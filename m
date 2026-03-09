@@ -4,86 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4790F3C246
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 12:28:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E62ECF3C245
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 12:38:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzZhz-00024C-Av; Mon, 09 Mar 2026 08:27:39 -0400
+	id 1vzZrw-0005NF-HZ; Mon, 09 Mar 2026 08:37:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzZhx-00023c-Dk
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:27:37 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzZrv-0005Ko-5F
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:37:55 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzZhv-0001Xs-Ta
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:27:37 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4853aec185aso8563355e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 05:27:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzZrt-0003Gm-9w
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:37:54 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4852e9ca034so18292725e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 05:37:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773059254; x=1773664054; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1773059871; x=1773664671; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=CtBGb9p00bM5mD4MpMsJ5mM8oT+b3h/34PMdnMEEpPs=;
- b=rJyaUuAd6331wsKJM2WSA5i0IVjSosuMVyR6SyhNBo4eRiw7YAt9dfzE1LGsP64vhc
- ubY+N3jCBPsypX6tGp4MpVrNhlP6H7V1e+WDv3LGrFdRD+3lAguWLMaDzM6kiz8iGImV
- TrBOp8JVUE3goDXQFeyaPRoNZEU+bCuX94O3GHpcwq+cow+9UmfjHdE0IjRCZpdL7gjK
- RMH/IxTfnhDptrm8gnxw4cQJJ/SkBJqBS2gquF2EeKNnMrPIxrfI1mDFFEJxWUtNMriG
- mfiwnRrIyPU7dlMzkNUnEzFh+a7wn7287XEMzYUSZV5NBaz+3feGooqtpc1+Ai0t7+I3
- Lxdw==
+ bh=SE+6UstLJtJyb+N6KxFuZm2jwFxo46JYvru2YY+1jrw=;
+ b=qY/ViahlyQ2qUV4X1rA9VV3dJ3zXc09vXMAfzLnsJ631M0IcUyAQMCow5KWpuzPfCK
+ VpW+RNTadA7/FfJCIkw2IfyXII8wHhAFHrhIn5pys1n9HZrcpZztHKKIehphQVe6mu1M
+ JhYxl9UOtKA1zVY5+rlIIzXyTMSfWoAGabw5LbIICR/J0gVapc1fRycZoixwkSi6JV8I
+ cM3gGpDFFTkbSXC1hj6t4kaJnTLmXFMy4HRZVAKzCJInjI8PtyZRTDswdcWBD20FhMrk
+ qSlsDup5PQ5VsFwIJvJtTGvJ6o8git4pG9gLN/u0jnKbKyKzBPajWA7Rbkk6jMJuowRO
+ bHhA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773059254; x=1773664054;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1773059871; x=1773664671;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=CtBGb9p00bM5mD4MpMsJ5mM8oT+b3h/34PMdnMEEpPs=;
- b=J+ns9AMVB8eR3BlJo3sZ0N2jBzQKNcyjoCXLd+XBmsECPReiRj9YSxfxJVyJbrveY0
- 1g8Gse5H67Kg+JCfGjindE9Vq8mbyotxpzqHx192wL65Q/yWHfgwPE/7EalkjfJi26UF
- DYiGQRdORnc6gpdSHt2vEucd194QqtwHEq67xfLv35aJvBjMjnA5micflEGvjtnsNwmr
- 5F6Q8oZ96UwrHm7du9a5EnetEo29EKtOp71AROzGWZXJXIyeID9xLL4Ys17iIRHQcpGb
- MtJCnp63lUKo/eDJpkbdrhnsSma06dn1OPtE78yA5IZXKQedKLgRxFxchQHnsT4/F4qs
- 7vCg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUmQv3Jx117deS1InnujEArmBkOvIWQnVH5yIdHQA+m2tWEEXUR4TKj8+8EXv5tLqBMWjG/WIHaFl0U@nongnu.org
-X-Gm-Message-State: AOJu0Yy71hIOkIpc6Ju2G1UkoPL4za99+PC1SIcarRe93poktiqxbL7a
- CZh3noPnDb+m10vUe71UYjMz0x+juHHHsswDwi/cHo7ZCImrArf5MQ+Avr25ThWvMgo=
-X-Gm-Gg: ATEYQzwwbR34ecJRGIFwTgsEFsoZ4OPmItY11zfS1k59SZ2v9A5NudV3KuqGTAn+RpY
- eErUTBcy/FIbIJoz7XIYaOCPTXTB5A/wynEE6R7PElsKZmR5dno47b4lzgZLs5u5M19l6yq4+eL
- F0z6XSULA+iZo5ZSn7qCzsmAeDvhaFciJA9NYGQLLU/IfeOzPB/0j5bFWqWteNPmMqEa3YTeN/s
- w+Pyl2FVRlPm4GzY+a9we4xXAT6AHWX+7yUO677F0oTRlP5xolX+3P0sbeihyh689ot11tSSqEH
- ziqYmy4ftq4XNXwzfOXd3lRgka+2IqFJ69w44MJL6VdkimnEiT+3Gh6BKGY/VieL+6LWIEZBKZg
- GiHVqbKcocE5Mwulpp8SCLTi5opQ2VjI6Xl8MpwgX9eJpoFle1nHFSzrTfeUOeWqctIN3BdOSeQ
- Y0GBsOBkg0fYwciST3kgPE5Xz52G+E6ITDWXgb9KCahhQeUz7kx8yMhhRQQ5hcgQcXPg==
-X-Received: by 2002:a05:600c:358e:b0:485:3ec6:e634 with SMTP id
- 5b1f17b1804b1-4853ec6e713mr29445815e9.15.1773059254155; 
- Mon, 09 Mar 2026 05:27:34 -0700 (PDT)
+ bh=SE+6UstLJtJyb+N6KxFuZm2jwFxo46JYvru2YY+1jrw=;
+ b=BOmv8KkZWWflgqXE5UQAzE/Py7/wxOuumMKUvRTVX4C8Tq80zYkejsZ+/V0HCMcsDz
+ nFx+nunSjDWR8s75m8DIYuI/L5F7a2xQEhSlvSskfEroCbuJgoIyUsqF6m0Dq8Xm8AGE
+ 2e8/6qiMdxkPjlQVD0YElnB4k9kwIFRb2n1C07kpb7ZWMNdSEMj0c4bC5gepjg4G8Mr9
+ xbLFZmk4let7uzTJw9+tVAq+9h23sO9aKvds7wMmWzNTRwWMoq9wFyGVE2q/+8z6DUUK
+ AurGl3thtr1AOQ5KFARV0iZnt7CAc0M/xHwi769Hr6oM+vkQajFLBGKcQRLIJy7X80zq
+ oMgg==
+X-Gm-Message-State: AOJu0YwYtrokknyrP92htUAznM7CNxlg5NFdmVBcqlqw60BVBPQyO385
+ MER/Fv8XsKk/ldj25jXVuK4AlEGYBdbSPWJfyd1auSMuUnsfW+6k/XrVuEVBKQvegY7NZYsdliT
+ M7Dg79NI=
+X-Gm-Gg: ATEYQzxBmfGsnWatDkb1Kz95j6LdUrpLPUgke1gPxLWYmHxVbBFjXrjGFOR7fvANoyx
+ 0cU95smOWJTpNxb4NeEjNYYZQuq70NLd1KJw5s8F4aC0ig/wM/yNxi1AICcSJlnTE5vi83iQbeI
+ 6ANNtsqOv+3umGqcanQHQuIwmeFKoSi811KJ4JIyS5Eacft6pJ94hF6qVtbWTKcOF8VMJQB40f5
+ 8YO/BiteVHwbGHWKHdDHvZvZ9ZYECd1hRIfso0KC5oNQOExAmSqrG4ybx1OaCmakIMSURk3OcHs
+ o0QF7ZLmGv3n7aR2JQcTMu3taBp0vLYnW2rjd8nCDo9y2kpE8AUsRd8EUtSltk2gUSlqoHPntsu
+ 7e9hiEMDmtKUDz04PRcKE7xfKf+VsuEf7T4s8oIEDCly394TDD84QK7g5b9fMcDsL2nzGQzvMaW
+ Z29CxwLbyLeWBpswUlog7uH0lmZWkqBWmDC7ToIIqI3Fc4EUwjAU5z7xckV6OQsKINcA==
+X-Received: by 2002:a05:600c:4e8e:b0:485:3abe:ab86 with SMTP id
+ 5b1f17b1804b1-4853abeac80mr57230375e9.4.1773059871442; 
+ Mon, 09 Mar 2026 05:37:51 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae49177sm25528206f8f.35.2026.03.09.05.27.33
+ ffacd0b85a97d-439dae2b9ccsm25589879f8f.19.2026.03.09.05.37.49
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 05:27:33 -0700 (PDT)
-Message-ID: <0225a250-8dfb-41c3-8ec8-7c39b057557c@linaro.org>
-Date: Mon, 9 Mar 2026 13:27:32 +0100
+ Mon, 09 Mar 2026 05:37:50 -0700 (PDT)
+Message-ID: <53077d7d-ebb9-486e-9ed9-acf196ffb536@linaro.org>
+Date: Mon, 9 Mar 2026 13:37:49 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/riscv_cpc: Free CPU array in instance_finalize
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Chao-ying Fu <cfu@mips.com>,
- Djordje Todorovic <djordje.todorovic@htecgroup.com>
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org
-References: <20260309095328.1406779-1-peter.maydell@linaro.org>
- <CAFEAcA8x70ruJzSXhSo5OentZnTgsh4xnZmqL3h9+1EcFY=z5A@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v2] ui/cocoa: Do not automatically zoom for HiDPI
 Content-Language: en-US
-In-Reply-To: <CAFEAcA8x70ruJzSXhSo5OentZnTgsh4xnZmqL3h9+1EcFY=z5A@mail.gmail.com>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Peter Maydell <peter.maydell@linaro.org>, Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Cc: qemu-devel@nongnu.org
+References: <20260304-zoom-v2-1-2eebf2b51106@rsg.ci.i.u-tokyo.ac.jp>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260304-zoom-v2-1-2eebf2b51106@rsg.ci.i.u-tokyo.ac.jp>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,37 +103,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 10:53, Peter Maydell wrote:
-> On Mon, 9 Mar 2026 at 09:53, Peter Maydell <peter.maydell@linaro.org> wrote:
->>
->> The TYPE_RISCV_CPC device allocates an array in its instance_init,
->> but does not free this, leading to leaks like this from QOM/QMP
->> introspection:
->>
->> Direct leak of 512 byte in 1 object allocated from:
->>      #0  in calloc
->>      #1  in g_malloc0
->>      #2  in riscv_cpc_init /home/pm215/qemu/build/san/../../hw/misc/riscv_cpc.c:175:15
->>      #3  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
->>      #4  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
->>      #5  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
->>      #6  in qdev_device_help /home/pm215/qemu/build/san/../../system/qdev-monitor.c:313:17
->>      #7  in hmp_device_add /home/pm215/qemu/build/san/../../system/qdev-monitor.c:1005:9
->>
->> Free the array in instance_finalize.
->>
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
->> ---
->>   hw/misc/riscv_cpc.c | 8 ++++++++
->>   1 file changed, 8 insertions(+)
+On 4/3/26 07:39, Akihiko Odaki wrote:
+> Cocoa automatically zooms for a HiDPI display like Retina and makes
+> the display blurry. Revert the automatic zooming.
 > 
-> PS: this file isn't listed in any MAINTAINERS section -- which
-> section should it be under ?
+> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> ---
+> Changes in v2:
+> - Rebased.
+> - Link to v1: https://lore.kernel.org/r/20240318-zoom-v1-1-07ad14fcde19@daynix.com
+> ---
+>   ui/cocoa.m | 9 ++++++---
+>   1 file changed, 6 insertions(+), 3 deletions(-)
 
-A missing "MIPS Boston-aia board" section under "RISC-V Machines"
-(see commit 2264f637da7 "hw/riscv: Add support for MIPS Boston-aia
-board mode"). Commit authors Cc'ed.
+Merged as a3b23b946c85062ff6fbdcc3d1f10557715516e4, thanks.
 
