@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13F92F41807
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFBD0F41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcut-0003so-7l; Mon, 09 Mar 2026 11:53:11 -0400
+	id 1vzcv3-0004iD-0Q; Mon, 09 Mar 2026 11:53:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuo-0003fI-QN
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:07 -0400
-Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcv1-0004ZL-FZ
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:19 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcun-0008Aj-7j
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:06 -0400
-Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-48534237460so18200765e9.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuz-0008CE-Lg
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:19 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48539cbb7b1so9338655e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071582; x=1773676382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071596; x=1773676396; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=1Uao/CKWcfJ+UFrA+3AmPlD8nKqx8My4/8hpgD51tDU=;
- b=eRDOXr1SP3uMSoDwnvKAo2Lp2lQQVqE0Zz+1bp3YD1pXwUEN1PFpPANZ7804giyam6
- RRGo3tlRKZa1BIFOyNOeP6UL1yla0ocPVyz0cgMUbFXwXk+YrFOcPHfWqCdRWKnhA+Ku
- fAgrqeQgrppesfn/0e/RHpYAtmJUHoLA1ce3QglUKHYEjgP8zDtRSL/mUYR+FzQBuYVv
- sIAPJ/w01FMnLL0KGf5crQt1V0IfBmUo4bFJW15fyxSkAD1pi/IPVI12B4UG7FlEO5Vw
- BfpIdoUkhfqjFqV3tFnPs11shdCD6+lOzf+253XUTj7mQYej5qdMpO8dZad9er3zkk2i
- UhhA==
+ :reply-to; bh=44Beolhsb9IaT4rslnVVRU0yRvy4qFxSOsfGseaGZiU=;
+ b=FsssENkXPdC4FIkjTc3g5ugSZwY6zAWOMTDDM6qac0Krb6qmQr76I09ZQfk4OeF1mU
+ DyiBm5aiN/cQajH4gDYP3abIYirGea4u69aPQ5Q+Txm6G4T++o7kQh8tyljoTyr195/Q
+ pIw6APVk8lYDbL28bTe4oI1wEdIaJwU+nWQcxCXOgGHY4ghizP98mUwv9kG+RzWohY7i
+ EP11Yg6/FmRYBKtrPn20rkVrNjkFSVeeTSFAGPuRMiTDcyrrz+TH9OFkIpqzgV9Vce1u
+ K/WsJti9F6z3l9dPzSbLOR/g2M8i3PXeQiCHtJ+SkIYMQgyVs8d4O3KyUtlkgEHNELrz
+ h2kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071582; x=1773676382;
+ d=1e100.net; s=20230601; t=1773071596; x=1773676396;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=1Uao/CKWcfJ+UFrA+3AmPlD8nKqx8My4/8hpgD51tDU=;
- b=riPL10ze7zKW5WLpgIzJKGs5M3LThRnSGoKRTRXZRS8lIczkSi7noSpx3i/RA8aX5h
- QIAbunf/z9pJ3KPHR4tY/lunDXyYB16xGwxTbl+n389zribzf841AWhuT0mTJ05UhNZ9
- ryd+6iwVmeLgODHGkFh5ajclsWiR0eWF45DRZIWP/dlubW/C6wf+9GC8KErPRttvaNs8
- kWjtiqnQLO7IgjBvfb2Uge3muPFKDtF3RaixVNZo/sHRPchgLUzvsb/k2tfnyIUQGUDZ
- Pqs4ZYLWVlWUi0mglKeCYa9XvNnht/7wDdGWdBoIDDhyd+ubc76wZ5ZJF6B2NERDRv8W
- 0KYg==
-X-Gm-Message-State: AOJu0YzG632hRQPAEgcB+Bwyd2oeUddHG9AgLZOiW/GOwnMfalvVQb9R
- YKjMpqFO+vod0ZIDGUFL5NAP03a88TxHal5jymJlYZk3yzeTXH5648nw29hHqa7FDA3t0l2mvt0
- sC8ryJjw=
-X-Gm-Gg: ATEYQzyBrLAk6aYalbs467wuR9/K9HJUJuG7k1N9mdo821ZJjjOvpHf7Uy8i40eCjme
- NOm3erYUa107Q+iye9hBolRSDlf9jaYjmjw6rZ/cvBj4tRkIoReL1L4N0lZP+RufFt0mr7E83VN
- +GyzjjsgotuNN2LaiYwCbK6MU1H4rhosg5MsdNJY0oMSJL6mLEBbsBOsAbhxXEEZGWbXNBb0fOV
- 5pEuGDBpGZkO1KbCpYwM64CfN6vU8DloqEsLqWKNLHNwBN+p/xQ5LZrhPa3CYpKXsfzY25UwV7h
- HwoIJAGxLfpoDnvcKiAJFilrKGIT8ABynQ7IEKXfNt/CoU5U7K/boZaCC69yJt4xEbuyG4RAVyZ
- LFboPqXpqAwF5PefGemLDsOVrBg8SqUSqcNMEjfQjTPAJDF8KmEsWt5O3kB0dZlufxQbWegeJRQ
- 1+gnu05bJoPJaVGbp+3myc774PdG/oHe7z4Itlkyg+COgj1JtpR2+HQA96YELmFKwGtdJnTWDs
-X-Received: by 2002:a05:600c:3b17:b0:483:7903:c3b1 with SMTP id
- 5b1f17b1804b1-4852695aeb9mr186807515e9.20.1773071582512; 
- Mon, 09 Mar 2026 08:53:02 -0700 (PDT)
+ bh=44Beolhsb9IaT4rslnVVRU0yRvy4qFxSOsfGseaGZiU=;
+ b=jPseBNa1W+kfE4prJe5MfhJ2JT2u3ayBizJ8h84fqcQOl8TJR7rx5+XTIgFT0skrEv
+ 92S1oUcf9zOqm+77r8o7Y8Hs8xFYe/Jy2RqbKXelVphbk0ifWPjzIlgemaKp0ROfJoZz
+ DwTsltO457EqWrrFdcW8xtxU+vxOWEf6ryzfRBkJXrY/fJc0pQ/sufsOT4AToVIEjVva
+ E5RzntEo2blfMbjx6ahehH3lUR8rkMOAEGqRgbk7AuiafL8NmNdMnrPL43HapMaWl/KA
+ 0GtcwjgzrgZ6cnJmGWs8BlbHzBY1KTiXV6XSslSvVhF8Mmc2fm8btHPU8FuXlNP4Vj1N
+ JO1A==
+X-Gm-Message-State: AOJu0Ywy+eWnk0xqEfo+6RGh++uTIF5zzspntqDLvfsRlq93Ss2B7cCc
+ r5Cw7a9JLD26rIolbiQcpWQGHpVOmNlXqe4ZCup8mpnCe1stOIeovRHAJX1G7wIIK0xiWkc3dIp
+ 8ltGPhUE=
+X-Gm-Gg: ATEYQzyk99pUTVfmcfod1qKxLX3xnsUTf7zcT9Ay4qdwDHfwwYuEdhhjsuxFNbSqMct
+ x/wZPikTQYCFQqYyVflrRgVmPXHR6LJAkEiFfLkaIYwcTY1YaCPdYi5PFk+3BINwzEaUUzH2EcR
+ 0lFXjDgeKqhnnGJ5H7IN6gMBkwe8ryLleCtn1YcKqq5gclolEG70Ax3fZ5rW3VGh1plXEKTDW3q
+ KuG3vWIFBiOXL76kJJp8t6Gh2lbKCBsJRtibopbaDuqtQJWAz89TRBRBnQlnF5yL4OGpxSn0P8+
+ nkZ0kGqOew3tY9ToRi3X1IRXwFlsZYRlUOH9T4WEQKpvxiGWl1vgXnzVmM9yneghTSmUKs7pJtz
+ ZX4z4gsVzX4tOdMdg0MWYIGkk9GkKz5fm6PGZUfKu33svRAd2H855LbPsPck8fN7wN6mIEPO0CT
+ QrbLIWEKjpI9yms0kdWVTJcRRWisuDtWicU+GA4ulIG+EDr1a8wERMEQwEYGSp+tkAgbHrsaT5
+X-Received: by 2002:a05:600c:4445:b0:477:7ab8:aba with SMTP id
+ 5b1f17b1804b1-4852690fffemr213920095e9.1.1773071595606; 
+ Mon, 09 Mar 2026 08:53:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853a59fc36sm195786325e9.9.2026.03.09.08.53.01
+ ffacd0b85a97d-439dae57c05sm25504559f8f.39.2026.03.09.08.53.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:53:01 -0700 (PDT)
+ Mon, 09 Mar 2026 08:53:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/49] hw/i386/pc: Remove pc_compat_3_1[] array
-Date: Mon,  9 Mar 2026 16:51:36 +0100
-Message-ID: <20260309155219.62400-7-philmd@linaro.org>
+Subject: [PULL 08/49] target/i386/cpu: Remove X86CPU::intel_pt_auto_level field
+Date: Mon,  9 Mar 2026 16:51:38 +0100
+Message-ID: <20260309155219.62400-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::329;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,67 +98,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The pc_compat_3_1[] array was only used by the pc-q35-3.1
-and pc-i440fx-3.1 machines, which got removed. Remove it.
+The X86CPU::intel_pt_auto_level boolean was only set in the
+pc_compat_3_1[] array, via the 'x-intel-pt-auto-level=off'
+property. We removed all machines using that array, let's
+emove that property and all the code around it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-6-philmd@linaro.org>
+Message-Id: <20260307152635.83893-8-philmd@linaro.org>
 ---
- include/hw/i386/pc.h |  3 ---
- hw/i386/pc.c         | 25 -------------------------
- 2 files changed, 28 deletions(-)
+ target/i386/cpu.h |  3 ---
+ target/i386/cpu.c | 10 +---------
+ 2 files changed, 1 insertion(+), 12 deletions(-)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 908de5e1eab..4e1dd436ab7 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -271,9 +271,6 @@ extern const size_t pc_compat_4_1_len;
- extern GlobalProperty pc_compat_4_0[];
- extern const size_t pc_compat_4_0_len;
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 2b70d56e9b0..5a62aa61579 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2457,9 +2457,6 @@ struct ArchCPU {
+     /* Only advertise TOPOEXT features that AMD defines */
+     bool amd_topoext_features_only;
  
--extern GlobalProperty pc_compat_3_1[];
--extern const size_t pc_compat_3_1_len;
+-    /* Enable auto level-increase for Intel Processor Trace leave */
+-    bool intel_pt_auto_level;
 -
- #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
-     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
-                                                  const void *data) \
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 00581dd8b44..f33e3f72656 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -180,31 +180,6 @@ const size_t pc_compat_4_1_len = G_N_ELEMENTS(pc_compat_4_1);
- GlobalProperty pc_compat_4_0[] = {};
- const size_t pc_compat_4_0_len = G_N_ELEMENTS(pc_compat_4_0);
+     /* if true fill the top bits of the MTRR_PHYSMASKn variable range */
+     bool fill_mtrr_mask;
  
--GlobalProperty pc_compat_3_1[] = {
--    { "intel-iommu", "dma-drain", "off" },
--    { "Opteron_G3" "-" TYPE_X86_CPU, "rdtscp", "off" },
--    { "Opteron_G4" "-" TYPE_X86_CPU, "rdtscp", "off" },
--    { "Opteron_G4" "-" TYPE_X86_CPU, "npt", "off" },
--    { "Opteron_G4" "-" TYPE_X86_CPU, "nrip-save", "off" },
--    { "Opteron_G5" "-" TYPE_X86_CPU, "rdtscp", "off" },
--    { "Opteron_G5" "-" TYPE_X86_CPU, "npt", "off" },
--    { "Opteron_G5" "-" TYPE_X86_CPU, "nrip-save", "off" },
--    { "EPYC" "-" TYPE_X86_CPU, "npt", "off" },
--    { "EPYC" "-" TYPE_X86_CPU, "nrip-save", "off" },
--    { "EPYC-IBPB" "-" TYPE_X86_CPU, "npt", "off" },
--    { "EPYC-IBPB" "-" TYPE_X86_CPU, "nrip-save", "off" },
--    { "Skylake-Client" "-" TYPE_X86_CPU,      "mpx", "on" },
--    { "Skylake-Client-IBRS" "-" TYPE_X86_CPU, "mpx", "on" },
--    { "Skylake-Server" "-" TYPE_X86_CPU,      "mpx", "on" },
--    { "Skylake-Server-IBRS" "-" TYPE_X86_CPU, "mpx", "on" },
--    { "Cascadelake-Server" "-" TYPE_X86_CPU,  "mpx", "on" },
--    { "Icelake-Client" "-" TYPE_X86_CPU,      "mpx", "on" },
--    { "Icelake-Server" "-" TYPE_X86_CPU,      "mpx", "on" },
--    { "Cascadelake-Server" "-" TYPE_X86_CPU, "stepping", "5" },
--    { TYPE_X86_CPU, "x-intel-pt-auto-level", "off" },
--};
--const size_t pc_compat_3_1_len = G_N_ELEMENTS(pc_compat_3_1);
--
- /*
-  * @PC_FW_DATA:
-  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index c77addd2c25..0a29ff805fa 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9565,13 +9565,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+ 
+     /* Intel Processor Trace requires CPUID[0x14] */
+     if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT)) {
+-        if (cpu->intel_pt_auto_level) {
+-            x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
+-        } else if (cpu->env.cpuid_min_level < 0x14) {
+-            mark_unavailable_features(cpu, FEAT_7_0_EBX,
+-                CPUID_7_0_EBX_INTEL_PT,
+-                "Intel PT need CPUID leaf 0x14, please set by \"-cpu ...,intel-pt=on,min-level=0x14\"");
+-        }
++        x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
+     }
+ 
+     /*
+@@ -10589,8 +10583,6 @@ static const Property x86_cpu_properties[] = {
+      * to the specific Windows version being used."
+      */
+     DEFINE_PROP_INT32("x-hv-max-vps", X86CPU, hv_max_vps, -1),
+-    DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
+-                     true),
+     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
+     DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
+ 
 -- 
 2.53.0
 
