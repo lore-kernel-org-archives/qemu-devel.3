@@ -4,93 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D28F417F1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4940F417F3
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbxC-0004Hc-BR; Mon, 09 Mar 2026 10:51:36 -0400
+	id 1vzbv0-0001GU-Vl; Mon, 09 Mar 2026 10:49:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwI-0003WK-2T
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:36 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwF-0005fJ-RI
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:33 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-483487335c2so98742115e9.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:50:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbus-00010P-Bn
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:07 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbuq-0005HJ-OI
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:06 -0400
+Received: from pps.filterd (m0279871.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629C5dBt526831
+ for <qemu-devel@nongnu.org>; Mon, 9 Mar 2026 14:48:54 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ OTsjkE6PyCjrcq7r6k4/OGN1PB8LtUmEB75qaHHtKx4=; b=GNyIvlK9mK3XhGKw
+ L0BDhZz3ag0N+bMAkX/4517MDEriR8qSyJlXxbVvVb2ZrLb3lBLIVkqtb67IHu13
+ YvwslJSKW2atVjZim0fiAeEgCMaJQl3C5YVDLjI0LMJFMie7Lxd3gJewtQL7NL/g
+ IYP6hYec5UE06xDLqeN5CsH5DM6YYX4R10QPdy7N4DS1rKEj3ZNJdVtWclMSX2lS
+ jzSqfORc4w1de/OFWLjA1XpIRiWhirzhGksBZRBpYmhZ8ogZJGgN/94kh79Rm7fX
+ dVa33Vk9xLg8kCZj42JJYXJT4lqWmNDb42vSYB50B9LoVmAzw/ZBQ3EJsg9t+GEt
+ nmhu2Q==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cswwkgg64-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 14:48:53 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2bda35eab74so4833778eec.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:48:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773067830; x=1773672630; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1773067733; x=1773672533; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=twH0MoLU9gm5rBOzlpHaIy0topLpBsNv4557Fsob2w8=;
- b=lyNdX39M++8ik/1y/XKCQKFwC9ovMSHBlybt/aDULOiybxrHmlJVy2StJmIoO9xdo1
- 2UnztWsojzt+4pvKZIEVL401FDkm05RuWJZwprEkm01uzMz88sbB9rDxmNteWuQ1r0dV
- Wp09kyVEkqHQb3adoYqY77AeIfbgJ03zBlBGIrcmdFvIBzoh5Ff5F1OLs0IVzsJ4n5Rj
- tyGFlOzgWAd7PphfjC31yqj3JsXUM6ciqFcGreYEjX4V/zHjkNxOpBXKiu2bzyAZJHY6
- RWCUt5PqnzYI/84KJMxOSeqfPO5GCeGuHDAP8JWmaJC2JSEaDWU4QWya9xYp4lZZ2VLE
- GPMw==
+ bh=OTsjkE6PyCjrcq7r6k4/OGN1PB8LtUmEB75qaHHtKx4=;
+ b=UWTzDo+10NuKsvKsMMAmiVYyawXydnunY7TdSWHL/Jm/4HulGzXLJsxCP8760WVX28
+ OUIBYr5kpbwv3jVyCtY/i9biCgjDUXFKomaMNzCcorDkMpW9eER4NDSykw7AqJdMpjLI
+ PdG0K6Ert9SYP7SC/oHRPFX8lQllUUXusR66eLh6pt7Fwhouu/hfm/opxCGy48DnfQsb
+ 4h5BpGLxNwztllX8oO499bIx3apM7+LP1f6NP+eVS/eWuBkPoVdt2j/VAghCRJYPWnHs
+ xp9JiiMHfz36CkgHdhPQ+g5corJvq15SEqWrU69k5aj6niDm4lmYoNc3+hRLVhBGVuCP
+ bdyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773067830; x=1773672630;
+ d=1e100.net; s=20230601; t=1773067733; x=1773672533;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=twH0MoLU9gm5rBOzlpHaIy0topLpBsNv4557Fsob2w8=;
- b=lnB0Xke23t+wFmUJ/KEIpIWYMH8X0IbsIz+rlPnn2HsoRCEynm8CcwQqwixaURFf+5
- Cy5nFg4UcljPdgebiztLzB5e9N6BaGjMngF79/cy+91Zl5qApyjZCFk2bf9Fut62tP49
- ZGfl/jXBXMTndc5xvP40NX8unStPdcdQ14UgwaefsQDIGRgqO0nzXPxg2nSo2eKTQ1c4
- IhwhIPwlF4skZrgYH2rjZ+HydjBKmGxW74bEGwWdULdARHjpcemPSbPiPTSlstBwokwa
- FB0ZRZSy9mdDytNbK2VJYOlM3dIdf00aKfW1T+Vy/G24Ple9dMJyQwLRqejDtn86iLOg
- PrtA==
-X-Gm-Message-State: AOJu0YzWG/ttnXgeJWIeyqnxkn+U0tPE/Cva86B0yDOszNgjClTdCqVM
- QZZkLZWn5ltFDxIT9yklmgfcH9JmKZg2c4gnB+MIJTSPnFFC+ddnJEiO9jV7CLZ32Bh+sQrDGXd
- 7MTzdwlw=
-X-Gm-Gg: ATEYQzzGYA5fL8K6AW/G8eTOLYmpF6GwCiQG1ZFUL1BLp4h36EQ8nhEEi+xyiSCdY/O
- N90vc6nMqiBStbKhE4piw5R7gWBU0uyT20c2G5mYFPZnpbXjbkEhRa3XINIJcQ/sQOGbccvIxyj
- G58tPOXQhAf0XI+s25aRmaN3Wkq9H0zJXEeEFXFjVV/pBO9aRgILdzeuiZNHs8RdhWfFQt1Tlcu
- w8Em657EVRRK8/Vh8gvwqG9xqE7g5uzLuDCqZmvw2VJNSwmcC48n76kEKcrbQ2rxcSh6ZYn+zT/
- Bj5oaYNQ8CnkNKB1BGijptdJrLUEpsQdBRE1yZ/TekCQEMoXrvovUgxJdjXbjeaRC/647tTOwZ7
- WP5sQEeI2dOx+FJE3j3HCqj1BPxLiOjLwE75+RIGjw2q+5+w9HPyv81bA0nxHYgd0VE1AKRDyP0
- BFBK5fBG3KOB5dYdyYgmt3EQxBG69m2WMUxh9GZO4N4QqtYgbiQox0zQqonCmz9IDO2o/yA1IrG
- DpbcQ==
-X-Received: by 2002:a05:600c:3b13:b0:47f:f952:d207 with SMTP id
- 5b1f17b1804b1-48526969359mr218672575e9.19.1773067829463; 
- Mon, 09 Mar 2026 07:50:29 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852f369118sm76824055e9.20.2026.03.09.07.50.28
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 07:50:28 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=OTsjkE6PyCjrcq7r6k4/OGN1PB8LtUmEB75qaHHtKx4=;
+ b=StHr6HXu3aPW/VC8iwHtvP3/PZsDgnw8HY8V0cxshAqy3U2md7kB3D8QIvq6q/JmUx
+ 8Id8pleiPI6sYIgHGKvrWLN13WiE4nl/6DZ3uLqHV5nSDhIXu076NllkQYd+WQ79hBtm
+ 0n0lFN4C6Ndtv872Iyke5R/GTRpT15Vu9YWNz0crmNIyvj18mLNiHjiRQcVQV5I4Gbuc
+ Zvs2a0ZD/Le9GHUaL2UjyBtgWKDVbqyUmU8yFRGw1vvOi3ygWZXmOujnhyFpVUoyP5z/
+ VnLeFmkcpGXJA8JFIuBdgjAbmrJ0ilKQVQSOhmbTjlMyJ7caj1uLFE9hk4bllAHjwdlc
+ Hewg==
+X-Gm-Message-State: AOJu0Yxlrbup5/4BFgpyuwAmKr0UhPZxHDfoSQlkjjt5eQcmgvcO5JDW
+ emFmR/s6xDRqkPu7I8KY3xcYLqpOwoegnyBLn0HiCKQ1zLVW+XnPr9elxFHwjHCWrxevGMZXeU1
+ CtQ0UdcaUt5SLyunftBHgKQLmRNwOaFTG2a4z0KTCktHAuZSlzmgUU/LoWPqYtpSoRw==
+X-Gm-Gg: ATEYQzw001ICgJkTuPVCNKo4DQKQ8a4Sq6z+tZjQfsQuccFmxgvOkDgyoRsNR8w7uao
+ CCz57HNzz0x0owgQBTSchT5+u6mtfa3zLkUM3OPr+t0uB18axyg58AqGNU5nCLNedJZ4xo+qGSl
+ d+Dj/bJqVAKH2iaQ3cVj3DONxYNXNemUI5asSR+B9bIEKPy9w3Gm3MGO8pP38jTDilWr+ecoTWv
+ cBCJmKty+iQYI6zH4Li7/9PyOXhDuOnZGc7C2aa/sJS+kdQNa4eqJQHe9iLmwkd/XuAJLZljmqv
+ uu7MYHsQA4i8i/1d3kjpxxjp+zypp5wNZJRpKzo6Hek7gDylWTuM6liR5VC+F0TJqbCVaYrUcj/
+ d8JIY/R6Ffpnhi8OOafPwNck0Tyl7evl1CgZNiylnX79qF5+XJo+QfWhN3reNr/hHGwnJ5g==
+X-Received: by 2002:a05:7301:4186:b0:2b7:c285:837d with SMTP id
+ 5a478bee46e88-2be4e56e840mr3684149eec.4.1773067732617; 
+ Mon, 09 Mar 2026 07:48:52 -0700 (PDT)
+X-Received: by 2002:a05:7301:4186:b0:2b7:c285:837d with SMTP id
+ 5a478bee46e88-2be4e56e840mr3684124eec.4.1773067731930; 
+ Mon, 09 Mar 2026 07:48:51 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2be4f82b78esm9322776eec.12.2026.03.09.07.48.51
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 07:48:51 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v2 02/10] hw/i386/pc: Remove PCMachineClass::pvh_enabled field
-Date: Mon,  9 Mar 2026 15:50:04 +0100
-Message-ID: <20260309145013.44327-3-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260309145013.44327-1-philmd@linaro.org>
-References: <20260309145013.44327-1-philmd@linaro.org>
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH v4 22/35] target/hexagon: Implement do_raise_exception()
+Date: Mon,  9 Mar 2026 07:48:09 -0700
+Message-Id: <20260309144822.877695-23-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
+References: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Authority-Analysis: v=2.4 cv=cZ/fb3DM c=1 sm=1 tr=0 ts=69aeddd5 cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=3WHJM1ZQz_JShphwDgj5:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=hK29HtBGQMdOITfcgGsA:9
+ a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-ORIG-GUID: sRaym8mzpdJ9NR87fzkFKw-ELGyeMP4C
+X-Proofpoint-GUID: sRaym8mzpdJ9NR87fzkFKw-ELGyeMP4C
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzMyBTYWx0ZWRfX4klLT/6wtqPU
+ irIMjbl1Ikx+FWWo1VDMV2NSyog+VQL4GDPNeaeMbgGD1IDX0C4dxRccqtj9MH/PVdHfaFPwq61
+ kO10EgN2VunmZLrHRWLC2rdYIeX9BPNVWIkHBKOo+2W3zZJ550q5pSdjfEf6zVc378WSfQTIZc6
+ S612aGyy7pnHUJMBFGTCo//jvS/fQngxxIBdL3IjN/sW2CTNLZI4PgkAv5GDhIEXxeYEcLO2vc3
+ Z4hIpEUyFqsgUbiS4kW8VZY/Pu1sXH2OIu9aA4G16A8Qh2M1N3w0mLH3AbHuDWkM5buexrs7c+4
+ IVKQcdFwnzGmmj9jvXLYUXHgjiw0QAatSxoUVp004j+rGgbKk/DAJtbzwCXdrEu6tto2uTKQDx3
+ evQS9vKhWyPbbXQnP869afKmxF9rKAhSUo2iB+YlAeNMNZ3JpVCpnnGmfvmvsB1BH0hZvwU3LIA
+ dLTDRczVDTtZ9bIglWw==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_04,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 suspectscore=0 impostorscore=0 adultscore=0 priorityscore=1501
+ phishscore=0 malwarescore=0 lowpriorityscore=0 clxscore=1015 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090133
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,86 +150,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCMachineClass::pvh_enabled boolean was only used by
-the pc-q35-3.1 and pc-i440fx-3.1 machines, which got removed.
-Remove it.
+From: Brian Cain <bcain@quicinc.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-3-philmd@linaro.org>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- include/hw/i386/pc.h | 3 ---
- hw/i386/pc.c         | 6 ++----
- hw/i386/x86-common.c | 3 +--
- 3 files changed, 3 insertions(+), 9 deletions(-)
+ target/hexagon/internal.h  |  5 +++++
+ target/hexagon/op_helper.c | 14 ++++++++++++++
+ 2 files changed, 19 insertions(+)
 
-diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
-index 5623660f5dd..908de5e1eab 100644
---- a/include/hw/i386/pc.h
-+++ b/include/hw/i386/pc.h
-@@ -110,9 +110,6 @@ struct PCMachineClass {
-     bool enforce_amd_1tb_hole;
-     bool isa_bios_alias;
+diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
+index cd06ff41d4f..33d73ed18d1 100644
+--- a/target/hexagon/internal.h
++++ b/target/hexagon/internal.h
+@@ -31,6 +31,11 @@ void hexagon_debug(CPUHexagonState *env);
  
--    /* use PVH to load kernels that support this feature */
--    bool pvh_enabled;
--
-     /* create kvmclock device even when KVM PV features are not exposed */
-     bool kvmclock_create_always;
+ extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];
  
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index 052226baa57..3fc2f0a057e 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -588,7 +588,6 @@ void xen_load_linux(PCMachineState *pcms)
- {
-     int i;
-     FWCfgState *fw_cfg;
--    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
-     X86MachineState *x86ms = X86_MACHINE(pcms);
++void G_NORETURN do_raise_exception(CPUHexagonState *env,
++        uint32_t exception,
++        uint32_t PC,
++        uintptr_t retaddr);
++
+ #ifndef CONFIG_USER_ONLY
+ extern const VMStateDescription vmstate_hexagon_cpu;
+ #endif
+diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
+index 4db38d8eff2..eaefddef15c 100644
+--- a/target/hexagon/op_helper.c
++++ b/target/hexagon/op_helper.c
+@@ -37,6 +37,20 @@
+ #define SF_MANTBITS    23
  
-     assert(MACHINE(pcms)->kernel_filename != NULL);
-@@ -598,7 +597,7 @@ void xen_load_linux(PCMachineState *pcms)
-     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
-     rom_set_fw(fw_cfg);
- 
--    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, pcmc->pvh_enabled);
-+    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
-     for (i = 0; i < nb_option_roms; i++) {
-         assert(!strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
-                !strcmp(option_rom[i].name, "pvh.bin") ||
-@@ -932,7 +931,7 @@ void pc_memory_init(PCMachineState *pcms,
-     }
- 
-     if (linux_boot) {
--        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, pcmc->pvh_enabled);
-+        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
-     }
- 
-     for (i = 0; i < nb_option_roms; i++) {
-@@ -1673,7 +1672,6 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
-     pcmc->has_reserved_memory = true;
-     pcmc->enforce_amd_1tb_hole = true;
-     pcmc->isa_bios_alias = true;
--    pcmc->pvh_enabled = true;
-     pcmc->kvmclock_create_always = true;
-     x86mc->apic_xrupt_override = true;
-     assert(!mc->get_hotplug_handler);
-diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
-index a420112666a..db8d4e855f4 100644
---- a/hw/i386/x86-common.c
-+++ b/hw/i386/x86-common.c
-@@ -704,8 +704,7 @@ void x86_load_linux(X86MachineState *x86ms,
-          * saving the PVH entry point used by the x86/HVM direct boot ABI.
-          * If load_elfboot() is successful, populate the fw_cfg info.
-          */
--        if (pvh_enabled &&
--            load_elfboot(kernel_filename, kernel_size,
-+        if (load_elfboot(kernel_filename, kernel_size,
-                          header, pvh_start_addr, fw_cfg)) {
-             fclose(f);
- 
+ /* Exceptions processing helpers */
++G_NORETURN
++void do_raise_exception(CPUHexagonState *env, uint32_t exception,
++                        uint32_t PC, uintptr_t retaddr)
++{
++    CPUState *cs = env_cpu(env);
++    qemu_log_mask(CPU_LOG_INT, "%s: 0x%08" PRIx32 ", @ %08" PRIx32 "\n",
++                  __func__, exception, PC);
++    ASSERT_DIRECT_TO_GUEST_UNSET(env, exception);
++
++    env->gpr[HEX_REG_PC] = PC;
++    cs->exception_index = exception;
++    cpu_loop_exit_restore(cs, retaddr);
++}
++
+ G_NORETURN void hexagon_raise_exception_err(CPUHexagonState *env,
+                                             uint32_t exception,
+                                             uintptr_t pc)
 -- 
-2.53.0
+2.34.1
 
 
