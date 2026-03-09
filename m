@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8143DF41808
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:54:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF2A4F417F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:54:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcvz-0007KJ-CI; Mon, 09 Mar 2026 11:54:25 -0400
+	id 1vzcva-0006qQ-Cz; Mon, 09 Mar 2026 11:53:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvm-0007Ez-Eq
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:08 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvY-0006le-5H
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:52 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvj-0000LW-QO
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:05 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-4852f73d0a3so17544945e9.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:54:03 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvW-00005q-Gn
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:51 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso119560585e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071642; x=1773676442; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071629; x=1773676429; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vQ2Sn8Wbqu1NrXuJtMyexGGxp0O6O+LoeTC8M+EESYw=;
- b=hWev81pIKmphWWSpLrOAF0CA1WQ22MJXkU4PPtBhm05fzvi8EzioAxJRQ+eDitb4kB
- UkhalOxwOsku5CLr0eDAlZ5s3MDArbuY+F0CvcmiHQilJSDVpuUoTJmnIk0xC5BgAeZK
- 6Rnef4JujChbyZ4lC5WWj96DNfc8uZ0PuuFKGBBllhRwky7PRCaHSLb/++Pnc3AblBUC
- WDj4f9bc/PTOkTD4fpuhAX+YCL4lIRpIJ0aV96KBtyaKqNl0Y7T77uXUP1t67+DZV9R8
- qsHQi84m3ZxNfm+qfyxv96islowNDNBabkwAimCNXLzJl+LECdkubphz7kBTZ7uI5D+5
- V3+A==
+ :reply-to; bh=a08Md/WAEudx0JjenTi/rWK/LNu3K4IFgDGEGMN+LTY=;
+ b=a/Ah6703jQLsXv3zUUk288+UR3GK/4WsC2mP6hhvpkaYYzPRQ09fHdjj/eHibIUjn5
+ yfnJ1ZLfGRrjCemlu70lxgzRXDygaaN+weFisi7bnm+IGH8K7nXapu+rKPhQ42EqAOaZ
+ 2vfk5ubS7zphzXQnzuJvtJYXfzYLHUnULzxKVvsL1lSZQIeZY2s9xkT6/6kwfFBiPm+s
+ 1odPrT5vKIsrtp0T3ddbKdGBnwsuXThBCcnSPzGu4B2H+Qv48TFNGjlTVCYBgwaa+haI
+ E4nKqFkkVWCQfPZmLTzwdRDA5hyjq8jIuC+LnMISSIBhQ7RQUmqIUt7UH/MI8qZqi/KM
+ qT3g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071642; x=1773676442;
+ d=1e100.net; s=20230601; t=1773071629; x=1773676429;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=vQ2Sn8Wbqu1NrXuJtMyexGGxp0O6O+LoeTC8M+EESYw=;
- b=stWh7l3uRRQWN3CvH0Vk3jv2Z+bN61Uq8GN3vSW7rKv5/9Fv7J4I0SDxDo6hHhZx7D
- +qBPfd0a1aKdbb25Rfh9eLJ5sz39oG2pW+74sfPY44L5tc1qJOKmqQZhEOcuTfOpPVL7
- gowgF/cLyTF0zfmWau76HzKJmlWbz1N4ZryL+wUrBuGQsO4CaeO0s+dpB3RxO4K4tSSy
- JAXqoPJgoW9re7kMXVSHkzHzeq18CAqFQjVG6JAqzrWkLle0pqASMTPd1VvxK4/7Wyai
- bcjr4Xnsr6cVLQDaaTFPxo938GrvuzLXX21i+4lQ4dj8acpk6FwfrkzIsmSqLdai5wTe
- YK3A==
-X-Gm-Message-State: AOJu0Yz8cbPYN9unRgq6EI0mLYUcAIYFICuvpM6gZGt/iH3+nefJEjse
- Bd+KYsvg5kEuPQu2K74Odtw1qc3SogI1xmpPxip/rm1Df+LuUvO3Px0/pot4tn6Wmx3unCgXK5H
- DdHwMg8w=
-X-Gm-Gg: ATEYQzyK99qNgPIjYZm1nRKbxusjLJCd5xK8ajRMU7Kbm0V9EgKrlBW8KFiqM0nTe1y
- viqHSfdlZxjNXloGK+lXdKtNHLYkISaPlB+tH9LJObVSMmHyH6Ahii67eEXQtw9S/E1Qhx2Kdv/
- 18f8jJTKw81/5mQ2o8TF7zUGmxZWrOmgs67mNJz7CZ3l5pSUSF8cTgRtKXkaRruorZ15R7CZVZ5
- 1Mq6EtKXxaooqbc/QxZwBR380+BHIMjl7a63s3PZuV7sYZXqURXuixKx0tGQzQ7P+ryOhbn6X3d
- sfyl8UvqtNTIn9Q80ar6N1sZhaGE8kCa1TPK46ONFF/7+YLc26xvqDeKe0+CUUdfPmhUbELqmLK
- V45ZiyLnydnSh3xs5VT2a5tGc7aPNqhWUo6DINUAeCcJioRwYDkiTjsXXtI0/Qyx6KMyjzWs0Ir
- CuRrJqspYBCHrRa8YLejbmuRDJKeusLuNtVi5v+y/iamhKCUIxaSXtSaSCqKNt6vCraaEyNF92
-X-Received: by 2002:a05:600c:8b2f:b0:485:3a59:99ca with SMTP id
- 5b1f17b1804b1-4853a599b8cmr81905465e9.16.1773071641839; 
- Mon, 09 Mar 2026 08:54:01 -0700 (PDT)
+ bh=a08Md/WAEudx0JjenTi/rWK/LNu3K4IFgDGEGMN+LTY=;
+ b=Ao87oQ+vfUuGLSencUzEspxPQNtOnX1OOsuM0fV8MY6z6jqc8RFsqx7gu8VVfIHJDy
+ i+Ju/sHk+K9150BiFl8Ll2JXxHjRqeokNKKMFQPoWnImYmi+Sf9JnyRmiKXqZnIGBtK+
+ XdIcqX7rnk5BSKOAjVizVVa7ISWYVXSI8qpzK4ed16GbutX6Z3z2IMOgEJ3WFeK9JbKb
+ gDPwuYmYY9dkaeCTA5r1w3+XV36zNI2oLC4PxsLGDfccyENi/vcPO3ZKMAkbsf5QXOhK
+ DRtx2zN7C7Kwu2dXa1Yg5ZEkb0OsxsMmG17kjBkGYRq3RpM3gW912DT7Njm0SoPrluPW
+ Oh8Q==
+X-Gm-Message-State: AOJu0YxjL2oVNEuIQU+oo2/nrHA3+Ga1+BHG4riZxwPksoQECatWVO2A
+ rRfLodhhES3yMLUZj2MaUey6SrkhzgrO82QB2E9keq+fYbeunswM+kh9P5DgX/QQX5Rl7b2UkwS
+ VwxvtizA=
+X-Gm-Gg: ATEYQzxpwSRiGnb63eiTWdzfBIJhPINiy76aVMQ0q6HdVii2juQImj7uIs+sRoh3HQS
+ 6l29oSW/zqhAhXoCOAA7lC59D3o9avPjedfpzQzQMu+/YdMk4xK6o2WbzJsiBRU4G5sEnYv+6Ps
+ xsfit/UMbAfNc9gz5SbYMQSWM/0jv+MetnKAdNdfu3wL37BW+Q2mjSXBzG7ZGpuk3B0aPTKdT/K
+ ROmkG3afwYWEuXOTN3C0VugnvnkJSk+fOLNvS31F1RToOaHj0v8sP/tedC78tBpUCw8+5qJvI6k
+ 8BdtOfEKOEKuw+5r+69jsWy7ilNVjn5CteSj3T062uGZSmnHjQewm6TI8WXWGHCLo+yHfrcYWT4
+ Pyn25ioVQ6/rNbJq6fp/qMKwe3uFh+ebnkuocFK6dNf6ZOlctDr8x0bYK2aSuk4a2q/H0974h35
+ UcS3qLFRP9u2IPqhg0uVp66xSiJLtXexnLFSmV/j2LUCx95+8RP60u4LDZshFMoAmxo4n+Jptm
+X-Received: by 2002:a05:600c:3049:b0:47d:52ef:c572 with SMTP id
+ 5b1f17b1804b1-485419ba021mr1005505e9.1.1773071628640; 
+ Mon, 09 Mar 2026 08:53:48 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fb3668csm558452765e9.13.2026.03.09.08.54.01
+ ffacd0b85a97d-439dad8d840sm30513259f8f.8.2026.03.09.08.53.47
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:54:01 -0700 (PDT)
+ Mon, 09 Mar 2026 08:53:48 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/49] hw/rtc/pl031: : Remove PL031State::migrate_tick_offset
- field
-Date: Mon,  9 Mar 2026 16:51:45 +0100
-Message-ID: <20260309155219.62400-16-philmd@linaro.org>
+Subject: [PULL 13/49] hw/core/machine: Remove the hw_compat_4_0[] array
+Date: Mon,  9 Mar 2026 16:51:43 +0100
+Message-ID: <20260309155219.62400-14-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,81 +98,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PL031State::migrate_tick_offset boolean was only set in
-the hw_compat_4_0[] array, via the 'migrate-tick-offset=false'
-property.  We removed all machines using that array, lets remove
-that property, along with the pl031_properties[] array which is
-now empty.
+The hw_compat_4_0[] array was only used by the pc-q35-4.0
+and pc-i440fx-4.0 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307154202.86309-7-philmd@linaro.org>
+Message-Id: <20260307154202.86309-5-philmd@linaro.org>
 ---
- include/hw/rtc/pl031.h |  1 -
- hw/rtc/pl031.c         | 22 ----------------------
- 2 files changed, 23 deletions(-)
+ include/hw/core/boards.h |  3 ---
+ hw/core/machine.c        | 12 ------------
+ 2 files changed, 15 deletions(-)
 
-diff --git a/include/hw/rtc/pl031.h b/include/hw/rtc/pl031.h
-index c8b26c2f00e..75779c63122 100644
---- a/include/hw/rtc/pl031.h
-+++ b/include/hw/rtc/pl031.h
-@@ -36,7 +36,6 @@ struct PL031State {
-     uint32_t tick_offset_vmstate;
-     uint32_t tick_offset;
-     bool tick_offset_migrated;
--    bool migrate_tick_offset;
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 9155e0cc9ed..f85f31bd90d 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -864,7 +864,4 @@ extern const size_t hw_compat_4_2_len;
+ extern GlobalProperty hw_compat_4_1[];
+ extern const size_t hw_compat_4_1_len;
  
-     uint32_t mr;
-     uint32_t lr;
-diff --git a/hw/rtc/pl031.c b/hw/rtc/pl031.c
-index b56877c3a20..09d1b15c779 100644
---- a/hw/rtc/pl031.c
-+++ b/hw/rtc/pl031.c
-@@ -278,18 +278,10 @@ static int pl031_tick_offset_post_load(void *opaque, int version_id)
-     return 0;
- }
- 
--static bool pl031_tick_offset_needed(void *opaque)
--{
--    PL031State *s = opaque;
+-extern GlobalProperty hw_compat_4_0[];
+-extern const size_t hw_compat_4_0_len;
 -
--    return s->migrate_tick_offset;
--}
--
- static const VMStateDescription vmstate_pl031_tick_offset = {
-     .name = "pl031/tick-offset",
-     .version_id = 1,
-     .minimum_version_id = 1,
--    .needed = pl031_tick_offset_needed,
-     .post_load = pl031_tick_offset_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT32(tick_offset, PL031State),
-@@ -319,25 +311,11 @@ static const VMStateDescription vmstate_pl031 = {
-     }
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 9a3d826c3cb..a14ad05b9a6 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -209,18 +209,6 @@ GlobalProperty hw_compat_4_1[] = {
  };
+ const size_t hw_compat_4_1_len = G_N_ELEMENTS(hw_compat_4_1);
  
--static const Property pl031_properties[] = {
--    /*
--     * True to correctly migrate the tick offset of the RTC. False to
--     * obtain backward migration compatibility with older QEMU versions,
--     * at the expense of the guest RTC going backwards compared with the
--     * host RTC when the VM is saved/restored if using -rtc host.
--     * (Even if set to 'true' older QEMU can migrate forward to newer QEMU;
--     * 'false' also permits newer QEMU to migrate to older QEMU.)
--     */
--    DEFINE_PROP_BOOL("migrate-tick-offset",
--                     PL031State, migrate_tick_offset, true),
+-GlobalProperty hw_compat_4_0[] = {
+-    { "VGA",            "edid", "false" },
+-    { "secondary-vga",  "edid", "false" },
+-    { "bochs-display",  "edid", "false" },
+-    { "virtio-vga",     "edid", "false" },
+-    { "virtio-gpu-device", "edid", "false" },
+-    { "virtio-device", "use-started", "false" },
+-    { "virtio-balloon-device", "qemu-4-0-config-size", "true" },
+-    { "pl031", "migrate-tick-offset", "false" },
 -};
+-const size_t hw_compat_4_0_len = G_N_ELEMENTS(hw_compat_4_0);
 -
- static void pl031_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
+ MachineState *current_machine;
  
-     dc->vmsd = &vmstate_pl031;
--    device_class_set_props(dc, pl031_properties);
- }
- 
- static const TypeInfo pl031_info = {
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.53.0
 
