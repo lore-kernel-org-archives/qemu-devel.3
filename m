@@ -4,89 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 250B5FCA16D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:36:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBFAFCA16D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzfSa-0007KI-Pt; Mon, 09 Mar 2026 14:36:08 -0400
+	id 1vzfUR-0000rp-6i; Mon, 09 Mar 2026 14:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzfSY-0007It-Rm
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:36:07 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzfTt-0000p0-Vz
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:37:37 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzfSW-0003Wc-2J
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:36:06 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-439afc58ac7so9317117f8f.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:36:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzfTm-0003nE-UT
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:37:25 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2aaed195901so55025885ad.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773081360; x=1773686160; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=frENE9FJEJIJp1aKXCLyQE1na5fHvR5E0RLXQsidK/I=;
- b=FVuB7hI1I9L+alt7sXJTJ9gJNjJxDciSFG7wenIx+3mB9B+klRT94CXN5ylh3BhHwe
- NW7FNE1pdyFxT+T/gQfJUWBFu/6KPJs/6C4R7ZVwePMTTDiqE0VhoEE202zxoKXLDNoK
- 7s1QYNoU+TITdb6G336hEHVXe2KFmLnqwfeVSQFwqQb9qEO1v5A0JuqfO9PVsYkNI4zc
- zyWHkqcrBqpWK35RpTir8qjKGmmWYeV384shvz2/HBfOrTelSsilUzA0y1pbw4Wjfttt
- WO2LghoLLgnwrKypvuPYnDlmM+NygfUKSMgaLsm3Kwbh4FLV+mPCooFVQHydTLzLHfBL
- GXOg==
+ d=linaro.org; s=google; t=1773081441; x=1773686241; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=CB0c8DocWs9nC0mRqWJrFur/DeD1o0K/iABvpYV8rYI=;
+ b=JAgupj03SObRGO8EPOs7kXWk8pqu6ta3RWch6UlPpUBQx+tZvAEJcYcUkj9R+YQXcr
+ amXAOUmUKhgJPsTCvKXgTQUG4YROSdKsyHrAgwqAMn2kpHHxV6RYH7TL8DyCjrNHbyZ5
+ YYMteOpT8i0/DNHaDhR5SkOAbo/S8QHzEK2DaoMEutL6Vwcwi95qHBmhURqIvRHy7Jsk
+ cTNnHzG5Hsup1kodZxd2uOuNPJnTQewajpGdJErCA1NLzPTmU/cNC9dUuF/7d9dK6uf/
+ K1RQdEkTKoKfLmTnyJ0dcKHKD28tn0ZswPqprJRkuqZ4XwnmbW7pooQVKL15T0twdIMl
+ GbLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773081360; x=1773686160;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=frENE9FJEJIJp1aKXCLyQE1na5fHvR5E0RLXQsidK/I=;
- b=O3dmhisBP6xigB7cHr0XZTZQVVN4OWc8FPH2qXdo0yz4amoUI/+OnZAFWdSfukL7Xy
- 2H6YUEaKllQI3r2rOlZnxfBLZZyPOgn8uzhtq3eRXsXx+mg8nBoBJjiHZ3hifjohXOWr
- QbQ9KPR1iZDlpEYw7GOX5/rhb7sgELRyMGxwyLBPbAYEegxNl49YtERDZKfd+ziqFwlf
- 0bdp3O50hcmaRvaxJR7ckhkbCRkUCtoKZVD5qE2mHkhU0fjkTrff/mmLFTjQOskxEV4T
- TFnCxQVeR5RCZW0XRw46nqJlGrB4y0aID7A8sLKYwQ1TffLFoQEXPZgpN4P/oFZB/v4N
- Kt2A==
-X-Gm-Message-State: AOJu0YxtjiKVe/MTUembgSvZCKmgDnuN38rwMGjOJ1r0XhHXxHOOeUTT
- lmcBuJWTrMRvBixYECYFnhLKyAHy2DjrLVl8l35G9NRDKBkZbCU+pD/2xgtBGkj34hAIu4s0WFU
- BcfM3qKo=
-X-Gm-Gg: ATEYQzyJkwqRSCee4KEM/9aGBJnhQUkqttluoiJr9c6Q3UxyTN+KYF52nus8rCvaUUl
- bXWZQ1uYdMURAFjrEaGz9dG8M4/4c1fyYNtWP3UsWK8cJKhyjbd4HHWNq/azcK3+/MdpW2FwPDU
- hFBpLgfFpPtokvaK5Nb1W+K4uPkv7bu5Ol8oGHr9Xo6bwXT+xP5VxsrQN1dU9Pm+TXSVMi4zXDe
- Hu/1oDTxKXpsrZtwThhtP8JvCNBXnv0ed5dy49cHk+G7P+ArBQvRd5LCexFnURRgjGa5LWggkCy
- DwjE0y0mRM7KFEBb623PgCO4oN3BbQnBcnzr+07nHcrhGRYIPducuhLliR4cfBXLMU362VesMz+
- nAqHeAOHMUO/lejn5+aRtgWaWKKyYaDq7g39V3+7XUcc8TvjIuUSUDO7aU/cmC9s6VC91jeueET
- 9DIhL3/5YmHp9IUsgKLH7B81tbxNOme8h3U9RxI/yxBKFLhJkW0nkaCyzE4FnFzWfrdenAFDGx
-X-Received: by 2002:a05:6000:2681:b0:439:be4e:6e58 with SMTP id
- ffacd0b85a97d-439da891d17mr20945001f8f.47.1773081360467; 
- Mon, 09 Mar 2026 11:36:00 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad977f8sm28487057f8f.9.2026.03.09.11.35.59
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 11:35:59 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
+ d=1e100.net; s=20230601; t=1773081441; x=1773686241;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CB0c8DocWs9nC0mRqWJrFur/DeD1o0K/iABvpYV8rYI=;
+ b=o0dkKTIJXV/k300M/NFEONMQIEBn0QNJ2YfNQplxV6vXQIzJr0LcjQRwENWphrny+3
+ tReDGTnic9fE2HSzL4hXSLm6EDq0836wO2mXYkHjsz4QVFxsF4YLRS3i7BUim3wWdR3O
+ Isob9A2BStXMnmMflbhr1aUgh6fl5qj1VSrYXnpOnwvbkDTcHUHlc5Dv6NmdEvwEuVw0
+ v1pDJ7UUVYTn6S2qblh8QmpjhyFE1VxCat1LfpKoC4rw8tvq73JFq7/BJXkRgCzYMY9l
+ A1LQrK5ojDDQA6/EpkPrJ4LY7K+y1UKIhku6NkjnRP6IV8YnCZglZJ2JmLhgNjiqxslu
+ 6K8Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU7vCiDch9pt40DhzgIr3qGrP0IxLBw5+dDw5Ow2rurEAMjrOV0md+n2wqOuo6HGC5tUI2iZMEymn1r@nongnu.org
+X-Gm-Message-State: AOJu0YwxSkJ0YR/q1BitwFiSMc5axJ+RVRPwmNJC1YI6HP6SMZcLuxnM
+ vYENRPGmp6Uf/8F/SOcNI6fEqm+vdxd1APEfWDPbYsiOmjkqQQMz/8wyMgQZyS0F2xY=
+X-Gm-Gg: ATEYQzxkmLtE9vkS/vbXhlmhxnwXrOQuMJjU4SBLm509dYeThi4ij0EBl8ot8lgH/x/
+ HlSoxKtG1XTmcWgc776ipjPAFQB0/bDjETuLu8pg4ifaWIRN2gEPFA+i9oFMz7mX9F0aTRM3yaE
+ Y5pnpy+pRTZFkwMau5mW21W4LxxatxQ1XLVlb1Zho20+B6SCX2XCoCXfgJWMJikFmDn1QEfMenY
+ mVov3P1JeE95gH0YJPzKqHaNb+H1VnfBS39jF9DI5dj1iiamfz0cv62KV++MMJRHRXGSebg1ypL
+ /BIM5CzevHFBt2mFJlbD3NW2jsw0KNpxFkCYBl1CfJTCuApF9/3KfUl95EVVjr9F+K7rmTbxrmg
+ 2ihvue2ZxLuPQ8+93nUQaDzHX8oUjZD4BBOHsgUXLFHKh/kIvn34zfjL7SeEYrRE4MVwaUJSp9+
+ DmowbzkzTgKmIXB5CB7DJqKUpUkgAZTs5Q+sI9E2RO0+UeeiE1dQB+K2KOSCafb4zG6FpwmCpVx
+ yeyAoA=
+X-Received: by 2002:a17:903:ac4:b0:2ae:69d3:5b9f with SMTP id
+ d9443c01a7336-2ae824ac5abmr118864835ad.52.1773081441272; 
+ Mon, 09 Mar 2026 11:37:21 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ae840ad9b7sm206390295ad.79.2026.03.09.11.37.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 11:37:20 -0700 (PDT)
+Message-ID: <5483ce28-65d2-4726-b7f2-1003113ff58c@linaro.org>
+Date: Mon, 9 Mar 2026 11:37:20 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] system/xen: Constify various MemoryRegion arguments
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Peter Xu <peterx@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, Peter Xu
+ <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>,
  "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefano Stabellini <sstabellini@kernel.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v2 3/4] system/xen: Constify various MemoryRegion arguments
-Date: Mon,  9 Mar 2026 19:35:34 +0100
-Message-ID: <20260309183536.88976-4-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260309183536.88976-1-philmd@linaro.org>
 References: <20260309183536.88976-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+ <20260309183536.88976-4-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260309183536.88976-4-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,115 +148,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mark the MemoryRegion structure const when is only accessed read-only.
+On 3/9/26 11:35 AM, Philippe Mathieu-Daudé wrote:
+> Mark the MemoryRegion structure const when is only accessed read-only.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   include/system/xen-mapcache.h | 2 +-
+>   include/system/xen.h          | 6 +++---
+>   hw/xen/xen-hvm-common.c       | 8 ++++----
+>   hw/xen/xen-mapcache.c         | 2 +-
+>   hw/xen/xen_stubs.c            | 6 +++---
+>   5 files changed, 12 insertions(+), 12 deletions(-)
+> 
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- include/system/xen-mapcache.h | 2 +-
- include/system/xen.h          | 6 +++---
- hw/xen/xen-hvm-common.c       | 8 ++++----
- hw/xen/xen-mapcache.c         | 2 +-
- hw/xen/xen_stubs.c            | 6 +++---
- 5 files changed, 12 insertions(+), 12 deletions(-)
-
-diff --git a/include/system/xen-mapcache.h b/include/system/xen-mapcache.h
-index c46190dd0ce..114d1929c80 100644
---- a/include/system/xen-mapcache.h
-+++ b/include/system/xen-mapcache.h
-@@ -16,7 +16,7 @@ typedef hwaddr (*phys_offset_to_gaddr_t)(hwaddr phys_offset,
- bool xen_map_cache_enabled(void);
- void xen_map_cache_init(phys_offset_to_gaddr_t f,
-                         void *opaque);
--uint8_t *xen_map_cache(MemoryRegion *mr, hwaddr phys_addr, hwaddr size,
-+uint8_t *xen_map_cache(const MemoryRegion *mr, hwaddr phys_addr, hwaddr size,
-                        ram_addr_t ram_addr_offset,
-                        uint8_t lock, bool dma,
-                        bool is_write);
-diff --git a/include/system/xen.h b/include/system/xen.h
-index 9a7c53f2838..43b857e4d15 100644
---- a/include/system/xen.h
-+++ b/include/system/xen.h
-@@ -30,7 +30,7 @@ extern bool xen_allowed;
- 
- void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length);
- void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
--                   struct MemoryRegion *mr, Error **errp);
--bool xen_mr_is_memory(MemoryRegion *mr);
--bool xen_mr_is_grants(MemoryRegion *mr);
-+                   const MemoryRegion *mr, Error **errp);
-+bool xen_mr_is_memory(const MemoryRegion *mr);
-+bool xen_mr_is_grants(const MemoryRegion *mr);
- #endif
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index eb7f6270a0d..62d88804c43 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -23,19 +23,19 @@
- MemoryRegion xen_memory, xen_grants;
- 
- /* Check for any kind of xen memory, foreign mappings or grants.  */
--bool xen_mr_is_memory(MemoryRegion *mr)
-+bool xen_mr_is_memory(const MemoryRegion *mr)
- {
-     return mr == &xen_memory || mr == &xen_grants;
- }
- 
- /* Check specifically for grants.  */
--bool xen_mr_is_grants(MemoryRegion *mr)
-+bool xen_mr_is_grants(const MemoryRegion *mr)
- {
-     return mr == &xen_grants;
- }
- 
--void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
--                   Error **errp)
-+void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
-+                   const MemoryRegion *mr, Error **errp)
- {
-     unsigned target_page_bits = qemu_target_page_bits();
-     unsigned long nr_pfn;
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index a3c162cd4c6..85cf0cf359c 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -460,7 +460,7 @@ tryagain:
-     return mc->last_entry->vaddr_base + address_offset;
- }
- 
--uint8_t *xen_map_cache(MemoryRegion *mr,
-+uint8_t *xen_map_cache(const MemoryRegion *mr,
-                        hwaddr phys_addr, hwaddr size,
-                        ram_addr_t ram_addr_offset,
-                        uint8_t lock, bool dma,
-diff --git a/hw/xen/xen_stubs.c b/hw/xen/xen_stubs.c
-index a39efb5062d..f830768d998 100644
---- a/hw/xen/xen_stubs.c
-+++ b/hw/xen/xen_stubs.c
-@@ -19,12 +19,12 @@ void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
- }
- 
- void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
--                   struct MemoryRegion *mr, Error **errp)
-+                   const MemoryRegion *mr, Error **errp)
- {
-     g_assert_not_reached();
- }
- 
--bool xen_mr_is_memory(MemoryRegion *mr)
-+bool xen_mr_is_memory(const MemoryRegion *mr)
- {
-     g_assert_not_reached();
- }
-@@ -44,7 +44,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-     g_assert_not_reached();
- }
- 
--uint8_t *xen_map_cache(MemoryRegion *mr,
-+uint8_t *xen_map_cache(const MemoryRegion *mr,
-                        hwaddr phys_addr,
-                        hwaddr size,
-                        ram_addr_t ram_addr_offset,
--- 
-2.53.0
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
