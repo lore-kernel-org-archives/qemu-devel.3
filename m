@@ -4,97 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B6F6EA852F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 00:37:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 287A5EA854A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 00:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzObx-0006TU-VR; Sun, 08 Mar 2026 20:36:41 -0400
+	id 1vzObs-0006R8-Vt; Sun, 08 Mar 2026 20:36:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vzObr-0006Pc-8A; Sun, 08 Mar 2026 20:36:35 -0400
+ id 1vzObo-0006OF-7O; Sun, 08 Mar 2026 20:36:32 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vzObp-0001gg-KM; Sun, 08 Mar 2026 20:36:34 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1vzObm-0001g8-DV; Sun, 08 Mar 2026 20:36:31 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 628IqplV1177331; Mon, 9 Mar 2026 00:36:32 GMT
+ 628DjaTQ496716; Mon, 9 Mar 2026 00:36:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=tYT647uJjQj0loqeI
- MFQbMYPLziwk199+/Z7uRcbt+g=; b=hELw8pnIZWHgH59fM13QDMyPmlv7EJ1m+
- KNmagKG4efnl9317gucZ3l9LeptJlRzg3fLPXd6IVIRntHcbg0wmeWfbJPg1hn4k
- PK820q75XDx01XSL4+0mNLlUp4W7/edSZRXAJ5/HXKfzvsIvvQb6YoL334VwbrCI
- FJRbu7qQW6b+7WhRZdObOGBq9bUS+EDCJusfvYcVKIn5ZoGsb+05+gMoMTDKhEK0
- m9vb7A91jAkCDWa69YzUuNi2R8x4k2ynE8Nl7d+c12vhs6nTyuLvcZATR8RjdhkY
- G3DKxpvECp5tCGDYO+S/fPrcZzUy8N2Y+VxyVCzSkrKlqph2ZE62w==
+ :mime-version:references:subject:to; s=pp1; bh=CzvGb6GS2vPoidwzC
+ zGXELT63Hr7SucPd0x7GmsxkIs=; b=Nm9/mFVhkXanp/egtajUtXwwcCCdAme4U
+ 7KT9qqQPeU3I9HaCJp7Y/qGTuyQ5wRFPJvdTRP+BsI/zmv4Y3N+UOxKrEXG+valf
+ h1EXbTxN+5lnUiI+ktd2a1vcMDhGIyekakkfQZhFKsPwCFwDEANbRDgCJGNaqsy4
+ JRJBxhBC++KXO5yX5Edvgupcs122UIim9IfzhuzE6YFjvodVDTE40655HvkazjWE
+ lFwRHoRFhCKFwPNyy6E7fqoA2G3GqArmLhpuzIXYkgD1OXiAezxvXID/UeyzLpdI
+ RtrJXwBEjkVsP1Qx/o/oxrab+Z4267auA0bMOSYyBrlMFhpbVq5dg==
 Received: from ppma22.wdc07v.mail.ibm.com
  (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvr4emt-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1mcd8m-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 00:36:32 +0000 (GMT)
+ Mon, 09 Mar 2026 00:36:28 +0000 (GMT)
 Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 628Kt5I5009091;
- Mon, 9 Mar 2026 00:36:31 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crxqy32xm-1
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 628KPQLe009467;
+ Mon, 9 Mar 2026 00:36:28 GMT
+Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crxqy32xa-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 00:36:31 +0000
+ Mon, 09 Mar 2026 00:36:28 +0000
 Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
  [10.39.53.231])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6290aUll24249010
+ by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6290aQkf20120078
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Mar 2026 00:36:30 GMT
+ Mon, 9 Mar 2026 00:36:27 GMT
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6E7565805E;
- Mon,  9 Mar 2026 00:36:30 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id AD04958052;
+ Mon,  9 Mar 2026 00:36:26 +0000 (GMT)
 Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5061858045;
- Mon,  9 Mar 2026 00:36:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 4D42358050;
+ Mon,  9 Mar 2026 00:36:25 +0000 (GMT)
 Received: from t15.ibmuc.com (unknown [9.61.180.105])
  by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Mar 2026 00:36:29 +0000 (GMT)
+ Mon,  9 Mar 2026 00:36:25 +0000 (GMT)
 From: jrossi@linux.ibm.com
 To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
  mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v5 13/15] s390x: Build IPLB for virtio-pci devices
-Date: Sun,  8 Mar 2026 20:35:59 -0400
-Message-ID: <20260309003601.242634-14-jrossi@linux.ibm.com>
+Subject: [PATCH v5 11/15] pc-bios/s390-ccw: Introduce virtio-pci functions
+Date: Sun,  8 Mar 2026 20:35:57 -0400
+Message-ID: <20260309003601.242634-12-jrossi@linux.ibm.com>
 X-Mailer: git-send-email 2.43.5
 In-Reply-To: <20260309003601.242634-1-jrossi@linux.ibm.com>
 References: <20260309003601.242634-1-jrossi@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDAwMyBTYWx0ZWRfX8ZaJwFejQ6Rb
- wHlh6/LKU3vTOT/Un+N2Yphc+u2TLApHn4y4ank5INDldE0nZh81CC4EZDKFGnagSKCYkFxfTnI
- cSN9zdJrFw+UTik8hfE6oJbl2Jn90aQj1anEqi7yxgoi28rVao/PRwGC1sarYtsDTYiHwK1tRHE
- KEbNHCt/WVaTL73H4nLUpmIC79bUiWT7NC0EpVDLmIOSuoJYid9Oti4awIZpuyqAQLoMR4hkLue
- bWTUwsofuaaa/snM7pCqj0BF130Kjhj3dW/KGNvSE+ntnFnO4ZJeSksYtu5C63jx4UK3HP9SFmz
- cybsR0W/OdJM/yHf5FHKD0+HdlkllkGW71EddDHpZLPDKHFPFrpGPkdTcDcL48g3Cd9g+pny7/z
- CZ9LFFO26F8KKqAz013CNk8D20FwqTxCHRIueAYIEY1DmwZ31kRfPjA1IJh4Wuq/Cu9lYm7NoVg
- hen1S1KvnHLOf9J8oXw==
-X-Proofpoint-GUID: 07vTK0OqLy82wKIBZFF7-p9iAUWK2oQN
-X-Proofpoint-ORIG-GUID: 07vTK0OqLy82wKIBZFF7-p9iAUWK2oQN
-X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69ae1610 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69ae160c cx=c_pps
  a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=2vq5nSo2ypbVcaHj6lgA:9
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=lM7CEYtdp-gwZ96l5QAA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDAwMyBTYWx0ZWRfX17u5d+9lXlDY
+ bxStoRj8mFFndeP91RS0dQEPhyllZacxvmBvDXFK2Giqp9uW/oTGvQV0Cb/zAqTkEKCtV6FoDEr
+ pHMGLlA0Ri67LJ57NbaFq0pWVvlTPSvKrKeBQntBL2nlhYpdYdSVELRWdVf+eFAwdXTtJyNqB89
+ 55/3ocSWOTP8KD8vRO4aQSVmP72Iahmv00V12Tz0W5UxIDNOYuzXyNOVST9EJKPKsVWKGGGXvCH
+ oeyA1hAEBFROnUtauoSAvoolhBUK5dLMEkSXfJb0FJ/I3jBsGisQkZybZyhHB26j1BR3Koe44EI
+ aTU6eqVuuoWy/T7ESgfVfpJXxhcvuWnaF0FhY8RAkhN6uLYQH1MiOYG3BRU5QHpbtuIHQClwXPH
+ aIwBAeb2U5y5PzpESMxthpnNMVwfmlUpyAoVpe5YQJexP7pX+DDbcd5ZjDXGy9iJzKmG0KN5/Yp
+ y3sPajlD+c3DkzcGy4Q==
+X-Proofpoint-GUID: uQWJte5cD3yaRHzn4JXFKKjaHl2ZahOs
+X-Proofpoint-ORIG-GUID: uQWJte5cD3yaRHzn4JXFKKjaHl2ZahOs
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-08_07,2026-03-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603090003
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090003
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -9
@@ -122,176 +120,311 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Search for a corresponding S390PCIBusDevice and build an IPLB if a device has
-been indexed for boot but does not identify as a CCW device,
+Define common functionality for interacting with virtio-pci devices.
 
-PCI devices are not yet included in boot probing (they must have a boot index).
-
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 ---
- hw/s390x/ipl.c                  | 56 ++++++++++++++++++++++++++++++---
- hw/s390x/ipl.h                  |  3 ++
- hw/s390x/s390-pci-bus.c         |  3 +-
- include/hw/s390x/s390-pci-bus.h |  2 ++
- 4 files changed, 57 insertions(+), 7 deletions(-)
+ pc-bios/s390-ccw/Makefile     |   2 +-
+ pc-bios/s390-ccw/virtio-pci.c | 167 ++++++++++++++++++++++++++++++++++
+ pc-bios/s390-ccw/virtio-pci.h |  80 ++++++++++++++++
+ pc-bios/s390-ccw/virtio.h     |   3 +
+ 4 files changed, 251 insertions(+), 1 deletion(-)
+ create mode 100644 pc-bios/s390-ccw/virtio-pci.c
+ create mode 100644 pc-bios/s390-ccw/virtio-pci.h
 
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index d34adb5522..53dd3deafa 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -28,6 +28,8 @@
- #include "hw/s390x/ebcdic.h"
- #include "hw/scsi/scsi.h"
- #include "hw/virtio/virtio-net.h"
-+#include "hw/virtio/virtio-pci.h"
-+#include "hw/s390x/s390-pci-bus.h"
- #include "exec/cpu-common.h"
- #include "ipl.h"
- #include "qemu/error-report.h"
-@@ -340,7 +342,8 @@ static void s390_ipl_set_boot_menu(S390IPLState *ipl)
-     ipl->qipl.boot_menu_timeout = cpu_to_be32(splash_time);
- }
+diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+index a62fc9d766..3e5dfb64d5 100644
+--- a/pc-bios/s390-ccw/Makefile
++++ b/pc-bios/s390-ccw/Makefile
+@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
  
--#define CCW_DEVTYPE_NONE        0x00
-+#define S390_DEVTYPE_NONE       0x00
+ OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+ 	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+-	  virtio-ccw.o clp.o pci.o
++	  virtio-ccw.o clp.o pci.o virtio-pci.o
+ 
+ SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+ 
+diff --git a/pc-bios/s390-ccw/virtio-pci.c b/pc-bios/s390-ccw/virtio-pci.c
+new file mode 100644
+index 0000000000..f6ce7ec766
+--- /dev/null
++++ b/pc-bios/s390-ccw/virtio-pci.c
+@@ -0,0 +1,167 @@
++/*
++ * Functionality for virtio-pci
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
 +
- #define CCW_DEVTYPE_VIRTIO      0x01
- #define CCW_DEVTYPE_VIRTIO_NET  0x02
- #define CCW_DEVTYPE_SCSI        0x03
-@@ -349,7 +352,7 @@ static void s390_ipl_set_boot_menu(S390IPLState *ipl)
- static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
- {
-     CcwDevice *ccw_dev = NULL;
--    int tmp_dt = CCW_DEVTYPE_NONE;
-+    int tmp_dt = S390_DEVTYPE_NONE;
- 
-     if (dev_st) {
-         VirtIONet *virtio_net_dev = (VirtIONet *)
-@@ -396,6 +399,31 @@ static CcwDevice *s390_get_ccw_device(DeviceState *dev_st, int *devtype)
-     return ccw_dev;
- }
- 
-+#define PCI_DEVTYPE_VIRTIO       0x05
++#include "clp.h"
++#include "pci.h"
++#include "helper.h"
++#include "virtio.h"
++#include "bswap.h"
++#include "virtio-pci.h"
++#include "s390-time.h"
++#include <stdio.h>
 +
-+static S390PCIBusDevice *s390_get_pci_device(DeviceState *dev_st, int *devtype)
++/* Variable offsets used for reads/writes to modern memory regions */
++VirtioPciCap c_cap; /* Common capabilities  */
++VirtioPciCap d_cap; /* Device capabilities  */
++VirtioPciCap n_cap; /* Notify capabilities  */
++uint32_t notify_mult;
++uint16_t q_notify_offset;
++
++static int virtio_pci_set_status(uint8_t status)
 +{
-+    S390PCIBusDevice *pbdev = NULL;
-+    int tmp_dt = S390_DEVTYPE_NONE;
-+
-+    if (dev_st) {
-+        PCIDevice *pci_dev = (PCIDevice *)
-+            object_dynamic_cast(OBJECT(qdev_get_parent_bus(dev_st)->parent),
-+                                       TYPE_VIRTIO_PCI);
-+        if (pci_dev) {
-+            pbdev = s390_pci_find_dev_by_pci(s390_get_phb(), pci_dev);
-+            if (pbdev) {
-+                tmp_dt = PCI_DEVTYPE_VIRTIO;
-+            }
-+        }
-+    }
-+    if (devtype) {
-+        *devtype = tmp_dt;
++    int rc = vpci_write_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.bar, status);
++    if (rc) {
++        puts("Failed to write virtio-pci status");
++        return -EIO;
 +    }
 +
-+    return pbdev;
++    return 0;
 +}
 +
- static uint64_t s390_ipl_map_iplb_chain(IplParameterBlock *iplb_chain)
- {
-     S390IPLState *ipl = get_ipl_device();
-@@ -428,14 +456,12 @@ void s390_ipl_convert_loadparm(char *ascii_lp, uint8_t *ebcdic_lp)
- static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
- {
-     CcwDevice *ccw_dev = NULL;
-+    S390PCIBusDevice *pbdev = NULL;
-     SCSIDevice *sd;
-     int devtype;
-     uint8_t *lp;
-     g_autofree void *scsi_lp = NULL;
- 
--    /*
--     * Currently allow IPL only from CCW devices.
--     */
-     ccw_dev = s390_get_ccw_device(dev_st, &devtype);
-     if (ccw_dev) {
-         lp = ccw_dev->loadparm;
-@@ -485,6 +511,26 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-         return true;
-     }
- 
-+    pbdev = s390_get_pci_device(dev_st, &devtype);
-+    if (pbdev) {
-+        switch (devtype) {
-+        case PCI_DEVTYPE_VIRTIO:
-+            iplb->len = S390_IPLB_MIN_PCI_LEN;
-+            iplb->pbt = S390_IPL_TYPE_PCI;
-+            iplb->pci.fid = pbdev->fid;
-+            break;
-+        default:
-+            return false;
-+        }
-+
-+        /* Per-device loadparm not yet supported for non-ccw IPL */
-+        lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-+        s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-+        iplb->flags |= DIAG308_FLAGS_LP_VALID;
-+
-+        return true;
++static int virtio_pci_get_status(uint8_t *status)
++{
++    int rc = vpci_read_byte(c_cap.off + VPCI_C_OFFSET_STATUS, c_cap.bar, status);
++    if (rc) {
++        puts("Failed to read virtio-pci status");
++        return -EIO;
 +    }
 +
-     return false;
- }
++    return 0;
++}
++
++/* virtio spec v1.3 section 4.1.2.1 */
++void virtio_pci_id2type(VDev *vdev, uint16_t device_id)
++{
++    switch (device_id) {
++    case 0x1042:
++    case 0x1001:
++        vdev->dev_type = VIRTIO_ID_BLOCK;
++        break;
++    default:
++        vdev->dev_type = 0;
++    }
++}
++
++int virtio_pci_reset(VDev *vdev)
++{
++    int rc;
++    uint8_t status = 0;
++
++    rc = virtio_pci_set_status(status);
++    rc |= virtio_pci_get_status(&status);
++
++    if (rc || status) {
++        puts("Failed to reset virtio-pci device");
++        return 1;
++    }
++
++    return 0;
++}
++
++long virtio_pci_notify(int vq_id)
++{
++    uint32_t offset = n_cap.off + notify_mult * q_notify_offset;
++    return vpci_bswap16_write(offset, n_cap.bar, (uint16_t) vq_id);
++}
++
++/*
++ * Wrappers to byte swap common data sizes then write
++ */
++int vpci_write_byte(uint64_t offset, uint8_t pcias, uint8_t data)
++{
++    return pci_write(virtio_get_device()->pci_fh, offset, pcias, (uint64_t) data, 1);
++}
++
++int vpci_bswap16_write(uint64_t offset, uint8_t pcias, uint16_t data)
++{
++    uint64_t le_data = bswap16(data);
++    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data, 2);
++}
++
++int vpci_bswap32_write(uint64_t offset, uint8_t pcias, uint32_t data)
++{
++    uint64_t le_data = bswap32(data);
++    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data, 4);
++}
++
++int vpci_bswap64_write(uint64_t offset, uint8_t pcias, uint64_t data)
++{
++    uint64_t le_data = bswap64(data);
++    return pci_write(virtio_get_device()->pci_fh, offset, pcias, le_data, 8);
++}
++
++/*
++ * Wrappers to read common data sizes then byte swap
++ */
++int vpci_read_byte(uint64_t offset, uint8_t pcias, uint8_t *buf)
++{
++    return pci_read(virtio_get_device()->pci_fh, offset, pcias, buf, 1);
++}
++
++int vpci_read_bswap16(uint64_t offset, uint8_t pcias, uint16_t *buf)
++{
++    int rc = pci_read(virtio_get_device()->pci_fh, offset, pcias, buf, 2);
++    *buf = bswap16(*buf);
++    return rc;
++}
++
++int vpci_read_bswap32(uint64_t offset, uint8_t pcias, uint32_t *buf)
++{
++    int rc = pci_read(virtio_get_device()->pci_fh, offset, pcias, buf, 4);
++    *buf = bswap32(*buf);
++    return rc;
++}
++
++int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf)
++{
++    int rc = pci_read(virtio_get_device()->pci_fh, offset, pcias, buf, 8);
++    *buf = bswap64(*buf);
++    return rc;
++}
++
++/*
++ * Read to an arbitrary length buffer without byte swapping
++ */
++int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len)
++{
++    uint8_t readlen;
++    int rc;
++    int remaining = len;
++
++    /* Read bytes in powers of 2, up to a maximum of 8 bytes per read */
++    while (remaining) {
++        for (int i = 3; i >= 0; i--) {
++            readlen = 1 << i;
++            if (remaining >= readlen) {
++                break;
++            }
++        }
++
++        rc = pci_read(virtio_get_device()->pci_fh, offset, pcias, buf, readlen);
++        if (rc) {
++            return -1;
++        }
++
++        remaining -= readlen;
++        buf += readlen;
++        offset += readlen;
++    }
++
++    return 0;
++}
+diff --git a/pc-bios/s390-ccw/virtio-pci.h b/pc-bios/s390-ccw/virtio-pci.h
+new file mode 100644
+index 0000000000..54c524f698
+--- /dev/null
++++ b/pc-bios/s390-ccw/virtio-pci.h
+@@ -0,0 +1,80 @@
++/*
++ * Definitions for virtio-pci
++ *
++ * Copyright 2025 IBM Corp.
++ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef VIRTIO_PCI_H
++#define VIRTIO_PCI_H
++
++/* Common configuration */
++#define VPCI_CAP_COMMON_CFG          1
++/* Notifications */
++#define VPCI_CAP_NOTIFY_CFG          2
++/* ISR access */
++#define VPCI_CAP_ISR_CFG             3
++/* Device specific configuration */
++#define VPCI_CAP_DEVICE_CFG          4
++/* PCI configuration access */
++#define VPCI_CAP_PCI_CFG             5
++/* Additional shared memory capability */
++#define VPCI_CAP_SHARED_MEMORY_CFG   8
++/* PCI vendor data configuration */
++#define VPCI_CAP_VENDOR_CFG          9
++
++/* Offsets within capability header */
++#define VPCI_CAP_VNDR        0
++#define VPCI_CAP_NEXT        1
++#define VPCI_CAP_LEN         2
++#define VPCI_CAP_CFG_TYPE    3
++#define VPCI_CAP_BAR         4
++#define VPCI_CAP_OFFSET      8
++#define VPCI_CAP_LENGTH      12
++
++#define VPCI_N_CAP_MULT 16 /* Notify multiplier, VPCI_CAP_NOTIFY_CFG only */
++
++/* Common Area Offsets for virtio-pci queue */
++#define VPCI_C_OFFSET_DFSELECT      0
++#define VPCI_C_OFFSET_DF            4
++#define VPCI_C_OFFSET_GFSELECT      8
++#define VPCI_C_OFFSET_GF            12
++#define VPCI_C_COMMON_NUMQ          18
++#define VPCI_C_OFFSET_STATUS        20
++#define VPCI_C_OFFSET_Q_SELECT      22
++#define VPCI_C_OFFSET_Q_SIZE        24
++#define VPCI_C_OFFSET_Q_ENABLE      28
++#define VPCI_C_OFFSET_Q_NOFF        30
++#define VPCI_C_OFFSET_Q_DESCLO      32
++#define VPCI_C_OFFSET_Q_DESCHI      36
++#define VPCI_C_OFFSET_Q_AVAILLO     40
++#define VPCI_C_OFFSET_Q_AVAILHI     44
++#define VPCI_C_OFFSET_Q_USEDLO      48
++#define VPCI_C_OFFSET_Q_USEDHI      52
++
++#define VIRTIO_F_VERSION_1          1   /* Feature bit 32 */
++
++struct VirtioPciCap {
++    uint8_t bar;     /* Which PCIAS it's in */
++    uint32_t off;    /* Offset within bar */
++};
++typedef struct VirtioPciCap  VirtioPciCap;
++
++void virtio_pci_id2type(VDev *vdev, uint16_t device_id);
++int virtio_pci_reset(VDev *vdev);
++long virtio_pci_notify(int vq_id);
++
++int vpci_read_flex(uint64_t offset, uint8_t pcias, void *buf, int len);
++int vpci_read_bswap64(uint64_t offset, uint8_t pcias, uint64_t *buf);
++int vpci_read_bswap32(uint64_t offset, uint8_t pcias, uint32_t *buf);
++int vpci_read_bswap16(uint64_t offset, uint8_t pcias, uint16_t *buf);
++int vpci_read_byte(uint64_t offset, uint8_t pcias, uint8_t *buf);
++
++int vpci_bswap64_write(uint64_t offset, uint8_t pcias, uint64_t data);
++int vpci_bswap32_write(uint64_t offset, uint8_t pcias, uint32_t data);
++int vpci_bswap16_write(uint64_t offset, uint8_t pcias, uint16_t data);
++int vpci_write_byte(uint64_t offset, uint8_t pcias, uint8_t data);
++
++#endif
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index c3cb5a6ee3..1ef64675f4 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -18,6 +18,8 @@
+ #define VIRTIO_CONFIG_S_DRIVER          2
+ /* Driver has used its parts of the config, and is happy */
+ #define VIRTIO_CONFIG_S_DRIVER_OK       4
++/* Feature negotiation complete */
++#define VIRTIO_CONFIG_S_FEATURES_OK     8
+ /* We've given up on this device. */
+ #define VIRTIO_CONFIG_S_FAILED          0x80
  
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index c542d30ce2..403cd08450 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -107,6 +107,7 @@ QEMU_BUILD_BUG_MSG(offsetof(S390IPLState, iplb) & 3, "alignment of iplb wrong");
- #define S390_IPLB_MIN_PV_LEN 148
- #define S390_IPLB_MIN_CCW_LEN 200
- #define S390_IPLB_MIN_FCP_LEN 384
-+#define S390_IPLB_MIN_PCI_LEN 376
- #define S390_IPLB_MIN_QEMU_SCSI_LEN 200
- 
- static inline bool iplb_valid_len(IplParameterBlock *iplb)
-@@ -179,6 +180,8 @@ static inline bool iplb_valid(IplParameterBlock *iplb)
-         return len >= S390_IPLB_MIN_FCP_LEN;
-     case S390_IPL_TYPE_CCW:
-         return len >= S390_IPLB_MIN_CCW_LEN;
-+    case S390_IPL_TYPE_PCI:
-+        return len >= S390_IPLB_MIN_PCI_LEN;
-     case S390_IPL_TYPE_QEMU_SCSI:
-     default:
-         return false;
-diff --git a/hw/s390x/s390-pci-bus.c b/hw/s390x/s390-pci-bus.c
-index 3166b91c46..4de7b587e8 100644
---- a/hw/s390x/s390-pci-bus.c
-+++ b/hw/s390x/s390-pci-bus.c
-@@ -250,8 +250,7 @@ S390PCIBusDevice *s390_pci_find_dev_by_target(S390pciState *s,
-     return NULL;
- }
- 
--static S390PCIBusDevice *s390_pci_find_dev_by_pci(S390pciState *s,
--                                                  PCIDevice *pci_dev)
-+S390PCIBusDevice *s390_pci_find_dev_by_pci(S390pciState *s, PCIDevice *pci_dev)
- {
-     S390PCIBusDevice *pbdev;
- 
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index f643e13057..9228523ce8 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -402,6 +402,8 @@ S390PCIBusDevice *s390_pci_find_dev_by_fh(S390pciState *s, uint32_t fh);
- S390PCIBusDevice *s390_pci_find_dev_by_fid(S390pciState *s, uint32_t fid);
- S390PCIBusDevice *s390_pci_find_dev_by_target(S390pciState *s,
-                                               const char *target);
-+S390PCIBusDevice *s390_pci_find_dev_by_pci(S390pciState *s,
-+                                           PCIDevice *pci_dev);
- S390PCIBusDevice *s390_pci_find_next_avail_dev(S390pciState *s,
-                                                S390PCIBusDevice *pbdev);
- void s390_pci_ism_reset(void);
+@@ -255,6 +257,7 @@ struct VDev {
+     uint8_t scsi_dev_heads;
+     bool scsi_device_selected;
+     ScsiDevice selected_scsi_device;
++    uint32_t pci_fh;
+     uint32_t max_transfer;
+     uint32_t guest_features[2];
+ };
 -- 
 2.52.0
 
