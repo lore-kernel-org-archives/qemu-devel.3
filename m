@@ -4,106 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F967FCA168
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:45:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 264AEFCA166
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:45:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzef3-0003Lc-Eh; Mon, 09 Mar 2026 13:44:57 -0400
+	id 1vzee6-0002eW-UE; Mon, 09 Mar 2026 13:43:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vzeeN-0002mH-Dy
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:44:16 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1vzedy-0002bu-SG
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:43:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vzeeF-00027c-Bw
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:44:10 -0400
+ id 1vzedw-00025L-CD
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:43:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773078246;
+ s=mimecast20190719; t=1773078226;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=1r9g5CqWf0hmFdhCjo01T6zVno1OvrQP8qBF9MdcaDw=;
- b=YUGvmbjgt/jOSZuX1vsW6fwfcsh4kLPltfypPsr48FRBVTgDIGTgJAMGNJOFhMxnbNIfcu
- Do5TD39qacnX8jutBo2Gl7xYqDqKMjkt+R3Th0PJfw2QMKR22ctjdTY2HahJxFnjLm0iER
- O+PrHGJdHybpkI/yq63dpW9VZpNlQKc=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qOy9OTL1uqEbN8LPQAT/LvbFrV6eEdN3lcnzY+kqSow=;
+ b=ZeX2JqJzI+otvpc4StZ3gN12ANBp51K/G8hLSryGNxfpSizaDbB5+H2H0wEiJuGh9IULGY
+ 5cJx+jEroCpjxvOvkfxseS1+1WiyZRFhQoyr8fjfmqAvwLhjPiMwjrBRugLaRLUtqJiCG2
+ jS3fE3IOmKUqkpn4Nhc77kEMYB6YfKw=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-_bjd4DsyO0KYFHwmwyDHxQ-1; Mon, 09 Mar 2026 13:44:05 -0400
-X-MC-Unique: _bjd4DsyO0KYFHwmwyDHxQ-1
-X-Mimecast-MFC-AGG-ID: _bjd4DsyO0KYFHwmwyDHxQ_1773078244
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-439c4bde453so4317699f8f.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:44:05 -0700 (PDT)
+ us-mta-142-CS31i4tGPLmhSsxCKvrFvQ-1; Mon, 09 Mar 2026 13:43:45 -0400
+X-MC-Unique: CS31i4tGPLmhSsxCKvrFvQ-1
+X-Mimecast-MFC-AGG-ID: CS31i4tGPLmhSsxCKvrFvQ_1773078224
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4853ab1cae0so13968865e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:43:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773078243; x=1773683043; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773078223; x=1773683023; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1r9g5CqWf0hmFdhCjo01T6zVno1OvrQP8qBF9MdcaDw=;
- b=RuRWnE8Gkb6hUaHHY80aLu4+DUX79Kjiaieq/xkVI48efAsStFPdsXELAwuQsbXXr2
- qYAHg+6McI3HGU8YYKyPvl5XVpZ/PapSLUNCVZC4dirzFzWsfj4rAUb2RsKrT1hSJc5R
- UyouD6ngPw+rQ4mpNTDPalGmyyk5i7Tzy18/3RR+72HurcOAvA57qkrSQ8Cs2sGgln5I
- pycoz2pgWfI+4r4E2lbbNcBtJ9ARHp9N6hcgQw6Z+Q+2jNWHl7hQTweBhpnfyE0b6ijs
- rpEs4iKPXptEl0AeZz2JBhI8GadIZ6cdEnOvGoMfYctT2tTJ5zh3SMZ3K8lvvmImF3Gh
- KzdQ==
+ bh=qOy9OTL1uqEbN8LPQAT/LvbFrV6eEdN3lcnzY+kqSow=;
+ b=S0uWz8KI65DEkU3DQSbLt0KgjRxDmQClSOq+YYlJC4sTtnHXDuot7hmJ+DHydVZZpy
+ HMsOPeEDL1I+5i/48l9y/mcrmGrL4vrcwsIXLPhruw94Yd0fjLLCDkXiveffvyrCeLTU
+ SIU9U8dvWYFDStwdLrr7bIW1JzJhhJGbF6UrOO2Rt7+xNajUF/JwlsfLoA0qJmoQVB7O
+ GH6Ai+6kZ3r2Nfw+cliSH4619xkgjdWMFlqtHUO3tkJdsch0IWOnqp99zqUR9ISwklwv
+ tt3I5SJhbsIA1CZhg7BwC86Z5GFkeilBWCaxD6tumlGWCXjMgTkvbTG0X17EQ7yt2+JJ
+ JWog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773078243; x=1773683043;
+ d=1e100.net; s=20230601; t=1773078223; x=1773683023;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1r9g5CqWf0hmFdhCjo01T6zVno1OvrQP8qBF9MdcaDw=;
- b=Ev2Y7s3bdhutvkIRq5rA5LmhTkNSHQlqbDG30UEPFKZAw30Ow4iby24qkF+lW4H61k
- 2vjCXwow2s7sVpex9pq41rKMhNLfytIaYoxval5bKmWepK+w55KDzIHEedEcKroF0a+1
- BCzey7BQ56STF47w7zUaUOZifskc8wCUk3BZaUJGccnb099vZwgs62+Hi0p15a2E1klZ
- W2PXdLXTd3tMkghza5uAic4Qwo6yjF3ndIjqybaRiAvhoK8hU68xz7CKQ7ZM+AmC+0F9
- D7lLOK9AwugXxZ/mRzWC91X1fdh/zzVcLnaCXfbYfmXFGuo9yp4R3UwugR346OyT6Rsw
- MlzA==
-X-Gm-Message-State: AOJu0Yx9YZaO3+JugLcj6FdKOQtMDNwwquJAyfxEmWkqIHYSIPYvaNFJ
- z2vdTAVTQxEsVDWbnIBYrf9q0VxuprXv0cbDu2I4O7U+OD+EhFgQ+O5Y+TVroQGcq2kZt4WtbEV
- aUTWOZn0QtJ6r7BjUOkSYQ5fpJvyv8ZRNxgL/feLeyBK06hcLYGamTtbjBGyu8G/MP8cNFgzKFQ
- JTECJNAje9nlSi0KMnlJb+UO0dYX/05tdQwBs2rLQo
-X-Gm-Gg: ATEYQzzHDltjdGLQSgIEesumHrF92Lrn2o1dyTKw7mX3tAjBnK/ghtyx3fbv+idPD8D
- PUDVQfjDjrlrp/w+rfsSyaE74HFWDqYhONcTyLPLZ0iNi/v9IrzVEYbHjsa2D6FRQEewgp9Y5Rc
- j97YPDGR6Bfpy2nI5BuqFUhAn1aHXmAQNgyoq3Rk+2PMLZvR/9IrQZP6CYLQ1QkGHL1BrJhN45N
- Gyij4Pw7tcn3Eggpefz7l9MTCqnMYJyGAwAesx9dVTo/IF8ND3UfNQKvVFAMkGBnac4maPDyZOE
- z+Ab86U2BFdPEU0GnAMImH2mIRGL2r6OF/qWQy9NZew7RILXqSDwAGWjvFUOuCHorVbhhPLBwdc
- tf8/7I5gglwD2mKpD4RqlkPAHUdWfAC9SQXIW1MclOJPolSc0qNJFlE7QDVhs5rkri89LDODlYx
- M6ou0amAl1GXnip/DnkKMNp6zrS8A=
-X-Received: by 2002:a05:600c:3593:b0:485:3c7f:527e with SMTP id
- 5b1f17b1804b1-4853c7f53cemr54268495e9.15.1773078243538; 
- Mon, 09 Mar 2026 10:44:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:3593:b0:485:3c7f:527e with SMTP id
- 5b1f17b1804b1-4853c7f53cemr54267895e9.15.1773078242998; 
- Mon, 09 Mar 2026 10:44:02 -0700 (PDT)
+ bh=qOy9OTL1uqEbN8LPQAT/LvbFrV6eEdN3lcnzY+kqSow=;
+ b=k8OLpChLX5SuCyf/SJYXWHOdq+X4MDBQ39enfU/CWUOY8cfa6AswSGN8EC6jbGcDuU
+ eRzlCpX1FP9WOkcMlkZks6nKyEXHkwVEq36VI+t+1wAMZm4FPya88EOdUQd6mT1lRAHU
+ ueb1o3OtbvCch9z0dWodxhA988HNMmekh7Xz4hW2x8NldyLGpB7u9ftsQ14B+JlBr183
+ CI3H8xgLdDl8+zs2+gfAYeXFfH+hQEZyfD1uvBy9bXEQwzd/1atS1g54+npu4jtraLsb
+ QUVWERmKpCk9zOfV5V48xrlM+XvsgyhIi8ggQHIGlLbxxyYVU1zwdeOTiWPKuDpVpIcY
+ 03/Q==
+X-Gm-Message-State: AOJu0YyZNSiI3dFl3cVWZnsuRFQ/QzvARly+sKt6oMCb6dlPoOCXvKpf
+ giK9rTjdgYv0GCK0zw/DgwcGfNxFUuVeNwj4OXXXF2YxbAcsFOYlkr4kKaiJQPAYKNlngU385aZ
+ J4DD4zT833CzVzk++/263TbvriGXOuE8d9QWJt5lwvRIw2f8795U9OcU3RvFieTBdohMlGWMFDE
+ j6g68ABcwDvDXbM7pMyp+yRisCRAN416pPHDcgmsNK
+X-Gm-Gg: ATEYQzzEK1jKfuTtS/Njtn+Z7JohlIcAZQ9UGVvMXage62WhN2t+rAXm/SWdaxaQpnE
+ n6dglLJhhol8bUemsN2XH0Ogm+QnHHN7YZJKjhyG0lAwQiwwrmJnpLEosuSnTurcdTfd4kTvv0R
+ KyeeubRq+dyzkxOo00Xce7h2S7Gd8w48T+eOIG9dm2kjd6m+jcsczPW722/ij90++Oa9XJt0Rs0
+ wSBGeqfdluLjO6VSsrdOL8N89cWpBLACG9vYjbzyRfnZ3jB0dbib/JULbV3hafy2wqxZvog2AF2
+ kQVuXXBB3gn/ByrwHahwk08EGc2pnFlurIjQGVxHMxzlx3LKDidFRxCLdzYvqxeJAmWRHJweuJQ
+ B9XPS/u1sRfjB1pq4TC+5z/VjrA8XLd6oNUlntr1eYFHVdGXjklKa6+1u1xKsKgZ0/oLQ/FeyEm
+ 4/r573dza+FyvPmlsu2pEfzV0q8wg=
+X-Received: by 2002:a05:600c:5490:b0:485:35ee:f836 with SMTP id
+ 5b1f17b1804b1-48535eefa3emr92752465e9.2.1773078223406; 
+ Mon, 09 Mar 2026 10:43:43 -0700 (PDT)
+X-Received: by 2002:a05:600c:5490:b0:485:35ee:f836 with SMTP id
+ 5b1f17b1804b1-48535eefa3emr92752095e9.2.1773078222919; 
+ Mon, 09 Mar 2026 10:43:42 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485237dd017sm95189205e9.2.2026.03.09.10.44.00
+ 5b1f17b1804b1-4852378e700sm159681725e9.0.2026.03.09.10.43.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 10:44:00 -0700 (PDT)
+ Mon, 09 Mar 2026 10:43:42 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 10/10] whpx: i386: remove SIPI trapping
-Date: Mon,  9 Mar 2026 18:43:40 +0100
-Message-ID: <20260309174340.52174-11-pbonzini@redhat.com>
+Cc: Siteshwar Vashisht <svashisht@redhat.com>
+Subject: [PULL 01/10] xen-block: remove NULL pointer dereference
+Date: Mon,  9 Mar 2026 18:43:31 +0100
+Message-ID: <20260309174340.52174-2-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309174340.52174-1-pbonzini@redhat.com>
 References: <20260309174340.52174-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -121,134 +121,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+If params is NULL, xen_block_drive_create calls xen_block_drive_destroy
+with drive == NULL.
 
-The implementation in Hyper-V works fine and the code
-currently present doesn't handle x2APIC correctly anyway, so
-remove it and use the implementation in Hyper-V.
-
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260307181856.2209-10-mohamed@unpredictable.fr
+Reported-by: Siteshwar Vashisht <svashisht@redhat.com>
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/whpx/whpx-all.c | 97 -------------------------------------
- 1 file changed, 97 deletions(-)
+ hw/block/xen-block.c | 41 +++++++++++++++++++----------------------
+ 1 file changed, 19 insertions(+), 22 deletions(-)
 
-diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index b095c96962d..4d5d3dbd243 100644
---- a/target/i386/whpx/whpx-all.c
-+++ b/target/i386/whpx/whpx-all.c
-@@ -1692,100 +1692,6 @@ int whpx_vcpu_run(CPUState *cpu)
-             ret = whpx_handle_halt(cpu);
-             break;
+diff --git a/hw/block/xen-block.c b/hw/block/xen-block.c
+index 5dc4ba9d076..474c12fe4ac 100644
+--- a/hw/block/xen-block.c
++++ b/hw/block/xen-block.c
+@@ -883,32 +883,29 @@ static XenBlockDrive *xen_block_drive_create(const char *id,
+     QDict *driver_layer;
+     struct stat st;
+     int rc;
++    char **v;
  
--        case WHvRunVpExitReasonX64ApicInitSipiTrap: {
--            WHV_INTERRUPT_CONTROL ipi = {0};
--            uint64_t icr = vcpu->exit_ctx.ApicInitSipi.ApicIcr;
--            uint32_t delivery_mode =
--                (icr & APIC_ICR_DELIV_MOD) >> APIC_ICR_DELIV_MOD_SHIFT;
--            int dest_shorthand =
--                (icr & APIC_ICR_DEST_SHORT) >> APIC_ICR_DEST_SHORT_SHIFT;
--            bool broadcast = false;
--            bool include_self = false;
--            uint32_t i;
+-    if (params) {
+-        char **v = g_strsplit(params, ":", 2);
 -
--            /* We only registered for INIT and SIPI exits. */
--            if ((delivery_mode != APIC_DM_INIT) &&
--                (delivery_mode != APIC_DM_SIPI)) {
--                error_report(
--                    "WHPX: Unexpected APIC exit that is not a INIT or SIPI");
--                break;
--            }
--
--            if (delivery_mode == APIC_DM_INIT) {
--                ipi.Type = WHvX64InterruptTypeInit;
+-        if (v[1] == NULL) {
+-            filename = g_strdup(v[0]);
+-            driver = g_strdup("raw");
+-        } else {
+-            if (strcmp(v[0], "aio") == 0) {
+-                driver = g_strdup("raw");
+-            } else if (strcmp(v[0], "vhd") == 0) {
+-                driver = g_strdup("vpc");
 -            } else {
--                ipi.Type = WHvX64InterruptTypeSipi;
+-                driver = g_strdup(v[0]);
 -            }
--
--            ipi.DestinationMode =
--                ((icr & APIC_ICR_DEST_MOD) >> APIC_ICR_DEST_MOD_SHIFT) ?
--                    WHvX64InterruptDestinationModeLogical :
--                    WHvX64InterruptDestinationModePhysical;
--
--            ipi.TriggerMode =
--                ((icr & APIC_ICR_TRIGGER_MOD) >> APIC_ICR_TRIGGER_MOD_SHIFT) ?
--                    WHvX64InterruptTriggerModeLevel :
--                    WHvX64InterruptTriggerModeEdge;
--
--            ipi.Vector = icr & APIC_VECTOR_MASK;
--            switch (dest_shorthand) {
--            /* no shorthand. Bits 56-63 contain the destination. */
--            case 0:
--                ipi.Destination = (icr >> 56) & APIC_VECTOR_MASK;
--                hr = whp_dispatch.WHvRequestInterrupt(whpx->partition,
--                        &ipi, sizeof(ipi));
--                if (FAILED(hr)) {
--                    error_report("WHPX: Failed to request interrupt  hr=%08lx",
--                        hr);
--                }
--
--                break;
--
--            /* self */
--            case 1:
--                include_self = true;
--                break;
--
--            /* broadcast, including self */
--            case 2:
--                broadcast = true;
--                include_self = true;
--                break;
--
--            /* broadcast, excluding self */
--            case 3:
--                broadcast = true;
--                break;
--            }
--
--            if (!broadcast && !include_self) {
--                break;
--            }
--
--            for (i = 0; i <= max_vcpu_index; i++) {
--                if (i == cpu->cpu_index && !include_self) {
--                    continue;
--                }
--
--                /*
--                 * Assuming that APIC Ids are identity mapped since
--                 * WHvX64RegisterApicId & WHvX64RegisterInitialApicId registers
--                 * are not handled yet and the hypervisor doesn't allow the
--                 * guest to modify the APIC ID.
--                 */
--                ipi.Destination = i;
--                hr = whp_dispatch.WHvRequestInterrupt(whpx->partition,
--                        &ipi, sizeof(ipi));
--                if (FAILED(hr)) {
--                    error_report(
--                        "WHPX: Failed to request SIPI for %d,  hr=%08lx",
--                        i, hr);
--                }
--            }
--
--            break;
+-            filename = g_strdup(v[1]);
 -        }
 -
-         case WHvRunVpExitReasonCanceled:
-             if (exclusive_step_mode != WHPX_STEP_NONE) {
-                 /*
-@@ -2249,9 +2155,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
-     prop.ExtendedVmExits.X64MsrExit = 1;
-     prop.ExtendedVmExits.ExceptionExit = 1;
--    if (whpx_irqchip_in_kernel()) {
--        prop.ExtendedVmExits.X64ApicInitSipiExitTrap = 1;
--    }
+-        g_strfreev(v);
+-    } else {
++    if (!params) {
+         error_setg(errp, "no params");
+-        goto done;
++        return NULL;
+     }
  
-     hr = whp_dispatch.WHvSetPartitionProperty(
-             whpx->partition,
+-    assert(filename);
+-    assert(driver);
++    v = g_strsplit(params, ":", 2);
++    if (v[1] == NULL) {
++        filename = g_strdup(v[0]);
++        driver = g_strdup("raw");
++    } else {
++        if (strcmp(v[0], "aio") == 0) {
++            driver = g_strdup("raw");
++        } else if (strcmp(v[0], "vhd") == 0) {
++            driver = g_strdup("vpc");
++        } else {
++            driver = g_strdup(v[0]);
++        }
++        filename = g_strdup(v[1]);
++    }
++
++    g_strfreev(v);
+ 
+     drive = g_new0(XenBlockDrive, 1);
+     drive->id = g_strdup(id);
 -- 
 2.53.0
 
