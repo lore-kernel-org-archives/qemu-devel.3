@@ -4,108 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF865EFCD73
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:47:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9616EEFCD73
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:51:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzXCe-0004wk-E1; Mon, 09 Mar 2026 05:47:08 -0400
+	id 1vzXGz-0005mX-LM; Mon, 09 Mar 2026 05:51:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzXCW-0004vn-Je
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:47:00 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ id 1vzXGw-0005mE-Tr
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:51:35 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzXCU-00006T-1K
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:47:00 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64c9a6d6b70so9718337d50.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:46:56 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773049616; cv=none;
- d=google.com; s=arc-20240605;
- b=Jl+O/IaxkGr9z+8E/46rjQoX6XzVYeWPimt0FXbW9bDfGY8MaC6MXIpq1Eno4UBZvd
- rLwQ33hBAYLtfeU6XsYprST5Qw/lenu1hjAMtkcWT7eDouDehOIZnno/8yDkBCrD1JV2
- 3ajJniD4IsxNyXuzYWgBFyjULFHTYJA8jViSW2QW+1jaVLW3+QhApcLdNeJREUP52f/p
- 5FtevLXk8xf+w07RCZdId33bXLYLMRmpOUuyI4fJ0s8t7RarGdoJ7Vwu5fGLYoTHUnMH
- CKRHK7tpdcrN1x8x5q6xauxMUmFQ29ZcF7morUEGST0JsK1q/JMtUkhYbWL+RN+1gd/a
- S0DA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=WXTKPx6DOn8tj+ElBjv8zsF6JK0+oHmjWzFt5qs1PH4=;
- fh=OB6xuOJuO4/iAKhS3gKvuHG0B66IvEoj4oKzbPgMo48=;
- b=YYSsPtomRQD5olHnC9Ln7W8Ra0EVTJejxG7K+w07ginZXVXt5HxXJ5Y/m70ZAEO459
- RNX2rxEHcMHKKyteAeDJ0avjsFTVcbR81S4HUcWnoed1OnI+lPWn/Dt0xCQ06XdiVEmR
- znkShCsygF2aDU77GwjQOj/K1JSKF7XbC1BqXbEgATVJDeGc9LftmkQ3Xj83E8hktsra
- kVNwDf9q/Kyv+b7HEdIqNXdPQQEHen3iRI0FXTKX5WjOYX17NcYCDFFfcvF6W+1GAM4/
- vpLQHLxDiM71eQrV/8nz/fxELFMrlWilibLTCcmmHKhUCkXXioK6WAYeAkY+sw0lPBoI
- D77Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ id 1vzXGu-0000Zp-QC
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:51:34 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so136003355e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:51:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773049616; x=1773654416; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WXTKPx6DOn8tj+ElBjv8zsF6JK0+oHmjWzFt5qs1PH4=;
- b=Rnsqv3s7cfV6YeT5IeQQkGQGbMrG5/AvvPWjJ5/+0QBk+ensgXGY+gC4GuLJq8zmt+
- thD4GU7TNMQPPQkbGsF6kkwtq+nlbODO39rjr0JyEIAhVFbRlhuBhb861qz94mFD0Rio
- aVBBN0SrETOXRp7u7cwQ+if1yOTNCWptfhBVgHi1hoxMLFxh+OsyMFzvF5YkZTZq4EPt
- GY30tfBh6BzfOwSLVWMBWShQFkDjwnwHtJaCAAJSIym/cW6Dtw6/d5Sj/n1f7w4vxvDO
- TByJ2bwU0+L5gpUC0c3/waRgDsrH8Vzg4d8Bf1lww+JTT4dKKN8U6cVzC0A2V5dZqPu0
- 6jiw==
+ d=linaro.org; s=google; t=1773049891; x=1773654691; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=FSiI47q1uS6LXlyXsoFn8BGOPs2Ve688o13OIyq7I1Y=;
+ b=Gbigss8sjfCe0HyVFIUHpVmY3M8IwJzvzC6MQJzCGGA6SYo1L8wOyOJTblGxignPZQ
+ JtF/hJiNgmM6abPCrUQqtCzR7C8LMqC2cRGjxwk72PxYLVWJJsf3KkTT7HGwzdtZq7DV
+ 2j3iMro6OYK9MER7WcV2+IxLjMCYmbiiNhsN2Dn7K2o+vFLdnH9I9qru9Smvv0tOc6cM
+ ES/TMME1PGnhCUcTtvQmaQFTTyrA2aK2agyh6aa4JuC2R7xSUI54+5fwQmfx/Q8qWbOu
+ iTPR4U7mZ94bJr9JtUn2ZkkBzSmv2wnd+2lNy/GoncMucEa/qAUBIAJWxRDxRyV9qAxz
+ w7/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773049616; x=1773654416;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20230601; t=1773049891; x=1773654691;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WXTKPx6DOn8tj+ElBjv8zsF6JK0+oHmjWzFt5qs1PH4=;
- b=VAtlww6tEKbR2rhlcKKuPAZNrhVtg4eV//+6l1IS5YDaBiCqXOE133GcM91xx0pNEg
- dmfladmdptcUXCUb4BKdbWwFEO+oycgfBDtfE2CUsA9Mwt0pMhvHDM4MqbgGyU/6mmuw
- cXexvti7Xtu1hdrJC+DXuEZIe/pOgLoC9jJL16eWn7FK9LEhjPW6AkNNLqPXQTvBHF6p
- 6nAJumZHKHUD05mS340r8D1F5YJP8qARweC0xhPqNI0YY9udTYHAxZm4Fjmu6p5yvC3j
- w+iN+Ek6t0dfJI31EHCwgBJ1fQlW+gk0k6Re0xnsVFvp2RzdyCXpMRUDvHSgERWLorb4
- OnkA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWIEfK03uwX+ni6Qm5cbPgOsMJXJjqpkFGoX7hAZzxjyQwc6jUKpTmzT+itauQNLlzpU2xOYVZj2yPB@nongnu.org
-X-Gm-Message-State: AOJu0Yxi6gBmgt1hL6TLtrxe5TiPapSX36n2HkPJtEnTwXBXx/p5abJf
- 4cDhvEtTTb2ab5PwDEoYK86j1B2dd/f6Q+UDmK8yeRwxjWYLue53wTSpE7UU52jfEfWy188Ald3
- PDKm/wEQjZbWJRBWf12ybLbbuv6W9GQLrmITc2DHmeg==
-X-Gm-Gg: ATEYQzxNboFSNgFb8CgbIlVVbov3vvontjQ2qdbHpNuf78nG+PXBO/rIVhB0LJlt1XM
- j7xT+2sWK2KZHPRRqtjTcVQMvgp77Xn4X6IVUUObfXyrW6EcJSP7j+8jLHBsmwAib0c4PqqAWp+
- RJTfD9QdQejD9PyvG5yUHKNGe6cKWpID5OB43NdsfFX4tl2upI/0AUF+IFiDvY95+sg65zZOPes
- 0rEEw+VW41n2iQu5+6nl8SVIhPBlswMewEi9K72nqoDM5KEJbuN3rSJLzTpV0sanl4PYbtP4eu7
- V3eX7+QMe33D26SKNwk9pMtubcNrKKHggYLlOf24UCmhZfaQxMnPkrjyr3WallFtzi4=
-X-Received: by 2002:a05:690e:e0b:b0:64c:a4ab:e4da with SMTP id
- 956f58d0204a3-64d1409677emr7935798d50.6.1773049616006; Mon, 09 Mar 2026
- 02:46:56 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260305220911.131508-1-shentey@gmail.com>
- <20260305220911.131508-14-shentey@gmail.com>
- <cf26c35f-a508-45bd-9398-5b4e7140d743@redhat.com>
-In-Reply-To: <cf26c35f-a508-45bd-9398-5b4e7140d743@redhat.com>
+ bh=FSiI47q1uS6LXlyXsoFn8BGOPs2Ve688o13OIyq7I1Y=;
+ b=ULNh+TMlQ8xrg/P3IsE3tfE0EwUBAarTv1ePWeWCcBtTSJf0BAouZBX56l4rNFVi5G
+ LpRJSyHvqR9Xxdaba5XjTnO7POQzvU+ZwyKROSawGdKg5cOONFpv/DhkeBXlT18+5IuO
+ VBD6ayp3nImGhulHs9NHoCMqiOEtPkQUuW/IHQONdiEvBSPOPV3TH73vy9T/RGWFnaOo
+ ziweetb8mb/bMQ05msNMukJNLcVw8SQO+iCnZuVOG0DFZl94hglUD6Ee5KSgpTd1cSaN
+ uU8yTkxTCuLO6+o6Kuu2nyWBiyNwNenD3JO4AWgKqF62UBWLr5DaQgNbljj4Rq7Srokf
+ zp2A==
+X-Gm-Message-State: AOJu0YxBcnDoYXP0tkr+divneJAIeIaOvtm2HvL/WGeIlWSpcuEDc/mT
+ u2shOEQwpL2ESfhC9+dOSXzcZ7RYnSoVBhgRy7gK1nqKnUUyv4zz+gnuFnNK+gEWpYSVK4YCngm
+ oDQ8k
+X-Gm-Gg: ATEYQzzoQLuXqkrY9arnU4aEBq318UrfDHLl83Tq3r7eqvhU14ePWjKYYSuMXoSx2eB
+ WPu59w0oc7/jxBKAnvMVCyvz5TVkWmiLYFabVlVvWAMwhbyb7D2KNXBWgdfKOYLZpn9af4UVaUI
+ VNOjQ3p9UZtA5lCItKWRhsduw8dSsFvm17+a6zXzIKDuiijMlSkufFw/U/sLCqfdVkiw8ZihC6F
+ eyE+SJn54iegmmEaOnrKKzIzPkIfGDQ4ZKNQdMFSKHqqLgf/dvy9FBZ+UK6UTHeYTyqxqPtsAyT
+ dcTQxA31IC1kTGiIzmuJadbeK6e1J4QK3BbPSVvNZr/P8n/eMAz2JoDU0kxaEmBq7NuwtzynHxi
+ 9vyHW8GMnaq3xjz12y2nRAozArZqQG5V3BAFMLOVhpeTdeKncOdqT9ZVgyKF+I9DeajFVbGNyEz
+ PsMYPLGUmrbkzkV/BweGWcGE+FK/gz7jOLQlPSsRJ8+xboROOmdZ7JE3e0L03znU0kqvR1GV6Iq
+ 6cEFq/+swrCKzr0c4/9TNbArsKv1PnVO4PM4+lRJg==
+X-Received: by 2002:a05:600c:8b58:b0:477:a54a:acba with SMTP id
+ 5b1f17b1804b1-4852695af23mr184477065e9.17.1773049890852; 
+ Mon, 09 Mar 2026 02:51:30 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4852381c61csm85136235e9.11.2026.03.09.02.51.29
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 02:51:30 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Mar 2026 09:46:44 +0000
-X-Gm-Features: AaiRm53VwoxCUBDt84uy8e7dWDXh6WYso9faRE0QiNfous25fYrGqq0rSlmzPi0
-Message-ID: <CAFEAcA_cZbp4FW4SLxdRs4doE8ZkadNGrADe3tBrbXDpy-DC5A@mail.gmail.com>
-Subject: Re: [PATCH v3 13/14] hw/char/serial: Inherit from SysBusDevice
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: Bernhard Beschow <shentey@gmail.com>, qemu-devel@nongnu.org, 
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, 
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Troy Lee <leetroy@gmail.com>, Joel Stanley <joel@jms.id.au>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>, 
- Andrew Jeffery <andrew@codeconstruct.com.au>,
- Steven Lee <steven_lee@aspeedtech.com>, 
- Jamin Lin <jamin_lin@aspeedtech.com>, qemu-arm@nongnu.org, 
- Helge Deller <deller@gmx.de>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org
+Subject: [PATCH] hw/misc/sifive_e_aon: Don't leak timer
+Date: Mon,  9 Mar 2026 09:51:29 +0000
+Message-ID: <20260309095129.1406506-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -128,38 +99,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Mar 2026 at 08:33, Paolo Bonzini <pbonzini@redhat.com> wrote:
->
-> On 3/5/26 23:09, Bernhard Beschow wrote:
-> > SerialState currently inherits just from DeviceState and serial devices
-> > use SerialState as an "IP block". Since DeviceState doesn't have an API
-> > to provide MMIO regions or IRQs, all serial devices access attributes
-> > internal to SerialState directly. Fix this by having SerialState inherit
-> > from SysBusDevice.
-> >
-> > In addition, DeviceState doesn't participate in the reset framework
-> > while SysBusDevice does. This allows for implementing reset
-> > functionality more idiomatically.
-> >
-> > Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->
-> The lack of support for automatically resetting children other than
-> buses is a pity indeed, but I don't think that this patch is correct.
->
-> SysBusDevice is for devices connected directly to the board; a device
-> should not have any children objects connected to a bus (unless the bus
-> is part of the device itself, as is the case for usb-storage for example).
+The sifive_e_aon watchdog creates a timer with timer_new_ns() in its
+instance_init method, but does not free it in instance_finalize.
+This means that QMP introspection of the device leaks it:
 
-We also use it for various other things beyond that, though:
-notably we use it extensively in SoC objects, which have
-child objects which are almost always sysbus devices.
-Very few devices really connect directly to a board.
+Direct leak of 48 byte in 1 object allocated from:
+    #0  in calloc
+    #1  in g_malloc0
+    #2  in timer_new_full /home/pm215/qemu/include/qemu/timer.h:520:21
+    #3  in timer_new /home/pm215/qemu/include/qemu/timer.h:543:12
+    #4  in timer_new_ns /home/pm215/qemu/include/qemu/timer.h:563:12
+    #5  in sifive_e_aon_init /home/pm215/qemu/build/san/../../hw/misc/sifive_e_aon.c:286:21
+    #6  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+    #7  in object_initialize /home/pm215/qemu/build/san/../../qom/object.c:578:5
+    #8  in object_initialize_child_with_propsv /home/pm215/qemu/build/san/../../qom/object.c:608:5
+    #9  in object_initialize_child_with_props /home/pm215/qemu/build/san/../../qom/object.c:591:10
+    #10  in object_initialize_child_internal /home/pm215/qemu/build/san/../../qom/object.c:645:5
+    #11  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+    #12  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
+    #13  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
 
-I actively advise against people creating new devices that
-directly inherit from TYPE_DEVICE. If you also advise against
-creating devices that inherit from TYPE_SYSBUS_DEVICE that
-aren't directly connected to the board, then we are jointly
-saying "don't create this device" for quite a lot of devices :-)
+Allocating a separate QEMUTimer with timer_new() is not the preferred
+interface (per the comments in include/qemu/timer.h); switch to an
+inline struct initialized with timer_init(), which we can clean up
+with timer_del() in finalize.
 
--- PMM
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+Incidentally I notice that this device doesn't have vmstate support,
+which is unfortunate -- devices really ought to either support it
+or else install a migration-blocker explaining why they can't.
+
+ hw/misc/sifive_e_aon.c         | 16 ++++++++++++----
+ include/hw/misc/sifive_e_aon.h |  2 +-
+ 2 files changed, 13 insertions(+), 5 deletions(-)
+
+diff --git a/hw/misc/sifive_e_aon.c b/hw/misc/sifive_e_aon.c
+index 0e82ae3758..e78f4f5672 100644
+--- a/hw/misc/sifive_e_aon.c
++++ b/hw/misc/sifive_e_aon.c
+@@ -94,9 +94,9 @@ static void sifive_e_aon_wdt_update_state(SiFiveEAONState *r)
+         next += muldiv64((r->wdogcmp0 - wdogs) <<
+                          FIELD_EX32(r->wdogcfg, AON_WDT_WDOGCFG, SCALE),
+                          NANOSECONDS_PER_SECOND, r->wdogclk_freq);
+-        timer_mod(r->wdog_timer, next);
++        timer_mod(&r->wdog_timer, next);
+     } else {
+-        timer_mod(r->wdog_timer, INT64_MAX);
++        timer_mod(&r->wdog_timer, INT64_MAX);
+     }
+ }
+ 
+@@ -283,12 +283,19 @@ static void sifive_e_aon_init(Object *obj)
+     sysbus_init_mmio(sbd, &r->mmio);
+ 
+     /* watchdog timer */
+-    r->wdog_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
+-                                 sifive_e_aon_wdt_expired_cb, r);
++    timer_init_ns(&r->wdog_timer, QEMU_CLOCK_VIRTUAL,
++                  sifive_e_aon_wdt_expired_cb, r);
+     r->wdogclk_freq = SIFIVE_E_LFCLK_DEFAULT_FREQ;
+     sysbus_init_irq(sbd, &r->wdog_irq);
+ }
+ 
++static void sifive_e_aon_finalize(Object *obj)
++{
++    SiFiveEAONState *r = SIFIVE_E_AON(obj);
++
++    timer_del(&r->wdog_timer);
++}
++
+ static const Property sifive_e_aon_properties[] = {
+     DEFINE_PROP_UINT64("wdogclk-frequency", SiFiveEAONState, wdogclk_freq,
+                        SIFIVE_E_LFCLK_DEFAULT_FREQ),
+@@ -307,6 +314,7 @@ static const TypeInfo sifive_e_aon_info = {
+     .parent        = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(SiFiveEAONState),
+     .instance_init = sifive_e_aon_init,
++    .instance_finalize = sifive_e_aon_finalize,
+     .class_init    = sifive_e_aon_class_init,
+ };
+ 
+diff --git a/include/hw/misc/sifive_e_aon.h b/include/hw/misc/sifive_e_aon.h
+index efa2c3023f..e907aa7869 100644
+--- a/include/hw/misc/sifive_e_aon.h
++++ b/include/hw/misc/sifive_e_aon.h
+@@ -46,7 +46,7 @@ struct SiFiveEAONState {
+     MemoryRegion mmio;
+ 
+     /*< watchdog timer >*/
+-    QEMUTimer *wdog_timer;
++    QEMUTimer wdog_timer;
+     qemu_irq wdog_irq;
+     uint64_t wdog_restart_time;
+     uint64_t wdogclk_freq;
+-- 
+2.43.0
+
 
