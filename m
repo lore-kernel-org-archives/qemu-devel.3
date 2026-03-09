@@ -4,119 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D0EDEF3718
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:58:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59205EF3718
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:58:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzWQY-0002gf-NN; Mon, 09 Mar 2026 04:57:26 -0400
+	id 1vzWRG-0004lo-Pk; Mon, 09 Mar 2026 04:58:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vzWQW-0002ZX-RP
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:57:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWRE-0004Z9-Oh
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:58:08 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
- id 1vzWQV-0001UE-DJ
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:57:24 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWRD-0001Xu-03
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:58:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773046642;
+ s=mimecast20190719; t=1773046683;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=z7H5q2bUnc1L7CwHCB7TMkJqVuSCaaGZQRfwdfma1+o=;
- b=OxBSa3sNeGbef8zj3WyyAAMmAAnNStXp9NYRcII0A3SLN5xOHCeyI76OkIivuYb6cvklfO
- xpqWCCJt9U/HBFDQio2NR5SYNbT5HnAk36c74Az0Pucl5fvMkeEAtYS2rc/p/lgWb6kpFs
- rMeOgoy7akXqLGp6Cs1Aad4tuT/XmnU=
-Received: from mail-pf1-f198.google.com (mail-pf1-f198.google.com
- [209.85.210.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-280-n62LHqc4NcOUTKxy6nZlZA-1; Mon, 09 Mar 2026 04:57:21 -0400
-X-MC-Unique: n62LHqc4NcOUTKxy6nZlZA-1
-X-Mimecast-MFC-AGG-ID: n62LHqc4NcOUTKxy6nZlZA_1773046640
-Received: by mail-pf1-f198.google.com with SMTP id
- d2e1a72fcca58-829a4b6d5c4so1057739b3a.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 01:57:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773046640; cv=none;
- d=google.com; s=arc-20240605;
- b=fKVn0ODR8QPWJumkFukXGkXPFRHMwhgSdIPTzGGjJEtS9sS6qm+vmb+C6oVbGXwGsk
- 44GwkgCnYS244ZQ7WoClV9RhNcfOvEvtSRrRLFcxzj0hHToA4HRdXl6WF1sPsl+Yy90i
- gqOV+qShZwjatuFqcl/S1Tw6Kuq+zAO3NIJ/DpP2kicxIxqaGM+y6Hp8eoHO51PNgxGz
- alT3p+3MBc/980LbI4rOEpwo4NobBdkZ67gJVyXaN5P2rZikqBK/0efI5Y8vE8wwLTq4
- g9qoCvMtzydWVdgIGiK+VygzdmQlplEExVhy8qr0otw/bhjkXILqGcElvvZbKOR27R0I
- 6x1A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=z7H5q2bUnc1L7CwHCB7TMkJqVuSCaaGZQRfwdfma1+o=;
- fh=9rCAgRZzFqNjR/wNTxyQXAt8YRB1AGR74dADh0tp4w0=;
- b=Xfb5Z9WGgcSSOj2g0hB3+ZbzVS2hUfefYHaxFv1c1p0ffXNUG9Was7ikhLpiuj5YFJ
- VdL1K6yfcwkhTHntAzBeUZb+UlFx16i/vWB0FmP3Vjtqh995OK7XzvI3jRl1vb6QB/o9
- CYKo8DrnUFbfmMvtzJRKo5q20mKgWOW8ZbkaxjswpDTqS9NPWf9XDJX9ZDBM0hqNwL8r
- wUSL/ErUBVKOO14vJEzCyHctd/4tjHMz4HB8TASRrfRJXkuXz1CljImt2yNNNQoD6hzO
- xNPQUwfGHLcgxAIHrcopLrdzo4+84aH0IusutuU27CTpggf8YvGLdohYvEj+3OMeWZp3
- d4gA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773046640; x=1773651440; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=z7H5q2bUnc1L7CwHCB7TMkJqVuSCaaGZQRfwdfma1+o=;
- b=H5jY/5tRSAxC6+NLecTm7vYN/BSc/O6sqv2Gf2VxVAlKymGgms4xgPVqtzUXO+CpHe
- S2dkXi2pYtaxA2hzedF76l/Vw5l1TxPsyRIjmC0mM2MTIBYHw2CnB8xGvhSBU5Jh23HK
- Ad5TtMSaCeHcm6yBvJtl/jSDXyl/MtRlyQtBlhuFQOs5jPfBCUGK88vJGNR9QwLlIQSO
- PWUNj2/5iVzOCvu4DB+Ux+kJBqqyZxz7nqrpk8YSjPsb8MUmMVzoxDMNO9bIDuP6mliL
- LBosl2iVgHwlY4wu2CjeBeu+9KWVJSNr8eJMTxs4jQY1Mo5VcJyYNAeFx7ih4GbaS35V
- WaaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773046640; x=1773651440;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=z7H5q2bUnc1L7CwHCB7TMkJqVuSCaaGZQRfwdfma1+o=;
- b=ZhPDZXn6U2lTlsZsKoMAcTS739Qx4kd5dKwuTKAXVHLxEZ7xwIm8noTf5A5toTpKGN
- xc++5N0nJlZ8IQkjAKrEduh1L5pD5sgrmMf3WFzooRMmGGBIaDbaQq62Cx3rimAjEWrt
- fGWvNsAmex9FD+TsRZyM5mT0mANhFztgQ93pyMSwUHerx63RCy74EtHHUtOlFkpOyv53
- NTxoPdQfd2hvzeTxGRS7axkIfJxzqxqGi9gVqHVakPqRxq6JHOD6c9qeNEErvyikFZ7z
- eYp+MPuB13WxOGMyi0UMEzk+klT3gRLoPkMYhTfcZ00orhXDCb/XXgUd7A2HWxDdUf4m
- 0Zpw==
-X-Gm-Message-State: AOJu0Yy0zVHQYcTUNu9W1Rh7/FXsRoihYN0YCgOUGNvJSTy8eBVkc3No
- 030Q9qwJkPpoakXD+GzMrwT0LpT4UtiEZ6tDztztAE5VQO7o4qsIqCtl9qs5drkuI75xZSCUnEr
- yNvZ+o3NUkf400lRaW60KNKdKRA1FyPUSmaG3Q273KySACBlqacRLc2p9lmXfbvSf5Y0dex7851
- ERLMiao4S2cjU1liZ7TXN3Fdtp9uWIT/s=
-X-Gm-Gg: ATEYQzyv5sB95boFRXGoSbYe+A17scF7geUzgqyv+JzahoVkzI7ukCGsSo9CWF9aaVE
- EWAm8fKsrOpAlZ4/YzIse9WXI4BravaIkR+oO8+tQjbz0rL+uK5zvLviSKe/Txizn4Dyo+M7fSt
- Bi3XlEAQzqeQ1JcX2K09VoCGjGW5X6NWUvQSvyNY2M3JHvVVxPR5LVtGQdGiWmd4p7XyVeH4fKN
- 4xfVPiJ
-X-Received: by 2002:a05:6a00:198d:b0:827:2eff:a29e with SMTP id
- d2e1a72fcca58-829a2f4b9f0mr9266747b3a.34.1773046640358; 
- Mon, 09 Mar 2026 01:57:20 -0700 (PDT)
-X-Received: by 2002:a05:6a00:198d:b0:827:2eff:a29e with SMTP id
- d2e1a72fcca58-829a2f4b9f0mr9266729b3a.34.1773046639928; Mon, 09 Mar 2026
- 01:57:19 -0700 (PDT)
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Wa1hwvTj0PqMMr2FsP7w8YTN3PmwtpLagNYpllAMNK4=;
+ b=exPlf+gsNVk2rMapeIw0Zr2SjZv4YRmml5VVrD52bojZN7I84pTti5oi8LHpjtMzU1cMku
+ lpIvL+SeV3y5RULpI3qii/pxvmsUwC8Ezw2Pbh7K4XFROYSjK6lUXGmOaChjzciCD5o/Y0
+ ah6wmU0yT9OzMJmwzsiV3fffxT5IePU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-586-JbUpX0e1NL69Y8HXmdkrFQ-1; Mon,
+ 09 Mar 2026 04:58:02 -0400
+X-MC-Unique: JbUpX0e1NL69Y8HXmdkrFQ-1
+X-Mimecast-MFC-AGG-ID: JbUpX0e1NL69Y8HXmdkrFQ_1773046672
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 441741956055; Mon,  9 Mar 2026 08:57:52 +0000 (UTC)
+Received: from [10.45.224.73] (unknown [10.45.224.73])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 97A0818001FE; Mon,  9 Mar 2026 08:57:46 +0000 (UTC)
+Message-ID: <74018924-9721-46c5-add7-80c672d4585a@redhat.com>
+Date: Mon, 9 Mar 2026 09:57:44 +0100
 MIME-Version: 1.0
-References: <20260304173535.2702587-1-eperezma@redhat.com>
- <20260304173535.2702587-4-eperezma@redhat.com>
-In-Reply-To: <20260304173535.2702587-4-eperezma@redhat.com>
-From: Jason Wang <jasowang@redhat.com>
-Date: Mon, 9 Mar 2026 16:57:08 +0800
-X-Gm-Features: AaiRm51k_GotyR8wcRZN15RgpaFMhy1lv2JjTha14ToLeelrn_A9Cr23Gf-4MPk
-Message-ID: <CACGkMEsZO1t+-qMaYiuVuWoqbyqb2khoFREHqZ56ZG8hGfojyA@mail.gmail.com>
-Subject: Re: [PATCH 3/7] vhost: factor out the descriptor next fetching
-To: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
- Dragos Tatulea DE <dtatulea@nvidia.com>, Jonah Palmer <jonah.palmer@oracle.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Koushik Dutta <kdutta@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
- Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 10/10] hw/tpm: Remove CRBState::ppi_enabled field
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20260307152635.83893-1-philmd@linaro.org>
+ <20260307152635.83893-11-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260307152635.83893-11-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -141,16 +135,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 5, 2026 at 1:35=E2=80=AFAM Eugenio P=C3=A9rez <eperezma@redhat.=
-com> wrote:
->
-> The next field will not be used if IN_ORDER is enabled.
->
-> Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+On 07/03/2026 16.26, Philippe Mathieu-Daudé wrote:
+> The CRBState::ppi_enabled boolean was only set in the
+> hw_compat_3_1[] array, via the 'ppi=false' property.
+> We removed all machines using that array, lets remove
+> that property and all the code around it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
+>   hw/tpm/tpm_tis.h        |  1 -
+>   hw/acpi/tpm.c           |  4 ----
+>   hw/i386/acpi-build.c    |  2 +-
+>   hw/tpm/tpm_crb.c        | 12 +++---------
+>   hw/tpm/tpm_tis_common.c |  4 +---
+>   hw/tpm/tpm_tis_isa.c    |  7 ++-----
+>   6 files changed, 7 insertions(+), 23 deletions(-)
 
-Acked-by: Jason Wang <jasowang@redhat.com>
-
-Thanks
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
