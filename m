@@ -4,111 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0280EEF371E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15CFEF3718
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzWPU-0001f5-2c; Mon, 09 Mar 2026 04:56:20 -0400
+	id 1vzWPx-0001p5-MO; Mon, 09 Mar 2026 04:56:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vzWPO-0001eA-43
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:56:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vzWPr-0001n4-Al; Mon, 09 Mar 2026 04:56:43 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
- id 1vzWPL-0001OT-Ls
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:56:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773046569;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=/HlY8JJ2ZwQtAbGhleOP05qyV3gQEb1rXboDai36nKE=;
- b=et934AtP5SW342yeN4FhgjG4DDhJSZKdh2h9tp0QNeGNPJWTX7+J4lfIYVqVK43uN2B9Hl
- XemWqfaNs6jfBLmSchvUSH33UYuOWVkTWZ2wadmtnxgjKUP1mhyuKa0p0lM2eH0zTFhuH7
- OE2ZRdyACjRZsbReMZ2nIWNAWTZjM3M=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-126-GTOatqOWMC-hi_QcULEz3Q-1; Mon, 09 Mar 2026 04:56:06 -0400
-X-MC-Unique: GTOatqOWMC-hi_QcULEz3Q-1
-X-Mimecast-MFC-AGG-ID: GTOatqOWMC-hi_QcULEz3Q_1773046565
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439b20722e3so4221623f8f.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 01:56:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773046565; x=1773651365; darn=nongnu.org;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:from:to:cc:subject:date:message-id:reply-to;
- bh=/HlY8JJ2ZwQtAbGhleOP05qyV3gQEb1rXboDai36nKE=;
- b=P1Q2Q1aTCA9tF7EtXwvwHKG+5x6QJdBSZMY5OO0JX26GBjaLSzLWtE2Arv0s8VSdgh
- Ytr5nk51c06QeoLE0M5qrUzQEZhA7LiVB3Rqi9XpozgGxEosjt7z+PMBYfoQsxOntT0b
- zjU5AE1K2Ae8udqeo6fDhCulyBdR1bhM+fexhgBmJ73qoyvTQ3wxCIz3LzyYzuJzNY70
- vKrL3NeaKDQlEg0cAqLZc5VBI6eNqz1ja+4g/V5kscptP/yIQjOJWQCp7D229dmlDz+r
- wcvec8rHjp/fUucUUsUHhon42Vd6Woqb7AD15FlqpiD6b/L0NhYSiJPgpgIpGZ5LChKN
- jtuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773046565; x=1773651365;
- h=cc:to:message-id:content-transfer-encoding:mime-version:subject
- :date:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/HlY8JJ2ZwQtAbGhleOP05qyV3gQEb1rXboDai36nKE=;
- b=apr+jZGw2oUburzQeyNA6oOPO2qotUAT+IqyRPOw9qHJznOedWJWHmLzvy1Qv7BlCH
- 3NDnJ1fQGzUiOMX48GwBxloIfAkPC3tmROK17S7dflPOK027vspU4VlFDj8VAhRl9gd4
- sSi7WV+yjy4cJAEeAVF2CPLuFrCSIp8x4YuWSqDY+kvNAFD+ry1k9GUg+8S4sO+uHgRm
- 6uKzRGBGyS+LUSIfYGBdYbZJ3+MGf6oQYPdOaElXZaOGG7AAWUoe1Y0VqB9utar0Vgvo
- MvoVLr68ECzK7DFigoGMCkNb149QxoituAEB3JSFeN9/NKZxsk1WlZe8vEbKvEUcp0/r
- +bpg==
-X-Gm-Message-State: AOJu0YySE/rsC6CxBWtA92bsC4XWp8+fQDbQmBv7XzazclsjxsPseEmx
- LOxqixYE12KwFZr9ul/wvHfWXDaJLgXbl2mW4fFU97FxyEBxDoeWtN/yke0efmKDGUlaanjjVA5
- zE3v8jilQPkKfkBZVQQFiOpBtDf2HunpUqbeQKzdQH6Am5oLeqfnf+za4
-X-Gm-Gg: ATEYQzw9XG0tQ6JkBP67cYdoRwdGxlYhYJEPTybMVdzD8eIDeATp5qgthNus/jr2bXw
- qJ+716AEkb+hGBce4zlu4qtb4biaIAqYS0Y2HtTtzAcGpsrNmXfEWuHVtbween1ysoiJFrkmUVf
- 6cbnIKWjtm6HS3wZspLQj4Xh/ISTNGd6zrh4pk431D92UbRGqQLNEw+Yv11lmTgmm2HQWl1xq5Z
- u+FU/HDA8hbdmxRYMNO4XiWN/KLwH3NCrLnfRkAZmQjtGDfREQM+14VHAx7N9rlU32CzZ5yhH+7
- IXTWlPtwCEwyz/XtSGu82FZ+a2gRs67sQEvF4z5IntgLerH9VHB4m1mwxApn/OFkL1Vl8wCUAnI
- soHHoq2VEQlESksKxwsYXhOTsW5/eEX+zpUDpd2jLFqe2Wkcu3AXz/BAuuyvi
-X-Received: by 2002:a05:6000:2881:b0:439:b744:c601 with SMTP id
- ffacd0b85a97d-439da894037mr16836619f8f.40.1773046564822; 
- Mon, 09 Mar 2026 01:56:04 -0700 (PDT)
-X-Received: by 2002:a05:6000:2881:b0:439:b744:c601 with SMTP id
- ffacd0b85a97d-439da894037mr16836573f8f.40.1773046564313; 
- Mon, 09 Mar 2026 01:56:04 -0700 (PDT)
-Received: from lleonard-thinkpadx1carbongen13.rmtit.csb ([176.206.19.176])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dada3b43sm25342856f8f.13.2026.03.09.01.56.03
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 01:56:03 -0700 (PDT)
-From: Luigi Leonardi <leonardi@redhat.com>
-Date: Mon, 09 Mar 2026 09:55:52 +0100
-Subject: [PATCH v2] igvm: fix build when igvm is not installed in a well
- known path
+ (Exim 4.90_1) (envelope-from <shivangu@linux.ibm.com>)
+ id 1vzWPd-0001Ox-6p; Mon, 09 Mar 2026 04:56:39 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 628KY7Ww1649593; Mon, 9 Mar 2026 08:56:22 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=BBBXhRP4CoQ1+bSAhNFHY58VV6nNbR
+ OGKuqcakzbYpw=; b=DVmtsQ4GRxXbrhWUEI9w6mAxH19alzPBSI+1JEt8cf5Or/
+ SqXqgJG34mGL9WLGf+fpE+IafTGHM0dk9bt33e1SrZW80D1I9NYqIAeIEEdQULi/
+ 9lY94ECDs6CIYWSziRLiDhHcAVfBHmANzQEXw3RoZG9FTNnHkL/N37Lx68OuPevJ
+ CjncDtdAXwEikKNkyw6WD+zFrvirknRyQLh7Y0CfkTGoL1dUAiPAOby6yQLe/8z1
+ 4YnCca5dnSSdzg5204HyWJhQ7KyYgwJnDzYGUYjwQJZvzTegMXZIgLtcSR1tXjwp
+ Gn79EP4wjaXwYxRZqsL2cKPS4Fx5Yg9BA9iPgDyg==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvm5t9k-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 08:56:21 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6295Zd1M025052;
+ Mon, 9 Mar 2026 08:56:20 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs0jjv3dv-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 08:56:20 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6298uGvt33882504
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Mar 2026 08:56:17 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D62012004B;
+ Mon,  9 Mar 2026 08:56:16 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id F32D720040;
+ Mon,  9 Mar 2026 08:56:14 +0000 (GMT)
+Received: from shivang.upadyay (unknown [9.79.204.232])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon,  9 Mar 2026 08:56:14 +0000 (GMT)
+Date: Mon, 9 Mar 2026 14:26:12 +0530
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
+To: Aditya Gupta <adityag@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Hari Bathini <hbathini@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+Subject: Re: [PATCH v4 00/10] Implement MPIPL for PowerNV
+Message-ID: <qowkbzfxurfejfbecky4nwhgck7hs45dsq66sdxyp23od5plcd@h67km3gfkfzz>
+References: <20260309072001.3136261-1-adityag@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260309-master-v2-1-7e02f07a1096@redhat.com>
-X-B4-Tracking: v=1; b=H4sIAAAAAAAC/2XMyw7CIBCF4VdpZi2G4VKJK9/DdIHtVFi0NQMhm
- oZ3F7t1+Z+cfDsk4kgJrt0OTCWmuK0t1KmDMfj1SSJOrUFJ1UstrVh8ysSCEN1DO9JoCNr5xTT
- H9wHdh9Yhprzx53AL/tY/oqBA0duLMUbNlsjdmKbg83ncFhhqrV9TB/7qnQAAAA==
-X-Change-ID: 20260305-master-e118b38e314e
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, Ani Sinha <anisinha@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, Oliver Steffen <osteffen@redhat.com>, 
- Luigi Leonardi <leonardi@redhat.com>
-X-Mailer: b4 0.14.2
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260309072001.3136261-1-adityag@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: bOfyBed9b_ymv9GTMyaptBBP-99gSKSz
+X-Proofpoint-ORIG-GUID: EUp4sDt3BeqIijQtspHmTA4Q5iVYJcT0
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA3OCBTYWx0ZWRfXxTkhtUbEntCI
+ kXSy+rSylqCsTsd1XvhD/AgcOOf6Spib17rKEIDzfBAfdGOUFUqtrbdUFVtksfSZec1luUa4SNg
+ kLIFnEiBMJR5BCjmmAA7QaIl4PFk3x0eUTHYIuKOJLg/TcvPTm9Nd8BtRcShqYPa0yMqDJs01KQ
+ DD/m7eOd1mc2ewgq5x/80ELk9HdhS8XtSwZFCCks07hmectz278mORd4OM54b1HIjo/Lk0S0Rhl
+ pjUAIEe1RMkizU+LJVjEAtOEIambpPCXKh/MOBISaIhPXRUDjZ8yv3QimcwFNeaqvkqf/nLvwIG
+ CI1aWhReVaLkNpmYzQbUMKSgx2C5N+RLEkiaJ/214u3chsQr9MPmKU/nZ8Bhzlg8phk6buziU1J
+ KqGgwkECDG/HKbQq+DSNpcQKk3aj/hmO5mEiV1JBvvRQeFOeASnbIXJrA+X0nIWAhaGuZGSDvF7
+ X6cxjyd1D8uCwF0Q3aA==
+X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69ae8b36 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8
+ a=VnNF1IyMAAAA:8 a=hSWd8L_6iOwG8_bK90wA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_03,2026-03-06_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090078
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=shivangu@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,109 +123,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-`stubs/igvm.c` includes `igvm-internal.h`, that in turn includes the igvm library.
-This is required just for the QIgvm declaration and creates an
-unnecessary dependency on the library.
+On Mon, Mar 09, 2026 at 12:49:49PM +0530, Aditya Gupta wrote:
+> Overview
+> =========
+> 
+> Implemented MPIPL (Memory Preserving IPL, aka fadump) on PowerNV machine
+> in QEMU.
+> 
+> Fadump is an alternative dump mechanism to kdump, in which we the firmware
+> does a memory preserving boot, and the second/crashkernel is booted fresh
+> like a normal system reset, instead of the crashed kernel loading the
+> second/crashkernel in case of kdump.
+> 
+> MPIPL in PowerNV, is similar to fadump in Pseries. The idea is same, memory
+> preserving, where in PowerNV we are assisted by SBE (Self Boot Engine) &
+> Hostboot, while in Pseries we are assisted by PHyp (Power Hypervisor)
+> 
+> For implementing in baremetal/powernv QEMU, we need to export a
+> "ibm,opal/dump" node in the device tree, to tell the kernel we support
+> MPIPL
+> 
+> Once kernel sees the support, and "fadump=on" is passed on commandline,
+> kernel will register memory regions to preserve with Skiboot.
+> 
+> Kernel sends these data using OPAL calls, after which skiboot/opal saves
+> the memory region details to MDST and MDDT tables (S-source, D-destination)
+> 
+> Then in the event of a kernel crash, the kernel initiates MPIPL with another
+> OPAL code (opal_cec_reboot2), this request goes to Skiboot.
+> Skiboot then triggers the "S0 Interrupt" to the SBE (Self Boot Engine),
+> along with OPAL's relocated base address.
+> 
+> SBE then stops all core clocks, and only does particular ISteps for a
+> memory preserving boot.
+> 
+> Then, hostboot comes up, and with help of the relocated base address, it
+> accesses MDST & MDDT tables (S-source and D-destination), and preserves the
+> memory regions according to the data in these tables.
+> And after preserving, it writes the preserved memory region details to MDRT
+> tables (R-Result), for the kernel to know where/whether a memory region is
+> preserved.
+> 
+> Both SBE's and hostboot responsiblities are implemented in the SBE code
+> in QEMU.
+> 
+> Then in the second kernel/crashkernel boot, OPAL passes the "mpipl-boot"
+> property for the kernel to know that a dump is active, which kernel then
+> exports in /proc/vmcore
+> 
+> Testing
+> ====================
+> 
+> 1. Git tree for testing: https://gitlab.com/adi-g15-ibm/qemu/tree/fadump-powernv-v4
+> 
+> 2. Gitlab pipeline: https://gitlab.com/adi-g15-ibm/qemu/-/pipelines/2372098708
+> 
+> 3. Analysing generated vmcore:
+> 
+> 	# ls -lh /proc/vmcore 
+> 	-r--------    1 root     root        4.5G Feb 25 07:33 /proc/vmcore
+> 	# file /proc/vmcore 
+> 	/proc/vmcore: ELF 64-bit LSB core file, 64-bit PowerPC or cisco 7500, OpenPOWER ELF V2 ABI, version 1 (SYSV), SVR4-style
+> 
+> 	# crash vmlinux vmcore
+> 	...
+> 	      KERNEL: vmlinux-38fec10eb60d-network      
+> 	    DUMPFILE: vmcore-powernv-25feb26
+> 	        CPUS: 4
+> 	        DATE: Thu Jan  1 05:30:00 IST 1970
+> 	      UPTIME: 00:05:23
+> 	LOAD AVERAGE: 0.12, 0.08, 0.03
+> 	       TASKS: 101
+> 	    NODENAME: buildroot
+> 	     RELEASE: 6.14.0
+> 	     VERSION: #1 SMP Thu Apr  3 08:06:13 CDT 2025
+> 	     MACHINE: ppc64le  (1000 Mhz)
+> 	      MEMORY: 6 GB
+> 	       PANIC: "Kernel panic - not syncing: sysrq triggered crash"
+> 	         PID: 257
+> 	     COMMAND: "sh"
+> 	        TASK: c000000008066600  [THREAD_INFO: c000000008066600]
+> 	         CPU: 2
+> 	       STATE: TASK_RUNNING (PANIC)
+> 
+> 	crash> # ps and kmem -i works
+> 
+Hi Aditya,
 
-Since igvm is not listed as a dependency of stubs, this results in build
-failing when the library is not installed in a "well known" path of the
-system.
+I was able to get the fadump working on buildroot images, with this.
+Thanks for this feature.
 
-Add a forward declaration for QIgvm and move the definition of
-`qigvm_directive_madt` to `igvm.h` so that we can drop `igvm-internal.h` from
-`stubs/igvm.c`.
+	Welcome to Buildroot
+	buildroot login: root
+	# dmesg | grep fadump
+	[    0.000000][    T0] opal fadump: Kernel metadata addr: 653902a8
+	[    0.000000][    T0] fadump: Reserved 768MB of memory at 0x00000035390000 (System RAM: 8192MB)
+	[    0.000000][    T0] fadump: Initialized [0x36000000, 752MB] cma area from [0x35390000, 768MB] bytes of memory reserved for firmware-assisted dump
+	[    0.000000][    T0] Kernel command line: console=hvc0 rootwait root=/dev/nvme0n1 fadump=on
+	[    0.377005][    T1] opal fadump: Registration is successful!
+	# uname -r
+	6.19.6
 
-Fixes: dea1f68a5c ("igvm: Fill MADT IGVM parameter field on x86_64")
-Suggested-by: Stefano Garzarella <sgarzare@redhat.com>
-Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
----
-Changes in v2:
-- Removed blankline between tags [Stefano]
-- Removed typedef for QIgvm in igvm-internal.h [Stefano]
-- Link to v1: https://lore.kernel.org/qemu-devel/20260305-master-v1-1-6574442f5ee8@redhat.com
----
- include/qemu/typedefs.h        | 1 +
- include/system/igvm-internal.h | 9 ++-------
- include/system/igvm.h          | 5 +++++
- stubs/igvm.c                   | 1 -
- 4 files changed, 8 insertions(+), 8 deletions(-)
+	 <snip/>
 
-diff --git a/include/qemu/typedefs.h b/include/qemu/typedefs.h
-index 416a8c9acead659786f22dfa7542f7af93699cec..cbe6f7f4c7c1092017296cbba09cc79b03b45b79 100644
---- a/include/qemu/typedefs.h
-+++ b/include/qemu/typedefs.h
-@@ -102,6 +102,7 @@ typedef struct QEMUSGList QEMUSGList;
- typedef struct QemuSpin QemuSpin;
- typedef struct QEMUTimer QEMUTimer;
- typedef struct QEMUTimerListGroup QEMUTimerListGroup;
-+typedef struct QIgvm QIgvm;
- typedef struct QList QList;
- typedef struct QNull QNull;
- typedef struct QNum QNum;
-diff --git a/include/system/igvm-internal.h b/include/system/igvm-internal.h
-index 38004bd908e773a3ffc2343a9035be86dc6a8ace..76ae1bc3be9249cc1796bd7eec77dd9084358f98 100644
---- a/include/system/igvm-internal.h
-+++ b/include/system/igvm-internal.h
-@@ -42,7 +42,7 @@ typedef struct QIgvmParameterData {
-  * QIgvm contains the information required during processing of a single IGVM
-  * file.
-  */
--typedef struct QIgvm {
-+struct QIgvm {
-     IgvmHandle file;
-     MachineState *machine_state;
-     ConfidentialGuestSupportClass *cgsc;
-@@ -67,16 +67,11 @@ typedef struct QIgvm {
-     unsigned region_start_index;
-     unsigned region_last_index;
-     unsigned region_page_count;
--} QIgvm;
-+};
- 
- IgvmHandle qigvm_file_init(char *filename, Error **errp);
- 
- QIgvmParameterData*
- qigvm_find_param_entry(QIgvm *igvm, uint32_t parameter_area_index);
- 
--/*
-- *  IGVM parameter handlers
-- */
--int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp);
--
- #endif
-diff --git a/include/system/igvm.h b/include/system/igvm.h
-index 5573a6111ae754e2de49ba72a354b36c4b6fe747..f9231f03ec8015928d0968ac59c72a1b6d9f00b9 100644
---- a/include/system/igvm.h
-+++ b/include/system/igvm.h
-@@ -27,4 +27,9 @@ int qigvm_x86_get_mem_map_entry(int index,
- int qigvm_x86_set_vp_context(void *data, int index,
-                              Error **errp);
- 
-+/*
-+ *  IGVM parameter handlers
-+ */
-+int qigvm_directive_madt(QIgvm *ctx, const uint8_t *header_data, Error **errp);
-+
- #endif
-diff --git a/stubs/igvm.c b/stubs/igvm.c
-index 47d5130d9d7488fb1092a0b5389a864d83e8b2f2..9e9f683fc9607bae85baaaa2f269eba594ae0574 100644
---- a/stubs/igvm.c
-+++ b/stubs/igvm.c
-@@ -12,7 +12,6 @@
- #include "qemu/osdep.h"
- 
- #include "system/igvm.h"
--#include "system/igvm-internal.h"
- 
- int qigvm_x86_get_mem_map_entry(int index,
-                                 ConfidentialGuestMemoryMapEntry *entry,
+	Welcome to Buildroot
+	buildroot login: root
+	# ls /proc/vmcore
+	/proc/vmcore
+	# ls -alh /proc/vmcore
+	-r--------    1 root     root        4.3G Mar  8 17:08 /proc/vmcore
 
----
-base-commit: 333aaa55f051977cc897fb71e0a9ed52bb00a675
-change-id: 20260305-master-e118b38e314e
 
-Best regards,
--- 
-Luigi Leonardi <leonardi@redhat.com>
+Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 
+~Shivang.
 
