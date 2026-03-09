@@ -4,84 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CFA6F417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:48:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFE50F417F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:49:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcqP-00079b-8q; Mon, 09 Mar 2026 11:48:33 -0400
+	id 1vzcqf-0007Su-4n; Mon, 09 Mar 2026 11:48:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcqD-0006tA-62
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:48:21 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcqd-0007QS-8D
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:48:47 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcqB-00073y-Lf
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:48:20 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-439bcec8613so6155671f8f.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:48:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcqa-0007Ip-G6
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:48:46 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4852f8ac7e9so27202825e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:48:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071298; x=1773676098; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071323; x=1773676123; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=3WrIJBfxQwNwzS1oBLelbPb/WGK8n0y2uuv132L2kOo=;
- b=DFZGXbJxPTUIDWk5MYJZqvPpXbThdkJEhZlHvJmtxj+B14dLv9Gvorgli1FeBFBMZG
- K8LSI9RHpiAY8XvItRpGZYjrcRiqT9/mqTZ+XC0yjIvrPHyFgMtggmWLWz6pQh1tsYkJ
- +vl8l3UrVO15MPH6hTKKq7rlqkQZfnrJ2aVt1DkjWm+Qjyvnx7WNg3n3PXMXcPwAN4Cl
- QJeafhYZrdlY2Mwd6adUOXjUpK6946EbdFttOr2odlyp+aBxmWjhUrIibaZvPBMcnNgI
- ieSww5S1G7GS3lm64EP+m4GrPVklZm9ganTuRbgBcDtevRqXhen5hl+htFt2g7DnBCyJ
- Rhcw==
+ bh=h1ymr9MHNM7cG/1C8WlXJT7tye89prJGdl2MMMwvSxE=;
+ b=CuJkGVkqXH8Jqnrh2tu/PGS/pO5lS0EHnoWdB1kv0rxD1cT8QDVVUSk9MUpb68rzfo
+ MxttFGoS1acxkoXSFV8/d/Hlv3ek6gnzeqX06/0yiA0zcOTUIO/2AhCcuiPt6GL+QMf3
+ WeGlbt9dLHN64TN6DBDDwhO2Gbq0eCJGVpuHBf0OOTgddP+Dy4skMzF+EYV20LRcIfpP
+ U45qYp+1NcvTfHX6B6GmCSvzTMHfFPXtAkxlwrenrRsWljpybU5G4WWq6ULEu6dA61VG
+ 4QHctimGc6To9kS4wNXbr+e8Loc0OgZqyQ5/5aCbTceMt6rNn+r0wwUTgCnZ0VODT0uG
+ bznQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071298; x=1773676098;
+ d=1e100.net; s=20230601; t=1773071323; x=1773676123;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=3WrIJBfxQwNwzS1oBLelbPb/WGK8n0y2uuv132L2kOo=;
- b=dYPBn+2FF4rymTwf5K6egK/TvTv77SANmE0iYDDKH3YGDkWhkNJm3nL51t+O8AxKTM
- pwpiJEd3LkoRd+FL5Oi6wC4urB3H2rkVwWCO9hvqzR/fJimJa2zJgzre69C0jz2eSlyw
- NY0Pcd6681zJz6eq3NUnTRWgpWDtPxTkgnYARacm5PCP2yaojZRlrnlBYN5l/57VumCm
- 5n2oiMCTiUoQNrFW8Jyoj2aTNy/LluuBBH+0FQlDehBTUj429qT4HodQeL2tF7NE8Yv4
- C4ShLhiQKyxHcXo0ofRIUXT+k4OG7gKqcEDDPbRYft0ZNvWFmA3BJHTzKijvo7xCUCvK
- pyBA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUAJf133jpFUM4OQ4qOXtb6NDYDZzqrjK1gQJ8e7nZcTUkL+wkJhSGIgQy1rjBOJla5RAb32iV1LQ7g@nongnu.org
-X-Gm-Message-State: AOJu0Yw8nWFRula0ja2yvgrWhFA0GSKINj7zzuphs6WEjzHiToR5uJzf
- 5ZsT+OV3NViNiob6Ts6rHv2ktpT6Z9QyvOdSJe/v9XGocKKUHj4tEAenitQ7yB7Gj/E5EXoCmyU
- uvCjWUcA=
-X-Gm-Gg: ATEYQzwE3qdckNTe/WukKZgouD8HRjtl09gYh64Okq/qvA57ScyCzmo+5jOJFvnHoCi
- YHhvBN4DIWitkuBux0RvEjPkpEiaFC+cFLmDxcM+thKB9m5KWTLf5Bu+6JbkiBNaxIakj+asIrF
- ctB1mEfN0maL3I6LQ5WVLL5Ey3QMNIFoFhAeUqSuQ6IIDo7okQ2ysBtpr68LOSFm6mXL+9iyGW7
- /LoOU/Jcg9SK/4nh0vivzzlTqPhvB100kVBgzv+OQ1Lja1XO3tZrjycrH3r3IEDxB7mxR84Y2Zn
- 2DJYdimymgO3hD4oB1JBM/ZK4BzMph0+UEO7mYC2AACUVzugZlCVVXpknlxkSzsXrE2OiwyWs/e
- V7YP2nVFRnoSY3t0LGigqN+rM9mo1lAYTXP01aAOAHezfF0nWN4yfqIgN7ekWTP8wkoZRYfMyYq
- WXDhwmqDp4jRCSkP6tqFz41sbiYUAfKm/ry0kzumYtkoa1bJFgiupd1l5sdqN3F3quKg==
-X-Received: by 2002:a5d:5c89:0:b0:439:c018:60ec with SMTP id
- ffacd0b85a97d-439da669595mr20260580f8f.30.1773071297539; 
- Mon, 09 Mar 2026 08:48:17 -0700 (PDT)
+ bh=h1ymr9MHNM7cG/1C8WlXJT7tye89prJGdl2MMMwvSxE=;
+ b=egR/Oiuvu+UNI7cj1bhLoZg7SD5U7ZZuANLidvTaXbVEzs4hER2tH1oqZvVzaZNT1i
+ 38s94lBvsx2Wwh6dSuhJoz73Jk6VnTb2xrKgGu/NbXkZOimgOseeXz4hrod6uF6hQg+c
+ D0YP5VL87J34wwCUg1Mt/h8NRdxE6CoB3lKhZPNWZxJeYKROvNOwBcLOhJFF3K+rNqWk
+ UixO7h/ZI8iCU5SL/KbiMSBZ0d4sSoImFLwu5puMY61ys88K3XAYaVohhT/lOgK8wGBA
+ ed1u2RQyyHSCFeyOxgj6mH/1RgKo0hc98NS6MR5IEZhcI02cQB7GMj7wKqReaBkUdHSG
+ OWqQ==
+X-Gm-Message-State: AOJu0Yxnke/6pnzVRK/dmSuhDvu/GJFEoaog+fHx8Ig1/lmPmkpLjHiy
+ ZONfq8TZc7A64LMWUUJmoLaOsJqhhWEv7fP16hZ1FWcQRY1NOr1cM8aRostmqQBfn6jX+e0iAFU
+ V2DG+SqM=
+X-Gm-Gg: ATEYQzyDScaRi7HU67ZqGz9k7qbVsT8s//zBWQuqFFB1GSY2a49dgQ9NVk26chbmO0R
+ UD6aKhjeGuw5VvJqwXTD5yUSa3LMR8QMFEknTHT5205z0CrXwEVOt4y03Ytt1T89MjXw2H5Jpmh
+ KoZbXt302povppM3NCPfTidESUYxHmjgs0O4IVZ0dDYK7yUFoXzW28d4t68y0XHAfUB3rB8cV/9
+ C2sMZDDbn1LwxIynop3gFCxrxdVivG/G78CRESxfdqtpaO+PbfLJoU0EknySYd3aMw3X0cW1Hv2
+ BBkgNRZppzoURPPJ2vZy6ZDnRPqxPmL92gkhJYIQN+OPb4JxCpQ+RVCPMZh0pI6Ksr+ZqAp+ufb
+ ACYd3HB9ZK/6B/vZeq8WxLvVodYIlm8tb2y7uWl/975soIim9OsN96jvmu4xj5s4VBjojdXGz9F
+ Qtaiz4+dYQzvJi/SJjFOoF27edv1zGI1k6XTw6FxVn9rVB7GJSP+JQMMdrDMGQlN7L4WTu7mM6R
+ org
+X-Received: by 2002:a05:600c:64cf:b0:485:35a4:939f with SMTP id
+ 5b1f17b1804b1-48535a4a174mr97481095e9.28.1773071322649; 
+ Mon, 09 Mar 2026 08:48:42 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad97be5sm28074533f8f.11.2026.03.09.08.48.15
+ 5b1f17b1804b1-4853588758fsm76568295e9.4.2026.03.09.08.48.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 08:48:16 -0700 (PDT)
-Message-ID: <07a45602-8dcf-4797-bd79-b97cb8666bd4@linaro.org>
-Date: Mon, 9 Mar 2026 16:48:15 +0100
+ Mon, 09 Mar 2026 08:48:41 -0700 (PDT)
+Message-ID: <1c89ab32-b994-430c-9cc8-948a250c9ddb@linaro.org>
+Date: Mon, 9 Mar 2026 16:48:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/misc/riscv_cpc: Free CPU array in instance_finalize
+Subject: Re: [PATCH 0/6] hw/i386/pc: Remove deprecated 4.0 machines
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Alistair Francis <Alistair.Francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org
-References: <20260309095328.1406779-1-peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Igor Mammedov <imammedo@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
+ Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Zhao Liu <zhao1.liu@intel.com>
+References: <20260307154202.86309-1-philmd@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260309095328.1406779-1-peter.maydell@linaro.org>
+In-Reply-To: <20260307154202.86309-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,27 +106,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 10:53, Peter Maydell wrote:
-> The TYPE_RISCV_CPC device allocates an array in its instance_init,
-> but does not free this, leading to leaks like this from QOM/QMP
-> introspection:
-> 
-> Direct leak of 512 byte in 1 object allocated from:
->      #0  in calloc
->      #1  in g_malloc0
->      #2  in riscv_cpc_init /home/pm215/qemu/build/san/../../hw/misc/riscv_cpc.c:175:15
->      #3  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
->      #4  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
->      #5  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
->      #6  in qdev_device_help /home/pm215/qemu/build/san/../../system/qdev-monitor.c:313:17
->      #7  in hmp_device_add /home/pm215/qemu/build/san/../../system/qdev-monitor.c:1005:9
-> 
-> Free the array in instance_finalize.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   hw/misc/riscv_cpc.c | 8 ++++++++
->   1 file changed, 8 insertions(+)
+On 7/3/26 16:41, Philippe Mathieu-Daudé wrote:
 
-Patch queued via hw-misc, thanks.
+> Philippe Mathieu-Daudé (6):
+>    hw/i386/pc: Remove deprecated pc-q35-4.0[.1] and pc-i440fx-4.0
+>      machines
+>    system/hostmem: Remove HostMemoryBackend::use_canonical_path field
+
+Except patch #2, series queued via hw-misc, thanks.
+
+>    hw/i386/pc: Remove pc_compat_4_0[] array
+>    hw/core/machine: Remove the hw_compat_4_0[] array
+>    hw/virtio: Remove VirtIOBalloon::qemu_4_0_config_size field
+>    hw/rtc/pl031: : Remove PL031State::migrate_tick_offset field
+
+
 
