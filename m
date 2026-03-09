@@ -4,100 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8063F3C242
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 12:15:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 932B9F3C240
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 12:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzZVz-0006R1-F0; Mon, 09 Mar 2026 08:15:15 -0400
+	id 1vzZWp-0006iq-41; Mon, 09 Mar 2026 08:16:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzZVs-0006QP-PL
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:15:10 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vzZWX-0006cH-9M
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:15:52 -0400
+Received: from mail-dl1-x1241.google.com ([2607:f8b0:4864:20::1241])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzZVq-0007h0-2z
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:15:07 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-64ca1ba0089so10505545d50.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 05:15:05 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773058505; cv=none;
- d=google.com; s=arc-20240605;
- b=ULi+cnu7sBoTgXuYcuM86E3TPhy7Hn0XOoIrBjIHfe2GbJIU1dcR0Un/462/dkCDd+
- w6je5F78ONJXQmK3hmfJ/C17Tcs4f7yzjNvLBDzk7F0Wh5pYzclrauRt7y2tGnX4xXGR
- 4G4ZD84sdt/a2h9zyD55yrGbMbzdn+Ye+Pw6UdL3uKGv24hJGF1hxjR/qNdZtN+hvFnw
- SLTT7U/rA8zVTZA6d0/pu684gPP+mNPRl7Y/YiDlGKcjFOXw644IvDg+Bo0YkvPJSfYZ
- O2kbxEiZgZFFQQ8oM5aH8Y2RQHPZcpC8+u5atF8qS7JftD0ut3aM1UOCrpF/XY99sUcE
- FWxA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=FT3bMKAfKYX5wJya+RpLJyA30xxPqNTFZD5++m6u/z8=;
- fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
- b=H2e7pSRNGjfFf3kZ/7orW8ghkKTeqfLBjw1Z4Sa1iQu+Aw3NVOhuAPtBRYVK7gEycE
- Na0MoEreKwE22SRUSRCuDdmveKhSUeP0pRzDNwo1IM4P2tlW4dPfPSAzq/DZ0C9QZoa+
- PmoxqaGXT/geXYuX/hXowQ0zkiEEk+8O9NmEldn5yDR4rlOGp3hkTNyl+u0HHHxy0xyy
- /ksx3PoRJIOvjkMpWRSIuVedovmKB/icvBckHmPhRnXKOm2JfRf1VLHwUkM1KUKjlxqA
- KVa+YZlpoQYZJO/16Cbs1dgd5PRVWCbej7fCamfI5PAbd9onmBVmGP3IpP92hX7Tqxy1
- nFnQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1vzZWT-0007tq-9t
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 08:15:47 -0400
+Received: by mail-dl1-x1241.google.com with SMTP id
+ a92af1059eb24-12713e56abdso6579866c88.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 05:15:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773058505; x=1773663305; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FT3bMKAfKYX5wJya+RpLJyA30xxPqNTFZD5++m6u/z8=;
- b=b//E1+9F8lCRXcjBuhFt2jWAMSj3DBw9KslBNESLBaMEYyKB0ITtC0nheIrYy5Y1NQ
- 5GSiXChRnyqtBx1k2hBtIbNxxST5hepYiiygGDCVSSsQR+k6UM6CxGjM5A0iBQHtaE3I
- Pa+qlJhPKa7jYhCWwETs9k37Bk1TkKYn1d+GyuqitreSMHgqq/xthQ4TEGNO+jdyp5PD
- ssm0tucSeZRztmIc/JmufdsrAHZ2MupUkLOgb0mBHJX/WyGT02smnC3z0ZuxtYC0UU7/
- yOysiAXMW5t/Nv5zHFHOpZzAdV2wJDFx6A31NP+ILwefMbfgqfmO5I++qe2hxclhxes1
- cneA==
+ d=gmail.com; s=20230601; t=1773058543; x=1773663343; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=VA0sy7fn8lN3mTt8/UgUn2z6o5yUo0J4OR6zdZ3Cw7E=;
+ b=NkLl4X6o1KMmZQYc1VyKD52iTP22oL/bJ+B2pOgFnTOQMG64eX9An67HPZlq/KE828
+ 4FMeN/9pFIhOKJkSb8lGsJQ3F4cSHHsANduF27NgLRDEOaxntpFxxyMIyICoT9guKb+3
+ Ze7fkUOUWvON6bOW2x5VLvyB73Q28l8k5j5uZCJYDNquflU36IA+bhTfKucCLSaaRa41
+ YQxxk1mSdmjrhQGLRNjzYK4IWHYNSSVlkqS5Y18vZ81Nt3tZaQqgn/NK3Hp+V9URtORA
+ yCWK57HwTZOqYIjL7YPDhS/axO88TnjT364J5HjuoQkUnjFfD1fGHuzJ2sAim5Bnj6N5
+ fyqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773058505; x=1773663305;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=FT3bMKAfKYX5wJya+RpLJyA30xxPqNTFZD5++m6u/z8=;
- b=jLo4o1uiWF7lthOAb0cMXSUoVthBgl2vZxVpl42m8eK8mOHRLf3pxxIjS/HOo+LGxB
- nf/DbswoPhxdU2Xjh8DVxOyZoiBd2wHTsJp0pv/i3ZUEnGTAeG+pLPJd0vHsqyB8DjzW
- OzgauEX+yMqHsjnvWhW6IistWf21LEm7mUk6Lp8dTHbieYEQaK0C4LyOxeuiOaCSrP8K
- 2/ktFfYiQU9wTQyw/9vb/inw9QS+Hvdg51DUyIWgM6KIOtjUtgEej5wyhO37czlbYOcr
- /JBCqcEQBkEH3BMM8pgEelmpxL4LLsinP5+gymTcNlsYThe/ertoxFyp39noPxJ3yCRy
- ubcw==
-X-Gm-Message-State: AOJu0YwQCe/7mOvmc3WaoeIrXDcDDlJ9WlSKAPUCFZZo98DaYjACElXE
- ZzkmlTH/RRseHsW27Cl5+xhohcGeorvCDVboRglxwZnFQ0TMv7Gr/s5UKARnCU7YVpTYQqKJZ7X
- lpZRT7M8+kSVT8MDRAx8FgSfCHbN6Ap/eC6gRty1O/VZFDonBnfzE
-X-Gm-Gg: ATEYQzy+Xbyl1+beSRLgC5ifgwsoJSszMVMznkF3N8avUT53KbelE8ms8GZFh8NnLd8
- xpmqM16J4AFYQi4z07LlxblYDQSTy7tb4WywnAozjMl4b69CJJ+f6gwwPp+sczMbrFi8tJfVjoi
- hhrNDAluLS3X0CZy9Lyp2S7SsVT9+gYp4EEldrIK+e/dXyWr1oZz0XuGTHm8XFrSY1XBfgrVxPn
- eFtKVQdaLnijbiSZ0i0NG6bA1lhlIlE8/QZx9JOy7aI/wuvODtzsgFhX+Uqf15QYYsvRRq/eUAG
- tSpGGXn0Vfex1t+V6VxEhNOLVXJoc0G8eEN+ncOsDVirmw7OMn+6q1LyGx77WHdtKPY=
-X-Received: by 2002:a53:b186:0:b0:64c:cfae:a9fa with SMTP id
- 956f58d0204a3-64d14304a58mr7300945d50.62.1773058504701; Mon, 09 Mar 2026
- 05:15:04 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773058543; x=1773663343;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=VA0sy7fn8lN3mTt8/UgUn2z6o5yUo0J4OR6zdZ3Cw7E=;
+ b=bX7vXtn9WYTHZ7ODTMpoJ4RkvFOoLMHPln9v/tCx27nuj/Z52O/pIXFdvEEgiaMKcX
+ 9rqzzbBhD9sMt0m+RUFYNK9Xk2hfscfDCBOF2dpJiefrNmK8giANRjrrysWK/+p8LZa1
+ XgT5qK6RXT8MLi0D9NKeCnLHVsj29ReL54xlbm92lkq7M/q5dShhcN3QDW8jWXeVmmuf
+ EXF34HmK6lSuSAw93/tLlI7/Kcb1R0EilT69rE/eRWGZZxKuwEi7G7j7Wl5g95TKR515
+ 7XszenzGryuhQSNB6xt/QHT96mYNCm5GpYAnnxfylBDv5z3p4IDUtnu5fZJ2urip54Hu
+ bAsQ==
+X-Gm-Message-State: AOJu0Yxg+Byr+dgBrpetVI1hi07CWJDheMk5Z1q4h8yG/oS3snaVUkxL
+ Khi0lKWVoUguBdH/b05CaT6WPDxSmggfjNtCrBYVsB718gpj6nhMTBkK
+X-Gm-Gg: ATEYQzzzUtXQaz4ZFMA6Sit+P/isptoyN9x674BKlLR6Mbv2ZHbDbNE+A2lvtBzP1yn
+ t0kcuVT5C9+W4LKqrua6zFYxYe6ydUCgmNNfXbc6LdPp6lzlPCTMp2SgzM0vm9FeLjL7IGkjidY
+ VMYJr1VmTd1t6Q8CxWuoOk7Zia7C+nFYvg4MzrWlPtBOAitCEw8bXzMM9mb0FSsRhdyJpj8yVqa
+ OVxDv0zQWyl4/XuZ9R/DnlrtttN2CjZFxlc3onEwdULkS9OgkP3p+bkN5R1oGSaYxAVBdAQA0xd
+ zVbcjuJkrDJaJZTIDMnGD+xemOFo6Sc3BIUqTmBo/mUGf0qtw7A2lTn7ONYsjr0+M9FERWFe/Gf
+ eBz5dFKDX+9VZdZ32Vq0GxK2aSKdagYYSD5tGemwJOhLO7Dl8KzZbYouGU8yq0EqIgSYx9W1DGQ
+ Y3xa9bvlF4kXM0LyGSeV/aboC/6vFtXpHwkzpXStTrgfWWMLme+ViLwvXKhd/fvMqyq4VA0A09J
+ rvSgpeb6aWXItZD/yFkPcajJg44jUY=
+X-Received: by 2002:a05:7022:699b:b0:11c:883d:1ef0 with SMTP id
+ a92af1059eb24-128bbfe716emr5544805c88.15.1773058543044; 
+ Mon, 09 Mar 2026 05:15:43 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-128c3f5a102sm9437010c88.13.2026.03.09.05.15.33
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 05:15:42 -0700 (PDT)
+Date: Mon, 9 Mar 2026 20:14:52 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: Jim Shu <jim.shu@sifive.com>
+Cc: qemu-devel@nongnu.org, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Michael Rolnik <mrolnik@gmail.com>,
+ Helge Deller <deller@gmx.de>, 
+ Eduardo Habkost <eduardo@habkost.net>, Song Gao <gaosong@loongson.cn>, 
+ Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>, 
+ Aurelien Jarno <aurelien@aurel32.net>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
+ Aleksandar Rikalo <arikalo@gmail.com>, Stafford Horne <shorne@gmail.com>, 
+ Nicholas Piggin <npiggin@gmail.com>, Chinmay Rath <rathc@linux.ibm.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Yoshinori Sato <yoshinori.sato@nifty.com>, 
+ Ilya Leoshkevich <iii@linux.ibm.com>, David Hildenbrand <david@kernel.org>, 
+ Thomas Huth <thuth@redhat.com>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Artyom Tarasenko <atar4qemu@gmail.com>,
+ Bastian Koppelmann <kbastian@rumtueddeln.de>, 
+ Max Filippov <jcmvbkbc@gmail.com>,
+ "open list:PowerPC TCG CPUs" <qemu-ppc@nongnu.org>, 
+ "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>,
+ "open list:S390 TCG CPUs" <qemu-s390x@nongnu.org>
+Subject: Re: [PATCH 2/2] accel/tcg: address_space_translate*() will pass the
+ correct iommu_flags
+Message-ID: <aa65nTMvERTjuEwr@ZEVORN-PC.localdomain>
+References: <20260202075358.2137740-1-jim.shu@sifive.com>
+ <20260202075358.2137740-3-jim.shu@sifive.com>
+ <aaUkfa3DfURTV83t@ZEVORN-PC.localdomain>
+ <CALw707rZM3ObmC-ckeRtcAgww=1uONetrBP-VqAE4aij5G1mHA@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260308223433.25503-1-philmd@linaro.org>
-In-Reply-To: <20260308223433.25503-1-philmd@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Mar 2026 12:14:52 +0000
-X-Gm-Features: AaiRm52DJCxCGxdhZBnIsao7qIsPGAwA8udVoDaBNrsLkjGA_cP6JE4u6Xj8_dg
-Message-ID: <CAFEAcA9+87WY59=v0N1wkUANZy-B1unEhjjS7Z2bbr5p8Q5QZQ@mail.gmail.com>
-Subject: Re: [PULL 00/49] Misc HW patches for 2026-03-08
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CALw707rZM3ObmC-ckeRtcAgww=1uONetrBP-VqAE4aij5G1mHA@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1241;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1241.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -115,63 +132,137 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 8 Mar 2026 at 22:35, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org=
-> wrote:
->
-> The following changes since commit 1ae4271ab8dbfbf5dc28b36baa7f3fd5fd2215=
-e1:
->
->   Merge tag 'pull-11.0-virtio-gpu-updates-060326-1' of https://gitlab.com=
-/stsquad/qemu into staging (2026-03-07 11:22:16 +0000)
->
-> are available in the Git repository at:
->
->   https://github.com/philmd/qemu.git tags/hw-misc-20260308
->
-> for you to fetch changes up to 27c64fa59d1b14c4656908e1dfca49482a96df61:
->
->   hw/char: Drop disable property of Diva GSP card (2026-03-08 23:11:14 +0=
-100)
->
-> Following checkpatch errors ignored (first spurious, other ones pre-exist=
-ing):
->
-> ERROR: "foo * bar" should be "foo *bar"
-> #40: FILE: hw/display/ati_2d.c:60:
-> +                                                    + dst_y * surface_st=
-ride(ds),
->
-> ERROR: switch and case should be at the same indent
-> #27: FILE: hw/net/xilinx_axienet.c:143:
->      switch (regnum) {
-> +        case 2:
-> +        case 3:
->
-> ERROR: braces {} are necessary for all arms of this statement
-> #43: FILE: hw/char/serial.c:164:
-> +        if (s->lcr & UART_LCR_EPS)
-> [...]
->          else
-> [...]
->
-> ----------------------------------------------------------------
-> Misc HW patches
->
-> - Remove versioned machines released in QEMU 3.0
-> - Build various stubs and ACPI objects once
-> - Pair of bug fixes in ATI VGA model
-> - Cleanups in 16550A UART model
-> - Clarify PA-RISC CPU models (adding the PA-8500)
-> - Various memory leaks / overflows fixed
-> - MAINTAINERS updates
-> ----------------------------------------------------------------
+On Thu, Mar 05, 2026 at 01:35:51PM +0800, Jim Shu wrote:
+> Hi Chao,
+> 
+> 
+> On Mon, Mar 2, 2026 at 1:51 PM Chao Liu <chao.liu.zevorn@gmail.com> wrote:
+> >
+> > Hi Jim,
+> >
+> > On Mon, Feb 02, 2026 at 03:53:58PM +0800, Jim Shu wrote:
+> > > Instead of IOMMU_NONE, address_space_translate_for_iotlb() now can pass
+> > > the correct iommu_flags to the IOMMU translate function from the
+> > > access_type.
+> > >
+> > > Since RISC-V wgChecker [1] could permit access in RO or WO permission
+> > > only, the IOMMUMemoryRegion could return different section for
+> > > read and write access. To support this kind of IOMMUMemoryRegion
+> > > in the path of CPU access, we should pass correct iommu_flags here.
+> > >
+> > > [1] RISC-V WG:
+> > > https://patchew.org/QEMU/20251021155548.584543-1-jim.shu@sifive.com/
+> > >
+> > > Signed-off-by: Jim Shu <jim.shu@sifive.com>
+> > > ---
+> > >  accel/tcg/cputlb.c        |  3 ++-
+> > >  include/accel/tcg/iommu.h |  3 ++-
+> > >  system/physmem.c          | 16 +++++++++++-----
+> > >  3 files changed, 15 insertions(+), 7 deletions(-)
+> > >
+> > > diff --git a/accel/tcg/cputlb.c b/accel/tcg/cputlb.c
+> > > index 2a0f4cfff62..404a8607b9b 100644
+> > > --- a/accel/tcg/cputlb.c
+> > > +++ b/accel/tcg/cputlb.c
+> > > @@ -1050,7 +1050,8 @@ void tlb_set_page_full(CPUState *cpu, int mmu_idx,
+> > >      prot = full->prot;
+> > >      asidx = cpu_asidx_from_attrs(cpu, full->attrs);
+> > >      section = address_space_translate_for_iotlb(cpu, asidx, paddr_page,
+> > > -                                                &xlat, &sz, full->attrs, &prot);
+> > > +                                                &xlat, &sz, full->attrs, &prot,
+> > > +                                                access_type);
+> > >      assert(sz >= TARGET_PAGE_SIZE);
+> > >
+> > >      tlb_debug("vaddr=%016" VADDR_PRIx " paddr=0x" HWADDR_FMT_plx
+> > > diff --git a/include/accel/tcg/iommu.h b/include/accel/tcg/iommu.h
+> > > index 547f8ea0ef0..2a79f859834 100644
+> > > --- a/include/accel/tcg/iommu.h
+> > > +++ b/include/accel/tcg/iommu.h
+> > > @@ -20,7 +20,8 @@ MemoryRegionSection *address_space_translate_for_iotlb(CPUState *cpu,
+> > >                                                         hwaddr *xlat,
+> > >                                                         hwaddr *plen,
+> > >                                                         MemTxAttrs attrs,
+> > > -                                                       int *prot);
+> > > +                                                       int *prot,
+> > > +                                                       MMUAccessType access_type);
+> > >
+> > >  #endif
+> > >
+> > > diff --git a/system/physmem.c b/system/physmem.c
+> > > index 2fb0c25c93b..337137489de 100644
+> > > --- a/system/physmem.c
+> > > +++ b/system/physmem.c
+> > > @@ -683,12 +683,14 @@ void tcg_iommu_init_notifier_list(CPUState *cpu)
+> > >  MemoryRegionSection *
+> > >  address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+> > >                                    hwaddr *xlat, hwaddr *plen,
+> > > -                                  MemTxAttrs attrs, int *prot)
+> > > +                                  MemTxAttrs attrs, int *prot,
+> > > +                                  MMUAccessType access_type)
+> > >  {
+> > >      MemoryRegionSection *section;
+> > >      IOMMUMemoryRegion *iommu_mr;
+> > >      IOMMUMemoryRegionClass *imrc;
+> > >      IOMMUTLBEntry iotlb;
+> > > +    IOMMUAccessFlags iommu_flags;
+> > >      int iommu_idx;
+> > >      hwaddr addr = orig_addr;
+> > >      AddressSpaceDispatch *d = address_space_to_dispatch(cpu->cpu_ases[asidx].as);
+> > > @@ -705,10 +707,14 @@ address_space_translate_for_iotlb(CPUState *cpu, int asidx, hwaddr orig_addr,
+> > >
+> > >          iommu_idx = imrc->attrs_to_index(iommu_mr, attrs);
+> > >          tcg_register_iommu_notifier(cpu, iommu_mr, iommu_idx);
+> > > -        /* We need all the permissions, so pass IOMMU_NONE so the IOMMU
+> > > -         * doesn't short-cut its translation table walk.
+> > > -         */
+> > > -        iotlb = imrc->translate(iommu_mr, addr, IOMMU_NONE, iommu_idx);
+> > > +
+> > > +        if (access_type == MMU_DATA_STORE) {
+> > > +            iommu_flags = IOMMU_WO;
+> > > +        } else {
+> > > +            iommu_flags = IOMMU_RO;
+> > > +        }
+> > This maps both MMU_INST_FETCH and MMU_DATA_LOAD to IOMMU_RO. Is this intentional?
+> > Some IOMMU implementations might want to distinguish between instruction fetch and data read.
+> 
+> Thanks for pointing out it!
+> I don't know IOMMUAccessFlags enum now has IOMMU_EXEC.
+> I think mapping three access_types to IOMMU_RO/WO/EXEC is more
+> accurate. I will fix it in the v2 series.
+> 
+> >
+> > Or is the current mapping sufficient for your use case (RISC-V wgChecker)?
+> Yes, RW is enough for RISC-V wgChecker now. We don't distinguish EXEC
+> permission from READ permission.
+> But I think supporting RWX permissions in the generic code is better.
+> Perhaps future devices will distinguish RWX permissions.
+> 
+Thanks for the explanation. It makes sense that wgChecker treats instruction
+fetch and data read uniformly at the IOMMU level given the current RISC-V
+spec.
 
+I agree that adding full RWX support in the generic path is the right
+approach. Having the mapping explicitly cover all three cases:
 
+  MMU_DATA_LOAD  -> IOMMU_RO
+  MMU_DATA_STORE -> IOMMU_WO
+  MMU_INST_FETCH -> IOMMU_EXEC
 
-Applied, thanks.
+will make the code cleaner and ready for IOMMU implementations that do
+enforce execute permissions separately. Looking forward to the v2 series.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
+Thanks,
+Chao
+> >
+> > Thanks,
+> > Chao
+> > > +
+> > > +        iotlb = imrc->translate(iommu_mr, addr, iommu_flags, iommu_idx);
+> > >          addr = ((iotlb.translated_addr & ~iotlb.addr_mask)
+> > >                  | (addr & iotlb.addr_mask));
+> > >          /* Update the caller's prot bits to remove permissions the IOMMU
+> > > --
+> > > 2.43.0
+> > >
+> > >
 
