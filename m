@@ -4,67 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09492EF370F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:17:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A05EF370F
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:17:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzVnM-0003Ib-W3; Mon, 09 Mar 2026 04:16:57 -0400
+	id 1vzVnW-00045Y-GY; Mon, 09 Mar 2026 04:17:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vzVlh-0002Ld-Fx
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:15:15 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVnU-00040f-IW
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:17:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
- id 1vzVlf-0003zH-Vb
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:15:13 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVnS-0004K5-J0
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:17:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773044110;
+ s=mimecast20190719; t=1773044220;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=kYo5zwTXKSpB+8xzwxC1SC56MIoInwghTipG2oXJj/c=;
- b=GKu7++QH8Q5DXEOPrpVNTY+iBKkHFbGGj1ebzN8LCJAuBUaYKkLBU0kr13kVIhZRUv5f0U
- JqiKZLMv+kOfG+FTc/7zrF9VFWF4uHJyJMWziqzULeoJNjbR5bgrb6X4ZQGw2Obgi+geE7
- Bw1+8zpf2X4RuRWV5EVX5ZgxrEYAiwk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=AP8VAIcyc77G0uANBWj4jMNbo+BkJjyr/23jJCkf26Y=;
+ b=bTCWrYuUuZMRSkSEfSMZMrThnth6kZ67WZZ4Z3b72P2aLRyhzMHPdqfRUcZPmnRjHbiOZu
+ x3BxF8uKIpPSNgfDNQmVWDYWggr/FnlaKQG88w/kwoxUi6lj5OP4IFa7H9OJzL5mdtK7L8
+ SNrAPZfYH9byB4mWIhV8xxnc4vY1BKw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-295-HZlTMLtXMuGR-fswLP_M7A-1; Mon,
- 09 Mar 2026 04:15:07 -0400
-X-MC-Unique: HZlTMLtXMuGR-fswLP_M7A-1
-X-Mimecast-MFC-AGG-ID: HZlTMLtXMuGR-fswLP_M7A_1773044106
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-qkvvVX_7Pheuuvjvp3XdPg-1; Mon,
+ 09 Mar 2026 04:16:57 -0400
+X-MC-Unique: qkvvVX_7Pheuuvjvp3XdPg-1
+X-Mimecast-MFC-AGG-ID: qkvvVX_7Pheuuvjvp3XdPg_1773044215
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 437611956059; Mon,  9 Mar 2026 08:15:06 +0000 (UTC)
-Received: from localhost (unknown [10.44.32.11])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0586D180049D; Mon,  9 Mar 2026 08:15:04 +0000 (UTC)
-Date: Mon, 9 Mar 2026 16:15:02 +0800
-From: Stefan Hajnoczi <stefanha@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>, Kevin Wolf <kwolf@redhat.com>,
- armbru@redhat.com
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>,
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
- holder name
-Message-ID: <20260309081502.GC39949@fedora>
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-5-zhangckid@gmail.com>
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA7BE180034F; Mon,  9 Mar 2026 08:16:55 +0000 (UTC)
+Received: from [10.45.224.73] (unknown [10.45.224.73])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 0956819560A6; Mon,  9 Mar 2026 08:16:48 +0000 (UTC)
+Message-ID: <d1bfeb86-7559-40fc-a04e-6d30ce2e1e7a@redhat.com>
+Date: Mon, 9 Mar 2026 09:16:47 +0100
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
- protocol="application/pgp-signature"; boundary="5fThf1NTULKGb5Su"
-Content-Disposition: inline
-In-Reply-To: <20260305142459.52559-5-zhangckid@gmail.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=stefanha@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 05/10] hw/i386/pc: Remove pc_compat_3_1[] array
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>
+References: <20260307152635.83893-1-philmd@linaro.org>
+ <20260307152635.83893-6-philmd@linaro.org>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260307152635.83893-6-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -89,73 +135,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
---5fThf1NTULKGb5Su
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-On Thu, Mar 05, 2026 at 10:24:50PM +0800, Zhang Chen wrote:
-> Update the usage of "iothread_get_aio_context()".
->=20
-> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+On 07/03/2026 16.26, Philippe Mathieu-Daudé wrote:
+> The pc_compat_3_1[] array was only used by the pc-q35-3.1
+> and pc-i440fx-3.1 machines, which got removed. Remove it.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  blockdev.c | 9 ++++++++-
->  1 file changed, 8 insertions(+), 1 deletion(-)
->=20
-> diff --git a/blockdev.c b/blockdev.c
-> index 6e86c6262f..01ccf64b3f 100644
-> --- a/blockdev.c
-> +++ b/blockdev.c
-> @@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const char *node_=
-name, StrOrNull *iothread,
->              goto out;
->          }
-> =20
-> -        new_context =3D iothread_get_aio_context(obj);
-> +        char *path =3D object_get_canonical_path(OBJECT(bs));
+>   include/hw/i386/pc.h |  3 ---
+>   hw/i386/pc.c         | 25 -------------------------
+>   2 files changed, 28 deletions(-)
 
-CCing Kevin and Markus in case they have an opinion on this.
-
-BlockDriverState is not a QOM Object so using OBJECT(bs) is undefined
-behavior and may crash.
-
-node_name is unique across block driver graph nodes and could be used.
-Unfortunately it's not connected to the QOM Object hierarchy. Maybe it's
-best to build a holder name that is an invalid QOM path so there can be
-no collisions between QOM paths and block driver graph nodes.
-
-  g_autofree char *holder =3D g_strdup_printf("BlockDriverState %s", node_n=
-ame);
-
-(A cleaner long-term solution would be making BlockDriverStates QOM
-Objects so they have a proper path.)
-
-> +        /*
-> +         * For this qmp case, hard to find the point put aio context ???
-> +         * It looks like a pairing function is needed:
-> +         * qmp_x_blockdev_del_iothread()
-> +         */
-> +        new_context =3D iothread_get_aio_context(obj, path);
-> +        g_free(path);
-
-Who calls iothread_put_aio_context()?
-
---5fThf1NTULKGb5Su
-Content-Type: application/pgp-signature; name=signature.asc
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmugYYACgkQnKSrs4Gr
-c8hLgQf/ZokL3LkE9BYi86csKhOTiUDThODDINEX5VrFqAjXqDPvJYCzRgYcJP7e
-P76U0DGbY5hlZtYn1Bk784+qTzQoqX4uf2/2e4m0StgebJ9E0MJam9ziS0xAj2pu
-RHrUM0fq8je2agbkXY9Z7DOSrzodFerMOCnYLgjuSvoX2LW5jY9Wn4dIkF8OM7/X
-TksKPd+gjY0ps6kClGUz8vmo+dmyqRaCtOrSrqK3Aa3Hym1eq62uxnF/DSgJpH5h
-Teuncxiq9FLWbDNblNi0idKWpknj8F5na8wknwPWu9m/9mn1w2SSzlgE3/Mpaw2r
-87UqyiXckoNQsd7Tflrrd8xAsjalkA==
-=mvxs
------END PGP SIGNATURE-----
-
---5fThf1NTULKGb5Su--
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
