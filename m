@@ -4,91 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 045E4FCA191
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 22:48:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B94DFCA19D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 23:00:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzjOD-0003Q5-5i; Mon, 09 Mar 2026 18:47:53 -0400
+	id 1vzja8-0005vw-KP; Mon, 09 Mar 2026 19:00:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzjOA-0003Pw-LP
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:47:50 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzjO8-00035V-Lu
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:47:50 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-4327790c4e9so9466765f8f.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 15:47:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773096467; x=1773701267; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Aud/vsM8qXLxgAKvFp0agbpqFv9C+zDE18mTApxpkgY=;
- b=aLbbFWoZTwN+6GRPni3Qo9R0UABvgRqQB3u2cW5Ejvb1Pb0MMPErPX9ontC2aGdkeq
- YZ9UYtHVp56VBkXmV3w4f7LMo2udGCUHfm/JjV4Z2VHHDFqUGcJsbAYPAzofzKKJg1gY
- fNuxjYzKc1fzSeJq03KT2DLH6AEdMqdAqC70XaVfZnpDtlJG6UQ/SPLED10Se9HzIfYg
- 1POmngjxXw7sa3OUBWRwZpoX091zjuVDSmU1SODK71KERIVp+KP5UyJBCr/xQogMIii7
- dgpfwyqG4Kc8YPiyww+M1EnIm2WSWWawdxi2+cxtk/LntmZY1DPQJzIlTSpe6p/o0NsQ
- OkuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773096467; x=1773701267;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Aud/vsM8qXLxgAKvFp0agbpqFv9C+zDE18mTApxpkgY=;
- b=J6IgvgvZ7rOEFflfUXjQS7og8VpMi8cnyXg+zecg4XpZsklPi/n7QyiMBdIzwCVDP1
- 3MPeGwlkXI+YEKHqWEqeCl8H0PD+qU/8DShheTD619OjbDUsWCoLOOwdeqJiJpsrcbru
- Z5z09QXpFnkAtxaib78nIN/RtJrxZBxiNA/kx/ukywATXlEoumDJSOElH6HfYCgEq4NT
- wog1y9HXiltJUro+VFQextl7HdLy28mbOE5IO6QomdjwC1BIaIV0fal+eyCE6Xp68g+/
- h8Yc/loe4iyibTJ2+qvXTts3qzmkV/I1MQoLO49euRdDuvIo8KhAMC6zznT/rwZnbbp8
- OhHQ==
-X-Gm-Message-State: AOJu0Yxj7tRh023eKhMn87K3TWPrqXaSnqiJp8vDNztJTS1/lMpk6BjF
- X0n3gi759wbwua4eO1NOrDRUjmoGM0N9EIKryYnXg2w+sIckL0rjFBlOpRHQ052oGUsRrEN/MIa
- FJbihuh4=
-X-Gm-Gg: ATEYQzxKJnv6YZEgspS4UmWQk2KUX4YBqYRCVJ8SlkQumyjTmx5ILQCh1GHbyx5g0eL
- xPDKV+YT3WDq2R/xqc+94LbcPk+bBauAQGF5bjbi5vBXgKzb4q228JFKrb1/Gc760aWaRSBr9Wb
- 5SgC870MzRrmja9kFld+N8DThYs60SnEu8fUe0smAo3PBRftqlbV3ExuaYkyjgsvtgmHo8mZMIx
- q1SUuYYgNptvD3VGnnFgUpS1sImoLZbT5kFYDIqLTs5wW75l8Ww2EeMrD1uRjF0vnmwGbqIryAx
- 6qLFybvmhi81j8LxQoLdlMDHaW5Zi50Ghv675ONuyp7otp2hIwoi9PDSy147n/n0/vha1lJOjrH
- fY8kF4FHuvc9W4b+YrhOWH6aTuUWynYb0U/Do0Se3MF7hDl99YgONcRmVp5A0ajYjPvZBJRefH/
- 55NCxTfD6jW8GyAMdLX5/zvzZ3JY8zZYyeWjc6zoJdpDt76G+9Z9X48eyuDfKxwRfrzasl9CPEt
- C4S
-X-Received: by 2002:a05:6000:381:b0:439:beee:43b5 with SMTP id
- ffacd0b85a97d-439da64f629mr23684736f8f.3.1773096466573; 
- Mon, 09 Mar 2026 15:47:46 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dadac2a7sm30844759f8f.15.2026.03.09.15.47.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 15:47:45 -0700 (PDT)
-Message-ID: <bca933e0-83da-4518-a7f6-af3e611293c3@linaro.org>
-Date: Mon, 9 Mar 2026 23:47:45 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vzja1-0005vi-I9
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 19:00:06 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vzjZz-0004L5-1P
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 19:00:05 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 123815969E7;
+ Tue, 10 Mar 2026 00:00:00 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id 5qjtksLH5NIk; Mon,  9 Mar 2026 23:59:58 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 121295969E6; Mon, 09 Mar 2026 23:59:58 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 0EC755966F4;
+ Mon, 09 Mar 2026 23:59:58 +0100 (CET)
+Date: Mon, 9 Mar 2026 23:59:58 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] ati-vga: Fix sign extension in DEFAULT_SC_BOTTOM_RIGHT
+ read
+In-Reply-To: <e2824e5c-4d1d-4d08-ba24-a8c3056c2edc@linaro.org>
+Message-ID: <de83d589-99c0-9d40-b29e-61f8deb3d249@eik.bme.hu>
+References: <20260309212206.2457691-1-chad@jablonski.xyz>
+ <1931a6d0-d351-cc43-1b3d-fa3b3b0809a9@eik.bme.hu>
+ <e2824e5c-4d1d-4d08-ba24-a8c3056c2edc@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/hppa: Expand tcg_global_mem_new() ->
- tcg_global_mem_new_i64()
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>
-References: <20260205212914.10382-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260205212914.10382-1-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1991432198-1773097198=:98453"
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,15 +70,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/2/26 22:29, Philippe Mathieu-Daudé wrote:
-> The HPPA target is a 64-bit one, so tcg_global_mem_new()
-> expands to tcg_global_mem_new_i64(). Use the latter which
-> is more explicit.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   target/hppa/translate.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-Patch queued.
+--3866299591-1991432198-1773097198=:98453
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
+
+On Mon, 9 Mar 2026, Philippe Mathieu-Daudé wrote:
+> On 9/3/26 22:41, BALATON Zoltan wrote:
+>> On Mon, 9 Mar 2026, Chad Jablonski wrote:
+>>> Cast default_sc_bottom to uint32_t before shifting left to prevent
+>>> sign extension when assigning to uint64_t.
+>>> 
+>>> Fixes: CID 1645615
+>>> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+>>> ---
+>>> hw/display/ati.c | 2 +-
+>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>> 
+>>> diff --git a/hw/display/ati.c b/hw/display/ati.c
+>>> index 6cf243bcf9..f9773e1154 100644
+>>> --- a/hw/display/ati.c
+>>> +++ b/hw/display/ati.c
+>>> @@ -514,7 +514,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, 
+>>> unsigned int size)
+>>>         val |= s->regs.default_tile << 16;
+>>>         break;
+>>>     case DEFAULT_SC_BOTTOM_RIGHT:
+>>> -        val = (s->regs.default_sc_bottom << 16) |
+>>> +        val = ((uint32_t)s->regs.default_sc_bottom << 16) |
+>>>               s->regs.default_sc_right;
+>
+> What about using deposit64() which is uncontroversial?
+>
+>            val = deposit64(s->regs.default_sc_right, 16,
+>                            13, s->regs.default_sc_bottom);
+
+I can't make sense of that without going and looking what the arguments of 
+this function are so I'd rather keep it simple. As I said, the values here 
+can't be large enough to sign extend and there may be other similar cases 
+that are already marked in Coverity. But if we still want to fix all of 
+them then maybe we could try to make val uint32_t then do something about 
+it once at the return for all cases. That seems better than trying to 
+handle in each case inconsistently. The simplest would still be to tell 
+Converity it's wrong here.
+
+Regards,
+BALATON Zoltan
+--3866299591-1991432198-1773097198=:98453--
 
