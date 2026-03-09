@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE294F41807
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BCCAAF41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcuM-0003HN-OO; Mon, 09 Mar 2026 11:52:38 -0400
+	id 1vzcus-0003lO-CN; Mon, 09 Mar 2026 11:53:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuH-0003C7-2w
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:34 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuj-0003XY-6Q
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:02 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuE-00086B-Nc
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:32 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-439d8dc4ae4so1790686f8f.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:52:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcug-0008AE-Um
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:00 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48534237460so18198695e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:52:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071549; x=1773676349; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071576; x=1773676376; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=aAGNceKt9ICMl3PKB0LspGbqju2ajHOrPESyT1vA8as=;
- b=CCE/ksDdVgOC+lyN8n0YVhpN180fyNxwuB9yPiuDKlMJP79hThuyn00eOjJy7yg7lK
- Sss/miSiejzbp191q5XeVuqGfyjPNqk8O0EwbcOrEhnwAMjzWy9+YpaGoAfNZANa0W6/
- xbvdDmPWjOvXDA8Dq3AH1UV7hOBzNHTUu3I8ZzWj05Urb8vN5o32vfjMw7g8R88PW85g
- AhupUnkvK3BkgupyZXod2Bozpa62Y9UPGLZT6+4sGXOl0mSMAu0H2lx/NGUAITijRAQU
- 23O42H0Pxmpc0kuv/npL2kw38GBCNRLNPuIeswMJ3VBMJz8gphkR5LhIKMz7GUWOBR7n
- 6Acw==
+ :reply-to; bh=UjlYj7EvBnMKHImEQ8XvxuaNoxFu0RUHBwONjSEDr6Y=;
+ b=WURiTKvcRwwzHW+kRYmrHgJ6Wcqhsozd5mMYeRNk8eu2B3ptH50bfD6B4ho97EOdh0
+ wk34Etsb1DS0zQcyHP4Tnha2Grizxu6hB6Nh0MZvwwmH/VW7KuKv2uEPyIJSuFbuJdgg
+ 5QRwuIQKeeQBXrYmxdZAET/Gh0HzAZ9H24lsirMrwiLlSazTMSzpxRdXLtQKUAZDstIh
+ jcMQrlMT3c9kGfgY2sUli5uurnJgfO/WneDgTcPK6V2d9ByhqO5jVQcg0hecW4a1CIuj
+ WwgD/mviA2nIhA5D1/mIdfbluuMDX+Q0UpCehEeO8NWa8OgVNvi6kgySq+yMF/4/8549
+ Ca6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071549; x=1773676349;
+ d=1e100.net; s=20230601; t=1773071576; x=1773676376;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=aAGNceKt9ICMl3PKB0LspGbqju2ajHOrPESyT1vA8as=;
- b=RKc+D0CRGocsdC4ZCPvGqXia2VwUJEHRWCKfIlJjGiMrrEuf7oy8CXZtdI0Ls6atIP
- rI/F2lobqDiyphKrDD6/ZsrHkdXXAcD/UMBewykjI9z9EVisaKFJUNLZIxdKiZTUgTUG
- WxnK924oJscJW0shj8+Ai0vi/OJfoHiLzgcK4Umn3coWxCeuOexfIXlJTRi40uI+e5Ij
- K76s/u3tXeGVmo1FiijD0nmKlNO7+3DuMHNAeMwXTe9Npo9shR0LqmFX+qtAEHYslu38
- YNCSD+/wR24CAAu/UeB58B9vSPoYPofxEG0RPud/e3ZDrK62IXEETQ1+Kifok6uZkLY8
- 4lwA==
-X-Gm-Message-State: AOJu0Yw4QnPCArnVAKDprjgWbk9fBCJzADw6HFxUU8E+W+I45I7Sk5HP
- WFuIS69sTRlpXXxVk185yzmCzwiHp2rJpfjaX0VxICxSvISMUpQ75pcOVm34cctz9he9o4lLGYS
- rlOzuM5Q=
-X-Gm-Gg: ATEYQzzQoaableH/KGA+Vn4mCDw1YCnaaYiVtNMEtxwdvI7OaCA8Z8Q+GnXFhv5QBKL
- +ESehcOeGkMmrmu/0OTQqJGsoFpPk3AcIeIe4jxDs6XrKWWyAF4Y3j5+4aLpTbS7yEhxMlyM39E
- oJxMfJsl/G/TUy7PibAhBTv8+vIaVQ1lxz11oaKmAXTgTOEbJUY4eMj9K8umMKBfNal4aq+W1wW
- rhkOD56b6dCNJZikPVyP1h0KBEjmnYGu3MXFrZIvS1ZvF7ugyUs5x/j6U1ROqxmUQyaqla6MQjm
- 4RVAwFldMecwsZeAzSUeWaOnZZpEf5+58rvlAPdO5KOkkGNQpkHLwVLt6JMtQfWevyuWPLGCJdO
- 9lJhjBL6nMKBoySU/AzeyPcgXgWN1AMFtubfpeZwlqlI0KsWIfp3vjvYyJqyyk3Rq4gpCnpRlfj
- oCeUL5e+hmjcM75eE5NZBra62L/QvjPDtOz621NDX+KRqpJFPTa37zAeUkLQVvEUPqGNNejjxp
-X-Received: by 2002:a05:6000:2285:b0:439:ba69:101d with SMTP id
- ffacd0b85a97d-439da354ccbmr19755263f8f.1.1773071548697; 
- Mon, 09 Mar 2026 08:52:28 -0700 (PDT)
+ bh=UjlYj7EvBnMKHImEQ8XvxuaNoxFu0RUHBwONjSEDr6Y=;
+ b=HmKFQP5p9T7fNv6vb/TQPQ79qpec+unSwJ04/wM4k3BFoqSk/T8ioSLM5GNHaHW7OF
+ hPINoWufCGS5ChTfq4xEadgy3dLukZkL3xpBXxMqzN+NHJob1qpdeZD1BE6y4IUbvC6k
+ q0RZqeEz3+wBXUGi1hxeolOfPHAk91k1841O+nTW1qVIo31ZO/MswGUSehKnMaUYyPNH
+ Ku8ITb02Ijji+/m6MQhE+cFB7EYwNblZ5iuQ8UwCopDE7urEtgK2ANGE8QVvJR+93/5j
+ Az426vpseY9l6Ylqc+1XCRFDsTq+SaZgVBqt/L4rPJSgdWGTUtRWCLxScD9W+cYw1qqp
+ AEaQ==
+X-Gm-Message-State: AOJu0Yx0qVsrsVMwwanN1o1Y4mqBEofF8hzIuZgAhudKK7X7/MbdA17A
+ iWwAMelF80VCViC71JDpp5+JHZciETb3eTA6gOxN68wisDfgE+Rsudx8YkZrjB6M4bQK/yNXT46
+ AgSw3Clg=
+X-Gm-Gg: ATEYQzw5dzpP+zmGdgSz9qKQRqKihWgKcdLjvxdY83kHu8HvcW9xULtqj+1+0q2O1Gl
+ ffTfcyfn10xZ6JhPIXwwNazi/red6uqkFwmEeX9cNHpSq06ugDdBP+GlYgfbBESHl301nzlfl6I
+ 6cmrDRtQuDBUxce3mzhQYYcPcprDKAIiKje3Z9KtoYoghL0Kd15rMAmh4dwt/BY7e3cu5+J5H0L
+ 0p0spMz3NO9APxJy3dSDjkWMhmpcFKsV4QWpllvboTESMDk6dDwkzeiBy3rHl8PLZN5OBtRR5D6
+ pR+oJxwV4BgdkiFqcd1vzaxb+wkhtAZwAonknrIIKRvbS0Ynjbz8H5GhrMauBYzv04h0p+ua2ih
+ bP22RiV2MTLuaqk9t/JErj1aP3f7i1yaaEq/ev/3MIqK1KnvpuW/MXY9d9xGyqKYi01ulPSzW1S
+ eKbU873PvVcEDtQWXZp/bW8MHoRnX45yN98cUuTCc0uWai6ysMVkNFCN6xn1mEc0xJT7ENnZ9y
+X-Received: by 2002:a05:600c:310f:b0:485:390d:74f8 with SMTP id
+ 5b1f17b1804b1-485390d7719mr77360355e9.25.1773071575711; 
+ Mon, 09 Mar 2026 08:52:55 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2ba06sm29306158f8f.24.2026.03.09.08.52.27
+ 5b1f17b1804b1-485419c2930sm2739455e9.0.2026.03.09.08.52.54
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:52:27 -0700 (PDT)
+ Mon, 09 Mar 2026 08:52:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 01/49] hw/timer/hpet: Remove HPETState::hpet_offset_saved field
-Date: Mon,  9 Mar 2026 16:51:31 +0100
-Message-ID: <20260309155219.62400-2-philmd@linaro.org>
+Subject: [PULL 05/49] hw/core/boards: Remove
+ MachineClass::smbus_no_migration_support field
+Date: Mon,  9 Mar 2026 16:51:35 +0100
+Message-ID: <20260309155219.62400-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,97 +99,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The HPETState::hpet_offset_saved boolean was only set in the
-hw_compat_2_11[] array, via the 'hpet-offset-saved=false'
-property. We removed all machines using that array, let's remove
-that property and all the code around it.
+The MachineClass::smbus_no_migration_support boolean was only used
+by the pc-q35-3.1 and pc-i440fx-3.1 machines, which got removed.
+Remove it, along with pm_smbus_vmstate_needed().
 
-Message-ID: <20250501230129.2596-6-philmd@linaro.org>
-[thuth: Adapted the rust part to the current master branch]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Use the unconditional VMSTATE_BOOL() and VMSTATE_STRUCT() macros.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260306093134.27789-1-thuth@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Acked-by: Corey Minyard <corey@minyard.net>
+Message-Id: <20260307152635.83893-5-philmd@linaro.org>
 ---
- hw/timer/hpet.c                  | 9 +--------
- rust/hw/timer/hpet/src/device.rs | 9 +--------
- 2 files changed, 2 insertions(+), 16 deletions(-)
+ include/hw/core/boards.h  |  1 -
+ include/hw/i2c/pm_smbus.h |  7 -------
+ hw/acpi/piix4.c           |  8 +-------
+ hw/i2c/pm_smbus.c         |  7 -------
+ hw/i2c/smbus_eeprom.c     |  4 +---
+ hw/i2c/smbus_ich9.c       | 10 ++--------
+ 6 files changed, 4 insertions(+), 33 deletions(-)
 
-diff --git a/hw/timer/hpet.c b/hw/timer/hpet.c
-index 0d7b8e0c7a3..767093c431a 100644
---- a/hw/timer/hpet.c
-+++ b/hw/timer/hpet.c
-@@ -75,7 +75,6 @@ struct HPETState {
-     QemuMutex lock;
-     MemoryRegion iomem;
-     uint64_t hpet_offset;
--    bool hpet_offset_saved;
-     QemuSeqLock state_version;
-     qemu_irq irqs[HPET_NUM_IRQ_ROUTES];
-     uint32_t flags;
-@@ -272,11 +271,6 @@ static int hpet_post_load(void *opaque, int version_id)
-         t->cmp64 = hpet_calculate_cmp64(t, s->hpet_counter, t->cmp);
-         t->last = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL) - NANOSECONDS_PER_SECOND;
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index 9ad2a7d5c97..e15dbcea83b 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -314,7 +314,6 @@ struct MachineClass {
+     bool auto_enable_numa_with_memhp;
+     bool auto_enable_numa_with_memdev;
+     bool ignore_boot_device_suffixes;
+-    bool smbus_no_migration_support;
+     bool nvdimm_supported;
+     bool numa_mem_supported;
+     bool auto_enable_numa;
+diff --git a/include/hw/i2c/pm_smbus.h b/include/hw/i2c/pm_smbus.h
+index dafe0df4f69..62bbd45e803 100644
+--- a/include/hw/i2c/pm_smbus.h
++++ b/include/hw/i2c/pm_smbus.h
+@@ -44,13 +44,6 @@ typedef struct PMSMBus {
+ 
+ void pm_smbus_init(DeviceState *parent, PMSMBus *smb, bool force_aux_blk);
+ 
+-/*
+- * For backwards compatibility on migration, older versions don't have
+- * working migration for pm_smbus, this lets us ignore the migrations
+- * for older machine versions.
+- */
+-bool pm_smbus_vmstate_needed(void);
+-
+ extern const VMStateDescription pmsmb_vmstate;
+ 
+ #endif /* PM_SMBUS_H */
+diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
+index 138ac3d3940..43860d12278 100644
+--- a/hw/acpi/piix4.c
++++ b/hw/acpi/piix4.c
+@@ -205,11 +205,6 @@ static const VMStateDescription vmstate_cpuhp_state = {
      }
--    /* Recalculate the offset between the main counter and guest time */
--    if (!s->hpet_offset_saved) {
--        s->hpet_offset = ticks_to_ns(s->hpet_counter)
--                        - qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
--    }
- 
-     return 0;
- }
-@@ -285,7 +279,7 @@ static bool hpet_offset_needed(void *opaque)
- {
-     HPETState *s = opaque;
- 
--    return hpet_enabled(s) && s->hpet_offset_saved;
-+    return hpet_enabled(s);
- }
- 
- static bool hpet_rtc_irq_level_needed(void *opaque)
-@@ -766,7 +760,6 @@ static const Property hpet_device_properties[] = {
-     DEFINE_PROP_UINT8("timers", HPETState, num_timers, HPET_MIN_TIMERS),
-     DEFINE_PROP_BIT("msi", HPETState, flags, HPET_MSI_SUPPORT, false),
-     DEFINE_PROP_UINT32(HPET_INTCAP, HPETState, intcap, 0),
--    DEFINE_PROP_BOOL("hpet-offset-saved", HPETState, hpet_offset_saved, true),
  };
  
- static void hpet_device_class_init(ObjectClass *klass, const void *data)
-diff --git a/rust/hw/timer/hpet/src/device.rs b/rust/hw/timer/hpet/src/device.rs
-index ebf715d3995..0a5c131819b 100644
---- a/rust/hw/timer/hpet/src/device.rs
-+++ b/rust/hw/timer/hpet/src/device.rs
-@@ -627,8 +627,6 @@ pub struct HPETState {
-     flags: u32,
+-static bool piix4_vmstate_need_smbus(void *opaque, int version_id)
+-{
+-    return pm_smbus_vmstate_needed();
+-}
+-
+ /*
+  * This is a fudge to turn off the acpi_index field,
+  * whose test was always broken on piix4 with 6.2 and older machine types.
+@@ -238,8 +233,7 @@ static const VMStateDescription vmstate_acpi = {
+         VMSTATE_UINT16(ar.pm1.evt.en, PIIX4PMState),
+         VMSTATE_UINT16(ar.pm1.cnt.cnt, PIIX4PMState),
+         VMSTATE_STRUCT(apm, PIIX4PMState, 0, vmstate_apm, APMState),
+-        VMSTATE_STRUCT_TEST(smb, PIIX4PMState, piix4_vmstate_need_smbus, 3,
+-                            pmsmb_vmstate, PMSMBus),
++        VMSTATE_STRUCT(smb, PIIX4PMState, 3, pmsmb_vmstate, PMSMBus),
+         VMSTATE_TIMER_PTR(ar.tmr.timer, PIIX4PMState),
+         VMSTATE_INT64(ar.tmr.overflow_time, PIIX4PMState),
+         VMSTATE_STRUCT(ar.gpe, PIIX4PMState, 2, vmstate_gpe, ACPIGPE),
+diff --git a/hw/i2c/pm_smbus.c b/hw/i2c/pm_smbus.c
+index ead53d2724d..5654d516382 100644
+--- a/hw/i2c/pm_smbus.c
++++ b/hw/i2c/pm_smbus.c
+@@ -443,13 +443,6 @@ static const MemoryRegionOps pm_smbus_ops = {
+     .endianness = DEVICE_LITTLE_ENDIAN,
+ };
  
-     hpet_offset_migration: BqlCell<u64>,
--    #[property(rename = "hpet-offset-saved", default = true)]
--    hpet_offset_saved: bool,
+-bool pm_smbus_vmstate_needed(void)
+-{
+-    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+-
+-    return !mc->smbus_no_migration_support;
+-}
+-
+ const VMStateDescription pmsmb_vmstate = {
+     .name = "pmsmb",
+     .version_id = 1,
+diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
+index d9ac556a0ab..693d4762205 100644
+--- a/hw/i2c/smbus_eeprom.c
++++ b/hw/i2c/smbus_eeprom.c
+@@ -88,11 +88,9 @@ static int eeprom_write_data(SMBusDevice *dev, uint8_t *buf, uint8_t len)
  
-     irqs: [InterruptSource; HPET_NUM_IRQ_ROUTES],
-     rtc_irq_level: BqlCell<u32>,
-@@ -947,11 +945,6 @@ fn post_load(&self, _version_id: u8) -> Result<(), migration::Infallible> {
-             tn_regs.last = CLOCK_VIRTUAL.get_ns() - NANOSECONDS_PER_SECOND;
-         }
+ static bool smbus_eeprom_vmstate_needed(void *opaque)
+ {
+-    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
+     SMBusEEPROMDevice *eeprom = opaque;
  
--        // Recalculate the offset between the main counter and guest time
--        if !self.hpet_offset_saved {
--            self.hpet_offset_migration
--                .set(ticks_to_ns(regs.counter) - CLOCK_VIRTUAL.get_ns());
--        }
-         regs.hpet_offset = self.hpet_offset_migration.get();
+-    return (eeprom->accessed || smbus_vmstate_needed(&eeprom->smbusdev)) &&
+-        !mc->smbus_no_migration_support;
++    return eeprom->accessed || smbus_vmstate_needed(&eeprom->smbusdev);
+ }
  
-         Ok(())
-@@ -962,7 +955,7 @@ fn is_rtc_irq_level_needed(&self) -> bool {
+ static const VMStateDescription vmstate_smbus_eeprom = {
+diff --git a/hw/i2c/smbus_ich9.c b/hw/i2c/smbus_ich9.c
+index 956c9b59bbc..51513e73fde 100644
+--- a/hw/i2c/smbus_ich9.c
++++ b/hw/i2c/smbus_ich9.c
+@@ -41,20 +41,14 @@ struct ICH9SMBState {
+     PMSMBus smb;
+ };
+ 
+-static bool ich9_vmstate_need_smbus(void *opaque, int version_id)
+-{
+-    return pm_smbus_vmstate_needed();
+-}
+-
+ static const VMStateDescription vmstate_ich9_smbus = {
+     .name = "ich9_smb",
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (const VMStateField[]) {
+         VMSTATE_PCI_DEVICE(dev, ICH9SMBState),
+-        VMSTATE_BOOL_TEST(irq_enabled, ICH9SMBState, ich9_vmstate_need_smbus),
+-        VMSTATE_STRUCT_TEST(smb, ICH9SMBState, ich9_vmstate_need_smbus, 1,
+-                            pmsmb_vmstate, PMSMBus),
++        VMSTATE_BOOL(irq_enabled, ICH9SMBState),
++        VMSTATE_STRUCT(smb, ICH9SMBState, 1, pmsmb_vmstate, PMSMBus),
+         VMSTATE_END_OF_LIST()
      }
- 
-     fn is_offset_needed(&self) -> bool {
--        self.regs.borrow().is_hpet_enabled() && self.hpet_offset_saved
-+        self.regs.borrow().is_hpet_enabled()
-     }
- 
-     fn validate_num_timers(&self, _version_id: u8) -> bool {
+ };
 -- 
 2.53.0
 
