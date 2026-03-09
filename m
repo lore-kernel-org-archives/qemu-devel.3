@@ -4,107 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDAD6FCA187
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 20:41:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D009FCA189
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 20:41:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzhPA-0004fZ-IK; Mon, 09 Mar 2026 16:40:46 -0400
+	id 1vzhPI-0004kp-H8; Mon, 09 Mar 2026 16:40:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhP2-0004eO-0F
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhPB-0004go-Tc
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhOn-0007gx-4g
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:24 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhP9-0007nj-E0
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773088820;
+ s=mimecast20190719; t=1773088842;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=2vehCZK5/R8j3vUwTjtp8zDbHvkpCYWmHpHas3VXqzU=;
- b=Eg862//JHCI8ij4qm7aoyGx6SFJxPpNlxJb4uHtv69nkfVllGxoP6awWLYP/6LrUbgJh0Q
- 4qnoRYU8pOsN56KJcFmLHOBRyxr5yMeSLpd/o65cEXO705mZJ7CyfPCeJwVT9cvf3hRXMb
- L757mJW7/43r7H4E0J2HlX0GoQDaGhU=
+ bh=uf3HD61cPR9EZKQ9SCtWf0wlWyOgzRoud2zUcsD7Rg4=;
+ b=RHG0OThO6MoDDTGygkpRJU6f0TTYg0Cbo3b8SES9iyBAwQuu5G930PV4uUczHX+Vg1B7BW
+ hyLfrWSF4QL5jksQMWcFQXJ8ukvxOW+VJmNvRoacNziG41pH0J4C5zsPfpB8JE758JjjA7
+ jiieC36UF0FZkkX4K6WDA3hYTZ7U0zU=
 Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
  [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-460-k4bYsTy9NTauN8cGL0eFcQ-1; Mon, 09 Mar 2026 16:40:19 -0400
-X-MC-Unique: k4bYsTy9NTauN8cGL0eFcQ-1
-X-Mimecast-MFC-AGG-ID: k4bYsTy9NTauN8cGL0eFcQ_1773088819
+ us-mta-59-MnOoPJ9DMs-6iHB1nXkgcA-1; Mon, 09 Mar 2026 16:40:40 -0400
+X-MC-Unique: MnOoPJ9DMs-6iHB1nXkgcA-1
+X-Mimecast-MFC-AGG-ID: MnOoPJ9DMs-6iHB1nXkgcA_1773088840
 Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8cd77502295so1349969585a.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 13:40:19 -0700 (PDT)
+ af79cd13be357-8cd7ea0bb20so1071408785a.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 13:40:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773088818; x=1773693618; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773088840; x=1773693640; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2vehCZK5/R8j3vUwTjtp8zDbHvkpCYWmHpHas3VXqzU=;
- b=RtpZs8PwByC6R11h9AeFN7mPOO0Sz/KDpvu24mH3A9PuqBvn+68P7xrfJsOAHAAD05
- tfgLk0s5lDuN7tKvNN/GS8/BchWDPYrHJK5cYGIgfU4cbEtJvnBaQIBDXBAwhv+rJHtZ
- mrb2MNwEzKWDMXO5Ggxj/xRYRdJI1nI5BFwxceeRP/TlI/MIXrrsB2O7R/6DCNNS7T4w
- mmnpdcqEaH8pdpjl3ZgCfRAYLc492Qrm17gtM5cuIxXcf+ocWLGIa+WUpPReG1TAB5yw
- F4ZfxXVQms2F2GLWxRCBVKcz7zq7Qk3QQRXHa5QkLdJzgOU4StMu1vK1JK7iJVYmA+MO
- zz2w==
+ bh=uf3HD61cPR9EZKQ9SCtWf0wlWyOgzRoud2zUcsD7Rg4=;
+ b=fKJITlpsZsS9K2rfXO2tHoXzaxWNm4fqj5e4VrEe/FL/iKg3dQ/MMxCVTX5mTLVFZZ
+ fBSOBJZDP9tso+mQYuZ2RYt0O4FV4PiGUWJt0Mz9XRl3aqF/EXT3mwz/idhgm8pT5A4F
+ /Zks+nyu1dFkyVQCyEtSdJFY47Wu6/7wWIlgVSpLgCYdQSSq7vvQavzzf3L528rIOl9M
+ G/3YPLf3r2JXrBCHlRn4WCqptQgkgc4YhRbkrRXN8whZ1cN/cScsGSnZ+YZgISAmp38A
+ twA76y/r96rGZFM1vnrPM9c7sqZLk2PCmvVQqFf3HhIsBm5O/MfgqvD+P11/mV5FGS8q
+ 0Liw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773088818; x=1773693618;
+ d=1e100.net; s=20230601; t=1773088840; x=1773693640;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=2vehCZK5/R8j3vUwTjtp8zDbHvkpCYWmHpHas3VXqzU=;
- b=tNzTwiMMnWnhEohe13n6bV3kmOJ4tPD12anNvaqrF55o846TZ/wHC93cN4r4k0uT9f
- fPaNyvMtfHKgH26K78wuV7r+hCho1rA5nrtDhbxt/rSFWGwyC7hlrQR3DDo/3OM2JIlo
- 4l3jFBgDJg3AyDkIn/ZQHYlQz8H3pRqJSwwHa91ZDjskiK7KuoPZ5fMLAVEwCTF3foyp
- r7yladpIwgqvNxLNCPGhqgX6klOgNNxHe+XmCkYDiZ3UUsS4KElyU8Zd4GXGqwCL0mpb
- Q+JVkIfvvSF3tLOzFntfYM+y40YFgy+qLnb6TrH0T9sDstDEw07fS+xDSfRKMAEC4DT+
- OZCA==
-X-Gm-Message-State: AOJu0Yyhyt7CPvsk0ZNepZjNqTkGb4pfxIGIu2hbbpPGDY02bLEUoauU
- fEYFkItW2BTucA3y6TUND/elvtLXDSKmanRpA72WQduD6d0BQX0XYq2ZAfuCGfHzOhSYFjHBfcZ
- yZvQa2ZYOvBosQI6oWYsLXOwXRXzIA/ST/W8RqzkpV0u8RJyrj/dkgJhD+aiQix7AtiH9KwsZhf
- 87/iJj34J5zbi5M3Cy5tGsdFL8rSM8mszMOlVnKw==
-X-Gm-Gg: ATEYQzw+n5QvhOa8FcxLAnEObHoofItc3o82qcZ+R0JiAZSERfKx6nvwKbx6a8hG2j7
- P6wBLiKkus7Luf7xMdwsuCwGJgook43rVpWmTg1zsnTA1y54/yGWKg7pRr1yvo9rXVuS2xh/7JO
- 7ARFeINOPYDWl3tWRwTEoiQ/KOMd0Gr3tIRC56PeA6UMRLTeh8LxxFK9zCE0P21+7kViCNBx9uk
- 5bZwad0HCenZRvmR2OYglBVd6bPglUPTNpZoQbr4pN80w4ealdQh2s/P+CpHVVgz4KUC1tRe/qr
- MScnDapBeGVulCz9sk0xx9IGlcK8l5z8+u0VqBJYLDZ1CuKZ8U8QMmid69wxBcnPND8nwVj9JRZ
- vKae2v4Ucn2jP6yYYzqd/0PXUuTbIgnzlnuRXJmVyqzlhO/bDdMepsG+4Wgwl+vwSTAQqlafU5h
- KfR64i6w==
-X-Received: by 2002:a05:620a:480c:b0:8ca:2baa:6658 with SMTP id
- af79cd13be357-8cd6d4f7dd7mr1570852285a.70.1773088818314; 
- Mon, 09 Mar 2026 13:40:18 -0700 (PDT)
-X-Received: by 2002:a05:620a:480c:b0:8ca:2baa:6658 with SMTP id
- af79cd13be357-8cd6d4f7dd7mr1570847785a.70.1773088817649; 
- Mon, 09 Mar 2026 13:40:17 -0700 (PDT)
+ bh=uf3HD61cPR9EZKQ9SCtWf0wlWyOgzRoud2zUcsD7Rg4=;
+ b=Mht1FJiFO4c8JG6aOFfVH1ynE699+jzSGwUI0QVucaBRqiBq1qSaBpcrhrID2vV3Yd
+ DlN0aDfA3FlL0FrOSaPr9nGl/FjARaLdkImfU5JPetQCPJyFaGzdDZrqTEulVJ+fsfAa
+ x8dqIJ6lVRf0qHu1fR7rVTUZW3LAHu+SrTpMm5WFdKVfcQ7HfL0ojbuxXz8ihkYRrMOH
+ wvEkq/VJzz8GHZ4FDse1Zc8xRXmU5IoPPR2/iOiGIus8itniBA+wYGp2REu8jtX44051
+ dfwEPUgGDW3i29iKADIdQuuDXlCvF6jAzAMovemDNBczWS4y0tGa5FgjIrX+Sc74l/jB
+ 497g==
+X-Gm-Message-State: AOJu0YzWm5qInn1uRnlPcrejYppWA2nlJA+ZR/TX3GjvRnAnE9awubbj
+ 4qFPLRQGztVIgYll9SbiYUI48/c5dGWR6KtHOk/2mmy5bkNR9rKksrZHBd/y7obOReFVOO6pEL1
+ 4aiP8mdlfbDmmvjp6JmlT1AOIqD9fJfj7yOvRSzqMkPy08CqHo0C2Jk2BeZKKxXhp408Q9+Lb7i
+ hIVJwJBISti73U0JT/KPThM6Wsg+hCoSbfUq0/qg==
+X-Gm-Gg: ATEYQzzUufdNBXmOoNJy+yDS2hdylRLUYhk4ZYbt8NkoBWhLu7aP54NjKz3+wut+Z76
+ /YWTpleNBb7Y8eSueQ34EwHB1aSQtTfNdWotJ72HTda6RPXIBhuPR/Pd+de+qFUqqGjMo39Il+W
+ Oqo/mM2towK/XNsKA6rcAWhWC2FI3QTHoASiqh+uVmHdbCGbcV8qdBl5SDhrFvv0OeoAWw0muh7
+ jbGcYVYpMbjJ+yTxsBQCf9rvd0A7X+ILjYJZpNjYGZ0DGsm8l4peB0nDoW1u3pA30N1YV1egzBu
+ /JNpPBLEQBrJJJG4T6JLDVKidbBjvPBYq4z2nyX8BnbBAKOhWVlhLLU7FXlZVJdLzLALwwofQNT
+ l0FFY4emlDPds4K63ITIx0Odm/bvy3PZglweHW8gyQuIq3AYsBT9TK4/qYbUAya0aAATQoWHHui
+ 6ce01yKg==
+X-Received: by 2002:a05:620a:564:b0:8cd:7f7d:b089 with SMTP id
+ af79cd13be357-8cd7f7db148mr689055085a.70.1773088839708; 
+ Mon, 09 Mar 2026 13:40:39 -0700 (PDT)
+X-Received: by 2002:a05:620a:564:b0:8cd:7f7d:b089 with SMTP id
+ af79cd13be357-8cd7f7db148mr689051485a.70.1773088839159; 
+ Mon, 09 Mar 2026 13:40:39 -0700 (PDT)
 Received: from x1.local
  (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cd8576db0esm332951885a.47.2026.03.09.13.40.16
+ af79cd13be357-8cd8576db0esm332951885a.47.2026.03.09.13.40.37
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 13:40:17 -0700 (PDT)
+ Mon, 09 Mar 2026 13:40:37 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 02/18] memory: Remove memory_region_init_rom_nomigrate()
-Date: Mon,  9 Mar 2026 16:39:51 -0400
-Message-ID: <20260309204007.1709441-3-peterx@redhat.com>
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PULL 15/18] system/ramblock: Constify various RAMBlock arguments
+Date: Mon,  9 Mar 2026 16:40:04 -0400
+Message-ID: <20260309204007.1709441-16-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260309204007.1709441-1-peterx@redhat.com>
 References: <20260309204007.1709441-1-peterx@redhat.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -122,167 +123,209 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: BALATON Zoltan <balaton@eik.bme.hu>
+From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-All users were converted so no longer needed.
+Mark the RAMBlock structure const when is only accessed read-only.
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Link: https://lore.kernel.org/r/2665c92b578f5f6a602b34c7dde73451773e6148.1772924151.git.balaton@eik.bme.hu
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/r/20260309183536.88976-2-philmd@linaro.org
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- docs/devel/memory.rst                         |  1 -
- .../memory-region-housekeeping.cocci          | 28 -------------------
- include/system/memory.h                       | 26 -----------------
- system/memory.c                               | 19 ++-----------
- 4 files changed, 3 insertions(+), 71 deletions(-)
+ include/system/ramblock.h | 28 ++++++++++++++--------------
+ stubs/physmem.c           |  2 +-
+ stubs/ram-block.c         |  6 +++---
+ system/physmem.c          | 28 ++++++++++++++--------------
+ 4 files changed, 32 insertions(+), 32 deletions(-)
 
-diff --git a/docs/devel/memory.rst b/docs/devel/memory.rst
-index 8558f70a42..0bb5acab21 100644
---- a/docs/devel/memory.rst
-+++ b/docs/devel/memory.rst
-@@ -113,7 +113,6 @@ have a special case where you need to manage the migration of
- the backing memory yourself, you can call the functions:
+diff --git a/include/system/ramblock.h b/include/system/ramblock.h
+index e9f58ac045..4435f8d55f 100644
+--- a/include/system/ramblock.h
++++ b/include/system/ramblock.h
+@@ -154,26 +154,26 @@ RAMBlock *qemu_ram_block_by_name(const char *name);
+  */
+ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
+                                    ram_addr_t *offset);
+-ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host);
++ram_addr_t qemu_ram_block_host_offset(const RAMBlock *rb, void *host);
+ void qemu_ram_set_idstr(RAMBlock *block, const char *name, DeviceState *dev);
+ void qemu_ram_unset_idstr(RAMBlock *block);
+-const char *qemu_ram_get_idstr(RAMBlock *rb);
+-void *qemu_ram_get_host_addr(RAMBlock *rb);
+-ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
+-ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
+-ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
+-ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
+-bool qemu_ram_is_shared(RAMBlock *rb);
+-bool qemu_ram_is_noreserve(RAMBlock *rb);
+-bool qemu_ram_is_uf_zeroable(RAMBlock *rb);
++const char *qemu_ram_get_idstr(const RAMBlock *rb);
++void *qemu_ram_get_host_addr(const RAMBlock *rb);
++ram_addr_t qemu_ram_get_offset(const RAMBlock *rb);
++ram_addr_t qemu_ram_get_fd_offset(const RAMBlock *rb);
++ram_addr_t qemu_ram_get_used_length(const RAMBlock *rb);
++ram_addr_t qemu_ram_get_max_length(const RAMBlock *rb);
++bool qemu_ram_is_shared(const RAMBlock *rb);
++bool qemu_ram_is_noreserve(const RAMBlock *rb);
++bool qemu_ram_is_uf_zeroable(const RAMBlock *rb);
+ void qemu_ram_set_uf_zeroable(RAMBlock *rb);
+-bool qemu_ram_is_migratable(RAMBlock *rb);
++bool qemu_ram_is_migratable(const RAMBlock *rb);
+ void qemu_ram_set_migratable(RAMBlock *rb);
+ void qemu_ram_unset_migratable(RAMBlock *rb);
+-bool qemu_ram_is_named_file(RAMBlock *rb);
+-int qemu_ram_get_fd(RAMBlock *rb);
++bool qemu_ram_is_named_file(const RAMBlock *rb);
++int qemu_ram_get_fd(const RAMBlock *rb);
  
- - memory_region_init_ram_nomigrate()
--- memory_region_init_rom_nomigrate()
- 
- which only initialize the MemoryRegion and leave handling
- migration to the caller.
-diff --git a/scripts/coccinelle/memory-region-housekeeping.cocci b/scripts/coccinelle/memory-region-housekeeping.cocci
-index 7f89e9712e..e45703141a 100644
---- a/scripts/coccinelle/memory-region-housekeeping.cocci
-+++ b/scripts/coccinelle/memory-region-housekeeping.cocci
-@@ -16,17 +16,10 @@
- expression E1, E2, E3, E4, E5;
- symbol true;
- @@
--(
- - memory_region_init_ram(E1, E2, E3, E4, E5);
- + memory_region_init_rom(E1, E2, E3, E4, E5);
-   ... WHEN != E1
- - memory_region_set_readonly(E1, true);
--|
--- memory_region_init_ram_nomigrate(E1, E2, E3, E4, E5);
--+ memory_region_init_rom_nomigrate(E1, E2, E3, E4, E5);
--  ... WHEN != E1
--- memory_region_set_readonly(E1, true);
--)
- 
- 
- @possible_memory_region_init_rom@
-@@ -53,11 +46,7 @@ cocci.print_main("potential use of memory_region_init_rom*() in ", p)
- expression ROM, E1, E2, E3, E4;
- expression ALIAS, E5, E6, E7, E8;
- @@
--(
-   memory_region_init_rom(ROM, E1, E2, E3, E4);
--|
--  memory_region_init_rom_nomigrate(ROM, E1, E2, E3, E4);
--)
-   ...
-    memory_region_init_alias(ALIAS, E5, E6, ROM, E7, E8);
- -  memory_region_set_readonly(ALIAS, true);
-@@ -80,23 +69,6 @@ expression ERRP;
-  ...
- -vmstate_register_ram_global(MR);
- @@
--expression MR;
--expression NAME;
--expression SIZE;
--expression ERRP;
--@@
---memory_region_init_rom_nomigrate(MR, NULL, NAME, SIZE, ERRP);
--+memory_region_init_rom(MR, NULL, NAME, SIZE, ERRP);
-- ...
---vmstate_register_ram_global(MR);
--@@
--expression MR;
--expression OPS;
--expression OPAQUE;
--expression NAME;
--expression SIZE;
--expression ERRP;
--@@
- typedef DeviceState;
- identifier device_fn, dev, obj;
- expression E1, E2, E3, E4, E5;
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 0562af3136..7117699b10 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -1588,32 +1588,6 @@ void memory_region_init_alias(MemoryRegion *mr,
-                               hwaddr offset,
-                               uint64_t size);
- 
--/**
-- * memory_region_init_rom_nomigrate: Initialize a ROM memory region.
-- *
-- * This has the same effect as calling memory_region_init_ram_nomigrate()
-- * and then marking the resulting region read-only with
-- * memory_region_set_readonly().
-- *
-- * Note that this function does not do anything to cause the data in the
-- * RAM side of the memory region to be migrated; that is the responsibility
-- * of the caller.
-- *
-- * @mr: the #MemoryRegion to be initialized.
-- * @owner: the object that tracks the region's reference count
-- * @name: Region name, becomes part of RAMBlock name used in migration stream
-- *        must be unique within any device
-- * @size: size of the region.
-- * @errp: pointer to Error*, to store an error if it happens.
-- *
-- * Return: true on success, else false setting @errp with error.
-- */
--bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp);
--
- /**
-  * memory_region_init_iommu: Initialize a memory region of a custom type
-  * that translates addresses
-diff --git a/system/memory.c b/system/memory.c
-index c51d0798a8..65042bd9fa 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -1738,21 +1738,6 @@ void memory_region_init_alias(MemoryRegion *mr,
-     mr->alias_offset = offset;
+-size_t qemu_ram_pagesize(RAMBlock *block);
++size_t qemu_ram_pagesize(const RAMBlock *block);
+ size_t qemu_ram_pagesize_largest(void);
+ #include "exec/target_page.h"
+ #include "exec/hwaddr.h"
+diff --git a/stubs/physmem.c b/stubs/physmem.c
+index 14667f2bd8..2eca06ab6d 100644
+--- a/stubs/physmem.c
++++ b/stubs/physmem.c
+@@ -7,7 +7,7 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
+     return NULL;
  }
  
--bool memory_region_init_rom_nomigrate(MemoryRegion *mr,
--                                      Object *owner,
--                                      const char *name,
--                                      uint64_t size,
--                                      Error **errp)
--{
--    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
--                                                size, 0, errp)) {
--         return false;
--    }
--    mr->readonly = true;
--
--    return true;
--}
--
- void memory_region_init_iommu(void *_iommu_mr,
-                               size_t instance_size,
-                               const char *mrtypename,
-@@ -3757,9 +3742,11 @@ bool memory_region_init_rom(MemoryRegion *mr,
+-int qemu_ram_get_fd(RAMBlock *rb)
++int qemu_ram_get_fd(const RAMBlock *rb)
  {
-     DeviceState *owner_dev;
+     return -1;
+ }
+diff --git a/stubs/ram-block.c b/stubs/ram-block.c
+index 8790a59593..1c79e447ff 100644
+--- a/stubs/ram-block.c
++++ b/stubs/ram-block.c
+@@ -3,17 +3,17 @@
+ #include "system/ramblock.h"
+ #include "system/memory.h"
  
--    if (!memory_region_init_rom_nomigrate(mr, owner, name, size, errp)) {
-+    if (!memory_region_init_ram_flags_nomigrate(mr, owner, name,
-+                                                size, 0, errp)) {
-         return false;
+-void *qemu_ram_get_host_addr(RAMBlock *rb)
++void *qemu_ram_get_host_addr(const RAMBlock *rb)
+ {
+     return 0;
+ }
+ 
+-ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
++ram_addr_t qemu_ram_get_offset(const RAMBlock *rb)
+ {
+     return 0;
+ }
+ 
+-ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
++ram_addr_t qemu_ram_get_used_length(const RAMBlock *rb)
+ {
+     return 0;
+ }
+diff --git a/system/physmem.c b/system/physmem.c
+index 7eecd81877..e5390d09be 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -1859,48 +1859,48 @@ static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
      }
-+    mr->readonly = true;
-     /* This will assert if owner is neither NULL nor a DeviceState.
-      * We only want the owner here for the purposes of defining a
-      * unique name for migration. TODO: Ideally we should implement
+ }
+ 
+-const char *qemu_ram_get_idstr(RAMBlock *rb)
++const char *qemu_ram_get_idstr(const RAMBlock *rb)
+ {
+     return rb->idstr;
+ }
+ 
+-void *qemu_ram_get_host_addr(RAMBlock *rb)
++void *qemu_ram_get_host_addr(const RAMBlock *rb)
+ {
+     return rb->host;
+ }
+ 
+-ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
++ram_addr_t qemu_ram_get_offset(const RAMBlock *rb)
+ {
+     return rb->offset;
+ }
+ 
+-ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
++ram_addr_t qemu_ram_get_fd_offset(const RAMBlock *rb)
+ {
+     return rb->fd_offset;
+ }
+ 
+-ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
++ram_addr_t qemu_ram_get_used_length(const RAMBlock *rb)
+ {
+     return rb->used_length;
+ }
+ 
+-ram_addr_t qemu_ram_get_max_length(RAMBlock *rb)
++ram_addr_t qemu_ram_get_max_length(const RAMBlock *rb)
+ {
+     return rb->max_length;
+ }
+ 
+-bool qemu_ram_is_shared(RAMBlock *rb)
++bool qemu_ram_is_shared(const RAMBlock *rb)
+ {
+     return rb->flags & RAM_SHARED;
+ }
+ 
+-bool qemu_ram_is_noreserve(RAMBlock *rb)
++bool qemu_ram_is_noreserve(const RAMBlock *rb)
+ {
+     return rb->flags & RAM_NORESERVE;
+ }
+ 
+ /* Note: Only set at the start of postcopy */
+-bool qemu_ram_is_uf_zeroable(RAMBlock *rb)
++bool qemu_ram_is_uf_zeroable(const RAMBlock *rb)
+ {
+     return rb->flags & RAM_UF_ZEROPAGE;
+ }
+@@ -1910,7 +1910,7 @@ void qemu_ram_set_uf_zeroable(RAMBlock *rb)
+     rb->flags |= RAM_UF_ZEROPAGE;
+ }
+ 
+-bool qemu_ram_is_migratable(RAMBlock *rb)
++bool qemu_ram_is_migratable(const RAMBlock *rb)
+ {
+     return rb->flags & RAM_MIGRATABLE;
+ }
+@@ -1925,12 +1925,12 @@ void qemu_ram_unset_migratable(RAMBlock *rb)
+     rb->flags &= ~RAM_MIGRATABLE;
+ }
+ 
+-bool qemu_ram_is_named_file(RAMBlock *rb)
++bool qemu_ram_is_named_file(const RAMBlock *rb)
+ {
+     return rb->flags & RAM_NAMED_FILE;
+ }
+ 
+-int qemu_ram_get_fd(RAMBlock *rb)
++int qemu_ram_get_fd(const RAMBlock *rb)
+ {
+     return rb->fd;
+ }
+@@ -1987,7 +1987,7 @@ static char *cpr_name(MemoryRegion *mr)
+     }
+ }
+ 
+-size_t qemu_ram_pagesize(RAMBlock *rb)
++size_t qemu_ram_pagesize(const RAMBlock *rb)
+ {
+     return rb->page_size;
+ }
+@@ -2772,7 +2772,7 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
+ }
+ 
+ /* Return the offset of a hostpointer within a ramblock */
+-ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host)
++ram_addr_t qemu_ram_block_host_offset(const RAMBlock *rb, void *host)
+ {
+     ram_addr_t res = (uint8_t *)host - (uint8_t *)rb->host;
+     assert((uintptr_t)host >= (uintptr_t)rb->host);
 -- 
 2.50.1
 
