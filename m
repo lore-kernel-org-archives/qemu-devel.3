@@ -4,109 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA313FCA19A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 22:28:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C54B0FCA19C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 22:33:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzj4y-0000jA-41; Mon, 09 Mar 2026 18:28:00 -0400
+	id 1vzjA7-0001SO-HR; Mon, 09 Mar 2026 18:33:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vzj4v-0000iN-SQ; Mon, 09 Mar 2026 18:27:58 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vzj4u-00007K-Ca; Mon, 09 Mar 2026 18:27:57 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 629KNS183756393; Mon, 9 Mar 2026 22:27:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=mOr0Ho
- NF3QfjdQJPN3kW7OFCuh3OYnrOjBRDx29WAKQ=; b=IYmvg+2IgPhuZ9w/x/RI3O
- lQ/fmF2z99bwhVpF541UnP1iFY4J+UxS4ja46E/jdkiRM9jk5vpWIWSRfdjskJH+
- 0GWN6O3OwI8rhtxThFCjAxnLjsDK+pYcn7Rl4pokl/UNEAyFVnEcat1NFxDZjTf1
- ozZ2rOLdY+C6Va4vbiNEVj9slJHPyiMTMOnSzNqS4kwWxiLsSogS/YkekbMx4fOt
- X6oymeAQ5R/KB0ppkIj+F0ZY2000S24xNHSCX2sYo6evZUWYDsMoRZa8xNHTYWJr
- N6ZHFjTkd/iCsBE9wBBQFFVal4ZEXiq7xdJCShYArZZ4akomCccNxqsQxf4Q6aMg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcyw8m4t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 22:27:53 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 629KTLcS015706;
- Mon, 9 Mar 2026 22:27:52 GMT
-Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs121xg3h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 22:27:52 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 629MRotY26804780
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Mar 2026 22:27:50 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7E8CE58052;
- Mon,  9 Mar 2026 22:27:50 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AB11B58065;
- Mon,  9 Mar 2026 22:27:49 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.185.62]) by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Mar 2026 22:27:49 +0000 (GMT)
-Message-ID: <da97038a7c0a9ad250dd840ceb6a448b8c0df3c3.camel@linux.ibm.com>
-Subject: Re: [PATCH v5 11/15] pc-bios/s390-ccw: Introduce virtio-pci functions
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, mjrosato@linux.ibm.com,
- zycai@linux.ibm.com
-Date: Mon, 09 Mar 2026 18:27:49 -0400
-In-Reply-To: <20260309003601.242634-12-jrossi@linux.ibm.com>
-References: <20260309003601.242634-1-jrossi@linux.ibm.com>
- <20260309003601.242634-12-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from
+ <3p0qvaQQKCk470y7w44w1u.s426u2A-tuBu1343w3A.47w@flex--rkir.bounces.google.com>)
+ id 1vzjA5-0001SA-QE
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:33:17 -0400
+Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from
+ <3p0qvaQQKCk470y7w44w1u.s426u2A-tuBu1343w3A.47w@flex--rkir.bounces.google.com>)
+ id 1vzjA4-0000ua-8y
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:33:17 -0400
+Received: by mail-pg1-x54a.google.com with SMTP id
+ 41be03b00d2f7-c739120475fso2798642a12.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 15:33:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20230601; t=1773095592; x=1773700392; darn=nongnu.org;
+ h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=/jEOSZqXvX7oqb37NNn2BCpc9o7sCwjr2f+SOIOx/JE=;
+ b=YKsRtNoG38OXml/HjBAelvrElO2O2qmpJqlb1xFrBBciIqE7A2yrIFQ8DGXKSMYKxu
+ 2oALm4gUXovPKUbnOe/uKfyC0pXsDGUxkLMAU6fshCYss+R+NTsjQLLKCGPoqASh7Vll
+ wUJuwL23hsrQEwrMtnIQEb6bUs4qFvMzY+AfBHP7rcu3fwslD65ijoKMNwCtwnNdOhT/
+ 40UtJLT6N8sApFo70AXgy6KKSDMcXvh1A6DTEltc9z3FAVt+o6f3on1Vo3O2Ml/3uJOr
+ GB+a7fNCuhQpbBzgED7Ou1W1rlbfK0YXdaNGQS2YlCl5rLaXDfhgt+YZvq+KI7YFJKHp
+ siXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773095592; x=1773700392;
+ h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=/jEOSZqXvX7oqb37NNn2BCpc9o7sCwjr2f+SOIOx/JE=;
+ b=DpeLxGhT+JQJXR6EkIfoPmY5EWn6D0Opp3GSMyOpyAOFbjo8lBGrwUILr/HwhsmqO7
+ 8zcgP/quLCHFnonJh/ZGBfcKeCSpbP8GTQjkQJqDIyVtgA6GvE+TxIjXQDaMNGdx0olx
+ B3hs/JSPhMrvrpNeyEtudcXfPgtBtAoDie+JbBlvwM1d11ERPhZY6gu5VTX0koeHkqAe
+ YMg1w0QejCIKa4zZ0MiwjjVHBPWzWfK3J3Ij6FnPnCjLqQKE33dzVx4R52DOTwMoKXk/
+ NJAIGTJ/D0qXCbCR4k7gWNFa1uiK+5tqgNHbKtmHX9tOuliE2d846fkZpsoZkyysjbhZ
+ B2lA==
+X-Gm-Message-State: AOJu0YyvTKEQ2TOzvkyDK8UZEXSbYA2IXgbKutQ3js6fa2+ZwmIj/6ZH
+ yfw1RrQKrs3Kig9BkA8d1UQDEvN2llc+nIao37tdbJ9tWmJIy+Qhnw7EYKNG2864GHdXE6THoQ=
+ =
+X-Received: from pfbmy12.prod.google.com
+ ([2002:a05:6a00:6d4c:b0:824:b235:888c])
+ (user=rkir job=prod-delivery.src-stubby-dispatcher) by
+ 2002:a05:6a00:7701:b0:824:a8f2:7de7
+ with SMTP id d2e1a72fcca58-829a30ca97emr8188474b3a.60.1773095591794; Mon, 09
+ Mar 2026 15:33:11 -0700 (PDT)
+Date: Mon,  9 Mar 2026 22:31:16 +0000
+Mime-Version: 1.0
+X-Mailer: git-send-email 2.53.0.851.ga537e3e6e9-goog
+Message-ID: <20260309223116.3233668-1-rkir@google.com>
+Subject: [PATCH] vmstate: assert that VMStateDescription::fields is not NULL
+From: Roman Kiryanov <rkir@google.com>
+To: peterx@redhat.com
+Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com, 
+ jpcottin@google.com, Roman Kiryanov <rkir@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
-MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDE5NiBTYWx0ZWRfXwNMK0t+o7f5o
- 2ka7MfhAKFDKPDRdPZl2XuK41VrtilB3ZS+Ys0m57Iznv3S0jzRhEdSuGm6Sv8ZYCrbcz9LZvKv
- dBXqqIN+1Qe4LhHQNoVUoqOkj/aKt4X+kUxkcu3xYAshLrrcw/ubS7Vyb0hJhKeVx2J1m6fTpUx
- SZXQc0zmuVSgrHrd8VWtlEkMUZqUCrDITWPcXWFSFYunjpi7bkvWACSw4wszmww0/kpTnYBAAPR
- /48KlqO3TLKc0fPTZefiFZ9UktqbMo85bRLI+gIMBIYqGh6tdsJKoKugdzjWyQvzZcO6NvUAMS4
- 4VL/KGefjDIE8VA7Rr15xNUTdDdpeYwBCqoJ+7g/xNotEXcNSyeiOV9ZHQ9t63Oi2T6+xGSU+xz
- gR2VnBZ3wyd4Xn0dHOc39PxJ85PmMJj4lBABS3D8V9bBwPxw/UKwvEgaUu1PIDUp4rQ3WD8OQGz
- VQaNpzdNALyDlvlJHkw==
-X-Authority-Analysis: v=2.4 cv=QaVrf8bv c=1 sm=1 tr=0 ts=69af4969 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=C0PV6cu7Yr33yCaZjcoA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: dGFRQqUO_oACmkKaai0Xz1sJ8Tas7CXq
-X-Proofpoint-ORIG-GUID: dGFRQqUO_oACmkKaai0Xz1sJ8Tas7CXq
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-09_06,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 impostorscore=0 clxscore=1015 adultscore=0
- bulkscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090196
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=farman@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
+ envelope-from=3p0qvaQQKCk470y7w44w1u.s426u2A-tuBu1343w3A.47w@flex--rkir.bounces.google.com;
+ helo=mail-pg1-x54a.google.com
+X-Spam_score_int: -95
+X-Spam_score: -9.6
+X-Spam_bar: ---------
+X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
+ USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,20 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 2026-03-08 at 20:35 -0400, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
->=20
-> Define common functionality for interacting with virtio-pci devices.
->=20
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  pc-bios/s390-ccw/Makefile     |   2 +-
->  pc-bios/s390-ccw/virtio-pci.c | 167 ++++++++++++++++++++++++++++++++++
->  pc-bios/s390-ccw/virtio-pci.h |  80 ++++++++++++++++
->  pc-bios/s390-ccw/virtio.h     |   3 +
->  4 files changed, 251 insertions(+), 1 deletion(-)
->  create mode 100644 pc-bios/s390-ccw/virtio-pci.c
->  create mode 100644 pc-bios/s390-ccw/virtio-pci.h
+The vmstate_save_state_v() function does not
+support NULL in VMStateDescription::fields
+and will crash if one is provided.
 
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
+Signed-off-by: Roman Kiryanov <rkir@google.com>
+---
+ migration/vmstate.c | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 4d28364f7b..5cb173ea25 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -433,6 +433,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+     ERRP_GUARD();
+     int ret = 0;
+     const VMStateField *field = vmsd->fields;
++    assert(field);
+ 
+     trace_vmstate_save_state_top(vmsd->name);
+ 
+-- 
+2.53.0.851.ga537e3e6e9-goog
+
 
