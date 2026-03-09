@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABEC5FCA16D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:13:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C084FCA16D
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:13:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzf68-0005oP-RD; Mon, 09 Mar 2026 14:12:56 -0400
+	id 1vzf6E-0005sB-Dd; Mon, 09 Mar 2026 14:13:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzf65-0005n3-7r
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:12:53 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ id 1vzf6A-0005qB-MD
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:12:58 -0400
+Received: from mail-qk1-x731.google.com ([2607:f8b0:4864:20::731])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzf63-0007xS-K6
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:12:52 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-8cd77786e97so239782685a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:12:51 -0700 (PDT)
+ id 1vzf68-0007yM-RE
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:12:57 -0400
+Received: by mail-qk1-x731.google.com with SMTP id
+ af79cd13be357-8c6f21c2d81so1133033385a.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:12:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773079970; x=1773684770; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773079976; x=1773684776; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=NEjfrceVoPpsyMxRtYpKXw6OfR+Lo42WgLugVLi/t74=;
- b=v5/sbkUuDjAY7ZDGOxuea+hEZ0RfVm8y8nGcQAPxoJfXO86JCVSdHVHpwQpPAug4+B
- kcBJqCqB5SP24/8SCrsMDqMj+GSKsyw+wSXLx+dB+DLb/h1XkD6pR3m9zhmLhNBQ/xR1
- ioXPRGFf/3btQmz40LY4ZpK8VrhpM6O0XSbgy4/pGF5BfdAaqlkTC8nxy+jMFM3yf/Nu
- x5Bb3OOCqoqsOVGGA9vqlQFA/FycAvJ5t0OmAbmDgDqtdkm837isHyCdlfmPluvs4oba
- UHGN9ivVA6Ps6Wb58GOltFtLnP2JZZuPeDovqKALof1xDnTxRUyAJ/ZuKsPIZgDf1830
- 9/JA==
+ bh=TSgcsDOULrbpLNw5NSsQKmQvmKzE9KsxsxkqM+QyGJM=;
+ b=lugfOidwX6rWhKFZpvJpROhQWesxdydkK3vhcmkU0uxZUmRLkyqv24pfEQzfICer/5
+ mGHyBW0oOqYBEqion8OsIFUf92BwX7W6a/8pgFjpuLWkI/TCyi9ukoWNpAEHbY1GQBVU
+ feuE4Py+NH0qN/edmvsAoz4rFXS3PHWecCpAMthkTOSGWAkXX0B27VuV2Qi61dW7F+Pg
+ gHdwFwtx1ZFgxksjJhw4b0qDbkvhE/5DNtJjQ9Zuei7BLRj4j1pcakxhP3nq5XFQ7E5M
+ inuEEkfOBymBB0i/fvnL/hvN9XaehHHml6o/XQUvhL0TwtOQg9+3GHkRr3woFmSmrQw0
+ i9fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773079970; x=1773684770;
+ d=1e100.net; s=20230601; t=1773079976; x=1773684776;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=NEjfrceVoPpsyMxRtYpKXw6OfR+Lo42WgLugVLi/t74=;
- b=jfG7l0yIgU1gcW+h14bkZprLWnmHDjfPsv27es7CEr7ji5FTXYs30/LYmIhyMgO92Z
- mWGW3uYL61DMBzPnBmytn4DcumgO4H1QBD7jEVDau/Sw7yH+UgQr9h5hPC+YCW7BCbLg
- 2v3jVH5yZL7B4HP73YEJLBy8BA40tznEYvjojpiI+G+rJTzrIe8WKE2Wvx13MyJst0bB
- DoaV7JsHRPUltKwaaCzRbV74O5IIDJXLonlnrOuToTM7gFU5XpkItb0ftngqmCBXGHie
- zAri3nco5XKtCN+9pPocDbzywLi7puSvXKu7ExlDKTGsHqj7MboDvqyuC+mp0xhnl5Ox
- gYMA==
+ bh=TSgcsDOULrbpLNw5NSsQKmQvmKzE9KsxsxkqM+QyGJM=;
+ b=KdXK+1KdhBfprrtvXWWkpaV3Efn2+XNyM02tkHy0Do/vjKQo2JXZoPaYukNPn/f8FQ
+ FUJhINee9S8v/RA5eT1DFhyN/QG08s+w7kl3RmWRcsiB0f/oP7y2S6wkln9hzZjgbU/L
+ IIyKEOp35mKgG88X6FmeKAQPf9LDcmExOzcGiSBcGsMA3BMvnilPhss02Vn1yt17w6Kl
+ Y0HLM55lJppy1tjyVHnn37eqEieJJUYq/EN5p/wjHswOp5ltyHILqVLqVxg3M4Zw4d4F
+ JmOhxihiTz54EsPSrVOXgctiTAmEMSTLP4B+qvlayx809CbSRDiO2HWFROMynTeCNyFt
+ 16Uw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXClpcj+BJS+ld1QFiPA1H47ENaW7g9949JsXM0Sy2uCidxsqSOzwFUIuRdKKHzVjmlf/g5WzGNtBXO@nongnu.org
-X-Gm-Message-State: AOJu0YzeL2dI5J/x/uOY4i/z7IEtNk9kfuK9stD6wIkvH7H+kGkpgQp6
- jM0SpfpuMNhNGdRjtmuH0Vtpkp2ryB7L1wpmms6ShXUZ+P7edz32EA5yax4FeEaidCI=
-X-Gm-Gg: ATEYQzwONjYHZPPUJOHgZDwNxGlTyNXPVCVqpJIGlprxtRi1zeC/hig4GZaBvdF+oja
- As3WYYQLVhqR8YvJ9E7slqUq4G0/XWZ8iAYQqLsplSmlhwjffq1MKZktYc0NTllv4FF6DK4wNkY
- ZdxtM/qTqogbV+go9zYn3OzsI7qv1I+Oq9G+UPwAxoxWQ0vwYvdO7FVHIhNPigOPx8yyBMFfJAL
- fkkjVzcR75D3SGuBqKZ9JqkUrNpYhsTwdZGt0pAUugzZ2YPNmFOdtwG6QjR4czhUWSNL/tdWNw9
- Hmcl0IoUGFw7xa21D7Oy16x41RWJnouhGfj3b0EfUXg+Vs0QWEXyN7Ako3B39jmbLr3Z1ahAhKj
- P8lB+IZcM8+kjzWuj0iPiKI5ljLyEt+Im0R1s4wMiklP8C1ltjxpCyzF5SoEDqP27JQ6sdxyBiw
- HeqlIFrrouaouV2GpW1qwapD4tM7ggsETN7zw76vADrNyzUGYNztblRthmG8ZE6jhSWk0R
-X-Received: by 2002:a05:620a:1a8b:b0:8cd:8938:effd with SMTP id
- af79cd13be357-8cd8938f3b6mr551924085a.1.1773079970375; 
- Mon, 09 Mar 2026 11:12:50 -0700 (PDT)
+ AJvYcCXHhkxVAx3QOr0egCYhV66T865JdxnImCwPbQ+x3d5uQl7bBmrRxbcRLa4E09Yr1YD7CUfQkC3jQF1w@nongnu.org
+X-Gm-Message-State: AOJu0YzAfObaD3S4Ppt+KAIJwpfciROA8Z95NkA21W/ZnlJigA7jzLTb
+ 94NXKXu3D4X09nQQh1E5XvCwRzVGyvrXj6w8pX31P1do+7E9qNGQ9i177T0h4LmDbLU=
+X-Gm-Gg: ATEYQzyvq07wOfhpJcG0sYxypBJH0LalYDTjm7H9PxjowUHbl3Uy4n2gx0+pqL9gVOy
+ Fh4qVCm8UThBPUAUOsYN9lBaTV5pbmPRvzzL+UCS7a/Vz3f46ljRQwDTsLsPcs/fAzjC1qiHU0R
+ MysJjJA+Vf6qmdMRacSpTpmUm5FMHmPphZITL2+XrQSryRlYEpIQBzu7ze8d/hvYP8CMWJw4cVg
+ SE8YFsk+rXUX+GDmqPzWhqKatKfZH0vQD9OGMW5IAwGFCotN2o6sLvsDChE6Wn5LD9VoMKj+4tk
+ TIICceFpTtOG6FFrJtvTFNzjpDFpJnbm5CDSuFRXBBI1CqNEu1FJtCVjlmwAA8cvh0H3PEs9pe8
+ srOyEcWqSfivsxxHKSqQYD1fznSsMRn+9Mcbct6qw2AoRi3lGcpcHPxRUz7kLzfRKFh3EEOTqWZ
+ rAv389jYDYKUTndhlWCml56eA1R8zQFJIq/IsGBaVyCpQQoJHuNNagiqD6yBMNpTtyzFZU
+X-Received: by 2002:a05:620a:4409:b0:8cd:92e7:718a with SMTP id
+ af79cd13be357-8cd92e7790amr160047385a.38.1773079975531; 
+ Mon, 09 Mar 2026 11:12:55 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cd6f49649esm719044285a.12.2026.03.09.11.12.49
+ af79cd13be357-8cd6f49649esm719044285a.12.2026.03.09.11.12.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 11:12:49 -0700 (PDT)
-Message-ID: <c632b868-3c0c-4a9a-b592-1af0429c6033@linaro.org>
-Date: Mon, 9 Mar 2026 11:12:48 -0700
+ Mon, 09 Mar 2026 11:12:55 -0700 (PDT)
+Message-ID: <1f89ed58-280b-4d09-a12a-93c4dfae8691@linaro.org>
+Date: Mon, 9 Mar 2026 11:12:54 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] system/kvm: Make kvm_irqchip*notifier()
- declaration non target-specific
+Subject: Re: [PATCH v2 2/2] accel: Build stubs once
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org
 References: <20260309174941.67624-1-philmd@linaro.org>
- <20260309174941.67624-2-philmd@linaro.org>
+ <20260309174941.67624-3-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -115,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260309174941.67624-2-philmd@linaro.org>
+In-Reply-To: <20260309174941.67624-3-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x734.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::731;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x731.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,31 +142,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/9/26 10:49 AM, Philippe Mathieu-Daudé wrote:
-> Commit 3607715a308 ("kvm: Introduce KVM irqchip change notifier")
-> restricted the kvm_irqchip*notifier() declarations to target-specific
-> files, guarding them under the NEED_CPU_H (later renamed as
-> COMPILING_PER_TARGET) #ifdef check.
+> Move stubs to the global stub_ss[] source set. These files
+> are now built once for all binaries, instead of one time
+> per system binary.
 > 
-> This however prohibit building the kvm-stub.c file once:
-> 
->    ../accel/stubs/kvm-stub.c:70:6: error: no previous prototype for function 'kvm_irqchip_add_change_notifier' [-Werror,-Wmissing-prototypes]
->       70 | void kvm_irqchip_add_change_notifier(Notifier *n)
->          |      ^
->    ../accel/stubs/kvm-stub.c:74:6: error: no previous prototype for function 'kvm_irqchip_remove_change_notifier' [-Werror,-Wmissing-prototypes]
->       74 | void kvm_irqchip_remove_change_notifier(Notifier *n)
->          |      ^
->    ../accel/stubs/kvm-stub.c:78:6: error: no previous prototype for function 'kvm_irqchip_change_notify' [-Werror,-Wmissing-prototypes]
->       78 | void kvm_irqchip_change_notify(void)
->          |      ^
-> 
-> Since nothing in these prototype declarations is target specific,
-> move them around to be generically available, allowing to build
-> kvm-stub.c once for all targets in the next commit.
-> 
+> Inspired-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 > ---
->   include/system/kvm.h | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+>   accel/stubs/meson.build | 21 ++++++++++-----------
+>   1 file changed, 10 insertions(+), 11 deletions(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
