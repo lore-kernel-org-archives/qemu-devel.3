@@ -4,92 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EF09F417F1
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3540FF417F3
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbyG-00051i-2f; Mon, 09 Mar 2026 10:52:36 -0400
+	id 1vzbv2-0001NQ-7Y; Mon, 09 Mar 2026 10:49:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbxB-0004MJ-Ng
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:51:34 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbx2-0005la-Nl
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:51:22 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso95423045e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:51:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbuc-0000s2-MN
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:48:54 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbua-0005GK-TD
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:48:50 -0400
+Received: from pps.filterd (m0279868.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629EerBC3773507
+ for <qemu-devel@nongnu.org>; Mon, 9 Mar 2026 14:48:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ +noMkYUOhKd6CmPutkej3yzEfQc/TUuch39sOhKneQg=; b=KopeBWPMxbih+bDQ
+ ATUCmYAAMMk8mH1Hc/pzl9nVGKH+LZH90y9bFii/zsDmg3Q4QTZwlbhFZMJR6VFT
+ Fpg2PD8UpkxYNEcTGjrLaE5TAJtl1a/4m32khqQbo8jwmXLAnmZuFezsbnGxo9g/
+ ToTcdLxhW+twpAqacdUc64rtVxxegzO7rxxm+T7wwAi6U4/H7txVxoMu+XpDBS6+
+ jpOX4OGxLnGAAa4QT8TGLT8+psX2VRYsVOp5SyQnH5bap4xBSZbUsu2/MB5ZsoUA
+ rKkmpD21eqNTylk10NiH0bxUBvcxfzxCX7KyyXvpdCUoXKnYCjmIjWMOngI7U2iA
+ MIQ3Bg==
+Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
+ [74.125.82.198])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4cstsa98ee-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 14:48:47 +0000 (GMT)
+Received: by mail-dy1-f198.google.com with SMTP id
+ 5a478bee46e88-2bdc1b30ac8so47870993eec.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773067879; x=1773672679; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1773067726; x=1773672526; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pgpA3PHGmA2cywOmnIHp4QQstzRdLHRlcUMp4w2UsrY=;
- b=XPK8xWqwdxcH4Oid8Gs2c2kFLDxwvDmC7iqoNR9x1BNr7goxy5z/xUNYdhoN33LinD
- R8sqQ0i1dWXlXV17DLk9ipukWVE0loQ/7XLVr+jMRDHgL7OyCRSDq7uAFNbaWAE11H58
- VWGbLgD0sXClFu2FVA/QbSMQH5MZQtDXdURshR3B3OMl1gSlh8mNVUlgChyRY9/BC1b/
- JgOokskuEtmOR2f0Z0ingR/q09JD04rXkApjZl9b0TwWjEFp48/WDs8V6q6qJmAGNdQz
- foQ6d/UUeioBsJ6Z4/jqNSUdDMCLzyZUj7lUfLtDiRGeU4vIq0EOxdQ35R5/bNgDHaWY
- 4KzA==
+ bh=+noMkYUOhKd6CmPutkej3yzEfQc/TUuch39sOhKneQg=;
+ b=A+vyDHStNPWjY/WBQmkK92iCNk5mhh3f98TfYQ8iLfq1QgV/FbcZ2C2hiB1gRk/UGs
+ iN1161zoTQQlD4JkFTyagDFRetPV1ekflrUZk5wXcDKm5DH2yU9yG8a5QfVDQ6yePPCq
+ PPZwvFv/tbohOdKNksDUwFvCGXy1+InwYaDmmqmm7A3y8d8cu0fUr4zA5IanUrqbHNzP
+ Pek7RqT0NuE+piBbbzx9tQZrKTf+RrAIEJWVVG2br6XOPab1BYVc5odgirNjNoS/5dM6
+ JurKaI4ke9mlJ7nr8D+EtPVQkL+ZjlbvUYXaG19jMkwKaffzA33wagl7yZdPXb2WR1ZZ
+ bWzg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773067879; x=1773672679;
+ d=1e100.net; s=20230601; t=1773067726; x=1773672526;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=pgpA3PHGmA2cywOmnIHp4QQstzRdLHRlcUMp4w2UsrY=;
- b=tsemqwszWWIHd52mfv/KpulNxU+CdrolZT9fXNvuza1bnSOgcRuLB45E9J9S3Huj1U
- zWqj+SsjnEJcjyRvYHM3nSbBcq8/JBeWt6Zhlw4WhXYSx3McKOjVX9bwGC8Nt8caK4Wm
- 5qodLnzautxpBDeQqHlCycV5SsD2MSeO1ZsK9vDmNz9727IXIb22m4/HIZfcM+ynNyI+
- Cu4bTN+0XOckjiWIMqevjafpghZRcPS261Ly5OgIIBPIkfQDYKUUYsJdLMbXcF89hg+7
- BgI6Vyptf2ZI9M1OurZxBQG40ewttHefsl8fA6I5REsEbzjvZHPXdF3QlbX4mBBxMB9s
- aEMA==
-X-Gm-Message-State: AOJu0YyVHEJnE5Mco98OHINB0wc0VqE2V46PSey7YuMvcFfrSRrfM2eD
- HzuBM7Qb+zYaWvdjT+DE9nqMuEVtEd4aDs46yXW8KIcd5cm/2gJQS9lIc2F/K3YZuT8eV+LSBlj
- 0CPxG0a4=
-X-Gm-Gg: ATEYQzym3QmsC/zyNbG9utECZMu6XqXuK0vZf1A3od7q2sasMBllZhOxAz2GQPsoboV
- FB72gMKGez3eL+SvHpuq3qlbccX9iDbGWQPEo3Ht9t8dvaGNTdN+R8exOehHTTC/arfDYENmoKk
- JDR9ayI6DaQZVo4JV9Ev4VWOQuyznJm656i0Q10k1LsnEZ806sGIksZdL9/bs04IAgyQlxnr5yU
- yQ0NRoM7HtV5iwl6G2jimIyaUNEp8X5FCeC3KaAJpjOKWdNaX3a89sHFtSZ6wyEtbxvsNUc2mnX
- E+FpZUiS7Mm6pxgxO46iyMGYfRbPgSw8Dlw4gdCXj1amI4dcJaFCZBLcz7A/dYJw3pzy5VFFOcd
- KCB1xI5snbEkpJYNH1C4qmokayOAPYkM/ystM2ZoBeGSMFOZubiRUAjIckB+QFruf+ua7G4o25L
- Q1JGFO9qFuiaRRmfe3atO/NDe1ggXLZUAsE42z9LJlqh0gFB0osMIg7m54pu3r6weVDPoDm+zlc
- /hqzA==
-X-Received: by 2002:a05:600c:3515:b0:485:364e:934e with SMTP id
- 5b1f17b1804b1-485364e94admr93028595e9.21.1773067878792; 
- Mon, 09 Mar 2026 07:51:18 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853a946978sm111340465e9.1.2026.03.09.07.51.17
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 07:51:18 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=+noMkYUOhKd6CmPutkej3yzEfQc/TUuch39sOhKneQg=;
+ b=SFqnpBUlooh/rZuR7zTSto2msld7598cJgmy4MPmv8EdwmQ54PFQXi8AzUXaToh9lz
+ v838yXTtkCviXDzjh4qBEnIuaUjb/KOENzHRIUycXlnrnJBwsE1afghUvciRBA+hmuOI
+ 9L2Qv0kqKRzFDvIhuILSunxRitAmIOMTMXv3WfJkGKO68C2qZQP4dSadYsB+vHhtVjmx
+ pUjmIXZyv7EC503qd6rhR6yL8TvwU7gCnnqYrTg9YM3U8FEC8QBtjBEoDt8+p8AJLYOx
+ OXsEFMCPPV2yvCIvsV00aqwUnWdiGcEb90lhterKTjvoRK3IeV1Pcx38rHW+5inLbecI
+ BHxA==
+X-Gm-Message-State: AOJu0Yx7p5GIeDJVAxnoxUcErXFSYqxmXdX8zdXW/BC4wRqrzxRtpU7U
+ gMyR1k+LytDbK+lWe5qwmYO2Lj6+hpDSdmxK3lrnMd5FSdXWokulAM6b/CuF/1Xlt24afXCpJps
+ RPqpY89IsufCbbiAvp6WBoPpKt0eHn6bZ26OalrwjO0x6/23KLYV5/5LP2MCBVAZ3Eg==
+X-Gm-Gg: ATEYQzwqvzbjs7MOaKQJLrP12bFa4y/V2QNf6ARZDD4ptJuKe+QSEqAyFuPfBVIWV8w
+ Wunoh4WwOtP50xhy84v1G4qJVLfSSd2MrZ08E79yO9yfpTYGoD/f3hC1TN2l66Tc8qaZvKIOi6J
+ rd0lXSPr9MgLi528et/CLQgvy2THVGQ8KHxXeaEDQaMi/QPQdbffSL9daKYE1hfSMQY/UI43Mk4
+ TA7FnSVaXjiFCYdTH5SVp17eXAJV0z9awSEGVqIw5/4xJVEgVZ/zbSq8owEJqU6CNHO/OaBLUzI
+ zYAaPwstFfCl1VlyNMNYu7dEaYkunZ1A0Tesksn8OeKUb495K3HJ146/wxW2rEP3++MCt4jr9DU
+ 0c0eJ89WniZhFVNRPIGONsfu2Z1SlDdTxSfqSLfOFdbBBuvqO6Dta5fRPAjIBdhBZtPNhcQ==
+X-Received: by 2002:a05:7300:3b06:b0:2be:37d:3d6d with SMTP id
+ 5a478bee46e88-2be4e0ac5bemr4752492eec.32.1773067725849; 
+ Mon, 09 Mar 2026 07:48:45 -0700 (PDT)
+X-Received: by 2002:a05:7300:3b06:b0:2be:37d:3d6d with SMTP id
+ 5a478bee46e88-2be4e0ac5bemr4752464eec.32.1773067725243; 
+ Mon, 09 Mar 2026 07:48:45 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2be4f82b78esm9322776eec.12.2026.03.09.07.48.44
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 07:48:44 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: [PATCH v2 09/10] hw/pci-bridge/pcie_rp: Remove PCIESlot::disable_acs
- field
-Date: Mon,  9 Mar 2026 15:50:11 +0100
-Message-ID: <20260309145013.44327-10-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260309145013.44327-1-philmd@linaro.org>
-References: <20260309145013.44327-1-philmd@linaro.org>
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH v4 17/35] target/hexagon: Add handlers for guest/sysreg r/w
+Date: Mon,  9 Mar 2026 07:48:04 -0700
+Message-Id: <20260309144822.877695-18-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
+References: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-GUID: wO5oxUxqOYbSWhj2q1Xt6YIFQr1zcD6g
+X-Authority-Analysis: v=2.4 cv=I+Vohdgg c=1 sm=1 tr=0 ts=69aeddcf cx=c_pps
+ a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=ZpdpYltYx_vBUK5n70dp:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=YS0KV4ZxTOLzYV__0jkA:9
+ a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzMyBTYWx0ZWRfX8MI3pHQufn+V
+ H2oBgS6UGm2ZHY74OMz5V6mXkAYw3n0O6fH+nbtwy09n2qxQi+uATK5OUKiQroTdhtPr3/pCl/k
+ F8cctB/2xlSs6Q97W08jK3CtxqCafKiz8NCeV3OIswWjQWtRPw/fuVV/um60256VccQDnwI2tQB
+ XNgAOL/6rszOx/oUtqfGbsxCVE/s0unL/eQTQyuZQaiwIa5GK6lqYUpYGJGwJVCexyVlXdmrTZ/
+ c7G1HN3Z9RBmD44Ah+nypePbjUKq/uynvP5jK18wwecuK9XwwZolECqdDrYYi6ULyKFcLV3ODQT
+ UvgeiaNBEGWm+RL3IMHBRPsrOkx9Gbv2Bw2ttzgl3dEMN2FoX7hSn8isF/nWmZdeFuodS4itLY+
+ xTrDhRI+SF1qdjIebds940OnIx2FcV1E4+TcDUQUVAUL/g7mQmCjLy4A4Kkh0K1sciLpbR5g2en
+ HzxhwsxuDtJPx7nX0YA==
+X-Proofpoint-ORIG-GUID: wO5oxUxqOYbSWhj2q1Xt6YIFQr1zcD6g
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_04,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 impostorscore=0 spamscore=0 malwarescore=0 suspectscore=0
+ bulkscore=0 lowpriorityscore=0 clxscore=1015 priorityscore=1501 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090133
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,55 +150,183 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCIESlot::disable_acs boolean was only set in the
-hw_compat_3_1[] array, via the 'disable-acs=true' property.
-We removed all machines using that array, lets remove that
-property and all the code around it.
+From: Brian Cain <bcain@quicinc.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-10-philmd@linaro.org>
+This commit provides handlers to generate TCG for guest and system
+register reads and writes.  They will be leveraged by a future commit.
+
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- include/hw/pci/pcie_port.h     | 3 ---
- hw/pci-bridge/pcie_root_port.c | 3 +--
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ target/hexagon/genptr.c | 147 ++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 147 insertions(+)
 
-diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-index 53cd64c5edf..b28af067a66 100644
---- a/include/hw/pci/pcie_port.h
-+++ b/include/hw/pci/pcie_port.h
-@@ -60,9 +60,6 @@ struct PCIESlot {
-     PCIExpLinkWidth width;
-     bool flitmode;
- 
--    /* Disable ACS (really for a pcie_root_port) */
--    bool        disable_acs;
--
-     /* Indicates whether any type of hot-plug is allowed on the slot */
-     bool        hotplug;
- 
-diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-index fe3ced56851..7c3e78010b4 100644
---- a/hw/pci-bridge/pcie_root_port.c
-+++ b/hw/pci-bridge/pcie_root_port.c
-@@ -117,7 +117,7 @@ static void rp_realize(PCIDevice *d, Error **errp)
-     pcie_aer_root_init(d);
-     rp_aer_vector_update(d);
- 
--    if (rpc->acs_offset && !s->disable_acs) {
-+    if (rpc->acs_offset) {
-         pcie_acs_init(d, rpc->acs_offset);
+diff --git a/target/hexagon/genptr.c b/target/hexagon/genptr.c
+index 9eb21da6f3e..2310b9aec3a 100644
+--- a/target/hexagon/genptr.c
++++ b/target/hexagon/genptr.c
+@@ -23,6 +23,7 @@
+ #include "exec/helper-gen.h"
+ #include "insn.h"
+ #include "opcodes.h"
++#include "sys_macros.h"
+ #include "translate.h"
+ #define QEMU_GENERATE       /* Used internally by macros.h */
+ #include "macros.h"
+@@ -120,6 +121,152 @@ TCGv get_result_pred(DisasContext *ctx, int pnum)
      }
-     return;
-@@ -151,7 +151,6 @@ static void rp_exit(PCIDevice *d)
- static const Property rp_props[] = {
-     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
-                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
--    DEFINE_PROP_BOOL("disable-acs", PCIESlot, disable_acs, false),
- };
+ }
  
- static void rp_instance_post_init(Object *obj)
++#ifndef CONFIG_USER_ONLY
++G_GNUC_UNUSED
++static bool greg_writable(int rnum, bool pair)
++{
++    if (pair) {
++        if (rnum < HEX_GREG_G3) {
++            return true;
++        }
++        qemu_log_mask(LOG_UNIMP,
++                "Warning: ignoring write to guest register pair G%d:%d\n",
++                rnum + 1, rnum);
++    } else {
++        if (rnum <= HEX_GREG_G3) {
++            return true;
++        }
++        qemu_log_mask(LOG_UNIMP,
++                "Warning: ignoring write to guest register G%d\n", rnum);
++    }
++    return false;
++}
++
++G_GNUC_UNUSED
++static void check_greg_impl(int rnum, bool pair)
++{
++    if (pair && (!greg_implemented(rnum) || !greg_implemented(rnum + 1))) {
++        qemu_log_mask(LOG_UNIMP,
++                "Warning: guest register pair G%d:%d is unimplemented or "
++                "reserved. Read will yield 0.\n",
++                rnum + 1, rnum);
++    } else if (!pair && !greg_implemented(rnum)) {
++        qemu_log_mask(LOG_UNIMP,
++                "Warning: guest register G%d is unimplemented or reserved."
++                " Read will yield 0.\n", rnum);
++    }
++}
++
++G_GNUC_UNUSED
++static inline void gen_log_greg_write(DisasContext *ctx, int rnum, TCGv_i32 val)
++{
++    tcg_gen_mov_i32(ctx->greg_new_value[rnum], val);
++}
++
++G_GNUC_UNUSED
++static void gen_log_greg_write_pair(DisasContext *ctx, int rnum, TCGv_i64 val)
++{
++    TCGv_i32 val32 = tcg_temp_new_i32();
++
++    /* Low word */
++    tcg_gen_extrl_i64_i32(val32, val);
++    gen_log_greg_write(ctx, rnum, val32);
++
++    /* High word */
++    tcg_gen_extrh_i64_i32(val32, val);
++    gen_log_greg_write(ctx, rnum + 1, val32);
++}
++
++static const uint32_t sreg_immut_masks[NUM_SREGS] = {
++    [HEX_SREG_STID] = 0xff00ff00,
++    [HEX_SREG_ELR] = 0x00000003,
++    [HEX_SREG_SSR] = 0x00008000,
++    [HEX_SREG_CCR] = 0x10e0ff24,
++    [HEX_SREG_HTID] = IMMUTABLE,
++    [HEX_SREG_IMASK] = 0xffff0000,
++    [HEX_SREG_GEVB] = 0x000000ff,
++};
++
++G_GNUC_UNUSED
++static void gen_log_sreg_write(DisasContext *ctx, int rnum, TCGv_i32 val)
++{
++    const uint32_t reg_mask = sreg_immut_masks[rnum];
++
++    if (reg_mask != IMMUTABLE) {
++        if (rnum < HEX_SREG_GLB_START) {
++            gen_masked_reg_write(val, hex_t_sreg[rnum], reg_mask);
++            tcg_gen_mov_i32(ctx->t_sreg_new_value[rnum], val);
++        } else {
++            gen_helper_sreg_write_masked(tcg_env, tcg_constant_i32(rnum), val);
++        }
++    }
++}
++
++G_GNUC_UNUSED
++static void gen_log_sreg_write_pair(DisasContext *ctx, int rnum, TCGv_i64 val)
++{
++    TCGv_i32 val32 = tcg_temp_new_i32();
++
++    /* Low word */
++    tcg_gen_extrl_i64_i32(val32, val);
++    gen_log_sreg_write(ctx, rnum, val32);
++
++    /* High word */
++    tcg_gen_extrh_i64_i32(val32, val);
++    gen_log_sreg_write(ctx, rnum + 1, val32);
++}
++
++G_GNUC_UNUSED
++static void gen_read_sreg(TCGv_i32 dst, int reg_num)
++{
++    if (reg_num >= HEX_SREG_GLB_START || reg_num == HEX_SREG_BADVA) {
++        gen_helper_sreg_read(dst, tcg_env, tcg_constant_i32(reg_num));
++    } else {
++        tcg_gen_mov_i32(dst, hex_t_sreg[reg_num]);
++    }
++}
++
++G_GNUC_UNUSED
++static void gen_read_sreg_pair(TCGv_i64 dst, int reg_num)
++{
++    if (reg_num < HEX_SREG_GLB_START) {
++        if (reg_num + 1 == HEX_SREG_BADVA) {
++            TCGv_i32 badva = tcg_temp_new_i32();
++            gen_helper_sreg_read(badva, tcg_env,
++                                 tcg_constant_i32(HEX_SREG_BADVA));
++            tcg_gen_concat_i32_i64(dst, hex_t_sreg[reg_num], badva);
++        } else {
++            tcg_gen_concat_i32_i64(dst, hex_t_sreg[reg_num],
++                                        hex_t_sreg[reg_num + 1]);
++        }
++    } else {
++        gen_helper_sreg_read_pair(dst, tcg_env, tcg_constant_i32(reg_num));
++    }
++}
++
++G_GNUC_UNUSED
++static void gen_read_greg(TCGv_i32 dst, int reg_num)
++{
++    if (reg_num <= HEX_GREG_G3) {
++        tcg_gen_mov_i32(dst, hex_greg[reg_num]);
++    } else {
++        gen_helper_greg_read(dst, tcg_env, tcg_constant_i32(reg_num));
++    }
++}
++
++G_GNUC_UNUSED
++static void gen_read_greg_pair(TCGv_i64 dst, int reg_num)
++{
++    if (reg_num == HEX_GREG_G0 || reg_num == HEX_GREG_G2) {
++        tcg_gen_concat_i32_i64(dst, hex_greg[reg_num],
++                                    hex_greg[reg_num + 1]);
++    } else {
++        gen_helper_greg_read_pair(dst, tcg_env, tcg_constant_i32(reg_num));
++    }
++}
++#endif
++
++
+ void gen_pred_write(DisasContext *ctx, int pnum, TCGv val)
+ {
+     TCGv pred = get_result_pred(ctx, pnum);
 -- 
-2.53.0
+2.34.1
 
 
