@@ -4,82 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98D08F417F3
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA867F4180F
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:11:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzdCM-0003Js-8w; Mon, 09 Mar 2026 12:11:14 -0400
+	id 1vzdCB-0003Bh-1s; Mon, 09 Mar 2026 12:11:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzdCK-0003He-12
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:11:12 -0400
-Received: from mail-pf1-x436.google.com ([2607:f8b0:4864:20::436])
+ id 1vzdBl-00031X-D9
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:10:38 -0400
+Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzdCG-0002va-O0
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:11:11 -0400
-Received: by mail-pf1-x436.google.com with SMTP id
- d2e1a72fcca58-829a9c03780so2839606b3a.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:11:06 -0700 (PDT)
+ id 1vzdBh-0002qb-Hk
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:10:35 -0400
+Received: by mail-pj1-x1036.google.com with SMTP id
+ 98e67ed59e1d1-358ed696623so4917420a91.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:10:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773072666; x=1773677466; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kX/1yxRtsbALEMCdceiycv5xNUWnyfCojgu+7lZZ/gY=;
- b=b3AHga2WnKUiY119FDfR54nZalUQQYQGuec4G6/CxbmmUHyERHRShrhfOiwUqsLc6j
- UgwAVu0BB+ZQPdCjbtHmUX9QModsIR6rrQFRJULPXXzCB3nQX9OAP0N/VyQHSnJapbE8
- RJPqqy6W9VDlk2Q+r9WgnT5eLz8GLn2wVwput0Ge2rNp4iA9fLRouOPR9joOGnFmBd11
- 3xJ89yQME065UEBjRMcHjVcQq239ELuzUW6vJLIeMUUF62TFiFH/y586mCyPTSfDPjyO
- aEi4Uy0R8ZK/b4ZtwIFU/Sh/B6ScX00Rh3VWfkEUYeKAwIUy6JDUIAbhZctZdKQMrqy5
- qFrA==
+ d=linaro.org; s=google; t=1773072632; x=1773677432; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=OZNavs60TcJqGoR3lruQxu1imrBKLWomSBgv7FNFYz4=;
+ b=LOPRQmVonkjq5Kg0vJJqeE9oGngBb4LRCgfg8YyvuwZfrBv8g45Xq5RlxwnuVyWDiu
+ W64dbmX29p25zqxVoNEfpJX53tgxs7FrCN/aajWQYfqFsAcCvIq2gaayp96EjPl+K5pg
+ Plq+1wFV597gfWsZaYWH9hhWvkwGSrsLICzZ6Tr/oofThBlG+aKrb8a/L4u60HiJYxye
+ 3sT5o2gS0GSYXN51sNpbvTiFtYtGSNrUJooLdeGBwVqup9vGP8MUAV5iJ1LWGHXGGQka
+ FDJctr3NpJUj6SXnQbCbQQkhky0kkm89/z7Roy+FvSXRre9dk5RJmmZ/NVJAn9q7oxFW
+ MqoA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773072666; x=1773677466;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kX/1yxRtsbALEMCdceiycv5xNUWnyfCojgu+7lZZ/gY=;
- b=cgrZAGfrFUGMFMfa/eoaN9h9EMIadVdS0rpUXEsjbOfnFtbUq0VWe1sXufDGoEi/oI
- 806TGzSi6543H2EexircWHuMA4CHq2vnE6SiuhXnFgfJ5qZbZYjTAFbcpIhovr7oUvDn
- Vh/IuVPd2I0P2zYk8srlBKcI/YZ8sb+sOtl1/37iipu7VucyWym+mx0AUKxh2m19Jzla
- spLreh0j84ZAA4JgqO3QsGQnc5Rl6OqD4l+29N+5HLPZjdksx60GxGvP6noyirvXZdOo
- T3C19nvWYDML6AWC3QyyWd4f1LNzFIwOsCmtq4kD3OkC/Yf6MymOakwF5syenbC2K7vA
- RN0g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV8K8ZZGk6fHcNWXWX7A1QjHl/oiahUWOf1qsmDkKXKqR1QiYeQLXmSyVtdS66o5OHyh0kYI8RJ0tAX@nongnu.org
-X-Gm-Message-State: AOJu0YzLYUF4jqJjQhL2HSXAkwFp9SWst8NFQG9q8s9HDOKORnYsUmOZ
- UVJIP6zqVM8cFe0qA97/+KFVT19mPP2R2hGZpcol+D4xMhrLI4v9oVHvee6u6JUGyKc=
-X-Gm-Gg: ATEYQzzbsuK2Vg2Hlt7owtYMP2FTc1ahPk7uUPD/XXn8OYOsy4SmIi4IldEA9zzMB+W
- hgw0YsmM+zclYw79w5oZKgPlmy+5QZC/gPbKLKiPHJOoGUCrvhhoml/t94fNeN9sY10Yt5pcmyM
- ikvpWv+WJ4flIQF3MAe8IAFLlY86yM5PRw3GoDT/ir3pf3KoomMo6qgYSRNoq4qZxCNhoDWifkz
- xk3XPcKPiBdQ85fUi8QnnsLt2d04VnORdPDD3UJVNT1HVVPKtf9tHhiWTfMwCO/eYrrfyQvWvFI
- 4YhLorFRcm18CTMdfyoeFIjI82zjEZllEqzj7aBlf4zIVa2IN2Kck6h/idrlcw4bguCuXt4DRJJ
- C06HydEjtxHMZkqVp+HUAc5PBgXx7LZsSgDlc7xyAiRlo1mUOxXCl0U0RgCooOBfcLp21z+5mEi
- q3Ak4G38zvRaM4DIdqMUX7mlNM39RAlq3FG8s7auQTpQ8c67RFK2xVPBVMJ8hb0UTZr3W8
-X-Received: by 2002:a05:6a00:4c95:b0:823:b1f:893c with SMTP id
- d2e1a72fcca58-829a2f126f8mr9849102b3a.33.1773072665606; 
- Mon, 09 Mar 2026 09:11:05 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773072632; x=1773677432;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OZNavs60TcJqGoR3lruQxu1imrBKLWomSBgv7FNFYz4=;
+ b=Hgvumvp7d+bK9ozeKjR96xYra+HUOnpvuMelppOF3tXAJp3T9zBWy8mN9uayIiQUgg
+ rlx0YuRJw6wYjLbpIP9mSDc4NMWa+XFcb3On2XfPUvV46FeTVJ0Sw4Dp4sCbL69iia90
+ /vadidrWEFeixK2/1TZ+MLOouY8nEzGazt4wFKH3tK0OOa/7jRpcO1hwCus29edLr/FB
+ KOnQJQ4hGfk+HYtUeIjoDixZKCSXjKLQgWzLRg8YHGQe9eeoJPLcjN0q5uo5xC/1s0cj
+ 0IkU+t4ivmccYNn7bsTgG37R7Y6C8vplLYWGy4ycfDCS70QlWDnwUmMr9/JMacCD/mBP
+ mRtQ==
+X-Gm-Message-State: AOJu0Yw//AIVHc91JUsAmDcB+V0EQE0AfijUroGsJvUzUmgenl9GRwMw
+ tSlJc6JnmQCD29wOVEVMJuQvRMWsodyIJIQJkdIxhVoIMQZBKQXcYO2ExPFj1L4KQmg=
+X-Gm-Gg: ATEYQzyZ24sVRL250qwmRYZ5jePp1ERuzz3bvKvCsZ6VzDiHQwyzhDewgVEcsSy1ir7
+ BxGgZDWa0drlyXgxIQWIJeq3XVOR/YdtvlnxX9cH64nH+V3xNGIxVJknYtmNiFgg9mqMyIAkfkJ
+ gSn1dOfhKv7wCa8JzJc8UBau7mdYvlBqVT1YYRvD06HvLa1Bgvg45bsOzl5eA6RC4wDqzTTcyA1
+ 1uMCyotGDtNGrI9qEpqQNLEkQ3lRwRO77J0zonhAW65QgAIqIpgGrD8oQrQUnUN8QC5INm5O9pf
+ 1Rdr6x95CAKXdvRfiZ1S5O5UXH8u8r3vTifqTPUlH7h9Ot0XaIZE5flOmyr4qUKL0EDJbHVZd3v
+ o9UfMbau4+SUNeQi4iS8Jb+s8zg04JJh71b5tGMARUfNVi/YkwJCljEtUe1s2JYHZIXNQtj7szN
+ ahBLt70XSS9k9XOpeGhVMsVGht+A5d863+eEzHa0sNNqC4eN1znaq08DL+H8h68NfW2wSE
+X-Received: by 2002:a17:90b:4d88:b0:359:8055:df63 with SMTP id
+ 98e67ed59e1d1-359be15449amr11058660a91.0.1773072631801; 
+ Mon, 09 Mar 2026 09:10:31 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-829a465b702sm10687724b3a.20.2026.03.09.09.11.04
+ 98e67ed59e1d1-359f0827f96sm57182a91.15.2026.03.09.09.10.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 09:11:05 -0700 (PDT)
-Message-ID: <7b555373-fc33-456d-a96d-a6ac46f5de5f@linaro.org>
-Date: Mon, 9 Mar 2026 09:11:05 -0700
+ Mon, 09 Mar 2026 09:10:31 -0700 (PDT)
+Message-ID: <c1958cfc-06d0-49db-8e4e-a0c848fca9e0@linaro.org>
+Date: Mon, 9 Mar 2026 09:10:31 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/functional/x86_64: Disable memlock test for asan
- builds
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>, 
- qemu-devel@nongnu.org
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-References: <20260309104545.1550888-1-peter.maydell@linaro.org>
- <5203acfa-7de3-411e-afe7-343dacbaa7f6@redhat.com>
+Subject: Re: leaks in migration-test
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>
+References: <CAFEAcA_3ed-jb+P8SVh6Pj8uGM+aYcCHTZgvzzHEUFW5zSn3rQ@mail.gmail.com>
+ <321e8b29-7879-4778-8734-0c2a6a2dadf3@linaro.org>
+ <CAFEAcA-zd=k0xioNOKgpe6hAsY76ux04=VkHeQWkngkBnTXTVw@mail.gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -114,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <5203acfa-7de3-411e-afe7-343dacbaa7f6@redhat.com>
+In-Reply-To: <CAFEAcA-zd=k0xioNOKgpe6hAsY76ux04=VkHeQWkngkBnTXTVw@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::436;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x436.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,20 +139,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 4:39 AM, Thomas Huth wrote:
-> On 09/03/2026 11.45, Peter Maydell wrote:
->> The address-sanitizer intercepts mlock() and makes it a no-op,
->> because it interacts badly with the sanitizer's own use of large
->> amounts of memory.  This means that our 'memlock' test will always
->> fail, because it checks via /proc for whether the QEMU process really
->> locked some pages.  Don't add the test when QEMU is built with asan.
+On 3/9/26 2:42 AM, Peter Maydell wrote:
+> On Sun, 8 Mar 2026 at 23:42, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
 >>
->> Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
->> ---
->>    tests/functional/x86_64/meson.build | 9 ++++++++-
->>    1 file changed, 8 insertions(+), 1 deletion(-)
+>> On 3/8/26 12:22 PM, Peter Maydell wrote:
+>>> I'm continuing to work through leaks reported during "make check".
+>>> Some of them come from the migration-test. (For these to actually
+>>> appear in the log you need to run with QTEST_LOG=1, otherwise the
+>>> migration test framework will send stderr to /dev/null and the
+>>> tests will fail without printing the leak report.)
+>>>
+>>> I did find this comment in qmp_migrate_incoming():
+>>>
+>>>        * NOTE: QEMU _might_ leak this refcount in some failure paths, but
+>>>        * that's OK.  This is the minimum change we need to at least making
+>>>        * sure success case is clean on the refcount.  We can try harder to
+>>>        * make it accurate for any kind of failures, but it might be an
+>>>        * overkill and doesn't bring us much benefit.
+>>>
+>>> The issue with this is that it means we need to suppress leak
+>>> reports in the whole migration-test binary, which means the
+>>> migration code will get no leak-detection coverage at all.
+>>> (Not all the leak paths have qmp_migrate_incoming() in their backtrace,
+>>> as you can see below.)
+>>>
+>>> We're getting pretty close to being able to get a complete "make check"
+>>> run with the leak sanitizer enabled, so it would be nice to not have
+>>> to suppress leak reports for this test at some point.
+>>>
 >>
+>> That's a nice thing in itself.
+>>
+>> Is the end goal is to enable that in CI? If not, I doubt there is a
+>> strong value in reaching that state today. You'll run out of steam and
+>> motivation to fix that yourself in the end.
+>> Same goes for all other sanitizer errors.
+> 
+> Yes, I'd like to be able to get this into CI at some point.
+> I periodically have a look through some of these things and
+> whittle down the number of failures.
+>
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+That's great to hear that. In the past, I used to run sanitized builds 
+also but lost motivation chasing and fixing new bugs added upstream. I 
+tried to push the idea a few times to add in CI but comments were 
+usually "we don't want to spend CI minutes on that", so that's great to 
+see this change coming from you.
+
+If we can reach a stable state and enforce it in CI for all tests + 
+check-tcg, this would be a really good thing for QEMU community.
+
+Regards,
+Pierrick
 
