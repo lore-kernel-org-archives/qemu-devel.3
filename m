@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19B83F4180D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32A9F41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:58:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcz7-0004AN-0u; Mon, 09 Mar 2026 11:57:34 -0400
+	id 1vzczk-0005ZU-1M; Mon, 09 Mar 2026 11:58:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcy4-0002kr-Ou
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:56:33 -0400
-Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcyv-00040O-4Y
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:23 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcxx-0000k7-G4
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:56:24 -0400
-Received: by mail-wm1-x332.google.com with SMTP id
- 5b1f17b1804b1-48540d21f7dso4105495e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:56:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcyp-0000pI-6g
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:17 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4852fdb36a8so24371855e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071778; x=1773676578; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071833; x=1773676633; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IYwq/x5k8YzSo5nefHb2YOgR15RYyHxfIiTIwO06Ijw=;
- b=rkkyZkuhRPsS7UNbX1WJNeHURgdjDt9+kADXwixPY907TZUihNtLm790KZd8D2WJtw
- lCj1KSINZ89x5i948kXREIh4MK5G31MSCqUetMUHhnZmXMR+hfNEWgW7JwtoLRITZdOt
- /75+u0TIu/TobR/wP4L5oVZ6w4vXE/kD8g1EYrEiY/Ac/WfYlQQh5LwEb+aTd6A6mfkD
- J/NDm5LxInaSzoLnX15RWjxc04PXiAPVFZ/kQMdYVGjKn6RIDRxFeX9XZosv1+PBOJgJ
- Skdn13wxqgZSfwOrrMBLyUvPkjAKSmPHn6s5IFbAguYBYgYv/b7G+GF2lg8Kb9+ET46X
- Y2PQ==
+ :reply-to; bh=zzThGEbHDfbShZ+LqArsRWb9rcvvKyh183/KD+t4v7U=;
+ b=w3AgJOl84dg9jL1OE/x53l74mCuMKnvUwf20zqcAnTawH4qfjhtzVIE5o7LYMWMp1q
+ 0mI4HA7RTum05igyKyGfhAY0sxZ/QLhrtB/vPKu9okxNaStqCNqqQtiwGluM5SaP3Wa3
+ XKLS9FMWzO3Dp+llYaF0ACmupp4fZFT+g/nH+T5aXk6NoJpvxMM3DS6fdnP8NBgK88SS
+ AShN2yP3/YRbjrjfukpptsye9toM4xxYYzBUhNGrChTH6E04jetsN0koymOqiJ8wSW2k
+ EKEJaqMsGo8iUtHhhbI9QLJLp8Vh/VMS7mPWYnwJXsv1nxRpuc/MNbOAbWiDD2r/t7vW
+ x0+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071778; x=1773676578;
+ d=1e100.net; s=20230601; t=1773071833; x=1773676633;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IYwq/x5k8YzSo5nefHb2YOgR15RYyHxfIiTIwO06Ijw=;
- b=RnFXSo9Jyth+2YYf7yZJ3pIMGWsUFB/hDQgET+iAJtazaBhZW0g3OZLH4o46LL3H7d
- AZ8CJBNF450SrWiYwWb/pu6bWzhd/3kwhx4upLXxiPhWyTbuFun8Xs7tBpNLW4LuKEIR
- nKO3OtjUGmPodACFPRXtBS/wZZH63l9M6vOlSl1DaHVMxR1CrvktBf/fEqLFnAu2smhT
- XyKpJM+qWW+fEFCicosSahr+8V9Ho9mu2P72Eh3vSW9ig3ZTklpYDbqykKAo4at7XJD5
- +6f3NFqFGCXWrDQG85lXscVm11+BOOozTfOjZb8efiklGpasyH+9v4LtC0hWKnocDsdF
- nKtg==
-X-Gm-Message-State: AOJu0YyDVl+qnX2Yf6l1cnXpZzlD5+Ct90LKGJ+TgSOcn0UIciysk5a1
- rPGcD47RBkQKNOQLNIN/i+s9tKhRqqooqhnwaNsrMkuoCMbUFBjG0wykABTrBD6mxQQMmF6ydxg
- hTZJvjBc=
-X-Gm-Gg: ATEYQzwuSV962wHDXLUQREJjlncrxgOc0IHjtkA2zgVNWoIsMYRvGpcFxdiZxsr7OE4
- nJy8rRvsGmVMD/cSgvmWY1FPZcFdczTlEk9b410XG7/bibh9DnzTOxyuLB2IPz3ah8AHII0y2HC
- eLHGWpiDN7E16tkZl3zVLyCNK+bd3SKcJCq21D1V6x1LltWNXdLRE17Z4Ivmq3+fwbkBNjCu7dW
- Dh5/8XxABNeeXSFuD5rVqGzqaen4VqyOxaKVl4smFqfwKAu0qeyvidZqCrqnPSEylIduU52/U6i
- 7vIVOqEuHTNsTBmaB4GIgu/O3y2n+/nQsRhCOSwl04f/vNDw4wZbAABsA4VRi4kWIx52uJDaikd
- /40gDk5qJJ8WNseTBwj6Vp5cv2orqezNbN67TllHNZmZFTUr+R166vHd0pZLmGcaW5gOPynqPsp
- hGlAncBhwJ86UXPTxSmQIY3b5n8kbI608rK01hK8IXq6iwn3fpxTwsDGa3N5A35gFzgPikmBB1
-X-Received: by 2002:a05:600c:c8f:b0:483:703e:4ad9 with SMTP id
- 5b1f17b1804b1-4852695b63emr201283305e9.19.1773071777730; 
- Mon, 09 Mar 2026 08:56:17 -0700 (PDT)
+ bh=zzThGEbHDfbShZ+LqArsRWb9rcvvKyh183/KD+t4v7U=;
+ b=JrT3dmKaIZ+rHZR2lWHJ0nAj81vDjjidqAJ/Z9ruUO3LrNR01beOsj0v9ZqROqHyLZ
+ t4k5ZunAJgamnv+i4OVfnIojcqtJ+y+49s+mZ54zCTdP/NQFmAnF7hgAQQzxLKm2Jed1
+ T0kt+OtgFpt1m40SaG0BJkghn57CiWrgol5fLttBfduLnVHeKZKpRC1WkTeZm/h8cjdD
+ DdTG60K0/CghskOHrrgeYeau4UqfhyNcA+gYkNlNAIuPzHwqtesbug7X5XRyK8xXnLon
+ +0y4wBYl2vvxbfQ7ExAFBXk8FKrh5o6tE2MrYitpOafOKLn6VrJydoe9VHsQEaQ9Y16N
+ DDLQ==
+X-Gm-Message-State: AOJu0YzI2+3fclHuqNVX578Q3pJyMq/JAuRhgJRgbfZrthy5V65kJfN9
+ 7uMb+wYWp9w7GtPvBMFPaZsiGMtPUuGPeld4y8L+FGVq6qiZ3v8eEFxaKoarXUi8r7Brx+H58XG
+ XRYjEIJw=
+X-Gm-Gg: ATEYQzx/Cpf/wc2rg6ZY1tbK+1WNg05AATq6PKSNod3DAsYlE1OGEww7sKQHl4OBcZE
+ trFL35klIw9I5yMO9rWb75qpTY0TBefuWdTfBsXY11sMwanYHP+BrAFyb3mY6+boAtTF97M8Biy
+ gnj2vdOj31tTTJS5fDkJXnx2w1UrNNRLZnjgqc2JVitScUNlwh4MM493wD+gxU4Sd/odibSdmCZ
+ Qz7+ybS2iVj9xpH684ESacF/1GqxHRZjBc/yy7OlccP1RytEroqOq5t1ljL3j7YQo2wVTf1z3PW
+ GS1ZKjNh4sQSD7whE/n5sceueqw6eks63YqPMuK19HWc1A9U3GJJ5Rqff1UT4Z0wg5C8sxN8Cav
+ mZB9+4XKrGiH+XEzz3E+4FpRyha5FfMiGiOw9wp9LWEUXg9/ZTDNXeOOE2GxjHOKRnb2eCvECeq
+ CSclEXEd2HWHo65uAGav7ZqEy/wbpg0u5G/w9H6VDoePWshHycMpvxEVH1e+GK3aFQacxJXRRyC
+ /YfHIABIfk=
+X-Received: by 2002:a05:600c:3ba2:b0:485:35ba:1d81 with SMTP id
+ 5b1f17b1804b1-48535ba1ea6mr92788705e9.21.1773071832488; 
+ Mon, 09 Mar 2026 08:57:12 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853927825csm39166875e9.9.2026.03.09.08.56.16
+ 5b1f17b1804b1-485419c2930sm3208125e9.0.2026.03.09.08.57.11
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:56:17 -0700 (PDT)
+ Mon, 09 Mar 2026 08:57:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 35/49] hw: Make qdev_get_printable_name() consistently return
- freeable string
-Date: Mon,  9 Mar 2026 16:52:05 +0100
-Message-ID: <20260309155219.62400-36-philmd@linaro.org>
+Subject: [PULL 43/49] ati-vga: Implement HOST_DATA register writes
+Date: Mon,  9 Mar 2026 16:52:13 +0100
+Message-ID: <20260309155219.62400-44-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::332;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,138 +99,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Chad Jablonski <chad@jablonski.xyz>
 
-The current implementation of qdev_get_printable_name() sometimes
-returns a string that must not be freed (vdev->id or the fixed
-fallback string "<unknown device>" and sometimes returns a string
-that must be freed (the return value of qdev_get_dev_path()). This
-forces callers to leak the string in the "must be freed" case.
+Writing to any of the HOST_DATA0-7 registers pushes the written data
+into a 128-bit accumulator. When the accumulator is full a flush is
+triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
+will also initiate a flush. The flush itself is left for the next patch.
 
-Make the function consistent that it always returns a string that
-the caller must free, and make the three callsites free it.
+Unaligned HOST_DATA* writes result in, from what I can tell, undefined
+behavior on real hardware. A well-behaved driver shouldn't be doing this
+anyway. For that reason they are not handled here at all.
 
-This fixes leaks like this that show up when running "make check"
-with the address sanitizer enabled:
-
-Direct leak of 13 byte(s) in 1 object(s) allocated from:
-    #0 0x5561de21f293 in malloc (/home/pm215/qemu/build/san/qemu-system-i386+0x1a2d293) (BuildId: 6d6fad7130fd5c8dbbc03401df554f68b8034936)
-    #1 0x767ad7a82ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
-    #2 0x5561deaf34f2 in pcibus_get_dev_path /home/pm215/qemu/build/san/../../hw/pci/pci.c:2792:12
-    #3 0x5561df9d8830 in qdev_get_printable_name /home/pm215/qemu/build/san/../../hw/core/qdev.c:431:24
-    #4 0x5561deebdca2 in virtio_init_region_cache /home/pm215/qemu/build/san/../../hw/virtio/virtio.c:298:17
-    #5 0x5561df05f842 in memory_region_write_accessor /home/pm215/qemu/build/san/../../system/memory.c:491:5
-    #6 0x5561df05ed1b in access_with_adjusted_size /home/pm215/qemu/build/san/../../system/memory.c:567:18
-    #7 0x5561df05e3fa in memory_region_dispatch_write /home/pm215/qemu/build/san/../../system/memory.c
-    #8 0x5561df0aa805 in address_space_stm_internal /home/pm215/qemu/build/san/../../system/memory_ldst.c.inc:85:13
-    #9 0x5561df0bcad3 in qtest_process_command /home/pm215/qemu/build/san/../../system/qtest.c:480:13
-
-Cc: qemu-stable@nongnu.org
-Fixes: e209d4d7a31b9 ("virtio: improve virtqueue mapping error messages")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260307155046.3940197-3-peter.maydell@linaro.org>
+Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Message-ID: <235adb69787c818afd023e7f32286166cc70744c.1773020351.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/core/qdev.h | 16 ++++++++++++++++
- hw/core/qdev.c         |  4 ++--
- hw/virtio/virtio.c     | 12 +++++++++---
- 3 files changed, 27 insertions(+), 5 deletions(-)
+ hw/display/ati_int.h  |  9 +++++++++
+ hw/display/ati_regs.h |  9 +++++++++
+ hw/display/ati.c      | 26 ++++++++++++++++++++++++++
+ hw/display/ati_dbg.c  |  9 +++++++++
+ 4 files changed, 53 insertions(+)
 
-diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
-index 29083bc9078..f99a8979ccb 100644
---- a/include/hw/core/qdev.h
-+++ b/include/hw/core/qdev.h
-@@ -1084,6 +1084,22 @@ extern bool qdev_hot_removed;
-  * If @dev is NULL or not on a bus, returns NULL.
-  */
- char *qdev_get_dev_path(DeviceState *dev);
-+
-+/**
-+ * qdev_get_printable_name: Return human readable name for device
-+ * @dev: Device to get name of
-+ *
-+ * Returns: A newly allocated string containing some human
-+ * readable name for the device, suitable for printing in
-+ * user-facing error messages. The function will never return NULL,
-+ * so the name can be used without further checking or fallbacks.
-+ *
-+ * If the device has an explicitly set ID (e.g. by the user on the
-+ * command line via "-device thisdev,id=myid") this is preferred.
-+ * Otherwise we try the canonical QOM device path (which will be
-+ * the PCI ID for PCI devices, for example). If all else fails
-+ * we will return the placeholder "<unknown device">.
-+ */
- const char *qdev_get_printable_name(DeviceState *dev);
+diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+index 874c63eb544..063efc7bbaa 100644
+--- a/hw/display/ati_int.h
++++ b/hw/display/ati_int.h
+@@ -96,6 +96,14 @@ typedef struct ATIVGARegs {
+     uint32_t default_tile;
+ } ATIVGARegs;
  
- void qbus_set_hotplug_handler(BusState *bus, Object *handler);
-diff --git a/hw/core/qdev.c b/hw/core/qdev.c
-index fc3425a8fe1..e48616b2c6f 100644
---- a/hw/core/qdev.c
-+++ b/hw/core/qdev.c
-@@ -420,7 +420,7 @@ const char *qdev_get_printable_name(DeviceState *vdev)
-      * names.
-      */
-     if (vdev->id) {
--        return vdev->id;
-+        return g_strdup(vdev->id);
++typedef struct ATIHostDataState {
++    bool active;
++    uint32_t row;
++    uint32_t col;
++    uint32_t next;
++    uint32_t acc[4];
++} ATIHostDataState;
++
+ struct ATIVGAState {
+     PCIDevice dev;
+     VGACommonState vga;
+@@ -114,6 +122,7 @@ struct ATIVGAState {
+     MemoryRegion io;
+     MemoryRegion mm;
+     ATIVGARegs regs;
++    ATIHostDataState host_data;
+ };
+ 
+ const char *ati_reg_name(int num);
+diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+index 3999edb9b71..48f15e9b1da 100644
+--- a/hw/display/ati_regs.h
++++ b/hw/display/ati_regs.h
+@@ -252,6 +252,15 @@
+ #define DP_T12_CNTL                             0x178c
+ #define DST_BRES_T1_LNTH                        0x1790
+ #define DST_BRES_T2_LNTH                        0x1794
++#define HOST_DATA0                              0x17c0
++#define HOST_DATA1                              0x17c4
++#define HOST_DATA2                              0x17c8
++#define HOST_DATA3                              0x17cc
++#define HOST_DATA4                              0x17d0
++#define HOST_DATA5                              0x17d4
++#define HOST_DATA6                              0x17d8
++#define HOST_DATA7                              0x17dc
++#define HOST_DATA_LAST                          0x17e0
+ #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
+ #define SCALE_OFFSET_0                          0x1998
+ #define SCALE_PITCH                             0x199c
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 9a7c5703b0f..16dbb743e1a 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -1023,6 +1023,27 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+     case SRC_SC_BOTTOM:
+         s->regs.src_sc_bottom = data & 0x3fff;
+         break;
++    case HOST_DATA0:
++    case HOST_DATA1:
++    case HOST_DATA2:
++    case HOST_DATA3:
++    case HOST_DATA4:
++    case HOST_DATA5:
++    case HOST_DATA6:
++    case HOST_DATA7:
++    case HOST_DATA_LAST:
++        if (!s->host_data.active) {
++            break;
++        }
++        s->host_data.acc[s->host_data.next++] = data;
++        if (addr == HOST_DATA_LAST) {
++            qemu_log_mask(LOG_UNIMP, "HOST_DATA finish not yet implemented\n");
++            s->host_data.next = 0;
++        } else if (s->host_data.next >= 4) {
++            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
++            s->host_data.next = 0;
++        }
++        break;
+     default:
+         break;
      }
-     /*
-      * Fall back to the canonical QOM device path (eg. ID for PCI
-@@ -437,7 +437,7 @@ const char *qdev_get_printable_name(DeviceState *vdev)
-      * Final fallback: if all else fails, return a placeholder string.
-      * This ensures the error message always contains a valid string.
-      */
--    return "<unknown device>";
-+    return g_strdup("<unknown device>");
+@@ -1128,6 +1149,11 @@ static void ati_vga_reset(DeviceState *dev)
+     /* reset vga */
+     vga_common_reset(&s->vga);
+     s->mode = VGA_MODE;
++
++    s->host_data.active = false;
++    s->host_data.next = 0;
++    s->host_data.row = 0;
++    s->host_data.col = 0;
  }
  
- void qdev_add_unplug_blocker(DeviceState *dev, Error *reason)
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 4c5a4479bfa..0ba734d0bc6 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -281,10 +281,12 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->desc, vdev->dma_as,
-                                    addr, size, packed);
-     if (len < size) {
-+        g_autofree const char *devname = qdev_get_printable_name(DEVICE(vdev));
-+
-         virtio_error(vdev,
-                 "Failed to map descriptor ring for device %s: "
-                 "invalid guest physical address or corrupted queue setup",
--                qdev_get_printable_name(DEVICE(vdev)));
-+                devname);
-         goto err_desc;
-     }
- 
-@@ -292,10 +294,12 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->used, vdev->dma_as,
-                                    vq->vring.used, size, true);
-     if (len < size) {
-+        g_autofree const char *devname = qdev_get_printable_name(DEVICE(vdev));
-+
-         virtio_error(vdev,
-                 "Failed to map used ring for device %s: "
-                 "possible guest misconfiguration or insufficient memory",
--                qdev_get_printable_name(DEVICE(vdev)));
-+                devname);
-         goto err_used;
-     }
- 
-@@ -303,10 +307,12 @@ void virtio_init_region_cache(VirtIODevice *vdev, int n)
-     len = address_space_cache_init(&new->avail, vdev->dma_as,
-                                    vq->vring.avail, size, false);
-     if (len < size) {
-+        g_autofree const char *devname = qdev_get_printable_name(DEVICE(vdev));
-+
-         virtio_error(vdev,
-                 "Failed to map avalaible ring for device %s: "
-                 "possible queue misconfiguration or overlapping memory region",
--                qdev_get_printable_name(DEVICE(vdev)));
-+                devname);
-         goto err_avail;
-     }
+ static void ati_vga_exit(PCIDevice *dev)
+diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
+index 3ffa7f35df9..5c799d540a9 100644
+--- a/hw/display/ati_dbg.c
++++ b/hw/display/ati_dbg.c
+@@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
+     {"MC_SRC1_CNTL", 0x19D8},
+     {"TEX_CNTL", 0x1800},
+     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
++    {"HOST_DATA0", 0x17c0},
++    {"HOST_DATA1", 0x17c4},
++    {"HOST_DATA2", 0x17c8},
++    {"HOST_DATA3", 0x17cc},
++    {"HOST_DATA4", 0x17d0},
++    {"HOST_DATA5", 0x17d4},
++    {"HOST_DATA6", 0x17d8},
++    {"HOST_DATA7", 0x17dc},
++    {"HOST_DATA_LAST", 0x17e0},
+     {NULL, -1}
+ };
  
 -- 
 2.53.0
