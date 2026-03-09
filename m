@@ -4,41 +4,40 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4EAB4F3C25E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9054F3C266
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:48:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzaxd-00043N-EW; Mon, 09 Mar 2026 09:47:53 -0400
+	id 1vzaxi-00045G-Ih; Mon, 09 Mar 2026 09:47:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxU-0003yU-3q
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxU-0003yT-3l
  for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:47 -0400
 Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxP-00067q-LU
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:43 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxO-00067j-4D
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:42 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id EDCEF40657
+ by sea.source.kernel.org (Postfix) with ESMTP id 0AFD5435AB
  for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 55AACC4CEF7
- for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:22 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669E4C4CEF7
+ for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:21 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773064042;
- bh=fGNhZhGwYx5O0WsKa+ya31k08B1YR0SmQJGqiNNdM0g=;
+ s=k20201202; t=1773064041;
+ bh=x2p9sfsUBTUAYtkqoTf6MRparRAy9QhO3P2K4BkAkCQ=;
  h=From:To:Subject:Date:In-Reply-To:References:From;
- b=Mb4+Ih0in3QH04vck+nRjMXiGw51U/O5qGbmQg9d/HTPvtzhgW33C3FtwqBGZvyrj
- ytWGlQ1NRzmA9o3lOWZxfU8t0W9ggmxwEJA+URyso+wE0mQVneAS9BBS5QArVEAYbK
- 46CxZqBjCsouAiNYjvgykowEAV35HqPSe3Xj0nJ5UVUd9R9rVpebFJoRAP9UMOjkMJ
- 89l+3Py1NJqHua6k4+qBDsKvRmzyRxCVMr4tDaYwy52Cuimhx/5M27FcCZsc6FECrf
- x5yAcjNWGwpelWR9TH2VKKLTFYPQ82s3p1izpzOGbYFpOSw3qhVoSanXuSoHgDN7Bu
- +jO6dW0OaC5iA==
+ b=rx4k/uyySmXb05PHPRRl3d9HDzmoTI055ZTZnPIm2wQ15TkwkieZSGLenlZXX7P08
+ vuhhDMbANUYHcDbj5kgcNHqm083XUbYTnCTcuMJigMHnrYf3BG71Q1Crykc9H+NKMO
+ C3W4CLYr3NMFC3BFdqQNKWLjiaNY2LMiHyBXsMFPq1YuwimakeG7wlgwU1W3zHTfPu
+ bc+eMK45W/+PDf4MMlasws4S3R1UFF7q8+40tDOXKMSmtx45BZPHv2DFdEIfLTXiq9
+ 0yv6wTK9DAcfFuDUFdJINceSb7t64fg1/wztu9vUIXPlJgZ76eVEFDZtXdXTExUNj+
+ 4hze49tkSpt7A==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 09/10] tests/tcg/multiarch/test-mmap: Check mmaps beyond
- reserved_va
-Date: Mon,  9 Mar 2026 14:47:10 +0100
-Message-ID: <20260309134711.5312-10-deller@kernel.org>
+Subject: [PULL 08/10] tests/tcg/multiarch/test-mmap: Print more details
+Date: Mon,  9 Mar 2026 14:47:09 +0100
+Message-ID: <20260309134711.5312-9-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309134711.5312-1-deller@kernel.org>
 References: <20260309134711.5312-1-deller@kernel.org>
@@ -69,48 +68,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bingwu Zhang <xtex@astrafall.org>
 
-Unfixed mmap calls where start > reserved_va or the max guest addr
-should have a valid result.
+Useful for debugging
 
 Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- tests/tcg/multiarch/test-mmap.c | 15 +++++++++++++++
- 1 file changed, 15 insertions(+)
+ tests/tcg/multiarch/test-mmap.c | 12 +++++++++---
+ 1 file changed, 9 insertions(+), 3 deletions(-)
 
 diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
-index 88f7a04101..2bfa529127 100644
+index e297f4b1e9..88f7a04101 100644
 --- a/tests/tcg/multiarch/test-mmap.c
 +++ b/tests/tcg/multiarch/test-mmap.c
-@@ -497,6 +497,20 @@ void check_shrink_mmaps(void)
-     fprintf(stdout, " passed\n");
- }
+@@ -442,19 +442,19 @@ void check_invalid_mmaps(void)
  
-+void check_mmaps_beyond_addr_space(void)
-+{
-+    unsigned char *addr;
-+    addr = mmap((void *)(-(unsigned long)pagesize * 10), pagesize * 2,
-+                PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d", __func__, (void *)addr, errno);
-+    fail_unless(addr != MAP_FAILED);
-+
-+    memcpy(dummybuf, addr, 2 * pagesize);
-+    munmap(addr, 2 * pagesize);
+     /* Attempt to map a zero length page.  */
+     addr = mmap(NULL, 0, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+-    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
+     fail_unless(addr == MAP_FAILED);
+     fail_unless(errno == EINVAL);
+ 
+     /* Attempt to map a over length page.  */
+     addr = mmap(NULL, -4, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
+-    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
+     fail_unless(addr == MAP_FAILED);
+     fail_unless(errno == ENOMEM);
+ 
+     /* Attempt to remap a region which exceeds the bounds of memory. */
+     addr = mremap((void *)((uintptr_t)pagesize * 10), SIZE_MAX & ~(size_t)pagemask, pagesize, 0);
+-    fprintf(stdout, "%s mremap addr=%p", __func__, (void *)addr);
++    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)addr, errno);
+     fail_unless(addr == MAP_FAILED);
+     fail_unless(errno == EFAULT);
+ 
+@@ -465,8 +465,11 @@ void check_shrink_mmaps(void)
+ {
+     unsigned char *a, *b, *c;
+     a = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)a, errno);
+     b = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)b, errno);
+     c = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)c, errno);
+ 
+     fail_unless(a != MAP_FAILED);
+     fail_unless(b != MAP_FAILED);
+@@ -479,6 +482,7 @@ void check_shrink_mmaps(void)
+ 
+     /* Shrink the middle mapping in-place; the others should be unaffected */
+     b = mremap(b, pagesize * 2, pagesize, 0);
++    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)b, errno);
+     fail_unless(b != MAP_FAILED);
+ 
+     /* Ensure we can still access all valid mappings */
+@@ -489,6 +493,8 @@ void check_shrink_mmaps(void)
+     munmap(a, 2 * pagesize);
+     munmap(b, pagesize);
+     munmap(c, 2 * pagesize);
 +
 +    fprintf(stdout, " passed\n");
-+}
-+
- int main(int argc, char **argv)
- {
- 	char tempname[] = "/tmp/.cmmapXXXXXX";
-@@ -540,6 +554,7 @@ int main(int argc, char **argv)
- 	check_file_unfixed_eof_mmaps();
- 	check_invalid_mmaps();
-     check_shrink_mmaps();
-+    check_mmaps_beyond_addr_space();
+ }
  
- 	/* Fails at the moment.  */
- 	/* check_aligned_anonymous_fixed_mmaps_collide_with_host(); */
+ int main(int argc, char **argv)
 -- 
 2.53.0
 
