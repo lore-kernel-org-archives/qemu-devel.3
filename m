@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FF1F417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3083DF41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcvL-0005aR-NJ; Mon, 09 Mar 2026 11:53:39 -0400
+	id 1vzcvS-0006Sj-Qm; Mon, 09 Mar 2026 11:53:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvE-0005Bl-Fk
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:32 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvR-0006Le-Lf
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:45 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvC-0008FP-Ns
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:32 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-439aeed8a5bso9200468f8f.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvQ-0008Qa-4U
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:45 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48538c5956bso14194075e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071609; x=1773676409; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071622; x=1773676422; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=pgpA3PHGmA2cywOmnIHp4QQstzRdLHRlcUMp4w2UsrY=;
- b=hw05L4sm07BFjE1hsZoDVU/p1m5aPvMWfElezukKU0/Ezpa6htKlSyjpg4QagPvAVy
- r6G3Afk6xtTh49tJy7/OXvQDYBrTnQ+YAiKvXgkn/FlvQ0B4ogxcKmKPcYm8bJHDh35m
- CQJzIu7k23fTU8aa/WdW09qy768Ljdkhi5tC/y4cSRDA6FzIAeWWMgNh8nQ3u+wteOUp
- nqJJZD0529sH+SZS6H6REX0EOs8eNkBOfTugSZ+Wu+4nE3/0NFEBoJ7p3ruEAMDdY9Pa
- p9R9oE5RH9SWzd1yFwTn/PCp7yKuMg3B5EOVDy8cRCUZX7bNJGLp8gGmoZGj2B7AhlBx
- ziWA==
+ :reply-to; bh=F1/3YUpYRmZXjja4BuejGPaJcObXsK5Vr2HdAMOPQ14=;
+ b=Uf/sISJsS5Y8Cd4r74HKM+EOPVhiftpkXbDRTJHSYwcHQiqD0l5aYkGkgIK0wRen7Q
+ MiFBsTv1RbyEe1Gof2VYUj/OVKZuanqUB5nHQRpfWYVUJ7qgdCSWThwEopgRguzD2s65
+ r3fyv+QGdj45osv4stLXvpdWy3k1JGzzc4ecl+cxCPed0LmFr2Mkka1wB32rk2+P7AMk
+ 1qQOHM+B8BjnccWF9Bg6lNSuD4oCUgySt+IUiGygTruwq6vg+gdG+Tc0SsBc+9IN8pE1
+ E/9XIYOS1c11FSTTUq09W7Vrh131/BUOOp0QgFPm9x8MHh4yinvgp+HjrrMMe6IpvMqX
+ U2uQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071609; x=1773676409;
+ d=1e100.net; s=20230601; t=1773071622; x=1773676422;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=pgpA3PHGmA2cywOmnIHp4QQstzRdLHRlcUMp4w2UsrY=;
- b=gNdT4JA2zNyiQAWz2Y/JJJn1VsoqdeJVEUbR7i/F0XpVW/+QachoB+sj89uFHq8YXv
- l61p+ldYbv/mrqyI8eJCFcj5B1TXDXzb0pUGHrdENGSXnNFD2nNDEKExcx9YF7pV34pS
- X60D69tb81ZyiwdVN71V16SN35whEe5bteyGdpNSfChgVLlOE2Kjkyc2QWKbDGkDf/E1
- MXc18Ss3Fm/hoDVbROA60nGzDT45otxsh42y8fow8JeIZGvzyyIuiil6WRFwodc87AkS
- zKNK4A8reKaqwkIE41L8E8vkEWWxq/4EruBrhtp7WGqrcEhHpNZoaGvZ2js9NJKGkB88
- Ijgg==
-X-Gm-Message-State: AOJu0Yzl7bs2Qv3A4KngIG+I0Q2tX2k/G3us8R8lR+VUqjmNtt4xb3CZ
- 9SrLkEqRtgEI4wX5qMBAZuNfpbRDB83/TKxHQdfHWVHSW1iQT3uJwYddgimiskBy57yEHTxwBt8
- 3UJSj+l4=
-X-Gm-Gg: ATEYQzyP+WpeviDGrwDQNl9F/ZABKAgO0DXbLDvee7YRo29CpnUn8otTHTiT/LpszAS
- 2LvG69GOUIbWr8NY7vvEYScF7E/4p/fYvQKDNo1zw0KEGjpluf5piakPATWBjbH09JEF0LlizSX
- bYNJ777y1ww9BlSR379PYnjytmEyHORidc9cAytHZ8nK3itPr1l4iEXuVUT98cNuDexVuLBYbgc
- 47PjEWMg3SfL8FeBpvG1Ip5eUC5W91J653HpyN5x+aWlb5eW8Azc67cwH5d4s9ENkN7qwyXJ2iw
- 4WkESHZ7IjY6H79b2wGqQo7KFPrDsgX4z5Zd4M+QSl3Z4XVdyLY58ArDpFHg3lOjXVYgH6JneCt
- MZW+7xR+30sNqux1AGBxSOpDnNgoNokYZ5vNKFQsRp/i7VQf2t1SSIguasm+bEElNJv/B9fwEl2
- tKALddNzKmDd5puuyN2ZgVY3qQ4IWPClYO7r6+a2TNPok2PAr/Yk35THIe5+O6Ve/C2DhLdMS5h
- vaXIyEm3kg=
-X-Received: by 2002:a05:6000:40cb:b0:439:cc01:c9ee with SMTP id
- ffacd0b85a97d-439da5554a3mr18488588f8f.3.1773071608643; 
- Mon, 09 Mar 2026 08:53:28 -0700 (PDT)
+ bh=F1/3YUpYRmZXjja4BuejGPaJcObXsK5Vr2HdAMOPQ14=;
+ b=khYslWKghTGx/u9OoYT/1+o0M1QMhnJYyLCXHzJRfuH9jFTkQphSIGlCi5fa6O9czm
+ rY/i4Y+nlD7FiTyBHpIwU2yOYWF79sKOXXiFoBhMgB7pgIKdSfjrZWWyoAzz486bdKeN
+ gcTWKzMVCJtm3opuF+X3uIMrhYp1d+autWxwT09iJX3vyzHa9GT/hiz2JONwj/Mmxt/+
+ DbzLmnCLDiJpDURH1cm/CLukrBYZB18Y/VsKbIhkQ6Lc07rc3mplFkdpzNeb3JXH34Oj
+ ODqqWQ8k9YHLNHX6KFuiByA7A/QNaB/nynaZmgM0U6bWWIu9kYj2y6WtfNS9K9SzCx29
+ eyOA==
+X-Gm-Message-State: AOJu0Yzj8ScnaxyFAv94LsMVhh1vpp15crOjqppYh4Y1kshh6TPBgmuf
+ anTHkJYCKiK4v/EPN/gEx6ZWwc69sZFoKL6Q1v0KNPli2IkAlhnjFSZ3JSGP1xSkIOD2XRUSp1R
+ P5+viMag=
+X-Gm-Gg: ATEYQzxLneOKNzjKYOPJY45JYYhVRO7Xm7vulD9+GLW06A8fvfxCeB2Dqeb8VaU9THj
+ AW6UyADRiizXd4VPBvTsozYAacRxXMOWt18JCvQVa8c2AdG9rSRVl16WH9FuAcFii9qR4PIRAXM
+ WbSFTN8+IkT9nfGiLUr8EELEWh6ZG5kv5NHzw7tB2spAKm87vcYLorVyaWkJBsvsqUbpiw314ty
+ 6qVxeXJQhN0ZQWXpBOYfs7VkcUc2cvwcvEbsQQqT4fvk5SG7xa5xis+VBSn75I81siudxKI8R3N
+ Jpk75/Nir5yqfny6FePINLAwwpeyKjNuBjLKSvwq+P4hIr2yD0z1wGho5OX6KhYgwgVLDh9unFz
+ dZnEx+SomCKyAURcctJ9c5QVe1rA8X4su1dQmvYJJjC52XvnCq2dNhtEp9fzqnviXdg2MbH21UU
+ UsiwSHrt8QKg/2csCf9CSEfKwkhFRDlRV9SO8F4knzXUSz6eUuMHfWRiCSoAmjE0RMoDFaRna1
+X-Received: by 2002:a05:600c:8b53:b0:485:3b33:f4b6 with SMTP id
+ 5b1f17b1804b1-4854192dd55mr2171895e9.0.1773071622071; 
+ Mon, 09 Mar 2026 08:53:42 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2b9d8sm28693381f8f.21.2026.03.09.08.53.27
+ 5b1f17b1804b1-48541a7f1f5sm1661765e9.4.2026.03.09.08.53.41
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:53:28 -0700 (PDT)
+ Mon, 09 Mar 2026 08:53:41 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/49] hw/pci-bridge/pcie_rp: Remove PCIESlot::disable_acs field
-Date: Mon,  9 Mar 2026 16:51:40 +0100
-Message-ID: <20260309155219.62400-11-philmd@linaro.org>
+Subject: [PULL 12/49] hw/i386/pc: Remove pc_compat_4_0[] array
+Date: Mon,  9 Mar 2026 16:51:42 +0100
+Message-ID: <20260309155219.62400-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +98,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The PCIESlot::disable_acs boolean was only set in the
-hw_compat_3_1[] array, via the 'disable-acs=true' property.
-We removed all machines using that array, lets remove that
-property and all the code around it.
+The pc_compat_4_0[] array was only used by the pc-q35-4.0,
+pc-q35-4.0.1 and pc-i440fx-4.0 machines, which got removed.
+Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-10-philmd@linaro.org>
+Message-Id: <20260307154202.86309-4-philmd@linaro.org>
 ---
- include/hw/pci/pcie_port.h     | 3 ---
- hw/pci-bridge/pcie_root_port.c | 3 +--
- 2 files changed, 1 insertion(+), 5 deletions(-)
+ include/hw/i386/pc.h | 3 ---
+ hw/i386/pc.c         | 3 ---
+ 2 files changed, 6 deletions(-)
 
-diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
-index 53cd64c5edf..b28af067a66 100644
---- a/include/hw/pci/pcie_port.h
-+++ b/include/hw/pci/pcie_port.h
-@@ -60,9 +60,6 @@ struct PCIESlot {
-     PCIExpLinkWidth width;
-     bool flitmode;
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 4e1dd436ab7..22325324d09 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -268,9 +268,6 @@ extern const size_t pc_compat_4_2_len;
+ extern GlobalProperty pc_compat_4_1[];
+ extern const size_t pc_compat_4_1_len;
  
--    /* Disable ACS (really for a pcie_root_port) */
--    bool        disable_acs;
+-extern GlobalProperty pc_compat_4_0[];
+-extern const size_t pc_compat_4_0_len;
 -
-     /* Indicates whether any type of hot-plug is allowed on the slot */
-     bool        hotplug;
+ #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+     static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+                                                  const void *data) \
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index f33e3f72656..addf602da08 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -177,9 +177,6 @@ const size_t pc_compat_4_2_len = G_N_ELEMENTS(pc_compat_4_2);
+ GlobalProperty pc_compat_4_1[] = {};
+ const size_t pc_compat_4_1_len = G_N_ELEMENTS(pc_compat_4_1);
  
-diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
-index fe3ced56851..7c3e78010b4 100644
---- a/hw/pci-bridge/pcie_root_port.c
-+++ b/hw/pci-bridge/pcie_root_port.c
-@@ -117,7 +117,7 @@ static void rp_realize(PCIDevice *d, Error **errp)
-     pcie_aer_root_init(d);
-     rp_aer_vector_update(d);
- 
--    if (rpc->acs_offset && !s->disable_acs) {
-+    if (rpc->acs_offset) {
-         pcie_acs_init(d, rpc->acs_offset);
-     }
-     return;
-@@ -151,7 +151,6 @@ static void rp_exit(PCIDevice *d)
- static const Property rp_props[] = {
-     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
-                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
--    DEFINE_PROP_BOOL("disable-acs", PCIESlot, disable_acs, false),
- };
- 
- static void rp_instance_post_init(Object *obj)
+-GlobalProperty pc_compat_4_0[] = {};
+-const size_t pc_compat_4_0_len = G_N_ELEMENTS(pc_compat_4_0);
+-
+ /*
+  * @PC_FW_DATA:
+  * Size of the chunk of memory at the top of RAM for the BIOS ACPI tables
 -- 
 2.53.0
 
