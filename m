@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E3611F417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:47:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C78BBF41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:48:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcpd-0006N3-8P; Mon, 09 Mar 2026 11:47:45 -0400
+	id 1vzcqB-0006p3-LZ; Mon, 09 Mar 2026 11:48:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcpV-0006Gk-FE
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:47:37 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcpo-0006gZ-VG
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:48:00 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcpT-0006z4-My
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:47:37 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-439c4bde55cso4154532f8f.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:47:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcpn-000711-Db
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:47:56 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4853aec185aso10821665e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:47:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071254; x=1773676054; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071272; x=1773676072; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=YRb30fu5gErroAKi6DgB2cezgJaGqabrAkmfdbQOouo=;
- b=XhbJgJBqnX5EN4SY8VVTHn1kKvtm1aKAI+5gNCoF48UyQ714fhfW6s5N22Kj3+/4WH
- iLBP50Fj7YHZ7QQ9RMvJHPrEOtQAFtzAa+vTjRNUGSl3avZjWj3HpbNSXK6NY01xp+Rg
- OYQg0QELzYTqvPSgvnpuW6pbwUVWlfRxfBi/H084oDVOHIezT6tFhRXR8w1xwq1kFcuO
- c3gIoi68pWwW6MwokZ7PzRD5ozLI7YE6ZXn9b4XWtO2r9YQ4e2Spo1SXgdvwxKU6u0XX
- oyD+IgTx/wGkwDP1Y65zFl72/77KniLiT2FtW/5FRKc95jmCIDb0rBZ/1N+eeNnxy44k
- PH4w==
+ bh=wYTf19tFA5Ga8Mvs8jxCIv8fEqitWOTW3VQbunH9IHY=;
+ b=VlzFJ+SJHVK4IbUkeiniWXgniAaPLd1Yo8XVNg4L5O1EHJJHUSoEuWQm7Npterr9LH
+ faju0wAv5zdPgMPPqkkQcdDI7U8U67OU3Tj6pYZ/LDs4fOmgkP9W4nwW6V9hXJHEDkov
+ LpLw4KD//cXAiCP0eTJneAszQUG2SpYQjGFF59GLNaqIYvi3pjA5iQoM98HfF6LPdsEF
+ 4DsjEqlJPndMvl1a3/9jWrArOnmDPelojfucaC5eBpSy7vQ/UgNMN6M82DekKwJsU3u3
+ cS2JoLq+N7Q5plwqy4r8oCdkxqQ+bA/P5M2H0JozvgxFIEug6Mg+i7NilntxSsv+H3DN
+ WTKA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071254; x=1773676054;
+ d=1e100.net; s=20230601; t=1773071272; x=1773676072;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=YRb30fu5gErroAKi6DgB2cezgJaGqabrAkmfdbQOouo=;
- b=u72DR+6Dgf10NRgoeIcqhHTuNsJSeHSTxIrshBPDagxV9pxe/PjZN84nGODHXHqoV0
- vRbAIuQYNw5iDqOvYrTTgdHC88x/W7xs3nP1pPYZUiOW5TBPU4bhx2Jgz+gZ+EB14qzO
- 97poo3xq64LrGXZUV2P4mf2AHwaqxu2qqXNx8Qoz7aVUin/gWPgiZvgM0j+AHxHUb+gG
- vS6l1obdPhJoJy8ZgdDSZ9VQB2DPAbaNpLSqFPM2DTHo8NIW1yKRbXxrAOcVGaKd11fQ
- EbtX2Hs3FlWawhcH68KVaY80SpQKkpgoWE+WcyWCLfwereEXXOnIQFzpMg+YCrxkKs3Y
- UD+g==
+ bh=wYTf19tFA5Ga8Mvs8jxCIv8fEqitWOTW3VQbunH9IHY=;
+ b=UowSE6rDDgmVXiwgjWAeQgqQgH1kT2T2jR79pA3srDJPvWNuAYkCWp7pMar2/u3+yj
+ 0a5jM09o5mkG5q/0C5/hBzlbsXmI5CCpThC9OAX7JNupU35UrvMsWxACFWbBI9cyJFQX
+ iRfssUEAQAhPySn1LZIJjCFS6DYldyRUb8MbZZvSGP9eLcy9ZGSXunf6Jmy4Rhdb5EZY
+ ZlXwMMXcnclMqusQb1yDD8PWTTYwdX6wZsu3IPWG/z+5gL6FrAkDjfmEzKwcnkItNYz5
+ MiTZaJwXbPTLo4fT5EGhkHnMFdscVkdK2/b0mTEgfo4kCPzeofpYxIrRou2s8pSscVZb
+ 4kqQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVIbpaWcXBJ6fvZ8fSNq2nMMn+4EjZOKfdCFfRj4d2gfgLAZn0WyepWIt2hqNllXqPdlUPKea2t56bN@nongnu.org
-X-Gm-Message-State: AOJu0YwQhIF27CsKCcpjOeXFcmaYB9zxYjm/8Lo1F+MwzNSz4VlW5zPu
- dYCLY7wFmuzIxQzpIpME7NdhSOT0Vw0RwZNXibpBvM3U63PrFocUXngbs7VYbUn2xYU=
-X-Gm-Gg: ATEYQzy1LXzhlVb5iyCNGPfF7/VXS8Ss4N2zs8ja044MTBTuizzkErE4w7JYtesBlWh
- rT4MtHX/ReZJINCQQTVunYtTM/QA9pokmEqD3aiVjczNyYf8D50u6djRiT/DbP12rIPhT5ev0TR
- E3yi2qCemi0am8Sw3ZOajwVarXIF0ccrd4EjZqCrNq1U3tsugLAFn/ERHhdQwbA5zMrlcBDPjcG
- fOz8i0KJurFEi6MZc+5jUXn0LQOIspSycJrTu0hRp7MAf0/6zJ3Le80w0Bo+0ck9UvmEuq9qdxx
- n48EbNqZiVlizkzG11efHYQj5U55+F3d1cDqQDK5wb/2IXZePfl9Ylil7kfB2zx6cTQPrUrkZMe
- 5EKJUF9h+k9bg4V1xmZS8GCoR0kcIhXOyRfPk4FSBn1qfKQkDJU0Y6fUZyPfaM0d7s9w85pBmlg
- +2n4EPqoRZFq3yWBdo3hbyGF58TsDeYqxA5uoMR0x03hmBeSBcQxiO+KadCoBRN8miMP493qkw7
- cMv
-X-Received: by 2002:a05:6000:178f:b0:439:be3b:ddb6 with SMTP id
- ffacd0b85a97d-439da653249mr19586084f8f.59.1773071253610; 
- Mon, 09 Mar 2026 08:47:33 -0700 (PDT)
+ AJvYcCUi6nsiZqkWeGX7jyUc2tnysRRWrBiWHTAaypHUBzSWLB+5FhO0CaHR7eMlr8RAuIeNDPr9y3LqBZjR@nongnu.org
+X-Gm-Message-State: AOJu0YzddAzF4PrSntSMVwm0LQCzEHNYeQzw8oCb3p5GqmDQlcvcZsnN
+ NxoJxo3kpNvAbm836361k2XW40876q4Y0r+iwd1aPz4mo66Yi+m7QS3nWxJxZOhssnU=
+X-Gm-Gg: ATEYQzxLxvcSSzTvgU6BoTp7ZjcrX9472yvo3z+jN3NzbQ9wCgfnmqn1Hjcp3U5ctaI
+ lcIGRCkv6HrHTCIhYdVzc7RzMDPGYTRbMLJ3HfvRFC6oy4xou4j8k5jLXWNExqJTosGRLwuDJKC
+ C2QPif83iungxN4kMzQvYUoRjQQVTw2vcjKJ5NfvlklK/Q8ms9YMlyW0D0YNqgbIqWWKNpJ/iVm
+ xxrREIP8F9mq7xgd/of9JFUcTKN2b7uQq+uKTl4lqRGGcadnOqGZJZeNnP+1cUbdvXbISso3FYQ
+ SW0vIFAn2yLcgdLRMFMtdGawYYcjiRP5a3/RSGz7KxmTzGOFJRb9NaEWDlF2wAX+HMsJY542xua
+ NJSklCCrjM/gQUc2Jz/0twBk+cA9sIgmyoP343bEsMvWoXmAHz5RaQW+rJBd5ooXsgKnLOg40Kn
+ ENJNRmCpm9Y9F131VY76vAKGjHd+KJKLZ1STv1jcYLB0MQm9O34meh63rdWKLZnUGjhw==
+X-Received: by 2002:a05:600c:a09:b0:485:419c:4eba with SMTP id
+ 5b1f17b1804b1-485419c503amr1339195e9.1.1773071272163; 
+ Mon, 09 Mar 2026 08:47:52 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae3d98asm30824170f8f.30.2026.03.09.08.47.32
+ ffacd0b85a97d-439dae2ba06sm29272097f8f.24.2026.03.09.08.47.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 08:47:33 -0700 (PDT)
-Message-ID: <157f41e2-58da-4f56-9a62-0f082ff48a9d@linaro.org>
-Date: Mon, 9 Mar 2026 16:47:32 +0100
+ Mon, 09 Mar 2026 08:47:51 -0700 (PDT)
+Message-ID: <9e175373-49e6-4ba0-af0a-792df5239f9d@linaro.org>
+Date: Mon, 9 Mar 2026 16:47:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i3c/dw-i3c: Fix memory leaks in error logging paths
+Subject: Re: [PATCH] hw/misc/sifive_e_aon: Don't leak timer
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Nabih Estefan <nabihestefan@google.com>
-References: <20260309093838.364126-1-clg@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org
+References: <20260309095129.1406506-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260309093838.364126-1-clg@redhat.com>
+In-Reply-To: <20260309095129.1406506-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,17 +103,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 10:38, Cédric Le Goater wrote:
-> object_get_canonical_path() returns an allocated string that must be
-> freed by the caller. Use g_autofree variables to ensure that memory is
-> not leaked.
+On 9/3/26 10:51, Peter Maydell wrote:
+> The sifive_e_aon watchdog creates a timer with timer_new_ns() in its
+> instance_init method, but does not free it in instance_finalize.
+> This means that QMP introspection of the device leaks it:
 > 
-> Resolves: Coverity CID 1645550
-> Resolves: Coverity CID 1645553
-> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> Direct leak of 48 byte in 1 object allocated from:
+>      #0  in calloc
+>      #1  in g_malloc0
+>      #2  in timer_new_full /home/pm215/qemu/include/qemu/timer.h:520:21
+>      #3  in timer_new /home/pm215/qemu/include/qemu/timer.h:543:12
+>      #4  in timer_new_ns /home/pm215/qemu/include/qemu/timer.h:563:12
+>      #5  in sifive_e_aon_init /home/pm215/qemu/build/san/../../hw/misc/sifive_e_aon.c:286:21
+>      #6  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+>      #7  in object_initialize /home/pm215/qemu/build/san/../../qom/object.c:578:5
+>      #8  in object_initialize_child_with_propsv /home/pm215/qemu/build/san/../../qom/object.c:608:5
+>      #9  in object_initialize_child_with_props /home/pm215/qemu/build/san/../../qom/object.c:591:10
+>      #10  in object_initialize_child_internal /home/pm215/qemu/build/san/../../qom/object.c:645:5
+>      #11  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+>      #12  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
+>      #13  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+> 
+> Allocating a separate QEMUTimer with timer_new() is not the preferred
+> interface (per the comments in include/qemu/timer.h); switch to an
+> inline struct initialized with timer_init(), which we can clean up
+> with timer_del() in finalize.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   hw/i3c/dw-i3c.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
+> Incidentally I notice that this device doesn't have vmstate support,
+> which is unfortunate -- devices really ought to either support it
+> or else install a migration-blocker explaining why they can't.
+> 
+>   hw/misc/sifive_e_aon.c         | 16 ++++++++++++----
+>   include/hw/misc/sifive_e_aon.h |  2 +-
+>   2 files changed, 13 insertions(+), 5 deletions(-)
 
 Patch queued via hw-misc, thanks.
 
