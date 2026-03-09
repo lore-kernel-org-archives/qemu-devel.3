@@ -4,119 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA867F4180F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:11:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B28C3F417F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:12:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzdCB-0003Bh-1s; Mon, 09 Mar 2026 12:11:03 -0400
+	id 1vzdC6-00038z-Vf; Mon, 09 Mar 2026 12:10:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzdBl-00031X-D9
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzdBh-000312-UH
  for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:10:38 -0400
-Received: from mail-pj1-x1036.google.com ([2607:f8b0:4864:20::1036])
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzdBh-0002qb-Hk
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:10:35 -0400
-Received: by mail-pj1-x1036.google.com with SMTP id
- 98e67ed59e1d1-358ed696623so4917420a91.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:10:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzdBf-0002qB-Nj
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:10:33 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4852e9ca034so21005025e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:10:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773072632; x=1773677432; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=OZNavs60TcJqGoR3lruQxu1imrBKLWomSBgv7FNFYz4=;
- b=LOPRQmVonkjq5Kg0vJJqeE9oGngBb4LRCgfg8YyvuwZfrBv8g45Xq5RlxwnuVyWDiu
- W64dbmX29p25zqxVoNEfpJX53tgxs7FrCN/aajWQYfqFsAcCvIq2gaayp96EjPl+K5pg
- Plq+1wFV597gfWsZaYWH9hhWvkwGSrsLICzZ6Tr/oofThBlG+aKrb8a/L4u60HiJYxye
- 3sT5o2gS0GSYXN51sNpbvTiFtYtGSNrUJooLdeGBwVqup9vGP8MUAV5iJ1LWGHXGGQka
- FDJctr3NpJUj6SXnQbCbQQkhky0kkm89/z7Roy+FvSXRre9dk5RJmmZ/NVJAn9q7oxFW
- MqoA==
+ d=linaro.org; s=google; t=1773072629; x=1773677429; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=mBrdsfH8zkcr9CyEeAG3fxbrmPaBAIjJHWD1motCURk=;
+ b=rdv56A+p5R6XQmmr/x22EvPC8rTbBFV4q/hZEyToKka2F8sh5rQ3AVayNIEdy+xIZD
+ mSyu1EDkwh99HiWES0QQSkVKfrSWEjh2s4ySHNPntMW6L28QOzJyuTLDirdtcK8L5Vso
+ Sp0g5+L5Au0+KdesQ0sh1mucbYiEhfFHL5bk5TwVI8wjrPAciyVBUO1JVHRt7oszpG+n
+ 19mX1L9Kq+jjqBmwZfcWlOjsYRBtV8Jlw93GcNigTgdfs6j1RReIO4CU4om9xliwYd08
+ axHJyJjNfJ7s9iyia9+c65n7JZO5iOdJHJFjAN77xyStBpErsZQ8+qdsAU2SxXAsexCu
+ AwCw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773072632; x=1773677432;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OZNavs60TcJqGoR3lruQxu1imrBKLWomSBgv7FNFYz4=;
- b=Hgvumvp7d+bK9ozeKjR96xYra+HUOnpvuMelppOF3tXAJp3T9zBWy8mN9uayIiQUgg
- rlx0YuRJw6wYjLbpIP9mSDc4NMWa+XFcb3On2XfPUvV46FeTVJ0Sw4Dp4sCbL69iia90
- /vadidrWEFeixK2/1TZ+MLOouY8nEzGazt4wFKH3tK0OOa/7jRpcO1hwCus29edLr/FB
- KOnQJQ4hGfk+HYtUeIjoDixZKCSXjKLQgWzLRg8YHGQe9eeoJPLcjN0q5uo5xC/1s0cj
- 0IkU+t4ivmccYNn7bsTgG37R7Y6C8vplLYWGy4ycfDCS70QlWDnwUmMr9/JMacCD/mBP
- mRtQ==
-X-Gm-Message-State: AOJu0Yw//AIVHc91JUsAmDcB+V0EQE0AfijUroGsJvUzUmgenl9GRwMw
- tSlJc6JnmQCD29wOVEVMJuQvRMWsodyIJIQJkdIxhVoIMQZBKQXcYO2ExPFj1L4KQmg=
-X-Gm-Gg: ATEYQzyZ24sVRL250qwmRYZ5jePp1ERuzz3bvKvCsZ6VzDiHQwyzhDewgVEcsSy1ir7
- BxGgZDWa0drlyXgxIQWIJeq3XVOR/YdtvlnxX9cH64nH+V3xNGIxVJknYtmNiFgg9mqMyIAkfkJ
- gSn1dOfhKv7wCa8JzJc8UBau7mdYvlBqVT1YYRvD06HvLa1Bgvg45bsOzl5eA6RC4wDqzTTcyA1
- 1uMCyotGDtNGrI9qEpqQNLEkQ3lRwRO77J0zonhAW65QgAIqIpgGrD8oQrQUnUN8QC5INm5O9pf
- 1Rdr6x95CAKXdvRfiZ1S5O5UXH8u8r3vTifqTPUlH7h9Ot0XaIZE5flOmyr4qUKL0EDJbHVZd3v
- o9UfMbau4+SUNeQi4iS8Jb+s8zg04JJh71b5tGMARUfNVi/YkwJCljEtUe1s2JYHZIXNQtj7szN
- ahBLt70XSS9k9XOpeGhVMsVGht+A5d863+eEzHa0sNNqC4eN1znaq08DL+H8h68NfW2wSE
-X-Received: by 2002:a17:90b:4d88:b0:359:8055:df63 with SMTP id
- 98e67ed59e1d1-359be15449amr11058660a91.0.1773072631801; 
- Mon, 09 Mar 2026 09:10:31 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-359f0827f96sm57182a91.15.2026.03.09.09.10.31
+ d=1e100.net; s=20230601; t=1773072629; x=1773677429;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=mBrdsfH8zkcr9CyEeAG3fxbrmPaBAIjJHWD1motCURk=;
+ b=S0an4Om0bqmuorfCH5MkU0e1dh0X98jVtX8k+d5MqG/Py72wfv5V+UC18HE09Xi6ld
+ W8MxAcvU9TpW8yPvLuhL+9Uws9YkFcLcBeUcZHo+GJ5wrd41/cAR/T4+ZNJrmZhu4tda
+ aIs3Q9hGGRWXLCuf3Mrlecvcnw2cQ2c/OvlRwmKsXaBYJ6PHAbTrK/CwteYlfxk5josM
+ dJfaLdrA9yfgLswMeXlsD76mGBf5EXhPBEdItQueEp4n/4T1aNsCFTk44UhvN+XUA4DE
+ 6GYni1HWVuX0Tdl1xdSsnzuhzovWT3+rjgSpKxxx4wcXYwl81QtTJu6RdjVMBvBtbVQ5
+ 5yAw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUt+7UMxKNhJLnHCrYkq2mmZ8SSHQCJf1FOVz9XUY3tafAJEKfufejZyUJKSpChiOT6RfraxrsOUzHd@nongnu.org
+X-Gm-Message-State: AOJu0YzQWlIQ19OL15kgUXoJw7eORPyuF+IXoqFqremNwzugy3lbofw3
+ 56w6IB9NwiCz29n5/d2eR6nI2cHwqgoO6ysL6YyWOK8JFcKnDwjXMTMeJcrfU+VJVjw=
+X-Gm-Gg: ATEYQzzwpLAzFxa/gl/77ZCN7SPIsx0VeKWP5cordvNnO2DZ/+wc9ykp7KCiGsGTQ7/
+ OmmTlwm/WlyQuNWKck0641L4zcSEXMxhBF7xytVk1SzpU0KvIkfyfFfYxrmu3oWOJfJe25gBy7U
+ hUdsD1vE9dhshH1EDpGrN4THaTBmm5UFb2xkvOJ46CFuXQAYE1i1zeYPD/EKVhO/+4bAa0CGXC3
+ 7sWWW8OAysn7iI8IEaemCwNQweFtkY6P3wd294xlLYHhrQYypGl2qDMFI7bOMDnWJr36GfyWf0F
+ agt/ebvXQlsYLcbPvieyPgb8Ms6Owyfh18QnykN6tzEoCpo+AgZPvJ/DeG/lOZyqvxqHhZikMXy
+ /uWohdk5//yOSbeybEbI2Uor4k8JBkHP+Nk/sgMLON/LrO8RDlSC/7qa/bKGA870VaX3AyDQ0oL
+ ecdUxl8451+y2BgX5jVabXKziWI2drIysTlgJ/DmBB6fCjtSSgjaA3Lz1C9Vf218QFXQ==
+X-Received: by 2002:a05:600c:4443:b0:485:410c:119b with SMTP id
+ 5b1f17b1804b1-485410c1bfemr14214555e9.13.1773072628715; 
+ Mon, 09 Mar 2026 09:10:28 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541ab9f9esm1531615e9.4.2026.03.09.09.10.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 09:10:31 -0700 (PDT)
-Message-ID: <c1958cfc-06d0-49db-8e4e-a0c848fca9e0@linaro.org>
-Date: Mon, 9 Mar 2026 09:10:31 -0700
+ Mon, 09 Mar 2026 09:10:28 -0700 (PDT)
+Message-ID: <595ddc7a-de0c-4c21-91e8-626e76c7eca7@linaro.org>
+Date: Mon, 9 Mar 2026 17:10:27 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: leaks in migration-test
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>,
- Fabiano Rosas <farosas@suse.de>
-References: <CAFEAcA_3ed-jb+P8SVh6Pj8uGM+aYcCHTZgvzzHEUFW5zSn3rQ@mail.gmail.com>
- <321e8b29-7879-4778-8734-0c2a6a2dadf3@linaro.org>
- <CAFEAcA-zd=k0xioNOKgpe6hAsY76ux04=VkHeQWkngkBnTXTVw@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] hw/net/npcm_gmac: Catch accesses off the end of the
+ register array
 Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAFEAcA-zd=k0xioNOKgpe6hAsY76ux04=VkHeQWkngkBnTXTVw@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, Tyrone Ting <kfting@nuvoton.com>,
+ Hao Wu <wuhaotsh@google.com>, Jason Wang <jasowang@redhat.com>
+References: <20260306154016.2194091-1-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260306154016.2194091-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1036;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1036.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -139,57 +105,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 2:42 AM, Peter Maydell wrote:
-> On Sun, 8 Mar 2026 at 23:42, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
->>
->> On 3/8/26 12:22 PM, Peter Maydell wrote:
->>> I'm continuing to work through leaks reported during "make check".
->>> Some of them come from the migration-test. (For these to actually
->>> appear in the log you need to run with QTEST_LOG=1, otherwise the
->>> migration test framework will send stderr to /dev/null and the
->>> tests will fail without printing the leak report.)
->>>
->>> I did find this comment in qmp_migrate_incoming():
->>>
->>>        * NOTE: QEMU _might_ leak this refcount in some failure paths, but
->>>        * that's OK.  This is the minimum change we need to at least making
->>>        * sure success case is clean on the refcount.  We can try harder to
->>>        * make it accurate for any kind of failures, but it might be an
->>>        * overkill and doesn't bring us much benefit.
->>>
->>> The issue with this is that it means we need to suppress leak
->>> reports in the whole migration-test binary, which means the
->>> migration code will get no leak-detection coverage at all.
->>> (Not all the leak paths have qmp_migrate_incoming() in their backtrace,
->>> as you can see below.)
->>>
->>> We're getting pretty close to being able to get a complete "make check"
->>> run with the leak sanitizer enabled, so it would be nice to not have
->>> to suppress leak reports for this test at some point.
->>>
->>
->> That's a nice thing in itself.
->>
->> Is the end goal is to enable that in CI? If not, I doubt there is a
->> strong value in reaching that state today. You'll run out of steam and
->> motivation to fix that yourself in the end.
->> Same goes for all other sanitizer errors.
+On 6/3/26 16:40, Peter Maydell wrote:
+> In the npcm_gmac device, we create the iomem MemoryRegion with
+> a size of 8KB, but NPCM_GMAC_NR_REGS is only 0x1060 / 4. This
+> means there's a range of offsets that the guest can access
+> that don't have gmac->regs[] entries. We weren't catching this,
+> so the guest could get us to index off the end of the regs array.
 > 
-> Yes, I'd like to be able to get this into CI at some point.
-> I periodically have a look through some of these things and
-> whittle down the number of failures.
->
+> Catch and log these invalid accesses.
+> 
+> Cc: qemu-stable@nongnu.org
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3316
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   hw/net/npcm_gmac.c         | 14 ++++++++++++++
+>   include/hw/net/npcm_gmac.h |  3 ++-
+>   2 files changed, 16 insertions(+), 1 deletion(-)
 
-That's great to hear that. In the past, I used to run sanitized builds 
-also but lost motivation chasing and fixing new bugs added upstream. I 
-tried to push the idea a few times to add in CI but comments were 
-usually "we don't want to spend CI minutes on that", so that's great to 
-see this change coming from you.
-
-If we can reach a stable state and enforce it in CI for all tests + 
-check-tcg, this would be a really good thing for QEMU community.
-
-Regards,
-Pierrick
+Queued via hw-misc, thanks.
 
