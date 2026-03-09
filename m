@@ -4,68 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DB92EFCD63
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58BCCEFCD72
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:42:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzX4o-0001zJ-C0; Mon, 09 Mar 2026 05:39:02 -0400
+	id 1vzX86-0003BL-Js; Mon, 09 Mar 2026 05:42:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vzX4d-0001yC-5q
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:38:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vzX4Y-0007Bi-N6
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:38:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773049125;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=XMJw33FTROJsJV7N4Rh2nOPIMyVgCTPQtgv7C5NvxW0=;
- b=YlGtQsGG+n0G9SQK+6Rh/+2KBiuwxiXMgMc3gYtf0A9oa+y+QEOTRJG5IgW6gsC7m2ihql
- ICLzEhHnKgZo9UyW1wJyhfdh0Q3MShUutEsBFjyzuFLxdBSxcSjCSZ3vF/gmLc4VU70E+p
- qjz0WjUkg01rAxYKu4dB9Zh/Vf/2I3c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-655-U4Tagv_8OP-XJ5mVUijfQg-1; Mon,
- 09 Mar 2026 05:38:43 -0400
-X-MC-Unique: U4Tagv_8OP-XJ5mVUijfQg-1
-X-Mimecast-MFC-AGG-ID: U4Tagv_8OP-XJ5mVUijfQg_1773049122
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D5AD119560B0; Mon,  9 Mar 2026 09:38:42 +0000 (UTC)
-Received: from corto.redhat.com (unknown [10.45.224.34])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B8C981956095; Mon,  9 Mar 2026 09:38:40 +0000 (UTC)
-From: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Nabih Estefan <nabihestefan@google.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH] hw/i3c/dw-i3c: Fix memory leaks in error logging paths
-Date: Mon,  9 Mar 2026 10:38:38 +0100
-Message-ID: <20260309093838.364126-1-clg@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzX85-0003B0-GK
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:42:25 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzX83-0007sF-U8
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:42:25 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64ca09f2170so11665362d50.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:42:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773049342; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hkS+cokHZ8Gb+ImfwVfPPh1G8st+Q8OSK41odQXpjbrqnNB++QrwIhGGzSi6f9uHNz
+ g9oVxXhBBf4OqrCZQIYErHyC21SNryex6MkAieVjdJN8FuWWCipB3dnKfzXtlPpmVz9l
+ Ugwsk489zxo9ygy4VJXwStCjKJb6JA5m4drQRM8wO22rYQi7EAe1L3LKLhWDfU3F3Ffa
+ Jm1EPhDMY8jv5oJAgR45rLDdADFORhJOnnX1bvu6LQLRAPBOLBnmxb4lTwxGoJqMBe+2
+ R3CVb8SIiejT/vfVN0KtxPa7wP91X1s4zADWHhSMKUJ2JgPfb4qbs+COhcg4SYiWsk9R
+ qFTw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=NWwP3Ue+alTqVv8klH3Uf3jiakxGCz93PJzD5pzzH9M=;
+ fh=LjZC2//iffA7IpGIEUwHfyiPvMMVpvRVKyaQrPHJg+Y=;
+ b=NWpkfMinAsjfLFtPeUaYbjnJLlJrH3PwfD2R1D/JLLy1EFsGmNTcRXdKJlwlR0dagP
+ epL7ewmjH73/gdAXRRHQEI9G0G2aiHQcLxztAWaSeuL//a9xAJOMB3Zq1A490JXekspP
+ lFumZS5/jT9UHEzvW4GGT0ZjZOZ2UbcgVad7IT1znWbLGA4qUOPrqXOvT6+IwHzshK+1
+ fotN9+xT6FFr/JN67ED8+8zl6RID3tWY9IKIgI7FXckxZ3PJuQ6/yY5RPP7WzlUvVG3C
+ 45+c0E2ZkfwbBEyV3xGqWUkrd88wVTGk88sGJkbNK4dAC3NKPA2X1Fe4P//7n5qdRlBR
+ ec3g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773049342; x=1773654142; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=NWwP3Ue+alTqVv8klH3Uf3jiakxGCz93PJzD5pzzH9M=;
+ b=RAVriTjAuP5ZGP5SnfArCfbIsFJpVSQcfOnvRfZm5njfrZX0ayfLMQx5KaEUOm1JuM
+ jKczwwnL93dF9M3k7pBcnfbpAwU8r8wEQtgBbszFc4bgBOBnOIDNXMA36Hdl6pJ25Xwa
+ 5YFtX1bNwcAij3D1+6V0CqEdJBLEkpPsFmHPTi++lrAZlEuE+fe5MyZBVw95AEmnscAX
+ 1EwHPply6E2lDnLYUMiMAy1xuMhl1yWjC8k85w5IbgExrjd6IT3KQoUnnaY8aHgJMcBt
+ 2zBm82xDvrk/CM7+RrXpel6fDKxZf6bvnI2/8egCO5VFynShMA6yU/MF/sUDfkYQVa4u
+ zbcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773049342; x=1773654142;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NWwP3Ue+alTqVv8klH3Uf3jiakxGCz93PJzD5pzzH9M=;
+ b=EUBWOJSSH2Tr/oGYRp7fjRZsM0bEc4pmiUa95jxtE2bfVTMJtJSjFBH6ppXxKPoKpw
+ iXtF+iw9yXeGwOaDuiYW26i+z8fIFjOIxAA3VCj4Qy4BBR7l+Tha9rgqosm1/JEKuJ50
+ lcma647WT6aOoH70c4s9wZ34Gn1ftQ7yM9h+2wdL5szSmAtpvgBqkFt4KyJBUhqnLYkx
+ kwyx30NlevBNXhESgkVVfhEnBcvy2qrv/dpfgsXHZAq7VGYScdeuY+tL/Snqv3gfoU/F
+ aiDfZq8VNkvConZwVTpFHBlEe+OKqDoGvqtsV4MFrzGMoAkFSKNI1BDTN6IGIlYyXSXd
+ cu9g==
+X-Gm-Message-State: AOJu0YzpVKP5KXX/Kpi3HLlt90thJ5OZm75Ku6OsovZaiquXEdUYOMWE
+ mNI76rspVmaitxVy4/Rxx0apmbV8NcPrplU3f7SPBd7EXWlBIyTxlY6gaBZ3OkN1m9qyzmDuEcT
+ IeDGpIsEV2QM14UiofjaGCQMDPBDda47yoy4fnceTGw==
+X-Gm-Gg: ATEYQzxBNjA/hO1gxQSCuUzuBWn1D6hOp5RF4HoSQgqSdHd2gkCmpu7VZi+WFISinx1
+ Z+uDZtMEQ1mvlD1LOf7/9rtzq1kvya2k9BRYrM6RrmwDyGb4AGr10gn2rYR3cqgIhBxjJdZQQM2
+ luGGFDNlicthcKUNwSudVMewwSD2alWmdyR9bI3x6PeE561NinNqmaXfG8OGazQM5IiFD/G8LHG
+ RuDszwX+EHOxM0LqQGVMZt97R9D1Zwx5quT+tSE/KnOkxlUuM8HdVZgRCom/v9AZUO83R/n/PzN
+ lCXKyJ7kouyYFlaNZNAty6WHtnOohI4DiU/CnosC1e7/fviF206JvPIxE3EwqpD1gFM=
+X-Received: by 2002:a53:b10a:0:b0:64c:a048:9cf2 with SMTP id
+ 956f58d0204a3-64d1414f4f3mr9040877d50.27.1773049342497; Mon, 09 Mar 2026
+ 02:42:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <CAFEAcA_3ed-jb+P8SVh6Pj8uGM+aYcCHTZgvzzHEUFW5zSn3rQ@mail.gmail.com>
+ <321e8b29-7879-4778-8734-0c2a6a2dadf3@linaro.org>
+In-Reply-To: <321e8b29-7879-4778-8734-0c2a6a2dadf3@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Mar 2026 09:42:10 +0000
+X-Gm-Features: AaiRm50_aGh6f7QZRDcJ-dp5x3b2MYB4dyCZ28ESbGL-x3E-VWKbkXceyGudnFU
+Message-ID: <CAFEAcA-zd=k0xioNOKgpe6hAsY76ux04=VkHeQWkngkBnTXTVw@mail.gmail.com>
+Subject: Re: leaks in migration-test
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: QEMU Developers <qemu-devel@nongnu.org>, Peter Xu <peterx@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,44 +115,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-object_get_canonical_path() returns an allocated string that must be
-freed by the caller. Use g_autofree variables to ensure that memory is
-not leaked.
+On Sun, 8 Mar 2026 at 23:42, Pierrick Bouvier
+<pierrick.bouvier@linaro.org> wrote:
+>
+> On 3/8/26 12:22 PM, Peter Maydell wrote:
+> > I'm continuing to work through leaks reported during "make check".
+> > Some of them come from the migration-test. (For these to actually
+> > appear in the log you need to run with QTEST_LOG=1, otherwise the
+> > migration test framework will send stderr to /dev/null and the
+> > tests will fail without printing the leak report.)
+> >
+> > I did find this comment in qmp_migrate_incoming():
+> >
+> >       * NOTE: QEMU _might_ leak this refcount in some failure paths, but
+> >       * that's OK.  This is the minimum change we need to at least making
+> >       * sure success case is clean on the refcount.  We can try harder to
+> >       * make it accurate for any kind of failures, but it might be an
+> >       * overkill and doesn't bring us much benefit.
+> >
+> > The issue with this is that it means we need to suppress leak
+> > reports in the whole migration-test binary, which means the
+> > migration code will get no leak-detection coverage at all.
+> > (Not all the leak paths have qmp_migrate_incoming() in their backtrace,
+> > as you can see below.)
+> >
+> > We're getting pretty close to being able to get a complete "make check"
+> > run with the leak sanitizer enabled, so it would be nice to not have
+> > to suppress leak reports for this test at some point.
+> >
+>
+> That's a nice thing in itself.
+>
+> Is the end goal is to enable that in CI? If not, I doubt there is a
+> strong value in reaching that state today. You'll run out of steam and
+> motivation to fix that yourself in the end.
+> Same goes for all other sanitizer errors.
 
-Resolves: Coverity CID 1645550
-Resolves: Coverity CID 1645553
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
----
- hw/i3c/dw-i3c.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Yes, I'd like to be able to get this into CI at some point.
+I periodically have a look through some of these things and
+whittle down the number of failures.
 
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-index 3d8b95a14c4b..e9bdfd6af2ac 100644
---- a/hw/i3c/dw-i3c.c
-+++ b/hw/i3c/dw-i3c.c
-@@ -490,8 +490,9 @@ static int dw_i3c_recv_data(DWI3C *s, bool is_i2c, uint8_t *data,
-     /* I3C devices can NACK if the controller sends an unsupported CCC. */
-     ret = i3c_recv(s->bus, data, num_to_read, num_read);
-     if (ret) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: NACKed receiving byte\n",
--                      object_get_canonical_path(OBJECT(s)));
-+                      path);
-         ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
-                          DW_I3C_TRANSFER_STATE_HALT);
-         ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_STATUS,
-@@ -1107,8 +1108,9 @@ static void dw_i3c_resp_queue_push(DWI3C *s, uint8_t err, uint8_t tid,
- static void dw_i3c_push_tx(DWI3C *s, uint32_t val)
- {
-     if (fifo32_is_full(&s->tx_queue)) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Tried to push to TX FIFO when "
--                      "full\n", object_get_canonical_path(OBJECT(s)));
-+                      "full\n", path);
-         return;
-     }
- 
--- 
-2.53.0
-
+-- PMM
 
