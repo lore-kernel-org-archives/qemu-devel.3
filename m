@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79050FCA16D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:36:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DEA8FCA174
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:36:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzfSJ-00078s-HS; Mon, 09 Mar 2026 14:35:51 -0400
+	id 1vzfSh-0007dE-UO; Mon, 09 Mar 2026 14:36:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzfSI-00078b-7e
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:35:50 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzfSf-0007VA-QU
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:36:13 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzfSG-0003VB-CT
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:35:49 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4853f2826f7so10493015e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:35:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzfSb-0003Yr-PI
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:36:13 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-439b97a8a8cso8004676f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:36:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773081346; x=1773686146; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773081368; x=1773686168; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xA3KiBRZDEy+tGK0VBSBg6K/vS9OJsxKrmQTjGkh/tM=;
- b=r54g4rNOxfL2dZgOm3oH2kHJd71A2PLKkxyqZxtp2hI84nQ8G+bomJeIsKaeRHCJ95
- XvPAY6ZAjv5Yucokg/o0K1W2RDTggbVsBI35KBU3Pw+/3ywCUymO1UCIMUS1xriC5ky0
- jYIPZnZ4kDEU7p0wKM/EDzC9QazXI9Z1jVXTpYc5s3wQcqHHfKt7jC+FsCMF2c12mIGr
- 4lF5q/xvawbwjVrzAg9bqo/ND0JrQ3KCpxTZHPvzDHu++wmg3+xr2aJrKpAwIN0kOCay
- uTI3K7LudwXfo1c2+QIbY4HnVJeHfYy47UEV9I0tRkfxKJKgATVBNvKBnvTSplxjBxK5
- K9xA==
+ bh=bIEbHx6YI4gBPOp+3pEqRYyaYkjjh/Mj9wYvLwhU6C8=;
+ b=E8KcInWrN37aaKl539sbIx73yXJDNWhdM3ps4x+n50rDAi0Jfq3QtFv87BZzBVbXvY
+ ROS8J4sXQlQWF1amMFTbdEO8ncNyYGo5aBfel658fiMNdWkkZLO25Bw2pk4jGauZvyaJ
+ IaTgzSidsAVqKGSi+OHL6NveAhWaYxlHWLbdpKB93TL5kqvGvx+P5faWAuX3WZGURWlt
+ 3p1NjBaxrG71+VjsGRbwVRcvvz19t5XxoCLJgEZ07DLOsSPWYMtlGNYD/yJVqqTv9J1z
+ kKVV3yXsmSIAdFQ7hti0cQYJYZAI/iillglfy5p5B1JyRwcFPwn4TRPRAJs3QQpJCgGc
+ 7GkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773081346; x=1773686146;
+ d=1e100.net; s=20230601; t=1773081368; x=1773686168;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xA3KiBRZDEy+tGK0VBSBg6K/vS9OJsxKrmQTjGkh/tM=;
- b=WJCL5tXfW2GMTRbLVG4K0exzCbFzuvCi0iUo8aiyW7lev0T5OqnBZgZoQSPxzyq+26
- LcxCR1l1XtlR6D5SXRAVbihTcyMw262C9LOhZELiiyGawnbOUpCKuM6sAsxgxIoLxzhh
- YgroaWySeyVuNRPTPjHSkMMCmTmn2/WeNgL10pUOk1MyIVR7dVXH6+JVA+rMHqznjVY9
- oa+o0HragjwVjxLLWNhu29uo2gQgaWt380G/9PD1a7v26LzXqshhx2+yUPhTiIlU3Q6s
- c767w2GfBDvG6wnWbJFGk51PRxdWfM8X0gk2CRTuz2oZzqRRlOiZOlPOCjtMTh7LkjZ4
- F1TQ==
-X-Gm-Message-State: AOJu0YyBxYKyC+ia4CVbGmWBZTmqH1XM5rOT58i5iE1FTYBTy+rVZTO8
- NqI3PXhEc8ajMBCJqnHPZg5hRESjSFtJZr9tN32/dckK51V9rxQNsF4x2Z4x1YCt4GpLdmIlBk/
- dtoPeV4c=
-X-Gm-Gg: ATEYQzxsZ2R5g+jjVGJ/OApGHelNCQsKcJBnupxXOlaLb5fwMLjPNTKDhYwtipVdyIJ
- xU9t0WZ8vahVzPYu6m4E2nMglq0Ii+FGyxojl8hNDhXz58ERT5OdpML9uTqb/9Sn4t2uNPpTekc
- jR28ER7b8b+4hm0xlEAF/gqBV6JMDn2YlSOKYYy6QyrSqssop+RAGN8hJ8K/xY/minvzXysM+1A
- jOkNmqm/8DoyQoF/Fv31XCoBRJy/8shgmzWvrd9vpOyDayTTSZmFnc+uWz5DfL8tLg4NTt/HRrT
- CO5pCVXtUzdbv3t0Nk2YbPwYXGg9vNBzyw9jmPUffyQwmuzVrhsYIpAEYbZHXtKDEbGq5Whh94L
- B1Hl2e+VKfCpvvJC2BP6Z26j5gcHG9wqmioaM9bFhCRmmTLrK67dBscaNsDqbVjtgrLjsgxfbri
- ZaZeOTcQoGmcN0LBrNNXfySzL5olrB3dcK+0WkkRj2TipzxYuVXg0edi7HfbapBuiCtUcsLi/d
-X-Received: by 2002:a05:600c:3b8e:b0:485:35a4:939c with SMTP id
- 5b1f17b1804b1-48535a4a188mr113829175e9.29.1773081346102; 
- Mon, 09 Mar 2026 11:35:46 -0700 (PDT)
+ bh=bIEbHx6YI4gBPOp+3pEqRYyaYkjjh/Mj9wYvLwhU6C8=;
+ b=phPMIPafdthiSzMkPhFOFAF/ATgCq7vryYAHeuCIF3uV/w4RAlAW9frvo2tLqqbpid
+ 9ilxXMYL03FRSIBKNabk9VAHfvr0t8X/8X9vNB+k1WfhHNwGjO8hcnS+H1jEc5AcDW43
+ tHDAVur18qtjXbQXVYq2H4rja/i33CdNlGfpCLZ2lBG9D7CENPgBq0wzqgX+JcNNiuyM
+ 48taUvxbpP2mMsjay50tYXdNXaLGZ3iHNaGRbg8FofFBcP8YJTVPBvKghQSgTPbNvMf6
+ 94NZ1QyZAXh6457B7bgdJUxXXzYUmwJLEBliThPDiB4hyN6xtrLvZJpcFMZKgibFJK5Y
+ yS2Q==
+X-Gm-Message-State: AOJu0YxRqRAYZT6a/hKJ1GloAUoW1EFbGcSYoOH76gmSrlz+LCIdzsqA
+ fKUphRiUKJQjSqmo/XPGUBpNLIIO4kqNv7AasV0SJF3sAA/A6nBlXKkMhSD4/6RKwqGBJ+zBvUi
+ bb7wtRU8=
+X-Gm-Gg: ATEYQzxgTJyb/8ka2cduECic3bvzsJrSqInhxKKn7bNYgJwpcGDWe95vHJAHQE3EAPo
+ QVv2sTKae9kamuchfG5MV0sskmk2l009gavg0bJYwjSEWXoBbuwa8q+LcudSxveoNwxqo1TK2VF
+ vJfX1SGMVj6j3nwd1wc5ClO6+lYm4F+n5dEAeHTYAP8eCc8pE8hgzIZwg1x0yGiBAX+OVJh7Cmx
+ 8sMNrgjFMIq0vJVro7IWqdRwA7ovS3m8YONxTSLkJlgb+Bx+VDMW7gX+q8I5BhUAHP6I530tR6o
+ BOXou5uYQyCAmyF74c2PO8dzMhkcwp0Wf5xdVCIbkWhRLx28rDHrswizToOmiL2UCpBK5np2m+X
+ sY0ds4+pxMQzLFfgmUsvTSv4ufvtE/J80NUWqQD3DAR6nZLGFpRx0IFvuxF5XOCURZeAVoBitbk
+ yyz6lvEJp+KLqvpdmAOjhd9dAPyCHhwzH9O3Msl1LbZ/eDkPdqeoPpo43FVJKTA7DmR1RyC942
+X-Received: by 2002:a05:6000:604:b0:439:b715:6f4b with SMTP id
+ ffacd0b85a97d-439da8a78d1mr22493963f8f.57.1773081367549; 
+ Mon, 09 Mar 2026 11:36:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a6bb86sm9367755e9.1.2026.03.09.11.35.44
+ ffacd0b85a97d-439dad8dbb3sm25412105f8f.4.2026.03.09.11.36.06
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 11:35:45 -0700 (PDT)
+ Mon, 09 Mar 2026 11:36:07 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
@@ -76,17 +76,18 @@ Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Stefano Stabellini <sstabellini@kernel.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v2 1/4] system/ramblock: Constify various RAMBlock arguments
-Date: Mon,  9 Mar 2026 19:35:32 +0100
-Message-ID: <20260309183536.88976-2-philmd@linaro.org>
+Subject: [PATCH v2 4/4] system/memory: Have memory_region_type() correctly
+ describe containers
+Date: Mon,  9 Mar 2026 19:35:35 +0100
+Message-ID: <20260309183536.88976-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309183536.88976-1-philmd@linaro.org>
 References: <20260309183536.88976-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,205 +110,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mark the RAMBlock structure const when is only accessed read-only.
+MemoryRegion containers are not I/O regions,
+describe them as 'container'.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Reviewed-by: Peter Xu <peterx@redhat.com>
 ---
- include/system/ramblock.h | 28 ++++++++++++++--------------
- stubs/physmem.c           |  2 +-
- stubs/ram-block.c         |  6 +++---
- system/physmem.c          | 28 ++++++++++++++--------------
- 4 files changed, 32 insertions(+), 32 deletions(-)
+ system/memory.c | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/include/system/ramblock.h b/include/system/ramblock.h
-index e9f58ac0457..4435f8d55fe 100644
---- a/include/system/ramblock.h
-+++ b/include/system/ramblock.h
-@@ -154,26 +154,26 @@ RAMBlock *qemu_ram_block_by_name(const char *name);
-  */
- RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
-                                    ram_addr_t *offset);
--ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host);
-+ram_addr_t qemu_ram_block_host_offset(const RAMBlock *rb, void *host);
- void qemu_ram_set_idstr(RAMBlock *block, const char *name, DeviceState *dev);
- void qemu_ram_unset_idstr(RAMBlock *block);
--const char *qemu_ram_get_idstr(RAMBlock *rb);
--void *qemu_ram_get_host_addr(RAMBlock *rb);
--ram_addr_t qemu_ram_get_offset(RAMBlock *rb);
--ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb);
--ram_addr_t qemu_ram_get_used_length(RAMBlock *rb);
--ram_addr_t qemu_ram_get_max_length(RAMBlock *rb);
--bool qemu_ram_is_shared(RAMBlock *rb);
--bool qemu_ram_is_noreserve(RAMBlock *rb);
--bool qemu_ram_is_uf_zeroable(RAMBlock *rb);
-+const char *qemu_ram_get_idstr(const RAMBlock *rb);
-+void *qemu_ram_get_host_addr(const RAMBlock *rb);
-+ram_addr_t qemu_ram_get_offset(const RAMBlock *rb);
-+ram_addr_t qemu_ram_get_fd_offset(const RAMBlock *rb);
-+ram_addr_t qemu_ram_get_used_length(const RAMBlock *rb);
-+ram_addr_t qemu_ram_get_max_length(const RAMBlock *rb);
-+bool qemu_ram_is_shared(const RAMBlock *rb);
-+bool qemu_ram_is_noreserve(const RAMBlock *rb);
-+bool qemu_ram_is_uf_zeroable(const RAMBlock *rb);
- void qemu_ram_set_uf_zeroable(RAMBlock *rb);
--bool qemu_ram_is_migratable(RAMBlock *rb);
-+bool qemu_ram_is_migratable(const RAMBlock *rb);
- void qemu_ram_set_migratable(RAMBlock *rb);
- void qemu_ram_unset_migratable(RAMBlock *rb);
--bool qemu_ram_is_named_file(RAMBlock *rb);
--int qemu_ram_get_fd(RAMBlock *rb);
-+bool qemu_ram_is_named_file(const RAMBlock *rb);
-+int qemu_ram_get_fd(const RAMBlock *rb);
- 
--size_t qemu_ram_pagesize(RAMBlock *block);
-+size_t qemu_ram_pagesize(const RAMBlock *block);
- size_t qemu_ram_pagesize_largest(void);
- #include "exec/target_page.h"
- #include "exec/hwaddr.h"
-diff --git a/stubs/physmem.c b/stubs/physmem.c
-index 14667f2bd8f..2eca06ab6d6 100644
---- a/stubs/physmem.c
-+++ b/stubs/physmem.c
-@@ -7,7 +7,7 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
-     return NULL;
- }
- 
--int qemu_ram_get_fd(RAMBlock *rb)
-+int qemu_ram_get_fd(const RAMBlock *rb)
- {
-     return -1;
- }
-diff --git a/stubs/ram-block.c b/stubs/ram-block.c
-index 8790a59593e..1c79e447ff0 100644
---- a/stubs/ram-block.c
-+++ b/stubs/ram-block.c
-@@ -3,17 +3,17 @@
- #include "system/ramblock.h"
- #include "system/memory.h"
- 
--void *qemu_ram_get_host_addr(RAMBlock *rb)
-+void *qemu_ram_get_host_addr(const RAMBlock *rb)
- {
-     return 0;
- }
- 
--ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
-+ram_addr_t qemu_ram_get_offset(const RAMBlock *rb)
- {
-     return 0;
- }
- 
--ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
-+ram_addr_t qemu_ram_get_used_length(const RAMBlock *rb)
- {
-     return 0;
- }
-diff --git a/system/physmem.c b/system/physmem.c
-index 7eecd818770..e5390d09bef 100644
---- a/system/physmem.c
-+++ b/system/physmem.c
-@@ -1859,48 +1859,48 @@ static void qemu_ram_setup_dump(void *addr, ram_addr_t size)
+diff --git a/system/memory.c b/system/memory.c
+index b130d956d4e..2f2f96ab046 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -3303,6 +3303,8 @@ static const char *memory_region_type(const MemoryRegion *mr)
+         return "rom";
+     } else if (memory_region_is_ram(mr)) {
+         return "ram";
++    } else if (!mr->container) {
++        return "container";
+     } else {
+         return "i/o";
      }
- }
- 
--const char *qemu_ram_get_idstr(RAMBlock *rb)
-+const char *qemu_ram_get_idstr(const RAMBlock *rb)
- {
-     return rb->idstr;
- }
- 
--void *qemu_ram_get_host_addr(RAMBlock *rb)
-+void *qemu_ram_get_host_addr(const RAMBlock *rb)
- {
-     return rb->host;
- }
- 
--ram_addr_t qemu_ram_get_offset(RAMBlock *rb)
-+ram_addr_t qemu_ram_get_offset(const RAMBlock *rb)
- {
-     return rb->offset;
- }
- 
--ram_addr_t qemu_ram_get_fd_offset(RAMBlock *rb)
-+ram_addr_t qemu_ram_get_fd_offset(const RAMBlock *rb)
- {
-     return rb->fd_offset;
- }
- 
--ram_addr_t qemu_ram_get_used_length(RAMBlock *rb)
-+ram_addr_t qemu_ram_get_used_length(const RAMBlock *rb)
- {
-     return rb->used_length;
- }
- 
--ram_addr_t qemu_ram_get_max_length(RAMBlock *rb)
-+ram_addr_t qemu_ram_get_max_length(const RAMBlock *rb)
- {
-     return rb->max_length;
- }
- 
--bool qemu_ram_is_shared(RAMBlock *rb)
-+bool qemu_ram_is_shared(const RAMBlock *rb)
- {
-     return rb->flags & RAM_SHARED;
- }
- 
--bool qemu_ram_is_noreserve(RAMBlock *rb)
-+bool qemu_ram_is_noreserve(const RAMBlock *rb)
- {
-     return rb->flags & RAM_NORESERVE;
- }
- 
- /* Note: Only set at the start of postcopy */
--bool qemu_ram_is_uf_zeroable(RAMBlock *rb)
-+bool qemu_ram_is_uf_zeroable(const RAMBlock *rb)
- {
-     return rb->flags & RAM_UF_ZEROPAGE;
- }
-@@ -1910,7 +1910,7 @@ void qemu_ram_set_uf_zeroable(RAMBlock *rb)
-     rb->flags |= RAM_UF_ZEROPAGE;
- }
- 
--bool qemu_ram_is_migratable(RAMBlock *rb)
-+bool qemu_ram_is_migratable(const RAMBlock *rb)
- {
-     return rb->flags & RAM_MIGRATABLE;
- }
-@@ -1925,12 +1925,12 @@ void qemu_ram_unset_migratable(RAMBlock *rb)
-     rb->flags &= ~RAM_MIGRATABLE;
- }
- 
--bool qemu_ram_is_named_file(RAMBlock *rb)
-+bool qemu_ram_is_named_file(const RAMBlock *rb)
- {
-     return rb->flags & RAM_NAMED_FILE;
- }
- 
--int qemu_ram_get_fd(RAMBlock *rb)
-+int qemu_ram_get_fd(const RAMBlock *rb)
- {
-     return rb->fd;
- }
-@@ -1987,7 +1987,7 @@ static char *cpr_name(MemoryRegion *mr)
-     }
- }
- 
--size_t qemu_ram_pagesize(RAMBlock *rb)
-+size_t qemu_ram_pagesize(const RAMBlock *rb)
- {
-     return rb->page_size;
- }
-@@ -2772,7 +2772,7 @@ void *qemu_map_ram_ptr(RAMBlock *ram_block, ram_addr_t addr)
- }
- 
- /* Return the offset of a hostpointer within a ramblock */
--ram_addr_t qemu_ram_block_host_offset(RAMBlock *rb, void *host)
-+ram_addr_t qemu_ram_block_host_offset(const RAMBlock *rb, void *host)
- {
-     ram_addr_t res = (uint8_t *)host - (uint8_t *)rb->host;
-     assert((uintptr_t)host >= (uintptr_t)rb->host);
 -- 
 2.53.0
 
