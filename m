@@ -4,93 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C9DDFCA16E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:44:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F87DFCA166
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:45:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzeee-000314-2t; Mon, 09 Mar 2026 13:44:34 -0400
+	id 1vzee8-0002fn-KL; Mon, 09 Mar 2026 13:44:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vzeeI-0002kw-Am
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:44:14 -0400
+ id 1vzee6-0002eK-IF
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:43:58 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vzeeD-00027C-30
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:44:07 -0400
+ id 1vzee4-00026E-CE
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:43:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773078242;
+ s=mimecast20190719; t=1773078235;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=AvStR8y6hpWDqE72q8INHMrameFwTjMrV5Vu65iKqaE=;
- b=U3GuwWV25EINIp+EG9gZjSLgTRlN9FYGly0p7msjgCZdhEPsRfr0azxMQ/fsjbNNFFerXB
- faOqfYWATfPxrMdSp+4Oybxt7tHW0NINhFLgGAjMhgsj3krdUnqbB2noU2SCxOTADFyffq
- xMQpR8f4zDK58Zw6CpxEEpQ98kQO+kQ=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=barQm0ytYadQlbHRY+PvBMzrx7IGIkBCbHT+M4DhJKE=;
+ b=MzE4BhJM2ojQRepEL6wbfsCPVdNxsqlKby/AJr0UJbf8C5IPdw8m7jhJi/PKX6EfDLzkKx
+ W+IXwgbqjQEUTTF3wADyzb1voCRQQVewdTv6hDhodxiUIbBhLhZ3ACrAHI7k3otNb2SGn9
+ qHDb27yQ0k5xvCOKzaE1AXElheB0Fm4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-522-7CFWlS42No6cTueZ5j3vfQ-1; Mon, 09 Mar 2026 13:44:01 -0400
-X-MC-Unique: 7CFWlS42No6cTueZ5j3vfQ-1
-X-Mimecast-MFC-AGG-ID: 7CFWlS42No6cTueZ5j3vfQ_1773078240
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-439db9da59eso2976584f8f.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:44:00 -0700 (PDT)
+ us-mta-2-WqmRSuojPqG17qrDyVQ9Hg-1; Mon, 09 Mar 2026 13:43:54 -0400
+X-MC-Unique: WqmRSuojPqG17qrDyVQ9Hg-1
+X-Mimecast-MFC-AGG-ID: WqmRSuojPqG17qrDyVQ9Hg_1773078233
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48378df3469so82847555e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773078239; x=1773683039; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773078232; x=1773683032; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=AvStR8y6hpWDqE72q8INHMrameFwTjMrV5Vu65iKqaE=;
- b=e9xLENHqhMEM4Bgxh9UOh7n4UPzLhQrO3OXMQD829c+N4ptxQzkiy7uXfh33Iyags2
- ftT7tWY3A3S6re8mVJBmjGsmW7o1kL2iaOBHro6f5w4pJfOAYwO5mcYJb0eYIoAfYKvf
- BSm/X0KMm5annWgl4Mo1SWGYRsgG8aZk8MHfkdk3LewA0AVs+mKm9/IXmYH/RGaNK5v3
- JR2zuEBKF8mIdPHWv/GhbvrLT6vTHaPrDwqX9ruFaJEbKjzYLKHvKLGw7VsUbVq2zqbD
- RuRrVjUewARubzBjyCJB/FdbB4OGrgmUTBB1XuI5ovtvDEoVMqg3x8F3aLonR738msLc
- jvjQ==
+ bh=barQm0ytYadQlbHRY+PvBMzrx7IGIkBCbHT+M4DhJKE=;
+ b=FVjpbHHaV2WDfV6s+dzOnaQ/6cojg+n/tBU1aLKZooZ6ZTi6/bG1GvJ4PHOwfCXcT9
+ DqEtqi2fpLiwTtFoTensV1qs6dusuzKGaZSNjUMCQBzFJ7IEeE11/py3Qh6QO5XZ//AK
+ kj7TEvio7FPiNcPJ8hIbAZQYR7J9s5QtXJ71v2GjiBVW/sOIA2kZ06arNIgQPYaniwF8
+ unM4PV36XAQuUUfQPikLqIHjqfnS0iDQGtA9iAFbW0Ld0oF+Bd4fgy7mihKfxp9QuXi/
+ JPPcl3AFy9FZ3fSr7JuV4SSC9BxuO+LtlfaxsXyOBA+OUV/ZMRoN3rrwrojLeXfgT08u
+ Qh/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773078239; x=1773683039;
+ d=1e100.net; s=20230601; t=1773078232; x=1773683032;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=AvStR8y6hpWDqE72q8INHMrameFwTjMrV5Vu65iKqaE=;
- b=LJh1I+IPkTQNzBfTQiIW8O/1TPHbYeDzwuR3UhfenxLCEbHjJwQ85/ESYzjdEkycV5
- MlNfI8WdzOM7YRXcUWN9TIe/cV+S2hfuIv3Y6BrAlema85aC51zLWeBv0qxN1O9SiDyo
- NuYzVGJSc9fKFBpTg5RSkmqlnEo5hMNCVB7pqgkoXc3IGxLok7/GmkB37qQSNzg7okND
- HSPvYkPlsD61c5KRzHPBXulSdm7NQTaKIfkajwcT0iAWEIX8JnTqn3Ib2diITz3MBls5
- TIxEbeNXlS/EhGKD6kVoVisgVeuFYTJ5TqiuKJRidVBtEOFjAzyx2Qehr2WVB62ZMual
- EhWw==
-X-Gm-Message-State: AOJu0YzXbgR0+W+Hh+AVH+HciO6UBfgJml78KsENG6Q949jErEJa2rvX
- ZPUCeKSVIcFgf4tN+h/fg36Xf1oxGndfPaBmnMFztFFGEdljKPbIE0zTPCHd1tyt1+11SAWqx7I
- vdjiOlCCiw2mKMDZaay2olSGSpCB9N6Ju2m6vWrLwOZ/GTU4d26DXvMwmLngVwAY2sAfcWREW/S
- 7SSzqLe7OEbOmxNvHBZ2Av/kX3OyAHQXUma0h7QuUF
-X-Gm-Gg: ATEYQzz95Wx8JqgmJdsoTRgVFJ80sMDKw2z1jpgWZaNCWLa+BIXArMFS0MM8nG0hgtO
- Nt25+6NRmV/s1B3/F6yuduxJ3m45jl9Q/vdm1pnsGdTkPkMoJrVxkA6W1ZD5V0BCKtRlfjZypXq
- GJPFxhLje8g4F80fyKtr5oa/FCXbOgPEjwe4Ls4Yn6wMRZqDjh8z+PwtmLftEb6SMO2TcEemG6W
- gtKjwYsGr25gn10G1dTJ5SI3NGx96QK+0pAcXnJJfNiyY/L5MA9rHpyIjCvmzVzezKK2ufVmXWh
- JJOZRORL1RVwbRh39zE9j+WnCNiBaUvEK3Tu1sZYoGksKj+mt2ExnOAI+EiXrZCEiFKqNV5uLVf
- PoSDpb+6cZQ77sJ2MYbfDUB+aBhxadHIZHqFsotlWbzSV2boRPyeXcKQOGQEX78lq6QGL/4vXO7
- gCnwV5Pv6lB2o3leVbDUGR33/WNbA=
-X-Received: by 2002:a05:6000:1865:b0:439:bcab:405e with SMTP id
- ffacd0b85a97d-439da885f29mr20835406f8f.35.1773078239007; 
- Mon, 09 Mar 2026 10:43:59 -0700 (PDT)
-X-Received: by 2002:a05:6000:1865:b0:439:bcab:405e with SMTP id
- ffacd0b85a97d-439da885f29mr20835353f8f.35.1773078238475; 
- Mon, 09 Mar 2026 10:43:58 -0700 (PDT)
+ bh=barQm0ytYadQlbHRY+PvBMzrx7IGIkBCbHT+M4DhJKE=;
+ b=FVvOo3qz5kk8TZbcFRWK7Dq9QE9bRWCdDE5EIsFXI3KUz9qp0C4GVwOnjzMtPNl2gR
+ COs9KFBYOG7cmygB80/2w/kHGsmWAcciuGazby405qAC9huvBRRJOEfNUS9cjaeH1rl4
+ IZEJcV/uNJ5TXBd8Gi1d23pco1Pm4guFVVh+D8G228dS/RmAqdoaMN2wNvH3enAmmX/D
+ DxMbpZ3oBsXwD/6O6MF9d7d28/dIsTRWIN8Ur2BVrB3GG1dHLUJYnutj39ioUyBS7Bsr
+ sGq1oSWflmgg3N0EMKPBNbG/EFgEP5JrQL8B/DI1pLfouJBCVkX/J3l/EhFcINTBq0PH
+ mUjQ==
+X-Gm-Message-State: AOJu0Yx4LmHBVpJA2Mq000SVtH40gTaDZ/9FHcrznamSoWqyhIF/YpdZ
+ hdwTPwJF/JqW1gFWJ0NZbw5mJ/T26vTT9EKiHSFU4cOQGD84U9/SquVqD+BimXWsawKgZl+h7jD
+ FORiDwanpIKivEBzYo5dzoDDX7seTvkbMDicTWvi4+QTcOvdem5udjvJAs3kIqMqQ/fk4S6Kuv8
+ B9yK4XYPEGsRkLf6lMTYs8NrdBdUL4hlGGprOibqx0
+X-Gm-Gg: ATEYQzyYanTaYjWbASo3wa50LHYdR5jv6bvoe3xOhAID5VQAJboLwDR8YZwZksNJkhF
+ U8m4Zkl+keY72i/gGrPuLTw/cYxrqvXAD7q4oLFoii9quLu5k+PKzre2O+8sntNbwAdOmVwwbuD
+ cBIN73vDYyNnSGLjoPRZsX+dCXa1uUlocj6+JMvlhHpxxHM2vStnwdoDrV/PskSAvJ5+aWc3Uzp
+ xKhyZ10fmywnKmCADP7orY/ZrYLoJZD14XE+lMdstG/L3h2sUJdmDb/i/wA0hYS69sk2RfRmS7X
+ YPoV+KqNLXd2FjMPgpq6b3sNK1a6v14yHdokTdrJ1M/F8b6L9uRXSy0P3ldF8w10scMUgwSn20f
+ sk7C09d/QlZ2bVo5wAOXW4vYzB1BLOJqjck25tpQnhdazRscfI4ZXommOMnWfsauMUjIjCiW5gF
+ nYQWeOr+MqKkGgIBcERfjUUZMDA2U=
+X-Received: by 2002:a05:600c:138e:b0:485:3e00:944a with SMTP id
+ 5b1f17b1804b1-485419d759amr8246875e9.9.1773078232338; 
+ Mon, 09 Mar 2026 10:43:52 -0700 (PDT)
+X-Received: by 2002:a05:600c:138e:b0:485:3e00:944a with SMTP id
+ 5b1f17b1804b1-485419d759amr8246405e9.9.1773078231809; 
+ Mon, 09 Mar 2026 10:43:51 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad977f8sm28153260f8f.9.2026.03.09.10.43.56
+ 5b1f17b1804b1-485358cd26bsm88598325e9.8.2026.03.09.10.43.51
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 10:43:56 -0700 (PDT)
+ Mon, 09 Mar 2026 10:43:51 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PULL 08/10] whpx: make Hyper-V enlightenments configurable
-Date: Mon,  9 Mar 2026 18:43:38 +0100
-Message-ID: <20260309174340.52174-9-pbonzini@redhat.com>
+Subject: [PULL 05/10] whpx: i386: do not enable nested virt when
+ kernel-irqchip=off
+Date: Mon,  9 Mar 2026 18:43:35 +0100
+Message-ID: <20260309174340.52174-6-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309174340.52174-1-pbonzini@redhat.com>
 References: <20260309174340.52174-1-pbonzini@redhat.com>
@@ -123,133 +124,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Have them be a machine option instead of a CPU one, to have something available, even if not ideal...
+This combination is not allowed as of build 26300.7939 and results in:
 
-The existing Hyper-V enlightenments configuration mechanism is part of per-CPU configuration, which happens too late for this.
+qemu-system-x86_64.exe: WHPX: Failed to setup partition, hr=c0350005
+qemu-system-x86_64.exe: failed to initialize whpx: Invalid argument
 
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Link: https://lore.kernel.org/r/20260307181856.2209-8-mohamed@unpredictable.fr
+Link: https://lore.kernel.org/r/20260307181856.2209-5-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- include/system/whpx-internal.h |  4 ++++
- accel/whpx/whpx-common.c       | 43 ++++++++++++++++++++++++++++++++++
- target/i386/whpx/whpx-all.c    | 20 +++++++++-------
- 3 files changed, 58 insertions(+), 9 deletions(-)
+ target/i386/whpx/whpx-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/system/whpx-internal.h b/include/system/whpx-internal.h
-index 7a1c9871f18..8482901f714 100644
---- a/include/system/whpx-internal.h
-+++ b/include/system/whpx-internal.h
-@@ -42,6 +42,10 @@ struct whpx_state {
- 
-     bool kernel_irqchip_allowed;
-     bool kernel_irqchip_required;
-+
-+    bool hyperv_enlightenments_allowed;
-+    bool hyperv_enlightenments_required;
-+
- };
- 
- extern struct whpx_state whpx_global;
-diff --git a/accel/whpx/whpx-common.c b/accel/whpx/whpx-common.c
-index 4863fc86631..b813a5d9d25 100644
---- a/accel/whpx/whpx-common.c
-+++ b/accel/whpx/whpx-common.c
-@@ -470,6 +470,41 @@ static void whpx_set_kernel_irqchip(Object *obj, Visitor *v,
-     }
- }
- 
-+static void whpx_set_hyperv(Object *obj, Visitor *v,
-+                                   const char *name, void *opaque,
-+                                   Error **errp)
-+{
-+    struct whpx_state *whpx = &whpx_global;
-+    OnOffAuto mode;
-+
-+    if (!visit_type_OnOffAuto(v, name, &mode, errp)) {
-+        return;
-+    }
-+
-+    switch (mode) {
-+    case ON_OFF_AUTO_ON:
-+        whpx->hyperv_enlightenments_allowed = true;
-+        whpx->hyperv_enlightenments_required = true;
-+        break;
-+
-+    case ON_OFF_AUTO_OFF:
-+        whpx->hyperv_enlightenments_allowed = false;
-+        whpx->hyperv_enlightenments_required = false;
-+        break;
-+
-+    case ON_OFF_AUTO_AUTO:
-+        whpx->hyperv_enlightenments_allowed = true;
-+        whpx->hyperv_enlightenments_required = false;
-+        break;
-+    default:
-+        /*
-+         * The value was checked in visit_type_OnOffAuto() above. If
-+         * we get here, then something is wrong in QEMU.
-+         */
-+        abort();
-+    }
-+}
-+
- static void whpx_cpu_accel_class_init(ObjectClass *oc, const void *data)
- {
-     AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
-@@ -498,6 +533,11 @@ static void whpx_accel_class_init(ObjectClass *oc, const void *data)
-         NULL, NULL);
-     object_class_property_set_description(oc, "kernel-irqchip",
-         "Configure WHPX in-kernel irqchip");
-+    object_class_property_add(oc, "hyperv", "OnOffAuto",
-+        NULL, whpx_set_hyperv,
-+        NULL, NULL);
-+    object_class_property_set_description(oc, "hyperv",
-+        "Configure Hyper-V enlightenments");
- }
- 
- static void whpx_accel_instance_init(Object *obj)
-@@ -507,6 +547,9 @@ static void whpx_accel_instance_init(Object *obj)
-     memset(whpx, 0, sizeof(struct whpx_state));
-     /* Turn on kernel-irqchip, by default */
-     whpx->kernel_irqchip_allowed = true;
-+
-+    whpx->hyperv_enlightenments_allowed = true;
-+    whpx->hyperv_enlightenments_required = false;
- }
- 
- static const TypeInfo whpx_accel_type = {
 diff --git a/target/i386/whpx/whpx-all.c b/target/i386/whpx/whpx-all.c
-index bc82995b33e..b095c96962d 100644
+index c172e86886b..9c60295d553 100644
 --- a/target/i386/whpx/whpx-all.c
 +++ b/target/i386/whpx/whpx-all.c
-@@ -2232,15 +2232,17 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-         synthetic_features.Bank0.DirectSyntheticTimers = 1;
+@@ -2160,7 +2160,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+         goto error;
      }
  
--    hr = whp_dispatch.WHvSetPartitionProperty(
--            whpx->partition,
--            WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
--            &synthetic_features,
--            sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
--    if (FAILED(hr)) {
--        error_report("WHPX: Failed to set synthetic features, hr=%08lx", hr);
--        ret = -EINVAL;
--        goto error;
-+    if (whpx->hyperv_enlightenments_allowed) {
-+        hr = whp_dispatch.WHvSetPartitionProperty(
-+                whpx->partition,
-+                WHvPartitionPropertyCodeSyntheticProcessorFeaturesBanks,
-+                &synthetic_features,
-+                sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
-+        if (FAILED(hr)) {
-+            error_report("WHPX: Failed to set synthetic features, hr=%08lx", hr);
-+            ret = -EINVAL;
-+            goto error;
-+        }
-     }
- 
-     /* Register for MSR and CPUID exits */
+-    if (processor_features.Bank1.NestedVirtSupport) {
++    if (whpx_irqchip_in_kernel() && processor_features.Bank1.NestedVirtSupport) {
+         memset(&prop, 0, sizeof(WHV_PARTITION_PROPERTY));
+         prop.NestedVirtualization = 1;
+         hr = whp_dispatch.WHvSetPartitionProperty(
 -- 
 2.53.0
 
