@@ -4,76 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D44EF417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:52:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20F4FF41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcuE-00038y-82; Mon, 09 Mar 2026 11:52:31 -0400
+	id 1vzcuV-0003NH-MX; Mon, 09 Mar 2026 11:52:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuA-000374-Hm
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:26 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuR-0003Ky-2B
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:43 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcu8-00085c-2z
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:26 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439b611274bso5417648f8f.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:52:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcuP-00087H-AS
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:52:42 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso119541225e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:52:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071542; x=1773676342; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=Wc6MquOTQOl6tK0ogxwI89CHQE/LrPwVhz0daXJCuwQ=;
- b=nSrXoZOdhORSleNhmbAJIB83KWLL2ZFTrZNq1kmZ/fwYdWjSxuPIHM0GLqEZO+NRzP
- I9X7B/SfzEvfR8FCGo0bFYEBPOruVmAU3rHPkJOD8SfiBqADdvQXCoes6pExNYaOcqLS
- B0M/YH6RDL8dTxdd+Yz6HmKa/bh6qQlu+uhGtVMFiBtMqQFstlaZgrB7yS4TzvbjRFOF
- K6Wdi22das3Z36bseQmNTx3U7S3UwdkrFJNvSxMux0DRsL5ufgkyiyeS9dFlvTLtOPtu
- aSlMM8UHOVcIewRwOS6lfyZ5rpU3iXkeKVs9UNf6au+GiBHNexENdPNYHbmFlV4foYvd
- 00bA==
+ d=linaro.org; s=google; t=1773071556; x=1773676356; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=dbkT8Ir/6ERT+BlEo9AWddD42Sjvd+yoa66xU1i+ei0=;
+ b=ZSjoxE84tsxcMam+j5bOAXP8b28I/qeUvg/Be8av1Zo2drCbAs2/6+JpWopZHtXXSl
+ O10L7LAq42WV2gSND3gSGBCv55YEIbnWiINgUmKJsJPIMuzh3j14D15jq53TMbno1vPw
+ 9m+qC2PmwQ+WOT5b+TVHaQrp9xYDDMsOWXKrnPJlhW59J5PUWwgSZ+cNMjXOMcfT0ZX2
+ ekP/xzV7j/KKklcOCkPCg3KOcjoc6YovA/y/GACv6Ywo9c7XCNTL35b6hwDbpeVkpU0e
+ budtsIaPb3uq4EzRqh5u2g+H1+MH71NS5mSa5cN5T3nCsY+SGEvex5OIBztpeSPhuouh
+ ymZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071542; x=1773676342;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Wc6MquOTQOl6tK0ogxwI89CHQE/LrPwVhz0daXJCuwQ=;
- b=t0aG5UU8mJSV4xMgzKc35FERKrK9utm9gsH05drAIaHnILZ4/ndN9CIboltjY1S3LO
- JSbUU1oE8caV9W4WAknUE4bBE3BAvDJ13G67E4ssHni8+IwxRnMlytYVbJDy1Tnt1z7H
- u0JLGpJJq+89jWKG2JuiLvFruJzQ6ySESI6zTVcutQ++SZNsjHc92t7DaO+pJIzzREpZ
- S+dczCGTnfw2FcHrj1qFlBK8ufyo/sgMhpograHANkqXX9G2/ChYa/RdDOiLh/1gTWVk
- PSP7Dlnochnp+qNvs9+SpU4MPRlvG4Z5VVZyEl+WdX7S/ZaG+FURr7ppfaXiVznalOi0
- 3Gbg==
-X-Gm-Message-State: AOJu0YylQThbmGi6rTS6lNi/zyFOr7Y8PyZDP/ul2vbkS3G7VlCDZlFj
- Aj8ELJJsmwKOIy1Gu2noYtV7CDZEwlpiFj2s9/LSuTnwrMpwnVG7KGGxMRXzeiFmo8DkcuBn8YH
- ps3iXqI0=
-X-Gm-Gg: ATEYQzzk5ZdElJcc1gYJmui7uzQHON3Hk8Ta5ELHFN6yVa4M2R/WkAdCi2MRFBxHYYt
- JySyIxfrA5V+B6hZT11sg8YfuMxlP/2PhUAWqEr/lwPek+LcuOh4tu7GtVwbR/r+Zw4ltBi1UTe
- zmYqmi/xG04veL9Z8P2MkqtpLC8HOT27VhjzRoe6TKlfnEY9srQc9t1g36/vZcXtyYQb1t94C6s
- 5p4U2wQXpsr29cnz4njd0qQCLxP0UEdBH9FcfH3g042YSl4jF8l0Rut+oGkwPplu0c4eLicS9o+
- cjWcsuhOy90MqzofduRfs6g9RluvlxM2qDjwN/IbVlHbDrYZycVV2079WPvUZxgBk5Q2W7Idt4V
- wso+QA3lGV3ipZaqZfoGwAZVngpDDgtoytAldfMaFjPCWjyqNiH0C8D5ChM70Bl0ByfpiaiI0Yi
- m3nTEK5OEKLPi2S5PYWp+pi6Bp8PY4+7reaeovgMPCctQl18rGHpX1zo/cYb0ObTlKYwa7Zaje
-X-Received: by 2002:a05:6000:178f:b0:439:b2d9:cf35 with SMTP id
- ffacd0b85a97d-439da64f838mr20535790f8f.8.1773071541726; 
- Mon, 09 Mar 2026 08:52:21 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773071556; x=1773676356;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=dbkT8Ir/6ERT+BlEo9AWddD42Sjvd+yoa66xU1i+ei0=;
+ b=wmfqFJLGstrZo5BIRkarYA23XJKhyTgNkz2LwNOc9lggCvD3SY5fJu0Y1cma7h2sQC
+ nEApS1tLvBUX8N2FMi+I5UxezWefYYTevBNk5v7Q+kL8GS6ii5IXvapiuEAUVyV9Qz2m
+ pECCr3u3ClfghV8vYntEcOB3tA6hk2onEk+DVNjT1b1Akd1T8+EYK+zHUZSkv/LIsVGg
+ uukk18VwZlWNSn7pa2incO1gGG0MWyvh0uh4YmdHkt7G4R0w6JeTjyRPl0F7yahGmbbU
+ ouSGcY/Voc79xkScgB0Wtji6CkWahD3UFnxY+XSxhdiffyHnsdxvKCz4InRgT1yEx2fo
+ t3Zw==
+X-Gm-Message-State: AOJu0Yx8ayH/I8bG8rCn2JcxZcBV4V+wqUhLwWJAJmsTC0MEfaDvqm2b
+ fq5ifngSF3JrpSGwXACZYN76JM7qj8MV5/WihJbZU39axT57reFI4Zs7CoyCAUgWH8+tIYEKmEs
+ 1iNvXMPo=
+X-Gm-Gg: ATEYQzxzguKDIbHLH0YQRhG81OGFb2FA9OlfvNhfgnwuEMua5fxsH7iM3HWESeK98i8
+ tPh5P+EonXvFW7KNv0Ng+v/2k6DXliut6pNqFM+Vdelo6L6XmXQlz1nJEuJMX/dopLtbTQ2Zf/j
+ TGKS46JY548KTROVqzQsZaFcYN0h6y02kXm1i3mllNdwzFFbEA13U53oLs0UmHNN3082CD5IYUH
+ 8jYGupU1b7hnLcnv9nKugZ4ojyr8xodmJZw3r3SV9wbyKqaNz7f1ryiaG9X9BJ7P3NMQXqzO9s6
+ 2aYt7OzUcF8C9uNL8MJKQQNh+ytUVXMKWv+hYvZwIAAX8SwfoKO6s76fZYTu64WKGR5IZKWa4T5
+ fifWhe3svVVMuVpo/RYbCxKVcC8XVRCcjfIx/OBL9kQh/6u2QzQcGz6KRuj+uR2BXzCz5GXSrlr
+ UA8a2j4RzBW8HgHZ43Nl2lj2R3vAhwkDXrsVhjuZvImv/RGpSWbpIPMTzJLOZqJWo495K7LARh
+X-Received: by 2002:a05:600c:8b53:b0:485:3b33:f4b6 with SMTP id
+ 5b1f17b1804b1-4854192dd55mr2123945e9.0.1773071555652; 
+ Mon, 09 Mar 2026 08:52:35 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2b9fbsm28093511f8f.23.2026.03.09.08.52.20
+ 5b1f17b1804b1-485237e8095sm166780205e9.2.2026.03.09.08.52.34
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:52:21 -0700 (PDT)
+ Mon, 09 Mar 2026 08:52:34 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 00/49] Misc HW patches for 2026-03-09
-Date: Mon,  9 Mar 2026 16:51:30 +0100
-Message-ID: <20260309155219.62400-1-philmd@linaro.org>
+Subject: [PULL 02/49] hw/i386/pc: Remove deprecated pc-q35/pc-i440fx/xenfv 3.1
+ machines
+Date: Mon,  9 Mar 2026 16:51:32 +0100
+Message-ID: <20260309155219.62400-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
+References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,169 +99,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7608a95d2e0bd8c8d069ab77824d02586dd94648:
+These machines has been supported for a period of more than 6 years.
+According to our versioned machine support policy (see commit
+ce80c4fa6ff "docs: document special exception for machine type
+deprecation & removal") they can now be removed.
 
-  Merge tag 'pull-xen-20260309' of https://xenbits.xen.org/git-http/people/aperard/qemu-dm into staging (2026-03-09 12:15:42 +0000)
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20260309145013.44327-2-philmd@linaro.org>
+---
+ hw/i386/pc_piix.c | 25 -------------------------
+ hw/i386/pc_q35.c  | 14 --------------
+ 2 files changed, 39 deletions(-)
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/hw-misc-20260309
-
-for you to fetch changes up to caa5d8257037201f4e546ec833e51863ae07b331:
-
-  hw/misc/riscv_cpc: Free CPU array in instance_finalize (2026-03-09 16:45:25 +0100)
-
-Ignoring following checkpatch errors:
-
-  17/48 Checking commit b362f63b6016 (tests: fix leaks in dbus-display-test)
-  WARNING: line over 80 characters
-  #44: FILE: tests/qtest/dbus-display-test.c:137:
-  +    qemu_dbus_display1_listener_unix_map_complete_scanout_map(object, invocation,
-
-  35/48 Checking commit 6d5eb13974b3 (ati-vga: Remove src and dst stride mutation in ati_2d_blt)
-  WARNING: line over 80 characters
-  #38: FILE: hw/display/ati_2d.c:129:
-  +        DPRINTF("pixman_blt(%p, %p, %ld, %ld, %d, %d, %d, %d, %d, %d, %d, %d)\n",
-
-Couldn't test well mingw-w64-clang-x86_64 because of issues with the
-OSU Open Source Lab mirror:
-
-  error: failed retrieving file 'mingw-w64-clang-x86_64-libwinpthread-13.0.0.r560.g3197fc7d6-1-any.pkg.tar.zst.sig' from ftp2.osuosl.org : Operation too slow. Less than 1 bytes/sec transferred the last 10 seconds
-
-----------------------------------------------------------------
-Misc HW patches
-
-- Remove versioned machines released in QEMU 3.1 and 4.0
-- Enable X.Org text rendering on ATI VGA model
-- Various memory leaks / overflows fixed
-- Build using -Wformat-overflow=2 CPPFLAG
-----------------------------------------------------------------
-
-Akihiko Odaki (6):
-  coreaudio: Remove unnecessary explicit casts
-  coreaudio: Remove extra whitespaces
-  contrib/elf2dmp: Grow PDB URL buffer
-  vfio/pci: Grow buffer in vfio_pci_host_match()
-  tests: Clean up double comparisons to avoid compiler warning
-  meson: Add -Wformat-overflow=2
-
-BALATON Zoltan (2):
-  ati-vga: Simplify hw cursor drawing
-  ati-vga: Do not access pixel outside the screen
-
-Chad Jablonski (9):
-  ati-vga: Remove src and dst stride mutation in ati_2d_blt
-  ati-vga: Use local variables for register values in ati_2d_blt
-  ati-vga: Introduce ATI2DCtx struct for 2D blit context
-  ati-vga: Extract setup_2d_blt_ctx from ati_2d_blt
-  ati-vga: Split ati_2d_do_blt from ati_2d_blt
-  ati-vga: Remove ATIVGAState param from ati_2d_do_blt
-  ati-vga: Implement scissor rectangle clipping for 2D operations
-  ati-vga: Implement HOST_DATA register writes
-  ati-vga: Implement HOST_DATA flush to VRAM
-
-Cédric Le Goater (1):
-  hw/i3c/dw-i3c: Fix memory leaks in error logging paths
-
-Marc-André Lureau (4):
-  tests: fix leaks in dbus-display-test
-  ui/dbus: fix leak regression
-  ui/dbus: fix Unix.Map proxy leak
-  ui/dbus: fix pixman cleanup
-
-Peter Foley (2):
-  net/passt: Only kill passt if it wrote a pidfile
-  net/passt: Don't try to read the pidfile if passt got a signal
-
-Peter Maydell (8):
-  hw/net/npcm_gmac: Catch accesses off the end of the register array
-  hw/sparc/sun4m: Don't set up dummy cpu interrupts
-  hw/sparc/sun4m: Use qdev GPIOs rather than qemu_allocate_irqs()
-  hw/timer/slavio_timer: Free resources allocated in instance_init
-  hw/qdev: Document qdev_get_dev_path()
-  hw: Make qdev_get_printable_name() consistently return freeable string
-  hw/misc/sifive_e_aon: Don't leak timer
-  hw/misc/riscv_cpc: Free CPU array in instance_finalize
-
-Philippe Mathieu-Daudé (15):
-  hw/timer/hpet: Remove HPETState::hpet_offset_saved field
-  hw/i386/pc: Remove deprecated pc-q35/pc-i440fx/xenfv 3.1 machines
-  hw/i386/pc: Remove PCMachineClass::pvh_enabled field
-  hw/i386/x86: Remove @pvh_enabled argument in x86_load_linux()
-  hw/core/boards: Remove MachineClass::smbus_no_migration_support field
-  hw/i386/pc: Remove pc_compat_3_1[] array
-  hw/i386/iommu: Remove IntelIOMMUState::dma_drain field
-  target/i386/cpu: Remove X86CPU::intel_pt_auto_level field
-  hw/core/machine: Remove the hw_compat_3_1[] array
-  hw/pci-bridge/pcie_rp: Remove PCIESlot::disable_acs field
-  hw/i386/pc: Remove deprecated pc-q35-4.0[.1] and pc-i440fx-4.0
-    machines
-  hw/i386/pc: Remove pc_compat_4_0[] array
-  hw/core/machine: Remove the hw_compat_4_0[] array
-  hw/virtio: Remove VirtIOBalloon::qemu_4_0_config_size field
-  hw/rtc/pl031: : Remove PL031State::migrate_tick_offset field
-
-Roman Kiryanov (2):
-  virtio-snd: remove a redundant memory allocation
-  virtio-snd: remove redundant fields
-
- meson.build                              |   1 +
- hw/display/ati_int.h                     |  12 +
- hw/display/ati_regs.h                    |  13 +
- include/hw/audio/virtio-snd.h            |   4 +-
- include/hw/core/boards.h                 |   7 -
- include/hw/core/qdev.h                   |  39 ++
- include/hw/i2c/pm_smbus.h                |   7 -
- include/hw/i386/intel_iommu.h            |   1 -
- include/hw/i386/microvm.h                |   2 +-
- include/hw/i386/pc.h                     |   9 -
- include/hw/i386/x86.h                    |   3 +-
- include/hw/misc/sifive_e_aon.h           |   2 +-
- include/hw/net/npcm_gmac.h               |   3 +-
- include/hw/pci/pcie_port.h               |   3 -
- include/hw/rtc/pl031.h                   |   1 -
- include/hw/virtio/virtio-balloon.h       |   1 -
- target/i386/cpu.h                        |   3 -
- contrib/elf2dmp/main.c                   |  32 +-
- hw/acpi/piix4.c                          |   8 +-
- hw/audio/virtio-snd.c                    |  55 ++-
- hw/core/machine.c                        |  29 --
- hw/core/qdev.c                           |   4 +-
- hw/display/ati.c                         |  38 +-
- hw/display/ati_2d.c                      | 443 ++++++++++++++++-------
- hw/display/ati_dbg.c                     |   9 +
- hw/i2c/pm_smbus.c                        |   7 -
- hw/i2c/smbus_eeprom.c                    |   4 +-
- hw/i2c/smbus_ich9.c                      |  10 +-
- hw/i386/intel_iommu.c                    |  11 +-
- hw/i386/microvm.c                        |   2 +-
- hw/i386/nitro_enclave.c                  |   4 +-
- hw/i386/pc.c                             |  34 +-
- hw/i386/pc_piix.c                        |  36 --
- hw/i386/pc_q35.c                         |  39 --
- hw/i386/x86-common.c                     |   6 +-
- hw/i3c/dw-i3c.c                          |   6 +-
- hw/misc/riscv_cpc.c                      |   8 +
- hw/misc/sifive_e_aon.c                   |  16 +-
- hw/net/npcm_gmac.c                       |  14 +
- hw/pci-bridge/pcie_root_port.c           |   3 +-
- hw/rtc/pl031.c                           |  22 --
- hw/sparc/sun4m.c                         |  34 +-
- hw/timer/hpet.c                          |   9 +-
- hw/timer/slavio_timer.c                  |  25 +-
- hw/vfio/pci.c                            |   2 +-
- hw/virtio/virtio-balloon.c               |   5 -
- hw/virtio/virtio.c                       |  12 +-
- net/passt.c                              |  17 +-
- target/i386/cpu.c                        |  10 +-
- tests/qtest/dbus-display-test.c          |   9 +
- tests/unit/test-qobject-input-visitor.c  |   8 +-
- tests/unit/test-qobject-output-visitor.c |   7 +-
- ui/dbus-listener.c                       |  11 +-
- audio/coreaudio.m                        |  24 +-
- rust/hw/timer/hpet/src/device.rs         |   9 +-
- 55 files changed, 617 insertions(+), 516 deletions(-)
-
+diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
+index 29c8e997131..2b94c472446 100644
+--- a/hw/i386/pc_piix.c
++++ b/hw/i386/pc_piix.c
+@@ -655,19 +655,6 @@ static void pc_i440fx_machine_4_0_options(MachineClass *m)
+ 
+ DEFINE_I440FX_MACHINE(4, 0);
+ 
+-static void pc_i440fx_machine_3_1_options(MachineClass *m)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_i440fx_machine_4_0_options(m);
+-    m->smbus_no_migration_support = true;
+-    pcmc->pvh_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_3_1, hw_compat_3_1_len);
+-    compat_props_add(m->compat_props, pc_compat_3_1, pc_compat_3_1_len);
+-}
+-
+-DEFINE_I440FX_MACHINE(3, 1);
+-
+ #ifdef CONFIG_XEN
+ static void xenfv_machine_4_2_options(MachineClass *m)
+ {
+@@ -679,16 +666,4 @@ static void xenfv_machine_4_2_options(MachineClass *m)
+ 
+ DEFINE_PC_MACHINE(xenfv_4_2, "xenfv-4.2", pc_xen_hvm_init,
+                   xenfv_machine_4_2_options);
+-
+-static void xenfv_machine_3_1_options(MachineClass *m)
+-{
+-    pc_i440fx_machine_3_1_options(m);
+-    m->desc = "Xen Fully-virtualized PC";
+-    m->alias = "xenfv";
+-    m->max_cpus = HVM_MAX_VCPUS;
+-    m->default_machine_opts = "accel=xen,suppress-vmdesc=on";
+-}
+-
+-DEFINE_PC_MACHINE(xenfv, "xenfv-3.1", pc_xen_hvm_init,
+-                  xenfv_machine_3_1_options);
+ #endif
+diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
+index f102da8e4a1..52b8064b4d2 100644
+--- a/hw/i386/pc_q35.c
++++ b/hw/i386/pc_q35.c
+@@ -600,17 +600,3 @@ static void pc_q35_machine_4_0_options(MachineClass *m)
+ }
+ 
+ DEFINE_Q35_MACHINE(4, 0);
+-
+-static void pc_q35_machine_3_1_options(MachineClass *m)
+-{
+-    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
+-
+-    pc_q35_machine_4_0_options(m);
+-    m->default_kernel_irqchip_split = false;
+-    m->smbus_no_migration_support = true;
+-    pcmc->pvh_enabled = false;
+-    compat_props_add(m->compat_props, hw_compat_3_1, hw_compat_3_1_len);
+-    compat_props_add(m->compat_props, pc_compat_3_1, pc_compat_3_1_len);
+-}
+-
+-DEFINE_Q35_MACHINE(3, 1);
 -- 
 2.53.0
 
