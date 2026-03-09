@@ -4,52 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99A05EF370F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:17:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02D97EF3715
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:20:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzVnW-00045Y-GY; Mon, 09 Mar 2026 04:17:06 -0400
+	id 1vzVqi-00066d-FT; Mon, 09 Mar 2026 04:20:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVnU-00040f-IW
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:17:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVqg-00066G-FL
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:20:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVnS-0004K5-J0
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:17:04 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVqd-00056T-Pq
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:20:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773044220;
+ s=mimecast20190719; t=1773044417;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=AP8VAIcyc77G0uANBWj4jMNbo+BkJjyr/23jJCkf26Y=;
- b=bTCWrYuUuZMRSkSEfSMZMrThnth6kZ67WZZ4Z3b72P2aLRyhzMHPdqfRUcZPmnRjHbiOZu
- x3BxF8uKIpPSNgfDNQmVWDYWggr/FnlaKQG88w/kwoxUi6lj5OP4IFa7H9OJzL5mdtK7L8
- SNrAPZfYH9byB4mWIhV8xxnc4vY1BKw=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=zpJitCh0gLwWqpJj/a2jzqDOWIyJjXEy+/AWVw2z3nA=;
+ b=BzJF8/6OimNZ60ZiL8+a0g0yslJd+U6X30sOvlvvOJEKiUIcH2v6I0E/hNRCGLTywxrkw3
+ Aqvx777Ho77pLdEFISJtyAhgEFTCzSUZQF8jweLov7zc7tGzfF1AbZCpsjx64mI0t6Ms84
+ CmAZ4eOIl8LTjBZSwE5TceBq4XuTvqs=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-251-qkvvVX_7Pheuuvjvp3XdPg-1; Mon,
- 09 Mar 2026 04:16:57 -0400
-X-MC-Unique: qkvvVX_7Pheuuvjvp3XdPg-1
-X-Mimecast-MFC-AGG-ID: qkvvVX_7Pheuuvjvp3XdPg_1773044215
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-KFyfNPlpPYOz4r0pELv18w-1; Mon,
+ 09 Mar 2026 04:20:14 -0400
+X-MC-Unique: KFyfNPlpPYOz4r0pELv18w-1
+X-Mimecast-MFC-AGG-ID: KFyfNPlpPYOz4r0pELv18w_1773044412
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA7BE180034F; Mon,  9 Mar 2026 08:16:55 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 86E4018005B3; Mon,  9 Mar 2026 08:20:12 +0000 (UTC)
 Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0956819560A6; Mon,  9 Mar 2026 08:16:48 +0000 (UTC)
-Message-ID: <d1bfeb86-7559-40fc-a04e-6d30ce2e1e7a@redhat.com>
-Date: Mon, 9 Mar 2026 09:16:47 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8186918002A6; Mon,  9 Mar 2026 08:20:06 +0000 (UTC)
+Message-ID: <9037012f-27c0-4bf0-b772-393dce2529bc@redhat.com>
+Date: Mon, 9 Mar 2026 09:20:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 05/10] hw/i386/pc: Remove pc_compat_3_1[] array
+Subject: Re: [PATCH 06/10] hw/i386/iommu: Remove IntelIOMMUState::dma_drain
+ field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
@@ -57,11 +58,12 @@ Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
  =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
  Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>,
+ Jason Wang <jasowang@redhat.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
 References: <20260307152635.83893-1-philmd@linaro.org>
- <20260307152635.83893-6-philmd@linaro.org>
+ <20260307152635.83893-7-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -106,10 +108,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307152635.83893-6-philmd@linaro.org>
+In-Reply-To: <20260307152635.83893-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -136,14 +138,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.26, Philippe Mathieu-Daudé wrote:
-> The pc_compat_3_1[] array was only used by the pc-q35-3.1
-> and pc-i440fx-3.1 machines, which got removed. Remove it.
+> The IntelIOMMUState::dma_drain boolean was only set in
+> the pc_compat_3_1[] array, via the 'dma-drain=off' property.
+> We removed all machines using that array, lets remove that
+> property and all the code around it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/i386/pc.h |  3 ---
->   hw/i386/pc.c         | 25 -------------------------
->   2 files changed, 28 deletions(-)
+>   include/hw/i386/intel_iommu.h |  1 -
+>   hw/i386/intel_iommu.c         | 11 +----------
+>   2 files changed, 1 insertion(+), 11 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
