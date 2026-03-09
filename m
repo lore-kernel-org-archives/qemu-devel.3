@@ -4,88 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36484F3C266
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:51:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94FD4F3C26A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:54:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzb12-0001cR-8X; Mon, 09 Mar 2026 09:51:24 -0400
+	id 1vzb3G-0002CC-EN; Mon, 09 Mar 2026 09:53:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzb0z-0001cA-DD
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:51:21 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzb0x-0006i1-GE
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:51:21 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-485409ab264so2784645e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 06:51:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773064277; x=1773669077; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=jRsJIPcAQjznj9SNGnhxzXMw6IqKxWI5j3VMPdgvF3w=;
- b=Q/2E2nPP/qHutyes6SLphsynqeFK0lV/OPoP8yhnknHjZ8KWeAi2Ft+2WoeIMcV921
- QXYcgXORXt+NIpxn7DlN23qmRMpTGBYJOpHheULlVDdbW/+w4CCvEQ8TgKV+RGX8avLz
- ZT7ypca0BCmbXCAMntCaT26tUS4j5Oji7LYAAKZvMRFgtA6HLpZll9yGtTEmXdrYIFb0
- IBiQb1OTvd9SxmFVLP9aM70G55OEUzwjGYN7CQNxVvYODpGyDF2EXwga3FIh7Wa66H4c
- a1glVhX71vPa5NANnpsQd/45ULm7rJ5H+Im2vBhI8TCLOIfordXdZngEhZJ0Tljgy0ji
- fjGw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773064277; x=1773669077;
- h=content-transfer-encoding:in-reply-to:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=jRsJIPcAQjznj9SNGnhxzXMw6IqKxWI5j3VMPdgvF3w=;
- b=pH7F8foFOb7j3nEC7apWCK4mQp2L1YwZi7nVpvSEaat50aDmNGUoUpnhrr/lEYQRIH
- OaaAEClxrK1aWYuHKF/x2pA48fx4KoCXSOIW08OuBWKoolLDTm5TxbWtSXQHA/m+sBnn
- iirgFNel/c9YsbpYubfj31+jxQ9xHgo57qOBM1oFyPq9b3BD6CzFbaBkgsZEK+QaKGll
- xD+UVduFgNfSo4tS0k+X7vA6ClUX7Kbq7YooHf12OJUpcCPT+aBWTVpCPspArv3IdoOx
- irVa9/6Odq9GZpGqEbpCexahk2nqH5c2C7uZ4nu2PNWIOCbJ+KPJnQUT9PQGMNsCgQ2l
- fFuw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWi1XZyDXsFh0wXxhZIXmJdFthP89KFQZ7G3XY+fHOAh1V1oOHngcS1RT9nhEkXhuHrSPGWGgeWJVep@nongnu.org
-X-Gm-Message-State: AOJu0YxD9UqF9eqxv4tmNGHMt/zLaGo3ivz7Pv6zDtsCop5kiXOg2BzQ
- YJm7Tb64MGkge+KNJwtxAVul1VKCy5FT+Q7C6KEmzIE9zWRnGc3KkVFdYD/4TcXHkTs=
-X-Gm-Gg: ATEYQzzzVpyGhev8vvr9+vwvL+0Xr0Y4TZKygqaG7b1FNejVvSVWbU6vkEE90/i7C09
- QSC+00A5nInrqcRFoyuohw4lOFoUc/5kn/iW4VZOzYawWQIyYkZFmURqC/YH6WZ3AmTbbvpI7Cc
- Nx/mrMNZvkdf971I3ecOJVaK5hK87eBL5UvQkmv/tY0z6alhHyFu/39b7JlpKzJPjZuANyD+ljP
- BXAUbXYanCdm+VFq3V9vmNPgWsJ0yi99OpEkp4IJTJSME4xOK+9N2PGD1ZPTjvVjZpZYxPyp5cB
- 7FEtO5OJV84bxcaHuLNQEJL3ggTY7/RKlBQ4IOrKd3GWmUf2JafMhccrHgQBFNTr7bBxDyMWhGQ
- p/LAamDStByw6D2n24oGx7eZap76x2I2ediXTBf5v2ASNRpIMf8+DMaoDi6Yn07FAHqmOgVD2Qr
- cf34Vw0oB3/L+xCsK4Zrd28BSRCQT2YSosC8O+Aau8AMVrqE/NdzkdTZLV40tSAn1+PPHTshI=
-X-Received: by 2002:a05:600c:19c9:b0:485:3b33:f4b6 with SMTP id
- 5b1f17b1804b1-4853b33f723mr55311615e9.0.1773064277330; 
- Mon, 09 Mar 2026 06:51:17 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485237dcf04sm134276675e9.1.2026.03.09.06.51.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 06:51:16 -0700 (PDT)
-Message-ID: <303bc39e-9fca-4173-be6a-f748d29ba7dc@linaro.org>
-Date: Mon, 9 Mar 2026 14:51:16 +0100
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vzb39-0002Bp-Vb; Mon, 09 Mar 2026 09:53:36 -0400
+Received: from mgamail.intel.com ([192.198.163.13])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vzb36-0006rB-KN; Mon, 09 Mar 2026 09:53:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773064413; x=1804600413;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:in-reply-to;
+ bh=cIVgUpGmS0BGN4DiHlAK1Xk2bzz98JuTFMyOMf4rApQ=;
+ b=WGwoi18MrjE3W205qS1JrJpXSSNBEY2zVdr5/hpVogKPRP/PXfRaTrBQ
+ 6SXYEF6WuYF1sDJS78pCETpeHt/bOqjeyU7J+YE4BoOckxI7nNL0/MzQZ
+ gIPAEqkJjleA81MDuXYZ5TT6Mu+6DVHxMM3C7pE/Ls8/tM2B845f9S06S
+ CvIxqzGzD3qIZBpbc1tChlpINvMw9CG2UUKPktMNuAtU4Bfzp+MLoPUL9
+ px9HvkhTR4I+T6tQ66XbZE1DG0XZCCLwhP3H8VAe2w6vjBN/7BOrRSpT4
+ CY1emkACCMr/zUuTbclTD38dNVIZBRkd/M1cR+Rwwvd+aI+kykL2DOyTJ w==;
+X-CSE-ConnectionGUID: UZ3wWGy9SgaqgRc82u/zIQ==
+X-CSE-MsgGUID: 93h0IndJQJuZLDbcfiv5mw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11723"; a="76690436"
+X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="76690436"
+Received: from fmviesa002.fm.intel.com ([10.60.135.142])
+ by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2026 06:53:30 -0700
+X-CSE-ConnectionGUID: 5RKwQITPQoeSkpHRa0kO7A==
+X-CSE-MsgGUID: 3OyWIHpQSiiaY7yBDHNidQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="242780912"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by fmviesa002.fm.intel.com with ESMTP; 09 Mar 2026 06:53:28 -0700
+Date: Mon, 9 Mar 2026 22:19:38 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Sergei Heifetz <heifetz@yandex-team.com>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH] target/i386: fix NULL pointer dereference in
+ legacy-cache=off handling
+Message-ID: <aa7W+oqYHTfa8UH9@intel.com>
+References: <20260305060431.30347-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/12] For next patches
-Content-Language: en-US
-To: Helge Deller <deller@gmx.de>, qemu-devel@nongnu.org
-References: <20260308172936.2835-1-deller@kernel.org>
- <e389e2d6-2376-46f0-ba48-e38f39d07f20@gmx.de>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <e389e2d6-2376-46f0-ba48-e38f39d07f20@gmx.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260305060431.30347-1-heifetz@yandex-team.com>
+Received-SPF: pass client-ip=192.198.163.13; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,42 +82,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 14:44, Helge Deller wrote:
-> On 3/8/26 18:29, deller@kernel.org wrote:
->> From: Helge Deller <deller@gmx.de>
->>
->> The following changes since commit 
->> 900682c57287ea308850af4490339455512e92e7:
->>
->>    Merge tag 'pull-target-arm-20260306-2' of https://gitlab.com/pm215/ 
->> qemu into staging (2026-03-06 15:58:24 +0000)
->>
->> are available in the Git repository at:
->>
->>    https://github.com/hdeller/qemu-hppa.git tags/for-next-pull-request
->>
->> for you to fetch changes up to 9e8501ba72d5136ee5e6622f8863ce8ea252c29a:
->>
->>    linux-user: Improve formatting for mremap() (2026-03-07 22:58:27 
->> +0100)
->>
->> ----------------------------------------------------------------
->> linux-user and hppa patches
->>
->> Two patches which prevent memleaks when using Diva PCI
->> cards on the parisc architecture.
->> All other patches are for linux-user emulation.
+On Thu, Mar 05, 2026 at 11:04:31AM +0500, Sergei Heifetz wrote:
+> Date: Thu,  5 Mar 2026 11:04:31 +0500
+> From: Sergei Heifetz <heifetz@yandex-team.com>
+> Subject: [PATCH] target/i386: fix NULL pointer dereference in
+>  legacy-cache=off handling
+> X-Mailer: git-send-email 2.34.1
 > 
-> Please ignore this pull request.
+> The check that xcc->model is not NULL occurs after it is dereferenced
+> inside x86_cpu_get_versioned_cache_info(), so something like
+> `-cpu host,legacy-cache=off` leads to a segfault rather than an error.
+> This patch fixes that.
 > 
-> The two patches for Diva cards have already been merged via the "misc- 
-> hw" pull request.
+> Fixes: cca0a000d06f897411a8a ("target/i386: allow versioned CPUs to specify new cache_info")
+> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+> ---
+>  target/i386/cpu.c | 5 +++--
+>  1 file changed, 3 insertions(+), 2 deletions(-)
 
-My bad, I didn't noticed your PR while I was preparing mine.
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
-> I'll send a new pull request, which will include the "linux-user" 
-> patches only.
-
-No need, git-merge should figure the commits are identical and proceed
-as usual.
 
