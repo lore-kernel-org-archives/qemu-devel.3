@@ -4,90 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1115EA8554
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 04:56:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66490EA8554
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 04:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzSep-0008Tf-IQ; Mon, 09 Mar 2026 00:55:55 -0400
+	id 1vzSfC-0000Io-7N; Mon, 09 Mar 2026 00:56:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vzSeW-0008Ry-Om
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 00:55:37 -0400
-Received: from mail-ej1-x62f.google.com ([2a00:1450:4864:20::62f])
+ id 1vzSfA-0000IH-F8
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 00:56:16 -0400
+Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vzSeU-0006So-CI
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 00:55:35 -0400
-Received: by mail-ej1-x62f.google.com with SMTP id
- a640c23a62f3a-b9431300833so369421066b.0
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 21:55:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773032133; cv=none;
+ id 1vzSf8-0006UP-M9
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 00:56:16 -0400
+Received: by mail-ed1-x534.google.com with SMTP id
+ 4fb4d7f45d1cf-660b497acd1so7919703a12.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 21:56:13 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773032173; cv=none;
  d=google.com; s=arc-20240605;
- b=NzvLHb4870ROlWSe8cKckTAjsNfffs55pyTuAhrDyMVC2ZmLMVc0p4QU4z+wySyt8q
- 0FWugSRIpAf+Pa6SLDO+ZWzuHPqFn1qf8n7U57WwfHXSnrSFcX72SsiIDSMJwtFvHTio
- 9T/885NMXWt3ByDoEhBNJ7qU+XgPfoovV71KkcCeB5w7oTr4HFlxsinru3g2vjC7KOb5
- qyt+ERwMt9Vs9p1FGGlaNhlYpjf1s7XGnGK0dIUktMB7pl0usU0Rghral6usrd19wsvb
- 1fdnxzAgJe/h8wP5OblLc6X7k7oyagL0i+N4eSQNIlsDvlnIieQFKO+Ap4wcYrIyHn7f
- pwPA==
+ b=INg0G7Ok30CjQ/vGNff6A5Qzdy8f5n23dlSMqyZ6SZSzKhTmdp4cc27l/f15IPh0uo
+ CYspgdlS0pZk/gd2wJPj40ZxVDbyL6qBOFUd6TT5HQb5v7f1HQa743vSnpI/i74QphJQ
+ Z7QxamXtKXQ2RtyUw7N8JFJMJNRRpoDdDExHe9uS4ZTbnBJVwTHusSlrJT0bhAea5PB8
+ xbXvb4FM8MGxWBNmK7KSyr/49T/pkV1nseEwOEAofdf0rPpA3JbYewx0+A+wSphFlj3w
+ UTd+60V9w9Q0Rvn2YF+qloA3XqFzA6myKGR/E5Y0szOdoCn34MVJ86kcIMMrtA0Qw7sh
+ mwlw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=X8PXbDE/f5J2fv/A3/OvRsGcFVuUt1PRdqssI1rm+3c=;
- fh=6MaOGNVsLtWpl/iOCTF3OUzdeOcD/I/uUp4w5gfgKjI=;
- b=e7mgP4Ypty7RmRSt/D/J0NWKzVQWSBl8QJRcA/x4bIH704OK1d3Pf1VOuQ93M7vlM0
- c6VSXUvtwH9+WsvFnl0h+2VVa47EF1DpzSMoKxW3IYeZLjQVEg8hI8BZI56U5l8o9RLK
- 20P3fvR5oUihVlki8WlcCj9FR428oSZMnSRjRWS0ixbWvw6Rk0wdcI1RLl6idFQ4p1eZ
- apEzXaUJhu3EOApzVi3FFzXX2ZhZHyVu0LaeZSCDVBwW4eV4fuvvt6/tpZ35C32PKswY
- ce0e6dwqzRaw0CPAstM0kIZGQCIHi3VQGJX/Kxvu4LngH+5cNbM2mrHb0WJCkLQa/wLA
- Xo3w==; darn=nongnu.org
+ bh=x4SLxFLdp3FxOZeOLCCESkY6DOHUDpGMvCQs6+IU7f0=;
+ fh=XErS4XjkAQDBkClscxjQUC7TY1MVaIkgq5whaEGujtU=;
+ b=ViSBeuxe1oTGkhob6Yjw9wgpV7XUjte1aoxyCq3b40WNK9AKoN2q56Ztfj9eBuNiQi
+ aggCkey+lCKdGXYUAjqeA76sIk6k9GJVcsFnDmyq+2QpXIUbxuSxoXrTtvmxRO1PCsa1
+ kfnX7qqge63easRPoOkoHuk/Y+2r02rtMY2UNd4ud4O3c69GU8hi6Th0dQ5VCFc/pGWy
+ 9Jqyi2XbJLtVVFNZgajTp7IhKPimhpiifmKsq5UkjcpRdsOU6WeWuuBIlEcIuNagr6+W
+ /c/2xq4eZwgCD8vFZJllu+H7p28EoC2jeJ0b2ol2S7xJNoKl+SIir+3paxoIZjjGHnG2
+ 2oLA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773032133; x=1773636933; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773032173; x=1773636973; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=X8PXbDE/f5J2fv/A3/OvRsGcFVuUt1PRdqssI1rm+3c=;
- b=DYyh7BNwsEp5VIpOO93T+Xvr81gDge97GYkYAmW2lyXHsIzZRixTP+AEak/VZf0ntQ
- J3z31ZFGxJguGTwl4gV04B86gVpu9jM+SHPsTPz+KBFh/xyehvuWIz25lQER7Vs8uP+t
- Lexz0L8JsHdZDaFV58y4SQow4l/9uNIi/FIvIMtiOuvClIm4R1DKT3PI4GIT7uiS2O8e
- iIMyp/hKdN9aLWjvVVAb8Um43Yf8q9ZlbM+T1U4oI7mAzdL9ovxq2nvtNpQsUOKCYbK+
- qpH4Ou8JlxyetfcL66VxgGKDelEq7cpGcEtM6063sCJBoBo/e8TAYqjTueIukXiJQOq+
- X2Uw==
+ bh=x4SLxFLdp3FxOZeOLCCESkY6DOHUDpGMvCQs6+IU7f0=;
+ b=gS6b4zz9WbOoPp+OCoZvvcm6iebE8iJFASTnXNUSHDujm80Ol6hADMx7M2VwdqWcPZ
+ jt2iRouHkVOjGFdSfNvsRC16ihUe1gKn3fBC0992IlBW0YqEv7+kRrI5ew+DwFSAO0K4
+ TM+/NXCeVUI2lfELaQLGgWWpb0fwJin0vXnnLk/kXnbv1Ubx2H10i/mdMucbc6Hv3tPw
+ eJ9aDHIbfHPAoK/bj+RzsmMKdTLOqB7yaNNi2u8+NuSH+jWEQ4Q+kN/jeweuJ1SC2t1O
+ NINd/XGCCZEgo5LvGkn90nZeHzEWAHheD/24NZNGXTbsEq9eHDndwh6ss3hR9DZklSw4
+ Eu1w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773032133; x=1773636933;
+ d=1e100.net; s=20230601; t=1773032173; x=1773636973;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=X8PXbDE/f5J2fv/A3/OvRsGcFVuUt1PRdqssI1rm+3c=;
- b=dkd1uEE31R3KOjTGWrBIobr2IIRpMYUX1+kMTc83IRHt5LAP8YfdvlJ5MR3yoLThCJ
- T4lHirtT6iBJwztdn2ZWYzSTlvxqgW3+w+EvAZDAFZ5cRZfZRDY2vccmKj27TWRnm6cU
- 7dDzOGn7uG1SSiqC3ARvofe+JH0xP/DJPY+2IeUYH+2ub5pZB9B0Uc4XCoiPe/tLLp7M
- u6WmXQaTeOf7N801GkQa7yjHoMZ/X6mVBE7UfO0rmdsvbUy35ODaCfb8ugPy8GiWrE9K
- C/gOMkHIeat313TGDFiTpJ0EGDK41F4L58auRceaEMMcSgngiOov9qFP5J4LRrv8VMrG
- f5Xw==
-X-Gm-Message-State: AOJu0YyzU8a5RA0kwHKykU2bFt4MA1JxK58ab2Yh81Com5K1Go3+3iOP
- L61JIDwsSpuG3+5mY6ePMZGSGgCcQ7/p8L8QWDh/VQxRAsDGvdKiXrE8++3eTCvGGjet/jnMeea
- 8FHKgjSlsLDJBF3pHxNz6fU+NQtJ1gE4=
-X-Gm-Gg: ATEYQzyqK54H3bIkObgtUM4MmH3f3yDS85okZCueoqA2lx7ckqgX/Q9uBI35WdgAosO
- iCw57dwM55DIWAzkim8L7HuooOJn8TpljlsYVPcnmJJqv9TNvHGHF9N1xloAq98ycJBV/i/HDhB
- 0BKxpnE97t4WrS6XFbQZdgqb6XwD9muS/QGkThEMTvFCsBqHvrIAHJHU7C83RTl9/tWi2xGGSAW
- 7701OEFN4L/jSj5qjE9HXi0dO41TOymVYxz+wf5KNY1JAmWlu/tIRVg6D2O/EBVTF7+vUqgqgjB
- 09C8jK5w2TgQARzzqRPY+5+3kkT/yPMqp6bn9Q==
-X-Received: by 2002:a17:907:94d4:b0:b94:cfd:f37b with SMTP id
- a640c23a62f3a-b942dfbd50emr492724466b.45.1773032132467; Sun, 08 Mar 2026
- 21:55:32 -0700 (PDT)
+ bh=x4SLxFLdp3FxOZeOLCCESkY6DOHUDpGMvCQs6+IU7f0=;
+ b=CnxPxB3On+6+7mmW/Fy7qCDIRwbfqAsEzERIveZ/N40y4//+TbxC7GrTnhqN0Sv96C
+ kzKgruWWroWQ+pNxkC02OISBVvGiBhu6HDujD+9Pn2jiHm50h8h6o5VdcI6zinNaoo/T
+ PN2cU0LJknFAD8RImDavPhdA5QIATojOjd5TgdVejPVWgDudCQYsTDYnqnN2cy5WAte4
+ u4sg2X7RSLLq+/lVkuQK9zz4R9+N5ujMDp3kKlwTpkm7C3d2o0P0mM9zhHs5iv1g9wpw
+ NI05Yx73SNBCG4BkF3lDJUa9igovSrb5hJbbJZegqpd+S7pMKgTdLngolPdEeBiR8yqz
+ gW6A==
+X-Gm-Message-State: AOJu0YyLlo4Alkq0c6JgbxXUDkC4x9f9Jzf2WPI8vnSz1Do21RB6rXCh
+ 2ZkoEA84zYKAZz5vKl2Uv/y/LduS8V8Q5DfvucZxY4+nHS/0SbNit/U0jilNSsyv6Gb4q+k4c1s
+ fp3Fz2Cm2WwgZ2/DIHIG3WcquIOuwyBU=
+X-Gm-Gg: ATEYQzy8Z+Yb6wxt8H1rqsJ87Z64CbQH6e3ey/dU6vNOiV92ouCIHnOyEhYOSZMQ44C
+ CR9GnRUG2Wo5rJr620tEEtOVef9BVMJziy3kTygRUl0VfgACmjRFpjjPKB0wDK1jd/LLRvHdrHL
+ mgd1ohR7miXDdEzyibseySCApKU4/zYnzaow6fvJ1kRhkq7Npc1fQ0xwEPO16tncl/j3oFrI+YK
+ f6TvBQzsqMexoZstR8gjj979l5P61C8iTR1m7c6fv+1Y5zxxjvAuXTQhdybwse8UDLsHz/2LIsr
+ YLG1PmdtiEdz8d5Zis23rS6jOv5gkAuUADnOjw==
+X-Received: by 2002:a05:6402:f12:b0:658:d1b0:9970 with SMTP id
+ 4fb4d7f45d1cf-6619d45a0edmr3335571a12.5.1773032172542; Sun, 08 Mar 2026
+ 21:56:12 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260306071105.3328365-1-max.chou@sifive.com>
- <20260306071105.3328365-4-max.chou@sifive.com>
-In-Reply-To: <20260306071105.3328365-4-max.chou@sifive.com>
+ <20260306071105.3328365-5-max.chou@sifive.com>
+In-Reply-To: <20260306071105.3328365-5-max.chou@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Mar 2026 14:55:06 +1000
-X-Gm-Features: AaiRm52p3kL1LnsPLIsPUHVM7AaFNSSWKz0wSqL2ECu7qMdSCObxsNWK9tskDt0
-Message-ID: <CAKmqyKN2ka35Qd2Zf8vbh8t7m+hmgdPY-tZQyGYOc97Gm648Rg@mail.gmail.com>
-Subject: Re: [PATCH v5 3/9] target/riscv: rvv: Add new VTYPE CSR field - altfmt
+Date: Mon, 9 Mar 2026 14:55:46 +1000
+X-Gm-Features: AaiRm50_u4gmYIKQh3BeqEVxKIRP2bs6zMkfPEnI-jlDh5QjPQP18_6e3mD-vUA
+Message-ID: <CAKmqyKPCuey3R-9oSNWQGyGMtTrG=bKy9QMDjCMet_vhAjNrrA@mail.gmail.com>
+Subject: Re: [PATCH v5 4/9] target/riscv: rvv: Introduce reset_ill_vtype to
+ reset illegal vtype CSR
 To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -95,12 +96,11 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Weiwei Li <liwei1518@gmail.com>, 
  Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- Chao Liu <chao.liu.zevorn@gmail.com>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+ Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x62f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::534;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -127,23 +127,9 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Mar 6, 2026 at 5:13=E2=80=AFPM Max Chou <max.chou@sifive.com> wrote=
 :
 >
-> According to the Zvfbfa ISA spec v0.1, the vtype CSR adds a new field:
-> altfmt for BF16 support.
-> This update changes the layout of the vtype CSR fields.
+> Replace the same vill reset flow by reset_ill_vtype function.
 >
-> - Removed VEDIV field (bits 8-9) since EDIV extension is not planned to
->   be part of the base V extension
-> - Added ALTFMT field at bit 8
-> - Changed RESERVED field to start from bit 9 instead of bit 10
->
-> When Zvfbfa is disabled, bits 8+ are treated as reserved (preserving
-> existing behavior for altfmt bit). When Zvfbfa is enabled, only bits 9+
-> are reserved.
->
-> Reference:
-> - https://github.com/riscvarchive/riscv-v-spec/blob/master/ediv.adoc
->
-> Reviewed-by: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+> Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > Signed-off-by: Max Chou <max.chou@sifive.com>
 
@@ -152,99 +138,59 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  target/riscv/cpu.h           |  4 ++--
->  target/riscv/vector_helper.c | 39 +++++++++++++++++++++++++++++++-----
->  2 files changed, 36 insertions(+), 7 deletions(-)
+>  target/riscv/vector_helper.c | 21 +++++++++++----------
+>  1 file changed, 11 insertions(+), 10 deletions(-)
 >
-> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-> index 35d1f6362c..962cc45073 100644
-> --- a/target/riscv/cpu.h
-> +++ b/target/riscv/cpu.h
-> @@ -191,8 +191,8 @@ FIELD(VTYPE, VLMUL, 0, 3)
->  FIELD(VTYPE, VSEW, 3, 3)
->  FIELD(VTYPE, VTA, 6, 1)
->  FIELD(VTYPE, VMA, 7, 1)
-> -FIELD(VTYPE, VEDIV, 8, 2)
-> -FIELD(VTYPE, RESERVED, 10, sizeof(target_ulong) * 8 - 11)
-> +FIELD(VTYPE, ALTFMT, 8, 1)
-> +FIELD(VTYPE, RESERVED, 9, sizeof(target_ulong) * 8 - 10)
->
->  typedef struct PMUCTRState {
->      /* Current value of a counter */
 > diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index caa8dd9c12..7575e24084 100644
+> index 7575e24084..b7105627ed 100644
 > --- a/target/riscv/vector_helper.c
 > +++ b/target/riscv/vector_helper.c
-> @@ -33,6 +33,22 @@
->  #include "vector_internals.h"
->  #include <math.h>
+> @@ -49,6 +49,15 @@ static target_ulong vtype_reserved(CPURISCVState *env,=
+ target_ulong vtype)
+>      return reserved;
+>  }
 >
-> +static target_ulong vtype_reserved(CPURISCVState *env, target_ulong vtyp=
-e)
+> +static inline void reset_ill_vtype(CPURISCVState *env)
 > +{
-> +    int xlen =3D riscv_cpu_xlen(env);
-> +    target_ulong reserved =3D 0;
-> +
-> +    if (riscv_cpu_cfg(env)->ext_zvfbfa) {
-> +        reserved =3D vtype & MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-> +                                           xlen - 1 - R_VTYPE_RESERVED_S=
-HIFT);
-> +    } else {
-> +        reserved =3D vtype & MAKE_64BIT_MASK(R_VTYPE_ALTFMT_SHIFT,
-> +                                           xlen - 1 - R_VTYPE_ALTFMT_SHI=
-FT);
-> +    }
-> +
-> +    return reserved;
+> +    /* only set vill bit. */
+> +    env->vill =3D 1;
+> +    env->vtype =3D 0;
+> +    env->vl =3D 0;
+> +    env->vstart =3D 0;
 > +}
 > +
 >  target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
 >                              target_ulong s2, target_ulong x0)
 >  {
-> @@ -41,12 +57,10 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, targe=
+> @@ -93,11 +102,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, targe=
 t_ulong s1,
->      uint64_t vlmul =3D FIELD_EX64(s2, VTYPE, VLMUL);
->      uint8_t vsew =3D FIELD_EX64(s2, VTYPE, VSEW);
->      uint16_t sew =3D 8 << vsew;
-> -    uint8_t ediv =3D FIELD_EX64(s2, VTYPE, VEDIV);
-> +    uint8_t altfmt =3D FIELD_EX64(s2, VTYPE, ALTFMT);
-> +    bool ill_altfmt =3D true;
->      int xlen =3D riscv_cpu_xlen(env);
->      bool vill =3D (s2 >> (xlen - 1)) & 0x1;
-> -    target_ulong reserved =3D s2 &
-> -                            MAKE_64BIT_MASK(R_VTYPE_RESERVED_SHIFT,
-> -                                            xlen - 1 - R_VTYPE_RESERVED_=
-SHIFT);
->      uint16_t vlen =3D cpu->cfg.vlenb << 3;
->      int8_t lmul;
->
-> @@ -63,7 +77,22 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, target=
-_ulong s1,
->          }
 >      }
 >
-> -    if ((sew > cpu->cfg.elen) || vill || (ediv !=3D 0) || (reserved !=3D=
- 0)) {
-> +    switch (vsew) {
-> +    case MO_8:
-> +        ill_altfmt &=3D !(cpu->cfg.ext_zvfbfa);
-> +        break;
-> +    case MO_16:
-> +        ill_altfmt &=3D !(cpu->cfg.ext_zvfbfa);
-> +        break;
-> +    default:
-> +        break;
-> +    }
-> +
-> +    if (altfmt && ill_altfmt) {
-> +        vill =3D true;
-> +    }
-> +
-> +    if ((sew > cpu->cfg.elen) || vill || (vtype_reserved(env, s2) !=3D 0=
+>      if ((sew > cpu->cfg.elen) || vill || (vtype_reserved(env, s2) !=3D 0=
 )) {
->          /* only set vill bit. */
->          env->vill =3D 1;
->          env->vtype =3D 0;
+> -        /* only set vill bit. */
+> -        env->vill =3D 1;
+> -        env->vtype =3D 0;
+> -        env->vl =3D 0;
+> -        env->vstart =3D 0;
+> +        reset_ill_vtype(env);
+>          return 0;
+>      }
+>
+> @@ -113,11 +118,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, targ=
+et_ulong s1,
+>      }
+>
+>      if (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl !=3D vl)) {
+> -        /* only set vill bit. */
+> -        env->vill =3D 1;
+> -        env->vtype =3D 0;
+> -        env->vl =3D 0;
+> -        env->vstart =3D 0;
+> +        reset_ill_vtype(env);
+>          return 0;
+>      }
+>
 > --
 > 2.52.0
 >
