@@ -4,57 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 51423EA8549
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 01:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 274B7EA854C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 02:00:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzPq6-0001Wh-Hd; Sun, 08 Mar 2026 21:55:22 -0400
+	id 1vzPv9-00037C-JR; Sun, 08 Mar 2026 22:00:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vzPq3-0001WR-4J
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 21:55:19 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vzPv7-00036t-FZ
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:00:33 -0400
+Received: from fout-b5-smtp.messagingengine.com ([202.12.124.148])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vzPpz-0002H7-Ns
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 21:55:18 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id D58F55966F4;
- Mon, 09 Mar 2026 02:55:13 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id JCqCdx6jkSZI; Mon,  9 Mar 2026 02:55:11 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 1E7F35969E8; Mon, 09 Mar 2026 02:55:11 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 1BA265969E7;
- Mon, 09 Mar 2026 02:55:11 +0100 (CET)
-Date: Mon, 9 Mar 2026 02:55:11 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
-cc: Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org, 
- Gerd Hoffmann <kraxel@redhat.com>, 
- =?ISO-8859-15?Q?Marc-Andr=E9_Lureau?= <marcandre.lureau@redhat.com>
-Subject: Re: [PATCH v11 00/17] ati-vga: Implement HOST_DATA transfers to
+ (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
+ id 1vzPv5-0002fh-Os
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:00:33 -0400
+Received: from phl-compute-09.internal (phl-compute-09.internal [10.202.2.49])
+ by mailfout.stl.internal (Postfix) with ESMTP id 862141D00082;
+ Sun,  8 Mar 2026 22:00:28 -0400 (EDT)
+Received: from phl-frontend-03 ([10.202.2.162])
+ by phl-compute-09.internal (MEProxy); Sun, 08 Mar 2026 22:00:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1773021628; x=1773108028; bh=12T3J0h2KARTDT/AcyRA6eCuh4ma/nyq
+ YA5dXyVut+k=; b=DPJ5xCDmMW8BpRuwgkGGeprYft2mlYk6Od9T3kbEd1AM4npT
+ +dPdYjrXzaQNsDGl1+c64ZGDTQKP3cttXwFDXgH+6v8NAKFkM+2JwKM++uqt12ct
+ 1EuJjjWzfo+fsD6ioZAqfvhDZeeDB7UpAKTKad1/DLfj6v6/iBGDluDiHD3DynxB
+ EM7w7XhQ8IhcQ01CnNDqVgzHyQP/nrWErduA2/sgd+k3MNC2hd9LowCnOsULP6QL
+ 84MQuB2xFVz0qFJp8Av0kLMjolH35IwO8l4XwSqevOlvO/IkX8ggORzAhwdxP7IA
+ qyxzcPLuOLBQU0JKatMU9xgsIx+4zCP+wAWYuA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773021628; x=
+ 1773108028; bh=12T3J0h2KARTDT/AcyRA6eCuh4ma/nyqYA5dXyVut+k=; b=I
+ XRb249cL+O3zZ09Rpq1SnLhL1zxG8vCuf1nH13xu6GQHXGddP73mHpiMWN6hN53A
+ bbtTUjNdKMEhqsy2QVlSXv93iZGO3YbivXkfqLjDV5GFc1Oc2d6g+HNLS5kRA6xd
+ LH2TCZJh5h24l8cwWNGW/YhxZz7Vn9PFPPsNBYtz/zPXSmYA9Nna6aPxcnk9oOZk
+ pJM1JdwzZhamtc/ZKcFwF+MKvkbuhOr2zjR/ELKazxrYoPBKNWb+ADJFCRhs7moc
+ vnJT1cxSzOKI+ZdneL0Fb6X0vfvqmjYPIUB9D+7i81NXoEJQseqXUGKNR+T3wgaM
+ qgDCiEYK0N+dRc8ITPe9Q==
+X-ME-Sender: <xms:vCmuaS5ijjh9gkiiLT16I8bxqH6t5sdFOWkJC-D9sZ8mT6UQr2P0eg>
+ <xme:vCmuaflirl5KufHxYGvlGFatVjh_99PRRngXkDlZjybUlbtF3j5C7re4Da5jqIyGX
+ YzwSl0E9nHQM4mvE8NnQEaz2-F5tdM1JYIZzhJFB1JK5paKuQNzfFM>
+X-ME-Received: <xmr:vCmuabQ0e3FgOTznTli2oMDTLEvKI2iU8SESiWHvsRF3ogC1SmmO0WQV6gSP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeikeefucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
+ hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
+ jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
+ honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
+ tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
+ nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepphhhih
+ hlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhho
+ nhhgnhhurdhorhhgpdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomhdprh
+ gtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhopehmrghr
+ tggrnhgurhgvrdhluhhrvggruhesrhgvughhrghtrdgtohhmpdhrtghpthhtohepsggrlh
+ grthhonhesvghikhdrsghmvgdrhhhu
+X-ME-Proxy: <xmx:vCmuaWGYrJSJE53d2_K3uA3AziKg7AJ7dJPpxX-bIORNbor79q8KWQ>
+ <xmx:vCmuaYHWRVyY0Mt0ppNb5Pfz1iMHiXb0TPMfEiX9c6KVZwKGEM6V3Q>
+ <xmx:vCmuacRZkDR07OfP2RGDe4MKJiLLrPthF6OAk1DoAplJlZSmSjToBQ>
+ <xmx:vCmuaRLH1Nicnr4nPx11_Je1zFDrRWM6nhg5vO9j1MF8N1SgqujzBw>
+ <xmx:vCmuaWY7gZFuQBL5pRvpNyLtWEXf9iX0NdbPNwc2XLjQBphRrGUuYC-a>
+Feedback-ID: ib26944c1:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
+ 8 Mar 2026 22:00:27 -0400 (EDT)
+Received: from localhost (chomposaur [local])
+ by chomposaur (OpenSMTPD) with ESMTPA id 66ee7c92;
+ Mon, 9 Mar 2026 02:00:26 +0000 (UTC)
+Mime-Version: 1.0
+Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=UTF-8
+Date: Sun, 08 Mar 2026 22:00:26 -0400
+Message-Id: <DGXVPMQPMXN3.3QYKWHOQKKS72@jablonski.xyz>
+Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
+ "Chad Jablonski" <chad@jablonski.xyz>,
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v12 0/9] ati-vga: Implement HOST_DATA transfers to
  enable X.org text rendering
-In-Reply-To: <cff2726a-f4c0-e8b0-83b2-00727196b12a@eik.bme.hu>
-Message-ID: <994345a2-9258-75bf-c669-29555373f7c0@eik.bme.hu>
-References: <20260303024730.1489136-1-chad@jablonski.xyz>
- <a04c9f47-d371-4e78-93cd-7798b804f237@linaro.org>
- <cff2726a-f4c0-e8b0-83b2-00727196b12a@eik.bme.hu>
-MIME-Version: 1.0
-Content-Type: multipart/mixed;
- boundary="3866299591-152344451-1773021311=:18519"
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: "Chad Jablonski" <chad@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
+X-Mailer: aerc 0.21.0
+References: <cover.1773020351.git.balaton@eik.bme.hu>
+In-Reply-To: <cover.1773020351.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=202.12.124.148; envelope-from=chad@jablonski.xyz;
+ helo=fout-b5-smtp.messagingengine.com
+X-Spam_score_int: 24
+X-Spam_score: 2.4
+X-Spam_bar: ++
+X-Spam_report: (2.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_NTLD_LINKBAIT=1,
+ FROM_SUSPICIOUS_NTLD=0.5, PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
+ UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,87 +119,6 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  This message is in MIME format.  The first part should be readable text,
-  while the remaining parts are likely unreadable without MIME-aware tools.
-
---3866299591-152344451-1773021311=:18519
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8BIT
-
-On Mon, 9 Mar 2026, BALATON Zoltan wrote:
-> On Sun, 8 Mar 2026, Philippe Mathieu-Daudé wrote:
->> Hi Chad,
->> 
->> On 3/3/26 03:47, Chad Jablonski wrote:
->>> This series implements HOST_DATA as a blit source enabling text rendering 
->>> in
->>> xterm under X.org with 2D acceleration.
->>> 
->>> The series builds up functionality incrementally:
->>> 
->>> * Patches   1-6:  Bug fixes and register implementations
->>> * Patches  7-14:  Refactor of ati_2d_blt to decouple from ATIVGAState
->>> * Patch      15:  Scissor clipping implementation
->>> * Patches 16-17:  HOST_DATA register writes, color expansion, and
->>>                    accumulator flush
->> 
->> 
->>> Chad Jablonski (17):
->>>    ati-vga: Fix framebuffer mapping by using hardware-correct aperture
->>>      sizes
->>>    ati-vga: Fix DST_PITCH and SRC_PITCH reads
->>>    ati-vga: Read aliased values from DP_GUI_MASTER_CNTL
->>>    ati-vga: Latch src and dst pitch and offset on master_cntl default
->>>    ati-vga: Implement foreground and background color register writes
->>>    ati-vga: Add scissor clipping register support
->>>    ati-vga: Remove dst_x/y updates after blit
->>>    ati-vga: Consolidate dirty region tracking in ati_2d_blt
->>>    ati-vga: Remove src and dst stride mutation in ati_2d_blt
->>>    ati-vga: Use local variables for register values in ati_2d_blt
->>>    ati-vga: Introduce ATI2DCtx struct for 2D blit context
->>>    ati-vga: Extract setup_2d_blt_ctx from ati_2d_blt
->>>    ati-vga: Split ati_2d_do_blt from ati_2d_blt
->>>    ati-vga: Remove ATIVGAState param from ati_2d_do_blt
->>>    ati-vga: Implement scissor rectangle clipping for 2D operations
->>>    ati-vga: Implement HOST_DATA register writes
->>>    ati-vga: Implement HOST_DATA flush to VRAM
->> 
->> Zoltan asked me to look at your series [*] but unfortunately I'm
->> getting a build failure when building without PIXMAN starting
->> with patch #9:
->> 
->> ../hw/display/ati_2d.c: In function ‘ati_2d_do_blt’:
->> ../hw/display/ati_2d.c:185:13: error: unused variable ‘src_stride_words’ 
->> [-Werror=unused-variable]
->>  185 |         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
->>      |             ^~~~~~~~~~~~~~~~
->> ../hw/display/ati_2d.c:147:9: error: unused variable ‘dst_stride_words’ 
->> [-Werror=unused-variable]
->>  147 |     int dst_stride_words = ctx->dst_stride / sizeof(uint32_t);
->>      |         ^~~~~~~~~~~~~~~~
->> ../hw/display/ati_2d.c:137:10: error: unused variable ‘use_pixman_blt’ 
->> [-Werror=unused-variable]
->>  137 |     bool use_pixman_blt = use_pixman & BIT(1);
->>      |          ^~~~~~~~~~~~~~
->> ../hw/display/ati_2d.c:136:10: error: unused variable ‘use_pixman_fill’ 
->> [-Werror=unused-variable]
->>  136 |     bool use_pixman_fill = use_pixman & BIT(0);
->>      |          ^~~~~~~~~~~~~~~
->> 
->> I'm queueing the first 8 patches hoping it helps.
->> 
->> Also, please fix the checkpatch.pl coding style errors
->> before re-posting.
->
-> Sorry, my mistake I did not notice this during review and testing. I'm fixing 
-> it up and will send updated version of the last part of the series not yet 
-> queued. Thanks a lot for your help.
-
-I sent updated v12 fixing the above. Before that I've also sent this small 
-fix independent of this series:
-https://patchew.org/QEMU/cover.1773009887.git.balaton@eik.bme.hu/
-
-Thank you,
-BALATON Zoltan
---3866299591-152344451-1773021311=:18519--
+Thanks Zoltan! You beat me to it. This fix looks good to me. And thank
+you Philippe for picking this up.
 
