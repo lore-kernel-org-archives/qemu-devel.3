@@ -4,83 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F31FCA168
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EA9D8FCA166
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:50:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzek6-0001T8-Gb; Mon, 09 Mar 2026 13:50:11 -0400
+	id 1vzejZ-0000pE-NV; Mon, 09 Mar 2026 13:49:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzejs-0001Db-CQ
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:49:58 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vzein-0000Zj-If
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:48:55 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzejq-000300-8f
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:49:56 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-48540d21f7dso5318525e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:49:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1vzeik-0002oi-Es
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:48:48 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-4852a8482fcso26587285e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:48:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773078592; x=1773683392; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773078524; x=1773683324; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FfOU74AZsB0BJ+9t5I5qi8V7Be00GDq0IJGiovLZCOM=;
- b=YqsdUAusbiH0xyBqxZK/VoSXtCcFNSAXPITsfQpzMhYN9ffOrzvRxSEQZbWbHGmKYf
- g3H/8zGAW8gWGTAwFMi9tGQt8svbP45gUMqiIGOybFsKRY2DW30He5mJDwCWWDJ489bK
- uDRlatyElGq7QhSmER9QUJcplkS/iNOHjvhHphRt0uimFYhzFa5Yvi1NWNaDtv06A2bK
- NIVwwIgIViQoMnaL/l2GDnvA/K+gWNjpvSeAyyUuC0eK3e5q846YT2wXXKaZ1Z7S7Kgp
- mBUNgKUPreFzVyq8cVRgznwL2W8i8uSWErsqKqZaMp23v5OLrKbn7th6vYeJiUi/np58
- ceIA==
+ bh=YhvJ30u4SjKjKGIAS0IRtyTM16wsKwTzLGcYfkxCVc0=;
+ b=rhPopMlXstd5OeHVGDbY99KJUyq0nEuE96vXmTs9BoOqen82Sss5fvu7h7wJr7ynZa
+ sVkcBhq0hFpqWIMm4P2+P2aNmi1sTHXAx6sJQwoLH+RxlkFjsNQdtjuDo2T07572dhhB
+ Pjecrwn1T2D76HZzCDAjbBAXaai50Ku+s5aLk+/SmBRiqWVWTcG/8akrIO2OspH7Ss46
+ oEm3Nr5AXEsNcwgjcgyhf2VLPPhY+cDy6bn76nhwP8MXwgkQyVukStkqtLqv5oahy5V3
+ HNXoiSCS8exusl73vrxqs2Ud9n5LrlBNZVhjw19t2IrRWGhandbGLmqehtnZTOuAJxKA
+ gdTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773078592; x=1773683392;
+ d=1e100.net; s=20230601; t=1773078524; x=1773683324;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FfOU74AZsB0BJ+9t5I5qi8V7Be00GDq0IJGiovLZCOM=;
- b=VgGAAnms+sPvzDQG2yCUGQEmKYdH9v7kp2wE5ZD7nEVjM6feDx3+GDhW+SWd7c3ckJ
- HCzbDuQXSA6N6IjvnTURr1ivXDx70SIApeAfpw6iJUUbda9yw8lhVkAjBdIiqf5MQMvN
- 67ZTh8CRWoXQmlMVNfs3nfh57pEqNN/Q7RQW4UZUCdZQeL30Ly5WmHzQXxhATQS4KcGv
- O+A/rOww0NzgUyErcFCVeahQFXt1bkc76PBCRUO2YEvSXIepg0EFDw/qYMZQI1LQ7jI+
- L3wic20Z8Hh1mHpLnPgFSSgKrWtX+HnAUcbZV3Pel8UbjBwvTXnlxbJro3PlPcQQ0ZCE
- iVcg==
-X-Gm-Message-State: AOJu0YzLnFT+ngrrKCJYx0B3pu1pzMSzCF6oJOd+gr7SQwWzL9eHJJBU
- UPBxGc59W7ydkAEYviTKOqO47B5juLVA3mGWq32UDeBTzFJFxPCxogEMsxJeRKpDa9mepB67UXd
- 56QFf7DU=
-X-Gm-Gg: ATEYQzzY82mu/Xgm2Qs+yB6LoVahvBM+PZICBXjw8qfTqPfA0uAs1cSCApLDrc9H/J1
- 57aOhh/Y+Vmd8lnK3S5w0O7fpvN2A6DQUxNLfAYXImyrBuV11hrTx6w8ly7dwnB8n8gJw+bYX9B
- Rjp8gV9kFeGAvYuieme1SWEuPjtfGRIQg6t2AQmUQuQyFvB7TD5SR0237hHgLnie+V7LRcMMfyh
- 8nC9C3RgPR+CkoaCLLXCUqyICbUevIaXpcAvM8aLq2nzIoC0hUx+ApRa5n424B5SMbx69xFf7xC
- TfoEtFjlCtN9J8Dk3k+1FPSMQAcnOPO/WNNeNJfG1XZ2cc16Z8Jrd/Twa6DC6/Rg0QQ0ThJtbor
- K9B8TmSyI20jwT3uxnz9nBwaKnA8Wo5wsi/Y506uhd5Gv1Fh2PLP5GVhgVaynL962MiQ9DcrP1m
- vijLITifzwVz7rlANyp5u6gfyawtFhSSTuIKp4ggZq5Tj0gRCmfSQG8uM2JE/3py0DqZVb1XB1
-X-Received: by 2002:a05:600c:8b01:b0:477:5ad9:6df1 with SMTP id
- 5b1f17b1804b1-4852691989bmr200833445e9.3.1773078592217; 
- Mon, 09 Mar 2026 10:49:52 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a6bbcesm7670835e9.3.2026.03.09.10.49.50
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 10:49:51 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=YhvJ30u4SjKjKGIAS0IRtyTM16wsKwTzLGcYfkxCVc0=;
+ b=SVzzq1/cUsCDVFXwaBzybFt7mwL0O/oA7rn2UXHWcMM7v9f1LmLhoMpAHcncfLghW8
+ /B7r135H2pGP1veVTHkKn5aBtel34J2alUbI4B0xvtBkHLHyOaix2unjCHykQeAyo5vD
+ 7wrosopvTb1yfMOyqZyRGEmeqe34NSNk8gJERkNXThKelBp30XLk0WSchSr8iiXBdXvu
+ 8oclmo1UZj2zBOXCFzxMk90Z1fOgoByPADqhsMZavx30B1edP3U2pnHk7E3t+emvJ+Mf
+ zWlnRvRkhH/oVcXVLod3Dr63Gf0TDCWInT0/cmemqx4F4IpXvkY7uVuiTP1/CQ7BBuun
+ /Aiw==
+X-Gm-Message-State: AOJu0Yx5zabDEHTB4GW42gXoOrGC8/1+pYv2lQYw5wIE2zo+5h+G0kDm
+ GWfViO6/7FLvgL3xr71TegGUO7nk5LWoWakaGq0v6KRAFiAHi8RMCocxWlzJxZG6KGM=
+X-Gm-Gg: ATEYQzz2Kg0OHSwpHewkehcg8wseWnf2ccycPVyfNQpo8UdahvPHgXD/5XvvSx456QH
+ otROqv0mx4E0z8ccIRW4sXam+8+VKGgnKPchxWcMaX/ZXX5BCI2AylLG24Wz4C2Q4qDBa9eMTvd
+ 0YG4dUqE+Cym4UUwZCu7uHTuA9rHffSJL5g8XzJM7fOpM7b76wC3miWLdvc6p7GIfZFC6XyE3Di
+ OG5604uTWYqn1eSAP+zK+XP5m8NItncZUR0aOEJgeCbVByqOuFcTyuXjNc3AS3Gy5L5OP3PzO9Y
+ /kaHWMo7d1jDRcqoMeAnXuE5njFPbVHQqVBH3dWqcoZvJN5jRYsAzHM7NJxF6bV/R9trcUwbQNd
+ HoOxhlLt0nkI13GkMFX3VxaA6uJcMncnCnxwj4TPoPQ7QCjezfJCsPbY8Q1jrcc3H6c2+VHsci3
+ DSYRZD1PSgsWIEovupWEOxH63r4wQhbNXlGg==
+X-Received: by 2002:a05:600c:3114:b0:485:40c6:f516 with SMTP id
+ 5b1f17b1804b1-48540c6f648mr28269355e9.33.1773078523879; 
+ Mon, 09 Mar 2026 10:48:43 -0700 (PDT)
+Received: from draig.lan ([185.124.0.126]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541aad45fsm8048965e9.15.2026.03.09.10.48.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 10:48:42 -0700 (PDT)
+Received: from draig.lan (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id E4EA55F94A;
+ Mon, 09 Mar 2026 17:48:41 +0000 (GMT)
+From: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, kvm@vger.kernel.org,
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Kyle Evans <kevans@freebsd.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 1/2] system/kvm: Make kvm_irqchip*notifier() declaration
- non target-specific
-Date: Mon,  9 Mar 2026 18:49:40 +0100
-Message-ID: <20260309174941.67624-2-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260309174941.67624-1-philmd@linaro.org>
-References: <20260309174941.67624-1-philmd@linaro.org>
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>,
+ Brian Cain <brian.cain@oss.qualcomm.com>
+Subject: [PATCH v2 3/5] tests/tcg/multiarch/linux-test: use portable
+ alternative for dirent64
+Date: Mon,  9 Mar 2026 17:48:39 +0000
+Message-ID: <20260309174841.4184117-4-alex.bennee@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260309174841.4184117-1-alex.bennee@linaro.org>
+References: <20260309174841.4184117-1-alex.bennee@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,59 +112,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 3607715a308 ("kvm: Introduce KVM irqchip change notifier")
-restricted the kvm_irqchip*notifier() declarations to target-specific
-files, guarding them under the NEED_CPU_H (later renamed as
-COMPILING_PER_TARGET) #ifdef check.
+From: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
 
-This however prohibit building the kvm-stub.c file once:
+dirent64 and readdir64 are glibc-specific and not portable to other
+C libraries such as musl. Define _FILE_OFFSET_BITS=64 instead, which
+portably instructs all libc implementations to use 64-bit file offsets,
+making readdir() and struct dirent equivalent to their 64-bit variants.
 
-  ../accel/stubs/kvm-stub.c:70:6: error: no previous prototype for function 'kvm_irqchip_add_change_notifier' [-Werror,-Wmissing-prototypes]
-     70 | void kvm_irqchip_add_change_notifier(Notifier *n)
-        |      ^
-  ../accel/stubs/kvm-stub.c:74:6: error: no previous prototype for function 'kvm_irqchip_remove_change_notifier' [-Werror,-Wmissing-prototypes]
-     74 | void kvm_irqchip_remove_change_notifier(Notifier *n)
-        |      ^
-  ../accel/stubs/kvm-stub.c:78:6: error: no previous prototype for function 'kvm_irqchip_change_notify' [-Werror,-Wmissing-prototypes]
-     78 | void kvm_irqchip_change_notify(void)
-        |      ^
-
-Since nothing in these prototype declarations is target specific,
-move them around to be generically available, allowing to build
-kvm-stub.c once for all targets in the next commit.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Matheus Tavares Bernardino <matheus.bernardino@oss.qualcomm.com>
+Reviewed-by: Brian Cain <brian.cain@oss.qualcomm.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Message-ID: <af31d21c4d668cfb940ba4159f584fa6454c3d82.1772107448.git.matheus.bernardino@oss.qualcomm.com>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
 ---
- include/system/kvm.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tests/tcg/multiarch/linux/linux-test.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 4b0e1b4ab14..5fa33eddda3 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -219,6 +219,10 @@ int kvm_vm_ioctl(KVMState *s, unsigned long type, ...);
- 
- void kvm_flush_coalesced_mmio_buffer(void);
- 
-+void kvm_irqchip_add_change_notifier(Notifier *n);
-+void kvm_irqchip_remove_change_notifier(Notifier *n);
-+void kvm_irqchip_change_notify(void);
-+
- #ifdef COMPILING_PER_TARGET
- #include "cpu.h"
- 
-@@ -393,10 +397,6 @@ int kvm_irqchip_send_msi(KVMState *s, MSIMessage msg);
- 
- void kvm_irqchip_add_irq_route(KVMState *s, int gsi, int irqchip, int pin);
- 
--void kvm_irqchip_add_change_notifier(Notifier *n);
--void kvm_irqchip_remove_change_notifier(Notifier *n);
--void kvm_irqchip_change_notify(void);
--
- struct kvm_guest_debug;
- struct kvm_debug_exit_arch;
- 
+diff --git a/tests/tcg/multiarch/linux/linux-test.c b/tests/tcg/multiarch/linux/linux-test.c
+index bf6e0fda262..0fa3165602f 100644
+--- a/tests/tcg/multiarch/linux/linux-test.c
++++ b/tests/tcg/multiarch/linux/linux-test.c
+@@ -16,6 +16,7 @@
+  *  You should have received a copy of the GNU General Public License
+  *  along with this program; if not, see <http://www.gnu.org/licenses/>.
+  */
++#define _FILE_OFFSET_BITS 64
+ #define _GNU_SOURCE
+ #include <stdarg.h>
+ #include <stdlib.h>
+@@ -83,7 +84,7 @@ static void test_file(void)
+     struct utimbuf tbuf;
+     struct iovec vecs[2];
+     DIR *dir;
+-    struct dirent64 *de;
++    struct dirent *de;
+     /* TODO: make common tempdir creation for tcg tests */
+     char template[] = "/tmp/linux-test-XXXXXX";
+     char *tmpdir = mkdtemp(template);
+@@ -191,7 +192,7 @@ static void test_file(void)
+         error("opendir");
+     len = 0;
+     for(;;) {
+-        de = readdir64(dir);
++        de = readdir(dir);
+         if (!de)
+             break;
+         if (strcmp(de->d_name, ".") != 0 &&
 -- 
-2.53.0
+2.47.3
 
 
