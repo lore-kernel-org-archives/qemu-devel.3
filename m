@@ -4,90 +4,137 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A83AF417EF
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:53:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8C48F417EE
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:54:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbyc-00067h-HZ; Mon, 09 Mar 2026 10:52:58 -0400
+	id 1vzbv3-0001QG-2k; Mon, 09 Mar 2026 10:49:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbww-0004JF-GA
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:51:21 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwr-0005jv-BX
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:51:13 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-439aeed8a5bso9124617f8f.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:51:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbuq-0000yL-Q5
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbun-0005Gs-KC
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:04 -0400
+Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629EAUAb1249036
+ for <qemu-devel@nongnu.org>; Mon, 9 Mar 2026 14:48:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ hjdqw7ViUHZY/mO/JrPBTjkTU8B404aXzmagcFLQRi8=; b=iRhsyFQ+5Yduzmvz
+ wPyK23ySzmMuHl0CiGCEcUmzEEBwzoau5dBNuGlPG35xQ0hfAUjvaGUnR47D2VZf
+ LO9N/VeQtZgaeDjNYY8Y2lD5mD3Br49emP0qQTP9/YNmxWoK9mHC7lnACwCpZjR+
+ wU6fVDUK6OIgybdsjYzLTAG/7nosAjWG5BXfimmc+d1Y+1NTj/7DA97tbxmNM9Um
+ DCqKaNgTJn3LkEsQIuBgqQ4oPJAgnppuxZ0Konklt78Q7ybndYFEeJ42Ibywc4S7
+ FN+6Zryta6H5PMhFziZY8s4qvhrYDqVBPWOGz3w9rQSWypIdr66hJRsHjZmABzY6
+ kCHPYA==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4csyr403t1-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 14:48:49 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2bdff07d8f4so12962361eec.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773067865; x=1773672665; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1773067729; x=1773672529; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=44Beolhsb9IaT4rslnVVRU0yRvy4qFxSOsfGseaGZiU=;
- b=mZ9QcXV/JIVJ4wGbuSx/IwPsqXkOrAOz4LxX6AZV7Ko0sgShhcxXIYcTAaYv0NnkY1
- X1IfNhGgQmvQ5Zs2T5PQZJ8fPxg+YA3KgkzAh2kNHI+Er1WTQz+Pmy9G16q3lvPPXfOS
- vSLMB3X826eUeIsn3x+chF/k43PdNorYHLxOXBlNVvn2NYRZwD54yEdXBog0ICXYG5Fl
- lH0p7R4VajGtM379IUvotxvQQseeUaq6NNR1J5EiEPK2NEJXCe3kvfrOqiANHkcSJEPC
- KEVxK+nSrwHvVrKTTOG/t45TVwOHANp0Ri4U2Mcrbq2P44Gtt9ByBAK7lsM7XmPkyICv
- vopQ==
+ bh=hjdqw7ViUHZY/mO/JrPBTjkTU8B404aXzmagcFLQRi8=;
+ b=Gd8kKHQ29eLWh7wXsggfaeuQqTHYWOWwKLf9yIjqJme20WtbaAhV1KcYAUkiRaHqhj
+ liGgg8knvRFIcJ7ieJiZHEIYJbR3WZfhuhoMVlRjQ7hqqn/yICm24j3pkFCNf+/zNrfc
+ 30bzFSvJtHVEYyLy5rK0enSjUVk2STXiRikKY9VdMge73019G5sxkiE45/OFV1uJcJU/
+ 77T33sPS4pUajuS3g2hHxbaZGwr411O3vZsFuYAwJovIxDbY2E6VVos293R0Ijiapm+0
+ BUytjGN6rZSg5Mv+zV178mFr8jwEcXB/UzRLFs6h0mPjwap/fw2x5smkUK8tuAwJerc+
+ SFxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773067865; x=1773672665;
+ d=1e100.net; s=20230601; t=1773067729; x=1773672529;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=44Beolhsb9IaT4rslnVVRU0yRvy4qFxSOsfGseaGZiU=;
- b=cfjQyu6lna7GB7YAypw51KyjJ+RXoA2988HohENT7a4Bf+QRpn53y68ZLmULUX6wUt
- zXyNxVfgB+K1cG167rDTF+Le+Fr03BJ7mRllzqboixmnfVKMxK2pNwSBuxVxX+R+oFj2
- q/Ziv12aPkuIv1lIWkAlaTr0cW2Y15fSXsaXXuD0lBbb+f+aox97iPaXZ5tGDwKhtCSn
- i4iyNUGHDa69ph4OVD2FMX8e5w4jRhkOi9id2ZVY5I6SaKv+Z47xAK/OvGs/wQ9IqVDG
- Z8csTxfHfJ4wPFwqhyF6SHtuLn6UpTLzwGcH8LZVFdK2Jb6y7w/rg0m57z8Y68+NrJFF
- CRRg==
-X-Gm-Message-State: AOJu0YzmD+Mjf50YdOSqIpzsNr2/1viCi9TWKEDGNrrUc4899wWH4Qyp
- TKvfJI0uEAGB8fagfd9lnXUX9ldX1I9kzAykiGx13NXE8rCpjSYlGY5cYqmLI7gQfWFfucn+mxt
- cxQTNndo=
-X-Gm-Gg: ATEYQzwku29Jg+0rhGryQ9GRYk24vhUhu+6TPunLsHgQ0WPDP24QVktAKcqdDKL4qG8
- z3aDQbXBYpePVP4eNJFsjmiA2wTAwvnUpMEMpt4Ht/3bzhu+yH7tSXtr/S/psCFX/R//v4vnw9Z
- +7X+4pWW7h86OZ6VFZmyFc9kh0VklvRFKzMxRWvQGhEji/kFCpFLGhsx2nHId5rIIj/w1RY3r2K
- U9/V2CUBZ4hs1H9l5T6L/vH3bglxJ50Ot3ST4CAIuIirdNtzKJs/uzP7iB2Mi5ZzK3Xsm66XmKN
- kh0u8V1MvJZI6Pl6CLYrq/4TeCpoUh825agaQAxzQh+Q6wunHcX5EBpn3VlVdP09T/v4okIVvir
- turiqtXlubDaKx2ZM8HbySpScvVK5bj2q/zVKBFY37yOrCbxzz1RsHo6jlo6j16tGrIGc9mDpRE
- HgSsf1iScWOz6PSMtZGO6Rm7sdEHCx5yl9mq+xWxsSM0k7dD7BrCL1kbUVdqF36Sc3XqNesRhO4
- srcbA==
-X-Received: by 2002:a05:6000:2481:b0:439:bdd7:4259 with SMTP id
- ffacd0b85a97d-439da88210cmr21014277f8f.38.1773067864910; 
- Mon, 09 Mar 2026 07:51:04 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2ba66sm23931995f8f.20.2026.03.09.07.51.04
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 07:51:04 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=hjdqw7ViUHZY/mO/JrPBTjkTU8B404aXzmagcFLQRi8=;
+ b=bObaaiCa+/7fp0k38S/aFQC2Ij2PdriMuyLYfdZ10WctVIElDWQBAJBilq+wbtoaqX
+ KzejhCeaf5ka3bjQhs3HBe2oToWbrhd6Ve3K1NaZPTBad4zrY9FdCem+9KhVo1UqNYgV
+ V77PhBnEGH3eHEcWMdJ0ii4cqyhSZJsnpku6iWMJv8lXJLeZ+WPYsvLnXLAb0013CUii
+ jywKeKr2gBPuv45nHAn+gogEXVHsISBIktS7aHlO3z/RkbV2VYnTQq/Hjk0yt9mLladP
+ wcNWW8fNvs6CdJEakhVz2RT8d0yekHA0O1hsJyB4pV8ApPYpjySwE03lr/dnJBWp0c0J
+ JvZA==
+X-Gm-Message-State: AOJu0Yx4U6bNVRfCwbZVwtkPzC5rRcOgmgLUQ6rGiTs660iklQSB2+ap
+ O2yiJQq4cVE1CgtDCxMySuuDyijGUzlw/wrSc0e4ghTQ0XJrJkNvn6y9NQ/Za3lxB1Dt9qW301O
+ Kl2wd5TyYZjMxiWEKtnYKADtKUEpXcl6aPtN4lagpRc6Cg/uAhZQ3cloZvBBMzdw1nw==
+X-Gm-Gg: ATEYQzwrWSOdhFANIrzxB3kFIaOfbYULoUvQI93kSHIOjqGQekDzs0S54CHmdUUJD2E
+ 0nS3wszlgpXJyaPJfD7KO4YRfm8072FwQzFdWMqXNLLQsPM2RSCkbG1ZNVToegwJJ5w/EZeQYW8
+ tQ0SfEJ/2VgOsMd7jq5sBCYdjehJo8eO7i31k34kW6YX78XFBtgoP3ctI/Tl8t5KhECzQLZQlMY
+ kjj5uHMnIEc/x68xmMMRnkuLIKCy8NgCFhL3o8Dxw6roGwrp9ymPXFs3cE4IVyWgSc9l1kxugTK
+ mFDx2G7biSusUfN6Z1mp2E/SmR4NUJJ/tYy44PPYKT6TVFFGeLi8SDhdu3Mps8G19TDcXJnnsVO
+ MK55RMd82Jabwv34q9NwyFiEPg+cacSt47vp4agyNXc3Z+eHupxqe/x0c2L36Wy0M1L92cQ==
+X-Received: by 2002:a05:7300:cd90:b0:2ba:7863:f0a8 with SMTP id
+ 5a478bee46e88-2be4e0d3a1cmr4278243eec.36.1773067728680; 
+ Mon, 09 Mar 2026 07:48:48 -0700 (PDT)
+X-Received: by 2002:a05:7300:cd90:b0:2ba:7863:f0a8 with SMTP id
+ 5a478bee46e88-2be4e0d3a1cmr4278227eec.36.1773067728025; 
+ Mon, 09 Mar 2026 07:48:48 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2be4f82b78esm9322776eec.12.2026.03.09.07.48.46
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 07:48:47 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 07/10] target/i386/cpu: Remove X86CPU::intel_pt_auto_level
- field
-Date: Mon,  9 Mar 2026 15:50:09 +0100
-Message-ID: <20260309145013.44327-8-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260309145013.44327-1-philmd@linaro.org>
-References: <20260309145013.44327-1-philmd@linaro.org>
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH v4 19/35] target/hexagon: Add vmstate representation
+Date: Mon,  9 Mar 2026 07:48:06 -0700
+Message-Id: <20260309144822.877695-20-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
+References: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzMyBTYWx0ZWRfX4f2tr1oYQWtg
+ Vzq8YBJpVzWbVK2WMmdW3cFOf9l9CMUo0zh9XwzejG2RdVybtfUnmFZAhda0fX8shCtXdKDY86v
+ N3Zd2GdwSyZSshDKOq7ZRrfu4O1QGakUKu74lrz6PqK1NwXnKhMhMgkkDBqwJRBKD/W//2lsY9t
+ ToY3xcy+Z+ec7cnDLSUp/7j5X60HmY1ZdeJLXJ5O1e/ueoVoRaGPk7R3XRqBOoUXFRxjvuM5N9r
+ W2TQFL3OhoBGLLO7a5Zz4X+U/9Z7tUjC2VFAN4VaeWwMhcWxJtfe0vwGOaSGjdfRTl0CyNRIBBc
+ Q6s25dSNu10njq4kJc0SIMpNA19McoV6jzwy0ZXR/7PZQZyM/8q2ULVwVL931Nq0g4hVw49Ocxo
+ +7/fn51/yPqU1Ae7YSKlfayBnXPXf7XIJsYoThLsdZip0c5pJDtLnugAEryZZZ0mHHsf02WRk7o
+ wBOV7x8exDv0lnVj79w==
+X-Proofpoint-GUID: 8m0XR6S89EHFFcm_clcxKzYI_2rNB_7v
+X-Proofpoint-ORIG-GUID: 8m0XR6S89EHFFcm_clcxKzYI_2rNB_7v
+X-Authority-Analysis: v=2.4 cv=KNRXzVFo c=1 sm=1 tr=0 ts=69aeddd1 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=zFM9_BfjGYtbIq66ZkUA:9
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_04,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 spamscore=0 bulkscore=0 priorityscore=1501
+ suspectscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090133
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,62 +150,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The X86CPU::intel_pt_auto_level boolean was only set in the
-pc_compat_3_1[] array, via the 'x-intel-pt-auto-level=off'
-property. We removed all machines using that array, let's
-emove that property and all the code around it.
+From: Brian Cain <bcain@quicinc.com>
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-8-philmd@linaro.org>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/i386/cpu.h |  3 ---
- target/i386/cpu.c | 10 +---------
- 2 files changed, 1 insertion(+), 12 deletions(-)
+ target/hexagon/internal.h |  4 ++++
+ target/hexagon/cpu.c      |  3 +++
+ target/hexagon/machine.c  | 32 ++++++++++++++++++++++++++++++++
+ 3 files changed, 39 insertions(+)
+ create mode 100644 target/hexagon/machine.c
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 2b70d56e9b0..5a62aa61579 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2457,9 +2457,6 @@ struct ArchCPU {
-     /* Only advertise TOPOEXT features that AMD defines */
-     bool amd_topoext_features_only;
+diff --git a/target/hexagon/internal.h b/target/hexagon/internal.h
+index 5fc837ae229..cd06ff41d4f 100644
+--- a/target/hexagon/internal.h
++++ b/target/hexagon/internal.h
+@@ -31,4 +31,8 @@ void hexagon_debug(CPUHexagonState *env);
  
--    /* Enable auto level-increase for Intel Processor Trace leave */
--    bool intel_pt_auto_level;
--
-     /* if true fill the top bits of the MTRR_PHYSMASKn variable range */
-     bool fill_mtrr_mask;
+ extern const char * const hexagon_regnames[TOTAL_PER_THREAD_REGS];
  
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c77addd2c25..0a29ff805fa 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -9565,13 +9565,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
++#ifndef CONFIG_USER_ONLY
++extern const VMStateDescription vmstate_hexagon_cpu;
++#endif
++
+ #endif
+diff --git a/target/hexagon/cpu.c b/target/hexagon/cpu.c
+index 6fabfaad6d2..38d605b06ba 100644
+--- a/target/hexagon/cpu.c
++++ b/target/hexagon/cpu.c
+@@ -387,6 +387,9 @@ static void hexagon_cpu_class_init(ObjectClass *c, const void *data)
+     cc->gdb_stop_before_watchpoint = true;
+     cc->gdb_core_xml_file = "hexagon-core.xml";
+     cc->disas_set_info = hexagon_cpu_disas_set_info;
++#ifndef CONFIG_USER_ONLY
++    dc->vmsd = &vmstate_hexagon_cpu;
++#endif
+     cc->tcg_ops = &hexagon_tcg_ops;
+ }
  
-     /* Intel Processor Trace requires CPUID[0x14] */
-     if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT)) {
--        if (cpu->intel_pt_auto_level) {
--            x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
--        } else if (cpu->env.cpuid_min_level < 0x14) {
--            mark_unavailable_features(cpu, FEAT_7_0_EBX,
--                CPUID_7_0_EBX_INTEL_PT,
--                "Intel PT need CPUID leaf 0x14, please set by \"-cpu ...,intel-pt=on,min-level=0x14\"");
--        }
-+        x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
-     }
- 
-     /*
-@@ -10589,8 +10583,6 @@ static const Property x86_cpu_properties[] = {
-      * to the specific Windows version being used."
-      */
-     DEFINE_PROP_INT32("x-hv-max-vps", X86CPU, hv_max_vps, -1),
--    DEFINE_PROP_BOOL("x-intel-pt-auto-level", X86CPU, intel_pt_auto_level,
--                     true),
-     DEFINE_PROP_BOOL("x-l1-cache-per-thread", X86CPU, l1_cache_per_core, true),
-     DEFINE_PROP_BOOL("x-force-cpuid-0x1f", X86CPU, force_cpuid_0x1f, false),
- 
+diff --git a/target/hexagon/machine.c b/target/hexagon/machine.c
+new file mode 100644
+index 00000000000..d6dcd07dd4a
+--- /dev/null
++++ b/target/hexagon/machine.c
+@@ -0,0 +1,32 @@
++/*
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "migration/cpu.h"
++#include "cpu.h"
++
++const VMStateDescription vmstate_hexagon_cpu = {
++    .name = "cpu",
++    .version_id = 1,
++    .minimum_version_id = 1,
++    .fields = (VMStateField[]) {
++        VMSTATE_UINT32_ARRAY(env.gpr, HexagonCPU, TOTAL_PER_THREAD_REGS),
++        VMSTATE_UINT32_ARRAY(env.pred, HexagonCPU, NUM_PREGS),
++        VMSTATE_UINT32_ARRAY(env.t_sreg, HexagonCPU, NUM_SREGS),
++        VMSTATE_UINT32_ARRAY(env.greg, HexagonCPU, NUM_GREGS),
++        VMSTATE_UINT32(env.next_PC, HexagonCPU),
++        VMSTATE_UINT32(env.tlb_lock_state, HexagonCPU),
++        VMSTATE_UINT32(env.k0_lock_state, HexagonCPU),
++        VMSTATE_UINT32(env.tlb_lock_count, HexagonCPU),
++        VMSTATE_UINT32(env.k0_lock_count, HexagonCPU),
++        VMSTATE_UINT32(env.threadId, HexagonCPU),
++        VMSTATE_UINT32(env.cause_code, HexagonCPU),
++        VMSTATE_UINT32(env.wait_next_pc, HexagonCPU),
++        VMSTATE_UINT64(env.t_cycle_count, HexagonCPU),
++
++        VMSTATE_END_OF_LIST()
++    },
++};
 -- 
-2.53.0
+2.34.1
 
 
