@@ -4,60 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7A0DF4180E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:50:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0559CF4180E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:54:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzdne-0007Sh-8S; Mon, 09 Mar 2026 12:49:46 -0400
+	id 1vzdrh-0000fc-VI; Mon, 09 Mar 2026 12:53:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzdnb-0007OW-Tq
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:49:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzdrf-0000eh-Vz
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:53:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzdna-0001RD-FU
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:49:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzdrd-0001uf-TR
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:53:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773074981;
+ s=mimecast20190719; t=1773075233;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ZgFTkEJZty0NPfBOdEbUkMbydDWSqofA66ut4aEqBU4=;
- b=dxl1qn3Zyh0ZNq+UDyxCJNzGsqcxezGXsSI2dH9DeDvHlpKzYcC/RSsX2tdisQ5J/Pk5dq
- zzR2/JJPWmkNGJJz4eI46KMARkbxpSLf0N9gDFlWeDfKluYf8z8EaHbPjsbs7aJpTy+5YO
- /ZzcKpHm3SIsyWQ6BUCK5/5S/OV///Q=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=XmJ19BfSOO/S1s/MM4wWcVCtTVYWQVmU/kzWHwJWKQM=;
+ b=ALOJkgff7BXYiEU+iDYhAqrhvjTnFGanBf8F3HYB+L/+p8RmRhPeZlwryOc/cF7VSXSQa7
+ abIKu/Rjzr1f6ef+82oUKxHLFIKGYng/2c7J/6C2Ru0KXv1t2k/qlzETSuyc2x3R7WtHNV
+ jRfnDf3LwN/Cd40KIVWaZOp0LNRsd5I=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-689-UNSxuFDhPlCOUSQkTDneww-1; Mon,
- 09 Mar 2026 12:49:39 -0400
-X-MC-Unique: UNSxuFDhPlCOUSQkTDneww-1
-X-Mimecast-MFC-AGG-ID: UNSxuFDhPlCOUSQkTDneww_1773074977
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-644-Wo1DxiuIPlu_SusCr4Mqpg-1; Mon,
+ 09 Mar 2026 12:53:48 -0400
+X-MC-Unique: Wo1DxiuIPlu_SusCr4Mqpg-1
+X-Mimecast-MFC-AGG-ID: Wo1DxiuIPlu_SusCr4Mqpg_1773075226
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 46A6B1800464; Mon,  9 Mar 2026 16:49:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 96AAD195605A; Mon,  9 Mar 2026 16:53:46 +0000 (UTC)
 Received: from [10.44.34.113] (unknown [10.44.34.113])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 23D411955D87; Mon,  9 Mar 2026 16:49:32 +0000 (UTC)
-Message-ID: <e844e819-9000-47c5-bbc1-b163e7255870@redhat.com>
-Date: Mon, 9 Mar 2026 17:49:30 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id F3404300019F; Mon,  9 Mar 2026 16:53:42 +0000 (UTC)
+Message-ID: <bd10a0b8-2116-4785-9069-a0f3c622c0f9@redhat.com>
+Date: Mon, 9 Mar 2026 17:53:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v5 15/15] tests/qtest: Add s390x PCI boot test to
  cdrom-test.c
+From: Thomas Huth <thuth@redhat.com>
 To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
  mst@redhat.com
 Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
  mjrosato@linux.ibm.com, zycai@linux.ibm.com
 References: <20260309003601.242634-1-jrossi@linux.ibm.com>
  <20260309003601.242634-16-jrossi@linux.ibm.com>
-From: Thomas Huth <thuth@redhat.com>
+ <e844e819-9000-47c5-bbc1-b163e7255870@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -101,18 +102,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260309003601.242634-16-jrossi@linux.ibm.com>
+In-Reply-To: <e844e819-9000-47c5-bbc1-b163e7255870@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -130,41 +131,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09/03/2026 01.36, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
+On 09/03/2026 17.49, Thomas Huth wrote:
+> On 09/03/2026 01.36, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> Add a rudimentary test for s390x IPL to verify that a guest may boot using
+>> virtio-blk-pci device.
+>>
+>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>> ---
+>>   tests/qtest/cdrom-test.c | 7 +++++++
+>>   1 file changed, 7 insertions(+)
+>>
+>> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+>> index 56e2d283a9..a65854d2bc 100644
+>> --- a/tests/qtest/cdrom-test.c
+>> +++ b/tests/qtest/cdrom-test.c
+>> @@ -246,6 +246,13 @@ static void add_s390x_tests(void)
+>>                               "-drive if=none,id=d2,media=cdrom,file=",
+>>                               test_cdboot);
+>>       }
+>> +    if (qtest_has_device("virtio-blk-pci")) {
+>> +        qtest_add_data_func("cdrom/boot/pci-bus-with-bootindex",
+>> +                            "-device virtio-scsi -device virtio-serial "
+>> +                            "-device virtio-blk-pci,drive=d1,bootindex=1 "
+>> +                            "-drive if=none,id=d1,media=cdrom,file=",
+>> +                            test_cdboot);
+>> +    }
+>>   }
 > 
-> Add a rudimentary test for s390x IPL to verify that a guest may boot using
-> virtio-blk-pci device.
+>   Hi Jared!
 > 
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->   tests/qtest/cdrom-test.c | 7 +++++++
->   1 file changed, 7 insertions(+)
-> 
-> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
-> index 56e2d283a9..a65854d2bc 100644
-> --- a/tests/qtest/cdrom-test.c
-> +++ b/tests/qtest/cdrom-test.c
-> @@ -246,6 +246,13 @@ static void add_s390x_tests(void)
->                               "-drive if=none,id=d2,media=cdrom,file=",
->                               test_cdboot);
->       }
-> +    if (qtest_has_device("virtio-blk-pci")) {
-> +        qtest_add_data_func("cdrom/boot/pci-bus-with-bootindex",
-> +                            "-device virtio-scsi -device virtio-serial "
-> +                            "-device virtio-blk-pci,drive=d1,bootindex=1 "
-> +                            "-drive if=none,id=d1,media=cdrom,file=",
-> +                            test_cdboot);
-> +    }
->   }
+> While testing your series, it seems like the cdrom-test is now triggering a 
+> segmentation fault in QEMU here ... not sure whether I did something wrong 
+> on my side while building the bios, or whether there is a bug somewhere? 
+> Does this qtest work for you with this v5 series?
 
-  Hi Jared!
-
-While testing your series, it seems like the cdrom-test is now triggering a 
-segmentation fault in QEMU here ... not sure whether I did something wrong 
-on my side while building the bios, or whether there is a bug somewhere? 
-Does this qtest work for you with this v5 series?
+Ah, it's working on my s390x LPAR, but it's failing on my x86 laptop ... 
+maybe there is some endianness issue left somewhere?
 
   Thomas
 
