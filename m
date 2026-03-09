@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0883EFCD6E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:24:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D146DEFCD6E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:26:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzWqR-0006cy-9E; Mon, 09 Mar 2026 05:24:11 -0400
+	id 1vzWs1-0007xy-LV; Mon, 09 Mar 2026 05:25:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWqQ-0006cq-7U
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:24:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWrz-0007xC-D1
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:25:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWqO-0005EB-IQ
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:24:09 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWrx-0005bv-Vd
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:25:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773048247;
+ s=mimecast20190719; t=1773048345;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=BJtCi8dD46ynv7EgeUGDIMQfjLbEBy1KC+iwb3h1Ssc=;
- b=h47qZ5YX3mJre56+vqmVgvyYCtxvyZsuxYf7Z5JfJBHjZoBViNHrHvXc7zTP0gImCkxBc/
- b3+5+ixEkvHLn+H5cr0RL2nV4hWbBySXyINvoggYIgN0eWW2S7DeprevU+18tZn85ofsTM
- Y0qQTyom5gHtBVCyeGBJaF2bNbbnLTU=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=CzCGq2xcSDX8Dd1F2BAGydt2sIQ8V9jiX/19wnCdd+A=;
+ b=cBGTCfQ4eZdvHDIbvma2FRDVl5TreP9b8Q1Ub9ItDp1oVc787isMgTs0hKqWjh43SB4AVN
+ 9VRih//TG/zOiMpMBOGnHAnwE5D+C9ElqSohzFOxWt7QmmE0A9vVAXErsC1XVFHzNBfaCc
+ bhE7y37kPxXJKGTUAY8N5fgIi+Y9it4=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-88-lKvu4FnSNpGi_rEZPyGG3w-1; Mon,
- 09 Mar 2026 05:24:04 -0400
-X-MC-Unique: lKvu4FnSNpGi_rEZPyGG3w-1
-X-Mimecast-MFC-AGG-ID: lKvu4FnSNpGi_rEZPyGG3w_1773048243
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-83-aD25PDATP0WsBkWOXzVuJg-1; Mon,
+ 09 Mar 2026 05:25:42 -0400
+X-MC-Unique: aD25PDATP0WsBkWOXzVuJg-1
+X-Mimecast-MFC-AGG-ID: aD25PDATP0WsBkWOXzVuJg_1773048340
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1B0941800281; Mon,  9 Mar 2026 09:24:03 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1B2F195608D; Mon,  9 Mar 2026 09:25:40 +0000 (UTC)
 Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7426A3002D0D; Mon,  9 Mar 2026 09:23:57 +0000 (UTC)
-Message-ID: <d5701dd1-3f1e-43fa-9a6b-30c37fb467aa@redhat.com>
-Date: Mon, 9 Mar 2026 10:23:55 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 47F931955D71; Mon,  9 Mar 2026 09:25:36 +0000 (UTC)
+Message-ID: <f1527893-99a3-4715-a057-71f6e888ee10@redhat.com>
+Date: Mon, 9 Mar 2026 10:25:34 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 5/6] hw/virtio: Remove VirtIOBalloon::qemu_4_0_config_size
- field
+Subject: Re: [PATCH 6/6] hw/rtc/pl031: : Remove
+ PL031State::migrate_tick_offset field
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- David Hildenbrand <david@kernel.org>
+ Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org
 References: <20260307154202.86309-1-philmd@linaro.org>
- <20260307154202.86309-6-philmd@linaro.org>
+ <20260307154202.86309-7-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -104,18 +104,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307154202.86309-6-philmd@linaro.org>
+In-Reply-To: <20260307154202.86309-7-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -134,16 +134,17 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.42, Philippe Mathieu-Daudé wrote:
-> The VirtIOBalloon::qemu_4_0_config_size boolean was only set in
-> the hw_compat_4_0[] array, via the 'qemu-4-0-config-size=true'
+> The PL031State::migrate_tick_offset boolean was only set in
+> the hw_compat_4_0[] array, via the 'migrate-tick-offset=false'
 > property.  We removed all machines using that array, lets remove
-> that property.
+> that property, along with the pl031_properties[] array which is
+> now empty.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/hw/virtio/virtio-balloon.h | 1 -
->   hw/virtio/virtio-balloon.c         | 5 -----
->   2 files changed, 6 deletions(-)
+>   include/hw/rtc/pl031.h |  1 -
+>   hw/rtc/pl031.c         | 22 ----------------------
+>   2 files changed, 23 deletions(-)
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
