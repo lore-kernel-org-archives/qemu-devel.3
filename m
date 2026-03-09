@@ -4,102 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4C1DF3C24C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:10:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 896A4F3C24A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:10:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzaLT-000726-Kd; Mon, 09 Mar 2026 09:08:29 -0400
+	id 1vzaLu-0007cd-B1; Mon, 09 Mar 2026 09:08:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzaLM-0006uD-4v
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:20 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzaLl-0007Mg-K7
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:46 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzaLK-0008Aw-CW
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:19 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64ae222d87dso10496366d50.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 06:08:17 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773061696; cv=none;
- d=google.com; s=arc-20240605;
- b=SlvjGiDjvwm6WOZSBj/N73byDciIFI8Qlc66OV5ZsjttrOKW/kb8K2Aie2F5TdnLev
- w//4MMvOLcPinCbuDr/CKOdW4/Rla7wmdijzJqqeMlEPEvDbhh3SU3VhqEWKFD6GeVvM
- vRAFWCs6lajcLCOK+N9oC1iIwv+tOrmizo1C+Ct0kZzly/DRuKDXswJTcMmgkS+Srx/7
- aTd5EQOLAIQyUbDUqQzkMa7kkAVoIMi604NQGbn+CT0ESvu7b2mwTCEYSDfr2aFtRg20
- 2SQfn5y4UeCUDY+R5KC7Ihje3Jq/KW986nLAx7fBAzv8rxfqMKZWiygMjVme4WgJmTm2
- Z+kQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GduVTXdiZ1S23u3Lrbb8oIM41C4r9WXmvvMVN/hRaVo=;
- fh=KIPl86UKwYdKsAWkYeHBwwla3dnQZBVl4urYHK8biVk=;
- b=JT83V7Afx68uiGz5xpRlz58Y+5y89oB58U9qFLWOGzAiuQcnVri5lgisiwhM42Pr+1
- +xoGR4Zm+2Ch6LQiqEzflS+Osbj7bLLAVq+SjavmRQ5gpjIt9114KJUANwvYcL8+bFhK
- D6LRMA9DJb3NkdDWPzdVRPFi00XmCa749JYIU+ShZpNx0fUAIHHJNF4DFl5Muo6L8vyR
- xoWwxYfYxq7Rli6nFXxqBfaf/TP+Ykai8FruekIkytTgiViL6rvWSf9XCdycxcvzyUBn
- hiU3JUz4vJnzeyb5x8kv+ZnS0wMIU8HgAxYIHaJQOxSyN1hq55mRDbyJcVrWXkfpikng
- HvUg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773061696; x=1773666496; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GduVTXdiZ1S23u3Lrbb8oIM41C4r9WXmvvMVN/hRaVo=;
- b=psdDMzKQHKuvb56OXJ+1WUh09jh8y51KH63F6helOwuxVoZ7hBnx4dFdlfx0tsne5s
- 2fKxC2Q3EaFJNkYmTdePdES4YxWlg6BnXA262PBV4ukvprknyViD5yYAZuWvhc7u+HrE
- DWxSyPEBI1tsYNyBFrcIOCXfBUJxqFccYnHDo6bgfCGDhtLsdUc232iKRyiuyicLq/xT
- M3RRsHrB6Gwb0q0s+R2e+USakbMNW0IOKcXCiP02OtjSXYswR6qubwfq1ZfrSXWgyF9i
- 1ZJkrdALuq+2Pepk3lHIMpZ6L7bdwx3jfbB/O2SOtesbg9gRXYqFHwyB4FbENjgIw8Z6
- sxwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773061696; x=1773666496;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GduVTXdiZ1S23u3Lrbb8oIM41C4r9WXmvvMVN/hRaVo=;
- b=eT3dtKAIcBxPy8Av8y1TFPv29zaDWbiXEUug/Pm/8BG09E72pU1KAYUuAdGKXfa/oR
- +2AD46ESN6xXTmWxGoP4vNHOKZBuqInWLh5vlxGa+/oS+zF/hrT9H0nFQu6lKYRre+J2
- WrqBELpxKKdPdGdSU7ND8q5RydrMldv8w9xMW12whIrDMfVTTiYt2i2eB2FMftImOZr3
- J+ZA02ljEltdLcIAw1JP6+nhV1/qUgsrR56f5cNRjhqv6XStryRI3oHTXy3TjmyeP4qP
- 3E2Y5YWObZym5S+0ExiE6HQT7SYRR8HvqPeGJD/zMUciafDtHhaKm3zx/dtuvBxEvUJv
- 03cw==
-X-Gm-Message-State: AOJu0YxheT1rf8td6+ylVqvxtr0F1GnFMvJHV+ZoIxR41rgFcevND7+K
- F0pciOV+xfjIMOONQeDDDA4SIOlZfIIT83aRJEtKHoZM2RnrOflH8vbRO3csjAHf7R1ZQKQl/Tb
- sNAhGjWmYCOauPP1pvwDQoAXBdnmS6Qs8/KZuWcMbew==
-X-Gm-Gg: ATEYQzzLYPQxaQC4KXXsyMhkr1fpu9h1slAHREj/i7fOPiKxWZItnaTWveBBXBXoqHP
- VW1QXy+qG4ZiXOfHwKTGWTyJXgfNYHq/UFEp6K8rF9DG43oM1P2dLvFfeCpMM3n3UPR6CmKtWIB
- d6Q3NK+PpB19jbF/9kayD6P5QcfUWFMnNzO1vbE3H5FL9cK5zztLNDFudkx5MBxQ29CkMH7pvd1
- 0fW04GkPr7m9W+qQPnJTU33ksNwcFwaZqDhxh7uGsYxcSvnrNGgKBZ3zeH8GSTi1XJKmjPKwRhY
- DNbuhmrMhxX5iAhhEaedvdFrohwSL9WLIP9EJEd9f7tSAGt+Qml2jiB27fQWRfmDRe4=
-X-Received: by 2002:a05:690e:444d:b0:64a:dc4e:780a with SMTP id
- 956f58d0204a3-64d1429b2d3mr7732636d50.44.1773061696259; Mon, 09 Mar 2026
- 06:08:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzaLk-0008HG-1d
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:45 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id BF88C5BE07;
+ Mon,  9 Mar 2026 13:08:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773061688; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zY4vhXW1YV+fVtNWpUYRbmkk4HN9uMjW7kAYijFlluA=;
+ b=sbPmD8pZcNERO2+5royTX0eEXK3bCmIpdbtSiShm8+jqqEKig0UTbtOpnSP2YkIRqige0C
+ ji27fSoeY+9QJ6mA2Tn1V303f+cjsCHA6vlRSDaoaq9ixBhjYOxqcksG8R6lvQdgQaW3Gw
+ 5ByQmSs9Te/VQQRU7DAg05jz4o8Gumk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773061688;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zY4vhXW1YV+fVtNWpUYRbmkk4HN9uMjW7kAYijFlluA=;
+ b=oZiBIvIIWnG9JI1BvJMdvsdf+7WGw51R4WJxlXRRxzVsduBfNjsHGtYrKqvTt7K15f6MS9
+ RN75oq2XRyb5sDBA==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=sbPmD8pZ;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=oZiBIvII
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773061688; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zY4vhXW1YV+fVtNWpUYRbmkk4HN9uMjW7kAYijFlluA=;
+ b=sbPmD8pZcNERO2+5royTX0eEXK3bCmIpdbtSiShm8+jqqEKig0UTbtOpnSP2YkIRqige0C
+ ji27fSoeY+9QJ6mA2Tn1V303f+cjsCHA6vlRSDaoaq9ixBhjYOxqcksG8R6lvQdgQaW3Gw
+ 5ByQmSs9Te/VQQRU7DAg05jz4o8Gumk=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773061688;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zY4vhXW1YV+fVtNWpUYRbmkk4HN9uMjW7kAYijFlluA=;
+ b=oZiBIvIIWnG9JI1BvJMdvsdf+7WGw51R4WJxlXRRxzVsduBfNjsHGtYrKqvTt7K15f6MS9
+ RN75oq2XRyb5sDBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 918E33EEF2;
+ Mon,  9 Mar 2026 13:08:07 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id yI+rFTfGrmlJcAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 09 Mar 2026 13:08:07 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>,
+	Lukas Straub <lukasstraub2@web.de>
+Subject: [PULL 20/22] colo: Use file lock in primary_vm_do_failover()
+Date: Mon,  9 Mar 2026 10:07:25 -0300
+Message-ID: <20260309130730.20526-21-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260309130730.20526-1-farosas@suse.de>
+References: <20260309130730.20526-1-farosas@suse.de>
 MIME-Version: 1.0
-References: <CAFEAcA8FhiJZy6NqRUVnWQ+L6=fE8Ssqs9FEW2eO2eAVTrL=_w@mail.gmail.com>
- <aa6_x250FtIdy1iw@redhat.com>
-In-Reply-To: <aa6_x250FtIdy1iw@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Mar 2026 13:08:04 +0000
-X-Gm-Features: AaiRm53zKdP2UdKymyj0HrF10w6snPkiaRHgpuZSTIYTqEmV3X3Mm_3yZDGncDs
-Message-ID: <CAFEAcA_odsUhgQiucTRiAmTp9y1rnEwBK97JQ=2p_UORb9e4vQ@mail.gmail.com>
-Subject: Re: running a single functional test: where do the logs go?
-To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: QEMU Developers <qemu-devel@nongnu.org>, Thomas Huth <thuth@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Content-Transfer-Encoding: 8bit
+X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ R_MISSING_CHARSET(0.50)[];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ MX_GOOD(-0.01)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
+ FREEMAIL_CC(0.00)[redhat.com,web.de]; RCVD_TLS_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ FROM_HAS_DN(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
+ DKIM_TRACE(0.00)[suse.de:+]; RCPT_COUNT_THREE(0.00)[3];
+ FREEMAIL_ENVRCPT(0.00)[web.de]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: BF88C5BE07
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -116,17 +130,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Mar 2026 at 12:40, Daniel P. Berrang=C3=A9 <berrange@redhat.com> =
-wrote:
->
-> On Mon, Mar 09, 2026 at 11:55:58AM +0000, Peter Maydell wrote:
-> > The functional test documentation suggests running a single test
-> > with the build/run script. But if you do this where do the logfiles go?
+From: Lukas Straub <lukasstraub2@web.de>
 
-> Meanwhile your logs are likely in build/tests/functional/... instead
-> of build/san/tests/functional.
+Take the file lock since s->to_dst_file and s->rp_state.from_dst_file
+may be changed in the migration thread.
 
-Thanks, yes, that's exactly where they ended up.
+Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260302-colo_unit_test_multifd-v11-19-d653fb3b1d80@web.de
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/colo.c | 12 +++++++-----
+ 1 file changed, 7 insertions(+), 5 deletions(-)
 
--- PMM
+diff --git a/migration/colo.c b/migration/colo.c
+index ce02c71d88..dc47d03874 100644
+--- a/migration/colo.c
++++ b/migration/colo.c
+@@ -173,11 +173,13 @@ static void primary_vm_do_failover(void)
+      * The s->rp_state.from_dst_file and s->to_dst_file may use the
+      * same fd, but we still shutdown the fd for twice, it is harmless.
+      */
+-    if (s->to_dst_file) {
+-        qemu_file_shutdown(s->to_dst_file);
+-    }
+-    if (s->rp_state.from_dst_file) {
+-        qemu_file_shutdown(s->rp_state.from_dst_file);
++    WITH_QEMU_LOCK_GUARD(&s->qemu_file_lock) {
++        if (s->to_dst_file) {
++            qemu_file_shutdown(s->to_dst_file);
++        }
++        if (s->rp_state.from_dst_file) {
++            qemu_file_shutdown(s->rp_state.from_dst_file);
++        }
+     }
+ 
+     old_state = failover_set_state(FAILOVER_STATUS_ACTIVE,
+-- 
+2.51.0
+
 
