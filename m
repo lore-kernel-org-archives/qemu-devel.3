@@ -4,105 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C34F4181C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93562F4181C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:12:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vze8y-0003f0-Ie; Mon, 09 Mar 2026 13:11:48 -0400
+	id 1vze9A-0003nu-Bm; Mon, 09 Mar 2026 13:12:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vze8w-0003eH-RT
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:11:47 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vze8u-0004jv-Cr
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:11:46 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-829865a8471so4568014b3a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:11:44 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773076303; cv=none;
- d=google.com; s=arc-20240605;
- b=aWt4IShYCLv96Za6G8xjjQv3bqhbdwJpzHlaXTVOTfego7yGiCf/JI3iWkt053IBaX
- RsbHazEunK+B21vK9N7smyImkzHaZKhhCqGE+jDBUjur9OuoauSOPTsifbc3PQ3wJ5X1
- 13KZ7wnsoLxJl3D7tC9ig6w/x5qPNE8YhrCwgE5kYhW6E29lszcgnyRxpjQrDHMMTHpl
- Dkm963138c587AUeq4myBBSOh9By14dH7BAghNndrzjLaXsQogZQZ8wRlMMZtkaPRwYN
- ag2CidM+sEMjJfSpjSO8dDxa1MU2VFrTsk3yFHcIFATEB2VYkApT6xGyNeg0YX8ynlqE
- hV8g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=0Z9hkZO+uCj/OzawKgOIoDxZvpUaRj7ek6MtGK8Yr8s=;
- fh=yiUwoBOEypY2fM3mHrz5u4mbHkIidyv/b4UPGcEpz+k=;
- b=dJEuy66DDiRIzgHVzhCNJJc9908u2D1r7Zem5R/5AAGcr9wT9gP7grecQWNqFam1Mf
- SfUYis0WDUWbccVqLb5TgRl3lM4LHYfbYq4aRmaczcxYhuG4Q6HfMpA2OdK2rujphOiK
- KOkjknevlTAwv1mfQmCrr5apk8GrfuKOKEZy/VBwe0W2x1Cz5mFb0RYatvypKEGJkw5Y
- 7Gm6cUJm0TYtx2OCt471wn24XyC5A2ILjesqd3hB+G33iQ/KGBGTdH75JCwe5Rqxo1R4
- Qo6Hh2jiIrf9nL2R22xH6ySIRg24b2clZkVEu3uVQ8oWN4kjTnYK3erjgyZSbZrpqZsl
- ztaA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773076303; x=1773681103; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=0Z9hkZO+uCj/OzawKgOIoDxZvpUaRj7ek6MtGK8Yr8s=;
- b=HRsvybORSZqNw5qCge0u6/rb5AHoWCF7iQvuBftoyLiPSqgsc2Q5V4vso75Ph006+E
- wVWpTdlIRpU0cJ0972wpD+rRBZvywojKNb/nOkZOgbbysU0nbrwx9DX4QgyDzeQ5A9zX
- 7MZQk1XCz4Uyvlnbf2w7xrjm63mB/QdIBY9qZcpk30kPxcqP7LEQlm68ltxJaD8NGYh0
- 9MhIc1vETojzunOSxAgblp9CKIBmR5+9Cu0dnnO9YuDL+kQVH9yBcG4HCMa7JNMxfOyD
- N0dZj8n+pUcyVa+uAhf43Ih86ypJGy4XjP+FdiIi93EkbcJaRl+Yagnu6UJ2s7pgAUuZ
- rOIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773076303; x=1773681103;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0Z9hkZO+uCj/OzawKgOIoDxZvpUaRj7ek6MtGK8Yr8s=;
- b=IiE9rn8flhPVuVqpiamsZXv5qFUfGoyNeF80Qal+s3isRj5q+agQ5vN1xENUC8BNS3
- 93RK9iQgZ5K0qOlva/oQAokzvBphcbkkOgOwwDCBRuMT7do2SEtvck3nxVbxkfhc4B8R
- uMoMIwg4CtCnDSRsv7SFOarvIrjHOSk0LtQ00+ow/UriHUXP1xL2t3z+3OxvoprMUqxi
- LMsjjZiXnxBrC1ckji+MP6zxM9OwRznhZhMUKR6zCZcsoWx4pjH4dYix2j26C3ig8ocz
- H0j4DFdx40yzWa7Dbmtt8kC5cy2B+WF9lWqpKZxEn8TwWWuONY5oMUHeimRmq2ICw97d
- M62w==
-X-Gm-Message-State: AOJu0Yx87lWTHl4+ln5rXKAKu1nT25++vWPoPCNxDgden6KgH+gGXTLB
- X6SbnppSUhClXJvbwx9sH3M4AquDKWTOcyJ7A8V494NLr50gwB37X5ecoe6vsP7vQd4ptgtpS3B
- KFBigeDRCL80R+VaPQ02YvAwnCRdT2aA=
-X-Gm-Gg: ATEYQzyw+LLqmVh3glL7bn+1tnBE60xKFVhemYzlIuCAaQA/wlkVXj9jBoePDtjuXLx
- iENbU97J129x/XeaSaa7q58UW2aaTNM9dolRCWHmsG5lpr0zpB/y4QCaCxsQhqPsH0HyqAV4cV+
- SyyQTM4sHNAbXQeQ1dRPhbfVhotjZfYPjYGkGeL6HuJ4gKVUAMZ82rH2fzAo0p3i2bnSVQhzIve
- drmd5hvbIW6V63Kohd2/TORqqAvxxJ+bVNcOlQPd5tyI/v31eJo9orontsTWMos9/vo79OWLjD8
- VUERo3QygUFnJn5AubsDz/yQdJGZRLshJAcbLyWhNER2HxgC
-X-Received: by 2002:a05:6a00:1827:b0:829:7dfd:1c15 with SMTP id
- d2e1a72fcca58-829a30a633cmr10767203b3a.63.1773076302674; Mon, 09 Mar 2026
- 10:11:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vze98-0003mh-5m
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:11:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vze96-0004kj-Mg
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:11:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773076315;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=PKFCrP++l1HR5YXDtxOZS0Z3aIaBUbAMSsmAuLimiak=;
+ b=Demgt6rTlylu1bnHJT0aTJOB+N8AHrcz9JzwK0o2IrgCf2e51aXUFiQzizW6ApuLfzrzjm
+ 5HfkTt1tIZB/A2VtctckX6Hr7qCztr6cZkUuh5pvxzAY/YwIbqyf+N1QOgyW9ZDW+ys7wr
+ Y8nA0CfRQ11mwuyGCsDVKxPCSkmn/zc=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-hGayAOC-MeGQLtceCWn-oQ-1; Mon,
+ 09 Mar 2026 13:11:52 -0400
+X-MC-Unique: hGayAOC-MeGQLtceCWn-oQ-1
+X-Mimecast-MFC-AGG-ID: hGayAOC-MeGQLtceCWn-oQ_1773076310
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 809281956053; Mon,  9 Mar 2026 17:11:50 +0000 (UTC)
+Received: from [10.44.34.113] (unknown [10.44.34.113])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 28DD618005AE; Mon,  9 Mar 2026 17:11:46 +0000 (UTC)
+Message-ID: <cd84ed2d-9ed3-4a0f-8c1c-0092eca84cf8@redhat.com>
+Date: Mon, 9 Mar 2026 18:11:44 +0100
 MIME-Version: 1.0
-References: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
- <20260309144822.877695-7-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260309144822.877695-7-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 9 Mar 2026 11:11:29 -0600
-X-Gm-Features: AaiRm53QnjMWYI-rpBWs0KekFLozS7m31z4XVd-upBKRvjdSV3jgEa8uXEsopqg
-Message-ID: <CAATN3NqyDZN_YJMf96O7cR8wQZXVwiYD9EOM4r4L0xuXmy_VPw@mail.gmail.com>
-Subject: Re: [PATCH v4 06/35] target/hexagon: Suppress unused-variable
- warnings for sysemu source regs
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
- anjo@rev.ng
-Content-Type: multipart/alternative; boundary="0000000000002e4167064c9a7f0a"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 15/15] tests/qtest: Add s390x PCI boot test to
+ cdrom-test.c
+From: Thomas Huth <thuth@redhat.com>
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ mjrosato@linux.ibm.com, zycai@linux.ibm.com
+References: <20260309003601.242634-1-jrossi@linux.ibm.com>
+ <20260309003601.242634-16-jrossi@linux.ibm.com>
+ <e844e819-9000-47c5-bbc1-b163e7255870@redhat.com>
+ <bd10a0b8-2116-4785-9069-a0f3c622c0f9@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <bd10a0b8-2116-4785-9069-a0f3c622c0f9@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,67 +132,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002e4167064c9a7f0a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 09/03/2026 17.53, Thomas Huth wrote:
+> On 09/03/2026 17.49, Thomas Huth wrote:
+>> On 09/03/2026 01.36, jrossi@linux.ibm.com wrote:
+>>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>>
+>>> Add a rudimentary test for s390x IPL to verify that a guest may boot using
+>>> virtio-blk-pci device.
+>>>
+>>> Reviewed-by: Thomas Huth <thuth@redhat.com>
+>>> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+>>> ---
+>>>   tests/qtest/cdrom-test.c | 7 +++++++
+>>>   1 file changed, 7 insertions(+)
+>>>
+>>> diff --git a/tests/qtest/cdrom-test.c b/tests/qtest/cdrom-test.c
+>>> index 56e2d283a9..a65854d2bc 100644
+>>> --- a/tests/qtest/cdrom-test.c
+>>> +++ b/tests/qtest/cdrom-test.c
+>>> @@ -246,6 +246,13 @@ static void add_s390x_tests(void)
+>>>                               "-drive if=none,id=d2,media=cdrom,file=",
+>>>                               test_cdboot);
+>>>       }
+>>> +    if (qtest_has_device("virtio-blk-pci")) {
+>>> +        qtest_add_data_func("cdrom/boot/pci-bus-with-bootindex",
+>>> +                            "-device virtio-scsi -device virtio-serial "
+>>> +                            "-device virtio-blk-pci,drive=d1,bootindex=1 "
+>>> +                            "-drive if=none,id=d1,media=cdrom,file=",
+>>> +                            test_cdboot);
+>>> +    }
+>>>   }
+>>
+>>   Hi Jared!
+>>
+>> While testing your series, it seems like the cdrom-test is now triggering 
+>> a segmentation fault in QEMU here ... not sure whether I did something 
+>> wrong on my side while building the bios, or whether there is a bug 
+>> somewhere? Does this qtest work for you with this v5 series?
+> 
+> Ah, it's working on my s390x LPAR, but it's failing on my x86 laptop ... 
+> maybe there is some endianness issue left somewhere?
 
-On Mon, Mar 9, 2026 at 8:48=E2=80=AFAM Brian Cain <brian.cain@oss.qualcomm.=
-com>
-wrote:
+Yes, it's a missing swap of endianness data, this patch fixes it:
 
-> The analyze_read() methods on GuestSource, GuestPairSource,
-> SystemSource, and SystemPairSource were no-ops because these
-> source registers do not need read-tracking in the analyze phase.
-> However, gen_analyze_funcs.py unconditionally declares the
-> register-number variable (e.g. GsN) via decl_reg_num() for all
-> registers that are read or written.  When building with
-> hexagon-softmmu, the generated analyze function bodies are
-> compiled (outside the #ifndef CONFIG_USER_ONLY guard), and the
-> declared-but-unreferenced register-number variable triggers
-> -Werror=3Dunused-variable under both gcc and clang.
->
-> Emit a (void) cast on the register number from analyze_read() to
-> suppress the warning.
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/hex_common.py | 16 ++++++++++++----
->  1 file changed, 12 insertions(+), 4 deletions(-)
->
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -524,9 +524,9 @@ static bool s390_build_iplb(DeviceState *dev_st, 
+IplParameterBlock *iplb)
 
-Better to declare GsN with G_GNUC_UNUSED.
+          switch (devtype) {
+          case PCI_DEVTYPE_VIRTIO:
+-            iplb->len = S390_IPLB_MIN_PCI_LEN;
++            iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
+              iplb->pbt = S390_IPL_TYPE_PCI;
+-            iplb->pci.fid = pbdev->fid;
++            iplb->pci.fid = cpu_to_be32(pbdev->fid);
+              break;
+          default:
+              return false;
 
---0000000000002e4167064c9a7f0a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+If you agree, I can squash this into patch 13.
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 9, =
-2026 at 8:48=E2=80=AFAM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qua=
-lcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">The analyze_read() methods on GuestSo=
-urce, GuestPairSource,<br>
-SystemSource, and SystemPairSource were no-ops because these<br>
-source registers do not need read-tracking in the analyze phase.<br>
-However, gen_analyze_funcs.py unconditionally declares the<br>
-register-number variable (e.g. GsN) via decl_reg_num() for all<br>
-registers that are read or written.=C2=A0 When building with<br>
-hexagon-softmmu, the generated analyze function bodies are<br>
-compiled (outside the #ifndef CONFIG_USER_ONLY guard), and the<br>
-declared-but-unreferenced register-number variable triggers<br>
--Werror=3Dunused-variable under both gcc and clang.<br>
-<br>
-Emit a (void) cast on the register number from analyze_read() to<br>
-suppress the warning.<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/hex_common.py | 16 ++++++++++++----<br>
-=C2=A01 file changed, 12 insertions(+), 4 deletions(-)<br></blockquote><div=
-><br></div><div>Better to declare GsN with G_GNUC_UNUSED.</div><div>=C2=A0<=
-/div></div></div>
+  Thomas
 
---0000000000002e4167064c9a7f0a--
 
