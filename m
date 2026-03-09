@@ -4,78 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A31AF55106
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 05:58:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55C58EF36E3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 06:20:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzTct-00067N-TI; Mon, 09 Mar 2026 01:58:00 -0400
+	id 1vzTyJ-0002dN-NH; Mon, 09 Mar 2026 02:20:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vzTcr-00066y-03
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 01:57:57 -0400
-Received: from ci-2004f-snip4-6.eps.apple.com ([57.103.89.59]
- helo=outbound.ci.icloud.com)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vzTyE-0002Wr-5S
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:20:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vzTco-0005KW-Fz
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 01:57:55 -0400
-Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-central-1k-20-percent-2 (Postfix) with ESMTPS id
- 5175E18000B9; Mon,  9 Mar 2026 05:57:51 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773035872; x=1775627872;
- bh=iIiveCfyDTZD3b7CBoeUSs/JWaTE/QuglIZEMhSQEJI=;
- h=From:Message-Id:Content-Type:Mime-Version:Subject:Date:To:x-icloud-hme;
- b=DcQT4pPPX8f44F/xEdFMeS3hVqBQ8Z/Z78IT2d/GvidNkW0wEz73RprCq0yYg25VACRHtef6cNrrV8hZXi2ICqRJLpfEmGlu5W+IX6SNgmC2HMb82/EpRfcth51LVl09XRog373xNZpoUxr0fTh6ZiSUpZTEZaRnRfswUW8Ody6vxPT1jztlC7WZD1RUD6x8de5nwX4MbsOAgLkytrGHdgD+aJChChsSk7w2GmCy2RHsQf5tmppCCWZmuYtj680EuCuMxH/upSreyQE+cuW0qd+UquNFvehWFnvJ+jsoigEc/kejbrq1O3fjHyACZ/WL0MZc+kEYDWHjBpS2CEusZQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.156.36])
- by p00-icloudmta-asmtp-us-central-1k-20-percent-2 (Postfix) with ESMTPSA id
- 1588A1800095; Mon,  9 Mar 2026 05:57:49 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-Message-Id: <6A894B95-03A6-49EE-91A2-D3BCB09AAFCD@unpredictable.fr>
-Content-Type: multipart/alternative;
- boundary="Apple-Mail=_3428DE1F-8EA6-493C-8EE0-F5CC81F79B09"
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [RFC PATCH v2 0/1] target/i386/kvm: Configure proper KVM SEOIB
- behavior
-Date: Mon, 9 Mar 2026 06:57:38 +0100
-In-Reply-To: <20260309054243.440453-1-khushit.shah@nutanix.com>
-Cc: qemu-devel@nongnu.org, shaju.abraham@nutanix.com, jon@nutanix.com,
- mark.caveayland@nutanix.com, kvm@vger.kernel.org
-To: Khushit Shah <khushit.shah@nutanix.com>
-References: <20260309054243.440453-1-khushit.shah@nutanix.com>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-GUID: 5pNNHF9ThkRUJprcjwFwaOXW4KbjVQYC
-X-Authority-Info-Out: v=2.4 cv=OsVCCi/t c=1 sm=1 tr=0 ts=69ae615f
- cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=64Cc0HZtAAAA:8 a=ebM0bOMmiKBTFg0fHpwA:9 a=CjuIK1q_8ugA:10
- a=4RsP3C8MxSXKoMckyAUA:9 a=uE1VpXKgi7NLAj7Y:21 a=_W_S_7VecoQA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA1MyBTYWx0ZWRfX4YQDg29Oq50z
- vN1Xim83vSAWTUwdjnoYmkDNXA9ci2awHlXmi+1L55mvaZSMeJ1QN8Euoo5o+fYm4ovt3H5Zpdj
- 5wulSN090MCk2567V1KImYKC9Dlba+hKZr/+oxxOJOdjOFZkP9hoCAAlgxjPd7QkX8zX1u2n1FA
- jUSvYSUtCITdlq6YMUBsXCXVplKlJL5q84JbSvmNMuUcXJzjl5VEFyIRaCTrQ2H57Dd7JVDGq7X
- sKC1aHlJcR+qiQwqQq4sN+9OfdpRZxQ7ngjuypTmCLkKCz7w/gSpqQP6oo4YSd2ShQhUonjCZ1/
- xhXxfYMEe58cf8M8lfbjZG5YFkM/+lzEKYMrkQnvnQH/wfdIA6YTaYE/6xELWs=
-X-Proofpoint-ORIG-GUID: 5pNNHF9ThkRUJprcjwFwaOXW4KbjVQYC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-09_02,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxscore=0 phishscore=0 lowpriorityscore=0 adultscore=0 spamscore=0
- malwarescore=0 mlxlogscore=725 clxscore=1030 suspectscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603090053
-X-JNJ: AAAAAAABlc+yNPTgdQcr1JxgtO8dhH5Lpzqo7b9C02eQO/vm5ng0C4WimlUwBLEk5zerIZxzlkpIc5akTJdqlqeJqqSE5Kcge7SMX+sUYdz65TAhPleHHpW+ZxdoJVRusOYalCevdHVp4tdW5ioqfvJ4ECIMFqxuzOc9ueoahFWKx4RjoYGaF/Fd28AD5eAnz6Ocu9A7WqTYaTgVD/H8fbBipIM0+562fZ6thiH8vPnCIyHKJLHWgahYbnmBIXCa5TwL5poKa+B49czViZdqmcRP1O28RgnFWozxHOQ9AqShzmcK6XEgUG/LVG02Ro84GjiTgJ38c9Ad9mNuz94YI/ewMl6GUa+/72Cc7GwZPRxZAfqIUXiQBEKk4pBM/u2cqlIdj1bD+F+G7mfg+Bl+Q+++eMGMNmLJc+xC0cE+QMNvK6eBCzpK50qQQdo/u/NfMMPPn1BDMNQ9pa8RADh5FNi7EjmaoAQTt+XPoQkPZNrmff5iUPaVVLbK+4dnSVCdcI65I7emxdCPyrmuR2j2c342u5TvCD6r7wF4f08BcDTnaEReO2PB3CgeQbK3FgCLNIk17U2tmtTvQQbC/dQHDuL+1Nzo0+q7TV+b5C8x7DW26/hRMBnQrpn6czwixvbEd+H3jTTsG03EpKJcdNHP1igRQX8WNWAXDkx5n4PjA2FLP9KphdsoPRdsa2S/JPDgdSk8ylU=
-Received-SPF: pass client-ip=57.103.89.59;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vzTyA-0007bs-Uy
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:20:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773037197;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ZUcTOee5fCmnpYRg75B8u8kmQQGCOdT0nvAj+9ht668=;
+ b=Qwk8hhCK3fWVVccYSncSnJEgMjDsdkDHb6IFZG7ktAHQzK3qA9GFari+98FLxbb1FNaQyv
+ Z+ZfQytLw+Ex94DEd9aOXXsKVv70Zs6Y+JKNATXv5RhalsylJG5JflDcd5/b1HeLC2wZgR
+ mnFNHSfWb3QpDZKpMOPIT8UdrMyaWzw=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-67-WxInvOUzO8W9wVDYbXJJ3A-1; Mon, 09 Mar 2026 02:19:54 -0400
+X-MC-Unique: WxInvOUzO8W9wVDYbXJJ3A-1
+X-Mimecast-MFC-AGG-ID: WxInvOUzO8W9wVDYbXJJ3A_1773037194
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-79868381229so240255857b3.0
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 23:19:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773037194; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ezov4jf2FQmVVv5xAxVQaYva27mRE1u2yrX4dd2kPz8ZUG3tRwwkGahcMt1Tr0qUUp
+ sAOqqYK+95/Yo56Ut8OTL7ImgYWfFJ0mOSP/SrVR+SEJBzW0dRdyeWqO4dnXHovyIVkX
+ b03t+T2gshnYKmOnWjMZmyb8E9rVx/6PKSw6dxlm8LiQFDC8khycTFeQUMCKXt5G2FUN
+ MdkKJXGVSXt7NlJmdYQ3pQtW2Bn6b8ZITLau6Xj/MhnNmRW4s24jKFa2swBYIlwB0eGI
+ a0NE1mH/qjDvtTrzVU/Ms1M1wi7wt4OZ8QVvNxok/wct4scAFbmx7UOL+e9dmLfPPo9j
+ MebQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZUcTOee5fCmnpYRg75B8u8kmQQGCOdT0nvAj+9ht668=;
+ fh=srKTuQ1zrFvCk697vtO4h473zqLsuvDuubo1BzKDh1s=;
+ b=GiBhQWQEIYe6Vq4Akn589k3AE5NaD1mWldTjD9C4Vs04lhbjno7rKDN20VMHacEhiB
+ srP8ejWfqi0Suwca3fAqssn0EmPWtxZUxDxFBKGOWXspGoPFQP3LeWV7H05muHJzuxf6
+ CU7is5dx1SpzoXVhsVlvq8pkwFwY2uAqX5xErZfRgcmGh0AcUCVH5i1iUMJHcO2uwqo8
+ lrkGL6OEGD3UgVfX5m3UG1cODiwMfEIAoZxi8Cj2naC4osU9omLKVy/7mYBgM/i+NxNK
+ YtQNONby8oNAI5/OaArm0OrUMEpBr6758VqTvCPAgVKOewaonUyPxWKthw0yUFmFmkK+
+ +Msw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773037194; x=1773641994; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZUcTOee5fCmnpYRg75B8u8kmQQGCOdT0nvAj+9ht668=;
+ b=KaB1oIq3N65gpAKP3iNMheAKKi+jDLUBnTzpeqXI01WwvnC/hcwsFSSJ51P+H+11wM
+ k+iYht1KEt0CHE+/wLDbYF20Jgc6B1CiiM2H+LOwS7DNNAKHHPwKSIZ0YNy35vKmGoQi
+ fvPKSDbh4X/hIsZjSBbaD8onaFHYbPzEry9MEqNtucEPLQuQMPcE96GaxakDAnq6CZFe
+ DMKpE9/+u4+K39ph2xohRS7oCSdIIRljmS7R26Ic6o3mYcBkpGlpZFYWsMHy/a7H7JBn
+ ubZOmPMeE7sASqA2zDa1vX6A+p9POUPan6vrVth2bDa4HRZO+6zB2NR/9tvvlGRUOK+v
+ xlYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773037194; x=1773641994;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZUcTOee5fCmnpYRg75B8u8kmQQGCOdT0nvAj+9ht668=;
+ b=DV7IXWy+20q5JsKfaVl8F9/9oWgmErerLlyX5OtR6VXDVl9/E4CZEQ611+C0SpxY0a
+ 0iBZiGq5bst8CHefO6nmMOMRExkgijCdAyq45kl0qZb/L6A5KMXRrowNkgHb0od2aUgd
+ YLZYYMMfPRws50UABSWPH3nca466GRIYS79ttQnGPPghpbjOgiMQhX/AJFLNPoe2mIiI
+ xAAY2Qb8vZrKYz3inDJr8YvP+PKmE0XDfCXkx4YjtwDsaZ/+03qOqmgeDfbmnAqt7rJw
+ XWRTSqOfdDuLPPsYdSctYUYQtWGX1HcirHv+duhwFxLJLAYy94324eLKTmkQYUxAcwvM
+ GaJg==
+X-Gm-Message-State: AOJu0YyxN/2UZlBGkwdypS7tg8DMq2TM02gpIktAeH6fhrlibFM14VJj
+ rkfsPbuoYiLrkiIjJetjIojSQqYkdG9Kqxx5L6Bp7BNKOYcOfFiiBSYEVaubncVdbz8lQ4gAHwJ
+ Opxj1TD0RUgLyXe7syJhlnCOEkyDV7+tY67cMaugTsgnRZwiBjycUVkq181gEa0Uur3ckN/v32o
+ 5wZPRqwsC/RkDhXCoxdJgKIn6/kXaFunY=
+X-Gm-Gg: ATEYQzwSe6t1Zc0DY/yMqVwF+zlgNljBvZvek39TrR8ktZtBhZH0mwG7lrxKJ40jPiK
+ +b0b5nqAQqaqoMMwQJ3gEcy+WlreawAkF+x7tGZz36MP2xkwQAxVxtR6HnQnGPXyUPcVYIu0L3p
+ /1L7r6KSTTPzXJQMC7R9zWkEawBXBwObgm5BUEXtra3KSbHAxIENn0KCsKUR2fBy6A3KcEUl5vm
+ 6V4pQ==
+X-Received: by 2002:a05:690e:1389:b0:649:6053:15de with SMTP id
+ 956f58d0204a3-64d0715a066mr13532373d50.27.1773037193851; 
+ Sun, 08 Mar 2026 23:19:53 -0700 (PDT)
+X-Received: by 2002:a05:690e:1389:b0:649:6053:15de with SMTP id
+ 956f58d0204a3-64d0715a066mr13532355d50.27.1773037193463; Sun, 08 Mar 2026
+ 23:19:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260304173535.2702587-1-eperezma@redhat.com>
+ <20260304173535.2702587-2-eperezma@redhat.com>
+ <CACGkMEu5BGgdstpEVw8eH+wmXhi+nFdHRW2bXk7enZtxbAdsBQ@mail.gmail.com>
+ <CAJaqyWfADYQHjszX+DGoW1Cah--619_pVztmfV6ctTN6-0-Q5g@mail.gmail.com>
+ <CACGkMEt09WkCgJmbrdmyDYdB8HUH=Y-DrwNChJGrfH2afua8QA@mail.gmail.com>
+In-Reply-To: <CACGkMEt09WkCgJmbrdmyDYdB8HUH=Y-DrwNChJGrfH2afua8QA@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Mon, 9 Mar 2026 07:19:17 +0100
+X-Gm-Features: AaiRm51jTBnDesVIZwuFeEtcxtqVF-9enb6j2VkHf2IuxNOAUXU-byAIPSgZl10
+Message-ID: <CAJaqyWfOdMkeXEfHKadN2zrXmxNytC+uzFmf8pF7Ldrr6i0o6w@mail.gmail.com>
+Subject: Re: [PATCH 1/7] virtio: Allow to fill a whole virtqueue in order
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Dragos Tatulea DE <dtatulea@nvidia.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Koushik Dutta <kdutta@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
+ Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -93,91 +144,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Mar 9, 2026 at 4:17=E2=80=AFAM Jason Wang <jasowang@redhat.com> wro=
+te:
+>
+> On Fri, Mar 6, 2026 at 2:23=E2=80=AFPM Eugenio Perez Martin <eperezma@red=
+hat.com> wrote:
+> >
+> > On Fri, Mar 6, 2026 at 4:26=E2=80=AFAM Jason Wang <jasowang@redhat.com>=
+ wrote:
+> > >
+> > > On Thu, Mar 5, 2026 at 1:35=E2=80=AFAM Eugenio P=C3=A9rez <eperezma@r=
+edhat.com> wrote:
+> > > >
+> > > > As the while steps < max_steps is already one less than the vq size=
+, the
+> > > > right maximum max_steps variable is queue length, not the maximum
+> > > > possible remainder of % vq->vring.num.
+> > > >
+> > > > Fixes: b44135daa37 ("virtio: virtqueue_ordered_fill - VIRTIO_F_IN_O=
+RDER support")
+> > > > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > > > ---
+> > > > Personally I'd just remove max_steps and let it be vq->vring.num, b=
+ut
+> > > > let's make the minimal changes for now.
+> > > > ---
+> > > >  hw/virtio/virtio.c | 2 +-
+> > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > > > index e9d553295257..17f171551892 100644
+> > > > --- a/hw/virtio/virtio.c
+> > > > +++ b/hw/virtio/virtio.c
+> > > > @@ -980,7 +980,7 @@ static void virtqueue_ordered_fill(VirtQueue *v=
+q, const VirtQueueElement *elem,
+> > > >       * We shouldn't need to increase 'i' by more than or equal to
+> > > >       * the distance between used_idx and last_avail_idx (max_steps=
+).
+> > > >       */
+> > > > -    max_steps =3D (vq->last_avail_idx - vq->used_idx) % vq->vring.=
+num;
+> > > > +    max_steps =3D MIN(vq->last_avail_idx - vq->used_idx, vq->vring=
+.num);
+> > > >
+> > > >      /* Search for element in vq->used_elems */
+> > > >      while (steps < max_steps) {
+> > >
+> > > Not directly related but I found that the virtqueue_ordered_fill() an=
+d
+> > > virtqueue_ordered_flush() can "emulate" an in-order device even if it
+> > > isn't one. I'm not sure this is good for the device that can benefit
+> > > from out of order completion like block devices.
+> > >
+> >
+> > I guess the benefit is significantly reduced if the device cannot use
+> > more than one descriptor in the same used entry.
+> >
+> > > It seems the correct approach is to let the device decide whether it
+> > > can operate in order, not the virtio core (as vhost-kernel did).
+> > >
+> >
+> > I agree with this.
+> >
+> > Currently, `in_order` is off by default but we could enable it by
+> > default per-device.
+>
+> After further thought, there's another reason. For example, for a
+> networking device, virtio-net should know nothing about the networking
+> backend (though some tricks exist in the code). So it can't know if
+> the backend can handle OOO or not. Starting with this seems to be
+> fine.
+>
 
---Apple-Mail=_3428DE1F-8EA6-493C-8EE0-F5CC81F79B09
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain;
-	charset=us-ascii
+Well, if the backend exposes in_order, I'd assume it works better if
+the feature is acknowledged. I was talking just about the emulated
+device.
 
+I kind of agree with what you say for virtio-net+kernel tap or
+vhost-kernel case, but we're already assuming that the virtio-net
+backend works in order in Live Migration anyway. With worse
+consecuences that less performance. To be coherent with your mention
+here, we should support out of order descriptors in live migration.
+Not saying that it is urgent, just pointing it out.
 
-
-> On 9. Mar 2026, at 06:42, Khushit Shah <khushit.shah@nutanix.com> =
-wrote:
->=20
->  - Machine-type gating (restrict to 10.2+) helps with older machine =
-types,
->    but still breaks migration to a destination with an older kernel =
-that
->    lacks the SEOIB API, again without user opt-in.
-Hi,
-
-Ugh about this one, but am still convinced that a machine model version
-is _the_ right way to deal with this. Will this be backported to Linux =
-LTSes on the KVM side?
-
-Or alternatively, what are the odds of having it fit as a CPU flag?
-For example -cpu host,x2apic-suppress-eoi-broadcast=3Don.
-=20=
-
---Apple-Mail=_3428DE1F-8EA6-493C-8EE0-F5CC81F79B09
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/html;
-	charset=us-ascii
-
-<html aria-label=3D"message body"><head><meta http-equiv=3D"content-type" =
-content=3D"text/html; charset=3Dus-ascii"></head><body =
-style=3D"overflow-wrap: break-word; -webkit-nbsp-mode: space; =
-line-break: after-white-space;"><br =
-id=3D"lineBreakAtBeginningOfMessage"><div><br><blockquote =
-type=3D"cite"><div>On 9. Mar 2026, at 06:42, Khushit Shah =
-&lt;khushit.shah@nutanix.com&gt; wrote:</div><br =
-class=3D"Apple-interchange-newline"><div><meta charset=3D"UTF-8"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&nbsp;- Machine-type gating (restrict to =
-10.2+) helps with older machine types,</span><br style=3D"caret-color: =
-rgb(0, 0, 0); font-family: Helvetica; font-size: 12px; font-style: =
-normal; font-variant-caps: normal; font-weight: 400; letter-spacing: =
-normal; orphans: 2; text-align: start; text-indent: 0px; text-transform: =
-none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&nbsp;&nbsp;&nbsp;but still breaks =
-migration to a destination with an older kernel that</span><br =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: solid;"><span =
-style=3D"caret-color: rgb(0, 0, 0); font-family: Helvetica; font-size: =
-12px; font-style: normal; font-variant-caps: normal; font-weight: 400; =
-letter-spacing: normal; orphans: 2; text-align: start; text-indent: 0px; =
-text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration: none; float: none; =
-display: inline !important;">&nbsp;&nbsp;&nbsp;lacks the SEOIB API, =
-again without user opt-in.</span><br style=3D"caret-color: rgb(0, 0, 0); =
-font-family: Helvetica; font-size: 12px; font-style: normal; =
-font-variant-caps: normal; font-weight: 400; letter-spacing: normal; =
-orphans: 2; text-align: start; text-indent: 0px; text-transform: none; =
-white-space: normal; widows: 2; word-spacing: 0px; =
--webkit-text-stroke-width: 0px; text-decoration-line: none; =
-text-decoration-thickness: auto; text-decoration-style: =
-solid;"></div></blockquote></div>Hi,<div><br><div>Ugh about this one, =
-but am still convinced that a machine model version</div><div>is _the_ =
-right way to deal with this. Will this be backported to Linux LTSes on =
-the KVM side?</div><div><br></div><div>Or alternatively, what are the =
-odds of having it fit as a CPU flag?</div><div>For example -cpu =
-host,x2apic-suppress-eoi-broadcast=3Don.</div><div>&nbsp;</div></div></bod=
-y></html>=
-
---Apple-Mail=_3428DE1F-8EA6-493C-8EE0-F5CC81F79B09--
 
