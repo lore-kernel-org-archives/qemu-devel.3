@@ -4,84 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6C22F3C266
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8344BF3C266
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:17:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbOj-0001UO-NO; Mon, 09 Mar 2026 10:15:53 -0400
+	id 1vzbQ7-00029w-AH; Mon, 09 Mar 2026 10:17:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbOh-0001Sy-SN
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:15:51 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbPz-00028I-0L
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:17:12 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbOg-0001U4-3F
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:15:51 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4853c1ca73aso7778415e9.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:15:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbPx-0001YP-7V
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:17:10 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-485392de558so6508025e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:17:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773065748; x=1773670548; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773065827; x=1773670627; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iGPhK78NLxRoo55z5nhr91xgJDrLcLdGGT8DAAPSslM=;
- b=bx6Df+tnwsa+yXz/Chl3ABHPQPGIwCDfayJ4wS2HfX/4hcI5E2iTXZFUZ+qr0CIxym
- pDz0iccPztNYO7em03KXcNTlrc09xlINer1O8t5nfRV3E44aJ9vZRdzJFZq7pDEnuN9K
- SkMeZ3tJ2SY6fQnkDff2ZMFm8s9NMpsLR0jn/ha6aIOaehBWO8EFg6vkxoV+EsYWRhLa
- 1iOAxKUyrcmj4ByIVkyX2NV7Zc4d7qQCOpOD7xFKy7kGh2VFLOFV7QKOOIenOq64okKq
- hu81HDGVE7lxTlkrQwAbVmS/6kejlpcA2DrLdKahT+wnFqKyoeEyZrQ7HtiiU2v20xkw
- Fw4Q==
+ bh=RzcFdQyDDkDjYGuDFQKGPnMB0uLqqM6lBzvZCh67Fks=;
+ b=gnhPjip2UCqq7bvlhYDHR3wr95USxMArNwHowhio42hDKcFovw0se8yuoYD8cArZnM
+ YBYIhQ7EJdWCli0zAP9waTxbsSodvNF6rMhgr/dyFITueH3EggTmk+Kd3VMnbQz+Mgxd
+ 9J73X6GuvO9eOU+iAitZblY/qQ7G3YMIZP33U4Ai2teaN3SVdKKPhptL/8cUhj+dT7p6
+ Aycx5HTjGh/xChPqxEgkJg1J6WBtXV0iM6jrw48DymStH8k/uSOPdrV+60fJzvZZeW/9
+ WnVqZ0fyZdTMZKY3uC/AlfP3MC6ixDTZ7kjnbSCVopD71UDYHFnC6IJDTSdrN3g8qURK
+ XV9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773065748; x=1773670548;
+ d=1e100.net; s=20230601; t=1773065827; x=1773670627;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=iGPhK78NLxRoo55z5nhr91xgJDrLcLdGGT8DAAPSslM=;
- b=H5rUqHUyI12G2sbH7NHe8SCmrimAKZjEPviuWh2A32T9w8rVonaL/lDlD2gtcBeZ1n
- RwVOSkmiRRWZHvy83gk+mas9fy+xfPP16EdH+sf47PLtZ0ctuh5sNrCFgqlv88B27dsB
- 27D35/jSJq649BgfJ56oLdSNqFyVsWP3ZUfF5cBO0A8Kee6q9fg+S8wNdeQ/JM+qhtGc
- l5Ia+dN5oLxCBf8+03hZShfmWPkJrgDbfrL/QiOSUcXtbtRIqTCobkZx6I7/Ws48o9Jc
- IILolhX72SGSnK3K9o51Ks9DYABCjOsXe41KgjJmPRE8TAVpTzHIGRSv+VTvQqijCe3G
- lYSg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgq3wwNUCFCwhkhq30mCf0Pm+1ovkQ1++eemR0Z6dnwuZsWyka/UuGOiI/5AH1b1MfZxaXHv02EJpb@nongnu.org
-X-Gm-Message-State: AOJu0Yzf0eQPEk6ecUHFvX+xgkwsVTvQaWsIGNerBEnixKbpS2qYWoC4
- WGh1/Al/sivvl42EG0Sdlxc7x0dcvSGRa+49shgf2pN8vXbrQr/g/6U3ekVcTYxdqyNl8cshih6
- g4N9mVN8=
-X-Gm-Gg: ATEYQzxA0xIRU77azodEGCLxi2yphGy9AboS227xFyGu/tLoQ/C422Op6yzf5y2URAL
- gHNUq/EW0WWPqrWUjiigqJyepS+HDtDliKx9V3NHZJEXbHIcGeULGRmU4jJsshSLIejq6irRayb
- xisJSqYJbMHwwk2pjt0SH8Rz+e6GnkdpYsjo4HulgGRINsypLHET+jx/tgXmnIhRstbNuqwMdr0
- bC7O3wEW+HKE+xBYYYul8NvglT9u98MwzNgawGXDvyQL14lNjl5Hl09HBiv4jLH9PDMx5vYnkRN
- thnxkGlOpyLvqbAFDdEb8xxCOF+NC4FNp7xkev37fAwJp7Xt0rq+UFwNHFy+lOzSSNJ+wu+RgOr
- WKp+y5UvX/lbgm6DuglM/yFReUlTNgREY6nLIUiHRFtdD3+kWYSotgGKk5TqBpj6BMwIK7yupiB
- H+KRTjjGTrNPoP7NDLJOAKBy/VUgSvLkgSLV1WMFUw3ZIXW1oNkoN5FLqDU3ZAfnvkrFyGqSFdB
- 0qCqvee4A==
-X-Received: by 2002:a05:600c:1c17:b0:485:3b00:f93b with SMTP id
- 5b1f17b1804b1-4853b00facamr76616915e9.31.1773065746957; 
- Mon, 09 Mar 2026 07:15:46 -0700 (PDT)
+ bh=RzcFdQyDDkDjYGuDFQKGPnMB0uLqqM6lBzvZCh67Fks=;
+ b=t2v1MthNdoDpvtZm7MZDg5p5VspwrVvaqyCSEDJlVrGpT5hYS0Xt/tLZQcRm76RbNj
+ 6N5SG0v2vinRnwNAROC/UjwiO8xwTnvWn24BqT3ZCIDO8pZeb1iqy610ldlv0R0Ws8x1
+ ZJJI2t3vaZtW8H0aOZDa2Bq/VXLYlgYANyzRlix4XnhQDjNXpJvf6Ta/URaCxKN0X2He
+ k2ldQeaG1f8C8woowMwxF69OI3EkFQfUAR5kuJuJ2d/Ej/ocXY7/d3QUx9GRuEY5KtTc
+ S+xrHs/EmPgDwtWd9DUJ3L46aVxHDCu08Ut5hDs7X/IPxXPvQidzO27gPYrJh8ibYH8F
+ u4Sg==
+X-Gm-Message-State: AOJu0Yy+zvMn9KqNpQwUVLraHFjMJQzWSjxgP+V8GxZ6drC+txH82oS8
+ jopJ/gMf3zRVdK8E3WuQNOWY4fpsfHUxaQSzPLte5mTNyiTAGpsFN8p9/IG969e4J3g=
+X-Gm-Gg: ATEYQzy3Emz1y2nhlX9nMWIGTlilaK3fQyiroXBpXMrbmVMvzCsqOl7qHFBGZRWamU5
+ U4hCDC9/eX15L5OOiUSSFZTQEnFUicPrkA3kmxy46LbgwILlQkLm076Zjq9HrnDIR6iR4ZKvVGu
+ zJPKKbeSRlrggQaEqQ8rbj2eCJ3BPQ+Eb54pkjlyihxNUFeH/OF+SyAHdtDu0/EB/AcVATYFuEq
+ K0ojvlbSUU9nQ4RUwkfx/ASO/CsRsH+0LrT7c/Wqei84eUpGqfyrCkWKXxw3eYq3/qakDWKr4tN
+ Z1WbIlIIEs7r14BXlP7zgaHaIlJfUm12WjTQQKk50xuSmAvUMY/AQYr5oXx+Fh3Xo0mLvNhyLzy
+ wKpoA/RpcMJTygig2Nif9eLc2KzwFHugfogGxoLzD7Xc1LXGdi4KliJucmdJyxvF//+hoE3gWUV
+ wQo5mzZRIiyQwvvlpRWnoeO7VQZeISFRB4kwdvVXnu+5xSda11vTLhcfU4KR/oE0VF8sfou84=
+X-Received: by 2002:a05:600c:4591:b0:480:1e40:3d2 with SMTP id
+ 5b1f17b1804b1-48526979de9mr181585025e9.29.1773065827234; 
+ Mon, 09 Mar 2026 07:17:07 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853044d849sm304502465e9.11.2026.03.09.07.15.45
+ 5b1f17b1804b1-4853588758fsm73192895e9.4.2026.03.09.07.17.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 07:15:45 -0700 (PDT)
-Message-ID: <a472bede-f617-483a-99ec-7ef34856efdc@linaro.org>
-Date: Mon, 9 Mar 2026 15:15:45 +0100
+ Mon, 09 Mar 2026 07:17:06 -0700 (PDT)
+Message-ID: <6f0e971d-0cbf-4662-9eb4-a3185b267f6e@linaro.org>
+Date: Mon, 9 Mar 2026 15:17:05 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 0/2] Error-handling fixes for passt
+Subject: Re: [PATCH 1/2] virtio-snd: remove a redundant memory allocation
 Content-Language: en-US
-To: Peter Foley <pefoley@google.com>, qemu-devel@nongnu.org
-Cc: Jason Wang <jasowang@redhat.com>, Laurent Vivier <lvivier@redhat.com>
-References: <20260305-passt-v2-0-f0582198afc0@google.com>
+To: Roman Kiryanov <rkir@google.com>, manos.pitsidianakis@linaro.org
+Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com,
+ jpcottin@google.com
+References: <20260305042523.335493-1-rkir@google.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260305-passt-v2-0-f0582198afc0@google.com>
+In-Reply-To: <20260305042523.335493-1-rkir@google.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,11 +101,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 5/3/26 17:04, Peter Foley wrote:
+On 5/3/26 05:25, Roman Kiryanov wrote:
+> This change also makes its lifetime explicit and
+> prevents NULL dereferences.
+> 
+> Signed-off-by: Roman Kiryanov <rkir@google.com>
+> ---
+>   hw/audio/virtio-snd.c         | 53 ++++++++++++++++-------------------
+>   include/hw/audio/virtio-snd.h |  2 +-
+>   2 files changed, 25 insertions(+), 30 deletions(-)
 
-> Peter Foley (2):
->        Only kill passt if it wrote a pidfile
->        Don't try to read the pidfile if passt got a signal
-
-I'll queue these via my hw-misc tree, thanks.
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
