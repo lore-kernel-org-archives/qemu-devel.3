@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC8FDF4180B
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:11:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77A03F4180C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:11:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcGP-0003Ue-H2; Mon, 09 Mar 2026 11:11:21 -0400
+	id 1vzcEp-0000wW-CD; Mon, 09 Mar 2026 11:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcFP-0001gw-9l
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:10:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcEn-0000vO-Vm
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcFG-0000Hz-SR
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:10:13 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcEm-0008OD-Gh
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773069007;
+ s=mimecast20190719; t=1773068979;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=/nvY+FQXOEd7mADtviTKG5X4XDtAjCV+MockVMSjqaI=;
- b=D8YG34+jjwta7P4Ndo8Z3aO2mD3LzqxWnRJNqiUrt5/D0jYOLKGSX+oIk1x0m92qIG3ncN
- b65xWF8V/S1QurYRRn4JspaTnAppxw0rBl5KBPJPKH5p9GW3TXP64dV/zYfbw9GaAfLnx9
- hc3gdiAIpP3iC9VTGM++n5nFsy1DwCQ=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Ua8eW642KP2nisR1pAUnxlQGxBu2aVkwwsqHEm2Vzkk=;
+ b=Gw1piys7nKQbgZojoiEtsFXHBm50b82yBv0QDLccOp+npE2h6qSnuOUNrVj6eCgrQsfka1
+ 8Q27cUh4wwBOrwTtJbRxiY91/6DD7dRUgbpTn08/z3uqWbld9hZmbz+SjRZrQl6TiAfr9+
+ IsfZgsgtP84sCpB3GrvR/oNKW84rZHw=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-fnYNy0oAPU66XbE3NDkCKA-1; Mon, 09 Mar 2026 11:10:06 -0400
-X-MC-Unique: fnYNy0oAPU66XbE3NDkCKA-1
-X-Mimecast-MFC-AGG-ID: fnYNy0oAPU66XbE3NDkCKA_1773069005
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4853ac455b2so12474815e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:10:06 -0700 (PDT)
+ us-mta-117-hJOrwry0OPe7IlbuoYOlyA-1; Mon, 09 Mar 2026 11:09:38 -0400
+X-MC-Unique: hJOrwry0OPe7IlbuoYOlyA-1
+X-Mimecast-MFC-AGG-ID: hJOrwry0OPe7IlbuoYOlyA_1773068977
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-485345e2fdfso8767275e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:09:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773069005; x=1773673805; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773068977; x=1773673777; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/nvY+FQXOEd7mADtviTKG5X4XDtAjCV+MockVMSjqaI=;
- b=dXRWrzARBBNyg/qVYYducm74ox3QsCIempB3Hr18Hgl5UjE/KMOFCcLa43tPm/FPFx
- sSA65VHOfGi/fhn7OEaurERLNoHQ765CayNqeKLNAPNLGkJMDBLgjh2sUYXhrqj1Dqov
- nTsLDG3a38bcGnC0jOmBx2EegL5B56lw+KAaRx2/kNaq0OpjgD+WXmITYTyq+FUNuAYx
- c0dOu8/fFI2m8fclA1Cn5Cm2RlPU1utivYfs/JFsNLAVqIAJ8et2CVl84nGZdzZSNKGL
- h8B0vP9ohz+uoZdCvg494A/DH3StsDs5V7CPXmp8isUB/A6ZL6mm4kBZFAP6UMKHCwbB
- rvig==
+ bh=Ua8eW642KP2nisR1pAUnxlQGxBu2aVkwwsqHEm2Vzkk=;
+ b=MAfixMQHIXD7OxjRSifk9/VQUvq5/Kt4yfewoHdAQqu28fRzDIoK3+jRpqpkQ24Qiv
+ rB/4zV3lOv5+1FGX/zMkypVZkMlkx5oAnmxnSytWMkeUnU7kAin9klmm83PwUF1alJKY
+ TidKoTMgH7Pm4sQDug1NohMi8Izk5M725G02Ew49UozTjPLx0RdRgdEMGkMzeFn2Qpy4
+ aOQu+EvP8Ip1h8K13opmDFLx0klS6JzwKpn9ex/dQYb76aO+PAENgKhJsg5WFXF/eEtc
+ 5+xlKpqKO7FKgn3HBNg//xdehskJdnBcRXMcKVY94Prz+0Soir2fONu5lW3GP53OtAip
+ IIlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773069005; x=1773673805;
+ d=1e100.net; s=20230601; t=1773068977; x=1773673777;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/nvY+FQXOEd7mADtviTKG5X4XDtAjCV+MockVMSjqaI=;
- b=VDGWkXceKnYrYyxemzPjefvNkYX0Z3dcdvlPr/yqrdU9lO/7/yUTxClkZ1PbaSQsQs
- sGYeAKmh5AeMmlOxEIhEvR+WwoXIY8roIqk0kBC6D9B3ZHXAO0H+Jjy1IKvwbC+TOLC4
- UJH4GTTsATBcWZw+ZBDYfob9rr/cX56ES3ufDcEgWBtD3PPJnwpaZ9Y5innHkNpLOoRw
- /F76EE+Hg3KP3hMBWxYhl6wPZw+JVJcP8ZwC5MrLhhf+niiTgEKhZx4Hj9XL7A7fmNPY
- rcd4p/VQ9xs93PLXzg3532vF5a07/wBe1CEAt1ScezioDb5RxYHUYKP3Z1qmZUFaPpi9
- JfSg==
-X-Gm-Message-State: AOJu0Yya59Bxbd5DInKi7hEsV7zAwKPJXmgs7HqilcaaGH9diBGFL6kK
- mEPjbPuvBPB0snbbJsSU/25jNVLLjME6zYWOlGFJWGStbBM1+eEFlG/vCQzZU1xK8gZTeFaGi00
- w+s1fFO3Ey+RGg11EzZMBSENd43drTBYOUFq75nGfgEfanabHtkT2yWjC
-X-Gm-Gg: ATEYQzyEP07ZTZ6Jld3ARQHQeXJzkXFDdsAsGGrQINoTJ6hXT8xtBQG+3MRtfzNLcOO
- TONPO3irBOQZWBZIzftf4Y5/av3Xcac6hEQ7XyT0odiY8vKZD8xXLl3DtcHYdX1OpguM21WrxAP
- MvUYg9SM2z8w1QZqt6Q5mQRiuFyS9pdvM7bN0vODgsTrUG+MdkU8UHMilIcV98kxePT2VCP+4ef
- bEV/Wh5dNdMSGtCDP0YOUwrXIDl8c2jmLCkIfrfK+E3e8RUMq3j1PmRH6CDXAtxgr9CvVI/2EjA
- +I4/DV+sZra9S5JuYLFjm9C/AClbqPk9qowgZa5qKZlZh58iieIThlk94lrvdu8eB2QdaUsShSw
- z1fhMmqucVjqOkFGFIvzGshJAEYq1Rex5buY7WbFU0oIzSjRBBKt6eW/orka2ZjMOxFEiPOs2O3
- BvJu/3
-X-Received: by 2002:a05:600c:4445:b0:483:6a8d:b2f9 with SMTP id
- 5b1f17b1804b1-4852690febamr208987695e9.5.1773069004998; 
- Mon, 09 Mar 2026 08:10:04 -0700 (PDT)
-X-Received: by 2002:a05:600c:4445:b0:483:6a8d:b2f9 with SMTP id
- 5b1f17b1804b1-4852690febamr208986955e9.5.1773069004559; 
- Mon, 09 Mar 2026 08:10:04 -0700 (PDT)
+ bh=Ua8eW642KP2nisR1pAUnxlQGxBu2aVkwwsqHEm2Vzkk=;
+ b=GeBYKLLHghYuklij4NXQVCO6zF5obXwvhDOL1iT7wHBffEMuhxGCd5cDFYTkTLypKi
+ DtK988Q2wjfRdbUsAUj+GV35JrvHIuxQ0F94XUUNZhqasOfPixoYP0xXhrikOpWJ8Omu
+ zNLffu/dvA3L1zGHiqRyMtkOqMloCPurUPSlVmmEd9SROcpU+n79zDTSK5FeC26a7IYx
+ 3vMm9BfqA0ZqJVgYQAMpkTdYkvnfFMZ/mNzz7fC4hQwHXc+jLIJaYhM07aOLeKUwayht
+ pgjxlSUDEL0/XsYApKC9SJV34qrglVcO5E4p7jgjl6acnw4OYv5N6CQJQF/3I0MfFN+w
+ Nv2Q==
+X-Gm-Message-State: AOJu0Yy9OVS7pN18JVcNjemYHA0UDkip5oIIG6aLaHuogEQC7uMNJUnQ
+ xUOA+qtXabFFoxAuW6w0GYrUYxWwRHnmiwKmtVEVe+gc3A0At3V9tSlVP8k27YYYYVs1NaFRm9P
+ Pgnk6sgU/Iz8Ln/GypUIXFN0jBM7LwYF1Ar82hmsQ5kmnFdS0bNhUGv0o
+X-Gm-Gg: ATEYQzwU65Cx7OOhgjporCVCWVfAOQZpZhRmghpBnIwngPGwQx/pIbQcv3vJhN5lrmY
+ dZV17F/mPi+1qyk86Ss9bAxfpzRCOlIu2zFcgCO9nsOSL6hHlJh6QU2waep5iRr7Nbn8bwcw3PI
+ 7P385m91TMZLrPZk7eR6A5f/im0ckcY2eWG+Z+i3HNZ1z7KQUtA3ooPBd9cR6Ut+FPuV5YmJX2s
+ UwRApS0vxyvpY2UpiX58jyeqheXUdmdaP7ijWNbNyDX2Ub/cvi+MFOrm6elSagaOkRTXyEuKWak
+ ILYjNBem63Izmwsn30eH5PjEqhR+Ss/le23GITOVPYU3YUfHdP0tU/Y3PVFfU3f4ngskY1PWlau
+ 5ZewGA6GaOeYAtqOLsonW9INRmb4L9LSYBDC6XjyNps0Y4HRsclWL1I+n4Ut83m1ppYtlUQCEUj
+ gygIGu
+X-Received: by 2002:a05:600c:46cb:b0:485:3dfc:57c with SMTP id
+ 5b1f17b1804b1-4853dfc073cmr38304605e9.21.1773068977288; 
+ Mon, 09 Mar 2026 08:09:37 -0700 (PDT)
+X-Received: by 2002:a05:600c:46cb:b0:485:3dfc:57c with SMTP id
+ 5b1f17b1804b1-4853dfc073cmr38304045e9.21.1773068976807; 
+ Mon, 09 Mar 2026 08:09:36 -0700 (PDT)
 Received: from localhost
  (p200300cfd737d0cf29d515fbd6051d53.dip0.t-ipconnect.de.
  [2003:cf:d737:d0cf:29d5:15fb:d605:1d53])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485245dbe50sm91408945e9.17.2026.03.09.08.10.03
+ 5b1f17b1804b1-485237dcf04sm136917715e9.1.2026.03.09.08.09.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 08:10:03 -0700 (PDT)
+ Mon, 09 Mar 2026 08:09:36 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v5 24/25] qapi/block-export: Document FUSE's multi-threading
-Date: Mon,  9 Mar 2026 16:08:55 +0100
-Message-ID: <20260309150856.26800-25-hreitz@redhat.com>
+Subject: [PATCH v5 13/25] iotests/308: Use conv=notrunc to test growability
+Date: Mon,  9 Mar 2026 16:08:44 +0100
+Message-ID: <20260309150856.26800-14-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309150856.26800-1-hreitz@redhat.com>
 References: <20260309150856.26800-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -122,37 +122,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Document for users that FUSE's multi-threading implementation
-distributes requests in a round-robin manner, regardless of where they
-originate from.
+Without conv=notrunc, dd will automatically truncate the output file to
+the @seek value at least.  We want to test post-EOF I/O, not truncate,
+so pass conv=notrunc.
 
-As noted by Stefan, this will probably change with a FUSE-over-io_uring
-implementation (which is supposed to have CPU affinity), but documenting
-that is left for once that is done.
+(It does not make a difference in practice because we only seek to the
+EOF, so the truncate effectively does nothing, but this is still
+cleaner.)
 
-Suggested-by: Stefan Hajnoczi <stefanha@redhat.com>
-Acked-by: Markus Armbruster <armbru@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- qapi/block-export.json | 5 +++++
- 1 file changed, 5 insertions(+)
+ tests/qemu-iotests/308 | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/qapi/block-export.json b/qapi/block-export.json
-index 160cd2e3ca..dd724acf1c 100644
---- a/qapi/block-export.json
-+++ b/qapi/block-export.json
-@@ -164,6 +164,11 @@
- # Options for exporting a block graph node on some (file) mountpoint
- # as a raw image.
- #
-+# Multi-threading note: The FUSE export supports multi-threading.
-+# Currently, requests are distributed across these threads in a
-+# round-robin fashion, i.e. independently of the CPU core from which a
-+# request originates.
-+#
- # @mountpoint: Path on which to export the block device via FUSE.
- #     This must point to an existing regular file.
- #
+diff --git a/tests/qemu-iotests/308 b/tests/qemu-iotests/308
+index 033d5cbe22..6ecb275555 100755
+--- a/tests/qemu-iotests/308
++++ b/tests/qemu-iotests/308
+@@ -296,7 +296,8 @@ orig_disk_usage=$(disk_usage "$TEST_IMG")
+ # Should fail (exports are non-growable by default)
+ # (Note that qemu-io can never write beyond the EOF, so we have to use
+ # dd here)
+-dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$orig_len 2>&1 \
++dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$orig_len \
++    conv=notrunc 2>&1 \
+     | _filter_testdir | _filter_imgfmt
+ 
+ echo
+@@ -333,7 +334,7 @@ fuse_export_add \
+     'node-protocol'
+ 
+ # Now we should be able to write beyond the EOF
+-dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$new_len 2>&1 \
++dd if=/dev/zero of="$EXT_MP" bs=1 count=64k seek=$new_len conv=notrunc 2>&1 \
+     | _filter_testdir | _filter_imgfmt
+ 
+ new_len=$(get_proto_len "$EXT_MP" "$TEST_IMG")
 -- 
 2.53.0
 
