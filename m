@@ -4,94 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398D4FCA187
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2683FCA189
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 20:42:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzhPH-0004jt-8O; Mon, 09 Mar 2026 16:40:51 -0400
+	id 1vzhPH-0004ju-6j; Mon, 09 Mar 2026 16:40:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhPD-0004hR-SA
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhP7-0004fd-Mh
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhPC-0007q2-5u
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:47 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhP1-0007jw-Mv
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773088845;
+ s=mimecast20190719; t=1773088835;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=dulq0T1zzOTRkDz99a96A58d86es7ym6LZ7eZmdWwUw=;
- b=WKQ7fRQSI6UDCc9Ml5zcmSq3MeTh2u06p/2F3IHzP+tcuotSvvuULBQRci5AxtcsfHDhSo
- UIUAKF76xnX5x8MAe/2AzN4xjsyiB1WVDNcavED3ulUhwAC1q0igrPGmM9Vqk/No+PcQsx
- covA0LY0/leVdiig6CJgJCFToAqgHro=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=IKLe9iiWMkSZNOnyjvHZMWwPo4cDtCVEG53p9Vctsgk=;
+ b=DnWcqIZ42PnUpCO1G1klbJ85eaq0JBVx1TtMIF+/nP2jBP+TwOhsPWPtYkMczzSV5jVCyQ
+ XMJb/ydIOLoOhEjCdhlXADSISRnGj1laDYmPhyJegoCv25E36eLTt7JQiy8clVvC5Dg+Oq
+ 1qzshxpfRMzlkihaDbq0MzU11Re57I8=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-152-1WjBShxbP-W-syRQbhUFUQ-1; Mon, 09 Mar 2026 16:40:44 -0400
-X-MC-Unique: 1WjBShxbP-W-syRQbhUFUQ-1
-X-Mimecast-MFC-AGG-ID: 1WjBShxbP-W-syRQbhUFUQ_1773088844
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8cd7ea0bb20so1071438085a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 13:40:44 -0700 (PDT)
+ us-mta-542-L4sUBdSNMbut5Jt5xDe59g-1; Mon, 09 Mar 2026 16:40:33 -0400
+X-MC-Unique: L4sUBdSNMbut5Jt5xDe59g-1
+X-Mimecast-MFC-AGG-ID: L4sUBdSNMbut5Jt5xDe59g_1773088833
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8cb6291d95aso4096430285a.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 13:40:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773088844; x=1773693644; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773088833; x=1773693633; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=dulq0T1zzOTRkDz99a96A58d86es7ym6LZ7eZmdWwUw=;
- b=pZNIqXKbIe3sBEzaSB7YmHnLacpBFQVbTNedglYUZsEXZbZWq1XwB1CErO1yMadIqw
- pKBeG4guXyBrpBSdUshAoFMeLx3a5laK3cakFy2Jx5uxJSoZIGSPjJHZG3pwsCrDjvW/
- BkzdIQrPN2gdYC0LT70AhqjVg5U4+kFFL5Gf5wF+ef3paBU6HDarjevF7I5PWLPvt82M
- W0pjLUT4J3bpBpe2k9fypiiSNp8gnTWSoYVZkId4zJBh1w3T4gs/ugflbdJcxdfVOozk
- fMc6wC+s2LhZ9E0/X+2PaA9mcEroNICwLpdp7mJzy4m7FrevUfNn20OafYgxin2Mx0IH
- b8Fw==
+ bh=IKLe9iiWMkSZNOnyjvHZMWwPo4cDtCVEG53p9Vctsgk=;
+ b=Yfnoz97BVFxtLAHciHRMi3oc8JW3tjs/EYZI9FwoYl5cnTCZydPDo1+ODMwNH3p/L0
+ ryfWpHSO5sPAu4IB6EyDrKn16kmyaEEr64yFp/GRKKYBqCYPzo3WsRbviBw2Dy+cuANO
+ PhfmoFDBc0WyqfUS/UI5IxyPaCz6lhJyZiK7q1I1Yr6HVzpGQRLp+wbAkTl1Ibt+M8sm
+ RQD6KHp2PS6BR+9RZepZs4C+1RRJJfdPi7OCe082T+eLK5/DYG/0f7WglK5ZAYu57zng
+ p4q2MW1qke/0nqk3pjmvHOLxNdJEtbLkzp1fhpww99m4TL8Dhf4mwQpIGNQkYSdiDh9v
+ JIow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773088844; x=1773693644;
+ d=1e100.net; s=20230601; t=1773088833; x=1773693633;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=dulq0T1zzOTRkDz99a96A58d86es7ym6LZ7eZmdWwUw=;
- b=rKRhKTPyH7ERb48c7auaoBjcHvFiT5EQi+lYWM8vGDxPS2UyjX0EBN8/9Ft4J49RGG
- rcPEgvZTKZc1TXEsoushqR3ZQZZeZNPnHCgyyd1NwlzA69Eez6EVumFHJ7MzX5YBJRqR
- ZHERA+GGHVMY2cSQZQEuiyyWqUF8xS/1/MG5qX26PcgZJwBrTpTCIRgNGaSfEEXPdais
- q88/1Zz8DU7yTDVm5WLguZAwE0tPE1LGyOf189KmiM4RJTSjPlBNL8ucXxPWPTKjXcuX
- Lcd+BHJYkikFpWQ3vKDvt45y6LmogoXlsW14dI6yIDThVls3DXzuvd0R3lK1v1rTkLWa
- P22Q==
-X-Gm-Message-State: AOJu0YymRHQFPqLrJRJVZ96t7z7aYk9WhStd2DLq++EP/AyemczcjENP
- i421Fg+rZXXlzidnaOcsfNq6y2j4lS530mdgNFZJzoJoAj6qFDMvI8xvqxgPikVjJnGMPKCacV0
- D0kMZTjhBBDxXMTj7X8cwo+CcvyUHkSzpQGWD4osVEagDS4fKVlAlGA0713JSBZvNU+BdvdsN2D
- SkyaPMu1SkM8RHoOoU/C7+uMex0vSw/K20VDtnKQ==
-X-Gm-Gg: ATEYQzzSNKuozqH1gABkAKrrADhszuKIyYSknr7RwHOUvbvDPDZ7a8aqcAVNOIlYS0S
- ztp9w0CZW3B7ElL7ABsnZULZmSg8mISuPr0ZLt2kfnH6wiU8fw2nXNyH0ec0xYplNORkhM8TWq/
- NplKOO2CahH1+lKqtywV8xODTnPCb6HBLz6nPqFTDNuisuzip/wQdUb64rISxTR+yAw9cRIS4jJ
- Y5eZ/wwr+m9uy86udVvZhFg3qIlsozC1/IqZzjQtXnouhSorqicG/D4X3K6EI09sewckLCztsM9
- LoOmZuwTIGmKKoaLDvjQdWjvLBoYSLk+eyw0EnNAhjKBGrWIkF4twGHcVY6yVmNyNf6IO8IvfvV
- a3a7yEzyAsRMC2v9YhI5nnfQx4l6WJR3LNJeNv2hbiMzF3L7z8uAzyFrsfdKQX5lmDa8TdZLYdr
- pNLxRmag==
-X-Received: by 2002:a05:620a:2847:b0:8ca:2086:a148 with SMTP id
- af79cd13be357-8cd6d453d81mr1669284685a.28.1773088843557; 
- Mon, 09 Mar 2026 13:40:43 -0700 (PDT)
-X-Received: by 2002:a05:620a:2847:b0:8ca:2086:a148 with SMTP id
- af79cd13be357-8cd6d453d81mr1669279685a.28.1773088842894; 
- Mon, 09 Mar 2026 13:40:42 -0700 (PDT)
+ bh=IKLe9iiWMkSZNOnyjvHZMWwPo4cDtCVEG53p9Vctsgk=;
+ b=s3CboqOEfOvTJJsspsWxyScG+E0/ygDhzUardJ9wgBfNpK8T5RmjfljpSAvLqf5DoH
+ 8gL5QpMHALUBA7q6wN96wGxnh8PBolS1IhTBHjRkoIwNsARHFxbVdgbBStyBRheEqD3T
+ 1rngfYcqI33JOEWqsPyCV0YH35CPnYcEWMdpNZloJeUgghv1KaLchYmYfrB45g/0BVs4
+ 7pIlFlt3eKzd1Gg4UPYhX4gUKhSjYnuXCW+AHNOoKjcvQMgQ63tfd9VsqAo6WuiSUqml
+ 6aFSc4Ja+9sDTTHtucpT67EngjQqL7RUU+uMKALrnHUk3O4gqQWaYAZQV015N3KMzv1F
+ Ldkg==
+X-Gm-Message-State: AOJu0Yyz3azRNIIL6FMWNb8OnN9vJM5ce/7z3jSglwfm33HVxXVe7pbH
+ ajXuuTKOkWkZQZgASB2zmYEJkVKYk0ZCWg5xsjr/o66Lps5sICMaMa4V9RBjWUet+0pOvTmTEbn
+ nyzsRzFaqMHRKVi6IGsghi1xntExkorXQ+sVG0yfJJfF73UeHtdPKnpQD+PrwLAOQugIOwIdYn1
+ p5n06dhqb3WCIXpZ2YY7ay3O89KP8UkmEYRy0IMg==
+X-Gm-Gg: ATEYQzyzOXfuI83z1ZK+TrTUE9FM7HraefMPXKuiDPa6tHh1rnpEiMUSV8L9QaoGRWw
+ C1B3vvhEOlB4PADQSLzlBWRzjZbD+MOGUU59wdi9OEpU2h3C9qqAPnwhVEcrEZMwWFK7KZ2IUKJ
+ KkuEPyDitIsvyi3QMoLaEuWDY7Kl179hLG65Mmi/EXUHg6eFpzY99ZTZB3Vtl3sxxlmagL2ncKt
+ iuI0j1qnKZqPuzQqEZLKwnonjVfdP+maoiE6yPkX1yWQQDLmxSQimKffbnb+2SW0alLRf8oikem
+ cv97j08TqCMWPsi+2rCX/lZ1YCApXEe/izKVB7tlfujjlhN/EKjncLf9I1pIkb2VV5QWHnqzxVr
+ i9t5Az9LmVNteuaLs//r+TrG8eGSqunumpnKSAOZLXDuomJe2wKQc/QjHDPQYtKObKyZ9hR8KJD
+ 6WrukaTA==
+X-Received: by 2002:a05:620a:444d:b0:8cd:8a8b:8cf6 with SMTP id
+ af79cd13be357-8cd8a8b9552mr537873285a.10.1773088832660; 
+ Mon, 09 Mar 2026 13:40:32 -0700 (PDT)
+X-Received: by 2002:a05:620a:444d:b0:8cd:8a8b:8cf6 with SMTP id
+ af79cd13be357-8cd8a8b9552mr537868585a.10.1773088832024; 
+ Mon, 09 Mar 2026 13:40:32 -0700 (PDT)
 Received: from x1.local
  (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cd8576db0esm332951885a.47.2026.03.09.13.40.41
+ af79cd13be357-8cd8576db0esm332951885a.47.2026.03.09.13.40.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 13:40:41 -0700 (PDT)
+ Mon, 09 Mar 2026 13:40:30 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PULL 17/18] system/xen: Constify various MemoryRegion arguments
-Date: Mon,  9 Mar 2026 16:40:06 -0400
-Message-ID: <20260309204007.1709441-18-peterx@redhat.com>
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ "David Hildenbrand (Arm)" <david@kernel.org>
+Subject: [PULL 11/18] memory: drop RamDiscardListener::double_discard_supported
+Date: Mon,  9 Mar 2026 16:40:00 -0400
+Message-ID: <20260309204007.1709441-12-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260309204007.1709441-1-peterx@redhat.com>
 References: <20260309204007.1709441-1-peterx@redhat.com>
@@ -123,119 +124,160 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Mark the MemoryRegion structure const when is only accessed read-only.
+This was never turned off, effectively some dead code.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/r/20260309183536.88976-4-philmd@linaro.org
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Peter Xu <peterx@redhat.com>
+Acked-by: David Hildenbrand (Arm) <david@kernel.org>
+Link: https://lore.kernel.org/r/20260226140001.3622334-3-marcandre.lureau@redhat.com
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- include/system/xen-mapcache.h | 2 +-
- include/system/xen.h          | 6 +++---
- hw/xen/xen-hvm-common.c       | 8 ++++----
- hw/xen/xen-mapcache.c         | 2 +-
- hw/xen/xen_stubs.c            | 6 +++---
- 5 files changed, 12 insertions(+), 12 deletions(-)
+ include/system/memory.h       | 12 +-----------
+ hw/vfio/listener.c            |  2 +-
+ hw/virtio/virtio-mem.c        | 22 ++--------------------
+ system/ram-block-attributes.c | 23 +----------------------
+ 4 files changed, 5 insertions(+), 54 deletions(-)
 
-diff --git a/include/system/xen-mapcache.h b/include/system/xen-mapcache.h
-index c46190dd0c..114d1929c8 100644
---- a/include/system/xen-mapcache.h
-+++ b/include/system/xen-mapcache.h
-@@ -16,7 +16,7 @@ typedef hwaddr (*phys_offset_to_gaddr_t)(hwaddr phys_offset,
- bool xen_map_cache_enabled(void);
- void xen_map_cache_init(phys_offset_to_gaddr_t f,
-                         void *opaque);
--uint8_t *xen_map_cache(MemoryRegion *mr, hwaddr phys_addr, hwaddr size,
-+uint8_t *xen_map_cache(const MemoryRegion *mr, hwaddr phys_addr, hwaddr size,
-                        ram_addr_t ram_addr_offset,
-                        uint8_t lock, bool dma,
-                        bool is_write);
-diff --git a/include/system/xen.h b/include/system/xen.h
-index 9a7c53f283..43b857e4d1 100644
---- a/include/system/xen.h
-+++ b/include/system/xen.h
-@@ -30,7 +30,7 @@ extern bool xen_allowed;
+diff --git a/include/system/memory.h b/include/system/memory.h
+index d4793a08a7..d6b5ca13c2 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -580,26 +580,16 @@ struct RamDiscardListener {
+      */
+     NotifyRamDiscard notify_discard;
  
- void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length);
- void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
--                   struct MemoryRegion *mr, Error **errp);
--bool xen_mr_is_memory(MemoryRegion *mr);
--bool xen_mr_is_grants(MemoryRegion *mr);
-+                   const MemoryRegion *mr, Error **errp);
-+bool xen_mr_is_memory(const MemoryRegion *mr);
-+bool xen_mr_is_grants(const MemoryRegion *mr);
- #endif
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index eb7f6270a0..62d88804c4 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -23,19 +23,19 @@
- MemoryRegion xen_memory, xen_grants;
+-    /*
+-     * @double_discard_supported:
+-     *
+-     * The listener suppors getting @notify_discard notifications that span
+-     * already discarded parts.
+-     */
+-    bool double_discard_supported;
+-
+     MemoryRegionSection *section;
+     QLIST_ENTRY(RamDiscardListener) next;
+ };
  
- /* Check for any kind of xen memory, foreign mappings or grants.  */
--bool xen_mr_is_memory(MemoryRegion *mr)
-+bool xen_mr_is_memory(const MemoryRegion *mr)
+ static inline void ram_discard_listener_init(RamDiscardListener *rdl,
+                                              NotifyRamPopulate populate_fn,
+-                                             NotifyRamDiscard discard_fn,
+-                                             bool double_discard_supported)
++                                             NotifyRamDiscard discard_fn)
  {
-     return mr == &xen_memory || mr == &xen_grants;
+     rdl->notify_populate = populate_fn;
+     rdl->notify_discard = discard_fn;
+-    rdl->double_discard_supported = double_discard_supported;
  }
  
- /* Check specifically for grants.  */
--bool xen_mr_is_grants(MemoryRegion *mr)
-+bool xen_mr_is_grants(const MemoryRegion *mr)
+ /**
+diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
+index 1087fdc142..960da9e0a9 100644
+--- a/hw/vfio/listener.c
++++ b/hw/vfio/listener.c
+@@ -283,7 +283,7 @@ static bool vfio_ram_discard_register_listener(VFIOContainer *bcontainer,
+ 
+     ram_discard_listener_init(&vrdl->listener,
+                               vfio_ram_discard_notify_populate,
+-                              vfio_ram_discard_notify_discard, true);
++                              vfio_ram_discard_notify_discard);
+     ram_discard_manager_register_listener(rdm, &vrdl->listener, section);
+     QLIST_INSERT_HEAD(&bcontainer->vrdl_list, vrdl, next);
+ 
+diff --git a/hw/virtio/virtio-mem.c b/hw/virtio/virtio-mem.c
+index c1e2defb68..251d1d50aa 100644
+--- a/hw/virtio/virtio-mem.c
++++ b/hw/virtio/virtio-mem.c
+@@ -331,14 +331,6 @@ static int virtio_mem_notify_populate_cb(MemoryRegionSection *s, void *arg)
+     return rdl->notify_populate(rdl, s);
+ }
+ 
+-static int virtio_mem_notify_discard_cb(MemoryRegionSection *s, void *arg)
+-{
+-    RamDiscardListener *rdl = arg;
+-
+-    rdl->notify_discard(rdl, s);
+-    return 0;
+-}
+-
+ static void virtio_mem_notify_unplug(VirtIOMEM *vmem, uint64_t offset,
+                                      uint64_t size)
  {
-     return mr == &xen_grants;
+@@ -398,12 +390,7 @@ static void virtio_mem_notify_unplug_all(VirtIOMEM *vmem)
+     }
+ 
+     QLIST_FOREACH(rdl, &vmem->rdl_list, next) {
+-        if (rdl->double_discard_supported) {
+-            rdl->notify_discard(rdl, rdl->section);
+-        } else {
+-            virtio_mem_for_each_plugged_section(vmem, rdl->section, rdl,
+-                                                virtio_mem_notify_discard_cb);
+-        }
++        rdl->notify_discard(rdl, rdl->section);
+     }
  }
  
--void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size, MemoryRegion *mr,
--                   Error **errp)
-+void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
-+                   const MemoryRegion *mr, Error **errp)
+@@ -1824,12 +1811,7 @@ static void virtio_mem_rdm_unregister_listener(RamDiscardManager *rdm,
+ 
+     g_assert(rdl->section->mr == &vmem->memdev->mr);
+     if (vmem->size) {
+-        if (rdl->double_discard_supported) {
+-            rdl->notify_discard(rdl, rdl->section);
+-        } else {
+-            virtio_mem_for_each_plugged_section(vmem, rdl->section, rdl,
+-                                                virtio_mem_notify_discard_cb);
+-        }
++        rdl->notify_discard(rdl, rdl->section);
+     }
+ 
+     memory_region_section_free_copy(rdl->section);
+diff --git a/system/ram-block-attributes.c b/system/ram-block-attributes.c
+index 9f72a6b354..630b0fda12 100644
+--- a/system/ram-block-attributes.c
++++ b/system/ram-block-attributes.c
+@@ -61,16 +61,6 @@ ram_block_attributes_notify_populate_cb(MemoryRegionSection *section,
+     return rdl->notify_populate(rdl, section);
+ }
+ 
+-static int
+-ram_block_attributes_notify_discard_cb(MemoryRegionSection *section,
+-                                       void *arg)
+-{
+-    RamDiscardListener *rdl = arg;
+-
+-    rdl->notify_discard(rdl, section);
+-    return 0;
+-}
+-
+ static int
+ ram_block_attributes_for_each_populated_section(const RamBlockAttributes *attr,
+                                                 MemoryRegionSection *section,
+@@ -191,22 +181,11 @@ ram_block_attributes_rdm_unregister_listener(RamDiscardManager *rdm,
+                                              RamDiscardListener *rdl)
  {
-     unsigned target_page_bits = qemu_target_page_bits();
-     unsigned long nr_pfn;
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index a3c162cd4c..85cf0cf359 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -460,7 +460,7 @@ tryagain:
-     return mc->last_entry->vaddr_base + address_offset;
- }
+     RamBlockAttributes *attr = RAM_BLOCK_ATTRIBUTES(rdm);
+-    int ret;
  
--uint8_t *xen_map_cache(MemoryRegion *mr,
-+uint8_t *xen_map_cache(const MemoryRegion *mr,
-                        hwaddr phys_addr, hwaddr size,
-                        ram_addr_t ram_addr_offset,
-                        uint8_t lock, bool dma,
-diff --git a/hw/xen/xen_stubs.c b/hw/xen/xen_stubs.c
-index a39efb5062..f830768d99 100644
---- a/hw/xen/xen_stubs.c
-+++ b/hw/xen/xen_stubs.c
-@@ -19,12 +19,12 @@ void xen_hvm_modified_memory(ram_addr_t start, ram_addr_t length)
- }
+     g_assert(rdl->section);
+     g_assert(rdl->section->mr == attr->ram_block->mr);
  
- void xen_ram_alloc(ram_addr_t ram_addr, ram_addr_t size,
--                   struct MemoryRegion *mr, Error **errp)
-+                   const MemoryRegion *mr, Error **errp)
- {
-     g_assert_not_reached();
- }
+-    if (rdl->double_discard_supported) {
+-        rdl->notify_discard(rdl, rdl->section);
+-    } else {
+-        ret = ram_block_attributes_for_each_populated_section(attr,
+-                rdl->section, rdl, ram_block_attributes_notify_discard_cb);
+-        if (ret) {
+-            error_report("%s: Failed to unregister RAM discard listener: %s",
+-                         __func__, strerror(-ret));
+-            exit(1);
+-        }
+-    }
++    rdl->notify_discard(rdl, rdl->section);
  
--bool xen_mr_is_memory(MemoryRegion *mr)
-+bool xen_mr_is_memory(const MemoryRegion *mr)
- {
-     g_assert_not_reached();
- }
-@@ -44,7 +44,7 @@ ram_addr_t xen_ram_addr_from_mapcache(void *ptr)
-     g_assert_not_reached();
- }
- 
--uint8_t *xen_map_cache(MemoryRegion *mr,
-+uint8_t *xen_map_cache(const MemoryRegion *mr,
-                        hwaddr phys_addr,
-                        hwaddr size,
-                        ram_addr_t ram_addr_offset,
+     memory_region_section_free_copy(rdl->section);
+     rdl->section = NULL;
 -- 
 2.50.1
 
