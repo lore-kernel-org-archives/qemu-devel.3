@@ -4,78 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C54B0FCA19C
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 22:33:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 045E4FCA191
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 22:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzjA7-0001SO-HR; Mon, 09 Mar 2026 18:33:19 -0400
+	id 1vzjOD-0003Q5-5i; Mon, 09 Mar 2026 18:47:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3p0qvaQQKCk470y7w44w1u.s426u2A-tuBu1343w3A.47w@flex--rkir.bounces.google.com>)
- id 1vzjA5-0001SA-QE
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:33:17 -0400
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzjOA-0003Pw-LP
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:47:50 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3p0qvaQQKCk470y7w44w1u.s426u2A-tuBu1343w3A.47w@flex--rkir.bounces.google.com>)
- id 1vzjA4-0000ua-8y
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:33:17 -0400
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-c739120475fso2798642a12.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 15:33:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzjO8-00035V-Lu
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 18:47:50 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so9466765f8f.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 15:47:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1773095592; x=1773700392; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=/jEOSZqXvX7oqb37NNn2BCpc9o7sCwjr2f+SOIOx/JE=;
- b=YKsRtNoG38OXml/HjBAelvrElO2O2qmpJqlb1xFrBBciIqE7A2yrIFQ8DGXKSMYKxu
- 2oALm4gUXovPKUbnOe/uKfyC0pXsDGUxkLMAU6fshCYss+R+NTsjQLLKCGPoqASh7Vll
- wUJuwL23hsrQEwrMtnIQEb6bUs4qFvMzY+AfBHP7rcu3fwslD65ijoKMNwCtwnNdOhT/
- 40UtJLT6N8sApFo70AXgy6KKSDMcXvh1A6DTEltc9z3FAVt+o6f3on1Vo3O2Ml/3uJOr
- GB+a7fNCuhQpbBzgED7Ou1W1rlbfK0YXdaNGQS2YlCl5rLaXDfhgt+YZvq+KI7YFJKHp
- siXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773095592; x=1773700392;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
+ d=linaro.org; s=google; t=1773096467; x=1773701267; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=/jEOSZqXvX7oqb37NNn2BCpc9o7sCwjr2f+SOIOx/JE=;
- b=DpeLxGhT+JQJXR6EkIfoPmY5EWn6D0Opp3GSMyOpyAOFbjo8lBGrwUILr/HwhsmqO7
- 8zcgP/quLCHFnonJh/ZGBfcKeCSpbP8GTQjkQJqDIyVtgA6GvE+TxIjXQDaMNGdx0olx
- B3hs/JSPhMrvrpNeyEtudcXfPgtBtAoDie+JbBlvwM1d11ERPhZY6gu5VTX0koeHkqAe
- YMg1w0QejCIKa4zZ0MiwjjVHBPWzWfK3J3Ij6FnPnCjLqQKE33dzVx4R52DOTwMoKXk/
- NJAIGTJ/D0qXCbCR4k7gWNFa1uiK+5tqgNHbKtmHX9tOuliE2d846fkZpsoZkyysjbhZ
- B2lA==
-X-Gm-Message-State: AOJu0YyvTKEQ2TOzvkyDK8UZEXSbYA2IXgbKutQ3js6fa2+ZwmIj/6ZH
- yfw1RrQKrs3Kig9BkA8d1UQDEvN2llc+nIao37tdbJ9tWmJIy+Qhnw7EYKNG2864GHdXE6THoQ=
- =
-X-Received: from pfbmy12.prod.google.com
- ([2002:a05:6a00:6d4c:b0:824:b235:888c])
- (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:7701:b0:824:a8f2:7de7
- with SMTP id d2e1a72fcca58-829a30ca97emr8188474b3a.60.1773095591794; Mon, 09
- Mar 2026 15:33:11 -0700 (PDT)
-Date: Mon,  9 Mar 2026 22:31:16 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.53.0.851.ga537e3e6e9-goog
-Message-ID: <20260309223116.3233668-1-rkir@google.com>
-Subject: [PATCH] vmstate: assert that VMStateDescription::fields is not NULL
-From: Roman Kiryanov <rkir@google.com>
-To: peterx@redhat.com
-Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com, 
- jpcottin@google.com, Roman Kiryanov <rkir@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3p0qvaQQKCk470y7w44w1u.s426u2A-tuBu1343w3A.47w@flex--rkir.bounces.google.com;
- helo=mail-pg1-x54a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ bh=Aud/vsM8qXLxgAKvFp0agbpqFv9C+zDE18mTApxpkgY=;
+ b=aLbbFWoZTwN+6GRPni3Qo9R0UABvgRqQB3u2cW5Ejvb1Pb0MMPErPX9ontC2aGdkeq
+ YZ9UYtHVp56VBkXmV3w4f7LMo2udGCUHfm/JjV4Z2VHHDFqUGcJsbAYPAzofzKKJg1gY
+ fNuxjYzKc1fzSeJq03KT2DLH6AEdMqdAqC70XaVfZnpDtlJG6UQ/SPLED10Se9HzIfYg
+ 1POmngjxXw7sa3OUBWRwZpoX091zjuVDSmU1SODK71KERIVp+KP5UyJBCr/xQogMIii7
+ dgpfwyqG4Kc8YPiyww+M1EnIm2WSWWawdxi2+cxtk/LntmZY1DPQJzIlTSpe6p/o0NsQ
+ OkuQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773096467; x=1773701267;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Aud/vsM8qXLxgAKvFp0agbpqFv9C+zDE18mTApxpkgY=;
+ b=J6IgvgvZ7rOEFflfUXjQS7og8VpMi8cnyXg+zecg4XpZsklPi/n7QyiMBdIzwCVDP1
+ 3MPeGwlkXI+YEKHqWEqeCl8H0PD+qU/8DShheTD619OjbDUsWCoLOOwdeqJiJpsrcbru
+ Z5z09QXpFnkAtxaib78nIN/RtJrxZBxiNA/kx/ukywATXlEoumDJSOElH6HfYCgEq4NT
+ wog1y9HXiltJUro+VFQextl7HdLy28mbOE5IO6QomdjwC1BIaIV0fal+eyCE6Xp68g+/
+ h8Yc/loe4iyibTJ2+qvXTts3qzmkV/I1MQoLO49euRdDuvIo8KhAMC6zznT/rwZnbbp8
+ OhHQ==
+X-Gm-Message-State: AOJu0Yxj7tRh023eKhMn87K3TWPrqXaSnqiJp8vDNztJTS1/lMpk6BjF
+ X0n3gi759wbwua4eO1NOrDRUjmoGM0N9EIKryYnXg2w+sIckL0rjFBlOpRHQ052oGUsRrEN/MIa
+ FJbihuh4=
+X-Gm-Gg: ATEYQzxKJnv6YZEgspS4UmWQk2KUX4YBqYRCVJ8SlkQumyjTmx5ILQCh1GHbyx5g0eL
+ xPDKV+YT3WDq2R/xqc+94LbcPk+bBauAQGF5bjbi5vBXgKzb4q228JFKrb1/Gc760aWaRSBr9Wb
+ 5SgC870MzRrmja9kFld+N8DThYs60SnEu8fUe0smAo3PBRftqlbV3ExuaYkyjgsvtgmHo8mZMIx
+ q1SUuYYgNptvD3VGnnFgUpS1sImoLZbT5kFYDIqLTs5wW75l8Ww2EeMrD1uRjF0vnmwGbqIryAx
+ 6qLFybvmhi81j8LxQoLdlMDHaW5Zi50Ghv675ONuyp7otp2hIwoi9PDSy147n/n0/vha1lJOjrH
+ fY8kF4FHuvc9W4b+YrhOWH6aTuUWynYb0U/Do0Se3MF7hDl99YgONcRmVp5A0ajYjPvZBJRefH/
+ 55NCxTfD6jW8GyAMdLX5/zvzZ3JY8zZYyeWjc6zoJdpDt76G+9Z9X48eyuDfKxwRfrzasl9CPEt
+ C4S
+X-Received: by 2002:a05:6000:381:b0:439:beee:43b5 with SMTP id
+ ffacd0b85a97d-439da64f629mr23684736f8f.3.1773096466573; 
+ Mon, 09 Mar 2026 15:47:46 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dadac2a7sm30844759f8f.15.2026.03.09.15.47.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 15:47:45 -0700 (PDT)
+Message-ID: <bca933e0-83da-4518-a7f6-af3e611293c3@linaro.org>
+Date: Mon, 9 Mar 2026 23:47:45 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] target/hppa: Expand tcg_global_mem_new() ->
+ tcg_global_mem_new_i64()
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>
+References: <20260205212914.10382-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <20260205212914.10382-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,28 +104,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vmstate_save_state_v() function does not
-support NULL in VMStateDescription::fields
-and will crash if one is provided.
+On 5/2/26 22:29, Philippe Mathieu-Daudé wrote:
+> The HPPA target is a 64-bit one, so tcg_global_mem_new()
+> expands to tcg_global_mem_new_i64(). Use the latter which
+> is more explicit.
+> 
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/hppa/translate.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
- migration/vmstate.c | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 4d28364f7b..5cb173ea25 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -433,6 +433,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
-     ERRP_GUARD();
-     int ret = 0;
-     const VMStateField *field = vmsd->fields;
-+    assert(field);
- 
-     trace_vmstate_save_state_top(vmsd->name);
- 
--- 
-2.53.0.851.ga537e3e6e9-goog
-
+Patch queued.
 
