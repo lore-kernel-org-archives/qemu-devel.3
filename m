@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79B08F417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:55:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7CCF417F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:55:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcwm-0008Fu-4a; Mon, 09 Mar 2026 11:55:09 -0400
+	id 1vzcx3-0000GK-Kb; Mon, 09 Mar 2026 11:55:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwQ-0007wZ-B8
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:52 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw8-0007da-OU
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:31 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwO-0000PJ-NT
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:46 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-439aa2f8ebaso5672921f8f.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:54:43 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw5-0000NP-Mw
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:28 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439aeed8a5bso9201614f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:54:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071682; x=1773676482; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071662; x=1773676462; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=R4mjnc6tXY+cKbc3ib7GxWhkvz4lXXEfF9utxwY+JMc=;
- b=szCc/nNyqCG/yAP6TVF998kQi+RLqcq94LtRz9VgkDFDpD/T2TZzEMpT7CJEXzIojm
- 6JIddnC5HMaZBTuSX8jMbpQeqS+Y/M4yJH5cyigmJS1uegYju4FvgpjCi9CHPtErKMHw
- IrxN4ZMZlT0NV0a3+n9UMbG4b2hwDIqy5lNf6vuPDeXM/pRRLblAfneYu336leJTL7oV
- Nx6lyGSRaER0Ms40T8uMIHsUqvwSyvh6RXZnAzup79Qiuxdwm3RCYw23h1uKOVxoVd9H
- lygW8q4xZkTXsxj5FAB0bj+zRKOSqWA2SXPX33Dx4yIq9Tvu0NjokD5d2fwQaUK8r6uy
- XgqA==
+ :reply-to; bh=z5uB+oJJAcxPuGuh1DjXOASB24mbYKaB2eXGC4gPbaY=;
+ b=AR9Jfzy4NgGp2hhpMOk2vJ8fteyFzTZrTsQMv9EBad0qok5elytVn0jaYZXyvyT8+a
+ TXmpMaZMna1Xnavqe/tmylS0N8bBAhjJCIrC0BZLetC+OjR9uyiH3DfaZKGj/2Hc8AKK
+ D4R9e/Drgk2QOmEcpQ67H640+ZvYmNC1hI7PdSH8+uqCLll6Men8Cjp9zGe8GOKkbBGP
+ iL/sb4k/OgxbFblHwuSw/NuW2G9XFFEpxSVJg7eWQIj8o4NouUBgKtVNvW7/Gf3gHhG6
+ WokVo1EG/N3LvPbB3iMOw0cHQlW7sbxMyWMYA6u7OWk4IaymNx4F14CUV3X1hEI51R7h
+ yW5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071682; x=1773676482;
+ d=1e100.net; s=20230601; t=1773071662; x=1773676462;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=R4mjnc6tXY+cKbc3ib7GxWhkvz4lXXEfF9utxwY+JMc=;
- b=cLnHBEBeO5tTMdF3+YHIdQSFqd+WkCcgs/3s93uyUpDrVcy6cOc/cXhaNG6t5MFxS9
- EQWxo9LFL3hB346VnK2CWFkkszRGSA/6kBSCOacqw1b8haVmsnqDubOKG597Gaql4+MM
- Bcuxic65Gq3eKCEWIVhkJmrK7SbHACfHF5VEt+/PdVRkcfPmnyMQwl19tlBf3vYGOC+w
- m7d73F1wbT2YJHG8svmk5Akqk38HpGK+J14pcXAidTY5eUIFblWmpPN1FS7Wah1iUitk
- G9XzD56heedpA0aEvl7QgMkjV0E5JAew3FVBBV+2MMHZeoWRpyxvqOhLPVK10jbBsMxw
- 9y7g==
-X-Gm-Message-State: AOJu0YxnBH/9f25zq2S0mnjsAs6KAxT43VKF1FMYPDufwEqxqnq/jjS4
- tYuEvfsqtwRpVqsMDN/hZXcNc9fCWA6ENJA9ulTxc/iEsYpzEQE2Een0nO1xneOQJtKQBq2hltR
- O1cQn6og=
-X-Gm-Gg: ATEYQzw6Mc6zzXqNdjlmxrI6TTfSx8SNaTHMEfnVOjWXR8S8YujmxlQ7gkWP3ygVjks
- 96wSzMKiyza3cv+zHUyKXduIvbTXOlxbNotROZbPQQbu41sYXjECGx29lqdIhPlfEgQ5kNmK0CZ
- qfzWWCJG+WVBonEnAXCYcCRSV7sDGfMMY6Tiv58GdJtspQUGxnyZ3+/LWUiH6o16u9lSuCVCvda
- TnvJt00XoHjgL1BSL8Jm+5m2xpqtBgjI1b8JIMkyyYreRAs+7dt09nYpANxEzhTr4ZsFD/uPKFd
- nCtrklkaTC/WD+fnq53ngn6mMWawwNCWkGs/u1GiKHUdOEU5IlpC23ePzJ9Ba/cxoa8x9icNRnO
- u6ltyp9ODSi6ETDxFSSUt2mRWsH54tXj6Ff7jbf1EgCyQcdh55kde+urHWQR/t0U87J6w5GiQ0O
- bG9nEkRScbQiV++/DIBC4LvSM4jgbCKeRcFFHrB9cVhx5OzdBTJXDcPzlah1OmaTXMmTkWeKsjK
- WmA/P+Xl3I=
-X-Received: by 2002:a5d:64e7:0:b0:439:af81:1b21 with SMTP id
- ffacd0b85a97d-439da118cbamr19063337f8f.0.1773071682485; 
- Mon, 09 Mar 2026 08:54:42 -0700 (PDT)
+ bh=z5uB+oJJAcxPuGuh1DjXOASB24mbYKaB2eXGC4gPbaY=;
+ b=XjjY3BrpX8SvmPm3E929swrG7Y7JohksHmkci2eSai/Ur8QM9hpqWH/BjC6R8cxs/h
+ rGgUtYMF3Bzkchswkw5bwllv3nOA08F47ZlWuV1KwYEOHSMv/BStUcZ/gcSyT2o+u9Mu
+ od25qHHh7o6CEdA5ksHrGVM7p9TsjyzBvJRvT8DSDgwjOVa8HD3hhI2VcyJL4SIinRG3
+ 69iPIxa/H3wRV+rwEGkSvnsc7Qv17GjxeZxrh67XhZx3kCEp4G8JfIazQKA/y9Y8CXJO
+ CjPEK+deRp2g+TIl2d2NjnR4DkI9ZvdzpH7UIbXV4cMUfVrk5sdFLYQJknEcRxwiVh03
+ Ulyw==
+X-Gm-Message-State: AOJu0YwVQVNt0c72/VnJrgOcuqjsYc6vMgdlbk35Vw9+6pkwzF5TG3s1
+ 6Y5tXnpMOnNp0eekee4+iVbpZWFJi9XtAPuxMSrJYssqIgNQtN52rfJ8H8U6/5l58IU0KrqgBet
+ TsTCn9oU=
+X-Gm-Gg: ATEYQzxDh6rZ4nv4j/GgHTJwr0D56neoxw+hccuhfV3AHMf/Q8M68xd7VZlGIAA3dRG
+ 6adHksO22wn6arxRlLHaSrHVBte5JGm7VRpYqiqe8Sdhl1o4p1yBXEMzzi5BYJ1mcpX888pZB99
+ X0ZaT6HVs9O3HBVwqxXqadB15MUytQKPO9i5Eorc99BS0rD8ycUT4E5w0KaOggyc9YjKj2/Qx6q
+ FNoyAdpZGAuEqh589uT3LNew1hCkctdyT0flLHyoGBg3/yiUppuTto6kzHD4VO2G4j3C1MFUG+F
+ kAGFAWGkAbUSoO1aGChkQhCTi9Sfdg+4hG8NzLuikqBKDIuchOPwqI+b0We2vpe3ryl2y2Q54aL
+ ZM90moviwvV55yvEQ1JX3996/h+iqYt58iWRKFI3qC31+IH2xsBUfBgIscVn+3zeboTNdDCkzZd
+ dhsK6SgxO4no1haDd5/8nznNYerm/CJzpxf8AkQQvxJa+t2dK1YmkhyptEg508wNWnauMKb0uk
+X-Received: by 2002:a05:6000:4205:b0:439:c9d0:5fd4 with SMTP id
+ ffacd0b85a97d-439da656affmr20384401f8f.16.1773071662253; 
+ Mon, 09 Mar 2026 08:54:22 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae2bdf8sm28802948f8f.25.2026.03.09.08.54.41
+ ffacd0b85a97d-439dae3d98asm30879656f8f.30.2026.03.09.08.54.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:54:41 -0700 (PDT)
+ Mon, 09 Mar 2026 08:54:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 21/49] coreaudio: Remove extra whitespaces
-Date: Mon,  9 Mar 2026 16:51:51 +0100
-Message-ID: <20260309155219.62400-22-philmd@linaro.org>
+Subject: [PULL 18/49] ui/dbus: fix Unix.Map proxy leak
+Date: Mon,  9 Mar 2026 16:51:48 +0100
+Message-ID: <20260309155219.62400-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,101 +98,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Remove extra whitespaces around parentheses.
-
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-ID: <20260304-coreaudio-v8-2-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+Fixes: commit 48b7ef0f0 ("ui/dbus: implement Unix.Map")
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260122113144.2046899-4-marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- audio/coreaudio.m | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ ui/dbus-listener.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index cbda4f14369..bc9ab7477b6 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -272,7 +272,7 @@ static int coreaudio_buf_unlock(coreaudioVoiceOut *core, const char *fn_name)
- #define COREAUDIO_WRAPPER_FUNC(name, ret_type, args_decl, args) \
-     static ret_type glue(coreaudio_, name)args_decl             \
-     {                                                           \
--        coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;     \
-+        coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;      \
-         ret_type ret;                                           \
-                                                                 \
-         if (coreaudio_buf_lock(core, "coreaudio_" #name)) {         \
-@@ -313,13 +313,13 @@ static OSStatus audioDeviceIOProc(
-     coreaudioVoiceOut *core = hwptr;
-     size_t len;
- 
--    if (coreaudio_buf_lock (core, "audioDeviceIOProc")) {
-+    if (coreaudio_buf_lock(core, "audioDeviceIOProc")) {
-         inInputTime = 0;
-         return 0;
-     }
- 
-     if (inDevice != core->outputDeviceID) {
--        coreaudio_buf_unlock (core, "audioDeviceIOProc(old device)");
-+        coreaudio_buf_unlock(core, "audioDeviceIOProc(old device)");
-         return 0;
-     }
- 
-@@ -329,7 +329,7 @@ static OSStatus audioDeviceIOProc(
-     /* if there are not enough samples, set signal and return */
-     if (pending_frames < frameCount) {
-         inInputTime = 0;
--        coreaudio_buf_unlock (core, "audioDeviceIOProc(empty)");
-+        coreaudio_buf_unlock(core, "audioDeviceIOProc(empty)");
-         return 0;
-     }
- 
-@@ -349,7 +349,7 @@ static OSStatus audioDeviceIOProc(
-         out += write_len;
-     }
- 
--    coreaudio_buf_unlock (core, "audioDeviceIOProc");
-+    coreaudio_buf_unlock(core, "audioDeviceIOProc");
-     return 0;
- }
- 
-@@ -563,7 +563,7 @@ static OSStatus handle_voice_change(
- static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
- {
-     OSStatus status;
--    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;
-+    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
-     int err;
-     Audiodev *dev = hw->s->dev;
-     AudiodevCoreaudioPerDirectionOptions *cpdo = dev->u.coreaudio.out;
-@@ -579,7 +579,7 @@ static int coreaudio_init_out(HWVoiceOut *hw, struct audsettings *as)
-     obt_as = *as;
-     as = &obt_as;
-     as->fmt = AUDIO_FORMAT_F32;
--    audio_pcm_init_info (&hw->info, as);
-+    audio_pcm_init_info(&hw->info, as);
- 
-     core->frameSizeSetting = audio_buffer_frames(
-         qapi_AudiodevCoreaudioPerDirectionOptions_base(cpdo), as, 11610);
-@@ -615,7 +615,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
- {
-     OSStatus status;
-     int err;
--    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;
-+    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
- 
-     status = AudioObjectRemovePropertyListener(kAudioObjectSystemObject,
-                                                &voice_addr,
-@@ -636,7 +636,7 @@ static void coreaudio_fini_out (HWVoiceOut *hw)
- 
- static void coreaudio_enable_out(HWVoiceOut *hw, bool enable)
- {
--    coreaudioVoiceOut *core = (coreaudioVoiceOut *) hw;
-+    coreaudioVoiceOut *core = (coreaudioVoiceOut *)hw;
- 
-     core->enabled = enable;
-     update_device_playback_state(core);
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 407719fc1e0..46264839d86 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -960,8 +960,8 @@ dbus_display_listener_dispose(GObject *object)
+     g_clear_object(&ddl->conn);
+     g_clear_pointer(&ddl->bus_name, g_free);
+     g_clear_object(&ddl->proxy);
+-#ifdef WIN32
+     g_clear_object(&ddl->map_proxy);
++#ifdef WIN32
+     g_clear_object(&ddl->d3d11_proxy);
+     g_clear_pointer(&ddl->peer_process, CloseHandle);
+ #ifdef CONFIG_PIXMAN
 -- 
 2.53.0
 
