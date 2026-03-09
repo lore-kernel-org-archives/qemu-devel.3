@@ -4,119 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DF630F4181F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:19:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A02D3EF3717
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:19:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzeGB-0002nE-M3; Mon, 09 Mar 2026 13:19:18 -0400
+	id 1vzeGg-00039Q-RN; Mon, 09 Mar 2026 13:19:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzeFg-0002Zy-Ui
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:18:54 -0400
-Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzeGE-0002qm-Ae
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:19:21 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzeFc-00063u-Mg
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:18:43 -0400
-Received: by mail-pf1-x42a.google.com with SMTP id
- d2e1a72fcca58-82984c077b2so2071400b3a.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:18:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzeG0-00065l-0x
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:19:06 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-64c9cabfe5dso14722698d50.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:19:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773076742; cv=none;
+ d=google.com; s=arc-20240605;
+ b=M2dgGcF+hHNeDHm/IgOJSBKwXFLar/8YAjiA2DL+pCwq3uVszqm4MzAid2zZu7U+dW
+ H34Jvp3JZo52SgpselzX4cm8fw/VdexgRO5oGI6d/PyIHRarp7eJiE6RUaSul+xz2woc
+ PAR09IHAoHIfGLusAO2O+sTy0810xax52zSXRdVJb25B1/y8kKqTxNLQ4Q64IT2Kev0f
+ jaMX4I/wj3CaEAlBEREbwVMAX9VyvQWIV0Ukg+Kzm5aTtCOCOYQKkGOY6iOA0GXDgEGE
+ Crk7etPAHQbzHROyhf9czyN/unVD/kCFGRF9pwunU+AihOz4cIJGYSCM5QiTSGkA04Yi
+ lHng==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=GYpFmHBT46R/83E68UmtkaJSh+72l/my4RpOp9Za3ew=;
+ fh=6kJ3CohSxQ+7EgnARanNFMAgatAnP0uu5SOkx3O7QGs=;
+ b=bPRFd1T/E+U+nckj14yz/SLRXfr6RH/4oVaGNrXGx9500ZAy9adoT+oLDWzHxvlkcj
+ yDgYZHSTcIXuHC/ffscHKCRACPAo30MyLDPABGYpUkwt6B3uRCO1umUBSY8HAA7xAp2m
+ yCjJk5Dw2+E/DnrQYM003pbZhhk4kug7A//rBE7z8d0CYD/3SN9FjpT89SSXRbRmpXso
+ /e3jSkWBc3cAK//uXxb2hCuYbQ3c7Rd4nMPIE3Qe9u7B6Aa0wLmy/PUjwQsR22SUFU5Y
+ 4jglxgDPHwfzGn7s+wGSSwFK/VQ2czy6eQTKDA55EbApWreRTSpIS4u3TvpFu6VF+6Zk
+ QRRQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773076719; x=1773681519; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1SHZVk1p5DXSxoc1YpVBT7c4rDwJos0l3tnRPrksqR0=;
- b=jzDfymFSRkRfhqLcNgIVgZpoKaNUFBGByRMkoX6SSbPiEWqACabeczhyWkLCPlj0Jf
- sKoDXCllQhtx+/aL+PaclIpTboVRJj3chE3Lac4vtaepgT/YYd2ewvDz5uAtUQedeQIS
- TTf8xenzsUaGjJZbmu4SQffMC2URwyMLVakR+ZIbONocjoBY7ExBrrMpsB87FiQzacKe
- Kvh1NEOPJDuH8gHfBimyaymtjxjWcbsI9YrDd0gDZ+xC7m95cKBfpeZLphUMZcZgZwsn
- vlSYUwfP3O4ut5aB9/O/6etKyGVFCNYmh3T/aVNRo+sXhv7897zXrVCI7/3F2fBWSMlA
- qKLg==
+ d=linaro.org; s=google; t=1773076742; x=1773681542; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=GYpFmHBT46R/83E68UmtkaJSh+72l/my4RpOp9Za3ew=;
+ b=lsHTEz6cBN1jDKEntoZk3LFpwvN6c8eqH6i6SJtDtu5tWOdKAt2qMrN6B916q5PK59
+ r4XJOZ0bZwBahSAaqGDxRJxvTaTqpksPr3F1dQQUwubMacM9F3tYGZmmwGgu/SfhtfzD
+ DkXrZENXP0F+MElUu+50NC71x8bSx9mOrBfsrXbZGq2nTy2IhPEPW89mw4HhZp1pz4Bp
+ nnZSwSwWWcAbmclZw5WZR7yaDS5j9kezSVf+L1W2u5xNbAyXbBiPFRKhPid4z7Nf0xpn
+ dnkfAlKDLLvkJtmjQUhhr8ybU/UvM6cZ/KjXtnFlk0pGW9j+ixptxqcssuPi07/6MAiy
+ wFZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773076719; x=1773681519;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1SHZVk1p5DXSxoc1YpVBT7c4rDwJos0l3tnRPrksqR0=;
- b=DUI36yl8JkofwRfbWs9sjIFaGhSvAvrY/qqxJxoV0xK5AotGFTGttjkLySjHTEwmAP
- U0sHMqFtFfEV72XA5rXhxwsKNv4VHmOkrBuwOfME1h/J41oOArnY7kJE3kr7sb6tmOnh
- sdyKNNFE+3QswJ4anbFGTZJ/KWPbWWptlU1n8n7hYfUfZYUUeqINWuefdGb0EEs4Uc/n
- eAy7VIWyLtlvWx6hfhLCscwpK7qdwwzkXwCS+V1E19g19n2ox2UE9j7O2Ldq9eXONzSE
- e58S4hNMGcEM1IgiidlwcPUFP9uDQaizV3JmGo4MdwaGhobcBVldDE1C8ZQyLlpIA9rc
- EUlA==
-X-Gm-Message-State: AOJu0Yw2VNf4euq+DE7MF9DZ22xXXo48OXHfCAtnVP1pATpXl04WSQcC
- RJIutIqNdV1gBjCj7uwdN2wLlBy9fd+fisT3k/z7SlBXo52P8ZZn1xjJc5Us+nO4XsI=
-X-Gm-Gg: ATEYQzxYp1OFxfNsXgsi2D75dQnuSymG5oxUjto+YG6AvS3XZlF0X/yvy/vyUiX7OtY
- yC2FwNcvIvtqjz+T7zz8AMIayqJWYUuZYLrwHt+EIbzjct41B3UrYfse+4eahaaj9uYBeHR7sey
- OmKTVZKc+vaulIWj2gqZj7bWVC5ELHnmOS9QpNhzrXKUT+As15okboJjzmvlitjc3bXr53C3ts7
- Q1Swlw90B9edVq991LW6OxSdrZFrvXs8YS2B0Hfo0F6D3td0zGNu80De223rMpLKXs+WeARMlL2
- 3Z3SYsR24lXkJVIZ0pTD4f0FNhcqN33uoc0mY7dgQQ9lgFgOV0TP2DcX0ubMFhMhHqvk65NgMIL
- pK8USPIGAJw961IOAxK5VcnbD33A9HJij5FCji4h4RI72QjApBJEnfAWfaCwzgkJsYinji7PEer
- Almf++TcW/fG3/sanFwKJrKou0jjIG0CXuAv0pljzIUiF98aEjp/wCwS2MSFjNw/es0Opx
-X-Received: by 2002:a05:6a00:3d01:b0:7b9:8142:96f4 with SMTP id
- d2e1a72fcca58-829a2e4ab99mr10999036b3a.21.1773076718578; 
- Mon, 09 Mar 2026 10:18:38 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-829aeea86b9sm11257368b3a.34.2026.03.09.10.18.37
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 10:18:38 -0700 (PDT)
-Message-ID: <9f1b74e5-0741-487e-a549-bfa64c8e2146@linaro.org>
-Date: Mon, 9 Mar 2026 10:18:37 -0700
+ d=1e100.net; s=20230601; t=1773076742; x=1773681542;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GYpFmHBT46R/83E68UmtkaJSh+72l/my4RpOp9Za3ew=;
+ b=Iop/thGo6grIj9SCMXx/a0P5cM/B0oWX0Qie9tbriMyIo5l/erHh9fI+WPEmrRMKec
+ LdTabnjeFGBnyA7iQQK1VA1bfXihRCPfjZ5ddS1MPRydATL7/z8xgD4oZIQFlPxaIrgM
+ KJeC8pF/LVYkNrnYQdhRHtWAkvy7veo3veZj3yNjkzYIS7ac6j2Vw7iZZN5K7wUVRNyc
+ Zw2HYSBY1A3iYpGhyJOHkMUQ4ow4vk8GgWJQVscVFhvjUVJy5R3ZwhRFFNCL0zLy5Zmy
+ sGy3pj/47GECJ3vmAeFZG/K9M2FUGPXmcGugkc7WRrqsBBSerEb6ric5UdNjcdwWZVnz
+ W5Mg==
+X-Gm-Message-State: AOJu0YwbR3dmPpK1AS2aP18kqKnl0au17IC/LvW/MKE6/XXiLZjAdG1K
+ 7H9PPkGhdNCQVivGWjqpwM342OCiudm/Eckg80x2qjVO1eUMkW+tkx3RB4x19/6pf3/ZRIS9+e1
+ FWmZdhhbrCFSnUdVR4iUHyi34C2pDoxvPYvv0xzxUQQ==
+X-Gm-Gg: ATEYQzyvgey/pIFB5Arw+S28Tf1kTab/GSYiRRe3a8qchfbSRyCJOn2BdQauJkk116k
+ WRCXqD3T0yAd/nr7XO8iOUaIWMIoRMdh/jFKgm73ghHFn0dqzUDto3GBwWAbmSB39ERxogZDRTL
+ jBHMiIa7yorp+lrYUopN7IP1x+uEU4ZLU7lnIxYvbe5l1TvT+n+p4eb7/2FkAWMTR72soKoAraw
+ 05NLwvXb4eTGwfYzyqap5S+nuJD+M+9JmsgdGiIvMjIALpCbMrKCWutJxBqD6BTzvbGqd0gSVm5
+ Bu6gf26+5IRldjTu9GbZBzDofeY5JNvtjhv5YehRB2UFbd5uJR8injNxBsIzW9A2hLM=
+X-Received: by 2002:a05:690e:42c9:b0:64c:ec30:9dd8 with SMTP id
+ 956f58d0204a3-64d5a2545fcmr265568d50.47.1773076742155; Mon, 09 Mar 2026
+ 10:19:02 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial] plugins: add missing docstrings to qemu-plugin.h
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>,
- Florian Hofhammer <florian.hofhammer@epfl.ch>
-Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, alex.bennee@linaro.org,
- richard.henderson@linaro.org
-References: <20260309-add-missing-plugin-docs-v1-1-41dddcd177c8@epfl.ch>
- <CAFEAcA_WAnfxtCgfhX4oGa7eJhvs9aWgsU46CGGzgqNfBX28Dg@mail.gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CAFEAcA_WAnfxtCgfhX4oGa7eJhvs9aWgsU46CGGzgqNfBX28Dg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42a.google.com
+References: <20260309130730.20526-1-farosas@suse.de>
+In-Reply-To: <20260309130730.20526-1-farosas@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Mar 2026 17:18:50 +0000
+X-Gm-Features: AaiRm53O3Ba-9ugEemErdjGtAyKxjCWB_MISsSzmugW9GhB6A4M3mgvcFMHATsY
+Message-ID: <CAFEAcA-kDs5i0ZwUQRe89iFzVWjbnjZC9cLv30BUvcQxMQ87+w@mail.gmail.com>
+Subject: Re: [PULL 00/22] Migration patches for 2026-03-09
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -139,73 +113,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 9:35 AM, Peter Maydell wrote:
-> On Mon, 9 Mar 2026 at 16:22, Florian Hofhammer
-> <florian.hofhammer@epfl.ch> wrote:
->>
->> This patch adds docstrings for typedefs and function declarations in
->> include/plugins/qemu-plugin.h that were previously missing. This
->> resolves inconsistencies in the docs, e.g., the description for
->> qemu_plugin_read_register() referring to qemu_plugin_register_flush_cb()
->> but code cache flush callbacks not being documented themselves.
->>
->> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
-> 
-> I don't know this API either, so a couple of questions below
-> for those who do:
-> 
->> +/**
->> + * enum qemu_plugin_mem_rw - type of memory access
->> + *
->> + * @QEMU_PLUGIN_MEM_R: memory read access only
->> + * @QEMU_PLUGIN_MEM_W: memory write access only
->> + * @QEMU_PLUGIN_MEM_RW: memory read and write access
->> + */
->>   enum qemu_plugin_mem_rw {
->>       QEMU_PLUGIN_MEM_R = 1,
->>       QEMU_PLUGIN_MEM_W,
->>       QEMU_PLUGIN_MEM_RW,
->>   };
-> 
-> This define sets up the values such that you can use
-> the _R and _W values as bit checks (i.e. _RW == _R | _W).
-> Is that intentional and can code using the API rely on it,
-> or must it strictly check against _R and _RW separately?
-> 
->> +/**
->> + * enum qemu_plugin_mem_value_type - size of memory value
->> + *
->> + * @QEMU_PLUGIN_MEM_VALUE_U8: unsigned 8-bit value
->> + * @QEMU_PLUGIN_MEM_VALUE_U16: unsigned 16-bit value
->> + * @QEMU_PLUGIN_MEM_VALUE_U32: unsigned 32-bit value
->> + * @QEMU_PLUGIN_MEM_VALUE_U64: unsigned 64-bit value
->> + * @QEMU_PLUGIN_MEM_VALUE_U128: unsigned 128-bit value
->> + */
->>   enum qemu_plugin_mem_value_type {
->>       QEMU_PLUGIN_MEM_VALUE_U8,
->>       QEMU_PLUGIN_MEM_VALUE_U16,
->> @@ -353,7 +369,13 @@ enum qemu_plugin_mem_value_type {
->>       QEMU_PLUGIN_MEM_VALUE_U128,
->>   };
-> 
-> In this enum, the values are set up such that if you have
-> a qemu_plugin_mem_value_type vt, then the size of the data
-> is (1 << vt) (i.e., a byte is 0, a short is 1, 32 bits are 2,
-> and so on up). Is that intentional and can code using the
-> API rely on it, or must it strictly use the enum only as
-> something to switch() on to select a length.
+On Mon, 9 Mar 2026 at 13:08, Fabiano Rosas <farosas@suse.de> wrote:
+>
+> The following changes since commit 1ae4271ab8dbfbf5dc28b36baa7f3fd5fd2215e1:
+>
+>   Merge tag 'pull-11.0-virtio-gpu-updates-060326-1' of https://gitlab.com/stsquad/qemu into staging (2026-03-07 11:22:16 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/farosas/qemu.git tags/migration-20260309-pull-request
+>
+> for you to fetch changes up to 161e6039759a77debee9434ee55a086c8a85ed60:
+>
+>   colo: Reuse the return path from migration on primary and secondary side (2026-03-09 08:53:34 -0300)
+>
+> ----------------------------------------------------------------
+> Migration pull request
+>
+> - Fix for races when migration starts again after a failure
+> - New maintainer for COLO: Lukas Straub
+> - COLO cleanups and bug fixes
+> - COLO multifd support
 >
 
-The latter, see it as something similar to Rust enums, or what theory 
-calls an Algebraic data type:
-https://doc.rust-lang.org/std/keyword.enum.html
 
-> I actually ran into that last one in tests/tcg/plugins/mem.c:
-> update_region_info() has a switch() on this enum which (among
-> other things) sets val_size in each case, because I didn't
-> know if it was guaranteed to work to set val_size = 1 << value.type.
-> 
-> thanks
-> -- PMM
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
