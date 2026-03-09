@@ -4,130 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74766F417EE
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:50:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECE64F417E0
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:50:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbuq-0000yE-55; Mon, 09 Mar 2026 10:49:04 -0400
+	id 1vzbv8-0001h3-CJ; Mon, 09 Mar 2026 10:49:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vzbuQ-0000pG-BQ
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:48:39 -0400
-Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ id 1vzbv4-0001UY-2z
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:18 -0400
+Received: from mx0a-0031df01.pphosted.com ([205.220.168.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
- id 1vzbuO-0005Dg-Ah
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:48:37 -0400
-Received: from pps.filterd (m0279872.ppops.net [127.0.0.1])
+ id 1vzbv1-0005KA-Vx
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:17 -0400
+Received: from pps.filterd (m0279864.ppops.net [127.0.0.1])
  by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 629EAR791249016
- for <qemu-devel@nongnu.org>; Mon, 9 Mar 2026 14:48:35 GMT
+ 629DqkEF4143734
+ for <qemu-devel@nongnu.org>; Mon, 9 Mar 2026 14:49:04 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
  cc:content-transfer-encoding:content-type:date:from:in-reply-to
  :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
- 4GZnug9ptvzXBeCOm6nt56nQExnanu1uhh//WEVAiVY=; b=YDNLrMwIwMxDYsA8
- YIZ5YhTVxsIlOlU6/jj+QG/2zXFuG2XgnggcZvCtPkxKkgfgg9dZ64cPOjvLmhcN
- 0tpnxb56BIPpnTtOmK2423LJ1+Qm7UilVroF+Idw3RZvyO89tCu9kZjE91KfcRrp
- WVDQflbsY9YUuZ590TgMy0tuPZfLnCjdiOlGe2ux3ToQbqf9jX5PfidTc6TxBSDB
- d67Sqb1GX5SamQ23OPtuylEZM1HIpLkEXisehYIKINdaR4Bsos53iZ9hl/4Y22D9
- +JJFOg6XJzgjEur5uFl+d/noHGk73dlY8ZotPLBX9kTykiiA6nggEfkY6maj4Y08
- /Oeu1Q==
-Received: from mail-dy1-f198.google.com (mail-dy1-f198.google.com
- [74.125.82.198])
- by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4csyr403s4-1
+ HCTGOKXs1fYSZixnoMaJMXvytawJB9bQ+ItN/EAPNM4=; b=X5x6c0f2z1UZtllF
+ 2x0jxXbHZJ7s/XlkQTvF5o9Fp4XgLZFLidVoR61D0nm7xghPcaz2b3tt5XlpUg8Y
+ 2HbbprlhDCPWiHSGN683wiruE6svAwr4AkeVKcp4r3xU8O6qEEY0yMhVQlfe2vXO
+ NBse2HjMQTGoD7dvwOj2JV0XQc7usMa5iIG2HJeUWSEpWTdn6LB4LWPRnkWZhDhU
+ mUrcLR1aDvGu8BLBYreGhCkfdi5DZb0x8KpirAgOkCmumMEGiB4KUFFf1UuZOsVg
+ TmVgf7lWxzjjD5ykrszTJVkdAkqgqOacC2kdGZ0GQ9+7tIZnW1OIwgBAewv1bNTa
+ N9FiJQ==
+Received: from mail-dy1-f197.google.com (mail-dy1-f197.google.com
+ [74.125.82.197])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4crd6fdr8p-1
  (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 14:48:34 +0000 (GMT)
-Received: by mail-dy1-f198.google.com with SMTP id
- 5a478bee46e88-2be21146933so10001816eec.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:48:34 -0700 (PDT)
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 14:49:04 +0000 (GMT)
+Received: by mail-dy1-f197.google.com with SMTP id
+ 5a478bee46e88-2bdff07d8f4so12962746eec.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:49:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=oss.qualcomm.com; s=google; t=1773067714; x=1773672514; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1773067744; x=1773672544; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4GZnug9ptvzXBeCOm6nt56nQExnanu1uhh//WEVAiVY=;
- b=Y7fkmvHnnKqcQOQ3nmh3LWJibaiP69rUOeRNvSpoGYBCb/OAdfwrJ3tgI6DHxU7zkf
- 6xX8ZaQu3Zoj02RadaR+06DB828x8+zZ4zDUgVth42rKDw3iccQOj0MI/cB0goPE4CtZ
- BbENHaZTb0ARIccvCosbi6fU8p1lwpyANOrKY71Ao6NDchxrnhosgCihuhwcDvcR5qsg
- BYtWIR46jMnn9293bFqLud4JBnriAw5LTFv+EIlRZecRqm2O2BovhyLIT7KL5iTVSaN4
- r2Zzimuwf17a7yiXPuUrGK1hunMi66a4CpP5fWS824YeS2RmMV/rfTTncKRnr5hHNlSJ
- 3b0Q==
+ bh=HCTGOKXs1fYSZixnoMaJMXvytawJB9bQ+ItN/EAPNM4=;
+ b=igZ5MJskdEH0BEASpqKcJX72oM4ErzdXlXD0EMmt5sIX+Ch/iQlcus2Lncsg9oEIS+
+ t+TeEy+a/qeoltKhNec8zA4wsKaTIb4MTM0FYDFKySMZSd1D5jNjbjfStjTesTwzQXLp
+ jR5XBtovizSBxzTra/WBZwyzl5HQ+z+aDVupW9uv7gqGrOYv82zaQmaLUXUIRJGu7uFu
+ qZENEXxyurAdpP9RhWR2Rd3L5pQD713L+mZaTcgbWzzSADoIdllzfLujf353ujBTuvXE
+ iVW1CVCTSJ1FjHxzwKxjW+O7sdiRThxbAUkeV5J3Je8pi4botoIHMUkncrwNI+DcxAKQ
+ PBSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773067714; x=1773672514;
+ d=1e100.net; s=20230601; t=1773067744; x=1773672544;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4GZnug9ptvzXBeCOm6nt56nQExnanu1uhh//WEVAiVY=;
- b=IOVzpxq9ElSLk0Q46Khipn9Ba5THGSsllm8RlYNBHPUpOwtwThm49uJkwinLdwh7dv
- lmloPtbhK/gl1voMlI6y4AmOXW/jdvNJt/9DP2V3drM3LyzmEUXKxcxj1pyoAozMqIqi
- diLgZP3d1u6pVbBikQyT7KJ4I7+LuiHrgkHOqzQDyAmQv4H7yDQv4c0bynK2Alw1TZSh
- vOytsZTTdfyz0lZAQjcjEoojkYRYVrNaKtT9fdSkCJgeirDO2/7uSGUlXlGDsyt+NeKs
- HmGMKba1aAYvHysQvGqXJG4Qd2+E/+5Rvj+7GDdVVckcVOgEmRwxsD9AbQsdDtNO4dld
- vbwg==
-X-Gm-Message-State: AOJu0YxU5EsRx1rP1aVqyx9TzPkfUrk7roP1HIsVMKuvUSW6t6aBCPvb
- nrmfQFc9m33NV/3hHd1vw1fVpcovBJUBFpMTQID8sS4EXxHdCqz5v2vv/QpAIU+N6V8pW7FANct
- SILpOuImWCLi0XIaici+kHDT6NfCgnT1S92HK0MyDtRcbLniJ6OSLfWEX05Ek8eqoww==
-X-Gm-Gg: ATEYQzwdtQMf1KMkqnUumZV9o77eExyeWAgw3AOWlYcntdDu1TZEMKEoazR1gZ9Oxeh
- e+hDq5hJ6agpAAdIzEiRiqGBSIeKniNUWmY6bFvgycQESe2rsUhlqY2s7kMBSzRBfr2HoodboZo
- VDTGXeKvHXpmDpf6/he+lHN/LrGNG8FVwxdPbYPD5ogO77Z8vvuMexuQMIVlnwRQBDG/dXJPSsC
- xLGMA4Dgi0Jk8ZJ8HrwdrBoV9l12APDWkwC8qfnGVvHtuBNZGy+C5r/FMj+J+nT3cnWx8RFJ52W
- pSCiqgbRaCNY0npDW0oDI4EIGiLOd/XgcAYkxBXeofa+AT0e0fOtlrMpWiQOHETikItxHpJIjl3
- 3eKVBId5v0M0hErIPEn5WNm0r6aUxIdapTpCD7Z/f8KrKhKDlY4x4YKdKq/LCfjwTB1BKsw==
-X-Received: by 2002:a05:7300:a985:b0:2be:10a6:647e with SMTP id
- 5a478bee46e88-2be4e055786mr4195889eec.19.1773067713759; 
- Mon, 09 Mar 2026 07:48:33 -0700 (PDT)
-X-Received: by 2002:a05:7300:a985:b0:2be:10a6:647e with SMTP id
- 5a478bee46e88-2be4e055786mr4195859eec.19.1773067713051; 
- Mon, 09 Mar 2026 07:48:33 -0700 (PDT)
+ bh=HCTGOKXs1fYSZixnoMaJMXvytawJB9bQ+ItN/EAPNM4=;
+ b=Mt10cF86LcejAt7FqIjkgWq7Js02NsrIxKTVM7F/aStSN9X+za4yO6NpBSTHLwVmcD
+ thhYjLwhGsKiZCAn9hA9U1NzqWWyaOgOlfCgZ+z4D8hNQBvyxrMFAZQKiUh7ZYhtteBb
+ /QJT4RT6bwxhMXXnX0qqKJIXS3squkUrgGPynnYrK02sCM5hleRgpeyO1zsAgXxNOReN
+ 5haz6GpYsnWn8J/zyKmxKfJHn+5iVObQONur9PTidNbp61sHSGPFWvOjHyYbiwbOEOih
+ VFjCsX15l7BctbTMhJ85U2+KJtWiUYHga+ruqwgtiVs5RGhMTH8wGpveQWKLyKaLDX6/
+ 0D/Q==
+X-Gm-Message-State: AOJu0Yza7E+AQC9I/TzdX0hf5DQRnikAsepUfIPvHDu+S9UKiHESgHPC
+ Qtu8a0iXZ+bpWbEUPGdaEpFkvEFihhFFXMBlmLL++DOkqzR3xCbgPZoJFcIHHNGiMA+y1gZ5676
+ DHlOtpR7/fapMQ3kb057PnUtN7bTaM1jq6NhBZndawF7KYO62BLnw1FfGSlt1G97l0A==
+X-Gm-Gg: ATEYQzzBiqZrcOv45RPxEzC4aChRhWFeJWJIm2uVPhS9KP/nrR5UfcqA2OfQVtOdRqW
+ RktSyji3NXTebKfnGeW9+gqDEzdT3WVVAPOOS4QezNfFOQ+pn7KIiUtEF+OV3AZCILatzPVf/FZ
+ 3cHcYGZZsN6zxn9rMVAYlVXE2OsVhebSsPiPG9uB5H+2rAZAC3oKsMbBzKItYsKpPyb94tBvePt
+ qCtbKm7BXT3Q75f1TBAHG5NuW53HYyUSNZEXiyqKFHedAN/6KzTxmHsNCqjSlFpiROEKI1wdJfr
+ SSqL170g+SMHA5hajxZo26FzWVBJlSxwX4FDYz/YBPG5YKFH1cSXrmD0BdVyjfwYswdQGAgd6xN
+ ShWvfI6clf2mxzHTe2UcbCkcg00H4N1Gz+X3Y6lDh71zUqEthu3s0RaDxd5WG06ywFto2KA==
+X-Received: by 2002:a05:7301:6895:b0:2ba:6b3a:7696 with SMTP id
+ 5a478bee46e88-2be4dfd0b09mr4281522eec.8.1773067743592; 
+ Mon, 09 Mar 2026 07:49:03 -0700 (PDT)
+X-Received: by 2002:a05:7301:6895:b0:2ba:6b3a:7696 with SMTP id
+ 5a478bee46e88-2be4dfd0b09mr4281505eec.8.1773067742945; 
+ Mon, 09 Mar 2026 07:49:02 -0700 (PDT)
 Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
  [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2be4f82b78esm9322776eec.12.2026.03.09.07.48.32
+ 5a478bee46e88-2be4f82b78esm9322776eec.12.2026.03.09.07.49.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 07:48:32 -0700 (PDT)
+ Mon, 09 Mar 2026 07:49:02 -0700 (PDT)
 From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
 Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
  matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
  anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Subject: [PATCH v4 05/35] target/hexagon: Handle system/guest registers in
- gen_analyze_funcs.py and hex_common.py
-Date: Mon,  9 Mar 2026 07:47:52 -0700
-Message-Id: <20260309144822.877695-6-brian.cain@oss.qualcomm.com>
+Subject: [PATCH v4 33/35] target/hexagon: Add clear_wait_mode() definition
+Date: Mon,  9 Mar 2026 07:48:20 -0700
+Message-Id: <20260309144822.877695-34-brian.cain@oss.qualcomm.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
 References: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzMyBTYWx0ZWRfX7Z4eolJvNbna
- Bn4wHcfMSHDn8rKAbuQuBbiTSBaMq5bNQqAqrFjMpZMpRRVZ9iKqV3D63Jb4uZFdRbsI7K6okhe
- c+2dBqgfNsAmsoE1oWBRRmGgTU7XGlKyNL2Kmj79sikqF9c2uxJtVwtfE76cbcW1TkXZeYi/SND
- BE0NzjNQvYw4xrjFARhpaA1wpycmY7NzRGaR/xu55s+GglpXiPpwq+EuIj3Do0B535pzDJ2EAY5
- 6HpkmTSi2ZV271DKThcsV1xvszCkqeigjFCj0oIe9A1wumJO8AqeqRkuR5ZceewMFnn78XzqAOE
- rOgqoE4G7QTwlQtWUvqyaNqyNmt3XfcoYVLUZdvD5m0glcnMiYYe8DRenfoeDc0JbI7S9khanYI
- TyuXT8Xwc3YgwA2OBVQUiuPfgV/ZPNyOG21OF/Cs+sSYW6m8K8Oszwx98DGMv5D2itNaYBKCdCj
- bgvi3qgDH9oLXW9eECA==
-X-Proofpoint-GUID: b3nZtruKo_wjd9HbCrgLO7xsn6cFy8aA
-X-Proofpoint-ORIG-GUID: b3nZtruKo_wjd9HbCrgLO7xsn6cFy8aA
-X-Authority-Analysis: v=2.4 cv=KNRXzVFo c=1 sm=1 tr=0 ts=69aeddc2 cx=c_pps
- a=wEP8DlPgTf/vqF+yE6f9lg==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+X-Proofpoint-ORIG-GUID: l-qHQDYWbNX6Wi7E3mspI8jNlEtiUsr6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzMyBTYWx0ZWRfXydbSKGFteVEH
+ O2WsBE+GB36E9o1IdVOngkUmK7R3Hwg5/71bwfDZpMrl4NxEU9Rou4wI/EsIuOz3qmVpJMJadN6
+ e2e6450STAuXMyCJu6AvVPdlQsF61n7+Fonvj475PlTkAzndnRB5MTZhgsdub5vBKyw0/VqbAa7
+ 37aAAECNdKmlh1gxh4wNYDKotUxsXW5BkPEheyy/DmP9D6lhYFPGwrSvDVoSzwvdkwKcEX/WE9C
+ aJjQvvnHM1i0suvaj9+Sqob9p3jMWHcB/j7w3QmPhE+6gc4eH1tzKR7R47C7DA3LFaSFStRT1A6
+ l+apz5lKUvOd+l3egADCLrC6cn5xfBRDDXuOHnpsp12v+6If2bCTRSimYmrbyVA/YDypDhkXlvS
+ mjZDWbUfLoh/X7P96bWvPmg8VOhb9/uuWmlrmNOb+SYsRVYSW+qWgB0Aen29+ZhMVpaa7uBGqLM
+ OeAD0CueoDEya9ZF5ng==
+X-Proofpoint-GUID: l-qHQDYWbNX6Wi7E3mspI8jNlEtiUsr6
+X-Authority-Analysis: v=2.4 cv=RP++3oi+ c=1 sm=1 tr=0 ts=69aedde0 cx=c_pps
+ a=Uww141gWH0fZj/3QKPojxA==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=yx91gb_oNiZeI1HMLzn7:22
- a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=-IRm0M9p1sl727KxlF4A:9
- a=QEXdDO2ut3YA:10 a=bBxd6f-gb0O0v-kibOvt:22 a=TjNXssC_j7lpFel5tvFf:22
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=DJpcGTmdVt4CTyJn9g5Z:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=InO9qlFFT13rIqmD9gwA:9
+ a=QEXdDO2ut3YA:10 a=PxkB5W3o20Ba91AHUih5:22 a=TjNXssC_j7lpFel5tvFf:22
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-09_04,2026-03-09_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 spamscore=0 bulkscore=0 priorityscore=1501
- suspectscore=0 clxscore=1015 lowpriorityscore=0 malwarescore=0 phishscore=0
+ adultscore=0 priorityscore=1501 malwarescore=0 spamscore=0 phishscore=0
+ clxscore=1015 bulkscore=0 lowpriorityscore=0 impostorscore=0 suspectscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090133
-Received-SPF: pass client-ip=205.220.180.131;
- envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+Received-SPF: pass client-ip=205.220.168.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0a-0031df01.pphosted.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -153,258 +152,50 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Brian Cain <bcain@quicinc.com>
 
-Add register classes for guest (G) and system (S) registers to
-hex_common.py, and update gen_analyze_funcs.py to handle them.
-
-Guest and system registers can only appear once per packet (one
-transfer instruction each), so there is no read-after-write hazard
-to detect during the analyze phase.  Source classes (GuestSource,
-GuestPairSource, SystemSource, SystemPairSource) provide a no-op
-analyze_read() since these register reads do not need tracking.
-
 Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- target/hexagon/gen_analyze_funcs.py |  14 ++-
- target/hexagon/hex_common.py        | 152 ++++++++++++++++++++++++++++
- 2 files changed, 164 insertions(+), 2 deletions(-)
+ target/hexagon/cpu_helper.h |  1 +
+ target/hexagon/cpu_helper.c | 15 +++++++++++++++
+ 2 files changed, 16 insertions(+)
 
-diff --git a/target/hexagon/gen_analyze_funcs.py b/target/hexagon/gen_analyze_funcs.py
-index fdefd5b4b36..44bb22ed927 100755
---- a/target/hexagon/gen_analyze_funcs.py
-+++ b/target/hexagon/gen_analyze_funcs.py
-@@ -22,7 +22,6 @@
- import string
- import hex_common
+diff --git a/target/hexagon/cpu_helper.h b/target/hexagon/cpu_helper.h
+index 18300657f3d..d15385daf83 100644
+--- a/target/hexagon/cpu_helper.h
++++ b/target/hexagon/cpu_helper.h
+@@ -16,5 +16,6 @@ void hexagon_set_sys_pcycle_count_low(CPUHexagonState *env, uint32_t);
+ void hexagon_set_sys_pcycle_count_high(CPUHexagonState *env, uint32_t);
+ void hexagon_modify_ssr(CPUHexagonState *env, uint32_t new, uint32_t old);
+ int get_exe_mode(CPUHexagonState *env);
++void clear_wait_mode(CPUHexagonState *env);
  
--
- ##
- ## Generate the code to analyze the instruction
- ##     For A2_add: Rd32=add(Rs32,Rt32), { RdV=RsV+RtV;}
-@@ -42,6 +41,13 @@ def gen_analyze_func(f, tag, regs, imms):
-     f.write(f"static void analyze_{tag}(DisasContext *ctx)\n")
-     f.write("{\n")
+ #endif
+diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
+index b6a8bd35309..6fbf5fc8e2f 100644
+--- a/target/hexagon/cpu_helper.c
++++ b/target/hexagon/cpu_helper.c
+@@ -64,6 +64,21 @@ void hexagon_modify_ssr(CPUHexagonState *env, uint32_t new, uint32_t old)
+     g_assert_not_reached();
+ }
  
-+    if hex_common.tag_ignore(tag):
-+        f.write("}\n\n")
-+        return
++void clear_wait_mode(CPUHexagonState *env)
++{
++    g_assert(bql_locked());
 +
-+    if hex_common.is_sysemu_tag(tag):
-+        f.write("#ifndef CONFIG_USER_ONLY\n")
-+
-     f.write("    Insn *insn G_GNUC_UNUSED = ctx->insn;\n")
-     if (hex_common.is_hvx_insn(tag)):
-         if hex_common.has_hvx_helper(tag):
-@@ -58,7 +64,8 @@ def gen_analyze_func(f, tag, regs, imms):
-     for regno, register in enumerate(regs):
-         reg_type, reg_id = register
-         reg = hex_common.get_register(tag, reg_type, reg_id)
--        reg.decl_reg_num(f, regno)
-+        if reg.is_read() or reg.is_written():
-+            reg.decl_reg_num(f, regno)
- 
-     ## Analyze the register reads
-     for regno, register in enumerate(regs):
-@@ -78,6 +85,9 @@ def gen_analyze_func(f, tag, regs, imms):
- 
-     f.write("    mark_implicit_writes(ctx);\n")
- 
-+    if hex_common.is_sysemu_tag(tag):
-+        f.write("#endif /* !CONFIG_USER_ONLY */\n")
-+
-     f.write("}\n\n")
- 
- 
-diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
-index 002afcdb9e3..1e2c2e46506 100755
---- a/target/hexagon/hex_common.py
-+++ b/target/hexagon/hex_common.py
-@@ -33,6 +33,41 @@
- overrides = {}  # tags with helper overrides
- idef_parser_enabled = {}  # tags enabled for idef-parser
- 
-+
-+def is_sysemu_tag(tag):
-+    return bool(attribdict[tag] & {"A_PRIV", "A_GUEST"})
-+
-+
-+def tag_ignore(tag):
-+    tag_skips = (
-+        "Y6_diag",
-+        "Y6_diag0",
-+        "Y6_diag1",
-+    )
-+    attr_skips = {
-+        "A_FAKEINSN",
-+        "A_MAPPING",
-+        "A_CONDMAPPING",
++    HexagonCPU *cpu = env_archcpu(env);
++    if (cpu->globalregs) {
++        const uint32_t modectl =
++            hexagon_globalreg_read(cpu->globalregs, HEX_SREG_MODECTL,
++                                   env->threadId);
++        uint32_t thread_wait_mask = GET_FIELD(MODECTL_W, modectl);
++        thread_wait_mask &= ~(0x1 << env->threadId);
++        SET_SYSTEM_FIELD(env, HEX_SREG_MODECTL, MODECTL_W, thread_wait_mask);
 +    }
-+    return tag in tag_skips or attribdict[tag] & attr_skips
++}
 +
-+
-+def get_sys_tags():
-+    return sorted(
-+        tag for tag in frozenset(tags) if is_sysemu_tag(tag)
-+    )
-+
-+
-+def get_user_tags():
-+    return sorted(
-+        tag for tag in frozenset(tags) if not is_sysemu_tag(tag)
-+    )
-+
-+
-+def get_all_tags():
-+    return get_user_tags() + get_sys_tags()
-+
-+
- # We should do this as a hash for performance,
- # but to keep order let's keep it as a list.
- def uniquify(seq):
-@@ -369,12 +404,16 @@ def helper_proto_type(self):
-         return "s32"
-     def helper_arg_type(self):
-         return "int32_t"
-+    def is_pair(self):
-+        return False
- 
- class Pair(Scalar):
-     def helper_proto_type(self):
-         return "s64"
-     def helper_arg_type(self):
-         return "int64_t"
-+    def is_pair(self):
-+        return True
- 
- class Hvx:
-     def is_scalar_reg(self):
-@@ -1010,6 +1049,109 @@ def analyze_write(self, f, tag, regno):
-             ctx_log_qreg_write(ctx, {self.reg_num}, insn_has_hvx_helper);
-         """))
- 
-+class GuestRegister(Register):
-+    pass
-+
-+class GuestDest(GuestRegister, Single, Dest):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv {self.reg_tcg()} = tcg_temp_new();
-+        """))
-+    def gen_write(self, f, tag):
-+        f.write(code_fmt(f"""\
-+            gen_log_greg_write(ctx, {self.reg_num}, {self.reg_tcg()});
-+        """))
-+    def analyze_write(self, f, tag, regno):
-+        f.write(code_fmt(f"""\
-+            ctx_log_greg_write(ctx, {self.reg_num});
-+        """))
-+
-+class GuestSource(GuestRegister, Single, OldSource):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv {self.reg_tcg()} = tcg_temp_new();
-+            gen_read_greg({self.reg_tcg()}, {self.reg_num});
-+        """))
-+    def analyze_read(self, f, regno):
-+        pass
-+
-+class GuestPairDest(GuestRegister, Pair, Dest):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
-+        """))
-+    def gen_write(self, f, tag):
-+        f.write(code_fmt(f"""\
-+            gen_log_greg_write_pair(ctx, {self.reg_num}, {self.reg_tcg()});
-+        """))
-+    def analyze_write(self, f, tag, regno):
-+        f.write(code_fmt(f"""\
-+            ctx_log_greg_write_pair(ctx, {self.reg_num});
-+        """))
-+
-+class GuestPairSource(GuestRegister, Pair, OldSource):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
-+            gen_read_greg_pair({self.reg_tcg()}, {self.reg_num});
-+        """))
-+    def analyze_read(self, f, regno):
-+        pass
-+
-+class SystemDest(Register, Single, Dest):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv {self.reg_tcg()} = tcg_temp_new();
-+        """))
-+    def gen_write(self, f, tag):
-+        f.write(code_fmt(f"""\
-+            gen_log_sreg_write(ctx, {self.reg_num}, {self.reg_tcg()});
-+        """))
-+    def analyze_write(self, f, tag, regno):
-+        f.write(code_fmt(f"""\
-+            ctx_log_sreg_write(ctx, {self.reg_num});
-+        """))
-+
-+class SystemSource(Register, Single, OldSource):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv {self.reg_tcg()} = tcg_temp_new();
-+            gen_read_sreg({self.reg_tcg()}, {self.reg_num});
-+        """))
-+    def analyze_read(self, f, regno):
-+        pass
-+
-+class SystemPairDest(Register, Pair, Dest):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
-+        """))
-+    def gen_write(self, f, tag):
-+        f.write(code_fmt(f"""\
-+            gen_log_sreg_write_pair(ctx, {self.reg_num}, {self.reg_tcg()});
-+        """))
-+    def analyze_write(self, f, tag, regno):
-+        f.write(code_fmt(f"""\
-+            ctx_log_sreg_write_pair(ctx, {self.reg_num});
-+        """))
-+
-+class SystemPairSource(Register, Pair, OldSource):
-+    def decl_tcg(self, f, tag, regno):
-+        self.decl_reg_num(f, regno)
-+        f.write(code_fmt(f"""\
-+            TCGv_i64 {self.reg_tcg()} = tcg_temp_new_i64();
-+            gen_read_sreg_pair({self.reg_tcg()}, {self.reg_num});
-+        """))
-+    def analyze_read(self, f, regno):
-+        pass
-+
- def init_registers():
-     regs = {
-         GprDest("R", "d"),
-@@ -1056,6 +1198,16 @@ def init_registers():
-         QRegSource("Q", "u"),
-         QRegSource("Q", "v"),
-         QRegReadWrite("Q", "x"),
-+
-+        # system regs
-+        GuestDest("G", "d"),
-+        GuestSource("G", "s"),
-+        GuestPairDest("G", "dd"),
-+        GuestPairSource("G", "ss"),
-+        SystemDest("S", "d"),
-+        SystemSource("S", "s"),
-+        SystemPairDest("S", "dd"),
-+        SystemPairSource("S", "ss"),
-     }
-     for reg in regs:
-         registers[f"{reg.regtype}{reg.regid}"] = reg
+ int get_exe_mode(CPUHexagonState *env)
+ {
+     g_assert_not_reached();
 -- 
 2.34.1
 
