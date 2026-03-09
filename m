@@ -4,109 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD47F41810
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93574F4180E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:36:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzdZm-00078P-EP; Mon, 09 Mar 2026 12:35:26 -0400
+	id 1vzdZv-0007GJ-2F; Mon, 09 Mar 2026 12:35:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzdZl-00078A-Om
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:35:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzdZj-0007Ju-Cv
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:35:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773074122;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=U07d+lohWT730+kIOsQzG6405cB1f9HTmdKo/WXEVFI=;
- b=KULjqsds7kAKgalWQIJzr8ckatmBNDqtfvTSUapuxESPfPtwIB90OJdpcIroH81gRE+Dld
- 0npl5fpOVT9jus6nO8l43LEra5/0/TjPp2ah52DDSct9VV5rvE4bdQDZqWyf2XmWRJMtfq
- Dzb4odle8ONjOvtXVFTFXoibixVCZi0=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-57-Gg4f-yRXNGeTcoNYwzJSrg-1; Mon, 09 Mar 2026 12:35:20 -0400
-X-MC-Unique: Gg4f-yRXNGeTcoNYwzJSrg-1
-X-Mimecast-MFC-AGG-ID: Gg4f-yRXNGeTcoNYwzJSrg_1773074120
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-899f671ceb2so586682766d6.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:35:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzdZt-0007FZ-F9
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:35:33 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzdZr-0007XF-IG
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:35:33 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-64ad9238d8fso11600989d50.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:35:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773074130; cv=none;
+ d=google.com; s=arc-20240605;
+ b=FPMVmBn9k3Ye4FLxDwb2SyXBNSnuk1Z3wROKQflpDqCDbxZ/D2nbSwZwf8OzOVlrne
+ JfDyNEMefakw0jzyGCsqmDxsqqasgkHmOctoCQ3fHTEPjZiHePmMKHxo0MEBX5DhwAjU
+ PhJWW7zEBpS8pyDkHPeFuIk1AXD8QctNexpTrp9eyQKidZbaGdII+X56CbEZiLIYIwLJ
+ o/HD1jnKUccEO5ki6fZDV2AAL//1Q/aUgK/FeH0nH7bbNWpNVT0cl0DJO5puWD4Luv6Y
+ blx3cgo2TmUVAVl7jcrZpL/QmXBO4dAjXEZiTcjWRLoXVpQYz+jgE4rHwatrtf9BfmwN
+ M+ZQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=ZSPm0Ofg0Eb4oVi8NOscKCN6Vf00mZ9r+zi+X/F4Qmo=;
+ fh=QQmp9SZyJTmZ15k6LdEtWo32FSIQO8LxTBx0/Ev/MOA=;
+ b=kTbfaDOwYueAABFiJL9i5bPvyjUibmsiKrycHG5D8zWXAHpgdydzoMtH1rju8++0i0
+ h3Kj4uQZJwDlm2MQQdQ3QZr7tSA5hCwc4SFahYHxOiMnN2os+tNZ62gWnFbnuhFYoTL4
+ nJ0Pkv3Lr8iehm3/zMJBeKJ1TEWspQA3RaDwvl344o3O/LOi9FMj/JlWLQKLHDd0gFg2
+ TKr7Fv8eiyxt7VzqyhbVU/5OAr2OH0sDiUp8MRLx3sivt9qU9KRY4d0hKpxyio2okwby
+ hDl400S9LWQ9m01qZt5C+7f8RoL1/O82YxRzZQ2Vkw2Tsh2uu7qWlTc73vAYc/zdk0qc
+ k2Aw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773074120; x=1773678920; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=U07d+lohWT730+kIOsQzG6405cB1f9HTmdKo/WXEVFI=;
- b=BVQhhPKsWjMG0Bder4wR9rRuud0wJhaLYJZCI9e+pCTBiHI8YJPqRxcgrAULgjFEU9
- WuqekBtD8rL9P4z6uNMaIASlQ6Kpga3OlmVKagHO/FBdBW3MHo6MVvoYfuKm1wpRXScO
- jXBPZjPevRlIpbc2tmGobHZTOOHpvnjZD2rj+bGtDkaZXQq1Y6eUpOsyNXQMRcROSd2c
- jhGro2XATWhbZddXkjpXAEvNX3TOotBCGSj5svJLdsrb99A75IBNU4tC/UvcrV/JTmCU
- 0XmGKliSaJapZwmkVts6LJ+LKbyc4h6ZSzt+F1y2gtCE143C2jBARvEu2EFbnwizX8Ae
- 2QUQ==
+ d=linaro.org; s=google; t=1773074130; x=1773678930; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=ZSPm0Ofg0Eb4oVi8NOscKCN6Vf00mZ9r+zi+X/F4Qmo=;
+ b=vnhNDphAWYtNfUIm/3MdV18mLqG9T4d9iAnp9czuS7xEUtyEigaYd69ljcvMpHbjni
+ o7/Xo55VP6pgvKHU2flf2drd6LpXK4/gByQKWIeNSygaBIAB/U8vMT+M2lNfbBje2KH5
+ OX1FEbhuvfPVu/Ehqg6Z8Dhq+f8OMGKBnuyv9xv4m3eya5zrVFQ3FM55C/6DtwZXWtht
+ BtNuLiAAd1g+TCTliy7QKwm0MFN0zXdLThP3CjGDf0x868q03ApaXyeC48iy3k9ultx8
+ tCDlDVAfPgnfDttqUmvYW08/T/D4qL5Al7uNEcHCmEP86wDAcHHQyGFkaEvUku4VCIAT
+ tCNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773074120; x=1773678920;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=U07d+lohWT730+kIOsQzG6405cB1f9HTmdKo/WXEVFI=;
- b=b+uMiGFSlewBLYC7q95iS+Tr62+fCeBuiRwKRz2kyPX2U8vdiB8s9JX+2ntlN8GmJB
- Gh4ejePTU7Ylu4Qib42S6t3S1gOXpsQjPcjNAUkaSxk+JhiHDefF5F7WEu0P6PC/qgr+
- po1Eu7zN5Jsjx9sHJ5CQ1Ym0JYY/D8hhoEYYNq6CyfGfuEibgzHkmCe3erumoM+DhtnC
- Zm1lSgmr/5j/m/TnfqPJy7TI4UyU37iBbvhOyleKtyp+ESTlnZ/Vlya0rUYR8cGcYRwD
- 3Gf4U+iERQw73oDNxvhwVaaHroB1KJ7S9T0sjMsXzwt1oKU5kiiXKhGnFmi1lr6O8W4T
- 9hiw==
-X-Gm-Message-State: AOJu0Yy9g08f9fAeD1P+9Bp8FD3JZdhdaqyaBMIoAdWT/6xKMrhNGPnZ
- G+6uMs7ffEiaUd3mMSZTdSP94RyF0eX2BytEQ8+Tf5biwSReadKgsf5bNO1de9AxsxLug7v7Ks+
- kqLSGALl2tz234OxkXT/bpb28nvvjQdaM2S9WlsV577sIijyQojdSgnKX
-X-Gm-Gg: ATEYQzwc1iL0X3H2Kj4CuNze8nGaVLRdDEMEbyY1ak4LBuBxaAKCFeJGryhanMvf6kB
- i3htVZH5TF5203YlEr0QbwXOqIMKBajBrM2ZNw/do3JZA2kCKiQvWV1AjvzgD0zDCkN9wluZOLo
- 152UH3RSw/AiBudBc2hGxKvapI1jVQHhMaDD9y0VS70E/lk/hEhscw4veJgYbkna2HTGvE3TVGZ
- WMuMFa9M5M4x/nvhIT7r6MEZqpuarVGUV3Wy8WqOqsUK3jtfoIJEIIHGjtDoTCW+rLx1i0gFyZJ
- i1Ra+POzbCPfZ2PT+2PU4Wdox90esj6pmUW3PX1I1LwsEprFRVNt6f+Kxya0g6mWePo/+zQskkN
- HJ9TIUV1yyAl+evnY0XNLoekd02Gnu/V/iscxCbFE0xa4M+LmrgVf3Y4kJPmySfWw5AO2sLL9RF
- NRtaV9NQ==
-X-Received: by 2002:a05:6214:194d:b0:899:f092:9da with SMTP id
- 6a1803df08f44-89a30a77e50mr190561636d6.28.1773074119985; 
- Mon, 09 Mar 2026 09:35:19 -0700 (PDT)
-X-Received: by 2002:a05:6214:194d:b0:899:f092:9da with SMTP id
- 6a1803df08f44-89a30a77e50mr190560926d6.28.1773074119345; 
- Mon, 09 Mar 2026 09:35:19 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a57c13b71sm1201416d6.36.2026.03.09.09.35.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 09:35:18 -0700 (PDT)
-Date: Mon, 9 Mar 2026 12:35:16 -0400
-From: Peter Xu <peterx@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Paolo Bonzini <pbonzini@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Gerd Hoffmann <kraxel@redhat.com>, Max Filippov <jcmvbkbc@gmail.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v10 0/9] memory: Remove most _nomigrate variants
-Message-ID: <aa72xAyfXk4rrM6d@x1.local>
-References: <cover.1772924151.git.balaton@eik.bme.hu>
+ d=1e100.net; s=20230601; t=1773074130; x=1773678930;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ZSPm0Ofg0Eb4oVi8NOscKCN6Vf00mZ9r+zi+X/F4Qmo=;
+ b=QLhLLpNmfEuCpLt6CO7Of8EPv47KCCSuK5O6VL+auUz2F9C6onqDYY6NtHJX9PZufD
+ PxYj5HAqV60H21QlSnwIFr+KMmKbhci1Pl0aNFeyAn4YTf9OVBavKC5pMlLOHAIuWmrx
+ Epigbmm4Eg+mQihs3wFmmQe4hkDg25A3fItG/uGEFBqtkQUHkA/w0gbcDCWQey58PCAS
+ 88gsUTKxRfm6E/rqP0Xqo97yTzQMhzo5IclJ1LB6+wpHfE4pdIQlSZAAIEDUdsNa5VOd
+ WcT6y1rEx4cAZhzSFGxJggAmjmAhz5vKSwFUAPo8kh8XHKaliTVT8i432jSnPvHpnJwS
+ Xcbg==
+X-Gm-Message-State: AOJu0YxZSgpUvuPiDJbq3Uo90onouH9ddNTuMrCoTkFuFeyflqfaHXHK
+ I7iSFrUBuJqmu1mwIcFiDhTPuIWO1/ggkCsagybG81JT9bwCUboJEu8XiAz1o3zIiOvPCU3I6oN
+ KlQlSmXOaW3Tro76jlkaaSRA2IHDd1M+lqZ8u4qhm7g==
+X-Gm-Gg: ATEYQzyidAeizsKq7YeUKVsnizOE2TJUSMeinJA0wF3fjKIGe+/K3Nd+f9Zgi3YD8uF
+ dVwe61/wbaWfUawEK5FXvPSebfd/GGiXkViV+B6JP7oeOIb9mpsJCSSzIhI+XXekqU9687e2Gi2
+ xFhY5393lCVYg7HsmW0mC/XLJumYIug56MKaulhMFL63GemYoG3GYAEf5TOESklug7grsrQjQdE
+ znuGlvWj0RJ9BDZHizE3X4TfdfIjoopuHHlh3BfDvHjOxFeSyXZ4vkG66s1wByAjUVU0ed9N9iS
+ lNp1+uk4XJah2rhCkanETeryuSoac+pEBEv4cnuewxLDc5TuEiZSwNN/QQsk+rbp/xFWA7JC7BS
+ A3g==
+X-Received: by 2002:a53:e1a2:0:b0:64a:d18a:66bd with SMTP id
+ 956f58d0204a3-64d1407dabamr8206612d50.16.1773074130054; Mon, 09 Mar 2026
+ 09:35:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <cover.1772924151.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260309-add-missing-plugin-docs-v1-1-41dddcd177c8@epfl.ch>
+In-Reply-To: <20260309-add-missing-plugin-docs-v1-1-41dddcd177c8@epfl.ch>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Mar 2026 16:35:17 +0000
+X-Gm-Features: AaiRm51UH6YFQBYjBsqw0-TrMlPJDHOw8I5micKgw-T8g7-lbJz_4kwsXy2X3NI
+Message-ID: <CAFEAcA_WAnfxtCgfhX4oGa7eJhvs9aWgsU46CGGzgqNfBX28Dg@mail.gmail.com>
+Subject: Re: [PATCH trivial] plugins: add missing docstrings to qemu-plugin.h
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org, 
+ pierrick.bouvier@linaro.org, alex.bennee@linaro.org, 
+ richard.henderson@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,22 +116,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 08, 2026 at 12:05:58AM +0100, BALATON Zoltan wrote:
-> BALATON Zoltan (9):
->   hw/display/{cg3.tcx}: Do not use memory_region_init_rom_nomigrate()
->   memory: Remove memory_region_init_rom_nomigrate()
->   sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
->   hw/xtensa/xtfpga:  Do not use memory_region_init_ram_nomigrate()
->   memory: Remove memory_region_init_ram_nomigrate()
->   memory: Shorten memory_region_init_ram_device_ptr and
->     memory_region_init_rom_device
->   memory: Add internal memory_region_register_ram function
->   memory: Factor out common ram region initialization
->   memory: Factor out common ram ptr initialization
+On Mon, 9 Mar 2026 at 16:22, Florian Hofhammer
+<florian.hofhammer@epfl.ch> wrote:
+>
+> This patch adds docstrings for typedefs and function declarations in
+> include/plugins/qemu-plugin.h that were previously missing. This
+> resolves inconsistencies in the docs, e.g., the description for
+> qemu_plugin_read_register() referring to qemu_plugin_register_flush_cb()
+> but code cache flush callbacks not being documented themselves.
+>
+> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 
-I queued the rest too for 11.0, thanks.
+I don't know this API either, so a couple of questions below
+for those who do:
 
--- 
-Peter Xu
+> +/**
+> + * enum qemu_plugin_mem_rw - type of memory access
+> + *
+> + * @QEMU_PLUGIN_MEM_R: memory read access only
+> + * @QEMU_PLUGIN_MEM_W: memory write access only
+> + * @QEMU_PLUGIN_MEM_RW: memory read and write access
+> + */
+>  enum qemu_plugin_mem_rw {
+>      QEMU_PLUGIN_MEM_R = 1,
+>      QEMU_PLUGIN_MEM_W,
+>      QEMU_PLUGIN_MEM_RW,
+>  };
 
+This define sets up the values such that you can use
+the _R and _W values as bit checks (i.e. _RW == _R | _W).
+Is that intentional and can code using the API rely on it,
+or must it strictly check against _R and _RW separately?
+
+> +/**
+> + * enum qemu_plugin_mem_value_type - size of memory value
+> + *
+> + * @QEMU_PLUGIN_MEM_VALUE_U8: unsigned 8-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U16: unsigned 16-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U32: unsigned 32-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U64: unsigned 64-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U128: unsigned 128-bit value
+> + */
+>  enum qemu_plugin_mem_value_type {
+>      QEMU_PLUGIN_MEM_VALUE_U8,
+>      QEMU_PLUGIN_MEM_VALUE_U16,
+> @@ -353,7 +369,13 @@ enum qemu_plugin_mem_value_type {
+>      QEMU_PLUGIN_MEM_VALUE_U128,
+>  };
+
+In this enum, the values are set up such that if you have
+a qemu_plugin_mem_value_type vt, then the size of the data
+is (1 << vt) (i.e., a byte is 0, a short is 1, 32 bits are 2,
+and so on up). Is that intentional and can code using the
+API rely on it, or must it strictly use the enum only as
+something to switch() on to select a length.
+
+I actually ran into that last one in tests/tcg/plugins/mem.c:
+update_region_info() has a switch() on this enum which (among
+other things) sets val_size in each case, because I didn't
+know if it was guaranteed to work to set val_size = 1 << value.type.
+
+thanks
+-- PMM
 
