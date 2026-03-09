@@ -4,95 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6A48F417EE
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:53:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1211F417EF
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:53:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbyG-00051N-1F; Mon, 09 Mar 2026 10:52:36 -0400
+	id 1vzbv2-0001O3-Ax; Mon, 09 Mar 2026 10:49:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwV-0003jX-H2
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:50 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwT-0005ge-LY
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:47 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso95417395e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:50:45 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbuq-0000yI-N8
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:05 -0400
+Received: from mx0b-0031df01.pphosted.com ([205.220.180.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <brian.cain@oss.qualcomm.com>)
+ id 1vzbuo-0005H2-PC
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:49:04 -0400
+Received: from pps.filterd (m0279869.ppops.net [127.0.0.1])
+ by mx0a-0031df01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629A6h9I2195267
+ for <qemu-devel@nongnu.org>; Mon, 9 Mar 2026 14:48:50 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qualcomm.com; h=
+ cc:content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=qcppdkim1; bh=
+ jXncDzIpL7BHLhBBLfh8X+wcCJY2MGqK0a3S6KiKLrI=; b=YkP9p2cZWRi5KSYD
+ WR4yiEhYDSMmUD5XE2+Pk5TmSliIV8os8j0Pl5ZDigBsgp4TOnX8SHpmypkn8Fg3
+ tI1QDZAVA8gxVyO09MpEb2SRsCG02bw/RNBmStV/Wi6dGy8se7DMzWAS7h4yWuEK
+ zGsP5iue78cdk6xVS5gl4YTveb2+N5J/EbaOZbXZ5qGVZRZus9DhnsiUMGLdU/h3
+ JaLP9ctg8Qga1cXz73XaCaYq/xaZ9i4t26zmRPfkQlQAlWKh2cRUFMXw0MUpBAf3
+ Yiu7NGyr8c7JgwXIDDs5d/8mxrzdo9PLFlcMi5e/d6kjhd8fxDEoL9xuV6+11Kht
+ Mjfrzw==
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ by mx0a-0031df01.pphosted.com (PPS) with ESMTPS id 4csv5u8vkn-1
+ (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT)
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 14:48:50 +0000 (GMT)
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2be1bc0905bso6078494eec.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:48:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773067844; x=1773672644; darn=nongnu.org;
+ d=oss.qualcomm.com; s=google; t=1773067730; x=1773672530; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9IQmVwB2igYY3QUbm8smw1vlxDB9vgMK4ANQ4xk3vr0=;
- b=U6XCnyWqly/ZBEeqoIA9g//naPnC+pJ2lUhQa+kpbRby+1RNqpBn7IYw34nCRpuEq7
- 0D6s5MOlstDdX7Qxovp54AMxvPSQkOylef4ueLqQDS56yi3hYNRyOcFOGFs8KRTdHm8A
- EvKaM5MzoTGeNuXCJF/vAP829IWm47Rm4pW1i5BphqBBPeNH3b8yWsg1jNsvqHjgx11K
- HpTxZE9kT/JFRXsYAXOVSp6vCtJtCrdL/yQVGrOS+1Nl5CrpbXrCGF/SZHAVQnyPVj7V
- lHWmyJ2G21GdgqOOoNAuItLtYJaabZi6/qte97BnZ7AgSuOHMg483C+trZiOBvD439VG
- jmOg==
+ bh=jXncDzIpL7BHLhBBLfh8X+wcCJY2MGqK0a3S6KiKLrI=;
+ b=OQtCe4yQUb1+XVldsX1TS8JJBsS6mbbLzaWaJkfrlIQfkUfRzautJMq7wjYVFgWyRC
+ D0QynDACEG2D4YW8qEevx9393ycVeYwN4Orw0d0wizWWhWC6k7KFDFOrWiSVhszzXLxA
+ br0hqdw7B47vm5EehMI7jmNwowj1E/CXH8ja8m+58e9CaPCNG6AYYCE0xPtCDJnBo7Hj
+ PBB/xseEz9NSpnKpuL5lqE+ABB41qomsby+vAFDllwCT+dGzNyP4Cn+Sg5MqVRUPiYdk
+ itRrxW3T7NWtH9gQ7RS1Tg+/hqX7pc6Ui7Kz+zqJExGX8jI6y+bkTLQK97TzlXotje2e
+ hifg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773067844; x=1773672644;
+ d=1e100.net; s=20230601; t=1773067730; x=1773672530;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9IQmVwB2igYY3QUbm8smw1vlxDB9vgMK4ANQ4xk3vr0=;
- b=OjnO1z7mQ2/32TqfgZIexn/Ljb0NWzGjbCyrXpGd4rPBjl3ME7fNmVR4k+KsuGBlsG
- A4mhrHzqYKWUERoH2nlunT7SDeuiUWSjA5MG+F88SMbq3uJdTOGfQ2Q/NSFYruzrWPZj
- RE9O8nOZRFf2Vic3vwxAP1cmdXjwwlQ60p8KbLKjW6jL2GiqCel8SLpN/DGebD6qiO+F
- hlZsQzm98gp+Blk1B59/BXg4J7Q5/PlPFrhlLg+P3BjycUXNAoL1t/JQDVqHwrBamGCI
- SgBbYJR/BWTh+1eGH73/01z/4RyDI62OvEmEAcoTHlRfL4fpRCmzDD6H0erAdlqDxlwr
- zWrg==
-X-Gm-Message-State: AOJu0YyIYL5CL9/lBOfQdIgsbcO3aRSuR7D76FNeFfjWRFua7uBCIea8
- oh+d4v66PEti81zRMx/CD0u3oAXLQmc2MM40GafLgtanc2Jw52lY14Aufesl3JKB3QgMWTHqp/v
- 6kWTV8po=
-X-Gm-Gg: ATEYQzybK3yKyvH99n7eMGk7MciwPntdRbDazVdOziH0pPEStnGl8ZPw57hu5b3U6OC
- kY1RSVD0YJNSV/5t1kRTOM6DckQmLFZp9xQ4CRmlSqVvM7PCpTrNHPKWxtbqFOi9S37pbp+/7No
- sp0haSPQxoN6FFgYtccHw7KSPWfZD/hDr7eX8kF9RF7Z3Sgz/pt6dapzIMZ626+GJoTazEM5vcP
- rFL/FBeFNeK2URVmywJThmnCAURu+hDjv3QDhp9fCh0qu0cMMwYk1hCspRKYqy7zeNm0/SmGygY
- cvwDemmXiWO0mxf//s2GXSms8p1h3kiIZDhR7QhMuamqxcwA94s8TUfCVaz1tcx8ydG1/rCopoG
- 61FRQNPjMjQQkhRQT1bpQzCpwdzOxO16A/V/hHDliYBFsWhpqJW1771w8HPtxZGGmwUqyTgv2IA
- 9NK9fTk1sVN7Nv52uC/5RezqitrSQd3dsA2r0hcb4hBDanXkqAIYuHOQZg08M4lkAG67qHyXmUk
- quDKg==
-X-Received: by 2002:a05:600c:b95:b0:483:7980:4687 with SMTP id
- 5b1f17b1804b1-48526951b71mr201450145e9.17.1773067843736; 
- Mon, 09 Mar 2026 07:50:43 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4851fae00absm344874895e9.4.2026.03.09.07.50.42
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 07:50:43 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ bh=jXncDzIpL7BHLhBBLfh8X+wcCJY2MGqK0a3S6KiKLrI=;
+ b=bMUOglmgHVXI6qjwGZbUbWc9wYe1NvSb3WPrZxxZmp3s0pB0xOdBGnK0Z/muP93a2k
+ hrQ4r2RSB+UCFHyicT5LeXSXLRTLmlZz/BUxjofs/RwGZntZtcN3M4sAZmCuFEyjjNSJ
+ 4eFzsKGZSpL4fPCyMzNYnNqkm+wNjYAy/IbBzmopyXYLXnjqNOriJP7md1CId7C3MoqT
+ 7QPVPObXq+iE51hPVeTXOTa2nzLvUDsVwdizcDLzydOeqq5SI3oJl5oAl5FfrEO8cKAi
+ m8KuewY/qKIEteCh+G265jKUJtlv3QBvAuVwido/zp6uVU8kgedSyF4cED3PNWLYAiiX
+ kkCw==
+X-Gm-Message-State: AOJu0YzB9p4HnLWbKr6PbLivgolk7lxOTpzB/nawWISqIKf0lWeB3FCY
+ xmdMNGbr+MFV2bwxU716qadoDTbFi4mSCFO8kRF9ydugQBaTHdECo1p0kGzIPOaWKE0Il9GwFW0
+ NEdVPU+P+kb3AZHuefJZsZZ2MXDR8zmA9BxPxddfXCW7nhdK3Gx1s184kvcmHP0uQOA==
+X-Gm-Gg: ATEYQzxivoCQowCpRbYuANhF5VXQoOTTliwi6vvTSBG/GzdQFj12/XjISCtJzJLekEV
+ suQYJqkdjU2oLVxs1Ps2MBwPV2dv0H3JhiRgpU0UysGYL/2sMV0D6WSGzPW7VFMKk8nyNjuWvOo
+ UBAAWH89kv2QsjQ9wLNNBRcl1bOrBw1Mq6Kf4tvd17fp+CCC+NlCDZVuBFsYcQGDkf4JU9O+Y9J
+ Bb3EsnHdC283a9qvmsN79qzN+OtX9Z/34aXQeK9AEODVIrcMoFycFwgzBYaDz7FvCJePmrnXBCo
+ bTl98wF5axFRdHzLw97TpYEiX3cu8tAqgMf7alaqHehUE5WxpDGH87QtfKgjh3dAL0ZUa+nyQOR
+ fnNenEc7iIyOx5S2h8pFHOU6Tc1MsQc2cLtQnxEAj0ujDAw2ERAEQnUnscBu/w/tUfM+3Cw==
+X-Received: by 2002:a05:7300:fd03:b0:2ba:9835:1113 with SMTP id
+ 5a478bee46e88-2be4e090029mr4474598eec.36.1773067729410; 
+ Mon, 09 Mar 2026 07:48:49 -0700 (PDT)
+X-Received: by 2002:a05:7300:fd03:b0:2ba:9835:1113 with SMTP id
+ 5a478bee46e88-2be4e090029mr4474578eec.36.1773067728876; 
+ Mon, 09 Mar 2026 07:48:48 -0700 (PDT)
+Received: from hu-bcain-lv.qualcomm.com (Global_NAT1.qualcomm.com.
+ [129.46.96.20]) by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2be4f82b78esm9322776eec.12.2026.03.09.07.48.48
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 09 Mar 2026 07:48:48 -0700 (PDT)
+From: Brian Cain <brian.cain@oss.qualcomm.com>
 To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Aurelien Jarno <aurelien@aurel32.net>, Corey Minyard <cminyard@mvista.com>,
- Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>
-Subject: [PATCH v2 04/10] hw/core/boards: Remove
- MachineClass::smbus_no_migration_support field
-Date: Mon,  9 Mar 2026 15:50:06 +0100
-Message-ID: <20260309145013.44327-5-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260309145013.44327-1-philmd@linaro.org>
-References: <20260309145013.44327-1-philmd@linaro.org>
+Cc: brian.cain@oss.qualcomm.com, philmd@linaro.org, ltaylorsimpson@gmail.com, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com,
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng,
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>
+Subject: [PATCH v4 20/35] target/hexagon: Make A_PRIV,
+ "J2_trap*" insts need_env()
+Date: Mon,  9 Mar 2026 07:48:07 -0700
+Message-Id: <20260309144822.877695-21-brian.cain@oss.qualcomm.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
+References: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Proofpoint-GUID: QuQDlqZlWC2WDEj6w_a7SdIqtyL4qU93
+X-Proofpoint-ORIG-GUID: QuQDlqZlWC2WDEj6w_a7SdIqtyL4qU93
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDEzMyBTYWx0ZWRfX2s6K9JOqQuJd
+ 7TL1JOhe5XYN2z0OFzOlWXCI48wkVNQQDxe5AaEqART3ZwAP4u+7mCyXAgXb5G4CcKjcGBWFDQM
+ RhnwZkgO3tAOkiFCxfOBG4KVBYvow6ery2L8j9jFZ6syf9YEW48H/nfyK4if0AX/Ir3g/BELKTR
+ u9HBEHGDgS/D27n0ykDTnvm2t90BK4WSHTbpzOZOkDHP68ZbH0wZVHhFttqHd5fWFeVAICpfJwH
+ 3CmG8TERwso7fsKfIsI+yS1g/fI74Wkdt1k+JO1H4AyB/3+G0lWbhvzxXLXGmKnLEOn/mPV5wY5
+ SfXjm4t68TaYM3z+HuKwgTMWV3542lDzeaBWRqD22lmLXv1enJfSISkCOU21o8hv/z/Tac/e2VC
+ bmqk6xRwCpzgfSwFqcTUmkk+XZ3VkuLVS+0ZV9gRiIlVunhCxMPZrTKNwVuL20gioLVZDZz8njY
+ uK6C7XvV4Yg1DL9n+GA==
+X-Authority-Analysis: v=2.4 cv=Xr/3+FF9 c=1 sm=1 tr=0 ts=69aeddd2 cx=c_pps
+ a=cFYjgdjTJScbgFmBucgdfQ==:117 a=ouPCqIW2jiPt+lZRy3xVPw==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=s4-Qcg_JpJYA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=u7WPNUs3qKkmUXheDGA7:22 a=_glEPmIy2e8OvE2BGh3C:22
+ a=COk6AnOGAAAA:8 a=pGLkceISAAAA:8 a=EUspDBNiAAAA:8 a=3Ncpk96OCEhYCSOrUwYA:9
+ a=QEXdDO2ut3YA:10 a=scEy_gLbYbu1JhEsrz4S:22 a=TjNXssC_j7lpFel5tvFf:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_04,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 adultscore=0 spamscore=0 impostorscore=0 suspectscore=0
+ lowpriorityscore=0 clxscore=1015 phishscore=0 priorityscore=1501 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090133
+Received-SPF: pass client-ip=205.220.180.131;
+ envelope-from=brian.cain@oss.qualcomm.com; helo=mx0b-0031df01.pphosted.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,143 +151,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The MachineClass::smbus_no_migration_support boolean was only used
-by the pc-q35-3.1 and pc-i440fx-3.1 machines, which got removed.
-Remove it, along with pm_smbus_vmstate_needed().
+From: Brian Cain <bcain@quicinc.com>
 
-Use the unconditional VMSTATE_BOOL() and VMSTATE_STRUCT() macros.
-
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-5-philmd@linaro.org>
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 ---
- include/hw/core/boards.h  |  1 -
- include/hw/i2c/pm_smbus.h |  7 -------
- hw/acpi/piix4.c           |  8 +-------
- hw/i2c/pm_smbus.c         |  7 -------
- hw/i2c/smbus_eeprom.c     |  4 +---
- hw/i2c/smbus_ich9.c       | 10 ++--------
- 6 files changed, 4 insertions(+), 33 deletions(-)
+ target/hexagon/hex_common.py | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
-index 9ad2a7d5c97..e15dbcea83b 100644
---- a/include/hw/core/boards.h
-+++ b/include/hw/core/boards.h
-@@ -314,7 +314,6 @@ struct MachineClass {
-     bool auto_enable_numa_with_memhp;
-     bool auto_enable_numa_with_memdev;
-     bool ignore_boot_device_suffixes;
--    bool smbus_no_migration_support;
-     bool nvdimm_supported;
-     bool numa_mem_supported;
-     bool auto_enable_numa;
-diff --git a/include/hw/i2c/pm_smbus.h b/include/hw/i2c/pm_smbus.h
-index dafe0df4f69..62bbd45e803 100644
---- a/include/hw/i2c/pm_smbus.h
-+++ b/include/hw/i2c/pm_smbus.h
-@@ -44,13 +44,6 @@ typedef struct PMSMBus {
+diff --git a/target/hexagon/hex_common.py b/target/hexagon/hex_common.py
+index 85745ef48c2..b9a5b9e2a29 100755
+--- a/target/hexagon/hex_common.py
++++ b/target/hexagon/hex_common.py
+@@ -250,7 +250,9 @@ def need_env(tag):
+             "A_LOAD" in attribdict[tag] or
+             "A_CVI_GATHER" in attribdict[tag] or
+             "A_CVI_SCATTER" in attribdict[tag] or
+-            "A_IMPLICIT_WRITES_USR" in attribdict[tag])
++            "A_IMPLICIT_WRITES_USR" in attribdict[tag] or
++            "A_PRIV" in attribdict[tag] or
++            "J2_trap" in tag)
  
- void pm_smbus_init(DeviceState *parent, PMSMBus *smb, bool force_aux_blk);
  
--/*
-- * For backwards compatibility on migration, older versions don't have
-- * working migration for pm_smbus, this lets us ignore the migrations
-- * for older machine versions.
-- */
--bool pm_smbus_vmstate_needed(void);
--
- extern const VMStateDescription pmsmb_vmstate;
- 
- #endif /* PM_SMBUS_H */
-diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
-index 138ac3d3940..43860d12278 100644
---- a/hw/acpi/piix4.c
-+++ b/hw/acpi/piix4.c
-@@ -205,11 +205,6 @@ static const VMStateDescription vmstate_cpuhp_state = {
-     }
- };
- 
--static bool piix4_vmstate_need_smbus(void *opaque, int version_id)
--{
--    return pm_smbus_vmstate_needed();
--}
--
- /*
-  * This is a fudge to turn off the acpi_index field,
-  * whose test was always broken on piix4 with 6.2 and older machine types.
-@@ -238,8 +233,7 @@ static const VMStateDescription vmstate_acpi = {
-         VMSTATE_UINT16(ar.pm1.evt.en, PIIX4PMState),
-         VMSTATE_UINT16(ar.pm1.cnt.cnt, PIIX4PMState),
-         VMSTATE_STRUCT(apm, PIIX4PMState, 0, vmstate_apm, APMState),
--        VMSTATE_STRUCT_TEST(smb, PIIX4PMState, piix4_vmstate_need_smbus, 3,
--                            pmsmb_vmstate, PMSMBus),
-+        VMSTATE_STRUCT(smb, PIIX4PMState, 3, pmsmb_vmstate, PMSMBus),
-         VMSTATE_TIMER_PTR(ar.tmr.timer, PIIX4PMState),
-         VMSTATE_INT64(ar.tmr.overflow_time, PIIX4PMState),
-         VMSTATE_STRUCT(ar.gpe, PIIX4PMState, 2, vmstate_gpe, ACPIGPE),
-diff --git a/hw/i2c/pm_smbus.c b/hw/i2c/pm_smbus.c
-index ead53d2724d..5654d516382 100644
---- a/hw/i2c/pm_smbus.c
-+++ b/hw/i2c/pm_smbus.c
-@@ -443,13 +443,6 @@ static const MemoryRegionOps pm_smbus_ops = {
-     .endianness = DEVICE_LITTLE_ENDIAN,
- };
- 
--bool pm_smbus_vmstate_needed(void)
--{
--    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
--
--    return !mc->smbus_no_migration_support;
--}
--
- const VMStateDescription pmsmb_vmstate = {
-     .name = "pmsmb",
-     .version_id = 1,
-diff --git a/hw/i2c/smbus_eeprom.c b/hw/i2c/smbus_eeprom.c
-index d9ac556a0ab..693d4762205 100644
---- a/hw/i2c/smbus_eeprom.c
-+++ b/hw/i2c/smbus_eeprom.c
-@@ -88,11 +88,9 @@ static int eeprom_write_data(SMBusDevice *dev, uint8_t *buf, uint8_t len)
- 
- static bool smbus_eeprom_vmstate_needed(void *opaque)
- {
--    MachineClass *mc = MACHINE_GET_CLASS(qdev_get_machine());
-     SMBusEEPROMDevice *eeprom = opaque;
- 
--    return (eeprom->accessed || smbus_vmstate_needed(&eeprom->smbusdev)) &&
--        !mc->smbus_no_migration_support;
-+    return eeprom->accessed || smbus_vmstate_needed(&eeprom->smbusdev);
- }
- 
- static const VMStateDescription vmstate_smbus_eeprom = {
-diff --git a/hw/i2c/smbus_ich9.c b/hw/i2c/smbus_ich9.c
-index 956c9b59bbc..51513e73fde 100644
---- a/hw/i2c/smbus_ich9.c
-+++ b/hw/i2c/smbus_ich9.c
-@@ -41,20 +41,14 @@ struct ICH9SMBState {
-     PMSMBus smb;
- };
- 
--static bool ich9_vmstate_need_smbus(void *opaque, int version_id)
--{
--    return pm_smbus_vmstate_needed();
--}
--
- static const VMStateDescription vmstate_ich9_smbus = {
-     .name = "ich9_smb",
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (const VMStateField[]) {
-         VMSTATE_PCI_DEVICE(dev, ICH9SMBState),
--        VMSTATE_BOOL_TEST(irq_enabled, ICH9SMBState, ich9_vmstate_need_smbus),
--        VMSTATE_STRUCT_TEST(smb, ICH9SMBState, ich9_vmstate_need_smbus, 1,
--                            pmsmb_vmstate, PMSMBus),
-+        VMSTATE_BOOL(irq_enabled, ICH9SMBState),
-+        VMSTATE_STRUCT(smb, ICH9SMBState, 1, pmsmb_vmstate, PMSMBus),
-         VMSTATE_END_OF_LIST()
-     }
- };
+ def need_slot(tag):
 -- 
-2.53.0
+2.34.1
 
 
