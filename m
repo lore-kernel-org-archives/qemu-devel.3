@@ -4,62 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17491EF3716
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:25:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 303AEEF3716
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 08:27:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzVuz-0008JU-SP; Mon, 09 Mar 2026 04:24:49 -0400
+	id 1vzVxL-0000ro-4V; Mon, 09 Mar 2026 04:27:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVuy-0008IV-6q
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:24:48 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVxJ-0000rT-4Z
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:27:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVuw-0005Ql-Qd
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:24:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzVxH-000607-G5
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 04:27:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773044686;
+ s=mimecast20190719; t=1773044830;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=JzwGvg3NQSCNSLSyuAxvngoXmffW8l47UKD161Lx3vg=;
- b=HSL4HIa3w784MKOl/mv0Ji3vyM7zWJNxqhhJh+lm28/u9MCtGwRWMR4lwTy4txf7+I95zp
- p4kfHWx43Gg4zhYeNvCbKHUFzYPs6PhnK5aufVucjDJKouVQt8FgfaONLDd/suzMW52joW
- OLsUW93uQOjavqzI2oQz/GEiR5QLaLs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8mqMe8sDWgrxSPePzrAEV11p9IthpGeT2R+YSgXKVOE=;
+ b=FIf3UGSWRjSl8aYn5kgcUv7DROlIjpngvyN1itzKQbP0UKiKdxAMQriui20l9I1JOuRYXY
+ VJW10nuL/aFtgfh2DlKmyoRD09pRaV3I4tdizZkBk1mnaRQCN+i9AcMrM0DyjuAuuoXk1d
+ pUUZqE4DdKSugBgnDhG97hvrwecNzpU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-351-d_dIWJVXP1arNhUt_cptIg-1; Mon,
- 09 Mar 2026 04:24:42 -0400
-X-MC-Unique: d_dIWJVXP1arNhUt_cptIg-1
-X-Mimecast-MFC-AGG-ID: d_dIWJVXP1arNhUt_cptIg_1773044681
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-0NnPU-B0MKu2ZZR-0OIt4g-1; Mon,
+ 09 Mar 2026 04:27:05 -0400
+X-MC-Unique: 0NnPU-B0MKu2ZZR-0OIt4g-1
+X-Mimecast-MFC-AGG-ID: 0NnPU-B0MKu2ZZR-0OIt4g_1773044823
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D331C1955F38; Mon,  9 Mar 2026 08:24:40 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6AACD180034E; Mon,  9 Mar 2026 08:27:03 +0000 (UTC)
 Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 7AA6818002A6; Mon,  9 Mar 2026 08:24:36 +0000 (UTC)
-Message-ID: <2ba20703-f79d-4d40-b050-0a49a48edee5@redhat.com>
-Date: Mon, 9 Mar 2026 09:24:34 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 408791956095; Mon,  9 Mar 2026 08:26:56 +0000 (UTC)
+Message-ID: <fbed48bf-862e-44d6-b128-01c1b0d1d49c@redhat.com>
+Date: Mon, 9 Mar 2026 09:26:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 07/10] target/i386/cpu: Remove X86CPU::intel_pt_auto_level
- field
+Subject: Re: [PATCH 08/10] hw/core/machine: Remove the hw_compat_3_1[] array
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Yi Liu <yi.l.liu@intel.com>, Zhao Liu <zhao1.liu@intel.com>,
  "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
  =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
  Paolo Bonzini <pbonzini@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>
+ Stefan Berger <stefanb@linux.vnet.ibm.com>, Ani Sinha <anisinha@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
 References: <20260307152635.83893-1-philmd@linaro.org>
- <20260307152635.83893-8-philmd@linaro.org>
+ <20260307152635.83893-9-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -104,10 +106,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307152635.83893-8-philmd@linaro.org>
+In-Reply-To: <20260307152635.83893-9-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -134,55 +136,15 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.26, Philippe Mathieu-Daudé wrote:
-> The X86CPU::intel_pt_auto_level boolean was only set in the
-> pc_compat_3_1[] array, via the 'x-intel-pt-auto-level=off'
-> property. We removed all machines using that array, lets remove
-
-s/lets/let's/
-
-> that property and all the code around it.
+> The hw_compat_3_1[] array was only used by the pc-q35-3.1
+> and pc-i440fx-3.1 machines, which got removed. Remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/i386/cpu.h | 3 ---
->   target/i386/cpu.c | 8 --------
->   2 files changed, 11 deletions(-)
-> 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index 2b70d56e9b0..5a62aa61579 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2457,9 +2457,6 @@ struct ArchCPU {
->       /* Only advertise TOPOEXT features that AMD defines */
->       bool amd_topoext_features_only;
->   
-> -    /* Enable auto level-increase for Intel Processor Trace leave */
-> -    bool intel_pt_auto_level;
-> -
->       /* if true fill the top bits of the MTRR_PHYSMASKn variable range */
->       bool fill_mtrr_mask;
->   
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index c77addd2c25..d8cd0d81d7f 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -9565,13 +9565,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
->   
->       /* Intel Processor Trace requires CPUID[0x14] */
->       if ((env->features[FEAT_7_0_EBX] & CPUID_7_0_EBX_INTEL_PT)) {
-> -        if (cpu->intel_pt_auto_level) {
->               x86_cpu_adjust_level(cpu, &cpu->env.cpuid_min_level, 0x14);
+>   include/hw/core/boards.h |  3 ---
+>   hw/core/machine.c        | 17 -----------------
+>   2 files changed, 20 deletions(-)
 
-I think we should decrease the indentation here now?
-
-> -        } else if (cpu->env.cpuid_min_level < 0x14) {
-> -            mark_unavailable_features(cpu, FEAT_7_0_EBX,
-> -                CPUID_7_0_EBX_INTEL_PT,
-> -                "Intel PT need CPUID leaf 0x14, please set by \"-cpu ...,intel-pt=on,min-level=0x14\"");
-> -        }
->       }
-
-With the indentation fixed:
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
