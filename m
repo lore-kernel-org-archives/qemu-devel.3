@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D32A9F41807
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:58:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA49F41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:59:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzczk-0005ZU-1M; Mon, 09 Mar 2026 11:58:12 -0400
+	id 1vzcz3-000450-MM; Mon, 09 Mar 2026 11:57:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcyv-00040O-4Y
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:23 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcyc-0003fa-T4
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:03 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcyp-0000pI-6g
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:17 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4852fdb36a8so24371855e9.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcyb-0000oV-8z
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:02 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-48532925a4bso8799015e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071833; x=1773676633; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071819; x=1773676619; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=zzThGEbHDfbShZ+LqArsRWb9rcvvKyh183/KD+t4v7U=;
- b=w3AgJOl84dg9jL1OE/x53l74mCuMKnvUwf20zqcAnTawH4qfjhtzVIE5o7LYMWMp1q
- 0mI4HA7RTum05igyKyGfhAY0sxZ/QLhrtB/vPKu9okxNaStqCNqqQtiwGluM5SaP3Wa3
- XKLS9FMWzO3Dp+llYaF0ACmupp4fZFT+g/nH+T5aXk6NoJpvxMM3DS6fdnP8NBgK88SS
- AShN2yP3/YRbjrjfukpptsye9toM4xxYYzBUhNGrChTH6E04jetsN0koymOqiJ8wSW2k
- EKEJaqMsGo8iUtHhhbI9QLJLp8Vh/VMS7mPWYnwJXsv1nxRpuc/MNbOAbWiDD2r/t7vW
- x0+A==
+ :reply-to; bh=wXh203y0iWfmEpIZbgI0WGjeGbB3hah+KAK+PVl+7ew=;
+ b=Y891bbPMirtCw03tTRtkNGYNUle24gB4Wf2F6LDFGDfR8Q7bt5+OrVz66IVT1Voyuf
+ yd4acjDVSuejzfIPHbAESoOl4CDmUv+5o7E+btMNtUejmJnyA4BKt1wfkpNPYwHHM9cF
+ gBF2Ytmft57ZBiR4hLG/sb31s2hG66TNj1Uh7kYHg4G6eo0BSBqGNJxddkgk7LqX7yi7
+ mFtBtMlw802oC/RaYmFptplQ3igkl+93UQTjY3x/HYtd66miAm07BF0Z4u9V+u83x9DA
+ VkF5KcTCNose1llrZr3vLkLvD1tCsux3ylTjCvto/aErY7OagQjwIDjnypwLvr6kkzBz
+ dNRA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071833; x=1773676633;
+ d=1e100.net; s=20230601; t=1773071819; x=1773676619;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=zzThGEbHDfbShZ+LqArsRWb9rcvvKyh183/KD+t4v7U=;
- b=JrT3dmKaIZ+rHZR2lWHJ0nAj81vDjjidqAJ/Z9ruUO3LrNR01beOsj0v9ZqROqHyLZ
- t4k5ZunAJgamnv+i4OVfnIojcqtJ+y+49s+mZ54zCTdP/NQFmAnF7hgAQQzxLKm2Jed1
- T0kt+OtgFpt1m40SaG0BJkghn57CiWrgol5fLttBfduLnVHeKZKpRC1WkTeZm/h8cjdD
- DdTG60K0/CghskOHrrgeYeau4UqfhyNcA+gYkNlNAIuPzHwqtesbug7X5XRyK8xXnLon
- +0y4wBYl2vvxbfQ7ExAFBXk8FKrh5o6tE2MrYitpOafOKLn6VrJydoe9VHsQEaQ9Y16N
- DDLQ==
-X-Gm-Message-State: AOJu0YzI2+3fclHuqNVX578Q3pJyMq/JAuRhgJRgbfZrthy5V65kJfN9
- 7uMb+wYWp9w7GtPvBMFPaZsiGMtPUuGPeld4y8L+FGVq6qiZ3v8eEFxaKoarXUi8r7Brx+H58XG
- XRYjEIJw=
-X-Gm-Gg: ATEYQzx/Cpf/wc2rg6ZY1tbK+1WNg05AATq6PKSNod3DAsYlE1OGEww7sKQHl4OBcZE
- trFL35klIw9I5yMO9rWb75qpTY0TBefuWdTfBsXY11sMwanYHP+BrAFyb3mY6+boAtTF97M8Biy
- gnj2vdOj31tTTJS5fDkJXnx2w1UrNNRLZnjgqc2JVitScUNlwh4MM493wD+gxU4Sd/odibSdmCZ
- Qz7+ybS2iVj9xpH684ESacF/1GqxHRZjBc/yy7OlccP1RytEroqOq5t1ljL3j7YQo2wVTf1z3PW
- GS1ZKjNh4sQSD7whE/n5sceueqw6eks63YqPMuK19HWc1A9U3GJJ5Rqff1UT4Z0wg5C8sxN8Cav
- mZB9+4XKrGiH+XEzz3E+4FpRyha5FfMiGiOw9wp9LWEUXg9/ZTDNXeOOE2GxjHOKRnb2eCvECeq
- CSclEXEd2HWHo65uAGav7ZqEy/wbpg0u5G/w9H6VDoePWshHycMpvxEVH1e+GK3aFQacxJXRRyC
- /YfHIABIfk=
-X-Received: by 2002:a05:600c:3ba2:b0:485:35ba:1d81 with SMTP id
- 5b1f17b1804b1-48535ba1ea6mr92788705e9.21.1773071832488; 
- Mon, 09 Mar 2026 08:57:12 -0700 (PDT)
+ bh=wXh203y0iWfmEpIZbgI0WGjeGbB3hah+KAK+PVl+7ew=;
+ b=xNCk+7uY88qijOopEPP6SUerjgxCp+zV7xuqAirhlqecP19LQqwRWZ9YDy49cuNL1j
+ hjt0NkOeocKyG86cggKR5YzWytbo6L6q6Iiy93BCERDUzxWAfWCxpbGaS71QE6KWL+We
+ JZD77iuX8GJIUrC7vh2hBipDEs9kDXGjvA2322xM/Ier1XLig3CedOs7r6uEdbUKQzH/
+ /VvhWB8lc1U/EqlFWG7X1YE3BC06U3b7yPnDDgG6V+GMeXCx6K03rqxHLelV0jCyYEKV
+ 4MQDFY8VshhOmR0ICDO5jj2jOHThiu+s/Xa+LwLwXT8BGZml0DaR5EOqF+ZhS4wfhTla
+ t4dg==
+X-Gm-Message-State: AOJu0YyVnu51oqkvtXxLAEqBUpVCMeHVBghgRG9AK9msteDbyhUGf1Kl
+ 6RQ5kEJEFJPo2AGASS+f47GWK7/VoN7hCYR21YxyMGsnhhjSwVu0YXQiaLOkAOPYbKyfer59nGq
+ qtVjvbo4=
+X-Gm-Gg: ATEYQzyoFId4xEBKYAXO+ybgxpCYrqMvy3sRzyJsGgzcJUyKH66QDAVx3tyCt8ZQzFr
+ S3Osfo0xY1E9SPxAS08cNBBQQhD7/2lGnwJzqfUoYgbdZ51qTo4DAuF3UUhzvp8PWjhorHcFWyj
+ GtCzZXU0MoPRsdibTYSHHlXmSGT3k+QAUatPI5D5XMAj8NwZ7wsWtU8O6gCAq8bSZw1AudjFi+9
+ z5cn/QdUlNnMABQCqIhYefH1soodSgxYIcT8ChC1huq8Fvgxp53vy+DB3SlTL1kubzplIexZeBN
+ Wyo422BsbDU9rg4DLKamjZ04HdRaNWIum+xPOk/rbFIq3D0D1Aw2pmNPrIC0KzGwkClUFyrMCls
+ iorNwJo2UQwU8WZzZS+GF7UGp/xcfK30XW+Zh4SDpFBwQgd5GJ3m3zun/BFoMz1/Bzlo99uv5os
+ bN4TMa7mlRNbqO6jeJcLDlNIyFqtKZEo+FUyJv32RZYp/GiMUCxKX0HCKp4fHo49sMiDnGlv+H
+X-Received: by 2002:a05:600c:529a:b0:485:365f:b4e7 with SMTP id
+ 5b1f17b1804b1-485365fb814mr87433285e9.14.1773071818851; 
+ Mon, 09 Mar 2026 08:56:58 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485419c2930sm3208125e9.0.2026.03.09.08.57.11
+ 5b1f17b1804b1-48533d6151esm51193065e9.10.2026.03.09.08.56.57
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:57:11 -0700 (PDT)
+ Mon, 09 Mar 2026 08:56:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 43/49] ati-vga: Implement HOST_DATA register writes
-Date: Mon,  9 Mar 2026 16:52:13 +0100
-Message-ID: <20260309155219.62400-44-philmd@linaro.org>
+Subject: [PULL 41/49] ati-vga: Remove ATIVGAState param from ati_2d_do_blt
+Date: Mon,  9 Mar 2026 16:52:11 +0100
+Message-ID: <20260309155219.62400-42-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,138 +100,66 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Chad Jablonski <chad@jablonski.xyz>
 
-Writing to any of the HOST_DATA0-7 registers pushes the written data
-into a 128-bit accumulator. When the accumulator is full a flush is
-triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
-will also initiate a flush. The flush itself is left for the next patch.
-
-Unaligned HOST_DATA* writes result in, from what I can tell, undefined
-behavior on real hardware. A well-behaved driver shouldn't be doing this
-anyway. For that reason they are not handled here at all.
+This completes the decoupling from the ATIVGAState struct.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+[balaton: Fix build without pixman]
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Message-ID: <235adb69787c818afd023e7f32286166cc70744c.1773020351.git.balaton@eik.bme.hu>
+Message-ID: <6e3545dea9f4522e07e91f9db885a7d74dae781a.1773020351.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/display/ati_int.h  |  9 +++++++++
- hw/display/ati_regs.h |  9 +++++++++
- hw/display/ati.c      | 26 ++++++++++++++++++++++++++
- hw/display/ati_dbg.c  |  9 +++++++++
- 4 files changed, 53 insertions(+)
+ hw/display/ati_2d.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index 874c63eb544..063efc7bbaa 100644
---- a/hw/display/ati_int.h
-+++ b/hw/display/ati_int.h
-@@ -96,6 +96,14 @@ typedef struct ATIVGARegs {
-     uint32_t default_tile;
- } ATIVGARegs;
- 
-+typedef struct ATIHostDataState {
-+    bool active;
-+    uint32_t row;
-+    uint32_t col;
-+    uint32_t next;
-+    uint32_t acc[4];
-+} ATIHostDataState;
-+
- struct ATIVGAState {
-     PCIDevice dev;
-     VGACommonState vga;
-@@ -114,6 +122,7 @@ struct ATIVGAState {
-     MemoryRegion io;
-     MemoryRegion mm;
-     ATIVGARegs regs;
-+    ATIHostDataState host_data;
- };
- 
- const char *ati_reg_name(int num);
-diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
-index 3999edb9b71..48f15e9b1da 100644
---- a/hw/display/ati_regs.h
-+++ b/hw/display/ati_regs.h
-@@ -252,6 +252,15 @@
- #define DP_T12_CNTL                             0x178c
- #define DST_BRES_T1_LNTH                        0x1790
- #define DST_BRES_T2_LNTH                        0x1794
-+#define HOST_DATA0                              0x17c0
-+#define HOST_DATA1                              0x17c4
-+#define HOST_DATA2                              0x17c8
-+#define HOST_DATA3                              0x17cc
-+#define HOST_DATA4                              0x17d0
-+#define HOST_DATA5                              0x17d4
-+#define HOST_DATA6                              0x17d8
-+#define HOST_DATA7                              0x17dc
-+#define HOST_DATA_LAST                          0x17e0
- #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
- #define SCALE_OFFSET_0                          0x1998
- #define SCALE_PITCH                             0x199c
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 9a7c5703b0f..16dbb743e1a 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -1023,6 +1023,27 @@ static void ati_mm_write(void *opaque, hwaddr addr,
-     case SRC_SC_BOTTOM:
-         s->regs.src_sc_bottom = data & 0x3fff;
-         break;
-+    case HOST_DATA0:
-+    case HOST_DATA1:
-+    case HOST_DATA2:
-+    case HOST_DATA3:
-+    case HOST_DATA4:
-+    case HOST_DATA5:
-+    case HOST_DATA6:
-+    case HOST_DATA7:
-+    case HOST_DATA_LAST:
-+        if (!s->host_data.active) {
-+            break;
-+        }
-+        s->host_data.acc[s->host_data.next++] = data;
-+        if (addr == HOST_DATA_LAST) {
-+            qemu_log_mask(LOG_UNIMP, "HOST_DATA finish not yet implemented\n");
-+            s->host_data.next = 0;
-+        } else if (s->host_data.next >= 4) {
-+            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
-+            s->host_data.next = 0;
-+        }
-+        break;
-     default:
-         break;
-     }
-@@ -1128,6 +1149,11 @@ static void ati_vga_reset(DeviceState *dev)
-     /* reset vga */
-     vga_common_reset(&s->vga);
-     s->mode = VGA_MODE;
-+
-+    s->host_data.active = false;
-+    s->host_data.next = 0;
-+    s->host_data.row = 0;
-+    s->host_data.col = 0;
+diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
+index aa2e540a510..be940d8ab6b 100644
+--- a/hw/display/ati_2d.c
++++ b/hw/display/ati_2d.c
+@@ -123,7 +123,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
+             (ctx->top_to_bottom ? 'v' : '^'));
  }
  
- static void ati_vga_exit(PCIDevice *dev)
-diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
-index 3ffa7f35df9..5c799d540a9 100644
---- a/hw/display/ati_dbg.c
-+++ b/hw/display/ati_dbg.c
-@@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
-     {"MC_SRC1_CNTL", 0x19D8},
-     {"TEX_CNTL", 0x1800},
-     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
-+    {"HOST_DATA0", 0x17c0},
-+    {"HOST_DATA1", 0x17c4},
-+    {"HOST_DATA2", 0x17c8},
-+    {"HOST_DATA3", 0x17cc},
-+    {"HOST_DATA4", 0x17d0},
-+    {"HOST_DATA5", 0x17d4},
-+    {"HOST_DATA6", 0x17d8},
-+    {"HOST_DATA7", 0x17dc},
-+    {"HOST_DATA_LAST", 0x17e0},
-     {NULL, -1}
- };
- 
+-static bool ati_2d_do_blt(ATIVGAState *s, ATI2DCtx *ctx)
++static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
+ {
+     if (!ctx->bpp) {
+         qemu_log_mask(LOG_GUEST_ERROR, "Invalid bpp\n");
+@@ -164,14 +164,14 @@ static bool ati_2d_do_blt(ATIVGAState *s, ATI2DCtx *ctx)
+ #ifdef CONFIG_PIXMAN
+         int src_stride_words = ctx->src_stride / sizeof(uint32_t);
+         int dst_stride_words = ctx->dst_stride / sizeof(uint32_t);
+-        if ((s->use_pixman & BIT(1)) &&
++        if ((use_pixman & BIT(1)) &&
+             ctx->left_to_right && ctx->top_to_bottom) {
+             fallback = !pixman_blt((uint32_t *)ctx->src_bits,
+                                    (uint32_t *)ctx->dst_bits, src_stride_words,
+                                    dst_stride_words, ctx->bpp, ctx->bpp,
+                                    ctx->src.x, ctx->src.y, ctx->dst.x,
+                                    ctx->dst.y, ctx->dst.width, ctx->dst.height);
+-        } else if (s->use_pixman & BIT(1)) {
++        } else if (use_pixman & BIT(1)) {
+             /* FIXME: We only really need a temporary if src and dst overlap */
+             int llb = ctx->dst.width * (ctx->bpp / 8);
+             int tmp_stride_words = DIV_ROUND_UP(llb, sizeof(uint32_t));
+@@ -241,7 +241,7 @@ static bool ati_2d_do_blt(ATIVGAState *s, ATI2DCtx *ctx)
+                 ctx->dst.x, ctx->dst.y, ctx->dst.width, ctx->dst.height,
+                 filler);
+ #ifdef CONFIG_PIXMAN
+-        if (!(s->use_pixman & BIT(0)) ||
++        if (!(use_pixman & BIT(0)) ||
+             !pixman_fill((uint32_t *)ctx->dst_bits,
+                          ctx->dst_stride / sizeof(uint32_t), ctx->bpp,
+                          ctx->dst.x, ctx->dst.y,
+@@ -272,7 +272,7 @@ void ati_2d_blt(ATIVGAState *s)
+ {
+     ATI2DCtx ctx;
+     setup_2d_blt_ctx(s, &ctx);
+-    if (ati_2d_do_blt(s, &ctx)) {
++    if (ati_2d_do_blt(&ctx, s->use_pixman)) {
+         ati_set_dirty(&s->vga, &ctx);
+     }
+ }
 -- 
 2.53.0
 
