@@ -4,127 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47598F4180E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:14:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14807F417F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:18:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzdF0-0005wK-AB; Mon, 09 Mar 2026 12:13:58 -0400
+	id 1vzdIa-0007pk-J7; Mon, 09 Mar 2026 12:17:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzdEy-0005tA-0i
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:13:56 -0400
-Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzdEw-0003GN-9D
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:13:55 -0400
-Received: by mail-qt1-x834.google.com with SMTP id
- d75a77b69052e-505a1789a27so69584001cf.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:13:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773072833; x=1773677633; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Zi9YZw2fNlAvLthkVGtsKX5O06s7V1xGEuBilebLQkQ=;
- b=B7/A/PkTqyQUZUkGfVSmBr9vMw2HYiDsTmcaoJfesysuMgJ5a13PLC11aRYDdnQ/yp
- uf6H4hvamb1GS70i3MKy3aOYkfsCfOhumowX+eBPG7fTHM7F2NwiO+KRfOmrC8z5uvzO
- b83Cj2umXI8sY7zSLvxMa/ZCSeeNfhoy3a0wuMqa2+Gv4iiKuvQImLjYpw5G8LERVd5i
- TTqYe9RmEMJZB8fA/sGgUWo8hnFsEKMIAkojcQePVCUYPvLfsgzGC7tuXFdrOS7yt3z7
- M3ue0D+d151e345Vzn82rjpWDK3/rWrWZLQ67CM8fsqRafx0W8ILPU853HuS3koXZLJe
- C3mw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773072833; x=1773677633;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Zi9YZw2fNlAvLthkVGtsKX5O06s7V1xGEuBilebLQkQ=;
- b=PYq0d+mTQGrslRUiyhpBGGWxx5n246k+e7NT67zBPy2ATA70zEV3WRwY8esggHgUe0
- sxBGqSl9jw15jrkr3zieq2m/OQw6f3TaGjOhHs5hh94sx+nE6mQ/qmTOC4TiR0snSRHf
- pcoE0m//zDTxz0PL9K9imW8pfwsl8Z8+zxSjRZBy1FJ4DQopA+mgmuo9MFNNwDuEx2Cd
- ejSn5es5VYKuctF6dtDAGQ5SjPNfKpovLvXABsmHBYLKmudNn9NVMZlFDsOaViUNQCzY
- 6Nr51Qz3NS4PMat4TFaFiMD9tGmPZBSPpYwp10ibkGjD8/FJzcl//Lute21pyVNYeSfA
- GtyA==
-X-Gm-Message-State: AOJu0YwXkgLJbqk50Ncex7Do1nXiE4xJZncem7hQMWeWMnJW0FJoxVOS
- jchisWkqv+S3RuI2KZaJ3sewA1Xvp240pLCZnI3oKYYU+y7LmEzkGUDwi2Z8/TrQJa2W8hfy+lB
- Elxks
-X-Gm-Gg: ATEYQzzERjUvR6WN9c7vfsPuhbdA5mDO5vpHje+WCA58GnVqfcv/GTYgXIphVRShzvv
- x+zkgJ1ZZzPjZf16OVnr4TT0x/iT9ofDHWmjwFeC3iocC9oOEm29tQDm6yaVnSeOmT6upJjjQv8
- +Sdyd4cVuRasctwZR3qo6VylEPh0ZookbNisnRytdeEzNT5WDHHGpWtg8HF3LCbnxsKQmn+JdO4
- JQTvA9qqcwgjb2yvK0vDsYsr8FmMxZpVFSs1BiFQKbhGl8m8zBFXWZYNYIilC29n+nsowffoEPp
- KRNK+BMbXfoIAwgehAyySe0ZsWqHe66zi4VwmSfXEdJpZ/AjmbDKWVF80ZrWB1hL8InWR9xsHmU
- 072fiuSWdHZ2CPIP2ZB3UypKe3PXJ3jlYLt6v70X70DMTE8WiSkma0kGb7dqN/b1oRynz8zfvpH
- vxLTXqQXY2zVqYf8ajXsKQ+pnHU8WVv2BVgF9J44S6RvHh6Ebw9E0+4BQglgLv/DJygUxu
-X-Received: by 2002:a05:622a:1456:b0:509:219f:8e35 with SMTP id
- d75a77b69052e-509219f951amr20494741cf.42.1773072833072; 
- Mon, 09 Mar 2026 09:13:53 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a57a538e5sm987706d6.21.2026.03.09.09.13.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 09:13:52 -0700 (PDT)
-Message-ID: <f7e095e3-18f8-4c5e-8a39-ff428f984b07@linaro.org>
-Date: Mon, 9 Mar 2026 09:13:52 -0700
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vzdIP-0007mE-4S; Mon, 09 Mar 2026 12:17:29 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vzdIL-0003ms-Ii; Mon, 09 Mar 2026 12:17:28 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629GEiJE1554633; Mon, 9 Mar 2026 16:17:24 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=ElG+qh
+ R292rULm3egNwxjGTJKEc0DrnsfbbnQo6B+nY=; b=HuJZPGDIZDh3u25DTkyaO3
+ O2nlyTpz+IWidGAUyxauGlUikhkvy/KrgtUpooHQ74L6HUeaiRTqJkWV4+ypiRNJ
+ I4tcNwDYybMqxKO1+/Yyi2SthwUYS/3Dcog/1+i/wtEdQPy8ge8zghwk2a6FnmXc
+ h25DfFzrQ5MFdC+DzHC+XCPuYYxbuPaCzlseM9NposdYGszjUo1yrUeBHwdanJOm
+ LXOBDWy4DQHc8y0/y6GtdXjsSHJjIWvjqlL8hQA6SzODAhiAnVnmO2+LkJiKJIr7
+ /EFijiWEPeFVMebnxxjXau0917V0sFsaS87T7K75IsREPlqb6oLITl/ADPooQKVA
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1mf59f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 16:17:23 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 629E6dKY021521;
+ Mon, 9 Mar 2026 16:17:22 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4crxbsntc5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 16:17:22 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 629GHKFD40174172
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Mar 2026 16:17:21 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id DABDB58056;
+ Mon,  9 Mar 2026 16:17:20 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 418685803F;
+ Mon,  9 Mar 2026 16:17:20 +0000 (GMT)
+Received: from [9.61.138.24] (unknown [9.61.138.24])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Mar 2026 16:17:20 +0000 (GMT)
+Message-ID: <19a72bb3-6852-4d32-aef7-545525b8b2f1@linux.ibm.com>
+Date: Mon, 9 Mar 2026 12:17:19 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/uftrace_symbols.py: ignore zero sized
- symbols
+Subject: Re: [PATCH v5 00/15] s390x: Add support for virtio-blk-pci IPL device
+To: Thomas Huth <thuth@redhat.com>, jrossi@linux.ibm.com,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260309003601.242634-1-jrossi@linux.ibm.com>
+ <4bef56aa-8b2c-43c7-9449-fea7c31d00b2@linux.ibm.com>
+ <2e5a8e6a-6513-4726-b43d-5933427f524c@redhat.com>
 Content-Language: en-US
-To: qemu-devel@nongnu.org
-Cc: philmd@linaro.org, =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>,
- Mahmoud Mandour <ma.mandourr@gmail.com>
-References: <20260306051553.2778652-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
- eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
- CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
- gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
- qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
- 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
- L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
- IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
- dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
- tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
- PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
- F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
- HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
- CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
- UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
- uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
- vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
- FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
- I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
- oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
- TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
- y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
- /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
- YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
- DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
- v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
- 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
- 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
- dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
- 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
- X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260306051553.2778652-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qt1-x834.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <2e5a8e6a-6513-4726-b43d-5933427f524c@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69aef293 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=Ci8l2pZZUM2kTSr-spoA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDE0NSBTYWx0ZWRfX5gP/LKs23rX6
+ 4/pcXHmQ2bY1I5jr1zJ0GJ43cw+22RwrDK05hbbl16GEK39DU/Wi5M3OLLqH+rO4lIFWH6w8+3u
+ B9lsaKRq60P0fDeOhLMF9MTodn+v2ils9+o8JpLzUDMlGXX2F/5ZQCcjdBiP8PPI1lR7GBQsYQK
+ CKl05KSOqusiP52aZJDLBvMScVTVEjpWKsUC0cdHYS/K+XlVaUJadySHFn6lWOjWTMMUQHqTpGU
+ U8hBoxxuR4lq1s4f25JpoOL9B3PDKmEN91XnNqxaSsao5BVyEqQuGMlhjc8EUXXJPpL2zy0JI3Q
+ g2Oa01tIbhRCsKNFAGnlPqIIzH0Mhxdg9W3oSVJEOA14O0X9zNvSCa+EjWU43Tj4JkdCJRWPGoE
+ F+j0bEiwY9pmmugqUsO/U8QbRDGE3694mHkAuIhizINBDmAmCbo1x1uO+jk8bkPrkXLF0njTPRP
+ 4dRmZjmZ4kTRUIIR1BQ==
+X-Proofpoint-GUID: oP1tgVQs1vao1DYFfz1veWX_LzOkI-5J
+X-Proofpoint-ORIG-GUID: oP1tgVQs1vao1DYFfz1veWX_LzOkI-5J
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_04,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090145
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,20 +124,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/5/26 9:15 PM, Pierrick Bouvier wrote:
-> When using llvm-addr2line in replacement of addr2line, it will output
-> zero sized symbols, which can shadow other binaries depending on where
-> there location is (happens with arm-trusted-firmware and its different
-> binaries). Thus, those symbols.
+On 3/9/26 11:40 AM, Thomas Huth wrote:
+> On 09/03/2026 15.00, Matthew Rosato wrote:
+>> On 3/8/26 8:35 PM, jrossi@linux.ibm.com wrote:
+>>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>>
+>>> This patch series introduces an IPLB subtype to support PCI devices, which may
+>>> be built if a device has been assigned a boot index and is identified as a PCI
+>>> device with a corresponding s390 PCI Bus device.
+>>>
+>>> Boot support is only added for virtio-blk-pci at this time and is limited to
+>>> devices with an assigned bootindex.
+>>>
+>>> A "loadparm" property is added to virtio-blk-pci boot devices on s390x.
+>>>
+>>> A simple test to check basic functionality is added to the cdrom-tests in qtest.
+>>>
+>>> Changes v4 -> v5:
+>>>      - Fix incorrect switch/case for virtio block device ID
+>>>      - Use target_s390x() instead of qemu_arch_available(QEMU_ARCH_S390X)
+>>>      - Properly denote switch fallthrough
+>>>      - Remove reduntant RC checks in PCI read/write
+>>>
+>>
+>> Rather than reply to individual patches, I noticed new copyright lines with 2025 dates on the following patches that should be updated to 2026:
+>>
+>> 6: pc-bios/s390-ccw: Split virtio-ccw and generic virtio
+>> 8: pc-bios/s390-ccw: Introduce CLP Architecture
+>> 10: pc-bios/s390-ccw: Introduce PCI device
+>> 11: pc-bios/s390-ccw: Introduce virtio-pci functions
+>>
+>> Thomas, if there are no further comments would you still like Jared to respin for that kind of change or would you just fix up when you pick up the series?
 > 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   contrib/plugins/uftrace_symbols.py | 2 ++
->   1 file changed, 2 insertions(+)
+> I've seen different opinions on the year in copyright statements in the past (also from various people from IBM) - some say, it should be the year when the code was written/initially posted, some say, it should be the year when the code gets merged ... I personally don't mind too much anymore. For me, it's also ok if we keep the 2025.
+> 
+> Anyway, tomorrow (Tuesday) is softfreeze, so I'm going to send a pull request for this series tomorrow - let me know by then if you want me to fix up the year, or if you rather prefer to keep 2025.
 > 
 
-This was merged into master (a8ff516c2f5ec05fb8b8bf4bceb88f49701f80d6).
+I actually wonder why we have the year at all (besides convention)...  But I do not have a strong opinion about it and was checking about a re-spin exactly because of soft freeze.
 
-Regards,
-Pierrick
+If you are OK with 2025 then that is also fine by me, leave it as-is.  
+
+Thanks,
+Matt
 
