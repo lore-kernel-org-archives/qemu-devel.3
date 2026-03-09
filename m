@@ -4,120 +4,148 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10466EFCD71
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 720BBEFCD72
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:44:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzX9a-0003dD-T3; Mon, 09 Mar 2026 05:43:59 -0400
+	id 1vzX9b-0003dm-17; Mon, 09 Mar 2026 05:43:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vzX9X-0003cP-B5
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vzX9X-0003cU-Kg
  for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:43:55 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
- id 1vzX9U-0007xp-JG
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vzX9U-0007wv-C5
  for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:43:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773049432;
+ s=mimecast20190719; t=1773049431;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
- b=gIu87SkXzBKifM+Oyc4d0tzo3qbtp/9UtFD5xGPmmF/INgnoMuPjSFuQe7eMecXU/nbROf
- ClNI0B5miwsZtTVU4ezQ/Dq6Urp5iNU/I9Cns83ws+TW5+2bNC7DUCIismYfsidU57WUrI
- lAh50btYiZPdUutFCKoyaI5fl+RGWIo=
-Received: from mail-yw1-f197.google.com (mail-yw1-f197.google.com
- [209.85.128.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=BoGz65fPCwazhQrV4HZn7xRTG51MR4vI7CiRxISHug8=;
+ b=fREbC/v5L6ZaxYJGzuJ7Cz/I5hu6VWJbAGumwa3bqntGGxblQkUD7D/c6/h6SQyecfgIzG
+ 8W1lFX9iK9A0jdB+hJxdxR48YjZ+GgILlXB5IPSLnPhQjaTT3nLKA+87/47oG+98bweYnY
+ erYnfkNrNxLbR8Ma5a/Lt0ebZdmzQRU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-yD32H-2TOBOciztgXqViPw-1; Mon, 09 Mar 2026 05:43:50 -0400
-X-MC-Unique: yD32H-2TOBOciztgXqViPw-1
-X-Mimecast-MFC-AGG-ID: yD32H-2TOBOciztgXqViPw_1773049430
-Received: by mail-yw1-f197.google.com with SMTP id
- 00721157ae682-79904eb0d1bso2194087b3.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:43:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773049430; cv=none;
- d=google.com; s=arc-20240605;
- b=MUmarmE5iU4CuShLwJd2czrAWNLfFpzBHuWmtFIWzNTSDDwG63cQ1jXms6CstSpy/A
- kDbc+Zzt1A8dpXybcgM6hJ3yIR9ksgxLXbCLnTo7VVPgZAXg4Qcdv4YoZs1+LNY+HeHb
- iOmwh6sYoq8P2dWYXYEiAuOHW7ySuSVvYBmMmPTC/hVCtCdlVpmEMN302lLBrdhcrikL
- YNG9IUNYIzDJSLOFZ0+kq1mFwsmntxLhnT/p1JLzlipv/IfPPCKG7PM5VQCWc44wwovx
- 2JXShNxbYqH4QOrr7d4aKUiypucHlv3EKOCycbVNTOBwI2ZqYqHDqboh8DdHWBh4BKY9
- TdFA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
- fh=srKTuQ1zrFvCk697vtO4h473zqLsuvDuubo1BzKDh1s=;
- b=NCkt/CLArdy6EkETIormRLscp+r5M6lpDA0b4ANcYQLuCazHwxL2newPdpsL4YXO2l
- XvnASJDlXG7Ncr9UxLOMgyiguH9J+S4Nfd4CiX5lLkN0I2as/CCJQVINs6UWnz/YGRJr
- PlC/bsplxW2BxR7fBjHExAzpWfge9tH+PrUVatBndR7ME7mgfD1HEnzk6QblpszZBqXx
- y6cdvYoR88xhzvrdOdWsOELw+TbkZJfSNVqlanTLibkNUZFagetd/EPJVf68T9f0bi2m
- NaBuG/OYE55Srg0YM4Cr01dy2T/0uiPeW6yGJ6o2dODinPjDX/wX5i5ulTsOlb+STHd9
- v/Pw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ us-mta-562-Mcm1mMsEMlC8iKyQs9Dngw-1; Mon, 09 Mar 2026 05:43:49 -0400
+X-MC-Unique: Mcm1mMsEMlC8iKyQs9Dngw-1
+X-Mimecast-MFC-AGG-ID: Mcm1mMsEMlC8iKyQs9Dngw_1773049428
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4853efceaddso2952415e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:43:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773049430; x=1773654230; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
- b=B/MqBt4re/XeT5z6LW6aAQPUmjw0lOzLhSI6NDJXtRUOqkFOqvOtYGWgYGLLIiaUR+
- u2wX23DuGXdG28q2eS7HhZdMXvriDcxdRJWIk2wgEGFL8MwzmnzwwMLJe3A/SmtmKUbn
- MjcTKiuvoz+Iu0S9BrXYh3P/uPAKvKuL/L2lAARlHtwZ4mRzBao11U0A1TTyiHVy0aYP
- qDP/zdBq9SrgBwwiZCz957jxnDOpZnilQuNNk+EPp/aD4aYuB4OXI8h1IdRX0YMdjIAA
- VUHRZ0PkzxXsJLyCDnSLioWqgJ5MiAEv5BJpSwiFR35oBE15tvJ2zonpuPmcvBsAKNL8
- ME4A==
+ d=redhat.com; s=google; t=1773049428; x=1773654228; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=BoGz65fPCwazhQrV4HZn7xRTG51MR4vI7CiRxISHug8=;
+ b=Vm4wRmh4ONRlmE/Xw9pc4mGvasMRLuLAjDbU81EyMkLWOe90NxuxxJl2uMHoh+6skN
+ PMacYNvHwH3jcj+U7tjvpQfEC501WvIQA3o044ZFWeTWmRE7dQ+dMpLcjjk/Z6jQKci2
+ oauUFH5VwADKdVVR1MI6D/GFQe1bQn4zsb7xEPaSXmtUF0kbs+t1l6MqKsWGgBwI3tQp
+ N97SpTYy9IFEMdEgBOA6TEVEgJZA6fTNzADvEOmnAUl7xwQSA0R0+fHSyloY7ADHzDqe
+ 96A67hACkxnMNkdYvT1lbAV2TPL6/VkWOR7uYmvB8JsfNvL+k5/+RifOTUAyD3oq+beY
+ hlSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773049430; x=1773654230;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=knMHCpJzsKxoXUghOyuD/O900y7IluNeOnvwQLWswLw=;
- b=l2XaYpHXKzG59278nilMhobQwdMECa79ZrzTfvSIFlvp10onKjJPjKTdn58NnputP1
- /FJiRmHJcexYNbx7LEBFtAKN9om+k8pXMqlOmGQWrumvp4PRKuWiiKTpgACSzirimLJd
- xJ+JJvHxoiTug4+5Q0FUGZDLHJUVcZ0TS/tImqOfbqnmdNSStCYnE8Sid9HEwXS3nMnF
- fINWA/qAiUhbP//ybSgYrvSdeyxsBCyKUqJjniHyYf0IbIppX4QA5NqarjDSTm3qt16w
- tndpVWPU5OtkdhVlXXRkYXsWZBejGgxicYTVNRyvqOVzuqJBAkrGww7U9UA2MtxwuOOc
- SuuQ==
-X-Gm-Message-State: AOJu0YyU7x195r6ZbRCRa1H+TK4kMiWJWbZvsWwOa0ANyMsZ9Th8WBhh
- Rgf5wvp95nVyA218StEGZIoyFz18FmK38W8+LiB8Ls+flu2AIUcEn7PSl+Rd2m7211cp2fNrQ+s
- 1mgDgH7nHSj9CrEwNweAUo23ytGKqiVbmTn/3e9I7ExNU5ms8+CCN6KNp/ohceFKAprfcuguM+s
- f7HbpWgkK8xInoDlcGLGqwLNC3zc4mOJw=
-X-Gm-Gg: ATEYQzwWq1yJC2bLke6jbyzPy8oxUUBdJB9aU2r2RSa+2nL0/e3PhZlHmyyjBWik1/K
- 8q+kIxgqMehGpCfQRJ6avNQV9q+pYv1ByooXJEZXFv68AoKJtLgRx99PIPTQ7QfPGYLTm1NjaSB
- VuVKkkXQZ9TsOD5Q4FhxccyO3SqSeVBIrGibhtHsbYvYVumtsg/EKgpqVPsibSyU4aWjI9Pxyvc
- WRwsw==
-X-Received: by 2002:a05:690e:e17:b0:649:b9f4:c536 with SMTP id
- 956f58d0204a3-64d142fedb7mr7226668d50.73.1773049430320; 
- Mon, 09 Mar 2026 02:43:50 -0700 (PDT)
-X-Received: by 2002:a05:690e:e17:b0:649:b9f4:c536 with SMTP id
- 956f58d0204a3-64d142fedb7mr7226653d50.73.1773049430006; Mon, 09 Mar 2026
- 02:43:50 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773049428; x=1773654228;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=BoGz65fPCwazhQrV4HZn7xRTG51MR4vI7CiRxISHug8=;
+ b=RuUsnwW3CpcXpyVPJ7bqn2kKqwOb3kqdgbnQ+WNP0HmLHUGU01EdTjTNTTbfMB5Hhb
+ tIOqbZlbPS9SWqAhvGrMdSWD0I5rMCOmfR8JI89Gdh1yPxxGad8Ia8mbgx/u3fvk8pNh
+ UHJjN5gwW9IkcmMU2cthgFfkzKUyRLpXYqCp8gZq+PyeUH7oOwi34DeNOWFYZBLn0R2g
+ miarc+3ZCj9ub2xKdOdVBOCSImjdRNTcOIz8K0jvnyAU+bmZNKn4jqrv1HYUBNbPpwDB
+ U0z/LdgV+1GJNuqpQS+D0xxBFy5LkG37cjKj947mfh8yK/6T5/JrPQ0rejaiKbZll3CM
+ nH0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUkeV2LmLrT2gCRRiW6M0oaRVdFRTtbu6Rho9AQmWdewksp5GVsx8wr1OBZk88aT14ltXJXI0BdOpiu@nongnu.org
+X-Gm-Message-State: AOJu0YzvgEzd5rQPl1oxB/jnW5pUT5FowLmPMcZXJ7h5gfN0qFdyr8Kx
+ mEdVLneF+0XHa4zwgQa973aMlgqzm/nfG+y1NoaTjXLfqVH6xfvUbQO6RPbW9Dbw0Bo+lnvGkMA
+ m6aZ9cL1wl++QX88WwdhUv5fu2vj6Ex7/JbT7id68VemsgBd2b3+hUrLZ
+X-Gm-Gg: ATEYQzxdHeVwS3kXNkYb0j6dZ+ednyObZ2JepB6kyloo6877IvtyO2CsUjH7nKD3WDJ
+ 3MeGHJ+lEGXBhvtWW+I8869NfqKQAD8INxxWELtdFGPzfuZOyQ2xO5oj5RXWhqcKDxKPRSgN6v+
+ ChhTECQHxhbhdcRXYpR6Nu3QgZkToRkQCbL0f+USNTsNp+GgMRlhZtDgbWSQEKiHfgPTnmLjAv8
+ xNrHcFWPyVdfDIEhDx0QxQktB1iLck04MlBQqjgmPGZhdjdUb0Rvqac5obDvmF6DHl5Kj0mHG8F
+ mD4HUD0oSC+T/Nlr+YcfbuVP7hthpM6X0OEbtuiz9CoHAfSWzRB63vuspXvdTW8QPhRBHFcjDaQ
+ IM92K51kvQ8mJMvQkVu9rBTQzKQ2GUvl+WQ5yy0Fc9Ok8UZGIVF8JxrrNishr
+X-Received: by 2002:a05:600c:4e8a:b0:485:3f41:e113 with SMTP id
+ 5b1f17b1804b1-4853f41e355mr15141935e9.1.1773049427941; 
+ Mon, 09 Mar 2026 02:43:47 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e8a:b0:485:3f41:e113 with SMTP id
+ 5b1f17b1804b1-4853f41e355mr15141615e9.1.1773049427459; 
+ Mon, 09 Mar 2026 02:43:47 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48527686bcesm404264375e9.7.2026.03.09.02.43.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 02:43:47 -0700 (PDT)
+Message-ID: <655d295e-06e6-4312-9e7c-2ca5cb6bc838@redhat.com>
+Date: Mon, 9 Mar 2026 10:43:45 +0100
 MIME-Version: 1.0
-References: <20260304173535.2702587-1-eperezma@redhat.com>
- <20260304173535.2702587-6-eperezma@redhat.com>
- <CACGkMEsCDDSV1m9-2cz3SGEh=MB0viA6h5a9vF5BCHPEhadfUQ@mail.gmail.com>
-In-Reply-To: <CACGkMEsCDDSV1m9-2cz3SGEh=MB0viA6h5a9vF5BCHPEhadfUQ@mail.gmail.com>
-From: Eugenio Perez Martin <eperezma@redhat.com>
-Date: Mon, 9 Mar 2026 10:43:13 +0100
-X-Gm-Features: AaiRm52vEgNHznDwzVWVegwWsBvw2DSsHrZKW6A5PS-ZSg6P4BjnssmaXBVFF9A
-Message-ID: <CAJaqyWdPbU3HXxsc-e4+K_CBPtnYZzbW8vrQJYK-nSUu35LtWg@mail.gmail.com>
-Subject: Re: [PATCH 5/7] vhost: factor out the detach buf logic in SVQ
-To: Jason Wang <jasowang@redhat.com>
-Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
- Dragos Tatulea DE <dtatulea@nvidia.com>, Jonah Palmer <jonah.palmer@oracle.com>,
- "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Koushik Dutta <kdutta@redhat.com>, 
- Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
- Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 14/38] hw/i3c/dw-i3c: Add data TX and RX
+To: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Cc: Jamin Lin <jamin_lin@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
+ Stephen Longfield <slongfield@google.com>,
+ Patrick Venture <venture@google.com>,
+ Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+References: <20260305175711.1119025-1-clg@redhat.com>
+ <20260305175711.1119025-15-clg@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260305175711.1119025-15-clg@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -142,85 +170,153 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 9, 2026 at 9:57=E2=80=AFAM Jason Wang <jasowang@redhat.com> wro=
-te:
->
-> On Thu, Mar 5, 2026 at 1:36=E2=80=AFAM Eugenio P=C3=A9rez <eperezma@redha=
-t.com> wrote:
-> >
-> > This code path is modified to handle in order devices.  Abstract here s=
-o
-> > we can generalize on the caller.
-> >
-> > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
-> > ---
-> >  hw/virtio/vhost-shadow-virtqueue.c | 24 ++++++++++++++++--------
-> >  1 file changed, 16 insertions(+), 8 deletions(-)
-> >
-> > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-shado=
-w-virtqueue.c
-> > index e7e3c9155cd0..2d8fc82cc06f 100644
-> > --- a/hw/virtio/vhost-shadow-virtqueue.c
-> > +++ b/hw/virtio/vhost-shadow-virtqueue.c
-> > @@ -473,11 +473,24 @@ static uint16_t vhost_svq_last_desc_of_chain(cons=
-t VhostShadowVirtqueue *svq,
-> >      return i;
-> >  }
-> >
-> > +G_GNUC_WARN_UNUSED_RESULT
-> > +static VirtQueueElement *vhost_svq_detach_buf(VhostShadowVirtqueue *sv=
-q,
-> > +                                              uint16_t id)
-> > +{
-> > +    uint16_t num =3D svq->desc_state[id].ndescs;
-> > +    uint16_t last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num=
-, id);
-> > +
-> > +    svq->desc_state[last_used_chain].next =3D svq->free_head;
-> > +    svq->free_head =3D id;
-> > +
-> > +    return g_steal_pointer(&svq->desc_state[id].elem);
-> > +}
-> > +
-> >  G_GNUC_WARN_UNUSED_RESULT
-> >  static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq,
-> >                                             uint32_t *len)
-> >  {
-> > -    uint16_t last_used, last_used_chain, num;
-> > +    uint16_t last_used;
-> >
-> >      if (!vhost_svq_more_used(svq)) {
-> >          return NULL;
-> > @@ -500,14 +513,9 @@ static VirtQueueElement *vhost_svq_get_buf(VhostSh=
-adowVirtqueue *svq,
-> >          return NULL;
-> >      }
-> >
-> > -    num =3D svq->desc_state[last_used].ndescs;
-> > +    svq->num_free +=3D svq->desc_state[last_used].ndescs;
-> >      svq->desc_state[last_used].ndescs =3D 0;
->
-> Any reason we don't factor those two lines?
->
+Hello,
 
-They are common for split and split_in_order case.
+On 3/5/26 18:56, Cédric Le Goater wrote:
+> From: Jamin Lin <jamin_lin@aspeedtech.com>
+> 
+> This adds data and CCC transmission, reception, and the associated
+> queues required for data transmission and reception to happen.
+> 
+> The I3C controller transmits data by the user writing into a command
+> queue. When the queue has a command and an argument in it, the
+> controller starts executing the command.
+> 
+> The controller can execute 1 of 3 ways:
+> 1. A larger data transfer that involves using the TX and RX queues. This
+>     is the most common way the controller does transactions.
+> 
+> 2. A small data transfer that involves sending a couple bytes passed
+>     into the command queue argument.
+> 
+> 3. An address assignment command. This is how the controller does
+>     ENTDAA. When ENTDAA succeeds in assigning an address to a target, it
+>     updates the controller's char table with the target's PID, BCR, and
+>     DCR.
+> 
+> The controller determines what addresses to send by looking at the index
+> in the device address table specified by the argument in the command
+> queue. ENTDAA also uses these addresses to assign to targets on the bus.
+> 
+> When the controller is done executing a command, it puts a response in
+> the response queue indicating how command execution went.
+> 
+> In order for the user to send and receive data to/from the controller,
+> the user reads/writes to a bidirectional TX/RX port.
+> 
+> Signed-off-by: Joe Komlodi <komlodi@google.com>
+> Reviewed-by: Stephen Longfield <slongfield@google.com>
+> Reviewed-by: Patrick Venture <venture@google.com>
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> Tested-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+> Link: https://lore.kernel.org/qemu-devel/20260225021158.1586584-14-jamin_lin@aspeedtech.com
+> Signed-off-by: Cédric Le Goater <clg@redhat.com>
+> ---
+>   include/hw/i3c/aspeed_i3c.h |   1 +
+>   include/hw/i3c/dw-i3c.h     | 143 +++++-
+>   hw/i3c/dw-i3c.c             | 882 +++++++++++++++++++++++++++++++++++-
+>   hw/i3c/trace-events         |  10 +
+>   4 files changed, 1030 insertions(+), 6 deletions(-)
 
-> > -    last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num, last_us=
-ed);
-> > -    svq->desc_state[last_used_chain].next =3D svq->free_head;
-> > -    svq->free_head =3D last_used;
-> > -    svq->num_free +=3D num;
-> > -
-> > -    return g_steal_pointer(&svq->desc_state[last_used].elem);
-> > +    return vhost_svq_detach_buf(svq, last_used);
-> >  }
-> >
-> >  /**
-> > --
-> > 2.53.0
-> >
->
-> Thanks
->
+
+
+Coverity reports an "Uninitialized variables" issue :
+
+   _____________________________________________________________________________________________
+   *** CID 1645555:         Uninitialized variables  (UNINIT)
+   /builds/qemu-project/qemu/hw/i3c/dw-i3c.c: 1229             in dw_i3c_short_transfer()
+   1223         }
+   1224         if (arg.byte_strb & 0x04) {
+   1225             data[len] = arg.byte2;
+   1226             len++;
+   1227         }
+   1228
+   >>>     CID 1645555:         Uninitialized variables  (UNINIT)
+   >>>     Using uninitialized value "*data" when calling "dw_i3c_send".
+   1229         if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {
+   1230             err = DW_I3C_RESP_QUEUE_ERR_I2C_NACK;
+   1231         } else {
+   1232             /* Only go to an idle state on a successful transfer. */
+   1233             ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
+   1234                              DW_I3C_TRANSFER_STATE_IDLE);
+
+
+Should we call dw_i3c_send() when len == 0 ?
+
+Thanks,
+
+C.
+
+> +static void dw_i3c_short_transfer(DWI3C *s, DWI3CTransferCmd cmd,
+> +                                  DWI3CShortArg arg)
+> +{
+> +    uint8_t err = DW_I3C_RESP_QUEUE_ERR_NONE;
+> +    uint8_t addr = dw_i3c_target_addr(s, cmd.dev_index);
+> +    bool is_i2c = dw_i3c_target_is_i2c(s, cmd.dev_index);
+> +    uint8_t data[4]; /* Max we can send on a short transfer is 4 bytes. */
+> +    uint8_t len = 0;
+> +    uint32_t bytes_sent; /* Ignored on short transfers. */
+> +
+> +    /* Can't do reads on a short transfer. */
+> +    if (cmd.rnw) {
+> +        g_autofree char *path = object_get_canonical_path(OBJECT(s));
+> +        qemu_log_mask(LOG_GUEST_ERROR, "%s: Cannot do a read on a short "
+> +                      "transfer\n", path);
+> +        return;
+> +    }
+> +
+> +    if (dw_i3c_send_start(s, addr, /*is_recv=*/false, is_i2c)) {
+> +        err = DW_I3C_RESP_QUEUE_ERR_I2C_NACK;
+> +        goto transfer_done;
+> +    }
+> +
+> +    /* Are we sending a command? */
+> +    if (cmd.cp) {
+> +        data[len] = cmd.cmd;
+> +        len++;
+> +        /*
+> +         * byte0 is the defining byte for a command, and is only sent if a
+> +         * command is present and if the command has a defining byte present.
+> +         * (byte_strb & 0x01) is always treated as set by the controller, and is
+> +         * ignored.
+> +         */
+> +        if (cmd.dbp) {
+> +            data[len] += arg.byte0;
+> +            len++;
+> +        }
+> +    }
+> +
+> +    /* Send the bytes passed in the argument. */
+> +    if (arg.byte_strb & 0x02) {
+> +        data[len] = arg.byte1;
+> +        len++;
+> +    }
+> +    if (arg.byte_strb & 0x04) {
+> +        data[len] = arg.byte2;
+> +        len++;
+> +    }
+> +
+> +    if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {
+> +        err = DW_I3C_RESP_QUEUE_ERR_I2C_NACK;
+> +    } else {
+> +        /* Only go to an idle state on a successful transfer. */
+> +        ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
+> +                         DW_I3C_TRANSFER_STATE_IDLE);
+> +    }
+> +
+> +transfer_done:
+> +    if (cmd.toc) {
+> +        dw_i3c_end_transfer(s, is_i2c);
+> +    }
+> +    if (cmd.roc) {
+> +        /*
+> +         * ccc_type is always 0 in controller mode, data_len is 0 in short
+> +         * transfers.
+> +         */
+> +        dw_i3c_resp_queue_push(s, err, cmd.tid, /*ccc_type=*/0,
+> +                                          /*data_len=*/0);
+> +    }
+> +}
+> +
 
 
