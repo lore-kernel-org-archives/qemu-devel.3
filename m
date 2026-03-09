@@ -4,113 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C88AAFCA178
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 19:28:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B124FCA178
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 19:29:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzgH8-00022Y-6m; Mon, 09 Mar 2026 15:28:22 -0400
+	id 1vzgIK-0002Q7-MB; Mon, 09 Mar 2026 15:29:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzgH6-00022N-OG
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:28:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzgH4-0004Wb-T9
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:28:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773084497;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=rbgWYjkthYIOSTddrLM7TxbryCIauGeCCATpvk8Vcjo=;
- b=g0ZXl4CUL2Fi3nckrdJXjkXIcQxxCE0H9jHpjCvGPympANA4QeakAZjW4M3OSsRCw5KGXK
- bt5IqXjg+HXRMlBKTlWPJFbs7mRo2YDtp0C7Smil7ComsCDh43nT1uoOgAWS4UOqpPKgTW
- +bP2TxlXRRxmiI7zXrgK2XKdhKzGka4=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-407-g8B-YqlgP3-0AkTSvM4LEQ-1; Mon, 09 Mar 2026 15:28:13 -0400
-X-MC-Unique: g8B-YqlgP3-0AkTSvM4LEQ-1
-X-Mimecast-MFC-AGG-ID: g8B-YqlgP3-0AkTSvM4LEQ_1773084493
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-899e89bf366so452119196d6.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 12:28:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzgIG-0002Ps-Ec
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:29:32 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzgID-0004cg-2p
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:29:32 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-439afc58ac7so9362447f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 12:29:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773084493; x=1773689293; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=rbgWYjkthYIOSTddrLM7TxbryCIauGeCCATpvk8Vcjo=;
- b=izCO3kLcdYHFdU4KSONot2GaHPbpn9qfyw7kYwRvOG9sJgtwOxHncvL2+EYhOLQzXc
- hU42prHMiYlgbFdvKAgecaqzH7d+1gRmbI1ehgxP0xermSPsyzYxGubpzLOpaGtE5Yea
- s6ONj8Dbj8QdVRi50PDgunInJ8mbyEC45WC9oedpFNgA4kLVLfiR2fOG/MtoKIkdVByp
- XS27aFf0EAfBek34eD9pH6cHXQIu5mTG9TmWEfkox3qJUS94IP0piXy2n0IJQt5GN7dr
- l6bTMc5ThRR4ZtYW4US/aiaU8xbMqNt0m5tf08YMmg31wawZauygfqDn2yPYOM+prtl1
- Ejuw==
+ d=linaro.org; s=google; t=1773084566; x=1773689366; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ud9l/59tZJ6PrQzHXsKC0rWDN9j64M2GrQtbFz0nQ74=;
+ b=kg5F8DXz/sdZG9oaUEYk0c3Gv0CfymfsWZjFGt5NoHBsm3US2pJTIsRx1mUpOG7+rN
+ TZQhPPmqo0OoouoiFNjnA9rK/ia4295toEFappa/PKfEiEkdB3uDxih4etDzObMlsG0a
+ N8mFF0DTfEiafaTZlz3tofOh89iFbgNzyj030TYF+SM0LFAAaQoBhbVIDbENwjL8ac0g
+ v78pBc4OCltnXwDx46iJM1iw7uosra81zGsW0R6w6/TR0cCIy6BWCZ1DcEcKLfHdFU56
+ ypJ32cCRL/2bRYhxyP8D7zxI3XyCYgi/o6m5ThTY2o6oTa5LDxfGdpuBJRhuWXXUiCn2
+ 7ekg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773084493; x=1773689293;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=rbgWYjkthYIOSTddrLM7TxbryCIauGeCCATpvk8Vcjo=;
- b=MGplEFSfYy+uG2mCLP6oiGSi7Ia45olvCvELdly8XVIIqW91iGG/THPir2unt5Pj5t
- 1at7uWOlLLif/jRGMdFIzZWAuwk/usd+2Tu5pNB3nEzlEwt4F+sTE5fP1L1yk680y661
- 97/ATnAlDLsPE9ChH8HSKc/bEOkNMNTevIroC/9qWSWEdeuG9FCDH0SSquRvPL6/OB7d
- w38OwiFBXKva6O/hAzGcd2wxBSQn+WQkFn6l1KSjrrlX1vlO+n/ojoFNJgt6TrpLbzLw
- AZi9B5DrAzN/6Dxx7dNDwOdfW5vSNT9A8zR63T7E4uSMzXA1BKxKLneyZmBO2dh5zxE0
- Ez3w==
-X-Gm-Message-State: AOJu0YydMaSSoFRqMrnXi/XcPDqXFvbqkDM7hFhQnlMKy9ORWgpTeHV1
- SOWtaHWIhzR/bOi/ptBICSyU3e9+nfjERGBgHSBY3uxB9i7vg5Z2fw+r85FBJ5g6VsTzeqgVe96
- //mg754RBY1zghEp0JeW8lk6D4RRBVdsbBNrSaFDWZKrEHr6QK2jf2Eni
-X-Gm-Gg: ATEYQzzO0+4B8YKm7dlzKp/LAJidxymkZBAjbS33SXO3aYfuOd4t8KnFqsWA3cLAdUm
- suPBSxLH9gnp5pE0mjsG2U4Pn1OZoYI0bfe1shjAh8TJKG1t56eb0xx3H4vExl/l/nlJjo/PlYL
- +XhWPqsSKxHGr43zWzYStUEyHMr8ePKu3Ne6re04za2yGUkKXn/UP2n7P4u9snVB/OcNjnFl1MK
- o0lacGZLGGHihECn+t2fJkiq5BUELptEYL6q106UfjZvm10imw+2H3rRQkpGaQgGyAZ2XQldrWG
- naraH3QEVGfToNIeqQcYa5KWMBO0TjZiFTI29f/mqWtbCuDBLfQdE7e+oiSZFrPSKGpZGep5qlp
- 4VGd7PjBCPQChuw==
-X-Received: by 2002:a05:6214:cc4:b0:89a:865:75d7 with SMTP id
- 6a1803df08f44-89a30a5c913mr195502326d6.27.1773084493140; 
- Mon, 09 Mar 2026 12:28:13 -0700 (PDT)
-X-Received: by 2002:a05:6214:cc4:b0:89a:865:75d7 with SMTP id
- 6a1803df08f44-89a30a5c913mr195501746d6.27.1773084492577; 
- Mon, 09 Mar 2026 12:28:12 -0700 (PDT)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a57c21650sm3965026d6.39.2026.03.09.12.28.11
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 12:28:11 -0700 (PDT)
-Date: Mon, 9 Mar 2026 15:28:00 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
- Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: Re: [PATCH v2 0/4] system/memory: Constify various
- RAMBlock/MemoryRegion arguments
-Message-ID: <aa8fQIialE5xMAnf@x1.local>
-References: <20260309183536.88976-1-philmd@linaro.org>
+ d=1e100.net; s=20230601; t=1773084566; x=1773689366;
+ h=content-transfer-encoding:in-reply-to:references:to:from
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ud9l/59tZJ6PrQzHXsKC0rWDN9j64M2GrQtbFz0nQ74=;
+ b=b+0bPwyszeFKpB5tQhMx2Jro+bl6BXiaEdCvefr4KOX6IGWf+k2nM3Q8zcL/07FlaS
+ VnZUSlxmA84Jez79zql81FFtI1YL9CvEJXpfYetnA187J8rt7OLUHq9j67pEqfvFSR8T
+ 9mRiUSyKZTLkghEe5dPT7GJNRVJd8FmJMNycUBN3kTvf23UyXOqnd9tr0b40ReGQMNYe
+ nkbQtgGkYhGluyqnIBBwzr5ekwnEQMIGS2xk7NoyDl1jumceRj8rC0gbL9LUzri8tffm
+ oSb6Kva+A+jfvFDaXSATih70aBAUHS8/3SB4xRHyFVDI/vsDiLeZLqJkpGmDdKoeFMXn
+ wfhA==
+X-Gm-Message-State: AOJu0Yw0JxwfgZanxBAJCSNf/mqjzy8TFcnXPCg+9OSvkjFK6VHEGCzL
+ ExL0psFVR3g/A2Ou2Iyr2YNKyKJWPkBnS7YUKAZwveDCcRCjy7fGKSalQ2G5eXgo3l0X+Zp+HN6
+ GU5DMCE8=
+X-Gm-Gg: ATEYQzypdsK14epplkOButjK1hoAmNncQYRXHZ8b8/mC7Bz7zcjqRsiEXOQzWB2xBnH
+ W0K1gB5UdbdCPhvyW2aZ+U+FPD3s8dKAlxp9oVfrcbOnnSbkkQvfm/8kACZX29M3wxXb1LmfrCQ
+ hPVMPR3wBPjW2KTwR1gSqhAA19KEptrL3ZdEv/C22uEzVXQcMAIZdvCsE4bncWPj+rAS8cyNyVj
+ RrEa1hWWYUVTwOfU7vPk3F8GyamLhJogWAkMLPgRtoyGYhva5noZVsFN7/xmFpyWOstXS9qb2Uy
+ ZpOgP3WLV0W9ZpAw7CdVTbxFTV3pISuVUZVT9RnmOnxtja7sMeYSFHEQqpKkpvzJDZvtXrTHu6/
+ TR8XSWqhdDbUfSPcHwm/wuK9u9vKs87ESPUPLgdN+zqLlOHZcBwAKrRZX0Re33s0LT7sokSR/hN
+ U9ZPjWTvghGwssbfL6BowgqIwzNv5B0mMseYvXuKLy8AylsyTtiZIypni4ykTxD8mvJKgssh6VD
+ qqGW6ELQQ==
+X-Received: by 2002:a05:6000:3113:b0:439:905e:1236 with SMTP id
+ ffacd0b85a97d-439da55584amr21731651f8f.2.1773084565653; 
+ Mon, 09 Mar 2026 12:29:25 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dae3d98asm32493397f8f.30.2026.03.09.12.29.24
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 12:29:25 -0700 (PDT)
+Message-ID: <6a859aab-76c9-4306-9361-2adc9d9e0c4a@linaro.org>
+Date: Mon, 9 Mar 2026 20:29:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 22/49] ati-vga: Add scissor clipping register support
+Content-Language: en-US
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org, Chad Jablonski <chad@jablonski.xyz>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+References: <20260308223433.25503-1-philmd@linaro.org>
+ <20260308223433.25503-23-philmd@linaro.org>
+In-Reply-To: <20260308223433.25503-23-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260309183536.88976-1-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,21 +103,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 07:35:31PM +0100, Philippe Mathieu-Daudé wrote:
-> v2:
-> - Dropped "stubs: Merge physmem.c within ram-block.c" (Zoltan)
-> - Dropped "info mtree" patches (no time to update doc for freeze)
-> - New Xen patch
+Hi,
+
+On 8/3/26 23:34, Philippe Mathieu-Daudé wrote:
+> From: Chad Jablonski <chad@jablonski.xyz>
 > 
-> Philippe Mathieu-Daudé (4):
->   system/ramblock: Constify various RAMBlock arguments
->   system/memory: Constify various MemoryRegion arguments
->   system/xen: Constify various MemoryRegion arguments
->   system/memory: Have memory_region_type() correctly describe containers
+> Implement read and write operations on SC_TOP_LEFT, SC_BOTTOM_RIGHT,
+> and SRC_SC_BOTTOM_RIGHT registers. These registers are also updated
+> when the src and/or dst clipping fields on DP_GUI_MASTER_CNTL are set
+> to default clipping.
+> 
+> Scissor clipping is used when rendering text in X.org. The r128 driver
+> sends host data much wider than is necessary to draw a glyph and cuts it
+> down to size using clipping before rendering. The actual clipping
+> implementation follows in a future patch.
+> 
+> This also includes a very minor refactor of the combined
+> default_sc_bottom_right field in the registers struct to
+> default_sc_bottom and default_sc_right. This was done to
+> stay consistent with the other scissor registers and prevent repeated
+> masking and extraction.
+> 
+> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+> Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+> Message-ID: <20260303024730.1489136-7-chad@jablonski.xyz>
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   hw/display/ati_int.h  |  9 +++++-
+>   hw/display/ati_regs.h |  2 ++
+>   hw/display/ati.c      | 70 +++++++++++++++++++++++++++++++++++++++++--
+>   3 files changed, 78 insertions(+), 3 deletions(-)
 
-queued
 
--- 
-Peter Xu
+> diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+> index 0a0825db048..3999edb9b71 100644
+> --- a/hw/display/ati_regs.h
+> +++ b/hw/display/ati_regs.h
+> @@ -397,6 +397,8 @@
+>   #define GMC_DST_PITCH_OFFSET_CNTL               0x00000002
+>   #define GMC_SRC_CLIP_DEFAULT                    0x00000000
+>   #define GMC_DST_CLIP_DEFAULT                    0x00000000
+> +#define GMC_SRC_CLIPPING                        0x00000004
+> +#define GMC_DST_CLIPPING                        0x00000008
+>   #define GMC_BRUSH_SOLIDCOLOR                    0x000000d0
+>   #define GMC_SRC_DSTCOLOR                        0x00003000
+>   #define GMC_BYTE_ORDER_MSB_TO_LSB               0x00000000
+> diff --git a/hw/display/ati.c b/hw/display/ati.c
+> index 26fc74b19b3..6cf243bcf95 100644
+> --- a/hw/display/ati.c
+> +++ b/hw/display/ati.c
+> @@ -514,7 +514,32 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
+>           val |= s->regs.default_tile << 16;
+>           break;
+>       case DEFAULT_SC_BOTTOM_RIGHT:
+> -        val = s->regs.default_sc_bottom_right;
+> +        val = (s->regs.default_sc_bottom << 16) |
+> +              s->regs.default_sc_right;
 
+Coverity is reporting an integer handling issues (SIGN_EXTENSION,
+CID 1645615):
+
+ >>>     CID 1645615:         Integer handling issues  (SIGN_EXTENSION)
+ >>>     Suspicious implicit sign extension: "s->regs.default_sc_bottom" 
+with type "uint16_t" (16 bits, unsigned) is promoted in 
+"(s->regs.default_sc_bottom << 16) | s->regs.default_sc_right" to type 
+"int" (32 bits, signed), then sign-extended to type "unsigned long" (64 
+bits, unsigned).  If "(s->regs.default_sc_bottom << 16) | 
+s->regs.default_sc_right" is greater than 0x7FFFFFFF, the upper bits of 
+the result will all be 1.
+
+Do you mind posting a fix?
+
+Thanks,
+
+Phil.
 
