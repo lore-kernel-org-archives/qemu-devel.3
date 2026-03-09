@@ -4,135 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7BBFAFCA16D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADEC1FCA174
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:41:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzfUR-0000rp-6i; Mon, 09 Mar 2026 14:38:03 -0400
+	id 1vzfXq-0003FG-7K; Mon, 09 Mar 2026 14:41:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzfTt-0000p0-Vz
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:37:37 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1vzfTm-0003nE-UT
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:37:25 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2aaed195901so55025885ad.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:37:22 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773081441; x=1773686241; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=CB0c8DocWs9nC0mRqWJrFur/DeD1o0K/iABvpYV8rYI=;
- b=JAgupj03SObRGO8EPOs7kXWk8pqu6ta3RWch6UlPpUBQx+tZvAEJcYcUkj9R+YQXcr
- amXAOUmUKhgJPsTCvKXgTQUG4YROSdKsyHrAgwqAMn2kpHHxV6RYH7TL8DyCjrNHbyZ5
- YYMteOpT8i0/DNHaDhR5SkOAbo/S8QHzEK2DaoMEutL6Vwcwi95qHBmhURqIvRHy7Jsk
- cTNnHzG5Hsup1kodZxd2uOuNPJnTQewajpGdJErCA1NLzPTmU/cNC9dUuF/7d9dK6uf/
- K1RQdEkTKoKfLmTnyJ0dcKHKD28tn0ZswPqprJRkuqZ4XwnmbW7pooQVKL15T0twdIMl
- GbLg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773081441; x=1773686241;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=CB0c8DocWs9nC0mRqWJrFur/DeD1o0K/iABvpYV8rYI=;
- b=o0dkKTIJXV/k300M/NFEONMQIEBn0QNJ2YfNQplxV6vXQIzJr0LcjQRwENWphrny+3
- tReDGTnic9fE2HSzL4hXSLm6EDq0836wO2mXYkHjsz4QVFxsF4YLRS3i7BUim3wWdR3O
- Isob9A2BStXMnmMflbhr1aUgh6fl5qj1VSrYXnpOnwvbkDTcHUHlc5Dv6NmdEvwEuVw0
- v1pDJ7UUVYTn6S2qblh8QmpjhyFE1VxCat1LfpKoC4rw8tvq73JFq7/BJXkRgCzYMY9l
- A1LQrK5ojDDQA6/EpkPrJ4LY7K+y1UKIhku6NkjnRP6IV8YnCZglZJ2JmLhgNjiqxslu
- 6K8Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU7vCiDch9pt40DhzgIr3qGrP0IxLBw5+dDw5Ow2rurEAMjrOV0md+n2wqOuo6HGC5tUI2iZMEymn1r@nongnu.org
-X-Gm-Message-State: AOJu0YwxSkJ0YR/q1BitwFiSMc5axJ+RVRPwmNJC1YI6HP6SMZcLuxnM
- vYENRPGmp6Uf/8F/SOcNI6fEqm+vdxd1APEfWDPbYsiOmjkqQQMz/8wyMgQZyS0F2xY=
-X-Gm-Gg: ATEYQzxkmLtE9vkS/vbXhlmhxnwXrOQuMJjU4SBLm509dYeThi4ij0EBl8ot8lgH/x/
- HlSoxKtG1XTmcWgc776ipjPAFQB0/bDjETuLu8pg4ifaWIRN2gEPFA+i9oFMz7mX9F0aTRM3yaE
- Y5pnpy+pRTZFkwMau5mW21W4LxxatxQ1XLVlb1Zho20+B6SCX2XCoCXfgJWMJikFmDn1QEfMenY
- mVov3P1JeE95gH0YJPzKqHaNb+H1VnfBS39jF9DI5dj1iiamfz0cv62KV++MMJRHRXGSebg1ypL
- /BIM5CzevHFBt2mFJlbD3NW2jsw0KNpxFkCYBl1CfJTCuApF9/3KfUl95EVVjr9F+K7rmTbxrmg
- 2ihvue2ZxLuPQ8+93nUQaDzHX8oUjZD4BBOHsgUXLFHKh/kIvn34zfjL7SeEYrRE4MVwaUJSp9+
- DmowbzkzTgKmIXB5CB7DJqKUpUkgAZTs5Q+sI9E2RO0+UeeiE1dQB+K2KOSCafb4zG6FpwmCpVx
- yeyAoA=
-X-Received: by 2002:a17:903:ac4:b0:2ae:69d3:5b9f with SMTP id
- d9443c01a7336-2ae824ac5abmr118864835ad.52.1773081441272; 
- Mon, 09 Mar 2026 11:37:21 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae840ad9b7sm206390295ad.79.2026.03.09.11.37.20
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 11:37:20 -0700 (PDT)
-Message-ID: <5483ce28-65d2-4726-b7f2-1003113ff58c@linaro.org>
-Date: Mon, 9 Mar 2026 11:37:20 -0700
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vzfXm-0003D5-9i; Mon, 09 Mar 2026 14:41:30 -0400
+Received: from mail-northcentralusazlp170130007.outbound.protection.outlook.com
+ ([2a01:111:f403:c105::7] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vzfXj-0004Vh-4M; Mon, 09 Mar 2026 14:41:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=TQUOAZyNEkh4udqMtIv/4guVPRuBFS8OiN5jkfd6vVjRykE9/ooYbq5tMeOtg/tTrQMN+95HJF2qzuqJN4xvuttDs2fm+5+iH+1NcUKr9KJjHkDPNgZXfl02LTeIOd8S2FK/8XndGA6RcmjVsqGudehWFxUeRxiNkGvWPxJJ6QdkMUWcyZo+uHsa6ZSipn8E0wGwUHx8oW964p34OH0WDBYnPH+JORs3EOYH72z4x9G8TMrcNv3RgB3PAXGwPc7ersAhdmIDDSiHBv2Ozr0zIlORSl2YP2PRUM9CTNRb15KGbyaAhxqXzymwYCFS0SdqLGgzobp5W+gOIYzGtb2x9Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=dTrycQbGlAHf24CfOpqZ1oFXcEAZvySGCOJV6e4Hf5U=;
+ b=iytZ6aYiri8FYoQCucQP4FlwtzqTq0XOn6yDkbn7oqh1yf9wzcpMuu0F3mazz1Cish7fBre332Sm3MOFouKaF9XX0XhWA88VMnHQr4bGQeGl9FWmeHdEMWXVChCGRRTLd9wfDq8QCIlIv+VsLwDuyph7Rxz2saP64nVyU4O8FtP82CYos/YNWav81FfxlDZVI/WEIdatEsYdwvS8ORnYsylXshECweUIRdoZUpE4/0InuDQydxYxCscHicO/caZN/8Ywk6BPFZFUmykn571eojy5MbgNtvFWmxcaqqUxxAyWJBUw2ijvGHurSOIsuhaQwcdXiaXMjchxjBnnGSMLww==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.118.232) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=dTrycQbGlAHf24CfOpqZ1oFXcEAZvySGCOJV6e4Hf5U=;
+ b=qpKuXBUvmLKD0FEPqhVSO14ByeM/bxF0Nk2ix6u5eLyPowlejEHL2rHgb2fUNyg2CY6vG2yNkmo6hnN++lpyQkEFaOvRkvtUIP9z1KwsZqAtjIqVEhfXGLoY3GiXR3/5HVkc16ln9dVV+1Xo5N5qETxPLnzJ8+DbWZn+WXIF6ozV9WLFxrQDZ3NnsAi/avkMEVmFVW4uz2fATvrFG1G1761ciPRrUVLU2T5RfarN2toZ1T4e27BFfTmjEPf/2vrPgS7W4KHRt1PC229Y5Ckh9UwNlNES88E8Jrxot1mFTjQC47oAfk0rSp8WrOOmF+2dCYI4h5U2lvNByla98NvPeA==
+Received: from CH0P220CA0026.NAMP220.PROD.OUTLOOK.COM (2603:10b6:610:ef::22)
+ by PH7PR12MB7307.namprd12.prod.outlook.com (2603:10b6:510:20b::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.10; Mon, 9 Mar
+ 2026 18:41:19 +0000
+Received: from CH1PEPF0000AD7D.namprd04.prod.outlook.com
+ (2603:10b6:610:ef:cafe::21) by CH0P220CA0026.outlook.office365.com
+ (2603:10b6:610:ef::22) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.25 via Frontend Transport; Mon,
+ 9 Mar 2026 18:41:15 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.232)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.118.232 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.118.232; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.118.232) by
+ CH1PEPF0000AD7D.mail.protection.outlook.com (10.167.244.86) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9678.18 via Frontend Transport; Mon, 9 Mar 2026 18:41:19 +0000
+Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
+ (10.127.129.5) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 9 Mar
+ 2026 11:41:01 -0700
+Received: from drhqmail203.nvidia.com (10.126.190.182) by
+ drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.20; Mon, 9 Mar 2026 11:41:00 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
+ (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 9 Mar 2026 11:41:00 -0700
+Date: Mon, 9 Mar 2026 11:40:58 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
+ <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
+Subject: Re: [PATCH v3 15/32] hw/arm/tegra241-cmdqv: Emulate global and VINTF
+ VCMDQ register reads
+Message-ID: <aa8UOhKhA4jIXVxf@Asurada-Nvidia>
+References: <20260226105056.897-1-skolothumtho@nvidia.com>
+ <20260226105056.897-16-skolothumtho@nvidia.com>
+ <1b64d8d1-85d9-4894-8813-d645977aee68@redhat.com>
+ <CH3PR12MB7548413828C8ED32C75B1ED1AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] system/xen: Constify various MemoryRegion arguments
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Mohamed Mediouni <mohamed@unpredictable.fr>,
- Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>, Peter Xu
- <peterx@redhat.com>, Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- Stefano Stabellini <sstabellini@kernel.org>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-References: <20260309183536.88976-1-philmd@linaro.org>
- <20260309183536.88976-4-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260309183536.88976-4-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CH3PR12MB7548413828C8ED32C75B1ED1AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CH1PEPF0000AD7D:EE_|PH7PR12MB7307:EE_
+X-MS-Office365-Filtering-Correlation-Id: d31c438a-a6c9-4e3b-429d-08de7e0b742b
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|7416014|36860700016|1800799024; 
+X-Microsoft-Antispam-Message-Info: DM9CJ395tMOMtOzIcrR/XWNJaSxCyeb8e+ouAES9vCzRRjzpsmUahNEitms3I0Mm7xceHFHdZYKilj7kNtehXSj1w7zJbTwG3o/4aiCpDXxYNv8Cs5cnzmVXejuKlcUPxvzRHRML0SspmsPP+4+kO3ctrsk+rQGp+t9t3TV8t4AtN5/Q7Djk0ahLKUqh6PIqx2W9CZRm2nBs1rBovZct5ucwmEtiYsOT08Ud8SevRJAsGSH+70Ln6AoRUcyQLJ8dYcHDVx0qqoQQRVb/J3yXZtUDU5rsZncsMVuXBNTWcL4xAl7AxZiJ49RVhgpa06l1dKH+uzCb9rTB9bbKC+zUpwNS8uc1AEq5ZbGM6RDV3nL37rP/TX7MSKTGLOr3kYSlEn3etdB7JJLPi0Efadae0Knb5ynUtezVrjn8x/KTiLAXtr/Hb07z/tXQ0lfi2U0G0eHWYx5Fm525worbBA21rWjEgsi9C0BRvyPBnJ58s6Q0F2jwMqdzYJq3zuCNoxxTpMpwF/B9Y1t8jY5yLgsCuufVlXB7zMczurUynaQ/z8BaAMymCJU8rVnfxN97WCbQyJ77z/dHILaMbotwuZmrcsVi2PDhTT6XhZMPoUp/pWeOMAlWesp228WN36TpO0Ij3XENY34uzQJ3w/Qcu1LmDhqBKGcsUMM8Qh93+FYT7Czyyb30kOf541lHczUYf3ZawjEL8IgRBdU5UBNfMpCYLcYi34LndF07czOeJP39SZt30HoOVmkEc8FFGFl5E7JO1wtRZB1Lc5FwsrNVzld8tA==
+X-Forefront-Antispam-Report: CIP:216.228.118.232; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(7416014)(36860700016)(1800799024); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: bYTA9O+4GybPWTzDFPffRQ0W8JNVox6OeS9JNTnkLCFvfMEY/YMaAPIrwYg63hRU7QMX5g/8r4hfKpV2hzvwlN3ae3pVT5xqbUVbCN7sASRktigWL6tZOsMlE0YqaZQmuGyOJ5ZXQdkdzoD4GstUKa3Ri9YMdSyzYw7y+oMoZrX4JFTeb03qPsEuUBFyKsZn/NMt24+RBM10nB2zX8LrVrYV9KEffq5GqmlSwqHnc+OWC/7SFCFtk8LgL7hTmkE2xQjWH15ZacaXzrpu5zmJ3xMODym7pCTz+qRHlvehdS+b6ThW5+luzrrpANTbCb5vCrp79x+prQqMOIIWc/SdhqCaQ5CTsT6sIG2Pn5DnY3jPLhjL5yUwgL+LMp42kIVRJM142Q6HgQi7FHIUlXiZCMn4VKF//kkZ5jwFycrtnjvv5z+KBkUtutZYqoDcbwxj
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2026 18:41:19.0245 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: d31c438a-a6c9-4e3b-429d-08de7e0b742b
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.232];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CH1PEPF0000AD7D.namprd04.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR12MB7307
+Received-SPF: permerror client-ip=2a01:111:f403:c105::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,18 +143,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 11:35 AM, Philippe Mathieu-Daudé wrote:
-> Mark the MemoryRegion structure const when is only accessed read-only.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   include/system/xen-mapcache.h | 2 +-
->   include/system/xen.h          | 6 +++---
->   hw/xen/xen-hvm-common.c       | 8 ++++----
->   hw/xen/xen-mapcache.c         | 2 +-
->   hw/xen/xen_stubs.c            | 6 +++---
->   5 files changed, 12 insertions(+), 12 deletions(-)
-> 
+On Mon, Mar 09, 2026 at 11:04:31AM -0700, Shameer Kolothum Thodi wrote:
+> > > The VI_VCMDQ register ranges are an alias of the global VCMDQ registers
+> > > and are only meaningful when a VCMDQ is mapped to a VINTF via ioctl
+> > > IOMMU_HW_QUEUE_ALLOC.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> > If the guest detects he can use a single VMCDQs (I guess he can
+> > introspect this by reading the SMMU_CMDQ_PARAM_0) how does he know if
+> > he
+> > shall access your so-called "Global VCMD regs" at 0x10000 or VI0 regs
+> > (0x30000-40000). How does the guest know that he is supposed to use VI0?
+> 
+> The CMDQ registers can be accessed via both the so called "Global VCMDQ registers 
+> Page0" and by "VINTF logical VCMDQ registers Page 0". And they are aliased.
+> 
+> The difference being(from Nicolin's explanation here[0]):
+> 
+> "
+> The global page0 is programmable at any time so long as CMDQV_EN
+> is enabled.
+> 
+> The logical page0 is programmable only when SW allocates and maps
+> global vcmdq(s) to a VINTF. "logical" also means "local" to that
+> VINTF.
+> ".
+> 
+> IIUC, for now a Linux Guest kernel will only use "VINTF logical VCMDQ
+> registers Page 0". 
+
+Yes.
+
+> The question is whether QEMU should also support accesses via the
+> "Global VCMDQ registers Page 0" if some other guest implementation
+> chooses to use that path.
+
+Yes.
+
+The point is that we can't reject guest's access to the global MMIO
+space. So, QEMU has to support both. But guest OS is allowed to do a
+partial map/alloc, so global MMIO page isn't identical to the VINTF
+logical page in this case.
+
+In an extreme corner case, guest OS might try to enable a VCMDQ via
+the global MMIO space, though the vcmdq isn't allocated/mapped to a
+VINTF. QEMU should still allow these MMIOs but does not essentially
+make the vcmdq functional, since this would be "unpredictable" in a
+physical HW situation.
+
+Maybe we should elaborate these in the commit message.
+
+Nicolin
+
+> @Nicolin, please correct me if that assumption is not right.
+
 
