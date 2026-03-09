@@ -4,86 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6940FF3C24A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:11:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD81BF3C24C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:11:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzaLu-0007cX-B2; Mon, 09 Mar 2026 09:08:54 -0400
+	id 1vzaLt-0007Y6-78; Mon, 09 Mar 2026 09:08:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzaLk-0007Ll-TL
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:45 -0400
-Received: from mgamail.intel.com ([198.175.65.9])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzaLh-0008FG-41
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773061721; x=1804597721;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=gjWa/6Zn7gu/PE25Kg8S0txoY7y+19Rcf8HIy2Whxrk=;
- b=hCGT5+K7IFUVZfFvLJovSnkWzXJjlRfIiGDDbAG5Vy4kn0NuVjAD0idr
- L2doEB3cjWxu8/wv5dZlY9Om3ex19FqztBzq1fpEUTNoXbYlVMizY4s5+
- 0TEGa0VHU8M+s7y0e2GA/bXw1tYV5N+Ml5m1symHN/WnHUSvgnnKgv+75
- xuD3xPAfNziu3Hjp7hlQPJHeD6aKe1qqkEsLPb0UhkxvkqpRmym8R6n/B
- Yq+ZAvs2EzSaYsTWFZ+aIgj/I18xfvL9gZAjUOezryz53GtV4ahC4InDk
- KLZmS665vTQ+5mdw0v/1+aQj5A9k5tfciAN69njI+FICbF4mszzDKmJD3 Q==;
-X-CSE-ConnectionGUID: iX/avDeqSHe1JenvMeKlgA==
-X-CSE-MsgGUID: A+oK/wuXT5SjSJP4J+ZY3A==
-X-IronPort-AV: E=McAfee;i="6800,10657,11723"; a="96701244"
-X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="96701244"
-Received: from fmviesa001.fm.intel.com ([10.60.135.141])
- by orvoesa101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2026 06:08:36 -0700
-X-CSE-ConnectionGUID: Nh16+b3FSVizfVtPJTIbog==
-X-CSE-MsgGUID: YJhnVgqOSMG7taxJY7qQEA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="245713507"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa001.fm.intel.com with ESMTP; 09 Mar 2026 06:08:32 -0700
-Date: Mon, 9 Mar 2026 21:34:42 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>,
- Thomas Huth <thuth@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Zide Chen <zide.chen@intel.com>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
- devel@lists.libvirt.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH v2 14/21] hw/core/qdev-properties: allow qdev properties
- accept flags
-Message-ID: <aa7Mckq/8cgwZwkB@intel.com>
-References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <20260210032348.987549-15-zhao1.liu@intel.com>
- <aYsAuFNQQvwYiLPI@redhat.com> <aYwv/mcUBXy9kUYZ@intel.com>
- <aYy1R-JQjZ-Y38Am@redhat.com> <aY3w3RjzF8/SxPjg@intel.com>
- <aY309kPru8ELO5_N@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzaLa-0007ET-FV
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:37 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzaLY-0008DU-Rm
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:08:34 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id D30385BE00;
+ Mon,  9 Mar 2026 13:08:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773061683; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h13tJ1xejAgyEUU76A0g3yFwe/yE9nt3DxGNX20EZWs=;
+ b=Z3Rj1SKAh0vAx/3I5qiUCe1MejY2cjd9cXUg7OTODX9qh+NO1IgxivH+Wr1FANykWrZCc4
+ +GBzNgoz5UsYpBhd377TRExX+3jwLzNihHcc3gUHh/RcZJTwz0O1Kfj3eCBVPs8x5YDnzL
+ CwH+jY1k8QhPt6oZWLJPgFeAkU9KU2Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773061683;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h13tJ1xejAgyEUU76A0g3yFwe/yE9nt3DxGNX20EZWs=;
+ b=oNxuVMCaj5aZHdAdhefjl+ycy6cKx3Sgxe6bgg/V9poRRxhHB4mSKtM2V6KHZCJFTdG2wA
+ EgZcn51dbkD/2VBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773061683; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h13tJ1xejAgyEUU76A0g3yFwe/yE9nt3DxGNX20EZWs=;
+ b=Z3Rj1SKAh0vAx/3I5qiUCe1MejY2cjd9cXUg7OTODX9qh+NO1IgxivH+Wr1FANykWrZCc4
+ +GBzNgoz5UsYpBhd377TRExX+3jwLzNihHcc3gUHh/RcZJTwz0O1Kfj3eCBVPs8x5YDnzL
+ CwH+jY1k8QhPt6oZWLJPgFeAkU9KU2Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773061683;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=h13tJ1xejAgyEUU76A0g3yFwe/yE9nt3DxGNX20EZWs=;
+ b=oNxuVMCaj5aZHdAdhefjl+ycy6cKx3Sgxe6bgg/V9poRRxhHB4mSKtM2V6KHZCJFTdG2wA
+ EgZcn51dbkD/2VBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 65EED3EEF2;
+ Mon,  9 Mar 2026 13:08:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id kLsDCzLGrmlJcAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 09 Mar 2026 13:08:02 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Lukas Straub <lukasstraub2@web.de>,
+ Zhang Chen <zhangckid@gmail.com>
+Subject: [PULL 17/22] qemu-colo.rst: Add my copyright
+Date: Mon,  9 Mar 2026 10:07:22 -0300
+Message-ID: <20260309130730.20526-18-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260309130730.20526-1-farosas@suse.de>
+References: <20260309130730.20526-1-farosas@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aY309kPru8ELO5_N@redhat.com>
-Received-SPF: pass client-ip=198.175.65.9; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.998];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ ARC_NA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[redhat.com,web.de,gmail.com];
+ RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[4];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com,web.de]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -100,47 +120,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-(Sorry for the long silence — just returned from vacation.)
+From: Lukas Straub <lukasstraub2@web.de>
 
-> > Yeah, most property setting paths are covered by
-> > object_set_properties_from_qdict() (I listes these cases in patch 12,
-> > including the most common ones: -object/-device and their related HMP/QMP
-> > commands).
-> > 
-> > But there're some corner cases which don't go through
-> > object_set_properties_from_qdict(), e.g., -global/-accel/"qom-set", etc,
-> > those were considerred in patch 9/11/13 (and sorry I should list all
-> > cases affected in cover letter :(). These cases are where I find
-> > things to be both trivial and tricky, so I manually check them and mark
-> > them using USER_SET.
-> > 
-> > Therefore, I think the unified entry point for externally setting
-> > properties resides at a lower level—specifically, is object_property_set(),
-> > then we need to dientify when object_property_set() is called by
-> > external user or not - that's how USER_SET works...(I feel like I'm back
-> > where I started).
-> 
-> There's a significant different there.  Emitting deprecation messages
-> in the API entry points tied to user data is a clear purpose, not
-> open to abuse. Recording the difference between user set & internally
-> set against the object instance persistently is an open ended purpose
-> and based on what we've seen in QEMU in the past, that is highly likely
-> to be mis-used.
->
-> The idea of supporting deprecations on properties is definitely
-> something we should do, but I really dn't want to see that expressed
-> via the 'user set' mechanism from this series.
+I have so far contributed 61 commits to the colo project, waranting
+the addition of my copyright to this file.
 
-Thank you for your explanation. In practice, as the alternative to
-USER_SET, I understand we identify the specific API entry points (including
-object_set_properties_from_qdict and others) and trigger the warning
-directly within those functions / code path, may I ask if this
-understanding is right?
+Reviewed-by: Zhang Chen <zhangckid@gmail.com>
+Reviewed-by: Fabiano Rosas <farosas@suse.de>
+Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+Link: https://lore.kernel.org/qemu-devel/20260302-colo_unit_test_multifd-v11-16-d653fb3b1d80@web.de
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ docs/system/qemu-colo.rst | 1 +
+ 1 file changed, 1 insertion(+)
 
-The current API entry points are somewhat fragmented; perhaps we should
-consider whether further unification is possible.
-
-Regards,
-Zhao
+diff --git a/docs/system/qemu-colo.rst b/docs/system/qemu-colo.rst
+index ec73677e5e..671c56448e 100644
+--- a/docs/system/qemu-colo.rst
++++ b/docs/system/qemu-colo.rst
+@@ -358,3 +358,4 @@ Wait until disk is synced, then::
+ | Copyright (c) 2016 Intel Corporation
+ | Copyright (c) 2016 HUAWEI TECHNOLOGIES CO., LTD.
+ | Copyright (c) 2016 Fujitsu, Corp.
++| Copyright (c) 2026 Lukas Straub <lukasstraub2@web.de>
+-- 
+2.51.0
 
 
