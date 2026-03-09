@@ -4,107 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A5AFF41808
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:13:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19ADFF41808
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:14:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcF6-0001Iw-F1; Mon, 09 Mar 2026 11:10:00 -0400
+	id 1vzcEh-0000r9-NP; Mon, 09 Mar 2026 11:09:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcF2-0001DW-Rc
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcEh-0000qh-16
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcEz-0008RT-Ch
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:56 -0400
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzcEf-0008Mo-Ie
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:09:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773068992;
+ s=mimecast20190719; t=1773068972;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ri63c0zIoSQgAinKj4Gr9ogtshcXsY80vNDrWEB/NVk=;
- b=GDzP8GyANw7jMf9C9+IUshsW2StizenNk5qFoEDgEQmbI1K//dR+9RLVyRfp9pXRvAJRWp
- 1/VspIQvZxEMo48bRWK4a8tZa8xKkuPzMkZik1OFFPYuH4QHrEYAPCZR3/dGIXqpEAzzBL
- ki1RIE8uacHideuNKxj/4v12dI1JEfk=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=H/8FdOawT4l+d49GakUVhtVVYAdyZ+VALEhrmRAkR5g=;
+ b=cnpG1wtwNDrCw7JHSNFCbtJEwb36bS8IjH64cVMmCFaYq1YM/zWZTvi3+nhJfkCwnofsdA
+ TqlpxfCybyaXCbe0Pb5RpmCmeMFlPenV05PR0o5YtFmYiPTf+u7C/A4bgjVNDNIesQox7F
+ I/j/9rtv25n2kE52OBHlfZP8caOlWzU=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-650-GHRI3WG7PdGx1TGdfMrjGQ-1; Mon, 09 Mar 2026 11:09:51 -0400
-X-MC-Unique: GHRI3WG7PdGx1TGdfMrjGQ-1
-X-Mimecast-MFC-AGG-ID: GHRI3WG7PdGx1TGdfMrjGQ_1773068990
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-485355493aeso3417015e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:09:50 -0700 (PDT)
+ us-mta-381-sJbow0PMMvOnqmY1VYgIaA-1; Mon, 09 Mar 2026 11:09:31 -0400
+X-MC-Unique: sJbow0PMMvOnqmY1VYgIaA-1
+X-Mimecast-MFC-AGG-ID: sJbow0PMMvOnqmY1VYgIaA_1773068970
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4852ccff333so26570265e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:09:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773068990; x=1773673790; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773068970; x=1773673770; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ri63c0zIoSQgAinKj4Gr9ogtshcXsY80vNDrWEB/NVk=;
- b=gBJINylToqoIein58AZtJD2uY7Mani6ESzz5EDwsObgGBZRt86eazL/z/tmnusRa4r
- +UgaSI3/H68DwjT/VNTqoX4SAKC0Taf5xCFYe3qpmVoUSx68uDgtpr8SDpjNMBts6eG9
- mDUnjcUW0BTCERATb0wmyI6nDFTqHflyKxQbcgjQjGiTQj20+p9C4iMTD7g253TiOhRa
- xDOWs96TTpbJIL4ppiEJ978zZzqra5a1dO1lXYxOiO9T+vL6IZxewr9wz85bJ+pBwa//
- R6TQuZo9WCMqPBGNYufp05tUXXzV4ppRKdrkpWW8ZkdLR0fgvrHyct8mhNPNI0TDVKUn
- 4skQ==
+ bh=H/8FdOawT4l+d49GakUVhtVVYAdyZ+VALEhrmRAkR5g=;
+ b=ncJvgHV/DrYKH5orgzJa2aeQ8YQti+NEZqW+7N0MXSYNrOr/W17Oz13Sl7/qZV0OIW
+ kCmCnQT1M4Y4IjdfWEx1hvZJP6Zoi5G0pkdKCR+zk/OLBZ4ts8ZzHhYJfJ4whaJN1dFa
+ m/IvacTOEULKHyRKOjrOrvyQ7w+SrcmHiqUB21YfxCwUPQllTHR/zlSoHR4KXV535Oc0
+ zH3efZPGZEiR5b1vP/cskaJ/vPAFM30CeZsiAnctOreOl46Sok93FVcmb5+yDohXexDl
+ BCJf1rN6FaNtexdR87gs+dzKSrszJ6mrm3spvH2n8CYv6AIl+UGvG+2JiREniXLfkyXe
+ z0Zg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773068990; x=1773673790;
+ d=1e100.net; s=20230601; t=1773068970; x=1773673770;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ri63c0zIoSQgAinKj4Gr9ogtshcXsY80vNDrWEB/NVk=;
- b=rrj3BfcyJ594HhVG2PXfEPksm3wv2plsRLutpxiGLEVXa8UMFxsB35eXRvm+XhgjQf
- YFh318b2H70Ix2kUNECKz0D7cX0N6hSaA0YKaLLM5dgUr04UOC8rLjpyBx/NliBEkBg6
- muUWg8mbc6SpLEdhZ+9XfjX0NlhoNSurthqhfrVzeAzAoQMnWT9NTv5oAs8ECLrScrGO
- op0zNtEouL5SgAWq8KHWBs0pHIt93c/cP5J0aw+cvdIXs8ubeF8K77ZxIy4bspumd6OV
- NLi7ZHcREDzoDWNAHNGWcxvHAFm7J+NC4iihibtBI/kSRuax8IDh9g17dT1sW/2ENWyY
- iFDQ==
-X-Gm-Message-State: AOJu0Yx34nwI08I+AjW7wPD2lx/hut01Z66sp3igp7jLCxGESsfvQ9H6
- GtDkesqYKb6ZRsH5rx8FZYBA/lHiLDwpReQ7hC++I69oeBC9pZn0x6rMiyUA/jaGqsbssC9VwCk
- bqSZ1MLiHhVCItuavWon/8L+RI5aKy858npQ2RkUYlaONEoP2aq07mvwz
-X-Gm-Gg: ATEYQzzsnE5sZUYhwT2G7mZmho1WO5HCaDDZdTEechOjhoUyhZJrQU1iMn2gB1sVziQ
- z4q4ekIKnTLgquNMP3tgY3tWpIyBHCBlEbclMN+n0wdZUePJ0R433RTs3wR+3r0eICE2CCj54Cs
- 3JsMHfJrUIknDNj2Xc6yRo3unSJ/A3+ktZAwXLJwXASR4MJr3xPnYeoFJZtkY0lKx7ECVEP6ByE
- dMeovdcDgSJeNexbN817P/kfJ8y0Kvz/EvJ7TOl2OePx0JTOJa+wju2xBq71EabNxVR8LrQz3Wi
- kNF2AhWJeuEksz61OX6Qz9t5ssYOyf/CjFZyFP7u6JRG8Lh8cyUvMx4v9oHeoCUqz4Z+x5YVzoM
- QkVSpnRYPPy2AfZRyuxs8qamBlvc1CUZlAXqrlCY5oGDxYwRqGnfFhQWXvNdeg8yQcr1ireyU/2
- zcqoMw
-X-Received: by 2002:a05:600c:46c4:b0:485:304a:58cd with SMTP id
- 5b1f17b1804b1-485304a5a00mr136119535e9.4.1773068989701; 
- Mon, 09 Mar 2026 08:09:49 -0700 (PDT)
-X-Received: by 2002:a05:600c:46c4:b0:485:304a:58cd with SMTP id
- 5b1f17b1804b1-485304a5a00mr136118845e9.4.1773068989214; 
- Mon, 09 Mar 2026 08:09:49 -0700 (PDT)
+ bh=H/8FdOawT4l+d49GakUVhtVVYAdyZ+VALEhrmRAkR5g=;
+ b=NOPJIWW0qBn6Sj2xWCuvDJRhx0KCp+feNhbIHll6zsb10ZJhV1h6+aFf7LwE7+fbuq
+ C6WIFdqtz2ipYsaVClUTVtdkVMl3bCqw6MqRsHw3GnFzyG5RZ5iORvG9nKdTp1J7w5Le
+ Rj1lxZZwDUeKf4sWTTw4CWAQkwhF/faBE7KGN9RT0erJluRDSZCB0+e7e/jaD3LXZ8FI
+ sUcScwqTz2lvUrc8Wr95a1WmAE1I320TdjfEjHWKLyzQew3arwa3u7jPutlSEMNawAvr
+ aOxKj2DhCbvG7SW82OO6H5MMJtSwri9pypCTi7DgRarZiCJ6Sq66UQZRL31jD+yugoup
+ yRRg==
+X-Gm-Message-State: AOJu0Ywb4P2v63JDpSmbv0ipXPfJTjS5xpdiFa9ges4UX2hLr6BYee9s
+ 2Supe/3bZJgo2GiXBFTP+BnG4szCxQiFuccifexPldeLjOJ++V5b3e5Z/udhPxQ6HyGXUs/0uCj
+ SJuqmuOFBTX3newovHrU1u2ruZSAz/P4k9uEdB8w3PH9tBeUpXwxy0t0N
+X-Gm-Gg: ATEYQzzaDTtdxzl75zCxxrDytk3DY78dit2R7zMH/vTXa+KJUnoluyNU+nMpN7zuPYA
+ CFvNol/NPCFeeZBXcSJDhx8Bzqu09ZJMeeAXnfUA6yuzfVeHnnemjtp2s6m5ejpqBHXA91YLVPu
+ JlvmPUIK61xsf8yh37+D0+V/hVAfhoJPPJeOPwnhFQQ8uK0mJWO+AsCzW6+/+4E00OXFO//2og0
+ NU10x0tdyXmzfAd/EjwvITZtQJvGFq2eud1hvKZCB6HgRvffzHgLjEOm3hXc7nhnBV6Xqm3Lpfu
+ Ek8cQSwDhmZLoF8F6Czf3IB/3+T+q2zrqlBBo0fksD/EU7xpG4qDlqJK8hxPGG8HTWqV/NgZTSE
+ zRptwKVyO4N5fB6MDrmJeMQH2FpIAOUtxXp2TG0tisJo+peUuoH3rxIb1UWxG1kBZM/m2YABqV7
+ 6bd3P6
+X-Received: by 2002:a05:600c:1e2a:b0:47e:e57d:404 with SMTP id
+ 5b1f17b1804b1-485269582efmr185943445e9.16.1773068970327; 
+ Mon, 09 Mar 2026 08:09:30 -0700 (PDT)
+X-Received: by 2002:a05:600c:1e2a:b0:47e:e57d:404 with SMTP id
+ 5b1f17b1804b1-485269582efmr185942935e9.16.1773068969819; 
+ Mon, 09 Mar 2026 08:09:29 -0700 (PDT)
 Received: from localhost
  (p200300cfd737d0cf29d515fbd6051d53.dip0.t-ipconnect.de.
  [2003:cf:d737:d0cf:29d5:15fb:d605:1d53])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48531818b5asm88131615e9.3.2026.03.09.08.09.47
+ 5b1f17b1804b1-485237dd017sm92455125e9.2.2026.03.09.08.09.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 08:09:47 -0700 (PDT)
+ Mon, 09 Mar 2026 08:09:28 -0700 (PDT)
 From: Hanna Czenczek <hreitz@redhat.com>
 To: qemu-block@nongnu.org
 Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
  Kevin Wolf <kwolf@redhat.com>, Brian Song <hibriansong@gmail.com>
-Subject: [PATCH v5 18/25] fuse: Reduce max read size
-Date: Mon,  9 Mar 2026 16:08:49 +0100
-Message-ID: <20260309150856.26800-19-hreitz@redhat.com>
+Subject: [PATCH v5 10/25] fuse: Introduce fuse_{inc,dec}_in_flight()
+Date: Mon,  9 Mar 2026 16:08:41 +0100
+Message-ID: <20260309150856.26800-11-hreitz@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309150856.26800-1-hreitz@redhat.com>
 References: <20260309150856.26800-1-hreitz@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -122,37 +122,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We are going to introduce parallel processing via coroutines, a maximum
-read size of 64 MB may be problematic, allowing users of the export to
-force us to allocate quite large amounts of memory with just a few
-requests.
-
-At least tone it down to 1 MB, which is still probably far more than
-enough.  (Larger requests are split automatically by the FUSE kernel
-driver anyway.)
-
-(Yes, we inadvertently already had parallel request processing due to
-nested polling before.  Better to fix this late than never.)
+This is how vduse-blk.c does it, and it does seem better to have
+dedicated functions for it.
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
 ---
- block/export/fuse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/export/fuse.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
 diff --git a/block/export/fuse.c b/block/export/fuse.c
-index bd099d1291..f32e74f39d 100644
+index 5953407f20..fc75a5e74d 100644
 --- a/block/export/fuse.c
 +++ b/block/export/fuse.c
-@@ -45,7 +45,7 @@
- #endif
+@@ -78,6 +78,25 @@ static void read_from_fuse_export(void *opaque);
+ static bool is_regular_file(const char *path, Error **errp);
  
- /* Prevent overly long bounce buffer allocations */
--#define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 64 * 1024 * 1024))
-+#define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
- #define FUSE_MAX_WRITE_BYTES (64 * 1024)
  
- /*
++static void fuse_inc_in_flight(FuseExport *exp)
++{
++    if (qatomic_fetch_inc(&exp->in_flight) == 0) {
++        /* Prevent export from being deleted */
++        blk_exp_ref(&exp->common);
++    }
++}
++
++static void fuse_dec_in_flight(FuseExport *exp)
++{
++    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
++        /* Wake AIO_WAIT_WHILE() */
++        aio_wait_kick();
++
++        /* Now the export can be deleted */
++        blk_exp_unref(&exp->common);
++    }
++}
++
+ static void fuse_attach_handlers(FuseExport *exp)
+ {
+     aio_set_fd_handler(exp->common.ctx,
+@@ -303,9 +322,7 @@ static void read_from_fuse_export(void *opaque)
+     FuseExport *exp = opaque;
+     int ret;
+ 
+-    blk_exp_ref(&exp->common);
+-
+-    qatomic_inc(&exp->in_flight);
++    fuse_inc_in_flight(exp);
+ 
+     do {
+         ret = fuse_session_receive_buf(exp->fuse_session, &exp->fuse_buf);
+@@ -323,11 +340,7 @@ static void read_from_fuse_export(void *opaque)
+     fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
+ 
+ out:
+-    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
+-        aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
+-    }
+-
+-    blk_exp_unref(&exp->common);
++    fuse_dec_in_flight(exp);
+ }
+ 
+ static void fuse_export_shutdown(BlockExport *blk_exp)
 -- 
 2.53.0
 
