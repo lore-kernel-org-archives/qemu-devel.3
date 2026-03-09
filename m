@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9054F3C266
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:48:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDAFF3C265
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:48:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzaxi-00045G-Ih; Mon, 09 Mar 2026 09:47:58 -0400
+	id 1vzaxd-00043M-Dk; Mon, 09 Mar 2026 09:47:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxU-0003yT-3l
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxU-0003yO-1S
  for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:47 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxO-00067j-4D
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:42 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxO-00067M-4C
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:43 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 0AFD5435AB
- for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:22 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 669E4C4CEF7
- for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:21 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id 77768600B0
+ for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:18 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id A8E68C4CEF7
+ for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:17 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773064041;
- bh=x2p9sfsUBTUAYtkqoTf6MRparRAy9QhO3P2K4BkAkCQ=;
+ s=k20201202; t=1773064038;
+ bh=yQjfyq4uMUjaesM0EhyZ3X0IrXyyB6Sp6uAxR9zq4is=;
  h=From:To:Subject:Date:In-Reply-To:References:From;
- b=rx4k/uyySmXb05PHPRRl3d9HDzmoTI055ZTZnPIm2wQ15TkwkieZSGLenlZXX7P08
- vuhhDMbANUYHcDbj5kgcNHqm083XUbYTnCTcuMJigMHnrYf3BG71Q1Crykc9H+NKMO
- C3W4CLYr3NMFC3BFdqQNKWLjiaNY2LMiHyBXsMFPq1YuwimakeG7wlgwU1W3zHTfPu
- bc+eMK45W/+PDf4MMlasws4S3R1UFF7q8+40tDOXKMSmtx45BZPHv2DFdEIfLTXiq9
- 0yv6wTK9DAcfFuDUFdJINceSb7t64fg1/wztu9vUIXPlJgZ76eVEFDZtXdXTExUNj+
- 4hze49tkSpt7A==
+ b=bkmoJPPwgaEfu5Yy0Ro028CV3C8SUZK4jaUF7jPcVYGKk+OAFozuXUd3D5o+Av3ds
+ F4T0eTXbai6GhkTbViEE3QcQ+IcmaVRdN8Jxa8ZuRC6hqegJj+N4d6o8bfdKIwpwEH
+ 808SDn8JFqO77+WKjoI35eqFB/n6JrkY4m6W8GuN8Dz+Nf8YC/LD9m3qWzcnrFqHNM
+ DbyIGdaM/96K2Wtxoetaxgz04nqk3yBGrueq47qOjeh2mZiH2UqexKYHEw9sGYWm93
+ iS01AyQkvK3w+4lKoiEWXsdKjj4ThW84FwdDlTzh53PqFdfBUMC0N5ZsgpfyNak8bY
+ GGQ8TPm1jgkuw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 08/10] tests/tcg/multiarch/test-mmap: Print more details
-Date: Mon,  9 Mar 2026 14:47:09 +0100
-Message-ID: <20260309134711.5312-9-deller@kernel.org>
+Subject: [PULL 04/10] linux-user: fix matching ioctl numbers in print_ioctl
+Date: Mon,  9 Mar 2026 14:47:05 +0100
+Message-ID: <20260309134711.5312-5-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309134711.5312-1-deller@kernel.org>
 References: <20260309134711.5312-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
+Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
+ envelope-from=deller@kernel.org; helo=tor.source.kernel.org
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -66,72 +66,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bingwu Zhang <xtex@astrafall.org>
+From: Andreas Schwab <schwab@suse.de>
 
-Useful for debugging
+target_cmd in struct IOCTLEntry is a signed int.  Make sure the ioctl cmd
+argument in the syscall is converted to int when matching, so that it
+works correctly with an ioctl cmd that has bit 31 set.
 
-Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
+Signed-off-by: Andreas Schwab <schwab@suse.de>
+Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- tests/tcg/multiarch/test-mmap.c | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ linux-user/strace.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
-index e297f4b1e9..88f7a04101 100644
---- a/tests/tcg/multiarch/test-mmap.c
-+++ b/tests/tcg/multiarch/test-mmap.c
-@@ -442,19 +442,19 @@ void check_invalid_mmaps(void)
+diff --git a/linux-user/strace.c b/linux-user/strace.c
+index 02d610a7f8..2cbaf94c89 100644
+--- a/linux-user/strace.c
++++ b/linux-user/strace.c
+@@ -1021,12 +1021,12 @@ print_syscall_ret_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
+         int target_size;
  
-     /* Attempt to map a zero length page.  */
-     addr = mmap(NULL, 0, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
--    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
-     fail_unless(addr == MAP_FAILED);
-     fail_unless(errno == EINVAL);
+         for (ie = ioctl_entries; ie->target_cmd != 0; ie++) {
+-            if (ie->target_cmd == arg1) {
++            if (ie->target_cmd == (int)arg1) {
+                 break;
+             }
+         }
  
-     /* Attempt to map a over length page.  */
-     addr = mmap(NULL, -4, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
--    fprintf(stdout, "%s addr=%p", __func__, (void *)addr);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)addr, errno);
-     fail_unless(addr == MAP_FAILED);
-     fail_unless(errno == ENOMEM);
+-        if (ie->target_cmd == arg1 &&
++        if (ie->target_cmd == (int)arg1 &&
+            (ie->access == IOC_R || ie->access == IOC_RW)) {
+             arg_type = ie->arg_type;
+             qemu_log(" (");
+@@ -4359,7 +4359,7 @@ print_ioctl(CPUArchState *cpu_env, const struct syscallname *name,
+     int target_size;
  
-     /* Attempt to remap a region which exceeds the bounds of memory. */
-     addr = mremap((void *)((uintptr_t)pagesize * 10), SIZE_MAX & ~(size_t)pagemask, pagesize, 0);
--    fprintf(stdout, "%s mremap addr=%p", __func__, (void *)addr);
-+    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)addr, errno);
-     fail_unless(addr == MAP_FAILED);
-     fail_unless(errno == EFAULT);
- 
-@@ -465,8 +465,11 @@ void check_shrink_mmaps(void)
- {
-     unsigned char *a, *b, *c;
-     a = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)a, errno);
-     b = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)b, errno);
-     c = mmap(NULL, pagesize * 2, PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d\n", __func__, (void *)c, errno);
- 
-     fail_unless(a != MAP_FAILED);
-     fail_unless(b != MAP_FAILED);
-@@ -479,6 +482,7 @@ void check_shrink_mmaps(void)
- 
-     /* Shrink the middle mapping in-place; the others should be unaffected */
-     b = mremap(b, pagesize * 2, pagesize, 0);
-+    fprintf(stdout, "%s mremap addr=%p errno=%d\n", __func__, (void *)b, errno);
-     fail_unless(b != MAP_FAILED);
- 
-     /* Ensure we can still access all valid mappings */
-@@ -489,6 +493,8 @@ void check_shrink_mmaps(void)
-     munmap(a, 2 * pagesize);
-     munmap(b, pagesize);
-     munmap(c, 2 * pagesize);
-+
-+    fprintf(stdout, " passed\n");
- }
- 
- int main(int argc, char **argv)
+     for (ie = ioctl_entries; ie->target_cmd != 0; ie++) {
+-        if (ie->target_cmd == arg1) {
++        if (ie->target_cmd == (int)arg1) {
+             break;
+         }
+     }
 -- 
 2.53.0
 
