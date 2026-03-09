@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D34EFCD9A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 11:06:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D5DD7EFCD99
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 11:10:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzYRB-0000cK-Er; Mon, 09 Mar 2026 07:06:13 -0400
+	id 1vzYUR-00022A-DG; Mon, 09 Mar 2026 07:09:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vzYR9-0000Vj-BI
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:06:11 -0400
+ id 1vzYUQ-00021h-06
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:09:34 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vzYR4-0003bI-QP
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:06:10 -0400
+ id 1vzYUO-0004GE-6y
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 07:09:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773054363;
+ s=mimecast20190719; t=1773054571;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=DoF0Ch/aSprBYWXCQshySPAUdtlutjKvNeIRSVYy+9k=;
- b=cH9l4eLElAVksFjRc7Ze2T1c41ZBUjkBMfgfNfDNZJB6d3qKb6QylCqS6lexOu0613jtHP
- GQJHFGRv2eEk4FqsxjDSEERwgIodgvW/LwFxcXadI3IO7YF/Y5kLVgC98TCXVL8btw/AY6
- Fz5cmihpkPSjlMdpdsVhuErZYGdtxuk=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=YRd8RDCobWzkOIL/55dBZ6Bma4Lf5yyWSHcJ6UJrR3A=;
+ b=FkmXjem3uiqq9lcS0mLc4nrF6C9ALH6Yv6Cod3XwhYIKc1dqeMVTVRd3uQKkmxJBh9FPNI
+ Vc57Gz6x2M+24cPomJ5gsw2U4LcjaU5/odwRB7rDOdo4yWnWjF+ArWCL9OU4CWHldQPRZU
+ aqzjKQGkbndbf5PHVGM1c5mMyZm7ZNA=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-627-nd8snE71Ma2HeljsC5LSkQ-1; Mon, 09 Mar 2026 07:06:02 -0400
-X-MC-Unique: nd8snE71Ma2HeljsC5LSkQ-1
-X-Mimecast-MFC-AGG-ID: nd8snE71Ma2HeljsC5LSkQ_1773054361
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4852fbfc379so19699115e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 04:06:01 -0700 (PDT)
+ us-mta-359-DkoH2RpsP1OVu96d8TAEqQ-1; Mon, 09 Mar 2026 07:09:29 -0400
+X-MC-Unique: DkoH2RpsP1OVu96d8TAEqQ-1
+X-Mimecast-MFC-AGG-ID: DkoH2RpsP1OVu96d8TAEqQ_1773054569
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-439beddef55so6116738f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 04:09:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773054361; x=1773659161;
+ d=1e100.net; s=20230601; t=1773054568; x=1773659368;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DoF0Ch/aSprBYWXCQshySPAUdtlutjKvNeIRSVYy+9k=;
- b=xMUp5GD+JoS/7hVxU6pZrVysk9KOdvQHDanPJ+tLuh7AwNbhscGLuhojOZRp55Jh7v
- Nlf5zygjtEWz+PNyEvBxWsxdHvgM6fWtndnMiB1XDpXC3DOyAHEOOZC/dMoTDZ7hpKv2
- z0vCp0BCxN0hCnv0ANvw2qlqymKjDynSRMDDTLMh/aNGlepswodaah4FLpdTeWp64T4m
- VfoKMfQN5uhggPIlv9gTyxHlfH+k6fcuHyivkNelVTttrxeMV3Cb1JmHvFZ6k+aqIuQn
- EzJq0eW1Q+NOYUnL7B6u7jSv7ebr/PAUqjgmd452obIQ9LlbGIwPsnCH+GP1e0PTulbQ
- qQig==
+ bh=YRd8RDCobWzkOIL/55dBZ6Bma4Lf5yyWSHcJ6UJrR3A=;
+ b=XDvZqphkBMwEYijSngnRWrs8KUtuA/EnO15u9868lZB+db0aQ0Ca+mfoPPvWMNjse+
+ vdVOqd1izwwsidxbF/NHpYLRlWmOHqQBw9z9di2zNdDGjAJCvrf9/ngMgDApuhJxXFwj
+ /wj7R9gdLuTtj+W92BvS9uqzS1M1PoDQnD0qrtkhlJgi2rS20BRcSLDnfd2yjGuUQlaL
+ KSbtj+4BHwcuBekWkHTUHT70VT4I+QxoqMaKd7xMwFjs0e8PS9VB1fWHhSxNFSYDO+pX
+ k8nuBABVh8ppxCniQI8sktc4NiTmE9lcpb2FtdPTZki2RW/5mG9X2FM+bWdCd4nTPTs8
+ 9xEQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU+CyBVhNyCQezOHTuhUk9GE2mxbiigdunR9TPDbhX1G1p1tpaSfj4DfD+853Q87VEEST7dFN1E18x2@nongnu.org
-X-Gm-Message-State: AOJu0YyR0WRr6e6IO7z9YRR76yU81DQSnpHkAbfHkudBLqXrJu8bnnaj
- Rf3SFmWKtNfs6GX1IuSzwTfyPdJRR2OQB33ZPBt7MAyUC+981KLFmTmh+js3EjYNdUthGYnysOz
- ApXqdog3k5FztXqDIs5WSh8a5vrIgUjTKhF2QyOt3UwdHD1ZAndkr2Tir
-X-Gm-Gg: ATEYQzyE4L0qQMuVe/W6Ulh+lgarLVxEHo9OQ0ktDxNhnn7LPOCddnqrRY5dAYvwVz9
- qsCIkx+Ka5sr/gXhcDrIS40bQU9EYJKn783770csbwawprBXn3mVk9qHHXzUNt1MR4m2YjnVojD
- C/hudJoqudZx2Nq8fQp1UrOa+be96vQY4djmgH3umsQTvihS+ST/AZPJYT4BDVSatMS+iqp3rQb
- 0jojvZ1Vx9pqd2bBMDscees8iiTepJErOBe1PhTsxss4RHsCofH8f9D6SDb/Zg0BtWUmAQzoln4
- DqKOZ44amDLHVQTOR3m1tgIjcNni5p0wND8iLYvjVVebEIxQJms1BfQv685lg5L0+bxaSAw5h3s
- AkaHdpb7Dx7kT8Uxx91GKD20WepTy2hoLaVd49mcvvtBg3bDXPLiFMALT0/PDEvahhL3WXw==
-X-Received: by 2002:a5d:64e8:0:b0:439:d67f:d48 with SMTP id
- ffacd0b85a97d-439da8a7cccmr18869977f8f.59.1773054360792; 
- Mon, 09 Mar 2026 04:06:00 -0700 (PDT)
-X-Received: by 2002:a5d:64e8:0:b0:439:d67f:d48 with SMTP id
- ffacd0b85a97d-439da8a7cccmr18869900f8f.59.1773054360249; 
- Mon, 09 Mar 2026 04:06:00 -0700 (PDT)
+ AJvYcCVYlE0wHH7L7Y4CAUfFlT2GyBnS4ZQOo3FSGJaxh/SC4UGFNKcS8HWo2eYvoIz2DXlcU6inrJaXpPw/@nongnu.org
+X-Gm-Message-State: AOJu0YzjTh0fmYIuIWCnH0xb6ARuMacm+5z73J/wqF/O1Urxj8UglVRn
+ oC6QdgL53YvKrZ5ETQs1FCKzRsgx9Rz9D4u+VFgBvz7Gw3yD2VGc7+ZqmP+IT6dzASbXpbC4N7J
+ oJr/tgpbu3XKsQDPdfHMj6lsCOpbtf/onT6wQ+Zy41vuTDmpSg4qI2wpC
+X-Gm-Gg: ATEYQzz2jNrd74gS6P2cEQnwuRe19kS0GJtrcCnEu5SCXG9s0DX3zr32MuBOz6WT4r6
+ 77si9Q1HjoyNTHXLArjdZxB2UEXMqIZhERtvGTtVEzxroCiECTeEdY7SbAFT9G6Br9np6A+aD67
+ J1G7cE11JDoUvS96CTAyrtrEZY3hZH+4+HoGV/G0/eyNy50vhratuOm9iuFbSh2Tic3BGkO7u+a
+ hmuPCu0+l25djp/kgrmfRb8BX/JegN0x5LM8E0nuC34qtvwivH7eypxCk9fQIBGzhAW21BeIvyA
+ U2zM98/Cwss2amfiq4PIvfcJzdH2zCWfpjrF4jCg2w3S9gwBS5kzlPBdpgmANTIy6vb54l0HcbR
+ x2ma0kI341HGvAkudVouaCT1gkg7eZb4d+90IIhGey4KqBn8NJz/BE/KSBOkvw9Cn0bpyuA==
+X-Received: by 2002:a05:600c:500d:b0:47e:e48b:506d with SMTP id
+ 5b1f17b1804b1-4852695b9f7mr179766605e9.16.1773054568502; 
+ Mon, 09 Mar 2026 04:09:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:500d:b0:47e:e48b:506d with SMTP id
+ 5b1f17b1804b1-4852695b9f7mr179766265e9.16.1773054568075; 
+ Mon, 09 Mar 2026 04:09:28 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dada3b43sm26233383f8f.13.2026.03.09.04.05.55
+ 5b1f17b1804b1-4853f9f82a7sm24560715e9.10.2026.03.09.04.09.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 04:05:59 -0700 (PDT)
-Message-ID: <aa0319bf-066b-4c81-8368-19a93ee1eddb@redhat.com>
-Date: Mon, 9 Mar 2026 12:05:54 +0100
+ Mon, 09 Mar 2026 04:09:27 -0700 (PDT)
+Message-ID: <ed5ca420-94e5-4e9e-a2c3-f59eb6ea8ada@redhat.com>
+Date: Mon, 9 Mar 2026 12:09:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 07/32] hw/arm/smmuv3-accel: Wire CMDQV ops into accel
- lifecycle
+Subject: Re: [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU
+ alloc/free
 Content-Language: en-US
 To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
  qemu-devel@nongnu.org
@@ -90,9 +90,9 @@ Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
  jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
  zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
 References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-8-skolothumtho@nvidia.com>
+ <20260226105056.897-14-skolothumtho@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260226105056.897-8-skolothumtho@nvidia.com>
+In-Reply-To: <20260226105056.897-14-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=170.10.129.124;
@@ -124,201 +124,63 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 2/26/26 11:50 AM, Shameer Kolothum wrote:
-> Add support for selecting and initializing a CMDQV backend based on
-> the cmdqv OnOffAuto property.
+> From: Nicolin Chen <nicolinc@nvidia.com>
 >
-> If set to OFF, CMDQV is not used and the default IOMMUFD-backed
-> allocation path is taken.
+> Replace the stub implementation with real vIOMMU allocation for
+> Tegra241 CMDQV.
 >
-> If set to AUTO, QEMU attempts to probe a CMDQV backend during
-> device setup. If probing succeeds, the selected ops are stored
-> in the accelerated SMMUv3 state and used. If probing fails,
-> QEMU silently falls back to the default path.
+> Free the vIOMMU ID on teardown.
 >
-> If set to ON, QEMU requires CMDQV support. Probing is performed
-> during setup and failure results in an error.
->
-> When a CMDQV backend is active, its callbacks are used for vIOMMU
-> allocation, free, and reset handling. Otherwise, the base
-> implementation is used.
->
-> The current implementation wires up the Tegra241 CMDQV backend
-> through the generic ops interface. Functional CMDQV behaviour is
-> added in subsequent patches.
->
-> No functional change.
->
+> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
 > Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
 > ---
->  include/hw/arm/smmuv3.h |  2 +
->  hw/arm/smmuv3-accel.c   | 93 +++++++++++++++++++++++++++++++++++++----
->  2 files changed, 88 insertions(+), 7 deletions(-)
+>  hw/arm/tegra241-cmdqv.c | 19 +++++++++++++++++--
+>  1 file changed, 17 insertions(+), 2 deletions(-)
 >
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index 26b2fc42fd..648412cafc 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -73,6 +73,8 @@ struct SMMUv3State {
->      bool ats;
->      uint8_t oas;
->      uint8_t ssidsize;
-> +    /* SMMU CMDQV extension */
-> +    OnOffAuto cmdqv;
->  };
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> index 6959766129..d487612ba2 100644
+> --- a/hw/arm/tegra241-cmdqv.c
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -25,14 +25,29 @@ static void tegra241_cmdqv_write(void *opaque, hwaddr offset, uint64_t value,
 >  
->  typedef enum {
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index ab1b0a3669..4373bbd97b 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -18,6 +18,7 @@
->  
->  #include "smmuv3-internal.h"
->  #include "smmuv3-accel.h"
-> +#include "tegra241-cmdqv.h"
->  
->  /*
->   * The root region aliases the global system memory, and shared_as_sysmem
-> @@ -522,6 +523,7 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->                            Error **errp)
+>  static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
 >  {
->      SMMUv3AccelState *accel = s->s_accel;
-> +    const SMMUv3AccelCmdqvOps *cmdqv_ops = accel->cmdqv_ops;
->      struct iommu_hwpt_arm_smmuv3 bypass_data = {
->          .ste = { SMMU_STE_CFG_BYPASS | SMMU_STE_VALID, 0x0ULL },
->      };
-> @@ -532,10 +534,17 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->      uint32_t viommu_id, hwpt_id;
->      IOMMUFDViommu *viommu;
->  
-> -    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> -                                      IOMMU_VIOMMU_TYPE_ARM_SMMUV3, s2_hwpt_id,
-> -                                      NULL, 0, &viommu_id, errp)) {
-> -        return false;
-> +    if (cmdqv_ops) {
-> +        if (!cmdqv_ops->alloc_viommu(s, idev, &viommu_id, errp)) {
-> +            return false;
-> +        }
-> +    } else {
-> +        if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> +                                          IOMMU_VIOMMU_TYPE_ARM_SMMUV3,
-> +                                          s2_hwpt_id, NULL, 0, &viommu_id,
-> +                                          errp)) {
-> +            return false;
-> +        }
->      }
->  
->      viommu = g_new0(IOMMUFDViommu, 1);
-> @@ -581,12 +590,69 @@ free_bypass_hwpt:
->  free_abort_hwpt:
->      iommufd_backend_free_id(idev->iommufd, accel->abort_hwpt_id);
->  free_viommu:
-> -    iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
-> +    if (cmdqv_ops && cmdqv_ops->free_viommu) {
-> +        cmdqv_ops->free_viommu(s);
-> +    } else {
-> +        iommufd_backend_free_id(idev->iommufd, viommu->viommu_id);
+> +    SMMUv3AccelState *accel = s->s_accel;
+> +    IOMMUFDViommu *viommu = accel->viommu;
+> +
+> +    if (!viommu) {
+> +        return;
 > +    }
-reading [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU
-alloc/free
+> +    iommufd_backend_free_id(viommu->iommufd, viommu->viommu_id);
+>  }
+>  
+>  static bool
+>  tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+>                              uint32_t *out_viommu_id, Error **errp)
+>  {
+> -    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> -    return false;
+> +    Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
+> +
+> +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
+> +                                      IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
+if the only think that differs compared to no cmdq is the type, ie.
 
-tegra241_cmdqv_free_viommu() looks identifical in both implementations
+IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV vs IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV
 
-So maybe this is not needed
++ passing true args, maybe you can just record the type of the cmdqv that is being used in the smmu_accel device. Then you can get rid of alloc and free
 
 Eric
 
->      g_free(viommu);
->      accel->viommu = NULL;
->      return false;
->  }
->  
-> +static const SMMUv3AccelCmdqvOps *
-> +smmuv3_accel_probe_cmdqv(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-> +                          Error **errp)
-> +{
-> +    const SMMUv3AccelCmdqvOps *ops = tegra241_cmdqv_get_ops();
-> +
-> +    if (!ops || !ops->probe) {
-> +        error_setg(errp, "No CMDQV ops found");
-> +        return NULL;
-> +    }
-> +
-> +    if (!ops->probe(s, idev, errp)) {
-> +        return NULL;
-> +    }
-> +    return ops;
-> +}
-> +
-> +static bool
-> +smmuv3_accel_select_cmdqv(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-> +                          Error **errp)
-> +{
-> +    const SMMUv3AccelCmdqvOps *ops = NULL;
-> +
-> +    if (s->s_accel->cmdqv_ops) {
-> +        return true;
-> +    }
-> +
-> +    switch (s->cmdqv) {
-> +    case ON_OFF_AUTO_OFF:
-> +        s->s_accel->cmdqv_ops = NULL;
-> +        return true;
-> +    case ON_OFF_AUTO_AUTO:
-> +        ops = smmuv3_accel_probe_cmdqv(s, idev, NULL);
-> +        break;
-> +    case ON_OFF_AUTO_ON:
-> +        ops = smmuv3_accel_probe_cmdqv(s, idev, errp);
-> +        if (!ops) {
-> +            error_append_hint(errp, "CMDQV requested but not supported");
-> +            return false;
-> +        }
-> +        s->s_accel->cmdqv_ops = ops;
-> +        break;
-> +    default:
-> +        g_assert_not_reached();
-> +    }
-> +
-> +    if (ops && ops->init && !ops->init(s, errp)) {
+
+> +                                      idev->hwpt_id, &cmdqv->cmdqv_data,
+> +                                      sizeof(cmdqv->cmdqv_data), out_viommu_id,
+> +                                      errp)) {
 > +        return false;
 > +    }
-> +    s->s_accel->cmdqv_ops = ops;
 > +    return true;
-> +}
-> +
->  static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->                                            HostIOMMUDevice *hiod, Error **errp)
->  {
-> @@ -621,6 +687,10 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->          goto done;
->      }
->  
-> +    if (!smmuv3_accel_select_cmdqv(s, idev, errp)) {
-> +        return false;
-> +    }
-> +
->      if (!smmuv3_accel_alloc_viommu(s, idev, errp)) {
->          error_append_hint(errp, "Unable to alloc vIOMMU: idev devid 0x%x: ",
->                            idev->devid);
-> @@ -867,8 +937,17 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
->  
->  void smmuv3_accel_reset(SMMUv3State *s)
->  {
-> -     /* Attach a HWPT based on GBPA reset value */
-> -     smmuv3_accel_attach_gbpa_hwpt(s, NULL);
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +
-> +    if (!accel) {
-> +        return;
-> +    }
-> +    /* Attach a HWPT based on GBPA reset value */
-> +    smmuv3_accel_attach_gbpa_hwpt(s, NULL);
-> +
-> +    if (accel->cmdqv_ops && accel->cmdqv_ops->reset) {
-> +        accel->cmdqv_ops->reset(s);
-> +    }
 >  }
 >  
->  static void smmuv3_accel_as_init(SMMUv3State *s)
+>  static void tegra241_cmdqv_reset(SMMUv3State *s)
 
 
