@@ -4,65 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5EACEFCD6E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:21:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EEC05EFCD6E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:21:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzWnT-0004eK-Bm; Mon, 09 Mar 2026 05:21:07 -0400
+	id 1vzWoC-0005E1-HD; Mon, 09 Mar 2026 05:21:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWnF-0004bb-MU
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:20:55 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWo8-00055Q-9z
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:21:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWnD-0004jU-KA
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:20:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWo6-0004q9-8f
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:21:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773048050;
+ s=mimecast20190719; t=1773048105;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mFnAOfz4xuirEiwshG/r07zEyp6cY6Q4lIqq/xffg5U=;
- b=ZWdIUXPyGEZxjpxzzUkRaAcWJpfapdL6zzWT2RXLhYDO+HKsYtBxPFGZRgmRbotxkwK15U
- hZrpjda16vjjkpdjBh/CeCt0Bb461xLrhUOozdeficOWV1KmSAvCvZ9BL6seidm8/jOsXG
- 6X4fvDm/AZvaFWXAgTMTdvaeNjvadI4=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=WDL0BUc78tPDMAm0pti/zBG+j2WRCpcQmzr41h6UVLg=;
+ b=GOrckc8zv8Wr3nqued1kP2ujzi5Yia/j89ReDCg7wtIPOCCALYdb/w0PqnwNLpb865UoXj
+ qv2SQ5DLIUnGWDW7QF6Qo8pnnSjJUmOHbD25Oph/7Nu5Qy5XyclR+YtUK8828oZsVIiGdx
+ UFaFFk3DkKTlkN62cSxX0Uiva0sXNzE=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-D4MimowoNTqWeGUyTsmA4g-1; Mon,
- 09 Mar 2026 05:20:47 -0400
-X-MC-Unique: D4MimowoNTqWeGUyTsmA4g-1
-X-Mimecast-MFC-AGG-ID: D4MimowoNTqWeGUyTsmA4g_1773048045
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-MiZAjUCBO_qA17TjrdosKQ-1; Mon,
+ 09 Mar 2026 05:21:41 -0400
+X-MC-Unique: MiZAjUCBO_qA17TjrdosKQ-1
+X-Mimecast-MFC-AGG-ID: MiZAjUCBO_qA17TjrdosKQ_1773048099
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 793EF18005BD; Mon,  9 Mar 2026 09:20:45 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B8B06195608A; Mon,  9 Mar 2026 09:21:39 +0000 (UTC)
 Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C002E18002A6; Mon,  9 Mar 2026 09:20:38 +0000 (UTC)
-Message-ID: <7c4ee27f-394a-4e2e-a67d-0c77921d8a21@redhat.com>
-Date: Mon, 9 Mar 2026 10:20:37 +0100
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1F72330001BB; Mon,  9 Mar 2026 09:21:34 +0000 (UTC)
+Message-ID: <9b4c8534-95b8-4464-97d0-1ec3d34b16bb@redhat.com>
+Date: Mon, 9 Mar 2026 10:21:32 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/6] system/hostmem: Remove
- HostMemoryBackend::use_canonical_path field
+Subject: Re: [PATCH 3/6] hw/i386/pc: Remove pc_compat_4_0[] array
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Igor Mammedov <imammedo@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>, devel@lists.libvirt.org
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Eduardo Habkost <eduardo@habkost.net>
 References: <20260307154202.86309-1-philmd@linaro.org>
- <20260307154202.86309-3-philmd@linaro.org>
+ <20260307154202.86309-4-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -107,10 +104,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260307154202.86309-3-philmd@linaro.org>
+In-Reply-To: <20260307154202.86309-4-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -137,119 +134,41 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 07/03/2026 16.41, Philippe Mathieu-Daudé wrote:
-> The HostMemoryBackend::use_canonical_path boolean
-> was only set in the hw_compat_3_1[] array, via the
-> 'x-use-canonical-path-for-ramblock-id=true' property.
-> We removed all machines using that array, but the
-> comment added in commit 8db0b20415c ("machine: add
-> missing doc for memory-backend option") requested to
-> not remove this property "as long as 4.0 and older
-> machine types exists". Previous commit removed the
-> last machines in this range, we can now remove that
-> property and all the code around it.
+> The pc_compat_4_0[] array was only used by the pc-q35-4.0,
+> pc-q35-4.0.1 and pc-i440fx-4.0 machines, which got removed.
+> Remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   qapi/qom.json            |  8 +-------
->   include/system/hostmem.h |  2 +-
->   backends/hostmem.c       | 34 ----------------------------------
->   qemu-options.hx          | 10 ----------
->   4 files changed, 2 insertions(+), 52 deletions(-)
+>   include/hw/i386/pc.h | 3 ---
+>   hw/i386/pc.c         | 3 ---
+>   2 files changed, 6 deletions(-)
 > 
-> diff --git a/qapi/qom.json b/qapi/qom.json
-> index c653248f85d..3e13e3fd25c 100644
-> --- a/qapi/qom.json
-> +++ b/qapi/qom.json
-> @@ -660,11 +660,6 @@
->   #
->   # @size: size of the memory region in bytes
->   #
-> -# @x-use-canonical-path-for-ramblock-id: if true, the canonical path
-> -#     is used for ramblock-id.  Disable this for 4.0 machine types or
-> -#     older to allow migration with newer QEMU versions.
-> -#     (default: false generally, but true for machine types <= 4.0)
-> -#
->   # .. note:: prealloc=true and reserve=false cannot be set at the same
->   #    time.  With reserve=true, the behavior depends on the operating
->   #    system: for example, Linux will not reserve swap space for shared
-> @@ -683,8 +678,7 @@
->               '*prealloc-context': 'str',
->               '*share': 'bool',
->               '*reserve': 'bool',
-> -            'size': 'size',
-> -            '*x-use-canonical-path-for-ramblock-id': 'bool' } }
-> +            'size': 'size' } }
+> diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+> index 4e1dd436ab7..22325324d09 100644
+> --- a/include/hw/i386/pc.h
+> +++ b/include/hw/i386/pc.h
+> @@ -268,9 +268,6 @@ extern const size_t pc_compat_4_2_len;
+>   extern GlobalProperty pc_compat_4_1[];
+>   extern const size_t pc_compat_4_1_len;
 >   
->   ##
->   # @MemoryBackendFileProperties:
-> diff --git a/include/system/hostmem.h b/include/system/hostmem.h
-> index 88fa791ac78..cafcf9c9c74 100644
-> --- a/include/system/hostmem.h
-> +++ b/include/system/hostmem.h
-> @@ -74,7 +74,7 @@ struct HostMemoryBackend {
+> -extern GlobalProperty pc_compat_4_0[];
+> -extern const size_t pc_compat_4_0_len;
+> -
+>   #define DEFINE_PC_MACHINE(suffix, namestr, initfn, optsfn) \
+>       static void pc_machine_##suffix##_class_init(ObjectClass *oc, \
+>                                                    const void *data) \
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 93d1a52d712..d8fd63bfe17 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -186,9 +186,6 @@ const size_t pc_compat_4_2_len = G_N_ELEMENTS(pc_compat_4_2);
+>   GlobalProperty pc_compat_4_1[] = {};
+>   const size_t pc_compat_4_1_len = G_N_ELEMENTS(pc_compat_4_1);
 >   
->       /* protected */
->       uint64_t size;
-> -    bool merge, dump, use_canonical_path;
-> +    bool merge, dump;
->       bool prealloc, is_mapped, share, reserve;
->       bool guest_memfd, aligned;
->       uint32_t prealloc_threads;
-> diff --git a/backends/hostmem.c b/backends/hostmem.c
-> index 15d4365b697..7da7cd54e05 100644
-> --- a/backends/hostmem.c
-> +++ b/backends/hostmem.c
-> @@ -40,10 +40,6 @@ QEMU_BUILD_BUG_ON(HOST_MEM_POLICY_INTERLEAVE != MPOL_INTERLEAVE);
->   char *
->   host_memory_backend_get_name(HostMemoryBackend *backend)
->   {
-> -    if (!backend->use_canonical_path) {
-> -        return g_strdup(object_get_canonical_path_component(OBJECT(backend)));
-> -    }
+> -GlobalProperty pc_compat_4_0[] = {};
+> -const size_t pc_compat_4_0_len = G_N_ELEMENTS(pc_compat_4_0);
 
-I'm a little bit confused by this one here. If I've got that right, the flag 
-was set to "true" for the old QEMU machines <= 3.1, and it is set to false 
-by default for new machines? If so, shouldn't we rather always use the above 
-return and remove the one below instead?
-
->       return object_get_canonical_path(OBJECT(backend));
->   }
->   
-> @@ -484,23 +480,6 @@ static void host_memory_backend_set_reserve(Object *o, bool value, Error **errp)
->   }
->   #endif /* CONFIG_LINUX */
->   
-> -static bool
-> -host_memory_backend_get_use_canonical_path(Object *obj, Error **errp)
-> -{
-> -    HostMemoryBackend *backend = MEMORY_BACKEND(obj);
-> -
-> -    return backend->use_canonical_path;
-> -}
-> -
-> -static void
-> -host_memory_backend_set_use_canonical_path(Object *obj, bool value,
-> -                                           Error **errp)
-> -{
-> -    HostMemoryBackend *backend = MEMORY_BACKEND(obj);
-> -
-> -    backend->use_canonical_path = value;
-> -}
-> -
->   static void
->   host_memory_backend_class_init(ObjectClass *oc, const void *data)
->   {
-> @@ -563,19 +542,6 @@ host_memory_backend_class_init(ObjectClass *oc, const void *data)
->       object_class_property_set_description(oc, "reserve",
->           "Reserve swap space (or huge pages) if applicable");
->   #endif /* CONFIG_LINUX */
-> -    /*
-> -     * Do not delete/rename option. This option must be considered stable
-> -     * (as if it didn't have the 'x-' prefix including deprecation period) as
-> -     * long as 4.0 and older machine types exists.
-By the way, this option seems to be used by libvirt - we should maybe make 
-sure that its removal does not break libvirt by accident...?
-
-  Thomas
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
