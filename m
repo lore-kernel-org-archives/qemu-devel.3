@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A2C9F4180D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:55:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B340F41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:55:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcx8-0000UP-SZ; Mon, 09 Mar 2026 11:55:30 -0400
+	id 1vzcxD-000123-IH; Mon, 09 Mar 2026 11:55:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwq-0008W1-PW
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:55:18 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwy-0000EO-G8
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:55:20 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwp-0000e8-A8
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:55:12 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-439d8dc4ae4so1793656f8f.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:55:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcww-0000er-RN
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:55:20 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4838c15e3cbso108445445e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:55:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071709; x=1773676509; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071717; x=1773676517; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=NCORoNPQHDOcsEAMIb/xmUVZv8e+uBI25ItL/f7mOyY=;
- b=MG2UuKGiBV+XkBOXqUzjbT7qWYSGRLJCfihtVabTAhgfQ/BDrQKH1ylQK2c4oo3haZ
- UOKZCTeyHQ7L6KKLmk2te+Qw3yI0kB50s6a2a6HluIX8+b10/fFHPilHYTd0MuRZndNH
- TooEUv0m+bISn7EJvr2JrzVRLvA++XMBqNSkC1/3d/0nAKR0tQ2K8tAxJQQd3UnCfSTV
- vLM4B0s/BZFo56S1epgEjzWhB6MOU3lVTGk0M6ti+1STbAlO4v3s2bVoKLZgmUNkB5TA
- dcJPQRyAYLdJMfkBHGy4DYouQ9PVZi9wc7hI9osqMW11RH2BlPWk+0B1/8UK8gumYvHv
- wZ7g==
+ :reply-to; bh=8/T06OpHJH5m9fii5ifmkMMsmok/9oyj+L/ZSYDiSkw=;
+ b=FzxdbZ7yfZdgQs9pF2q1/tTxoFejPWElGYWqYDdx8uUVPqjjPSQseWStxaafNX7qoE
+ /Zeb92+BQY54mnWTVJ2rGfvttVeK/6Qkhx4fqV6avnEtlUJCeFjuc9y8JeKRnEN6YLny
+ uIlX7W8hLcWQCUprOqgjQgbNDqxKovvzGqCuyHJ72YsEQGeUTRHWssKc5pv6BlaalqNM
+ 27/SV4H69GZoZZbK9QjsiPc+0284kaIM+8BecmIcE8VKpbm0yFHXN3eAEnfege/0h1H9
+ GLPiYqvRPXLNKLbT5i84p4puBj0RUz6K96r6BIlxsuf3np3+UDZ2hFhIUHbu/sA2V6yj
+ RJkg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071709; x=1773676509;
+ d=1e100.net; s=20230601; t=1773071717; x=1773676517;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=NCORoNPQHDOcsEAMIb/xmUVZv8e+uBI25ItL/f7mOyY=;
- b=Ax/uZd7n7EzbnP/BAtywwDvWRPFxz0rEGx558JXE6epIdYHPJOn07Kwz3Bo4SXA1P9
- bS6FvI7vW3msw7mfEtTpOm8BA/ceX/tvpyVPgU00KBoLY3keWYeMckL0AAVkCCrw59Hu
- CgCTT7v33vTDocIJ/w6UlVv79lsZN2/blI83wSKhiAmPOh41db+2xvrHz+LwAKSGmcua
- hiI4/gDD7VrhN8E5pBHE1JeeMb8BIe201KZiyi9qaJ0MOMXNUXgjL+g7ptRwasdE+f75
- FpnOt9Dw8xnxjenMt3fiLhLQOcgEDHv9+fW9CusGyFXyEu+VTFH/wzZHxoR+92oknPC7
- uNwg==
-X-Gm-Message-State: AOJu0YzayKCwIkxVtKLIsO9bSXjkoaclSO9XY6k9G80OVrGzA1u6N2an
- tQZZSzv3xpLeDi0tYReDNMWiUfdxF1VaFhTeLYVW88XlwfCuAC+Eb8Mtb+k1JaeAnCfweuLwvf8
- k/aA083Y=
-X-Gm-Gg: ATEYQzxLY0zMta8x6MHs2qaneGSIaLcdV44IibQ0NO3tOfCMiZj+XMR9jAg2BJfFgy4
- JKKsfk9Hy3bfT0oZ6NVv9JNlwUrImrnw0bueg/RDN3dzyU5+0+aJA7w5JbEfwM1p9woW9aQyOFV
- nqv0kAd0+zKdRYttbNSwkLNJxVbiyWL5LFKtbydkw3dTAq5MBAZp0I3UcPRK4npTKFj7j0Kl9QN
- CvxUr5nW5QFakaY5fklk8jx5btKu8qRwNIBYvd1BfqvqbsoJbaGMSNm5S4YBaUuekVN9kIh5Z4v
- lXrTHRNYaoGWogD9etjV88SkAqyKPovk6OZPq2CZ7DuAggVpCUUqTfXyhHLXjd31fD+VW+U8qJZ
- N1snRSma65GWPozoVI8ZQM9qhY21iOoWrMLBqZtTJXXi6kunvzXHhHxJ6rQ99Okww+NZPvc7tpW
- +Mii5FOXXRswhvdvMOafxi5cuFmsnRS284Qmdq+/BY+MpSpIp6E13OzE0COTuEUH575DzueS7Cw
- TvxScnvXbQ=
-X-Received: by 2002:a05:6000:49:b0:439:be67:a02d with SMTP id
- ffacd0b85a97d-439da67c0c9mr16614261f8f.31.1773071709488; 
- Mon, 09 Mar 2026 08:55:09 -0700 (PDT)
+ bh=8/T06OpHJH5m9fii5ifmkMMsmok/9oyj+L/ZSYDiSkw=;
+ b=alkWsQWlfNGuJ0qk8C/besDJK5MBXHvWYOP0icYREZqXX7cPvTVHrBqU3F6fpkt7aN
+ kbhOMSZHRhnXU8HWXn7REbZDhyC3ZA2GgZG7oeQIL0tFagtfgJs4O/9H9gv2tfy0TV7k
+ 0lQBSHEug+i/y07Cv6I7mEgZNhcryGmhax7qB2uPzHaKJ59+J5zm40hLC6bteoH0Ghlk
+ zQWh9v0RqpXj9SIzf3bJtb4Uq4Xj+vvXmlYthCw4ufz5p9vLHhlSjA5vxlp5rb0pOV20
+ bU+/NX3imkwW9gr7VYsv2620loLHjnlSocCZM4gvgACkTiQhul3oBDDwxh00e3Rqe4IO
+ 7A1w==
+X-Gm-Message-State: AOJu0Yx3YsZxdYBb9McqZAK8JevDki9NJJwH1YHMJlJ3lJGNVHGK23MO
+ iLxShWvK4WC/BAieYkQjnQPDkZv/LV1NBWBbyx2KTfAjk8mX3kdkZW9TxhaC3YoYjIdmu5DAT1m
+ DnpNOwFU=
+X-Gm-Gg: ATEYQzz/MJK8mEZA6WaWOhwRv+sbko0tHS5LcRWxlIt0d2yTqnuAtKko30hb6+ZXxT7
+ Fba0LSLWQqQnO9jsbypTiq1QKtlE9yw2WUwbBib5aeXF+KoEq+lNHlet/Bgv7Ij5MLURh/lCvhp
+ ztTWYQ6Vw83gl07fyX0S7xbbLk2rrjEAuM1SYd830hhGM8qMiamdE+f454JVkzzcihkWEK7p1ZS
+ 8FokXG7GZY/WQyoM0771ioi547JtNgn2xCc6X/9ceYrrsMpiNkxOIxzLVnCQ7GxZhGBkm1Z/boX
+ 4NvCf1Fj17fqMF7XDHcUeianYWieAXEx4s3KfOVzOyRTbmE/glfapjoIsDLUOb+LAF8NSQtSHlc
+ A5Rdr+gz1mFQWsD1IW0QpKStEcBna1WVlzK5NY2Wc5PYfgXtsqXEc4/Vc7QnBr+SAqM6sGf+PLn
+ uthJRvVELWbw/p7nZjEKk1c0+lLKxT+R7yDjotOGT+qEzaY/sv05rczYZtdIak5QAp0mwbTYYu
+X-Received: by 2002:a05:600c:8b68:b0:485:3991:5d4 with SMTP id
+ 5b1f17b1804b1-48539910730mr77717675e9.31.1773071716958; 
+ Mon, 09 Mar 2026 08:55:16 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae57401sm22872051f8f.38.2026.03.09.08.55.08
+ 5b1f17b1804b1-4852470a654sm88786445e9.29.2026.03.09.08.55.15
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:55:08 -0700 (PDT)
+ Mon, 09 Mar 2026 08:55:16 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 25/49] vfio/pci: Grow buffer in vfio_pci_host_match()
-Date: Mon,  9 Mar 2026 16:51:55 +0100
-Message-ID: <20260309155219.62400-26-philmd@linaro.org>
+Subject: [PULL 26/49] tests: Clean up double comparisons to avoid compiler
+ warning
+Date: Mon,  9 Mar 2026 16:51:56 +0100
+Message-ID: <20260309155219.62400-27-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,35 +101,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Each field of PCIHostDeviceAddress is an unsigned int, therefore
-while a valid address is limited to 13 characters, an invalid
-address could exceed the specified format, up to:
+To enable -Wformat-overflow=2, we need to clean up a couple of false
+positives:
 
-        ffffffff:ffffffff:ffffffff.ffffffff<NUL>
+[2/5] Compiling C object tests/unit/test-qobject-output-visitor.p/test-qobject-output-visitor.c.o
+../tests/unit/test-qobject-output-visitor.c: In function ‘test_visitor_out_list_struct’:
+../tests/unit/test-qobject-output-visitor.c:577:28: error: ‘%.6f’ directive writing between 3 and 317 bytes into a region of size 32 [-Werror=format-overflow=]
+  577 |         sprintf(expected, "%.6f", (double)i / 3);
+      |                            ^~~~
+../tests/unit/test-qobject-output-visitor.c:577:27: note: assuming directive output of 8 bytes
+  577 |         sprintf(expected, "%.6f", (double)i / 3);
+      |                           ^~~~~~
+In file included from /usr/include/stdio.h:970,
+                 from /home/me/q/var/qemu/include/qemu/osdep.h:114,
+                 from ../tests/unit/test-qobject-output-visitor.c:13:
+In function ‘sprintf’,
+    inlined from ‘test_visitor_out_list_struct’ at ../tests/unit/test-qobject-output-visitor.c:577:9:
+/usr/include/bits/stdio2.h:30:10: note: ‘__builtin___sprintf_chk’ output between 4 and 318 bytes into a destination of size 32
+   30 |   return __builtin___sprintf_chk (__s, __USE_FORTIFY_LEVEL - 1,
+      |          ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   31 |                                   __glibc_objsize (__s), __fmt,
+      |                                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+   32 |                                   __va_arg_pack ());
+      |                                   ~~~~~~~~~~~~~~~~~
+cc1: all warnings being treated as errors
+FAILED: tests/unit/test-qobject-output-visitor.p/test-qobject-output-visitor.c.o
 
-This requires 36 characters with the terminator.
+These buffers cannot actually overflow because the doubles are
+between 0 and 31.0/3 inclusive.
+
+However, formatting doubles just to compare them is silly.  Compare
+them directly instead.  To avoid potential rounding trouble, change
+the numbers tested to be representable exactly in double.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Alex Williamson <alex.williamson@nvidia.com>
-Message-ID: <20260305-nvme-v4-2-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20260305-nvme-v4-3-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/vfio/pci.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tests/unit/test-qobject-input-visitor.c  | 8 ++------
+ tests/unit/test-qobject-output-visitor.c | 7 ++-----
+ 2 files changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index c89f3fbea34..94c174a773f 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -2739,7 +2739,7 @@ void vfio_pci_post_reset(VFIOPCIDevice *vdev)
+diff --git a/tests/unit/test-qobject-input-visitor.c b/tests/unit/test-qobject-input-visitor.c
+index 84bdcdf702e..beee11db4e4 100644
+--- a/tests/unit/test-qobject-input-visitor.c
++++ b/tests/unit/test-qobject-input-visitor.c
+@@ -500,7 +500,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
+     g_string_append_printf(json, "'number': [");
+     sep = "";
+     for (i = 0; i < 32; i++) {
+-        g_string_append_printf(json, "%s%f", sep, (double)i / 3);
++        g_string_append_printf(json, "%s%f", sep, (double)i / FLT_RADIX);
+         sep = ", ";
+     }
+     g_string_append_printf(json, "], ");
+@@ -583,11 +583,7 @@ static void test_visitor_in_list_struct(TestInputVisitorData *data,
  
- bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name)
- {
--    char tmp[13];
-+    char tmp[36];
+     i = 0;
+     for (num_list = arrs->number; num_list; num_list = num_list->next) {
+-        char expected[32], actual[32];
+-
+-        sprintf(expected, "%.6f", (double)i / 3);
+-        sprintf(actual, "%.6f", num_list->value);
+-        g_assert_cmpstr(expected, ==, actual);
++        g_assert_cmpfloat(num_list->value, ==, (double)i / FLT_RADIX);
+         i++;
+     }
  
-     sprintf(tmp, "%04x:%02x:%02x.%1x", addr->domain,
-             addr->bus, addr->slot, addr->function);
+diff --git a/tests/unit/test-qobject-output-visitor.c b/tests/unit/test-qobject-output-visitor.c
+index 407ab9ed505..3c47b28f663 100644
+--- a/tests/unit/test-qobject-output-visitor.c
++++ b/tests/unit/test-qobject-output-visitor.c
+@@ -538,7 +538,7 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
+     }
+ 
+     for (i = 31; i >= 0; i--) {
+-        QAPI_LIST_PREPEND(arrs->number, (double)i / 3);
++        QAPI_LIST_PREPEND(arrs->number, (double)i / FLT_RADIX);
+     }
+ 
+     for (i = 31; i >= 0; i--) {
+@@ -571,12 +571,9 @@ static void test_visitor_out_list_struct(TestOutputVisitorData *data,
+     i = 0;
+     QLIST_FOREACH_ENTRY(qlist, e) {
+         QNum *qvalue = qobject_to(QNum, qlist_entry_obj(e));
+-        char expected[32], actual[32];
+ 
+         g_assert(qvalue);
+-        sprintf(expected, "%.6f", (double)i / 3);
+-        sprintf(actual, "%.6f", qnum_get_double(qvalue));
+-        g_assert_cmpstr(actual, ==, expected);
++        g_assert_cmpfloat(qnum_get_double(qvalue), ==, (double)i / FLT_RADIX);
+         i++;
+     }
+ 
 -- 
 2.53.0
 
