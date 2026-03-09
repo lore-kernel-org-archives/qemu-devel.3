@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AACAEF36E8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D0923EF36F7
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 07:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzUus-0006QI-Vr; Mon, 09 Mar 2026 03:20:39 -0400
+	id 1vzUum-0006Lr-Bv; Mon, 09 Mar 2026 03:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzUur-0006PI-6k; Mon, 09 Mar 2026 03:20:37 -0400
+ id 1vzUuZ-0006GE-SR; Mon, 09 Mar 2026 03:20:22 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzUup-0006EO-J3; Mon, 09 Mar 2026 03:20:36 -0400
+ id 1vzUuX-000658-M8; Mon, 09 Mar 2026 03:20:19 -0400
 Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 628FG36o661980; Mon, 9 Mar 2026 07:20:34 GMT
+ 628FG36n661980; Mon, 9 Mar 2026 07:20:16 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=lYmPT+3wLn+2ZQzkp
- aDwZ+PUmlVFiWIzG3P57Hr4AYg=; b=a6mZKCmRN8h8gdEct2JxLxzwzSGTOlM9N
- VAkJr2pPbYcJH79mG/M8ftu2mdA4KJBBfKt+I4n365lRFYyQaY4g161Q5x36qMgZ
- N0FK55Qfs6xoZha2OsyIvDV0+oPaD4TtRkm1IFnuHv02iGSjivsPLRahZzQE4fZ8
- 6pl3CPcFmbCokkl4qrowe017pv0OdKrnfv86w0/p9nGINUmKqFCPj5c+apk4lCE/
- dxVK2gkPFqqZqixTK8UPnnV+mS9AZJ6QU3rAo/wsZqw1ffvreOvcOh66pJqEHX3b
- YH0A4Vr6aIB1MWBbr61nyo0VGEqQ+3mlKwYf4Nkw/ecXUjeJxUlLQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1md8yk-1
+ :mime-version:references:subject:to; s=pp1; bh=OGcbweHKgI/MjOWF3
+ XWCLnKo0ATib3JJT6+YN3wr1rE=; b=DZDmBbyvWFOTMYByrD2/M7GtwFcxuQ3qu
+ aQhwsPBG/uFJSvIUNAv2ifBKDriqhrptpgLdjWKVPV8ZWcCqcfi4i3KVQHfIVtwP
+ +SaJVo5uKOYRw+RcU83xshcyqRoVzE3fAFN8FAyERSM3TsZ+cDUWcfbhEjn84rby
+ /A1xY1nZtOhuBbCZfigMhlRto4qWadtaqWY0MnHC7O0iLCHSjCBPlGQIbjJG2Z1T
+ kO8eFAWV5RCTrs4kH/zDVBcnBlZ1a+JsAaHsY9w2rftZ3s/yWMpiAT02EqgL1XT2
+ 3Bb0b6i3PEydu3lpE3JsL4vPwiAQaYhpcPTw9rgblP23aJudJmYLA==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1md8xk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 07:20:33 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6293JFZt029360;
- Mon, 9 Mar 2026 07:20:33 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4csp6ugm1x-1
+ Mon, 09 Mar 2026 07:20:15 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6295O7sf024660;
+ Mon, 9 Mar 2026 07:20:15 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs0jjutfj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 07:20:33 +0000
+ Mon, 09 Mar 2026 07:20:14 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6297KTiv49414542
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6297KBUs22544706
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Mar 2026 07:20:29 GMT
+ Mon, 9 Mar 2026 07:20:11 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E807F2004B;
- Mon,  9 Mar 2026 07:20:28 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 54F4420040;
+ Mon,  9 Mar 2026 07:20:11 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 0F4D520040;
- Mon,  9 Mar 2026 07:20:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BF8CE2004B;
+ Mon,  9 Mar 2026 07:20:08 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
  [9.109.199.210])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Mar 2026 07:20:26 +0000 (GMT)
+ Mon,  9 Mar 2026 07:20:08 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
@@ -66,9 +66,10 @@ Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PATCH v4 08/10] pnv/mpipl: Enable MPIPL support
-Date: Mon,  9 Mar 2026 12:49:57 +0530
-Message-ID: <20260309072001.3136261-9-adityag@linux.ibm.com>
+Subject: [PATCH v4 01/10] ppc/pnv: Move SBE host doorbell function to top of
+ file
+Date: Mon,  9 Mar 2026 12:49:50 +0530
+Message-ID: <20260309072001.3136261-2-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309072001.3136261-1-adityag@linux.ibm.com>
 References: <20260309072001.3136261-1-adityag@linux.ibm.com>
@@ -76,20 +77,20 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69ae74c2 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69ae74b0 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=dCvegdiEg4V6ml2xVIcA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA2MyBTYWx0ZWRfX3ipUrilegvg6
- +UIgSvHJ1fksrvZE7CSqELMhW4/r6ApZ6eRzza9Eg/VNozeP/3qLjCsG4/9z1hJi2G+EXd372JM
- N5jijrpQhIeoq8zALWfnobYNi1tsLACGpzLKJ8QGNxvWjWNq5dSUwouSQO4AQo0Q68k8qVWFbCN
- LgwZeWyZvkGJfT4k6fyCuLqUW2PuSblPbSFqYJa+6lyrYbjWrSuPve7MhednszUykfLpuLpcngC
- UkqUBQJ8Iq36be6zB+q5zVEGU8c0l7hNktGNZIaIm64wgKDq6W9Dtq0nrBqK3NC5uMWO9yJ4JVD
- 9VNBYUnzznYnqNgyo+4zqEoIiAaGyzi7HOZtRbc7yBOBBlMJ/+f0293gJT+94fDgYSILsX+7fcz
- V918gnmbQD/EGwrQmo+Uqk7ezcnwzO237Oz2HQvNkGlGoBqrWJwdIHSMg5mx/V5b/CQIEX1XyvD
- sb0O7o14sGsZyVhjg0w==
-X-Proofpoint-GUID: I4kXAlppvnslf1byRF8j5JvgcleLRCtA
-X-Proofpoint-ORIG-GUID: ygQKKG5pvfhVXA3wJ7yYrHZpqHrT1iTu
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=Cz7AoQ69vTHEakZR_RYA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA2MyBTYWx0ZWRfXymBlhWXnWHel
+ ci4l2N1jRxyYBZCYeTdrtnZ7StigXVecfBevyzhGS/OL/xWNU8+8FtZC/gQssxTij6b6guuGLYl
+ 1OhQ72NwT0WzJEG4B9V0Krf0/jQNrGyZxFl/I5Sjtsnn5Ul9snxHsLHgt6DpULvx3f/Oe1lr+K+
+ 1hh7WAn3m40TiGwMT9I9WiYfRBTRfctvowe2tEpksP95czht43/jgHYhhId8QqgeVxJUBZB2gDM
+ 3Q9Zy/jv1f7AQ38pKXUVVB/SEGtmJu+HLxz00/V0jz3VJ29UhUWhTgz6HKUjj1H3aaIphbUwe6L
+ TvwCC3dJwDTJyfsj/RtGw9cpgWNObGnu2mpuGKhztdUwGDj0dBws488j8sG0BkjM3ZPjNr8WUsS
+ O4M5KjBE/wNJdd9GfBhDWDNltivoA9NmTgVWYB7fLmZNySbPyvFdD8C2lzR92ktxTmNh2dQC8ka
+ IBCmmvumKC7pFO7OyEw==
+X-Proofpoint-GUID: W43IFxgdJytdUzUEbCWlpXUbqFZDS7C8
+X-Proofpoint-ORIG-GUID: ejRXwqZ732xHkIpWgl2pHNX87pJmzexq
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-09_02,2026-03-06_02,2025-10-01_01
@@ -123,83 +124,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With all MPIPL support in place, export a "dump" node in device tree,
-signifying that PowerNV QEMU platform supports MPIPL
+Moved 'pnv_sbe_set_host_doorbell' as-it-is to above
+'pnv_sbe_power9_xscom_ctrl_write'.
 
-Also, export fw-load-area dt node, which has details about where the
-kernel & initrd were loaded, so that kernel can verify whether the
-kernel/initrd images were loaded within the boot memory region. QEMU
-just exports these details in fw-load-area, the check for boot memory
-region is done in kernel.
+This is done since in a future patch, S0 interrupt implementation uses
+'pnv_sbe_set_host_doorbell', hence the host doorbell function needs to
+be declared/defined before 'pnv_sbe_power9_xscom_ctrl_write' where we
+implement the S0 interrupt.
+
+No functional change.
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv.c | 37 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+ hw/ppc/pnv_sbe.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 0b94e0c7a19b..139a2037e5d6 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -54,6 +54,7 @@
- #include "hw/ppc/pnv_chip.h"
- #include "hw/ppc/pnv_xscom.h"
- #include "hw/ppc/pnv_pnor.h"
-+#include "hw/ppc/pnv_mpipl.h"
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 27383ce6837e..247617338a0d 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -80,6 +80,15 @@
+ #define SBE_CONTROL_REG_S0              PPC_BIT(14)
+ #define SBE_CONTROL_REG_S1              PPC_BIT(15)
  
- #include "hw/isa/isa.h"
- #include "hw/char/serial-isa.h"
-@@ -672,6 +673,39 @@ static void pnv_dt_power_mgt(PnvMachineState *pnv, void *fdt)
-     _FDT(fdt_setprop_cell(fdt, off, "ibm,enabled-stop-levels", 0xc0000000));
- }
- 
-+static void pnv_dt_mpipl_dump(PnvMachineState *pnv, void *fdt)
++static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
 +{
-+    int off;
++    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
++    sbe->host_doorbell = val;
 +
-+    /*
-+     * Add "dump" node so kernel knows MPIPL (aka fadump) is supported
-+     *
-+     * Note: This is only needed to be done since we are passing device tree to
-+     * opal
-+     *
-+     * In case HDAT is supported in future, then opal can add these nodes by
-+     * itself based on system attribute having MPIPL_SUPPORTED bit set
-+     */
-+    off = fdt_add_subnode(fdt, 0, "ibm,opal");
-+    if (off == -FDT_ERR_EXISTS) {
-+        off = fdt_path_offset(fdt, "/ibm,opal");
-+    }
-+
-+    _FDT(off);
-+    off = fdt_add_subnode(fdt, off, "dump");
-+    _FDT(off);
-+    _FDT((fdt_setprop_string(fdt, off, "compatible", "ibm,opal-dump")));
-+
-+    /* Add kernel and initrd as fw-load-area */
-+    uint64_t fw_load_area[4] = {
-+        cpu_to_be64(KERNEL_LOAD_ADDR), cpu_to_be64(KERNEL_MAX_SIZE),
-+        cpu_to_be64(INITRD_LOAD_ADDR), cpu_to_be64(INITRD_MAX_SIZE)
-+    };
-+
-+    _FDT((fdt_setprop(fdt, off, "fw-load-area",
-+                    fw_load_area, sizeof(fw_load_area))));
++    trace_pnv_sbe_reg_set_host_doorbell(val);
++    qemu_set_irq(sbe->psi_irq, !!val);
 +}
 +
- static void *pnv_dt_create(MachineState *machine)
- {
-     PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(machine);
-@@ -734,6 +768,9 @@ static void *pnv_dt_create(MachineState *machine)
-         pmc->dt_power_mgt(pnv, fdt);
-     }
+ struct sbe_msg {
+     uint64_t reg[4];
+ };
+@@ -125,15 +134,6 @@ static const MemoryRegionOps pnv_sbe_power9_xscom_ctrl_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
  
-+    /* Advertise support for MPIPL */
-+    pnv_dt_mpipl_dump(pnv, fdt);
-+
-     return fdt;
- }
- 
+-static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
+-{
+-    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
+-    sbe->host_doorbell = val;
+-
+-    trace_pnv_sbe_reg_set_host_doorbell(val);
+-    qemu_set_irq(sbe->psi_irq, !!val);
+-}
+-
+ /* SBE Target Type */
+ #define SBE_TARGET_TYPE_PROC            0x00
+ #define SBE_TARGET_TYPE_EX              0x01
 -- 
 2.53.0
 
