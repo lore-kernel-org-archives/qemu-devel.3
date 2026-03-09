@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A7CCF417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B6DF41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcx3-0000GK-Kb; Mon, 09 Mar 2026 11:55:26 -0400
+	id 1vzcwf-00081O-Pa; Mon, 09 Mar 2026 11:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw8-0007da-OU
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:31 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw1-0007Td-MI
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:26 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw5-0000NP-Mw
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:28 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-439aeed8a5bso9201614f8f.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:54:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw0-0000Mg-6T
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:21 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48538c5956bso14201605e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:54:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071662; x=1773676462; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071655; x=1773676455; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=z5uB+oJJAcxPuGuh1DjXOASB24mbYKaB2eXGC4gPbaY=;
- b=AR9Jfzy4NgGp2hhpMOk2vJ8fteyFzTZrTsQMv9EBad0qok5elytVn0jaYZXyvyT8+a
- TXmpMaZMna1Xnavqe/tmylS0N8bBAhjJCIrC0BZLetC+OjR9uyiH3DfaZKGj/2Hc8AKK
- D4R9e/Drgk2QOmEcpQ67H640+ZvYmNC1hI7PdSH8+uqCLll6Men8Cjp9zGe8GOKkbBGP
- iL/sb4k/OgxbFblHwuSw/NuW2G9XFFEpxSVJg7eWQIj8o4NouUBgKtVNvW7/Gf3gHhG6
- WokVo1EG/N3LvPbB3iMOw0cHQlW7sbxMyWMYA6u7OWk4IaymNx4F14CUV3X1hEI51R7h
- yW5w==
+ :reply-to; bh=8HKEnxXC7jOdNFCw1vDK2f2aMKDF2U6tfcBZgm/YZAs=;
+ b=oIyS8P55aFboGC/DXsIrU0vFutSSO0OXgppM0R/f8LXmzYe40O+MlU6tJgJFPwH5EK
+ hpMj+GOq+lY5fppr/++i6yVZSCO9HqqrecT/0letUNUYJCRFUIbOpItnJRsaqecqA5mP
+ oNhgSYFsF9NHxHHFG6Y91yJho56GZfQ3l5ONtV2kPnGJ9WOM6pTk51jRbMRoG1H6YD/i
+ dBY4mlG7OvRhsB92QCvXG2aZ5HHqfteONAQY+pzNF8jv+O0toRcbK8wqvGDjP9KUlDGC
+ Zj3h0Bczn7sPJpQRNTMT8oW2T1Weoa7ssFdVUU8LUhUDRhe2arba9vzLvKiy4SktItaR
+ Geog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071662; x=1773676462;
+ d=1e100.net; s=20230601; t=1773071655; x=1773676455;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=z5uB+oJJAcxPuGuh1DjXOASB24mbYKaB2eXGC4gPbaY=;
- b=XjjY3BrpX8SvmPm3E929swrG7Y7JohksHmkci2eSai/Ur8QM9hpqWH/BjC6R8cxs/h
- rGgUtYMF3Bzkchswkw5bwllv3nOA08F47ZlWuV1KwYEOHSMv/BStUcZ/gcSyT2o+u9Mu
- od25qHHh7o6CEdA5ksHrGVM7p9TsjyzBvJRvT8DSDgwjOVa8HD3hhI2VcyJL4SIinRG3
- 69iPIxa/H3wRV+rwEGkSvnsc7Qv17GjxeZxrh67XhZx3kCEp4G8JfIazQKA/y9Y8CXJO
- CjPEK+deRp2g+TIl2d2NjnR4DkI9ZvdzpH7UIbXV4cMUfVrk5sdFLYQJknEcRxwiVh03
- Ulyw==
-X-Gm-Message-State: AOJu0YwVQVNt0c72/VnJrgOcuqjsYc6vMgdlbk35Vw9+6pkwzF5TG3s1
- 6Y5tXnpMOnNp0eekee4+iVbpZWFJi9XtAPuxMSrJYssqIgNQtN52rfJ8H8U6/5l58IU0KrqgBet
- TsTCn9oU=
-X-Gm-Gg: ATEYQzxDh6rZ4nv4j/GgHTJwr0D56neoxw+hccuhfV3AHMf/Q8M68xd7VZlGIAA3dRG
- 6adHksO22wn6arxRlLHaSrHVBte5JGm7VRpYqiqe8Sdhl1o4p1yBXEMzzi5BYJ1mcpX888pZB99
- X0ZaT6HVs9O3HBVwqxXqadB15MUytQKPO9i5Eorc99BS0rD8ycUT4E5w0KaOggyc9YjKj2/Qx6q
- FNoyAdpZGAuEqh589uT3LNew1hCkctdyT0flLHyoGBg3/yiUppuTto6kzHD4VO2G4j3C1MFUG+F
- kAGFAWGkAbUSoO1aGChkQhCTi9Sfdg+4hG8NzLuikqBKDIuchOPwqI+b0We2vpe3ryl2y2Q54aL
- ZM90moviwvV55yvEQ1JX3996/h+iqYt58iWRKFI3qC31+IH2xsBUfBgIscVn+3zeboTNdDCkzZd
- dhsK6SgxO4no1haDd5/8nznNYerm/CJzpxf8AkQQvxJa+t2dK1YmkhyptEg508wNWnauMKb0uk
-X-Received: by 2002:a05:6000:4205:b0:439:c9d0:5fd4 with SMTP id
- ffacd0b85a97d-439da656affmr20384401f8f.16.1773071662253; 
- Mon, 09 Mar 2026 08:54:22 -0700 (PDT)
+ bh=8HKEnxXC7jOdNFCw1vDK2f2aMKDF2U6tfcBZgm/YZAs=;
+ b=f3GWM1o9AtA0vgpNW43HifN0jZVM8DJUQNk5YGyjNutYJ61Cfg5YfvMtWssrPg/NY+
+ PfLqM+akWWgM6tnl9TUMgzsLbKdWWTG6nPQhlXEvvwZuTQVPQQi/jp4JHy/how70S0cc
+ PFQM6HcqinyF/vL5jq6SuceBjLAqFgScOvNNCkL99Nk9KIgSXxAwrNDgdl2HPBlZrdaG
+ A8SXMcDuZ1spvUlQBmD276HCUpHfNWKqnwuoVzrPBiZBCRI1XnZH9/UYk8Csbv4oWUCT
+ d5qpgt+ADogjf9IMDJK+WIqkXc7qHkx2JqGvKOLbO35Pq+E7boiyxDUG3jLApXtt7XE4
+ 9M7Q==
+X-Gm-Message-State: AOJu0Yyx0saFqUiB2PoWzm6AIofJUu7CRekzC8AKIjZGGvIyX4u6M+qi
+ mB9UIhg5hbw+NcY6Y67vtL9+h0bY9FYXW4mghQhMDFAEYNalNaiI+OOVBI6rpv8JWJonr5pgXTL
+ 6VRWStNY=
+X-Gm-Gg: ATEYQzx5eWv5p3YD6Qdmc+EkxKyQ/OtbXjOzHzVs9VnFugX3M7IasVcvcP6T1v1DihL
+ Hm3uX6KSw5cxP1KBSLnhH4Q2tEaUGHcMiHld6geullaD8X6QOKkeO/axDIn1mbctLPzenyS3ODu
+ biGPZwc7OINEXk0kNpCLkTxnkFcCWbF3eJCs6yjNaA4Gk/FHfBfm4Lk557aDebgKTOgUS6pyDhh
+ EpouY0wFH7aIFB08l1NI+0j+4cpS7LIsRx/OfW6YyNuEOCNmND4nqpWbEU6CoJjJxvBP5YWsVXj
+ w5YvOmlONTIUPiXekcopckw1QfiVwC+bu2UmmDc4CzoDNWGjkq0yrsznraWZHf85dYP3pftbicn
+ stsF+4BOz4u5UPTcUeReHpISi/8NCGOgyxE7Q4+13tGEzTEkN/DHUvPBSiaEvMbALsGT5WOlufj
+ 4TF2rxY9me73z3oV7fS8qqQeclbZQWy0ZVLx9EZwQ088ZkgTZdMv8UBaSmvXbfWBl80b8y8zUc
+X-Received: by 2002:a05:600c:8b4b:b0:46e:59bd:f7e2 with SMTP id
+ 5b1f17b1804b1-485419f1614mr1523135e9.11.1773071655530; 
+ Mon, 09 Mar 2026 08:54:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae3d98asm30879656f8f.30.2026.03.09.08.54.21
+ 5b1f17b1804b1-48541a9c293sm627925e9.10.2026.03.09.08.54.14
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:54:21 -0700 (PDT)
+ Mon, 09 Mar 2026 08:54:14 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 18/49] ui/dbus: fix Unix.Map proxy leak
-Date: Mon,  9 Mar 2026 16:51:48 +0100
-Message-ID: <20260309155219.62400-19-philmd@linaro.org>
+Subject: [PULL 17/49] ui/dbus: fix leak regression
+Date: Mon,  9 Mar 2026 16:51:47 +0100
+Message-ID: <20260309155219.62400-18-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,29 +100,31 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-Fixes: commit 48b7ef0f0 ("ui/dbus: implement Unix.Map")
+For some reason, during refactoring, an extra reference leak was introduced.
+
+Fixes: commit 7945576cf2 ("ui/dbus: factor out sending a scanout")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260122113144.2046899-4-marcandre.lureau@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260122113144.2046899-3-marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- ui/dbus-listener.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ ui/dbus-listener.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 407719fc1e0..46264839d86 100644
+index 52e041edb0f..407719fc1e0 100644
 --- a/ui/dbus-listener.c
 +++ b/ui/dbus-listener.c
-@@ -960,8 +960,8 @@ dbus_display_listener_dispose(GObject *object)
-     g_clear_object(&ddl->conn);
-     g_clear_pointer(&ddl->bus_name, g_free);
-     g_clear_object(&ddl->proxy);
--#ifdef WIN32
-     g_clear_object(&ddl->map_proxy);
-+#ifdef WIN32
-     g_clear_object(&ddl->d3d11_proxy);
-     g_clear_pointer(&ddl->peer_process, CloseHandle);
- #ifdef CONFIG_PIXMAN
+@@ -815,8 +815,7 @@ static void ddl_scanout(DBusDisplayListener *ddl)
+     qemu_dbus_display1_listener_call_scanout(
+         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
+         surface_stride(ddl->ds), surface_format(ddl->ds), v_data,
+-        G_DBUS_CALL_FLAGS_NONE, DBUS_DEFAULT_TIMEOUT, NULL, NULL,
+-        g_object_ref(ddl));
++        G_DBUS_CALL_FLAGS_NONE, DBUS_DEFAULT_TIMEOUT, NULL, NULL, NULL);
+ }
+ 
+ static void dbus_gfx_update(DisplayChangeListener *dcl,
 -- 
 2.53.0
 
