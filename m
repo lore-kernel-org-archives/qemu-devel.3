@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14B6DF41807
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD586F41808
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:55:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcwf-00081O-Pa; Mon, 09 Mar 2026 11:55:05 -0400
+	id 1vzcwj-00087c-N1; Mon, 09 Mar 2026 11:55:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw1-0007Td-MI
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:26 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwF-0007lD-4N
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:36 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcw0-0000Mg-6T
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:21 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso14201605e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:54:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwB-0000Nr-F2
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:54:34 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-4852ff06541so21303825e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:54:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071655; x=1773676455; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071669; x=1773676469; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=8HKEnxXC7jOdNFCw1vDK2f2aMKDF2U6tfcBZgm/YZAs=;
- b=oIyS8P55aFboGC/DXsIrU0vFutSSO0OXgppM0R/f8LXmzYe40O+MlU6tJgJFPwH5EK
- hpMj+GOq+lY5fppr/++i6yVZSCO9HqqrecT/0letUNUYJCRFUIbOpItnJRsaqecqA5mP
- oNhgSYFsF9NHxHHFG6Y91yJho56GZfQ3l5ONtV2kPnGJ9WOM6pTk51jRbMRoG1H6YD/i
- dBY4mlG7OvRhsB92QCvXG2aZ5HHqfteONAQY+pzNF8jv+O0toRcbK8wqvGDjP9KUlDGC
- Zj3h0Bczn7sPJpQRNTMT8oW2T1Weoa7ssFdVUU8LUhUDRhe2arba9vzLvKiy4SktItaR
- Geog==
+ :reply-to; bh=OOvqoe7ybjz/sXWQnNO0nCuNJc5Dn+3Dmj9lVQ+2j/0=;
+ b=CZFAPIM1U7BRbKfLjxqyrd1NwTzPsDIT+9DqxMH8vuY78O2pT4Gkt1ieiNfJSfNude
+ XrTUY/Fsu7PQpct7Ljj3xzXdfeJn5F+uRB64BAa2tzRUNdhwKMeIS3UgPCRYPJzW4hHC
+ 1WveRcKuw4QFBdLbwHdAxYRw8ceQXIXY13aJLwUfAeVFF7L97OyU1hwP5p6z7SID/l8n
+ sqlJ82UGTDX91xnz4KQMKqr+FMN60z+pHQoldMmlCrBey6KpuepcmOfrpfTAVaxcAlLF
+ yN/ubFzR6jQvLHI1z6l3VRvoDFM3xNTjEirgONDHDwcnNc1m7v7GvsAjI/R/GAkZvhei
+ YKHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071655; x=1773676455;
+ d=1e100.net; s=20230601; t=1773071669; x=1773676469;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=8HKEnxXC7jOdNFCw1vDK2f2aMKDF2U6tfcBZgm/YZAs=;
- b=f3GWM1o9AtA0vgpNW43HifN0jZVM8DJUQNk5YGyjNutYJ61Cfg5YfvMtWssrPg/NY+
- PfLqM+akWWgM6tnl9TUMgzsLbKdWWTG6nPQhlXEvvwZuTQVPQQi/jp4JHy/how70S0cc
- PFQM6HcqinyF/vL5jq6SuceBjLAqFgScOvNNCkL99Nk9KIgSXxAwrNDgdl2HPBlZrdaG
- A8SXMcDuZ1spvUlQBmD276HCUpHfNWKqnwuoVzrPBiZBCRI1XnZH9/UYk8Csbv4oWUCT
- d5qpgt+ADogjf9IMDJK+WIqkXc7qHkx2JqGvKOLbO35Pq+E7boiyxDUG3jLApXtt7XE4
- 9M7Q==
-X-Gm-Message-State: AOJu0Yyx0saFqUiB2PoWzm6AIofJUu7CRekzC8AKIjZGGvIyX4u6M+qi
- mB9UIhg5hbw+NcY6Y67vtL9+h0bY9FYXW4mghQhMDFAEYNalNaiI+OOVBI6rpv8JWJonr5pgXTL
- 6VRWStNY=
-X-Gm-Gg: ATEYQzx5eWv5p3YD6Qdmc+EkxKyQ/OtbXjOzHzVs9VnFugX3M7IasVcvcP6T1v1DihL
- Hm3uX6KSw5cxP1KBSLnhH4Q2tEaUGHcMiHld6geullaD8X6QOKkeO/axDIn1mbctLPzenyS3ODu
- biGPZwc7OINEXk0kNpCLkTxnkFcCWbF3eJCs6yjNaA4Gk/FHfBfm4Lk557aDebgKTOgUS6pyDhh
- EpouY0wFH7aIFB08l1NI+0j+4cpS7LIsRx/OfW6YyNuEOCNmND4nqpWbEU6CoJjJxvBP5YWsVXj
- w5YvOmlONTIUPiXekcopckw1QfiVwC+bu2UmmDc4CzoDNWGjkq0yrsznraWZHf85dYP3pftbicn
- stsF+4BOz4u5UPTcUeReHpISi/8NCGOgyxE7Q4+13tGEzTEkN/DHUvPBSiaEvMbALsGT5WOlufj
- 4TF2rxY9me73z3oV7fS8qqQeclbZQWy0ZVLx9EZwQ088ZkgTZdMv8UBaSmvXbfWBl80b8y8zUc
-X-Received: by 2002:a05:600c:8b4b:b0:46e:59bd:f7e2 with SMTP id
- 5b1f17b1804b1-485419f1614mr1523135e9.11.1773071655530; 
- Mon, 09 Mar 2026 08:54:15 -0700 (PDT)
+ bh=OOvqoe7ybjz/sXWQnNO0nCuNJc5Dn+3Dmj9lVQ+2j/0=;
+ b=QlN/P3bCnbbooT8tvjNqSwybA53MQfA8KBlYLw+afIDpvu74qlA/9Ok3QbMIhsRUuv
+ liLDj3ebgSmzPlTBond0zHCJSvjk5o50jDOx9gaQmDAdeosCOwCS6Uj9ENltsG9t7463
+ 0I6Es2NR1+wT3S0wx9CyiqVpmmLpKixYt4C+69r+Yi0g2z25sMcdk72nvZoOG177GzRN
+ VbWBUk129pDBPxSFOsS63h7mxFsjdtmxcVsD+RqcueFDakt634RqM9esxhNxHWZlO/r0
+ +65RamJBxQYh3leVLqICUA6Uh10y9baV5ikzB+1uJ+fQsbz+P9M7pdQYBDJDnM6z/IxH
+ WHQA==
+X-Gm-Message-State: AOJu0YxYjEPGeXJDwMvcOysXrW7HoaPweBY/AHgiJAvVVkEvjgM1v6ks
+ Hp5zGLmKAAKx1vFiwbYvsgifsg3881S7ZJgBF+pfPVIn9Cmj4xpaqv6xq0D/uAnMmolboZEen7Z
+ gh9lSxqw=
+X-Gm-Gg: ATEYQzxK/z/B0bcnDRuZFxCXo+WGwTvIXVZRxEUNBM8oIDZYHM0b9mSWUkaAkXuXidW
+ ESVxSTOvrD+064VUVgBXIwnlQ355YNvbL4UWZiZBRNk1NFDFCKbdAI3Lsf9xBLGvRW4MIJZC9X/
+ /YBpJy8//myd0FFvcKws939dazGTjbJxn8AxMjr4asH1SNvsgHcCcCuCiExn+Bgk2+zHb73ViHp
+ /D6ZEX5vATbF1Fmp0Pc5IeZWxw4G1NTiW0k9jkrIxrsjqVAQv3qCyjp5RM2wge1XAmgdjeAmg6f
+ 9i/Sqrzdu8RQxuA9+8TJ3ne0J0RrnJ5IM6dgeAw1mQzcIU8x30LeKJoWMfapYVrBuboJTYmInQ+
+ jZx151h+ykfbCFPUtf+JRhZ45F7RAmRCJK+eDNH4M1BjatT0sMsMAbWjBJ3+7bBkh59vYM1f/+V
+ WifVfnhkhP3Qlrri3NVOttyjcn18NqutYixnIoiNz5PNWgIRkDKx4J2sVCgT4eV+C3MLo9OYmx
+X-Received: by 2002:a05:600c:350e:b0:480:4a90:1afe with SMTP id
+ 5b1f17b1804b1-485269785afmr180347865e9.34.1773071668993; 
+ Mon, 09 Mar 2026 08:54:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a9c293sm627925e9.10.2026.03.09.08.54.14
+ 5b1f17b1804b1-48541a7f20csm926495e9.6.2026.03.09.08.54.28
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:54:14 -0700 (PDT)
+ Mon, 09 Mar 2026 08:54:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 17/49] ui/dbus: fix leak regression
-Date: Mon,  9 Mar 2026 16:51:47 +0100
-Message-ID: <20260309155219.62400-18-philmd@linaro.org>
+Subject: [PULL 19/49] ui/dbus: fix pixman cleanup
+Date: Mon,  9 Mar 2026 16:51:49 +0100
+Message-ID: <20260309155219.62400-20-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,31 +100,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-For some reason, during refactoring, an extra reference leak was introduced.
+Moved pixman_region32_fini() outside the WIN32 block so it's called on
+all platforms.
 
-Fixes: commit 7945576cf2 ("ui/dbus: factor out sending a scanout")
+Fixes: commit 7007e98c ("ui/dbus: implement damage regions for GL")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260122113144.2046899-3-marcandre.lureau@redhat.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260122113144.2046899-5-marcandre.lureau@redhat.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- ui/dbus-listener.c | 3 +--
- 1 file changed, 1 insertion(+), 2 deletions(-)
+ ui/dbus-listener.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
-index 52e041edb0f..407719fc1e0 100644
+index 46264839d86..3e2b4adf41f 100644
 --- a/ui/dbus-listener.c
 +++ b/ui/dbus-listener.c
-@@ -815,8 +815,7 @@ static void ddl_scanout(DBusDisplayListener *ddl)
-     qemu_dbus_display1_listener_call_scanout(
-         ddl->proxy, surface_width(ddl->ds), surface_height(ddl->ds),
-         surface_stride(ddl->ds), surface_format(ddl->ds), v_data,
--        G_DBUS_CALL_FLAGS_NONE, DBUS_DEFAULT_TIMEOUT, NULL, NULL,
--        g_object_ref(ddl));
-+        G_DBUS_CALL_FLAGS_NONE, DBUS_DEFAULT_TIMEOUT, NULL, NULL, NULL);
- }
+@@ -964,15 +964,15 @@ dbus_display_listener_dispose(GObject *object)
+ #ifdef WIN32
+     g_clear_object(&ddl->d3d11_proxy);
+     g_clear_pointer(&ddl->peer_process, CloseHandle);
+-#ifdef CONFIG_PIXMAN
+-    pixman_region32_fini(&ddl->gl_damage);
+-#endif
+ #ifdef CONFIG_OPENGL
+     egl_fb_destroy(&ddl->fb);
+ #endif
+ #else /* !WIN32 */
+     g_clear_object(&ddl->scanout_dmabuf_v2_proxy);
+ #endif
++#ifdef CONFIG_PIXMAN
++    pixman_region32_fini(&ddl->gl_damage);
++#endif
  
- static void dbus_gfx_update(DisplayChangeListener *dcl,
+     G_OBJECT_CLASS(dbus_display_listener_parent_class)->dispose(object);
+ }
 -- 
 2.53.0
 
