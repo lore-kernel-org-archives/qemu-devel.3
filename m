@@ -4,107 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E659EFCA177
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 19:02:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C6B4FCA177
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 19:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzfrk-0008Gt-MD; Mon, 09 Mar 2026 15:02:08 -0400
+	id 1vzfvw-0000pT-Gc; Mon, 09 Mar 2026 15:06:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vzfrh-0008GO-Do
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:02:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vzfvr-0000no-Tj; Mon, 09 Mar 2026 15:06:23 -0400
+Received: from mail-eastusazlp170120007.outbound.protection.outlook.com
+ ([2a01:111:f403:c101::7] helo=BL0PR03CU003.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1vzfrf-0008Og-NN
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 15:02:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773082922;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=y/qlqmIofDlptpbL5/aMCvyiW+xkWmjzCFv3R3DqpoY=;
- b=UDAJbL7UiOIpzoCN0aTlQ+0kAYcG0gFloh5VtCMgD68/AfIjLVdd9NZY/J5FbQXM/+Y8rj
- k7IR1Tb4JnucRox+BFgQy5z2yMaAC4EZt2jsj0fbwnxGWR+27TQttEmdcAFfJ9pLiX3Nga
- gRRFQyOiTLEEE1dAFN3amwB323mjy5M=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-614-NnJFGW2iP4a2ksev2yJr8A-1; Mon, 09 Mar 2026 15:02:00 -0400
-X-MC-Unique: NnJFGW2iP4a2ksev2yJr8A-1
-X-Mimecast-MFC-AGG-ID: NnJFGW2iP4a2ksev2yJr8A_1773082919
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48378df3469so83224045e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 12:02:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773082918; x=1773687718; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=y/qlqmIofDlptpbL5/aMCvyiW+xkWmjzCFv3R3DqpoY=;
- b=e19jk5l0oXKKEEjszrJqPj16N0n8DsNoOJj+qglnLUbMYaEAEHpY8DDemCXJxgribh
- IEUBap3BO4q5QQglLLpc52zWOesCckMOSpcBYtwAEsKMo0rKBKpLFwb9teic1hbjdX6j
- vPipwnsuJ3KesxHdsYU+qXoxwMHdnS01CbEsMCn3mFmziX2LV9/o/vIUIfAiLjecoLf5
- sjO0YXfbOx9DM7qDlrdNS/zGpk0sG19cl/emvuwfzUdCVT24RRzhw2KyV99ETA6bunNd
- ppZBahaw5l5ANMoKPM5BjtoyQpn6r1bFpFS+/s7GBKKpF7bySLBhEuFdeZnyd+DSnjAd
- kZ2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773082918; x=1773687718;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y/qlqmIofDlptpbL5/aMCvyiW+xkWmjzCFv3R3DqpoY=;
- b=wSLDR5NpYm5lCChUA4Ls2sLwPubIYtVFR8KJV8ORv/lcnGKOxuBWW8+IMKabySWdIt
- F2ZCotEs/dQEV7dVNx4Q5peTi8Trvr66m/KBuBKHFswylWMABzCLZvU14ESW1r7TdOW9
- nWae+B8c2Dw7roOswUIaAwkTcm/Bz7FK4JbocFP3k3MvhRkgAZcCuoUITcFFC5vDzNuS
- m1pfhLykwW6+mS9h8IIi96lGuXEf2cCK43AdJ6MSpS3g27uKksTQvHBduv4L5awaG9Tl
- vzridyg+SbOt8lay/SLhCXrzu5V/73FHns/ZYte93u6h+7G7dkIdrnebOL7/1AhS2URU
- EgPA==
-X-Gm-Message-State: AOJu0Yz/U1/VFq+DJshbgTNIjRF/YMSiKGuJn8EFWXFZnqrzBavWu2pC
- dPrQK170rtPgFfXhfEenNLy+fdXs5wKPlvllcHUttDRGydak4kPD0zUHxRsXh9Pdtb9ARQhmSLY
- f36JTtdWUgcP887mF3r+eur0Ctz3losa/pDz88atF1iO2g0gQL488h++Ofi1sfATKkrWokgEMFE
- 805bmOLOF5v4vdyMIAvVVwf5T+JmwhrytP7+MnQhqJ
-X-Gm-Gg: ATEYQzwrC9Md8kHb3+STYyy739lp8oLapWGnuUP3a+HOUdHtspQzUXpkMqVbphDZQRH
- a1csJmlJMIDxXtvomfazQrrUF4U1J0I9+OdoMNzoou/j2PEYZie515YdlKiuinUnseXrfntB/0w
- yqNGAp/vzfd/1K39yoR7zrhnueBGBH+NhVEFS6cFiUb+DPLPZh3JmgxhRQnVzhZ5uZt1QD73EXk
- Dns0jOq14DhTqLyJu5XldQLEK5SzH13wq/roD1qocBmVMUmCR9rUT/MTmhKjL2+CTWxdGdzMXtB
- IeoF8MRb3PLk3SX3A5gPR9tehVkW5j0/+8RAYWLwlAQooYA75hjsO6Ue23gpZ0ni5lpJIhE45Cr
- rHwLWveD80Xh8ZOG4OFdcNF5jLpXpFzMoLH+azOrOqHWFmnP9erMB8sIvw2NOziTZKQvFhfTvne
- BsUmWyA8fHRLjPDEMTsjkhEFzkpbU=
-X-Received: by 2002:a05:600c:8488:b0:485:3989:b3e4 with SMTP id
- 5b1f17b1804b1-485419b61a2mr10821245e9.6.1773082917959; 
- Mon, 09 Mar 2026 12:01:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:8488:b0:485:3989:b3e4 with SMTP id
- 5b1f17b1804b1-485419b61a2mr10820735e9.6.1773082917435; 
- Mon, 09 Mar 2026 12:01:57 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a8d4desm10575555e9.8.2026.03.09.12.01.56
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 12:01:56 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: mcascell@redhat.com, security@1seal.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PATCH] hyperv/syndbg: check length returned by
- cpu_physical_memory_map() [Fixes: CVE-2026-3842]
-Date: Mon,  9 Mar 2026 20:01:44 +0100
-Message-ID: <20260309190155.80619-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
+ id 1vzfvo-0000mP-Ok; Mon, 09 Mar 2026 15:06:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=X4JO2KQ79dnZvcYcPGDauF1xMLt/scvZcbq6TZBoXEQP4IqHcvhCveH2eJH73VeiigtdSPHkMMgypr98xqD9eS0yOLEGTMy/eh1GfDE3yYPbrFHI4K+FvrmhIz+Q34AUlevkaxEW2FreLGVm6d9FdVbXsbSCNWIZGNSsshRHg5B5nRVyR+MIYCwkArETr7qeJIIG2VtCmJBOvo79GF7ztcIQOc6sV1qGDl5i1WjK/PQVSEk3E55Br9XGiYg4OiosjMQwCGzQh5eovsoecpg+pSZ5tNQVsXEoelH/I2Rj+DlrGqVqB7GfMj9MRPS+kYjex9NytzOhWARz0Idf2uC/ZA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=JPIo9cuT19fiZhqAWvgIdWUBYUOYMFHQ6pmxrHxM2+Y=;
+ b=O4o+3/Ac2ma1A+nkWB8YcP64qZTfSThZqqfE4dkfn63OxB8X9mc7fccJyzWZDlfMTlHlq4/00VxjMx7cQP8oLK8O4UwktSh0ApQ/zRqP/Qrj7aRqgGuiCQwuF9+OcUpVfanamLH3p+VzaaN+oHHLi2TfEMqKFB+WdjcvcJVuYbN2R+A4+nBxSvqvwu2kquvcibH46NCjCVfsprZ4Vjq9ttGqgntSW9HC4Qf2TV2FeMJIzi6HpdpDDsP+qpVTgaF0SIPsla7yIv2k/FPQqby7SqeTY01AqmIT0eGXl9l6s3NOHqvOQYxTdGyxU5Js0DSt0BQtvsfibDPhylNg/x1Q3g==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 216.228.117.160) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
+ dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=JPIo9cuT19fiZhqAWvgIdWUBYUOYMFHQ6pmxrHxM2+Y=;
+ b=MNDpPvIY8mds4BOyXLC0KXDFBnVatcvgYoMZ1oEPIEBJyaLzYpmFI37iZpn8I8vJ8iKcfJdgoF+3ecXLqIjItVbNhQFDWJ3aE7dGnqw0dPnKBIw1pdCuj8qLARa852xN4wRNTBfiFUh7dFRd/hU1ouGAFJOQbcJnlzssHCGTf+mqdRbMl8in8fsk+gLHRIQ+zj26atbM2OjCrpF7cvhjEdI3N65jGLSrlSJamMPd9g9m/oCnfI3uT/QsChazkzswzfU1M6spJsNQWV6ufrz/iT4uu5G+kQWtyCR/FFV2hKq7JlunAECAaUkgM+YvlN+c6uMqwp1CAOGh7TxJv7kMhQ==
+Received: from PH0PR07CA0052.namprd07.prod.outlook.com (2603:10b6:510:e::27)
+ by LV8PR12MB9690.namprd12.prod.outlook.com (2603:10b6:408:296::16) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.6; Mon, 9 Mar
+ 2026 19:06:13 +0000
+Received: from CY4PEPF0000EDD2.namprd03.prod.outlook.com
+ (2603:10b6:510:e:cafe::c8) by PH0PR07CA0052.outlook.office365.com
+ (2603:10b6:510:e::27) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9587.18 via Frontend Transport; Mon,
+ 9 Mar 2026 19:06:13 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.117.160)
+ smtp.mailfrom=nvidia.com;
+ dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=nvidia.com;
+Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
+ 216.228.117.160 as permitted sender) receiver=protection.outlook.com;
+ client-ip=216.228.117.160; helo=mail.nvidia.com; pr=C
+Received: from mail.nvidia.com (216.228.117.160) by
+ CY4PEPF0000EDD2.mail.protection.outlook.com (10.167.241.198) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9678.18 via Frontend Transport; Mon, 9 Mar 2026 19:06:12 +0000
+Received: from rnnvmail204.nvidia.com (10.129.68.6) by mail.nvidia.com
+ (10.129.200.66) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 9 Mar
+ 2026 12:05:45 -0700
+Received: from rnnvmail202.nvidia.com (10.129.68.7) by rnnvmail204.nvidia.com
+ (10.129.68.6) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 9 Mar
+ 2026 12:05:44 -0700
+Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com (10.129.68.7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
+ Transport; Mon, 9 Mar 2026 12:05:43 -0700
+Date: Mon, 9 Mar 2026 12:05:42 -0700
+From: Nicolin Chen <nicolinc@nvidia.com>
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
+ "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
+ <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
+ <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
+ <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
+Subject: Re: [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU
+ alloc/free
+Message-ID: <aa8aBsl220veL+n/@Asurada-Nvidia>
+References: <20260226105056.897-1-skolothumtho@nvidia.com>
+ <20260226105056.897-14-skolothumtho@nvidia.com>
+ <ed5ca420-94e5-4e9e-a2c3-f59eb6ea8ada@redhat.com>
+ <CH3PR12MB7548F5610D7F339C5DAD0E41AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <aa8M96GLFbPiMNUo@Asurada-Nvidia>
+ <CH3PR12MB7548B6C7F7DC206BD38B9143AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CH3PR12MB7548B6C7F7DC206BD38B9143AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
+X-NV-OnPremToCloud: ExternallySecured
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY4PEPF0000EDD2:EE_|LV8PR12MB9690:EE_
+X-MS-Office365-Filtering-Correlation-Id: 417efef5-a480-4068-82ea-08de7e0eeea0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|82310400026|1800799024|36860700016|376014|7053199007; 
+X-Microsoft-Antispam-Message-Info: CVsysPn4knKS7BKoyymkGj9wy14/3+8dS9XnI/GXLchcyLf+OSyWXPF6lB6w4T2bAMSRogzt5dkuyssJTjFadsdJIyBi0wFSPwUuHIPg0q8SuqUkvkMuVSNOOqX8VT9h7HnEiTV1AcLq5XXZpPFZf6QHHUtWdkg6nZRd+cUH2Xw76u1iuEqZRRcoytMlCiLmO+5KcnFQQY2p30fpoAaWgTSLWE+VvtQ4HOPbz7NC+leXmE6DZIcupDa7x7eIRkP3FA1ut8SPcJSKxHHGFC0oTWe8pdsUrNVo28lxyz2olcx18GT7twQXrfShWYmttN6K9ZTcraLVwA1hM65zF9SphIjmswHxVUYoTnmYfsQ7epp8ML7lufVsQqTAKCgPP0tgWnl/jvY3USWYf9I+nxkwswvnE8QtEKdHwGJ4SBvYb9faG7LooHa91p3+F616ph+mRxk80WdcDmpKxS+oQeo19qEm2dF1zphsNWHg3/MHwmQLTOraKSXG+s2oW4R5zf4awf6hE+5w3NIV+8EuP9xhA6My2V+drKcXeCeQPrJYXbHwTMplXlcB85p9Dde34pR9RWquLevjeQYIn4OP7kAI88EugFK8eXkzQKeqgjansBfmq3uw5qTfjEHhCS2NPjwchOqpbH+4uDTIUeoeaA769jXX7yMPXj8oj6eS/CnOSkfk3i0Mm3rDnAvLTkHR7n9jBoPi9Qh9igmgPKyBXs5OMczRKoukrvGxjdY+6OJ1o6+IPzamTRa7gsv0uaV53gZDxDy+DCkx3PPojs7DBuYhWQ==
+X-Forefront-Antispam-Report: CIP:216.228.117.160; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc6edge1.nvidia.com; CAT:NONE;
+ SFS:(13230040)(7416014)(82310400026)(1800799024)(36860700016)(376014)(7053199007);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: KrnV+YdNr3phmt/vhjLnEJescsJaokx8aAQmeV7Zg/zZaYrRnOZtAat+ABzdIydXdReOpByODKqPsV1EX8LsRBtRlHo8qZ2xNXlCatY1bf8ZTQbV8KlF9+XRShT6AKmeQUa3gtE7+Jb2/52DJCQ/XXILBbTi1jbhsK9q3YjFGf7KFS+9dn8zChbhMDatVsXe8c93/R5bWnWsgHCO/qv1+Cg6ol80Oall5R0vb+WfYxg4Pu6BjsnNtPLM2RMB2TO/EZU6iVgkkIVL0j3eRA2H0YZnWnfVBvlrkNAzhSc/r2Hya5bNnOFQrzD0pYMRbH5FyiHdqU8BafV1+GGMo/hkKLYDvTbcSiPmxFankLQoejg+N0aJ7zQfGssR8TDwwgu5Ss1cStJLtj8jSCkJOxrw/C4j+Jre3CaXO5HbaU8G7oX7WYduj1i/tCVMEpoLIxUd
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2026 19:06:12.9861 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 417efef5-a480-4068-82ea-08de7e0eeea0
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.117.160];
+ Helo=[mail.nvidia.com]
+X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EDD2.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9690
+Received-SPF: permerror client-ip=2a01:111:f403:c101::7;
+ envelope-from=nicolinc@nvidia.com;
+ helo=BL0PR03CU003.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,78 +145,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If cpu_physical_memory_map() returns a length shorter than the one
-that was passed into the function, writing the full out_len bytes
-causes an access beyond the memory allocated to the guest; or in
-the case of the MMIO bounce buffer, an out-of-bounds access in a
-heap-allocated object.
+On Mon, Mar 09, 2026 at 11:25:21AM -0700, Shameer Kolothum Thodi wrote:
+> 
+> 
+> > -----Original Message-----
+> > From: Nicolin Chen <nicolinc@nvidia.com>
+> > Sent: 09 March 2026 18:10
+> > To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> > Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
+> > devel@nongnu.org; peter.maydell@linaro.org; clg@redhat.com;
+> > alex@shazbot.org; Nathan Chen <nathanc@nvidia.com>; Matt Ochs
+> > <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> > <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> > zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+> > <kjaju@nvidia.com>; phrdina@redhat.com
+> > Subject: Re: [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV
+> > vIOMMU alloc/free
+> > 
+> > On Mon, Mar 09, 2026 at 04:31:22AM -0700, Shameer Kolothum Thodi
+> > wrote:
+> > > > > -    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> > > > > -    return false;
+> > > > > +    Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
+> > > > > +
+> > > > > +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
+> > > > > +
+> > > > > + IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
+> > > > if the only think that differs compared to no cmdq is the type, ie.
+> > > >
+> > > > IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV vs
+> > > > IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV
+> > > >
+> > > > + passing true args, maybe you can just record the type of the cmdqv
+> > > > + that is being used in the smmu_accel device. Then you can get rid of
+> > > > + alloc and free
+> > >
+> > > It is not just the type. Based on the type we also need to pass,
+> > >
+> > >  * @data_len: Length of the type specific data
+> > >  * @__reserved: Must be 0
+> > >  * @data_uptr: User pointer to a driver-specific virtual IOMMU data
+> > >  *
+> > >
+> > > And the above is implementation specific.
+> > >
+> > > If our idea of the "ops" is to allow easier support for different
+> > > implementations in future, it probably makes sense to keep this.
+> > 
+> > Any future "cmdqv" will likely have a different viommu type. So,
+> > essentially this is just a viommu type override, as Eric pointed
+> > out above.
+> > 
+> > What we actually need to expose per viommu is type/data_len. The
+> > data_uptr can be a union viommu_data in the accel structure?
+> 
+> So the suggestion is to get rid of alloc_viommu() and retrieve type/len 
+> during probe() and store the data_uptr in struct accel . Doable, I guess.
+> 
+> But then we need to do something similar for veventq as well, right?
+> 
+> Isn't that actually bloating struct accel then? 
+> IMHO, the ops way looks better.
 
-Add a check similar to the one already in handle_send_msg(),
-and take the occasion to remove repeated computations of
-recv_byte_count + UDP_PKT_HEADER_SIZE and clarify that the
-code does not write past out_len bytes.
+The data_uptr could be dynamically allocated corresponding to the
+data_len, to avoid bloating.
 
-Reported-by: Oleh Konko <https://github.com/1seal>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/hyperv/syndbg.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+But you are right we do need a place to alloc/free a 2nd veventq.
 
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index 1e177f9dd82..10171b19e8f 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -194,7 +194,7 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
-     uint16_t ret;
-     g_assert(MSG_BUFSZ >= qemu_target_page_size());
-     QEMU_UNINITIALIZED uint8_t data_buf[MSG_BUFSZ];
--    hwaddr out_len;
-+    hwaddr out_len, out_requested_len;
-     void *out_data;
-     ssize_t recv_byte_count;
- 
-@@ -223,29 +223,28 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
-     if (is_raw) {
-         out_len += UDP_PKT_HEADER_SIZE;
-     }
-+    out_requested_len = out_len;
-     out_data = cpu_physical_memory_map(outgpa, &out_len, 1);
--    if (!out_data) {
--        return HV_STATUS_INSUFFICIENT_MEMORY;
-+    ret = HV_STATUS_INSUFFICIENT_MEMORY;
-+    if (!out_data || out_len < out_requested_len) {
-+        goto cleanup_out_data;
-     }
- 
-     if (is_raw &&
--        !create_udp_pkt(syndbg, out_data,
--                        recv_byte_count + UDP_PKT_HEADER_SIZE,
-+        !create_udp_pkt(syndbg, out_data, out_len,
-                         data_buf, recv_byte_count)) {
--        ret = HV_STATUS_INSUFFICIENT_MEMORY;
-         goto cleanup_out_data;
-     } else if (!is_raw) {
--        memcpy(out_data, data_buf, recv_byte_count);
-+        memcpy(out_data, data_buf, out_len);
-     }
- 
--    *retrieved_count = recv_byte_count;
--    if (is_raw) {
--        *retrieved_count += UDP_PKT_HEADER_SIZE;
--    }
-+    *retrieved_count = out_len;
-     ret = HV_STATUS_SUCCESS;
- 
- cleanup_out_data:
--    cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    if (out_data) {
-+        cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    }
-     return ret;
- }
- 
--- 
-2.53.0
+Maybe we can have a pair of alloc/free_viommu for now.
 
+Thanks
+Nicolin
 
