@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 487B4F3C25E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:48:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95FADF3C265
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzaxc-00042O-Kx; Mon, 09 Mar 2026 09:47:52 -0400
+	id 1vzaxf-00044C-3s; Mon, 09 Mar 2026 09:47:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxR-0003yG-Dc
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxU-0003yQ-3O
  for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:47 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+Received: from sea.source.kernel.org ([172.234.252.31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxN-00067J-W8
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:40 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1vzaxO-00067U-4A
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:47:42 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id 5F1AC42B70
- for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:17 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id B9B1CC4CEF7
- for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:16 +0000 (UTC)
+ by sea.source.kernel.org (Postfix) with ESMTP id 3C79B40A9A
+ for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:19 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 993B5C4CEF7
+ for <qemu-devel@nongnu.org>; Mon,  9 Mar 2026 13:47:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773064037;
- bh=vm/aA9SwjzkHcfVSNxqZDO1EuMwbYIzCIFfKiGC9xog=;
+ s=k20201202; t=1773064039;
+ bh=lUwAO9km4/S+zD0o1NtjbvrV7Uoam/HK5Wb+d30GVks=;
  h=From:To:Subject:Date:In-Reply-To:References:From;
- b=qVR4SDD8sBQ7iPsThq4rYI7coP6u2r9gbgOSm6Kc380fz08Gly7Lk6K/f6pFRtmOK
- JIfWaH5O2E3e4gadmANT3VRjLErKvJEpRrKCRnZi0Gmmgpm6JM5jgjSjLTVQc0jbSg
- JHTPZb61jpzGwIpEPlQQaxyqzMgIPeoookTXwLmLP5FIXw53PfZMrEla3m6aPQd9Zw
- 4zmGQZ+RIykj6TTOCDZ/Hf5cZkaNb5sKAsF9tStnT1pMYOJJrSKkfApF3kEcoO5J4D
- 8sthOPWKwTTCIqxaP089cu262nQlPiYQ2qUuC9znHBTalGnvh9ZjCmQOucV9M+g0h0
- EC5aE2LHoh1fA==
+ b=W7h+APUsFYJIVBosWIE1LMGSX8VZNHR/8cctveleZ7rjpWIOkFZUIWmSD//oHqdxP
+ 2XI8i7Rb5XKVcUYvafaU8BPL1kZeKsknySAlP88gToY+vuyLB3nQ7hJoxJDjXXWifG
+ EvLXRHBpc1dm5RyeHX+LCO+loATQzq7it1xX5E06KXQRYSyU2wEXHD7VeX/oDQIGNh
+ Pigj+JEyP61dUluP7yITiyKtB3kspL8S6um9RCH38ftEfysBQoq1jieKELXMl3RX6r
+ 8c79VE43UtsK8cU6zXjqibD4GgVUqYNavQhhj/Iz+i68SwbBH264V4Yyof770VcHdL
+ CEhxPbnuTkM/w==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 03/10] linux-user: Check if RESOLVE_CACHED flag is defined
- before using it
-Date: Mon,  9 Mar 2026 14:47:04 +0100
-Message-ID: <20260309134711.5312-4-deller@kernel.org>
+Subject: [PULL 05/10] linux-user: fix TIOCGSID ioctl
+Date: Mon,  9 Mar 2026 14:47:06 +0100
+Message-ID: <20260309134711.5312-6-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309134711.5312-1-deller@kernel.org>
 References: <20260309134711.5312-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=172.234.252.31; envelope-from=deller@kernel.org;
+ helo=sea.source.kernel.org
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,33 +67,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Andreas Schwab <schwab@suse.de>
 
-openat2.h was introduced in Linux kernel 5.6. However, RESOLVE_CACHED
-flag was only added in kernel 5.12 and later. Therefore, we need to check
-if RESOLVE_CACHED flag is defined before using it.
+TIOCGSID is IOC_R, not IOC_W.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
+Signed-off-by: Andreas Schwab <schwab@suse.de>
 Reviewed-by: Helge Deller <deller@gmx.de>
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- linux-user/strace.c | 2 ++
- 1 file changed, 2 insertions(+)
+ linux-user/ioctls.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/linux-user/strace.c b/linux-user/strace.c
-index d253b522bf..02d610a7f8 100644
---- a/linux-user/strace.c
-+++ b/linux-user/strace.c
-@@ -1129,7 +1129,9 @@ UNUSED static const struct flags openat2_resolve_flags[] = {
-     FLAG_GENERIC(RESOLVE_NO_SYMLINKS),
-     FLAG_GENERIC(RESOLVE_BENEATH),
-     FLAG_GENERIC(RESOLVE_IN_ROOT),
-+#ifdef RESOLVE_CACHED
-     FLAG_GENERIC(RESOLVE_CACHED),
-+#endif
- #endif
-     FLAG_END,
- };
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 6ecfe6306e..5b7d00e92f 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -26,7 +26,7 @@
+      IOCTL(TIOCSCTTY, 0, TYPE_INT)
+      IOCTL(TIOCGPGRP, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCSPGRP, IOC_W, MK_PTR(TYPE_INT))
+-     IOCTL(TIOCGSID, IOC_W, MK_PTR(TYPE_INT))
++     IOCTL(TIOCGSID, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCOUTQ, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCSTI, IOC_W, MK_PTR(TYPE_INT))
+      IOCTL(TIOCMGET, IOC_R, MK_PTR(TYPE_INT))
 -- 
 2.53.0
 
