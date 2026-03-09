@@ -4,119 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85B6EEA854B
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:11:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05649EFCD6C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:18:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzWeB-0002J5-Qq; Mon, 09 Mar 2026 05:11:31 -0400
+	id 1vzWkh-0003KY-Dr; Mon, 09 Mar 2026 05:18:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWeA-0002Ir-5z
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:11:30 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vzWkd-0003Jy-Mi
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:18:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzWe7-0003Sh-Jt
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:11:29 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vzWkb-000479-Jd
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:18:11 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773047485;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1773047888;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=XiOUdqZEmp7Ay/bnnUqFA82DLvaJAtDvN2rKy4hfnEo=;
- b=iKW5+s+nT564wY8kmQj9UX5GRF4if0OpNXFfXS+wdVZEK7fnmZ7nyIgnV0O3/qLGNSkXjr
- zEzxcr+mWWxte3cXRR9m5IH2YFYBbn84rgbvh1KLJJT4MYvYIUGL/3d+tVkKAi9sFjut8l
- zI8vopifhnwX7nR+GOm11IeVMSDz6HI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-37-M3aCsbL1P4akQYd_m5Dbkw-1; Mon,
- 09 Mar 2026 05:11:20 -0400
-X-MC-Unique: M3aCsbL1P4akQYd_m5Dbkw-1
-X-Mimecast-MFC-AGG-ID: M3aCsbL1P4akQYd_m5Dbkw_1773047479
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E6ED618005B8; Mon,  9 Mar 2026 09:11:18 +0000 (UTC)
-Received: from [10.45.224.73] (unknown [10.45.224.73])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C3A6E1956095; Mon,  9 Mar 2026 09:11:13 +0000 (UTC)
-Message-ID: <f7a406e2-1fe1-47c6-9074-a73bc50d575e@redhat.com>
-Date: Mon, 9 Mar 2026 10:11:12 +0100
+ in-reply-to:in-reply-to:references:references;
+ bh=yfx3EK7MACARCzTSjNItTuf797kpj/G+oEG2icoTA94=;
+ b=KeSHIihb1H5Qq+HbDfLQ1bX71NQS9ZW36KgdVHqsxdXFkcKd2BsFDt7kURCLKnIl/6Qcbb
+ dYEM0pNb3sEYl8ohHs8sGTZpg5bywmZ2g4La6WSGGbov4HE3gNq3fUERIWPA7iY16lOEH+
+ uLolMJk4ELuLZnDyNr4zmAQG+KC3Iw8=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-18-VzV3CeA1OOGnY701vYX3jQ-1; Mon, 09 Mar 2026 05:18:06 -0400
+X-MC-Unique: VzV3CeA1OOGnY701vYX3jQ-1
+X-Mimecast-MFC-AGG-ID: VzV3CeA1OOGnY701vYX3jQ_1773047885
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-439c4bde453so3989987f8f.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:18:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773047885; x=1773652685;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=yfx3EK7MACARCzTSjNItTuf797kpj/G+oEG2icoTA94=;
+ b=aHeP07VMzciTmLfX5aaKdt+XinzHCd8/NA8l8pt0qU09DNl2WIrZXbTkjoM484VhuA
+ 5WHf3kP4Z+znc9eOyRC9SrxoGhZEL0eCn7WEpNTd3uK8VmSWqWwX7ilBjMcVmV2PnhQU
+ jGgXMf4K0s8w50YMtiGs4WxhcnfiMEME0m8sEWTj/T9sCdOQJ+GGu41je96wdlaWhY7h
+ BSmys851kK59VnBmYXYvzn4nwetxA4ja+LCmxNG4+KVESM/dnTfyXb1I6vrcVokR30z6
+ kDk8AoPZeTxarFR9mnvuolpbZoFihavv68zq1vCZEXsq7QSvcB/rEL/dc8DqVP/oEMcq
+ O1Yg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW3r7Mv8HVtR2trutlcxO60G+/Ya0zGkDDl+nxqibQvnof5JgLa9RR+dzV/WCKHabbtattAnMe6pF7p@nongnu.org
+X-Gm-Message-State: AOJu0YwLDv/0k3810RBaJdgtd1nbqDX2SvRXR+SCnKbYOqvAzPFBq8Le
+ UmDOFq+AsalodcZT8XFNdyHBD4IC2Fk3h0LuZt+NYCqI/U9QCfjUrwg6bipvgGk9qjM623DjvF0
+ KIN4f2tC63ej8CK1r2NO1N8+74hieobOMDM1HDvXGesnTx7OZSEqDqjIv
+X-Gm-Gg: ATEYQzzg4TdI39uGMTTBsM5XAELJpJAc/UBhxKZ51k7za9zOu26COjAFaMdmTa9sCrW
+ xGvEsYM18c9VssPP44UhfU3bDsZHrgrW9tcVvgzP8QOca8PSs/HRWuhfV5FzfbzJ98XOBGqmi7o
+ jMnqqe80nsRdk+ABy8zqoXbN7+TerfGaA1wNzcur2Bi1dGZeo9BzkVr0kJBUJGlCFc3tACEHukC
+ uEmPEOroyCOZBnoxXKex3jgqR8sb+lfKhRwSiAtTeHxvaNRmpJPiQQB8jjQniIXVtu6pqd3+p1N
+ sBRe1um7aKk9VIogf6SLzYXTf9cZlEMF2KN4D0d3LYlQyZOmKuSAZ/tEoqvjNK2ef+aX4sE75It
+ fBQLKLphHDn3yvb8pLQwtxWOh8IoXVh18ilfC+b9kMexvTfFOgralTSMgG6TH4nx9KiXUkQ==
+X-Received: by 2002:a05:600c:1e88:b0:47e:e952:86c9 with SMTP id
+ 5b1f17b1804b1-485268bd528mr200986195e9.0.1773047885139; 
+ Mon, 09 Mar 2026 02:18:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:1e88:b0:47e:e952:86c9 with SMTP id
+ 5b1f17b1804b1-485268bd528mr200985655e9.0.1773047884598; 
+ Mon, 09 Mar 2026 02:18:04 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48535863e40sm129894085e9.14.2026.03.09.02.18.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 02:18:03 -0700 (PDT)
+Message-ID: <1d42eed4-d9cd-46a3-9613-00c1b347fa4d@redhat.com>
+Date: Mon, 9 Mar 2026 10:18:02 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/6] hw/i386/pc: Remove deprecated pc-q35-4.0[.1] and
- pc-i440fx-4.0 machines
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Igor Mammedov <imammedo@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, Yanan Wang <wangyanan55@huawei.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-References: <20260307154202.86309-1-philmd@linaro.org>
- <20260307154202.86309-2-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+Subject: Re: [PATCH v3 06/32] hw/arm/tegra241-cmdqv: Add Tegra241 CMDQV ops
+ backend stub
 Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260307154202.86309-2-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
+References: <20260226105056.897-1-skolothumtho@nvidia.com>
+ <20260226105056.897-7-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260226105056.897-7-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -131,21 +117,190 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 07/03/2026 16.41, Philippe Mathieu-Daudé wrote:
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/i386/pc_piix.c | 11 -----------
->   hw/i386/pc_q35.c  | 25 -------------------------
->   2 files changed, 36 deletions(-)
+Hi Shameer,
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+On 2/26/26 11:50 AM, Shameer Kolothum wrote:
+> Introduce a Tegra241 CMDQV backend that plugs into the SMMUv3 accelerated
+> CMDQV ops interface.
+>
+> This patch wires up the Tegra241 CMDQV backend and provides a stub
+> implementation for CMDQV probe, initialization, vIOMMU allocation
+> and reset handling.
+>
+> Functional CMDQV support is added in follow-up patches.
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/tegra241-cmdqv.h       | 15 ++++++++++
+>  hw/arm/tegra241-cmdqv-stubs.c | 18 +++++++++++
+>  hw/arm/tegra241-cmdqv.c       | 56 +++++++++++++++++++++++++++++++++++
+>  hw/arm/Kconfig                |  5 ++++
+>  hw/arm/meson.build            |  2 ++
+>  5 files changed, 96 insertions(+)
+>  create mode 100644 hw/arm/tegra241-cmdqv.h
+>  create mode 100644 hw/arm/tegra241-cmdqv-stubs.c
+>  create mode 100644 hw/arm/tegra241-cmdqv.c
+>
+> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+> new file mode 100644
+> index 0000000000..07e10e86ee
+> --- /dev/null
+> +++ b/hw/arm/tegra241-cmdqv.h
+> @@ -0,0 +1,15 @@
+> +/*
+> + * Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved
+> + * NVIDIA Tegra241 CMDQ-Virtualiisation extension for SMMUv3
+> + *
+> + * Written by Nicolin Chen, Shameer Kolothum
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HW_ARM_TEGRA241_CMDQV_H
+> +#define HW_ARM_TEGRA241_CMDQV_H
+> +
+> +const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
+> +
+> +#endif /* HW_ARM_TEGRA241_CMDQV_H */
+> diff --git a/hw/arm/tegra241-cmdqv-stubs.c b/hw/arm/tegra241-cmdqv-stubs.c
+> new file mode 100644
+> index 0000000000..eedc7bfdcd
+> --- /dev/null
+> +++ b/hw/arm/tegra241-cmdqv-stubs.c
+> @@ -0,0 +1,18 @@
+> +/*
+> + * Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved
+> + *
+> + * Stubs for Tegra241 CMDQ-Virtualiisation extension for SMMUv3
+^typo
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "hw/arm/smmuv3.h"
+> +#include "smmuv3-accel.h"
+> +#include "hw/arm/tegra241-cmdqv.h"
+> +
+> +const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void)
+> +{
+> +    return NULL;
+> +}
+> +
+> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+> new file mode 100644
+> index 0000000000..ad5a0d4611
+> --- /dev/null
+> +++ b/hw/arm/tegra241-cmdqv.c
+> @@ -0,0 +1,56 @@
+> +/*
+> + * Copyright (c) 2025-2026 NVIDIA CORPORATION & AFFILIATES. All rights reserved
+> + * NVIDIA Tegra241 CMDQ-Virtualization extension for SMMUv3
+> + *
+> + * Written by Nicolin Chen, Shameer Kolothum
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "hw/arm/smmuv3.h"
+> +#include "smmuv3-accel.h"
+> +#include "tegra241-cmdqv.h"
+> +
+> +static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
+> +{
+> +}
+> +
+> +static bool
+> +tegra241_cmdqv_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+> +                            uint32_t *out_viommu_id, Error **errp)
+> +{
+> +    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> +    return false;
+> +}
+> +
+> +static void tegra241_cmdqv_reset(SMMUv3State *s)
+> +{
+> +}
+> +
+> +static bool tegra241_cmdqv_init(SMMUv3State *s, Error **errp)
+> +{
+> +    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> +    return false;
+> +}
+> +
+> +static bool tegra241_cmdqv_probe(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
+> +                                 Error **errp)
+> +{
+> +    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
+> +    return false;
+> +}
+> +
+> +static const SMMUv3AccelCmdqvOps tegra241_cmdqv_ops = {
+> +    .probe = tegra241_cmdqv_probe,
+> +    .init = tegra241_cmdqv_init,
+> +    .alloc_viommu = tegra241_cmdqv_alloc_viommu,
+> +    .free_viommu = tegra241_cmdqv_free_viommu,
+> +    .reset = tegra241_cmdqv_reset,
+
+I think I would create a no_cmdqv_ops to convert the existing code
+without any cmdqv support to the same api. This would avoid
+the repeating: 
+
+if (cmdqv_ops && cmdqv_ops-><func>) check in subsequent patches.
+
+Also this looks a bit strange to have different signatures for the
+functions used with both vcmdq on and off
+
+Eric
+
+
+> +};
+> +
+> +const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void)
+> +{
+> +    return &tegra241_cmdqv_ops;
+> +}
+> diff --git a/hw/arm/Kconfig b/hw/arm/Kconfig
+> index c66c452737..3305c6e76e 100644
+> --- a/hw/arm/Kconfig
+> +++ b/hw/arm/Kconfig
+> @@ -626,6 +626,10 @@ config FSL_IMX8MP_EVK
+>      depends on TCG
+>      select FSL_IMX8MP
+>  
+> +config TEGRA241_CMDQV
+> +    bool
+> +    depends on ARM_SMMUV3_ACCEL
+> +
+>  config ARM_SMMUV3_ACCEL
+>      bool
+>      depends on ARM_SMMUV3
+> @@ -633,6 +637,7 @@ config ARM_SMMUV3_ACCEL
+>  config ARM_SMMUV3
+>      bool
+>      select ARM_SMMUV3_ACCEL if IOMMUFD
+> +    imply TEGRA241_CMDQV
+>  
+>  config FSL_IMX6UL
+>      bool
+> diff --git a/hw/arm/meson.build b/hw/arm/meson.build
+> index 8f834c32b1..fc83b635e7 100644
+> --- a/hw/arm/meson.build
+> +++ b/hw/arm/meson.build
+> @@ -88,6 +88,8 @@ arm_common_ss.add(when: 'CONFIG_FSL_IMX8MP_EVK', if_true: files('imx8mp-evk.c'))
+>  arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3', if_true: files('smmuv3.c'))
+>  arm_common_ss.add(when: 'CONFIG_ARM_SMMUV3_ACCEL', if_true: files('smmuv3-accel.c'))
+>  stub_ss.add(files('smmuv3-accel-stubs.c'))
+> +arm_common_ss.add(when: 'CONFIG_TEGRA241_CMDQV', if_true: files('tegra241-cmdqv.c'))
+> +stub_ss.add(files('tegra241-cmdqv-stubs.c'))
+>  arm_common_ss.add(when: 'CONFIG_FSL_IMX6UL', if_true: files('fsl-imx6ul.c', 'mcimx6ul-evk.c'))
+>  arm_common_ss.add(when: 'CONFIG_NRF51_SOC', if_true: files('nrf51_soc.c'))
+>  arm_common_ss.add(when: 'CONFIG_XEN', if_true: files(
 
 
