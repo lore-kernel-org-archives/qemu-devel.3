@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9616EEFCD73
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:51:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1263EEFCD77
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 09:53:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzXGz-0005mX-LM; Mon, 09 Mar 2026 05:51:37 -0400
+	id 1vzXIx-0006HC-7f; Mon, 09 Mar 2026 05:53:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzXGw-0005mE-Tr
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:51:35 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1vzXIs-0006Fh-8G
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:53:35 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzXGu-0000Zp-QC
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:51:34 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so136003355e9.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:51:32 -0700 (PDT)
+ id 1vzXIq-0000gn-N3
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 05:53:33 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48535a0ef86so9408495e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 02:53:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773049891; x=1773654691; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773050010; x=1773654810; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FSiI47q1uS6LXlyXsoFn8BGOPs2Ve688o13OIyq7I1Y=;
- b=Gbigss8sjfCe0HyVFIUHpVmY3M8IwJzvzC6MQJzCGGA6SYo1L8wOyOJTblGxignPZQ
- JtF/hJiNgmM6abPCrUQqtCzR7C8LMqC2cRGjxwk72PxYLVWJJsf3KkTT7HGwzdtZq7DV
- 2j3iMro6OYK9MER7WcV2+IxLjMCYmbiiNhsN2Dn7K2o+vFLdnH9I9qru9Smvv0tOc6cM
- ES/TMME1PGnhCUcTtvQmaQFTTyrA2aK2agyh6aa4JuC2R7xSUI54+5fwQmfx/Q8qWbOu
- iTPR4U7mZ94bJr9JtUn2ZkkBzSmv2wnd+2lNy/GoncMucEa/qAUBIAJWxRDxRyV9qAxz
- w7/Q==
+ bh=gKNmKl0vacYZC/r9wSH3ugWYQ7msGR+dGPcMXTncvzM=;
+ b=Tt/tcdUNIxEOVMkJaJ54+yvKTOEcPxXkd372sHpHyQQUenA1w31PGl8H9O0V8XuszN
+ NdIHl/Ihz7T2hTSnIsJum8/X283VfOi4E2wzXDYa+qBFhF55ur6XpdJ04IVNMinmiuv6
+ KHImQVL00IvfbFOLNpzhPqVRY8zFf9ope5imdYdjChJWtftSb8Hf6yPR9LLdkxhq9AQy
+ k0JfqYIwtStcM2D/3qo4M3kaIcP9fYm8E7GDEei5zPjd6ekgME5NNLEsg6uA7IvSgqDZ
+ TPnAkllB5+jXOdcTb9sh8StMsSWPEBfVqc7KZm14k5BzfhD0eeKJ0qrQe48CDhdlTHDr
+ p7Gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773049891; x=1773654691;
+ d=1e100.net; s=20230601; t=1773050010; x=1773654810;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FSiI47q1uS6LXlyXsoFn8BGOPs2Ve688o13OIyq7I1Y=;
- b=ULNh+TMlQ8xrg/P3IsE3tfE0EwUBAarTv1ePWeWCcBtTSJf0BAouZBX56l4rNFVi5G
- LpRJSyHvqR9Xxdaba5XjTnO7POQzvU+ZwyKROSawGdKg5cOONFpv/DhkeBXlT18+5IuO
- VBD6ayp3nImGhulHs9NHoCMqiOEtPkQUuW/IHQONdiEvBSPOPV3TH73vy9T/RGWFnaOo
- ziweetb8mb/bMQ05msNMukJNLcVw8SQO+iCnZuVOG0DFZl94hglUD6Ee5KSgpTd1cSaN
- uU8yTkxTCuLO6+o6Kuu2nyWBiyNwNenD3JO4AWgKqF62UBWLr5DaQgNbljj4Rq7Srokf
- zp2A==
-X-Gm-Message-State: AOJu0YxBcnDoYXP0tkr+divneJAIeIaOvtm2HvL/WGeIlWSpcuEDc/mT
- u2shOEQwpL2ESfhC9+dOSXzcZ7RYnSoVBhgRy7gK1nqKnUUyv4zz+gnuFnNK+gEWpYSVK4YCngm
- oDQ8k
-X-Gm-Gg: ATEYQzzoQLuXqkrY9arnU4aEBq318UrfDHLl83Tq3r7eqvhU14ePWjKYYSuMXoSx2eB
- WPu59w0oc7/jxBKAnvMVCyvz5TVkWmiLYFabVlVvWAMwhbyb7D2KNXBWgdfKOYLZpn9af4UVaUI
- VNOjQ3p9UZtA5lCItKWRhsduw8dSsFvm17+a6zXzIKDuiijMlSkufFw/U/sLCqfdVkiw8ZihC6F
- eyE+SJn54iegmmEaOnrKKzIzPkIfGDQ4ZKNQdMFSKHqqLgf/dvy9FBZ+UK6UTHeYTyqxqPtsAyT
- dcTQxA31IC1kTGiIzmuJadbeK6e1J4QK3BbPSVvNZr/P8n/eMAz2JoDU0kxaEmBq7NuwtzynHxi
- 9vyHW8GMnaq3xjz12y2nRAozArZqQG5V3BAFMLOVhpeTdeKncOdqT9ZVgyKF+I9DeajFVbGNyEz
- PsMYPLGUmrbkzkV/BweGWcGE+FK/gz7jOLQlPSsRJ8+xboROOmdZ7JE3e0L03znU0kqvR1GV6Iq
- 6cEFq/+swrCKzr0c4/9TNbArsKv1PnVO4PM4+lRJg==
-X-Received: by 2002:a05:600c:8b58:b0:477:a54a:acba with SMTP id
- 5b1f17b1804b1-4852695af23mr184477065e9.17.1773049890852; 
- Mon, 09 Mar 2026 02:51:30 -0700 (PDT)
+ bh=gKNmKl0vacYZC/r9wSH3ugWYQ7msGR+dGPcMXTncvzM=;
+ b=ddiW1inLZWFCiTSQ/ITQgadbtjAtdujtSbkDidYv52tDiOQycRF6aeY5m4/osSCoB6
+ XhlimfwK5KIgdCFmSq+dHO+QrwIOj4yQsMBHH3817AAWL5vxBdawi/hIzXjKbH0PGb76
+ o9icsEXvCWVgZaVc/ZfEIfUVlbSIuo7ooOo9Zp9gxvYK+DP+2VOYNLDVYILhkEv9dF9/
+ Bd56h8HX5LlyBd8Rt4jIfqQAGDomiYeb7bziSsu/+ia2t0tp0lQ2LIa1DFi1TaLN7gNh
+ uYaebiu73eGnrKLY0QG8bgsyKxAcYyJgfspgCqFVKR3zkth+d636IY7tNA4XS1Tl4XJw
+ DbGw==
+X-Gm-Message-State: AOJu0Yz0cDxoueuIc/88HntnPbSphJk2+S2tZZhYbuBReukx1H0ApTpw
+ Kw4w6kYl3O7zeqfkL3frdh1FU7L9C20+orOZthoLnifjVbZ71rAJn20OGIH4yt2ECcEkq5kYb+I
+ Rs+H9
+X-Gm-Gg: ATEYQzwmiWhfBgUN/fBsW4OyK9edSYsnKyj570DoutIZSdPckl4Fq1WRW79mljkmytu
+ N6xY6iG5knyg41Iek8A8KVl5KXXuz7Ugj6U4GUZ+as6s2NvIzugMM0TTrZeqyTOiY3HaHAa1fVY
+ l6qqvW6cxyFKYwp7G1o27CUinVhm7ACNBWNghE5Hy5LgycNb/43pZNLRiG2SJOZ0+gpd8VNDwFQ
+ f06qIrJrjVc7JwidyT7kLOA1C8Sl9958TbcP61Hl5AlDeGXVtI5gRirBpRiKKzG+HByQU6l3Z/4
+ 0IYiFxpFqI7xq/x3vhdzZZxgwBHnyjgMSHxCsPMNXkFVoV30ele3WRP/qo6gR+HgBAQICJpm79M
+ KmPe78wcmcjcXL71WkBJtqdMe3Lx5K5HQ1h77En1Nu2Jn6b610XAnmzs5Gi6G1eQYNMioYBlw7C
+ 5U1d0c9juJXNhWrxJ4t2Z82VR/6e/g4n5YGUCxgNDDzn1FZfUkfGZtyuxFRt7sxautXHtv0xlRn
+ Vs4f9BolJNGUiv1qcGmlT0++zcwHFg=
+X-Received: by 2002:a05:6000:228a:b0:439:d7db:c526 with SMTP id
+ ffacd0b85a97d-439da880c49mr18273944f8f.29.1773050009620; 
+ Mon, 09 Mar 2026 02:53:29 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852381c61csm85136235e9.11.2026.03.09.02.51.29
+ ffacd0b85a97d-439dae35cf7sm24035860f8f.26.2026.03.09.02.53.28
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 02:51:30 -0700 (PDT)
+ Mon, 09 Mar 2026 02:53:28 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Alistair Francis <Alistair.Francis@wdc.com>,
  Palmer Dabbelt <palmer@dabbelt.com>, qemu-riscv@nongnu.org
-Subject: [PATCH] hw/misc/sifive_e_aon: Don't leak timer
-Date: Mon,  9 Mar 2026 09:51:29 +0000
-Message-ID: <20260309095129.1406506-1-peter.maydell@linaro.org>
+Subject: [PATCH] hw/misc/riscv_cpc: Free CPU array in instance_finalize
+Date: Mon,  9 Mar 2026 09:53:28 +0000
+Message-ID: <20260309095328.1406779-1-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,100 +99,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The sifive_e_aon watchdog creates a timer with timer_new_ns() in its
-instance_init method, but does not free it in instance_finalize.
-This means that QMP introspection of the device leaks it:
+The TYPE_RISCV_CPC device allocates an array in its instance_init,
+but does not free this, leading to leaks like this from QOM/QMP
+introspection:
 
-Direct leak of 48 byte in 1 object allocated from:
+Direct leak of 512 byte in 1 object allocated from:
     #0  in calloc
     #1  in g_malloc0
-    #2  in timer_new_full /home/pm215/qemu/include/qemu/timer.h:520:21
-    #3  in timer_new /home/pm215/qemu/include/qemu/timer.h:543:12
-    #4  in timer_new_ns /home/pm215/qemu/include/qemu/timer.h:563:12
-    #5  in sifive_e_aon_init /home/pm215/qemu/build/san/../../hw/misc/sifive_e_aon.c:286:21
-    #6  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #7  in object_initialize /home/pm215/qemu/build/san/../../qom/object.c:578:5
-    #8  in object_initialize_child_with_propsv /home/pm215/qemu/build/san/../../qom/object.c:608:5
-    #9  in object_initialize_child_with_props /home/pm215/qemu/build/san/../../qom/object.c:591:10
-    #10  in object_initialize_child_internal /home/pm215/qemu/build/san/../../qom/object.c:645:5
-    #11  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #12  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
-    #13  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+    #2  in riscv_cpc_init /home/pm215/qemu/build/san/../../hw/misc/riscv_cpc.c:175:15
+    #3  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+    #4  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
+    #5  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
+    #6  in qdev_device_help /home/pm215/qemu/build/san/../../system/qdev-monitor.c:313:17
+    #7  in hmp_device_add /home/pm215/qemu/build/san/../../system/qdev-monitor.c:1005:9
 
-Allocating a separate QEMUTimer with timer_new() is not the preferred
-interface (per the comments in include/qemu/timer.h); switch to an
-inline struct initialized with timer_init(), which we can clean up
-with timer_del() in finalize.
+Free the array in instance_finalize.
 
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
-Incidentally I notice that this device doesn't have vmstate support,
-which is unfortunate -- devices really ought to either support it
-or else install a migration-blocker explaining why they can't.
+ hw/misc/riscv_cpc.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
- hw/misc/sifive_e_aon.c         | 16 ++++++++++++----
- include/hw/misc/sifive_e_aon.h |  2 +-
- 2 files changed, 13 insertions(+), 5 deletions(-)
-
-diff --git a/hw/misc/sifive_e_aon.c b/hw/misc/sifive_e_aon.c
-index 0e82ae3758..e78f4f5672 100644
---- a/hw/misc/sifive_e_aon.c
-+++ b/hw/misc/sifive_e_aon.c
-@@ -94,9 +94,9 @@ static void sifive_e_aon_wdt_update_state(SiFiveEAONState *r)
-         next += muldiv64((r->wdogcmp0 - wdogs) <<
-                          FIELD_EX32(r->wdogcfg, AON_WDT_WDOGCFG, SCALE),
-                          NANOSECONDS_PER_SECOND, r->wdogclk_freq);
--        timer_mod(r->wdog_timer, next);
-+        timer_mod(&r->wdog_timer, next);
-     } else {
--        timer_mod(r->wdog_timer, INT64_MAX);
-+        timer_mod(&r->wdog_timer, INT64_MAX);
+diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
+index 231a419062..4bf2fd8db1 100644
+--- a/hw/misc/riscv_cpc.c
++++ b/hw/misc/riscv_cpc.c
+@@ -185,6 +185,13 @@ static void riscv_cpc_init(Object *obj)
      }
  }
  
-@@ -283,12 +283,19 @@ static void sifive_e_aon_init(Object *obj)
-     sysbus_init_mmio(sbd, &r->mmio);
- 
-     /* watchdog timer */
--    r->wdog_timer = timer_new_ns(QEMU_CLOCK_VIRTUAL,
--                                 sifive_e_aon_wdt_expired_cb, r);
-+    timer_init_ns(&r->wdog_timer, QEMU_CLOCK_VIRTUAL,
-+                  sifive_e_aon_wdt_expired_cb, r);
-     r->wdogclk_freq = SIFIVE_E_LFCLK_DEFAULT_FREQ;
-     sysbus_init_irq(sbd, &r->wdog_irq);
- }
- 
-+static void sifive_e_aon_finalize(Object *obj)
++static void riscv_cpc_finalize(Object *obj)
 +{
-+    SiFiveEAONState *r = SIFIVE_E_AON(obj);
++    RISCVCPCState *s = RISCV_CPC(obj);
 +
-+    timer_del(&r->wdog_timer);
++    g_free(s->cpus);
 +}
 +
- static const Property sifive_e_aon_properties[] = {
-     DEFINE_PROP_UINT64("wdogclk-frequency", SiFiveEAONState, wdogclk_freq,
-                        SIFIVE_E_LFCLK_DEFAULT_FREQ),
-@@ -307,6 +314,7 @@ static const TypeInfo sifive_e_aon_info = {
+ static void riscv_cpc_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVCPCState *s = RISCV_CPC(dev);
+@@ -254,6 +261,7 @@ static const TypeInfo riscv_cpc_info = {
      .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(SiFiveEAONState),
-     .instance_init = sifive_e_aon_init,
-+    .instance_finalize = sifive_e_aon_finalize,
-     .class_init    = sifive_e_aon_class_init,
+     .instance_size = sizeof(RISCVCPCState),
+     .instance_init = riscv_cpc_init,
++    .instance_finalize = riscv_cpc_finalize,
+     .class_init    = riscv_cpc_class_init,
  };
  
-diff --git a/include/hw/misc/sifive_e_aon.h b/include/hw/misc/sifive_e_aon.h
-index efa2c3023f..e907aa7869 100644
---- a/include/hw/misc/sifive_e_aon.h
-+++ b/include/hw/misc/sifive_e_aon.h
-@@ -46,7 +46,7 @@ struct SiFiveEAONState {
-     MemoryRegion mmio;
- 
-     /*< watchdog timer >*/
--    QEMUTimer *wdog_timer;
-+    QEMUTimer wdog_timer;
-     qemu_irq wdog_irq;
-     uint64_t wdog_restart_time;
-     uint64_t wdogclk_freq;
 -- 
 2.43.0
 
