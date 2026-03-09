@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFF56F417EF
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:53:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74D28F417F1
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzbwd-0003qt-Nx; Mon, 09 Mar 2026 10:50:56 -0400
+	id 1vzbxC-0004Hc-BR; Mon, 09 Mar 2026 10:51:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwC-0003MP-8T
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:28 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwI-0003WK-2T
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:36 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbw9-0005eA-Gp
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:27 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso13409485e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:50:23 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbwF-0005fJ-RI
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:50:33 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so98742115e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:50:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773067822; x=1773672622; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773067830; x=1773672630; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NngTNdq24X5y9HO0NgvOvHi/Olf87roj8zALJBcI8aU=;
- b=ykfitZHbEjbRScGaxyk9t84VJR4hPepcFCOXkfN2dsr4995i5J4LF/DKowy7uzGbTf
- 9s3Zhll/xlRTb/uTj+yclt1W9SkEGlSQr5to9cst6+lXWyXR8SqrDb9L7qYpjV70xz6p
- gXOJUAtfcjc6msdzrBhicPpgRiFAt9NRSgLihTi88CQKsOF18KolqCd5BZ4eoBDaVC2m
- of+foCsral1TKCdkEkcswBPkfyiGUtVAvjxMMlQdA9P5nLqIt3LOfcWp5QnqYIyN3QMU
- kOYi8+W4fM5TDNj7MmYIvFja33iZEdzt3hvXOj+1H16et9dR7znTTsdvguh+fjaAe0g3
- eNhw==
+ bh=twH0MoLU9gm5rBOzlpHaIy0topLpBsNv4557Fsob2w8=;
+ b=lyNdX39M++8ik/1y/XKCQKFwC9ovMSHBlybt/aDULOiybxrHmlJVy2StJmIoO9xdo1
+ 2UnztWsojzt+4pvKZIEVL401FDkm05RuWJZwprEkm01uzMz88sbB9rDxmNteWuQ1r0dV
+ Wp09kyVEkqHQb3adoYqY77AeIfbgJ03zBlBGIrcmdFvIBzoh5Ff5F1OLs0IVzsJ4n5Rj
+ tyGFlOzgWAd7PphfjC31yqj3JsXUM6ciqFcGreYEjX4V/zHjkNxOpBXKiu2bzyAZJHY6
+ RWCUt5PqnzYI/84KJMxOSeqfPO5GCeGuHDAP8JWmaJC2JSEaDWU4QWya9xYp4lZZ2VLE
+ GPMw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773067822; x=1773672622;
+ d=1e100.net; s=20230601; t=1773067830; x=1773672630;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NngTNdq24X5y9HO0NgvOvHi/Olf87roj8zALJBcI8aU=;
- b=UmCWVxrzjxpktud99RTwEbzYC8M0BMs4XGMtDVB8x+RmEXFkP5gVHEID5jZDF8Fq0G
- e8/vpfNYOytgNsbn5ajYH8+FCrpmmI9k+BGY6bRrl46VQnXjSuGCForpBnQRxD76EiW5
- Hwqicj/9IjZS9LrJp8VKYt4p3h9Ckeh5OC0RwIM0o0CGaZbJpDRtyqj+D4Y9QNZQGgoE
- APJIrDAEJ7FTKbk0KL5ACZ1MSlRx7PGEAYEMX74k1Z+1JnSwOYG8Wm+r5j1Lr3wJ+NAU
- 5zEJxjgQa944ujq9Rt9+tCKZrntepkqkamHpQ3VQACeZcsipwlDtFwmn4wVA/xPjuc6U
- MaBQ==
-X-Gm-Message-State: AOJu0YxbqkW+guGEDAcYuQSms+0N73S5TRZzmKrcr6jHe1chICMNOvj3
- 8/J+aektIytyNg+wlO+pcNzHjqswdy37wc/kWHt5BOoQtP4Y0G5fCd4b7PTCTUnJts5KENJuvvj
- Jfly/pSk=
-X-Gm-Gg: ATEYQzxlOlX97xg/KwqDJ2kDnZqst3TJfR3UBBv6b1umY3kDq34qUIXkrLaYNeg3j47
- 1bnVIJNEG9PIVbYP77NVQAD30X3g3I7AQgGXReGOVUEkxosX3yoP25bQP34L1dP3flSCrdeQhRI
- ew0xQoESDqsfsVdzM+7cCZe/DwZ0vjKAzvg3nVYFM4ogRWHfbpd+dcAjZNprpUW5LL1lC+oFmGW
- ieYO7023N4LgDccasWx8A0l43DN455O3zE+XuApE5GrhJwYxb14WWmM2M1WgHCnmji5qF93kgtC
- QivJB3Pf/zlN1QUGV7KIkOjhIOhvIq/DifYd79R6hEJep1OxN/iaS0SUruAVvy86wlahAJpzEK3
- CMtRFRx7ybI3jum2RXkPXRoojzSq6E6X7y293OKSb7err8p+Az21OZKJVDj7VttxIzca6BOWACH
- rd+Psy2rmAF7zuhd1Gdbt+Z0RsRzHtRtCuUWsyBevfJnf1CuBsED5UNOYSMo8mGxcaC/diX6AJx
- TtHkQ==
-X-Received: by 2002:a05:600c:3b9a:b0:485:3c11:de84 with SMTP id
- 5b1f17b1804b1-4853c11e970mr48719215e9.14.1773067822191; 
- Mon, 09 Mar 2026 07:50:22 -0700 (PDT)
+ bh=twH0MoLU9gm5rBOzlpHaIy0topLpBsNv4557Fsob2w8=;
+ b=lnB0Xke23t+wFmUJ/KEIpIWYMH8X0IbsIz+rlPnn2HsoRCEynm8CcwQqwixaURFf+5
+ Cy5nFg4UcljPdgebiztLzB5e9N6BaGjMngF79/cy+91Zl5qApyjZCFk2bf9Fut62tP49
+ ZGfl/jXBXMTndc5xvP40NX8unStPdcdQ14UgwaefsQDIGRgqO0nzXPxg2nSo2eKTQ1c4
+ IhwhIPwlF4skZrgYH2rjZ+HydjBKmGxW74bEGwWdULdARHjpcemPSbPiPTSlstBwokwa
+ FB0ZRZSy9mdDytNbK2VJYOlM3dIdf00aKfW1T+Vy/G24Ple9dMJyQwLRqejDtn86iLOg
+ PrtA==
+X-Gm-Message-State: AOJu0YzWG/ttnXgeJWIeyqnxkn+U0tPE/Cva86B0yDOszNgjClTdCqVM
+ QZZkLZWn5ltFDxIT9yklmgfcH9JmKZg2c4gnB+MIJTSPnFFC+ddnJEiO9jV7CLZ32Bh+sQrDGXd
+ 7MTzdwlw=
+X-Gm-Gg: ATEYQzzGYA5fL8K6AW/G8eTOLYmpF6GwCiQG1ZFUL1BLp4h36EQ8nhEEi+xyiSCdY/O
+ N90vc6nMqiBStbKhE4piw5R7gWBU0uyT20c2G5mYFPZnpbXjbkEhRa3XINIJcQ/sQOGbccvIxyj
+ G58tPOXQhAf0XI+s25aRmaN3Wkq9H0zJXEeEFXFjVV/pBO9aRgILdzeuiZNHs8RdhWfFQt1Tlcu
+ w8Em657EVRRK8/Vh8gvwqG9xqE7g5uzLuDCqZmvw2VJNSwmcC48n76kEKcrbQ2rxcSh6ZYn+zT/
+ Bj5oaYNQ8CnkNKB1BGijptdJrLUEpsQdBRE1yZ/TekCQEMoXrvovUgxJdjXbjeaRC/647tTOwZ7
+ WP5sQEeI2dOx+FJE3j3HCqj1BPxLiOjLwE75+RIGjw2q+5+w9HPyv81bA0nxHYgd0VE1AKRDyP0
+ BFBK5fBG3KOB5dYdyYgmt3EQxBG69m2WMUxh9GZO4N4QqtYgbiQox0zQqonCmz9IDO2o/yA1IrG
+ DpbcQ==
+X-Received: by 2002:a05:600c:3b13:b0:47f:f952:d207 with SMTP id
+ 5b1f17b1804b1-48526969359mr218672575e9.19.1773067829463; 
+ Mon, 09 Mar 2026 07:50:29 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48540ae5484sm19806785e9.2.2026.03.09.07.50.20
+ 5b1f17b1804b1-4852f369118sm76824055e9.20.2026.03.09.07.50.28
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 07:50:21 -0700 (PDT)
+ Mon, 09 Mar 2026 07:50:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
@@ -73,18 +73,17 @@ Cc: Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>
-Subject: [PATCH v2 01/10] hw/i386/pc: Remove deprecated pc-q35/pc-i440fx/xenfv
- 3.1 machines
-Date: Mon,  9 Mar 2026 15:50:03 +0100
-Message-ID: <20260309145013.44327-2-philmd@linaro.org>
+Subject: [PATCH v2 02/10] hw/i386/pc: Remove PCMachineClass::pvh_enabled field
+Date: Mon,  9 Mar 2026 15:50:04 +0100
+Message-ID: <20260309145013.44327-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309145013.44327-1-philmd@linaro.org>
 References: <20260309145013.44327-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,82 +106,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-These machines has been supported for a period of more than 6 years.
-According to our versioned machine support policy (see commit
-ce80c4fa6ff "docs: document special exception for machine type
-deprecation & removal") they can now be removed.
+The PCMachineClass::pvh_enabled boolean was only used by
+the pc-q35-3.1 and pc-i440fx-3.1 machines, which got removed.
+Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-2-philmd@linaro.org>
+Message-Id: <20260307152635.83893-3-philmd@linaro.org>
 ---
- hw/i386/pc_piix.c | 25 -------------------------
- hw/i386/pc_q35.c  | 14 --------------
- 2 files changed, 39 deletions(-)
+ include/hw/i386/pc.h | 3 ---
+ hw/i386/pc.c         | 6 ++----
+ hw/i386/x86-common.c | 3 +--
+ 3 files changed, 3 insertions(+), 9 deletions(-)
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 29c8e997131..2b94c472446 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -655,19 +655,6 @@ static void pc_i440fx_machine_4_0_options(MachineClass *m)
+diff --git a/include/hw/i386/pc.h b/include/hw/i386/pc.h
+index 5623660f5dd..908de5e1eab 100644
+--- a/include/hw/i386/pc.h
++++ b/include/hw/i386/pc.h
+@@ -110,9 +110,6 @@ struct PCMachineClass {
+     bool enforce_amd_1tb_hole;
+     bool isa_bios_alias;
  
- DEFINE_I440FX_MACHINE(4, 0);
+-    /* use PVH to load kernels that support this feature */
+-    bool pvh_enabled;
+-
+     /* create kvmclock device even when KVM PV features are not exposed */
+     bool kvmclock_create_always;
  
--static void pc_i440fx_machine_3_1_options(MachineClass *m)
--{
--    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
--
--    pc_i440fx_machine_4_0_options(m);
--    m->smbus_no_migration_support = true;
--    pcmc->pvh_enabled = false;
--    compat_props_add(m->compat_props, hw_compat_3_1, hw_compat_3_1_len);
--    compat_props_add(m->compat_props, pc_compat_3_1, pc_compat_3_1_len);
--}
--
--DEFINE_I440FX_MACHINE(3, 1);
--
- #ifdef CONFIG_XEN
- static void xenfv_machine_4_2_options(MachineClass *m)
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index 052226baa57..3fc2f0a057e 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -588,7 +588,6 @@ void xen_load_linux(PCMachineState *pcms)
  {
-@@ -679,16 +666,4 @@ static void xenfv_machine_4_2_options(MachineClass *m)
+     int i;
+     FWCfgState *fw_cfg;
+-    PCMachineClass *pcmc = PC_MACHINE_GET_CLASS(pcms);
+     X86MachineState *x86ms = X86_MACHINE(pcms);
  
- DEFINE_PC_MACHINE(xenfv_4_2, "xenfv-4.2", pc_xen_hvm_init,
-                   xenfv_machine_4_2_options);
--
--static void xenfv_machine_3_1_options(MachineClass *m)
--{
--    pc_i440fx_machine_3_1_options(m);
--    m->desc = "Xen Fully-virtualized PC";
--    m->alias = "xenfv";
--    m->max_cpus = HVM_MAX_VCPUS;
--    m->default_machine_opts = "accel=xen,suppress-vmdesc=on";
--}
--
--DEFINE_PC_MACHINE(xenfv, "xenfv-3.1", pc_xen_hvm_init,
--                  xenfv_machine_3_1_options);
- #endif
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index f102da8e4a1..52b8064b4d2 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -600,17 +600,3 @@ static void pc_q35_machine_4_0_options(MachineClass *m)
- }
+     assert(MACHINE(pcms)->kernel_filename != NULL);
+@@ -598,7 +597,7 @@ void xen_load_linux(PCMachineState *pcms)
+     fw_cfg_add_i16(fw_cfg, FW_CFG_NB_CPUS, x86ms->boot_cpus);
+     rom_set_fw(fw_cfg);
  
- DEFINE_Q35_MACHINE(4, 0);
--
--static void pc_q35_machine_3_1_options(MachineClass *m)
--{
--    PCMachineClass *pcmc = PC_MACHINE_CLASS(m);
--
--    pc_q35_machine_4_0_options(m);
--    m->default_kernel_irqchip_split = false;
--    m->smbus_no_migration_support = true;
--    pcmc->pvh_enabled = false;
--    compat_props_add(m->compat_props, hw_compat_3_1, hw_compat_3_1_len);
--    compat_props_add(m->compat_props, pc_compat_3_1, pc_compat_3_1_len);
--}
--
--DEFINE_Q35_MACHINE(3, 1);
+-    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, pcmc->pvh_enabled);
++    x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
+     for (i = 0; i < nb_option_roms; i++) {
+         assert(!strcmp(option_rom[i].name, "linuxboot_dma.bin") ||
+                !strcmp(option_rom[i].name, "pvh.bin") ||
+@@ -932,7 +931,7 @@ void pc_memory_init(PCMachineState *pcms,
+     }
+ 
+     if (linux_boot) {
+-        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, pcmc->pvh_enabled);
++        x86_load_linux(x86ms, fw_cfg, PC_FW_DATA, true);
+     }
+ 
+     for (i = 0; i < nb_option_roms; i++) {
+@@ -1673,7 +1672,6 @@ static void pc_machine_class_init(ObjectClass *oc, const void *data)
+     pcmc->has_reserved_memory = true;
+     pcmc->enforce_amd_1tb_hole = true;
+     pcmc->isa_bios_alias = true;
+-    pcmc->pvh_enabled = true;
+     pcmc->kvmclock_create_always = true;
+     x86mc->apic_xrupt_override = true;
+     assert(!mc->get_hotplug_handler);
+diff --git a/hw/i386/x86-common.c b/hw/i386/x86-common.c
+index a420112666a..db8d4e855f4 100644
+--- a/hw/i386/x86-common.c
++++ b/hw/i386/x86-common.c
+@@ -704,8 +704,7 @@ void x86_load_linux(X86MachineState *x86ms,
+          * saving the PVH entry point used by the x86/HVM direct boot ABI.
+          * If load_elfboot() is successful, populate the fw_cfg info.
+          */
+-        if (pvh_enabled &&
+-            load_elfboot(kernel_filename, kernel_size,
++        if (load_elfboot(kernel_filename, kernel_size,
+                          header, pvh_start_addr, fw_cfg)) {
+             fclose(f);
+ 
 -- 
 2.53.0
 
