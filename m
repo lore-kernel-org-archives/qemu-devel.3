@@ -4,56 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 701B6EA8542
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 02:37:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DDF8EA8542
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 02:42:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzQTw-00015d-As; Sun, 08 Mar 2026 22:36:32 -0400
+	id 1vzQZi-0002VK-1h; Sun, 08 Mar 2026 22:42:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vzQTu-00015Q-Sa
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:36:30 -0400
-Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
+ id 1vzQZf-0002VB-8i
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:42:27 -0400
+Received: from fout-b6-smtp.messagingengine.com ([202.12.124.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1vzQTt-000737-7o
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:36:30 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 600867A0154;
- Sun,  8 Mar 2026 22:36:27 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-03.internal (MEProxy); Sun, 08 Mar 2026 22:36:27 -0400
+ id 1vzQZc-00080w-QL
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 22:42:25 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfout.stl.internal (Postfix) with ESMTP id 29CA31D00133;
+ Sun,  8 Mar 2026 22:42:19 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-05.internal (MEProxy); Sun, 08 Mar 2026 22:42:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1773023787; x=1773110187; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p
- 0gRn5cEe2Wc=; b=kgU0wogp+d7yj8G/pIupycfPSIq5I31jsx0KdVEFMHsFIWpz
- IOgBiQ3Ri1rdJZZH0Up+5kQkVZ0pkprfEfl3UeMj/G3Gw1o4/LKc+HUG5K+3SRiw
- eQxziDEnOLLkl5mu7WKWmlU53d4pRQclWaOKRCXcJTR0gN7llzBswGxx31rlwBCr
- 0A5IxcJEnv2rOqsTZIeTuR71Rog9g1XGUzvp8CG72ggPkiQ0G0I6YBOCpYsIN07q
- OTVremgBnss0esu6LBOeQl8yZAUPGMrgQ6AK8GoOdq5IaUFunYxdBYEDOH4mY7JJ
- f01jN0FI8e57aM8SYf+vc/Vj0A6dKIA0uQpgzg==
+ t=1773024137; x=1773110537; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p
+ 0gRn5cEe2Wc=; b=RnLLM9OYfSayeAq+MV17c52bludvqSuuFa+xBHfGWmp03POa
+ /yrv/W2aNAJ4urjuWzw8eyK7Uy3VYxzsV+BAGoIxIEqb3mq43jGhZjcnZhjhS7Mt
+ YT890WcJpoc69AB+qpuSwNYZLeQJa/4TUTf/U4Mx3kGK7LcIEZW1PDybGS/KMluW
+ 6vKKwBNvU5G5k9+bW+fI9yIdP1rmEXdM7MEulB4kf9sKGrjjHqLTVHyFlMW6Tpwn
+ pb7zlnniKDJ87+DZoxIwliUBeDO2Gh2tsgLBLILwCCp+465/EzvKMVTng/chfnR2
+ 5dMXeDD6k1x2FDyY/RT/POv+5A+Ys4mmEn3Lsg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773023787; x=
- 1773110187; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p0gRn5cEe2Wc=; b=a
- xyQamloF1STC2TrtP675yJy2J8/P+keZxxSxXPL2RdvTA50PSpr7fOidopswtgtd
- nSM3VXaB8thLQsb3lFygHGD0diZQUOz38Jid0XCH2DKH38v1qLk6FVNrOBQSCCRR
- k5VvMhmnAEoX7C1mAlqKVyFYCudQ0DkG6gvyIz0yfl4pPgiOxu6QYuaWdlNZeD71
- eMZj6RcktP/Ie1ooUITPXbCETzZ7G6AES+tVAw9Wz9MtJRprafI9ZKBV4foSgXn2
- zFvKihOsy+3k4kRw/GTmxwZ2Us5bTHcu5NYhnayqdwG0RH0/5S6cPEruLqtHe67A
- sgK9qeAc5AHTIiNtQdVLQ==
-X-ME-Sender: <xms:KjKuaaE5Auf786XkhvJ5mvpZnr415Y7eqUc3_SnQNWDwtbfjcPG6wg>
- <xme:KjKuaSMWUjWs4oGNX3s7Y-lzqftmO9zSv9y0Ej7yVD8cK4u7oatxs56nXJzgJBUUl
- jRN8ObaX_aRhUMaEqb6RWDFxBz4PqgxYXgKE0TKc02GWD_kXdvCqA>
-X-ME-Received: <xmr:KjKuacdxLdliH4m9LYyLR5ZlB3wxWk_7ndnHWI5AA8GxKhk-b2LBwC0iMe8V>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeiledtucetufdoteggodetrf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773024137; x=
+ 1773110537; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p0gRn5cEe2Wc=; b=H
+ AgVbd511rtEpvvMQy1XmipT5oGg9E6wR9IC2rIoqQb7tzg2QQDX3NjCiLkMMuePM
+ ZGZXUnW+x11zF3d4p4cgLbWjxeodESPtaRgwBhGOo5rBkH9Ot8IACBi5Li5u5nzD
+ liLH5EoHtEN8NAn7RV4+idklzqdzuhn+Ku47u/TL97GNifjBFnRq8uVM0+fA7Aei
+ jYPRhwOZ2vqnbx5VCqZyC4e6/0nYBpC0ggy5DuYZvzZ5/e+Z/V+ITYo+Yde71Ryd
+ y9/B0d1mtPtd2w95WpbmntFEh2N+6QwID686xQ4OjshX64CLNe8q90/qBWRD/koV
+ mLmuOUyZs1uqpI1PD0nEA==
+X-ME-Sender: <xms:iTOuaRWDc3KCiKXp3QeSE4RYf_eyLcIOdiHQjEt_ZWhPYAPFyLr5lw>
+ <xme:iTOuaYeUfKs1haImzOAUgHdn70WncHEn9_ZEug7mYRoQK7JdamTzjbDCG-cBy2wH5
+ 5veuAKrsN21rwh1lmthokzKFTn-vwolYcm7Xmophn5d03v7eyJpyVU>
+X-ME-Received: <xmr:iTOuaVsaA5Nxn4kcpnrbq37vF2HpHLQ_148oRNBqbvDAzuMEbtb1sMia3Qn1>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeiledvucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
  hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkuffhvfevofhfjgesthhqredtredt
@@ -61,38 +61,38 @@ X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvjeeiledtucetufdote
  honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpeekkeekfedujefgleeguddtuefg
  hedvhfehhfdutdekffdujeelfeefkeegleejhfenucevlhhushhtvghrufhiiigvpedtne
  curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrlh
- grthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhu
- rhgvrghusehrvgguhhgrthdrtghomhdprhgtphhtthhopegthhgrugesjhgrsghlohhnsh
- hkihdrgiihiidprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
- pdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomh
-X-ME-Proxy: <xmx:KjKuaftlp0ckBZ427Yh-GRCJBnspjcsfwKV7N-LssAfcEQk47S8iqw>
- <xmx:KjKuadmqX8qKBtKLkMZpvDLZJYb739kwk9j5g4qVnfqsiCBxAS4qdA>
- <xmx:KjKuaRwOQ9CKZmNS_cR0rVQnBHGdZ1qRzdftC7OXiE2iuEvqdNTT_w>
- <xmx:KjKuafNxQ4s0yHOEZ3zbi9lBnufrGxTgX2_cAWZSxQgSIiF7YyTr4A>
- <xmx:KzKuaWrcdPAoafDZCZg4yzgPa42XR3-8hcYhAVQ2kx4j8SzRxUS5dRho>
+ nhgspghrtghpthhtohephedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrh
+ gtrghnughrvgdrlhhurhgvrghusehrvgguhhgrthdrtghomhdprhgtphhtthhopegsrghl
+ rghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnh
+ honhhgnhhurdhorhhgpdhrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomhdp
+ rhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihii
+X-ME-Proxy: <xmx:iTOuaf8khR0u31Mz6RU98etMPzCi6XmNPajwAu5wUx0iwhKwhA3Sjw>
+ <xmx:iTOuaY2XF6P_1Zcyj6WhP6E24RPBaM7kveMtymwO9ZN92qNC0JURsw>
+ <xmx:iTOuacCOLKNGcn06GEYWcjN7MeYZH_jpRbHNrhVTK47iunJz7nwjOQ>
+ <xmx:iTOuacePcvGVBOJz-8NYjF5haw9yGKJkCO5xwrK695G2I5X02AXqxA>
+ <xmx:iTOuaQ5wPaDKAWxGQ6vWrFznQ1_yqyEtKu8GQQf6r0MTunyfaEgb3lyj>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 8 Mar 2026 22:36:26 -0400 (EDT)
+ 8 Mar 2026 22:42:17 -0400 (EDT)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id c293eeef;
- Mon, 9 Mar 2026 02:36:25 +0000 (UTC)
+ by chomposaur (OpenSMTPD) with ESMTPA id 85c9c94c;
+ Mon, 9 Mar 2026 02:42:16 +0000 (UTC)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Sun, 08 Mar 2026 22:36:25 -0400
-Message-Id: <DGXWH6QV4EVO.1TSVT5R0C2OUI@jablonski.xyz>
-Subject: Re: [PATCH 1/2] ati-vga: Simplify hw cursor drawing
+Date: Sun, 08 Mar 2026 22:42:16 -0400
+Message-Id: <DGXWLNVJONOP.2H6YZDMRWSCOD@jablonski.xyz>
+Subject: Re: [PATCH 2/2] ati-vga: Do not access pixel outside the screen
 From: "Chad Jablonski" <chad@jablonski.xyz>
 To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
 Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
  "Chad Jablonski" <chad@jablonski.xyz>
 X-Mailer: aerc 0.21.0
 References: <cover.1773009887.git.balaton@eik.bme.hu>
- <90b49357b6bf80bcf8962331575ffd16a96b706a.1773009887.git.balaton@eik.bme.hu>
-In-Reply-To: <90b49357b6bf80bcf8962331575ffd16a96b706a.1773009887.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=202.12.124.158; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b7-smtp.messagingengine.com
+ <26db0715a6b9f6504f394010513facc9a37882ad.1773009887.git.balaton@eik.bme.hu>
+In-Reply-To: <26db0715a6b9f6504f394010513facc9a37882ad.1773009887.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=202.12.124.149; envelope-from=chad@jablonski.xyz;
+ helo=fout-b6-smtp.messagingengine.com
 X-Spam_score_int: 14
 X-Spam_score: 1.4
 X-Spam_bar: +
