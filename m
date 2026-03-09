@@ -4,112 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8525AF41807
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359E2F41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:26:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcQl-0007Q8-4d; Mon, 09 Mar 2026 11:22:03 -0400
+	id 1vzcV2-0001VL-Ad; Mon, 09 Mar 2026 11:26:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzcQj-0007PJ-8T
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:22:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzcQf-0002if-NB
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:21:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773069715;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=S3AWJM+4eVxibfFgjpiz1jLMjG/zA+n2zZGIifc+no8=;
- b=L6WGdgUt+MOa9OKEJ6z4U5R+R8KTuLzCxOmVEM5qDNxhXiANk07hOVUV+hpZgzH1VkGrxy
- LaxbWmSkUB0QTT+zSbpMhot4EO/vp8tyOrmZpZQ4d74s+e52WoRnD9WHZZrG0N0yv1yie0
- WODIQnA2etWKM2r5KO4rWFhfK5MHcMk=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-333-9oTzrXC7NkS1Or-Rx8M6vw-1; Mon, 09 Mar 2026 11:21:53 -0400
-X-MC-Unique: 9oTzrXC7NkS1Or-Rx8M6vw-1
-X-Mimecast-MFC-AGG-ID: 9oTzrXC7NkS1Or-Rx8M6vw_1773069713
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-506bac14430so534647591cf.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:21:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzcUw-0001Tt-PI
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:26:23 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzcUv-0003O0-4J
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:26:22 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4853f2826f7so8255915e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:26:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773069713; x=1773674513; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=S3AWJM+4eVxibfFgjpiz1jLMjG/zA+n2zZGIifc+no8=;
- b=hadnX8sLtHtmwi3Sa8biIJLOOltUrRPjAhExvtwuDFi/5up+ejmiuvhoDbiRwLV1mI
- +LyjN6OkF0fd91Rl1m7+sg2J5lpQKOk5tkg8goonwVWQoLJMgVuHdnm2S9VJzIqmNCUV
- BC9P3r4lmjOSLcBZ4w6VvFqy7zlxq6HlyCvlIQuBml2Frl7wd23YPNxKksYf0Y0QvWj0
- upGQ2G3PW/6qw+2LXW+AEZaV3e7tNetGzlLWXNyMHy3xmKuJdSGe6DV8++B5lESkSQSS
- QC30++Ajk0GmLaujxo/ifc4x1rb7CVVBG7BWHBC3HsH8nySOC2TttDFNQIbhdYRvqWAO
- Hzqg==
+ d=linaro.org; s=google; t=1773069979; x=1773674779; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=0y29DJUnuBxj2iK9KwnvP2N8bp4mkTNvUyojM3qXp5o=;
+ b=q476In5+Qwf2Bi2NPOS2OnmmxKpdDNBZZvgrLVMws6wq1l3LDjLWiCIvh4Lsby50Le
+ tFzdFMdxXijlya8O5p009UjDvsq/gGOqxQyimD/gbPwoP3jBVCyjowqMe9PQo9B8vkJu
+ r21TBPgwdwODDD8v291tC/A3NQl0SU+DAiRD6fn9YyXQ83oXoFOHDZhRkywBAeffSK35
+ 37XaSY/NlLM0SuqpSvtT1dOi7EwdXNK6IPrGulrU65u9zP+YaEwv/WUh+GOr7+Q16vBM
+ IZi/vSE4aF9yucXTWx73Sm+sqrW4JGvBS3rt707fyhgtgMDBLStgGkkiguKitR08M8Sq
+ zsQw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773069713; x=1773674513;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=S3AWJM+4eVxibfFgjpiz1jLMjG/zA+n2zZGIifc+no8=;
- b=DDHA+4OEADuRUQScNOJm1MrD9x8p1/VjR5WKxHlGwls6zvq8ZvJbusOrWVS/i6VrAy
- 3KuY7vDow4HRJyw8+Ri3+ETwy7PHHAtALe76GMh7LCrnqFYAO2ZZW+QjZX/EqBKzZ3ny
- VUHBpO/eXxt+3WTx7PPFHLxNDPtbes6ayBBejoH6e+FOjNIKK8ymtUyrp3RLlXw3Vily
- +Y+k1gT5+lk8Btjc1uQCv/nGk/Vugpl4nDS9KQgH3GHaTNWo1CDti+UqD1DLobiy0189
- ypgjYepldxUXzGgAjh3gupXMcmgwpfPleSGtHQ7d6nrQUx30t4w+M8ma5utap4P+ujZh
- wJog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV1DBab5daredjQ8GNdPg7AfG4DDNvdbKLFqsE2BtzB42Tl0XEkukoUGKtZZuRoOPnUYi3iBccvyqLT@nongnu.org
-X-Gm-Message-State: AOJu0YyHSCHuYFDomgDEOigS/Q10w5H/XGZg3wXif5BwFjDq1bOXYC1z
- FxgHVKgjS+n2M/Bx2wmwwmf7Ex3fu60aVLkkI/6mI1FIf+2ivuV2UtsWU05nGb2rDnxOL5A9qy4
- iNxrv9Th+BDsSv1tPJUpyyl8hzUkOF7wHP2g3xrZ9WOHgYXjO0xXUi7Ce
-X-Gm-Gg: ATEYQzzYTYOe6I3EyEnZRy4bK1Px03ePG1YBUxLOjem7u+g+QQIMkg8Lg3mvc8pKtFq
- 5T2PHBXFC1HmUz87cAfU1aNqNlLpaCf8zQWYHpwZHcY7sqnOpFaJqsP5S3o9Z4CnyaYp0rjlwp4
- Q7IOSjhLzoJBSsHRhS3XH7zNko9JFk4kNq1Sku6XfqJfvlJlcOV9Zg73ESFQcAHo+x3CSBiwPdu
- 74WnJQ62sI40m2XZnkjAx01J4FFLMY5q0s7U/FIM5bawqMsZFMj8Ft916qSJdkdWt6APlYrLmDh
- eCizgto8R2gT7U6XYHNXoV1UNTXzAiMpLsdkPyvqOnzTP+HdXiV3G8OG4kIEWdfp4Jcr8BHIcI+
- 3UABSnxvE4LyScQ==
-X-Received: by 2002:ac8:5ac2:0:b0:509:1ad4:630b with SMTP id
- d75a77b69052e-5091ad46e03mr47873101cf.22.1773069713151; 
- Mon, 09 Mar 2026 08:21:53 -0700 (PDT)
-X-Received: by 2002:ac8:5ac2:0:b0:509:1ad4:630b with SMTP id
- d75a77b69052e-5091ad46e03mr47872661cf.22.1773069712679; 
- Mon, 09 Mar 2026 08:21:52 -0700 (PDT)
-Received: from x1.local ([174.91.117.149]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5091a371f4dsm23622441cf.10.2026.03.09.08.21.50
+ d=1e100.net; s=20230601; t=1773069979; x=1773674779;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0y29DJUnuBxj2iK9KwnvP2N8bp4mkTNvUyojM3qXp5o=;
+ b=c/FcPWFcjX2Fnrq3s+LlSzQbKyXaP+pVcutMXydTHHucovjxB7JslDSbgAEifTHmBu
+ VqGQMv/fHtVppESCz76R220zLk4ZXqzURMkcFdi++NdfRpsqBAblZbq18S9xsSTRfrXB
+ nRdNK7ZVo3Ng1tRy0A40GNfqLlmrFYrVWt+7hfXtjl0C+KfH27tObu/bXXWuQYeCIPSb
+ zd72cUZxpR9SSIdiCKPWoVbErsa4vIIbxa49uD9yhbJpuf3MfdiRGRcQPU5hl9r9C8+t
+ 7VKUfxtdDkb4zi0d1QsSmFWLLR+bNlAYWvBhtN3r0offliNLqraPPV0lVZR1JKDAumyb
+ ObPg==
+X-Gm-Message-State: AOJu0YySndvlSmF1lWbgJVuH+tPrp31lewVxBFL8LX96mGwDluY+mk7q
+ nhD6aAzKvw/6HuT5LCWOjnMeZgpU8kAMNly3viTlnHQGabelmurepsuDxeDpQjFgCGqOqVhU9wG
+ dGDDF
+X-Gm-Gg: ATEYQzwxPLTqw285l8agHStkEu4ZB+MCGMtTMWDmOrN9rZkZZ626QRBw0tX1bFQwyDt
+ SWWMAi3JHQGtB4tP1r7aFgx3dSabJEMNuUmWT1wyUm0XYJXtUACOmCumUaHHUX6l+o1SsnaLtpz
+ fUYh/IXLcSZX6yNbMqej0E2TJ7gKx6AXojnLRT2Y+jBhQui9TjTJfYEAZrpLtsFsKN7ytL+pTW1
+ ymdrTsOp4lByDfIPrJLn7Ukk0DhoHJ1qU1rs6awH55lDLIflMoCTEJNI09wzzW3lYUaLtAdBj6Z
+ L+B3xKmd6LqVWRd2V6gqRuP6wzTnqVn7eh9U/HcUUmDLZ6ci6iPH/P4OY2ufOZUCYbFKjsAddcr
+ C8o7Fu57tM8wwSsU8m2Yu3H6nWdRHU7Ax0XIMVUWO8oRkm0EqAcRvNwpQYdqT20kIW0I9ZwQauG
+ 3zG7Bn/tvFVd2Rs3Lfr1ObDL5XyB1m0Nfbmw0XGln7RLdjkKPbWcWQ8W7oO+9tDLMjvnkXvf73O
+ J9ghbczhD4OozyVHP7Ed3z2UHJUpIA=
+X-Received: by 2002:a05:600c:3b0c:b0:483:ad56:8d16 with SMTP id
+ 5b1f17b1804b1-48526918944mr202277405e9.6.1773069978922; 
+ Mon, 09 Mar 2026 08:26:18 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48534fa65a6sm94844045e9.2.2026.03.09.08.26.17
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 08:21:51 -0700 (PDT)
-Date: Mon, 9 Mar 2026 11:21:40 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, qemu-devel@nongnu.org,
- mst@redhat.com, jasowang@redhat.com, clg@redhat.com,
- nathanc@nvidia.com, Yi Liu <yi.l.liu@intel.com>,
- =?utf-8?Q?Cl=C3=A9ment?= Mathieu--Drif <clement.mathieu--drif@bull.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] intel_iommu: Remove 'x-' prefix from 'x-scalable-mode'
- and 'x-flts' properties
-Message-ID: <aa7lhJ5E5IY5SEiH@x1.local>
-References: <20260309092027.404489-1-zhenzhong.duan@intel.com>
- <aa7P13u3yconC_JU@redhat.com>
+ Mon, 09 Mar 2026 08:26:18 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH] docs/devel/decodetree: Fix formatting in "field examples"
+ table
+Date: Mon,  9 Mar 2026 15:26:17 +0000
+Message-ID: <20260309152617.1611566-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aa7P13u3yconC_JU@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,24 +100,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 01:49:11PM +0000, Daniel P. Berrangé wrote:
-> On Mon, Mar 09, 2026 at 05:20:27AM -0400, Zhenzhong Duan wrote:
-> > We had 'x-scalable-mode' for more than 5 years and 'x-flts' for more than 1
-> > year, it's fine to remove 'x-' now.
-> 
-> I tried to look at history to understand why we used an 'x-' prefix to
-> begin with. There doesn't seem to have been a very compelling reason,
-> just a suggestion from Peter (cc'd)
-> 
->    https://lists.nongnu.org/archive/html/qemu-devel/2019-02/msg02847.html
+The rST syntax for a table uses ASCII art to draw the cell
+boundaries; then inside each cell the text is treated as a body
+element, so it is rendered the same way as text at the top level of a
+document.
 
-Yes, at that time scalable mode is at very early stage, and the ABI may be
-prone to change, hence the suggestion.  I do have the gut feeling it's
-getting much more stable on the interface so it makes sense to remove x-.
+The "field examples" table was assuming a "literal document" format
+for its cell bodies; this meant that the single line cells were being
+rendered in plain text, not a fixed width font, and the multi line
+cells were rendered as definition-lists because of their "second and
+subsequent lines are indented" layout.
 
-Thanks,
+Fix this by consistently using inline-code markup for the left column
+and literal blocks for the right column.  (We want to be consistent
+within each column because a literal block renders differently to
+inline-code, with a green background.)
 
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+You can see the mis-rendered version at
+https://www.qemu.org/docs/master/devel/decodetree.html
+---
+ docs/devel/decodetree.rst | 44 ++++++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 17 deletions(-)
+
+diff --git a/docs/devel/decodetree.rst b/docs/devel/decodetree.rst
+index 98ad33a487..33cd6fe583 100644
+--- a/docs/devel/decodetree.rst
++++ b/docs/devel/decodetree.rst
+@@ -64,23 +64,33 @@ A field with no ``fields`` and no ``!function`` is in error.
+ 
+ Field examples:
+ 
+-+---------------------------+---------------------------------------------+
+-| Input                     | Generated code                              |
+-+===========================+=============================================+
+-| %disp   0:s16             | sextract(i, 0, 16)                          |
+-+---------------------------+---------------------------------------------+
+-| %imm9   16:6 10:3         | extract(i, 16, 6) << 3 | extract(i, 10, 3)  |
+-+---------------------------+---------------------------------------------+
+-| %disp12 0:s1 1:1 2:10     | sextract(i, 0, 1) << 11 |                   |
+-|                           |    extract(i, 1, 1) << 10 |                 |
+-|                           |    extract(i, 2, 10)                        |
+-+---------------------------+---------------------------------------------+
+-| %shimm8 5:s8 13:1         | expand_shimm8(sextract(i, 5, 8) << 1 |      |
+-|   !function=expand_shimm8 |               extract(i, 13, 1))            |
+-+---------------------------+---------------------------------------------+
+-| %sz_imm 10:2 sz:3         | expand_sz_imm(extract(i, 10, 2) << 3 |      |
+-|   !function=expand_sz_imm |               extract(a->sz, 0, 3))         |
+-+---------------------------+---------------------------------------------+
+++-----------------------------+----------------------------------------------+
++| Input                       | Generated code                               |
+++=============================+==============================================+
++| ``%disp   0:s16``           | ::                                           |
++|                             |                                              |
++|                             |   sextract(i, 0, 16)                         |
+++-----------------------------+----------------------------------------------+
++| ``%imm9   16:6 10:3``       | ::                                           |
++|                             |                                              |
++|                             |   extract(i, 16, 6) << 3 | extract(i, 10, 3) |
+++-----------------------------+----------------------------------------------+
++| ``%disp12 0:s1 1:1 2:10``   | ::                                           |
++|                             |                                              |
++|                             |   sextract(i, 0, 1) << 11 |                  |
++|                             |       extract(i, 1, 1) << 10 |               |
++|                             |       extract(i, 2, 10)                      |
+++-----------------------------+----------------------------------------------+
++| ``%shimm8 5:s8 13:1         | ::                                           |
++| !function=expand_shimm8``   |                                              |
++|                             |   expand_shimm8(sextract(i, 5, 8) << 1 |     |
++|                             |                 extract(i, 13, 1))           |
+++-----------------------------+----------------------------------------------+
++| ``%sz_imm 10:2 sz:3         | ::                                           |
++| !function=expand_sz_imm``   |                                              |
++|                             |   expand_sz_imm(extract(i, 10, 2) << 3 |     |
++|                             |                 extract(a->sz, 0, 3))        |
+++-----------------------------+----------------------------------------------+
+ 
+ Argument Sets
+ =============
 -- 
-Peter Xu
+2.43.0
 
 
