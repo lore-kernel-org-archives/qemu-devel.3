@@ -4,89 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB37DF417EE
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:56:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C41AF417EE
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 14:56:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzc0G-0003H9-6V; Mon, 09 Mar 2026 10:54:44 -0400
+	id 1vzbyh-0006mH-C7; Mon, 09 Mar 2026 10:53:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbzl-00039T-5L
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:54:11 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbx7-0004LT-Jc
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:51:30 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbzj-00062c-5E
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:54:08 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so23706125e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:54:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzbww-0005kW-6l
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 10:51:15 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4806ce0f97bso106124505e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 07:51:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773068045; x=1773672845; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DiQAVEFb3r6ogPZf0GUrrnxuG22BmOSeHtlf/Q6Q7Ng=;
- b=SMXpvJHp7zFyqdrmOa60GkTf7VqcYSmWz7K+XNMfqJrOz1hSYBJTeE0IjAIMtkayf+
- WokUx5TTo4EOZ4iLYY6bHGsdKIS/E1b56GmdH/JGT0TiIRU55n1BrccsvfOieitwRofI
- ihHAPvwLE24Apcp8NDW/qg20Rz6GiZWRdXhmtcABJH9ny94D1692CwvzLTYJgh3Avc8R
- GnFR30oI8q31660tqwK6o5sxeYzHfq1pzGyJnQvd4ucXGuAzLIWFonxB3xKRmI8MxSOd
- iIKgJuuNOVJvCvaLZlZ+aK7qC8yuvA4DGD5bP2XeS6OkxYewqxkj0IgqiwwAyoUren14
- 0TbQ==
+ d=linaro.org; s=google; t=1773067872; x=1773672672; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pfrbHFhAv8bhscS2w7kB7DC3fNMKySB4UiY5tzkGzOE=;
+ b=ON7Z+ns4hWiJ2eD0ZK2czi7L3pv6kBvDd6CrYaDLrx+vWrRperoSrnVmZgEjUiiYpZ
+ yT2npLRaVbAKwHjdAUFv6Bd2PYikP6ic2HgpPU6u/LaFhbDEDQ56agB1lId7vQ92L0hd
+ EwHbKZCjSJEawdmOMR2492xQ4pZ75qhTsvP9LKciJPeQ5JAzYXiNUkah8zd5kkYZYxLV
+ 4y+IvMDt9TgtuoOqNsOZqU0bsEaATTCYFAOJgTrFzqMwwdwry+4bBwJdpRRvjz/ckT4W
+ WDoVvFon3H6r6MQ6tpAY7dr6SNfb/7SHoiDOQJnasKIGAKCgCOUu1S9SXXVxiTUNoNxZ
+ oqhw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773068045; x=1773672845;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DiQAVEFb3r6ogPZf0GUrrnxuG22BmOSeHtlf/Q6Q7Ng=;
- b=SmCyKTPCyBgcuQbqtpN0Dc2t/KcCaY3IagH8s4k9RXQqPJejE6o2G/3nLqH7EIhfHP
- wV+WWQ0Gtcm+U8ZP7WJdJ1Df7cggyDyznx5N8u2VQJyv5UuUmjA85LZY7iD0+OBOcBjL
- O/bsTwcmu5BX5bVJ59BXKAlVsOS9cvu2J+oFLV2HpcdjInjC96WD56xKvbBQ+5ZA6vC4
- WbZn/VG4Sw6rRq42M2rEjg/ESbFU96a9D08JiDDtEbyxeARChzQJICgP1xfwCrsRKVcY
- W+qaHqljErTFTWCdlZn7HGLpbghXY4qMAc4WG//n/UtBf1XGKzBxHxrkTHqmdSYJbW5O
- UzRQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVZB3GeWlDaT7cjw3Rr0aaahzuovwJf7P9Qt2qdG8RR9VIhHIN95Rjcexs9J7I1JUU6rC38X8ddeV5F@nongnu.org
-X-Gm-Message-State: AOJu0YyxqGFVJUf0XlyBEREvYpbM28bOy1IsUWdJQ1d7AtmXV1DE/Pl7
- Wd2i7tBvbuGodjsO2/r1RUWBN9YFBp3w1/N6VF2ZYRkBef4rrHr2qCpIJz6+L8/WLjbCaxLwiAk
- 0fQW5gmg=
-X-Gm-Gg: ATEYQzzVTGu5UPxHN1O5bob/3uNZgX9zqRB+25WhN9/y2CYpkh1w/qwb5zfN0dAY8zI
- zZLMoUtVoco6ZEIMfYG7wGqBoiC4Q6zvMnlpnZVtJgl9Uu0X8m1y0W5aAR2jiT9FLjG0gNxksDb
- qdx3Oj1q6IWv4CgAOUUEGf4ckOZ88bLZ70XGTf1yQYxMDEx3t1vxqLLoJoinJ0e7VuyVRyZeSPz
- 3TQtUrFuArDSpFCTKMFbExlEQInsETRgX/iCJjdiY48EVtzJZAU2cj6jAQsJwiEqJ73EVqo8vae
- xoeTg3e0eU34bVSMgZ8iJ7XVV2CD5l9z9UsPSEMtRb10E7OigrWxqeoN+wAht3aqbCwJx2EcDvh
- HBlm5O/xxJNlLzJJcDa9UQ2kZdeJPRgPOnZNgwiAiQozOuGFREoTew6ISXnxfS4RndG7t+9w4rL
- 4PMleVyD36al7DaUsDtoWncM9bclGu/gfZkqwa00yDC8cho2qBCoKzGe5PKAuEw4Vv3wzIawkuB
- yuNdUVV7Q==
-X-Received: by 2002:a05:600c:4686:b0:485:3ae8:2236 with SMTP id
- 5b1f17b1804b1-4853ae82538mr62224835e9.32.1773068044635; 
- Mon, 09 Mar 2026 07:54:04 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20230601; t=1773067872; x=1773672672;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=pfrbHFhAv8bhscS2w7kB7DC3fNMKySB4UiY5tzkGzOE=;
+ b=COnf+cT7JNNzNhWDJ3N8ag817dnT5VGeoiTQPv6vmPOPQvshh5XIrLIZrYKcQiO8zr
+ kxO0huGjxfkN9nyx89PV5DlWmrJ5TJS/OYnbPenUf7gUvJqasgSHaRfU6Si0YvmiudaN
+ FWT9ghbPixmgbuXoREc9YcTEAK5xsuIVHkCDQvHguVExKvLzlq8VNYqPIjvi2ZnNLntG
+ sXiaKfpURR6VVmqwmhxiK4CV/06f+RaekkSWsp5NwDky1dsw8P9gCN24bzEiGL890mlg
+ SSZuot7fhB+8wY/mjX9Lu7MiscWHxFcjwVxtSrTlzihtoreWmtdd+/4gPbcuSr3BI8Xq
+ z6kA==
+X-Gm-Message-State: AOJu0Yx0Iacx3Vpb/6/uAXsrVM5VkAJFe/LYglaS1IMYyg+QJnzaBlJS
+ MRYgrsaQDbldpm3FVJE0oTD6W94tpvk9Wv7eJR3zjDHqL9E4R7+dvL0IrRjlz61IC2SPM1zmyTC
+ mlz6Ku58=
+X-Gm-Gg: ATEYQzxDTZo8opPpDL0LjAXc0EWc2qfYl9ChxTHhXWPyea+6foI5L6ZgLXFQHRqGqwp
+ QZttjKCo7htT8JKuJQUyVppqN3LZXjcGoRGO1bxJmeUUAVCDg65C7R1Cy62mM0WnIrUpzciDtQE
+ L+8oYuapE/lGtPmGefzv+3JYqzBeSSLyCVdNAUTioe54WaPBeVGRyUNEIAvTVy0FJXbw6u9P3mK
+ fe6okVXieF649YPkNGTcO5bXgWT743caZtKPsbMRJ+TnSnP9iP75bwZwu227vjCjNEQCpZh5cnG
+ tMgOiHKIeuSwIPMgf6ebASaeueMuGeq1niD2gMDXtp1JrfrScM76RBSY4nZWsDGCVxBZivd+wdE
+ OlsPOgJyMt+zp1Or0hqE0bu35LEMdhNrlGu2Terpknavtu8jt6DRtvPojiB+e1iLJ6NGqYItDY2
+ TU/ghf//3p+Ma3ps7eLuZuztYdEa70LHJbqqCnlFzeUcMSjzg1eDXVWQAAyD9XOGe4u9ho6cQb8
+ aZ68x//TIVTCuJi
+X-Received: by 2002:a05:600c:35d2:b0:485:3ca4:4eee with SMTP id
+ 5b1f17b1804b1-4853ca45255mr43424175e9.34.1773067871917; 
+ Mon, 09 Mar 2026 07:51:11 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48527681e3fsm248652025e9.6.2026.03.09.07.54.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 07:54:04 -0700 (PDT)
-Message-ID: <a038115b-8855-42a3-bf7a-b56a93c18e10@linaro.org>
-Date: Mon, 9 Mar 2026 15:54:03 +0100
+ 5b1f17b1804b1-485276b0adasm248388175e9.10.2026.03.09.07.51.10
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Mon, 09 Mar 2026 07:51:11 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Yanan Wang <wangyanan55@huawei.com>
+Subject: [PATCH v2 08/10] hw/core/machine: Remove the hw_compat_3_1[] array
+Date: Mon,  9 Mar 2026 15:50:10 +0100
+Message-ID: <20260309145013.44327-9-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260309145013.44327-1-philmd@linaro.org>
+References: <20260309145013.44327-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/4] ui: fix small leaks in -display dbus
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: marcandre.lureau@redhat.com, qemu-devel@nongnu.org,
- Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, richard.henderson@linaro.org
-References: <20260122113144.2046899-1-marcandre.lureau@redhat.com>
- <CAFEAcA8PwXsmYGsPDyctxm7Ud78VYB_3nFazxvTXpu=HsGTnzw@mail.gmail.com>
- <d884b7c9-5bc6-4b5f-a45b-43716fdb2268@linaro.org>
- <CAFEAcA-Ji3o6qZSTevUdVVZBforcjo4uOhjDRsUPJe+qJ=bKPw@mail.gmail.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-Ji3o6qZSTevUdVVZBforcjo4uOhjDRsUPJe+qJ=bKPw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,33 +105,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 9/3/26 15:51, Peter Maydell wrote:
-> On Mon, 9 Mar 2026 at 14:21, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
->> On 8/3/26 14:25, Peter Maydell wrote:
+The hw_compat_3_1[] array was only used by the pc-q35-3.1
+and pc-i440fx-3.1 machines, which got removed. Remove it.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-Id: <20260307152635.83893-9-philmd@linaro.org>
+---
+ include/hw/core/boards.h |  3 ---
+ hw/core/machine.c        | 17 -----------------
+ 2 files changed, 20 deletions(-)
 
->>>> Marc-André Lureau (4):
->>>>     tests: fix leaks in dbus-display-test
->>>>     ui/dbus: fix leak regression
->>>>     ui/dbus: fix Unix.Map proxy leak
->>>>     ui/dbus: fix pixman cleanup
->>>>
->>>>    tests/qtest/dbus-display-test.c |  9 +++++++++
->>>>    ui/dbus-listener.c              | 11 +++++------
->>>>    2 files changed, 14 insertions(+), 6 deletions(-)
->>>
->>> I don't know the code well enough to review more than the
->>> two really obvious ones, but this series fixes all the leaks I
->>> see in the dbus-display-test test.
->>
->> Is this statement equivalent to:
->>
->> Tested-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> I thought about that, but I decided against it, because
-> I have not tested the actual dbus functionality at all;
-> I only ran 'make check'. For all I know the tests could have
-> fixed the leaks and broken something for users :-)
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index e15dbcea83b..9155e0cc9ed 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -867,7 +867,4 @@ extern const size_t hw_compat_4_1_len;
+ extern GlobalProperty hw_compat_4_0[];
+ extern const size_t hw_compat_4_0_len;
+ 
+-extern GlobalProperty hw_compat_3_1[];
+-extern const size_t hw_compat_3_1_len;
+-
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 162600425b0..9a3d826c3cb 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -221,23 +221,6 @@ GlobalProperty hw_compat_4_0[] = {
+ };
+ const size_t hw_compat_4_0_len = G_N_ELEMENTS(hw_compat_4_0);
+ 
+-GlobalProperty hw_compat_3_1[] = {
+-    { "pcie-root-port", "x-speed", "2_5" },
+-    { "pcie-root-port", "x-width", "1" },
+-    { "memory-backend-file", "x-use-canonical-path-for-ramblock-id", "true" },
+-    { "memory-backend-memfd", "x-use-canonical-path-for-ramblock-id", "true" },
+-    { "tpm-crb", "ppi", "false" },
+-    { "tpm-tis", "ppi", "false" },
+-    { "usb-kbd", "serial", "42" },
+-    { "usb-mouse", "serial", "42" },
+-    { "usb-tablet", "serial", "42" },
+-    { "virtio-blk-device", "discard", "false" },
+-    { "virtio-blk-device", "write-zeroes", "false" },
+-    { "virtio-balloon-device", "qemu-4-0-config-size", "false" },
+-    { "pcie-root-port-base", "disable-acs", "true" }, /* Added in 4.1 */
+-};
+-const size_t hw_compat_3_1_len = G_N_ELEMENTS(hw_compat_3_1);
+-
+ MachineState *current_machine;
+ 
+ static char *machine_get_kernel(Object *obj, Error **errp)
+-- 
+2.53.0
 
-OK. I'll queue this series then, thanks!
 
