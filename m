@@ -4,71 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71DE7EFCD71
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 10:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D7B8EFCD7C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 10:19:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzXPL-0007vG-AI; Mon, 09 Mar 2026 06:00:15 -0400
+	id 1vzXhA-0002vn-Ey; Mon, 09 Mar 2026 06:18:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzXPH-0007rk-S2
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:00:12 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vzXgu-0002tj-U2
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:18:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzXPE-0001Vy-4v
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:00:11 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vzXgr-0004d2-RY
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 06:18:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773050406;
+ s=mimecast20190719; t=1773051499;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=SVaAl0hg8Crb51WUycUQ/vXcVqo6x2fhIJxEqlBI3SM=;
- b=RVkRi1HLkmK7oMl0Qb49J6d7+4t74ZrF+k+3XEwZ8oTc80+SH2Hko/MW4ZRX90HX9BKDMo
- uyMMRrZ41xrtSZKOuc1GO9Lvq3S9/PKThu3ZuZCTKqkhRchhg1OwWy4PkZJr9CvnfBoCZJ
- ZqTAx+K6/neByp443nAyjyScCO3mv4o=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-ZfEbZdYqPj6nbfVcNQfDwQ-1; Mon,
- 09 Mar 2026 06:00:02 -0400
-X-MC-Unique: ZfEbZdYqPj6nbfVcNQfDwQ-1
-X-Mimecast-MFC-AGG-ID: ZfEbZdYqPj6nbfVcNQfDwQ_1773050400
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A7301956059; Mon,  9 Mar 2026 09:59:59 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.95])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 58FDE19560A6; Mon,  9 Mar 2026 09:59:55 +0000 (UTC)
-Date: Mon, 9 Mar 2026 09:59:51 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Warner Losh <imp@bsdimp.com>
-Cc: qemu-devel@nongnu.org, Kyle Evans <kevans@freebsd.org>,
- Stacey Son <sson@freebsd.org>, Sean Bruno <sbruno@freebsd.org>,
- =?utf-8?Q?Mika=C3=ABl?= Urankar <mikael.urankar@gmail.com>,
- Guy Yur <guyyur@gmail.com>, Alexander Kabaev <kan@freebsd.org>,
- Michal Meloun <mmel@freebsd.org>, Ed Schouten <ed@nuxi.nl>,
- Karim Taha <kariem.taha2.7@gmail.com>
-Subject: Re: [PATCH v3] bsd-user: Switch to SPDX-License-Expression
-Message-ID: <aa6aF2HKJ-54fs8h@redhat.com>
-References: <20260307-bsd-user-copyright-v3-1-666ac0b819f1@bsdimp.com>
+ bh=u8YCq90UjcclfOFZjjnKI8QO7OBSSA6hQoDJ6x4cpXM=;
+ b=O2nm7uNAJM/KeGJWMoyS5lNlQZ0yf/UyavC651qymeCfrTFA7NG0iMG+MhK+Vh6qmNElGC
+ dPfpZZa4Sc07+M1HvUDvhajFNtCpoDGwYj+QShlUBwVdnvhtalcMCdkJoxh97xqJGRjb54
+ v0VGn3LN1f1548gs03BYj510Lfwez4A=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-18-ltSl_s8NMAGQhIeGztdUDQ-1; Mon, 09 Mar 2026 06:18:18 -0400
+X-MC-Unique: ltSl_s8NMAGQhIeGztdUDQ-1
+X-Mimecast-MFC-AGG-ID: ltSl_s8NMAGQhIeGztdUDQ_1773051497
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4853466655dso11412055e9.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 03:18:18 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773051497; x=1773656297;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=u8YCq90UjcclfOFZjjnKI8QO7OBSSA6hQoDJ6x4cpXM=;
+ b=J+lXKH/urfrbxH7ACWEWYcdvbz1CSxwxayG02t+MKbeonuoFIsIrOgavJinkWfCI6i
+ 6GKUw21BQZrxbdO/+fXx0QxO3x2qA8L6iUQqMKMf628yrBu9KKECxV5rOLAMcTU+epAo
+ k+TNFQWLQwx50loOhonM3ZDBeHgL4/VwL8hmUEjCJrGCAwywara6nJMa93AnKU60qOQK
+ Eu3HUuFAitTz49tVX+2c5VrkIyF5xCDS0Ga2sAxtpf2mE8EMERm2xZbhgpsCKYqkIBQs
+ F0+yGslQ9xa3VwzYc3EKQ7IRko+lx2oeHe2oOlz///mLCyPciScU7lKZnaiOmBFcoh77
+ HreA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWxe09oG0HIlib9UMEcn4/yI7F3lkT1H9vfaJ7sYStvTY6oFPU04V/57rVNwlQBJRKH0Z3CKgbKWPzw@nongnu.org
+X-Gm-Message-State: AOJu0YwwstVfTtawTjAANQWqBz0Lm5d8D7EddqzSvZKjE3c3zDd1fx3K
+ ZxhIrMQSXCn4+VqyCPEqB+urkC7fCRdnrUCQbHYDGk+9pE1XulRLsRZ1uxEKt+PRWgTmU/b8yU5
+ 57ZyDj/xfRuj9zrCiu/PLcDrjbV6BC7zDLBx9qZAXSSqkWo9/iSBehxWS
+X-Gm-Gg: ATEYQzwqwK/nvenMSLsixT8wv1hrLmGZ0/JMnJCbuGdKt7nkYX5irr+fYuacbHc5TpQ
+ jd5woZVH+E40Djam/GnclBBfSXhhGxKfAWC/RducGxQI+ptAW9Au/ryUGY234r9dlX9KK/iDNM6
+ qSIIHqfxbQ5gnYzLITSF63LV5gJEv1SJ1Z8w0lwtd29CeaNrXpoK9mn8fOd0yunrpSiG+OXs89O
+ JmU80TJa1XGbDph3LQaMxpoWlq678BbczRDuId8xejbSun3AHsH0f+5SiS6noJ8fAVH1P1KUSXY
+ /mX9xCg8Q6PnjDlrix100tAYuNC4+Ryafttt6Q2+G12Ihybkq5twJyDc29iTCMTKLiEtS4I9DQ0
+ ntdXcvC84PU028D4GfnkcGyf3m02qPkx2gAiNRiaorUObR9UcO3EBScOSCReHr2A0kj02aA==
+X-Received: by 2002:a05:600c:3515:b0:485:364e:934e with SMTP id
+ 5b1f17b1804b1-485364e94admr77136635e9.21.1773051497379; 
+ Mon, 09 Mar 2026 03:18:17 -0700 (PDT)
+X-Received: by 2002:a05:600c:3515:b0:485:364e:934e with SMTP id
+ 5b1f17b1804b1-485364e94admr77136175e9.21.1773051496879; 
+ Mon, 09 Mar 2026 03:18:16 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4853588758fsm63890085e9.4.2026.03.09.03.18.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 03:18:16 -0700 (PDT)
+Message-ID: <a1b62ea5-1fb9-4b6a-b413-2c3a71629d1f@redhat.com>
+Date: Mon, 9 Mar 2026 11:18:13 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260307-bsd-user-copyright-v3-1-666ac0b819f1@bsdimp.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 09/32] hw/arm/virt-acpi-build: Use stored SMMUv3
+ devices for IORT build
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
+References: <20260226105056.897-1-skolothumtho@nvidia.com>
+ <20260226105056.897-10-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260226105056.897-10-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -89,153 +117,127 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 07, 2026 at 09:49:41AM -0700, Warner Losh wrote:
-> Two minor changes to the copyright and license marking for these files:
-> (1) Stacey D Son is used instead of variations of his name.
-> (2) The GPL boilerplate is replaced by SPDX markings. No change to the
-> terms of the license are intended, and this matches current QEMU practice.
-> 
-> There's no changes to the license or additional claims to any IP that
-> others may hold in these files. All the S-o-bs in this commit have given
-> me permission to do this to the extent they may hold rights. git blame
-> over multiple repos and branches suggests that only minimal other
-> material is present (much of it likely not subject to copyright
-> protection). The project's long and complex history as well as tooling
-> limitations make it hard to be 100% sure. Any omissions are
-> unintentional and I will correct them as they come to light.
-> 
-> Signed-off-by: Stacey Son <sson@FreeBSD.org>
-> Signed-off-by: Sean Bruno <sbruno@FreeBSD.org>
-> Signed-off-by: Mikaël Urankar <mikael.urankar@gmail.com>
-> Signed-off-by: Kyle Evans <kevans@FreeBSD.org>
-> Signed-off-by: Guy Yur <guyyur@gmail.com>
-> Signed-off-by: Alexander Kabaev <kan@FreeBSD.org>
-> Signed-off-by: Michal Meloun <mmel@FreeBSD.org>
-> Signed-off-by: Ed Schouten <ed@nuxi.nl>
-> Signed-off-by: Karim Taha <kariem.taha2.7@gmail.com>
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
-> Adjust the copyright markings for the bsd-user project to the extent
-> that's easy and prudent. This removes the gpl boilerplate and replaces
-> it with a SPDX line, per QEMU standard proactice. It uses Stacey D Son
-> everytwhere rather than variations on that name. It uses full date
-> ranges as appropriate.
-> 
-> All that's changing is the markings. I have Stacey's explicit permission
-> to do this, as well as people cc'd. The history of bsd-user, first
-> copied from linux-user and then passing through several branches in
-> several repos as maintainers shifted make it hard to get a complete list
-> of authors. But to the best of my ability to determine, this list
-> represents the overwhelming majority of people who may have a copyright
-> interest in the files not documented with a Copyright line.
-> 
-> This does not chanage any intellectual property rights people hold in
-> these files. Nor does it change the licensing of these files in any
-> way. It's easy to revert relevant parts should an unknown-to-me author
-> appear and desire it. I believe it's legally defensible and would not
-> affect future legal matters, especailly given this explicit statement of
-> intent.
-> 
-> I'm doing this proactively so that all the files, with only few
-> exceptions, can be marked in a similar manner in bsd-user's blitz repo.
-> This will help in upstreaming as it completely takes the issue off the
-> table, likely saving me hours of future work in reply to why something
-> is marked the old way or realizing in the upstreaming process I have to
-> make the change in bsd-user's blitz branch first (or worse, during the
-> review process). Each individual change might not be a big deal, but the
-> cumulative effect can grow large.
-> ---
-> Changes in v3:
-> - Drop a few more files
-> - Add Karim Taha, who has given me permission
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260304-bsd-user-copyright-v2-1-173525ffa614@bsdimp.com
-> 
-> Changes in v2:
-> - document permissions better
-> - drop a couple files that had others claiming copyright.
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260302-bsd-user-copyright-v1-1-f05587d18d4e@bsdimp.com
-> ---
->  bsd-user/aarch64/signal.c               | 15 ++-------------
->  bsd-user/aarch64/target_arch.h          | 16 ++--------------
->  bsd-user/aarch64/target_arch_cpu.c      | 15 ++-------------
->  bsd-user/aarch64/target_arch_cpu.h      | 18 +++---------------
->  bsd-user/aarch64/target_arch_elf.h      | 14 +-------------
->  bsd-user/aarch64/target_arch_reg.h      | 19 +++----------------
->  bsd-user/aarch64/target_arch_signal.h   | 16 ++--------------
->  bsd-user/aarch64/target_arch_sigtramp.h | 16 ++--------------
->  bsd-user/aarch64/target_arch_sysarch.h  | 16 ++--------------
->  bsd-user/aarch64/target_arch_thread.h   | 16 ++--------------
->  bsd-user/aarch64/target_arch_vmparam.h  | 16 ++--------------
->  bsd-user/aarch64/target_syscall.h       | 16 ++--------------
->  bsd-user/arm/signal.c                   | 18 +++---------------
->  bsd-user/arm/target_arch.h              | 16 ++--------------
->  bsd-user/arm/target_arch_cpu.c          | 18 +++---------------
->  bsd-user/arm/target_arch_cpu.h          | 18 +++---------------
->  bsd-user/arm/target_arch_elf.h          | 18 +++---------------
->  bsd-user/arm/target_arch_reg.h          | 18 +++---------------
->  bsd-user/arm/target_arch_signal.h       | 18 +++---------------
->  bsd-user/arm/target_arch_sigtramp.h     | 18 +++---------------
->  bsd-user/arm/target_arch_sysarch.h      | 18 +++---------------
->  bsd-user/arm/target_arch_thread.h       | 18 +++---------------
->  bsd-user/arm/target_arch_vmparam.h      | 18 +++---------------
->  bsd-user/arm/target_syscall.h           | 18 +++---------------
->  bsd-user/bsd-file.h                     | 18 +++---------------
->  bsd-user/bsd-mem.c                      | 17 +++--------------
->  bsd-user/bsd-mem.h                      | 17 +++--------------
->  bsd-user/bsd-proc.c                     | 17 +++--------------
->  bsd-user/bsd-proc.h                     | 17 +++--------------
->  bsd-user/freebsd/os-misc.h              | 18 +++---------------
->  bsd-user/freebsd/os-proc.c              | 17 +++--------------
->  bsd-user/freebsd/os-proc.h              | 18 +++---------------
->  bsd-user/freebsd/os-stat.c              | 17 +++--------------
->  bsd-user/freebsd/os-stat.h              | 18 +++---------------
->  bsd-user/freebsd/os-strace.h            | 19 +++----------------
->  bsd-user/freebsd/target_os_elf.h        | 18 +++---------------
->  bsd-user/freebsd/target_os_siginfo.h    | 18 +++---------------
->  bsd-user/freebsd/target_os_stack.h      | 18 +++---------------
->  bsd-user/freebsd/target_os_thread.h     | 18 +++---------------
->  bsd-user/freebsd/target_os_user.h       | 18 +++---------------
->  bsd-user/freebsd/target_os_vmparam.h    | 18 +++---------------
->  bsd-user/i386/signal.c                  | 17 +++--------------
->  bsd-user/i386/target_arch.h             | 16 ++--------------
->  bsd-user/i386/target_arch_cpu.c         | 17 +++--------------
->  bsd-user/i386/target_arch_cpu.h         | 17 +++--------------
->  bsd-user/i386/target_arch_elf.h         | 18 +++---------------
->  bsd-user/i386/target_arch_reg.h         | 19 +++----------------
->  bsd-user/i386/target_arch_signal.h      | 16 +++-------------
->  bsd-user/i386/target_arch_sigtramp.h    | 16 ++--------------
->  bsd-user/i386/target_arch_sysarch.h     | 18 +++---------------
->  bsd-user/i386/target_arch_thread.h      | 18 +++---------------
->  bsd-user/i386/target_arch_vmparam.h     | 18 +++---------------
->  bsd-user/i386/target_syscall.h          | 16 +++-------------
->  bsd-user/qemu-bsd.h                     | 18 +++---------------
->  bsd-user/syscall_defs.h                 | 18 +++---------------
->  bsd-user/x86_64/signal.c                | 16 +++-------------
->  bsd-user/x86_64/target_arch.h           | 16 ++--------------
->  bsd-user/x86_64/target_arch_cpu.c       | 17 +++--------------
->  bsd-user/x86_64/target_arch_cpu.h       | 17 +++--------------
->  bsd-user/x86_64/target_arch_elf.h       | 18 +++---------------
->  bsd-user/x86_64/target_arch_reg.h       | 19 +++----------------
->  bsd-user/x86_64/target_arch_signal.h    | 17 +++--------------
->  bsd-user/x86_64/target_arch_sigtramp.h  | 17 ++---------------
->  bsd-user/x86_64/target_arch_sysarch.h   | 17 +++--------------
->  bsd-user/x86_64/target_arch_thread.h    | 18 +++---------------
->  bsd-user/x86_64/target_arch_vmparam.h   | 18 +++---------------
->  bsd-user/x86_64/target_syscall.h        | 16 +++-------------
->  67 files changed, 185 insertions(+), 971 deletions(-)
-
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+On 2/26/26 11:50 AM, Shameer Kolothum wrote:
+> Stop walking the object tree to discover SMMUv3 devices when building
+> the IORT table.
+>
+> Use the SMMUv3 device array maintained by the virt machine instead,
+> avoiding recursive object traversal.
+>
+> No functional change intended.
+>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  hw/arm/virt-acpi-build.c | 70 ++++++++++++++++++----------------------
+>  1 file changed, 31 insertions(+), 39 deletions(-)
+>
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 544004615d..ae78e9b9e0 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -385,49 +385,41 @@ static int smmuv3_dev_idmap_compare(gconstpointer a, gconstpointer b)
+>      return map_a->input_base - map_b->input_base;
+>  }
+>  
+> -static int iort_smmuv3_devices(Object *obj, void *opaque)
+> -{
+> -    VirtMachineState *vms = VIRT_MACHINE(qdev_get_machine());
+> -    AcpiIortSMMUv3Dev sdev = {0};
+> -    GArray *sdev_blob = opaque;
+> -    AcpiIortIdMapping idmap;
+> -    PlatformBusDevice *pbus;
+> -    int min_bus, max_bus;
+> -    SysBusDevice *sbdev;
+> -    PCIBus *bus;
+> -
+> -    if (!object_dynamic_cast(obj, TYPE_ARM_SMMUV3)) {
+> -        return 0;
+> -    }
+> -
+> -    bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
+> -    sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
+> -    sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
+> -    pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+> -    sbdev = SYS_BUS_DEVICE(obj);
+> -    sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> -    sdev.base += vms->memmap[VIRT_PLATFORM_BUS].base;
+> -    sdev.irq = platform_bus_get_irqn(pbus, sbdev, 0);
+> -    sdev.irq += vms->irqmap[VIRT_PLATFORM_BUS];
+> -    sdev.irq += ARM_SPI_BASE;
+> -
+> -    pci_bus_range(bus, &min_bus, &max_bus);
+> -    sdev.rc_smmu_idmaps = g_array_new(false, true, sizeof(AcpiIortIdMapping));
+> -    idmap.input_base = min_bus << 8,
+> -    idmap.id_count = (max_bus - min_bus + 1) << 8,
+> -    g_array_append_val(sdev.rc_smmu_idmaps, idmap);
+> -    g_array_append_val(sdev_blob, sdev);
+> -    return 0;
+> -}
+> -
+>  /*
+>   * Populate the struct AcpiIortSMMUv3Dev for all SMMUv3 devices and
+>   * return the total number of idmaps.
+>   */
+> -static int populate_smmuv3_dev(GArray *sdev_blob)
+> +static int populate_smmuv3_dev(GArray *sdev_blob, VirtMachineState *vms)
+nit: I would prefer vms to be the 1st arg
+>  {
+> -    object_child_foreach_recursive(object_get_root(),
+> -                                   iort_smmuv3_devices, sdev_blob);
+> +    for (int i = 0; i < vms->smmuv3_devices->len; i++) {
+> +        Object *obj = OBJECT(g_ptr_array_index(vms->smmuv3_devices, i));
+> +        AcpiIortSMMUv3Dev sdev = {0};
+> +        AcpiIortIdMapping idmap;
+> +        PlatformBusDevice *pbus;
+> +        int min_bus, max_bus;
+> +        SysBusDevice *sbdev;
+> +        PCIBus *bus;
+> +
+> +        bus = PCI_BUS(object_property_get_link(obj, "primary-bus",
+> +                                               &error_abort));
+> +        sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
+> +        sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
+> +        pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+> +        sbdev = SYS_BUS_DEVICE(obj);
+> +        sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> +        sdev.base += vms->memmap[VIRT_PLATFORM_BUS].base;
+> +        sdev.irq = platform_bus_get_irqn(pbus, sbdev, 0);
+> +        sdev.irq += vms->irqmap[VIRT_PLATFORM_BUS];
+> +        sdev.irq += ARM_SPI_BASE;
+> +
+> +        pci_bus_range(bus, &min_bus, &max_bus);
+> +        sdev.rc_smmu_idmaps = g_array_new(false, true,
+> +                                          sizeof(AcpiIortIdMapping));
+> +        idmap.input_base = min_bus << 8;
+> +        idmap.id_count = (max_bus - min_bus + 1) << 8;
+> +        g_array_append_val(sdev.rc_smmu_idmaps, idmap);
+> +        g_array_append_val(sdev_blob, sdev);
+> +    }
+>      /* Sort the smmuv3 devices(if any) by smmu idmap input_base */
+>      g_array_sort(sdev_blob, smmuv3_dev_idmap_compare);
+>      /*
+> @@ -561,7 +553,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>      if (vms->legacy_smmuv3_present) {
+>          rc_smmu_idmaps_len = populate_smmuv3_legacy_dev(smmuv3_devs);
+>      } else {
+> -        rc_smmu_idmaps_len = populate_smmuv3_dev(smmuv3_devs);
+> +        rc_smmu_idmaps_len = populate_smmuv3_dev(smmuv3_devs, vms);
+So did you check this does not break existing bios qtests (as we change
+the way we iterate on the devices)? If so maybe add a comment in commit
+description.
+>      }
+>  
+>      num_smmus = smmuv3_devs->len;
+I would squash previous patch in that one.
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+Eric
 
 
