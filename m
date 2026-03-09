@@ -4,99 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B3CF41807
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:40:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7514F41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:41:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzchq-0000u0-V2; Mon, 09 Mar 2026 11:39:42 -0400
+	id 1vzciq-0001ZI-D4; Mon, 09 Mar 2026 11:40:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzchn-0000sn-69
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:39:39 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzcip-0001XQ-3R
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:40:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzchl-00055A-4t
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:39:38 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzcim-0005Q1-Bv
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:40:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773070776;
+ s=mimecast20190719; t=1773070839;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ftQkCj7dl0BHtVdnSc70G0vnRqt+zl2O9gw+jSpGoE4=;
- b=AhyRCAqzrRzDZHyOlQ/vKVnKgJ10x/fgSU5J8WoHcqqZ1vQtEEMBCt9wNfLep3ThCcmZ2H
- w+0AOi3r3XJtvXnnqvphdqSi7J8k/X5VtczoivrSA0KC9Jo9Ni3gsChyEszkYS/VkM4rnj
- TLsgnxNCbJA6Cy2ikNzAg9uWleQ2R+g=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-43-Syzu7r-PNVuVbiOJ9b83sA-1; Mon, 09 Mar 2026 11:39:34 -0400
-X-MC-Unique: Syzu7r-PNVuVbiOJ9b83sA-1
-X-Mimecast-MFC-AGG-ID: Syzu7r-PNVuVbiOJ9b83sA_1773070774
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-899ef673d82so160461536d6.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:39:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773070774; x=1773675574; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=ftQkCj7dl0BHtVdnSc70G0vnRqt+zl2O9gw+jSpGoE4=;
- b=a9F2wY0gJOaKI0vWsQc9e1GQzlB1OwRRWz6WmikFO8A+ciNb2TPV/sex9ZIiOMNj6j
- umsUHj0HActCs6nZznprMZQwLjd55lm2xw0Jg1YfwDafCpUvKzATXLjoQXG1M7Zt1J/p
- I1G/4O8AmTfk6zWoMy2/wEYsMtm7S8K+6MqALzUxvunTQ3xtedeJ+XBefoTzM/A9GSzp
- +UX2MCSe8+HuyDimnScHL7nLFwp38f7f3pI4kbaQ8nsTKQjBr4Y6/bW9ItL1F2euVO10
- Ef9mjkIJjsrwk8roSiJObfYCfVw98ErArRJ/u+u3E5zNsk9Fl6wgzSULDwaKpNa8JsBp
- nVaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773070774; x=1773675574;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=ftQkCj7dl0BHtVdnSc70G0vnRqt+zl2O9gw+jSpGoE4=;
- b=k5T7xEcjt1mcyx9XeFDVbdfwz23CD3uuMK2Lk4jc85pLRMQA/ufO38JuShD7rgH3ca
- BMsj7r7lvwqYFIr3hPQRy3eNhqzXOwFpfSHedEs3Ss9AoEH5ZPb52Svnvd8vh5fUF3/C
- 34Os3oRJ021G/99Isn7fGDXmurXan3d0EL57EKd45gc+KQjL5ThMFP6ZIFZN0pgeiO5H
- XpEtLEVAAxpf7c2pmLP76SzwM+bHVTv18pUqrRs923J/YYVMQHmxsoThBwUUpZ5tV7ez
- vV6+qsZVADaE74KW53l+1MUQTRMSXNrr/8QuscnYOD/7OLMt9aRk4st7StGUAvaJKlWq
- QI8w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV97JNd16ENQUmWfPFm7zbPHsWzAqqi0FRGnOZUmmXFW364IrQqacZ+NjsOACQtZafT+l+uD+3Sk3U8@nongnu.org
-X-Gm-Message-State: AOJu0YyCLZHlmrnT2vi8zrp8XDjMt9fGAeaNughPpp85QcSTTDlgn8T7
- OB10TqexPtL3+bOf7WB5EC+TEaCTMjMXw1boL6pZ488T5Z1aXNEC5k6rM89vKpctUAnGph4Mtxo
- q7QU9WQRgXgz5q1Pj1PZR0BupPsDj77FuvBjqSmEaGBATNXqlgEKFqrW/Iy+4P1Ka
-X-Gm-Gg: ATEYQzz1H77x/vyWZJeO+3hnaaEhueomrjKZLpHUDqh3DwfRqOiDir2FniYLNRWAMe6
- 2/8bZ3joME+oDtIC4nKaJna9UkTHQQUD4y60lbs0w5LZfBprgS9rK3oKu9JpPjVi/yuezoxLt/j
- U/mSRJfWL22Up0l4q+IKXNB92nq7yN/tqEspi4D2UAQA9L6xr488HA6zd3127Bf36Fk/uhRdp1L
- R85gfWRO02c8sZ08iZ+H7T9CO/LYl9LZZUrZ9Ngsgy1eHpNhjyTTmGuSvK75ShfpOydgVlK7abE
- 9I2gKV6srrOYA5Fu2t7+lk6oaRNo+8p1G5VHBPcquIIi+b/YHRPNvLf8yBZ/4YZgbkeblM7g9P9
- tRyFPTbE3/94o8zhHBKeGvBsnXbsy75Gu1mNYbn0Md+bqTBLwFqXmJT6uUAJjj5oONFOvYpTco8
- PjNrvHSg==
-X-Received: by 2002:a05:6214:3002:b0:89a:321:a198 with SMTP id
- 6a1803df08f44-89a30acb78bmr168263076d6.45.1773070773612; 
- Mon, 09 Mar 2026 08:39:33 -0700 (PDT)
-X-Received: by 2002:a05:6214:3002:b0:89a:321:a198 with SMTP id
- 6a1803df08f44-89a30acb78bmr168262506d6.45.1773070773013; 
- Mon, 09 Mar 2026 08:39:33 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a57a18315sm447596d6.6.2026.03.09.08.39.31
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 08:39:32 -0700 (PDT)
-Date: Mon, 9 Mar 2026 11:39:31 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Ani Sinha <anisinha@redhat.com>
-Cc: Fabiano Rosas <farosas@suse.de>, Markus Armbruster <armbru@redhat.com>,
- Prasad Pandit <pjp@fedoraproject.org>, qemu-devel@nongnu.org
-Subject: Re: [PATCH] migration: assert that the same migration handler is not
- being added twice
-Message-ID: <aa7ps81lguxP9Thv@x1.local>
-References: <20260308100148.162503-1-anisinha@redhat.com>
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=u6w4vSmA/v9MAef+WnofPgokJP27TgM7aTPy5ccoMO0=;
+ b=QTIMsBZMD0HJvRkuA6rWYh5Kb7z7p+4h2ha+/wDGnk8CMWB9qvSKaqlfTCjyF7kkJTfdDF
+ GBoECkiGNTqr1Mrtg24iYPOOYWv5/2qlTksUy/RK9G3DHOL8D1oV55i1RCK4mKHu2gMzwB
+ OSqZI1E9xG9zvNMWAIIpfdNX4uO88kE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-OT0Fm0gUO1uYCPJADaDBIw-1; Mon,
+ 09 Mar 2026 11:40:33 -0400
+X-MC-Unique: OT0Fm0gUO1uYCPJADaDBIw-1
+X-Mimecast-MFC-AGG-ID: OT0Fm0gUO1uYCPJADaDBIw_1773070831
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DD65F180060F; Mon,  9 Mar 2026 15:40:30 +0000 (UTC)
+Received: from [10.45.224.73] (unknown [10.45.224.73])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 085F11956095; Mon,  9 Mar 2026 15:40:26 +0000 (UTC)
+Message-ID: <2e5a8e6a-6513-4726-b43d-5933427f524c@redhat.com>
+Date: Mon, 9 Mar 2026 16:40:24 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260308100148.162503-1-anisinha@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/15] s390x: Add support for virtio-blk-pci IPL device
+To: Matthew Rosato <mjrosato@linux.ibm.com>, jrossi@linux.ibm.com,
+ qemu-devel@nongnu.org, qemu-s390x@nongnu.org, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260309003601.242634-1-jrossi@linux.ibm.com>
+ <4bef56aa-8b2c-43c7-9449-fea7c31d00b2@linux.ibm.com>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <4bef56aa-8b2c-43c7-9449-fea7c31d00b2@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -121,19 +129,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 08, 2026 at 03:31:48PM +0530, Ani Sinha wrote:
-> Currently the code that adds a migration blocker does not check if the same
-> blocker already exists. Assert that the migration handler being added has
-> not been added already.
+On 09/03/2026 15.00, Matthew Rosato wrote:
+> On 3/8/26 8:35 PM, jrossi@linux.ibm.com wrote:
+>> From: Jared Rossi <jrossi@linux.ibm.com>
+>>
+>> This patch series introduces an IPLB subtype to support PCI devices, which may
+>> be built if a device has been assigned a boot index and is identified as a PCI
+>> device with a corresponding s390 PCI Bus device.
+>>
+>> Boot support is only added for virtio-blk-pci at this time and is limited to
+>> devices with an assigned bootindex.
+>>
+>> A "loadparm" property is added to virtio-blk-pci boot devices on s390x.
+>>
+>> A simple test to check basic functionality is added to the cdrom-tests in qtest.
+>>
+>> Changes v4 -> v5:
+>>      - Fix incorrect switch/case for virtio block device ID
+>>      - Use target_s390x() instead of qemu_arch_available(QEMU_ARCH_S390X)
+>>      - Properly denote switch fallthrough
+>>      - Remove reduntant RC checks in PCI read/write
+>>
 > 
-> CC: Markus Armbruster <armbru@redhat.com>
-> CC: Peter Xu <peterx@redhat.com>
-> CC: Prasad Pandit <pjp@fedoraproject.org>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> Rather than reply to individual patches, I noticed new copyright lines with 2025 dates on the following patches that should be updated to 2026:
+> 
+> 6: pc-bios/s390-ccw: Split virtio-ccw and generic virtio
+> 8: pc-bios/s390-ccw: Introduce CLP Architecture
+> 10: pc-bios/s390-ccw: Introduce PCI device
+> 11: pc-bios/s390-ccw: Introduce virtio-pci functions
+> 
+> Thomas, if there are no further comments would you still like Jared to respin for that kind of change or would you just fix up when you pick up the series?
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+I've seen different opinions on the year in copyright statements in the past 
+(also from various people from IBM) - some say, it should be the year when 
+the code was written/initially posted, some say, it should be the year when 
+the code gets merged ... I personally don't mind too much anymore. For me, 
+it's also ok if we keep the 2025.
 
--- 
-Peter Xu
+Anyway, tomorrow (Tuesday) is softfreeze, so I'm going to send a pull 
+request for this series tomorrow - let me know by then if you want me to fix 
+up the year, or if you rather prefer to keep 2025.
+
+  Thomas
 
 
