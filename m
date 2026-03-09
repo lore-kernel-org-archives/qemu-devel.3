@@ -4,130 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6BB73FCA170
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EB88FCA171
 	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:11:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzf4O-0000p9-Gl; Mon, 09 Mar 2026 14:11:15 -0400
+	id 1vzf45-0000al-DH; Mon, 09 Mar 2026 14:10:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vzf3w-0000Er-Fz; Mon, 09 Mar 2026 14:10:45 -0400
-Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vzf3t-0000Av-VE
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:10:39 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vzf3u-0007de-GR; Mon, 09 Mar 2026 14:10:40 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=pIdRC8NrtALOalz3vL9BDq7G1xOnjoLNHLQdOWCkqMk3LhoZ9pJdQC3oCalllZz0mEUhC6Kf/+5xT2BbEK7yInIghCAOASxtXX2PAFGAkfMOcvP55tvVnBEjVlNcv+Llokoo1xhSxmbmyFKRSHUu6Rnv6NKklt76l6wPnS9BdDMRoyU/+i6Neg7nKFtYpA0gUUArHNk4NeGoZRxgXG2ZfUvqNQvuBrKMkbot7UHyEZLLUL+zYLbr8NjYXnCTccHkS7VFeT+yrRAojsgCFhPUjZBClBY8abY6PWQ1kxysj3cMRYnIOdGMssjfFzkqVe+xJhQXXwzwIIB+EO4ZewHEnw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=JbU7/Flk1+5P564OgMdcWbY/EMD8FxPv+RQ6GKn9f6s=;
- b=y2zMJdyamyuI8uX2hwoD7UrmFfq5j7ODqSNKm2rj26jdz1v5vaQzpCLSWdT7RnRLMyug/k7lTRyUj+WnhnswHYJn8lOq0OhR6FGmaIhKnDfxFexp0rxzqzkTLq8OQDJIxRWP3zehRXXIiABeMQFoHUzK7xZqSZxIv187Tk+bLca6rFiUDsySwvcxZL7FIlD67lMWew7E6+wNVCscryu0/NXa9+PynYrpOSmFWCnpwiZMat0UPgwGPuTDRJePCxMS2wzdYIGrU/dAXyUSBbS+xDJciUDPl3FXWuaPoFkSMeKVWewL5nts57Om/VuIpTJGQ8w3uYNepvGmNEqrpk0dJA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=redhat.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=JbU7/Flk1+5P564OgMdcWbY/EMD8FxPv+RQ6GKn9f6s=;
- b=nCY3sGzAN4AMWGbvM6Ol5ZR/pvwtlrC6emwiNLhk3b9onp6Ves5XP/O7C9MOWZ5FyieQel19kj/mxJdbHjAg0p2tbydY/Cg0P80p5HbT5wID+Hnp0KH9tI24r6bW3bcFzdySsokP+fWNmcczNJ5MHSpujMWtjOT6ysBTb/0CqyOVyz6IwTVPXqQMl7Jz5lrcAOxx251ekhGWQUob3WKT/KoNbf8yEJYn/GsgySuqfKkzS4VV/3KB7XX5KC5aTjsPJARo38h9/yDF91AVB0HiKmUoCjJV+rbg3BxDKrEsL6nOSd5cqGnNbV2LE2+v750B8i2C7OSHWCblc6xAUsNJmQ==
-Received: from MN2PR12CA0035.namprd12.prod.outlook.com (2603:10b6:208:a8::48)
- by BN5PR12MB9509.namprd12.prod.outlook.com (2603:10b6:408:2a8::12)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Mon, 9 Mar
- 2026 18:10:18 +0000
-Received: from BL6PEPF0001AB71.namprd02.prod.outlook.com
- (2603:10b6:208:a8:cafe::8d) by MN2PR12CA0035.outlook.office365.com
- (2603:10b6:208:a8::48) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.25 via Frontend Transport; Mon,
- 9 Mar 2026 18:10:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- BL6PEPF0001AB71.mail.protection.outlook.com (10.167.242.164) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9678.18 via Frontend Transport; Mon, 9 Mar 2026 18:10:18 +0000
-Received: from drhqmail203.nvidia.com (10.126.190.182) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 9 Mar
- 2026 11:10:02 -0700
-Received: from drhqmail202.nvidia.com (10.126.190.181) by
- drhqmail203.nvidia.com (10.126.190.182) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Mon, 9 Mar 2026 11:10:01 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
- (10.126.190.181) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 9 Mar 2026 11:10:00 -0700
-Date: Mon, 9 Mar 2026 11:09:59 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nathan Chen
- <nathanc@nvidia.com>, Matt Ochs <mochs@nvidia.com>, Jiandi An
- <jan@nvidia.com>, Jason Gunthorpe <jgg@nvidia.com>,
- "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
- "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
- "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>, Krishnakant Jaju
- <kjaju@nvidia.com>, "phrdina@redhat.com" <phrdina@redhat.com>
-Subject: Re: [PATCH v3 13/32] hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU
- alloc/free
-Message-ID: <aa8M96GLFbPiMNUo@Asurada-Nvidia>
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-14-skolothumtho@nvidia.com>
- <ed5ca420-94e5-4e9e-a2c3-f59eb6ea8ada@redhat.com>
- <CH3PR12MB7548F5610D7F339C5DAD0E41AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vzf3n-0007cS-Vp
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:10:37 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A8A015969E7;
+ Mon, 09 Mar 2026 19:10:28 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id vQ7Ohft2EVQl; Mon,  9 Mar 2026 19:10:26 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id AAD2D5969EC; Mon, 09 Mar 2026 19:10:26 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id A921C5969E5;
+ Mon, 09 Mar 2026 19:10:26 +0100 (CET)
+Date: Mon, 9 Mar 2026 19:10:26 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Peter Maydell <peter.maydell@linaro.org>
+cc: qemu-devel@nongnu.org, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ =?ISO-8859-15?Q?Herv=E9_Poussineau?= <hpoussin@reactos.org>
+Subject: Re: [PATCH] hw/isa/piix: Embed i8259 irq in device state instead of
+ allocating
+In-Reply-To: <20260309171258.1905205-1-peter.maydell@linaro.org>
+Message-ID: <947b79c6-cd6a-945d-be07-415647c14142@eik.bme.hu>
+References: <20260309171258.1905205-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <CH3PR12MB7548F5610D7F339C5DAD0E41AB79A@CH3PR12MB7548.namprd12.prod.outlook.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: BL6PEPF0001AB71:EE_|BN5PR12MB9509:EE_
-X-MS-Office365-Filtering-Correlation-Id: aabf5888-90c6-4c52-f20a-08de7e071f12
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|1800799024|7416014|376014|36860700016; 
-X-Microsoft-Antispam-Message-Info: N3Q4tzOI747fqDCzL5oKGzeQKcTEBGv7oMLknwzohYUfabWV3fx+G4QrGFf9SFb3zQgYmiJ06srkJwBB0jcbk+OocY+A2tRSbrqUx4tZQHtTgY5lDl9oMOGybKM/nVUWLEyYwQ2MI4jRuq4YxVo99T1cA1jMqe5zrhxwY7fML3cxd6jfrnlamSWHs5pqRocWdI01yPr83MwMf3infufQiJ+qSFxKfWUWmqfsZbhBbfSbJ+Q3gF6HLVi/B5E7gVrXVMw4HS9de67AE8VfHZyM1kxQv/ZvvgF/uEIJ7QsGA2Av2e2EfXKQPcioMbXJWbEPiEEmle9ddRhBDeeYSCNs/cNiA/HJ3N0/OiisbO68wg5Tu9NFl7HTrHxZ3cjYidVjLh4Ob5JxdHzqC8awyA49bdLEkyHm1fmzIufOOKHkSb/kcDky9XS9BySwcRGEL5gjo7ODZOrLgdwXXU8HO3e7Eto1qCuL3wZ+CsGDIBafsbJABXiLBTLgvj8zHnlhYObhmIscSsYsdXDSor+ZCjXUn/85kh0DmTMriXOJ5ZZphlteILha4aUmESZ5CSSykZ9RlV2aLx9hZKpFLbPtIOrXVjOaVzg0n6lxYXdKq/DqXgn3OQ7V3bLT63QGwTARoN54NxlcdJGLmToLZlurx8muxQ/rJg0ixxuaq3/UExbY2h/G+vRF08baTEGw1rh7dswonKMGVkjoGyMwFRQyP6v9y9LIF7JTxgl31TFA2dUl4TaJw5w2RooUTyyY8ZCT3myGxKIfiB1Y/ZHB2yiX+nTN5Q==
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(1800799024)(7416014)(376014)(36860700016); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: vNqjoD3i9eY/1ZfwGrVUjkImSlxETw8VNJpf/DJ1WN3It8tfxM0eFlZqcu6g2A6r+tWH7vOjFX5y/TTR85/Kx0E0SCXeOChL235EUv9nf7HigWoR3WdO8FHkrANv/ZgfCny0O2WpmB6JJPNuX9ULL/HfPPA/RB2c18zQ87Y34b89anGdMpDv/2OekW+4CMBP75C1l1MGDEGghwnNTa+kgMxA71OnZ8MDzIZpRWEolD5h7GSYLPn49C8xvc8PtyAMYtM+FKru2wKLK4xayliw3WO1VlwEZKrtDCXyvne7AjwGCsD6a0PMZWmMLRwI2+FzefPzUoBeHbvutmlWdonXd3hwLJVdM1bvQl60Xux93Ip+VVufJJvJqvTjPegOcW78sN8LUYlbE1mehUZgLd7Uk0puE0zTKTZK5OcPLdh5tQLGpqnAEujoh2dm+ZubRRj1
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2026 18:10:18.2580 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: aabf5888-90c6-4c52-f20a-08de7e071f12
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: BL6PEPF0001AB71.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN5PR12MB9509
-Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
- envelope-from=nicolinc@nvidia.com;
- helo=BN1PR04CU002.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,41 +68,106 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 04:31:22AM -0700, Shameer Kolothum Thodi wrote:
-> > > -    error_setg(errp, "NVIDIA Tegra241 CMDQV is unsupported");
-> > > -    return false;
-> > > +    Tegra241CMDQV *cmdqv = s->s_accel->cmdqv;
-> > > +
-> > > +    if (!iommufd_backend_alloc_viommu(idev->iommufd, idev->devid,
-> > > +
-> > > + IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV,
-> > if the only think that differs compared to no cmdq is the type, ie.
-> > 
-> > IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV vs
-> > IOMMU_VIOMMU_TYPE_TEGRA241_CMDQV
-> > 
-> > + passing true args, maybe you can just record the type of the cmdqv
-> > + that is being used in the smmu_accel device. Then you can get rid of
-> > + alloc and free
-> 
-> It is not just the type. Based on the type we also need to pass,
-> 
->  * @data_len: Length of the type specific data
->  * @__reserved: Must be 0
->  * @data_uptr: User pointer to a driver-specific virtual IOMMU data
->  *
-> 
-> And the above is implementation specific.
-> 
-> If our idea of the "ops" is to allow easier support for different 
-> implementations in future, it probably makes sense to keep this.
+On Mon, 9 Mar 2026, Peter Maydell wrote:
+> The pci_piix_realize() function's use of qemu_allocate_irqs()
+> results in a memory leak:
+>
+> Direct leak of 8 byte(s) in 1 object(s) allocated from:
+>    #0 0x61045c7a1a43 in malloc (/home/pm215/qemu/build/san/qemu-system-mips+0x16f8a43) (BuildId: aa43d3865e0f1991b1fc04422b5570fe522b6fa7)
+>    #1 0x724cc3095ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+>    #2 0x61045db72134 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
+>    #3 0x61045cd7bf49 in pci_piix_realize /home/pm215/qemu/build/san/../../hw/isa/piix.c:318:35
+>    #4 0x61045cf4533e in pci_qdev_realize /home/pm215/qemu/build/san/../../hw/pci/pci.c:2308:9
+>    #5 0x61045db6cbca in device_set_realized /home/pm215/qemu/build/san/../../hw/core/qdev.c:523:13
+>    #6 0x61045db86bd9 in property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:2376:5
+>    #7 0x61045db81c5e in object_property_set /home/pm215/qemu/build/san/../../qom/object.c:1450:5
+>    #8 0x61045db8e2fc in object_property_set_qobject /home/pm215/qemu/build/san/../../qom/qom-qobject.c:28:10
+>    #9 0x61045db8258f in object_property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:1520:15
+>    #10 0x61045db687aa in qdev_realize_and_unref /home/pm215/qemu/build/san/../../hw/core/qdev.c:283:11
+>    #11 0x61045d892e21 in mips_malta_init /home/pm215/qemu/build/san/../../hw/mips/malta.c:1239:5
+>
+> (The i386 PC sets the has-pic property to 'false', so this only
+> affects the MIPS Malta board.)
+>
+> Fix this by embedding the i8259 irq in the device state instead of
+> allocating it.  This is a similar fix to the one we used for vt82c686
+> in commit 2225dc562a93dc, except that we use qemu_init_irq_child()
+> instead of qemu_init_irq().  The behaviour is identical except that
+> the _child() version avoids what would be a leak if we ever
+> unrealized the device.
 
-Any future "cmdqv" will likely have a different viommu type. So,
-essentially this is just a viommu type override, as Eric pointed
-out above.
+How could it leak if it's embedded? This should be freed with PIIXState so 
+I think the _child probably only affects where it shows up in qom-tree or 
+I may be missing something.
 
-What we actually need to expose per viommu is type/data_len. The
-data_uptr can be a union viommu_data in the accel structure?
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 
-Nicolin 
+Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
+
+> ---
+> The handling of IRQs in i8259_init() is rather convoluted and forces
+> its callers into having an IRQ that just forwards the set operation
+> outwards. It could in theory be cleaned up, but it's used in too
+> many places for that to seem worthwhile just now.
+
+I think we've tried that before and found that the forwarder is needed to 
+avoid problems with creating and connecting interrupts that need to be in 
+specific order which would lead to hard to follow rules that's easy to get 
+wrong so it's easier to have a forwarder that works without further 
+thought. I can't find the discussion about this now but was probably 
+around commit 3820001131. Or maybe it's a different issue.
+
+Regards,
+BALATON Zoltan
+
+> ---
+> hw/isa/piix.c                 | 11 ++++++-----
+> include/hw/southbridge/piix.h |  3 +++
+> 2 files changed, 9 insertions(+), 5 deletions(-)
+>
+> diff --git a/hw/isa/piix.c b/hw/isa/piix.c
+> index 04b2be2cc3..31fa53e6a4 100644
+> --- a/hw/isa/piix.c
+> +++ b/hw/isa/piix.c
+> @@ -315,12 +315,13 @@ static void pci_piix_realize(PCIDevice *dev, const char *uhci_type,
+>
+>     /* PIC */
+>     if (d->has_pic) {
+> -        qemu_irq *i8259_out_irq = qemu_allocate_irqs(piix_request_i8259_irq, d,
+> -                                                     1);
+> -        qemu_irq *i8259 = i8259_init(isa_bus, *i8259_out_irq);
+> -        size_t i;
+> +        qemu_irq *i8259;
+>
+> -        for (i = 0; i < ISA_NUM_IRQS; i++) {
+> +        qemu_init_irq_child(OBJECT(dev), "i8259-irq", &d->i8259_irq,
+> +                            piix_request_i8259_irq, d, 0);
+> +        i8259 = i8259_init(isa_bus, &d->i8259_irq);
+> +
+> +        for (size_t i = 0; i < ISA_NUM_IRQS; i++) {
+>             d->isa_irqs_in[i] = i8259[i];
+>         }
+>
+> diff --git a/include/hw/southbridge/piix.h b/include/hw/southbridge/piix.h
+> index 86709ba2e4..a296b1205a 100644
+> --- a/include/hw/southbridge/piix.h
+> +++ b/include/hw/southbridge/piix.h
+> @@ -17,6 +17,7 @@
+> #include "hw/ide/pci.h"
+> #include "hw/rtc/mc146818rtc.h"
+> #include "hw/usb/hcd-uhci.h"
+> +#include "hw/core/irq.h"
+>
+> /* PIRQRC[A:D]: PIRQx Route Control Registers */
+> #define PIIX_PIRQCA 0x60
+> @@ -52,6 +53,8 @@ struct PIIXState {
+>     qemu_irq cpu_intr;
+>     qemu_irq isa_irqs_in[ISA_NUM_IRQS];
+>
+> +    IRQState i8259_irq;
+> +
+>     /* This member isn't used. Just for save/load compatibility */
+>     int32_t pci_irq_levels_vmstate[PIIX_NUM_PIRQS];
+>
+>
 
