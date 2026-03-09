@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE40FCA16A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:07:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2E56FCA16A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:08:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzf14-0005Ab-C8; Mon, 09 Mar 2026 14:07:43 -0400
+	id 1vzf0H-0004Mx-Ka; Mon, 09 Mar 2026 14:06:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vzf04-00043U-Sa
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:46 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vzf0B-00048t-NU
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vzf02-0006h1-P7
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:40 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vzf0A-0006hW-5C
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773079597;
+ s=mimecast20190719; t=1773079604;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ib+CApM1kWITeZ/5sgt8awzJihc228hSFn8FjiKZjaM=;
- b=ZnAgFUVk4gvdVqtJzPaxQle5kZteIxgtB7jnEpGuEOGCZmWkZfTTKhExZ4HiqT7tRuoVyj
- TqO51Kl9yIvT08iDBZvBywUl7dcBfoBs3lpJso3v+Z83/cgHJKXuLZLOiPLNAx1pVBPaIP
- FHTciXxsARoot2dWNyv9c9xrWGTopHE=
+ bh=/Dg9kIyvAgyx751FNJETQQgeV7XuqlKLND0JzYHR6xw=;
+ b=IO2+SU5SxXGWuS0PLZYjIJCtgFaw7dlKeSGX9rr/JILoZpsb2quKS0P3gSsr3eN9IKZ/ci
+ DmgbibTKZhvRif1Iryrm73v4uiK1NtHVgphrMtQX6gRY/FkMQHIakea7QnHNyNow1PP1Dh
+ FImvmalu9R5heDAMiZjRDF0npitY0YU=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-g_VNe-AxMQWd2nC8JByBhQ-1; Mon,
- 09 Mar 2026 14:06:34 -0400
-X-MC-Unique: g_VNe-AxMQWd2nC8JByBhQ-1
-X-Mimecast-MFC-AGG-ID: g_VNe-AxMQWd2nC8JByBhQ_1773079592
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-KdMW1tSZMpKesc6TKlK6PA-1; Mon,
+ 09 Mar 2026 14:06:42 -0400
+X-MC-Unique: KdMW1tSZMpKesc6TKlK6PA-1
+X-Mimecast-MFC-AGG-ID: KdMW1tSZMpKesc6TKlK6PA_1773079600
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C5CC51956055; Mon,  9 Mar 2026 18:06:31 +0000 (UTC)
+ id 1B819195608F; Mon,  9 Mar 2026 18:06:38 +0000 (UTC)
 Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.81.1])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 34F43180049D; Mon,  9 Mar 2026 18:06:25 +0000 (UTC)
+ id 22166180049D; Mon,  9 Mar 2026 18:06:32 +0000 (UTC)
 From: John Snow <jsnow@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Hanna Reitz <hreitz@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
@@ -63,9 +63,9 @@ Cc: Hanna Reitz <hreitz@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
  Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Fabiano Rosas <farosas@suse.de>, Li-Wen Hsu <lwhsu@freebsd.org>,
  Cleber Rosa <crosa@redhat.com>
-Subject: [PULL 3/4] python: drop avocado
-Date: Mon,  9 Mar 2026 14:06:00 -0400
-Message-ID: <20260309180601.164435-4-jsnow@redhat.com>
+Subject: [PULL 4/4] python: add formal python3.14 support and testing
+Date: Mon,  9 Mar 2026 14:06:01 -0400
+Message-ID: <20260309180601.164435-5-jsnow@redhat.com>
 In-Reply-To: <20260309180601.164435-1-jsnow@redhat.com>
 References: <20260309180601.164435-1-jsnow@redhat.com>
 MIME-Version: 1.0
@@ -97,204 +97,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avocado-framework is no longer used for anything, so it can be removed.
-
 Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260226213400.1254014-4-jsnow@redhat.com>
+Message-ID: <20260226213400.1254014-5-jsnow@redhat.com>
 Signed-off-by: John Snow <jsnow@redhat.com>
 ---
- python/README.rst              |  2 --
- python/avocado.cfg             | 13 -------------
- python/setup.cfg               |  1 -
- python/tests/flake8.sh         |  3 ---
- python/tests/iotests-mypy.sh   |  4 ----
- python/tests/iotests-pylint.sh |  5 -----
- python/tests/isort.sh          |  3 ---
- python/tests/minreqs.txt       |  1 -
- python/tests/mypy.sh           |  3 ---
- python/tests/pylint.sh         |  4 ----
- python/tests/qapi-flake8.sh    |  6 ------
- python/tests/qapi-isort.sh     |  8 --------
- python/tests/qapi-mypy.sh      |  4 ----
- python/tests/qapi-pylint.sh    |  8 --------
- 14 files changed, 65 deletions(-)
- delete mode 100644 python/avocado.cfg
- delete mode 100755 python/tests/flake8.sh
- delete mode 100755 python/tests/iotests-mypy.sh
- delete mode 100755 python/tests/iotests-pylint.sh
- delete mode 100755 python/tests/isort.sh
- delete mode 100755 python/tests/mypy.sh
- delete mode 100755 python/tests/pylint.sh
- delete mode 100755 python/tests/qapi-flake8.sh
- delete mode 100755 python/tests/qapi-isort.sh
- delete mode 100755 python/tests/qapi-mypy.sh
- delete mode 100755 python/tests/qapi-pylint.sh
+ configure        | 4 ++--
+ python/setup.cfg | 3 ++-
+ 2 files changed, 4 insertions(+), 3 deletions(-)
 
-diff --git a/python/README.rst b/python/README.rst
-index ec5cb5e971b..e34d1a1c7b1 100644
---- a/python/README.rst
-+++ b/python/README.rst
-@@ -108,8 +108,6 @@ Files in this directory
- 
- - ``qemu/`` Python 'qemu' namespace package source directory.
- - ``tests/`` Python package tests directory.
--- ``avocado.cfg`` Configuration for the Avocado test-runner.
--  Used by ``make check`` et al.
- - ``Makefile`` provides some common testing/installation invocations.
-   Try ``make help`` to see available targets.
- - ``MANIFEST.in`` is read by python setuptools, it specifies additional files
-diff --git a/python/avocado.cfg b/python/avocado.cfg
-deleted file mode 100644
-index a4604200594..00000000000
---- a/python/avocado.cfg
-+++ /dev/null
-@@ -1,13 +0,0 @@
--[run]
--test_runner = nrunner
--
--[simpletests]
--# Don't show stdout/stderr in the test *summary*
--status.failure_fields = ['status']
--
--[job]
--# Don't show the full debug.log output; only select stdout/stderr.
--output.testlogs.logfiles = ['stdout', 'stderr']
--
--# Show full stdout/stderr only on tests that FAIL
--output.testlogs.statuses = ['FAIL']
+diff --git a/configure b/configure
+index b99ba65d718..cd1dadd8bb2 100755
+--- a/configure
++++ b/configure
+@@ -527,8 +527,8 @@ first_python=
+ if test -z "${PYTHON}"; then
+     # A bare 'python' is traditionally python 2.x, but some distros
+     # have it as python 3.x, so check in both places.
+-    for binary in python3 python python3.13 python3.12 python3.11 \
+-                          python3.10 python3.9 ; do
++    for binary in python3 python python3.14 python3.13 python3.12 \
++                          python3.11 python3.10 python3.9 ; do
+         if has "$binary"; then
+             python=$(command -v "$binary")
+             if check_py_version "$python"; then
 diff --git a/python/setup.cfg b/python/setup.cfg
-index 03344526730..e5bf498f0e1 100644
+index e5bf498f0e1..80975933971 100644
 --- a/python/setup.cfg
 +++ b/python/setup.cfg
-@@ -35,7 +35,6 @@ install_requires =
- [options.extras_require]
- # Remember to update tests/minreqs.txt if changing anything below:
- devel =
--    avocado-framework >= 90.0
-     distlib >= 0.3.6
-     flake8 >= 5.0.4
-     fusepy >= 2.0.4
-diff --git a/python/tests/flake8.sh b/python/tests/flake8.sh
-deleted file mode 100755
-index e0136996453..00000000000
---- a/python/tests/flake8.sh
-+++ /dev/null
-@@ -1,3 +0,0 @@
--#!/bin/sh -e
--python3 -m flake8 qemu/
--python3 -m flake8 scripts/
-diff --git a/python/tests/iotests-mypy.sh b/python/tests/iotests-mypy.sh
-deleted file mode 100755
-index ee764708199..00000000000
---- a/python/tests/iotests-mypy.sh
-+++ /dev/null
-@@ -1,4 +0,0 @@
--#!/bin/sh -e
--
--cd ../tests/qemu-iotests/
--python3 -m linters --mypy
-diff --git a/python/tests/iotests-pylint.sh b/python/tests/iotests-pylint.sh
-deleted file mode 100755
-index 33c5ae900a5..00000000000
---- a/python/tests/iotests-pylint.sh
-+++ /dev/null
-@@ -1,5 +0,0 @@
--#!/bin/sh -e
--
--cd ../tests/qemu-iotests/
--# See commit message for environment variable explainer.
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m linters --pylint
-diff --git a/python/tests/isort.sh b/python/tests/isort.sh
-deleted file mode 100755
-index 66c2f7df0fd..00000000000
---- a/python/tests/isort.sh
-+++ /dev/null
-@@ -1,3 +0,0 @@
--#!/bin/sh -e
--python3 -m isort -c qemu/
--python3 -m isort -c scripts/
-diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
-index 19912027076..05c3bdb89f8 100644
---- a/python/tests/minreqs.txt
-+++ b/python/tests/minreqs.txt
-@@ -31,7 +31,6 @@ distlib==0.3.6
- fusepy==2.0.4
+@@ -19,6 +19,7 @@ classifiers =
+     Programming Language :: Python :: 3.11
+     Programming Language :: Python :: 3.12
+     Programming Language :: Python :: 3.13
++    Programming Language :: Python :: 3.14
+     Typing :: Typed
  
- # Test-runners, utilities, etc.
--avocado-framework==90.0
- pytest==6.0.2
+ [options]
+@@ -162,7 +163,7 @@ multi_line_output=3
+ # of python available on your system to run this test.
  
- # Linters
-diff --git a/python/tests/mypy.sh b/python/tests/mypy.sh
-deleted file mode 100755
-index a33a3f58ab3..00000000000
---- a/python/tests/mypy.sh
-+++ /dev/null
-@@ -1,3 +0,0 @@
--#!/bin/sh -e
--python3 -m mypy -p qemu
--python3 -m mypy scripts/
-diff --git a/python/tests/pylint.sh b/python/tests/pylint.sh
-deleted file mode 100755
-index 2b68da90df7..00000000000
---- a/python/tests/pylint.sh
-+++ /dev/null
-@@ -1,4 +0,0 @@
--#!/bin/sh -e
--# See commit message for environment variable explainer.
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint qemu/
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint scripts/
-diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
-deleted file mode 100755
-index c69f9ea2e00..00000000000
---- a/python/tests/qapi-flake8.sh
-+++ /dev/null
-@@ -1,6 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--python3 -m flake8 ../scripts/qapi/ \
--        ../docs/sphinx/qapidoc.py \
--        ../docs/sphinx/qapi_domain.py
-diff --git a/python/tests/qapi-isort.sh b/python/tests/qapi-isort.sh
-deleted file mode 100755
-index 067c16d5d94..00000000000
---- a/python/tests/qapi-isort.sh
-+++ /dev/null
-@@ -1,8 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--python3 -m isort --sp . -c ../scripts/qapi/
--# Force isort to recognize "compat" as a local module and not third-party
--python3 -m isort --sp . -c -p compat \
--        ../docs/sphinx/qapi_domain.py \
--        ../docs/sphinx/qapidoc.py
-diff --git a/python/tests/qapi-mypy.sh b/python/tests/qapi-mypy.sh
-deleted file mode 100755
-index 363dbaf8c06..00000000000
---- a/python/tests/qapi-mypy.sh
-+++ /dev/null
-@@ -1,4 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--python3 -m mypy ../scripts/qapi
-diff --git a/python/tests/qapi-pylint.sh b/python/tests/qapi-pylint.sh
-deleted file mode 100755
-index 8767d9d2a2d..00000000000
---- a/python/tests/qapi-pylint.sh
-+++ /dev/null
-@@ -1,8 +0,0 @@
--#!/bin/sh -e
--# SPDX-License-Identifier: GPL-2.0-or-later
--
--SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint \
--                                --rcfile=../scripts/qapi/pylintrc \
--                                ../scripts/qapi/ \
--                                ../docs/sphinx/qapidoc.py \
--                                ../docs/sphinx/qapi_domain.py
+ [tox:tox]
+-envlist = py39, py310, py311, py312, py313
++envlist = py39, py310, py311, py312, py313, py314
+ skip_missing_interpreters = true
+ 
+ [testenv]
 -- 
 2.53.0
 
