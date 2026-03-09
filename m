@@ -4,105 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61090F4181E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:08:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 150BBF4181F
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:09:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vze50-0000PD-Oh; Mon, 09 Mar 2026 13:07:42 -0400
+	id 1vze6w-0002Lj-AO; Mon, 09 Mar 2026 13:09:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vze4u-0000Fm-Fk
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:07:37 -0400
-Received: from mail-pf1-x435.google.com ([2607:f8b0:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1vze4r-000410-JD
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:07:36 -0400
-Received: by mail-pf1-x435.google.com with SMTP id
- d2e1a72fcca58-829ac8d56c5so2680511b3a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:07:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773076051; cv=none;
- d=google.com; s=arc-20240605;
- b=O2eYuAqb8TSfpzSJPvpI2IqTboioADIkRUpCrqehRpLl8XR6xXY7NtrOoGVMOLw18Q
- qritUAnBUu8avbI5VsnRmSKP+C4gs7LjZV0CnmTjb1mwhx2M6KhL5kicNnSceFQ95igR
- Z27gxFQ33cM1iNw84lNItLt5kOOtkpq2PfpWn64L9dG6SYqzsCC37/6CwOf7Gtm/0yYt
- wAtEM+DhIgCDNp883kkNKHDnjyXfHs6hYToqlu+SqYJvms0XlmKtovdz1100MONfXrTp
- numY4b7h0/8qk1vr5Z0eScW4CreS5aX1aIf5LU9HjF6yxjqV/XV+oG04YumlOWnWW1C6
- 3vlA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=c3PkIKfzARLPbsK6rjh6RT/1346Qjqd3vbaSm72RyoE=;
- fh=KRCCjFQNjYXxmVm5lhBeSL8Cxa/V2Ufkjle/+cdDqO0=;
- b=Qbp2AaHLoQ7aPFs2ir1ezvI3Ng+bhgQyGXF5Vp63DRD7+1UyBBsoCBJjmc50kpcVYF
- +9grmNO818TrKmtbt6Y8TUVzOivcSTVKruQ/3FsPnkelngciz/KBiFTYX9Ciy20Kb3na
- nQLDPYjJfv/XaSZ8TUmkrOgGqRkX2TRpUedc1P7l1eoKXtROPkNYHg50DaJnorM/4+BX
- y0odXTMXAfIKwGAYZJkltDCWzA9lmUeRxQlJpJXdq/cGcgn2RPNGfgCfPb661nexAmN+
- vW9xkKca6AaO4xOz/ksuLF336+uE8tFU/br5Sg7iJeYGfDB/bvkuNHdQgcCFvThVUU8Q
- ze7g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773076051; x=1773680851; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=c3PkIKfzARLPbsK6rjh6RT/1346Qjqd3vbaSm72RyoE=;
- b=ZBRLYAAJmcZn/OoIzduWM2evZJpJXe7hjxGIGxY2HlqUL/DSNVRq8Got0mW6tnJAXp
- 9YKAfBOTcjEjJhTfa+SxKikr57bq4L8nuxKzWf4iZoY43UkGfU/UuxSoEaL0Vbt44lqK
- /ErN4lVuOAJnioSd/Gz69ac0sWMFGideD+yHQbrFlzC9s0F5uLSOXK+2wEU28DeIId4B
- 2s7TbtaXBbDCr7fpiHGQSILOVxiEC6sIXw+LM70nk1TzI2yE/7JovbRqwWXG0xhIPWuq
- l+sy+7Jihum4hRJd36zPulB/nxzuQuIo1luNR1pZxj6q4wHwX8TBu5eZ6RbE0sWbURX2
- xLwg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773076051; x=1773680851;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=c3PkIKfzARLPbsK6rjh6RT/1346Qjqd3vbaSm72RyoE=;
- b=pNggSM4KPJSFIAqZFfZlnASzir9BPVBjcnndEYVgRSLAs7K+IRrycIo34A4ztLVarH
- kzT5U/TEVoNFyD5qCojSNidKKhMx7s82FLL4p/l7XXpkDSyr+qIPDFGgOoKGGuXHLOds
- G6rbcF6w/qMTjQ0EL2Tp5p5+EVMlJbSlkZkdfE1xfkdefh7ZB3Fx78kC4WkVAMuFcQ9W
- 3OvFdAEJqwtqV+NXZlMLETTLl3kwRoAzlZqSdwqkQ9n5NEAVa3D7JqGn4P9CG+LTji8I
- x1Lr9XYavjuM+Mm8O+ldLILx0KjSdm7eQEWb9aDVkGzAyPaUV5iG8WuzdCeIwwX0HfAr
- LRvA==
-X-Gm-Message-State: AOJu0YxPrlHxofoDSWpTglwf28TGhxZZ+tvlw522DBPXFNmTqmTwFJYk
- yUfzHLCj2asYy9xk77w4AaSo+r/eVySKHh4/3TjUWqUPfz9vm1uG84qWQHvU+X4EY1Ml5w/XsoD
- 2AkjUcIcPVZp91Vcd7EGgEbB+eRAIfeE=
-X-Gm-Gg: ATEYQzzzOq/MgB/zmjA1Pvs94ZtOYYGLyby0PzhqHqzm9p1nPKjA/CbLRtcFORy5hh0
- UkNp1cVHaM7BPKFktUlt0KUoV0mQufIaeBVxnoLotK31dfGbPgbMqFTEwhYxDHiQSQoBqDvxnLj
- FqrcBFSo4S+tbSbQdcDt3w3fdkkjqvTS/oedR0wdjGJrYzFuP8owgTRj2rpZM0hxlacfJrHOSSM
- rp/+G8C2Jd0LEr7PP8dIscuN/iutljBVAKoDO1/MxArdLLaIeFpxN/NFKDyD4JhR8/PeO6mi0fU
- Ud9hRkLB4m9ghahMISjTakhBjGE5yNxRxhM+gw==
-X-Received: by 2002:a05:6a00:a502:20b0:829:af4a:5eb4 with SMTP id
- d2e1a72fcca58-829af4a610dmr6270861b3a.6.1773076051054; Mon, 09 Mar 2026
- 10:07:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vze6t-0002KO-OK; Mon, 09 Mar 2026 13:09:40 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alifm@linux.ibm.com>)
+ id 1vze6r-0004Le-Gj; Mon, 09 Mar 2026 13:09:39 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629EXJDq1273637; Mon, 9 Mar 2026 17:09:34 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=KRZJSa
+ 3HIkLDeIEZv5wO9fUvTwGxwUmugPB8Vblb97U=; b=p51gd/J5YmboHkFTuLSq81
+ VO2xFd432mqlzNo7vG/JgN0dqylW5/21uXmJa9aU2p0NPz5nKgxheWOgDaLPL7DS
+ p30IHRTGvig7420QonQolgvko3fhwDi86gxkz48Z4miz2UMzNZ7m6lYGXYcXWmqO
+ 6GCF7iUq/s6Pp9PfLj5u+/NiKm6hTukmlY8LLMehIc2njfG2zFp5YDA8Yf88lSoa
+ zhWq6nTMp3Bov/DVJwwWb7Zpp1mEdkEuxF0fsf/wNQoAKYKI8+3NhJegnZs/Qk88
+ uMectYGVSDAck8Skmtcr9P3GblBDHTyrfDmw0gE3EqJSUOzLZHJ3zQabITMYkRdg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvr7dp6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 17:09:34 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 629EBi0a021150;
+ Mon, 9 Mar 2026 17:09:33 GMT
+Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4crxbsp0fe-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 17:09:33 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 629H9WJ454985106
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Mar 2026 17:09:32 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2D01B58058;
+ Mon,  9 Mar 2026 17:09:32 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 39FB55805B;
+ Mon,  9 Mar 2026 17:09:31 +0000 (GMT)
+Received: from [9.61.251.111] (unknown [9.61.251.111])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Mar 2026 17:09:31 +0000 (GMT)
+Message-ID: <cfc79e1c-9a5c-4217-9038-b2617931bb88@linux.ibm.com>
+Date: Mon, 9 Mar 2026 10:09:30 -0700
 MIME-Version: 1.0
-References: <20260309144822.877695-1-brian.cain@oss.qualcomm.com>
- <20260309144822.877695-5-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260309144822.877695-5-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 9 Mar 2026 11:07:20 -0600
-X-Gm-Features: AaiRm528K9xlbN5e8r5773ECbSd3QNB3xK2DxCk_xKl1JzaDu5OWqeluL3PdWgU
-Message-ID: <CAATN3NoKtCQOY+uYJpyPoD4Aakyrh+ZNVjiLdPj+vumFRP=25g@mail.gmail.com>
-Subject: Re: [PATCH v4 04/35] target/hexagon: Add missing A_CALL attr,
- hintjumpr to multi_cof
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
- anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Content-Type: multipart/alternative; boundary="0000000000002ed5f2064c9a70ff"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::435;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pf1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 10/15] pc-bios/s390-ccw: Introduce PCI device
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, farman@linux.ibm.com, mjrosato@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260309003601.242634-1-jrossi@linux.ibm.com>
+ <20260309003601.242634-11-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Farhan Ali <alifm@linux.ibm.com>
+In-Reply-To: <20260309003601.242634-11-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDE1MyBTYWx0ZWRfX2QrDhIyFjwUt
+ b7GrG4Is0JTuX/mcSe5auX0LMt5WTK/k4qnJ42IJ0C+ACAU/6NMRN6EVkZvpFDc12ELU2sH/Ep3
+ OP/t/+4ND2kUnztKbjpmg9vGO6GT4TY/l+vxlbU2berqnRnRjfGw0EipEFHJwZrjB0ySteUQ2b+
+ b5S81LY5z4lrM+US5THZs+XMk1MKJXHSiumvw2stGuwrz5hCvkIETvp8dplfyfUsx8yXcGkRni4
+ CtV60pK7GUr9oJ40v1nlGL9DChegtpmSwFc7UT0eYFqmIGLXonZY5tOvzuBFxvrPfXPkr0q2D1A
+ nT7HzNrC0djKlvbMumagZB1oqTLYzXyFrzcDuMBxTddecpWQC2mhw0BKTaWuLSPBslMyzxLHZgc
+ BesKw3v5Rj1BBgVIMHKHIDpDUFl1ilS/T1RIaPQWyNs4edSHkzMggCDIPjGpj+gulzV3uPNJ72g
+ WE+ZpguGXcp2bg/5/3A==
+X-Proofpoint-GUID: 3j1vd748ZoemjN0_6CGAS7RjqROB62FT
+X-Proofpoint-ORIG-GUID: 3j1vd748ZoemjN0_6CGAS7RjqROB62FT
+X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69aefece cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=DTgVIiggviyzEEToKV0A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_04,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603090153
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=alifm@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,44 +124,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000002ed5f2064c9a70ff
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 9, 2026 at 8:48=E2=80=AFAM Brian Cain <brian.cain@oss.qualcomm.=
-com>
-wrote:
+On 3/8/2026 5:35 PM, jrossi@linux.ibm.com wrote:
+> diff --git a/pc-bios/s390-ccw/pci.h b/pc-bios/s390-ccw/pci.h
+> new file mode 100644
+> index 0000000000..40a0bf9dcb
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/pci.h
+> @@ -0,0 +1,39 @@
+> +/*
+> + * s390x PCI definitions
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi<jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef PCI_H
+> +#define PCI_H
+> +
+> +#include <stdint.h>
+> +#include <stdbool.h>
+> +#include "clp.h"
+> +
+> +#define ZPCI_CREATE_REQ(handle, space, len)                    \
+> +    ((uint64_t) handle << 32 | space << 16 | len)
+> +
+> +union register_pair {
+> +    unsigned __int128 pair;
+> +    struct {
+> +        unsigned long even;
+> +        unsigned long odd;
+> +    };
+> +};
+> +
+> +#define PCIST_DISABLED         0x0
+> +#define PCIST_ENABLED          0x1
 
-> From: Brian Cain <bcain@quicinc.com>
->
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
-> ---
->  target/hexagon/hex_common.py | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
->
+Where are we using these #defines? I couldn't find it in the code. So 
+maybe we should remove them? Apart from this the patch looks good to me.
 
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+Reviewed-by: Farhan Ali<alifm@linux.ibm.com>
 
---0000000000002ed5f2064c9a70ff
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 9, =
-2026 at 8:48=E2=80=AFAM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qua=
-lcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote =
-class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px sol=
-id rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mailt=
-o:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/hex_common.py | 4 +++-<br>
-=C2=A01 file changed, 3 insertions(+), 1 deletion(-)<br></blockquote><div><=
-br></div><div>Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimp=
-son@gmail.com">ltaylorsimpson@gmail.com</a>&gt;</div><div>=C2=A0</div></div=
-></div>
+Thanks
 
---0000000000002ed5f2064c9a70ff--
+Farhan
+
+
+> +
+> +#define PCI_CFGBAR             0xF  /* Base Address Register for config space */
+> +#define PCI_CAPABILITY_LIST    0x34 /* Offset of first capability list entry */
+> +
+> +int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
+> +              uint8_t len);
+> +int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
+> +             uint8_t len);
+> +
+> +#endif
 
