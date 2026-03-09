@@ -4,80 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 95890FCA168
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:52:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 641D3FCA16A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:52:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzem5-0005iE-10; Mon, 09 Mar 2026 13:52:13 -0400
+	id 1vzem8-0005ts-UP; Mon, 09 Mar 2026 13:52:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzelj-0005Yv-M4
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:51:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzeld-0003aI-FD
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzelj-0005Z5-M8
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:51:53 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzelh-0003d8-BX
  for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:51:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773078702;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1M6NOZ00P0JnAbthNzASZGH0vsK+lJq548CT/oZbajg=;
- b=B2hiFfpx9qyl47C9fGF7d2bdqLhRZDRJMEEFGxwvMyNtRoChYoVifViZfXmKs/xqeu3B+N
- OLOV/O4nyb2cT6ZVhdCCo8yCJc7rXgb5r0l/j3rRpCcU6X3W0a2cr+uvX5J1JoJ81K9U1K
- NetLPOJiyOPzYFKa8S9vdT6wb1oFV8A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-210-cP1hHaiJOPeKN7cRLf9-YQ-1; Mon,
- 09 Mar 2026 13:51:39 -0400
-X-MC-Unique: cP1hHaiJOPeKN7cRLf9-YQ-1
-X-Mimecast-MFC-AGG-ID: cP1hHaiJOPeKN7cRLf9-YQ_1773078697
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7E7EF19540C8; Mon,  9 Mar 2026 17:51:35 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.95])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 31EDD19560A6; Mon,  9 Mar 2026 17:51:32 +0000 (UTC)
-Date: Mon, 9 Mar 2026 17:51:29 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Tejus GK <tejus.gk@nutanix.com>
-Cc: Peter Xu <peterx@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 1/1] io: make zerocopy fallback accounting more accurate
-Message-ID: <aa8IoQOZHzQvacSh@redhat.com>
-References: <20260309090907.956330-1-tejus.gk@nutanix.com>
- <aa755Yc6t_bBzM_u@redhat.com> <aa78gMsQrt1BeXt3@x1.local>
- <aa8AqKqOa8YhEiF9@redhat.com>
- <0DF1A5F6-E20D-4A3F-9285-9205E87DE641@nutanix.com>
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439b73f4ab4so8532329f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:51:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773078706; x=1773683506; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=WFm/ouylL9EFt+S8dJda/dTOGa2NJRjLHJRcJZiZz5Q=;
+ b=M6jlR13zvxKBEyURI9Hd69We/+/REKd5WnCSHWBVxTo/4wenFvzKf9tYcO8vvQZHQK
+ PTPCEpuHyuIWolWumK8T6aunLSsUViZhYbjbaai1fu64fXJpMLALwOCtUDfjTEtyjikv
+ Hs9VLI+0xucpPsKVAgGD2n80EPy8jeWQ3Qvzh9YWRnYgSTDLLPILI1j84Vw8HMtK4eWn
+ IVjHhFllknb6jcgrF40q12kvr+piXIUNxo+M4f0M4LynFrsQywUbv8WbyaTA/jXycWBN
+ VfLywR1nJzgJOgChLytUoV7Jsn9P2NrM7OHP1eZX/57lEd1vgyYiZoFDeRRcSgJmoJYG
+ Kplw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773078706; x=1773683506;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=WFm/ouylL9EFt+S8dJda/dTOGa2NJRjLHJRcJZiZz5Q=;
+ b=djC+JinzHTsQNfZ75B1WJVC8zR1RwWBHCuIJwhVEooiVDtSjG/p48Nw6W7s5sv7UXn
+ 48lGcFWJzvMYedqRgDMnSmPcnkEHf7EEZmsNL0FNOiQMAxeFkhk+yVYCBOi6/4S50gZM
+ 0Xsk7Jual5CmX/rUALBbNbsIyb6I+gkwYY4k8+fPlsjlXER26vlLdIXtnJ40baWIZwcX
+ BBR+kTFBzltLchdnkEjg4/OGxFg8+NEN+SAqWkiEyhi8j/dhNYGqqukr/wbANGVsx5GB
+ FQJFQ0oK5pJmdna+agcbHVKBSUz/3UC98Mubt0+XwkNhvd1YDD03ZBEPfpk3WAjMO69b
+ fw1g==
+X-Gm-Message-State: AOJu0Yzuof0Ws0IaFC+sC8rf7S8GiSS1lR8f1hbkGcEGihU/5aavG4F1
+ iU90B4hynoVogmr4o6ETQ4EfQr1W0Fsbh0iCt/pYbCaXEo6AJXZwwPdsKMPnaWFVT2DUTMZHAMn
+ 8YHSdRS4=
+X-Gm-Gg: ATEYQzwuKGAty2rdDOXlUkOHkHbaN5DK89rZNOelC3c5ZhYEQIGP/M93fB6+ZsZ/YtL
+ ri6OMbmUe7R6kEmve9M4PjQ5Rshpqbo+kVQfRCj7o5eH7fnLSCnZhIpqXBFV1xrZiZWJh44V8x5
+ vbDI8rFM/byRhGCOX5gedFPKp8HSc+TJ3Qz2oJqu8rwJ0fW2IXfC0+aCz5PPwJNhnWvIpVFEz3H
+ dDz3/TdXFfILmKRrq786/BWWdxs9rEj6V1+XElTBTilWBNyw/Bex5AEZiGw9QVtduOA88L5zohq
+ 5MSH5DyhtXVccwxKqr7j046RR+6XJ3e3+8zUv4NUiG5zZpPI2FrCo1ILvJuPTRIwTlp4/ImqTrJ
+ hzTr6lwu11L1S5tF6JVoYIpVVhBMsACuu/YKs52HQ/EE/y6siVsOmeISgV/oWu0iGxo6sUI3t85
+ JPyXtFVbwwZw3AoYeX5KNApvLrFdqpR+N9l2emrXPYmPle28cBOWg8ofdNBMN4tm3FMA==
+X-Received: by 2002:a05:6000:2881:b0:437:711c:8754 with SMTP id
+ ffacd0b85a97d-439da55541cmr22138690f8f.7.1773078706035; 
+ Mon, 09 Mar 2026 10:51:46 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dae2b9fbsm28995130f8f.23.2026.03.09.10.51.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 10:51:45 -0700 (PDT)
+Message-ID: <da603699-30e2-44e9-b117-ffbf0ae7833a@linaro.org>
+Date: Mon, 9 Mar 2026 18:51:44 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] accel/qtest: Build once as common object
+Content-Language: en-US
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+References: <20260225053408.18426-1-philmd@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260225053408.18426-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <0DF1A5F6-E20D-4A3F-9285-9205E87DE641@nutanix.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,96 +102,18 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 05:42:08PM +0000, Tejus GK wrote:
+On 25/2/26 06:34, Philippe Mathieu-Daudé wrote:
+> No code within qtest.c uses target-specific knowledge:
+> build it once as target-agnostic common unit.
 > 
-> 
-> > On 9 Mar 2026, at 10:47 PM, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > 
-> > !-------------------------------------------------------------------|
-> >  CAUTION: External Email
-> > 
-> > |-------------------------------------------------------------------!
-> > 
-> > On Mon, Mar 09, 2026 at 12:59:44PM -0400, Peter Xu wrote:
-> >> On Mon, Mar 09, 2026 at 04:48:37PM +0000, Daniel P. Berrangé wrote:
-> >>>> @@ -881,8 +881,8 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> >>>>         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
-> >>>> 
-> >>>>         /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
-> >>>> -        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> >>>> -            sioc->new_zero_copy_sent_success = true;
-> >>>> +        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
-> >>>> +            sioc->zero_copy_fallback++;
-> >>> 
-> >>> ...this is counting the number of MSG_ERRQUEUE items, which is not
-> >>> the same as the number of IO requests. That's why we only used it
-> >>> as a boolean marker originally, rather than making it a counter.
-> >> 
-> >> Would the logic still work and better than before?  Say, it's a counter of
-> >> "messages" rather than "IOs" then.
-> > 
-> > IIUC it is a counter of processing notifications which is not directly
-> > correlated to any action by QEMU - neither bytes nor syscalls.
-> 
-> Please correct me if I'm wrong about this, isn’t each notification an information 
-> about what happened to an individual IO?
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   meson.build             | 3 ---
+>   accel/qtest/meson.build | 5 ++++-
+>   2 files changed, 4 insertions(+), 4 deletions(-)
 
-If userspace hasn't read a queued notification yet, the kernel will
-merge new notifications with the existing queued one.
-
-The line above your change
-
-  serr->ee_data - serr->ee_info + 1;
-
-records how many notifications were merged, so we now how many
-syscalls were processed.
-
-If ee_code is  SO_EE_CODE_ZEROCOPY_COPIED though it means at least
-one syscall resulted in a copy, but that doesn't imply that *all*
-syscalls resulted in a copy.
-
-AFAICT, it could be 1 out of a 1000 syscalls resulted in a copy,
-or it could be 1000 out of 1000 resulted in a copy. We don't know.
-
-IIUC the kernel's merging of notifications appears lossy wrt this
-information. It could be partially mitigated by doing a flush for
-notifications really really frequently but that feels like it would
-have its own downsides
-
-
-> >> The problem with the old code was we may report fallback=0 even if there
-> >> can have fallback happened, as we mask that fact as long as one zerocopy
-> >> happened in the whole batch between two flushes.  So it seems this (even if
-> >> the counter is not per-IO) is still better.
-> > 
-> > Better for what purpose though ?
-> > 
-> > If we enabled zero-copy, it is useful to know if /something/ managed
-> > to benefit from zero-copy. ie if /always/ fails to zero-copy then
-> > we can diagnose that the NIC driver isn't capable of it, or there
-> > is some other limitation.  If something manages to zero-copy, then
-> > we know the feature is functionally working.
-> > 
-> > What will we do with a count of notificaitons ?
-> 
-> I was wondering if it can be useful for debugging live migration issues where zerocopy is 
-> enabled. For instance, let’s say a zerocopy write failed due to the socket error queue being
-> full. Now it could be either due to the out of order processing we had seen before 
-> (https://github.com/qemu/qemu/commit/84005f4a2b8745e5934f955c045a0b4311cd0992) or 
-> due to it getting filled up because some copies getting deferred. For the latter, this stat can be
-> worthwile as a debugging stat. 
-
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Patch queued, thanks.
 
