@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5AF3F417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:54:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48D1F41808
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:54:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcvh-0006z8-BV; Mon, 09 Mar 2026 11:54:01 -0400
+	id 1vzcvI-0005Er-Hd; Mon, 09 Mar 2026 11:53:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcve-0006xq-Us
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:58 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcv9-0004vq-2c
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:27 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvd-0000Fs-8v
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:58 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so24417715e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcv7-0008DH-G5
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:26 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439cb5af25bso2178474f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071635; x=1773676435; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071602; x=1773676402; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=PO1+Ml3mNJBa037aqT8Z2g6AbLpEBP5aH3yPV+0teXs=;
- b=IPLe7pGPF+k92gd/zOc3MrifIu3pdixu9hbQJ3Yr3jtbQZcM/9zUY2NxQI4TVZmc3d
- 9+2WwXkFbckchfsblmxVFskjlz3T65K555oOUcf4QtluTBFs98462ShsbiYZo7VU2io4
- pLyUy0eDbcnGNYHx8LwrSDI9WkKozv0LN7NlBK99qaet0sVnRLee6UIgp4WJCBxC5aIa
- 7XAb4UZFxckn+CUSvs2n1+mdkNIv1dmdBQjas9Bp8kMAvp4BYSMvQ97CCL0RE3WI8AmT
- oR5+8zVu35wpMROYz0eo7WBXc/VgDxV5O8KGLgGhQyOb2OaixkLjK3JAUCdTGN1cY6xU
- JdUA==
+ :reply-to; bh=pfrbHFhAv8bhscS2w7kB7DC3fNMKySB4UiY5tzkGzOE=;
+ b=iJE3wbTSmP2cKoWlGJQ4ow40W8RlkLqncgIuz/HbGQNbPGBFy5vrvYO0aigwqgSlyU
+ 0MF3KjV7ctuXhsdrpTzYxht2ABY+PgJXwTZJh2Gi1RaSM9+dOfZCNrHMeSsm9RjuzSHf
+ mvxUUvE59KT6/CQV/z2vQFeEsOTTd5IY00/tZtPIrtCGmQkwafP/ODMVteA8+vHx/G4B
+ prRtyyDpnBiJR9KQmsk3JSCAc7FCdWINAaSKj0VDX+BYqbR23kWxNKfssB0eEB1Ru9iK
+ xeF42QN6Hf1nE53IK74G630/duwFxuVVfFz3e0n09CRjbkaCzWXv13SDmbLNcyPi8ejR
+ pXUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071635; x=1773676435;
+ d=1e100.net; s=20230601; t=1773071602; x=1773676402;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=PO1+Ml3mNJBa037aqT8Z2g6AbLpEBP5aH3yPV+0teXs=;
- b=tbfvgalh7x+Ap0WmwFyLu3Ss1+JCj9pBMe2LRfRpyThimnMgR6BKkTajmeGb/dezSp
- uuFQi2ToA0azZNeNqD9JcfLayCWSfJW0w/oSws748sZuWbg7gj0z2b7HtIiQY38ftLac
- xO42xpw0533ll2ovd9WaP7Dhu/eK/cyfH6OoANtegdNu0XXSIC5Qy/cOJ8UZyxAdRhqp
- nTIkX4tDfhZA3IVl27Jhwha56DPalQZJXvwSjSVShEKGGPYQPoLN8nTaxK5PqGP+Q1Z6
- MXt4TXb7SA6QbKhjYnBdztKi5F9ZxWz339N9jkfYOP7ap6m+EHqfq1c7jht0aTfnk5Gj
- lSzQ==
-X-Gm-Message-State: AOJu0Yz/f4+5T+M37f2c6rfBOLVJMDNIUk44s7ZZ4AB9VdZpfGteQr0F
- Rem+u4vNF/3v4bK9S8JtFKSq16hPRJZSAfPPeMepAqjaW4mLf3OWiJJAJuwSQWTIMWfd47+794y
- B4S/PYUQ=
-X-Gm-Gg: ATEYQzwUJYXNwQLrRVrTTU0nQ2nJu/5hR22YNCBe/YHaBiIJvvU1iBeR5jx5+nPtilt
- lxjvmXlrw/stsqQlox3hcUSMkaKRiWE/iojOWw5imLXI1FpZMx6pHuslc1sBUPzqkFQN6ZXhUV6
- dJ3gLmqj/wfiverve1R/xNA+y2vhApw3QwQI5RMcnAMIJnrkQmT9Tk4bVXiTIUwJL4igadA4dIF
- Bulyhe/eBgG/o67PVygE3JIzqLQ8ZdhORcgaZNaegfF91OtsGI6B6eTc1XcIaMgAR8+bZUbSgpu
- DMPCvp7gUZW9Wms4IpFFgRO29Q0U1Y5CN91E3nfzLotkiLy123jzMdIa+JAU8CCNDqM0l6RkqY5
- 9Eiloh5jLJKltSFlUthakB7feY/+CsOjJUL2yduYgv5/5bQeCXQEAgQ7DE784oFeOjT/K86pLoy
- M89LZMF7ee40vlv7+x9/n83xnR3RkN9vV60ioCIIB4DOaZ07zDl/n2gRzBQkjCPoMf0mQPpiql
-X-Received: by 2002:a05:600c:3d90:b0:480:4d38:7abc with SMTP id
- 5b1f17b1804b1-485269304aamr176624885e9.11.1773071635217; 
- Mon, 09 Mar 2026 08:53:55 -0700 (PDT)
+ bh=pfrbHFhAv8bhscS2w7kB7DC3fNMKySB4UiY5tzkGzOE=;
+ b=s5euGLmIUvNdMb6c2p0Im8CrI4QAW98Sumw4/HElu0eMKsOslD8fSImmN5NN6OlVdc
+ 8GlCM18MGlhTU3DVw45i9VjqtUzufkDvuvk23A/imoo4mRBg6fCs8o4/SODpfNMp0BP9
+ MqgXChyBqCs6hRgh+O6vs2uWxhLVYOD234uhoKcxxdOLGgGXaUQci1twRdGjLzsoIMrh
+ TqeVd6jxGuFZvdxLifzJntWAGBFKvITSLBFTUBga588tfekwDAin4fKzhCmeUQ3VMr1k
+ fTk5yXlKsfO9rp3tdm//ZCz+0Vt4Wo3otEgpL5Wpic99+RVVRyj21aYAzsgW7IfLPaN0
+ mWeA==
+X-Gm-Message-State: AOJu0YwgL+KgVlxfrQrUEbQ8wt3OgDqoAsLZqNkKrQOEuS7u89+Et/kW
+ 1SwoNf0UlyDAuKxHRsRXRv1GClyg8WO0V3mIaqlerrWSxZ1mHxMR7g3qrCOi+yIM1mYhgQPWXrj
+ wznzUv1U=
+X-Gm-Gg: ATEYQzw/RgjI1zNI0RAJbzHCATPUJmvpEGvKkFjxlGi7laYF2ltcpUwX9AFiX5YkFPs
+ YbZHgAYmzbIVp6y0NIstjEupOEdd8p95uvdE32Gz0Ms/3PRLCPLH8z4fuUslSTKTllEPUMmIMBV
+ PPlN4AewF6btv6VyHhEyGct0lhl78JNMIL6nRDlILoGV9HZ0n0kbrMv0Sjn+ZDbDf/lwEhL/jpI
+ odBw95WBE+8JQrqDIzXg9XoMtOClzEN3GdxVF3NQ8vd37E0A3CB8K6Ow5tiqpR125zcQAkaTjsb
+ f1r7SkbjKgukD1PsgbXdGF/vl147hRaEBld/f4nHp4SCOVk0aYSetquxaEh/IGFkqRfejjmHl7L
+ 0qPMjxc6fwaFIxTM8VTvByhijiASmpnAPGNXLMaDe+yCt46UFo+sbOyMpAFxATnsiQ8l1CjLbyT
+ HnwacIfRSEWFIKiS6BsgGSKE0o8RqY5oM/f0G1MNMp/u1hOoaEpvI29RDckOVLV7vrlUHXge+L
+X-Received: by 2002:a05:6000:3107:b0:439:b3c5:ea1f with SMTP id
+ ffacd0b85a97d-439da35f8d7mr22194715f8f.16.1773071602043; 
+ Mon, 09 Mar 2026 08:53:22 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a6bbcesm984865e9.3.2026.03.09.08.53.54
+ ffacd0b85a97d-439dae3f267sm26232109f8f.31.2026.03.09.08.53.21
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:53:54 -0700 (PDT)
+ Mon, 09 Mar 2026 08:53:21 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 14/49] hw/virtio: Remove VirtIOBalloon::qemu_4_0_config_size
- field
-Date: Mon,  9 Mar 2026 16:51:44 +0100
-Message-ID: <20260309155219.62400-15-philmd@linaro.org>
+Subject: [PULL 09/49] hw/core/machine: Remove the hw_compat_3_1[] array
+Date: Mon,  9 Mar 2026 16:51:39 +0100
+Message-ID: <20260309155219.62400-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,54 +98,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The VirtIOBalloon::qemu_4_0_config_size boolean was only set in
-the hw_compat_4_0[] array, via the 'qemu-4-0-config-size=true'
-property.  We removed all machines using that array, lets remove
-that property.
+The hw_compat_3_1[] array was only used by the pc-q35-3.1
+and pc-i440fx-3.1 machines, which got removed. Remove it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307154202.86309-6-philmd@linaro.org>
+Message-Id: <20260307152635.83893-9-philmd@linaro.org>
 ---
- include/hw/virtio/virtio-balloon.h | 1 -
- hw/virtio/virtio-balloon.c         | 5 -----
- 2 files changed, 6 deletions(-)
+ include/hw/core/boards.h |  3 ---
+ hw/core/machine.c        | 17 -----------------
+ 2 files changed, 20 deletions(-)
 
-diff --git a/include/hw/virtio/virtio-balloon.h b/include/hw/virtio/virtio-balloon.h
-index 79ac194ccec..abbf3397188 100644
---- a/include/hw/virtio/virtio-balloon.h
-+++ b/include/hw/virtio/virtio-balloon.h
-@@ -70,7 +70,6 @@ struct VirtIOBalloon {
-     int64_t stats_poll_interval;
-     uint32_t host_features;
+diff --git a/include/hw/core/boards.h b/include/hw/core/boards.h
+index e15dbcea83b..9155e0cc9ed 100644
+--- a/include/hw/core/boards.h
++++ b/include/hw/core/boards.h
+@@ -867,7 +867,4 @@ extern const size_t hw_compat_4_1_len;
+ extern GlobalProperty hw_compat_4_0[];
+ extern const size_t hw_compat_4_0_len;
  
--    bool qemu_4_0_config_size;
-     uint32_t poison_val;
- 
-     /* State of the resettable container */
-diff --git a/hw/virtio/virtio-balloon.c b/hw/virtio/virtio-balloon.c
-index 38bf1e84a1d..4c5f486ba23 100644
---- a/hw/virtio/virtio-balloon.c
-+++ b/hw/virtio/virtio-balloon.c
-@@ -708,9 +708,6 @@ static size_t virtio_balloon_config_size(VirtIOBalloon *s)
- {
-     uint64_t features = s->host_features;
- 
--    if (s->qemu_4_0_config_size) {
--        return sizeof(struct virtio_balloon_config);
--    }
-     if (virtio_has_feature(features, VIRTIO_BALLOON_F_PAGE_POISON)) {
-         return sizeof(struct virtio_balloon_config);
-     }
-@@ -1054,8 +1051,6 @@ static const Property virtio_balloon_properties[] = {
-      * is disabled, resulting in QEMU 3.1 migration incompatibility.  This
-      * property retains this quirk for QEMU 4.1 machine types.
-      */
--    DEFINE_PROP_BOOL("qemu-4-0-config-size", VirtIOBalloon,
--                     qemu_4_0_config_size, false),
-     DEFINE_PROP_LINK("iothread", VirtIOBalloon, iothread, TYPE_IOTHREAD,
-                      IOThread *),
+-extern GlobalProperty hw_compat_3_1[];
+-extern const size_t hw_compat_3_1_len;
+-
+ #endif
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index 162600425b0..9a3d826c3cb 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -221,23 +221,6 @@ GlobalProperty hw_compat_4_0[] = {
  };
+ const size_t hw_compat_4_0_len = G_N_ELEMENTS(hw_compat_4_0);
+ 
+-GlobalProperty hw_compat_3_1[] = {
+-    { "pcie-root-port", "x-speed", "2_5" },
+-    { "pcie-root-port", "x-width", "1" },
+-    { "memory-backend-file", "x-use-canonical-path-for-ramblock-id", "true" },
+-    { "memory-backend-memfd", "x-use-canonical-path-for-ramblock-id", "true" },
+-    { "tpm-crb", "ppi", "false" },
+-    { "tpm-tis", "ppi", "false" },
+-    { "usb-kbd", "serial", "42" },
+-    { "usb-mouse", "serial", "42" },
+-    { "usb-tablet", "serial", "42" },
+-    { "virtio-blk-device", "discard", "false" },
+-    { "virtio-blk-device", "write-zeroes", "false" },
+-    { "virtio-balloon-device", "qemu-4-0-config-size", "false" },
+-    { "pcie-root-port-base", "disable-acs", "true" }, /* Added in 4.1 */
+-};
+-const size_t hw_compat_3_1_len = G_N_ELEMENTS(hw_compat_3_1);
+-
+ MachineState *current_machine;
+ 
+ static char *machine_get_kernel(Object *obj, Error **errp)
 -- 
 2.53.0
 
