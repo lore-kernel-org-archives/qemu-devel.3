@@ -4,112 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92046F4180E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:40:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4008FF41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:45:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzdef-0002oV-2u; Mon, 09 Mar 2026 12:40:29 -0400
+	id 1vzdjk-0005DI-Bw; Mon, 09 Mar 2026 12:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzded-0002o8-LB
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:40:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1vzdeb-0008R6-6R
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:40:27 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773074423;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OONw1393cXZM2tg4reXTBdd2MIJVsOZf4g9innuGPag=;
- b=g5YR2K4FIOZozETPme5xrpPozKvTt9vLK2nZayozdk+dcKGrVWUzyZZMRjkXFO49rzds3U
- fTYbD+ALnVH5t93HLEhMuyWsbkUv7GnYNDcmvBYmBpvR8Je5C05AJE/OQltJRISReMnXkH
- OUOAOCk+CMpAkfMKKsla8lCsy0yT3HA=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-39-VHIMVez0O0eQ29ZapwxZsw-1; Mon, 09 Mar 2026 12:40:22 -0400
-X-MC-Unique: VHIMVez0O0eQ29ZapwxZsw-1
-X-Mimecast-MFC-AGG-ID: VHIMVez0O0eQ29ZapwxZsw_1773074421
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-485389bf0daso8517775e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:40:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzdjW-0005Ah-9J
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:45:30 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzdjU-0000t4-C5
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 12:45:30 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-64ca9ec3ee7so11545911d50.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 09:45:26 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773074726; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gujyKX7mFXjRcaAZjpbB7EPAi8EimCc0RH/aYPHTfAmJ+IwsgQ2fr/m3DCKkne2dkh
+ CmPUZAgqsil5c/QJTy8/ydHzUrc6X1hbKGAuYFga/TjKd7GwjG/XOnuSFtuHzrszfgtK
+ 2wqxPg5U+lOFyJvkzZ1k7kQU1oRW9M/zKbIbYsQpl+n2KdKzWPYLbT5nxh1jXEWcLvjM
+ DcsZ4ddaLIeAFX9eRjoQpRj4zuDPNyGKjBJImTIzN128ZFqpgi0ZORIFq5NuEUXLEblM
+ t2LUttfgq0WrRKiS71wvze7EGmSec6YDxzDjabvi89P72c744atKD590rWrmq2/JxfKW
+ nS5Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=lJIOrcKWDh0mlmwwpQLhiBx8VG6WriqhGT85GDbI8IA=;
+ fh=zxz4leYHlK8liCTg8IjU8MgvAL+aTbMLdpPccU2byLQ=;
+ b=bmXV9bstzrPhpRuu4J7azUx1EfforWcyFj+PKfZB1YubzPtmn7vsaj2FVgsmj64cv3
+ HACynzjhZ8SMCYOcq7/8ZSrg1wWasgapeELvRU6TbtxQmDCmunvekT2ZTJD3oGrcPsDU
+ h7QXoeWGwo2Bz86rJoCJBlYGHatKdu8w/ipJ/aDWw/r3d2ZitF4GvEvq2Q1P6mxDA5Kz
+ VLgen3usQYzMWTsMMbO/gmGCA9knU4JbMCTFddo3ZkW9DIaEDtoF4z0ZuJXVhliS5MpE
+ 2H+6EIRcfjRP8vwmWZvWybC+yxIl+30goQs3pKyE2w6gYjP3pX0gu8f5/Ek5DydLLrU/
+ raeQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773074421; x=1773679221; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=OONw1393cXZM2tg4reXTBdd2MIJVsOZf4g9innuGPag=;
- b=LvHUKo5VPxVLdHJujLZNoX45m3DUviZmg+bWZTrWHth6n5JyDzEJd3xRuvesuIUyIH
- S3ii6K3/J+pn7HG4k8muBb4yKCRaTISFums65WZBUaMc0LQFHMmkbdIVJPmulfvcvTCK
- D5xX6g787yCxKf5cPmOvnP/kEki/kG1KB4j7AJA1x1EOqHF3ecD8ep80lwyzWD9g2wd+
- UYsqBZ5bHZdkmantesFk/NVHxl+Eg1zK7gRBaaA6/oPEvZZU+/SeTmUNEekP7QKgpCr1
- t5z2CckVVWmt87HE/MY6WPB5gPgUs8/5hIWnPw6tmxw0OsNVnySTHv11wFwF1PYE8moa
- pf3g==
+ d=linaro.org; s=google; t=1773074726; x=1773679526; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=lJIOrcKWDh0mlmwwpQLhiBx8VG6WriqhGT85GDbI8IA=;
+ b=pURZUouoHzH7hXy9HJ6NPPCIjkhFZOiDci0Q4/qPseuU/cvnZiwCEnTmeA15ftrzCX
+ 87M6PQiMf3SEB9Avju6GyhjX4lcwE9U8ErWSCbIi40PtXDp2eoPwlv/LAVC1Ncepl2A0
+ I4igiV1PMNFjxLfw1Bbkt1uomjsAYizaMqt4UStz5+Zts2AT3Uy7Gd/ZLQau5kOJR/XI
+ u/eWhjn7gehz6+SUuNLVHVffU/+54NH4UU+D04TWdW0zPBROeJqX7978+QA/FREGoYng
+ fBaA/wqCM1c5p/ggZTq5bObA7us9oFvtQ7f8etJDAxbmVNVjl7dmTlQ14u0yGuugwGTb
+ /cjA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773074421; x=1773679221;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=OONw1393cXZM2tg4reXTBdd2MIJVsOZf4g9innuGPag=;
- b=wiXzqipft7nmqufPjEg1OwDUgrjaBMVGOLiK77qjoWxA6AEtjZM28/rsPtEU0e736v
- vhhjx2rfJ2dBTQSBOrV+epuKPBw8FFrmlWh2bL3FhN3UmhHhFzVyWeuZy/xXZfeMz7mW
- 6q5LoRk01eMARyCGt8P/SgC5CGUzntKQoxPpD4+f6CopDZPN03ho+/3fltXAe9VNoTjY
- lypo+7M2kQydamRwNiVkQaFh3ldj1KfB3hPyIk0rlJ0B+5wx1vucn93R7jHP+l0Ny+oA
- idqkwZFTrVCDapq9l2S3QnreyfRSdkHtGi9JqMc1aLwFAb/2gpVLSOhEHXKVBtQaJofR
- ZdWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV3qkjHbqWWq7G+hK9a2gO5Kp+Bpea/Bzej6RG0RgWQzQQNssyHj2i3preMCzNKNBgihYMghXiTOI/K@nongnu.org
-X-Gm-Message-State: AOJu0YyRpxa7/tTf3c558N0cE2DtSF3ccBGTilcgUpggA29EL9pIDusb
- 1ZMArKiCj0+7rYC2f3FydRU8GjOlL0dv4wW8grOfQseUQqMQewLt5WCIY9mWWuk95B1JiybBxxC
- cQQ3Hv9szMB0zNY9KpFgRZmWtfpoL4eU4+f5kpKVJAFJa11Vy30tKAACm
-X-Gm-Gg: ATEYQzzfr6xVYr31Nqo8Ifm8BOoLXM95uHQQIgDwCpbPcsONqOHP75ZpGfw12Nx3D5V
- uLXim7p06kD2nIMewPa7JhBiSaoD1PDlqQoBHH8XO7oFWzzV2uMlYgGUqCFKx8pxbx5MRJu+VRZ
- t5eyrLQhEYRzK6X5X3BfVPTJBF9KfmV9ZpeGABmXjwiIccqBbD5jeXi74gUUxXFFCvZeT/JIuGR
- t99wxe66OjSy154/xL6d5aBdi/f5bYZiKV6uO7i83kaTUR0rbsF7pqh4wTKM74Xa06lBJDMyvkV
- 50PzRLA96sN35SysEzuI69P6rx7eQIjbUJC2UcLncJ6RWV1lDSuj9NAAMGFdpePdNwwq1QQfm7/
- qXvg128eetTVChn9cyRATJVg3ZGdGItoMECxPy9hv7rNlpY1ErOf7qaqM3/g+/t9NZdV5l3NsF4
- ZYqAoXFUOgc3LGtXbcynruBLErzJbXLGBEvFvM6p7BfU3kOcgIkd4=
-X-Received: by 2002:a05:600c:500d:b0:483:709e:f238 with SMTP id
- 5b1f17b1804b1-48526968008mr187248925e9.29.1773074421221; 
- Mon, 09 Mar 2026 09:40:21 -0700 (PDT)
-X-Received: by 2002:a05:600c:500d:b0:483:709e:f238 with SMTP id
- 5b1f17b1804b1-48526968008mr187248595e9.29.1773074420752; 
- Mon, 09 Mar 2026 09:40:20 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d737:d0cf:29d5:15fb:d605:1d53?
- (p200300cfd737d0cf29d515fbd6051d53.dip0.t-ipconnect.de.
- [2003:cf:d737:d0cf:29d5:15fb:d605:1d53])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dad1cb7csm28486892f8f.0.2026.03.09.09.40.15
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 09:40:19 -0700 (PDT)
-Message-ID: <db80a6cc-2e77-4da4-980f-20a63f398eb8@redhat.com>
-Date: Mon, 9 Mar 2026 17:40:14 +0100
+ d=1e100.net; s=20230601; t=1773074726; x=1773679526;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=lJIOrcKWDh0mlmwwpQLhiBx8VG6WriqhGT85GDbI8IA=;
+ b=FbeVWfQhObMV+0htKhTfSiYr0MP9BRj6CIN0smp0ePRFhp2XSSk3R9RrZ8HcqwY1/4
+ kCwEr/I5/Ra73g1Bme4PHGjdlauK4VRmKaXJxd3cv2LF/DAuxcqJFiTty/yNsWfPnlfd
+ aCPdNYdYvEFEpluWhdDGDrJO2J1+sUaWGL82aEMckKJAKJ0Tb4Bc9TR51QNQswDznAWa
+ DGkuPypoyj/nGgRvCvU0tzYuT+GW32wqz52BFjdVYKjZLbieUvfK46Er9RTkWjiu/mJb
+ q06unUFpyOmLF2PKiVhh7gXbSHNw6PLqh8pAFz8J72KoXbzXv8rn4BMxp2BUdfPbOz8A
+ wppQ==
+X-Gm-Message-State: AOJu0Yw8+BHD8gQu63QM3NE7ynzfpB7i7eD2GFFl/fWAKPArhrf5rGzd
+ wSCAoOSxJSfxuNs3RP4P291zhqgKdO9NCSB9fBipFv7BUgViYZnZedJT6zy152J2xchV3Mut1wh
+ Z+7bpDS537VUYFHyn/s03risVmU2g5ovB8zG0d1SwNg==
+X-Gm-Gg: ATEYQzzyqSXM4q8HNZxW5a97VgmqPHvFHIRr4MfU4aKrBlpYK5tiZyzDl3nlO1F+Ccv
+ IUFD++u+WRVl2wzBCzkQa3Ll+9pIHeQTYjsOWlecRh4ezMCUrPHGZS6D6EUIBkGtvmvwzQOHnNd
+ DqFRTY4IJPnVAvULHSzM4FnBjqUmI4K2nooe/sFsCBP71yEejqomjbB4y3W4Swtd3iikZpndAuT
+ xu47HhIGDoSPofW42y88b1JNGaXh8mXLH5x1jD2Z7CVBT/V4NJpOfNTx/yjAB7ItNXRfMrt8WZa
+ pOkuD0vbbAwBqc9fOJZXC7JoJsr/K8vFp3lxgQ4R0PhtwvdKEKnM8g63IVq71KpBWVU=
+X-Received: by 2002:a05:690e:44a5:b0:649:b943:2ca9 with SMTP id
+ 956f58d0204a3-64d1414fc2fmr8211407d50.33.1773074725569; Mon, 09 Mar 2026
+ 09:45:25 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [GSoC 2026] vhost-user memory isolation proposal feedback request
-To: Han Zhang <ihanzhzh@gmail.com>, qemu-devel@nongnu.org
-Cc: stefanha@redhat.com, tfanelli@redhat.com
-References: <CAHjCdDAJomXwQ8Z0kkiDGn_8hLWredsby3Nwy4rRgeC9sywc8A@mail.gmail.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <CAHjCdDAJomXwQ8Z0kkiDGn_8hLWredsby3Nwy4rRgeC9sywc8A@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260309152617.1611566-1-peter.maydell@linaro.org>
+ <87fr69ge53.fsf@draig.linaro.org>
+In-Reply-To: <87fr69ge53.fsf@draig.linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 9 Mar 2026 16:45:14 +0000
+X-Gm-Features: AaiRm51gb6IH8BYTyf3sj0Mohhhg0cS0cbBpQ9tFvCWETX2pQRmfH4YRnGhkfuo
+Message-ID: <CAFEAcA-JEtwT_AkKHQCOgvRjkAwcO3rAZjv7_4rdpkyQHEQGVw@mail.gmail.com>
+Subject: Re: [PATCH] docs/devel/decodetree: Fix formatting in "field examples"
+ table
+To: =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,88 +118,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 09.03.26 12:17, Han Zhang wrote:
-> Hello,
+On Mon, 9 Mar 2026 at 16:29, Alex Benn=C3=A9e <alex.bennee@linaro.org> wrot=
+e:
 >
-> My name is Han. I previously implemented a virtio-based communication
-> mechanism between confidential virtual machines, and based on that
-> experience I would like to apply for the QEMU GSoC 2026 project
-> "vhost-user memory isolation". Before finalizing my proposal, I would
-> like to check whether my understanding of the project direction is
-> correct.
-
-Hello Han!
-
-Thank you for your interest in this project, good to hear you already 
-have experience with virtio!
-
-> My current understanding is:
-> without changing the existing vhost-user protocol, add a
-> memory-isolation mode for vhost-user devices so the backend no longer
-> directly accesses guest RAM. Instead, QEMU intercepts virtqueue
-> requests, copies data between guest RAM and isolated buffers, and
-> forwards notifications. The backend only sees QEMU-managed shadow
-> virtqueues and descriptors pointing to isolated buffers.
-
-That is correct.
-
-> After reading the relevant code paths around vhost-user-blk and SVQ,
-> my current understanding of the required work is roughly:
-> 1. Extend the generic SVQ path for the vhost-user case, including
-> adding a used_handler so completion handling can perform copy-back and
-> cleanup before returning requests to the guest virtqueue.
-
-You mean used_handler as a counterpart to avail_handler?  That makes 
-sense indeed.
-
-> 2. Move the SVQ vring memory to memfd-backed shared regions and
-> register them with the backend through add-mem-reg/rem-mem-reg, so the
-> userspace backend can access the shadow vring.
-
-That must happen in some capacity, although I would have assumed that 
-there is already a mechanism for this, for the vring memory itself.
-
-> 3. Allocate bounce or isolated buffers at the SVQ callback point, copy
-> data from the guest virtqueue into those buffers, forward rewritten
-> descriptors to the backend, and copy data back on completion.
-
-Right.  And these too would need to be shared with the back-end, too.  
-Ideally, they are cached, of course, to reduce the number of buffer 
-add/remove functions that need to be run.
-
-> I am mainly trying to validate whether this is the right architectural
-> direction, especially the split between generic reusable vhost-user
-> SVQ code and device-specific handling such as the vhost-user-blk
-> bounce-buffer path.
+> Peter Maydell <peter.maydell@linaro.org> writes:
 >
-> I would appreciate feedback on the following:
-> 1. Is this interpretation of the core goal correct, especially "QEMU
-> performs data copy, backend only sees isolated memory + SVQ"?
-
-Yes, it is.
-
-> 2. For isolated buffers, is qemu_memfd_alloc + add-mem-reg the
-> preferred direction, or is there a better approach?
-
-I’ll defer to Tyler and Stefan on this, but in general, I would say if 
-it works, it works.  It does sound good to me, fwiw.
-
-> 3. For code organization, what split is preferred between generic
-> vhost-user code and device-specific code (for example vhost-user-blk)?
-
-Ideally, it is completely generic, nothing in the device-specific code.
-
-> This is my first time participating in an open source project, so I
-> would greatly appreciate any correction or guidance.
-
-Perfect for GSoC! :)
-
-Hanna
-
-> Thank you very much for your time.
+> > The rST syntax for a table uses ASCII art to draw the cell
+> > boundaries; then inside each cell the text is treated as a body
+> > element, so it is rendered the same way as text at the top level of a
+> > document.
+> >
+> > The "field examples" table was assuming a "literal document" format
+> > for its cell bodies; this meant that the single line cells were being
+> > rendered in plain text, not a fixed width font, and the multi line
+> > cells were rendered as definition-lists because of their "second and
+> > subsequent lines are indented" layout.
+> >
+> > Fix this by consistently using inline-code markup for the left column
+> > and literal blocks for the right column.  (We want to be consistent
+> > within each column because a literal block renders differently to
+> > inline-code, with a green background.)
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > You can see the mis-rendered version at
+> > https://www.qemu.org/docs/master/devel/decodetree.html
+> > ---
+> >  docs/devel/decodetree.rst | 44 ++++++++++++++++++++++++---------------
+> >  1 file changed, 27 insertions(+), 17 deletions(-)
+> >
+> > diff --git a/docs/devel/decodetree.rst b/docs/devel/decodetree.rst
+> > index 98ad33a487..33cd6fe583 100644
+> > --- a/docs/devel/decodetree.rst
+> > +++ b/docs/devel/decodetree.rst
+> > @@ -64,23 +64,33 @@ A field with no ``fields`` and no ``!function`` is =
+in error.
+> >
+> >  Field examples:
+> >
+> > -+---------------------------+-----------------------------------------=
+----+
+> > -| Input                     | Generated code                          =
+    |
+> > -+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
++
+> > -| %disp   0:s16             | sextract(i, 0, 16)                      =
+    |
+> > -+---------------------------+-----------------------------------------=
+----+
+> > -| %imm9   16:6 10:3         | extract(i, 16, 6) << 3 | extract(i, 10, =
+3)  |
+> > -+---------------------------+-----------------------------------------=
+----+
+> > -| %disp12 0:s1 1:1 2:10     | sextract(i, 0, 1) << 11 |               =
+    |
+> > -|                           |    extract(i, 1, 1) << 10 |             =
+    |
+> > -|                           |    extract(i, 2, 10)                    =
+    |
+> > -+---------------------------+-----------------------------------------=
+----+
+> > -| %shimm8 5:s8 13:1         | expand_shimm8(sextract(i, 5, 8) << 1 |  =
+    |
+> > -|   !function=3Dexpand_shimm8 |               extract(i, 13, 1))      =
+      |
+> > -+---------------------------+-----------------------------------------=
+----+
+> > -| %sz_imm 10:2 sz:3         | expand_sz_imm(extract(i, 10, 2) << 3 |  =
+    |
+> > -|   !function=3Dexpand_sz_imm |               extract(a->sz, 0, 3))   =
+      |
+> > -+---------------------------+-----------------------------------------=
+----+
+> > ++-----------------------------+---------------------------------------=
+-------+
+> > +| Input                       | Generated code                        =
+       |
+> > ++=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=3D=
+=3D=3D=3D+
+> > +| ``%disp   0:s16``           | ::                                    =
+       |
+> > +|                             |                                       =
+       |
+> > +|                             |   sextract(i, 0, 16)                  =
+       |
+> > ++-----------------------------+---------------------------------------=
+-------+
+> > +| ``%imm9   16:6 10:3``       | ::                                    =
+       |
+> > +|                             |                                       =
+       |
+> > +|                             |   extract(i, 16, 6) << 3 | extract(i, =
+10, 3) |
+> > ++-----------------------------+---------------------------------------=
+-------+
+> > +| ``%disp12 0:s1 1:1 2:10``   | ::                                    =
+       |
+> > +|                             |                                       =
+       |
+> > +|                             |   sextract(i, 0, 1) << 11 |           =
+       |
+> > +|                             |       extract(i, 1, 1) << 10 |        =
+       |
+> > +|                             |       extract(i, 2, 10)               =
+       |
+> > ++-----------------------------+---------------------------------------=
+-------+
+> > +| ``%shimm8 5:s8 13:1         | ::                                    =
+       |
+> > +| !function=3Dexpand_shimm8``   |                                     =
+         |
+> > +|                             |   expand_shimm8(sextract(i, 5, 8) << 1=
+ |     |
+> > +|                             |                 extract(i, 13, 1))    =
+       |
+> > ++-----------------------------+---------------------------------------=
+-------+
+> > +| ``%sz_imm 10:2 sz:3         | ::                                    =
+       |
+> > +| !function=3Dexpand_sz_imm``   |                                     =
+         |
+> > +|                             |   expand_sz_imm(extract(i, 10, 2) << 3=
+ |     |
+> > +|                             |                 extract(a->sz, 0, 3)) =
+       |
+> > ++-----------------------------+---------------------------------------=
+-------+
 >
-> Best regards,
-> Han
+> Shouldn't we just use the proper markup
 >
+> .. list-table:: Field Examples
+>   :widths: 30 70
+>   :header-rows: 1
+>
+>   * - Input
+>     - Generated Code
+>   * - %disp   0:s16
+>     - sextract(i, 0, 16)
+>   ...
+>
+> ?
 
+What "proper markup"? This is using the "grid tables" syntax from
+https://www.sphinx-doc.org/en/master/usage/restructuredtext/basics.html#tab=
+les
+You're suggesting "list table" syntax, which requires that the data can
+be represented by a uniform two level bullet list. I don't think either
+is more "proper" than the other. (Can you even put literal-block markup
+inside a bullet list item?)
+
+thanks
+-- PMM
 
