@@ -4,113 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18732FCA188
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 20:47:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F74AFCA191
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 21:22:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzhVD-0003mb-Of; Mon, 09 Mar 2026 16:47:00 -0400
+	id 1vzi3M-00039Z-S5; Mon, 09 Mar 2026 17:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vzhVC-0003kk-H8; Mon, 09 Mar 2026 16:46:58 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jhkim@linux.ibm.com>)
- id 1vzhVA-0000Ix-Bf; Mon, 09 Mar 2026 16:46:58 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 629DO3WP606712; Mon, 9 Mar 2026 20:46:51 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nm/1if
- 9BA/KPH91rwYkMczFxJ5BwxnNSW2eUnXr7enE=; b=AP5NAKwzPcMO4+A3h9U7Oe
- rCFk2Hgc/1PtHS1r0wgcdlxehJYuwC1T159DrwUqyhfVLUz/Nu07MDyVFLhfNJQT
- oRttioVYMzR7qhqgNLv8zs489G1SsDCGgiBltjlDMaGLezCjxY1/WBC3TMDUpd1k
- vCkGDrUW7re5HKbqM9VIq6Kz8huARUGrP9ncmvTf2Zz5kPzKE8jco28aabSdzy5e
- QOvnTe1mUwkE4o7t+VBMD/wo9XxJEXkR3Ka8jgh2xkIbcq3HEaSASpUyadUof+wV
- 5y1bhCh17sb4OU/UYD852r8hk1V5l/8DuQPrCbc0aV17Of7vkBZqelSQMXs7yxpA
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvr83sr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 20:46:51 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 629KS37F025085;
- Mon, 9 Mar 2026 20:46:50 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs0jjxam0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 20:46:50 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 629Kkn2N28705378
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Mar 2026 20:46:50 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC6A158059;
- Mon,  9 Mar 2026 20:46:49 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 859C158057;
- Mon,  9 Mar 2026 20:46:49 +0000 (GMT)
-Received: from [9.24.20.109] (unknown [9.24.20.109])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Mar 2026 20:46:49 +0000 (GMT)
-Message-ID: <e2fc5d97-af5b-4a8a-8a51-50bc108d969d@linux.ibm.com>
-Date: Mon, 9 Mar 2026 15:46:47 -0500
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzi3L-00039K-7y
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 17:22:15 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzi3J-0006VB-B5
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 17:22:14 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-439b9b1900bso6257158f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 14:22:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773091331; x=1773696131; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Mixz76pW27YCTImeLcaFqdC2LFwRLt6Wnpe7A5C1DqI=;
+ b=W1xJ/sDQGMBxuPdrXgRjmcBs/0VBSQnfG5nPuvnE8tHQvwB01Rxl+V5tx1ld6qDW5t
+ RwUvIruwe4dInaML0AkjsIgPLJfv+Qte2/ky3MkCcTIpomc7D0IbqTlzrFDQGKJ/6NOp
+ pBmmAyPvUuUSFf5m5gHUMnHNzyfpnzDKIHZEoCZjAq7xzxSq3oLYFJh5RQ9IQF8D+yuB
+ 0kwkDJLMGmZg/dKbb0yWtIgxMFk45/FoMeMB4KPFEuvW9ndXi3RrN/Q8Ali0weWD+1le
+ 0yW8eCeqyXRTqfkliakN5D+UJUGArdfbS65byKpL3if8G1JBqhvdGRL3FJ1c2BO0fHuO
+ w2ew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773091331; x=1773696131;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Mixz76pW27YCTImeLcaFqdC2LFwRLt6Wnpe7A5C1DqI=;
+ b=LpFSiEJgAl1Z220RaSBIHfoYVKdIaQQG5zKN4Wo3+Esa2IarUJcCRSVNq8Tqgf35Cq
+ a3x3ns2WUPCjA4tApEuw+3PLtxZhVKqoMNiBztW8rjadEgu5MVoQrAOlZw/kVRva3TqK
+ 3A6XPPnq1JgbE0F5Y8QNNYikDvUbz0Y4tuOL9xWAikysQaEILGBVFDFjw6Rcm4k0yBwP
+ xfwsxCAFv0Cnom0yKemExjw0DBH4OIrthSPFiog2rPQEfSdwahwnB3gbMet4gqSCSdwn
+ HzhworrPk1D7xGL1vZkkKIPi9BMZwHlYhcu6++FuwQkGNaNmeqvS258C/s419CrLFSXY
+ B/kA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUZmnomeOIvA1CTe+zvmEQ7pgCiRaimLfIAIsjMbNaoOqnSjUjYQ6ugcP+CU4kPwZnj+2qHXRn847pj@nongnu.org
+X-Gm-Message-State: AOJu0YyCN9uxxtZIU4l0H3W+o6HcUP6qG1PRQQFZ59ujUrJM4X7X6/rc
+ KE1TaLmhPq2nWHcej3830px2T5Qwv5x151ZXb9bTx/KerhSToQu7RjceBEWqMkDxQ/E=
+X-Gm-Gg: ATEYQzy51n6lB/alEh2atjDzRQmZjZlW6xgPtsj1mbNvjrNm+0bCvz+6cPGEvm1hu5Z
+ ZBBl6koLGDgO1ORzomdTlmD+BcdP3qR5z3Q9VI9SfqFCGZxDB8QwCNZIYhWZdgTcDkYUEKBRN6w
+ 0WUWtgiE4BIOGWhSwzncyCRQDoiwoHG8Em5kIZBrt7Vxu0GjuVQuHvV44UtI08S7z9PHZrpcr83
+ 88ADnhHxmwV8U6dl5b1VGmLaCSOUFxZz3ObmcQTi9zHPBvbxWXXyKCsgOHpWjaFIow5t+wu9P+o
+ dhH8TVLT/Y3FqrrqAh16AoPul0Io83FOwAVg2g6AjdhbbTpuuRVJFNZ0s2X11k0f35khXo6RBBD
+ wKJX5zWlgQdSFZdTH/uqHVRdslkj4Vls5R0Q/hyz6FZwD9gcLqAbuoCI1r/iJ774t/Np38yOiOy
+ +KuZwlpk2DX7N9j0pZR+j5WjvbppB5mCqgMOBTY9lTnFCE93zzJCrAG/xLTPtAGFHskA==
+X-Received: by 2002:a05:6000:2c03:b0:439:af96:29ea with SMTP id
+ ffacd0b85a97d-439da895476mr21625718f8f.41.1773091331342; 
+ Mon, 09 Mar 2026 14:22:11 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dae483desm28601373f8f.34.2026.03.09.14.22.10
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 14:22:10 -0700 (PDT)
+Message-ID: <f70d2300-5554-4eeb-986f-927ffdd82dad@linaro.org>
+Date: Mon, 9 Mar 2026 22:22:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v1 0/3] aio-poll: improve aio-polling efficiency
-From: JAEHOON KIM <jhkim@linux.ibm.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-block@nongnu.org, pbonzini@redhat.com,
- fam@euphon.net, armbru@redhat.com, eblake@redhat.com,
- berrange@redhat.com, eduardo@habkost.net, dave@treblig.org, sw@weilnetz.de
-References: <20260113174824.464720-1-jhkim@linux.ibm.com>
- <20260219222717.GA1011077@fedora>
- <79c89de8-68f4-46ff-bcce-dcb817d04ad5@linux.ibm.com>
- <5a50568c-d7c8-4938-b399-b304c162f6f2@linux.ibm.com>
+Subject: Re: [PATCH v3 1/7] tcg: Drop extract+shl expansions in
+ tcg_gen_deposit_z_*
 Content-Language: en-US
-In-Reply-To: <5a50568c-d7c8-4938-b399-b304c162f6f2@linux.ibm.com>
+To: Richard Henderson <richard.henderson@linaro.org>, qemu-devel@nongnu.org
+Cc: pbonzini@redhat.com, jim.macarthur@linaro.org
+References: <20260303010833.1115741-1-richard.henderson@linaro.org>
+ <20260303010833.1115741-2-richard.henderson@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260303010833.1115741-2-richard.henderson@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDE4MiBTYWx0ZWRfX6ZylosJefKdl
- 8IfZMMDcK//L4LMN3MwCkzg09mW2NeREHMsRwi/tLF8zB6oaN7SzPA7U8FokG3qgpFG0Gy0mtge
- 5WlmnwUE/48k9YmFgCDM8hT6xx74gulij9C0zHblpxIMIsPMx5ocoeiWH7UAT0UDO/jfSLjgqQn
- 9GjK9qHdwQNrOEtBlqJTQ7276uMiz7U/7edtLAUfxrPlrn+9upiFPEiUPxv8gbe8+gTKM4xSO1W
- C/U9XpWbVxHAn/0M+JhgmZ6N/Mo6vqTjERwKUgP6W/PHeB6/h7tzr4X3kmu2pjIKQDrj+rm55GA
- 15uq20Tz5VfS/qzP4he5/OD31KWrFWiIiofVR/z/KvGt3zhOnM/itMzyemkWQqlOrafTSRZ9FMv
- dDNpidmAxBDBq3jML8X+e8Ox7Btcwcn7sl/5CyZcaqSwhGV7nBjxRC90InKEUzUM4vcPHXPVfJ8
- 5jjL9ZO3cJK8SMDrHeg==
-X-Proofpoint-GUID: dHhYEJsua2RYv0DwvCZ1nSUpIf2LMDqD
-X-Proofpoint-ORIG-GUID: dHhYEJsua2RYv0DwvCZ1nSUpIf2LMDqD
-X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69af31bb cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=Vid-5JzNVKjw29RllMwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-09_06,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603090182
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jhkim@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,252 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2/26/2026 12:03 AM, JAEHOON KIM wrote:
-> On 2/20/2026 1:00 PM, JAEHOON KIM wrote:
->> On 2/19/2026 4:27 PM, Stefan Hajnoczi wrote:
->>> Hi Jaehoon,
->>> Following the call earlier this week I ran a single fio job to get a
->>> clearer picture of:
->>> 1. The QEMU 10.0.0 regression that prompted you to optimize AioContext
->>>     polling.
->>> 2. How the poll-weight parameter affects IOPS.
->>>
->>> run      rw        bs   numjobs iothreads iops   diff
->>> v9.2.0   randread  8k   1       1         174944 3.6%
->>> v10.0.0  randread  8k   1       1         174285 3.2%
->>> baseline randread  8k   1       1         168908 0.0%
->>> w2       randread  8k   1       1         163718 -3.1%
->>> w3       randread  8k   1       1         165805 -1.8%
->>> w4       randread  8k   1       1         167388 -0.9%
->>>
->>> This time I only ran randread bs=8k iodepth=8 numjobs=1 with a single
->>> IOThread.
->>>
->>> Observations:
->>>
->>> - There might be an IOPS regression between v10.0.0 and the baseline
->>>    (9ad7f544c696) that your patches apply on top of. This is different
->>>    from the CPU utilization regression that you found in v9.2.0 ->
->>>    v10.0.0. I will bisect it.
->>>
->>> - poll-weight=3 and 4 improve IOPS to a level that is acceptable. CPU
->>>    utilization looks like this:
->>>
->>> run         %usr     %nice      %sys   %iowait    %steal %irq     
->>> %soft    %guest    %gnice     %idle
->>> baseline   49.37      0.00     31.10      0.00      0.00 11.61      
->>> 0.04      0.00      0.00      7.89
->>> w2         46.24      0.00     32.61      0.00      0.00 11.84      
->>> 0.10      0.00      0.00      9.21
->>> w3         48.04      0.00     32.17      0.00      0.00 11.98      
->>> 0.08      0.00      0.00      7.73
->>> w4         48.56      0.00     31.23      0.00      0.00 11.48      
->>> 0.03      0.00      0.00      8.69
->>>
->>> poll-weight=2 is the winner at CPU utilization. I'm not sure if
->>> poll-weight=3 will produce an acceptable CPU utilization improvement 
->>> for
->>> you. Do you have data or want to re-run to measure poll-weight=3?
->>>
->>> Stefan
->>
->> Thank you very much for sharing the detailed measurement results.
->> I truly appreciate the effort.
->>
->> Regarding w=3, I will discuss with our performance team to see
->> if the CPU consumption levels are acceptable within our internal
->> test environment. I will get back to you with more definitive data
->> as soon as possible.
->>
->> Thanks again for your thorough analysis.
->>
->> Regards,
->> Jaehoon.
->>
-> Hello Stefan,
->
-> Thank you for your patience. I would like to share the observed 
-> changes in throughput
-> and CPU consumption in our performance test environment as follows.
->
-> We observed that when using W=3, performance returns to a level 
-> comparable to
-> QEMU v9.1, while W=2 results in slightly lower CPU consumption.
->
-> Our initial preference is to use W=2 by default.
-> However, we fully understand your concerns regarding the potential 
-> performance drop.
-> Should the patch be accepted, we would provide guidance on using the 
-> weighted value as
-> a configurable option.
->
-> For reference, we consider values between -2 and 2 as noise in our 
-> analysis.
-> I look forward to your feedback.
->
-> The table below shows a comparison between:
-> *  - Host:* RHEL10.1-GA+qemu-10.0.0-14.el10_1, *Guest:* RHEL 9.6 GA vs.
-> *  - Host:* RHEL10.1-GA+qemu-10.0.0-14.el10_1 (w=2, w=3), *Guest:* 
-> RHEL 9.6 GA
->     for FIO FCP and FICON with 1 iothread and 8 iothreads.
->     The values shown are the averages for numjobs 1, 4, and 8.
->
-> FIO FCP -1 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -3.00    |   -2.33    |    0.00    |  -0.33  
->   |   -3.00    |   -3.33    |    1.33    |   -0.33    |
-> | CPU consumption avg |   -5.67    |   -4.33    |   -6.33    |  -5.33  
->   |   -7.33    |   -5.33    |  -10.33    |   -8.67    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
-> FIO FCP -8 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -5.00    |   -4.00    |   -3.67    |  -3.33  
->   |   -4.67    |   -4.00    |   -0.33    |   -0.67    |
-> | CPU consumption avg |  -13.00    |  -10.67    |  -16.00    | -14.33  
->   |  -14.00    |   -9.33    |  -13.67    |  -11.00    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
->
-> FIO FICON -1 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -0.67    |   -0.67    |   -6.33    |  -6.67  
->   |   -0.67    |    0.00    |    1.33    |    1.33    |
-> | CPU consumption avg |   -7.67    |   -7.33    |  -13.67    | -13.00  
->   |   -9.00    |   -8.33    |   -5.00    |   -4.33    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
-> FIO FICON -8 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -3.00    |   -2.67    |   -7.33    |  -7.00  
->   |   -0.67    |   -1.00    |    0.67    |    0.67    |
-> | CPU consumption avg |  -16.33    |  -14.33    |  -25.33    | -27.00  
->   |   -8.67    |   -7.00    |   -6.67    |   -5.00    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
->
-> The table below shows a comparison between:
-> * - Host:* RHEL 10.0 GA + qemu-9.1.0-15.el10, *Guest:* RHEL 9.6 GA vs.
-> * - Host:* RHEL 10.1 GA + qemu-10.0.0-14.el10_1 (w=2, w=3), *Guest:* 
-> RHEL 9.6 GA.
->
-> FIO FCP -1 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -0.67    |    0.00    |   -0.33    |  -1.00  
->   |   -1.00    |   -0.67    |    3.33    |    2.00    |
-> | CPU consumption avg |    0.67    |    2.00    |    1.67    | 3.00    
-> |   -3.33    |   -0.33    |   -2.33    |    0.00    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
-> FIO FCP -8 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -2.00    |   -1.33    |   -1.00    | 0.00    
-> |   -0.33    |    1.00    |    1.00    |    0.67    |
-> | CPU consumption avg |   -3.00    |   -1.00    |   -2.00    | 0.00    
-> |  -10.33    |   -5.67    |   -6.67    |   -3.33    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
->
-> FIO FICON -1 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -1.67    |   -1.67    |   -0.33    | 0.00    
-> |   -1.33    |   -1.00    |   -1.67    |   -2.33    |
-> | CPU consumption avg |   -0.33    |    1.00    |    1.00    | 2.00    
-> |   -2.33    |   -1.33    |   -1.33    |   -0.33    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
-> FIO FICON -8 iothread
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> |                     | Seq. Read  | Seq. Read  | Seq. Write | Seq. 
-> Write | Rand. Read | Rand. Read | Rand. Write| Rand. Write|
-> |                     |   w2 (%)   |   w3 (%)   |   w2 (%)   |  w3 
-> (%)   |   w2 (%)   |   w3 (%)   |   w2 (%)   |   w3 (%)   |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
-> | Throughput avg      |   -1.00    |   -0.67    |   -0.33    | 0.33    
-> |    0.67    |    0.33    |    0.33    |    0.33    |
-> | CPU consumption avg |   -1.33    |    1.00    |    4.33    | 2.33    
-> |   -2.00    |    0.00    |   -3.00    |   -1.33    |
-> +---------------------+------------+------------+------------+------------+------------+------------+------------+------------+ 
->
->
->
-> Regards,
-> Jaehoon.
->
->
-Hello Stefan,
+On 3/3/26 02:08, Richard Henderson wrote:
+> The extract+shl expansion is handled in tcg_gen_andi_*
+> by preferring supported extract.
+> 
+> The shl+extract expansion is simply removed for now; it was
+> only present for slightly smaller code generation on x86.
+> 
+> Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+> ---
+>   tcg/tcg-op.c | 30 ------------------------------
+>   1 file changed, 30 deletions(-)
 
-I’m following up to see if you’ve had a chance to review the performance 
-results I shared.
-As I mentioned, we are completely fine with using w=3 as the default value.
-It effectively restores performance to QEMU v9.1 levels, and we will 
-provide guidance
-for users who need further CPU savings to use w=2.
+To the best of my knowledge:
 
-I’ve updated the patch to set the default value to 3 and include the 
-feedback so far.
-Please let me know if you have any comments or if I should post the new 
-patch.
-
-Regards,
-Jaehoon
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
