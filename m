@@ -4,108 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 298D4FCA16E
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:22:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5ADF4FCA173
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:23:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzfFB-0001y4-JB; Mon, 09 Mar 2026 14:22:17 -0400
+	id 1vzfFk-00023j-8x; Mon, 09 Mar 2026 14:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzfEv-0001wu-2g
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:22:04 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vzfFf-00023D-Fe
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:22:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzfEq-0000zL-0z
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:21:59 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1vzfFd-000143-Qh
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:22:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773080514;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1773080565;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=wZoqVQ9p1M4/FSeTynDH4kDE6l45iwPwO8kRNhzfePo=;
- b=WEljMeGY5Lg6HltUNm9wo09qZvc2evNoGKTA2vX6YIm+pDj2LgoDLOpA4mNENtRT61l8Br
- a1+NehiXOR4zuZtNU6Ec1ATm8po9a3fAFD/nbH+EbIj5HbXJsz9w5GXurw6E32iYdPseDi
- R37j0McWuiCig/fdLg8w9Cw8Tj94s9Q=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=QjbYeyc/RS0ynaHNNkgIqKc7uJ/XrSLoGAdZK6ETemY=;
+ b=BJAlDh3v2yEGy0hYFOrueKMtmXbZdfbkQy9jNs2o+xggmv6R1UBYdi0YHHCgoiFWvIGGbL
+ zwEV8IFt1PfZeq0E3NP96KUir658RqxiMVsmSZlMoShtdf9+Oj9Nh/UP8Zfo9LXIyaspsm
+ gKkCAIENYe+1wtrE8sFPTfUu3n1jugA=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-564-PH5_BVIwPr6r_bS0b6m8ig-1; Mon, 09 Mar 2026 14:21:53 -0400
-X-MC-Unique: PH5_BVIwPr6r_bS0b6m8ig-1
-X-Mimecast-MFC-AGG-ID: PH5_BVIwPr6r_bS0b6m8ig_1773080513
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-89463017976so834960286d6.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:21:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773080513; x=1773685313; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=wZoqVQ9p1M4/FSeTynDH4kDE6l45iwPwO8kRNhzfePo=;
- b=AZD9ePizd+BLWKcxAj3Vz7H0AU9mPXZhi950T4s6JP6C45GyxxOjRfS4cZm5gKSg3e
- fYpS09PRsMBOenHWMqKSWNTlMKOvMC62hao9unJR80LUJyWpUbdGO6bkjgNxi1edGROX
- Vi3VbsMGtXPCGXtaMq8tCICRQo3wxEqwUVG6Mh9Ltg5Z8n5188qB+VhqJuQuKfzdRDP8
- +dk+6ao6xZiiP66eu27g79O6lxI6EcUgyRzpeziFut+fz66ooo0m3dCatyTaYD+Lm1Ng
- b4uq4t5cpUk1j3O0ZJQYHR2BBPkGPre9STzqBLCpJeMHCcAlbi6TNTJ+OLvlLVL+jPd9
- mCUA==
+ us-mta-282-GV08TLfiOo6mSlcP12aHwg-1; Mon, 09 Mar 2026 14:22:44 -0400
+X-MC-Unique: GV08TLfiOo6mSlcP12aHwg-1
+X-Mimecast-MFC-AGG-ID: GV08TLfiOo6mSlcP12aHwg_1773080563
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-4853ac455b2so13692265e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:22:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773080513; x=1773685313;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=wZoqVQ9p1M4/FSeTynDH4kDE6l45iwPwO8kRNhzfePo=;
- b=xS+jMtGLkgOfdYVbZRxjUaeySc/Pfmvui1KyhiKwTJLU227R2cJKS8tXFZfuuvydY6
- KMUNW7a84BJuscvapdTurfWPGqgn1Egn947awyI4ReHiDSfiOHKhu44th9yGFaDPtUQA
- 2Oc5Xz0umnO7sMbmaRVvq727E1IsvM6Sqog6bqAb6gmCLWSvfFmUNMyjLxlX5dgAYxOL
- c0CdhckOyTnmtzBCirJ5tcH6gv46swGV1GbBDDjx3Th1aG+jNlNvmEwlkt+dHTaynl+T
- Nu20JvQg+JvhkmDGn13T1ijJGv/rL/HeTziGz4eomUnT8/lXUxqZDDgWzKgHZiSINebw
- vuig==
+ d=1e100.net; s=20230601; t=1773080563; x=1773685363;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QjbYeyc/RS0ynaHNNkgIqKc7uJ/XrSLoGAdZK6ETemY=;
+ b=wAUVGkrg1NGCFM4jao8HtSgl+96drMvo1AnQsp1fqOMUN7ezqG7VDoGIiaH3mkSOy9
+ 5yJkwFgkOwgV6bM262dtFT1RM0yTvFMH/pWGpbOIBPdKn7aWoX9DLS8RmlEOkEx/JzqI
+ CilC85H6RVxgsrfpIKu5wDDPjCUrtA4y2knERrcCARX+myLomQLkmN9D8CrDF+ojrroL
+ NeYOgiKwyMqnFDnScLdePikjAYk0NtHl4snnRUS7tSD/sUrCIefC9p26yM1pIYdo3/FX
+ /TIU37VwkU1xk/1ByCXcGQTiG2hM+vLjLNiEdAQTFYvtJ8uSZT5ITx8jcdrH5UIC6vgE
+ zl/g==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVLwcirAKkdpqnlcwalMrQclLoIqu/ZDGA9POju42ChDJGavkU/eR6rWtquxod7flh+6cZKa0uZ9qhq@nongnu.org
-X-Gm-Message-State: AOJu0YyXy1cF//tyuUSTSvkAWitgiCrbu1wwAfp/pa0sY9U9nqDYypXK
- 3lbKOlYpsLwg1KoKy5P37XWUdwf3zrkYbSup+edO8GCa3rHsWxXMEzgFEHul/YzBYnYRV2ZSyaU
- X60FwJshqgwHbrbZGuMGC2AB+yNTmRqtPMCdNyGftzlECztz3sDPZHa7o
-X-Gm-Gg: ATEYQzyvSeEMxrqU6A6t0F2LWLQBRFiX6LXnIfXeDK9ruOnKpMUncqhXgbLP7kDC1Ol
- 2Fx5DjILF3BDvUnKmwMnfzRD5kd6d1LmUNeIOJcQq9iY6+XKcBOXeNMWZbgWf7xb9UThBJ3683C
- Y5vMhRmVqlMhpseOnorLmAoRKv7clZtHBmrxrGZRTJT1VgEv6HoUVBmf7hM5KuADfL3Dh2Lb5/J
- DPRbdT9A/f9EzrupPNEfI7TiMpMKtL7LLyoQ19jkoEys5oFS39i7IyW0ew7CMZZcfEDkKWwbvnN
- 2+Xw9evmGPQOFm4OeGyxtfgZXpxuxjXi/0eQGDtFxTV1sMRs9cZtca9vp1hdg8mBPhHuTRGODvK
- qE6+NWzk5MFjZ4KTon+yX8sX2CVlh3yEQhoLsmsO/Zp/Zj6k0h/L35fQ8FCwlssW/5wy6pRJIsl
- 4ZapCYDw==
-X-Received: by 2002:a05:6214:242a:b0:899:e621:eac8 with SMTP id
- 6a1803df08f44-89a30ad1c83mr178024986d6.39.1773080512931; 
- Mon, 09 Mar 2026 11:21:52 -0700 (PDT)
-X-Received: by 2002:a05:6214:242a:b0:899:e621:eac8 with SMTP id
- 6a1803df08f44-89a30ad1c83mr178024496d6.39.1773080512257; 
- Mon, 09 Mar 2026 11:21:52 -0700 (PDT)
-Received: from x1.local
- (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
+ AJvYcCXV4fb94p2qjEm7odu/mYPAyXoxVa8V9+eyEqzMOT1SKRQIzn9xNgAND38y8a4edsRweGbkEKacvjE0@nongnu.org
+X-Gm-Message-State: AOJu0YzkeWV9AwPRX+VHnjZFL5KL140I0Y0OM9IrBARYw+MB3Nf5PcDH
+ nguvu/JS3WONfx3wUKVftEaR0b13I1nnR58jbjs1j9Jf1yzjm53dJtIDQSWQSEn3wTG7wu8+ipo
+ 7yxK6OQWJX7BWlFttWIWFE5/yLGTL5N2nIKkFoTVcA7pq/27fA42jgcxO
+X-Gm-Gg: ATEYQzxIJ/WGOMvxptkKQSNeCsv6noMPV8q0v/U6faMf8w1ipPrbG0/wFQsurg7v4mu
+ q2J8qx/cWD1xPWE57ohMjfeFpTYkhoQT1zuRMoxJgbvrgBhdn06MOsoDAcCCA4mfVuIKJXUvy9N
+ 11lfCx6rdGV85WGfPtR4rGbdyLEAJQPqB49TRWA/P8zLlxmCgMRn+3Cs0aBnjMu7vcrmc8pX28O
+ 5kHHNmK3eZ52z0Vcq1iiKMvWME39+OFex5BIlgRoae1kBbw6HpzNyuyjV+HgmqKuB9gPKQTcxpc
+ Bw7XSiTc05Fa90zzdkX/fYrZXiAUHtMRCjbiqE2J3Vx8YqOnhq+zL1TpLAPv+4zAZxLnD8vABrr
+ Qtswrw5DoJrqEGe+Aay8UVtW9C0zF947ju5fOnehOkBi7u5Bmfxfh5I5fy5N2jU4QQXCHeQ==
+X-Received: by 2002:a05:600c:b95:b0:483:7980:4687 with SMTP id
+ 5b1f17b1804b1-48526951b71mr216046025e9.17.1773080562618; 
+ Mon, 09 Mar 2026 11:22:42 -0700 (PDT)
+X-Received: by 2002:a05:600c:b95:b0:483:7980:4687 with SMTP id
+ 5b1f17b1804b1-48526951b71mr216045435e9.17.1773080562065; 
+ Mon, 09 Mar 2026 11:22:42 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a57c31483sm2917326d6.44.2026.03.09.11.21.50
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 11:21:51 -0700 (PDT)
-Date: Mon, 9 Mar 2026 14:21:49 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Cc: Tejus GK <tejus.gk@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 1/1] io: make zerocopy fallback accounting more accurate
-Message-ID: <aa8Pvd5O-OLKIXam@x1.local>
-References: <20260309090907.956330-1-tejus.gk@nutanix.com>
- <aa755Yc6t_bBzM_u@redhat.com> <aa78gMsQrt1BeXt3@x1.local>
- <aa8AqKqOa8YhEiF9@redhat.com>
- <0DF1A5F6-E20D-4A3F-9285-9205E87DE641@nutanix.com>
- <aa8IoQOZHzQvacSh@redhat.com>
+ 5b1f17b1804b1-485358cd26bsm90133205e9.8.2026.03.09.11.22.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 11:22:41 -0700 (PDT)
+Message-ID: <fb8c82d1-38e7-446a-9b04-8b2879eb181e@redhat.com>
+Date: Mon, 9 Mar 2026 19:22:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 28/32] hw/arm/smmuv3: Add per-device identifier property
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
+References: <20260226105056.897-1-skolothumtho@nvidia.com>
+ <20260226105056.897-29-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260226105056.897-29-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aa8IoQOZHzQvacSh@redhat.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -126,89 +116,127 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 05:51:29PM +0000, Daniel P. Berrangé wrote:
-> On Mon, Mar 09, 2026 at 05:42:08PM +0000, Tejus GK wrote:
-> > 
-> > 
-> > > On 9 Mar 2026, at 10:47 PM, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > 
-> > > !-------------------------------------------------------------------|
-> > >  CAUTION: External Email
-> > > 
-> > > |-------------------------------------------------------------------!
-> > > 
-> > > On Mon, Mar 09, 2026 at 12:59:44PM -0400, Peter Xu wrote:
-> > >> On Mon, Mar 09, 2026 at 04:48:37PM +0000, Daniel P. Berrangé wrote:
-> > >>>> @@ -881,8 +881,8 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> > >>>>         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
-> > >>>> 
-> > >>>>         /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
-> > >>>> -        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> > >>>> -            sioc->new_zero_copy_sent_success = true;
-> > >>>> +        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
-> > >>>> +            sioc->zero_copy_fallback++;
-> > >>> 
-> > >>> ...this is counting the number of MSG_ERRQUEUE items, which is not
-> > >>> the same as the number of IO requests. That's why we only used it
-> > >>> as a boolean marker originally, rather than making it a counter.
-> > >> 
-> > >> Would the logic still work and better than before?  Say, it's a counter of
-> > >> "messages" rather than "IOs" then.
-> > > 
-> > > IIUC it is a counter of processing notifications which is not directly
-> > > correlated to any action by QEMU - neither bytes nor syscalls.
-> > 
-> > Please correct me if I'm wrong about this, isn’t each notification an information 
-> > about what happened to an individual IO?
-> 
-> If userspace hasn't read a queued notification yet, the kernel will
-> merge new notifications with the existing queued one.
-> 
-> The line above your change
-> 
->   serr->ee_data - serr->ee_info + 1;
-> 
-> records how many notifications were merged, so we now how many
-> syscalls were processed.
-> 
-> If ee_code is  SO_EE_CODE_ZEROCOPY_COPIED though it means at least
-> one syscall resulted in a copy, but that doesn't imply that *all*
-> syscalls resulted in a copy.
-> 
-> AFAICT, it could be 1 out of a 1000 syscalls resulted in a copy,
-> or it could be 1000 out of 1000 resulted in a copy. We don't know.
-> 
-> IIUC the kernel's merging of notifications appears lossy wrt this
-> information. It could be partially mitigated by doing a flush for
-> notifications really really frequently but that feels like it would
-> have its own downsides
 
-IMHO what this change does is removing the false negatives.
 
-Before this patch, if QEMU reports fallback=0, it doesn't mean all the
-MSG_ZEROCOPY requests were all fulfilled by zerocopy.  It's because we
-justify it with one boolean over "a period of time" between two flushes, we
-set the boolean to TRUE as long as there is _one_ successful report of
-MSG_ZEROCOPY.  So even if every flush reports TRUE it only means "there is
-at least one MSG_ZEROCOPY request that didn't fallback".  It has no
-implication of whether a fallback happened.
+On 2/26/26 11:50 AM, Shameer Kolothum wrote:
+> Add an "identifier" property to the SMMUv3 device and use it when
+> building the ACPI IORT SMMUv3 node Identifier field.
+>
+> This avoids relying on device enumeration order and provides a stable
+> per-device identifier. A subsequent patch will use the same identifier
+> when generating the DSDT description for Tegra241 CMDQV, ensuring that
+> the IORT and DSDT entries refer to the same SMMUv3 instance.
+>
+> No functional change intended.
+>
+> Reviewed-by: Nicolin Chen <nicolinc@nvidia.com>
+> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> ---
+>  include/hw/arm/smmuv3.h  | 1 +
+>  hw/arm/smmuv3.c          | 2 ++
+>  hw/arm/virt-acpi-build.c | 4 +++-
+>  hw/arm/virt.c            | 3 +++
+>  4 files changed, 9 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 648412cafc..73b8f39aaa 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -63,6 +63,7 @@ struct SMMUv3State {
+>      qemu_irq     irq[4];
+>      QemuMutex mutex;
+>      char *stage;
+> +    uint8_t identifier;
+>  
+>      /* SMMU has HW accelerator support for nested S1 + s2 */
+>      bool accel;
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 468135bb24..c1f84bedd4 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -2109,6 +2109,8 @@ static const Property smmuv3_properties[] = {
+>       * Defaults to stage 1
+>       */
+>      DEFINE_PROP_STRING("stage", SMMUv3State, stage),
+> +    /* Identifier used for ACPI IORT SMMUv3 (and DSDT for CMDQV) generation */
+> +    DEFINE_PROP_UINT8("identifier", SMMUv3State, identifier, 0),
+>      DEFINE_PROP_BOOL("accel", SMMUv3State, accel, false),
+>      /* GPA of MSI doorbell, for SMMUv3 accel use. */
+>      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index ae78e9b9e0..20605185c5 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -342,6 +342,7 @@ static int iort_idmap_compare(gconstpointer a, gconstpointer b)
+>  typedef struct AcpiIortSMMUv3Dev {
+>      int irq;
+>      hwaddr base;
+> +    uint8_t id;
+>      GArray *rc_smmu_idmaps;
+>      /* Offset of the SMMUv3 IORT Node relative to the start of the IORT */
+>      size_t offset;
+> @@ -404,6 +405,7 @@ static int populate_smmuv3_dev(GArray *sdev_blob, VirtMachineState *vms)
+>                                                 &error_abort));
+>          sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
+>          sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
+> +        sdev.id = object_property_get_uint(obj, "identifier", &error_abort);
+>          pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+>          sbdev = SYS_BUS_DEVICE(obj);
+>          sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> @@ -630,7 +632,7 @@ build_iort(GArray *table_data, BIOSLinker *linker, VirtMachineState *vms)
+>                       (ID_MAPPING_ENTRY_SIZE * smmu_mapping_count);
+>          build_append_int_noprefix(table_data, node_size, 2); /* Length */
+>          build_append_int_noprefix(table_data, 4, 1); /* Revision */
+> -        build_append_int_noprefix(table_data, id++, 4); /* Identifier */
+> +        build_append_int_noprefix(table_data, sdev->id, 4); /* Identifier */
+Hum actually I see that previously the id scope was shared by all nodes,
+including ITS, SMMU, RC.
+So now can have its and smmu node having both id=0. And this is why you
+have a change in the IORT table for its=off test.
+Is it legal?
 
-Hence, before this v2 patch, there can be false negative reported by QEMU,
-assuming there's no fallback (reflected in stats) but it actually happened.
+IORT spec says:
 
-After this patch, if QEMU reports fallback=0, it guarantees that _all_
-MSG_ZEROCOPY requests are fulfilled with zerocopy.  It's because we monitor
-all messages and accumulate any fallback cases.  Even if the messages can
-be merged, when "fallback" shows anything non-zero would imply some
-fallback happened.  Here, the counter value doesn't really matter much
-IMHO, as long as it becomes non-zero.
+Unique identifier for this node that can be used to locate it in the
+parent table. This identifier enables other ACPI tables and DSDT objects
+to locate this node. This field serves in the same capacity as the _UID
+object associated with ACPI device objects. Note IMPLEMENTATION NOTE: In
+the simplest scheme, the Identifier might be set to the node’s index in
+the array of IORT nodes in the parent IORT table. Other schemes are also
+possible and permitted.
 
-Thanks,
+So I don't think this is valid
 
--- 
-Peter Xu
+Eric
+ 
+
+>          /* Number of ID mappings */
+>          build_append_int_noprefix(table_data, smmu_mapping_count, 4);
+>          /* Reference to ID Array */
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index c75a8d6e9e..44c6b99c96 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -3138,6 +3138,7 @@ static void virt_memory_plug(HotplugHandler *hotplug_dev,
+>      }
+>  }
+>  
+> +static uint8_t smmuv3_dev_id;
+>  static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>                                              DeviceState *dev, Error **errp)
+>  {
+> @@ -3196,6 +3197,8 @@ static void virt_machine_device_pre_plug_cb(HotplugHandler *hotplug_dev,
+>                                       OBJECT(vms->sysmem), NULL);
+>              object_property_set_link(OBJECT(dev), "secure-memory",
+>                                       OBJECT(vms->secure_sysmem), NULL);
+> +            object_property_set_uint(OBJECT(dev), "identifier", smmuv3_dev_id++,
+> +                                     NULL);
+>          }
+>          if (object_property_get_bool(OBJECT(dev), "accel", &error_abort)) {
+>              hwaddr db_start = 0;
 
 
