@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD818F4180D
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:59:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1ED6DF417F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:59:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzd0c-0006c2-82; Mon, 09 Mar 2026 11:59:10 -0400
+	id 1vzczV-0005KY-Io; Mon, 09 Mar 2026 11:57:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzczJ-0004wy-Je
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:46 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzczA-0004M1-OK
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:36 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzczG-0000rj-Ni
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:45 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48539cbb7b1so9380455e9.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcz9-0000r6-6F
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:36 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4853510b4f3so22819515e9.0
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071861; x=1773676661; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071853; x=1773676653; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=AuRv8v324tCQUkX/bfQ3Ovg91hb7uk1tmN4rCfz01G8=;
- b=cjPojoAKSdHK3d38fbW2sF5VV9BYbZCObjG8QCJr4nztSN2/qu241NHN+h8eSJvdqg
- ww48v5tiZ5Uu4rgyrOm1kKNGu+M667Qrtt/XqvxG7JDdsvT8WwBxESTYhyxf8OGxeTGQ
- Shcg1ctI1aV+rF2z8EZv5EnNY06aira2xAzs8S/ysBOaZgJsOe6SPtX+KTSkuPX/iOqH
- pmHkJV7IY3MiHeXmzPhwQLgtxOWvO2sWlryw4rsxam4WNDiTHBZnwKI3L+ojkwt/ubL4
- MjH+it4MBrORfckkDClKchT2SpFtgzggLhgIDhPYeKsHJeKv3oi5KI/dmvYSVX9inN66
- WfQQ==
+ :reply-to; bh=QpWkjwMhJW7fy/PrD8/KH6aDfGrjV4YP9KEmKtnuVuY=;
+ b=dkgAr0hWb2/IVpjVxBXfRuZpcL/dWCmHC3G3TrAVXsSXcPAtcAZFTSIDcEEvkcC4VM
+ Ux4afpt9yzdBkJP8sEPU16R6LMwEY8V1uEdupB0gPSGGJwvWg4zrXBW9Wd/yJhNJZXjD
+ gD2RdGrj4B1Dc4KAAwnr6rn+lw0uVhZ1GkhHMiUOGn4bXcNGcVNeiikDfxAfpugQZgoH
+ iYq5jnBvu+My+mAeafI3QRGjcrQk5P9T1A6p4gj+PGJ8TlYeAiIkARt4ldmZFxod/Fgn
+ +WYFgex1r/heWRRdLsjvOmSXaCdc1hVcXgELn08HEhv/c7swUAtT0DYtx0gWmt0AnJ94
+ 1gOw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071861; x=1773676661;
+ d=1e100.net; s=20230601; t=1773071853; x=1773676653;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=AuRv8v324tCQUkX/bfQ3Ovg91hb7uk1tmN4rCfz01G8=;
- b=apkoeCR3r6aKNvGD+q+7eZ85YAgb9WpzhS4R1BMmTVMtjYcX5m80smi1k2jzu9qAYZ
- ywqTA+wHzfUzrdgJI8MdiFYT6s1BoOaZbZdsvxfzCi9kV3BEU5KgvNNxnSWgKOkKR6KI
- GePw82Dtpo0zIbzt31yr2mgkGheeY2nri681pe5bq69ob7ghzjUv5LA8InTjULNJg5H9
- vBSEOE2l06CjlYNkUHAz6tdmThjBjH5o0Zdm/X/R3/DJ+Sj2EuG1vgxS3dwzhMNVtPpy
- hTdl3Lz32so00XvRCkE9qIe5OSSkHo7wNviKsZ54jo+ZE5K97N/OOUq27olU9CZVu8W6
- lVlQ==
-X-Gm-Message-State: AOJu0Yzf/HErMuEqznZKdbXqFBBah1c4Ma9u+tSHrA4iKJJFDGG7XQGG
- OEVq/XUsR4xZR7eClUJqAXjYR6NNovFkwFzuxbLfqUpQnKHZnoaq2XcM54gx6BXDLZot444gsfO
- SIFRD0Mo=
-X-Gm-Gg: ATEYQzzKOlm9rTOhmICYOJr4uY48zczFGNWpw/u+VScC3chPAvQN6Ltvj1uob0RF0pa
- ZnmIFcKQJAak/Z8p0lZOH7nvvHJm3tTLV1bgqs1WadjKX36sN+H1g55idmwQhmNQK2jNccsgiTu
- /KefBDGM87VQGU9+cYuNfr7L2A0tHcpA2AN2HQDHKR8z192ahaiASso0uQHU3f1/3F1rnbzswwu
- GDUKuKovt2+2vfD3alRegxfpyrjLq6N2uImFfU5Oh97uFVCXz88TecpdPqToOQShGmcojGJOdbc
- OxHzQ7FIM5ranj6kcygBNwz2nuHiC4k0Ve4CScBFl2/ABC7bRFzRabrA1t+n8CP+4ym9ctFG7WC
- wV/J+Agj7eNnlmtAZZxRUVVg+bpY8ieHI522pLqoXTR4FYbmdQmGNVVi1wtDXPQd3UTTqm5Kc40
- Qdpvs6/A72me/+ySZLnJie4G/zy0MitCzqzMGQ48vR0FNY8+1BxjNSWcMWmw4yLwPFqjILMGp2
-X-Received: by 2002:a05:600c:4f55:b0:485:3c66:e230 with SMTP id
- 5b1f17b1804b1-4853c66e4eamr55050955e9.29.1773071860592; 
- Mon, 09 Mar 2026 08:57:40 -0700 (PDT)
+ bh=QpWkjwMhJW7fy/PrD8/KH6aDfGrjV4YP9KEmKtnuVuY=;
+ b=WMe7rF4TQvXCAMZ1lJ5Y4v072s/84XiT1lSjBOG0Wku97IDMzdmq56yKN6hSN3ZBxY
+ a6rJk/DpCQAkyXFxvkBaY51w+0vgLA981MlDO72tjDK816GwohZaD20mWZ9vUlV/+0Ne
+ siudjVdgTs8EehnVO2DzsKHiDA/4BEmbLhvV45KS0hoWfvn7iWupbCtFqCyhlEA6gW5k
+ WHSkc9p2QiGon1Jjn8elFzwpBirVn1ra7XzUJlkd2nuphr+1kuknTXg+Zif6VmLNuOhX
+ cDxpQJAeM/xY/hsm8w6nW4mtNZAzLK7X1xTKOmaRlilXit6fGHd7Pc4jGAWRWLNZEDFN
+ SCXw==
+X-Gm-Message-State: AOJu0Yy98zqqOuvkUpLff5hLUNDAvnYklV6q6utmtZs1vezMHCMfZAEM
+ C3JBNTHQBk2uGTrSan94Mn53HA468fkW0Rq+QBoqtXF3/KI+mvB34/iBiT++XSldAu9bFdDQhOu
+ 7Nkr08oI=
+X-Gm-Gg: ATEYQzyrJKCIJ/apzc5BM16niPULIrOHEiebjNrK2SjHv85mcJkXVHFYRqxYplB8SnM
+ cFFqLPTLy4lhSFxO3l1dbhbn/1xGwL7GrEOVi/0SSLpnCI7A/HomfD77bWw3GIbGmkn/jkVwGLs
+ bJjPDbApL4UGp9+0IZ0yNgRrU5TGedk6KjAoSK3h8Lg5be0C6UCDS0nsuCV6Z40n96FKI8VMOSr
+ jdEbh/6/It2kWOHZgje5k3HokeXuDUScn5dPrCBiXgXpk2T+HtiSkRo44VH0iZKgh7Xp+UuoHLt
+ tG751JIOglWG8MXImfxqabjOe55PiZqjsBwKHl9M4l6AgX5MB1p2aI81pPdF7QYspcGfdjLQzXQ
+ MDsbdDemgok+jqHuXrpLBPpFfWLXa8uQc9zbaD8G7rPHOJGrXfeGvRNjzsywdQRU9/2GAU6Epr8
+ srAGFIe04elolkjSaEcoxW4ZPhY37bcP4wlR3RnMc8BFF0tYPm/pjybzlkUyS9/VT/h+9QUEnG
+X-Received: by 2002:a05:600c:1d24:b0:485:39b9:96a1 with SMTP id
+ 5b1f17b1804b1-48539b998d8mr84484145e9.19.1773071853316; 
+ Mon, 09 Mar 2026 08:57:33 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541aad45fsm802025e9.15.2026.03.09.08.57.39
+ 5b1f17b1804b1-485245dc298sm93876405e9.15.2026.03.09.08.57.32
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:57:39 -0700 (PDT)
+ Mon, 09 Mar 2026 08:57:32 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 47/49] hw/i3c/dw-i3c: Fix memory leaks in error logging paths
-Date: Mon,  9 Mar 2026 16:52:17 +0100
-Message-ID: <20260309155219.62400-48-philmd@linaro.org>
+Subject: [PULL 46/49] ati-vga: Do not access pixel outside the screen
+Date: Mon,  9 Mar 2026 16:52:16 +0100
+Message-ID: <20260309155219.62400-47-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,48 +98,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Cédric Le Goater <clg@redhat.com>
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-object_get_canonical_path() returns an allocated string that must be
-freed by the caller. Use g_autofree variables to ensure that memory is
-not leaked.
+We check end of screen before writing the pixel but before that
+complement color also accesses screen pixel so we have to check before
+that. This fixes a segmentation fault with guest_hwcursor when pointer
+is partially out of screen at lower right corner.
 
-Resolves: Coverity CID 1645550
-Resolves: Coverity CID 1645553
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260309093838.364126-1-clg@redhat.com>
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Message-ID: <26db0715a6b9f6504f394010513facc9a37882ad.1773009887.git.balaton@eik.bme.hu>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/i3c/dw-i3c.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/display/ati.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-index 3d8b95a14c4..e9bdfd6af2a 100644
---- a/hw/i3c/dw-i3c.c
-+++ b/hw/i3c/dw-i3c.c
-@@ -490,8 +490,9 @@ static int dw_i3c_recv_data(DWI3C *s, bool is_i2c, uint8_t *data,
-     /* I3C devices can NACK if the controller sends an unsupported CCC. */
-     ret = i3c_recv(s->bus, data, num_to_read, num_read);
-     if (ret) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: NACKed receiving byte\n",
--                      object_get_canonical_path(OBJECT(s)));
-+                      path);
-         ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
-                          DW_I3C_TRANSFER_STATE_HALT);
-         ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_STATUS,
-@@ -1107,8 +1108,9 @@ static void dw_i3c_resp_queue_push(DWI3C *s, uint8_t err, uint8_t tid,
- static void dw_i3c_push_tx(DWI3C *s, uint32_t val)
- {
-     if (fifo32_is_full(&s->tx_queue)) {
-+        g_autofree char *path = object_get_canonical_path(OBJECT(s));
-         qemu_log_mask(LOG_GUEST_ERROR, "%s: Tried to push to TX FIFO when "
--                      "full\n", object_get_canonical_path(OBJECT(s)));
-+                      "full\n", path);
-         return;
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 2c649e940b3..05cf507bd47 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -214,6 +214,9 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+         uint8_t abits = vga_read_byte(vga, srcoff + i);
+         uint8_t xbits = vga_read_byte(vga, srcoff + i + 8);
+         for (j = 0; j < 8; j++, abits <<= 1, xbits <<= 1, idx++) {
++            if (vga->hw_cursor_x + idx >= h) {
++                return; /* end of screen, don't span to next line */
++            }
+             if (abits & BIT(7)) {
+                 if (xbits & BIT(7)) {
+                     color = dp[idx] ^ 0xffffffff; /* complement */
+@@ -224,9 +227,6 @@ static void ati_cursor_draw_line(VGACommonState *vga, uint8_t *d, int scr_y)
+                 color = (xbits & BIT(7) ? s->regs.cur_color1 :
+                                           s->regs.cur_color0) | 0xff000000;
+             }
+-            if (vga->hw_cursor_x + idx >= h) {
+-                return; /* end of screen, don't span to next line */
+-            }
+             dp[idx] = color;
+         }
      }
- 
 -- 
 2.53.0
 
