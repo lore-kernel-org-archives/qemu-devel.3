@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C14C3EF36F4
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 07:21:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AACAEF36E8
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 07:21:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzUuv-0006SI-Gj; Mon, 09 Mar 2026 03:20:41 -0400
+	id 1vzUus-0006QI-Vr; Mon, 09 Mar 2026 03:20:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzUut-0006Qm-8y; Mon, 09 Mar 2026 03:20:39 -0400
+ id 1vzUur-0006PI-6k; Mon, 09 Mar 2026 03:20:37 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzUur-0006Eg-IA; Mon, 09 Mar 2026 03:20:38 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1vzUup-0006EO-J3; Mon, 09 Mar 2026 03:20:36 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 628Ns7cD1721997; Mon, 9 Mar 2026 07:20:36 GMT
+ 628FG36o661980; Mon, 9 Mar 2026 07:20:34 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=gCouDQl/xUhsUxOzZ
- /1sjor9Q++aGzChfSsdF05Mb5E=; b=hJeEaP1TxRISSWf6Wyu7UxfQTBN4GGZ84
- aCwoYfEnwPa/bQNZXb5QeAHmeQyTRT7zS4lQYYjKqnzkySPR993HAQ8x5NpHJ4w5
- Pv6VpPZwfXKAOko/GQcOK0EHcLLtvjUOe8gHrBtErgrhcrRDlKmmqULV7KjnV+aM
- Y2iiVywFGIZP+azSK/IUkNYkS2Mvov1g6nQb/1W40kP6hTwBWpIdbDq9Mde+ipIu
- sLA8A5eJQRMmqb4zF/hS/SEB5K7Umt2k6TeHEXH7CknznJqr4j6O4PDAjacfFVec
- wTXRDADSP+tlsbIXWawEMGo1PGZMBxSbUfAbGuYEAFKnMzyp/rNVg==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvr5abj-1
+ :mime-version:references:subject:to; s=pp1; bh=lYmPT+3wLn+2ZQzkp
+ aDwZ+PUmlVFiWIzG3P57Hr4AYg=; b=a6mZKCmRN8h8gdEct2JxLxzwzSGTOlM9N
+ VAkJr2pPbYcJH79mG/M8ftu2mdA4KJBBfKt+I4n365lRFYyQaY4g161Q5x36qMgZ
+ N0FK55Qfs6xoZha2OsyIvDV0+oPaD4TtRkm1IFnuHv02iGSjivsPLRahZzQE4fZ8
+ 6pl3CPcFmbCokkl4qrowe017pv0OdKrnfv86w0/p9nGINUmKqFCPj5c+apk4lCE/
+ dxVK2gkPFqqZqixTK8UPnnV+mS9AZJ6QU3rAo/wsZqw1ffvreOvcOh66pJqEHX3b
+ YH0A4Vr6aIB1MWBbr61nyo0VGEqQ+3mlKwYf4Nkw/ecXUjeJxUlLQ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1md8yk-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 07:20:35 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6293pLTi009505;
- Mon, 9 Mar 2026 07:20:35 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crxqy4310-1
+ Mon, 09 Mar 2026 07:20:33 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 6293JFZt029360;
+ Mon, 9 Mar 2026 07:20:33 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4csp6ugm1x-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 07:20:35 +0000
+ Mon, 09 Mar 2026 07:20:33 +0000
 Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
  [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6297KV0s40894950
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 6297KTiv49414542
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Mar 2026 07:20:31 GMT
+ Mon, 9 Mar 2026 07:20:29 GMT
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 01DF22004F;
- Mon,  9 Mar 2026 07:20:31 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E807F2004B;
+ Mon,  9 Mar 2026 07:20:28 +0000 (GMT)
 Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3988020040;
- Mon,  9 Mar 2026 07:20:29 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 0F4D520040;
+ Mon,  9 Mar 2026 07:20:27 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
  [9.109.199.210])
  by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Mar 2026 07:20:29 +0000 (GMT)
+ Mon,  9 Mar 2026 07:20:26 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
@@ -66,9 +66,9 @@ Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PATCH v4 09/10] tests/functional: Add test for MPIPL in PowerNV
-Date: Mon,  9 Mar 2026 12:49:58 +0530
-Message-ID: <20260309072001.3136261-10-adityag@linux.ibm.com>
+Subject: [PATCH v4 08/10] pnv/mpipl: Enable MPIPL support
+Date: Mon,  9 Mar 2026 12:49:57 +0530
+Message-ID: <20260309072001.3136261-9-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309072001.3136261-1-adityag@linux.ibm.com>
 References: <20260309072001.3136261-1-adityag@linux.ibm.com>
@@ -76,30 +76,28 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA2MyBTYWx0ZWRfXyokVp0TrqnkZ
- WZjtsd2zMSAtgey3wN0DN6jdrAo2eEHtEAJzyULYWp12VYU/lH+FMeD+lxXi6sTAgtskfjWXE/M
- RRvqtucwaOxVCLrcTOHFKw9MqP/BDMNtbyzYbsiDtGF0sk/lzg6D9Pkcx6ccAzBXSOUjvR3LZ3u
- 8d1JO3ntkz8NzTmBWyCbU4ad/5DrrBf6nE9Er4BU4xv3LMSuO9JA26JvdwRbyYk0D5sWoOnUm1N
- avpRevHtgs7Tfchu1x4tz9sZuuUu6fbpWVcX8KiXQ+KelYAkvgY1+STqM87uadG0ipA69jM1nG9
- qFLxUzva6QBwuMmv3noogm+JF+Mvt+RaOJ5zRd7HHKJG0p8TRTtf+NXRmyF5w0rIWCDQt354UYf
- y3rhScS+K03d8WBWScY1uEF5UWv6hv2zaC+0gfi41egOfOrgjRw96OGbpX+c04OQZSPQg4PYDvF
- eSoZHlft6KSE2dQIwYw==
-X-Proofpoint-GUID: ezwazmuq7zGXu9g0bB3XUYp58lt_U_aP
-X-Proofpoint-ORIG-GUID: g8NeY5TJs6sCLLdXMLLp1a_ugjkDkSQz
-X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69ae74c4 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69ae74c2 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=xeNidhmBAAAA:20 a=vTr9H3xdAAAA:8 a=VnNF1IyMAAAA:8
- a=yF-uCvtE38AvPGpA37UA:9 a=bA3UWDv6hWIuX7UZL3qL:22
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=dCvegdiEg4V6ml2xVIcA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDA2MyBTYWx0ZWRfX3ipUrilegvg6
+ +UIgSvHJ1fksrvZE7CSqELMhW4/r6ApZ6eRzza9Eg/VNozeP/3qLjCsG4/9z1hJi2G+EXd372JM
+ N5jijrpQhIeoq8zALWfnobYNi1tsLACGpzLKJ8QGNxvWjWNq5dSUwouSQO4AQo0Q68k8qVWFbCN
+ LgwZeWyZvkGJfT4k6fyCuLqUW2PuSblPbSFqYJa+6lyrYbjWrSuPve7MhednszUykfLpuLpcngC
+ UkqUBQJ8Iq36be6zB+q5zVEGU8c0l7hNktGNZIaIm64wgKDq6W9Dtq0nrBqK3NC5uMWO9yJ4JVD
+ 9VNBYUnzznYnqNgyo+4zqEoIiAaGyzi7HOZtRbc7yBOBBlMJ/+f0293gJT+94fDgYSILsX+7fcz
+ V918gnmbQD/EGwrQmo+Uqk7ezcnwzO237Oz2HQvNkGlGoBqrWJwdIHSMg5mx/V5b/CQIEX1XyvD
+ sb0O7o14sGsZyVhjg0w==
+X-Proofpoint-GUID: I4kXAlppvnslf1byRF8j5JvgcleLRCtA
+X-Proofpoint-ORIG-GUID: ygQKKG5pvfhVXA3wJ7yYrHZpqHrT1iTu
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-09_02,2026-03-06_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603090063
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090063
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
  helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -9
@@ -125,121 +123,83 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With MPIPL support implemented, enable fadump's functional test for PowerNV
+With all MPIPL support in place, export a "dump" node in device tree,
+signifying that PowerNV QEMU platform supports MPIPL
 
-Also, current functional test for powernv uses op-build's Linux 5.10 image,
-which doesn't support adding "fadump=on" in argument due to this:
-
-    Kernel is locked down from Kernel configuration; see man kernel_lockdown.7
-
-Hence, instead of op-build's image, use the newer fedora vmlinuz as used
-in FADump PSeries functional test
-
-Also due to "bash#" string not showing up, rely on sh: no job control to
-check if testcase has reached till shell
+Also, export fw-load-area dt node, which has details about where the
+kernel & initrd were loaded, so that kernel can verify whether the
+kernel/initrd images were loaded within the boot memory region. QEMU
+just exports these details in fw-load-area, the check for boot memory
+region is done in kernel.
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- tests/functional/ppc64/test_fadump.py | 35 ++++++++++-----------------
- 1 file changed, 13 insertions(+), 22 deletions(-)
+ hw/ppc/pnv.c | 37 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 37 insertions(+)
 
-diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
-index bd9692f64c05..7ea65974e0ea 100755
---- a/tests/functional/ppc64/test_fadump.py
-+++ b/tests/functional/ppc64/test_fadump.py
-@@ -14,6 +14,7 @@ class QEMUFadump(LinuxKernelTest):
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 0b94e0c7a19b..139a2037e5d6 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -54,6 +54,7 @@
+ #include "hw/ppc/pnv_chip.h"
+ #include "hw/ppc/pnv_xscom.h"
+ #include "hw/ppc/pnv_pnor.h"
++#include "hw/ppc/pnv_mpipl.h"
  
-     1. test_fadump_pseries:       PSeries
-     2. test_fadump_pseries_kvm:   PSeries + KVM
-+    3. test_fadump_powernv:       PowerNV
-     """
+ #include "hw/isa/isa.h"
+ #include "hw/char/serial-isa.h"
+@@ -672,6 +673,39 @@ static void pnv_dt_power_mgt(PnvMachineState *pnv, void *fdt)
+     _FDT(fdt_setprop_cell(fdt, off, "ibm,enabled-stop-levels", 0xc0000000));
+ }
  
-     timeout = 90
-@@ -24,11 +25,6 @@ class QEMUFadump(LinuxKernelTest):
-     msg_registered_failed = ''
-     msg_dump_active = ''
- 
--    ASSET_EPAPR_KERNEL = Asset(
--        ('https://github.com/open-power/op-build/releases/download/v2.7/'
--         'zImage.epapr'),
--        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
--
-     ASSET_VMLINUZ_KERNEL = Asset(
-         ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-          'releases/39/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
-@@ -62,16 +58,14 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-             # SLOF takes upto >20s in startup time, use VOF
-             self.set_machine("pseries")
-             self.vm.add_args("-machine", "x-vof=on")
--            self.vm.add_args("-m", "6G")
++static void pnv_dt_mpipl_dump(PnvMachineState *pnv, void *fdt)
++{
++    int off;
 +
-+        self.vm.add_args("-m", "6G")
++    /*
++     * Add "dump" node so kernel knows MPIPL (aka fadump) is supported
++     *
++     * Note: This is only needed to be done since we are passing device tree to
++     * opal
++     *
++     * In case HDAT is supported in future, then opal can add these nodes by
++     * itself based on system attribute having MPIPL_SUPPORTED bit set
++     */
++    off = fdt_add_subnode(fdt, 0, "ibm,opal");
++    if (off == -FDT_ERR_EXISTS) {
++        off = fdt_path_offset(fdt, "/ibm,opal");
++    }
++
++    _FDT(off);
++    off = fdt_add_subnode(fdt, off, "dump");
++    _FDT(off);
++    _FDT((fdt_setprop_string(fdt, off, "compatible", "ibm,opal-dump")));
++
++    /* Add kernel and initrd as fw-load-area */
++    uint64_t fw_load_area[4] = {
++        cpu_to_be64(KERNEL_LOAD_ADDR), cpu_to_be64(KERNEL_MAX_SIZE),
++        cpu_to_be64(INITRD_LOAD_ADDR), cpu_to_be64(INITRD_MAX_SIZE)
++    };
++
++    _FDT((fdt_setprop(fdt, off, "fw-load-area",
++                    fw_load_area, sizeof(fw_load_area))));
++}
++
+ static void *pnv_dt_create(MachineState *machine)
+ {
+     PnvMachineClass *pmc = PNV_MACHINE_GET_CLASS(machine);
+@@ -734,6 +768,9 @@ static void *pnv_dt_create(MachineState *machine)
+         pmc->dt_power_mgt(pnv, fdt);
+     }
  
-         self.vm.set_console()
++    /* Advertise support for MPIPL */
++    pnv_dt_mpipl_dump(pnv, fdt);
++
+     return fdt;
+ }
  
-         kernel_path = None
- 
--        if is_powernv:
--            kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
--        else:
--            kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
-+        kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
- 
-         initrd_path = self.ASSET_FEDORA_INITRD.fetch()
- 
-@@ -102,16 +96,14 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-             timeout=20
-         )
- 
--        # Ensure fadump is registered successfully, if registration
--        # succeeds, we get a log from rtas fadump:
--        #
--        #     rtas fadump: Registration is successful!
--        self.wait_for_console_pattern(
--            "rtas fadump: Registration is successful!"
--        )
-+        # Ensure fadump is registered successfully
-+        if not is_powernv:
-+            self.wait_for_console_pattern(
-+                "rtas fadump: Registration is successful!"
-+            )
- 
-         # Wait for the shell
--        self.wait_for_console_pattern("#")
-+        self.wait_for_console_pattern("sh: no job control")
- 
-         # Mount /proc since not available in the initrd used
-         exec_command(self, command="mount -t proc proc /proc")
-@@ -135,7 +127,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-         # that qemu didn't pass the 'ibm,kernel-dump' device tree node
-         wait_for_console_pattern(
-             test=self,
--            success_message="rtas fadump: Firmware-assisted dump is active",
-+            success_message="fadump: Firmware-assisted dump is active",
-             failure_message="fadump: Reserved "
-         )
- 
-@@ -148,7 +140,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-         self.wait_for_console_pattern("preserving crash data")
- 
-         # Wait for prompt
--        self.wait_for_console_pattern("sh-5.2#")
-+        self.wait_for_console_pattern("Run /bin/sh as init process")
- 
-         # Mount /proc since not available in the initrd used
-         exec_command_and_wait_for_pattern(self,
-@@ -166,9 +158,8 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-     def test_fadump_pseries(self):
-         return self.do_test_fadump(is_kvm=False, is_powernv=False)
- 
--    @skip("PowerNV Fadump not supported yet")
-     def test_fadump_powernv(self):
--        return
-+        return self.do_test_fadump(is_kvm=False, is_powernv=True)
- 
-     def test_fadump_pseries_kvm(self):
-         """
 -- 
 2.53.0
 
