@@ -4,107 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98B3EA852F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 00:38:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8E72EA852F
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 01:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzObo-0006Ny-08; Sun, 08 Mar 2026 20:36:32 -0400
+	id 1vzPJQ-0001Mz-Qb; Sun, 08 Mar 2026 21:21:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vzObi-0006Lw-FA; Sun, 08 Mar 2026 20:36:27 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vzObg-0001fU-Nq; Sun, 08 Mar 2026 20:36:26 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 628LdMvU1478497; Mon, 9 Mar 2026 00:36:23 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=vTcQyrK4A0BQD9du/
- yxFLwGAxMaqMxDm7ekoHg6vzdQ=; b=mmESlSCyfFnj1mm0EcKkYe+trcwVgyjXc
- lg28l3/tmvNHJ2Z0BwByXV8GyzaTwrY/MLcFjb0r2MgKDZM3drkbWUEjfIPUz/cY
- xYtCEMVoFmfXHlnQ+eJCb6ha1c+Bi8nmiw4djSFDmppwT/up2kMaisOkv1/OS6mf
- Yd06VDPzFfGDxysBDvtd5bSVEfX5hI2ZFwD5Se7II4z8mBhzOQt9JJ8Xck76H5wJ
- wPTR0syKbgeQ0XY2oKoTDy2ruU20697z4Yzn08+0RJAnDsMDqCt1Khdbtfq+NCf+
- jaB+Q/mxh28tfyYJ9EFqajMy5iWngHO7HlY6RSLumy1itQo02BiRw==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvr4emh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 00:36:23 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 628Nu1LD015750;
- Mon, 9 Mar 2026 00:36:22 GMT
-Received: from smtprelay05.wdc07v.mail.ibm.com ([172.16.1.72])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs121tqn5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 09 Mar 2026 00:36:22 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay05.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 6290aKLv33620592
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 9 Mar 2026 00:36:21 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC38858054;
- Mon,  9 Mar 2026 00:36:20 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C08BE58045;
- Mon,  9 Mar 2026 00:36:19 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.180.105])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Mon,  9 Mar 2026 00:36:19 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
- mst@redhat.com
-Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
- mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH v5 08/15] pc-bios/s390-ccw: Introduce CLP Architecture
-Date: Sun,  8 Mar 2026 20:35:54 -0400
-Message-ID: <20260309003601.242634-9-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20260309003601.242634-1-jrossi@linux.ibm.com>
-References: <20260309003601.242634-1-jrossi@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <maobibo@loongson.cn>)
+ id 1vzPJL-0001MC-VP; Sun, 08 Mar 2026 21:21:32 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <maobibo@loongson.cn>)
+ id 1vzPJI-0006RF-UP; Sun, 08 Mar 2026 21:21:31 -0400
+Received: from loongson.cn (unknown [10.20.42.62])
+ by gateway (Coremail) with SMTP id _____8Bx08CLIK5pacMYAA--.14620S3;
+ Mon, 09 Mar 2026 09:21:16 +0800 (CST)
+Received: from [10.20.42.62] (unknown [10.20.42.62])
+ by front1 (Coremail) with SMTP id qMiowJDxzsKGIK5pkfpQAA--.22829S3;
+ Mon, 09 Mar 2026 09:21:12 +0800 (CST)
+Subject: Re: [PATCH v2 1/2] target/loongarch: Preserve PTE permission bits in
+ LDPTE
+To: "Andrew S. Rightenburg" <andrew@rail5.org>, qemu-devel@nongnu.org
+Cc: gaosong@loongson.cn, qemu-stable@nongnu.org
+References: <20260306073355.899858-1-andrew@rail5.org>
+ <20260306073355.899858-2-andrew@rail5.org>
+From: Bibo Mao <maobibo@loongson.cn>
+Message-ID: <ca0c1c76-2448-7bc8-7819-7cd660ba4e0f@loongson.cn>
+Date: Mon, 9 Mar 2026 09:18:30 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
+In-Reply-To: <20260306073355.899858-2-andrew@rail5.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDAwMyBTYWx0ZWRfX04I/X5doFwrk
- V6/EjF17mjAXVmB5RPRbU/do+H0LjHSE7ctF5NN4TpYJU6GuLk1Od+A4D3PQ1Za6Wt8hCpvD49c
- UnWwLEQ0WcnyTj9aXluw/F0w3WVlmORo6iHYS3ZohGVrvTtC5+Au8jREqSySX7EAYIdX7FN+c1i
- eMwgQKG/Gl0FbTANmASkZW7VAZflpSEHB3LHnND9q2Ry6gL2utw6fPl1Pjq0F+x5EqzUPYZuxIT
- BFAuRJiKzG751aGUftJfbLFG31h/szHXK4Svnl4egQwMaoekYFMT92WvnNP4NPNiH1y1MDdTvLt
- FG0blgIDC1lG9ww7gDdPn1zDBcqbp5BBgcNmybCpe9L1XzOP+mfCk1uX4URU9JOMF08wkD0dTxY
- nCt0ctLj0zkYnPuRCGhdEalsYmxa3jYAWSCxyH+vJDq9EtenEcIOrYAMOlLwsZgIKkOXbsO5WZi
- cqTWIpiLPTIQg4b8GNg==
-X-Proofpoint-GUID: RtBUVb-Ls84SgKJDHxnaXERub6ujXnDB
-X-Proofpoint-ORIG-GUID: RtBUVb-Ls84SgKJDHxnaXERub6ujXnDB
-X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69ae1607 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8 a=20KFwNOVAAAA:8
- a=B6FfjjnMrpp8agTJrekA:9 a=O8hF6Hzn-FEA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-08_07,2026-03-06_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603090003
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-CM-TRANSID: qMiowJDxzsKGIK5pkfpQAA--.22829S3
+X-CM-SenderInfo: xpdruxter6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBj93XoWxtF4xuw13XF15Cr4fCFy8WFX_yoW7ArWfpr
+ Z7Cr4ayF48trZrJas3u3WYqrn8Xr1fGw4Iqa1SkryFk3y3Jr18ur4kt39FqF48Jw45Gw40
+ vF45Zr4UuF47X3XCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv0b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r1j6r18M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_JFI_Gr1l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8JVWxJwA2z4x0Y4vEx4A2jsIEc7CjxVAFwI0_
+ Gr0_Gr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx1l5I
+ 8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv67AK
+ xVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07AlzV
+ AYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02F40E
+ 14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw1lIx
+ kGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7CjxVAF
+ wI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r1j6r
+ 4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1wL05UU
+ UUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=maobibo@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.101,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,172 +82,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
 
-Call Logical Processor (CLP) Architecture is used for managing PCI functions on
-s390x. Define and include the structures and routines needed to interact with
-PCI devices during IPL.
 
-Acked-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- pc-bios/s390-ccw/Makefile |  2 +-
- pc-bios/s390-ccw/clp.c    | 99 +++++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/clp.h    | 24 ++++++++++
- 3 files changed, 124 insertions(+), 1 deletion(-)
- create mode 100644 pc-bios/s390-ccw/clp.c
- create mode 100644 pc-bios/s390-ccw/clp.h
+On 2026/3/6 下午3:33, Andrew S. Rightenburg via qemu development wrote:
+> From: rail5 <andrew@rail5.org>
+> 
+> The LDPTE helper loads a page table entry (or huge page entry) from guest
+> memory and currently applies the PALEN mask to the whole 64-bit value.
+> 
+> That mask is intended to constrain the physical address bits, but masking
+> the full entry also clears upper permission bits in the PTE, including NX
+> (bit 62). As a result, LoongArch TCG can incorrectly allow instruction
+> fetches from NX mappings when translation is driven through software
+> page-walk.
+> 
+> Fix this by masking only the PPN/address field with PALEN while preserving
+> permission bits, and by clearing any non-architectural (software) bits
+> using a hardware PTE mask. LDDIR is unchanged since it returns the base
+> address of the next page table level.
+> 
+> Reported at: https://gitlab.com/qemu-project/qemu/-/issues/3319
+> 
+> Fixes: 56599a705f2 ("target/loongarch: Introduce loongarch_palen_mask()")
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: rail5 (Andrew S. Rightenburg) <andrew@rail5.org>
+> ---
+>   target/loongarch/cpu.c            | 11 +++++++++++
+>   target/loongarch/cpu.h            |  1 +
+>   target/loongarch/tcg/tlb_helper.c | 25 ++++++++++++++++++++++---
+>   3 files changed, 34 insertions(+), 3 deletions(-)
+> 
+> diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+> index 8e8b10505d..e22568c84a 100644
+> --- a/target/loongarch/cpu.c
+> +++ b/target/loongarch/cpu.c
+> @@ -596,6 +596,17 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+>   
+>   #ifdef CONFIG_TCG
+>       env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
+> +
+> +    if (is_la64(env)) {
+> +        env->hw_pte_mask = MAKE_64BIT_MASK(0, 9) |
+> +                           R_TLBENTRY_64_PPN_MASK |
+> +                           R_TLBENTRY_64_NR_MASK |
+> +                           R_TLBENTRY_64_NX_MASK |
+> +                           R_TLBENTRY_64_RPLV_MASK;
+> +    } else {
+> +        env->hw_pte_mask = MAKE_64BIT_MASK(0, 9) |
+> +                           R_TLBENTRY_32_PPN_MASK;
+> +    }
+>   #endif
+>       env->fcsr0 = 0x0;
+>   
+> diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+> index d2dfdc8520..4d333806ed 100644
+> --- a/target/loongarch/cpu.h
+> +++ b/target/loongarch/cpu.h
+> @@ -406,6 +406,7 @@ typedef struct CPUArchState {
+>       uint64_t llval;
+>       uint64_t llval_high; /* For 128-bit atomic SC.Q */
+>       uint64_t llbit_scq; /* Potential LL.D+LD.D+SC.Q sequence in effect */
+> +    uint64_t hw_pte_mask; /* Mask of architecturally-defined (hardware) PTE bits. */
+>   #endif
+>   #ifndef CONFIG_USER_ONLY
+>   #ifdef CONFIG_TCG
+> diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+> index c1dc77a8f8..6581b3b898 100644
+> --- a/target/loongarch/tcg/tlb_helper.c
+> +++ b/target/loongarch/tcg/tlb_helper.c
+> @@ -686,6 +686,21 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+>       cpu_loop_exit_restore(cs, retaddr);
+>   }
+>   
+> +static inline uint64_t loongarch_sanitize_hw_pte(CPULoongArchState *env,
+> +                                                 uint64_t pte)
+> +{
+> +    uint64_t palen_mask = loongarch_palen_mask(env);
+> +    uint64_t ppn_mask = is_la64(env) ? R_TLBENTRY_64_PPN_MASK : R_TLBENTRY_32_PPN_MASK;
+> +
+> +    /*
+> +     * Keep only architecturally-defined PTE bits. Guests may use some
+> +     * otherwise-unused bits for software purposes.
+> +     */
+> +    pte &= env->hw_pte_mask;
+> +
+> +    return (pte & ~ppn_mask) | ((pte & ppn_mask) & palen_mask);
+> +}
+> +
+>   target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+>                             uint32_t level, uint32_t mem_idx)
+>   {
+> @@ -729,6 +744,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>   {
+>       CPUState *cs = env_cpu(env);
+>       hwaddr phys, tmp0, ptindex, ptoffset0, ptoffset1;
+> +    uint64_t pte_raw;
+>       uint64_t badv;
+>       uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+>       uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
+> @@ -744,7 +760,6 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>        * and the other is the huge page entry,
+>        * whose bit 6 should be 1.
+>        */
+> -    base = base & palen_mask;
+>       if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+>           /*
+>            * Gets the huge page level and Gets huge page size.
+> @@ -768,10 +783,11 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>            * when loaded into the tlb,
+>            * so the tlb page size needs to be divided by 2.
+>            */
+> -        tmp0 = base;
+> +        tmp0 = loongarch_sanitize_hw_pte(env, base);
+>           if (odd) {
+>               tmp0 += MAKE_64BIT_MASK(ps, 1);
+>           }
+> +        tmp0 = loongarch_sanitize_hw_pte(env, tmp0);
+Hi Andrew,
 
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 259cff09db..9c29548f84 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
- 
- OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
- 	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
--	  virtio-ccw.o
-+	  virtio-ccw.o clp.o
- 
- SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
- 
-diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
-new file mode 100644
-index 0000000000..8c04738bbf
---- /dev/null
-+++ b/pc-bios/s390-ccw/clp.c
-@@ -0,0 +1,99 @@
-+/*
-+ * Call Logical Processor (CLP) architecture
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "clp.h"
-+#include <stdio.h>
-+#include <string.h>
-+
-+int clp_pci(void *data)
-+{
-+    struct { uint8_t _[CLP_BLK_SIZE]; } *req = data;
-+    int cc = 3;
-+
-+    asm volatile (
-+        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
-+        "     ipm     %[cc]\n"
-+        "     srl     %[cc],28\n"
-+        : [cc] "+d" (cc), "+m" (*req)
-+        : [req] "a" (req)
-+        : "cc");
-+    if (cc) {
-+        printf("CLP returned with non-zero condition code %d\n", cc);
-+    }
-+    return cc;
-+}
-+
-+/*
-+ * Get the PCI function entry for a given function ID
-+ * Return 0 on success, 1 if the FID is not found, or a negative RC on error
-+ */
-+int find_pci_function(uint32_t fid, ClpFhListEntry *entry)
-+{
-+    int count = 0;
-+    int limit = PCI_MAX_FUNCTIONS;
-+    ClpReqRspListPci rrb;
-+
-+    rrb.request.hdr.len = sizeof(ClpReqListPci);
-+    rrb.request.hdr.cmd = 0x02;
-+    rrb.request.resume_token = 0;
-+    rrb.response.hdr.len = sizeof(ClpRspListPci);
-+
-+    do {
-+        if (clp_pci(&rrb) || rrb.response.hdr.rsp != 0x0010) {
-+            puts("Failed to list PCI functions");
-+            return -1;
-+        }
-+
-+        /* Resume token set when max enteries are returned */
-+        if (rrb.response.resume_token) {
-+            count = CLP_FH_LIST_NR_ENTRIES;
-+            rrb.request.resume_token = rrb.response.resume_token;
-+        } else {
-+            count = (rrb.response.hdr.len - 32) / sizeof(ClpFhListEntry);
-+        }
-+
-+        limit -= count;
-+
-+        for (int i = 0; i < count; i++) {
-+            if (rrb.response.fh_list[i].fid == fid) {
-+                memcpy(entry, &rrb.response.fh_list[i], sizeof(ClpFhListEntry));
-+                return 0;
-+            }
-+        }
-+
-+    } while (rrb.request.resume_token && limit > 0);
-+
-+    puts("No function entry found for FID!");
-+
-+    return 1;
-+}
-+
-+/*
-+ * Enable the PCI function associated with a given handle
-+ * Return 0 on success or a negative RC on error
-+ */
-+int enable_pci_function(uint32_t *fhandle)
-+{
-+    ClpReqRspSetPci rrb;
-+
-+    rrb.request.hdr.len = sizeof(ClpReqSetPci);
-+    rrb.request.hdr.cmd = 0x05;
-+    rrb.request.fh = *fhandle;
-+    rrb.request.oc = 0;
-+    rrb.request.ndas = 1;
-+    rrb.response.hdr.len = sizeof(ClpRspSetPci);
-+
-+    if (clp_pci(&rrb) || rrb.response.hdr.rsp != 0x0010) {
-+        puts("Failed to enable PCI function");
-+        return -1;
-+    }
-+
-+    *fhandle = rrb.response.fh;
-+    return 0;
-+}
-diff --git a/pc-bios/s390-ccw/clp.h b/pc-bios/s390-ccw/clp.h
-new file mode 100644
-index 0000000000..1ac2f8c177
---- /dev/null
-+++ b/pc-bios/s390-ccw/clp.h
-@@ -0,0 +1,24 @@
-+/*
-+ * Call Logical Processor (CLP) architecture definitions
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef CLP_H
-+#define CLP_H
-+
-+#ifndef QEMU_PACKED
-+#define QEMU_PACKED __attribute__((packed))
-+#endif
-+
-+#include <stdint.h>
-+#include <s390-pci-clp.h>
-+
-+int clp_pci(void *data);
-+int find_pci_function(uint32_t fid, ClpFhListEntry *entry);
-+int enable_pci_function(uint32_t *fhandle);
-+
-+#endif
--- 
-2.52.0
+I think that duplicated calling with loongarch_sanitize_hw_pte() is 
+unnecessary, the other looks good to me.
+
+Thanks for doing this.
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+>   
+>           if (!check_ps(env, ps)) {
+>               qemu_log_mask(LOG_GUEST_ERROR, "Illegal huge pagesize %d\n", ps);
+> @@ -780,12 +796,15 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+>       } else {
+>           badv = env->CSR_TLBRBADV;
+>   
+> +        base = base & palen_mask;
+> +
+>           ptindex = (badv >> ptbase) & ((1 << ptwidth) - 1);
+>           ptindex = ptindex & ~0x1;   /* clear bit 0 */
+>           ptoffset0 = ptindex << 3;
+>           ptoffset1 = (ptindex + 1) << 3;
+>           phys = base | (odd ? ptoffset1 : ptoffset0);
+> -        tmp0 = ldq_le_phys(cs->as, phys) & palen_mask;
+> +        pte_raw = ldq_le_phys(cs->as, phys);
+> +        tmp0 = loongarch_sanitize_hw_pte(env, pte_raw);
+>           ps = ptbase;
+>       }
+>   
+> 
 
 
