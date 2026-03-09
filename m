@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C970AEA8549
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 01:48:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8897DEA8549
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 01:48:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzPjN-0005p3-48; Sun, 08 Mar 2026 21:48:25 -0400
+	id 1vzPjP-0005qI-3V; Sun, 08 Mar 2026 21:48:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vzPiw-0005lL-6U
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 21:48:01 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1vzPj2-0005mg-C2
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 21:48:05 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1vzPiq-0001HM-9g
- for qemu-devel@nongnu.org; Sun, 08 Mar 2026 21:47:55 -0400
+ id 1vzPiz-0001Ij-NI
+ for qemu-devel@nongnu.org; Sun, 08 Mar 2026 21:48:04 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 801E15969ED;
- Mon, 09 Mar 2026 02:47:46 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id A137B596ADE;
+ Mon, 09 Mar 2026 02:47:53 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 7_kKrN1MRwWp; Mon,  9 Mar 2026 02:47:44 +0100 (CET)
+ id SjV1lnUCMe9v; Mon,  9 Mar 2026 02:47:51 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 4A7135969E8; Mon, 09 Mar 2026 02:47:44 +0100 (CET)
-Message-ID: <7ab2227b96b73a63cb4fc61d0e6921e01900a4ee.1773020351.git.balaton@eik.bme.hu>
+ id 99BA8596A41; Mon, 09 Mar 2026 02:47:51 +0100 (CET)
+Message-ID: <235adb69787c818afd023e7f32286166cc70744c.1773020351.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1773020351.git.balaton@eik.bme.hu>
 References: <cover.1773020351.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v12 1/9] ati-vga: Remove src and dst stride mutation in
- ati_2d_blt
+Subject: [PATCH v12 8/9] ati-vga: Implement HOST_DATA register writes
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,14 +41,15 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Mon, 09 Mar 2026 02:47:44 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Mon, 09 Mar 2026 02:47:51 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,123 +67,136 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Chad Jablonski <chad@jablonski.xyz>
 
-Pixman requires stride in words. So over the course of the ati_2d_blt
-function both src and dst stride were mutated before being passed to
-pixman and then back afterwards.
+Writing to any of the HOST_DATA0-7 registers pushes the written data
+into a 128-bit accumulator. When the accumulator is full a flush is
+triggered to copy it to the framebuffer. A final write to HOST_DATA_LAST
+will also initiate a flush. The flush itself is left for the next patch.
 
-This creates local variables holding src and dst stride in words
-avoiding the potentially confusing mutation.
+Unaligned HOST_DATA* writes result in, from what I can tell, undefined
+behavior on real hardware. A well-behaved driver shouldn't be doing this
+anyway. For that reason they are not handled here at all.
 
 Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
 Reviewed-by: BALATON Zoltan <balaton@eik.bme.hu>
-[balaton: Fix build without pixman]
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati_2d.c | 48 +++++++++++++++++++++------------------------
- 1 file changed, 22 insertions(+), 26 deletions(-)
+ hw/display/ati.c      | 26 ++++++++++++++++++++++++++
+ hw/display/ati_dbg.c  |  9 +++++++++
+ hw/display/ati_int.h  |  9 +++++++++
+ hw/display/ati_regs.h |  9 +++++++++
+ 4 files changed, 53 insertions(+)
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 980cdd6ac0..8a7dcdf6e9 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -125,34 +125,34 @@ void ati_2d_blt(ATIVGAState *s)
-             return;
-         }
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 9a7c5703b0..16dbb743e1 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -1023,6 +1023,27 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+     case SRC_SC_BOTTOM:
+         s->regs.src_sc_bottom = data & 0x3fff;
+         break;
++    case HOST_DATA0:
++    case HOST_DATA1:
++    case HOST_DATA2:
++    case HOST_DATA3:
++    case HOST_DATA4:
++    case HOST_DATA5:
++    case HOST_DATA6:
++    case HOST_DATA7:
++    case HOST_DATA_LAST:
++        if (!s->host_data.active) {
++            break;
++        }
++        s->host_data.acc[s->host_data.next++] = data;
++        if (addr == HOST_DATA_LAST) {
++            qemu_log_mask(LOG_UNIMP, "HOST_DATA finish not yet implemented\n");
++            s->host_data.next = 0;
++        } else if (s->host_data.next >= 4) {
++            qemu_log_mask(LOG_UNIMP, "HOST_DATA flush not yet implemented\n");
++            s->host_data.next = 0;
++        }
++        break;
+     default:
+         break;
+     }
+@@ -1128,6 +1149,11 @@ static void ati_vga_reset(DeviceState *dev)
+     /* reset vga */
+     vga_common_reset(&s->vga);
+     s->mode = VGA_MODE;
++
++    s->host_data.active = false;
++    s->host_data.next = 0;
++    s->host_data.row = 0;
++    s->host_data.col = 0;
+ }
  
--        src_stride /= sizeof(uint32_t);
--        dst_stride /= sizeof(uint32_t);
--        DPRINTF("pixman_blt(%p, %p, %d, %d, %d, %d, %d, %d, %d, %d, %d, %d)\n",
--                src_bits, dst_bits, src_stride, dst_stride, bpp, bpp,
--                src_x, src_y, dst_x, dst_y,
--                s->regs.dst_width, s->regs.dst_height);
-+        DPRINTF("pixman_blt(%p, %p, %ld, %ld, %d, %d, %d, %d, %d, %d, %d, %d)\n",
-+                src_bits, dst_bits, src_stride / sizeof(uint32_t),
-+                dst_stride / sizeof(uint32_t), bpp, bpp, src_x, src_y, dst_x,
-+                dst_y, s->regs.dst_width, s->regs.dst_height);
- #ifdef CONFIG_PIXMAN
-+        int src_stride_words = src_stride / sizeof(uint32_t);
-+        int dst_stride_words = dst_stride / sizeof(uint32_t);
-         if ((s->use_pixman & BIT(1)) &&
-             s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT &&
-             s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
-             fallback = !pixman_blt((uint32_t *)src_bits, (uint32_t *)dst_bits,
--                                   src_stride, dst_stride, bpp, bpp,
-+                                   src_stride_words, dst_stride_words, bpp, bpp,
-                                    src_x, src_y, dst_x, dst_y,
-                                    s->regs.dst_width, s->regs.dst_height);
-         } else if (s->use_pixman & BIT(1)) {
-             /* FIXME: We only really need a temporary if src and dst overlap */
-             int llb = s->regs.dst_width * (bpp / 8);
--            int tmp_stride = DIV_ROUND_UP(llb, sizeof(uint32_t));
--            uint32_t *tmp = g_malloc(tmp_stride * sizeof(uint32_t) *
-+            int tmp_stride_words = DIV_ROUND_UP(llb, sizeof(uint32_t));
-+            uint32_t *tmp = g_malloc(tmp_stride_words * sizeof(uint32_t) *
-                                      s->regs.dst_height);
-             fallback = !pixman_blt((uint32_t *)src_bits, tmp,
--                                   src_stride, tmp_stride, bpp, bpp,
-+                                   src_stride_words, tmp_stride_words, bpp, bpp,
-                                    src_x, src_y, 0, 0,
-                                    s->regs.dst_width, s->regs.dst_height);
-             if (!fallback) {
-                 fallback = !pixman_blt(tmp, (uint32_t *)dst_bits,
--                                       tmp_stride, dst_stride, bpp, bpp,
--                                       0, 0, dst_x, dst_y,
-+                                       tmp_stride_words, dst_stride_words,
-+                                       bpp, bpp, 0, 0, dst_x, dst_y,
-                                        s->regs.dst_width, s->regs.dst_height);
-             }
-             g_free(tmp);
-@@ -163,18 +163,15 @@ void ati_2d_blt(ATIVGAState *s)
-         }
-         if (fallback) {
-             unsigned int y, i, j, bypp = bpp / 8;
--            unsigned int src_pitch = src_stride * sizeof(uint32_t);
--            unsigned int dst_pitch = dst_stride * sizeof(uint32_t);
--
-             for (y = 0; y < s->regs.dst_height; y++) {
-                 i = dst_x * bypp;
-                 j = src_x * bypp;
-                 if (s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM) {
--                    i += (dst_y + y) * dst_pitch;
--                    j += (src_y + y) * src_pitch;
-+                    i += (dst_y + y) * dst_stride;
-+                    j += (src_y + y) * src_stride;
-                 } else {
--                    i += (dst_y + s->regs.dst_height - 1 - y) * dst_pitch;
--                    j += (src_y + s->regs.dst_height - 1 - y) * src_pitch;
-+                    i += (dst_y + s->regs.dst_height - 1 - y) * dst_stride;
-+                    j += (src_y + s->regs.dst_height - 1 - y) * src_stride;
-                 }
-                 memmove(&dst_bits[i], &src_bits[j], s->regs.dst_width * bypp);
-             }
-@@ -201,21 +198,20 @@ void ati_2d_blt(ATIVGAState *s)
-             break;
-         }
+ static void ati_vga_exit(PCIDevice *dev)
+diff --git a/hw/display/ati_dbg.c b/hw/display/ati_dbg.c
+index 3ffa7f35df..5c799d540a 100644
+--- a/hw/display/ati_dbg.c
++++ b/hw/display/ati_dbg.c
+@@ -252,6 +252,15 @@ static struct ati_regdesc ati_reg_names[] = {
+     {"MC_SRC1_CNTL", 0x19D8},
+     {"TEX_CNTL", 0x1800},
+     {"RAGE128_MPP_TB_CONFIG", 0x01c0},
++    {"HOST_DATA0", 0x17c0},
++    {"HOST_DATA1", 0x17c4},
++    {"HOST_DATA2", 0x17c8},
++    {"HOST_DATA3", 0x17cc},
++    {"HOST_DATA4", 0x17d0},
++    {"HOST_DATA5", 0x17d4},
++    {"HOST_DATA6", 0x17d8},
++    {"HOST_DATA7", 0x17dc},
++    {"HOST_DATA_LAST", 0x17e0},
+     {NULL, -1}
+ };
  
--        dst_stride /= sizeof(uint32_t);
--        DPRINTF("pixman_fill(%p, %d, %d, %d, %d, %d, %d, %x)\n",
--                dst_bits, dst_stride, bpp, dst_x, dst_y,
-+        DPRINTF("pixman_fill(%p, %ld, %d, %d, %d, %d, %d, %x)\n",
-+                dst_bits, dst_stride / sizeof(uint32_t), bpp, dst_x, dst_y,
-                 s->regs.dst_width, s->regs.dst_height, filler);
- #ifdef CONFIG_PIXMAN
-         if (!(s->use_pixman & BIT(0)) ||
--            !pixman_fill((uint32_t *)dst_bits, dst_stride, bpp, dst_x, dst_y,
--                    s->regs.dst_width, s->regs.dst_height, filler))
-+            !pixman_fill((uint32_t *)dst_bits, dst_stride / sizeof(uint32_t),
-+                         bpp, dst_x, dst_y, s->regs.dst_width,
-+                         s->regs.dst_height, filler))
- #endif
-         {
-             /* fallback when pixman failed or we don't want to call it */
-             unsigned int x, y, i, bypp = bpp / 8;
--            unsigned int dst_pitch = dst_stride * sizeof(uint32_t);
-             for (y = 0; y < s->regs.dst_height; y++) {
--                i = dst_x * bypp + (dst_y + y) * dst_pitch;
-+                i = dst_x * bypp + (dst_y + y) * dst_stride;
-                 for (x = 0; x < s->regs.dst_width; x++, i += bypp) {
-                     stn_he_p(&dst_bits[i], bypp, filler);
-                 }
+diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
+index 874c63eb54..063efc7bba 100644
+--- a/hw/display/ati_int.h
++++ b/hw/display/ati_int.h
+@@ -96,6 +96,14 @@ typedef struct ATIVGARegs {
+     uint32_t default_tile;
+ } ATIVGARegs;
+ 
++typedef struct ATIHostDataState {
++    bool active;
++    uint32_t row;
++    uint32_t col;
++    uint32_t next;
++    uint32_t acc[4];
++} ATIHostDataState;
++
+ struct ATIVGAState {
+     PCIDevice dev;
+     VGACommonState vga;
+@@ -114,6 +122,7 @@ struct ATIVGAState {
+     MemoryRegion io;
+     MemoryRegion mm;
+     ATIVGARegs regs;
++    ATIHostDataState host_data;
+ };
+ 
+ const char *ati_reg_name(int num);
+diff --git a/hw/display/ati_regs.h b/hw/display/ati_regs.h
+index 3999edb9b7..48f15e9b1d 100644
+--- a/hw/display/ati_regs.h
++++ b/hw/display/ati_regs.h
+@@ -252,6 +252,15 @@
+ #define DP_T12_CNTL                             0x178c
+ #define DST_BRES_T1_LNTH                        0x1790
+ #define DST_BRES_T2_LNTH                        0x1794
++#define HOST_DATA0                              0x17c0
++#define HOST_DATA1                              0x17c4
++#define HOST_DATA2                              0x17c8
++#define HOST_DATA3                              0x17cc
++#define HOST_DATA4                              0x17d0
++#define HOST_DATA5                              0x17d4
++#define HOST_DATA6                              0x17d8
++#define HOST_DATA7                              0x17dc
++#define HOST_DATA_LAST                          0x17e0
+ #define SCALE_SRC_HEIGHT_WIDTH                  0x1994
+ #define SCALE_OFFSET_0                          0x1998
+ #define SCALE_PITCH                             0x199c
 -- 
 2.41.3
 
