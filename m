@@ -4,80 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 359E2F41807
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:26:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F18DCF41807
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:32:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcV2-0001VL-Ad; Mon, 09 Mar 2026 11:26:28 -0400
+	id 1vzca0-0004Kd-F4; Mon, 09 Mar 2026 11:31:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzcUw-0001Tt-PI
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:26:23 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcZo-0004D1-V9
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:31:30 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzcUv-0003O0-4J
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:26:22 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4853f2826f7so8255915e9.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:26:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcZl-0003xa-SJ
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:31:24 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439af00d33cso8868314f8f.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773069979; x=1773674779; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=0y29DJUnuBxj2iK9KwnvP2N8bp4mkTNvUyojM3qXp5o=;
- b=q476In5+Qwf2Bi2NPOS2OnmmxKpdDNBZZvgrLVMws6wq1l3LDjLWiCIvh4Lsby50Le
- tFzdFMdxXijlya8O5p009UjDvsq/gGOqxQyimD/gbPwoP3jBVCyjowqMe9PQo9B8vkJu
- r21TBPgwdwODDD8v291tC/A3NQl0SU+DAiRD6fn9YyXQ83oXoFOHDZhRkywBAeffSK35
- 37XaSY/NlLM0SuqpSvtT1dOi7EwdXNK6IPrGulrU65u9zP+YaEwv/WUh+GOr7+Q16vBM
- IZi/vSE4aF9yucXTWx73Sm+sqrW4JGvBS3rt707fyhgtgMDBLStgGkkiguKitR08M8Sq
- zsQw==
+ d=linaro.org; s=google; t=1773070279; x=1773675079; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0Jk9g5xVJBESmpIqrYUAyEMtlqKY2FYPPc2k4WoqoEE=;
+ b=RsMFi+FUmc1Rb+nOwRl+NtGj2bOH5mr4uEo7vwN/wpdC8JdqzWjkmfoX5h2MaAXRym
+ iu4MMjR/BA+t47ZLvtaPapj8fHRb6OEZ+RbyszQWJO4oL0XRfjfUeB6YUDE+LazZFLBt
+ PBMawcxsiFkos+XiBduLo+t27WHc2TXjbM10xSHGD/0zX9djXwpHzM7bO+6Cp50laiAK
+ niSElZL4yjqbU45Gjz3rk9btyL1qCVUwhLFxr5mjPzq6M2NqWsTXBoY/CTpoH8TSPs8p
+ KlZ6N1oJSilT78LvJXUDszdLq6Zp/57D0hnXkg5DTPrdeQo2cl0uFHE5mHNP8BtOop8B
+ Tp1g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773069979; x=1773674779;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0y29DJUnuBxj2iK9KwnvP2N8bp4mkTNvUyojM3qXp5o=;
- b=c/FcPWFcjX2Fnrq3s+LlSzQbKyXaP+pVcutMXydTHHucovjxB7JslDSbgAEifTHmBu
- VqGQMv/fHtVppESCz76R220zLk4ZXqzURMkcFdi++NdfRpsqBAblZbq18S9xsSTRfrXB
- nRdNK7ZVo3Ng1tRy0A40GNfqLlmrFYrVWt+7hfXtjl0C+KfH27tObu/bXXWuQYeCIPSb
- zd72cUZxpR9SSIdiCKPWoVbErsa4vIIbxa49uD9yhbJpuf3MfdiRGRcQPU5hl9r9C8+t
- 7VKUfxtdDkb4zi0d1QsSmFWLLR+bNlAYWvBhtN3r0offliNLqraPPV0lVZR1JKDAumyb
- ObPg==
-X-Gm-Message-State: AOJu0YySndvlSmF1lWbgJVuH+tPrp31lewVxBFL8LX96mGwDluY+mk7q
- nhD6aAzKvw/6HuT5LCWOjnMeZgpU8kAMNly3viTlnHQGabelmurepsuDxeDpQjFgCGqOqVhU9wG
- dGDDF
-X-Gm-Gg: ATEYQzwxPLTqw285l8agHStkEu4ZB+MCGMtTMWDmOrN9rZkZZ626QRBw0tX1bFQwyDt
- SWWMAi3JHQGtB4tP1r7aFgx3dSabJEMNuUmWT1wyUm0XYJXtUACOmCumUaHHUX6l+o1SsnaLtpz
- fUYh/IXLcSZX6yNbMqej0E2TJ7gKx6AXojnLRT2Y+jBhQui9TjTJfYEAZrpLtsFsKN7ytL+pTW1
- ymdrTsOp4lByDfIPrJLn7Ukk0DhoHJ1qU1rs6awH55lDLIflMoCTEJNI09wzzW3lYUaLtAdBj6Z
- L+B3xKmd6LqVWRd2V6gqRuP6wzTnqVn7eh9U/HcUUmDLZ6ci6iPH/P4OY2ufOZUCYbFKjsAddcr
- C8o7Fu57tM8wwSsU8m2Yu3H6nWdRHU7Ax0XIMVUWO8oRkm0EqAcRvNwpQYdqT20kIW0I9ZwQauG
- 3zG7Bn/tvFVd2Rs3Lfr1ObDL5XyB1m0Nfbmw0XGln7RLdjkKPbWcWQ8W7oO+9tDLMjvnkXvf73O
- J9ghbczhD4OozyVHP7Ed3z2UHJUpIA=
-X-Received: by 2002:a05:600c:3b0c:b0:483:ad56:8d16 with SMTP id
- 5b1f17b1804b1-48526918944mr202277405e9.6.1773069978922; 
- Mon, 09 Mar 2026 08:26:18 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48534fa65a6sm94844045e9.2.2026.03.09.08.26.17
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 08:26:18 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH] docs/devel/decodetree: Fix formatting in "field examples"
- table
-Date: Mon,  9 Mar 2026 15:26:17 +0000
-Message-ID: <20260309152617.1611566-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ d=1e100.net; s=20230601; t=1773070279; x=1773675079;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=0Jk9g5xVJBESmpIqrYUAyEMtlqKY2FYPPc2k4WoqoEE=;
+ b=sUR7vSV5Xh2/igS/V9f8+PEk/Sd7hWqdMA2fcII0097mHmKXcgGTXIF5Cjq+bzwKuH
+ vguv39FeRc4MUV4ni764hi9J+DXknLme3kC7J1qEZlN2YRNLxx0M3k7FLC7Bq5JRjlsF
+ urbnKrfNcrS9YT49ruzZBuw0XTRVBuTt9ZyOx5TPq9Eq0yoWcKKyHCh2h6pWP9sq6xCW
+ ogCeTfgX3SBV5ObSxK51y6RyNgHLKq30UsgNrp65BA9r1cbo6pzp47wee9etsVji21DG
+ 0gp5b+x4mSuwOpXNqJ2AmqgCQqFf/d0QtfisoKZCudGgH+e0EFFF2Xp6HTrih1pgIt+7
+ klqQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcyPWPhcTdRG8hiBlmqGOedneKzJC9f6E9bqzu9a26NS9S6dCixfaqkQ+9qIBIaSpZU250dZMauy/n@nongnu.org
+X-Gm-Message-State: AOJu0Yy+YGZQmR6ZB15rCPXzbHIdSMFCA/hF2XvfuAYU7woJHJiAGJPr
+ k+UNgfQJ8PHwps5j6J5S1APeClspGifplntHeF4ujPeZOVee5a0GG4w7fyZv6zEpzxA=
+X-Gm-Gg: ATEYQzxkC/RiyE8kQhYkibgGSEfp127MCFM81PN5Vul9pazS6OMQzabY6AlLNrptImR
+ DJipMK39gcDvIVPoC0KXwDkvDOamQmJukfEmyqqmYB0ShftuktZ9p4XHqVwitW5ZwqzXQfIlBmT
+ Nfb3nm+uB6EncANDQiLcCQitiR6sq3byr0D0xYfJxYwrjCbff48A7RjLCXmUeOv6z8npO2XFXKf
+ F3G78JvR5NT2Cdml8brDLHA9WHGAoUkYNyGT0pBfNosvGqhRziITq7QBcdvEb4UFJ+em50z2UxL
+ 9GgrJvN45ZItd/755aJKwYXm2AAYmAAGQ0lNEsdVtPNeg37FV6EYgk/gWnBVzbxZrDspLyVjV5t
+ k8y3iKwf6Lv2g6f5liaZ/OcLbo6M4PEPPCSL1UD4eR2+BQUrVHVJc1g1qryzJL/IFQNIXkeIxaI
+ nCE7U75q7nlfJ0b8ztSLpj5rHlbJCJ0WAdoCXHuYFxzP0xxx/wf88jlrnbCRhe6sRCRQ==
+X-Received: by 2002:a05:6000:230f:b0:439:b114:60c2 with SMTP id
+ ffacd0b85a97d-439da880b2fmr20161919f8f.34.1773070278960; 
+ Mon, 09 Mar 2026 08:31:18 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dae57401sm22761234f8f.38.2026.03.09.08.31.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 08:31:18 -0700 (PDT)
+Message-ID: <a8cf5873-c202-4e8c-8c0a-a84953101485@linaro.org>
+Date: Mon, 9 Mar 2026 16:31:17 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/2] hw/qdev: Document qdev_get_dev_path()
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Alessandro Ratti <alessandro@0x65c.net>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260307155046.3940197-1-peter.maydell@linaro.org>
+ <20260307155046.3940197-2-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260307155046.3940197-2-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -100,86 +106,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The rST syntax for a table uses ASCII art to draw the cell
-boundaries; then inside each cell the text is treated as a body
-element, so it is rendered the same way as text at the top level of a
-document.
+On 7/3/26 16:50, Peter Maydell wrote:
+> We don't document qdev_get_dev_path() at all; in particular
+> we do not mention that it returns a string that the caller
+> must free.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   include/hw/core/qdev.h | 23 +++++++++++++++++++++++
+>   1 file changed, 23 insertions(+)
 
-The "field examples" table was assuming a "literal document" format
-for its cell bodies; this meant that the single line cells were being
-rendered in plain text, not a fixed width font, and the multi line
-cells were rendered as definition-lists because of their "second and
-subsequent lines are indented" layout.
-
-Fix this by consistently using inline-code markup for the left column
-and literal blocks for the right column.  (We want to be consistent
-within each column because a literal block renders differently to
-inline-code, with a green background.)
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-You can see the mis-rendered version at
-https://www.qemu.org/docs/master/devel/decodetree.html
----
- docs/devel/decodetree.rst | 44 ++++++++++++++++++++++++---------------
- 1 file changed, 27 insertions(+), 17 deletions(-)
-
-diff --git a/docs/devel/decodetree.rst b/docs/devel/decodetree.rst
-index 98ad33a487..33cd6fe583 100644
---- a/docs/devel/decodetree.rst
-+++ b/docs/devel/decodetree.rst
-@@ -64,23 +64,33 @@ A field with no ``fields`` and no ``!function`` is in error.
- 
- Field examples:
- 
--+---------------------------+---------------------------------------------+
--| Input                     | Generated code                              |
--+===========================+=============================================+
--| %disp   0:s16             | sextract(i, 0, 16)                          |
--+---------------------------+---------------------------------------------+
--| %imm9   16:6 10:3         | extract(i, 16, 6) << 3 | extract(i, 10, 3)  |
--+---------------------------+---------------------------------------------+
--| %disp12 0:s1 1:1 2:10     | sextract(i, 0, 1) << 11 |                   |
--|                           |    extract(i, 1, 1) << 10 |                 |
--|                           |    extract(i, 2, 10)                        |
--+---------------------------+---------------------------------------------+
--| %shimm8 5:s8 13:1         | expand_shimm8(sextract(i, 5, 8) << 1 |      |
--|   !function=expand_shimm8 |               extract(i, 13, 1))            |
--+---------------------------+---------------------------------------------+
--| %sz_imm 10:2 sz:3         | expand_sz_imm(extract(i, 10, 2) << 3 |      |
--|   !function=expand_sz_imm |               extract(a->sz, 0, 3))         |
--+---------------------------+---------------------------------------------+
-++-----------------------------+----------------------------------------------+
-+| Input                       | Generated code                               |
-++=============================+==============================================+
-+| ``%disp   0:s16``           | ::                                           |
-+|                             |                                              |
-+|                             |   sextract(i, 0, 16)                         |
-++-----------------------------+----------------------------------------------+
-+| ``%imm9   16:6 10:3``       | ::                                           |
-+|                             |                                              |
-+|                             |   extract(i, 16, 6) << 3 | extract(i, 10, 3) |
-++-----------------------------+----------------------------------------------+
-+| ``%disp12 0:s1 1:1 2:10``   | ::                                           |
-+|                             |                                              |
-+|                             |   sextract(i, 0, 1) << 11 |                  |
-+|                             |       extract(i, 1, 1) << 10 |               |
-+|                             |       extract(i, 2, 10)                      |
-++-----------------------------+----------------------------------------------+
-+| ``%shimm8 5:s8 13:1         | ::                                           |
-+| !function=expand_shimm8``   |                                              |
-+|                             |   expand_shimm8(sextract(i, 5, 8) << 1 |     |
-+|                             |                 extract(i, 13, 1))           |
-++-----------------------------+----------------------------------------------+
-+| ``%sz_imm 10:2 sz:3         | ::                                           |
-+| !function=expand_sz_imm``   |                                              |
-+|                             |   expand_sz_imm(extract(i, 10, 2) << 3 |     |
-+|                             |                 extract(a->sz, 0, 3))        |
-++-----------------------------+----------------------------------------------+
- 
- Argument Sets
- =============
--- 
-2.43.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
