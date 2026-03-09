@@ -4,99 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD160FCA16A
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:07:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CE40FCA16A
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 18:07:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzf0L-0004O2-Lt; Mon, 09 Mar 2026 14:07:07 -0400
+	id 1vzf14-0005Ab-C8; Mon, 09 Mar 2026 14:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vzezz-0003vH-2T
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:38 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vzf04-00043U-Sa
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:46 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1vzezw-0006g7-9F
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:33 -0400
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1vzf02-0006h1-P7
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 14:06:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773079591;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1773079597;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=f/alvkQgr1baGbx0ARaryDIBCWnm7KJLZWRPA88ESYY=;
- b=ip9vvP8WQnA7Ef65kvsNk/jJjDnsK02xuh9D+8+8QV7kdjDiGTO4FDqEwwA6kVCyAhtVQC
- oArhFEStPAz8YoDWUpw8TrVWNw4x9Hyw6GPCBNt37NoXGPWa3GLr7WjQ5e/Ry1bR82YMXd
- VwAxeyZaYZDX7qOaIzjuYqtAp/stqxQ=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-QMIQ2ZGdM9uHXdnltAboHg-1; Mon, 09 Mar 2026 14:06:30 -0400
-X-MC-Unique: QMIQ2ZGdM9uHXdnltAboHg-1
-X-Mimecast-MFC-AGG-ID: QMIQ2ZGdM9uHXdnltAboHg_1773079589
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-439a9182148so6332391f8f.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 11:06:29 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773079589; x=1773684389;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f/alvkQgr1baGbx0ARaryDIBCWnm7KJLZWRPA88ESYY=;
- b=K0R058UWUnKoZFDW1XSCkPSGYre2uKyD5DsY+98Iw+1KXPYqIwAL0bXdNatfj9X2it
- AIgOlZ1QjB6rC38tWX84wkBjkYWnDP7d/vyIvlFhnEwTB5ufwT2WFvn0vQ4ay2zLb79o
- R6VAo8dbubL6Z0Q9mVT9cWNooHH9yk7hlWsWG+UyfZeWQ9EzPUzcKFm6EAGsvgrusXVU
- glw68QDBq/94JEoRCELnAP0oPIe7QzbJXOOQGd3iKOh4tFHivJh7GIxQuZ5mij9cnjPk
- GtpeOAJUUy6JgeY0q373Wpq58h5JpduG79oWxd5xI7jixLbx0/7MBZ/9p9RcmnIPIfIh
- SVmw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWuOjdLpV67fM1rnrUqmXSI/AuTWKIxAkVdRzlDG6KwbfW5GbQiTjo1JTGB98L8wxf4CgrKZGi4y68N@nongnu.org
-X-Gm-Message-State: AOJu0YxbZITG6pQmo8JCkhF/ySzWhPzDWNdE12+r3zBXjkxvdBgK9733
- 7WACRJZPJOXjAqt5oLMAxVFpALhyNT7jApjhbQS+hZ/omH0kETE1zqeaoPeydwIz+/jUdAMJZSu
- 0VAReyh5uR7iUgD/oGHhwx940ulHGQPqt0q0dlyBXS08Uz80OPoobnO72
-X-Gm-Gg: ATEYQzzaLv76pUQ9USQa+0UFkckiAbT7hM+/vYQ3lc+IpFvA0yolaebaCG1a8Advfhx
- tBGZOsKv5KmURHb0z3m9VUiB8bm9gDM3p+IQnrvNDKYMkvn4SROvRrWAhrvkmDLxD9pGfIe99m8
- 5Hod60sc7TNDwQUfgnupYoOEiJWqFLpCCiSMNZVRP3NmIJSCdM4d1BCJfdOi2a4YWIJz3FGRwgK
- 7mmRDoqXxfgy0Sjbr3kiXQqbknU4DwJgkUTKf4sVBPJKTQyuTqGQ5Hb+NW5jzq+Vj/vwizuYbZE
- xOq6PwZbzbvYcWkyYQ82y+tJq2TCKZwVqAISYBxDJLzpuDUXqw0Eo8fO7D6yq1xD3YFry5zqL6s
- eiOfxPtAMa7RevI9yyXFoH2qZgxXzCl0Y3YNNjYQXv1JUM8+3afBCURbsWk0Dfnz5PnT0aw==
-X-Received: by 2002:a05:6000:2404:b0:439:abcd:b312 with SMTP id
- ffacd0b85a97d-439da64f787mr21908518f8f.7.1773079588788; 
- Mon, 09 Mar 2026 11:06:28 -0700 (PDT)
-X-Received: by 2002:a05:6000:2404:b0:439:abcd:b312 with SMTP id
- ffacd0b85a97d-439da64f787mr21908447f8f.7.1773079588326; 
- Mon, 09 Mar 2026 11:06:28 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae45786sm31525004f8f.32.2026.03.09.11.06.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 11:06:27 -0700 (PDT)
-Message-ID: <16b4f960-61a2-4e30-af2f-a4267ebc425a@redhat.com>
-Date: Mon, 9 Mar 2026 19:06:26 +0100
+ bh=Ib+CApM1kWITeZ/5sgt8awzJihc228hSFn8FjiKZjaM=;
+ b=ZnAgFUVk4gvdVqtJzPaxQle5kZteIxgtB7jnEpGuEOGCZmWkZfTTKhExZ4HiqT7tRuoVyj
+ TqO51Kl9yIvT08iDBZvBywUl7dcBfoBs3lpJso3v+Z83/cgHJKXuLZLOiPLNAx1pVBPaIP
+ FHTciXxsARoot2dWNyv9c9xrWGTopHE=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-g_VNe-AxMQWd2nC8JByBhQ-1; Mon,
+ 09 Mar 2026 14:06:34 -0400
+X-MC-Unique: g_VNe-AxMQWd2nC8JByBhQ-1
+X-Mimecast-MFC-AGG-ID: g_VNe-AxMQWd2nC8JByBhQ_1773079592
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C5CC51956055; Mon,  9 Mar 2026 18:06:31 +0000 (UTC)
+Received: from jsnow-thinkpadp16vgen1.westford.csb (unknown [10.22.81.1])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 34F43180049D; Mon,  9 Mar 2026 18:06:25 +0000 (UTC)
+From: John Snow <jsnow@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Hanna Reitz <hreitz@redhat.com>, Yonggang Luo <luoyonggang@gmail.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Kyle Evans <kevans@freebsd.org>,
+ Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
+ Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ qemu-block@nongnu.org, Michael Roth <michael.roth@amd.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, John Snow <jsnow@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ed Maste <emaste@freebsd.org>, Maksim Davydov <davydov-max@yandex-team.ru>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>, Li-Wen Hsu <lwhsu@freebsd.org>,
+ Cleber Rosa <crosa@redhat.com>
+Subject: [PULL 3/4] python: drop avocado
+Date: Mon,  9 Mar 2026 14:06:00 -0400
+Message-ID: <20260309180601.164435-4-jsnow@redhat.com>
+In-Reply-To: <20260309180601.164435-1-jsnow@redhat.com>
+References: <20260309180601.164435-1-jsnow@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 27/32] tests/qtest/bios-tables-test: Prepare for IORT
- SMMUv3 node identifier change
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-28-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260226105056.897-28-skolothumtho@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -117,36 +94,208 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Avocado-framework is no longer used for anything, so it can be removed.
 
+Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260226213400.1254014-4-jsnow@redhat.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
+---
+ python/README.rst              |  2 --
+ python/avocado.cfg             | 13 -------------
+ python/setup.cfg               |  1 -
+ python/tests/flake8.sh         |  3 ---
+ python/tests/iotests-mypy.sh   |  4 ----
+ python/tests/iotests-pylint.sh |  5 -----
+ python/tests/isort.sh          |  3 ---
+ python/tests/minreqs.txt       |  1 -
+ python/tests/mypy.sh           |  3 ---
+ python/tests/pylint.sh         |  4 ----
+ python/tests/qapi-flake8.sh    |  6 ------
+ python/tests/qapi-isort.sh     |  8 --------
+ python/tests/qapi-mypy.sh      |  4 ----
+ python/tests/qapi-pylint.sh    |  8 --------
+ 14 files changed, 65 deletions(-)
+ delete mode 100644 python/avocado.cfg
+ delete mode 100755 python/tests/flake8.sh
+ delete mode 100755 python/tests/iotests-mypy.sh
+ delete mode 100755 python/tests/iotests-pylint.sh
+ delete mode 100755 python/tests/isort.sh
+ delete mode 100755 python/tests/mypy.sh
+ delete mode 100755 python/tests/pylint.sh
+ delete mode 100755 python/tests/qapi-flake8.sh
+ delete mode 100755 python/tests/qapi-isort.sh
+ delete mode 100755 python/tests/qapi-mypy.sh
+ delete mode 100755 python/tests/qapi-pylint.sh
 
-On 2/26/26 11:50 AM, Shameer Kolothum wrote:
-> The IORT SMMUv3 node Identifier field will be derived from a new
-> per-device "identifier" property instead of relying on enumeration
-> order.
->
-> Add the affected IORT blobs to allowed-diff list for bios-table tests.
->
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-Reviewed-by: Eric Auger <eric.auger@redhat.com>
-
-Eric
-> ---
->  tests/qtest/bios-tables-test-allowed-diff.h | 4 ++++
->  1 file changed, 4 insertions(+)
->
-> diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-> index dfb8523c8b..df5fe417c0 100644
-> --- a/tests/qtest/bios-tables-test-allowed-diff.h
-> +++ b/tests/qtest/bios-tables-test-allowed-diff.h
-> @@ -1 +1,5 @@
->  /* List of comma-separated changed AML files to ignore */
-> +"tests/data/acpi/aarch64/virt/IORT.its_off",
-> +"tests/data/acpi/aarch64/virt/IORT.msi_gicv2m",
-> +"tests/data/acpi/aarch64/virt/IORT.smmuv3-legacy",
-> +"tests/data/acpi/aarch64/virt/IORT.smmuv3-dev",
+diff --git a/python/README.rst b/python/README.rst
+index ec5cb5e971b..e34d1a1c7b1 100644
+--- a/python/README.rst
++++ b/python/README.rst
+@@ -108,8 +108,6 @@ Files in this directory
+ 
+ - ``qemu/`` Python 'qemu' namespace package source directory.
+ - ``tests/`` Python package tests directory.
+-- ``avocado.cfg`` Configuration for the Avocado test-runner.
+-  Used by ``make check`` et al.
+ - ``Makefile`` provides some common testing/installation invocations.
+   Try ``make help`` to see available targets.
+ - ``MANIFEST.in`` is read by python setuptools, it specifies additional files
+diff --git a/python/avocado.cfg b/python/avocado.cfg
+deleted file mode 100644
+index a4604200594..00000000000
+--- a/python/avocado.cfg
++++ /dev/null
+@@ -1,13 +0,0 @@
+-[run]
+-test_runner = nrunner
+-
+-[simpletests]
+-# Don't show stdout/stderr in the test *summary*
+-status.failure_fields = ['status']
+-
+-[job]
+-# Don't show the full debug.log output; only select stdout/stderr.
+-output.testlogs.logfiles = ['stdout', 'stderr']
+-
+-# Show full stdout/stderr only on tests that FAIL
+-output.testlogs.statuses = ['FAIL']
+diff --git a/python/setup.cfg b/python/setup.cfg
+index 03344526730..e5bf498f0e1 100644
+--- a/python/setup.cfg
++++ b/python/setup.cfg
+@@ -35,7 +35,6 @@ install_requires =
+ [options.extras_require]
+ # Remember to update tests/minreqs.txt if changing anything below:
+ devel =
+-    avocado-framework >= 90.0
+     distlib >= 0.3.6
+     flake8 >= 5.0.4
+     fusepy >= 2.0.4
+diff --git a/python/tests/flake8.sh b/python/tests/flake8.sh
+deleted file mode 100755
+index e0136996453..00000000000
+--- a/python/tests/flake8.sh
++++ /dev/null
+@@ -1,3 +0,0 @@
+-#!/bin/sh -e
+-python3 -m flake8 qemu/
+-python3 -m flake8 scripts/
+diff --git a/python/tests/iotests-mypy.sh b/python/tests/iotests-mypy.sh
+deleted file mode 100755
+index ee764708199..00000000000
+--- a/python/tests/iotests-mypy.sh
++++ /dev/null
+@@ -1,4 +0,0 @@
+-#!/bin/sh -e
+-
+-cd ../tests/qemu-iotests/
+-python3 -m linters --mypy
+diff --git a/python/tests/iotests-pylint.sh b/python/tests/iotests-pylint.sh
+deleted file mode 100755
+index 33c5ae900a5..00000000000
+--- a/python/tests/iotests-pylint.sh
++++ /dev/null
+@@ -1,5 +0,0 @@
+-#!/bin/sh -e
+-
+-cd ../tests/qemu-iotests/
+-# See commit message for environment variable explainer.
+-SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m linters --pylint
+diff --git a/python/tests/isort.sh b/python/tests/isort.sh
+deleted file mode 100755
+index 66c2f7df0fd..00000000000
+--- a/python/tests/isort.sh
++++ /dev/null
+@@ -1,3 +0,0 @@
+-#!/bin/sh -e
+-python3 -m isort -c qemu/
+-python3 -m isort -c scripts/
+diff --git a/python/tests/minreqs.txt b/python/tests/minreqs.txt
+index 19912027076..05c3bdb89f8 100644
+--- a/python/tests/minreqs.txt
++++ b/python/tests/minreqs.txt
+@@ -31,7 +31,6 @@ distlib==0.3.6
+ fusepy==2.0.4
+ 
+ # Test-runners, utilities, etc.
+-avocado-framework==90.0
+ pytest==6.0.2
+ 
+ # Linters
+diff --git a/python/tests/mypy.sh b/python/tests/mypy.sh
+deleted file mode 100755
+index a33a3f58ab3..00000000000
+--- a/python/tests/mypy.sh
++++ /dev/null
+@@ -1,3 +0,0 @@
+-#!/bin/sh -e
+-python3 -m mypy -p qemu
+-python3 -m mypy scripts/
+diff --git a/python/tests/pylint.sh b/python/tests/pylint.sh
+deleted file mode 100755
+index 2b68da90df7..00000000000
+--- a/python/tests/pylint.sh
++++ /dev/null
+@@ -1,4 +0,0 @@
+-#!/bin/sh -e
+-# See commit message for environment variable explainer.
+-SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint qemu/
+-SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint scripts/
+diff --git a/python/tests/qapi-flake8.sh b/python/tests/qapi-flake8.sh
+deleted file mode 100755
+index c69f9ea2e00..00000000000
+--- a/python/tests/qapi-flake8.sh
++++ /dev/null
+@@ -1,6 +0,0 @@
+-#!/bin/sh -e
+-# SPDX-License-Identifier: GPL-2.0-or-later
+-
+-python3 -m flake8 ../scripts/qapi/ \
+-        ../docs/sphinx/qapidoc.py \
+-        ../docs/sphinx/qapi_domain.py
+diff --git a/python/tests/qapi-isort.sh b/python/tests/qapi-isort.sh
+deleted file mode 100755
+index 067c16d5d94..00000000000
+--- a/python/tests/qapi-isort.sh
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#!/bin/sh -e
+-# SPDX-License-Identifier: GPL-2.0-or-later
+-
+-python3 -m isort --sp . -c ../scripts/qapi/
+-# Force isort to recognize "compat" as a local module and not third-party
+-python3 -m isort --sp . -c -p compat \
+-        ../docs/sphinx/qapi_domain.py \
+-        ../docs/sphinx/qapidoc.py
+diff --git a/python/tests/qapi-mypy.sh b/python/tests/qapi-mypy.sh
+deleted file mode 100755
+index 363dbaf8c06..00000000000
+--- a/python/tests/qapi-mypy.sh
++++ /dev/null
+@@ -1,4 +0,0 @@
+-#!/bin/sh -e
+-# SPDX-License-Identifier: GPL-2.0-or-later
+-
+-python3 -m mypy ../scripts/qapi
+diff --git a/python/tests/qapi-pylint.sh b/python/tests/qapi-pylint.sh
+deleted file mode 100755
+index 8767d9d2a2d..00000000000
+--- a/python/tests/qapi-pylint.sh
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#!/bin/sh -e
+-# SPDX-License-Identifier: GPL-2.0-or-later
+-
+-SETUPTOOLS_USE_DISTUTILS=stdlib python3 -m pylint \
+-                                --rcfile=../scripts/qapi/pylintrc \
+-                                ../scripts/qapi/ \
+-                                ../docs/sphinx/qapidoc.py \
+-                                ../docs/sphinx/qapi_domain.py
+-- 
+2.53.0
 
 
