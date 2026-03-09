@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E57A2F3C260
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:33:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99ECBF3C24E
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:34:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzajN-0006t5-Mm; Mon, 09 Mar 2026 09:33:09 -0400
+	id 1vzakd-0007W2-VC; Mon, 09 Mar 2026 09:34:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzajM-0006sA-8h
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:33:08 -0400
-Received: from mgamail.intel.com ([192.198.163.15])
+ id 1vzakW-0007V9-Bl
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:34:20 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzajK-0003cf-C5
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:33:08 -0400
+ id 1vzakU-0003po-KT
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:34:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773063186; x=1804599186;
+ t=1773063259; x=1804599259;
  h=date:from:to:cc:subject:message-id:references:
  mime-version:content-transfer-encoding:in-reply-to;
- bh=TwOPo2xU+wo6JHkAxZR3ET/P45lbHyonSTKmFVyud18=;
- b=RyxHpq/ZNf3ErRMWsy+mvqSimaJr2sr8SiDlzkSWr0vBktXrtbJmUtnP
- I6rkEqIh5zPK4jFLghkrYVZUiiueoPsipVgYqVk6jSR5Fqn/jK5bypkA+
- UUzznab5gs53A4P+s/EGH6dwqNxlmV3/EHl56UbgCZZQtDJ86H3HCJYDV
- G9DeK3FIOIVkGs7nl1B8y9OripMUmboSVI+XmfUcJ2vvGC8oLRkgAOokG
- knGDolPdm3anSSeg/i7XPR1JVJs3UsI48i5ON2h/9vmdkKq23kug5w+vE
- bn8O8mb/Hu0vSaWR8d9WF6y30ZtlGJpHBxR2fZJa6FKzDh2QYmUB7veEk A==;
-X-CSE-ConnectionGUID: SPkaKZuaR96IOLbj9yjEvw==
-X-CSE-MsgGUID: EMasAXnrQzKHD52/YIZxMQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11723"; a="74196027"
-X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="74196027"
-Received: from orviesa003.jf.intel.com ([10.64.159.143])
- by fmvoesa109.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2026 06:33:05 -0700
-X-CSE-ConnectionGUID: 4uhL1T7OR5esRq4lEOdNFQ==
-X-CSE-MsgGUID: B2v0VP5uSJqAD49PJLkiag==
+ bh=fHnOd4ptp2n2SS6b+dj489eQCBKnaY40Oa6fwRIO9gE=;
+ b=UVpFyMCGXdb7XJRv0leIyBBtpbzaX5Mx1kY0SCN0n1vz1goH31B1Mntr
+ 8X7Ngdh2bAvNNDwYbg0ReOwELB95SmbQZF6fq9qWrZhXdSSFMF3MEAVjM
+ 28HIIZ1lcnRiAFpvtAi/Na/VOoT8UVodV9Up2Qil6bqnHb1h/dQCz+Pux
+ 5ZAEeg6tpG18tJhF770uLh4F89z/+jvFn7fBNR/qfH2y7sIqGP517pJCi
+ vfPhtFXOLuIni6eMVxDbK7qPDmZxQOyafd65rCMmGmZCt2GY7fEgXRQOt
+ PxbMizYujxQMGdTkR0OB/LehylJAETRebXjRAad3/QR9un/TVgmZTonIg Q==;
+X-CSE-ConnectionGUID: p+mwHLk+SG6ayoivkaI/6A==
+X-CSE-MsgGUID: PbPqKVDOStib28BX/EnyUw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11723"; a="73784769"
+X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="73784769"
+Received: from orviesa007.jf.intel.com ([10.64.159.147])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2026 06:34:17 -0700
+X-CSE-ConnectionGUID: bFYIW+L0Q/CWDlm/mDSbvA==
+X-CSE-MsgGUID: 1GnliaQqQPOXpUFB1pz+Gg==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="223856843"
+X-IronPort-AV: E=Sophos;i="6.23,109,1770624000"; d="scan'208";a="219887558"
 Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
  ([10.239.160.39])
- by orviesa003.jf.intel.com with ESMTP; 09 Mar 2026 06:33:03 -0700
-Date: Mon, 9 Mar 2026 21:59:12 +0800
+ by orviesa007.jf.intel.com with ESMTP; 09 Mar 2026 06:34:14 -0700
+Date: Mon, 9 Mar 2026 22:00:24 +0800
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
@@ -55,17 +55,16 @@ Cc: qemu-devel@nongnu.org, "Michael S. Tsirkin" <mst@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>,
  Eduardo Habkost <eduardo@habkost.net>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-Subject: Re: [PATCH 1/4] hw/i386/pc: Remove deprecated pc-q35-3.0 and
- pc-i440fx-3.0 machines
-Message-ID: <aa7SMJu4AkZaryZC@intel.com>
+Subject: Re: [PATCH 2/4] hw/i386/pc: Remove pc_compat_3_0[] array
+Message-ID: <aa7SeHGv7y4E6cd8@intel.com>
 References: <20260307150042.78030-1-philmd@linaro.org>
- <20260307150042.78030-2-philmd@linaro.org>
+ <20260307150042.78030-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260307150042.78030-2-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.15; envelope-from=zhao1.liu@intel.com;
+In-Reply-To: <20260307150042.78030-3-philmd@linaro.org>
+Received-SPF: pass client-ip=198.175.65.20; envelope-from=zhao1.liu@intel.com;
  helo=mgamail.intel.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -90,23 +89,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, Mar 07, 2026 at 04:00:39PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Sat,  7 Mar 2026 16:00:39 +0100
+On Sat, Mar 07, 2026 at 04:00:40PM +0100, Philippe Mathieu-Daudé wrote:
+> Date: Sat,  7 Mar 2026 16:00:40 +0100
 > From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH 1/4] hw/i386/pc: Remove deprecated pc-q35-3.0 and
->  pc-i440fx-3.0 machines
+> Subject: [PATCH 2/4] hw/i386/pc: Remove pc_compat_3_0[] array
 > X-Mailer: git-send-email 2.52.0
 > 
-> These machines has been supported for a period of more than 6 years.
-> According to our versioned machine support policy (see commit
-> ce80c4fa6ff "docs: document special exception for machine type
-> deprecation & removal") they can now be removed.
+> The pc_compat_3_0[] array was only used by the pc-q35-3.0
+> and pc-i440fx-3.0 machines, which got removed. Remove it.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  hw/i386/pc_piix.c | 9 ---------
->  hw/i386/pc_q35.c  | 9 ---------
->  2 files changed, 18 deletions(-)
+>  include/hw/i386/pc.h | 3 ---
+>  hw/i386/pc.c         | 7 -------
+>  2 files changed, 10 deletions(-)
 
 Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 
