@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66490EA8554
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 04:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28CF6EA8553
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 05:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzSfC-0000Io-7N; Mon, 09 Mar 2026 00:56:18 -0400
+	id 1vzSkh-0001vU-9t; Mon, 09 Mar 2026 01:01:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vzSfA-0000IH-F8
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 00:56:16 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1vzSkf-0001uw-4X
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 01:01:57 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1vzSf8-0006UP-M9
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 00:56:16 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-660b497acd1so7919703a12.0
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 21:56:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773032173; cv=none;
+ id 1vzSkd-0006p8-Ap
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 01:01:56 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-6618bc129acso4737819a12.2
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 22:01:53 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773032513; cv=none;
  d=google.com; s=arc-20240605;
- b=INg0G7Ok30CjQ/vGNff6A5Qzdy8f5n23dlSMqyZ6SZSzKhTmdp4cc27l/f15IPh0uo
- CYspgdlS0pZk/gd2wJPj40ZxVDbyL6qBOFUd6TT5HQb5v7f1HQa743vSnpI/i74QphJQ
- Z7QxamXtKXQ2RtyUw7N8JFJMJNRRpoDdDExHe9uS4ZTbnBJVwTHusSlrJT0bhAea5PB8
- xbXvb4FM8MGxWBNmK7KSyr/49T/pkV1nseEwOEAofdf0rPpA3JbYewx0+A+wSphFlj3w
- UTd+60V9w9Q0Rvn2YF+qloA3XqFzA6myKGR/E5Y0szOdoCn34MVJ86kcIMMrtA0Qw7sh
- mwlw==
+ b=at4NjVRjX3h37PeE7to210oeoyPRwyQ3VkspotleS1Fxf6g1ruzOD80TIfyj1pz2zi
+ AtBdsJjl4TGVp8yi6g4UOOsZXFDdyiCesebuqjxd99Mtz3+tuyl5yIH5rLIZHcYt8myj
+ PXlLhUCGhghSJ+l4K7KW4gYaM2rh/A7feFwSJ6W1wY16o2KWiyPRlwWX/FArmvjpVraY
+ NJKbEP0pcU0iz5Mk4/YB4iNxNbiuRXsvbDxWaP3+XojydRt33YkRCpFn/A/VkK34Qc1x
+ BNunri6cm/Q+mWyOhw7prhsjahUpKbFCNNTEHalTnP3XXGyHyB8q/MgusDAY8NCbF7tn
+ pruw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=x4SLxFLdp3FxOZeOLCCESkY6DOHUDpGMvCQs6+IU7f0=;
+ bh=Ril4rw2jBsjZpsT7O08dRm4Do/tIwXd4+g/CdjtDRXk=;
  fh=XErS4XjkAQDBkClscxjQUC7TY1MVaIkgq5whaEGujtU=;
- b=ViSBeuxe1oTGkhob6Yjw9wgpV7XUjte1aoxyCq3b40WNK9AKoN2q56Ztfj9eBuNiQi
- aggCkey+lCKdGXYUAjqeA76sIk6k9GJVcsFnDmyq+2QpXIUbxuSxoXrTtvmxRO1PCsa1
- kfnX7qqge63easRPoOkoHuk/Y+2r02rtMY2UNd4ud4O3c69GU8hi6Th0dQ5VCFc/pGWy
- 9Jqyi2XbJLtVVFNZgajTp7IhKPimhpiifmKsq5UkjcpRdsOU6WeWuuBIlEcIuNagr6+W
- /c/2xq4eZwgCD8vFZJllu+H7p28EoC2jeJ0b2ol2S7xJNoKl+SIir+3paxoIZjjGHnG2
- 2oLA==; darn=nongnu.org
+ b=dqtMcA4D4ztwW8y7ozMzyPrw9jGYH6x50sPElByo1ohbDt2qxjXaPY+p5EOmuP7E+h
+ nN3dMzx/xHrxVqi48B2MRJjcKaUBGw6MCf+L1tiDBC9a/ELIPAVnm3RH5D+LbwfsmC/N
+ eO7u8Qrw/hTJahCePLJv7yjb4tzHd5O37RG+TXcWOiJOiVzyjBBE/QKphtFFMaPFHN2P
+ Fyhjx4NRJYviIDMKpkIALaBUIfhoaxBSagVj9MmJCjFkQQlflLM4XUmEuGTuv1I6Ilk8
+ Qejj2yC3v/i2OkmqhrWjQE6DYE1U4DZ3F7rBW2SGQX3rewusTuSyF3TNKR0UgCHAwGWq
+ opfA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773032173; x=1773636973; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773032512; x=1773637312; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=x4SLxFLdp3FxOZeOLCCESkY6DOHUDpGMvCQs6+IU7f0=;
- b=gS6b4zz9WbOoPp+OCoZvvcm6iebE8iJFASTnXNUSHDujm80Ol6hADMx7M2VwdqWcPZ
- jt2iRouHkVOjGFdSfNvsRC16ihUe1gKn3fBC0992IlBW0YqEv7+kRrI5ew+DwFSAO0K4
- TM+/NXCeVUI2lfELaQLGgWWpb0fwJin0vXnnLk/kXnbv1Ubx2H10i/mdMucbc6Hv3tPw
- eJ9aDHIbfHPAoK/bj+RzsmMKdTLOqB7yaNNi2u8+NuSH+jWEQ4Q+kN/jeweuJ1SC2t1O
- NINd/XGCCZEgo5LvGkn90nZeHzEWAHheD/24NZNGXTbsEq9eHDndwh6ss3hR9DZklSw4
- Eu1w==
+ bh=Ril4rw2jBsjZpsT7O08dRm4Do/tIwXd4+g/CdjtDRXk=;
+ b=hPSgR8GzxNMZtA55m7g6Jik/dlcBF251l/aDfIIqVdLP3KWEbzqy4OkURTSpALaYjQ
+ 1QrlYkDZW++xMzvjenl3Ci5gWzPQAnheSa27mI7j3X/ZbKVpp9POFb8ufJxQKURxCm35
+ GaC5RdwacBe7YYcE3VV818Nc+QRkcsK+LniFjrWo3IOOdrGPP3SNDx6h3Njstw/EHkvI
+ iD55oKkzP8TIhGIlJKksYljCQ7p+NM8n9nhDDBvoFzMblnsKnjpgUDw4R3l+fKTJ87sE
+ DjZVa8GVXjP3JBmRRm2WynYIKYauvssVBQtYzYnq9X9OP0v4p8Jbo2BsQrt++WBcl2KH
+ LCIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773032173; x=1773636973;
+ d=1e100.net; s=20230601; t=1773032512; x=1773637312;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=x4SLxFLdp3FxOZeOLCCESkY6DOHUDpGMvCQs6+IU7f0=;
- b=CnxPxB3On+6+7mmW/Fy7qCDIRwbfqAsEzERIveZ/N40y4//+TbxC7GrTnhqN0Sv96C
- kzKgruWWroWQ+pNxkC02OISBVvGiBhu6HDujD+9Pn2jiHm50h8h6o5VdcI6zinNaoo/T
- PN2cU0LJknFAD8RImDavPhdA5QIATojOjd5TgdVejPVWgDudCQYsTDYnqnN2cy5WAte4
- u4sg2X7RSLLq+/lVkuQK9zz4R9+N5ujMDp3kKlwTpkm7C3d2o0P0mM9zhHs5iv1g9wpw
- NI05Yx73SNBCG4BkF3lDJUa9igovSrb5hJbbJZegqpd+S7pMKgTdLngolPdEeBiR8yqz
- gW6A==
-X-Gm-Message-State: AOJu0YyLlo4Alkq0c6JgbxXUDkC4x9f9Jzf2WPI8vnSz1Do21RB6rXCh
- 2ZkoEA84zYKAZz5vKl2Uv/y/LduS8V8Q5DfvucZxY4+nHS/0SbNit/U0jilNSsyv6Gb4q+k4c1s
- fp3Fz2Cm2WwgZ2/DIHIG3WcquIOuwyBU=
-X-Gm-Gg: ATEYQzy8Z+Yb6wxt8H1rqsJ87Z64CbQH6e3ey/dU6vNOiV92ouCIHnOyEhYOSZMQ44C
- CR9GnRUG2Wo5rJr620tEEtOVef9BVMJziy3kTygRUl0VfgACmjRFpjjPKB0wDK1jd/LLRvHdrHL
- mgd1ohR7miXDdEzyibseySCApKU4/zYnzaow6fvJ1kRhkq7Npc1fQ0xwEPO16tncl/j3oFrI+YK
- f6TvBQzsqMexoZstR8gjj979l5P61C8iTR1m7c6fv+1Y5zxxjvAuXTQhdybwse8UDLsHz/2LIsr
- YLG1PmdtiEdz8d5Zis23rS6jOv5gkAuUADnOjw==
-X-Received: by 2002:a05:6402:f12:b0:658:d1b0:9970 with SMTP id
- 4fb4d7f45d1cf-6619d45a0edmr3335571a12.5.1773032172542; Sun, 08 Mar 2026
- 21:56:12 -0700 (PDT)
+ bh=Ril4rw2jBsjZpsT7O08dRm4Do/tIwXd4+g/CdjtDRXk=;
+ b=vgjj2aADrpordoMw5gZ96CH/Y6FcrVHG1F6nJS9QmL88qp1bUJdF/eG/d4MpTSC8uO
+ iEsbFJqI/HeV6qEC5yjjL6HoEroUW/EdNId5C5zG1kyB7ZzEhxqjFbMMFSCcOJueIjGc
+ SrNZ2pJwn8ZXR2e7nr8GkqxgZyIXRRuvfgavy8Tx0Lcx881axlZvlz6MmAtasNJvZkFR
+ 345+Y3xuJWAc5FNuoUTD7n3zEjp17A6sb8nPDfUwpyG7hQzzAfPNGMb2is2B89kAGd37
+ fgJ8zDQ7kQo5khGA4UmKxCjAdghLJ7I4tbXacb//0xxPs808w1uU7ru7YqUw+xNhmGE4
+ K84Q==
+X-Gm-Message-State: AOJu0YxLKsi3Mz8U335Mdgszrg58S/tjqOWlhvb0nT2eiV+7dnZZzrHW
+ agK3+a/Oh/EbwHcONs/riRIBLW7qydpsdcQFbUr+D7BQaOy0Bvn76O2soS92Ed6L6f1GW+2eSf7
+ 3otQtdAVd/FDZk3/h/aLU5tEiyd+aSdI=
+X-Gm-Gg: ATEYQzwntDFWs9AeC0q3VP6j0XOk20gI6iJjBWhBLMl/qdSjTx6dhApLTaY0DrXjuFl
+ YITCbXmZpMLff+3ZgRYnU8bkGgiWvBrN9wSbbIWMpwJytbUIBwoyM1qHW1ZofcpKuGJ5P3LgLaR
+ EpbVYhYbjAGNgPDfv18EcFZKCbUYLFj+73RZe96rePIg7uw9LE6B7Or63N616qzYCB9SFYESRoz
+ fk/r5cUlJq7TTO37ZHqOBJt86adEH99iWAlvfXmJJjQNK10nAeTgUp0AmINu4EIrKsfuzCMGzWK
+ EEm9vKD6Rc/hU/nhF4UXdj0TUIYeZE0rl5pcHg==
+X-Received: by 2002:a05:6402:5419:b0:662:863f:59e1 with SMTP id
+ 4fb4d7f45d1cf-662863f5b9amr260235a12.23.1773032512449; Sun, 08 Mar 2026
+ 22:01:52 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260306071105.3328365-1-max.chou@sifive.com>
- <20260306071105.3328365-5-max.chou@sifive.com>
-In-Reply-To: <20260306071105.3328365-5-max.chou@sifive.com>
+ <20260306071105.3328365-6-max.chou@sifive.com>
+In-Reply-To: <20260306071105.3328365-6-max.chou@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Mon, 9 Mar 2026 14:55:46 +1000
-X-Gm-Features: AaiRm50_u4gmYIKQh3BeqEVxKIRP2bs6zMkfPEnI-jlDh5QjPQP18_6e3mD-vUA
-Message-ID: <CAKmqyKPCuey3R-9oSNWQGyGMtTrG=bKy9QMDjCMet_vhAjNrrA@mail.gmail.com>
-Subject: Re: [PATCH v5 4/9] target/riscv: rvv: Introduce reset_ill_vtype to
- reset illegal vtype CSR
+Date: Mon, 9 Mar 2026 15:01:26 +1000
+X-Gm-Features: AaiRm52bxTnL5rkgzYwVOprXYhbqFNz9T96_6WmkkCAb8-y-etHfwx8vzBoTcuM
+Message-ID: <CAKmqyKM-mu7+gtFRK+G94szLFUDdxGaz4zxW7-bW2L5y0Kn2hw@mail.gmail.com>
+Subject: Re: [PATCH v5 5/9] target/riscv: Use the tb->cs_base as the extend tb
+ flags
 To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -99,8 +99,8 @@ Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
  Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -108,7 +108,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,69 +127,102 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On Fri, Mar 6, 2026 at 5:13=E2=80=AFPM Max Chou <max.chou@sifive.com> wrote=
 :
 >
-> Replace the same vill reset flow by reset_ill_vtype function.
+> We have more than 32-bits worth of state per TB, so use the
+> tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
 >
 > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 > Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 > Signed-off-by: Max Chou <max.chou@sifive.com>
+> ---
+>  include/exec/translation-block.h | 1 +
+>  target/riscv/cpu.h               | 3 +++
+>  target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
+>  3 files changed, 10 insertions(+), 1 deletion(-)
+>
+> diff --git a/include/exec/translation-block.h b/include/exec/translation-=
+block.h
+> index 4f83d5bec9..40cc699031 100644
+> --- a/include/exec/translation-block.h
+> +++ b/include/exec/translation-block.h
+> @@ -65,6 +65,7 @@ struct TranslationBlock {
+>       * arm: an extension of tb->flags,
+>       * s390x: instruction data for EXECUTE,
+>       * sparc: the next pc of the instruction queue (for delay slots).
+> +     * riscv: an extension of tb->flags,
+>       */
+>      uint64_t cs_base;
+>
+> diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
+> index 962cc45073..4c0676ed53 100644
+> --- a/target/riscv/cpu.h
+> +++ b/target/riscv/cpu.h
+> @@ -703,6 +703,9 @@ FIELD(TB_FLAGS, BCFI_ENABLED, 28, 1)
+>  FIELD(TB_FLAGS, PM_PMM, 29, 2)
+>  FIELD(TB_FLAGS, PM_SIGNEXTEND, 31, 1)
+>
+> +FIELD(EXT_TB_FLAGS, MISA_EXT, 0, 32)
+> +FIELD(EXT_TB_FLAGS, ALTFMT, 32, 1)
+> +
+>  #ifdef TARGET_RISCV32
+>  #define riscv_cpu_mxl(env)  ((void)(env), MXL_RV32)
+>  #else
+> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
+> index 720ff0c2a3..378b298886 100644
+> --- a/target/riscv/tcg/tcg-cpu.c
+> +++ b/target/riscv/tcg/tcg-cpu.c
+> @@ -104,6 +104,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
+*cs)
+>      RISCVCPU *cpu =3D env_archcpu(env);
+>      RISCVExtStatus fs, vs;
+>      uint32_t flags =3D 0;
+> +    uint64_t ext_flags =3D 0;
+>      bool pm_signext =3D riscv_cpu_virt_mem_enabled(env);
+>
+>      if (cpu->cfg.ext_zve32x) {
+> @@ -118,6 +119,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
+*cs)
+>
+>          /* lmul encoded as in DisasContext::lmul */
+>          int8_t lmul =3D sextract32(FIELD_EX64(env->vtype, VTYPE, VLMUL),=
+ 0, 3);
+> +        uint8_t altfmt =3D FIELD_EX64(env->vtype, VTYPE, ALTFMT);
+>          uint32_t vsew =3D FIELD_EX64(env->vtype, VTYPE, VSEW);
+>          uint32_t vlmax =3D vext_get_vlmax(cpu->cfg.vlenb, vsew, lmul);
+>          uint32_t maxsz =3D vlmax << vsew;
+> @@ -133,6 +135,7 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUState =
+*cs)
+>          flags =3D FIELD_DP32(flags, TB_FLAGS, VMA,
+>                             FIELD_EX64(env->vtype, VTYPE, VMA));
+>          flags =3D FIELD_DP32(flags, TB_FLAGS, VSTART_EQ_ZERO, env->vstar=
+t =3D=3D 0);
+> +        ext_flags =3D FIELD_DP64(ext_flags, EXT_TB_FLAGS, ALTFMT, altfmt=
+);
+>      } else {
+>          flags =3D FIELD_DP32(flags, TB_FLAGS, VILL, 1);
+>      }
+> @@ -189,10 +192,12 @@ static TCGTBCPUState riscv_get_tb_cpu_state(CPUStat=
+e *cs)
+>      flags =3D FIELD_DP32(flags, TB_FLAGS, PM_PMM, riscv_pm_get_pmm(env))=
+;
+>      flags =3D FIELD_DP32(flags, TB_FLAGS, PM_SIGNEXTEND, pm_signext);
+>
+> +    ext_flags =3D FIELD_DP64(ext_flags, EXT_TB_FLAGS, MISA_EXT, env->mis=
+a_ext);
+> +
+>      return (TCGTBCPUState){
+>          .pc =3D env->xl =3D=3D MXL_RV32 ? env->pc & UINT32_MAX : env->pc=
+,
+>          .flags =3D flags,
+> -        .cs_base =3D env->misa_ext,
+> +        .cs_base =3D ext_flags,
 
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+We need to update the comment in `struct TranslationBlock` for
+`target_ulong cs_base`
 
 Alistair
 
-> ---
->  target/riscv/vector_helper.c | 21 +++++++++++----------
->  1 file changed, 11 insertions(+), 10 deletions(-)
->
-> diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-> index 7575e24084..b7105627ed 100644
-> --- a/target/riscv/vector_helper.c
-> +++ b/target/riscv/vector_helper.c
-> @@ -49,6 +49,15 @@ static target_ulong vtype_reserved(CPURISCVState *env,=
- target_ulong vtype)
->      return reserved;
+>      };
 >  }
->
-> +static inline void reset_ill_vtype(CPURISCVState *env)
-> +{
-> +    /* only set vill bit. */
-> +    env->vill =3D 1;
-> +    env->vtype =3D 0;
-> +    env->vl =3D 0;
-> +    env->vstart =3D 0;
-> +}
-> +
->  target_ulong HELPER(vsetvl)(CPURISCVState *env, target_ulong s1,
->                              target_ulong s2, target_ulong x0)
->  {
-> @@ -93,11 +102,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, targe=
-t_ulong s1,
->      }
->
->      if ((sew > cpu->cfg.elen) || vill || (vtype_reserved(env, s2) !=3D 0=
-)) {
-> -        /* only set vill bit. */
-> -        env->vill =3D 1;
-> -        env->vtype =3D 0;
-> -        env->vl =3D 0;
-> -        env->vstart =3D 0;
-> +        reset_ill_vtype(env);
->          return 0;
->      }
->
-> @@ -113,11 +118,7 @@ target_ulong HELPER(vsetvl)(CPURISCVState *env, targ=
-et_ulong s1,
->      }
->
->      if (cpu->cfg.rvv_vsetvl_x0_vill && x0 && (env->vl !=3D vl)) {
-> -        /* only set vill bit. */
-> -        env->vill =3D 1;
-> -        env->vtype =3D 0;
-> -        env->vl =3D 0;
-> -        env->vstart =3D 0;
-> +        reset_ill_vtype(env);
->          return 0;
->      }
 >
 > --
 > 2.52.0
