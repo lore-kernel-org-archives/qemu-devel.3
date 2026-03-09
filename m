@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2BDE5EF36E8
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 06:45:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F768EF36E6
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 06:45:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzUMG-0007vI-8P; Mon, 09 Mar 2026 02:44:52 -0400
+	id 1vzUMH-0007vM-UY; Mon, 09 Mar 2026 02:44:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vzUMC-0007uk-RG
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:44:50 -0400
-Received: from mail-ua1-x933.google.com ([2607:f8b0:4864:20::933])
+ id 1vzUMF-0007v1-Vk
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:44:51 -0400
+Received: from mail-vk1-xa2f.google.com ([2607:f8b0:4864:20::a2f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <edgar.iglesias@gmail.com>)
- id 1vzUMB-00026z-CQ
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:44:48 -0400
-Received: by mail-ua1-x933.google.com with SMTP id
- a1e0cc1a2514c-94b07fddecbso7379508241.1
- for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 23:44:47 -0700 (PDT)
+ id 1vzUME-000278-Co
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 02:44:51 -0400
+Received: by mail-vk1-xa2f.google.com with SMTP id
+ 71dfb90a1353d-56a9076813bso4437611e0c.3
+ for <qemu-devel@nongnu.org>; Sun, 08 Mar 2026 23:44:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773038686; x=1773643486; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773038689; x=1773643489; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xgO9zG7fMna9CoPh8ghnxcTLAQlMFEOZkqL0utLfYyE=;
- b=L3SeXvQPSYzYdzb+p1OXEOxFilPMnHCNVvbywwoRZKKVgwiZrqKdAWN3WbDAa/CEFH
- sqdVDud3zxW0yD9/fof22THDyV/GfCIwGJTJOZStFszAF9Fkm3Z73ZQaMusLj6kYWnbs
- J8S7Px4TTd/ttowCgMOSaeWKtZ3YnIjeM0hjQEaytj3/PlD8VYrKJN9dXUttdo8IvnYJ
- yr26ntK821RAUE96n9pCW6CGA7BwJ7i647wFrxrCmdPTdugnqbdZqq8fFem5psENvzgN
- CTWYI3GdpvXb+tp5Y6qhtwNi9M4jVi3hbXM8UU4r54W1fltXUsj5oV49iwqUxualZUHC
- rTAQ==
+ bh=a2tMEsPmEaiHyXknwk29SjcZVAaayzKi1p57s2lEHB0=;
+ b=XmqA6fo/4c1uVD1d70si61mKP9HXkueuObtL6Qv0v1rTV5ppEiGeOp+KVdgEfhFWNL
+ H/YD5KPrY/c3eiRxFCwqvqXniGA0wM7+57ywu8TaDqDIirU57oWov3jo6FEl0QXzDt1U
+ qk/jmKU2wtR/L62SVG/SWdxcWAklpnTLtkGhNL4KUn+dje6n7VkNnR3FTWcwhOS27TnS
+ 3gDxVc6C8WpzQzenhcS9Jx2fnnzvb4hpevckjj9qgBUZY3DVLjNd1+aUJjXZhHxFPFMB
+ zC9Om5Yt55tLKNBcPLACVeK0XmwjHmZR4yMQKKt0Oc9InoeJWd/s8MiiWEqDBPOzfK2O
+ Xrqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773038686; x=1773643486;
+ d=1e100.net; s=20230601; t=1773038689; x=1773643489;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xgO9zG7fMna9CoPh8ghnxcTLAQlMFEOZkqL0utLfYyE=;
- b=jbLh80UVCw1kF+gE6Y32jRTrNmIz1Renf/6LO88D8xk3GrXCYGrpWAVou5Ucnur1Kw
- nk3KaOs8K40U8ou5Ww81WukKpgEtaLwdS3fuM/fJWvicwRYth4R3glU7c9aowX83CYOW
- aSskqRCqzx0UMyfZlj5oDqVVUiLUBiOeLQSNwgeo45URM4iSI9HPtspMlLFGog8TdB4D
- W/SGEszeVuV2nbep9AWCVx6bgYIJv1odO6tMItq6t5KcK6wKURrAesJfjU8hgPTGzHyi
- OFDetaibvWqBIflZz83qXyIj2kuYFG/H7lcllAFPVNeYtC65IwFaySGisgN3orD6dewM
- F8hw==
-X-Gm-Message-State: AOJu0YzV5d+5ZrfFoc3r320/pTL+SrmnGglAbaeJ9zPBN2l82z8InFAp
- rBlsET5ker8hMg35kitf+QrQjuZA6GsLNIynU1cN5R6Rts+jW/wknjfHH8RUOmg9
-X-Gm-Gg: ATEYQzxaP+LD4wbfBxhCIT/W9/kvH/ERHc/ZCGmkGnmuiCEfmivYYuHk+0oVoiXNDm8
- 1vhJUdCGNJ/jtAlfs0NSzDbueeUt2JsCXIuJhFXSCnD2Ci7EGFFW22Y6LCER/CPO2jEAHCiLbr+
- WaGey6Yqc8dYWUD1SJttcFqWee3cE8Wa1rgnXYiSw5InI+JiqZKP3BfECLe+JN9lB9G2m7q+QTj
- 7vZ93REwfq8CU8cEBvBZ4X1A1Z+IwZ0jI9Y5FyfCjrXCTtR0e5heVEH/789o7S5QXZfd3n9E2Xd
- JFDVjhEzOOk+ejcTVkd7bQIJLy6FAuUzccEre8yd0SPZj/Io5O67jN348n5l3xragaEDEdySN2K
- QRy/Driwk2lW9ndIGBkd1fDBlj1uEPUZj+3MMnVcYyzm07HqCSLhHu+xAMTpTgt6i0m2KqEjVHn
- HyPCbYdpKdIIEvrZd1ihFTIAnFVJjKVgGXU748P48SY7jvGcSTcVW3AI4xY7yAEGNyA21v
-X-Received: by 2002:a05:6102:c86:b0:5ff:a606:3cfc with SMTP id
- ada2fe7eead31-5ffe61248dfmr4759508137.21.1773038685979; 
- Sun, 08 Mar 2026 23:44:45 -0700 (PDT)
+ bh=a2tMEsPmEaiHyXknwk29SjcZVAaayzKi1p57s2lEHB0=;
+ b=otOVmhPlFRHeUQ2ywWM4Fo0Z0oGq/rap/ohh+BnhN2ofJ8w1A3Eq5oZWaYzQksijzc
+ TjW+yoAVeaUEO2B+D6xDMompIZnARGXM2dM4f2cxsVazpabf9EXrEH65/z9lXyECdZmK
+ dNLMIIjmUMSECxP+tds0eNYtXD+e2qxEcKimR+JzOU4ty4dVPgCcRLtAgGW57ths29UL
+ 0QSWBSMD/CE+U56aral2Mq0qei1oYjhbpJ+lG+Nsns1lnfLbh0dkwbg20NeN0ocCWxQQ
+ 1Q/rK759gtBR52SgCncwGNQcOhYP3R5fvtic4mG8yc54wrCWZs4ES9x+UOdkN2Vzf62S
+ UJdQ==
+X-Gm-Message-State: AOJu0Yw6xo/B/WcQWJGUFhl+KKydM1nsR4x8Adh04Fr+cw9ghUv/r5/L
+ XeWYKAs2sn67O7hocCWOQwiukXREjV0tQ3VFHnOUL2+gCh3LEQKJ+/3yllQaqyXQ
+X-Gm-Gg: ATEYQzz++sSXJuuLKN2b2Ri35FrynOCleom9mAel73rATVkJaXCM86clBBDLQ79zUMQ
+ WEXDTcY8ytKblKIVHBb0zUI7Mn/igTnRUrBGiqicJsLPAEH/E0YR3abBnQ8pr0fLW8hTeu/SLuI
+ leWb5FmvAcpJiJX3vDpe35FF6rN7ucxtsrc0XyYqDzlVlBdJ5B6EvrhYK94IwafUFFf0vmDbWV0
+ ORWHv3eoibgth59oBBeBzxpavUCijPFxow5MPFTfhSSeHvHJr04y0PNEWsh6p8D2EM2yObZpkYs
+ O/LYWgjcF1N5omko9Zvz+mOLKMzwOSF+uPV/Y+JYFUiJ0qBVtRNzyYAm4TU+35eiLdGmZCA3SB8
+ Z452rqXDVn+G1djTGPkRiAsd1Tdj0cyWF+2DoY7Ikr+GQza7zNpoQ+NH7OMHzTDmKe4lR1ioOhI
+ v4BZb6tECIwXWpVQaoBO/Z2nzw+83ZkwKjKxrIlbeQOz6UwMStxMHu4JTZSg==
+X-Received: by 2002:a05:6122:1350:b0:566:36e7:8934 with SMTP id
+ 71dfb90a1353d-56b07e8b7dcmr3378593e0c.16.1773038688827; 
+ Sun, 08 Mar 2026 23:44:48 -0700 (PDT)
 Received: from gmail.com (ip190-5-140-138.intercom.com.sv. [190.5.140.138])
  by smtp.gmail.com with ESMTPSA id
- ada2fe7eead31-5ffe8922cdfsm8333849137.5.2026.03.08.23.44.44
+ 71dfb90a1353d-56b09a2614fsm9529782e0c.7.2026.03.08.23.44.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 08 Mar 2026 23:44:44 -0700 (PDT)
+ Sun, 08 Mar 2026 23:44:47 -0700 (PDT)
 From: "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-To: qemu-devel@nongnu.org, Stefano Stabellini <sstabellini@kernel.org>,
- Anthony PERARD <anthony@xenproject.org>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
-Cc: edgar.iglesias@amd.com,
-	xen-devel@lists.xenproject.org
-Subject: [PULL v1 2/5] xen: mapcache: Add function to check if the mapcache is
- enabled
-Date: Mon,  9 Mar 2026 07:44:32 +0100
-Message-ID: <20260309064436.51860-3-edgar.iglesias@gmail.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Xu <peterx@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: sstabellini@kernel.org, anthony@xenproject.org, edgar.iglesias@amd.com,
+ xen-devel@lists.xenproject.org
+Subject: [PULL v1 3/5] physmem: xen: Conditionalize use of the mapcache
+Date: Mon,  9 Mar 2026 07:44:33 +0100
+Message-ID: <20260309064436.51860-4-edgar.iglesias@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260309064436.51860-1-edgar.iglesias@gmail.com>
 References: <20260309064436.51860-1-edgar.iglesias@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::933;
- envelope-from=edgar.iglesias@gmail.com; helo=mail-ua1-x933.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::a2f;
+ envelope-from=edgar.iglesias@gmail.com; helo=mail-vk1-xa2f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,62 +104,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: "Edgar E. Iglesias" <edgar.iglesias@amd.com>
 
-Add function to check if the mapcache is enabled.
-No functional change.
+Conditionalize use of the mapcache. This is in preparation
+to optionally disable the mapcache at runtime.
 
 Signed-off-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Acked-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Stefano Stabellini <sstabellini@kernel.org>
 ---
- hw/xen/xen-mapcache.c         | 6 ++++++
- hw/xen/xen_stubs.c            | 5 +++++
- include/system/xen-mapcache.h | 1 +
- 3 files changed, 12 insertions(+)
+ system/physmem.c | 14 ++++++++------
+ 1 file changed, 8 insertions(+), 6 deletions(-)
 
-diff --git a/hw/xen/xen-mapcache.c b/hw/xen/xen-mapcache.c
-index 517e5171b7..a3c162cd4c 100644
---- a/hw/xen/xen-mapcache.c
-+++ b/hw/xen/xen-mapcache.c
-@@ -80,6 +80,12 @@ static MapCache *mapcache_grants_ro;
- static MapCache *mapcache_grants_rw;
- static xengnttab_handle *xen_region_gnttabdev;
+diff --git a/system/physmem.c b/system/physmem.c
+index e5ff26acec..7eecd81877 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -578,7 +578,9 @@ MemoryRegion *flatview_translate(FlatView *fv, hwaddr addr, hwaddr *xlat,
+                                     is_write, true, &as, attrs);
+     mr = section.mr;
  
-+bool xen_map_cache_enabled(void)
-+{
-+    /* Map cache enabled implies xen_enabled().  */
-+    return xen_enabled() && mapcache;
-+}
-+
- static inline void mapcache_lock(MapCache *mc)
+-    if (xen_enabled() && memory_access_is_direct(mr, is_write, attrs)) {
++    if (xen_map_cache_enabled() &&
++        memory_access_is_direct(mr, is_write, attrs)) {
++        /* mapcache: Next page may be unmapped or in a different bucket/VA. */
+         hwaddr page = ((addr & TARGET_PAGE_MASK) + TARGET_PAGE_SIZE) - addr;
+         *plen = MIN(page, *plen);
+     }
+@@ -2577,7 +2579,7 @@ static void reclaim_ramblock(RAMBlock *block)
  {
-     qemu_mutex_lock(&mc->lock);
-diff --git a/hw/xen/xen_stubs.c b/hw/xen/xen_stubs.c
-index 5e565df392..a39efb5062 100644
---- a/hw/xen/xen_stubs.c
-+++ b/hw/xen/xen_stubs.c
-@@ -29,6 +29,11 @@ bool xen_mr_is_memory(MemoryRegion *mr)
-     g_assert_not_reached();
- }
+     if (block->flags & RAM_PREALLOC) {
+         ;
+-    } else if (xen_enabled()) {
++    } else if (xen_map_cache_enabled()) {
+         xen_invalidate_map_cache_entry(block->host);
+ #if !defined(_WIN32) && !defined(EMSCRIPTEN)
+     } else if (block->fd >= 0) {
+@@ -2736,7 +2738,7 @@ static void *qemu_ram_ptr_length(RAMBlock *block, ram_addr_t addr,
+         len = *size;
+     }
  
-+bool xen_map_cache_enabled(void)
-+{
-+    return false;
-+}
-+
- void xen_invalidate_map_cache_entry(uint8_t *buffer)
- {
-     g_assert_not_reached();
-diff --git a/include/system/xen-mapcache.h b/include/system/xen-mapcache.h
-index fa2cff38d1..c46190dd0c 100644
---- a/include/system/xen-mapcache.h
-+++ b/include/system/xen-mapcache.h
-@@ -13,6 +13,7 @@
+-    if (xen_enabled() && block->host == NULL) {
++    if (xen_map_cache_enabled() && block->host == NULL) {
+         /* We need to check if the requested address is in the RAM
+          * because we don't want to map the entire memory in QEMU.
+          * In that case just map the requested area.
+@@ -2785,7 +2787,7 @@ RAMBlock *qemu_ram_block_from_host(void *ptr, bool round_offset,
+     RAMBlock *block;
+     uint8_t *host = ptr;
  
- typedef hwaddr (*phys_offset_to_gaddr_t)(hwaddr phys_offset,
-                                          ram_addr_t size);
-+bool xen_map_cache_enabled(void);
- void xen_map_cache_init(phys_offset_to_gaddr_t f,
-                         void *opaque);
- uint8_t *xen_map_cache(MemoryRegion *mr, hwaddr phys_addr, hwaddr size,
+-    if (xen_enabled()) {
++    if (xen_map_cache_enabled()) {
+         ram_addr_t ram_addr;
+         RCU_READ_LOCK_GUARD();
+         ram_addr = xen_ram_addr_from_mapcache(ptr);
+@@ -3787,7 +3789,7 @@ void address_space_unmap(AddressSpace *as, void *buffer, hwaddr len,
+         if (is_write) {
+             invalidate_and_set_dirty(mr, addr1, access_len);
+         }
+-        if (xen_enabled()) {
++        if (xen_map_cache_enabled()) {
+             xen_invalidate_map_cache_entry(buffer);
+         }
+         memory_region_unref(mr);
+@@ -3898,7 +3900,7 @@ void address_space_cache_destroy(MemoryRegionCache *cache)
+         return;
+     }
+ 
+-    if (xen_enabled()) {
++    if (xen_map_cache_enabled()) {
+         xen_invalidate_map_cache_entry(cache->ptr);
+     }
+     memory_region_unref(cache->mrs.mr);
 -- 
 2.43.0
 
