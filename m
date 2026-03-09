@@ -4,107 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBEC7F3C24F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:21:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8DEDF3C24C
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 13:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzaXh-0002Ba-HF; Mon, 09 Mar 2026 09:21:05 -0400
+	id 1vzaXp-0002HH-8T; Mon, 09 Mar 2026 09:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzaXg-0002BC-DC
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:21:04 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzaXe-00025A-Np
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 09:21:04 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64c9f7576d4so8579313d50.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 06:21:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773062462; cv=none;
- d=google.com; s=arc-20240605;
- b=MkexSxbfQcpWmR3jO3ymPTsGtG3i8jWEaqDKI6+zYLo2f+FJZyVK75jPcgZDqgm3pX
- wup7ap+OBuTCTT5ujaHtrcn6GyiULT94I/cbia2Zd7QF/l7Oc7y6MqGIP8HVekLnic1a
- 5Uu7PbCJW3VTeDHb4AVlKuQTq2GMeXodntuzttZAQNXOlGwzdqIk4GAOoz2u58/M+hCg
- LpHxmyjx8FayfnoiXh0gg+4oB5Yqcw9mAfOLkYZ1UA34fULh/JZdtXM8kbTuZBUEsNHO
- 9uyWryQz4wbpvaUSJ3WcM1y2S/aj3Ubv6XWHZWRuQbfW3DemiSiBpnw+ds3a402+JJE7
- Wagg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=W2SJ5g1esPpiuxXYMFcA2YYU3D6Qrf7nK/bC9724DZU=;
- fh=uE2Jpq45LWWwPoKgXBdl3FXmpsIufb+Ea/ralj+9VsE=;
- b=Luw8Zs3KtHdcBI5bJ23Hu6wt+WyJyOA08I24421j1aOFzuQDHeIOT42CM8M2qyYtz8
- 3MlP0Eya1epYI3tKmSnzIz3mCMAwa9qmMs/+/mCp9MFK2UiFnoyq/hWP6gmYMOR8bM8t
- jP/oXPfHZmMms2yCWWsahAHCr2q1ywki73mr80nlnjyT3tkFb8ZygC86+QHboGzx0SDE
- K+H0pNClE0XNLCHefNbB0XRifJZuL5aaX4hicLL3JF/616ndSQKzywzGaF4A5ZdGJbSM
- kvdX5mc1X5FOPF/pUjIusup8WukCB7vjN0UXUY/ovastDqT+vKdkwZLM9nYZ7mQm3GfM
- gGYw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773062462; x=1773667262; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=W2SJ5g1esPpiuxXYMFcA2YYU3D6Qrf7nK/bC9724DZU=;
- b=F1rqFRdBfbzGLcygHUaAWY88GAE/xjK1+sZyD6q7CZHpezE3zPKsS/Kec2dw2nkDMx
- lGoUBOqaiB0eHJ67JkVEU8bxQ3Qb/+VvizloO9cXx1ymAOnOaZu4tsrWvAowcpe1xIsK
- o1KbkfiPWajHaXNAmj4zFamf2uBK1lOVskJMVYKrc3sgi+tldNQAdLLTh96PhTCBavEU
- CFKaMKtwpP/Mc6vMwm2afPr6eJhbrF/6Y3/iGCP6R5WaeWI6NRxPC6q1s4TaW0AbnpWU
- nic0XKg4iU4uP8umQcl/gGKVBLmxM6jN87ut0FNrbbuNksF1sGjae67lhmh1L1sAIC8A
- MPOw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773062462; x=1773667262;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=W2SJ5g1esPpiuxXYMFcA2YYU3D6Qrf7nK/bC9724DZU=;
- b=ozvYb9/3dmpJosmNA6hCu75gO/WSQD5G8Y3+jS6xMgbaSj11UNN77PETJHCXO8i+cE
- NE5ILY+RDcXvHZLSaRDV9XaGbav6aHF0HAC4tBlLxZ3A252A3ThfVbqIn7y2NZSmIYJM
- 04egQ2dN3xl1quWxf+FsLx608FO/y6OUQs7CARVElGrD/fD29lnStuL7STibL2B+Ny2s
- wrArxutXD/jGxtnPGvJFBDJM+KPTXpsy2h9pMkjXMCOUGwLFFP51rt3OGyWExnVsWRZq
- oI0MSdoHibk2JjVT+IC8Io0SqQHTLSNhbDC++D8H28tBoB3fuT4WQvYJ46Mheo9CJc4R
- PUqQ==
-X-Gm-Message-State: AOJu0YwNMp8lpmX+Z9hr1oxlYdhwZWbEDuH2q12WWbl6yAykpBL9KRDI
- 1+YmnBHuQDBE4UcWNZXoWv6qkxyuu3jFlSkHxkam1O27FIZpHShdfv82GLvHVY94ZaYu9KMdG6D
- keuAx0fmfzsY4byOZcmvbUqtI6c3X71rqXd+0JaJh4z4rn3LJ3TGd
-X-Gm-Gg: ATEYQzzR8LfCxnWaQHCB/hz8VRCWmtCeb2nT1MplJN84dadMtnpcA8RVYqJGUZaBNsl
- 2Yvj0M+KbOegf9fyZXDxuxL5rADZoZNbtrdz76GBwfAXlNuU0u/iftTERNE3/SA2g/N/KdzNOVv
- M1MN3XX/3OrPVLUL/gY3t4jNlSzXGrkynntx6NLqfrBWZey0Apg6XeMjU5eAMWj/jb3/ckwkysn
- IcprYmQ+kZ10lhpNDqdn2+XhXQVXJO3vEnfRlqLXYgaZbLTP942wgwujQ3YEthyCGrTwxIWGX9x
- lvosjk5Wrv4A+i8gVfushjJDNK/Df4UDuhgdWzvCwoNNLptlZHgFfLX7vuDFEjLgNPxnvCTv+C/
- usQ==
-X-Received: by 2002:a05:690e:1a9b:b0:64a:f160:2351 with SMTP id
- 956f58d0204a3-64d143500f8mr7424473d50.71.1773062461600; Mon, 09 Mar 2026
- 06:21:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vzaXn-0002E5-Pu; Mon, 09 Mar 2026 09:21:11 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1vzaXl-00025w-Q5; Mon, 09 Mar 2026 09:21:11 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629C1acx441791; Mon, 9 Mar 2026 13:21:07 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=CTkmkb
+ cjTtlDlvpdzibUD4subQGli6sdG9RDPIw5iKw=; b=HJ41KIxCRKHo5bBPpdrTz9
+ xS1dYY2RQV0O+EGMabzp/qN1nzlrTutihLcrvq5LhsLsbrsz1KxN+xLXZbaFqRsy
+ Jgebuad9P6/Eu8TwUKbURHPnl/+KT2+sUDnKXq3ruY7e1R3m6QjZ4nVKTp7kBuej
+ o95MtU0BQdaRfo0ga4US/l8U4gTZpIZD2DEhY5SWI/G8Y5c7815CEbpblqJxNgji
+ x/Emt9h9nftGRWh+FH1T38j/F2ecBUeN8QQsEeQ84GQpXv0fj4gtDrl8NtgXMr4+
+ +hkeeF4gWPMP9YQ9DgHq3dI1/NLsVzE//FePztKRfDDwi/EA/dFwKp8OTErLdTkQ
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1medvq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 13:21:07 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 629BDWIS015725;
+ Mon, 9 Mar 2026 13:21:06 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs121vsph-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 09 Mar 2026 13:21:06 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 629DL4K166781576
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 9 Mar 2026 13:21:04 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1601C58068;
+ Mon,  9 Mar 2026 13:21:04 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 714CE5805A;
+ Mon,  9 Mar 2026 13:21:03 +0000 (GMT)
+Received: from [9.61.138.24] (unknown [9.61.138.24])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon,  9 Mar 2026 13:21:03 +0000 (GMT)
+Message-ID: <d8e3959a-a206-4754-848f-e2d18f045e2d@linux.ibm.com>
+Date: Mon, 9 Mar 2026 09:21:03 -0400
 MIME-Version: 1.0
-References: <20260307180330.75168-1-mohamed@unpredictable.fr>
-In-Reply-To: <20260307180330.75168-1-mohamed@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 9 Mar 2026 13:20:50 +0000
-X-Gm-Features: AaiRm53FntFlLNVEeD568TyIkpDX-IhjEwguDOfdflqroS6dbGgUehVJJ1Qs04g
-Message-ID: <CAFEAcA9TSQEVEVeQc4rPtz4HEJJbZUs9LaeVbz-y3=tB9zv4EA@mail.gmail.com>
-Subject: Re: [PATCH v19 00/13] HVF: Add support for platform vGIC and nested
- virtualisation
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Roman Bolshakov <rbolshakov@ddn.com>, 
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Alexander Graf <agraf@csgraf.de>, 
- Phil Dennis-Jordan <phil@philjordan.eu>, qemu-arm@nongnu.org, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 08/15] pc-bios/s390-ccw: Introduce CLP Architecture
+To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
+ thuth@redhat.com, mst@redhat.com
+Cc: jjherne@linux.ibm.com, alifm@linux.ibm.com, farman@linux.ibm.com,
+ zycai@linux.ibm.com
+References: <20260309003601.242634-1-jrossi@linux.ibm.com>
+ <20260309003601.242634-9-jrossi@linux.ibm.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260309003601.242634-9-jrossi@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69aec943 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=20KFwNOVAAAA:8 a=eg3GhxO6QQJttQrM36AA:9 a=QEXdDO2ut3YA:10 a=O8hF6Hzn-FEA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzA5MDExOSBTYWx0ZWRfX8OAN+DfFPqtK
+ X/Llm/CYB7sm4ItpDeaG+7lEQ2HD/OLYoKL9GYYO3g3w2sDWYSq/6K+roldOrkJlN8U2vB1tDu0
+ PBuA4oU6bgVY1tcsaJm00pjKfkwxtTbYpve+nK2KDFrE4vDQcGxfKUPb1b4+PrOzHZ9TSk418WZ
+ AA6epttVgJcdZohs64BBAorl96YPfgbCjjlMR7qY3zuAD6Mr4X5eyNaHinYRSDnfpF9qHJfrpXK
+ 3EEqi4bzL5VxBsL3O0Ol3gKGKIr+YpTp098mD0M8//SXTGcnRFe1spjmThRawrlfrr2uNPsB3pI
+ CrLhfR/nT09AsRGMSzLijG6cQVj+1Y8MukgYlv1BJgrJi9DCiCIvjn9DFDPrJwhxLiQBZUf8vCZ
+ TqGX18PgUXMWhnqsle7mTxL0Aq1pSCHXzZ4Ai31sVwdU7EmNMZx+VudgFWkN1TKjSPUhlHwzvpm
+ Ydrs/zdzhThOtY4xFRw==
+X-Proofpoint-GUID: gEH9E2nOKjE2OHjPfBOxJfNlPxdoJao2
+X-Proofpoint-ORIG-GUID: gEH9E2nOKjE2OHjPfBOxJfNlPxdoJao2
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-09_03,2026-03-09_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603090119
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,28 +123,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sat, 7 Mar 2026 at 18:03, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
->
-> Link to branch: https://github.com/mediouni-m/qemu hvf-irqchip-and-nested
-> (tag for this submission: hvf-irqchip-and-nested-v19)
->
-> This series adds support for nested virtualisation when using HVF on arm64 Macs.
->
-> The first two patches are from the SME enablement series and are present for the
-> series to be buildable on its own.
->
-> It has two parts:
-> - Apple vGICv3 support and necessary infrastructure changes for it
-> - Nested virtualisation support. Note that the nested virtualisation implementation
-> shipping as of macOS 26.3 is nVHE only (but it _does_ use VNCR as shipped).
->
-> This series doesn't contain EL2 physical timer emulation, which is
-> needed if not leveraging the Apple vGIC. As such, nested virt requires kernel-irqchip=on.
+On 3/8/26 8:35 PM, jrossi@linux.ibm.com wrote:
+> From: Jared Rossi <jrossi@linux.ibm.com>
+> 
+> Call Logical Processor (CLP) Architecture is used for managing PCI functions on
+> s390x. Define and include the structures and routines needed to interact with
+> PCI devices during IPL.
+> 
+> Acked-by: Thomas Huth <thuth@redhat.com>
+> Reviewed-by: Eric Farman <farman@linux.ibm.com>
+> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
 
-Hi; I think at this point this series has unfortunately missed the
-softfreeze deadline for 11.0, and we should be aiming to get it in
-for early in the 11.1 cycle. I will keep it on my list to apply then.
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-thanks
--- PMM
+> ---
+>  pc-bios/s390-ccw/Makefile |  2 +-
+>  pc-bios/s390-ccw/clp.c    | 99 +++++++++++++++++++++++++++++++++++++++
+>  pc-bios/s390-ccw/clp.h    | 24 ++++++++++
+>  3 files changed, 124 insertions(+), 1 deletion(-)
+>  create mode 100644 pc-bios/s390-ccw/clp.c
+>  create mode 100644 pc-bios/s390-ccw/clp.h
+> 
+> diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
+> index 259cff09db..9c29548f84 100644
+> --- a/pc-bios/s390-ccw/Makefile
+> +++ b/pc-bios/s390-ccw/Makefile
+> @@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+>  
+>  OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
+>  	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
+> -	  virtio-ccw.o
+> +	  virtio-ccw.o clp.o
+>  
+>  SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+>  
+> diff --git a/pc-bios/s390-ccw/clp.c b/pc-bios/s390-ccw/clp.c
+> new file mode 100644
+> index 0000000000..8c04738bbf
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/clp.c
+> @@ -0,0 +1,99 @@
+> +/*
+> + * Call Logical Processor (CLP) architecture
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "clp.h"
+> +#include <stdio.h>
+> +#include <string.h>
+> +
+> +int clp_pci(void *data)
+> +{
+> +    struct { uint8_t _[CLP_BLK_SIZE]; } *req = data;
+> +    int cc = 3;
+> +
+> +    asm volatile (
+> +        "     .insn   rrf,0xb9a00000,0,%[req],0,2\n"
+> +        "     ipm     %[cc]\n"
+> +        "     srl     %[cc],28\n"
+> +        : [cc] "+d" (cc), "+m" (*req)
+> +        : [req] "a" (req)
+> +        : "cc");
+> +    if (cc) {
+> +        printf("CLP returned with non-zero condition code %d\n", cc);
+> +    }
+> +    return cc;
+> +}
+> +
+> +/*
+> + * Get the PCI function entry for a given function ID
+> + * Return 0 on success, 1 if the FID is not found, or a negative RC on error
+> + */
+> +int find_pci_function(uint32_t fid, ClpFhListEntry *entry)
+> +{
+> +    int count = 0;
+> +    int limit = PCI_MAX_FUNCTIONS;
+> +    ClpReqRspListPci rrb;
+> +
+> +    rrb.request.hdr.len = sizeof(ClpReqListPci);
+> +    rrb.request.hdr.cmd = 0x02;
+> +    rrb.request.resume_token = 0;
+> +    rrb.response.hdr.len = sizeof(ClpRspListPci);
+> +
+> +    do {
+> +        if (clp_pci(&rrb) || rrb.response.hdr.rsp != 0x0010) {
+> +            puts("Failed to list PCI functions");
+> +            return -1;
+> +        }
+> +
+> +        /* Resume token set when max enteries are returned */
+> +        if (rrb.response.resume_token) {
+> +            count = CLP_FH_LIST_NR_ENTRIES;
+> +            rrb.request.resume_token = rrb.response.resume_token;
+> +        } else {
+> +            count = (rrb.response.hdr.len - 32) / sizeof(ClpFhListEntry);
+> +        }
+> +
+> +        limit -= count;
+> +
+> +        for (int i = 0; i < count; i++) {
+> +            if (rrb.response.fh_list[i].fid == fid) {
+> +                memcpy(entry, &rrb.response.fh_list[i], sizeof(ClpFhListEntry));
+> +                return 0;
+> +            }
+> +        }
+> +
+> +    } while (rrb.request.resume_token && limit > 0);
+> +
+> +    puts("No function entry found for FID!");
+> +
+> +    return 1;
+> +}
+> +
+> +/*
+> + * Enable the PCI function associated with a given handle
+> + * Return 0 on success or a negative RC on error
+> + */
+> +int enable_pci_function(uint32_t *fhandle)
+> +{
+> +    ClpReqRspSetPci rrb;
+> +
+> +    rrb.request.hdr.len = sizeof(ClpReqSetPci);
+> +    rrb.request.hdr.cmd = 0x05;
+> +    rrb.request.fh = *fhandle;
+> +    rrb.request.oc = 0;
+> +    rrb.request.ndas = 1;
+> +    rrb.response.hdr.len = sizeof(ClpRspSetPci);
+> +
+> +    if (clp_pci(&rrb) || rrb.response.hdr.rsp != 0x0010) {
+> +        puts("Failed to enable PCI function");
+> +        return -1;
+> +    }
+> +
+> +    *fhandle = rrb.response.fh;
+> +    return 0;
+> +}
+> diff --git a/pc-bios/s390-ccw/clp.h b/pc-bios/s390-ccw/clp.h
+> new file mode 100644
+> index 0000000000..1ac2f8c177
+> --- /dev/null
+> +++ b/pc-bios/s390-ccw/clp.h
+> @@ -0,0 +1,24 @@
+> +/*
+> + * Call Logical Processor (CLP) architecture definitions
+> + *
+> + * Copyright 2025 IBM Corp.
+> + * Author(s): Jared Rossi <jrossi@linux.ibm.com>
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef CLP_H
+> +#define CLP_H
+> +
+> +#ifndef QEMU_PACKED
+> +#define QEMU_PACKED __attribute__((packed))
+> +#endif
+> +
+> +#include <stdint.h>
+> +#include <s390-pci-clp.h>
+> +
+> +int clp_pci(void *data);
+> +int find_pci_function(uint32_t fid, ClpFhListEntry *entry);
+> +int enable_pci_function(uint32_t *fhandle);
+> +
+> +#endif
+
 
