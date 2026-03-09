@@ -4,122 +4,126 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46AD7F4181F
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:25:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 97055F4181F
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 17:25:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzeM7-0008UP-2I; Mon, 09 Mar 2026 13:25:23 -0400
+	id 1vzeMQ-0000Wb-1v; Mon, 09 Mar 2026 13:25:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vzeLg-0008Nj-LA; Mon, 09 Mar 2026 13:24:58 -0400
-Received: from mail-westus3azlp170120001.outbound.protection.outlook.com
- ([2a01:111:f403:c107::1] helo=PH8PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nicolinc@nvidia.com>)
- id 1vzeLc-00077J-Vf; Mon, 09 Mar 2026 13:24:55 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=msWRm3CZzpTO2MOT/JgTPoIxjZTPA+pD2GmATCgI+e8/y5x/c1FYOn1Rsk1/+qkFv9VB0kSORZu/77nKEjux9SHgiUUB0YVzWsXbTWn1NBbY/5xLIVnsdseCKR2hcbz9FX1xGr4LDlpAhY6aQKcPLbJCzohsoCqf3VmNmBrDknaaLkEYsthpBHvMA6qpJFVIMncF4ujRwtxBxiHtWGkVRoJfgxukwgkNKC1HKKW+U/S6NntB//3Cc7CGl6u3CKj9brMuHRe4mC1sJzK5eXso8a0JbpZcjr/jtxJbfmHWkl3PGITHySB2sjjaZeehKeOWghesHmDibB7bdGFakueF5w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=rLDHEfgDj6/YWFYQz7wiVSqAvfzftv3SRl9CUROm9WE=;
- b=cVFPE8AqYmeS3SvxzhRev5ARZePUcLeS5GvLZB/Lo/QoizQGa4HyGWP1yJGUEYiFMcNbfn2h0n+CPJ581Zj/gAeGq8qv+jQ9orCSxh58RNHkBGHQw7P+NM106DzLWWyvsqUlGBwcRaoIRw9CTJiox7djAlyCRlT9WNm6RBnUlzJJ8QN7aBTj6LYsGdFqZXU8HSKRKHa6bzVboA96YMt1n8EyBKZJRzpYXJYnhVikKyULUivaPv+aox6z/zgN9srCYh+4XjI1PZRlo58cpQzxNC3lrsI27SF3BZX37nT9KrTZ3G4udERlGHaMCRRGZTJCnOAJXkhQKCxkuH3gJtWQWw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.118.233) smtp.rcpttodomain=nongnu.org smtp.mailfrom=nvidia.com;
- dmarc=pass (p=reject sp=reject pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=rLDHEfgDj6/YWFYQz7wiVSqAvfzftv3SRl9CUROm9WE=;
- b=n6ShJ6QWnB5ZvxHJdbF9GpFyMQE6YyvOeV4/68XzeCAfyBWcPzagG9yuDdBORWAjbmJN50A+WmQ4+nNjhkEi4OYckDzg0z9PNZD7dn+h9Y5RmMEAaNAKBAJ44q4Rz/+7GKZssKajeUIUqSeqmzuGx+CwKaHw4a1f72LIGSm9J9Smfv2FnK6RR7rOiugGxMSuQ2uePZg7jIBnxwyLLw+WFnrGzLXFgElosLHJzP83TyDJ9JCT9lK/nQDf+4A/hl1dUfE/Rr1LB1HDh4uSz8stiyE9iMnRu+w9TEjhovhUIUk4OFL4wfvtXuakWG8zY52FrU54YvW+3n3Xl6asW16+jA==
-Received: from CH0PR03CA0052.namprd03.prod.outlook.com (2603:10b6:610:b3::27)
- by MN2PR12MB4406.namprd12.prod.outlook.com (2603:10b6:208:268::23)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Mon, 9 Mar
- 2026 17:24:42 +0000
-Received: from CH2PEPF00000148.namprd02.prod.outlook.com
- (2603:10b6:610:b3:cafe::dd) by CH0PR03CA0052.outlook.office365.com
- (2603:10b6:610:b3::27) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.25 via Frontend Transport; Mon,
- 9 Mar 2026 17:24:16 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.118.233)
- smtp.mailfrom=nvidia.com;
- dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.118.233 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.118.233; helo=mail.nvidia.com; pr=C
-Received: from mail.nvidia.com (216.228.118.233) by
- CH2PEPF00000148.mail.protection.outlook.com (10.167.244.105) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9678.18 via Frontend Transport; Mon, 9 Mar 2026 17:24:41 +0000
-Received: from drhqmail202.nvidia.com (10.126.190.181) by mail.nvidia.com
- (10.127.129.6) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20; Mon, 9 Mar
- 2026 10:24:23 -0700
-Received: from drhqmail203.nvidia.com (10.126.190.182) by
- drhqmail202.nvidia.com (10.126.190.181) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.20; Mon, 9 Mar 2026 10:24:23 -0700
-Received: from Asurada-Nvidia (10.127.8.14) by mail.nvidia.com
- (10.126.190.182) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.20 via Frontend
- Transport; Mon, 9 Mar 2026 10:24:22 -0700
-Date: Mon, 9 Mar 2026 10:24:21 -0700
-From: Nicolin Chen <nicolinc@nvidia.com>
-To: Shameer Kolothum <skolothumtho@nvidia.com>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>, <eric.auger@redhat.com>,
- <peter.maydell@linaro.org>, <clg@redhat.com>, <alex@shazbot.org>,
- <nathanc@nvidia.com>, <mochs@nvidia.com>, <jan@nvidia.com>, <jgg@nvidia.com>, 
- <jonathan.cameron@huawei.com>, <zhangfei.gao@linaro.org>,
- <zhenzhong.duan@intel.com>, <kjaju@nvidia.com>, <phrdina@redhat.com>
-Subject: Re: [PATCH v3 22/32] hw/arm/tegra241-cmdqv: Add vEVENTQ allocation
- and free
-Message-ID: <aa8CRT0gv3tr5GkV@Asurada-Nvidia>
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-23-skolothumtho@nvidia.com>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzeM8-0000FX-NM
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:25:29 -0400
+Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1vzeM6-0007AG-Eu
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 13:25:24 -0400
+Received: by mail-pl1-x62d.google.com with SMTP id
+ d9443c01a7336-2ae5423b02aso55238755ad.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 10:25:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773077121; x=1773681921; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=7oOFgLCjTGPgT8WrQcJ5xRlx0WQd4ReFZk+yVcQCQsw=;
+ b=kACX8cPCdT8r2/ajQ8GO50rAh8mfSCA4YyCrabRJEQBQNpbV10vTjxF87B3S5dnKS5
+ K8itYGYtQcN+owk3LWzUNsIlB5osPB4XV2zgL84PinL1QoVdKKUGTKf2WvIwVZGvoS1N
+ K+tMhHJeHX2WESfSxKdvjJ6hio44BAnFQgmYcmm81XmoDNCYujZrPmE5VqzinaJbJPH2
+ BX9GQmNSWb+iRW2R48YU792NmZD3syyoDmsuWD2h1caKeGFgVKrG8cZ5zsFAe1eeev+n
+ BLO4yXDNZpgJaTyzkA95K7qfE8cYUkGTFWvUGJISS0nz6t/MCHRXXMClWaC8cBurg0pZ
+ Xrsg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773077121; x=1773681921;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=7oOFgLCjTGPgT8WrQcJ5xRlx0WQd4ReFZk+yVcQCQsw=;
+ b=hCUrOKccI8nGdBM733ZVy3yI7X/dJZFx2Q3qKCdHzMX7bvrYYVKX5MQ/Kc9yjUTpmB
+ 4qajzXlhd43+q4Zk7ZnaNOwufpXEwa7Ij+NGmwwPHk/tj1ZFdOHWUKNycQS56GTg3DAP
+ mCiQvudwGikefEqxGpJ4384dem9JR75Gp+i/amN2pzMnNaS/Fk48Uy6X0uTNsFzkEC1F
+ 1JfNVogwfDJ2rNgt7L3C3kmdCiKuS2THCbRfIHXfbBh6i2FrDIL9Re42Z4yY4JHCmo98
+ KrVeO92AeEYzsvikhONyRqS/WnUtOTKwZqAS5m7cqIA6cD4mzO4WywGGukzNIxqMe9L5
+ dfNA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVttL86+ar31evQt5iBv4auUrW+kCP7mRvZneatuKpWHHjuB4K8k9QFegsgC0di/g+1fJdXrfNE45vX@nongnu.org
+X-Gm-Message-State: AOJu0Ywpyoy+by5y08eIW1KMZ0kLOEs+a5YEMJDZG+8YhyjUqZSN/XCq
+ zWOF4QgVXI9MXhqSvjtSF3FxjPv9QjNTwCziu2pjVTVTActNP7MQSDeHNGPQwDmrBzE=
+X-Gm-Gg: ATEYQzzeTwPid8F9bzgeXC9wSEyERMdZiRsMvV0LtuDPjIai4+0j9VQFXJTj/WbHyVp
+ j5keGSSPSlFqUj5FghVbXad2aR1T7FU658Q7GG3tCXBFxxDhaO8rSVyK24A2EmA06UMAHNrmPxX
+ U3SwQUnCw1DeNHowAkJjatQBj2SpZ/G/waWEHKbg48Pi3zZZU6A6ZRtCbNyct5Oy1fF6ZRlUDSk
+ Xw1Ruh52eNzNV0CiLVjf8gb2vcuwW1LrkEBHDxjqNZQ23okeT6+Bm8Us/aRNBpq590/1n0O2Owa
+ PhhW3KAaxZC4IHFvwmk3h75wJ0yp7wd94v6a86YirCUEAgiE29rbtAuXMggGnkFEf++9s6sZoRe
+ mqvPJcg7Rh+OCvh+O9V3XYW4GrcCq43tG3gY/w/cmTA1PxiYoTG3BZGC+HaqVby/55iKR1M5dTp
+ 4i8SOWiO0VbbBG5Zzgl9uaj9PWp6Z+edbzVsAiCe/mnP/hVH+yMU14voegnle5P3cKLVSy
+X-Received: by 2002:a17:903:3b8b:b0:29f:301a:f6cf with SMTP id
+ d9443c01a7336-2ae8243435emr108891965ad.35.1773077120607; 
+ Mon, 09 Mar 2026 10:25:20 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ae83f74272sm123724855ad.47.2026.03.09.10.25.19
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 10:25:20 -0700 (PDT)
+Message-ID: <f624f3d9-aa11-406a-ac9b-f3fa2b103291@linaro.org>
+Date: Mon, 9 Mar 2026 10:25:19 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset="us-ascii"
-Content-Disposition: inline
-In-Reply-To: <20260226105056.897-23-skolothumtho@nvidia.com>
-X-NV-OnPremToCloud: ExternallySecured
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CH2PEPF00000148:EE_|MN2PR12MB4406:EE_
-X-MS-Office365-Filtering-Correlation-Id: 93bc73f2-be93-4d0e-405e-08de7e00bfb4
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|7416014|376014|36860700016|1800799024; 
-X-Microsoft-Antispam-Message-Info: QOUhzU+hxuuc0XleVdlozt9aAgIZSfHGXfFdvo2hgOzMwFGI9OnjDtiOi07K7m6zaPCcjcCNSjRd8CV5q1AoyCkqtp1If0NVjGNR7kBYghUkX4N/U2/AACvmZPHndg/G90OUGJBDgSzRsqkcltJ1qKkn+u+CtUhVI9zg0RRFRLzchOK2JiCV3yedYqdapfHIb2kQL0ZxoVj3GUJoAL2Ew3t0iXi0hvutmLyNRSg5P/t5J1Z0VaYbMzmlChB1GPEVFogbRF3naKqcv8hIlmbwlaqSH1B2IUACV2KQM4Coz7aCR9Op3ofqkBShL0HTlch7TOQAqA+bfspoLzBn/YsAMdt6f4fm+7xaoXOs5y4El770DmrVd7fv0e6vGZA+/KWcHShX7pGWL7M1dQ84hHwQ6D6YVZQ56Q0LKAT7FxhqMn1QQalmK2+eN4Wc8AX0yNFBOYIsdL42xERNNtyyAy9F6bRGAx7B9QzqV608t4En0nuEO6AqNrrk0dDl7aaDT4qprBuVgRswuR48C+CRosAniNA679kyhZgXABX98SVAGlqCK+Rd7CuLbWh/J4VL/C+ZuNOKupYKStMuSAS0wOxnEmTLC7ROZ8Ut5vhNWf/lOAdtFBI9zKdERhQFV3hr9pKswJnOyboB561fi/mO6HoXL9huYnpMAQqFa6W4eBlhQHpXcpMcIoqzf38VWw++Zd1Yn5xZNb+Xvv4FHfiZn+lrpRK1U5QcGJfB8qcuBL9l7f9rb4y+8CDp5orT3wzMl2X5+eiZu7keDy5+Ui8TihhjAw==
-X-Forefront-Antispam-Report: CIP:216.228.118.233; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:mail.nvidia.com; PTR:dc7edge2.nvidia.com; CAT:NONE;
- SFS:(13230040)(82310400026)(7416014)(376014)(36860700016)(1800799024); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: L6GcmcS+20s7cxHwNe3fZjYkWsc3lnEx3tiWmY9FIqGBsS3SnXFnRFhvG+bobmTQ07T46XBYRzapuluJE72XHM/jnS9gdLZAUU4if80IW6OFSo8zXMVnCZKC9TwmIAcf7KntLPWQIFcnBoqUDYGYWCd95UiI19ctMvkth2C4x6MQ/jF0On42Q3qjFINOpTQWbB26Ah0OeEjXbMloJdmOTFHfJrw8QpoBSg0QSmvblFTb4r+lffFrw19i2xnD2nzyF0JfFKUQjtGx3dSUJwa93FVTjCypap0Wr0e0FTd3U7PwGPSUk1BELG6QQoBv3nwGP8zH3s5JNi2GIJXb2RZMyYNyij0jEs4THi4+QkDjjx+f37g56gncKaqtKxbAPCLMj3Z+fHaPKUOc4J6VVc6E6VtRLtn/Y75UnKPeYzwtWDjpg3FtOz1vaEIhV5TjonWq
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 09 Mar 2026 17:24:41.3048 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 93bc73f2-be93-4d0e-405e-08de7e00bfb4
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a; Ip=[216.228.118.233];
- Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CH2PEPF00000148.namprd02.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR12MB4406
-Received-SPF: permerror client-ip=2a01:111:f403:c107::1;
- envelope-from=nicolinc@nvidia.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH trivial] plugins: add missing docstrings to qemu-plugin.h
+Content-Language: en-US
+To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org
+References: <20260309-add-missing-plugin-docs-v1-1-41dddcd177c8@epfl.ch>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260309-add-missing-plugin-docs-v1-1-41dddcd177c8@epfl.ch>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,51 +139,224 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Feb 26, 2026 at 10:50:46AM +0000, Shameer Kolothum wrote:
-> Allocate a CMDQV specific vEVENTQ via IOMMUFD, and add the
-> corresponding teardown path to free the vEVENTQ during cleanup.
+On 3/9/26 9:21 AM, Florian Hofhammer wrote:
+> This patch adds docstrings for typedefs and function declarations in
+> include/plugins/qemu-plugin.h that were previously missing. This
+> resolves inconsistencies in the docs, e.g., the description for
+> qemu_plugin_read_register() referring to qemu_plugin_register_flush_cb()
+> but code cache flush callbacks not being documented themselves.
 > 
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
 > ---
->  hw/arm/smmuv3-accel.h   |  2 ++
->  hw/arm/tegra241-cmdqv.h |  1 +
->  hw/arm/smmuv3-accel.c   | 10 ++++++++-
->  hw/arm/tegra241-cmdqv.c | 47 +++++++++++++++++++++++++++++++++++++++++
->  4 files changed, 59 insertions(+), 1 deletion(-)
+> Hi,
 > 
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index 7d6e4c6b76..4bff90e2c1 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -28,6 +28,8 @@ typedef struct SMMUv3AccelCmdqvOps {
->                           uint32_t *out_viommu_id,
->                           Error **errp);
->      void (*free_viommu)(SMMUv3State *s);
-> +    bool (*alloc_veventq)(SMMUv3State *s,  Error **errp);
-> +    void (*free_veventq)(SMMUv3State *s);
+> While working on a QEMU plugin and browsing the online docs at
+> https://www.qemu.org/docs/master/devel/tcg-plugins.html, I noticed that
+> some of the API functions were not actually documented.
+> 
+> I went through the include/plugins/qemu-plugin.h header file and added
+> docstrings where they were missing, hoping of course that I documented
+> the correct functionality based on my understanding of the plugin
+> internals.
+> 
+> I hope that's useful and I didn't miss anything!
+>
 
-As I replied in v2, this should really depend on viommu and should
-be simply added to tegra241_cmdqv_alloc/free_viommu().
+Thanks for the effort, that's always welcome to add documentation on a 
+public API like this!
 
-The alloc_viommu is an override of the standard viommu type, so it
-might be useful to have an op. 
+> Best regards,
+> Florian
+> 
+> --
+> Florian Hofhammer
+> ---
+>   include/plugins/qemu-plugin.h | 98 ++++++++++++++++++++++++++++++++++++++-----
+>   1 file changed, 88 insertions(+), 10 deletions(-)
+> 
+> diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+> index 827e8e1787..fcf5af52ed 100644
+> --- a/include/plugins/qemu-plugin.h
+> +++ b/include/plugins/qemu-plugin.h
+> @@ -339,12 +339,28 @@ enum qemu_plugin_cb_flags {
+>       QEMU_PLUGIN_CB_RW_REGS_PC,
+>   };
+>   
+> +/**
+> + * enum qemu_plugin_mem_rw - type of memory access
+> + *
+> + * @QEMU_PLUGIN_MEM_R: memory read access only
+> + * @QEMU_PLUGIN_MEM_W: memory write access only
+> + * @QEMU_PLUGIN_MEM_RW: memory read and write access
+> + */
+>   enum qemu_plugin_mem_rw {
+>       QEMU_PLUGIN_MEM_R = 1,
+>       QEMU_PLUGIN_MEM_W,
+>       QEMU_PLUGIN_MEM_RW,
+>   };
+>   
+> +/**
+> + * enum qemu_plugin_mem_value_type - size of memory value
+> + *
+> + * @QEMU_PLUGIN_MEM_VALUE_U8: unsigned 8-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U16: unsigned 16-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U32: unsigned 32-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U64: unsigned 64-bit value
+> + * @QEMU_PLUGIN_MEM_VALUE_U128: unsigned 128-bit value
+> + */
+>   enum qemu_plugin_mem_value_type {
+>       QEMU_PLUGIN_MEM_VALUE_U8,
+>       QEMU_PLUGIN_MEM_VALUE_U16,
+> @@ -353,7 +369,13 @@ enum qemu_plugin_mem_value_type {
+>       QEMU_PLUGIN_MEM_VALUE_U128,
+>   };
+>   
+> -/* typedef qemu_plugin_mem_value - value accessed during a load/store */
+> +/**
+> + * typedef qemu_plugin_mem_value - value accessed during a load/store
+> + *
+> + * @type: the memory access size
+> + * @data: the value accessed during the memory operation (value after
+> + *        read/write)
+> + */
+>   typedef struct {
+>       enum qemu_plugin_mem_value_type type;
+>       union {
+> @@ -462,7 +484,6 @@ void qemu_plugin_register_vcpu_tb_exec_cond_cb(struct qemu_plugin_tb *tb,
+>    * @QEMU_PLUGIN_INLINE_ADD_U64: add an immediate value uint64_t
+>    * @QEMU_PLUGIN_INLINE_STORE_U64: store an immediate value uint64_t
+>    */
+> -
+>   enum qemu_plugin_op {
+>       QEMU_PLUGIN_INLINE_ADD_U64,
+>       QEMU_PLUGIN_INLINE_STORE_U64,
+> @@ -803,6 +824,20 @@ const void *qemu_plugin_request_time_control(void);
+>   QEMU_PLUGIN_API
+>   void qemu_plugin_update_ns(const void *handle, int64_t time);
+>   
+> +/**
+> + * typedef qemu_plugin_vcpu_syscall_cb_t - vCPU syscall callback function type
+> + * @id: plugin id
+> + * @vcpu_index: the executing vCPU
+> + * @num: the syscall number
+> + * @a1: the 1st syscall argument
+> + * @a2: the 2nd syscall argument
+> + * @a3: the 3rd syscall argument
+> + * @a4: the 4th syscall argument
+> + * @a5: the 5th syscall argument
+> + * @a6: the 6th syscall argument
+> + * @a7: the 7th syscall argument
+> + * @a8: the 8th syscall argument
+> + */
+>   typedef void
+>   (*qemu_plugin_vcpu_syscall_cb_t)(qemu_plugin_id_t id, unsigned int vcpu_index,
+>                                    int64_t num, uint64_t a1, uint64_t a2,
+> @@ -836,24 +871,61 @@ typedef bool
+>                                           uint64_t a6, uint64_t a7, uint64_t a8,
+>                                           uint64_t *sysret);
+>   
+> -QEMU_PLUGIN_API
+> -void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
+> -                                          qemu_plugin_vcpu_syscall_cb_t cb);
+> -
+> +/**
+> + * typedef qemu_plugin_vcpu_syscall_ret_cb_t - vCPU syscall return callback
+> + * function type
+> + * @id: plugin id
+> + * @vcpu_index: the executing vCPU
+> + * @num: the syscall number
+> + * @ret: the syscall return value
+> + */
+>   typedef void
+>   (*qemu_plugin_vcpu_syscall_ret_cb_t)(qemu_plugin_id_t id, unsigned int vcpu_idx,
+>                                        int64_t num, int64_t ret);
+>   
+> +/**
+> + * qemu_plugin_register_vcpu_syscall_cb() - register a syscall entry callback
+> + * @id: plugin id
+> + * @cb: callback of type qemu_plugin_vcpu_syscall_cb_t
+> + *
+> + * This registers a callback for every syscall executed by the guest. The @cb
+> + * function is executed before a syscall is handled by the host.
+> + */
+>   QEMU_PLUGIN_API
+> -void
+> -qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
+> -                                         qemu_plugin_vcpu_syscall_ret_cb_t cb);
+> +void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
+> +                                          qemu_plugin_vcpu_syscall_cb_t cb);
+>   
+> +/**
+> + * qemu_plugin_register_vcpu_syscall_filter_cb() - register a syscall filter
+> + * callback
+> + * @id: plugin id
+> + * @cb: callback of type qemu_plugin_vcpu_syscall_filter_cb_t
+> + *
+> + * This registers a callback for every syscall executed by the guest. The @cb
+> + * function is executed before a syscall is handled by the host. If the
+> + * callback returns true, the syscall is filtered and will not be executed by
+> + * the host. The callback must then set the syscall return value via the
+> + * corresponding pointer passed to it.
+> + */
+>   QEMU_PLUGIN_API
+>   void
+>   qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
+>                                               qemu_plugin_vcpu_syscall_filter_cb_t cb);
+>   
+> +/**
+> + * qemu_plugin_register_vcpu_syscall_ret_cb() - register a syscall entry
+> + * callback
+> + * @id: plugin id
+> + * @cb: callback of type qemu_plugin_vcpu_syscall_ret_cb_t
+> + *
+> + * This registers a callback for every syscall executed by the guest. The @cb
+> + * function is executed upon return from the host syscall before execution is
+> + * handed back to the guest.
+> + */
+> +QEMU_PLUGIN_API
+> +void
+> +qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
+> +                                         qemu_plugin_vcpu_syscall_ret_cb_t cb);
+>   
+>   /**
+>    * qemu_plugin_insn_disas() - return disassembly string for instruction
+> @@ -861,7 +933,6 @@ qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
+>    *
+>    * Returns an allocated string containing the disassembly
+>    */
+> -
+>   QEMU_PLUGIN_API
+>   char *qemu_plugin_insn_disas(const struct qemu_plugin_insn *insn);
+>   
+> @@ -888,6 +959,13 @@ QEMU_PLUGIN_API
+>   void qemu_plugin_vcpu_for_each(qemu_plugin_id_t id,
+>                                  qemu_plugin_vcpu_simple_cb_t cb);
+>   
+> +/**
+> + * qemu_plugin_register_flush_cb() - register code cache flush callback
+> + * @id: plugin ID
+> + * @cb: callback
+> + *
+> + * The @cb function is called every time the code cache is flushed.
+> + */
 
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 4373bbd97b..f6602f51aa 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -576,13 +576,21 @@ smmuv3_accel_alloc_viommu(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->          goto free_bypass_hwpt;
->      }
->  
-> +    if (cmdqv_ops && !cmdqv_ops->alloc_veventq(s, errp)) {
-> +        goto free_veventq;
-> +    }
-> +
+Thanks, I was thinking to document this since someone asked a question 
+on IRC a few weeks ago.
 
-But, this veventq op is completely in parallel to the standard one.
-There is no need for the smmuv3-accel to initiate the allocation?
+May you add here:
+"This callback can be used to free resources associated with existing 
+translated blocks in a plugin. @cb is guaranteed to run with all cpus 
+being stopped, thus no lock is required within it."
 
-Thanks
-Nicolin
+>   QEMU_PLUGIN_API
+>   void qemu_plugin_register_flush_cb(qemu_plugin_id_t id,
+>                                      qemu_plugin_simple_cb_t cb);
+> 
+> ---
+> base-commit: 7608a95d2e0bd8c8d069ab77824d02586dd94648
+> change-id: 20260309-add-missing-plugin-docs-159d7ff315f9
+> 
+
+Regards,
+Pierrick
 
