@@ -4,78 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78FC5F417F3
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:00:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 552B8F41808
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 16:00:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzd0u-000750-8c; Mon, 09 Mar 2026 11:59:24 -0400
+	id 1vzcx9-0000WS-4S; Mon, 09 Mar 2026 11:55:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzczW-0005RT-0v
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:59 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwk-0008I1-EW
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:55:08 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzczU-0000tf-Dc
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:57:57 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48534b59cf3so12037715e9.2
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:57:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcwi-0000WF-Cp
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:55:06 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4852ff06541so21311445e9.2
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:55:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071875; x=1773676675; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071703; x=1773676503; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=FT88LR+eo72/LXYlYp0i0a+oKJzqOg43I+KETtJ6zlI=;
- b=iKHTeKiaqXVy/tFipIryo2XrGn+cN7LQG0HAXLRbh7ZNGqs1rp+0LtbhC8MfnZtL0B
- 4TbaZgETeYDc1ffXUDK+BxC3azU8XmmIqBIiP22SOkooS/9ZsdAqwfVkgncD0ai5V9um
- E8b3RgGnJnvEgcQx32kKjpnxVrcvEZOu557I1nd9dJGCU3NusHbrSTwaYGNj/RmOyQpl
- 4ydBmuPbACAWV8UyznODFfBQJxo1JcCJOvtwtYgA3d91cI7EPQFSKnDz2H1TyCLvcHgW
- e++rgTL5X3ig3Ku/yPktNIBT1njOB1VEqLYTOt/pXk4Ts3uNvUTTNSWgDxHaGAFC8+Y1
- xisQ==
+ :reply-to; bh=VCt2tniDnmnYi733EQKIyxEHA7/z296v1/90TDxGuK0=;
+ b=sjn9hX9Wo3MitLl2YzrPWybZhVcH0DPjpJndEOv4UW7YfbpWdq9rbW/JlUPPfh0iL4
+ ScIrDeFejte+xt45AWIqigyNPGERK6Igg7xmgXn3zVVqixPUK3y8aMTr6we6T1aEw8V6
+ hM+FCLu+NvE8YzfXAD8AwzjlV+6X7R1Jc6G13fmFAeP0+COqtmzM7pJaB7sF9QTBZk2x
+ xE34McA36cvDLvHcuIqUVhCRIzX5xV12P+sW/nWeCe+6uEplLYUKq6f4QrYDzhmXX6F+
+ Vpxp2oHwEk4USx33pYkLG8cyULJ/r4kfjfsP85HYGnr1yOa5i0jpTu2Vt5BFjb0AybqE
+ 5u+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071875; x=1773676675;
+ d=1e100.net; s=20230601; t=1773071703; x=1773676503;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=FT88LR+eo72/LXYlYp0i0a+oKJzqOg43I+KETtJ6zlI=;
- b=J4sRQr+TVGlzjGYJ1mn/GwZgsjK2soQEzs/GeR2JakvNX5adPkpShEltFcPP45avnV
- d+UwbqfsU+Q3WHuW1MtSE78VEpa/PuloSrGNYcaZaVnHcqEUqxQhUpoILtMmJzTBr8mb
- qdc/QDQhGMG6xYMo86jbGYgZK57cWmuou+JHzkuOgmSVify4Hm2Tkw/pZ1EfreHvkuRU
- mXFnpop1UBxHmYO8eQd8c+pL+5nFyhsmCxtKY//jQmsEKuRuAQqU2EVhGk41k2oAsRvq
- nHyLBXpP8QVZD1gYuXQN9fMj8zOZN5ZHvNKVFIpn6vyO8GNo0wx4Z8QQA+7K4YLpQJVh
- xMOg==
-X-Gm-Message-State: AOJu0YwxyHvI55LJm3Ng5J0UV4QkeD5tHUVLrA7Ewx0DMT3we2zdjZvF
- HfI72GMF+z6XRmtc4BKWobhrLRk6/Mqf27wQaYoOEjiaDGXOoEx3tmwwlaxGlHLhUBeg3kEaVYn
- /hV61uFU=
-X-Gm-Gg: ATEYQzzdQ5kRf6aOJDPDAqNr+cECJrU4Q65Tn9+VVyeY/6ASC59MXsDZifVcaIRLdWc
- DTnSbE58/MORYkuuIQpYiOkMrgd0hdokVsnPFk+3RLbjrPpqs0s6sXS9anMqNi7zeqYqAs9/4QB
- KpHSIVeE+Hkt5fIpgG8tjjg3QOK7rxB7lyzbbbpcBupKM3sAavuicKJ0ECqYVD4/fMTXOwrf2or
- Ujw4SGc9dufNhXOSo+lLNtx7fa/KeR7rtxM+nQPlklWFdni3Kms/dxdEDwnqmo6FyxFEbEa0Ybu
- XR+DxZqPsiEyu/04fJ0ngqsMzxHz261hUcDvhkFjqonSml1HWpjZQnXYbBWSoNdKdYFuh8MDxhk
- 7X/Eh+8eHcepGUdQx1+/0RPEnZPLUAzLQcLaArkn2PjNa/9p6FOukH7kHlgHVGyzxRP/B5nVNmy
- q4+AwcZKfbInYIjnJ8qUaRRw2HoRdG7GE7l9X6ZGstDtSToBBJb1MrZ4WRrw90mhfANbt0Bh7s
-X-Received: by 2002:a05:600c:64ce:b0:485:3ca4:4ef4 with SMTP id
- 5b1f17b1804b1-4853ca451d9mr47071325e9.9.1773071874580; 
- Mon, 09 Mar 2026 08:57:54 -0700 (PDT)
+ bh=VCt2tniDnmnYi733EQKIyxEHA7/z296v1/90TDxGuK0=;
+ b=E34SWhohT2P0DrTDHL3WyK5KAAH6N0iK9Cw2V8Prz4pifUw+7TQ82tU+UhRNE3WlRD
+ FN0PmCDHHrLumKROuSLp1QEGlqRprNWApOZM2DrVW7h7YOV8Zv9xLa1FV3xRkVDq4TIj
+ Uy06clSl+hO1APD62kZ6isIp/+/bn09E3pWBKyibglvj42S1LAXTs4mItqpKAuoD6uSA
+ aNpOpspAIgSmPx7VmAhOX5n6BZ6copfRLFe4GxinXyN5JglfwyIxpwLdlS3CTQFxxci/
+ WDjdDaEGPnRZAy/LOYVK0kuBhga20FAxf1y7viQ6vv9QNxhMvU643if6jzKIvxGEC3wd
+ zSyA==
+X-Gm-Message-State: AOJu0YxWnEpZNM1BuYeGGx5idH341DPEMWzq0rA8KUxbKA/CT9Kf6NAa
+ TDHa59CzXVFdj3X2ktGS4vYTpOMLEJz26k8h9cF5gEBlwftN7Rz9FcsvIkuGNJhnuSSTFkoRq1i
+ MShNjIRQ=
+X-Gm-Gg: ATEYQzzigLxLIOq1E0APjJ2Nn6xgjHd8iaKI2AzapgTVI26x/ounp75NOqUEtuc9CPF
+ FcV60wgT5+thSVooOEww3i2c+aHcAzWSvywkvoNi4KfLqxWIQFanmfi3fJvC5YgLun5/Lmg6wTv
+ n6VjVNTVA+216Qqavar/wczg7BKojpiBEbN50llu+josR4SLI7Zb1+so3LlRVkeNlJLQhCPygIx
+ jI6fpWP9YdG/WCH0s7p2GNSNl/yvltte0TqLwxvInfi+JK2FaSY7GbYocemci+Z9xzdCr7Rth0S
+ dBkbt0ZKwVSTcCZ8ue2Qed4KtOGmiD1RX7cV3vy9YRPxJeT4+hHLg+6wzcXn/uLfaMzsd9aVFIB
+ 3GdxZCjBJh62BYQ9XJwFJv9+WaJXOysiMrDlpFCDDyAgV4/h27O754re50bPFAdMxjuVgUrF+G0
+ r4IdNIqp4Y+20xgg0vX4c1BH5YLd8YGOz2ekpaIuSZMulUhb/Tc/74cpHm9aMjb4xh2HclNXqJ
+X-Received: by 2002:a05:600c:4510:b0:485:3c8f:e4ce with SMTP id
+ 5b1f17b1804b1-4853c8fe68amr47206855e9.18.1773071702437; 
+ Mon, 09 Mar 2026 08:55:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a9e6aesm799245e9.11.2026.03.09.08.57.53
+ ffacd0b85a97d-439dad8d840sm30519981f8f.8.2026.03.09.08.55.01
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:57:53 -0700 (PDT)
+ Mon, 09 Mar 2026 08:55:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 49/49] hw/misc/riscv_cpc: Free CPU array in instance_finalize
-Date: Mon,  9 Mar 2026 16:52:19 +0100
-Message-ID: <20260309155219.62400-50-philmd@linaro.org>
+Subject: [PULL 24/49] contrib/elf2dmp: Grow PDB URL buffer
+Date: Mon,  9 Mar 2026 16:51:54 +0100
+Message-ID: <20260309155219.62400-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,58 +98,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-The TYPE_RISCV_CPC device allocates an array in its instance_init,
-but does not free this, leading to leaks like this from QOM/QMP
-introspection:
+The buffers used to construct a PDB URL overflow when the "age" property
+is greater than 0xf, so grow it. This also simplifies the logic of the
+URL construction to use one buffer instead of two to avoid the chore to
+synchronize the sizes of two buffers.
 
-Direct leak of 512 byte in 1 object allocated from:
-    #0  in calloc
-    #1  in g_malloc0
-    #2  in riscv_cpc_init /home/pm215/qemu/build/san/../../hw/misc/riscv_cpc.c:175:15
-    #3  in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
-    #4  in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
-    #5  in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
-    #6  in qdev_device_help /home/pm215/qemu/build/san/../../system/qdev-monitor.c:313:17
-    #7  in hmp_device_add /home/pm215/qemu/build/san/../../system/qdev-monitor.c:1005:9
-
-Free the array in instance_finalize.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260309095328.1406779-1-peter.maydell@linaro.org>
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260305-nvme-v4-1-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/misc/riscv_cpc.c | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ contrib/elf2dmp/main.c | 32 +++++++++++++++-----------------
+ 1 file changed, 15 insertions(+), 17 deletions(-)
 
-diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
-index 231a419062f..4bf2fd8db16 100644
---- a/hw/misc/riscv_cpc.c
-+++ b/hw/misc/riscv_cpc.c
-@@ -185,6 +185,13 @@ static void riscv_cpc_init(Object *obj)
-     }
+diff --git a/contrib/elf2dmp/main.c b/contrib/elf2dmp/main.c
+index d046a72ae67..a62abadcc04 100644
+--- a/contrib/elf2dmp/main.c
++++ b/contrib/elf2dmp/main.c
+@@ -494,18 +494,6 @@ static bool pe_check_pdb_name(uint64_t base, void *start_addr,
+     return !strcmp(pdb_name, PDB_NAME);
  }
  
-+static void riscv_cpc_finalize(Object *obj)
-+{
-+    RISCVCPCState *s = RISCV_CPC(obj);
-+
-+    g_free(s->cpus);
-+}
-+
- static void riscv_cpc_realize(DeviceState *dev, Error **errp)
+-static void pe_get_pdb_symstore_hash(OMFSignatureRSDS *rsds, char *hash)
+-{
+-    sprintf(hash, "%.08x%.04x%.04x%.02x%.02x", rsds->guid.a, rsds->guid.b,
+-            rsds->guid.c, rsds->guid.d[0], rsds->guid.d[1]);
+-    hash += 20;
+-    for (unsigned int i = 0; i < 6; i++, hash += 2) {
+-        sprintf(hash, "%.02x", rsds->guid.e[i]);
+-    }
+-
+-    sprintf(hash, "%.01x", rsds->age);
+-}
+-
+ int main(int argc, char *argv[])
  {
-     RISCVCPCState *s = RISCV_CPC(dev);
-@@ -254,6 +261,7 @@ static const TypeInfo riscv_cpc_info = {
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(RISCVCPCState),
-     .instance_init = riscv_cpc_init,
-+    .instance_finalize = riscv_cpc_finalize,
-     .class_init    = riscv_cpc_class_init,
- };
+     int err = 1;
+@@ -517,9 +505,7 @@ int main(int argc, char *argv[])
+     uint64_t KernBase;
+     void *nt_start_addr = NULL;
+     WinDumpHeader64 header;
+-    char pdb_hash[34];
+-    char pdb_url[] = SYM_URL_BASE PDB_NAME
+-        "/0123456789ABCDEF0123456789ABCDEFx/" PDB_NAME;
++    g_autofree char *pdb_url = NULL;
+     struct pdb_reader pdb;
+     uint64_t KdDebuggerDataBlock;
+     KDDEBUGGER_DATA64 *kdbg;
+@@ -583,9 +569,21 @@ int main(int argc, char *argv[])
+     printf("KernBase = 0x%016"PRIx64", signature is \'%.2s\'\n", KernBase,
+             (char *)nt_start_addr);
  
+-    pe_get_pdb_symstore_hash(&rsds, pdb_hash);
++    pdb_url = g_strdup_printf("%s"
++                              "%.08x%.04x%.04x"
++                              "%.02x%.02x"
++                              "%.02x%.02x"
++                              "%.02x%.02x"
++                              "%.02x%.02x%.01x"
++                              "%s",
++                              SYM_URL_BASE PDB_NAME "/",
++                              rsds.guid.a, rsds.guid.b, rsds.guid.c,
++                              rsds.guid.d[0], rsds.guid.d[1],
++                              rsds.guid.e[0], rsds.guid.e[1],
++                              rsds.guid.e[2], rsds.guid.e[3],
++                              rsds.guid.e[4], rsds.guid.e[5], rsds.age,
++                              "/" PDB_NAME);
+ 
+-    sprintf(pdb_url, "%s%s/%s/%s", SYM_URL_BASE, PDB_NAME, pdb_hash, PDB_NAME);
+     printf("PDB URL is %s\n", pdb_url);
+ 
+     if (!download_url(PDB_NAME, pdb_url)) {
 -- 
 2.53.0
 
