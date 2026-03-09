@@ -4,78 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA3A5F41807
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E9FF1F417F3
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 15:53:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzcuy-0004Es-6d; Mon, 09 Mar 2026 11:53:16 -0400
+	id 1vzcvL-0005aR-NJ; Mon, 09 Mar 2026 11:53:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcux-00047x-A0
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:15 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvE-0005Bl-Fk
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:32 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcut-0008Be-4C
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:14 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-439b6d9c981so5666290f8f.1
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzcvC-0008FP-Ns
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 11:53:32 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-439aeed8a5bso9200468f8f.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 08:53:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773071589; x=1773676389; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773071609; x=1773676409; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=3AcIpsO3Z8lXw3c5iZUqwV5IA07HcbVKYRak/NRH6Uw=;
- b=jn75L3/ebE2r90VKHhcEyp9HdSEYqgLffOvxip13lyJoob1W2g2PiLUKgIf9d5WBHF
- HWWYjF9MRtViE0qjhpdcS0q1kzQvoboMvSszjDfHAMeOXapDoZjL/HuEb96HLGET+TJT
- UqsVAEGRckptTfiQVNHCbEleb53XzbBbx8ixhVLHTN6VWF67DfLQ4RGFWKH0CSkY8S5g
- /3LKxNnT2T3sOvOrWjCg/PBt6CiAmtaY89bmk+mbot9COrc6fUFSCU0rdOkmVMVF3W1/
- nacLu/r3ha4youM7GXrPJzvEOWXWfj3xP2dMGaR/nH+6iBizP3iLSwEY/wS1yfeAqdqK
- Q0WA==
+ :reply-to; bh=pgpA3PHGmA2cywOmnIHp4QQstzRdLHRlcUMp4w2UsrY=;
+ b=hw05L4sm07BFjE1hsZoDVU/p1m5aPvMWfElezukKU0/Ezpa6htKlSyjpg4QagPvAVy
+ r6G3Afk6xtTh49tJy7/OXvQDYBrTnQ+YAiKvXgkn/FlvQ0B4ogxcKmKPcYm8bJHDh35m
+ CQJzIu7k23fTU8aa/WdW09qy768Ljdkhi5tC/y4cSRDA6FzIAeWWMgNh8nQ3u+wteOUp
+ nqJJZD0529sH+SZS6H6REX0EOs8eNkBOfTugSZ+Wu+4nE3/0NFEBoJ7p3ruEAMDdY9Pa
+ p9R9oE5RH9SWzd1yFwTn/PCp7yKuMg3B5EOVDy8cRCUZX7bNJGLp8gGmoZGj2B7AhlBx
+ ziWA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773071589; x=1773676389;
+ d=1e100.net; s=20230601; t=1773071609; x=1773676409;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=3AcIpsO3Z8lXw3c5iZUqwV5IA07HcbVKYRak/NRH6Uw=;
- b=viQquhd6/kzAnGv60x75mjl38JKJO+4GHNdifpCMs/9pPtjnuW9L0Eutxphuo7CFZd
- srqDFyJdUcYk6KUQ1k/Wc3oUyAEreDZuAOcOz3n+TxFRem6NJkEdAox0MT0mToiQYGnz
- XyJVzYdYp1gD3x3iXrKdfcOkRP8ay8nUF1/BCBjxTne1ap3fM4gL2R9csvriEkro2IpY
- 4Rdyohkx+jY5Jv7yPrLk0EsxjnWbM+e7NOiLhAX0X+ROOvJJnQcPLC6z4rH3cBZJqZT8
- o+uFXuEgAa/s4MlEexfoImR+C4XYpdwh4NULpxUkqq7UpJSi6QXLPRjHpLb06XvA/fMN
- NFOA==
-X-Gm-Message-State: AOJu0YwQuFOpWDXtSugbdhLI3TD20hJoDjYkmwvZo8kiTZn7Hdq3BKzz
- 5zUBPaT3vHkB3KpLUQ0jtxa26TZlXICykQpbGZZpPWlNPbtMB75FBDFjir6kJ6+oSP7v086rzM2
- YQ26xKcI=
-X-Gm-Gg: ATEYQzwH2HGLTVEKAy6qb3s3yKuzvY/ekuK8udrWb7ItUxMsskZiSXnDIU9dKQePA3o
- /4oKpcxOW328T8Nqbpp3/N+CV7rp5omU+qXe5UaXKWomTkY9/rK0VYcc0lo6jurYLA4XQqzvSvJ
- 7DyTpNx16cnD42ZCaA7dXYIn5raik4RJ5j8aik7MEmDqeZlIeX/zk9OXajtBcdc1K76Fm3fhcls
- 93rqaTbxBVmmgXbuqG7jN2d0Fr0/5JlkWq4VGU/6Cgdc6G4BOylS8Ab8G/a0MbAIEsZvtdsxpSo
- +AGQdEkCroOhEvTbkrL4iosfld5XbB42plLNZ8DqCBDjK5rNye06/AZx2xhQGQNE1f/MTkJIdIP
- ZW+puTFs72bsfqLgj5AY9LfV7GXiSodq6KCCzqQ4pEMTM1TumFwGDts/7uyRUqwlPZp4SZw4k+p
- MEUrEw+SP+I8vn+9KdeViEi/0CDQtmbNqREAmpF7tNb/cmoRDG4rU6INVRGpXIDZ9lS91ZP9PO
-X-Received: by 2002:a05:6000:1789:b0:439:cd10:192a with SMTP id
- ffacd0b85a97d-439eff50330mr173977f8f.26.1773071589091; 
- Mon, 09 Mar 2026 08:53:09 -0700 (PDT)
+ bh=pgpA3PHGmA2cywOmnIHp4QQstzRdLHRlcUMp4w2UsrY=;
+ b=gNdT4JA2zNyiQAWz2Y/JJJn1VsoqdeJVEUbR7i/F0XpVW/+QachoB+sj89uFHq8YXv
+ l61p+ldYbv/mrqyI8eJCFcj5B1TXDXzb0pUGHrdENGSXnNFD2nNDEKExcx9YF7pV34pS
+ X60D69tb81ZyiwdVN71V16SN35whEe5bteyGdpNSfChgVLlOE2Kjkyc2QWKbDGkDf/E1
+ MXc18Ss3Fm/hoDVbROA60nGzDT45otxsh42y8fow8JeIZGvzyyIuiil6WRFwodc87AkS
+ zKNK4A8reKaqwkIE41L8E8vkEWWxq/4EruBrhtp7WGqrcEhHpNZoaGvZ2js9NJKGkB88
+ Ijgg==
+X-Gm-Message-State: AOJu0Yzl7bs2Qv3A4KngIG+I0Q2tX2k/G3us8R8lR+VUqjmNtt4xb3CZ
+ 9SrLkEqRtgEI4wX5qMBAZuNfpbRDB83/TKxHQdfHWVHSW1iQT3uJwYddgimiskBy57yEHTxwBt8
+ 3UJSj+l4=
+X-Gm-Gg: ATEYQzyP+WpeviDGrwDQNl9F/ZABKAgO0DXbLDvee7YRo29CpnUn8otTHTiT/LpszAS
+ 2LvG69GOUIbWr8NY7vvEYScF7E/4p/fYvQKDNo1zw0KEGjpluf5piakPATWBjbH09JEF0LlizSX
+ bYNJ777y1ww9BlSR379PYnjytmEyHORidc9cAytHZ8nK3itPr1l4iEXuVUT98cNuDexVuLBYbgc
+ 47PjEWMg3SfL8FeBpvG1Ip5eUC5W91J653HpyN5x+aWlb5eW8Azc67cwH5d4s9ENkN7qwyXJ2iw
+ 4WkESHZ7IjY6H79b2wGqQo7KFPrDsgX4z5Zd4M+QSl3Z4XVdyLY58ArDpFHg3lOjXVYgH6JneCt
+ MZW+7xR+30sNqux1AGBxSOpDnNgoNokYZ5vNKFQsRp/i7VQf2t1SSIguasm+bEElNJv/B9fwEl2
+ tKALddNzKmDd5puuyN2ZgVY3qQ4IWPClYO7r6+a2TNPok2PAr/Yk35THIe5+O6Ve/C2DhLdMS5h
+ vaXIyEm3kg=
+X-Received: by 2002:a05:6000:40cb:b0:439:cc01:c9ee with SMTP id
+ ffacd0b85a97d-439da5554a3mr18488588f8f.3.1773071608643; 
+ Mon, 09 Mar 2026 08:53:28 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae46353sm31745284f8f.33.2026.03.09.08.53.08
+ ffacd0b85a97d-439dae2b9d8sm28693381f8f.21.2026.03.09.08.53.27
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 09 Mar 2026 08:53:08 -0700 (PDT)
+ Mon, 09 Mar 2026 08:53:28 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/49] hw/i386/iommu: Remove IntelIOMMUState::dma_drain field
-Date: Mon,  9 Mar 2026 16:51:37 +0100
-Message-ID: <20260309155219.62400-8-philmd@linaro.org>
+Subject: [PULL 10/49] hw/pci-bridge/pcie_rp: Remove PCIESlot::disable_acs field
+Date: Mon,  9 Mar 2026 16:51:40 +0100
+Message-ID: <20260309155219.62400-11-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260309155219.62400-1-philmd@linaro.org>
 References: <20260309155219.62400-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,68 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The IntelIOMMUState::dma_drain boolean was only set in
-the pc_compat_3_1[] array, via the 'dma-drain=off' property.
+The PCIESlot::disable_acs boolean was only set in the
+hw_compat_3_1[] array, via the 'disable-acs=true' property.
 We removed all machines using that array, lets remove that
 property and all the code around it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Message-Id: <20260307152635.83893-7-philmd@linaro.org>
+Message-Id: <20260307152635.83893-10-philmd@linaro.org>
 ---
- include/hw/i386/intel_iommu.h |  1 -
- hw/i386/intel_iommu.c         | 11 +----------
- 2 files changed, 1 insertion(+), 11 deletions(-)
+ include/hw/pci/pcie_port.h     | 3 ---
+ hw/pci-bridge/pcie_root_port.c | 3 +--
+ 2 files changed, 1 insertion(+), 5 deletions(-)
 
-diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
-index 54c2b6b77a0..e44ce318417 100644
---- a/include/hw/i386/intel_iommu.h
-+++ b/include/hw/i386/intel_iommu.h
-@@ -314,7 +314,6 @@ struct IntelIOMMUState {
-     bool intr_eime;                 /* Extended interrupt mode enabled */
-     OnOffAuto intr_eim;             /* Toggle for EIM cabability */
-     uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
--    bool dma_drain;                 /* Whether DMA r/w draining enabled */
-     bool pasid;                     /* Whether to support PASID */
-     bool fs1gp;                     /* First Stage 1-GByte Page Support */
+diff --git a/include/hw/pci/pcie_port.h b/include/hw/pci/pcie_port.h
+index 53cd64c5edf..b28af067a66 100644
+--- a/include/hw/pci/pcie_port.h
++++ b/include/hw/pci/pcie_port.h
+@@ -60,9 +60,6 @@ struct PCIESlot {
+     PCIExpLinkWidth width;
+     bool flitmode;
  
-diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
-index d24ba989bfc..f395fa248c0 100644
---- a/hw/i386/intel_iommu.c
-+++ b/hw/i386/intel_iommu.c
-@@ -4205,7 +4205,6 @@ static const Property vtd_properties[] = {
-     DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
-     DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
-     DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
--    DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
-     DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
-     DEFINE_PROP_BOOL("fs1gp", IntelIOMMUState, fs1gp, true),
- };
-@@ -5000,11 +4999,8 @@ static void vtd_cap_init(IntelIOMMUState *s)
-     X86IOMMUState *x86_iommu = X86_IOMMU_DEVICE(s);
- 
-     s->cap = VTD_CAP_FRO | VTD_CAP_NFR | VTD_CAP_ND | VTD_ECAP_PT |
--             VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS |
-+             VTD_CAP_MAMV | VTD_CAP_PSI | VTD_CAP_SSLPS | VTD_CAP_DRAIN |
-              VTD_CAP_ESRTPS | VTD_CAP_MGAW(s->aw_bits);
--    if (s->dma_drain) {
--        s->cap |= VTD_CAP_DRAIN;
--    }
-     if (x86_iommu->dma_translation) {
-             if (s->aw_bits >= VTD_HOST_AW_39BIT) {
-                     s->cap |= VTD_CAP_SAGAW_39bit;
-@@ -5582,11 +5578,6 @@ static bool vtd_decide_config(IntelIOMMUState *s, Error **errp)
-         return false;
-     }
- 
--    if (s->scalable_mode && !s->dma_drain) {
--        error_setg(errp, "Need to set dma_drain for scalable mode");
--        return false;
--    }
+-    /* Disable ACS (really for a pcie_root_port) */
+-    bool        disable_acs;
 -
-     if (s->pasid && !s->scalable_mode) {
-         error_setg(errp, "Need to set scalable mode for PASID");
-         return false;
+     /* Indicates whether any type of hot-plug is allowed on the slot */
+     bool        hotplug;
+ 
+diff --git a/hw/pci-bridge/pcie_root_port.c b/hw/pci-bridge/pcie_root_port.c
+index fe3ced56851..7c3e78010b4 100644
+--- a/hw/pci-bridge/pcie_root_port.c
++++ b/hw/pci-bridge/pcie_root_port.c
+@@ -117,7 +117,7 @@ static void rp_realize(PCIDevice *d, Error **errp)
+     pcie_aer_root_init(d);
+     rp_aer_vector_update(d);
+ 
+-    if (rpc->acs_offset && !s->disable_acs) {
++    if (rpc->acs_offset) {
+         pcie_acs_init(d, rpc->acs_offset);
+     }
+     return;
+@@ -151,7 +151,6 @@ static void rp_exit(PCIDevice *d)
+ static const Property rp_props[] = {
+     DEFINE_PROP_BIT(COMPAT_PROP_PCP, PCIDevice, cap_present,
+                     QEMU_PCIE_SLTCAP_PCP_BITNR, true),
+-    DEFINE_PROP_BOOL("disable-acs", PCIESlot, disable_acs, false),
+ };
+ 
+ static void rp_instance_post_init(Object *obj)
 -- 
 2.53.0
 
