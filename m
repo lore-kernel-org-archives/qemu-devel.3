@@ -4,94 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A1EBFCA187
-	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 20:41:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E796FCA187
+	for <qemu-devel@archiver.kernel.org>; Mon,  9 Mar 2026 20:42:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzhPE-0004hj-5v; Mon, 09 Mar 2026 16:40:48 -0400
+	id 1vzhPF-0004iJ-1p; Mon, 09 Mar 2026 16:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhP2-0004eR-40
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:36 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhP7-0004fb-Hy
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhOl-0007gL-Uv
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:24 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1vzhP1-0007hg-Na
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 16:40:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773088817;
+ s=mimecast20190719; t=1773088826;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=9YX58P0SmrR/s5nkf1YmH956fxr9ZlSayKiY+oD0FrY=;
- b=R5uhhCsst7Rm7W+3gnLJU9e8+TL4FBZ26pfE13v4j1ZxajR00MBv5WvJKHzmpXfe7d8wig
- 8jGF9eXMPA386ktbRLNx3ffruBdtac+8zsM8jitJZeuU1hKbNIX4p/AXZDAQoFGlGERkfk
- zwiusiJwj+1FOGmFCvSBQgrg1i/N0IM=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=PCSsJ5q4fk9kF9TJZO2z5mERilkapSPpUsI49F3EOfg=;
+ b=h3p7fjnt3zDRmNWXpJeGNVmK1+m3dXlVhJtQU8jkd3HZglK3aJVqxILh2at808hwqqW8mW
+ VNVqbKM90a27ZESdwp6vUdRQG6GYZxB3OAHvDZl4k5o/ajJ75/jjmWDCWVc3dhsock3ErJ
+ 7EBf39loxHoV+Jih5p1OhT+bA7+lRts=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-589-uYSmySbWM8GSmU-fHyOwIQ-1; Mon, 09 Mar 2026 16:40:16 -0400
-X-MC-Unique: uYSmySbWM8GSmU-fHyOwIQ-1
-X-Mimecast-MFC-AGG-ID: uYSmySbWM8GSmU-fHyOwIQ_1773088816
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8cd81ce6fdcso1750705385a.3
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 13:40:16 -0700 (PDT)
+ us-mta-689-3J5_IFIMO5mCn4qwGqO9QQ-1; Mon, 09 Mar 2026 16:40:25 -0400
+X-MC-Unique: 3J5_IFIMO5mCn4qwGqO9QQ-1
+X-Mimecast-MFC-AGG-ID: 3J5_IFIMO5mCn4qwGqO9QQ_1773088825
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8cd81506677so979574285a.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 13:40:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773088815; x=1773693615; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=9YX58P0SmrR/s5nkf1YmH956fxr9ZlSayKiY+oD0FrY=;
- b=SXBBzOw/JaLszlWy/jcV7qXuGhGPu/JhMb++MuxsHjV3MntbCaEo/cJPE+geoh1Sx6
- Zlp73PYACB4KQjBtPb1o4pYDcblDh3+w6668UzCbqovdmeJAFOXz02B+meobePB5JSfq
- zi51zG1j9T/FuHfrXs6geY9nw2twUnD81Efg97vFxZGyjOAIrZsoIqAtqYOLZSXQeGzT
- +6rHxqdYMft1rkvQ6rt94Wc0VG3hEm3zTCldUDwXx/iGB9RIpqzkxVI+zlDr6ukK+P5h
- wMAgkDarlD78LxTWvG2ceFlUMG9Q1k9JC+5DmRLCJSd6fMBpbDYSAYWhIUD3XpOSuy3s
- s7AA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773088815; x=1773693615;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1773088824; x=1773693624; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9YX58P0SmrR/s5nkf1YmH956fxr9ZlSayKiY+oD0FrY=;
- b=sKSIfaxHMoMBujp0VSfb3Bavlamdftp53iceRT4Q+kc9MnulbVg5Rga22yMsWUw6K4
- KXZBTWGDD/YBn4O9TBi3GzX7SR6opwUb4vcH8fcT26ODZJy63de2NZhWCwnnUDCYgXb/
- k0ab/dLiVgEntd6QbdDQvHeMK1JUvy0UQpfXZseON3x6EMxcpJLbCIzvjT7DIXYzpXSL
- m36wUl+4hrVF/G7wt8/cg7rdCxmf7oT/Fu/Qb0/QYePeSmUnDamENBxhT4zTC0uSvZM9
- iWUwzXGt0RJD0xwu78oxfaEmGe9nxNbZth5vjfUylmh4xevgSebSKDmVx9JVeiNRStvJ
- CW+A==
-X-Gm-Message-State: AOJu0YwYaV0fesAq7PYi+mO147h7J9BW+0dAhGIeBhSwqK+fOAzXR7oC
- fkJ2/01LS5HsfKd3MWxupWMnTw+F5EKHy+V4GR46lrKbQb2Q3HPJFuses5CsitlIPUu4ESeemfQ
- 7GCnrDDDiEXTq++hndxSSmH5RZ4cg3TiuTxEZOYYKZgWd7/xEKt6O/HTlD/WKL9g4BrIeUluR/z
- DbJkU/9VJA2tFBqmVFpwvnwHAFmECFbvCy4dhGGw==
-X-Gm-Gg: ATEYQzxhj37cDtRpk/Dg8Irf66Acz7KUdoR6VF/AkAkHR/6cSYmM6yE/uHAeGXcDDbE
- tBoFQR4WA7Z8gnboqtYaf5SFJU+2o2UW8S1qMj9w2hTUQXRyEHxXql1XecCgE/upQZrmgN2pI9o
- h6rDfPdUsVeJ0mjmCwe9Iw3QN6tN6bv2cGs6MVeMCftiYKCp1gP/4sgcbv4h8cqgAaj3LlkJ5IF
- TRYHqV6n09nMQ4IKhUGSqRfZPJiN9CKaTK27s2iTQH8mraNYEYapkJ97/4ni0oROUdjw4W48pFV
- s/set8Z908zI4aZJOxIeMWIiLFcsy3IUs0yrSFLnZ9wyTtzEImGNL8TewI70HLiUYfGPHvBaiCT
- UEq8gDeBlHVpbbq0VwGQ4btGcCdMmus3AdP2LSs9HFCCSJyyu22NIiPNrQQU5RcVGPdrhHZQkHx
- pY+3o48g==
-X-Received: by 2002:a05:620a:3d09:b0:8cd:7e1d:8243 with SMTP id
- af79cd13be357-8cd7e1d8678mr668181885a.36.1773088815354; 
- Mon, 09 Mar 2026 13:40:15 -0700 (PDT)
-X-Received: by 2002:a05:620a:3d09:b0:8cd:7e1d:8243 with SMTP id
- af79cd13be357-8cd7e1d8678mr668178685a.36.1773088814759; 
- Mon, 09 Mar 2026 13:40:14 -0700 (PDT)
+ bh=PCSsJ5q4fk9kF9TJZO2z5mERilkapSPpUsI49F3EOfg=;
+ b=pTKg5P8fhgAqB991pq2EmWx2w5yrTFcEdWssSJmwGoGUrGSlLW1GO4P7OK9dp2GzZ/
+ bAUOq6bTeT/0W9tRVUet/4clHAHEmMFCLmEr5YGZi6Ii4keNvpjGP+3/fQqCzHBowxAG
+ k3bNRSs9mSDWF4jQGp302/G1BHTiZ5zGO9QamclYAqROAtob+zjHyD38FGfblW4uY0Wm
+ nCfL9+1EJ2+GNC6gLwYFqwxIPI7xSdkQyKcIUE32yHWB9uHLerkG2X8FvWZdeI9UjuLw
+ QECIln73KBDMkdjj+Dk1KPWZEE6YdEg7JO1h0bApSbNUZRH6tMGmNN3vZwtnnCoz+X0h
+ sg5w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773088824; x=1773693624;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PCSsJ5q4fk9kF9TJZO2z5mERilkapSPpUsI49F3EOfg=;
+ b=eucaJXPaiQVmvCGh8xPoZ8ArYbydrUj4FbV2J03FI39FgJdxr15OeaKhC/Q7xDGmpK
+ WpVyp+Qevb3U4KplGrgNu0B6EI1lFyBWhbcD/8mSVCTCyo+df+k2pPJ24gsrZ80OvT+i
+ RKEI62L+oR+LE3ILQ3czpIODERRCTBLZDlZOU0Z2Lp3h1Fr6iSeTFMgHmbczquMGrk0N
+ rb6yGKbsnGkNuwu3nZ6CIRvmVR0V4IzYJEXSDflyJUoga+jv5NEX/4u0hKMBFFetITDY
+ uQ2qOlG6tnHgWgEd9jt9mNROGYlv/VunomZJhV0RS8W33uQoVotvlNB9Kdt+sHNgvH/E
+ qFZQ==
+X-Gm-Message-State: AOJu0Yx1EhV8xyA0VNYSDbLpOd7DFC6sRqQtl3ZTCM2HY0obZEkUR4ZI
+ 3Zonr6dgof4VWdj6seSr0Pur/FR49OAiRhWT4G3Paza0+Gj1KulZeG5bXopdKCwQR9VHS4UjPZe
+ IqsWpnb8TyAymTgYxxj/CncU4jLkfucc12Imk93WPiv1HxoUMapxF7ek1RGC4IOIJ/wbZKRH1eo
+ uMov/5BmBHP/e3EaAhKVI3Fhf2HazoiSb03vgE1g==
+X-Gm-Gg: ATEYQzz4TjR28XvaBDl1ucAaTCzotkfqUvA0a1KQy5OBw8dE9FckeV13AwMeGuPR4b7
+ hjJAvbuVVtx8Y7nK209LLu1Al9U2aM0LjZV0uDN9ZlFeZ4NXPaNULe1O3dwRLrAOrluDkeb2qVF
+ eVm9hBc9JVfsSuvc8DdKrY/c3dSEPPpEoOt7uJFpQw7lDOxax7BuoqqGB4Df5fBH/6I9NzUy4n/
+ 4aMBgEl9OA5h1YQd+DTyn/vzDZYG2M+MGwgQtqTLWXU2GKn+ttdcAaWqQEwyBtdp+t6XaMVkiOh
+ T4h5fUxLLnDnhbo5OlJDBeglHxJcXqZy2lUMyuC7/Bxvbqf5Fx/9Nz7jhEEA+8+UMEZ28O9zwMm
+ n4wmKDYeKsxUgC/YXr8kBbe3NTcqFUNfXE8c1ucwVpLimd51/2dKoznWa9rgOlg+8bXIQ/ps41l
+ dxsRAfUw==
+X-Received: by 2002:a05:620a:4008:b0:8cd:8142:b7d3 with SMTP id
+ af79cd13be357-8cd8142c613mr814604785a.72.1773088824032; 
+ Mon, 09 Mar 2026 13:40:24 -0700 (PDT)
+X-Received: by 2002:a05:620a:4008:b0:8cd:8142:b7d3 with SMTP id
+ af79cd13be357-8cd8142c613mr814599585a.72.1773088823432; 
+ Mon, 09 Mar 2026 13:40:23 -0700 (PDT)
 Received: from x1.local
  (bras-vprn-aurron9134w-lp130-03-174-91-117-149.dsl.bell.ca. [174.91.117.149])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cd8576db0esm332951885a.47.2026.03.09.13.40.13
+ af79cd13be357-8cd8576db0esm332951885a.47.2026.03.09.13.40.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 09 Mar 2026 13:40:14 -0700 (PDT)
+ Mon, 09 Mar 2026 13:40:22 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PULL 00/18] Staging patches
-Date: Mon,  9 Mar 2026 16:39:49 -0400
-Message-ID: <20260309204007.1709441-1-peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Subject: [PULL 06/18] memory: Shorten memory_region_init_ram_device_ptr and
+ memory_region_init_rom_device
+Date: Mon,  9 Mar 2026 16:39:55 -0400
+Message-ID: <20260309204007.1709441-7-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260309204007.1709441-1-peterx@redhat.com>
+References: <20260309204007.1709441-1-peterx@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -118,77 +123,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 7608a95d2e0bd8c8d069ab77824d02586dd94648:
+From: BALATON Zoltan <balaton@eik.bme.hu>
 
-  Merge tag 'pull-xen-20260309' of https://xenbits.xen.org/git-http/people/aperard/qemu-dm into staging (2026-03-09 12:15:42 +0000)
+We can reuse memory_region_init_io in these functions.
 
-are available in the Git repository at:
+Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Link: https://lore.kernel.org/r/79ff00abd2eb5c304f1f00664c94784e1269d984.1772924151.git.balaton@eik.bme.hu
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ system/memory.c | 6 ++----
+ 1 file changed, 2 insertions(+), 4 deletions(-)
 
-  https://gitlab.com/peterx/qemu.git tags/staging-pull-request
-
-for you to fetch changes up to 40aa899d030e957f815beab33e997a1970914580:
-
-  system/memory: Have memory_region_type() correctly describe containers (2026-03-09 15:27:26 -0400)
-
-----------------------------------------------------------------
-Memory pull for 11.0 softfreeze
-
-- BALATON's memory cleanups on _nomigrate MRs and else
-- Phil's small constify series and else
-- Marc-André's initial cleanup patches around ram discard manager
-
-----------------------------------------------------------------
-
-BALATON Zoltan (9):
-  hw/display/{cg3.tcx}: Do not use memory_region_init_rom_nomigrate()
-  memory: Remove memory_region_init_rom_nomigrate()
-  sun4m,sun4u,tcx: Do not use memory_region_init_ram_nomigrate()
-  hw/xtensa/xtfpga: Do not use memory_region_init_ram_nomigrate()
-  memory: Remove memory_region_init_ram_nomigrate()
-  memory: Shorten memory_region_init_ram_device_ptr and
-    memory_region_init_rom_device
-  memory: Add internal memory_region_register_ram function
-  memory: Factor out common ram region initialization
-  memory: Factor out common ram ptr initialization
-
-Marc-André Lureau (5):
-  system/rba: use DIV_ROUND_UP
-  memory: drop RamDiscardListener::double_discard_supported
-  virtio-mem: use warn_report_err_once()
-  system/memory: minor doc fix
-  kvm: replace RamDicardManager by the RamBlockAttribute
-
-Philippe Mathieu-Daudé (4):
-  system/ramblock: Constify various RAMBlock arguments
-  system/memory: Constify various MemoryRegion arguments
-  system/xen: Constify various MemoryRegion arguments
-  system/memory: Have memory_region_type() correctly describe containers
-
- docs/devel/memory.rst                         |   9 +-
- .../memory-region-housekeeping.cocci          |  47 ---
- include/system/memory.h                       | 101 ++----
- include/system/ramblock.h                     |  28 +-
- include/system/xen-mapcache.h                 |   2 +-
- include/system/xen.h                          |   6 +-
- accel/kvm/kvm-all.c                           |   2 +-
- hw/display/cg3.c                              |   5 +-
- hw/display/tcx.c                              |   8 +-
- hw/display/vga.c                              |   4 +-
- hw/sparc/sun4m.c                              |  19 +-
- hw/sparc64/sun4u.c                            |  10 +-
- hw/vfio/listener.c                            |   2 +-
- hw/virtio/virtio-mem.c                        |  35 +-
- hw/xen/xen-hvm-common.c                       |   8 +-
- hw/xen/xen-mapcache.c                         |   2 +-
- hw/xen/xen_stubs.c                            |   6 +-
- hw/xtensa/xtfpga.c                            |   4 +-
- stubs/physmem.c                               |   2 +-
- stubs/ram-block.c                             |   6 +-
- system/memory.c                               | 322 ++++++------------
- system/physmem.c                              |  30 +-
- system/ram-block-attributes.c                 |  26 +-
- 23 files changed, 203 insertions(+), 481 deletions(-)
-
+diff --git a/system/memory.c b/system/memory.c
+index e15f931a8a..13d4e3314b 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1705,10 +1705,9 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr,
+                                        uint64_t size,
+                                        void *ptr)
+ {
+-    memory_region_init(mr, owner, name, size);
++    memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+     mr->ram = true;
+     mr->ram_device = true;
+-    memory_region_set_ops(mr, &ram_device_mem_ops, mr);
+     mr->destructor = memory_region_destructor_ram;
+ 
+     /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
+@@ -3762,8 +3761,7 @@ bool memory_region_init_rom_device(MemoryRegion *mr,
+     Error *err = NULL;
+ 
+     assert(ops);
+-    memory_region_init(mr, owner, name, size);
+-    memory_region_set_ops(mr, ops, opaque);
++    memory_region_init_io(mr, owner, ops, opaque, name, size);
+     mr->rom_device = true;
+     mr->destructor = memory_region_destructor_ram;
+     mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
 -- 
 2.50.1
 
