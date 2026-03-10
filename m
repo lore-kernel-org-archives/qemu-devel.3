@@ -4,80 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 042F1FD88CD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:21:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27A1DFD88CE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:21:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w06Nq-0000bU-6l; Tue, 10 Mar 2026 19:21:03 -0400
+	id 1w06Nk-0000a7-C1; Tue, 10 Mar 2026 19:20:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Nn-0000b2-PD
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:20:59 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Ng-0000Zs-33
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:20:52 -0400
 Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Nm-0008EX-2B
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:20:59 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Nd-0008EF-Ie
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:20:51 -0400
 Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4852afd42ceso41108545e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:20:57 -0700 (PDT)
+ 5b1f17b1804b1-4852fdb36a8so42558695e9.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:20:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773184855; x=1773789655; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vjVT/GwAY5pAtPUtuWIIqJdRTGmpLeYD6025xDJly8o=;
- b=OLCxQ9RFnull2sp/S3t9Cyyyn2Ah+wx2eL9SPeMxkxbSW3EHCVf2ZnLOKuwHbFr5MO
- sTbyH3JS8D8pzCAe+IuLjgX7JAye1/LHUfCbLq2MFgPuaNE9BVw0F65Wetkf07AyXrFZ
- hxskHWtqPKC2qWvXAzMkjVYDXsjAOgZjN+M5fcwbV5toRuLBpnPBcmFs+TB0RgdTkz3l
- aCLWLovV2KFeXhOib8HiagW8fr7cGVyUFwb8tBxL0iRoKnOq1aCa1QPQ2sNm/gD2nHya
- rtTAbWvTQa7ChZOWCJDGUg/LLseymOO0iaJ5TMMS76CuEnoFgRGQoYep2JW7LVgeeQq5
- MG8Q==
+ d=linaro.org; s=google; t=1773184847; x=1773789647; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=5g/FeXZUDgVhqVd2S+hP2e5WaTTBdNua5vIYuBxxiso=;
+ b=jAkQI3cxgaURsbGu4p15XB6xzJ+YJcWLveQoLq0ZdkCkm8NUmbaVSqahn4s5qBRcSI
+ Bvd7/TbXMeq+bqchcohJYUOSST80SG8t53n+f2QYdLGxLN9cYDdQv63swdpovivhSfl2
+ iAqZnA4E5duC0jp3GN+NUq250yF6wJkiNqMSaFkiO00QXEAgnqeYzPlze/Fjbdz52rEP
+ stdYaZhNXKxcgMix/TDoRYyLKefO7c8Ngp0+u5ItgRhd9ft8NIuMx0F9Zb2Z+LExjQHK
+ 7xkz99kAFPaNRHw5o2Fk5QoMpIwlOK+ZhW53YrjCwpmgg6jYHwh+fNYAAe/kMFM04oNI
+ 7KWQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773184855; x=1773789655;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vjVT/GwAY5pAtPUtuWIIqJdRTGmpLeYD6025xDJly8o=;
- b=ofl2M+qjrFEM/EepKACF7cvInmViVcjq6WYYkjqbH97xw6RgNAfVAXrKxfUadek4iC
- Vw4RXt/hr0hURboqRPySvsOcFZgqFvTIUCq3D6LxHLVrUbWKasCENfLJy9eA8HxwSoi2
- XVK6Rson9DkKe04kVnTO0DPTZ3q+UNytG6VXi2ZcSJi/7hSVU36epnr+NQ3ko7bYd1lA
- g7gxm3pm9jusq0HPlIx0Y1EIxMQ4crIAo/VD1IGJ4q/l1RJ75bke0rjQ6p02Q+/BrX0q
- 5K2oKXVaqmtDGquCxx8IVIbdQdEPGt9u9Ey9ZTCeH9Qqiq6Zng/hYYIIkCEUC9zMkXvE
- Aeqg==
-X-Gm-Message-State: AOJu0YwgHRHShtDkROJV3RjD61wOFtVCt36mu8OyShKn9IgqTsza1Dbf
- hvvt63zLRMM3jqqFT2HBLtwQicWKKhpt6M3ZC9khg8va/QrU9aL4x31vXv5qz+39/6as8pKD9GG
- oNar2Fbo=
-X-Gm-Gg: ATEYQzwO9i6nsvWsqONaF7sNKDmeVGNy+sprcfYTDIw+jPerd9H/3I+t/vQWdNIx+DY
- mSpmbl/cwvmoS3nOhMlxEIlxf0doMyfn/y7rifnmMVkaBXItzclB8DMclEysAav7x/LILEs7pya
- nZgqUc5oPVl7l2Vt2YXh81gqzoJOI/F/Iyoj6CbHZMbYI00VpTSB/jPvdlj3a7dRHG7Ezy3oLMY
- cc7Sw4ZM9gNrEAwvb2JGYUTBtThx4438gTvX1izQ41j58MwkkFxqTcWM5lUc6hgCw/cIOyKqCLQ
- bon8O+dfxUTZPBZJeFpxvf+l0nMLEOzyoNrhcJob9uTUdfQJdFsan5U9CKPSKKexGuDyy1NKkR4
- fmsldpCHpplk/xVk9xx0OLyp2WLzuNriDdgkNeQzXAknG+mslX8d6srXicFEYtSY4r6m2GzOoI/
- NGZFBoOfIKmFpEksaDHSGc8S550Nnd78KdBOONpkKHCyqLVZDwRNQKn3EbEq3r/NX5xh1a557k
-X-Received: by 2002:a05:600c:1f10:b0:485:379b:57bb with SMTP id
- 5b1f17b1804b1-4854b0a413emr9173225e9.3.1773184854807; 
- Tue, 10 Mar 2026 16:20:54 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773184847; x=1773789647;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5g/FeXZUDgVhqVd2S+hP2e5WaTTBdNua5vIYuBxxiso=;
+ b=tdy6KiVZH3eUn24KUFrzjNLE0mdLvi8mI25+Uk5F6uw7Yn0F4kfi4i94cuLwcxSPqO
+ zoIcRUvF3BSi/Kwr1AwDxwOdPH0JgJKZ9PVC68zFtJUx2NJyjCZsa/YNVs4b0F6/CvgB
+ wmcVai+0cvM/pa4kdmTpJFULWEsYGZeAhne+Y25nxQCBjHAB19osIUOcESYaSRhYaHhG
+ G5bjdlVw5tGdvT1KOiLeN9hhDIsu3zc4R3CwlvcJgPc6eXF9JsynjZPbGB2Q9i4qvVEN
+ KcmSH7VfGFYBNWxVDpKunmdRZce7aOOt7PaqVCbucSbNN571tb5EXMUhzIvxOqKJh0tG
+ 3sqg==
+X-Gm-Message-State: AOJu0YwiDM1UEVLZzSYZRE16z4uA91qSejIQdZqoAX/WWFfDyds7wqNv
+ FzuCMnHVjUhMIJTZWcnycM6RYl0UQPII5DLl8RDTaibmLY48qiMxcLxqUxOUDFi2sgStDjtxRfa
+ QN/wrHCA=
+X-Gm-Gg: ATEYQzyaI5k8R4dywD1ZV8AFWID55HBA7y31oV88/WxauT143ViXCHAxfmYJr+NgOZA
+ MO04tSZcx/F6HXx3+vQ/xJZfwHHCZ7y4QSbXQtIYTpmuv9XanC6AIlDREjbMV//3H2Ow9pB8+mM
+ ZQGEW2xBxl8DyyVdWdQ7cbeafoe6rKfLtCfNvLI+pSchLsfdsYy7ALocEMWIV/pcGZI59MiaJou
+ BmvHH17UKj7wdxm/XAtK/s5p/W9uHF/Cs+lJFzTnd72GI5TyGO78ytuX8jHk5fyQBffiaEtSQIi
+ prnx5+WdMEmXj/5Xj03FNYYjZWEqYCOuRbkVFPOaytQEgxk+/5GjR3gjxbXrCBT0AdcudNyqOjM
+ /3juCnV43I3RfsACoZ2zZSOv/zIhR5kCChv6fSgHMfeCk17OVYdJl+RXiXLYGWlhS+9Bo/jpSs3
+ OPDZO95/bUCWzvVq8l34AVuber+94lUaj9sIteHj6VUkZotG4BrumejmxcUjtZslLGVdalWZZ4
+X-Received: by 2002:a05:600c:3551:b0:485:3f1c:d8a4 with SMTP id
+ 5b1f17b1804b1-4854b0d6c1amr8383865e9.9.1773184847073; 
+ Tue, 10 Mar 2026 16:20:47 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854a3068cfsm5932415e9.8.2026.03.10.16.20.53
+ 5b1f17b1804b1-4854b0dc76csm3365535e9.24.2026.03.10.16.20.46
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 16:20:54 -0700 (PDT)
+ Tue, 10 Mar 2026 16:20:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v4 01/16] tests/tcg: Temporary disable multiarch tests for PPC
- targets
-Date: Wed, 11 Mar 2026 00:20:29 +0100
-Message-ID: <20260310232045.58440-2-philmd@linaro.org>
+Subject: [PATCH v4 00/16] gdbstub: Always infer base register index from GDB
+ XML
+Date: Wed, 11 Mar 2026 00:20:28 +0100
+Message-ID: <20260310232045.58440-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260310232045.58440-1-philmd@linaro.org>
-References: <20260310232045.58440-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::333;
  envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
@@ -103,42 +100,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-gdbstub is currently broken for the PPC targets [*]. We
-didn't notice because our tests require gdb-multiarch which
-isn't installed on our containers. Next patch will fix that,
-but we need to temporary disable the PPC target test to keep
-our CI green.
+Generic fix for a latent bug reported by Florian:
+https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
 
-[*] https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
+Use the 'regnum' XML tag for feature base register index
+(after fixing the incorrect m68k FPU ones).
 
-Suggested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <c957fe25-a0a2-405f-be83-d411261c21e6@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- tests/tcg/multiarch/Makefile.target | 4 ++++
- 1 file changed, 4 insertions(+)
+Include patches from "gdbstub: Generate a single gdbstub-xml.c /
+gdb_static_features[]".
 
-diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
-index a347efbadf0..73c2a78215c 100644
---- a/tests/tcg/multiarch/Makefile.target
-+++ b/tests/tcg/multiarch/Makefile.target
-@@ -156,12 +156,16 @@ else
- run-gdbstub-%:
- 	$(call skip-test, "gdbstub test $*", "need working gdb with $(patsubst -%,,$(TARGET_NAME)) support")
- endif
-+# gdbstub currently broken on ppc, see:
-+# https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
-+ifneq ($(TARGET_NAME), ppc)
- EXTRA_RUNS += run-gdbstub-sha1 run-gdbstub-qxfer-auxv-read \
- 	      run-gdbstub-proc-mappings run-gdbstub-thread-breakpoint \
- 	      run-gdbstub-registers run-gdbstub-prot-none \
- 	      run-gdbstub-catch-syscalls run-gdbstub-follow-fork-mode-child \
- 	      run-gdbstub-follow-fork-mode-parent \
- 	      run-gdbstub-qxfer-siginfo-read run-gdbstub-late-attach
-+endif
- 
- # ARM Compatible Semi Hosting Tests
- #
+v3:
+- Correctly update @base_reg in gdb_register_coprocessor()
+v4:
+- Disable prot-note tests
+- Add gdb-multiarch to run gdbstub tests on CI
+
+Alex Bennée (1):
+  tests/docker: add gdb-multiarch to all-test-cross
+
+Philippe Mathieu-Daudé (15):
+  tests/tcg: Temporary disable multiarch tests for PPC targets
+  tests/tcg: Disable prot-none test on GitLab
+  target/i386/gdbstub: Remove stale comment
+  meson: Restrict gdbstub to user/system builds
+  gdbstub: Simplify gdb_init_cpu() logic
+  gdbstub: Add trace events for around XML parsing / generation
+  gdbstub: Have scripts/feature_to_c.py generate more verbose output
+  gdbstub: Make base register explicit in m68k GDB XML files
+  gdbstub: Remove @g_pos argument in gdb_register_coprocessor()
+  gdbstub: Emit base_register index in GDBFeature entries
+  gdbstub: Consider GDBFeature::base_reg in gdb_register_coprocessor()
+  tests/tcg: Re-enable disabled multiarch tests for PPC targets
+  gdbstub: Remove 'gdb-xml/' directory prefix in TARGET_XML_FILES
+  gdbstub: Move gdb-xml/ within gdbstub/
+  gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[]
+
+ MAINTAINERS                                   | 19 +++++-----
+ docs/devel/codebase.rst                       |  2 -
+ configs/targets/aarch64-bsd-user.mak          |  2 +-
+ configs/targets/aarch64-linux-user.mak        |  2 +-
+ configs/targets/aarch64-softmmu.mak           |  2 +-
+ configs/targets/aarch64_be-linux-user.mak     |  2 +-
+ configs/targets/alpha-linux-user.mak          |  2 +-
+ configs/targets/alpha-softmmu.mak             |  2 +-
+ configs/targets/arm-bsd-user.mak              |  2 +-
+ configs/targets/arm-linux-user.mak            |  2 +-
+ configs/targets/arm-softmmu.mak               |  2 +-
+ configs/targets/armeb-linux-user.mak          |  2 +-
+ configs/targets/avr-softmmu.mak               |  2 +-
+ configs/targets/hexagon-linux-user.mak        |  2 +-
+ configs/targets/i386-bsd-user.mak             |  2 +-
+ configs/targets/i386-linux-user.mak           |  2 +-
+ configs/targets/i386-softmmu.mak              |  2 +-
+ configs/targets/loongarch64-linux-user.mak    |  2 +-
+ configs/targets/loongarch64-softmmu.mak       |  2 +-
+ configs/targets/m68k-linux-user.mak           |  2 +-
+ configs/targets/m68k-softmmu.mak              |  2 +-
+ configs/targets/microblaze-linux-user.mak     |  2 +-
+ configs/targets/microblaze-softmmu.mak        |  2 +-
+ configs/targets/microblazeel-linux-user.mak   |  2 +-
+ configs/targets/or1k-linux-user.mak           |  2 +-
+ configs/targets/or1k-softmmu.mak              |  2 +-
+ configs/targets/ppc-linux-user.mak            |  2 +-
+ configs/targets/ppc-softmmu.mak               |  2 +-
+ configs/targets/ppc64-linux-user.mak          |  2 +-
+ configs/targets/ppc64-softmmu.mak             |  2 +-
+ configs/targets/ppc64le-linux-user.mak        |  2 +-
+ configs/targets/riscv32-linux-user.mak        |  2 +-
+ configs/targets/riscv32-softmmu.mak           |  2 +-
+ configs/targets/riscv64-bsd-user.mak          |  2 +-
+ configs/targets/riscv64-linux-user.mak        |  2 +-
+ configs/targets/riscv64-softmmu.mak           |  2 +-
+ configs/targets/rx-softmmu.mak                |  2 +-
+ configs/targets/s390x-linux-user.mak          |  2 +-
+ configs/targets/s390x-softmmu.mak             |  2 +-
+ configs/targets/sparc-linux-user.mak          |  2 +-
+ configs/targets/sparc-softmmu.mak             |  2 +-
+ configs/targets/sparc32plus-linux-user.mak    |  2 +-
+ configs/targets/sparc64-linux-user.mak        |  2 +-
+ configs/targets/sparc64-softmmu.mak           |  2 +-
+ configs/targets/x86_64-bsd-user.mak           |  2 +-
+ configs/targets/x86_64-linux-user.mak         |  2 +-
+ configs/targets/x86_64-softmmu.mak            |  2 +-
+ meson.build                                   | 12 +-----
+ include/exec/gdbstub.h                        |  4 +-
+ stubs/gdbstub.c => gdbstub/gdb-xml-stub.c     |  0
+ gdbstub/gdbstub.c                             | 38 ++++++++++++-------
+ target/arm/gdbstub.c                          | 21 ++++------
+ target/arm/gdbstub64.c                        | 19 ++++------
+ target/hexagon/cpu.c                          |  2 +-
+ target/i386/gdbstub.c                         | 12 ++----
+ target/loongarch/gdbstub.c                    |  6 +--
+ target/m68k/helper.c                          |  4 +-
+ target/microblaze/cpu.c                       |  3 +-
+ target/ppc/gdbstub.c                          | 11 +++---
+ target/riscv/gdbstub.c                        | 18 +++------
+ target/s390x/gdbstub.c                        | 15 ++++----
+ target/sparc/gdbstub.c                        | 12 ++----
+ {gdb-xml => gdbstub/gdb-xml}/aarch64-core.xml |  0
+ {gdb-xml => gdbstub/gdb-xml}/aarch64-fpu.xml  |  0
+ {gdb-xml => gdbstub/gdb-xml}/aarch64-mte.xml  |  0
+ .../gdb-xml}/aarch64-pauth.xml                |  0
+ {gdb-xml => gdbstub/gdb-xml}/aarch64-sme2.xml |  0
+ {gdb-xml => gdbstub/gdb-xml}/alpha-core.xml   |  0
+ {gdb-xml => gdbstub/gdb-xml}/arm-core.xml     |  0
+ .../gdb-xml}/arm-m-profile-mve.xml            |  0
+ .../gdb-xml}/arm-m-profile.xml                |  0
+ {gdb-xml => gdbstub/gdb-xml}/arm-neon.xml     |  0
+ .../gdb-xml}/arm-vfp-sysregs.xml              |  0
+ {gdb-xml => gdbstub/gdb-xml}/arm-vfp.xml      |  0
+ {gdb-xml => gdbstub/gdb-xml}/arm-vfp3.xml     |  0
+ {gdb-xml => gdbstub/gdb-xml}/avr-cpu.xml      |  0
+ {gdb-xml => gdbstub/gdb-xml}/cf-core.xml      |  0
+ {gdb-xml => gdbstub/gdb-xml}/cf-fp.xml        |  2 +-
+ {gdb-xml => gdbstub/gdb-xml}/hexagon-core.xml |  0
+ {gdb-xml => gdbstub/gdb-xml}/hexagon-hvx.xml  |  0
+ .../gdb-xml}/i386-32bit-linux.xml             |  0
+ {gdb-xml => gdbstub/gdb-xml}/i386-32bit.xml   |  0
+ .../gdb-xml}/i386-64bit-apx.xml               |  0
+ .../gdb-xml}/i386-64bit-linux.xml             |  0
+ {gdb-xml => gdbstub/gdb-xml}/i386-64bit.xml   |  0
+ .../gdb-xml}/loongarch-base32.xml             |  0
+ .../gdb-xml}/loongarch-base64.xml             |  0
+ .../gdb-xml}/loongarch-fpu.xml                |  0
+ .../gdb-xml}/loongarch-lasx.xml               |  0
+ .../gdb-xml}/loongarch-lsx.xml                |  0
+ {gdb-xml => gdbstub/gdb-xml}/m68k-core.xml    |  0
+ {gdb-xml => gdbstub/gdb-xml}/m68k-fp.xml      |  2 +-
+ .../gdb-xml}/microblaze-core.xml              |  0
+ .../gdb-xml}/microblaze-stack-protect.xml     |  0
+ {gdb-xml => gdbstub/gdb-xml}/or1k-core.xml    |  0
+ .../gdb-xml}/power-altivec.xml                |  0
+ {gdb-xml => gdbstub/gdb-xml}/power-core.xml   |  0
+ {gdb-xml => gdbstub/gdb-xml}/power-fpu.xml    |  0
+ {gdb-xml => gdbstub/gdb-xml}/power-spe.xml    |  0
+ {gdb-xml => gdbstub/gdb-xml}/power-vsx.xml    |  0
+ {gdb-xml => gdbstub/gdb-xml}/power64-core.xml |  0
+ .../gdb-xml}/riscv-32bit-cpu.xml              |  0
+ .../gdb-xml}/riscv-32bit-fpu.xml              |  0
+ .../gdb-xml}/riscv-32bit-virtual.xml          |  0
+ .../gdb-xml}/riscv-64bit-cpu.xml              |  0
+ .../gdb-xml}/riscv-64bit-fpu.xml              |  0
+ .../gdb-xml}/riscv-64bit-virtual.xml          |  0
+ {gdb-xml => gdbstub/gdb-xml}/rx-core.xml      |  0
+ {gdb-xml => gdbstub/gdb-xml}/s390-acr.xml     |  0
+ {gdb-xml => gdbstub/gdb-xml}/s390-cr.xml      |  0
+ {gdb-xml => gdbstub/gdb-xml}/s390-fpr.xml     |  0
+ {gdb-xml => gdbstub/gdb-xml}/s390-gs.xml      |  0
+ .../gdb-xml}/s390-virt-kvm.xml                |  0
+ {gdb-xml => gdbstub/gdb-xml}/s390-virt.xml    |  0
+ {gdb-xml => gdbstub/gdb-xml}/s390-vx.xml      |  0
+ {gdb-xml => gdbstub/gdb-xml}/s390x-core64.xml |  0
+ {gdb-xml => gdbstub/gdb-xml}/sparc32-cp0.xml  |  0
+ {gdb-xml => gdbstub/gdb-xml}/sparc32-cpu.xml  |  0
+ {gdb-xml => gdbstub/gdb-xml}/sparc32-fpu.xml  |  0
+ {gdb-xml => gdbstub/gdb-xml}/sparc64-cp0.xml  |  0
+ {gdb-xml => gdbstub/gdb-xml}/sparc64-cpu.xml  |  0
+ {gdb-xml => gdbstub/gdb-xml}/sparc64-fpu.xml  |  0
+ gdbstub/meson.build                           | 23 +++++++++++
+ gdbstub/trace-events                          |  7 ++++
+ scripts/feature_to_c.py                       | 14 ++++---
+ stubs/meson.build                             |  2 -
+ .../dockerfiles/debian-all-test-cross.docker  |  1 +
+ tests/lcitool/refresh                         |  1 +
+ tests/tcg/multiarch/Makefile.target           |  5 +++
+ 129 files changed, 177 insertions(+), 168 deletions(-)
+ rename stubs/gdbstub.c => gdbstub/gdb-xml-stub.c (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/aarch64-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/aarch64-fpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/aarch64-mte.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/aarch64-pauth.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/aarch64-sme2.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/alpha-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/arm-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/arm-m-profile-mve.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/arm-m-profile.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/arm-neon.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp-sysregs.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp3.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/avr-cpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/cf-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/cf-fp.xml (93%)
+ rename {gdb-xml => gdbstub/gdb-xml}/hexagon-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/hexagon-hvx.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/i386-32bit-linux.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/i386-32bit.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit-apx.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit-linux.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/loongarch-base32.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/loongarch-base64.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/loongarch-fpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/loongarch-lasx.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/loongarch-lsx.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/m68k-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/m68k-fp.xml (93%)
+ rename {gdb-xml => gdbstub/gdb-xml}/microblaze-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/microblaze-stack-protect.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/or1k-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/power-altivec.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/power-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/power-fpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/power-spe.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/power-vsx.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/power64-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-cpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-fpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-virtual.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-cpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-fpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-virtual.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/rx-core.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390-acr.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390-cr.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390-fpr.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390-gs.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390-virt-kvm.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390-virt.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390-vx.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/s390x-core64.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/sparc32-cp0.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/sparc32-cpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/sparc32-fpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/sparc64-cp0.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/sparc64-cpu.xml (100%)
+ rename {gdb-xml => gdbstub/gdb-xml}/sparc64-fpu.xml (100%)
+
 -- 
 2.53.0
 
