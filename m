@@ -4,65 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F058EB1053
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 11:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5114EB1052
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 11:53:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzva6-0003Sb-KH; Tue, 10 Mar 2026 07:48:59 -0400
+	id 1vzvds-0005FG-Nj; Tue, 10 Mar 2026 07:52:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzvZL-0003Lx-Oz
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 07:48:12 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzvdj-0005Ed-I4
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 07:52:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzvZK-000110-8F
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 07:48:11 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzvdh-0001h1-NR
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 07:52:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773143289;
+ s=mimecast20190719; t=1773143560;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Ticjyx0rJFT9ZL3vtP4WlISSvfOKWqzOPAwqglSEBDQ=;
- b=TERdi/Ly8UCKa4lCOh6g75RBxE2R8iT/B5fQ6VFY5VvJhXDUqQDThVREWKNy/v6YDYr+ew
- 2GBTMAVPWmhQM/fBQHj+JO8daaNLcpPUWKYACgLp4UPHsdhuduffIfEWfyxi7WCQDGfOc1
- 5B6Z0VU5ABtqj5rRPcPvA/sjTeLi714=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Z1wZhdknnAMZbqWthtVmRMki4CyPmY1HK5asoqlizIY=;
+ b=S55KSdYwqtulpwHC/+sdXDLZt6jOdt4Mu8/C7js6uXbO7yac9ff0+oFdUBsKuqszi7EhSQ
+ xCOlcOtZ+c+fvSpvwm2HkQHRuZFHF6cQCkK41j22+sxQGHw8tFGrwb5gb5eGgJbdvDPd1W
+ RZloqJMyLY3pm+bTPq/3nlepPL5ZGuc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-WmiZlzjnNDihInI3UyjpCg-1; Tue,
- 10 Mar 2026 07:48:06 -0400
-X-MC-Unique: WmiZlzjnNDihInI3UyjpCg-1
-X-Mimecast-MFC-AGG-ID: WmiZlzjnNDihInI3UyjpCg_1773143285
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-41-7L_1kw3YNtKPbAXFDrDNAA-1; Tue,
+ 10 Mar 2026 07:52:39 -0400
+X-MC-Unique: 7L_1kw3YNtKPbAXFDrDNAA-1
+X-Mimecast-MFC-AGG-ID: 7L_1kw3YNtKPbAXFDrDNAA_1773143558
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F403119560BD; Tue, 10 Mar 2026 11:48:04 +0000 (UTC)
-Received: from toolbx.redhat.com (unknown [10.44.33.213])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3508A1800351; Tue, 10 Mar 2026 11:48:02 +0000 (UTC)
-From: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: Thomas Huth <thuth@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH v2 2/2] tests/functional: remove heuristics for finding build
- dir
-Date: Tue, 10 Mar 2026 11:47:56 +0000
-Message-ID: <20260310114756.146083-3-berrange@redhat.com>
-In-Reply-To: <20260310114756.146083-1-berrange@redhat.com>
-References: <20260310114756.146083-1-berrange@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0644F18005B4; Tue, 10 Mar 2026 11:52:38 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A1C2619560A6; Tue, 10 Mar 2026 11:52:37 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 185F721E681B; Tue, 10 Mar 2026 12:52:35 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Alessandro
+ Ratti <alessandro@0x65c.net>,  alessandro.ratti@gmail.com,
+ alex.bennee@linaro.org,  mst@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] virtio: improve virtqueue mapping error messages
+In-Reply-To: <CAFEAcA85zD1d=4xkXKFyefYjsj14DqpBDXrPbtfSfa0ry8raKw@mail.gmail.com>
+ (Peter Maydell's message of "Tue, 10 Mar 2026 11:09:01 +0000")
+References: <aNLIHOwcGB47qbUY@redhat.com>
+ <20250924093138.559872-1-alessandro@0x65c.net>
+ <20250924093138.559872-2-alessandro@0x65c.net>
+ <aNO7J7Y6wsk1-wyw@redhat.com>
+ <CAFEAcA9oKbFi7hBvKcz_v_xWtHaPz4n3Q_cVEai1F1kZnr5PiA@mail.gmail.com>
+ <87a4wgc5gh.fsf@pond.sub.org>
+ <CAFEAcA85zD1d=4xkXKFyefYjsj14DqpBDXrPbtfSfa0ry8raKw@mail.gmail.com>
+Date: Tue, 10 Mar 2026 12:52:35 +0100
+Message-ID: <874imnc35o.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -87,64 +92,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently some heuristics are used to locate the build dir, if the
-MESON_BUILD_ROOT environment variable is not set. These are not
-entirely accurate, however, especially if the developer is using
-nested sub-dirs under $PWD/build/...
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-Since the introduction of the 'run' script, we can ensure any
-direct execution of the tests will have MESON_BUILD_ROOT set.
+> On Tue, 10 Mar 2026 at 11:03, Markus Armbruster <armbru@redhat.com> wrote:
+>> Neither function is ideal.  But in their current state, I *strongly*
+>> prefer qdev_get_human_name(), because I hate having to decipher a QOM
+>> path less than having to guess what kind of device this might be, then
+>> figure out what format its .get_dev_path() uses.
+>>
+>> If someone posts a patch to fix the shortcomings of
+>> qdev_get_printable_name() I outlined above, we can talk.
+>
+> How do you feel about the proposed unification of the two
+> functions done in this patch?
+>
+> https://lore.kernel.org/qemu-devel/20260308160040.354186-2-alessandro@0x65c.net/
 
-Meanwhile when meson runs the test it will also have this env
-set. The only gap is when running pre-caching, and that is easily
-fixed to set MESON_BUILD_ROOT.
-
-It can thus be assumed that MESON_BUILD_ROOT will always be set
-in any supported execution scenario, which allows the heuristics
-to be removed.
-
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
----
- tests/functional/meson.build         |  1 +
- tests/functional/qemu_test/config.py | 11 +++--------
- 2 files changed, 4 insertions(+), 8 deletions(-)
-
-diff --git a/tests/functional/meson.build b/tests/functional/meson.build
-index d34aefa8b0..1b94c2efb6 100644
---- a/tests/functional/meson.build
-+++ b/tests/functional/meson.build
-@@ -95,6 +95,7 @@ foreach speed : ['quick', 'thorough']
-       teststamp = testname + '.tstamp'
-       test_precache_env = environment()
-       test_precache_env.set('QEMU_TEST_PRECACHE', meson.current_build_dir() / teststamp)
-+      test_precache_env.set('MESON_BUILD_ROOT', meson.project_build_root())
-       test_precache_env.set('PYTHONPATH', meson.project_source_root() / 'python:' +
-                                           meson.current_source_dir())
-       precache = custom_target('func-precache-' + testname,
-diff --git a/tests/functional/qemu_test/config.py b/tests/functional/qemu_test/config.py
-index 0192027233..e0893f630e 100644
---- a/tests/functional/qemu_test/config.py
-+++ b/tests/functional/qemu_test/config.py
-@@ -24,15 +24,10 @@ def _build_dir():
-     root = os.getenv('MESON_BUILD_ROOT')
-     if root is not None:
-         return Path(root)
--    # Makefile.mtest only exists in build dir, so if it is available, use CWD
--    if os.path.exists('Makefile.mtest'):
--        return Path(os.getcwd())
- 
--    root = os.path.join(_source_dir(), 'build')
--    if os.path.exists(root):
--        return Path(root)
--
--    raise Exception("Cannot identify build dir, set MESON_BUILD_ROOT")
-+    raise Exception("Missing MESON_BUILD_ROOT environment variable. " +
-+                    "Please use the '<BUILD-DIR>/run' script if invoking " +
-+                    "directly instead of via make/meson")
- 
- BUILD_DIR = _build_dir()
- 
--- 
-2.53.0
+Thanks for the pointer, I'll reply there.
 
 
