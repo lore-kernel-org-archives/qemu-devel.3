@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8662CFD88C7
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:33:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABDB6FD88C7
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:33:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w05d4-0001KI-Um; Tue, 10 Mar 2026 18:32:43 -0400
+	id 1w05d2-0001Io-Uh; Tue, 10 Mar 2026 18:32:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cu-0001Fw-Na
+ id 1w05cu-0001Fv-NR
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:34 -0400
 Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cs-00073u-5w
+ id 1w05cr-00073c-9m
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:32 -0400
 X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
 Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- dd1a111eb4860f1c12934ed2843786ddb528a15c181ef1ee0b540968d4cb5591 with SMTP id
- 69b09bf63d2e7d2b970e52cb; Tue, 10 Mar 2026 22:32:22 GMT
+ ef8cb5a096bd0b111214fe5b7167cad5f7917c3de0449a8d432d9c13c6c82cb5 with SMTP id
+ 69b09bf5026b9427582cbc13; Tue, 10 Mar 2026 22:32:21 GMT
 X-Mailgun-Sending-Ip: 143.55.232.12
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
  s=rsa2048; t=1773181941;
- bh=gbGcz6KPFpon6gDzfcTyRTwLorioz88BSTAwE0HoKnI=;
+ bh=RyVAKJLMo0aGuRn7813OVY/29sKqnOGraCtDLeWGLNE=;
  h=X-Mailgun-Dkim:From:Date:Subject:MIME-Version:Content-Type:
  Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
  X-Developer-Signature:X-Developer-Key:From:Reply-to:Subject:Date:
  Message-id:To:Cc:Mime-version:Content-type:
  Content-transfer-encoding:In-reply-to:References;
- b=mzwP3MolxHaOz6FLinAh1dTw77KjqcXICeHcbaipiupj688WG1lsylrvnY0MnUj+e
- 3wwSKdfvHU4AKJk7GFNgZ7PPyy0L02Vtlrg+bhob+VlBoKws0PcoxnCq0ypGNJB6rk
- 8epSjskzbe42gsxcB5cd1OaECg6TM0VCto9hVNiC36R19vDVI1O6WEEUNOuBvS4fq7
- J0UroFxmt79u2tRJp+n4PvM8BB9gKESaIIXYhzdpZ2U6VUirzpcWEXCNYA69871OrX
- +P4OWmwG/EwTWssPc7IZCGNeRz+HaYX7QJVLVMuGDf3HO7SA4eU5XWOTf2XSttt2hy
- T4MMBr7MQi0zA==
+ b=UcznkTtFzyqtnembeK67LuDN3PcwvImRqjSWchU/RJeyyqMZUg99ffxTMCiLbihq4
+ iS5BW6XSgBiBxQMBAF3MJyLx8OFcrLdLHHCYN2oqRPENEkqixZ5/42nLVUeAS6eBDF
+ 6xyxrh+NPU+sr1y9SUFP7pepBcic9+1UZApK3CL0fBWTPL/RmzALXDirjJNU1TlmAT
+ tude8J68qWqby5h5ptkWlV66jxtYyUnPINWWnFLpHHTfBADlhpc3lVzw3/5slduJaO
+ A4ue+bembmOEhUfcRDfTYdl6wblSYHuibMRWG6IXRKkx9w2J5JcodYyILfi9FWI1SG
+ nQisK1ID7R/Ww==
 X-Mailgun-Dkim: no
 X-Mailgun-Dkim: no
 From: Yodel Eldar <yodel.eldar@yodel.dev>
-Date: Tue, 10 Mar 2026 17:31:49 -0500
-Subject: [PATCH 09/15] hw/alpha: Convert IRQ pointers to named GPIOs
+Date: Tue, 10 Mar 2026 17:31:47 -0500
+Subject: [PATCH 07/15] hw/alpha: Use QOM composition for the Typhoon
+ chipset
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-MS-Reactions: disallow
-Message-Id: <20260310-qomify-alpha-v1-9-4375b00a85ff@yodel.dev>
+Message-Id: <20260310-qomify-alpha-v1-7-4375b00a85ff@yodel.dev>
 References: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
 In-Reply-To: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Yodel Eldar <yodel.eldar@yodel.dev>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4510; i=yodel.eldar@yodel.dev; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=5491; i=yodel.eldar@yodel.dev; 
  h=from:subject:message-id;
- bh=rXxKkCgg9TKmZFppB9FKN9HnN6ES1MNT9sY4hCQAZcY=; 
- b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDI3zP7E2vhn+V61dVdcDv5x5O+K1SrIu//TOrFFJGzKz
- g2zYlmEOkpZGMS4GGTFFFkun5U465C7uytt5Y/7MHNYmUCGMHBxCsBE5k5gZNg2q+B40Jf6C0/i
- o9dnZ7aH255y2Tx/btVTZuGFUwwv7Mph+J/97tc+uc8b1uwrXXFrd2XHipRVwcIXTKR0l1ZLbPN
- a8ZoVAA==
+ bh=t9rEAymgy1ah9FBlM7UtLVNH7ETZR6oaCjVJ6+nJg6U=; 
+ b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDI3zP5oXHqhdY+n89cLC8TfV9/gY0xYNPfedPe3c9ZpH
+ zT918O7raOUhUGMi0FWTJHl8lmJsw65u7vSVv64DzOHlQlkCAMXpwBMxOonI8P86e6f97yvOqHj
+ Vmr69VWs17/uoEaZ7MWPbhVf9Zm/56gLI8PVVY5fLrH1RpUfETv86dsEtRNrp5u8e7+24IwfT37
+ a//9cAA==
 X-Developer-Key: i=yodel.eldar@yodel.dev; a=openpgp;
  fpr=D3CD18CD406DBB8A66A9F8DF95EE4FB736654DAC
 Received-SPF: pass client-ip=143.55.232.12;
@@ -91,119 +92,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eliminate the qemu_irq parameters of typhoon_init() by using
-qdev_init_gpio_in_named() for the IRQ lines.
+Export the QOM declaration of TyphoonState by moving it out of
+hw/alpha/typhoon.c into hw/alpha/alpha_sys.h. Keep its definition
+encapsulated.
 
-Replace the qemu_irq variables in clipper_init() by calling
-qdev_get_gpio_in_named() in their place.
+Define ClipperMachineState with a TyphoonState member.
+
+Move the instantiation of Typhoon out of typhoon_init() into the
+Clipper machine and add it as a QOM child object of Clipper.
+
+For now, add TyphoonState pointer as a parameter of typhoon_init().
+
+Note: Eventually, typhoon_init() will be split into Typhoon's
+instance_init and realize hooks; this is an intermediate commit
+to that end.
 
 Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 ---
- hw/alpha/alpha_sys.h |  5 ++++-
- hw/alpha/dp264.c     | 12 +++++++-----
- hw/alpha/typhoon.c   | 11 ++++++-----
- 3 files changed, 17 insertions(+), 11 deletions(-)
+ hw/alpha/alpha_sys.h |  4 +++-
+ hw/alpha/dp264.c     | 31 ++++++++++++++++++++++++++++---
+ hw/alpha/typhoon.c   | 12 +++---------
+ 3 files changed, 34 insertions(+), 13 deletions(-)
 
 diff --git a/hw/alpha/alpha_sys.h b/hw/alpha/alpha_sys.h
-index f6779520d9..39a96760d7 100644
+index 6e6691d116..247a52b776 100644
 --- a/hw/alpha/alpha_sys.h
 +++ b/hw/alpha/alpha_sys.h
-@@ -11,9 +11,12 @@
- #define TYPE_TYPHOON_PCI_HOST_BRIDGE "typhoon-pcihost"
- OBJECT_DECLARE_SIMPLE_TYPE(TyphoonState, TYPHOON_PCI_HOST_BRIDGE)
+@@ -8,9 +8,11 @@
+ #include "hw/core/boards.h"
+ #include "hw/intc/i8259.h"
  
--PCIBus *typhoon_init(MemoryRegion *, qemu_irq *, qemu_irq *,
-+PCIBus *typhoon_init(MemoryRegion *,
-                      pci_map_irq_fn, uint8_t devfn_min, TyphoonState *);
++#define TYPE_TYPHOON_PCI_HOST_BRIDGE "typhoon-pcihost"
++OBJECT_DECLARE_SIMPLE_TYPE(TyphoonState, TYPHOON_PCI_HOST_BRIDGE)
  
-+#define TYPHOON_GPIO_ISA_IRQ "isa-irq"
-+#define TYPHOON_GPIO_RTC_IRQ "rtc-irq"
-+
+ PCIBus *typhoon_init(MemoryRegion *, qemu_irq *, qemu_irq *, AlphaCPU *[4],
+-                     pci_map_irq_fn, uint8_t devfn_min);
++                     pci_map_irq_fn, uint8_t devfn_min, TyphoonState *);
+ 
  /* alpha_pci.c.  */
  extern const MemoryRegionOps alpha_pci_ignore_ops;
- extern const MemoryRegionOps alpha_pci_conf1_ops;
 diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
-index c0996efffe..61eeaef6db 100644
+index b2ef423f93..c9d639eb7b 100644
 --- a/hw/alpha/dp264.c
 +++ b/hw/alpha/dp264.c
-@@ -66,8 +66,6 @@ static void clipper_init(MachineState *machine)
-     PCIDevice *pci_dev;
-     DeviceState *i82378_dev;
-     ISABus *isa_bus;
--    qemu_irq rtc_irq;
--    qemu_irq isa_irq;
-     long size, i;
-     char *palcode_filename;
-     uint64_t palcode_entry;
-@@ -108,7 +106,7 @@ static void clipper_init(MachineState *machine)
-      * Init the chipset.  Because we're using CLIPPER IRQ mappings,
+@@ -18,6 +18,15 @@
+ #include "hw/isa/superio.h"
+ #include "qemu/datadir.h"
+ 
++#define TYPE_CLIPPER_MACHINE MACHINE_TYPE_NAME("clipper")
++OBJECT_DECLARE_SIMPLE_TYPE(ClipperMachineState, CLIPPER_MACHINE)
++
++struct ClipperMachineState {
++    MachineState parent_obj;
++
++    TyphoonState *typhoon;
++};
++
+ static uint64_t cpu_alpha_superpage_to_phys(void *opaque, uint64_t addr)
+ {
+     if (((addr >> 41) & 3) == 2) {
+@@ -46,6 +55,7 @@ static int clipper_pci_map_irq(PCIDevice *d, int irq_num)
+ 
+ static void clipper_init(MachineState *machine)
+ {
++    ClipperMachineState *cms = CLIPPER_MACHINE(machine);
+     ram_addr_t ram_size = machine->ram_size;
+     const char *kernel_filename = machine->kernel_filename;
+     const char *kernel_cmdline = machine->kernel_cmdline;
+@@ -64,6 +74,11 @@ static void clipper_init(MachineState *machine)
+     uint64_t kernel_entry, kernel_low, kernel_high;
+     unsigned int smp_cpus = machine->smp.cpus;
+ 
++    Object * const typhoon_obj = object_new(TYPE_TYPHOON_PCI_HOST_BRIDGE);
++    TyphoonState * const typhoon = TYPHOON_PCI_HOST_BRIDGE(typhoon_obj);
++    cms->typhoon = typhoon;
++    object_property_add_child(OBJECT(machine), "typhoon", typhoon_obj);
++
+     /* Create up to 4 cpus.  */
+     memset(cpus, 0, sizeof(cpus));
+     for (i = 0; i < smp_cpus; ++i) {
+@@ -93,7 +108,7 @@ static void clipper_init(MachineState *machine)
       * the minimum PCI device IdSel is 1.
       */
--    pci_bus = typhoon_init(machine->ram, &isa_irq, &rtc_irq,
-+    pci_bus = typhoon_init(machine->ram,
-                            clipper_pci_map_irq, PCI_DEVFN(1, 0), typhoon);
+     pci_bus = typhoon_init(machine->ram, &isa_irq, &rtc_irq, cpus,
+-                           clipper_pci_map_irq, PCI_DEVFN(1, 0));
++                           clipper_pci_map_irq, PCI_DEVFN(1, 0), typhoon);
  
      /*
-@@ -136,10 +134,14 @@ static void clipper_init(MachineState *machine)
-     isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
+      * Init the PCI -> ISA bridge.
+@@ -218,8 +233,9 @@ static void clipper_init(MachineState *machine)
+     }
+ }
  
-     /* Connect the ISA PIC to the Typhoon IRQ used for ISA interrupts. */
--    qdev_connect_gpio_out(i82378_dev, 0, isa_irq);
-+    qdev_connect_gpio_out(i82378_dev, 0,
-+                          qdev_get_gpio_in_named(DEVICE(typhoon),
-+                                                 TYPHOON_GPIO_ISA_IRQ, 0));
+-static void clipper_machine_init(MachineClass *mc)
++static void clipper_machine_init(ObjectClass *oc, const void *data)
+ {
++    MachineClass *mc = MACHINE_CLASS(oc);
+     mc->desc = "Alpha DP264/CLIPPER";
+     mc->init = clipper_init;
+     mc->block_default_type = IF_IDE;
+@@ -230,4 +246,13 @@ static void clipper_machine_init(MachineClass *mc)
+     mc->default_nic = "e1000";
+ }
  
-     /* Since we have an SRM-compatible PALcode, use the SRM epoch.  */
--    mc146818_rtc_init(isa_bus, 1900, rtc_irq);
-+    mc146818_rtc_init(isa_bus, 1900,
-+                      qdev_get_gpio_in_named(DEVICE(typhoon),
-+                                             TYPHOON_GPIO_RTC_IRQ, 0));
- 
-     /* VGA setup.  Don't bother loading the bios.  */
-     pci_vga_init(pci_bus);
+-DEFINE_MACHINE("clipper", clipper_machine_init)
++static const TypeInfo clipper_types[] = {
++    {
++        .name = TYPE_CLIPPER_MACHINE,
++        .parent = TYPE_MACHINE,
++        .instance_size = sizeof(ClipperMachineState),
++        .class_init = clipper_machine_init,
++    },
++};
++
++DEFINE_TYPES(clipper_types);
 diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
-index 5fac5eba1c..03bb4c8055 100644
+index 5789829818..b0eb4e415c 100644
 --- a/hw/alpha/typhoon.c
 +++ b/hw/alpha/typhoon.c
-@@ -831,8 +831,7 @@ static void typhoon_alarm_timer(void *opaque)
-     cpu_interrupt(CPU(s->cchip.cpu[cpu]), CPU_INTERRUPT_TIMER);
- }
+@@ -18,7 +18,6 @@
+ #include "hw/core/qdev-properties.h"
  
--PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
--                     qemu_irq *p_rtc_irq,
-+PCIBus *typhoon_init(MemoryRegion *ram,
-                      pci_map_irq_fn sys_map_irq, uint8_t devfn_min,
-                      TyphoonState *s)
- {
-@@ -857,9 +856,6 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
-         }
-     }
  
--    *p_isa_irq = qemu_allocate_irq(typhoon_set_isa_irq, s, 0);
--    *p_rtc_irq = qemu_allocate_irq(typhoon_set_timer_irq, s, 0);
+-#define TYPE_TYPHOON_PCI_HOST_BRIDGE "typhoon-pcihost"
+ #define TYPE_TYPHOON_IOMMU_MEMORY_REGION "typhoon-iommu-memory-region"
+ 
+ typedef struct TyphoonCchip {
+@@ -50,8 +49,6 @@ typedef struct TyphoonPchip {
+     TyphoonWindow win[4];
+ } TyphoonPchip;
+ 
+-OBJECT_DECLARE_SIMPLE_TYPE(TyphoonState, TYPHOON_PCI_HOST_BRIDGE)
 -
-     /*
-      * Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
-      * but the address space hole reserved at this point is 8TB.
-@@ -945,6 +941,7 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
- static void typhoon_pcihost_init(Object *obj)
+ struct TyphoonState {
+     PCIHostState parent_obj;
+ 
+@@ -836,18 +833,15 @@ static void typhoon_alarm_timer(void *opaque)
+ 
+ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+                      qemu_irq *p_rtc_irq, AlphaCPU *cpus[4],
+-                     pci_map_irq_fn sys_map_irq, uint8_t devfn_min)
++                     pci_map_irq_fn sys_map_irq, uint8_t devfn_min,
++                     TyphoonState *s)
  {
-     TyphoonState *s = TYPHOON_PCI_HOST_BRIDGE(obj);
-+    DeviceState *dev = DEVICE(obj);
- 
+     MemoryRegion *addr_space = get_system_memory();
+-    DeviceState *dev;
+-    TyphoonState *s;
++    DeviceState *dev = DEVICE(s);
+     PCIHostState *phb;
+     PCIBus *b;
      int i;
-     for (i = 0; i < 4; ++i) {
-@@ -953,6 +950,10 @@ static void typhoon_pcihost_init(Object *obj)
-                                  (Object **)&s->cchip.cpu[i],
-                                  qdev_prop_allow_set_link_before_realize, 0);
-     }
-+
-+    qdev_init_gpio_in_named(dev, typhoon_set_isa_irq, TYPHOON_GPIO_ISA_IRQ, 1);
-+    qdev_init_gpio_in_named(dev, typhoon_set_timer_irq, TYPHOON_GPIO_RTC_IRQ,
-+                            1);
- }
  
- static void typhoon_pcihost_class_init(ObjectClass *klass, const void *data)
+-    dev = qdev_new(TYPE_TYPHOON_PCI_HOST_BRIDGE);
+-
+-    s = TYPHOON_PCI_HOST_BRIDGE(dev);
+     phb = PCI_HOST_BRIDGE(dev);
+ 
+     s->cchip.misc = 0x800000000ull; /* Revision: Typhoon.  */
 
 -- 
 2.53.0
