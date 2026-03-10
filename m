@@ -4,82 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D73BFCC9D1
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 07:05:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8241FCC9D1
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 07:06:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzr9k-0000RH-KR; Tue, 10 Mar 2026 03:05:28 -0400
+	id 1vzrAe-00017w-Nu; Tue, 10 Mar 2026 03:06:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzr9i-0000PC-HD
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:05:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1vzrAc-00015n-IC
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:06:22 -0400
+Received: from outbound5e.eu.mailhop.org ([52.28.168.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzr9g-0000Vx-Le
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:05:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773126323;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=dOWsMxDffEU5sonTHWg6k8c6XF/rLnGiTdq6/9hDcI4=;
- b=HlEZtoVv2wfnFLvejTAIT4k5udh6NBmtDkH1vuyf6Mr0Vhznc2PgwEKX9YdGSVmOlukhaN
- ZtEXE3pbCebbPpBgV2FvnYv0/K84dyCb5LtNhOMLZWAROme93DDTgKvfOfIP3FO23CZBNq
- ng6JsXxXEdRZYzqB27j6LTO0R0JPPNs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-483-HKQBG9fTPK2O7aF3QzAIbw-1; Tue,
- 10 Mar 2026 03:05:19 -0400
-X-MC-Unique: HKQBG9fTPK2O7aF3QzAIbw-1
-X-Mimecast-MFC-AGG-ID: HKQBG9fTPK2O7aF3QzAIbw_1773126317
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 535CE19560B7; Tue, 10 Mar 2026 07:05:17 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AC4F30002D2; Tue, 10 Mar 2026 07:05:16 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 75DC221E681B; Tue, 10 Mar 2026 08:05:13 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Nathan Chen <nathanc@nvidia.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Yi Liu
- <yi.l.liu@intel.com>,  Eric Auger <eric.auger@redhat.com>,  Zhenzhong Duan
- <zhenzhong.duan@intel.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Ani Sinha
- <anisinha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Alex Williamson
- <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Eric Blake
- <eblake@redhat.com>
-Subject: Re: [RFC PATCH 2/8] hw/arm/smmuv3-accel: Introduce _AUTO support
- for ATS
-In-Reply-To: <20260309192119.870186-3-nathanc@nvidia.com> (Nathan Chen's
- message of "Mon, 9 Mar 2026 12:21:13 -0700")
-References: <20260309192119.870186-1-nathanc@nvidia.com>
- <20260309192119.870186-3-nathanc@nvidia.com>
-Date: Tue, 10 Mar 2026 08:05:13 +0100
-Message-ID: <87pl5cnp06.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1vzrAa-0000q9-Na
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:06:22 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=stackframe.org; s=duo-1634547266507-560c42ae;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:cfbl-address:cfbl-feedback-id:from; 
+ bh=v/JBIAuR3rz+9BevGSQ2nYhqZWgI2J2lAMXSfiqFFvw=;
+ b=Favz8GNxaH8moKhLb1wi09Zi0UossFXaja2se12IpvbS68mIcaEdllt/9VMA7+xQk4YrMvyomvhwd
+ 6PBkytzVlYtVoJKce2OMgG5+SNlMTNN1/NRB3KWW8oZlmpEBZPK/IHlZBCSZoAzZp7m3bk9qECBPbd
+ 6qHGkpVTGycfgObw=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=dkim-high;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:cfbl-address:cfbl-feedback-id:from; 
+ bh=v/JBIAuR3rz+9BevGSQ2nYhqZWgI2J2lAMXSfiqFFvw=;
+ b=f0bS//QFgWSDJ1EmNl1c76Qyz3/egIEYWfBOwmWyZWYsGxCoYwXT2MgOxnlhGoljk4D7a2ipSwGNy
+ 1pFvuTEiC9Lt18DF3pVTF/aKFb3xrB93lvNWWr7VWHnC6DsNimoVFVNgoEVGCoK+OtMGwXccFilXWr
+ ryAbTjT/8XAWzK/iC4qZ2RXnX48yFCf1H2TdMDYKHWbCrBBozFRW8y9gATP1V0u7nr1u8WSr1ReIWX
+ WoEdKNQS1Hv5gswwUQkq3GBvXLvoQLRsGQN40f5Pt33m7n3H/P2ODNbTQAzTE05yrGhdvkKTjXSdi+
+ 3w9sHiezishK05uhaeGG8BATPz4nslQ==
+X-Originating-IP: 130.180.31.158
+X-MHO-RoutePath: dG9ta2lzdG5lcm51
+X-MHO-User: 9f8e8d27-1c4f-11f1-bb42-754228886235
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Mail-Handler: DuoCircle Outbound SMTP
+CFBL-Feedback-ID: 9f8e8d27-1c4f-11f1-bb42-754228886235:13
+CFBL-Address: prvs=0529f992e2=abuse@outbound.mailhop.org; report=arf
+Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
+ by outbound2.eu.mailhop.org (Halon) with ESMTPSA
+ id 9f8e8d27-1c4f-11f1-bb42-754228886235;
+ Tue, 10 Mar 2026 07:06:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=v/JBIAuR3rz+9BevGSQ2nYhqZWgI2J2lAMXSfiqFFvw=; b=V7hKNHnXyxG3jxcTgR8pC93Byk
+ Rdou3YuPF43BC/mnJf2Fffxr6b+DY3jxlsHwOP7lLUVJ9j+hHN9+kO8Sv8CjH/pkpHdHQ5uGzFcg6
+ Z5/o5ZEvLi1Ffme4OvTRgADhu/Xrd7EeSlMVmu3aULCXC0AXA1eLLPIgOQD58zLOrAIkhDHCsLAFo
+ Jx/D7BrypJreNo17KmKtid7kwo0M6ISitHB1kUv5RCHjMrfw/VJDy0o0cvj0ExEcmUZUH3BDtQj13
+ LrdW/Sj5eWZpAbWtlqC1ZeudvnGJRb3Yp58iMt0V+/1G2JmJY70P+fqReDmy/mOd6KicaMMymvH2G
+ xS1RwqVA==;
+Received: from [134.3.93.166] (helo=t14.stackframe.org)
+ by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.97)
+ (envelope-from <svens@stackframe.org>) id 1vzrAS-0000000Ay4x-3aRk;
+ Tue, 10 Mar 2026 08:06:12 +0100
+From: Sven Schnelle <svens@stackframe.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: deller@kernel.org,  qemu-devel@nongnu.org,  Soumyajyotii Ssarkar
+ <soumyajyotisarkar23@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Helge Deller <deller@gmx.de>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Fam Zheng <fam@euphon.net>
+Subject: Re: [PULL 12/12] target/hppa: add 64 bit support to gdbstub
+In-Reply-To: <87cy1cb2s8.fsf@stackframe.org>
+References: <20251223155031.7110-1-deller@kernel.org>
+ <20251223155031.7110-13-deller@kernel.org>
+ <52cbaf6d-f7a4-4984-9561-ca31418cdc0f@linaro.org>
+ <87cy1cb2s8.fsf@stackframe.org>
+Date: Tue, 10 Mar 2026 08:06:12 +0100
+Message-ID: <878qc0b1uj.fsf@stackframe.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=52.28.168.19; envelope-from=svens@stackframe.org;
+ helo=outbound5e.eu.mailhop.org
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,157 +108,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nathan Chen <nathanc@nvidia.com> writes:
+Sven Schnelle <svens@stackframe.org> writes:
 
-> From: Nathan Chen <nathanc@nvidia.com>
+> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
 >
-> Allow accelerated SMMUv3 Address Translation Services support property
-> to be derived from host IOMMU capabilities. Derive host values using
-> IOMMU_GET_HW_INFO, retrieving ATS capability from IDR0.
+>> Hi,
+>>
+>> (now merged as commit b2c2d00f48cc5f4486cfba33b505ff86d79cb137)
+>>
+>> On 23/12/25 16:50, deller@kernel.org wrote:
+>>> From: Sven Schnelle <svens@stackframe.org>
+>>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
+>>> Reviewed-by: Helge Deller <deller@gmx.de>
+>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>> Signed-off-by: Helge Deller <deller@gmx.de>
+>>> ---
+>>> target/hppa/gdbstub.c | 62
+>> ++++++++++++++++++++++++++++---------------
+>>>   1 file changed, 41 insertions(+), 21 deletions(-)
+>>> diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
+>>> index 0daa52f7af..777f4a48b9 100644
+>>> --- a/target/hppa/gdbstub.c
+>>> +++ b/target/hppa/gdbstub.c
+>>> @@ -21,16 +21,25 @@
+>>> @@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs,
+>> GByteArray *mem_buf, int n)
+>>>           val =3D env->cr[30];
+>>>           break;
+>>>       case 64 ... 127:
+>>> - val =3D extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
+>>> -        break;
+>>> -    default:
+>>> -        if (n < 128) {
+>>> -            val =3D 0;
+>>> +        if (hppa_is_pa20(env)) {
+>>> +            val =3D env->fr[n - 64];
+>>
+>> Coverity reports:
+>>
+>>>>>     CID 1645613:         Memory - illegal accesses  (OVERRUN)
+>>>>>     Overrunning array "env->fr" of 32 8-byte elements at element
+>>         index 32 (byte offset 263) using index "n - 64" (which
+>>        evaluates to 32).
 >
-> Set the default value of ATS to auto. The default for ATS support used
-> to be set to off, but we change it to match what the host IOMMU
-> properties report.
->
-> Add a "ats-enabled" read-only property for smmuv3 to address an
-> expected bool for the "ats" property in iort_smmuv3_devices().
->
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c    | 25 +++++++++++++++++++++++--
->  hw/arm/smmuv3.c          | 12 ++++++++++--
->  hw/arm/virt-acpi-build.c |  2 +-
->  include/hw/arm/smmuv3.h  |  2 +-
->  4 files changed, 35 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 617629bacd..8fec335557 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -52,6 +52,12 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice *pdev,
->          return;
->      }
->  
-> +    /* Update ATS if auto from info */
-> +    if (s->ats == ON_OFF_AUTO_AUTO) {
-> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS,
-> +                               FIELD_EX32(info->idr[0], IDR0, ATS));
-> +    }
-> +
->      accel->auto_finalised = true;
->  }
->  
-> @@ -124,6 +130,13 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->                     smmuv3_oas_bits(FIELD_EX32(s->idr[5], IDR5, OAS)));
->          return false;
->      }
-> +    /* Check ATS value opted is compatible with Host SMMUv3 */
-> +    if (FIELD_EX32(info->idr[0], IDR0, ATS) <
-> +                FIELD_EX32(s->idr[0], IDR0, ATS)) {
-> +        error_setg(errp, "Host SMMUv3 doesn't support Address Translation"
-> +                   " Services");
-> +        return false;
-> +    }
->  
->      /* QEMU SMMUv3 supports GRAN4K/GRAN16K/GRAN64K translation granules */
->      if (FIELD_EX32(info->idr[5], IDR5, GRAN4K) !=
-> @@ -844,8 +857,12 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->      /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
->      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
->  
-> -    /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
-> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
-> +    /* Only override ATS if user explicitly set ON or OFF */
-> +    if (s->ats == ON_OFF_AUTO_ON) {
-> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 1);
-> +    } else if (s->ats == ON_OFF_AUTO_OFF) {
-> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 0);
-> +    }
->  
->      /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
->      if (s->oas == SMMU_OAS_48BIT) {
-> @@ -923,4 +940,8 @@ void smmuv3_accel_init(SMMUv3State *s)
->      s->s_accel = g_new0(SMMUv3AccelState, 1);
->      bs->iommu_ops = &smmuv3_accel_ops;
->      smmuv3_accel_as_init(s);
-> +
-> +    if (s->ats == ON_OFF_AUTO_AUTO) {
-> +        s->s_accel->auto_mode = true;
-> +    }
->  }
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 068108e49b..197ba7c77b 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -317,6 +317,12 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
->      smmuv3_accel_idr_override(s);
->  }
->  
-> +static bool get_ats_enabled(Object *obj, Error **errp)
-> +{
-> +    SMMUv3State *s = ARM_SMMUV3(obj);
-> +    return FIELD_EX32(s->idr[0], IDR0, ATS);
-> +}
-> +
->  static void smmuv3_reset(SMMUv3State *s)
->  {
->      s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
-> @@ -1971,7 +1977,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->              error_setg(errp, "ril can only be disabled if accel=on");
->              return false;
->          }
-> -        if (s->ats) {
-> +        if (s->ats == ON_OFF_AUTO_ON) {
->              error_setg(errp, "ats can only be enabled if accel=on");
->              return false;
->          }
-> @@ -2128,7 +2134,7 @@ static const Property smmuv3_properties[] = {
->      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->      /* RIL can be turned off for accel cases */
->      DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
-> -    DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
-> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
+> Yes, there's indeed a check missing wether n is < 96. I'll submit a patch=
+ later.
 
-Is property "ats" accessible via QMP or JSON command line?  If yes, this
-is an incompatible change: JSON values false and true no longer work.
+Looking again there is
 
->      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
->      DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
->  };
-> @@ -2153,6 +2159,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
->      dc->hotpluggable = false;
->      dc->user_creatable = true;
->  
-> +    object_class_property_add_bool(klass, "ats-enabled", get_ats_enabled, NULL);
-> +
->      object_class_property_set_description(klass, "accel",
->          "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
->          "configured in nested mode for vfio-pci dev assignment");
-> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-> index 719d2f994e..6c77fc5f6a 100644
-> --- a/hw/arm/virt-acpi-build.c
-> +++ b/hw/arm/virt-acpi-build.c
-> @@ -402,7 +402,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
->  
->      bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
->      sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
-> -    sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
-> +    sdev.ats = object_property_get_bool(obj, "ats-enabled", &error_abort);
->      pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
->      sbdev = SYS_BUS_DEVICE(obj);
->      sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index 26b2fc42fd..2ca49ded36 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -70,7 +70,7 @@ struct SMMUv3State {
->      uint64_t msi_gpa;
->      Error *migration_blocker;
->      bool ril;
-> -    bool ats;
-> +    OnOffAuto ats;
->      uint8_t oas;
->      uint8_t ssidsize;
->  };
+if (n >=3D hppa_num_regs(env)) {
+        return 0;
+}=20=20=20
 
+right at the beginning of both functions, which returns 96 for 64 bit
+mode as the limit so n should have proper bounds already if I'm not mistake=
+n.
 
