@@ -4,66 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2D568FD88C6
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:33:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE05CFD88C7
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:33:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w05d3-0001JU-FL; Tue, 10 Mar 2026 18:32:41 -0400
+	id 1w05cz-0001GQ-Bw; Tue, 10 Mar 2026 18:32:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cx-0001GT-8M
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:36 -0400
+ id 1w05cs-0001F3-DC
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:30 -0400
 Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cv-00073x-OG
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:34 -0400
+ id 1w05cq-00073F-84
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:29 -0400
 X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
 Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- e3eae5278e78a74b29245b337ebde5402886ef0f423f2da3f3b2bfa1c3b59332 with SMTP id
- 69b09bf6bbf64f6899e0662b; Tue, 10 Mar 2026 22:32:22 GMT
+ bc612f78922d94fa27e3162e0bc8f509a3bf8f7e4f8bc9b874baf8e8c9b336d3 with SMTP id
+ 69b09bf4409f4d8a2bbedc6c; Tue, 10 Mar 2026 22:32:20 GMT
 X-Mailgun-Sending-Ip: 143.55.232.12
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1773181942;
- bh=ZnxAJzgYH9ZG2omqVFaAj6k38B27lb9zSPEJjo/0sxc=;
+ s=rsa2048; t=1773181939;
+ bh=jmxb10JNM//QK7j3a9BnIxAB7QAjpcueDbi6qwM/er8=;
  h=X-Mailgun-Dkim:From:Date:Subject:MIME-Version:Content-Type:
  Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
  X-Developer-Signature:X-Developer-Key:From:Reply-to:Subject:Date:
  Message-id:To:Cc:Mime-version:Content-type:
  Content-transfer-encoding:In-reply-to:References;
- b=Eyn1Il2yBkk2zYhkj4SOoya+HnSxIDZhJxh5D8RIAYPoeEUPN6VhiVMfE0dox0QfV
- lpmiuGs34/bSEWuitKl7OKOGWSgnJf44kBZC+Qla9YOrVDfRh180VBLSPZe1oKJ7hE
- zKA6CNzi6w50sHBeUMLXV8YLjLcIPe5v0lzWVZFRkYiuX82zHaaBiZz3CGgZBoXiN4
- PiG5YhqKIj+kYb2Xzw/PRa8cZ170PSi0wiqWBY4lAW2gMqGlocwinqvqEbN60blgBP
- u/HqUV3vIzk0JCKuc2j3HYwVpdUf+YdgKNX8qQrQQPfvxtC9pMLEA785n+XMYs4HRH
- b1ue0VgIW5hGw==
+ b=fXUnapdC2OKsevGs1PELtA9iydBjYOFVmpgjktpNzJny2wGx/Z/qQBwkgBOxzSDBQ
+ shYB9zTEnTLvvvH+xQZQ6MHBybcXuSLQfCEClB8b8zcdUxZDkVB5OETjaOdN+veJ5b
+ xd/3OAXEp/Y9ZWHixNEODz/21hy7NTvdo7cj0A5DTlpZdd9pwyezXzmSkE/U+9JyXD
+ /WCRimYKnUhClZX0S971hf2i7UolQ2dbd9WJ9cWw8WV5mLikGXx/7ULpuqVS1QAsx3
+ 8UNJlmMnW6MC21OYQIsYEgMqycchTekS3mECsQ4Lsj83NvA8sWR2eKXnFJg01TtbR+
+ 6pE81i2arezCA==
 X-Mailgun-Dkim: no
 X-Mailgun-Dkim: no
 From: Yodel Eldar <yodel.eldar@yodel.dev>
-Date: Tue, 10 Mar 2026 17:31:50 -0500
-Subject: [PATCH 10/15] hw/alpha: Expose RAM to typhoon via QOM property
- link
+Date: Tue, 10 Mar 2026 17:31:41 -0500
+Subject: [PATCH 01/15] hw/alpha/typhoon: Fix whitespace and block comment
+ style problems
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-MS-Reactions: disallow
-Message-Id: <20260310-qomify-alpha-v1-10-4375b00a85ff@yodel.dev>
+Message-Id: <20260310-qomify-alpha-v1-1-4375b00a85ff@yodel.dev>
 References: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
 In-Reply-To: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Yodel Eldar <yodel.eldar@yodel.dev>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=4218; i=yodel.eldar@yodel.dev; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7914; i=yodel.eldar@yodel.dev; 
  h=from:subject:message-id;
- bh=XI6uGBEJ2/O7iYlIzV2EFhEmPsdhy30vn8asQ0sinDg=; 
- b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDI3zP708dc5BmemwJqnnz7kcyjzcvJqb9Xx4OupVtjXG
- x3QLa/eUcrCIMbFICumyHL5rMRZh9zdXWkrf9yHmcPKBDKEgYtTACYinMjI0DBhZYRTeZmkrw9D
- cNBbE++JfqdnaKbcnGdxUld9UUxXFyPDFWP3vst+T7PSnNwNpverT/u/uPt76+3i9tz7ykaW1W0
- 8AA==
+ bh=KWafmBoA76UrvsYyUnBmR+n2TgtLcqfuwMs5FcJxfIE=; 
+ b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDI3zP6YvZ3RLOWRScAnXYmyc0YLY3KOX7k496Byk3Jm+
+ 949L6Z2dZSyMIhxMciKKbJcPitx1iF3d1fayh/3YeawMoEMYeDiFICJvFrOyDBdSXXWo7+SFZcT
+ +8tqrua3rJaLCzne+DTOnT09+Zb6zSkM//SuKKSqnHT7l74mTu9rvaPyBpcWd1t1nsNzA343zHW
+ MYQAA
 X-Developer-Key: i=yodel.eldar@yodel.dev; a=openpgp;
  fpr=D3CD18CD406DBB8A66A9F8DF95EE4FB736654DAC
 Received-SPF: pass client-ip=143.55.232.12;
@@ -92,120 +92,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the board (Clipper/DP264) passes machine->ram to the
-chipset (Typhoon) as an arg to typhoon_init(), where it is
-added as a subregion of system memory. This commit, instead adds
-a ram pointer in TyphoonState, defines it as a Property, and sets
-a link to it from the machine, thus removing the ram parameter.
+Eliminate trailing whitespaces.
 
-Note: Moving the ram subregion mapping into machine code was
-considered but decided against so as to preserve the Typhoon's
-historical role in mapping the address space.
+Use leading "/*", internal "*", and trailing "*/" for block comments.
 
 Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 ---
- hw/alpha/alpha_sys.h |  5 +++--
- hw/alpha/dp264.c     |  8 +++++---
- hw/alpha/typhoon.c   | 14 +++++++++++---
- 3 files changed, 19 insertions(+), 8 deletions(-)
+ hw/alpha/typhoon.c | 84 +++++++++++++++++++++++++++++++++---------------------
+ 1 file changed, 52 insertions(+), 32 deletions(-)
 
-diff --git a/hw/alpha/alpha_sys.h b/hw/alpha/alpha_sys.h
-index 39a96760d7..8611881b55 100644
---- a/hw/alpha/alpha_sys.h
-+++ b/hw/alpha/alpha_sys.h
-@@ -11,8 +11,9 @@
- #define TYPE_TYPHOON_PCI_HOST_BRIDGE "typhoon-pcihost"
- OBJECT_DECLARE_SIMPLE_TYPE(TyphoonState, TYPHOON_PCI_HOST_BRIDGE)
- 
--PCIBus *typhoon_init(MemoryRegion *,
--                     pci_map_irq_fn, uint8_t devfn_min, TyphoonState *);
-+PCIBus *typhoon_init(pci_map_irq_fn, uint8_t devfn_min, TyphoonState *);
-+
-+#define TYPHOON_PROP_RAM "ram"
- 
- #define TYPHOON_GPIO_ISA_IRQ "isa-irq"
- #define TYPHOON_GPIO_RTC_IRQ "rtc-irq"
-diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
-index 61eeaef6db..a7fc137e70 100644
---- a/hw/alpha/dp264.c
-+++ b/hw/alpha/dp264.c
-@@ -102,12 +102,14 @@ static void clipper_init(MachineState *machine)
-     cpus[0]->env.trap_arg1 = 0;
-     cpus[0]->env.trap_arg2 = smp_cpus | (!machine->enable_graphics << 6);
- 
-+    object_property_set_link(typhoon_obj, TYPHOON_PROP_RAM,
-+                             OBJECT(machine->ram), &error_fatal);
-+
-     /*
-      * Init the chipset.  Because we're using CLIPPER IRQ mappings,
-      * the minimum PCI device IdSel is 1.
-      */
--    pci_bus = typhoon_init(machine->ram,
--                           clipper_pci_map_irq, PCI_DEVFN(1, 0), typhoon);
-+    pci_bus = typhoon_init(clipper_pci_map_irq, PCI_DEVFN(1, 0), typhoon);
- 
-     /*
-      * Init the PCI -> ISA bridge.
-@@ -245,7 +247,7 @@ static void clipper_machine_init(ObjectClass *oc, const void *data)
-     mc->max_cpus = 4;
-     mc->is_default = true;
-     mc->default_cpu_type = ALPHA_CPU_TYPE_NAME("ev67");
--    mc->default_ram_id = "ram";
-+    mc->default_ram_id = TYPHOON_PROP_RAM;
-     mc->default_nic = "e1000";
- }
- 
 diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
-index 03bb4c8055..792ace5ce7 100644
+index 7722d4fd00..f392772500 100644
 --- a/hw/alpha/typhoon.c
 +++ b/hw/alpha/typhoon.c
-@@ -55,6 +55,8 @@ struct TyphoonState {
-     TyphoonCchip cchip;
-     TyphoonPchip pchip;
-     MemoryRegion dchip_region;
+@@ -34,7 +34,7 @@ typedef struct TyphoonWindow {
+     uint64_t wsm;
+     uint64_t tba;
+ } TyphoonWindow;
+- 
 +
-+    MemoryRegion *ram;
+ typedef struct TyphoonPchip {
+     MemoryRegion region;
+     MemoryRegion reg_iack;
+@@ -84,8 +84,10 @@ static MemTxResult cchip_read(void *opaque, hwaddr addr,
+     switch (addr) {
+     case 0x0000:
+         /* CSC: Cchip System Configuration Register.  */
+-        /* All sorts of data here; probably the only thing relevant is
+-           PIP<14> Pchip 1 Present = 0.  */
++        /*
++         * All sorts of data here; probably the only thing relevant is
++         * PIP<14> Pchip 1 Present = 0.
++         */
+         break;
+ 
+     case 0x0040:
+@@ -188,7 +190,7 @@ static MemTxResult cchip_read(void *opaque, hwaddr addr,
+     case 0x0780:
+         /* PWR: Power Management Control.   */
+         break;
+-    
++
+     case 0x0c00: /* CMONCTLA */
+     case 0x0c40: /* CMONCTLB */
+     case 0x0c80: /* CMONCNT01 */
+@@ -440,7 +442,7 @@ static MemTxResult cchip_write(void *opaque, hwaddr addr,
+     case 0x0780:
+         /* PWR: Power Management Control.   */
+         break;
+-    
++
+     case 0x0c00: /* CMONCTLA */
+     case 0x0c40: /* CMONCTLB */
+     case 0x0c80: /* CMONCNT01 */
+@@ -605,8 +607,10 @@ static const MemoryRegionOps pchip_ops = {
+     },
  };
  
- /* Called when one of DRIR or DIM changes.  */
-@@ -831,8 +833,7 @@ static void typhoon_alarm_timer(void *opaque)
-     cpu_interrupt(CPU(s->cchip.cpu[cpu]), CPU_INTERRUPT_TIMER);
+-/* A subroutine of typhoon_translate_iommu that builds an IOMMUTLBEntry
+-   using the given translated address and mask.  */
++/*
++ * A subroutine of typhoon_translate_iommu that builds an IOMMUTLBEntry
++ * using the given translated address and mask.
++ */
+ static bool make_iommu_tlbe(hwaddr taddr, hwaddr mask, IOMMUTLBEntry *ret)
+ {
+     *ret = (IOMMUTLBEntry) {
+@@ -618,8 +622,10 @@ static bool make_iommu_tlbe(hwaddr taddr, hwaddr mask, IOMMUTLBEntry *ret)
+     return true;
  }
  
--PCIBus *typhoon_init(MemoryRegion *ram,
--                     pci_map_irq_fn sys_map_irq, uint8_t devfn_min,
-+PCIBus *typhoon_init(pci_map_irq_fn sys_map_irq, uint8_t devfn_min,
-                      TyphoonState *s)
+-/* A subroutine of typhoon_translate_iommu that handles scatter-gather
+-   translation, given the address of the PTE.  */
++/*
++ * A subroutine of typhoon_translate_iommu that handles scatter-gather
++ * translation, given the address of the PTE.
++ */
+ static bool pte_translate(hwaddr pte_addr, IOMMUTLBEntry *ret)
  {
-     MemoryRegion *addr_space = get_system_memory();
-@@ -860,7 +861,7 @@ PCIBus *typhoon_init(MemoryRegion *ram,
-      * Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
-      * but the address space hole reserved at this point is 8TB.
-      */
--    memory_region_add_subregion(addr_space, 0, ram);
-+    memory_region_add_subregion(addr_space, 0, s->ram);
+     uint64_t pte = address_space_ldq_le(&address_space_memory, pte_addr,
+@@ -633,8 +639,10 @@ static bool pte_translate(hwaddr pte_addr, IOMMUTLBEntry *ret)
+     return make_iommu_tlbe((pte & 0x3ffffe) << 12, 0x1fff, ret);
+ }
+ 
+-/* A subroutine of typhoon_translate_iommu that handles one of the
+-   four single-address-cycle translation windows.  */
++/*
++ * A subroutine of typhoon_translate_iommu that handles one of the
++ * four single-address-cycle translation windows.
++ */
+ static bool window_translate(TyphoonWindow *win, hwaddr addr,
+                              IOMMUTLBEntry *ret)
+ {
+@@ -668,8 +676,10 @@ static bool window_translate(TyphoonWindow *win, hwaddr addr,
+ }
+ 
+ /* Handle PCI-to-system address translation.  */
+-/* TODO: A translation failure here ought to set PCI error codes on the
+-   Pchip and generate a machine check interrupt.  */
++/*
++ * TODO: A translation failure here ought to set PCI error codes on the
++ * Pchip and generate a machine check interrupt.
++ */
+ static IOMMUTLBEntry typhoon_translate_iommu(IOMMUMemoryRegion *iommu,
+                                              hwaddr addr,
+                                              IOMMUAccessFlags flag,
+@@ -773,10 +783,12 @@ static void typhoon_set_timer_irq(void *opaque, int irq, int level)
+     TyphoonState *s = opaque;
+     int i;
+ 
+-    /* Thankfully, the mc146818rtc code doesn't track the IRQ state,
+-       and so we don't have to worry about missing interrupts just
+-       because we never actually ACK the interrupt.  Just ignore any
+-       case of the interrupt level going low.  */
++    /*
++     * Thankfully, the mc146818rtc code doesn't track the IRQ state,
++     * and so we don't have to worry about missing interrupts just
++     * because we never actually ACK the interrupt.  Just ignore any
++     * case of the interrupt level going low.
++     */
+     if (level == 0) {
+         return;
+     }
+@@ -787,14 +799,16 @@ static void typhoon_set_timer_irq(void *opaque, int irq, int level)
+         if (cpu != NULL) {
+             uint32_t iic = s->cchip.iic[i];
+ 
+-            /* ??? The verbage in Section 10.2.2.10 isn't 100% clear.
+-               Bit 24 is the OverFlow bit, RO, and set when the count
+-               decrements past 0.  When is OF cleared?  My guess is that
+-               OF is actually cleared when the IIC is written, and that
+-               the ICNT field always decrements.  At least, that's an
+-               interpretation that makes sense, and "allows the CPU to
+-               determine exactly how mant interval timer ticks were
+-               skipped".  At least within the next 4M ticks...  */
++            /*
++             * ??? The verbage in Section 10.2.2.10 isn't 100% clear.
++             * Bit 24 is the OverFlow bit, RO, and set when the count
++             * decrements past 0.  When is OF cleared?  My guess is that
++             * OF is actually cleared when the IIC is written, and that
++             * the ICNT field always decrements.  At least, that's an
++             * interpretation that makes sense, and "allows the CPU to
++             * determine exactly how mant interval timer ticks were
++             * skipped".  At least within the next 4M ticks...
++             */
+ 
+             iic = ((iic - 1) & 0x1ffffff) | (iic & 0x1000000);
+             s->cchip.iic[i] = iic;
+@@ -852,13 +866,17 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+     *p_isa_irq = qemu_allocate_irq(typhoon_set_isa_irq, s, 0);
+     *p_rtc_irq = qemu_allocate_irq(typhoon_set_timer_irq, s, 0);
+ 
+-    /* Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
+-       but the address space hole reserved at this point is 8TB.  */
++    /*
++     * Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
++     * but the address space hole reserved at this point is 8TB.
++     */
+     memory_region_add_subregion(addr_space, 0, ram);
  
      /* TIGbus, 0x801.0000.0000, 1GB.  */
-     /*
-@@ -956,11 +957,18 @@ static void typhoon_pcihost_init(Object *obj)
-                             1);
- }
+-    /* ??? The TIGbus is used for delivering interrupts, and access to
+-       the flash ROM.  I'm not sure that we need to implement it at all.  */
++    /*
++     * ??? The TIGbus is used for delivering interrupts, and access to
++     * the flash ROM.  I'm not sure that we need to implement it at all.
++     */
  
-+static const Property typhoon_properties[] = {
-+    DEFINE_PROP_LINK(TYPHOON_PROP_RAM, TyphoonState, ram,
-+                     TYPE_MEMORY_REGION, MemoryRegion *),
-+};
-+
- static void typhoon_pcihost_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
+     /* Pchip0 CSRs, 0x801.8000.0000, 256MB.  */
+     memory_region_init_io(&s->pchip.region, OBJECT(s), &pchip_ops, s, "pchip0",
+@@ -916,9 +934,11 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+     memory_region_add_subregion(addr_space, 0x801fe000000ULL,
+                                 &s->pchip.reg_conf);
  
-     dc->user_creatable = false;
-+
-+    device_class_set_props(dc, typhoon_properties);
- }
- 
- static const TypeInfo typhoon_pcihost_info = {
+-    /* For the record, these are the mappings for the second PCI bus.
+-       We can get away with not implementing them because we indicate
+-       via the Cchip.CSC<PIP> bit that Pchip1 is not present.  */
++    /*
++     * For the record, these are the mappings for the second PCI bus.
++     * We can get away with not implementing them because we indicate
++     * via the Cchip.CSC<PIP> bit that Pchip1 is not present.
++     */
+     /* Pchip1 PCI memory, 0x802.0000.0000, 4GB.  */
+     /* Pchip1 CSRs, 0x802.8000.0000, 256MB.  */
+     /* Pchip1 PCI special/interrupt acknowledge, 0x802.F800.0000, 64MB.  */
 
 -- 
 2.53.0
