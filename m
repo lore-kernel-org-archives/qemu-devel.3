@@ -4,59 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C72A3FD2D62
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 12:11:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5621EFD2D63
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 12:13:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzvvC-0001uV-6U; Tue, 10 Mar 2026 08:10:46 -0400
+	id 1vzvyB-0004OM-26; Tue, 10 Mar 2026 08:13:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzvvA-0001uD-Rn
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:10:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzvy6-0004NI-TM
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:13:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzvv7-0007E3-FR
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:10:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzvy5-0000Xq-12
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:13:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773144637;
+ s=mimecast20190719; t=1773144824;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=5QEpYme4Q8USncoclqXzhScWpIaORlfAgOqp0gzEYqc=;
- b=YjQRuXwA6OQfn8vPLVcbMBpSKvuRwWJieKcDIfWcpNuuYKgNxj7dJKexUAA0QHUteqF+2j
- 8U7vnWRlhLdIBAqfQe7ZWjMuJ1+TSxVL5Xzg/EvGuENhRnMouSOYixNcbgMaFIxUQkW3Bk
- LABTVAPl5zqrYHBWSbvVAsWnkTPlWFI=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=aOtNvU/UJ9YWsNimGpt4FEGgLPhlNA7hCCD7sZcp/jk=;
+ b=EDZ8SMEqmjOPpu3pVU/9TIllHwSQxuwYYppjYjZXg/lH+T1dSQu5OVWQslmNNT7ECU4pB2
+ KOmH/LTKHC782B0fIJwEkaZyP1ky8sP9M3RT6zbAsOqs+aVksprvgTswE+NpekFbp8i0aZ
+ y8AgroXuD+h9AWwdKCaPdgQw9h7bP6g=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-255-DFq7rFq9PtSIYT39rTZqzg-1; Tue,
- 10 Mar 2026 08:10:35 -0400
-X-MC-Unique: DFq7rFq9PtSIYT39rTZqzg-1
-X-Mimecast-MFC-AGG-ID: DFq7rFq9PtSIYT39rTZqzg_1773144633
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-48-K704siczM7mcJiiLd1XO5A-1; Tue,
+ 10 Mar 2026 08:13:40 -0400
+X-MC-Unique: K704siczM7mcJiiLd1XO5A-1
+X-Mimecast-MFC-AGG-ID: K704siczM7mcJiiLd1XO5A_1773144819
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7389519560B2; Tue, 10 Mar 2026 12:10:33 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B22901800245; Tue, 10 Mar 2026 12:13:39 +0000 (UTC)
 Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 639FC1800351; Tue, 10 Mar 2026 12:10:32 +0000 (UTC)
-Message-ID: <28272832-0a68-4625-842d-a039a55d9db8@redhat.com>
-Date: Tue, 10 Mar 2026 13:10:31 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E72631955D87; Tue, 10 Mar 2026 12:13:38 +0000 (UTC)
+Message-ID: <592dcbf8-e0ab-4089-8ff5-1ef7cbf763d6@redhat.com>
+Date: Tue, 10 Mar 2026 13:13:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 1/2] tests/functional: fix log placement when run
- directly
+Subject: Re: [PATCH v2 2/2] tests/functional: remove heuristics for finding
+ build dir
 To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
  qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20260310114756.146083-1-berrange@redhat.com>
- <20260310114756.146083-2-berrange@redhat.com>
+ <20260310114756.146083-3-berrange@redhat.com>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -101,18 +100,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260310114756.146083-2-berrange@redhat.com>
+In-Reply-To: <20260310114756.146083-3-berrange@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -131,27 +130,25 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 10/03/2026 12.47, Daniel P. Berrangé wrote:
-> When running functional tests directly there are some heuristics
-> to figure out where the build directory lives, along with the
-> possibility to override the logic by setting the QEMU_BUILD_DIR
-> env variable. This env var is set as part of the test env when
-> run via Meson but not when run directly.
+> Currently some heuristics are used to locate the build dir, if the
+> MESON_BUILD_ROOT environment variable is not set. These are not
+> entirely accurate, however, especially if the developer is using
+> nested sub-dirs under $PWD/build/...
 > 
-> A particular flaw with the currently logic is that it silently
-> uses the wrong location when the build directory is a sub-dir
-> under "./build", which is a common usage scenario for some devs.
+> Since the introduction of the 'run' script, we can ensure any
+> direct execution of the tests will have MESON_BUILD_ROOT set.
 > 
-> With the recent introduction of the 'run' script, we now have
-> the MESON_BUILD_ROOT env variable set unconditionally, so we
-> can rely on that from the functional tests to get the correct
-> location in all scenarios.
+> Meanwhile when meson runs the test it will also have this env
+> set. The only gap is when running pre-caching, and that is easily
+> fixed to set MESON_BUILD_ROOT.
 > 
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-> ---
->   tests/functional/meson.build         | 2 +-
->   tests/functional/qemu_test/config.py | 4 ++--
->   2 files changed, 3 insertions(+), 3 deletions(-)
+> It can thus be assumed that MESON_BUILD_ROOT will always be set
+> in any supported execution scenario, which allows the heuristics
+> to be removed.
+
+Fair point. And in the worst case, it's always possible to set the env 
+variable manually if you still want to run a test directly without the "run" 
+script.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
