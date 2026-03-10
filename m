@@ -4,84 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A826FD88CD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:22:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A989CFD88CE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:22:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w06OV-0000w9-9w; Tue, 10 Mar 2026 19:21:43 -0400
+	id 1w06Nx-0000cX-Q0; Tue, 10 Mar 2026 19:21:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06OT-0000tl-B9
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:41 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Nu-0000bw-3H
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:07 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06OR-0008JF-QB
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:41 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-439b790af67so327517f8f.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:21:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Ns-0008FB-Ca
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:05 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so159775615e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:21:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773184896; x=1773789696; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773184862; x=1773789662; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wNTAcnUVZLFT1caohWc1RYKZIcF7oFrm+9IM93yP2WI=;
- b=oCw4nOCkk/p9trQme6GDQa1e2sKDzeA7j9kN6poxhW8k/7MVSDwRTWBWlscKNGqt98
- mXjjdRr/btkGAk8C2Qe7v4JXIOsBk35whKaGuscpuhdyMwg0QsZmbqs1wJ6lYgzd94pf
- wl1qlisGcuxasdMnY3CRRBm371D33f/qOj70L5pRcFQfYZmLRwjuz3O0tTOeCRlHuGlx
- LuEb/88wdZcMSUsFNEC5Q47feGiHRDz506A7YiBM7uLVarah4aV/w7h5M0z6gVVC3DaP
- qwnbpeMZW/uCj9K8guWm5oYiKbasb0LLl2xXduy4TKUHBDFwXQkRG0NDoSYaFPObkNNq
- BFwA==
+ bh=P6tKvUfztERW9EFL9HLa8BjD2a2aQehJmMD1H4t3ElY=;
+ b=WhFIOWu1vdXjCnjRKtgZUxNC7sS/sJjZPIIpy3FB08FGudxHije0o5izI/ZEfsyEZv
+ sJAFcZueE+i82jgRN5PnE1bKHlmuNxMH1PHw5XQYXFDNFuYTfMnPaUNbHebvYiclOKpP
+ +fknxj06if4BAOA1/DCcm55z4Fpl++3o6SJiUtJUDEsy+RiHBrp7rU59y+4LwhdOs7q6
+ Xr8nc0SCV5kVLpfPQ2XxJ0AJntc6C+Px33GiEpr97WbyYahRC1WHUgH4cxeBVQ112Hlv
+ 8kvaNm0tfYZaX3p3zA7Ch/5XhZk2ulJtKCQdF+dlGgMgP9PkLSMHWP9dL2+vof/U2VOs
+ lrww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773184896; x=1773789696;
+ d=1e100.net; s=20230601; t=1773184862; x=1773789662;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wNTAcnUVZLFT1caohWc1RYKZIcF7oFrm+9IM93yP2WI=;
- b=RK8Xa2xQaG4u2Ze48lYgxBXNRJWABe9OVUXis0ojje9SI9lI7fdX8hxwYBRqHNy203
- H463lmvpNqaMcMvUSoZ7Rp5Rm1q95axqRokb0haT4F93eUYPUK54N9hZ4o7VXVdFQDsI
- bOkdvTPKEnAm1aGW8vJyll+HGngxADgDtz6QVvxW6yN4rsBpnpbX0yncVEptPD2we5g8
- fu0+7xh1cIA5j2+VUu4xcszvcYnEQsYmI2MjVYWg8aySKziJtKKZ3GMOEsOCbY3wQxbR
- QngqN9KJQ0oXiwqGPOgrGXjed9MKcAgz8G5jl8UPZ+J7RpQqkb9X2q+aZoPiHysvSRl+
- 0Gtw==
-X-Gm-Message-State: AOJu0Yz9iLY/APSTrqQGqA3irGrFiIe6g95ZknniEWZkWU8EArBayjxP
- b49zBpWOHendF23T8KZ4Xao8coZu3FgyXXwijjEaQYBUkMEywDv2FWoGxOUhw+GEDh5/1Bmg7xU
- T2ZFzL8k=
-X-Gm-Gg: ATEYQzzJ8xzD+BjlEvZ1VSDfnYHvDSKLsUwwaIEyvNhgeS/oG8h0irMaw587f+RST9x
- 9LHe4GulOeXJK0vV/ZKwdZZsLjf9X98jaL09CGVOc0RMKpC8Aas5/AohBiAjqiIVoHG0dk+N6PN
- gT58CDcYfcSto9AbJWELLAuv6ZpEdBneyNFYhTX1llX+OrWiHRNGE2Ea01a8esnSEm97470V9J3
- gKnnpKTusbyYPPmikim2MKh9aNJWmw/ZkDWoN90gt3EIN2sGV8c660ehmXooUZjtarIZXBq6I/6
- dBV3Y4b/+8Cj0DD6G7dL4o8yjZ5PsZrBlGJm+7w2AgvdV2KN0EOqydFtOrLHLq6MZ6v/M8EGM/Q
- fmso7MKD49JKrD/m7yxaf3sJoigS+l906QfUZlSzsE/BteOA4/n/7pbk5yWIJGNuKA3QSmxQyP2
- 7CaBvr98f76/DyHePq8f3TRD+BhEjuedeJDLhgQsdoGh3CkVLzsost0A74krY/XJVcBzlXJi04I
- kraWAF8HOQ=
-X-Received: by 2002:a05:6000:18a6:b0:439:9812:35ea with SMTP id
- ffacd0b85a97d-439eff12c90mr10624969f8f.3.1773184896269; 
- Tue, 10 Mar 2026 16:21:36 -0700 (PDT)
+ bh=P6tKvUfztERW9EFL9HLa8BjD2a2aQehJmMD1H4t3ElY=;
+ b=OVXpgBQ3N0W8XVpt9/adafJlDLBu4FbzqM/uiRFSspyK1YOq9rbxiwpGOf3qNxj9ZB
+ ftDBfPRrV8PX9AHumic+5MOKKoHy52w2UHpL/HwB7+oz3gq7Dipc12c+7FQaWepTaQTM
+ mmZnX88mII9I3sezYfxJUL0+HgCxpyUxNassgyE9vVw99AaWOFppP3auzEtISsQikqkj
+ Z7AgBhCMJbmacBbWWK7xqs+ifNBF4NalLoeWY5zKA7ZLGS/Z/tuaudxvRXUCIv03NIEw
+ D5TTGjzCC3FsraHbcYhoZcnK/lbJLJSB2QxnnPdr3XoSN3FKsyYNN6mACn5FuWKWDD0I
+ mlng==
+X-Gm-Message-State: AOJu0Yzh4mOAEteh/YIWdH7invvF56GrPkNlAkxAwmzZVm02vEVnalEE
+ dQpbg8iiBbwdb9zfrsPCJN4rFmt2F7usTk6oRmIcPpwgitfC3fRFcQd+DKmKGhWRRxBAXdyjoe1
+ rYkAGNYk=
+X-Gm-Gg: ATEYQzzfa/QYq1H4Y3QtE7KUX9Lct/maYvVdmBh/aIJnJDionMqtjvveieAtKDidnTY
+ bTjlaB9SaDdhPtTa/cjfXBFWLCW25RtL/WVUml580fOw2n673nuZZPx/s4gR/3xMRSYRI+oGqMS
+ c9fC9kDGm/ajPJvn6Hq0owWyJzngWdiX2jFI4YRaP+sTwdPgiA3WSIRD4UWXM8eXcc9w+t2EoJ4
+ JTIhhjDvfebBZHsuRlaZYIlPsUUtbKr635L+/9Xh3D+LricM2TQCJX7u43VnJQblOoIx4kLS7ID
+ prbL6VpXE006e7lbMdkZ0lTgAJeDmG9l+eg7XRLSqC1O4e+nS5OvVtdPXHKtxXiZdTMd81Zpc0v
+ Db/ukVlKrUGtzX5YfwlUs460nRUFZh/nWBPIdRnygkFmKqGEqKmyuCT1Bgw5kEqhhmdd13RRVZx
+ GjsdxX4bqJBfcFQG7Bj+rOvOF3cC83gHYMfx2dW/vXyLJN1Utyoyp0y3VHL9Q++G7YDn4Js4yV
+X-Received: by 2002:a05:600c:1e88:b0:485:3ff1:d5c3 with SMTP id
+ 5b1f17b1804b1-4854b0cb356mr9340145e9.5.1773184862449; 
+ Tue, 10 Mar 2026 16:21:02 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439f81a5143sm1798082f8f.14.2026.03.10.16.21.35
+ ffacd0b85a97d-439f821a672sm1496769f8f.31.2026.03.10.16.21.00
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 16:21:35 -0700 (PDT)
+ Tue, 10 Mar 2026 16:21:01 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v4 07/16] gdbstub: Add trace events for around XML parsing /
- generation
-Date: Wed, 11 Mar 2026 00:20:35 +0100
-Message-ID: <20260310232045.58440-8-philmd@linaro.org>
+Subject: [PATCH v4 02/16] tests/tcg: Disable prot-none test on GitLab
+Date: Wed, 11 Mar 2026 00:20:30 +0100
+Message-ID: <20260310232045.58440-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310232045.58440-1-philmd@linaro.org>
 References: <20260310232045.58440-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,79 +102,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add trace events to help follow how the various files in
-gdb-xml/ are parsed or generated at runtime.
+When adding gdb-multiarch on our container images, we
+see the prot-none tests to pass on GitHub but fail on
+GitLab. Disable and track:
+https://gitlab.com/qemu-project/qemu/-/issues/3329
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- gdbstub/gdbstub.c    | 14 ++++++++++++++
- gdbstub/trace-events |  6 ++++++
- 2 files changed, 20 insertions(+)
+ tests/tcg/multiarch/Makefile.target | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 221951c22b0..5c1a18e055c 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -478,6 +478,10 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder)
+diff --git a/tests/tcg/multiarch/Makefile.target b/tests/tcg/multiarch/Makefile.target
+index 73c2a78215c..70e2ac38f5a 100644
+--- a/tests/tcg/multiarch/Makefile.target
++++ b/tests/tcg/multiarch/Makefile.target
+@@ -117,12 +117,17 @@ run-gdbstub-registers: sha512
+ 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/registers.py, \
+ 	checking register enumeration)
  
-     builder->feature->num_regs = builder->regs->len;
-     builder->feature->regs = (void *)g_ptr_array_free(builder->regs, FALSE);
-+    trace_gdbxml_feature_builder_header(builder->feature->name,
-+                                        builder->feature->xmlname,
-+                                        builder->feature->num_regs);
-+    trace_gdbxml_feature_builder_content(builder->feature->xml);
- }
++# The prot-none test was skipped on gitlab due to missing gdb-multiarch,
++# however it seems to have bitrotten. Disable, it is tracked as
++# https://gitlab.com/qemu-project/qemu/-/issues/3329
++ifneq ($(GITLAB_CI),)
+ run-gdbstub-prot-none: prot-none
+ 	$(call run-test, $@, env PROT_NONE_PY=1 $(GDB_SCRIPT) \
+ 		--gdb $(GDB) \
+ 		--qemu $(QEMU) --qargs "$(QEMU_OPTS)" \
+ 		--bin $< --test $(MULTIARCH_SRC)/gdbstub/prot-none.py, \
+ 	accessing PROT_NONE memory)
++endif
  
- const GDBFeature *gdb_find_static_feature(const char *xmlname)
-@@ -511,6 +515,10 @@ GArray *gdb_get_register_list(CPUState *cpu)
-                 name,
-                 r->feature->name
-             };
-+            trace_gdbxml_get_register_list(r->feature->name,
-+                                           r->feature->xmlname,
-+                                           r->feature->base_reg,
-+                                           r->base_reg + i, name);
-             g_array_append_val(results, desc);
-         }
-     }
-@@ -563,6 +571,8 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
-         .feature = feature
-     };
- 
-+    trace_gdbxml_register_feature(feature->name, feature->xmlname,
-+                                  base_reg, feature->num_regs);
-     g_array_append_val(cpu->gdb_regs, s);
- }
- 
-@@ -598,6 +608,10 @@ void gdb_init_cpu(CPUState *cpu)
-     } else {
-         cpu->gdb_num_regs = cpu->gdb_num_g_regs = cc->gdb_num_core_regs;
-     }
-+
-+    trace_gdbxml_init_cpu(object_get_typename(OBJECT(cpu)), cpu->cpu_index,
-+                          cpu->gdb_num_regs, cpu->gdb_num_g_regs,
-+                          cc->gdb_num_core_regs);
- }
- 
- void gdb_register_coprocessor(CPUState *cpu,
-diff --git a/gdbstub/trace-events b/gdbstub/trace-events
-index 4fd126a38c1..8caee36c242 100644
---- a/gdbstub/trace-events
-+++ b/gdbstub/trace-events
-@@ -28,5 +28,11 @@ gdbstub_err_checksum_invalid(uint8_t ch) "got invalid command checksum digit: 0x
- gdbstub_err_checksum_incorrect(uint8_t expected, uint8_t got) "got command packet with incorrect checksum, expected=0x%02x, received=0x%02x"
- gdbstub_err_unexpected_runpkt(uint8_t ch) "unexpected packet (0x%02x) while target running"
- 
-+gdbxml_init_cpu(const char *typename, unsigned id, unsigned gdb_num_regs, unsigned gdb_num_g_regs, unsigned gdb_num_core_regs) "%s:%d regs:%u g_regs:%u core_regs:%u"
-+gdbxml_register_feature(const char *featname, const char *xmlname, unsigned base_reg, unsigned num_regs) "%s (%s) @%u +%u"
-+gdbxml_feature_builder_header(const char *name, const char *xmlname, int num_regs) "%s (%s) regs:%d"
-+gdbxml_feature_builder_content(const char *xml) "%s"
-+gdbxml_get_register_list(const char *featname, const char *xmlname, unsigned feat_base_reg, unsigned base_reg, const char *regname) "%s (%s) [%u,%u]:%s"
-+
- # system.c
- gdbstub_hit_watchpoint(const char *type, int cpu_gdb_index, uint64_t vaddr) "Watchpoint hit, type=\"%s\" cpu=%d, vaddr=0x%" PRIx64 ""
+ run-gdbstub-catch-syscalls: catch-syscalls
+ 	$(call run-test, $@, $(GDB_SCRIPT) \
 -- 
 2.53.0
 
