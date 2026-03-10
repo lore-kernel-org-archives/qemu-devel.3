@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E9C1FCC9C4
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 05:58:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E18EAFCC9C4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 05:58:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzq5R-0000WF-5K; Tue, 10 Mar 2026 01:56:57 -0400
+	id 1vzq4s-00076P-F6; Tue, 10 Mar 2026 01:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq5O-0000MU-5t
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:54 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq4m-0006xY-Bv
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:18 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq5L-0006KI-UI
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:53 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq4k-0006GJ-JI
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773122211;
+ s=mimecast20190719; t=1773122174;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=OY51g9+eUvj1djQZBkWHLh3VByefHAuAYmIFtE21EwQ=;
- b=FaSmuhglm1EI0etBsw+GBCInFAqwbc7YA1z+MWvIWovQ/FoOmH4/1Mk8mYl7/qdDhkLGT7
- Ke2lNAi/xvHh/eHKe+ajB/Wr5i665dacDP25vfC8L2AfSvlc63Uc12vaieMA/8FPw07NUf
- /qkOy4rS1B+fj7WZeGNRFPT4nfWqFrk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=XxNM4HxmyRO4tl1AAMVyqRynDOBYCCwt8hKcbfgbSwA=;
+ b=R37F4SxAjzGBxFh+LeCwce48I9ApEZIczZsuRkvQ9usQghgrtSG6kWIiz72boJwfOOzoPx
+ ZK0Kr18pIn52oxztM0gs8GrUcj0FLcX7pl11in03ClakCcUK93EE6t7wmiQEMDzkIYTFkR
+ q9MC8FsdAHxVCMiBju5nMS/sD3sO9RQ=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-398-u_pXyqVnOra0kGGWHYgyjQ-1; Tue,
- 10 Mar 2026 01:56:47 -0400
-X-MC-Unique: u_pXyqVnOra0kGGWHYgyjQ-1
-X-Mimecast-MFC-AGG-ID: u_pXyqVnOra0kGGWHYgyjQ_1773122206
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-192-YVYWn2JpNgm4SiCmA_K8Tw-1; Tue,
+ 10 Mar 2026 01:56:10 -0400
+X-MC-Unique: YVYWn2JpNgm4SiCmA_K8Tw-1
+X-Mimecast-MFC-AGG-ID: YVYWn2JpNgm4SiCmA_K8Tw_1773122169
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 56A53195608E; Tue, 10 Mar 2026 05:56:46 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 50B5A18005B2; Tue, 10 Mar 2026 05:56:09 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.69])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 3BA021956095; Tue, 10 Mar 2026 05:56:42 +0000 (UTC)
+ id A37A21956095; Tue, 10 Mar 2026 05:56:05 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Jared Rossi <jrossi@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>
-Subject: [PULL 18/25] pc-bios/s390-ccw: Introduce PCI device
-Date: Tue, 10 Mar 2026 06:55:23 +0100
-Message-ID: <20260310055530.8893-19-thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
+ Farhan Ali <alifm@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 09/25] pc-bios/s390-ccw: Fix misattributed function prototypes
+Date: Tue, 10 Mar 2026 06:55:14 +0100
+Message-ID: <20260310055530.8893-10-thuth@redhat.com>
 In-Reply-To: <20260310055530.8893-1-thuth@redhat.com>
 References: <20260310055530.8893-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,202 +84,86 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-Define selected s390x PCI instructions.
+The virtio-blkdev functions are incorrectly listed in s390-ccw.h as belonging to
+virtio.c.  Additionally, virtio_load_direct() has an unused subchan_id argument.
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Acked-by: Thomas Huth <thuth@redhat.com>
-Message-ID: <20260309003601.242634-11-jrossi@linux.ibm.com>
+Remove the unused argument and move the prototypes to virtio.h so that they are
+independent from the CCW bus.
+
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Eric Farman <farman@linux.ibm.com>
 Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-[thuth: Remove unused defines as suggested by Farhan]
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Message-ID: <20260309003601.242634-2-jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- pc-bios/s390-ccw/pci.h    |  36 ++++++++++++
- pc-bios/s390-ccw/pci.c    | 118 ++++++++++++++++++++++++++++++++++++++
- pc-bios/s390-ccw/Makefile |   2 +-
- 3 files changed, 155 insertions(+), 1 deletion(-)
- create mode 100644 pc-bios/s390-ccw/pci.h
- create mode 100644 pc-bios/s390-ccw/pci.c
+ pc-bios/s390-ccw/s390-ccw.h      | 4 ----
+ pc-bios/s390-ccw/virtio.h        | 7 +++++++
+ pc-bios/s390-ccw/bootmap.c       | 2 +-
+ pc-bios/s390-ccw/virtio-blkdev.c | 2 +-
+ 4 files changed, 9 insertions(+), 6 deletions(-)
 
-diff --git a/pc-bios/s390-ccw/pci.h b/pc-bios/s390-ccw/pci.h
-new file mode 100644
-index 00000000000..968635eff11
---- /dev/null
-+++ b/pc-bios/s390-ccw/pci.h
-@@ -0,0 +1,36 @@
-+/*
-+ * s390x PCI definitions
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef PCI_H
-+#define PCI_H
-+
-+#include <stdint.h>
-+#include <stdbool.h>
-+#include "clp.h"
-+
-+#define ZPCI_CREATE_REQ(handle, space, len)                    \
-+    ((uint64_t) handle << 32 | space << 16 | len)
-+
-+union register_pair {
-+    unsigned __int128 pair;
-+    struct {
-+        unsigned long even;
-+        unsigned long odd;
-+    };
-+};
-+
-+#define PCI_CFGBAR             0xF  /* Base Address Register for config space */
-+#define PCI_CAPABILITY_LIST    0x34 /* Offset of first capability list entry */
-+
-+int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
-+              uint8_t len);
-+int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
-+             uint8_t len);
-+
-+#endif
-diff --git a/pc-bios/s390-ccw/pci.c b/pc-bios/s390-ccw/pci.c
-new file mode 100644
-index 00000000000..247070e5f07
---- /dev/null
-+++ b/pc-bios/s390-ccw/pci.c
-@@ -0,0 +1,118 @@
-+/*
-+ * s390x PCI functionality
-+ *
-+ * Copyright 2025 IBM Corp.
-+ * Author(s): Jared Rossi <jrossi@linux.ibm.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "clp.h"
-+#include "pci.h"
-+#include "bswap.h"
-+#include <stdio.h>
-+#include <stdbool.h>
-+
-+/* PCI load */
-+static inline int pcilg(uint64_t *data, uint64_t req, uint64_t offset,
-+                        uint8_t *status)
-+{
-+    union register_pair req_off = {.even = req, .odd = offset};
-+    int cc = -1;
-+    uint64_t __data;
-+
-+    asm volatile (
-+        "     .insn   rre,0xb9d20000,%[data],%[req_off]\n"
-+        "     ipm     %[cc]\n"
-+        "     srl     %[cc],28\n"
-+        : [cc] "+d" (cc), [data] "=d" (__data),
-+          [req_off] "+d" (req_off.pair) :: "cc");
-+    *status = req_off.even >> 24 & 0xff;
-+    *data = __data;
-+    return cc;
-+}
-+
-+/* PCI store */
-+static inline int pcistg(uint64_t data, uint64_t req, uint64_t offset,
-+                         uint8_t *status)
-+{
-+    union register_pair req_off = {.even = req, .odd = offset};
-+    int cc = -1;
-+
-+    asm volatile (
-+        "     .insn   rre,0xb9d00000,%[data],%[req_off]\n"
-+        "     ipm     %[cc]\n"
-+        "     srl     %[cc],28\n"
-+        : [cc] "+d" (cc), [req_off] "+d" (req_off.pair)
-+        : [data] "d" (data)
-+        : "cc");
-+    *status = req_off.even >> 24 & 0xff;
-+    return cc;
-+}
-+
-+int pci_write(uint32_t fhandle, uint64_t offset, uint8_t pcias, uint64_t data,
-+              uint8_t len)
-+{
-+
-+    uint64_t req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-+    uint8_t status;
-+    int rc;
-+
-+    /* len must be non-zero power of 2 with a maximum of 8 bytes per write */
-+    switch (len) {
-+    case 1:
-+    case 2:
-+    case 4:
-+    case 8:
-+        rc = pcistg(data, req, offset, &status);
-+        break;
-+    default:
-+        return -1;
-+    }
-+
-+    /* Error condition detected */
-+    if (rc != 0) {
-+        printf("PCI store failed with status condition %d, return code %d\n",
-+               status, rc);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+int pci_read(uint32_t fhandle, uint64_t offset, uint8_t pcias, void *buf,
-+             uint8_t len)
-+{
-+    uint64_t req, data;
-+    uint8_t status;
-+    int rc;
-+
-+    req = ZPCI_CREATE_REQ(fhandle, pcias, len);
-+    rc = pcilg(&data, req, offset, &status);
-+
-+    /* Error condition detected */
-+    if (rc != 0) {
-+        printf("PCI load failed with status condition %d, return code %d\n",
-+               status, rc);
-+        return -1;
-+    }
-+
-+    switch (len) {
-+    case 1:
-+        *(uint8_t *)buf = data;
-+        break;
-+    case 2:
-+        *(uint16_t *)buf = data;
-+        break;
-+    case 4:
-+        *(uint32_t *)buf = data;
-+        break;
-+    case 8:
-+        *(uint64_t *)buf = data;
-+        break;
-+    default:
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-diff --git a/pc-bios/s390-ccw/Makefile b/pc-bios/s390-ccw/Makefile
-index 9c29548f849..a62fc9d7660 100644
---- a/pc-bios/s390-ccw/Makefile
-+++ b/pc-bios/s390-ccw/Makefile
-@@ -35,7 +35,7 @@ QEMU_DGFLAGS = -MMD -MP -MT $@ -MF $(@D)/$(*F).d
+diff --git a/pc-bios/s390-ccw/s390-ccw.h b/pc-bios/s390-ccw/s390-ccw.h
+index b1dc35cdedf..47ea66bd4d1 100644
+--- a/pc-bios/s390-ccw/s390-ccw.h
++++ b/pc-bios/s390-ccw/s390-ccw.h
+@@ -67,11 +67,7 @@ void sclp_get_loadparm_ascii(char *loadparm);
+ int sclp_read(char *str, size_t count);
  
- OBJECTS = start.o main.o bootmap.o jump2ipl.o sclp.o menu.o netmain.o \
- 	  virtio.o virtio-net.o virtio-scsi.o virtio-blkdev.o cio.o dasd-ipl.o \
--	  virtio-ccw.o clp.o
-+	  virtio-ccw.o clp.o pci.o
+ /* virtio.c */
+-unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
+-                                 unsigned long subchan_id, void *load_addr);
+ bool virtio_is_supported(SubChannelId schid);
+-int virtio_blk_setup_device(SubChannelId schid);
+-int virtio_read(unsigned long sector, void *load_addr);
  
- SLOF_DIR := $(SRC_PATH)/../../roms/SLOF
+ /* bootmap.c */
+ void zipl_load(void);
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 5c5e808a500..597bd423586 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -277,7 +277,14 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd);
+ int virtio_reset(VDev *vdev);
+ int virtio_setup_ccw(VDev *vdev);
  
++/* virtio-net.c */
+ int virtio_net_init(void *mac_addr);
+ void virtio_net_deinit(void);
+ 
++/* virtio-blkdev.c */
++int virtio_blk_setup_device(SubChannelId schid);
++int virtio_read(unsigned long sector, void *load_addr);
++unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
++                                 void *load_addr);
++
+ #endif /* VIRTIO_H */
+diff --git a/pc-bios/s390-ccw/bootmap.c b/pc-bios/s390-ccw/bootmap.c
+index 0f8baa01985..420ee32eff8 100644
+--- a/pc-bios/s390-ccw/bootmap.c
++++ b/pc-bios/s390-ccw/bootmap.c
+@@ -662,7 +662,7 @@ static int zipl_load_segment(ComponentEntry *entry)
+                  */
+                 break;
+             }
+-            address = virtio_load_direct(cur_desc[0], cur_desc[1], 0,
++            address = virtio_load_direct(cur_desc[0], cur_desc[1],
+                                          (void *)address);
+             if (!address) {
+                 puts("zIPL load segment failed");
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index 7b2d1e20f4d..4b819dd80fb 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -64,7 +64,7 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
+ }
+ 
+ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
+-                                 unsigned long subchan_id, void *load_addr)
++                                 void *load_addr)
+ {
+     u8 status;
+     int sec = rec_list1;
 -- 
 2.53.0
 
