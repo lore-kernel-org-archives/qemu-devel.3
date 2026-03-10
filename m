@@ -4,107 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B7B8EB1054
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE594EB1054
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:52:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzyRT-0000SC-7h; Tue, 10 Mar 2026 10:52:15 -0400
+	id 1vzyRf-0000mY-Gr; Tue, 10 Mar 2026 10:52:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzyRS-0000Rs-HR
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:52:14 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzyRR-0007eM-46
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:52:14 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso16149099d50.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 07:52:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773154332; cv=none;
- d=google.com; s=arc-20240605;
- b=HmQ1Vg+Qc0ZodrQJQKMGkDfV4aNemB0tT4GWHHNEYDJgrfl9GMMTqp39sPwVHOfaR6
- sCJPW6wNTQrJZ+mpmR91cxxQpYQaYP5q+R6FdqtpwnBIvs5PZS/VSHBnRVChodGHB34P
- l1WNhBMIEGoa9q84XFivkm4ISUjeA96Z9kfTgqsDnnry2wLcRZRfKB/gnJ5sjiZxDrvf
- zJhFGBWJJdYPZnygEch22suFwlKio17GbOC6rokNH1UE1hHQcwTFJjJefBXaXBNUy9+m
- PewJSyEJtaldUu3DTWs4yi9ko/znHO58FG0RspgGz11qZnM14uj4BJdebv9Vog1KkMX2
- tE9A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=dJp8Hg9WBMV1JSzVZsMnHkOFsyey8WWYIm8zPWJ7FnY=;
- fh=61hcG8LfOnpyBhAzbvYC5V7qNwnllrg2sfE1S55DUWU=;
- b=jo8Y1Kazzg21jpz6epwBNZTXXrcMI5smIla86DFYRyiJJe0gEvuMHAMX2Dp8uRLeas
- KKgfm6rFbdPzTpzX1j6PTZou+pseZIdwGoKhjzKrwComAMuXcjb5CXJzDaMa2DVautmF
- sX+cKMQuwPhcmS+zbRn9Xe7tsgfACF5nSfuNJMrEu38sWBAfPginmfYi2rmMQgRTMMno
- FV+HpWGRZ/+VSXexRg61dt2lCmiGZfcfVYz0d2mCxTcSJ70Yv4rhVfHOQ5B+jDzsAg3A
- DkkLLoYhZq/LqZjGRRG0nZycBDlebbIi/k8rKdkKMamPU6bZD8IyKJ/ZBdZ97AlfkqEm
- +apw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773154332; x=1773759132; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=dJp8Hg9WBMV1JSzVZsMnHkOFsyey8WWYIm8zPWJ7FnY=;
- b=XmYcAo+JmQ0dnagU0OH3BxzR3TUH10xI26Yj7XzI4JgX27CfOCiMUrBUj6Q/ZAgBe0
- pcNVxm+kx4KSwlAcxI3JOI7wvPcjD+cI1Z/O5nJdtp2KDGlHhMrI3xFXgdz/yqnKo0P/
- n+ZWRD6/WRZfu+cJsd2W/soDmipCszO7XZnFg8Tm1snabSZkVt1NdjhAGrr4SnmPKlDD
- +LgUrE10rbw/TDeWNG3x6aHu3O77Bes7woh4X3S00cNOMjmfma/yIv+KdcUjJdeWDaW8
- v2Alx4U7818PExQ4N79Btfq/hHwncy0WGDEqc8mQn9xnFcHpxJlO1KpfuHs+FmiAEDI2
- it6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773154332; x=1773759132;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=dJp8Hg9WBMV1JSzVZsMnHkOFsyey8WWYIm8zPWJ7FnY=;
- b=wme3sKE7k5wMRimJCroNIEzsNvoBNDO7M54L5DBUUDVORCisi9yZ3er61lGooN9l5N
- jroectgO43OoM1JzSMuLBENM3ro+0nfgWPOCQ5SE+Sjx/Oe3L6CFnem21DheqlRGpW/Q
- qVv3D6UyuEDQWGxr8QRjST26PI+BvDpeYvmjG6m2wRFRtUSz1Chp3yeBDcjLghdscO88
- uNck2vzkxXLrdpiMitlkVZ1w4+/cIyVGfEQG29jbDwTpl84cNkUZeL0xFX41/Cbyrh6Y
- SSysH1TA91s/PxnRLdJhfsLZCQKCQ1pA7AQ93PPC/kC+mu1pagz2PJQJt9E5Zdl7jWBb
- IoNA==
-X-Gm-Message-State: AOJu0YzZCUMLTVNzRGDBxhuhwn8EzsMq7JZqv3Ql4W9V7wVMkOwc2PJJ
- 48GF4cR6PA4fLzcs3Z6avitwR2god8bV4QP6JyUu299bnx8PuvTUYwXRzVrQpckZkv2kU7t5/eI
- z84l4/IVr1F2CGt2g8YF9om6aKqnnLhL126Gewh85vkuxbP0Q8oq6
-X-Gm-Gg: ATEYQzyeYxSRytzYdy4TCWPuZGGl8/VKUkywzB5dJdQgxw1RpWagq7XMNk/2afm3pRd
- z9rv2QwYSMy2PjJ5FhWhwbqIYbVI7hyzLSzJ7UHvPh90HIuKA2oTLkVGZmUuv7Ca2WnQaI4iu8a
- mgEEkpxPSp62OI27mEB+h6P4JkP00ilnLYQ4azcd18xhVi5llpb3xwWyIUb7s2M4JJcD2K7p7pC
- yrTSLdKQATHPwyb5WiIugx9N9D2rGqK4GDDYByJ/MRqkhWsiQhBEqLkcFU0Z93NeyWBne4X0VP0
- QmiJZQP399j3nOXxYPxoQjQWkx+G8K2EyL6h4B+HZhgXpPFx0F++hflh8YRc20+Oqis=
-X-Received: by 2002:a53:acc6:0:10b0:64a:d3b2:d394 with SMTP id
- 956f58d0204a3-64d5a13ebeemr2693589d50.26.1773154331912; Tue, 10 Mar 2026
- 07:52:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vzyRa-0000hp-7M; Tue, 10 Mar 2026 10:52:22 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vzyRY-0007ef-L8; Tue, 10 Mar 2026 10:52:21 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62A75pHK1561657; Tue, 10 Mar 2026 14:52:18 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=4EyWwc
+ +8ZnGWg7PZ77LlViCtaNcXAcREDRlWWUBFyfM=; b=tno2qc2qBAvNEuUwLxnIFu
+ qiks0pnyoYLrSfwYBzgo0Hgngu2h97KuWmxGma6RxzVTUoHhNMD2NgAp4gwyjnOV
+ XcBVV0zvidUj1tDCyExneCikiHyAzHPMagvDYE8l4VBYqv70l1GJrYsU80WFCgHQ
+ oJW3jpjyfXUCj1dahkvSSIABw51sZpql9+qeFVsr0YbXrU1yxx2SNsZnuBWADgjt
+ 0mYNz+mut73tWxhkm13wEJGUiEblvmORQjaF2oy+avGQ2OtpuDnyHCfQ/gMusAiL
+ qXXSXb3+nPRptx4O+jkSTsTylayh6alyUr9OoCeNDg2A1LHbi61VPGp+XiEVfbdg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmbdt5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 14:52:18 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AAtSlT021389;
+ Tue, 10 Mar 2026 14:52:17 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4crxbssnys-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 14:52:17 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62AEqDHg45547802
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Mar 2026 14:52:14 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D284520040;
+ Tue, 10 Mar 2026 14:52:13 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 22DA020049;
+ Tue, 10 Mar 2026 14:52:11 +0000 (GMT)
+Received: from [9.124.215.249] (unknown [9.124.215.249])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Mar 2026 14:52:10 +0000 (GMT)
+Message-ID: <e09883a8-7157-4b2e-a11b-2545d5efe85b@linux.ibm.com>
+Date: Tue, 10 Mar 2026 20:22:09 +0530
 MIME-Version: 1.0
-References: <20260310132154.2783257-1-kraxel@redhat.com>
-In-Reply-To: <20260310132154.2783257-1-kraxel@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Mar 2026 14:52:00 +0000
-X-Gm-Features: AaiRm50hzBtQP8mn_uikyElZG_YtsHGwkN8joSgiJHgdOkWuRigr8P-RtoKA4RQ
-Message-ID: <CAFEAcA94vNGzmFMdMhu7835uH-N5y3M8wr-YP0zDZnLY8z8nDA@mail.gmail.com>
-Subject: Re: [PULL 0/3] Firmware 20260310 patches
-To: Gerd Hoffmann <kraxel@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Stefano Garzarella <sgarzare@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
- Ani Sinha <anisinha@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Kashyap Chamarthy <kchamart@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/10] Implement MPIPL for PowerNV
+To: Sourabh Jain <sourabhjain@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Hari Bathini <hbathini@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+References: <20260310124619.3909045-1-adityag@linux.ibm.com>
+ <d828f5f5-f79f-436a-bd84-ab8c270725a8@linux.ibm.com>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <d828f5f5-f79f-436a-bd84-ab8c270725a8@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: w06GAAA_LX28e2KgSKUj5mQhgkrdlBQi
+X-Proofpoint-ORIG-GUID: 3_XAuUbNlgCPoVBCIa4mLYcr9U5HUYOh
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEyNiBTYWx0ZWRfX/aRPGbQzR59D
+ TErenghP/cTE9eNI9JV5VLT0leiUAbHvv3RWxkQf2uOO09YFr0pQC0IMcMjCha3fUrSohHtEEf5
+ ruM0G7BryshpLbmV2dcRLeFERyh5ra3+b3WDTur9xdPO3YcBe9o+iJhbc1UtMwh72QDS2RaW4/h
+ QLPkzp4AkZn4dHGYnzgHqogkSTnxAfqoDUfnbb/jFSa+2YbRTACU1RZWS+Ymp4R5HIimf03Ncen
+ 7tKDGzehgJdBZ8Xj+wlIzfcNvQfDVCsxuM+dMBRVgF6G07rq4VZJNZJmqDG9PQaCWv/J1xGpJj2
+ Du88Bm4fSkzzHWXk+ary2IOoPNtBnu7B/XWDcj433q4ivfV9uXgdQSLs/Be+GcFq9meLzfAKtWf
+ xIm7lxdTv75BZ+zfde9H8eaQXuSj6zcktJVQWBeewwOEnp8rn7AKQkNOCZoX5YCbO7GP9JyLgx9
+ iJU9LWrAgD1ORahMe3w==
+X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b03022 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
+ a=WzblKziCi-pPldmMIboA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100126
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,32 +126,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Mar 2026 at 13:22, Gerd Hoffmann <kraxel@redhat.com> wrote:
+On 10/03/26 20:20, Sourabh Jain wrote:
+
+> Thanks for adding fadump support on PowerNV platform.
 >
-> The following changes since commit de61484ec39f418e5c0d4603017695f9ffb8fe24:
->
->   Merge tag 'linux-user-for-v11-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-03-09 14:53:42 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/kraxel/qemu.git tags/firmware-20260310-pull-request
->
-> for you to fetch changes up to 470ccb470b33bedede0100fdb703228a3f2683a5:
->
->   i386/sev/igvm: do not reset guest policy if IGVM does not set it (2026-03-10 14:20:41 +0100)
->
-> ----------------------------------------------------------------
-> - firmware.json spec update for svsm.
-> - igvm bugfixes.
->
-> ----------------------------------------------------------------
+> The whole patch series looks good to me.
+> Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+
+Thank you for the detailed reviews Sourabh !
 
 
+- Aditya G
 
-Applied, thanks.
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
 
