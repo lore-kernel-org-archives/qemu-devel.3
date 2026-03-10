@@ -4,103 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4A11EB105A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7359EB105B
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:22:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxxo-0006Ik-1S; Tue, 10 Mar 2026 10:21:36 -0400
+	id 1vzxxs-0006JY-9p; Tue, 10 Mar 2026 10:21:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vzxxl-0006Ho-Cy; Tue, 10 Mar 2026 10:21:33 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzxxp-0006Iz-D8
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:21:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1vzxxj-0008M9-Be; Tue, 10 Mar 2026 10:21:33 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A7UNJL1200596; Tue, 10 Mar 2026 14:21:28 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=M1kpYcBBOzSa1HI0ADnN6S7ADmGCiWr/HA3ISTd4+
- aQ=; b=NH/ysRKvni4bYkAYrbPeYBKaM8rj5+eUFotKNzGBWfow+UqVM5XnwvgfH
- F6yK9fd1qci9wO37QJB3/zSlHcOSQyBwxLrJInJ9NKlaA5R5EWTJ3oddYYKngBYM
- FyQMANY5nRR7Z2rycOEYIRw4wDV2MNwQszX2Kib01pt+QOthz9TXvgl8VMGZr3Gg
- AHBc75G5AqydX10CvHEpXhnUOzdWI7kj4dnjwrS3pK0c4TFJyf0qQZs/hPAYTIrU
- QE9yfN+aOZ8OaXW8ONtJYK+Ubd2mIdRMZPsmOSJyuUkIqFoSu0mKqfUItLksYgis
- ajY5QhspecVXARAgJiX8iNHYSVUMQ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcywb859-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 14:21:27 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AD0JCd015771;
- Tue, 10 Mar 2026 14:21:26 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs12215pr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 14:21:26 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AELQ6Q24904246
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 14:21:26 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 03F2058062;
- Tue, 10 Mar 2026 14:21:26 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 65C6158052;
- Tue, 10 Mar 2026 14:21:25 +0000 (GMT)
-Received: from t15.ibmuc.com (unknown [9.61.79.36])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 14:21:25 +0000 (GMT)
-From: jrossi@linux.ibm.com
-To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org, thuth@redhat.com,
- borntraeger@linux.ibm.com
-Cc: mjrosato@linux.ibm.com, jrossi@linux.ibm.com, zycai@linux.ibm.com
-Subject: [PATCH] MAINTAINERS: Update S390-ccw boot maintainers/reviewers
-Date: Tue, 10 Mar 2026 10:21:18 -0400
-Message-ID: <20260310142118.1120291-1-jrossi@linux.ibm.com>
-X-Mailer: git-send-email 2.43.5
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzxxm-0008Mn-0L
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:21:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773152493;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DPDNQB22OH1icWGTv0aradCc9IgBGx5DXINS//ejKek=;
+ b=QbP9RseLJgWm026qPyU10MzwiQMAssXWGgxqtCak0UbyxN5cXT54RrW9NDu2N/xIgEzKgI
+ gPSmTOdXqe2CkKGomLSLtocgnkuFdRB09H5fbVyz9A125e/cpbfQchv1DU5BiAEZtnoFmA
+ 5ngTFkqeHNwL/zA4zaXsmcRKDvFxoh0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-361-a7TdJ_XjOJqlpaILKeAqRA-1; Tue,
+ 10 Mar 2026 10:21:28 -0400
+X-MC-Unique: a7TdJ_XjOJqlpaILKeAqRA-1
+X-Mimecast-MFC-AGG-ID: a7TdJ_XjOJqlpaILKeAqRA_1773152486
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0235018005B2; Tue, 10 Mar 2026 14:21:26 +0000 (UTC)
+Received: from redhat.com (unknown [10.45.224.112])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 41EBD19560A6; Tue, 10 Mar 2026 14:21:23 +0000 (UTC)
+Date: Tue, 10 Mar 2026 15:21:20 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-block@nongnu.org, hreitz@redhat.com, xeor@yandex-team.ru,
+ vsementsov@yandex-team.ru, pkrempa@redhat.com, qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] block: Never drop BLOCK_IO_ERROR with action=stop for
+ rate limiting
+Message-ID: <abAo4NCbVN0PejkM@redhat.com>
+References: <20260304122800.51923-1-kwolf@redhat.com>
+ <87y0jzresf.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEyMiBTYWx0ZWRfX3FsD64mwfZ3s
- YoZZiv/GxNRwgo1Ut2ntgcCfvS5u/Pkeqb2J1jclUQNeVxk3VGNDyJo1btJ3yN0fAE4/B5DbPYE
- FcmSrJJAns4+k3ZIP4/zExipeO/QSZtDhK5uhePJetg5h7wphtExQgod1rcIMr+zvpcznzKGCk6
- 03xz3UWOGjweTPrRzv4YdLvCZfVRUqf0WrFLF4whj9EAKUVlLimQ7egiKAOCTIY2/GjoMyuO/Io
- y2DwX4aDriYHysdl5C8B5O/vCoGI+Lk1A9GiurcqJUCw1h8DkwlHhO2KMta9L2YnlyrckJeYvps
- n3SN9cVRE8vmlnkoYi3Om887vFnAmzXLwF06dVBFb0zvDTZGkcjgLd3shmIgMb0xDqKvMWWcwso
- 3cIqpKq70wgM1Ola+CzfT3AUuP76wNiDHgB78mGF8nf7p8r3vbY/40XtJrJoqLxqhS8cUZ60vRu
- xTpCmlYqW5BYqx2MTgw==
-X-Authority-Analysis: v=2.4 cv=QaVrf8bv c=1 sm=1 tr=0 ts=69b028e7 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=U7nrCbtTmkRpXpFmAIza:22 a=NEAV23lmAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
- a=20KFwNOVAAAA:8 a=4VVcHpUFlTeZ-k0x__MA:9 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: w18uur4QVE8gJp8eVb327IFZiBsSL7YI
-X-Proofpoint-ORIG-GUID: w18uur4QVE8gJp8eVb327IFZiBsSL7YI
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 spamscore=0 impostorscore=0 clxscore=1015 adultscore=0
- bulkscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0 phishscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100122
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jrossi@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87y0jzresf.fsf@pond.sub.org>
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,34 +84,129 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+Am 10.03.2026 um 14:32 hat Markus Armbruster geschrieben:
+> This is now commit 544ddbb6373d61292a0e2dc269809cd6bd5edec6.  I'm not
+> objecting.  Just a few remarks.  I dropped qemu-stable@ from cc.
+> 
+> Kevin Wolf <kwolf@redhat.com> writes:
+> 
+> > Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
+> > event only once a second. This makes sense for cases in which the guest
+> > keeps running and can submit more requests that would possibly also fail
+> > because there is a problem with the backend.
+> >
+> > However, if the error policy is configured so that the VM is stopped on
+> > errors, this is both unnecessary because stopping the VM means that the
+> > guest can't issue more requests and in fact harmful because stopping the
+> > VM is an important state change that management tools need to keep track
+> > of even if it happens more than once in a given second. If an event is
+> > dropped, the management tool would see a VM randomly going to paused
+> > state without an associated error, so it has a hard time deciding how to
+> > handle the situation.
+> >
+> > This patch disables rate limiting for action=stop by not relying on the
+> > event type alone any more in monitor_qapi_event_queue_no_reenter(), but
+> > checking action for BLOCK_IO_ERROR, too. If the error is reported to the
+> > guest or ignored, the rate limiting stays in place.
+> >
+> > Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
+> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+> > ---
+> >  qapi/block-core.json |  2 +-
+> >  monitor/monitor.c    | 21 ++++++++++++++++++++-
+> >  2 files changed, 21 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+> > index b66bf316e2f..da0b36a3751 100644
+> > --- a/qapi/block-core.json
+> > +++ b/qapi/block-core.json
+> > @@ -5794,7 +5794,7 @@
+> >  # .. note:: If action is "stop", a `STOP` event will eventually follow
+> >  #    the `BLOCK_IO_ERROR` event.
+> >  #
+> > -# .. note:: This event is rate-limited.
+> > +# .. note:: This event is rate-limited, except if action is "stop".
+> >  #
+> >  # Since: 0.13
+> >  #
+> > diff --git a/monitor/monitor.c b/monitor/monitor.c
+> > index 1273eb72605..37fa674cfe6 100644
+> > --- a/monitor/monitor.c
+> > +++ b/monitor/monitor.c
+> > @@ -367,14 +367,33 @@ monitor_qapi_event_queue_no_reenter(QAPIEvent event, QDict *qdict)
+> >  {
+> >      MonitorQAPIEventConf *evconf;
+> >      MonitorQAPIEventState *evstate;
+> > +    bool throttled;
+> >  
+> >      assert(event < QAPI_EVENT__MAX);
+> >      evconf = &monitor_qapi_event_conf[event];
+> >      trace_monitor_protocol_event_queue(event, qdict, evconf->rate);
+> > +    throttled = evconf->rate;
+> > +
+> > +    /*
+> > +     * Rate limit BLOCK_IO_ERROR only for action != "stop".
+> > +     *
+> > +     * If the VM is stopped after an I/O error, this is important information
+> > +     * for the management tool to keep track of the state of QEMU and we can't
+> > +     * merge any events. At the same time, stopping the VM means that the guest
+> > +     * can't send additional requests and the number of events is already
+> > +     * limited, so we can do without rate limiting.
+> > +     */
+> > +    if (event == QAPI_EVENT_BLOCK_IO_ERROR) {
+> > +        QDict *data = qobject_to(QDict, qdict_get(qdict, "data"));
+> > +        const char *action = qdict_get_str(data, "action");
+> > +        if (!strcmp(action, "stop")) {
+> > +            throttled = false;
+> > +        }
+> > +    }
+> 
+> Having event-specific logic in the general event emission function is
+> ugly.
+> 
+> Before the patch, the "throttle this event?" logic is coded in one
+> place: table monitor_qapi_event_conf[].
+> 
+> The table maps from event kind (enum QAPIEvent) to the minimum time
+> between two events.  Non-zero specifies a rate limit, zero makes it
+> unlimited.
+> 
+> Aside: as far as I can tell, we've only ever used one
+> MonitorQAPIEventConf: { .rate = 1000 * SCALE_MS }.  Could be dumbed down
+> to bool.
+> 
+> This is insufficient for QAPIEvent QAPI_EVENT_BLOCK_IO_ERROR, where the
+> desired rate depends on event data, not just the QAPIEvent.
+> 
+> The patch gives us the desired rate, but it splits the logic between the
+> map and the map's user.
+> 
+> I think the cleaner solution is to make the map more capable: have it
+> maps from the entire event, not just its kind.
+> 
+> An obvious way to do that would be a table of function pointers
+> 
+>     bool (*)(QAPIEvent, QDict *)
+> 
+> Null means unlimited.
+> 
+> The table entry for BLOCK_IO_ERROR returns false for unlimited when
+> "action" is "stop", else true.
+> 
+> The table entries for the other rate-limited events simply return true.
+> 
+> Thoughts?
 
-Christian Borntraeger is no longer active in this space.  Promote myself to
-maintainer and demote Christian to reviewer.
+Like you, I often prefer data to code. However, if the data becomes just
+a table of function pointers to trivial functions, wouldn't it be better
+to just have it as code in the first place?
 
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
----
- MAINTAINERS | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+It could be a helper function with the same signature as you proposed
+above and it would simply be a switch statement returning true for a few
+event types, looking at the QDict for BLOCK_IO_ERROR and returning false
+for default. Seems a lot simpler than an explicit table of function
+pointers.
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 80e10e43b5..1012135dd4 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1862,10 +1862,10 @@ T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
- S390-ccw boot
--M: Christian Borntraeger <borntraeger@linux.ibm.com>
- M: Thomas Huth <thuth@redhat.com>
--R: Jared Rossi <jrossi@linux.ibm.com>
-+M: Jared Rossi <jrossi@linux.ibm.com>
- R: Zhuoying Cai <zycai@linux.ibm.com>
-+R: Christian Borntraeger <borntraeger@linux.ibm.com>
- S: Supported
- F: hw/s390x/ipl.*
- F: pc-bios/s390-ccw/
--- 
-2.52.0
+Kevin
 
 
