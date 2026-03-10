@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A3D3EB1067
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:16:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19EAEEB1070
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:16:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzynd-00071e-KY; Tue, 10 Mar 2026 11:15:09 -0400
+	id 1vzynk-0007MM-50; Tue, 10 Mar 2026 11:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynN-0006p5-RH
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:57 -0400
+ id 1vzynT-0006rP-JD
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:04 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynL-0000Fd-NG
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:53 -0400
+ id 1vzynQ-0000GI-KG
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:59 -0400
 Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62AAYBeG1721997
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:50 GMT
+ 62A1Ew0s076304
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:55 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=MMM8fqi8Az8/ii4Qk
- ag1EO3WTRA4KMdJ9e91Krm1NgQ=; b=L/wiwbnaJfQjzSxfIld5MSbhpSbQCSEhx
- lULZTlM+JonPJyByg/OcKxCnRklV+skF6cDDmLS9Y8y7Svx6OOfRwF6HT+vJFClf
- fU6FyS90EuimXDoo4ZehWMmg7svCH8xHYm45h1Rzi+AV0O9pBkN09lon58SQkKjK
- tDMXwf6QDitJrMv0gwdjCbMHqUJX6lquFjdzqjfCAL20/6Mv81+xEOTaBrmFcrfz
- Xb1u2/EjAwcDqBQuHogi7sWBTAWJ+gQRZPSCU0EWla6sn9jV7gqmQ8tkh2mfz2GM
- MpzusdCIF+Dn1Gi6qhu5y0O54u7llSBo9dNC7OV+VtQtJLI9p33rA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvrb6fe-1
+ :mime-version:references:subject:to; s=pp1; bh=oxnCuJ415kJrm9x0e
+ 7Lh0j6E+LRZnIIw3ZKt6MD94sY=; b=Ey6Os1B8vuNQBOxIz1v+qoG5d31abjjDc
+ zMhskVWZosUk051vBKfdsaDOGEX9i5XB96OcW+HLioh/KBA1rBPwnfbJtIPMgbv1
+ bQ0wLvo5ddiu1GcwOtkRSoXaMGVnf7HU2nPAX3AHMKasq/mH1KrJN4jMiWcdHmkH
+ MMBOvMKJLKvW1F0eMmnD9mq59GBm72dzBZpPbaEILGwY/73/N3h7/baIFDoZUwQI
+ OiEBm/puOApj9drrjwE+06QgKmHS40GM8c/tufPYGtRSZsbZenP+lX86ra+BPP4M
+ lnBz9bEWb4OVqqnjyN92m5KZVOqbiCIg+Y9pJut/lFjVCkVc2IO4w==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvrb6fq-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:50 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62ACwnoV015750
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:49 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs1221bku-1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:55 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62ABlH9R015629
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:54 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crybn9mvu-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:49 +0000
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:54 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AFEjK044171536
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62AFEpZH44040464
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 15:14:46 GMT
+ Tue, 10 Mar 2026 15:14:51 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id DC42C2004B;
- Tue, 10 Mar 2026 15:14:45 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id E7A5F2004D;
+ Tue, 10 Mar 2026 15:14:50 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BC30C2004E;
- Tue, 10 Mar 2026 15:14:44 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id C944C2004B;
+ Tue, 10 Mar 2026 15:14:49 +0000 (GMT)
 Received: from Mac.com (unknown [9.39.23.49])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 15:14:44 +0000 (GMT)
+ Tue, 10 Mar 2026 15:14:49 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Aditya Gupta <adityag@linux.ibm.com>,
  Hari Bathini <hbathini@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>,
  Sourabh Jain <sourabhjain@linux.ibm.com>
-Subject: [PULL 03/10] ppc/pnv: Handle stash command in PowerNV SBE
-Date: Tue, 10 Mar 2026 20:44:23 +0530
-Message-ID: <20260310151432.92531-4-harshpb@linux.ibm.com>
+Subject: [PULL 06/10] pnv/mpipl: Set thread entry size to be allocated by
+ firmware
+Date: Tue, 10 Mar 2026 20:44:26 +0530
+Message-ID: <20260310151432.92531-7-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260310151432.92531-1-harshpb@linux.ibm.com>
 References: <20260310151432.92531-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfX9DIV4+bosLnF
- TVI6BbuEGEjUUBE25ImOZX8amOMHoZ9F4vwtLwx3WUdpGpu0rh0JlJp7F/FoDURTlFd51QWXkbm
- bKMOdffvJc07NrRGRuETtfSJZrraWDVL13vOUPH9tBwgho6z9vkfs92Os+L24dET9i/T8Ai0JIv
- 7N2pux9yFr4a9Na4ySR41l9N2cm3+XppMAwHfoiYFzgyaBshNad+LoMzCtfRs2gmcmjN6k/Jz/z
- B4q8Gk5HtE6VoPAJxFaScSff/Oh+jTU6D1WxC12dyAN6Ikqd6M4zvyr5G0x88JPfsW4g24Abd7B
- M4KtWhJtBoL3R8rzMEVHDX7GH5GX3MbOIQZPEJkdJpg83Y5z4Pkj1u1sUZmATKVwacOjoWweCxQ
- mwEpYFjip/EZQclYRhNEfm6I5EO/iAE3yZKA+FUiBvWA6lZiygodxLEIM3xf+dfDKAHt2yX6vtw
- LJK56oesuhoGp37iAhQ==
-X-Proofpoint-GUID: wu8UD6jKvZC06_hFuzIy-S6FLiKwR_jH
-X-Proofpoint-ORIG-GUID: wu8UD6jKvZC06_hFuzIy-S6FLiKwR_jH
-X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69b0356a cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfX83LnxTT/DJN5
+ 4PRn2hBXEXWsAPW0Ke3Ro3gTkA4znzSS5R9lHrbJUeraFJDSNz9Y+2+yfPqB9MhixdDwqcHxWK1
+ VafMSvdSvfnMELhtbpv+ZJn/JCXIo1f1cbZGTN7YJQv2ooo1Y46a8jlNlbG7050JhxodJ42TjCk
+ VyZnNmFjIQsj1JhIYiZxS1mzVWfw0AtsK+fyALNaG3m9d8AX/jBokeGEawv98c5xlGhkVqX1R2O
+ xN46RZWzyV7SnDEG3fccMZYgxlhZnVqPUn5Gl7RZsvvRrOm+xi/yHsYdYQg+HnHhRi0MS0FdruH
+ oBTtEcQBa0GqfO15fsqTh7fE8hq2EyIkk967gXmtMjcTEqsGoJmd+nx2PpzbGek6P6YJhsLpyUs
+ Jw7ymIQQQO5Psc8BipujIyBU2yCSEq87dP1xf7c14HMRjhOqEpDU/1Ms2bDOvOC2qvpGd0rMuWQ
+ 7g/yAJVZ3ckmZvJq8aA==
+X-Proofpoint-GUID: 6IXoKoXWOOi0ou5dh_dvDn99q7Il8Aur
+X-Proofpoint-ORIG-GUID: 6IXoKoXWOOi0ou5dh_dvDn99q7Il8Aur
+X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69b0356f cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
  a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=lqnwqb0_oS2Hd41rSKUA:9
+ a=VnNF1IyMAAAA:8 a=K3nGc4jhFjju3E8dwHwA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
@@ -126,119 +127,55 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aditya Gupta <adityag@linux.ibm.com>
 
-Earlier since the SBE_CMD_STASH_MPIPL_CONFIG command was not handled, so
-skiboot used to not get any response from SBE:
-
-    [  106.350742821,3] SBE: Message timeout [chip id = 0], cmd = d7, subcmd = 7
-    [  106.352067746,3] SBE: Failed to send stash MPIPL config [chip id = 0x0, rc = 254]
-
-Fix this by handling the command in PowerNV SBE, and sending a response so
-skiboot knows SBE has handled the STASH command
-
-The stashed skiboot base is later used to access the relocated MDST/MDDT
-tables when MPIPL is implemented.
-
-The purpose of stashing relocated base address is explained in following
-skiboot commit:
-
-    author Vasant Hegde <hegdevasant@linux.vnet.ibm.com> Fri Jul 12 16:47:51 2019 +0530
-    committer Oliver O'Halloran <oohall@gmail.com> Thu Aug 15 17:53:39 2019 +1000
-
-    SBE: Send OPAL relocated base address to SBE
-
-      OPAL relocates itself during boot. During memory preserving IPL hostboot needs
-      to access relocated OPAL base address to get MDST, MDDT tables. Hence send
-      relocated base address to SBE via 'stash MPIPL config' chip-op. During next
-      IPL SBE will send stashed data to hostboot... so that hostboot can access
-      these data.
+Set the "Thread Register State Entry Size" that is required by firmware
+(OPAL), to know size of memory to allocate to capture CPU state, in the
+event of a crash
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-4-adityag@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-7-adityag@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- include/hw/ppc/pnv_mpipl.h |  3 +++
- hw/ppc/pnv_sbe.c           | 37 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 40 insertions(+)
+ hw/ppc/pnv.c | 24 ++++++++++++++++++++++++
+ 1 file changed, 24 insertions(+)
 
-diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
-index c544984dc7..60d6ede482 100644
---- a/include/hw/ppc/pnv_mpipl.h
-+++ b/include/hw/ppc/pnv_mpipl.h
-@@ -8,11 +8,14 @@
- #define PNV_MPIPL_H
- 
- #include "qemu/osdep.h"
-+#include "exec/hwaddr.h"
- 
- typedef struct MpiplPreservedState MpiplPreservedState;
- 
- /* Preserved state to be saved in PnvMachineState */
- struct MpiplPreservedState {
-+    /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
-+    hwaddr     skiboot_base;
-     bool       is_next_boot_mpipl;
- };
- 
-diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
-index 5a2b3342d1..46c5047f1c 100644
---- a/hw/ppc/pnv_sbe.c
-+++ b/hw/ppc/pnv_sbe.c
-@@ -233,8 +233,11 @@ static void sbe_timer(void *opaque)
- 
- static void do_sbe_msg(PnvSBE *sbe)
- {
-+    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
-+    MachineState *machine = MACHINE(pnv);
-     struct sbe_msg msg;
-     uint16_t cmd, ctrl_flags, seq_id;
-+    uint64_t mbox_val;
-     int i;
- 
-     memset(&msg, 0, sizeof(msg));
-@@ -265,6 +268,40 @@ static void do_sbe_msg(PnvSBE *sbe)
-             timer_del(sbe->timer);
-         }
-         break;
-+    case SBE_CMD_STASH_MPIPL_CONFIG:
-+        /* key = sbe->mbox[1] */
-+        switch (sbe->mbox[1]) {
-+        case SBE_STASH_KEY_SKIBOOT_BASE:
-+            mbox_val = sbe->mbox[2];
-+            if (mbox_val >= machine->ram_size) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                  "SBE: skiboot_base 0x%" PRIx64 " exceeds RAM size 0x%" PRIx64 "\n",
-+                  mbox_val, machine->ram_size);
-+                return;
-+            }
-+
-+            pnv->mpipl_state.skiboot_base = mbox_val;
-+            qemu_log_mask(LOG_UNIMP,
-+                "Stashing skiboot base: 0x%" HWADDR_PRIx "\n",
-+                pnv->mpipl_state.skiboot_base);
-+
-+            /*
-+             * Set the response register.
-+             *
-+             * Currently setting the same sequence number in
-+             * response as we got in the request.
-+             */
-+            sbe->mbox[4] = sbe->mbox[0];    /* sequence number */
-+            pnv_sbe_set_host_doorbell(sbe,
-+                    sbe->host_doorbell | SBE_HOST_RESPONSE_WAITING);
-+
-+            break;
-+        default:
-+            qemu_log_mask(LOG_UNIMP,
-+                "SBE: CMD_STASH_MPIPL_CONFIG: Unimplemented key: 0x" TARGET_FMT_lx "\n",
-+                sbe->mbox[1]);
-+        }
-+        break;
-     default:
-         qemu_log_mask(LOG_UNIMP, "SBE Unimplemented command: 0x%x\n", cmd);
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 1513575b8f..3038b1626c 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -781,6 +781,30 @@ static void pnv_reset(MachineState *machine, ResetType type)
+         _FDT((fdt_pack(fdt)));
      }
+ 
++    if (!pnv->mpipl_state.is_next_boot_mpipl) {
++        /*
++         * Set the "Thread Register State Entry Size", so that firmware can
++         * allocate enough memory to capture CPU state in the event of a
++         * crash
++         */
++
++        MpiplProcDumpArea proc_area;
++
++        proc_area.version = PROC_DUMP_AREA_VERSION_P9;
++        proc_area.thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
++
++        /* These are to be allocated & assigned by the firmware */
++        proc_area.alloc_addr = 0;
++        proc_area.alloc_size = 0;
++
++        /* These get assigned after crash, when QEMU preserves the registers */
++        proc_area.dest_addr = 0;
++        proc_area.act_size = 0;
++
++        cpu_physical_memory_write(PROC_DUMP_AREA_OFF, &proc_area,
++                sizeof(proc_area));
++    }
++
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+ 
+     /* Update machine->fdt with latest fdt */
 -- 
 2.52.0
 
