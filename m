@@ -4,94 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCC2EB105B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:22:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697B5EB105A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:26:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxxv-0006L5-Rp; Tue, 10 Mar 2026 10:21:44 -0400
+	id 1vzy2Y-0000KH-1i; Tue, 10 Mar 2026 10:26:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxxt-0006KK-Of
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:21:41 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxxs-0008OF-24
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:21:41 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id F308E4D211;
- Tue, 10 Mar 2026 14:21:37 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773152498; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
- b=HlxJx4BmGmrXBZA0wnnSo9jN4BrN51CcfAhNTNFY22+vXbp76iiOJ4W93ERtdmbcyZ9rFc
- 3OtDNmosFT3HV61pW2TMBO2yvjvgYgAZRxhzF/khYwtvIUzQ4gNm6UiCxdzeE8myE1l2+3
- CcQThtndUUsn0NZLyZO0VtSeXagHK2A=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773152498;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
- b=AOFv9LjMNoqMM7pZNLE7mqHZiYFiVVAFqZb0l26EBLiiZ3HcuwZ0WJhEkoRTUKNXRXG1jU
- X9blokv5am6ylMDQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773152497; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
- b=dxq1tJ8uMowCr0aLuv0MgUyT0PJZz0/YYfeCXDktUUVhnOH5yrAw/hADCy8tDujSe/dVmT
- wNNCMv8QTbj3oYuboCikR7Av2r20vBBcDz6gMi/F7deA0lje4Pq6MOxmrroMS1K5xsKPmT
- rK1GfTv8pZ3CKMC80JlDL2JeagnAl/Y=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773152497;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
- b=GafK3lf7CH/WydAfZ24+bspIUwJyx1YnTkdSAuE6/J51RdltVy0wYygzNJdImC+yYHq2l/
- DPcjJgo1Vouzd3Dg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CDB633F4CD;
- Tue, 10 Mar 2026 14:21:36 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id D7evJPAosGnYDgAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 14:21:36 +0000
-From: Fabiano Rosas <farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vzy2S-0000E5-LU; Tue, 10 Mar 2026 10:26:24 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1vzy2Q-0001Bb-DV; Tue, 10 Mar 2026 10:26:24 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 961F087493;
+ Tue, 10 Mar 2026 15:26:11 +0100 (CET)
+From: Fiona Ebner <f.ebner@proxmox.com>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PATCH 0/8] migration-test: Plumbing
-Date: Tue, 10 Mar 2026 11:21:34 -0300
-Message-ID: <20260310142134.15137-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+Cc: qemu-stable@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
+ philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
+ marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de
+Subject: [PATCH v2] ui/vdagent: add migration blocker when machine version <
+ 10.1
+Date: Tue, 10 Mar 2026 15:25:39 +0100
+Message-ID: <20260310142552.240877-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1773152737132
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,49 +58,151 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix leaks. A couple of normal ones and a few that happen due to a test
-expecting failure in the destination side, but exit-on-error=true so
-the coroutine just exits the entire process while a few resources are
-still allocated, but outside of the scope of the migration code.
+In QEMU 10.1, commit 5d56bff11e ("ui/vdagent: add migration support")
+added migration support for the vdagent chardev and commit 42000e0013
+("ui/vdagent: remove migration blocker") removed the migration
+blocker. No compat for older machine versions was added, so migration
+with pre-10.1 machine version, from a 10.1 binary to a pre-10.1 binary
+will result in a failure when loading the VM state in the target
+instance:
 
-I brought a couple of cleanup patches from another in-flight series to
-be able to force-set exit-on-error=false for the tests that are
-causing leaks, that way we don't need to complicate the migration
-cleanup code trying to reach into other subsystems to free memory when
-QEMU is already exiting.
+> Unknown savevm section or instance 'vdagent' 0. Make sure that your
+> current VM setup matches your saved VM setup, including any
+> hotplugged devices
 
-CI run: https://gitlab.com/farosas/qemu/-/pipelines/2375586934
+Add a compat flag to block migration when the machine version is less
+than 10.1 to avoid this.
 
---enable-asan --enable-ubsan build is clean for x86_64 migration-test --full
+Cc: qemu-stable@nongnu.org
+Fixes: 42000e0013 ("ui/vdagent: remove migration blocker")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+---
 
-Fabiano Rosas (8):
-  tests/qtest/migration: Fix leak of migration tests data
-  tests/qtest/migration: Change validate_uuid test to not trigger
-    exit(1)
-  tests/qtest/migration: Fix misuse of listen_uri
-  tests/qtest/migration: Stop invoking migrate_incoming from hooks
-  tests/qtest/migration: Force exit-on-error=false when appropriate
-  io: Fix TLS bye task leak
-  tests/qtest/migration: Fix leak in CPR exec test
-  migration/multifd: Fix leaks of TLS error objects
+Changes in v2:
+* rebase on current master, adapting to commit 8c84f31ace
+  ("chardev: .chr_open(): add boolean return value")
 
- io/channel-tls.c                          |  4 ++-
- migration/migration.c                     |  5 +++
- migration/multifd.c                       | 27 +++++++--------
- tests/qtest/migration/colo-tests.c        |  8 ++++-
- tests/qtest/migration/compression-tests.c | 18 ++++++----
- tests/qtest/migration/cpr-tests.c         | 25 +++++++++-----
- tests/qtest/migration/file-tests.c        | 41 ++++++++++++++++-------
- tests/qtest/migration/framework.c         | 31 ++++++++++++-----
- tests/qtest/migration/framework.h         |  7 ++++
- tests/qtest/migration/migration-util.c    | 19 ++++++++---
- tests/qtest/migration/migration-util.h    |  2 +-
- tests/qtest/migration/misc-tests.c        |  8 ++---
- tests/qtest/migration/precopy-tests.c     | 21 +++++++-----
- tests/qtest/migration/tls-tests.c         | 30 +++++++++++------
- 14 files changed, 165 insertions(+), 81 deletions(-)
+ hw/core/machine.c |  1 +
+ ui/vdagent.c      | 46 ++++++++++++++++++++++++++++++++++++++++++++++
+ 2 files changed, 47 insertions(+)
 
+diff --git a/hw/core/machine.c b/hw/core/machine.c
+index a14ad05b9a..6cf0e2f404 100644
+--- a/hw/core/machine.c
++++ b/hw/core/machine.c
+@@ -57,6 +57,7 @@ GlobalProperty hw_compat_10_0[] = {
+     { "vfio-pci", "x-migration-load-config-after-iter", "off" },
+     { "ramfb", "use-legacy-x86-rom", "true"},
+     { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
++    { "chardev-qemu-vdagent", "x-migration-blocked", "true" },
+ };
+ const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
+ 
+diff --git a/ui/vdagent.c b/ui/vdagent.c
+index 5a5e4bf681..bb0c4aa14c 100644
+--- a/ui/vdagent.c
++++ b/ui/vdagent.c
+@@ -6,6 +6,8 @@
+ #include "qemu/option.h"
+ #include "qemu/units.h"
+ #include "hw/core/qdev.h"
++#include "hw/core/qdev-properties.h"
++#include "migration/blocker.h"
+ #include "ui/clipboard.h"
+ #include "ui/console.h"
+ #include "ui/input.h"
+@@ -24,6 +26,10 @@
+ struct VDAgentChardev {
+     Chardev parent;
+ 
++    /* needed for machine versions < 10.1 when migration was not supported */
++    Error *migration_blocker;
++    bool migration_blocked;
++
+     /* config */
+     bool mouse;
+     bool clipboard;
+@@ -657,6 +663,12 @@ static bool vdagent_chr_open(Chardev *chr, ChardevBackend *backend,
+     return false;
+ #endif
+ 
++    if (vd->migration_blocked) {
++        if (migrate_add_blocker(&vd->migration_blocker, errp) != 0) {
++            return false;
++        }
++    }
++
+     vd->mouse = VDAGENT_MOUSE_DEFAULT;
+     if (cfg->has_mouse) {
+         vd->mouse = cfg->mouse;
+@@ -901,6 +913,19 @@ static void vdagent_chr_parse(QemuOpts *opts, ChardevBackend *backend,
+ 
+ /* ------------------------------------------------------------------ */
+ 
++static bool get_migration_blocked(Object *o, Error **errp)
++{
++    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(o);
++    return vd->migration_blocked;
++}
++
++static void set_migration_blocked(Object *o, bool migration_blocked,
++                                   Error **errp)
++{
++    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(o);
++    vd->migration_blocked = migration_blocked;
++}
++
+ static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
+ {
+     ChardevClass *cc = CHARDEV_CLASS(oc);
+@@ -910,6 +935,10 @@ static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
+     cc->chr_write        = vdagent_chr_write;
+     cc->chr_set_fe_open  = vdagent_chr_set_fe_open;
+     cc->chr_accept_input = vdagent_chr_accept_input;
++
++    object_class_property_add_bool(oc, "x-migration-blocked",
++                                   get_migration_blocked,
++                                   set_migration_blocked);
+ }
+ 
+ static int post_load(void *opaque, int version_id)
+@@ -1064,10 +1093,26 @@ static void vdagent_chr_instance_init(Object *obj)
+     vmstate_register_any(NULL, &vmstate_vdagent, vd);
+ }
+ 
++static void vdagent_post_init(Object *obj)
++{
++    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
++
++    object_apply_compat_props(obj);
++
++    if (vd->migration_blocked) {
++        error_setg(&vd->migration_blocker,
++                   "The vdagent chardev doesn't support migration with machine"
++                   " version less than 10.1");
++    }
++}
++
+ static void vdagent_chr_fini(Object *obj)
+ {
+     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
+ 
++    if (vd->migration_blocked) {
++        migrate_del_blocker(&vd->migration_blocker);
++    }
+     vdagent_disconnect(vd);
+     if (vd->mouse_hs) {
+         qemu_input_handler_unregister(vd->mouse_hs);
+@@ -1080,6 +1125,7 @@ static const TypeInfo vdagent_chr_type_info = {
+     .parent = TYPE_CHARDEV,
+     .instance_size = sizeof(VDAgentChardev),
+     .instance_init = vdagent_chr_instance_init,
++    .instance_post_init = vdagent_post_init,
+     .instance_finalize = vdagent_chr_fini,
+     .class_init = vdagent_chr_class_init,
+ };
 -- 
-2.51.0
+2.47.3
+
 
 
