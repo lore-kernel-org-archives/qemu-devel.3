@@ -4,105 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A7CBFD2D9B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:56:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9474AFD2D9A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:56:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxZA-0004Ps-Pi; Tue, 10 Mar 2026 09:56:08 -0400
+	id 1vzxYy-00046H-3k; Tue, 10 Mar 2026 09:55:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxZ8-0004Nh-S7
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:56:07 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxYw-000466-Ro
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:55:54 -0400
 Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxZ7-0007LC-2r
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:56:06 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxYv-0006vR-5E
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:55:54 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 779244D211;
- Tue, 10 Mar 2026 13:56:00 +0000 (UTC)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id C2AB44D211;
+ Tue, 10 Mar 2026 13:55:46 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773150960; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1773150946; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cJIdpo4r88UPSBhoejSEqlOOpGzHBhEaMd5/99QldwA=;
- b=Hu3VT7M95KaM5Pm1QQEcyjcm2ELIQDEnNaqtk94N+DxoXe6/8b976aXroFvCYU8V/Fbfvp
- QK80cfcHxvcdvPR42OEqhX+b4tVtQu5TdQpOgyU7e8Tv6t1VVaT2yfpL2rcEEeSP7+abn8
- OSCJCBKSKd9nkLCEuG0rEblO236FwKA=
+ bh=vDytoEY7rdITC/LPBNW2KmyIs4i7pB7P8iyv8gIrLsM=;
+ b=JyySx91g8VrrizdXW4o540q1UvTUZKdpnsz9MTGhrQOGQJQTlSH2Q4JwmNuKTsnnkrbzRH
+ Or4Ab92PUA32+KRw3eJ/aUauqAP7ryHKVKP58604P3txdjNBggVIl45MKBV+TTBnSklpS7
+ 7ulqJVQztfFWod2V0t4vsscGVuZIAAc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773150960;
+ s=susede2_ed25519; t=1773150946;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cJIdpo4r88UPSBhoejSEqlOOpGzHBhEaMd5/99QldwA=;
- b=4WNm/ZFg39Pl1Q06Z3ZI5nK70gUm7stPNSiHcmkIx9qpzUg3ql+ee+a1PlcRrLa0l+XzOE
- ikKmJoOhocxCfGAw==
+ bh=vDytoEY7rdITC/LPBNW2KmyIs4i7pB7P8iyv8gIrLsM=;
+ b=Q6P1bsEVNQVSrSdy6t5TimfceiOlTAIeK5lk+4biF+NW7qFFpsrM6WtP6k2nACCxWFOyUi
+ BtBZRM/HUQSkHMDQ==
 Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Hu3VT7M9;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="4WNm/ZFg"
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773150960; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1773150946; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cJIdpo4r88UPSBhoejSEqlOOpGzHBhEaMd5/99QldwA=;
- b=Hu3VT7M95KaM5Pm1QQEcyjcm2ELIQDEnNaqtk94N+DxoXe6/8b976aXroFvCYU8V/Fbfvp
- QK80cfcHxvcdvPR42OEqhX+b4tVtQu5TdQpOgyU7e8Tv6t1VVaT2yfpL2rcEEeSP7+abn8
- OSCJCBKSKd9nkLCEuG0rEblO236FwKA=
+ bh=vDytoEY7rdITC/LPBNW2KmyIs4i7pB7P8iyv8gIrLsM=;
+ b=JyySx91g8VrrizdXW4o540q1UvTUZKdpnsz9MTGhrQOGQJQTlSH2Q4JwmNuKTsnnkrbzRH
+ Or4Ab92PUA32+KRw3eJ/aUauqAP7ryHKVKP58604P3txdjNBggVIl45MKBV+TTBnSklpS7
+ 7ulqJVQztfFWod2V0t4vsscGVuZIAAc=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773150960;
+ s=susede2_ed25519; t=1773150946;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=cJIdpo4r88UPSBhoejSEqlOOpGzHBhEaMd5/99QldwA=;
- b=4WNm/ZFg39Pl1Q06Z3ZI5nK70gUm7stPNSiHcmkIx9qpzUg3ql+ee+a1PlcRrLa0l+XzOE
- ikKmJoOhocxCfGAw==
+ bh=vDytoEY7rdITC/LPBNW2KmyIs4i7pB7P8iyv8gIrLsM=;
+ b=Q6P1bsEVNQVSrSdy6t5TimfceiOlTAIeK5lk+4biF+NW7qFFpsrM6WtP6k2nACCxWFOyUi
+ BtBZRM/HUQSkHMDQ==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 503823F4B3;
- Tue, 10 Mar 2026 13:55:59 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 2BCFA3F4B3;
+ Tue, 10 Mar 2026 13:55:44 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id 4Fb/Be8isGnFcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 13:55:59 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id OA3DOOAisGnFcQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 13:55:44 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
-	Peter Xu <peterx@redhat.com>
-Subject: [PATCH 8/8] migration/multifd: Fix leaks of TLS error objects
-Date: Tue, 10 Mar 2026 10:55:40 -0300
-Message-ID: <20260310135540.8679-8-farosas@suse.de>
+Cc: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: [PATCH 2/8] tests/qtest/migration: Change validate_uuid test to not
+ trigger exit(1)
+Date: Tue, 10 Mar 2026 10:55:34 -0300
+Message-ID: <20260310135540.8679-2-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310135540.8679-1-farosas@suse.de>
 References: <20260310135540.8679-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.985];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
  FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
  RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_THREE(0.00)[3];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 779244D211
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
  envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
 X-Spam_score_int: -20
@@ -126,67 +118,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The code currently ignores errors from multifd threads that happen
-after a first error has already been propagated. Make sure the
-subsequent errors are freed appopriately.
+The UUID validation happens early enough during the migration process
+that the incoming coroutine hasn't yet yielded once so the
+EXIT_FAILURE from the coroutine can trigger ASAN leak detection due to
+the temporary socket from qio_net_listener_channel_func() still having
+an elevated refcount.
 
-This fixes a leak of the TLS session->werr when the certificate
-validation fails after multifd threads are already running. The first
-writes on the threads will fail deep into the gnutls stack.
+Direct leak of 400 byte(s) in 1 object(s) allocated from:
+    #0 0x55e668890a07 in malloc asan_malloc_linux.cpp:68:3
+    #1 0x7f3c7e2b6648 in g_malloc ../glib/gmem.c:130
+    #2 0x55e66a8ef05f in object_new_with_type ../qom/object.c:767:15
+    #3 0x55e66a8ef178 in object_new ../qom/object.c:789:12
+    #4 0x55e66a93bcc6 in qio_channel_socket_new ../io/channel-socket.c:70:31
+    #5 0x55e66a93f34f in qio_channel_socket_accept ../io/channel-socket.c:401:12
+    #6 0x55e66a96752a in qio_net_listener_channel_func ../io/net-listener.c:64:12
+    #7 0x55e66a94bdac in qio_channel_fd_source_dispatch ../io/channel-watch.c:84:12
+    #8 0x7f3c7e2adf4b in g_main_dispatch ../glib/gmain.c:3476
+    #9 0x7f3c7e2adf4b in g_main_context_dispatch_unlocked ../glib/gmain.c:4284
+    #10 0x7f3c7e2b00c8 in g_main_context_dispatch ../glib/gmain.c:4272
 
-No need to check if(err) because the callers are all under a similar
-check.
+Direct leak of 32 byte(s) in 1 object(s) allocated from:
+    #0 0x55e668890a07 in malloc asan_malloc_linux.cpp:68:3
+    #1 0x7f3c7e2b6648 in g_malloc ../glib/gmem.c:130
+    #2 0x7f3c7e2ad40c in g_source_set_callback ../glib/gmain.c:1879
+    #3 0x55e66a95c4d2 in qio_channel_add_watch_full ../io/channel.c:416:5
+    #4 0x55e66a95c5a9 in qio_channel_add_watch_source ../io/channel.c:444:10
+    #5 0x55e66a96380c in qio_net_listener_watch ../io/net-listener.c:166:46
+    #6 0x55e66a96496a in qio_net_listener_set_client_func_internal ../io/net-listener.c:275:5
+    #7 0x55e66a963e79 in qio_net_listener_set_client_func_full ../io/net-listener.c:284:5
+    #8 0x55e669e1b3bb in socket_connect_incoming ../migration/socket.c:165:5
+    #9 0x55e669d26b9f in migration_connect_incoming ../migration/channel.c:83:13
+    #10 0x55e669d5f6d2 in qemu_setup_incoming_migration ../migration/migration.c:672:5
+    #11 0x55e669d5f344 in qmp_migrate_incoming ../migration/migration.c:1771:5
+
+This is inconsequential in production, but let's give ourselves an
+easier time and avoid this situation when testing. The uuid_error test
+doesn't really need to check the exit code, just the migration state
+would be sufficient. Set exit-on-error=false for this test.
+
+While looking at this, add a comment to the source explaining that the
+incoming coroutine may block the main loop for a (longer than
+expected) while.
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- migration/multifd.c | 27 ++++++++++++---------------
- 1 file changed, 12 insertions(+), 15 deletions(-)
+ migration/migration.c              | 5 +++++
+ tests/qtest/migration/misc-tests.c | 4 ++--
+ 2 files changed, 7 insertions(+), 2 deletions(-)
 
-diff --git a/migration/multifd.c b/migration/multifd.c
-index 8b9ed84805..035cb70f7b 100644
---- a/migration/multifd.c
-+++ b/migration/multifd.c
-@@ -412,28 +412,25 @@ bool multifd_send(MultiFDSendData **send_data)
- /* Multifd send side hit an error; remember it and prepare to quit */
- static void multifd_send_error_propagate(Error *err)
- {
-+    MigrationState *s = migrate_get_current();
-+
-     /*
--     * We don't want to exit each threads twice.  Depending on where
--     * we get the error, or if there are two independent errors in two
--     * threads at the same time, we can end calling this function
--     * twice.
-+     * There may be independent errors in each thread. Propagate the
-+     * first and free the subsequent ones.
-      */
-     if (qatomic_xchg(&multifd_send_state->exiting, 1)) {
-+        error_free(err);
+diff --git a/migration/migration.c b/migration/migration.c
+index f949708629..c77832f851 100644
+--- a/migration/migration.c
++++ b/migration/migration.c
+@@ -898,6 +898,11 @@ void migration_start_incoming(void)
+ 
+     Coroutine *co = qemu_coroutine_create(process_incoming_migration_co, NULL);
+     qemu_coroutine_enter(co);
++    /*
++     * This doesn't return right away. The coroutine will run
++     * unimpeded until its first yield, which may happen as late as
++     * the force yield at ram_load_precopy().
++     */
+ }
+ 
+ int migrate_send_rp_switchover_ack(MigrationIncomingState *mis)
+diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+index 810e9e6549..06da2657d5 100644
+--- a/tests/qtest/migration/misc-tests.c
++++ b/tests/qtest/migration/misc-tests.c
+@@ -131,7 +131,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+     g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+     QTestState *from, *to;
+ 
+-    if (migrate_start(&from, &to, uri, args)) {
++    if (migrate_start(&from, &to, "defer", args)) {
          return;
      }
  
--    if (err) {
--        MigrationState *s = migrate_get_current();
-+    migrate_error_propagate(s, err);
+@@ -146,10 +146,10 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+     /* Wait for the first serial output from the source */
+     wait_for_serial("src_serial");
  
--        migrate_error_propagate(s, err);
--
--        if (s->state == MIGRATION_STATUS_SETUP ||
--            s->state == MIGRATION_STATUS_PRE_SWITCHOVER ||
--            s->state == MIGRATION_STATUS_DEVICE ||
--            s->state == MIGRATION_STATUS_ACTIVE) {
--            migrate_set_state(&s->state, s->state,
--                              MIGRATION_STATUS_FAILING);
--        }
-+    if (s->state == MIGRATION_STATUS_SETUP ||
-+        s->state == MIGRATION_STATUS_PRE_SWITCHOVER ||
-+        s->state == MIGRATION_STATUS_DEVICE ||
-+        s->state == MIGRATION_STATUS_ACTIVE) {
-+        migrate_set_state(&s->state, s->state,
-+                          MIGRATION_STATUS_FAILING);
-     }
- }
++    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+     migrate_qmp(from, to, uri, NULL, "{}");
  
+     if (should_fail) {
+-        qtest_set_expected_status(to, EXIT_FAILURE);
+         wait_for_migration_fail(from, true);
+     } else {
+         wait_for_migration_complete(from);
 -- 
 2.51.0
 
