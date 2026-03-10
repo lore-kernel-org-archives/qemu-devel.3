@@ -4,119 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91065FD4F16
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 18:08:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42DF3FD4F19
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 18:28:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w01VO-0005Tt-35; Tue, 10 Mar 2026 14:08:30 -0400
+	id 1w01oU-0000xc-Nk; Tue, 10 Mar 2026 14:28:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w01VI-0005T2-F4
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:08:26 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w01oT-0000vM-6c
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:28:13 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w01VG-00030X-44
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:08:24 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 2E4E65BCF6;
- Tue, 10 Mar 2026 18:08:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773166098; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ko7l95wt6cDByTsyJBvxSN266v6WsHSfE35zflJN3yw=;
- b=BAF15NrSjt6R9wxd29I0YrxyJsmfWr99nSpY8o4KBpaIyjwl/1ZHs667NGVQjrzbmI877k
- wOCAKjvH31Z9z3/+KsbifpeCOMTI9NvSIdCF254RfgTntaREYUslUMatPo46g7DpFrI2a3
- Ko4Q3fYZP09QN2XtkDqRohMqsNSE/o4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773166098;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ko7l95wt6cDByTsyJBvxSN266v6WsHSfE35zflJN3yw=;
- b=pLPHMA57oGarbJjYzw1G+15jx/PoPICekHi9ayZofA+E6UYUlSGafw0VWx5P9dR8m0FHRA
- Xh5XJZQm1nYkfPAg==
-Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=BAF15NrS;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=pLPHMA57
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773166098; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ko7l95wt6cDByTsyJBvxSN266v6WsHSfE35zflJN3yw=;
- b=BAF15NrSjt6R9wxd29I0YrxyJsmfWr99nSpY8o4KBpaIyjwl/1ZHs667NGVQjrzbmI877k
- wOCAKjvH31Z9z3/+KsbifpeCOMTI9NvSIdCF254RfgTntaREYUslUMatPo46g7DpFrI2a3
- Ko4Q3fYZP09QN2XtkDqRohMqsNSE/o4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773166098;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=ko7l95wt6cDByTsyJBvxSN266v6WsHSfE35zflJN3yw=;
- b=pLPHMA57oGarbJjYzw1G+15jx/PoPICekHi9ayZofA+E6UYUlSGafw0VWx5P9dR8m0FHRA
- Xh5XJZQm1nYkfPAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A5B273F5B0;
- Tue, 10 Mar 2026 18:08:17 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id WccSGxFesGnefAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 18:08:17 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Thomas Huth <thuth@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-devel@nongnu.org
-Cc: =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- =?utf-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>, Peter
- Maydell <peter.maydell@linaro.org>, Nia Alarie <nia@netbsd.org>, Thomas
- Huth <thuth@redhat.com>
-Subject: Re: [PATCH] meson.build: Bump the minimum GCC version to v10.4
-In-Reply-To: <20260310155331.320066-1-thuth@redhat.com>
-References: <20260310155331.320066-1-thuth@redhat.com>
-Date: Tue, 10 Mar 2026 15:08:15 -0300
-Message-ID: <8734271rsg.fsf@suse.de>
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w01oR-00049d-Fv
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:28:12 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2addb31945aso95381015ad.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 11:28:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1773167289; x=1773772089; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=e4Q2dkkI0mk2vsvJY3N19Lw1PUlH/8eA9sGDCLUaGHk=;
+ b=SDNRJqDHYwWaZenzuqbT8AQept91psKMUmsOQ5npvErwhjcCU154KArScFFfKGoAWG
+ KDRPPd7PHbkCqKpHBV853O/ZSN22qRtwnqQEeCkhvaSeOUMtEl9uOkuh6Vj9JoqcBvZ/
+ GXX70R8wHiSctTKt6HZCpS3LMmhrcYRwOPgrCPTPQeon2YM/Rdp9ltCMfdrWj3egCAg3
+ OB5G/AaSJ3F/nFkSv5VjYa5w3F15RH9HFHG9myDDbCCDYTevI5SXMggYlUzg2LG4rSoa
+ 9O5rdHvzUAnupQkmzakoAq/h7clAfcwmr+w3LCTkyg1paCa2ZaO1mgWEsHUdrsQoL2OV
+ FtNw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773167289; x=1773772089;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=e4Q2dkkI0mk2vsvJY3N19Lw1PUlH/8eA9sGDCLUaGHk=;
+ b=H0UA+bTA21KXYsJCKwe65huRcsC8O/i/p1yAIbC9TfdpZQNvKSegG/jv5Qkd++L8wh
+ JgxUhiG7Dwe0Em5K34YjaoKULNNVtr9toxMPhKm5Ox5yb4tJSIwxnZjzPti/35WDegbE
+ dt09HhIHfhJkpORYbSgduT6NJBRs0N1uCzyvwCf42VPWguorPJcXwfWw+4kMBs4Qsnfr
+ wIdK8lSMlHHkJC7vfGtVNJD5oVy2m8ezwPauMl2dcdF1Vy9kG0NReLsP6ZTSTuQ4EDs2
+ 4F/K1pBYBzzpQIepr17Ipu0x/t3gYNMAsG5/Wm+8ckoDfM/HV+Mvt3g82gGCi0YLaaBC
+ JS5g==
+X-Gm-Message-State: AOJu0Yy3DAUknPvRqZ4Md1QtoCDql/YcpIExPzr1uzqZxfFM8lHUd7e+
+ mkDtY72vmrR629aeD6humvlV/Jx3IHYm6MMqb6eyePAjFdE48t9FLo030yuRmtHWWi0=
+X-Gm-Gg: ATEYQzw4Vi70oLSHeRboL3SRBIoPNbOZADFM+Mj5plXAu3AOuPlLBpQXPPZKbtfZQex
+ W8VACaS2AVkgfShye1P9GRtp14th3awAyU0hW7uwwmbelIpAGYmOf2OSCFKnXNI41OT/fnG/vKk
+ cSEtHODw3Flzws001u/5tslOYg4/BgmB8GLElkl/eRz91P+x3qEPMnOqlaPZ+xeaWnlZno6KI1L
+ yHXop/oe/IUaY3v8MmcQQeospwR5GkSzl8saQQobUY2jiNviPB3FJjoH7o9xmQARc6WN+f5uzr+
+ FpduU6IOYBTx3umKrkOBdUl8bBFCyHnvqHb1PeQZOQV48nzkVPPWYGZQtRjpKMwOSj3JYWXklEK
+ z6WcPamgH1ol4XoAweCHVNiwCx52ekauPpFthwQPF2ZheapEVLdgs/duhXwLIMDiMXxz+D1n55W
+ Wk3R7eUqnhetsT+vxFscg4Gm0PY7J4azy0I8e530BXQmhbKE6G5eC7Qzvn
+X-Received: by 2002:a17:902:f541:b0:2aa:d65f:47a2 with SMTP id
+ d9443c01a7336-2ae824671c6mr162337625ad.41.1773167288826; 
+ Tue, 10 Mar 2026 11:28:08 -0700 (PDT)
+Received: from localhost.localdomain ([123.19.166.13])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2ae840b2e9dsm209437015ad.85.2026.03.10.11.28.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Mar 2026 11:28:08 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Trieu Huynh <vikingtc4@gmail.com>
+Subject: [PATCH 0/4] Fix error handling for callers of
+Date: Wed, 11 Mar 2026 01:27:56 +0700
+Message-ID: <20260310182801.196443-1-viking4@gmail.com>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-4.50 / 50.00]; BAYES_HAM(-2.99)[99.97%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- URIBL_BLOCKED(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,meson.build:url,gitlab.com:url,repology.org:url,netbsd.org:url];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FUZZY_RATELIMITED(0.00)[rspamd.com];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- TO_DN_SOME(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; DKIM_TRACE(0.00)[suse.de:+];
- DNSWL_BLOCKED(0.00)[2a07:de40:b281:106:10:150:64:167:received,2a07:de40:b281:104:10:150:64:97:from];
- RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- MID_RHS_MATCH_FROM(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- RCPT_COUNT_SEVEN(0.00)[9]; MISSING_XM_UA(0.00)[];
- RCVD_VIA_SMTP_AUTH(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[gitlab.com:url, meson.build:url, suse.de:mid,
- suse.de:dkim, suse.de:email]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 2E4E65BCF6
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x630.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,58 +97,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+From: Trieu Huynh <vikingtc4@gmail.com>
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> Our minimum supported version of GCC used to be v7.4 since we still
-> wanted to support NetBSD 9.x in the past:
->
->  https://gitlab.com/qemu-project/qemu/-/issues/614
->  https://gitlab.com/qemu-project/qemu/-/commit/3830df5f83b9b52d949676
->
-> However, NetBSD 10 has already been released since two years ago
-> (see https://www.netbsd.org/releases/formal-10/NetBSD-10.0.html),
-> so according to our support policy, starting with QEMU v11.0, we
-> don't have to take care of the previous major release of NetBSD
-> anymore.
->
-> Looking at the various distros that we take care of (see e.g.
-> https://repology.org/project/gcc/versions), and the NetBSD 10.0
-> 3rd party package information:
->
->  https://cvsweb.netbsd.org/bsdweb.cgi/src/doc/3RDPARTY?rev=1.1905.2.14;content-type=text%2Fplain;only_with_tag=netbsd-10-0-RELEASE
->
-> ... it seems like NetBSD 10 has the lowest version of GCC again,
-> but at least it's GCC 10.4 now. Thus bump our GCC requirement to
-> this version now.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  meson.build | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/meson.build b/meson.build
-> index f45885f05a1..6ccca2325a7 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -325,7 +325,7 @@ endif
->  
->  foreach lang : all_languages
->    compiler = meson.get_compiler(lang)
-> -  if compiler.get_id() == 'gcc' and compiler.version().version_compare('>=7.4')
-> +  if compiler.get_id() == 'gcc' and compiler.version().version_compare('>=10.4')
->      # ok
->    elif compiler.get_id() == 'clang' and compiler.compiles('''
->        #ifdef __apple_build_version__
-> @@ -341,7 +341,7 @@ foreach lang : all_languages
->    elif compiler.get_id() == 'emscripten'
->      # ok
->    else
-> -    error('You either need GCC v7.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
-> +    error('You either need GCC v10.4 or Clang v10.0 (or XCode Clang v15.0) to compile QEMU')
->    endif
->  endforeach
+This series audits callers of load_image_targphys(), get_image_size(),
+event_notifier_init(), and msix_init() as discussed in issue #413.
+The callers are updated to cover negative return value instead of
+continuing with invalid state or failure.
 
-Acked-by: Fabiano Rosas <farosas@suse.de>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
+
+Trieu Huynh (4):
+  hw/core/loader: fix error handling for load_image_targphys callers
+  hw/core/loader: fix error handling for get_image_size callers
+  util/event_notifier: fix error handling for event_notifier_init
+    callers
+  hw/pci/msix: fix error handling for msix_init callers
+
+ hw/alpha/dp264.c       |  8 ++++++--
+ hw/hppa/machine.c      |  7 +++++--
+ hw/hyperv/hyperv.c     |  4 ++--
+ hw/hyperv/vmbus.c      |  4 ++--
+ hw/ipmi/ipmi_bmc_sim.c |  2 ++
+ hw/m68k/next-cube.c    |  9 ++++++++-
+ hw/m68k/q800.c         |  7 +++++--
+ hw/m68k/virt.c         |  7 +++++--
+ hw/microblaze/boot.c   |  4 ++++
+ hw/net/igbvf.c         |  2 +-
+ hw/net/rocker/rocker.c |  2 +-
+ hw/pci/msix.c          |  2 +-
+ hw/ppc/amigaone.c      |  9 +++++++++
+ hw/ppc/e500.c          | 10 ++++++++++
+ hw/ppc/mac_newworld.c  | 10 ++++++++++
+ hw/ppc/mac_oldworld.c  | 10 ++++++++++
+ hw/ppc/pegasos.c       |  5 +++++
+ hw/ppc/pnv.c           | 20 ++++++++++++++++----
+ hw/ppc/ppc440_bamboo.c |  4 ++++
+ hw/ppc/prep.c          | 10 ++++++++++
+ hw/ppc/sam460ex.c      |  5 +++++
+ hw/ppc/spapr.c         |  8 ++++++++
+ hw/ppc/virtex_ml507.c  |  9 +++++++++
+ hw/remote/proxy.c      | 15 +++++++++++++--
+ hw/scsi/megasas.c      | 16 +++++++++++-----
+ hw/sparc/leon3.c       |  5 +++++
+ hw/usb/hcd-xhci-pci.c  | 17 ++++++++++++-----
+ hw/vfio/ap.c           |  2 +-
+ hw/vfio/ccw.c          |  2 +-
+ hw/vfio/pci-quirks.c   |  2 +-
+ hw/vfio/pci.c          |  2 +-
+ hw/virtio/vhost-vdpa.c |  4 ++--
+ 32 files changed, 185 insertions(+), 38 deletions(-)
+
+-- 
+2.43.0
+
 
