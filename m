@@ -4,78 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C279EFD88C7
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:34:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3067DFD88C7
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:34:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w05d1-0001Hc-CL; Tue, 10 Mar 2026 18:32:39 -0400
+	id 1w05ec-0003T0-Fx; Tue, 10 Mar 2026 18:34:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cx-0001GU-8J
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:36 -0400
-Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w05eO-00034t-G1
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:34:06 -0400
+Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cv-000740-RO
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:34 -0400
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- 12ac18be3bf7e79e0eb564a6cc4c3d4b410700961179fd83028dbfb35223fa36 with SMTP id
- 69b09bf698e94a06ee1352f6; Tue, 10 Mar 2026 22:32:22 GMT
-X-Mailgun-Sending-Ip: 143.55.232.12
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1773181942;
- bh=2qNE+06FFkIw6FzpLa1xH6jqTf5ePHgQhjUSgoNbprA=;
- h=X-Mailgun-Dkim:From:Date:Subject:MIME-Version:Content-Type:
- Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
- X-Developer-Signature:X-Developer-Key:From:Reply-to:Subject:Date:
- Message-id:To:Cc:Mime-version:Content-type:
- Content-transfer-encoding:In-reply-to:References;
- b=PR+vIq/7UsXb6i9K5wVfn8CfYq/P1YJ2/iLc+0jGFA+UuEPY87oIlzu4Jn2l7p5Qp
- ubuMTFYRFCNTRCwuRECmmNyWEICxbYlpllZysPqQvkC1mZI+3RGjuplfdKdXvJKBm6
- +JV2RdAUFDQsu9WOZAdhGLVOz62s+nlYIF49Z7Yk3lBqLbzZ3vZiM6+SI9s1GgpyzE
- JJCv2fQDx9O9oNyCH/OdlWZm5ehvkBcIQBz1BYIaiQEDHhkb+b3hbb33XDLX7Nsh6s
- xZfz4iXEGMJNbnxdQGCBUuwBQvngn1tUQOHBuL3lINP9XiAvczM0dx5R9NSp2MgAxr
- zHP9SF7E9QjHQ==
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Date: Tue, 10 Mar 2026 17:31:51 -0500
-Subject: [PATCH 11/15] hw/alpha: Explicitly define TyphoonClass in alpha_sys.h
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w05eM-0007Rs-DL
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:34:03 -0400
+Received: by mail-ed1-x52e.google.com with SMTP id
+ 4fb4d7f45d1cf-65c0891f4e9so7382032a12.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:34:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773182040; x=1773786840; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4hX5NNmFeeurVlMxYxeBTfUoQ2gdRNsswUC6nvUAhOE=;
+ b=fLjmPa4xEq6HANvTYTUKtPDWHKsDrkPi+Yx1zEkqlRV2/Y8afaRVrmcBU3Nlwdug93
+ Xralkq4dv6+yJs9q7l5e5ffprPcXKlmhW/u9vPxa1NP4lXdG/CrsjouUQi5y5kWZHY/h
+ Pd2sNBSD94Qj4WHgtSMKkvwXM7hiZqaVtcvNdQMBub514Fd+YsyhY2+9yt3SAqVzWKiw
+ w+TwHN/uiVOHMs4HxuXUk9dvoUPjsh0AWCBmx9cGI+G263ef61g740pYjLa3ubYfbwgG
+ cy2ebwgx7Dmm7x7UDIDJGgdCl6+++5mNONyhmE55g616MIrYpFnCbzMvH99VD10HhdcJ
+ zfhg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773182040; x=1773786840;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4hX5NNmFeeurVlMxYxeBTfUoQ2gdRNsswUC6nvUAhOE=;
+ b=kp0tuZ60gKTXAaNKdl191y3OPbWGafO4LXaf/2cpROrbFQ4HfjemTQNoKs+H9mfEJ/
+ YLAajCsFY+Q0o3OXsIcT8+1U9DAWlm/GWq3USoojX5vtLKFCNhCyd5CTJpOgpgKQsZER
+ DDqkFEJs/OWFLsRZndoYJiIRU8utQEtCckCxVgVwqMh9Ox9cK5ZRJbuunzY4QgrCvisV
+ a1pBXl7DdPH7OLuV0LvyWpVnglqBvps5pqabwx1HHIFzvv1pFPAcBVJND/ZxlRqorS6M
+ HbEyh62wpsld6D6kxf8mOqDQ4gHdXzlAAECVDApFgig4hqsQRm79uTMBcrAbpuN+emOp
+ Z9YQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW/OjHUU/s9JMmeIz5cbERN2eXMN0VsCmO84uSn5pVgZXxSKLw9PmlC388hE+Zhx4lcYXN+GMWQvXGT@nongnu.org
+X-Gm-Message-State: AOJu0Yx1bLIWQb35msAZBswa0qxWQArwV/8y5Q/CkKZpwVSEnLrqfXrQ
+ p2XoO1xPhnJyaW7IWiOgiz5RhFWUyRt4B5nQGoBhYiARo1ecnGUowDflzZa21iD2d5c=
+X-Gm-Gg: ATEYQzxuyIa0fooevKFSIj7lUpbjJrbBOQe5YtS/0rELdnJR9SpkptWLjWfpfSPSuIA
+ 2Sl28kuyCXPQPyDmzx06/lXt7Npn8oEt274zj74YlqDWueDmOB8ZsVuQ0HhuIrTVuyH6VsZhzNQ
+ MZa4fGhohSRWYIabdD2EFfA8Yz963Ffy19VrDyxvO6x4fCxxlrZGNDLqo6ePwrcXMvhB8UCVgAo
+ A/KmZa66Tk6YxzVlsCB7m0CP2osyS0/w4J06vF/TyyRwqDXsSp5YYUOvCGJ0a5xPBvPjHn7IqP1
+ HHOLiCYShmRRPgMzv85vkTkllwpzs27Rgwn7VunxKOXpLoXVoPPN2qtJPqnI9R2BzsY17IS8ZlP
+ RgjiLUJFv0WgV2SEgwxLMp8dW7H2HfJmVfC8vG5dh1FWNw4ostEMi+sRMAKwl/9sDDBn495yH9P
+ Vv653foj1aAaHhLSB+lRoyeWuEGcnkZ/XVseX8Uzu4Iy2TL0HUCXUdU9UCTEkZ7jtraw==
+X-Received: by 2002:a05:6402:4405:b0:65f:8271:3f7a with SMTP id
+ 4fb4d7f45d1cf-66319cc6cf4mr130701a12.16.1773182039867; 
+ Tue, 10 Mar 2026 15:33:59 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-6631457f349sm145109a12.13.2026.03.10.15.33.56
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Mar 2026 15:33:58 -0700 (PDT)
+Message-ID: <78c8b024-6dd5-4f1b-a19c-c7a71c7acc9f@linaro.org>
+Date: Tue, 10 Mar 2026 23:33:55 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-MS-Reactions: disallow
-Message-Id: <20260310-qomify-alpha-v1-11-4375b00a85ff@yodel.dev>
-References: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
-In-Reply-To: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, 
- Yodel Eldar <yodel.eldar@yodel.dev>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1790; i=yodel.eldar@yodel.dev; 
- h=from:subject:message-id;
- bh=tloD9q2Ixvhe/Je+2/nijrGzuxhxU/t2z7pz6TfC2+s=; 
- b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDI3zP6k+8xj87YPYpMPRLju3Oq6/mm4nMF+s7/73N/w9
- R/7u2WBc0cpC4MYF4OsmCLL5bMSZx1yd3elrfxxH2YOKxPIEAYuTgGYCG8WI8Pe7Blyzmu33XLk
- +76Hky0o/92/ZYVtC9lWV/L1C0uqNgYy/C/+FR/sXhR39PI/mU9el/bKrrWJPmzSvss8bcH+f8c
- VfnMCAA==
-X-Developer-Key: i=yodel.eldar@yodel.dev; a=openpgp;
- fpr=D3CD18CD406DBB8A66A9F8DF95EE4FB736654DAC
-Received-SPF: pass client-ip=143.55.232.12;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=v512.v5f06b487.use4.send.mailgun.net
-X-Spam_score_int: 10
-X-Spam_score: 1.0
-X-Spam_bar: +
-X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HELO_STATIC_HOST=-0.001,
- RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/7] tests/docker: add gdb-multiarch to all-test-cross
+Content-Language: en-US
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+ Warner Losh <imp@bsdimp.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>
+References: <20260306161728.2657486-1-alex.bennee@linaro.org>
+ <20260306161728.2657486-2-alex.bennee@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260306161728.2657486-2-alex.bennee@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x52e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,59 +109,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the Typhoon has no additional class fields besides
-its inheritance (PCIHostBridgeClass), so an explicit definition
-of its class struct was unnecessary, and we simply used
-OBJECT_DECLARE_SIMPLE_TYPE to declare its instance and class;
-however, forthcoming changes will require additional Typhoon-specific
-class fields.
+On 6/3/26 17:17, Alex Bennée wrote:
+> This allows the gdb integration tests to be run as well.
+> 
+> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+> ---
+>   tests/docker/dockerfiles/debian-all-test-cross.docker | 1 +
+>   tests/lcitool/refresh                                 | 1 +
+>   2 files changed, 2 insertions(+)
 
-This commit creates the Typhoon class definition, although it remains
-a shell of its parent class for now.
-
-Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
----
- hw/alpha/alpha_sys.h | 8 +++++++-
- hw/alpha/typhoon.c   | 1 +
- 2 files changed, 8 insertions(+), 1 deletion(-)
-
-diff --git a/hw/alpha/alpha_sys.h b/hw/alpha/alpha_sys.h
-index 8611881b55..794a47127d 100644
---- a/hw/alpha/alpha_sys.h
-+++ b/hw/alpha/alpha_sys.h
-@@ -5,11 +5,17 @@
- 
- #include "target/alpha/cpu-qom.h"
- #include "hw/pci/pci.h"
-+#include "hw/pci/pci_host.h"
- #include "hw/core/boards.h"
- #include "hw/intc/i8259.h"
- 
- #define TYPE_TYPHOON_PCI_HOST_BRIDGE "typhoon-pcihost"
--OBJECT_DECLARE_SIMPLE_TYPE(TyphoonState, TYPHOON_PCI_HOST_BRIDGE)
-+
-+typedef struct TyphoonClass {
-+    PCIHostBridgeClass parent_class;
-+} TyphoonClass;
-+
-+OBJECT_DECLARE_TYPE(TyphoonState, TyphoonClass, TYPHOON_PCI_HOST_BRIDGE)
- 
- PCIBus *typhoon_init(pci_map_irq_fn, uint8_t devfn_min, TyphoonState *);
- 
-diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
-index 792ace5ce7..8745025319 100644
---- a/hw/alpha/typhoon.c
-+++ b/hw/alpha/typhoon.c
-@@ -976,6 +976,7 @@ static const TypeInfo typhoon_pcihost_info = {
-     .parent        = TYPE_PCI_HOST_BRIDGE,
-     .instance_size = sizeof(TyphoonState),
-     .instance_init = typhoon_pcihost_init,
-+    .class_size    = sizeof(TyphoonClass),
-     .class_init    = typhoon_pcihost_class_init,
- };
- 
-
--- 
-2.53.0
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
