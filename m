@@ -4,114 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FD38F3C27D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7EBEB1041
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:16:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzu6W-0001nq-S0; Tue, 10 Mar 2026 06:14:20 -0400
+	id 1vzu8A-0002J4-O8; Tue, 10 Mar 2026 06:16:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vzu6V-0001nb-H8
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:14:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vzu6S-0007qo-UN
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:14:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773137656;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=kCpUoR5PTVv9r/wpaG6FtqiqdVXagf3nOaXnlZ9IrH0=;
- b=I+DWmazGw013vncoplVtwt+5SAMiYzX7uxQqJYuR/taJXkg9gB6Ow8h+jvcCaf8vWtcXGs
- oHvVBQ9OWrMEgCf78bR36OGKN5q+1NbAMtlI5hoAkL9b/l0hvlUS1E9oy3GRq1d23ZeMNm
- VJ0M6X6TsedU+yRoZj79b7Kxa8Uxmbo=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-401-NYG9NTLMO0WV5j61kiLJbg-1; Tue, 10 Mar 2026 06:14:15 -0400
-X-MC-Unique: NYG9NTLMO0WV5j61kiLJbg-1
-X-Mimecast-MFC-AGG-ID: NYG9NTLMO0WV5j61kiLJbg_1773137653
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-bce224720d8so7323206a12.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:14:13 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vzu86-0002Il-JY
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:15:59 -0400
+Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vzu84-00088v-DR
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:15:57 -0400
+Received: by mail-ed1-x52a.google.com with SMTP id
+ 4fb4d7f45d1cf-6617f0bcad2so7308701a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:15:54 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773137753; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QXJUefFrI3OGqc+TB+6M6qdRI9d0dvHljgNI9Iy5Pw3QAqUxC/sHa01VzbvcDIn8t/
+ JWjtdIcqcgx87aLA1EgttbeaEmoMvn8ZyXick/Fq8J3DEtei5Js/0JwrfsY957gjdVBp
+ 0Crmq0bH37EnJVfSK0QM5nXknjtTcMgm3jkxOLQ25IN2OfAdtNSQGVEZA29vnhVy2vmA
+ xYZptjN44ZIK0M4k1u5blVdmMjy8ljwzdvwF4SCdpYiJCTg1+EJjp8FhflzVPwPSKYhB
+ J4rxUbaWKIJuCWCPGloKCrmv6su3deUtfIiBsYQfDDpXe2V13eBczgMovOLoy8Zr3xFq
+ aiMg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=eFMQRaTOPTytbVUi59YQgQlVI8iB7+5R1eZ8nL4HV74=;
+ fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
+ b=IK3b7TywscaQW1lucF0sfw2fJ/ME3vjOYW6xoPa6LOZGvF5T3XCMcFxzzS4jim1+3c
+ EWCcBc2bfExFTx5z3ZhIXF7CJ+G4MX2rcd8jWh/czKMrVKb0o0Mr8qurETk2Vt0zqXob
+ DuZZLh4qN8hY/Kpe2WQoqYOIGO1gYg7emCk3bfVNEBz/DeWekOm85DHLpcEs6hD6IilX
+ sPjpGokYs0uZjsnZ7o0DFoNsgG7L9c0a7SKLb43VvhLuWf3fTfio1xbnLEoYlH/A8nV3
+ /o3Y6nS9zLmbukWaUHRDaFrsJqpUXyn7VZ4Pjr6LvFh7TrN2KfBhHS0eMN4T5UjGStO0
+ KjCA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773137653; x=1773742453; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773137753; x=1773742553; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=kCpUoR5PTVv9r/wpaG6FtqiqdVXagf3nOaXnlZ9IrH0=;
- b=EnaZHgizwuCVqIglFKF2D6UsD1ewiSJ64q8Y5uYzU+FNKXztDzZb7JgxX7Wp6q8gmt
- VzvdZmauWaEzkNcxrRwxykd8Qm9TNg7CYN2HEZVi/XBq8361aeWAE+hm7nWPASLsS0C9
- zdlgMgj9PgTsVSPgZyeb/BEzJE1JZOuDLUvpyhozvPFN80Jc1/m5KM9blNHTGCkiepYM
- P21ObognEswxFfWoOGofsMsUnZvPQGbBXc5wDvfp2lKnZfxT+MvBNRBTGY+VWHZGx1o7
- nIpgdmBM/k53Jlrr4lLcpO5Wp58vPR3GHfAgaWPzsdLlbayUEEw4wAPO4U48+8DGhMHf
- uZdA==
+ bh=eFMQRaTOPTytbVUi59YQgQlVI8iB7+5R1eZ8nL4HV74=;
+ b=izjIfimfzal7BwhIKxGa8OZ4RUt7fxFJKBgSZ4wPVMAGeGO+ggeTkBhkRa+6Uj+HNQ
+ w0k9PXNwSQruJFnSnvI41GsmgOTESei7+XkGpbvNaXvnBW0jaH5sqNiE1H5ZY3VDrDJO
+ 3JvGyNspXFVLfUOc+gC8BVlcK+Wt1AYBRzG55JC0BbcjjK5ftWgIUOMFL0nah1nTf6Y9
+ TG8f4QMeDATTNLcI6ef+feBHl9CJIxtMsrOx9gxm7EUJzV64z99RkLyljWhJnBDT0e8W
+ HTEzKX2v7LH7//Ln3OiCReJFcWKk5s3Cw0WudHxwKNRXAPqZnrziVS3vn0b/Xtztualn
+ Kv/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773137653; x=1773742453;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kCpUoR5PTVv9r/wpaG6FtqiqdVXagf3nOaXnlZ9IrH0=;
- b=mwGSnGclQ3X1zpTASaEc70JArXZGK2GzYndGpWlAwn6YVisn6HSNTm+YuvwS4REsV8
- 3PKbvpAoiQC5PIGg2yS4RIobXhgR6q5evw8BfBIELulDD3QZqzLEubInV78mE5UNNdw9
- RGCMCyIRrskX3/8G5DxeRC+jdsXCdaNiL8Fs4vDBaa2y0xZvEhgtCfmgW3fUlS9C9G9B
- 8mjhhvf6msGDARb0K5QkIrgi+k7vaH3sn0R1ft7CPPxqouRDay/J57uydXJt1igjMY6g
- YKn34VlUYWiTbpChAebKdNsX/sv8AVZh5h04KaEk2592bwv3Z37SFoplOJaVcIGzLM+9
- 9GWA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdN0Cwoyy8BT4wr2fVFs8V2P9c2dPM0IukDaskGL8KefCB9kTC/h21erbo7hDeXeWtY5JFGfBNoRbe@nongnu.org
-X-Gm-Message-State: AOJu0Yyi9KUXT0uQOXELkRAwZLa0vY3e1Mjsafs53BCpEDAIjIiqTCy/
- C/pn5IJwqwe0EjPCRRY7rLjnZWuirPf+olkgKb1JgRxFaSN6pLyyzrIDMpYnxbd/Hg+FF1QG80Q
- ZYOgL+BFIPCUil90cjahflsJvxS8jVnk686ULZwi3urYxOqaOt81hbOWw
-X-Gm-Gg: ATEYQzysiwIIKeZ2cYrdzuqXMSQsNI7bCTw7xQqdn25dCHQpIGE6bbspctTwcKJqQcS
- E7CLUy1yy+mfS4eHfInHDHnHLq9zOQSifrJKi3w839tu58iV6Sthdgrny3LUNmLgmf1m7ni7kSs
- aHJXQ1Lh15WBjYon7xg9r+t3RIRvRXBYNvjGPhARQ4/8EVHpHDd0dofYB3bELvoK6v9+rhO+NC8
- rbkU7jw5lOfvja7PS40n4f1UVFdqUZGBR8ehdl4Uiy23351VujLacrnoikhnrJeGTEgMgtu5HfA
- zXp2y9BNRoBZWnfL4i/3uZjbsF7uwQF4HGNs8Fy+yNsSoiLbWBOvWt02qotICD4z+f4Q6u9U7N3
- rYlCyx3mtKcTFT8wpcqQEdkvfE8J1dpv/RAoPUtPbnux8mAVS2Kz7LDthwycWLK1YnCl6e6i3/D
- I=
-X-Received: by 2002:a05:6a20:7294:b0:387:a311:3825 with SMTP id
- adf61e73a8af0-398590b3e3cmr14483883637.61.1773137652938; 
- Tue, 10 Mar 2026 03:14:12 -0700 (PDT)
-X-Received: by 2002:a05:6a20:7294:b0:387:a311:3825 with SMTP id
- adf61e73a8af0-398590b3e3cmr14483856637.61.1773137652568; 
- Tue, 10 Mar 2026 03:14:12 -0700 (PDT)
-Received: from smtpclient.apple ([122.176.129.56])
- by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c739e195acfsm11592652a12.29.2026.03.10.03.14.10
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 10 Mar 2026 03:14:12 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH] migration: assert that the same migration handler is not
- being added twice
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <87wlzkknm1.fsf@pond.sub.org>
-Date: Tue, 10 Mar 2026 15:43:58 +0530
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Prasad Pandit <pjp@fedoraproject.org>, qemu-devel <qemu-devel@nongnu.org>
+ d=1e100.net; s=20230601; t=1773137753; x=1773742553;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=eFMQRaTOPTytbVUi59YQgQlVI8iB7+5R1eZ8nL4HV74=;
+ b=lMgcbcaVbZNjI5pr1rKrIuAorynHtl+CiOi2RaxYMHRtKhZV+kl+vvleigC17V+qzh
+ 51i81zsq7p694oNqSwj+kmVSF+e1QC7hmyjfM+oZz2pSBGNcbRN0yiDb4eBs1OnYZQwI
+ Fi9IFLKbli7sbeVARu8w6LoWcZZBmwvf3S2AJA2ndZyHLjkz+09xq1zDb4bm7cs/tg8/
+ a46YWcVtEr0v2YUs/I/7/YwI/iy6JYS7wYIY+wCT/Io7X+qvq3VaKPhRiPq5PDNf8soi
+ m+7jFxRCODKP6ZH+LitGPifEUunehU9+C1yQRLQS+MpYsPUqmG+LXkNdbBJh9Nl94Ilr
+ 5cwQ==
+X-Gm-Message-State: AOJu0YzK3E+fz4GQBmtOZKOpURN56y+y5O3/MRdTXI4zlMrDmLC8QodT
+ 9Hi00YNugs6VqhiEHuGc8fqGSZm1i3yuqPcc6lERXmWv7F6UDz3/WJp+rbkVb+fWxEFThEBDkJt
+ 6qGtJr8BdCrixneCjkRebT/PNo1S9HPg=
+X-Gm-Gg: ATEYQzznviAn9yQrHKRByG0e5Wu8pcRskR9wINU4LNllSqyHtZLBvm46T+7QCOtud1N
+ 1uiDeWHOMyh3qjbC4nyWcc8+fsFlLfD4P/Xzze92Mp1UIknvMSuH973mukOSev2gS+Hlsev6LkB
+ yHEsJX3vy0IQeCcVWICvgmUCMd0TXaq5tTff5V4u7YAeaWulaNEAtueYX/Oh/3cZpu5/QCBGl0N
+ bl3ZKGzCWN7vFsFN9MNUEqwzvMra4MpUCcAj7KPmf7FuD3lJ+Ufnx3bqMh3B6X4j8mRYfGmPwj1
+ 8xPacvQ=
+X-Received: by 2002:a05:6402:902:b0:662:811d:60fa with SMTP id
+ 4fb4d7f45d1cf-662811d66aamr1935604a12.0.1773137753460; Tue, 10 Mar 2026
+ 03:15:53 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260305142459.52559-1-zhangckid@gmail.com>
+ <20260305142459.52559-8-zhangckid@gmail.com>
+ <20260309084422.GG39949@fedora>
+In-Reply-To: <20260309084422.GG39949@fedora>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 10 Mar 2026 18:15:16 +0800
+X-Gm-Features: AaiRm51H2w25jHJdmQiEKcTDRgOlehGSo91uKH_rhYK1EqGdUVn5h0TuQPkt3Wo
+Message-ID: <CAK3tnvJmGEdr93pDDZdFk=0jUYHYChgchR4xtP6JpDVxBv2MCA@mail.gmail.com>
+Subject: Re: [PATCH V5 07/13] net/colo: track IOThread references using
+ path-based holder
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>, 
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <3C0115AB-E428-4906-AA39-79B37F84E38E@redhat.com>
-References: <20260308100148.162503-1-anisinha@redhat.com>
- <87wlzkknm1.fsf@pond.sub.org>
-To: Markus Armbruster <armbru@redhat.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,56 +121,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Mar 9, 2026 at 4:44=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
+> wrote:
+>
+> On Thu, Mar 05, 2026 at 10:24:53PM +0800, Zhang Chen wrote:
+> > @@ -1434,11 +1436,17 @@ static void colo_compare_finalize(Object *obj)
+> >
+> >      qemu_bh_delete(s->event_bh);
+> >
+> > -    AioContext *ctx =3D iothread_get_aio_context(s->iothread);
+> > +    /*
+> > +     * Use the device's canonical path as the holder ID to track IOThr=
+ead
+> > +     * usage and ensure the AioContext remains valid during the device=
+'s
+> > +     * lifecycle.
+> > +     */
+> > +    AioContext *ctx =3D iothread_get_aio_context(s->iothread, NULL);
+>
+> Should NULL be path?
+>
 
+Yes, here code in the finalize function need to waiting for the
+coroutine to complete processing
+Or do you have any other suggestion?
 
-> On 10 Mar 2026, at 3:33=E2=80=AFPM, Markus Armbruster =
-<armbru@redhat.com> wrote:
->=20
-> Ani Sinha <anisinha@redhat.com> writes:
->=20
->> Currently the code that adds a migration blocker does not check if =
-the same
->> blocker already exists. Assert that the migration handler being added =
-has
->> not been added already.
->>=20
->> CC: Markus Armbruster <armbru@redhat.com>
->> CC: Peter Xu <peterx@redhat.com>
->> CC: Prasad Pandit <pjp@fedoraproject.org>
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> ---
->> migration/migration.c | 2 ++
->> 1 file changed, 2 insertions(+)
->>=20
->> diff --git a/migration/migration.c b/migration/migration.c
->> index a5b0465ed3..840cf0dfe2 100644
->> --- a/migration/migration.c
->> +++ b/migration/migration.c
->> @@ -1702,6 +1702,8 @@ static int add_blockers(Error **reasonp, =
-unsigned modes, Error **errp)
->> {
->>     for (MigMode mode =3D 0; mode < MIG_MODE__MAX; mode++) {
->>         if (modes & BIT(mode)) {
->> +            assert(g_slist_index(migration_blockers[mode],
->> +                                     *reasonp) =3D=3D -1);
->=20
-> Indentation is off.
->=20
-> Have we run into such extra additions, or is this just out of caution?
+Thanks
+Chen
 
-Out of caution I suspect.
-
->=20
-> What would happen if such an extra addition went uncaught?
->=20
->>             migration_blockers[mode] =3D =
-g_slist_prepend(migration_blockers[mode],
->>                                                        *reasonp);
-
-I vaguely recall multiple blockers causing some crash.
-
-
->>         }
-
-
+> >      AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
+> >      if (s->notify_dev) {
+> >          AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
+> >      }
+> > +    iothread_put_aio_context(s->iothread, path);
 
