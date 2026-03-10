@@ -4,95 +4,134 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B4F1FCC9C8
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 06:16:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9AB9FCC9CC
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 06:22:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzqNd-000604-Dz; Tue, 10 Mar 2026 02:15:46 -0400
+	id 1vzqTT-0008Sj-04; Tue, 10 Mar 2026 02:21:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzqNa-0005yt-5q
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 02:15:42 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzqNX-0000Kb-HR
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 02:15:41 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4852e09e23dso24218565e9.0
- for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 23:15:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vzqTR-0008SN-GG
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 02:21:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eperezma@redhat.com>)
+ id 1vzqTM-0001WA-Tt
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 02:21:43 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773123698;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8qOyGQSKOkk0aZ1QutW7TQ5ROu63Bx8vRXXADH64F6I=;
+ b=DUYcakrMesu3L8Dv4paGqEOLWwup5Gj7TGEw53O/uMU5lm9p2cly6w5m2iaH/rxECNWFMM
+ /+fc/vs3/sHjEEl1guavkNd9Ud0UeWcRw9oePnJ9eWkNW/C6U+ojP7jmD/uV/fnAIdZrEr
+ iufc1bipS57XcwbtqqZEWy71TcfE6Q8=
+Received: from mail-yx1-f69.google.com (mail-yx1-f69.google.com
+ [74.125.224.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-662-lldOQ07YM_qljsn4HNsVPw-1; Tue, 10 Mar 2026 02:21:37 -0400
+X-MC-Unique: lldOQ07YM_qljsn4HNsVPw-1
+X-Mimecast-MFC-AGG-ID: lldOQ07YM_qljsn4HNsVPw_1773123697
+Received: by mail-yx1-f69.google.com with SMTP id
+ 956f58d0204a3-644548b1dcfso8587384d50.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 23:21:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773123697; cv=none;
+ d=google.com; s=arc-20240605;
+ b=h18QkH8qtG6xVjz6uewvawyUwO6tndFbk3AaoZuVoSRpVA0+wUei4V+cS1alotfxGR
+ q6IePZe/trktM+gDIg9Ywz6f8rJovkccsvDwAiUT58pOaI0wMDon+pno+y5VsLYl9ZRO
+ UBhZDHfidJsQsVLB/YkMrYJplBwAgiWW3P3UrMxbugSxhJD4xfVIrT997q5aF2+oGAZY
+ rNyo7ypYUN7uSjKvLKPvFeWz5r2rS5p/tnkVmgnlGpjuaPvSMybBlENUO5IyEah6ZbYb
+ iHpb6XhxtXFdhYPuSXBPth5XEtvlcdsKEfZqC7ls4s06AcPtLmmkmN57ZmZUzTUs+ULs
+ DhFA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=8qOyGQSKOkk0aZ1QutW7TQ5ROu63Bx8vRXXADH64F6I=;
+ fh=srKTuQ1zrFvCk697vtO4h473zqLsuvDuubo1BzKDh1s=;
+ b=KDZIs9ckcqZaAI9t6xeS7n/V/hPv+nHCQljfuH28DwkgJO1AtpkBvs8Ys2HHc5vw+Q
+ 36X0FSSW+yYvqjDJSo9uAc86IAkemzfiQ5s/MNduzQeysd9rZ3sn+CajkBCmTHABnKmb
+ fDhrCghNQ6j3jnX2YQ6b0VHRVjLjmNarVdFoULVsvZpgfiJPA8x4vxzdNgWZ1EBLxJn5
+ V66UcLeGAIa59zcOi5d2nSCQeHlKBn+7E1rXAgfZo3YmhQbKBFQbhpTAxWH1z1n49cJg
+ jmPAqogophwb3NTjQXbY37Bm7AOv19cACL+TnqmMczApBPYxb/j8I4jfLUuPQopiUZtQ
+ XIwA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773123336; x=1773728136; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ypmdLDVyHCzygN19of2F/slBTQPRbg8+egZSZUSC8Gg=;
- b=r+7XDBZSFQlQ2SzRZVu0Utf20UO+e+ekLrXWCcChN5YP71OJ4nlUSGLcwsMS/5Bb2L
- 7qcgYhUsXXAq0SVb2X8gcpW4BlXxaMB9CB9ISKTTjIsvOUmnD74vE5cC4Z98aCvu9dsS
- yfZznS9EdehOy8Eq6htQasVB7AIxHJIfxxQ5TRjYPnps2GB7omaHxxmJSccx4NOpK756
- pNOKFCAO84rawIzfDgaBLQvMckkfNJ+1lOj3irl0KnT9cvxW2hokUH4+NnoM3v548Hpw
- ratf3J0Jx+I3CggVPT1Jvpi9kojBvTDKdJbfMCPUfkC1BYlbK9InhAKI76nJ2/n0XxE1
- IyXA==
+ d=redhat.com; s=google; t=1773123697; x=1773728497; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8qOyGQSKOkk0aZ1QutW7TQ5ROu63Bx8vRXXADH64F6I=;
+ b=GRLt88vBhURDZ8vJoj7qpD2R0Vp9Bm8FNYCVwVoR+qVjXcmks4Ve8wVReh/VXj/MA+
+ mLzZOWTg2tbqitRkhgAmG6XSbeJikc+kDxFcsYijGmSlmnv0itl+jHlVNmQMtWrucfIx
+ IYeVWViFLIbQTuHdFNRxInpESJAWLFcIYmdHwf68kHclAMzcyElENCcmNx5yvZW3cana
+ RCsvKNTI7tumB7sPy/4mrhNN6VaXMTzX6xJ7HQ4GqYbr1HvOyeF9SGgeXpRMTIqQrYp8
+ kqgnodGrdPxYnNl/zWR6mQe0ZEp1aUPZcYd4KUXAtiKXkw4VxvkjQKvOTEP//iZxUfD2
+ Cw5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773123336; x=1773728136;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ypmdLDVyHCzygN19of2F/slBTQPRbg8+egZSZUSC8Gg=;
- b=dRv//C8DNCr/bFim5Ce5srjEtYTDGeOFxfIwOSEReFzEUN0A0JUaMhVanowG7aMEJe
- Knb06hpBZ8glbpUWg2nwD88y/51GyUoJpPIROUYQxMK6LPvMgUFl+vhkeglhFbJzsBzu
- tH6aGLyZbiE1PtggFizGr+m4kUms37prwlLIpqFbweArq8Xd0tXHWH3I9F+H7aLAl3M4
- KBTyglJEP+kLsL+Bl5UBeaE3LNqh2dMwhXpPYBK3FpW5irpPOPwaOmtf6y9YLWoaRpxd
- k3TF26csajqGaskw/asGAXv/zKl9N3/0kWmJrXdAgLB6lYcjP7cCmqVidqTjmjBJy5e2
- i3Jw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCURBFttSlFtTQTw+jAjSd4aJanyWjyUtnCpX7xX3hcbfbACjJI+1uRn7CPnuKmSI2/o87d52ZobF05L@nongnu.org
-X-Gm-Message-State: AOJu0YwbM8RS2uSpvatSSD125AUHOYAp6dTadRwHvU04umjZo8pV8vSL
- OYenAKGoNViPwPNYSKrxOZDceKToQVfq12Nnl/oJ6AfJ5DufMVMkZ4PwnlDgivbteh6A6ZMonB6
- Qm2E/ZwA=
-X-Gm-Gg: ATEYQzx3x92VN+UwDuyFhS0SNQYDiU43zG6f452htxK0ijwdqiw0ROVNTSQ7eyMc4Wh
- CcO48PUzPFeRGXJRx8yMEIlP5kPsKAKuJydrWBqGgB0VzjfLOKrced0tnUXqk2K3tFacqVLZStF
- f/qRYC1Rx1SZ1Ea0Bfu12kpiqerT5qMXIazqXZuLhApIoHpfzT2ARL1oSEy1+M7O4dH0ETPqMo5
- EVwUj6d371bDmvlgnlObWm09xanfnE+dpsLp/4SY2stKFmXuxTo5TU2sQTSnRQJde6opU3uRnAD
- zJ3tcmO7iyhfDG22sfrgetPPTQi3BzR+aY1RnjnqW7x2Pq0zsEWJt+Fcip968ZyxQHZ+rmOXlk3
- l8xd/VR87VQzfVRMuKtlyMer+jOsmkeUd0EOH9mSU3Vj39g8AQwmL8UUjr8p/eOosDf1hicZ+U5
- zulSHWMxS3/zPlGSRYrT+JuqIQVHMR/OQ7g/GVV08g9uLTngfOig9+Ke0yBMkEILIAfi2ZENXpX
- rSn
-X-Received: by 2002:a05:600c:350e:b0:485:17a7:ba0d with SMTP id
- 5b1f17b1804b1-485269785bamr229177355e9.32.1773123336216; 
- Mon, 09 Mar 2026 23:15:36 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a9e6aesm47175525e9.11.2026.03.09.23.15.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 09 Mar 2026 23:15:35 -0700 (PDT)
-Message-ID: <52cbaf6d-f7a4-4984-9561-ca31418cdc0f@linaro.org>
-Date: Tue, 10 Mar 2026 07:15:34 +0100
+ d=1e100.net; s=20230601; t=1773123697; x=1773728497;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=8qOyGQSKOkk0aZ1QutW7TQ5ROu63Bx8vRXXADH64F6I=;
+ b=n7rXS7u6QcH7byrMyaF2RolUgv8uend1nvvSsWafkXqYA2O1eEgTZ4f+zlcM6i8s0K
+ Rhm0zHJW4fLWmS/eWb+Vu0slM2SgzMeV3wOmAVUc6rtGsV4jbUBbI+lx1MUcfuv7lqzb
+ rRYDQJfaoouQ9JYJNZBIxdWnJV5a+eiyw9y5lpQA7+tMMYN+DQRLll3A4DHHZB2HeyFh
+ cpost+3lUhZgA8YprrY8Td2YcWE/moNXUNuIyHnDQQPGq1Jb9TG9R9qif7hlFkuML5L6
+ CU8i8xiVnqEqOQ57k0GZwVSWUyn/ERqIgj2SyrZNj3nN2rJsVLxc3xvO0U5/DKJ6Elnn
+ TuNg==
+X-Gm-Message-State: AOJu0YyxNqOSd0r15z6j9tI855WOeQu1oaC+U63GikbZq2aEvDioJ9nh
+ 1mBAGJ9UBydlOnX8mSSnqWXxyuoc8nItevHFtrPeMeyYMWfq/CUagHPUGrUfPgmuRWKQvJAZjre
+ eH9+uK965OigvOD0CQ8tpE/Dqkzp04DzJ3NFrNHpNvYdJC2eadBd3HonJ4B6jXqERImtENTTzVC
+ SZJoRQWikxwr+YuFR5WJKEfmwMzgGcjh8=
+X-Gm-Gg: ATEYQzxo5oq6avSSccgGxxdw8ey9jN7F38s9fbAj8x6Gn20ttu0ZnSi127mBoiahxP5
+ /rdC9jXbD7Ze1EDdmfbA8mu64MH2NzouN7wZojG6T53e9r1s0QqzbByFb6PCYs80UFxNuJuvrhS
+ KCDg2dCUqFvFlJ8SsUx2ooRLYMc2vjc6VM+4FY/lVC1r3FpbfBcBINODhto/w5LJQKLkn92WJkp
+ B6oPw==
+X-Received: by 2002:a53:b191:0:b0:64c:b68a:f519 with SMTP id
+ 956f58d0204a3-64d14397896mr10023312d50.80.1773123697135; 
+ Mon, 09 Mar 2026 23:21:37 -0700 (PDT)
+X-Received: by 2002:a53:b191:0:b0:64c:b68a:f519 with SMTP id
+ 956f58d0204a3-64d14397896mr10023302d50.80.1773123696717; Mon, 09 Mar 2026
+ 23:21:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 12/12] target/hppa: add 64 bit support to gdbstub
-Content-Language: en-US
-To: deller@kernel.org, qemu-devel@nongnu.org
-Cc: Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Helge Deller <deller@gmx.de>,
- Sven Schnelle <svens@stackframe.org>,
- Richard Henderson <richard.henderson@linaro.org>, Fam Zheng <fam@euphon.net>
-References: <20251223155031.7110-1-deller@kernel.org>
- <20251223155031.7110-13-deller@kernel.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20251223155031.7110-13-deller@kernel.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <20260304173535.2702587-1-eperezma@redhat.com>
+ <20260304173535.2702587-2-eperezma@redhat.com>
+ <CACGkMEu5BGgdstpEVw8eH+wmXhi+nFdHRW2bXk7enZtxbAdsBQ@mail.gmail.com>
+ <CAJaqyWfADYQHjszX+DGoW1Cah--619_pVztmfV6ctTN6-0-Q5g@mail.gmail.com>
+ <CACGkMEt09WkCgJmbrdmyDYdB8HUH=Y-DrwNChJGrfH2afua8QA@mail.gmail.com>
+ <CAJaqyWfOdMkeXEfHKadN2zrXmxNytC+uzFmf8pF7Ldrr6i0o6w@mail.gmail.com>
+ <CACGkMEv2-pfUwMi0_b_FO0-FTLn7t3RDBvpYBPBT9+CdsSDY2A@mail.gmail.com>
+In-Reply-To: <CACGkMEv2-pfUwMi0_b_FO0-FTLn7t3RDBvpYBPBT9+CdsSDY2A@mail.gmail.com>
+From: Eugenio Perez Martin <eperezma@redhat.com>
+Date: Tue, 10 Mar 2026 07:21:00 +0100
+X-Gm-Features: AaiRm53Dp7S1gA0ZqCdKUEWeGCS1o_bFeiKxqChGzLQFcpwOxVipGcR_iuBtjvw
+Message-ID: <CAJaqyWfC_hjCveqtnhx9cU=EA66oj5amLCGQ8b9Jf3pbzeuwYg@mail.gmail.com>
+Subject: Re: [PATCH 1/7] virtio: Allow to fill a whole virtqueue in order
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Dragos Tatulea DE <dtatulea@nvidia.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Koushik Dutta <kdutta@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
+ Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=eperezma@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: 10
+X-Spam_score: 1.0
+X-Spam_bar: +
+X-Spam_report: (1.0 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_BL_SPAMCOP_NET=1.347, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,138 +147,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+On Tue, Mar 10, 2026 at 4:09=E2=80=AFAM Jason Wang <jasowang@redhat.com> wr=
+ote:
+>
+> On Mon, Mar 9, 2026 at 2:19=E2=80=AFPM Eugenio Perez Martin <eperezma@red=
+hat.com> wrote:
+> >
+> > On Mon, Mar 9, 2026 at 4:17=E2=80=AFAM Jason Wang <jasowang@redhat.com>=
+ wrote:
+> > >
+> > > On Fri, Mar 6, 2026 at 2:23=E2=80=AFPM Eugenio Perez Martin <eperezma=
+@redhat.com> wrote:
+> > > >
+> > > > On Fri, Mar 6, 2026 at 4:26=E2=80=AFAM Jason Wang <jasowang@redhat.=
+com> wrote:
+> > > > >
+> > > > > On Thu, Mar 5, 2026 at 1:35=E2=80=AFAM Eugenio P=C3=A9rez <eperez=
+ma@redhat.com> wrote:
+> > > > > >
+> > > > > > As the while steps < max_steps is already one less than the vq =
+size, the
+> > > > > > right maximum max_steps variable is queue length, not the maxim=
+um
+> > > > > > possible remainder of % vq->vring.num.
+> > > > > >
+> > > > > > Fixes: b44135daa37 ("virtio: virtqueue_ordered_fill - VIRTIO_F_=
+IN_ORDER support")
+> > > > > > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > > > > > ---
+> > > > > > Personally I'd just remove max_steps and let it be vq->vring.nu=
+m, but
+> > > > > > let's make the minimal changes for now.
+> > > > > > ---
+> > > > > >  hw/virtio/virtio.c | 2 +-
+> > > > > >  1 file changed, 1 insertion(+), 1 deletion(-)
+> > > > > >
+> > > > > > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > > > > > index e9d553295257..17f171551892 100644
+> > > > > > --- a/hw/virtio/virtio.c
+> > > > > > +++ b/hw/virtio/virtio.c
+> > > > > > @@ -980,7 +980,7 @@ static void virtqueue_ordered_fill(VirtQueu=
+e *vq, const VirtQueueElement *elem,
+> > > > > >       * We shouldn't need to increase 'i' by more than or equal=
+ to
+> > > > > >       * the distance between used_idx and last_avail_idx (max_s=
+teps).
+> > > > > >       */
+> > > > > > -    max_steps =3D (vq->last_avail_idx - vq->used_idx) % vq->vr=
+ing.num;
+> > > > > > +    max_steps =3D MIN(vq->last_avail_idx - vq->used_idx, vq->v=
+ring.num);
+> > > > > >
+> > > > > >      /* Search for element in vq->used_elems */
+> > > > > >      while (steps < max_steps) {
+> > > > >
+> > > > > Not directly related but I found that the virtqueue_ordered_fill(=
+) and
+> > > > > virtqueue_ordered_flush() can "emulate" an in-order device even i=
+f it
+> > > > > isn't one. I'm not sure this is good for the device that can bene=
+fit
+> > > > > from out of order completion like block devices.
+> > > > >
+> > > >
+> > > > I guess the benefit is significantly reduced if the device cannot u=
+se
+> > > > more than one descriptor in the same used entry.
+> > > >
+> > > > > It seems the correct approach is to let the device decide whether=
+ it
+> > > > > can operate in order, not the virtio core (as vhost-kernel did).
+> > > > >
+> > > >
+> > > > I agree with this.
+> > > >
+> > > > Currently, `in_order` is off by default but we could enable it by
+> > > > default per-device.
+> > >
+> > > After further thought, there's another reason. For example, for a
+> > > networking device, virtio-net should know nothing about the networkin=
+g
+> > > backend (though some tricks exist in the code). So it can't know if
+> > > the backend can handle OOO or not. Starting with this seems to be
+> > > fine.
+> > >
+> >
+> > Well, if the backend exposes in_order, I'd assume it works better if
+> > the feature is acknowledged. I was talking just about the emulated
+> > device.
+> >
+> > I kind of agree with what you say for virtio-net+kernel tap or
+> > vhost-kernel case, but we're already assuming that the virtio-net
+> > backend works in order in Live Migration anyway.
+>
+> Could you point the code that has this asumption?
+>
 
-(now merged as commit b2c2d00f48cc5f4486cfba33b505ff86d79cb137)
+Actually, the lack of code to migrate the inflight descriptors is the
+fact that the migration code of virtio-net assumes the buffers arrive
+in order :).
 
-On 23/12/25 16:50, deller@kernel.org wrote:
-> From: Sven Schnelle <svens@stackframe.org>
-> 
-> Signed-off-by: Sven Schnelle <svens@stackframe.org>
-> Reviewed-by: Helge Deller <deller@gmx.de>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   target/hppa/gdbstub.c | 62 ++++++++++++++++++++++++++++---------------
->   1 file changed, 41 insertions(+), 21 deletions(-)
-> 
-> diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
-> index 0daa52f7af..777f4a48b9 100644
-> --- a/target/hppa/gdbstub.c
-> +++ b/target/hppa/gdbstub.c
-> @@ -21,16 +21,25 @@
->   #include "cpu.h"
->   #include "gdbstub/helpers.h"
->   
-> -/*
-> - * GDB 15 only supports PA1.0 via the remote protocol, and ignores
-> - * any provided xml.  Which means that any attempt to provide more
-> - * data results in "Remote 'g' packet reply is too long".
-> - */
-> +static int hppa_num_regs(CPUHPPAState *env)
-> +{
-> +    return hppa_is_pa20(env) ? 96 : 128;
-> +}
-> +
-> +static int hppa_reg_size(CPUHPPAState *env)
-> +{
-> +    return hppa_is_pa20(env) ? 8 : 4;
-> +}
->   
->   int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
->   {
-> -    CPUHPPAState *env = cpu_env(cs);
-> -    uint32_t val;
-> +    HPPACPU *cpu = HPPA_CPU(cs);
-> +    CPUHPPAState *env = &cpu->env;
-> +    target_ulong val;
-> +
-> +    if (n >= hppa_num_regs(env)) {
-> +        return 0;
-> +    }
->   
->       switch (n) {
->       case 0:
-> @@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs, GByteArray *mem_buf, int n)
->           val = env->cr[30];
->           break;
->       case 64 ... 127:
-> -        val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
-> -        break;
-> -    default:
-> -        if (n < 128) {
-> -            val = 0;
-> +        if (hppa_is_pa20(env)) {
-> +            val = env->fr[n - 64];
+It is easier to reproduce in the packed vq: When used entries override
+the avail descriptors, all the overridden entries for available
+buffers are lost. But it's easy to reproduce in the split vq too, as
+we only migrate indexes.
 
-Coverity reports:
+It does not happen in virtio-blk, where in-flight virtqueue elements
+are migrated.
 
- >>>     CID 1645613:         Memory - illegal accesses  (OVERRUN)
- >>>     Overrunning array "env->fr" of 32 8-byte elements at element 
-index 32 (byte offset 263) using index "n - 64" (which evaluates to 32).
-
->           } else {
-> -            return 0;
-> +            val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
->           }
->           break;
-> +    default:
-> +        val = 0;
-> +        break;
->       }
->   
-> -    return gdb_get_reg32(mem_buf, val);
-> +    if (hppa_is_pa20(env)) {
-> +        return gdb_get_reg64(mem_buf, val);
-> +    } else {
-> +        return gdb_get_reg32(mem_buf, val);
-> +    }
->   }
->   
->   int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->   {
-> -    CPUHPPAState *env = cpu_env(cs);
-> -    uint32_t val = ldl_p(mem_buf);
-> +    HPPACPU *cpu = HPPA_CPU(cs);
-> +    CPUHPPAState *env = &cpu->env;
-> +    target_ulong val;
-> +
-> +    if (n >= hppa_num_regs(env)) {
-> +        return 0;
-> +    }
-> +
-> +    val = ldn_p(mem_buf, hppa_reg_size(env));
->   
->       switch (n) {
->       case 0:
-> @@ -267,16 +287,16 @@ int hppa_cpu_gdb_write_register(CPUState *cs, uint8_t *mem_buf, int n)
->           cpu_hppa_loaded_fr0(env);
->           break;
->       case 65 ... 127:
-> -        {
-> +        if (hppa_is_pa20(env)) {
-> +            env->fr[n - 64] = val;
-
-Ditto:
-
- >>>     CID 1645614:         Memory - corruptions  (OVERRUN)
- >>>     Overrunning array "env->fr" of 32 8-byte elements at element 
-index 32 (byte offset 263) using index "n - 64" (which evaluates to 32).
-
-> +        } else {
->               uint64_t *fr = &env->fr[(n - 64) / 2];
->               *fr = deposit64(*fr, (n & 1 ? 0 : 32), 32, val);
->           }
->           break;
->       default:
-> -        if (n >= 128) {
-> -            return 0;
-> -        }
->           break;
->       }
-> -    return 4;
-> +
-> +    return hppa_reg_size(env);
->   }
+> > With worse
+> > consecuences that less performance. To be coherent with your mention
+> > here, we should support out of order descriptors in live migration.
+> > Not saying that it is urgent, just pointing it out.
+> >
+>
+> Thanks
+>
 
 
