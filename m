@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19EAEEB1070
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:16:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 65D0BEB106D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:16:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzynk-0007MM-50; Tue, 10 Mar 2026 11:15:16 -0400
+	id 1vzynn-0007bt-OZ; Tue, 10 Mar 2026 11:15:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynT-0006rP-JD
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:04 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ id 1vzynN-0006p6-RR
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:58 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynQ-0000GI-KG
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:59 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ id 1vzynL-0000Fa-Nq
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:53 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A1Ew0s076304
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:55 GMT
+ 62A7F0sM1123654
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=oxnCuJ415kJrm9x0e
- 7Lh0j6E+LRZnIIw3ZKt6MD94sY=; b=Ey6Os1B8vuNQBOxIz1v+qoG5d31abjjDc
- zMhskVWZosUk051vBKfdsaDOGEX9i5XB96OcW+HLioh/KBA1rBPwnfbJtIPMgbv1
- bQ0wLvo5ddiu1GcwOtkRSoXaMGVnf7HU2nPAX3AHMKasq/mH1KrJN4jMiWcdHmkH
- MMBOvMKJLKvW1F0eMmnD9mq59GBm72dzBZpPbaEILGwY/73/N3h7/baIFDoZUwQI
- OiEBm/puOApj9drrjwE+06QgKmHS40GM8c/tufPYGtRSZsbZenP+lX86ra+BPP4M
- lnBz9bEWb4OVqqnjyN92m5KZVOqbiCIg+Y9pJut/lFjVCkVc2IO4w==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvrb6fq-1
+ :mime-version:references:subject:to; s=pp1; bh=ONuKfYvFvEai5Z62s
+ Q38HoXonILpjlJA700g5K9THRc=; b=kjz0yEM6Ag3Mlfp09PR72T5S66jc4bKHD
+ CPxXkJioyXXhDrWjYg5K5LtY9B9NhzjwEhhR2ORv92WBczkumj6Kr6aj/DcCTzDO
+ y4DJNHKeH4CFxR142rPXFD12DHbhfwFjlWxJfM7dJLsL5wKc/atb9Pjux/CjOKTu
+ TBM68C6ctyUS3PGC1ualLgZie6DFAuWDUyGMnbIdb2pOhHITaOrCut4S/AVYnecn
+ MMqXmMnezf1YldlhkFkMCfle+SW46GeZuA2GaiVsAk2y0zdkdVubhTC1mjEg0rJ7
+ wZVg/+mDyLw45Lz2seOqrNltoq1u79ZMNvGT/WKh4cQ4IayKmwWxg==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcuybfyj-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:55 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62ABlH9R015629
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:54 GMT
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:49 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AFCcqr029850
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:48 GMT
 Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crybn9mvu-1
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4csp6up8af-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:54 +0000
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:48 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
  by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AFEpZH44040464
+ 62AFEiUZ60490222
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 15:14:51 GMT
+ Tue, 10 Mar 2026 15:14:44 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E7A5F2004D;
- Tue, 10 Mar 2026 15:14:50 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 666802004E;
+ Tue, 10 Mar 2026 15:14:44 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C944C2004B;
- Tue, 10 Mar 2026 15:14:49 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 073572004B;
+ Tue, 10 Mar 2026 15:14:43 +0000 (GMT)
 Received: from Mac.com (unknown [9.39.23.49])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 15:14:49 +0000 (GMT)
+ Tue, 10 Mar 2026 15:14:42 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Aditya Gupta <adityag@linux.ibm.com>,
  Hari Bathini <hbathini@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>,
  Sourabh Jain <sourabhjain@linux.ibm.com>
-Subject: [PULL 06/10] pnv/mpipl: Set thread entry size to be allocated by
- firmware
-Date: Tue, 10 Mar 2026 20:44:26 +0530
-Message-ID: <20260310151432.92531-7-harshpb@linux.ibm.com>
+Subject: [PULL 02/10] ppc/mpipl: Implement S0 SBE interrupt
+Date: Tue, 10 Mar 2026 20:44:22 +0530
+Message-ID: <20260310151432.92531-3-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260310151432.92531-1-harshpb@linux.ibm.com>
 References: <20260310151432.92531-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfX83LnxTT/DJN5
- 4PRn2hBXEXWsAPW0Ke3Ro3gTkA4znzSS5R9lHrbJUeraFJDSNz9Y+2+yfPqB9MhixdDwqcHxWK1
- VafMSvdSvfnMELhtbpv+ZJn/JCXIo1f1cbZGTN7YJQv2ooo1Y46a8jlNlbG7050JhxodJ42TjCk
- VyZnNmFjIQsj1JhIYiZxS1mzVWfw0AtsK+fyALNaG3m9d8AX/jBokeGEawv98c5xlGhkVqX1R2O
- xN46RZWzyV7SnDEG3fccMZYgxlhZnVqPUn5Gl7RZsvvRrOm+xi/yHsYdYQg+HnHhRi0MS0FdruH
- oBTtEcQBa0GqfO15fsqTh7fE8hq2EyIkk967gXmtMjcTEqsGoJmd+nx2PpzbGek6P6YJhsLpyUs
- Jw7ymIQQQO5Psc8BipujIyBU2yCSEq87dP1xf7c14HMRjhOqEpDU/1Ms2bDOvOC2qvpGd0rMuWQ
- 7g/yAJVZ3ckmZvJq8aA==
-X-Proofpoint-GUID: 6IXoKoXWOOi0ou5dh_dvDn99q7Il8Aur
-X-Proofpoint-ORIG-GUID: 6IXoKoXWOOi0ou5dh_dvDn99q7Il8Aur
-X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69b0356f cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+X-Authority-Analysis: v=2.4 cv=EK4LElZC c=1 sm=1 tr=0 ts=69b03569 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
  a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=K3nGc4jhFjju3E8dwHwA:9
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=sHmFuGpciTfFc5QH0gQA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfX1zUKOn0RcKo3
+ pUcEiHF9+jHeLhafi6EMJeW4i4u11SARVSdwgusMuLXhte4yYs5dNZhVQiz6N0f7EP6z+S5/Wi2
+ DIRqCGeem2BvsrCK/cpYk/Vnl+w0guO6jwDfdppg0g6XbmsPzFNrkNu4S2SKxQi6jJXfirnDib+
+ NqYEUcQmz8kRy2cqFkx7V14o5by90TXUBqKz7Qh9Bj1Q7hbYCVdobyoaJnBdei2oV6SPG+jIeV1
+ qGqroY81Femw9K40McGfYFhr3jPFa8z1lClLo2bmSWK5+5h4L4dKz3hvheDunpIZeO8jxBkpKgk
+ F+aSinHC8mPKn7VECyuF8Wtnf7rdGJbWNYWMsGaJ8sepqXoS/KCBEV6NIkSovcK42J0d6664eqt
+ xJIXZeE2sQdz7ustMV4oWBRBkO/IGBoU4uuDMj/LRO2qwxqQHsoON5zi2Qt/VijVUsczpT6BIK2
+ oTXY7mWXANCbtGq3S0g==
+X-Proofpoint-GUID: q9GwbXwgA0PWlom7KWf84aqqPKGZN17a
+X-Proofpoint-ORIG-GUID: q9GwbXwgA0PWlom7KWf84aqqPKGZN17a
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
- lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
- definitions=main-2603100131
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ phishscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100131
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
@@ -127,55 +125,190 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aditya Gupta <adityag@linux.ibm.com>
 
-Set the "Thread Register State Entry Size" that is required by firmware
-(OPAL), to know size of memory to allocate to capture CPU state, in the
-event of a crash
+During MPIPL (aka fadump), after a kernel crash, the kernel does
+opal_cec_reboot2 opal call, signifying an abnormal termination.
+When OPAL receives this opal call, it further triggers SBE S0 interrupt,
+to trigger a MPIPL boot.
+
+Currently S0 interrupt is unimplemented in QEMU.
+
+Implement S0 interrupt as 'pause_vcpus' + 'guest_reset' in QEMU, as the
+SBE's implementation of S0 seems to be basically "stop all clocks" and
+then "host reset".
+
+pause_vcpus is done in a later patch when register preserving support is
+added
+
+See 'stopClocksS0' in SBE source code for more information.
+
+Also log both S0 and S1 interrupts.
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-7-adityag@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-3-adityag@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- hw/ppc/pnv.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
+ include/hw/ppc/pnv.h       |  6 ++++++
+ include/hw/ppc/pnv_mpipl.h | 19 +++++++++++++++++++
+ hw/ppc/pnv_mpipl.c         | 26 ++++++++++++++++++++++++++
+ hw/ppc/pnv_sbe.c           | 29 +++++++++++++++++++++++++++++
+ hw/ppc/meson.build         |  1 +
+ 5 files changed, 81 insertions(+)
+ create mode 100644 include/hw/ppc/pnv_mpipl.h
+ create mode 100644 hw/ppc/pnv_mpipl.c
 
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 1513575b8f..3038b1626c 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -781,6 +781,30 @@ static void pnv_reset(MachineState *machine, ResetType type)
-         _FDT((fdt_pack(fdt)));
-     }
+diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+index 24f8843a40..7d73629f11 100644
+--- a/include/hw/ppc/pnv.h
++++ b/include/hw/ppc/pnv.h
+@@ -25,6 +25,7 @@
+ #include "hw/core/sysbus.h"
+ #include "hw/ipmi/ipmi.h"
+ #include "hw/ppc/pnv_pnor.h"
++#include "hw/ppc/pnv_mpipl.h"
  
-+    if (!pnv->mpipl_state.is_next_boot_mpipl) {
-+        /*
-+         * Set the "Thread Register State Entry Size", so that firmware can
-+         * allocate enough memory to capture CPU state in the event of a
-+         * crash
-+         */
-+
-+        MpiplProcDumpArea proc_area;
-+
-+        proc_area.version = PROC_DUMP_AREA_VERSION_P9;
-+        proc_area.thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
-+
-+        /* These are to be allocated & assigned by the firmware */
-+        proc_area.alloc_addr = 0;
-+        proc_area.alloc_size = 0;
-+
-+        /* These get assigned after crash, when QEMU preserves the registers */
-+        proc_area.dest_addr = 0;
-+        proc_area.act_size = 0;
-+
-+        cpu_physical_memory_write(PROC_DUMP_AREA_OFF, &proc_area,
-+                sizeof(proc_area));
-+    }
-+
-     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+ #define TYPE_PNV_CHIP "pnv-chip"
  
-     /* Update machine->fdt with latest fdt */
+@@ -111,6 +112,8 @@ struct PnvMachineState {
+ 
+     bool         big_core;
+     bool         lpar_per_core;
++
++    MpiplPreservedState mpipl_state;
+ };
+ 
+ PnvChip *pnv_get_chip(PnvMachineState *pnv, uint32_t chip_id);
+@@ -290,4 +293,7 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
+ 
+ #define PNV11_OCC_SENSOR_BASE(chip) PNV10_OCC_SENSOR_BASE(chip)
+ 
++/* MPIPL helpers */
++void do_mpipl_preserve(PnvMachineState *pnv);
++
+ #endif /* PPC_PNV_H */
+diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
+new file mode 100644
+index 0000000000..c544984dc7
+--- /dev/null
++++ b/include/hw/ppc/pnv_mpipl.h
+@@ -0,0 +1,19 @@
++/*
++ * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef PNV_MPIPL_H
++#define PNV_MPIPL_H
++
++#include "qemu/osdep.h"
++
++typedef struct MpiplPreservedState MpiplPreservedState;
++
++/* Preserved state to be saved in PnvMachineState */
++struct MpiplPreservedState {
++    bool       is_next_boot_mpipl;
++};
++
++#endif
+diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
+new file mode 100644
+index 0000000000..d8c9b7a428
+--- /dev/null
++++ b/hw/ppc/pnv_mpipl.c
+@@ -0,0 +1,26 @@
++/*
++ * Emulation of MPIPL (Memory Preserving Initial Program Load), aka fadump
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "system/runstate.h"
++#include "hw/ppc/pnv.h"
++#include "hw/ppc/pnv_mpipl.h"
++
++void do_mpipl_preserve(PnvMachineState *pnv)
++{
++    /* Mark next boot as Memory-preserving boot */
++    pnv->mpipl_state.is_next_boot_mpipl = true;
++
++    /*
++     * Do a guest reset.
++     * Next reset will see 'is_next_boot_mpipl' as true, and trigger MPIPL
++     *
++     * Requirement:
++     * GUEST_RESET is expected to NOT clear the memory, as is the case when
++     * this is merged
++     */
++    qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
++}
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 247617338a..5a2b3342d1 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -26,6 +26,9 @@
+ #include "hw/ppc/pnv.h"
+ #include "hw/ppc/pnv_xscom.h"
+ #include "hw/ppc/pnv_sbe.h"
++#include "hw/ppc/pnv_mpipl.h"
++#include "system/cpus.h"
++#include "system/runstate.h"
+ #include "trace.h"
+ 
+ /*
+@@ -113,11 +116,37 @@ static uint64_t pnv_sbe_power9_xscom_ctrl_read(void *opaque, hwaddr addr,
+ static void pnv_sbe_power9_xscom_ctrl_write(void *opaque, hwaddr addr,
+                                        uint64_t val, unsigned size)
+ {
++    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    PnvSBE *sbe = opaque;
+     uint32_t offset = addr >> 3;
+ 
+     trace_pnv_sbe_xscom_ctrl_write(addr, val);
+ 
+     switch (offset) {
++    case SBE_CONTROL_REG_RW:
++        switch (val) {
++        case SBE_CONTROL_REG_S0:
++            qemu_log_mask(LOG_UNIMP, "SBE: S0 Interrupt triggered\n");
++
++            pnv_sbe_set_host_doorbell(sbe, sbe->host_doorbell | SBE_HOST_RESPONSE_MASK);
++
++            /* Preserve memory regions and CPU state, if MPIPL is registered */
++            do_mpipl_preserve(pnv);
++
++            /*
++             * Control may not come back here as 'do_mpipl_preserve' triggers
++             * a guest reboot
++             */
++            break;
++        case SBE_CONTROL_REG_S1:
++            qemu_log_mask(LOG_UNIMP, "SBE: S1 Interrupt triggered\n");
++            break;
++        default:
++            qemu_log_mask(LOG_UNIMP,
++                "SBE: CONTROL_REG_RW: Unknown value: Ox%."
++                  HWADDR_PRIx "\n", val);
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "SBE Unimplemented register: Ox%"
+                       HWADDR_PRIx "\n", addr >> 3);
+diff --git a/hw/ppc/meson.build b/hw/ppc/meson.build
+index f7dac87a2a..c61fba4ec8 100644
+--- a/hw/ppc/meson.build
++++ b/hw/ppc/meson.build
+@@ -56,6 +56,7 @@ ppc_ss.add(when: 'CONFIG_POWERNV', if_true: files(
+   'pnv_pnor.c',
+   'pnv_nest_pervasive.c',
+   'pnv_n1_chiplet.c',
++  'pnv_mpipl.c',
+ ))
+ # PowerPC 4xx boards
+ ppc_ss.add(when: 'CONFIG_PPC405', if_true: files(
 -- 
 2.52.0
 
