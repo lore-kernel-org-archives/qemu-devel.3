@@ -4,45 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697B5EB105A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:26:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7B7EEB105B
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:29:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzy2Y-0000KH-1i; Tue, 10 Mar 2026 10:26:30 -0400
+	id 1vzy4r-00019G-7n; Tue, 10 Mar 2026 10:28:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vzy2S-0000E5-LU; Tue, 10 Mar 2026 10:26:24 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vzy4p-00018i-1K
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:28:51 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vzy2Q-0001Bb-DV; Tue, 10 Mar 2026 10:26:24 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 961F087493;
- Tue, 10 Mar 2026 15:26:11 +0100 (CET)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, eduardo@habkost.net, marcel.apfelbaum@gmail.com,
- philmd@linaro.org, wangyanan55@huawei.com, zhao1.liu@intel.com,
- marcandre.lureau@redhat.com, peterx@redhat.com, farosas@suse.de
-Subject: [PATCH v2] ui/vdagent: add migration blocker when machine version <
- 10.1
-Date: Tue, 10 Mar 2026 15:25:39 +0100
-Message-ID: <20260310142552.240877-1-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1vzy4l-0001ZB-TK
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:28:50 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 762B7596A13;
+ Tue, 10 Mar 2026 15:28:42 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id to77rNk09GPG; Tue, 10 Mar 2026 15:28:40 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id 407295969F3; Tue, 10 Mar 2026 15:28:40 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id 3E8F25969EC;
+ Tue, 10 Mar 2026 15:28:40 +0100 (CET)
+Date: Tue, 10 Mar 2026 15:28:40 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+cc: Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: Re: [PATCH] ati-vga: Fix sign extension in DEFAULT_SC_BOTTOM_RIGHT
+ read
+In-Reply-To: <4425f6c4-7003-4d6d-9842-3b9c320be0f6@linaro.org>
+Message-ID: <c551ef96-ca0e-01fb-02c0-435851d5cdc5@eik.bme.hu>
+References: <20260309212206.2457691-1-chad@jablonski.xyz>
+ <1931a6d0-d351-cc43-1b3d-fa3b3b0809a9@eik.bme.hu>
+ <e2824e5c-4d1d-4d08-ba24-a8c3056c2edc@linaro.org>
+ <de83d589-99c0-9d40-b29e-61f8deb3d249@eik.bme.hu>
+ <18a50a29-1deb-41c5-91f1-ae5f76129a05@linaro.org>
+ <9233d54a-1a95-0cc9-c118-9c557b8bae4b@eik.bme.hu>
+ <4425f6c4-7003-4d6d-9842-3b9c320be0f6@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1773152737132
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: multipart/mixed;
+ boundary="3866299591-1488743036-1773152920=:90299"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -58,151 +73,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In QEMU 10.1, commit 5d56bff11e ("ui/vdagent: add migration support")
-added migration support for the vdagent chardev and commit 42000e0013
-("ui/vdagent: remove migration blocker") removed the migration
-blocker. No compat for older machine versions was added, so migration
-with pre-10.1 machine version, from a 10.1 binary to a pre-10.1 binary
-will result in a failure when loading the VM state in the target
-instance:
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-> Unknown savevm section or instance 'vdagent' 0. Make sure that your
-> current VM setup matches your saved VM setup, including any
-> hotplugged devices
+--3866299591-1488743036-1773152920=:90299
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-Add a compat flag to block migration when the machine version is less
-than 10.1 to avoid this.
+On Tue, 10 Mar 2026, Philippe Mathieu-Daudé wrote:
+> On 10/3/26 13:47, BALATON Zoltan wrote:
+>> On Tue, 10 Mar 2026, Philippe Mathieu-Daudé wrote:
+>>> On 9/3/26 23:59, BALATON Zoltan wrote:
+>>>> On Mon, 9 Mar 2026, Philippe Mathieu-Daudé wrote:
+>>>>> On 9/3/26 22:41, BALATON Zoltan wrote:
+>>>>>> On Mon, 9 Mar 2026, Chad Jablonski wrote:
+>>>>>>> Cast default_sc_bottom to uint32_t before shifting left to prevent
+>>>>>>> sign extension when assigning to uint64_t.
+>>>>>>> 
+>>>>>>> Fixes: CID 1645615
+>>>>>>> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+>>>>>>> ---
+>>>>>>> hw/display/ati.c | 2 +-
+>>>>>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>> 
+>>>>>>> diff --git a/hw/display/ati.c b/hw/display/ati.c
+>>>>>>> index 6cf243bcf9..f9773e1154 100644
+>>>>>>> --- a/hw/display/ati.c
+>>>>>>> +++ b/hw/display/ati.c
+>>>>>>> @@ -514,7 +514,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr 
+>>>>>>> addr, unsigned int size)
+>>>>>>>         val |= s->regs.default_tile << 16;
+>>>>>>>         break;
+>>>>>>>     case DEFAULT_SC_BOTTOM_RIGHT:
+>>>>>>> -        val = (s->regs.default_sc_bottom << 16) |
+>>>>>>> +        val = ((uint32_t)s->regs.default_sc_bottom << 16) |
+>>>>>>>               s->regs.default_sc_right;
+>>>>> 
+>>>>> What about using deposit64() which is uncontroversial?
+>>>>> 
+>>>>>            val = deposit64(s->regs.default_sc_right, 16,
+>>>>>                            13, s->regs.default_sc_bottom);
+>>> 
+>>> (alternatively deposit32)
+>>> 
+>>>> I can't make sense of that without going and looking what the arguments 
+>>>> of this function are so I'd rather keep it simple. As I said, the values 
+>>>> here can't be large enough to sign extend and there may be other similar 
+>>>> cases that are already marked in Coverity. But if we still want to fix 
+>>>> all of them then maybe we could try to make val uint32_t then do 
+>>>> something about it once at the return for all cases. That seems better 
+>>>> than trying to handle in each case inconsistently. The simplest would 
+>>>> still be to tell Converity it's wrong here.
+>>> 
+>>> Until the next register is implemented and Coverity complains again,
+>>> and another round-up on the mailing list until Peter manually marks it.
+>>> I was hoping for a way to avoid all that hassle.
+>> 
+>> Changing local val to uint32_t and cast it at the last return line should 
+>> also solve this if the issue is assigning to uint64_t without a cast. To me 
+>> that seems better than making changes to every case separately and would 
+>> allow me to avoid additional complexity. If you think it would help I can 
+>> make a patch but I can't test it.
+>
+> No more time / energy for this topic, so do what you think is best for
+> the project, I don't mind much anymore. I shouldn't have intervened at
+> all first, but since I merged this patch, I felt a bit concerned.
+> Actually the simplest is you mark that issue yourself on Coverity;
+> anybody can request an account for free. I'm done with this thread.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 42000e0013 ("ui/vdagent: remove migration blocker")
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
+I did not know I can get access to Coverity. Then I can take a look there. 
+I still think there's nothing to fix here because even if uint16_t 
+default_sc_bottom is promoted to int for the calculation we don't support 
+32 bit hosts any more so this can't get sign extension issue even in that 
+case. So I think Converity is just confused here and we should not make 
+code more complex for it.
 
-Changes in v2:
-* rebase on current master, adapting to commit 8c84f31ace
-  ("chardev: .chr_open(): add boolean return value")
-
- hw/core/machine.c |  1 +
- ui/vdagent.c      | 46 ++++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 47 insertions(+)
-
-diff --git a/hw/core/machine.c b/hw/core/machine.c
-index a14ad05b9a..6cf0e2f404 100644
---- a/hw/core/machine.c
-+++ b/hw/core/machine.c
-@@ -57,6 +57,7 @@ GlobalProperty hw_compat_10_0[] = {
-     { "vfio-pci", "x-migration-load-config-after-iter", "off" },
-     { "ramfb", "use-legacy-x86-rom", "true"},
-     { "vfio-pci-nohotplug", "use-legacy-x86-rom", "true" },
-+    { "chardev-qemu-vdagent", "x-migration-blocked", "true" },
- };
- const size_t hw_compat_10_0_len = G_N_ELEMENTS(hw_compat_10_0);
- 
-diff --git a/ui/vdagent.c b/ui/vdagent.c
-index 5a5e4bf681..bb0c4aa14c 100644
---- a/ui/vdagent.c
-+++ b/ui/vdagent.c
-@@ -6,6 +6,8 @@
- #include "qemu/option.h"
- #include "qemu/units.h"
- #include "hw/core/qdev.h"
-+#include "hw/core/qdev-properties.h"
-+#include "migration/blocker.h"
- #include "ui/clipboard.h"
- #include "ui/console.h"
- #include "ui/input.h"
-@@ -24,6 +26,10 @@
- struct VDAgentChardev {
-     Chardev parent;
- 
-+    /* needed for machine versions < 10.1 when migration was not supported */
-+    Error *migration_blocker;
-+    bool migration_blocked;
-+
-     /* config */
-     bool mouse;
-     bool clipboard;
-@@ -657,6 +663,12 @@ static bool vdagent_chr_open(Chardev *chr, ChardevBackend *backend,
-     return false;
- #endif
- 
-+    if (vd->migration_blocked) {
-+        if (migrate_add_blocker(&vd->migration_blocker, errp) != 0) {
-+            return false;
-+        }
-+    }
-+
-     vd->mouse = VDAGENT_MOUSE_DEFAULT;
-     if (cfg->has_mouse) {
-         vd->mouse = cfg->mouse;
-@@ -901,6 +913,19 @@ static void vdagent_chr_parse(QemuOpts *opts, ChardevBackend *backend,
- 
- /* ------------------------------------------------------------------ */
- 
-+static bool get_migration_blocked(Object *o, Error **errp)
-+{
-+    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(o);
-+    return vd->migration_blocked;
-+}
-+
-+static void set_migration_blocked(Object *o, bool migration_blocked,
-+                                   Error **errp)
-+{
-+    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(o);
-+    vd->migration_blocked = migration_blocked;
-+}
-+
- static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
- {
-     ChardevClass *cc = CHARDEV_CLASS(oc);
-@@ -910,6 +935,10 @@ static void vdagent_chr_class_init(ObjectClass *oc, const void *data)
-     cc->chr_write        = vdagent_chr_write;
-     cc->chr_set_fe_open  = vdagent_chr_set_fe_open;
-     cc->chr_accept_input = vdagent_chr_accept_input;
-+
-+    object_class_property_add_bool(oc, "x-migration-blocked",
-+                                   get_migration_blocked,
-+                                   set_migration_blocked);
- }
- 
- static int post_load(void *opaque, int version_id)
-@@ -1064,10 +1093,26 @@ static void vdagent_chr_instance_init(Object *obj)
-     vmstate_register_any(NULL, &vmstate_vdagent, vd);
- }
- 
-+static void vdagent_post_init(Object *obj)
-+{
-+    VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
-+
-+    object_apply_compat_props(obj);
-+
-+    if (vd->migration_blocked) {
-+        error_setg(&vd->migration_blocker,
-+                   "The vdagent chardev doesn't support migration with machine"
-+                   " version less than 10.1");
-+    }
-+}
-+
- static void vdagent_chr_fini(Object *obj)
- {
-     VDAgentChardev *vd = QEMU_VDAGENT_CHARDEV(obj);
- 
-+    if (vd->migration_blocked) {
-+        migrate_del_blocker(&vd->migration_blocker);
-+    }
-     vdagent_disconnect(vd);
-     if (vd->mouse_hs) {
-         qemu_input_handler_unregister(vd->mouse_hs);
-@@ -1080,6 +1125,7 @@ static const TypeInfo vdagent_chr_type_info = {
-     .parent = TYPE_CHARDEV,
-     .instance_size = sizeof(VDAgentChardev),
-     .instance_init = vdagent_chr_instance_init,
-+    .instance_post_init = vdagent_post_init,
-     .instance_finalize = vdagent_chr_fini,
-     .class_init = vdagent_chr_class_init,
- };
--- 
-2.47.3
-
-
+Regards,
+BALATON Zoltan
+--3866299591-1488743036-1773152920=:90299--
 
