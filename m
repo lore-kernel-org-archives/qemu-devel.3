@@ -4,102 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DC68FD4F3F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 20:49:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2377DFD4F3F
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 21:15:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w041F-00052I-Ep; Tue, 10 Mar 2026 16:49:33 -0400
+	id 1w04PW-0000Dv-Ry; Tue, 10 Mar 2026 17:14:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w041B-000524-Am
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 16:49:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0419-0007LH-8g
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 16:49:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773175766;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w04PV-0000DY-42
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 17:14:37 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w04PT-0002Zt-Gp
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 17:14:36 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 8D03A5BD0B;
+ Tue, 10 Mar 2026 21:14:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773177273; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=JUa5m9NbcRnNMy9IUEE/llzuD6RHQZHLUKQv6HDSaUc=;
- b=D6S8mhCRURiHeHOKVavzzXYU26FNcdjfYrwDVtjR4h7CarUHWZQV9K1JC0dfPi5C1GBwiv
- W9cWG6Cmu0Gy8n242F7mvT+33ev3tfi9czJdkgiTMhHgp1p/blrpyPLi5zeCqCxE7bZJM3
- 88HpsifbEGJBkcvfbuGwrK1VgPuONXI=
-Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
- [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-416-cymqOLjgNXmcpHKjfnsa6A-1; Tue, 10 Mar 2026 16:49:25 -0400
-X-MC-Unique: cymqOLjgNXmcpHKjfnsa6A-1
-X-Mimecast-MFC-AGG-ID: cymqOLjgNXmcpHKjfnsa6A_1773175765
-Received: by mail-qk1-f200.google.com with SMTP id
- af79cd13be357-8cd91c0262fso1040818485a.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 13:49:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773175764; x=1773780564; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=JUa5m9NbcRnNMy9IUEE/llzuD6RHQZHLUKQv6HDSaUc=;
- b=cO3tjd6MfzqQuNefw0TSbzszBNjtGg7qXogMykmluixhf67jjh/7Ap7ztSntx1dufx
- Cd1bbRKvCgIEyYhlPWvrWgDyyNv98NPqdkEDBiFwyEV9RooCIA3lOjnIFzamPFY30+57
- 0of9cq5zpt6t5nbCNwOVpa0sYBqiBUcwb6qUfb8NJ2r5UYCarUJAdydemrl7PHSgBaGA
- 9icxzsFWJ40JpkGqEEEB2hSNNEyDkUhiMLIY5piP8H6m5/1b5rmmJVLcxSw5UQaU0s/0
- TFiiTpEPfHaY1/e38/KAKMoUnW7IDGUyvlnEv0QCc9lhR8d7Quq7VDiAoIMWlMJ0MNYX
- 9Gfw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773175764; x=1773780564;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=JUa5m9NbcRnNMy9IUEE/llzuD6RHQZHLUKQv6HDSaUc=;
- b=SEONmAFRizACn90XclJcMuSpEMXKORTd/7RIr8Sdja/Uvy9FZXINHvio1OO2RDHA3i
- qMtsuqecHsdzf0uFgOSQjeSgGbDTLxoCFTBBfZal9ZupVxAE0NkI4Kcr6YEzHWS9+4kG
- uMTwQKRYvJZDc4GmLRvZ2XOFsTAZ7uHnWPtulY7BCIBlHVRmlbbAA51O6uxg6NpKQo3S
- rvvBHNSx5DTbyDhNVM9+ljfcXRSyyrGTI55ATOwJ6q6VdOGiu/jtdWwC+nCyRTZcaa7g
- +gLEh0b3mGCQPr7pKyDpw3hL8AZdkzestjHzfAQADHe+gGY4+wNulqY784Er/HvfaXxz
- +Szg==
-X-Gm-Message-State: AOJu0YzLfT7cx1SBFT5vXnWf5//Avy3OCIPX0zr1YszV0T6Ie0xIFMLg
- 4+s8lliPP0XOKtHcdeam/dD2mXHIq0G2/eUnOnFZbX1oQIgIaoJmlfi4ZA8jVveAnTY5inzL9wa
- VpzktaSWoSIht/uXz96RrQ58lJSMwpiHWgG6OnMSZWTnBsG+CfzoJ7Yun
-X-Gm-Gg: ATEYQzyVynFgWB6oLLH8D2qeBuSoI4nfb4P7M54JKHGXZbrIPMUyMjPbuLY7ys0/8XY
- 7gQ0k5P0rYAjO3JsPhYaeDR1aagURgCniQR9qhpz69P6PK3x82cFf3d74cTvT1B3DAvzqczwFrD
- 6jCPFf07p+TAMo8fVaEE9w0PQwpA0gDstWotWsmEj3pAD8GkH3jG34APy3WSlJ6lG/uEoV0CU4H
- wjNY4DcZSdvlEvsYvgJdzVydiDmk3gI7oTtH53NLIfBMpgW4F9E0vcQkJv6t4WkhgU/xNHaCpcv
- KKgI0T/VbgzVtKapnpQp6BxuFV01DpLqj9whNxpOVxLFVzlPxfKM/QmkWM+LILUn8rBe02L9K5N
- kQK5OqyPZZ/Glqw==
-X-Received: by 2002:a05:620a:2805:b0:8cb:52e0:15e7 with SMTP id
- af79cd13be357-8cda19f8c66mr42747185a.33.1773175764576; 
- Tue, 10 Mar 2026 13:49:24 -0700 (PDT)
-X-Received: by 2002:a05:620a:2805:b0:8cb:52e0:15e7 with SMTP id
- af79cd13be357-8cda19f8c66mr42738085a.33.1773175763645; 
- Tue, 10 Mar 2026 13:49:23 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda1fc09efsm4817985a.2.2026.03.10.13.49.22
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 13:49:23 -0700 (PDT)
-Date: Tue, 10 Mar 2026 16:49:21 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH 8/8] migration/multifd: Fix leaks of TLS error objects
-Message-ID: <abCD0UsimnNk2uGf@x1.local>
+ bh=mfDWrOjQ59MpKgqVcEJcXt/CkGUrLeRRJZS/QumwaYM=;
+ b=Q1c2uROSyiV29MJbYYHf9/ooKxJ/6upDY2ZYRVOD/cc9A3geBnKk97AzVKoNyw6EYj8eCY
+ HPS37ItH0UIDgXT/bHmJ6iatp5x/dK5vEWDIp5P9pXvD7xAXz1io/G9rHb2Rd/eb3LT/J9
+ NJBkGSKk/NasNd6TAXEnXgqLJhXbe6Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773177273;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mfDWrOjQ59MpKgqVcEJcXt/CkGUrLeRRJZS/QumwaYM=;
+ b=8wgWxjXE+wjgA2FivKoMX8n9uOL3fwXNd95Uzl9HuQcwmL7RqaSRxHX02rGXzegc4mfC5M
+ wZgSzMug9gnREYBg==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773177273; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mfDWrOjQ59MpKgqVcEJcXt/CkGUrLeRRJZS/QumwaYM=;
+ b=Q1c2uROSyiV29MJbYYHf9/ooKxJ/6upDY2ZYRVOD/cc9A3geBnKk97AzVKoNyw6EYj8eCY
+ HPS37ItH0UIDgXT/bHmJ6iatp5x/dK5vEWDIp5P9pXvD7xAXz1io/G9rHb2Rd/eb3LT/J9
+ NJBkGSKk/NasNd6TAXEnXgqLJhXbe6Q=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773177273;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=mfDWrOjQ59MpKgqVcEJcXt/CkGUrLeRRJZS/QumwaYM=;
+ b=8wgWxjXE+wjgA2FivKoMX8n9uOL3fwXNd95Uzl9HuQcwmL7RqaSRxHX02rGXzegc4mfC5M
+ wZgSzMug9gnREYBg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 1294D3F66C;
+ Tue, 10 Mar 2026 21:14:32 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id HCmxMriJsGkQPAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 21:14:32 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, Laurent
+ Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH 5/8] tests/qtest/migration: Force exit-on-error=false
+ when appropriate
+In-Reply-To: <abCDJyknIzzX8dUy@x1.local>
 References: <20260310135540.8679-1-farosas@suse.de>
- <20260310135540.8679-8-farosas@suse.de>
+ <20260310135540.8679-5-farosas@suse.de> <abCDJyknIzzX8dUy@x1.local>
+Date: Tue, 10 Mar 2026 18:14:30 -0300
+Message-ID: <87o6kvz8sp.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260310135540.8679-8-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ TO_DN_SOME(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_FIVE(0.00)[5];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,23 +116,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 10, 2026 at 10:55:40AM -0300, Fabiano Rosas wrote:
-> The code currently ignores errors from multifd threads that happen
-> after a first error has already been propagated. Make sure the
-> subsequent errors are freed appopriately.
-> 
-> This fixes a leak of the TLS session->werr when the certificate
-> validation fails after multifd threads are already running. The first
-> writes on the threads will fail deep into the gnutls stack.
-> 
-> No need to check if(err) because the callers are all under a similar
-> check.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+Peter Xu <peterx@redhat.com> writes:
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
+> On Tue, Mar 10, 2026 at 10:55:37AM -0300, Fabiano Rosas wrote:
+>> Some tests can cause QEMU to exit(1) too early while the incoming
+>> coroutine has not yielded for a first time yet. This trips ASAN
+>> because resources related to dispatching the incoming process will
+>> still be allocated in the io/channel.c layer without a
+>> straight-forward way for the migration code to clean them up.
+>> 
+>> Since this is an issue only affecting testing and leak detection,
+>> let's make sure tests only use MIG_TEST_FAIL_DEST_QUIT_ERR when
+>> strictly necessary.
+>> 
+>> To make this process easier, force exit-on-error=false for precopy
+>> whenever the expected test result is MIG_TEST_FAIL. The distinction
+>> between the two return codes is exactly that, the latter should never
+>> cause exit(1).
+>> 
+>> The affected tests for now are the TLS tests "no_hostname" and
+>> "mismatch_host".
+>> 
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  tests/qtest/migration/framework.c | 5 ++++-
+>>  tests/qtest/migration/tls-tests.c | 6 ++++--
+>>  2 files changed, 8 insertions(+), 3 deletions(-)
+>> 
+>> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+>> index 4cc63bba7b..cfb8409d33 100644
+>> --- a/tests/qtest/migration/framework.c
+>> +++ b/tests/qtest/migration/framework.c
+>> @@ -854,7 +854,10 @@ int test_precopy_common(MigrateCommon *args)
+>>              in_channels = qobject_from_json(args->connect_channels,
+>>                                              &error_abort);
+>>          }
+>> -        migrate_incoming_qmp(to, args->listen_uri, in_channels, "{}");
+>> +
+>> +        migrate_incoming_qmp(to, args->listen_uri, in_channels,
+>> +                             args->result == MIG_TEST_FAIL ?
+>> +                             "{ 'exit-on-error': false }" : "{}");
+>
+> Can we set exit-on-error unconditionally?
+>
 
--- 
-Peter Xu
+Yeah, what about I just remove MIG_TEST_FAIL_DEST_QUIT_ERR entirely?
+Aside from the ones mentioned in this series, there's only one other TLS
+test using it. There are two tests setting qtest_set_expected_status(to,
+EXIT_FAILURE); after migrate_cancel, but we can just wait for FAILED and
+then qtest_quit(to);
 
+> In all cases:
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
+>
+>>      }
+>>  
+>>      /* Wait for the first serial output from the source */
+>> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+>> index f636802642..6274906ad9 100644
+>> --- a/tests/qtest/migration/tls-tests.c
+>> +++ b/tests/qtest/migration/tls-tests.c
+>> @@ -525,7 +525,8 @@ static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
+>>      args->listen_uri = "tcp:127.0.0.1:0";
+>>      args->start_hook = migrate_hook_start_tls_x509_no_host;
+>>      args->end_hook = migrate_hook_end_tls_x509;
+>> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
+>> +    args->result = MIG_TEST_FAIL;
+>> +    args->start.incoming_defer = true;
+>>  
+>>      args->start.hide_stderr = true;
+>>  
+>> @@ -559,7 +560,8 @@ static void test_precopy_tcp_tls_x509_mismatch_host(char *name,
+>>      args->listen_uri = "tcp:127.0.0.1:0";
+>>      args->start_hook = migrate_hook_start_tls_x509_mismatch_host;
+>>      args->end_hook = migrate_hook_end_tls_x509;
+>> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
+>> +    args->result = MIG_TEST_FAIL;
+>> +    args->start.incoming_defer = true;
+>>  
+>>      args->start.hide_stderr = true;
+>>  
+>> -- 
+>> 2.51.0
+>> 
 
