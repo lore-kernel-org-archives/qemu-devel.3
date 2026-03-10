@@ -4,85 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B552CEB1060
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:38:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB067EB1062
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:49:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzyDa-0004Kl-PA; Tue, 10 Mar 2026 10:37:54 -0400
+	id 1vzyO0-0005d0-EQ; Tue, 10 Mar 2026 10:48:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzyDY-0004KQ-AI
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:37:52 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzyNy-0005cs-W6
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:48:39 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzyDV-0004o1-A8
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:37:51 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48535a0ef86so22140015e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 07:37:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzyNx-000752-Cd
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:48:38 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-661d20c9787so4926143a12.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 07:48:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773154115; cv=none;
+ d=google.com; s=arc-20240605;
+ b=OMx75pX6rucGZ/xCfZsrk8Vyt51Y7sv5mp5t4nTDBJE5Eqk+sAuAXslwq/DATMwpvz
+ t+uRUX9+BdO3l/swBX/V4h7QBh7OcgVFTGajz2kZGecCuks+UOgjfegZl+iFv7lX//sL
+ OeRMhf9Nz+CQAt8ZgQcrrHTUKz2GtP/FoWmscWdBzzP31j78yUCvNdqO4G+vf2z1I00Q
+ JJjjjj+NwXGD3I8AvfFb+BhhAG60/Bh1QnzhRYx7P6/KMskeerHpxjWy2usuWA+LFaRe
+ 5opB02V6HK2MnWWM7g6I5D83ABB89OR88EyLvqw3kRpWKRR1lwmOM3CAXS2G+yQbgPfY
+ gUaA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=MAi4mJc3yHHvEbMGx/K9ZTKbMrdDs7vCcn8+ghC07MM=;
+ fh=eb/6RYiJlpBUWog4+dSsqWDeqHDGWYSH6Yu5iX4aLSw=;
+ b=IvUQ9j40tyXz9h0Ug/IlzoRhSutUbppJTqc5IoMRLQY/J3psPS/tUnOXsBq7FocxMk
+ gpjPZoah67uzFYmzY90ru5WUk3kECP6aKumYGoCQixKQEOQIr+RWf3jtJEr3FQTo1QG6
+ UmsaB9uaWLVo1hocUstYt8nQe5AlesOucMVWmuQaVYsooWUqkDY6jGowT+CzdvcW7Nxo
+ iOvuKxV/n+b9s4NTzf3wnqfV0OKOf+RCGpOjA/lrSVRsq67cjU7cSGWIjA80xzh+6TAA
+ 3SMLoC/ZijKICG+pHXG2OrYRInMBUfsYMrFgSCH9p8FnI01xfrw0z7afz3TkUeK/OF4i
+ fwLA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773153467; x=1773758267; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=+Y6ehQdG4BTbk5vOMRXdMo49BIxhMgxOuMYGpIhnvXo=;
- b=rCC3ziYI6xQo2T157D49byQLcYgPGQxBd/zHSGjQF/dqMsVfyRTBfCPDxX7hNvPYhk
- LtcrHAi1M8FNROktCl7RaOoNRC+a4TkhDwbU3+WiBJbovIxD8ajXdluO/LTMMFwBS5XL
- 811M0k7XAIKEK8MIHLNJBfCsFpJki58RqivME9IMAH2u4+RNU9rjAM89iEEr+uK/Lqg0
- dsQYLstgmBXnY6uJbvUl8KJaL2/T5cq5RNCDCePuh6UNwTV2ApI5BKq6Gsi63cixnvG8
- IhxRX5A8j1XdYDFoqbaitVVV6Hbspyolxd6sH/dsvcLzdKzNa5NWpk8vGV4B3uj4FoDd
- f72w==
+ d=linaro.org; s=google; t=1773154115; x=1773758915; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=MAi4mJc3yHHvEbMGx/K9ZTKbMrdDs7vCcn8+ghC07MM=;
+ b=pDfH8B/0C91wNVJKw4Yaj9MPqCfeP4kbeWsNZw0jNksYotB0rOJGt8hYLQ0eddz2wl
+ V4WLch2EUhYhoK2g2UHZt0oZnhjJbzT580YAROl0lPlNY1Jy4MSE2ENaI7WUkRo82oi6
+ IVSnpxY4QhTS+6hHXFVgc+mUIgKy4+t7GJGkx+y4lEbOgAfKWbtECLj+55ehPUMK3WWt
+ e0cfq54X1tyfBLY3pdcomJHdu97tzpeiJoNWO7JIHADOV6OAiCrsilyRrpuJDij16fWE
+ Fga14yEbkyeYXreZHsm17FV8VH9aTvXeGsg0M5X73/HCx6buogiqemFNnClgRoFaQWQg
+ 8uMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773153467; x=1773758267;
- h=content-transfer-encoding:in-reply-to:cc:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=+Y6ehQdG4BTbk5vOMRXdMo49BIxhMgxOuMYGpIhnvXo=;
- b=QuJCncjrqjjs5MNep9JLpwqi0JbZKUeRZJ7LtYU/KjaFDxaQK5f0un4g4Ri3Q0/NTo
- MbhoLoz8PHnjHKfiM15cxHlVe8Ud42lqNNvlCli42Y6hIGrw8c3oWiDt6pKL+7q4i1Io
- LnedTSbAsd7zupp9B9r4yQkBv+tGg6m/1s/8uEXoCXnN6MXtAvxA5Sxc4eSV/M4SRxwr
- f70ExaqItUUX5rbGqp8x5bxZg7R/5qYrZ1wMbcX6V6XoIwe+7ZsHOLvEvGSeEWH9cdyP
- Dq+ZJz6Ax9mXFMvEWj21d0L3ZULUSizCsbn5wXaBho23iC6b3//8PC6iE02YG1QVLNZF
- A7rQ==
+ d=1e100.net; s=20230601; t=1773154115; x=1773758915;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=MAi4mJc3yHHvEbMGx/K9ZTKbMrdDs7vCcn8+ghC07MM=;
+ b=VMqE+D16OLTF9/fKpqx1lPu927EyegIw4H4HpOGFTudY0FWRZKkyNBVUxv0jgtW9Nr
+ pYjCgx7b6/udkolPr/esTRCiFl1M6gQlC9DA5nyDTwFcWMOOaeEkrnprb+xZqhP6jaEV
+ 4sWqhEmUh5jQkBW4p2psMEQ/JrzjSFT+d/CGjTBu1HTaePvB4cRrVpompXF2gQYcxkQY
+ EBcVmLAMU5DAZi7rQdKPMCqNMw2no8S54C7886zKQGYatd2hyeNeSC8qETU+wHXuvYHK
+ 49wj9QAP3WIvAFt0Z9YUb4K1p8hrbnipGtsWoJzn4yF7VDL7TTLimVELwAC3qkZHVYLY
+ ZqDA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVK868iTGOYESQPsXktCc5S8Z9C57PCxhidJuBqVvxxLR6AUEsdIB1Qe7RoAJUuWDv5Ir91qrXBwuWC@nongnu.org
-X-Gm-Message-State: AOJu0YxZBkKdXACMX5mDbRxOeSIZXJ42Z7GQHWBM6qNey4iAzqL521Gp
- VlxJWHUt+u8pViqWvNo/gcaC/NaypU2jKXA7XgzY1kSb6Q2OuDbdGiAvz8hL6XD6iig=
-X-Gm-Gg: ATEYQzwG91BiZjfnzSQspmKlcKroR3GLKXou4aRpLTfnYSTTDP8tz/FqEz2xAwVZdJN
- qk2hSGeUI5DspUP7jQkVjG7SQ5DD/2iK9d9+DP3618UGFrHtjjxA+53fjB80ur0KVTptKGa7lvT
- gXhG9itYXIuP/DC/DTqMiNbWHq3AhEyqz5toU0PsJFbjZ6uvO2sd7VpbP64g2vfFrbyPX1GxaP1
- wEjKuyax2dXoKsRnuFluk4r5WdlFgCFC2RAX5EjOi9FxPEbaefV1GWqZfv7iPfx9XZLou/FUhFP
- 6g6brtvew4F7BQdrIRIAievPM2T8k4nk6pF7PDIbPSWGmW5GE8gLmg2DF8Ezf541FEtS0ZPSOtP
- 3HLFm4jbypuBsJ7BLfKTnEIfVNx7G17HFoI5rZQGMM3PZFlWqP0uLntW3UR/kYW0caT+/D4rIKy
- cqXlQdjqVcsxCfnNmAEqJCEiPLw9L/AwOkdUXy97I8YGb4b6aKUKVHnxysV9WCOhEgBByF38xZ+
- 2/C
-X-Received: by 2002:a05:600c:8a0d:20b0:485:4388:3492 with SMTP id
- 5b1f17b1804b1-485438835f8mr35202075e9.11.1773153467343; 
- Tue, 10 Mar 2026 07:37:47 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48534c302fasm73414755e9.0.2026.03.10.07.37.46
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Mar 2026 07:37:46 -0700 (PDT)
-Message-ID: <293fd9cc-5adb-4e14-8f92-37157888ca11@linaro.org>
-Date: Tue, 10 Mar 2026 15:37:45 +0100
+ AJvYcCXG/iH3FzYfoVY3s90rheMLHw9H30eqUI48VY1K0zLmGHOM5EmjvVXsXFjnRvm1d/O/1Xd+j0SZpwTV@nongnu.org
+X-Gm-Message-State: AOJu0YySQ0RHei9cWF+PUjQD9SUkK4RP36Xu+MdTPSgGdPf2XasCMBwO
+ iqikZW2P88Qj/57tccVYXk2aiFE/AwUVFUmL/PawY99G0KSIeotBsoVj9RCOfEue1Jkitc1/x2D
+ zaQifEeeZ/7fcDN5BZ139jcNKe0FGOoN+iDPTDyXi2w==
+X-Gm-Gg: ATEYQzzpd+COvt8zldE9rbC1sBwn5W+0Lv9g5VG16TPYl0/h4WRoGlw/AeTYe6D45R8
+ 2/5R2Q+zL+9HZOzGO1GgtxEjTCXjQLZRsI1Awa2AWnA5LaqTWXMIDwuzHesqhvrkAeNmExFBNo0
+ odFmS8qHSMc7C75xGgrTbvDC+K1VZ1RVWerr8BYKZylRjkYTfuSyibOzYEbf8/YBFMd4D4D82Bn
+ JCkjAvRsjQC+z6seMDUJBTa+HRkQt/s8Un+bpaWGwoIltBI9PvKk+NkKoQwiTyDTsqm/zPWhqui
+ eF44Agowh1sPEjfRMcW0U93PGCzyQbWB/It01ZbFsM2DAifrekbjgI78lU2Mw22VXUw=
+X-Received: by 2002:a17:907:26cc:b0:b93:81e7:845a with SMTP id
+ a640c23a62f3a-b942df46b34mr786612366b.9.1773154114991; Tue, 10 Mar 2026
+ 07:48:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 27/49] meson: Add -Wformat-overflow=2
-Content-Language: en-US
-To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
-References: <20260309155219.62400-1-philmd@linaro.org>
- <20260309155219.62400-28-philmd@linaro.org> <87h5qn23v5.fsf@suse.de>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Yubin Zou <yubinz@google.com>, Kane Chen <kane_chen@aspeedtech.com>
-In-Reply-To: <87h5qn23v5.fsf@suse.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+References: <20260309212206.2457691-1-chad@jablonski.xyz>
+ <1931a6d0-d351-cc43-1b3d-fa3b3b0809a9@eik.bme.hu>
+ <e2824e5c-4d1d-4d08-ba24-a8c3056c2edc@linaro.org>
+ <de83d589-99c0-9d40-b29e-61f8deb3d249@eik.bme.hu>
+ <18a50a29-1deb-41c5-91f1-ae5f76129a05@linaro.org>
+ <9233d54a-1a95-0cc9-c118-9c557b8bae4b@eik.bme.hu>
+ <4425f6c4-7003-4d6d-9842-3b9c320be0f6@linaro.org>
+ <c551ef96-ca0e-01fb-02c0-435851d5cdc5@eik.bme.hu>
+In-Reply-To: <c551ef96-ca0e-01fb-02c0-435851d5cdc5@eik.bme.hu>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Mar 2026 14:48:20 +0000
+X-Gm-Features: AaiRm51b79TWkdNZxGe1zHDLQZK3WDdALJGTbrsd3gpUBQEEfTLVm6ABRLIc8ZE
+Message-ID: <CAFEAcA9nAup6PLQRBLb92kyAQOJhnx5ahe-u7nwaZq7kFZuSfw@mail.gmail.com>
+Subject: Re: [PATCH] ati-vga: Fix sign extension in DEFAULT_SC_BOTTOM_RIGHT
+ read
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,68 +124,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Cc'ing more developers.
+On Tue, 10 Mar 2026 at 14:28, BALATON Zoltan <balaton@eik.bme.hu> wrote:
+> I did not know I can get access to Coverity. Then I can take a look there.
+> I still think there's nothing to fix here because even if uint16_t
+> default_sc_bottom is promoted to int for the calculation we don't support
+> 32 bit hosts any more so this can't get sign extension issue even in that
+> case. So I think Converity is just confused here and we should not make
+> code more complex for it.
 
-On 10/3/26 14:47, Fabiano Rosas wrote:
-> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
-> 
->> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->>
->> https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Warning-Options.html
->>> Level 2 warns also about calls that might overflow the destination
->>> buffer given an argument of sufficient length or magnitude. At level
->>> 2, unknown numeric arguments are assumed to have the minimum
->>> representable value for signed types with a precision greater than 1,
->>> and the maximum representable value otherwise. Unknown string
->>> arguments whose length cannot be assumed to be bounded either by the
->>> directive’s precision, or by a finite set of string literals they may
->>> evaluate to, or the character array they may point to, are assumed to
->>> be 1 character long.
->>
->> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
->> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
->> Message-ID: <20260305-nvme-v4-4-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->>   meson.build | 1 +
->>   1 file changed, 1 insertion(+)
->>
->> diff --git a/meson.build b/meson.build
->> index 102f0cbb13e..f45885f05a1 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -694,6 +694,7 @@ warn_flags = [
->>     '-Wempty-body',
->>     '-Wendif-labels',
->>     '-Wexpansion-to-defined',
->> +  '-Wformat-overflow=2',
->>     '-Wformat-security',
->>     '-Wformat-y2k',
->>     '-Wignored-qualifiers',
-> 
-> This gives me:
-> 
-> ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_output_pins’:
-> ../tests/qtest/ast2700-sgpio-test.c:27:33: error: ‘sprintf’ may write a
-> terminating nul past the end of the destination
-> [-Werror=format-overflow=]
-> 
-> ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_irq_level_high’:
-> ../tests/qtest/ast2700-sgpio-test.c:85:33: error: ‘sprintf’ may write a
-> terminating nul past the end of the destination
-> [-Werror=format-overflow=]
-> 
-> ../tests/qtest/arm-cpu-features.c: In function ‘test_query_cpu_model_expansion_kvm’:
-> ../tests/qtest/arm-cpu-features.c:578:35: error: ‘%u’ directive writing
-> between 1 and 10 bytes into a region of size 5
-> [-Werror=format-overflow=]
-> 
-> ../configure
-> --target-list=x86_64-softmmu,i386-softmmu,aarch64-softmmu,arm-softmmu,ppc64-softmmu,s390x-softmmu,riscv64-softmmu,aarch64-linux-user,loongarch64-softmmu
-> --disable-plugins --enable-modules --enable-werror
-> --enable-trace-backends=log,dtrace --enable-debug --enable-docs
-> --enable-rust --enable-strict-rust-lints
-> 
-> gcc version 7.5.0 (SUSE Linux)
+None of the types here depend on whether the host is 32 bit or 64 bit:
+ * default_sc_bottom is "uint16_t", which is always 16 bits unsigned
+ * (default_sc_bottom << 16) is "int", which is 32-bit and signed
+   on any platform we have ever cared about
+ * val is "uint64_t", which is always 64 bits unsigned
 
+So if default_sc_bottom bit 15 is set (0x8000) then we will end up
+with an "int" value 0x8000_0000 (shift by 16 into the sign bit),
+which then gets sign-extended to give a uint64_t
+0xffff_ffff_8000_0000 when it is assigned to val.
+
+Coverity warns about this because "I took an unsigned type
+and shifted it right and assigned it to a larger unsigned type,
+and in the middle of that it got handled as signed" is one
+of C's unintuitive corners.
+
+The thing that makes this specific case not a bug is that the value
+of default_sc_bottom is always masked so that bit 15 is zero
+(which is not something Coverity's analysis is capable of
+spotting, because it's too far removed from the site of the
+sign-extension).
+
+We are about 50:50 on whether we prefer to mark these as
+false-positives or else to insert a cast or other thing
+to enforce that the intermediate type in the shift is
+unsigned.
+
+-- PMM
 
