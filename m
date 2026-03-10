@@ -4,106 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15532EB1044
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:26:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8F8E9EB104C
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzuHi-000460-Na; Tue, 10 Mar 2026 06:25:54 -0400
+	id 1vzuab-00070Z-QA; Tue, 10 Mar 2026 06:45:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vzuHW-00045V-SU
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:25:47 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzuaa-00070F-2O
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:45:24 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vzuHM-0002RJ-W6
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:25:41 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-662abedbeb7so2028136a12.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:25:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773138329; cv=none;
- d=google.com; s=arc-20240605;
- b=SfsGUqXvtTRyX8plAOnOTqGFsLqdUmBK/RIhlIfkyMnCAkOhZVRv2YZM0nUaM58i45
- hxXHU3wS8DJWciD43eMGLc/J5SMeZavRMFi46WVJkcJfMkZvrZhfz3PRlRkQIamQqNex
- nRiWWSta1JG+lU+EPuc6ZC4RPL4FKpDGRpkA78+WC4ZhZslmKGmGOBZziB4g5pf9GU4Q
- Ewobg3CtutAfsx3t1Jjap9QaOXRa4HKwwc1v+r06Y2mZEWfDaRrZ1vmOBqGFIGIO2DWg
- iWBgknfrclj6Wg1lLdylrzNfyrU23DhE2p9o2anpJXslSwM1mVnYqxq+zHMUozxNVzvl
- vFhg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=GcmA6d8dMpzQk58Sp1WO+2vqLWHHe2eFo/u76M/AXuM=;
- fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
- b=hp/cux/GmIXmuwmoHf+GJ+iK2CA39otj+f3h+wVtUmjT4s9HSQuTgnX3o506IW8BJ+
- /jDowQ1sVkupgyVsNkd3YZe93BAgmKwbAqFp6T07FWyjsGj2AEL7URua6zirXPDxdLgR
- PgXNTx5QtwZb69IvejVyZqsgzaUeUW9TWB0/zRGGgJJN62G70VvpRBV33EI/PxSxiRC4
- vPvjHCpVelidRJne0dAaGc9vbDilgskDUaWMB77iqTQ/Uub57WBRxjcNaRm8bFtymz8l
- IJV1ROupAfCGNjV/fxIW5FoGRvvcxzHfAKPN7sOqUVsdEvDjhIUVY2bLQ7ZhkPDNH+fR
- vwLQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzuaY-0005lU-HC
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:45:23 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-439cd6b0aedso4715280f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:45:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773138329; x=1773743129; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=GcmA6d8dMpzQk58Sp1WO+2vqLWHHe2eFo/u76M/AXuM=;
- b=EY+PdT0VRHiEAblBIwaUzVLaGU4duD9g9Y+4e0v+OsIvnBjcbe5XwjlrZYwBkZcrvz
- QJ/vxFKh7Bvkln91sj+FJWgGMqUURQX6Y9K4S9LWmuM4WM1t3vYBmigd5hFMvZQhUnwD
- Lf3MK+t7G3X98dFZZj7N21pgsdp1SHRgcNLNltSa8HlAS2OC1nGZcpixx+K4vYg+cuhc
- aggcrqLJgCIy6LeH0IFt4+9TZ0pXEdT+yuOx+iLqoDtlG7JuqdUEo65vpxmpFc+rUH+L
- EriUtpEkDc44/BYWLKlk6uXDQa5NFUuEkOX8cn1AVKgsVij15eXioJ/QeR/8Gm4FA4wG
- 4AEQ==
+ d=linaro.org; s=google; t=1773139520; x=1773744320; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=Qw0e1BsVz/+1pNHiRmvLy0a6vY8j9BXsvSZSxO4C5KE=;
+ b=InrXhdcMXiW+UHJrhtWRv0I4nJe6azms5ZU2xbWr1M6s040hd4WlQYuQEQf2RU5eTe
+ /RV9q5HG9EvU4xEuS2/GzW/BwWtvybTOnMMlTsFoF+ZE6E7MGVFGDss9viC53aqOZEpa
+ 8cjviIHbvPDJc0fOSbpXk4IIeM0bmcA6U2GDI0nottODwyQ2ms0hYqGkzLO4FLHj4L7d
+ JNj43QQJ7zmvYmdpt4HdQOrCAP7xFLZT8YbySnhXggzf3nmFyq1tb9DM0R2Sm6NPtz6P
+ YVbj3ICBtf8wIknFBPQuRj5SDnDNCjG51s+Aho242cxKoXZ8r3RIEJJbvE0BqrtsDAKi
+ 57HA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773138329; x=1773743129;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=GcmA6d8dMpzQk58Sp1WO+2vqLWHHe2eFo/u76M/AXuM=;
- b=Au+dOXPMBX/p64CtEVvMDtqRzSJnhe1QyvRXPgV6VcitqVDzBwlcqu0i1sA1DrcqJC
- nG8gLcmVCjMNzGChvdO1WE73cwdoPhMY6kf7AGCKSl9pQzKaQ6G1kWXjXKppWCoX1T18
- fZtXpwvQHqF00K9/p9ZZOav11u5GZ1MBqge68jSbrpNo9js07Pj475jOAonKQz/SKUfY
- iv9gAzZNRFsWJuDCysYbsJpASpZvhEmWQ4xcu6eW97zkOvsGzz9qZhjmCZiT6Il/QSoW
- 6zi2DXnqCfnAtyYP+bTRatFaNDqHdPnH7bm5RmA6MafRL27Gym2IkIadmddLyhML5bes
- RrNA==
-X-Gm-Message-State: AOJu0YzuEt/l+SIvg1G0Nm144JqJPDEO71w8F8qQEzJ47Zrr9oT/neWw
- 9r957XFIBYzWtZgcxiMK5JWER7gJ1949cVBKoI6nyE9X9fu4SqgmQsEcejaAbVt85tMPWGbxuc7
- K2Ay0jXoTrrLCNVS1e79Gv/10bHeacD17CZ40GfsKyA==
-X-Gm-Gg: ATEYQzyix2MKBq6M3PUdh7Xxa2ZzgGhIEYo5AXIPg3qhOn7uynu4IlbANXseibp5zha
- edyH6/2EKmLzkLRrp+nqLj3PH0LYD0mHmJMC91umkDXKiea3Hr2G/xqqrFKYnK+vAKG3fMofbau
- 4Pk/CyW37VzxHcAIsAxq7eXFeiucOpQIPsAM3cy7qOlAev10GOaJ1ZpA9tvapeG5bHwRgdMUXs2
- RWTQtHA6BxI01Yi8e0BZTcCZDoxrCn5InEAzcOY7yv+hLbSU8yJhyyIPk9flAlA9fx/zV9Qa5eZ
- ilPRqOo=
-X-Received: by 2002:a05:6402:4409:b0:660:f609:2eca with SMTP id
- 4fb4d7f45d1cf-6619d527516mr8018859a12.18.1773138329177; Tue, 10 Mar 2026
- 03:25:29 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773139520; x=1773744320;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=Qw0e1BsVz/+1pNHiRmvLy0a6vY8j9BXsvSZSxO4C5KE=;
+ b=L3ASUZ2CjAQD9eVSp1W7UQb9CW2z1rml1cxRjMKiAPSRgdyyms0IHHzD2qE+TDvd2g
+ Nm1OpaCcCo7elpPwTKCypNKFVvZVE/b1l6atw1qxLq4GawmpSg41iixCquFouwQClWDi
+ ItqrULAgbSEgj7DjMKuMZ+ofMtdo57aDpvji2h/eN9wK/8y9m4OdZmpPgujZ7R8fhapv
+ o9tcB7Arer5PpK6l0O8ksm6ueWkonDc+AAHdRX7ZfTyYJj7l1AsLzc0GYbh16Z+2k1u/
+ UwEg2arLw4wSxSWRO8kk1KckDUDX5tEPL0AXg8hWarMOkL19Bmw1hWLRQKgYChEYV3FX
+ 8l5g==
+X-Gm-Message-State: AOJu0YywqPl9g/m0k8hih6mbRbIHmiuvDILRJgCnbSKlA5vq5YGwk62F
+ uIcNpCBKzREfmgQCCc7iwSo7X57C26Ljz7huDNWAkKuJ5XHKOGJunyDVh/GnSYBd+hwdHX3w7lf
+ 7aRtqbIU=
+X-Gm-Gg: ATEYQzz3kFwUxZ8xVGcdSxqzj/Je0iuJbBOyri36wJonuDq0tc3vP2nymjlkixiT0qH
+ YYgVEV2qms1fMzZAszaslMj8eOEJQ9usrcjNLwb/XGVD/dCh5KM2AxHdgbQVCNE2AZ17qbS2gtM
+ UHVASO+//bz2m/Qx5F8UVA3fU6Gn4Uq4/8qrw0sjwFrGKFPRHLsrjQblqWoKqrvnhHoki9WsDZ9
+ wTUSVsMCXOgvoxzWGvqRt7xSxxfCo60TBUjCeA/+HbZ2y3r28SJvB8q2D39p+EO1GWb4Imm98yU
+ o27JTzTH7/alhVpp8lurQAGakcu891fwRCVnNN68bEZDTMp2gq/Vyqr+yN/DdwBdf7TlTEM53U2
+ +jxiY3Mh3xzpFUUHxXlH1jRyrLX68UThCHsgfE/bVzd8gJolYuvFZ5eBidywiM3qJKfKHz6cYhZ
+ 22AIw4Xlk3Qv90q/PwZ8lom5BnBQW2e7myvA0b0mcwd+ZxCY8ZT9KLHlvrDw7cYv/86rXu36eu
+X-Received: by 2002:a05:6000:2003:b0:437:6d8c:c08a with SMTP id
+ ffacd0b85a97d-439da8942d3mr24542322f8f.45.1773139520246; 
+ Tue, 10 Mar 2026 03:45:20 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dae2ba66sm30678880f8f.20.2026.03.10.03.45.19
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 10 Mar 2026 03:45:19 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 01/16] tcg: Drop extract+shl expansions in tcg_gen_deposit_z_*
+Date: Tue, 10 Mar 2026 11:44:56 +0100
+Message-ID: <20260310104511.12670-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260310104511.12670-1-philmd@linaro.org>
+References: <20260310104511.12670-1-philmd@linaro.org>
 MIME-Version: 1.0
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-10-zhangckid@gmail.com>
- <20260309085653.GI39949@fedora>
-In-Reply-To: <20260309085653.GI39949@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 10 Mar 2026 18:24:52 +0800
-X-Gm-Features: AaiRm52WfwDRKDdvaSAMQ1mj26QBZOGeQsXyC-4RMLv6cNMtf5R3OVki4SnSZrc
-Message-ID: <CAK3tnvKJacwYccjvZWthMtkCL8UKS=Vsg64XHT_RNiy9yyuJgQ@mail.gmail.com>
-Subject: Re: [PATCH V5 09/13] monitor: Update tracking iothread users with
- holder name
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x535.google.com
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,28 +98,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 9, 2026 at 4:57=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
-> wrote:
->
-> On Thu, Mar 05, 2026 at 10:24:55PM +0800, Zhang Chen wrote:
-> > Because of monitor create own iothread, and use the
-> > iothread suspend/resume with bh handler and chardev handler.
-> > The QOM lifecycle is hard to track. Update the legacy usage
-> > of "iothread_get_aio_context()" and "iothread_put_aio_context()".
->
-> As mentioned in the prevoius patch, this feature needs to be implemented
-> fully in order to merged. If only half of it works, then it's not a
-> feature that users can rely on.
+From: Richard Henderson <richard.henderson@linaro.org>
 
-Sure, I will try to implement it as the original iothread get/put design.
+The extract+shl expansion is handled in tcg_gen_andi_*
+by preferring supported extract.
 
-Hi Markus and Dave,  do you have any suggestion for how to track the
-monitor iothread QOM lifecycle?
-Need to do iothread_get/put each time when monitor_suspend/resume ?
+The shl+extract expansion is simply removed for now; it was
+only present for slightly smaller code generation on x86.
 
-Thanks
-Chen
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260303010833.1115741-2-richard.henderson@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ tcg/tcg-op.c | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
 
->
-> Stefan
+diff --git a/tcg/tcg-op.c b/tcg/tcg-op.c
+index 8d67acc4fce..b95b07efb57 100644
+--- a/tcg/tcg-op.c
++++ b/tcg/tcg-op.c
+@@ -937,21 +937,6 @@ void tcg_gen_deposit_z_i32(TCGv_i32 ret, TCGv_i32 arg,
+         TCGv_i32 zero = tcg_constant_i32(0);
+         tcg_gen_op5ii_i32(INDEX_op_deposit, ret, zero, arg, ofs, len);
+     } else {
+-        /*
+-         * To help two-operand hosts we prefer to zero-extend first,
+-         * which allows ARG to stay live.
+-         */
+-        if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, len)) {
+-            tcg_gen_extract_i32(ret, arg, 0, len);
+-            tcg_gen_shli_i32(ret, ret, ofs);
+-            return;
+-        }
+-        /* Otherwise prefer zero-extension over AND for code size.  */
+-        if (TCG_TARGET_extract_valid(TCG_TYPE_I32, 0, ofs + len)) {
+-            tcg_gen_shli_i32(ret, arg, ofs);
+-            tcg_gen_extract_i32(ret, ret, 0, ofs + len);
+-            return;
+-        }
+         tcg_gen_andi_i32(ret, arg, (1u << len) - 1);
+         tcg_gen_shli_i32(ret, ret, ofs);
+     }
+@@ -2210,21 +2195,6 @@ void tcg_gen_deposit_z_i64(TCGv_i64 ret, TCGv_i64 arg,
+         TCGv_i64 zero = tcg_constant_i64(0);
+         tcg_gen_op5ii_i64(INDEX_op_deposit, ret, zero, arg, ofs, len);
+     } else {
+-        /*
+-         * To help two-operand hosts we prefer to zero-extend first,
+-         * which allows ARG to stay live.
+-         */
+-        if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, len)) {
+-            tcg_gen_extract_i64(ret, arg, 0, len);
+-            tcg_gen_shli_i64(ret, ret, ofs);
+-            return;
+-        }
+-        /* Otherwise prefer zero-extension over AND for code size.  */
+-        if (TCG_TARGET_extract_valid(TCG_TYPE_I64, 0, ofs + len)) {
+-            tcg_gen_shli_i64(ret, arg, ofs);
+-            tcg_gen_extract_i64(ret, ret, 0, ofs + len);
+-            return;
+-        }
+         tcg_gen_andi_i64(ret, arg, (1ull << len) - 1);
+         tcg_gen_shli_i64(ret, ret, ofs);
+     }
+-- 
+2.53.0
+
 
