@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68A09FD2D92
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E67BFD2D91
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxM4-00074e-GJ; Tue, 10 Mar 2026 09:42:36 -0400
+	id 1vzxM7-00075n-S7; Tue, 10 Mar 2026 09:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzxLx-00070O-JY
+ id 1vzxLx-00070P-M0
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:42:30 -0400
 Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzxLw-0003DW-2Y
+ id 1vzxLw-0003DN-2H
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:42:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
  t=1773150148; x=1804686148;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=23oFSQFeckjBSHClRj8x1vVwScp8+dwkHgm070uUpNo=;
- b=G7J1ffeP8LMAGbNChuzM4S1lpLYnD2RkPBhjlMDC32HtdGHRTLDwYZFJ
- c8ahDWmS9KsOBk4MIKkuTQfPgPAVB7feilZQuUsR7Y1K3bpENA+LtK4QD
- zP6XHMwb5cYRu1oF6G2EPT7buKrV2krHCXSzXjO9AogQiBGdAXa5opteK
- lysHgtsBf9kgvFgKLUHhkMzldw/aZt7Cky082l2R7TLnXvTMSh1q3BDUS
- Og01Ze1uBaRvoazfQNSeA3QXAEm9JEKIs4TgMEWrVnizK5uIaGiE/XFV4
- ePb2D8cmAJMSCcP7a6WYX4z4LlYu9Y6vAn7KDHxVqgvaxwjiqasnbWDyG w==;
-X-CSE-ConnectionGUID: wTmKERFRR8CxeaG+M7cJDA==
-X-CSE-MsgGUID: jgJQQhnzQASvwdpZMkyaQg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="78048241"
-X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="78048241"
+ bh=/b530bJ07lOfzQ7t6KMd1QSzVbGo9GL2BuLTUMSx3PQ=;
+ b=I9k2fF25ZUItqYLu0/2vETS4ra4QN27ngQb16IDJ4SVS98zYycdc4HDO
+ TDSJUx8sIPCa0O9QNzFC2ddwAyEA4vYZ/vyDaLCNDjLviMQuv/AKAZL1G
+ R4aG8FHe3Y+OycnwuIbiJhApCOTOsL91OYURY/SaERHFEgUbYNFTJdMXs
+ Cw7NhH70+wWC198r87ph2eVNs9NmM3+yrA1xHvkd5FY5JbpXI36ruPV4m
+ Vt/T51AFhncOBAggmwSOFSq6/Bt7pMr+5wrGCBdqaRCJIWkWFB+Zz2pR2
+ W8luMCCNhmQwvbwrfBffaosAsRoHE3Gnw3FWbk0EwQKBTpTvFJQKiXy4M w==;
+X-CSE-ConnectionGUID: M37ZweUHRLmMSBxOjvTqtA==
+X-CSE-MsgGUID: ar2hKl83RR2/4mi26UmYEA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="78048237"
+X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="78048237"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2026 06:42:24 -0700
-X-CSE-ConnectionGUID: o/W/iWanRrylRWIyUJhLwg==
-X-CSE-MsgGUID: Ee42vWskQ2Os8tM6v7sQxA==
+ 10 Mar 2026 06:42:22 -0700
+X-CSE-ConnectionGUID: XDa+Bqf/ToOH1nEE19YFcw==
+X-CSE-MsgGUID: op0yftVsSf6l6PytyBg8sA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="217647985"
+X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="217647976"
 Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 10 Mar 2026 06:42:22 -0700
+ by fmviesa007.fm.intel.com with ESMTP; 10 Mar 2026 06:42:21 -0700
 From: Zhao Liu <zhao1.liu@intel.com>
 To: Paolo Bonzini <pbonzini@redhat.com>
 Cc: qemu-devel@nongnu.org,
 	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 4/5] i386/cpu: Adjust the note for CPU models with its-no
-Date: Tue, 10 Mar 2026 22:08:18 +0800
-Message-Id: <20260310140819.1563084-5-zhao1.liu@intel.com>
+Subject: [PATCH 3/5] i386/cpu: Remove unnecessary cache_info fields from
+ builtin CPU model
+Date: Tue, 10 Mar 2026 22:08:17 +0800
+Message-Id: <20260310140819.1563084-4-zhao1.liu@intel.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260310140819.1563084-1-zhao1.liu@intel.com>
 References: <20260310140819.1563084-1-zhao1.liu@intel.com>
@@ -82,52 +83,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-For new versioned CPU models with its-no enabled, since CET was already
-enabled in previous versions, remove the related description from the
-notes of its-no related CPU models.
+In x86_cpu_get_versioned_cache_info(), higher version CPU models will
+inherit cache_info from lower versions if the cache_info field is not
+specified, so there is no need to repeatedly set the same cache_info.
+
+Therefore, remove the repeated cache models from SapphireRapids-v6
+(SapphireRapids-v4 has set the cache model), GraniteRapids-v5
+(GraniteRapids-v3 has set) and SierraForest-v5 (SierraForest-v3 has
+set).
 
 Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- target/i386/cpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/i386/cpu.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index c6323fee94bb..a3c8f523e85b 100644
+index 21dcfa47c351..c6323fee94bb 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -5263,7 +5263,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             },
+@@ -5264,7 +5264,6 @@ static const X86CPUDefinition builtin_x86_defs[] = {
              {
                  .version = 6,
--                .note = "with cet-ss, cet-ibt, its-no",
-+                .note = "with its-no",
+                 .note = "with cet-ss, cet-ibt, its-no",
+-                .cache_info = &xeon_spr_cache_info,
                  .props = (PropValue[]) {
                      { "its-no", "on" },
                      { /* end of list */ },
-@@ -5444,7 +5444,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             },
+@@ -5446,7 +5445,6 @@ static const X86CPUDefinition builtin_x86_defs[] = {
              {
                  .version = 5,
--                .note = "with cet-ss, cet-ibt, its-no",
-+                .note = "with its-no",
+                 .note = "with cet-ss, cet-ibt, its-no",
+-                .cache_info = &xeon_gnr_cache_info,
                  .props = (PropValue[]) {
                      { "its-no", "on" },
                      { /* end of list */ },
-@@ -5809,7 +5809,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             },
+@@ -5812,7 +5810,6 @@ static const X86CPUDefinition builtin_x86_defs[] = {
              {
                  .version = 5,
--                .note = "with ITS_NO",
-+                .note = "with its-no",
-                 .props = (PropValue[]) {
-                     { "its-no", "on" },
-                     { /* end of list */ },
-@@ -5963,7 +5963,7 @@ static const X86CPUDefinition builtin_x86_defs[] = {
-             },
-             {
-                 .version = 3,
--                .note = "with cet-ss, cet-ibt, ITS_NO",
-+                .note = "with its-no",
+                 .note = "with ITS_NO",
+-                .cache_info = &xeon_srf_cache_info,
                  .props = (PropValue[]) {
                      { "its-no", "on" },
                      { /* end of list */ },
