@@ -4,102 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B52BFD4F04
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:50:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49450FD4F04
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w00H5-00036J-Oa; Tue, 10 Mar 2026 12:49:39 -0400
+	id 1w00HD-000370-Vd; Tue, 10 Mar 2026 12:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w00H1-00035x-71
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:49:35 -0400
-Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w00Gz-0001JJ-D2
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:49:34 -0400
-Received: by mail-ej1-x632.google.com with SMTP id
- a640c23a62f3a-b9704cd6951so212534266b.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 09:49:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773161371; cv=none;
- d=google.com; s=arc-20240605;
- b=GQXD6f3PwOXVVmkNrbTdxnxG5Suv8IlS6TWQ5aUXqMwQp+iLq1NtggNlbapJND7dSC
- 7lxT3k49/oB7wJ7d44Wn7P98SUeXxukMKcKW3Kd3eOzyKQ3VcWr5HZSKX1eDS5UK9UtW
- YcTrLWwaYM19yd/ESADGKPCBdiODakkl5pXywh/eBSyxfPFWO5QOI9DeulavYcoT0lb0
- 7wkCulHtRfPfqYgx4vnfHw5q5bbXsza0aO6x7zebTBFc3f7SJlWWL+F8I7hHxfm/ADyU
- UbbzdNldNTeWNQyPrAWCLPvTLwyAHIHXPWDFvoUcQiueu8eV+Mi/oVV7TVUlfPhNhw56
- Cv2g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=AlnjlecALTJd7vBc5aBxXqL+r8ZoPyjuvgpoB4UbyoY=;
- fh=L0TlHOEEnsG8fZKcAojSy8uMGFRKUmRdvFPDkVDeddQ=;
- b=cUfEuIigeH6lEfJZV67opo381bUc6rNdR1CwYJ5/NA02vGf9vGmb7q8F6MoyGqNTpa
- NsrIaOSGw+oadAfIFRWbmTaiCovP3VZL9+w+cfomlbKt9WBCU9BmZwLh+J3CvPs4QJXR
- etbgGzcZs0tGFbY6HjALw7Pjin5vBRP8SIQwaf+ca20nxhIpLP26kxkG1YsCJGHNIxol
- quQ78uYYkH8rXPtTf/eaIurpcKENrmzJqqCQfMaN+W4EaAyMjuloBtnWPwhbagp/4xmn
- Ab6zavdNl5gEzCOdUhAnQ2Vvb/iqPMQnYs84p/sf/ZEDf8Z06ET5dmgnnAK7+UMU7mIw
- 8PwA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1w00HA-00036k-8E
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:49:44 -0400
+Received: from outbound5g.eu.mailhop.org ([18.156.67.42])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
+ id 1w00H4-0001K0-GN
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:49:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773161371; x=1773766171; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=AlnjlecALTJd7vBc5aBxXqL+r8ZoPyjuvgpoB4UbyoY=;
- b=UZhEFnMBuwUy0+exXoTPXiTnoanQFgVlI5G1zf/FT2SZCwcoxRr+MOhcnvByl27wPs
- iDSP4fU3Ua09zJX13nixH6JlHIJN1PxLw1ue3DZva+3Lz4P3bMtq9SFT9CNkAR8tBfeW
- +3d01rd8zU7WN0AIHNOBtlf0ydbuZfB3fuz+4Q/dKmfpOLTUcRMG3GIAgcVRjyvZweml
- lNVe8j2nf6ztH67ghQnjFx7eMlnauPk9OOaqmH9+2Y/xAyJrNKQY+WtAmLeVXxUm9ZDy
- 3c/us6dNLJxTp7pIOi+Ks8h9GFv+S5s6M03xVuuG1+I5wmmUcNYkA0xTkCXo676I3lzs
- C/GA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773161371; x=1773766171;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=AlnjlecALTJd7vBc5aBxXqL+r8ZoPyjuvgpoB4UbyoY=;
- b=jIXFfGFWz/uQpzHYkLgP3joMGhWlq3LI92lPMXyIRcp6hyHTdPaVYNl3EUokLwPZn/
- vFC+jx9auHVW7KsAjFyaLTHvqifqaEd3Rry0S6goJSJfM2ZprWSX4T0m4aEtD1Sj1qz8
- He4KPifC+4Yy61aSCJz1NOF0bvwPJIb4z1VWYsPbe7cfqeKnG2RAP7DeEEubOtEDQmz7
- qTlV2ps3pvUeGoD+Q37wPFDOgXzZfhIn2usXTCHwLeDXx16qTHqh61zT9n6zBpwcWynK
- fIohGg/Nfxv9IeQ62Dp0w/7+OW9EyPsmTLKeOQEf1dotjrGFCekv+qjlBEt7IJh188DM
- 7etQ==
-X-Gm-Message-State: AOJu0YzQJZpFyUQtO5RRwd57PxZvra2rfcGR7DVN8d5Sy1yv6KGuRx36
- p0cV0yjLPSW5YJ5x+RjXUhUqyO80tAizVbYAY84dDIWqdXJu9njLf8Z9pD3zzpOK54QBKoKgSls
- IHsaIgs1QSEoL4YZUlWOjGeh1Y6xf7RSnLMVdVdy1pSjKkc1KrCDDt30=
-X-Gm-Gg: ATEYQzwKcWMXHaIviOMptA3q0ONGxh8/MISXIBgLf2MC6Q+OnUlFrbC1Y6StqQ99XTg
- 2INhRFuUrFN4ENRXWG8B78pNzkudvijRnVs9jJZ764enSL5T5ptm7p+4+CupNd9gepi6lRxOQjX
- UlWwZWjd0mwgtZ5b4MTLJmhCiBhSOQKd876k3b4ZYp/IqMKMf1xBa3R/P1xp7Zs9en64oj5qBXv
- ftjJLGfpf5UZL0wcBebL1SSefP38lMAZVU20pZdGt6HP3YTXHwxqCTCi6mYAdpnFyJP+Csgp/PP
- PToUlTvgL5RQvrP4BP5jfOjxp0VnB6SMeLC+yqOHJE/JP5sKdZtjJJi3bEiqCcDOyqU=
-X-Received: by 2002:a17:906:6a0d:b0:b93:9407:ea62 with SMTP id
- a640c23a62f3a-b942e1584c4mr903383966b.54.1773161371201; Tue, 10 Mar 2026
- 09:49:31 -0700 (PDT)
+ d=stackframe.org; s=duo-1634547266507-560c42ae;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:cfbl-address:cfbl-feedback-id:from; 
+ bh=50/mddupBI9m+s17XpYNr+FqV1J0qZxLeJiUMzXJn04=;
+ b=X+bXzZaKR3bE8oQ+WaJrD5m0ta6NvjM9Ue9yYPPHtC4Ni+y0PfO3APolT6dN40cok0m4su1sPOhdf
+ JEqAMrIpKYXUy5Y+AYV90XeFIlvhKovMWWrn+vS1fcFSmXACaBtvsfo0lBudGHg7L0cT1jtHY5/a4x
+ YC0Q20Wc00rWssbA=
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=outbound.mailhop.org; s=dkim-high;
+ h=content-transfer-encoding:content-type:mime-version:message-id:date:
+ references:in-reply-to:subject:cc:to:from:cfbl-address:cfbl-feedback-id:from; 
+ bh=50/mddupBI9m+s17XpYNr+FqV1J0qZxLeJiUMzXJn04=;
+ b=lFMW1COQv9UJpgzJ8Vp1W076PSmks8v2tX+EGUEVivC8oLPPynnOeQ/ZpD/cXawE3dERmB8mp24wi
+ Gkep/ucQvXT5QmQHop74A0hAdUa3W89wZPs+QgsYs26sA3PZyjkKtHLsSfSrar/Vbk2fC80l5bSecY
+ u/Ee3iSgujZjEtRovLHv5a5BxHFJuAdsDCzkkuE3TzXGLxkd7+vTcE5rSks8IEN4pb1BVBDgBhyRU3
+ 1M7JX+YG3wHkD0v2/4QnXyUBMhZOUf2bvOpMnGYrMYk8cklJ1TxWbjQX10psnj2h9EHg+347dG0E0y
+ kbnhRQFQy6NYXk/BJ0FssNbmRSqLncg==
+X-Originating-IP: 130.180.31.158
+X-MHO-RoutePath: dG9ta2lzdG5lcm51
+X-MHO-User: 1abf1397-1ca1-11f1-bb61-754228886235
+X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
+X-Mail-Handler: DuoCircle Outbound SMTP
+CFBL-Feedback-ID: 1abf1397-1ca1-11f1-bb61-754228886235:13
+CFBL-Address: prvs=0529f992e2=abuse@outbound.mailhop.org; report=arf
+Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
+ by outbound2.eu.mailhop.org (Halon) with ESMTPSA
+ id 1abf1397-1ca1-11f1-bb61-754228886235;
+ Tue, 10 Mar 2026 16:49:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:Content-Type:
+ MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From:Sender
+ :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
+ Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
+ List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
+ bh=50/mddupBI9m+s17XpYNr+FqV1J0qZxLeJiUMzXJn04=; b=IeqLzqNQfCUlFv3nPiJcbLXarw
+ PcpgbcCxMO5ln1WVX+JU8KsecxbCJKW1lorNAVj/+UX8i+5FpN9ikpBhdFClZxZzPzN04bi2MzGiY
+ yVW8pufcsMOgVIpIMj77Gj5wzg3/o3UgtbFMdDkHhcg1Qxfd9H/UJtJEcdnLTastyCNbYsWcDOSRp
+ dT+5jx/a9qMFSBYnNHK5I8jt3XwnhwKzqLm/eYKIsXyvQs3hIU0y+YLWERJZ8KT+CUe6vuSI+EknS
+ esZFn3CxBO5MV3HQgMnBoXb6/NPtNOaZ0SRarTUYNpQUyIDyOID5H1erPBihYTL9C9AcaObpIHW/Y
+ pIReD3pg==;
+Received: from [134.3.93.166] (helo=t14.stackframe.org)
+ by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
+ TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.97)
+ (envelope-from <svens@stackframe.org>) id 1w00Gu-0000000BCqz-2WrS;
+ Tue, 10 Mar 2026 17:49:28 +0100
+From: Sven Schnelle <svens@stackframe.org>
+To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: deller@kernel.org,  qemu-devel@nongnu.org,  Soumyajyotii Ssarkar
+ <soumyajyotisarkar23@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Helge Deller <deller@gmx.de>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Fam Zheng <fam@euphon.net>
+Subject: Re: [PULL 12/12] target/hppa: add 64 bit support to gdbstub
+In-Reply-To: <518117ad-777a-4bce-ab9e-cdfaf360d81d@linaro.org>
+References: <20251223155031.7110-1-deller@kernel.org>
+ <20251223155031.7110-13-deller@kernel.org>
+ <52cbaf6d-f7a4-4984-9561-ca31418cdc0f@linaro.org>
+ <87cy1cb2s8.fsf@stackframe.org> <878qc0b1uj.fsf@stackframe.org>
+ <518117ad-777a-4bce-ab9e-cdfaf360d81d@linaro.org>
+Date: Tue, 10 Mar 2026 17:49:27 +0100
+Message-ID: <873427bpew.fsf@stackframe.org>
 MIME-Version: 1.0
-References: <20260302084338.473368-1-pbonzini@redhat.com>
- <20260302084749.474955-7-pbonzini@redhat.com>
-In-Reply-To: <20260302084749.474955-7-pbonzini@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Mar 2026 16:49:16 +0000
-X-Gm-Features: AaiRm51XRctMJ-OS1UTh7VAoj0lBCMBjkSCvuj5xj_QkJAx7w2AHkDtUzrt1504
-Message-ID: <CAFEAcA8YWkoG67A7pVqauPTj+jUxBT5jv2=ZJrqZyvwrDK6GfA@mail.gmail.com>
-Subject: Re: [PULL 073/102] hw/machine: introduce machine specific option
- 'x-change-vmfd-on-reset'
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, Ani Sinha <anisinha@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2a00:1450:4864:20::632;
- envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x632.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=18.156.67.42; envelope-from=svens@stackframe.org;
+ helo=outbound5g.eu.mailhop.org
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,55 +109,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 2 Mar 2026 at 08:57, Paolo Bonzini <pbonzini@redhat.com> wrote:
+Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+
+> Hi Sven!
 >
-> From: Ani Sinha <anisinha@redhat.com>
+> On 10/3/26 08:06, Sven Schnelle wrote:
+>> Sven Schnelle <svens@stackframe.org> writes:
+>>=20
+>>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+>>>
+>>>> Hi,
+>>>>
+>>>> (now merged as commit b2c2d00f48cc5f4486cfba33b505ff86d79cb137)
+>>>>
+>>>> On 23/12/25 16:50, deller@kernel.org wrote:
+>>>>> From: Sven Schnelle <svens@stackframe.org>
+>>>>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
+>>>>> Reviewed-by: Helge Deller <deller@gmx.de>
+>>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+>>>>> Signed-off-by: Helge Deller <deller@gmx.de>
+>>>>> ---
+>>>>> target/hppa/gdbstub.c | 62
+>>>> ++++++++++++++++++++++++++++---------------
+>>>>>    1 file changed, 41 insertions(+), 21 deletions(-)
+>>>>> diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
+>>>>> index 0daa52f7af..777f4a48b9 100644
+>>>>> --- a/target/hppa/gdbstub.c
+>>>>> +++ b/target/hppa/gdbstub.c
+>>>>> @@ -21,16 +21,25 @@
+>>>>> @@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs,
+>>>> GByteArray *mem_buf, int n)
+>>>>>            val =3D env->cr[30];
+>>>>>            break;
+>>>>>        case 64 ... 127:
+>>>>> - val =3D extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
+>>>>> -        break;
+>>>>> -    default:
+>>>>> -        if (n < 128) {
+>>>>> -            val =3D 0;
+>>>>> +        if (hppa_is_pa20(env)) {
+>>>>> +            val =3D env->fr[n - 64];
+>>>>
+>>>> Coverity reports:
+>>>>
+>>>>>>>      CID 1645613:         Memory - illegal accesses  (OVERRUN)
+>>>>>>>      Overrunning array "env->fr" of 32 8-byte elements at element
+>>>>          index 32 (byte offset 263) using index "n - 64" (which
+>>>>         evaluates to 32).
+>>>
+>>> Yes, there's indeed a check missing wether n is < 96. I'll submit a pat=
+ch later.
+>> Looking again there is
+>> if (n >=3D hppa_num_regs(env)) {
+>>          return 0;
+>> }
+>> right at the beginning of both functions, which returns 96 for 64
+>> bit
+>> mode as the limit so n should have proper bounds already if I'm not mist=
+aken.
 >
-> A new machine specific option 'x-change-vmfd-on-reset' is introduced for
-> debugging and testing only (hence the 'x-' prefix). This option when enabled
-> will force KVM VM file descriptor to be changed upon guest reset like
-> in the case of confidential guests. This can be used to exercise the code
-> changes that are specific for confidential guests on non-confidential
-> guests as well (except changes that require hardware support for
-> confidential guests).
-> A new functional test has been added in the next patch that uses this new
-> parameter to test the VM file descriptor changes.
->
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> Link: https://lore.kernel.org/r/20260225035000.385950-33-anisinha@redhat.com
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> I thought the same but wasn't sure. Maybe adding a pair of assert()
+> are sufficient to fell safe and make Coverity happy?
 
-Hi; Coverity points out an issue in this commit (CID 1644565):
-
-> --- a/system/runstate.c
-> +++ b/system/runstate.c
-> @@ -526,9 +526,9 @@ void qemu_system_reset(ShutdownCause reason)
->          type = RESET_TYPE_COLD;
->      }
->
-> -    if (!cpus_are_resettable() &&
-> -        (reason == SHUTDOWN_CAUSE_GUEST_RESET ||
-> -         reason == SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET)) {
-> +    if ((reason == SHUTDOWN_CAUSE_GUEST_RESET ||
-> +         reason == SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET) &&
-> +        (current_machine->new_accel_vmfd_on_reset || !cpus_are_resettable())) {
-
-This change adds a dereference of current_machine, but earlier
-in the file we have
-
-    mc = current_machine ? MACHINE_GET_CLASS(current_machine) : NULL;
-
-which assumes that current_machine can be NULL.
-
-Presumably here we should be handling the current_machine == NULL
-possibility?
-
->          if (ac->rebuild_guest) {
->              ret = ac->rebuild_guest(current_machine);
->              if (ret < 0) {
-> --
-> 2.53.0
-
-thanks
--- PMM
+Feel free to do so, but I don't want to write code just to make some
+code checker happy.
 
