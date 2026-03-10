@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C2C8FD88CE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C0BC8FD88CD
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:22:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w06ON-0000sc-Bc; Tue, 10 Mar 2026 19:21:35 -0400
+	id 1w06O8-0000eO-9l; Tue, 10 Mar 2026 19:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06OK-0000s2-Mi
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:32 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06O7-0000eF-8b
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:19 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06OJ-0008IR-9O
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:32 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-439c4bde55cso5244650f8f.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:21:30 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06O5-0008Gr-QP
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:19 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4852a9c6309so40027415e9.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:21:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773184889; x=1773789689; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773184876; x=1773789676; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1V9tdOVdLqFK1/bFtKcjJ3YN5b5xAdHA5bYLzSjTysU=;
- b=lL1zzXIMISyzMr9vPDtPJ2IczfeDdo9WtTRSX9X31p99j+39gTzFVWSJsqoH/wP78v
- FJgbKWzJJ7lAxP4/nvqNDjQbr4oOtBOh9NACakHgPuTtyiDPyU6FJR2bN7K0BJqpo+5y
- l4gnHF5Vc2+P95iiCsWGZMPLeLm6gohh8WFHQFsTQerm0JS97zKUbc/UMepUfL19YohS
- H+yOBZ6X4t2tAoQVPI5503YWNTVRnakjIMV20PIuaYMZFhzVhyDokDMV5QJYu9gMn3Su
- ACPlkBwaWeGwtvidfhwK6qz4MsmIr6wk025hbb7hjC8E/JKv5GDsCeRa7VCmnKyLoZ0b
- o/EQ==
+ bh=ryhT2pIL2ziR09MwVWDioEa4N4ab6svjwvbFx+xxq7Y=;
+ b=WTmH8kTO+rLaxSZYASWu0s/NVTcmoSc0qKpMCZAK872vJwIZ64CeJrTILnuYjeC+Ip
+ yn0cLmVTcNTt0kUgQHSJX1pKrEwF5hwykeIISc2J+whbIkcYqpmQ6x+7v7a3mElNBQGK
+ ZGvfCp/Uvy3RwKYgXpGfcpEbYaaBJXx5gNspSuiAzi9hebH+jE+lEo3yjtZ2t73BTbv9
+ ARBBZLLSThpyelNr4J5orbnrw7G5iBbtAmweb7YlTmbx5hIbHiliINo7eOXEMSg23EWU
+ 7Qhjy14llDQa1Qk8qJk5vjtjPV7PTTD/LoVET//4rKpa60+4SigTP1qZOn/ADbFkMIA/
+ Uu7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773184889; x=1773789689;
+ d=1e100.net; s=20230601; t=1773184876; x=1773789676;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1V9tdOVdLqFK1/bFtKcjJ3YN5b5xAdHA5bYLzSjTysU=;
- b=FUIh6dGIGk2XznAY1nPt9x3JGjWKCqu9uMRQ4QVsMFvTZaLJB+gV4Mew88he6Bndz4
- JCchnu3REF6O2dqb8czwnI5J/E52iRcCnfZg2C/O2FWbLw5Pt1dEaEREtHvP6WUhYQom
- prG98aG2q4uQmMAuyc1YmUS6hSp8n+Vr1oKu0VluVrgJPYpHEOaRQEpliv1pph82fFA3
- ygSBjUauwB5o0jHvFwinoRfVQqyfZFl1o4+JjolVvIxkbSG6S1e6SMLGXsfwwJA9dT3p
- EOVh1JrmmPizFiPdcDkaXG7049EnlBlzxkpNkWzPfQ0TK8U8wOmWklio76sBFUDut590
- 7N4g==
-X-Gm-Message-State: AOJu0YwrUQ38Dl/QKn7yJTGyUQuNJlTBZJY05cVUTxqTfXQZpNLWr1uo
- kIx4m3ZEWfLzAD62sLx2e5QCyPoJtTFYBB0mVkR0i5kjhO6ic1h9naWdVDcB//Yo3iMoljyy/LQ
- cOAvUX/g=
-X-Gm-Gg: ATEYQzxvVtuFYOVTmY2ITRVzwZy06mBmWzuGAogfaqjnBiKs17UQvFYiCCRQ+Hrm5RL
- E6iXB+ecqIPiEBiLrrjigV4QTpGT2OiaQBzOnNZryk+X1ic1vKSDQWW+Z9l71H2TUjfdcCfjKRn
- rQtFKbmQ0/6YCrjxcjh4T2ucDDW0e+DDfMxnP7BaKhYOADDLm1LuLrh677huSRg5WcpAAWuGmrx
- +l2jL4M9XSleB8cDbASoxNGH3ii4JdvHpn9OJuMd7rMewOZ6xMiioJ0hwLsOkFmUHFxQwkuNv2U
- ItYu819jAW4EGZFz3O2VM34Lw+3OjKuCLC9EIW5/yM1kI/KNsN/ftnSg3cUmNyJ3DeXy/beJuve
- DwsTn635aEk/zB8Gt20oq6jeJRUImwgGekA3XpJUY/e1Ar5YwPd4trIMYiXoQu476HZlOG/sbIE
- Qg7yoAkm4WNMt+DsVTwlDd+EXXdNhi0qat/zVzxBZrNkW0mE2ZT/jmYn1gD/Y1WWb3uobh2ia/
-X-Received: by 2002:a05:6000:220c:b0:439:f605:b006 with SMTP id
- ffacd0b85a97d-439f8438e9emr1117481f8f.39.1773184889544; 
- Tue, 10 Mar 2026 16:21:29 -0700 (PDT)
+ bh=ryhT2pIL2ziR09MwVWDioEa4N4ab6svjwvbFx+xxq7Y=;
+ b=WagMX+WKIqDxGyBWlNXpivGbUQ+IIdliYwxbYY3nWLBjzp7BGemlEsCAnmv7Ea/Qdf
+ R1nLNfkpgGRRTnd39lG43JfLuF+bUYdTFAhL9YMJiZH8rdNoEhUEovsp5PF8MfUqiEm6
+ NY0mIyOwsz0iZeGrXJfmPxtM0jJc+fIdhzNuvnTlFf1o3IMA5XdpdvqEigMwImwTtLM8
+ hyDxjHmBL2HW55IQ5T/TP/lUnVmWpH3e/BO9Qkh0e24PJcVv+9w9rEG/oI6h881BFuzO
+ DTubTxL52Vtvrhbw2oo3/e8vZY8Cotx0nDnQgZuDhieFNA0U3OwkRSW52UoycJ7txaDn
+ CbxQ==
+X-Gm-Message-State: AOJu0YyQ+7kYQhUUyso8II3B4Z4RBqmz99lFzWCs0qopJBp2Txsq/sYf
+ EADvdQZW28QVsgQ8+lkyYWIOr4TqD9xekAE4XCViHAJYD9t3zmjdpwJXv0hZX8uIMiTwbJA61WZ
+ vL45tZlk=
+X-Gm-Gg: ATEYQzwePjAUDkRGoY2moWrqieDb4NQxuhaFcl9vaw3UtTWNdJ6+dyfOpg9/Swbyrng
+ zD7GzIHVqTFQuWK5awUVqVIHDSoOcAxDg7HmDwDojURKCizaRMsZ36P+VoNqd2qp+MXGuhoFjBR
+ Nm60Q844pvxXyfSgYH9+fkyJ4YWX4tdTvw65Eha+mIQlVfVB+ufKpmMbpXrHIhTtGXpZd5o48hj
+ Z5SaIZC6cm1ceBeCTGHQ1R0gz9+wrOrWih/r/SgKNu/4uJLZA7s3vmqIgfdJulm4QAnoxEC2N3D
+ TEoh3a5bAY5ms4rCP//+73QIMa0XD0RfK8wPMootDXEDuQ1FHoLGsn+wjMhZ7u1ywPk+ujjnIu0
+ mI8xVvltjUT+x958HN4wVFhsTh3CNhprktDC0fw77sISSTEVGO4kOo3BjMGSYGLCq7jfDL/X9XC
+ ZVhhOY5oiMbU89zGxTugqK8Hm1CHEh6DTXh4i3PXjMcm//ImPlqL2ii2G4LJIUoynowX0VNrET
+X-Received: by 2002:a05:6000:290e:b0:439:f605:afde with SMTP id
+ ffacd0b85a97d-439f84144abmr1207742f8f.51.1773184875973; 
+ Tue, 10 Mar 2026 16:21:15 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439f81a0480sm1670194f8f.12.2026.03.10.16.21.28
+ ffacd0b85a97d-439f8224420sm1980561f8f.39.2026.03.10.16.21.15
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 16:21:29 -0700 (PDT)
+ Tue, 10 Mar 2026 16:21:15 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v4 06/16] gdbstub: Simplify gdb_init_cpu() logic
-Date: Wed, 11 Mar 2026 00:20:34 +0100
-Message-ID: <20260310232045.58440-7-philmd@linaro.org>
+Subject: [PATCH v4 04/16] target/i386/gdbstub: Remove stale comment
+Date: Wed, 11 Mar 2026 00:20:32 +0100
+Message-ID: <20260310232045.58440-5-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310232045.58440-1-philmd@linaro.org>
 References: <20260310232045.58440-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,46 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ensure we either set gdb_num_core_regs or have a XML file.
-We shouldn't modify CPUClass content, so mark it const.
+Since commit ecd6f6a8820 ("gdbstub: Infer number of core
+registers from XML") gdb_num_core_regs is inferred for
+the x86 targets. Remove a stale comment.
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- gdbstub/gdbstub.c | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+ target/i386/gdbstub.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 90f4b95135b..221951c22b0 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -582,22 +582,20 @@ static const char *gdb_get_core_xml_file(CPUState *cpu)
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index f1ce90a046e..b86520f8f9c 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -39,9 +39,7 @@ static const int gpr_map[CPU_NB_EREGS] = {
+ static const int gpr_map32[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
  
- void gdb_init_cpu(CPUState *cpu)
- {
--    CPUClass *cc = cpu->cc;
-+    const CPUClass *cc = cpu->cc;
-     const GDBFeature *feature;
-     const char *xmlfile = gdb_get_core_xml_file(cpu);
+ /*
+- * Keep these in sync with assignment to
+- * gdb_num_core_regs in target/i386/cpu.c
+- * and with the machine description
++ * Keep these in sync with the machine description
+  */
  
-     cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
- 
-     if (xmlfile) {
-+        assert(!cc->gdb_num_core_regs);
-         feature = gdb_find_static_feature(xmlfile);
-         gdb_register_feature(cpu, 0,
-                              cc->gdb_read_register, cc->gdb_write_register,
-                              feature);
--        assert(!cc->gdb_num_core_regs);
-         cpu->gdb_num_regs = cpu->gdb_num_g_regs = feature->num_regs;
--    }
--
--    if (cc->gdb_num_core_regs) {
-+    } else {
-         cpu->gdb_num_regs = cpu->gdb_num_g_regs = cc->gdb_num_core_regs;
-     }
- }
+ /*
 -- 
 2.53.0
 
