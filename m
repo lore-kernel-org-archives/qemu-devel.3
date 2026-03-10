@@ -4,165 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60FB7FCC9D7
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 07:43:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C65F5FCC9D9
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 07:50:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzrjV-0000Hk-IY; Tue, 10 Mar 2026 03:42:25 -0400
+	id 1vzrqY-0001ua-C6; Tue, 10 Mar 2026 03:49:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vzrjM-0000Gb-B0
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:42:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
+ id 1vzrqV-0001u5-5N; Tue, 10 Mar 2026 03:49:39 -0400
+Received: from
+ mail-switzerlandnorthazlp170120005.outbound.protection.outlook.com
+ ([2a01:111:f403:c213::5] helo=ZR1P278CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1vzrjG-0000bA-OB
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:42:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773128528;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=yTYscQ1dk4rwUFiSRxH1bDa4BpsdA4XWcuhVNfNZCLM=;
- b=cymdquSU3BPUM4YZbn5NkL2brewCexFZ7IaKSR9ehwH1n6CnJvNuca0GDp6t28yAbesrHd
- n5tfrH2E9t+LmKbDz8R0crrf1OM/VzX5p+wAyyWm8WsRlEjuAg3dndoJQXkasPySiP9jum
- 0pPSiuccfgVk6yxrD6GIk4ayxN9Iu+s=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-547-qARmv8odNCeHGwT5XiozVg-1; Tue, 10 Mar 2026 03:42:07 -0400
-X-MC-Unique: qARmv8odNCeHGwT5XiozVg-1
-X-Mimecast-MFC-AGG-ID: qARmv8odNCeHGwT5XiozVg_1773128526
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48531e8ae62so15477775e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 00:42:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773128526; x=1773733326; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=yTYscQ1dk4rwUFiSRxH1bDa4BpsdA4XWcuhVNfNZCLM=;
- b=Qvzq7tYINm0qjcYhEcWP4DyeMVcYdxCAf0lj7QpWgV0MnGqE9UrMYHA4/k7WgpKh1L
- 5RpUlubRT6o7OVfwVh4HWizW2NKAIl28UtubXROo+TMRmSWidjwwTyNyJDXwz6PwruYk
- U/pFY3ikxh9D717Svplx7Efc4gUYPPMPRu4L/zVFSW7/bPCaHFO5B7yQP362eJaHmHfg
- e0ybHlTZhMDFsSLYhX/u5F4ojtZ/QI/VcUP7Yu7zo7LjI8FEUnp1xDefLUBvFETW0E2x
- NQU+nDaNeyvYCA9QW92/O0J2as7UmTKmV8GaiizFh8BH78TyAc0vsD/8gVzv8yDaQlS8
- 7uQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773128526; x=1773733326;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yTYscQ1dk4rwUFiSRxH1bDa4BpsdA4XWcuhVNfNZCLM=;
- b=OErQ49t6e8vlgAtw92HlmYSZP+oA7g2ky7huaQ/yrO69hmsO/42Un18BGgzNpSiu6P
- xXdW1H6JP08aJNkda/XOazq2X25TN2ecU82FDVjxX6FmuwMLEtDcLafi+WzsXRClJPQM
- 8HrPBmhwmqeoSZUyu7wL9c9vEiJ/ybheymNicxGgONlxMoMmozuc0Z29QigrTWyExcL+
- OBspmbzhu6F4Vl2WKcmUqwh2qXOJ9e9MhUY7e+AZERAvsnQV206tDBEe4F4vam9cY9hn
- jmdE0YUEs3jiVFukwrSfY6axY7w6Hn3evimZlINo9AcAh9tXKfzfsP8MK3cHScjqcSko
- I8Mg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQqwerd5Xaz6lBpuFdZ1viNetiI6OmT5xuitEVVNIDRHQArJ+wDEV46sR/N0tX9oicdgt1BV8m/Inw@nongnu.org
-X-Gm-Message-State: AOJu0Yxd+3d/rVxMFA+lXKnxLhEeXbjb3z7ALhiFlM3ETupuXq2propQ
- 1NAPlRhacs9P2DOxiXK08Bv4uhY1JwMj7pAsH0Y6hK26gxstQJpP1BQyQ7tAewqOYiTfwNcZ00F
- LjYw+Ax8DwzzWgI8CwYn9vMYw3oYY+h0xG49SVj02zi1/zis/v8Dx/6fv
-X-Gm-Gg: ATEYQzxEJty26HOvxwJkX4JnZXoJwbyz07INPRx9GobzRhJjysZwxVAZDSmYaawbndU
- Wsz6Yq6KW1ymEZ+7Dryo3H19g47smoRIWuqgJTe1Rx+RUx9ceDfI4uFPHTremwsugn0jWEVZ6Ll
- TjQikIU49kMyhOzCE8n9+Tu+bZgfigu42y6FlGd8TP0+E4MiRvoygk22QWokf9o/WtICUzwIfLj
- Ug+xHrKn7WkGKhTkDnvsgX3tM73hs6nIgYnyy3g6LeA3tY0iLGqeSrlMSB6Pv2/EGGXwv2TUx1L
- kDstMa+/Q193nkvFKVHGVDJs04C7qrn1ju3xFmzjN2ulbuuznAGZBusl5OrcT7XioVf0dO0r5aY
- xo59pFgBqqkcTjYJkmSnm/UuwxgGFdDL0NIdWiFnWJ8GubE0UD2k1mInMjJqO
-X-Received: by 2002:a05:600c:4447:b0:485:34b3:8587 with SMTP id
- 5b1f17b1804b1-48534b38969mr138930435e9.10.1773128525608; 
- Tue, 10 Mar 2026 00:42:05 -0700 (PDT)
-X-Received: by 2002:a05:600c:4447:b0:485:34b3:8587 with SMTP id
- 5b1f17b1804b1-48534b38969mr138929815e9.10.1773128525070; 
- Tue, 10 Mar 2026 00:42:05 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246fd127sm165950055e9.6.2026.03.10.00.42.03
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Mar 2026 00:42:04 -0700 (PDT)
-Message-ID: <b76df308-6731-4d30-9665-34d4cb71159d@redhat.com>
-Date: Tue, 10 Mar 2026 08:42:03 +0100
+ (Exim 4.90_1) (envelope-from <florian.hofhammer@epfl.ch>)
+ id 1vzrqR-0001jb-C0; Tue, 10 Mar 2026 03:49:38 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=ZzY/xbWOhFGbypL+nQmDSVxqgsO7h69b6ggDUsw5fpHI+/32HwFcSusddsxV63a2rdmVAVK68UyrCn7T15n98Ylhes42wqpU5pQZG6k5qn0QdbGVZfO/ac5/yluxVtEa4pH+T9I0jgI3ITF3DyTLNF0ZYmbik+WMZdboHhrmUMHBx8IZoBE+wP1x1EXw/NaIREJqbZcr0WejvtnDHabTm1M62BZW03bLEvqd/0+/xp5d9Luk5vJFFceDQArfo4RYYPvP4W2gCJ46Zz5FubhJwHbqJZ+4TIjJshiQQy0qVJu6EJcj3rxPxjaYjhoio6gciv5aTFrID9GjDrn0UFghLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=PTtCI7qUtjNToGaYr9T997Muyn8ENXZmG0pKhLfRqwA=;
+ b=SxAvF1blggfxqNSLRgFsaXfilJmJNrQbhlna2sDsbluNzHUD1hb1yn54lALmQMnkmUauMDN9QC0EqhKd151MrS+OSL1iZN8ot9wjvn6YpUr3HEfV44WpI+vgZFY0UC5w4b9s/YAgAisnmXZA2vycM1VHnJnfjo4pjQ06kArDoLkwoY3F6IpWl35FWa4BMfuc6uI49yugP1olTK82S6Z74VIeYDGw1owO8Ln3Rbjq6qy9SLSgifmEC3jm+nIvdlXSaqTa2zwDa6MunvvqQdlaGEYRkoMS8tarmcbSkRXmGFVVE+AL5Gxkheqtubi4IcEuQvQvhzU2Q9yCDrrQUUirCA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=epfl.ch; dmarc=pass action=none header.from=epfl.ch; dkim=pass
+ header.d=epfl.ch; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=epfl.ch; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=PTtCI7qUtjNToGaYr9T997Muyn8ENXZmG0pKhLfRqwA=;
+ b=Ud3mYlUoDWJmPQCCbSw5kSPUjdHaQTyVfMo5YDRN77PMG2IuZcrdmPQ/Auj1ssm9oOCaBEqtPT7CxdqWaLQPj8nHIEMhFGy/j6SRUOJysbQrQYXpI2orhLw4N38MjYU5B3DkTAGt4KxfWccfyX20DSHQJy/jqB48KBl3ThOio2k=
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=epfl.ch;
+Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM (2603:10a6:918::220)
+ by GV0P278MB1497.CHEP278.PROD.OUTLOOK.COM (2603:10a6:710:6b::9) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.25; Tue, 10 Mar
+ 2026 07:49:27 +0000
+Received: from ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::80ea:3d03:40bf:998c]) by ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+ ([fe80::80ea:3d03:40bf:998c%8]) with mapi id 15.20.9678.024; Tue, 10 Mar 2026
+ 07:49:27 +0000
+From: Florian Hofhammer <florian.hofhammer@epfl.ch>
+To: qemu-devel@nongnu.org
+Cc: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-trivial@nongnu.org,
+ pierrick.bouvier@linaro.org, alex.bennee@linaro.org,
+ richard.henderson@linaro.org, peter.maydell@linaro.org
+Subject: [PATCH trivial v2] plugins: add missing docstrings to qemu-plugin.h
+Date: Tue, 10 Mar 2026 08:49:05 +0100
+Message-ID: <20260310-add-missing-plugin-docs-v2-1-e9a91cb6974a@epfl.ch>
+X-Mailer: git-send-email 2.53.0
+Content-Type: text/plain; charset="utf-8"
+X-Change-ID: 20260309-add-missing-plugin-docs-159d7ff315f9
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=7844;
+ i=florian.hofhammer@epfl.ch; h=from:subject:message-id;
+ bh=cM2BxQJmPs8fBOTg9GQlZSCU0wISTnTLuNuI8bpgG8E=;
+ b=owEBbQKS/ZANAwAKAZbrJ7oxX8d8AcsmYgBpr8zLbMD8ze/W6EBp2sy/4CWvTwF/6GRTtcxUm
+ 4XD+kKOhNGJAjMEAAEKAB0WIQSoIHw/Sr677ZtN+EmW6ye6MV/HfAUCaa/MywAKCRCW6ye6MV/H
+ fKnEEADF9Tghc2DrAmwCCld5q7QNmrd9uzaYJhYIFFpr9dMTYOp0ZhrCIzi00sikAvDTBICGxqp
+ 7uKYLe95mcKQXsUgB16A7ULj23eS7881q1UGst6thnMFzGMhuWC2jZvVOEEbE7zmA2r7QEJT40e
+ cWF2x1Wf4rW+8fobgjBOn2x/hmdudUbUhrRTGl22pbU6h3KTcoHyMiaI+DsvX35btuH3y1y4Gl/
+ 4aSmjaK1YmmuOldG2A9TTFW2Fp+01YWpd6wQYCPJohVZKYDnOf+KKGXF/rSQIyq1Xspx0RiDIvX
+ nZjDIutft6zuFS0TkN36xQa5JGDpF+fsCHFfKVil7GBlE2T0FUNNQPV/8ETs2bLIPumcVxk3joW
+ dVXeyifygpyle3KCi7Il6ZifJHelAVic01c5ZVK5mym8iSPyUY3+PJVs4g/+X5qWOeXr6U/EEH7
+ 9HxVcZXPTXvp5S6vxmKMBP25G301HgXcVp1b2Yk3ItASm5EzQ85gHYfMaUER3+cQZkLcWwDV/l7
+ BGmKXgEdqpiEdRRDeiv9a9QnW1iZwuwPF8iAYPm1UZbcKNODx+cnNHEourqPQzM/WTB4eNMHPQ+
+ qUgmAYB+Y10pKSIETezBHCmvkfF+mZi7E4ZbRYttjpCvm8nJ5bFL5ef0m+gPvnThWqmvXbqkLfg
+ TIJKPMFdCePt12g==
+X-Developer-Key: i=florian.hofhammer@epfl.ch; a=openpgp;
+ fpr=A8207C3F4ABEBBED9B4DF84996EB27BA315FC77C
+Content-Transfer-Encoding: quoted-printable
+X-ClientProxiedBy: GV0P278CA0066.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:710:2a::17) To ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:918::220)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 1/8] hw/arm/smmuv3-accel: Add helper for resolving
- auto parameters
-To: Nathan Chen <nathanc@nvidia.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>,
- Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Alex Williamson <alex@shazbot.org>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-References: <20260309192119.870186-1-nathanc@nvidia.com>
- <20260309192119.870186-2-nathanc@nvidia.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260309192119.870186-2-nathanc@nvidia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: ZRH2PFAD84B9AF9:EE_|GV0P278MB1497:EE_
+X-MS-Office365-Filtering-Correlation-Id: 8e16191b-0935-4e79-d68f-08de7e798e1f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|19092799006|1800799024|366016|786006|376014; 
+X-Microsoft-Antispam-Message-Info: IWmqunWF2K2CreBxL0VY6y3Qj5fq/0D1Tz0HGYPnllAWRayOsLOJF5xDm++woLC0/dD2aGjxUISK8UO3Zi00UDtt+01HK20ZyWdruuGhE4rQx8Whm5+hJFmDenKazpldDgE7QjYeFplgzWo9RLUB5tXYba1RYZE5t8LdfFdMe59r7lCz1fBGXvW7IulDkXRF/Fx8iHBngYuP/uhgNFhZIhiHwOcay3SK2uFUCfvxfBJPCF+aI+45gBa17QCuCUSLqSS6ax+1fTmSY9b4qAdIRgHNedAzIdhAo44zAR9qYsjvmnFRQFjIo1H+t5Mc51XOc4YHS9AZLmlQTOynMxkJeYr0I2tNQHimHvpmaDeyKc3cchyUtPq6ds2OKGH/K2n0g1h4BGAI2QLFzHQWK5Wuiq0xifRZ0z8u+L0g9WpjPKiXpPUdfz/2BGN8uJhXM0H8oQAo7YuAzP0XGhvSfqMuappn4CxaqDEY66HGU7MVuli+XZFuC+WOU/6fxPPUqaKkVX3lfn6hzYYJ1a8YT1S+ACrchH+YRs8sgZa3h7VHpenmajnFgSIB+Vit/OMT26DvZK1p30uG4zMYj4CAQvqb8aB+9mjtQnsXagUJHTuHgyTXAoSunlhVcLxiwgMqd6u3oVLr49ZU7yq1QkuwsFfoU9Z01qiv8MaoD2op4ZyzXZGlmBQiV/NxFFOTHh9u+bOzCpU7nSUjbRKITv4AFGwNnf+XO/VdQCw985QbBvpvn1M=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM; PTR:; CAT:NONE;
+ SFS:(13230040)(19092799006)(1800799024)(366016)(786006)(376014); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?ejUydGRzbFdHZHIyNHdDUFpRRDBvSTgrQWwwQTljakl4ZjgwRFJSQTA0MGt4?=
+ =?utf-8?B?N21pRU5SZ0xyN0Z5bEFDS3Nwek5iT2lTWVZIYzFUTDNYNDFUak56clVFUXlu?=
+ =?utf-8?B?M1JFS3l1eFhpSkZqL0l5TGMzQnkyY1ROUGZjWVJrcFV4TzErUXpleG1CYXJQ?=
+ =?utf-8?B?NkdLVUdUeFJ5bzBCQXBiQXMvZkduWGVVak5hS0QvRzkybGR4V3lncE8wWTFh?=
+ =?utf-8?B?VE5WZ1EvcmxxN1JXdm5TZm9nZVZyZ1RBVy9pTmd1TmtWOWk5RlRqSHB3UWRq?=
+ =?utf-8?B?Rkt6SlpUSUNmazlGcjh6SXBQQUw4WWZiSEFTVDJtcW9GdEtYOHNGNGFWb1Vt?=
+ =?utf-8?B?ZjJjNVpRN1Jhc1VybGt4TWZZMlc4SG1PeE1jNlIzeFZBK0h5UmllK25PNEpa?=
+ =?utf-8?B?Rk15eVBieDhnMUV4Sm5rREhsSkZBR09aaER4Rkc1UjZpalpoU0VvRXFSTFhU?=
+ =?utf-8?B?ejdUZld0WG1NSFhvSzVobkpWb042dVcvYi80Y2FYY0MybEpuODdkZ3o1VGhM?=
+ =?utf-8?B?dkRxQUlYT0VLWG1FVFdwWTVNcHNVZFRLZ2NRdkVJRkh3ZnFqclp1aERVMDRn?=
+ =?utf-8?B?aWxrOTA1MVd0MVdqa2RrdlRoTXp2anVMTE5JcXhIUFNPMnp3Tm5NVlNJZjVT?=
+ =?utf-8?B?SDBTMTM2MU9PVmQzTmVOdEJpNU5NY2g3NkxpWTRPK0VkdE9RTUxaUDIrUndw?=
+ =?utf-8?B?b1I5NWNjb1NMSk50Q2NyUnZvOVVoTzdYTnNmY3liZEk2bW9Cd0hNVlYyS0x0?=
+ =?utf-8?B?NDZlOFlQSEJXQklzeVJHMHJXWk5NM0ZueEp0K1VxR0xwVVkxMlVZakcvTTJU?=
+ =?utf-8?B?RlFjQndncW1PMXdLZEYxd2x4NkVhbTBqZ0ErL3loRTh5VUZGdWNaWXhkK09D?=
+ =?utf-8?B?dUpkd3FXV2dwNEZNMFVZM01mNEhVbVBXckFKS1Qyd083RHdnWGpndjE3TFoz?=
+ =?utf-8?B?NjRUdmVFVEg1RG1VdmFEcEI3M1ZuMVlLZWE0bkpEYlJ0TWhyR2FncnpJVEJ3?=
+ =?utf-8?B?eFkycjl4U21RUFR0U3VqWGN6dXlDck5GdklSQ2U4djFpNENLZHE3eENGOFhn?=
+ =?utf-8?B?akpXNUZKMWw3Z2NlVG5HVHJJTmxSdVJCb3J5UFlNdXdNdnluZGdMbzNYb0Ur?=
+ =?utf-8?B?ZFBJcGo0Z0tHQVhIY3BpK2NUSVQ1d3Q3Z3ZLd0F3RllEU1NLZ2h6cXdrVWc5?=
+ =?utf-8?B?MEdKVG9oUzNoSWM5K1RVSlBjcmwvb3NxRnpjT0xnRGJzYk1xMGIremtUSTA0?=
+ =?utf-8?B?WWJxZ1YwOWZkbTdIK01wbzI3VzdpNzVlWEk4ZVJkN0ZPT1dRbUJuNEFBMXox?=
+ =?utf-8?B?czN1aWNhcjdNSDNLa2lKdEJPZkJmdWhITVdEWk1waERFbGpGSlRnamNDWVFC?=
+ =?utf-8?B?N3NMcEVJMlV0NXdIWWJjRkFuZTVPY0lHcUdaSUJrZ1JwSHQ0a1pGalBmSUND?=
+ =?utf-8?B?bS9DOWZQdDBtMjdvUzFmSEY0TnV5dFdidE50WDNEamdwRTdENEEwZFRwRkFu?=
+ =?utf-8?B?OElEaW0xMEpvQzJRdjBNS0ZoeHBCUGJJd29FWTdKS2JnZzRUWUxuNUhrZ0dD?=
+ =?utf-8?B?SlFJUzBUTEVDczAxVGVvN3dTNmFZZDlPcHdxT2tsRGtaUEd4bEVzcWdjMjdY?=
+ =?utf-8?B?N205eDZlNXZqL1B0NTkwQVUvWHRleVN4M2F2aGtNUzhVbUZDM2dHdEdVMlk0?=
+ =?utf-8?B?MEt3TFY1OU9xU3NjdlhEVm8zN3hUOCtsbHdxUGtaQnZRV0g1OUZXQkxGOXZr?=
+ =?utf-8?B?ZWdLK0QyNTZET0VpVzc5bDgvamw2U2Npd1drWTZtUDBIYWRreGVTdEpJVEx5?=
+ =?utf-8?B?TFBCZUNiQ3ZBcHRnc1NSVnRlSGRaLzFMWiszTFd1RW5WZUdKbkozOVNCdWJY?=
+ =?utf-8?B?MFhlbWF0K0N0SHlMb1NTM2JCTW5OQkxCMWFUZ0JVYXArQ3ZNTHpTREJ6ei9B?=
+ =?utf-8?B?S0NlcFpPdUtMWkFVL2dlMTV3QWFkQnEydkY1TWZoMzY3UzYxNFFyYU9Ed0Na?=
+ =?utf-8?B?SlRscTNvSUhCM2dtellJVk9JbnY0eld0WHFmbnYrSHhOVzZaZXRjOWQ2TTRU?=
+ =?utf-8?B?NmVhRmV2R2o0ekpyM0pYV05vd2tWVmNva3ZDZ0o3bjIxV1lmVk5Za1lyRU50?=
+ =?utf-8?B?Mzl0YUFqd1lEZXlHRVNJUkgza3M4V0NlOURoMUNFOEhlYTV2cDJ6WUllQWV2?=
+ =?utf-8?B?aTJ2dmt3bVovTmRJWkF3WW9nZmgyYWZRNlBhNEtHRm5Fck5laVM3TTJwTzVW?=
+ =?utf-8?B?ZmY3aG1TT2Q1S3VnMkZJZXR0ZGFYVEZXR0xPcmp6V3ptWFJvZ1Q1c2tGNUl0?=
+ =?utf-8?B?SW5wdHdZUEhibUUxdHgvcWI4UzllRllVazRNVVFNNkY0QXo4cDIvWmF2ODl6?=
+ =?utf-8?Q?rSY/GYJ2VHkWEIic=3D?=
+X-OriginatorOrg: epfl.ch
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e16191b-0935-4e79-d68f-08de7e798e1f
+X-MS-Exchange-CrossTenant-AuthSource: ZRH2PFAD84B9AF9.CHEP278.PROD.OUTLOOK.COM
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2026 07:49:27.6694 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: f6c2556a-c4fb-4ab1-a2c7-9e220df11c43
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: Fs4Sz8BtS9JVSkRVTZKbH3Vouw0sEnCshqjIb3HgQtA8Rr0u5uyRV7B1Ha5lX1BqXWrwnha97d+fMcVfqtQH/ngiGVZPQy5n0vwvzFy/i6U=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV0P278MB1497
+Received-SPF: pass client-ip=2a01:111:f403:c213::5;
+ envelope-from=florian.hofhammer@epfl.ch;
+ helo=ZR1P278CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -178,175 +166,237 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 20:21, Nathan Chen wrote:
-> From: Nathan Chen <nathanc@nvidia.com>
-> 
-> Introduce smmuv3_accel_auto_finalise() to resolve properties
-> that are set to 'auto' for accelerated SMMUv3. This helper
-> function allows properties such as ATS, RIL, SSIDSIZE, and OAS
-> support to be resolved from host IOMMU values, while avoiding
-> triggering auto-resolved values for hot-plugged devices.
-> 
-> Auto mode requires at least one cold-plugged device to retrieve
-> and finalise these properties, and we fail boot if that is not
-> the case.
-
-IIUC, QEMU will require a minimum of one PCI device if
-arm-smmuv3,accel=on is passed on the command line and if the
-smmu properties are set to 'auto'.
-
-I would try to enforce this requirement in the realize routine.
-Can't we leverage the supports_address_space() handler ? See :
-
-
-     static bool smmuv3_accel_supports_as(PCIBus *bus, void *opaque, int devfn,
-                                          Error **errp)
-     {
-         PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
-         bool vfio_pci = false;
-     
-         if (pdev && !smmuv3_accel_pdev_allowed(pdev, &vfio_pci)) {
-             if (vfio_pci) {
-                 error_setg(errp, "vfio-pci endpoint devices without an iommufd "
-                            "backend not allowed when using arm-smmuv3,accel=on");
-     ...
-
-      
-
-> 
-> Subsequent patches will make use of this helper to set the
-> values when we convert the values to OnOffAuto. New auto_mode
-> and auto_finalised bool members are added to SMMUv3AccelState.
-> smmuv3_accel_init() will set auto_mode to true when 'auto' is
-> detected for the accel SMMUv3 properties.
-> smmuv3_accel_auto_finalise() will set auto_finalised to true
-> after all 'auto' properties are resolved, and subsequent
-> calls to this function will return early if auto_finalised is
-> set to true.
-> 
-> Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->   hw/arm/smmuv3-accel.c | 38 +++++++++++++++++++++++++++++++++-----
->   hw/arm/smmuv3-accel.h |  2 ++
->   2 files changed, 35 insertions(+), 5 deletions(-)
-> 
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 17306cd04b..617629bacd 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -35,11 +35,34 @@ static int smmuv3_oas_bits(uint32_t oas)
->       return map[oas];
->   }
->   
-> +static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice *pdev,
-> +                                       struct iommu_hw_info_arm_smmuv3 *info) {
-> +    SMMUv3AccelState *accel = s->s_accel;
-> +
-> +    /* Return if no auto for any or finalised already */
-> +    if (!accel->auto_mode || accel->auto_finalised) {
-> +        return;
-> +    }
-> +
-> +    /* We can't update if device is hotplugged */
-> +    if (DEVICE(pdev)->hotplugged) {
-> +        warn_report("arm-smmuv3: 'auto' feature property detected, but host "
-> +                    "value cannot be applied for hot-plugged device; using "
-> +                    "existing value");
-
-Please add an 'Error **' parameter instead.
-
-> +        return;
-> +    }
-> +
-> +    accel->auto_finalised = true;
-> +}
-> +
->   static bool
->   smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->                                    struct iommu_hw_info_arm_smmuv3 *info,
-> +                                 PCIDevice *pdev,
->                                    Error **errp)
->   {
-> +    smmuv3_accel_auto_finalise(s, pdev, info);
-> +
->       /* QEMU SMMUv3 supports both linear and 2-level stream tables */
->       if (FIELD_EX32(info->idr[0], IDR0, STLEVEL) !=
->                   FIELD_EX32(s->idr[0], IDR0, STLEVEL)) {
-> @@ -124,7 +147,7 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->   
->   static bool
->   smmuv3_accel_hw_compatible(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
-> -                           Error **errp)
-> +                           PCIDevice *pdev, Error **errp)
->   {
->       struct iommu_hw_info_arm_smmuv3 info;
->       uint32_t data_type;
-> @@ -142,7 +165,7 @@ smmuv3_accel_hw_compatible(SMMUv3State *s, HostIOMMUDeviceIOMMUFD *idev,
->           return false;
->       }
->   
-> -    if (!smmuv3_accel_check_hw_compatible(s, &info, errp)) {
-> +    if (!smmuv3_accel_check_hw_compatible(s, &info, pdev, errp)) {
->           return false;
->       }
->       return true;
-> @@ -595,6 +618,7 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->       SMMUv3State *s = ARM_SMMUV3(bs);
->       SMMUPciBus *sbus = smmu_get_sbus(bs, bus);
->       SMMUv3AccelDevice *accel_dev = smmuv3_accel_get_dev(bs, sbus, bus, devfn);
-> +    PCIDevice *pdev = pci_find_device(bus, pci_bus_num(bus), devfn);
->   
->       if (!idev) {
->           return true;
-> @@ -613,7 +637,7 @@ static bool smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
->        * Check the host SMMUv3 associated with the dev is compatible with the
->        * QEMU SMMUv3 accel.
->        */
-> -    if (!smmuv3_accel_hw_compatible(s, idev, errp)) {
-> +    if (!smmuv3_accel_hw_compatible(s, idev, pdev, errp)) {
->           return false;
->       }
->   
-> @@ -867,8 +891,12 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
->   
->   void smmuv3_accel_reset(SMMUv3State *s)
->   {
-> -     /* Attach a HWPT based on GBPA reset value */
-> -     smmuv3_accel_attach_gbpa_hwpt(s, NULL);
-> +    if (s->s_accel && s->s_accel->auto_mode && !s->s_accel->auto_finalised) {
-> +        error_report("AUTO mode specified but properties not finalised.");
-
-This is not a very friendly message for the user.
-
-
-> +        exit(1);
-
-QEMU should not exit in the reset phase. Can this check be done during
-the realize stage ?
-
-Thanks,
-
-C.
-
-> +    }
-> +    /* Attach a HWPT based on GBPA reset value */
-> +    smmuv3_accel_attach_gbpa_hwpt(s, NULL);
->   }
->   
->   static void smmuv3_accel_as_init(SMMUv3State *s)
-> diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
-> index dba6c71de5..3c1cd55714 100644
-> --- a/hw/arm/smmuv3-accel.h
-> +++ b/hw/arm/smmuv3-accel.h
-> @@ -26,6 +26,8 @@ typedef struct SMMUv3AccelState {
->       uint32_t bypass_hwpt_id;
->       uint32_t abort_hwpt_id;
->       QLIST_HEAD(, SMMUv3AccelDevice) device_list;
-> +    bool auto_mode;
-> +    bool auto_finalised;
->   } SMMUv3AccelState;
->   
->   typedef struct SMMUS1Hwpt {
-
+This patch adds docstrings for typedefs and function declarations in=0D
+include/plugins/qemu-plugin.h that were previously missing. This=0D
+resolves inconsistencies in the docs, e.g., the description for=0D
+qemu_plugin_read_register() referring to qemu_plugin_register_flush_cb()=0D
+but code cache flush callbacks not being documented themselves.=0D
+=0D
+Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>=0D
+---=0D
+Hi,=0D
+=0D
+While working on a QEMU plugin and browsing the online docs at=0D
+https://www.qemu.org/docs/master/devel/tcg-plugins.html, I noticed that=0D
+some of the API functions were not actually documented.=0D
+=0D
+I went through the include/plugins/qemu-plugin.h header file and added=0D
+docstrings where they were missing, hoping of course that I documented=0D
+the correct functionality based on my understanding of the plugin=0D
+internals.=0D
+=0D
+I hope that's useful and I didn't miss anything!=0D
+=0D
+Best regards,=0D
+Florian=0D
+=0D
+Changes in v2:=0D
+- Added semantics clarification to the qemu_plugin_register_flush_cb()=0D
+  docstring (suggested by Pierrick)=0D
+- Link to v1: https://lore.kernel.org/qemu-devel/20260309-add-missing-plugi=
+n-docs-v1-1-41dddcd177c8@epfl.ch=0D
+---=0D
+ include/plugins/qemu-plugin.h | 101 +++++++++++++++++++++++++++++++++++++-=
+----=0D
+ 1 file changed, 91 insertions(+), 10 deletions(-)=0D
+=0D
+diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h=
+=0D
+index 827e8e1787..0089e72850 100644=0D
+--- a/include/plugins/qemu-plugin.h=0D
++++ b/include/plugins/qemu-plugin.h=0D
+@@ -339,12 +339,28 @@ enum qemu_plugin_cb_flags {=0D
+     QEMU_PLUGIN_CB_RW_REGS_PC,=0D
+ };=0D
+ =0D
++/**=0D
++ * enum qemu_plugin_mem_rw - type of memory access=0D
++ *=0D
++ * @QEMU_PLUGIN_MEM_R: memory read access only=0D
++ * @QEMU_PLUGIN_MEM_W: memory write access only=0D
++ * @QEMU_PLUGIN_MEM_RW: memory read and write access=0D
++ */=0D
+ enum qemu_plugin_mem_rw {=0D
+     QEMU_PLUGIN_MEM_R =3D 1,=0D
+     QEMU_PLUGIN_MEM_W,=0D
+     QEMU_PLUGIN_MEM_RW,=0D
+ };=0D
+ =0D
++/**=0D
++ * enum qemu_plugin_mem_value_type - size of memory value=0D
++ *=0D
++ * @QEMU_PLUGIN_MEM_VALUE_U8: unsigned 8-bit value=0D
++ * @QEMU_PLUGIN_MEM_VALUE_U16: unsigned 16-bit value=0D
++ * @QEMU_PLUGIN_MEM_VALUE_U32: unsigned 32-bit value=0D
++ * @QEMU_PLUGIN_MEM_VALUE_U64: unsigned 64-bit value=0D
++ * @QEMU_PLUGIN_MEM_VALUE_U128: unsigned 128-bit value=0D
++ */=0D
+ enum qemu_plugin_mem_value_type {=0D
+     QEMU_PLUGIN_MEM_VALUE_U8,=0D
+     QEMU_PLUGIN_MEM_VALUE_U16,=0D
+@@ -353,7 +369,13 @@ enum qemu_plugin_mem_value_type {=0D
+     QEMU_PLUGIN_MEM_VALUE_U128,=0D
+ };=0D
+ =0D
+-/* typedef qemu_plugin_mem_value - value accessed during a load/store */=
+=0D
++/**=0D
++ * typedef qemu_plugin_mem_value - value accessed during a load/store=0D
++ *=0D
++ * @type: the memory access size=0D
++ * @data: the value accessed during the memory operation (value after=0D
++ *        read/write)=0D
++ */=0D
+ typedef struct {=0D
+     enum qemu_plugin_mem_value_type type;=0D
+     union {=0D
+@@ -462,7 +484,6 @@ void qemu_plugin_register_vcpu_tb_exec_cond_cb(struct q=
+emu_plugin_tb *tb,=0D
+  * @QEMU_PLUGIN_INLINE_ADD_U64: add an immediate value uint64_t=0D
+  * @QEMU_PLUGIN_INLINE_STORE_U64: store an immediate value uint64_t=0D
+  */=0D
+-=0D
+ enum qemu_plugin_op {=0D
+     QEMU_PLUGIN_INLINE_ADD_U64,=0D
+     QEMU_PLUGIN_INLINE_STORE_U64,=0D
+@@ -803,6 +824,20 @@ const void *qemu_plugin_request_time_control(void);=0D
+ QEMU_PLUGIN_API=0D
+ void qemu_plugin_update_ns(const void *handle, int64_t time);=0D
+ =0D
++/**=0D
++ * typedef qemu_plugin_vcpu_syscall_cb_t - vCPU syscall callback function =
+type=0D
++ * @id: plugin id=0D
++ * @vcpu_index: the executing vCPU=0D
++ * @num: the syscall number=0D
++ * @a1: the 1st syscall argument=0D
++ * @a2: the 2nd syscall argument=0D
++ * @a3: the 3rd syscall argument=0D
++ * @a4: the 4th syscall argument=0D
++ * @a5: the 5th syscall argument=0D
++ * @a6: the 6th syscall argument=0D
++ * @a7: the 7th syscall argument=0D
++ * @a8: the 8th syscall argument=0D
++ */=0D
+ typedef void=0D
+ (*qemu_plugin_vcpu_syscall_cb_t)(qemu_plugin_id_t id, unsigned int vcpu_in=
+dex,=0D
+                                  int64_t num, uint64_t a1, uint64_t a2,=0D
+@@ -836,24 +871,61 @@ typedef bool=0D
+                                         uint64_t a6, uint64_t a7, uint64_t=
+ a8,=0D
+                                         uint64_t *sysret);=0D
+ =0D
+-QEMU_PLUGIN_API=0D
+-void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,=0D
+-                                          qemu_plugin_vcpu_syscall_cb_t cb=
+);=0D
+-=0D
++/**=0D
++ * typedef qemu_plugin_vcpu_syscall_ret_cb_t - vCPU syscall return callbac=
+k=0D
++ * function type=0D
++ * @id: plugin id=0D
++ * @vcpu_index: the executing vCPU=0D
++ * @num: the syscall number=0D
++ * @ret: the syscall return value=0D
++ */=0D
+ typedef void=0D
+ (*qemu_plugin_vcpu_syscall_ret_cb_t)(qemu_plugin_id_t id, unsigned int vcp=
+u_idx,=0D
+                                      int64_t num, int64_t ret);=0D
+ =0D
++/**=0D
++ * qemu_plugin_register_vcpu_syscall_cb() - register a syscall entry callb=
+ack=0D
++ * @id: plugin id=0D
++ * @cb: callback of type qemu_plugin_vcpu_syscall_cb_t=0D
++ *=0D
++ * This registers a callback for every syscall executed by the guest. The =
+@cb=0D
++ * function is executed before a syscall is handled by the host.=0D
++ */=0D
+ QEMU_PLUGIN_API=0D
+-void=0D
+-qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,=0D
+-                                         qemu_plugin_vcpu_syscall_ret_cb_t=
+ cb);=0D
++void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,=0D
++                                          qemu_plugin_vcpu_syscall_cb_t cb=
+);=0D
+ =0D
++/**=0D
++ * qemu_plugin_register_vcpu_syscall_filter_cb() - register a syscall filt=
+er=0D
++ * callback=0D
++ * @id: plugin id=0D
++ * @cb: callback of type qemu_plugin_vcpu_syscall_filter_cb_t=0D
++ *=0D
++ * This registers a callback for every syscall executed by the guest. The =
+@cb=0D
++ * function is executed before a syscall is handled by the host. If the=0D
++ * callback returns true, the syscall is filtered and will not be executed=
+ by=0D
++ * the host. The callback must then set the syscall return value via the=
+=0D
++ * corresponding pointer passed to it.=0D
++ */=0D
+ QEMU_PLUGIN_API=0D
+ void=0D
+ qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,=0D
+                                             qemu_plugin_vcpu_syscall_filte=
+r_cb_t cb);=0D
+ =0D
++/**=0D
++ * qemu_plugin_register_vcpu_syscall_ret_cb() - register a syscall entry=
+=0D
++ * callback=0D
++ * @id: plugin id=0D
++ * @cb: callback of type qemu_plugin_vcpu_syscall_ret_cb_t=0D
++ *=0D
++ * This registers a callback for every syscall executed by the guest. The =
+@cb=0D
++ * function is executed upon return from the host syscall before execution=
+ is=0D
++ * handed back to the guest.=0D
++ */=0D
++QEMU_PLUGIN_API=0D
++void=0D
++qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,=0D
++                                         qemu_plugin_vcpu_syscall_ret_cb_t=
+ cb);=0D
+ =0D
+ /**=0D
+  * qemu_plugin_insn_disas() - return disassembly string for instruction=0D
+@@ -861,7 +933,6 @@ qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin=
+_id_t id,=0D
+  *=0D
+  * Returns an allocated string containing the disassembly=0D
+  */=0D
+-=0D
+ QEMU_PLUGIN_API=0D
+ char *qemu_plugin_insn_disas(const struct qemu_plugin_insn *insn);=0D
+ =0D
+@@ -888,6 +959,16 @@ QEMU_PLUGIN_API=0D
+ void qemu_plugin_vcpu_for_each(qemu_plugin_id_t id,=0D
+                                qemu_plugin_vcpu_simple_cb_t cb);=0D
+ =0D
++/**=0D
++ * qemu_plugin_register_flush_cb() - register code cache flush callback=0D
++ * @id: plugin ID=0D
++ * @cb: callback=0D
++ *=0D
++ * The @cb function is called every time the code cache is flushed.=0D
++ * The callback can be used to free resources associated with existing=0D
++ * translated blocks in a plugin. @cb is guaranteed to run with all cpus b=
+eing=0D
++ * stopped, thus no lock is required within it.=0D
++ */=0D
+ QEMU_PLUGIN_API=0D
+ void qemu_plugin_register_flush_cb(qemu_plugin_id_t id,=0D
+                                    qemu_plugin_simple_cb_t cb);=0D
+=0D
+---=0D
+base-commit: 7608a95d2e0bd8c8d069ab77824d02586dd94648=0D
+change-id: 20260309-add-missing-plugin-docs-159d7ff315f9=0D
 
