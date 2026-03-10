@@ -4,71 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53A08FD2D90
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:42:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 42D3CFD2D91
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:42:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxLN-0006ct-1f; Tue, 10 Mar 2026 09:41:53 -0400
+	id 1vzxM7-00075m-RB; Tue, 10 Mar 2026 09:42:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzxLA-0006bK-TB
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:41:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vzxLz-00070r-AQ
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:42:33 -0400
+Received: from mgamail.intel.com ([198.175.65.14])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzxL8-00037v-1P
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:41:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773150097;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=st7Laohye1aRwT0IsQFt3PFTD/zMetc/rY1yaSDLilI=;
- b=c69iQ9m2oH/OJJ7y23gBR2cFDC5pf2hCcCX6+BoMDwvHJ35Exq24iP344yDylVcdI8fG8K
- ecyNIiRE4fnUvTMDKY8n7ufjtEdd3WjA6eeMpa6z1BlWbGBSZ6W6PxYtGki31ndjqiSqEn
- 3f5VNrZX7SxsHzEYb0PE6jYG/Wr5f5U=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-UQU2qtucMYa3rcJwAJ2dvw-1; Tue,
- 10 Mar 2026 09:41:34 -0400
-X-MC-Unique: UQU2qtucMYa3rcJwAJ2dvw-1
-X-Mimecast-MFC-AGG-ID: UQU2qtucMYa3rcJwAJ2dvw_1773150093
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 67C791808958; Tue, 10 Mar 2026 13:41:27 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.224.112])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C995C19560A6; Tue, 10 Mar 2026 13:41:23 +0000 (UTC)
-Date: Tue, 10 Mar 2026 14:41:21 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Peter Lieven <pl@dlhnet.de>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org, pbonzini@redhat.com,
- hreitz@redhat.com, marcandre.lureau@redhat.com, berrange@redhat.com,
- philmd@linaro.org, armbru@redhat.com, jsnow@redhat.com,
- thuth@redhat.com, Ronnie Sahlberg <ronniesahlberg@gmail.com>
-Subject: Re: [PATCH] block/nfs: add support for libnfs v6
-Message-ID: <abAfgVCdcP66IrGk@redhat.com>
-References: <20260306142840.72923-1-pl@dlhnet.de>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1vzxLx-0003Dj-6I
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:42:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773150149; x=1804686149;
+ h=from:to:cc:subject:date:message-id:in-reply-to:
+ references:mime-version:content-transfer-encoding;
+ bh=bN9Ea9R3MgXHRqo0PkJv/bfX8SYsbbsseRAhQ1lTJ9s=;
+ b=U8oOvrB67hzSB/ZbxfyTgkx/tU3JNwfdCv7JPoKrIfo5TvkOVlbrI13D
+ LpYY4CPkFTSCYI2qKBlw5HIXPjS/ob4Jcq55nKMQWyf5lDVDwjz4PEeI0
+ SXkyBbOLf/sY8LsT+5/YxbtUhaFww8fKE8GGTTFDvL1qvElucye5JRESx
+ VwDgQxBRpywMcskQzuAIAmMVVflZ13aSlvHsUf/BxEuX8tLEofpvAty0s
+ ngsAAR02OY2FRulLXnEwSj+FBUXlMPtkMOkZcT9uim3vCsykMDJ+mGWBP
+ vFBvKnPeeOXUadm9BjLcV1vRUndvBagHy8K6ugX0jy1k2fBWzB5rNXTaf g==;
+X-CSE-ConnectionGUID: jbqIX5gDQl2kuUJW0aysvQ==
+X-CSE-MsgGUID: H9PI+lW9SDGO5n4dU1mDzg==
+X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="78048244"
+X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="78048244"
+Received: from fmviesa007.fm.intel.com ([10.60.135.147])
+ by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 10 Mar 2026 06:42:25 -0700
+X-CSE-ConnectionGUID: kGA9/KI7SUG57tAPSes/Eg==
+X-CSE-MsgGUID: ofk3Bqi2TlmvsIdN9JzMKA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="217647998"
+Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
+ by fmviesa007.fm.intel.com with ESMTP; 10 Mar 2026 06:42:23 -0700
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Zhijun Zeng <zhijun.zeng@intel.com>, Chao Peng <chao.p.peng@intel.com>
+Subject: [PATCH 5/5] i386/cpu: Enable CPUID 0x1f & cache model for
+ ClearwaterForest
+Date: Tue, 10 Mar 2026 22:08:19 +0800
+Message-Id: <20260310140819.1563084-6-zhao1.liu@intel.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260310140819.1563084-1-zhao1.liu@intel.com>
+References: <20260310140819.1563084-1-zhao1.liu@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260306142840.72923-1-pl@dlhnet.de>
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,42 +83,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 06.03.2026 um 15:28 hat Peter Lieven geschrieben:
-> libnfs v6 added a new api structure for read and write requests.
-> 
-> This effectively also adds zero copy read support for cases where
-> the qiov coming from the block layer has only one vector.
-> 
-> The .brdv_refresh_limits implementation is needed because libnfs v6
-> silently dropped support for splitting large read/write request into
-> chunks.
-> 
-> Signed-off-by: Ronnie Sahlberg <ronniesahlberg@gmail.com>
-> Signed-off-by: Peter Lieven <pl@dlhnet.de>
+ClearwaterForest has CPUID 0x1f by default, so force enabling this leaf
+for it (ClearwaterForect-v3).
 
-Thanks, applied to the block branch.
+And add the cache model to ClearwaterForest (v3) to better emulate its
+environment.
 
-> @@ -280,6 +307,13 @@ static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
->      }
->      qemu_coroutine_yield();
->  
-> +    if (my_buffer) {
-> +        if (task.ret > 0) {
-> +            qemu_iovec_from_buf(iov, 0, buf, task.ret);
-> +        }
-> +        g_free(buf);
-> +    }
+The cache model is based on ClearwaterForest-AP (Advanced Performance):
 
-I wonder if it wouldn't be easier to just always do the copy in the
-callback. The only thing that would need to be version dependent is the
-buffer that contains the actual data (the @data parameter in
-nfs_co_generic_cb or the bounce buffer).
+      --- cache 0 ---
+      cache type                         = data cache (1)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x0 (0)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x8 (8)
+      number of sets                     = 0x40 (64)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 64
+      (size synth)                       = 32768 (32 KB)
+      --- cache 1 ---
+      cache type                         = instruction cache (2)
+      cache level                        = 0x1 (1)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x0 (0)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x8 (8)
+      number of sets                     = 0x80 (128)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 128
+      (size synth)                       = 65536 (64 KB)
+      --- cache 2 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x2 (2)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x7 (7)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x1000 (4096)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = false
+      number of sets (s)                 = 4096
+      (size synth)                       = 4194304 (4 MB)
+      --- cache 3 ---
+      cache type                         = unified cache (3)
+      cache level                        = 0x3 (3)
+      self-initializing cache level      = true
+      fully associative cache            = false
+      maximum IDs for CPUs sharing cache = 0x3ff (1023)
+      maximum IDs for cores in pkg       = 0x3f (63)
+      system coherency line size         = 0x40 (64)
+      physical line partitions           = 0x1 (1)
+      ways of associativity              = 0x10 (16)
+      number of sets                     = 0x84000 (540672)
+      WBINVD/INVD acts on lower caches   = false
+      inclusive to lower caches          = false
+      complex cache indexing             = true
+      number of sets (s)                 = 540672
+      (size synth)                       = 553648128 (528 MB)
+      --- cache 4 ---
+      cache type                         = no more caches (0)
 
-But I assume we'll touch this code again soon enough, because I saw that
-libnfs recently added vectored reads. If we can use them, that would be
-even more efficient. (But somehow it didn't add vectored writes at the
-same time? Strange.)
+Suggested-by: Zhijun Zeng <zhijun.zeng@intel.com>
+Suggested-by: Chao Peng <chao.p.peng@intel.com>
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+---
+ target/i386/cpu.c | 95 ++++++++++++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 94 insertions(+), 1 deletion(-)
 
-Kevin
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index a3c8f523e85b..4b6aed770a15 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -3318,6 +3318,97 @@ static const CPUCaches xeon_srf_cache_info = {
+     },
+ };
+ 
++static const CPUCaches xeon_cwf_cache_info = {
++    .l1d_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x0.EAX */
++        .type = DATA_CACHE,
++        .level = 1,
++        .self_init = true,
++
++        /* CPUID 0x4.0x0.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 8,
++
++        /* CPUID 0x4.0x0.ECX */
++        .sets = 64,
++
++        /* CPUID 0x4.0x0.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 32 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l1i_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x1.EAX */
++        .type = INSTRUCTION_CACHE,
++        .level = 1,
++        .self_init = true,
++
++        /* CPUID 0x4.0x1.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 8,
++
++        /* CPUID 0x4.0x1.ECX */
++        .sets = 128,
++
++        /* CPUID 0x4.0x1.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 64 * KiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_CORE,
++    },
++    .l2_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x2.EAX */
++        .type = UNIFIED_CACHE,
++        .level = 2,
++        .self_init = true,
++
++        /* CPUID 0x4.0x2.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x2.ECX */
++        .sets = 4096,
++
++        /* CPUID 0x4.0x2.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = false,
++
++        .size = 4 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_MODULE,
++    },
++    .l3_cache = &(CPUCacheInfo) {
++        /* CPUID 0x4.0x3.EAX */
++        .type = UNIFIED_CACHE,
++        .level = 3,
++        .self_init = true,
++
++        /* CPUID 0x4.0x3.EBX */
++        .line_size = 64,
++        .partitions = 1,
++        .associativity = 16,
++
++        /* CPUID 0x4.0x3.ECX */
++        .sets = 540672,
++
++        /* CPUID 0x4.0x3.EDX */
++        .no_invd_sharing = false,
++        .inclusive = false,
++        .complex_indexing = true,
++
++        .size = 528 * MiB,
++        .share_level = CPU_TOPOLOGY_LEVEL_SOCKET,
++    },
++};
++
+ static const CPUCaches yongfeng_cache_info = {
+     .l1d_cache = &(CPUCacheInfo) {
+         /* CPUID 0x4.0x0.EAX */
+@@ -5963,9 +6054,11 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             },
+             {
+                 .version = 3,
+-                .note = "with its-no",
++                .note = "with its-no, cwf-ap cache model and 0x1f leaf",
++                .cache_info = &xeon_cwf_cache_info,
+                 .props = (PropValue[]) {
+                     { "its-no", "on" },
++                    { "x-force-cpuid-0x1f", "on" },
+                     { /* end of list */ },
+                 }
+             },
+-- 
+2.34.1
 
 
