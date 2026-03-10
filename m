@@ -4,80 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FCF7FCC9CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 07:07:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89964FCC9D1
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 07:10:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzrBG-0001pd-1e; Tue, 10 Mar 2026 03:07:02 -0400
+	id 1vzrE2-0002WL-8U; Tue, 10 Mar 2026 03:09:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzrBE-0001oz-3E
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:07:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vzrDv-0002VN-Dj
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:09:49 -0400
+Received: from p-west2-cluster4-host5-snip4-9.eps.apple.com ([57.103.69.160]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzrBB-0001FB-KR
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:06:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773126416;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=K71luOn2wKaYkqvOibD8RcVwEiYVYuDg9flxuFRt1+c=;
- b=JYBebZUEZXE4xgwZY+qIxpvv+JiJKohRSF+RPnA3USWxO1lJ3VLTaBdJPZW681gtJo/8M7
- hgovb/0LvLb4+xQbac++dOPF4eQ4fWf8G33VCNuI6eklJiwvLMhi4eLiDSp74Y/IHA8XzU
- oVwVtnyNii7hc8TCSdfkNXUY5CsjgAI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-395-mf0IAocWMLOVFzsDu1HtJA-1; Tue,
- 10 Mar 2026 03:06:53 -0400
-X-MC-Unique: mf0IAocWMLOVFzsDu1HtJA-1
-X-Mimecast-MFC-AGG-ID: mf0IAocWMLOVFzsDu1HtJA_1773126412
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C01D81956052; Tue, 10 Mar 2026 07:06:51 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 165971800759; Tue, 10 Mar 2026 07:06:51 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 5ACD021E681B; Tue, 10 Mar 2026 08:06:48 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Nathan Chen <nathanc@nvidia.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Yi Liu
- <yi.l.liu@intel.com>,  Eric Auger <eric.auger@redhat.com>,  Zhenzhong Duan
- <zhenzhong.duan@intel.com>,  Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Ani Sinha
- <anisinha@redhat.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P .
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Alex Williamson
- <alex@shazbot.org>,
- =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@redhat.com>,  Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>
-Subject: Re: [RFC PATCH 4/8] hw/arm/smmuv3-accel: Introduce _AUTO support
- for RIL
-In-Reply-To: <20260309192119.870186-5-nathanc@nvidia.com> (Nathan Chen's
- message of "Mon, 9 Mar 2026 12:21:15 -0700")
-References: <20260309192119.870186-1-nathanc@nvidia.com>
- <20260309192119.870186-5-nathanc@nvidia.com>
-Date: Tue, 10 Mar 2026 08:06:48 +0100
-Message-ID: <87ldg0noxj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1vzrDt-0001dd-3Z
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 03:09:47 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-9 (Postfix) with ESMTPS id
+ B125318004D6; Tue, 10 Mar 2026 07:09:40 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1773126582; x=1775718582;
+ bh=PxpihWYuYWUG+3Pet0UDDCSmrHPXl6ORAjh0ZN8CAM4=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Qs5pfEzF4dDFAFJkuIu1eO4s41NL4evfR6so6ppWd2Zc/gFyg6OwqmZ+boqcJ+uBMcMxoLtYai6x7sgXE32rrBWfPiZAtYXlffCPVLjBwpr53NqqAcM0rS/Uzrh+5I6axuQiL1FXbpou3si2rUdps58+9ZaM+N00B+b86s45ChcAp8fnqpbtLPFTnUu9HUBTBPU4TwlZVSaNL87IKMIIh3KQxcGUqB2QgxScVWH+DKD9Yn/5qolnXAZaNqNMGR1EMx6CMXjZ6EQ8yGdXA2nw/S5Ga1lMfeMtTk1zmKfI4rTKZ4M/JQ7B+QRzA+YU2EgL/cThL+2h8YcBTc8ZDpN6sg==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-60-percent-9 (Postfix) with ESMTPSA id
+ 2ED701801ECA; Tue, 10 Mar 2026 07:09:38 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v5 1/2] vmapple: apple-gfx: make it work on the latest
+ macOS release
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <f94bebf5-a452-46cf-ad46-acb71c619917@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 10 Mar 2026 08:09:26 +0100
+Cc: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Phil Dennis-Jordan <phil@philjordan.eu>,
+ Mads Ynddal <mads@ynddal.dk>, qemu-arm@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
+ Peter Xu <peterx@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Alexander Bulekov <alxndr@bu.edu>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <63A01CD9-19E1-4D45-9575-FFDE975A194E@unpredictable.fr>
+References: <20260306145246.10274-1-mohamed@unpredictable.fr>
+ <20260306145246.10274-2-mohamed@unpredictable.fr>
+ <8908689a-f5c1-490e-925d-7a664093963f@rsg.ci.i.u-tokyo.ac.jp>
+ <a24c76d0-4106-4d49-b032-35f7f6310e69@linaro.org>
+ <f94bebf5-a452-46cf-ad46-acb71c619917@rsg.ci.i.u-tokyo.ac.jp>
+To: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Proofpoint-GUID: LiuW_No9VjWzk0UBP9JfYcPp5ieotOYc
+X-Proofpoint-ORIG-GUID: LiuW_No9VjWzk0UBP9JfYcPp5ieotOYc
+X-Authority-Info-Out: v=2.4 cv=Af683nXG c=1 sm=1 tr=0 ts=69afc3b5
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=XaNHVGzJZ3ayr3Wv:21 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=9BwXnSop6uAxbtba5hgA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDA1OSBTYWx0ZWRfXxQS23W732G4t
+ KcDL9HLY8z81e7u6zfypnYDyx8G07KzwWu0mb6e6GgTWD9byeYGy4uxEfTsXoyWDZXQxxsqEaBY
+ 14lhoAVIBR4t891ZfRtgzxfWXuUXE63bh1H9dH+GtzxRJgFtjcREAtOxs0PEFPq9vtfayURDP3W
+ L9NRZbo/fidaTD6jjZRsatvIv+i9cUkRFuzKFy5SfMFpLpafGvFQJyNoIvcNXUJzpC9G4F+2GC/
+ 9BAN6tEkVqQT1RUTF4uu7hBgjTp9RukKyi092kt1wxpIn969Qik5ENNx2Tf5sKlZIcxkkawsuh7
+ pdemLZXCoBSf1iBAH/AwzEUTa2aSQU7baFk3mVUwiQbwsj0L7Zb8j5Wl4u+YH4=
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_01,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxlogscore=999 malwarescore=0 phishscore=0 mlxscore=0 clxscore=1030
+ spamscore=0 adultscore=0 suspectscore=0 lowpriorityscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603100059
+X-JNJ: AAAAAAAB/DVDuDc1eGPv+6/78yx8ZlpGUigzUByv3GV5FNYhwC4vAQZgtjU7sQbzprgem8CYLdiH4nR2RsfF7mboZTL6jqcveQehq0ihH7eQwzg5ZylFig3bdFeA7cgsWXHE/k4RD2kqeOw13gw5wOBxyemGkngVlaVTEdUWytxY2yERwyoUuhaowJ6eZKZmXPNngxu+ueCgwknscPSlSWZ+23UnN/LF0UvxZ93sCqHcjfd+6GjBnCuo7f8kqC5SCUQge6B48rt70DJfy6azMH1gVr3/vECwb/PF7XZ+/oyDRCTSLuFPln0Xi2AUT3Ixwt5UgXCwp8Uua28V0q3uRAxhpLtCyu2Mf2aW0VXpbwXwLpV7r7X5i9kd2SaOPb16PtMx8So8ffmC1jxInBVVYm6ireFJMro7F+fk+Rgl7MsmalU0M0gyHK6ZMvowsQ76AOmqHT2sDzz42efyCtfFVqCmu2bQEXUiuDsi6DTNeQ67zm/bE35pI5shixM/DP1jJCFdSM4BRDfQwiGlAqNpQ3ljL5UwMaG3fPPpqXFDyQE1Xr44b6JkpH3bafPINq6u5assq14FUNqW3Q4wCnk2GJiAj6iOc0rt0mTbt+QjlSm3psOiloEQJXSx5iwuMRfzG7SjfN3w7HQOEUhOH010aKYi8rCDzS90tZ1DX/6HPONA+GM00Ne0TxTcMzydTrwrcedWP6uNOLpVRJmI3BADgKCYjCofP+SkW3rGJQlEmvD9W385b8q2W6w/7hYRBWh9wU+5EGgFphTWdwBvoRsB4bn7Sf3y1zw=
+Received-SPF: pass client-ip=57.103.69.160;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -95,110 +103,138 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nathan Chen <nathanc@nvidia.com> writes:
 
-> From: Nathan Chen <nathanc@nvidia.com>
->
-> Allow accelerated SMMUv3 Range Invalidation support property to be
-> derived from host IOMMU capabilities. Derive host values using
-> IOMMU_GET_HW_INFO, retrieving RIL capability from IDR3.
->
-> Set the default value of RIL to auto. The default for RIL support used
-> to be set to on, but we change it to match what the host IOMMU
-> properties report so that users do not have to introspect host IDR3 for
-> Range Invalidation support. The RIL support needs to be compatible with
-> host SMMUv3 if accelerated mode is enabled.
->
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c   | 20 +++++++++++++++++---
->  hw/arm/smmuv3.c         |  4 ++--
->  include/hw/arm/smmuv3.h |  2 +-
->  3 files changed, 20 insertions(+), 6 deletions(-)
->
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index 8fec335557..02e3f7a9f3 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -58,6 +58,12 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice *pdev,
->                                 FIELD_EX32(info->idr[0], IDR0, ATS));
->      }
->  
-> +    /* Update RIL if auto from info */
-> +    if (s->ril == ON_OFF_AUTO_AUTO) {
-> +        s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL,
-> +                               FIELD_EX32(info->idr[3], IDR3, RIL));
-> +    }
-> +
->      accel->auto_finalised = true;
->  }
->  
-> @@ -854,8 +860,15 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->          return;
->      }
->  
-> -    /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
-> -    s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
-> +    /*
-> +     * Only override RIL if user explicitly set ON or OFF.
-> +     * AUTO will be resolved later when host info is available.
-> +     */
-> +    if (s->ril == ON_OFF_AUTO_ON) {
-> +        s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 1);
-> +    } else if (s->ril == ON_OFF_AUTO_OFF) {
-> +        s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, 0);
-> +    }
->  
->      /* Only override ATS if user explicitly set ON or OFF */
->      if (s->ats == ON_OFF_AUTO_ON) {
-> @@ -941,7 +954,8 @@ void smmuv3_accel_init(SMMUv3State *s)
->      bs->iommu_ops = &smmuv3_accel_ops;
->      smmuv3_accel_as_init(s);
->  
-> -    if (s->ats == ON_OFF_AUTO_AUTO) {
-> +    if (s->ats == ON_OFF_AUTO_AUTO ||
-> +        s->ril == ON_OFF_AUTO_AUTO) {
->          s->s_accel->auto_mode = true;
->      }
->  }
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 197ba7c77b..7791e5294d 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1973,7 +1973,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->  #endif
->  
->      if (!s->accel) {
-> -        if (!s->ril) {
-> +        if (s->ril == ON_OFF_AUTO_OFF) {
->              error_setg(errp, "ril can only be disabled if accel=on");
->              return false;
->          }
-> @@ -2133,7 +2133,7 @@ static const Property smmuv3_properties[] = {
->      /* GPA of MSI doorbell, for SMMUv3 accel use. */
->      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->      /* RIL can be turned off for accel cases */
-> -    DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
-> +    DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_AUTO),
 
-Is property "ril" accessible via QMP or JSON command line?  If yes, this
-is an incompatible change: JSON values false and true no longer work.
+> On 10. Mar 2026, at 07:55, Akihiko Odaki =
+<odaki@rsg.ci.i.u-tokyo.ac.jp> wrote:
+>=20
+> On 2026/03/10 7:21, Philippe Mathieu-Daud=C3=A9 wrote:
+>> +Peter/Paolo
+>> On 7/3/26 04:08, Akihiko Odaki wrote:
+>>> On 2026/03/06 23:52, Mohamed Mediouni wrote:
+>>>> Follow changes in memory management introduced on macOS 15.4.
+>>>>=20
+>>>> The legacy memory management API has been removed for the IOSurface =
+mapper on that macOS version.
+>>>>=20
+>>>> Also enable process isolation for a sandboxed GPU process when on a =
+new OS.
+>>>>=20
+>>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>>> ---
+>>>>  hw/display/apple-gfx-mmio.m | 62 =
+++++++++++++++++++++++++++++---------
+>>>>  hw/display/apple-gfx.h      | 18 +++++++++++
+>>>>  hw/display/apple-gfx.m      | 43 ++++++++++++++++++++++++-
+>>>>  3 files changed, 107 insertions(+), 16 deletions(-)
+>>>> diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+>>>> index e0a765fcb1..92404d20bf 100644
+>>>> --- a/hw/display/apple-gfx.m
+>>>> +++ b/hw/display/apple-gfx.m
+>>>> @@ -21,6 +21,7 @@
+>>>>  #include "system/address-spaces.h"
+>>>>  #include "system/dma.h"
+>>>>  #include "migration/blocker.h"
+>>>> +#include "system/memory.h"
+>>>>  #include "ui/console.h"
+>>>>  #include "apple-gfx.h"
+>>>>  #include "trace.h"
+>>>> @@ -596,6 +597,37 @@ void apple_gfx_common_init(Object *obj, =
+AppleGFXState *s, const char* obj_name)
+>>>>      /* TODO: PVG framework supports serialising device state: =
+integrate it! */
+>>>>  }
+>>>> +@interface PGDeviceDescriptor (IOSurfaceMapper)
+>>>> +@property (readwrite, nonatomic, copy, nullable) =
+PGMemoryMapDescriptor* memoryMapDescriptor;
+>>>> +@end
+>>>> +
+>>>> +bool apple_gfx_register_memory_cb(Int128 start, Int128 len,
+>>>> +                                  const MemoryRegion *mr_const,
+>>>> +                                  hwaddr offset_in_region, void =
+*opaque) {
+>>>> +    MemoryRegion *mr =3D (MemoryRegion *)mr_const;
+>>>=20
+>>> flatview_for_each_range() should be changed to pass non-const =
+pointers instead.
+>> flatview_for_each_range() was added in commit fb5ef4eeecd ("memory: =
+Add
+>> FlatView foreach function") with memory fuzzing in mind, so const MR =
+was
+>> the correct choice then IMO.
+>> FlatView is more of an internal memory API, I'm not sure it should be
+>> used by hw/ layer.
+>> $ git grep -w flatview_for_each_range
+>> hw/core/loader.c:1656:    flatview_for_each_range(fv, find_rom_cb, =
+&cbdata);
+>> semihosting/arm-compat-semi.c:158:    flatview_for_each_range(fv, =
+find_ram_cb, &info);
+>> tests/qtest/fuzz/generic_fuzz.c:310: flatview_for_each_range(view, =
+get_io_address_cb , &cb_info);
+>> Semihosting is special, as it the ROM loader helper, and fuzzing =
+code.
+>> We provide MemoryRegionSection, MemoryListener and RamDiscardListener
+>> APIs. Maybe one of them is more appropriate here? See:
+>> * A #RamDiscardManager coordinates which parts of specific RAM
+>> * #MemoryRegion regions are currently populated to be used/accessed
+>> * by the VM, notifying after parts were discarded (freeing up memory)
+>> * and before parts will be populated (consuming memory), to be used/
+>> * accessed by the VM.
+>> Could this be what this code needs to do?
+>=20
+> The problem here is that the reverse-engineered interface is =
+insufficient to keep the memory map synchronized so it can only populate =
+the memory map during initialization. flatview_for_each_range() fits for =
+this purpose.
+>=20
+> Ideally the interface may be reverse-engineered more thoroughly to =
+synchronize the memory map at runtime but that needs more work.
+>=20
+Hello,
 
->      DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
->      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
->      DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index 2ca49ded36..9124bfe751 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -69,7 +69,7 @@ struct SMMUv3State {
->      struct SMMUv3AccelState *s_accel;
->      uint64_t msi_gpa;
->      Error *migration_blocker;
-> -    bool ril;
-> +    OnOffAuto ril;
->      OnOffAuto ats;
->      uint8_t oas;
->      uint8_t ssidsize;
+Unfortunately there=E2=80=99s no such interface anymore/no notifiers =
+from what I gathered. The new interface has a resetWithMemoryMap
+call but that resets the state and use again has to go through the VM =
+save/restore path=E2=80=A6
+
+Well, the legacy path is still there for outside of the =
+PGIOSurfaceHostDevice path but that=E2=80=99s just because it=E2=80=99s =
+public
+API on x86, and is going away really soon + it blocks sandboxing=E2=80=A6=20=
+
+
+I guess it=E2=80=99s good enough for the macOS use case - and any =
+potential ballooning handleable via purgeable memory...
+
+>>> Regards,
+>>> Akihiko Odaki
+>>>=20
+>>>> +    PGGuestPhysicalRange_t range;
+>>>> +    PGMemoryMapDescriptor *memory_map_descriptor =3D opaque;
+>>>> +    if (memory_access_is_direct(mr, true, MEMTXATTRS_UNSPECIFIED)) =
+{
+>>>> +        range.physicalAddress =3D start;
+>>>> +        range.physicalLength =3D len;
+>>>> +        range.hostAddress =3D memory_region_get_ram_ptr(mr);
+>>>> +        [memory_map_descriptor addRange:range];
+>>>> +        memory_region_ref(mr);
+>>>> +    }
+>>>> +    return false;
+>>>> +}
+>>>> +
+>>>> +static void apple_gfx_register_memory(AppleGFXState *s,
+>>>> + PGDeviceDescriptor *desc)
+>>>> +{
+>>>> +    PGMemoryMapDescriptor* memoryMapDescriptor =3D =
+[PGMemoryMapDescriptor new];
+>>>> +
+>>>> +    FlatView* fv =3D =
+address_space_to_flatview(&address_space_memory);
+>>>> +    flatview_for_each_range(fv, apple_gfx_register_memory_cb, =
+memoryMapDescriptor);
+>>>> +
+>>>> +    desc.memoryMapDescriptor =3D memoryMapDescriptor;
+>>>> +}
+>=20
 
 
