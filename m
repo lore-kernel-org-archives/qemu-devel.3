@@ -4,108 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B3CEB1076
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B43E1EB107D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:54:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzOU-0002S5-HS; Tue, 10 Mar 2026 11:53:14 -0400
+	id 1vzzOy-0002ee-48; Tue, 10 Mar 2026 11:53:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vzzOS-0002Ql-9D; Tue, 10 Mar 2026 11:53:12 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farman@linux.ibm.com>)
- id 1vzzOP-0004mw-TU; Tue, 10 Mar 2026 11:53:11 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A9ETch1505945; Tue, 10 Mar 2026 15:53:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=LVSCxs
- JYaUb30I8VXW74xDfsmGeX4mjCGngqDyaWkao=; b=lNYX3P7QgK/CeuhUJcb484
- cEuXFhlDFhQVS6wy3CmkAb8IKE7rdwJYrzf+z686snVFb38KY4BG164FDt7Dgr0c
- hfuAWb8nLu+XTx7H3j1moz44orgkTzXStT9o3hwrnYWqakeucPzK5HN64tHCA5Et
- ribI2ldEORL2HyuuIHGQ0Oywt81M/SzfjrGjzfc1yer2ajFJ5PkkqhkNMxYMmuMX
- z4LUIy+EYqD3VtgD0HwqnUfsHGu8LHymrfLQ4Mw4XS+ZFYGr5ZnSIy8Y8kuWrkbD
- KR3j4i3frJgskpyZS0Twegd2cTpWOhYOK0kAWYXULsq4/c+GUhJUIxZSC/fzKSdg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1mk9k2-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 15:53:07 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AD2MFN015761;
- Tue, 10 Mar 2026 15:53:07 GMT
-Received: from smtprelay07.dal12v.mail.ibm.com ([172.16.1.9])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs1221f9t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 15:53:07 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AFr6QX29688392
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 15:53:06 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 11FCE5805A;
- Tue, 10 Mar 2026 15:53:06 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8158758056;
- Tue, 10 Mar 2026 15:53:05 +0000 (GMT)
-Received: from li-479af74c-31f9-11b2-a85c-e4ddee11713b.ibm.com (unknown
- [9.61.185.62]) by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 15:53:05 +0000 (GMT)
-Message-ID: <18bca005750d835cff2d855cc46501fbaeec39e1.camel@linux.ibm.com>
-Subject: Re: [PATCH] MAINTAINERS: Update S390-ccw boot maintainers/reviewers
-From: Eric Farman <farman@linux.ibm.com>
-To: jrossi@linux.ibm.com, qemu-devel@nongnu.org, qemu-s390x@nongnu.org,
- thuth@redhat.com, borntraeger@linux.ibm.com
-Cc: mjrosato@linux.ibm.com, zycai@linux.ibm.com
-Date: Tue, 10 Mar 2026 11:53:05 -0400
-In-Reply-To: <20260310142118.1120291-1-jrossi@linux.ibm.com>
-References: <20260310142118.1120291-1-jrossi@linux.ibm.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-User-Agent: Evolution 3.58.3 (3.58.3-1.fc43) 
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzOw-0002di-4Y
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:53:42 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzOu-0005vc-Js
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:53:41 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-485345e1013so37925e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:53:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773158019; x=1773762819; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=VbjCxPdxTy0F+sdur/B9cQkzQDmrjNtGzbXRyewiX7w=;
+ b=W9dbffFnkgXLaiSvyP5O1j2yn/UbzY++GbEt0Drdt3BuPLaF5joTpZ5Qi07zO4pIJv
+ fAqBt01IQit1jFtMGNuRgoj2rTlK83QR1TVT8hjJrsxMynjQ1gdH9BNbe5LflPjux3Xm
+ SHVl1KlRs2YqFoJ8CkD7bqdzpegxs6nGsKzxexyakFuXDhe8Pv0MN6gGBEayL/ol9Dv+
+ aPZ3BeUHgMCkvXhl0i8Zhfc3xkvv1m3CgCy44IQuMCgqmPwtJvpJ080xA+YGYI596HHa
+ 0e1rC3+X2dz97v6PWIiKvqPvNFJlh/X3goyiCfxg3A1AkfB7dAueifXAW6O7skce8JWg
+ 8tnA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773158019; x=1773762819;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=VbjCxPdxTy0F+sdur/B9cQkzQDmrjNtGzbXRyewiX7w=;
+ b=fqpK6Yq3dE3WWNcxVK9SXxhlWhOoEnLrRhenz8gm0OK+aJ0sZlm7YTMpAmHA6aL+37
+ ktlAZRyrU5A5Tr+SFVsoKM7BE51MA0gE9IMgnHaq+pmLqqJKGyn8+0Is/BvmnF+iyH2L
+ oDlhNI62Bo0KXMr9jieOxcc/kVflMPzd8SzkxoipJ+sRzlh3McAUewzKtPvVielrw9jC
+ t9elauDLKIpAZys4GaJF2B90jLdKnakBVasQ0HllCL40+g+9WP6EMjqQ/D0KbzI3M7yS
+ 8TZKX49xipUTeSymEYRIJmMAbNJPTTD5IpoVt195xJanM/j8KBXxf3RZhxB5qcOaPW7c
+ Q5pQ==
+X-Gm-Message-State: AOJu0YyhDCOy+YmbbNSjZaSSJ/OWu3CdYoeY4Kv3xG0fhfIC5cA3fYic
+ f/IUWFUUfEHb8cjQkE1u5djvFbfOxzMxNuI6CqpcqY70MUMxa8RxaQ7SbY7uafcbTwVaQ8V8Pjl
+ /JOxyQK8=
+X-Gm-Gg: ATEYQzy2pfOn3istnsAJ4adZHXWzmWXqGyH/yciTq5Qr6qNnzHLqXOATMGWNB6GavDn
+ YvcPKswAtF42TA+CjpnhL60XgzKZnZiYpHDF6oP6tKrJwwKcAYFDsjl2d0jiAXjawgWXLDMTgtC
+ E6ynZeLv2vEoKLSnQHTu8YFrcON/G3byiDxePhPgjodtDjeZO6axGPTQ3JhS4oCSvInHxdNjniV
+ RmMyz4ITFEM0biQ9dIGubuxOFxc3E9iGqhFA3xkauMEDsdhAy2u/CtcuNAuvgO9/t0bDVoJiFtQ
+ rkXW//4EgNqhJ1aeKadLEkx5p3NjvICTVb6WidNr1EuFjCF3sbzqKenn1dQOSHWoDdAUCHBc/Mx
+ 9SzBB/SysWhzyGa0lGOOcrV0dpvkFf70PXT/JfWQeaCOVdo6Jwj3OdqsUcufbq23UhTYBHdKzvd
+ GfW2x1f3unCfmiQfV6TZtrXRd2n+yjhHp/jMcuWg63NuyThmZCNyVAC6QuRXINyDrHZmwprxgq
+X-Received: by 2002:a05:600d:848a:b0:485:3294:fff0 with SMTP id
+ 5b1f17b1804b1-48541a2b9f4mr43533675e9.17.1773158018622; 
+ Tue, 10 Mar 2026 08:53:38 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541a6bc3bsm96154915e9.2.2026.03.10.08.53.37
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 10 Mar 2026 08:53:38 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-ppc@nongnu.org
+Subject: [PATCH v2 01/13] meson: Restrict gdbstub to user/system builds
+Date: Tue, 10 Mar 2026 16:53:17 +0100
+Message-ID: <20260310155329.48772-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260310155329.48772-1-philmd@linaro.org>
+References: <20260310155329.48772-1-philmd@linaro.org>
 MIME-Version: 1.0
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69b03e63 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=NEAV23lmAAAA:8
- a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=20KFwNOVAAAA:8 a=qQASs0gnnu4lUi2r55sA:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzNSBTYWx0ZWRfXzcYL97LoKg4m
- +CEhHCx7ZMvvc/fxOnOiLu3E/DMpKVymOQ09rGyNlu55jOAwuWVYazIM5pKdhDdCZseSVkOaKeu
- ACMGa/OWBE/ejrkOJxKqjARkPdZ3jZ6+hlbu25hgX8FJqvRizmIqENo7C1gRNBa9L4oaL4xGXiW
- +3KRXsqFeiq0agELAgXHkawzc6OTJBZQ6q9nunXTBdnvOkgUKjclVD3jahcVeUGpcrLKpbgTWr2
- VWbjbksi6I9vb9SVOfJvkeeD8FT8J++/W1EwCrURJ7eToZAju3gtPH6pq885oNjdgF4LwXYQZcJ
- DN3TC37as6RDcXlHvuBV99zd9XGDIsFfq8R+BWs1MIvjyuaKsNRGWSEQovYBql0sbHKFwlF+WnL
- P02XsYMD2c38r3RV2BVgusVRdZ/+tEUwE7S5vZQtrhVp0v+PN2qs1Wo4wG3PwmHZm1bFtXiFIgC
- lop8mANxSDFGXcOqNzA==
-X-Proofpoint-GUID: ockR7c98D7bAbknDsjZifp0BqQly5Huf
-X-Proofpoint-ORIG-GUID: ockR7c98D7bAbknDsjZifp0BqQly5Huf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100135
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=farman@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,39 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 2026-03-10 at 10:21 -0400, jrossi@linux.ibm.com wrote:
-> From: Jared Rossi <jrossi@linux.ibm.com>
->=20
-> Christian Borntraeger is no longer active in this space.  Promote myself =
-to
-> maintainer and demote Christian to reviewer.
->=20
-> Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-> ---
->  MAINTAINERS | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
+Limited builds (tools, documentation) don't need to generate /
+build gdbstub files. Only process the gdbstub/ folder when
+user / system emulation / acceleration is built.
 
-Thank you for stepping up, Jared!
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Tested-by: Alex Bennée <alex.bennee@linaro.org>
+Acked-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ meson.build | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Acked-by: Eric Farman <farman@linux.ibm.com>
+diff --git a/meson.build b/meson.build
+index 1867560da63..db8918dd303 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3754,7 +3754,6 @@ subdir('qom')
+ subdir('authz')
+ subdir('crypto')
+ subdir('ui')
+-subdir('gdbstub')
+ subdir('semihosting')
+ subdir('audio')
+ subdir('io')
+@@ -3805,6 +3804,7 @@ if have_system or have_user
+                          output: 'decode-@BASENAME@.c.inc',
+                          arguments: ['@INPUT@', '@EXTRA_ARGS@', '-o', '@OUTPUT@'])
+   subdir('libdecnumber')
++  subdir('gdbstub')
+   subdir('target')
+ endif
+ 
+-- 
+2.53.0
 
->=20
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 80e10e43b5..1012135dd4 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1862,10 +1862,10 @@ T: git https://github.com/borntraeger/qemu.git s3=
-90-next
->  L: qemu-s390x@nongnu.org
-> =20
->  S390-ccw boot
-> -M: Christian Borntraeger <borntraeger@linux.ibm.com>
->  M: Thomas Huth <thuth@redhat.com>
-> -R: Jared Rossi <jrossi@linux.ibm.com>
-> +M: Jared Rossi <jrossi@linux.ibm.com>
->  R: Zhuoying Cai <zycai@linux.ibm.com>
-> +R: Christian Borntraeger <borntraeger@linux.ibm.com>
->  S: Supported
->  F: hw/s390x/ipl.*
->  F: pc-bios/s390-ccw/
 
