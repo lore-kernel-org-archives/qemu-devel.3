@@ -4,73 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE300FD88D2
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:57:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2895AFD88D4
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:57:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w06wo-0004wZ-AZ; Tue, 10 Mar 2026 19:57:10 -0400
+	id 1w06wq-0004wg-OM; Tue, 10 Mar 2026 19:57:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <30K-waQQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com>)
- id 1w06wm-0004vz-LW
+ <3zq-waQQKCkUyrpynvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--rkir.bounces.google.com>)
+ id 1w06wl-0004vy-LB
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:57:09 -0400
-Received: from mail-pf1-x44a.google.com ([2607:f8b0:4864:20::44a])
+Received: from mail-pg1-x549.google.com ([2607:f8b0:4864:20::549])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from
- <30K-waQQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com>)
- id 1w06wl-0002Js-3X
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:57:08 -0400
-Received: by mail-pf1-x44a.google.com with SMTP id
- d2e1a72fcca58-829b9320a2cso1398908b3a.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:57:06 -0700 (PDT)
+ <3zq-waQQKCkUyrpynvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--rkir.bounces.google.com>)
+ id 1w06wj-0002JW-E4
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:57:07 -0400
+Received: by mail-pg1-x549.google.com with SMTP id
+ 41be03b00d2f7-c73783c96baso3427647a12.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:57:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20230601; t=1773187025; x=1773791825; darn=nongnu.org;
+ d=google.com; s=20230601; t=1773187022; x=1773791822; darn=nongnu.org;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:from:to:cc:subject:date:message-id:reply-to;
- bh=X0aTiEBxHzNsnv4Dg3eXLQ7mbtCD9oqDijUAqvIXilI=;
- b=alQemdvOimYDSzsylBRr2QsG+GWmr6PsH4tvzcMj107d0xHbVOUnLWXuVvvKQx4QgP
- 7ye68s8NyVpZ9mNluFdk1ScJbjAkkkTnHILcJvjBzTQ+Yp2dYMwAaJvrBGoH2R0/Ohsf
- 5V0Y81SpX+aOZZt4ujExIPpxGHtBDfgwCCyb+d8+UeqtyXRcHZNZ6IS7p6kfAPysU7XU
- SSumo1NjsKNP//q73j6LqyaEyQevj3fen+ZXhpCk5IFzAaKe815zv9nMJ6vhSQyTU4KT
- keMa7Devi0jp7uRZlWR0V55SXFdr63ig0b8FClweM6YdFpckG7iO79SZdh62FIKjFRE0
- cJOA==
+ bh=b+nzrbNAdvs+x6jyHUYdxcTNGPkpA+/DNlvOeQtkqPs=;
+ b=tFsWc7iq3chudIyGL57ce21m+6bctB80uSNLlJftQQodrTaaQXZixaGGqJb04b/aLO
+ trTljrgZN7py5DAReTmBwdeLNBv24pBAME6/EweCKpzFzVL/HFktB23NBVHzBmVv9z3X
+ kLYYWNJl1JmAmNhd8NVnCwSYgzptQstTeYOUKuCG2PBSfbrL0YVxs4QPjF8ftPSoDnTI
+ M7nFvYI9OXQ3jiIczAGw1cjfUJLRXuTvj4x5j/j3IhTLVMzVsImyAMLTAYvZ2VXZUbpy
+ GVEgAF+F+fVapm4ZBoDlRPT1LX++Vmh+Nd99GVpGCUN0q5raeIPgCuSoYBR8qxqqSAsc
+ 5AMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773187025; x=1773791825;
+ d=1e100.net; s=20230601; t=1773187022; x=1773791822;
  h=cc:to:from:subject:message-id:references:mime-version:in-reply-to
  :date:x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=X0aTiEBxHzNsnv4Dg3eXLQ7mbtCD9oqDijUAqvIXilI=;
- b=n2YHNah+b0aEUt9bTvKP9arjlZ1MAq13cozQV6hrC26NRynAJ7i0AipOfUYy7jAASN
- hXcEZYWtwptVHSHdkQFMBz9NtmERDkN3Q8LmFKyQJD+dPwncteehGoujJVxJXSTxfRHu
- DkhkvHN6cQyEixedCIw5Gwy8xRmxR79MCvgTYJxENEWfpqRw9zWTymW4ruEtbeavfkpi
- az+ptGaof+0+5K54GAkQTPaWudYQUyaG/8VRIET9xsMn21HUByzxNxCNQMe8fED5cxdQ
- ivttzyyoc9XqF/zCP/a1y++EqqqrdDTj75ulhHipCvPobX7uA0RS2N4V0qqxzKjhUWpD
- B/RQ==
-X-Gm-Message-State: AOJu0YwEhAbQx52sWXQyAUquq0AoXRUMfGoisXyE88mPvFo1g2JCc2jA
- jm13FWuJi1qyjg9j6Gnpxzv3R6EL2Tac50mWQRrNNcGnulBMwuxyXp/IuMCzFPvSXrEP0Y+i6Q=
+ bh=b+nzrbNAdvs+x6jyHUYdxcTNGPkpA+/DNlvOeQtkqPs=;
+ b=a4afFdI2R795J8WU72OM+sXZB/W2RuWhkfrSYMqVFb5gFi/8uSS5LKLZzr/+PD4Uy1
+ BvGXE1i+SQ9XAbi0nY6W4FpKoMQ8hJS217HwXDJoD/h0jvv80+sYvJ96cs3vQUKk+zWe
+ jSBT4FkXgyuM3RzQLfagurr+Z+4y0F3cAhb3clTwFxO5gd5OuRa4x0Ia9DFfN9sPxm/a
+ lgaeUjsDGj2U6+IyBBDxt7ewsjaEX6w1H2zPmaE/UHeFHI9VMhpdLSz5ziEhEDk1pMzm
+ v/6kphsURJrLt27kWnB7YUBN4tJTDaBX035WpVpBZJoVn7U9CGXFasfQdb8vobkZjxY0
+ mPQw==
+X-Gm-Message-State: AOJu0YzCQDS4Z3zGKuEXrorwBEMqiAkYNbepVkQ0GvsyQLusl6+mLS62
+ AcNIU15OEVTUPmY66+n+uHbG0VTcXdIUWPNaqo4NiXhBrJb+Qew5zj3buPqzE2HHqNUgCODfDw=
  =
-X-Received: from pfdj19.prod.google.com ([2002:a05:6a00:9513:b0:7dd:8bba:63aa])
+X-Received: from pfbic8.prod.google.com ([2002:a05:6a00:8a08:b0:7b8:ac8f:27c])
  (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a00:3d54:b0:823:8a5:297f
- with SMTP id d2e1a72fcca58-829f6ea7405mr522615b3a.16.1773187024998; Tue, 10
- Mar 2026 16:57:04 -0700 (PDT)
-Date: Tue, 10 Mar 2026 23:56:31 +0000
+ 2002:a05:6a00:4c8f:b0:829:8969:b8b4
+ with SMTP id d2e1a72fcca58-829f6e714e3mr589703b3a.11.1773187022104; Tue, 10
+ Mar 2026 16:57:02 -0700 (PDT)
+Date: Tue, 10 Mar 2026 23:56:30 +0000
 In-Reply-To: <20260310235632.3987668-1-rkir@google.com>
 Mime-Version: 1.0
 References: <20260310235632.3987668-1-rkir@google.com>
 X-Mailer: git-send-email 2.53.0.473.g4a7958ca14-goog
-Message-ID: <20260310235632.3987668-3-rkir@google.com>
-Subject: [PATCH 2/3] virtio-snd: remove virtio_snd_pcm_set_params from
- VirtIOSoundPCMStream
+Message-ID: <20260310235632.3987668-2-rkir@google.com>
+Subject: [PATCH 1/3] virtio-snd: remove the unused field
 From: Roman Kiryanov <rkir@google.com>
 To: philmd@linaro.org, manos.pitsidianakis@linaro.org
 Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com, 
  jpcottin@google.com, Roman Kiryanov <rkir@google.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::44a;
- envelope-from=30K-waQQKCkc0tr0pxxpun.lxvznv3-mn4nuwxwpw3.x0p@flex--rkir.bounces.google.com;
- helo=mail-pf1-x44a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::549;
+ envelope-from=3zq-waQQKCkUyrpynvvnsl.jvtxlt1-kl2lsuvunu1.vyn@flex--rkir.bounces.google.com;
+ helo=mail-pg1-x549.google.com
 X-Spam_score_int: -95
 X-Spam_score: -9.6
 X-Spam_bar: ---------
@@ -93,64 +92,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The virtio_snd_pcm_set_params values are latched
-into a VirtIOSoundPCMStream instance during
-the PREPARE request where they are converted into
-audsettings. Only the `period_bytes` value is used
-afterwards.
-
-Having both audsettings and virtio_snd_pcm_set_params
-next to each other grows sizeof and adds confusion to
-snapshot handling.
+VirtIOSoundPCMStream::positions is set but
+never read from. It can be added back once
+required.
 
 Signed-off-by: Roman Kiryanov <rkir@google.com>
 ---
- hw/audio/virtio-snd.c         | 6 +++---
- include/hw/audio/virtio-snd.h | 2 +-
- 2 files changed, 4 insertions(+), 4 deletions(-)
+ hw/audio/virtio-snd.c         | 3 ---
+ include/hw/audio/virtio-snd.h | 2 --
+ 2 files changed, 5 deletions(-)
 
 diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index bd6a5d71bb..6d820b56a6 100644
+index fb5cff3866..bd6a5d71bb 100644
 --- a/hw/audio/virtio-snd.c
 +++ b/hw/audio/virtio-snd.c
-@@ -461,7 +461,7 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
-     stream->info.channels_max = as.nchannels;
+@@ -462,9 +462,6 @@ static uint32_t virtio_snd_pcm_prepare(VirtIOSound *s, uint32_t stream_id)
      stream->info.formats = supported_formats;
      stream->info.rates = supported_rates;
--    stream->params = *params;
-+    stream->period_bytes = params->period_bytes;
+     stream->params = *params;
+-
+-    stream->positions[0] = VIRTIO_SND_CHMAP_FL;
+-    stream->positions[1] = VIRTIO_SND_CHMAP_FR;
      stream->as = as;
  
      if (stream->info.direction == VIRTIO_SND_D_OUTPUT) {
-@@ -1271,7 +1271,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
-                     return_rx_buffer(stream, buffer);
-                     break;
-                 }
--                to_read = stream->params.period_bytes - buffer->size;
-+                to_read = stream->period_bytes - buffer->size;
-                 to_read = MIN(to_read, available);
-                 to_read = MIN(to_read, max_size - buffer->size);
-                 size = audio_be_read(stream->s->audio_be,
-@@ -1284,7 +1284,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
-                 }
-                 buffer->size += size;
-                 available -= size;
--                if (buffer->size >= stream->params.period_bytes) {
-+                if (buffer->size >= stream->period_bytes) {
-                     return_rx_buffer(stream, buffer);
-                     break;
-                 }
 diff --git a/include/hw/audio/virtio-snd.h b/include/hw/audio/virtio-snd.h
-index f8bb5c95b9..a767f68301 100644
+index e28f1be5db..f8bb5c95b9 100644
 --- a/include/hw/audio/virtio-snd.h
 +++ b/include/hw/audio/virtio-snd.h
-@@ -135,8 +135,8 @@ struct VirtIOSoundPCM {
- 
- struct VirtIOSoundPCMStream {
+@@ -137,8 +137,6 @@ struct VirtIOSoundPCMStream {
      virtio_snd_pcm_info info;
--    virtio_snd_pcm_set_params params;
+     virtio_snd_pcm_set_params params;
      uint32_t id;
-+    uint32_t period_bytes;  /* from virtio_snd_pcm_set_params */
+-    /* channel position values (VIRTIO_SND_CHMAP_XXX) */
+-    uint8_t positions[VIRTIO_SND_CHMAP_MAX_SIZE];
      VirtIOSound *s;
      bool flushing;
      audsettings as;
