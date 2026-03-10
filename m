@@ -4,113 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE594EB1054
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:52:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A2EEB1054
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:53:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzyRf-0000mY-Gr; Tue, 10 Mar 2026 10:52:28 -0400
+	id 1vzySB-0001Ek-F6; Tue, 10 Mar 2026 10:53:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzyRa-0000hp-7M; Tue, 10 Mar 2026 10:52:22 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzyRp-0000wi-71
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:52:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzyRY-0007ef-L8; Tue, 10 Mar 2026 10:52:21 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A75pHK1561657; Tue, 10 Mar 2026 14:52:18 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=4EyWwc
- +8ZnGWg7PZ77LlViCtaNcXAcREDRlWWUBFyfM=; b=tno2qc2qBAvNEuUwLxnIFu
- qiks0pnyoYLrSfwYBzgo0Hgngu2h97KuWmxGma6RxzVTUoHhNMD2NgAp4gwyjnOV
- XcBVV0zvidUj1tDCyExneCikiHyAzHPMagvDYE8l4VBYqv70l1GJrYsU80WFCgHQ
- oJW3jpjyfXUCj1dahkvSSIABw51sZpql9+qeFVsr0YbXrU1yxx2SNsZnuBWADgjt
- 0mYNz+mut73tWxhkm13wEJGUiEblvmORQjaF2oy+avGQ2OtpuDnyHCfQ/gMusAiL
- qXXSXb3+nPRptx4O+jkSTsTylayh6alyUr9OoCeNDg2A1LHbi61VPGp+XiEVfbdg
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmbdt5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 14:52:18 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AAtSlT021389;
- Tue, 10 Mar 2026 14:52:17 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4crxbssnys-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 14:52:17 +0000
-Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
- [10.20.54.105])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AEqDHg45547802
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 14:52:14 GMT
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D284520040;
- Tue, 10 Mar 2026 14:52:13 +0000 (GMT)
-Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 22DA020049;
- Tue, 10 Mar 2026 14:52:11 +0000 (GMT)
-Received: from [9.124.215.249] (unknown [9.124.215.249])
- by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 14:52:10 +0000 (GMT)
-Message-ID: <e09883a8-7157-4b2e-a11b-2545d5efe85b@linux.ibm.com>
-Date: Tue, 10 Mar 2026 20:22:09 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzyRn-0007nz-IS
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:52:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773154354;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=KNLR0TFxR/gVL3SScgFMvX6kZ8NqfM6H5hZw3j0x6EE=;
+ b=DXl2RmnVur+fbPT5FEdzF7eCmuAuI3V/rT424Q05dEu6yBD8WBE/glrc5DtYch8sJOCKo5
+ wLYqOM4whgi8UbmOH4iHcMul/J/sjb41sxo6JugGFTX37TlLorrYY993JXOx5savVtMKbc
+ jf/yaBcuJTeIhl2lwr5M37qVSRw0VZU=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-621-F9XmzivoOnmV5FyflsAt9A-1; Tue,
+ 10 Mar 2026 10:52:31 -0400
+X-MC-Unique: F9XmzivoOnmV5FyflsAt9A-1
+X-Mimecast-MFC-AGG-ID: F9XmzivoOnmV5FyflsAt9A_1773154350
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C807A19560A3; Tue, 10 Mar 2026 14:52:29 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EF5A9180035F; Tue, 10 Mar 2026 14:52:28 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 58A1621E681B; Tue, 10 Mar 2026 15:52:26 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Kevin Wolf <kwolf@redhat.com>
+Cc: qemu-block@nongnu.org,  hreitz@redhat.com,  xeor@yandex-team.ru,
+ vsementsov@yandex-team.ru,  pkrempa@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v2] block: Never drop BLOCK_IO_ERROR with action=stop
+ for rate limiting
+In-Reply-To: <abAo4NCbVN0PejkM@redhat.com> (Kevin Wolf's message of "Tue, 10
+ Mar 2026 15:21:20 +0100")
+References: <20260304122800.51923-1-kwolf@redhat.com>
+ <87y0jzresf.fsf@pond.sub.org> <abAo4NCbVN0PejkM@redhat.com>
+Date: Tue, 10 Mar 2026 15:52:26 +0100
+Message-ID: <87ldfzhh3p.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 00/10] Implement MPIPL for PowerNV
-To: Sourabh Jain <sourabhjain@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Hari Bathini <hbathini@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-References: <20260310124619.3909045-1-adityag@linux.ibm.com>
- <d828f5f5-f79f-436a-bd84-ab8c270725a8@linux.ibm.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <d828f5f5-f79f-436a-bd84-ab8c270725a8@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: w06GAAA_LX28e2KgSKUj5mQhgkrdlBQi
-X-Proofpoint-ORIG-GUID: 3_XAuUbNlgCPoVBCIa4mLYcr9U5HUYOh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEyNiBTYWx0ZWRfX/aRPGbQzR59D
- TErenghP/cTE9eNI9JV5VLT0leiUAbHvv3RWxkQf2uOO09YFr0pQC0IMcMjCha3fUrSohHtEEf5
- ruM0G7BryshpLbmV2dcRLeFERyh5ra3+b3WDTur9xdPO3YcBe9o+iJhbc1UtMwh72QDS2RaW4/h
- QLPkzp4AkZn4dHGYnzgHqogkSTnxAfqoDUfnbb/jFSa+2YbRTACU1RZWS+Ymp4R5HIimf03Ncen
- 7tKDGzehgJdBZ8Xj+wlIzfcNvQfDVCsxuM+dMBRVgF6G07rq4VZJNZJmqDG9PQaCWv/J1xGpJj2
- Du88Bm4fSkzzHWXk+ary2IOoPNtBnu7B/XWDcj433q4ivfV9uXgdQSLs/Be+GcFq9meLzfAKtWf
- xIm7lxdTv75BZ+zfde9H8eaQXuSj6zcktJVQWBeewwOEnp8rn7AKQkNOCZoX5YCbO7GP9JyLgx9
- iJU9LWrAgD1ORahMe3w==
-X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b03022 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8
- a=WzblKziCi-pPldmMIboA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100126
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,17 +87,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/03/26 20:20, Sourabh Jain wrote:
+Kevin Wolf <kwolf@redhat.com> writes:
 
-> Thanks for adding fadump support on PowerNV platform.
+> Am 10.03.2026 um 14:32 hat Markus Armbruster geschrieben:
+>> This is now commit 544ddbb6373d61292a0e2dc269809cd6bd5edec6.  I'm not
+>> objecting.  Just a few remarks.  I dropped qemu-stable@ from cc.
+>> 
+>> Kevin Wolf <kwolf@redhat.com> writes:
+>> 
+>> > Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
+>> > event only once a second. This makes sense for cases in which the guest
+>> > keeps running and can submit more requests that would possibly also fail
+>> > because there is a problem with the backend.
+>> >
+>> > However, if the error policy is configured so that the VM is stopped on
+>> > errors, this is both unnecessary because stopping the VM means that the
+>> > guest can't issue more requests and in fact harmful because stopping the
+>> > VM is an important state change that management tools need to keep track
+>> > of even if it happens more than once in a given second. If an event is
+>> > dropped, the management tool would see a VM randomly going to paused
+>> > state without an associated error, so it has a hard time deciding how to
+>> > handle the situation.
+>> >
+>> > This patch disables rate limiting for action=stop by not relying on the
+>> > event type alone any more in monitor_qapi_event_queue_no_reenter(), but
+>> > checking action for BLOCK_IO_ERROR, too. If the error is reported to the
+>> > guest or ignored, the rate limiting stays in place.
+>> >
+>> > Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
+>> > Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+>> > ---
+>> >  qapi/block-core.json |  2 +-
+>> >  monitor/monitor.c    | 21 ++++++++++++++++++++-
+>> >  2 files changed, 21 insertions(+), 2 deletions(-)
+>> >
+>> > diff --git a/qapi/block-core.json b/qapi/block-core.json
+>> > index b66bf316e2f..da0b36a3751 100644
+>> > --- a/qapi/block-core.json
+>> > +++ b/qapi/block-core.json
+>> > @@ -5794,7 +5794,7 @@
+>> >  # .. note:: If action is "stop", a `STOP` event will eventually follow
+>> >  #    the `BLOCK_IO_ERROR` event.
+>> >  #
+>> > -# .. note:: This event is rate-limited.
+>> > +# .. note:: This event is rate-limited, except if action is "stop".
+>> >  #
+>> >  # Since: 0.13
+>> >  #
+>> > diff --git a/monitor/monitor.c b/monitor/monitor.c
+>> > index 1273eb72605..37fa674cfe6 100644
+>> > --- a/monitor/monitor.c
+>> > +++ b/monitor/monitor.c
+>> > @@ -367,14 +367,33 @@ monitor_qapi_event_queue_no_reenter(QAPIEvent event, QDict *qdict)
+>> >  {
+>> >      MonitorQAPIEventConf *evconf;
+>> >      MonitorQAPIEventState *evstate;
+>> > +    bool throttled;
+>> >  
+>> >      assert(event < QAPI_EVENT__MAX);
+>> >      evconf = &monitor_qapi_event_conf[event];
+>> >      trace_monitor_protocol_event_queue(event, qdict, evconf->rate);
+>> > +    throttled = evconf->rate;
+>> > +
+>> > +    /*
+>> > +     * Rate limit BLOCK_IO_ERROR only for action != "stop".
+>> > +     *
+>> > +     * If the VM is stopped after an I/O error, this is important information
+>> > +     * for the management tool to keep track of the state of QEMU and we can't
+>> > +     * merge any events. At the same time, stopping the VM means that the guest
+>> > +     * can't send additional requests and the number of events is already
+>> > +     * limited, so we can do without rate limiting.
+>> > +     */
+>> > +    if (event == QAPI_EVENT_BLOCK_IO_ERROR) {
+>> > +        QDict *data = qobject_to(QDict, qdict_get(qdict, "data"));
+>> > +        const char *action = qdict_get_str(data, "action");
+>> > +        if (!strcmp(action, "stop")) {
+>> > +            throttled = false;
+>> > +        }
+>> > +    }
+>> 
+>> Having event-specific logic in the general event emission function is
+>> ugly.
+>> 
+>> Before the patch, the "throttle this event?" logic is coded in one
+>> place: table monitor_qapi_event_conf[].
+>> 
+>> The table maps from event kind (enum QAPIEvent) to the minimum time
+>> between two events.  Non-zero specifies a rate limit, zero makes it
+>> unlimited.
+>> 
+>> Aside: as far as I can tell, we've only ever used one
+>> MonitorQAPIEventConf: { .rate = 1000 * SCALE_MS }.  Could be dumbed down
+>> to bool.
+>> 
+>> This is insufficient for QAPIEvent QAPI_EVENT_BLOCK_IO_ERROR, where the
+>> desired rate depends on event data, not just the QAPIEvent.
+>> 
+>> The patch gives us the desired rate, but it splits the logic between the
+>> map and the map's user.
+>> 
+>> I think the cleaner solution is to make the map more capable: have it
+>> maps from the entire event, not just its kind.
+>> 
+>> An obvious way to do that would be a table of function pointers
+>> 
+>>     bool (*)(QAPIEvent, QDict *)
+>> 
+>> Null means unlimited.
+>> 
+>> The table entry for BLOCK_IO_ERROR returns false for unlimited when
+>> "action" is "stop", else true.
+>> 
+>> The table entries for the other rate-limited events simply return true.
+>> 
+>> Thoughts?
 >
-> The whole patch series looks good to me.
-> Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+> Like you, I often prefer data to code. However, if the data becomes just
+> a table of function pointers to trivial functions, wouldn't it be better
+> to just have it as code in the first place?
+>
+> It could be a helper function with the same signature as you proposed
+> above and it would simply be a switch statement returning true for a few
+> event types, looking at the QDict for BLOCK_IO_ERROR and returning false
+> for default. Seems a lot simpler than an explicit table of function
+> pointers.
 
-Thank you for the detailed reviews Sourabh !
-
-
-- Aditya G
-
+You're right.
 
 
