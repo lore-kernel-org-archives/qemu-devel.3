@@ -4,100 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36B1DEB1054
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:52:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE438EB105A
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:52:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzyRC-0008QJ-Nu; Tue, 10 Mar 2026 10:51:58 -0400
+	id 1vzyR4-0008PN-CA; Tue, 10 Mar 2026 10:51:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzyRA-0008Q0-Mz
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:51:56 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzyR9-0007cT-6Z
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:51:56 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64acd19e1dfso10927888d50.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 07:51:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773154314; cv=none;
- d=google.com; s=arc-20240605;
- b=kXmqLPwXkyhX3Ek60yfmR4SWalTMw4cBYHTQiNWW5PMVnb32AbJ4GPUKBBW27CZj7u
- M+35zsedla/n1kvGfcfbQPTzbTxHbVWRKPXJl5mZh9S7fgynEcolJvLTaaGysCMTilT+
- EsL+MlwDyyxsC7JkHQ3A1ILO/Un7xnLI7mvjM0RNcnZ7+AkWNPVNbJcpBqog9y85cXj8
- U0X1dJTAIz0R1TkroQPd0Rsva6bBxOThIuh00r3XaDYhjt7CSn3uhhutFp2zNuDOOBdO
- haCdNJy36o4fBsX7czdVU/63EPIEPjmY/Zy71i19wDgohx6yfXxC6Kmc8xzcZAgMONOb
- 8Uog==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=sSFDL/vWWCX2LAxmX4mIpD/WNopgJ8FdJdsCFors+6w=;
- fh=bQWo+lpWV4pkOMHXzy0o8JNJvbYBgZP0Roft/57stKU=;
- b=WTxyJkN1CsfCKHgjXnTGkIKx7o7uui+51s1OoMtFVev19AOn14c6eI6nDcBQw6hIoF
- NumSznH2aaHKVNgf5E79jfN2RPlrxtOyBsY29eE9xdR4E8tQvjAlKMtsdWOdIHjway8D
- 0DgBtHv1VvvYh/y1p33qxBK6smzZ4Oo1CXIEIKoev3MmodUqBLahj0hBWwcMAJYv6a1u
- v5TgZv5/xJwtgo29dsIGJDYhusM90JmwEt0AaIBFFgkvs++PltQgX2kDrp74V2Oxrz6U
- 6QVGKfErdpsmkqnQv2hog1pridsZNpjw2XfoDO8uQzDPkx3ORvhEipJf8Jv284P68IcB
- yrPQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773154314; x=1773759114; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=sSFDL/vWWCX2LAxmX4mIpD/WNopgJ8FdJdsCFors+6w=;
- b=QfOhs5R/roeHrCe4UVFb18I9EG6hlRgGcxo0vuSCqyWieF751hMyGBeHbLL8LOrDgE
- lK9hM9qSpALU2LSeBu62ANebXDtsujZKGhCI8D4XZsX7i+OfhhQywij4n+Y3T61QD6w5
- cmExSuMhUBFNvPsvJC9IZCOBLtVGsz82xHDol69/Tqq3HC9iETjbWsndWHpeXW9k8qXk
- Wops1OaeR8/zVVT2OA0CIXztCKhpYO4QOMxWRPVMfh39+obB0547ICC9chuDtmodE4aX
- KrIqYX1YW3RAtlYT62M5o7UUhi7N3YwfOhIlx+h5bxtfLKDcEuNPl8xXvFdKwAheI9OR
- +RIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773154314; x=1773759114;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=sSFDL/vWWCX2LAxmX4mIpD/WNopgJ8FdJdsCFors+6w=;
- b=DmPlWNOGvV7FtivFhpHjgJhWq0v8kevJr9LqG1y6NR2oRon/nPAu+cyY5el52ViQZF
- Zrl8VuURZG8XfMow4YL9vL40K8xBNEPzILhVwAiUXXxbz/fC1xcjgHhqkKSOLyA8ZC/6
- 1P52A4Ty0dpOGDgotMCJ0wrhWAd01LiTb/ZumPhVVf26rruHtlwr73B69JS5GL2D9hFV
- Xp8cryrJR0f75EaGfrmuLERAFHdsE2oEMHVA8npC0kn8FPgetD7xrpWAMoxa0fLyFq92
- SclgGaL7Je4DJKXn7rbpZZdkihWTGw2hd/cW0n6K1BzDGJeOK6GCqnM1XWrZnzrKD2Qq
- CGQw==
-X-Gm-Message-State: AOJu0YzEp2Bb6bE1tpXf8W192qraZSUxym+woEk8ayceAjp9uTLzFli+
- 0DsoZWEmjZXWtzfFUeBXHVVFaMToUkUYhJ3z0am+imkjVWkm/Y3DB452LLo495rkiHcRNVCwmUr
- p+0AsJbEDF/NVj8rQ6nJLYhApbbiNZDvcOaiq1hkkCkv6XXN+TwOh
-X-Gm-Gg: ATEYQzz45rHACzJgkgjdScoe65Q7bQ2+vcD92Rit8VjYu2/TswPmvw1hyttTxcxd5WN
- VJPuQEB0gVNlOPSD6HeBhNqORsHwxV6IXwvG5k6kHB7+xeZxQ5nVSQUyy76wIKyDAE+Fw+pOJYa
- xfLpW9SKBFoCbWwmXRn+bgqr+UAjSJmIccdD3grS0ffyBEJMKqMqK/Dk71Kdg3WUZVRy8koMG1s
- t0YY5QGybRtHbL69nibUqZru6RZrMuXy98fr3etn6kJ/qLPzCxEw/m++yJdp7vIiuwRi2XF579x
- UrgQ3SWAXfVRHXnpbkmR0zeBdcO+NBkSQ43BU0RSsvfDJ9Ur/TQXT434d4hVkSWmhM8=
-X-Received: by 2002:a05:690e:d45:b0:64c:f78b:1259 with SMTP id
- 956f58d0204a3-64d1433f689mr13153554d50.62.1773154313832; Tue, 10 Mar 2026
- 07:51:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vzyR2-0008Oe-08; Tue, 10 Mar 2026 10:51:48 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1vzyQz-0007bB-Gf; Tue, 10 Mar 2026 10:51:47 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62A7pqtC1274613; Tue, 10 Mar 2026 14:51:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=be7FAU
+ 2bqz/bLbVcm4tWgnRZELqRG+r25LPm00skCyI=; b=hZwBJK2N33GZQB7frLOMz4
+ WKQ4kJ4lKl5DWvBGa4xUPw2iUaDN0SuVKTXg7Lp21xHI7rzbgBA6W4a6H+ixB8IC
+ e7Qcq/iT2QSLXPkBZH8Nz0M7JS1QbYZTZF1nN8vVXWW72oyfu90Y/P97Zu6xMl58
+ i6hvdwSE30kZ9RSL86EyivlsA1e/w0jubpjFjPZsOQUxd+IeVw1kawiYxPHrv7gE
+ ZX5u/hRf7ARDjDZMcZO+OOfbcsOIj4nXFbsI6L/JMTQzhKRHQt9AYxXHYmd1vvSg
+ GHyuu263l9j2fwTtEhutva85bQvBZCUwrIQihmprj6SW1RXGHXHokxZ8LS68Y5Jg
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcuybc73-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 14:51:42 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AAi6mt021181;
+ Tue, 10 Mar 2026 14:51:42 GMT
+Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4crxbssnx8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 14:51:41 +0000
+Received: from smtpav06.fra02v.mail.ibm.com (smtpav06.fra02v.mail.ibm.com
+ [10.20.54.105])
+ by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62AEpcRj44695932
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Mar 2026 14:51:38 GMT
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3689F20040;
+ Tue, 10 Mar 2026 14:51:38 +0000 (GMT)
+Received: from smtpav06.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2C22020049;
+ Tue, 10 Mar 2026 14:51:35 +0000 (GMT)
+Received: from [9.124.215.249] (unknown [9.124.215.249])
+ by smtpav06.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Mar 2026 14:51:34 +0000 (GMT)
+Message-ID: <3054d7bd-f4d5-44af-8cde-14d940437f30@linux.ibm.com>
+Date: Tue, 10 Mar 2026 20:21:33 +0530
 MIME-Version: 1.0
-References: <20260310114442.1025328-1-gaosong@loongson.cn>
-In-Reply-To: <20260310114442.1025328-1-gaosong@loongson.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Mar 2026 14:51:41 +0000
-X-Gm-Features: AaiRm51fp1LI47ZX8YDCRb72BQoAN07QzRGY61pCxU-eMZWwnUe72qFr3FMTIAU
-Message-ID: <CAFEAcA8bu9oMbg=FW1pXBr1rLqmrXDvFL5ZTzs-9hRh8P52wSQ@mail.gmail.com>
-Subject: Re: [PULL 0/2] loongarch-to-apply queue
-To: Song Gao <gaosong@loongson.cn>
-Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 00/10] Implement MPIPL for PowerNV
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org,
+ Hari Bathini <hbathini@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>
+References: <20260310124619.3909045-1-adityag@linux.ibm.com>
+ <abAmBV7g_bGNw0Ax@shivang.upadyay>
+Content-Language: en-US
+From: Aditya Gupta <adityag@linux.ibm.com>
+In-Reply-To: <abAmBV7g_bGNw0Ax@shivang.upadyay>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=EK4LElZC c=1 sm=1 tr=0 ts=69b02fff cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
+ a=9J9Pf-jHrf-NaEm-wmYA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEyNiBTYWx0ZWRfX+sKFJO0JLuzi
+ 5v1DM4jjwkzs8A09/srZDXVCndo1jm9fBscc4h/OVSJQ4FCncAUbbA6+3eFG0jLZYsm+8K2Fh3X
+ A6SqJACgclE0I+51tYlaJjKGq+Gx7ALs5feNIInJKAYjWJ5fJvV3A4iHleuZ7DhdXhGQFkd7ev4
+ 8SB/Y0aD9MdXRyvtAdYfaByqqw1liSeJfNGPH7uvXPR/rYBJQCl1UavzlqHfUhJMDmdfjYXqwIG
+ FhvTkUO+FCFtX7RAKCqJYkuv6JD7IDVSU9aJMP7ynQnNMOIpRFCmKewb7hilTJ5fGE+Qv3ReIdc
+ FJP0q4MNWrtMkC338AZQSol05FsbCD/oHI6Dpn1zoW4A6AGs9YeWLsJH0IXBgm3pBnSDyr26ZrI
+ MPmzhBZQY9mp/4uXINtDu8sjL7v97yR5/xtaGEb6tNJ594HOochrrcBbtyQsygRUso2l3guB5eh
+ P+hKR3cA/mV0lRo0wDA==
+X-Proofpoint-GUID: bAafq9L4rlN0Mwu847QBd2YqiKkZK2Oh
+X-Proofpoint-ORIG-GUID: v-2cTRAzzklpttkk13-u8GMJnvVs5AFQ
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0 clxscore=1015
+ bulkscore=0 impostorscore=0 priorityscore=1501 malwarescore=0 adultscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100126
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -113,35 +127,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Mar 2026 at 12:10, Song Gao <gaosong@loongson.cn> wrote:
+On 10/03/26 19:42, Shivang Upadhyay wrote:
+> On Tue, Mar 10, 2026 at 06:16:07PM +0530, Aditya Gupta wrote:
+>> <...snip...>
+> buildroot fadump test and `make check-functional-ppc64` are passing on V5.
 >
-> The following changes since commit 31ee190665dd50054c39cef5ad740680aabda382:
+> 	Welcome to Buildroot
+> 	buildroot login: root
+> 	# dmesg | grep fadump
+> 	[    0.000000][    T0] opal fadump: Kernel metadata addr: 653902a8
+> 	[    0.000000][    T0] fadump: Reserved 768MB of memory at 0x00000035390000 (System RAM: 5120MB)
+> 	[    0.000000][    T0] fadump: Initialized [0x36000000, 752MB] cma area from [0x35390000, 768MB] bytes of memory reserved for firmware-assisted dump
+> 	[    0.000000][    T0] Kernel command line: console=hvc0 rootwait root=/dev/nvme0n1 fadump=on
+> 	[    0.473711][    T1] opal fadump: Registration is successful!
+> 	# echo c > /proc/sysrq-trigger
 >
->   Merge tag 'hw-misc-20260309' of https://github.com/philmd/qemu into staging (2026-03-09 17:19:26 +0000)
+> 	<snip />
 >
-> are available in the Git repository at:
+> 	Welcome to Buildroot
+> 	buildroot login: root
+> 	# ls -alh /proc/vmcore
+> 	-r--------    1 root     root        4.3G Mar 10 14:07 /proc/vmcore
+> 	#
 >
->   https://github.com/gaosong715/qemu.git tags/pull-loongarch-20260310
 >
-> for you to fetch changes up to db2325f79481fab87211e5a287580d753f582cb8:
+> 	> make check-functional-ppc64
+> 	<snip />
+> 	16/16 func-thorough+func-ppc64-thorough+thorough - qemu:func-ppc64-fadump                OK               65.42s   2 subtests passed
 >
->   target/loongarch: Avoid recursive PNX exception on CSR_BADI fetch (2026-03-10 19:50:01 +0800)
+> 	Ok:                9
+> 	Fail:              0
+> 	Skipped:           7
 >
-> ----------------------------------------------------------------
-> loongarch bug fix
 >
-> ----------------------------------------------------------------
-> rail5 (2):
->       target/loongarch: Preserve PTE permission bits in LDPTE
->       target/loongarch: Avoid recursive PNX exception on CSR_BADI fetch
+> Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+
+Thank you for testing this series, shivang !
 
 
+- Aditya G
 
-
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
+>
+> ~Shivang.
 
