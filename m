@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DB55EB104B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:47:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B6FB6EB1049
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:47:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzucB-0001XH-D9; Tue, 10 Mar 2026 06:47:03 -0400
+	id 1vzubH-0007JT-FO; Tue, 10 Mar 2026 06:46:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzuc6-0001Qn-Tu
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:59 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzubF-0007GC-Hg
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:05 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzuc5-0005wg-H9
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:58 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4853c1ca73aso16427475e9.2
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:46:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzubD-0005qN-3N
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:05 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-48535a0ef86so19960645e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:46:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773139615; x=1773744415; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773139561; x=1773744361; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=ujoRf0bcClqXhFXdVcwAONN87FJcA7bXaTWOZ3wQ6vo=;
- b=cL2vsQpv/mvWFzn9bOF/C0DgdR396OO2dyCZI4DWOA4IAz8dkee/bRztw4nyOaRHEs
- P0m527HYj9yEH3TaNgQ0/uPmaQfzfjC6g7gyrInzRI4Y9Le/cmJvEyC8/GHRwCIrwIba
- EBTvij1li78L2AHGW1ughf2D+gr6C2ewbjYelLyAkF7xeQqh+98/cDyqA8Do0OBdWsmw
- K4ppL47Sq8HGbp36RCc3J0pw1TtDK+uJcuF7rQrSHA5eqlS07UtmjhSaAILh+pZ06EcG
- X/Xay6uwAMJnGS4lM3DpmEq5Sbc2ljyTF3WZxnIK0sKZsLu1uqIiAyCxrtiCcYQAzofv
- lB4w==
+ :reply-to; bh=q7Z/vQB+lFLKsxa63Yt8nB8oPVKn+DTUu+uQwmHZnEY=;
+ b=vqiOwgGrzJV4bqYmYaQLZLa+SyHLTAyqLvrK1kNOSWfspYc3bFm5jzWNuh6ExtPPnh
+ TXKf/uZ3L//q/u4ISJyiKwoxyuZ0atyi8t1UjBxZFq1KINYDcOo1JIFgvF7s2qg42LlJ
+ 5oyxwDKq33VdM/uJvGFNvaXwCX+FVTH2yj95gplP4Snar8n9gjO2jyQe83sOLUIZKOaG
+ HWxhntt0gj2Hs0mQBi1pXggFZTojV5fIJXrDI5QGQFn27C/LnMG7zmr8SzURvK7oVdz7
+ 27uFyWNx780T1qbK4ChTeo03rMAy6jksll9nkgnFWAY3onT3wPGqlzXIh/z7u+rGSTBS
+ lubQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773139615; x=1773744415;
+ d=1e100.net; s=20230601; t=1773139561; x=1773744361;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=ujoRf0bcClqXhFXdVcwAONN87FJcA7bXaTWOZ3wQ6vo=;
- b=fSO++DdSCZe9v4z9uRCpZLe62qOyAGNd/La0dP+dg5Wl8Ze9lnkUfIlaBgiurlSULH
- u6NiA+NuuO/zEZdzg48V147xyJukdslz09F5xAJVtB90XizFn0uspogoURo+35g/4+6A
- CmjYJx+Tpe6BbBsW5MP5K/4HYba0Gq5vCtVhaG471b1sDh9I/5DO+akiT0vQeWDv4Dyd
- 4GlV6qY3XErcRDe0lYgqOYx2dxZrsfywmvARDV7EzSnb2VURR/Vj5fxblkdITSw0k4N9
- Kzg6lqRfuGhjFGTuIK0tw9IrutjIiBjgKB4/ok8Aq2mC3n8vT4kHE/d75yqD9fGiwTiT
- n/hg==
-X-Gm-Message-State: AOJu0Yy11uJGgy6Y3RCfRx9UWFQ3+tv0ZQ4LtAxdWVNueGPb7+WFJ3XA
- gp8JdK3pYWSzk1xDPKlQbMnPpRkppG5Eo1GkTd5zuVLQiIf5cHKWGsnjccWmZ+1fL1mPIoHJ0cJ
- Xfcyju0I=
-X-Gm-Gg: ATEYQzw7hlhyFAUqM2EIA8q7iK54xB1Ok2K4QcvzNAiMYpbAfXEEoZTfOMYrF0OeXi7
- 97hB78YYI3r5LboWvGKCorYRRfhpiSp3gtxeNJPbN4edne7Q4xFAXjuJ/MAiKtfudS2HSI1r/2L
- xrOc+5+feqH/DbT6z2AGOH5aQSGqItVceqUxn6veabALfya5tqg3CLk0lAuJ+gMC+n8pVhBzIge
- i95iRtCeBkuXaFJWG6KQQnjY6zADaO0qDihyu49t10w3CPsoz3jp3Q+APVDmyTeapqsyfDgRtd5
- 4CoOf1Rw/ephglfz4ht7uq3R3qlUSpgvPo1fxuhKmshVzTmLmhEGy2349LQNkaTXeZhllafSu1d
- X9HFFg1NrWEfN6n9obLnBlFbwByPn+vZbtPYiniwiUViImRJJV+Q0TJGrBqX8hMBv4bNmYfi3oD
- l9mQc8/k4SHrYuw1rJg2LjMrwz6I/5JXGF8ML59hh9a3btQHxbyB/auJPnDHc0sexKNiSs6nVU
-X-Received: by 2002:a05:600c:a12:b0:480:3ad0:93c0 with SMTP id
- 5b1f17b1804b1-4852695d1e2mr233119305e9.23.1773139615117; 
- Tue, 10 Mar 2026 03:46:55 -0700 (PDT)
+ bh=q7Z/vQB+lFLKsxa63Yt8nB8oPVKn+DTUu+uQwmHZnEY=;
+ b=k+PaqdA1F8ai7cI3uvEA8VrFbhQ7bdkIy0me8AcVmUYFfGIBeNBdu/GrQOITmLxu4g
+ yyvWZz3kt9TgY5UUUmLJxGoq6eMjh/91Z0VQXiEzeVO7rP9CZa4/8uZc0dMqpiG8e6nG
+ rLsvNNnptF7fvjoFroCu859042gmYkKi6/p3hZ4zR/DPUYLcibcirGpoqyCFrvjZp/JU
+ KOlvJPPKJTPAAXMDMyYIxL+xfEh5GZhYC/0+lKnr2zhaioslq4SCJS4W+EGThMoRFafJ
+ Nc09Hda17nT6rVdL3TCBE0cxK3XzKa8j4/hQaRX7Y37VqD28DAObtV1YenglEu/0/gEX
+ zB4w==
+X-Gm-Message-State: AOJu0Yxc/f9fUQYzp5k1UINQwWfyH+SGypCi9RjFrUeTf67/CpnqNAXB
+ 9RX3bMkc3VNr54pChBYOgszofVKF3pG8KxgQjTlMRZYMgnHkDkRQpL0P37nANWmtLUm3QJFffRH
+ 5KYakl8s=
+X-Gm-Gg: ATEYQzxzG0sKNqCiydd9zF854fqUmXXfhUvNKGlMPz2tavZVFvUu87guCaoDnq+eXzS
+ 6upoYW+R0KwBsw9eeit456S4ZBKAIlryICRD50x0fCm3ES5iMSYJCSQUpzDmDFBrHqIlYbwHjgO
+ ynd6O8E9KCxG8gnj8pA4hteWkl3k8mlqSz8D3/k9Z6ODzyZqhzP4aA5vKvIzpcMI9UOM/E1Jjwq
+ QspOOK6zpgJ3fcKP8UMbUdBtCYgsF0dt7VJZj64PX6zdtllabie7/EWcLrK3vfuDqRshqeVTfs8
+ rSuSKhe5lA1/zTKEeC55YANMzfEjd5yjRkjCu1YETMCqdWTKqVJzmCMEf39lYjewg9u3qk7+v79
+ Yb7rofiC37EytzQ0dplTijcVjXgTeIKBaxphhkDbIbkuFXxDnzP2AO6zWhJrmE0YcmjVq2tBwSh
+ P/2n0Se28jZYyunbYor37YINN0d9anq+CHuqVWqkC3J0Ji9U0W30eKYXF4E0oYaRab8opMUod26
+ C02rYsVFFs=
+X-Received: by 2002:a05:600c:1c25:b0:485:3e6c:aacb with SMTP id
+ 5b1f17b1804b1-4853e6cae44mr95993085e9.4.1773139560818; 
+ Tue, 10 Mar 2026 03:46:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4852378e700sm196655345e9.0.2026.03.10.03.46.54
+ 5b1f17b1804b1-485246ece8bsm171964975e9.4.2026.03.10.03.45.59
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 03:46:54 -0700 (PDT)
+ Tue, 10 Mar 2026 03:45:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 15/16] accel/xen: Build without target-specific knowledge
-Date: Tue, 10 Mar 2026 11:45:10 +0100
-Message-ID: <20260310104511.12670-16-philmd@linaro.org>
+Subject: [PULL 07/16] tcg/optimize: possibly expand deposit into zero with
+ shifts
+Date: Tue, 10 Mar 2026 11:45:02 +0100
+Message-ID: <20260310104511.12670-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310104511.12670-1-philmd@linaro.org>
 References: <20260310104511.12670-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,26 +100,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Code in accel/ aims to be target-agnostic. Enforce that
-by moving the Xen file units to system_ss[], which is
-target-agnostic.
+From: Richard Henderson <richard.henderson@linaro.org>
 
+Use tcg_op_imm_match to choose between expanding with AND+SHL vs SHL+SHR.
+
+Suggested-by: Paolo Bonzini <pbonzini@redhat.com>
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Message-ID: <20260303010833.1115741-8-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Acked-by: Anthony PERARD <anthony.perard@vates.tech>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260225051303.91614-6-philmd@linaro.org>
 ---
- accel/xen/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ tcg/optimize.c | 36 ++++++++++++++++++++++++++++++------
+ 1 file changed, 30 insertions(+), 6 deletions(-)
 
-diff --git a/accel/xen/meson.build b/accel/xen/meson.build
-index 002bdb03c62..455ad5d6be4 100644
---- a/accel/xen/meson.build
-+++ b/accel/xen/meson.build
-@@ -1 +1 @@
--specific_ss.add(when: 'CONFIG_XEN', if_true: files('xen-all.c'))
-+system_ss.add(when: 'CONFIG_XEN', if_true: files('xen-all.c'))
+diff --git a/tcg/optimize.c b/tcg/optimize.c
+index 59761c2c844..b1abec69a5d 100644
+--- a/tcg/optimize.c
++++ b/tcg/optimize.c
+@@ -1743,14 +1743,38 @@ static bool fold_deposit(OptContext *ctx, TCGOp *op)
+             goto done;
+         }
+ 
+-        /* Lower invalid deposit into zero as AND + SHL. */
++        /* Lower invalid deposit into zero as AND + SHL or SHL + SHR. */
+         if (!valid) {
+-            op2 = opt_insert_before(ctx, op, INDEX_op_and, 3);
+-            op2->args[0] = ret;
+-            op2->args[1] = arg2;
+-            op2->args[2] = arg_new_constant(ctx, len_mask);
+-            fold_and(ctx, op2);
++            if (TCG_TARGET_extract_valid(ctx->type, 0, len)) {
++                /* EXTRACT (at 0) + SHL */
++                op2 = opt_insert_before(ctx, op, INDEX_op_extract, 4);
++                op2->args[0] = ret;
++                op2->args[1] = arg2;
++                op2->args[2] = 0;
++                op2->args[3] = len;
++            } else if (tcg_op_imm_match(INDEX_op_and, ctx->type, len_mask)) {
++                /* AND + SHL */
++                op2 = opt_insert_before(ctx, op, INDEX_op_and, 3);
++                op2->args[0] = ret;
++                op2->args[1] = arg2;
++                op2->args[2] = arg_new_constant(ctx, len_mask);
++            } else {
++                /* SHL + SHR */
++                int shl = width - len;
++                int shr = width - len - ofs;
+ 
++                op2 = opt_insert_before(ctx, op, INDEX_op_shl, 3);
++                op2->args[0] = ret;
++                op2->args[1] = arg2;
++                op2->args[2] = arg_new_constant(ctx, shl);
++
++                op->opc = INDEX_op_shr;
++                op->args[1] = ret;
++                op->args[2] = arg_new_constant(ctx, shr);
++                goto done;
++            }
++
++            /* Finish the (EXTRACT|AND) + SHL cases. */
+             op->opc = INDEX_op_shl;
+             op->args[1] = ret;
+             op->args[2] = arg_new_constant(ctx, ofs);
 -- 
 2.53.0
 
