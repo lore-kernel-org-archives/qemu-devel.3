@@ -4,135 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DDBDFD4F08
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 17:53:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA860FD4F11
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 18:01:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w01G1-0001jP-QC; Tue, 10 Mar 2026 13:52:38 -0400
+	id 1w01Nm-0003YA-N7; Tue, 10 Mar 2026 14:00:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w01Fp-0001jA-5c
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:52:25 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w01Fm-0004IE-T2
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:52:24 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-359832fc558so7812147a91.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 10:52:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w01Ni-0003Xi-KG
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:00:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w01Ng-0007WM-Fv
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:00:34 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773165630;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=qOh/lwP4gpZdTqNhhT+bRsz3Non+rnlJtT/sA346NOo=;
+ b=EHsVilP7qKhvsF+4dJ12SDSCgHjxpL5ksihCYNFrdZkWwM6x4FckjA3S3ntiQ8bFz/ox2l
+ vj0QYx5Dd+QL0mIGwhifaSrQgVhFo/AZ5/VA29aaAdg/vSseozWluMjIXOIyRJX9OwMIDv
+ OW11olV0+KYayYQo4RXMST7WRfNhZcE=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-354-xcTx37J7Nnmxw3S_p31HbQ-1; Tue, 10 Mar 2026 14:00:29 -0400
+X-MC-Unique: xcTx37J7Nnmxw3S_p31HbQ-1
+X-Mimecast-MFC-AGG-ID: xcTx37J7Nnmxw3S_p31HbQ_1773165628
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8cd773dd409so434320285a.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 11:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773165141; x=1773769941; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EWvQjJ/GJtZVkCpg+NyxdaGUgScDcuaDg9DXgoFoL2s=;
- b=yIhxUlIQV52UgggFA+ZVVMvwFHZKUwHOrdknIlL/fvTqXacti6fDBaUA1i3O3Z1PW2
- m2ed8I32FJhdiDnO6EnRvlLVFH3nacxfT//vPDgmnIyj3zw5f23ZwZoOppLwPZKhgWgB
- miCGD/Tn5+YZyGoRmtCuBOIoNdMjNlmSOLUEYdEaiHdx48d3cGu4KMZITHuJGqaKM88j
- 3vmf2VLtlLnHJRKGdTFxRog8ipX8p/jC2tHQ/HToxnJLmsa9LO7otIGrMgNsGsXslAf1
- RLexB7NGAZ3nrlMzy2nrk2WXZzrdL1w5VqcWneqvMYPpbtpW8y1VSyzA+IsvRtslJxeN
- AKXw==
+ d=redhat.com; s=google; t=1773165628; x=1773770428; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=qOh/lwP4gpZdTqNhhT+bRsz3Non+rnlJtT/sA346NOo=;
+ b=EbPWGjjt28jBOV+0kBABjZzBUbaeV334TTViWG8mrjTd+gKrOO7cibMpcUnb+hH6IE
+ 6Bhh9mLwebFS7Y/JW9z55AbBjGKVM+GaFJsBdAmCSOKtAH2vJkElQ+qoQG7sHJaNPMRw
+ 3WDYVrP8g4jJV8+SYWz3ZKxtBXU2pXv5e/+E1q3O9P71DG7YmKLxtuosj8lWLkG6H8pU
+ mcwxmuW6sKtCWPTmXDpymnEaoT4P79AwES+aa9JXwOTXuRHrcik7yKkMYGw2mcWyfJgE
+ W44WrO4Nreq7/m6hJnPJt34icMNGAK19ULb5rAQpdq6x2gROi5NFPlsBwZps9QzpAtuD
+ nLdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773165141; x=1773769941;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EWvQjJ/GJtZVkCpg+NyxdaGUgScDcuaDg9DXgoFoL2s=;
- b=QuvKi7VRa5c+FIgQzodq2z8n3SW6Z+3O9dI2u7Kar+jM8GNOL+wm2K7xKMavl7xmYJ
- 9RQJPaRg4kndu3A/ueTOuBDz6lZiGBRL4yLJr699M74Qx5u/ARryX5c3+au/lWvp2KnA
- nKF9nb6ZIU7hMEaf1k9/MrbtVQVVXFob7tKXJMERickHhqfhIEmnx3M8gsYkJPOiFiH7
- 9YeGbjFCgNgzeH+30JRfKj5Um+ocYh6nDtdPX5GINVj3qw2lMy0KtahOyR5FB7EEXFQM
- noJdNP8be68rMK1Z+XKkE1dcHK2Ekzqk5oVncutZK4TIjGnAt23IdLG2Fne2F8hwsZd9
- wLgg==
-X-Gm-Message-State: AOJu0YxheH9a/+HPnUxNPdEezY+KbdyB3qjP6jq5g/OPwEkU7pfRl9q7
- OuIir/8G4RRSyJbsKj59MAsrsUMRWSPd7XEOEx0zTzo9zC2oIZafrXajfKwvxcDEeRc=
-X-Gm-Gg: ATEYQzyc5w8l7SqOFVaq+BKrfS5F7DAnOn+imY9Pdqlr2ECRXJKR92F12I5IA5tA8i0
- QQ/oWMyv6lkwLf6Omkh7kfebiQoyiGOa8VfWLWbGVk+Xx8nLfK6vmPTycrRfK/vUFtwJ+y1jbzS
- eDiJTr757Z0OeNfDTtRW+izrfThoTMhyg0+2g4Io6ZscKsMQWRlxN/G9Ou/gVIUGVe4el+TDypL
- B67rY77O4b8S9ZwhJlJpKK6W0Y5GF7StEg2iU539oeA5dav1uGu4VXUbq5cMifkHAbt8EIpqf81
- 4qwIyqLQ106A/ZxS6HVJVfo/cpqf+MT6yAG38lWX6jG7bWXKp2KyFJNEJTK+5V1teQIk+GUQiAe
- t4mfqsy7yxCiV0sUA5kuPRbNKHW8i72XAEUw9ygRcUQhAuyRuyQ2WT5FClDV6iBm3l74X8t1qo3
- JqFgtlbcuYljLExAxFDtw1h0OBKeCywDqwYxsLvCbIs99zwA1wc4H9jpS+ZuXJwo1lLw1V
-X-Received: by 2002:a17:90b:2d85:b0:359:7ae5:89e7 with SMTP id
- 98e67ed59e1d1-359be2331b5mr12653797a91.4.1773165140500; 
- Tue, 10 Mar 2026 10:52:20 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35a00416674sm5012a91.2.2026.03.10.10.52.19
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Mar 2026 10:52:19 -0700 (PDT)
-Message-ID: <a2af11df-42a8-44eb-9e07-27f40b7aef92@linaro.org>
-Date: Tue, 10 Mar 2026 10:52:19 -0700
+ d=1e100.net; s=20230601; t=1773165628; x=1773770428;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=qOh/lwP4gpZdTqNhhT+bRsz3Non+rnlJtT/sA346NOo=;
+ b=Lk4pkZqTH8BiRBxNgAS+h/gpce+T4tub7mNaCmmnM+gYURY0b816skptSqCDqY8NZU
+ ypfghvDqeqPKl8M36lGmq7hRTIBBKUeYK9pdu/VBfkGMk+0B/kZEYmniWalljtFFpBVl
+ hv0yFGKxzEHa6eWHLYQJw1fOSWYtz1Ykclcb95RAsRAn6XdLCzmHo6oDPIYM5Xv89xEd
+ 65AWgX/kxHJBeu+SfTlupVeEcP23EE8YOGXMLqlgjcg2Nn5FXSwGBmYcaKT3iDSaf/Gq
+ UDnMTSpsTMdlBUChJTzmAwaj4rtQMOJuFCnPOV9BVlT9qCz5wHg1KTmL4RVSTX9csqkU
+ lOTg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW9KTj1uyYuPcb9YQk6xC7QrdzPSWsyJ2o7ehUdmSODekNIpCVo89ZddZ1VfR5zOYNxbUxtP3oQVtr9@nongnu.org
+X-Gm-Message-State: AOJu0YyM0Ex6vz/HGSTlwo/6O0we09VTG8hAk/P+Pc2EpxE5pYHLjIlG
+ vmajNMgTijDBjPdchjVhoXbZ5i2vRuL8r5J5ndNWUiL+QU7otUR+MZshuRbzbC34D+jq2pzty9k
+ kk+j4i4AxW7e8OnVLtM0WWX1De2PB9lGA4s+XJKRlVyDo6Bbeeoornz/B
+X-Gm-Gg: ATEYQzw05KF9Dw0F4wkJ5BXACRaWuMg/nSFJgkketLiQtqfPGrJ8HT457Oni/zszpqI
+ in6Iq+WQ3qbZHalsxE0m+FwchXvy/MfdMOa5XW1uSaOH5aM+TAq42b11wlBZisluj9c01fROTd6
+ L3asLLyyr2fCuEY6PEz8lamlshWlZRRj7A+wJNZwyF5McAN0bV6etmzGTA8a+xVRW2M3EFxhFs9
+ K31eCkcJ9j3SndC4/HUllb/Pqk6bbjCzsT6kNO1+N02IAdXC9yvI/h5I/lxDXuD28mMEfHl41zD
+ yUH0CjNdYpISiGRXfO48rzo3LJnMoaIBw2eAeG/LlvK4FXs8T9+AmQ2IUrpiMimyqAymNlVwaH8
+ ruXEg7OyYwv20jw==
+X-Received: by 2002:a05:620a:8782:b0:8cd:7c98:87c2 with SMTP id
+ af79cd13be357-8cd7c988bc0mr897337085a.60.1773165628159; 
+ Tue, 10 Mar 2026 11:00:28 -0700 (PDT)
+X-Received: by 2002:a05:620a:8782:b0:8cd:7c98:87c2 with SMTP id
+ af79cd13be357-8cd7c988bc0mr897330385a.60.1773165627544; 
+ Tue, 10 Mar 2026 11:00:27 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cda136f7f0sm2005085a.44.2026.03.10.11.00.26
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Mar 2026 11:00:26 -0700 (PDT)
+Date: Tue, 10 Mar 2026 14:00:23 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2] vmstate: fix subsection load name check
+Message-ID: <abBcN2B4QNBT_Oh9@x1.local>
+References: <20260302070626.613396-1-dtalexundeer@yandex-team.ru>
+ <87y0k5136i.fsf@suse.de>
+ <714e4329-6001-4c77-b004-ed7beb11c154@yandex-team.ru>
+ <e81360d5-cab4-47a4-840b-7d948b51a5c0@yandex-team.ru>
+ <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/uftrace_symbols.py: ignore zero sized
- symbols
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260306051553.2778652-1-pierrick.bouvier@linaro.org>
- <f7e095e3-18f8-4c5e-8a39-ff428f984b07@linaro.org>
- <f9c9d581-294d-a813-2cfd-584fb57af743@eik.bme.hu>
- <0a0f0d55-24ed-4018-addf-dac2b7bcfe6e@linaro.org>
- <e5bef5ed-23e9-119d-3f63-a45343cc9c53@eik.bme.hu>
- <cbc1b812-40f4-4b1e-b206-ed4962cb5dd9@linaro.org>
- <c30ea720-5208-adea-c8a3-788c870fedee@eik.bme.hu>
- <905957d4-4d5d-45d1-95e0-f7cdc6f75a97@linaro.org>
- <f2690dc7-ef35-3ab4-0f4a-dbe139b48670@eik.bme.hu>
- <62d96ae5-0b15-4de4-90f8-fb7f6a93afeb@linaro.org>
- <f10e3c8e-b1a6-215b-812d-4c4eb8e6c0c1@eik.bme.hu>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <f10e3c8e-b1a6-215b-812d-4c4eb8e6c0c1@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -148,49 +122,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/26 5:44 AM, BALATON Zoltan wrote:
->>> Could you at least make it easy to filter and delete them? Like sending
->>> them with a cover letter threaded at once or adding [MERGED] to the
->>> subject or something similar so they are easily filtered and not just tell
->>> me to deal with it if I don't like it?
->>>
->>
->> The message body will always be the same, as I use a template in my email
->> client.
->> ```
->> This was merged into master (.*).
->> Thank you for your contribution!
->>
->> Regards,
->> Pierrick
->> ```
->>
->> Second line is optional because I don't thank myself when sending my own
->> series.
->>
->> So a simple email filter could be:
->> from: pierrick.bouvier@linaro.org
->> contains: 'This was merged into master (.*)'
->>
->> Does that sound good to you?
+On Tue, Mar 10, 2026 at 01:39:04PM +0000, Peter Maydell wrote:
+> On Tue, 10 Mar 2026 at 13:28, Alexandr Moshkov
+> <dtalexundeer@yandex-team.ru> wrote:
+> > Hi, this breaks migration for s390x and ppc64:
+> >
+> > qemu-system-s390x: Missing section footer for qemu-s390-flic
+> >
+> > Thanks for reply! It happens because "qemu-s390-flic" vmsd has "qemu-s390-flic-full" subsection. I'm not sure if we can change the names of the existing subsections. Peter, what do you think?
+> >
+> > It seems to be a bigger problem that the migration framework does not document the names for subsections in any way. At the same time, the code implies that at least the names should be a substring with its parent. There is even such a code comment `subsection name has to be "section_name/a"`, that seems to imply the presence of /.
+> >
+> > Also I tried to put together a list of devices whose separator in subsections is not /:
 > 
-> That helps as long as you're the only one sending these otherwise "from"
-> is not the same. It would be even better it you could also change the
-> label in the subject to [MERGED] as it's easier to filter by headers
-> (faster than content search) and that may also help more easily tracking
-> the lifecycle later so you'd see [PATCH vXX] -> [PULL] -> [MERGED}. Or add
-> some header specific to these messages.
->
+> > or-irq
+> 
+> This one and probably some of the others are my mistake, I think.
+> I think this is because:
+>  * the migration code imposes a constraint on the subsection names
+>  * the migration documentation does not mention this constraint
+>  * the migration code does not effectively enforce this constraint
+>    (e.g. by asserting when the vmstate with a bad name is registered)
+> 
+> My assumption when writing that code was very likely that the
+> name of the subsection didn't have to have any relation to
+> the name of its parent subsection (after all, the migration
+> code knows it is a subsection, so if it needed to have the
+> name on the wire be "parentname/subsectionname" it could construct
+> that itself), and since it all just worked I never noticed the
+> mistake...
 
-Unfortunately I can't do this with template, that only can have a fixed 
-subject, and not reuse existing subject + a prefix.
-If I use a manual process, I'm pretty sure I will get it wrong at some 
-point, so I prefer not to promise something that will end up being 
-inconsistent.
+Indeed, we can do better on the 2nd/3rd bullets.. so we should document it
+in struct VMStateDescription definition, and enforce it when registering
+new VMSDs.
 
-> Regards,
-> BALATON Zoltan
+One thing to double check with Alexandr on this one:
 
-Regards,
-Pierrick
+> They using `_`, `-` or `.` as separator
+
+Does it mean we also can't simply whitelist all these characters (including
+"/"), because it won't always work?
+
+For example in your case, it's "virtio-blk" being the parent VMSD, "virtio"
+being the child VMSD, followed with a subsection belongs to virtio-blk.
+We want to make that subsection be recognizable as virtio-blk's.
+
+Then if we treat "-" also to be a separator, then "virtio" will still
+mis-recognize virtio-blk's as its own (because its name is "virtio-blk/..."
+hence it also satisfies the "virtio" check)?
+
+Thanks,
+
+-- 
+Peter Xu
+
 
