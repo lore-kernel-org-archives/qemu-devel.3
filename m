@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B57FFD4F04
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:27:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43201FD4F04
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:27:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzvK-0003Qk-OM; Tue, 10 Mar 2026 12:27:10 -0400
+	id 1vzzvS-0003Wa-Lv; Tue, 10 Mar 2026 12:27:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzv9-0003L3-0t
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:59 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvC-0003Nk-Fw
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:02 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzv7-0000uK-F9
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:58 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvB-0000vX-4M
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773160016;
+ s=mimecast20190719; t=1773160020;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=EerOtERlXoVSU73mqwwBbXk9WG5MEwl6IjYw0Ivbe4o=;
- b=iQN2QHJrPEpc5SuTIe1h1a3+VgzSNgNyxKHslD2TAqqimrwEIxyxHgHcI4d1CUFOXZf1Na
- O65iFZMi1ql7Syl5kS3zK9AyiJYXW8gdlkk3Oofi7+pJAkf+tt8AmYx3xG4Gj5/wuDJ0t3
- aG6mXMfBSD4W3iHByUMW9TEFPl6bZZk=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=mhdlKPgh17Z3o9lLJY65BTZtmBO2Ej1Xu+1oTHM+Z/4=;
+ b=gPZcYYB/BYN0BqBjbqYJF2r0ovaMq4sVRsILmpp+Tg6isG1ICtcL0SA54WMppkyuQz6t1u
+ BwSZYYkb4L5/L8a3Llr3IenBfsLPpLOIPwUVOcSMNaXxrCp4wJfvEz9rKR0RKRSAqNd+LC
+ Pc3FkIRAyDlE5BGRizfa9eoTOOd80Ao=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-584-AXSMoUFENKizoniwXHTxaQ-1; Tue,
- 10 Mar 2026 12:26:55 -0400
-X-MC-Unique: AXSMoUFENKizoniwXHTxaQ-1
-X-Mimecast-MFC-AGG-ID: AXSMoUFENKizoniwXHTxaQ_1773160014
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-638-gRkn4m2FNGCUZcVOotNsPg-1; Tue,
+ 10 Mar 2026 12:26:57 -0400
+X-MC-Unique: gRkn4m2FNGCUZcVOotNsPg-1
+X-Mimecast-MFC-AGG-ID: gRkn4m2FNGCUZcVOotNsPg_1773160016
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B74721956094; Tue, 10 Mar 2026 16:26:54 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5097A18002DD; Tue, 10 Mar 2026 16:26:56 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.224.112])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 9157419560A6; Tue, 10 Mar 2026 16:26:53 +0000 (UTC)
+ id 2B3A419560A6; Tue, 10 Mar 2026 16:26:54 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 15/28] block: Move qemu_fcntl_addfl() into osdep.c
-Date: Tue, 10 Mar 2026 17:26:09 +0100
-Message-ID: <20260310162622.333137-16-kwolf@redhat.com>
+Subject: [PULL 16/28] fuse: Drop permission changes in fuse_do_truncate
+Date: Tue, 10 Mar 2026 17:26:10 +0100
+Message-ID: <20260310162622.333137-17-kwolf@redhat.com>
 In-Reply-To: <20260310162622.333137-1-kwolf@redhat.com>
 References: <20260310162622.333137-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -84,96 +84,69 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hanna Czenczek <hreitz@redhat.com>
 
-Move file-posix's helper to add a flag (or a set of flags) to an FD's
-existing set of flags into osdep.c for other places to use.
+This function is always called with writable == true.  This makes
+add_resize_perm always false, and thus we can drop the quite ugly
+permission-changing code.
 
-Suggested-by: Eric Blake <eblake@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260309150856.26800-16-hreitz@redhat.com>
+Message-ID: <20260309150856.26800-17-hreitz@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- include/qemu/osdep.h |  1 +
- block/file-posix.c   | 17 +----------------
- util/osdep.c         | 18 ++++++++++++++++++
- 3 files changed, 20 insertions(+), 16 deletions(-)
+ block/export/fuse.c | 34 ++--------------------------------
+ 1 file changed, 2 insertions(+), 32 deletions(-)
 
-diff --git a/include/qemu/osdep.h b/include/qemu/osdep.h
-index b384b5b506b..f151578b5ce 100644
---- a/include/qemu/osdep.h
-+++ b/include/qemu/osdep.h
-@@ -633,6 +633,7 @@ int qemu_lock_fd(int fd, int64_t start, int64_t len, bool exclusive);
- int qemu_unlock_fd(int fd, int64_t start, int64_t len);
- int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive);
- bool qemu_has_ofd_lock(void);
-+int qemu_fcntl_addfl(int fd, int flag);
- #endif
- 
- bool qemu_has_direct_io(void);
-diff --git a/block/file-posix.c b/block/file-posix.c
-index 6265d2e248b..e49b13d6abb 100644
---- a/block/file-posix.c
-+++ b/block/file-posix.c
-@@ -1056,21 +1056,6 @@ static int raw_handle_perm_lock(BlockDriverState *bs,
-     return ret;
- }
- 
--/* Sets a specific flag */
--static int fcntl_setfl(int fd, int flag)
--{
--    int flags;
--
--    flags = fcntl(fd, F_GETFL);
--    if (flags == -1) {
--        return -errno;
--    }
--    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
--        return -errno;
--    }
--    return 0;
--}
--
- static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
-                                  int *open_flags, uint64_t perm, Error **errp)
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index af0a8de17b1..b7a710c29f8 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -503,44 +503,14 @@ static void fuse_getattr(fuse_req_t req, fuse_ino_t inode,
+ static int fuse_do_truncate(const FuseExport *exp, int64_t size,
+                             bool req_zero_write, PreallocMode prealloc)
  {
-@@ -1109,7 +1094,7 @@ static int raw_reconfigure_getfd(BlockDriverState *bs, int flags,
-         /* dup the original fd */
-         fd = qemu_dup(s->fd);
-         if (fd >= 0) {
--            ret = fcntl_setfl(fd, *open_flags);
-+            ret = qemu_fcntl_addfl(fd, *open_flags);
-             if (ret) {
-                 qemu_close(fd);
-                 fd = -1;
-diff --git a/util/osdep.c b/util/osdep.c
-index 770369831bc..000e7daac8b 100644
---- a/util/osdep.c
-+++ b/util/osdep.c
-@@ -280,6 +280,24 @@ int qemu_lock_fd_test(int fd, int64_t start, int64_t len, bool exclusive)
-         return fl.l_type == F_UNLCK ? 0 : -EAGAIN;
-     }
- }
-+
-+/**
-+ * Set the given flag(s) (fcntl GETFL/SETFL) on the given FD, while retaining
-+ * other flags.
-+ */
-+int qemu_fcntl_addfl(int fd, int flag)
-+{
-+    int flags;
-+
-+    flags = fcntl(fd, F_GETFL);
-+    if (flags == -1) {
-+        return -errno;
-+    }
-+    if (fcntl(fd, F_SETFL, flags | flag) == -1) {
-+        return -errno;
-+    }
-+    return 0;
-+}
- #endif
+-    uint64_t blk_perm, blk_shared_perm;
+     BdrvRequestFlags truncate_flags = 0;
+-    bool add_resize_perm;
+-    int ret, ret_check;
+-
+-    /* Growable and writable exports have a permanent RESIZE permission */
+-    add_resize_perm = !exp->growable && !exp->writable;
  
- bool qemu_has_direct_io(void)
+     if (req_zero_write) {
+         truncate_flags |= BDRV_REQ_ZERO_WRITE;
+     }
+ 
+-    if (add_resize_perm) {
+-        if (!qemu_in_main_thread()) {
+-            /* Changing permissions like below only works in the main thread */
+-            return -EPERM;
+-        }
+-
+-        blk_get_perm(exp->common.blk, &blk_perm, &blk_shared_perm);
+-
+-        ret = blk_set_perm(exp->common.blk, blk_perm | BLK_PERM_RESIZE,
+-                           blk_shared_perm, NULL);
+-        if (ret < 0) {
+-            return ret;
+-        }
+-    }
+-
+-    ret = blk_truncate(exp->common.blk, size, true, prealloc,
+-                       truncate_flags, NULL);
+-
+-    if (add_resize_perm) {
+-        /* Must succeed, because we are only giving up the RESIZE permission */
+-        ret_check = blk_set_perm(exp->common.blk, blk_perm,
+-                                 blk_shared_perm, &error_abort);
+-        assert(ret_check == 0);
+-    }
+-
+-    return ret;
++    return blk_truncate(exp->common.blk, size, true, prealloc,
++                        truncate_flags, NULL);
+ }
+ 
+ /**
 -- 
 2.53.0
 
