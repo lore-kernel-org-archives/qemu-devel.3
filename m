@@ -4,113 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B1E8EB1049
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 11:02:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5ABAEB1049
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 11:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzuqX-0000z0-Og; Tue, 10 Mar 2026 07:01:55 -0400
+	id 1vzurn-0001d9-8C; Tue, 10 Mar 2026 07:03:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1vzuqC-0000xK-97; Tue, 10 Mar 2026 07:01:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzurj-0001cU-B6
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 07:03:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
- id 1vzuq9-0003si-DE; Tue, 10 Mar 2026 07:01:31 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A4dVs8661980; Tue, 10 Mar 2026 11:01:15 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=nRSzBN
- 1cnLZc3ZRZVqJviC37BuQuY+FK+RY3jhwDK58=; b=g0cixMpOB5uwfMCoDC+kkO
- AYvzSAXZtIEOEykot5YCQ+8iNKz46vmg485lgFDoipMMdAwSl4ZPdX2jOF/0usJt
- nCdCiwG4IfsMx6y7OdurGEz4SV5Fz3irfYanKYUcPyuSYx6AzH22G/2SrtRTjOnX
- kQs2GY/Fiq2cHYTNoVXeKqmx+/VBzflwvty+CVApdB4m742PSxseyqytVi9ghR6k
- Y6y45ljEjfXcCSm1CzXZdIXds3zUcM6ZzizQXQHc4hrzoadzKQMKRpnD/rWtSLPd
- tH3wRwUiViz3v5SQz008psImW9ZIgEXmYxRHV4dnNeZzWH26CYcqtGAqyawYBnuw
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1mj4xw-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 11:01:14 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62A81sPq015771;
- Tue, 10 Mar 2026 11:01:13 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs1220fd9-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 11:01:13 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AB17Vd62062960
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 11:01:07 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 225DE2004B;
- Tue, 10 Mar 2026 11:01:07 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3D55220043;
- Tue, 10 Mar 2026 11:01:05 +0000 (GMT)
-Received: from [9.109.204.116] (unknown [9.109.204.116])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 11:01:05 +0000 (GMT)
-Message-ID: <75cc39a2-2327-461d-9ca8-ed240b1a6e2e@linux.ibm.com>
-Date: Tue, 10 Mar 2026 16:31:04 +0530
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzurg-00049l-Ds
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 07:03:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773140582;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=06VdzrnGqfIaPqfmLt3aygF27v/kaYNW/vZppX8ksMw=;
+ b=Pgd1lc2L1UbBNCK02pV6BGG2Wq/L7MqSpviGmiKomrDmG2cmJI2DGwgYqnd2ki1M6i0dgu
+ qLM4psaFisajdNLr5X2yUoAt980PqWITeLIwCEXs49hjdawDIvy8oJjh+Cb+RustgxNZ2p
+ RAfUEDLEHIgbkrGU/xu787C1CBU0I14=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-xJjdC0AUMhyOvMVn3__GNw-1; Tue,
+ 10 Mar 2026 07:02:59 -0400
+X-MC-Unique: xJjdC0AUMhyOvMVn3__GNw-1
+X-Mimecast-MFC-AGG-ID: xJjdC0AUMhyOvMVn3__GNw_1773140578
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 48A9A1956094; Tue, 10 Mar 2026 11:02:58 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7069F19560A6; Tue, 10 Mar 2026 11:02:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 00BDE21E6614; Tue, 10 Mar 2026 12:02:54 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Alessandro
+ Ratti <alessandro@0x65c.net>,  alessandro.ratti@gmail.com,
+ alex.bennee@linaro.org,  mst@redhat.com,  qemu-devel@nongnu.org
+Subject: Re: [PATCH v3] virtio: improve virtqueue mapping error messages
+In-Reply-To: <CAFEAcA9oKbFi7hBvKcz_v_xWtHaPz4n3Q_cVEai1F1kZnr5PiA@mail.gmail.com>
+ (Peter Maydell's message of "Sat, 7 Mar 2026 13:39:33 +0000")
+References: <aNLIHOwcGB47qbUY@redhat.com>
+ <20250924093138.559872-1-alessandro@0x65c.net>
+ <20250924093138.559872-2-alessandro@0x65c.net>
+ <aNO7J7Y6wsk1-wyw@redhat.com>
+ <CAFEAcA9oKbFi7hBvKcz_v_xWtHaPz4n3Q_cVEai1F1kZnr5PiA@mail.gmail.com>
+Date: Tue, 10 Mar 2026 12:02:54 +0100
+Message-ID: <87a4wgc5gh.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 07/10] pnv/mpipl: Write the preserved CPU and MDRT state
-To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Hari Bathini <hbathini@linux.ibm.com>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Nicholas Piggin <npiggin@gmail.com>,
- Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>
-References: <20260309072001.3136261-1-adityag@linux.ibm.com>
- <20260309072001.3136261-8-adityag@linux.ibm.com>
-Content-Language: en-US
-From: Sourabh Jain <sourabhjain@linux.ibm.com>
-In-Reply-To: <20260309072001.3136261-8-adityag@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69aff9fa cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
- a=OCuGa67OR13ycClGfpMA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDA5MCBTYWx0ZWRfX1EzDv1Y6sBXd
- Fac82wp/SQcChnc2fJ5RlCw0XC51y2GjA8AGw2W8EWqV48VVt2IxZcLi9MV7Ln/6YDkfDtfH7gf
- BJRxSdTVEkKRxhed56oI5NUtR5ZwUoRf1//3w1jNGSPaqXl2xsDlp88zbXq1vo3tzXLbHN1Ryeg
- 5CMSBhAzwKN7ceXC1klJkoRskLYdgqYWWxsmA1Pj7sA9yYIRYk6K9v3TwfSt1pS0tirAi5XC4lQ
- HCD2qJBi3Vp0v45PuV9ryKBxPpHgiF3VZuDnj0AZG4VsNwypTiOtf1C/S2gZEjuh8da8RHD1ZqW
- 17zqHaJPPip9JTcXDVqOpxoUbdnFeSq0Pv+PM8w7d/HIoYQMby1jZEix+peI4TUzxnAtqo7ow0h
- oG/sE7ypHWaJL9ksfGorU9WpWDhPYIi96ivbmsccbG4YQRxJOBmi3xPcCQQhB7Gf7aL2wOz9tbM
- Sq9z3v3rm810M+oT6/w==
-X-Proofpoint-GUID: t9rUM8mHyD_oWnvL2d6ShOy8S1mbT0lS
-X-Proofpoint-ORIG-GUID: zYOo3iNjCeR3tQGetI-dMhx0kO0_8ebU
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100090
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=sourabhjain@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,268 +92,163 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Peter Maydell <peter.maydell@linaro.org> writes:
 
-
-On 09/03/26 12:49, Aditya Gupta wrote:
-> Logic for preserving the CPU registers and memory regions has been done
-> in previous patches.
+> On Wed, 24 Sept 2025 at 10:37, Daniel P. Berrang=C3=A9 <berrange@redhat.c=
+om> wrote:
+>>
+>> On Wed, Sep 24, 2025 at 11:14:04AM +0200, Alessandro Ratti wrote:
+>> > Improve error reporting when virtqueue ring mapping fails by including=
+ a
+>> > device identifier in the error message.
+>> >
+>> > Introduce a helper qdev_get_printable_name() in qdev-core, which retur=
+ns
+>> > either:
+>> >
+>> >  - the device ID, if explicitly provided (e.g. -device ...,id=3Dfoo)
+>> >  - the QOM path from qdev_get_dev_path(dev) otherwise
+>> >  - "<unknown device>" as a fallback when no identifier is present
+>> >
+>> > This makes it easier to identify which device triggered the error in
+>> > multi-device setups or when debugging complex guest configurations.
+>> >
+>> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/230
+>> > Buglink: https://bugs.launchpad.net/qemu/+bug/1919021
+>> >
+>> > Suggested-by: Markus Armbruster <armbru@redhat.com>
+>> > Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+>> > ---
+>> >  hw/core/qdev.c         | 29 +++++++++++++++++++++++++++++
+>> >  hw/virtio/virtio.c     | 15 ++++++++++++---
+>> >  include/hw/qdev-core.h |  1 +
+>> >  3 files changed, 42 insertions(+), 3 deletions(-)
+>>
+>> Reviewed-by: Daniel P. Berrang=C3=A9 <berrange@redhat.com>
 >
-> Write those data at the relevant memory address, such as PROC_DUMP_AREA
-> for CPU registers, and MDRT for preserved memory regions.
+> Hi; I just found this commit (now e209d4d7a31b9) in the course
+> of finding a memory leak in it. I'm about to send patches to fix
+> that, but in the meantime:
 >
-> Also export "mpipl-boot" device tree node, for kernel to know that it's
-> a 'dump active' boot
+> We now have two different functions for "give me a nice string
+> that I can use in an error message about this device":
 >
-> Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-> ---
->   hw/ppc/pnv.c         |  45 +++++++++++++-
->   hw/ppc/pnv_mpipl.c   | 140 +++++++++++++++++++++++++++++++++++++++++++
->   include/hw/ppc/pnv.h |   1 +
->   3 files changed, 185 insertions(+), 1 deletion(-)
+>  * qdev_get_human_name(), used only in hw/block/block.c
+>  * qdev_get_printable_name(), used only in hw/virtio/virtio.c
 >
-> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-> index 3038b1626c54..0b94e0c7a19b 100644
-> --- a/hw/ppc/pnv.c
-> +++ b/hw/ppc/pnv.c
-> @@ -751,6 +751,8 @@ static void pnv_reset(MachineState *machine, ResetType type)
->       PnvMachineState *pnv = PNV_MACHINE(machine);
->       IPMIBmc *bmc;
->       void *fdt;
-> +    int node_offset;
-> +    bool is_next_boot_mpipl = false;
->   
->       qemu_devices_reset(type);
->   
-> @@ -781,7 +783,48 @@ static void pnv_reset(MachineState *machine, ResetType type)
->           _FDT((fdt_pack(fdt)));
->       }
->   
-> -    if (!pnv->mpipl_state.is_next_boot_mpipl) {
-> +    /*
-> +     * Only on success of writing MPIPL data will the next boot be provided
-> +     * "mpipl-boot" property in device tree
-> +     * Otherwise boot like a normal non-MPIPL boot
-> +     */
-> +    if (pnv->mpipl_state.is_next_boot_mpipl) {
-> +        /* Write the preserved MDRT and CPU State Data */
-> +        bool mpipl_write_succeeded = do_mpipl_write(pnv);
+> Can we please have *one* function for this purpose?
 
-do_mpipl_write returns bool and mpipl_write_succeeded is of type boot yet
-is_next_boot_mpipl is assigned under if-else condition. Is it really needed?
+Sensible request.
 
-> +
-> +        if (!mpipl_write_succeeded) {
-> +            is_next_boot_mpipl = false;
-> +        } else {
-> +            is_next_boot_mpipl = true;
-> +        }
-> +    }
-> +
-> +    /*
-> +     * If it's a MPIPL boot, add the "mpipl-boot" property, and reset the
-> +     * boolean for MPIPL boot for next boot
-> +     */
-> +    if (is_next_boot_mpipl) {
-> +        void *fdt_copy = g_malloc0(FDT_MAX_SIZE);
-> +
-> +        /* Create a writable copy of the fdt */
-> +        _FDT((fdt_open_into(fdt, fdt_copy, FDT_MAX_SIZE)));
-> +
-> +        node_offset = fdt_path_offset(fdt_copy, "/ibm,opal/dump");
-> +        _FDT((fdt_appendprop_u64(fdt_copy, node_offset, "mpipl-boot", 1)));
+> I see from the thread that the criticism of qdev_get_human_name()
+> is that "it often returns opaque paths like
+>
+>    /machine/peripheral-anon/device[0]/virtio-backend
+>
+> which are less informative in user-facing logs compared to PCI IDs or
+> user-specified names".
+>
+> So could we instead make block.c use qdev_get_printable_name(), and
+> remove qdev_get_human_name() ? It also is using the result only
+> to construct an error string for the user.
 
-What if node_offset is not valid? What is expected here?
+No, not without significant improvements to qdev_get_printable_name().
 
-> +
-> +        /* Update the fdt, and free the original fdt */
-> +        if (fdt != machine->fdt) {
-> +            /*
-> +             * Only free the fdt if it's not machine->fdt, to prevent
-> +             * double free, since we already free machine->fdt later
-> +             */
-> +            g_free(fdt);
-> +        }
-> +        fdt = fdt_copy;
-> +
-> +        /* This boot is an MPIPL, reset the boolean for next boot */
-> +        pnv->mpipl_state.is_next_boot_mpipl = false;
-> +    } else {
->           /*
->            * Set the "Thread Register State Entry Size", so that firmware can
->            * allocate enough memory to capture CPU state in the event of a
-> diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
-> index 37f498051254..2cf54a8ec306 100644
-> --- a/hw/ppc/pnv_mpipl.c
-> +++ b/hw/ppc/pnv_mpipl.c
-> @@ -20,6 +20,8 @@
->       (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
->   #define MDDT_TABLE_RELOCATED                            \
->       (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
-> +#define MDRT_TABLE_RELOCATED                            \
-> +    (pnv->mpipl_state.skiboot_base + MDRT_TABLE_OFF)
->   #define PROC_DUMP_RELOCATED                             \
->       (pnv->mpipl_state.skiboot_base + PROC_DUMP_AREA_OFF)
->   
-> @@ -319,6 +321,139 @@ static bool pnv_mpipl_preserve_cpu_state(PnvMachineState *pnv)
->       return true;
->   }
->   
-> +/*
-> + * Write the preserved CPU state data in Processor Dump Area (PROC_DUMP_AREA)
-> + *
-> + * Returns true if everything went fine, else false for any error
-> + */
-> +static bool pnv_mpipl_write_cpu_state(PnvMachineState *pnv)
-> +{
-> +    MpiplProcDumpArea *proc_area = &pnv->mpipl_state.proc_area;
-> +    MpiplPreservedCPUState *cpu_state = pnv->mpipl_state.cpu_states;
-> +    const uint32_t num_cpu_states = pnv->mpipl_state.num_cpu_states;
-> +    hwaddr next_regentries_hdr;
-> +    AddressSpace *default_as = &address_space_memory;
-> +    MemTxResult io_result;
-> +    MemTxAttrs attrs;
-> +
-> +    /* Mark the memory transactions as privileged memory access */
-> +    attrs.user = 0;
-> +    attrs.memory = 1;
-> +
-> +    if (be32_to_cpu(proc_area->alloc_size) <
-> +       (num_cpu_states * sizeof(MpiplPreservedCPUState))) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +            "MPIPL: Size of buffer allocate by skiboot (%u bytes) is not"
-> +            "enough to save all CPUs registers needed (%zu bytes)",
-> +            be32_to_cpu(proc_area->alloc_size),
-> +            num_cpu_states * sizeof(MpiplPreservedCPUState));
-> +
-> +        return false;
-> +    }
-> +
-> +    proc_area->version = PROC_DUMP_AREA_VERSION_P9;
-> +
-> +    /*
-> +     * This is the stride kernel/firmware should use to jump from a
-> +     * register entries header to next CPU's header
-> +     */
-> +    proc_area->thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
-> +
-> +    /* Write the header and register entries for each CPU */
-> +    next_regentries_hdr = be64_to_cpu(proc_area->alloc_addr) & (~HRMOR_BIT);
-> +    for (int i = 0; i < num_cpu_states; ++i) {
-> +        io_result = address_space_write(default_as, next_regentries_hdr, attrs,
-> +            &cpu_state->hdr, sizeof(MpiplRegDataHdr));
-> +        if (io_result != MEMTX_OK) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                "MPIPL: Failed to write RegEntries Header\n");
-> +            return false;
-> +        }
-> +
-> +        io_result = address_space_write(default_as,
-> +            next_regentries_hdr + sizeof(MpiplRegDataHdr), attrs,
-> +            &cpu_state->reg_entries,
-> +            NUM_REGS_PER_CPU * (sizeof(MpiplRegEntry)));
-> +        if (io_result != MEMTX_OK) {
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                "MPIPL: Failed to write Register Entries\n");
-> +            return false;
-> +        }
-> +
-> +        /*
-> +         * According to HDAT section:
-> +         *  "15.3.1.5 Architected Register Data content":
-> +         *
-> +         * The next register entries header will be at current header +
-> +         * "Thread Register State Entry size"
-> +         *
-> +         * Note: proc_area.thread_size == sizeof(MpiplPreservedCPUState)
-> +         */
-> +        next_regentries_hdr += sizeof(MpiplPreservedCPUState);
-> +        ++cpu_state;
-> +    }
-> +
-> +    /* Point the destination address to the preserved memory region */
-> +    proc_area->dest_addr = proc_area->alloc_addr;
-> +    proc_area->act_size  = cpu_to_be32(num_cpu_states *
-> +            sizeof(MpiplPreservedCPUState));
-> +
-> +    io_result = address_space_write(default_as, PROC_DUMP_AREA_OFF, attrs,
-> +        proc_area, sizeof(MpiplProcDumpArea));
-> +    if (io_result != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +            "MPIPL: Failed to write Register Entries\n");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
-> +/*
-> + * Write the preserved MDRT table, representing preserved memory regions
-> + *
-> + * Returns true if everything went fine, else false for any error
-> + */
-> +static bool pnv_mpipl_write_mdrt(PnvMachineState *pnv)
-> +{
-> +    MpiplPreservedState *state = &pnv->mpipl_state;
-> +    AddressSpace *default_as = &address_space_memory;
-> +    MemTxResult io_result;
-> +    MemTxAttrs attrs;
-> +
-> +    /* Mark the memory transactions as privileged memory access */
-> +    attrs.user = 0;
-> +    attrs.memory = 1;
-> +
-> +    /*
-> +     * Generally writes from platform during MPIPL don't go to a relocated
-> +     * skiboot address
-> +     *
-> +     * Though for MDRT we are doing so, as this is the address skiboot
-> +     * considers by default for MDRT
-> +     *
-> +     * MDRT/MDST/MDDT base addresses are actually meant to be shared by
-> +     * platform in SPIRA structures.
-> +     *
-> +     * Not implementing SPIRA as it increases complexity for no gains.
-> +     * Using the default address skiboot expects for MDRT, which is the
-> +     * relocated MDRT, hence writing to it
-> +     *
-> +     * Other tables like MDST/MDDT should not be written to relocated
-> +     * addresses, as skiboot will overwrite anything from SKIBOOT_BASE till
-> +     * SKIBOOT_BASE+SKIBOOT_SIZE (which is 0x30000000-0x31c00000 by default)
-> +     */
-> +    io_result = address_space_write(default_as, MDRT_TABLE_RELOCATED, attrs,
-> +            state->mdrt_table,
-> +            state->num_mdrt_entries * sizeof(MdrtTableEntry));
-> +    if (io_result != MEMTX_OK) {
-> +        qemu_log_mask(LOG_GUEST_ERROR, "MPIPL: Failed to write MDRT table\n");
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->   void do_mpipl_preserve(PnvMachineState *pnv)
->   {
->       pause_all_vcpus();
-> @@ -339,3 +474,8 @@ void do_mpipl_preserve(PnvMachineState *pnv)
->        */
->       qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
->   }
-> +
-> +bool do_mpipl_write(PnvMachineState *pnv)
-> +{
-> +    return pnv_mpipl_write_mdrt(pnv) && pnv_mpipl_write_cpu_state(pnv);
-> +}
-> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-> index 7d73629f112a..98fe10fb4f2e 100644
-> --- a/include/hw/ppc/pnv.h
-> +++ b/include/hw/ppc/pnv.h
-> @@ -295,5 +295,6 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
->   
->   /* MPIPL helpers */
->   void do_mpipl_preserve(PnvMachineState *pnv);
-> +bool do_mpipl_write(PnvMachineState *pnv);
->   
->   #endif /* PPC_PNV_H */
+Let's have a closer look.
+
+
+First qdev_get_human_name():
+
+    char *qdev_get_human_name(DeviceState *dev)
+    {
+        g_assert(dev !=3D NULL);
+
+        return dev->id ?
+               g_strdup(dev->id) : object_get_canonical_path(OBJECT(dev));
+    }
+
+This returns the device's ID if it has one, else its canonical QOM path.
+
+Intepreting the value is easy enough: if it starts with '/', it's a
+canonical QOM path, else a qdev ID.
+
+Devices plugged by the user have an ID if the user specified one.  If
+they don't have one, the canonical path will be
+/machine/peripheral-anon/device[N], where N is a non-negative integer.
+Gibberish, but easy enough to avoid: specify an ID.  Management
+applications should do that always.
+
+Onboard devices do not have an ID.  The return value could be something
+relatively reasonable like /machine/soc/cpu, or gibberish like
+/machine/unattached/device[N].
+
+
+Next qdev_get_printable_name():
+
+    const char *qdev_get_printable_name(DeviceState *vdev)
+
+Nitpick: @vdev is an unusual identifier.  We normally use @dev around
+here.
+
+    {
+        /*
+         * Return device ID if explicity set
+         * (e.g. -device virtio-blk-pci,id=3Dfoo)
+         * This allows users to correlate errors with their custom device
+         * names.
+         */
+        if (vdev->id) {
+            return vdev->id;
+        }
+
+Same as qdev_get_human_name() so far.
+
+        /*
+         * Fall back to the canonical QOM device path (eg. ID for PCI
+         * devices).
+         * This ensures the device is still uniquely and meaningfully
+         * identified.
+         */
+        const char *path =3D qdev_get_dev_path(vdev);
+        if (path) {
+            return path;
+        }
+
+This returns a "name" in a bus-specific format if the device is plugged
+into a bus that provides the get_dev_path() method.  Many buses do.
+
+For instance, the PCI bus's method is cibus_get_dev_path().  It appears
+to return a path of the form
+
+    Domain:00:Slot.Function:Slot.Function....:Slot.Function.
+
+which is commonly just a PCI address.
+
+The comment is nonsense: this has nothing to do with "the canonical QOM
+device path".
+
+        /*
+         * Final fallback: if all else fails, return a placeholder string.
+         * This ensures the error message always contains a valid string.
+         */
+        return "<unknown device>";
+
+This fallback is is unnecessarily bad.  The canonical QOM path always
+exists and would be far better.
+
+    }
+
+Intepreting the value can be difficult: we have some twenty
+.get_dev_path() methods, and each of them can format however it wants.
+You need to guess the format to make sense of the value.
+
+
+Neither function is ideal.  But in their current state, I *strongly*
+prefer qdev_get_human_name(), because I hate having to decipher a QOM
+path less than having to guess what kind of device this might be, then
+figure out what format its .get_dev_path() uses.
+
+If someone posts a patch to fix the shortcomings of
+qdev_get_printable_name() I outlined above, we can talk.
 
 
