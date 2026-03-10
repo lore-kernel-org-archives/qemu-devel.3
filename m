@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39A15EB1043
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:46:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E466BEB1049
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:46:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzuaW-0006zI-Gg; Tue, 10 Mar 2026 06:45:20 -0400
+	id 1vzubK-0007Ll-Sb; Tue, 10 Mar 2026 06:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzuaU-0006yq-4M
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:45:18 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1vzubJ-0007Kh-3y
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:09 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzuaS-0005kB-72
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:45:17 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48532925a4bso13079095e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:45:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1vzubH-0005r8-8g
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:08 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-439d8df7620so2776926f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:46:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773139514; x=1773744314; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=prpVZEFx5pusLus9gfFD95wasIRzuR492CqA6rGNeDs=;
- b=oq03ckeC7vkv7lEl6a5FdDDa7Fv4Ahbkvhm9tZncqVbfQrXW/w7OiWMuDTNiGqCcBJ
- CLZ46PRFWuGigzsgsEDdcfJtwuU5Jgb59n2gJNE3B5VS78rD8qJZrRyZ90AHIo6MkQMW
- NTJVBP6Sp+1KzO4qNoIE0CRnyh9+ebuj2/7fAO2R+oQL4mgfSScHKe7UKW4WiXFTpvEk
- 0UAB8aAMuVKZj0IMqURxvBsX/sjiu8liqjniTwkncyxpTYiY1f1yB+SswOcz6FjpC8TH
- h4AuOaorPopLaMfdWzdSThly4cnaUrL1B3RgTHeoSy2PeKd/dNoKft2sWLEMCsx3Gn1G
- byFg==
+ d=lowrisc.org; s=google; t=1773139565; x=1773744365; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=YdkZiwfVySks8Rpj4htrXSfL5hZEvQhJ0yl/SD/CGn4=;
+ b=RQKxwfDyPFpwYyxtC2Xa9m0usxKkWFcNoSrLlQPUo9VBd+QcsizocLBSTh/XTd9ISR
+ k3yvuWxJ/b5AmFtcw8nxW6DrW/z5VRUu22u09VKbYRXn+djfjzuvjvLYx+CiYJ2tRXDD
+ Q/f2zQh/P4Ak7VEE4Uf24zRDy/HiNS8rKXp3XN8Ol6UdglftO8g6akoOpOqergRuLO8w
+ t1aSsML73JPZCET1zyaoeB/ZBf5CwxuzLpowAxbTFvHJerS1EXUX+vUqO3IXFAq3bm9r
+ NfzOW5+AHJovXECWEQMkgF2fOcuuG385L0yryLG1a3Q+VlBgMr29A9mrH5ptIMt5W1I7
+ nolA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773139514; x=1773744314;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=prpVZEFx5pusLus9gfFD95wasIRzuR492CqA6rGNeDs=;
- b=AmMLIbNSqQKLNFEH5gr4K2Vhg3rFJfBkDEXY3mfY4CxUiXthD26f5lfyTw59vOubbx
- sAywmgVqyBkKRUENw2emEUFzdjEgiN0qp+pXsVEN97uyisUflPIGJf+m/OOTiVswY2Ui
- OPkiPJEXg4x6tbYMkX5G4OjHS05xW69c174RQr86XlygguJXu5G5n3XDDDhswW2gwN9W
- ZRpx6jt25HRMojKUN2svVKTnRqZPbY0sl0KGMepCSiSfXPvPKVp4qtSN6laZdE3qmV+y
- uR/6p4P5SJ50k9usSXxja8EMybB6A2iuK1P9uRcVtnd/v2G4YQtFcv28hj29CPYGmVhY
- jKhg==
-X-Gm-Message-State: AOJu0YzW9Wm5x7nyGX+sg72XLu4ZYI/iQbqdVdACRzgh3xPPFzwFqj7p
- I8v7gToqkPcSiS7OdKe4CQjLRn7L0ks2Lb9vYCsqN+f1mBaMAGQdfsItHC6x9GZ+u0IpzCtLzrY
- TQe0f6+g=
-X-Gm-Gg: ATEYQzxAuuI3YfGXLGZ37LyZ/D7l8ROrHCdC+VCKypbAbEA7ylRnRht67286jVHEohd
- STmobMOYBIzOw9NAO/ZMRlyjLXe2DtvWeEDja2eEdCw80IEIJ9Xov4KJ/w+Dti+ZCHG12PyfzZ8
- T2cTzzvWX6Nt2sNmqF+fU1hp9RGE0HETUVmu2oxKIvRcjCYUwQKc4taCjtCJZN2cp0C/yTqDL93
- p1v/bysrcTUwl9m8eT47y0WLg4DsDdYt6WQ+SaHt+w9CpcyETutk9OLDwha3XrWUyHYK6sqaKhe
- BXupkK9im58iRbml2X04DdjK5lbMY8MaFrCuVJ4Jf/PAPV47xTMwGB/fcrvtvroLVLWtnAjKoRP
- BG+7aTpfkETeXSKZm/f7YtuYzaMkdc1G7PnO8H7OswydNJ3PWGwy8kbHQMniFLeifB8TUtz6vi8
- RtfEBf+05dQAkeYtoOIyZZdm78UF91bHKz0lUXt7a4sUWp9H31ilSujzZtUlzDskouv/kasaV+
-X-Received: by 2002:a05:600c:540e:b0:485:39d1:b4dd with SMTP id
- 5b1f17b1804b1-48539d1bb72mr114282505e9.10.1773139513516; 
- Tue, 10 Mar 2026 03:45:13 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48531818b5asm128181615e9.3.2026.03.10.03.45.12
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 03:45:12 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 00/16] Accelerators and TCG patches for 2026-03-10
-Date: Tue, 10 Mar 2026 11:44:55 +0100
-Message-ID: <20260310104511.12670-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20230601; t=1773139565; x=1773744365;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=YdkZiwfVySks8Rpj4htrXSfL5hZEvQhJ0yl/SD/CGn4=;
+ b=cmBGW90XxbrF32oT54FaYbxxuFOqoITkCbyc7TCASAOx9xrV9M+yZXcXINx4ZONuVf
+ hqWXB+kUNbwaeS2ZoMitPwEmx8oj32+MOTh/mI5THOaX6FcF2A5WHwd/mhxtb30UUXcq
+ Ne8Cu3fYOD0vbFqeIu6jMu5KCN8LZjdc83qwpW5QT/08ZfO8ce3iiEDtrSFpMs6oQtCR
+ cO1FcoVYHK1hWq1/3RxOdCYyA8GmSMqdX65TmqS8HB93XdkAOpVNi2dxxg+pEnyNmAN2
+ lRjDf+rQ+BD7k6hvXH6jgQvfpxx/r9IE+y0zsKHbaqHrzbm1OgOfFSfu5HncWAkUjQkh
+ omIA==
+X-Gm-Message-State: AOJu0YzQ99m0VOjrYfRIZ7NbefJvMPuwBGhM+4/2pUgJh8d3zpVPPaF7
+ BD8eWBs9CXfsPgn9gJtNjvMxD2ccaS9XbdKjwD5M20Qo39+a+KYBANbV30Ob5gP2WSY=
+X-Gm-Gg: ATEYQzwJrJAppT6CTu1aaTfjLTGDtkugKF/lOKZo5+S/4Ci+w+sx6WYchHp+XW8cNMG
+ itvBTFC9mopLxmIbTzK9yra0NhOrDXbczdwRdYpR0ihZuLbtTfIgcf+ltuogv6L98G0w8u4mlbR
+ 2MhHFRDFO373Am8h2bUC0A2HsTKKqpXuTubt2kY/r5inhDTdOX4WQiaPGE32nPEogOqqrbZaBV7
+ xkwwRHVL4ZQSq4NPT0H9jm3Tmis4DBmF6dovZhhJkIvBSnifS7KXL7uJmpsi4Zkmjgcpdud5lw4
+ 3yiJomrt6izFbKClbAhWMjEuT7s7CQ2VRpk2zhX6wzWO0XEAuWTfOszXuo+oNxB7ejGum7o27Ux
+ rEj2sU2PJQ8Qx9mhg8+HJYEz44JIrdc+m0sQOQNTnaXR1mJbJElRaCsldWr89B9B++Ahx19e9jI
+ H9LqiwfSQGf1YZWncK/zJZe9/4QTMXdchCYS60O3Lh5MgD0YCLKnop4x+E4qLJnxfd+NAp+Vr4m
+ 7IIVH1eFqP9f9MQqbhP
+X-Received: by 2002:a05:6000:24c6:b0:439:c6d0:b0e1 with SMTP id
+ ffacd0b85a97d-439da66b5a4mr24776179f8f.26.1773139565192; 
+ Tue, 10 Mar 2026 03:46:05 -0700 (PDT)
+Received: from jw-ThinkPad-T14-Gen-3.home (128.70.159.143.dyn.plus.net.
+ [143.159.70.128]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439dadb29fdsm34838715f8f.16.2026.03.10.03.46.04
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Mar 2026 03:46:04 -0700 (PDT)
+From: James Wainwright <james.wainwright@lowrisc.org>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
+ James Wainwright <james.wainwright@lowrisc.org>
+Subject: [PATCH v2 0/3] target/riscv: add unratified RISC-V Zbr0p93 ext
+Date: Tue, 10 Mar 2026 10:45:55 +0000
+Message-ID: <20260310104558.52838-1-james.wainwright@lowrisc.org>
+X-Mailer: git-send-email 2.48.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=james.wainwright@lowrisc.org; helo=mail-wr1-x432.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -96,65 +98,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 31ee190665dd50054c39cef5ad740680aabda382:
+Reorganised as a vendor extension for Ibex and renamed to xbr0p93.
 
-  Merge tag 'hw-misc-20260309' of https://github.com/philmd/qemu into staging (2026-03-09 17:19:26 +0000)
+James Wainwright (3):
+  util: export CRC32[C] lookup tables
+  target/riscv: add draft RISC-V Zbr ext as xbr0p93
+  disas: diassemble RISC-V Zbr0p93 instructions
 
-are available in the Git repository at:
-
-  https://github.com/philmd/qemu.git tags/accel-tcg-20260310
-
-for you to fetch changes up to c574ff9245c7e9d10433efd60df2319ff4d69084:
-
-  accel/qtest: Build once as common object (2026-03-10 11:36:21 +0100)
-
-----------------------------------------------------------------
-Accelerators and TCG patches queue
-
-- Improve TCG extract and deposit
-- Build accelerator stub files once
-----------------------------------------------------------------
-
-Paolo Bonzini (2):
-  tcg: Add tcg_op_imm_match
-  tcg: target-dependent lowering of extract to shr/and
-
-Philippe Mathieu-Daudé (9):
-  target/hppa: Expand tcg_global_mem_new() -> tcg_global_mem_new_i64()
-  accel/kvm: Include missing 'exec/cpu-common.h' header
-  accel/kvm: Make kvm_irqchip*notifier() declaration non target-specific
-  accel/stubs: Build stubs once
-  accel/mshv: Forward-declare mshv_root_hvcall structure
-  accel/mshv: Build without target-specific knowledge
-  accel/hvf: Build without target-specific knowledge
-  accel/xen: Build without target-specific knowledge
-  accel/qtest: Build once as common object
-
-Richard Henderson (5):
-  tcg: Drop extract+shl expansions in tcg_gen_deposit_z_*
-  tcg/optimize: Lower unsupported deposit during optimize
-  tcg/optimize: Lower unsupported extract2 during optimize
-  tcg: Expand missing rotri with extract2
-  tcg/optimize: possibly expand deposit into zero with shifts
-
- meson.build               |   3 -
- include/system/kvm.h      |   8 +-
- include/system/mshv_int.h |   5 +-
- tcg/tcg-internal.h        |   5 +
- accel/kvm/kvm-accel-ops.c |   1 +
- accel/mshv/mshv-all.c     |   2 +-
- target/hppa/translate.c   |   8 +-
- tcg/optimize.c            | 266 ++++++++++++++++++++++++++++++++++----
- tcg/tcg-op.c              | 215 +++++++-----------------------
- tcg/tcg.c                 |  21 ++-
- accel/hvf/meson.build     |   5 +-
- accel/mshv/meson.build    |   5 +-
- accel/qtest/meson.build   |   5 +-
- accel/stubs/meson.build   |  21 ++-
- accel/xen/meson.build     |   2 +-
- 15 files changed, 338 insertions(+), 234 deletions(-)
+ MAINTAINERS                                 |  2 +-
+ disas/meson.build                           |  3 +-
+ disas/riscv-xbr0p93.c                       | 79 +++++++++++++++++++
+ disas/riscv-xbr0p93.h                       | 19 +++++
+ disas/riscv.c                               |  4 +
+ include/qemu/crc32.h                        | 18 +++++
+ include/qemu/crc32c.h                       |  1 +
+ target/riscv/bitmanip_helper.c              | 20 +++++
+ target/riscv/cpu.c                          |  4 +-
+ target/riscv/cpu_cfg.h                      |  1 +
+ target/riscv/cpu_cfg_fields.h.inc           |  1 +
+ target/riscv/helper.h                       |  2 +
+ target/riscv/insn_trans/trans_xbr0p93.c.inc | 55 +++++++++++++
+ target/riscv/meson.build                    |  1 +
+ target/riscv/translate.c                    |  3 +
+ target/riscv/xbr0p93.decode                 | 42 ++++++++++
+ tests/tcg/riscv64/Makefile.softmmu-target   |  5 ++
+ tests/tcg/riscv64/test-crc32.S              | 64 ++++++++++++++++
+ util/crc32.c                                | 85 +++++++++++++++++++++
+ util/crc32c.c                               |  4 +-
+ util/meson.build                            |  1 +
+ 21 files changed, 409 insertions(+), 5 deletions(-)
+ create mode 100644 disas/riscv-xbr0p93.c
+ create mode 100644 disas/riscv-xbr0p93.h
+ create mode 100644 include/qemu/crc32.h
+ create mode 100644 target/riscv/insn_trans/trans_xbr0p93.c.inc
+ create mode 100644 target/riscv/xbr0p93.decode
+ create mode 100644 tests/tcg/riscv64/test-crc32.S
+ create mode 100644 util/crc32.c
 
 -- 
-2.53.0
+2.48.1
 
 
