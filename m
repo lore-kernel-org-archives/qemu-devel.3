@@ -4,103 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82257EB106D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:15:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A3D3EB1067
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:16:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzynh-0007EF-Mp; Tue, 10 Mar 2026 11:15:14 -0400
+	id 1vzynd-00071e-KY; Tue, 10 Mar 2026 11:15:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynY-0006u6-8X
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:04 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ id 1vzynN-0006p5-RH
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:57 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynW-0000HJ-BD
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:03 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ id 1vzynL-0000Fd-NG
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:53 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62AF9Oi9641632
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:01 GMT
+ 62AAYBeG1721997
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:50 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=wWQnkhfx9OiwjFjSD
- V5k/HgZxQnLtjck3Fdhnq45O1g=; b=YccFQAh860v8YRS+7RWgQNyM1vgEqQG/K
- fQKKhe74tYeL4MRmQVDtQ3st9mtc++NYEple8TyLmX5ni4aa26cdYA2fr7d8P8L3
- 09NgzoVnuuVRse9grPW9HwWWaZT/GItxCVdFQMksBVoeKaEZsWSMgO1F5zdvw196
- tZINVycxVhuT5MV7B0Tf15REiaKJRbYioGQit7xaRlZjefdfgHN+111xFROds4xs
- gszyyoqCujNcxvJzlTizn0TFq5/N8kfoNUUHmRNbOtrEidzYcm0D+FF6AnJMiatD
- rqKrlE2ZsBWyZ68istiv+UiNfZWP7l9YLy+2NxOLh7E4gCITlF7QQ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmbhe7-1
+ :mime-version:references:subject:to; s=pp1; bh=MMM8fqi8Az8/ii4Qk
+ ag1EO3WTRA4KMdJ9e91Krm1NgQ=; b=L/wiwbnaJfQjzSxfIld5MSbhpSbQCSEhx
+ lULZTlM+JonPJyByg/OcKxCnRklV+skF6cDDmLS9Y8y7Svx6OOfRwF6HT+vJFClf
+ fU6FyS90EuimXDoo4ZehWMmg7svCH8xHYm45h1Rzi+AV0O9pBkN09lon58SQkKjK
+ tDMXwf6QDitJrMv0gwdjCbMHqUJX6lquFjdzqjfCAL20/6Mv81+xEOTaBrmFcrfz
+ Xb1u2/EjAwcDqBQuHogi7sWBTAWJ+gQRZPSCU0EWla6sn9jV7gqmQ8tkh2mfz2GM
+ MpzusdCIF+Dn1Gi6qhu5y0O54u7llSBo9dNC7OV+VtQtJLI9p33rA==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvrb6fe-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:00 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AF3VmH029359
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:59 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4csp6up8aw-1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:50 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62ACwnoV015750
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:49 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs1221bku-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:59 +0000
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:49 +0000
 Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
  [10.20.54.100])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AFEtMT56230264
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62AFEjK044171536
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 15:14:55 GMT
+ Tue, 10 Mar 2026 15:14:46 GMT
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id C1A9D2004D;
- Tue, 10 Mar 2026 15:14:55 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id DC42C2004B;
+ Tue, 10 Mar 2026 15:14:45 +0000 (GMT)
 Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 7C48F2004B;
- Tue, 10 Mar 2026 15:14:54 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id BC30C2004E;
+ Tue, 10 Mar 2026 15:14:44 +0000 (GMT)
 Received: from Mac.com (unknown [9.39.23.49])
  by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 15:14:54 +0000 (GMT)
+ Tue, 10 Mar 2026 15:14:44 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
 Cc: Aditya Gupta <adityag@linux.ibm.com>,
  Hari Bathini <hbathini@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>,
  Sourabh Jain <sourabhjain@linux.ibm.com>
-Subject: [PULL 09/10] tests/functional: Add test for MPIPL in PowerNV
-Date: Tue, 10 Mar 2026 20:44:29 +0530
-Message-ID: <20260310151432.92531-10-harshpb@linux.ibm.com>
+Subject: [PULL 03/10] ppc/pnv: Handle stash command in PowerNV SBE
+Date: Tue, 10 Mar 2026 20:44:23 +0530
+Message-ID: <20260310151432.92531-4-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260310151432.92531-1-harshpb@linux.ibm.com>
 References: <20260310151432.92531-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: I4tQCB-jK8pi7DmJ03kftFCVoqLG4O-k
-X-Proofpoint-ORIG-GUID: I4tQCB-jK8pi7DmJ03kftFCVoqLG4O-k
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfX6bRy6iXTjOYL
- lr45Y9eCVXDd/U4+z/YUf78gYOFSbgylyi0YXf3uGrGI3fg5ogHmV3QgWi4xI+PWQpKXqHOtr2H
- VmnDvH63VwVpixopxRJYH0/+lnALOEWNVai8l8LUfZ5gychVQMgV0+HtyFMNZ2DSKihCbm1cEDG
- dhb9JMAzYU+7O1nyh/t9KiMAvFS6pGpEyn8zUMeBX5du94nYoxqjHSlpC12TNy91cS5joQyaLa+
- kelQGDVKuQTAZuBpk2J/j7chfzr0IM/7kMbFkReZVHkgsMluo2lx/6t2d+oVjgftKIsuqNANhKk
- REeN0WsSHyug/iLqmuqmH9JjoS7EMKGvDotKH+2Dj4ZswOwnruenvHk5xGZ3sGctG7bDzaV/WRE
- m6SH0BctWLcETTp25t2J+UFJYDwsCaYcFAhAN6m5ZkSVepwCe4XQq+0xXykxVC2T0VR5GktsmJT
- eSmZBvglVLxhjQdi1PA==
-X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b03574 cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfX9DIV4+bosLnF
+ TVI6BbuEGEjUUBE25ImOZX8amOMHoZ9F4vwtLwx3WUdpGpu0rh0JlJp7F/FoDURTlFd51QWXkbm
+ bKMOdffvJc07NrRGRuETtfSJZrraWDVL13vOUPH9tBwgho6z9vkfs92Os+L24dET9i/T8Ai0JIv
+ 7N2pux9yFr4a9Na4ySR41l9N2cm3+XppMAwHfoiYFzgyaBshNad+LoMzCtfRs2gmcmjN6k/Jz/z
+ B4q8Gk5HtE6VoPAJxFaScSff/Oh+jTU6D1WxC12dyAN6Ikqd6M4zvyr5G0x88JPfsW4g24Abd7B
+ M4KtWhJtBoL3R8rzMEVHDX7GH5GX3MbOIQZPEJkdJpg83Y5z4Pkj1u1sUZmATKVwacOjoWweCxQ
+ mwEpYFjip/EZQclYRhNEfm6I5EO/iAE3yZKA+FUiBvWA6lZiygodxLEIM3xf+dfDKAHt2yX6vtw
+ LJK56oesuhoGp37iAhQ==
+X-Proofpoint-GUID: wu8UD6jKvZC06_hFuzIy-S6FLiKwR_jH
+X-Proofpoint-ORIG-GUID: wu8UD6jKvZC06_hFuzIy-S6FLiKwR_jH
+X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69b0356a cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
  a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=xeNidhmBAAAA:20 a=vTr9H3xdAAAA:8 a=yF-uCvtE38AvPGpA37UA:9
- a=bA3UWDv6hWIuX7UZL3qL:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=pGLkceISAAAA:8 a=lqnwqb0_oS2Hd41rSKUA:9
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100131
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
+ impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603100131
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
@@ -126,125 +126,119 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aditya Gupta <adityag@linux.ibm.com>
 
-With MPIPL support implemented, enable fadump's functional test for PowerNV
+Earlier since the SBE_CMD_STASH_MPIPL_CONFIG command was not handled, so
+skiboot used to not get any response from SBE:
 
-Also, current functional test for powernv uses op-build's Linux 5.10 image,
-which doesn't support adding "fadump=on" in argument due to this:
+    [  106.350742821,3] SBE: Message timeout [chip id = 0], cmd = d7, subcmd = 7
+    [  106.352067746,3] SBE: Failed to send stash MPIPL config [chip id = 0x0, rc = 254]
 
-    Kernel is locked down from Kernel configuration; see man kernel_lockdown.7
+Fix this by handling the command in PowerNV SBE, and sending a response so
+skiboot knows SBE has handled the STASH command
 
-Hence, instead of op-build's image, use the newer fedora vmlinuz as used
-in FADump PSeries functional test
+The stashed skiboot base is later used to access the relocated MDST/MDDT
+tables when MPIPL is implemented.
 
-Also due to "bash#" string not showing up, rely on sh: no job control to
-check if testcase has reached till shell
+The purpose of stashing relocated base address is explained in following
+skiboot commit:
+
+    author Vasant Hegde <hegdevasant@linux.vnet.ibm.com> Fri Jul 12 16:47:51 2019 +0530
+    committer Oliver O'Halloran <oohall@gmail.com> Thu Aug 15 17:53:39 2019 +1000
+
+    SBE: Send OPAL relocated base address to SBE
+
+      OPAL relocates itself during boot. During memory preserving IPL hostboot needs
+      to access relocated OPAL base address to get MDST, MDDT tables. Hence send
+      relocated base address to SBE via 'stash MPIPL config' chip-op. During next
+      IPL SBE will send stashed data to hostboot... so that hostboot can access
+      these data.
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-10-adityag@linux.ibm.com
+Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-4-adityag@linux.ibm.com
 Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- tests/functional/ppc64/test_fadump.py | 35 ++++++++++-----------------
- 1 file changed, 13 insertions(+), 22 deletions(-)
+ include/hw/ppc/pnv_mpipl.h |  3 +++
+ hw/ppc/pnv_sbe.c           | 37 +++++++++++++++++++++++++++++++++++++
+ 2 files changed, 40 insertions(+)
 
-diff --git a/tests/functional/ppc64/test_fadump.py b/tests/functional/ppc64/test_fadump.py
-index bd9692f64c..7ea65974e0 100755
---- a/tests/functional/ppc64/test_fadump.py
-+++ b/tests/functional/ppc64/test_fadump.py
-@@ -14,6 +14,7 @@ class QEMUFadump(LinuxKernelTest):
+diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
+index c544984dc7..60d6ede482 100644
+--- a/include/hw/ppc/pnv_mpipl.h
++++ b/include/hw/ppc/pnv_mpipl.h
+@@ -8,11 +8,14 @@
+ #define PNV_MPIPL_H
  
-     1. test_fadump_pseries:       PSeries
-     2. test_fadump_pseries_kvm:   PSeries + KVM
-+    3. test_fadump_powernv:       PowerNV
-     """
+ #include "qemu/osdep.h"
++#include "exec/hwaddr.h"
  
-     timeout = 90
-@@ -24,11 +25,6 @@ class QEMUFadump(LinuxKernelTest):
-     msg_registered_failed = ''
-     msg_dump_active = ''
+ typedef struct MpiplPreservedState MpiplPreservedState;
  
--    ASSET_EPAPR_KERNEL = Asset(
--        ('https://github.com/open-power/op-build/releases/download/v2.7/'
--         'zImage.epapr'),
--        '0ab237df661727e5392cee97460e8674057a883c5f74381a128fa772588d45cd')
--
-     ASSET_VMLINUZ_KERNEL = Asset(
-         ('https://archives.fedoraproject.org/pub/archive/fedora-secondary/'
-          'releases/39/Everything/ppc64le/os/ppc/ppc64/vmlinuz'),
-@@ -62,16 +58,14 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-             # SLOF takes upto >20s in startup time, use VOF
-             self.set_machine("pseries")
-             self.vm.add_args("-machine", "x-vof=on")
--            self.vm.add_args("-m", "6G")
+ /* Preserved state to be saved in PnvMachineState */
+ struct MpiplPreservedState {
++    /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
++    hwaddr     skiboot_base;
+     bool       is_next_boot_mpipl;
+ };
+ 
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 5a2b3342d1..46c5047f1c 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -233,8 +233,11 @@ static void sbe_timer(void *opaque)
+ 
+ static void do_sbe_msg(PnvSBE *sbe)
+ {
++    PnvMachineState *pnv = PNV_MACHINE(qdev_get_machine());
++    MachineState *machine = MACHINE(pnv);
+     struct sbe_msg msg;
+     uint16_t cmd, ctrl_flags, seq_id;
++    uint64_t mbox_val;
+     int i;
+ 
+     memset(&msg, 0, sizeof(msg));
+@@ -265,6 +268,40 @@ static void do_sbe_msg(PnvSBE *sbe)
+             timer_del(sbe->timer);
+         }
+         break;
++    case SBE_CMD_STASH_MPIPL_CONFIG:
++        /* key = sbe->mbox[1] */
++        switch (sbe->mbox[1]) {
++        case SBE_STASH_KEY_SKIBOOT_BASE:
++            mbox_val = sbe->mbox[2];
++            if (mbox_val >= machine->ram_size) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                  "SBE: skiboot_base 0x%" PRIx64 " exceeds RAM size 0x%" PRIx64 "\n",
++                  mbox_val, machine->ram_size);
++                return;
++            }
 +
-+        self.vm.add_args("-m", "6G")
- 
-         self.vm.set_console()
- 
-         kernel_path = None
- 
--        if is_powernv:
--            kernel_path = self.ASSET_EPAPR_KERNEL.fetch()
--        else:
--            kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
-+        kernel_path = self.ASSET_VMLINUZ_KERNEL.fetch()
- 
-         initrd_path = self.ASSET_FEDORA_INITRD.fetch()
- 
-@@ -102,16 +96,14 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-             timeout=20
-         )
- 
--        # Ensure fadump is registered successfully, if registration
--        # succeeds, we get a log from rtas fadump:
--        #
--        #     rtas fadump: Registration is successful!
--        self.wait_for_console_pattern(
--            "rtas fadump: Registration is successful!"
--        )
-+        # Ensure fadump is registered successfully
-+        if not is_powernv:
-+            self.wait_for_console_pattern(
-+                "rtas fadump: Registration is successful!"
-+            )
- 
-         # Wait for the shell
--        self.wait_for_console_pattern("#")
-+        self.wait_for_console_pattern("sh: no job control")
- 
-         # Mount /proc since not available in the initrd used
-         exec_command(self, command="mount -t proc proc /proc")
-@@ -135,7 +127,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-         # that qemu didn't pass the 'ibm,kernel-dump' device tree node
-         wait_for_console_pattern(
-             test=self,
--            success_message="rtas fadump: Firmware-assisted dump is active",
-+            success_message="fadump: Firmware-assisted dump is active",
-             failure_message="fadump: Reserved "
-         )
- 
-@@ -148,7 +140,7 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-         self.wait_for_console_pattern("preserving crash data")
- 
-         # Wait for prompt
--        self.wait_for_console_pattern("sh-5.2#")
-+        self.wait_for_console_pattern("Run /bin/sh as init process")
- 
-         # Mount /proc since not available in the initrd used
-         exec_command_and_wait_for_pattern(self,
-@@ -166,9 +158,8 @@ def do_test_fadump(self, is_kvm=False, is_powernv=False):
-     def test_fadump_pseries(self):
-         return self.do_test_fadump(is_kvm=False, is_powernv=False)
- 
--    @skip("PowerNV Fadump not supported yet")
-     def test_fadump_powernv(self):
--        return
-+        return self.do_test_fadump(is_kvm=False, is_powernv=True)
- 
-     def test_fadump_pseries_kvm(self):
-         """
++            pnv->mpipl_state.skiboot_base = mbox_val;
++            qemu_log_mask(LOG_UNIMP,
++                "Stashing skiboot base: 0x%" HWADDR_PRIx "\n",
++                pnv->mpipl_state.skiboot_base);
++
++            /*
++             * Set the response register.
++             *
++             * Currently setting the same sequence number in
++             * response as we got in the request.
++             */
++            sbe->mbox[4] = sbe->mbox[0];    /* sequence number */
++            pnv_sbe_set_host_doorbell(sbe,
++                    sbe->host_doorbell | SBE_HOST_RESPONSE_WAITING);
++
++            break;
++        default:
++            qemu_log_mask(LOG_UNIMP,
++                "SBE: CMD_STASH_MPIPL_CONFIG: Unimplemented key: 0x" TARGET_FMT_lx "\n",
++                sbe->mbox[1]);
++        }
++        break;
+     default:
+         qemu_log_mask(LOG_UNIMP, "SBE Unimplemented command: 0x%x\n", cmd);
+     }
 -- 
 2.52.0
 
