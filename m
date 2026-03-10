@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9532FD88CD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71A49FD88CE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:22:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w06Ok-0001QB-Bm; Tue, 10 Mar 2026 19:21:58 -0400
+	id 1w06P6-0002nW-7y; Tue, 10 Mar 2026 19:22:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Oh-0001Fu-I3
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:55 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06P1-0002cU-Q1
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:22:16 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Of-0008KW-0X
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:54 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439d8dc4ae4so3263363f8f.2
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:21:51 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06P0-0000G4-4m
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:22:15 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so113202315e9.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:22:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773184910; x=1773789710; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773184932; x=1773789732; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ygQ/v0cdpGrwH8lnrmi7lhlM+ablab0Z37ZCJxHh2pw=;
- b=T4qnvzg0NYPQk4JUkUEYxnWt2CABXf06gpMQJyceGNaH4Wqt2uoMkAAZCI5XooWemn
- zPv/efsNaX5gXAEJo+Dpb8nRniW+YuXslbPk3PFoZ/TXy2MSfnbxe9P3rQpS2ecSmG7x
- f+Gxli1vrQkCMree2VzcgwQog9TXiP8+jv27KrKKaKiQRnulhHoNmJKjETwQx6lAvVrU
- 0r7Cqkf9xabAaY7saDLxNFyHxCiK0sz7N2p5LksaTVBJMJ8GHHISKeS2vqy1XwnWdkI8
- 7+XgnpNlDWdpvXD7xRyjNZb+rrv7aoCDtfakwuhHHOjIH7zImUAytWk1zLSLWk1gof2N
- Q+Bw==
+ bh=Y1rfBVikTwv8UKl9/GEItZIIiz4modSUfC3Li8tbgj8=;
+ b=uZ+Zq/LgdfFl8NvQEJGfhvcf5wOBZN0+SoAXweeM90JVqt1esysdzJkxF646W3t/c+
+ lDbNmEPQwUNPpfarmiOny7EbKYYu/c5T+03TKiNf9KO2MMuQinhAlbzqHX3KT8lJqFmG
+ 901/y2qAerUf7z3/6tDx8BgJCp/Ljf84Tv04G+A28LPX8Q7dayFTJx7P7H76dPYnwP0O
+ d7EcZO8Ce0TriNxcmSka6z/0WJQbkkSPHppOUSpHI9v4DzQhx7jgcVu1sQiKLil30A4s
+ z9klSMTlTSphnRSJcMWyivqIHCKUWlUd+GvrNHR3s63c0+pmynw6w4k5BOEhMSRDVPU9
+ 74Ig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773184910; x=1773789710;
+ d=1e100.net; s=20230601; t=1773184932; x=1773789732;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ygQ/v0cdpGrwH8lnrmi7lhlM+ablab0Z37ZCJxHh2pw=;
- b=PfGsqlFtrqbdNHj/D9sC2cEdAf79+HQ6rSMiSrX38HJ3Bynm3falLfLI21BJPIs/Wu
- BP7GPbgMRDWRX9AGXk+ldK+C/kAYMpHFTcHWEFjfZwVgpW2PggazeptAChcpTROSIZ1P
- XCDPx9Y68hjkv6XnGwSEQZP8zZ+2/MG/Grm5QBqKI9OgOIAO8DRMi71FDBgGjFZCE0dS
- +5296GdyTwuAG2zHgj1cik8rsxtQGhbgQggODMfFnjjjG1CWni+V62BHmCiSLsDzUkOf
- ZVuOns5Fwx+slEK7BbDkCFlhu1qrwhOfDWAO80f3BGi+Sld0NKUIDkQnwUFypuMC0IbU
- ap8g==
-X-Gm-Message-State: AOJu0YxWQAgyZEOX4X/6JIJ5zXDxGseCIjUVqQCSjJJtwv2fHyTTN6cU
- iiOLcCiHf4q0jydH4V0Zz+vL+hZ6wZwxGYwqKiS4kbHUwMwtRKGl1moM9ZqtV7wa9hnMmqpsPp2
- MflOK3X4=
-X-Gm-Gg: ATEYQzwUPdW+oU/f9BUTfWDaW1erd3GcHI9zjXcU89UmEjRbZQrwSJPSLiSMufcmyUp
- lDqlfU3ixtxk5ZJXDI2NQp2kdxqCz50MF4n9+OHkLHYXoGsNPRdn7GFVwyloQRFGnpnAhudGptq
- LlPvq2TEjvkKvO57N+sfzqoAUpwsnz7CeYPTsu0OovNBAucxpG1n04Yfhy9clzNDhoYHDhypfM6
- 76uqgMCJC+hXpNbkG8p913Yaw81rP0dFLOJiU5OmkUC3fy3BQ53jAINnhYazZR7tVZJq80nCHHz
- sGJfFDVKXoZ4z2jg1qsL+LUINS7GcAn+ryuzx69B3+JXi3/NtP8xnvrjg7WjxvyCiq05lusjtWn
- h0zHNYxWyInzS9BSJNp9TlixfvzacLvFvF1lld9K5qY4hlLPR7GgmUPSVd4jd02cxAqEKkP1HCR
- G5X6XEy70V4hqkUBXQOIi9u83ogCQ2/AMSsJc3LOZGY3RYwLLktlrcN9VA4uXEcRBp9KcnBC0Nu
- 2BtLMTVX7Y=
-X-Received: by 2002:a05:6000:2c03:b0:439:afcd:b629 with SMTP id
- ffacd0b85a97d-439f843c3f9mr1084952f8f.55.1773184909937; 
- Tue, 10 Mar 2026 16:21:49 -0700 (PDT)
+ bh=Y1rfBVikTwv8UKl9/GEItZIIiz4modSUfC3Li8tbgj8=;
+ b=W9L/kqPBAN9bG3bWScaPIcBSyzfupMmiiHJrH5XW1HX8pEQYhjIqKmNjuW6hbQoLGp
+ DSuuQDH2gu/4i2YtZkAB0Yda5MQdrXesxvO59rUM/Wsf/X4M+MyqQoYyrJki2ByIFOe0
+ GJ+fVffJY40/PAcTazyCnPqgA+mrHP9TUtq/GYLmtBN//sKi5MUrn74NSykSQAH3RWDQ
+ qNuXP8kOo6BQAhZ8ev9wyOUax4VOey6zUr11wF9a1bUaSiu41GoZvcppGZ+HXLyeAeBy
+ 8D9kr2scvyFnEDEEN9PARKH/f+fAnkZpG6Rfn35wdZyMkfF2ZIWUTj23RhCGAslDMqSi
+ 5RPg==
+X-Gm-Message-State: AOJu0YwxsvX3+/fDih3rrDzmGzhHblawrrdTQ8vBRW8YzNfCZBpFuRBX
+ 4wRuEKhCw5SZcFNGgwQ3hMO17LaPNXN9ePuhRplWj6nwD5R++vAH+zCXVBJiks3JCtNb1vbBH6T
+ 1QdYYuzI=
+X-Gm-Gg: ATEYQzyFVVeivbEoXVBObfzsmDKd5t6J7lxRvNZo9cmdLRDFjEvCxY/dyDm7KkuYflc
+ okbS/Ngm4cmv3xFB0o6chVqUvD0NEWA9Bjthc4y3WIk4KX2maQb/5IXniF28xFiiMDk0i0mI/Rh
+ A98BwyTt3VMvoyM/OXWktTmh3YxJdTTqHyN6S40j+j/QtSRy1J8sokep7trWIrNGYHSCOyRyihz
+ XSwrOxKuPgKxTwNtwEBq4mKJQ73Clz5ePGr4sZjcYoiA/mzCwJ4lesAN3H2koOrQc4FgLkDUiU/
+ Pu+UXrJNjBWcihpjceqyETzRwYT/AldZC+m+ePBQ4dMjCe+xht6pcWLPWUgPnS7+Py2R9KObYaH
+ YFBkDab0iDwb9zja8hvweVzG9chRkdjf2iLM4AkYgnyh7x6ifqhvPI4J/4dz/HV7G8jXZforxcA
+ xSZTKvvnNPYT6cRPqXwDEwM0kem2QT/FG5wpvJwmvdJ7orydNBJhzAs/BUhxeKtux5sEsoEsAQc
+ m4Mvc7h8RE=
+X-Received: by 2002:a05:600c:3b02:b0:485:3c41:360b with SMTP id
+ 5b1f17b1804b1-4854b14f5aamr7759315e9.35.1773184932231; 
+ Tue, 10 Mar 2026 16:22:12 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439f81f1357sm1603724f8f.19.2026.03.10.16.21.49
+ 5b1f17b1804b1-4854b5f6c24sm7302335e9.5.2026.03.10.16.22.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 16:21:49 -0700 (PDT)
+ Tue, 10 Mar 2026 16:22:11 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v4 09/16] gdbstub: Make base register explicit in m68k GDB XML
- files
-Date: Wed, 11 Mar 2026 00:20:37 +0100
-Message-ID: <20260310232045.58440-10-philmd@linaro.org>
+Subject: [PATCH v4 12/16] gdbstub: Consider GDBFeature::base_reg in
+ gdb_register_coprocessor()
+Date: Wed, 11 Mar 2026 00:20:40 +0100
+Message-ID: <20260310232045.58440-13-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310232045.58440-1-philmd@linaro.org>
 References: <20260310232045.58440-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,66 +104,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Both gdb-xml/cf-fp.xml and gdb-xml/m68k-fp.xml aren't imported
-from GDB repository. Presumably they are hand-written, and lack
-the @regnum XML tag.
+When a feature XML file provides a "regnum=" tag to indicate
+the registers base index, respect it, as it might not be the
+same as our current number of registered entries, in particular
+when there are gaps.
 
-This might explain why gdb_register_coprocessor() have a @g_pos
-argument, only used for these 2 m68k files.
+This fixes a bug with the "power-fpu.xml" file [*] which was
+loaded at index 70 while the base register is 71. This latent
+bug was exposed by commit 1ec0fbe2dda ("target/ppc: Fix
+CPUClass::gdb_num_core_regs value").
 
-Fixes: 56aebc89167 ("Add GDB XML register description support")
+[*] https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
+
+Reported-by: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/m68k/helper.c | 4 ++--
- gdb-xml/cf-fp.xml    | 2 +-
- gdb-xml/m68k-fp.xml  | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
+ gdbstub/gdbstub.c    | 6 ++++++
+ gdbstub/trace-events | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 15f110fa7a2..c566cb0a16c 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -129,10 +129,10 @@ void m68k_cpu_init_gdb(M68kCPU *cpu)
- 
-     if (m68k_feature(env, M68K_FEATURE_CF_FPU)) {
-         gdb_register_coprocessor(cs, cf_fpu_gdb_get_reg, cf_fpu_gdb_set_reg,
--                                 gdb_find_static_feature("cf-fp.xml"), 18);
-+                                 gdb_find_static_feature("cf-fp.xml"), 0);
-     } else if (m68k_feature(env, M68K_FEATURE_FPU)) {
-         gdb_register_coprocessor(cs, m68k_fpu_gdb_get_reg, m68k_fpu_gdb_set_reg,
--                                 gdb_find_static_feature("m68k-fp.xml"), 18);
-+                                 gdb_find_static_feature("m68k-fp.xml"), 0);
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 69038c66f2b..c3c944e965b 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -601,6 +601,7 @@ void gdb_init_cpu(CPUState *cpu)
+     if (xmlfile) {
+         assert(!cc->gdb_num_core_regs);
+         feature = gdb_find_static_feature(xmlfile);
++        assert(feature->base_reg == 0);
+         gdb_register_feature(cpu, 0,
+                              cc->gdb_read_register, cc->gdb_write_register,
+                              feature);
+@@ -630,6 +631,11 @@ void gdb_register_coprocessor(CPUState *cpu,
+         }
      }
-     /* TODO: Add [E]MAC registers.  */
- }
-diff --git a/gdb-xml/cf-fp.xml b/gdb-xml/cf-fp.xml
-index bf71c320bfc..27db66ae963 100644
---- a/gdb-xml/cf-fp.xml
-+++ b/gdb-xml/cf-fp.xml
-@@ -6,7 +6,7 @@
-      notice and this notice are preserved.  -->
- <!DOCTYPE feature SYSTEM "gdb-target.dtd">
- <feature name="org.gnu.gdb.coldfire.fp">
--  <reg name="fp0" bitsize="64" type="float" group="float"/>
-+  <reg name="fp0" bitsize="64" type="float" group="float" regnum="18"/>
-   <reg name="fp1" bitsize="64" type="float" group="float"/>
-   <reg name="fp2" bitsize="64" type="float" group="float"/>
-   <reg name="fp3" bitsize="64" type="float" group="float"/>
-diff --git a/gdb-xml/m68k-fp.xml b/gdb-xml/m68k-fp.xml
-index 64290d16306..ec45931b673 100644
---- a/gdb-xml/m68k-fp.xml
-+++ b/gdb-xml/m68k-fp.xml
-@@ -6,7 +6,7 @@
-      notice and this notice are preserved.  -->
- <!DOCTYPE feature SYSTEM "gdb-target.dtd">
- <feature name="org.gnu.gdb.coldfire.fp">
--  <reg name="fp0" bitsize="96" type="float" group="float"/>
-+  <reg name="fp0" bitsize="96" type="float" group="float" regnum="18"/>
-   <reg name="fp1" bitsize="96" type="float" group="float"/>
-   <reg name="fp2" bitsize="96" type="float" group="float"/>
-   <reg name="fp3" bitsize="96" type="float" group="float"/>
+ 
++    if (base_reg < feature->base_reg) {
++        trace_gdbxml_register_coprocessor_gap(base_reg,
++                                              feature->base_reg);
++        base_reg = feature->base_reg;
++    }
+     gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature);
+ 
+     /* Add to end of list.  */
+diff --git a/gdbstub/trace-events b/gdbstub/trace-events
+index 8caee36c242..5bc83946743 100644
+--- a/gdbstub/trace-events
++++ b/gdbstub/trace-events
+@@ -29,6 +29,7 @@ gdbstub_err_checksum_incorrect(uint8_t expected, uint8_t got) "got command packe
+ gdbstub_err_unexpected_runpkt(uint8_t ch) "unexpected packet (0x%02x) while target running"
+ 
+ gdbxml_init_cpu(const char *typename, unsigned id, unsigned gdb_num_regs, unsigned gdb_num_g_regs, unsigned gdb_num_core_regs) "%s:%d regs:%u g_regs:%u core_regs:%u"
++gdbxml_register_coprocessor_gap(unsigned gdb_num_regs, unsigned base_reg) "regs %u -> %u"
+ gdbxml_register_feature(const char *featname, const char *xmlname, unsigned base_reg, unsigned num_regs) "%s (%s) @%u +%u"
+ gdbxml_feature_builder_header(const char *name, const char *xmlname, int num_regs) "%s (%s) regs:%d"
+ gdbxml_feature_builder_content(const char *xml) "%s"
 -- 
 2.53.0
 
