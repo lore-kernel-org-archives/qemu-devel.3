@@ -4,108 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 722DAFD2D93
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:47:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7939BFD2D99
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:54:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxR0-00021l-CM; Tue, 10 Mar 2026 09:47:42 -0400
+	id 1vzxWi-00037S-HR; Tue, 10 Mar 2026 09:53:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxQu-0001sN-Vr
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:47:39 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxQs-0004bl-D0
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:47:36 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzxWf-00036x-IG
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:53:33 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzxWd-0005zP-Ae
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:53:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773150808;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=QwPGxLKyl4WnkrlRO4iCkB05zSTeBuf2ShTthp2skEo=;
+ b=QnSeLGzjFd9w/yeD//a8qlH4gBOIDATIqoR8q7BWbKnfbRfds8RP7AdN4qHed01fWLlsei
+ bBqyE2sS+FDtN9E3wVL6U9IvGM4Q3CY6w5T5t9zSiYXJ6NcQ00ZX1P+S1FpqP7s8D5gtOP
+ tguwSs6AFbYrAZGvUUKgjz0MWhMc5Hk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-592-Pdakyj_5OXWOjGEh5tk7tA-1; Tue,
+ 10 Mar 2026 09:53:23 -0400
+X-MC-Unique: Pdakyj_5OXWOjGEh5tk7tA-1
+X-Mimecast-MFC-AGG-ID: Pdakyj_5OXWOjGEh5tk7tA_1773150801
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 798214D211;
- Tue, 10 Mar 2026 13:47:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773150449; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AbgC6gMDI4w2drEthFWx0JpWXVmiDG4Wzm19OcMcZ2c=;
- b=SagRbUEmAUB8Ca0Dm3panvxwF8Gj5wLezROdyhLNi+pxy9oXt+qsmUnjUHI1mJ3QPHrO9l
- trUrQsvHQFt3PbuL9/1JV5+Brju6JhGyxYPmkW/rbCj1CGsTVsAIBAaDlUUxLff4g3efIc
- G/BAZlzxH+6N9AAGSNhuitc2HRGFblM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773150449;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AbgC6gMDI4w2drEthFWx0JpWXVmiDG4Wzm19OcMcZ2c=;
- b=xbz05U8p+59VyA6G6uRFsFUh9Elnb1ViOa4ViVWk85cPR4uGjVIk1GlOKUN0e+H8rEQrxb
- O3RAHZjBrZIRKiDQ==
-Authentication-Results: smtp-out1.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773150449; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AbgC6gMDI4w2drEthFWx0JpWXVmiDG4Wzm19OcMcZ2c=;
- b=SagRbUEmAUB8Ca0Dm3panvxwF8Gj5wLezROdyhLNi+pxy9oXt+qsmUnjUHI1mJ3QPHrO9l
- trUrQsvHQFt3PbuL9/1JV5+Brju6JhGyxYPmkW/rbCj1CGsTVsAIBAaDlUUxLff4g3efIc
- G/BAZlzxH+6N9AAGSNhuitc2HRGFblM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773150449;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:
- mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=AbgC6gMDI4w2drEthFWx0JpWXVmiDG4Wzm19OcMcZ2c=;
- b=xbz05U8p+59VyA6G6uRFsFUh9Elnb1ViOa4ViVWk85cPR4uGjVIk1GlOKUN0e+H8rEQrxb
- O3RAHZjBrZIRKiDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 04C543F4AB;
- Tue, 10 Mar 2026 13:47:28 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id JituL/AgsGn8aAAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 13:47:28 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Subject: Re: [PULL 27/49] meson: Add -Wformat-overflow=2
-In-Reply-To: <20260309155219.62400-28-philmd@linaro.org>
-References: <20260309155219.62400-1-philmd@linaro.org>
- <20260309155219.62400-28-philmd@linaro.org>
-Date: Tue, 10 Mar 2026 10:47:26 -0300
-Message-ID: <87h5qn23v5.fsf@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 87D221956094; Tue, 10 Mar 2026 13:53:20 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 915711956095; Tue, 10 Mar 2026 13:53:19 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 3DA9F21E6614; Tue, 10 Mar 2026 14:53:17 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  mst@redhat.com,  thuth@redhat.com,
+ eblake@redhat.com,  farosas@suse.de,  peterx@redhat.com,
+ zhao1.liu@intel.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net,
+ davydov-max@yandex-team.ru,  qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru,  leiyang@redhat.com,
+ raphael.s.norwitz@gmail.com,  bchaney@akamai.com
+Subject: Re: [PATCH v12 3/8] qapi: add local migration parameter
+In-Reply-To: <20260306213235.216863-4-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Sat, 7 Mar 2026 00:32:30 +0300")
+References: <20260306213235.216863-1-vsementsov@yandex-team.ru>
+ <20260306213235.216863-4-vsementsov@yandex-team.ru>
+Date: Tue, 10 Mar 2026 14:53:17 +0100
+Message-ID: <87cy1biyeq.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[99.98%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
- RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
- MID_RHS_MATCH_FROM(0.00)[]; RCPT_COUNT_TWO(0.00)[2];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCVD_COUNT_TWO(0.00)[2];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, linaro.org:email,
- imap1.dmz-prg2.suse.org:helo]
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,82 +91,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-> From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+> We are going to implement local-migration feature: some devices will be
+> able to transfer open file descriptors through migration stream (which
+> must UNIX domain socket for that purpose).  This allows to transfer the
+> whole backend state without reconnecting and restarting the backend
+> service. For example, virtio-net will migrate its attached TAP netdev,
+> together with its connected file descriptors.
 >
-> https://gcc.gnu.org/onlinedocs/gcc-15.2.0/gcc/Warning-Options.html
->> Level 2 warns also about calls that might overflow the destination
->> buffer given an argument of sufficient length or magnitude. At level
->> 2, unknown numeric arguments are assumed to have the minimum
->> representable value for signed types with a precision greater than 1,
->> and the maximum representable value otherwise. Unknown string
->> arguments whose length cannot be assumed to be bounded either by the
->> directive=E2=80=99s precision, or by a finite set of string literals the=
-y may
->> evaluate to, or the character array they may point to, are assumed to
->> be 1 character long.
+> In this commit we introduce a migration parameter, which enables
+> the feature for supporting devices (no one at the moment).
+
+for devices that support it (none at the moment).
+
 >
-> Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> Message-ID: <20260305-nvme-v4-4-b65b9de1839f@rsg.ci.i.u-tokyo.ac.jp>
-> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
-> ---
->  meson.build | 1 +
->  1 file changed, 1 insertion(+)
->
-> diff --git a/meson.build b/meson.build
-> index 102f0cbb13e..f45885f05a1 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -694,6 +694,7 @@ warn_flags =3D [
->    '-Wempty-body',
->    '-Wendif-labels',
->    '-Wexpansion-to-defined',
-> +  '-Wformat-overflow=3D2',
->    '-Wformat-security',
->    '-Wformat-y2k',
->    '-Wignored-qualifiers',
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
 
-This gives me:
+[...]
 
-../tests/qtest/ast2700-sgpio-test.c: In function =E2=80=98test_output_pins=
-=E2=80=99:=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20
-../tests/qtest/ast2700-sgpio-test.c:27:33: error: =E2=80=98sprintf=E2=80=99=
- may write a
-terminating nul past the end of the destination
-[-Werror=3Dformat-overflow=3D]
+> diff --git a/qapi/migration.json b/qapi/migration.json
+> index f925e5541bf..2c8d85f5834 100644
+> --- a/qapi/migration.json
+> +++ b/qapi/migration.json
+> @@ -828,7 +828,8 @@
+>             'mode',
+>             'zero-page-detection',
+>             'direct-io',
+> -           'cpr-exec-command'] }
+> +           'cpr-exec-command',
+> +           'local'] }
+>  
+>  ##
+>  # @migrate-set-parameters:
+> @@ -1004,6 +1005,15 @@
+>  #     is @cpr-exec.  The first list element is the program's filename,
+>  #     the remainder its arguments.  (Since 10.2)
+>  #
+> +# @local: Enable local migration feature for devices that support
+> +#     it.  The feature is for local migration only and rely on the
+> +#     channel support for passing file descriptors (it must be a UNIX
+> +#     socket).  In general that means that backend state and its file
+> +#     descriptors are passed to the destination in the migration
+> +#     channel.  In general devices may have an option which in
+> +#     conjunction with @local set to true enables the local-migration
+> +#     feature for that device.  (Since 11.0)
 
-../tests/qtest/ast2700-sgpio-test.c: In function =E2=80=98test_irq_level_hi=
-gh=E2=80=99:=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20
-../tests/qtest/ast2700-sgpio-test.c:85:33: error: =E2=80=98sprintf=E2=80=99=
- may write a
-terminating nul past the end of the destination
-[-Werror=3Dformat-overflow=3D]
+This needs polish.  Let me try.
 
-../tests/qtest/arm-cpu-features.c: In function =E2=80=98test_query_cpu_mode=
-l_expansion_kvm=E2=80=99:=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=
-=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20=20
-../tests/qtest/arm-cpu-features.c:578:35: error: =E2=80=98%u=E2=80=99 direc=
-tive writing
-between 1 and 10 bytes into a region of size 5
-[-Werror=3Dformat-overflow=3D]
+  # @local: Enable local migration for devices that support it.  Backend
+  #     state and its file descriptors are then passed to the
+  #     destination in the migration channel.  The migration channel
+  #     must be a Unix domain socket.  Also needs to be enabled per
+  #     device by setting device property "local" to true.
 
-../configure
---target-list=3Dx86_64-softmmu,i386-softmmu,aarch64-softmmu,arm-softmmu,ppc=
-64-softmmu,s390x-softmmu,riscv64-softmmu,aarch64-linux-user,loongarch64-sof=
-tmmu
---disable-plugins --enable-modules --enable-werror
---enable-trace-backends=3Dlog,dtrace --enable-debug --enable-docs
---enable-rust --enable-strict-rust-lints
+> +#
+>  # Features:
+>  #
+>  # @unstable: Members @x-checkpoint-delay and
+> @@ -1043,7 +1053,8 @@
+>              '*mode': 'MigMode',
+>              '*zero-page-detection': 'ZeroPageDetection',
+>              '*direct-io': 'bool',
+> -            '*cpr-exec-command': [ 'str' ]} }
+> +            '*cpr-exec-command': [ 'str' ],
+> +            '*local': 'bool' } }
+>  
+>  ##
+>  # @query-migrate-parameters:
 
-gcc version 7.5.0 (SUSE Linux)
 
