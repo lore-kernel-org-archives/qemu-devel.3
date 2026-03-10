@@ -4,96 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49450FD4F04
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:50:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2071FD4F04
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:53:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w00HD-000370-Vd; Tue, 10 Mar 2026 12:49:48 -0400
+	id 1w00Kp-0004GP-Tg; Tue, 10 Mar 2026 12:53:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1w00HA-00036k-8E
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:49:44 -0400
-Received: from outbound5g.eu.mailhop.org ([18.156.67.42])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <svens@stackframe.org>)
- id 1w00H4-0001K0-GN
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:49:43 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w00Kl-0004Fx-V4
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:53:28 -0400
+Received: from mail-ej1-x62d.google.com ([2a00:1450:4864:20::62d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w00Ki-0004UY-Jn
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:53:27 -0400
+Received: by mail-ej1-x62d.google.com with SMTP id
+ a640c23a62f3a-b96e9c59339so463171266b.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 09:53:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773161603; cv=none;
+ d=google.com; s=arc-20240605;
+ b=dlUf8kt0NP9H8wlaxggF3/HwmO7b0t0f6rKUsOEBs/jVHN+G9BuEXAnFeILV/6q7sP
+ U2QJQwJfA/OwzBfyriRooxrNIlvheaGojA2f7KpJFhNz6WQwJCi7esE1l3qtKt7YE8Ji
+ mKNQc5pot5m6abvltHo3K11jw4QzpJlOygRNV9cPWZrdjKxFUwpV1OaqbM8AMz788GBZ
+ mMSuBy6ovSS8i44ywK/6KkB0AW9ONWXAKscfM8vd8RbzlM3RBfwANOspmTQwLOwQuYRy
+ lJwuy45/oDgV+efr+Tv3dK6GKV7Uqr9nZFUxipvnvT5hwQFek3s9epjABZ7VknWuB01q
+ id4g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=OucPCdHK4onxE3uCRwVBvRy1iNOvvWI1LWD86E5XmPc=;
+ fh=2+ROL61GaolZp+du6n9ufjYYdS54csK0eB12Ik9P49M=;
+ b=gWlbfuoDHJ5oY/UcwF3isTxMKLpTUo/T+XVvx2b0ogAdl2pIlATHdcxKkmFu5xo84O
+ qGBxGf6yVhZpgUoyCSWxnR+rhTrkqT13Jtclis6jwkDGRJp6NZZhOSSB16qdtskFV0WM
+ dy515tJY0SHI3wBa2CinSDfjDbr/mKRLk9x0g1B6/DrxtMOKassAv8RGvijyAp5lilZA
+ SdEYMvPvTmdOVzE/Tnliilh1UTUIWI8fgHhW/ooCSt+ElMU4t8A8Q0BTcJtIOLszr/qG
+ NF31vLzwfem4funnAeYdeq2bs+0SJxHzkRbxnd9NIdXUs1bLEpsM88Dc0HJDcmN7Dq7N
+ 8hXg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=stackframe.org; s=duo-1634547266507-560c42ae;
- h=content-transfer-encoding:content-type:mime-version:message-id:date:
- references:in-reply-to:subject:cc:to:from:cfbl-address:cfbl-feedback-id:from; 
- bh=50/mddupBI9m+s17XpYNr+FqV1J0qZxLeJiUMzXJn04=;
- b=X+bXzZaKR3bE8oQ+WaJrD5m0ta6NvjM9Ue9yYPPHtC4Ni+y0PfO3APolT6dN40cok0m4su1sPOhdf
- JEqAMrIpKYXUy5Y+AYV90XeFIlvhKovMWWrn+vS1fcFSmXACaBtvsfo0lBudGHg7L0cT1jtHY5/a4x
- YC0Q20Wc00rWssbA=
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=outbound.mailhop.org; s=dkim-high;
- h=content-transfer-encoding:content-type:mime-version:message-id:date:
- references:in-reply-to:subject:cc:to:from:cfbl-address:cfbl-feedback-id:from; 
- bh=50/mddupBI9m+s17XpYNr+FqV1J0qZxLeJiUMzXJn04=;
- b=lFMW1COQv9UJpgzJ8Vp1W076PSmks8v2tX+EGUEVivC8oLPPynnOeQ/ZpD/cXawE3dERmB8mp24wi
- Gkep/ucQvXT5QmQHop74A0hAdUa3W89wZPs+QgsYs26sA3PZyjkKtHLsSfSrar/Vbk2fC80l5bSecY
- u/Ee3iSgujZjEtRovLHv5a5BxHFJuAdsDCzkkuE3TzXGLxkd7+vTcE5rSks8IEN4pb1BVBDgBhyRU3
- 1M7JX+YG3wHkD0v2/4QnXyUBMhZOUf2bvOpMnGYrMYk8cklJ1TxWbjQX10psnj2h9EHg+347dG0E0y
- kbnhRQFQy6NYXk/BJ0FssNbmRSqLncg==
-X-Originating-IP: 130.180.31.158
-X-MHO-RoutePath: dG9ta2lzdG5lcm51
-X-MHO-User: 1abf1397-1ca1-11f1-bb61-754228886235
-X-Report-Abuse-To: https://support.duocircle.com/support/solutions/articles/5000540958-duocircle-standard-smtp-abuse-information
-X-Mail-Handler: DuoCircle Outbound SMTP
-CFBL-Feedback-ID: 1abf1397-1ca1-11f1-bb61-754228886235:13
-CFBL-Address: prvs=0529f992e2=abuse@outbound.mailhop.org; report=arf
-Received: from mail.duncanthrax.net (mail.duncanthrax.net [130.180.31.158])
- by outbound2.eu.mailhop.org (Halon) with ESMTPSA
- id 1abf1397-1ca1-11f1-bb61-754228886235;
- Tue, 10 Mar 2026 16:49:30 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=stackframe.org; s=dkim1; h=Content-Transfer-Encoding:Content-Type:
- MIME-Version:Message-ID:Date:References:In-Reply-To:Subject:Cc:To:From:Sender
- :Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:
- Resent-Sender:Resent-To:Resent-Cc:Resent-Message-ID:List-Id:List-Help:
- List-Unsubscribe:List-Subscribe:List-Post:List-Owner:List-Archive;
- bh=50/mddupBI9m+s17XpYNr+FqV1J0qZxLeJiUMzXJn04=; b=IeqLzqNQfCUlFv3nPiJcbLXarw
- PcpgbcCxMO5ln1WVX+JU8KsecxbCJKW1lorNAVj/+UX8i+5FpN9ikpBhdFClZxZzPzN04bi2MzGiY
- yVW8pufcsMOgVIpIMj77Gj5wzg3/o3UgtbFMdDkHhcg1Qxfd9H/UJtJEcdnLTastyCNbYsWcDOSRp
- dT+5jx/a9qMFSBYnNHK5I8jt3XwnhwKzqLm/eYKIsXyvQs3hIU0y+YLWERJZ8KT+CUe6vuSI+EknS
- esZFn3CxBO5MV3HQgMnBoXb6/NPtNOaZ0SRarTUYNpQUyIDyOID5H1erPBihYTL9C9AcaObpIHW/Y
- pIReD3pg==;
-Received: from [134.3.93.166] (helo=t14.stackframe.org)
- by mail.duncanthrax.net with esmtpsa (TLS1.3) tls
- TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 (Exim 4.97)
- (envelope-from <svens@stackframe.org>) id 1w00Gu-0000000BCqz-2WrS;
- Tue, 10 Mar 2026 17:49:28 +0100
-From: Sven Schnelle <svens@stackframe.org>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: deller@kernel.org,  qemu-devel@nongnu.org,  Soumyajyotii Ssarkar
- <soumyajyotisarkar23@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Helge Deller <deller@gmx.de>,  Richard Henderson
- <richard.henderson@linaro.org>,  Fam Zheng <fam@euphon.net>
-Subject: Re: [PULL 12/12] target/hppa: add 64 bit support to gdbstub
-In-Reply-To: <518117ad-777a-4bce-ab9e-cdfaf360d81d@linaro.org>
-References: <20251223155031.7110-1-deller@kernel.org>
- <20251223155031.7110-13-deller@kernel.org>
- <52cbaf6d-f7a4-4984-9561-ca31418cdc0f@linaro.org>
- <87cy1cb2s8.fsf@stackframe.org> <878qc0b1uj.fsf@stackframe.org>
- <518117ad-777a-4bce-ab9e-cdfaf360d81d@linaro.org>
-Date: Tue, 10 Mar 2026 17:49:27 +0100
-Message-ID: <873427bpew.fsf@stackframe.org>
+ d=linaro.org; s=google; t=1773161603; x=1773766403; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=OucPCdHK4onxE3uCRwVBvRy1iNOvvWI1LWD86E5XmPc=;
+ b=TU9KAKdQlpGzChMg4d3utqeTa50slTuOJ0cMaq8G4ceXMADpkOI+sUTkpPXIzYj+we
+ 8OMN69I6+XuIUlMZ5PkXlAPnk2rsQ14t9bURcGBIvq2EX7oM3NzMpzYaUA0o65ijary3
+ rzvq+yLSPuHy36UJG9GmJIPmBU58QEyBJuquEi76q4f+EZu7TCkrNabOCfl/vQ1vGqXH
+ l2HphZB0q7ak6nyRc/sV97QQuZ+UHLRK0wiRQHeNsGgcgKYjHEUFoaPTjNXCxfiVYzb3
+ ZTPOf3gYAx37AZBMY/Ms10vf3MA1cc4g/PmRkn69hQJQgcyA/zUqIQGzATtSdHZS9DTZ
+ +wDg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773161603; x=1773766403;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=OucPCdHK4onxE3uCRwVBvRy1iNOvvWI1LWD86E5XmPc=;
+ b=p0+puWCMoJZ01B9899z8Xjx7vJwhy3BkpTMctCplBM05dFiA/FetcW6OtPeX2MQ6f0
+ GwpJ8SaQSyEkS407+hSmZov/L7+Ift6HLj21mxjCTZkffxreM9DMbVxN0aI1IWr7qMTt
+ 8YKWvY/42v4T+DZ7ZMdRonPrEXpmAYus2gCRetYii31gC0O0e4yexTXbX0FMQjUL9/lv
+ KOuYKAbKueg5PXedStENdrH+t0doUzBFLaz2F/wUlKArbeX8kkp31KeUNvhXbTzXcg2V
+ Vkd4OVEZKMkRIInGIGLbXFeJUy2LTBnQdLszrpMDvkVZSu8tiYgYG8f//Hpc9GMaDH3D
+ g+cw==
+X-Gm-Message-State: AOJu0YxuKl3ez6iHbrVh4xpoVWc4bG5ZrgrR/AtQ9SyChvTt5gLEOGOU
+ /PJowcivItw18DIn0BW0QbOnnSPYo2zGqyyoMomfeGBI/pOEFpePZquILpwky21nOqoEokoFvRS
+ imCdr/M/Jd1d0tiiYYKph/OeEfnrAHSOfqbGl4GR4vg==
+X-Gm-Gg: ATEYQzw4GvfMRWDnzyCMNsjvnZNh2AUsVLIt+jpeqU8S59lFuHW/4wbZWrOJKgQgQnk
+ 9yHUf5WBGwmCk423wreueQ8sWMaYnUpjJRaXZBTgGsb8sYmCeWmRefxpZZf3Lu7Hbsyhg3SWwP9
+ y+0VWPdt+QD16GORmvcPQQxJVl+djjJykq7XlgJ+YHgtZTn7TpRD2+isCzebkZhbl7tE8UhpwiA
+ re8UnB3Qvy2N6jZtvDtuqWQGZcZN/aGAlTtlRnMH38LjK9cKpasM/LTAR3X3RcEC2qiCImgFZBA
+ iGnqlomYvMf6j1Z4Pe4QBn5fXra3k6SazFzg5xE0ILce1ZXS/xqOEwI/REz2wMCtUpc=
+X-Received: by 2002:a17:906:209a:b0:b97:1db4:e59d with SMTP id
+ a640c23a62f3a-b971db505bdmr91047266b.1.1773161602747; Tue, 10 Mar 2026
+ 09:53:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=18.156.67.42; envelope-from=svens@stackframe.org;
- helo=outbound5g.eu.mailhop.org
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260309185752.76865-1-pbonzini@redhat.com>
+ <20260309185752.76865-7-pbonzini@redhat.com>
+In-Reply-To: <20260309185752.76865-7-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Mar 2026 16:53:09 +0000
+X-Gm-Features: AaiRm51487PF4CsY4WgubzWJlWGPJQptRRXtuYHg0gGFSVg22L68lSJj6rqwDhc
+Message-ID: <CAFEAcA_VjvAigGT0vEZ+fQyqnRMN0oZS77fhfRy6bG-ehmcEjA@mail.gmail.com>
+Subject: Re: [PULL 06/10] target/i386: emulate: LA57 fix
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::62d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-ej1-x62d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,68 +114,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
-
-> Hi Sven!
+On Mon, 9 Mar 2026 at 18:59, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> On 10/3/26 08:06, Sven Schnelle wrote:
->> Sven Schnelle <svens@stackframe.org> writes:
->>=20
->>> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->>>
->>>> Hi,
->>>>
->>>> (now merged as commit b2c2d00f48cc5f4486cfba33b505ff86d79cb137)
->>>>
->>>> On 23/12/25 16:50, deller@kernel.org wrote:
->>>>> From: Sven Schnelle <svens@stackframe.org>
->>>>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
->>>>> Reviewed-by: Helge Deller <deller@gmx.de>
->>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->>>>> Signed-off-by: Helge Deller <deller@gmx.de>
->>>>> ---
->>>>> target/hppa/gdbstub.c | 62
->>>> ++++++++++++++++++++++++++++---------------
->>>>>    1 file changed, 41 insertions(+), 21 deletions(-)
->>>>> diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
->>>>> index 0daa52f7af..777f4a48b9 100644
->>>>> --- a/target/hppa/gdbstub.c
->>>>> +++ b/target/hppa/gdbstub.c
->>>>> @@ -21,16 +21,25 @@
->>>>> @@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs,
->>>> GByteArray *mem_buf, int n)
->>>>>            val =3D env->cr[30];
->>>>>            break;
->>>>>        case 64 ... 127:
->>>>> - val =3D extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
->>>>> -        break;
->>>>> -    default:
->>>>> -        if (n < 128) {
->>>>> -            val =3D 0;
->>>>> +        if (hppa_is_pa20(env)) {
->>>>> +            val =3D env->fr[n - 64];
->>>>
->>>> Coverity reports:
->>>>
->>>>>>>      CID 1645613:         Memory - illegal accesses  (OVERRUN)
->>>>>>>      Overrunning array "env->fr" of 32 8-byte elements at element
->>>>          index 32 (byte offset 263) using index "n - 64" (which
->>>>         evaluates to 32).
->>>
->>> Yes, there's indeed a check missing wether n is < 96. I'll submit a pat=
-ch later.
->> Looking again there is
->> if (n >=3D hppa_num_regs(env)) {
->>          return 0;
->> }
->> right at the beginning of both functions, which returns 96 for 64
->> bit
->> mode as the limit so n should have proper bounds already if I'm not mist=
-aken.
+> From: Mohamed Mediouni <mohamed@unpredictable.fr>
 >
-> I thought the same but wasn't sure. Maybe adding a pair of assert()
-> are sufficient to fell safe and make Coverity happy?
+> Seen on a Sapphire Rapids box with LA57.
+>
+> The top level of the pte array is taken for CR3, so there was
+> one entry too little for 5-level paging.
+>
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> Link: https://lore.kernel.org/r/20260307181856.2209-6-mohamed@unpredictable.fr
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+> ---
+>  target/i386/emulate/x86_mmu.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>
+> diff --git a/target/i386/emulate/x86_mmu.c b/target/i386/emulate/x86_mmu.c
+> index 8261ca16351..4e39bae025e 100644
+> --- a/target/i386/emulate/x86_mmu.c
+> +++ b/target/i386/emulate/x86_mmu.c
+> @@ -56,7 +56,7 @@ static bool is_user(CPUState *cpu)
+>  struct gpt_translation {
+>      target_ulong  gva;
+>      uint64_t gpa;
+> -    uint64_t pte[5];
+> +    uint64_t pte[6];
+>  };
 
-Feel free to do so, but I don't want to write code just to make some
-code checker happy.
+Also detected by Coverity (CID 1645466, 1645468).
+
+-- PMM
 
