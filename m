@@ -4,104 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19A63EFCD9F
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7948FEA8550
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:04:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzttj-0006AS-Ig; Tue, 10 Mar 2026 06:01:07 -0400
+	id 1vztwG-0006xV-0Y; Tue, 10 Mar 2026 06:03:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzttQ-00067G-12
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:00:48 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vztwB-0006xJ-7j
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:03:40 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzttO-00053d-Cw
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:00:47 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64ad79df972so12262395d50.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:00:45 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773136844; cv=none;
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1vztw5-0005FK-Sk
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:03:38 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-662abedbeb7so1995783a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:03:33 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773137012; cv=none;
  d=google.com; s=arc-20240605;
- b=U4AzPyllXBeCqc/FA2t6dwPbUdbj6WwatpUsrP/FMDqYMs3kanyxETRpeRLe0dNU71
- 0zx4CB3JED4u1RWZ0pNiWaiNF82f2zobHRhgMF3EfnWAEQVG5SjEYSDzDepDaAKx2fVy
- yRDH88nrvfbgQZJfqny6sNGRNZcJweRm7AmKYKfQP42wUUudjx265vAvs/TqkGnn1Szj
- 3CtuKggp4tayzChdBDKTxerjPXPYjDcFe2i588q5q8UuTcntZZgcX/Hgh5dqt1TBPNQW
- dMJv+DDHs0meFU95MwgpOqjCuKyMvdxZwLE8QDSUsMkmjr/y87WEbKn7S1YmJr/LgTKP
- eJPQ==
+ b=lWgcItVbQKrJwrqsDr0bBSzkMNX7uHqdGAh4vA2zXXrVXVxV6J5SdG1BJtFzp9RJn7
+ GdSBkUA0qufsOAVXhp3r1WIH3jFwVt8RITeGAy0Kh41VwGLnN0RAuNn1xv8EgpwIEtF5
+ OkB1cuqE4OL2kLtw5dkELR1io62d2SBLNCPKtD0Q6euopE94uMcf4d3qWUNK3oc94bZq
+ xzJiOzuhayTafcap+UUlnHBpGKIgAwwW3/3HXD5qsGgErrSPXitrVCkN1x5oET9XQg+F
+ Qh1BX7Fj8F5Nqrq4LEjTj7JFCfIfIUeql1uAAnQY/puJcV2nWKyi759W5xRK00XQBvWC
+ LW9g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=vA538xkBYu+c5ZewwjzFctB957ziu1EwWSk+8q4qAS8=;
- fh=BBXXBmZbsnh1iUcPA7aYGot0GnoKedpL6BO7ZAJRQVM=;
- b=EkUrmbD0S6bZvw6d1gpe8sxKk7d/+nAY6RniDkHKCWFPb0wYhNA5KHtFLqFST+v7th
- oWn8QNDlMobLJ8mpiwmsf56NjeP75HzHogaDhj5ZCg9k/xcuA5iiBhb4rsE831dMlVOP
- CaIeb+wXeUpEeYhapB5E+w5oWyRnCoS0o//e07In2jtI8fnWFfuOkyBgMFW/NnZ4+/6X
- AUDQ1UvACsabzMTkZ1Z9a9b9gzpyRhnOgiEqtE0hpHCKoPcr0eVD4c0M8vUpCoPRBdeo
- gUKVLbRB+mm2a/kC10FtnpLHMJBWoFS3jkP1aW+yXuiZx0ldpZIkIBigy2NGuGAVDooj
- TcqQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=fXrYWJ97Wx0+u3hRBLccGW8qXx+v21YOPINNKipUzFI=;
+ fh=QptDyNslKGOgM7YQDmPmjIJ3s5ixH2z+xkxKHrHph54=;
+ b=gLn6wgEHsWIlPpxqvB6Lo5UMxytnZ8A6nU2zd+6PGnPsL2rnlVER1uu2UvIghrHIwN
+ ViNMKRzcWyvoSCyDQZiDcM+0oyKYuksS5VjXQwGyvt5M9+bsldtGfaJqzH9Q04l+oi9G
+ o1MtrlSkDlgTV0Dl/oHcdioICDxPATtrupKSXkF7Y/MJmuRNbR6P5ZoJy8UYhLr3f2+y
+ FJfXEiJD8Tm1idXvH8Pxn4OkKrXShpV9JtICJxR1I0BUOKjeg9Zb64VOBwK4LV/svEwp
+ KOpTfjker8YKfu6AM9HV/+yZ5e5bxMexR1/GVNFSbeCj1/qK1qt7RMmVs25Uf/oCpNCc
+ z3Qg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773136844; x=1773741644; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=vA538xkBYu+c5ZewwjzFctB957ziu1EwWSk+8q4qAS8=;
- b=FbDOiIlA3TbIu1f/Bq3GAGhxnMGb8sp/aoCNjH/ZelBaLLFXmTl6d4nAQuwQUs+QEr
- 59V36LMiTjEnEJI1/BeZoPm11qBftCNAju4APeipebtvYYCJLKhaptGqSw+NwT6HeWl+
- M240jq6Q7fvZnnYpoL0aPgh28jEZb7+flGefdCyFvmb9GnMA/3g0FDFnBUQ2IAz03AbF
- 0VsYG9ztoHtYDfDodBpYubEkBDTa1xCyu2Ng7XBeiD/Za7SAJgOecwVGRjzBidpiI+Ro
- f+NPP3lfI+HZ0Ss/4bWqSmVYofCXRpzI8s7B5vRqY4m/sCYf2tkJJ/gl5QHphH5v/X5D
- PQbA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773136844; x=1773741644;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773137012; x=1773741812; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vA538xkBYu+c5ZewwjzFctB957ziu1EwWSk+8q4qAS8=;
- b=hZqWVRP3pex1vM11iv7PyXaqLx3Bh5FK2gxDweSh74QAF7v3R4NbruvCVICPQsYthk
- 2UIX7XYswVDsskFC/hl+JlaJ1qQraUvek6yLdck5BCWr2Zytub34xGCAqWhllr8HWVSH
- bmCXchFfijIYQJKAX56BDAB8H3dyZ+hdf05Js5GDVY1o+qepFBuwR7kIxB1PJcCrD5Dc
- e8lFEfON0Ytu+g4XHHlRIiATxIs6tVAxEsQZU0W01SLv81BEkZLQxXXwmHUgDbRdrgz6
- XmNV9vbpR0ovViioZxufhO7Y6r7Lo9yMwgBKbGadHhtAesDcK/PnWz6Ngbe7iAIM4jyi
- MHyQ==
-X-Gm-Message-State: AOJu0YwLezt+KhEdO1EFMiUIr/gwhOCvw3PHprspBOOcf4gYmZR6Wyfo
- 0//69ZeYCTeRN4YxFCA+yNdrznwvBuLkmm67zwuwSRHo1SIEk3ukMkQFad2KYoDShmUlDiBC3c9
- /tIsF2K2kCrYSZST0/iqDmhWcIT+6kG++Cnexq2QszQ==
-X-Gm-Gg: ATEYQzwuYhkj8uHn7cEv9tGbRwG8YyERhnvNwhD1JlhLtKQ+PjQ4TYVU19fQJ0ltexX
- TG3FOhu9auL1LEAZ85W9zLWKQycbjaBp6cNqeHXVb/YyhlIz/iWyTmZ8o60rnwW8ii2ptg5lkJt
- lddZT+bhRd4rrzJk6hyxrRvSkKHJtybpAcaf2VYVmkP/gFFx6+EavXoygL5WabqZEmX0mdRTSwZ
- 00zTmwnQqqfN8SE5c/R+w8B+RYfSkIQBgt0bODLqc3Glvkfm1EMUwUWcYLCMorjJ9pLSOgVpqr5
- JgCFd+yyR03a3iGPzcN9/3uk7lO6Yu5dCmRGMW4XRXAmLBLePPwe3HguPY6AYSeM0ls=
-X-Received: by 2002:a05:690e:4105:b0:64c:a2a4:476a with SMTP id
- 956f58d0204a3-64d1414c8c6mr14466003d50.32.1773136842691; Tue, 10 Mar 2026
- 03:00:42 -0700 (PDT)
+ bh=fXrYWJ97Wx0+u3hRBLccGW8qXx+v21YOPINNKipUzFI=;
+ b=NVga6BexiMU1wCh6SBjxqcIq6gXdEwZyxVaRMHRLoX3bGM1baTf0cdqc8dF4YR7e76
+ W1CC9Gkez4hKQKwOBzLoDGJn20aYhGxojHLQrxMVLPolOsmj+QwlHZtmkTGm41dAGGR7
+ 2ZOIJcQYBIEYu2su2X0ryaLVTRyZ6YlsVBdg8bUsuB8zatru4LYKTmGEQfljFDrynMuL
+ t20PAaX+HsUI0WMzlIBxsGVKMcZP2+rXQ+34SwWz9/5+8otsrmzB9nmwvlOxNYhxRjwH
+ HkYa31/Eh6nBYGd6kDrhVGiHemqe1Vk8DoJKc0fvWD5o8/LhuVGFp8akHSFfvDCOLVQT
+ HLCg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773137012; x=1773741812;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=fXrYWJ97Wx0+u3hRBLccGW8qXx+v21YOPINNKipUzFI=;
+ b=Gf54lJi+2v/aQc2TJ5+joRrAMUHs0b0ZM+W+5aNQX9dQ+TvZJag2TpdWdsCFm0xcze
+ h2yrR1tfv6KQrO6ZdGu5kSElc7avsRJ1cKauBYTAmZCoeA3bAw+IdvHoxcR7NQ8jAeuM
+ coiWRSDmZzPj9z2dIPF3ZSGPg7gmMKyahI5RnVptFTvvoHQVCB9LesJs9fXj5d0JNTRs
+ mHYcjaPya50hWJQnLDfU4uJ8k8ezMtCKKcdSZKDNG9nQgcUSizli4LJdOce3H8gxNcRt
+ pkI4gdXnj3RhNJkA8boOMf1GRBwNLDDMrpchX8PnC/LOulyOyxTFaWlIDumRbUQIEsyX
+ /pkw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXYTtK6TbDJ/uJESlNu+5Re8GltUsy285UG9Cmj0K8y8JYYiy1aYelqYK557+Kzma7eJ/Awta2DzYmP@nongnu.org
+X-Gm-Message-State: AOJu0YyOkK7+dn4g7VkROuErfr05uKuqbWo5TQL3KxjfrY8Hy+fq4rC+
+ XgpFpgocedz+7gGQi/hbHqrS5qax1in12Ancr2QlUGTYx62FsWKwRX8FwNJjrHRotOohYMOINPG
+ FAcOM2GJUlnNCQAiY+wtPzXdsSZc6trw=
+X-Gm-Gg: ATEYQzywSkbYL8dIYASUvccIY34jEhzCOHT7kyLAhLaCwMfTGi/ir6wbxNdgJFxfBzG
+ 9KbqtW1zLplfPFZtTDjOwBBZWlvKzNBPi0gWqdN/7oyPYkc9GKvZF0OC3mv9vH0pFlLS2JZ6blX
+ +1T8d4YzVtn7R4Wn1UhBh3zMMJsWs4IAdwQZXwZS6h/IhXSyWBQ6NkO/i+GvKY32AjKHt5PCPib
+ vP6dapgShIKFmKwgTEtearlMoZn6yOEJVtEWDU5Lq2AnvNBV+3YKoWTVOhZPjwizLQhZR0Lte2s
+ aJfeeCE=
+X-Received: by 2002:a05:6402:278d:b0:65b:a76d:7004 with SMTP id
+ 4fb4d7f45d1cf-6619d560f1dmr7330453a12.30.1773137011547; Tue, 10 Mar 2026
+ 03:03:31 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260308203516.160103-1-shentey@gmail.com>
- <20260308203516.160103-3-shentey@gmail.com>
-In-Reply-To: <20260308203516.160103-3-shentey@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Mar 2026 10:00:31 +0000
-X-Gm-Features: AaiRm521S2O4yW12FYeF5vn5OVw-337c587GtbvWBH-2aPT1g1EoBsPEuS4-f5M
-Message-ID: <CAFEAcA9cfiDB3+=K+MsHptujVhcPexwaf+1y8kHaV692ORAdgQ@mail.gmail.com>
-Subject: Re: [PATCH 2/5] hw/arm/fsl-imx8mp: Fix parent of ocram memory region
-To: Bernhard Beschow <shentey@gmail.com>
-Cc: qemu-devel@nongnu.org, Eduardo Habkost <eduardo@habkost.net>, 
- Paolo Bonzini <pbonzini@redhat.com>, Laurent Vivier <laurent@vivier.eu>,
- qemu-trivial@nongnu.org, 
- qemu-arm@nongnu.org, Michael Tokarev <mjt@tls.msk.ru>, 
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- Gaurav Sharma <gaurav.sharma_7@nxp.com>
+References: <20260305142459.52559-1-zhangckid@gmail.com>
+ <20260305142459.52559-5-zhangckid@gmail.com>
+ <20260309081502.GC39949@fedora>
+In-Reply-To: <20260309081502.GC39949@fedora>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Tue, 10 Mar 2026 18:02:54 +0800
+X-Gm-Features: AaiRm53S4hjgQKMABDrAiFRdxGiOn6bvFuQzVuY9HgrK_712hG5UjiwW2DAZD3s
+Message-ID: <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
+Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
+ holder name
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, armbru@redhat.com,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x531.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -119,38 +123,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, 8 Mar 2026 at 20:35, Bernhard Beschow <shentey@gmail.com> wrote:
+On Mon, Mar 9, 2026 at 4:15=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
+> wrote:
 >
-> Rather than having a NULL parent, let the containing SoC object be the
-> parent. This cleans up the QOM composition tree a bit.
+> On Thu, Mar 05, 2026 at 10:24:50PM +0800, Zhang Chen wrote:
+> > Update the usage of "iothread_get_aio_context()".
+> >
+> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > ---
+> >  blockdev.c | 9 ++++++++-
+> >  1 file changed, 8 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/blockdev.c b/blockdev.c
+> > index 6e86c6262f..01ccf64b3f 100644
+> > --- a/blockdev.c
+> > +++ b/blockdev.c
+> > @@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const char *nod=
+e_name, StrOrNull *iothread,
+> >              goto out;
+> >          }
+> >
+> > -        new_context =3D iothread_get_aio_context(obj);
+> > +        char *path =3D object_get_canonical_path(OBJECT(bs));
 >
-> Fixes:  ("hw/arm/fsl-imx8mp: Add on-chip RAM")
-> cc: Gaurav Sharma <gaurav.sharma_7@nxp.com>
-> Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-> ---
->  hw/arm/fsl-imx8mp.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+> CCing Kevin and Markus in case they have an opinion on this.
 >
-> diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-> index 0119a18416..839c925e4a 100644
-> --- a/hw/arm/fsl-imx8mp.c
-> +++ b/hw/arm/fsl-imx8mp.c
-> @@ -671,7 +671,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
->                      fsl_imx8mp_memmap[FSL_IMX8MP_PCIE_PHY1].addr);
+> BlockDriverState is not a QOM Object so using OBJECT(bs) is undefined
+> behavior and may crash.
 >
->      /* On-Chip RAM */
-> -    if (!memory_region_init_ram(&s->ocram, NULL, "imx8mp.ocram",
-> +    if (!memory_region_init_ram(&s->ocram, OBJECT(dev), "imx8mp.ocram",
->                                  fsl_imx8mp_memmap[FSL_IMX8MP_OCRAM].size,
->                                  errp)) {
->          return;
+> node_name is unique across block driver graph nodes and could be used.
+> Unfortunately it's not connected to the QOM Object hierarchy. Maybe it's
+> best to build a holder name that is an invalid QOM path so there can be
+> no collisions between QOM paths and block driver graph nodes.
+>
+>   g_autofree char *holder =3D g_strdup_printf("BlockDriverState %s", node=
+_name);
+>
+> (A cleaner long-term solution would be making BlockDriverStates QOM
+> Objects so they have a proper path.)
 
+If no other comments, it's OK for me. This issue like I mentioned in
+patch 7 and 9.
 
-This is a migration break, because qemu_ram_set_idstr()
-includes the qdev path of the owning device when it
-creates the name of the ramblock for migrating it.
-But since we haven't released anything with this change in
-it and this board isn't versioned either, that's not a problem.
+>
+> > +        /*
+> > +         * For this qmp case, hard to find the point put aio context ?=
+??
+> > +         * It looks like a pairing function is needed:
+> > +         * qmp_x_blockdev_del_iothread()
+> > +         */
+> > +        new_context =3D iothread_get_aio_context(obj, path);
+> > +        g_free(path);
+>
+> Who calls iothread_put_aio_context()?
 
--- PMM
+As the comments I wrote:
+> > +        /*
+> > +         * For this qmp case, hard to find the point put aio context ?=
+??
+> > +         * It looks like a pairing function is needed:
+> > +         * qmp_x_blockdev_del_iothread()
+> > +         */
+
+Please Kevin and Markus help to see if we need to add new function
+'qmp_x_blockdev_del_iothread()'?
+The iothread_put_aio_context() will be called in it.
+
+Thanks
+Chen
 
