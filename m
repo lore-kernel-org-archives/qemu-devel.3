@@ -4,82 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF097EB1060
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:30:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69CD0EB1060
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:31:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzz2h-0001QV-55; Tue, 10 Mar 2026 11:30:43 -0400
+	id 1vzz36-0001aD-OK; Tue, 10 Mar 2026 11:31:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzz2Y-0001Pn-R4
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:30:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1vzz2T-00058J-Hr
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:30:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773156625;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=QMU8A5qNXdcWg0iopZTOvjbSW3UHXcA3TSRJJsnCYTo=;
- b=GiwyCd/Y+klsp/1k51KbPdJ7M3dYHYgCZm2f8tOYfV46EmGMMiEs9h1EP1p0UcJygYIlWn
- 6UgIjuuhAGGK5yBRwJ+QEf1e0iD9CkFmbOZqVf3W6dSlVBz5e4hqEllMrPKkvc0RrExXae
- JpFyFjntUnrj+6ILj5gFUaExHDunKNc=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-XYD-si45PWiwtAhLolNksw-1; Tue,
- 10 Mar 2026 11:30:21 -0400
-X-MC-Unique: XYD-si45PWiwtAhLolNksw-1
-X-Mimecast-MFC-AGG-ID: XYD-si45PWiwtAhLolNksw_1773156619
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7C84B18002D1; Tue, 10 Mar 2026 15:30:19 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.213])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B8E2130002D2; Tue, 10 Mar 2026 15:30:16 +0000 (UTC)
-Date: Tue, 10 Mar 2026 15:30:12 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Nia Alarie <nia@netbsd.org>
-Subject: Re: Minimal GCC version for QEMU (was: Re: [PULL 27/49] meson: Add
- -Wformat-overflow=2)
-Message-ID: <abA5BBSQ0cHstmqM@redhat.com>
-References: <20260309155219.62400-1-philmd@linaro.org>
- <20260309155219.62400-28-philmd@linaro.org>
- <87h5qn23v5.fsf@suse.de>
- <CAFEAcA-vsS0Q9kGVbmwEyLQcoANaHg5S754DNvqXOOnqoY-LMg@mail.gmail.com>
- <eb7c065a-ff9f-41d9-a80f-51123af20603@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzz2t-0001UB-W8
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:30:57 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzz2r-0005An-BB
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:30:55 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-4853aec185aso21471155e9.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:30:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773156649; x=1773761449; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wOUbUvKw9rUBdkf5MYN70J4wl1FNzo77ifUxMf+0les=;
+ b=hmULES99nt6/kmwh75Q4huxOk2bNQfsZ+VSFw3u5CToyYY1dWhukbeyg3NrfDWDSkC
+ vDR7I35rb9RfffuZ+39e5ncaACGyvZyNBOu7icvVd1zi64QLz9Gd5UHa2lNJarZS2F//
+ 3ESHvZ+97rOblnrG/W0FQ7dn/nVvpob0XEBIeM1Hs0Ys9mAqdYBsDOBC1x0X021Sl8sE
+ +8nHTg0AThJc1pM7GJMn/MFogyzrlM2dgbzhWXnzAyTwKaN5wDkJO++E9UQ6REBo7niM
+ 8uprlplM8SsFwErbZS09kwG4bVRI+3rFCAdeO/FrMMmMmabar5zl6pS5famRypUjgji0
+ uSiw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773156649; x=1773761449;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wOUbUvKw9rUBdkf5MYN70J4wl1FNzo77ifUxMf+0les=;
+ b=c5+Jg+FGW1Gh6vuzEvBk1PB2EHYP5VMYD0eD0ggAzVqVH5BKWG90ijX5xcd9ihSmed
+ MjBYZYx0YLc4h6x4FAtn4bjERmxUdi+eXLyI8IAWiNpZ+hcT+wuMcUUV+EivnseJVXnj
+ Wv74BlAemEdIG3psn20iDNAIo2js+uoscJ1+bkNtmkLFzkG07e11l+6R4kbsR0XowmZD
+ +vtxggZ0IQlQjjdrsalm35cMZuh7de327gIk9Z5ZuW5zzCzZENfiHt5tTpzozVeuJbqj
+ 7O1LoPWKk+MI91hKi3PexWcESzsY28iPjA//rScofjc9rhX7ghnf79uShhfjYHQRncA6
+ DsGQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWICpE/cOHToVXQU/kepYCDZIa95/z1GQo+xcWKmW2QFqPI0qjQ3rEtXgNcXoNrHU9XinK05jw5wB8g@nongnu.org
+X-Gm-Message-State: AOJu0YzQO27eJttcGtZnvHBDDfdjyJHDiUJa3R2zPMuYmZr9i+QfqVgs
+ M7juYrP8Fl4WxuNgwPx03XmDd1sIi+njOLpoEZ2eZPbjqynr3AOkMV7cQbtz8p/CBdQ=
+X-Gm-Gg: ATEYQzzgN5iUxIMxiTLcsBYP9XRW1YZWmYr9r/Z8zWpQx5T/yZMwCy4wt0CpaSNTkLB
+ W4fnNzW54LfeeeQzkmokrInKVFpkY4+ifqWgWJa0MU4Sa+Rl/BKGopoBfvkOXiquD0Ir92G6e0d
+ iJ9fJJj4I8QmtS0DAaw6tCOs04z8MNKf1OTRMMtggMWLeozKeYppZ4mdfKyHXjb4SsNShISbBwj
+ mlGI9y4SLGqj8ox8duBPEcvGS8eccpAD6NoVrsCccmumH82Kr87dWGqXEzZDK2Nb0Inj1TZStko
+ XPe1MRN3z1CJPjvW/QWNFZLwXAmAs0uxsC4EGDrMoP8NIp4OF4zifpsTwQjKkbjTpz0fxY//rWS
+ +GVHNWJzIPr9hY7ZDIOdPiO01cQuES9vKCse29PIu9tHipWN5JQp898Ri3luZhtQ90Kvi+jOhmn
+ bLlpyOHOqjMbEZHrfjSlaTjK7TVIoKwPGCx55hakhVHf9zl+YNe6saPvqIXQ74O/oUog==
+X-Received: by 2002:a05:600c:a12:b0:477:6d96:b3c8 with SMTP id
+ 5b1f17b1804b1-485269648fcmr238705985e9.23.1773156648803; 
+ Tue, 10 Mar 2026 08:30:48 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541aa73dasm196592165e9.2.2026.03.10.08.30.47
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Mar 2026 08:30:48 -0700 (PDT)
+Message-ID: <26eb1310-4a84-4987-8a0e-1d798827e512@linaro.org>
+Date: Tue, 10 Mar 2026 16:30:47 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] tests/qtest/arm-cpu-features: Use g_strdup_printf()
+ instead of char arrays
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20260310151507.2973843-1-peter.maydell@linaro.org>
+ <20260310151507.2973843-3-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260310151507.2973843-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <eb7c065a-ff9f-41d9-a80f-51123af20603@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,64 +105,28 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 10, 2026 at 04:17:47PM +0100, Thomas Huth wrote:
-> On 10/03/2026 15.51, Peter Maydell wrote:
-> > On Tue, 10 Mar 2026 at 13:47, Fabiano Rosas <farosas@suse.de> wrote:
-> > > This gives me:
-> > > 
-> > > ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_output_pins’:
-> > > ../tests/qtest/ast2700-sgpio-test.c:27:33: error: ‘sprintf’ may write a
-> > > terminating nul past the end of the destination
-> > > [-Werror=format-overflow=]
-> > > 
-> > > ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_irq_level_high’:
-> > > ../tests/qtest/ast2700-sgpio-test.c:85:33: error: ‘sprintf’ may write a
-> > > terminating nul past the end of the destination
-> > > [-Werror=format-overflow=]
-> > > 
-> > > ../tests/qtest/arm-cpu-features.c: In function ‘test_query_cpu_model_expansion_kvm’:
-> > > ../tests/qtest/arm-cpu-features.c:578:35: error: ‘%u’ directive writing
-> > > between 1 and 10 bytes into a region of size 5
-> > > [-Werror=format-overflow=]
-> > > 
-> > > ../configure
-> > > --target-list=x86_64-softmmu,i386-softmmu,aarch64-softmmu,arm-softmmu,ppc64-softmmu,s390x-softmmu,riscv64-softmmu,aarch64-linux-user,loongarch64-softmmu
-> > > --disable-plugins --enable-modules --enable-werror
-> > > --enable-trace-backends=log,dtrace --enable-debug --enable-docs
-> > > --enable-rust --enable-strict-rust-lints
-> > > 
-> > > gcc version 7.5.0 (SUSE Linux)
-> > 
-> > This is quite an old GCC, so it's probably less good at noticing
-> > when there might be an overflow and when not (or it has bugs
-> > that have been fixed in subsequent versions).
+On 10/3/26 16:15, Peter Maydell wrote:
+> Older versions of gcc with -Wformat-overflow=2 don't like the usage of
+> fixed size char arrays in this test; gcc 7.5.0 (SUSE Linux) says:
 > 
-> By the way, I think we likely could bump the minimum GCC version to a newer
-> level nowadays. GCC 7.4 was chosen for NetBSD 9 at that point in time:
+> ../tests/qtest/arm-cpu-features.c: In function ‘test_query_cpu_model_expansion_kvm’:
+> ../tests/qtest/arm-cpu-features.c:578:35: error: ‘%u’ directive writing
+> between 1 and 10 bytes into a region of size 5
+> [-Werror=format-overflow=]
 > 
->  https://gitlab.com/qemu-project/qemu/-/issues/614
->  https://gitlab.com/qemu-project/qemu/-/commit/3830df5f83b9b52d949676
+> These can't actually happen because of the limited size of the values
+> being substituted in.  However rather than require readers to check
+> whether the arrays really have been declared large enough, we prefer
+> to use g_strdup_printf() for this kind of string work.
 > 
-> ... but since NetBSD 10 has been released since a while, we could likely
-> bump the minimum GCC version to 10.4 now, see:
-> 
->  https://cvsweb.netbsd.org/bsdweb.cgi/src/doc/3RDPARTY?rev=1.1905.2.14;content-type=text%2Fplain;only_with_tag=netbsd-10-0-RELEASE
-> 
-> WDYT?
+> Reported-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   tests/qtest/arm-cpu-features.c | 24 +++++++++++++++---------
+>   1 file changed, 15 insertions(+), 9 deletions(-)
 
-Yep, if any distro needing 7.4 is out of our support matrix we can
-bump it. Likewise clang can probably be bumped too.
-
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
