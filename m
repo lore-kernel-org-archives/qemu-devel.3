@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14251EB1076
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:54:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58DD6EB1076
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:54:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzPj-0003B6-OF; Tue, 10 Mar 2026 11:54:31 -0400
+	id 1vzzPk-0003CL-0u; Tue, 10 Mar 2026 11:54:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzPF-0002ru-Qv
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:54:05 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzP5-0002pr-Um
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:53:52 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzPC-0006Wt-TZ
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:54:00 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4853e1ce427so24731235e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:53:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzP1-00069T-OD
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:53:49 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439a89b6fd0so9618871f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:53:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773158033; x=1773762833; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773158025; x=1773762825; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Dqz9NVzSufOWty8PPCEysvgoqR4/ll2kzgD0WQ2e/uc=;
- b=IzMmkb9LJJdwn70PmjXsvNWcQgAACShV7ivv+RhFdOgnZrOpRmMtme2edfSFjxu5kd
- oNzJQD6maB1C08TA1d33gIhzicT3OiBNEa3OnWM4K93yN3/NxyIgWRc8IkA0iS2IBJlS
- 3zNtUceiAa/t7m1kS6KkW44WH+Bnejz7AFg1RGDEIjStB5qnRxRObXw0EYz5yQMT2tJD
- BCP7yhukevDC+ocZG0jI6LjJ0yjD8HbKhuwvN75lDTQbdwBId9T2WXQOkkt6Qqa+ggzd
- CfMOFbGwOv4XgrXp6iHLX+ZErtcfRGwb7BoJM+uYz4qxMzgk5odEAzsdzgZrqdw1maLr
- 73hQ==
+ bh=C6mhKW9cyui3RXBaMvsXOeklQUvgkDOQLWXx/oKD7aQ=;
+ b=eJKM552mdVFaAY32QiV2Yoqx9LgagrDhXFP6xcqN/eFe54daAyxscIW2hO4iHpOH8j
+ CxTP/XOOS+XBm209undrtlMcJtw8qNAiHJAN4jVxYc/ksBte+NeSy6tnbzRj0hbQlcG+
+ rGXUG5xLhKT8ck0f2XPkDJztgNYrJz5tr3nbfk1tpBgYfjRvEQapGD7bsK6jov+9ErlL
+ ncQ5kc98PkrLOyEYj10Qr/DAgGm3ED3m1LlnuIsD9UWL7DQDueqCmI4mgD+C3ix1MD6W
+ 9rsBUNhMoxgc6WGD9RjVfuYClQJZ31ZinQ0YPr42SVJtbAYb5IivIsmeR04sbLjedbjp
+ 1GPQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773158033; x=1773762833;
+ d=1e100.net; s=20230601; t=1773158025; x=1773762825;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Dqz9NVzSufOWty8PPCEysvgoqR4/ll2kzgD0WQ2e/uc=;
- b=dQyk8l7GVJcC1b5JWF2709cjB4sB7UQoEp1umaBjHHN6zllpzRuXl38QCUh089DpNU
- gF10k+okfSwDhpxJxdgCdretkxB+8ddQBaWPglv/PFlmvyVsvdI+cXpujdzBrXPw3Sow
- SPwAwKXa1iYS1B8FraUH+ovREuH/Xr0flKWAtFeWUuBcQBAnZtxL6py/a9Swjcz39T0A
- XaGlGeakGsuGKA2yd4fiFjmPVfP5YE3OcQ03mFU9MohYlXydeotcqaxnV9VIHbqMZlMT
- vkmSJwq2kGEGFbR7cbJl60il4ueYtGGP1cXNlM7Fse77I3xgLGJD+Hi9AbzVMaXSP06o
- rsYg==
-X-Gm-Message-State: AOJu0YxRXLVRtKFHcrtrBzgm+2isZEwsngFylQGeSpJq/433I13eSVYF
- a/wHOmUGBCTX1VY+xVD1X5SIXOk1tVM+OV49TIGPMGUZsEgs5xvqqsqPQAea72tyi2u+W5SyRoC
- jfNuFL5s=
-X-Gm-Gg: ATEYQzye9FZSd7iKyR+B4Rt2STRgxPpiQttS4lTGiFzm23JKzprwJRDUkvnJh2FmQty
- SOJIkA8S3nDoQ9Smd24FySsyLbGflTINHsnGpjPz+ZF+jHidtZHofduZe564UyJpfc6SSMbJtQN
- UFxtuxmoPNk1ojI9AS+3+1IhrrocC/MyzqbaALkXiVIairm0KrYYHE/at1b+HRweyEczttqdfpX
- bK6/e/6KI9crwHSWRrXFTcOflxnoF51i+9URwPc00V41RU0qc0dcQxRTyWz2zgAovbqLfUwEgje
- jiSgn47CJrA9cjcGyzKSGSnBgsoci9smVw5JGtavtEjmtxttE8uRhTgoe4X26CDMSisVL2aGFUE
- 0hn2vY2Sup0DRWLYPYrSN55fcspNFV1lEkuLYAoi+spZz7i1hH7vhjUEbCK2kr9/d1CZUHIDdxN
- ju/QStTleibBPHF3pes6YHewDodZQrUX6jtSNLkqJ3xGRoFO44tlFEyzFZJn0xBvgxR1r8USlmN
- EF4zE0LUBU=
-X-Received: by 2002:a05:600c:1c0d:b0:485:39d4:2dd9 with SMTP id
- 5b1f17b1804b1-48539d42ea2mr161159745e9.33.1773158032897; 
- Tue, 10 Mar 2026 08:53:52 -0700 (PDT)
+ bh=C6mhKW9cyui3RXBaMvsXOeklQUvgkDOQLWXx/oKD7aQ=;
+ b=ZmJ7e7X8zLGYaLIUVvdtpX3tbHfGi63zeZgyNT3ENAi1nQ2wOWeTH8RH4o6K2El3Iv
+ ZT85DT3QMpKibBqnVoplurzWsvNEHMkbcQzI9uZIDpdF9OpmIv3kl6nSAXL23ZS/IBkf
+ /5hWsO7ahZxQVzPIePkAH2HrRsXz/77xtvsAaqTDvERSX7bvEQCT7tHZ2z+0cMvJAPUy
+ mMHOqN/5OagQ9nLjXPi40eldQaZfifkETqecARavz85h6zg/fpYOuarDvhiGSOW8tQ1v
+ VHlhq9w5DlUE4AmYeqb1R3vOmr6kRip2WqjpF1uKTMXM18ZVIalXVw6ntNpKCwhQj9g1
+ t9ew==
+X-Gm-Message-State: AOJu0YypYngIF0mdV8hyJfOQlKvc2GqMKPiffKYP6j97z8CIO99DoDng
+ YOeToaodKq4VEk4uo/PxhdKfbLGt1wMIWxon2HSx6Dt2ioNRBbtxm0UHcQrLS4SvEaVy679hdeY
+ yH+l6etw=
+X-Gm-Gg: ATEYQzyxxH5H7TnU1Hwy8sxRVVe0vRQoTN6r5YchA2ywi7iwqdt/kl80OeFySZR5K1j
+ bhErk4OzUgxiBhVbEA67jo9fEFiBNfxSB89dCJzOOG0LdMN/nBatC+UXV0B6COql5UVTp/wHfqb
+ gI8f21iiboY/9QhwbLwyNbMqOJlXwDqMSf4JuQ3+nnr9Zsakpi1uLr0PcRb86c0/C4sZY1gzh/0
+ 8Ps8K0A7QMRJgah7MuecadbzcGMBtwK653ydV7WFgS97DCr6ZRNhS71eUesYc+8v+HucL06BbYd
+ d1PwXpL7KgJxXGGAoFT4D+KeM/zr7/i68eGyKT0xocNzSdyXPKjCYFpEGkXD7r+mpjCSYA6GrqF
+ osjklnqOLNDAW82aDQsCltfjVDCgygtIRHfzLzbxct2SMSfheRQ5Q7OLTMKbn+CXEdoigyhmQ/Z
+ GA3eCHz8YWfBaaCemof1pFwU+ovm4bzziesT++C8xb9NeUaDxaFGny9GY4pBG21xr8mcwAxW2H
+X-Received: by 2002:a05:6000:2902:b0:439:d8e2:9a3f with SMTP id
+ ffacd0b85a97d-439da89fe7amr28417989f8f.56.1773158025399; 
+ Tue, 10 Mar 2026 08:53:45 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853a797dbasm86444845e9.7.2026.03.10.08.53.51
+ ffacd0b85a97d-439dadb29fdsm37044857f8f.16.2026.03.10.08.53.44
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 08:53:51 -0700 (PDT)
+ Tue, 10 Mar 2026 08:53:44 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
@@ -71,24 +70,24 @@ Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
  Chao Liu <chao.liu.zevorn@gmail.com>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, qemu-ppc@nongnu.org
-Subject: [PATCH v2 03/13] gdbstub: Simplify gdb_init_cpu() logic
-Date: Tue, 10 Mar 2026 16:53:19 +0100
-Message-ID: <20260310155329.48772-4-philmd@linaro.org>
+Subject: [PATCH v2 02/13] target/i386/gdbstub: Remove stale comment
+Date: Tue, 10 Mar 2026 16:53:18 +0100
+Message-ID: <20260310155329.48772-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310155329.48772-1-philmd@linaro.org>
 References: <20260310155329.48772-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,45 +103,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ensure we either set gdb_num_core_regs or have a XML file.
-We shouldn't modify CPUClass content, so mark it const.
+Since commit ecd6f6a8820 ("gdbstub: Infer number of core
+registers from XML") gdb_num_core_regs is inferred for
+the x86 targets. Remove a stale comment.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- gdbstub/gdbstub.c | 9 ++++-----
- 1 file changed, 4 insertions(+), 5 deletions(-)
+ target/i386/gdbstub.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
-index 90f4b95135b..139301b485d 100644
---- a/gdbstub/gdbstub.c
-+++ b/gdbstub/gdbstub.c
-@@ -582,22 +582,21 @@ static const char *gdb_get_core_xml_file(CPUState *cpu)
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index f1ce90a046e..b86520f8f9c 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -39,9 +39,7 @@ static const int gpr_map[CPU_NB_EREGS] = {
+ static const int gpr_map32[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
  
- void gdb_init_cpu(CPUState *cpu)
- {
--    CPUClass *cc = cpu->cc;
-+    const CPUClass *cc = cpu->cc;
-     const GDBFeature *feature;
-     const char *xmlfile = gdb_get_core_xml_file(cpu);
+ /*
+- * Keep these in sync with assignment to
+- * gdb_num_core_regs in target/i386/cpu.c
+- * and with the machine description
++ * Keep these in sync with the machine description
+  */
  
-     cpu->gdb_regs = g_array_new(false, false, sizeof(GDBRegisterState));
- 
-     if (xmlfile) {
-+        assert(!cc->gdb_num_core_regs);
-         feature = gdb_find_static_feature(xmlfile);
-         gdb_register_feature(cpu, 0,
-                              cc->gdb_read_register, cc->gdb_write_register,
-                              feature);
--        assert(!cc->gdb_num_core_regs);
-         cpu->gdb_num_regs = cpu->gdb_num_g_regs = feature->num_regs;
--    }
--
--    if (cc->gdb_num_core_regs) {
-+    } else {
-+        assert(cc->gdb_num_core_regs);
-         cpu->gdb_num_regs = cpu->gdb_num_g_regs = cc->gdb_num_core_regs;
-     }
- }
+ /*
 -- 
 2.53.0
 
