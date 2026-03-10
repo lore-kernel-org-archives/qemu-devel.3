@@ -4,54 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DDA4FCC9C4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B974AFCC9C8
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 05:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzq4s-000761-Dk; Tue, 10 Mar 2026 01:56:22 -0400
+	id 1vzq67-0001Yv-8C; Tue, 10 Mar 2026 01:57:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq4p-00074C-EK
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq5b-0000rz-Ko
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:57:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq4n-0006Gc-VQ
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq5X-0006LV-Pp
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:57:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773122177;
+ s=mimecast20190719; t=1773122222;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=YKUDv+C4AC+5FOzoo+6Mo8xYxvLGt2HVce4C3xeF4R4=;
- b=K/tBJzSFva2mTjh5Kp/F7wafHS20xjfM8eEa6t7kfQ/0Krmcym6dHPx5S7ptz32vjaNFgX
- SNzzMT7nlMewEIwqIfbNx/daJnsE0px+N7uTOee6S/synxl7bcpZcBgrmw8KTglsKqbDQH
- RdNgXZC3DaCK4GOUadB+z+35xvf2WF8=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=EFTM6x/HkKccer2jVaVlp2BBiwHHgfzvPHNZdcz7q1M=;
+ b=anwdZdyn5FX++DqudtyfH+34tWTbJI/IUDEEMLtsWF4/AMQR+UtkOWtndeAFNhnuuidp23
+ QbT1kHgAj/JMYxk0XM6LSXnRhddReKdrLbJvIZyJzrOhssOHAR6LaxIIotVrm8l3r09mjw
+ mWdDMZD27XlMsVLZsfDPN4XgSJxe5Jg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-306-T4BmmDTONhq59xSzFFr_gw-1; Tue,
- 10 Mar 2026 01:56:14 -0400
-X-MC-Unique: T4BmmDTONhq59xSzFFr_gw-1
-X-Mimecast-MFC-AGG-ID: T4BmmDTONhq59xSzFFr_gw_1773122173
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-zoitBFP_PfGD4agU6YLv-Q-1; Tue,
+ 10 Mar 2026 01:56:59 -0400
+X-MC-Unique: zoitBFP_PfGD4agU6YLv-Q-1
+X-Mimecast-MFC-AGG-ID: zoitBFP_PfGD4agU6YLv-Q_1773122218
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8D49E195609F; Tue, 10 Mar 2026 05:56:13 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9A7FA18005B2; Tue, 10 Mar 2026 05:56:58 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.69])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 362351956095; Tue, 10 Mar 2026 05:56:09 +0000 (UTC)
+ id CAC191956095; Tue, 10 Mar 2026 05:56:56 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Farhan Ali <alifm@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 10/25] pc-bios/s390-ccw: Remove redundant vring schid attribute
-Date: Tue, 10 Mar 2026 06:55:15 +0100
-Message-ID: <20260310055530.8893-11-thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 22/25] hw: Add "loadparm" property to virtio block PCI devices
+ booting on s390x
+Date: Tue, 10 Mar 2026 06:55:27 +0100
+Message-ID: <20260310055530.8893-23-thuth@redhat.com>
 In-Reply-To: <20260310055530.8893-1-thuth@redhat.com>
 References: <20260310055530.8893-1-thuth@redhat.com>
 MIME-Version: 1.0
@@ -84,117 +85,154 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Jared Rossi <jrossi@linux.ibm.com>
 
-The schid is already stored as an attribute of the VDev itself and any other
-instances are copies of this same value.  To avoid CCW specific attributes in
-the VRing let's just access the existing VDev schid attribute as needed.
+The loadparm is required on s390x to pass the information to the boot loader
+such as which kernel should be started or whether the boot menu should be shown.
+
+Because PCI devices do not naturally allocate space for this, the property is
+added on an architecture specific basis for supported device types.
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
 Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Message-ID: <20260309003601.242634-3-jrossi@linux.ibm.com>
+Message-ID: <20260309003601.242634-15-jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- pc-bios/s390-ccw/virtio.h        | 3 +--
- pc-bios/s390-ccw/virtio-blkdev.c | 2 +-
- pc-bios/s390-ccw/virtio-net.c    | 2 +-
- pc-bios/s390-ccw/virtio.c        | 9 ++++-----
- 4 files changed, 7 insertions(+), 9 deletions(-)
+ include/hw/pci/pci.h        |  1 +
+ include/hw/pci/pci_device.h |  3 +++
+ hw/pci/pci.c                | 38 +++++++++++++++++++++++++++++++++++++
+ hw/s390x/ipl.c              | 11 +++++++++--
+ hw/virtio/virtio-blk-pci.c  |  1 +
+ 5 files changed, 52 insertions(+), 2 deletions(-)
 
-diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
-index 597bd423586..06ba4e45aca 100644
---- a/pc-bios/s390-ccw/virtio.h
-+++ b/pc-bios/s390-ccw/virtio.h
-@@ -103,7 +103,6 @@ struct VRing {
-     VRingDesc *desc;
-     VRingAvail *avail;
-     VRingUsed *used;
--    SubChannelId schid;
-     long cookie;
-     int id;
- };
-@@ -269,7 +268,7 @@ struct VirtioCmd {
- typedef struct VirtioCmd VirtioCmd;
+diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
+index 64141e92fec..5b179091dee 100644
+--- a/include/hw/pci/pci.h
++++ b/include/hw/pci/pci.h
+@@ -380,6 +380,7 @@ const char *pci_root_bus_path(PCIDevice *dev);
+ bool pci_bus_bypass_iommu(PCIBus *bus);
+ PCIDevice *pci_find_device(PCIBus *bus, int bus_num, uint8_t devfn);
+ int pci_qdev_find_device(const char *id, PCIDevice **pdev);
++void pci_qdev_property_add_specifics(DeviceClass *dc);
+ void pci_bus_get_w64_range(PCIBus *bus, Range *range);
  
- bool vring_notify(VRing *vr);
--int drain_irqs(SubChannelId schid);
-+int drain_irqs(void);
- void vring_send_buf(VRing *vr, void *p, int len, int flags);
- int vr_poll(VRing *vr);
- int vring_wait_reply(void);
-diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
-index 4b819dd80fb..019c2718b18 100644
---- a/pc-bios/s390-ccw/virtio-blkdev.c
-+++ b/pc-bios/s390-ccw/virtio-blkdev.c
-@@ -42,7 +42,7 @@ static int virtio_blk_read_many(VDev *vdev, unsigned long sector, void *load_add
-     /* Now we can tell the host to read */
-     vring_wait_reply();
+ void pci_device_deassert_intx(PCIDevice *dev);
+diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
+index 88ccea50113..5cac6e16886 100644
+--- a/include/hw/pci/pci_device.h
++++ b/include/hw/pci/pci_device.h
+@@ -62,6 +62,9 @@ struct PCIDevice {
+     bool partially_hotplugged;
+     bool enabled;
  
--    if (drain_irqs(vr->schid)) {
-+    if (drain_irqs()) {
-         /* Well, whatever status is supposed to contain... */
-         status = 1;
-     }
-diff --git a/pc-bios/s390-ccw/virtio-net.c b/pc-bios/s390-ccw/virtio-net.c
-index 301445bf978..7eb08500695 100644
---- a/pc-bios/s390-ccw/virtio-net.c
-+++ b/pc-bios/s390-ccw/virtio-net.c
-@@ -88,7 +88,7 @@ int send(int fd, const void *buf, int len, int flags)
-     while (!vr_poll(txvq)) {
-         yield();
-     }
--    if (drain_irqs(txvq->schid)) {
-+    if (drain_irqs()) {
-         puts("send: drain irqs failed");
-         return -1;
-     }
-diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
-index cd6c99c7e32..f384a990dcc 100644
---- a/pc-bios/s390-ccw/virtio.c
-+++ b/pc-bios/s390-ccw/virtio.c
-@@ -72,14 +72,14 @@ static long virtio_notify(SubChannelId schid, int vq_idx, long cookie)
-  *             Virtio functions                *
-  ***********************************************/
++    /* only for s390x */
++    char *loadparm;
++
+     /* PCI config space */
+     uint8_t *config;
  
--int drain_irqs(SubChannelId schid)
-+int drain_irqs(void)
- {
-     Irb irb = {};
-     int r = 0;
- 
-     while (1) {
-         /* FIXME: make use of TPI, for that enable subchannel and isc */
--        if (tsch(schid, &irb)) {
-+        if (tsch(vdev.schid, &irb)) {
-             /* Might want to differentiate error codes later on. */
-             if (irb.scsw.cstat) {
-                 r = -EIO;
-@@ -134,7 +134,7 @@ static void vring_init(VRing *vr, VqInfo *info)
- 
- bool vring_notify(VRing *vr)
- {
--    vr->cookie = virtio_notify(vr->schid, vr->id, vr->cookie);
-+    vr->cookie = virtio_notify(vdev.schid, vr->id, vr->cookie);
-     return vr->cookie >= 0;
+diff --git a/hw/pci/pci.c b/hw/pci/pci.c
+index 6399ebd41cb..2c3657d00de 100644
+--- a/hw/pci/pci.c
++++ b/hw/pci/pci.c
+@@ -36,6 +36,7 @@
+ #include "migration/qemu-file-types.h"
+ #include "migration/vmstate.h"
+ #include "net/net.h"
++#include "system/arch_init.h"
+ #include "system/numa.h"
+ #include "system/runstate.h"
+ #include "system/system.h"
+@@ -2843,6 +2844,43 @@ int pci_qdev_find_device(const char *id, PCIDevice **pdev)
+     return rc;
  }
  
-@@ -211,7 +211,7 @@ int virtio_run(VDev *vdev, int vqid, VirtioCmd *cmd)
-     } while (cmd[i++].flags & VRING_DESC_F_NEXT);
++static char *pci_qdev_property_get_loadparm(Object *obj, Error **errp)
++{
++    return g_strdup(PCI_DEVICE(obj)->loadparm);
++}
++
++static void pci_qdev_property_set_loadparm(Object *obj, const char *value,
++                                       Error **errp)
++{
++    void *lp_str;
++
++    if (object_property_get_int(obj, "bootindex", NULL) < 0) {
++        error_setg(errp, "'loadparm' is only valid for boot devices");
++        return;
++    }
++
++    lp_str = g_malloc0(strlen(value) + 1);
++    if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
++        g_free(lp_str);
++        return;
++    }
++    PCI_DEVICE(obj)->loadparm = lp_str;
++}
++
++void pci_qdev_property_add_specifics(DeviceClass *dc)
++{
++    ObjectClass *oc = OBJECT_CLASS(dc);
++
++    /* The loadparm property is only supported on s390x */
++    if (target_s390x()) {
++        object_class_property_add_str(oc, "loadparm",
++                                      pci_qdev_property_get_loadparm,
++                                      pci_qdev_property_set_loadparm);
++        object_class_property_set_description(oc, "loadparm",
++                                              "load parameter (s390x only)");
++    }
++}
++
+ MemoryRegion *pci_address_space(PCIDevice *dev)
+ {
+     return pci_get_bus(dev)->address_space_mem;
+diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
+index 7e09a8cf80d..1babcd2b7dd 100644
+--- a/hw/s390x/ipl.c
++++ b/hw/s390x/ipl.c
+@@ -461,6 +461,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+     int devtype;
+     uint8_t *lp;
+     g_autofree void *scsi_lp = NULL;
++    g_autofree void *pci_lp = NULL;
  
-     vring_wait_reply();
--    if (drain_irqs(vr->schid)) {
-+    if (drain_irqs()) {
-         return -1;
-     }
-     return 0;
-@@ -316,7 +316,6 @@ int virtio_setup_ccw(VDev *vdev)
+     ccw_dev = s390_get_ccw_device(dev_st, &devtype);
+     if (ccw_dev) {
+@@ -513,6 +514,14 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+ 
+     pbdev = s390_get_pci_device(dev_st, &devtype);
+     if (pbdev) {
++        pci_lp = object_property_get_str(OBJECT(pbdev->pdev), "loadparm", NULL);
++        if (pci_lp && strlen(pci_lp) > 0) {
++            lp = pci_lp;
++        } else {
++            /* Use machine loadparm as a place holder if PCI LP is unset */
++            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
++        }
++
+         switch (devtype) {
+         case PCI_DEVTYPE_VIRTIO:
+             iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
+@@ -523,8 +532,6 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
+             return false;
          }
-         info.num = config.num;
-         vring_init(&vdev->vrings[i], &info);
--        vdev->vrings[i].schid = vdev->schid;
-         if (run_ccw(vdev, CCW_CMD_SET_VQ, &info, sizeof(info), false)) {
-             puts("Cannot set VQ info");
-             return -EIO;
+ 
+-        /* Per-device loadparm not yet supported for non-ccw IPL */
+-        lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
+         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
+         iplb->flags |= DIAG308_FLAGS_LP_VALID;
+ 
+diff --git a/hw/virtio/virtio-blk-pci.c b/hw/virtio/virtio-blk-pci.c
+index 64a434c81b5..3eecc23a657 100644
+--- a/hw/virtio/virtio-blk-pci.c
++++ b/hw/virtio/virtio-blk-pci.c
+@@ -71,6 +71,7 @@ static void virtio_blk_pci_class_init(ObjectClass *klass, const void *data)
+ 
+     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
+     device_class_set_props(dc, virtio_blk_pci_properties);
++    pci_qdev_property_add_specifics(dc);
+     k->realize = virtio_blk_pci_realize;
+     pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
+     pcidev_k->device_id = PCI_DEVICE_ID_VIRTIO_BLOCK;
 -- 
 2.53.0
 
