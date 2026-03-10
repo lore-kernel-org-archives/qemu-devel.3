@@ -4,70 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08566FCC9CA
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BF97FCC9C8
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 05:59:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzq5H-0007yz-5O; Tue, 10 Mar 2026 01:56:47 -0400
+	id 1vzq7Q-0005M9-VX; Tue, 10 Mar 2026 01:59:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq5B-0007dE-53
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vzq71-0005D0-Es
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:58:37 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq59-0006IH-It
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773122199;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=OCoy6OQYtHfUDEcCV0LoVq1e8ZXCcHkuvHBUQYyJXgo=;
- b=WfqVPDaB+uEYkWdJOni5MyUXpS+UInoH11Cu5xuEmS2VnFHGTRP04PYI7AC76Q2QO1aXUD
- hca+tFChX5o80zWqTYDL4Q6Pa5dXuPZlNJ69lHuIz5vhk4MTnZ38ci/EDazleHx8be4BCY
- cDICYGqcxSzDEBG2peZhccF/60iPEsc=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-232-bgKijGGGMYi9jfOnM6_Bug-1; Tue,
- 10 Mar 2026 01:56:34 -0400
-X-MC-Unique: bgKijGGGMYi9jfOnM6_Bug-1
-X-Mimecast-MFC-AGG-ID: bgKijGGGMYi9jfOnM6_Bug_1773122193
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4A56518005B0; Tue, 10 Mar 2026 05:56:33 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.69])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 316111956095; Tue, 10 Mar 2026 05:56:29 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 15/25] include/hw/s390x: Move CLP definitions for easier BIOS
- access
-Date: Tue, 10 Mar 2026 06:55:20 +0100
-Message-ID: <20260310055530.8893-16-thuth@redhat.com>
-In-Reply-To: <20260310055530.8893-1-thuth@redhat.com>
-References: <20260310055530.8893-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1vzq6x-0006VN-BD
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:58:34 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62A5wLea080265
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Tue, 10 Mar 2026 14:58:21 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=uDBno0fKkpKDECT24rS5yo368o5/OCeIpWZzQOxxbj0=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1773122301; v=1;
+ b=sUSbxAzfKkebfqMEdctgpG5nWf/plw9RWaOjuW8k7G54j+rSu8LlZMpU7ODT2eAR
+ 6j98nLPWrZiKj75zCcLdEEVPqGe/b0U2oPzAjiCSaI10er0CUK9iRrvl1BPQlR9B
+ FUfjP+6nuVG2f+n/AdEoUMt3K+iwMvyfZ4/qIMA+pSeauIEt/HiUzX7jlLpLVtOY
+ wlXT//KyrGvLChENvMDA9f9yx6FNvlMZiI/TIBKU6D8AiBQIoHrEMZTJkHecZYws
+ Jjd9G27GCN6PBirXcwM4gspgsucw/FCjVR53k/6vRTm0dC44Y3+s9ciIYscCA1zv
+ X796adGDy+LXfrdvm1QILw==
+Message-ID: <b0a1c569-699b-407d-af34-16420ac64948@rsg.ci.i.u-tokyo.ac.jp>
+Date: Tue, 10 Mar 2026 14:58:21 +0900
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v10 09/10] virtio-gpu-dmabuf: Improve error handling with
+ 'Error **' and err enum
+To: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>
+References: <20260307030812.1224392-1-vivek.kasireddy@intel.com>
+ <20260307030812.1224392-10-vivek.kasireddy@intel.com>
+ <0fcb33f3-4d2b-4825-93ea-27dac89c4237@rsg.ci.i.u-tokyo.ac.jp>
+ <IA0PR11MB7185B020FDF01E34A56D126AF846A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Language: en-US
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <IA0PR11MB7185B020FDF01E34A56D126AF846A@IA0PR11MB7185.namprd11.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: 0
+X-Spam_score: 0.0
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,69 +82,188 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+On 2026/03/10 14:38, Kasireddy, Vivek wrote:
+> Hi Akihiko,
+> 
+>> Subject: Re: [PATCH v10 09/10] virtio-gpu-dmabuf: Improve error handling
+>> with 'Error **' and err enum
+>>
+>> On 2026/03/07 12:05, Vivek Kasireddy wrote:
+>>> Make the error handling more robust in virtio_gpu_init_udmabuf()
+>>> by introducing 'Error **' parameter to capture errors and using an
+>>> enum from VFIO to categorize Guest and Host errors. This allows
+>>> for better error reporting and handling of errors from
+>>> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
+>>>
+>>> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+>>> Cc: Alex Bennée <alex.bennee@linaro.org>
+>>> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+>>> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+>>> Cc: Alex Williamson <alex@shazbot.org>
+>>> Cc: Cédric Le Goater <clg@redhat.com>
+>>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>>> ---
+>>>    hw/display/virtio-gpu-dmabuf.c | 65 ++++++++++++++++++++++----------
+>> --
+>>>    1 file changed, 43 insertions(+), 22 deletions(-)
+>>>
+>>> diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-
+>> dmabuf.c
+>>> index 8d67ef7c2a..0a6b54fde5 100644
+>>> --- a/hw/display/virtio-gpu-dmabuf.c
+>>> +++ b/hw/display/virtio-gpu-dmabuf.c
+>>> @@ -18,6 +18,7 @@
+>>>    #include "ui/console.h"
+>>>    #include "hw/virtio/virtio-gpu.h"
+>>>    #include "hw/virtio/virtio-gpu-pixman.h"
+>>> +#include "hw/vfio/vfio-device.h"
+>>>    #include "trace.h"
+>>>    #include "system/ramblock.h"
+>>>    #include "system/hostmem.h"
+>>> @@ -27,16 +28,18 @@
+>>>    #include "standard-headers/linux/udmabuf.h"
+>>>    #include "standard-headers/drm/drm_fourcc.h"
+>>>
+>>> -static void virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>> +static int virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res,
+>>> +                                     Error **errp)
+>>>    {
+>>>        g_autofree struct udmabuf_create_list *list = NULL;
+>>>        RAMBlock *rb;
+>>>        ram_addr_t offset;
+>>> -    int udmabuf, i;
+>>> +    int udmabuf, i, fd;
+>>>
+>>>        udmabuf = udmabuf_fd();
+>>>        if (udmabuf < 0) {
+>>> -        return;
+>>> +        error_setg(errp, "udmabuf device not available or enabled");
+>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+>>>        }
+>>>
+>>>        list = g_malloc0(sizeof(struct udmabuf_create_list) +
+>>> @@ -45,7 +48,8 @@ static void virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>        for (i = 0; i < res->iov_cnt; i++) {
+>>>            rb = qemu_ram_block_from_host(res->iov[i].iov_base, false,
+>> &offset);
+>>>            if (!rb || rb->fd < 0) {
+>>> -            return;
+>>> +            error_setg(errp, "IOV memory address incompatible with
+>> udmabuf ");
+>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+>>>            }
+>>>
+>>>            list->list[i].memfd  = rb->fd;
+>>> @@ -56,22 +60,29 @@ static void virtio_gpu_create_udmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>>        list->count = res->iov_cnt;
+>>>        list->flags = UDMABUF_FLAGS_CLOEXEC;
+>>>
+>>> -    res->dmabuf_fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>>> -    if (res->dmabuf_fd < 0) {
+>>> -        warn_report("%s: UDMABUF_CREATE_LIST: %s", __func__,
+>>> -                    strerror(errno));
+>>> +    fd = ioctl(udmabuf, UDMABUF_CREATE_LIST, list);
+>>> +    if (fd < 0) {
+>>> +        error_setg_errno(errp, errno, "UDMABUF_CREATE_LIST: ioctl
+>> failed");
+>>> +        if (errno == EINVAL || errno == EBADFD) {
+>>> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+>>> +        }
+>>> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+>>>        }
+>>> +    return fd;
+>>>    }
+>>>
+>>> -static void virtio_gpu_remap_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>> +static bool virtio_gpu_remap_dmabuf(struct
+>> virtio_gpu_simple_resource *res,
+>>> +                                    void **addr, Error **errp)
+>>>    {
+>>> -    res->remapped = mmap(NULL, res->blob_size, PROT_READ,
+>>> -                         MAP_SHARED, res->dmabuf_fd, 0);
+>>> -    if (res->remapped == MAP_FAILED) {
+>>> -        warn_report("%s: dmabuf mmap failed: %s", __func__,
+>>> -                    strerror(errno));
+>>> -        res->remapped = NULL;
+>>> +    void *map;
+>>> +
+>>> +    map = mmap(NULL, res->blob_size, PROT_READ, MAP_SHARED, res-
+>>> dmabuf_fd, 0);
+>>> +    if (map == MAP_FAILED) {
+>>> +        error_setg_errno(errp, errno, "dmabuf mmap failed");
+>>> +        return false;
+>>>        }
+>>> +    *addr = map;
+>>> +    return true;
+>>>    }
+>>
+>> Following the convention, this function should return the mapped pointer
+>> if success and return NULL otherwise.
+> Ok, I'll make the change. I am guessing I should also make a similar change to
+> vfio_device_mmap_dmabuf() right?
 
-Move the s390-pci-clp definitions into the "ipl" sub-directory, which is visible
-to the s390-bios.  This allows the bios to reuse the architected definitions and
-prevents code duplication.
+Yes, I think that's a good idea.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Message-ID: <20260309003601.242634-8-jrossi@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- MAINTAINERS                               | 1 +
- include/hw/s390x/{ => ipl}/s390-pci-clp.h | 0
- include/hw/s390x/s390-pci-bus.h           | 2 +-
- hw/s390x/s390-pci-vfio.c                  | 2 +-
- 4 files changed, 3 insertions(+), 2 deletions(-)
- rename include/hw/s390x/{ => ipl}/s390-pci-clp.h (100%)
+Regards,
+Akihiko Odaki
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index f6d43a41431..9d1614fd7e9 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1882,6 +1882,7 @@ R: Eric Farman <farman@linux.ibm.com>
- S: Supported
- F: hw/s390x/s390-pci*
- F: include/hw/s390x/s390-pci*
-+F: include/hw/s390x/ipl/s390-pci*
- F: util/s390x_pci_mmio.c
- L: qemu-s390x@nongnu.org
- 
-diff --git a/include/hw/s390x/s390-pci-clp.h b/include/hw/s390x/ipl/s390-pci-clp.h
-similarity index 100%
-rename from include/hw/s390x/s390-pci-clp.h
-rename to include/hw/s390x/ipl/s390-pci-clp.h
-diff --git a/include/hw/s390x/s390-pci-bus.h b/include/hw/s390x/s390-pci-bus.h
-index 04944d4fed7..f643e130579 100644
---- a/include/hw/s390x/s390-pci-bus.h
-+++ b/include/hw/s390x/s390-pci-bus.h
-@@ -19,7 +19,7 @@
- #include "hw/s390x/sclp.h"
- #include "hw/s390x/s390_flic.h"
- #include "hw/s390x/css.h"
--#include "hw/s390x/s390-pci-clp.h"
-+#include "hw/s390x/ipl/s390-pci-clp.h"
- #include "qom/object.h"
- 
- #define TYPE_S390_PCI_HOST_BRIDGE "s390-pcihost"
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 9e31029d7ac..8ce44dbecce 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -17,7 +17,7 @@
- 
- #include "trace.h"
- #include "hw/s390x/s390-pci-bus.h"
--#include "hw/s390x/s390-pci-clp.h"
-+#include "hw/s390x/ipl/s390-pci-clp.h"
- #include "hw/s390x/s390-pci-vfio.h"
- #include "hw/vfio/pci.h"
- #include "hw/vfio/vfio-container-legacy.h"
--- 
-2.53.0
+> 
+> Thanks,
+> Vivek
+> 
+>>
+>> Regards,
+>> Akihiko Odaki
+>>
+>>>
+>>>    static void virtio_gpu_destroy_dmabuf(struct
+>> virtio_gpu_simple_resource *res)
+>>> @@ -125,22 +136,32 @@ bool virtio_gpu_have_udmabuf(void)
+>>>
+>>>    void virtio_gpu_init_dmabuf(struct virtio_gpu_simple_resource *res)
+>>>    {
+>>> +    Error *local_err = NULL;
+>>>        void *pdata = NULL;
+>>>
+>>> -    res->dmabuf_fd = -1;
+>>>        if (res->iov_cnt == 1 &&
+>>>            res->iov[0].iov_len < 4096) {
+>>> +        res->dmabuf_fd = -1;
+>>>            pdata = res->iov[0].iov_base;
+>>>        } else {
+>>> -        virtio_gpu_create_udmabuf(res);
+>>> +        res->dmabuf_fd = virtio_gpu_create_udmabuf(res, &local_err);
+>>> +        if (res->dmabuf_fd == VFIO_DMABUF_CREATE_ERR_INVALID_IOV)
+>> {
+>>> +            error_free_or_abort(&local_err);
+>>> +
+>>> +            qemu_log_mask(LOG_GUEST_ERROR,
+>>> +                          "Cannot create dmabuf: incompatible memory\n");
+>>> +            return;
+>>> +        } else if (res->dmabuf_fd < 0 ||
+>>> +                   !virtio_gpu_remap_dmabuf(res, &pdata, &local_err)) {
+>>> +            virtio_gpu_destroy_dmabuf(res);
+>>> +            res->dmabuf_fd = -1;
+>>> +        }
+>>> +
+>>>            if (res->dmabuf_fd < 0) {
+>>> +            error_report_err(local_err);
+>>>                return;
+>>>            }
+>>> -        virtio_gpu_remap_dmabuf(res);
+>>> -        if (!res->remapped) {
+>>> -            return;
+>>> -        }
+>>> -        pdata = res->remapped;
+>>> +        res->remapped = pdata;
+>>>        }
+>>>
+>>>        res->blob = pdata;
+> 
 
 
