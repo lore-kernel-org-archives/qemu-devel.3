@@ -4,111 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0BFDEB106D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343A6EB106E
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzynq-0007lg-0u; Tue, 10 Mar 2026 11:15:22 -0400
+	id 1vzyqc-0003OW-B6; Tue, 10 Mar 2026 11:18:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynQ-0006r4-RJ
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:00 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzyqN-0003DZ-EC
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:18:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynO-0000Fs-9j
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:56 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 629Mj3BV557886
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:53 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=0jJRI5VXRIykfnPhg
- inxDD57zXDzQoYgzNgb4cZNvuk=; b=H3Z/Tcq3BifAEABvn9IkOlCAr9fJNIH46
- PFEWQ+AXm4aRVm75tZdwLcyC0yudB5bYOBMiNT/0J+K4FCpZIZxe+vCtgr9J5Dno
- M0OHYHADaRgwQUXFcSpN5O2TL1nSw1iWdWXWLbiKSLNCkvoLF6jsFQNfURnJX8WS
- URFsOHB7jWn4JJlYrUNasS+/fqjW8Bg3njAKHSps3cHDPiXA9uMYG40UdxGWZ3iw
- figFb7qHVStSLf/7Ysy46JGJ+shUinx07Grhcunr91ee8+kKUs4CSobz+LkiefxA
- r3pc7/4z47RcmOuEOx5MkvrQ6ZXZfI9x+0AVWZ2ABM8LN0tgztNyA==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmbhdm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:52 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AF5vt3029360
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:51 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4csp6up8ak-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:51 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AFEldU43254200
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 15:14:47 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 849B82004D;
- Tue, 10 Mar 2026 15:14:47 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3F6152004B;
- Tue, 10 Mar 2026 15:14:46 +0000 (GMT)
-Received: from Mac.com (unknown [9.39.23.49])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 15:14:46 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>
-Subject: [PULL 04/10] pnv/mpipl: Preserve memory regions as per MDST/MDDT
- tables
-Date: Tue, 10 Mar 2026 20:44:24 +0530
-Message-ID: <20260310151432.92531-5-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260310151432.92531-1-harshpb@linux.ibm.com>
-References: <20260310151432.92531-1-harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzyqL-0001Ci-GC
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:17:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773155876;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=qXz0865TDtQVtlphwh7885ZMb8XktrHRqjZ24AVONKo=;
+ b=Pf/PbaUw9jTV6SkX/HvFWbojAhOXozhV6egcxu3MKPx1CSDsB/gXnSZ6vxTQ57z5UDkmV9
+ O65IkVZ3alLSJRlby1uNiuQXlqpbT+uH5dfaE2gUWbUr2h/DatBXofRIW7PrzYimRump8Z
+ awVo4ytazbgSKCZg4orGYZGHLPEV0Ck=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-IrzWpyTMPBayJLfB9M5BMw-1; Tue,
+ 10 Mar 2026 11:17:53 -0400
+X-MC-Unique: IrzWpyTMPBayJLfB9M5BMw-1
+X-Mimecast-MFC-AGG-ID: IrzWpyTMPBayJLfB9M5BMw_1773155871
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DAAA71956095; Tue, 10 Mar 2026 15:17:50 +0000 (UTC)
+Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id D99A2180035F; Tue, 10 Mar 2026 15:17:48 +0000 (UTC)
+Message-ID: <eb7c065a-ff9f-41d9-a80f-51123af20603@redhat.com>
+Date: Tue, 10 Mar 2026 16:17:47 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Minimal GCC version for QEMU (was: Re: [PULL 27/49] meson: Add
+ -Wformat-overflow=2)
+To: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ Nia Alarie <nia@NetBSD.org>, "Daniel P. Berrange" <berrange@redhat.com>
+References: <20260309155219.62400-1-philmd@linaro.org>
+ <20260309155219.62400-28-philmd@linaro.org> <87h5qn23v5.fsf@suse.de>
+ <CAFEAcA-vsS0Q9kGVbmwEyLQcoANaHg5S754DNvqXOOnqoY-LMg@mail.gmail.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <CAFEAcA-vsS0Q9kGVbmwEyLQcoANaHg5S754DNvqXOOnqoY-LMg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: S3GHbu15w3rzONh_jcZACVXSXgVggFMk
-X-Proofpoint-ORIG-GUID: S3GHbu15w3rzONh_jcZACVXSXgVggFMk
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfXwQOeUa/jPKfn
- 1NMq8vgxj4a2+/sgeSlb7REg9faioJ4XJZsadyaE4Hm0dda4bMVvTaB1OkBeUqz1O6yEBW1F+kR
- tnsjMVQcOjxX94C3YJeoGpSElLzP6ZaTz9Kx+bv2ArMJEpulM1CNyQndPiT3mcQCuIc7Z9tGRZA
- Q58oNRDq5INu1yM1mIX/8n0T7Yg1WnXDr4qQN9FvOjEgMnSVQr016tnK61sKpkJurrz7gEULRVr
- h61QZB1ytvEVM0rMjUHDbdrCWOgZS1qfKQW94LYz2Vp/dvs0rGX2uQmKB9zgfCIYXlpOrZIyNhy
- WLu0v0tJW2DodjUu6UFAYzcWHMxO3vIwmqRhOQF8CydQmSxAwtekz2J2SZQbWIC18RhXRvIFecU
- ESK/c90tNZQXbinZ4FxzR6s44QQPXMHtNMTcmZbIRGwF3gw9W/KQQBnSo63O5hshYwHSB0Nnvgt
- c5SlNu/RlLOJW/wATpw==
-X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b0356c cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=VwQbUJbxAAAA:8
- a=VnNF1IyMAAAA:8 a=uldKd1TX8WFnlnzwhmkA:9
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100131
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,324 +131,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+On 10/03/2026 15.51, Peter Maydell wrote:
+> On Tue, 10 Mar 2026 at 13:47, Fabiano Rosas <farosas@suse.de> wrote:
+>> This gives me:
+>>
+>> ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_output_pins’:
+>> ../tests/qtest/ast2700-sgpio-test.c:27:33: error: ‘sprintf’ may write a
+>> terminating nul past the end of the destination
+>> [-Werror=format-overflow=]
+>>
+>> ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_irq_level_high’:
+>> ../tests/qtest/ast2700-sgpio-test.c:85:33: error: ‘sprintf’ may write a
+>> terminating nul past the end of the destination
+>> [-Werror=format-overflow=]
+>>
+>> ../tests/qtest/arm-cpu-features.c: In function ‘test_query_cpu_model_expansion_kvm’:
+>> ../tests/qtest/arm-cpu-features.c:578:35: error: ‘%u’ directive writing
+>> between 1 and 10 bytes into a region of size 5
+>> [-Werror=format-overflow=]
+>>
+>> ../configure
+>> --target-list=x86_64-softmmu,i386-softmmu,aarch64-softmmu,arm-softmmu,ppc64-softmmu,s390x-softmmu,riscv64-softmmu,aarch64-linux-user,loongarch64-softmmu
+>> --disable-plugins --enable-modules --enable-werror
+>> --enable-trace-backends=log,dtrace --enable-debug --enable-docs
+>> --enable-rust --enable-strict-rust-lints
+>>
+>> gcc version 7.5.0 (SUSE Linux)
+> 
+> This is quite an old GCC, so it's probably less good at noticing
+> when there might be an overflow and when not (or it has bugs
+> that have been fixed in subsequent versions).
 
-Implement copying of memory region, as mentioned by MDST and MDDT
-tables.
+By the way, I think we likely could bump the minimum GCC version to a newer 
+level nowadays. GCC 7.4 was chosen for NetBSD 9 at that point in time:
 
-Copy the memory regions from source to destination in chunks of 32MB
+  https://gitlab.com/qemu-project/qemu/-/issues/614
+  https://gitlab.com/qemu-project/qemu/-/commit/3830df5f83b9b52d949676
 
-Note, qemu can fail preserving a particular entry due to any reason,
-such as:
-  * region length mis-matching in MDST & MDDT
-  * failed copy due to access/decode/etc memory issues
+... but since NetBSD 10 has been released since a while, we could likely 
+bump the minimum GCC version to 10.4 now, see:
 
-HDAT doesn't specify any field in MDRT to notify host about such errors.
+  https://cvsweb.netbsd.org/bsdweb.cgi/src/doc/3RDPARTY?rev=1.1905.2.14;content-type=text%2Fplain;only_with_tag=netbsd-10-0-RELEASE
 
-Though HDAT section "15.3.1.3 Memory Dump Results Table (MDRT)" says:
-    The Memory Dump Results Table is a list of the memory ranges that
-    have been included in the dump
+WDYT?
 
-Based on above statement, it looks like MDRT should include only those
-regions which are successfully captured in the dump, hence, regions
-which qemu fails to dump, just get skipped, and will not have a
-corresponding entry in MDRT
-
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-5-adityag@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- include/hw/ppc/pnv_mpipl.h |  86 ++++++++++++++++++++
- hw/ppc/pnv_mpipl.c         | 162 +++++++++++++++++++++++++++++++++++++
- 2 files changed, 248 insertions(+)
-
-diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
-index 60d6ede482..e0518ef2e1 100644
---- a/include/hw/ppc/pnv_mpipl.h
-+++ b/include/hw/ppc/pnv_mpipl.h
-@@ -10,13 +10,99 @@
- #include "qemu/osdep.h"
- #include "exec/hwaddr.h"
- 
-+#include <assert.h>
-+
-+typedef struct MdstTableEntry MdstTableEntry;
-+typedef struct MdrtTableEntry MdrtTableEntry;
- typedef struct MpiplPreservedState MpiplPreservedState;
- 
-+/*
-+ * Following offsets are copied from skiboot source code.
-+ * These need to be updated if this changes in a future skiboot version
-+ */
-+/* Use 768 bytes for SPIRAH */
-+#define SPIRAH_OFF      0x00010000
-+#define SPIRAH_SIZE     0x300
-+
-+/* Use 256 bytes for processor dump area */
-+#define PROC_DUMP_AREA_OFF  (SPIRAH_OFF + SPIRAH_SIZE)
-+#define PROC_DUMP_AREA_SIZE 0x100
-+
-+#define PROCIN_OFF      (PROC_DUMP_AREA_OFF + PROC_DUMP_AREA_SIZE)
-+#define PROCIN_SIZE     0x800
-+
-+/* Offsets of MDST and MDDT tables from skiboot base */
-+#define MDST_TABLE_OFF      (PROCIN_OFF + PROCIN_SIZE)
-+#define MDST_TABLE_SIZE     0x400
-+
-+#define MDDT_TABLE_OFF      (MDST_TABLE_OFF + MDST_TABLE_SIZE)
-+#define MDDT_TABLE_SIZE     0x400
-+/*
-+ * Offset of the dump result table MDRT. Hostboot will write to this
-+ * memory after moving memory content from source to destination memory.
-+ */
-+#define MDRT_TABLE_OFF         0x01c00000
-+#define MDRT_TABLE_SIZE        0x00008000
-+
-+/* HRMOR_BIT copied from skiboot */
-+#define HRMOR_BIT (1ull << 63)
-+
-+#define __packed             __attribute__((packed))
-+
-+/*
-+ * Memory Dump Source Table (MDST)
-+ *
-+ * Format of this table is same as Memory Dump Source Table defined in HDAT
-+ */
-+struct MdstTableEntry {
-+    uint64_t  addr;
-+    uint8_t data_region;
-+    uint8_t dump_type;
-+    uint16_t  reserved;
-+    uint32_t  size;
-+} __packed;
-+
-+/* Memory dump destination table (MDDT) has same structure as MDST */
-+typedef MdstTableEntry MddtTableEntry;
-+
-+/*
-+ * Memory dump result table (MDRT)
-+ *
-+ * List of the memory ranges that have been included in the dump. This table is
-+ * filled by hostboot and passed to OPAL on second boot. OPAL/payload will use
-+ * this table to extract the dump.
-+ *
-+ * Note: This structure differs from HDAT, but matches the structure
-+ * skiboot uses
-+ */
-+struct MdrtTableEntry {
-+    uint64_t  src_addr;
-+    uint64_t  dest_addr;
-+    uint8_t data_region;
-+    uint8_t dump_type;  /* unused */
-+    uint16_t  reserved;   /* unused */
-+    uint32_t  size;
-+    uint64_t  padding;    /* unused */
-+} __packed;
-+
-+/* Maximum length of mdst/mddt/mdrt tables */
-+#define MDST_MAX_ENTRIES    (MDST_TABLE_SIZE / sizeof(MdstTableEntry))
-+#define MDDT_MAX_ENTRIES    (MDDT_TABLE_SIZE / sizeof(MddtTableEntry))
-+#define MDRT_MAX_ENTRIES    (MDRT_TABLE_SIZE / sizeof(MdrtTableEntry))
-+
-+static_assert(MDST_MAX_ENTRIES == MDDT_MAX_ENTRIES,
-+        "Maximum entries in MDDT must match MDST");
-+static_assert(MDRT_MAX_ENTRIES >= MDST_MAX_ENTRIES,
-+        "MDRT should support atleast having number of entries as in MDST");
-+
- /* Preserved state to be saved in PnvMachineState */
- struct MpiplPreservedState {
-     /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
-     hwaddr     skiboot_base;
-     bool       is_next_boot_mpipl;
-+
-+    MdrtTableEntry *mdrt_table;
-+    uint32_t num_mdrt_entries;
- };
- 
- #endif
-diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
-index d8c9b7a428..cef1fe2c40 100644
---- a/hw/ppc/pnv_mpipl.c
-+++ b/hw/ppc/pnv_mpipl.c
-@@ -5,12 +5,174 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qemu/units.h"
-+#include "system/address-spaces.h"
- #include "system/runstate.h"
- #include "hw/ppc/pnv.h"
- #include "hw/ppc/pnv_mpipl.h"
-+#include <math.h>
-+
-+#define MDST_TABLE_RELOCATED                            \
-+    (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
-+#define MDDT_TABLE_RELOCATED                            \
-+    (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
-+
-+/*
-+ * Preserve the memory regions as pointed by MDST table
-+ *
-+ * During this, the memory region pointed by entries in MDST, are 'copied'
-+ * as it is to the memory region pointed by corresponding entry in MDDT
-+ *
-+ * Notes: All reads should consider data coming from skiboot as big-endian,
-+ *        and data written should also be in big-endian
-+ */
-+static bool pnv_mpipl_preserve_mem(PnvMachineState *pnv)
-+{
-+    g_autofree MdstTableEntry *mdst = g_malloc(MDST_TABLE_SIZE);
-+    g_autofree MddtTableEntry *mddt = g_malloc(MDDT_TABLE_SIZE);
-+    g_autofree MdrtTableEntry *mdrt = g_malloc0(MDRT_TABLE_SIZE);
-+    AddressSpace *default_as = &address_space_memory;
-+    MemTxResult io_result;
-+    MemTxAttrs attrs;
-+    uint64_t src_addr, dest_addr;
-+    uint32_t data_len;
-+    uint64_t num_chunks, chunk_id = 0;
-+    int mdrt_idx = 0;
-+
-+    /* Mark the memory transactions as privileged memory access */
-+    attrs.user = 0;
-+    attrs.memory = 1;
-+
-+    if (pnv->mpipl_state.mdrt_table) {
-+        /*
-+         * MDRT table allocated from some past crash, free the memory to
-+         * prevent memory leak
-+         */
-+        g_free(pnv->mpipl_state.mdrt_table);
-+        pnv->mpipl_state.num_mdrt_entries = 0;
-+    }
-+
-+    io_result = address_space_read(default_as, MDST_TABLE_RELOCATED, attrs,
-+            mdst, MDST_TABLE_SIZE);
-+    if (io_result != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "MPIPL: Failed to read MDST table at: 0x" TARGET_FMT_lx "\n",
-+            MDST_TABLE_RELOCATED);
-+
-+        return false;
-+    }
-+
-+    io_result = address_space_read(default_as, MDDT_TABLE_RELOCATED, attrs,
-+            mddt, MDDT_TABLE_SIZE);
-+    if (io_result != MEMTX_OK) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+            "MPIPL: Failed to read MDDT table at: 0x" TARGET_FMT_lx "\n",
-+            MDDT_TABLE_RELOCATED);
-+
-+        return false;
-+    }
-+
-+    /* Try to read all entries */
-+    for (int i = 0; i < MDST_MAX_ENTRIES; ++i) {
-+        g_autofree uint8_t *copy_buffer = NULL;
-+        bool is_copy_failed = false;
-+
-+        /* Considering entry with address and size as 0, as end of table */
-+        if ((mdst[i].addr == 0) && (mdst[i].size == 0)) {
-+            break;
-+        }
-+
-+        if (mdst[i].size != mddt[i].size) {
-+            qemu_log_mask(LOG_TRACE,
-+                    "Warning: Invalid entry, size mismatch in MDST & MDDT\n");
-+            continue;
-+        }
-+
-+        if (mdst[i].data_region != mddt[i].data_region) {
-+            qemu_log_mask(LOG_TRACE,
-+                    "Warning: Invalid entry, region mismatch in MDST & MDDT\n");
-+            continue;
-+        }
-+
-+        src_addr  = be64_to_cpu(mdst[i].addr) & ~HRMOR_BIT;
-+        dest_addr = be64_to_cpu(mddt[i].addr) & ~HRMOR_BIT;
-+        data_len   = be32_to_cpu(mddt[i].size);
-+
-+#define COPY_CHUNK_SIZE  ((size_t)(32 * MiB))
-+        copy_buffer = g_try_malloc(COPY_CHUNK_SIZE);
-+        if (copy_buffer == NULL) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                "MPIPL: Failed allocating memory (size: %zu) for copying"
-+                " reserved memory regions\n", COPY_CHUNK_SIZE);
-+            is_copy_failed = true;
-+            continue;
-+        }
-+
-+        chunk_id = 0;
-+        num_chunks = ceil((data_len * 1.0f) / COPY_CHUNK_SIZE);
-+        while (chunk_id < num_chunks) {
-+            /* Take minimum of bytes left to copy, and chunk size */
-+            uint64_t copy_len = MIN(
-+                            data_len - (chunk_id * COPY_CHUNK_SIZE),
-+                            COPY_CHUNK_SIZE
-+                        );
-+
-+            /* Copy the source region to destination */
-+            io_result = address_space_read(default_as, src_addr, attrs,
-+                    copy_buffer, copy_len);
-+            if (io_result != MEMTX_OK) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                    "MPIPL: Failed to read region at: 0x%" PRIx64 "\n",
-+                    src_addr);
-+                is_copy_failed = true;
-+                break;
-+            }
-+
-+            io_result = address_space_write(default_as, dest_addr, attrs,
-+                    copy_buffer, copy_len);
-+            if (io_result != MEMTX_OK) {
-+                qemu_log_mask(LOG_GUEST_ERROR,
-+                    "MPIPL: Failed to write region at: 0x%" PRIx64 "\n",
-+                    dest_addr);
-+                is_copy_failed = true;
-+                break;
-+            }
-+
-+            src_addr += COPY_CHUNK_SIZE;
-+            dest_addr += COPY_CHUNK_SIZE;
-+            ++chunk_id;
-+        }
-+#undef COPY_CHUNK_SIZE
-+
-+        if (is_copy_failed) {
-+            /*
-+             * HDAT doesn't specify an error code in MDRT for failed copy,
-+             * and doesn't specify how this is to be handled
-+             * Hence just skip adding an entry in MDRT, as done for size
-+             * mismatch or other inconsistency between MDST/MDDT
-+             */
-+            continue;
-+        }
-+
-+        /* Populate entry in MDRT table if preserving successful */
-+        mdrt[mdrt_idx].src_addr    = cpu_to_be64(src_addr);
-+        mdrt[mdrt_idx].dest_addr   = cpu_to_be64(dest_addr);
-+        mdrt[mdrt_idx].size        = cpu_to_be32(data_len);
-+        mdrt[mdrt_idx].data_region = mdst[i].data_region;
-+        ++mdrt_idx;
-+    }
-+
-+    pnv->mpipl_state.mdrt_table = g_steal_pointer(&mdrt);
-+    pnv->mpipl_state.num_mdrt_entries = mdrt_idx;
-+
-+    return true;
-+}
- 
- void do_mpipl_preserve(PnvMachineState *pnv)
- {
-+    pnv_mpipl_preserve_mem(pnv);
-+
-     /* Mark next boot as Memory-preserving boot */
-     pnv->mpipl_state.is_next_boot_mpipl = true;
- 
--- 
-2.52.0
+  Thomas
 
 
