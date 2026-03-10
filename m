@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0223AFD2D6E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 12:47:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D79E8FD2D6E
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 12:47:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzwU6-000514-8G; Tue, 10 Mar 2026 08:46:53 -0400
+	id 1vzwUk-0005BM-Tw; Tue, 10 Mar 2026 08:47:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzwTv-00050a-7L; Tue, 10 Mar 2026 08:46:39 -0400
+ id 1vzwU0-00051e-8m; Tue, 10 Mar 2026 08:46:50 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1vzwTs-00036q-FF; Tue, 10 Mar 2026 08:46:38 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ id 1vzwTy-00038a-FH; Tue, 10 Mar 2026 08:46:44 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A87ede1651541; Tue, 10 Mar 2026 12:46:33 GMT
+ 62AAThT91554633; Tue, 10 Mar 2026 12:46:41 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=pp1; bh=OGcbweHKgI/MjOWF3
- XWCLnKo0ATib3JJT6+YN3wr1rE=; b=NDQkMHWVLceMBJjT6aqbREVncEj2BqlT/
- DtFXMLZxhUWgidim6BZKteQ3A4vfs4QMTTQRwxsZvx2RX2xXx+p9yme0kNS1ODes
- hbkMidmgNbqeaeJXaSnZcsCg7kl76z2cW+TAJGB1dgWP/955xo2XYetQcoymiuuv
- KB85XLCtESeLfLz7bAdP0/+EAW6mrarUN6sXhPJ+bmhsP34Wmo+HCZvgohW4/s2b
- DQOnXddCgaGrekLA8vTXCyT8AN4euByCL/mlm2amHAjh7q/LdSXJnXTtwe6vbrLJ
- mOnZPJA5pyx7NhQ5RJJ+2B9qfKKuGruPZpJnpbSKNQQNcE7hUd7BA==
+ :mime-version:references:subject:to; s=pp1; bh=05yWi1TQoGUqbpd6R
+ j7c/SZZDynmc7ZdELkxaSTnWCU=; b=nO2ZT6+T1ylIEOhMtZ9BHS52NcHrJM6Wr
+ LtxsI77NFjxcg7tSvYNVdNDw7U7N7Inu8VtjGKV8nTI2L7qPOZCRXZRd4vod7QC2
+ kpS++VztN8cq1BmvpPzaq1RH8FBlrB0nk2PNo5WAHc3UpyB9rRf5qkpeXMFyyDco
+ HQau1Aro4k3ZkoPXvi0TpwzSEN8cj+QPck7sk/IWwMI4ArZNiMhPnwrb2XLMXtAf
+ IpzQkS8SliGA89FToWEiPO4ANuL/HftevzhgvBPZADl33xaHR/Yq4FUpkL/A02C4
+ XhyHRYs4guSlmiUFmsd86gG1eIUBP7GAOaHN2dsqkq8rBoQV3Lppw==
 Received: from ppma21.wdc07v.mail.ibm.com
  (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcunah6u-1
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1mjg7f-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 12:46:32 +0000 (GMT)
+ Tue, 10 Mar 2026 12:46:40 +0000 (GMT)
 Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62ABASRb015581;
- Tue, 10 Mar 2026 12:46:31 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crybn93fb-1
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AB61Li015653;
+ Tue, 10 Mar 2026 12:46:40 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crybn93fv-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 10 Mar 2026 12:46:31 +0000
+ Tue, 10 Mar 2026 12:46:40 +0000
 Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
  [10.20.54.103])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62ACkRMB44564826
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62ACkaRI25231622
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 12:46:27 GMT
+ Tue, 10 Mar 2026 12:46:36 GMT
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BCAFC2004B;
- Tue, 10 Mar 2026 12:46:27 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 14B9820040;
+ Tue, 10 Mar 2026 12:46:36 +0000 (GMT)
 Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 698B120040;
- Tue, 10 Mar 2026 12:46:25 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id CA7712004B;
+ Tue, 10 Mar 2026 12:46:33 +0000 (GMT)
 Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.in.ibm.com (unknown
  [9.109.199.210])
  by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 12:46:25 +0000 (GMT)
+ Tue, 10 Mar 2026 12:46:33 +0000 (GMT)
 From: Aditya Gupta <adityag@linux.ibm.com>
 To: <qemu-devel@nongnu.org>
 Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
@@ -66,10 +66,10 @@ Cc: <qemu-ppc@nongnu.org>, Hari Bathini <hbathini@linux.ibm.com>,
  Nicholas Piggin <npiggin@gmail.com>,
  Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
  Shivang Upadhyay <shivangu@linux.ibm.com>
-Subject: [PATCH v5 01/10] ppc/pnv: Move SBE host doorbell function to top of
- file
-Date: Tue, 10 Mar 2026 18:16:08 +0530
-Message-ID: <20260310124619.3909045-2-adityag@linux.ibm.com>
+Subject: [PATCH v5 04/10] pnv/mpipl: Preserve memory regions as per MDST/MDDT
+ tables
+Date: Tue, 10 Mar 2026 18:16:11 +0530
+Message-ID: <20260310124619.3909045-5-adityag@linux.ibm.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310124619.3909045-1-adityag@linux.ibm.com>
 References: <20260310124619.3909045-1-adityag@linux.ibm.com>
@@ -77,26 +77,26 @@ MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
 X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: f6QrOaRIMrZyFvn4hg7zR8d0x75U_j-0
-X-Authority-Analysis: v=2.4 cv=Hp172kTS c=1 sm=1 tr=0 ts=69b012a8 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69b012b1 cx=c_pps
  a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
- a=Y2IxJ9c9Rs8Kov3niI8_:22 a=VnNF1IyMAAAA:8 a=Cz7AoQ69vTHEakZR_RYA:9
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEwOSBTYWx0ZWRfXysTgFPgmApFz
- 0qo9mhDftoDYEpvMrXc/vbFj+/uBBmUDDoJur2ZvwPS0bKgydlOCU5YGWf3d+W+a/OT+Z3itksb
- 650mdHdk5GX8KvLhXRkek7XDKR/WZzrWhLtd/5Zj0Nd7PPrei3iqMhtycUE9zmu/KjPHOYl9XDR
- eZLitPG9lvbBZGHl+FJZGlML/FOzu//WB8ASG0dqwnqMSu5C6zzuUS0YLS1GdOjOlcxcU8nx3V2
- bJMed9ZN3SobC6qr0aW7k04frExwyQXFM7Bp/Iae7b9/NRcCcCtw5k9MzeKaZE1nn+eyk8cPP8q
- 3Kd8gvt3lSJUDGuk3iMpTM1PKS7qo6RZY4lLXhajkMaXIKQoMWeS43iEmFNX96dGblz7C1sJpWV
- GpyNLEjLc83EPa3Q93cNegZSc2FB+YZoFtet62+6k4QceYsKDoFB0MSMhLESOrBUxdxnx1Awc7x
- BncFwD0QPhBY0yXZvzg==
-X-Proofpoint-ORIG-GUID: orUchHdnhjLWNwOEJqDaKNvRoIv2ZF_A
+ a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8 a=uldKd1TX8WFnlnzwhmkA:9
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEwOSBTYWx0ZWRfX1fD6yIN1ja8d
+ xWUsTdtdp/ayfDA1jZwb7cL9ZURWfbD+dZUFRS8yMeor0F9GrzKB9QY+Y/4+DS4HLhDKB/0w4mc
+ bKGemZBPTS9aVVjDf4lf/eVFUbzzERUYLBH6q8RAVby2Msl3a5x5lGRB+0y6l1WSiSZgBluZKW9
+ kFW8Ro0xv/p4n8PRn+HNW1/Rk56Pf5LOG9p0Mmm0FylemCfZ7QbxgHv9YGSFvyoSL8OqR8gzDVZ
+ q3/w2JWax6ia2nbiLLvii9NzoQR3qMnnCb4HuIXRvCk9fEsxiUOoN/3Up+F6IV0La9792gD+vNB
+ H7rrtr3jfeRK2JmahXp79WuuZVrd8vXxCFHgPN0D06K2OMX023cZp4JP2nzpmnhlejvZy+O1CAN
+ pl74Wv6J+5WkZHB4s5oJIp1YpZk/vKvYE82CQVuomr8sbakXHaObEW1wlA2bzR2vn4ataElKbDw
+ 8L7xz2Ow8mGVrv5AspA==
+X-Proofpoint-GUID: 8elbdCplVBn6vrFEd4EDzsG98b-VywE_
+X-Proofpoint-ORIG-GUID: y1DsprN-FtqoiwsWjHbmfeI29DaFnnn7
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-10_02,2026-03-09_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- bulkscore=0 adultscore=0 malwarescore=0 impostorscore=0 suspectscore=0
- spamscore=0 phishscore=0 clxscore=1015 priorityscore=1501 lowpriorityscore=0
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
  classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
  reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100109
 Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
@@ -124,58 +124,317 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Moved 'pnv_sbe_set_host_doorbell' as-it-is to above
-'pnv_sbe_power9_xscom_ctrl_write'.
+Implement copying of memory region, as mentioned by MDST and MDDT
+tables.
 
-This is done since in a future patch, S0 interrupt implementation uses
-'pnv_sbe_set_host_doorbell', hence the host doorbell function needs to
-be declared/defined before 'pnv_sbe_power9_xscom_ctrl_write' where we
-implement the S0 interrupt.
+Copy the memory regions from source to destination in chunks of 32MB
 
-No functional change.
+Note, qemu can fail preserving a particular entry due to any reason,
+such as:
+  * region length mis-matching in MDST & MDDT
+  * failed copy due to access/decode/etc memory issues
+
+HDAT doesn't specify any field in MDRT to notify host about such errors.
+
+Though HDAT section "15.3.1.3 Memory Dump Results Table (MDRT)" says:
+    The Memory Dump Results Table is a list of the memory ranges that
+    have been included in the dump
+
+Based on above statement, it looks like MDRT should include only those
+regions which are successfully captured in the dump, hence, regions
+which qemu fails to dump, just get skipped, and will not have a
+corresponding entry in MDRT
 
 Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
 Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
 ---
- hw/ppc/pnv_sbe.c | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ hw/ppc/pnv_mpipl.c         | 162 +++++++++++++++++++++++++++++++++++++
+ include/hw/ppc/pnv_mpipl.h |  86 ++++++++++++++++++++
+ 2 files changed, 248 insertions(+)
 
-diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
-index 27383ce6837e..247617338a0d 100644
---- a/hw/ppc/pnv_sbe.c
-+++ b/hw/ppc/pnv_sbe.c
-@@ -80,6 +80,15 @@
- #define SBE_CONTROL_REG_S0              PPC_BIT(14)
- #define SBE_CONTROL_REG_S1              PPC_BIT(15)
+diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
+index d8c9b7a428b7..cef1fe2c4056 100644
+--- a/hw/ppc/pnv_mpipl.c
++++ b/hw/ppc/pnv_mpipl.c
+@@ -5,12 +5,174 @@
+  */
  
-+static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
+ #include "qemu/osdep.h"
++#include "qemu/log.h"
++#include "qemu/units.h"
++#include "system/address-spaces.h"
+ #include "system/runstate.h"
+ #include "hw/ppc/pnv.h"
+ #include "hw/ppc/pnv_mpipl.h"
++#include <math.h>
++
++#define MDST_TABLE_RELOCATED                            \
++    (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
++#define MDDT_TABLE_RELOCATED                            \
++    (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
++
++/*
++ * Preserve the memory regions as pointed by MDST table
++ *
++ * During this, the memory region pointed by entries in MDST, are 'copied'
++ * as it is to the memory region pointed by corresponding entry in MDDT
++ *
++ * Notes: All reads should consider data coming from skiboot as big-endian,
++ *        and data written should also be in big-endian
++ */
++static bool pnv_mpipl_preserve_mem(PnvMachineState *pnv)
 +{
-+    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
-+    sbe->host_doorbell = val;
++    g_autofree MdstTableEntry *mdst = g_malloc(MDST_TABLE_SIZE);
++    g_autofree MddtTableEntry *mddt = g_malloc(MDDT_TABLE_SIZE);
++    g_autofree MdrtTableEntry *mdrt = g_malloc0(MDRT_TABLE_SIZE);
++    AddressSpace *default_as = &address_space_memory;
++    MemTxResult io_result;
++    MemTxAttrs attrs;
++    uint64_t src_addr, dest_addr;
++    uint32_t data_len;
++    uint64_t num_chunks, chunk_id = 0;
++    int mdrt_idx = 0;
 +
-+    trace_pnv_sbe_reg_set_host_doorbell(val);
-+    qemu_set_irq(sbe->psi_irq, !!val);
++    /* Mark the memory transactions as privileged memory access */
++    attrs.user = 0;
++    attrs.memory = 1;
++
++    if (pnv->mpipl_state.mdrt_table) {
++        /*
++         * MDRT table allocated from some past crash, free the memory to
++         * prevent memory leak
++         */
++        g_free(pnv->mpipl_state.mdrt_table);
++        pnv->mpipl_state.num_mdrt_entries = 0;
++    }
++
++    io_result = address_space_read(default_as, MDST_TABLE_RELOCATED, attrs,
++            mdst, MDST_TABLE_SIZE);
++    if (io_result != MEMTX_OK) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "MPIPL: Failed to read MDST table at: 0x" TARGET_FMT_lx "\n",
++            MDST_TABLE_RELOCATED);
++
++        return false;
++    }
++
++    io_result = address_space_read(default_as, MDDT_TABLE_RELOCATED, attrs,
++            mddt, MDDT_TABLE_SIZE);
++    if (io_result != MEMTX_OK) {
++        qemu_log_mask(LOG_GUEST_ERROR,
++            "MPIPL: Failed to read MDDT table at: 0x" TARGET_FMT_lx "\n",
++            MDDT_TABLE_RELOCATED);
++
++        return false;
++    }
++
++    /* Try to read all entries */
++    for (int i = 0; i < MDST_MAX_ENTRIES; ++i) {
++        g_autofree uint8_t *copy_buffer = NULL;
++        bool is_copy_failed = false;
++
++        /* Considering entry with address and size as 0, as end of table */
++        if ((mdst[i].addr == 0) && (mdst[i].size == 0)) {
++            break;
++        }
++
++        if (mdst[i].size != mddt[i].size) {
++            qemu_log_mask(LOG_TRACE,
++                    "Warning: Invalid entry, size mismatch in MDST & MDDT\n");
++            continue;
++        }
++
++        if (mdst[i].data_region != mddt[i].data_region) {
++            qemu_log_mask(LOG_TRACE,
++                    "Warning: Invalid entry, region mismatch in MDST & MDDT\n");
++            continue;
++        }
++
++        src_addr  = be64_to_cpu(mdst[i].addr) & ~HRMOR_BIT;
++        dest_addr = be64_to_cpu(mddt[i].addr) & ~HRMOR_BIT;
++        data_len   = be32_to_cpu(mddt[i].size);
++
++#define COPY_CHUNK_SIZE  ((size_t)(32 * MiB))
++        copy_buffer = g_try_malloc(COPY_CHUNK_SIZE);
++        if (copy_buffer == NULL) {
++            qemu_log_mask(LOG_GUEST_ERROR,
++                "MPIPL: Failed allocating memory (size: %zu) for copying"
++                " reserved memory regions\n", COPY_CHUNK_SIZE);
++            is_copy_failed = true;
++            continue;
++        }
++
++        chunk_id = 0;
++        num_chunks = ceil((data_len * 1.0f) / COPY_CHUNK_SIZE);
++        while (chunk_id < num_chunks) {
++            /* Take minimum of bytes left to copy, and chunk size */
++            uint64_t copy_len = MIN(
++                            data_len - (chunk_id * COPY_CHUNK_SIZE),
++                            COPY_CHUNK_SIZE
++                        );
++
++            /* Copy the source region to destination */
++            io_result = address_space_read(default_as, src_addr, attrs,
++                    copy_buffer, copy_len);
++            if (io_result != MEMTX_OK) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                    "MPIPL: Failed to read region at: 0x%" PRIx64 "\n",
++                    src_addr);
++                is_copy_failed = true;
++                break;
++            }
++
++            io_result = address_space_write(default_as, dest_addr, attrs,
++                    copy_buffer, copy_len);
++            if (io_result != MEMTX_OK) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                    "MPIPL: Failed to write region at: 0x%" PRIx64 "\n",
++                    dest_addr);
++                is_copy_failed = true;
++                break;
++            }
++
++            src_addr += COPY_CHUNK_SIZE;
++            dest_addr += COPY_CHUNK_SIZE;
++            ++chunk_id;
++        }
++#undef COPY_CHUNK_SIZE
++
++        if (is_copy_failed) {
++            /*
++             * HDAT doesn't specify an error code in MDRT for failed copy,
++             * and doesn't specify how this is to be handled
++             * Hence just skip adding an entry in MDRT, as done for size
++             * mismatch or other inconsistency between MDST/MDDT
++             */
++            continue;
++        }
++
++        /* Populate entry in MDRT table if preserving successful */
++        mdrt[mdrt_idx].src_addr    = cpu_to_be64(src_addr);
++        mdrt[mdrt_idx].dest_addr   = cpu_to_be64(dest_addr);
++        mdrt[mdrt_idx].size        = cpu_to_be32(data_len);
++        mdrt[mdrt_idx].data_region = mdst[i].data_region;
++        ++mdrt_idx;
++    }
++
++    pnv->mpipl_state.mdrt_table = g_steal_pointer(&mdrt);
++    pnv->mpipl_state.num_mdrt_entries = mdrt_idx;
++
++    return true;
 +}
+ 
+ void do_mpipl_preserve(PnvMachineState *pnv)
+ {
++    pnv_mpipl_preserve_mem(pnv);
 +
- struct sbe_msg {
-     uint64_t reg[4];
- };
-@@ -125,15 +134,6 @@ static const MemoryRegionOps pnv_sbe_power9_xscom_ctrl_ops = {
-     .endianness = DEVICE_BIG_ENDIAN,
+     /* Mark next boot as Memory-preserving boot */
+     pnv->mpipl_state.is_next_boot_mpipl = true;
+ 
+diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
+index 60d6ede48209..e0518ef2e12e 100644
+--- a/include/hw/ppc/pnv_mpipl.h
++++ b/include/hw/ppc/pnv_mpipl.h
+@@ -10,13 +10,99 @@
+ #include "qemu/osdep.h"
+ #include "exec/hwaddr.h"
+ 
++#include <assert.h>
++
++typedef struct MdstTableEntry MdstTableEntry;
++typedef struct MdrtTableEntry MdrtTableEntry;
+ typedef struct MpiplPreservedState MpiplPreservedState;
+ 
++/*
++ * Following offsets are copied from skiboot source code.
++ * These need to be updated if this changes in a future skiboot version
++ */
++/* Use 768 bytes for SPIRAH */
++#define SPIRAH_OFF      0x00010000
++#define SPIRAH_SIZE     0x300
++
++/* Use 256 bytes for processor dump area */
++#define PROC_DUMP_AREA_OFF  (SPIRAH_OFF + SPIRAH_SIZE)
++#define PROC_DUMP_AREA_SIZE 0x100
++
++#define PROCIN_OFF      (PROC_DUMP_AREA_OFF + PROC_DUMP_AREA_SIZE)
++#define PROCIN_SIZE     0x800
++
++/* Offsets of MDST and MDDT tables from skiboot base */
++#define MDST_TABLE_OFF      (PROCIN_OFF + PROCIN_SIZE)
++#define MDST_TABLE_SIZE     0x400
++
++#define MDDT_TABLE_OFF      (MDST_TABLE_OFF + MDST_TABLE_SIZE)
++#define MDDT_TABLE_SIZE     0x400
++/*
++ * Offset of the dump result table MDRT. Hostboot will write to this
++ * memory after moving memory content from source to destination memory.
++ */
++#define MDRT_TABLE_OFF         0x01c00000
++#define MDRT_TABLE_SIZE        0x00008000
++
++/* HRMOR_BIT copied from skiboot */
++#define HRMOR_BIT (1ull << 63)
++
++#define __packed             __attribute__((packed))
++
++/*
++ * Memory Dump Source Table (MDST)
++ *
++ * Format of this table is same as Memory Dump Source Table defined in HDAT
++ */
++struct MdstTableEntry {
++    uint64_t  addr;
++    uint8_t data_region;
++    uint8_t dump_type;
++    uint16_t  reserved;
++    uint32_t  size;
++} __packed;
++
++/* Memory dump destination table (MDDT) has same structure as MDST */
++typedef MdstTableEntry MddtTableEntry;
++
++/*
++ * Memory dump result table (MDRT)
++ *
++ * List of the memory ranges that have been included in the dump. This table is
++ * filled by hostboot and passed to OPAL on second boot. OPAL/payload will use
++ * this table to extract the dump.
++ *
++ * Note: This structure differs from HDAT, but matches the structure
++ * skiboot uses
++ */
++struct MdrtTableEntry {
++    uint64_t  src_addr;
++    uint64_t  dest_addr;
++    uint8_t data_region;
++    uint8_t dump_type;  /* unused */
++    uint16_t  reserved;   /* unused */
++    uint32_t  size;
++    uint64_t  padding;    /* unused */
++} __packed;
++
++/* Maximum length of mdst/mddt/mdrt tables */
++#define MDST_MAX_ENTRIES    (MDST_TABLE_SIZE / sizeof(MdstTableEntry))
++#define MDDT_MAX_ENTRIES    (MDDT_TABLE_SIZE / sizeof(MddtTableEntry))
++#define MDRT_MAX_ENTRIES    (MDRT_TABLE_SIZE / sizeof(MdrtTableEntry))
++
++static_assert(MDST_MAX_ENTRIES == MDDT_MAX_ENTRIES,
++        "Maximum entries in MDDT must match MDST");
++static_assert(MDRT_MAX_ENTRIES >= MDST_MAX_ENTRIES,
++        "MDRT should support atleast having number of entries as in MDST");
++
+ /* Preserved state to be saved in PnvMachineState */
+ struct MpiplPreservedState {
+     /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
+     hwaddr     skiboot_base;
+     bool       is_next_boot_mpipl;
++
++    MdrtTableEntry *mdrt_table;
++    uint32_t num_mdrt_entries;
  };
  
--static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
--{
--    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
--    sbe->host_doorbell = val;
--
--    trace_pnv_sbe_reg_set_host_doorbell(val);
--    qemu_set_irq(sbe->psi_irq, !!val);
--}
--
- /* SBE Target Type */
- #define SBE_TARGET_TYPE_PROC            0x00
- #define SBE_TARGET_TYPE_EX              0x01
+ #endif
 -- 
 2.53.0
 
