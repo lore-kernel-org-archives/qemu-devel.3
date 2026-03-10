@@ -4,71 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7042BEB105A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACCC2EB105B
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 14:22:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxyf-0006Tv-NZ; Tue, 10 Mar 2026 10:22:29 -0400
+	id 1vzxxv-0006L5-Rp; Tue, 10 Mar 2026 10:21:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzxyd-0006TW-Pd
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:22:28 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzxyT-0008Ts-C4
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:22:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773152537; x=1804688537;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=LY0ugd6G2ux3QLQzKlVN3OVRTEmcSaTPW4XfKkhfTho=;
- b=Hu4WsVn4/TDSRILs7gv1YiWsLDGcsM+JBV7t3ipIZm/hIMpvtb2d0FHE
- 2ITfQwerdR8hu+UxF+V3hmQBIXYTfQhCnkH0RHl4aIoawNc7++csOs3by
- 3QPfbxpVQKytuGAM5N6eX+pTk37//tS7LvKKlkz4BaglyubGOr48H0v7i
- z7jKOvz/mJxPk5fSu3UpM8OxksqvBrsTF9b3Ha6VdvGDRkLDOBRma8NoQ
- BdIXS8dat8E/5r44oh6btc2lZx3cpQGCSwwS1oFjmJpqQUcj3xrdzjkco
- +NF3I8XTn4XtPSKpMWQcTfVRxaxA7GPKY+YchaA01QBd/17OAa/rmtN8W w==;
-X-CSE-ConnectionGUID: PIiKSI3dRH+aecZsewaBMA==
-X-CSE-MsgGUID: b8CzsI4USTuxav7SmY242Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="84833851"
-X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="84833851"
-Received: from fmviesa010.fm.intel.com ([10.60.135.150])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2026 07:22:14 -0700
-X-CSE-ConnectionGUID: 1c9+EKOOSj+UR8ZOkwdXDQ==
-X-CSE-MsgGUID: LOb8wqZiSSKe7JZnaWjmLg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="216903347"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by fmviesa010.fm.intel.com with ESMTP; 10 Mar 2026 07:22:12 -0700
-Date: Tue, 10 Mar 2026 22:48:23 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Yi Liu <yi.l.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH v2 00/10] hw/i386/pc: Remove deprecated 3.1 machines
-Message-ID: <abAvNziZxBIc6+o6@intel.com>
-References: <20260309145013.44327-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxxt-0006KK-Of
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:21:41 -0400
+Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxxs-0008OF-24
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 10:21:41 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id F308E4D211;
+ Tue, 10 Mar 2026 14:21:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773152498; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
+ b=HlxJx4BmGmrXBZA0wnnSo9jN4BrN51CcfAhNTNFY22+vXbp76iiOJ4W93ERtdmbcyZ9rFc
+ 3OtDNmosFT3HV61pW2TMBO2yvjvgYgAZRxhzF/khYwtvIUzQ4gNm6UiCxdzeE8myE1l2+3
+ CcQThtndUUsn0NZLyZO0VtSeXagHK2A=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773152498;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
+ b=AOFv9LjMNoqMM7pZNLE7mqHZiYFiVVAFqZb0l26EBLiiZ3HcuwZ0WJhEkoRTUKNXRXG1jU
+ X9blokv5am6ylMDQ==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773152497; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
+ b=dxq1tJ8uMowCr0aLuv0MgUyT0PJZz0/YYfeCXDktUUVhnOH5yrAw/hADCy8tDujSe/dVmT
+ wNNCMv8QTbj3oYuboCikR7Av2r20vBBcDz6gMi/F7deA0lje4Pq6MOxmrroMS1K5xsKPmT
+ rK1GfTv8pZ3CKMC80JlDL2JeagnAl/Y=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773152497;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=mov2GOtY37Y+X1mq8loHhu5NyTNNJoBiH5aI7dlxX5U=;
+ b=GafK3lf7CH/WydAfZ24+bspIUwJyx1YnTkdSAuE6/J51RdltVy0wYygzNJdImC+yYHq2l/
+ DPcjJgo1Vouzd3Dg==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id CDB633F4CD;
+ Tue, 10 Mar 2026 14:21:36 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id D7evJPAosGnYDgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 14:21:36 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+	Peter Xu <peterx@redhat.com>
+Subject: [PATCH 0/8] migration-test: Plumbing
+Date: Tue, 10 Mar 2026 11:21:34 -0300
+Message-ID: <20260310142134.15137-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260309145013.44327-1-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_THREE(0.00)[3]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
+ envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,41 +107,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 03:50:02PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Mon,  9 Mar 2026 15:50:02 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH v2 00/10] hw/i386/pc: Remove deprecated 3.1 machines
-> X-Mailer: git-send-email 2.53.0
-> 
-> 1 y.o. dust Thomas asked me to rebase & post:
-> 
-> The versioned 'pc' and 'q35' machines up to 3.1 been marked
-> as deprecated two releases ago, and are older than 6 years,
-> so according to our support policy we can remove them.
-> 
-> v2: Remove xenfv-3.1 in patch #1
-> 
-> Philippe Mathieu-Daudé (10):
->   hw/i386/pc: Remove deprecated pc-q35/pc-i440fx/xenfv 3.1 machines
->   hw/i386/pc: Remove PCMachineClass::pvh_enabled field
->   hw/i386/x86: Remove @pvh_enabled argument in x86_load_linux()
->   hw/core/boards: Remove MachineClass::smbus_no_migration_support field
->   hw/i386/pc: Remove pc_compat_3_1[] array
->   hw/i386/iommu: Remove IntelIOMMUState::dma_drain field
->   target/i386/cpu: Remove X86CPU::intel_pt_auto_level field
->   hw/core/machine: Remove the hw_compat_3_1[] array
->   hw/pci-bridge/pcie_rp: Remove PCIESlot::disable_acs field
->   hw/tpm: Remove CRBState::ppi_enabled field
+Fix leaks. A couple of normal ones and a few that happen due to a test
+expecting failure in the destination side, but exit-on-error=true so
+the coroutine just exits the entire process while a few resources are
+still allocated, but outside of the scope of the migration code.
 
-Just a rough idea - not sure whether patches 9 and 10 should be
-deprecated before removal. Maybe someone might still use them for
-emulating older systems?
+I brought a couple of cleanup patches from another in-flight series to
+be able to force-set exit-on-error=false for the tests that are
+causing leaks, that way we don't need to complicate the migration
+cleanup code trying to reach into other subsystems to free memory when
+QEMU is already exiting.
 
-If you feel it needs to be deprecated first, I could add these two
-properties to my series about deprecated property support (v3) -
-v3 will take some time.
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2375586934
 
-Thanks,
-Zhao
+--enable-asan --enable-ubsan build is clean for x86_64 migration-test --full
+
+Fabiano Rosas (8):
+  tests/qtest/migration: Fix leak of migration tests data
+  tests/qtest/migration: Change validate_uuid test to not trigger
+    exit(1)
+  tests/qtest/migration: Fix misuse of listen_uri
+  tests/qtest/migration: Stop invoking migrate_incoming from hooks
+  tests/qtest/migration: Force exit-on-error=false when appropriate
+  io: Fix TLS bye task leak
+  tests/qtest/migration: Fix leak in CPR exec test
+  migration/multifd: Fix leaks of TLS error objects
+
+ io/channel-tls.c                          |  4 ++-
+ migration/migration.c                     |  5 +++
+ migration/multifd.c                       | 27 +++++++--------
+ tests/qtest/migration/colo-tests.c        |  8 ++++-
+ tests/qtest/migration/compression-tests.c | 18 ++++++----
+ tests/qtest/migration/cpr-tests.c         | 25 +++++++++-----
+ tests/qtest/migration/file-tests.c        | 41 ++++++++++++++++-------
+ tests/qtest/migration/framework.c         | 31 ++++++++++++-----
+ tests/qtest/migration/framework.h         |  7 ++++
+ tests/qtest/migration/migration-util.c    | 19 ++++++++---
+ tests/qtest/migration/migration-util.h    |  2 +-
+ tests/qtest/migration/misc-tests.c        |  8 ++---
+ tests/qtest/migration/precopy-tests.c     | 21 +++++++-----
+ tests/qtest/migration/tls-tests.c         | 30 +++++++++++------
+ 14 files changed, 165 insertions(+), 81 deletions(-)
+
+-- 
+2.51.0
 
 
