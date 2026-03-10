@@ -4,108 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E7EBEB1041
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:16:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCDF7EB1042
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:23:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzu8A-0002J4-O8; Tue, 10 Mar 2026 06:16:02 -0400
+	id 1vzuF6-0003Pz-IH; Tue, 10 Mar 2026 06:23:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vzu86-0002Il-JY
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:15:59 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vzu84-00088v-DR
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:15:57 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-6617f0bcad2so7308701a12.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:15:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773137753; cv=none;
- d=google.com; s=arc-20240605;
- b=QXJUefFrI3OGqc+TB+6M6qdRI9d0dvHljgNI9Iy5Pw3QAqUxC/sHa01VzbvcDIn8t/
- JWjtdIcqcgx87aLA1EgttbeaEmoMvn8ZyXick/Fq8J3DEtei5Js/0JwrfsY957gjdVBp
- 0Crmq0bH37EnJVfSK0QM5nXknjtTcMgm3jkxOLQ25IN2OfAdtNSQGVEZA29vnhVy2vmA
- xYZptjN44ZIK0M4k1u5blVdmMjy8ljwzdvwF4SCdpYiJCTg1+EJjp8FhflzVPwPSKYhB
- J4rxUbaWKIJuCWCPGloKCrmv6su3deUtfIiBsYQfDDpXe2V13eBczgMovOLoy8Zr3xFq
- aiMg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=eFMQRaTOPTytbVUi59YQgQlVI8iB7+5R1eZ8nL4HV74=;
- fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
- b=IK3b7TywscaQW1lucF0sfw2fJ/ME3vjOYW6xoPa6LOZGvF5T3XCMcFxzzS4jim1+3c
- EWCcBc2bfExFTx5z3ZhIXF7CJ+G4MX2rcd8jWh/czKMrVKb0o0Mr8qurETk2Vt0zqXob
- DuZZLh4qN8hY/Kpe2WQoqYOIGO1gYg7emCk3bfVNEBz/DeWekOm85DHLpcEs6hD6IilX
- sPjpGokYs0uZjsnZ7o0DFoNsgG7L9c0a7SKLb43VvhLuWf3fTfio1xbnLEoYlH/A8nV3
- /o3Y6nS9zLmbukWaUHRDaFrsJqpUXyn7VZ4Pjr6LvFh7TrN2KfBhHS0eMN4T5UjGStO0
- KjCA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773137753; x=1773742553; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=eFMQRaTOPTytbVUi59YQgQlVI8iB7+5R1eZ8nL4HV74=;
- b=izjIfimfzal7BwhIKxGa8OZ4RUt7fxFJKBgSZ4wPVMAGeGO+ggeTkBhkRa+6Uj+HNQ
- w0k9PXNwSQruJFnSnvI41GsmgOTESei7+XkGpbvNaXvnBW0jaH5sqNiE1H5ZY3VDrDJO
- 3JvGyNspXFVLfUOc+gC8BVlcK+Wt1AYBRzG55JC0BbcjjK5ftWgIUOMFL0nah1nTf6Y9
- TG8f4QMeDATTNLcI6ef+feBHl9CJIxtMsrOx9gxm7EUJzV64z99RkLyljWhJnBDT0e8W
- HTEzKX2v7LH7//Ln3OiCReJFcWKk5s3Cw0WudHxwKNRXAPqZnrziVS3vn0b/Xtztualn
- Kv/Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773137753; x=1773742553;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=eFMQRaTOPTytbVUi59YQgQlVI8iB7+5R1eZ8nL4HV74=;
- b=lMgcbcaVbZNjI5pr1rKrIuAorynHtl+CiOi2RaxYMHRtKhZV+kl+vvleigC17V+qzh
- 51i81zsq7p694oNqSwj+kmVSF+e1QC7hmyjfM+oZz2pSBGNcbRN0yiDb4eBs1OnYZQwI
- Fi9IFLKbli7sbeVARu8w6LoWcZZBmwvf3S2AJA2ndZyHLjkz+09xq1zDb4bm7cs/tg8/
- a46YWcVtEr0v2YUs/I/7/YwI/iy6JYS7wYIY+wCT/Io7X+qvq3VaKPhRiPq5PDNf8soi
- m+7jFxRCODKP6ZH+LitGPifEUunehU9+C1yQRLQS+MpYsPUqmG+LXkNdbBJh9Nl94Ilr
- 5cwQ==
-X-Gm-Message-State: AOJu0YzK3E+fz4GQBmtOZKOpURN56y+y5O3/MRdTXI4zlMrDmLC8QodT
- 9Hi00YNugs6VqhiEHuGc8fqGSZm1i3yuqPcc6lERXmWv7F6UDz3/WJp+rbkVb+fWxEFThEBDkJt
- 6qGtJr8BdCrixneCjkRebT/PNo1S9HPg=
-X-Gm-Gg: ATEYQzznviAn9yQrHKRByG0e5Wu8pcRskR9wINU4LNllSqyHtZLBvm46T+7QCOtud1N
- 1uiDeWHOMyh3qjbC4nyWcc8+fsFlLfD4P/Xzze92Mp1UIknvMSuH973mukOSev2gS+Hlsev6LkB
- yHEsJX3vy0IQeCcVWICvgmUCMd0TXaq5tTff5V4u7YAeaWulaNEAtueYX/Oh/3cZpu5/QCBGl0N
- bl3ZKGzCWN7vFsFN9MNUEqwzvMra4MpUCcAj7KPmf7FuD3lJ+Ufnx3bqMh3B6X4j8mRYfGmPwj1
- 8xPacvQ=
-X-Received: by 2002:a05:6402:902:b0:662:811d:60fa with SMTP id
- 4fb4d7f45d1cf-662811d66aamr1935604a12.0.1773137753460; Tue, 10 Mar 2026
- 03:15:53 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1vzuEv-0003Of-6s; Tue, 10 Mar 2026 06:23:02 -0400
+Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1vzuEt-0001uq-5g; Tue, 10 Mar 2026 06:23:00 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.stl.internal (Postfix) with ESMTP id 163B11D00159;
+ Tue, 10 Mar 2026 06:22:53 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Tue, 10 Mar 2026 06:22:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-type:content-type:date:date:from:from
+ :in-reply-to:in-reply-to:message-id:mime-version:references
+ :reply-to:subject:subject:to:to; s=fm3; t=1773138172; x=
+ 1773224572; bh=tjugxnBVJ2/0dcevPD8F9pLeE0JL/pmlroOQG8+I5JM=; b=Z
+ hekG18I7GnG0hsK3VrdF6529ljkPQsRYjZLOBSL0ZmRoT8+HFb1c0en/dH2MCPsO
+ AsvDw9bK2PXChafIcynzHYwqA1PfnL/C5LtC7TLXlsGuae9hgTUDH907GciBYPvL
+ ktP5pgnhAg7pQX5wpj11boEV2P2bFIAPoSHlr5sZCriVN2SYADCiVnd5Jx4tDxG8
+ QgJhdP+gNunvZ8VMK+tJXKLmUowXrXoUBOUOsawYq8nsigETbJISTEdqqebljAxp
+ zifcpiQV8MoyOs8XQvkamnDNMGQiTHgOKTnqzpJ3ISLvaa8HwLCJK8iQdxMuAjem
+ U1Fo21g1UfXQib3W924OA==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-type:content-type:date:date
+ :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
+ :message-id:mime-version:references:reply-to:subject:subject:to
+ :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
+ 1773138172; x=1773224572; bh=tjugxnBVJ2/0dcevPD8F9pLeE0JL/pmlroO
+ QG8+I5JM=; b=YtEZZASYb957dQFGVESuQJ+9NY64PG+jfCaqDmD3cGq2sVUsLiR
+ orvoKit9VUQWdQKIMkWPeZjjgjTPO5POvgP/HIIG4Hm3Gj7JvdMLzMXrRq4KkOlb
+ Lj4xNWcvXVBL5VsQRtrG0xOB4q1yTSXRQ3OMxLgZ6jfurLVaEHxAIWJSYaugYxb8
+ lmuHPJl+MAFQUbTv50HNq57j2w6Scj0oBxOTP2MmS2cRU1B2DWU1L3GWhv1Izxzt
+ LbF+U4/H9JKQgVXbdyb+uZ4Dsg6267V49LtZvg8/SuhE/V4WIb8dzQxqwK6oY5Vl
+ ur5BOp6HV/vKJUdvtu10GhdZxrWum25ee7A==
+X-ME-Sender: <xms:_PCvafS26tEFgiwWqk0K2aVDENJM2bVc3Z_zZCm6nUpahsoyHU6l9g>
+ <xme:_PCvaa19jNQob52c8CMzZKb-5Y0VrSj1REn1ps50HCS_aZEAwAsT50BZ1PDVkGXLO
+ fJ3aJ69ng0osiWBtJOXO61hDya3zYW_PMr3hhbHcLHM3czY3gWuh5A>
+X-ME-Received: <xmr:_PCvaUtMEQ48qDci-1mg-KfATDtmC8y80mo-Dtnf5gjeazDtULS4G2ehPhiSM5xGJ-tAOQLKrSOXrXd58F2BNDM6-N4xL2rtsL3Qpf_k9xDJ>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkedtkedvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepmfhlrghushcu
+ lfgvnhhsvghnuceoihhtshesihhrrhgvlhgvvhgrnhhtrdgukheqnecuggftrfgrthhtvg
+ hrnhepffduvdfhheejudfgieejueeileegveduvdelhfekhffgteetffdtvdekveeileef
+ necuffhomhgrihhnpehkvghrnhgvlhdrohhrghenucevlhhushhtvghrufhiiigvpedtne
+ curfgrrhgrmhepmhgrihhlfhhrohhmpehithhssehirhhrvghlvghvrghnthdrughkpdhn
+ sggprhgtphhtthhopeekpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehprdhrrg
+ hghhgrvhesshgrmhhsuhhnghdrtghomhdprhgtphhtthhopehqvghmuhdqsghlohgtkhes
+ nhhonhhgnhhurdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrihhtpd
+ hrtghpthhtohepkhgsuhhstghhsehkvghrnhgvlhdrohhrghdprhgtphhtthhopehprghn
+ khgrjhdrrhgrghhhrghvsehlihhnuhigrdguvghvpdhrtghpthhtohepkhdrjhgvnhhsvg
+ hnsehsrghmshhunhhgrdgtohhmpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhn
+ ghhnuhdrohhrghdprhgtphhtthhopehithhssehirhhrvghlvghvrghnthdrughk
+X-ME-Proxy: <xmx:_PCvaQjZdXXPYqSZJfrt3D2d1J6nJfziysjOeOtXZJevdexxV_a1FQ>
+ <xmx:_PCvaV9WF3uH_ywEZeYXFxbvBm5EvDz5HjvAZtnaYAUryYjhxYO68w>
+ <xmx:_PCvaTs-BteT0YMrtFGxhn8faYczGCvV9XhEsVvaTYXw5ZbPPxvx1Q>
+ <xmx:_PCvaZoPNNoj_-07RHwtkCPLEBK2oZRGMqfzbU_cUVuyTSsqL6VPLw>
+ <xmx:_PCvaaTUy7kpz4odspVcsc8etRx_0LQ18syK_EnX-tHG7dX7MO8HphCE>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 10 Mar 2026 06:22:51 -0400 (EDT)
+Date: Tue, 10 Mar 2026 11:22:49 +0100
+From: Klaus Jensen <its@irrelevant.dk>
+To: Pankaj Raghav <p.raghav@samsung.com>
+Cc: qemu-block@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ Keith Busch <kbusch@kernel.org>, pankaj.raghav@linux.dev,
+ Klaus Jensen <k.jensen@samsung.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] hw/block/nvme: re-enable wzds bit in namespace dlfeat
+Message-ID: <aa_w-cz2nKsCdkMi@AALNPWKJENSEN.aal.scsc.local>
+References: <20260301160720.1562509-2-p.raghav@samsung.com>
 MIME-Version: 1.0
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-8-zhangckid@gmail.com>
- <20260309084422.GG39949@fedora>
-In-Reply-To: <20260309084422.GG39949@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 10 Mar 2026 18:15:16 +0800
-X-Gm-Features: AaiRm51H2w25jHJdmQiEKcTDRgOlehGSo91uKH_rhYK1EqGdUVn5h0TuQPkt3Wo
-Message-ID: <CAK3tnvJmGEdr93pDDZdFk=0jUYHYChgchR4xtP6JpDVxBv2MCA@mail.gmail.com>
-Subject: Re: [PATCH V5 07/13] net/colo: track IOThread references using
- path-based holder
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="4A7bk6oha26a0BHQ"
+Content-Disposition: inline
+In-Reply-To: <20260301160720.1562509-2-p.raghav@samsung.com>
+Received-SPF: pass client-ip=202.12.124.150; envelope-from=its@irrelevant.dk;
+ helo=fout-b7-smtp.messagingengine.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,37 +112,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 9, 2026 at 4:44=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
-> wrote:
->
-> On Thu, Mar 05, 2026 at 10:24:53PM +0800, Zhang Chen wrote:
-> > @@ -1434,11 +1436,17 @@ static void colo_compare_finalize(Object *obj)
-> >
-> >      qemu_bh_delete(s->event_bh);
-> >
-> > -    AioContext *ctx =3D iothread_get_aio_context(s->iothread);
-> > +    /*
-> > +     * Use the device's canonical path as the holder ID to track IOThr=
-ead
-> > +     * usage and ensure the AioContext remains valid during the device=
-'s
-> > +     * lifecycle.
-> > +     */
-> > +    AioContext *ctx =3D iothread_get_aio_context(s->iothread, NULL);
->
-> Should NULL be path?
->
 
-Yes, here code in the finalize function need to waiting for the
-coroutine to complete processing
-Or do you have any other suggestion?
+--4A7bk6oha26a0BHQ
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Thanks
-Chen
+On Mar  1 17:07, Pankaj Raghav wrote:
+> dlfeat was changed from 0x9 to 0x1 when PI support was added.
+> It was removed because we can't rely on unmap and have to physically
+> clear it to get the checksums right but that doesnt mean that we do not
+> support the bit.
+>=20
+> The spec says that if wzds is enabled, then the controller supports
+> deallocate (DEAC) on write zeroes. But DEAC bit in write zeroes command
+> is only a hint, the controller might choose to physically write zeroes in
+> those areas.
+>=20
+> As we are sending write zeroes command with BDRV_REQ_MAY_UNMAP to the
+> underlying block device anyway (if the unmap operation is supported),
+> change the dlfeat value back to 0x9.
+>=20
+> A new flag FALLOC_FL_WRITE_ZEROES has been introduced in linux for
+> fallocate which will use the wzds bit in dlfeat to quickly zeroout extents
+> using unmap operation whenever possible[1].
+>=20
+> [1] https://lore.kernel.org/linux-fsdevel/20250619111806.3546162-1-yi.zha=
+ng@huaweicloud.com/
+>=20
+> Fixes: 146f720c55 ("hw/block/nvme: end-to-end data protection")
+> Suggested-by: Klaus Jensen <k.jensen@samsung.com>
+> Signed-off-by: Pankaj Raghav <p.raghav@samsung.com>
+> ---
+>  hw/nvme/ns.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/hw/nvme/ns.c b/hw/nvme/ns.c
+> index 38f86a1726..b0106eaa5c 100644
+> --- a/hw/nvme/ns.c
+> +++ b/hw/nvme/ns.c
+> @@ -75,7 +75,7 @@ static int nvme_ns_init(NvmeNamespace *ns, Error **errp)
+>      ns->csi =3D NVME_CSI_NVM;
+>      ns->status =3D 0x0;
+> =20
+> -    ns->id_ns.dlfeat =3D 0x1;
+> +    ns->id_ns.dlfeat =3D 0x9;
+> =20
+>      /* support DULBE and I/O optimization fields */
+>      id_ns->nsfeat |=3D (NVME_ID_NS_NSFEAT_DAE | NVME_ID_NS_NSFEAT_OPTPER=
+F_ALL);
+> --=20
+> 2.50.1
+>=20
 
-> >      AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
-> >      if (s->notify_dev) {
-> >          AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
-> >      }
-> > +    iothread_put_aio_context(s->iothread, path);
+Applied to nvme-next. Thanks Pankaj!
+
+--4A7bk6oha26a0BHQ
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEUigzqnXi3OaiR2bATeGvMW1PDekFAmmv8PYACgkQTeGvMW1P
+DencBwgAqqu3dkMY5XpnCOH1gBLsydRxFGbz90fkZavl93YZQFIX7Q765jRDWKnk
+FisxbkDzsql6/k2QJ+5A+EpZpxET4jjxMX/uT0PcPQMKjR7tGRUfJjSt9mzkiL8d
+K2+dc0p3nfxAdoOx2biu8uw7VgaLELLZs5hfXcUlHbJqmqxaoxunvn1rB6tgQX4V
+Af0FNqtF+YMgOoNt2jZYbMObpkXsjhFS7GEwXAXHQFkD41bWlbKGTl+by32sC/TF
+B2NFpq2wOYyesfjZ36GIk91NZJdlitOShRAvyA9vzPDDD4XiWDiXZVN8CPrwaONX
+8Yfh9lt93otc5myjDZszofxFvYVDjg==
+=t452
+-----END PGP SIGNATURE-----
+
+--4A7bk6oha26a0BHQ--
 
