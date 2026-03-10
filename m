@@ -4,79 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88089EB1049
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:47:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26A71EB1043
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:47:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzubq-0008An-Vp; Tue, 10 Mar 2026 06:46:43 -0400
+	id 1vzub2-00074N-6e; Tue, 10 Mar 2026 06:45:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzubb-0007qr-DZ
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:32 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzub0-00073t-9r
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:45:50 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzubZ-0005tl-TY
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:46:27 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-485345e1013so18326265e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:46:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzuay-0005og-OT
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:45:50 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4852afd42ceso34091725e9.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773139582; x=1773744382; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773139547; x=1773744347; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=w3BIlPw0CMfmgESexX1jy7Eew6qRZ790jhRyJ/45kFQ=;
- b=O284WygsowAUAogxdtmVvXjL4UJJt4d9iK6P+ba8CF7wJ1oxYimw8b9f0Dfj+iXa0w
- e6uKmguesBrueGKJzgHWBJUstGpasTBlinJCqDbxVlxpJbqAGgTRI0kSTuyvvbX8U6OU
- 8Yl0zFLYklKcXJJO2ejlfUzLWpgSiqXxTSSBCZN6J/wkEEnybNtHUhUfDI5rGiX2klL/
- 7fmu3ODz4/61zUdlqZaF8RrmiqpxZue7yqoHdbB+kRXfygya4xW9oI56TvWd+nY9yenx
- uEVecj/d6Ppa0TN/JZTgZiXsOFsssMgPwZdAtk0ZKhWKkYhxCHlVQTNtLqIDHY/Uf27+
- Tb+Q==
+ :reply-to; bh=Sz4Zj3xRZlzSb5pL9wYtWvSc/eh/YqpNHjaGsP/aUlo=;
+ b=Ep/aIq7etFVg/h9ecFnQL0cotCoc27CH9oL34hCx2XT4MlV155roP877iM+KCV7Iqi
+ FnjSlizwt4UkmMyKcbJ/gRxJflS+LGs2VwfU5UAu/WzrG6UsITc7vIBu/QQW9W+sthox
+ nlRJXM+iIzD8mzjXImxezCIXwHHyUGATb4naGpcPW44NxLR0AC21nw/1C8k0SVFY6fhe
+ rXujN5bJjFNV7pjggPniTdMUh78KuqDo29uAEGz/r/Bl/pM+qb+Cz+ozm+bn1Od1F/eu
+ NTflyXo0zsheG/uR3OAUUPdWMRgh6lkVI5Yz+D3bD87CduuqEu5BIe3lsP64sEXwVDXG
+ /fSw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773139582; x=1773744382;
+ d=1e100.net; s=20230601; t=1773139547; x=1773744347;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=w3BIlPw0CMfmgESexX1jy7Eew6qRZ790jhRyJ/45kFQ=;
- b=hMFy305EVntiyRqpw27j+wlmph2n/O4aUBG7HJCravFuTbOrsCWoWLhrHovW92dtyS
- zi7I1hWbS99FMsnUSN5WDgFGs61YGbAUyve2Qcu2wTcFEfsvcm17e5Y18GsY4TsQ6671
- +IQbkA93mVjxH3awWsxldB1d5pLzv/AGFujT+k2nIPZXXcLG1e5aCFjd6R7kGOZ4eIq9
- m4GSqocbDw1s9pD1ol/bvccqyWgF/Ygg5EMOFeklSha6O26DyWMsFUMeljE4bj/3LWI9
- IMEPM6YuE5SDHMcSsKuUZD3uqeUVyPYXcbfXaEG18XLLQqFmPdu/7ZQxfd7AWSG2a5/8
- 6R2g==
-X-Gm-Message-State: AOJu0YwqqwNts5VLqp9khXw/3+g3vqChiL9I1va3/DdOwU2v3XmcnOvC
- 98yK6Vv8EkyjRPAP68HeXz17OYl6S4hqpdkTE4qMBvj32SPkCAONaFEtbIZt9YvRi/VdF7Ye+Cy
- IS7OObeY=
-X-Gm-Gg: ATEYQzxhkJandXPOehwCYoWYUqyuAHgR25W7qHd8Lo2/d1UCMuzKCXlP2o1dHNnq1md
- LNhZsPJVlV5Lvu/tjm/3VnJzaL9r1F/YhJml9tzP/zLz62sZEK8/zPolmkh6d2wF9WuZXIIpY9b
- eXMiOusA/ukgg3vPCgjQAti27s8bWqcA7S/QXFurPOKGel7JKZql9E4IdWm+42bPM2u+GtmDZiY
- yNucTgtDvGWa1/S9a4zV3oPp16RpJ70dSdCnVpQhDFyBwnoVZwnO/KBIH+X2RBaBcTfNCxOahFY
- SKuJ9xOr088wTYUhVh9Ly5SiumqKlCMXFNJwFMVKjJzIvf8lKQkpoPjx8o2vwWG2HdeBajp++NA
- UDSVf1hHFyU+7tU/djiY+piYUJgSPUTO/dsQ+3SXAfmyfOVz1uPfO7CquFFu/bdCJdKTkx+YfwT
- flmwdfHG31f3Ud6bNeq8dJIG7W31kmd/GQ6aL4/ZljmB0iF9/Vfwo5HGztz7PASKQUfiF4PxeW
-X-Received: by 2002:a05:600c:4f8e:b0:47e:e59c:67c5 with SMTP id
- 5b1f17b1804b1-485419cc0c0mr39842485e9.8.1773139582363; 
- Tue, 10 Mar 2026 03:46:22 -0700 (PDT)
+ bh=Sz4Zj3xRZlzSb5pL9wYtWvSc/eh/YqpNHjaGsP/aUlo=;
+ b=mMt0OOzQ4t46gCK6sh5JXWaTATO/vpsG1I0he0Q/ksg77rs4jRynahsKR7SZCEnEbX
+ B2993HTNTvQWMHsyDhKqh9ZaxVYPDkUAXegCXl0V5KtX5SVjr+GOQALzhWAa5htXhCns
+ XnbWEHP1FMwkNtdsTsMsd0Jdq9Zr9WGuBdattUacxt8h9dm0qKERFATJQmzOjCcWvdn6
+ 3uLNHhyiI1L+usFlpf/dy+84REMNsGIGp8G3ooEHupJaEmv+Ta+5S+tkmzSGewx1OHmY
+ dVgOric2mF3smYC+iXYPu+aFBp5oWou5nKI4ksSpUeG+4pHajvrZKWPkou1j2659sXC7
+ EDgg==
+X-Gm-Message-State: AOJu0Yxz24SP96AZsF6urCVMVp9QJUSoPviQda+G2GVyF1Jae1U7ZuPc
+ wKLfaNZlZegAguIivH/yi3wPbx2TEOBTr0iuiQNYBs+8lQ4unSoLPfZRU1ezPjg99JpzLqN8lop
+ 43hWPKxE=
+X-Gm-Gg: ATEYQzzkB6iX5vx8Kn4Ll0DOtmUsRP1/xJpNyYCvISs8XqLqr7cRlkCfpavcNB1InUc
+ xa0rGX23pBWdXDZT/1WSot6yT1+EkIeK14q3Gr25GBbaw71u25I3gwxn4/mj9ifQOyDXPeljs9d
+ xb2SqrNAz+j2wl9AnkPca8B9cKnjIWWEUJ8eFi3/eeGdpytG0nsu/Fzsl2xejR+EtXaVUFo8a4U
+ j1dmLGb7ATyhKOm8in94Pm65k0DOurN7ylQ2E5ilyP8tqUf0LuuQhBXhMHoAYVOz4K7E5tkPLYb
+ OJDYnU7jTa23PRoMVQk4W+/ICccJqML8oohiSx/2nGdeYPK5s/YAG3Ob5x2WA9zQAAVPLUVz2am
+ crdp4jvvPhH3g53t40KtADjJwviM4gRIVjt0IdbdaIOvHeq+Rm7drL+NSvCe8+b7g1b49+TXV6V
+ k7ZRnaq1N78nlthCUBKFNvHuzGS7/C43GmDNKZvGlbPIp/KZ/fWd31L+ErdgQ+JDPI4CnuEjTr
+X-Received: by 2002:a05:600c:350a:b0:485:4278:2558 with SMTP id
+ 5b1f17b1804b1-48542782901mr41600815e9.6.1773139546824; 
+ Tue, 10 Mar 2026 03:45:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541a8d4desm65313945e9.8.2026.03.10.03.46.21
+ 5b1f17b1804b1-48541ad1e4esm67752005e9.8.2026.03.10.03.45.46
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 03:46:21 -0700 (PDT)
+ Tue, 10 Mar 2026 03:45:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 10/16] accel/kvm: Make kvm_irqchip*notifier() declaration non
- target-specific
-Date: Tue, 10 Mar 2026 11:45:05 +0100
-Message-ID: <20260310104511.12670-11-philmd@linaro.org>
+Subject: [PULL 05/16] tcg: Add tcg_op_imm_match
+Date: Tue, 10 Mar 2026 11:45:00 +0100
+Message-ID: <20260310104511.12670-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310104511.12670-1-philmd@linaro.org>
 References: <20260310104511.12670-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,60 +98,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit 3607715a308 ("kvm: Introduce KVM irqchip change notifier")
-restricted the kvm_irqchip*notifier() declarations to target-specific
-files, guarding them under the NEED_CPU_H (later renamed as
-COMPILING_PER_TARGET) #ifdef check.
+From: Paolo Bonzini <pbonzini@redhat.com>
 
-This however prohibit building the kvm-stub.c file once:
+Create a function to test whether the second operand of a
+binary operation allows a given immediate.
 
-  ../accel/stubs/kvm-stub.c:70:6: error: no previous prototype for function 'kvm_irqchip_add_change_notifier' [-Werror,-Wmissing-prototypes]
-     70 | void kvm_irqchip_add_change_notifier(Notifier *n)
-        |      ^
-  ../accel/stubs/kvm-stub.c:74:6: error: no previous prototype for function 'kvm_irqchip_remove_change_notifier' [-Werror,-Wmissing-prototypes]
-     74 | void kvm_irqchip_remove_change_notifier(Notifier *n)
-        |      ^
-  ../accel/stubs/kvm-stub.c:78:6: error: no previous prototype for function 'kvm_irqchip_change_notify' [-Werror,-Wmissing-prototypes]
-     78 | void kvm_irqchip_change_notify(void)
-        |      ^
-
-Since nothing in these prototype declarations is target specific,
-move them around to be generically available, allowing to build
-kvm-stub.c once for all targets in the next commit.
-
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+[rth: Split out from a larger patch; keep the declaration internal.]
+Signed-off-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260303010833.1115741-6-richard.henderson@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Message-Id: <20260309174941.67624-2-philmd@linaro.org>
 ---
- include/system/kvm.h | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ tcg/tcg-internal.h |  5 +++++
+ tcg/tcg.c          | 21 +++++++++++++++++----
+ 2 files changed, 22 insertions(+), 4 deletions(-)
 
-diff --git a/include/system/kvm.h b/include/system/kvm.h
-index 4b0e1b4ab14..5fa33eddda3 100644
---- a/include/system/kvm.h
-+++ b/include/system/kvm.h
-@@ -219,6 +219,10 @@ int kvm_vm_ioctl(KVMState *s, unsigned long type, ...);
+diff --git a/tcg/tcg-internal.h b/tcg/tcg-internal.h
+index 26156846120..c0997ab2243 100644
+--- a/tcg/tcg-internal.h
++++ b/tcg/tcg-internal.h
+@@ -100,4 +100,9 @@ TCGOp *tcg_op_insert_before(TCGContext *s, TCGOp *op,
+ TCGOp *tcg_op_insert_after(TCGContext *s, TCGOp *op,
+                            TCGOpcode, TCGType, unsigned nargs);
  
- void kvm_flush_coalesced_mmio_buffer(void);
- 
-+void kvm_irqchip_add_change_notifier(Notifier *n);
-+void kvm_irqchip_remove_change_notifier(Notifier *n);
-+void kvm_irqchip_change_notify(void);
++/*
++ * For a binary opcode OP, return true if the second input operand allows IMM.
++ */
++bool tcg_op_imm_match(TCGOpcode op, TCGType type, tcg_target_ulong imm);
 +
- #ifdef COMPILING_PER_TARGET
- #include "cpu.h"
+ #endif /* TCG_INTERNAL_H */
+diff --git a/tcg/tcg.c b/tcg/tcg.c
+index 3111e1f4265..2ca44766f64 100644
+--- a/tcg/tcg.c
++++ b/tcg/tcg.c
+@@ -3387,11 +3387,9 @@ static void process_constraint_sets(void)
+     }
+ }
  
-@@ -393,10 +397,6 @@ int kvm_irqchip_send_msi(KVMState *s, MSIMessage msg);
+-static const TCGArgConstraint *opcode_args_ct(const TCGOp *op)
++static const TCGArgConstraint *op_args_ct(TCGOpcode opc, TCGType type,
++                                          unsigned flags)
+ {
+-    TCGOpcode opc = op->opc;
+-    TCGType type = TCGOP_TYPE(op);
+-    unsigned flags = TCGOP_FLAGS(op);
+     const TCGOpDef *def = &tcg_op_defs[opc];
+     const TCGOutOp *outop = all_outop[opc];
+     TCGConstraintSetIndex con_set;
+@@ -3418,6 +3416,21 @@ static const TCGArgConstraint *opcode_args_ct(const TCGOp *op)
+     return all_cts[con_set];
+ }
  
- void kvm_irqchip_add_irq_route(KVMState *s, int gsi, int irqchip, int pin);
- 
--void kvm_irqchip_add_change_notifier(Notifier *n);
--void kvm_irqchip_remove_change_notifier(Notifier *n);
--void kvm_irqchip_change_notify(void);
--
- struct kvm_guest_debug;
- struct kvm_debug_exit_arch;
- 
++static const TCGArgConstraint *opcode_args_ct(const TCGOp *op)
++{
++    return op_args_ct(op->opc, TCGOP_TYPE(op), TCGOP_FLAGS(op));
++}
++
++bool tcg_op_imm_match(TCGOpcode opc, TCGType type, tcg_target_ulong imm)
++{
++    const TCGArgConstraint *args_ct = op_args_ct(opc, type, 0);
++    const TCGOpDef *def = &tcg_op_defs[opc];
++
++    tcg_debug_assert(def->nb_oargs == 1);
++    tcg_debug_assert(def->nb_iargs == 2);
++    return tcg_target_const_match(imm, args_ct[2].ct, type, 0, 0);
++}
++
+ static void remove_label_use(TCGOp *op, int idx)
+ {
+     TCGLabel *label = arg_label(op->args[idx]);
 -- 
 2.53.0
 
