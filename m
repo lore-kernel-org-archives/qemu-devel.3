@@ -4,96 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87235EB106E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:17:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FF99EB106D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:17:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzyno-0007hi-OE; Tue, 10 Mar 2026 11:15:20 -0400
+	id 1vzynk-0007NT-8n; Tue, 10 Mar 2026 11:15:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzyni-0007H9-Fl
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:14 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzyng-0000TV-2o
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:14 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-485392de558so14165295e9.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:15:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773155710; x=1773760510; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Ym63ilovpE3fs1+AVhjYRXUzfWQaS0KSd4iVsrOzsEY=;
- b=XCexwV5/K+UoVxECz5gKu3t+zKQi1/KA1BGeX45ZfNqA7xSbaW9C6tAXtf9pJ6ky56
- imP0n1MzsMF4oJKXCZyTztBpijDdSOTsbP0gd/CynbWVuLpb+wAibcX5TKGfwob7vdQk
- gyUaS0dILGNZO5JffcHd8Xvsv/TKpS++wTwO01cDI9smqtHOQUTHMiRpEkMQwrxyF3mb
- yeaLG8+wukskRDtTw8PrPQQJPKYvwRjUCb+mkEznj0lNnVJwE0huUFxWeAOsY6mgCcxK
- 7MSVOjC51ddCoO6Rtk7V3AZI/z1l4YANQIE+p43q8IT/mJj0GNcC2/vFgZpwr7uI2lF5
- Y42Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773155710; x=1773760510;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=Ym63ilovpE3fs1+AVhjYRXUzfWQaS0KSd4iVsrOzsEY=;
- b=M7tjWVQqKGg+tpxNp2B7GtRsnY+U+aZg79/3tl0FZXD1xUBlUm4wWXNnSNmm1PQS9p
- VH2txUMDDRBzfHm8HggULag7chQTSvnXh1qJ5tJj9fjRF0vSNfS3J0PonAmQ9dvnX2Vn
- Wmbhct3SL/x5zkxL+oYq4aE9PjiT+qJN2XCVW8IC8y1r/TaX1srBKKyvJjxXjODrQ39V
- 2bQ233ePl02i/ZTw1I+bHJuvuExXZuVmLiJITzHfWJdWq3yCerHucaxVGwVCtp+pPxi9
- K5bkgPGaw4UTSdVgXn0atphHjvocCQ8rK1ysR1ZyrWunQ/1OdApXGrmWJCQeFUnJp1R8
- gm2w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWf9Bt5qnLKbJLYXPzzSoURPfutPCEpNupSJfiIaIGQrB3ehWjDnamx3HSaelLwVo/9xi5WzJEXpEpw@nongnu.org
-X-Gm-Message-State: AOJu0YwLfBtbmS1cF94/XvB5Ia+C5yYCqP8agajbKuEqMuP04iFY7Edc
- B1TkCD+rn6ggQPf+c+Bym9nh5/hB+9eUql1uQ8UQ1HczZeoxplecmm9eTA+pQX0zLsc=
-X-Gm-Gg: ATEYQzz62J0pm1waW5kQhwhnL0c3M5wsV+yoMiwa8jyldfhRQ0rIXj1DfB3WXH0C7BV
- +kV6Qc40c77L5C41Bb6L4P2jbRfUT6xB2Rc+0yJgGhruhA6n0JRmw9wWCH7cNuwBkxvWqtCSxBw
- +y28dPM12bLP4miof8exIfuHEyn+gdociD7YJpiPUZT3qYIgZweQXQd+ZEM6lEoXM2tmm8hpV7Y
- WLmstxIQZvxIkCc0+iN6DqnGJs6smGSsn2RPFeMopnU+awGfNFNYzDIr3XCz2s7De9Dir+HXk5m
- 7tOgZ+mfR3U3JxFjNxyw3S4pYepyjQXM9jOCxtKpkvWKBDt3qFtCjiVoihaDo5BA0y5Gx7F1Y5+
- i05JRxwq18XM4cz+RR322HXwWJ9ZxYj2X12tbU21s6VLoiNh0pS3DS7+28HkVZkCKr0kgd/OG00
- FYE/jetFsnWxhrYWIm0iJ1M4hftFcPcdTOrsrTrubHCKcXvVwcDb2Mqk1iNFgFPMCDA2pfIvDey
- XF1FEIapbiTEFKxGGnW4/oNOV1NUWue+RKnQmCeQw==
-X-Received: by 2002:a05:600c:4e94:b0:485:3fc6:c0f3 with SMTP id
- 5b1f17b1804b1-4853fc6c35fmr101139245e9.0.1773155710416; 
- Tue, 10 Mar 2026 08:15:10 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4853588758fsm127303185e9.4.2026.03.10.08.15.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 08:15:09 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 1/2] tests/qtest/ast2700-sgpio-test: Use g_strdup_printf()
- instead of char arrays
-Date: Tue, 10 Mar 2026 15:15:06 +0000
-Message-ID: <20260310151507.2973843-2-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260310151507.2973843-1-peter.maydell@linaro.org>
-References: <20260310151507.2973843-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vzynL-0006oP-Sy
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:56 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vzynI-0000Ef-TL
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:14:50 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62A81pAs1177331
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:47 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=yJWgUF4R1GPsx8bjo
+ UWbWPtkmgoOtugjqirrZiAMfv0=; b=g/Jv2ZOQK3FfLX2qLdabFnKxTlSmkTmk2
+ h+2tgpVVLuERX1gcdkuOzIyj2aO1P23NzKuBOIfZzVGp0w+uots/V2lfesBxU/9y
+ FlCykEWjFrSABptvfDxVTeaWwDlLZ5z2fpZdmsmEQ9aDT4YDmPZPndOSCiZyGgPC
+ Wccfz2+0H0cJEXZb5A0W95d/zOKhz7NFxyD33C1mKz8+UKA+4HCO9ZTjVpxU2vFW
+ U3U/GHR+hR0D9GVac/C60FIXLIkt7uMoY+BWccDhT3qQLutz9P9FMP54lp5pHc9M
+ m2kTEnNKKocimSDiSDlWzRHrI09k0xEkrtrbOJYkSnlGW9HwXWpLw==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvrb6f3-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:47 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62ABKnWI023481
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:46 GMT
+Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4ct8ng2jtn-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:14:46 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62AFEgCi15532488
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Mar 2026 15:14:42 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id A840B2004E;
+ Tue, 10 Mar 2026 15:14:42 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 4183F2004B;
+ Tue, 10 Mar 2026 15:14:41 +0000 (GMT)
+Received: from Mac.com (unknown [9.39.23.49])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Mar 2026 15:14:41 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>
+Subject: [PULL 01/10] ppc/pnv: Move SBE host doorbell function to top of file
+Date: Tue, 10 Mar 2026 20:44:21 +0530
+Message-ID: <20260310151432.92531-2-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260310151432.92531-1-harshpb@linux.ibm.com>
+References: <20260310151432.92531-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfX+KCBTYV9A8bS
+ cxqqO6Orcp1Unu33xNgyAvYP7BtFU/pmuIyXzq9CbaY9JJ7gTdwQsQHZqCRGCM7KhchZTzh8FBL
+ s5AuZO+dpS6uzDEbfjoYhaiZ0dRkJIkpADFCZc6gWp/v2S4w0X//WfGWldzJQkq28ilQJ8nF72G
+ VjhApL6+FPpdxUx80KrmgIG8e1pLypBOHo6kqAvvlmv+c6lkzq+IP7YYEqwUQ9y2EwMA0jL4de9
+ XYmKhYXfB2hMz15evlbw6bkzzTFw7bxly9NGvjXcgX/uh0RsSZ6eJ9zK6+xLiNqfnt4eNXCfwtK
+ jPERnMhnSiyguRbgswP73v/2puoPr+OwG/zK1ooMO717CdgtGt7SAjOFvs2CxQgwvycGgXiblDd
+ pvU7s9/dcR/jK8I7uwNLWJR9usgbi0AH6rOmdUs1B1fvAaYAIAoPymBTTk8QneUNFemLlTMGCBi
+ dELigRA5qkHD2ISUaDA==
+X-Proofpoint-GUID: 7eOG8JIw5pJa2koBsRl3AJb8sj5gCgRS
+X-Proofpoint-ORIG-GUID: 7eOG8JIw5pJa2koBsRl3AJb8sj5gCgRS
+X-Authority-Analysis: v=2.4 cv=QoFTHFyd c=1 sm=1 tr=0 ts=69b03567 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
+ a=VnNF1IyMAAAA:8 a=K3nGc4jhFjju3E8dwHwA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ impostorscore=0 spamscore=0 priorityscore=1501 phishscore=0
+ lowpriorityscore=0 adultscore=0 clxscore=1015 malwarescore=0 suspectscore=0
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2602130000
+ definitions=main-2603100131
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,95 +124,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Older versions of gcc with -Wformat-overflow=2 don't like the usage of
-fixed size char arrays in this test; gcc 7.5.0 (SUSE Linux) says:
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-../tests/qtest/ast2700-sgpio-test.c: In function ‘test_output_pins’:
-../tests/qtest/ast2700-sgpio-test.c:27:33: error: ‘sprintf’ may write a
-terminating nul past the end of the destination
-[-Werror=format-overflow=]
+Moved 'pnv_sbe_set_host_doorbell' as-it-is to above
+'pnv_sbe_power9_xscom_ctrl_write'.
 
-../tests/qtest/ast2700-sgpio-test.c: In function ‘test_irq_level_high’:
-../tests/qtest/ast2700-sgpio-test.c:85:33: error: ‘sprintf’ may write a
-terminating nul past the end of the destination
-[-Werror=format-overflow=]
+This is done since in a future patch, S0 interrupt implementation uses
+'pnv_sbe_set_host_doorbell', hence the host doorbell function needs to
+be declared/defined before 'pnv_sbe_power9_xscom_ctrl_write' where we
+implement the S0 interrupt.
 
-These can't actually happen because of the limited size of the values
-being substituted in.  However rather than require readers to check
-whether the arrays really have been declared large enough, we prefer
-to use g_strdup_printf() for this kind of string work.
+No functional change.
 
-Reported-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-2-adityag@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
 ---
- tests/qtest/ast2700-sgpio-test.c | 24 ++++++++++++------------
- 1 file changed, 12 insertions(+), 12 deletions(-)
+ hw/ppc/pnv_sbe.c | 18 +++++++++---------
+ 1 file changed, 9 insertions(+), 9 deletions(-)
 
-diff --git a/tests/qtest/ast2700-sgpio-test.c b/tests/qtest/ast2700-sgpio-test.c
-index 56c54cca9b..529408ca8f 100644
---- a/tests/qtest/ast2700-sgpio-test.c
-+++ b/tests/qtest/ast2700-sgpio-test.c
-@@ -18,14 +18,14 @@
- static void test_output_pins(const char *machine, const uint32_t base, int idx)
- {
-     QTestState *s = qtest_init(machine);
--    char name[16];
--    char qom_path[64];
-     uint32_t offset = 0;
-     uint32_t value = 0;
-     for (int i = 0; i < ASPEED_SGPIO_MAX_PIN_PAIR; i++) {
-         /* Odd index is output port */
--        sprintf(name, "sgpio%03d", i * 2 + 1);
--        sprintf(qom_path, "/machine/soc/sgpio[%d]", idx);
-+        g_autofree const char *name = g_strdup_printf("sgpio%03d", i * 2 + 1);
-+        g_autofree const char *qom_path
-+            = g_strdup_printf("/machine/soc/sgpio[%d]", idx);
+diff --git a/hw/ppc/pnv_sbe.c b/hw/ppc/pnv_sbe.c
+index 27383ce683..247617338a 100644
+--- a/hw/ppc/pnv_sbe.c
++++ b/hw/ppc/pnv_sbe.c
+@@ -80,6 +80,15 @@
+ #define SBE_CONTROL_REG_S0              PPC_BIT(14)
+ #define SBE_CONTROL_REG_S1              PPC_BIT(15)
+ 
++static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
++{
++    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
++    sbe->host_doorbell = val;
 +
-         offset = base + (R_SGPIO_0_CONTROL + i) * 4;
-         /* set serial output */
-         qtest_writel(s, offset, 0x00000001);
-@@ -45,14 +45,14 @@ static void test_output_pins(const char *machine, const uint32_t base, int idx)
- static void test_input_pins(const char *machine, const uint32_t base, int idx)
- {
-     QTestState *s = qtest_init(machine);
--    char name[16];
--    char qom_path[64];
-     uint32_t offset = 0;
-     uint32_t value = 0;
-     for (int i = 0; i < ASPEED_SGPIO_MAX_PIN_PAIR; i++) {
-         /* Even index is input port */
--        sprintf(name, "sgpio%03d", i * 2);
--        sprintf(qom_path, "/machine/soc/sgpio[%d]", idx);
-+        g_autofree const char *name = g_strdup_printf("sgpio%03d", i * 2);
-+        g_autofree const char *qom_path
-+            = g_strdup_printf("/machine/soc/sgpio[%d]", idx);
++    trace_pnv_sbe_reg_set_host_doorbell(val);
++    qemu_set_irq(sbe->psi_irq, !!val);
++}
 +
-         offset = base + (R_SGPIO_0_CONTROL + i) * 4;
-         /* set serial input */
-         qtest_qom_set_bool(s, qom_path, name, true);
-@@ -73,8 +73,6 @@ static void test_irq_level_high(const char *machine,
-                                 const uint32_t base, int idx)
- {
-     QTestState *s = qtest_init(machine);
--    char name[16];
--    char qom_path[64];
-     uint32_t ctrl_offset = 0;
-     uint32_t int_offset = 0;
-     uint32_t int_reg_idx = 0;
-@@ -82,8 +80,10 @@ static void test_irq_level_high(const char *machine,
-     uint32_t value = 0;
-     for (int i = 0; i < ASPEED_SGPIO_MAX_PIN_PAIR; i++) {
-         /* Even index is input port */
--        sprintf(name, "sgpio%03d", i * 2);
--        sprintf(qom_path, "/machine/soc/sgpio[%d]", idx);
-+        g_autofree const char *name = g_strdup_printf("sgpio%03d", i * 2);
-+        g_autofree const char *qom_path =
-+            g_strdup_printf("/machine/soc/sgpio[%d]", idx);
-+
-         int_reg_idx = i / 32;
-         int_bit_idx = i % 32;
-         int_offset = base + (R_SGPIO_INT_STATUS_0 + int_reg_idx) * 4;
+ struct sbe_msg {
+     uint64_t reg[4];
+ };
+@@ -125,15 +134,6 @@ static const MemoryRegionOps pnv_sbe_power9_xscom_ctrl_ops = {
+     .endianness = DEVICE_BIG_ENDIAN,
+ };
+ 
+-static void pnv_sbe_set_host_doorbell(PnvSBE *sbe, uint64_t val)
+-{
+-    val &= SBE_HOST_RESPONSE_MASK; /* Is this right? What does HW do? */
+-    sbe->host_doorbell = val;
+-
+-    trace_pnv_sbe_reg_set_host_doorbell(val);
+-    qemu_set_irq(sbe->psi_irq, !!val);
+-}
+-
+ /* SBE Target Type */
+ #define SBE_TARGET_TYPE_PROC            0x00
+ #define SBE_TARGET_TYPE_EX              0x01
 -- 
-2.43.0
+2.52.0
 
 
