@@ -4,92 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 398D0FD4F02
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:01:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C186AFD4F01
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:06:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzVI-0002PM-9N; Tue, 10 Mar 2026 12:00:16 -0400
+	id 1vzzaH-00055c-OS; Tue, 10 Mar 2026 12:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzV7-0002O1-R8
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:00:05 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzzV5-0000is-TZ
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:00:05 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-48534e9076fso19966985e9.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 09:00:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773158401; x=1773763201; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:from:to
- :cc:subject:date:message-id:reply-to;
- bh=VtJcwKU7Pxauh8E0AG87j1wMykvC2RluO+BcIBe1Q8A=;
- b=rbRm5blQq6WeJ145ytDvPdD+12spiyR+ZFywKWoUK7qLDzTPBaA5OqkP3qET0FKfL2
- DPCdjuTCSwfoj45BNgFsVq1TBwpVbPetqavX8QYijM8JdfbQfkRgddAtiwkOm+f4lLoi
- VmN54qPYmRstC8kga95B+v877eFF0tR0JBMrHtAPDpetLJJ7cDJgFfglmh2gv5gC3snm
- i2ewkHlTAcOpkU46GP2cPdt1VKfgQEI7HOICgKMvhdg8FgWNR1NDUNSIgUHtW11Qgcbt
- To7kH4uiyE/GTea4TlA8hjIfO5Bxy3laim0+ssw5Obt+E7Un8zdmnu3HSXk8KWqecuBS
- p/Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773158401; x=1773763201;
- h=content-transfer-encoding:in-reply-to:content-language:references
- :cc:to:from:subject:user-agent:mime-version:date:message-id:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=VtJcwKU7Pxauh8E0AG87j1wMykvC2RluO+BcIBe1Q8A=;
- b=hlFwEQSBYDThiJ2ubPjAbnvFNv/gw4BhakXTKNqNF8dEy5woBuloWlCBwR/UqVmr2S
- jWjC+uTXDLAcKyhn0AumE2mfSRoCLOyH5RIhddap0Z2lZbbmETujIqmcGTUuRNm8PpkM
- qkcxyfdOJRpAivyHYY5LmdX0sHWmrbqXX7Tkw5tcPD1wQU6qq/SpSO6suwry5qiuEewE
- MexJOj8WkxXStZOID315k13VBUkX2EwDECuIMPtUjj3hJzb0SHreRpkHeuPtHvsLh+zH
- Rfa0NzvMWifC2G/dO01QkVfbsI7BvbMtxxKN9M9bv5pCded1KeO3rKaGKFYwYf4oSos+
- A0/Q==
-X-Gm-Message-State: AOJu0Ywpv12QrZcdy7INn9m/Q7CDNf7wuh4nxngkiM1tHeNHOLfnMLKo
- ETmZeWGKoGfGumvHvJGzEiRizl19SFZJNWkkKCa4dylG0SAJLPlB6wyBJsnr60TyWUJYtnHnO/H
- 523TwDk4=
-X-Gm-Gg: ATEYQzxYZM3eOe5FYvGC9SWHVrRO3+H7KE9JmlOoSz79d5MUeF+7hGalgb/sAjHaM3u
- ZFjcL4yQ4alGMzFpdnyR1vVt6v8B9fqVE6CvHcwEakGIUsXJB7xWzn6OYxx2JTfbQiyQHFLx0kA
- /IvEj1rVmuLGPVZQ7IAI6dq6lZscRkjhWQ5Ny1hJp9APG9iY43DpfWG426esPxBcDizPs9cdrpM
- DF9D+G/554uaaPVkL/DXb+3L3jFF4g6OaQc6Oj8Gqug9EisusYqQzbCIP2l5AqK1oIJqaSZIhA9
- lQyv9s9xpG/O2cFiIfPyrgZTEzY8ZonjB1mhp+33j4GYNauqAYKk6+exdF3aqY9DCZL8zSwPzld
- pQ5EO9Ac7TrX2FJdjlutfhEtUrIx1m23I3/2p8vzxfSLlhG+JcU8deZ/tQoG3nGb7eyHFduCHjj
- iDDMhvujYv80QtHEEYZEbU8jqAaOMYM6n2aYXgShU0bDFXw1Yu3Qhi3QpQYKYNFkMr1A==
-X-Received: by 2002:a05:600c:c4b7:b0:485:3fc8:de9c with SMTP id
- 5b1f17b1804b1-4853fc8e5f5mr83928925e9.12.1773158400773; 
- Tue, 10 Mar 2026 09:00:00 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48535c7fae3sm102945455e9.1.2026.03.10.08.59.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Mar 2026 09:00:00 -0700 (PDT)
-Message-ID: <ec958da1-89fc-45d6-a346-f1e6e417f6d6@linaro.org>
-Date: Tue, 10 Mar 2026 16:59:59 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vzza6-00053o-9O; Tue, 10 Mar 2026 12:05:21 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1vzza1-0002eA-J7; Tue, 10 Mar 2026 12:05:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773158652; bh=R7k07FqOcE+u/WG8YnAgmdK/qesT8A9Iof9CFDLCLJI=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=n6j3zqpVWKW0RZrGeCXIRrhLt3TsfSYBSPB6NmcHQCy4C598qNNj1f15HFDdi0/io
+ FswkVMt+Kr0jguRFc2INPdD39Oj8IFTLPChX+6mQjbL6XLXgo4ZOg8SbDvbrltHx4q
+ i12jUCKbJjtyPuvAtkB17zHDr/yXmZe+DA08zKLGkqT4ExLDgIT1BbFU4wwqVLBuUE
+ z5TiSPGcg5vl7JPtzWoQsIzHyNyb07GujtW1e6B+wL4JWENtFGUvW0fzDdMIaTyPQt
+ r4f0Lt1xhNzE1jPbsy7gHzLkLmuK1V3pc+0Jn1aVrLwSFhek9GJ/aR1JTRqzHkgm90
+ YClMBV+Wp92CA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id EBA301917A8;
+ Tue, 10 Mar 2026 19:04:11 +0300 (MSK)
+Message-ID: <55df9b3d-702b-445b-972a-6671a1b9270e@tls.msk.ru>
+Date: Tue, 10 Mar 2026 19:04:47 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 00/13] gdbstub: Always infer base register index from
- GDB XML
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
- <alex.bennee@linaro.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- qemu-ppc@nongnu.org, Gustavo Romero <gustavo.romero@linaro.org>
-References: <20260310155329.48772-1-philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260310155329.48772-1-philmd@linaro.org>
+Subject: Re: [PULL 1/2] target/loongarch: Preserve PTE permission bits in LDPTE
+To: Song Gao <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, rail5 <andrew@rail5.org>,
+ Bibo Mao <maobibo@loongson.cn>
+References: <20260310114442.1025328-1-gaosong@loongson.cn>
+ <20260310114442.1025328-2-gaosong@loongson.cn>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260310114442.1025328-2-gaosong@loongson.cn>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,35 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/26 16:53, Philippe Mathieu-Daudé wrote:
-> Generic fix for a latent bug reported by Florian:
-> https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
+On 10.03.2026 14:44, Song Gao wrote:
+> From: rail5 <andrew@rail5.org>
+> 
+> The LDPTE helper loads a page table entry (or huge page entry) from guest
+> memory and currently applies the PALEN mask to the whole 64-bit value.
+> 
+> That mask is intended to constrain the physical address bits, but masking
+> the full entry also clears upper permission bits in the PTE, including NX
+> (bit 62). As a result, LoongArch TCG can incorrectly allow instruction
+> fetches from NX mappings when translation is driven through software
+> page-walk.
+> 
+> Fix this by masking only the PPN/address field with PALEN while preserving
+> permission bits, and by clearing any non-architectural (software) bits
+> using a hardware PTE mask. LDDIR is unchanged since it returns the base
+> address of the next page table level.
+> 
+> Reported at: https://gitlab.com/qemu-project/qemu/-/issues/3319
+> 
+> Fixes: 56599a705f2 ("target/loongarch: Introduce loongarch_palen_mask()")
+> Cc: qemu-stable@nongnu.org
 
+As far as I can see, 56599a705f2 is past 10.2.0 release, so is not
+present in any released version of qemu.  This commit also hasn't
+been back-ported to any stable series.
 
-> Philippe Mathieu-Daudé (13):
->    meson: Restrict gdbstub to user/system builds
->    target/i386/gdbstub: Remove stale comment
->    gdbstub: Simplify gdb_init_cpu() logic
->    gdbstub: Add trace events for around XML parsing / generation
->    gdbstub: Have scripts/feature_to_c.py generate more verbose output
->    gdbstub: Make base register explicit in m68k GDB XML files
->    gdbstub: Remove @g_pos argument in gdb_register_coprocessor()
->    gdbstub: Emit base_register index in GDBFeature entries
->    gdbstub: Use GDBFeature::base_reg in gdb_register_feature()
->    gdbstub: Remove GDBRegisterState::base_reg
->    gdbstub: Remove 'gdb-xml/' directory prefix in TARGET_XML_FILES
->    gdbstub: Move gdb-xml/ within gdbstub/
->    gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[]
+So I'm not picking up this one, despite it is marked as for qemu-stable.
+Please let me know if I should pick it up regardless.
 
-Rats... PPC fixed but I get on Aarch64:
+Thanks,
 
-Python Exception <class 'gdb.MemoryError'>: Cannot access memory at 
-address 0x0
-
-I presume an improvement over:
-
-gdb.error: Could not fetch register "APDBKEYLO_EL1"; remote failure 
-reply 'E14'
-
-It would be helpful to have the tests report the host GDB version ;)
+/mjt
 
