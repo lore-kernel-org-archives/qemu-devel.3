@@ -4,103 +4,132 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 91EF1FD4F2A
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 19:48:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12DA2FD4F31
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 19:51:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w033a-0008SW-Q8; Tue, 10 Mar 2026 15:47:55 -0400
+	id 1w0363-0001B0-Vx; Tue, 10 Mar 2026 15:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w033W-0008Rx-7w
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 15:47:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w033R-0000In-IS
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 15:47:48 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773172061;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=TuffWqpkUB2l8pHh77vDiGwBA+LP1srhPlLJTrOzTSU=;
- b=Z5rwN2FOwahdUOs4S6K/yDsU8xODP1Bur8NOO1X1Jnsanhnx2idJPbnAiyPXjTDLZ4eAz8
- 8hCIlHHCIUnWBWXiWKJdRv5kSxkXLivGekVpv0n2YrtHjmWXTp92sKpNK9KgRCDi/VE5qN
- QSpbrlJZtz1pidGkWi07DGRYf1FW4ZY=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-16-MYxG-ZiLPCKdE9zPx6xrKg-1; Tue, 10 Mar 2026 15:47:40 -0400
-X-MC-Unique: MYxG-ZiLPCKdE9zPx6xrKg-1
-X-Mimecast-MFC-AGG-ID: MYxG-ZiLPCKdE9zPx6xrKg_1773172058
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-89a116bf0f8so529411636d6.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 12:47:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0362-0001Ak-GM
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 15:50:26 -0400
+Received: from mail-qk1-x72e.google.com ([2607:f8b0:4864:20::72e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w035z-00011k-9p
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 15:50:24 -0400
+Received: by mail-qk1-x72e.google.com with SMTP id
+ af79cd13be357-8cd90401034so211045085a.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 12:50:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773172058; x=1773776858; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=TuffWqpkUB2l8pHh77vDiGwBA+LP1srhPlLJTrOzTSU=;
- b=soRiaDzWMK1wfQBRE8yuJKCNYSGenVziqr6MO2iPHFysII9eLy7fbQV70Rrfsx9fL/
- ZBeFiZj1pGVNNUxHWilQUzR7oL/nyMi55K/42K/ZGm1uu+1d5FB98pMtXio/V2lZC8B4
- 3Vbx4pwLGxAVEBKBdDFRBvK0eQfEAhmoWYhqV68T9HrB+3aXvaO44hLpNgAdZVdaxv0m
- W4xuoypP7/4dbbdvfdx57CM9TWaNcFQ+TZ5Ox2q581WBbXqnXPhYe1q6Xt8HOigV+jKn
- 5WS63i+Pz4sE0nv6SrFzHVD+GMQby/bIX3HQO2yMWYrCfn9MRc0XwsZ5LChjFmsSU9IQ
- 1rKQ==
+ d=linaro.org; s=google; t=1773172222; x=1773777022; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=BpEHkAgMNki3dPdWGSvCsiF5ebylYKfUtkDOklBhQME=;
+ b=HT9LqQHuO41hIZdTdpzHdeVSjw+RZGL8B7Qad7vTojoaAG3Nav2kiuTHmNX+Go/75K
+ dwsxBFuBPMaVRuXvsnWkCfBJpDAMbymrXjo/ldy4oYSo7C8ETRCMPk1O4dJBD7hsnCKI
+ 1hiNKFG66D7qjSX+7WKSRWp7niHjpAR5g49ZX4CkMp0fAgnFE5U4kqK06/JX3Jj001bM
+ gUvekMEKA71pa1HfZfdsHIwPiZaWSCVA2n2Jl3s4Uf9fIy8Wu/PCd+FqgYi3ED0rrEEs
+ B4s/bsJOOgMrVDOsWwtXTDA/aNyRd9tH5Ocg/qtx/p3iNvYOnpLEeV8axOYyEs3IImfZ
+ 7abA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773172058; x=1773776858;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=TuffWqpkUB2l8pHh77vDiGwBA+LP1srhPlLJTrOzTSU=;
- b=nkPHvSg7bPKN1DVtIox1HKW5OHVmOTTXNtkhbEIa2OIbomXCmHydwknNW9IutOp0+f
- AezsBANtNlxjepBQlZxF51/xi4BkVBg5U2LE7mJM8/cwsZ6GiSBZGSDWW7XN5JX80dnX
- oWn14Xpi3IMUtrO+KjHawLkQLVXvfv5O2KmARtE9MJJNya5vD9pyljyiqBONcQHhuei/
- GwMXIGf4GdT5z+7rrGeMCX99P6WDHcx4ujwtxQC3y4TxHGDZcWSEMlnZIxyt+dYX0v0z
- xK39iPLsrEXY3NyYiWK9IV0UEJeP8rYAW72ueQIxN5oqR7HmxsRrbhGnicuOK4Rl6+jS
- PXLw==
-X-Gm-Message-State: AOJu0Ywp7t1MsMDXRqFV+eM/on4aJAS77Urj3zwnZ27fPFyFc133dX8F
- rEGRio4qTFjRhDfR2KuAX5ofdy+VrlqyRsHN5+tz4Fpsq3ypMPAOrQl3PQt3d6L9uzgjg6441/n
- n0NBGIpY/bGCqCMObeFOoCR0OsNa6FcHy6RfdoJn1Ig4vVrOfJsaeVqgD
-X-Gm-Gg: ATEYQzwWDx2kaGjAgPwv6vZZD9uLF4mQmMi1fDRfQZ7iOs8cr4ney/j1Nf6KX1vqWX7
- sD3egEfRN21NDroLpC5lX21xJycDmAxc8Celo+20gwElgQfWlrDHw7k/ZSM5nAYh+CbseffND+6
- GvGYAbILMkZdq8cx5FgtNomeM4vsyiYtl04WSnQRuEk6CtikxaPX4lGlr5mMdinN6gdK+V9eF0N
- 9FkHPa1ZIr2I+W++Wj4OjBUUJ94Roqp83yXCYji8cH0u4QVyTGpVzCtiBJcJMHgII7c0Tqh3X7a
- RAbgvjKIOlz2H3ImftxAZ6y5hvVwIrVvflOm3q3fuXnxdPtTqgH48oB1gY8SJWcXg+1g4o11G9+
- /X0LySpeOArOpuw==
-X-Received: by 2002:ad4:5d45:0:b0:89a:125f:37db with SMTP id
- 6a1803df08f44-89a30afbf90mr241875186d6.51.1773172058329; 
- Tue, 10 Mar 2026 12:47:38 -0700 (PDT)
-X-Received: by 2002:ad4:5d45:0:b0:89a:125f:37db with SMTP id
- 6a1803df08f44-89a30afbf90mr241874726d6.51.1773172057868; 
- Tue, 10 Mar 2026 12:47:37 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a65cfc85dsm534896d6.37.2026.03.10.12.47.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 12:47:37 -0700 (PDT)
-Date: Tue, 10 Mar 2026 15:47:35 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/8] tests/qtest/migration: Fix leak of migration tests
- data
-Message-ID: <abB1Vxk8liS9Cbr5@x1.local>
-References: <20260310135540.8679-1-farosas@suse.de>
+ d=1e100.net; s=20230601; t=1773172222; x=1773777022;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=BpEHkAgMNki3dPdWGSvCsiF5ebylYKfUtkDOklBhQME=;
+ b=QIJ5G5nh2D8/q9qMpm59Igs2RYTdsSSY/wgru3pL/Ugr9WPs+gSVtVZfoY6ERLbu8N
+ M3MHQvCQN5+5xnM5FVE/qXB2GQHcGEJFdr9wPc8ZV1Lbh9LTHCRkn8LhIYkBmu5pMYi2
+ eUFVdSHmAuxsk3CdashBpwm/5wshxm06IOYrRp/LteVmB2sC98OzGkva3mq2qSkuhS27
+ 3uavxeZyvspfTS9VcYRZgb+srCVCVm9kvEGqdfbNNgAQrQsRP9f0zZLuP86Fjc6vuenr
+ iFC2pFJdkx3o2Szu3yAzue9gLVPBNDlIF8r3TJfseFbLkHbxs4G+HQ7DwMjUWMHHS6CW
+ ho6A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWvPorb2+4whJMCBKCYAoYv7botW8bidElmFBQxdVG8XZvCnY3bnv6EqkR07csfL+OzzHTXxHnsqKAR@nongnu.org
+X-Gm-Message-State: AOJu0YwQbVVgxwF547Ed9EdeIhpG284J9e0nrHgjlZSUgoybpzbim5p0
+ H2y6BPdvJX0pMwpyE/HSEi8jPdUlZlFSOng+Gig8XNFm4tiOgfadaEGqSMdge2uzvbVNAY78aDx
+ elIF8
+X-Gm-Gg: ATEYQzwMugyu6PUIAxIlh828PyskaUu0VSRmwd6Su/HKzT4AgivxAdeUX4qNygcs6/E
+ 3jmobh80jPbAsShrykrxNESI1pu/DJABte0r6s+Hlucz0iWYa5nBqV0Cv0oxOkmY4rdgkZaNPdP
+ ABjAxVwc4c3VFHXzbkyx8Nh+ndAHQUk4/5JCX2FJUu7ZX8U3iZAjP+mOZXONGG7brmd+YFdYQBB
+ GjPgrwxz0I1j7gfkDNLTSHfeh7iarFLen48tMtfqFbg2z1ZDrCD7tN5EQ28Tasw3Lt4hJhlYXIv
+ PWLaCZy9C79Rn6tfpiGm5YcZ88Xy87BaBGl0fkfWPPBISaDrKwhXyunPF0xkTaoBPj7Bqm+Zdlm
+ IgtIWrJ7LELk2f1jJmo520wmwaxDR8z4a9HCSwb8uEUI3aWw0oXwn4dVfQf/XcwhX0s8cULpmzH
+ Kb/oqBvZGMP2Px+BHkIc6IzEfPFlH/0SZUZXzSdRf9bBtH9YFca4kf7wvmlx3a0h8BflZz9ETaR
+ PhMW9Q=
+X-Received: by 2002:a05:620a:40c6:b0:8cd:8b9b:4589 with SMTP id
+ af79cd13be357-8cda18c90b7mr25836285a.0.1773172221929; 
+ Tue, 10 Mar 2026 12:50:21 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cda129d012sm22165085a.19.2026.03.10.12.50.20
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Mar 2026 12:50:21 -0700 (PDT)
+Message-ID: <d84dbf90-ba9b-4405-8e64-d2ddbdb30d5f@linaro.org>
+Date: Tue, 10 Mar 2026 12:50:19 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260310135540.8679-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/13] target/i386/gdbstub: Remove stale comment
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
+ Chao Liu <chao.liu.zevorn@gmail.com>, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ qemu-ppc@nongnu.org
+References: <20260310155329.48772-1-philmd@linaro.org>
+ <20260310155329.48772-3-philmd@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260310155329.48772-3-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x72e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,29 +145,16 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 10, 2026 at 10:55:33AM -0300, Fabiano Rosas wrote:
-> When the migration-test is invoked with the '-p' flag (to run a single
-> test), the glib code won't call the destroy function for the
-> not-executed tests, causing the MigrationTest wrapper data to leak.
+On 3/10/26 8:53 AM, Philippe Mathieu-Daudé wrote:
+> Since commit ecd6f6a8820 ("gdbstub: Infer number of core
+> registers from XML") gdb_num_core_regs is inferred for
+> the x86 targets. Remove a stale comment.
 > 
-> This doesn't affect make check, but affects debugging use-cases where
-> having a leak pop up in ASAN output is extra annoying.
+> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> ---
+>   target/i386/gdbstub.c | 4 +---
+>   1 file changed, 1 insertion(+), 3 deletions(-)
 > 
-> Fix by adding the tests data to a list and freeing them all at the end
-> of migration-test execution. Any tests actually dispatched by glib
-> will have the destroy function called as usual.
-> 
-> Note that migration_test_add_suffix() is altered to call
-> migration_test_add() so that there's only one place adding the data to
-> the list.
-> 
-> Performance is not an issue at the moment, we have < 100 tests.
-> 
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Reviewed-by: Peter Xu <peterx@redhat.com>
-
--- 
-Peter Xu
-
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
