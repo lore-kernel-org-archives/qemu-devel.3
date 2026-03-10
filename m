@@ -4,108 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 322FBEB106E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:20:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85161EB1070
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzysz-0006qQ-I6; Tue, 10 Mar 2026 11:20:41 -0400
+	id 1vzyvF-0007nv-79; Tue, 10 Mar 2026 11:23:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzysp-0006go-4q
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:20:34 -0400
-Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzysj-0002N7-HQ
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:20:30 -0400
-Received: by mail-yx1-xb134.google.com with SMTP id
- 956f58d0204a3-64ad79df972so12687385d50.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:20:21 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773156020; cv=none;
- d=google.com; s=arc-20240605;
- b=fS/GdMG8nTMcup5+lq/JE50IrwBxYUWX2NryDcezdAkWta4Ba6lxdtYnTFJDb9f2Lo
- rj3hj37JW3HJOT5OC9nM0cs+BhjWOyGHMTFtTqFUSFDYoKLNYGHClBFY2kYh9gCjCiOf
- dElkQYK14uu1CbDl4XjSSY1V0yM0F0Ls7dXfNXi4w7q1lJNYoV3psZAYGW150jmEkePV
- 5+yuDXOrnwR46TrBQxbROTKVdimgoS5W/qxSxMlJS7V1ZHXShO3/asxjEp+i3ie4XP3b
- u7P/gb4a03sNgqEQuyEzn196nqesiTs/DoNeJqyDC3GuLttjTLeb61Cc88s50Stq20Iq
- vddg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=jQyJcOZii5l8HMoqLCRx4Y2nQjDAIPcB39NMRnZu0Ag=;
- fh=1ZVhscQauNpVmzHXAxT+Avp6dsB07oJoHXEZ76kUnss=;
- b=VJ9xG5dH5jfzMVejLP203U5nuP5X7OWfqmIKUgiLuAXXAXosIBf37D6GVr76V0eExD
- 8mca5WBGRacSQJI+lRa15lGDFNp5aMaE+XgVwODgk+MYdmpOtAOfJGFlgARRk6n8Ylfj
- g7DKxVTBTLxqkTgZCWHoYXPJXVCFoEofIwYLjX4D7xcuMO88jL4pxy7pi5gRAgFxBY93
- yFQrpsS0W+Ivt57N3oRJz1RoKkKBZEXfaX9SnQXhE80K7oIMw9IIAihriDduGST5A4hv
- bgN5qq1Qp0gJuIRxE81y66Qe5tszXRWgt/XfCpfj1jtncxix/gpm3WR69BcmmLyBkkZp
- +80A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773156020; x=1773760820; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jQyJcOZii5l8HMoqLCRx4Y2nQjDAIPcB39NMRnZu0Ag=;
- b=h9922JjF476O7dCTFt2flAYCJyNlnOeWm50TG0aFupekhqYm4UrW3X7RPIDEPAqSwR
- 1PFfxi4K4+3BUhNAgAYQ1mUfskB5t8Bk2xG7+36QFaaLiUU2A0iZ7pqzTX7TWwMbCWs/
- w0Z6JqhL4HXWf7oIVtFXSZCPcOyQdf1995VsIsJ/fiNryAG6m3VgVRAg9POi0dhaXoKX
- yp/YOjMBxJXePXl6PAsRswvpa2pF5tqMmuFakbGq7PkKVGa1Ni72CtjiiAYuchcA4+Em
- 891Ie/OqWQFxorOO3bzwTi8hXuv/C1tKdhEf3Zyy5cC4nZvLuiPiD8CMGOV2nzNdltzL
- xZ7g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773156020; x=1773760820;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jQyJcOZii5l8HMoqLCRx4Y2nQjDAIPcB39NMRnZu0Ag=;
- b=kGRjrg7GZ7P+MlTKUh0svBVP+oJOIAk42xSBPTUBQyPV+3CsYF5MOJiQEkNgEhqQKs
- /ro0QdKpgBZd7U8yA7rk2TBZIPWIBEPh5mGJ3pd43pgtlGSnVJssF5hCKfUbBEV6BeJ1
- Qt7B3cbuYla30PJ+rtCxgT9k+QDSNnpL/PzPUjjLwD4LYb/h46buuhY2CF4X5sSCU8fP
- t9feCeGVZpmgbb5gIA8/bgo0OWJF8T5GeNXQILBMSJTeipM7GGpr5qNCqT9kmq62VkPv
- 7rhTgdg3TyqvVJrjZ5L5ADM2lu0az1dxc5prRSksuT/LjBjjiqvl4qo+tUoze89qoVxp
- m3qg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZSBwLr7x+IG/kez78KkHGmKccNgBp6heRxyGuFI6ZMlBrOgvMnMBGog7g4Xf1rIFi8Dl14Ac7ZhCg@nongnu.org
-X-Gm-Message-State: AOJu0YxU4DHKH7PoQ9/6cw+ZffGurkcQP/089PJMn2L1M9OZIkrdJbiG
- bs49wuA/4BmaKi2FhrQkOjwJV0eFd4pIdHkIUYH7dL0iCe90eczvDExJcf5dnldf4lRdaga1zgT
- d7Yz2hGf3nztJ2RpJwDxAMAYQbhIlOyoCCwArMjp55Q==
-X-Gm-Gg: ATEYQzzWwIQ6m0fLdCg0D96u1ReH1S/dOCMeGzn2QzuX0JZ+RaqUdzMgTl/H4UvM7g8
- Xihh2GJax0kp18RryT7BMkT5RSvddhD8e3cQfGCxSXNDMZqhXfqFham45nNfBZwQwRVlK2T8M5n
- eYJKrZCJI0/+4QqfBuldD++QxwI5iKTM9sEa1wrsStRqHP4j37vr67ARhg5R/mF16SIrw4IYDtb
- PveDWPeWpmf09gBcKU7ZIK6So4+xl4AwspdSaQRHVgRY7yAnAqKzC4UAeY0LYu3LvtvZpDjlulA
- F0g+7+8PPBbyIpSDQdw+2KoxEcRr50eNWyb7/iyYmVsE4iq66b67RRy+35M/9coi/aI=
-X-Received: by 2002:a05:690e:6c6:b0:649:d59f:dccc with SMTP id
- 956f58d0204a3-64d141285b8mr10588598d50.25.1773156020550; Tue, 10 Mar 2026
- 08:20:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzyvD-0007nl-QG
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:22:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzyvA-0002f7-VF
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:22:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773156175;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3Fzvf3v7hPgWIc8VdligtBDlOPc2L91UogibbjStJp0=;
+ b=QBTFNsywBIhYNS0XLCErUQx2Llkfc+913MIKrxzVTRwCzXN6oHs2ZnP2NiznZ28P8uRya0
+ A/+vqC014WoWW1N7QpFtCQ9OdRwMQJ9SWSrTv1hON6hh0fYumsBF8d7VQk2HGIPXRSEhzc
+ dpX4fDU9PI8xdxjiKjVr2ySLR5RjI/0=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-402-tppurs3JMD6bZb8d1E07Og-1; Tue,
+ 10 Mar 2026 11:22:52 -0400
+X-MC-Unique: tppurs3JMD6bZb8d1E07Og-1
+X-Mimecast-MFC-AGG-ID: tppurs3JMD6bZb8d1E07Og_1773156170
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6210C1956068; Tue, 10 Mar 2026 15:22:49 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 05952180035F; Tue, 10 Mar 2026 15:22:48 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8BD8421E681B; Tue, 10 Mar 2026 16:22:45 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  mst@redhat.com,  thuth@redhat.com,
+ eblake@redhat.com,  farosas@suse.de,  peterx@redhat.com,
+ zhao1.liu@intel.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net,
+ davydov-max@yandex-team.ru,  qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru,  leiyang@redhat.com,
+ raphael.s.norwitz@gmail.com,  bchaney@akamai.com
+Subject: Re: [PATCH v12 3/8] qapi: add local migration parameter
+In-Reply-To: <f3ac4e30-60ee-42f6-99a8-d43f8e4c3587@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Tue, 10 Mar 2026 18:06:59 +0300")
+References: <20260306213235.216863-1-vsementsov@yandex-team.ru>
+ <20260306213235.216863-4-vsementsov@yandex-team.ru>
+ <87cy1biyeq.fsf@pond.sub.org>
+ <f3ac4e30-60ee-42f6-99a8-d43f8e4c3587@yandex-team.ru>
+Date: Tue, 10 Mar 2026 16:22:45 +0100
+Message-ID: <87wlzjg14q.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-References: <20260309155219.62400-1-philmd@linaro.org>
- <20260309155219.62400-28-philmd@linaro.org>
- <87h5qn23v5.fsf@suse.de> <293fd9cc-5adb-4e14-8f92-37157888ca11@linaro.org>
-In-Reply-To: <293fd9cc-5adb-4e14-8f92-37157888ca11@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Mar 2026 15:20:09 +0000
-X-Gm-Features: AaiRm53jG-G2BDxVCVDWiqLBnUOe3FaXBp_vdSw48kEMQ1tysTb3U8S5ewNW5PE
-Message-ID: <CAFEAcA-YDkp02wvKft6F-Y5xAm7nLySR34zL14q_Co6+xC3ovQ@mail.gmail.com>
-Subject: Re: [PULL 27/49] meson: Add -Wformat-overflow=2
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Yubin Zou <yubinz@google.com>, 
- Kane Chen <kane_chen@aspeedtech.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,38 +93,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Mar 2026 at 14:38, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+
+> On 10.03.26 16:53, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> We are going to implement local-migration feature: some devices will be
+>>> able to transfer open file descriptors through migration stream (which
+>>> must UNIX domain socket for that purpose).  This allows to transfer the
+>>> whole backend state without reconnecting and restarting the backend
+>>> service. For example, virtio-net will migrate its attached TAP netdev,
+>>> together with its connected file descriptors.
+>>>
+>>> In this commit we introduce a migration parameter, which enables
+>>> the feature for supporting devices (no one at the moment).
+>> 
+>> for devices that support it (none at the moment).
+>> 
+>>>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>> 
+>> [...]
+>> 
+>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>> index f925e5541bf..2c8d85f5834 100644
+>>> --- a/qapi/migration.json
+>>> +++ b/qapi/migration.json
+>>> @@ -828,7 +828,8 @@
+>>>             'mode',
+>>>             'zero-page-detection',
+>>>             'direct-io',
+>>> -           'cpr-exec-command'] }
+>>> +           'cpr-exec-command',
+>>> +           'local'] }
+>>>  
+>>>  ##
+>>>  # @migrate-set-parameters:
+>>> @@ -1004,6 +1005,15 @@
+>>>  #     is @cpr-exec.  The first list element is the program's filename,
+>>>  #     the remainder its arguments.  (Since 10.2)
+>>>  #
+>>> +# @local: Enable local migration feature for devices that support
+>>> +#     it.  The feature is for local migration only and rely on the
+>>> +#     channel support for passing file descriptors (it must be a UNIX
+>>> +#     socket).  In general that means that backend state and its file
+>>> +#     descriptors are passed to the destination in the migration
+>>> +#     channel.  In general devices may have an option which in
+>>> +#     conjunction with @local set to true enables the local-migration
+>>> +#     feature for that device.  (Since 11.0)
+>> 
+>> This needs polish.  Let me try.
+>> 
+>>    # @local: Enable local migration for devices that support it.  Backend
+>>    #     state and its file descriptors are then passed to the
+>>    #     destination in the migration channel.  The migration channel
+>>    #     must be a Unix domain socket.  Also needs to be enabled per
+>>    #     device by setting device property "local" to true.
 >
-> Cc'ing more developers.
+> As discussed in v11, we don't want to require neither concrete property name
+> nor even the existence of such property, that why it was worded "may have an option".
 >
-> On 10/3/26 14:47, Fabiano Rosas wrote:
-> > ../tests/qtest/ast2700-sgpio-test.c: In function =E2=80=98test_output_p=
-ins=E2=80=99:
-> > ../tests/qtest/ast2700-sgpio-test.c:27:33: error: =E2=80=98sprintf=E2=
-=80=99 may write a
-> > terminating nul past the end of the destination
-> > [-Werror=3Dformat-overflow=3D]
-> >
-> > ../tests/qtest/ast2700-sgpio-test.c: In function =E2=80=98test_irq_leve=
-l_high=E2=80=99:
-> > ../tests/qtest/ast2700-sgpio-test.c:85:33: error: =E2=80=98sprintf=E2=
-=80=99 may write a
-> > terminating nul past the end of the destination
-> > [-Werror=3Dformat-overflow=3D]
-> >
-> > ../tests/qtest/arm-cpu-features.c: In function =E2=80=98test_query_cpu_=
-model_expansion_kvm=E2=80=99:
-> > ../tests/qtest/arm-cpu-features.c:578:35: error: =E2=80=98%u=E2=80=99 d=
-irective writing
-> > between 1 and 10 bytes into a region of size 5
-> > [-Werror=3Dformat-overflow=3D]
+> https://lore.kernel.org/qemu-devel/aZyS4UizvDq1Wnpq@x1.local/
 
-I don't have this specific GCC version, but this series I just
-sent should fix at least these three:
+Scratch "by setting ..." then, and maybe replace "also" by "usually".
 
-https://lore.kernel.org/qemu-devel/20260310151507.2973843-1-peter.maydell@l=
-inaro.org/
+[...]
 
--- PMM
 
