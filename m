@@ -4,89 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B3A1FD2D71
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 12:57:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852D7FD2D74
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 12:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzwda-0003eA-Od; Tue, 10 Mar 2026 08:56:38 -0400
+	id 1vzwf0-000467-EO; Tue, 10 Mar 2026 08:58:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzwdZ-0003cl-Bx
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:56:37 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzweu-00045f-Qh
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:58:00 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzwdX-0004iy-Pu
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:56:37 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4852b81c73aso28554645e9.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 05:56:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzwes-0004q5-KN
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 08:58:00 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so12710642d50.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 05:57:57 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773147477; cv=none;
+ d=google.com; s=arc-20240605;
+ b=h6Pav72Pfz5aH6oPRhXXN//kcChbZ6mqItbOX9WeqoGb6aQaGq/lEc23d71ghxqNF/
+ Ba4ys42jv43iR8eWx0X4oB0Be6TxvbQjOvto27ijpElS8p0aEGjA/tKg4/8Qm05eyp4p
+ Fztz7cc48p9f0qhQRjTYfAMQQTTj1C8VQmiLOnkfqT0e6XvwwyHMM2cgyoKwMmv/qQs0
+ c/uXi64Fyaz1odtppwvdQI+h65BhEtBrnou0ZGNDsLLdbyqZLYpEHY6CHYpxXHr1gkBc
+ QdBNOy+BIfx5U6wbEOs3jmSlxJMfsahjoglkSiRneUGaPampr8lWMkMnOnfPxZRqmARD
+ XcOg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=uBwm0V3ExdSCtql/BDzXvgymk+csBNLQ0gUpHiPukxw=;
+ fh=lDoAQeNI5c03e6qw2yeL0v97twxnVLoLIV5r8AeGPcE=;
+ b=jXwn0klO7JE/0mSMBfImGDINUA0S7FyvwwB/20S86A6Rju4j4qEtciBRcvIT7U1+bf
+ k1DY6Cu24o4mhdsDiLGdQdIxIb0RCBHoUwsF9sQj7B7DuqXwlpHz/p3fuFUAcgLYl0oh
+ 2i/I+qmRHupSHEOVgOj2sSU6YfoYaTPQ5LcPa8D4toaMHm+hkmspDEjJ+FyxuX9hZsjm
+ 1UOTIjHtERGpvTsNi/NHImY0tRGYVio55NgAiyeScK0etKtOpdGrDJEqtfRx1cvEiaVj
+ 6Cgss4q5oGf0XRNUascefmxTuHBRbxNXz9zA6mrJJt3R6nwT5Lb5sk86zpvgZ8+tqbqv
+ NIEg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773147394; x=1773752194; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2cKCaHuYXGMUWUMnWt5SlLSkZKnm5lkgN7CkXStw8eo=;
- b=IWzNCt6rn5hn59yLkXceaX6249ht2uInNHanKel0obbNrWCs+l5Al67p94Mj76Slxm
- PDusAzK4cQJTkHvYuPNGNt9MrtmWFBa0GnWEaeI2+dKTi4Az3FIpcQOTNPOHt6zHXvXd
- Pc2L3KQl04Qja7P2T2QR6Rr60TtPfgJ1uhZbEmTzP9ZrvQm+w5JyxhfJpeyEbcKgGLWu
- VSyxDaebdhgqSbcVfXPHPsUkZxxjJwV3SfJj7VgXtk8zEsWhcVtsXJpmf0Im8Ah02mbl
- oPcO3EVeyoTH0YeG/C1ZgveIrhiZWMS3A2EHJ7dt/47yQbJcfdzW4H60hfCfunLIDXRd
- Q/Bg==
+ d=linaro.org; s=google; t=1773147477; x=1773752277; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=uBwm0V3ExdSCtql/BDzXvgymk+csBNLQ0gUpHiPukxw=;
+ b=Ph9Ui6Hlk5x7Ldi7QPXkqGyh2oq6sxDkuE657xeR83XIA4+MzWxHkjeNkz1oVuCh1D
+ sHGwfy++pg0wKOKF1Fhn2YSBJxU1H2Q3vkSFwCJ0PmSlUWJ44gquPCy/Mz+jdcYEeuB1
+ at52xG9oIZyFxnpXpbWNGDeYBZHs6xwDeLl2J6Cg0HPLcmC3asdKbF6eij2nPhhIGxf9
+ ieCsz4n/qGKkoA9QCzIqSewmOoST7lATbxzLeBXZBpmhQuGDz+yZVhChsXQmYvdnsuAV
+ wtugU9yKjRC8a83TknpXOWZR36JdLQ6V9hThhEaNEnnglrpuNaWlhaLg3f4e3pCax9zO
+ GT3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773147394; x=1773752194;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2cKCaHuYXGMUWUMnWt5SlLSkZKnm5lkgN7CkXStw8eo=;
- b=uv1+cxkIjDCPqzgJAmxNrO9CSxSHg+w40aLzcmv42E8yXzZdo5MK9FBMOfutvD5Qg5
- pPAsLfPoUwXUMC+I+5SP5hlUUxD8ExpHKtPzBnc0zUoN5RYRB2zrT1UB2c897Wg28SIx
- 8IJgBfk7D6ZVC0EGLqBdFNTkD/vy4nAvYFGxAqJ63GjJlvx7mb/M9G39FxLTe9RhBOJz
- yLtRUv7eyGtBfIqe0OXX1Rnlyt8Xs7qSla32ZVp1CQ5Btk09TtY3ZnYjlRYgexzICPAM
- TUvTC/UG/b96MNyfxchY6d5WpA7HRCKBD+rAFU7I24mrNduqrumNKqWppXbYQmTL+WKh
- kKyw==
+ d=1e100.net; s=20230601; t=1773147477; x=1773752277;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=uBwm0V3ExdSCtql/BDzXvgymk+csBNLQ0gUpHiPukxw=;
+ b=SlwMrMkRvMTuF7058zRolebGe8HefaEiWUGs50ZPi1lWR0HQJ1T+vPziHRhKE5X/ae
+ xiklknuouh8xgAYVfJa69wSpiGd6HLSPTgmeItmeK8WtuSeeMlU5HS1ek6yS0bdv75ZY
+ WYkMCTYNYvqWAaO6Us1hXpRAlcpw4fRD6UWKZnXyzZAzrjqimhTRQymCPetcQ1IN7IpC
+ EcPWcICSh+fi1g/dOYAjMOJL5CyIeUQE/QY5EWIAtSuMsQ7YPz1EvkRVQ5yh2nUHI1B7
+ qR3kZBXbV8ebY5EhrNS8HEv75d20uPQqN1VMCjd2sYE+W4uBWoqs5XAU9ZVS1MSrC+kA
+ 0liA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUn1kQWtN96XnleSLAQRTxh3mjVAcmRqhrTkjP83Zt86Dv7EY5y0nLCkXe3yqzYuuSzyArXXH5pST8O@nongnu.org
-X-Gm-Message-State: AOJu0YxGybmlU2QBRcYXwPsP/27683nuLhhbaF7fo1YlqOEtVztd2fz0
- WpOm+gmjFMHqCeyDarviIAtDtyCCnu1kKstNL9bqJHHs8/G+7AWXtUxiJVV+A9PSJNA=
-X-Gm-Gg: ATEYQzwbKsBCG3cPw77jhR/KAwZjTieXFeYW8+TXb6buSuQPmdVDwgUa15MLdSSGnSm
- ZxTIaO6Reehy22DxI1bn/Wdb1I0tP8zAJrO3Tso3hdfnvA/sAwrqS/cf2VLpEfP6IAc5dezwrnb
- xAerD1t3vxx45g4xeYgB0Rt/dXdNF6HQdjEzFYJ5v122v8HAbBo/PzEYcZiIoUftwCAhGIpjcn+
- DewJ7jylstQ9z5rddrPpXVskqPidMV+M6v8CiO+Ro+tdM049FDphXKSetblPAFKylUKTMSNvGYt
- ZqbeKG+wVwWpUEEXBIkJyc5eKaKSBGt9714qXAzjrwcXr5SLJ4Jh+SsOsMM2Ww1KwOZl9aAlko6
- je9nP40K9K4jXyAbk/DKTzoOvGGGwmgiSt5cQ0cPF/isZD4uFLknReQH40GzVo6j31w1lAmxPlU
- R+nwWM68ZTcCMK7+PYJ6f6COt6MlMEwGOeOoA3+fazdhw6wINn6eX7kR+hAQQPWPUy6A==
-X-Received: by 2002:a05:600d:41c9:b0:485:3911:b8c7 with SMTP id
- 5b1f17b1804b1-4853911bb1amr118500715e9.35.1773147393576; 
- Tue, 10 Mar 2026 05:56:33 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485246fd127sm178098105e9.6.2026.03.10.05.56.30
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Mar 2026 05:56:31 -0700 (PDT)
-Message-ID: <4425f6c4-7003-4d6d-9842-3b9c320be0f6@linaro.org>
-Date: Tue, 10 Mar 2026 13:56:30 +0100
+ AJvYcCWLxTDc6Rw872rurrxRmB0dGa3seRvjXnI3Lvx1sSC6LIg67X9PJ0aUkfqDu1sqf4UFLM65yId3C9mP@nongnu.org
+X-Gm-Message-State: AOJu0YwLjJd+5YE8Qfu4jiZ1UJ3IISiG50B2LQzijQqgb2Oex+oBlStT
+ 0CGSXHhaawoe5SzHSM6wqS43R0qClNDXNr0Ay/PfrH/33Q6rfexHKXLmg8hVH9l4z5YOIhpCv5I
+ BZdzYHnsR/kQdXCK0A6UjPtWXlXCyk0hdd9BiXuasQA==
+X-Gm-Gg: ATEYQzxvvzOQgZ7qkgVAwgOEL1ogPibGNaCsCJn7qOXvX6hmEU/X5yYWRwQBALAVJuO
+ ziXfLHbXPMRDffStTm4DEF5UzlIAMxM64y83UvH0IrCYkk2o0UAZuMmlQfJZjPf2blhy9/0V3GF
+ IfbGIGJBWgfM9KXZk+sIafnp0vScRIvNkCy7vs43CX/+Nl774+BRlcnMcvbdJn0yh5g4RqJ7q/M
+ KfDj7g4cHgseeW0rc5UF+pYWvma5SPrsTPhYT6IA30Ufk34ccMiXGWA+NyytdZycBWPKdMFdqx/
+ 6axAIYQHlMM79E5JvJkc4ekPSVb7Bj1YrGHvmDjG9qoIZmd2nOOpVUrDcXjCiHqFafk=
+X-Received: by 2002:a53:b5cd:0:b0:64c:f0d9:5907 with SMTP id
+ 956f58d0204a3-64d142a09b2mr11198374d50.52.1773147476891; Tue, 10 Mar 2026
+ 05:57:56 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] ati-vga: Fix sign extension in DEFAULT_SC_BOTTOM_RIGHT
- read
-Content-Language: en-US
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org,
- Peter Maydell <peter.maydell@linaro.org>
-References: <20260309212206.2457691-1-chad@jablonski.xyz>
- <1931a6d0-d351-cc43-1b3d-fa3b3b0809a9@eik.bme.hu>
- <e2824e5c-4d1d-4d08-ba24-a8c3056c2edc@linaro.org>
- <de83d589-99c0-9d40-b29e-61f8deb3d249@eik.bme.hu>
- <18a50a29-1deb-41c5-91f1-ae5f76129a05@linaro.org>
- <9233d54a-1a95-0cc9-c118-9c557b8bae4b@eik.bme.hu>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <9233d54a-1a95-0cc9-c118-9c557b8bae4b@eik.bme.hu>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+References: <20260308160040.354186-2-alessandro@0x65c.net>
+ <87jyvjamzb.fsf@pond.sub.org>
+In-Reply-To: <87jyvjamzb.fsf@pond.sub.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Tue, 10 Mar 2026 12:57:44 +0000
+X-Gm-Features: AaiRm50RaglUmVTnC8YiXyTbQxoUvJennTID9Qq5FHKyAB8zwQ8GYZv9JSlCXgU
+Message-ID: <CAFEAcA-3PNv+g-fW0Xi5YfyGJJ3pNnmYvjU7yW+rgpkdsANDcg@mail.gmail.com>
+Subject: Re: [PATCH] qdev: Consolidate qdev_get_human_name() into
+ qdev_get_printable_name()
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Alessandro Ratti <alessandro@0x65c.net>, qemu-devel@nongnu.org,
+ berrange@redhat.com, mst@redhat.com, pbonzini@redhat.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -109,68 +118,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/3/26 13:47, BALATON Zoltan wrote:
-> On Tue, 10 Mar 2026, Philippe Mathieu-Daudé wrote:
->> On 9/3/26 23:59, BALATON Zoltan wrote:
->>> On Mon, 9 Mar 2026, Philippe Mathieu-Daudé wrote:
->>>> On 9/3/26 22:41, BALATON Zoltan wrote:
->>>>> On Mon, 9 Mar 2026, Chad Jablonski wrote:
->>>>>> Cast default_sc_bottom to uint32_t before shifting left to prevent
->>>>>> sign extension when assigning to uint64_t.
->>>>>>
->>>>>> Fixes: CID 1645615
->>>>>> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
->>>>>> ---
->>>>>> hw/display/ati.c | 2 +-
->>>>>> 1 file changed, 1 insertion(+), 1 deletion(-)
->>>>>>
->>>>>> diff --git a/hw/display/ati.c b/hw/display/ati.c
->>>>>> index 6cf243bcf9..f9773e1154 100644
->>>>>> --- a/hw/display/ati.c
->>>>>> +++ b/hw/display/ati.c
->>>>>> @@ -514,7 +514,7 @@ static uint64_t ati_mm_read(void *opaque, 
->>>>>> hwaddr addr, unsigned int size)
->>>>>>         val |= s->regs.default_tile << 16;
->>>>>>         break;
->>>>>>     case DEFAULT_SC_BOTTOM_RIGHT:
->>>>>> -        val = (s->regs.default_sc_bottom << 16) |
->>>>>> +        val = ((uint32_t)s->regs.default_sc_bottom << 16) |
->>>>>>               s->regs.default_sc_right;
->>>>
->>>> What about using deposit64() which is uncontroversial?
->>>>
->>>>            val = deposit64(s->regs.default_sc_right, 16,
->>>>                            13, s->regs.default_sc_bottom);
->>
->> (alternatively deposit32)
->>
->>> I can't make sense of that without going and looking what the 
->>> arguments of this function are so I'd rather keep it simple. As I 
->>> said, the values here can't be large enough to sign extend and there 
->>> may be other similar cases that are already marked in Coverity. But 
->>> if we still want to fix all of them then maybe we could try to make 
->>> val uint32_t then do something about it once at the return for all 
->>> cases. That seems better than trying to handle in each case 
->>> inconsistently. The simplest would still be to tell Converity it's 
->>> wrong here.
->>
->> Until the next register is implemented and Coverity complains again,
->> and another round-up on the mailing list until Peter manually marks it.
->> I was hoping for a way to avoid all that hassle.
-> 
-> Changing local val to uint32_t and cast it at the last return line 
-> should also solve this if the issue is assigning to uint64_t without a 
-> cast. To me that seems better than making changes to every case 
-> separately and would allow me to avoid additional complexity. If you 
-> think it would help I can make a patch but I can't test it.
+On Tue, 10 Mar 2026 at 12:27, Markus Armbruster <armbru@redhat.com> wrote:
+> Or simply use a cover letter.
 
-No more time / energy for this topic, so do what you think is best for
-the project, I don't mind much anymore. I shouldn't have intervened at
-all first, but since I merged this patch, I felt a bit concerned.
-Actually the simplest is you mark that issue yourself on Coverity;
-anybody can request an account for free. I'm done with this thread.
+Patchew doesn't correctly handle cover-letter + single patch,
+so my recommendation is "cover letter if and only if there
+is more than one patch".
 
-Thanks,
+> >  hw/block/block.c       |  5 ++---
+> >  hw/core/qdev.c         | 19 ++++++++-----------
+> >  include/hw/core/qdev.h | 13 -------------
+> >  3 files changed, 10 insertions(+), 27 deletions(-)
+> >
+> > diff --git a/hw/block/block.c b/hw/block/block.c
+> > index f187fa025d..84e5298e2f 100644
+> > --- a/hw/block/block.c
+> > +++ b/hw/block/block.c
+> > @@ -65,7 +65,6 @@ bool blk_check_size_and_read_all(BlockBackend *blk, DeviceState *dev,
+> >  {
+> >      int64_t blk_len;
+> >      int ret;
+> > -    g_autofree char *dev_id = NULL;
+> >
+> >      if (cpr_is_incoming()) {
+> >          return true;
+> > @@ -78,7 +77,7 @@ bool blk_check_size_and_read_all(BlockBackend *blk, DeviceState *dev,
+> >          return false;
+> >      }
+> >      if (blk_len != size) {
+> > -        dev_id = qdev_get_human_name(dev);
+> > +        g_autofree const char *dev_id = qdev_get_printable_name(dev);
+> >          error_setg(errp, "%s device '%s' requires %" HWADDR_PRIu
+> >                     " bytes, %s block backend provides %" PRIu64 " bytes",
+> >                     object_get_typename(OBJECT(dev)), dev_id, size,
+>
+> I believe this plugs a memory leak.
 
-Phil.
+It doesn't -- the previous declaration of dev_id above also
+is marked g_autofree. This patch is just moving the declarations
+into a narrower scope.
+
+> > -/**
+> > - * qdev_get_human_name() - Return a human-readable name for a device
+> > - * @dev: The device. Must be a valid and non-NULL pointer.
+> > - *
+> > - * .. note::
+> > - *    This function is intended for user friendly error messages.
+> > - *
+> > - * Returns: A newly allocated string containing the device id if not null,
+> > - * else the object canonical path.
+> > - *
+> > - * Use g_free() to free it.
+> > - */
+> > -char *qdev_get_human_name(DeviceState *dev);
+>
+> Please add a similarly nice contract to qdev_get_printable_name().
+
+Mostly that is in
+https://patchew.org/QEMU/20260307155046.3940197-1-peter.maydell@linaro.org/20260307155046.3940197-3-peter.maydell@linaro.org/
+
+thanks
+-- PMM
 
