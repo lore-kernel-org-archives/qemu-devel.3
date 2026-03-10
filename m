@@ -4,113 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37F6EB106E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:18:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 618F6EB106E
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:18:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzyno-0007hp-Ls; Tue, 10 Mar 2026 11:15:20 -0400
+	id 1vzynq-0007r7-Fh; Tue, 10 Mar 2026 11:15:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynZ-0006vN-B1
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:08 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1vzynX-0000HW-GY
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:05 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62AA1Dj31849314
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:02 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=HaVK6d
- Q4jgMbXsjoR9kGYk8XU2DipitWKer1LH+/Pf0=; b=CcaSn+jBOMpP151L3wqgBS
- 80iVRghKZwYvPum3hmtX4PaR2Pfk+6V3Rspd/wOMJmFIjxFzq7/D675Bws3uAzcA
- TeRC0Pz/I3Qe10kcE7ydG8s9SbdjQvKbt0YhVFaHRH2hK75yRXdIccEwxgJHJvNe
- H4P3JIB1hxKw3OD6FEIlwNn3W/v0bQoutRpjLl5q9yCLIFYl5mRDGDAKK28Mnqkd
- APfAOjuJKhwBoIK6nIfPpxb2VXviSjHTMHF5cuyY/U3YRDXvCochFjyccRQDOIzL
- 8YHZ8V2uVmVtWFWaY00KkF0mpvdlw/BQd4hZj3A/VYAYU5q3kVz7OD9EpKrrNhRA
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmbhef-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:02 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AD2M7k015761
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:01 GMT
-Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs1221bmm-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:01 +0000
-Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
- [10.20.54.100])
- by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62AFEvtd46661940
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 15:14:57 GMT
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 772A02004E;
- Tue, 10 Mar 2026 15:14:57 +0000 (GMT)
-Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2350A2004B;
- Tue, 10 Mar 2026 15:14:56 +0000 (GMT)
-Received: from Mac.com (unknown [9.39.23.49])
- by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 10 Mar 2026 15:14:55 +0000 (GMT)
-From: Harsh Prateek Bora <harshpb@linux.ibm.com>
-To: qemu-devel@nongnu.org
-Cc: Aditya Gupta <adityag@linux.ibm.com>,
- Hari Bathini <hbathini@linux.ibm.com>,
- Shivang Upadhyay <shivangu@linux.ibm.com>,
- Sourabh Jain <sourabhjain@linux.ibm.com>
-Subject: [PULL 10/10] MAINTAINERS: Add entry for MPIPL (PowerNV)
-Date: Tue, 10 Mar 2026 20:44:30 +0530
-Message-ID: <20260310151432.92531-11-harshpb@linux.ibm.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260310151432.92531-1-harshpb@linux.ibm.com>
-References: <20260310151432.92531-1-harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzynk-0007PR-II
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:16 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1vzyng-0000TT-2J
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:15 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-4852f73d0a3so28187955e9.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:15:11 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773155709; x=1773760509; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=JBO254OXcyxuexxiSJRAkJvpBHGqkPF+Kc3tWsQuVWg=;
+ b=xj+xGz9cGmPm+Ql+lFFAJWkX8JTg2JASe6YwfgI1NrcwXFBPG+NBhU6bPlA7ogoeLb
+ fgfNTgsEC5NXzM6Lvf+POxJIk2mwEKncWCF+lIJGRmmaU2hCbgbc3kaGXhYmHXlFRoA+
+ gJz0uviSGFp0nuLIQ7OGKtOLg5Im5XZ/B59vwYXm9SJhgAkuAfVBmubHSHm+A/t51vj+
+ gRCa7fTHkMbwxVqSiKjAf6hPTGEU8xrI3zNPmA24Ih1ODXHVQT/9ZZFi7+EMHCiefHAE
+ I3rDvWqWe4MrQpoSBa502l3NCGesN/3uLULncwpsGmKYhLuOE/J7+YX365yL7kXn0Lmg
+ O67g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773155709; x=1773760509;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=JBO254OXcyxuexxiSJRAkJvpBHGqkPF+Kc3tWsQuVWg=;
+ b=AhxXafec1e+gtMQfhWwbpaTQ5CUaU3QOwZRvT63jQHrfxjjLv2HgwOh8PE24Nhhl9W
+ KRbjthnkZVyLTcZ2up/4O8juvv6QwjCpGKsaUKDv703MV8dL2njBv5rxUY1CvQ3CWZp+
+ T3vi5Wz0ZPR4b0fyPlhXJxrU8RSf62dLNzBtPmM+DJVz5Wev4/XHxLn7MrxDABbEb0VZ
+ t9owXg9hTvs+7hTattkPhhNjrjYvO6AS4tmOmxYmL4IyE/Lm+DaM3rp2wSWauwXj0omS
+ 7C4dotwuLqbFapOERRIm/AT1jZh6AWHgBjINORwDrG4hD9g6FVoPfRDoVWywJC5zVKbH
+ mIrg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWpYK/hY3Ls1pkkWnomG2/5DZbvp/dx95m6wsSEy42/5ocUz0uQ22Pi6AA61ButUQ9Pq/IXkFii7B8u@nongnu.org
+X-Gm-Message-State: AOJu0Yz78GZgFrCltCnUltREsrxPKFDJ2/m+1ZnHGMqPKHXLUPIYi8Qz
+ XRG6cpo5SPlSe+ZHkFg2fAhi32N6SFpLJ7FNxLRMWB9D2KqYHeyWZ84s5a6H80ebi1M=
+X-Gm-Gg: ATEYQzzGYcE8Vv93jY44P7KRR2ZRo24tovrLusSU5t6N8xdWcBrwLjvsoStBE990cka
+ hZ85DwCe0hVjtwXoXo9wpLfP4LWIvVo/4/F5FdyDrjYN/+K6ukmrHkbsZH5OIL5un68Vm/XpZHv
+ pjsUFQF7yLaffYRAHpP7HOclz+ZEFms1sPklZQ3SiPVS10zu9N7qjLYrqxLJ2Ra62beRMvQgtxY
+ YI2MlBXaFWQbDMxoaZf2dyICXTEXN/UEH8c8CkI0Dw9I5DprSxwWN72TnWzPQmWkmi8VGfWMdx3
+ zsQmTbl6tqCQKBWWEVldxTG5KHSuWOCuDvwY5gkY2Z8zH4AjnYs8r5of9AxwAfjTKzspiJLMcyR
+ THiwh8MzVx6hIv+Uo68Yft+7fjEkSBsi2+uu8SFI9vFPckelBJumU/jLdWcb/u3Mk+sWKRY+3d6
+ Zj2uMMnfQ/ywNuxZKC4rLp/Q6RU6P1GC98NcZJsNy2oSEN1ECIB1zn69YRifzUFcaws5hyXc7Oc
+ yqJAH0jv5jfmrZ5/oXBCHlpTDYnfmY=
+X-Received: by 2002:a05:600c:4e4f:b0:485:3f72:323f with SMTP id
+ 5b1f17b1804b1-4853f7233b2mr89907065e9.11.1773155709284; 
+ Tue, 10 Mar 2026 08:15:09 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4853588758fsm127303185e9.4.2026.03.10.08.15.07
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Mar 2026 08:15:08 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+Subject: [PATCH 0/2] tests/qtest: Avoid char arrays in some Arm tests
+Date: Tue, 10 Mar 2026 15:15:05 +0000
+Message-ID: <20260310151507.2973843-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: 4pSa4sNEXRRzxaG4bcj97BcZBYl8Xnh8
-X-Proofpoint-ORIG-GUID: 4pSa4sNEXRRzxaG4bcj97BcZBYl8Xnh8
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfXyrqd7LfU3ps3
- 9d0TGVzwMHkQtaFK4a7iqd/crf/mPqZmaoCZbc89PsWJGPjiLz/x/WBKTd2CXzk6PyNugTFJn3A
- dk5wo2fhNxRBgytcYf8Hx6ZkjJVuXLGuYW0nim0VWOplwaTn4vD3D0E9pGJ+aum2+O9PtTPBt9k
- 7k04vAB22WKrA8oKH/xm2RGc8Cq5ibPNnfWTAbH4Ea/NSfXROF1bO/S5o5ah2a21gqCQMdSi6ip
- uEZTHhISR/YRv1R6eboP+whiZCzSMCFuVri1i15s1e5grOgisjN++MQ6tx5laJvFhvIDVArRBeS
- AaaS9tFmhr1Udb902+pcN98jTvSgfcElWKmi7XkR+ulhCMzTfrrKVo0J+PX4JLKMvDaae10X/WU
- 2n8Z/PoCQqJV7JAmTHIQFIE1HwewxG0+7IDwMc8T32K+8HruMzDA2/udua38cG7uC4d7IU1v8oI
- k+etn1WB+v93sPReKFQ==
-X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b03576 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10
- a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
- a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8 a=K3nGc4jhFjju3E8dwHwA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100131
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,40 +105,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aditya Gupta <adityag@linux.ibm.com>
+This patchset fixes a couple of problems reported by Fabiano Rosas
+with gcc 7.5.0 now we have turned on -Wformat-overflow=2. In both
+cases the test is using sprintf() into a fixed-size char array, and
+it can't actually overflow but gcc doesn't realize that. We prefer
+to use g_strdup_printf() for this kind of thing anyway, as it is
+much less error-prone, so switch to that.
 
-Add maintainer and reviewer for MPIPL subsystem.
+thanks
+-- PMM
 
-Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
-Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
-Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
-Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-11-adityag@linux.ibm.com
-Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
----
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+Peter Maydell (2):
+  tests/qtest/ast2700-sgpio-test: Use g_strdup_printf() instead of char
+    arrays
+  tests/qtest/arm-cpu-features: Use g_strdup_printf() instead of char
+    arrays
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d1614fd7e..c030a3fec2 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -3303,6 +3303,14 @@ F: include/hw/ppc/spapr_fadump.h
- F: hw/ppc/spapr_fadump.c
- F: tests/functional/ppc64/test_fadump.py
- 
-+Memory-Preserving Initial Program Load (MPIPL) for PowerNV
-+M: Aditya Gupta <adityag@linux.ibm.com>
-+R: Hari Bathini <hbathini@linux.ibm.com>
-+S: Maintained
-+F: include/hw/ppc/pnv_mpipl.h
-+F: hw/ppc/pnv_mpipl.c
-+F: tests/functional/ppc64/test_fadump.py
-+
- GDB stub
- M: Alex Bennée <alex.bennee@linaro.org>
- R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ tests/qtest/arm-cpu-features.c   | 24 +++++++++++++++---------
+ tests/qtest/ast2700-sgpio-test.c | 24 ++++++++++++------------
+ 2 files changed, 27 insertions(+), 21 deletions(-)
+
 -- 
-2.52.0
+2.43.0
 
 
