@@ -4,64 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB416FD4F0B
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 17:08:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90703FD4F08
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 17:08:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w00ZL-0008B0-W4; Tue, 10 Mar 2026 13:08:32 -0400
+	id 1w00ZN-0008Ev-Bu; Tue, 10 Mar 2026 13:08:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1w00ZF-00082D-Jj
+ id 1w00ZG-00082F-A4
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:08:29 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1w00ZC-0002C9-4y
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:08:24 -0400
-Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+ id 1w00ZD-0002Ck-JX
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:08:26 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A9XtZr2910641; Tue, 10 Mar 2026 17:08:18 GMT
+ 62A9paHu1719464; Tue, 10 Mar 2026 17:08:21 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=corp-2025-04-25; bh=ShhOehHvYzbbazvYqBrPBeVL7m9o6
- MUQm+oiGwBjSbo=; b=rgSfkn+ag6NkmXTVppjFqTXfFJzMvAE46j0iBWJmBHiIx
- TZ5GrfG+fveTzJwmlXuNn5tKGUSqxDujvEej/Uf7HcbJ0edNAFEizeJtZ1wgYomH
- q7bMjXixmj4VPNIIGtNiGAFSlWnHIAL7/KX4smNLXlZT3MaGR50iRBrCx0n2a4Dj
- fQD6S8TR9DlLczuICk5tLLjPNBIJsRiHizWyUCZ0HxxDpnNTnn9/cQfH75tgw9Ox
- b2G/FJHdjXdscuI0MiZtWWi/NEaQz1gGWKJWX1QFOhQBn0BSNBfW0vlt4MRSMmAX
- 9/bR9RGpkxIoIvMiB+obJ1r0CR9XWQ+rKAcAk0GyA==
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=UwFaq
+ lxrl+cyGEDBTYQT8hq7HYgRfb2BLDnnOzcsRFQ=; b=C1DgBDtTjkOIz3Hbe+s99
+ hn3vpsnaCTMEzri8YfQ2mMZS4sHaMaPTdi/Qq6KNsmtkI2JkvkCqmJ+fGuFf5kqd
+ kZj9StMIRkTD5W5cwKcg+WTSSZCWGJmGfS1WKipP8vKc4tEm4ka3+gD7QKoYqhM8
+ RS9NxjpszetE6Xbku5yef3K36+kuVvJWKQix5gbFUjJqZri5kMm8cnURpaXnNjqg
+ HU4jOwwaHGXVKkZ4Ik5t3K+256WhUZEWJtKOEGLsMkLLDvs+u1kWS43VepdQqMwc
+ T6B7wtDDghq42qziHyO7zovwk93mzjbRmPbG47R0clQ74qUGSR1aeYXy2dDtjJMf
+ w==
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cskua3a2t-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cskyp39mn-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 17:08:18 +0000 (GMT)
+ Tue, 10 Mar 2026 17:08:20 +0000 (GMT)
 Received: from pps.filterd
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 62AG0Bkf014970; Tue, 10 Mar 2026 17:08:18 GMT
+ with ESMTP id 62AGcjix014835; Tue, 10 Mar 2026 17:08:19 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4crafengvg-1
+ 4crafengwf-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 17:08:18 +0000
+ Tue, 10 Mar 2026 17:08:19 +0000
 Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
  (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62AH6kiI015679;
- Tue, 10 Mar 2026 17:08:17 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62AH6kiM015679;
+ Tue, 10 Mar 2026 17:08:19 GMT
 Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
  by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4crafenguc-1; Tue, 10 Mar 2026 17:08:17 +0000
+ 4crafenguc-3; Tue, 10 Mar 2026 17:08:19 +0000
 From: Dongli Zhang <dongli.zhang@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: pbonzini@redhat.com, philmd@linaro.org, kraxel@redhat.com,
  joe.jin@oracle.com
-Subject: [PATCH v2 0/2] hw/nvram/fw_cfg: update bootorder to fix SeaBIOS
- bootup failure 
-Date: Tue, 10 Mar 2026 10:06:15 -0700
-Message-ID: <20260310170712.46336-1-dongli.zhang@oracle.com>
+Subject: [PATCH v2 2/2] hw/nvram/fw_cfg: update bootorder and bios-geometry
+ before launching
+Date: Tue, 10 Mar 2026 10:06:17 -0700
+Message-ID: <20260310170712.46336-3-dongli.zhang@oracle.com>
 X-Mailer: git-send-email 2.43.5
+In-Reply-To: <20260310170712.46336-1-dongli.zhang@oracle.com>
+References: <20260310170712.46336-1-dongli.zhang@oracle.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Proofpoint-Virus-Version: vendor=baseguard
@@ -72,24 +75,24 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
  mlxscore=0 spamscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2602130000
  definitions=main-2603100148
-X-Authority-Analysis: v=2.4 cv=Methep/f c=1 sm=1 tr=0 ts=69b05002 b=1 cx=c_pps
+X-Proofpoint-GUID: G-BsrQuDhMkkMhuM5dGNRRzDZCwnMxV6
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDE0OCBTYWx0ZWRfX6Gj5ZjvQMCeY
+ HChQ902DMCcdAKXosb0aKdRXdjbU6Q7Nz3EoIAAaBYA/f7AIoCP2hEbh5WJPXTkxc1zpNIolWaI
+ RAa5tn51YtYsSu6n3VwdqjlarA808zyFIC9xVBaAXYXV6mxbtWg/Z2+kAnyO5vdA2QZEYkRs7ow
+ DLBczjiAwNtbCXb+S8UniTs2UFNOWsurvCnlv0AzUtVFldwPrSL44qP93LZS1YSurjQ9idhzo+2
+ BxPGQIcoWmL6TQftC++9DM+LMv0NDSkQ7AWInDaaS0ANlG6aItjyl/66n6fI8xKxqpOTZn7Js27
+ YEJvm0YO0QA9Vpxe8NXjP/NWcj0D+/9gj5CIjE7/zsDiquN5Gxv68gnREmdaugbAX37iqQM4tuV
+ dkEUezbq7lUUmcxuoupq9a7pTqiHD1C9Wx24CQl+PizkrWDMvzBGkin303xthLP//n/Tm73KOyP
+ 1b+EL3Q2DZaI5SfJ3IoAJkGz5DeuMDpzHN6hyp44=
+X-Proofpoint-ORIG-GUID: G-BsrQuDhMkkMhuM5dGNRRzDZCwnMxV6
+X-Authority-Analysis: v=2.4 cv=XP89iAhE c=1 sm=1 tr=0 ts=69b05005 b=1 cx=c_pps
  a=qoll8+KPOyaMroiJ2sR5sw==:117
  a=qoll8+KPOyaMroiJ2sR5sw==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=3I1J8UUJPc9JN9BFgKH3:22 a=VwQbUJbxAAAA:8 a=yPCof4ZbAAAA:8
- a=y3BRUD-lpVNtIR_uvvAA:9 cc=ntf awl=host:12273
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDE0OCBTYWx0ZWRfXyPQVSD47V9it
- SDFwfQyV98JKBIlTzGlpNh5w0B0ebtd2x/rC2to0+HrZRjTbiKykCH/SAZcNGkBaw4xbwGxScQI
- 4bMhBlc6RicVXI3/UwoZC961rKuhD7R8yDEvd0TToGmgS4RtdLnlb7B4Mbd+koclNfhzgC+hhiw
- e7w3vEVIn9ZRIqikp6ONaYAleRYYeDoa6c962LM8gYAXzn4qGz8643coRQ7vllCpWiYuki3yJKH
- 8drCYy3txRG+na6/Obq54qf3v/i6ZW68Ksdx8sYfrmac82UWAeM1ZfAP5GN5/Y6Qb5AFlr0jHsb
- 0iO9oH+ov06w5udDd4SvK7KsT9h3q0fnv1XJSTWtAqzwtiDh4cvwAJKnKYBkMsktUrBosJIvtkC
- zNnaI/ltu4x49daHrhZnm/jlcuQ0CobS6CbhHVapllCb7p4r4LyXCYjCrOGIASv5iS831KWLCnn
- Vzqi4wYRIIFspoNtv/qTdjU+KovW4gDZWb0c/3Pk=
-X-Proofpoint-ORIG-GUID: 6EdUR5d7C-HIvooe5bVLoj-mC-32rTSO
-X-Proofpoint-GUID: 6EdUR5d7C-HIvooe5bVLoj-mC-32rTSO
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
+ a=RD47p0oAkeU5bO7t-o6f:22 a=yPCof4ZbAAAA:8 a=vtPLVedyJFvWhrfAsZQA:9 cc=ntf
+ awl=host:12273
+Received-SPF: pass client-ip=205.220.165.32;
+ envelope-from=dongli.zhang@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -112,6 +115,10 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+
+QEMU maintains disk boot order and geometry information in the lists
+"fw_boot_order" and "fw_lchs". For example, boot order is derived from each
+device's bootindex value.
 
 During system reset, and only during system reset, QEMU updates the
 "bootorder" and "bios-geometry" entries in fw_cfg based on the contents of
@@ -168,25 +175,91 @@ According to runstate_transitions_def[], RUN_STATE_PRELAUNCH is allowed to
 transition to four states. Only the transition to RUN_STATE_RUNNING
 requires updating "bootorder" and "bios-geometry".
 
-v1: https://lore.kernel.org/qemu-devel/20260225220556.11049-1-dongli.zhang@oracle.com
-
+Co-developed-by: Joe Jin <joe.jin@oracle.com>
+Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
+---
 v1 -> v2:
   - Add new runstate tranisition notifier to track transition from
-    prelaunch to running.
-
-
-Dongli Zhang (2)
-  system/runstate: add runstate transition notifier
-  hw/nvram/fw_cfg: update bootorder and bios-geometry before launching
+    prelaunch to running
 
  hw/nvram/fw_cfg.c         | 31 +++++++++++++++++++++++++++++--
  include/hw/nvram/fw_cfg.h |  1 +
- include/system/runstate.h |  8 ++++++++
- system/runstate.c         | 25 +++++++++++++++++++++++++
- 4 files changed, 63 insertions(+), 2 deletions(-)
+ 2 files changed, 30 insertions(+), 2 deletions(-)
 
-Thank you very much!
-
-Dongli Zhang
+diff --git a/hw/nvram/fw_cfg.c b/hw/nvram/fw_cfg.c
+index 1d7d835421..5154d77028 100644
+--- a/hw/nvram/fw_cfg.c
++++ b/hw/nvram/fw_cfg.c
+@@ -27,6 +27,7 @@
+ #include "system/system.h"
+ #include "system/dma.h"
+ #include "system/reset.h"
++#include "system/runstate.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/boards.h"
+ #include "hw/nvram/fw_cfg.h"
+@@ -965,9 +966,8 @@ bool fw_cfg_add_file_from_generator(FWCfgState *s,
+     return true;
+ }
+ 
+-static void fw_cfg_machine_reset(void *opaque)
++static void __fw_cfg_machine_reset(FWCfgState *s)
+ {
+-    FWCfgState *s = opaque;
+     void *ptr;
+     size_t len;
+     char *buf;
+@@ -981,10 +981,37 @@ static void fw_cfg_machine_reset(void *opaque)
+     g_free(ptr);
+ }
+ 
++static void fw_cfg_machine_reset(void *opaque)
++{
++    FWCfgState *s = opaque;
++
++    __fw_cfg_machine_reset(s);
++}
++
++static void fw_cfg_runstate_transition(Notifier *notifier, void *data)
++{
++    FWCfgState *s = container_of(notifier, FWCfgState,
++                                 runstate_transition);
++    const VMRunStateTransition *transition = data;
++
++    /*
++     * According to runstate_transitions_def[], RUN_STATE_PRELAUNCH is
++     * allowed to transition to four states. Only the transition to
++     * RUN_STATE_RUNNING requires updating "bootorder" and "bios-geometry".
++     */
++    if (transition->old_state == RUN_STATE_PRELAUNCH &&
++        transition->new_state == RUN_STATE_RUNNING) {
++        __fw_cfg_machine_reset(s);
++    }
++}
++
+ static void fw_cfg_machine_ready(struct Notifier *n, void *data)
+ {
+     FWCfgState *s = container_of(n, FWCfgState, machine_ready);
++
+     qemu_register_reset(fw_cfg_machine_reset, s);
++    s->runstate_transition.notify = fw_cfg_runstate_transition;
++    qemu_add_runstate_transition_notifier(&s->runstate_transition);
+ }
+ 
+ static const Property fw_cfg_properties[] = {
+diff --git a/include/hw/nvram/fw_cfg.h b/include/hw/nvram/fw_cfg.h
+index 56f17a0bdc..81ac940119 100644
+--- a/include/hw/nvram/fw_cfg.h
++++ b/include/hw/nvram/fw_cfg.h
+@@ -66,6 +66,7 @@ struct FWCfgState {
+     uint16_t cur_entry;
+     uint32_t cur_offset;
+     Notifier machine_ready;
++    Notifier runstate_transition;
+ 
+     bool dma_enabled;
+     dma_addr_t dma_addr;
+-- 
+2.39.3
 
 
