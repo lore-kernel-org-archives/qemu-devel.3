@@ -4,50 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7EE7DFD4F05
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:23:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F818FD4F05
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:27:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzr9-00027Y-Vz; Tue, 10 Mar 2026 12:22:52 -0400
+	id 1vzzv6-0003Iw-Sq; Tue, 10 Mar 2026 12:26:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vzzr8-00026w-0y; Tue, 10 Mar 2026 12:22:50 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzux-0003FH-Ai
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:48 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vzzr6-0008IF-51; Tue, 10 Mar 2026 12:22:49 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id D791B492AE;
- Tue, 10 Mar 2026 17:22:44 +0100 (CET)
-Message-ID: <6f90bb78-b772-4785-9631-7dd3de83afd5@proxmox.com>
-Date: Tue, 10 Mar 2026 17:22:43 +0100
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzuv-0000px-Cd
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773160004;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ITSClxvGZk1A1oF1WXDat8zlVUrbDUJk1SSWwGmQKMY=;
+ b=F+Ekyuj/zITjk+7Gh9j0rCvlpZp2mg3fclgFQAImyprW+dTM9IraNgOEb+eo4B6MOWMq8C
+ hU9CyAoOU+/9d63va9YKH5X/HAZ/NHzSxtpn6hC+m5DZkoMYagEC7RuZ0pgyjrokwz5+Ap
+ hEGMs6x7wPzGfQPVFI82pS108LjQ8n0=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-445-YSO3q9NlM7edrcuHBK4GnA-1; Tue,
+ 10 Mar 2026 12:26:41 -0400
+X-MC-Unique: YSO3q9NlM7edrcuHBK4GnA-1
+X-Mimecast-MFC-AGG-ID: YSO3q9NlM7edrcuHBK4GnA_1773160000
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 53AAF180044D; Tue, 10 Mar 2026 16:26:40 +0000 (UTC)
+Received: from merkur.fritz.box (unknown [10.45.224.112])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2490019560A6; Tue, 10 Mar 2026 16:26:38 +0000 (UTC)
+From: Kevin Wolf <kwolf@redhat.com>
+To: qemu-block@nongnu.org
+Cc: kwolf@redhat.com,
+	qemu-devel@nongnu.org
+Subject: [PULL 06/28] fuse: Destroy session on mount_fuse_export() fail
+Date: Tue, 10 Mar 2026 17:26:00 +0100
+Message-ID: <20260310162622.333137-7-kwolf@redhat.com>
+In-Reply-To: <20260310162622.333137-1-kwolf@redhat.com>
+References: <20260310162622.333137-1-kwolf@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] mirror: Fix missed dirty bitmap writes during startup
-To: Michael Tokarev <mjt@tls.msk.ru>, Kevin Wolf <kwolf@redhat.com>,
- qemu-block@nongnu.org
-Cc: hreitz@redhat.com, vsementsov@yandex-team.ru, jsnow@redhat.com,
- jean-louis@dupond.be, dionbosschieter@gmail.com, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org
-References: <20260219202446.312493-1-kwolf@redhat.com>
- <27e0c423-7133-4aeb-95ea-50255871921e@tls.msk.ru>
-Content-Language: en-US
-From: Fiona Ebner <f.ebner@proxmox.com>
-In-Reply-To: <27e0c423-7133-4aeb-95ea-50255871921e@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1773159730450
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -63,58 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 08.03.26 um 9:24 AM schrieb Michael Tokarev:
-> On 19.02.2026 23:24, Kevin Wolf wrote:
->> Currently, mirror disables the block layer's dirty bitmap before its own
->> replacement is working. This means that during startup, there is a
->> window in which the allocation status of blocks in the source has
->> already been checked, but new writes coming in aren't tracked yet,
->> resulting in a corrupted copy:
->>
->> 1. Dirty bitmap is disabled in mirror_start_job()
->> 2. Some request are started in mirror_top_bs while s->job == NULL
->> 3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
->>     the request hasn't completed yet, the block isn't allocated
->> 4. The request completes, still sees s->job == NULL and skips the
->>     bitmap, and nothing else will mark it dirty either
->>
->> One ingredient is that mirror_top_opaque->job is only set after the
->> job is fully initialized. For the rationale, see commit 32125b1460
->> ("mirror: Fix access of uninitialised fields during start").
->>
->> Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
->> to track writes from the beginning. Disabling the block layer's tracking
->> and enabling the mirror_top_bs one happens in a drained section, so
->> there is no danger of races with in-flight requests any more. All of
->> this happens well before the block allocation status is checked, so we
->> can be sure that no writes will be missed.
->>
->> Cc: qemu-stable@nongnu.org
->> Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
->> Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields
->> during start')
->> Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-> 
-> Hi!
-> 
-> While trying to apply this one to 10.0.x series of qemu, I noticed there
-> are a few other commits missing in this area.  Namely, these commits are
-> missing in there:
-> 
-> 91ba0e1c382bd4 block: move drain outside of bdrv_change_aio_context()
-> and mark GRAPH_RDLOCK
-> ffdcd081f52544 block: move drain outside of bdrv_root_attach_child()
-> 6b89e851fabf78 block: add bdrv_graph_wrlock_drained() convenience wrapper
-> 
-> This is just a context, but I wonder if the resulting thing look sane.
-> https://gitlab.com/mjt0k/qemu/-/
-> commit/04c53bdbef634f93ac4149a19bf2de2e8d156b2b --
-> can you take a look please?
+From: Hanna Czenczek <hreitz@redhat.com>
 
-FWIW, it looks fine to me :) The fix here should be orthogonal to the
-draining changes from those commits.
+If mount_fuse_export() fails to mount the session, destroy it.
+Depending on the allow_other configuration, fuse_export_create() may
+retry this function on error, which may leak one session instance
+otherwise.
 
-Best Regards,
-Fiona
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20260309150856.26800-7-hreitz@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+---
+ block/export/fuse.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 00bb2ffee40..82560ca071f 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -270,11 +270,17 @@ static int mount_fuse_export(FuseExport *exp, Error **errp)
+     ret = fuse_session_mount(exp->fuse_session, exp->mountpoint);
+     if (ret < 0) {
+         error_setg(errp, "Failed to mount FUSE session to export");
+-        return -EIO;
++        ret = -EIO;
++        goto fail;
+     }
+     exp->mounted = true;
+ 
+     return 0;
++
++fail:
++    fuse_session_destroy(exp->fuse_session);
++    exp->fuse_session = NULL;
++    return ret;
+ }
+ 
+ /**
+-- 
+2.53.0
 
 
