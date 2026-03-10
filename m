@@ -4,54 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB44FD4F04
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C838FD4F05
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:29:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzvV-0003c1-E3; Tue, 10 Mar 2026 12:27:21 -0400
+	id 1vzzvS-0003WI-L5; Tue, 10 Mar 2026 12:27:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvF-0003PE-TS
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:06 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzv2-0003GK-Ra
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:53 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvD-0000w7-6S
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:05 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzv1-0000sd-GX
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773160022;
+ s=mimecast20190719; t=1773160010;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=j1zNq0gkwMJJa9HJNegRdCHxMB46SL9Pee5peNOWcGg=;
- b=H4IUpRqMrpDNZZwkEO0u67TQMFUkevE5H2mb+5r520wrN7CcxMpZERCFwWLQkFeT4c94s8
- KFTZkfRKS4lURUrt45ei+HpP/mQvyS2X2kg5a0AWejAAPPfdgvsdfybbCdineW8s8//mQM
- UezhbwBtMlyiGXy0aN5d5XEuv2gvtAA=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=BZk3YUP5SpVqzh6hMV3KaqxznPXV0KWA8O2wgLzS6ps=;
+ b=AnChs8li1PlyF4EcUclKg+JVlPZ28x9D19aHWPpvyEQgo+8ZbnmtGAk/J+gE98cInhqTWz
+ wzxMzF4fKLm14uPKXVIHpAWLRJWkKEVGB12fuiiA1rWBpzZ2pekt13Vwx6qeOLyr6gVFxm
+ 5PFA62hdCb/ZBUI3+1DwWQ/6mtWjeMY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-V7dINj91MX6NnbDt8k3BxA-1; Tue,
- 10 Mar 2026 12:27:01 -0400
-X-MC-Unique: V7dINj91MX6NnbDt8k3BxA-1
-X-Mimecast-MFC-AGG-ID: V7dINj91MX6NnbDt8k3BxA_1773160019
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-1hXKAtjPNAWB4_Z61yJ2Jw-1; Tue,
+ 10 Mar 2026 12:26:47 -0400
+X-MC-Unique: 1hXKAtjPNAWB4_Z61yJ2Jw-1
+X-Mimecast-MFC-AGG-ID: 1hXKAtjPNAWB4_Z61yJ2Jw_1773160006
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C914618005B6; Tue, 10 Mar 2026 16:26:59 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id A8FB419560B3; Tue, 10 Mar 2026 16:26:46 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.224.112])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8E68C19560A6; Tue, 10 Mar 2026 16:26:58 +0000 (UTC)
+ id 8402919560A6; Tue, 10 Mar 2026 16:26:45 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 18/28] fuse: Reduce max read size
-Date: Tue, 10 Mar 2026 17:26:12 +0100
-Message-ID: <20260310162622.333137-19-kwolf@redhat.com>
+Subject: [PULL 10/28] fuse: Introduce fuse_{inc,dec}_in_flight()
+Date: Tue, 10 Mar 2026 17:26:04 +0100
+Message-ID: <20260310162622.333137-11-kwolf@redhat.com>
 In-Reply-To: <20260310162622.333137-1-kwolf@redhat.com>
 References: <20260310162622.333137-1-kwolf@redhat.com>
 MIME-Version: 1.0
@@ -84,40 +84,72 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hanna Czenczek <hreitz@redhat.com>
 
-We are going to introduce parallel processing via coroutines, a maximum
-read size of 64 MB may be problematic, allowing users of the export to
-force us to allocate quite large amounts of memory with just a few
-requests.
-
-At least tone it down to 1 MB, which is still probably far more than
-enough.  (Larger requests are split automatically by the FUSE kernel
-driver anyway.)
-
-(Yes, we inadvertently already had parallel request processing due to
-nested polling before.  Better to fix this late than never.)
+This is how vduse-blk.c does it, and it does seem better to have
+dedicated functions for it.
 
 Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260309150856.26800-19-hreitz@redhat.com>
+Message-ID: <20260309150856.26800-11-hreitz@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/export/fuse.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ block/export/fuse.c | 29 +++++++++++++++++++++--------
+ 1 file changed, 21 insertions(+), 8 deletions(-)
 
 diff --git a/block/export/fuse.c b/block/export/fuse.c
-index bd099d12911..f32e74f39dd 100644
+index 5953407f20f..fc75a5e74d9 100644
 --- a/block/export/fuse.c
 +++ b/block/export/fuse.c
-@@ -45,7 +45,7 @@
- #endif
+@@ -78,6 +78,25 @@ static void read_from_fuse_export(void *opaque);
+ static bool is_regular_file(const char *path, Error **errp);
  
- /* Prevent overly long bounce buffer allocations */
--#define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 64 * 1024 * 1024))
-+#define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
- #define FUSE_MAX_WRITE_BYTES (64 * 1024)
  
- /*
++static void fuse_inc_in_flight(FuseExport *exp)
++{
++    if (qatomic_fetch_inc(&exp->in_flight) == 0) {
++        /* Prevent export from being deleted */
++        blk_exp_ref(&exp->common);
++    }
++}
++
++static void fuse_dec_in_flight(FuseExport *exp)
++{
++    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
++        /* Wake AIO_WAIT_WHILE() */
++        aio_wait_kick();
++
++        /* Now the export can be deleted */
++        blk_exp_unref(&exp->common);
++    }
++}
++
+ static void fuse_attach_handlers(FuseExport *exp)
+ {
+     aio_set_fd_handler(exp->common.ctx,
+@@ -303,9 +322,7 @@ static void read_from_fuse_export(void *opaque)
+     FuseExport *exp = opaque;
+     int ret;
+ 
+-    blk_exp_ref(&exp->common);
+-
+-    qatomic_inc(&exp->in_flight);
++    fuse_inc_in_flight(exp);
+ 
+     do {
+         ret = fuse_session_receive_buf(exp->fuse_session, &exp->fuse_buf);
+@@ -323,11 +340,7 @@ static void read_from_fuse_export(void *opaque)
+     fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
+ 
+ out:
+-    if (qatomic_fetch_dec(&exp->in_flight) == 1) {
+-        aio_wait_kick(); /* wake AIO_WAIT_WHILE() */
+-    }
+-
+-    blk_exp_unref(&exp->common);
++    fuse_dec_in_flight(exp);
+ }
+ 
+ static void fuse_export_shutdown(BlockExport *blk_exp)
 -- 
 2.53.0
 
