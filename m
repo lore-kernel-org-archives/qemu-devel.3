@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1A242FCC9C8
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 05:56:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D155FCC9C8
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 05:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzq4p-000723-44; Tue, 10 Mar 2026 01:56:19 -0400
+	id 1vzq5B-0007bX-5t; Tue, 10 Mar 2026 01:56:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq4i-0006vy-GG
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:12 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq54-0007Ph-Dj
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq4g-0006Fn-AY
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:11 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq52-0006Hp-Ox
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:56:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773122168;
+ s=mimecast20190719; t=1773122192;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=8111Z95vjiNS3KH7D0G5EqTmKVt2OguTKCPAtweNU4A=;
- b=dpvBVxp3+Ik6KS4x9t4NSVERelWJ7lLQ4+RJPXT9na1pDCeo0Z+yyFT3qrjY9UC2c5MJpN
- E7p+6fepiuqBI+FZob90V9qVeszrwa+GMjutEcvDWBXPUOMeX3fR/JttlzjpCek0c2XNzc
- cHRcfyQDZSviuNnDepZBVNoIrQkTl3g=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=GzRlD3koEkgv0kcLtoseIS7ngMhyZRhlcGARDho+TsY=;
+ b=VOTpHhanCciM5JJnnhv9MRdP5BaV3Ju4XY1jfIF/DcQykIddHfLGGAt2FHOFT22UCPha9S
+ m3XDXAsPCa6EXKBbdWoEieVvz0jT5bAeFUaahE5eCCRK/p4QSc4b+bxrayl1pRSzVuLgQP
+ AlilfTyxbgmp2Hq7e6gwyTLx5hEbIkw=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-624-TA2DeI9UMe-EcdhVirfCwQ-1; Tue,
- 10 Mar 2026 01:56:06 -0400
-X-MC-Unique: TA2DeI9UMe-EcdhVirfCwQ-1
-X-Mimecast-MFC-AGG-ID: TA2DeI9UMe-EcdhVirfCwQ_1773122165
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-253-A1v8LBoONmqhUHPa1McOZg-1; Tue,
+ 10 Mar 2026 01:56:25 -0400
+X-MC-Unique: A1v8LBoONmqhUHPa1McOZg-1
+X-Mimecast-MFC-AGG-ID: A1v8LBoONmqhUHPa1McOZg_1773122184
 Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D69DF1955DE2; Tue, 10 Mar 2026 05:56:04 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CD8B0180034E; Tue, 10 Mar 2026 05:56:24 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.32.69])
  by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 407561955D87; Tue, 10 Mar 2026 05:56:00 +0000 (UTC)
+ id B59731955D87; Tue, 10 Mar 2026 05:56:21 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Aditya Gupta <adityag@linux.ibm.com>,
- Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>
-Subject: [PULL 08/25] tests/functional/ppc64/pseries: Remove custom migration
- routine
-Date: Tue, 10 Mar 2026 06:55:13 +0100
-Message-ID: <20260310055530.8893-9-thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Farhan Ali <alifm@linux.ibm.com>,
+ Jared Rossi <jrossi@linux.ibm.com>
+Subject: [PULL 13/25] pc-bios/s390-ccw: Store device type independent of sense
+ data
+Date: Tue, 10 Mar 2026 06:55:18 +0100
+Message-ID: <20260310055530.8893-14-thuth@redhat.com>
 In-Reply-To: <20260310055530.8893-1-thuth@redhat.com>
 References: <20260310055530.8893-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -83,117 +83,225 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fabiano Rosas <farosas@suse.de>
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Don't implement a custom migration routine at PpcMigrationTest and
-instead reuse the generic one from MigrationTest.
+Store the device type (e.g. block) directly as an attribute of the VDev rather
+than assume all devices can be identified by accessing CCW specific sense data.
 
-This removes the dependency of PpcMigrationTest from
-PseriesMachine. Having one test import another causes unittest code to
-instantiate the imported test, resulting in the setup and teardown
-methods being invoked for the imported test class, even if no test
-from that class will be executed.
-
-If run in parallel, the extra setup/teardown methods that result from
-importing can race with the ones from the actual test being executed
-and cause the following error:
-
-File "<SRC_DIR>/tests/functional/qemu_test/testcase.py", line 238, in tearDown
-shutil.rmtree(self.workdir)
-...
-FileNotFoundError: [Errno 2] No such file or directory:
-'<SRC_DIR>/build/tests/functional/ppc64/.../test_migration_with_exec/scratch'
-
-The PseriesMachine class is changed to inherit from MigrationTest so
-both the migration routines and the class attributes of PseriesMachine
-can be accessed without the need to instantiate another object.
-
-Fixes: f4e34d0fd5 ("tests/functional: Add a OS level migration test for pseries")
-Reported-by: Aditya Gupta <adityag@linux.ibm.com>
 Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Tested-by: Aditya Gupta <adityag@linux.ibm.com>
-Message-ID: <20260303173320.10942-5-farosas@suse.de>
-[thuth: Remove superfluous ";" as suggested by Aditya]
+Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Message-ID: <20260309003601.242634-6-jrossi@linux.ibm.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
 ---
- tests/functional/migration.py            |  5 +++++
- tests/functional/ppc64/test_migration.py | 11 -----------
- tests/functional/ppc64/test_pseries.py   | 10 +++++-----
- 3 files changed, 10 insertions(+), 16 deletions(-)
+ pc-bios/s390-ccw/virtio.h        |  1 +
+ pc-bios/s390-ccw/main.c          |  2 +-
+ pc-bios/s390-ccw/virtio-blkdev.c | 39 +++++++++++++++++++-------------
+ pc-bios/s390-ccw/virtio.c        | 11 ++++++---
+ 4 files changed, 33 insertions(+), 20 deletions(-)
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index 49347a30bbf..e995328e833 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -65,6 +65,11 @@ def _get_free_port(self, ports):
-             self.skipTest('Failed to find a free port')
-         return port
+diff --git a/pc-bios/s390-ccw/virtio.h b/pc-bios/s390-ccw/virtio.h
+index 391d6ff2f7f..39b507b2219 100644
+--- a/pc-bios/s390-ccw/virtio.h
++++ b/pc-bios/s390-ccw/virtio.h
+@@ -239,6 +239,7 @@ struct VDev {
+     SubChannelId schid;
+     SenseId senseid;
+     S390IplType ipl_type;
++    VirtioDevType dev_type;
+     union {
+         VirtioBlkConfig blk;
+         VirtioScsiConfig scsi;
+diff --git a/pc-bios/s390-ccw/main.c b/pc-bios/s390-ccw/main.c
+index 2e9261904fa..64bde497103 100644
+--- a/pc-bios/s390-ccw/main.c
++++ b/pc-bios/s390-ccw/main.c
+@@ -251,7 +251,7 @@ static int virtio_setup(void)
+     vdev->is_cdrom = false;
+     int ret;
  
-+    def migration_with_tcp_localhost_vms(self, dst_vm, src_vm):
-+        with Ports() as ports:
-+            uri = 'tcp:localhost:%u' % self._get_free_port(ports)
-+            self.migrate_vms(uri, uri, dst_vm, src_vm)
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_NET:
+         puts("Network boot device detected");
+         return 0;
+diff --git a/pc-bios/s390-ccw/virtio-blkdev.c b/pc-bios/s390-ccw/virtio-blkdev.c
+index 019c2718b18..9cc40e9108d 100644
+--- a/pc-bios/s390-ccw/virtio-blkdev.c
++++ b/pc-bios/s390-ccw/virtio-blkdev.c
+@@ -53,14 +53,14 @@ int virtio_read_many(unsigned long sector, void *load_addr, int sec_num)
+ {
+     VDev *vdev = virtio_get_device();
+ 
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_BLOCK:
+         return virtio_blk_read_many(vdev, sector, load_addr, sec_num);
+     case VIRTIO_ID_SCSI:
+         return virtio_scsi_read_many(vdev, sector, load_addr, sec_num);
++    default:
++        return -1;
+     }
+-
+-    return -1;
+ }
+ 
+ unsigned long virtio_load_direct(unsigned long rec_list1, unsigned long rec_list2,
+@@ -119,7 +119,7 @@ void virtio_assume_iso9660(void)
+ {
+     VDev *vdev = virtio_get_device();
+ 
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_BLOCK:
+         vdev->guessed_disk_nature = VIRTIO_GDN_SCSI;
+         vdev->config.blk.blk_size = VIRTIO_ISO_BLOCK_SIZE;
+@@ -129,6 +129,8 @@ void virtio_assume_iso9660(void)
+     case VIRTIO_ID_SCSI:
+         vdev->scsi_block_size = VIRTIO_ISO_BLOCK_SIZE;
+         break;
++    default:
++        return;
+     }
+ }
+ 
+@@ -139,13 +141,15 @@ void virtio_assume_eckd(void)
+     vdev->guessed_disk_nature = VIRTIO_GDN_DASD;
+     vdev->blk_factor = 1;
+     vdev->config.blk.physical_block_exp = 0;
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_BLOCK:
+         vdev->config.blk.blk_size = VIRTIO_DASD_DEFAULT_BLOCK_SIZE;
+         break;
+     case VIRTIO_ID_SCSI:
+         vdev->config.blk.blk_size = vdev->scsi_block_size;
+         break;
++    default:
++        break;
+     }
+     vdev->config.blk.geometry.heads = 15;
+     vdev->config.blk.geometry.sectors =
+@@ -162,50 +166,52 @@ bool virtio_ipl_disk_is_valid(void)
+         return true;
+     }
+ 
+-    return (vdev->senseid.cu_model == VIRTIO_ID_BLOCK ||
+-            vdev->senseid.cu_model == VIRTIO_ID_SCSI) &&
+-           blksize >= 512 && blksize <= 4096;
++    return (vdev->dev_type == VIRTIO_ID_BLOCK || vdev->dev_type == VIRTIO_ID_SCSI)
++            && blksize >= 512 && blksize <= 4096;
+ }
+ 
+ int virtio_get_block_size(void)
+ {
+     VDev *vdev = virtio_get_device();
+ 
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_BLOCK:
+         return vdev->config.blk.blk_size;
+     case VIRTIO_ID_SCSI:
+         return vdev->scsi_block_size;
++    default:
++        return 0;
+     }
+-    return 0;
+ }
+ 
+ uint8_t virtio_get_heads(void)
+ {
+     VDev *vdev = virtio_get_device();
+ 
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_BLOCK:
+         return vdev->config.blk.geometry.heads;
+     case VIRTIO_ID_SCSI:
+         return vdev->guessed_disk_nature == VIRTIO_GDN_DASD
+                ? vdev->config.blk.geometry.heads : 255;
++    default:
++        return 0;
+     }
+-    return 0;
+ }
+ 
+ uint8_t virtio_get_sectors(void)
+ {
+     VDev *vdev = virtio_get_device();
+ 
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_BLOCK:
+         return vdev->config.blk.geometry.sectors;
+     case VIRTIO_ID_SCSI:
+         return vdev->guessed_disk_nature == VIRTIO_GDN_DASD
+                ? vdev->config.blk.geometry.sectors : 63;
++    default:
++        return 0;
+     }
+-    return 0;
+ }
+ 
+ uint64_t virtio_get_blocks(void)
+@@ -213,13 +219,14 @@ uint64_t virtio_get_blocks(void)
+     VDev *vdev = virtio_get_device();
+     const uint64_t factor = virtio_get_block_size() / VIRTIO_SECTOR_SIZE;
+ 
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_BLOCK:
+         return vdev->config.blk.capacity / factor;
+     case VIRTIO_ID_SCSI:
+         return vdev->scsi_last_block / factor;
++    default:
++        return 0;
+     }
+-    return 0;
+ }
+ 
+ int virtio_blk_setup_device(SubChannelId schid)
+diff --git a/pc-bios/s390-ccw/virtio.c b/pc-bios/s390-ccw/virtio.c
+index f384a990dcc..5dd407d5c9b 100644
+--- a/pc-bios/s390-ccw/virtio.c
++++ b/pc-bios/s390-ccw/virtio.c
+@@ -41,7 +41,7 @@ VDev *virtio_get_device(void)
+ 
+ VirtioDevType virtio_get_device_type(void)
+ {
+-    return vdev.senseid.cu_model;
++    return vdev.dev_type;
+ }
+ 
+ /* virtio spec v1.0 para 4.3.3.2 */
+@@ -248,7 +248,7 @@ int virtio_setup_ccw(VDev *vdev)
+         return -EIO;
+     }
+ 
+-    switch (vdev->senseid.cu_model) {
++    switch (vdev->dev_type) {
+     case VIRTIO_ID_NET:
+         vdev->nr_vqs = 2;
+         vdev->cmd_vr_idx = 0;
+@@ -346,12 +346,17 @@ bool virtio_is_supported(SubChannelId schid)
+                 true)) {
+         return false;
+     }
 +
-     def migration_with_tcp_localhost(self):
-         with Ports() as ports:
-             dst_uri = 'tcp:localhost:%u' % self._get_free_port(ports)
-diff --git a/tests/functional/ppc64/test_migration.py b/tests/functional/ppc64/test_migration.py
-index a3b819680bc..7d49ee175bb 100755
---- a/tests/functional/ppc64/test_migration.py
-+++ b/tests/functional/ppc64/test_migration.py
-@@ -22,17 +22,6 @@ def test_migration_with_exec(self):
-         self.set_machine('mac99')
-         self.migration_with_exec()
- 
--    def do_migrate_ppc64_linux(self, source_vm, dest_vm):
--        with Ports() as ports:
--            port = ports.find_free_port()
--            if port is None:
--                self.skipTest('Failed to find a free port')
--            uri = 'tcp:localhost:%u' % port
--
--            dest_vm.qmp('migrate-incoming', uri=uri)
--            source_vm.qmp('migrate', uri=uri)
--            self.assert_migration(source_vm, dest_vm)
--
- 
- if __name__ == '__main__':
-     MigrationTest.main()
-diff --git a/tests/functional/ppc64/test_pseries.py b/tests/functional/ppc64/test_pseries.py
-index b45763c3050..cb6d25dc816 100755
---- a/tests/functional/ppc64/test_pseries.py
-+++ b/tests/functional/ppc64/test_pseries.py
-@@ -7,11 +7,11 @@
- # This work is licensed under the terms of the GNU GPL, version 2 or
- # later.  See the COPYING file in the top-level directory.
- 
--from qemu_test import QemuSystemTest, Asset
-+from qemu_test import Asset
- from qemu_test import wait_for_console_pattern
--from test_migration import PpcMigrationTest
-+from migration import MigrationTest
- 
--class PseriesMachine(QemuSystemTest):
-+class PseriesMachine(MigrationTest):
- 
-     timeout = 90
-     KERNEL_COMMON_COMMAND_LINE = 'printk.time=0 console=hvc0 '
-@@ -116,11 +116,11 @@ def test_ppc64_linux_migration(self):
-         wait_for_console_pattern(self, console_pattern, self.panic_message,
-                                  vm=source_vm)
- 
--        PpcMigrationTest().do_migrate_ppc64_linux(source_vm, dest_vm);
-+        self.migration_with_tcp_localhost_vms(dest_vm, source_vm)
- 
-         # ensure the boot proceeds after migration
-         wait_for_console_pattern(self, self.good_message, self.panic_message,
-                                  vm=dest_vm)
- 
- if __name__ == '__main__':
--    QemuSystemTest.main()
-+    MigrationTest.main()
++    vdev.dev_type = vdev.senseid.cu_model;
++
+     if (vdev.senseid.cu_type == 0x3832) {
+-        switch (vdev.senseid.cu_model) {
++        switch (vdev.dev_type) {
+         case VIRTIO_ID_BLOCK:
+         case VIRTIO_ID_SCSI:
+         case VIRTIO_ID_NET:
+             return true;
++        default:
++            return false;
+         }
+     }
+     return false;
 -- 
 2.53.0
 
