@@ -4,66 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE05CFD88C7
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:33:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8662CFD88C7
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 22:33:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w05cz-0001GQ-Bw; Tue, 10 Mar 2026 18:32:37 -0400
+	id 1w05d4-0001KI-Um; Tue, 10 Mar 2026 18:32:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cs-0001F3-DC
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:30 -0400
+ id 1w05cu-0001Fw-Na
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:34 -0400
 Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1)
  (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w05cq-00073F-84
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:29 -0400
+ id 1w05cs-00073u-5w
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 18:32:32 -0400
 X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
 Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- bc612f78922d94fa27e3162e0bc8f509a3bf8f7e4f8bc9b874baf8e8c9b336d3 with SMTP id
- 69b09bf4409f4d8a2bbedc6c; Tue, 10 Mar 2026 22:32:20 GMT
+ dd1a111eb4860f1c12934ed2843786ddb528a15c181ef1ee0b540968d4cb5591 with SMTP id
+ 69b09bf63d2e7d2b970e52cb; Tue, 10 Mar 2026 22:32:22 GMT
 X-Mailgun-Sending-Ip: 143.55.232.12
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1773181939;
- bh=jmxb10JNM//QK7j3a9BnIxAB7QAjpcueDbi6qwM/er8=;
+ s=rsa2048; t=1773181941;
+ bh=gbGcz6KPFpon6gDzfcTyRTwLorioz88BSTAwE0HoKnI=;
  h=X-Mailgun-Dkim:From:Date:Subject:MIME-Version:Content-Type:
  Content-Transfer-Encoding:Message-Id:References:In-Reply-To:To:Cc:
  X-Developer-Signature:X-Developer-Key:From:Reply-to:Subject:Date:
  Message-id:To:Cc:Mime-version:Content-type:
  Content-transfer-encoding:In-reply-to:References;
- b=fXUnapdC2OKsevGs1PELtA9iydBjYOFVmpgjktpNzJny2wGx/Z/qQBwkgBOxzSDBQ
- shYB9zTEnTLvvvH+xQZQ6MHBybcXuSLQfCEClB8b8zcdUxZDkVB5OETjaOdN+veJ5b
- xd/3OAXEp/Y9ZWHixNEODz/21hy7NTvdo7cj0A5DTlpZdd9pwyezXzmSkE/U+9JyXD
- /WCRimYKnUhClZX0S971hf2i7UolQ2dbd9WJ9cWw8WV5mLikGXx/7ULpuqVS1QAsx3
- 8UNJlmMnW6MC21OYQIsYEgMqycchTekS3mECsQ4Lsj83NvA8sWR2eKXnFJg01TtbR+
- 6pE81i2arezCA==
+ b=mzwP3MolxHaOz6FLinAh1dTw77KjqcXICeHcbaipiupj688WG1lsylrvnY0MnUj+e
+ 3wwSKdfvHU4AKJk7GFNgZ7PPyy0L02Vtlrg+bhob+VlBoKws0PcoxnCq0ypGNJB6rk
+ 8epSjskzbe42gsxcB5cd1OaECg6TM0VCto9hVNiC36R19vDVI1O6WEEUNOuBvS4fq7
+ J0UroFxmt79u2tRJp+n4PvM8BB9gKESaIIXYhzdpZ2U6VUirzpcWEXCNYA69871OrX
+ +P4OWmwG/EwTWssPc7IZCGNeRz+HaYX7QJVLVMuGDf3HO7SA4eU5XWOTf2XSttt2hy
+ T4MMBr7MQi0zA==
 X-Mailgun-Dkim: no
 X-Mailgun-Dkim: no
 From: Yodel Eldar <yodel.eldar@yodel.dev>
-Date: Tue, 10 Mar 2026 17:31:41 -0500
-Subject: [PATCH 01/15] hw/alpha/typhoon: Fix whitespace and block comment
- style problems
+Date: Tue, 10 Mar 2026 17:31:49 -0500
+Subject: [PATCH 09/15] hw/alpha: Convert IRQ pointers to named GPIOs
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 X-MS-Reactions: disallow
-Message-Id: <20260310-qomify-alpha-v1-1-4375b00a85ff@yodel.dev>
+Message-Id: <20260310-qomify-alpha-v1-9-4375b00a85ff@yodel.dev>
 References: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
 In-Reply-To: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, 
  Yodel Eldar <yodel.eldar@yodel.dev>
-X-Developer-Signature: v=1; a=openpgp-sha256; l=7914; i=yodel.eldar@yodel.dev; 
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4510; i=yodel.eldar@yodel.dev; 
  h=from:subject:message-id;
- bh=KWafmBoA76UrvsYyUnBmR+n2TgtLcqfuwMs5FcJxfIE=; 
- b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDI3zP6YvZ3RLOWRScAnXYmyc0YLY3KOX7k496Byk3Jm+
- 949L6Z2dZSyMIhxMciKKbJcPitx1iF3d1fayh/3YeawMoEMYeDiFICJvFrOyDBdSXXWo7+SFZcT
- +8tqrua3rJaLCzne+DTOnT09+Zb6zSkM//SuKKSqnHT7l74mTu9rvaPyBpcWd1t1nsNzA343zHW
- MYQAA
+ bh=rXxKkCgg9TKmZFppB9FKN9HnN6ES1MNT9sY4hCQAZcY=; 
+ b=owGbwMvMwCU29Z3/drNU3zWMp9WSGDI3zP7E2vhn+V61dVdcDv5x5O+K1SrIu//TOrFFJGzKz
+ g2zYlmEOkpZGMS4GGTFFFkun5U465C7uytt5Y/7MHNYmUCGMHBxCsBE5k5gZNg2q+B40Jf6C0/i
+ o9dnZ7aH255y2Tx/btVTZuGFUwwv7Mph+J/97tc+uc8b1uwrXXFrd2XHipRVwcIXTKR0l1ZLbPN
+ a8ZoVAA==
 X-Developer-Key: i=yodel.eldar@yodel.dev; a=openpgp;
  fpr=D3CD18CD406DBB8A66A9F8DF95EE4FB736654DAC
 Received-SPF: pass client-ip=143.55.232.12;
@@ -92,190 +91,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Eliminate trailing whitespaces.
+Eliminate the qemu_irq parameters of typhoon_init() by using
+qdev_init_gpio_in_named() for the IRQ lines.
 
-Use leading "/*", internal "*", and trailing "*/" for block comments.
+Replace the qemu_irq variables in clipper_init() by calling
+qdev_get_gpio_in_named() in their place.
 
 Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
 ---
- hw/alpha/typhoon.c | 84 +++++++++++++++++++++++++++++++++---------------------
- 1 file changed, 52 insertions(+), 32 deletions(-)
+ hw/alpha/alpha_sys.h |  5 ++++-
+ hw/alpha/dp264.c     | 12 +++++++-----
+ hw/alpha/typhoon.c   | 11 ++++++-----
+ 3 files changed, 17 insertions(+), 11 deletions(-)
 
+diff --git a/hw/alpha/alpha_sys.h b/hw/alpha/alpha_sys.h
+index f6779520d9..39a96760d7 100644
+--- a/hw/alpha/alpha_sys.h
++++ b/hw/alpha/alpha_sys.h
+@@ -11,9 +11,12 @@
+ #define TYPE_TYPHOON_PCI_HOST_BRIDGE "typhoon-pcihost"
+ OBJECT_DECLARE_SIMPLE_TYPE(TyphoonState, TYPHOON_PCI_HOST_BRIDGE)
+ 
+-PCIBus *typhoon_init(MemoryRegion *, qemu_irq *, qemu_irq *,
++PCIBus *typhoon_init(MemoryRegion *,
+                      pci_map_irq_fn, uint8_t devfn_min, TyphoonState *);
+ 
++#define TYPHOON_GPIO_ISA_IRQ "isa-irq"
++#define TYPHOON_GPIO_RTC_IRQ "rtc-irq"
++
+ /* alpha_pci.c.  */
+ extern const MemoryRegionOps alpha_pci_ignore_ops;
+ extern const MemoryRegionOps alpha_pci_conf1_ops;
+diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
+index c0996efffe..61eeaef6db 100644
+--- a/hw/alpha/dp264.c
++++ b/hw/alpha/dp264.c
+@@ -66,8 +66,6 @@ static void clipper_init(MachineState *machine)
+     PCIDevice *pci_dev;
+     DeviceState *i82378_dev;
+     ISABus *isa_bus;
+-    qemu_irq rtc_irq;
+-    qemu_irq isa_irq;
+     long size, i;
+     char *palcode_filename;
+     uint64_t palcode_entry;
+@@ -108,7 +106,7 @@ static void clipper_init(MachineState *machine)
+      * Init the chipset.  Because we're using CLIPPER IRQ mappings,
+      * the minimum PCI device IdSel is 1.
+      */
+-    pci_bus = typhoon_init(machine->ram, &isa_irq, &rtc_irq,
++    pci_bus = typhoon_init(machine->ram,
+                            clipper_pci_map_irq, PCI_DEVFN(1, 0), typhoon);
+ 
+     /*
+@@ -136,10 +134,14 @@ static void clipper_init(MachineState *machine)
+     isa_bus = ISA_BUS(qdev_get_child_bus(i82378_dev, "isa.0"));
+ 
+     /* Connect the ISA PIC to the Typhoon IRQ used for ISA interrupts. */
+-    qdev_connect_gpio_out(i82378_dev, 0, isa_irq);
++    qdev_connect_gpio_out(i82378_dev, 0,
++                          qdev_get_gpio_in_named(DEVICE(typhoon),
++                                                 TYPHOON_GPIO_ISA_IRQ, 0));
+ 
+     /* Since we have an SRM-compatible PALcode, use the SRM epoch.  */
+-    mc146818_rtc_init(isa_bus, 1900, rtc_irq);
++    mc146818_rtc_init(isa_bus, 1900,
++                      qdev_get_gpio_in_named(DEVICE(typhoon),
++                                             TYPHOON_GPIO_RTC_IRQ, 0));
+ 
+     /* VGA setup.  Don't bother loading the bios.  */
+     pci_vga_init(pci_bus);
 diff --git a/hw/alpha/typhoon.c b/hw/alpha/typhoon.c
-index 7722d4fd00..f392772500 100644
+index 5fac5eba1c..03bb4c8055 100644
 --- a/hw/alpha/typhoon.c
 +++ b/hw/alpha/typhoon.c
-@@ -34,7 +34,7 @@ typedef struct TyphoonWindow {
-     uint64_t wsm;
-     uint64_t tba;
- } TyphoonWindow;
-- 
-+
- typedef struct TyphoonPchip {
-     MemoryRegion region;
-     MemoryRegion reg_iack;
-@@ -84,8 +84,10 @@ static MemTxResult cchip_read(void *opaque, hwaddr addr,
-     switch (addr) {
-     case 0x0000:
-         /* CSC: Cchip System Configuration Register.  */
--        /* All sorts of data here; probably the only thing relevant is
--           PIP<14> Pchip 1 Present = 0.  */
-+        /*
-+         * All sorts of data here; probably the only thing relevant is
-+         * PIP<14> Pchip 1 Present = 0.
-+         */
-         break;
- 
-     case 0x0040:
-@@ -188,7 +190,7 @@ static MemTxResult cchip_read(void *opaque, hwaddr addr,
-     case 0x0780:
-         /* PWR: Power Management Control.   */
-         break;
--    
-+
-     case 0x0c00: /* CMONCTLA */
-     case 0x0c40: /* CMONCTLB */
-     case 0x0c80: /* CMONCNT01 */
-@@ -440,7 +442,7 @@ static MemTxResult cchip_write(void *opaque, hwaddr addr,
-     case 0x0780:
-         /* PWR: Power Management Control.   */
-         break;
--    
-+
-     case 0x0c00: /* CMONCTLA */
-     case 0x0c40: /* CMONCTLB */
-     case 0x0c80: /* CMONCNT01 */
-@@ -605,8 +607,10 @@ static const MemoryRegionOps pchip_ops = {
-     },
- };
- 
--/* A subroutine of typhoon_translate_iommu that builds an IOMMUTLBEntry
--   using the given translated address and mask.  */
-+/*
-+ * A subroutine of typhoon_translate_iommu that builds an IOMMUTLBEntry
-+ * using the given translated address and mask.
-+ */
- static bool make_iommu_tlbe(hwaddr taddr, hwaddr mask, IOMMUTLBEntry *ret)
- {
-     *ret = (IOMMUTLBEntry) {
-@@ -618,8 +622,10 @@ static bool make_iommu_tlbe(hwaddr taddr, hwaddr mask, IOMMUTLBEntry *ret)
-     return true;
+@@ -831,8 +831,7 @@ static void typhoon_alarm_timer(void *opaque)
+     cpu_interrupt(CPU(s->cchip.cpu[cpu]), CPU_INTERRUPT_TIMER);
  }
  
--/* A subroutine of typhoon_translate_iommu that handles scatter-gather
--   translation, given the address of the PTE.  */
-+/*
-+ * A subroutine of typhoon_translate_iommu that handles scatter-gather
-+ * translation, given the address of the PTE.
-+ */
- static bool pte_translate(hwaddr pte_addr, IOMMUTLBEntry *ret)
+-PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+-                     qemu_irq *p_rtc_irq,
++PCIBus *typhoon_init(MemoryRegion *ram,
+                      pci_map_irq_fn sys_map_irq, uint8_t devfn_min,
+                      TyphoonState *s)
  {
-     uint64_t pte = address_space_ldq_le(&address_space_memory, pte_addr,
-@@ -633,8 +639,10 @@ static bool pte_translate(hwaddr pte_addr, IOMMUTLBEntry *ret)
-     return make_iommu_tlbe((pte & 0x3ffffe) << 12, 0x1fff, ret);
- }
- 
--/* A subroutine of typhoon_translate_iommu that handles one of the
--   four single-address-cycle translation windows.  */
-+/*
-+ * A subroutine of typhoon_translate_iommu that handles one of the
-+ * four single-address-cycle translation windows.
-+ */
- static bool window_translate(TyphoonWindow *win, hwaddr addr,
-                              IOMMUTLBEntry *ret)
- {
-@@ -668,8 +676,10 @@ static bool window_translate(TyphoonWindow *win, hwaddr addr,
- }
- 
- /* Handle PCI-to-system address translation.  */
--/* TODO: A translation failure here ought to set PCI error codes on the
--   Pchip and generate a machine check interrupt.  */
-+/*
-+ * TODO: A translation failure here ought to set PCI error codes on the
-+ * Pchip and generate a machine check interrupt.
-+ */
- static IOMMUTLBEntry typhoon_translate_iommu(IOMMUMemoryRegion *iommu,
-                                              hwaddr addr,
-                                              IOMMUAccessFlags flag,
-@@ -773,10 +783,12 @@ static void typhoon_set_timer_irq(void *opaque, int irq, int level)
-     TyphoonState *s = opaque;
-     int i;
- 
--    /* Thankfully, the mc146818rtc code doesn't track the IRQ state,
--       and so we don't have to worry about missing interrupts just
--       because we never actually ACK the interrupt.  Just ignore any
--       case of the interrupt level going low.  */
-+    /*
-+     * Thankfully, the mc146818rtc code doesn't track the IRQ state,
-+     * and so we don't have to worry about missing interrupts just
-+     * because we never actually ACK the interrupt.  Just ignore any
-+     * case of the interrupt level going low.
-+     */
-     if (level == 0) {
-         return;
+@@ -857,9 +856,6 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+         }
      }
-@@ -787,14 +799,16 @@ static void typhoon_set_timer_irq(void *opaque, int irq, int level)
-         if (cpu != NULL) {
-             uint32_t iic = s->cchip.iic[i];
  
--            /* ??? The verbage in Section 10.2.2.10 isn't 100% clear.
--               Bit 24 is the OverFlow bit, RO, and set when the count
--               decrements past 0.  When is OF cleared?  My guess is that
--               OF is actually cleared when the IIC is written, and that
--               the ICNT field always decrements.  At least, that's an
--               interpretation that makes sense, and "allows the CPU to
--               determine exactly how mant interval timer ticks were
--               skipped".  At least within the next 4M ticks...  */
-+            /*
-+             * ??? The verbage in Section 10.2.2.10 isn't 100% clear.
-+             * Bit 24 is the OverFlow bit, RO, and set when the count
-+             * decrements past 0.  When is OF cleared?  My guess is that
-+             * OF is actually cleared when the IIC is written, and that
-+             * the ICNT field always decrements.  At least, that's an
-+             * interpretation that makes sense, and "allows the CPU to
-+             * determine exactly how mant interval timer ticks were
-+             * skipped".  At least within the next 4M ticks...
-+             */
+-    *p_isa_irq = qemu_allocate_irq(typhoon_set_isa_irq, s, 0);
+-    *p_rtc_irq = qemu_allocate_irq(typhoon_set_timer_irq, s, 0);
+-
+     /*
+      * Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
+      * but the address space hole reserved at this point is 8TB.
+@@ -945,6 +941,7 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
+ static void typhoon_pcihost_init(Object *obj)
+ {
+     TyphoonState *s = TYPHOON_PCI_HOST_BRIDGE(obj);
++    DeviceState *dev = DEVICE(obj);
  
-             iic = ((iic - 1) & 0x1ffffff) | (iic & 0x1000000);
-             s->cchip.iic[i] = iic;
-@@ -852,13 +866,17 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
-     *p_isa_irq = qemu_allocate_irq(typhoon_set_isa_irq, s, 0);
-     *p_rtc_irq = qemu_allocate_irq(typhoon_set_timer_irq, s, 0);
+     int i;
+     for (i = 0; i < 4; ++i) {
+@@ -953,6 +950,10 @@ static void typhoon_pcihost_init(Object *obj)
+                                  (Object **)&s->cchip.cpu[i],
+                                  qdev_prop_allow_set_link_before_realize, 0);
+     }
++
++    qdev_init_gpio_in_named(dev, typhoon_set_isa_irq, TYPHOON_GPIO_ISA_IRQ, 1);
++    qdev_init_gpio_in_named(dev, typhoon_set_timer_irq, TYPHOON_GPIO_RTC_IRQ,
++                            1);
+ }
  
--    /* Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
--       but the address space hole reserved at this point is 8TB.  */
-+    /*
-+     * Main memory region, 0x00.0000.0000.  Real hardware supports 32GB,
-+     * but the address space hole reserved at this point is 8TB.
-+     */
-     memory_region_add_subregion(addr_space, 0, ram);
- 
-     /* TIGbus, 0x801.0000.0000, 1GB.  */
--    /* ??? The TIGbus is used for delivering interrupts, and access to
--       the flash ROM.  I'm not sure that we need to implement it at all.  */
-+    /*
-+     * ??? The TIGbus is used for delivering interrupts, and access to
-+     * the flash ROM.  I'm not sure that we need to implement it at all.
-+     */
- 
-     /* Pchip0 CSRs, 0x801.8000.0000, 256MB.  */
-     memory_region_init_io(&s->pchip.region, OBJECT(s), &pchip_ops, s, "pchip0",
-@@ -916,9 +934,11 @@ PCIBus *typhoon_init(MemoryRegion *ram, qemu_irq *p_isa_irq,
-     memory_region_add_subregion(addr_space, 0x801fe000000ULL,
-                                 &s->pchip.reg_conf);
- 
--    /* For the record, these are the mappings for the second PCI bus.
--       We can get away with not implementing them because we indicate
--       via the Cchip.CSC<PIP> bit that Pchip1 is not present.  */
-+    /*
-+     * For the record, these are the mappings for the second PCI bus.
-+     * We can get away with not implementing them because we indicate
-+     * via the Cchip.CSC<PIP> bit that Pchip1 is not present.
-+     */
-     /* Pchip1 PCI memory, 0x802.0000.0000, 4GB.  */
-     /* Pchip1 CSRs, 0x802.8000.0000, 256MB.  */
-     /* Pchip1 PCI special/interrupt acknowledge, 0x802.F800.0000, 64MB.  */
+ static void typhoon_pcihost_class_init(ObjectClass *klass, const void *data)
 
 -- 
 2.53.0
