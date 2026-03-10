@@ -4,118 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 343A6EB106E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:18:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F37F6EB106E
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:18:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzyqc-0003OW-B6; Tue, 10 Mar 2026 11:18:23 -0400
+	id 1vzyno-0007hp-Ls; Tue, 10 Mar 2026 11:15:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzyqN-0003DZ-EC
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:18:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vzynZ-0006vN-B1
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:08 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzyqL-0001Ci-GC
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:17:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773155876;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qXz0865TDtQVtlphwh7885ZMb8XktrHRqjZ24AVONKo=;
- b=Pf/PbaUw9jTV6SkX/HvFWbojAhOXozhV6egcxu3MKPx1CSDsB/gXnSZ6vxTQ57z5UDkmV9
- O65IkVZ3alLSJRlby1uNiuQXlqpbT+uH5dfaE2gUWbUr2h/DatBXofRIW7PrzYimRump8Z
- awVo4ytazbgSKCZg4orGYZGHLPEV0Ck=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-634-IrzWpyTMPBayJLfB9M5BMw-1; Tue,
- 10 Mar 2026 11:17:53 -0400
-X-MC-Unique: IrzWpyTMPBayJLfB9M5BMw-1
-X-Mimecast-MFC-AGG-ID: IrzWpyTMPBayJLfB9M5BMw_1773155871
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id DAAA71956095; Tue, 10 Mar 2026 15:17:50 +0000 (UTC)
-Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D99A2180035F; Tue, 10 Mar 2026 15:17:48 +0000 (UTC)
-Message-ID: <eb7c065a-ff9f-41d9-a80f-51123af20603@redhat.com>
-Date: Tue, 10 Mar 2026 16:17:47 +0100
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1vzynX-0000HW-GY
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:15:05 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62AA1Dj31849314
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:02 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=HaVK6d
+ Q4jgMbXsjoR9kGYk8XU2DipitWKer1LH+/Pf0=; b=CcaSn+jBOMpP151L3wqgBS
+ 80iVRghKZwYvPum3hmtX4PaR2Pfk+6V3Rspd/wOMJmFIjxFzq7/D675Bws3uAzcA
+ TeRC0Pz/I3Qe10kcE7ydG8s9SbdjQvKbt0YhVFaHRH2hK75yRXdIccEwxgJHJvNe
+ H4P3JIB1hxKw3OD6FEIlwNn3W/v0bQoutRpjLl5q9yCLIFYl5mRDGDAKK28Mnqkd
+ APfAOjuJKhwBoIK6nIfPpxb2VXviSjHTMHF5cuyY/U3YRDXvCochFjyccRQDOIzL
+ 8YHZ8V2uVmVtWFWaY00KkF0mpvdlw/BQd4hZj3A/VYAYU5q3kVz7OD9EpKrrNhRA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmbhef-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:02 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62AD2M7k015761
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:01 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs1221bmm-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 15:15:01 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62AFEvtd46661940
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Mar 2026 15:14:57 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 772A02004E;
+ Tue, 10 Mar 2026 15:14:57 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 2350A2004B;
+ Tue, 10 Mar 2026 15:14:56 +0000 (GMT)
+Received: from Mac.com (unknown [9.39.23.49])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Mar 2026 15:14:55 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Cc: Aditya Gupta <adityag@linux.ibm.com>,
+ Hari Bathini <hbathini@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Sourabh Jain <sourabhjain@linux.ibm.com>
+Subject: [PULL 10/10] MAINTAINERS: Add entry for MPIPL (PowerNV)
+Date: Tue, 10 Mar 2026 20:44:30 +0530
+Message-ID: <20260310151432.92531-11-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260310151432.92531-1-harshpb@linux.ibm.com>
+References: <20260310151432.92531-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Minimal GCC version for QEMU (was: Re: [PULL 27/49] meson: Add
- -Wformat-overflow=2)
-To: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Nia Alarie <nia@NetBSD.org>, "Daniel P. Berrange" <berrange@redhat.com>
-References: <20260309155219.62400-1-philmd@linaro.org>
- <20260309155219.62400-28-philmd@linaro.org> <87h5qn23v5.fsf@suse.de>
- <CAFEAcA-vsS0Q9kGVbmwEyLQcoANaHg5S754DNvqXOOnqoY-LMg@mail.gmail.com>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <CAFEAcA-vsS0Q9kGVbmwEyLQcoANaHg5S754DNvqXOOnqoY-LMg@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: 4pSa4sNEXRRzxaG4bcj97BcZBYl8Xnh8
+X-Proofpoint-ORIG-GUID: 4pSa4sNEXRRzxaG4bcj97BcZBYl8Xnh8
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDEzMSBTYWx0ZWRfXyrqd7LfU3ps3
+ 9d0TGVzwMHkQtaFK4a7iqd/crf/mPqZmaoCZbc89PsWJGPjiLz/x/WBKTd2CXzk6PyNugTFJn3A
+ dk5wo2fhNxRBgytcYf8Hx6ZkjJVuXLGuYW0nim0VWOplwaTn4vD3D0E9pGJ+aum2+O9PtTPBt9k
+ 7k04vAB22WKrA8oKH/xm2RGc8Cq5ibPNnfWTAbH4Ea/NSfXROF1bO/S5o5ah2a21gqCQMdSi6ip
+ uEZTHhISR/YRv1R6eboP+whiZCzSMCFuVri1i15s1e5grOgisjN++MQ6tx5laJvFhvIDVArRBeS
+ AaaS9tFmhr1Udb902+pcN98jTvSgfcElWKmi7XkR+ulhCMzTfrrKVo0J+PX4JLKMvDaae10X/WU
+ 2n8Z/PoCQqJV7JAmTHIQFIE1HwewxG0+7IDwMc8T32K+8HruMzDA2/udua38cG7uC4d7IU1v8oI
+ k+etn1WB+v93sPReKFQ==
+X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b03576 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22
+ a=VwQbUJbxAAAA:8 a=VnNF1IyMAAAA:8 a=KKAkSRfTAAAA:8 a=K3nGc4jhFjju3E8dwHwA:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100131
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,50 +126,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 10/03/2026 15.51, Peter Maydell wrote:
-> On Tue, 10 Mar 2026 at 13:47, Fabiano Rosas <farosas@suse.de> wrote:
->> This gives me:
->>
->> ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_output_pins’:
->> ../tests/qtest/ast2700-sgpio-test.c:27:33: error: ‘sprintf’ may write a
->> terminating nul past the end of the destination
->> [-Werror=format-overflow=]
->>
->> ../tests/qtest/ast2700-sgpio-test.c: In function ‘test_irq_level_high’:
->> ../tests/qtest/ast2700-sgpio-test.c:85:33: error: ‘sprintf’ may write a
->> terminating nul past the end of the destination
->> [-Werror=format-overflow=]
->>
->> ../tests/qtest/arm-cpu-features.c: In function ‘test_query_cpu_model_expansion_kvm’:
->> ../tests/qtest/arm-cpu-features.c:578:35: error: ‘%u’ directive writing
->> between 1 and 10 bytes into a region of size 5
->> [-Werror=format-overflow=]
->>
->> ../configure
->> --target-list=x86_64-softmmu,i386-softmmu,aarch64-softmmu,arm-softmmu,ppc64-softmmu,s390x-softmmu,riscv64-softmmu,aarch64-linux-user,loongarch64-softmmu
->> --disable-plugins --enable-modules --enable-werror
->> --enable-trace-backends=log,dtrace --enable-debug --enable-docs
->> --enable-rust --enable-strict-rust-lints
->>
->> gcc version 7.5.0 (SUSE Linux)
-> 
-> This is quite an old GCC, so it's probably less good at noticing
-> when there might be an overflow and when not (or it has bugs
-> that have been fixed in subsequent versions).
+From: Aditya Gupta <adityag@linux.ibm.com>
 
-By the way, I think we likely could bump the minimum GCC version to a newer 
-level nowadays. GCC 7.4 was chosen for NetBSD 9 at that point in time:
+Add maintainer and reviewer for MPIPL subsystem.
 
-  https://gitlab.com/qemu-project/qemu/-/issues/614
-  https://gitlab.com/qemu-project/qemu/-/commit/3830df5f83b9b52d949676
+Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+Tested-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Reviewed-by: Sourabh Jain <sourabhjain@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260310124619.3909045-11-adityag@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
+ MAINTAINERS | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-... but since NetBSD 10 has been released since a while, we could likely 
-bump the minimum GCC version to 10.4 now, see:
-
-  https://cvsweb.netbsd.org/bsdweb.cgi/src/doc/3RDPARTY?rev=1.1905.2.14;content-type=text%2Fplain;only_with_tag=netbsd-10-0-RELEASE
-
-WDYT?
-
-  Thomas
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9d1614fd7e..c030a3fec2 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -3303,6 +3303,14 @@ F: include/hw/ppc/spapr_fadump.h
+ F: hw/ppc/spapr_fadump.c
+ F: tests/functional/ppc64/test_fadump.py
+ 
++Memory-Preserving Initial Program Load (MPIPL) for PowerNV
++M: Aditya Gupta <adityag@linux.ibm.com>
++R: Hari Bathini <hbathini@linux.ibm.com>
++S: Maintained
++F: include/hw/ppc/pnv_mpipl.h
++F: hw/ppc/pnv_mpipl.c
++F: tests/functional/ppc64/test_fadump.py
++
+ GDB stub
+ M: Alex Bennée <alex.bennee@linaro.org>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+-- 
+2.52.0
 
 
