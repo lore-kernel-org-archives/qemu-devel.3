@@ -4,101 +4,74 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 86D3DEB1070
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:34:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7597EB1060
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzz5x-0002v6-BB; Tue, 10 Mar 2026 11:34:05 -0400
+	id 1vzzEj-0005XA-NL; Tue, 10 Mar 2026 11:43:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzz5i-0002rQ-CL
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:33:52 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzz5f-0007rr-IZ
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:33:49 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-439bcec8613so7106387f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 08:33:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773156823; x=1773761623; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=DgItLWleYDMgqjfqaZWlaJdobsVkFs5LpuLzkjcWcM8=;
- b=eTRSOYVS2fJnyXW0xksorvmbOlrooahpJj34AQpXvHnykDJ5EXBF6GlJUMHdzO7xbx
- okOhq618LNUNlBRrtUiforjbKL9PZ3slLVZCMEx+FmZxo27CBMI5Cuqw7UxqTdAB+hmP
- eVkm6Vt5cM+ZG1pFf753D5FvLjptmED/e791QPvOtDHYBreimBB42Mp2wgfVF6OfX2WG
- 86eREbKcrPL88LiesO8/QBVsVZgh0F9OadqEwmOWdqCyHtCK+VPuaPLWe2xKMToHDuZn
- gHJninR8Bwa7dIrPbP0fpvQYp/gIWajxDPfisaCFmAxG61DRj6OBxM5Ejc5daIO5IXSf
- bk+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773156823; x=1773761623;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=DgItLWleYDMgqjfqaZWlaJdobsVkFs5LpuLzkjcWcM8=;
- b=nTMcppYHDyZnCMCb0oeawe3KhJiCoZ2fMAiBsuoP7blhmwfKy7xoQ2V+1hPhP+NTj0
- pzjPl6FWiAcNy3xeWoKbKgSsZVkhmbzkxJTJe9yRGcfpT25ZyewgoDtGIrPJ82eE5DAf
- M3uTJ/RJdSpdrKp2lKw9mIj1+AYt16xT6LN98p4h4yJEkL/+XX+f9izzFpmPk+Ilu+hf
- r6Pzafmsbk5NQlJco5VbyCRq0WT6xE4IS0KuDDSwCAAw7dNF4TQbr64WkvJ6xCZSx8Ud
- QEVGaMiCt5bcP9HbT3sLYaqqoITySojL7g/68kASq06sK5T2po+vUB5l3WIcOLKVbGxL
- a5KA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWvzknIM+Gu2cue7pPGnUqboEYPLkC9MyAoh06mCpYiUYbWbXGyUM77dBvcYNDufEECZEKP4Mwd8zmn@nongnu.org
-X-Gm-Message-State: AOJu0YyCgZtTmr+VtP6ztT3NmvRZiRDUZMDa20zsmNF7Uqxf0lFJjOQ/
- 5qNhIRoPQotOSynKu+A7kK0fTxzGfUER6g2y10l1fSJRRWKA60xu0+akXLwxHTaAPwfyXwlcFRL
- w2En1
-X-Gm-Gg: ATEYQzxS0CcPxMliA8W1B5wqi7loC2I0ldSylBAkO0SahDqB7zJZ+NiEeQqaCoee2PQ
- 34ISOZwt7Ria95X32i3Dl7QpSTsfa2jqD3iM73idiTR+RSiVu1CyCFREgDk45Vv8YXPRPCz0B8G
- hjKc06y66kqH61CA5drR4AVhNelaUxObcVdU2b6/g2C1exb7V3T5jGC5XjBJaO4q/RNwmY0A+SN
- kY5Y0x4jkKZXpkeDv62lg0nINLXC7Uj9jTgwtUHsZJRFeLMyKSrzjPv5PCKGgPCcBuG9IEczYsx
- NBb7ZKNAbr3DhYmLgT2ISXpIl3J53wPuyasoQFc2D/078gjI2bMyoyeu7B9RogzAkHsWia5hmPH
- rFE9OtmPeGTw8f2rEQ+UMz28y7+nRElL9rJYlgM1VNxfWqNKOKvqw3/1w+2FCS2YPfFzrgYp61T
- PJtdhS3+7tWmwop4a//QOOiNEjpEV1aU4whDRbtWTypIQQO9jIRTIqJXiTLCiFXzWiT7H6NMQd4
- u2reSmOB8bjJ3yotqpOdW2+7r4tdo0=
-X-Received: by 2002:a05:6000:26c7:b0:439:b79d:b9ac with SMTP id
- ffacd0b85a97d-439da67c237mr25995069f8f.45.1773156822857; 
- Tue, 10 Mar 2026 08:33:42 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dae45786sm41709388f8f.32.2026.03.10.08.33.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 08:33:40 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@kaod.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Jamin Lin <jamin_lin@aspeedtech.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
-Subject: [PATCH 2/2] tests/qtest/aspeed_gpio-test: Use g_strdup_printf()
- instead of char arrays
-Date: Tue, 10 Mar 2026 15:33:34 +0000
-Message-ID: <20260310153334.3063224-3-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260310153334.3063224-1-peter.maydell@linaro.org>
-References: <20260310153334.3063224-1-peter.maydell@linaro.org>
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vzzEe-0005WT-BZ
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:43:05 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vzzEb-0001Tn-9i
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:43:04 -0400
+Received: from mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c08:7605:0:640:8d9a:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 036F680764;
+ Tue, 10 Mar 2026 18:42:55 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b78::1:28] (unknown
+ [2a02:6bf:8080:b78::1:28])
+ by mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id rgHHXx1AFKo0-c9dBJ03B; Tue, 10 Mar 2026 18:42:54 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1773157374;
+ bh=HmWty6rCJm/sEaJMlUfB34KYom95aUnjcFSeuiEXgU4=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=U9ttThTuIzoCT/hghItKPB2fNdB62aRSg0yi61aKYgjXVCRk0hV+A1yf+z5a1lBsN
+ uwKdGKR2DlBPbTtKfcciPfvAxXyrtVzAsLXN+VcPCPiOvuAEN1Y5xkg/2Oidxm5VYg
+ BkwxdTCraLJC6ZBDUMVjD4URFlo9svsIcBoIcNe8=
+Authentication-Results: mail-nwsmtp-smtp-corp-canary-81.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <3408f5b9-d0b8-4005-853c-119b2b429829@yandex-team.ru>
+Date: Tue, 10 Mar 2026 18:42:53 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=peter.maydell@linaro.org; helo=mail-wr1-x433.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 6/8] net/tap: support local migration with virtio-net
+To: Markus Armbruster <armbru@redhat.com>
+Cc: jasowang@redhat.com, mst@redhat.com, thuth@redhat.com, eblake@redhat.com, 
+ farosas@suse.de, peterx@redhat.com, zhao1.liu@intel.com,
+ wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ eduardo@habkost.net, davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, leiyang@redhat.com, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com
+References: <20260306213235.216863-1-vsementsov@yandex-team.ru>
+ <20260306213235.216863-7-vsementsov@yandex-team.ru>
+ <87jyvjiypw.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87jyvjiypw.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -110,49 +83,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Older versions of gcc with -Wformat-overflow=2 don't like the usage of
-fixed size char arrays in this test; gcc 7.5.0 (SUSE Linux) says:
+On 10.03.26 16:46, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> Support transferring of TAP state (including open fd) through
+>> migration stream as part of viritio-net "local-migration".
+>>
+>> Add new option, incoming-fds, which should be set to true to
+>> trigger new logic.
+>>
+>> For new option require explicitly unset script and downscript,
+>> to keep possibility of implementing support for them in future.
+>>
+>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+> 
+> [...]
+> 
+>> diff --git a/qapi/net.json b/qapi/net.json
+>> index 118bd349651..79f5ce9f431 100644
+>> --- a/qapi/net.json
+>> +++ b/qapi/net.json
+>> @@ -355,6 +355,9 @@
+>>   # @poll-us: maximum number of microseconds that could be spent on busy
+>>   #     polling for tap (since 2.7)
+>>   #
+>> +# @incoming-fds: do not open/connnect any resources, instead wait for
+>> +#     TAP state from incoming migration stream.  (Since 11.0)
+> 
+> "resources"?  The name @incoming-fds suggests this is about file
+> descriptors...
 
-../tests/qtest/aspeed_gpio-test.c: In function ‘test_set_input_pins’:
-../tests/qtest/aspeed_gpio-test.c:149:36: error: ‘sprintf’ may write a terminating nul past the end of the destination [-Werror=format-overflow=]
-             sprintf(name, "gpio%c%d", c, i);
-                                    ^
-../tests/qtest/aspeed_gpio-test.c:149:13: note: ‘sprintf’ output between 7 and 17 bytes into a destination of size 16
-             sprintf(name, "gpio%c%d", c, i);
-             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Hmm. But, I can't say "open any file descriptors"..
 
-This can't actually happen because of the limited size of the values
-being substituted in.  However rather than require readers to check
-whether the arrays really have been declared large enough, we prefer
-to use g_strdup_printf() for this kind of string work.
 
-Reported-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
- tests/qtest/aspeed_gpio-test.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> "wait for TAP state from" does not make sense.  Do you mean "retrieve
+> TAP state from"?
 
-diff --git a/tests/qtest/aspeed_gpio-test.c b/tests/qtest/aspeed_gpio-test.c
-index decbba23c8..029b3731d1 100644
---- a/tests/qtest/aspeed_gpio-test.c
-+++ b/tests/qtest/aspeed_gpio-test.c
-@@ -140,13 +140,13 @@ static void test_set_colocated_pins(const void *data)
- static void test_set_input_pins(const void *data)
- {
-     QTestState *s = (QTestState *)data;
--    char name[16];
-     uint32_t value;
- 
-     qtest_writel(s, AST2600_GPIO_BASE + GPIO_ABCD_DIRECTION, 0x00000000);
-     for (char c = 'A'; c <= 'D'; c++) {
-         for (int i = 0; i < 8; i++) {
--            sprintf(name, "gpio%c%d", c, i);
-+            g_autofree const char *name = g_strdup_printf("gpio%c%d", c, i);
-+
-             qtest_qom_set_bool(s, "/machine/soc/gpio", name, true);
-         }
-     }
+Retrieve means actively do something, but I mean, that FDs will come in
+future from incoming migration stream, and we just wait for it and "do nothing"
+at the moment of net-tap initialization.
+
+
+Let me try to reword:
+
+Do not open or create any TAP devices. Prepare for getting opened
+TAP file descriptors from incoming migration stream.
+
+
+> 
+> Is any part of NetdevTapOptions ignored when @incoming-fds is true?
+> 
+
+Hmm yes. sndbuf, vnet_hdr and ifname. I should add this information here.
+
+>> +#
+>>   # Since: 1.2
+>>   ##
+>>   { 'struct': 'NetdevTapOptions',
+>> @@ -373,7 +376,8 @@
+>>       '*vhostfds':   'str',
+>>       '*vhostforce': 'bool',
+>>       '*queues':     'uint32',
+>> -    '*poll-us':    'uint32'} }
+>> +    '*poll-us':    'uint32',
+>> +    '*incoming-fds': 'bool' } }
+>>   
+>>   ##
+>>   # @NetdevSocketOptions:
+> 
+
+
 -- 
-2.43.0
-
+Best regards,
+Vladimir
 
