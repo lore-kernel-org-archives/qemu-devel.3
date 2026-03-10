@@ -4,49 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF1DDEB1073
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77362EB1070
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 15:47:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzFz-000654-QR; Tue, 10 Mar 2026 11:44:27 -0400
+	id 1vzzIN-0007rp-J3; Tue, 10 Mar 2026 11:46:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vzzFv-000641-BW; Tue, 10 Mar 2026 11:44:24 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vzzI8-0007q7-GV
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:46:41 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1vzzFt-0001jh-DF; Tue, 10 Mar 2026 11:44:23 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 9909887365;
- Tue, 10 Mar 2026 16:44:18 +0100 (CET)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
- pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
- zhao1.liu@intel.com, peterx@redhat.com, farosas@suse.de,
- wangxinxin.wang@huawei.com
-Subject: [PATCH v2] target/i386: add compat for migrating error code
-Date: Tue, 10 Mar 2026 16:43:23 +0100
-Message-ID: <20260310154348.495332-1-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1vzzI5-0002Bt-7b
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 11:46:40 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 2F356C01BC;
+ Tue, 10 Mar 2026 18:46:33 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b78::1:28] (unknown
+ [2a02:6bf:8080:b78::1:28])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id VkHVpk1GO8c0-38Q992S2; Tue, 10 Mar 2026 18:46:32 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1773157592;
+ bh=icZnCzyL2MOyM4A61elfvxQBC6j2oBiYlLaEkDfIasM=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=Nkl5ScnpvzXlGKVtD/ujSh/5eB8SliWLK0ZY70x3FzpSt5wa0WY0wkFSqCPvM1omn
+ FQPJSU9ASpW2VAc0FGjb2TlreQ7t8Y6gBF3QRy+4Ub6IIiYmTQDcdt5IHz6+soNwjw
+ T7Qx4aeJTfVys3/zMl3LdPag0fKKFMmJAbX+v/nw=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <76aff934-3740-4c95-9cd4-da458e7e29f7@yandex-team.ru>
+Date: Tue, 10 Mar 2026 18:46:31 +0300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1773157424299
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: 28
-X-Spam_score: 2.8
-X-Spam_bar: ++
-X-Spam_report: (2.8 / 5.0 requ) BAYES_00=-1.9, HEXHASH_WORD=2.999,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v12 3/8] qapi: add local migration parameter
+To: Markus Armbruster <armbru@redhat.com>
+Cc: jasowang@redhat.com, mst@redhat.com, thuth@redhat.com, eblake@redhat.com, 
+ farosas@suse.de, peterx@redhat.com, zhao1.liu@intel.com,
+ wangyanan55@huawei.com, philmd@linaro.org, marcel.apfelbaum@gmail.com,
+ eduardo@habkost.net, davydov-max@yandex-team.ru, qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru, leiyang@redhat.com, raphael.s.norwitz@gmail.com,
+ bchaney@akamai.com
+References: <20260306213235.216863-1-vsementsov@yandex-team.ru>
+ <20260306213235.216863-4-vsementsov@yandex-team.ru>
+ <87cy1biyeq.fsf@pond.sub.org>
+ <f3ac4e30-60ee-42f6-99a8-d43f8e4c3587@yandex-team.ru>
+ <87wlzjg14q.fsf@pond.sub.org>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <87wlzjg14q.fsf@pond.sub.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -58,83 +86,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If cpu->env.has_error_code is true, backwards migration of a VM from
-a QEMU binary with commit 27535e9cca to a QEMU binary without commit
-27535e9cca will fail:
+On 10.03.26 18:22, Markus Armbruster wrote:
+> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+> 
+>> On 10.03.26 16:53, Markus Armbruster wrote:
+>>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>>>
+>>>> We are going to implement local-migration feature: some devices will be
+>>>> able to transfer open file descriptors through migration stream (which
+>>>> must UNIX domain socket for that purpose).  This allows to transfer the
+>>>> whole backend state without reconnecting and restarting the backend
+>>>> service. For example, virtio-net will migrate its attached TAP netdev,
+>>>> together with its connected file descriptors.
+>>>>
+>>>> In this commit we introduce a migration parameter, which enables
+>>>> the feature for supporting devices (no one at the moment).
+>>>
+>>> for devices that support it (none at the moment).
+>>>
+>>>>
+>>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>>>> Reviewed-by: Peter Xu <peterx@redhat.com>
+>>>
+>>> [...]
+>>>
+>>>> diff --git a/qapi/migration.json b/qapi/migration.json
+>>>> index f925e5541bf..2c8d85f5834 100644
+>>>> --- a/qapi/migration.json
+>>>> +++ b/qapi/migration.json
+>>>> @@ -828,7 +828,8 @@
+>>>>              'mode',
+>>>>              'zero-page-detection',
+>>>>              'direct-io',
+>>>> -           'cpr-exec-command'] }
+>>>> +           'cpr-exec-command',
+>>>> +           'local'] }
+>>>>   
+>>>>   ##
+>>>>   # @migrate-set-parameters:
+>>>> @@ -1004,6 +1005,15 @@
+>>>>   #     is @cpr-exec.  The first list element is the program's filename,
+>>>>   #     the remainder its arguments.  (Since 10.2)
+>>>>   #
+>>>> +# @local: Enable local migration feature for devices that support
+>>>> +#     it.  The feature is for local migration only and rely on the
+>>>> +#     channel support for passing file descriptors (it must be a UNIX
+>>>> +#     socket).  In general that means that backend state and its file
+>>>> +#     descriptors are passed to the destination in the migration
+>>>> +#     channel.  In general devices may have an option which in
+>>>> +#     conjunction with @local set to true enables the local-migration
+>>>> +#     feature for that device.  (Since 11.0)
+>>>
+>>> This needs polish.  Let me try.
+>>>
+>>>     # @local: Enable local migration for devices that support it.  Backend
+>>>     #     state and its file descriptors are then passed to the
+>>>     #     destination in the migration channel.  The migration channel
+>>>     #     must be a Unix domain socket.  Also needs to be enabled per
+>>>     #     device by setting device property "local" to true.
+>>
+>> As discussed in v11, we don't want to require neither concrete property name
+>> nor even the existence of such property, that why it was worded "may have an option".
+>>
+>> https://lore.kernel.org/qemu-devel/aZyS4UizvDq1Wnpq@x1.local/
+> 
+> Scratch "by setting ..." then, and maybe replace "also" by "usually".
+> 
 
-> kvm: error while loading state for instance 0x0 of device 'cpu'
+so,
 
-In practice, wrongly setting the error code to 0 on the target is
-often unproblematic, so additionally checking error_code != 0 in
-cpu_errcode_needed() is not enough to mitigate the issue. Instead, add
-proper machine version compat handling.
+   # @local: Enable local migration for devices that support it.  Backend
+   #     state and its file descriptors are then passed to the
+   #     destination in the migration channel.  The migration channel
+   #     must be a Unix domain socket.  Usually needs to be enabled per
+   #     device.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 27535e9cca ("target/i386: Add support for save/load of exception error code")
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
 
-Changes in v2:
-* Add proper machine version compat rather than just checking if
-  error_code != 0.
+Sounds good to me. Will use it for v13, if no more comments.
 
- hw/i386/pc.c          | 1 +
- target/i386/cpu.c     | 1 +
- target/i386/cpu.h     | 1 +
- target/i386/machine.c | 2 +-
- 4 files changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index addf602da0..4b53b5be4a 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -78,6 +78,7 @@ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
- 
- GlobalProperty pc_compat_10_1[] = {
-     { "mch", "extended-tseg-mbytes", "16" },
-+    { TYPE_X86_CPU, "x-migrate-error-code", "false" },
- };
- const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
- 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0a29ff805f..abf129c7d5 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10561,6 +10561,7 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("tcg-cpuid", X86CPU, expose_tcg, true),
-     DEFINE_PROP_BOOL("x-migrate-smi-count", X86CPU, migrate_smi_count,
-                      true),
-+    DEFINE_PROP_BOOL("x-migrate-error-code", X86CPU, migrate_error_code, true),
-     /*
-      * lecacy_cache defaults to true unless the CPU model provides its
-      * own cache information (see x86_cpu_load_def()).
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 5a62aa6157..ecae8593c8 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2361,6 +2361,7 @@ struct ArchCPU {
-     bool expose_tcg;
-     bool migratable;
-     bool migrate_smi_count;
-+    bool migrate_error_code;
-     uint32_t apic_id;
- 
-     /* Enables publishing of TSC increment and Local APIC bus frequencies to
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index c913961281..48a2a4b319 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -466,7 +466,7 @@ static bool cpu_errcode_needed(void *opaque)
- {
-     X86CPU *cpu = opaque;
- 
--    return cpu->env.has_error_code != 0;
-+    return cpu->env.has_error_code != 0 && cpu->migrate_error_code;
- }
- 
- static const VMStateDescription vmstate_error_code = {
 -- 
-2.47.3
-
-
+Best regards,
+Vladimir
 
