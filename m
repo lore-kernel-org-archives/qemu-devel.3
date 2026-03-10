@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2FB75FD4F04
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:29:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FB44FD4F04
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:29:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzvO-0003S6-Jp; Tue, 10 Mar 2026 12:27:14 -0400
+	id 1vzzvV-0003c1-E3; Tue, 10 Mar 2026 12:27:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzv4-0003Gw-Kx
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvF-0003PE-TS
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzv2-0000t6-V5
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:26:54 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvD-0000w7-6S
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773160012;
+ s=mimecast20190719; t=1773160022;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=sCdxqzzqW+CcsOoWHKJz2eNl+Nl/2EEfwXKHZ5AnWwM=;
- b=KebrbOXIAa2GgnaNln78tnA2WOTkFH+mvOMgk5a4tthZAarF6xxsXnsWow2KBohUS4AlXT
- 2xbIvl5VHrOhH1q6XlEhJ6miN+hgPnxRPAa+D1AQ0vxz4/Wg55QvphDEAtSceRymJubq62
- M7AUq4nTaFf1njQ7NfLn7o96dsjWR2U=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=j1zNq0gkwMJJa9HJNegRdCHxMB46SL9Pee5peNOWcGg=;
+ b=H4IUpRqMrpDNZZwkEO0u67TQMFUkevE5H2mb+5r520wrN7CcxMpZERCFwWLQkFeT4c94s8
+ KFTZkfRKS4lURUrt45ei+HpP/mQvyS2X2kg5a0AWejAAPPfdgvsdfybbCdineW8s8//mQM
+ UezhbwBtMlyiGXy0aN5d5XEuv2gvtAA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-262-E-Scm9PxPxaos7yX-tk5aQ-1; Tue,
- 10 Mar 2026 12:26:49 -0400
-X-MC-Unique: E-Scm9PxPxaos7yX-tk5aQ-1
-X-Mimecast-MFC-AGG-ID: E-Scm9PxPxaos7yX-tk5aQ_1773160008
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-17-V7dINj91MX6NnbDt8k3BxA-1; Tue,
+ 10 Mar 2026 12:27:01 -0400
+X-MC-Unique: V7dINj91MX6NnbDt8k3BxA-1
+X-Mimecast-MFC-AGG-ID: V7dINj91MX6NnbDt8k3BxA_1773160019
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 606061956089; Tue, 10 Mar 2026 16:26:48 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C914618005B6; Tue, 10 Mar 2026 16:26:59 +0000 (UTC)
 Received: from merkur.fritz.box (unknown [10.45.224.112])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1FE7A19560A6; Tue, 10 Mar 2026 16:26:46 +0000 (UTC)
+ id 8E68C19560A6; Tue, 10 Mar 2026 16:26:58 +0000 (UTC)
 From: Kevin Wolf <kwolf@redhat.com>
 To: qemu-block@nongnu.org
 Cc: kwolf@redhat.com,
 	qemu-devel@nongnu.org
-Subject: [PULL 11/28] fuse: Add halted flag
-Date: Tue, 10 Mar 2026 17:26:05 +0100
-Message-ID: <20260310162622.333137-12-kwolf@redhat.com>
+Subject: [PULL 18/28] fuse: Reduce max read size
+Date: Tue, 10 Mar 2026 17:26:12 +0100
+Message-ID: <20260310162622.333137-19-kwolf@redhat.com>
 In-Reply-To: <20260310162622.333137-1-kwolf@redhat.com>
 References: <20260310162622.333137-1-kwolf@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -84,98 +84,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Hanna Czenczek <hreitz@redhat.com>
 
-This is a flag that we will want when processing FUSE requests
-ourselves: When the kernel sends us e.g. a truncated request (i.e. we
-receive less data than the request's indicated length), we cannot rely
-on subsequent data to be valid.  Then, we are going to set this flag,
-halting all FUSE request processing.
+We are going to introduce parallel processing via coroutines, a maximum
+read size of 64 MB may be problematic, allowing users of the export to
+force us to allocate quite large amounts of memory with just a few
+requests.
 
-We plan to only use this flag in cases that would effectively be kernel
-bugs.
+At least tone it down to 1 MB, which is still probably far more than
+enough.  (Larger requests are split automatically by the FUSE kernel
+driver anyway.)
 
-While not necessary yet, access the flag atomically so that it will be
-safe to use once we introduce multi-threading.
+(Yes, we inadvertently already had parallel request processing due to
+nested polling before.  Better to fix this late than never.)
 
-(Right now, the flag is unused because libfuse still does our request
-processing.)
-
+Reviewed-by: Stefan Hajnoczi <stefanha@redhat.com>
 Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260309150856.26800-12-hreitz@redhat.com>
+Message-ID: <20260309150856.26800-19-hreitz@redhat.com>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
 ---
- block/export/fuse.c | 30 ++++++++++++++++++++++++++++++
- 1 file changed, 30 insertions(+)
+ block/export/fuse.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/block/export/fuse.c b/block/export/fuse.c
-index fc75a5e74d9..f6a5f4fa0a0 100644
+index bd099d12911..f32e74f39dd 100644
 --- a/block/export/fuse.c
 +++ b/block/export/fuse.c
-@@ -53,6 +53,13 @@ typedef struct FuseExport {
-     unsigned int in_flight; /* atomic */
-     bool mounted, fd_handler_set_up;
+@@ -45,7 +45,7 @@
+ #endif
  
-+    /*
-+     * Set when there was an unrecoverable error and no requests should be read
-+     * from the device anymore (basically only in case of something we would
-+     * consider a kernel bug).  Access atomically.
-+     */
-+    bool halted;
-+
-     char *mountpoint;
-     bool writable;
-     bool growable;
-@@ -69,6 +76,7 @@ static const struct fuse_lowlevel_ops fuse_ops;
+ /* Prevent overly long bounce buffer allocations */
+-#define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 64 * 1024 * 1024))
++#define FUSE_MAX_READ_BYTES (MIN(BDRV_REQUEST_MAX_BYTES, 1 * 1024 * 1024))
+ #define FUSE_MAX_WRITE_BYTES (64 * 1024)
  
- static void fuse_export_shutdown(BlockExport *exp);
- static void fuse_export_delete(BlockExport *exp);
-+static void fuse_export_halt(FuseExport *exp) G_GNUC_UNUSED;
- 
- static void init_exports_table(void);
- 
-@@ -99,6 +107,10 @@ static void fuse_dec_in_flight(FuseExport *exp)
- 
- static void fuse_attach_handlers(FuseExport *exp)
- {
-+    if (qatomic_read(&exp->halted)) {
-+        return;
-+    }
-+
-     aio_set_fd_handler(exp->common.ctx,
-                        fuse_session_fd(exp->fuse_session),
-                        read_from_fuse_export, NULL, NULL, NULL, exp);
-@@ -322,6 +334,10 @@ static void read_from_fuse_export(void *opaque)
-     FuseExport *exp = opaque;
-     int ret;
- 
-+    if (unlikely(qatomic_read(&exp->halted))) {
-+        return;
-+    }
-+
-     fuse_inc_in_flight(exp);
- 
-     do {
-@@ -380,6 +396,20 @@ static void fuse_export_delete(BlockExport *blk_exp)
-     g_free(exp->mountpoint);
- }
- 
-+/**
-+ * Halt the export: Detach FD handlers, and set exp->halted to true, preventing
-+ * fuse_attach_handlers() from re-attaching them, therefore stopping all further
-+ * request processing.
-+ *
-+ * Call this function when an unrecoverable error happens that makes processing
-+ * all future requests unreliable.
-+ */
-+static void fuse_export_halt(FuseExport *exp)
-+{
-+    qatomic_set(&exp->halted, true);
-+    fuse_detach_handlers(exp);
-+}
-+
- /**
-  * Check whether @path points to a regular file.  If not, put an
-  * appropriate message into *errp.
+ /*
 -- 
 2.53.0
 
