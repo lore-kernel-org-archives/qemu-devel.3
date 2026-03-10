@@ -4,176 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C41DFCC9AE
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 02:36:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99983FCC9AE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 03:05:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzmx2-0002Ip-Ba; Mon, 09 Mar 2026 22:36:04 -0400
+	id 1vznOZ-0005Fk-8Q; Mon, 09 Mar 2026 23:04:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vzmww-0002IJ-UB
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 22:35:59 -0400
-Received: from mgamail.intel.com ([198.175.65.20])
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vznOX-0005Ey-18
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 23:04:29 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
- id 1vzmws-0002Vp-2d
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 22:35:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773110155; x=1804646155;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=SotWjBlGiJYJjrkOqqJSOvJsTPjEJxEF9be8RMQRc5Q=;
- b=XBooxZCg/L04VKL7xjXbmkPQtQ+hqRUQXl56jgy2o7jmGRaTI70DYsTF
- 0F9N4plOfirfcSmXSLitzL2jiYcQEJTK/E4fC/69k77/vPfIRQ2JiOByQ
- 5tTU0ydXlIhEoabcWqLnbe6SGwBHSLsHaEcoopqzi+x2LNq/4AhIv3zRz
- cgVruH7nmawEF0X8MFn/bdUxJ54I+uiQN44Gaa9z8W7TxnggHuMAegoja
- 88nd+MPKdsDENL+tk4UXBYA+F5zauv5i7JDpaCT3vfKmAGlqaGQQq5nQr
- kho2RRCdphVRvGwFaaOiL+Q72y+EPUERmFPtW+iPAz74w+z117KZ7s8WI A==;
-X-CSE-ConnectionGUID: Whs0QVyCTE63P0DOg5qiSg==
-X-CSE-MsgGUID: 5HMbt1yZS5mOY2E4RhX+Cw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11724"; a="73846327"
-X-IronPort-AV: E=Sophos;i="6.23,111,1770624000"; d="scan'208";a="73846327"
-Received: from fmviesa008.fm.intel.com ([10.60.135.148])
- by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2026 19:35:45 -0700
-X-CSE-ConnectionGUID: iEOiwasVQp2Q6lMKvfRFDQ==
-X-CSE-MsgGUID: YRKXG2VcTSazhQKrwVBIoQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,111,1770624000"; d="scan'208";a="217962168"
-Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
- by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 09 Mar 2026 19:35:44 -0700
-Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Mon, 9 Mar 2026 19:35:42 -0700
-Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
- ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Mon, 9 Mar 2026 19:35:42 -0700
-Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.48) by
- edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Mon, 9 Mar 2026 19:35:41 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=XAYE3XpZRwC9b72UEQ/soLXeauGN7ebELo5GD3ZCjS2/2fIcvnfO4Y8s3or9uwccmK5DByqETyfvjtguHh0v9gz/i2m/Aer0WRbcmnYMh6dg7BV6SoDkoqoHfDUQB8mVeLC/RGbncNwwM7pqeLmMK0qHu9OqM5nUO/T16eTDN3915ghJPdugodxDNM7OR0WDympQgMnjKTgbCnU+6POY4hN7A794CcXI3CmwT8EJq8PuTUEheWn+4imTT8onOegD+abOol8BeQPjtKzSeuTnvMcJSKKLuv6t18A2r/mhKVAsWtGN6OsxqGwCoU/yOWJjyaioEFWZpRTiz6lcmJnlBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bV1mF3b7Ao0TxjfoouYDG9pvtDpeOppilN0jVPY6u8I=;
- b=liLcA2MgaIKn+o8kZn5sl1eaSvJUWUqHJvolhOjL0DR27Y7LROZZveVYPjsEZqxgPSgOU1ltFmZYZ/+Vl+Mxt0SeZVdelS9Okbb5jDC18EYP5P4bw7zTuJoR2imGkHfvyPEXcWbr/xS1f9UZeCGtjXoFYn4bnLMPve+hiZLzKnKUKuD8pA9DSGPEiFGVdAoOj3zwkwtiOVtTvbLCTpWWr+AN+x3SqFm5Q/3NW/1uaAK9Q+9ZvE8zV5c9oyi4cz9VNeF61weyw+QerzcgA8EmRHgvNIkmybrQOv32hnqwmDn6kpXKTzPWpjDXTsZv0PzzbSIj37BnmuIXxCkb8I1BYw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
- MN2PR11MB4520.namprd11.prod.outlook.com (2603:10b6:208:265::17) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Tue, 10 Mar
- 2026 02:35:35 +0000
-Received: from DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::8f1e:49f4:122c:c675]) by DM3PR11MB8735.namprd11.prod.outlook.com
- ([fe80::8f1e:49f4:122c:c675%4]) with mapi id 15.20.9700.010; Tue, 10 Mar 2026
- 02:35:34 +0000
-Message-ID: <ce681660-d47c-4ba6-9237-eef55a87493c@intel.com>
-Date: Tue, 10 Mar 2026 10:35:25 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 00/15] Make RamDiscardManager work with multiple sources
-To: <marcandre.lureau@redhat.com>, <qemu-devel@nongnu.org>
-CC: Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>, Fabiano Rosas
- <farosas@suse.de>, David Hildenbrand <david@kernel.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Xu
- <peterx@redhat.com>, <kvm@vger.kernel.org>, Mark Kanda
- <mark.kanda@oracle.com>
-References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
-From: Chenyi Qiang <chenyi.qiang@intel.com>
-Content-Language: en-US
-In-Reply-To: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: SI2PR02CA0024.apcprd02.prod.outlook.com
- (2603:1096:4:195::18) To DM3PR11MB8735.namprd11.prod.outlook.com
- (2603:10b6:0:4b::20)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1vznOU-0007FI-Sl
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 23:04:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773111865;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2rRImk9nm7CX2l/GZXfLaDKtYIMgHnurTZF2nXZqHXk=;
+ b=e6hHQhUyojmjSNjzQcGsjTZ6Ns4AkezYVAYlPblaOGmchwPZSpMS57QQdhEH3KQFuoW9U/
+ yVnpEBFUOID+Yi+OyajCUq8t4sM/ZYd1rNAkUicq2qRYvHaQrpAXLhQiLTI0JvZkw2JKD4
+ 8ipmoRC3JJ9uU5FtprOxc1WOB+zT96A=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-688-v8o2cx_gPPWSE60WUtZkkg-1; Mon, 09 Mar 2026 23:04:23 -0400
+X-MC-Unique: v8o2cx_gPPWSE60WUtZkkg-1
+X-Mimecast-MFC-AGG-ID: v8o2cx_gPPWSE60WUtZkkg_1773111863
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c738bebd53fso17534292a12.3
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 20:04:23 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773111862; cv=none;
+ d=google.com; s=arc-20240605;
+ b=PJAXPd2UQrgw2rztXxxcluZEinBOUUCDCOLulaPIDS2fVRastCmEa9tuygJl+yi9ib
+ DloAtuEErmiBCjZT0NcwJaZzCtXzl9DIcrBVUI8T551PF6RNYbh6n6zbLTl1ZdJwI+We
+ sqALqHSVplo2fb0SDIWQ12ibt72y2ZdpU/KIMXLQCbJnfDJjs8fRhBgOazuO7//J6nIT
+ HghYnoZtmUv1AVOOCasrZgyQE46uhC5ww8Ok5VeFwENPoanpfurxD6YFn1vtORt7L66j
+ JIc2In3Hz+rHsewwOZLSB3ktfGKCZ3Aozf5kwFnvXUxbaQn+cWQUXI+GrPHZpgoP06k7
+ /xeQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=2rRImk9nm7CX2l/GZXfLaDKtYIMgHnurTZF2nXZqHXk=;
+ fh=CCzwMatiZjClffqXfYCT0E4TCmw+jdyoA/vgnnKOdRs=;
+ b=TyY2eBgqJzEXGz+lsjGYCrMRwkQ16JE5E3SguT9oe2WhrSY/iHsgOsBurOl3KdDGGs
+ XxDGp0/7WkoriqhgRQwqZtDpZtb+AQQVzbqZEDT55AeYaExwruo4t3ygtpdmHl13IBGw
+ 3s46gZtx0HeyGWIDFACuMGarw+lfk77D0Bn5OB3wjn85kTu1YcXqL6ekwmZ3Ju9P5yhX
+ ubHnFJJkffQZKKZGwhApkYrGzQBye1/lLXHIr3jGN136GfeRwBxkTUVBhkUPM8CgRj6d
+ 8WSjULnNSDih4lO47AppvQ+PsZrsrl23gWlK52SDAJhG9FQ1gwtBtZp7IDovFfNTJ9Bs
+ apVg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773111862; x=1773716662; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=2rRImk9nm7CX2l/GZXfLaDKtYIMgHnurTZF2nXZqHXk=;
+ b=e4ogCJgUkwZS885OXVnHTgpwkpzGsCVDUuvi5P+uk0YNvjm+ERWN1SHdfOUNhOn/0Q
+ y81BwCIrkDLucYOaCfqaJNQiPzX/DAeHzFJ62N8+8UOWmzVaApiXQQZ4ESL+I0cUWtoy
+ ofAJNwJVUNZ9DE+Jhs8W/t7VXOr4tkgAa7WboFl658+Axia3/pRB+n+BVOm9baSTuMzH
+ +mNyUU45rXXRaamuHguQ/vouenhe1UWag2vOSxDr06TQ2XKsQCgUwrn4qCenknfWvp85
+ MgCHFh6lxk+obabEAi0JIYFGKNYNEQ5gpquJ4YMGlL/eXjYApIn20887h/Fsd67uvoaP
+ xkHQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773111862; x=1773716662;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2rRImk9nm7CX2l/GZXfLaDKtYIMgHnurTZF2nXZqHXk=;
+ b=mY3xDzFNyG++Do41FT6LOTLtoiCS3X0rl1byGucNKC9f02d9aP6bqSKCMP8WQ2bVst
+ jKEoKfoElc98bhoFQbUwKRwuDf41TDcAC0+IHI9wz1abUtiyxrxwbjmWwJzwXi9F/O7b
+ RtePeHvNybBzE+JhZB1dIUydHJSXN2Gi0+BaeNEjP750TC3DPY1GXhMjU87RMM/kSqee
+ fIOmTH6Szo4jOvKsEOeCg2GzzrOiQNVH8a67h0SPlGketFQ0zswlu0yKpEYl3bstb/iQ
+ aVjjX8Ak17CZ3y6kyiTyoToCUj/mynM2bcPWpPGJam4oqMUXgf3z9RLWxe2ewzRXe34l
+ 2puQ==
+X-Gm-Message-State: AOJu0YweZ4mAlx0wjxpKtzwgEBT2phCmLgpmiM9vFv5tmnVQ+/9yrqn0
+ +wpcrv8dQQmhdyQPp9LZ4gmcgs1yiYC+UZUlWMGSmkc5EtWr6nDbGYpr9LZhR7mZ/UplkWao5re
+ /odWevzWu9WJYa6VUwNtXNkXT9HEYKRh0XOa51X62MqaR4/w7sA4rMD1wrjwf33hsgPglA28eRL
+ 9PHAv0+S685zDWTPHwXp62cVvJUIFophM=
+X-Gm-Gg: ATEYQzz8Wny/c0En8EiUx1UYAaoI8uhIjekldMCO0VeMA4v1ws0JQch5bZacxwn6hCB
+ 5JeuTXW29wFuKD+OhODHTyRSbCVEBEq72jGvwNwd1GcnzLCoeZ7CX5AmhU45Y5JhLAIbofajLNu
+ tdYVFd1LDE8Ba3cLgUQxkARyy6IHpUCXrywWaFS90Zvnn0Rn0SFEZNp6eeMPVxAby3735dXPZR3
+ Jn88+Zl
+X-Received: by 2002:a05:6a21:9ccb:b0:394:7ee5:2fe1 with SMTP id
+ adf61e73a8af0-398590b4454mr12649006637.51.1773111862545; 
+ Mon, 09 Mar 2026 20:04:22 -0700 (PDT)
+X-Received: by 2002:a05:6a21:9ccb:b0:394:7ee5:2fe1 with SMTP id
+ adf61e73a8af0-398590b4454mr12648978637.51.1773111862127; Mon, 09 Mar 2026
+ 20:04:22 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|MN2PR11MB4520:EE_
-X-MS-Office365-Filtering-Correlation-Id: b48c5745-4179-4d8d-7799-08de7e4db4e0
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
-X-Microsoft-Antispam-Message-Info: DZTgSWFEN3scZxCSw1m/WEFuPg8eVgmTjxsPdSeb0Ezp+sMaWdWsaQ8BePhu1zQ7cmeqEmQ6K/eG2GMS+9LJGwa7noId/sYTX5b4EjA1tKSIOd9PNXD/ej3mLjjo50IbJ9SXwpot6/FHyDK+pBMegCSy9EN0lB6f9/zlD5xnMDUWMCDhD2ozvAA+fpUIkGkBlEyKhMd+3nuPxNo/sbPzPvFQEsEgIrxtA7d7OsEPMSOr6HkJbt+TMSPJhYr+zwnRPMzMIuYh7EXCr5wkydh0pXSvqI2MzjFUFBMPXVH6FKIfMsZm6jpckZLkAeUSQRSTOhPcQAF9JFEd+VtBRD9hD1J+rsNJB53EOBvYyBCfGEUSFsCh1/Olm/rkxwfuRmij703vMHpdPlIfW1GK4iHqVm0Tuqi7jH9dv0lZhkiAIamGZiU7S/LXlSIkKVBN6ycmMMcw/Fc03f1sc+tmSaNfrY1x6W9dhm2uedojaFyKg8WX9V+y73MfwaE9JsPiy7b7YLJNU9G+58RltsQObzVULPWz0gExKdrclPRRNXt26O7bmwFpEhZStQTRK/inLDQgk8k4YJgZpguyjvVVBT/4PDmeOtU19VX5uc3jqeU4o8o1hb7cDLwfVkujhaWEOLEze7O+a5/7F+rNtDM4WRKjUB0gqcfI/i7aXvc6/itgKcOC14icDjFN1QbTHjce3H5l2I1NwYFgrbhE9A0J4/eIUg==
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
- SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Wld6SmtwVUxDSFROcXY1SUNzSFJyV3dCcExZdUhhSVp4bG1LWFlROVdTY2dI?=
- =?utf-8?B?TVM5SUpMSUtPNTlPVkhYeFhodnVmU2E3c2s1T2M4RG4xVmMyZGMydXN5cGR6?=
- =?utf-8?B?Uys1TmlZOW9zeHBBUjhlQVAvc2JhQ3llZk5CdWVwVXQxWEFSUXQzSGY4TlNv?=
- =?utf-8?B?UGY4LzN4MDNTOHh1cDQyNnBITWRMZlVGNEFZL2REUE9aR2F4UGlqZmx1eWlv?=
- =?utf-8?B?enNSNVBUM1U0M0hza1o4OGgzVStWMVVDTmxnVk51L3JRUy90U2dRZWpnYXly?=
- =?utf-8?B?Z1NKbkwvNWJTdHdPUWlWaG9aanFYZ3p1bWI1S3hyYldyMThkVDlzRkJRSThG?=
- =?utf-8?B?Wjd2NnpNbGtSczRaSlgzcnJuVTFobTJWSmtqeFJvaEJxUnZydjJVVC9QTk9G?=
- =?utf-8?B?dlRIYXNIRVNDM0c2ZEd6OWRvWnhGQjJGeFlxMU9mNVZnL3l3QUo1NGFvM2hO?=
- =?utf-8?B?bUNMWGZUclZuaHY4ZGZmN3dFeDlVRzFJNFZ2dm9pbkhtTW1XNGRnQW5TR2No?=
- =?utf-8?B?Yi9ST1BVbzFkTTlNYitiRzlaMEl2ckw0em1DQkM3M2N0MEpUazBHaDBtd0FK?=
- =?utf-8?B?Y2c0UzJmWE9UeEkxVHlZdFJ0cHVnN3k2Y2oyUXFWbE9hQ0NGWDlVN3ZUQmZM?=
- =?utf-8?B?TW1MTGRuYnpsaTB1a1VLVW5SdmI5TERkY3pFWUdLRzR0RE9WMFFLWG1maHNT?=
- =?utf-8?B?VEtCZm51Qm1mdFhNbnM4S3pwanZDMU55S1VuMk5SN1UwS29Od1BxbmNNK1gr?=
- =?utf-8?B?VEI5UVlWNUtOOHFlUUxoRTRlZGxQVzJsOXlTNnRGS0JmY1VuUDVhQ2ZjUjZ1?=
- =?utf-8?B?VE5pMG92Yjd3dWZLb1FkZnlwOFIzYi96NE5xWkVRRjJvVk10NGUvZzBwM0ZO?=
- =?utf-8?B?Y25hSVljZGZQc2ovekU1cFZGSUVYWmZRaVBZMlE1KzJHa1haWmh4dS8vK2JR?=
- =?utf-8?B?RDhZR0JYNnlWanlNaWpyL0dvVmgwcWVuSXNYOTVBcGdyTzZMUFNCK1lWYzI4?=
- =?utf-8?B?d2VNbTcvWVMyUVNQdFJRa3dqUmZMV0RoaHpncWZ2bkNLTmtoajBIVExtdVFq?=
- =?utf-8?B?d3V6K2xKREdTR0FsMDZLU0pLeHcvMGZWMHp0VUthYm5tZ0dTaDR3MHZHeTM4?=
- =?utf-8?B?azZvVWRSL2tYVWpzdnFtZGFaM3YzNkE4TEdaYWI5UEtrVDJzZy9NV2QxRXVR?=
- =?utf-8?B?bnJPUjViS0pxKzRHL0t1UEJicWFwaXRZN3hiSUdaVUtMZFBHTHBRRW9KUWhw?=
- =?utf-8?B?RjBvUldiT0xaZGtWUG5aeXBoVTBRdlh1alFRT1d3OW9malFPWnc3K3RDZDM3?=
- =?utf-8?B?V09idTBJOXRFdDBnblhmOFFCay9TeHR0UWt5VXQ5NzNIR1pLU2JjaHdLMW5x?=
- =?utf-8?B?RG9WMENtVE4xcmUycXpnMkNkSFI5SGxCUGNtTjdIcktiWXRzTXRjYlpybmc2?=
- =?utf-8?B?RkJ3bW8ydTJKbDBYUkV3SFFvZXE2OE90NWlsNlFLQ0xaRFljNlhzZkZLalY2?=
- =?utf-8?B?RUhuZkNCbFg3c2R4ZFR4VVpCK0c2T1hwajJoRWxXL2V6QU9jR2c2bEU4Q3FS?=
- =?utf-8?B?ZloxTVRBc0FMRDk0c1BLTnlvenY1STh5ZU1ib2ZUZm9lbUNyRjhqaWJZZFFI?=
- =?utf-8?B?YUZ6RlBlbFR0am4ra2c1NjBCR1pPaTNWNUE3bnVnK1Y5OVZQTzNEdmVXdGll?=
- =?utf-8?B?UVJDeHk0WWFmYnd2SjFpalcvME9SditDckM4Unhka25mMTZJVitvRjRITzZW?=
- =?utf-8?B?TUt4QXBETlNtdGhWSHcyc2hiT2Z5c25Sa0w2dWZ1VG5yQy93T1FrR0VvU2JM?=
- =?utf-8?B?VWxIdlorTC9KcGlLU0Z6b2lmQzcwNXNGQnFRdktEMXV0cFBZbHNpc2JWeTM3?=
- =?utf-8?B?bzR4RG1TNHBqQkJqRlF1S1RQb2tocTVMcm1aK1J2OHo3cklMd0lOaGhwOFlr?=
- =?utf-8?B?WUJtaHBXSktrVE9OcVlPWk1nQWpVdEtzZTVkVWRhdWFqb25FZ0h5RDRBZWs2?=
- =?utf-8?B?WU9hQjl0UzlnRndRNjlQL0sya3lOdmNQM2RmdnB2QW5UbEdzTUsxN0dEUHZu?=
- =?utf-8?B?cnRBQmtFdTluNnUxSEJGS0ZObzhYdTE5dlQ4TlhZUlVzYjN2NjY3cnhxUkp2?=
- =?utf-8?B?UlM2VDE5N0l6YU94NHJyNk9BT0hCMnh3aHFmem5pZEhCN1pQYWdHbW0zby9N?=
- =?utf-8?B?c2lwMVFETnB2UWpVSThRQk1Ed284VFAxSkdBckpheVZCeW5LeGdOYUw1RHRU?=
- =?utf-8?B?Q1FiRzlpOGIvVTJsNGVCZmtIN21OLzBYZUg3TThUODNqMkFBOFdUS2gyMWhH?=
- =?utf-8?B?cFRlT0dTQ1RJSmpTN0hxTUhkQmlHS2VSNTVPUTBMaTZQZWd1d0VPZz09?=
-X-Exchange-RoutingPolicyChecked: A0ffx3P3ZuGZBQOLE3uMX6y8h1s3+8Y/RVZ/VcTv9X9o1YuOYQdIndaEbAspoRqc8bb3ItkQLt4qkooktbtzn8PSDij2mTmcYjEZ3253qZx1F2/ZWORkq1VF300LYgSo0juy+8L3gN2S1ZeJUldUCSfifKinZrxKmXwrTYcJOULS1HteqoEt9wb3GfxyguaWm2YApOWQyi1vZpuhnIp0s869eonjOLmzCcDqZD7eA062GW36xqJ7KDaA58FMCHM3faCHHfTjRxBfJteZFM/zcxwgo70tPOGz3oYElm6wXlagIATG4oqUSUFow9xZX6J1ZNm1tNEvTkClPPxUXaowQg==
-X-MS-Exchange-CrossTenant-Network-Message-Id: b48c5745-4179-4d8d-7799-08de7e4db4e0
-X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2026 02:35:34.8440 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: hoE19O9sc32ebMBb13hvzbq+g+MCGDeXGp8UbnBXiNSKMN7cEHBbpO8oUt9aagD7nmREIFlZRfJs9eSq0yUQag==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4520
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.20;
- envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20260304173535.2702587-1-eperezma@redhat.com>
+ <20260304173535.2702587-6-eperezma@redhat.com>
+ <CACGkMEsCDDSV1m9-2cz3SGEh=MB0viA6h5a9vF5BCHPEhadfUQ@mail.gmail.com>
+ <CAJaqyWdPbU3HXxsc-e4+K_CBPtnYZzbW8vrQJYK-nSUu35LtWg@mail.gmail.com>
+In-Reply-To: <CAJaqyWdPbU3HXxsc-e4+K_CBPtnYZzbW8vrQJYK-nSUu35LtWg@mail.gmail.com>
+From: Jason Wang <jasowang@redhat.com>
+Date: Tue, 10 Mar 2026 11:04:11 +0800
+X-Gm-Features: AaiRm50gfk1ZB2xagT6rpSayOwyY02JeseClR2OlmyD7ceqlVQYLWBxWSNV-tBU
+Message-ID: <CACGkMEscrowNUuZyeCiae-Oww5gkoyfQ+-mK0B2FSvKJFAUX=Q@mail.gmail.com>
+Subject: Re: [PATCH 5/7] vhost: factor out the detach buf logic in SVQ
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <lvivier@redhat.com>, 
+ Dragos Tatulea DE <dtatulea@nvidia.com>, Jonah Palmer <jonah.palmer@oracle.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Koushik Dutta <kdutta@redhat.com>, 
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-stable@nongnu.org,
+ Cindy Lu <lulu@redhat.com>, Maxime Coquelin <mcoqueli@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -189,103 +143,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, Mar 9, 2026 at 5:43=E2=80=AFPM Eugenio Perez Martin <eperezma@redha=
+t.com> wrote:
+>
+> On Mon, Mar 9, 2026 at 9:57=E2=80=AFAM Jason Wang <jasowang@redhat.com> w=
+rote:
+> >
+> > On Thu, Mar 5, 2026 at 1:36=E2=80=AFAM Eugenio P=C3=A9rez <eperezma@red=
+hat.com> wrote:
+> > >
+> > > This code path is modified to handle in order devices.  Abstract here=
+ so
+> > > we can generalize on the caller.
+> > >
+> > > Signed-off-by: Eugenio P=C3=A9rez <eperezma@redhat.com>
+> > > ---
+> > >  hw/virtio/vhost-shadow-virtqueue.c | 24 ++++++++++++++++--------
+> > >  1 file changed, 16 insertions(+), 8 deletions(-)
+> > >
+> > > diff --git a/hw/virtio/vhost-shadow-virtqueue.c b/hw/virtio/vhost-sha=
+dow-virtqueue.c
+> > > index e7e3c9155cd0..2d8fc82cc06f 100644
+> > > --- a/hw/virtio/vhost-shadow-virtqueue.c
+> > > +++ b/hw/virtio/vhost-shadow-virtqueue.c
+> > > @@ -473,11 +473,24 @@ static uint16_t vhost_svq_last_desc_of_chain(co=
+nst VhostShadowVirtqueue *svq,
+> > >      return i;
+> > >  }
+> > >
+> > > +G_GNUC_WARN_UNUSED_RESULT
+> > > +static VirtQueueElement *vhost_svq_detach_buf(VhostShadowVirtqueue *=
+svq,
+> > > +                                              uint16_t id)
+> > > +{
+> > > +    uint16_t num =3D svq->desc_state[id].ndescs;
+> > > +    uint16_t last_used_chain =3D vhost_svq_last_desc_of_chain(svq, n=
+um, id);
+> > > +
+> > > +    svq->desc_state[last_used_chain].next =3D svq->free_head;
+> > > +    svq->free_head =3D id;
+> > > +
+> > > +    return g_steal_pointer(&svq->desc_state[id].elem);
+> > > +}
+> > > +
+> > >  G_GNUC_WARN_UNUSED_RESULT
+> > >  static VirtQueueElement *vhost_svq_get_buf(VhostShadowVirtqueue *svq=
+,
+> > >                                             uint32_t *len)
+> > >  {
+> > > -    uint16_t last_used, last_used_chain, num;
+> > > +    uint16_t last_used;
+> > >
+> > >      if (!vhost_svq_more_used(svq)) {
+> > >          return NULL;
+> > > @@ -500,14 +513,9 @@ static VirtQueueElement *vhost_svq_get_buf(Vhost=
+ShadowVirtqueue *svq,
+> > >          return NULL;
+> > >      }
+> > >
+> > > -    num =3D svq->desc_state[last_used].ndescs;
+> > > +    svq->num_free +=3D svq->desc_state[last_used].ndescs;
+> > >      svq->desc_state[last_used].ndescs =3D 0;
+> >
+> > Any reason we don't factor those two lines?
+> >
+>
+> They are common for split and split_in_order case.
 
+Exactly, so why not factoring out them as well? Or you mean
+vhost_svq_detach_buf is only for in-order (then we probably need to
+rename).
 
-On 2/26/2026 9:59 PM, marcandre.lureau@redhat.com wrote:
-> From: Marc-André Lureau <marcandre.lureau@redhat.com>
-> 
-> Hi,
-> 
-> This is an attempt to fix the incompatibility of virtio-mem with confidential
-> VMs. The solution implements what was discussed earlier with D. Hildenbrand:
-> https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18657-5-chenyi.qiang@intel.com/#3502238
-> 
-> The first patches are misc cleanups. Then some code refactoring to have split a
-> manager/source. And finally, the manager learns to deal with multiple sources.
-> 
-> I haven't done thorough testing. I only launched a SEV guest with a virtio-mem
-> device. It would be nice to have more tests for those scenarios with
-> VFIO/virtio-mem/confvm.. In any case, review & testing needed!
+Thanks
 
-Is this series aimed to enable virtio-mem (memory hotplug) in a confidential VM?
-I tested it within a TD guest using the qemu command:
-
-qemu-system-x86_64
-	...
-        -m 2G,maxmem=10G \
-        -smp sockets=1,cores=2 \
-        -object memory-backend-ram,id=mem0,size=2G \
-        -numa node,nodeid=0,cpus=0-1,memdev=mem0 \
-        -object memory-backend-ram,id=vmem0,size=8G \
-        -device virtio-mem-pci,id=vm0,memdev=vmem0,node=0,requested-size=300M \
-        -object tdx-guest,id=tdx \
-        -machine q35,kernel_irqchip=split,hpet=off,memory-encryption=tdx \
-        ...
-
-The TD VM will exit with the error when the guest kernel loads the virtio-mem driver:
-
-    kvm_intel: Guest access before accepting 0x108008000 on vCPU 0
-
-I think it still lacks some support to accept the TD guest memory before using it.
-
-> 
-> (should fix https://issues.redhat.com/browse/RHEL-131968)
-> 
-> v3: issues found by Cédric
->  - fix assertion error on shutdown, due to rcu-defer cleanup
->  - fix API doc warnings
-> 
-> v2:
->  - drop replay_{populated,discarded} from source, suggested by Peter Xu
->  - add extra manager cleanup
->  - add r-b tags for preliminary patches
-> 
-> thanks
-> 
-> Marc-André Lureau (15):
->   system/rba: use DIV_ROUND_UP
->   memory: drop RamDiscardListener::double_discard_supported
->   virtio-mem: use warn_report_err_once()
->   system/memory: minor doc fix
->   kvm: replace RamDicardManager by the RamBlockAttribute
->   system/memory: split RamDiscardManager into source and manager
->   system/memory: move RamDiscardManager to separate compilation unit
->   system/memory: constify section arguments
->   system/ram-discard-manager: implement replay via is_populated
->     iteration
->   virtio-mem: remove replay_populated/replay_discarded implementation
->   system/ram-discard-manager: drop replay from source interface
->   system/memory: implement RamDiscardManager multi-source aggregation
->   system/physmem: destroy ram block attributes before RCU-deferred
->     reclaim
->   system/memory: add RamDiscardManager reference counting and cleanup
->   tests: add unit tests for RamDiscardManager multi-source aggregation
-> 
->  include/hw/vfio/vfio-container.h            |    2 +-
->  include/hw/vfio/vfio-cpr.h                  |    2 +-
->  include/hw/virtio/virtio-mem.h              |    3 -
->  include/system/memory.h                     |  287 +----
->  include/system/ram-discard-manager.h        |  358 ++++++
->  include/system/ramblock.h                   |    3 +-
->  accel/kvm/kvm-all.c                         |    2 +-
->  hw/vfio/cpr-legacy.c                        |    4 +-
->  hw/vfio/listener.c                          |   12 +-
->  hw/virtio/virtio-mem.c                      |  290 +----
->  migration/ram.c                             |    6 +-
->  system/memory.c                             |   83 +-
->  system/memory_mapping.c                     |    4 +-
->  system/physmem.c                            |    2 +-
->  system/ram-block-attributes.c               |  279 +----
->  system/ram-discard-manager.c                |  612 +++++++++
->  tests/unit/test-ram-discard-manager-stubs.c |   48 +
->  tests/unit/test-ram-discard-manager.c       | 1234 +++++++++++++++++++
->  system/meson.build                          |    1 +
->  tests/unit/meson.build                      |    8 +-
->  20 files changed, 2361 insertions(+), 879 deletions(-)
->  create mode 100644 include/system/ram-discard-manager.h
->  create mode 100644 system/ram-discard-manager.c
->  create mode 100644 tests/unit/test-ram-discard-manager-stubs.c
->  create mode 100644 tests/unit/test-ram-discard-manager.c
-> 
+>
+> > > -    last_used_chain =3D vhost_svq_last_desc_of_chain(svq, num, last_=
+used);
+> > > -    svq->desc_state[last_used_chain].next =3D svq->free_head;
+> > > -    svq->free_head =3D last_used;
+> > > -    svq->num_free +=3D num;
+> > > -
+> > > -    return g_steal_pointer(&svq->desc_state[last_used].elem);
+> > > +    return vhost_svq_detach_buf(svq, last_used);
+> > >  }
+> > >
+> > >  /**
+> > > --
+> > > 2.53.0
+> > >
+> >
+> > Thanks
+> >
+>
 
 
