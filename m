@@ -4,70 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F29BFD2D91
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:43:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6044FFD2D93
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:47:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxM3-00073D-Fg; Tue, 10 Mar 2026 09:42:35 -0400
+	id 1vzxQF-0001jT-U0; Tue, 10 Mar 2026 09:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzxLw-00070E-S7
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:42:29 -0400
-Received: from mgamail.intel.com ([198.175.65.14])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzxQD-0001jC-JK
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:46:53 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1vzxLt-0003Dj-R3
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:42:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773150146; x=1804686146;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=D0hw7OIpiW/NE4xd5uMdafmsbvzsIf/gcO9TbnVEeh8=;
- b=VvdtHSTGpOjota/0drd+Fhvc5qUQlY9+j3NYVbL1ca+s5vMYVwMb8zan
- jembudUl/rXhigIbIIMG5Bi7dIgocIJQHUUcbu7LiH2xZL/wG21Hnmyag
- Dqawzr1Fzsa6WBx1dqAIMt2VHJz0KbV6wOMHSa7wZ61YhNqgBIfYZ8bdS
- ExcO55BPUmGvKgQpyG89MUNmEnDpF2bJydQS9TlZxg3oXqC8NAcCEg6ky
- t6gS32vze12w6jbcapj3UbdnjCFSkTsjKb6fnKBQyWglBEinEXmT4cuWp
- bpKy1O7PLdka3reIVjW5mPTkyoQVmJPqvmNVkrlrM7wjNtUpayP44towG w==;
-X-CSE-ConnectionGUID: VYyCoWRlTxGkcmy9NNwncg==
-X-CSE-MsgGUID: RLMsDV4FTHqsDh0zSZ02zQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="78048235"
-X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="78048235"
-Received: from fmviesa007.fm.intel.com ([10.60.135.147])
- by orvoesa106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 10 Mar 2026 06:42:21 -0700
-X-CSE-ConnectionGUID: PePB4s93S5KOulPFLpye5g==
-X-CSE-MsgGUID: Pb31thVoSQuAoswSMyFGzg==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,112,1770624000"; d="scan'208";a="217647971"
-Received: from liuzhao-optiplex-7080.sh.intel.com ([10.239.160.39])
- by fmviesa007.fm.intel.com with ESMTP; 10 Mar 2026 06:42:20 -0700
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org,
-	Zhao Liu <zhao1.liu@intel.com>
-Subject: [PATCH 2/5] i386/cpu: Rename AMX mirror feature words with -alias
- suffix
-Date: Tue, 10 Mar 2026 22:08:16 +0800
-Message-Id: <20260310140819.1563084-3-zhao1.liu@intel.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260310140819.1563084-1-zhao1.liu@intel.com>
-References: <20260310140819.1563084-1-zhao1.liu@intel.com>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1vzxQ8-0004YZ-Ch
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:46:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773150405;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=Dp0IdvUWp3lH8qFssdZ4giCT6sdU4JwaHlzrhq7y7aU=;
+ b=GkcZ38lhs/NVPmPFnArAtE99CoSJDvC3Sj5lVrqbksXYnIAnw/iaiG4FPljUAbQDndUY1N
+ 1zQAc5Apky82TWRMWZlQM6sqTyXzXp8BZZWvoOYserhtfl3a+RH79gyvjX13vMEiWo2kXp
+ MUSiB3tyrlqZeBhBXygynVZVqXnXHVo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-0JtulayMO_SkZAPvZnOWmw-1; Tue,
+ 10 Mar 2026 09:46:42 -0400
+X-MC-Unique: 0JtulayMO_SkZAPvZnOWmw-1
+X-Mimecast-MFC-AGG-ID: 0JtulayMO_SkZAPvZnOWmw_1773150400
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 2EBBD19560B5; Tue, 10 Mar 2026 13:46:40 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 37A493000223; Tue, 10 Mar 2026 13:46:38 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id BFCE421E6614; Tue, 10 Mar 2026 14:46:35 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  mst@redhat.com,  thuth@redhat.com,
+ eblake@redhat.com,  farosas@suse.de,  peterx@redhat.com,
+ zhao1.liu@intel.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net,
+ davydov-max@yandex-team.ru,  qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru,  leiyang@redhat.com,
+ raphael.s.norwitz@gmail.com,  bchaney@akamai.com
+Subject: Re: [PATCH v12 6/8] net/tap: support local migration with virtio-net
+In-Reply-To: <20260306213235.216863-7-vsementsov@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Sat, 7 Mar 2026 00:32:33 +0300")
+References: <20260306213235.216863-1-vsementsov@yandex-team.ru>
+ <20260306213235.216863-7-vsementsov@yandex-team.ru>
+Date: Tue, 10 Mar 2026 14:46:35 +0100
+Message-ID: <87jyvjiypw.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.14; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,36 +91,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The commit 956b8f0fc38a ("i386/cpu: Add CPUID.0x1E.0x1 subleaf for AMX
-instructions") names amx-int8/amx-bf16/amx-complex-amx-fp16 in CPUID
-0x1E.1.EAX with "-mirror" suffix.
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-To align with the naming style of corresponding macros, rename these
-feature words with "-alias" suffix.
+> Support transferring of TAP state (including open fd) through
+> migration stream as part of viritio-net "local-migration".
+>
+> Add new option, incoming-fds, which should be set to true to
+> trigger new logic.
+>
+> For new option require explicitly unset script and downscript,
+> to keep possibility of implementing support for them in future.
+>
+> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 
-Since the commit 956b8f0fc38a is merged in v11.0 development cycle,
-it's safe to modify the names of feature words (before v11.0 is
-released).
+[...]
 
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
----
- target/i386/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+> diff --git a/qapi/net.json b/qapi/net.json
+> index 118bd349651..79f5ce9f431 100644
+> --- a/qapi/net.json
+> +++ b/qapi/net.json
+> @@ -355,6 +355,9 @@
+>  # @poll-us: maximum number of microseconds that could be spent on busy
+>  #     polling for tap (since 2.7)
+>  #
+> +# @incoming-fds: do not open/connnect any resources, instead wait for
+> +#     TAP state from incoming migration stream.  (Since 11.0)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 953770db9c9a..21dcfa47c351 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -1314,7 +1314,7 @@ FeatureWordInfo feature_word_info[FEATURE_WORDS] = {
-     [FEAT_1E_1_EAX] = {
-         .type = CPUID_FEATURE_WORD,
-         .feat_names = {
--            "amx-int8-mirror", "amx-bf16-mirror", "amx-complex-mirror", "amx-fp16-mirror",
-+            "amx-int8-alias", "amx-bf16-alias", "amx-complex-alias", "amx-fp16-alias",
-             "amx-fp8", NULL, "amx-tf32", "amx-avx512",
-             "amx-movrs", NULL, NULL, NULL,
-             NULL, NULL, NULL, NULL,
--- 
-2.34.1
+"resources"?  The name @incoming-fds suggests this is about file
+descriptors...
+
+"wait for TAP state from" does not make sense.  Do you mean "retrieve
+TAP state from"?
+
+Is any part of NetdevTapOptions ignored when @incoming-fds is true?
+
+> +#
+>  # Since: 1.2
+>  ##
+>  { 'struct': 'NetdevTapOptions',
+> @@ -373,7 +376,8 @@
+>      '*vhostfds':   'str',
+>      '*vhostforce': 'bool',
+>      '*queues':     'uint32',
+> -    '*poll-us':    'uint32'} }
+> +    '*poll-us':    'uint32',
+> +    '*incoming-fds': 'bool' } }
+>  
+>  ##
+>  # @NetdevSocketOptions:
 
 
