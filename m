@@ -4,82 +4,176 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B74B6FCC9A2
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 01:29:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C41DFCC9AE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 02:36:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzluA-0002Ml-EF; Mon, 09 Mar 2026 21:29:02 -0400
+	id 1vzmx2-0002Ip-Ba; Mon, 09 Mar 2026 22:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vzlu4-0002MF-UI
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 21:28:56 -0400
-Received: from p-west2-cluster2-host4-snip4-7.eps.apple.com ([57.103.68.160]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1vzmww-0002IJ-UB
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 22:35:59 -0400
+Received: from mgamail.intel.com ([198.175.65.20])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1vzlu2-00012h-SO
- for qemu-devel@nongnu.org; Mon, 09 Mar 2026 21:28:56 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-20-percent-2 (Postfix) with ESMTPS id
- 12CE6180012F; Tue, 10 Mar 2026 01:28:50 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773106134; x=1775698134;
- bh=f28tpuqdLcGC45GwzTg/S9M6CfA8/cETz8vtTkkJt4c=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=WveAaHiil7AEe51C+AdgPTxyQ7psi+LWmG0lw44KDZOc/ztZ9gMZrdyEdEpw9UyLUC95ki635TXauTw6DOJSdI82AVw7VFaGD9tl2U1KmtD2e1AwMT7ux/a+Azr1ulz5eorHy3uYqRmHku4uxErm/ux+Z5btIOCnnWUKNcSB8t27Lbkh77fsHGtKmxyRue1wvOe25SKOPvlu4fcC+XSJWDaQsHDYxFFxePheZ/2A91SpYOrE5dl91x0vLQ/nQfUlq4NE4G9YFqvSvWO4Db5LfNC4GuSg7ROmfO+nUPtMngu/2ikyPRhA+uGxHZlweqQ/NYV41B2jeP4BELXEwyeikA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-20-percent-2 (Postfix) with ESMTPSA id
- 3A4371800093; Tue, 10 Mar 2026 01:28:49 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH] target/arm/hvf: emulate ISV=0 data abort instructions
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260309214852.92545-1-lucaaamaral@gmail.com>
-Date: Tue, 10 Mar 2026 02:28:37 +0100
-Cc: qemu-devel@nongnu.org,
- qemu-arm@nongnu.org,
- agraf@csgraf.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <10F88EF8-950B-42AE-80A6-6B1E13BAD27D@unpredictable.fr>
-References: <20260309214852.92545-1-lucaaamaral@gmail.com>
-To: Lucas Amaral <lucaaamaral@gmail.com>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Authority-Info-Out: v=2.4 cv=TNJIilla c=1 sm=1 tr=0 ts=69af73d3
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=hONZm29C8bqNLOFPYg4A:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDAwOSBTYWx0ZWRfX5VLam+lMa0Mx
- w6DyK5MBQISSvzBYoQWom07CNXJpqAQ1ibaKAfMK+e0pkpRkQ7LFFvk6aoY2l2RDCTAHwbkIMj8
- U8+7IrCl8Jw781d0s+1X/ZN9gUnniTy0F6wRlsnwLwNhgRqYOAZH226I6Pj/LEtZ8gyFKdjsFuP
- wmLxAh/y/W5ysoFOAgh9o4/x9JAo+CqWVxenA6sYsUYR2ruWklJ+Jd5nNgqTQNP1+bNUFvllvrL
- ghLICIhiaNiCyO2o4h+laomZEasZE4LDRU/WshlIA6khWibEUGPCptDMsPeflonuvKECcCU9vrF
- OgomsUmzLXSw54ylaVlxscXXB+0+71D2bSJ5uYwm1CLL3O4TYOhkx3v0Gy5ps8=
-X-Proofpoint-GUID: J_1-LA25z_RJu5H7vfTovQH-bSUcMX_Q
-X-Proofpoint-ORIG-GUID: J_1-LA25z_RJu5H7vfTovQH-bSUcMX_Q
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-09_06,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0
- spamscore=0 adultscore=0 mlxlogscore=477
- clxscore=1030 mlxscore=0 bulkscore=0
- lowpriorityscore=0 phishscore=0 malwarescore=0 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603100009
-X-JNJ: AAAAAAABk+Hd2q9bFN0F95tfeKgEjntvRZGFUjtoEedFzMqw+YWDNX7hITlVp+4oCttZYp+6rnqM5A+uDKTV2g7ewm9rJXzDgy0aEXqgcw3ua8w0rzhlvOaQ3WbSnMiT3Oi4HJn340vSIVCrJuf2+Fw7nQf8w6NEsjKj3g4qbL3OAyk6p+9NfCZQaX2Ph9h7KQrdM9AQf91hRK6F0MhCm/Y/1sUDbRwIeGK7vROMKk5aZXyJ8KNkoIVOTS+ROwhUIlaPUHnHjCJ5kqxjYzMx49xGI+7cQZJ+Tx251PNuAR1NYcShQo3p4h5UqlmZLeUMErxz0y5vB9Fz01TC5DmLX4uHU24SmaQGVHx/pTzj4ciTV1oXtYJYdj0Zfav7K//e6eNXHp8IewVVrNO3EK7jZ0A+6NVBi5mAKG4W3OTnq5mH8FvVZNLPKa3iexwV6l+YXC/iVwfCeFH1cOxUepBUZYFTqX5r8Uz7tuSO5koPO5FxM5OzMgT+dkxtFxZvgUxt7M8oor2PQLy43MGb4KXddnXVoxEdut6o5Eydjo2lbUeIvGH/xQlrPfFkJf+OM9MnYw3tQZh/huHE5sl1AswmNoXVS+VgiM6MWkqgzZlYCYuwJJU1qL8+NqbONxBAV/7yVIk9Pg==
-Received-SPF: pass client-ip=57.103.68.160;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1vzmws-0002Vp-2d
+ for qemu-devel@nongnu.org; Mon, 09 Mar 2026 22:35:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773110155; x=1804646155;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=SotWjBlGiJYJjrkOqqJSOvJsTPjEJxEF9be8RMQRc5Q=;
+ b=XBooxZCg/L04VKL7xjXbmkPQtQ+hqRUQXl56jgy2o7jmGRaTI70DYsTF
+ 0F9N4plOfirfcSmXSLitzL2jiYcQEJTK/E4fC/69k77/vPfIRQ2JiOByQ
+ 5tTU0ydXlIhEoabcWqLnbe6SGwBHSLsHaEcoopqzi+x2LNq/4AhIv3zRz
+ cgVruH7nmawEF0X8MFn/bdUxJ54I+uiQN44Gaa9z8W7TxnggHuMAegoja
+ 88nd+MPKdsDENL+tk4UXBYA+F5zauv5i7JDpaCT3vfKmAGlqaGQQq5nQr
+ kho2RRCdphVRvGwFaaOiL+Q72y+EPUERmFPtW+iPAz74w+z117KZ7s8WI A==;
+X-CSE-ConnectionGUID: Whs0QVyCTE63P0DOg5qiSg==
+X-CSE-MsgGUID: 5HMbt1yZS5mOY2E4RhX+Cw==
+X-IronPort-AV: E=McAfee;i="6800,10657,11724"; a="73846327"
+X-IronPort-AV: E=Sophos;i="6.23,111,1770624000"; d="scan'208";a="73846327"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by orvoesa112.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2026 19:35:45 -0700
+X-CSE-ConnectionGUID: iEOiwasVQp2Q6lMKvfRFDQ==
+X-CSE-MsgGUID: YRKXG2VcTSazhQKrwVBIoQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,111,1770624000"; d="scan'208";a="217962168"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 09 Mar 2026 19:35:44 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 9 Mar 2026 19:35:42 -0700
+Received: from ORSEDG903.ED.cps.intel.com (10.7.248.13) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Mon, 9 Mar 2026 19:35:42 -0700
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.48) by
+ edgegateway.intel.com (134.134.137.113) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Mon, 9 Mar 2026 19:35:41 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XAYE3XpZRwC9b72UEQ/soLXeauGN7ebELo5GD3ZCjS2/2fIcvnfO4Y8s3or9uwccmK5DByqETyfvjtguHh0v9gz/i2m/Aer0WRbcmnYMh6dg7BV6SoDkoqoHfDUQB8mVeLC/RGbncNwwM7pqeLmMK0qHu9OqM5nUO/T16eTDN3915ghJPdugodxDNM7OR0WDympQgMnjKTgbCnU+6POY4hN7A794CcXI3CmwT8EJq8PuTUEheWn+4imTT8onOegD+abOol8BeQPjtKzSeuTnvMcJSKKLuv6t18A2r/mhKVAsWtGN6OsxqGwCoU/yOWJjyaioEFWZpRTiz6lcmJnlBw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=bV1mF3b7Ao0TxjfoouYDG9pvtDpeOppilN0jVPY6u8I=;
+ b=liLcA2MgaIKn+o8kZn5sl1eaSvJUWUqHJvolhOjL0DR27Y7LROZZveVYPjsEZqxgPSgOU1ltFmZYZ/+Vl+Mxt0SeZVdelS9Okbb5jDC18EYP5P4bw7zTuJoR2imGkHfvyPEXcWbr/xS1f9UZeCGtjXoFYn4bnLMPve+hiZLzKnKUKuD8pA9DSGPEiFGVdAoOj3zwkwtiOVtTvbLCTpWWr+AN+x3SqFm5Q/3NW/1uaAK9Q+9ZvE8zV5c9oyi4cz9VNeF61weyw+QerzcgA8EmRHgvNIkmybrQOv32hnqwmDn6kpXKTzPWpjDXTsZv0PzzbSIj37BnmuIXxCkb8I1BYw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ MN2PR11MB4520.namprd11.prod.outlook.com (2603:10b6:208:265::17) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Tue, 10 Mar
+ 2026 02:35:35 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::8f1e:49f4:122c:c675]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::8f1e:49f4:122c:c675%4]) with mapi id 15.20.9700.010; Tue, 10 Mar 2026
+ 02:35:34 +0000
+Message-ID: <ce681660-d47c-4ba6-9237-eef55a87493c@intel.com>
+Date: Tue, 10 Mar 2026 10:35:25 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/15] Make RamDiscardManager work with multiple sources
+To: <marcandre.lureau@redhat.com>, <qemu-devel@nongnu.org>
+CC: Ben Chaney <bchaney@akamai.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Alex Williamson <alex@shazbot.org>, Fabiano Rosas
+ <farosas@suse.de>, David Hildenbrand <david@kernel.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Xu
+ <peterx@redhat.com>, <kvm@vger.kernel.org>, Mark Kanda
+ <mark.kanda@oracle.com>
+References: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+Content-Language: en-US
+In-Reply-To: <20260226140001.3622334-1-marcandre.lureau@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-ClientProxiedBy: SI2PR02CA0024.apcprd02.prod.outlook.com
+ (2603:1096:4:195::18) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|MN2PR11MB4520:EE_
+X-MS-Office365-Filtering-Correlation-Id: b48c5745-4179-4d8d-7799-08de7e4db4e0
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|7416014|376014|1800799024|366016|7053199007; 
+X-Microsoft-Antispam-Message-Info: DZTgSWFEN3scZxCSw1m/WEFuPg8eVgmTjxsPdSeb0Ezp+sMaWdWsaQ8BePhu1zQ7cmeqEmQ6K/eG2GMS+9LJGwa7noId/sYTX5b4EjA1tKSIOd9PNXD/ej3mLjjo50IbJ9SXwpot6/FHyDK+pBMegCSy9EN0lB6f9/zlD5xnMDUWMCDhD2ozvAA+fpUIkGkBlEyKhMd+3nuPxNo/sbPzPvFQEsEgIrxtA7d7OsEPMSOr6HkJbt+TMSPJhYr+zwnRPMzMIuYh7EXCr5wkydh0pXSvqI2MzjFUFBMPXVH6FKIfMsZm6jpckZLkAeUSQRSTOhPcQAF9JFEd+VtBRD9hD1J+rsNJB53EOBvYyBCfGEUSFsCh1/Olm/rkxwfuRmij703vMHpdPlIfW1GK4iHqVm0Tuqi7jH9dv0lZhkiAIamGZiU7S/LXlSIkKVBN6ycmMMcw/Fc03f1sc+tmSaNfrY1x6W9dhm2uedojaFyKg8WX9V+y73MfwaE9JsPiy7b7YLJNU9G+58RltsQObzVULPWz0gExKdrclPRRNXt26O7bmwFpEhZStQTRK/inLDQgk8k4YJgZpguyjvVVBT/4PDmeOtU19VX5uc3jqeU4o8o1hb7cDLwfVkujhaWEOLEze7O+a5/7F+rNtDM4WRKjUB0gqcfI/i7aXvc6/itgKcOC14icDjFN1QbTHjce3H5l2I1NwYFgrbhE9A0J4/eIUg==
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(7416014)(376014)(1800799024)(366016)(7053199007); DIR:OUT;
+ SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Wld6SmtwVUxDSFROcXY1SUNzSFJyV3dCcExZdUhhSVp4bG1LWFlROVdTY2dI?=
+ =?utf-8?B?TVM5SUpMSUtPNTlPVkhYeFhodnVmU2E3c2s1T2M4RG4xVmMyZGMydXN5cGR6?=
+ =?utf-8?B?Uys1TmlZOW9zeHBBUjhlQVAvc2JhQ3llZk5CdWVwVXQxWEFSUXQzSGY4TlNv?=
+ =?utf-8?B?UGY4LzN4MDNTOHh1cDQyNnBITWRMZlVGNEFZL2REUE9aR2F4UGlqZmx1eWlv?=
+ =?utf-8?B?enNSNVBUM1U0M0hza1o4OGgzVStWMVVDTmxnVk51L3JRUy90U2dRZWpnYXly?=
+ =?utf-8?B?Z1NKbkwvNWJTdHdPUWlWaG9aanFYZ3p1bWI1S3hyYldyMThkVDlzRkJRSThG?=
+ =?utf-8?B?Wjd2NnpNbGtSczRaSlgzcnJuVTFobTJWSmtqeFJvaEJxUnZydjJVVC9QTk9G?=
+ =?utf-8?B?dlRIYXNIRVNDM0c2ZEd6OWRvWnhGQjJGeFlxMU9mNVZnL3l3QUo1NGFvM2hO?=
+ =?utf-8?B?bUNMWGZUclZuaHY4ZGZmN3dFeDlVRzFJNFZ2dm9pbkhtTW1XNGRnQW5TR2No?=
+ =?utf-8?B?Yi9ST1BVbzFkTTlNYitiRzlaMEl2ckw0em1DQkM3M2N0MEpUazBHaDBtd0FK?=
+ =?utf-8?B?Y2c0UzJmWE9UeEkxVHlZdFJ0cHVnN3k2Y2oyUXFWbE9hQ0NGWDlVN3ZUQmZM?=
+ =?utf-8?B?TW1MTGRuYnpsaTB1a1VLVW5SdmI5TERkY3pFWUdLRzR0RE9WMFFLWG1maHNT?=
+ =?utf-8?B?VEtCZm51Qm1mdFhNbnM4S3pwanZDMU55S1VuMk5SN1UwS29Od1BxbmNNK1gr?=
+ =?utf-8?B?VEI5UVlWNUtOOHFlUUxoRTRlZGxQVzJsOXlTNnRGS0JmY1VuUDVhQ2ZjUjZ1?=
+ =?utf-8?B?VE5pMG92Yjd3dWZLb1FkZnlwOFIzYi96NE5xWkVRRjJvVk10NGUvZzBwM0ZO?=
+ =?utf-8?B?Y25hSVljZGZQc2ovekU1cFZGSUVYWmZRaVBZMlE1KzJHa1haWmh4dS8vK2JR?=
+ =?utf-8?B?RDhZR0JYNnlWanlNaWpyL0dvVmgwcWVuSXNYOTVBcGdyTzZMUFNCK1lWYzI4?=
+ =?utf-8?B?d2VNbTcvWVMyUVNQdFJRa3dqUmZMV0RoaHpncWZ2bkNLTmtoajBIVExtdVFq?=
+ =?utf-8?B?d3V6K2xKREdTR0FsMDZLU0pLeHcvMGZWMHp0VUthYm5tZ0dTaDR3MHZHeTM4?=
+ =?utf-8?B?azZvVWRSL2tYVWpzdnFtZGFaM3YzNkE4TEdaYWI5UEtrVDJzZy9NV2QxRXVR?=
+ =?utf-8?B?bnJPUjViS0pxKzRHL0t1UEJicWFwaXRZN3hiSUdaVUtMZFBHTHBRRW9KUWhw?=
+ =?utf-8?B?RjBvUldiT0xaZGtWUG5aeXBoVTBRdlh1alFRT1d3OW9malFPWnc3K3RDZDM3?=
+ =?utf-8?B?V09idTBJOXRFdDBnblhmOFFCay9TeHR0UWt5VXQ5NzNIR1pLU2JjaHdLMW5x?=
+ =?utf-8?B?RG9WMENtVE4xcmUycXpnMkNkSFI5SGxCUGNtTjdIcktiWXRzTXRjYlpybmc2?=
+ =?utf-8?B?RkJ3bW8ydTJKbDBYUkV3SFFvZXE2OE90NWlsNlFLQ0xaRFljNlhzZkZLalY2?=
+ =?utf-8?B?RUhuZkNCbFg3c2R4ZFR4VVpCK0c2T1hwajJoRWxXL2V6QU9jR2c2bEU4Q3FS?=
+ =?utf-8?B?ZloxTVRBc0FMRDk0c1BLTnlvenY1STh5ZU1ib2ZUZm9lbUNyRjhqaWJZZFFI?=
+ =?utf-8?B?YUZ6RlBlbFR0am4ra2c1NjBCR1pPaTNWNUE3bnVnK1Y5OVZQTzNEdmVXdGll?=
+ =?utf-8?B?UVJDeHk0WWFmYnd2SjFpalcvME9SditDckM4Unhka25mMTZJVitvRjRITzZW?=
+ =?utf-8?B?TUt4QXBETlNtdGhWSHcyc2hiT2Z5c25Sa0w2dWZ1VG5yQy93T1FrR0VvU2JM?=
+ =?utf-8?B?VWxIdlorTC9KcGlLU0Z6b2lmQzcwNXNGQnFRdktEMXV0cFBZbHNpc2JWeTM3?=
+ =?utf-8?B?bzR4RG1TNHBqQkJqRlF1S1RQb2tocTVMcm1aK1J2OHo3cklMd0lOaGhwOFlr?=
+ =?utf-8?B?WUJtaHBXSktrVE9OcVlPWk1nQWpVdEtzZTVkVWRhdWFqb25FZ0h5RDRBZWs2?=
+ =?utf-8?B?WU9hQjl0UzlnRndRNjlQL0sya3lOdmNQM2RmdnB2QW5UbEdzTUsxN0dEUHZu?=
+ =?utf-8?B?cnRBQmtFdTluNnUxSEJGS0ZObzhYdTE5dlQ4TlhZUlVzYjN2NjY3cnhxUkp2?=
+ =?utf-8?B?UlM2VDE5N0l6YU94NHJyNk9BT0hCMnh3aHFmem5pZEhCN1pQYWdHbW0zby9N?=
+ =?utf-8?B?c2lwMVFETnB2UWpVSThRQk1Ed284VFAxSkdBckpheVZCeW5LeGdOYUw1RHRU?=
+ =?utf-8?B?Q1FiRzlpOGIvVTJsNGVCZmtIN21OLzBYZUg3TThUODNqMkFBOFdUS2gyMWhH?=
+ =?utf-8?B?cFRlT0dTQ1RJSmpTN0hxTUhkQmlHS2VSNTVPUTBMaTZQZWd1d0VPZz09?=
+X-Exchange-RoutingPolicyChecked: A0ffx3P3ZuGZBQOLE3uMX6y8h1s3+8Y/RVZ/VcTv9X9o1YuOYQdIndaEbAspoRqc8bb3ItkQLt4qkooktbtzn8PSDij2mTmcYjEZ3253qZx1F2/ZWORkq1VF300LYgSo0juy+8L3gN2S1ZeJUldUCSfifKinZrxKmXwrTYcJOULS1HteqoEt9wb3GfxyguaWm2YApOWQyi1vZpuhnIp0s869eonjOLmzCcDqZD7eA062GW36xqJ7KDaA58FMCHM3faCHHfTjRxBfJteZFM/zcxwgo70tPOGz3oYElm6wXlagIATG4oqUSUFow9xZX6J1ZNm1tNEvTkClPPxUXaowQg==
+X-MS-Exchange-CrossTenant-Network-Message-Id: b48c5745-4179-4d8d-7799-08de7e4db4e0
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 10 Mar 2026 02:35:34.8440 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: hoE19O9sc32ebMBb13hvzbq+g+MCGDeXGp8UbnBXiNSKMN7cEHBbpO8oUt9aagD7nmREIFlZRfJs9eSq0yUQag==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN2PR11MB4520
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.20;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -97,393 +191,101 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 9. Mar 2026, at 22:48, Lucas Amaral <lucaaamaral@gmail.com> wrote:
->=20
-> On Apple Silicon, HVF exits with ISV=3D0 (no syndrome information)
-> for STP/LDP/STNP/LDNP, SIMD/FP load/stores, and DC cache
-> maintenance instructions that access MMIO regions.  The existing
-> code asserted ISV!=3D0, crashing the VM.
->=20
-> Decode the faulting instruction from guest memory and emulate:
-> - Load/Store Pair (STP/LDP/STNP/LDNP) for GPR and SIMD registers
-> - Single Load/Store with writeback and SIMD/FP variants
-> - DC system instructions (NOP on MMIO regions)
-> - LDPSW (sign-extending load pair)
->=20
-> For pair instructions, compute the effective virtual address from
-> the base register to handle page-straddling accesses correctly.
-> HPFAR_EL2 reports the faulting page, not the effective address,
-> so using the IPA directly would produce wrong results when an
-> STP straddles an HVF-mapped / MMIO boundary.
->=20
-> Tested with virtio-gpu Venus blob resources on macOS ARM64.
->=20
-> Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
-> =E2=80=94
-Hello,
+On 2/26/2026 9:59 PM, marcandre.lureau@redhat.com wrote:
+> From: Marc-André Lureau <marcandre.lureau@redhat.com>
+> 
+> Hi,
+> 
+> This is an attempt to fix the incompatibility of virtio-mem with confidential
+> VMs. The solution implements what was discussed earlier with D. Hildenbrand:
+> https://patchwork.ozlabs.org/project/qemu-devel/patch/20250407074939.18657-5-chenyi.qiang@intel.com/#3502238
+> 
+> The first patches are misc cleanups. Then some code refactoring to have split a
+> manager/source. And finally, the manager learns to deal with multiple sources.
+> 
+> I haven't done thorough testing. I only launched a SEV guest with a virtio-mem
+> device. It would be nice to have more tests for those scenarios with
+> VFIO/virtio-mem/confvm.. In any case, review & testing needed!
 
-The idea is good, but this specific implementation is NAK for me.
+Is this series aimed to enable virtio-mem (memory hotplug) in a confidential VM?
+I tested it within a TD guest using the qemu command:
 
-This ought to be in common code target/i386/emulate style instead of in =
-specific HVF code.
+qemu-system-x86_64
+	...
+        -m 2G,maxmem=10G \
+        -smp sockets=1,cores=2 \
+        -object memory-backend-ram,id=mem0,size=2G \
+        -numa node,nodeid=0,cpus=0-1,memdev=mem0 \
+        -object memory-backend-ram,id=vmem0,size=8G \
+        -device virtio-mem-pci,id=vm0,memdev=vmem0,node=0,requested-size=300M \
+        -object tdx-guest,id=tdx \
+        -machine q35,kernel_irqchip=split,hpet=off,memory-encryption=tdx \
+        ...
 
-Oh, and using something that looks more like a regular decoder perhaps.
+The TD VM will exit with the error when the guest kernel loads the virtio-mem driver:
 
-Thank you,
--Mohamed
-> target/arm/hvf/hvf.c | 309 ++++++++++++++++++++++++++++++++++++++++++-
-> 1 file changed, 306 insertions(+), 3 deletions(-)
->=20
-> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> index d79469c..87ddcdb 100644
-> --- a/target/arm/hvf/hvf.c
-> +++ b/target/arm/hvf/hvf.c
-> @@ -1871,10 +1871,313 @@ static int hvf_handle_exception(CPUState =
-*cpu, hv_vcpu_exit_exception_t *excp)
->         assert(!s1ptw);
->=20
->         /*
-> -         * TODO: ISV will be 0 for SIMD or SVE accesses.
-> -         * Inject the exception into the guest.
-> +         * ISV=3D0: syndrome doesn't carry access size/register info.
-> +         * This happens for STP/LDP/STNP/LDNP, SIMD/SVE load/stores,
-> +         * and DC (data cache) maintenance instructions.
-> +         *
-> +         * Sync all CPU state (including TTBR/TCR/SCTLR for page =
-table
-> +         * walk) and decode the faulting instruction from guest =
-memory.
->          */
-> -        assert(isv);
-> +        if (!isv) {
-> +            ARMCPU *arm_cpu =3D ARM_CPU(cpu);
-> +            CPUARMState *env =3D &arm_cpu->env;
-> +            uint32_t insn;
-> +
-> +            /*
-> +             * Sync system registers (TTBR, TCR, SCTLR, etc.) from =
-HVF
-> +             * so cpu_memory_rw_debug can walk guest page tables.
-> +             */
-> +            cpu_synchronize_state(cpu);
-> +
-> +            if (cpu_memory_rw_debug(cpu, env->pc,
-> +                                    (uint8_t *)&insn, 4, false) !=3D =
-0) {
-> +                error_report("HVF: ISV=3D0 at ipa=3D0x%" PRIx64
-> +                             " -- cannot read insn at pc=3D0x%" =
-PRIx64,
-> +                             ipa, (uint64_t)env->pc);
-> +                goto isv0_inject_fault;
-> +            }
-> +            insn =3D le32_to_cpu(insn);
-> +
-> +            /*
-> +             * System instructions (DC CIVAC, DC CVAC, etc.):
-> +             * bits [31:22] =3D 1101010100 identifies MRS/MSR/SYS =
-class.
-> +             * Cache maintenance on MMIO regions is a harmless NOP.
-> +             */
-> +            if ((insn & 0xFFC00000) =3D=3D 0xD5000000) {
-> +                advance_pc =3D true;
-> +                break;
-> +            }
-> +
-> +            /*
-> +             * Load/Store Pair (STP/LDP/STNP/LDNP):
-> +             * bits [29:27] =3D 101 identifies this instruction =
-class.
-> +             * Supports both integer (GPR) and SIMD/FP register =
-pairs.
-> +             */
-> +            if ((insn & 0x38000000) =3D=3D 0x28000000) {
-> +                uint32_t opc =3D extract32(insn, 30, 2);
-> +                bool is_vec =3D extract32(insn, 26, 1);
-> +                bool is_load =3D extract32(insn, 22, 1);
-> +                uint32_t rt =3D extract32(insn, 0, 5);
-> +                uint32_t rt2 =3D extract32(insn, 10, 5);
-> +                uint32_t rn =3D extract32(insn, 5, 5);
-> +                uint32_t type =3D extract32(insn, 23, 3);
-> +                bool writeback =3D (type =3D=3D 1 || type =3D=3D 3);
-> +                uint32_t esize;
-> +                int32_t imm7 =3D sextract32(insn, 15, 7);
-> +
-> +                if (!is_vec) {
-> +                    esize =3D (opc & 2) ? 8 : 4;
-> +                } else {
-> +                    esize =3D 4u << opc;  /* 4, 8, or 16 bytes */
-> +                }
-> +
-> +                int64_t stp_offset =3D (int64_t)imm7 * esize;
-> +
-> +                /*
-> +                 * Compute the effective virtual address from the =
-base
-> +                 * register and immediate offset. HPFAR_EL2 reports
-> +                 * the faulting page, not the effective address, so =
-we
-> +                 * must derive the VA from the instruction encoding.
-> +                 *
-> +                 * After cpu_synchronize_state(), env->xregs[0..30] =
-are
-> +                 * GPRs and env->xregs[31] is the current SP =
-(restored
-> +                 * via aarch64_restore_sp).
-> +                 *
-> +                 * Using the VA with cpu_memory_rw_debug() correctly
-> +                 * splits page-straddling accesses via guest page =
-tables.
-> +                 */
-> +                uint64_t rn_va =3D env->xregs[rn];
-> +                /* post-index: access at unmodified base */
-> +                uint64_t va =3D (type =3D=3D 1) ? rn_va : rn_va + =
-stp_offset;
-> +
-> +                if (is_load =3D=3D iswrite) {
-> +                    error_report("HVF: ISV=3D0 load/write mismatch at =
-"
-> +                                 "ipa=3D0x%" PRIx64, ipa);
-> +                    goto isv0_inject_fault;
-> +                }
-> +
-> +                if (iswrite) {
-> +                    /* Store pair */
-> +                    if (!is_vec) {
-> +                        uint64_t val1 =3D env->xregs[rt];
-> +                        uint64_t val2 =3D env->xregs[rt2];
-> +                        uint8_t buf[16]; /* max 2 x 8 bytes */
-> +                        memcpy(buf, &val1, esize);
-> +                        memcpy(buf + esize, &val2, esize);
-> +                        cpu_memory_rw_debug(cpu, va, buf,
-> +                                            2 * esize, true);
-> +                    } else {
-> +                        /*
-> +                         * SIMD STP: register data is in =
-env->vfp.zregs[]
-> +                         * after cpu_synchronize_state().
-> +                         * esize=3D4: S reg, esize=3D8: D reg, =
-esize=3D16: Q reg
-> +                         */
-> +                        uint8_t buf[32]; /* max 2 x 16 bytes */
-> +                        memcpy(buf, &env->vfp.zregs[rt], esize);
-> +                        memcpy(buf + esize,
-> +                               &env->vfp.zregs[rt2], esize);
-> +                        cpu_memory_rw_debug(cpu, va, buf,
-> +                                            2 * esize, true);
-> +                    }
-> +                } else {
-> +                    /* Load pair */
-> +                    if (!is_vec) {
-> +                        uint64_t val1 =3D 0, val2 =3D 0;
-> +                        uint8_t buf[16];
-> +                        memset(buf, 0, sizeof(buf));
-> +                        cpu_memory_rw_debug(cpu, va, buf,
-> +                                            2 * esize, false);
-> +                        memcpy(&val1, buf, esize);
-> +                        memcpy(&val2, buf + esize, esize);
-> +                        if (opc =3D=3D 1 && !is_vec) {
-> +                            /* LDPSW: sign-extend 32-bit to 64-bit */
-> +                            val1 =3D (int64_t)(int32_t)val1;
-> +                            val2 =3D (int64_t)(int32_t)val2;
-> +                        }
-> +                        hvf_set_reg(cpu, rt, val1);
-> +                        hvf_set_reg(cpu, rt2, val2);
-> +                    } else {
-> +                        /* SIMD LDP */
-> +                        uint8_t buf[32];
-> +                        memset(buf, 0, sizeof(buf));
-> +                        cpu_memory_rw_debug(cpu, va, buf,
-> +                                            2 * esize, false);
-> +                        memset(&env->vfp.zregs[rt], 0,
-> +                               sizeof(env->vfp.zregs[rt]));
-> +                        memset(&env->vfp.zregs[rt2], 0,
-> +                               sizeof(env->vfp.zregs[rt2]));
-> +                        memcpy(&env->vfp.zregs[rt], buf, esize);
-> +                        memcpy(&env->vfp.zregs[rt2],
-> +                               buf + esize, esize);
-> +                        cpu->vcpu_dirty =3D true;
-> +                    }
-> +                }
-> +
-> +                /* Handle base register writeback (pre/post-index) */
-> +                if (writeback) {
-> +                    env->xregs[rn] =3D env->xregs[rn] + stp_offset;
-> +                    cpu->vcpu_dirty =3D true;
-> +                }
-> +
-> +                advance_pc =3D true;
-> +                break;
-> +            }
-> +
-> +            /*
-> +             * Load/Store Register (single):
-> +             * bits [29:27] =3D 111, bit [25] =3D 0.
-> +             * Covers immediate (unscaled, post-index, pre-index),
-> +             * unsigned offset, and register offset variants.
-> +             *
-> +             * ISV=3D0 for: writeback variants (pre/post-indexed) and
-> +             * all SIMD/FP loads/stores.
-> +             */
-> +            if ((insn & 0x3A000000) =3D=3D 0x38000000) {
-> +                uint32_t size_field =3D extract32(insn, 30, 2);
-> +                bool is_vec =3D extract32(insn, 26, 1);
-> +                uint32_t opc =3D extract32(insn, 22, 2);
-> +                bool is_unsigned =3D extract32(insn, 24, 1);
-> +                bool bit21 =3D extract32(insn, 21, 1);
-> +                uint32_t rn =3D extract32(insn, 5, 5);
-> +                uint32_t rt =3D extract32(insn, 0, 5);
-> +                uint32_t sub_type =3D extract32(insn, 10, 2);
-> +                bool is_reg =3D !is_unsigned && bit21;
-> +
-> +                /*
-> +                 * [24]=3D0, [21]=3D1, [11:10]!=3D10 could be atomic =
-ops
-> +                 * (LDADD, SWP, CAS, etc.) -- not handled.
-> +                 */
-> +                if (is_reg && sub_type !=3D 2) {
-> +                    goto isv0_inject_fault;
-> +                }
-> +
-> +                bool writeback =3D !is_unsigned && !is_reg
-> +                                 && (sub_type =3D=3D 1 || sub_type =3D=3D=
- 3);
-> +
-> +                uint32_t esize;
-> +                bool is_load;
-> +                bool is_signed =3D false;
-> +                uint32_t sign_extend_to =3D 0;
-> +
-> +                if (!is_vec) {
-> +                    esize =3D 1u << size_field;
-> +                    switch (opc) {
-> +                    case 0: /* STR */
-> +                        is_load =3D false;
-> +                        break;
-> +                    case 1: /* LDR */
-> +                        is_load =3D true;
-> +                        break;
-> +                    case 2:
-> +                        is_load =3D true;                      /* =
-LDRS->64 */
-> +                        is_signed =3D true;
-> +                        sign_extend_to =3D 8;
-> +                        break;
-> +                    case 3:
-> +                        if (size_field =3D=3D 3) {
-> +                            /* PRFM -- prefetch is NOP on MMIO */
-> +                            advance_pc =3D true;
-> +                            goto isv0_done;
-> +                        }
-> +                        is_load =3D true;                      /* =
-LDRS->32 */
-> +                        is_signed =3D true;
-> +                        sign_extend_to =3D 4;
-> +                        break;
-> +                    }
-> +                } else {
-> +                    /* SIMD/FP: size+opc determines element width */
-> +                    is_load =3D (opc & 1);
-> +                    if (opc >=3D 2 && size_field =3D=3D 0) {
-> +                        esize =3D 16;  /* Q register (128-bit) */
-> +                    } else if (opc < 2) {
-> +                        esize =3D 1u << size_field;
-> +                    } else {
-> +                        goto isv0_inject_fault;
-> +                    }
-> +                }
-> +
-> +                if (is_load =3D=3D iswrite) {
-> +                    error_report("HVF: ISV=3D0 LDR/STR load/write =
-mismatch "
-> +                                 "at ipa=3D0x%" PRIx64, ipa);
-> +                    goto isv0_inject_fault;
-> +                }
-> +
-> +                /* Perform memory access */
-> +                if (!is_load) {
-> +                    if (!is_vec) {
-> +                        uint64_t val =3D hvf_get_reg(cpu, rt);
-> +                        address_space_write(as, ipa,
-> +                                            MEMTXATTRS_UNSPECIFIED,
-> +                                            &val, esize);
-> +                    } else {
-> +                        address_space_write(as, ipa,
-> +                                            MEMTXATTRS_UNSPECIFIED,
-> +                                            &env->vfp.zregs[rt], =
-esize);
-> +                    }
-> +                } else {
-> +                    if (!is_vec) {
-> +                        uint64_t val =3D 0;
-> +                        address_space_read(as, ipa,
-> +                                           MEMTXATTRS_UNSPECIFIED,
-> +                                           &val, esize);
-> +                        if (is_signed) {
-> +                            switch (esize) {
-> +                            case 1:
-> +                                val =3D (int64_t)(int8_t)val;
-> +                                break;
-> +                            case 2:
-> +                                val =3D (int64_t)(int16_t)val;
-> +                                break;
-> +                            case 4:
-> +                                val =3D (int64_t)(int32_t)val;
-> +                                break;
-> +                            }
-> +                            if (sign_extend_to =3D=3D 4) {
-> +                                val &=3D 0xFFFFFFFF;
-> +                            }
-> +                        }
-> +                        hvf_set_reg(cpu, rt, val);
-> +                    } else {
-> +                        /* SIMD/FP load */
-> +                        memset(&env->vfp.zregs[rt], 0,
-> +                               sizeof(env->vfp.zregs[rt]));
-> +                        address_space_read(as, ipa,
-> +                                           MEMTXATTRS_UNSPECIFIED,
-> +                                           &env->vfp.zregs[rt], =
-esize);
-> +                        cpu->vcpu_dirty =3D true;
-> +                    }
-> +                }
-> +
-> +                /* Base register writeback (post/pre-indexed) */
-> +                if (writeback) {
-> +                    int32_t imm9 =3D sextract32(insn, 12, 9);
-> +                    env->xregs[rn] =3D env->xregs[rn] + imm9;
-> +                    cpu->vcpu_dirty =3D true;
-> +                }
-> +
-> +                advance_pc =3D true;
-> +                goto isv0_done;
-> +            }
-> +
-> +isv0_inject_fault:
-> +            /*
-> +             * Inject data abort into guest for unrecognized or
-> +             * inconsistent ISV=3D0 instructions.  The guest kernel
-> +             * will deliver SIGBUS to the faulting process.
-> +             */
-> +            {
-> +                int target_el =3D 1;
-> +                bool same_el =3D arm_current_el(env) =3D=3D =
-target_el;
-> +                uint32_t esr =3D syn_data_abort_no_iss(same_el,
-> +                    /*fnv=3D*/1, /*ea=3D*/0, /*cm=3D*/0,
-> +                    /*s1ptw=3D*/0, iswrite, /*fsc=3D*/0x10);
-> +                env->exception.vaddress =3D ipa;
-> +                hvf_raise_exception(cpu, EXCP_DATA_ABORT,
-> +                                    esr, target_el);
-> +            }
-> +isv0_done:
-> +            break;
-> +        }
->=20
->         /*
->          * Emulate MMIO.
-> --=20
-> 2.52.0
->=20
->=20
+    kvm_intel: Guest access before accepting 0x108008000 on vCPU 0
+
+I think it still lacks some support to accept the TD guest memory before using it.
+
+> 
+> (should fix https://issues.redhat.com/browse/RHEL-131968)
+> 
+> v3: issues found by Cédric
+>  - fix assertion error on shutdown, due to rcu-defer cleanup
+>  - fix API doc warnings
+> 
+> v2:
+>  - drop replay_{populated,discarded} from source, suggested by Peter Xu
+>  - add extra manager cleanup
+>  - add r-b tags for preliminary patches
+> 
+> thanks
+> 
+> Marc-André Lureau (15):
+>   system/rba: use DIV_ROUND_UP
+>   memory: drop RamDiscardListener::double_discard_supported
+>   virtio-mem: use warn_report_err_once()
+>   system/memory: minor doc fix
+>   kvm: replace RamDicardManager by the RamBlockAttribute
+>   system/memory: split RamDiscardManager into source and manager
+>   system/memory: move RamDiscardManager to separate compilation unit
+>   system/memory: constify section arguments
+>   system/ram-discard-manager: implement replay via is_populated
+>     iteration
+>   virtio-mem: remove replay_populated/replay_discarded implementation
+>   system/ram-discard-manager: drop replay from source interface
+>   system/memory: implement RamDiscardManager multi-source aggregation
+>   system/physmem: destroy ram block attributes before RCU-deferred
+>     reclaim
+>   system/memory: add RamDiscardManager reference counting and cleanup
+>   tests: add unit tests for RamDiscardManager multi-source aggregation
+> 
+>  include/hw/vfio/vfio-container.h            |    2 +-
+>  include/hw/vfio/vfio-cpr.h                  |    2 +-
+>  include/hw/virtio/virtio-mem.h              |    3 -
+>  include/system/memory.h                     |  287 +----
+>  include/system/ram-discard-manager.h        |  358 ++++++
+>  include/system/ramblock.h                   |    3 +-
+>  accel/kvm/kvm-all.c                         |    2 +-
+>  hw/vfio/cpr-legacy.c                        |    4 +-
+>  hw/vfio/listener.c                          |   12 +-
+>  hw/virtio/virtio-mem.c                      |  290 +----
+>  migration/ram.c                             |    6 +-
+>  system/memory.c                             |   83 +-
+>  system/memory_mapping.c                     |    4 +-
+>  system/physmem.c                            |    2 +-
+>  system/ram-block-attributes.c               |  279 +----
+>  system/ram-discard-manager.c                |  612 +++++++++
+>  tests/unit/test-ram-discard-manager-stubs.c |   48 +
+>  tests/unit/test-ram-discard-manager.c       | 1234 +++++++++++++++++++
+>  system/meson.build                          |    1 +
+>  tests/unit/meson.build                      |    8 +-
+>  20 files changed, 2361 insertions(+), 879 deletions(-)
+>  create mode 100644 include/system/ram-discard-manager.h
+>  create mode 100644 system/ram-discard-manager.c
+>  create mode 100644 tests/unit/test-ram-discard-manager-stubs.c
+>  create mode 100644 tests/unit/test-ram-discard-manager.c
+> 
 
 
