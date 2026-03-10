@@ -4,92 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4000FD2D84
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:32:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FE98FD2D83
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:32:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxBY-0003Fq-EB; Tue, 10 Mar 2026 09:31:44 -0400
+	id 1vzxBk-0003HG-3V; Tue, 10 Mar 2026 09:31:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzxBW-0003Fe-Cf
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:31:42 -0400
+ id 1vzxBi-0003Gu-LQ
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:31:54 -0400
 Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1vzxBU-00081n-F7
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:31:41 -0400
+ id 1vzxBh-0008Cr-4S
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:31:54 -0400
 Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-79902e1fb71so21731977b3.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 06:31:39 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773149499; cv=none;
+ 00721157ae682-797ab169454so131674137b3.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 06:31:52 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773149511; cv=none;
  d=google.com; s=arc-20240605;
- b=KpBf5hlvtwPeD1k+U0jUjWQzL4aULSALvXSscdLODLHjXZBW3QVSKgBu6JnCHW32mx
- K6WLM5lsqDaSo/Ray2lW+FuqSpWJ5f1+HV6zwa7vG/qXwgmTyMmzzztCtzXSKLJhyaX5
- WuEZ9UXw2fZVJ4f2Y5KYvkfe2wa2n0/FtSeOVY6Ddc1TJlI3kRTQLIvLAzE/4dSBNzWJ
- q0ngteK0wM4/eR8phloeDRAgPrnJVs3ugiICTNDDIIe1cFn5s5W0hlgrRqQiVl/yWTI/
- e7OFbIT0V6zduPBw6iI0qnCCizYN0n4q/lB6K9rwsAtdINuzcUwWnvNxwlJyqVQygrl+
- 42OQ==
+ b=SnA8SmNJzLooM0mR33teHcplNgStCDYblrB/DkW8r5Z6+wpU3QIiGW51RcAIt7Stfv
+ f9WCmRDH1y59+YzfQkuMiLp9VpW7iMSFYw0nUX19Ei3gq/aiPDbR9Sv0j6CphOZcCtpj
+ FNXo2RAtvKDIe5c29RiEOy2qMt9c5JNIcS8s0RXZXB3/4M3s9ls+hIDkQtA16Cb4J2g2
+ A6SFXOfdnOp+aXGlISU4U8Tt5lq5nSQBfdhISzniwK0wt9vJ07SrPljGq9h6qruaOdnH
+ 0tTn0j1xHOkD8l36oOVqjdIvPk5NVGUhgxf+RT4RWRDlZj1hVwMq0mWMbeUFI/JkQi8D
+ /92w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=QmsG94IcMQ+kDso+MGBEBxU9skIvCShz3G8NDv+jl4U=;
- fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
- b=cBEE39/nPallrhRSdHPk3Z35Tn2SmMPySc7VQF/+dbAnsIu6cRKpH/Ptf5bJRfFeO+
- UVIGuKWQNB3f/CM6sVePHzpgaBfg4wc2mSRoGKwOouO+kUunIlK9c4Rr+CyaCfw197WW
- 7W6EKhw6A1u7Bn2WtLKoCLhCVMdtchPLSjQfQDGNqvPx7vYxSIelKGUpf6FyEa6cHvKq
- hZF/r8Ra3mMfkCUqgOCygg2tc9wlCLmJGM4lWDz/LZ38t6jCxATsoxV1gF2EZ5nPpDPI
- fXthoA91EGwBD6gkcrAPaZBKrALqFyL/eaMuSx0ikACukEGmgC38Aidz1DS0MVZfpVRo
- wD7w==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=9OTKoDp7hyAQ12kmmZrxeBElTf35CSRv6BpuYlDNLbM=;
+ fh=q4CEMG0Er9cZWvqkTyrPIEB7c5qJovcabgcELgobYIk=;
+ b=OQLmk5dPsMg0dkIydM0iIelusMe/mo5qHF0MG5oIrUn5KDSwMxZKpOzsQgf/dwrRS+
+ KppSo8VAmgIwFLbY9AJc6e7CCcrDK3Z2uYYfQDZu7TXOxBNMF/PKT4WT+xNkPiesvByJ
+ PkvfXd4DIX2/IhycSdNEQCBzjPdao/A0QI/y8keHXDXdXC8UTTm8Cqe6lFn7RUcflGM9
+ N+ABjVVDu7fCoRPPf5AnSxX9JPLn0n2WU3ncj1GxHGfrhHfJHHtIX+ZC9XewjDFJnZG3
+ 2oj/A4ORjhQrdDzafR+IqDC02y1B6x+ReAQh30VMbitQ7H8YJ0GJZLpPv8EzrEqHtdDL
+ hbVQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773149499; x=1773754299; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QmsG94IcMQ+kDso+MGBEBxU9skIvCShz3G8NDv+jl4U=;
- b=lKYTbfdytMcGNlr6qNAEKw0a1AuKKyiBE5KAkpoZfN6/zvypaw8itw3WjPTy74q10B
- nJXp5kLYBF1DZS+WSYnlCMTi/xmhdG/Sp09x1zg0k4bE88vb3rKpTPZx9g51prpraYlk
- uPHSANHh2KWmnFtQUfpgZ89nanGinvsC99d7beozdEWWUj3eW+wePzQhIjwXKyT5ZK5b
- a33/3+/SVBdkDbecMbCyeFTwGwGNUUdufuOkFW9kHx8eSWiNmLhKflxSgdPldAvL4YI5
- GFFrjYIjElLqm5gdXcVBxt811WrdAoGmSnE8cZI0fEy/7S6wnnl2rh0oo6YYvC0jgeG/
- cm4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773149499; x=1773754299;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773149511; x=1773754311; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QmsG94IcMQ+kDso+MGBEBxU9skIvCShz3G8NDv+jl4U=;
- b=Rma2D1WgX7IyPQzC5ORFY8HRu9EQvcNtzA/Ez7p2Gkj+1rfXC7JbqFciIV8g4/r98a
- f44Oki1Ce+VvFG1vysXfyYh3zcIbM1o1Y5LYYcOjcXac+UnUDTHPGBpjfWOZrET7qhlj
- sfKcWgD1Q7p4tDptnJ0lg7x07FPjXijMkUHmRtKEOSiStXkK1CrdOEvvFiI8ja8RuXdP
- U/G5DnpcqiZMjdAKbMoQEnY6n12cgDQKSTdOicK8uzML+k1lAtmalRVa1BHUos/ruo/E
- +p0VtlJxv9wPwcX0xl/zot2mNaE2tckGhsLRo/rdPRB3wr4Fcc8Yql/ZPrrCuabcPKIY
- VJpQ==
-X-Gm-Message-State: AOJu0YwRdcqzdsPWGPLPmjAlTvmvveI1Q2EVlKLMWo1zwmQHKDUCuqka
- pYfUHOE6atITxIdAHUj2iS/D8ytMvFI/+NZukUWYoK3h7/D8XXRHYzDv83LrJXqPEQi5sTupDCb
- rvK2XzSeRgwOgGsPORviTsUuNUXnUWKlsl+m0QeqtaTbfMk1/pE2R
-X-Gm-Gg: ATEYQzwC7UZyY+nd2ZsSEBo3tKRN66nk+xmEdV7iT4qa35bQ9DVa63CCB7uKOsJzReN
- sspmeKv4nM8lt516BWHJINsqfh9LpDPJSn0QfiLArr3pO+N3l4436x0Szr4N1o48b06Dg4Q8RPs
- c4vbCd2+4M7xKvDiZ12E27PI8/TjZv1LVoPIKNVQojOvQpNY+0tyoJ0IcollJ3Lj/Z4a6yEglji
- JQpxgUlr8pfME8ww9VckyvmmDZZ25+nk3R8B7nDerv44MdoDsPVe+Cda/NNd1LzBUEuXfbdRfZn
- qHB+Hi6GUqNlTxKd75LLwhV5LyH3/mwDJ/8MQ4DTtFsub3f7JgGZobDpLpTm5JzkLyI=
-X-Received: by 2002:a05:690e:6cc:b0:64c:c616:c349 with SMTP id
- 956f58d0204a3-64d1418b37cmr10736342d50.31.1773149494614; Tue, 10 Mar 2026
- 06:31:34 -0700 (PDT)
+ bh=9OTKoDp7hyAQ12kmmZrxeBElTf35CSRv6BpuYlDNLbM=;
+ b=LcHicwiyXFVUBsQefG5UB17hnOF6fWyzGNA1hvTTNGmTzkDeGsbuloriLnZeLhjUFO
+ NoYyk3QvV53agIMpIwgLEDa5c6bSgjrasT0Bm3AuSbhA+MpxJy+lDaV0kdoNub7X1ftP
+ +eoth4gHMYQ/z0FQltFhDpefeVpr86I8e24/zNFEpnQpc8DF5O/hzAXe4+zM/r/TWLFP
+ rYfE2OUy1jPmSju1DuGWJ023wnr/SW4CcBKXzScaNs+Re2uB10rqwlRCpmNbFrXh35ai
+ Lx3L89l/qj5fVUDzLec/Nkiz4kjgbdQcUPNn+oijOU00IUmxLHj+jn7x55O7hZlSNddj
+ U/vA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773149511; x=1773754311;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=9OTKoDp7hyAQ12kmmZrxeBElTf35CSRv6BpuYlDNLbM=;
+ b=FH6wVjVc741e97+Ont6LBgd//jZbosy3nwpZN9dg97wIE0s86a+zF1xYFAJzX+x0K2
+ 89ziJVUkWYPv3I9hLl0oEg+hEbBXfEaleHsXsH9fDzwlZ0ArFNOQb3gyJmJrc4UD6mxC
+ Drn+LKusWY52K3LOz3RepE0AZibfzNYDaXUwY22hDNBeiAKGc7/ua3NLCxisIh5UBeBs
+ rY0rW9Y3y1wcf0A5DNklwr5OY93NKf38WqBj+2PsqgmqzYU2A5k9J6NKdoNM666vbfRQ
+ nmr8oAtbLQxAGKT4XrEF98k210rqBawSdJpPTPYQHs+WzW8Rec33vTkq1Nut/Nk4NStI
+ u+SQ==
+X-Gm-Message-State: AOJu0Yz/0B6/BXmN2/A0bJXMvryJ//kVj9AkRncvXsv+EO7kxreAloCs
+ qV9jL5FkaNSk2y6DkzMzSwraLX0dWDPb+LEZw15fiFnZ29K9DvczFF1ERjbr5IO0iHR4jRO5cjE
+ tdDNfr4qMBYGm63FrZMy6Rqmz6b0kHVrItjXIFzTPY/z+bllUxahv
+X-Gm-Gg: ATEYQzy/G6+dr6QIn1F/djII8FlrCZ30E51PtqtHvsrWnABGx9FaoFMGfaHtRvXtf1P
+ gviePy7472mNmL83gSt2ieGDqF8mzs8uMJ2SQbO4uORODqHbSEnjNwq2/xgk1MKp/VM6u/xhrUC
+ xM7x3sNh0YszGwSAMm6Dp5H/wa3EXwaVY29XLorwgXDQBECtsNOFD8AQZxI/T+sMotx5FMa4Rr9
+ A0Ndbchwvo8wpPFB6QIjPpsW0kIy4yEh8Ru0yhcyLM+tySrzEHqVdNW5BUv+97L7Yap6ST2vo5R
+ fb9V0Id6V5lAVepbucdUtvIoJ/Rr/kPqMCUPwp//Dt0nT3mn0o3Sn200NHFW3O/yAro=
+X-Received: by 2002:a05:690e:1488:b0:64d:29b4:d60d with SMTP id
+ 956f58d0204a3-64d29b4d6c0mr7256233d50.12.1773149509669; Tue, 10 Mar 2026
+ 06:31:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260310055530.8893-1-thuth@redhat.com>
-In-Reply-To: <20260310055530.8893-1-thuth@redhat.com>
+References: <20260309204007.1709441-1-peterx@redhat.com>
+In-Reply-To: <20260309204007.1709441-1-peterx@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 10 Mar 2026 13:31:22 +0000
-X-Gm-Features: AaiRm50R8F58zQ6X9Xo9h4s4C8v3KqF1a9aDfMwj8zJmebC7deXi4DLoGvv7phc
-Message-ID: <CAFEAcA-t7r5pQrZ5jY5CJ8j+TVFhgEAW0EhQqkH_WDU18sT3VA@mail.gmail.com>
-Subject: Re: [PULL 00/25] s390x & functional tests pull request for the
- softfreeze
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org
+Date: Tue, 10 Mar 2026 13:31:38 +0000
+X-Gm-Features: AaiRm51JnEObtJQoBeW7CFVdBreBVt6wbvV_XgIb_7PsL1E79P_LGOw8wRlBtLs
+Message-ID: <CAFEAcA8zjfAqdEDLga_HWOFCWxcr9G6o42VNd3EaMMDkcjLPKA@mail.gmail.com>
+Subject: Re: [PULL 00/18] Staging patches
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Received-SPF: pass client-ip=2607:f8b0:4864:20::112a;
  envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x112a.google.com
 X-Spam_score_int: -20
@@ -114,25 +115,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Mar 2026 at 05:55, Thomas Huth <thuth@redhat.com> wrote:
+On Mon, 9 Mar 2026 at 20:41, Peter Xu <peterx@redhat.com> wrote:
 >
-> The following changes since commit de61484ec39f418e5c0d4603017695f9ffb8fe24:
+> The following changes since commit 7608a95d2e0bd8c8d069ab77824d02586dd946=
+48:
 >
->   Merge tag 'linux-user-for-v11-pull-request' of https://github.com/hdeller/qemu-hppa into staging (2026-03-09 14:53:42 +0000)
+>   Merge tag 'pull-xen-20260309' of https://xenbits.xen.org/git-http/peopl=
+e/aperard/qemu-dm into staging (2026-03-09 12:15:42 +0000)
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-10
+>   https://gitlab.com/peterx/qemu.git tags/staging-pull-request
 >
-> for you to fetch changes up to f2bd9693f22b105182b0bacdba390a0e41b2cf82:
+> for you to fetch changes up to 40aa899d030e957f815beab33e997a1970914580:
 >
->   pc-bios/s390-ccw.img: Update the s390 bios blog with the latest changes (2026-03-10 06:46:45 +0100)
+>   system/memory: Have memory_region_type() correctly describe containers =
+(2026-03-09 15:27:26 -0400)
 >
 > ----------------------------------------------------------------
-> - Improve the s390-ccw bios to be able to boot from virtio-blk-pci devices
-> - Rework migration functional test to avoid a problem in the ppc64 test
-> - Disable functional memlock test for asan builds
-> - Some other minor tests improvements
+> Memory pull for 11.0 softfreeze
+>
+> - BALATON's memory cleanups on _nomigrate MRs and else
+> - Phil's small constify series and else
+> - Marc-Andr=C3=A9's initial cleanup patches around ram discard manager
+>
+> ----------------------------------------------------------------
 
 
 
