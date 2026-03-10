@@ -4,119 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87344EA854E
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 08:54:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3787BFCC9DE
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 09:02:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzsrF-0005Uh-Ed; Tue, 10 Mar 2026 04:54:29 -0400
+	id 1vzsy5-0006eV-NV; Tue, 10 Mar 2026 05:01:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vzsrB-0005Tw-JB
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 04:54:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vzsxs-0006dy-IR; Tue, 10 Mar 2026 05:01:26 -0400
+Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1vzsr9-0006JJ-5S
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 04:54:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773132862;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u2Yxn9lTMLy3PiaYq3pDZvFHr5Z58VEF5SVsZXH134Y=;
- b=I8Wf93CC/DCXg491224Q2NPRi9StkS1x1GbuOZtd2G+c64oNHEPhBxTl3cddXOomNDnZoB
- 7Qxjok/+Jnh/XfIe/QdfqJbwLWnEX2dGJ/eUNq5U+KqN8hycqSCBZADT5alSwnZ1rWOErs
- 7nxcMYYKDhsqWp8eAEVv7KHZdyCJA4I=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-133-0N5cvwnbPhyN829uIwJlIA-1; Tue, 10 Mar 2026 04:54:20 -0400
-X-MC-Unique: 0N5cvwnbPhyN829uIwJlIA-1
-X-Mimecast-MFC-AGG-ID: 0N5cvwnbPhyN829uIwJlIA_1773132860
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-82992206d20so2676114b3a.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 01:54:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773132860; x=1773737660; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=u2Yxn9lTMLy3PiaYq3pDZvFHr5Z58VEF5SVsZXH134Y=;
- b=O4arxUoUjEvamS6DfxoWJcFSefHmL/wLw3tBpMxcq+mEbsh97yuymtTCn0A0GQfUCG
- pOyIqreikcedlNHNrajgY+j+uOCCtCMQGmBj5HmiooRHQNvzX3Ce5cTvrW7gU0srl12x
- exSDZCPjrXZOL1LsfV0+6hNYuUDFWqGbcAIHAbDBVeaEZnVIVjWaGJjQCMWFdfRBZa4K
- pPDn6U3w+aZZd4qu3dJyjapgBfJ3YsWrxCAfqXnpic8lTKBK5Y1CpRIgEjma9u6AtBtK
- ifIQkZwC+3r7RSQIHzLhafFz5xj1bWP0VLk4Lb95U3TQLwA5iKSC9R70rHqNALlmuZlH
- RRuA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773132860; x=1773737660;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=u2Yxn9lTMLy3PiaYq3pDZvFHr5Z58VEF5SVsZXH134Y=;
- b=ZmzpxH0++8VNxzqe/VqBn3jAHSfBTAeSWKk+C6VjcVSTSV8Dv2oNI2nIFJX5xgNPQW
- Y27tDcgQr+sybYIgG0PB+86v/irwv5RUDZapR3fI5hk1nxiQYti9qqZwB4R+9O3F1TnP
- 69wOlbjONa9VRMjFk6SsJVlMUn14C5fVToo6abxb+Y0ud7HNAt7f/D6m0cn7q7Euppcz
- dRdMay7n2ZTGddANd275YM5QnWukZu+DcJzTo8c5YSvwYrrtk7b1n5+Zpk3+R+MwCkjB
- GHSxzVb0Qn+3lA7JbOBsHao0XW5wznUwClv2hTcXI70/XATqMZHam1awPD3TLeCOKE7D
- +30Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXZDaSWqQHyAqzVbeKNipIx2ykRS0HMccNKsov4C01THNR0zgH9Jo3tmA4UCo6iFe2jfRd+zc+y/yl2@nongnu.org
-X-Gm-Message-State: AOJu0YzIqXcRqwWbzpcqklhwBgR4dCksoTTKw1XImmnl/Ly492AhZYkQ
- ENCPH9lQNrgflmyIVqCw4QATFgpm6G2u2GUFM+JW8JY6ySrw2nJD9owBwyxguHTCqFWUbiH+JQv
- 2MJnlPY4gvVTw7JwyZmzHAcvADXVJJs38F+zoJ9/WVhLNRRhvnxMF0eQY
-X-Gm-Gg: ATEYQzwsXoYhKA4/YljYm+4+IcmgNmYxEqzN5DJPZbJ5vk13bkn488o1+nbYsbC1egY
- RaBGjeMMmBfNo4PHqpZCU/WViG67thkRC4YnbIKNmXc5EwKeKwKtrVRxH7piLjy+bS+COliSpbP
- RLExF1zwPJuT0ZEvb5OmlCJMJGuCrl16mwEKzY8zCpl/eA6m2h+UcDuDius1xCXdB0SoNnl/4V+
- sEF04fKbqSV59I0P4Q+MkjygxK+3KjlSSczQrU6WGiyb7Ot2eblwRJP/af8pg+GqgrWUymXTKOa
- HoIAqL9g4OIxTCiHu5A/0PVLes40mVrHMhyylgowudlp34tT1Xa7bMwHhxjlVdGMrPrJzT8Sl14
- hVC5iPUdYue/OZ7uAAnRrT/JVRUIUMYKceRzfvaKzhRNY55r3E82tq0sitQ0br8fBUuthTTn8Zc
- k=
-X-Received: by 2002:a05:6a00:889:b0:824:afd8:5e91 with SMTP id
- d2e1a72fcca58-829a2dc16eemr12744637b3a.10.1773132859738; 
- Tue, 10 Mar 2026 01:54:19 -0700 (PDT)
-X-Received: by 2002:a05:6a00:889:b0:824:afd8:5e91 with SMTP id
- d2e1a72fcca58-829a2dc16eemr12744625b3a.10.1773132859317; 
- Tue, 10 Mar 2026 01:54:19 -0700 (PDT)
-Received: from smtpclient.apple ([122.176.129.56])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-829a467239asm13312930b3a.26.2026.03.10.01.54.16
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Tue, 10 Mar 2026 01:54:18 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
- commit 98884e0c
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
-Date: Tue, 10 Mar 2026 14:24:03 +0530
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Qemu Ppc <qemu-ppc@nongnu.org>, npiggin@gmail.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1vzsxm-00089f-4t; Tue, 10 Mar 2026 05:01:20 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IkBBwtYQ4Zhc7X2MqdsN4WMefzmEZQZoHUyoT6sVTj8qUITaattB8Z1qcjpuqXkojCgW7L7S9U0p615LABDDRDAGBZo+6MwAmE7qqG5amUDXCFK2QtsvAPjH3vOw1UYy1bzON4YO+n5vIclO1ymFUs+acb9w9lH5708xU4yj9/AM3C7owBlZyXU06WNpB3E3VVeycj3dpBfeE68kjh7UfUN6oFL8b9QYlVThY0VeYdY7vyetrqU14Zd7l2Pvi0YdC1ZfM+v5cBV+8XCme1Wg1llCJaBXL7RKvet36SIT3Bh8ZktPvkaCKKiNV5TAUllP1/tmXFfJ5owVRgBxOgvPGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=LBJUwDL8Us1KLvlfgcJ/TYD4A10r9jOeQ3rlbCyTyv4=;
+ b=BluQ8w75WUpPkOHQDPsKaRpSNvIZaqrylceTRge2D6akOvyeawOYi8sEG9vfViOXEDU9nHUSNdaeatuH4mfNy/Qd1yTuRhRf99MM1LCs6yg8CQ2WaVVbgIf/ZTo6D6sTQfjRO9e8011qqZ+wwqhF4as0JGqWZN/vViQlQyP6PX4+EP8p3QG4z9jX1orZ776d1jNeK1u7dOcoGgKNsidzIZVEsghOsXs0RYDBhUCqDuY5kcslOgfbGoNGXhTSrglaH6jTY8PlLbuQZszldZXa7lcUd9rhcVzQfbpIC2Z336XZegjkuFkMvr+m2l3mOwj2kAWxTswywq004WYV5kXwWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=LBJUwDL8Us1KLvlfgcJ/TYD4A10r9jOeQ3rlbCyTyv4=;
+ b=cETSWIkxzQKrBWf6Yzr25lNaFdui7yvNWbZnndtoSorcz/IoG9P+T/jNrETYKgedW/it8JNIRmFraDc7xhyyTzHik8NdJGU8Hs3KoR3Qdq1BsisVHzkugKLoL2nL23Lm5C4m2cm46zafFEzP43HVRF3pilUCpmjs0TSI+X5riAXDwZ4kMgMYb5YDaELB92UduyAWQiaVl7P98IwMdJLJX2tmCDqGZ3qc56FUqTuvQHjJLBySEfRxmyQ0WMpPFSaKtHgtHiRAIJfloUcAuKknoq8DOGFffBeYMQGCuqf1kLaXoTLgZYIaqwvz5zH8zMyQNIuPOZwHX+IEIEh1mZ01yQ==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by SN7PR12MB8433.namprd12.prod.outlook.com (2603:10b6:806:2e5::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Tue, 10 Mar
+ 2026 09:01:04 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9700.010; Tue, 10 Mar 2026
+ 09:01:03 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Markus Armbruster <armbru@redhat.com>, Nathan Chen <nathanc@nvidia.com>
+CC: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, Yi Liu <yi.l.liu@intel.com>, Eric Auger
+ <eric.auger@redhat.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>, Peter
+ Maydell <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>,
+ "Michael S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Daniel_P=2EBerrang=E9?= <berrange@redhat.com>, Alex Williamson
+ <alex@shazbot.org>, =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
+ Eric Blake <eblake@redhat.com>
+Subject: RE: [RFC PATCH 1/8] hw/arm/smmuv3-accel: Add helper for resolving
+ auto parameters
+Thread-Topic: [RFC PATCH 1/8] hw/arm/smmuv3-accel: Add helper for resolving
+ auto parameters
+Thread-Index: AQHcr/oMB52/+UCqJ0eb9yphs6lsLbWnV1XEgAAb7VA=
+Date: Tue, 10 Mar 2026 09:01:03 +0000
+Message-ID: <CH3PR12MB754899F3426FCB494EA7154FAB46A@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260309192119.870186-1-nathanc@nvidia.com>
+ <20260309192119.870186-2-nathanc@nvidia.com> <87tsuonp7r.fsf@pond.sub.org>
+In-Reply-To: <87tsuonp7r.fsf@pond.sub.org>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SN7PR12MB8433:EE_
+x-ms-office365-filtering-correlation-id: 57b99f2e-3d1f-4783-4ef5-08de7e838f06
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|7416014|376014|1800799024|38070700021; 
+x-microsoft-antispam-message-info: d73tuuDxk/LztPS/dAVRVs66Ev9q26QV1QmosMgyGoUzBABRIsovgS/r3nxKySGCDs0rFsStpWNcRhLhO8qy+g5nzbWcFKYkLLM5Zmz70jnztEMXm1o50jOxnEPu4CVv/FtW9SFdR6RRLrQr/e6LZg260lQGS9aQr7dxy0tYd/soCTeeKd77Ef/0o3DdUFcHLuYBm7y5MjtAiDn95ky0NsInxjGei/3y0mx3lbAEyM5NrRgpTUJ/OHHuxPmFPRA9yWKA7Be3NDXzeyvg8PI9kRnQuF01+6kDaynrovgqywGBhooT3MQ2XHnihiDfvr2zwZMIB9z1zTDs1Yt6hmMmdI0k87zuZL+ZdVvJ1YbgtROWJxYlpK1ou1YMcQBMMj7yYuLSjuCB5lsN5cdtBjNtWDhQ3jOtpkdc75E5GS5kNsAk8FLMYg+XS96I2o0qPEo9zQ6gH5XvGcVJ8ZrAmIZZ9lce86tTjL6Fv1fJviBFq/qVNuA/KfI2BNSqiDavGR5BU4CsFckkRSMQQuX/ZWMFAlBK1IpZWpXBYrFtLkzWxgUQ+PN6PvGfgc0WQ4I8myFnlsNqfDx/cL91eTAdWE8E3/QkBOpgFFKvHctgeRkkZlH98tqtksQSe+tUsr6UHlluC8RxEgmdmtuQ3x0GpYXeKZET1SbbiUKU4/kRcATVV7pHU1310nwWxjL+JsDlFefxfWa46PkivnQXptO+03kTs1HzxC3lML8Oz5gZqCX4VdVBnYimbULHSQ8wbOARW71svOAhvW8CfHG4YpVy8baPCobUYp1FkENVNBbAZwxVT+8=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(7416014)(376014)(1800799024)(38070700021); DIR:OUT;
+ SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?KTCBFNZReKu3xKu6wIzVv38uCYWaW1WpV80UYZFp64oMTYAZBtFkB4mB4T?=
+ =?iso-8859-1?Q?ERC6PxkpxAs+QXo6vi4OGGc3GJB+1+2k4GiB60PuCb8AV7eVl4CCTBHEM6?=
+ =?iso-8859-1?Q?kvydcrv8Ir0xVPxfV3SlhENCBsYDx6fOwDLFUZxmIM/FH+lD7DQ+LZbJ6U?=
+ =?iso-8859-1?Q?Cir6F/k9KHIktBgXC3efpLqoDmcfcbSaSPDMJEkA0QwVXzMCVCEUifGwza?=
+ =?iso-8859-1?Q?vco4F3GRCrlty7smPWh0jeUBKaOoUuaTC5086lQtrcJRaq22gZBQX8xHkJ?=
+ =?iso-8859-1?Q?WbGW/3TCgHBN6GBCOrLF63rbY9aqyIBsiCzAlFzlP0sFj5bufcQ2VfNePV?=
+ =?iso-8859-1?Q?4U8p41XTaIirbQzpjq51gPmmmAn1SGKPQz3xkBE2/bkDhMErHqEutcRm6J?=
+ =?iso-8859-1?Q?Z5fCkOLjBfLrbWD01/2mY66Dr2NVK4rm+r82fX0SlARYjqhteRU5X1QE1L?=
+ =?iso-8859-1?Q?nIJoErujT6nHkWvI0CQd78zCgHVl+A6UqvlPHIGB0mvM1q04avMCB/N12u?=
+ =?iso-8859-1?Q?NJYL2E9glnp/EAttGi6refXCRUAI5Z76HdpE2wlJUd9Avn3Y1ypQBvXFAM?=
+ =?iso-8859-1?Q?dv4CcDUSxwD24uUCFeAMissb+Sg+2vfZFfDrg5cHqaeZDuhSH6lNWW/XQx?=
+ =?iso-8859-1?Q?r0Y+1blx7xqY5FHNXLlWqQ/NAFlgsq11JsVzhKwLJq9idyEUC/SBn+YADN?=
+ =?iso-8859-1?Q?tAWb+uBIm1MQgruNL+ty/H6Q6UChtqOfusc/WOwfE0TqhrQnu9VPbsr5Ks?=
+ =?iso-8859-1?Q?F1bQs5Lc0Kqn0uyuTPFZogyXJZeoxYUarryyHhATHSqTKjw7n0oMO9MIn2?=
+ =?iso-8859-1?Q?NledNqL4fJazkkVnyBEmv3JU/qBhDlDO9u7zpeFS7hFxndJJmVVod/aOkD?=
+ =?iso-8859-1?Q?ipAHhHcZ7avknFVRx4kkLiaZFtECq+n+pzOVXQ+w8gzef3/eDYMUrSlux2?=
+ =?iso-8859-1?Q?S0W4Kc/Zx+7ft4/JfsUhapajinX9qmt7cPamADQjy7mEBLBAtsXNuoEfwo?=
+ =?iso-8859-1?Q?phNz3ytmzkILoODkd7Nqsao47SsXwx52s2eoz/lj1PoFyc3KwaaIGh6+5E?=
+ =?iso-8859-1?Q?vsfmD+x2Ou2l+TMfNCUL4MXbXNc9Fu/cbQ31z9HFtwZ7dCK8Q13IGdzXY8?=
+ =?iso-8859-1?Q?EjQnwD8+3rYtSqzCaj/HaRXaJgdsRYvDwTI45c4c7XaPO1SXTzc4JbBkt5?=
+ =?iso-8859-1?Q?buW0mNqMLSrL5+D93lil6PIWME49DgwYY1MDN0h1e0VNMsL9GyeIFat5Uj?=
+ =?iso-8859-1?Q?DG2IRqJYMIpqEB9TgZxV9c8OgGh2G/rpY0shEy8GMEl6wAf6IDzJfi0D93?=
+ =?iso-8859-1?Q?TNUciAfKD2cqn8T28JrNFhPfuT1HDHMEExbvqoKPmTmK7HozmLiZRCeY6B?=
+ =?iso-8859-1?Q?sCTJgpuj+230rhEmlYiqrv4fwqUgBmMX63PDzBYQZVFn1KIVBM2u3Sr9y2?=
+ =?iso-8859-1?Q?wGBAshUq8lcuKI8/dd6K1tR1qZ7jbmHtoAGbK/URLGBrPjvYLeLhxj5Jo+?=
+ =?iso-8859-1?Q?iwi8EdmjJsvWVj7FXpGZYimO9X4ZKmWuiXUI92OsoMFyacen4Bll8iUMhY?=
+ =?iso-8859-1?Q?ZAtCcJ/XjdTv8nPRJ9HgwOYyuQdYlH9lvz9EABVxxL3hYbycmVuBJVTj5R?=
+ =?iso-8859-1?Q?8Ta4o/EztkRUP6flt8JFbj2pMVXWehGi8dgqoVxSKFfmawMYatWmMCtz0x?=
+ =?iso-8859-1?Q?Mm/tuprunXsRbgTOpO5nY9ohzdGyHrKbf3CVAKzF5p29tGpauskxHAan8v?=
+ =?iso-8859-1?Q?EN0lJ/M7yWPCTmYCcBNbNCqQ5xMYRE6ffrRuZCTqMz55vIj8FIT1EVpT0B?=
+ =?iso-8859-1?Q?7wITT8jvMg=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <ED4A083D-2B96-468A-BE77-211E9F3FA88D@redhat.com>
-References: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
- <2cc23a5ce64847dd8a9278c87f58119b@linux.ibm.com>
- <5bc7997d-329e-47a9-9b4d-750a3104094a@linux.ibm.com>
- <4797B580-7853-490E-8852-B6312619FE95@redhat.com>
- <e966c053-2e69-b185-532e-fcb4173b4daf@redhat.com>
- <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
-To: Misbah Anjum N <misanjum@linux.ibm.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 57b99f2e-3d1f-4783-4ef5-08de7e838f06
+X-MS-Exchange-CrossTenant-originalarrivaltime: 10 Mar 2026 09:01:03.8121 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 42B+OHbgbfZfHgVSnWvieZocr8BsRY6E9MFJE53geYXBz3bA05TeyX/dlCErnoR4xIs0LgXCcwVTckmesZuKOw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB8433
+Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=PH0PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -134,205 +153,216 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 10 Mar 2026, at 2:09=E2=80=AFPM, Misbah Anjum N =
-<misanjum@linux.ibm.com> wrote:
+> -----Original Message-----
+> From: Markus Armbruster <armbru@redhat.com>
+> Sent: 10 March 2026 07:01
+> To: Nathan Chen <nathanc@nvidia.com>
+> Cc: qemu-devel@nongnu.org; qemu-arm@nongnu.org; Yi Liu
+> <yi.l.liu@intel.com>; Eric Auger <eric.auger@redhat.com>; Zhenzhong Duan
+> <zhenzhong.duan@intel.com>; Peter Maydell <peter.maydell@linaro.org>;
+> Shannon Zhao <shannon.zhaosl@gmail.com>; Michael S . Tsirkin
+> <mst@redhat.com>; Igor Mammedov <imammedo@redhat.com>; Ani Sinha
+> <anisinha@redhat.com>; Paolo Bonzini <pbonzini@redhat.com>; Daniel
+> P.Berrang=E9 <berrange@redhat.com>; Alex Williamson <alex@shazbot.org>;
+> C=E9dric Le Goater <clg@redhat.com>; Eric Blake <eblake@redhat.com>;
+> Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+> Subject: Re: [RFC PATCH 1/8] hw/arm/smmuv3-accel: Add helper for resolvin=
+g
+> auto parameters
 >=20
-> Hi Ani and Paolo,
+> External email: Use caution opening links or attachments
 >=20
-> We have tested the code by applying both the original commit =
-(98884e0cc10997a17ce9abfd6ff10be19224ca6a) and your fix patch (commit =
-9e5a6945181d4c1fce7f8438e1b6213f1eb79c14) on ppc64le.
-> However, the issue persists. We've conducted GDB debugging that shows =
-the hang is occurring in a different location than what the fix =
-addresses.
 >=20
-> Since the original patch is breaking KVM guest bringup completely on =
-ppc64le, and the fix patch does not resolve the issue, given the =
-severity of this regression (complete KVM breakage on ppc64le), we =
-should either find a quick fix or consider reverting the patch until a =
-proper solution can be identified.
+> Nathan Chen <nathanc@nvidia.com> writes:
+>=20
+> > From: Nathan Chen <nathanc@nvidia.com>
+> >
+> > Introduce smmuv3_accel_auto_finalise() to resolve properties
+> > that are set to 'auto' for accelerated SMMUv3. This helper
+> > function allows properties such as ATS, RIL, SSIDSIZE, and OAS
+> > support to be resolved from host IOMMU values, while avoiding
+> > triggering auto-resolved values for hot-plugged devices.
+> >
+> > Auto mode requires at least one cold-plugged device to retrieve
+> > and finalise these properties, and we fail boot if that is not
+> > the case.
+> >
+> > Subsequent patches will make use of this helper to set the
+> > values when we convert the values to OnOffAuto. New auto_mode
+> > and auto_finalised bool members are added to SMMUv3AccelState.
+> > smmuv3_accel_init() will set auto_mode to true when 'auto' is
+> > detected for the accel SMMUv3 properties.
+> > smmuv3_accel_auto_finalise() will set auto_finalised to true
+> > after all 'auto' properties are resolved, and subsequent
+> > calls to this function will return early if auto_finalised is
+> > set to true.
+> >
+> > Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
+> > Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+> > ---
+> >  hw/arm/smmuv3-accel.c | 38 +++++++++++++++++++++++++++++++++--
+> ---
+> >  hw/arm/smmuv3-accel.h |  2 ++
+> >  2 files changed, 35 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> > index 17306cd04b..617629bacd 100644
+> > --- a/hw/arm/smmuv3-accel.c
+> > +++ b/hw/arm/smmuv3-accel.c
+> > @@ -35,11 +35,34 @@ static int smmuv3_oas_bits(uint32_t oas)
+> >      return map[oas];
+> >  }
+> >
+> > +static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice
+> *pdev,
+> > +                                       struct iommu_hw_info_arm_smmuv3=
+ *info) {
+> > +    SMMUv3AccelState *accel =3D s->s_accel;
+> > +
+> > +    /* Return if no auto for any or finalised already */
+> > +    if (!accel->auto_mode || accel->auto_finalised) {
+> > +        return;
+> > +    }
+> > +
+> > +    /* We can't update if device is hotplugged */
+> > +    if (DEVICE(pdev)->hotplugged) {
+> > +        warn_report("arm-smmuv3: 'auto' feature property detected, but=
+ host
+> "
+> > +                    "value cannot be applied for hot-plugged device; u=
+sing "
+> > +                    "existing value");
+>=20
+> Why is this warning useful?
+>=20
+> Does @auto's meaning depend on whether the device is cold- or
+> hot-plugged?
 
-Based on what you just described, it does not seem like the issue is =
-related to 98884e0cc10997a17ce9abfd6ff10be19224ca6a at all. If you =
-revert this patch in your local tree, can you confirm that your issue =
-gets fixed?
+If SMMUv3 accel=3Don and properties are set to "auto", we require
+at least one cold-plugged vfio-pci device to retrieve the associated
+host SMMUv3 information and finalise the QEMU SMMUv3 properties.
+
+In this series, "auto_mode" is set if any accel property is specified as
+"auto". The properties are then finalised using the first cold-plugged
+device and "auto_finalised" is set.
+
+Since we later fail the guest boot(see below) in the reset phase if
+auto_mode is set but auto_finalised is still false, the above hotplug
+case should not really happen. In that case the VM would not boot.
+
+So likely we can get rid of the hotplug check above. Need to do
+a bit more testing to confirm we cover all corner cases.
 
 >=20
-> Analysis:
-> 1. This is not a confidential guest. This is a regular KVM guest =
-running on ppc64le.
-> 2. The execution flow shows that qemu_system_reset() completes =
-successfully and never enters the code path at line 529-543
+> > +        return;
+> > +    }
+> > +
+> > +    accel->auto_finalised =3D true;
+> > +}
+> > +
+> >  static bool
+> >  smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+> >                                   struct iommu_hw_info_arm_smmuv3 *info=
+,
+> > +                                 PCIDevice *pdev,
+> >                                   Error **errp)
+> >  {
+> > +    smmuv3_accel_auto_finalise(s, pdev, info);
+> > +
+> >      /* QEMU SMMUv3 supports both linear and 2-level stream tables */
+> >      if (FIELD_EX32(info->idr[0], IDR0, STLEVEL) !=3D
+> >                  FIELD_EX32(s->idr[0], IDR0, STLEVEL)) {
+> > @@ -124,7 +147,7 @@
+> smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+> >
+> >  static bool
+> >  smmuv3_accel_hw_compatible(SMMUv3State *s,
+> HostIOMMUDeviceIOMMUFD *idev,
+> > -                           Error **errp)
+> > +                           PCIDevice *pdev, Error **errp)
+> >  {
+> >      struct iommu_hw_info_arm_smmuv3 info;
+> >      uint32_t data_type;
+> > @@ -142,7 +165,7 @@ smmuv3_accel_hw_compatible(SMMUv3State *s,
+> HostIOMMUDeviceIOMMUFD *idev,
+> >          return false;
+> >      }
+> >
+> > -    if (!smmuv3_accel_check_hw_compatible(s, &info, errp)) {
+> > +    if (!smmuv3_accel_check_hw_compatible(s, &info, pdev, errp)) {
+> >          return false;
+> >      }
+> >      return true;
+> > @@ -595,6 +618,7 @@ static bool
+> smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+> >      SMMUv3State *s =3D ARM_SMMUV3(bs);
+> >      SMMUPciBus *sbus =3D smmu_get_sbus(bs, bus);
+> >      SMMUv3AccelDevice *accel_dev =3D smmuv3_accel_get_dev(bs, sbus, bu=
+s,
+> devfn);
+> > +    PCIDevice *pdev =3D pci_find_device(bus, pci_bus_num(bus), devfn);
+> >
+> >      if (!idev) {
+> >          return true;
+> > @@ -613,7 +637,7 @@ static bool
+> smmuv3_accel_set_iommu_device(PCIBus *bus, void *opaque, int devfn,
+> >       * Check the host SMMUv3 associated with the dev is compatible wit=
+h the
+> >       * QEMU SMMUv3 accel.
+> >       */
+> > -    if (!smmuv3_accel_hw_compatible(s, idev, errp)) {
+> > +    if (!smmuv3_accel_hw_compatible(s, idev, pdev, errp)) {
+> >          return false;
+> >      }
+> >
+> > @@ -867,8 +891,12 @@ bool
+> smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s, Error **errp)
+> >
+> >  void smmuv3_accel_reset(SMMUv3State *s)
+> >  {
+> > -     /* Attach a HWPT based on GBPA reset value */
+> > -     smmuv3_accel_attach_gbpa_hwpt(s, NULL);
+> > +    if (s->s_accel && s->s_accel->auto_mode && !s->s_accel->auto_final=
+ised)
+> {
+> > +        error_report("AUTO mode specified but properties not finalised=
+.");
+> > +        exit(1);
+>=20
+> How can we get here?
 
-This is what I expected and therefore, no code related to coco guest =
-rebuilding is getting executed. Your issue seems to be somewhere else.
+This is reached from the SMMUv3 reset handler when auto mode is
+specified but no cold-plugged device has been attached to finalise the
+accelerated SMMUv3 properties.
 
-> 3. The hang occurs later in qemu_default_main() at system/main.c:49, =
-after calling bql_lock()
-> 4. The ppc KVM guest boots fine with the previous commit - =
-df8df3cb6b743372ebb335bd8404bc3d748da350
-> 5. This suggests the issue is not with error handling of -EOPNOTSUPP =
-during reset, but bql_lock() getting stuck in qemu_default_main()
->=20
-> GDB Trace Analysis:
-> We set breakpoints at qemu_system_reset() and qemu_default_main() to =
-trace the execution flow. The system successfully completes =
-qemu_system_reset() without entering the problematic code path where the =
-fix provided by you applies (system/runstate.c:529-543).
->=20
-> # gdb --args /usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine =
-pseries,accel=3Dkvm -enable-kvm -m 32768 -smp =
-32,sockets=3D1,cores=3D32,threads=3D1 -nographic -serial pty -device =
-virtio-balloon -device virtio-scsi-pci,id=3Dscsi0 -drive =
-file=3D/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2=
-,if=3Dnone,id=3Ddrive-scsi0-0-0,format=3Dqcow2 -device =
-scsi-hd,bus=3Dscsi0.0,drive=3Ddrive-scsi0-0-0 -netdev =
-bridge,id=3Dnet0,br=3Dvirbr0 -device virtio-net-pci,netdev=3Dnet0
->=20
-> (gdb) handle SIGUSR1 pass nostop noprint
-> Signal        Stop Print Pass to program Description
-> SIGUSR1       No No Yes User defined signal 1
-> (gdb) b qemu_system_reset
-> Breakpoint 1 at 0x69a688: file ../system/runstate.c, line 510.
-> (gdb) b qemu_default_main
-> Breakpoint 2 at 0xa9aeb8: file ../system/main.c, line 45.
-> (gdb) r
->=20
-> Starting program: /usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 =
--machine pseries,accel=3Dkvm -enable-kvm -m 32768 -smp =
-32,sockets=3D1,cores=3D32,threads=3D1 -nographic -serial pty -device =
-virtio-balloon -device virtio-scsi-pci,id=3Dscsi0 -drive =
-file=3D/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le.qcow2=
-,if=3Dnone,id=3Ddrive-scsi0-0-0,format=3Dqcow2 -device =
-scsi-hd,bus=3Dscsi0.0,drive=3Ddrive-scsi0-0-0 -netdev =
-bridge,id=3Dnet0,br=3Dvirbr0 -device virtio-net-pci,netdev=3Dnet0
->=20
-> Thread 1 "qemu-system-ppc" hit Breakpoint 1, qemu_system_reset =
-(reason=3Dreason@entry=3DSHUTDOWN_CAUSE_NONE) at =
-../system/runstate.c:513
-> 513     AccelClass *ac =3D ACCEL_GET_CLASS(current_accel());
-> (gdb) n
-> 517     mc =3D current_machine ? MACHINE_GET_CLASS(current_machine) : =
-NULL;
-> (gdb) n
-> 519     cpu_synchronize_all_states();
-> (gdb) n
-> 521     switch (reason) {
-> (gdb) n
-> 529     if (!cpus_are_resettable() &&
-> (gdb) n
-> 553     if (mc && mc->reset) {
-> (gdb) n
-> 554         mc->reset(current_machine, type);
-> (gdb) n
-> 558     switch (reason) {
-> (gdb) n
-> 574     if (cpus_are_resettable()) {
-> (gdb) n
-> 583             cpu_synchronize_all_post_reset();
-> (gdb) n
-> 587     vm_set_suspended(false);
-> (gdb) n
-> qdev_machine_creation_done () at ../hw/core/machine.c:1814
-> 1814    register_global_state();
-> (gdb) n
-> qemu_machine_creation_done (errp=3D0x10123e028 <error_fatal>) at =
-../system/vl.c:2785
-> 2785    if (machine->cgs && !machine->cgs->ready) {
-> (gdb) n
-> 2791    foreach_device_config_or_exit(DEV_GDB, gdbserver_start);
-> (gdb) n
-> 2793    if (!vga_interface_created && !default_vga &&
-> (gdb) n
-> qmp_x_exit_preconfig (errp=3Derrp@entry=3D0x10123e028 <error_fatal>) =
-at ../system/vl.c:2815
-> 2815    if (loadvm) {
-> (gdb) n
-> 2820    if (replay_mode !=3D REPLAY_MODE_NONE) {
-> (gdb) n
-> 2824    if (incoming) {
-> (gdb) n
-> 2837    } else if (autostart) {
-> (gdb) n
-> 2838        qmp_cont(NULL);
-> (gdb) n
-> qemu_init (argc=3D<optimized out>, argv=3D<optimized out>) at =
-../system/vl.c:3849
-> 3849    qemu_init_displays();
-> (gdb) n
-> 3850    accel_setup_post(current_machine);
-> (gdb) n
-> 3851    if (migrate_mode() !=3D MIG_MODE_CPR_EXEC) {
-> (gdb) n
-> 3852        os_setup_post();
-> (gdb) n
-> 3854    resume_mux_open();
-> (gdb) n
-> main (argc=3D<optimized out>, argv=3D<optimized out>) at =
-../system/main.c:84
-> 84      bql_unlock();
-> (gdb) n
-> 85      replay_mutex_unlock();
-> (gdb) n
-> 87      if (qemu_main) {
-> (gdb) n
-> 93          qemu_default_main(NULL);
-> (gdb) n
->=20
-> Thread 1 "qemu-system-ppc" hit Breakpoint 2, qemu_default_main =
-(opaque=3Dopaque@entry=3D0x0) at ../system/main.c:48
-> 48      replay_mutex_lock();
-> (gdb) n
-> 49      bql_lock();
-> (gdb) n
->=20
-> <hangs>
-> <system becomes unresponsive at this point>
->=20
->=20
-> Thanks,
-> Misbah Anjum N <misanjumn@ibm.com>
->=20
->=20
->=20
-> On 2026-03-09 18:53, Ani Sinha wrote:
->> Yes seems this is an issue and I will fix it. Not sure if the fix =
-will
->> address your issue though ...
->> Can you try the following patch?
->> =46rom 9e5a6945181d4c1fce7f8438e1b6213f1eb79c14 Mon Sep 17 00:00:00 =
-2001
->> From: Ani Sinha <anisinha@redhat.com>
->> Date: Mon, 9 Mar 2026 18:44:40 +0530
->> Subject: [PATCH] Fix reset for non-x86 archs that do not support =
-reset yet
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> ---
->> system/runstate.c | 4 +++-
->> 1 file changed, 3 insertions(+), 1 deletion(-)
->> diff --git a/system/runstate.c b/system/runstate.c
->> index eca722b43c..c1f41284c9 100644
->> --- a/system/runstate.c
->> +++ b/system/runstate.c
->> @@ -531,10 +531,12 @@ void qemu_system_reset(ShutdownCause reason)
->>         (current_machine->new_accel_vmfd_on_reset || =
-!cpus_are_resettable())) {
->>         if (ac->rebuild_guest) {
->>             ret =3D ac->rebuild_guest(current_machine);
->> -            if (ret < 0) {
->> +            if (ret < 0 && ret !=3D -EOPNOTSUPP) {
->>                 error_report("unable to rebuild guest: %s(%d)",
->>                              strerror(-ret), ret);
->>                 vm_stop(RUN_STATE_INTERNAL_ERROR);
->> +            } else if (ret =3D=3D -EOPNOTSUPP) {
->> +                error_report("accelerator does not support reset!");
->>             } else {
->>                 info_report("virtual machine state has been rebuilt =
-with new "
->>                             "guest file handle.");
->> --
->> 2.42.0
->>> Is this a confidential guest that cannot be normally reset?
->=20
+If no such device is present, "auto_finalised" remains false and we hit
+this path during reset.
+
+C=E9dric mentioned that we should not exit during the reset phase. If that
+is the case, we likely need another way to handle the scenario where
+auto mode is specified but no cold-plugged device is present.
+
+Thanks,
+Shameer
+=20
+> > +    }
+> > +    /* Attach a HWPT based on GBPA reset value */
+> > +    smmuv3_accel_attach_gbpa_hwpt(s, NULL);
+> >  }
+> >
+> >  static void smmuv3_accel_as_init(SMMUv3State *s)
+> > diff --git a/hw/arm/smmuv3-accel.h b/hw/arm/smmuv3-accel.h
+> > index dba6c71de5..3c1cd55714 100644
+> > --- a/hw/arm/smmuv3-accel.h
+> > +++ b/hw/arm/smmuv3-accel.h
+> > @@ -26,6 +26,8 @@ typedef struct SMMUv3AccelState {
+> >      uint32_t bypass_hwpt_id;
+> >      uint32_t abort_hwpt_id;
+> >      QLIST_HEAD(, SMMUv3AccelDevice) device_list;
+> > +    bool auto_mode;
+> > +    bool auto_finalised;
+> >  } SMMUv3AccelState;
+> >
+> >  typedef struct SMMUS1Hwpt {
 
 
