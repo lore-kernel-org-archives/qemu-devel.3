@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6E5CFD88CD
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8ABBFD88CD
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 23:21:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w06O2-0000dW-Cc; Tue, 10 Mar 2026 19:21:14 -0400
+	id 1w06Of-0000yQ-MS; Tue, 10 Mar 2026 19:21:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06O0-0000dI-PB
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:13 -0400
-Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Oa-0000y6-1m
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:48 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06Nz-0008Fm-7c
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:12 -0400
-Received: by mail-wr1-x433.google.com with SMTP id
- ffacd0b85a97d-439cd6b09f8so4984935f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:21:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w06OW-0008K2-UN
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 19:21:46 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439c944bb62so4992191f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 16:21:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773184869; x=1773789669; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773184903; x=1773789703; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tW5qNw2kq4iAD+9Er8jcxRwl/XjqIvVO6z8tOwbhYrU=;
- b=VcUSYGz5pSFBpdclSWftrRAgu6VM/cFVn67zJtSKfpz9ParxiZroB9mkPJgQdL96r2
- kJPEmPvDlQH0mmUWb6gTxKWIs21PptbCvFLve103PB8TPGGB/kBpGkPUQ+vO5UbXYRA5
- H4318+YVF4a2wQecZQS0bMV69IJsjH1UyhGOn5vlpWrgKOaSGM71at8OfSWI+D5xjLEU
- gCgHBDv1xT5/kwS0JUN3kDqAoxYWHa4qfiHNQ09cZgKYdx0MPCpmKXmbN8d7AmdzWuui
- 5ONQIeLiYqMr0MqOqbRresuLOrYA3eH9L3M3TBf2MjaKI+uJ1ylsqkyc7Ja13T33I7ir
- Z6pQ==
+ bh=bj/hjGdaTcwc0CniLQTv7gtXBbi9cqQXsRRG3awcJ4o=;
+ b=nC8ue+LS18pqrybSDYT5WrGUvmP9HsrBv4X2F/jCaYVMDmxLHzHC+U6UkcMYit2hcR
+ cARLim0LrAhpLmnFBykzWFKNgdO/iQpgvlty2MfwKw4lXwZeT35QQnmjhkl6zVrZaISM
+ sPqP2+gX/ADeiuppExaP8UIeeiRQGxEZ+z/rP+ASAolzq6eZgPA5OwmIhf71skag8RHU
+ 6siW/QtFonh/EXYNm94W2fsIoi3pWRRwc4iEtAsrXVfvfD4JVW59ENTd8Bl4/P4f9BNI
+ 8EaSX1UN10trJvl5MnBYTFiIIfB9WmV+YiQOaPfDlJzG8vw9JXC5Dc3WTzxhC3yXmDwT
+ QdPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773184869; x=1773789669;
+ d=1e100.net; s=20230601; t=1773184903; x=1773789703;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=tW5qNw2kq4iAD+9Er8jcxRwl/XjqIvVO6z8tOwbhYrU=;
- b=htuaOvSV8oQiJpR7xDVW1xXmspOJEqf/UGZH16GYTQACQpQ6A05rfRwtxMZ66FjLmN
- 6wJCOGfWFPFZfn9RVhMqFN0LfJcllvFnBRdjE2SdYLeeFwwHFE3GN10bO5HLDaFvYlnQ
- QTy+nVHfve/RQGZ0ItV21wu7j7KlPEujK9O9d+VIdMgfs+7fWeD287cy6nLhtaZjXBkV
- ma5nvQ3nsf6hVRmKzQrosK/3bAg92O706YSWlfhNja3DW2eeSDaCIq8twC2prVtuO5KV
- 0nhuR4TevMG+qxq0uQhiaCn8Bd6BRHVy1sneSyg7gbcC2+xRSyvjsBqww05qh2g5FI5L
- HpSA==
-X-Gm-Message-State: AOJu0YwWWnlIHxQ9a3iGo4jLsIXbxwIrx7uhdcNaJxeI0CAVBK0Y4MrU
- hqMFBRd24mUa+K2ZjfFdTRSZy4wJxgtylfgCFHq+wXzXaPvwuPdLSIwOu70HGXHqe57JM0K7tSb
- yTRE59oM=
-X-Gm-Gg: ATEYQzyjsccMfVGtq9L+zAR6onVtu1KSSnLwe9RQQU+sJe7zq6xJ8OZpABRftpaUZkL
- 278y4d7ElyVNVEPH+3p/VSUB7vlzafqxc/X6PobznN8XvWZBZqhzYEqNT7uGoecTeT289dRWmve
- NSoLLu9ibw45XSnOUuKZ6VCZIBMPfNf138c6wkb2FVT6PSLHU5kx4i97KrAe1pdZ+1DG5vFcJN4
- LMujy4Td2UA6K/FdVCECSjcRWiXgFAj/UU+vOnYiFA7/xkTXuF4z2oxGPRn0YmshQYk2Ss9kBuF
- HD9vRIL4w8cpqbD/jG/gQ3qOwaiWABDrTSF4OltMD4YbOYfPmxH1AjeiwKsQpbzSQzJkseV2R3y
- dEGMOqcTCivEUqCzOs6eqF+Itrgy+yZmsLCQHB+o9FEb3hk/CpWN9j9/aJlrQzhGIllQCA8NmOA
- Tf1VuGVzwt4XlU8q6MMtKOa4NY7hZlnEZ2oVgyJMyaXpKkkH+QN8ryCftuAa259uOCazSw+1Lc
-X-Received: by 2002:a05:6000:2486:b0:439:c9e0:83a5 with SMTP id
- ffacd0b85a97d-439f8440ee7mr1016891f8f.54.1773184869294; 
- Tue, 10 Mar 2026 16:21:09 -0700 (PDT)
+ bh=bj/hjGdaTcwc0CniLQTv7gtXBbi9cqQXsRRG3awcJ4o=;
+ b=LgTxCMEm2vzxZEHYnk+7U53RzkdimGmcv9QVsryQrhSw7yrrDjgBqCWmDYI2qxs4dS
+ E25Jx4LvlfTRy1KupZAn+yFAk+I2gT+8rkpsADzFngdj0ESA6rV6Qnd8uIMp84M+YWmM
+ o4HGc2BOdWGn3qn0VK8lrCq0A3gam0LO5q3w2FHBOyth0ZCOqYRLhQ8jEsQIIZipz7SP
+ +KoIj2AvsAJ5wOzmguuky2T2khP0iwoilkSMjgaz6lB8BcQs9tMzTrz55vMEmOEIR99n
+ iHZhh2sTy6gNz+rVPBqJYFE5sXgZ7iysfanmC/uUNutNgD4Zl7I4GThqoUhOYpRedB8S
+ 0OQg==
+X-Gm-Message-State: AOJu0YwAHw20L4mkJ9RzK51kUXUFzKTpDkrs84R6qtY5BWzobspT9M2b
+ wjSLB0QGoGc153FFLu2wNKmRUzBKgztBAfvEObHGLoKcMzX4Wq3d5dMMzrIx+XYBuWf6kKGjRke
+ bPDQqCMo=
+X-Gm-Gg: ATEYQzwgoq6inW9nFdL1nB2C/2h/PSpWals4mAxlKc68ULYkas3LrDqhvHytQc7LPLN
+ /A991YjFaPWPlObkZN9kZMnHDY30u1hjBMR9pZD8agt1XM32VyUemvksDGvxW2QAlK0mQyQWBVh
+ I3YvQS8rq05rQIlrY54GIcJ5hfXbv3zH1qk2gvy1dQvKq3leRV05xOuJlw3J6+znCrNFR90/Yti
+ 4lly84Y1CKBxl9BzSjFphMdtgG1Rf5VVd8gJxATLREsk14+yHOFXoj6/u1dGMHb+fjhBeJA4hYu
+ KLRlMUEhJ+yrvpgMPNgfPDAk2ZFH6AXNXR6byFqkmq9sykh6bSmZ3hXpEtBdpW6k9FXMt2YHy+K
+ te8eepAe2V0iteKQ6JXBzy8pWBNos5whK5QaBgrpgoaossjQHOzdXSg0VGHxfzu6k57HuXJtHy6
+ 7VDgwm1bu763bZkYi1qQ/uid2mkAFG4Pfkk/vCMbhz1tZ+bTEdu4sTueNI0Img5YVYBmlvj1rQ
+X-Received: by 2002:a05:6000:24c4:b0:439:b3ff:9abb with SMTP id
+ ffacd0b85a97d-439f8224fc0mr1135355f8f.57.1773184903093; 
+ Tue, 10 Mar 2026 16:21:43 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439f821ffb9sm1548824f8f.37.2026.03.10.16.21.08
+ ffacd0b85a97d-439f818d4c8sm1941947f8f.7.2026.03.10.16.21.42
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 10 Mar 2026 16:21:08 -0700 (PDT)
+ Tue, 10 Mar 2026 16:21:42 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
  =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PATCH v4 03/16] tests/docker: add gdb-multiarch to all-test-cross
-Date: Wed, 11 Mar 2026 00:20:31 +0100
-Message-ID: <20260310232045.58440-4-philmd@linaro.org>
+Subject: [PATCH v4 08/16] gdbstub: Have scripts/feature_to_c.py generate more
+ verbose output
+Date: Wed, 11 Mar 2026 00:20:36 +0100
+Message-ID: <20260310232045.58440-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260310232045.58440-1-philmd@linaro.org>
 References: <20260310232045.58440-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::433;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,44 +103,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+Make the structure field names explicit, so it is easier
+to figure what is what when reviewing multiple entries.
 
-This allows the gdb integration tests to be run as well.
-
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260306161728.2657486-2-alex.bennee@linaro.org>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- tests/docker/dockerfiles/debian-all-test-cross.docker | 1 +
- tests/lcitool/refresh                                 | 1 +
- 2 files changed, 2 insertions(+)
+ scripts/feature_to_c.py | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/tests/docker/dockerfiles/debian-all-test-cross.docker b/tests/docker/dockerfiles/debian-all-test-cross.docker
-index b73776d95b5..287770a995a 100644
---- a/tests/docker/dockerfiles/debian-all-test-cross.docker
-+++ b/tests/docker/dockerfiles/debian-all-test-cross.docker
-@@ -59,6 +59,7 @@ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-   apt install -y --no-install-recommends \
-   clang\
-   dpkg-dev\
-+  gdb-multiarch\
-   libclang-rt-dev
- ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \
-   libc6-dev-arm64-cross \
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 3e4b026035b..259e6ea0729 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -167,6 +167,7 @@ debian_all_test_cross_compilers = [
-     "  apt install -y --no-install-recommends \\\n",
-     "  clang\\\n",
-     "  dpkg-dev\\\n",
-+    "  gdb-multiarch\\\n",
-     "  libclang-rt-dev\n",
-     "ENV AVAILABLE_COMPILERS gcc-aarch64-linux-gnu \\\n",
-     "  libc6-dev-arm64-cross \\\n",
+diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
+index 3aa62fb895f..1329695ad04 100644
+--- a/scripts/feature_to_c.py
++++ b/scripts/feature_to_c.py
+@@ -85,13 +85,16 @@ def writeliteral(indent, bytes):
+     num_regs = max(regnums) - base_reg + 1 if len(regnums) else 0
+ 
+     sys.stdout.write('    {\n')
+-    writeliteral(8, bytes(os.path.basename(input), 'utf-8'))
++    sys.stdout.write('        .xmlname = ')
++    writeliteral(0, bytes(os.path.basename(input), 'utf-8'))
+     sys.stdout.write(',\n')
+-    writeliteral(8, read)
++    sys.stdout.write('        .xml = \n')
++    writeliteral(12, read)
+     sys.stdout.write(',\n')
+-    writeliteral(8, bytes(feature_name, 'utf-8'))
++    sys.stdout.write('        .name = ')
++    writeliteral(0, bytes(feature_name, 'utf-8'))
+     sys.stdout.write(',\n')
+-    sys.stdout.write(f'        (const char * const [{num_regs}]) {{\n')
++    sys.stdout.write(f'        .regs = (const char * const [{num_regs}]) {{\n')
+ 
+     for index, regname in enumerate(regnames):
+         sys.stdout.write(f'            [{regnums[index] - base_reg}] =\n')
+@@ -99,7 +102,7 @@ def writeliteral(indent, bytes):
+         sys.stdout.write(',\n')
+ 
+     sys.stdout.write( '        },\n')
+-    sys.stdout.write(f'        {num_regs},\n')
++    sys.stdout.write(f'        .num_regs = {num_regs},\n')
+     sys.stdout.write( '    },\n')
+ 
+ sys.stdout.write('    { NULL }\n};\n')
 -- 
 2.53.0
 
