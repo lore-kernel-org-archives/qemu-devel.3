@@ -4,108 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D84BF3C27D
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 09:50:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34878F3C27D
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 09:51:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vztjQ-0000mQ-Nv; Tue, 10 Mar 2026 05:50:28 -0400
+	id 1vztjq-00016g-FX; Tue, 10 Mar 2026 05:50:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vztjK-0000lX-Pi
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 05:50:24 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1vztjI-0001px-Ts
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 05:50:22 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-661b16ac011so6332474a12.2
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 02:50:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773136219; cv=none;
- d=google.com; s=arc-20240605;
- b=gQm5Uil58i3dRQpTD9sfQZCxWdzXuRvaG4QmCDXPtovvGjyV1K2aWk9lcc4316XlvQ
- 7gYmbM+vmaZo3Q0bi7hUOYPvufChQkcb4f5snrs4CEPSzGHdCa9PtiNBSaATxX4iUfh3
- olAezNo75B3YHyQRgEsia0seNi+39otTXSrzpU6Yif/jJkbMctNFCppT6DNSlt88Cbll
- djX9Xyj4lbsWkc5HZfRJokAfz1hqN/+a8UwzzWD9fCUPsW383ezSCbqE7ikm+iZT7/fw
- M1NOpFITrTxbw+3mLjthex6W/nIOBKdz7wW5M1MSvy4ZorVeGSwkoVDYCVzw/P3LG1DV
- P4vg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=BAsVF2XzAaxJVvKHHH5r0ZnlGx8AEryu0ptCLjyan1w=;
- fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
- b=dedbVOuMiQXw3QOvmBnz9dHahmWS7naowUmSe4EIpJ290YWciNKNsANcYbKaaFM93s
- wY45eLtpgiRTog2RQvAchHOJbX3O7O6VVSqI0sZeNJ5uXJgAbzNDQgvDmIWAeVWTTqwa
- dwXUUfOIPwP93+gbLn4xDrY7J6yfZIPEn2Ian8/o5cKkTw4skn9Zy5qfgRIiBkgjQrdC
- 9NvmnJeBjcn6nBp5xkIQjvhqk5+Z/pNodJkqjo9Ccp3HbqYe3hSiml1vBKBibmQujurz
- bac2c6P80c+Wh/QiJR1v2cegn/ZZGy+Xz2F/bn/VO9oWzYyIA2uWoxfQWo9COVp2gU8Y
- HAaw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773136219; x=1773741019; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=BAsVF2XzAaxJVvKHHH5r0ZnlGx8AEryu0ptCLjyan1w=;
- b=E528cVk5LScED7d3hRED1igw+dHejoe/wzcXDNUKoW78YDJrLbfIMb44uFbGe7gsa6
- mbgqEi7r6iiKAEj+0FDTm+SyIoI5sgfADtkUJbQRLl5YCFiSeK7Lu3XQnfntFisyy8bJ
- j7mr3Sy25DRrIk0YGpjRrOwdjuQSptigNiOqHBEvWtzaQd+SgDWg0ZlexV8YCANiujSW
- TKiqqUIorbxGXwVPzsdVRgVbwlv9YkUy/cFW2RIHeuKulAcUHbpuctGtKk53yHv7xHdU
- AQQyRlWW+0+QJ2ROi6mLNiZWU+cV85MD78U4GxpJzEGHpPztqOtfMr4fKRrnUOPLzRo6
- MGXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773136219; x=1773741019;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=BAsVF2XzAaxJVvKHHH5r0ZnlGx8AEryu0ptCLjyan1w=;
- b=jKggH74Ku9IU5ZUNlrEFrXfAFQo7HvuRLgPL6j129O2HqeGCeLUAdbRgAYNUR2RaoL
- IGlzsmmzNrz2P5Iy1lII1M6XDkyYqHiejKmZa94JSPZi9Nhn4QSYsdDLgQRdLBD0XcVG
- dCKc3Lrczew9+dABX8OIKETMLKrLHP1YGZYtQEuhDnG3SGxHUnLENUBFx814PvwtAA11
- dfIUareZGf9G0YL5+a2tcVdZ8JDOc1kX3ZnkM2j1tzq1Qd6hWYRcNkFwT/kI8kiyejcH
- 7HL8mAuw+fWdmK8xjXWw1p89OvZ2wSmpWXMaxSZNbe021XL5lHCkdIJRyEdKzHvfCGnL
- XF/w==
-X-Gm-Message-State: AOJu0YyZuXmM8+pf7y7vDqv9HoKulal263N7B59CxayJzFOgPFaRov3E
- KmKv5gP5cWsVZCrtSd/2e2OtCUvYq3BUPCitKwhqAMo2AWBCns110uFe+A7xwHK8N+NsbKMloi4
- ZYxNaKk5xIZAD91Da+3qn3helyjm4pDk=
-X-Gm-Gg: ATEYQzz4lWfa6jZtK/jbkPN8GLlpEdd7yaCs8G0DRumRghlhkXyPuotuTM01N9SbbjM
- 6hYFGzkQ4eU4DHx7vlBUUWi26yz6No8H7JQ5H8eH+PUeE9slqwjPwM6yGph74inXy+Lcg8fqoQ+
- zAgazX4WxEAmbqm8v00YTyB9UYaGs0Fplqo10vgTY9yUqY1GK/Vf4lE6WWW1HS02jzRq1YWCbS3
- KXoZZODV4pNf1m0eZUEd3UVdD/fvtJb+6QVDSQcZICdr2zIyTO/Cl5oMNy2+1aGkUhjhFE+fWcR
- X6b6D5A=
-X-Received: by 2002:a05:6402:40d6:b0:662:ac65:19e7 with SMTP id
- 4fb4d7f45d1cf-662ac651d8cmr2067864a12.10.1773136219131; Tue, 10 Mar 2026
- 02:50:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vztjl-0000tx-6B; Tue, 10 Mar 2026 05:50:50 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vztji-0001sa-Ln; Tue, 10 Mar 2026 05:50:48 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 629GOlPI1633953; Tue, 10 Mar 2026 09:50:43 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=or8zUK
+ Q3LG4R2h41q6R0lTAeIHbnW+wjYwwvJy3pf28=; b=AcGF3OlGw/0yCWoqfRlDmK
+ yy5yax6zLhjDzdNgunDM4mJxGQqLlFjU5rCeeJsrmaq+zx7UPIt9ps8wOf3dtEeG
+ zDrmKAtywcsm3+gCr8HSgsK5pK3xVvrOSI8NB1JCvRaVBlNKM9QHLjJyyJ7Frcpv
+ VHvVMmEEpeNnSsWivIqNyaPAb/KEgQBnYPd1NqBMWF3eFiYd6oMM9DuwwcN1voex
+ hor7nrlDG1llmi7a7cTQthSC4XveMOezB5/jAo6x5d3G70ao/muOQhaAvHTa70S9
+ PGYLRRMsgrn0SlQKTu7FHf4Ob6RSPPefGORE/Yec9/4DBZYIr3rJuMA49l2LOBNA
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcywa964-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 09:50:42 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62A86SEj015725;
+ Tue, 10 Mar 2026 09:50:41 GMT
+Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs122096u-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 09:50:41 +0000
+Received: from smtpav04.fra02v.mail.ibm.com (smtpav04.fra02v.mail.ibm.com
+ [10.20.54.103])
+ by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62A9ocxE46661958
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Mar 2026 09:50:38 GMT
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3282C2004D;
+ Tue, 10 Mar 2026 09:50:38 +0000 (GMT)
+Received: from smtpav04.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 350752004B;
+ Tue, 10 Mar 2026 09:50:36 +0000 (GMT)
+Received: from [9.109.204.116] (unknown [9.109.204.116])
+ by smtpav04.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Mar 2026 09:50:35 +0000 (GMT)
+Message-ID: <124ff9fa-c2af-49cc-b753-4cc82e3690c3@linux.ibm.com>
+Date: Tue, 10 Mar 2026 15:20:35 +0530
 MIME-Version: 1.0
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-4-zhangckid@gmail.com>
- <20260309080201.GB39949@fedora>
-In-Reply-To: <20260309080201.GB39949@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Tue, 10 Mar 2026 17:49:42 +0800
-X-Gm-Features: AaiRm51OfMAitWGEFtsiG34znSa9alZMd0C_R-lbV8IhDle4Sc_yAuEfK3-rYjM
-Message-ID: <CAK3tnvKypf4EvQaiswr3YfRVbbxHKNOGpFGdRAr5pG==py6-2A@mail.gmail.com>
-Subject: Re: [PATCH V5 03/13] iothread: tracking iothread users with holder
- name
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 04/10] pnv/mpipl: Preserve memory regions as per
+ MDST/MDDT tables
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Hari Bathini <hbathini@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+References: <20260309072001.3136261-1-adityag@linux.ibm.com>
+ <20260309072001.3136261-5-adityag@linux.ibm.com>
+Content-Language: en-US
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
+In-Reply-To: <20260309072001.3136261-5-adityag@linux.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDA4MSBTYWx0ZWRfX/LWKOnB5oanb
+ r001ufeAJFJ4FO43/mdqmfSvmukncFaoDtFGIpd6Q8g/umt2MCUWyxaixR+56aN2Ye0XBNitsYh
+ 1tQbJTmndpmyG+SkrC2uWUSxLQbhHCBaDWOM7sj3onQOoccJOd+0MWEAYUySa9XGf9xB5P4YWfq
+ BdDKgxgLoE+XfheZPkrhYWISGI4RpCnvEaoxbU8nb/XmUZu1QoaZgm7nLbbwiyhbBT/aQVYpeeN
+ YvHGMd2YIAnYD/EaITer0z+chX7KL2oJ3ogHcCezGqryp6T2txcvyxWmuDt00pvl0reX5eNnEgF
+ V6saKibqE7lqTyJGlAJvA5+eWB4ZKK1cHe+8NYKVpobMvwDwm92ATImUApkqjtnd/klZKHMRYE7
+ sZe985dlJQSD0AbIKf7bSyeU8z3/vG4JsIThi3rBsh65XIpopUVAZINFMKsyzjiUreCwtBy2i7O
+ J3Gp3s9hj6P0MscSWgw==
+X-Authority-Analysis: v=2.4 cv=QaVrf8bv c=1 sm=1 tr=0 ts=69afe973 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=lqyNjsoOSyArVUTPAX8A:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-GUID: zjYMdqbi4lJnVmet_Ld6NgMMXDzlWXR0
+X-Proofpoint-ORIG-GUID: tofWyhwXtzDDbMoVFu66ya52fp4qPOXD
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_01,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 spamscore=0 impostorscore=0 clxscore=1011 adultscore=0
+ bulkscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0 phishscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100081
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=sourabhjain@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,131 +127,332 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 9, 2026 at 4:02=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.com=
-> wrote:
->
-> On Thu, Mar 05, 2026 at 10:24:49PM +0800, Zhang Chen wrote:
-> > Introduce iothread_get_aio_context() with a 'holder' argument and its
-> > counterpart iothread_put_aio_context().
-> >
-> > Previously, users of an IOThread's AioContext did not explicitly
-> > record their identity, making it difficult to debug which devices or
-> > subsystems were pinning an IOThread.
-> >
-> > This patch enhances the reference counting mechanism by:
-> > 1. Automatically incrementing the object reference count when a context
-> >    is retrieved.
-> > 2. Tracking holders by name using iothread_ref() and iothread_unref().
-> >
-> > In iothread_instance_finalize(), we now retrieve the source name from
-> > the GMainContext to correctly unref the initial internal holder.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
-> > ---
-> >  include/system/iothread.h |  3 ++-
-> >  iothread.c                | 28 ++++++++++++++++++++++++++--
-> >  2 files changed, 28 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/include/system/iothread.h b/include/system/iothread.h
-> > index 21a76bd70d..595abeefbe 100644
-> > --- a/include/system/iothread.h
-> > +++ b/include/system/iothread.h
-> > @@ -47,7 +47,8 @@ DECLARE_INSTANCE_CHECKER(IOThread, IOTHREAD,
-> >
-> >  char *iothread_get_id(IOThread *iothread);
-> >  IOThread *iothread_by_id(const char *id);
-> > -AioContext *iothread_get_aio_context(IOThread *iothread);
-> > +AioContext *iothread_get_aio_context(IOThread *iothread, const char *h=
-older);
-> > +void iothread_put_aio_context(IOThread *iothread, const char *holder);
-> >  GMainContext *iothread_get_g_main_context(IOThread *iothread);
-> >
-> >  /*
-> > diff --git a/iothread.c b/iothread.c
-> > index 80a8cf4b32..da98fbb9ad 100644
-> > --- a/iothread.c
-> > +++ b/iothread.c
-> > @@ -172,7 +172,8 @@ static void iothread_init_gcontext(IOThread *iothre=
-ad, const char *thread_name)
-> >      g_autofree char *name =3D g_strdup_printf("%s aio-context", thread=
-_name);
-> >
-> >      iothread->worker_context =3D g_main_context_new();
-> > -    source =3D aio_get_g_source(iothread_get_aio_context(iothread));
-> > +    /* No need setup itself as the init holder */
-> > +    source =3D aio_get_g_source(iothread_get_aio_context(iothread, NUL=
-L));
->
-> This is cleaner:
->
->   source =3D aio_get_g_source(iothread->ctx);
->
-> That way iothread_get_aio_context() doesn't need a special case for
-> NULL.
 
-OK for here. But according to the following patch we try to use the
-NULL to handle
-problems that cannot be easily solved using ref/unref or get/put.
-For example the patch 7 and 9.  We can discuss the details in that mail thr=
-eads.
 
+On 09/03/26 12:49, Aditya Gupta wrote:
+> Implement copying of memory region, as mentioned by MDST and MDDT
+> tables.
 >
-> >      g_source_set_name(source, name);
-> >      g_source_attach(source, iothread->worker_context);
-> >      g_source_unref(source);
-> > @@ -362,11 +363,34 @@ char *iothread_get_id(IOThread *iothread)
-> >      return g_strdup(object_get_canonical_path_component(OBJECT(iothrea=
-d)));
-> >  }
-> >
-> > -AioContext *iothread_get_aio_context(IOThread *iothread)
-> > +AioContext *iothread_get_aio_context(IOThread *iothread, const char *h=
-older)
-> >  {
-> > +    /*
-> > +     * In some cases, iothread user need the ctx to clearup other reso=
-urce.
-> > +     * When holder is empty, back to the legacy way.
-> > +     */
-> > +    if (holder) {
-> > +        /*
-> > +         * This guarantees that the IOThread and its AioContext remain=
- alive
-> > +         * as long as there is a holder.
-> > +         */
-> > +        object_ref(OBJECT(iothread));
+> Copy the memory regions from source to destination in chunks of 32MB
 >
-> Can this be done in iothread_ref()/iothread_unref()? That would ensure
-> that callers always increment the QOM reference count regardless of
-> whether the iothread_ref() or iothread_get_aio_context() API is used.
-
-Sure, will move it into iothread_ref()/iothread_unref().
-
-Thanks
-
-Chen
-
+> Note, qemu can fail preserving a particular entry due to any reason,
+> such as:
+>    * region length mis-matching in MDST & MDDT
+>    * failed copy due to access/decode/etc memory issues
 >
-> > +
-> > +        /* Add holder device path to the list */
-> > +        iothread_ref(iothread, holder);
-> > +    }
-> > +
-> >      return iothread->ctx;
-> >  }
-> >
-> > +void iothread_put_aio_context(IOThread *iothread, const char *holder)
-> > +{
-> > +    object_unref(OBJECT(iothread));
-> > +
-> > +    /* Delete holder device path from the list */
-> > +    iothread_unref(iothread, holder);
-> > +}
-> > +
-> >  static int query_one_iothread(Object *object, void *opaque)
-> >  {
-> >      IOThreadInfoList ***tail =3D opaque;
-> > --
-> > 2.49.0
-> >
+> HDAT doesn't specify any field in MDRT to notify host about such errors.
+>
+> Though HDAT section "15.3.1.3 Memory Dump Results Table (MDRT)" says:
+>      The Memory Dump Results Table is a list of the memory ranges that
+>      have been included in the dump
+>
+> Based on above statement, it looks like MDRT should include only those
+> regions which are successfully captured in the dump, hence, regions
+> which qemu fails to dump, just get skipped, and will not have a
+> corresponding entry in MDRT
+>
+> Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/pnv_mpipl.c         | 161 +++++++++++++++++++++++++++++++++++++
+>   include/hw/ppc/pnv_mpipl.h |  86 ++++++++++++++++++++
+>   2 files changed, 247 insertions(+)
+>
+> diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
+> index d8c9b7a428b7..d9fe4a5decac 100644
+> --- a/hw/ppc/pnv_mpipl.c
+> +++ b/hw/ppc/pnv_mpipl.c
+> @@ -5,12 +5,173 @@
+>    */
+>   
+>   #include "qemu/osdep.h"
+> +#include "qemu/log.h"
+> +#include "qemu/units.h"
+> +#include "system/address-spaces.h"
+>   #include "system/runstate.h"
+>   #include "hw/ppc/pnv.h"
+>   #include "hw/ppc/pnv_mpipl.h"
+> +#include <math.h>
+> +
+> +#define MDST_TABLE_RELOCATED                            \
+> +    (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
+> +#define MDDT_TABLE_RELOCATED                            \
+> +    (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
+> +
+> +/*
+> + * Preserve the memory regions as pointed by MDST table
+> + *
+> + * During this, the memory region pointed by entries in MDST, are 'copied'
+> + * as it is to the memory region pointed by corresponding entry in MDDT
+> + *
+> + * Notes: All reads should consider data coming from skiboot as big-endian,
+> + *        and data written should also be in big-endian
+> + */
+> +static bool pnv_mpipl_preserve_mem(PnvMachineState *pnv)
+> +{
+> +    g_autofree MdstTableEntry *mdst = g_malloc(MDST_TABLE_SIZE);
+> +    g_autofree MddtTableEntry *mddt = g_malloc(MDDT_TABLE_SIZE);
+> +    g_autofree MdrtTableEntry *mdrt = g_malloc0(MDRT_TABLE_SIZE);
+> +    AddressSpace *default_as = &address_space_memory;
+> +    MemTxResult io_result;
+> +    MemTxAttrs attrs;
+> +    uint64_t src_addr, dest_addr;
+> +    uint32_t data_len;
+> +    uint64_t num_chunks, chunk_id = 0;
+> +    int mdrt_idx = 0;
+> +
+> +    /* Mark the memory transactions as privileged memory access */
+> +    attrs.user = 0;
+> +    attrs.memory = 1;
+> +
+> +    if (pnv->mpipl_state.mdrt_table) {
+> +        /*
+> +         * MDRT table allocated from some past crash, free the memory to
+> +         * prevent memory leak
+> +         */
+> +        g_free(pnv->mpipl_state.mdrt_table);
+> +        pnv->mpipl_state.num_mdrt_entries = 0;
+> +    }
+> +
+> +    io_result = address_space_read(default_as, MDST_TABLE_RELOCATED, attrs,
+> +            mdst, MDST_TABLE_SIZE);
+> +    if (io_result != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "MPIPL: Failed to read MDST table at: 0x" TARGET_FMT_lx "\n",
+> +            MDST_TABLE_RELOCATED);
+> +
+> +        return false;
+> +    }
+> +
+> +    io_result = address_space_read(default_as, MDDT_TABLE_RELOCATED, attrs,
+> +            mddt, MDDT_TABLE_SIZE);
+> +    if (io_result != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "MPIPL: Failed to read MDDT table at: 0x" TARGET_FMT_lx "\n",
+> +            MDDT_TABLE_RELOCATED);
+> +
+> +        return false;
+> +    }
+> +
+> +    /* Try to read all entries */
+> +    for (int i = 0; i < MDST_MAX_ENTRIES; ++i) {
+> +        g_autofree uint8_t *copy_buffer = NULL;
+> +        bool is_copy_failed = false;
+> +
+> +        /* Considering entry with address and size as 0, as end of table */
+> +        if ((mdst[i].addr == 0) && (mdst[i].size == 0)) {
+> +            break;
+> +        }
+> +
+> +        if (mdst[i].size != mddt[i].size) {
+> +            qemu_log_mask(LOG_TRACE,
+> +                    "Warning: Invalid entry, size mismatch in MDST & MDDT\n");
+> +            continue;
+> +        }
+> +
+> +        if (mdst[i].data_region != mddt[i].data_region) {
+> +            qemu_log_mask(LOG_TRACE,
+> +                    "Warning: Invalid entry, region mismatch in MDST & MDDT\n");
+> +            continue;
+> +        }
+> +
+> +        src_addr  = be64_to_cpu(mdst[i].addr) & ~HRMOR_BIT;
+> +        dest_addr = be64_to_cpu(mddt[i].addr) & ~HRMOR_BIT;
+> +        data_len   = be32_to_cpu(mddt[i].size);
+> +
+> +#define COPY_CHUNK_SIZE  ((size_t)(32 * MiB))
+> +        is_copy_failed = false;
+
+The above assignment seems redundant.
+
+> +        copy_buffer = g_try_malloc(COPY_CHUNK_SIZE);
+
+Why are we allocating and releasing this buffer for every MDST entry?
+
+> +        if (copy_buffer == NULL) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                "MPIPL: Failed allocating memory (size: %zu) for copying"
+> +                " reserved memory regions\n", COPY_CHUNK_SIZE);
+> +            is_copy_failed = true;
+
+We already declared copy has failed here, shouldn't we continue from 
+here itself?
+
+> +        }
+> +
+> +        num_chunks = ceil((data_len * 1.0f) / COPY_CHUNK_SIZE);
+> +        while ((!is_copy_failed) && (chunk_id < num_chunks)) {
+> +            /* Take minimum of bytes left to copy, and chunk size */
+> +            uint64_t copy_len = MIN(
+> +                            data_len - (chunk_id * COPY_CHUNK_SIZE),
+> +                            COPY_CHUNK_SIZE
+> +                        );
+> +
+> +            /* Copy the source region to destination */
+> +            io_result = address_space_read(default_as, src_addr, attrs,
+> +                    copy_buffer, copy_len);
+> +            if (io_result != MEMTX_OK) {
+> +                qemu_log_mask(LOG_GUEST_ERROR,
+> +                    "MPIPL: Failed to read region at: 0x%" PRIx64 "\n",
+> +                    src_addr);
+> +                is_copy_failed = true;
+> +                break;
+> +            }
+> +
+> +            io_result = address_space_write(default_as, dest_addr, attrs,
+> +                    copy_buffer, copy_len);
+> +            if (io_result != MEMTX_OK) {
+> +                qemu_log_mask(LOG_GUEST_ERROR,
+> +                    "MPIPL: Failed to write region at: 0x%" PRIx64 "\n",
+> +                    dest_addr);
+> +                is_copy_failed = true;
+> +                break;
+> +            }
+> +
+> +            src_addr += COPY_CHUNK_SIZE;
+> +            dest_addr += COPY_CHUNK_SIZE;
+> +            ++chunk_id;
+
+We aren't resetting the chunk_id, this may cause issue if we have 
+multiple MDST entries.
+
+> +        }
+> +#undef COPY_CHUNK_SIZE
+> +
+> +        if (is_copy_failed) {
+> +            /*
+> +             * HDAT doesn't specify an error code in MDRT for failed copy,
+> +             * and doesn't specify how this is to be handled
+> +             * Hence just skip adding an entry in MDRT, as done for size
+> +             * mismatch or other inconsistency between MDST/MDDT
+> +             */
+> +            continue;
+> +        }
+> +
+> +        /* Populate entry in MDRT table if preserving successful */
+> +        mdrt[mdrt_idx].src_addr    = cpu_to_be64(src_addr);
+> +        mdrt[mdrt_idx].dest_addr   = cpu_to_be64(dest_addr);
+> +        mdrt[mdrt_idx].size        = cpu_to_be32(data_len);
+> +        mdrt[mdrt_idx].data_region = mdst[i].data_region;
+> +        ++mdrt_idx;
+> +    }
+> +
+> +    pnv->mpipl_state.mdrt_table = g_steal_pointer(&mdrt);
+> +    pnv->mpipl_state.num_mdrt_entries = mdrt_idx;
+> +
+> +    return true;
+> +}
+>   
+>   void do_mpipl_preserve(PnvMachineState *pnv)
+>   {
+> +    pnv_mpipl_preserve_mem(pnv);
+> +
+>       /* Mark next boot as Memory-preserving boot */
+>       pnv->mpipl_state.is_next_boot_mpipl = true;
+>   
+> diff --git a/include/hw/ppc/pnv_mpipl.h b/include/hw/ppc/pnv_mpipl.h
+> index 60d6ede48209..e0518ef2e12e 100644
+> --- a/include/hw/ppc/pnv_mpipl.h
+> +++ b/include/hw/ppc/pnv_mpipl.h
+> @@ -10,13 +10,99 @@
+>   #include "qemu/osdep.h"
+>   #include "exec/hwaddr.h"
+>   
+> +#include <assert.h>
+> +
+> +typedef struct MdstTableEntry MdstTableEntry;
+> +typedef struct MdrtTableEntry MdrtTableEntry;
+>   typedef struct MpiplPreservedState MpiplPreservedState;
+>   
+> +/*
+> + * Following offsets are copied from skiboot source code.
+> + * These need to be updated if this changes in a future skiboot version
+> + */
+> +/* Use 768 bytes for SPIRAH */
+> +#define SPIRAH_OFF      0x00010000
+> +#define SPIRAH_SIZE     0x300
+> +
+> +/* Use 256 bytes for processor dump area */
+> +#define PROC_DUMP_AREA_OFF  (SPIRAH_OFF + SPIRAH_SIZE)
+> +#define PROC_DUMP_AREA_SIZE 0x100
+> +
+> +#define PROCIN_OFF      (PROC_DUMP_AREA_OFF + PROC_DUMP_AREA_SIZE)
+> +#define PROCIN_SIZE     0x800
+> +
+> +/* Offsets of MDST and MDDT tables from skiboot base */
+> +#define MDST_TABLE_OFF      (PROCIN_OFF + PROCIN_SIZE)
+> +#define MDST_TABLE_SIZE     0x400
+> +
+> +#define MDDT_TABLE_OFF      (MDST_TABLE_OFF + MDST_TABLE_SIZE)
+> +#define MDDT_TABLE_SIZE     0x400
+> +/*
+> + * Offset of the dump result table MDRT. Hostboot will write to this
+> + * memory after moving memory content from source to destination memory.
+> + */
+> +#define MDRT_TABLE_OFF         0x01c00000
+> +#define MDRT_TABLE_SIZE        0x00008000
+> +
+> +/* HRMOR_BIT copied from skiboot */
+> +#define HRMOR_BIT (1ull << 63)
+> +
+> +#define __packed             __attribute__((packed))
+> +
+> +/*
+> + * Memory Dump Source Table (MDST)
+> + *
+> + * Format of this table is same as Memory Dump Source Table defined in HDAT
+> + */
+> +struct MdstTableEntry {
+> +    uint64_t  addr;
+> +    uint8_t data_region;
+> +    uint8_t dump_type;
+> +    uint16_t  reserved;
+> +    uint32_t  size;
+> +} __packed;
+> +
+> +/* Memory dump destination table (MDDT) has same structure as MDST */
+> +typedef MdstTableEntry MddtTableEntry;
+> +
+> +/*
+> + * Memory dump result table (MDRT)
+> + *
+> + * List of the memory ranges that have been included in the dump. This table is
+> + * filled by hostboot and passed to OPAL on second boot. OPAL/payload will use
+> + * this table to extract the dump.
+> + *
+> + * Note: This structure differs from HDAT, but matches the structure
+> + * skiboot uses
+> + */
+> +struct MdrtTableEntry {
+> +    uint64_t  src_addr;
+> +    uint64_t  dest_addr;
+> +    uint8_t data_region;
+> +    uint8_t dump_type;  /* unused */
+> +    uint16_t  reserved;   /* unused */
+> +    uint32_t  size;
+> +    uint64_t  padding;    /* unused */
+> +} __packed;
+> +
+> +/* Maximum length of mdst/mddt/mdrt tables */
+> +#define MDST_MAX_ENTRIES    (MDST_TABLE_SIZE / sizeof(MdstTableEntry))
+> +#define MDDT_MAX_ENTRIES    (MDDT_TABLE_SIZE / sizeof(MddtTableEntry))
+> +#define MDRT_MAX_ENTRIES    (MDRT_TABLE_SIZE / sizeof(MdrtTableEntry))
+> +
+> +static_assert(MDST_MAX_ENTRIES == MDDT_MAX_ENTRIES,
+> +        "Maximum entries in MDDT must match MDST");
+> +static_assert(MDRT_MAX_ENTRIES >= MDST_MAX_ENTRIES,
+> +        "MDRT should support atleast having number of entries as in MDST");
+> +
+>   /* Preserved state to be saved in PnvMachineState */
+>   struct MpiplPreservedState {
+>       /* skiboot_base will be valid only after OPAL sends relocated base to SBE */
+>       hwaddr     skiboot_base;
+>       bool       is_next_boot_mpipl;
+> +
+> +    MdrtTableEntry *mdrt_table;
+> +    uint32_t num_mdrt_entries;
+>   };
+>   
+>   #endif
+
 
