@@ -4,70 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B974AFCC9C8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00395FCC9CB
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 05:58:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzq67-0001Yv-8C; Tue, 10 Mar 2026 01:57:39 -0400
+	id 1vzq6P-0002W9-45; Tue, 10 Mar 2026 01:57:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq5b-0000rz-Ko
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:57:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1vzq5X-0006LV-Pp
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:57:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773122222;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EFTM6x/HkKccer2jVaVlp2BBiwHHgfzvPHNZdcz7q1M=;
- b=anwdZdyn5FX++DqudtyfH+34tWTbJI/IUDEEMLtsWF4/AMQR+UtkOWtndeAFNhnuuidp23
- QbT1kHgAj/JMYxk0XM6LSXnRhddReKdrLbJvIZyJzrOhssOHAR6LaxIIotVrm8l3r09mjw
- mWdDMZD27XlMsVLZsfDPN4XgSJxe5Jg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-558-zoitBFP_PfGD4agU6YLv-Q-1; Tue,
- 10 Mar 2026 01:56:59 -0400
-X-MC-Unique: zoitBFP_PfGD4agU6YLv-Q-1
-X-Mimecast-MFC-AGG-ID: zoitBFP_PfGD4agU6YLv-Q_1773122218
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9A7FA18005B2; Tue, 10 Mar 2026 05:56:58 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.69])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id CAC191956095; Tue, 10 Mar 2026 05:56:56 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org,
-	Jared Rossi <jrossi@linux.ibm.com>
-Subject: [PULL 22/25] hw: Add "loadparm" property to virtio block PCI devices
- booting on s390x
-Date: Tue, 10 Mar 2026 06:55:27 +0100
-Message-ID: <20260310055530.8893-23-thuth@redhat.com>
-In-Reply-To: <20260310055530.8893-1-thuth@redhat.com>
-References: <20260310055530.8893-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzq6L-0002DR-Ru
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:57:54 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzq6K-0006Pi-4P
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 01:57:53 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-48535a0ef86so17717005e9.1
+ for <qemu-devel@nongnu.org>; Mon, 09 Mar 2026 22:57:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773122270; x=1773727070; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=JOeE7ZKmjwJq+X451rY59ohF0DUiOay3c5oi3jd/bug=;
+ b=ubkbHFkaCllZaa+//Us8iS4U9Ur/4JMCioqtKviMc4p8is/BLerJjMC97og+/xpPMn
+ itdyvE/UB1MSI1E9NQcb7pWUwCpYEuYBlzjDKnrh1Wjpry40iEv83QjV4GGcUm761XPE
+ Rw+BmPAJt1J9q06EDAosPLSTJjcT/GGlunMaO5xOfE3b6HmaO+ndLANNGPSxYQudF/cO
+ Vm8i9uSqX1BrVKduzFy2PayqZPKx6z6q1DBBZqmdMmSvwORpxQNXyetyoxOrccovpWrZ
+ dUH/vFVf0mKjkhXT32YfUpZeBrbLekhvOqbSQNxcdEd2KJSu5a9KTSa6/FWhjPl/z02K
+ xAjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773122270; x=1773727070;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=JOeE7ZKmjwJq+X451rY59ohF0DUiOay3c5oi3jd/bug=;
+ b=l1eiA42Io0lSj4TH7Im8uNA4FZQC4kjNdKM/mulACT59ICojxUWXpO4LsvF+/9ehlO
+ C0SdfRIbQfmoMv1X9P9ZoXGTbUXW577BNSROdZ4F23aP71MDGEWaS+QI8orrMJ6wGxMR
+ sBdAWXtNhwATiDTnUdnIvhr9spJuPlz5zlFIR2ptdrZ500WI/+A78RXNRe7cci1rwbdq
+ tfEu1rnrkldSNw2/2HXmM87ViCyHsN9H/Y39yOOlKbHmOMc7DXsWqOWjFOsNi+4pgy9y
+ UoO4oPBv5gHIA+VOMNOADTkGbrIooPuQd6DDa4Y5H/AH+yNtW8cclV7lxtGdFqui+T6c
+ jOag==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV6RtFSJJf+MpE54ENQrJE9fYHjZEtk7omoiIVvHLbpsiaY1mdFjNsB5WHq+6x7agDWJ51Sa5Wex94f@nongnu.org
+X-Gm-Message-State: AOJu0YwRT8blNgDF07Q5xHHaYHVtcnmif0AX+PGSRhlgASWNtG6vSJJG
+ S5vamtfsI5j1rv6eWU7DZ/Ah5khhSOMVwd79i7bTs2ZwXSA+ytdrd3tsF2FqA8c/KQgZdZrLonV
+ MNv43DBw=
+X-Gm-Gg: ATEYQzzAidJk87ICvxyIkPfkLSnneTfbZZnq8RALtdJ4EcU8dSspNuTgSr0Gly5kIe4
+ nlYY+Qy2uY43d+03GHC58dCy3pWpsrC2+ou24fHdRYI1IshjKQWMVN1ymtclj0GxYx0+s4TI+pQ
+ zGzHBEJeog4mILVboF7xd8o0O9eHqqfL2fv51PMMLHiTWn1NU6hV99Hf84qZ8g/d3bwLZpJ+MMe
+ Oc6ejN5Qq01Pw+GqmemOzwT4PmjS/wMET0+3EuKXbGcwEcEo0gpMyyixHpgRyD/s2mhVg/IMnPs
+ L35z+69U8dAxfWR73NyA8Q3+D4WNnphu262NDSv+C1NMQIsXeCFsKhNTBJEuykvO3wzuae3oXob
+ 1orvJS/V1hfcKDyUDLtqpTPSmviIeSXIzI2Xpns952utYNsRa7namszI01ZqK7CojoMd2q70V7r
+ QS0VVrqny9e+9rSKMB/GQfsKfE9tlXAHblbyut91WCrV4Dyjl9VRSF+KlmJ/Bhhzrodw==
+X-Received: by 2002:a05:600c:3b0c:b0:477:5b0a:e616 with SMTP id
+ 5b1f17b1804b1-485269188admr226872025e9.5.1773122270547; 
+ Mon, 09 Mar 2026 22:57:50 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541b6f6e6sm90970965e9.10.2026.03.09.22.57.49
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 09 Mar 2026 22:57:50 -0700 (PDT)
+Message-ID: <18a50a29-1deb-41c5-91f1-ae5f76129a05@linaro.org>
+Date: Tue, 10 Mar 2026 06:57:49 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] ati-vga: Fix sign extension in DEFAULT_SC_BOTTOM_RIGHT
+ read
+Content-Language: en-US
+To: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: Chad Jablonski <chad@jablonski.xyz>, qemu-devel@nongnu.org,
+ Peter Maydell <peter.maydell@linaro.org>
+References: <20260309212206.2457691-1-chad@jablonski.xyz>
+ <1931a6d0-d351-cc43-1b3d-fa3b3b0809a9@eik.bme.hu>
+ <e2824e5c-4d1d-4d08-ba24-a8c3056c2edc@linaro.org>
+ <de83d589-99c0-9d40-b29e-61f8deb3d249@eik.bme.hu>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <de83d589-99c0-9d40-b29e-61f8deb3d249@eik.bme.hu>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,157 +108,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jared Rossi <jrossi@linux.ibm.com>
+On 9/3/26 23:59, BALATON Zoltan wrote:
+> On Mon, 9 Mar 2026, Philippe Mathieu-Daudé wrote:
+>> On 9/3/26 22:41, BALATON Zoltan wrote:
+>>> On Mon, 9 Mar 2026, Chad Jablonski wrote:
+>>>> Cast default_sc_bottom to uint32_t before shifting left to prevent
+>>>> sign extension when assigning to uint64_t.
+>>>>
+>>>> Fixes: CID 1645615
+>>>> Signed-off-by: Chad Jablonski <chad@jablonski.xyz>
+>>>> ---
+>>>> hw/display/ati.c | 2 +-
+>>>> 1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>
+>>>> diff --git a/hw/display/ati.c b/hw/display/ati.c
+>>>> index 6cf243bcf9..f9773e1154 100644
+>>>> --- a/hw/display/ati.c
+>>>> +++ b/hw/display/ati.c
+>>>> @@ -514,7 +514,7 @@ static uint64_t ati_mm_read(void *opaque, hwaddr 
+>>>> addr, unsigned int size)
+>>>>         val |= s->regs.default_tile << 16;
+>>>>         break;
+>>>>     case DEFAULT_SC_BOTTOM_RIGHT:
+>>>> -        val = (s->regs.default_sc_bottom << 16) |
+>>>> +        val = ((uint32_t)s->regs.default_sc_bottom << 16) |
+>>>>               s->regs.default_sc_right;
+>>
+>> What about using deposit64() which is uncontroversial?
+>>
+>>            val = deposit64(s->regs.default_sc_right, 16,
+>>                            13, s->regs.default_sc_bottom);
 
-The loadparm is required on s390x to pass the information to the boot loader
-such as which kernel should be started or whether the boot menu should be shown.
+(alternatively deposit32)
 
-Because PCI devices do not naturally allocate space for this, the property is
-added on an architecture specific basis for supported device types.
+> I can't make sense of that without going and looking what the arguments 
+> of this function are so I'd rather keep it simple. As I said, the values 
+> here can't be large enough to sign extend and there may be other similar 
+> cases that are already marked in Coverity. But if we still want to fix 
+> all of them then maybe we could try to make val uint32_t then do 
+> something about it once at the return for all cases. That seems better 
+> than trying to handle in each case inconsistently. The simplest would 
+> still be to tell Converity it's wrong here.
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
-Message-ID: <20260309003601.242634-15-jrossi@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- include/hw/pci/pci.h        |  1 +
- include/hw/pci/pci_device.h |  3 +++
- hw/pci/pci.c                | 38 +++++++++++++++++++++++++++++++++++++
- hw/s390x/ipl.c              | 11 +++++++++--
- hw/virtio/virtio-blk-pci.c  |  1 +
- 5 files changed, 52 insertions(+), 2 deletions(-)
-
-diff --git a/include/hw/pci/pci.h b/include/hw/pci/pci.h
-index 64141e92fec..5b179091dee 100644
---- a/include/hw/pci/pci.h
-+++ b/include/hw/pci/pci.h
-@@ -380,6 +380,7 @@ const char *pci_root_bus_path(PCIDevice *dev);
- bool pci_bus_bypass_iommu(PCIBus *bus);
- PCIDevice *pci_find_device(PCIBus *bus, int bus_num, uint8_t devfn);
- int pci_qdev_find_device(const char *id, PCIDevice **pdev);
-+void pci_qdev_property_add_specifics(DeviceClass *dc);
- void pci_bus_get_w64_range(PCIBus *bus, Range *range);
- 
- void pci_device_deassert_intx(PCIDevice *dev);
-diff --git a/include/hw/pci/pci_device.h b/include/hw/pci/pci_device.h
-index 88ccea50113..5cac6e16886 100644
---- a/include/hw/pci/pci_device.h
-+++ b/include/hw/pci/pci_device.h
-@@ -62,6 +62,9 @@ struct PCIDevice {
-     bool partially_hotplugged;
-     bool enabled;
- 
-+    /* only for s390x */
-+    char *loadparm;
-+
-     /* PCI config space */
-     uint8_t *config;
- 
-diff --git a/hw/pci/pci.c b/hw/pci/pci.c
-index 6399ebd41cb..2c3657d00de 100644
---- a/hw/pci/pci.c
-+++ b/hw/pci/pci.c
-@@ -36,6 +36,7 @@
- #include "migration/qemu-file-types.h"
- #include "migration/vmstate.h"
- #include "net/net.h"
-+#include "system/arch_init.h"
- #include "system/numa.h"
- #include "system/runstate.h"
- #include "system/system.h"
-@@ -2843,6 +2844,43 @@ int pci_qdev_find_device(const char *id, PCIDevice **pdev)
-     return rc;
- }
- 
-+static char *pci_qdev_property_get_loadparm(Object *obj, Error **errp)
-+{
-+    return g_strdup(PCI_DEVICE(obj)->loadparm);
-+}
-+
-+static void pci_qdev_property_set_loadparm(Object *obj, const char *value,
-+                                       Error **errp)
-+{
-+    void *lp_str;
-+
-+    if (object_property_get_int(obj, "bootindex", NULL) < 0) {
-+        error_setg(errp, "'loadparm' is only valid for boot devices");
-+        return;
-+    }
-+
-+    lp_str = g_malloc0(strlen(value) + 1);
-+    if (!qdev_prop_sanitize_s390x_loadparm(lp_str, value, errp)) {
-+        g_free(lp_str);
-+        return;
-+    }
-+    PCI_DEVICE(obj)->loadparm = lp_str;
-+}
-+
-+void pci_qdev_property_add_specifics(DeviceClass *dc)
-+{
-+    ObjectClass *oc = OBJECT_CLASS(dc);
-+
-+    /* The loadparm property is only supported on s390x */
-+    if (target_s390x()) {
-+        object_class_property_add_str(oc, "loadparm",
-+                                      pci_qdev_property_get_loadparm,
-+                                      pci_qdev_property_set_loadparm);
-+        object_class_property_set_description(oc, "loadparm",
-+                                              "load parameter (s390x only)");
-+    }
-+}
-+
- MemoryRegion *pci_address_space(PCIDevice *dev)
- {
-     return pci_get_bus(dev)->address_space_mem;
-diff --git a/hw/s390x/ipl.c b/hw/s390x/ipl.c
-index 7e09a8cf80d..1babcd2b7dd 100644
---- a/hw/s390x/ipl.c
-+++ b/hw/s390x/ipl.c
-@@ -461,6 +461,7 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-     int devtype;
-     uint8_t *lp;
-     g_autofree void *scsi_lp = NULL;
-+    g_autofree void *pci_lp = NULL;
- 
-     ccw_dev = s390_get_ccw_device(dev_st, &devtype);
-     if (ccw_dev) {
-@@ -513,6 +514,14 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
- 
-     pbdev = s390_get_pci_device(dev_st, &devtype);
-     if (pbdev) {
-+        pci_lp = object_property_get_str(OBJECT(pbdev->pdev), "loadparm", NULL);
-+        if (pci_lp && strlen(pci_lp) > 0) {
-+            lp = pci_lp;
-+        } else {
-+            /* Use machine loadparm as a place holder if PCI LP is unset */
-+            lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-+        }
-+
-         switch (devtype) {
-         case PCI_DEVTYPE_VIRTIO:
-             iplb->len = cpu_to_be32(S390_IPLB_MIN_PCI_LEN);
-@@ -523,8 +532,6 @@ static bool s390_build_iplb(DeviceState *dev_st, IplParameterBlock *iplb)
-             return false;
-         }
- 
--        /* Per-device loadparm not yet supported for non-ccw IPL */
--        lp = S390_CCW_MACHINE(qdev_get_machine())->loadparm;
-         s390_ipl_convert_loadparm((char *)lp, iplb->loadparm);
-         iplb->flags |= DIAG308_FLAGS_LP_VALID;
- 
-diff --git a/hw/virtio/virtio-blk-pci.c b/hw/virtio/virtio-blk-pci.c
-index 64a434c81b5..3eecc23a657 100644
---- a/hw/virtio/virtio-blk-pci.c
-+++ b/hw/virtio/virtio-blk-pci.c
-@@ -71,6 +71,7 @@ static void virtio_blk_pci_class_init(ObjectClass *klass, const void *data)
- 
-     set_bit(DEVICE_CATEGORY_STORAGE, dc->categories);
-     device_class_set_props(dc, virtio_blk_pci_properties);
-+    pci_qdev_property_add_specifics(dc);
-     k->realize = virtio_blk_pci_realize;
-     pcidev_k->vendor_id = PCI_VENDOR_ID_REDHAT_QUMRANET;
-     pcidev_k->device_id = PCI_DEVICE_ID_VIRTIO_BLOCK;
--- 
-2.53.0
-
+Until the next register is implemented and Coverity complains again,
+and another round-up on the mailing list until Peter manually marks it.
+I was hoping for a way to avoid all that hassle.
 
