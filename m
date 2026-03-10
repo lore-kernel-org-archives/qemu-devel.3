@@ -4,60 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B8CFFD4F03
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:33:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A1DEFD4F04
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 16:34:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzzvW-0003fQ-8L; Tue, 10 Mar 2026 12:27:22 -0400
+	id 1w001p-0006i7-SU; Tue, 10 Mar 2026 12:33:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvK-0003R2-Pz
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:12 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w001J-0006VR-JG
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:33:29 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1vzzvI-0000wt-82
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:27:09 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w001G-0002j0-V7
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 12:33:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773160026;
+ s=mimecast20190719; t=1773160397;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=KMADtodgxED6gXdhsqP/rjK9lfC+lRgElo+09eD/r3w=;
- b=RvMyeqWp3mDQ0cIOQkAPCyrA3aeOJ2p3rApwyWUjm3B9UojTtKXRx1Zx4sh6QBk3xIOAVZ
- i5q7qwDbzqzi+XDvU9m2Yx8ep4ZhTJKpu5QKCrHZjf8JrvTeKLh7seujpZTptvNPndY918
- SnkvG6TtoL0z61JeNLfmt8t/3nrG87A=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-170-Ga04mpZ5NMu_sP4JrOARGA-1; Tue,
- 10 Mar 2026 12:27:05 -0400
-X-MC-Unique: Ga04mpZ5NMu_sP4JrOARGA-1
-X-Mimecast-MFC-AGG-ID: Ga04mpZ5NMu_sP4JrOARGA_1773160024
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 95FA81956057; Tue, 10 Mar 2026 16:27:04 +0000 (UTC)
-Received: from merkur.fritz.box (unknown [10.45.224.112])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 6B9E619560A6; Tue, 10 Mar 2026 16:27:03 +0000 (UTC)
-From: Kevin Wolf <kwolf@redhat.com>
-To: qemu-block@nongnu.org
-Cc: kwolf@redhat.com,
-	qemu-devel@nongnu.org
-Subject: [PULL 21/28] iotests/307: Test multi-thread export interface
-Date: Tue, 10 Mar 2026 17:26:15 +0100
-Message-ID: <20260310162622.333137-22-kwolf@redhat.com>
-In-Reply-To: <20260310162622.333137-1-kwolf@redhat.com>
-References: <20260310162622.333137-1-kwolf@redhat.com>
+ bh=lHK2oj7ebPOCZS8OLmlG+rqQcYiZuzCdGTzZEjr3ts8=;
+ b=e45yR4wS2C071OzPCGOtzfUW42vVwisdliB52MvuE1xdreyxTeDYoet3mxe25rKOQYfMbp
+ 2y9af1XB5yQayzxjMFRlXwEZbfvbFmN3vP1cTa5+wHYywemcQ/dznoGHdGPOt+uN2rm//f
+ uy3cA4uIu1XJkwzm3O/h4ja1tQ5BDcQ=
+Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
+ [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-232-D_TDcTs6MBywWf--ent-tw-1; Tue, 10 Mar 2026 12:33:16 -0400
+X-MC-Unique: D_TDcTs6MBywWf--ent-tw-1
+X-Mimecast-MFC-AGG-ID: D_TDcTs6MBywWf--ent-tw_1773160396
+Received: by mail-qt1-f198.google.com with SMTP id
+ d75a77b69052e-50921f7da6dso17017261cf.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 09:33:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773160395; x=1773765195; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=lHK2oj7ebPOCZS8OLmlG+rqQcYiZuzCdGTzZEjr3ts8=;
+ b=OdQmVwE1YQtVN+Qmv1RDBPntZlbybfbgbEMyCpW3rRRpWE8/vNfevNlBz5Kk2dO/9u
+ aVtytIpCZNQTEB7PfXYCOZVQtfbErujxCsg3xqFROzevrkEkpa9c5mngVs1zBqketOan
+ /unqnlsqPEj9l5VH3HVPMfH0h3p+1OZZ2qaRZJRM0mqMOgUz8ZhlSsZe6/8mdhnV10gY
+ O0U9/xyb2B5Pz6qBuvUWRTtGdTtNdCPt/afJowuv/aF8+qWzajk5tZSvrVdugXk/RTZ/
+ EBzlMPdYpqWaCDiwo9WjmJDYiUaNcFETsoi0Q+kFtbWwbD1tO8kn8jdrL7I6buy6qL+q
+ 2mEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773160395; x=1773765195;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lHK2oj7ebPOCZS8OLmlG+rqQcYiZuzCdGTzZEjr3ts8=;
+ b=PVbXGynItrmUaswRkViCPyZiaMGlFEwYLP8c+nT52m5elvNIDuO/egJJ7Rf66Ap6Ws
+ Mh4K0PgfzabEEXGnh8xWtd/mnVj2eT0x+xpRn0Xt08tv/I9KIfKXVKeRDveesYnTsRCH
+ CPZb8TzPilpxTOt5yoQf9mUh9BLyP+5JQqDCqgbLPVsyOSMtYK66wGzHZCzxKgacsXG7
+ 01Bvs2qhJpGydeRDtwao06Ts/jUy90aGQ/VmDsvItNLGWg7/i8ZKls0iULMLA2u5viXv
+ uyRzxx7ja27d10Ap1MB2cGxNzsCAkmKcz4J/aiovNpJEbbX4aQ49V7jdnoEM1Vrqf86M
+ Vh2g==
+X-Gm-Message-State: AOJu0YxpYxEPW+DR1SyDeJRoImyjnwaAc0bBgTaLdO61fRKbhNx55cKN
+ VW9jIKyc4+DbUjCjvq1BTscjIXcNym17pMG1wFHf8lN8WD04GYSw/TnEWUGzEeeb9GVoTjcyDOF
+ s1+avZymwrVAmn+w31q1CMFzsXEx1UVRbgxniGb1VR5XMut7XpBTRsDZ31/HToL4H
+X-Gm-Gg: ATEYQzzgxTnX6a0ae4VvDhgjUh6c0ucmRfmaN9j3xoaAFMNR5KhJSOt47Ivy1GXmSw/
+ 7WV2QE101iMUM3485XxYuX4adiyN+QnWU5hsGUECLc2SjYYMmQs/KvRCiSRgDnLK8XRFU7FIDRK
+ 0OfDgf+ccpulDneOHL1leSfgiLdr7trR6U0rD/KyUinlmRr9IzzLhNXRbuSliga9vC3JTL0ezVD
+ jTIR7aKc1YSMQ9vDPRGCSMQKbN4KrdHPTWZ03aXeQTEg1bku9YL/B4NEmPb/HYu3Y/oy0HWbZQQ
+ gFXiOOz2JmroIduGWOcOCCox82gtQ+t8Cf9MhgSr/neiVC07XQ7XBszoOqeoglbZ9rJCAQ5gQJ0
+ bxFKf0Uj++tCk0g==
+X-Received: by 2002:ac8:5815:0:b0:509:2ce4:28d5 with SMTP id
+ d75a77b69052e-5092ce43323mr28157331cf.72.1773160395322; 
+ Tue, 10 Mar 2026 09:33:15 -0700 (PDT)
+X-Received: by 2002:ac8:5815:0:b0:509:2ce4:28d5 with SMTP id
+ d75a77b69052e-5092ce43323mr28156891cf.72.1773160394737; 
+ Tue, 10 Mar 2026 09:33:14 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-508fcd9e5c8sm80213331cf.26.2026.03.10.09.33.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 10 Mar 2026 09:33:14 -0700 (PDT)
+Date: Tue, 10 Mar 2026 12:33:12 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
+ qemu-trivial@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>
+Subject: Re: [PATCH] docs: Move xbzrle.txt into the migration folder and
+ convert to rst
+Message-ID: <abBHyNfxF2zSRhCJ@x1.local>
+References: <20260310092822.21232-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kwolf@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260310092822.21232-1-thuth@redhat.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -82,106 +117,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+On Tue, Mar 10, 2026 at 10:28:22AM +0100, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> xbzrle is a feature of migration and thus this file should go
+> into the docs/devel/migration/ folder. While we're at it, turn
+> it into proper .rst format, too.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-Test the QAPI interface for multi-threaded exports.  None of our exports
-currently support multi-threading, so it's always an error in the end,
-but we can still test the specific errors.
+Thanks!
 
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260309150856.26800-22-hreitz@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
----
- tests/qemu-iotests/307     | 47 ++++++++++++++++++++++++++++++++++++++
- tests/qemu-iotests/307.out | 18 +++++++++++++++
- 2 files changed, 65 insertions(+)
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-diff --git a/tests/qemu-iotests/307 b/tests/qemu-iotests/307
-index b429b5aa50a..f6ee3ebec08 100755
---- a/tests/qemu-iotests/307
-+++ b/tests/qemu-iotests/307
-@@ -142,5 +142,52 @@ with iotests.FilePath('image') as img, \
-     vm.qmp_log('query-block-exports')
-     iotests.qemu_nbd_list_log('-k', socket)
- 
-+    iotests.log('\n=== Using multi-thread with NBD ===')
-+
-+    # Actual multi-threading; (currently) not supported by NBD
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0', 'iothread1'])
-+
-+    # Should be treated the same way as actual multi-threading, even if there's
-+    # only a single thread
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0'])
-+
-+    iotests.log('\n=== Empty thread list')
-+
-+    # Simply not allowed
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=[])
-+
-+    iotests.log('\n=== Non-existent thread name in list')
-+
-+    # Expect an error, even if NBD does not support multi-threading, because the
-+    # list is parsed before being passed to NBD
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0', 'nothread', 'iothread1'])
-+
-+    iotests.log('\n=== Multi-thread with fixed-iothread')
-+
-+    # With multi-threading, there is no single context to give the BDS, so it is
-+    # just left where it is.  fixed-iothread does not make sense then.
-+    vm.qmp_log('block-export-add',
-+               id='export0',
-+               type='nbd',
-+               node_name='fmt',
-+               iothread=['iothread0', 'iothread1'],
-+               fixed_iothread=True)
-+
-     iotests.log('\n=== Shut down QEMU ===')
-     vm.shutdown()
-diff --git a/tests/qemu-iotests/307.out b/tests/qemu-iotests/307.out
-index f645f3315f8..a9b37d3ac11 100644
---- a/tests/qemu-iotests/307.out
-+++ b/tests/qemu-iotests/307.out
-@@ -134,4 +134,22 @@ read failed: Input/output error
- exports available: 0
- 
- 
-+=== Using multi-thread with NBD ===
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": ["iothread0", "iothread1"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "NBD export does not support multi-threading"}}
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": ["iothread0"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "NBD export does not support multi-threading"}}
-+
-+=== Empty thread list
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": [], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "The set of I/O threads must not be empty"}}
-+
-+=== Non-existent thread name in list
-+{"execute": "block-export-add", "arguments": {"id": "export0", "iothread": ["iothread0", "nothread", "iothread1"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "iothread \"nothread\" not found"}}
-+
-+=== Multi-thread with fixed-iothread
-+{"execute": "block-export-add", "arguments": {"fixed-iothread": true, "id": "export0", "iothread": ["iothread0", "iothread1"], "node-name": "fmt", "type": "nbd"}}
-+{"error": {"class": "GenericError", "desc": "Cannot use fixed-iothread for a multi-threaded export"}}
-+
- === Shut down QEMU ===
 -- 
-2.53.0
+Peter Xu
 
 
