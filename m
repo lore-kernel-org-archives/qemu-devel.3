@@ -4,107 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16AA9FD2D9B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0FFA0FD2D98
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 13:56:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzxZE-0004St-R1; Tue, 10 Mar 2026 09:56:12 -0400
+	id 1vzxZ2-0004JD-W4; Tue, 10 Mar 2026 09:56:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxZC-0004SZ-V3
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:56:10 -0400
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxZ2-0004HH-5Q
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:56:00 -0400
 Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxZB-0007X1-Im
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:56:10 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1vzxZ0-0007AN-Gw
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 09:55:59 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id D184C5BD03;
- Tue, 10 Mar 2026 13:55:58 +0000 (UTC)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 17D265BCFF;
+ Tue, 10 Mar 2026 13:55:54 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773150958; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1773150954; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6+klaHRezzor2BJOwktV5mxehOv++t5XOPvAMZAYwXc=;
- b=WWmU5mI+N8SRcz0BUVjMGUmIbWCjMLhZSEOJWLYOKChYvI+mOga0GQKfchPQ6kBKTBwX8/
- LJYIS3Po0YquZroNb9DokPOMUHhV/93meRtEFJxKKYiY9I6kuWK8wO1la/bs6NEqDJ9wXn
- CbK1tFNXiAL5s0Ez+8sF361XfIGvtLI=
+ bh=ZUOb5ds4jvITFBawpUDNqXqIQIHh/FJKtjON74G0zxE=;
+ b=plL30HqQ9kZHaef9wv9WAhZBuPi/fh4O+g2oaF6VSmFtlcmi2vCSt1gwLuz/mi1xIgf9QL
+ aRtcgL+HWGA9X5Le+GP7h4xi86W7Lk8HApB4wDVZISJGSsp4LOI2nU+glRRB1KH//Ijzvn
+ 6OW47LL8MW8Xlp3xkchZtOTwp4tx2uk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773150958;
+ s=susede2_ed25519; t=1773150954;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6+klaHRezzor2BJOwktV5mxehOv++t5XOPvAMZAYwXc=;
- b=H487/fAOZO0SEiixywr3FFcjYjvL5zm0iIaFxU7n5NU4ckhmQfibjRcElxd03NHaxdsO92
- sZ56LgzSrk4iUABQ==
+ bh=ZUOb5ds4jvITFBawpUDNqXqIQIHh/FJKtjON74G0zxE=;
+ b=oThlRRby8qVXjf2JA5718EMLfx+N7kgiWG19MZ68nQXh/Al0w4pHJ8BnQESBO9lUE6ADlg
+ UwnzoDU2iHnEFPCg==
 Authentication-Results: smtp-out2.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=WWmU5mI+;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b="H487/fAO"
+	none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773150958; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ t=1773150954; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6+klaHRezzor2BJOwktV5mxehOv++t5XOPvAMZAYwXc=;
- b=WWmU5mI+N8SRcz0BUVjMGUmIbWCjMLhZSEOJWLYOKChYvI+mOga0GQKfchPQ6kBKTBwX8/
- LJYIS3Po0YquZroNb9DokPOMUHhV/93meRtEFJxKKYiY9I6kuWK8wO1la/bs6NEqDJ9wXn
- CbK1tFNXiAL5s0Ez+8sF361XfIGvtLI=
+ bh=ZUOb5ds4jvITFBawpUDNqXqIQIHh/FJKtjON74G0zxE=;
+ b=plL30HqQ9kZHaef9wv9WAhZBuPi/fh4O+g2oaF6VSmFtlcmi2vCSt1gwLuz/mi1xIgf9QL
+ aRtcgL+HWGA9X5Le+GP7h4xi86W7Lk8HApB4wDVZISJGSsp4LOI2nU+glRRB1KH//Ijzvn
+ 6OW47LL8MW8Xlp3xkchZtOTwp4tx2uk=
 DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773150958;
+ s=susede2_ed25519; t=1773150954;
  h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
  mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6+klaHRezzor2BJOwktV5mxehOv++t5XOPvAMZAYwXc=;
- b=H487/fAOZO0SEiixywr3FFcjYjvL5zm0iIaFxU7n5NU4ckhmQfibjRcElxd03NHaxdsO92
- sZ56LgzSrk4iUABQ==
+ bh=ZUOb5ds4jvITFBawpUDNqXqIQIHh/FJKtjON74G0zxE=;
+ b=oThlRRby8qVXjf2JA5718EMLfx+N7kgiWG19MZ68nQXh/Al0w4pHJ8BnQESBO9lUE6ADlg
+ UwnzoDU2iHnEFPCg==
 Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BFA563F4B3;
- Tue, 10 Mar 2026 13:55:56 +0000 (UTC)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 73A173F4B3;
+ Tue, 10 Mar 2026 13:55:52 +0000 (UTC)
 Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id aL80IewisGnFcQAAD6G6ig
- (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 13:55:56 +0000
+ by imap1.dmz-prg2.suse.org with ESMTPSA id YIq2DugisGnFcQAAD6G6ig
+ (envelope-from <farosas@suse.de>); Tue, 10 Mar 2026 13:55:52 +0000
 From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>, Peter Xu <peterx@redhat.com>,
- Mark Kanda <mark.kanda@oracle.com>, Ben Chaney <bchaney@akamai.com>,
  Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Subject: [PATCH 7/8] tests/qtest/migration: Fix leak in CPR exec test
-Date: Tue, 10 Mar 2026 10:55:39 -0300
-Message-ID: <20260310135540.8679-7-farosas@suse.de>
+Subject: [PATCH 5/8] tests/qtest/migration: Force exit-on-error=false when
+ appropriate
+Date: Tue, 10 Mar 2026 10:55:37 -0300
+Message-ID: <20260310135540.8679-5-farosas@suse.de>
 X-Mailer: git-send-email 2.51.0
 In-Reply-To: <20260310135540.8679-1-farosas@suse.de>
 References: <20260310135540.8679-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
- ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_SEVEN(0.00)[7];
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-0.984];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
  DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- FROM_EQ_ENVFROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- RCVD_TLS_ALL(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: D184C5BD03
+ RCPT_COUNT_FIVE(0.00)[5]; RCVD_TLS_ALL(0.00)[]
 Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
  envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
@@ -128,37 +118,70 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The string was being dup'ed only to get around the const of the
-qdict_get_str() return value.
+Some tests can cause QEMU to exit(1) too early while the incoming
+coroutine has not yielded for a first time yet. This trips ASAN
+because resources related to dispatching the incoming process will
+still be allocated in the io/channel.c layer without a
+straight-forward way for the migration code to clean them up.
+
+Since this is an issue only affecting testing and leak detection,
+let's make sure tests only use MIG_TEST_FAIL_DEST_QUIT_ERR when
+strictly necessary.
+
+To make this process easier, force exit-on-error=false for precopy
+whenever the expected test result is MIG_TEST_FAIL. The distinction
+between the two return codes is exactly that, the latter should never
+cause exit(1).
+
+The affected tests for now are the TLS tests "no_hostname" and
+"mismatch_host".
 
 Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- tests/qtest/migration/cpr-tests.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ tests/qtest/migration/framework.c | 5 ++++-
+ tests/qtest/migration/tls-tests.c | 6 ++++--
+ 2 files changed, 8 insertions(+), 3 deletions(-)
 
-diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-index 1b3d42e51c..fabdec4ff3 100644
---- a/tests/qtest/migration/cpr-tests.c
-+++ b/tests/qtest/migration/cpr-tests.c
-@@ -161,15 +161,16 @@ static void set_cpr_exec_args(QTestState *who, MigrateCommon *args)
- static void wait_for_migration_event(QTestState *who, const char *waitfor)
- {
-     QDict *rsp, *data;
--    char *status;
-     bool done = false;
- 
-     while (!done) {
-+        const char *status;
+diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+index 4cc63bba7b..cfb8409d33 100644
+--- a/tests/qtest/migration/framework.c
++++ b/tests/qtest/migration/framework.c
+@@ -854,7 +854,10 @@ int test_precopy_common(MigrateCommon *args)
+             in_channels = qobject_from_json(args->connect_channels,
+                                             &error_abort);
+         }
+-        migrate_incoming_qmp(to, args->listen_uri, in_channels, "{}");
 +
-         rsp = qtest_qmp_eventwait_ref(who, "MIGRATION");
-         g_assert(qdict_haskey(rsp, "data"));
-         data = qdict_get_qdict(rsp, "data");
-         g_assert(qdict_haskey(data, "status"));
--        status = g_strdup(qdict_get_str(data, "status"));
-+        status = qdict_get_str(data, "status");
-         g_assert(strcmp(status, "failed"));
-         done = !strcmp(status, waitfor);
-         qobject_unref(rsp);
++        migrate_incoming_qmp(to, args->listen_uri, in_channels,
++                             args->result == MIG_TEST_FAIL ?
++                             "{ 'exit-on-error': false }" : "{}");
+     }
+ 
+     /* Wait for the first serial output from the source */
+diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+index f636802642..6274906ad9 100644
+--- a/tests/qtest/migration/tls-tests.c
++++ b/tests/qtest/migration/tls-tests.c
+@@ -525,7 +525,8 @@ static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
+     args->listen_uri = "tcp:127.0.0.1:0";
+     args->start_hook = migrate_hook_start_tls_x509_no_host;
+     args->end_hook = migrate_hook_end_tls_x509;
+-    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
++    args->result = MIG_TEST_FAIL;
++    args->start.incoming_defer = true;
+ 
+     args->start.hide_stderr = true;
+ 
+@@ -559,7 +560,8 @@ static void test_precopy_tcp_tls_x509_mismatch_host(char *name,
+     args->listen_uri = "tcp:127.0.0.1:0";
+     args->start_hook = migrate_hook_start_tls_x509_mismatch_host;
+     args->end_hook = migrate_hook_end_tls_x509;
+-    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
++    args->result = MIG_TEST_FAIL;
++    args->start.incoming_defer = true;
+ 
+     args->start.hide_stderr = true;
+ 
 -- 
 2.51.0
 
