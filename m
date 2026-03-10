@@ -4,102 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CE6FFD4F09
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79DE5FD4F03
 	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 17:08:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w00ZM-0008Fl-M4; Tue, 10 Mar 2026 13:08:32 -0400
+	id 1w00YZ-0007qp-A6; Tue, 10 Mar 2026 13:07:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1w00ZG-00082E-0J
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:08:29 -0400
-Received: from mx0b-00069f02.pphosted.com ([205.220.177.32])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dongli.zhang@oracle.com>)
- id 1w00ZC-0002CM-Np
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:08:25 -0400
-Received: from pps.filterd (m0333520.ppops.net [127.0.0.1])
- by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62A9DY2c094073; Tue, 10 Mar 2026 17:08:19 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
- :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=iFpSK
- INe6OWo+I6GSanaKOcn2So+bSbYaeDc+PnJmY4=; b=oa5Ciq31bs6w7Fy3FYJOt
- YtCBKedUW5xGu3eDCSngAiHoF2lhmKj4M6lMDgEA8o2OFZ3KxxGMbBI8XtkOFOSb
- GToG6uNiKpUVjYrWivzSEt1vse5/JoModP9fIa8Hl7OPzEFEfvStpOFgCW0w2yKq
- 2wN0OeQdtOcAZt1QvrfcjMB/duy/pjd0lZue5mNL9CESnk4sNRLyNkNn+6EdibQr
- 6umzKA6Pt3uwFyb+zDfrawSFuZgYY8ERYihb90CNAERfhP6znWgB1g7nHzKP8Voe
- iM6zc7SuJO85X3YziHK2pKtyb3Gs8kfORVniDZnzLFcKxwZuQDLTUGlqJZ6cxKkS
- A==
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.appoci.oracle.com [130.35.103.27])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4csmdkk99k-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 17:08:19 +0000 (GMT)
-Received: from pps.filterd
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 62AGVhW5014795; Tue, 10 Mar 2026 17:08:19 GMT
-Received: from pps.reinject (localhost [127.0.0.1])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTPS id
- 4crafengw4-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 10 Mar 2026 17:08:18 +0000
-Received: from iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com
- (iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62AH6kiK015679;
- Tue, 10 Mar 2026 17:08:18 GMT
-Received: from localhost.localdomain (ca-dev80.us.oracle.com [10.211.9.80])
- by iadpaimrmta03.imrmtpd1.prodappiadaev1.oraclevcn.com (PPS) with ESMTP id
- 4crafenguc-2; Tue, 10 Mar 2026 17:08:18 +0000
-From: Dongli Zhang <dongli.zhang@oracle.com>
-To: qemu-devel@nongnu.org
-Cc: pbonzini@redhat.com, philmd@linaro.org, kraxel@redhat.com,
- joe.jin@oracle.com
-Subject: [PATCH v2 1/2] system/runstate: add runstate transition notifier
-Date: Tue, 10 Mar 2026 10:06:16 -0700
-Message-ID: <20260310170712.46336-2-dongli.zhang@oracle.com>
-X-Mailer: git-send-email 2.43.5
-In-Reply-To: <20260310170712.46336-1-dongli.zhang@oracle.com>
-References: <20260310170712.46336-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w00YX-0007pv-6Y
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:07:41 -0400
+Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w00YU-0001a6-As
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 13:07:40 -0400
+Received: by mail-ed1-x535.google.com with SMTP id
+ 4fb4d7f45d1cf-662b42ca0daso3327263a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 10:07:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773162457; x=1773767257; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jhKSwfcWirkgW4OmEZzxqWnK9gWTQjeX5p0IlUVw/YE=;
+ b=yw2zVSJ0doyC0jFaQ6kETcFkxK33vDcjWa0hB9qBqwBTkREfpd4gwqxP8Sczxydp0F
+ qRxu733CTN0YNK20T+bCmS4c27FVdBl91dcQ3hgzgODqndrbdAv5p8MjIdO15Pk2IXOT
+ i7jKLXLkRxKK+z0EQk9RvF4BJxUIRGAnHk/FOh/GyIcc1cqojnPgxEVZcCxTIQrO3pOX
+ 1rSmgjagn4MLh/+R2tAD+HA4NaZf6T6WR+fZiuLX3LAeOZ5BKts6c9ovVSe57Q6Lyyu9
+ tWrHQdKGeU4V5P9+ug9yZt8qDiZbN9HqJjdgDBgKQLFUxuduFwkK/3FXh3n1LxJIZhXa
+ G0DA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773162457; x=1773767257;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jhKSwfcWirkgW4OmEZzxqWnK9gWTQjeX5p0IlUVw/YE=;
+ b=WSf6Mqu84iqP/sBesgN5Hij00FIbG+2v3AOY3BuNdLrBJfAAE5grY0oUAUDJydel6k
+ RTJohK4m3Q1LatHeiR4KMErwZRuSNeAP0n3qE3dTbiDI9x+TPjKmXhwvDBrt1TymNH6g
+ N1s1+PQ1M6wzLT5p37x5Yk5DeBeJtLeDkyfasTiM0ICySC7V3Xzz2G1gRYkDLohL8Wa0
+ n7cY7ROvxnR8QQuk6ynbZgrR1yc48kK9LDWUUNH9FCEAWA9/KhinUOhN4SN7to14zVcb
+ fxltNnZOI0z1ZBM0ixey8SyLYoFBDNhxLaCHjj/Gvw9y5PdXOAoHqcgRkJ1u5JoNbm3x
+ rgrw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX9LGO59YuauW+60UGRMXHGsJ24fbQhqbvxjAm0pGo7/OOUkUgWwYBMwzfn5fOotQzIJV4TV3OoWgXt@nongnu.org
+X-Gm-Message-State: AOJu0YyoxIG2N4FT5HzWGI2pkPGAFoWR9QsEm7HU8Omvi7oKSN3K+Jue
+ 9ONdnIWxfUQGm4/HX9s83CluZv5RonUUnFNNZsAdAaqqh9BYHz7YDB9O/zDLHKlCF5g=
+X-Gm-Gg: ATEYQzyVO8lFdGoa4DR0RyCMaVd8SZjqE1QGokPbqP4w1XEnWUqfFtKF9mfEBX3oWbY
+ BE43h56VWircbGIlw792fo7BhqGXZDOqpSo/Rhj44okNts0ujv2B33vmg37zTWpTm+AyegHjDIH
+ 1E+AvmZCA6QdNYmA87pR4BLCY7/2bR6zUCE6C9GGUryeFGQyNqKTqJIvKfylekYcoOCBRAgh13s
+ eY2nX2FYv6gnQYnzA7pAV8sxl1D4fd2NQ54l2N6qseB3USy/qwbDiSqoSBeEb3PlRED77uthnhQ
+ aDUMDFRF8Br9ilic0t8lU0sTUUHimLjgl6Jkv+OufVjVexDhjbhsVLmh10jHsKcG8upnDreq4ug
+ 2UzaT4lSS91ce2wa5kweHeMwNs04dEwbpuH58PuOYNQWsWB4aWp5I8r2Nc5c7lpVg+eriYaBfWt
+ leu+ZPgmsNrHWsaj6OZ8YtIZtthQZaRMc7bd821mrBcfPhqU9zUNHZ3IxOB4owYr0HQA==
+X-Received: by 2002:a05:6402:278d:b0:65f:80cc:a47a with SMTP id
+ 4fb4d7f45d1cf-6619d45a9dbmr8919819a12.1.1773162456655; 
+ Tue, 10 Mar 2026 10:07:36 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-661a559b222sm4526297a12.23.2026.03.10.10.07.34
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Mar 2026 10:07:35 -0700 (PDT)
+Message-ID: <d63c29d6-5bd6-4bba-ad3c-525e2c3fe748@linaro.org>
+Date: Tue, 10 Mar 2026 18:07:34 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/2] tests/qtest/aspeed_gpio-test: Use g_strdup_printf()
+ instead of char arrays
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: Fabiano Rosas <farosas@suse.de>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@kaod.org>, Steven Lee <steven_lee@aspeedtech.com>,
+ Troy Lee <leetroy@gmail.com>, Jamin Lin <jamin_lin@aspeedtech.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>
+References: <20260310153334.3063224-1-peter.maydell@linaro.org>
+ <20260310153334.3063224-3-peter.maydell@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260310153334.3063224-3-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_03,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- adultscore=0 phishscore=0
- mlxscore=0 spamscore=0 mlxlogscore=999 malwarescore=0 suspectscore=0
- classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2602130000
- definitions=main-2603100148
-X-Authority-Analysis: v=2.4 cv=MuBfKmae c=1 sm=1 tr=0 ts=69b05003 b=1 cx=c_pps
- a=qoll8+KPOyaMroiJ2sR5sw==:117
- a=qoll8+KPOyaMroiJ2sR5sw==:17
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=BqU2WV_vvsyTyxaotp0D:22 a=yPCof4ZbAAAA:8 a=21ba6zvX9GSnDcFK0kkA:9 cc=ntf
- awl=host:12273
-X-Proofpoint-ORIG-GUID: 2YwVAM8LCJ8Kg2jH35zZHjWEDJY1T3IH
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDE0OCBTYWx0ZWRfX/n9u1+zgKMYn
- zzzUoY9QoZ/E01SXVXlEPBmwT2uMwM4BSkfFBFOpwV8W2PnrCHCnHNBIRkSmug+gZ21lZZfvWrk
- LJFqRiXMSC8r6AA51LhtLhX55f11CBfZROkFXOu5DS3fRoCO/NMPr8L8QONK0U0FfjqLBfqHmkX
- gP6gS/iSaq73oqBzuB0AlnJmHGek0k6y5r7fBa2i8Kue4FZekrHmH7mVuv91F6gtLm2ZFKN4Ilc
- oPX5yYr/foRVYWHyoCyKqsAUJ4KTQXQmB3iL+0pNeDcwIS64Yqii2NkjH3RF19+GN3ICOiUAXMO
- Bnil7pyp+v3lvf2DLhBweY35pKQndhE3SHWTjBIywwVuNNzN5IlLl7Oe6mup7iqdNhu0VcsOO8W
- 9jtv03C+dWe+ilKqHZmmljEqCF8RGS1TwhwpOC0E0InbPXW4wg8uO8fx0r8jeU34Hf9yOvr4FHt
- tLQ6JwCdaUIrER/yNRlq8oAevLMgcp8IrslRmqXU=
-X-Proofpoint-GUID: 2YwVAM8LCJ8Kg2jH35zZHjWEDJY1T3IH
-Received-SPF: pass client-ip=205.220.177.32;
- envelope-from=dongli.zhang@oracle.com; helo=mx0b-00069f02.pphosted.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::535;
+ envelope-from=philmd@linaro.org; helo=mail-ed1-x535.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,97 +108,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the notifier list that fires whenever runstate_set() changes the
-runstate. Any components can register to observe the old and new runstate
-values before the switch completes.
+On 10/3/26 16:33, Peter Maydell wrote:
+> Older versions of gcc with -Wformat-overflow=2 don't like the usage of
+> fixed size char arrays in this test; gcc 7.5.0 (SUSE Linux) says:
+> 
+> ../tests/qtest/aspeed_gpio-test.c: In function ‘test_set_input_pins’:
+> ../tests/qtest/aspeed_gpio-test.c:149:36: error: ‘sprintf’ may write a terminating nul past the end of the destination [-Werror=format-overflow=]
+>               sprintf(name, "gpio%c%d", c, i);
+>                                      ^
+> ../tests/qtest/aspeed_gpio-test.c:149:13: note: ‘sprintf’ output between 7 and 17 bytes into a destination of size 16
+>               sprintf(name, "gpio%c%d", c, i);
+>               ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+> 
+> This can't actually happen because of the limited size of the values
+> being substituted in.  However rather than require readers to check
+> whether the arrays really have been declared large enough, we prefer
+> to use g_strdup_printf() for this kind of string work.
+> 
+> Reported-by: Fabiano Rosas <farosas@suse.de>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   tests/qtest/aspeed_gpio-test.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-For instance, an upcoming change will use this hook to refresh the fw_cfg
-'bootorder' and 'bios-geometry' entries when the instance leaves
-RUN_STATE_PRELAUNCH for RUN_STATE_RUNING.
-
-Signed-off-by: Dongli Zhang <dongli.zhang@oracle.com>
----
- include/system/runstate.h |  8 ++++++++
- system/runstate.c         | 25 +++++++++++++++++++++++++
- 2 files changed, 33 insertions(+)
-
-diff --git a/include/system/runstate.h b/include/system/runstate.h
-index 929379adae..de812ec320 100644
---- a/include/system/runstate.h
-+++ b/include/system/runstate.h
-@@ -11,6 +11,14 @@ bool runstate_is_running(void);
- bool runstate_needs_reset(void);
- void runstate_replay_enable(void);
- 
-+typedef struct VMRunStateTransition {
-+    RunState old_state;
-+    RunState new_state;
-+} VMRunStateTransition;
-+
-+void qemu_add_runstate_transition_notifier(Notifier *notifier);
-+void qemu_remove_runstate_transition_notifier(Notifier *notifier);
-+
- typedef void VMChangeStateHandler(void *opaque, bool running, RunState state);
- typedef int VMChangeStateHandlerWithRet(void *opaque, bool running, RunState state);
- 
-diff --git a/system/runstate.c b/system/runstate.c
-index eca722b43c..01b76463d7 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -65,6 +65,8 @@
- 
- static NotifierList exit_notifiers =
-     NOTIFIER_LIST_INITIALIZER(exit_notifiers);
-+static NotifierList runstate_transition_notifiers =
-+    NOTIFIER_LIST_INITIALIZER(runstate_transition_notifiers);
- 
- static RunState current_run_state = RUN_STATE_PRELAUNCH;
- 
-@@ -226,6 +228,17 @@ static void runstate_init(void)
-     qemu_mutex_init(&vmstop_lock);
- }
- 
-+static void runstate_transition_notify(RunState old_state,
-+                                       RunState new_state)
-+{
-+    VMRunStateTransition transition = {
-+        .old_state = old_state,
-+        .new_state = new_state,
-+    };
-+
-+    notifier_list_notify(&runstate_transition_notifiers, &transition);
-+}
-+
- /* This function will abort() on invalid state transitions */
- void runstate_set(RunState new_state)
- {
-@@ -245,6 +258,8 @@ void runstate_set(RunState new_state)
-         abort();
-     }
- 
-+    runstate_transition_notify(current_run_state, new_state);
-+
-     current_run_state = new_state;
- }
- 
-@@ -403,6 +418,16 @@ int vm_state_notify(bool running, RunState state)
-     return ret;
- }
- 
-+void qemu_add_runstate_transition_notifier(Notifier *notifier)
-+{
-+    notifier_list_add(&runstate_transition_notifiers, notifier);
-+}
-+
-+void qemu_remove_runstate_transition_notifier(Notifier *notifier)
-+{
-+    notifier_remove(notifier);
-+}
-+
- static ShutdownCause reset_requested;
- static ShutdownCause shutdown_requested;
- static int shutdown_exit_code = EXIT_SUCCESS;
--- 
-2.39.3
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
