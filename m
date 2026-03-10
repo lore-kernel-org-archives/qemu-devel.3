@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4107FD4F17
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 18:32:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E159AFD4F17
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 18:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w01s8-000220-6n; Tue, 10 Mar 2026 14:32:00 -0400
+	id 1w01sJ-000242-EU; Tue, 10 Mar 2026 14:32:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w01s5-00021Y-Ft
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:31:57 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1w01sH-00023m-7Q
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:32:09 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w01s2-0007gI-Fp
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:31:57 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ae8177446fso33555605ad.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 11:31:54 -0700 (PDT)
+ id 1w01sF-0007iB-GB
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 14:32:08 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-3598e7155bbso6549154a91.2
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 11:32:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773167513; x=1773772313; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773167526; x=1773772326; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GG2Gexo+Btb5AB7rJ+bn7lp3VSbZ/BJr46AUU3D8uIU=;
- b=nqN4272mUYb9QeSWer6KfEFiUaCpVijtzcStlt6oySs275kEQvb+rlzeVY1G66MUV5
- lm46Yg50/no3U+hzrrwGM7y+EvcAXmkveQUStKK2lghFEUpdJ7VivshhTOG9KxNqGn0n
- A1ghWdFf3C30qvfvZRbzm/bod407+ky2PuFpUGhk80Qb/QPHjCj61CFNCHVGwZbi+P3b
- 08KVXcc/ZA4LykVVnERmFrqUWRE7Wsnpv21TSxeRT8IS6XiiTcMmBUM5Tom58AtKVFYN
- DI11R5JRB+IBef/1wLVm1CxxeUHtxJUGtkEWkHPD/h8C8BxBgI1m+thNnp1ukV/JfNOi
- 9Tog==
+ bh=YftEthnO5ZbHmCNgkv0qnfwkakmKxf+SOGKN2IGfTXs=;
+ b=mRNEx2fbCsMgzTL2IalXcc9+sxhnrlIFHitDFTnZzvd2tZUkyAtpyO/uaJmbhkrHNu
+ DnYIoNfczcI3da2NgFyhhsCls8ZKFVHyEob9vJb/hQ4ri3FrGw4+yXWKtnbejhRx12Et
+ YvLYMY94eSmlDoT5FDWmdCHZl5IyWeIqbxesuB1gsO6s3QfSFJmgzMEMopVCyNysuTnx
+ DHVjFy+/8fyGopmxjsm68YzF9cyXYLw14G9/nq9ir0EFq4ir+NfYq/7aritHGUG4Y0Y/
+ /sToW9Nd/bUvTi/0qhR45+TvEDUeturr+AbY51iAs11kZm16O1h3O3s4ORDJ1ge6GRFp
+ 40Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773167513; x=1773772313;
+ d=1e100.net; s=20230601; t=1773167526; x=1773772326;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GG2Gexo+Btb5AB7rJ+bn7lp3VSbZ/BJr46AUU3D8uIU=;
- b=cVK719yHfmBx+PoKf+N8h0t/oJN90RdlXThBraQOuaM3v1807K//JDXwB4Pe/jZkFu
- QeloEBFhpJaGIRFMNAeTALTYJH0HHvFk1uSQDW3P3H1IHzfP6S+ZMecpCquWNysepFsB
- 9IMY3WojsGAxjLGZhNLpjLrZn5dBd8IpmpXhW5upzbSKnhXoMXBqPTm6q0OYcpEPiXFf
- PjIB0LkOYompP377INCoNZmSzObB20P8EA4sntImM1uhHjKo+lYe54xM8NtVSWfIE9Ho
- oQ7aMXltKH8MSSKOh/dnQqwpRaau5tVhHGQZ6wVfp3MPPDOalNz1HbpAOfb46OEpHJ8T
- 9VFQ==
-X-Gm-Message-State: AOJu0Yw7Ey1WCPQMBnOF4BNISfkDl/dWTDgQkpCiDY4I15vYX9kCVmFW
- eEZfjQ9WTCgN+QjHNx/4JCu6dU7XS79sRosM6K2POFTL05xGLdN94eB9m9Fo2O0JmSrnjA==
-X-Gm-Gg: ATEYQzyFjj3vncaxx2EgbkjIIrJmEX2u1e6AhDTCuLjE2+FmE1m7qhwJof4d8kRx3UI
- bO1cq8hbh4mzMCSey3iiD9aZvrt7jMu+eSTmqlPeRWNd1j/6IZ+po0SN+175Fplg7YM0BETpnjX
- PMf1zAIVK72tBwMnQ0SzzK7iU9X5OHiEvfCQkxkIOlKItcvmUjjD058PzvJVjRTcTnsI6hTPQVP
- 3/YfsSGiMo1gpP/ryvi4eQ34gsBjw5f9qrxsOE9em+zAolz1SmoOV5ggtOr0YlAF5BoBy6gZ/3s
- RZAmnoXE/qmyGIZrcbXeJRj8HNWluZHuGCkHgdu/1o4RnPJKrf1HKYNQ15wYJe3+N8Qy0m36pC3
- JkD18F4nwIRHqMHIjUzYmEfeC8gkEJZlHOknM+MtumJs1Zlk5pv2/ysGOW37nUs/8bHkg9tyqMS
- N3VycKi/fFRT9uVRLSfcaAGnLy1eRtEpzu79o1nXO3Lu130A==
-X-Received: by 2002:a17:902:d48b:b0:2a9:5e25:46f6 with SMTP id
- d9443c01a7336-2ae82442c8dmr151595215ad.17.1773167512772; 
- Tue, 10 Mar 2026 11:31:52 -0700 (PDT)
+ bh=YftEthnO5ZbHmCNgkv0qnfwkakmKxf+SOGKN2IGfTXs=;
+ b=odSAKZif5eaKuOSah/jtudF2GJRnhmj7KMs4l5Km3zEBvEPfeVopkxPlmOOzMo0oRp
+ c5u0nSI1MAug1Q8Ftd1f/yUR/rvIkLnzDhHWX5P5r8Uv2ECxVIF4OaxGW/cmoPg1zQg4
+ Yo5D6D1PpMtz2ezBrrUmhj0qf7OixstRzcjf6wHVe/ABuhFbR1MTm+dcq4xyEoRNOpit
+ pNDSxasNMtIi5r9lmUZFSTC5wIfpt67qgpJ6YRA4SmAV9OnJV+rADCD1dopXVbXDhbNv
+ pKaHzlhPE4lykX5rhLuGIyHHKCB8mJ2mMM1s9t5optk84GUT+hsvDg4QlZPkMvBni9CV
+ NM4A==
+X-Gm-Message-State: AOJu0YxVmBMHiXtY2ahOMbU1MogEnhAyYb0iO6SZXoMTLBf5U+pKntkb
+ BgLJXQ1XHMrcNEja1kKdsiPEUI88H3DTCgXpu3aU7CcrIsVnZ6jgNHFQ4Yqrj7wosIMSKQ==
+X-Gm-Gg: ATEYQzwhxQ+0/1LDRo3ZyXP16vX578H+S7rRQaC5EwrCuooOc4QXIc0Fp82L+XH1sSo
+ g4Oxjwrt4SsLBktke7SsIZD2foBgz42Ck8JaCzYbg/3FPRjlaLW2YXnKgkH8TTk2KV9tUpC9VF0
+ K6r6BAeAw/cM/YMx4i4Kka/82KbwEDDDmtsxPrAkTwcyPvankMnmnQwvpMsKz9FmGS+KR6AJ5nE
+ fiCLx6pQfoTBME337LH1puxzHtV96KJt/b9+3NNebPUxOHiDlM52lepUs2wmtTXAbSW3UMau2/D
+ elIu2DShidnQHrpt8Nk7rO+fS9eZ5Fpovdi3drokNudQgfL9d8HlJWN46f68qPHHMT/pcYTgrZW
+ aKHssOhUWRlw2De+E8aXoLax5ou1tM6INHOh1rp5TNtBheMTLvx9iUqkb0LCR/ah29A4xabimWc
+ Y0AdVaeZdyHurXCqfxn1BNSp7oPqZpNEX1Dvr9acFUomU/Uw==
+X-Received: by 2002:a17:903:3845:b0:2ae:80a3:ca7d with SMTP id
+ d9443c01a7336-2ae8246be97mr176422845ad.39.1773167525946; 
+ Tue, 10 Mar 2026 11:32:05 -0700 (PDT)
 Received: from localhost.localdomain ([123.19.166.13])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2ae840b2e9dsm209437015ad.85.2026.03.10.11.31.47
+ d9443c01a7336-2ae840b2e9dsm209437015ad.85.2026.03.10.11.32.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 11:31:52 -0700 (PDT)
+ Tue, 10 Mar 2026 11:32:05 -0700 (PDT)
 From: Trieu Huynh <vikingtc4@gmail.com>
 X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: Trieu Huynh <vikingtc4@gmail.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Helge Deller <deller@gmx.de>, Thomas Huth <huth@tuxfamily.org>,
- Laurent Vivier <laurent@vivier.eu>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>,
- BALATON Zoltan <balaton@eik.bme.hu>, Bernhard Beschow <shentey@gmail.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Nicholas Piggin <npiggin@gmail.com>, Aditya Gupta <adityag@linux.ibm.com>,
- Glenn Miles <milesg@linux.ibm.com>,
- =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-ppc@nongnu.org
-Subject: [PATCH 1/4] hw/core/loader: fix error handling for
- load_image_targphys callers
-Date: Wed, 11 Mar 2026 01:27:57 +0700
-Message-ID: <20260310182801.196443-2-viking4@gmail.com>
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>, Thomas Huth <thuth@redhat.com>,
+ Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Tony Krowiak <akrowiak@linux.ibm.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-s390x@nongnu.org
+Subject: [PATCH 3/4] util/event_notifier: fix error handling for
+ event_notifier_init callers
+Date: Wed, 11 Mar 2026 01:27:59 +0700
+Message-ID: <20260310182801.196443-4-viking4@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260310182801.196443-1-viking4@gmail.com>
 References: <20260310182801.196443-1-viking4@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -113,7 +113,7 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Trieu Huynh <vikingtc4@gmail.com>
 
-Check return value of load_image_targphys() and return early on
+Check return value of event_notifier_init() and return early on
 failure instead of continuing with invalid state.
 - Use ret < 0 to handle negative return value.
 - No functional changes.
@@ -121,414 +121,159 @@ failure instead of continuing with invalid state.
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
 Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 ---
- hw/alpha/dp264.c       |  8 ++++++--
- hw/hppa/machine.c      |  7 +++++--
- hw/m68k/next-cube.c    |  9 ++++++++-
- hw/m68k/q800.c         |  7 +++++--
- hw/m68k/virt.c         |  7 +++++--
- hw/microblaze/boot.c   |  4 ++++
- hw/ppc/amigaone.c      |  9 +++++++++
- hw/ppc/e500.c          | 10 ++++++++++
- hw/ppc/mac_newworld.c  | 10 ++++++++++
- hw/ppc/mac_oldworld.c  | 10 ++++++++++
- hw/ppc/pegasos.c       |  5 +++++
- hw/ppc/pnv.c           | 20 ++++++++++++++++----
- hw/ppc/ppc440_bamboo.c |  4 ++++
- hw/ppc/prep.c          | 10 ++++++++++
- hw/ppc/sam460ex.c      |  5 +++++
- hw/ppc/spapr.c         |  8 ++++++++
- hw/ppc/virtex_ml507.c  |  9 +++++++++
- 17 files changed, 129 insertions(+), 13 deletions(-)
+ hw/hyperv/hyperv.c     |  4 ++--
+ hw/hyperv/vmbus.c      |  4 ++--
+ hw/remote/proxy.c      | 15 +++++++++++++--
+ hw/vfio/ap.c           |  2 +-
+ hw/vfio/ccw.c          |  2 +-
+ hw/vfio/pci-quirks.c   |  2 +-
+ hw/vfio/pci.c          |  2 +-
+ hw/virtio/vhost-vdpa.c |  4 ++--
+ 8 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
-index 98219f0456..830d14a509 100644
---- a/hw/alpha/dp264.c
-+++ b/hw/alpha/dp264.c
-@@ -189,8 +189,12 @@ static void clipper_init(MachineState *machine)
+diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+index 27e323a819..aa278b179e 100644
+--- a/hw/hyperv/hyperv.c
++++ b/hw/hyperv/hyperv.c
+@@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
+         sint_route->staged_msg->cb_data = cb_data;
  
-             /* Put the initrd image as high in memory as possible.  */
-             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
--            load_image_targphys(initrd_filename, initrd_base,
--                                ram_size - initrd_base, NULL);
-+            if (load_image_targphys(initrd_filename, initrd_base,
-+                                ram_size - initrd_base, NULL) < 0) {
-+                error_report("could not load initrd '%s'",
-+                             initrd_filename);
-+                exit(1);
-+            }
- 
-             address_space_stq_le(&address_space_memory, param_offset + 0x100,
-                                  initrd_base + 0xfffffc0000000000ULL,
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index f55e84529f..0bf3bccb07 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -507,8 +507,11 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
-                 exit(1);
-             }
- 
--            load_image_targphys(initrd_filename, initrd_base, initrd_size,
--                                NULL);
-+            if (load_image_targphys(initrd_filename, initrd_base, initrd_size,
-+                                NULL) < 0) {
-+                error_report("Could not load initrd '%s'", initrd_filename);
-+                exit(1);
-+            }
-             cpu[0]->env.initrd_base = initrd_base;
-             cpu[0]->env.initrd_end  = initrd_base + initrd_size;
+         r = event_notifier_init(ack_notifier, false);
+-        if (r) {
++        if (r < 0) {
+             goto cleanup_err_sint;
          }
-diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-index 26177c7b86..77a88d1dde 100644
---- a/hw/m68k/next-cube.c
-+++ b/hw/m68k/next-cube.c
-@@ -1326,7 +1326,14 @@ static void next_cube_init(MachineState *machine)
-     memory_region_init_alias(&m->rom2, NULL, "next.rom2", &m->rom, 0x0,
-                              0x20000);
-     memory_region_add_subregion(sysmem, 0x0, &m->rom2);
--    if (load_image_targphys(bios_name, 0x01000000, 0x20000, NULL) < 8) {
-+    int bios_size = 0;
-+    bios_size = load_image_targphys(bios_name, 0x01000000, 0x20000, NULL);
-+    if (bios_size <  0) {
-+        /* Shoud report failure and exit regardless of qtest enabled or not */
-+        error_report("Failed to load firmware (bios size < 0) '%s'.",
-+                     bios_name);
-+        exit(1);
-+    } else if (bios_size < 8) {
-         if (!qtest_enabled()) {
-             error_report("Failed to load firmware '%s'.", bios_name);
-         }
-diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
-index ded531394e..3266617ad7 100644
---- a/hw/m68k/q800.c
-+++ b/hw/m68k/q800.c
-@@ -632,8 +632,11 @@ static void q800_machine_init(MachineState *machine)
-             }
+         event_notifier_set_handler(ack_notifier, sint_ack_handler);
+@@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
  
-             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
--            load_image_targphys(initrd_filename, initrd_base,
--                                ram_size - initrd_base, NULL);
-+            if (load_image_targphys(initrd_filename, initrd_base,
-+                                ram_size - initrd_base, NULL) < 0) {
-+                error_report("Could not load initrd '%s'", initrd_filename);
-+                exit(1);
-+            }
-             BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
-                       initrd_size);
-         } else {
-diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
-index e67900c727..90f52f26e5 100644
---- a/hw/m68k/virt.c
-+++ b/hw/m68k/virt.c
-@@ -291,8 +291,11 @@ static void virt_init(MachineState *machine)
-             }
- 
-             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
--            load_image_targphys(initrd_filename, initrd_base,
--                                ram_size - initrd_base, NULL);
-+            if (load_image_targphys(initrd_filename, initrd_base,
-+                                ram_size - initrd_base, NULL) < 0) {
-+                error_report("Could not load initrd '%s'", initrd_filename);
-+                exit(1);
-+            }
-             BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
-                       initrd_size);
-         } else {
-diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
-index a6f9ebab90..9fa8885dd3 100644
---- a/hw/microblaze/boot.c
-+++ b/hw/microblaze/boot.c
-@@ -172,6 +172,10 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
-         if (kernel_size < 0) {
-             kernel_size = load_image_targphys(kernel_filename, ddr_base,
-                                               ramsize, NULL);
-+            if (kernel_size < 0) {
-+                error_report("could not load kernel '%s'", kernel_filename);
-+                exit(EXIT_FAILURE);
-+            }
-             boot_info.bootstrap_pc = ddr_base;
-             high = (ddr_base + kernel_size + 3) & ~3;
-         }
-diff --git a/hw/ppc/amigaone.c b/hw/ppc/amigaone.c
-index 8074713fbe..bb5e712c1b 100644
---- a/hw/ppc/amigaone.c
-+++ b/hw/ppc/amigaone.c
-@@ -326,6 +326,10 @@ static void amigaone_init(MachineState *machine)
-             exit(1);
-         }
-         sz = load_image_targphys(filename, PROM_ADDR, PROM_SIZE, &error_fatal);
-+        if (sz < 0) {
-+            error_report("Could not load firmware '%s'", filename);
-+            exit(1);
-+        }
+     /* We need to setup a GSI for this SintRoute */
+     r = event_notifier_init(&sint_route->sint_set_notifier, false);
+-    if (r) {
++    if (r < 0) {
+         goto cleanup_err_sint;
      }
  
-     /* Articia S */
-@@ -411,6 +415,11 @@ static void amigaone_init(MachineState *machine)
-         loadaddr = MAX(loadaddr, INITRD_MIN_ADDR);
-         sz = load_image_targphys(machine->initrd_filename, loadaddr,
-                                  bi->bd_info - loadaddr, &error_fatal);
-+        if (sz < 0) {
-+            error_report("Could not load initrd '%s'",
-+                         machine->initrd_filename);
-+            exit(1);
-+        }
-         bi->initrd_start = loadaddr;
-         bi->initrd_end = loadaddr + sz;
-     }
-diff --git a/hw/ppc/e500.c b/hw/ppc/e500.c
-index d6ca2e8563..3117a05b59 100644
---- a/hw/ppc/e500.c
-+++ b/hw/ppc/e500.c
-@@ -1221,6 +1221,11 @@ void ppce500_init(MachineState *machine)
-         kernel_size = load_image_targphys(machine->kernel_filename,
-                                       cur_base, machine->ram_size - cur_base,
-                                       &error_fatal);
-+        if (kernel_size < 0) {
-+            error_report("Could not load kernel '%s'",
-+                         machine->kernel_filename);
-+            exit(1);
-+        }
-         cur_base += kernel_size;
+diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+index c5bab5d245..2f0d2a03d8 100644
+--- a/hw/hyperv/vmbus.c
++++ b/hw/hyperv/vmbus.c
+@@ -1425,7 +1425,7 @@ static void open_channel(VMBusChannel *chan)
+         goto put_gpadl;
      }
  
-@@ -1230,6 +1235,11 @@ void ppce500_init(MachineState *machine)
-         initrd_size = load_image_targphys(machine->initrd_filename, initrd_base,
-                                           machine->ram_size - initrd_base,
-                                           &error_fatal);
-+        if (initrd_size < 0) {
-+            error_report("Could not load initrd '%s'",
-+                         machine->initrd_filename);
-+            exit(1);
-+        }
-         cur_base = initrd_base + initrd_size;
+-    if (event_notifier_init(&chan->notifier, 0)) {
++    if (event_notifier_init(&chan->notifier, 0) < 0) {
+         goto put_gpadl;
      }
  
-diff --git a/hw/ppc/mac_newworld.c b/hw/ppc/mac_newworld.c
-index 3680d96ed3..5e9556af33 100644
---- a/hw/ppc/mac_newworld.c
-+++ b/hw/ppc/mac_newworld.c
-@@ -213,6 +213,11 @@ static void ppc_core99_init(MachineState *machine)
-                                               kernel_base,
-                                               machine->ram_size - kernel_base,
-                                               &error_fatal);
-+            if (kernel_size < 0) {
-+                error_report("Could not load kernel '%s'",
-+                             machine->kernel_filename);
-+                exit(1);
-+            }
-         }
-         /* load initrd */
-         if (machine->initrd_filename) {
-@@ -221,6 +226,11 @@ static void ppc_core99_init(MachineState *machine)
-                                               initrd_base,
-                                               machine->ram_size - initrd_base,
-                                               &error_fatal);
-+            if (initrd_size < 0) {
-+                error_report("Could not load initrd '%s'",
-+                             machine->initrd_filename);
-+                exit(1);
-+            }
-             cmdline_base = TARGET_PAGE_ALIGN(initrd_base + initrd_size);
-         } else {
-             cmdline_base = TARGET_PAGE_ALIGN(kernel_base + kernel_size + KERNEL_GAP);
-diff --git a/hw/ppc/mac_oldworld.c b/hw/ppc/mac_oldworld.c
-index 24d9f2e3d5..fdbbfed52a 100644
---- a/hw/ppc/mac_oldworld.c
-+++ b/hw/ppc/mac_oldworld.c
-@@ -169,6 +169,11 @@ static void ppc_heathrow_init(MachineState *machine)
-                                               kernel_base,
-                                               machine->ram_size - kernel_base,
-                                               &error_fatal);
-+            if (kernel_size < 0) {
-+                error_report("Could not load kernel '%s'",
-+                             machine->kernel_filename);
-+                exit(1);
-+            }
-         }
-         /* load initrd */
-         if (machine->initrd_filename) {
-@@ -178,6 +183,11 @@ static void ppc_heathrow_init(MachineState *machine)
-                                               initrd_base,
-                                               machine->ram_size - initrd_base,
-                                               &error_fatal);
-+            if (initrd_size < 0) {
-+                error_report("Could not load initrd '%s'",
-+                             machine->initrd_filename);
-+                exit(1);
-+            }
-             cmdline_base = TARGET_PAGE_ALIGN(initrd_base + initrd_size);
-         } else {
-             cmdline_base = TARGET_PAGE_ALIGN(kernel_base + kernel_size + KERNEL_GAP);
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index ac9fc5a654..0f03691f52 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -304,6 +304,11 @@ static void pegasos_init(MachineState *machine)
-         pm->initrd_addr = MAX(pm->initrd_addr, INITRD_MIN_ADDR);
-         sz = load_image_targphys(machine->initrd_filename, pm->initrd_addr,
-                             machine->ram_size - pm->initrd_addr, &error_fatal);
-+        if (sz < 0) {
-+            error_report("Could not load initrd '%s'",
-+                         machine->initrd_filename);
-+            exit(1);
-+        }
-         pm->initrd_size = sz;
+@@ -2416,7 +2416,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
      }
  
-diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
-index 1513575b8f..aecffb211b 100644
---- a/hw/ppc/pnv.c
-+++ b/hw/ppc/pnv.c
-@@ -1068,14 +1068,21 @@ static void pnv_init(MachineState *machine)
-         exit(1);
+     ret = event_notifier_init(&vmbus->notifier, 0);
+-    if (ret != 0) {
++    if (ret < 0) {
+         error_setg(errp, "event notifier failed to init with %d", ret);
+         goto remove_msg_handler;
      }
+diff --git a/hw/remote/proxy.c b/hw/remote/proxy.c
+index 5081d67e7f..e91566509f 100644
+--- a/hw/remote/proxy.c
++++ b/hw/remote/proxy.c
+@@ -52,9 +52,20 @@ static void setup_irqfd(PCIProxyDev *dev)
+     PCIDevice *pci_dev = PCI_DEVICE(dev);
+     MPQemuMsg msg;
+     Error *local_err = NULL;
++    int ret = 0;
  
--    load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
--                        &error_fatal);
-+    if (load_image_targphys(fw_filename, pnv->fw_load_addr, FW_MAX_SIZE,
-+                        &error_fatal) < 0) {
-+        error_report("Could not load OPAL firmware '%s'", fw_filename);
-+        exit(1);
+-    event_notifier_init(&dev->intr, 0);
+-    event_notifier_init(&dev->resample, 0);
++    ret = event_notifier_init(&dev->intr, 0);
++    if (ret < 0) {
++        error_report("Failed to init intr notifier: %s", strerror(-ret));
++        return;
 +    }
-     g_free(fw_filename);
- 
-     /* load kernel */
-     if (machine->kernel_filename) {
--        load_image_targphys(machine->kernel_filename,
--                            KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE, &error_fatal);
-+        if (load_image_targphys(machine->kernel_filename,
-+                        KERNEL_LOAD_ADDR, KERNEL_MAX_SIZE, &error_fatal) < 0) {
-+            error_report("Could not load kernel '%s'",
-+                         machine->kernel_filename);
-+            exit(1);
-+        }
-     }
- 
-     /* load initrd */
-@@ -1084,6 +1091,11 @@ static void pnv_init(MachineState *machine)
-         pnv->initrd_size = load_image_targphys(machine->initrd_filename,
-                                                pnv->initrd_base,
-                                                INITRD_MAX_SIZE, &error_fatal);
-+        if (pnv->initrd_size < 0) {
-+            error_report("Could not load initrd '%s'",
-+                         machine->initrd_filename);
-+            exit(1);
-+        }
-     }
- 
-     /* load dtb if passed */
-diff --git a/hw/ppc/ppc440_bamboo.c b/hw/ppc/ppc440_bamboo.c
-index 2dde008b0e..b9c30d8929 100644
---- a/hw/ppc/ppc440_bamboo.c
-+++ b/hw/ppc/ppc440_bamboo.c
-@@ -244,6 +244,10 @@ static void bamboo_init(MachineState *machine)
-         initrd_size = load_image_targphys(initrd_filename, RAMDISK_ADDR,
-                                           machine->ram_size - RAMDISK_ADDR,
-                                           &error_fatal);
-+        if (initrd_size < 0) {
-+            error_report("Could not load initrd '%s'", initrd_filename);
-+            exit(1);
-+        }
-     }
- 
-     /* If we're loading a kernel directly, we must load the device tree too. */
-diff --git a/hw/ppc/prep.c b/hw/ppc/prep.c
-index e973b34099..172a4afd71 100644
---- a/hw/ppc/prep.c
-+++ b/hw/ppc/prep.c
-@@ -382,6 +382,11 @@ static void ibm_40p_init(MachineState *machine)
-                                           kernel_base,
-                                           machine->ram_size - kernel_base,
-                                           &error_fatal);
-+        if (kernel_size < 0) {
-+            error_report("Could not load kernel '%s'",
-+                         machine->kernel_filename);
-+            exit(1);
-+        }
-         fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_ADDR, kernel_base);
-         fw_cfg_add_i32(fw_cfg, FW_CFG_KERNEL_SIZE, kernel_size);
-         /* load initrd */
-@@ -391,6 +396,11 @@ static void ibm_40p_init(MachineState *machine)
-                                               initrd_base,
-                                               machine->ram_size - initrd_base,
-                                               &error_fatal);
-+            if (initrd_size < 0) {
-+                error_report("Could not load initrd '%s'",
-+                             machine->initrd_filename);
-+                exit(1);
-+            }
-             fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_ADDR, initrd_base);
-             fw_cfg_add_i32(fw_cfg, FW_CFG_INITRD_SIZE, initrd_size);
-         }
-diff --git a/hw/ppc/sam460ex.c b/hw/ppc/sam460ex.c
-index b13dd224ba..0747555bc8 100644
---- a/hw/ppc/sam460ex.c
-+++ b/hw/ppc/sam460ex.c
-@@ -493,6 +493,11 @@ static void sam460ex_init(MachineState *machine)
-                                           RAMDISK_ADDR,
-                                           machine->ram_size - RAMDISK_ADDR,
-                                           &error_fatal);
-+        if (initrd_size < 0) {
-+            error_report("Could not load initrd '%s'",
-+                         machine->initrd_filename);
-+            exit(1);
-+        }
-     }
- 
-     /* If we're loading a kernel directly, we must load the device tree too. */
-diff --git a/hw/ppc/spapr.c b/hw/ppc/spapr.c
-index 0ab39dfea6..7ab6a47c5b 100644
---- a/hw/ppc/spapr.c
-+++ b/hw/ppc/spapr.c
-@@ -2865,6 +2865,10 @@ static void spapr_machine_init(MachineState *machine)
-         exit(1);
-     }
-     fw_size = load_image_targphys(filename, 0, FW_MAX_SIZE, &error_fatal);
-+    if (fw_size < 0) {
-+        error_report("Could not load LPAR firmware '%s'", filename);
-+        exit(1);
++
++    ret = event_notifier_init(&dev->resample, 0);
++    if (ret < 0) {
++        error_report("Failed to init resample notifier: %s", strerror(-ret));
++        event_notifier_cleanup(&dev->intr);
++        return;
 +    }
  
-     /*
-      * if Secure VM (PEF) support is configured, then initialize it
-@@ -3124,6 +3128,10 @@ static void spapr_machine_init(MachineState *machine)
-                                                 spapr->initrd_base,
-                                                 load_limit - spapr->initrd_base,
-                                                 &error_fatal);
-+            if (spapr->initrd_size < 0) {
-+                error_report("Could not load initrd '%s'", initrd_filename);
-+                exit(1);
-+            }
-         }
+     memset(&msg, 0, sizeof(MPQemuMsg));
+     msg.cmd = MPQEMU_CMD_SET_IRQFD;
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index e58a0169af..5c8f305653 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -180,7 +180,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+         return false;
      }
  
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index 51b3d7d712..b125561dd6 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -255,6 +255,10 @@ static void virtex_init(MachineState *machine)
-             kernel_size = load_image_targphys(kernel_filename,
-                                               boot_offset,
-                                               machine->ram_size, &error_fatal);
-+            if (kernel_size < 0) {
-+                error_report("could not load kernel '%s'", kernel_filename);
-+                exit(1);
-+            }
-             boot_info.bootstrap_pc = boot_offset;
-             high = boot_info.bootstrap_pc + kernel_size + 8192;
-         }
-@@ -267,6 +271,11 @@ static void virtex_init(MachineState *machine)
-             initrd_size = load_image_targphys(machine->initrd_filename,
-                                               high, machine->ram_size - high,
-                                               &error_fatal);
-+            if (initrd_size < 0) {
-+                error_report("could not load initrd '%s'",
-+                             machine->initrd_filename);
-+                exit(1);
-+            }
-             high = ROUND_UP(high + initrd_size, 4);
-         }
+-    if (event_notifier_init(notifier, 0)) {
++    if (event_notifier_init(notifier, 0) < 0) {
+         error_setg_errno(errp, errno,
+                          "vfio: Unable to init event notifier for irq (%d)",
+                          irq);
+diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+index 2251facb35..ce9c014e6a 100644
+--- a/hw/vfio/ccw.c
++++ b/hw/vfio/ccw.c
+@@ -418,7 +418,7 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+         return false;
+     }
  
+-    if (event_notifier_init(notifier, 0)) {
++    if (event_notifier_init(notifier, 0) < 0) {
+         error_setg_errno(errp, errno,
+                          "vfio: Unable to init event notifier for irq (%d)",
+                          irq);
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 7b907b9360..66e02b15a4 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -318,7 +318,7 @@ static VFIOIOEventFD *vfio_ioeventfd_init(VFIOPCIDevice *vdev,
+ 
+     ioeventfd = g_malloc0(sizeof(*ioeventfd));
+ 
+-    if (event_notifier_init(&ioeventfd->e, 0)) {
++    if (event_notifier_init(&ioeventfd->e, 0) < 0) {
+         g_free(ioeventfd);
+         return NULL;
+     }
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index c89f3fbea3..29bf6511b3 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -70,7 +70,7 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+     }
+ 
+     ret = event_notifier_init(e, 0);
+-    if (ret) {
++    if (ret < 0) {
+         error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
+         return false;
+     }
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 2f8f11df86..9c7634e243 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -1075,13 +1075,13 @@ static int vhost_vdpa_svq_set_fds(struct vhost_dev *dev,
+     int r;
+ 
+     r = event_notifier_init(&svq->hdev_kick, 0);
+-    if (r != 0) {
++    if (r < 0) {
+         error_setg_errno(errp, -r, "Couldn't create kick event notifier");
+         goto err_init_hdev_kick;
+     }
+ 
+     r = event_notifier_init(&svq->hdev_call, 0);
+-    if (r != 0) {
++    if (r < 0) {
+         error_setg_errno(errp, -r, "Couldn't create call event notifier");
+         goto err_init_hdev_call;
+     }
 -- 
 2.43.0
 
