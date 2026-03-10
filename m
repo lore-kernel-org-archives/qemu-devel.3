@@ -4,96 +4,113 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0B05EB1049
-	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 10:55:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B1E8EB1049
+	for <qemu-devel@archiver.kernel.org>; Tue, 10 Mar 2026 11:02:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1vzujh-00082F-BM; Tue, 10 Mar 2026 06:54:49 -0400
+	id 1vzuqX-0000z0-Og; Tue, 10 Mar 2026 07:01:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzujd-00081h-6T
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:54:46 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1vzujZ-0002zy-Nj
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 06:54:43 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-439f5abc829so147881f8f.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 03:54:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773140080; x=1773744880; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Bo5b0kCSFpv5piIh9Osb+Tl/gwV3f3IFIuxtCUG9gD8=;
- b=U+oKP4V9eXNj5pz6i2W+JxxLNP8e9IMmlzl0uruO1b+7p8Waf8QzWDlFNcW/m0EAsR
- UDOkhSquIQUA4IcJgN2bJp+Lv5ggC0VFQjjfiYP4svVGJCpdG2bgvYK4NzVKrF+p7Gv7
- VEoKKUK4+JQgXZb2mcOkJ3AcyJ+b2SBtIaoJk7B8D46VhKXyws7AvrwbP2qS03XoZa8a
- cBOLzxzvoi8YC8xa1Mwn1B8JklnGxU54uEiRCdI93sV9w73FLfC2P71Ol6wz7QDGh+pt
- uofPxRTKll4IWcYIfTAJwvMpHVElh3tUc58VLt5K5/8i0kvablC1zIoQYHdQWW6A99Op
- ZU6Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773140080; x=1773744880;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Bo5b0kCSFpv5piIh9Osb+Tl/gwV3f3IFIuxtCUG9gD8=;
- b=O0AaacCAf7UcglcCA6VdnIVj9p/qlSGdZp30Phkzt+blpMfL3aT21PIXi4HmY6sq4Q
- fO1YfGxyh7EHPzEt4NfawAUhE1JpG5aEOK0Uw6XmQYvp0LztkxDanjAR8tl5YrLUe6Kb
- 3v4orqzvqyk0iSih/qwIxyHSUW85GWT/TTCnhU+dqveVzhPfUkEqDCGWjLii9CjhXvu/
- 6ZzwTGvTGntSMiPvj500X5uqCQ8sdFgHnJ65YT/Fmr8pwqtypsg3//hkocmlW15pd/ru
- bVii8MgYJmNcr/hUgSpwLPfQd1IdUbV8wyCNvEW8/oVDxvMXQa/8HuAyxnnTPhEgEVUQ
- 5e3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVxa4FrMC1tbYahKQFEcv3+3LCmLiDmrOJ6pbq07pclMd45kvX1uhyXdpDCnxHw4iaHSukzPK1WmDox@nongnu.org
-X-Gm-Message-State: AOJu0YxbsrMwu7ExxaSsl6QXQ0jXghDN42ifWTFY+GA68eadIN8B4wju
- nCnBPD9dRxyolajhD0Lrg6vjQL3KfTFwB0hGAdSkVomEZQuTgJlVqlAdn8t8fu10pr8=
-X-Gm-Gg: ATEYQzxyaxH6beDeefb47RPzUVJ3ZzYarSquEGdl2U23TxrYPjUy+iOzEyIOtQDhHLe
- NI/xE7J+GYolW6veTW3Hq3sJ/qkhRx6pTy4ug6wIXzU9+j2lO8vgrMU5SKGvbtm4g4aTi2dPoM1
- z/ng/PtJJ5HA4KISxdMujeOYTsoH4pr/NzWumS3AMsqikve+2TUilO6IUTlEbDgUV8K/gl8E+BH
- Bi+7aDyiN++WPRG3dz7eLLpFKRpV4+ZmMmufLIK9sJR9iKxmppzTpPPgu9CZLDv21srjMm/MrfW
- toXvQn2DNgo0c0KR0KxvORkrIHwAPh9fp/lwMhKAyBvdH8iXZvJFEeJxtFN3mKqw+pLk7mmLKmd
- /lmJimNrOYPih8tzAba6/6kG2LCuUR9n8tgyq5IsYjfxUIx10hW6dZLloNraff6A/xMzKlj0s0c
- q/VgoopAvhEw3ulC/JigptqqXGcIig6Rt9psXFyxBAu/0lNEsBLXwZcciIjX3ygzt4AUPeSlzBD
- bBH
-X-Received: by 2002:a05:6000:178b:b0:439:bce5:650b with SMTP id
- ffacd0b85a97d-439da662035mr26282212f8f.18.1773140080044; 
- Tue, 10 Mar 2026 03:54:40 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439dada9116sm32368600f8f.14.2026.03.10.03.54.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Mar 2026 03:54:39 -0700 (PDT)
-Message-ID: <518117ad-777a-4bce-ab9e-cdfaf360d81d@linaro.org>
-Date: Tue, 10 Mar 2026 11:54:38 +0100
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vzuqC-0000xK-97; Tue, 10 Mar 2026 07:01:33 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <sourabhjain@linux.ibm.com>)
+ id 1vzuq9-0003si-DE; Tue, 10 Mar 2026 07:01:31 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62A4dVs8661980; Tue, 10 Mar 2026 11:01:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=nRSzBN
+ 1cnLZc3ZRZVqJviC37BuQuY+FK+RY3jhwDK58=; b=g0cixMpOB5uwfMCoDC+kkO
+ AYvzSAXZtIEOEykot5YCQ+8iNKz46vmg485lgFDoipMMdAwSl4ZPdX2jOF/0usJt
+ nCdCiwG4IfsMx6y7OdurGEz4SV5Fz3irfYanKYUcPyuSYx6AzH22G/2SrtRTjOnX
+ kQs2GY/Fiq2cHYTNoVXeKqmx+/VBzflwvty+CVApdB4m742PSxseyqytVi9ghR6k
+ Y6y45ljEjfXcCSm1CzXZdIXds3zUcM6ZzizQXQHc4hrzoadzKQMKRpnD/rWtSLPd
+ tH3wRwUiViz3v5SQz008psImW9ZIgEXmYxRHV4dnNeZzWH26CYcqtGAqyawYBnuw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crd1mj4xw-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 11:01:14 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62A81sPq015771;
+ Tue, 10 Mar 2026 11:01:13 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs1220fd9-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 10 Mar 2026 11:01:13 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62AB17Vd62062960
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 10 Mar 2026 11:01:07 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 225DE2004B;
+ Tue, 10 Mar 2026 11:01:07 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3D55220043;
+ Tue, 10 Mar 2026 11:01:05 +0000 (GMT)
+Received: from [9.109.204.116] (unknown [9.109.204.116])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 10 Mar 2026 11:01:05 +0000 (GMT)
+Message-ID: <75cc39a2-2327-461d-9ca8-ed240b1a6e2e@linux.ibm.com>
+Date: Tue, 10 Mar 2026 16:31:04 +0530
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 12/12] target/hppa: add 64 bit support to gdbstub
+Subject: Re: [PATCH v4 07/10] pnv/mpipl: Write the preserved CPU and MDRT state
+To: Aditya Gupta <adityag@linux.ibm.com>, qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, Hari Bathini <hbathini@linux.ibm.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Nicholas Piggin <npiggin@gmail.com>,
+ Miles Glenn <milesg@linux.ibm.com>, Chinmay Rath <rathc@linux.ibm.com>,
+ Shivang Upadhyay <shivangu@linux.ibm.com>
+References: <20260309072001.3136261-1-adityag@linux.ibm.com>
+ <20260309072001.3136261-8-adityag@linux.ibm.com>
 Content-Language: en-US
-To: Sven Schnelle <svens@stackframe.org>
-Cc: deller@kernel.org, qemu-devel@nongnu.org,
- Soumyajyotii Ssarkar <soumyajyotisarkar23@gmail.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>, Fam Zheng <fam@euphon.net>
-References: <20251223155031.7110-1-deller@kernel.org>
- <20251223155031.7110-13-deller@kernel.org>
- <52cbaf6d-f7a4-4984-9561-ca31418cdc0f@linaro.org>
- <87cy1cb2s8.fsf@stackframe.org> <878qc0b1uj.fsf@stackframe.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <878qc0b1uj.fsf@stackframe.org>
+From: Sourabh Jain <sourabhjain@linux.ibm.com>
+In-Reply-To: <20260309072001.3136261-8-adityag@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=ds3Wylg4 c=1 sm=1 tr=0 ts=69aff9fa cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=OCuGa67OR13ycClGfpMA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEwMDA5MCBTYWx0ZWRfX1EzDv1Y6sBXd
+ Fac82wp/SQcChnc2fJ5RlCw0XC51y2GjA8AGw2W8EWqV48VVt2IxZcLi9MV7Ln/6YDkfDtfH7gf
+ BJRxSdTVEkKRxhed56oI5NUtR5ZwUoRf1//3w1jNGSPaqXl2xsDlp88zbXq1vo3tzXLbHN1Ryeg
+ 5CMSBhAzwKN7ceXC1klJkoRskLYdgqYWWxsmA1Pj7sA9yYIRYk6K9v3TwfSt1pS0tirAi5XC4lQ
+ HCD2qJBi3Vp0v45PuV9ryKBxPpHgiF3VZuDnj0AZG4VsNwypTiOtf1C/S2gZEjuh8da8RHD1ZqW
+ 17zqHaJPPip9JTcXDVqOpxoUbdnFeSq0Pv+PM8w7d/HIoYQMby1jZEix+peI4TUzxnAtqo7ow0h
+ oG/sE7ypHWaJL9ksfGorU9WpWDhPYIi96ivbmsccbG4YQRxJOBmi3xPcCQQhB7Gf7aL2wOz9tbM
+ Sq9z3v3rm810M+oT6/w==
+X-Proofpoint-GUID: t9rUM8mHyD_oWnvL2d6ShOy8S1mbT0lS
+X-Proofpoint-ORIG-GUID: zYOo3iNjCeR3tQGetI-dMhx0kO0_8ebU
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-10_02,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 phishscore=0 clxscore=1015 impostorscore=0 suspectscore=0
+ priorityscore=1501 lowpriorityscore=0 malwarescore=0 adultscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603100090
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=sourabhjain@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -109,64 +126,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Sven!
 
-On 10/3/26 08:06, Sven Schnelle wrote:
-> Sven Schnelle <svens@stackframe.org> writes:
-> 
->> Philippe Mathieu-Daudé <philmd@linaro.org> writes:
->>
->>> Hi,
->>>
->>> (now merged as commit b2c2d00f48cc5f4486cfba33b505ff86d79cb137)
->>>
->>> On 23/12/25 16:50, deller@kernel.org wrote:
->>>> From: Sven Schnelle <svens@stackframe.org>
->>>> Signed-off-by: Sven Schnelle <svens@stackframe.org>
->>>> Reviewed-by: Helge Deller <deller@gmx.de>
->>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>> Signed-off-by: Helge Deller <deller@gmx.de>
->>>> ---
->>>> target/hppa/gdbstub.c | 62
->>> ++++++++++++++++++++++++++++---------------
->>>>    1 file changed, 41 insertions(+), 21 deletions(-)
->>>> diff --git a/target/hppa/gdbstub.c b/target/hppa/gdbstub.c
->>>> index 0daa52f7af..777f4a48b9 100644
->>>> --- a/target/hppa/gdbstub.c
->>>> +++ b/target/hppa/gdbstub.c
->>>> @@ -21,16 +21,25 @@
->>>> @@ -133,24 +142,35 @@ int hppa_cpu_gdb_read_register(CPUState *cs,
->>> GByteArray *mem_buf, int n)
->>>>            val = env->cr[30];
->>>>            break;
->>>>        case 64 ... 127:
->>>> - val = extract64(env->fr[(n - 64) / 2], (n & 1 ? 0 : 32), 32);
->>>> -        break;
->>>> -    default:
->>>> -        if (n < 128) {
->>>> -            val = 0;
->>>> +        if (hppa_is_pa20(env)) {
->>>> +            val = env->fr[n - 64];
->>>
->>> Coverity reports:
->>>
->>>>>>      CID 1645613:         Memory - illegal accesses  (OVERRUN)
->>>>>>      Overrunning array "env->fr" of 32 8-byte elements at element
->>>          index 32 (byte offset 263) using index "n - 64" (which
->>>         evaluates to 32).
->>
->> Yes, there's indeed a check missing wether n is < 96. I'll submit a patch later.
-> 
-> Looking again there is
-> 
-> if (n >= hppa_num_regs(env)) {
->          return 0;
-> }
-> 
-> right at the beginning of both functions, which returns 96 for 64 bit
-> mode as the limit so n should have proper bounds already if I'm not mistaken.
 
-I thought the same but wasn't sure. Maybe adding a pair of assert()
-are sufficient to fell safe and make Coverity happy?
+On 09/03/26 12:49, Aditya Gupta wrote:
+> Logic for preserving the CPU registers and memory regions has been done
+> in previous patches.
+>
+> Write those data at the relevant memory address, such as PROC_DUMP_AREA
+> for CPU registers, and MDRT for preserved memory regions.
+>
+> Also export "mpipl-boot" device tree node, for kernel to know that it's
+> a 'dump active' boot
+>
+> Reviewed-by: Hari Bathini <hbathini@linux.ibm.com>
+> Signed-off-by: Aditya Gupta <adityag@linux.ibm.com>
+> ---
+>   hw/ppc/pnv.c         |  45 +++++++++++++-
+>   hw/ppc/pnv_mpipl.c   | 140 +++++++++++++++++++++++++++++++++++++++++++
+>   include/hw/ppc/pnv.h |   1 +
+>   3 files changed, 185 insertions(+), 1 deletion(-)
+>
+> diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+> index 3038b1626c54..0b94e0c7a19b 100644
+> --- a/hw/ppc/pnv.c
+> +++ b/hw/ppc/pnv.c
+> @@ -751,6 +751,8 @@ static void pnv_reset(MachineState *machine, ResetType type)
+>       PnvMachineState *pnv = PNV_MACHINE(machine);
+>       IPMIBmc *bmc;
+>       void *fdt;
+> +    int node_offset;
+> +    bool is_next_boot_mpipl = false;
+>   
+>       qemu_devices_reset(type);
+>   
+> @@ -781,7 +783,48 @@ static void pnv_reset(MachineState *machine, ResetType type)
+>           _FDT((fdt_pack(fdt)));
+>       }
+>   
+> -    if (!pnv->mpipl_state.is_next_boot_mpipl) {
+> +    /*
+> +     * Only on success of writing MPIPL data will the next boot be provided
+> +     * "mpipl-boot" property in device tree
+> +     * Otherwise boot like a normal non-MPIPL boot
+> +     */
+> +    if (pnv->mpipl_state.is_next_boot_mpipl) {
+> +        /* Write the preserved MDRT and CPU State Data */
+> +        bool mpipl_write_succeeded = do_mpipl_write(pnv);
+
+do_mpipl_write returns bool and mpipl_write_succeeded is of type boot yet
+is_next_boot_mpipl is assigned under if-else condition. Is it really needed?
+
+> +
+> +        if (!mpipl_write_succeeded) {
+> +            is_next_boot_mpipl = false;
+> +        } else {
+> +            is_next_boot_mpipl = true;
+> +        }
+> +    }
+> +
+> +    /*
+> +     * If it's a MPIPL boot, add the "mpipl-boot" property, and reset the
+> +     * boolean for MPIPL boot for next boot
+> +     */
+> +    if (is_next_boot_mpipl) {
+> +        void *fdt_copy = g_malloc0(FDT_MAX_SIZE);
+> +
+> +        /* Create a writable copy of the fdt */
+> +        _FDT((fdt_open_into(fdt, fdt_copy, FDT_MAX_SIZE)));
+> +
+> +        node_offset = fdt_path_offset(fdt_copy, "/ibm,opal/dump");
+> +        _FDT((fdt_appendprop_u64(fdt_copy, node_offset, "mpipl-boot", 1)));
+
+What if node_offset is not valid? What is expected here?
+
+> +
+> +        /* Update the fdt, and free the original fdt */
+> +        if (fdt != machine->fdt) {
+> +            /*
+> +             * Only free the fdt if it's not machine->fdt, to prevent
+> +             * double free, since we already free machine->fdt later
+> +             */
+> +            g_free(fdt);
+> +        }
+> +        fdt = fdt_copy;
+> +
+> +        /* This boot is an MPIPL, reset the boolean for next boot */
+> +        pnv->mpipl_state.is_next_boot_mpipl = false;
+> +    } else {
+>           /*
+>            * Set the "Thread Register State Entry Size", so that firmware can
+>            * allocate enough memory to capture CPU state in the event of a
+> diff --git a/hw/ppc/pnv_mpipl.c b/hw/ppc/pnv_mpipl.c
+> index 37f498051254..2cf54a8ec306 100644
+> --- a/hw/ppc/pnv_mpipl.c
+> +++ b/hw/ppc/pnv_mpipl.c
+> @@ -20,6 +20,8 @@
+>       (pnv->mpipl_state.skiboot_base + MDST_TABLE_OFF)
+>   #define MDDT_TABLE_RELOCATED                            \
+>       (pnv->mpipl_state.skiboot_base + MDDT_TABLE_OFF)
+> +#define MDRT_TABLE_RELOCATED                            \
+> +    (pnv->mpipl_state.skiboot_base + MDRT_TABLE_OFF)
+>   #define PROC_DUMP_RELOCATED                             \
+>       (pnv->mpipl_state.skiboot_base + PROC_DUMP_AREA_OFF)
+>   
+> @@ -319,6 +321,139 @@ static bool pnv_mpipl_preserve_cpu_state(PnvMachineState *pnv)
+>       return true;
+>   }
+>   
+> +/*
+> + * Write the preserved CPU state data in Processor Dump Area (PROC_DUMP_AREA)
+> + *
+> + * Returns true if everything went fine, else false for any error
+> + */
+> +static bool pnv_mpipl_write_cpu_state(PnvMachineState *pnv)
+> +{
+> +    MpiplProcDumpArea *proc_area = &pnv->mpipl_state.proc_area;
+> +    MpiplPreservedCPUState *cpu_state = pnv->mpipl_state.cpu_states;
+> +    const uint32_t num_cpu_states = pnv->mpipl_state.num_cpu_states;
+> +    hwaddr next_regentries_hdr;
+> +    AddressSpace *default_as = &address_space_memory;
+> +    MemTxResult io_result;
+> +    MemTxAttrs attrs;
+> +
+> +    /* Mark the memory transactions as privileged memory access */
+> +    attrs.user = 0;
+> +    attrs.memory = 1;
+> +
+> +    if (be32_to_cpu(proc_area->alloc_size) <
+> +       (num_cpu_states * sizeof(MpiplPreservedCPUState))) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "MPIPL: Size of buffer allocate by skiboot (%u bytes) is not"
+> +            "enough to save all CPUs registers needed (%zu bytes)",
+> +            be32_to_cpu(proc_area->alloc_size),
+> +            num_cpu_states * sizeof(MpiplPreservedCPUState));
+> +
+> +        return false;
+> +    }
+> +
+> +    proc_area->version = PROC_DUMP_AREA_VERSION_P9;
+> +
+> +    /*
+> +     * This is the stride kernel/firmware should use to jump from a
+> +     * register entries header to next CPU's header
+> +     */
+> +    proc_area->thread_size = cpu_to_be32(sizeof(MpiplPreservedCPUState));
+> +
+> +    /* Write the header and register entries for each CPU */
+> +    next_regentries_hdr = be64_to_cpu(proc_area->alloc_addr) & (~HRMOR_BIT);
+> +    for (int i = 0; i < num_cpu_states; ++i) {
+> +        io_result = address_space_write(default_as, next_regentries_hdr, attrs,
+> +            &cpu_state->hdr, sizeof(MpiplRegDataHdr));
+> +        if (io_result != MEMTX_OK) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                "MPIPL: Failed to write RegEntries Header\n");
+> +            return false;
+> +        }
+> +
+> +        io_result = address_space_write(default_as,
+> +            next_regentries_hdr + sizeof(MpiplRegDataHdr), attrs,
+> +            &cpu_state->reg_entries,
+> +            NUM_REGS_PER_CPU * (sizeof(MpiplRegEntry)));
+> +        if (io_result != MEMTX_OK) {
+> +            qemu_log_mask(LOG_GUEST_ERROR,
+> +                "MPIPL: Failed to write Register Entries\n");
+> +            return false;
+> +        }
+> +
+> +        /*
+> +         * According to HDAT section:
+> +         *  "15.3.1.5 Architected Register Data content":
+> +         *
+> +         * The next register entries header will be at current header +
+> +         * "Thread Register State Entry size"
+> +         *
+> +         * Note: proc_area.thread_size == sizeof(MpiplPreservedCPUState)
+> +         */
+> +        next_regentries_hdr += sizeof(MpiplPreservedCPUState);
+> +        ++cpu_state;
+> +    }
+> +
+> +    /* Point the destination address to the preserved memory region */
+> +    proc_area->dest_addr = proc_area->alloc_addr;
+> +    proc_area->act_size  = cpu_to_be32(num_cpu_states *
+> +            sizeof(MpiplPreservedCPUState));
+> +
+> +    io_result = address_space_write(default_as, PROC_DUMP_AREA_OFF, attrs,
+> +        proc_area, sizeof(MpiplProcDumpArea));
+> +    if (io_result != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR,
+> +            "MPIPL: Failed to write Register Entries\n");
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+> +/*
+> + * Write the preserved MDRT table, representing preserved memory regions
+> + *
+> + * Returns true if everything went fine, else false for any error
+> + */
+> +static bool pnv_mpipl_write_mdrt(PnvMachineState *pnv)
+> +{
+> +    MpiplPreservedState *state = &pnv->mpipl_state;
+> +    AddressSpace *default_as = &address_space_memory;
+> +    MemTxResult io_result;
+> +    MemTxAttrs attrs;
+> +
+> +    /* Mark the memory transactions as privileged memory access */
+> +    attrs.user = 0;
+> +    attrs.memory = 1;
+> +
+> +    /*
+> +     * Generally writes from platform during MPIPL don't go to a relocated
+> +     * skiboot address
+> +     *
+> +     * Though for MDRT we are doing so, as this is the address skiboot
+> +     * considers by default for MDRT
+> +     *
+> +     * MDRT/MDST/MDDT base addresses are actually meant to be shared by
+> +     * platform in SPIRA structures.
+> +     *
+> +     * Not implementing SPIRA as it increases complexity for no gains.
+> +     * Using the default address skiboot expects for MDRT, which is the
+> +     * relocated MDRT, hence writing to it
+> +     *
+> +     * Other tables like MDST/MDDT should not be written to relocated
+> +     * addresses, as skiboot will overwrite anything from SKIBOOT_BASE till
+> +     * SKIBOOT_BASE+SKIBOOT_SIZE (which is 0x30000000-0x31c00000 by default)
+> +     */
+> +    io_result = address_space_write(default_as, MDRT_TABLE_RELOCATED, attrs,
+> +            state->mdrt_table,
+> +            state->num_mdrt_entries * sizeof(MdrtTableEntry));
+> +    if (io_result != MEMTX_OK) {
+> +        qemu_log_mask(LOG_GUEST_ERROR, "MPIPL: Failed to write MDRT table\n");
+> +        return false;
+> +    }
+> +
+> +    return true;
+> +}
+> +
+>   void do_mpipl_preserve(PnvMachineState *pnv)
+>   {
+>       pause_all_vcpus();
+> @@ -339,3 +474,8 @@ void do_mpipl_preserve(PnvMachineState *pnv)
+>        */
+>       qemu_system_reset_request(SHUTDOWN_CAUSE_GUEST_RESET);
+>   }
+> +
+> +bool do_mpipl_write(PnvMachineState *pnv)
+> +{
+> +    return pnv_mpipl_write_mdrt(pnv) && pnv_mpipl_write_cpu_state(pnv);
+> +}
+> diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
+> index 7d73629f112a..98fe10fb4f2e 100644
+> --- a/include/hw/ppc/pnv.h
+> +++ b/include/hw/ppc/pnv.h
+> @@ -295,5 +295,6 @@ void pnv_bmc_set_pnor(IPMIBmc *bmc, PnvPnor *pnor);
+>   
+>   /* MPIPL helpers */
+>   void do_mpipl_preserve(PnvMachineState *pnv);
+> +bool do_mpipl_write(PnvMachineState *pnv);
+>   
+>   #endif /* PPC_PNV_H */
 
 
