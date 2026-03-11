@@ -4,74 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03001FD065A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 08:46:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3178CFD065D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 08:48:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0FCF-0006iX-1C; Wed, 11 Mar 2026 04:45:42 -0400
+	id 1w0FEM-0007Z7-Sv; Wed, 11 Mar 2026 04:47:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w0FBs-0006g0-KN; Wed, 11 Mar 2026 04:45:17 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w0FEL-0007Y5-3X; Wed, 11 Mar 2026 04:47:49 -0400
+Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w0FBp-0005bn-9o; Wed, 11 Mar 2026 04:45:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773218713; x=1804754713;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=mMOpQWW+g/XMluBRVCg1iH8ilkZo2rzj7MAi1sLNRgQ=;
- b=RuaeKcIKUoND8K9dZCZFE0Ph4s8PVtydDZTol4p6dHLWspm5THkcRgfx
- XAnf92xagGW10mpp5LhIjRoxmZGMzq4Gb6krGLghOQkXIh/4rEVKfn20K
- JK86U9b8/t20yCFohYBuhJBS2NqXj5I2e8vZk02YD0SS1BG9uVVkhURwZ
- sKGyW20QG3e+9B8T8yaAOSkkVYaCV3e5O7W/o0yGxFp8eG7CERp6lSzGK
- o9e5MI6yVufrgI0IynVbeLnneSj6aCNjJ6Us4Fya7+1yS8hK2Fp8NqU75
- WlOu+MSWpqOxbyeEngKSik4xVPAt4sJbUzuX+gZKXFWKp6CDKzr6dHfro g==;
-X-CSE-ConnectionGUID: wa7Mo25QSLqxRTSMPhPkuQ==
-X-CSE-MsgGUID: NN1xHqzxTViwan3lzajTKg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="84912063"
-X-IronPort-AV: E=Sophos;i="6.23,113,1770624000"; d="scan'208";a="84912063"
-Received: from orviesa007.jf.intel.com ([10.64.159.147])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 11 Mar 2026 01:45:07 -0700
-X-CSE-ConnectionGUID: iiWDx0N+Ro+r/7MFFdQsBg==
-X-CSE-MsgGUID: a6TDZtKGSoepWLJVVcJduA==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,113,1770624000"; d="scan'208";a="220575290"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa007.jf.intel.com with ESMTP; 11 Mar 2026 01:45:04 -0700
-Date: Wed, 11 Mar 2026 17:11:15 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org,
- =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH] rust: Update Cargo.lock
-Message-ID: <abExs0JTxGeTSY8U@intel.com>
-References: <20260309172440.66409-1-philmd@linaro.org>
+ (Exim 4.90_1) (envelope-from <dtalexundeer@yandex-team.ru>)
+ id 1w0FEH-00064G-RK; Wed, 11 Mar 2026 04:47:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 888B380671;
+ Wed, 11 Mar 2026 11:47:39 +0300 (MSK)
+Received: from dtalexundeer-nx.yandex-team.ru (unknown
+ [2a02:6bf:8080:b38::1:12])
+ by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id TlBqj00AleA0-OzzEFIFD; Wed, 11 Mar 2026 11:47:38 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1773218858;
+ bh=hDn0FL7ev6HdJsCNipC46uM4ZKoHr3DcNqYal9cwGfg=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=Ukrmt6S85BEPohbMCO66fpjDhM9ttYXh7veqXvOun/FNEA2/G/3CA9WZZYY/vQ62r
+ ykQvILaTeiDNeVof1RWiLVw2LbEjWX0zhLtj0JsNUMtgvr2d9tvj6hoJMa/f3Vb3Ju
+ zqju/FTmdECrDDPDHZZlKHPZhceFpOTNWKCi+EBg=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+To: qemu-devel@nongnu.org
+Cc: virtio-fs@lists.linux.dev, zhenwei pi <zhenwei.pi@linux.dev>,
+ Hanna Reitz <hreitz@redhat.com>,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ "Gonglei (Arei)" <arei.gonglei@huawei.com>,
+ Raphael Norwitz <rnorwitz@nvidia.com>, Milan Zamazal <mzamazal@redhat.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-block@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, Fam Zheng <fam@euphon.net>,
+ Kevin Wolf <kwolf@redhat.com>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Subject: [PATCH v2 0/4] vhost-user-blk: fix compatibility with older qemu
+ versions
+Date: Wed, 11 Mar 2026 13:47:24 +0500
+Message-Id: <20260311084728.751169-1-dtalexundeer@yandex-team.ru>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260309172440.66409-1-philmd@linaro.org>
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H2=0.001,
+Received-SPF: pass client-ip=178.154.239.136;
+ envelope-from=dtalexundeer@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -83,104 +82,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 06:24:40PM +0100, Philippe Mathieu-Daudé wrote:
-> Date: Mon,  9 Mar 2026 18:24:40 +0100
-> From: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Subject: [PATCH] rust: Update Cargo.lock
-> X-Mailer: git-send-email 2.53.0
-> 
-> Update Cargo.lock on top of commit  7ecd3f71079 ("Merge tag
-> 'for-upstream' of https://gitlab.com/bonzini/qemu into staging").
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  rust/Cargo.lock | 3 +--
->  1 file changed, 1 insertion(+), 2 deletions(-)
+v1 -> v2:
+- reorganize commits: make refactor commits first, then core semantic change
+- add additional pre_save check for inflight migration possibility
 
-When I ran `cargo +nightly build`, I met this error:
-
-$ cargo +nightly build
-   Compiling system-sys v0.1.0 (/media/liuzhao/data/qemu-cook/rust/bindings/system-sys)
-error[E0432]: unresolved import `hwcore_sys`
-  --> bindings/system-sys/lib.rs:22:5
-   |
-22 | use hwcore_sys::{qemu_irq, DeviceClass, DeviceState};
-   |     ^^^^^^^^^^ use of unresolved module or unlinked crate `hwcore_sys`
-   |
-   = help: if you wanted to use a crate named `hwcore_sys`, use `cargo add hwcore_sys` to add it to your `Cargo.toml`
-
-For more information about this error, try `rustc --explain E0432`.
-error: could not compile `system-sys` (lib) due to 1 previous error
-
-This is because of the wrong dependency relationship in Cargo.toml of
-hwcore-sys & system-sys.
-
-But the fix for this error will bring a little more change in
-Cargo.lock (since the dependencies will change).
-
-What about fixing this build bug first before updating Cargo.lock?
-
-(That's a fix for build error I met.)
--------------------------------->8-------------------------------
-From cc96c5530f5fe75eb0a422b092dbb761547e7514 Mon Sep 17 00:00:00 2001
-From: Zhao Liu <zhao1.liu@intel.com>
-Date: Wed, 11 Mar 2026 17:00:51 +0800
-Subject: [PATCH] rust: Fix wrong dependencies for cargo
-
-There's a build error:
-
-$ cargo +nightly build
-   Compiling system-sys v0.1.0 (/media/liuzhao/data/qemu-cook/rust/bindings/system-sys)
-error[E0432]: unresolved import `hwcore_sys`
-  --> bindings/system-sys/lib.rs:22:5
-   |
-22 | use hwcore_sys::{qemu_irq, DeviceClass, DeviceState};
-   |     ^^^^^^^^^^ use of unresolved module or unlinked crate `hwcore_sys`
-   |
-   = help: if you wanted to use a crate named `hwcore_sys`, use `cargo add hwcore_sys` to add it to your `Cargo.toml`
-
-For more information about this error, try `rustc --explain E0432`.
-error: could not compile `system-sys` (lib) due to 1 previous error
-
-This is because hwcore-sys & system-sys have the wrong dependencies
-relationship in their Cargo.toml.
-
-Fix the dependencies of hwcore-sys & system-sys in Cargo.toml, aligning
-the dependencies described in their meson.build files.
-
-Fixes: commit c899071b5a86 ("rust: move binding generation to bindings/")
-Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
 ---
- rust/bindings/hwcore-sys/Cargo.toml | 1 -
- rust/bindings/system-sys/Cargo.toml | 1 +
- 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/rust/bindings/hwcore-sys/Cargo.toml b/rust/bindings/hwcore-sys/Cargo.toml
-index c20024e921a1..b5ae33da8ed6 100644
---- a/rust/bindings/hwcore-sys/Cargo.toml
-+++ b/rust/bindings/hwcore-sys/Cargo.toml
-@@ -21,7 +21,6 @@ chardev-sys = { path = "../chardev-sys" }
- qom-sys = { path = "../qom-sys" }
- migration-sys = { path = "../migration-sys" }
- util-sys = { path = "../util-sys" }
--system-sys = { path = "../system-sys" }
+This is a small continuation of my series about inflight migration for vhost-user-blk.
 
- [lints]
- workspace = true
-diff --git a/rust/bindings/system-sys/Cargo.toml b/rust/bindings/system-sys/Cargo.toml
-index 7e527130ff5d..bbb4eaa53db3 100644
---- a/rust/bindings/system-sys/Cargo.toml
-+++ b/rust/bindings/system-sys/Cargo.toml
-@@ -17,6 +17,7 @@ path = "lib.rs"
- [dependencies]
- glib-sys = { workspace = true }
- common = { path = "../../common" }
-+hwcore-sys = { path = "../hwcore-sys" }
- migration-sys = { path = "../migration-sys" }
- util-sys = { path = "../util-sys" }
- qom-sys = { path = "../qom-sys" }
---
+This series is designed to solve the problem of compatibility with older versions of qemu, where this feature has not yet been introduced (for example, if we want to downgrade versions due to some problems).
+
+In the current version for vhost-user-blk, this feature is enabled using the parameter and further migration of the inflight region will depend on whether the vhost-user has accepted the new protocol feature or not. This creates an inconvenient dependency, because there is no way to disable this feature without reconnecting to the backend.
+This series slightly changes the semantics of the introduced protocol feature VHOST_USER_PROTOCOL_F_GET_VRING_BASE_INFLIGHT. Enabling this feature adds a new parameter for GET_VRING_BASE message - skip_drain, which allows to control drain in-flight requests on the backend.
+
+Thus, user can enable or disable inflight-migration param for vhost-user-blk to maintain compatibility with older versions of QEMU.
+
+Alexandr Moshkov (4):
+  vhost-user.rst: fix typo
+  vhost-user: add skip_drain param to do_vhost_virtqueue_stop
+  vhost-user-blk: move inflight_needed higher
+  vhost-user: add skip_drain param to GET_VRING_BASE
+
+ backends/cryptodev-vhost.c     |  2 +-
+ backends/vhost-user.c          |  2 +-
+ docs/interop/vhost-user.rst    |  8 +++-----
+ hw/block/vhost-user-blk.c      | 32 +++++++++++++++++++++++++-------
+ hw/net/vhost_net.c             |  9 +++++----
+ hw/scsi/vhost-scsi-common.c    |  2 +-
+ hw/virtio/vdpa-dev.c           |  2 +-
+ hw/virtio/vhost-user-base.c    |  2 +-
+ hw/virtio/vhost-user-fs.c      |  2 +-
+ hw/virtio/vhost-user-scmi.c    |  2 +-
+ hw/virtio/vhost-user.c         |  3 +--
+ hw/virtio/vhost-vsock-common.c |  2 +-
+ hw/virtio/vhost.c              | 24 +++++++++++++++---------
+ include/hw/virtio/vhost-user.h |  1 -
+ include/hw/virtio/vhost.h      |  7 +++++--
+ 15 files changed, 62 insertions(+), 38 deletions(-)
+
+-- 
 2.34.1
-
 
 
