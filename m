@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C961125875
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:38:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5A377112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:38:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PLi-0007uY-HR; Wed, 11 Mar 2026 15:36:06 -0400
+	id 1w0PLL-0007Zt-Oi; Wed, 11 Mar 2026 15:35:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PLc-0007nh-84; Wed, 11 Mar 2026 15:36:01 -0400
+ id 1w0PL6-0007Vc-R8; Wed, 11 Mar 2026 15:35:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PLa-0000Cy-8X; Wed, 11 Mar 2026 15:35:59 -0400
+ id 1w0PL5-000081-4X; Wed, 11 Mar 2026 15:35:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257667; bh=S2/IgILclxRZ7ljyqnMuw+A6wuBRT3cl3juQKdZVFKw=;
+ t=1773257666; bh=yQnZjgyMz3ySbNBJU7G+jkBzponQ6pRrFaMlgEJtwFA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=w7wF94825tsqLtW9TShEHklywyVnx0KIe5e85MwCeB8YX1PoWUgZDHWf16j9CWrYr
- LaZNpa1ptpFtiJm+dsyc4Kn77XooWfWKYTQDTK4y7KJBYNXcJVOkxSvHfFW/ZGISUl
- f6cu157rEhuUviEtYY7IYojJtahYgasSdMlpzZrBMvxFGbEYe7G9FL8I36OIinD00X
- dnHIobbXDKsiR8RNeqcjDZWam4XpsT7wUOcFp8+8GsftItMTqHZvs4IoHMj+h3sgm6
- oYqjd1WnKK8/csyTbcPv27Hp35LFohyGlzO9mPahrfmzSpfhAjJinjdZ6iFBnehlBK
- VRSC5SMcecHLg==
+ b=L3/6ejtgYaqiaUwo94Zh6HMK6+X7j+5Z4len2WtkEIgD9eydJqfEbNxl7RJsvv8iD
+ 9d5NzMLyoSvZBbf48W9hp86CyocqLWqKA2UraGkYRZlvdx8iW2wPa1PcU5Ri3dM8rH
+ KQ87fIDL1RWuXdduijNvVisLOrkVScDAPUy1rtAFDWT8ZNov/npTV81srYssaPBg7Q
+ zNfkhhVq1p99l7e/71nSyaTiAbRiMLueiFF9RL4DatGR2b+f61Pre4en9XbmJqeKTh
+ ghRA+UqEmTgggMCWgg39xgrSW+V+sBLR47wVKx81h9Ie3gYoAXGy+tIjQxK/5pS+gW
+ Y4G7tZPrD5ZKw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5CC9E1920F8;
- Wed, 11 Mar 2026 22:34:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id DB43B1920F2;
+ Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9B95A37C45D;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 292C337C457;
  Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Joelle van Dyne <j@getutm.app>, "Michael S. Tsirkin" <mst@redhat.com>,
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 16/53] virtio-gpu-virgl: Add
- virtio-gpu-virgl-hostmem-region type
-Date: Wed, 11 Mar 2026 22:34:09 +0300
-Message-ID: <20260311193449.1096110-16-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 10/53] hw/i2c/aspeed_i2c: Fix out-of-bounds read in
+ I2C MMIO handlers
+Date: Wed, 11 Mar 2026 22:34:03 +0300
+Message-ID: <20260311193449.1096110-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,175 +72,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-Commit e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory
-region") made the name member of MemoryRegion unset, causing a NULL
-pointer dereference[1]:
-> Thread 2 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
-> (gdb) bt
-> #0  0x00007ffff56565e2 in __strcmp_evex () at /lib64/libc.so.6
-> #1  0x0000555555841bdb in find_fd (head=0x5555572337d0 <cpr_state>,
-> name=0x0, id=0) at ../migration/cpr.c:68
-> #2  cpr_delete_fd (name=name@entry=0x0, id=id@entry=0) at
-> ../migration/cpr.c:77
-> #3  0x000055555582290a in qemu_ram_free (block=0x7ff7e93aa7f0) at
-> ../system/physmem.c:2615
-> #4  0x000055555581ae02 in memory_region_finalize (obj=<optimized out>)
-> at ../system/memory.c:1816
-> #5  0x0000555555a70ab9 in object_deinit (obj=<optimized out>,
-> type=<optimized out>) at ../qom/object.c:715
-> #6  object_finalize (data=0x7ff7e936eff0) at ../qom/object.c:729
-> #7  object_unref (objptr=0x7ff7e936eff0) at ../qom/object.c:1232
-> #8  0x0000555555814fae in memory_region_unref (mr=<optimized out>) at
-> ../system/memory.c:1848
-> #9  flatview_destroy (view=0x555559ed6c40) at ../system/memory.c:301
-> #10 0x0000555555bfc122 in call_rcu_thread (opaque=<optimized out>) at
-> ../util/rcu.c:324
-> #11 0x0000555555bf17a7 in qemu_thread_start (args=0x555557b99520) at
-> ../util/qemu-thread-posix.c:393
-> #12 0x00007ffff556f464 in start_thread () at /lib64/libc.so.6
-> #13 0x00007ffff55f25ac in __clone3 () at /lib64/libc.so.6
+The ASPEED I2C controller exposes a per-bus MMIO window of 0x80 bytes on
+AST2600/AST1030/AST2700, but the backing regs[] array was sized for only
+28 dwords (0x70 bytes). This allows guest reads in the range [0x70..0x7f]
+to index past the end of regs[].
 
-The intention of the aforementioned commit is to prevent a MemoryRegion
-from parenting itself while its references is counted indendependently
-of the device. To achieve the same goal, add a type of QOM objects that
-count references and parent MemoryRegions.
+Fix this by:
+- Sizing ASPEED_I2C_NEW_NUM_REG to match the 0x80-byte window
+  (0x80 >> 2 = 32 dwords).
+- Avoiding an unconditional pre-read from regs[] in the legacy/new read
+  handlers. Initialize the return value to -1 and only read regs[] for
+  offsets that are explicitly handled/valid, leaving invalid offsets to
+  return -1 with a guest error log.
 
-[1] https://lore.kernel.org/qemu-devel/4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com/
-
-Cc: qemu-stable@nongnu.org
-Fixes: e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory region")
-Fixes: be88ad424c0b ("virtio-gpu-virgl: correct parent for blob memory region") for 10.2.x
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Tested-by: Joelle van Dyne <j@getutm.app>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp>
-(cherry picked from commit b2a279094c3b86667969cc645f7fb1087e08dd19)
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3290
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260210024331.3984696-2-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit c2c5beec42bf9872b37e78b9e259132df7435cb5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 741728cabb..4e515c4ef6 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -52,11 +52,17 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
- 
- #if VIRGL_VERSION_MAJOR >= 1
- struct virtio_gpu_virgl_hostmem_region {
-+    Object parent_obj;
-     MemoryRegion mr;
-     struct VirtIOGPU *g;
-     bool finish_unmapping;
- };
- 
-+#define TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION "virtio-gpu-virgl-hostmem-region"
-+
-+OBJECT_DECLARE_SIMPLE_TYPE(virtio_gpu_virgl_hostmem_region,
-+                           VIRTIO_GPU_VIRGL_HOSTMEM_REGION)
-+
- static struct virtio_gpu_virgl_hostmem_region *
- to_hostmem_region(MemoryRegion *mr)
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index c48fa2050b..c455c3eb7c 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -94,7 +94,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+                                         unsigned size)
  {
-@@ -70,14 +76,22 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
-     virtio_gpu_process_cmdq(g);
- }
+     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+-    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
++    uint64_t value = -1;
  
--static void virtio_gpu_virgl_hostmem_region_free(void *obj)
-+/*
-+ * MR could outlive the resource if MR's reference is held outside of
-+ * virtio-gpu. In order to prevent unmapping resource while MR is alive,
-+ * and thus, making the data pointer invalid, we will block virtio-gpu
-+ * command processing until MR is fully unreferenced and freed.
-+ */
-+static void virtio_gpu_virgl_hostmem_region_finalize(Object *obj)
- {
--    MemoryRegion *mr = MEMORY_REGION(obj);
--    struct virtio_gpu_virgl_hostmem_region *vmr;
-+    struct virtio_gpu_virgl_hostmem_region *vmr = VIRTIO_GPU_VIRGL_HOSTMEM_REGION(obj);
-     VirtIOGPUBase *b;
-     VirtIOGPUGL *gl;
- 
--    vmr = to_hostmem_region(mr);
-+    if (!vmr->g) {
-+        return;
-+    }
-+
-     vmr->finish_unmapping = true;
- 
-     b = VIRTIO_GPU_BASE(vmr->g);
-@@ -92,11 +106,26 @@ static void virtio_gpu_virgl_hostmem_region_free(void *obj)
-     qemu_bh_schedule(gl->cmdq_resume_bh);
- }
- 
-+static const TypeInfo virtio_gpu_virgl_hostmem_region_info = {
-+    .parent = TYPE_OBJECT,
-+    .name = TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION,
-+    .instance_size = sizeof(struct virtio_gpu_virgl_hostmem_region),
-+    .instance_finalize = virtio_gpu_virgl_hostmem_region_finalize
-+};
-+
-+static void virtio_gpu_virgl_types(void)
-+{
-+    type_register_static(&virtio_gpu_virgl_hostmem_region_info);
-+}
-+
-+type_init(virtio_gpu_virgl_types)
-+
- static int
- virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-                                    struct virtio_gpu_virgl_resource *res,
-                                    uint64_t offset)
- {
-+    g_autofree char *name = NULL;
-     struct virtio_gpu_virgl_hostmem_region *vmr;
-     VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
-     MemoryRegion *mr;
-@@ -117,21 +146,16 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
-     }
- 
-     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
-+    name = g_strdup_printf("blob[%" PRIu32 "]", res->base.resource_id);
-+    object_initialize_child(OBJECT(g), name, vmr,
-+                            TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION);
-     vmr->g = g;
- 
-     mr = &vmr->mr;
--    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
-+    memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
-     memory_region_add_subregion(&b->hostmem, offset, mr);
-     memory_region_set_enabled(mr, true);
- 
--    /*
--     * MR could outlive the resource if MR's reference is held outside of
--     * virtio-gpu. In order to prevent unmapping resource while MR is alive,
--     * and thus, making the data pointer invalid, we will block virtio-gpu
--     * command processing until MR is fully unreferenced and freed.
--     */
--    OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
+     switch (offset) {
+     case A_I2CD_FUN_CTRL:
+@@ -105,7 +105,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CD_DEV_ADDR:
+     case A_I2CD_POOL_CTRL:
+     case A_I2CD_BYTE_BUF:
+-        /* Value is already set, don't do anything. */
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CD_CMD:
+         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
+@@ -113,21 +113,20 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CD_DMA_ADDR:
+         if (!aic->has_dma) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
+-            value = -1;
+             break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CD_DMA_LEN:
+         if (!aic->has_dma) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
+-            value = -1;
++            break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
 -
-     res->mr = mr;
- 
-     trace_virtio_gpu_cmd_res_map_blob(res->base.resource_id, vmr, mr);
-@@ -163,7 +187,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-      * 1. Begin async unmapping with memory_region_del_subregion()
-      *    and suspend/block cmd processing.
-      * 2. Wait for res->mr to be freed and cmd processing resumed
--     *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
-+     *    asynchronously by virtio_gpu_virgl_hostmem_region_finalize().
-      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
-      */
-     if (vmr->finish_unmapping) {
-@@ -186,7 +210,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
-         /* memory region owns self res->mr object and frees it by itself */
-         memory_region_set_enabled(mr, false);
-         memory_region_del_subregion(&b->hostmem, mr);
--        object_unref(OBJECT(mr));
-+        object_unparent(OBJECT(vmr));
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
+-        value = -1;
+         break;
      }
  
-     return 0;
+@@ -139,7 +138,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+                                         unsigned size)
+ {
+     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+-    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
++    uint64_t value = -1;
+ 
+     switch (offset) {
+     case A_I2CC_FUN_CTRL:
+@@ -159,13 +158,12 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CS_CMD:
+     case A_I2CS_INTR_CTRL:
+     case A_I2CS_DMA_LEN_STS:
+-        /* Value is already set, don't do anything. */
++    case A_I2CS_INTR_STS:
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CC_DMA_ADDR:
+         value = extract64(bus->dma_dram_offset, 0, 32);
+         break;
+-    case A_I2CS_INTR_STS:
+-        break;
+     case A_I2CM_CMD:
+         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
+         break;
+@@ -176,13 +174,13 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+         if (!aic->has_dma64) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
+             __func__);
+-            value = -1;
++            break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
+-        value = -1;
+         break;
+     }
+ 
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+index 2daacc10ce..efe8b1a0c5 100644
+--- a/include/hw/i2c/aspeed_i2c.h
++++ b/include/hw/i2c/aspeed_i2c.h
+@@ -36,8 +36,7 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
+ #define ASPEED_I2C_NR_BUSSES 16
+ #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
+ #define ASPEED_I2C_BUS_POOL_SIZE 0x20
+-#define ASPEED_I2C_OLD_NUM_REG 11
+-#define ASPEED_I2C_NEW_NUM_REG 28
++#define ASPEED_I2C_NEW_NUM_REG (0x80 >> 2)
+ 
+ #define A_I2CD_M_STOP_CMD       BIT(5)
+ #define A_I2CD_M_RX_CMD         BIT(3)
 -- 
 2.47.3
 
