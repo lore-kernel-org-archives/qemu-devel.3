@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6FCFD88D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30EE6FD88D4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w08XO-0003zd-PS; Tue, 10 Mar 2026 21:39:02 -0400
+	id 1w08XN-0003z5-Fi; Tue, 10 Mar 2026 21:39:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XL-0003xY-33
+ id 1w08XJ-0003xQ-Vi
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:59 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XJ-0004q7-7E
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:58 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ad4d639db3so60209365ad.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:38:56 -0700 (PDT)
+ id 1w08XI-0004px-0j
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:57 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2a9296b3926so105010025ad.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:38:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=linaro.org; s=google; t=1773193135; x=1773797935; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=svowva0ABp9HYKqRY27vri3pWPCVq+NsD0KSRtTlAy0=;
- b=L9WHQiCU1nkN/FYoD5iPvPlVUDVz0E2KC5KUQBaB+T49jZ11kO5mCjMoOvckzZ/cKS
- 4oQ+h/FQUDmTf7J/qLR070fDhh3NupHKojYICFysqqWWiTeTl7UZ8IGrdj0aCtEeSTaM
- R1q9/Z123GWcOzLm0E7gx3qnHEvNdb5yc6fqmM3T0OJSbqIsrXRpbrlF72nhPSIqTtCs
- 7xC6gLNHnAF8dPBFV9MDV2f7AIdpTOYhcNpwOw6tppekMuSgZ3uAJe5WPvikrgQB2ss4
- 5doi5xHh4qlegjYbXvGVQeypa6iO2S2F0roh9DbX0Tj79phitN6ciFyLGsnmF4cZkPSc
- /wcg==
+ bh=i9RKY3p04ElO43Xisole6IhcJMxmCAuLsbn7nLP326k=;
+ b=ROgTSMw+isDwAJy5Sdgmm/zBUhjqDJtJxkfPXzt7zDW4Vr7321UBHRixsVx7rDYT5H
+ mdU06D2S/JB8NlyqenYXcxuFDJ7LCkT6zqGQAP5c7tqdbgeAMbQmwwjvlhRGDmdUiwrw
+ HpK9cNht8puWRAKRPquFsGSC8CdhPx1FehuWmVn/JyWVFlBvzlIkhKMjrTzz+BCa0DeK
+ Z4f87XmjCSotAQ8mMNBXT3rrVrXdMyqbi6mkLnbk3gBEAq7PMy7MJYRuNZ54w2PgEyki
+ uM9wAEzThW415IUjtQ2Oq4914z8wwPci6TOkUn5CEjBFGD3O92a02wh31pRXO7VOfMdG
+ GRcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1773193135; x=1773797935;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=svowva0ABp9HYKqRY27vri3pWPCVq+NsD0KSRtTlAy0=;
- b=nAnYi2CWewxYGTMA7l0junYWzaQG9inFljV2HSGAoyQY8JMo1TRtKIzxDWCJW491MH
- A7VK9Jw7tNcmpA4lwn51/NEBJHLhHAvvM8/yYJX6KOPzzYX7eu20d7gNChib3dwNBXNv
- ttY9MmGSfwhVCltK/DxUUVmZpzYUHKJOtGTmjKONHbZZV4dTgci9P+gf7cA6lt5KFq9y
- /Z/8bN+Vwy9ahqFUzZFOnLdpVNunOJKt9U744S6We0/p+Wew7jpulj25xmThCbG0D6Dq
- 05wkdHiJ/16Q7zklx6PKmjy79EQREJyBPFbMyzrH3gMzqHJ2Fc+1YbFV8/xVaavoFYQ8
- cJnQ==
-X-Gm-Message-State: AOJu0YyJdWK8536KGFPRk9E7JHcxFhogkaH5WzPzAftv2oK4UW3W5fpK
- kwro5M5dO5Og9IsxQrhuFNqWM/dw5nvYmfFNspWvjb54E1CH4oBYh79WATOTegwaIdAlXkSNIdA
- 21gat
-X-Gm-Gg: ATEYQzwjarz2Mr1jMTe1b951m/6yFCSYW/3lHmGDwc+VLY2F34k3a+oC1Np44Y7xU9S
- FODVJBmiEMV2XoOJGxIg1o6umw4+sVPVanEPf/+SbNNfRjF/Yt1cGhIPOOV6ksRfjqLNRaeTmPp
- acrBMlLLfVwXzo+Ks1Y81/r63ays+jpCUccxih7tUivRcvjYbSaNAoJfAjbooK2oRV1NLmeWvmF
- MTwDAktepCT4j+vSMN0TSH8/w4HYcSu51hONtyGV6bRq+nayItlQI7v/pzthcVjFNWLaOlewjN8
- sH+tWPe8G5q3jBOhzu49z0q1HVcsHwpI52/tPQsHgv3V1vwO+pqBzCl7CrcD1S4YzeKIXRHiKX+
- skeNQdnMEjfbqgcAZwFOmJ6gYwtDjstT18SNr7suvWvCOEGVCp3P6VZY62mywnkl4Sl5Pkh9y8M
- 1+xamzMyoilE5+3Le8jMh4PIF1kAWKFeI3erwxGxn+qO20dFMXOjFnOWrp5gvhgUqUERzhtSIv0
- KAX
-X-Received: by 2002:a17:902:ecd1:b0:295:560a:e499 with SMTP id
- d9443c01a7336-2aeae78c845mr8367615ad.5.1773193135466; 
- Tue, 10 Mar 2026 18:38:55 -0700 (PDT)
+ bh=i9RKY3p04ElO43Xisole6IhcJMxmCAuLsbn7nLP326k=;
+ b=KbX/PmDTyfs2XP12PJxfVVvSPRe3aPoMjZPLb3PNS79gU0XBR/WOtwB1vFBNpw3pqf
+ DXc9OZtK7dUPJEz3E705pcX5mkb0oSUAG7smm3rUrD3sUz/kP0+lzCVVXLNC6u9RGG0O
+ hn/8zrP+1yYcOELs2mzR9tAJ516Qej05VGS9BRMIISXqC9bcCfSCfSZ6pNU7ew82LMHC
+ H0gKfZuXXh46RjgFEdGwfCYwR21ej7jQvfJXYfbbzNybMd7s/+k7Sy2/mfS0Xk12umps
+ KZMciK9RbN1QL+3lgXMWADrtudOop0j5qJf/KuUfiO6HfXqfvaO5H04vEZwKlZp4kWVV
+ I+Rw==
+X-Gm-Message-State: AOJu0YzdKv6crtOVb+/WdlLg8w+rVriiAwQctVdKR+2s6sbtvirPDx22
+ cgPCQTAihPNJj06uaoxYE1u8b/oXGY1FYB9wTau7+YTH5xsI/TNgNc9TedfGLXD8yVxXVpfnA+V
+ q9YYH
+X-Gm-Gg: ATEYQzwxR8hGTcUxijI2kAC7Y6hK9NF4LuacCehX//4J3veyvgu4UmisnvIijI1KHi7
+ +iKSPk2gZm2Ya3v4UIQFEfUX89QNeaRiw3+iUFZ5Gpp1RajUefRLMs4gYw7Cdr/2jog1Df57MwM
+ jYD0rWtKTlH9YcQJFCMmvslaD2n8i1RcKgTdzwJ7UqR0Gag1iz6tz1fhGeNhIQC978NlVLE1AQ2
+ NmTI2+9/D0MJRH2P1Cxb15gborNaWbPglchT26lhZrmaSXJfoEHCf+emkdfXS2hNqFnRX0xzOi7
+ 9LUr8VaL0aFcHIkBWHggmgHI826DMUhBke27vLqwu77/y3sU8+pwB16+8wUJMK3hmptT5x/dNSG
+ PkBgb0kECtEGYdz6nnokcqsLXl6vYLwHzUr04+NYVzdqqgcwKl/GxzIaZhSwu6UV+g5J7H73hs6
+ qjQN35Vz3e+sG7sAfxWwA+u1NS4rAj2AuS4PpOak8yotSiApafwOPykL28mux+h6mf1bITvx45H
+ mNA
+X-Received: by 2002:a17:903:2412:b0:2a9:622e:fd3e with SMTP id
+ d9443c01a7336-2aeae762901mr7459795ad.4.1773193134598; 
+ Tue, 10 Mar 2026 18:38:54 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.38.54
+ d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.38.53
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
  Tue, 10 Mar 2026 18:38:54 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 08/16] gdbstub: Have scripts/feature_to_c.py generate more
- verbose output
-Date: Tue, 10 Mar 2026 18:38:29 -0700
-Message-ID: <20260311013837.69945-9-pierrick.bouvier@linaro.org>
+Subject: [PULL 07/16] gdbstub: Add trace events for around XML parsing /
+ generation
+Date: Tue, 10 Mar 2026 18:38:28 -0700
+Message-ID: <20260311013837.69945-8-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,52 +106,81 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Make the structure field names explicit, so it is easier
-to figure what is what when reviewing multiple entries.
+Add trace events to help follow how the various files in
+gdb-xml/ are parsed or generated at runtime.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-9-philmd@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-8-philmd@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- scripts/feature_to_c.py | 13 ++++++++-----
- 1 file changed, 8 insertions(+), 5 deletions(-)
+ gdbstub/gdbstub.c    | 14 ++++++++++++++
+ gdbstub/trace-events |  6 ++++++
+ 2 files changed, 20 insertions(+)
 
-diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
-index 3aa62fb895f..1329695ad04 100644
---- a/scripts/feature_to_c.py
-+++ b/scripts/feature_to_c.py
-@@ -85,13 +85,16 @@ def writeliteral(indent, bytes):
-     num_regs = max(regnums) - base_reg + 1 if len(regnums) else 0
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 221951c22b0..5c1a18e055c 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -478,6 +478,10 @@ void gdb_feature_builder_end(const GDBFeatureBuilder *builder)
  
-     sys.stdout.write('    {\n')
--    writeliteral(8, bytes(os.path.basename(input), 'utf-8'))
-+    sys.stdout.write('        .xmlname = ')
-+    writeliteral(0, bytes(os.path.basename(input), 'utf-8'))
-     sys.stdout.write(',\n')
--    writeliteral(8, read)
-+    sys.stdout.write('        .xml = \n')
-+    writeliteral(12, read)
-     sys.stdout.write(',\n')
--    writeliteral(8, bytes(feature_name, 'utf-8'))
-+    sys.stdout.write('        .name = ')
-+    writeliteral(0, bytes(feature_name, 'utf-8'))
-     sys.stdout.write(',\n')
--    sys.stdout.write(f'        (const char * const [{num_regs}]) {{\n')
-+    sys.stdout.write(f'        .regs = (const char * const [{num_regs}]) {{\n')
+     builder->feature->num_regs = builder->regs->len;
+     builder->feature->regs = (void *)g_ptr_array_free(builder->regs, FALSE);
++    trace_gdbxml_feature_builder_header(builder->feature->name,
++                                        builder->feature->xmlname,
++                                        builder->feature->num_regs);
++    trace_gdbxml_feature_builder_content(builder->feature->xml);
+ }
  
-     for index, regname in enumerate(regnames):
-         sys.stdout.write(f'            [{regnums[index] - base_reg}] =\n')
-@@ -99,7 +102,7 @@ def writeliteral(indent, bytes):
-         sys.stdout.write(',\n')
+ const GDBFeature *gdb_find_static_feature(const char *xmlname)
+@@ -511,6 +515,10 @@ GArray *gdb_get_register_list(CPUState *cpu)
+                 name,
+                 r->feature->name
+             };
++            trace_gdbxml_get_register_list(r->feature->name,
++                                           r->feature->xmlname,
++                                           r->feature->base_reg,
++                                           r->base_reg + i, name);
+             g_array_append_val(results, desc);
+         }
+     }
+@@ -563,6 +571,8 @@ static void gdb_register_feature(CPUState *cpu, int base_reg,
+         .feature = feature
+     };
  
-     sys.stdout.write( '        },\n')
--    sys.stdout.write(f'        {num_regs},\n')
-+    sys.stdout.write(f'        .num_regs = {num_regs},\n')
-     sys.stdout.write( '    },\n')
++    trace_gdbxml_register_feature(feature->name, feature->xmlname,
++                                  base_reg, feature->num_regs);
+     g_array_append_val(cpu->gdb_regs, s);
+ }
  
- sys.stdout.write('    { NULL }\n};\n')
+@@ -598,6 +608,10 @@ void gdb_init_cpu(CPUState *cpu)
+     } else {
+         cpu->gdb_num_regs = cpu->gdb_num_g_regs = cc->gdb_num_core_regs;
+     }
++
++    trace_gdbxml_init_cpu(object_get_typename(OBJECT(cpu)), cpu->cpu_index,
++                          cpu->gdb_num_regs, cpu->gdb_num_g_regs,
++                          cc->gdb_num_core_regs);
+ }
+ 
+ void gdb_register_coprocessor(CPUState *cpu,
+diff --git a/gdbstub/trace-events b/gdbstub/trace-events
+index 4fd126a38c1..8caee36c242 100644
+--- a/gdbstub/trace-events
++++ b/gdbstub/trace-events
+@@ -28,5 +28,11 @@ gdbstub_err_checksum_invalid(uint8_t ch) "got invalid command checksum digit: 0x
+ gdbstub_err_checksum_incorrect(uint8_t expected, uint8_t got) "got command packet with incorrect checksum, expected=0x%02x, received=0x%02x"
+ gdbstub_err_unexpected_runpkt(uint8_t ch) "unexpected packet (0x%02x) while target running"
+ 
++gdbxml_init_cpu(const char *typename, unsigned id, unsigned gdb_num_regs, unsigned gdb_num_g_regs, unsigned gdb_num_core_regs) "%s:%d regs:%u g_regs:%u core_regs:%u"
++gdbxml_register_feature(const char *featname, const char *xmlname, unsigned base_reg, unsigned num_regs) "%s (%s) @%u +%u"
++gdbxml_feature_builder_header(const char *name, const char *xmlname, int num_regs) "%s (%s) regs:%d"
++gdbxml_feature_builder_content(const char *xml) "%s"
++gdbxml_get_register_list(const char *featname, const char *xmlname, unsigned feat_base_reg, unsigned base_reg, const char *regname) "%s (%s) [%u,%u]:%s"
++
+ # system.c
+ gdbstub_hit_watchpoint(const char *type, int cpu_gdb_index, uint64_t vaddr) "Watchpoint hit, type=\"%s\" cpu=%d, vaddr=0x%" PRIx64 ""
 -- 
 2.47.3
 
