@@ -4,72 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04491104C00D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:10:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3ECD41062880
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0INk-0007xa-Ba; Wed, 11 Mar 2026 08:09:44 -0400
+	id 1w0IUr-00026O-UW; Wed, 11 Mar 2026 08:17:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0INf-0007uF-Bl
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:09:41 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0IUa-00023m-D1
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:16:54 -0400
+Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0INY-0007Gs-MP
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:09:36 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48539cbb7b1so23173305e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 05:09:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0IUY-0000O7-74
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:16:48 -0400
+Received: by mail-wr1-x435.google.com with SMTP id
+ ffacd0b85a97d-439baf33150so819615f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 05:16:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773230971; x=1773835771; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773231403; x=1773836203; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=OYQKN7/JZQcImipPMxWO15cDyaAQMxMX8aUfy3Nm90o=;
- b=PV0Bc+MkXSUHTKILkOxKo4tTVfoBLxDoFu1Kv8MKstZO/vUG2K1FlUjc9e9J/MkfxR
- dpRJhekaTu1Kp/0ET4mIYlRA9/LkS6ZZ/OHafN4WvONNcDk8o3jfjYmhxFyF4v2EZ5JV
- wYPVBqWsrRPYZ/1bQPgpBNY/6FX3xaxFpMiR93wFp2mgO9f9HPSe+idqvke3uYsuojRE
- Ah3WDuwsuqhl9lOyVSbdnFryr1aee1DHqq0XmLrVnuMtTWW71ODpCtlWVULEAoFjjVJr
- Dm/UnF08OxE88MJxbooLeNElT3kTbHxG/SCdekfCUNOTRWN+aBGzBeTcNiel1zni3J8L
- IZ6g==
+ bh=/lDF0m0/Enh3zynLCArYk1i2HjYkkraUo/2aYEgOJR8=;
+ b=f+7aXwh1PnJ8WpGgUwOMIGku8F2BUFZTPRXag5+fU3Ag5goMygjZHhIO0FJZQaAW04
+ 3evVSQelR5fhowP2001vioAb1u4XydfLsC6FhBsX9MYxvn/2qFdu7KzulBjrAKFIqShL
+ 0x/ouiiWW/VzuUHpsyJomkEsIXSOg7j4AV3XPDMNYnfbiRGBvC0YraFbt4Ctic3D8Tm4
+ iOV1q6zfXQTgQoIl5lNh8bbU3ptqxvC6qgSc+3tW8M9MKoz34cMJWXk2eKrmpj+bo/he
+ Nageza/W3jqdQ25CDLgLIcAAxlRrocNpbAXLpKhU3cWqPyCFum9IAu1cdgsWNG9LG+yf
+ +E5A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773230971; x=1773835771;
+ d=1e100.net; s=20230601; t=1773231403; x=1773836203;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=OYQKN7/JZQcImipPMxWO15cDyaAQMxMX8aUfy3Nm90o=;
- b=WkCb4avIN2gR4crTGPe2ItD3DFF3OQXnfysHExHBz2L/FcQYV7wqKwhvABC9Vv69+x
- ZYTlEUYaTgPTP01+Q0jAXHFMxcpUUeO2twnPMds6wOLfnDLpLGxBgbGyHX4cNbjvQ3vI
- oGWOgKe1FzKMqf8qM35ZiXkW0kvTlO7D2FaNLzRAXwubTzUvPv5cfN5kel6qXeZnVPO3
- oW+FxUk/nBJB6aota0VzuwbBZGClNMK57yNJKLOcwTYC2P1U6MgF2encJUh+4yGn0h7g
- Py8jVG+sXOeDl8pwvTxsG5WOU5bv6FqjuUhnXZVvp9pJCsO77CBJjrfbnYTgU4zeiOd9
- z88g==
+ bh=/lDF0m0/Enh3zynLCArYk1i2HjYkkraUo/2aYEgOJR8=;
+ b=vMzhmzW4Peq4y7eApybbSq6s17VNYBuNrkD1xu5vBLETZfymgt90rIU68RmNOral0O
+ TOF9+YQjh8szLNyfB2m8EHx+YzAeBT+khmXTzWBgZvgJAit4ouFqxLY7obnQhkwujLQJ
+ zrNt3vpoKmfglYCTEunVclbc6Q9PKOukcK5aa6STYH40ztu0FxDMw7/lmka736yKolMH
+ H77h4pUo4+s1mT4VMrjSUpgVHtpDKh6lLPtF/SuSc47U+RQNTD+9eVJM6ZovxRZpx4wD
+ oMERtdkY7Q2JXx/Y90dg3SHMgjHMaVFHMUSzEKMo6S1D9XRmdnB1S8dZUW8ON4xneg3O
+ UBbQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU5KZU1//uAKUNNK2ntcQhlRrzpFsHbx40VqnEpfCsGhH8ZL2+1bl5OASxOR8wX9CbIPXg9FlanoMwi@nongnu.org
-X-Gm-Message-State: AOJu0YzayVoe1WC9zycbblHc2y3BTbdNf3bPjwNqYiDUc6RaOeYB+UPa
- wtOvG6SlY87LHqA7X4hAhZEhzoTacP80JNrlQWU/cjME4RxdnpyrESsZsHuOPxt6cvs=
-X-Gm-Gg: ATEYQzwcsKmvf+ZkiHZhE/QSlpelsWA7D5SZx+6tGj6lyzyqAu7893zEz3SXcSnTCrg
- lcujX/048FaWtjDkzH2Kwy1qVhuMdxWS7/Bcy3v5gFmwHciq/MYbsZzEVWV9UBgASmkCliVnCxM
- +4zwdAmwc3Zu0PdyIRJXqBinIcwQu3jfMy8p4wGQktshXZ5GUapAYhlgE7k9233LiK5yfzW2R5z
- Vk0CO3U2Y/8cRBFmnTezDF0/G9KCRDONF0ddM1QaJDSICPCfCEaKJbVyHEAR/xFZNfDa/V/bR0F
- HF+eyQwkLnlPxAwFrcl+bzGLDpl2ReFCn/8x+Va9cy6LgFavuAABTJd4OLm/AZwYsx8zHTFzhqu
- mZa4SbVAwNnC2e8/wKEGvmxhU24lmwPdzN4URO3SzPnT55serYo80lJgob2E60gW3FJInPvINVA
- KrsLYMHO5tP1SL3dCjx2zxulhAAgTBUHPKCbJ7o3izhgrjfqLJeVrca4EjmmtlRoLypg==
-X-Received: by 2002:a05:600c:8b45:b0:47d:8479:78d5 with SMTP id
- 5b1f17b1804b1-4854b0ac451mr36311635e9.7.1773230970517; 
- Wed, 11 Mar 2026 05:09:30 -0700 (PDT)
+ AJvYcCUx0C/cvD7GKkPwtI481CjdiuxfGCEmQDQ+HIQ8z+Cd+f6TsXZv5ViPGia3AxoUa3txt/WYbagB51HT@nongnu.org
+X-Gm-Message-State: AOJu0Yz/g7b89ONUB1tT4GZ7CRqKpmojD+4pT6m7R9upf/JN2MlN5oKO
+ GcO3rfPNeA+1ApnJqBcx3iUyeDeNJapzP51LHbCfFPE6Zs9ygns7vv9veakjVX24Zgs=
+X-Gm-Gg: ATEYQzzd/mL1sgZKG8QTcRfWwOxgZuFDsVu7I3zIGEz3wgdpCNXE9aBtzVtkpTsAQGR
+ V8m2B9vf/F1vXzUYED7atjZz6GK6r/6FLi9ZV3Ob8KneSYaXhvCYcnUmm5/W0xKYNlUvsIs6F9k
+ Qqkw0GjsdaIE2ZBXbzyyLBrG5h6kYQtiB+Qqhy5gaqOpOQTgRT2nnB9jsL5//UqmH21wTTn0Jrv
+ smImeYV6X8Y3T3tGUR/BtfJOGTFsYus3kmCCTH26EbHuIm0w5Yb9AfP3zngsGe3B/p1iMtYrWlQ
+ GlOZC3oJ2ys3Xno39GzvffOmpqbvl73cM8Wd9DBLQIK/nvr1f5PevVRu+XulDETAO+jlRhobcv9
+ uyFWwq3BFM1zrrrRWJ95aqbUr0NDdnclQXHtZjTe7GkKqNoCQzCHzW+3dWPLii/L60MCgivHUE3
+ V9sFa8WBcbJOy3fuv9xz6yCGAIaiAroHtGVTDX3xhP7Hkvs0BTYWu4i/135/GOwR4Wvg==
+X-Received: by 2002:a05:6000:2893:b0:439:be8d:2e44 with SMTP id
+ ffacd0b85a97d-439eff516bdmr12892323f8f.19.1773231403104; 
+ Wed, 11 Mar 2026 05:16:43 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439f8200606sm5214253f8f.27.2026.03.11.05.09.29
+ ffacd0b85a97d-439f81a3b91sm6857552f8f.13.2026.03.11.05.16.41
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 05:09:30 -0700 (PDT)
-Message-ID: <28989705-0466-477a-8299-569d434edb54@linaro.org>
-Date: Wed, 11 Mar 2026 13:09:29 +0100
+ Wed, 11 Mar 2026 05:16:42 -0700 (PDT)
+Message-ID: <3d470609-2770-4cf6-aaf5-d9ffbf31c8d3@linaro.org>
+Date: Wed, 11 Mar 2026 13:16:41 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 3/9] target/riscv: Add big-endian CPU property
+Subject: Re: [PATCH v3 6/9] hw/riscv: Make boot code endianness-aware at
+ runtime
 Content-Language: en-US
 To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
  "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
@@ -78,16 +79,15 @@ Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
  "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
  "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
  "alistair23@gmail.com" <alistair23@gmail.com>,
- "thuth@redhat.com" <thuth@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
+ "thuth@redhat.com" <thuth@redhat.com>
 References: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
- <20260311115910.564481-4-djordje.todorovic@htecgroup.com>
+ <20260311115910.564481-7-djordje.todorovic@htecgroup.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260311115910.564481-4-djordje.todorovic@htecgroup.com>
+In-Reply-To: <20260311115910.564481-7-djordje.todorovic@htecgroup.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::435;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,112 +111,70 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/3/26 12:59, Djordje Todorovic wrote:
-> Add a "big-endian" boolean property to the RISC-V CPU configuration,
-> defaulting to false (little-endian). This property allows machine
-> models to configure individual HARTs for big-endian data operation.
+> Add riscv_is_big_endian() helper that checks the hart's big-endian CPU
+> property and use it throughout the boot code:
 > 
-> The RISC-V ISA supports big-endian data accesses via the mstatus
-> SBE/MBE/UBE bits, while instructions remain always little-endian.
-> This property provides the configuration interface; subsequent
-> patches will connect it to the CPU state and translation logic.
+> - ELF loading: pass ELFDATA2MSB or ELFDATA2LSB based on endianness
+> - Firmware dynamic info: use cpu_to_be* or cpu_to_le* based on endianness
+> - Reset vector: instructions (entries 0-5) remain always little-endian,
+>    data words (entries 6-9) use target data endianness. For RV64 BE, the
+>    hi/lo word pairs within each dword are swapped since LD reads as BE.
+> 
+> This is part of the runtime big-endian support series which avoids
+> separate BE binaries by handling endianness as a CPU property.
 > ---
->   include/qemu/target-info.h        | 9 +++++++++
->   target-info-stub.c                | 8 +++++++-
->   target/riscv/cpu.c                | 6 ++++++
->   target/riscv/cpu_cfg_fields.h.inc | 1 +
->   4 files changed, 23 insertions(+), 1 deletion(-)
-> 
-> diff --git a/include/qemu/target-info.h b/include/qemu/target-info.h
-> index 23c997de54..1701cc1c9d 100644
-> --- a/include/qemu/target-info.h
-> +++ b/include/qemu/target-info.h
-> @@ -50,6 +50,15 @@ const char *target_cpu_type(void);
->    */
->   bool target_big_endian(void);
->   
-> +/**
-> + * target_set_big_endian:
-> + * @big_endian: the new endianness setting
-> + *
-> + * Set the target endianness at runtime. Used by bi-endian targets
-> + * (e.g. RISC-V) where data endianness is a runtime CPU property.
-> + */
-> +void target_set_big_endian(bool big_endian);
-> +
->   /**
->    * target_base_arm:
->    *
-> diff --git a/target-info-stub.c b/target-info-stub.c
-> index f5896a7262..b6532c419a 100644
-> --- a/target-info-stub.c
-> +++ b/target-info-stub.c
-> @@ -22,7 +22,7 @@ QEMU_BUILD_BUG_ON(offsetof(ArchCPU, env) != sizeof(CPUState));
->   QEMU_BUILD_BUG_ON(TARGET_PAGE_BITS < TARGET_PAGE_BITS_MIN);
->   #endif
->   
-> -static const TargetInfo target_info_stub = {
-> +static TargetInfo target_info_stub = {
+>   hw/riscv/boot.c         | 68 +++++++++++++++++++++++++++++++++--------
+>   include/hw/riscv/boot.h |  2 ++
+>   2 files changed, 58 insertions(+), 12 deletions(-)
 
-NAck. This structure must stay const. (this change isn't even
-documented / justified).
 
-What is the problem you are trying to resolve here?
-
->       .target_name = TARGET_NAME,
->       .target_arch = glue(SYS_EMU_TARGET_, TARGET_ARCH),
->       .long_bits = TARGET_LONG_BITS,
-> @@ -44,3 +44,9 @@ const TargetInfo *target_info(void)
->   {
->       return &target_info_stub;
->   }
-> +
-> +void target_set_big_endian(bool big_endian)
-> +{
-> +    target_info_stub.endianness = big_endian
-> +        ? ENDIAN_MODE_BIG : ENDIAN_MODE_LITTLE;
-> +}
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index e56470a374..305a8d73ad 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -34,6 +34,7 @@
->   #include "system/device_tree.h"
->   #include "system/kvm.h"
->   #include "system/tcg.h"
-> +#include "qemu/target-info.h"
->   #include "kvm/kvm_riscv.h"
->   #include "tcg/tcg-cpu.h"
->   #include "tcg/tcg.h"
-> @@ -941,6 +942,10 @@ static void riscv_cpu_realize(DeviceState *dev, Error **errp)
->           return;
+> @@ -474,10 +493,35 @@ void riscv_setup_rom_reset_vec(MachineState *machine, RISCVHartArrayState *harts
+>           reset_vec[2] = 0x00000013;   /*     addi   x0, x0, 0 */
 >       }
 >   
-> +    if (cpu->cfg.big_endian) {
-> +        target_set_big_endian(true);
-> +    }
+> -    /* copy in the reset vector in little_endian byte order */
+> -    for (i = 0; i < ARRAY_SIZE(reset_vec); i++) {
+> +    /* RISC-V instructions are always little-endian */
+> +    for (i = 0; i < 6; i++) {
+>           reset_vec[i] = cpu_to_le32(reset_vec[i]);
+>       }
 > +
->       riscv_cpu_register_gdb_regs_for_features(cs);
->   
->   #ifndef CONFIG_USER_ONLY
-> @@ -2641,6 +2646,7 @@ RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[] = {
->   
->   static const Property riscv_cpu_properties[] = {
->       DEFINE_PROP_BOOL("debug", RISCVCPU, cfg.debug, true),
-> +    DEFINE_PROP_BOOL("big-endian", RISCVCPU, cfg.big_endian, false),
->   
->       {.name = "pmu-mask", .info = &prop_pmu_mask},
->       {.name = "pmu-num", .info = &prop_pmu_num}, /* Deprecated */
-> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-> index 70ec650abf..51436daabf 100644
-> --- a/target/riscv/cpu_cfg_fields.h.inc
-> +++ b/target/riscv/cpu_cfg_fields.h.inc
-> @@ -154,6 +154,7 @@ BOOL_FIELD(ext_xmipscbop)
->   BOOL_FIELD(ext_xmipscmov)
->   BOOL_FIELD(ext_xmipslsp)
->   
-> +BOOL_FIELD(big_endian)
->   BOOL_FIELD(mmu)
->   BOOL_FIELD(pmp)
->   BOOL_FIELD(debug)
+> +    /*
+> +     * Data words (addresses at entries 6-9) must match the firmware's data
+> +     * endianness. For 64-bit big-endian, the high/low word order within
+> +     * each dword must also be swapped since LD interprets bytes as BE.
+> +     */
+> +    if (riscv_is_big_endian(harts)) {
 
+Do not consider endianness as an exceptional case. Please re-order
+as:
+
+        for(...) {
+           if (32bit) {
+               if (big_endian) {
+
+Even clearer if you add a riscv_boot_swap_data64() helper:
+
+       for(...) {
+           riscv_boot_swap_data64();
+       }
+
+> +        if (!riscv_is_32bit(harts)) {
+> +            uint32_t tmp;
+> +            tmp = reset_vec[6];
+> +            reset_vec[6] = cpu_to_be32(reset_vec[7]);
+> +            reset_vec[7] = cpu_to_be32(tmp);
+> +            tmp = reset_vec[8];
+> +            reset_vec[8] = cpu_to_be32(reset_vec[9]);
+> +            reset_vec[9] = cpu_to_be32(tmp);
+> +        } else {
+> +            for (i = 6; i < ARRAY_SIZE(reset_vec); i++) {
+> +                reset_vec[i] = cpu_to_be32(reset_vec[i]);
+> +            }
+> +        }
+> +    } else {
+> +        for (i = 6; i < ARRAY_SIZE(reset_vec); i++) {
+> +            reset_vec[i] = cpu_to_le32(reset_vec[i]);
+> +        }
+> +    }
 
