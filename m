@@ -4,121 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7EA1125876
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:26:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9D11125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:32:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PBw-0002Z1-Tv; Wed, 11 Mar 2026 15:26:00 -0400
+	id 1w0PHB-0004ZD-JE; Wed, 11 Mar 2026 15:31:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0PBu-0002Yd-TH
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 15:25:58 -0400
-Received: from mail-pg1-x52e.google.com ([2607:f8b0:4864:20::52e])
+ id 1w0PH8-0004YX-TD
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 15:31:23 -0400
+Received: from mail-qk1-x72d.google.com ([2607:f8b0:4864:20::72d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0PBt-0006RU-53
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 15:25:58 -0400
-Received: by mail-pg1-x52e.google.com with SMTP id
- 41be03b00d2f7-c73bd024a0dso78169a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 12:25:56 -0700 (PDT)
+ id 1w0PH6-0007Lz-Ss
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 15:31:22 -0400
+Received: by mail-qk1-x72d.google.com with SMTP id
+ af79cd13be357-8cd80f56b27so18547785a.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 12:31:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773257155; x=1773861955; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=W2QEAfg+J6pZOI1eLTTLQtNBs3gxf5Cz1RzLtG4q8co=;
- b=y+IDFnvKo1SCO+mcJnswqz7kWBFuGrr0wcBYjUUSGyFbtu+XVoBQhvZ7nxhhNSLwwC
- tncLyTOUKRrnRQLiLp/CP+s36qCpT+ZD9MuSEkPIw6N5OneNGicRg+J4bXYuxTz10fpF
- uMYzyng/ZcMMr/7qPp+pfQUnEuonUbmZNSwjibW7sbP7Z7msfv+tx93IsecYKHQMbN1O
- GcgacCHcq3dUZWSpg/Own4llVaoaOj7EU1ITMm+hu3+3FmWccezET+ShyRPVFjx8b7WV
- /LO8ynMRgUqEneDXi1ikviR+P58ZGZEASfmwm9VOr/1ZUaB+H8RExI99InjH8ahHk7NH
- d8rg==
+ d=linaro.org; s=google; t=1773257480; x=1773862280; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=Ei6Ta+OXVkX6YBpfnwjwbldUWIIqASQEuXoZq4gA2vs=;
+ b=Dmp/WZkyb93yqSW2pBuGOlu/v8ZdC2whHVK5miWfPsAzCEydb98OeaP/sTUtAN43/i
+ Qw8xF8bTs3p2DfqsLnIlvtStvA7Z4VZM1qasnMmW9JcMHycJX5l0A0P45xS++NrpsLt8
+ 52RXKVG68hfS9FL2vy3AzUWOM6leh0fEEku1+fNy5vDg5LxFX7Pn/Um4YftZj3o568dy
+ X0NQ11bqy6VoD2DmDIVcv8P3Hor1FXuFSugUjIEXMETl7zUnnNcGOnAXcBOeOC317MA8
+ t4EhwupuTXyRRvSmdxlaIWy3wgcKHS0dOoDcwChszroRbrM2qz07AZnYL5ENSJKJ5zA8
+ FBKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773257155; x=1773861955;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=W2QEAfg+J6pZOI1eLTTLQtNBs3gxf5Cz1RzLtG4q8co=;
- b=HwVl3egKTQMjoC6WGtynpLc0ABBhtPtPdW29tr0sf6XYK1lVihxMIMbTFzSxJh0e66
- zR1GIyfIURDjCJNWTeKvtb5JRMazM+oCrnwnDj1hSjrd/81oboio5b716RCSFA63iBLY
- lwsMMxV+3XogvCIzb4hnS/ffPhChNo4qkRfChNUC5MzOxTuCL9/nq2j9ocT7hYaP2HaO
- ZebCEtBvoUcscYvkBVzrrKplUjRUyvu+hyxyvdOwrqIQQW8T+9744W1FE1geL2U+MAQS
- bqvrq4k1ukB2fCyMilA+nhnF66aLzECrPBP2VknRKyARXvgYvUuBV5D8D7YItos+1qa5
- f9nQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUVupsGgGBCM+4i26PggvM/B8zSYqJOFduRgB+IY95EZa4dko0glXOuMx6YMAa4Wc2atHwb9m/WfwDz@nongnu.org
-X-Gm-Message-State: AOJu0YzmbZ4ZHXpfTSjhaKiXeavvr5l+qk5Gm8QWpeHCHkDJd3+ZNUrQ
- xpkSrdym60o5hd4qHV+/kdIbhwRHR7dqkLuawZiQeCZXp/kwjC2nokINhriaDN/23fA=
-X-Gm-Gg: ATEYQzy4Q4G6TDwCmbAOIUyHtUQMNh6p5ftUW8YWbftnwP6Ng9Rp/ZAaaM+64BCohYv
- F8GRyHpUc93PNCD9ZekH0t5VNSRY9Vy9wf9pV9Y0h7hwN6tgSIUyMLZgVqKxAHyyNsnjeLD2k2V
- +drCFUp6QYXBDIWKLm/jILUIBi72vFsKB4FLS4FT3fxlTE6S/axpKOl3i/Ef06I0guWhWNlloAR
- xpo+XFC9yEm0swAM6fHye5kZlCOHlFdnRvrnt+O/uIjpYWiob/L/lI0AFOR2ULLUpWKytdwwRYK
- cbeOPVunbHRdV9Xv9qCXc2Y92NLETaBR2umQ+AIvQnBPDS6PfPe89FV13kCHABAOzzLbbq/0zSX
- Yt9WWp+m2iKXHhczQ1L+hWFsKpCz1EJPDCTepWO7YDqhdRZPXmMeKs6R+9pMGlaMLC9f6BmqgCR
- kcmCw4qIpuY6PHteP2qIF7E8ZCsK3CjA9y9LoVqQhJ2XEDgTfBklqJf7lQSsFqXclyWLn9Vdt4a
- FICMdw=
-X-Received: by 2002:a17:902:d4c8:b0:2ae:665c:8b16 with SMTP id
- d9443c01a7336-2aeae92996fmr37409795ad.53.1773257155448; 
- Wed, 11 Mar 2026 12:25:55 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae222ef3sm32762965ad.7.2026.03.11.12.25.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 12:25:54 -0700 (PDT)
-Message-ID: <475aa897-dcde-454e-b4ee-1fee7a1a5f0b@linaro.org>
-Date: Wed, 11 Mar 2026 12:25:54 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH trivial v3] plugins: add missing docstrings to
- qemu-plugin.h
-Content-Language: en-US
-To: Florian Hofhammer <florian.hofhammer@epfl.ch>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, alex.bennee@linaro.org,
- peter.maydell@linaro.org, richard.henderson@linaro.org
-References: <20260311-add-missing-plugin-docs-v3-1-d68b9135e397@epfl.ch>
+ d=1e100.net; s=20230601; t=1773257480; x=1773862280;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Ei6Ta+OXVkX6YBpfnwjwbldUWIIqASQEuXoZq4gA2vs=;
+ b=w+WqeaRBWGKKcsKCwcr/qjnRV/HmKk0ia1mHK/YqvBJdJ+XhEGxdDMeVpPkAK1dKbo
+ AhASqtqC7d4FIoLpwSjR6AT/hqVsfvJ+9G2oEB/RPcxkJZBD4MRsk/dAoTrOMGosZahZ
+ Uh2ER3rwNisH3qqb7vR3bLP6KuQW/nMHwBwVTakBMvIJs+44vpPweW0xS95xrMi9Ks3/
+ oEkXUlAsV8vpr2L5l0h5G8zLTKDbrpCC7JAqgflBCoyZOBpfNEDGrQmhDMk4Nkj+pf+s
+ KZXjOzOwULRM70m8gaG0Dn6eXiNdSqWT04o7H2fcLbwgnbZTuCGPeURuc1ilQdNZXXIV
+ bjew==
+X-Gm-Message-State: AOJu0Yww0MSM3nTTjf+QODpdtcvk+jPy66xICt0TRJ3RWYaqGmXggK3A
+ i/1vYxnCam0wia3DxWvx2dlNmmmYFDaH/1HDKYWtWa6/rtIrKjoGErq58TMhipfhF0bYXjrQXSV
+ PqWbc
+X-Gm-Gg: ATEYQzzni9ymywQouzeCOOqD072/ZXRtJINagXPCYpdpqPfftI+73peEIEiNGFHyprE
+ xQHA4tp/qXei2rNa5ArHZDHoIkvpIFM/J/voPwzkKtm4A/OhCbKHevpgmrusEzCfOF/goFSGETn
+ uxFCKgtcRpwvA+ZqWMP9BqJS7fBH2XuNuHyeSzMyrmfenK16ooGPdcQbzmpDENEzD+czRTkmUMr
+ cg5cVXGgu4j32t7e1SwU8vX5o1PIUvgSMA+1TN99QrzZyyuX8a3xmSG4ZIkADTiG5QmqkZL/VZk
+ uj7ewTa4/JLBw09gl5bk59tDvRhoLaAW6iMEWDlyhIx2kXJk5lXjxGt9Wsv3/3s12j1KO19pxhG
+ RZebB5Fpm29x/7YrmdJGcZBFPd5AIEOdrXAuQ6Dc0ti2qXtGoZs9z7cbPpKqXcJk36CQhl+kdbB
+ pNZngwkhKfp5NF3cZ9OSDkt+LqkO5bc9bWlNiRh6xrl7Kb+tbJ4nUuRfywgL6i+Jt+Aoh0xf5Pt
+ BbcVA0pIwvtkIo=
+X-Received: by 2002:a05:620a:468f:b0:8cd:a071:9aac with SMTP id
+ af79cd13be357-8cda19f395cmr489889885a.24.1773257479708; 
+ Wed, 11 Mar 2026 12:31:19 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cda214be99sm213168585a.41.2026.03.11.12.31.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Mar 2026 12:31:19 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260311-add-missing-plugin-docs-v3-1-d68b9135e397@epfl.ch>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52e.google.com
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 0/1] Plugins doc update for 2026-03-11
+Date: Wed, 11 Mar 2026 12:31:11 -0700
+Message-ID: <20260311193112.417841-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x72d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,43 +99,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/26 3:25 AM, Florian Hofhammer wrote:
-> This patch adds docstrings for typedefs and function declarations in
-> include/plugins/qemu-plugin.h that were previously missing. This
-> resolves inconsistencies in the docs, e.g., the description for
-> qemu_plugin_read_register() referring to qemu_plugin_register_flush_cb()
-> but code cache flush callbacks not being documented themselves.
-> 
-> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
-> ---
-> Hi,
-> 
-> While working on a QEMU plugin and browsing the online docs at
-> https://www.qemu.org/docs/master/devel/tcg-plugins.html, I noticed that
-> some of the API functions were not actually documented.
-> 
-> I went through the include/plugins/qemu-plugin.h header file and added
-> docstrings where they were missing, hoping of course that I documented
-> the correct functionality based on my understanding of the plugin
-> internals.
-> 
-> I hope that's useful and I didn't miss anything!
-> 
-> Best regards,
-> Florian
-> 
-> Changes in v3:
-> - Fix documentation build issue due to incorrect parameter name
-> - Link to v2: https://lore.kernel.org/qemu-devel/20260310-add-missing-plugin-docs-v2-1-e9a91cb6974a@epfl.ch
-> Changes in v2:
-> - Added semantics clarification to the qemu_plugin_register_flush_cb()
->    docstring (suggested by Pierrick)
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260309-add-missing-plugin-docs-v1-1-41dddcd177c8@epfl.ch
-> ---
->   include/plugins/qemu-plugin.h | 106 +++++++++++++++++++++++++++++++++++++-----
->   1 file changed, 94 insertions(+), 12 deletions(-)
-> 
+The following changes since commit 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455:
 
-Thanks for updating it!
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+  Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-10 16:29:24 +0000)
+
+are available in the Git repository at:
+
+  https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260311
+
+for you to fetch changes up to 71b424ca7644e2546da3f07fce3c33980d85602e:
+
+  plugins: add missing docstrings to qemu-plugin.h (2026-03-11 12:30:17 -0700)
+
+----------------------------------------------------------------
+Changes:
+- [PATCH trivial v3] plugins: add missing docstrings to qemu-plugin.h (Florian Hofhammer <florian.hofhammer@epfl.ch>)
+  Link: https://lore.kernel.org/qemu-devel/20260311-add-missing-plugin-docs-v3-1-d68b9135e397@epfl.ch
+
+----------------------------------------------------------------
+Florian Hofhammer (1):
+      plugins: add missing docstrings to qemu-plugin.h
+
+ include/plugins/qemu-plugin.h | 106 +++++++++++++++++++++++++++++++++++++-----
+ 1 file changed, 94 insertions(+), 12 deletions(-)
 
