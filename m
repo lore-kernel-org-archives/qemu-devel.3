@@ -4,50 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE3481125875
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:39:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F363D1125892
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:39:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PM2-0000lH-5G; Wed, 11 Mar 2026 15:36:26 -0400
+	id 1w0POw-0001EZ-Um; Wed, 11 Mar 2026 15:39:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PLz-0000ZK-N9; Wed, 11 Mar 2026 15:36:23 -0400
+ id 1w0POq-0000R2-Vb; Wed, 11 Mar 2026 15:39:21 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PLy-0000E2-1d; Wed, 11 Mar 2026 15:36:23 -0400
+ id 1w0POp-0000k6-En; Wed, 11 Mar 2026 15:39:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257667; bh=fPyVvRaYn/mq2k7qOle+xfmthn7vwe+9dyU+ER3XLP8=;
+ t=1773257670; bh=zsJdKC1oSdqH86t/OM5dqP2jvqDdEPy1KD1EWd5IWzA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=l5yvH5/gP87BG0j6rAjaqdU7mNKHee3JP9UzczzZBhiIrZn6YynPb3buMAvY/3rN5
- 07Hx1XxyS3HkI2NYPHZEPMiP4pajMZnuglfFBnUwhTILzI/n+R0WBYyzXABtmP0XTx
- dcIOstONzvYHy7KFh3FnK5CvVygdiGmhSjk8Wsf/OXZl5IYE4/z8nzo+8ILdkeOyAt
- mh7wOvPffiXwNLFcyd8cOi3m2x3pz0jaQm9CW+rmzq2fkRCEoKZxal4/I1iEoNWvcO
- ygRecVaHk3wzPCNqNjpwB+OcuPUEcpAAIPtE48GGq/AJrn83n2bnKQPEALuA5UKFUF
- cWAFR9l0q/M1A==
+ b=MQ01ITpDHruRhKGxZgli2OIptjhl2XQEx+31EdTzj1+6hDwLDOSQ5/w8VTkRgCpZa
+ MVSi6ld1Um3agz6uBbv/xpt21/o7Ou4q1j97PhIO8jGOElsJMiMjD0IJZi+BCsgx9A
+ 8U+v173HGFQgHPfn6KAPIa8n/gcBTKV5EViracu8iL+nL7dVpw1iELjamCyrmtq9oZ
+ CVV8SVjLCpYyMxKgyKaCm91ufZXcrnLRu+WVQgtSrqLa0GO3Z1r81NsWUyyLb04VNg
+ 4Sa04XCHospHES4pcaSj2IY6SJUAFT0Az0lrt2VrJngM5iHvNw0HUP43WYKqVJlHd+
+ 9lNUDG6DUu6gA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7F55D1920FA;
- Wed, 11 Mar 2026 22:34:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1F64B192118;
+ Wed, 11 Mar 2026 22:34:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C032737C45F;
- Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5727437C47D;
+ Wed, 11 Mar 2026 22:35:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?=E7=BD=97=E9=93=AD=E6=BA=90?= <myluo24@m.fudan.edu.cn>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 18/53] virtio-snd: handle 5.14.6.2 for PCM_INFO
- properly
-Date: Wed, 11 Mar 2026 22:34:11 +0300
-Message-ID: <20260311193449.1096110-18-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andreas Schwab <schwab@suse.de>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 48/53] linux-user: fix TIOCGSID ioctl
+Date: Wed, 11 Mar 2026 22:34:41 +0300
+Message-ID: <20260311193449.1096110-48-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,86 +69,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Andreas Schwab <schwab@suse.de>
 
-The section 5.14.6.2 of the VIRTIO spec says:
+TIOCGSID is IOC_R, not IOC_W.
 
-  5.14.6.2 Driver Requirements: Item Information Request
-
-  - The driver MUST NOT set start_id and count such that start_id +
-    count is greater than the total number of particular items that is
-    indicated in the device configuration space.
-
-  - The driver MUST provide a buffer of sizeof(struct virtio_snd_hdr) +
-    count * size bytes for the response.
-
-While we performed some check for the second requirement, it failed to
-check for integer overflow.
-
-Add also a check for the first requirement, which should limit exposure
-to any overflow, since realistically the number of streams will be low
-enough in value such that overflow is improbable.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: 罗铭源 <myluo24@m.fudan.edu.cn>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260220-virtio-snd-series-v1-3-207c4f7200a2@linaro.org>
-(cherry picked from commit 61679d7dcfa2dffc8fb115aa19b09e0e7cf5ea5c)
+Signed-off-by: Andreas Schwab <schwab@suse.de>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6a1221614fd9344a22cafea78e48d6ded95f317d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index fd03efc120..e9c24d6795 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -156,7 +156,7 @@ static virtio_snd_pcm_set_params *virtio_snd_pcm_get_params(VirtIOSound *s,
- static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-                                        virtio_snd_ctrl_command *cmd)
- {
--    uint32_t stream_id, start_id, count, size;
-+    uint32_t stream_id, start_id, count, size, tmp;
-     virtio_snd_pcm_info val;
-     virtio_snd_query_info req;
-     VirtIOSoundPCMStream *stream = NULL;
-@@ -179,11 +179,34 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-     count = le32_to_cpu(req.count);
-     size = le32_to_cpu(req.size);
- 
--    if (iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
--        sizeof(virtio_snd_hdr) + size * count) {
-+    /*
-+     * 5.14.6.2 Driver Requirements: Item Information Request
-+     * "The driver MUST NOT set start_id and count such that start_id + count
-+     * is greater than the total number of particular items that is indicated
-+     * in the device configuration space."
-+     */
-+    if (start_id > s->snd_conf.streams
-+        || !g_uint_checked_add(&tmp, start_id, count)
-+        || start_id + count > s->snd_conf.streams) {
-+        error_report("pcm info: start_id + count is greater than the total "
-+                     "number of streams, got: start_id = %u, count = %u",
-+                     start_id, count);
-+        cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-+        return;
-+    }
-+
-+    /*
-+     * 5.14.6.2 Driver Requirements: Item Information Request
-+     * "The driver MUST provide a buffer of sizeof(struct virtio_snd_hdr) +
-+     * count * size bytes for the response."
-+     */
-+    if (!g_uint_checked_mul(&tmp, size, count)
-+        || !g_uint_checked_add(&tmp, tmp, sizeof(virtio_snd_hdr))
-+        || iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
-+           sizeof(virtio_snd_hdr) + size * count) {
-         error_report("pcm info: buffer too small, got: %zu, needed: %zu",
-                 iov_size(cmd->elem->in_sg, cmd->elem->in_num),
--                sizeof(virtio_snd_pcm_info));
-+                sizeof(virtio_snd_pcm_info) * count);
-         cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-         return;
-     }
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 6ecfe6306e..5b7d00e92f 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -26,7 +26,7 @@
+      IOCTL(TIOCSCTTY, 0, TYPE_INT)
+      IOCTL(TIOCGPGRP, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCSPGRP, IOC_W, MK_PTR(TYPE_INT))
+-     IOCTL(TIOCGSID, IOC_W, MK_PTR(TYPE_INT))
++     IOCTL(TIOCGSID, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCOUTQ, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCSTI, IOC_W, MK_PTR(TYPE_INT))
+      IOCTL(TIOCMGET, IOC_R, MK_PTR(TYPE_INT))
 -- 
 2.47.3
 
