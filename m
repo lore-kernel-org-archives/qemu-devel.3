@@ -4,71 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890BB1125847
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7981125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LLY-0002Ar-Sr; Wed, 11 Mar 2026 11:19:42 -0400
+	id 1w0LEJ-0007FR-Jz; Wed, 11 Mar 2026 11:12:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LKm-0001cT-PL; Wed, 11 Mar 2026 11:18:53 -0400
-Received: from sender4-of-o54.zoho.com ([136.143.188.54])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0LCg-0003KH-PU; Wed, 11 Mar 2026 11:10:33 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LKl-0000xW-Af; Wed, 11 Mar 2026 11:18:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1773242212; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=GI7VVaDmpWAiApiWH9BukEkFSI4c6sC7L+TMUazcL0BGaQQToaFYc9KmBGkXua3LBH1GrdXbsf2syVqFS6u3Gw47s5FiV3Rk9QSRaqqo/TZI9ctzUcHTVh5oZJQYQRsiBaXH2zWrCtH517gOlHIDZXNcjJ1AIorf2OS3qKflHQs=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1773242212;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=TtHVV09/azBFz2Seh9PYlKsEIwHX8fbx5TVphaMR2YA=; 
- b=PX/yC5FQ61oiEjn3y/HPY78ZCFOFI8CzucrzcAmcsFtHyzz30CrMZ7vPCXzCUI7yuI5XU8gxpNQr11V9s8nbo/VcM5fNUIjdU2tBAS72zO5aTBLRCelpnFuMMjk/MA0/JdQxShGl57alKpSbCOXJAady8Day55X3TX79nwgRyCs=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=anirudhrb.com;
- spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
- dmarc=pass header.from=<anirudh@anirudhrb.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242212; 
- s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
- h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
- bh=TtHVV09/azBFz2Seh9PYlKsEIwHX8fbx5TVphaMR2YA=;
- b=pWt2EdvvteRCwbFsHc20kbQ9TpJyhMW+s3m2X6V7tcX80jq4v+ZlcUS9TtT3Vb1s
- XqcYD4T3hDR4JVNLshRVF1r1RFsEosIrijFTylWbm+XwH4lLACXp5EdGbdf1if8UDdx
- 6ZDimYP93Fug5YwOqImxiLVrS44jBuEYdbyUboqI=
-Received: by mx.zohomail.com with SMTPS id 1773242209175320.2625669690708;
- Wed, 11 Mar 2026 08:16:49 -0700 (PDT)
-From: Anirudh Rayabharam <anirudh@anirudhrb.com>
-Date: Wed, 11 Mar 2026 15:15:36 +0000
-Subject: [PATCH 09/14] target/arm: cpu: Mark MSHV supporting PSCI 1.3
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260311-mshv_accel_arm64_supp-v1-9-c31699b7bc1f@anirudhrb.com>
-References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
-In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0LCf-00066C-0Z; Wed, 11 Mar 2026 11:10:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773241483; bh=Tap+1p3sDYHUxlsdu61MBmComIk/a+J4T9/QEAPfN1U=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=RpEsRKT/rHyU084XStEQU8Rp6OwGQYmgAQgDsD7xDigFvhK3dgjwHc8Z5PEvM73pW
+ lt3yVDVC0VcMZkjq6dyl5exdtALLmKJ0btFfLaYDJQVj8ubmWZor5VVnzghhbOm3d9
+ MmxDiuiBA3FHxvmTJEaQlIr919jrDFjYF/qh2S/2+OrFof9zs2tK72Xmz0lKjgDNpa
+ s3sZzsDrJglT+1ccW/naqkpJ6MoHxu32s5dKsKR1dHmUroWLWMmPG/0qi9liRUcBMh
+ 92VpXvkKk1rGPN/9eyq5rdksEQly0UU/Xfj632gsr6UR600maVpw8hZ0YbGeV4VBOW
+ NLn7tHTAZoosg==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id BD3C0191EA9;
+ Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id AB04037C2EA;
+ Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
-X-Mailer: b4 0.14.3
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.54;
- envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+Cc: qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 38/46] virtio-gpu: Ensure BHs are invoked only from
+ main-loop thread
+Date: Wed, 11 Mar 2026 18:03:14 +0300
+Message-ID: <20260311150327.1084669-38-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,30 +72,118 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
+From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 
-MSHV supports PSCI 1.3. Expose this version to guests.
+QEMU's display GL core is tied to main-loop thread and virtio-gpu
+interacts with display while processing GPU commands. Virtio-gpu BHs
+work in generic AIO context that can be invoked on vCPU thread, while
+GL and UI toolkits are bound to the main-loop thread.
 
-Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
----
- target/arm/cpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Make virtio-gpu BHs use iohandler AIO context that is handled in a
+main-loop thread only.
 
-diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-index 4b1e9750e6..a0a018a8cd 100644
---- a/target/arm/cpu.c
-+++ b/target/arm/cpu.c
-@@ -1157,7 +1157,7 @@ static void arm_cpu_initfn(Object *obj)
-     if (tcg_enabled() || hvf_enabled()) {
-         /* TCG and HVF implement PSCI 1.1 */
-         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
--    } else if (whpx_enabled()) {
-+    } else if (whpx_enabled() || mshv_enabled()) {
-         cpu->psci_version = QEMU_PSCI_VERSION_1_3;
+ 0  SDL_GL_MakeCurrent() (libSDL3)
+ 1  SDL_GL_MakeCurrent_REAL() (libSDL2)
+ 2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
+ 3  make_current() (virglrenderer.c:639)
+ 4  vrend_finish_context_switch() (vrend_renderer.c:11630)
+ 5  vrend_hw_switch_context() (vrend_renderer.c:11613)
+ 6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
+ 7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
+ 8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
+ 9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
+ 10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
+ 11 aio_bh_poll() (util/async.c)
+ 12 aio_poll() (util/aio-posix.c)
+ 13 blk_pwrite() (block/block-gen.c:1985)
+ 14 pflash_update() (pflash_cfi01.c:396)
+ 15 pflash_write() (pflash_cfi01.c:541)
+ 16 memory_region_dispatch_write() (system/memory.c:1554)
+ 17 flatview_write() (system/physmem.c:3333)
+ 18 address_space_write() (system/physmem.c:3453)
+ 19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
+ 20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Message-ID: <20260303151422.977399-8-dmitry.osipenko@collabora.com>
+Message-ID: <20260304165043.1437519-10-alex.bennee@linaro.org>
+Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+(cherry picked from commit 235f9b36383e4cc7a790bca51eddbe38edd5438c)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 362828f54e..a65fca9c62 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -1199,9 +1199,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
      }
+ 
+ #if VIRGL_VERSION_MAJOR >= 1
+-    gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
+-                                    virtio_gpu_virgl_resume_cmdq_bh,
+-                                    g);
++    gl->cmdq_resume_bh = virtio_bh_io_new_guarded(DEVICE(g),
++                                                  virtio_gpu_virgl_resume_cmdq_bh,
++                                                  g);
+ #endif
+ 
+     return 0;
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index 0a1a625b0e..3a71a80677 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1514,9 +1514,9 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+ 
+     g->ctrl_vq = virtio_get_queue(vdev, 0);
+     g->cursor_vq = virtio_get_queue(vdev, 1);
+-    g->ctrl_bh = virtio_bh_new_guarded(qdev, virtio_gpu_ctrl_bh, g);
+-    g->cursor_bh = virtio_bh_new_guarded(qdev, virtio_gpu_cursor_bh, g);
+-    g->reset_bh = qemu_bh_new(virtio_gpu_reset_bh, g);
++    g->ctrl_bh = virtio_bh_io_new_guarded(qdev, virtio_gpu_ctrl_bh, g);
++    g->cursor_bh = virtio_bh_io_new_guarded(qdev, virtio_gpu_cursor_bh, g);
++    g->reset_bh = virtio_bh_io_new_guarded(qdev, virtio_gpu_reset_bh, g);
+     qemu_cond_init(&g->reset_cond);
+     QTAILQ_INIT(&g->reslist);
+     QTAILQ_INIT(&g->cmdq);
+diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+index 9a81ad912e..4698b47426 100644
+--- a/hw/virtio/virtio.c
++++ b/hw/virtio/virtio.c
+@@ -4418,3 +4418,13 @@ QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
+     return qemu_bh_new_full(cb, opaque, name,
+                             &transport->mem_reentrancy_guard);
  }
-
++
++QEMUBH *virtio_bh_io_new_guarded_full(DeviceState *dev,
++                                      QEMUBHFunc *cb, void *opaque,
++                                      const char *name)
++{
++    DeviceState *transport = qdev_get_parent_bus(dev)->parent;
++
++    return aio_bh_new_full(iohandler_get_aio_context(), cb, opaque, name,
++                           &transport->mem_reentrancy_guard);
++}
+diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
+index c594764f23..963bcba825 100644
+--- a/include/hw/virtio/virtio.h
++++ b/include/hw/virtio/virtio.h
+@@ -543,4 +543,14 @@ QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
+ #define virtio_bh_new_guarded(dev, cb, opaque) \
+     virtio_bh_new_guarded_full((dev), (cb), (opaque), (stringify(cb)))
+ 
++/*
++ * The "_io" variant runs BH only on a main-loop thread, while generic BH
++ * may run on a vCPU thread.
++ */
++QEMUBH *virtio_bh_io_new_guarded_full(DeviceState *dev,
++                                      QEMUBHFunc *cb, void *opaque,
++                                      const char *name);
++#define virtio_bh_io_new_guarded(dev, cb, opaque) \
++    virtio_bh_io_new_guarded_full((dev), (cb), (opaque), (stringify(cb)))
++
+ #endif
 -- 
-2.43.0
+2.47.3
 
 
