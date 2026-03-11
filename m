@@ -4,132 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D54103E2E8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:30:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75A46103E2EA
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:55:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0S3H-0006MT-RP; Wed, 11 Mar 2026 18:29:15 -0400
+	id 1w0SRP-0003aW-LF; Wed, 11 Mar 2026 18:54:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0S3G-0006MD-ME
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:29:14 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0S3E-0007vd-SR
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:29:14 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-8cd78a4ce8dso41333285a.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 15:29:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0SRJ-0003Zx-I8
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:54:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0SRG-0004Qx-HZ
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:54:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773269640;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=J6Wfl0dzMb/0zWwoylO2C3CHxECDz88E0lJeNxLooa4=;
+ b=SslCkYmq08y9mTIwxtlpD8yBfndDr+mXtmql1nWG/lr8uSbnDRHd327xbhAOFfdub/TWFM
+ OVr+kuA6bhQB0jU9V3JVoZI85E89Cf7v1BDqF/cPmWYgGD46eR0dtjbwdOmS0dMN5WXuYC
+ WWqsmQmszWLo6TKwNax80FrIoKAWANg=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-271-LA3tI6kuMNOZacXLcE4hhw-1; Wed, 11 Mar 2026 18:53:58 -0400
+X-MC-Unique: LA3tI6kuMNOZacXLcE4hhw-1
+X-Mimecast-MFC-AGG-ID: LA3tI6kuMNOZacXLcE4hhw_1773269638
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-35a02f3b8e2so1553841a91.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 15:53:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773268151; x=1773872951; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=DdxfVqvcQUbqSK7nWN42MCG3eGRfjdJ5IfyBB4fJnpo=;
- b=jW482CGZm0XHLPAaBaXnFMJFZoH6Dv+SpliDWPE5ufWb8wg/5M+wb0AlFLHt9hbxAo
- AsiwL8dn8KaBa5f8osNJh75TVkebSJ8LxTCe3ex11IFJLJiPLtQbyoJ2jK/e2lLOQzz/
- 5X7/scyRFQYBEeLwM5cTHbdrVpRaYe1PrC1oq2IkT9/8aVhztCFrZjVJHCFYfWUp+a7R
- pj8iyX+NmmC1/mGOzCYU6r6TA7VLGJRNiq0ZGuME7PL9roDe3C0SXlvTOZBjACKxmbO2
- GvAHLa8ZhpkuUKY4do92Z6Az72zSWztxDtCfbixTCznahq69bZ55fQotwfZ9BilZqWlS
- uLZQ==
+ d=redhat.com; s=google; t=1773269638; x=1773874438; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=J6Wfl0dzMb/0zWwoylO2C3CHxECDz88E0lJeNxLooa4=;
+ b=Si2M+rpng39BzyktGOlol6TPsGtpHjswznpYLUAXHnGDUbo4M81QDcEiQZVWZucBgv
+ zuJpirUboBCVxbYZdKeKQOtxNSJmGNPvogccwqa3jdwzIf6Gi+s5wttBVD1nS29izX9h
+ PMzLOTOiNe6MrXNFPgbTPNTtPp+TU8ND2pPhu2h1PH77S75GzZyvM+7F8ETfbStM3EEm
+ ekMMkgVtVEk7GveQGd1quM7Vzg3qvL9p07+mjgKaY6PTFMIIs+X619ZGRGEze5pIlUc3
+ 8SMwt04JRBnhGJA97neSsO8SUdkMkTzE1yAnNLxHhd8pBlRjZUiZ+v3BzDukBd/SrVNw
+ Rw6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773268151; x=1773872951;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=DdxfVqvcQUbqSK7nWN42MCG3eGRfjdJ5IfyBB4fJnpo=;
- b=tY0I0LdtMG/P8bma62iBTZXjfrn775pSWSDoYCZVjRDFREmQo2jtP594kqIZqmgvWO
- L0vVTGGe7fdLWSZaUxdrfG3UgfvkjZHAxUym80N5vMivliZpqH7vnsdA0k30d8OdDypf
- cH+NbJDI915l75vwS2fCpu1tXD1ruYAlirYByy71E4bF1yScxMnxjlmW3ZHVpjiyO8cV
- VmIGnZWR7+hGHKWrGYstcZYZmzYRAnsQVwT2z7K8GaafrpibJQKODUMsNm8UTz1BAJmA
- WgSE/eLzFQFKbYmlNmNZ3Ycm98UL1lQZN4HhCzuiPQOCG/iq5D5e5Xtpg3PzjX9VWvJS
- 3yNw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcX1Qe2m8UtQmXVlBmlM5G6FAZl//Cz1581tjHmaqxXKTUv+/PuYid7P7imScoSOG8k7krk3MGmYkP@nongnu.org
-X-Gm-Message-State: AOJu0YwIp3o9oJ+6bOoOSTNpmH1WD8ndICKsU8IHWRIY6KTw03ZHLNaE
- eCDUdJgpge1Ls/+uV3zTYi1P7+gvOR3VLJP7l/BdAbr4a+2FasYPCS633b+uRqSDrB8=
-X-Gm-Gg: ATEYQzxhaZE/n1gICqo2jwUow8SesBJyraq+Cp04/9e+zaocz3HRFU78AJUJFYoMOCZ
- l7jWO4Slf5QwZ9/Czfowsw4sELqr5WjZuZAWKfX+LHvUcTHxNrt9ohg8Sih7GREkcMaeh2AdjUU
- ed2DQhCuOulLPF4IOMlMUndAyTJD90E7REl9C83yes+AapgvYH4Aqvc6A8Lxkn+bf9adiiF+qaf
- 5f9H4ieDUrbbQ4mtUy/4wpOcPxomDA4t04SqZXlHR0624xPe2unbROJhGBwhRovLKK5z2zpNQHY
- bsJ1Vlzy9lE7ovUMs9VH6CRl1TNxppY4hrDwjsu6JiQqoWgCqA77rztVT62Uk5V+Edkq0B7BbPA
- pYC6uTKCOezbkadOd57R2AfsqEtCWcW+sKs52u6Xrjgjnsd1DL42LF6ESDZVfg/DTh15Sd85hr/
- DSGCkFfan6kl/4CcmIkiHbY4GgXGeeI2gtwUSM+RAo8lPdE1Y6KkeX4roLB8c0RIoz8NGD
-X-Received: by 2002:a05:620a:1928:b0:8ca:2e37:ad07 with SMTP id
- af79cd13be357-8cda1936a84mr568586785a.8.1773268151568; 
- Wed, 11 Mar 2026 15:29:11 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda1fbcd2esm226929985a.5.2026.03.11.15.29.10
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 15:29:11 -0700 (PDT)
-Message-ID: <e7a2aa40-400b-444f-8c22-fc6895e376e3@linaro.org>
-Date: Wed, 11 Mar 2026 15:29:09 -0700
+ d=1e100.net; s=20230601; t=1773269638; x=1773874438;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=J6Wfl0dzMb/0zWwoylO2C3CHxECDz88E0lJeNxLooa4=;
+ b=Kc2hAspATLiCKpiHmqxXvBlBGUnJKG4QzkA1ZBmAZ2t2zQsvs6i1LhhHIiC4c1zMwN
+ Jv4hfMLZGGsHxCOVPQKp1VZRYKODpDMzqK8pA/Yk0QGOjXj3N38DGD9+fWeLPWWk/oNM
+ CsiecggToSBmnGHXmzA66DGNSFPEhDBu3HDiocBJHTzQmHjGOMnOlXQNr3ur2QRm25SG
+ gD2Hct9+yv8uTZtM7mYOyFXFQAaf4gZAvHwgeK/eOp7+H22Qbub990iwt2L1yEz2V2bb
+ BOtQ93EoV4T8GanOvGpT9Qdbvh8cNGav4NfjB7JaMjMgckJ0IsGb3JKG+0igLHk6PxbW
+ Tukg==
+X-Gm-Message-State: AOJu0YzT/2QXjlN65whZaI7d42z8neJtVe9TkUIecBbFEcx2CQt/9jzx
+ bRvXtkMyXW/AHME60R6ngfY0/GwFr2tOj9hUgCeTpWhfhm/2HFwYLWMXmZsYvtQm2x4ZF4nFyqA
+ +0EjPTcA+l6+tCSijtmCauQKCwgoJ1TSbMSh5oZZkcV85pDR2/yWVvmlN
+X-Gm-Gg: ATEYQzy+4TuEtAZqi4J8V1MaXdchP+Nl2lnwST0ILLtDyAsqkcLEas5JjW+6mOtJLUX
+ bcZvIqW4HTuXbmJmlH2sTtUonFZBth5S80dJ3OCs7kFmF2p7FM8zO40L16QIcuz/tWxhUELOb5b
+ c3YGEspAFLuZrp+8GM2EcI+pk2TZ0v7Kz4FSGTg4d684S+l6++vB8pzTAu+xeoasdeE+7T6hr7f
+ /Q93BkIIMuZWmuRESTtS35YDkPtK+3OH9xhP2WMz1g0PmN1lxe+UQTOI4osENhS3lyOxH56ePLG
+ lKN09PyG82c0T9D74S3LS+Obtxi/oMm1R4yw+5LrkmDpv7eff1p6sWZ3jhHx6ajEtPZkUxoP+7t
+ 6oUjzsqC9hZEs5g==
+X-Received: by 2002:a17:90b:4a08:b0:32e:a5ae:d00 with SMTP id
+ 98e67ed59e1d1-35a011d351bmr4220436a91.13.1773269637753; 
+ Wed, 11 Mar 2026 15:53:57 -0700 (PDT)
+X-Received: by 2002:a17:90b:4a08:b0:32e:a5ae:d00 with SMTP id
+ 98e67ed59e1d1-35a011d351bmr4220411a91.13.1773269637263; 
+ Wed, 11 Mar 2026 15:53:57 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-359ffdb6e53sm1367185a91.0.2026.03.11.15.53.55
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Mar 2026 15:53:56 -0700 (PDT)
+Date: Wed, 11 Mar 2026 18:53:54 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Prasad Pandit <ppandit@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 5/5] tests/qtest/migration: Force exit-on-error=false
+Message-ID: <abHygq03y43ubjsn@x1.local>
+References: <20260311213418.16951-1-farosas@suse.de>
+ <20260311213418.16951-6-farosas@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 00/14] Add ARM64 support for MSHV accelerator
-Content-Language: en-US
-To: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
- qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
-References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x734.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260311213418.16951-6-farosas@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -145,94 +118,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Anirudh,
+On Wed, Mar 11, 2026 at 06:34:18PM -0300, Fabiano Rosas wrote:
+> Some tests can cause QEMU to exit(1) too early while the incoming
+> coroutine has not yielded for a first time yet. This trips ASAN
+> because resources related to dispatching the incoming process will
+> still be allocated in the io/channel.c layer without a
+> straight-forward way for the migration code to clean them up.
+> 
+> As an example of one such issue, the UUID validation happens early
+> enough that the temporary socket from qio_net_listener_channel_func()
+> still has an elevated refcount. If it fails, the listener dispatch
+> code never gets to free the resource:
+> 
+> Direct leak of 400 byte(s) in 1 object(s) allocated from:
+>     #0 0x55e668890a07 in malloc asan_malloc_linux.cpp:68:3
+>     #1 0x7f3c7e2b6648 in g_malloc ../glib/gmem.c:130
+>     #2 0x55e66a8ef05f in object_new_with_type ../qom/object.c:767:15
+>     #3 0x55e66a8ef178 in object_new ../qom/object.c:789:12
+>     #4 0x55e66a93bcc6 in qio_channel_socket_new ../io/channel-socket.c:70:31
+>     #5 0x55e66a93f34f in qio_channel_socket_accept ../io/channel-socket.c:401:12
+>     #6 0x55e66a96752a in qio_net_listener_channel_func ../io/net-listener.c:64:12
+>     #7 0x55e66a94bdac in qio_channel_fd_source_dispatch ../io/channel-watch.c:84:12
+>     #8 0x7f3c7e2adf4b in g_main_dispatch ../glib/gmain.c:3476
+>     #9 0x7f3c7e2adf4b in g_main_context_dispatch_unlocked ../glib/gmain.c:4284
+>     #10 0x7f3c7e2b00c8 in g_main_context_dispatch ../glib/gmain.c:4272
+> 
+> The exit(1) also requires some tests to setup qtest to expect a return
+> code of 1 from the QEMU process. Although we can check migration
+> status changes to be fairly certain where the failure happened, there
+> is always the possibility of QEMU exiting for another reason and the
+> test passing. This happens frequently with sanitizers enabled, but
+> also risks masking issues in the regular build.
+> 
+> Stop allowing the incoming migration to exit and instead require the
+> tests to wait for the FAILED state and end QEMU gracefully with
+> qtest_quit.
+> 
+> In practice this means setting exit-on-error=false for every incoming
+> migration, changing MIG_TEST_FAIL_DEST_QUIT_ERR to MIG_TEST_FAIL and
+> waiting for a change of state where necessary.
+> 
+> With this, the MIG_TEST_FAIL_DEST_QUIT_ERR error result is now unused,
+> remove it.
+> 
+> The affected tests are:
+> validate_uuid_error
+> multifd_tcp_cancel
+> dirty_limit
+> precopy_unix_tls_x509_default_host
+> precopy_tcp_tls_no_hostname
+> tcp_tls_x509_mismatch_host
+> dbus_vmstate_missing_src
+> dbus_vmstate_missing_dst
+> 
+> Also add a comment to QEMU source explaining that the incoming
+> coroutine might block for a while until it yields as this is the
+> actual root cause of the issue.
+> 
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-On 3/11/26 8:15 AM, Anirudh Rayabharam (Microsoft) wrote:
-> This series adds ARM64 guest support to the MSHV (Microsoft Hypervisor)
-> accelerator, enabling QEMU to run aarch64 VMs on Microsoft's hypervisor
-> using the mshv Linux kernel module.
-> 
-> The first few patches refactor the existing x86 MSHV code to separate
-> arch-specific pieces from common infrastructure: moving MSR handling to
-> target/i386, extracting shared register hypercall helpers, provisioning
-> host CPU features, and introducing arch-specific init hooks.
-> 
-> The remaining patches add the ARM64 backend:
->   - vCPU state get/set using hypervisor register hypercalls
->   - -cpu host support by querying ID registers from the hypervisor
->   - vCPU run loop with MMIO emulation via ESR_EL2 syndrome decoding
->   - In-kernel vGICv3 backed by HVCALL_ASSERT_VIRTUAL_INTERRUPT
->   - Interrupt control structure adjustments for arm64
-> 
-> With this series, a standard aarch64 virt machine can be launched with:
->    qemu-system-aarch64 -accel mshv -cpu host -M virt ...
-> 
-> Caveats:
-> - Currently only direct kernel is supported. We're still debugging edk2
->    firmware boot.
-> - Live migration is not yet supported.
-> 
-> ---
-> Aastha Rawat (7):
->        accel/mshv: move msr.c to target/i386
->        accel/mshv: extract common CPU register helpers
->        meson, target/arm/mshv: Enable arm64 build & add initial MSHV support
->        target/arm/mshv: implement vcpu state operations for ARM64
->        target/arm/mshv: implement -cpu host for MSHV
->        accel/mshv: Add access_vp_regs synthetic proc features
->        target/arm: cpu: Mark MSHV supporting PSCI 1.3
-> 
-> Anirudh Rayabharam (Microsoft) (6):
->        accel/mshv: provision guests with the same features as host
->        accel/mshv: add arch-specific accelerator init hook
->        target/arm/mshv: add vCPU run loop
->        include/hw/hyperv: adjust hv_interrupt_control structure for arm64
->        hw/intc,target/arm/mshv: add MSHV vGICv3 implementation
->        MAINTAINERS: updates for MSHV arm64 code
-> 
-> Magnus Kulke (1):
->        accel/mshv: implement cpu_thread_is_idle() hook
-> 
->   MAINTAINERS                        |   8 +
->   accel/mshv/irq.c                   |   2 +
->   accel/mshv/meson.build             |   4 +-
->   accel/mshv/mshv-all.c              |  73 +++-
->   accel/mshv/mshv-cpu-common.c       | 151 +++++++++
->   hw/arm/virt.c                      |  11 +-
->   hw/intc/arm_gicv3_common.c         |   3 +
->   hw/intc/arm_gicv3_mshv.c           | 180 ++++++++++
->   hw/intc/meson.build                |   1 +
->   include/hw/hyperv/hvgdk_mini.h     | 130 ++++++++
->   include/hw/hyperv/hvhdk.h          |  97 +++++-
->   include/hw/hyperv/hvhdk_mini.h     |   6 +
->   include/hw/intc/arm_gicv3_common.h |   1 +
->   include/system/hw_accel.h          |   3 +-
->   include/system/mshv.h              |   2 +
->   include/system/mshv_int.h          |   5 +
->   meson.build                        |   7 +-
->   target/arm/cpu.c                   |   7 +-
->   target/arm/cpu64.c                 |  24 +-
->   target/arm/meson.build             |   1 +
->   target/arm/mshv/meson.build        |   7 +
->   target/arm/mshv/mshv-all.c         | 665 +++++++++++++++++++++++++++++++++++++
->   target/arm/mshv_arm.h              |  18 +
->   target/i386/mshv/meson.build       |   2 +
->   target/i386/mshv/mshv-all.c        |  85 +++++
->   target/i386/mshv/mshv-cpu.c        | 170 +---------
->   {accel => target/i386}/mshv/msr.c  |   0
->   27 files changed, 1465 insertions(+), 198 deletions(-)
-> ---
-> base-commit: 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455
-> change-id: 20260311-mshv_accel_arm64_supp-e86b0082aee4
-> 
-> Best regards,
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
-I have a question about MSHV itself.
+Only one optional comment:
 
-Is it possible to get access to it through a Windows install, or a 
-custom binary or disk image, or is it not redistributed and available 
-only through Azure instances?
+[...]
 
-Regards,
-Pierrick
+> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
+> index 8279504db1..61cd7db6cc 100644
+> --- a/tests/qtest/migration/migration-qmp.c
+> +++ b/tests/qtest/migration/migration-qmp.c
+> @@ -173,6 +173,12 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
+>      /* This function relies on the event to work, make sure it's enabled */
+>      migrate_set_capability(to, "events", true);
+>  
+> +    /*
+> +     * Set the incoming migration to never exit QEMU abruptly during
+> +     * the tests. It causes issues when running sanitizers and
+> +     * expecting a failure exit code can mask other issues.
+> +     */
+> +    qdict_put_bool(args, "exit-on-error", false);
+
+We could assert that the key isn't already there in case the caller thought
+it was still valid to set.. can be done when queue if you like that.
+
+>      rsp = qtest_qmp(to, "{ 'execute': 'migrate-incoming', 'arguments': %p}",
+>                      args);
+
+-- 
+Peter Xu
+
 
