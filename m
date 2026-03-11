@@ -4,47 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A46C112588E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:42:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 602871125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:42:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PNW-0004gc-J8; Wed, 11 Mar 2026 15:37:58 -0400
+	id 1w0PKp-0007R8-GS; Wed, 11 Mar 2026 15:35:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNV-0004dJ-0t; Wed, 11 Mar 2026 15:37:57 -0400
+ id 1w0PKj-0007PP-LV; Wed, 11 Mar 2026 15:35:05 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNT-0000V8-30; Wed, 11 Mar 2026 15:37:56 -0400
+ id 1w0PKg-0008IJ-TZ; Wed, 11 Mar 2026 15:35:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257668; bh=h/kUl/xQLmRb/S4svpv2ZTc8FHO1O9r77yc2rDjhLuM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=orJfXSEZCR2n77QfXbVGqi99JCUy/DX6t6pAe1XbTz/sRlEkqDJvPi4JPvi4Chge3
- 2NGkHm1pVNdcRrQJU5sxxL14zHDpTtbvFn2eNHNwidfIUNPXurUZls0VVYPAIQDGCu
- 31KSGDrY5CprqHsmef52IQsGKekkdWX3sqENSdEz8Z14WIRX9yeRTsEiGpdD5U+oXl
- DAr0tRstGcgxFb2JcdC9ZKQXLHPc7aG8Q9UqsDiot/52Rv7VrA/qU24vAQXNL3WL8a
- nT/xOdiZQNhFZaPfcLGaSXp+/o1F3oClgblWAEZKsaQ4aFwB6n2bb3/dF+GhbbeLni
- y3NfMstSOrSlQ==
+ t=1773257658; bh=M6Et7KRQ1ZqH96opItU6/tXihghVjS8lFFzrPJL18jY=;
+ h=From:To:Cc:Subject:Date;
+ b=ZEUtf51Sitbsf28imHSF03Rsx6D0KVdN8A/Gjd0Tf5hJVJWebbKmxSkjtudT5dW6Q
+ QTW5De2X/hd54FpvAsZ3v4GipIf5IRkvtDy0BDzde+0D1am04s0iCl1m6RMzvTqFUP
+ 9gxrg1sUIP3pjCZ1PrDhHfyIO4K/rdOYLo+WvsT8eNtpxPB26Kx0K67y4MpXLbvQ8A
+ GnWnj1TEofFpANz3pxdUlFAPzdgLN9RnxkmvjQsU0epjlxloEIWcy8NOTdtdGpOE/6
+ zIX/IM3Gw497IA0xu8IUKIp7gx4NvsgtXzsXOfhLhv8j93ApTWwwcJ5oal8XP9GSRo
+ aHvW7RSNrU9EA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D255F19210A;
- Wed, 11 Mar 2026 22:34:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 694531920E8;
+ Wed, 11 Mar 2026 22:34:18 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1CAD037C46F;
- Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 8BCF337C449;
+ Wed, 11 Mar 2026 22:34:56 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 34/53] hw/net/smc91c111: Don't allow negative-length
- packets
-Date: Wed, 11 Mar 2026 22:34:27 +0300
-Message-ID: <20260311193449.1096110-34-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+	Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 00/53] Patch Round-up for stable 10.2.2,
+ freeze on 2026-03-15
+Date: Wed, 11 Mar 2026 22:33:53 +0300
+Message-ID: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
-References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -72,78 +69,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+The following patches are queued for QEMU stable v10.2.2:
 
-The smc91c111 data frame format in memory (figure 8-1 in the
-datasheet) includes a "byte count" field which is intended to be the
-total size of the data frame, including not just the packet data but
-also the leading and trailing information like the status word and
-the byte count field itself.  It is therefore possible for the guest
-to set this to a value so small that the leading and trailing fields
-won't fit and the packet has effectively a negative area.
+  https://gitlab.com/qemu-project/qemu/-/commits/staging-10.2
 
-We weren't checking for this, with the result that when we subtract 6
-from the length to get the length of the packet proper we end up with
-a negative length, which is then inconsistently handled in the
-qemu_send_packet() code such that we can try to transmit a very large
-amount of data and read off the end of the device's data array.
+Patch freeze is 2026-03-15, and the release is planned for 2026-03-17:
 
-Treat excessively small length values the same way we do excessively
-large values.  As with the oversized case, the datasheet does not
-describe what happens for this software error case, and there is no
-relevant tx error condition for this, so we just log and drop the
-packet.
+  https://wiki.qemu.org/Planning/10.2
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3304
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-id: 20260226175549.1319476-1-peter.maydell@linaro.org
-(cherry picked from commit d8e19f8042dcaff8e077292209c8196acb150bdd)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+This review/release cycle is a bit shorter than usual, because
+of a few security fixes accumulated in there.
 
-diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
-index 5cd78e334b..f2c2e22dd0 100644
---- a/hw/net/smc91c111.c
-+++ b/hw/net/smc91c111.c
-@@ -30,6 +30,12 @@
-  * LAN91C111 datasheet).
-  */
- #define MAX_PACKET_SIZE 2048
-+/*
-+ * Size of the non-data fields in a data frame: status word,
-+ * byte count, control byte, and last data byte; this defines
-+ * the smallest value the byte count in the frame can validly be.
-+ */
-+#define MIN_PACKET_SIZE 6
- 
- #define TYPE_SMC91C111 "smc91c111"
- OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
-@@ -289,7 +295,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
-         *(p++) = 0x40;
-         len = *(p++);
-         len |= ((int)*(p++)) << 8;
--        if (len > MAX_PACKET_SIZE) {
-+        if (len < MIN_PACKET_SIZE || len > MAX_PACKET_SIZE) {
-             /*
-              * Datasheet doesn't say what to do here, and there is no
-              * relevant tx error condition listed. Log, and drop the packet.
-@@ -300,7 +306,13 @@ static void smc91c111_do_tx(smc91c111_state *s)
-             smc91c111_complete_tx_packet(s, packetnum);
-             continue;
-         }
--        len -= 6;
-+        /*
-+         * Convert from size of the data frame to number of bytes of
-+         * actual packet data. Whether the "last data byte" field is
-+         * included in the packet depends on the ODD bit in the control
-+         * byte at the end of the frame.
-+         */
-+        len -= MIN_PACKET_SIZE;
-         control = p[len + 1];
-         if (control & 0x20)
-             len++;
--- 
-2.47.3
+Please respond here or CC qemu-stable@nongnu.org on any additional patches
+you think should (or shouldn't) be included in the release.
 
+The changes which are staging for inclusion, with the original commit hash
+from master branch, are given below the bottom line.
+
+Thanks!
+
+/mjt
+
+--------------------------------------
+01 00ebc44514a6 Jaehoon Kim:
+   s390x/pci: Fix endianness for zPCI BAR values.
+02 b0353beebb0c Mohamed Mediouni:
+   plugins: fix cross-build using LLVM for Windows targets
+03 4a7b1bd18d2e Fiona Ebner:
+   block/mirror: check range when setting zero bitmap for sync write
+04 267d7ae99a1d Fiona Ebner:
+   iotests: test active mirror with unaligned, small write zeroes op
+05 e44a26ba9402 John Snow:
+   python: drop uses of pkg_resources
+06 90fabd5ddace Alex Bradbury:
+   contrib/plugins/hotblocks: Correctly free sorted counts list
+07 1c1e45fcd662 Alex Bradbury:
+   contrib/plugins/hotblocks: Fix off by one error in iteration of sorted 
+   blocks
+08 e777f6ab9140 Alex Bradbury:
+   contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than PRId64
+09 e4ed74c9aef6 Alex Bradbury:
+   docs/about/emulation: Add documentation for hotblocks plugin arguments
+10 c2c5beec42bf Jamin Lin:
+   hw/i2c/aspeed_i2c: Fix out-of-bounds read in I2C MMIO handlers
+11 42eab40a12f1 Peter Maydell:
+   target/arm: Account for SME in aarch64_sve_narrow_vq() assertion
+12 ee5bf0962ed6 Peter Maydell:
+   target/arm: Fix feature check in DO_SVE2_RRX, DO_SVE2_RRX_TB
+13 433097a22421 Peter Maydell:
+   target/arm/tcg: Allow SVE RAX1 in SME2p1 streaming mode
+14 aeb3c147fc4a Peter Maydell:
+   target/arm: Don't let 'sme=on' downgrade SME
+15 16786eb7bf86 Helge Deller:
+   hw/hppa: Add BMC on 64-bit machines only
+16 b2a279094c3b Akihiko Odaki:
+   virtio-gpu-virgl: Add virtio-gpu-virgl-hostmem-region type
+17 34238f078a04 Manos Pitsidianakis:
+   virtio-snd: remove TODO comments
+18 61679d7dcfa2 Manos Pitsidianakis:
+   virtio-snd: handle 5.14.6.2 for PCM_INFO properly
+19 bcb53328aa70 Manos Pitsidianakis:
+   virtio-snd: fix max_size bounds check in input cb
+20 7994203bb1b8 Manos Pitsidianakis:
+   virtio-snd: tighten read amount in in_cb
+21 8608ed356ef9 Kuan-Wei Chiu:
+   hw/misc/virt_ctrl: Fix incorrect trace event in read operation
+22 669683cf1414 Weixie Cui:
+   hw/ssi/xilinx_spips: Reset TX FIFO in reset
+23 662fd548a027 Alex Bennée:
+   target/arm: set the correct TI bits for WFIT traps
+24 c96f6d2398a9 Richie Buturla:
+   hw/9pfs: fix data race in v9fs_mark_fids_unreclaim()
+25 b72d15f47cbd Christian Schoenebeck:
+   hw/9pfs: fix missing EOPNOTSUPP on Twstat and Trenameat for fs synth 
+   driver
+26 48c8916aec43 Josh Poimboeuf:
+   hw/i386/vmmouse: Fix hypercall clobbers
+27 c86bca1671e9 Bernhard Beschow:
+   target/i386/emulate/x86_decode: Fix compiler warning
+28 529e5e764307 Bernhard Beschow:
+   target/i386/hvf/x86_mmu: Fix compiler warning
+29 1b93832f5592 Bernhard Beschow:
+   target/i386/emulate/x86_decode: Actually use stream in 
+   decode_instruction_stream()
+30 78c6b6010ce7 Peter Maydell:
+   target/ppc/translate: Fix TCG debug assert translating CLRBWIBC
+31 163cd0ae1182 Daniel P. Berrangé:
+   io: separate freeing of tasks from marking them as complete
+32 d39d0f3acdd7 Daniel P. Berrangé:
+   io: fix cleanup for TLS I/O source data on cancellation
+33 9545c059f77e Daniel P. Berrangé:
+   io: fix cleanup for websock I/O source data on cancellation
+34 d8e19f8042dc Peter Maydell:
+   hw/net/smc91c111: Don't allow negative-length packets
+35 cfda94eddb6c Halil Oktay (oblivionsage):
+   block/vmdk: fix OOB read in vmdk_read_extent()
+36 6f7b0a23a6ea Antoine Damhet:
+   block/curl: fix concurrent completion handling
+37 0f51f9c3420b Kevin Wolf:
+   mirror: Fix missed dirty bitmap writes during startup
+38 d4816177654d Dmitry Guryanov:
+   block/throttle-groups: fix deadlock with iolimits and muliple iothreads
+39 544ddbb6373d Kevin Wolf:
+   block: Never drop BLOCK_IO_ERROR with action=stop for rate limiting
+40 1d6610099bd7 Hanna Czenczek:
+   block/nfs: Do not enter coroutine from CB
+41 2ae361ef1d7d Jens Axboe:
+   aio-posix: notify main loop when SQEs are queued
+42 961fcc0f2276 Jens Axboe:
+   fdmon-io_uring: check CQ ring directly in gsource_check
+43 235f9b36383e Dmitry Osipenko:
+   virtio-gpu: Ensure BHs are invoked only from main-loop thread
+44 6595a8d5d17e Peter Maydell:
+   hw/net/xilinx_ethlite: Check for oversized TX packets
+45 f2813e13fe91 Bingwu Zhang:
+   linux-user: Deal with mmap where start > reserved_va
+46 e8e7d1f97785 Bingwu Zhang:
+   bsd-user: Deal with mmap where start > reserved_va
+47 c865b6bce5d0 Bingwu Zhang:
+   tests/tcg/multiarch/test-mmap: Check mmaps beyond reserved_va
+48 6a1221614fd9 Andreas Schwab:
+   linux-user: fix TIOCGSID ioctl
+49 550391c7134d Peter Maydell:
+   hw/net/npcm_gmac: Catch accesses off the end of the register array
+50 1e3e1d51e20e Peter Maydell:
+   hw: Make qdev_get_printable_name() consistently return freeable string
+51 db2325f79481 rail5:
+   target/loongarch: Avoid recursive PNX exception on CSR_BADI fetch
+52 2d877bc02a3b rail5:
+   target/loongarch: Preserve PTE permission bits in LDPTE
+53 a3fcbca0ef64 Hanna Czenczek:
+   fuse: Copy write buffer content before polling
 
