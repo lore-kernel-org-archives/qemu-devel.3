@@ -4,60 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC541049519
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 09:38:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 450F3104951B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 09:39:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0G0l-000819-TM; Wed, 11 Mar 2026 05:37:51 -0400
+	id 1w0G1u-0000NP-FR; Wed, 11 Mar 2026 05:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w0G0k-00080j-0t
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:37:50 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0G1s-0000N0-6d
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:39:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w0G0i-0003uz-Bs
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:37:49 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0G1q-00042G-J2
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:38:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773221867;
+ s=mimecast20190719; t=1773221936;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8qY5XsbXfFt4NDbyyFrGJdf9fR+dRuA9pRUeESP17fs=;
- b=Lnf1leJoItX2sG1I9RMhVpVyEEwEC4tyNzT5mihgnej6cdHa8LRRqxSDUXyik76UvuHYAO
- P0pvLFdGPPwfB6yP0ZrIoaIzxEWpGk4vqin8/SRqyxI7ncyIpnh41fi4mmPy2y3Nt9vOl3
- XKjql/V5DdknurxlmO1oaW5Fj7mZc7o=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=GPENB8X/GGkKQtJ22NqgJPvhCO6a4eylY2lA9lTt7Ss=;
+ b=TWSspABVI+d6mBbY61S+zDySuVlwkGfDfebOGeyPSb7Wllm8ommpG5b2TztOmMc6Q31j2O
+ i5z7CafwlkIGNJKM47zhSq+hYlrK/u5Eezr/anjZTyEqcTiQ57U+043XEupXJAMp79wUYJ
+ og8SN9iDtfZDMEknHDYJlAfRx14Any0=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-Q5HLUx6wPUGmM3GTqntE2A-1; Wed,
- 11 Mar 2026 05:37:43 -0400
-X-MC-Unique: Q5HLUx6wPUGmM3GTqntE2A-1
-X-Mimecast-MFC-AGG-ID: Q5HLUx6wPUGmM3GTqntE2A_1773221862
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-611-J-UK2zjWNdO_7Ak6hbKVkA-1; Wed,
+ 11 Mar 2026 05:38:52 -0400
+X-MC-Unique: J-UK2zjWNdO_7Ak6hbKVkA-1
+X-Mimecast-MFC-AGG-ID: J-UK2zjWNdO_7Ak6hbKVkA_1773221931
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5FF971956095; Wed, 11 Mar 2026 09:37:42 +0000 (UTC)
-Received: from redhat.com (stefkas-mbp.str.redhat.com [10.33.192.245])
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79FCA18005BE; Wed, 11 Mar 2026 09:38:50 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 90D17180075F; Wed, 11 Mar 2026 09:37:40 +0000 (UTC)
-Date: Wed, 11 Mar 2026 10:37:38 +0100
-From: Kevin Wolf <kwolf@redhat.com>
-To: Jorge Merlino <jorge.merlino@canonical.com>
-Cc: qemu-devel@nongnu.org, Alberto Garcia <berto@igalia.com>,
- Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
-Subject: Re: [PATCH] throttle-group: fix race condition when using iothreads
-Message-ID: <abE34qeQY36q2PkY@redhat.com>
-References: <20260310-fix-race-condition-b4-v1-1-09b9b9262a58@canonical.com>
+ id 3380418001FE; Wed, 11 Mar 2026 09:38:49 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D079021E681E; Wed, 11 Mar 2026 10:38:46 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: jasowang@redhat.com,  mst@redhat.com,  thuth@redhat.com,
+ eblake@redhat.com,  farosas@suse.de,  peterx@redhat.com,
+ zhao1.liu@intel.com,  wangyanan55@huawei.com,  philmd@linaro.org,
+ marcel.apfelbaum@gmail.com,  eduardo@habkost.net,
+ davydov-max@yandex-team.ru,  qemu-devel@nongnu.org,
+ yc-core@yandex-team.ru,  leiyang@redhat.com,
+ raphael.s.norwitz@gmail.com,  bchaney@akamai.com
+Subject: Re: [PATCH v12 6/8] net/tap: support local migration with virtio-net
+In-Reply-To: <3408f5b9-d0b8-4005-853c-119b2b429829@yandex-team.ru> (Vladimir
+ Sementsov-Ogievskiy's message of "Tue, 10 Mar 2026 18:42:53 +0300")
+References: <20260306213235.216863-1-vsementsov@yandex-team.ru>
+ <20260306213235.216863-7-vsementsov@yandex-team.ru>
+ <87jyvjiypw.fsf@pond.sub.org>
+ <3408f5b9-d0b8-4005-853c-119b2b429829@yandex-team.ru>
+Date: Wed, 11 Mar 2026 10:38:46 +0100
+Message-ID: <87bjgueme1.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260310-fix-race-condition-b4-v1-1-09b9b9262a58@canonical.com>
+Content-Type: text/plain
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -82,53 +93,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 11.03.2026 um 00:08 hat Jorge Merlino geschrieben:
-> There is a race condition on the value of throttle_timers on the
-> ThrottleGroupMember structure. Those timers should be protected by the
-> ThrottleGroup lock but sometimes are read without the lock and the code
-> expects their value to remain constant.
-> 
-> In particular, there is an assertion that can be false as the timers can
-> change between their value is checked and the assertion is run.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3194
-> 
-> Signed-off-by: Jorge Merlino <jorge.merlino@canonical.com>
+Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
 
-For context, there was another attempt a while ago to fix this race:
+> On 10.03.26 16:46, Markus Armbruster wrote:
+>> Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru> writes:
+>> 
+>>> Support transferring of TAP state (including open fd) through
+>>> migration stream as part of viritio-net "local-migration".
+>>>
+>>> Add new option, incoming-fds, which should be set to true to
+>>> trigger new logic.
+>>>
+>>> For new option require explicitly unset script and downscript,
+>>> to keep possibility of implementing support for them in future.
+>>>
+>>> Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+>> [...]
+>> 
+>>> diff --git a/qapi/net.json b/qapi/net.json
+>>> index 118bd349651..79f5ce9f431 100644
+>>> --- a/qapi/net.json
+>>> +++ b/qapi/net.json
+>>> @@ -355,6 +355,9 @@
+>>>   # @poll-us: maximum number of microseconds that could be spent on busy
+>>>   #     polling for tap (since 2.7)
+>>>   #
+>>> +# @incoming-fds: do not open/connnect any resources, instead wait for
+>>> +#     TAP state from incoming migration stream.  (Since 11.0)
+>> "resources"?  The name @incoming-fds suggests this is about file
+>> descriptors...
+>
+> Hmm. But, I can't say "open any file descriptors"..
+>
+>
+>> "wait for TAP state from" does not make sense.  Do you mean "retrieve
+>> TAP state from"?
+>
+> Retrieve means actively do something, but I mean, that FDs will come in
+> future from incoming migration stream, and we just wait for it and "do nothing"
+> at the moment of net-tap initialization.
+>
+>
+> Let me try to reword:
+>
+> Do not open or create any TAP devices. Prepare for getting opened
+> TAP file descriptors from incoming migration stream.
 
-https://patchew.org/QEMU/20251117011045.1232-1-luzhipeng@cestc.cn/
+Better, thanks!
 
-Unfortunately, neither the author nor Berto follow up on my response, so
-it went nowhere.
+>> Is any part of NetdevTapOptions ignored when @incoming-fds is true?
+>
+> Hmm yes. sndbuf, vnet_hdr and ifname. I should add this information here.
 
-As you can see, my conclusion then was, too, that the locking needs to
-be extended. So in that respect, I agree with your patch.
+I dislike ignoring the user's instructions silently.  Can we make it an
+error?
 
-I'm not completely clear on how much code needs to be covered by the
-lock. Is it okay for throttle_group_restart_queue_entry() to run only
-after the timer has been rescheduled?
-
-Also relevant context: Commit 25b8e4d, which introduced the assertion
-and stated that the situation shouldn't happen.
-
-> This patch fixes a race condition on an assertion on the value of the
-> ThrottleGroupMember throttle_timers.
-> 
-> The patch is minimal as it changes only a few lines. It will probably
-> have to be refactored, maybe removing part of the code of the
-> throttle_group_restart_queue procedure and duplicating it before the
-> call. As it is now, this procedure needs to be called with the
-> ThrottleGroup lock held as it will unlock it during its execution.
-> 
-> I left it as is now so that the changes are clear for review. As I'm
-> messing with locks and I'm not an expert on this codebase I'm not sure
-> if there could be side effects I'm not aware of. 
-
-Yes, there are clearly things to be improved so that lock/unlock happen
-in the same function, but let's first figure out what actually needs to
-be done before we worry about the refactoring.
-
-Kevin
+[...]
 
 
