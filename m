@@ -4,79 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 79F4D1049518
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 09:37:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC541049519
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 09:38:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0G0T-0007w4-TB; Wed, 11 Mar 2026 05:37:33 -0400
+	id 1w0G0l-000819-TM; Wed, 11 Mar 2026 05:37:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0G0R-0007vt-Ox
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:37:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w0G0k-00080j-0t
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:37:50 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0G0P-0003nk-Oz
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:37:31 -0400
+ (Exim 4.90_1) (envelope-from <kwolf@redhat.com>) id 1w0G0i-0003uz-Bs
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:37:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773221848;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=CNCgAgvx7L+11trlcSRCksesQFBnhlEPWI7FbiAE5eA=;
- b=CJFN3EP9ljD1x6pUnkSJ8CUo+uCBRGVNviVX22BT7sJCCv0Xehcjp7/AnTEJ94YzRG6dx3
- K9LBaDCOebn+fTvVuraLNoxY1/L2fB7JdXGW+eIUdVa3gs0hBlEyV9ztAjCPrhqtCQSLxj
- IorPK6+Tn3SPDpstWZYfE8wrVR3YoUQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ s=mimecast20190719; t=1773221867;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=8qY5XsbXfFt4NDbyyFrGJdf9fR+dRuA9pRUeESP17fs=;
+ b=Lnf1leJoItX2sG1I9RMhVpVyEEwEC4tyNzT5mihgnej6cdHa8LRRqxSDUXyik76UvuHYAO
+ P0pvLFdGPPwfB6yP0ZrIoaIzxEWpGk4vqin8/SRqyxI7ncyIpnh41fi4mmPy2y3Nt9vOl3
+ XKjql/V5DdknurxlmO1oaW5Fj7mZc7o=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-642-YDC-2faSNzGZGs0mf9355w-1; Wed,
- 11 Mar 2026 05:37:25 -0400
-X-MC-Unique: YDC-2faSNzGZGs0mf9355w-1
-X-Mimecast-MFC-AGG-ID: YDC-2faSNzGZGs0mf9355w_1773221844
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-137-Q5HLUx6wPUGmM3GTqntE2A-1; Wed,
+ 11 Mar 2026 05:37:43 -0400
+X-MC-Unique: Q5HLUx6wPUGmM3GTqntE2A-1
+X-Mimecast-MFC-AGG-ID: Q5HLUx6wPUGmM3GTqntE2A_1773221862
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3AE42180044D; Wed, 11 Mar 2026 09:37:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.160])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6896D19560A6; Wed, 11 Mar 2026 09:37:20 +0000 (UTC)
-Date: Wed, 11 Mar 2026 09:37:17 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: nia <nia@netbsd.org>
-Cc: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Fabiano Rosas <farosas@suse.de>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: Minimal GCC version for QEMU
-Message-ID: <abE3zeSaN7uE6tjB@redhat.com>
-References: <20260309155219.62400-1-philmd@linaro.org>
- <20260309155219.62400-28-philmd@linaro.org>
- <87h5qn23v5.fsf@suse.de>
- <CAFEAcA-vsS0Q9kGVbmwEyLQcoANaHg5S754DNvqXOOnqoY-LMg@mail.gmail.com>
- <eb7c065a-ff9f-41d9-a80f-51123af20603@redhat.com>
- <abA5BBSQ0cHstmqM@redhat.com>
- <6660d0a8-c5f8-4f4c-a097-9aa1fb1501b6@redhat.com>
- <abCj2IxC44wlkmqo@homeworld.netbsd.org>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 5FF971956095; Wed, 11 Mar 2026 09:37:42 +0000 (UTC)
+Received: from redhat.com (stefkas-mbp.str.redhat.com [10.33.192.245])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 90D17180075F; Wed, 11 Mar 2026 09:37:40 +0000 (UTC)
+Date: Wed, 11 Mar 2026 10:37:38 +0100
+From: Kevin Wolf <kwolf@redhat.com>
+To: Jorge Merlino <jorge.merlino@canonical.com>
+Cc: qemu-devel@nongnu.org, Alberto Garcia <berto@igalia.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org
+Subject: Re: [PATCH] throttle-group: fix race condition when using iothreads
+Message-ID: <abE34qeQY36q2PkY@redhat.com>
+References: <20260310-fix-race-condition-b4-v1-1-09b9b9262a58@canonical.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <abCj2IxC44wlkmqo@homeworld.netbsd.org>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20260310-fix-race-condition-b4-v1-1-09b9b9262a58@canonical.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=kwolf@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -91,38 +79,56 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 10, 2026 at 11:06:00PM +0000, nia wrote:
-> On Tue, Mar 10, 2026 at 04:47:30PM +0100, Thomas Huth wrote:
-> > According to that URL from NetBSD that I posted above, they are still using
-> > LLVM 10.0 in NetBSD 10 ... which is also our current minimum version of
-> > Clang, so I assume we're still stuck with Clang v10 for a while?
+Am 11.03.2026 um 00:08 hat Jorge Merlino geschrieben:
+> There is a race condition on the value of throttle_timers on the
+> ThrottleGroupMember structure. Those timers should be protected by the
+> ThrottleGroup lock but sometimes are read without the lock and the code
+> expects their value to remain constant.
 > 
-> Since I was CCed in this discussion - can I ask why qemu is targeting
-> compiler versions instead of C standard revisions?
+> In particular, there is an assertion that can be false as the timers can
+> change between their value is checked and the assertion is run.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3194
+> 
+> Signed-off-by: Jorge Merlino <jorge.merlino@canonical.com>
 
-QEMU has a general policies for 3rd dependencies that we will target
-a certain subset of OS distro releases as supportable build platforms.
+For context, there was another attempt a while ago to fix this race:
 
-Essentially this means the most recent major release, and the previous
-major release for upto 2 years overlap, or until vendor EOLs (whichever
-comes first). This is documented here:
+https://patchew.org/QEMU/20251117011045.1232-1-luzhipeng@cestc.cn/
 
-  https://www.qemu.org/docs/master/about/build-platforms.html
+Unfortunately, neither the author nor Berto follow up on my response, so
+it went nowhere.
 
-The setting of min compiler versions falls out of this policy, in the
-same way we set min versions of libraries.  These min versions then
-let us decide what features we can assume to always exist - a desired
-GNU C standard version would be inferred from the compiler min version.
+As you can see, my conclusion then was, too, that the locking needs to
+be extended. So in that respect, I agree with your patch.
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+I'm not completely clear on how much code needs to be covered by the
+lock. Is it okay for throttle_group_restart_queue_entry() to run only
+after the timer has been rescheduled?
+
+Also relevant context: Commit 25b8e4d, which introduced the assertion
+and stated that the situation shouldn't happen.
+
+> This patch fixes a race condition on an assertion on the value of the
+> ThrottleGroupMember throttle_timers.
+> 
+> The patch is minimal as it changes only a few lines. It will probably
+> have to be refactored, maybe removing part of the code of the
+> throttle_group_restart_queue procedure and duplicating it before the
+> call. As it is now, this procedure needs to be called with the
+> ThrottleGroup lock held as it will unlock it during its execution.
+> 
+> I left it as is now so that the changes are clear for review. As I'm
+> messing with locks and I'm not an expert on this codebase I'm not sure
+> if there could be side effects I'm not aware of. 
+
+Yes, there are clearly things to be improved so that lock/unlock happen
+in the same function, but let's first figure out what actually needs to
+be done before we worry about the refactoring.
+
+Kevin
 
 
