@@ -4,64 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE15A104951A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:02:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABFFA104BEC7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:06:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0GOK-0005u3-RI; Wed, 11 Mar 2026 06:02:12 -0400
+	id 1w0GRX-0006oj-5O; Wed, 11 Mar 2026 06:05:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luzhipeng@cestc.cn>)
- id 1w0GOB-0005tb-Ci
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:02:05 -0400
-Received: from smtp-pop-umt-2.cecloud.com ([1.203.97.240]
- helo=smtp.cecloud.com) by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <luzhipeng@cestc.cn>) id 1w0GO1-0001dO-CZ
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:01:59 -0400
-Received: from localhost (localhost [127.0.0.1])
- by smtp.cecloud.com (Postfix) with ESMTP id 39BF1900113;
- Wed, 11 Mar 2026 18:01:40 +0800 (CST)
-X-MAIL-GRAY: 0
-X-MAIL-DELIVERY: 1
-X-ADDR-CHECKED2: 1
-X-ANTISPAM-LEVEL: 2
-X-ABS-CHECKED: 1
-Received: from localhost.localdomain
- (131.25.209.222.broad.cd.sc.dynamic.163data.com.cn [222.209.25.131])
- by smtp.cecloud.com (postfix) whith ESMTP id
- P123638T281464759185776S1773223295647935_; 
- Wed, 11 Mar 2026 18:01:38 +0800 (CST)
-X-RL-SENDER: luzhipeng@cestc.cn
-X-SENDER: luzhipeng@cestc.cn
-X-LOGIN-NAME: luzhipeng@cestc.cn
-X-FST-TO: qemu-devel@nongnu.org
-X-RCPT-COUNT: 6
-X-LOCAL-RCPT-COUNT: 1
-X-MUTI-DOMAIN-COUNT: 0
-X-SENDER-IP: 222.209.25.131
-X-ATTACHMENT-NUM: 0
-X-UNIQUE-TAG: <3ee74330ccb3472224cd4e60e00f8ac7>
-X-System-Flag: 0
-From: luzhipeng <luzhipeng@cestc.cn>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- luzhipeng <luzhipeng@cestc.cn>
-Subject: [PATCH] qmp: Add ram-block-set/get-migratable commands
-Date: Wed, 11 Mar 2026 18:01:16 +0800
-Message-ID: <20260311100116.984-1-luzhipeng@cestc.cn>
-X-Mailer: git-send-email 2.45.1.windows.1
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w0GRU-0006oF-HH
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:05:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w0GRL-00039Z-Gd
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:05:23 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773223516;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=+O7yP0c5if+5PqoB91UNIvj3xa8Qgoo8xcZeCPbQEG8=;
+ b=dEd1GS8Yje/uDWrZCkMfNJOmXR/IZq76y1MGe00Q2Di0ij5ZQoHCVHP1Y82KPmTLAcq7a4
+ b9BsCUWpONCOfEibxsTy4Usd8pCxkvnN/uZw6COLHDTuH79S4IjtKoBj0dn2kBI3QvDRBf
+ p0v1tz32xI1mGMcVdJ/qpSsIgeDK3aQ=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-444-BqWio9HlOtiBCnJuBhTOnQ-1; Wed, 11 Mar 2026 06:05:15 -0400
+X-MC-Unique: BqWio9HlOtiBCnJuBhTOnQ-1
+X-Mimecast-MFC-AGG-ID: BqWio9HlOtiBCnJuBhTOnQ_1773223514
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48535f4d5e1so31241965e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 03:05:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773223514; x=1773828314;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=+O7yP0c5if+5PqoB91UNIvj3xa8Qgoo8xcZeCPbQEG8=;
+ b=Xgn3Cl2j0XltIpmxgUtrt3C+eIefgZIJ9YrpUX468DSctdE1OMa2P7ZTlEPu4tfKJ3
+ F+opNxERzZ0eQcyuU2VO7NQqX5fFPPyrYVps0BUqli2d4SC4N119Pn22KeaExusGe8GY
+ 5ukPb/wObUyawDY1TvBPk/ZB8cYqNLDDBTgCD5QSJOXVab5gbWgXbxfpkq6tbkx1R5EP
+ MavwlUuPkFsE9j2+7qELQgoVuwpoYRhLfZSlqqFuCoMAt7dh5BauyVpaRHKpMjqpmNkg
+ k7G6fGLeQcMi05HK9AxKhLHQM8VN7aNWyHEqLgpwXFj8AK3c+4IVzHRw8SisIs9t6jBC
+ X/0Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXKAzCpsO94GhYul5hTRqIihdcuribWOmokbYsa5T9IEVyXnE2tcJGnZ2fzoLXJ7tmUdRSIOvi06zL3@nongnu.org
+X-Gm-Message-State: AOJu0Yx6dfRgqXu/MnvLg/FHIYF6mL3TpiDPYd2kSvrFOcgQkxW+6x30
+ 2Sd8h15yK7Bh+GZBiLvSr0Sw+DI0A1O7FSvorzesEJu92vi9UKKYCAiDOLTD0ds3/aYEzM41IB+
+ 1c8iIgdxYqNdDvab4ozCmQuYrnK4NwmuL+7QQk3JG2uAuKQvcDgpQnf9d6ZlZO2KN
+X-Gm-Gg: ATEYQzyeUDv9N+BTryWqFSN8RSZeZ7PDC8ZwsaB/UB1n/W8KPf92y3JvE17r3Yq/AlD
+ q32ruKQPwSgJnYB9ax2oD5XrHRJSoK9HlcYZ2aaGGrXeFVr778YJ0mCOr7XMQ8ICjeBOI1W/Tg/
+ zHvufPDB3jLTQt+GdoAArHaORRpO4kACsvVFBy55HpNm9OQ3kTbmrb+ah0Yfi6VxXVoDlL03bLH
+ EX/7rCFG30kt2FxdbdL8oc7eKDzwo05jshlZqQZa0WhGqrZUayuxaAoE96xlbjMZ9xo2xgO8zs5
+ Y3IzNOE/JXNqkcb7lU2093qgvMLTXERsN8yvMO6O9eynUr9j+8vYU9iFhUPs/ETDoHBwKP7qijN
+ mcs4Jm+wCkx5pYxR8lGNRgUXNziJVHXIDlPfAaTkVUId6ASNC+MUF6qmYM7nyXJicp90v0g==
+X-Received: by 2002:a05:600c:a08:b0:485:2c61:9459 with SMTP id
+ 5b1f17b1804b1-4854b0afb48mr32436125e9.8.1773223513869; 
+ Wed, 11 Mar 2026 03:05:13 -0700 (PDT)
+X-Received: by 2002:a05:600c:a08:b0:485:2c61:9459 with SMTP id
+ 5b1f17b1804b1-4854b0afb48mr32435355e9.8.1773223513288; 
+ Wed, 11 Mar 2026 03:05:13 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541b6f6b7sm182597315e9.9.2026.03.11.03.05.11
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 03:05:12 -0700 (PDT)
+Message-ID: <8ee0ec15-bf22-473e-85f4-96426a9e763d@redhat.com>
+Date: Wed, 11 Mar 2026 11:05:10 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF Page0 for CMDQV
+Content-Language: en-US
+To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>,
+ "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "peter.maydell@linaro.org" <peter.maydell@linaro.org>,
+ "clg@redhat.com" <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>,
+ Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>,
+ Matt Ochs <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>,
+ Jason Gunthorpe <jgg@nvidia.com>,
+ "jonathan.cameron@huawei.com" <jonathan.cameron@huawei.com>,
+ "zhangfei.gao@linaro.org" <zhangfei.gao@linaro.org>,
+ "zhenzhong.duan@intel.com" <zhenzhong.duan@intel.com>,
+ Krishnakant Jaju <kjaju@nvidia.com>, "phrdina@redhat.com"
+ <phrdina@redhat.com>
+References: <20260226105056.897-1-skolothumtho@nvidia.com>
+ <20260226105056.897-18-skolothumtho@nvidia.com>
+ <22acfd93-72cd-49ca-b2f6-a080bf66104c@redhat.com>
+ <CH3PR12MB754885F68C4F08CC39732EB2AB47A@CH3PR12MB7548.namprd12.prod.outlook.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <CH3PR12MB754885F68C4F08CC39732EB2AB47A@CH3PR12MB7548.namprd12.prod.outlook.com>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=1.203.97.240; envelope-from=luzhipeng@cestc.cn;
- helo=smtp.cecloud.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -74,128 +125,211 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce two new QMP commands to manage RAMBlock migratable state:
-1. ram-block-set-migratable: Dynamically set a RAMBlock's migratable state
-2. ram-block-get-migratable: Query a RAMBlock's migratable state
-
-Signed-off-by: luzhipeng <luzhipeng@cestc.cn>
----
- migration/ram.c     | 48 +++++++++++++++++++++++++++++++++++++++++++++
- qapi/migration.json | 39 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 87 insertions(+)
-
-diff --git a/migration/ram.c b/migration/ram.c
-index 979751f61b..8b4fd8226d 100644
---- a/migration/ram.c
-+++ b/migration/ram.c
-@@ -234,6 +234,54 @@ bool migrate_ram_is_ignored(RAMBlock *block)
-                                     && qemu_ram_is_named_file(block));
- }
- 
-+void qmp_ram_block_set_migratable(const char *name,
-+                                  bool migratable, Error **errp)
-+{
-+    RAMBlock *rb = qemu_ram_block_by_name(name);
-+    if (!rb) {
-+        error_setg(errp, "RAMBlock '%s' not found", name);
-+        return;
-+    }
-+
-+    if (migration_is_running()) {
-+        error_setg(errp, "Cannot modify RAMBlock migratable state
-+                   during migration");
-+        return;
-+    }
-+
-+    if (migratable) {
-+        qemu_ram_set_migratable(rb);
-+        info_report("RAMBlock '%s' marked as migratable", name);
-+    } else {
-+        qemu_ram_unset_migratable(rb);
-+        info_report("RAMBlock '%s' marked as non-migratable", name);
-+    }
-+}
-+
-+/**
-+ * qmp_ram_block_get_migratable:
-+ * @name: Name of RAMBlock to query
-+ * @errp: Error object
-+ *
-+ * Return: RamBlockMigratableInfo
-+ */
-+RamBlockMigratableInfo *qmp_ram_block_get_migratable(const char *name,
-+                                                     Error **errp)
-+{
-+    RAMBlock *rb;
-+    RamBlockMigratableInfo *info = g_new0(RamBlockMigratableInfo, 1);
-+    rb = qemu_ram_block_by_name(name);
-+    if (!rb) {
-+        g_free(info);
-+        error_setg(errp, "RAMBlock '%s' not found", name);
-+        return NULL;
-+    }
-+    info->migratable = qemu_ram_is_migratable(rb);
-+    info_report("RAMBlock '%s' migratable state: %s", name,
-+                 info->migratable ? "true" : "false");
-+    return info;
-+}
-+
- #undef RAMBLOCK_FOREACH
- 
- int foreach_not_ignored_block(RAMBlockIterFunc func, void *opaque)
-diff --git a/qapi/migration.json b/qapi/migration.json
-index 7134d4ce47..483116db49 100644
---- a/qapi/migration.json
-+++ b/qapi/migration.json
-@@ -2233,3 +2233,42 @@
-   'data': { 'job-id': 'str',
-             'tag': 'str',
-             'devices': ['str'] } }
-+
-+##
-+# @ram-block-set-migratable:
-+#
-+# Set the migratable state of a specific RAMBlock.
-+#
-+# @name: Name of the RAMBlock to modify
-+# @migratable: true to enable migration for the RAMBlock,
-+# false to disable
-+#
-+# Since: 11.1
-+##
-+{ 'command': 'ram-block-set-migratable',
-+  'data': { 'name': 'str', 'migratable': 'bool' } }
-+
-+##
-+# @RamBlockMigratableInfo:
-+#
-+# Information about a RAMBlock's migratable state
-+#
-+# @migratable: true if the RAMBlock is migratable, false otherwise
-+#
-+# Since: 11.1
-+##
-+{ 'struct': 'RamBlockMigratableInfo', 'data': { 'migratable': 'bool' } }
-+
-+##
-+# @ram-block-get-migratable:
-+#
-+# Get the migratable state of a specific RAMBlock.
-+#
-+# @name: Name of the RAMBlock to query
-+#
-+# Returns: RamBlockMigratableInfo containing the migratable state
-+#
-+# Since: 11.1
-+##
-+{ 'command': 'ram-block-get-migratable', 'data': { 'name': 'str' },
-+                                         'returns': 'RamBlockMigratableInfo' }
--- 
-2.31.1
 
 
+On 3/11/26 10:26 AM, Shameer Kolothum Thodi wrote:
+>
+>> -----Original Message-----
+>> From: Eric Auger <eric.auger@redhat.com>
+>> Sent: 11 March 2026 07:55
+>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+>> arm@nongnu.org; qemu-devel@nongnu.org
+>> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nicolin
+>> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt
+>> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+>> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+>> <kjaju@nvidia.com>; phrdina@redhat.com
+>> Subject: Re: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF Page0
+>> for CMDQV
+>>
+>> External email: Use caution opening links or attachments
+>>
+>>
+>> On 2/26/26 11:50 AM, Shameer Kolothum wrote:
+>>> From: Nicolin Chen <nicolinc@nvidia.com>
+>>>
+>>> Global VCMDQ pages provide a VM wide view of all VCMDQs, while the
+>>> VINTF pages expose a logical view local to a given VINTF. Although real
+>>> hardware may support multiple VINTFs, the kernel currently exposes a
+>>> single VINTF per VM.
+>>>
+>>> The kernel provides an mmap offset for the VINTF Page0 region during
+>>> vIOMMU allocation. However, the logical-to-physical association between
+>>> VCMDQs and a VINTF is only established after HW_QUEUE allocation. Prior
+>>> to that, the mapped Page0 does not back any real VCMDQ state.
+>>>
+>>> When VINTF is enabled, mmap the kernel provided Page0 region and
+>>> unmap it when VINTF is disabled. This prepares the VINTF mapping
+>>> in advance of subsequent patches that add VCMDQ allocation support.
+>> So at some point we transition from something that is purely emulated
+>> (page 1 global cmdq) to something that is mmapped on a host page. How do
+>> we transfer the state of the cmdq from one to the other?
+> Right. If a guest uses both the "Global VCMDQ registers Page0" and the
+> "VINTF0 Logical VCMDQ registers Page0" interchangeably (and I see
+> nothing in the spec that forbids this), then we need to keep the two
+> views in sync.
+
+Also assuming the global VCMDQs are accessible and thus used, I guess we
+shall properly handle the actual commands (equivalent of
+smmuv3_cmdq_consume()), no? 
+I don't see it done at the moment.
+
+By the way, do we want support of VCMDQs in fully emulated mode. I guess
+it would be sensible?
+
+Thanks
+
+Eric
+>
+> So when the mapping between a global VCMDQ and a logical VCMDQ is
+> created through the HW_QUEUE ioctl, we should sync the state between
+> the Global VCMDQ Page0 and the VINTF0 Logical VCMDQ Page0.
+>
+> I will double check this.
+>
+> Thanks,
+> Shameer
+>
+>> Thanks
+>>
+>> Eric
+>>> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
+>>> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
+>>> ---
+>>>  hw/arm/tegra241-cmdqv.h |  3 +++
+>>>  hw/arm/tegra241-cmdqv.c | 44
+>> +++++++++++++++++++++++++++++++++++++++--
+>>>  2 files changed, 45 insertions(+), 2 deletions(-)
+>>>
+>>> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
+>>> index d379b8860c..3ce9f539ae 100644
+>>> --- a/hw/arm/tegra241-cmdqv.h
+>>> +++ b/hw/arm/tegra241-cmdqv.h
+>>> @@ -18,6 +18,8 @@
+>>>  #define TEGRA241_CMDQV_MAX_CMDQ            (1U <<
+>> TEGRA241_CMDQV_NUM_CMDQ_LOG2)
+>>>  #define TEGRA241_CMDQV_NUM_SID_PER_VM_LOG2 4
+>>>
+>>> +#define VINTF_PAGE_SIZE 0x10000
+>>> +
+>>>  /*
+>>>   * Tegra241 CMDQV MMIO layout (64KB pages)
+>>>   *
+>>> @@ -34,6 +36,7 @@ typedef struct Tegra241CMDQV {
+>>>      SMMUv3AccelState *s_accel;
+>>>      MemoryRegion mmio_cmdqv;
+>>>      qemu_irq irq;
+>>> +    void *vintf_page0;
+>>>
+>>>      /* Register Cache */
+>>>      uint32_t config;
+>>> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
+>>> index e1f1562c44..a3767a85a3 100644
+>>> --- a/hw/arm/tegra241-cmdqv.c
+>>> +++ b/hw/arm/tegra241-cmdqv.c
+>>> @@ -151,6 +151,39 @@ static uint64_t tegra241_cmdqv_read(void
+>> *opaque, hwaddr offset, unsigned size)
+>>>      }
+>>>  }
+>>>
+>>> +static bool
+>>> +tegra241_cmdqv_munmap_vintf_page0(Tegra241CMDQV *cmdqv, Error
+>> **errp)
+>>> +{
+>>> +    if (!cmdqv->vintf_page0) {
+>>> +        return true;
+>>> +    }
+>>> +
+>>> +    if (munmap(cmdqv->vintf_page0, VINTF_PAGE_SIZE) < 0) {
+>>> +        error_setg_errno(errp, errno, "Failed to unmap VINTF page0");
+>>> +        return false;
+>>> +    }
+>>> +    cmdqv->vintf_page0 = NULL;
+>>> +    return true;
+>>> +}
+>>> +
+>>> +static bool tegra241_cmdqv_mmap_vintf_page0(Tegra241CMDQV
+>> *cmdqv, Error **errp)
+>>> +{
+>>> +    IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
+>>> +
+>>> +    if (cmdqv->vintf_page0) {
+>>> +        return true;
+>>> +    }
+>>> +
+>>> +    if (!iommufd_backend_viommu_mmap(viommu->iommufd, viommu-
+>>> viommu_id,
+>>> +                                     VINTF_PAGE_SIZE,
+>>> +                                     cmdqv->cmdqv_data.out_vintf_mmap_offset,
+>>> +                                     &cmdqv->vintf_page0, errp)) {
+>>> +        return false;
+>>> +    }
+>>> +
+>>> +    return true;
+>>> +}
+>>> +
+>>>  /*
+>>>   * Write a VCMDQ register using VCMDQ0_* offsets.
+>>>   *
+>>> @@ -216,7 +249,7 @@ tegra241_cmdqv_write_vcmdq(Tegra241CMDQV
+>> *cmdqv, hwaddr offset0, int index,
+>>>  }
+>>>
+>>>  static void tegra241_cmdqv_write_vintf(Tegra241CMDQV *cmdqv, hwaddr
+>> offset,
+>>> -                                       uint64_t value)
+>>> +                                       uint64_t value, Error **errp)
+>>>  {
+>>>      int i;
+>>>
+>>> @@ -227,8 +260,10 @@ static void
+>> tegra241_cmdqv_write_vintf(Tegra241CMDQV *cmdqv, hwaddr offset,
+>>>          cmdqv->vintf_config = value;
+>>>          if (value & R_VINTF0_CONFIG_ENABLE_MASK) {
+>>> +            tegra241_cmdqv_mmap_vintf_page0(cmdqv, errp);
+>>>              cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
+>>>          } else {
+>>> +            tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
+>>>              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
+>>>          }
+>>>          break;
+>>> @@ -251,6 +286,7 @@ static void tegra241_cmdqv_write(void *opaque,
+>> hwaddr offset, uint64_t value,
+>>>                                   unsigned size)
+>>>  {
+>>>      Tegra241CMDQV *cmdqv = (Tegra241CMDQV *)opaque;
+>>> +    Error *local_err = NULL;
+>>>      int index;
+>>>
+>>>      if (offset >= TEGRA241_CMDQV_IO_LEN) {
+>>> @@ -276,7 +312,7 @@ static void tegra241_cmdqv_write(void *opaque,
+>> hwaddr offset, uint64_t value,
+>>>          cmdqv->cmdq_alloc_map[(offset - A_CMDQ_ALLOC_MAP_0) / 4] =
+>> value;
+>>>          break;
+>>>      case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
+>>> -        tegra241_cmdqv_write_vintf(cmdqv, offset, value);
+>>> +        tegra241_cmdqv_write_vintf(cmdqv, offset, value, &local_err);
+>>>          break;
+>>>      case A_VI_VCMDQ0_CONS_INDX ... A_VI_VCMDQ1_GERRORN:
+>>>          /* Same decoding as read() case: See comments above */
+>>> @@ -300,6 +336,10 @@ static void tegra241_cmdqv_write(void *opaque,
+>> hwaddr offset, uint64_t value,
+>>>          qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%"
+>> PRIx64 "\n",
+>>>                        __func__, offset);
+>>>      }
+>>> +
+>>> +    if (local_err) {
+>>> +        error_report_err(local_err);
+>>> +    }
+>>>  }
+>>>
+>>>  static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
 
 
