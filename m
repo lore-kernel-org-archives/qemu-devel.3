@@ -4,94 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D081A106286D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:41:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E27B1062871
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:51:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0HwD-0002GQ-GD; Wed, 11 Mar 2026 07:41:19 -0400
+	id 1w0I5g-00047z-Og; Wed, 11 Mar 2026 07:51:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0Hw2-0002CR-GB
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:41:07 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0Hvy-0007NM-PD
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:41:05 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-439d8dc4ae4so3792025f8f.2
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 04:41:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773229260; x=1773834060; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wvX29Vy+lLgdmAcr0PHqm1/oXxBMvoJrMR4HsjlwwGM=;
- b=qwioiDa70ACVXMM6IV4hsbYrRePHf2H4kYZVxVrU0dIo3tFLJ4bJY/h98mU982D7n/
- oxs+mvxLh986Zx8mq+X/3UoEuQm89HObrIAVTX+QSL8Ndi8xeF0cs0mp9Z0CqjHx6u4O
- SGexkVSbuVn8Puc3BvFBXuo8cCWEksSsm5aqXlznwZuxN7yp2nAd7KhQiedaeRazJCMX
- Z5Lbb0OZN9ABx2TPJz1gKKGlXb/UfCNPDpOvCBmCU5cRn8SpajQ+xe4U4T74ZlfebOTn
- Fq/JEEB9BiRn31eQePkeqxiwE6VgnwOf+/evAiIInHevHL957Vv2BpSGxZ8xR9WWAaMo
- 4sBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773229260; x=1773834060;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wvX29Vy+lLgdmAcr0PHqm1/oXxBMvoJrMR4HsjlwwGM=;
- b=bVgdcEf6E8i7RAkJ0FC5WRpzi6kDKOeaAZpz4Khc771/rIPDJI09AKzRc3/W8JA8e4
- 5hX9nDWVNm7rgQ8DIzmAI7M/CrRyMPxHO1RgkUY2uPaSrXG0EpC5Tu9271+LKYbonkal
- lxCIurT6qfZARCjoPqzaM4cM++awB5zOnOq7e7rotl59qtL+iI5AtwADmYPYqw8bWO1N
- qBcg5tBVJiy9Ffr3OQo1gMSIwgLjktdjEdgfjLcmoVEgD4fYYaMojUa4YCbQqDewyrzK
- +GZw0kPtzvSCFEh1ONX1+Iqiff1pHqEpGOS8mLJQMxruXBD6b2oqJRDwSZXjQ5dLTDg1
- EO3Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVKjq+Rd1J//56kIcRWnA872tULqSDxiae69Z+HbPy7AwV/HDCM6XkAcv1T7uJ9NBO2G2CRinAikaVM@nongnu.org
-X-Gm-Message-State: AOJu0YwuMPEQxJXcfAGlXnnuFzjGYkWYJmtUoJsRtVkKktF2rD8jrBq3
- CJcYvUqWGt+PWAWgd52KNtIlfQzAs1h/QvCxPJ5Y4OTHnJHJeVqEp8/7PuQ9YwUud6jIjUOfPmF
- 3Wpc2ldg=
-X-Gm-Gg: ATEYQzwkBpZ3fyQKAYbMt8gmn7OliGKEUd4aTNMr3X1SjmYEbOJEw5kIpPolkfPgo8r
- 8IjELXToZCNf6tbxAdzLRENO99m9q4Pns1MkCVc9kfLpjZweGvHAk5lE9VoCOyZbr9cS7cJId7c
- ld1QSP+PrW86TiIRjgDfdzJOA9rYp6uLevHYeOWtA9CgBLbqRQbpSoJpYU6ZP0KxsQa/8XT4fVZ
- XkyXyMrOdEZ3IklPOn69P5XnCeJ1gcDvGH1Xq8DB9CownsIzGO4wnhHgLz4IGsp0xG9rrJHWwy7
- g6n+9wH0E5HZA7aQ7PaYBMG/JZNGM5/RFC5GIXczmSCGhP9a+XYQURpphKHvrMxW4fiQ24nsJBV
- ziix+CQAU7EUbG84ylBE8olA6yT7KMEV1wbaVuQ1THAzLp+kAGWgUqDMWf60up5FkOOlPHZewSt
- BVgnkl+P0RY+fHFo+kMnmwqadTzCDHNc3tyhQwP9+e9eCsVUJCJQyUb531++aIpKaXx0aK9P406
- gux
-X-Received: by 2002:a05:6000:2f86:b0:439:abfb:6d34 with SMTP id
- ffacd0b85a97d-439f84359d8mr3989802f8f.50.1773229260477; 
- Wed, 11 Mar 2026 04:41:00 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439f818ff0fsm6624753f8f.4.2026.03.11.04.40.59
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 04:40:59 -0700 (PDT)
-Message-ID: <69022858-e838-4d43-bb0d-0ee7835561ba@linaro.org>
-Date: Wed, 11 Mar 2026 12:40:58 +0100
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0I5S-00047T-Qv; Wed, 11 Mar 2026 07:50:50 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0I5O-0001L4-TA; Wed, 11 Mar 2026 07:50:50 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773229802; bh=p0hye6KKTpSk7A1ZldAKcdfiAgCXmBPYnatRPxph8FM=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Cwc0YKji6BpYHwfxbQoAiOhHhyP2Q5hTxWNxYEF0JGlqJEyUw1cUK3+ZBrYVoB2/i
+ 376/ZB6div4nCrg0SKxHUtOLFrAUCowkzDPtB14Tu9i1VGnGO9YiNV808baV5v+YhI
+ pliZiC42TQpQCakZQ3BDJ7lt6rC1dUfFTxnD+Y3n/9G0U3V0GzXZAnDaZ8AqvcrIs8
+ F1jqvD/oShYS4KZ6d/CABnrW6AUi0NOFxXk6V7z+c6KKo8tE2cva8zYOpnWY1oiZo8
+ vGsI0Ie1Eb5KrM6OTLlmaGZCWbfz6jwn5p15GCrnpL3LyzY9QlYIzbKwgXbYGCQHTo
+ XC24wByefi3GA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 07AA8191D00;
+ Wed, 11 Mar 2026 14:50:02 +0300 (MSK)
+Message-ID: <fe9eeb1f-b964-43f3-8147-7e302bdef268@tls.msk.ru>
+Date: Wed, 11 Mar 2026 14:50:39 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 2/9] target/i386/mshv: fix cpuid propagation bug
-Content-Language: en-US
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
- Wei Liu <wei.liu@kernel.org>
-References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
- <20260311113505.1177878-3-magnuskulke@linux.microsoft.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260311113505.1177878-3-magnuskulke@linux.microsoft.com>
+Subject: Re: [PATCH 0/7] Add VIRTIO_F_IN_ORDER support to vhost shadow
+ virtqueue
+To: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, qemu-devel@nongnu.org
+Cc: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Dragos Tatulea DE <dtatulea@nvidia.com>,
+ Jonah Palmer <jonah.palmer@oracle.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
+ Koushik Dutta <kdutta@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ qemu-stable@nongnu.org, Cindy Lu <lulu@redhat.com>,
+ Maxime Coquelin <mcoqueli@redhat.com>
+References: <20260304173535.2702587-1-eperezma@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260304173535.2702587-1-eperezma@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,17 +117,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/26 12:34, Magnus Kulke wrote:
-> The list argument was missing a pointer and hence e.g. -cpu qemu64 and
-> -cpu EPYC would produce the same of cpuid leaves.
+On 04.03.2026 20:35, Eugenio Pérez wrote:
+> This series adds support for the VIRTIO_F_IN_ORDER feature flag to vhost shadow
+> virtqueue (SVQ), enabling migration of vDPA devices that offer this feature.
+> As SVQ acts as a virtio driver, the series follows the Linux kernel
+> implementation for the feature by Jason Wang.  This enables the live migration
+> of vhost-vdpa devices that supports IN_ORDER.
 > 
+> The IN_ORDER feature allows virtio devices to use many descriptors in batch,
+> just by marking the last one of the set as used.
+> 
+> The series is structured in three parts.  First, max_steps calculation in
+> virtqueue_ordered_fill is fixed to allow filling the entire virtqueue at once.
+> Otherwise, a full queue cannot be used with just one used entry.
+> 
+> Afterwards, the series extracts helper functions for descriptor processing to
+> prepare for in order changes:
+> 
+> Finally, the series adds IN_ORDER support, first adding conditional logic for
+> in-order vs regular processing and whitelisting the feature flag in SVQ.
+> 
+> Eugenio Pérez (7):
+>    virtio: Allow to fill a whole virtqueue in order
+>    vhost: move svq next desc array to descs state struct
+>    vhost: factor out the descriptor next fetching
+>    vhost: factor out the get of last used desc in SVQ
+>    vhost: factor out the detach buf logic in SVQ
+>    vhost: add in_order feature to shadow virtqueue
+>    vhost: accept in order feature flag
+> 
+>   hw/virtio/vhost-shadow-virtqueue.c | 215 +++++++++++++++++++++++++----
+>   hw/virtio/vhost-shadow-virtqueue.h |  38 ++++-
+>   hw/virtio/virtio.c                 |   2 +-
 
-Fixes: 4fa04dd1621 ("target/i386: Register CPUID entries with MSHV")
+Hi!
 
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-> ---
->   target/i386/mshv/mshv-cpu.c | 8 ++++----
->   1 file changed, 4 insertions(+), 4 deletions(-)
+This whole patchset is being Cc'ed to qemu-stable@.  Does this mean
+that whole patch set should be picked up for the qemu stable series?
+It's a rather unusual thing to do - to pick up new feature into a
+stable series.  Is it what you have in mind?
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Thanks,
+
+/mjt
 
