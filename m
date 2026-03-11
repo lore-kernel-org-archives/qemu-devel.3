@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3B61E112588E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:39:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1D0C91125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:39:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0POL-0006fo-NZ; Wed, 11 Mar 2026 15:38:49 -0400
+	id 1w0PON-0006oE-JS; Wed, 11 Mar 2026 15:38:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0POJ-0006S8-8H; Wed, 11 Mar 2026 15:38:47 -0400
+ id 1w0POM-0006kH-Cn; Wed, 11 Mar 2026 15:38:50 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0POH-0000aM-25; Wed, 11 Mar 2026 15:38:46 -0400
+ id 1w0POK-0000ek-Rl; Wed, 11 Mar 2026 15:38:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257669; bh=xvgjrtvfJYd0ggRcn57FNea3wevtXiKb9K1bOQPoMLM=;
+ t=1773257669; bh=jQENt2AgbC8mZlxJWiyfg+ZVOWKHlOxsAGIiAZSIphk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=hhpMhW5a1BIPPyyr1r4pu7S9i8HTDkE26BDBRb/p51LaU3I25cystDekPoilhXI5X
- yDMa621sb/QLWpChqiiOrViqy+aNoRa3L37+OrXbGOf9DemO4bgTFC79R8BK+5yBNL
- /HUCIM/TYix+p6HgalTsEnytIRx9waQqu3BPwyQL1E8Tn/tZWHIIvHEA7U/zHpV4wX
- EioXDu3/BIJMq/c1aIbujYvyqwdF7D/0ocUW7oPLYbBJTqxPzC4+h/giXj1R/0TPop
- cSmQItVdKAzQTmnP0uCWpQJ820XSxMccGyl4JEln7js4sZnyj+3k9OsNKxcGIypa7g
- In5bqmgtr11XQ==
+ b=X3SVdkPzeuTkqxA5h2CHpjXHl1QRSB5JDGLQaqRxJzvvMzoFj+5UYSmaRHmdu3c2z
+ IMivtLFhkeuCYV9DScEsFYp3ezxMAw6kodL3wd24avngKEDO5SigDyf957J1owg/A1
+ Xo7zP8ByP4nen595S/Pcxh0rLn4hOgAy4ThEzxhBaN0hXpt0yfngvrBSFQW3Xk6/hO
+ GlmryJ5VucAHVNNQt4UJVQ4J7HJbJLKZDOWHMLsBMH8uV7uw5rPtDur2lOTpNaahhz
+ zmZf4Z4r0syzXaANtGUgFJl5r56eLwhOjP6KaxfXcGx6wxvYGHOO/iDJaUt8q8+fsu
+ 12xOpoWcVeS5A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8035E192110;
+ by isrv.corpit.ru (Postfix) with ESMTP id A24B9192112;
  Wed, 11 Mar 2026 22:34:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C2A9C37C475;
+ by tsrv.corpit.ru (Postfix) with ESMTP id E63E337C477;
  Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 40/53] block/nfs: Do not enter coroutine from CB
-Date: Wed, 11 Mar 2026 22:34:33 +0300
-Message-ID: <20260311193449.1096110-40-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jens Axboe <axboe@kernel.dk>,
+ Stefan Hajnoczi <stefanha@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 42/53] fdmon-io_uring: check CQ ring directly in
+ gsource_check
+Date: Wed, 11 Mar 2026 22:34:35 +0300
+Message-ID: <20260311193449.1096110-42-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,68 +70,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-The reasoning I gave for why it would be safe to call aio_co_wake()
-despite holding the mutex was wrong: It is true that the current request
-will not re-acquire the mutex, but a subsequent request in the same
-coroutine can.  Because the mutex is a non-coroutine mutex, this will
-result in a deadlock.
+gsource_check() only looks at the ppoll revents for the io_uring fd,
+but CQEs can be posted during gsource_prepare()'s io_uring_submit()
+call via kernel task_work processing on syscall exit. These completions
+are already sitting in the CQ ring but the ring fd may not be signaled
+yet, causing gsource_check() to return false.
 
-Therefore, we must either not enter the coroutine here (only scheduling
-it), or release the mutex around aio_co_wake().  I opt for the former,
-as it is the behavior prior to the offending commit, and so seems safe
-to do.
+Add a fallback io_uring_cq_ready() check so completions that arrive
+during submission are dispatched immediately rather than waiting for
+the next ppoll() cycle.
 
-Fixes: deb35c129b859b9bec70fd42f856a0b7c1dc6e61
-       ("nfs: Run co BH CB in the coroutine’s AioContext")
-Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2622#note_2965097035
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260102153246.154207-1-hreitz@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 1d6610099bd7fc159626a38e60a3c84343ff67f7)
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Message-ID: <20260213143225.161043-3-axboe@kernel.dk>
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 961fcc0f22768e7c3432fc645b93dc7cd4932fae)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/nfs.c b/block/nfs.c
-index 1d3a34a30c..b78f4f86e8 100644
---- a/block/nfs.c
-+++ b/block/nfs.c
-@@ -249,14 +249,15 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
-     }
- 
-     /*
--     * Safe to call: nfs_service(), which called us, is only run from the FD
--     * handlers, never from the request coroutine.  The request coroutine in
--     * turn will yield unconditionally.
--     * No need to release the lock, even if we directly enter the coroutine, as
--     * the lock is never re-taken after yielding.  (Note: If we do enter the
--     * coroutine, @task will probably be dangling once aio_co_wake() returns.)
-+     * Using aio_co_wake() here could re-enter the coroutine directly, while we
-+     * still hold the mutex.  The current request will not attempt to re-take
-+     * the mutex, so that is fine; but if the same coroutine then goes on to
-+     * submit another request, that new request will try to re-take the mutex,
-+     * resulting in a deadlock.
-+     * To prevent that, only schedule the coroutine so it will be entered later,
-+     * with the mutex released.
-      */
--    aio_co_wake(task->co);
-+    aio_co_schedule(qemu_coroutine_get_aio_context(task->co), task->co);
+diff --git a/util/fdmon-io_uring.c b/util/fdmon-io_uring.c
+index d0b56127c6..b81e412402 100644
+--- a/util/fdmon-io_uring.c
++++ b/util/fdmon-io_uring.c
+@@ -344,7 +344,19 @@ static void fdmon_io_uring_gsource_prepare(AioContext *ctx)
+ static bool fdmon_io_uring_gsource_check(AioContext *ctx)
+ {
+     gpointer tag = ctx->io_uring_fd_tag;
+-    return g_source_query_unix_fd(&ctx->source, tag) & G_IO_IN;
++
++    /* Check ppoll revents (normal path) */
++    if (g_source_query_unix_fd(&ctx->source, tag) & G_IO_IN) {
++        return true;
++    }
++
++    /*
++     * Also check for CQEs that may have been posted during prepare's
++     * io_uring_submit() via task_work on syscall exit.  Without this,
++     * the main loop can miss completions and sleep in ppoll() until the
++     * next timer fires.
++     */
++    return io_uring_cq_ready(&ctx->fdmon_io_uring);
  }
  
- static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
-@@ -716,8 +717,8 @@ nfs_get_allocated_file_size_cb(int ret, struct nfs_context *nfs, void *data,
-     if (task->ret < 0) {
-         error_report("NFS Error: %s", nfs_get_error(nfs));
-     }
--    /* Safe to call, see nfs_co_generic_cb() */
--    aio_co_wake(task->co);
-+    /* Must not use aio_co_wake(), see nfs_co_generic_cb() */
-+    aio_co_schedule(qemu_coroutine_get_aio_context(task->co), task->co);
- }
- 
- static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
+ /* Dispatch CQE handlers that are ready */
 -- 
 2.47.3
 
