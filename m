@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91E9112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B94BA112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:10:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L8O-0002dI-Nq; Wed, 11 Mar 2026 11:06:05 -0400
+	id 1w0LBf-0000at-AV; Wed, 11 Mar 2026 11:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L74-0007zZ-Nj; Wed, 11 Mar 2026 11:04:43 -0400
+ id 1w0L9x-0004Pc-Oc; Wed, 11 Mar 2026 11:07:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L72-0004FQ-GR; Wed, 11 Mar 2026 11:04:42 -0400
+ id 1w0L9t-0005Pc-L8; Wed, 11 Mar 2026 11:07:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=4Nlfdi5GGWNBm6h4dFOA/ZCsnAbi/KsWlMfEchoZYTk=;
+ t=1773241481; bh=FB4jjS7oGuteuSerXx9FNPqkF7kbcDZLD/fyDh8Zzks=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xbuCGkMj9QBoZyas6vUZX9njsd7X7F+vBqkVb9YnZxXwwGLwAoYIVI1dV/QBXlvgb
- DluSXy6IYPyFYc2/+5NEJNXyh5esiIFvW2DZk6YPTvCwKIqxPA0bTggMd5VjGwAZJO
- 1CH0mCWVT9ynqFIu9C96+m2Ts0MLkaY3SqlZfLZyEzfkkZx7YmfPQUh0FMC4xqjXoG
- Qr9/b1ShYvZGop2Yj0J43e3l3Kmn/DeIv9qXFu1TzzxJJaY2HDZTzDEkQGeOT2+SbG
- TND0c1Ks0N/dJtYCYE74DPTcc21tv823qgsMorBeUJsGOkbVzZZdTAdGXwoH/Dncer
- C0Sr0IApiDUiQ==
+ b=IxxosI9SSHdyBEiR3wFKx+u+M5UOxfEdjlzcFUmi6Brle804THNBu0Q7/2Ra9RX3R
+ yI9WW3EhV2fnCBi91P6lwD9oVXsSQLg+YUsCzCzRxVsg15bAmVPTlL5Q1wZBTAHf/d
+ 9CKU0FyN4JOfDb8AfH4R+qvVEcB99LYjGJPTtyJ3h9HiijLzOI6YZ13UYiB35vDGA4
+ azU3J7ZQVXlsWcdWmkRXgdLc+LV+9kqkyS7tCMbPywOVXz7D7mkEJgqdsrfZGsIlkB
+ Q5PI2vBhjfdtyURvyvUBd+0eA1oicIcT8fL/cM5VjeAFPdJf5vefyQR5a+SUnhtvix
+ 9Y0nNn7CDKYOg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5A45A191E59;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id BC9D8191E8E;
+ Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 46D1337C2AB;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A80FF37C2CF;
+ Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 27/44] io: fix cleanup for TLS I/O source data on
- cancellation
-Date: Wed, 11 Mar 2026 18:01:59 +0300
-Message-ID: <20260311150221.1084186-27-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 11/46] target/arm: Account for SME in
+ aarch64_sve_narrow_vq() assertion
+Date: Wed, 11 Mar 2026 18:02:47 +0300
+Message-ID: <20260311150327.1084669-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
-References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,173 +74,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The TLS code will create a GSource for tracking completion of the
-handshake process, passing a QIOChannelTLSData struct that contains
-various data items. The data struct is freed by the callback when
-it completes, which means when a source is cancelled, nothing is
-free'ing the data struct or its contents.
+In aarch64_sve_narrow_vq() we assert that the new VQ is within
+the maximum supported range for the CPU. We forgot to update
+this to account for SME, which might have a different maximum.
 
-Switch to provide a data free callback to the GSource, which ensures
-the QIOChannelTLSData struct is always freed even when the main event
-callback never fires.
+Update the assert to permit any VQ which is valid for either
+SVE or SME.
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit d39d0f3acdd7c1bb275db7e97b511f98254ecd9f)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260202133353.2231685-2-peter.maydell@linaro.org
+(cherry picked from commit 42eab40a12f12f044a5ca7b7d889d9a1f0d172ee)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index 919bbf10dd..329ef6759f 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -153,13 +153,32 @@ struct QIOChannelTLSData {
- };
- typedef struct QIOChannelTLSData QIOChannelTLSData;
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 318452d816..518c0c191f 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -9660,7 +9660,7 @@ void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq)
+     uint64_t pmask;
  
-+static void qio_channel_tls_io_data_free(gpointer user_data)
+     assert(vq >= 1 && vq <= ARM_MAX_VQ);
+-    assert(vq <= env_archcpu(env)->sve_max_vq);
++    assert(vq <= arm_max_vq(env_archcpu(env)));
+ 
+     /* Zap the high bits of the zregs.  */
+     for (i = 0; i < 32; i++) {
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 1b3d0244fd..36fa5c3d40 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1881,6 +1881,15 @@ static inline uint64_t arm_mdcr_el2_eff(CPUARMState *env)
+     ((1 << (1 - 1)) | (1 << (2 - 1)) |                  \
+      (1 << (4 - 1)) | (1 << (8 - 1)) | (1 << (16 - 1)))
+ 
++/*
++ * Return the maximum SVE/SME VQ for this CPU. This defines
++ * the maximum possible size of the Zn vector registers.
++ */
++static inline int arm_max_vq(ARMCPU *cpu)
 +{
-+    QIOChannelTLSData *data = user_data;
-+    /*
-+     * Usually 'task' will be NULL since the GSource
-+     * callback will either complete the task or pass
-+     * it on to a new GSource. We'll see a non-NULL
-+     * task here only if the GSource was released before
-+     * its callback triggers
-+     */
-+    if (data->task) {
-+        qio_task_free(data->task);
-+    }
-+    if (data->context) {
-+        g_main_context_unref(data->context);
-+    }
-+    g_free(data);
++    return MAX(cpu->sve_max_vq, cpu->sme_max_vq);
 +}
 +
- static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
-                                              GIOCondition condition,
-                                              gpointer user_data);
- 
--static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
--                                           QIOTask *task,
--                                           GMainContext *context)
-+static gboolean qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-+                                               QIOTask *task,
-+                                               GMainContext *context)
- {
-     Error *err = NULL;
-     int status;
-@@ -170,8 +189,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-         trace_qio_channel_tls_handshake_fail(ioc);
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
--        return;
-+        return TRUE;
-     }
- 
-     if (status == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
-@@ -184,7 +202,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-             trace_qio_channel_tls_credentials_allow(ioc);
-         }
-         qio_task_complete(task);
--        qio_task_free(task);
-+        return TRUE;
-     } else {
-         GIOCondition condition;
-         QIOChannelTLSData *data = g_new0(typeof(*data), 1);
-@@ -208,8 +226,9 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-                                        condition,
-                                        qio_channel_tls_handshake_io,
-                                        data,
--                                       NULL,
-+                                       qio_channel_tls_io_data_free,
-                                        context);
-+        return FALSE;
-     }
- }
- 
-@@ -225,11 +244,9 @@ static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
-         qio_task_get_source(task));
- 
-     tioc->hs_ioc_tag = 0;
--    g_free(data);
--    qio_channel_tls_handshake_task(tioc, task, context);
--
--    if (context) {
--        g_main_context_unref(context);
-+    if (!qio_channel_tls_handshake_task(tioc, task, context)) {
-+        /* task is kept by new GSource so must not be released yet */
-+        data->task = NULL;
-     }
- 
-     return FALSE;
-@@ -247,14 +264,16 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
-                         func, opaque, destroy);
- 
-     trace_qio_channel_tls_handshake_start(ioc);
--    qio_channel_tls_handshake_task(ioc, task, context);
-+    if (qio_channel_tls_handshake_task(ioc, task, context)) {
-+        qio_task_free(task);
-+    }
- }
- 
- static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
-                                        gpointer user_data);
- 
--static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
--                                     GMainContext *context)
-+static gboolean qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
-+                                         GMainContext *context)
- {
-     GIOCondition condition;
-     QIOChannelTLSData *data;
-@@ -267,14 +286,12 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
-         trace_qio_channel_tls_bye_fail(ioc);
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
--        return;
-+        return TRUE;
-     }
- 
-     if (status == QCRYPTO_TLS_BYE_COMPLETE) {
-         qio_task_complete(task);
--        qio_task_free(task);
--        return;
-+        return TRUE;
-     }
- 
-     data = g_new0(typeof(*data), 1);
-@@ -294,7 +311,10 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
-     trace_qio_channel_tls_bye_pending(ioc, status);
-     ioc->bye_ioc_tag = qio_channel_add_watch_full(ioc->master, condition,
-                                                   qio_channel_tls_bye_io,
--                                                  data, NULL, context);
-+                                                  data,
-+                                                  qio_channel_tls_io_data_free,
-+                                                  context);
-+    return FALSE;
- }
- 
- 
-@@ -307,11 +327,9 @@ static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
-     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(qio_task_get_source(task));
- 
-     tioc->bye_ioc_tag = 0;
--    g_free(data);
--    qio_channel_tls_bye_task(tioc, task, context);
--
--    if (context) {
--        g_main_context_unref(context);
-+    if (!qio_channel_tls_bye_task(tioc, task, context)) {
-+        /* task is kept by new GSource so must not be released yet */
-+        data->task = NULL;
-     }
- 
-     return FALSE;
+ /*
+  * Return true if it is possible to take a fine-grained-trap to EL2.
+  */
 -- 
 2.47.3
 
