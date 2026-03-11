@@ -4,98 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 947851125850
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B181125851
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:14:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0M77-0006io-CY; Wed, 11 Mar 2026 12:08:53 -0400
+	id 1w0MC7-0003BO-5t; Wed, 11 Mar 2026 12:13:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0M6n-0006HP-1t
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:08:29 -0400
+ id 1w0MBj-0002y7-CB
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:13:37 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0M6l-000743-CK
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:08:28 -0400
+ id 1w0MBg-0008Bz-Ex
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:13:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773245306;
+ s=mimecast20190719; t=1773245611;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=eBrjzVVD0zLJ6B9y8zZmBzsOWwTyHWBoar812uanhfOQzcRPVDvImsTcZunmscg/CNDoKm
- VIdotFyuPKT2E0yNatlPLnp6qDSjPyMnt+mcjdlCz3dlUpr5mpGD8lAba9tkTveexDj2z3
- AD9cDBhOus1HmeKc1QK9o3MrOPEdxxk=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ b=Ms3fJrn8QkmTGBfUHjGIungq8i2FyVgCzXBMDKS5rDXzaa32c8M52dCdQTH0nz/ee3n3CX
+ sHL+ZNNcxw1ZctGipyUbhvPdXSYi2QPgIdM2/ax/FCSQ9frdPHlukKOKc8gz3cvQ/V+5q7
+ GSKrlvw+O8fUYKPSRIkqZSmamHZROSE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-209-AOSqldGwOP2sOfMFsbQrIg-1; Wed, 11 Mar 2026 12:08:25 -0400
-X-MC-Unique: AOSqldGwOP2sOfMFsbQrIg-1
-X-Mimecast-MFC-AGG-ID: AOSqldGwOP2sOfMFsbQrIg_1773245303
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439b3011be7so25441f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 09:08:23 -0700 (PDT)
+ us-mta-685-dPlud3UaMLK0w_e5WERrfQ-1; Wed, 11 Mar 2026 12:13:30 -0400
+X-MC-Unique: dPlud3UaMLK0w_e5WERrfQ-1
+X-Mimecast-MFC-AGG-ID: dPlud3UaMLK0w_e5WERrfQ_1773245609
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4853f33b7dbso82825e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 09:13:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773245303; x=1773850103; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773245608; x=1773850408; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
  bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=JLPVFIMiVgR6Q0uLHoPod98ejwX/bm40sKdLRPPHpXdcYytssfdiG41cLRzZvuzyM9
- 99puMxxMEpKCNAYl87xPC2oAlMPGbbVHWmQt5Cx6ml4tX95wkhcmQ9D/G0U+O9bLGj4c
- xG5CyTCTM1KTwixAe2NqzA+DnsKerHxSPp1CcmJz+DXkurXnXfadDZsxbiCJzghARkJj
- F2sQPBsi0NhzpUMiZiiyzVOPYkJqD124TKvcYSwB6ViADOOs/kJmnaEQqWqq8SlsmC1D
- J8xhMjfEqlSDnAF/wHp1+YX0Y/0NWeQlnDAGPhoua1rE9yOsazWmvxWk91PGVyKwzOCN
- d6kg==
+ b=I4mW0EEJT3ywfr7rm+ViicXP1YsPjna5NPXKeQcAYd++S5t2rIxGFKkIGCSLPpGMe6
+ iwuGtjyWZPk++F/fWEtV/Y7GWKfwzA7H9d/jHs2MhioB1ERCfstdNQkDUD40Eo59tqus
+ ayvvKF/tubwTIvGX6Tn4iLybqRKvCHUerAmgGnjPCowvoqISQ7IRI2ftBIiUQuYqk2vs
+ T7AAYMyA9mmb7vr9jxkbAe8vpPPSwvcl4IWkLtE4nl7v+6eLZvRfACzAAZT/IbGfkKxU
+ vdevdkz2tx3Dal5odX/4Sop3vi/uQ/A1omVHAsMm5ipmRlvjdsateM4Zr0pNS1Ys+7zV
+ /ZuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773245303; x=1773850103;
+ d=1e100.net; s=20230601; t=1773245608; x=1773850408;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
  bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=ug6maV7jChCv9uhXgOIa9HGMGXCpHtenYDmsq/gibJC2yMIcTyhY2cREIr67xy1CJ8
- HsNd2zXpjYARnqOCEqmMpjR6K+eMueQQ+COIW/A3E/KIRzQk8h4FJYG1vcIbttQLl4eg
- 1E49ELY4NFl5aDCAvrTMAPBuiGJXyRdvV8fadpYW0z+51Vx3iV8jVpmHj1klLKE8SnhV
- w1dk5v6eSYA+SFWMKhL/E0gcmJlYp2JrxjN9EgHM5Uply46FswVjfzk8jqmMzPzwZ+7l
- WcV8J1MtEa6MaNiPuxlA6U5yW3GRiIP3gJROy0oB3OhNu4uIiHHYmMUl5oMH3PFK38XU
- Xx1g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX9zZfRByrIfdX/o/hd0E+xu/+akPp5l/WwTNs0Y8rOmz3ku/02yNfpBXUzk4tQxHXuCMiiNZme8JAi@nongnu.org
-X-Gm-Message-State: AOJu0YzigSrCz3O3rkIfLET5l6+efbhHmipTAOcy/JDTNuv7MuRpYXYh
- yS35L+325YWmwnsiXZ98XnqtCZMissS4vlL5zrSlOtcNEmHeohMLPuo9FuqszJdDy5b1MV/fm1B
- x1IZQanJjYV8VKUX25qp4BYbJ/r7AWfuk6DyVUHROg4Hm5q1h9Vq8a4N2
-X-Gm-Gg: ATEYQzyuSeAHEBfl9zsXCUR3gehWLQxO7wV8xJTOxoAP88NryBZVugNqQ1m5IC/VOmf
- PIIwVKWkxIdsqDGmia01OBtzGMpyTvffgDP2GTpnxH8GM/+QV2I/8OJOkGvofFGAuGsC+UEM+mR
- /pFJy9B/eykQZIQ9VE5Dpw2j3un/wfidU9+WttbGvCpf/0rcWc1Xbo+SSuVY47grPSLSOBa8xQT
- COkHtHPGiTjzYMceWaeFygxTW2xDsBZr6aX+Uyiuc2jaO/BnsQDGxV7kg4XlscZY1GgJMSJJ4Re
- VmW+jdIYn0JKzjwaeYkdKLv8iFzDLXPxrSZhrI4dA+yCSXMK3z5py7Q7JPh+o0vYPb8zkafD/DI
- mNENGN4kiU8SkLOq8Z/a2/bhAZJ/A6lKqEI07vPaXOxU2heBgvdk2Lrzsbb+JZ+6VjxXJmUMdCG
- alr1L8QP9+TRB63wxfKhTrYGPoEk8=
-X-Received: by 2002:a05:6000:26c9:b0:439:b59e:5e6a with SMTP id
- ffacd0b85a97d-439f8204ad6mr6007651f8f.14.1773245302745; 
- Wed, 11 Mar 2026 09:08:22 -0700 (PDT)
-X-Received: by 2002:a05:6000:26c9:b0:439:b59e:5e6a with SMTP id
- ffacd0b85a97d-439f8204ad6mr6007585f8f.14.1773245302219; 
- Wed, 11 Mar 2026 09:08:22 -0700 (PDT)
+ b=h8yEvhqbYU/s0PRCLkH+w7kxhTwnnb07s5kD1R7ZXrxxObU4H3TsOYF0ENCe1SR2fI
+ qJr8Qc+RlWdRMzyIk1VfVWGCq+jF8tygFH27rYSYhsxuhTPuvtdmLJASYTNQ25iBTceJ
+ 7HxhqJDdWoXnFuz4JnZFMyFY8MvNpseap4FLq4V09H0UAghtFY8ew8ErzeoUsrOXARMn
+ /cD4pMbhC+xOLS3FXKuH35IJY51u9JTQ7vyuezaZTMgiTVljLkmmOIiCm8v1dOwmUC3X
+ dLGR/A3KALCPEbTu9T1Vx9OZzbh12yjGeoPKsDTiQL3w/tmX3N7WgPP08yPoYvrI6NsR
+ /X1g==
+X-Gm-Message-State: AOJu0YxAl72jg7SS3VdosZMAm+pSFaQlWHgkVbeji+5OTmplFuyoGe8I
+ c4PYP8uy4XClTPoU/PuP5CnYMNofIoHWfCeYxksuuRigQpJGPO/FLrlAezRhFJTqw7QDnZP3sQE
+ D7hEze/j93l/eThEg4lJ7JhMG+be68tcrunLW/UQyPgb84UW13cyYwkg8olmypHWI
+X-Gm-Gg: ATEYQzw0Fu8EurHSDp7hG+EQlTRDUsBYXtlELmYsL9C13+N94vqjE6uOUPu/os4fsr9
+ ySBYWyKcFgO63gN7d6WenmYLWIEKkLw8IzpTm0B2oYp+LtMtln6AEMqZoPzNmRp5JiE9acTECX8
+ ZPBNQXVkWH+1vhMsuiWyCOptymwz4wjOPpteDtWTbO25xU8hUFlgHPS5gW+P6/fF1Wq4oWkwbPS
+ HaTQueWSOgmI0gChy1hjDKK6yvQ3H6bXFKg20gRSInM445SK8/bKY1ruSiPeepT9mJ44eWIYPRY
+ TW5cBJQRm2bo0eGAAWtVE8xhthujoh2ag0TWkgLZ/iN8Nq67rdEODpN/+3rMsEUTaLY2pFxmceK
+ tHHJ6NUDfy+ncQT9i8jurqpbf2ByWVYeYl+XnGY80IahrW5fovNmObvOkwD+P+6R6xqPIKXmqIr
+ uh/ySVNXcwwZv+lJOEwDkSVjxHQgs=
+X-Received: by 2002:a05:600c:3115:b0:485:3dfc:569 with SMTP id
+ 5b1f17b1804b1-4854b0fb19bmr51021615e9.16.1773245608421; 
+ Wed, 11 Mar 2026 09:13:28 -0700 (PDT)
+X-Received: by 2002:a05:600c:3115:b0:485:3dfc:569 with SMTP id
+ 5b1f17b1804b1-4854b0fb19bmr51021015e9.16.1773245607929; 
+ Wed, 11 Mar 2026 09:13:27 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe19aec5sm232987f8f.4.2026.03.11.09.08.21
+ 5b1f17b1804b1-4854a18ddedsm61846545e9.0.2026.03.11.09.13.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 09:08:21 -0700 (PDT)
+ Wed, 11 Mar 2026 09:13:27 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
-To: Alyssa Ross <hi@alyssa.is>
-Cc: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Eric Auger <eric.auger@redhat.com>, Miguel Luis <miguel.luis@oracle.com>
-Subject: Re: [PATCH] target/arm/kvm: fall back if nested unsupported
-Date: Wed, 11 Mar 2026 17:08:19 +0100
-Message-ID: <20260311160819.555999-1-pbonzini@redhat.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org,
+	Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH 0/3] docs: some doc updates
+Date: Wed, 11 Mar 2026 17:13:19 +0100
+Message-ID: <20260311161319.558220-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260311095405.26297-1-hi@alyssa.is>
+In-Reply-To: <20260311102626.46546-1-mohamed@unpredictable.fr>
 References: 
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
