@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC8081125875
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:41:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41EB9112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PNv-0005PZ-Ir; Wed, 11 Mar 2026 15:38:23 -0400
+	id 1w0PMr-0002Oh-Cl; Wed, 11 Mar 2026 15:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNt-0005Ob-L8; Wed, 11 Mar 2026 15:38:21 -0400
+ id 1w0PMY-00021G-8c; Wed, 11 Mar 2026 15:37:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNq-0000Vw-O4; Wed, 11 Mar 2026 15:38:21 -0400
+ id 1w0PMU-0000Lk-Br; Wed, 11 Mar 2026 15:36:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257669; bh=CLgO+i9uE6yw0o/c7fPWp6c3Ly99nYGSb8fZpZqd5P0=;
+ t=1773257668; bh=rLUHziL3XRMnonK+0RGs8f/A9GwPWYXX7CuCsGPXpRA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=s+cLTIhqWI4OGBR+UDi4EYffNJ6MXT4F9sZc/cEattQtOF52p3anLPof6q39fmPRy
- riGorLamM9DXoh2Wp0+S1rwp/U1KE7WE7SWhwrSx5PbIbRde4gKLf3CCTnfr2k/829
- 0L+aaF1u0NRYkb4dlfPBhhvgbgMU6RwnWRoYA1OK+9sM09oSXY7sItEiIQNVHp0DZC
- qYEhSMK1uQ8s0AmlHBkO/6jNwCXJsi42YTkTqs75k2hceofnpNhbXvAHqkcaJHHpjB
- 93igfBwLEBLdJIvgAUOgW8oKv5ynAK7vSQ7GwFK8Q3/tL3UY+4c4ZWThejYcw0yhoN
- vKnl9oRl6URww==
+ b=P4Bzm4cbfotdXlvLCWe5QrwNLaNCUyQF1PKceKGXcy0WqXWuHwm6gaDj6e9tHfCLj
+ zsD4tS/P5wWnQTuzhF0IbPapSb2NbBJxMQazyw2IFWcrvvCTUB2nfsP28VBdZN8zgp
+ Q+fLhI7lqalXJH2Le5zHhL8B2YkcPf2YMEDLzzJcnmjuUVGlqDaiU9GKTNjT5i5fTI
+ Hzx4GMc6P+6daqkwX0a0xe1XoLMy+aAjahgJr0sMxpRDbeRxVmOa1ve1AnfVHqPbV/
+ aqwcNqHgPS8fai+0kOwIzFURaUpg+aZ+1EFYqTqJ0Hl79jC/Ar7ZzfvKzQG750gaVP
+ LZS25EUjowZpg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1D03619210D;
- Wed, 11 Mar 2026 22:34:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 106C1192100;
+ Wed, 11 Mar 2026 22:34:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5E0BC37C472;
- Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 541F737C465;
+ Wed, 11 Mar 2026 22:35:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>,
- Jean-Louis Dupond <jean-louis@dupond.be>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 37/53] mirror: Fix missed dirty bitmap writes during
- startup
-Date: Wed, 11 Mar 2026 22:34:30 +0300
-Message-ID: <20260311193449.1096110-37-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Richie Buturla <richie@linux.ibm.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 24/53] hw/9pfs: fix data race in
+ v9fs_mark_fids_unreclaim()
+Date: Wed, 11 Mar 2026 22:34:17 +0300
+Message-ID: <20260311193449.1096110-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -71,152 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Richie Buturla <richie@linux.ibm.com>
 
-Currently, mirror disables the block layer's dirty bitmap before its own
-replacement is working. This means that during startup, there is a
-window in which the allocation status of blocks in the source has
-already been checked, but new writes coming in aren't tracked yet,
-resulting in a corrupted copy:
+A data race between v9fs_mark_fids_unreclaim() and v9fs_path_copy()
+causes an inconsistent read of fidp->path. In v9fs_path_copy(), the
+path size is set before the data pointer is allocated, creating a
+window where size is non-zero but data is NULL.
 
-1. Dirty bitmap is disabled in mirror_start_job()
-2. Some request are started in mirror_top_bs while s->job == NULL
-3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-   the request hasn't completed yet, the block isn't allocated
-4. The request completes, still sees s->job == NULL and skips the
-   bitmap, and nothing else will mark it dirty either
+v9fs_co_open2() holds a write lock during path modifications,
+but v9fs_mark_fids_unreclaim() was not acquiring a read
+lock, allowing it to race.
 
-One ingredient is that mirror_top_opaque->job is only set after the
-job is fully initialized. For the rationale, see commit 32125b1460
-("mirror: Fix access of uninitialised fields during start").
+Fix by holding the path read lock during FID table iteration.
 
-Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
-to track writes from the beginning. Disabling the block layer's tracking
-and enabling the mirror_top_bs one happens in a drained section, so
-there is no danger of races with in-flight requests any more. All of
-this happens well before the block allocation status is checked, so we
-can be sure that no writes will be missed.
-
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260219202446.312493-1-kwolf@redhat.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Jean-Louis Dupond <jean-louis@dupond.be>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 0f51f9c3420b31bb383e456dd7bf24d3056eeb73)
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3300
+Signed-off-by: Richie Buturla <richie@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260211154450.254338-1-richie@linux.ibm.com/
+Fixes: 7a46274529 ("hw/9pfs: Add file descriptor reclaim support")
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit c96f6d2398a9dc068fa82088ea43020a52e2b26d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/mirror.c b/block/mirror.c
-index bc982cb99a..fa1d975eb9 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index bc4a016ee3..127e02a077 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -560,6 +560,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             sizeof(V9fsFidState *), 1);
+     gint i;
  
- typedef struct MirrorBDSOpaque {
-     MirrorBlockJob *job;
-+    BdrvDirtyBitmap *dirty_bitmap;
-     bool stop;
-     bool is_commit;
- } MirrorBDSOpaque;
-@@ -1675,9 +1676,11 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-         abort();
++    v9fs_path_read_lock(s);
+     g_hash_table_iter_init(&iter, s->fids);
+ 
+     /*
+@@ -580,6 +581,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             g_array_append_val(to_reopen, fidp);
+         }
      }
++    v9fs_path_unlock(s);
  
--    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
--        qatomic_set(&s->job->actively_synced, false);
--        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-+    if (!copy_to_target) {
-+        if (s->job) {
-+            qatomic_set(&s->job->actively_synced, false);
-+        }
-+        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
-     }
- 
-     if (ret < 0) {
-@@ -1904,13 +1907,35 @@ static BlockJob *mirror_start_job(
- 
-     bdrv_drained_begin(bs);
-     ret = bdrv_append(mirror_top_bs, bs, errp);
--    bdrv_drained_end(bs);
--
-     if (ret < 0) {
-+        bdrv_drained_end(bs);
-+        bdrv_unref(mirror_top_bs);
-+        return NULL;
-+    }
-+
-+    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-+                                                       granularity,
-+                                                       NULL, errp);
-+    if (!bs_opaque->dirty_bitmap) {
-+        bdrv_drained_end(bs);
-         bdrv_unref(mirror_top_bs);
-         return NULL;
-     }
- 
-+    /*
-+     * The mirror job doesn't use the block layer's dirty tracking because it
-+     * needs to be able to switch seemlessly between background copy mode (which
-+     * does need dirty tracking) and write blocking mode (which doesn't) and
-+     * doing that would require draining the node. Instead, mirror_top_bs takes
-+     * care of updating the dirty bitmap as appropriate.
-+     *
-+     * Note that write blocking mode only becomes effective after mirror_run()
-+     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
-+     * we're still in background copy mode irrespective of @copy_mode.
-+     */
-+    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-+    bdrv_drained_end(bs);
-+
-     /* Make sure that the source is not resized while the job is running */
-     s = block_job_create(job_id, driver, NULL, mirror_top_bs,
-                          BLK_PERM_CONSISTENT_READ,
-@@ -2005,24 +2030,13 @@ static BlockJob *mirror_start_job(
-     s->base_overlay = bdrv_find_overlay(bs, base);
-     s->granularity = granularity;
-     s->buf_size = ROUND_UP(buf_size, granularity);
-+    s->dirty_bitmap = bs_opaque->dirty_bitmap;
-     s->unmap = unmap;
-     if (auto_complete) {
-         s->should_complete = true;
-     }
-     bdrv_graph_rdunlock_main_loop();
- 
--    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
--                                               NULL, errp);
--    if (!s->dirty_bitmap) {
--        goto fail;
--    }
--
--    /*
--     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
--     */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
--
-     bdrv_graph_wrlock_drained();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-@@ -2102,9 +2116,6 @@ fail:
-         g_free(s->replaces);
-         blk_unref(s->target);
-         bs_opaque->job = NULL;
--        if (s->dirty_bitmap) {
--            bdrv_release_dirty_bitmap(s->dirty_bitmap);
--        }
-         job_early_fail(&s->common.job);
-     }
- 
-@@ -2118,6 +2129,7 @@ fail:
-     bdrv_graph_wrunlock();
-     bdrv_drained_end(bs);
- 
-+    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
-     bdrv_unref(mirror_top_bs);
- 
-     return NULL;
+     for (i = 0; i < to_reopen->len; i++) {
+         fidp = g_array_index(to_reopen, V9fsFidState*, i);
 -- 
 2.47.3
 
