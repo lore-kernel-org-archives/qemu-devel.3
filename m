@@ -4,70 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 853411049515
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:27:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A051049515
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:27:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0GmD-0002Lh-6V; Wed, 11 Mar 2026 06:26:53 -0400
+	id 1w0GmE-0002Nx-Ey; Wed, 11 Mar 2026 06:26:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0Gm4-0002IA-Ay
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:26:44 -0400
-Received: from ci-2004f-snip4-3.eps.apple.com ([57.103.89.56]
+ id 1w0Gm6-0002IM-1x
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:26:51 -0400
+Received: from ci-2004l-snip4-1.eps.apple.com ([57.103.89.114]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0Gm1-0001mX-Rx
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:26:43 -0400
+ id 1w0Gm2-0001ma-4u
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:26:45 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-0 (Postfix) with ESMTPS id
- E0EB118000AD; Wed, 11 Mar 2026 10:26:31 +0000 (UTC)
+ 7F5F61800126; Wed, 11 Mar 2026 10:26:30 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773224793; x=1775816793;
- bh=tqk9foTP5rMRlVCG5f+Zfh4A83KKwlPU+qNO5PuHkzc=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=Sqh+mCMxutzCbRG1zk0dj4b3W/YE1ZatXOZM+MnetxmKhJyxrXnZc5h481tXuvPYUhjeKmQoChB2qr5WRcBE2oAa4IoQyfScQwYvpo/rOkH8AfoieNOFCjCjBgQrx6QvaB/bwWUb/re5zVh6gpdl+w1uG7oFFiIlhyxW1lC+sjIr/phrkRoZPv7nKJBUNy6iWGF65HH6/i9y9BmToI4aSblvBH/nke+gc+cRQZ6Y8Sc/WQiM+N/VP0XiClfw2rpnF49SfaLaPsKE7Rq+DJpF9He22T27Mr8+cSSikdmvJWRgk9q6Iayb2r9yjP646yWkoLlrSM9qnp5iwDZ5yhEcgw==
+ s=sig1; t=1773224794; x=1775816794;
+ bh=BvNd770jug/w8jYxp90dgvip1ACZVHLac9SVOSCAF4w=;
+ h=From:To:Subject:Date:Message-ID:Content-Type:MIME-Version:x-icloud-hme;
+ b=afbUY9Eewuf7KQqfES82u6gtZdqO1WmrOGkZMpha+ewNMB7FjWoT8paSNuSRsti1cYQjDSnWOEKNuejzFEMhNeaj7VIA6s1/ZOsudximGV5+IVlfnSVU0XcHJ2MkDjx5yYstJUVXUjIVDJzhyyylk59oGqpPn80LyZytCV3+Pjqo81MXVbvQpLArynZXZWZy56MqEEaMXjeagSjnG35Yfkl5iEhD5KXKCBaGzM3Q56tNQmT9pLqH9r1ShFOX7GLzMjnQYh014f7x/y9V/qVPMfF8ppqdcvRN8tx2s66zEg5tmvX6na5z1DOlhmpgMScbdCFEfr5KYxQHEotbea8JHw==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-0 (Postfix) with ESMTPSA id
- C9122180013C; Wed, 11 Mar 2026 10:26:30 +0000 (UTC)
+ 2031F18000A3; Wed, 11 Mar 2026 10:26:29 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH 2/3] qemu-options.hx: document Hyper-V enlightenments
- accelerator option
-Date: Wed, 11 Mar 2026 11:26:25 +0100
-Message-ID: <20260311102626.46546-3-mohamed@unpredictable.fr>
+Subject: [PATCH 0/3] docs: some doc updates
+Date: Wed, 11 Mar 2026 11:26:23 +0100
+Message-ID: <20260311102626.46546-1-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260311102626.46546-1-mohamed@unpredictable.fr>
-References: <20260311102626.46546-1-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: rKARxzlrcOwSzk6AwyP_tZBSOIoTWyap
-X-Authority-Info-Out: v=2.4 cv=ULTQ3Sfy c=1 sm=1 tr=0 ts=69b14358
+X-Authority-Info-Out: v=2.4 cv=GsNPO01C c=1 sm=1 tr=0 ts=69b14356
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
- a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=YxDeTozNR0V_yq-76fUA:9
-X-Proofpoint-GUID: rKARxzlrcOwSzk6AwyP_tZBSOIoTWyap
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA4NyBTYWx0ZWRfXyj6mA5vG0PK2
- QpbD1saVcJkNUeyLtJY1xpdzVYvLP1nAcWo1VouFOnfyi9eSM82EgqPXJSEG+nbaSw03YNipMoM
- cyY/z//Mn51dPu6NZaGd6u39IGzwU0R2O5IoVs7/U67m/ZkVARDloBKLNkizUVUb5rcBw57qnb0
- UD+qi71OZREkLBt/MIa6Tl3iQXyfhzDiLL3H19LhemRSlyU1vCN/xUeH+PVf+WEMXdmQ9sUeyeN
- Aa5cnsKp67KqR9xOvqxpwwq51iO326tmCO1gVHQUFJnPXLDtTO9+L4/iWWYWtM7umIr1n/Wp15H
- AiUc8WxxK6P4n8JMCT8kzLQrzKeP5GwELKlWAp1h+lNo6jVzE2Dc3WHEW5amdk=
+ a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=-WPUQ5mZ83Ir-Yp9aOEA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA4NyBTYWx0ZWRfX6ZI1nVgi+B25
+ VW+308317Qnas/LK6bDbDoyN4iLBl/midMtj6yogjPYPjjk0xHMg1U1MvOBtaILvLuY4PawTcVU
+ nshOnxmXll4wNC30Fs+ZlaQ6OypHIsOYvJfp33py5MSVBo+rRuNbO/2Z7lg6DLBby/JgoBPColP
+ mXYihOCi7e3eKBqJKkEOBHkPiFWcclfKIFI8gKl6Pq7qXzFZZIZ2nOetVocrY9aCkGidePC8QsU
+ 1VwJjmIcqRrs9kbzeTGTGLOWPjYFLT/NciDYjAQm/6Hyc9NJPq4RtOspETVXn5bLN754/83x3rU
+ hJ9m6Dv614vSNws/b2yLvoOKElE6uzR9kyAZAeaQD9jGqMG25QuovDtTIAq0pI=
+X-Proofpoint-ORIG-GUID: eZOAiGGo1qlo7WnvDN5LdWZ_Z2Ba8LrR
+X-Proofpoint-GUID: eZOAiGGo1qlo7WnvDN5LdWZ_Z2Ba8LrR
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-11_01,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- bulkscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=751
- suspectscore=0 clxscore=1030 malwarescore=0 adultscore=0 classifier=spam
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxscore=0 lowpriorityscore=0 mlxlogscore=703 spamscore=0 malwarescore=0
+ suspectscore=0 clxscore=1030 phishscore=0 adultscore=0 classifier=spam
  authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
  definitions=main-2603110087
-X-JNJ: AAAAAAABSoUSmmquvJj8zi8WGJm+u8/MmaSLFfYaoia7iI4lQWzmeJJZ7mEMZKRzoP5nFt+O+R2yDrNfwEt5yQS8yFClUWsCUfqdswJsEGohTmbEBQb9VeQ9R/7ZDmp8unh4vyxPc+CN6A3qcymNBYbcuwoFzIpUyHWHifwEIkNx3l+jXBHMR9iVo0u5i0eG5QDJ5BhVwPj9Qkng6FJuEEhddexf1h03QlSVF1fjdww4bf2JebW3pwToFldYo7S35Rjpi85omvFqZpafcONVSvD/ubI3wFPe4q5Keevt2c5mTczcjr97zodx2XhDrDYytdcF06p0cWH0JOYSKKVQvT6r0DyE3jDNbX8XXpG2haDvmqC80NsrDhdY3vuW03Bzsus1VAbN9J2ZtHhUC0+kWQSYzaQEPK7bpo7SB3CIa6+GY05HCZEL7d8EIpIwS6gk96WPNSfmnM6tBEg6RUiTW0qRDeM1AmgCxTXaYHa96DS2qXAxo+zL64kVwV/RWjD39N5VBMElCSNj+q3qGDncbgDuX7/4uIyKLPM6lj4Dg+YAHRAZ4jyA8jLfmQSdwjxbGOIWDGSUC5+JGfvgndjgDcNXrMWwFKqxFQLyJdEbzCoWa6SmdZsHs4ysUWyjN3C+iKErxzOfTvpUfgjn
-Received-SPF: pass client-ip=57.103.89.56;
+X-JNJ: AAAAAAABYVF130rf69iuNaz7VsDBXyrNKJovH9JRd1qqEhidMn7RqTg0sqt36RIx9/EzmDufHtr+qLsAgAiwNfNxzpO+wq8DoK2vAXqLSyhbu4A6Da/TggvrgMyaYAEX9JLUHGOkaI2orATvluNrLWTcv7edzv1IEpb8LOkKyaE4rk5eueEyGi3toNm5ng6v8fWerVnas840jz4qkOsv8oB4wR6X1y5tVbvOIW8zugdJfwOrN2++iB3ew7p/Qz9DaYaCjyNeDbANZkfl8f+OfL2+fHeoRzIoMUZoFYmMdGCGXcvpcFTYE9pZRyDxLYCMHKDRWSta4EDVr9vzOh6AUFd7+rmZM/RYTTZr4feOKpgc/Z0oOKWZ8UykQio5x2YKot46NGy5qzJ0DJRriZcHAfu1IZJPzWW0l5tq7uFlNmC1rzLDi+tNI42GCa0JtcszeFVr7EBU2XQvZc5EyKme1Juf2eCRtTnl0580IfMlfUtjEayTQXPzgIkOc5rPJhqnbTmsR/bG/agfkxqVBi3h9BM1rTL2xHnHV5261TXsrikAd9ZwSEfMCRz5PpIK8eRD1ZmONoO/holCfsvQpx6GlowKICQpoSYO8hr1Dx32EsBYbR5mHGNMogEB8OoyqYg83TM=
+Received-SPF: pass client-ip=57.103.89.114;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -91,29 +89,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This option is WHPX-specific and controls whether Hyper-V enlightenments are enabled.
+A documentation update, no code.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- qemu-options.hx | 5 +++++
- 1 file changed, 5 insertions(+)
+Mohamed Mediouni (3):
+  docs: remove 64-bit only mentions for accelerators
+  qemu-options.hx: document Hyper-V enlightenments accelerator option
+  docs: mention that WHPX supports Arm too
 
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 890c4f1d23..69e5a874c1 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -325,6 +325,11 @@ SRST
-         option can be used to pass the KVM device to use via a file descriptor
-         by setting the value to ``/dev/fdset/NN``.
- 
-+    ``hyperv=on|off|auto``
-+        For the WHPX backend, determines whether to enable Hyper-V enlightenments.
-+        On x86_64, Hyper-V enlightenments are on by default. On AArch64, they're off
-+        by default.
-+
- ERST
- 
- DEF("smp", HAS_ARG, QEMU_OPTION_smp,
+ docs/about/build-platforms.rst | 4 ++--
+ docs/system/introduction.rst   | 6 +++---
+ qemu-options.hx                | 5 +++++
+ 3 files changed, 10 insertions(+), 5 deletions(-)
+
 -- 
 2.50.1 (Apple Git-155)
 
