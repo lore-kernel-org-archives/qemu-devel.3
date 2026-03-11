@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C0B4112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C0C9112583F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LAn-0006Z0-8s; Wed, 11 Mar 2026 11:08:33 -0400
+	id 1w0LAC-0004qa-Ml; Wed, 11 Mar 2026 11:08:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7n-0000ad-Mf; Wed, 11 Mar 2026 11:05:27 -0400
+ id 1w0L8F-00028F-T8; Wed, 11 Mar 2026 11:05:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7l-0004bt-IG; Wed, 11 Mar 2026 11:05:27 -0400
+ id 1w0L8A-0004hb-Sz; Wed, 11 Mar 2026 11:05:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=6xzuZ76X0cYdz6GomQIS+AAycOBkcyK2J/9Yi7hseQI=;
+ t=1773241306; bh=ey24FL2WtAviVBhBLUavUi+PlzeDOpL1ByagnJYcMNE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sWaKOGhynit+gXQQo2MgF5EVbn29wkOtLVh4ci2VcW3xCH9xZTkOqYrK5B02RyBaq
- 1sZrajFzIfHB2Y03YVX2ntrmUhWKgOvkuzOMXtWOzOI23sAuxjMzr1J4gSKnrub3FJ
- KP7AFCiK92uxSeUWkBGc6Xl5JdQptIBFOVCf/bd6Qk8C3SRC39/ecsC6MqngBYT4jj
- W0WXlrxEOrWtpulivdzwgMYwaDbaPyaEBZWnOOj+jS4ZQV/ojX7y/7MAtSnUNAs0Io
- a4w1ogYaWTyzdK2mbaENqu7Czr682Hs1JgKsucEDm6boYjwiWgDGSqjJ2YQDMe/R25
- JFINEJowuVoYQ==
+ b=A0Q2uoUrbla+iq8h9xtCXt9Hw6dvdf91O/AYeO7VGEJnOEIweJrXO/DuvJ1RLf76B
+ G4OLMru7Bw/157H/3iJBIRZ8MoG00G36W6mCHp5VVRjG7Ffu0iqHyGnAzs8iKq9+hs
+ 8mm84XsfYi9nOvhaEyonvqdF9buJZiqQ86Jj3AI9CuKRPmc3j9XSx/gZHM/TNoThbO
+ nF8ntBzTuFNQBUztrZLuMKyxWkzqwmBtM66NBqk1uuCGGNAHF4LJTpaSOqChxjsd0z
+ Y3dNuTrvdhSlNcWy2bWUzZ+8DQBgWCnF+S2TVHo7PHVxWwFU30Xtmd3CFyG0YGNDdn
+ tpfNDd7EBB9NQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DDBD6191E61;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 1969E191E64;
+ Wed, 11 Mar 2026 18:01:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id CB8C837C2B3;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 07EC937C2B6;
+ Wed, 11 Mar 2026 18:02:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 35/44] block/nfs: Do not enter coroutine from CB
-Date: Wed, 11 Mar 2026 18:02:07 +0300
-Message-ID: <20260311150221.1084186-35-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bingwu Zhang <xtex@astrafall.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 38/44] linux-user: Deal with mmap where start >
+ reserved_va
+Date: Wed, 11 Mar 2026 18:02:10 +0300
+Message-ID: <20260311150221.1084186-38-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -70,69 +70,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Bingwu Zhang <xtex@astrafall.org>
 
-The reasoning I gave for why it would be safe to call aio_co_wake()
-despite holding the mutex was wrong: It is true that the current request
-will not re-acquire the mutex, but a subsequent request in the same
-coroutine can.  Because the mutex is a non-coroutine mutex, this will
-result in a deadlock.
-
-Therefore, we must either not enter the coroutine here (only scheduling
-it), or release the mutex around aio_co_wake().  I opt for the former,
-as it is the behavior prior to the offending commit, and so seems safe
-to do.
-
-Fixes: deb35c129b859b9bec70fd42f856a0b7c1dc6e61
-Fixes: aa2ec06680b1924980a177e98502494293e4e9d9 in 10.0.7
-       ("nfs: Run co BH CB in the coroutine’s AioContext")
-Buglink: https://gitlab.com/qemu-project/qemu/-/issues/2622#note_2965097035
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260102153246.154207-1-hreitz@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 1d6610099bd7fc159626a38e60a3c84343ff67f7)
+Fixes: 4c13048e02d9 ("linux-user: Use page_find_range_empty for mmap_find_vma_reserved")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3310
+Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit f2813e13fe910e01127271a87177a477b9438bc6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/nfs.c b/block/nfs.c
-index 1d3a34a30c..b78f4f86e8 100644
---- a/block/nfs.c
-+++ b/block/nfs.c
-@@ -249,14 +249,15 @@ nfs_co_generic_cb(int ret, struct nfs_context *nfs, void *data,
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 568538d833..5622a01123 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -417,12 +417,15 @@ abi_ulong mmap_next_start;
+ static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
+                                         abi_ulong align)
+ {
+-    target_ulong ret;
++    target_ulong ret = -1;
+ 
+-    ret = page_find_range_empty(start, reserved_va, size, align);
++    if (start <= reserved_va) {
++        ret = page_find_range_empty(start, reserved_va, size, align);
++    }
+     if (ret == -1 && start > mmap_min_addr) {
+         /* Restart at the beginning of the address space. */
+-        ret = page_find_range_empty(mmap_min_addr, start - 1, size, align);
++        ret = page_find_range_empty(mmap_min_addr, MIN(start - 1, reserved_va),
++                                    size, align);
      }
  
-     /*
--     * Safe to call: nfs_service(), which called us, is only run from the FD
--     * handlers, never from the request coroutine.  The request coroutine in
--     * turn will yield unconditionally.
--     * No need to release the lock, even if we directly enter the coroutine, as
--     * the lock is never re-taken after yielding.  (Note: If we do enter the
--     * coroutine, @task will probably be dangling once aio_co_wake() returns.)
-+     * Using aio_co_wake() here could re-enter the coroutine directly, while we
-+     * still hold the mutex.  The current request will not attempt to re-take
-+     * the mutex, so that is fine; but if the same coroutine then goes on to
-+     * submit another request, that new request will try to re-take the mutex,
-+     * resulting in a deadlock.
-+     * To prevent that, only schedule the coroutine so it will be entered later,
-+     * with the mutex released.
-      */
--    aio_co_wake(task->co);
-+    aio_co_schedule(qemu_coroutine_get_aio_context(task->co), task->co);
- }
- 
- static int coroutine_fn nfs_co_preadv(BlockDriverState *bs, int64_t offset,
-@@ -716,8 +717,8 @@ nfs_get_allocated_file_size_cb(int ret, struct nfs_context *nfs, void *data,
-     if (task->ret < 0) {
-         error_report("NFS Error: %s", nfs_get_error(nfs));
-     }
--    /* Safe to call, see nfs_co_generic_cb() */
--    aio_co_wake(task->co);
-+    /* Must not use aio_co_wake(), see nfs_co_generic_cb() */
-+    aio_co_schedule(qemu_coroutine_get_aio_context(task->co), task->co);
- }
- 
- static int64_t coroutine_fn nfs_co_get_allocated_file_size(BlockDriverState *bs)
+     return ret;
 -- 
 2.47.3
 
