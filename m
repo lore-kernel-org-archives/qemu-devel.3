@@ -4,145 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F73C1125865
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 18:22:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CC2F01125811
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 18:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0OCJ-00080y-5A; Wed, 11 Mar 2026 14:22:20 -0400
+	id 1w0OEp-0000he-Kx; Wed, 11 Mar 2026 14:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w0OC8-00080R-E2; Wed, 11 Mar 2026 14:22:09 -0400
-Received: from mail-westus2azlp170120002.outbound.protection.outlook.com
- ([2a01:111:f403:c007::2] helo=MW6PR02CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w0OEo-0000gO-GU
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:24:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w0OC6-0006YG-Fq; Wed, 11 Mar 2026 14:22:08 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Yib0PdJ52iVk4hmwygAAHolY5Q6GD6c+gbGH11nxPdeH+Wv+BiF13KU4HoaILaRLa7jGrcJbsP/orU7lEJ5KmfZsLfZmKtglCPi1mStzzG+itBnlYBajo/vpvwYv9QAkajcHc2Q91OSL9f4f2cVou8/+yBmYISyvjTuP2IcoPSpkgrmi77+Kd5zvuwfhoH5L9psEantJApERcTx1PrMIyW/NP76WLy5+d8NL8nXb27tRgG/qWvMSG9GV4gfS+dnit96kZVVvqbo1HtzOgrhbDyEJWRJbygSJ6Wf++kY8PpT23NtuvH5x5cMts3NMTfYQfqnuXhgXKQPrRQ4v9EC8dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=qP/Axy+jts2BSlEsBXSSKZVJQmhwJRPi5j+3u7+GjOw=;
- b=oeBX60EPnLkWLc8wYlQUqutgC2LBCB+CGci7jOILsUNVHuYaNcASiHPZBO1+H18VaH7JZQYGcjiLoCe8L0UNGnaFD2SYumKZCCrv2Mi0613Lgucnafz98nHDBMsStb2Nw1H5XsowfEoou/ippsKwLSAk/XGyIGjrS3TPbI8CS/LRJD7zzbyYH3abjA8UWnOW+zxy+2YvgaXjeeYXRZZLXrRmOZDIMfwbUdS8qLCpeDkVTE2F/iao+4IKvuizBZqk7o+VlyaflxQejmOWI+qUoUIVUfRe6Y8ARF1oCloNbR035EtE8EhZlN/J5So5wF/pmdUvyiifCnKNULoz7/OMQA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=qP/Axy+jts2BSlEsBXSSKZVJQmhwJRPi5j+3u7+GjOw=;
- b=prd4oqkQSciGoI0c4sfRMELTHsNMoj+41eRNs0Zpm89WkXh/x4JcwCd5up8GbrZltiLVYo4K4YvCsTROe03pPSOkLmJhlf+hCHuz8CXBVHY1N/dgGo6EMSInTTJqZJVvEVJRI/mwvpk5BzlrfdJM2ALsxyOL5ToKqZF6nzQIFHdJuGfvGBxmqkm9ofWChAij07O/XER8bv1RR2ibLeMZjC/TZKFB308JU+VUw2jw3QLgN2S5xYnB6SXLmRFs23J0AbE95XtBhILJMGQopoQyf1HXpm4PLQ8TnHdCFIVcly5Ngbl1pnK7M/dBIaS1C9UmGrk9s9bzDXQPVgtrwYWi5Q==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DS2PR12MB9567.namprd12.prod.outlook.com (2603:10b6:8:27c::8) by
- SA1PR12MB7342.namprd12.prod.outlook.com (2603:10b6:806:2b3::9) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9723.4; Wed, 11 Mar 2026 18:21:59 +0000
-Received: from DS2PR12MB9567.namprd12.prod.outlook.com
- ([fe80::636:1b52:24ca:d7e5]) by DS2PR12MB9567.namprd12.prod.outlook.com
- ([fe80::636:1b52:24ca:d7e5%3]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
- 18:21:59 +0000
-Message-ID: <8c43a00e-ca9e-46dd-a7c5-9f53061946b7@nvidia.com>
-Date: Wed, 11 Mar 2026 11:21:57 -0700
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/8] hw/arm/smmuv3-accel: Introduce _AUTO support for
- ATS
-To: eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260309192119.870186-1-nathanc@nvidia.com>
- <20260309192119.870186-3-nathanc@nvidia.com>
- <ce715e79-ea70-46c1-80c7-6290ad0567f0@redhat.com>
-Content-Language: en-US
-From: Nathan Chen <nathanc@nvidia.com>
-In-Reply-To: <ce715e79-ea70-46c1-80c7-6290ad0567f0@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR05CA0107.namprd05.prod.outlook.com
- (2603:10b6:a03:334::22) To DS2PR12MB9567.namprd12.prod.outlook.com
- (2603:10b6:8:27c::8)
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w0OEm-00071V-EM
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:24:54 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773253491;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=doUnDX5DJZWrIKZ/jma5ny/v50MeXmf9DwvLugad35I=;
+ b=Ahywn0Ok9zBNcz/WYPRUtg7bJx5N2oYKiYKyWIbBvQMkJtkwpKBAw2h2JwQYcPAa9Tw8Xp
+ krmg1Vj47PmBlHzKAhnjeLRSgSJDLSVWHX5Cw9II+r/Tw/QcVpBJsDv0EgPw+FDAvdQ4Sf
+ r8cRo4F21cr70NwjtCrA8DcfDlQnPZo=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-562-FlV7jUuTMJC3EUnRfgz0kQ-1; Wed, 11 Mar 2026 14:24:50 -0400
+X-MC-Unique: FlV7jUuTMJC3EUnRfgz0kQ-1
+X-Mimecast-MFC-AGG-ID: FlV7jUuTMJC3EUnRfgz0kQ_1773253489
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-485390246c8so2130475e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 11:24:49 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773253489; x=1773858289;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=doUnDX5DJZWrIKZ/jma5ny/v50MeXmf9DwvLugad35I=;
+ b=AhbhhJsvY7CcB2fZ6UDoUVQXT2Nviq16wrOA/ocSxS05UBwFu5sOYLsNKy8LZozgBV
+ gaD8ybk4WBbR73sxUwDIiWGABSfzWBm5oa1FXVjgQpm7R1vngJdMd1gC4bAZRQ1NcG7s
+ cHbvVyd4WCnfXLC2IB8kCLfZfRp80FBCHRGp3zy7vQKKQ+heH8uUTnpoTxOVFnjMizom
+ Owu2n9dav+/JcuSVjddpcl1WG57ooREDJv/pdlatjn357EziBCQxMOCDVeDHhgyvTO0T
+ 6XYizzqTjQ4pGOIKVk7GENIHXvxPrfkaDmTYSEqtJCT6UmiyjwY13h2IVY7OqL33f4UH
+ nE/Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUL+AHJfT0A++RhN73aWoqVLzk25jDKptyoECjqjbLUSQxdF/Du4EslUK5Oxr3Tgl4Iby2jn/r2/num@nongnu.org
+X-Gm-Message-State: AOJu0Ywa4GS1ICb8uIxa05Oq4nULwFvFavZX3JLW6W7c7li/Y2E7IlWp
+ pfS+MrtRCl93QArsO2fRuoaeEjQQrSc68M2LfsargZ93acxzQ/t+sQPbJgs07wFaFORuO/tGlbB
+ 6yfwgDwfwtajuFqFOx+jnGVWl3U3KFLxfB/hjBvnkcKUjg0ZO0WtWMWk3
+X-Gm-Gg: ATEYQzxwc1JM+3icao5ZA9NoG+pG5TsevKLVqizDoibD8L03QvnN/RCWMcMOhF0VADn
+ YxFKhPsXO+THFNxrxMPMeZpApUoeejqbyjvz/gR8HjN3iccH3mH3O7pM4FmghW/QfkUmFMQZmEJ
+ FYY1tDm6NAnc9Ym3IB20J7blvTA8jtuujUkVfzbLNC6Wrt9/zu3NcKj7KRZLyzMnbZQ89834IRs
+ FLV6y4szENR7+LUhua8rKWWEkSITtD+JQtofvsiFpxXzWFrR72xUQn3cdmkTGOgvLkh7+ThmX3F
+ exnN1yDSAEfQx7V/LjW/1v6yPSU0Y6qDLxCzA/4U0f411B12paplohSZ7TO0ScYxZyy7fCi/5hc
+ J/j8lERObgu0cFMzALWpd9xCidHN6he5ctn3/JCnUp4+VnufEJsVWlGns1CtUJ/1HJZOTkw==
+X-Received: by 2002:a05:600c:a404:b0:485:4bd1:4c64 with SMTP id
+ 5b1f17b1804b1-4854bd14edamr51984815e9.31.1773253488637; 
+ Wed, 11 Mar 2026 11:24:48 -0700 (PDT)
+X-Received: by 2002:a05:600c:a404:b0:485:4bd1:4c64 with SMTP id
+ 5b1f17b1804b1-4854bd14edamr51984455e9.31.1773253488146; 
+ Wed, 11 Mar 2026 11:24:48 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485419c2930sm284129365e9.0.2026.03.11.11.24.46
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 11:24:47 -0700 (PDT)
+Message-ID: <254dceca-7864-4dbc-b25c-928add5a78e3@redhat.com>
+Date: Wed, 11 Mar 2026 19:24:46 +0100
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PR12MB9567:EE_|SA1PR12MB7342:EE_
-X-MS-Office365-Filtering-Correlation-Id: 4f66e2ef-37d0-4367-58e3-08de7f9b15d2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|7416014|1800799024|366016|18002099003|56012099003|22082099003;
-X-Microsoft-Antispam-Message-Info: k2U6tVfkU3SNu72d02fvmSkXBRvqHpnk99uSkjqqx0eMcuU92p8gBo2WiGgB9u0UjTex7ItI/KBqFGdTUm0aH97Djs3cuqnY+xWPVGvMvxxPKeCqAVEznkvJtAqfORWa1lczY1WHctPSVN+3b/kXu+TQoKMEMFPFMugzfqG1cW35cDYFQjsTcS3o/9ZeHXlU+3l3mmoAQQKdQf+aM9I75ZatNeHDz/+vMynrEcKLQAN+sdVe3WWP/ckRDLf0iWgmpPuAWnnDCJfB9hT774H+qGsGv8dFNR3XAroM29coANIWTuDh+urjDRFnkTxPFMgXiDCFSeRTyGYAwM9xwjgXY4CGXFK2pGy0GtGM2FUEwxKPUeZs8YSc4HprNCBgsOXBTC+sgJP7KSz8PovCbx1YMNbbqqpvithrEy1O50h4HjWGUS+2DrYxAb1QmLfFwA6CxNS+9OxwXUtojvWvKvz9DKcNgdPAFdcw+DGQ1e97yuIEBa9fYE+/p4QLUKNw3BAH+7UHPZ9J24lzAXDlM4YjbMroBZ9nTBX6GvoEOnFNekObuLrhszQmEL47QQktchgfso+DzWbSOvjQPWOdlfSk814uNIXOH2PMAitDB8hZxZsSnsOftWxkXZ4x4AzvT0jNL4c/ModySRvRstu8unFrXzkFuiV5uFRtQUeZqsZS70DXGoBA3hXDIkmDSW295O9UVh3ufCy8fP7u5Y7ne0jrC4pzhruZXMC1v3iesmj8hxA=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS2PR12MB9567.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(7416014)(1800799024)(366016)(18002099003)(56012099003)(22082099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?MCtFWVRvYk5hWjJJQ3FOcE1uK2xTT2h2bWFtenpHU0RGRWxSY3U5QVo3R3FI?=
- =?utf-8?B?TVNoR0ozdXJUWDZ4QVRyVkJQSkJhQkpNdVhXR1c4WGRUaUZlL2VmMlkvcm9J?=
- =?utf-8?B?Nnl1VU5RR3VvRmJSUEZhVVJhTkZtblBPeXloaitFYTBsQnFUSTF6T1FSMHBW?=
- =?utf-8?B?L1FZY3NCb3luT1A1ckI0OCtINkI1T2tSd1ZPVkU2R2w5dnBFak5sM0ltRnl2?=
- =?utf-8?B?UmhpTlZ1a3NidXJaZTZKR2RveElyS2VIaWtic2ZQbitKdk5wOE14a2M1aG9k?=
- =?utf-8?B?NjFVM2hnN1BVQmRKWDRvK2grL3RKTGRhbkpuQXcyZG4yNERORHRGMDJuYWow?=
- =?utf-8?B?OWxIc01NQ2UvK09XZlZpOHYvOFpEOWJScURmTXhHbFpJMnpEdjVsenRJMEJX?=
- =?utf-8?B?VkMrKzVLaWJrYUpkTWQwTXNtSkQxb0FpQUJBOWZ5RmF2WVBHNzBLNW9iTjdi?=
- =?utf-8?B?ZytVcXBZVHRlcTRpWDduNmpvakxUYWpLalo3TnQ4UUxkMlZGR1NWaXd0RW5m?=
- =?utf-8?B?RkZ4TXZRMythRGVzTW50c3Z0Wmd5Y2YzQUl3V3NNY2Y2dERJeUV1azRFbXF2?=
- =?utf-8?B?aDY3QlkvRlROVVpQM0FMRTJOaDJWN1ZrY1dqdTFyQ2JPdW56L1pzbDBsMkZx?=
- =?utf-8?B?MGxNQUh5NHZnZ2VIbnFCcWFvUmdMbzBYMGdKQkZpWEVncnZLWDhkZXorZ3k2?=
- =?utf-8?B?ejM1TUIrOGdDVGd1K3ZBWjk4MnExMU94L3RJSkQ4aFdpaFZXcWIrYW5heTVB?=
- =?utf-8?B?Z1dpSnptR1dCVlZrc2FlSmY1UnZPUjVwQkd2MVM4d0h1NXN6OU4rclkzWFJW?=
- =?utf-8?B?eUdhdk1YcEdseEVlRHlwMWc4Zmw5dTdqN2QrWjNKb3VSd3RsUzRSeDZIcmRv?=
- =?utf-8?B?TitHVThSdnl0OG1ueWNnLzJsRGhJL0VoTW91SlZ2RWUwS2M0SU1RNUFJYlMz?=
- =?utf-8?B?L2JvUitYYlRVMXd2Z2xQMEUvRUEyRnJtU3pVMjcyYVkzd01odmd6K2J4Qitn?=
- =?utf-8?B?U1pHdmR3YURYRCtuU2ROLzNPSVpSOWx6c3dxemZzcnVmN1hZUmRNQnlNRHRw?=
- =?utf-8?B?R2wvblVRV1BZRGlKdFNwNjlIVm9ZUlFGK2dReERkVEcyRTEvTEZQeC9uL0pr?=
- =?utf-8?B?aXJ3RzRFRlI1VXJlSWZBVEszRlZVRE1WeWtIWDlYZzcra2o4dVZlS093am5F?=
- =?utf-8?B?cUh3dlhiZ00zajNZRWx1dEMzMkNnQnk4bGNOV0ZsaHFmUlEyM2VqckhaN0lw?=
- =?utf-8?B?eVhQYXdjcXJJZW1CRnJkcG4rbjZTNGFNZ3lDVE9jMjF0Z1g0YkorVzBKazN5?=
- =?utf-8?B?bzhIalU4MGs3WnBhbG1mbkhyc1E1cXhGZGJtbkZvMHJSeGhqYzJBVERESlVO?=
- =?utf-8?B?aUl0dm9qRW1zRmw5azhVMHpCemlVQ0tMVkw4dnN3U0E5NTBPQlNqUEdwNndk?=
- =?utf-8?B?eG1pTzVTY0ttZ2NyUnNXS1MvNkNPdXJtZ3hqc3o2Rms3dHR1L3hlNTEzdWlG?=
- =?utf-8?B?ZW5ZWVh4Ykx0YU4vM3BPSnZzM2xDUW12Q1EvWlJIRUF5UVRDSVFzK3k4Wk9I?=
- =?utf-8?B?RjZLdjByWEU3UXpES25sQ29OYUF5eUVXcll5YkR2N1Q1NjF2Y2cwODRoeEwx?=
- =?utf-8?B?T1hMQU0rSWUrdU0vd3ViQm9vdnR6VE1iZG53N1ZGODJMMWVMZTNxZUZ2c3k2?=
- =?utf-8?B?SzZhRHFENXAwcHV2T1cxTzY0RnluSUIxVmlsYlZSOG5zUXhEZ1ZyMXFkTkpC?=
- =?utf-8?B?eGlwZmFVN0xDTktQTFZCSEdPcEZ2L2pHY212UmlUa0NkSkhqYjUrUmt5SDVh?=
- =?utf-8?B?Vks5T1hmZld6UU5qU2ZvVDYrWlRYbm93bm9CNzJRejI2QXRZZVduQkJFdTZp?=
- =?utf-8?B?Sk9XNWdjdVV3T05ndkFFSldYZjFjNy81YUJSS0xHdi95Z1Y5aGIxZXpicGZl?=
- =?utf-8?B?Yjh3eFJkbmlHNTVTKzRnLzlxZ1dLeURyYmd1QUxvSnNCeldFY21LaXBaMnky?=
- =?utf-8?B?MkcwbGNidExKSVovaHB1NnFxdXZJL24rcW5vQWIvUWpSOTdSVzRuYy83WXFN?=
- =?utf-8?B?T2dZWThlVmFZZFF3WVNSZi9kZ0pOSVNVUHN6eFVtd2NtRTh3U3AvYU43RS9E?=
- =?utf-8?B?WnM3UHoxekNCTHVrSFBKa2RGOGd2OEdRUTllZTNmVGJhRUtzbmEvUGZDdzNj?=
- =?utf-8?B?cXRaQm40M2JidVFhNi9aNUcwMWJIQ1BwRnZjVmRpSS9IWDExZUpVVDd0b1Nz?=
- =?utf-8?B?VS9zcjNWMi9Kd3F0R3pHeHFKWDBJeno2MVc3Z3ZRaE1lTXM0MEZDWSs1ak8y?=
- =?utf-8?B?dmltUzJnaW1xNng0T2ZXeHRqeVY0OEUzeVpRZkFuZ0Zja0RpdW11UT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 4f66e2ef-37d0-4367-58e3-08de7f9b15d2
-X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9567.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2026 18:21:59.7132 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: QVRpOfjCY/jMNgDi5A1/+R2xWrGcWtkY+r/dWqKhnyGo4B2MP0onEcqSRQgEj/i+XNLycQrZE743C5tELxSdNw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7342
-Received-SPF: permerror client-ip=2a01:111:f403:c007::2;
- envelope-from=nathanc@nvidia.com;
- helo=MW6PR02CU001.outbound.protection.outlook.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/32] hw/arm/virt: Introduce Tegra241 CMDQV support
+ for accelerated SMMUv3
+Content-Language: en-US
+To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
+ nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
+ jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
+ zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
+References: <20260226105056.897-1-skolothumtho@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260226105056.897-1-skolothumtho@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -155,154 +116,157 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi Shameer,
 
+On 2/26/26 11:50 AM, Shameer Kolothum wrote:
+> Hi,
+>
+> Changes from v2:
+>  https://lore.kernel.org/qemu-devel/20260206144823.80655-1-skolothumtho@nvidia.com/
+>
+>   - Addressed feedback on v2 and picked up R-by tags. Thanks!
+>   - Renamed the property from "tegra241-cmdqv" to a generic OnOffAuto
+>     "cmdqv".
+>   - Introduced a probe() callback to detect and initialize CMDQV
+>     support during device attach (patch #7).
+>   - Since CMDQV initialization is now deferred to device attach time,
+>     added a helper to link any unmapped MMIO/IRQ resources (patch #12).
+>   - Moved VINTF enable handling to the CONFIG ENABLE bit write path
+>     instead of any read/write access path (patch #17). Hopefully this
+>     won't break any corner cases.
+>   - Added checks for VINTF and CMDQV ENABLE bits before allocating
+>     vCMDQ HW queues, and free any allocated resources if disabled
+>     (patch #19).
+>   - Introduced a common helper for vEVENTQ read and validation
+>     (patch #23).
+>   - Updated bios-tables test IORT blobs for SMMUv3 device identifier
+>     changes (patch #29).
+>   - Rebasing on top of Philippe's CONFIG_DEVICES cleanup series [0],
+>     using tegra241-cmdqv-stubs.c (patch #6).
+>
+> Please find the complete branch here:
+> https://github.com/shamiali2008/qemu-master/tree/master-veventq-v8-vcmdq-v3
 
-On 3/11/2026 11:10 AM, Eric Auger wrote:
-> On 3/9/26 8:21 PM, Nathan Chen wrote:
->> From: Nathan Chen<nathanc@nvidia.com>
->>
->> Allow accelerated SMMUv3 Address Translation Services support property
->> to be derived from host IOMMU capabilities. Derive host values using
->> IOMMU_GET_HW_INFO, retrieving ATS capability from IDR0.
->>
->> Set the default value of ATS to auto. The default for ATS support used
->> to be set to off, but we change it to match what the host IOMMU
->> properties report.
->>
->> Add a "ats-enabled" read-only property for smmuv3 to address an
->> expected bool for the "ats" property in iort_smmuv3_devices().
->>
->> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
->> ---
->>   hw/arm/smmuv3-accel.c    | 25 +++++++++++++++++++++++--
->>   hw/arm/smmuv3.c          | 12 ++++++++++--
->>   hw/arm/virt-acpi-build.c |  2 +-
->>   include/hw/arm/smmuv3.h  |  2 +-
->>   4 files changed, 35 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->> index 617629bacd..8fec335557 100644
->> --- a/hw/arm/smmuv3-accel.c
->> +++ b/hw/arm/smmuv3-accel.c
->> @@ -52,6 +52,12 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice *pdev,
->>           return;
->>       }
->>   
->> +    /* Update ATS if auto from info */
->> +    if (s->ats == ON_OFF_AUTO_AUTO) {
->> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS,
->> +                               FIELD_EX32(info->idr[0], IDR0, ATS));
->> +    }
->> +
->>       accel->auto_finalised = true;
->>   }
->>   
->> @@ -124,6 +130,13 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->>                      smmuv3_oas_bits(FIELD_EX32(s->idr[5], IDR5, OAS)));
->>           return false;
->>       }
->> +    /* Check ATS value opted is compatible with Host SMMUv3 */
->> +    if (FIELD_EX32(info->idr[0], IDR0, ATS) <
->> +                FIELD_EX32(s->idr[0], IDR0, ATS)) {
->> +        error_setg(errp, "Host SMMUv3 doesn't support Address Translation"
->> +                   " Services");
->> +        return false;
->> +    }
-> Shouldn't this chunk be a separate fix for previous accel SMMU series?
-> 
-Yes, I'll separate this out to be a separate commit in the next refresh.
+with this version I still get those traces:
 
->>   
->>       /* QEMU SMMUv3 supports GRAN4K/GRAN16K/GRAN64K translation granules */
->>       if (FIELD_EX32(info->idr[5], IDR5, GRAN4K) !=
->> @@ -844,8 +857,12 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->>       /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
->>       s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
->>   
->> -    /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
->> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
->> +    /* Only override ATS if user explicitly set ON or OFF */
->> +    if (s->ats == ON_OFF_AUTO_ON) {
->> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 1);
->> +    } else if (s->ats == ON_OFF_AUTO_OFF) {
->> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 0);
->> +    }
->>   
->>       /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
->>       if (s->oas == SMMU_OAS_48BIT) {
->> @@ -923,4 +940,8 @@ void smmuv3_accel_init(SMMUv3State *s)
->>       s->s_accel = g_new0(SMMUv3AccelState, 1);
->>       bs->iommu_ops = &smmuv3_accel_ops;
->>       smmuv3_accel_as_init(s);
->> +
->> +    if (s->ats == ON_OFF_AUTO_AUTO) {
->> +        s->s_accel->auto_mode = true;
->> +    }
->>   }
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 068108e49b..197ba7c77b 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -317,6 +317,12 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
->>       smmuv3_accel_idr_override(s);
->>   }
->>   
->> +static bool get_ats_enabled(Object *obj, Error **errp)
->> +{
->> +    SMMUv3State *s = ARM_SMMUV3(obj);
->> +    return FIELD_EX32(s->idr[0], IDR0, ATS);
->> +}
->> +
->>   static void smmuv3_reset(SMMUv3State *s)
->>   {
->>       s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
->> @@ -1971,7 +1977,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->>               error_setg(errp, "ril can only be disabled if accel=on");
->>               return false;
->>           }
->> -        if (s->ats) {
->> +        if (s->ats == ON_OFF_AUTO_ON) {
->>               error_setg(errp, "ats can only be enabled if accel=on");
->>               return false;
->>           }
->> @@ -2128,7 +2134,7 @@ static const Property smmuv3_properties[] = {
->>       DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->>       /* RIL can be turned off for accel cases */
->>       DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
->> -    DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
->> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
->>       DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
->>       DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
->>   };
->> @@ -2153,6 +2159,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
->>       dc->hotpluggable = false;
->>       dc->user_creatable = true;
->>   
->> +    object_class_property_add_bool(klass, "ats-enabled", get_ats_enabled, NULL);
->> +
->>       object_class_property_set_description(klass, "accel",
->>           "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
->>           "configured in nested mode for vfio-pci dev assignment");
->> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
->> index 719d2f994e..6c77fc5f6a 100644
->> --- a/hw/arm/virt-acpi-build.c
->> +++ b/hw/arm/virt-acpi-build.c
->> @@ -402,7 +402,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
->>   
->>       bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
->>       sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
->> -    sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
->> +    sdev.ats = object_property_get_bool(obj, "ats-enabled", &error_abort);
-> are we obliged to use a prop here.
-> we can dynamic cast to the TYPE_ARM_SMMUV3 and use an exported helper, no?
+iommufd_backend_map_dma  iommufd=28 ioas=2 iova=0xc0b0000 size=0x10000
+addr=0xffff0bd30000 readonly=0 (-1)
+qemu-system-aarch64: warning: IOMMU_IOAS_MAP failed: Bad address, PCI BAR?
+qemu-system-aarch64: warning: vfio_container_dma_map(0xaaaea11e2870,
+0xc0b0000, 0x10000, 0xffff0bd30000) = -14 (Bad address)
 
-I'll look into replacing this ats-enabled prop with a helper that 
-accepts the dynamic casted TYPE_ARM_SMMUV3 object and determines whether 
-ATS support is being advertised.
+Eric
 
-Thanks,
-Nathan
+>
+> I have sanity tested this on an NVIDIA GRACE platform and will
+> continue with additional tests.
+>
+> Feedback and testing are very welcome.
+>
+> Thanks,
+> Shameer
+> [0] https://lore.kernel.org/qemu-devel/20260225031658.32095-1-philmd@linaro.org/
+>
+> ---
+> Background(from RFCv1):
+> https://lore.kernel.org/qemu-devel/20251210133737.78257-1-skolothumtho@nvidia.com/
+>
+> Thanks to Nicolin for the initial patches and testing on which this
+> is based.
+>
+> Tegra241 CMDQV extends SMMUv3 by allocating per-VM "virtual interfaces"
+> (VINTFs), each hosting up to 128 VCMDQs.
+>
+> Each VINTF exposes two 64KB MMIO pages:
+>  - Page0 – guest owned control and status registers (directly mapped
+>            into the VM)
+>  - Page1 – queue configuration registers (trapped/emulated by QEMU)
+>
+> Unlike the standard SMMU CMDQ, a guest owned Tegra241 VCMDQ does not
+> support the full command set. Only a subset, primarily invalidation
+> related commands, is accepted by the CMDQV hardware. For this reason,
+> a distinct CMDQV device must be exposed to the guest, and the guest OS
+> must include a Tegra241 CMDQV aware driver to take advantage of the
+> hardware acceleration.
+>
+> VCMDQ support is integrated via the IOMMU_HW_QUEUE_ALLOC mechanism,
+> allowing QEMU to attach guest configured VCMDQ buffers to the
+> underlying CMDQV hardware through IOMMUFD. The Linux kernel already
+> supports the full CMDQV virtualisation model via IOMMUFD[0].
+>
+> ---
+>
+> Nicolin Chen (15):
+>   backends/iommufd: Update iommufd_backend_get_device_info
+>   backends/iommufd: Update iommufd_backend_alloc_viommu to allow user
+>     ptr
+>   backends/iommufd: Introduce iommufd_backend_alloc_hw_queue
+>   backends/iommufd: Introduce iommufd_backend_viommu_mmap
+>   hw/arm/tegra241-cmdqv: Implement CMDQV init
+>   hw/arm/tegra241-cmdqv: Implement CMDQV vIOMMU alloc/free
+>   hw/arm/tegra241-cmdqv: Emulate global CMDQV registers
+>   hw/arm/tegra241-cmdqv: Emulate global and VINTF VCMDQ register reads
+>   hw/arm/tegra241-cmdqv: Emulate global and VINTF VCMDQ register writes
+>   hw/arm/tegra241-cmdqv: mmap VINTF Page0 for CMDQV
+>   hw/arm/tegra241-cmdqv: Allocate HW VCMDQs on base register programming
+>   hw/arm/tegra241-cmdqv: Map VINTF page0 into guest MMIO space
+>   hw/arm/tegra241-cmdqv: Add reset handler
+>   hw/arm/tegra241-cmdqv: Limit queue size based on backend page size
+>   hw/arm/virt-acpi: Advertise Tegra241 CMDQV nodes in DSDT
+>
+> Shameer Kolothum (17):
+>   hw/arm/smmuv3-accel: Introduce CMDQV ops interface
+>   hw/arm/tegra241-cmdqv: Add Tegra241 CMDQV ops backend stub
+>   hw/arm/smmuv3-accel: Wire CMDQV ops into accel lifecycle
+>   hw/arm/virt: Store SMMUv3 device objects in VirtMachineState.
+>   hw/arm/virt-acpi-build: Use stored SMMUv3 devices for IORT build
+>   hw/arm/tegra241-cmdqv: Probe host Tegra241 CMDQV support
+>   hw/arm/virt: Link SMMUv3 CMDQV resources to platform bus
+>   system/physmem: Add address_space_is_ram() helper
+>   hw/arm/tegra241-cmdqv: Use mmap'ed VINTF page0 as VCMDQ backing
+>   hw/arm/tegra241-cmdqv: Add vEVENTQ allocation and free
+>   hw/arm/smmuv3-accel: Introduce common helper for veventq read
+>   hw/arm/tegra241-cmdqv: Read and propagate Tegra241 CMDQV errors
+>   tests/qtest/bios-tables-test: Prepare for IORT SMMUv3 node identifier
+>     change
+>   hw/arm/smmuv3: Add per-device identifier property
+>   tests/qtest/bios-tables-test: Update IORT blobs for SMMUv3 identifier
+>     change
+>   hw/arm/smmuv3-accel: Introduce helper to query CMDQV type
+>   hw/arm/smmuv3: Add cmdqv property for SMMUv3 device
+>
+>  hw/arm/smmuv3-accel.h                         |  29 +
+>  hw/arm/tegra241-cmdqv.h                       | 342 ++++++++
+>  include/hw/arm/smmuv3.h                       |   3 +
+>  include/hw/arm/virt.h                         |   1 +
+>  include/system/iommufd.h                      |  16 +
+>  include/system/memory.h                       |  10 +
+>  backends/iommufd.c                            |  64 ++
+>  hw/arm/smmuv3-accel-stubs.c                   |  11 +
+>  hw/arm/smmuv3-accel.c                         | 196 ++++-
+>  hw/arm/smmuv3.c                               |   9 +
+>  hw/arm/tegra241-cmdqv-stubs.c                 |  18 +
+>  hw/arm/tegra241-cmdqv.c                       | 793 ++++++++++++++++++
+>  hw/arm/virt-acpi-build.c                      | 126 ++-
+>  hw/arm/virt.c                                 |  27 +
+>  hw/vfio/iommufd.c                             |   4 +-
+>  system/physmem.c                              |  11 +
+>  backends/trace-events                         |   4 +-
+>  hw/arm/Kconfig                                |   5 +
+>  hw/arm/meson.build                            |   2 +
+>  hw/arm/trace-events                           |   5 +
+>  tests/data/acpi/aarch64/virt/IORT.its_off     | Bin 172 -> 172 bytes
+>  tests/data/acpi/aarch64/virt/IORT.msi_gicv2m  | Bin 172 -> 172 bytes
+>  tests/data/acpi/aarch64/virt/IORT.smmuv3-dev  | Bin 260 -> 260 bytes
+>  .../data/acpi/aarch64/virt/IORT.smmuv3-legacy | Bin 192 -> 192 bytes
+>  24 files changed, 1596 insertions(+), 80 deletions(-)
+>  create mode 100644 hw/arm/tegra241-cmdqv.h
+>  create mode 100644 hw/arm/tegra241-cmdqv-stubs.c
+>  create mode 100644 hw/arm/tegra241-cmdqv.c
+>
+
 
