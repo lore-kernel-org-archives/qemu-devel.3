@@ -4,48 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A45C112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D91E9112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L7p-0000fn-1Z; Wed, 11 Mar 2026 11:05:29 -0400
+	id 1w0L8O-0002dI-Nq; Wed, 11 Mar 2026 11:06:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6b-0006Xq-7b; Wed, 11 Mar 2026 11:04:13 -0400
+ id 1w0L74-0007zZ-Nj; Wed, 11 Mar 2026 11:04:43 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6Z-0004A0-2e; Wed, 11 Mar 2026 11:04:12 -0400
+ id 1w0L72-0004FQ-GR; Wed, 11 Mar 2026 11:04:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241304; bh=8xhQiE1gLxgMzgWK9RXcErVqkvyOxnMT913Hwm5X38Y=;
+ t=1773241305; bh=4Nlfdi5GGWNBm6h4dFOA/ZCsnAbi/KsWlMfEchoZYTk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=F5buYiYW/+3m3t4jD47yc4EGxnBnjBfZ3o3LvlWOI9ABC/oT1Id+3XG9BquoPI7HR
- 6sIIls8KaA8nyTexD0vN8B8k7liV9u7DzfPHesDoWzmpz95Q/3/CVrDhPJhHno8VoW
- b65OUuaRAWtt6n6D+zQHkQPg4MzXm05Qtr027Lfo8RZ1WjfxU0i1jCAwBTcS+sR4Mg
- wjoGpCAJwZrTRT8h+APucPNcjDL5cO/vg5qkcwbQwsrdVSx284tS5U11bKnEZi9Clf
- futWjq7ElrHywyIXZdKx8hlOtsSmboCYhsBBkgLzoBP2cb2xcPWrMJMp+RTKK1k/L+
- p2Sb0sIQugPqg==
+ b=xbuCGkMj9QBoZyas6vUZX9njsd7X7F+vBqkVb9YnZxXwwGLwAoYIVI1dV/QBXlvgb
+ DluSXy6IYPyFYc2/+5NEJNXyh5esiIFvW2DZk6YPTvCwKIqxPA0bTggMd5VjGwAZJO
+ 1CH0mCWVT9ynqFIu9C96+m2Ts0MLkaY3SqlZfLZyEzfkkZx7YmfPQUh0FMC4xqjXoG
+ Qr9/b1ShYvZGop2Yj0J43e3l3Kmn/DeIv9qXFu1TzzxJJaY2HDZTzDEkQGeOT2+SbG
+ TND0c1Ks0N/dJtYCYE74DPTcc21tv823qgsMorBeUJsGOkbVzZZdTAdGXwoH/Dncer
+ C0Sr0IApiDUiQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ED02D191E54;
- Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5A45A191E59;
+ Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D817D37C2A6;
- Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 46D1337C2AB;
+ Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Oliver Chang <ochang@google.com>, Greg Kurz <groug@kaod.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 22/44] hw/9pfs: fix missing EOPNOTSUPP on Twstat and
- Trenameat for fs synth driver
-Date: Wed, 11 Mar 2026 18:01:54 +0300
-Message-ID: <20260311150221.1084186-22-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 27/44] io: fix cleanup for TLS I/O source data on
+ cancellation
+Date: Wed, 11 Mar 2026 18:01:59 +0300
+Message-ID: <20260311150221.1084186-27-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,62 +73,173 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-Renaming files/dirs is only supported by path-based fs drivers. EOPNOTSUPP
-should be returned on any renaming attempt for not path-based fs drivers.
-This was already the case for 9p "Trename" request type. However for 9p
-request types "Trenameat" and "Twstat" this was yet missing.
+The TLS code will create a GSource for tracking completion of the
+handshake process, passing a QIOChannelTLSData struct that contains
+various data items. The data struct is freed by the callback when
+it completes, which means when a source is cancelled, nothing is
+free'ing the data struct or its contents.
 
-So fix this by checking in Twstat and Trenameat request handlers whether
-the fs driver in use is really path based, if not return EOPNOTSUPP and
-abort further handling of the request.
+Switch to provide a data free callback to the GSource, which ensures
+the QIOChannelTLSData struct is always freed even when the main event
+callback never fires.
 
-This fixes a crash with the 9p "synth" fs driver which is not path-based.
-
-The crash happened because the synth driver stores and expects a raw
-V9fsSynthNode pointer instead of a C-string on V9fsPath.data. So the
-C-string delivered by 9p server to synth fs driver was incorrectly
-casted to a V9fsSynthNode pointer, eventually causing a segfault.
-
-Reported-by: Oliver Chang <ochang@google.com>
-Fixes: https://issues.oss-fuzz.com/issues/477990727
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3298
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Link: https://lore.kernel.org/qemu-devel/E1vrbaP-000Gqb-B3@kylie.crudebyte.com/
-(cherry picked from commit b72d15f47cbd2fc93580f33fa86a7e23595a68dd)
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit d39d0f3acdd7c1bb275db7e97b511f98254ecd9f)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index b1fcda574d..74dbf95a63 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3496,6 +3496,12 @@ static void coroutine_fn v9fs_renameat(void *opaque)
-         goto out_err;
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index 919bbf10dd..329ef6759f 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -153,13 +153,32 @@ struct QIOChannelTLSData {
+ };
+ typedef struct QIOChannelTLSData QIOChannelTLSData;
+ 
++static void qio_channel_tls_io_data_free(gpointer user_data)
++{
++    QIOChannelTLSData *data = user_data;
++    /*
++     * Usually 'task' will be NULL since the GSource
++     * callback will either complete the task or pass
++     * it on to a new GSource. We'll see a non-NULL
++     * task here only if the GSource was released before
++     * its callback triggers
++     */
++    if (data->task) {
++        qio_task_free(data->task);
++    }
++    if (data->context) {
++        g_main_context_unref(data->context);
++    }
++    g_free(data);
++}
++
+ static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
+                                              GIOCondition condition,
+                                              gpointer user_data);
+ 
+-static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+-                                           QIOTask *task,
+-                                           GMainContext *context)
++static gboolean qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
++                                               QIOTask *task,
++                                               GMainContext *context)
+ {
+     Error *err = NULL;
+     int status;
+@@ -170,8 +189,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+         trace_qio_channel_tls_handshake_fail(ioc);
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
+-        qio_task_free(task);
+-        return;
++        return TRUE;
      }
  
-+    /* if fs driver is not path based, return EOPNOTSUPP */
-+    if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
-+        err = -EOPNOTSUPP;
-+        goto out_err;
-+    }
-+
-     v9fs_path_write_lock(s);
-     err = v9fs_complete_renameat(pdu, olddirfid,
-                                  &old_name, newdirfid, &new_name);
-@@ -3586,6 +3592,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+     if (status == QCRYPTO_TLS_HANDSHAKE_COMPLETE) {
+@@ -184,7 +202,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+             trace_qio_channel_tls_credentials_allow(ioc);
          }
+         qio_task_complete(task);
+-        qio_task_free(task);
++        return TRUE;
+     } else {
+         GIOCondition condition;
+         QIOChannelTLSData *data = g_new0(typeof(*data), 1);
+@@ -208,8 +226,9 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+                                        condition,
+                                        qio_channel_tls_handshake_io,
+                                        data,
+-                                       NULL,
++                                       qio_channel_tls_io_data_free,
+                                        context);
++        return FALSE;
      }
-     if (v9stat.name.size != 0) {
-+        /* if fs driver is not path based, return EOPNOTSUPP */
-+        if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
-+            err = -EOPNOTSUPP;
-+            goto out;
-+        }
-         v9fs_path_write_lock(s);
-         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
-         v9fs_path_unlock(s);
+ }
+ 
+@@ -225,11 +244,9 @@ static gboolean qio_channel_tls_handshake_io(QIOChannel *ioc,
+         qio_task_get_source(task));
+ 
+     tioc->hs_ioc_tag = 0;
+-    g_free(data);
+-    qio_channel_tls_handshake_task(tioc, task, context);
+-
+-    if (context) {
+-        g_main_context_unref(context);
++    if (!qio_channel_tls_handshake_task(tioc, task, context)) {
++        /* task is kept by new GSource so must not be released yet */
++        data->task = NULL;
+     }
+ 
+     return FALSE;
+@@ -247,14 +264,16 @@ void qio_channel_tls_handshake(QIOChannelTLS *ioc,
+                         func, opaque, destroy);
+ 
+     trace_qio_channel_tls_handshake_start(ioc);
+-    qio_channel_tls_handshake_task(ioc, task, context);
++    if (qio_channel_tls_handshake_task(ioc, task, context)) {
++        qio_task_free(task);
++    }
+ }
+ 
+ static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
+                                        gpointer user_data);
+ 
+-static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+-                                     GMainContext *context)
++static gboolean qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
++                                         GMainContext *context)
+ {
+     GIOCondition condition;
+     QIOChannelTLSData *data;
+@@ -267,14 +286,12 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+         trace_qio_channel_tls_bye_fail(ioc);
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
+-        qio_task_free(task);
+-        return;
++        return TRUE;
+     }
+ 
+     if (status == QCRYPTO_TLS_BYE_COMPLETE) {
+         qio_task_complete(task);
+-        qio_task_free(task);
+-        return;
++        return TRUE;
+     }
+ 
+     data = g_new0(typeof(*data), 1);
+@@ -294,7 +311,10 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+     trace_qio_channel_tls_bye_pending(ioc, status);
+     ioc->bye_ioc_tag = qio_channel_add_watch_full(ioc->master, condition,
+                                                   qio_channel_tls_bye_io,
+-                                                  data, NULL, context);
++                                                  data,
++                                                  qio_channel_tls_io_data_free,
++                                                  context);
++    return FALSE;
+ }
+ 
+ 
+@@ -307,11 +327,9 @@ static gboolean qio_channel_tls_bye_io(QIOChannel *ioc, GIOCondition condition,
+     QIOChannelTLS *tioc = QIO_CHANNEL_TLS(qio_task_get_source(task));
+ 
+     tioc->bye_ioc_tag = 0;
+-    g_free(data);
+-    qio_channel_tls_bye_task(tioc, task, context);
+-
+-    if (context) {
+-        g_main_context_unref(context);
++    if (!qio_channel_tls_bye_task(tioc, task, context)) {
++        /* task is kept by new GSource so must not be released yet */
++        data->task = NULL;
+     }
+ 
+     return FALSE;
 -- 
 2.47.3
 
