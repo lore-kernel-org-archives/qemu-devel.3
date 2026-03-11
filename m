@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1582103E2E5
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 20:56:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C63103E2E7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 20:56:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Qar-0003qQ-W4; Wed, 11 Mar 2026 16:55:50 -0400
+	id 1w0Qai-0003el-EV; Wed, 11 Mar 2026 16:55:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0Qao-0003kk-9m; Wed, 11 Mar 2026 16:55:46 -0400
+ id 1w0QaQ-0003Zs-LU; Wed, 11 Mar 2026 16:55:26 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0Qal-0008FH-Bf; Wed, 11 Mar 2026 16:55:45 -0400
+ id 1w0QaF-0007qW-1z; Wed, 11 Mar 2026 16:55:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773262468; bh=f6Nx+HWByGmnQmKv2UQgmEd4UeKnLT2KP2r/nzZ06NM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=mDGLgadHZsf3KuyOl/VyviKs7TiWi7kLJtdR/xMDMFel41ViypF87XZT1CkqHupsW
- B4vYH1Nx1q2jNgAxrBKipUHB7QimlzT8vE5ugJJ8JQd4fonrM4Dj9ZRZlw38Hgmyze
- zSJpLFlN1H4EbiVcamTzCqVWmYme+7XpkIZHTImk9V9es2MHxIdTMhRMzJPR1Wd672
- PIrHdBpJvQu8aHfMGvS9mFrmwMGu7sFfDxT1zBKaLnsBEplClPqlGlzEHgQeU7jEJz
- LbA5sV77Ygq4aZSUoCunhZ7rMxtByVYkkU4KfHp5/veSdM5jpF3i80JB5OxU3HLgHA
- tKsX0X1sR720Q==
+ t=1773262468; bh=maegopCUP/tozWfVxHo90LVYVuWpHvg/lE5sloss4Xw=;
+ h=From:To:Cc:Subject:Date;
+ b=wjpVTeytp3EIneLdCSnC2vLfSs0iVjI7T+osXH85T5ME2t+aWgazH69EFIItA6UF+
+ PZa3VdnzDZh7i+bTttpwk9GWsAMXEwoVt6pBfAZN1YnLTwRz6hZBWcopOsvd13w051
+ 9PkR0iGrWfL7JeKzt/Rz4gCI4EfGNdf6j+lrHguFUtCx8+p/u3VC1AP5qGywJ6iCG+
+ e07w6ASrqQww3iXpN/urBNnK/aEn8p0ZTII3eVz7jofZBHFye46x7rESm3yVpmlDAB
+ 4kNqlMV3D7AWTcF2T4slU4HpObiKLXrtHNHg3LE52kDg58sHPjtnidWxqhjK5BCAuo
+ yd3syI3U5CZSA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F35661921F1;
+ by isrv.corpit.ru (Postfix) with ESMTP id C9BB61921ED;
  Wed, 11 Mar 2026 23:54:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5452D37C4D6;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 05B7037C4D2;
  Wed, 11 Mar 2026 23:55:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PATCH trivial v2 4/7] meson.build: stop checking for inotify_init()
-Date: Wed, 11 Mar 2026 23:54:52 +0300
-Message-ID: <20260311205459.1101023-5-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH trivial v2 0/7] a few cleanups for linux-user: splice, inotify,
+ epoll
+Date: Wed, 11 Mar 2026 23:54:48 +0300
+Message-ID: <20260311205459.1101023-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260311205459.1101023-1-mjt@tls.msk.ru>
-References: <20260311205459.1101023-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -69,37 +68,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-the only place in qemu which used the check for inotify_init()
-was linux-user, which now assumes inotify_init() is always
-present.  There's no need to check for this function anymore.
+Stop checking for linux syscalls which has been introduced long
+ago, - on modern system where qemu can run, these syscalls are
+always present.
 
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
----
- meson.build | 7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+I kept CONFIG_EPOLL separate, not replacing it with CONFIG_LINUX,
+since I think it is more understandable this way.  As an option,
+the last patch can make s/CONFIG_EPOLL/CONFIG_LINUX_EPOLL/ to make
+it explicit, but I'd love to make it EPOLL not LINUX.
 
-diff --git a/meson.build b/meson.build
-index 97af137f3f..bc60f71825 100644
---- a/meson.build
-+++ b/meson.build
-@@ -2675,15 +2675,12 @@ endif
- config_host_data.set('CONFIG_ASAN_IFACE_FIBER', have_asan_fiber)
- 
- inotify = not_found
--have_inotify_init = cc.has_header_symbol('sys/inotify.h', 'inotify_init')
- have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
--if (have_inotify_init or have_inotify_init1) and not cc.has_function('inotify_init1')
-+if have_inotify_init1 and not cc.has_function('inotify_init1')
-   # FreeBSD 14 and older need libinotify-kqueue wrapper
-   inotify = cc.find_library('inotify')
--  have_inotify_init = have_inotify_init and inotify.found()
--  have_inotify_init1 = have_inotify_init1 and inotify.found()
-+  have_inotify_init1 = inotify.found()
- endif
--config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
- config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
- 
- # has_header_symbol
+v2: rebase on top of native inotify on freebsd changes
+ (meson.build: stop checking for inotify_init())
+
+Michael Tokarev (7):
+  linux-user/syscall.c: assume splice is always present
+  meson.build: stop checking for splice()
+  linux-user: assume inotify sycalls are always present
+  meson.build: stop checking for inotify_init()
+  linux-user: assume epoll is always present
+  meson.build: do not check for epoll.h (CONFIG_EPOLL)
+  rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL, and stop checking for
+    epoll in meson.build
+
+ linux-user/fd-trans.c     |  5 -----
+ linux-user/fd-trans.h     |  4 ----
+ linux-user/syscall.c      | 44 +++++++--------------------------------
+ linux-user/syscall_defs.h |  3 ---
+ meson.build               | 19 +++--------------
+ util/aio-posix.h          |  4 ++--
+ util/meson.build          |  2 +-
+ 7 files changed, 13 insertions(+), 68 deletions(-)
+
 -- 
 2.47.3
 
