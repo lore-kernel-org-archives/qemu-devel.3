@@ -4,60 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BD2112583A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9501125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LDv-0005AB-3D; Wed, 11 Mar 2026 11:11:47 -0400
+	id 1w0LK1-0000Tb-T4; Wed, 11 Mar 2026 11:18:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBj-00015f-KX; Wed, 11 Mar 2026 11:09:31 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LJ0-00006w-Us; Wed, 11 Mar 2026 11:17:08 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBh-0005hR-BH; Wed, 11 Mar 2026 11:09:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241483; bh=e14xFKU6PZwBStPyZdwDeVLuMz+xSw0CgIS4SxWRuqc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=bwqmhYqYf75eV5bF2uGaOf5kzcQopYBwp4J+50l3p1hOOhXrtP/ZUEYCu2ZlyHdJH
- 5HXPN0KBi0cZgXMRvbzaCrZRQ3n9w/wU4WaKwoYTbSlG30Yy52XEqTtyYBGxI9kwAk
- nxzoKccZriQan6mlNj+7PHzjlwmTXdTtkGOMPCrWGYPTpHlzyjdHLfCtWr6l5BZg2m
- qeetV5Q5nsx7PYjyAK6eECKjlSaLC+RwonJ3hw/6/GDvD+TqgCHZSP6SIzRiZrCkq+
- MSAP9EBt9SsBgoMBARGgA1dOqmlgaOP4ZLo+FGx38oGlgADfLBtjtt4H0/5cBDOWS+
- Hifr34hkWunuA==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 06CBD191E9F;
- Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E846237C2E0;
- Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 28/46] io: separate freeing of tasks from marking them
- as complete
-Date: Wed, 11 Mar 2026 18:03:04 +0300
-Message-ID: <20260311150327.1084669-28-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LIx-0000Wx-8m; Wed, 11 Mar 2026 11:17:02 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773242183; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=G1hagRa4xojlEj9k9aUjM5hZnaxAlpbf5aPag3qOp4sJfvDKre8+jw3xXQIhvbW7WQkIjdCrfRvMeYH5iNGwcjNq4lTdz6/wRmeDfzyncMCU5hAUKa/CN+7QJEUjiJe7Nsgwl6V4sLrQkQIwED0m8GHFwZ3/Fy7HT2aMJ2f5+eg=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773242183;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=Xiwc6ZTsoVE3sApNhrgrxie2j913R3HBh0AQxHunnbc=; 
+ b=QIN7WirFHOLQw71nqs2JYJLBvb7+gV77MLArw/rFPWVopAAbZcDT4w3cuvvy4fMN3YvKQI7DFCs0nXJ+gZJO4VQHHkVwq9Yo9ASFV1Y+n83hGJYIcfBWd9PZyD5kdgMltJ6YtpEC81VUoLWdsxTggPNQdKUHgYal8EPoaRh1YEM=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242183; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
+ bh=Xiwc6ZTsoVE3sApNhrgrxie2j913R3HBh0AQxHunnbc=;
+ b=v7nhr3pycgbbJZUYSfbkc0/cOtQTLzLolsHYkCEQ0s7qBE3It80+/P5Vs/lFCSGt
+ UAIdnT2u3O00gzNtysCmoaZNuK8Iu19jomFXEA6KvXKfRIdn88t+9DbLu1X+SeFiAMe
+ U4lcEiSG7OVAssd2dJ/vPc2ZnpPH+nKXey0UPesM=
+Received: by mx.zohomail.com with SMTPS id 1773242181330266.4815230829188;
+ Wed, 11 Mar 2026 08:16:21 -0700 (PDT)
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+Date: Wed, 11 Mar 2026 15:15:29 +0000
+Subject: [PATCH 02/14] accel/mshv: move msr.c to target/i386
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260311-mshv_accel_arm64_supp-v1-2-c31699b7bc1f@anirudhrb.com>
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+X-Mailer: b4 0.14.3
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,252 +84,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
 
-The original design of QIOTask was intended to simplify lifecycle
-management by automatically freeing it when the task was marked as
-complete. This overlooked the fact that when a QIOTask is used in
-combination with a GSource, there may be times when the source
-callback is never invoked. This is typically when a GSource is
-released before any I/O event arrives. In such cases it is not
-desirable to mark a QIOTask as complete, but it still needs to be
-freed. To satisfy this, the task must be released manually.
+This file has x86 specific implementations. Move this file to i386
+folder in preparation for ARM64 MSHV support.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 163cd0ae1182e67509b271f244a73dfd938337b9)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+---
+ accel/mshv/meson.build            | 1 -
+ target/i386/mshv/meson.build      | 1 +
+ {accel => target/i386}/mshv/msr.c | 0
+ 3 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/io/task.h b/include/io/task.h
-index 0b5342ee84..98847f5994 100644
---- a/include/io/task.h
-+++ b/include/io/task.h
-@@ -96,7 +96,7 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  *                         1000,
-  *                         myobject_operation_timer,
-  *                         task,
-- *                         NULL);
-+ *                         qio_task_free);
-  *    }
-  *   </programlisting>
-  * </example>
-@@ -138,9 +138,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  * the callback func 'myobject_operation_notify' shown
-  * earlier to deal with the results.
-  *
-- * Once this function returns false, object_unref will be called
-- * automatically on the task causing it to be released and the
-- * ref on QMyObject dropped too.
-+ * Once this function returns FALSE, the task will be freed,
-+ * causing it release the ref on QMyObject too.
-  *
-  * The QIOTask module can also be used to perform operations
-  * in a background thread context, while still reporting the
-@@ -208,8 +207,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  * 'err' attribute in the task object to determine if
-  * the operation was successful or not.
-  *
-- * The returned task will be released when qio_task_complete()
-- * is invoked.
-+ * The returned task must be released by calling
-+ * qio_task_free() when no longer required.
-  *
-  * Returns: the task struct
-  */
-@@ -218,6 +217,19 @@ QIOTask *qio_task_new(Object *source,
-                       gpointer opaque,
-                       GDestroyNotify destroy);
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+index c1b1787c5e..e433187cde 100644
+--- a/accel/mshv/meson.build
++++ b/accel/mshv/meson.build
+@@ -1,6 +1,5 @@
+ system_ss.add(when: 'CONFIG_MSHV', if_true: files(
+   'irq.c',
+   'mem.c',
+-  'msr.c',
+   'mshv-all.c'
+ ))
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index 49f28d4a5b..6091c21887 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -2,6 +2,7 @@ i386_mshv_ss = ss.source_set()
  
-+/**
-+ * qio_task_free:
-+ * task: the task object to free
-+ *
-+ * Free the resources associated with the task. Typically
-+ * the qio_task_complete() method will be called immediately
-+ * before this to trigger the task callback, however, it is
-+ * permissible to free the task in the case of cancellation.
-+ * The destroy callback will be used to release the opaque
-+ * data provided to qio_task_new().
-+ */
-+void qio_task_free(QIOTask *task);
-+
- /**
-  * qio_task_run_in_thread:
-  * @task: the task struct
-@@ -268,8 +280,9 @@ void qio_task_wait_thread(QIOTask *task);
-  * qio_task_complete:
-  * @task: the task struct
-  *
-- * Invoke the completion callback for @task and
-- * then free its memory.
-+ * Invoke the completion callback for @task. This should typically
-+ * only be invoked once on a task, and then qio_task_free() used
-+ * to free it.
-  */
- void qio_task_complete(QIOTask *task);
+ i386_mshv_ss.add(files(
+   'mshv-cpu.c',
++  'msr.c',
+ ))
  
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index d1c6cf72b2..ce4ee6bb98 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -170,6 +170,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-         trace_qio_channel_tls_handshake_fail(ioc);
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         return;
-     }
- 
-@@ -183,6 +184,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-             trace_qio_channel_tls_credentials_allow(ioc);
-         }
-         qio_task_complete(task);
-+        qio_task_free(task);
-     } else {
-         GIOCondition condition;
-         QIOChannelTLSData *data = g_new0(typeof(*data), 1);
-@@ -270,11 +272,13 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
-         trace_qio_channel_tls_bye_fail(ioc);
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         return;
-     }
- 
-     if (status == QCRYPTO_TLS_BYE_COMPLETE) {
-         qio_task_complete(task);
-+        qio_task_free(task);
-         return;
-     }
- 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index ec5e09f9ab..13975de4d8 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -545,6 +545,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -561,6 +562,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-             trace_qio_channel_websock_handshake_complete(ioc);
-             qio_task_complete(task);
-         }
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -588,6 +590,7 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-diff --git a/io/task.c b/io/task.c
-index 451f26f8b4..331febd4e1 100644
---- a/io/task.c
-+++ b/io/task.c
-@@ -70,8 +70,12 @@ QIOTask *qio_task_new(Object *source,
-     return task;
- }
- 
--static void qio_task_free(QIOTask *task)
-+void qio_task_free(QIOTask *task)
- {
-+    if (!task) {
-+        return;
-+    }
-+
-     qemu_mutex_lock(&task->thread_lock);
-     if (task->thread) {
-         if (task->thread->destroy) {
-@@ -110,6 +114,7 @@ static gboolean qio_task_thread_result(gpointer opaque)
- 
-     trace_qio_task_thread_result(task);
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     return FALSE;
- }
-@@ -196,7 +201,6 @@ void qio_task_complete(QIOTask *task)
- {
-     task->func(task, task->opaque);
-     trace_qio_task_complete(task);
--    qio_task_free(task);
- }
- 
- 
-diff --git a/tests/unit/test-io-task.c b/tests/unit/test-io-task.c
-index 115dba8970..b1c8ecb7ab 100644
---- a/tests/unit/test-io-task.c
-+++ b/tests/unit/test-io-task.c
-@@ -73,6 +73,7 @@ static void test_task_complete(void)
-     src = qio_task_get_source(task);
- 
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     g_assert(obj == src);
- 
-@@ -84,6 +85,28 @@ static void test_task_complete(void)
- }
- 
- 
-+static void test_task_cancel(void)
-+{
-+    QIOTask *task;
-+    Object *obj = object_new(TYPE_DUMMY);
-+    Object *src;
-+    struct TestTaskData data = { NULL, NULL, false };
-+
-+    task = qio_task_new(obj, task_callback, &data, NULL);
-+    src = qio_task_get_source(task);
-+
-+    qio_task_free(task);
-+
-+    g_assert(obj == src);
-+
-+    object_unref(obj);
-+
-+    g_assert(data.source == NULL);
-+    g_assert(data.err == NULL);
-+    g_assert(data.freed == false);
-+}
-+
-+
- static void task_data_free(gpointer opaque)
- {
-     struct TestTaskData *data = opaque;
-@@ -101,6 +124,7 @@ static void test_task_data_free(void)
-     task = qio_task_new(obj, task_callback, &data, task_data_free);
- 
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     object_unref(obj);
- 
-@@ -123,6 +147,7 @@ static void test_task_failure(void)
- 
-     qio_task_set_error(task, err);
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     object_unref(obj);
- 
-@@ -260,6 +285,7 @@ int main(int argc, char **argv)
-     module_call_init(MODULE_INIT_QOM);
-     type_register_static(&dummy_info);
-     g_test_add_func("/crypto/task/complete", test_task_complete);
-+    g_test_add_func("/crypto/task/cancel", test_task_cancel);
-     g_test_add_func("/crypto/task/datafree", test_task_data_free);
-     g_test_add_func("/crypto/task/failure", test_task_failure);
-     g_test_add_func("/crypto/task/thread_complete", test_task_thread_complete);
+ i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
+diff --git a/accel/mshv/msr.c b/target/i386/mshv/msr.c
+similarity index 100%
+rename from accel/mshv/msr.c
+rename to target/i386/mshv/msr.c
+
 -- 
-2.47.3
+2.43.0
 
 
