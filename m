@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C571125875
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:41:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33626112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:41:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PNu-0005Oo-42; Wed, 11 Mar 2026 15:38:22 -0400
+	id 1w0POv-00013G-Nl; Wed, 11 Mar 2026 15:39:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNs-0005O2-9P; Wed, 11 Mar 2026 15:38:20 -0400
+ id 1w0POq-0000P4-En; Wed, 11 Mar 2026 15:39:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNq-0000Vr-HQ; Wed, 11 Mar 2026 15:38:20 -0400
+ id 1w0POo-0000jx-OC; Wed, 11 Mar 2026 15:39:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257669; bh=eF3GHeGDQgncqVtw2bAv743vc7IEjgHLgFSfcV78Oqg=;
+ t=1773257670; bh=+W3eicgXEE2AmYSo7J29g83NNYv1Bgs92Oh+32965CA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=imi6p270j8PXCc6W4m/iyoRUg4Axez/ahctYoT9/GlFtxjXEICMHoPcSvGYV8uywO
- VjUh+T13OZtIICCBL9QA8aAaxkNMvEig+d3lJMfrJTbiCTyXK87Xx2ni576ZkYPN+f
- kwGKpXaCn0CiQ/u/uh3PApp9UYfU/hzUT9u2lCTnINOaFVac8gD2hoqatuotiwitMJ
- JNo4jj8bPSUB5q6nUVzBfEmcbaopf5YIcPOWpaABqarjDOd0YybxEy1BgWqrcnJ5T/
- xohRkmMvj6K0O68rGKBe/z2pz1l7k7U5U+z9LjpKyLHvyYb7nfx7BJ6YytUuqZZh7y
- mWEUoce9IqidA==
+ b=MnKVxMUTGuLR2wZJ2JiuWXAuaUmAFn045MHOpOR4T0k0sulUKeBC2qw2ZU2nIGtsQ
+ UIPlsTfNLUSpNVXgnuGvS+lYL3sO/qUIjci8KVm8XSSEg+sHN1YEtPJ5wIi0vFHF4v
+ CaEGA9i4YYqjhakxKlcojKXWSlhmgTCjzITrBiaDG1ZEIChJOKKvxk+W1IVr5ZbaLB
+ 5wbsQ+bKGoF+oNyPVvXteXgoIkHM7BmzRmBx0ViyADLiryAV5VIN48OsjLqszHgA9i
+ kgzaP5K6+5cxPhH3G4x86Th2+nx5CXl+YCflzxSqAp4vWwv0AT9AnJVvQU1IcHCIdD
+ sOwy4cwURwWGw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0B06E19210C;
- Wed, 11 Mar 2026 22:34:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 045D1192117;
+ Wed, 11 Mar 2026 22:34:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4C29E37C471;
- Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4864E37C47C;
+ Wed, 11 Mar 2026 22:35:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Antoine Damhet <adamhet@scaleway.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 36/53] block/curl: fix concurrent completion handling
-Date: Wed, 11 Mar 2026 22:34:29 +0300
-Message-ID: <20260311193449.1096110-36-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bingwu Zhang <xtex@astrafall.org>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 47/53] tests/tcg/multiarch/test-mmap: Check mmaps
+ beyond reserved_va
+Date: Wed, 11 Mar 2026 22:34:40 +0300
+Message-ID: <20260311193449.1096110-47-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -69,60 +70,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Antoine Damhet <adamhet@scaleway.com>
+From: Bingwu Zhang <xtex@astrafall.org>
 
-curl_multi_check_completion would bail upon the first completed
-transfer even if more completion messages were available thus leaving
-some in flight IOs stuck.
+Unfixed mmap calls where start > reserved_va or the max guest addr
+should have a valid result.
 
-Rework a bit the loop to make the iterations clearer and drop the breaks.
-
-The original hang can be somewhat reproduced with the following command:
-
-$ qemu-img convert -p -m 16 -O qcow2 -c --image-opts \
-  'file.driver=https,file.url=https://scaleway.testdebit.info/10G.iso,file.readahead=1M' \
-  /tmp/test.qcow2
-
-Fixes: 1f2cead32443 ("curl: Ensure all informationals are checked for completion")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
-Message-ID: <20260212162730.440855-2-adamhet@scaleway.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 6f7b0a23a6ea0cc72ad222ab37936248d99d4256)
+Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit c865b6bce5d0c882b86fb7c3512174cdaf235017)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/curl.c b/block/curl.c
-index 4e77c93b46..6dccf00256 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -324,17 +324,11 @@ curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len, CURLAIOCB *acb)
- static void curl_multi_check_completion(BDRVCURLState *s)
- {
-     int msgs_in_queue;
-+    CURLMsg *msg;
- 
-     /* Try to find done transfers, so we can free the easy
-      * handle again. */
--    for (;;) {
--        CURLMsg *msg;
--        msg = curl_multi_info_read(s->multi, &msgs_in_queue);
--
--        /* Quit when there are no more completions */
--        if (!msg)
--            break;
--
-+    while ((msg = curl_multi_info_read(s->multi, &msgs_in_queue))) {
-         if (msg->msg == CURLMSG_DONE) {
-             int i;
-             CURLState *state = NULL;
-@@ -397,7 +391,6 @@ static void curl_multi_check_completion(BDRVCURLState *s)
-             }
- 
-             curl_clean_state(state);
--            break;
-         }
-     }
+diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
+index e297f4b1e9..fd9055a90e 100644
+--- a/tests/tcg/multiarch/test-mmap.c
++++ b/tests/tcg/multiarch/test-mmap.c
+@@ -491,6 +491,20 @@ void check_shrink_mmaps(void)
+     munmap(c, 2 * pagesize);
  }
+ 
++void check_mmaps_beyond_addr_space(void)
++{
++    unsigned char *addr;
++    addr = mmap((void *)(-(unsigned long)pagesize * 10), pagesize * 2,
++                PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
++    fprintf(stdout, "%s addr=%p errno=%d", __func__, (void *)addr, errno);
++    fail_unless(addr != MAP_FAILED);
++
++    memcpy(dummybuf, addr, 2 * pagesize);
++    munmap(addr, 2 * pagesize);
++
++    fprintf(stdout, " passed\n");
++}
++
+ int main(int argc, char **argv)
+ {
+ 	char tempname[] = "/tmp/.cmmapXXXXXX";
+@@ -534,6 +548,7 @@ int main(int argc, char **argv)
+ 	check_file_unfixed_eof_mmaps();
+ 	check_invalid_mmaps();
+     check_shrink_mmaps();
++    check_mmaps_beyond_addr_space();
+ 
+ 	/* Fails at the moment.  */
+ 	/* check_aligned_anonymous_fixed_mmaps_collide_with_host(); */
 -- 
 2.47.3
 
