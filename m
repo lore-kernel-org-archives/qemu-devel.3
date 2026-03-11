@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 203CD112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A45C112583F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L7p-0000l8-Op; Wed, 11 Mar 2026 11:05:29 -0400
+	id 1w0L7p-0000fn-1Z; Wed, 11 Mar 2026 11:05:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L5k-0004wV-Rb; Wed, 11 Mar 2026 11:03:22 -0400
+ id 1w0L6b-0006Xq-7b; Wed, 11 Mar 2026 11:04:13 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L5i-00045G-VZ; Wed, 11 Mar 2026 11:03:20 -0400
+ id 1w0L6Z-0004A0-2e; Wed, 11 Mar 2026 11:04:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241304; bh=9oHbpUeDEd6XwzIlLrrqJ5LBuhqpm9zsXXRYrX+/U3c=;
+ t=1773241304; bh=8xhQiE1gLxgMzgWK9RXcErVqkvyOxnMT913Hwm5X38Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wQqVANafwYeAgkLtKLPiS0rxV0oV3oYwIOdsfnHBO1iNMyc0RGbPEQb+UmJdlhw22
- xF0xnc6gF8F+6kKYPb/iUKKfHO9SjkojVpbQvObRo7X3ykdXjtjQsFIfVcUtUv2UhR
- Oy3cWQmfqYhscicWvfW8Y4uashHfAUkgxe/4xEQasW/lZcGPKzTYHUQQxtFtcLol7U
- pMfUotSSxNXMoUtmXs2Qbz9LGiLBmW/uJZsG9OV42os9T+gMGbHpI5iFbZi3xRnENN
- H8/HnhCE0MEh8hJRs1CagqbD6aPRZC7ugrdJpmULYo3heI4SeQLX/ZbF4X3WC6IQpL
- E+Rz+x8QKIGWg==
+ b=F5buYiYW/+3m3t4jD47yc4EGxnBnjBfZ3o3LvlWOI9ABC/oT1Id+3XG9BquoPI7HR
+ 6sIIls8KaA8nyTexD0vN8B8k7liV9u7DzfPHesDoWzmpz95Q/3/CVrDhPJhHno8VoW
+ b65OUuaRAWtt6n6D+zQHkQPg4MzXm05Qtr027Lfo8RZ1WjfxU0i1jCAwBTcS+sR4Mg
+ wjoGpCAJwZrTRT8h+APucPNcjDL5cO/vg5qkcwbQwsrdVSx284tS5U11bKnEZi9Clf
+ futWjq7ElrHywyIXZdKx8hlOtsSmboCYhsBBkgLzoBP2cb2xcPWrMJMp+RTKK1k/L+
+ p2Sb0sIQugPqg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5F584191E4D;
+ by isrv.corpit.ru (Postfix) with ESMTP id ED02D191E54;
  Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4AD2B37C29F;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D817D37C2A6;
  Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- =?UTF-8?q?=E7=BD=97=E9=93=AD=E6=BA=90?= <myluo24@m.fudan.edu.cn>,
- "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 15/44] virtio-snd: handle 5.14.6.2 for PCM_INFO
- properly
-Date: Wed, 11 Mar 2026 18:01:47 +0300
-Message-ID: <20260311150221.1084186-15-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Oliver Chang <ochang@google.com>, Greg Kurz <groug@kaod.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 22/44] hw/9pfs: fix missing EOPNOTSUPP on Twstat and
+ Trenameat for fs synth driver
+Date: Wed, 11 Mar 2026 18:01:54 +0300
+Message-ID: <20260311150221.1084186-22-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,86 +71,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-The section 5.14.6.2 of the VIRTIO spec says:
+Renaming files/dirs is only supported by path-based fs drivers. EOPNOTSUPP
+should be returned on any renaming attempt for not path-based fs drivers.
+This was already the case for 9p "Trename" request type. However for 9p
+request types "Trenameat" and "Twstat" this was yet missing.
 
-  5.14.6.2 Driver Requirements: Item Information Request
+So fix this by checking in Twstat and Trenameat request handlers whether
+the fs driver in use is really path based, if not return EOPNOTSUPP and
+abort further handling of the request.
 
-  - The driver MUST NOT set start_id and count such that start_id +
-    count is greater than the total number of particular items that is
-    indicated in the device configuration space.
+This fixes a crash with the 9p "synth" fs driver which is not path-based.
 
-  - The driver MUST provide a buffer of sizeof(struct virtio_snd_hdr) +
-    count * size bytes for the response.
+The crash happened because the synth driver stores and expects a raw
+V9fsSynthNode pointer instead of a C-string on V9fsPath.data. So the
+C-string delivered by 9p server to synth fs driver was incorrectly
+casted to a V9fsSynthNode pointer, eventually causing a segfault.
 
-While we performed some check for the second requirement, it failed to
-check for integer overflow.
-
-Add also a check for the first requirement, which should limit exposure
-to any overflow, since realistically the number of streams will be low
-enough in value such that overflow is improbable.
-
-Cc: qemu-stable@nongnu.org
-Reported-by: 罗铭源 <myluo24@m.fudan.edu.cn>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260220-virtio-snd-series-v1-3-207c4f7200a2@linaro.org>
-(cherry picked from commit 61679d7dcfa2dffc8fb115aa19b09e0e7cf5ea5c)
+Reported-by: Oliver Chang <ochang@google.com>
+Fixes: https://issues.oss-fuzz.com/issues/477990727
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3298
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Link: https://lore.kernel.org/qemu-devel/E1vrbaP-000Gqb-B3@kylie.crudebyte.com/
+(cherry picked from commit b72d15f47cbd2fc93580f33fa86a7e23595a68dd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 6266e84fd9..520fc7240c 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -156,7 +156,7 @@ static virtio_snd_pcm_set_params *virtio_snd_pcm_get_params(VirtIOSound *s,
- static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-                                        virtio_snd_ctrl_command *cmd)
- {
--    uint32_t stream_id, start_id, count, size;
-+    uint32_t stream_id, start_id, count, size, tmp;
-     virtio_snd_pcm_info val;
-     virtio_snd_query_info req;
-     VirtIOSoundPCMStream *stream = NULL;
-@@ -179,11 +179,34 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
-     count = le32_to_cpu(req.count);
-     size = le32_to_cpu(req.size);
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index b1fcda574d..74dbf95a63 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3496,6 +3496,12 @@ static void coroutine_fn v9fs_renameat(void *opaque)
+         goto out_err;
+     }
  
--    if (iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
--        sizeof(virtio_snd_hdr) + size * count) {
-+    /*
-+     * 5.14.6.2 Driver Requirements: Item Information Request
-+     * "The driver MUST NOT set start_id and count such that start_id + count
-+     * is greater than the total number of particular items that is indicated
-+     * in the device configuration space."
-+     */
-+    if (start_id > s->snd_conf.streams
-+        || !g_uint_checked_add(&tmp, start_id, count)
-+        || start_id + count > s->snd_conf.streams) {
-+        error_report("pcm info: start_id + count is greater than the total "
-+                     "number of streams, got: start_id = %u, count = %u",
-+                     start_id, count);
-+        cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-+        return;
++    /* if fs driver is not path based, return EOPNOTSUPP */
++    if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
++        err = -EOPNOTSUPP;
++        goto out_err;
 +    }
 +
-+    /*
-+     * 5.14.6.2 Driver Requirements: Item Information Request
-+     * "The driver MUST provide a buffer of sizeof(struct virtio_snd_hdr) +
-+     * count * size bytes for the response."
-+     */
-+    if (!g_uint_checked_mul(&tmp, size, count)
-+        || !g_uint_checked_add(&tmp, tmp, sizeof(virtio_snd_hdr))
-+        || iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
-+           sizeof(virtio_snd_hdr) + size * count) {
-         error_report("pcm info: buffer too small, got: %zu, needed: %zu",
-                 iov_size(cmd->elem->in_sg, cmd->elem->in_num),
--                sizeof(virtio_snd_pcm_info));
-+                sizeof(virtio_snd_pcm_info) * count);
-         cmd->resp.code = cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
-         return;
+     v9fs_path_write_lock(s);
+     err = v9fs_complete_renameat(pdu, olddirfid,
+                                  &old_name, newdirfid, &new_name);
+@@ -3586,6 +3592,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+         }
      }
+     if (v9stat.name.size != 0) {
++        /* if fs driver is not path based, return EOPNOTSUPP */
++        if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
++            err = -EOPNOTSUPP;
++            goto out;
++        }
+         v9fs_path_write_lock(s);
+         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
+         v9fs_path_unlock(s);
 -- 
 2.47.3
 
