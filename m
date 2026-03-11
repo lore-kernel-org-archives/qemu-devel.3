@@ -4,104 +4,63 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 419A7104C00E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:53:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FF08104C00E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0HBf-0004fo-S3; Wed, 11 Mar 2026 06:53:11 -0400
+	id 1w0HEl-00063x-8s; Wed, 11 Mar 2026 06:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0HBJ-0004bP-Fs
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:52:51 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0HBH-0001zD-UF
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:52:49 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64c97997b0fso9873663d50.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 03:52:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773226367; cv=none;
- d=google.com; s=arc-20240605;
- b=hATkENu3C8RwucoGnaLAweb+slo5RlH7RjgO0qfFMDIVlS+NOoxMq/iZG32uhTJ6wk
- ZXIULY3PChWczayNSRGfO+RrltDSNXIIlRobxDviWDbCjJlLJKK9AZzhk88ES82ht6Hf
- Ay2G0A4YGRXieXmdk+erz9Zqr968y8SgTlObkCULwyB96EbUtoDwMWH1vy1kTNrFB1L8
- 3HMU1wSy7ulSFbm0EJSwswGw8ErhDSghlJKAqcQenx/eewW5KCh+Uzsjt+k1L41oXccl
- zgH1FzqowGSx+BoSemGEaYayJCw0Sm693njy3/O+xckZydQTHFZx4N49ha6T2SEnv+Nc
- ZuRQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=8sUemrHPOW40xJ0blk1bRj6suupCKfQkWnwFoAScRqQ=;
- fh=8A/qvOjdiRdPC99itMK2f8zFtAtZdMHUYTDW8ZLvQPw=;
- b=SQCD3ywYSieKBmDQ7inCwFJJ8DQyT6yxLJ5Al5sa2IZRNyB7ZZU21xAbv2oGKNY+2L
- K441RUwEJsZXZT59IdjFtk2Nv8Q4l8kN/52H29ukB6JvuTThYtU8ASuajGi4LuY37E+T
- nBchDzQgh4zxQGgyBkGE1lMTLa7X9K4Q+Fxqxo3+wT138YxN1YMbQfGhEwgNajV8jyGj
- sZLOS9x8bkP9DyC8C7o9i30MkaWANKQqL8ynQcErkKUC+7yuLg+o37R6+aap4Pcbf6YW
- f2ZDTTAGWKhKtO74mugKgDXkfGBsMQNhpevdtnPCwY3rZ1+UXrHhBR139MKnt/IbvhLe
- QX4A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773226367; x=1773831167; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8sUemrHPOW40xJ0blk1bRj6suupCKfQkWnwFoAScRqQ=;
- b=Hp4+gTdJv9bu4ZujMzCZw+OC0xp+ZahomQF84Vrwq7ec0ZqgJs//VP6W6tHHrbfbpT
- QxBvr4RN+thXkuS9ZltENgjSLQLxD2i2UxfhezqpEveQU8ei7qHxInY0pUJ+Tbs51VdM
- HyThqfW67VBvZSJ2+scv1L8YvzPh6ZP3vljfadjDfG+oMWOosz5mKWA1Enq+RODNZXwX
- VEOIiMY9W1DgCQF+fuyRJZTBpjvH8IIp/NSluvWpOPomVX1befrfUY9ang89g7AMswXF
- VL2C2pMufxDZ+Cufbz7zf60rCFlXKSofiV6TWCBxUJ74JVdDvPynPfSc7EPDVjv6HHBR
- aakA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773226367; x=1773831167;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8sUemrHPOW40xJ0blk1bRj6suupCKfQkWnwFoAScRqQ=;
- b=Wsjgk3KhEngKzsfB7MZkmLAmd4qJKDJoCsgK3uyuzTOZ7HeIr1jJiK5Jl4ZNYHnyag
- ikNeuyyewtVLbVUSYzFHXu7cfCp5X6sT/FAU4XnIxJx3SHtId9z83b1Jkx+u6ws2g5up
- T3ZuFDh1k3ebLKh9D4KMEtTxlLoQ4VYd6ZZgG8qhQVfXKJgPQ85HiUvoPrwis2iju9l8
- iB57tlfCqY9FgLENsn0pG3lfJSGJ0AiiOvdVJuqb9uox2HRBYSIdGkFQjTWI7NRpKE0P
- JQBCqZCSuMeTVtNS/M3VNSeR6QXn7hrSDQ6AzMPZQ4gvb8Y3k6kp0yvtYSP2erriPzs6
- EjJA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUd9gFpd9AeIemDP78c9fi2036/ZS25MD62Jj5XU5Hy4rxKs0yL9R5rvGIAyEj++ujOBA5jrVGP4S+L@nongnu.org
-X-Gm-Message-State: AOJu0YwcxRrGOHVBRFMy5lf2g0XvXnsBdlWnVMM8SPAY+f43b8eWUTVD
- 59WKEwn8cViEmJhKd2dCM1NOnuLOZyO+P8HmWuvFFWEwBQbi6E28Jwslr8w+oEYt6LcOoUi4LnP
- j0JOxry+kvaTxPLyN+uyT1e5AxM8L44WhpLM0iEQeEg==
-X-Gm-Gg: ATEYQzwvRoJULQ0YfPxC6DCQC8lTDHeDM2rJTPuS6x4q+x0UbEex4PS24nORrI3eb2t
- u0aIDNiwI81+bYtD6Aw5oTkwBdpXZ3sbD4jNnhCi4t6WurHorGnUn3kwA5rrchQOrYXYGZFYlLM
- KW8GBw7OmgG+/LIl37ZomSO942alPS0sG8Mt2+S20wwPqlP39wu+k3jH98tCfzeLzkkBH06qLoG
- o+/d/zCeFAM773vuiR0pYFeoEVE3w+ft6HcOjKMwzSPjTWPRruNT5o+TYTAv9evcNC0uE/XGZt6
- Laxv++s046Z++TZ7yUOR4/ogjHcXxGnkJPYVkAuLVigeh9ltpyl/jEODEe5LLiEAmWs=
-X-Received: by 2002:a05:690e:b49:b0:64d:6600:64a1 with SMTP id
- 956f58d0204a3-64d660066e4mr1617171d50.16.1773226366726; Wed, 11 Mar 2026
- 03:52:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1w0HEd-00063A-Rq; Wed, 11 Mar 2026 06:56:15 -0400
+Received: from fanzine2.igalia.com ([213.97.179.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berto@igalia.com>)
+ id 1w0HEc-0002cv-31; Wed, 11 Mar 2026 06:56:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; 
+ s=20170329;
+ h=Content-Transfer-Encoding:MIME-Version:References:In-Reply-To:
+ Message-ID:Date:Subject:Cc:To:From:Sender:Reply-To:Content-Type:Content-ID:
+ Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
+ :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
+ List-Post:List-Owner:List-Archive;
+ bh=tw606xktnlQonOQ+Q59DMuzF29CovcBCRJO7VC+zYm0=; b=qMU8110EGLevmpNxDj9+/6e+Z/
+ DY/v4PNEX2eWxqCGwbDgxvNP05dwXrAIkGdSUeXrM/mi4STN3maQz+XQwioufvvn5es8nRdfhL79A
+ 3snibmQAt270YL+tGwQsQUmqHR15oZV2gny9muHgXPvYZE1+I5E02j8ymowofMZ4LxBq8XyekTiX5
+ mRedyjDknMbptESLC4GF5v+eiA6vkPYJAaslrQPpaHsekJf8rmyeGUmXLkEacHg6pLkj0Xq0dRDhd
+ BMnM32pHYSBn0Kso81MIhABb3teSGhSBCjqG+zU3ahM2PBzFd4VLnpw8nlSTO4bgco4RILBZ/+LQ7
+ dqqey4Tw==;
+Received: from ip40.wifi.igalia.com ([192.168.12.40] helo=zeus.local)
+ by fanzine2.igalia.com with esmtpsa 
+ (Cipher TLS1.3:ECDHE_SECP256R1__RSA_PSS_RSAE_SHA256__AES_256_GCM:256) (Exim)
+ id 1w0HEZ-00DR9Y-DP; Wed, 11 Mar 2026 11:56:11 +0100
+Received: from berto by zeus.local with local (Exim 4.98.2)
+ (envelope-from <berto@igalia.com>) id 1w0HEZ-000000008t1-18Om;
+ Wed, 11 Mar 2026 11:56:11 +0100
+From: Alberto Garcia <berto@igalia.com>
+To: qemu-devel@nongnu.org
+Cc: Alberto Garcia <berto@igalia.com>,
+ Jorge Merlino <jorge.merlino@canonical.com>, Kevin Wolf <kwolf@redhat.com>,
+ qemu-block@nongnu.org, Hanna Czenczek <hreitz@redhat.com>
+Subject: [PATCH 1/1] throttle-group: Fix race condition in
+ throttle_group_restart_queue()
+Date: Wed, 11 Mar 2026 11:55:45 +0100
+Message-ID: <c367d19a5c5a8f47b4137f7fb269eb47db6f7669.1773226379.git.berto@igalia.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <cover.1773226379.git.berto@igalia.com>
+References: <cover.1773226379.git.berto@igalia.com>
 MIME-Version: 1.0
-References: <20260208103958.121455-1-heifetz@yandex-team.com>
- <47a14220-139f-4be6-a19d-503924d5e90b@tls.msk.ru>
-In-Reply-To: <47a14220-139f-4be6-a19d-503924d5e90b@tls.msk.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Mar 2026 10:52:35 +0000
-X-Gm-Features: AaiRm51Mm-9wzovRtGo7Zm7286__J8iEJ4B4LGkzDDxKgsWPy3CqmkvtMERAz_A
-Message-ID: <CAFEAcA8xKEC62gTv2Trni_Ers7gkFWUgdTb_r3PaT0_Vz9sUPg@mail.gmail.com>
-Subject: Re: [PATCH v3 0/4] Fix a few minor issues reported by Coverity
-To: Michael Tokarev <mjt@tls.msk.ru>
-Cc: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org,
- qemu-trivial@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=213.97.179.56; envelope-from=berto@igalia.com;
+ helo=fanzine2.igalia.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,36 +76,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Mar 2026 at 10:48, Michael Tokarev <mjt@tls.msk.ru> wrote:
->
-> On 08.02.2026 13:39, Sergei Heifetz wrote:
-> > Hi. This patch series fixes several minor issues reported by our local
-> > Coverity installation.
-> >
-> > Changes in v3:
-> > - Nothing. I sent the second version of the series without the corresponding 'v2'
-> >    suffix by mistake. I apologise.
-> >
-> > Changes in v2:
-> > - Remove assert(block) in system/physmem.c instead of placing it
-> >    before the dereference.
-> >
-> > Sergei Heifetz (4):
-> >    migration/savevm.c: reorder usage and assertion of mis->from_src_file
-> >    dump/dump.c: reorder usage and assertion of block
-> >    system/physmem.c: remove useless assertion of block
-> >    hw/usb/core.c: reorder usage and assertion of p->ep
->
-> Hi!
->
-> I applied 3 patches from this series - all but the physmem.c one.
-> It's ugly either way, so I'm not picking it up.  Sigh.
+When a timer is fired a pending I/O request is restarted and
+tg->any_timer_armed is reset so other requests can be scheduled.
 
-I think patch 3 is good, the commit message just didn't include
-enough information to fully explain why the assert() there is pointless
-(i.e. that it's called from only two places, which both already
-assert or assume that block isn't NULL).
+However we're resetting any_timer_armed first in timer_cb() before
+the request is actually restarted, and there's a window between both
+moments in which another thread can arm the same timer, hitting an
+assertion in throttle_group_restart_queue().
 
-thanks
--- PMM
+This can be solved by deferring the reset of tg->any_timer_armed to
+the moment when the queue is actually restarted, which is protected by
+tg->lock, preventing other threads from arming the timer before that.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3194
+Signed-off-by: Alberto Garcia <berto@igalia.com>
+---
+ block/throttle-groups.c | 27 +++++++++++++++------------
+ 1 file changed, 15 insertions(+), 12 deletions(-)
+
+diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+index 5329ff1fdb..b3bfee5b76 100644
+--- a/block/throttle-groups.c
++++ b/block/throttle-groups.c
+@@ -391,6 +391,7 @@ void coroutine_fn throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
+ typedef struct {
+     ThrottleGroupMember *tgm;
+     ThrottleDirection direction;
++    bool reset_timer_armed;
+ } RestartData;
+ 
+ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
+@@ -403,6 +404,9 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
+     bool empty_queue;
+ 
+     qemu_mutex_lock(&tg->lock);
++    if (data->reset_timer_armed) {
++        tg->any_timer_armed[direction] = false;
++    }
+     empty_queue = !throttle_group_co_restart_queue(tgm, direction);
+ 
+     /* If the request queue was empty then we have to take care of
+@@ -419,13 +423,15 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
+ }
+ 
+ static void throttle_group_restart_queue(ThrottleGroupMember *tgm,
+-                                        ThrottleDirection direction)
++                                         ThrottleDirection direction,
++                                         bool reset_timer_armed)
+ {
+     Coroutine *co;
+     RestartData *rd = g_new0(RestartData, 1);
+ 
+     rd->tgm = tgm;
+     rd->direction = direction;
++    rd->reset_timer_armed = reset_timer_armed;
+ 
+     /* This function is called when a timer is fired or when
+      * throttle_group_restart_tgm() is called. Either way, there can
+@@ -451,7 +457,7 @@ void throttle_group_restart_tgm(ThrottleGroupMember *tgm)
+                 timer_cb(tgm, dir);
+             } else {
+                 /* Else run the next request from the queue manually */
+-                throttle_group_restart_queue(tgm, dir);
++                throttle_group_restart_queue(tgm, dir, false);
+             }
+         }
+     }
+@@ -499,16 +505,13 @@ void throttle_group_get_config(ThrottleGroupMember *tgm, ThrottleConfig *cfg)
+  */
+ static void timer_cb(ThrottleGroupMember *tgm, ThrottleDirection direction)
+ {
+-    ThrottleState *ts = tgm->throttle_state;
+-    ThrottleGroup *tg = container_of(ts, ThrottleGroup, ts);
+-
+-    /* The timer has just been fired, so we can update the flag */
+-    qemu_mutex_lock(&tg->lock);
+-    tg->any_timer_armed[direction] = false;
+-    qemu_mutex_unlock(&tg->lock);
+-
+-    /* Run the request that was waiting for this timer */
+-    throttle_group_restart_queue(tgm, direction);
++    /*
++     * Run the request that was waiting for this timer.
++     * tg->any_timer_armed needs to be cleared, but we'll do it later
++     * when the queue is restarted in order to prevent another thread
++     * from arming the timer before that.
++     */
++    throttle_group_restart_queue(tgm, direction, true);
+ }
+ 
+ static void read_timer_cb(void *opaque)
+-- 
+2.47.3
+
 
