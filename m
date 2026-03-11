@@ -4,30 +4,30 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE9C7112584E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:14:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFC4A112584F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:14:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0M87-0007Pz-Rj; Wed, 11 Mar 2026 12:09:53 -0400
+	id 1w0M6t-0006SQ-IQ; Wed, 11 Mar 2026 12:08:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1w0M7O-0006si-4Y; Wed, 11 Mar 2026 12:09:07 -0400
+ id 1w0M6l-0006Bi-2e; Wed, 11 Mar 2026 12:08:27 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1w0M7G-0007Dd-BI; Wed, 11 Mar 2026 12:09:04 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWFzh3l8KzHnGkZ;
- Thu, 12 Mar 2026 00:08:48 +0800 (CST)
+ id 1w0M6j-00073H-CZ; Wed, 11 Mar 2026 12:08:26 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWFz35865zHnGkS;
+ Thu, 12 Mar 2026 00:08:15 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 78B6A40585;
- Thu, 12 Mar 2026 00:08:56 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id A99174056A;
+ Thu, 12 Mar 2026 00:08:23 +0800 (CST)
 Received: from a2303103017.china.huawei.com (10.203.177.99) by
  dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.1544.11; Wed, 11 Mar 2026 16:08:55 +0000
+ 15.2.1544.11; Wed, 11 Mar 2026 16:08:22 +0000
 To: <qemu-devel@nongnu.org>, <gustavo.romero@linaro.org>, <mst@redhat.com>
 CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
  <dapeng1.mi@linux.intel.com>, <eric.auger@redhat.com>,
@@ -36,10 +36,9 @@ CC: <anisinha@redhat.com>, <armbru@redhat.com>, <berrange@redhat.com>,
  <mtosatti@redhat.com>, <peter.maydell@linaro.org>, <philmd@linaro.org>,
  <qemu-arm@nongnu.org>, <richard.henderson@linaro.org>,
  <shannon.zhaosl@gmail.com>, <zhao1.liu@intel.com>
-Subject: [PATCH v19 5/8] acpi: Add parameters to pass cache descriptions to
- ACPI build_pptt()
-Date: Wed, 11 Mar 2026 16:06:05 +0000
-Message-ID: <20260311160609.358-6-alireza.sanaee@huawei.com>
+Subject: [PATCH v19 4/8] bios-tables-test: prepare to change ARM ACPI virt PPTT
+Date: Wed, 11 Mar 2026 16:06:04 +0000
+Message-ID: <20260311160609.358-5-alireza.sanaee@huawei.com>
 X-Mailer: git-send-email 2.51.0.windows.2
 In-Reply-To: <20260311160609.358-1-alireza.sanaee@huawei.com>
 References: <20260311160609.358-1-alireza.sanaee@huawei.com>
@@ -75,88 +74,30 @@ From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add optional parameters to pass cache descriptions to build_pptt().
-Update ARM and Loongarch callers to pass none for now.
+Prepare to update `build_pptt` function to add cache description
+functionalities, thus add binaries in this patch.
 
 Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
 Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
 ---
-Thanks for the review Gustavo.
+Thanks for the tag Gustavo.
 Change log:
      v18->v19:
           No changes to this patch.
 
- hw/acpi/aml-build.c            | 3 ++-
- hw/arm/virt-acpi-build.c       | 2 +-
- hw/loongarch/virt-acpi-build.c | 4 ++--
- include/hw/acpi/aml-build.h    | 4 +++-
- 4 files changed, 8 insertions(+), 5 deletions(-)
+ tests/qtest/bios-tables-test-allowed-diff.h | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/hw/acpi/aml-build.c b/hw/acpi/aml-build.c
-index 4b37405088..b0ea8a5d5d 100644
---- a/hw/acpi/aml-build.c
-+++ b/hw/acpi/aml-build.c
-@@ -2155,7 +2155,8 @@ void build_spcr(GArray *table_data, BIOSLinker *linker,
-  * 5.2.29 Processor Properties Topology Table (PPTT)
-  */
- void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
--                const char *oem_id, const char *oem_table_id)
-+                const char *oem_id, const char *oem_table_id,
-+                int num_caches, CPUCoreCaches *caches)
- {
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     CPUArchIdList *cpus = ms->possible_cpus;
-diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
-index 719d2f994e..3fff78bcca 100644
---- a/hw/arm/virt-acpi-build.c
-+++ b/hw/arm/virt-acpi-build.c
-@@ -1277,7 +1277,7 @@ void virt_acpi_build(VirtMachineState *vms, AcpiBuildTables *tables)
-     if (!vmc->no_cpu_topology) {
-         acpi_add_table(table_offsets, tables_blob);
-         build_pptt(tables_blob, tables->linker, ms,
--                   vms->oem_id, vms->oem_table_id);
-+                   vms->oem_id, vms->oem_table_id, 0, NULL);
-     }
- 
-     acpi_add_table(table_offsets, tables_blob);
-diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-index 3e34bedcd6..a0b445f297 100644
---- a/hw/loongarch/virt-acpi-build.c
-+++ b/hw/loongarch/virt-acpi-build.c
-@@ -538,8 +538,8 @@ static void acpi_build(AcpiBuildTables *tables, MachineState *machine)
-     build_madt(tables_blob, tables->linker, lvms);
- 
-     acpi_add_table(table_offsets, tables_blob);
--    build_pptt(tables_blob, tables->linker, machine,
--               lvms->oem_id, lvms->oem_table_id);
-+    build_pptt(tables_blob, tables->linker, machine, lvms->oem_id,
-+               lvms->oem_table_id, 0, NULL);
- 
-     acpi_add_table(table_offsets, tables_blob);
-     build_srat(tables_blob, tables->linker, machine);
-diff --git a/include/hw/acpi/aml-build.h b/include/hw/acpi/aml-build.h
-index f38e129719..e70e0643b1 100644
---- a/include/hw/acpi/aml-build.h
-+++ b/include/hw/acpi/aml-build.h
-@@ -3,6 +3,7 @@
- 
- #include "hw/acpi/acpi-defs.h"
- #include "hw/acpi/bios-linker-loader.h"
-+#include "hw/core/cpu.h"
- 
- #define ACPI_BUILD_APPNAME6 "BOCHS "
- #define ACPI_BUILD_APPNAME8 "BXPC    "
-@@ -499,7 +500,8 @@ void build_slit(GArray *table_data, BIOSLinker *linker, MachineState *ms,
-                 const char *oem_id, const char *oem_table_id);
- 
- void build_pptt(GArray *table_data, BIOSLinker *linker, MachineState *ms,
--                const char *oem_id, const char *oem_table_id);
-+                const char *oem_id, const char *oem_table_id,
-+                int num_caches, CPUCoreCaches *caches);
- 
- void build_fadt(GArray *tbl, BIOSLinker *linker, const AcpiFadtData *f,
-                 const char *oem_id, const char *oem_table_id);
+diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
+index dfb8523c8b..e84d6c6955 100644
+--- a/tests/qtest/bios-tables-test-allowed-diff.h
++++ b/tests/qtest/bios-tables-test-allowed-diff.h
+@@ -1 +1,4 @@
+ /* List of comma-separated changed AML files to ignore */
++"tests/data/acpi/aarch64/virt/PPTT",
++"tests/data/acpi/aarch64/virt/PPTT.acpihmatvirt",
++"tests/data/acpi/aarch64/virt/PPTT.topology",
 -- 
 2.43.0
 
