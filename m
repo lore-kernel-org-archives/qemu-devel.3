@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05737106286C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:36:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C63106286C
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:36:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0HqX-0006aN-1h; Wed, 11 Mar 2026 07:35:25 -0400
+	id 1w0Hql-0006k8-HY; Wed, 11 Mar 2026 07:35:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w0HqU-0006ZF-Bd
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:22 -0400
+ id 1w0Hqj-0006jw-SL
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:37 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0HqS-0006Ep-RZ
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:22 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0Hqi-0006HW-Ap
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:37 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.53])
- by linux.microsoft.com (Postfix) with ESMTPSA id DBCF320B7129;
- Wed, 11 Mar 2026 04:35:17 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com DBCF320B7129
+ by linux.microsoft.com (Postfix) with ESMTPSA id E789220B7128;
+ Wed, 11 Mar 2026 04:35:33 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com E789220B7128
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1773228919;
- bh=iOL+n46cLKhORko9nhgf+iEAjALxz9Rv3YzT/yKIKlk=;
+ s=default; t=1773228935;
+ bh=4iI8uPVaZVzJqf/NvuPF4mDlwdEptSA/TCfKpkW4+Pg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=WZkgXmt2lpNOe3AVkchvhGQgFDsfmSdeRV5LdV7KByQSE4KWtOm3nx6A7ZGpDUkfc
- tLJps3KaEHEi4AjW6GLPHNBZj9+ZuOalolege/wOHM2QzftpNJUE2XBKIcDMsNdKt/
- nqhgW14v0VR4J5K7di99bfSFtGsZ+ROMNLquhAf0=
+ b=D61KMKo37FEOuVoOgHdvVQSMMRJ4JSoVBIcV227QTeRZMAbxLqtyRcNB9+z57r5ys
+ T83tgZLNaumyStx9q9FMUhRlG4RBDDNiv91lcPEdMzfaeDQ52/fkflyXsi3PNs9FEL
+ oa8KR0pwKEG8x25JuV8PlW34aU4t7ieb5Lu2ptX0=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v2 2/9] target/i386/mshv: fix cpuid propagation bug
-Date: Wed, 11 Mar 2026 12:34:58 +0100
-Message-Id: <20260311113505.1177878-3-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 9/9] accel/mshv: disable la57 (5lvl paging)
+Date: Wed, 11 Mar 2026 12:35:05 +0100
+Message-Id: <20260311113505.1177878-10-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
 References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
@@ -68,49 +68,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The list argument was missing a pointer and hence e.g. -cpu qemu64 and
--cpu EPYC would produce the same of cpuid leaves.
+This change disable la57 paging on the mshv hypervisor on both the
+mshv processor feature bitmap and mask the cpuid feature leaf to the
+guest.
+
+Since the removal of hypervisor-assisted gva=>gpa translation in
+1c85a4a3d7 we have seen MMIO errors in guests on la57-enabled hw. We
+will have to investigate and test this further.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ accel/mshv/mshv-all.c       | 7 +++++++
+ target/i386/mshv/mshv-cpu.c | 6 ++++++
+ 2 files changed, 13 insertions(+)
 
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index eab967ff07..ea3aacf6e0 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -142,6 +142,8 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     int ret;
+     uint64_t pt_flags, host_proc_features;
+     union hv_partition_processor_xsave_features disabled_xsave_features;
++    union hv_partition_processor_features disabled_proc_features = {0};
++
+     struct mshv_create_partition_v2 args = {0};
+     uint32_t feature_banks[] = {
+         HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
+@@ -181,6 +183,11 @@ static int create_partition(int mshv_fd, int *vm_fd)
+     }
+     args.pt_cpu_fbanks[1] = ~host_proc_features;
+ 
++    /* features we disable regardless of host support */
++    disabled_proc_features.la57_support = 1;
++    args.pt_cpu_fbanks[0] |= disabled_proc_features.as_uint64[0];
++    args.pt_cpu_fbanks[1] |= disabled_proc_features.as_uint64[1];
++
+     /* populate args structure */
+     args.pt_flags = pt_flags;
+     args.pt_isolation = MSHV_PT_ISOLATION_NONE;
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 2bc978deb2..f1cc4abc5c 100644
+index 2c66a52709..31fb788657 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -441,7 +441,7 @@ int mshv_load_regs(CPUState *cpu)
-     return 0;
- }
- 
--static void add_cpuid_entry(GList *cpuid_entries,
-+static void add_cpuid_entry(GList **cpuid_entries,
-                             uint32_t function, uint32_t index,
-                             uint32_t eax, uint32_t ebx,
-                             uint32_t ecx, uint32_t edx)
-@@ -456,10 +456,10 @@ static void add_cpuid_entry(GList *cpuid_entries,
-     entry->ecx = ecx;
-     entry->edx = edx;
- 
--    cpuid_entries = g_list_append(cpuid_entries, entry);
-+    *cpuid_entries = g_list_append(*cpuid_entries, entry);
- }
- 
--static void collect_cpuid_entries(const CPUState *cpu, GList *cpuid_entries)
-+static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
- {
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-@@ -615,7 +615,7 @@ static int set_cpuid2(const CPUState *cpu)
-     struct hv_cpuid_entry *entry;
-     GList *entries = NULL;
- 
--    collect_cpuid_entries(cpu, entries);
-+    collect_cpuid_entries(cpu, &entries);
-     n_entries = g_list_length(entries);
- 
-     cpuid_size = sizeof(struct hv_cpuid)
+@@ -1677,6 +1677,12 @@ uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
+      */
+     if (func == 0x07 && idx == 0 && reg == R_ECX) {
+         ret &= ~CPUID_7_0_ECX_CET_SHSTK;
++        /*
++         * LA57 (5-level paging) causes incorrect GVA=>GPA translations
++         * in the instruction decoder/emulator. Disable until page table
++         * walk in x86_mmu.c works w/ 5-level paging.
++         */
++        ret &= ~CPUID_7_0_ECX_LA57;
+     }
+     if (func == 0x07 && idx == 0 && reg == R_EDX) {
+         ret &= ~CPUID_7_0_EDX_CET_IBT;
 -- 
 2.34.1
 
