@@ -4,102 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C1031125856
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:35:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D6891125858
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:36:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0NS7-0006Qo-A7; Wed, 11 Mar 2026 13:34:35 -0400
+	id 1w0NTY-0007vF-Bl; Wed, 11 Mar 2026 13:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0NS1-0006Pa-A1
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:34:29 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1w0NTR-0007rg-RD; Wed, 11 Mar 2026 13:36:02 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0NRu-0002Gk-JI
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:34:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773250455;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=SQb8w2vhMJ7DChYv45SxWaAAKaLPUiW4JBJ6IX2WkrU=;
- b=NIYYNhzSWVL7hkg5oaHLpV0u5Gc7m8Smdvk2rrMcql7fAqzG2sZdRSYkKN6eVCmwtIqMuM
- 2sUS92GNayKgvZwh21A/lzu6uoIaLG4KJs+bacNLLFrFNNQio9xaykJLoqMS/5VjwnrNus
- cXCeqLnBNbgejqX00R4FPNsFfyMTCAs=
-Received: from mail-qt1-f200.google.com (mail-qt1-f200.google.com
- [209.85.160.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-81-Udv3o9msMSaNp_0XY6HLiw-1; Wed, 11 Mar 2026 13:34:12 -0400
-X-MC-Unique: Udv3o9msMSaNp_0XY6HLiw-1
-X-Mimecast-MFC-AGG-ID: Udv3o9msMSaNp_0XY6HLiw_1773250452
-Received: by mail-qt1-f200.google.com with SMTP id
- d75a77b69052e-50939597b85so4265791cf.2
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 10:34:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773250452; x=1773855252; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=SQb8w2vhMJ7DChYv45SxWaAAKaLPUiW4JBJ6IX2WkrU=;
- b=tLrVuk2mBSuhtGhWvIHZw5vhgPXBavHgc/tomri3YUBOipXpakQQ2IRTLwqdfLtHYe
- Yygx8m3i7PmfgthGyu1nVHrGndKzBF+JuRhAVk6mkTPuQXq8sX92mO/f6zXD7me6VMni
- YKuSl4sLb+87/fXaZ1nT+GK6a8nLiDDkeGs7NTYH6SDZi1koveWiP8pSLueXuYxa/3aK
- ltwmLUbML8t2hpKpdEOf7YgGzoY+atS5KjpNzeLmVgtaBMP9gVm9mPrSdM5rKTCI7k0d
- Ddm+R9HFL1qVjL9/8+MAEh2etjqF/meie/dDMKccqQPHw5gNv4ZbMmDFyCPlTJw6ujNz
- 2x4A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773250452; x=1773855252;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=SQb8w2vhMJ7DChYv45SxWaAAKaLPUiW4JBJ6IX2WkrU=;
- b=bFLFenNEpTzZIpdvkBfw1areJVKNq5fuZhTix9xIWjtr6pUzeOo73NaBwSRbw+/yiw
- aaKvSYg3L9KGhr3b45y/U6r+LojQwD+o5VP3yoMcMtSoLoxyNRbmtPO15B50eLwb/pTQ
- eOCL5i6MCHdonvcU3ttzUQHvDjpqniIv9J4PAikxnkJIIRgeHqipxd7b7I6Gvk435NEF
- QpdKLJx98rjrlUAB4YLOyfFQQI1kkLWpiMHkgelzZd1V6arF8PSBrsHGQg8lO6rFsiE3
- anq4pu1eLXP/Pv8hR4mBI4CackQwR315L/G+KHmAZmGSN8hsh07Ify8UO1lX4BpzUFUN
- p2Mw==
-X-Gm-Message-State: AOJu0Yxm4zik8tvghZwf4NDWNSw/mtQtPn7U9VqJ/cqoSDOeQDxp/YP2
- OhoK01ZfEEpFfKWhqEcxIlzzpwxauZSFelovfUA46oBckFNAjxOe4sQOme7GCGDe/xWml5LkS+f
- xuvKsPX8OqUo8zCVTPzFVABpHfQ+W594mW3To7PP5VyGW0UzyfwTpiTY/
-X-Gm-Gg: ATEYQzzcS7yWkk9/mSW3i06Vj2nk4vwcWB7gGzb4Hx6Kaqkiw10N/096n5QAawexoZ2
- uWQZ6QJDxSmS6X0ecK9mxpg4NuvY1OB4fDmQrhaJ1A0z9Nr6CSVR0kkVEk4cERsdfnp2zu5UmW5
- 3HeTbi4ynZfzFGq8yoVRTvDkN44C8QDHlDMs+6rPYNC7E25u7jctKOWIi572NCAPdMxZKqqxX54
- y38C+ZStQ7w+AL9bk2wXO1r1NRKff9iSku6AIJsVwwjTyRx+bj0OOeGZvaaw6zgN3MIyG+XkySq
- wqH8RL4VkHQoEaqdYzaoNqe0/an65ghjDtVCcfhfZqfRO45JnSrbiryr37TrCIxQ6ry+Dy3jDnL
- 018avu7OWn/1TJg==
-X-Received: by 2002:a05:622a:1a8d:b0:509:2d50:978b with SMTP id
- d75a77b69052e-5093a16f5a1mr42133231cf.38.1773250452084; 
- Wed, 11 Mar 2026 10:34:12 -0700 (PDT)
-X-Received: by 2002:a05:622a:1a8d:b0:509:2d50:978b with SMTP id
- d75a77b69052e-5093a16f5a1mr42132961cf.38.1773250451614; 
- Wed, 11 Mar 2026 10:34:11 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5093a1215f4sm17120301cf.29.2026.03.11.10.34.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 10:34:10 -0700 (PDT)
-Date: Wed, 11 Mar 2026 13:34:08 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Yanfei Xu <yanfei.xu@bytedance.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de, caixiangfeng@bytedance.com,
- liwenbo.liwenbo@bytedance.com
-Subject: Re: [PATCH] migration: check is_active for old-style vmstate
-Message-ID: <abGnkPmBuYTMVK0s@x1.local>
-References: <20260311051658.1074299-1-yanfei.xu@bytedance.com>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1w0NTO-0002ht-Am; Wed, 11 Mar 2026 13:35:57 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWHw04qq6zHnGhG;
+ Thu, 12 Mar 2026 01:35:44 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id BEC3D4056A;
+ Thu, 12 Mar 2026 01:35:52 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 11 Mar
+ 2026 17:35:52 +0000
+Date: Wed, 11 Mar 2026 17:35:51 +0000
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 50/65] target/arm: GICv5 cpuif: Implement GIC CDDI
+Message-ID: <20260311173551.000043b8@huawei.com>
+In-Reply-To: <20260223170212.441276-51-peter.maydell@linaro.org>
+References: <20260223170212.441276-1-peter.maydell@linaro.org>
+ <20260223170212.441276-51-peter.maydell@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260311051658.1074299-1-yanfei.xu@bytedance.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,64 +64,44 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 11, 2026 at 01:16:58PM +0800, Yanfei Xu wrote:
-> old-style vmstate doesn't use vmsd and instead rely on SaveStateEntry
-> ops. Check is_active for old-style vmstate to determine whether they
-> should be skipped during migration.
+On Mon, 23 Feb 2026 17:01:57 +0000
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-Would you please dscribe the use case?
-
-We only have two users in upstream tree that provided is_active(), and
-neither of them provided save_state().  IOW, so far it works kind of mutual
-exclusively v.s. save_state(), afaict.
-
+> Implement the GIC CDDI system instruction, which deactivates the
+> specified interrupt.
 > 
-> Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
 > ---
->  migration/savevm.c | 14 +++++++++++++-
->  1 file changed, 13 insertions(+), 1 deletion(-)
+>  target/arm/tcg/gicv5-cpuif.c | 49 ++++++++++++++++++++++++++++++++++++
+>  target/arm/tcg/trace-events  |  1 +
+>  2 files changed, 50 insertions(+)
 > 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index 197c89e0e6..7eee83ffca 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -1030,15 +1030,27 @@ static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc,
->                          Error **errp)
->  {
->      int ret;
-> +    const bool has_old_style = se->ops && se->ops->save_state;
->  
-> -    if ((!se->ops || !se->ops->save_state) && !se->vmsd) {
-> +    if (!has_old_style && !se->vmsd) {
->          return 0;
-> +    } else if (has_old_style && se->vmsd) {
-> +        error_report("%s: '%s' (section_id=%u): unexpected: both vmsd (%s) and"
-> +                     " old-style save_state are set", __func__, se->idstr,
-> +                     se->section_id, se->vmsd->name);
-> +        return -EINVAL;
->      }
-> +
->      if (se->vmsd && !vmstate_section_needed(se->vmsd, se->opaque)) {
->          trace_savevm_section_skip(se->idstr, se->section_id);
->          return 0;
->      }
->  
-> +    if (has_old_style && se->ops->is_active && !se->ops->is_active(se->opaque)) {
-> +        trace_savevm_section_skip(se->idstr, se->section_id);
-> +        return 0;
-> +    }
-> +
->      trace_savevm_section_start(se->idstr, se->section_id);
->      save_section_header(f, se, QEMU_VM_SECTION_FULL);
->      if (vmdesc) {
-> -- 
-> 2.20.1
-> 
+> diff --git a/target/arm/tcg/gicv5-cpuif.c b/target/arm/tcg/gicv5-cpuif.c
+> index c830938bdc..02129d5936 100644
+> --- a/target/arm/tcg/gicv5-cpuif.c
+> +++ b/target/arm/tcg/gicv5-cpuif.c
 
--- 
-Peter Xu
+> +static void gic_cddi_write(CPUARMState *env, const ARMCPRegInfo *ri,
+> +                           uint64_t value)
+> +{
+> +    /*
+> +     * Clear the Active state of the specified interrupt
+> +     * in the current interrupt domain.
+Maybe rewrap.  Doesn't really matter...
+> +     */
+> +    GICv5Common *gic = gicv5_get_gic(env);
+> +    GICv5Domain domain = gicv5_current_phys_domain(env);
+> +    GICv5IntType type = FIELD_EX64(value, GIC_CDDI, TYPE);
+> +    uint32_t id = FIELD_EX64(value, GIC_CDDI, ID);
+> +    bool virtual = false;
+> +
 
 
