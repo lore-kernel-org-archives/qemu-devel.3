@@ -4,70 +4,53 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A201062862
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:34:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E59801062862
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Hps-000688-Cy; Wed, 11 Mar 2026 07:34:44 -0400
+	id 1w0Hqf-0006iG-QR; Wed, 11 Mar 2026 07:35:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1w0Hpp-00067x-Qq
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:34:42 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1w0Hpk-000603-S0
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:34:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773228874;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=NrMSwBVjjmtktwDUPDLdJxva5juZsXnOiM6NTEmEBPE=;
- b=D3tYyE1qfEU2KktNcvvpBjc7yF9r1tLUP6FAWqgxVQ2H3ffEn6tp3Mb+RYGTBjcM84xI5I
- MDJCYOSgyMYGKVSRNBb0cIby06odJEzzLx9c4mKgUcZdgM25n3LvvCYBNSdb4MIPp4cjsO
- sK4OXpUAZxlbSmelAZE/7XISyKQ5fpE=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-553-OMwYl5HyMcm7cJfalRnGkQ-1; Wed,
- 11 Mar 2026 07:34:33 -0400
-X-MC-Unique: OMwYl5HyMcm7cJfalRnGkQ-1
-X-Mimecast-MFC-AGG-ID: OMwYl5HyMcm7cJfalRnGkQ_1773228871
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8168B1956061; Wed, 11 Mar 2026 11:34:31 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.45.225.19])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id F239D3000223; Wed, 11 Mar 2026 11:34:30 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id AB61E1800790; Wed, 11 Mar 2026 12:34:28 +0100 (CET)
-Date: Wed, 11 Mar 2026 12:34:28 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Dongli Zhang <dongli.zhang@oracle.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com, philmd@linaro.org, 
- joe.jin@oracle.com
-Subject: Re: [PATCH v2 0/2] hw/nvram/fw_cfg: update bootorder to fix SeaBIOS
- bootup failure
-Message-ID: <abFSF_Mt6xbMEzXz@sirius.home.kraxel.org>
-References: <20260310170712.46336-1-dongli.zhang@oracle.com>
+ (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
+ id 1w0Hqd-0006hb-JK
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:31 -0400
+Received: from linux.microsoft.com ([13.77.154.182])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0Hqb-0006GH-Uc
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:31 -0400
+Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.53])
+ by linux.microsoft.com (Postfix) with ESMTPSA id 3BFA720B710C;
+ Wed, 11 Mar 2026 04:35:27 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3BFA720B710C
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
+ s=default; t=1773228928;
+ bh=nZcy+/ZK01s5b0BjI67ZqZyqv/5op7CIJ4t61bdMbeo=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=XWrz/TFxk20E6VhebM/3VDeiEA7TTWV0iB8Elocp97CVpvErLCO7uMCFkeJNDsQYt
+ Nj4EzlI+e5iPyImpOrZ6ji65EB9uLdSj9GYJMpIfIQSffngXpmr6IYqe5WQTNrmNdj
+ 5MPzulzvFkTMoxfLfyGKy1OpI3gWrQSmZJa0zSO8=
+From: Magnus Kulke <magnuskulke@linux.microsoft.com>
+To: qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
+Subject: [PATCH v2 6/9] target/i386: query mshv accel for supported cpuids
+Date: Wed, 11 Mar 2026 12:35:02 +0100
+Message-Id: <20260311113505.1177878-7-magnuskulke@linux.microsoft.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
+References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260310170712.46336-1-dongli.zhang@oracle.com>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=kraxel@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=13.77.154.182;
+ envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -85,35 +68,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-  Hi,
+We implement mshv_get_supported_cpuid() and invoke it in
+x86_cpu_get_supported_feature_word() retrieve the cpu features that the
+host is supporting. Initially we mask the virtualization capabilitities
+potentially we might need to mask more in the future.
 
-> 1. Create a QEMU instance with a virtio-scsi HBA and keep it in the
-> prelaunch state. Use SeaBIOS rather than UEFI.
-> 
-> -device virtio-scsi-pci,id=scsi0,num_queues=4 \
-> -S \
-> 
-> 2. First, attach the boot disk, then attach the secondary disk.
-> 
-> (qemu) drive_add 0 file=boot.qcow2,if=none,id=drive0
-> (qemu) device_add scsi-hd,drive=drive0,bus=scsi0.0,channel=0,scsi-id=0,lun=1,bootindex=1
-> (qemu) drive_add 0 file=secondary.qcow2,if=none,id=drive1
-> (qemu) device_add scsi-hd,drive=drive1,bus=scsi0.0,channel=0,scsi-id=0,lun=2,bootindex=-1
-> 
-> 3. Start the VM from the prelaunch state. Because the "bootorder" and
-> "bios-geometry" data in fw_cfg is stale, SeaBIOS attempts to boot from the
-> secondary disk only once and then stops. As a result, the VM fails to boot.
-> 
-> One possible workaround is to require QEMU users to explicitly issue a
-> system_reset before starting a guest VM from the prelaunch state, if any
-> disks have been attached or detached.
+Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+---
+ include/system/mshv.h       |  3 +++
+ target/i386/cpu.c           |  8 ++++++++
+ target/i386/mshv/mshv-cpu.c | 27 +++++++++++++++++++++++++++
+ 3 files changed, 38 insertions(+)
 
-Requiring a system_reset looks sensible to me.  Neither seabios nor ovmf
-have hotplug support.  So if you expect the firmware pick up any new
-devices after hot-plugging them it is IMHO a very good idea to force a
-full re-initialization via system_reset for robustness reasons.
-
-take care,
-  Gerd
+diff --git a/include/system/mshv.h b/include/system/mshv.h
+index 75286baf16..51b0420735 100644
+--- a/include/system/mshv.h
++++ b/include/system/mshv.h
+@@ -60,4 +60,7 @@ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
+                                         const EventNotifier *rn, int virq);
+ int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
+ 
++/* cpuid */
++uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
++
+ #endif
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0a29ff805f..4447823932 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -26,6 +26,7 @@
+ #include "tcg/helper-tcg.h"
+ #include "exec/translation-block.h"
+ #include "system/hvf.h"
++#include "system/mshv.h"
+ #include "hvf/hvf-i386.h"
+ #include "kvm/kvm_i386.h"
+ #include "kvm/tdx.h"
+@@ -7997,6 +7998,13 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
+         r = hvf_get_supported_cpuid(wi->cpuid.eax,
+                                     wi->cpuid.ecx,
+                                     wi->cpuid.reg);
++     } else if (mshv_enabled()) {
++        if (wi->type != CPUID_FEATURE_WORD) {
++            return 0;
++        }
++        r = mshv_get_supported_cpuid(wi->cpuid.eax,
++                                     wi->cpuid.ecx,
++                                     wi->cpuid.reg);
+     } else if (tcg_enabled()) {
+         r = wi->tcg_features;
+     } else {
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 09878ef357..3b392533b4 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1639,6 +1639,33 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
+ }
+ 
++uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
++{
++    uint32_t eax, ebx, ecx, edx;
++    uint32_t ret = 0;
++
++    host_cpuid(func, idx, &eax, &ebx, &ecx, &edx);
++    switch (reg) {
++    case R_EAX:
++        ret = eax; break;
++    case R_EBX:
++        ret = ebx; break;
++    case R_ECX:
++        ret = ecx; break;
++    case R_EDX:
++        ret = edx; break;
++    }
++
++    /* Disable nested virtualization features not yet supported by MSHV */
++    if (func == 0x80000001 && reg == R_ECX) {
++        ret &= ~CPUID_EXT3_SVM;
++    }
++    if (func == 0x01       && reg == R_ECX) {
++        ret &= ~CPUID_EXT_VMX;
++    }
++    return ret;
++}
++
+ /*
+  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+  * fault to the guest if it tries to access it. It is possible to override
+-- 
+2.34.1
 
 
