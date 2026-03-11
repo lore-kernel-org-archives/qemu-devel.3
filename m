@@ -4,53 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E5F3FD88FF
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 05:47:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 219A1FCC9AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 05:48:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0COo-0006J4-Fw; Wed, 11 Mar 2026 01:46:27 -0400
+	id 1w0CQ7-0006k9-O1; Wed, 11 Mar 2026 01:47:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w0COl-0006Im-WF
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:46:24 -0400
+ id 1w0CPu-0006dz-7b
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:47:34 -0400
 Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w0COi-0002i4-Ro
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:46:23 -0400
+ id 1w0CPr-0002nF-Cq
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:47:33 -0400
 Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
  (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62B5jMVn060186
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62B5l9ep060710
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 11 Mar 2026 14:45:58 +0900 (JST)
+ Wed, 11 Mar 2026 14:47:21 +0900 (JST)
  (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=sgSufjNdyrYOjfkEJCqP5UAA3nQX23EJn1tJibpNfa8=; 
+DKIM-Signature: a=rsa-sha256; bh=pX0yrlcGvdu/J9E0doM+7QK1inEOaQr8SGc/kppNN4A=; 
  c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
  h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1773207958; v=1;
- b=uLYGaLQPrIJwAf1nRoXevoMNLY4U6f3tliGmhed1QuL1h0zyNjVSEmjJvfDonuZ6
- 5EUDgc6scVC67jlJFV1bwExTJ62AvC0Fo7xbqr1Y21C5lVg6e6OWUtPLoIVqgSvT
- armnvthuQ5lcHAo9WX5oJYsWlJ9Ys1HLMkTKjYR7nhJHckeO0To4qUZVINcAvGli
- e1mko7MWv5scS8CxRhHL328tgBi/t2KUymn1eeRv++9A7Sok6xfdC8Eu2iPNLh9T
- Be6NXjrdAYKyjjbnm/crm0Wwm6Z4ihwrV9/+1bJyfqf3bQozYwKVMjz8SNfHmbc5
- 5PNDmkfwViZbdcByxS2QaA==
-Message-ID: <6b36e795-b95d-4e97-82b9-bcad699647bc@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 11 Mar 2026 14:45:22 +0900
+ s=rs20250326; t=1773208041; v=1;
+ b=qZPZ2dqnUJ/20xvm5PP6WG3izLEP4pKGeNC0aT5/jET8UNcdlxCwXcLQO2e/sF0b
+ EJ17Em3mvsF2Eil8GKy54l55WB2W4jlO22dg3mJiH+titD/lNpXiZ0j4T9lo8aHx
+ BN/u175WgibLr0UUdEDu6JUhaO219FWtXhUT8ZtNhbLwkl/IbNOUH6CESvleEKmf
+ BkfXm85L6k4+ivTGgbKiwpwcNiYSPElvWVSaDAU6VRyGxWN3iYXEZ0ti/UfnYGdQ
+ p/cRC52B/Fz4LzK5tCXOGNOgRLLXmNTDbGXXLJRo1MLdQnir5R4Zxjzy5NujSe8O
+ WFEgAaUXdojWNeYXvwYuwg==
+Message-ID: <fd32c74f-5898-46df-a039-1729f0795101@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 11 Mar 2026 14:47:09 +0900
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 00/16] gdbstub: Always infer base register index from
- GDB XML
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Subject: Re: [PATCH 0/2] virtio-gpu: fix overflow check when allocating 2d
+ image
+To: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
  qemu-devel@nongnu.org
-Cc: Florian Hofhammer <florian.hofhammer@fhofhammer.de>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260310232045.58440-1-philmd@linaro.org>
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Zero Day Initiative <zdi-disclosures@trendmicro.com>
+References: <20260311-cve-v1-0-f72b4c7c1ab2@redhat.com>
 Content-Language: en-US
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260310232045.58440-1-philmd@linaro.org>
+In-Reply-To: <20260311-cve-v1-0-f72b4c7c1ab2@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=49.212.243.89;
@@ -77,42 +78,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/11 8:20, Philippe Mathieu-Daudé wrote:
-> Generic fix for a latent bug reported by Florian:
-> https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
+On 2026/03/11 6:26, Marc-André Lureau wrote:
+> The calc_image_hostmem() comment says pixman_image_create_bits() checks for
+> overflow. However, this relied on the facts that "bits" was NULL and it
+> performed it when it was introduced. Since commit 9462ff4695aa, the "bits"
+> argument can be provided and the check is no longer applied. This can lead to
+> OOB access.
 > 
-> Use the 'regnum' XML tag for feature base register index
-> (after fixing the incorrect m68k FPU ones).
+> Thanks Trend Micro's Zero Day Initiative for identifying the vulnerability.
 > 
-> Include patches from "gdbstub: Generate a single gdbstub-xml.c /
-> gdb_static_features[]".
-> 
-> v3:
-> - Correctly update @base_reg in gdb_register_coprocessor()
-> v4:
-> - Disable prot-note tests
-> - Add gdb-multiarch to run gdbstub tests on CI
-> 
-> Alex Bennée (1):
->    tests/docker: add gdb-multiarch to all-test-cross
-> 
-> Philippe Mathieu-Daudé (15):
->    tests/tcg: Temporary disable multiarch tests for PPC targets
->    tests/tcg: Disable prot-none test on GitLab
->    target/i386/gdbstub: Remove stale comment
->    meson: Restrict gdbstub to user/system builds
->    gdbstub: Simplify gdb_init_cpu() logic
->    gdbstub: Add trace events for around XML parsing / generation
->    gdbstub: Have scripts/feature_to_c.py generate more verbose output
->    gdbstub: Make base register explicit in m68k GDB XML files
->    gdbstub: Remove @g_pos argument in gdb_register_coprocessor()
->    gdbstub: Emit base_register index in GDBFeature entries
->    gdbstub: Consider GDBFeature::base_reg in gdb_register_coprocessor()
->    tests/tcg: Re-enable disabled multiarch tests for PPC targets
->    gdbstub: Remove 'gdb-xml/' directory prefix in TARGET_XML_FILES
->    gdbstub: Move gdb-xml/ within gdbstub/
->    gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[]
+> Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-For the whole series:
+For the whole series,
+
 Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
