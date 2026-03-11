@@ -4,46 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49D821125842
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:11:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24B67112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:11:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBC-0007Cv-1r; Wed, 11 Mar 2026 11:08:58 -0400
+	id 1w0LBw-00021I-Re; Wed, 11 Mar 2026 11:09:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7l-0000C9-Cs; Wed, 11 Mar 2026 11:05:25 -0400
+ id 1w0LAl-0006ZG-Ng; Wed, 11 Mar 2026 11:08:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7h-0004aK-MR; Wed, 11 Mar 2026 11:05:24 -0400
+ id 1w0LAk-0005Yu-9u; Wed, 11 Mar 2026 11:08:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=a6ShXSpOePxr/0qCwVUGkHanU4hFz9sz6MBqi9VESwI=;
+ t=1773241482; bh=LgH8KYxOi8GRUGWnbzF3XW3/9o4LU+rtDfY/7m1mayc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=PA08Z0FO8dMEhTwBgBuWohCAoBGk/ULyjkzuUdATyiSeOFkdh1twxejJ8JA/JTfls
- i27diWr+ZQZZ0hbv1RNnSfbSNnzofp+hvgQRubpWp0rK/dbL/D9SwSIs7qyG53lEQn
- qTkJJzpZpmFJjcBvbfX43FJfHEArg/weKSGQcKULDH+RhtrKTJeiqHwP8/qbYoVEUM
- aJ7iksSmwa3HnLGG5Qj4af0YB68tuAMMHw+0PFE6SFF3c+j4bB8vZoV2LrwFWncgHD
- sd4TUFeZU/0LdCBIlFCmSVDC9VHbBCcpWeub17Ih2lzOqI5bF+SHHPKYBWPMXT+5bh
- zp41AbLzOS0FQ==
+ b=B8is/rtz7rVXMqkrxRmuKfthbCaxkbt+Bn6FQy0n3AqAtvbqGPD26QhX9fDVA4fEv
+ Z5VUCVAQJuijvo6y+xGDUwQMZPUNxtPUocatkWhj3rhYZiIRG3ZefTKuDkhQgWRwQU
+ Ft2kjCR/eEz6dTQkNkCLNZ6HXUrKTVRdiL4elCOddcON40qjfSrSUIeVLwADNEL0rZ
+ UTXcKTTvpER92A1AgtJY6YSO1lpP3glHNCJMdShF7xTB/aJ0S0VrUboky9Nu48Obtd
+ ZoWQ/K3z/uslV7EhsW5TUdwfZ80F/pCnuHXT2r857oyEwmxHafxKjD83rhhF+NXITf
+ JARS5SRVbVuwQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CFBD8191E60;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3CD52191E95;
+ Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BFD8937C2B2;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2992F37C2D6;
+ Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ DARKNAVY <vr@darknavy.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 34/44] block: Never drop BLOCK_IO_ERROR with
- action=stop for rate limiting
-Date: Wed, 11 Mar 2026 18:02:06 +0300
-Message-ID: <20260311150221.1084186-34-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 18/46] virtio-snd: fix max_size bounds check in input
+ cb
+Date: Wed, 11 Mar 2026 18:02:54 +0300
+Message-ID: <20260311150327.1084669-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
-References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,86 +72,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
-event only once a second. This makes sense for cases in which the guest
-keeps running and can submit more requests that would possibly also fail
-because there is a problem with the backend.
+In 98e77e3d we calculated the max size and checked that each buffer is smaller than it.
 
-However, if the error policy is configured so that the VM is stopped on
-errors, this is both unnecessary because stopping the VM means that the
-guest can't issue more requests and in fact harmful because stopping the
-VM is an important state change that management tools need to keep track
-of even if it happens more than once in a given second. If an event is
-dropped, the management tool would see a VM randomly going to paused
-state without an associated error, so it has a hard time deciding how to
-handle the situation.
+We neglected to subtract the size of the virtio_snd_pcm_status header
+from the max size, and max_size was thus larger than the correct value,
+leading to potential OOB writes.
 
-This patch disables rate limiting for action=stop by not relying on the
-event type alone any more in monitor_qapi_event_queue_no_reenter(), but
-checking action for BLOCK_IO_ERROR, too. If the error is reported to the
-guest or ignored, the rate limiting stays in place.
+If the buffer cannot fit the header or can fit only the header, return
+the buffer immediately.
 
-Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260304122800.51923-1-kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 544ddbb6373d61292a0e2dc269809cd6bd5edec6)
+Cc: qemu-stable@nongnu.org
+Fixes: 98e77e3dd8dd6e7aa9a7dffa60f49c8c8a49d4e3 ("virtio-snd: add max size bounds check in input cb")
+Reported-by: DARKNAVY <vr@darknavy.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260220-virtio-snd-series-v1-4-207c4f7200a2@linaro.org>
+(cherry picked from commit bcb53328aa70023f1405fade4e253e7f77567261)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/monitor/monitor.c b/monitor/monitor.c
-index c5a5d30877..ae7cf64de0 100644
---- a/monitor/monitor.c
-+++ b/monitor/monitor.c
-@@ -363,14 +363,33 @@ monitor_qapi_event_queue_no_reenter(QAPIEvent event, QDict *qdict)
- {
-     MonitorQAPIEventConf *evconf;
-     MonitorQAPIEventState *evstate;
-+    bool throttled;
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 38d9a9712c..effae20bf0 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -1255,6 +1255,12 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
+             }
  
-     assert(event < QAPI_EVENT__MAX);
-     evconf = &monitor_qapi_event_conf[event];
-     trace_monitor_protocol_event_queue(event, qdict, evconf->rate);
-+    throttled = evconf->rate;
+             max_size = iov_size(buffer->elem->in_sg, buffer->elem->in_num);
++            if (max_size <= sizeof(virtio_snd_pcm_status)) {
++                return_rx_buffer(stream, buffer);
++                continue;
++            }
++            max_size -= sizeof(virtio_snd_pcm_status);
 +
-+    /*
-+     * Rate limit BLOCK_IO_ERROR only for action != "stop".
-+     *
-+     * If the VM is stopped after an I/O error, this is important information
-+     * for the management tool to keep track of the state of QEMU and we can't
-+     * merge any events. At the same time, stopping the VM means that the guest
-+     * can't send additional requests and the number of events is already
-+     * limited, so we can do without rate limiting.
-+     */
-+    if (event == QAPI_EVENT_BLOCK_IO_ERROR) {
-+        QDict *data = qobject_to(QDict, qdict_get(qdict, "data"));
-+        const char *action = qdict_get_str(data, "action");
-+        if (!strcmp(action, "stop")) {
-+            throttled = false;
-+        }
-+    }
- 
-     QEMU_LOCK_GUARD(&monitor_lock);
- 
--    if (!evconf->rate) {
-+    if (!throttled) {
-         /* Unthrottled event */
-         monitor_qapi_event_emit(event, qdict);
-     } else {
-diff --git a/qapi/block-core.json b/qapi/block-core.json
-index 807efd27fd..65031a86b5 100644
---- a/qapi/block-core.json
-+++ b/qapi/block-core.json
-@@ -5660,7 +5660,7 @@
- # .. note:: If action is "stop", a STOP event will eventually follow
- #    the BLOCK_IO_ERROR event.
- #
--# .. note:: This event is rate-limited.
-+# .. note:: This event is rate-limited, except if action is "stop".
- #
- # Since: 0.13
- #
+             for (;;) {
+                 if (buffer->size >= max_size) {
+                     return_rx_buffer(stream, buffer);
 -- 
 2.47.3
 
