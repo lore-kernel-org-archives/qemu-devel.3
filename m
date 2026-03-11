@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB8E1125842
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:11:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D81C112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:11:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LA5-0004SP-5H; Wed, 11 Mar 2026 11:07:49 -0400
+	id 1w0LBi-0000ul-BC; Wed, 11 Mar 2026 11:09:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7Z-0008M3-Kl; Wed, 11 Mar 2026 11:05:15 -0400
+ id 1w0L8M-0002kx-FD; Wed, 11 Mar 2026 11:06:04 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7W-0004Jy-RS; Wed, 11 Mar 2026 11:05:13 -0400
+ id 1w0L8K-0004mj-Vf; Wed, 11 Mar 2026 11:06:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=1+0w7xRv/DZ7PGz4an+pI/7zGWxeu5zPdwS/hJ4BtIg=;
+ t=1773241306; bh=zsJdKC1oSdqH86t/OM5dqP2jvqDdEPy1KD1EWd5IWzA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EUyQtYMa7GQuETT6mK0cgVg2DG18OTZUeJt2eD0HVVLudwwb3h1el8xjglhtRKKF4
- T7R7O2mYsrruFyrj4BYhhys2aK/9JzZDKphKCxxu3h2/9oDJaEWp8OrJ58RkKCMK1w
- uvVfhXeH+4Quzmac6t5+qWaEGOMIJnhzHLOByzq6myW8BZTthRUQLomSlt/aipz5YN
- rpja6F/LCLxI0gTMHDSzGmOTin7sHqAHL/ED4TQGcWUoXd5TOajEA4dYbIS6in3EN9
- I/FvC/1K3tCrTlhXKWFIl6GyXZW02vZBXejGox0AV9zQeCo3oWwGfO/Jty93Bkau1S
- doOLb9XkilXMQ==
+ b=rzdOQy6TTiooLLtteNAI/m8OMCF7btBK1UOD9LJ4Vh3jYCIVVKU8E+NEkLvhGoQhS
+ EodMMvaep/vjlq30IWx0+CTX3jRm+CR8vA+nw8OitE3vblCzivX+z1HMTzv3kWGUNs
+ O6RF/ZLBD1eajNVFIGkODI0jmXIZ0CvKI2OCzjcShw4fECV+QWoP+T2OluvoI1xU30
+ AE/Nz1L2acuv59vraJE5loJmG7kd2L5A0OL1VX2comqdu+LtQxIlzM7KqUUb80NvmP
+ Cug/jZaAAqHAjV7fJFjqHRdCf3rAX4fiYacHFQH/GCAD/W95l3zRbOjbCxF0pdvz8M
+ Q1cuzCFHIG92Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A1A1D191E5D;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 4F2A6191E67;
+ Wed, 11 Mar 2026 18:01:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 8F7DC37C2AF;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 336F137C2B9;
+ Wed, 11 Mar 2026 18:02:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Antoine Damhet <adamhet@scaleway.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 31/44] block/curl: fix concurrent completion handling
-Date: Wed, 11 Mar 2026 18:02:03 +0300
-Message-ID: <20260311150221.1084186-31-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Andreas Schwab <schwab@suse.de>,
+ Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 41/44] linux-user: fix TIOCGSID ioctl
+Date: Wed, 11 Mar 2026 18:02:13 +0300
+Message-ID: <20260311150221.1084186-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -69,60 +69,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Antoine Damhet <adamhet@scaleway.com>
+From: Andreas Schwab <schwab@suse.de>
 
-curl_multi_check_completion would bail upon the first completed
-transfer even if more completion messages were available thus leaving
-some in flight IOs stuck.
+TIOCGSID is IOC_R, not IOC_W.
 
-Rework a bit the loop to make the iterations clearer and drop the breaks.
-
-The original hang can be somewhat reproduced with the following command:
-
-$ qemu-img convert -p -m 16 -O qcow2 -c --image-opts \
-  'file.driver=https,file.url=https://scaleway.testdebit.info/10G.iso,file.readahead=1M' \
-  /tmp/test.qcow2
-
-Fixes: 1f2cead32443 ("curl: Ensure all informationals are checked for completion")
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
-Message-ID: <20260212162730.440855-2-adamhet@scaleway.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 6f7b0a23a6ea0cc72ad222ab37936248d99d4256)
+Signed-off-by: Andreas Schwab <schwab@suse.de>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+(cherry picked from commit 6a1221614fd9344a22cafea78e48d6ded95f317d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/curl.c b/block/curl.c
-index 96498aac1d..dabd2a905e 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -324,17 +324,11 @@ curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len, CURLAIOCB *acb)
- static void curl_multi_check_completion(BDRVCURLState *s)
- {
-     int msgs_in_queue;
-+    CURLMsg *msg;
- 
-     /* Try to find done transfers, so we can free the easy
-      * handle again. */
--    for (;;) {
--        CURLMsg *msg;
--        msg = curl_multi_info_read(s->multi, &msgs_in_queue);
--
--        /* Quit when there are no more completions */
--        if (!msg)
--            break;
--
-+    while ((msg = curl_multi_info_read(s->multi, &msgs_in_queue))) {
-         if (msg->msg == CURLMSG_DONE) {
-             int i;
-             CURLState *state = NULL;
-@@ -397,7 +391,6 @@ static void curl_multi_check_completion(BDRVCURLState *s)
-             }
- 
-             curl_clean_state(state);
--            break;
-         }
-     }
- }
+diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
+index 6ecfe6306e..5b7d00e92f 100644
+--- a/linux-user/ioctls.h
++++ b/linux-user/ioctls.h
+@@ -26,7 +26,7 @@
+      IOCTL(TIOCSCTTY, 0, TYPE_INT)
+      IOCTL(TIOCGPGRP, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCSPGRP, IOC_W, MK_PTR(TYPE_INT))
+-     IOCTL(TIOCGSID, IOC_W, MK_PTR(TYPE_INT))
++     IOCTL(TIOCGSID, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCOUTQ, IOC_R, MK_PTR(TYPE_INT))
+      IOCTL(TIOCSTI, IOC_W, MK_PTR(TYPE_INT))
+      IOCTL(TIOCMGET, IOC_R, MK_PTR(TYPE_INT))
 -- 
 2.47.3
 
