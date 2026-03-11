@@ -4,44 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E59801062862
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:35:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5AA11062862
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:35:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Hqf-0006iG-QR; Wed, 11 Mar 2026 07:35:33 -0400
+	id 1w0HqT-0006Z9-KB; Wed, 11 Mar 2026 07:35:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w0Hqd-0006hb-JK
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:31 -0400
+ id 1w0HqR-0006Ur-5I
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:19 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0Hqb-0006GH-Uc
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:31 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0HqP-0006Dy-Lg
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:18 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.53])
- by linux.microsoft.com (Postfix) with ESMTPSA id 3BFA720B710C;
- Wed, 11 Mar 2026 04:35:27 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 3BFA720B710C
+ by linux.microsoft.com (Postfix) with ESMTPSA id 2ADB920B710C;
+ Wed, 11 Mar 2026 04:35:09 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 2ADB920B710C
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1773228928;
- bh=nZcy+/ZK01s5b0BjI67ZqZyqv/5op7CIJ4t61bdMbeo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=XWrz/TFxk20E6VhebM/3VDeiEA7TTWV0iB8Elocp97CVpvErLCO7uMCFkeJNDsQYt
- Nj4EzlI+e5iPyImpOrZ6ji65EB9uLdSj9GYJMpIfIQSffngXpmr6IYqe5WQTNrmNdj
- 5MPzulzvFkTMoxfLfyGKy1OpI3gWrQSmZJa0zSO8=
+ s=default; t=1773228910;
+ bh=7o0FiQOEs2N4nICiGZxGUT7+QspecInURW6oy5tx3GI=;
+ h=From:To:Cc:Subject:Date:From;
+ b=Tem3wIPXjWJXQJ8XdIhw7ipYM7ZHasMwvFNCNnnZ7p2lfevqm1LllExwuQ6nt7IXS
+ 8+o6Nt36g28DtVZ5N+oZkZv51tLRMTN3cT2x9OCbJxzcA/QobcdEsehFU5Z0AEWHBa
+ UfQA5ROPfaQjqnB1SGbE/AnR4MuD+o4Et3L9Wga8=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v2 6/9] target/i386: query mshv accel for supported cpuids
-Date: Wed, 11 Mar 2026 12:35:02 +0100
-Message-Id: <20260311113505.1177878-7-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 0/9] Support QEMU cpu models in MSHV accelerator
+Date: Wed, 11 Mar 2026 12:34:56 +0100
+Message-Id: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
-References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=13.77.154.182;
@@ -68,94 +66,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We implement mshv_get_supported_cpuid() and invoke it in
-x86_cpu_get_supported_feature_word() retrieve the cpu features that the
-host is supporting. Initially we mask the virtualization capabilitities
-potentially we might need to mask more in the future.
+Hey all,
 
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- include/system/mshv.h       |  3 +++
- target/i386/cpu.c           |  8 ++++++++
- target/i386/mshv/mshv-cpu.c | 27 +++++++++++++++++++++++++++
- 3 files changed, 38 insertions(+)
+In the current MSHV accelerator code passing CPU features via the -cpu
+flag doesn't work as intended yet. When using the MSHV hypervisor we
+either silently discard the specified model/features and leave it up
+to the hypervisor to provide a sensible set of features or if the user
+selects -cpu host, the hypervisor might refuse to create a partition.
 
-diff --git a/include/system/mshv.h b/include/system/mshv.h
-index 75286baf16..51b0420735 100644
---- a/include/system/mshv.h
-+++ b/include/system/mshv.h
-@@ -60,4 +60,7 @@ int mshv_irqchip_add_irqfd_notifier_gsi(const EventNotifier *n,
-                                         const EventNotifier *rn, int virq);
- int mshv_irqchip_remove_irqfd_notifier_gsi(const EventNotifier *n, int virq);
- 
-+/* cpuid */
-+uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg);
-+
- #endif
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 0a29ff805f..4447823932 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -26,6 +26,7 @@
- #include "tcg/helper-tcg.h"
- #include "exec/translation-block.h"
- #include "system/hvf.h"
-+#include "system/mshv.h"
- #include "hvf/hvf-i386.h"
- #include "kvm/kvm_i386.h"
- #include "kvm/tdx.h"
-@@ -7997,6 +7998,13 @@ uint64_t x86_cpu_get_supported_feature_word(X86CPU *cpu, FeatureWord w)
-         r = hvf_get_supported_cpuid(wi->cpuid.eax,
-                                     wi->cpuid.ecx,
-                                     wi->cpuid.reg);
-+     } else if (mshv_enabled()) {
-+        if (wi->type != CPUID_FEATURE_WORD) {
-+            return 0;
-+        }
-+        r = mshv_get_supported_cpuid(wi->cpuid.eax,
-+                                     wi->cpuid.ecx,
-+                                     wi->cpuid.reg);
-     } else if (tcg_enabled()) {
-         r = wi->tcg_features;
-     } else {
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 09878ef357..3b392533b4 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -1639,6 +1639,33 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
-     g_clear_pointer(&env->emu_mmio_buf, g_free);
- }
- 
-+uint32_t mshv_get_supported_cpuid(uint32_t func, uint32_t idx, int reg)
-+{
-+    uint32_t eax, ebx, ecx, edx;
-+    uint32_t ret = 0;
-+
-+    host_cpuid(func, idx, &eax, &ebx, &ecx, &edx);
-+    switch (reg) {
-+    case R_EAX:
-+        ret = eax; break;
-+    case R_EBX:
-+        ret = ebx; break;
-+    case R_ECX:
-+        ret = ecx; break;
-+    case R_EDX:
-+        ret = edx; break;
-+    }
-+
-+    /* Disable nested virtualization features not yet supported by MSHV */
-+    if (func == 0x80000001 && reg == R_ECX) {
-+        ret &= ~CPUID_EXT3_SVM;
-+    }
-+    if (func == 0x01       && reg == R_ECX) {
-+        ret &= ~CPUID_EXT_VMX;
-+    }
-+    return ret;
-+}
-+
- /*
-  * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
-  * fault to the guest if it tries to access it. It is possible to override
+This changeset introduces a more comprehensive support for passing
+desired guest cpu features to the hypervisor. It's also a prerequisite
+for Live Migration support.
+
+Drive-by fixes:
+
+- adding packed attribute to inlined UAPI structs
+
+Changes since v1:
+
+- query hypervisor for supported processor features instead of the host OS
+- disable la57 (5 level page tables)
+
+best,
+
+magnus
+
+Magnus Kulke (9):
+  accel/mshv: use mshv_create_partition_v2 payload
+  target/i386/mshv: fix cpuid propagation bug
+  target/i386/mshv: fix various cpuid traversal bugs
+  target/i386/mshv: change cpuid mask to UINT32_MAX
+  target/i386/mshv: set cpu model name on -cpu host
+  target/i386: query mshv accel for supported cpuids
+  target/i386/mshv: populate xsave area offsets
+  target/i386/mshv: filter out CET bits in cpuid
+  accel/mshv: disable la57 (5lvl paging)
+
+ accel/mshv/mshv-all.c          |  82 +++++++++++-
+ include/hw/hyperv/hvgdk_mini.h |   2 +
+ include/hw/hyperv/hvhdk.h      | 195 ++++++++++++++++++++++++++++
+ include/system/mshv.h          |   3 +
+ target/i386/cpu.c              |   8 ++
+ target/i386/mshv/mshv-cpu.c    | 227 +++++++++++++++++++++++++++------
+ 6 files changed, 468 insertions(+), 49 deletions(-)
+
 -- 
 2.34.1
 
