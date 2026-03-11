@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D81C112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:11:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1BCF71125845
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:11:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBi-0000ul-BC; Wed, 11 Mar 2026 11:09:30 -0400
+	id 1w0LAW-0006Dl-D4; Wed, 11 Mar 2026 11:08:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L8M-0002kx-FD; Wed, 11 Mar 2026 11:06:04 -0400
+ id 1w0L8l-0003Pc-SF; Wed, 11 Mar 2026 11:06:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L8K-0004mj-Vf; Wed, 11 Mar 2026 11:06:02 -0400
+ id 1w0L8j-0004qf-KK; Wed, 11 Mar 2026 11:06:27 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241306; bh=zsJdKC1oSdqH86t/OM5dqP2jvqDdEPy1KD1EWd5IWzA=;
+ t=1773241306; bh=UhDEF+0FkvE8wwY7FcHd1IRaCkhOlhAOXEZlZtt+UPQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rzdOQy6TTiooLLtteNAI/m8OMCF7btBK1UOD9LJ4Vh3jYCIVVKU8E+NEkLvhGoQhS
- EodMMvaep/vjlq30IWx0+CTX3jRm+CR8vA+nw8OitE3vblCzivX+z1HMTzv3kWGUNs
- O6RF/ZLBD1eajNVFIGkODI0jmXIZ0CvKI2OCzjcShw4fECV+QWoP+T2OluvoI1xU30
- AE/Nz1L2acuv59vraJE5loJmG7kd2L5A0OL1VX2comqdu+LtQxIlzM7KqUUb80NvmP
- Cug/jZaAAqHAjV7fJFjqHRdCf3rAX4fiYacHFQH/GCAD/W95l3zRbOjbCxF0pdvz8M
- Q1cuzCFHIG92Q==
+ b=norGXK5Wm5rlJ8+1vYsere+6Di+xupDu7GYWl0yeCapJevYcC6CMTRI+cM6/kYeqw
+ NVxzCHpfExNVCxs9Su5yZY+qQTM9csinXbHTzM0u7ZG+tk/2Y3y1CR46VpfpEdBmf0
+ sTFFkPauJc6gKPj8X1Wm4FTHupawW25JXaQyyvRDft1DT1g5W5FMG3kxCkWMKtbRYg
+ fm6cIvJZkMb2ih56Q84M7ICyOqAIdjtrI0YqIVQs5sRstkspjiR4hoHe53CY18zb0G
+ R5sU4zSjybDy+WTpGXU8FNzgf0OE8tyYBDJ297yQhEt/1SR/JeyqzG9+RIDiWAeH8r
+ G+X1dc4yXYbyg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4F2A6191E67;
+ by isrv.corpit.ru (Postfix) with ESMTP id 8090B191E6A;
  Wed, 11 Mar 2026 18:01:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 336F137C2B9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D35037C2BC;
  Wed, 11 Mar 2026 18:02:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Andreas Schwab <schwab@suse.de>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 41/44] linux-user: fix TIOCGSID ioctl
-Date: Wed, 11 Mar 2026 18:02:13 +0300
-Message-ID: <20260311150221.1084186-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 44/44] fuse: Copy write buffer content before polling
+Date: Wed, 11 Mar 2026 18:02:16 +0300
+Message-ID: <20260311150221.1084186-44-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -69,29 +69,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Andreas Schwab <schwab@suse.de>
+From: Hanna Czenczek <hreitz@redhat.com>
 
-TIOCGSID is IOC_R, not IOC_W.
+aio_poll() in I/O functions can lead to nested read_from_fuse_export()
+calls, overwriting the request buffer's content.  The only function
+affected by this is fuse_write(), which therefore must use a bounce
+buffer or corruption may occur.
 
-Signed-off-by: Andreas Schwab <schwab@suse.de>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit 6a1221614fd9344a22cafea78e48d6ded95f317d)
+Note that in addition we do not know whether libfuse-internal structures
+can cope with this nesting, and even if we did, we probably cannot rely
+on it in the future.  This is the main reason why we want to remove
+libfuse from the I/O path.
+
+I do not have a good reproducer for this other than:
+
+$ dd if=/dev/urandom of=image bs=1M count=4096
+$ dd if=/dev/zero of=copy bs=1M count=4096
+$ touch fuse-export
+$ qemu-storage-daemon \
+    --blockdev file,node-name=file,filename=copy \
+    --export \
+    fuse,id=exp,node-name=file,mountpoint=fuse-export,writable=true \
+    &
+
+Other shell:
+$ qemu-img convert -p -n -f raw -O raw -t none image fuse-export
+$ killall -SIGINT qemu-storage-daemon
+$ qemu-img compare image copy
+Content mismatch at offset 0!
+
+(The -t none in qemu-img convert is important.)
+
+I tried reproducing this with throttle and small aio_write requests from
+another qemu-io instance, but for some reason all requests are perfectly
+serialized then.
+
+I think in theory we should get parallel writes only if we set
+fi->parallel_direct_writes in fuse_open().  In fact, I can confirm that
+if we do that, that throttle-based reproducer works (i.e. does get
+parallel (nested) write requests).  I have no idea why we still get
+parallel requests with qemu-img convert anyway.
+
+Also, a later patch in this series will set fi->parallel_direct_writes
+and note that it makes basically no difference when running fio on the
+current libfuse-based version of our code.  It does make a difference
+without libfuse.  So something quite fishy is going on.
+
+I will try to investigate further what the root cause is, but I think
+for now let's assume that calling blk_pwrite() can invalidate the buffer
+contents through nested polling.
+
+Cc: qemu-stable@nongnu.org
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+Message-ID: <20260309150856.26800-2-hreitz@redhat.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit a3fcbca0ef643a8aecf354bdeb08b1d81e5b33e7)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/linux-user/ioctls.h b/linux-user/ioctls.h
-index 6ecfe6306e..5b7d00e92f 100644
---- a/linux-user/ioctls.h
-+++ b/linux-user/ioctls.h
-@@ -26,7 +26,7 @@
-      IOCTL(TIOCSCTTY, 0, TYPE_INT)
-      IOCTL(TIOCGPGRP, IOC_R, MK_PTR(TYPE_INT))
-      IOCTL(TIOCSPGRP, IOC_W, MK_PTR(TYPE_INT))
--     IOCTL(TIOCGSID, IOC_W, MK_PTR(TYPE_INT))
-+     IOCTL(TIOCGSID, IOC_R, MK_PTR(TYPE_INT))
-      IOCTL(TIOCOUTQ, IOC_R, MK_PTR(TYPE_INT))
-      IOCTL(TIOCSTI, IOC_W, MK_PTR(TYPE_INT))
-      IOCTL(TIOCMGET, IOC_R, MK_PTR(TYPE_INT))
+diff --git a/block/export/fuse.c b/block/export/fuse.c
+index 465cc9891d..aec4d8736d 100644
+--- a/block/export/fuse.c
++++ b/block/export/fuse.c
+@@ -301,6 +301,12 @@ static void read_from_fuse_export(void *opaque)
+         goto out;
+     }
+ 
++    /*
++     * Note that aio_poll() in any request-processing function can lead to a
++     * nested read_from_fuse_export() call, which will overwrite the contents of
++     * exp->fuse_buf.  Anything that takes a buffer needs to take care that the
++     * content is copied before potentially polling via aio_poll().
++     */
+     fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
+ 
+ out:
+@@ -624,6 +630,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+                        size_t size, off_t offset, struct fuse_file_info *fi)
+ {
+     FuseExport *exp = fuse_req_userdata(req);
++    QEMU_AUTO_VFREE void *copied = NULL;
+     int64_t length;
+     int ret;
+ 
+@@ -638,6 +645,14 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+         return;
+     }
+ 
++    /*
++     * Heed the note on read_from_fuse_export(): If we call aio_poll() (which
++     * any blk_*() I/O function may do), read_from_fuse_export() may be nested,
++     * overwriting the request buffer content.  Therefore, we must copy it here.
++     */
++    copied = blk_blockalign(exp->common.blk, size);
++    memcpy(copied, buf, size);
++
+     /**
+      * Clients will expect short writes at EOF, so we have to limit
+      * offset+size to the image length.
+@@ -660,7 +675,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
+         }
+     }
+ 
+-    ret = blk_pwrite(exp->common.blk, offset, size, buf, 0);
++    ret = blk_pwrite(exp->common.blk, offset, size, copied, 0);
+     if (ret >= 0) {
+         fuse_reply_write(req, size);
+     } else {
 -- 
 2.47.3
 
