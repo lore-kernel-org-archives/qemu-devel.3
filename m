@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D67D4112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80FB6112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:13:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBr-0001ev-Aj; Wed, 11 Mar 2026 11:09:39 -0400
+	id 1w0LBi-0000xm-KX; Wed, 11 Mar 2026 11:09:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9q-0004Ka-F2; Wed, 11 Mar 2026 11:07:39 -0400
+ id 1w0L9E-0003tM-SV; Wed, 11 Mar 2026 11:07:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9p-0005NG-0I; Wed, 11 Mar 2026 11:07:34 -0400
+ id 1w0L9B-0004rg-PG; Wed, 11 Mar 2026 11:06:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241481; bh=WFDBd59LDeMuZab62RqqgKOzLkJ6gBfNQUKMlGkvZNE=;
+ t=1773241481; bh=UkC+mGEKAng2ipeWdHY5FpVi3rpU3TW2kt6s+TMUcoc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EstVVpZX0FM/XP7uGMB7GAgq0MxGDuGYfBzrm2Tzvj+W0zBUYbpKEYblLhtXfg+yH
- CAXn6BnsCsa2A/RVacsKrXclvaDDfj7lILZihVlzfu6n5/4tqwailrcElXfl6oI54v
- YGnd9/1/yYp/VJFP6mYDV5cu0hwl+kAbRjhKEiEKxkFdt6wIGn5lxOsqLSP9+GjnhB
- l9h1Nce5z4AxIEb9kpHqbjYUid/i+c//xzIYkk5Rm9IP8bV+IbcqPK2AfGqM6n3WaD
- RYZAvBcTnHNBSr/eX3prAvnZmXVwR/CKbQUYkI/kviUn29z076wwJWiJcRLsKJsjha
- DQGR3cTQ2fgwg==
+ b=gzb362OQhDRH2ecmPSVG6HKVd8iiL/C4ly66rqb8wViTol3t+134CrOQPp/nLrdOR
+ kl+HbJJfSIdDbEaooz5QLJ9G6vc0CDX0yDkligOHDOIL0eXwEbll7gQxTnLHVQlqFi
+ ifvilpcxy2ESmtjdvI76XkqKnrCDhFymodSWdk3uiKQvb7RYnE3BABtXJ+hYSPaNk5
+ 8p1SX3G3MmwPDUjFNjFc4B2f8MdMzJ8qcanegYduYLUFBRdHTcKqBWysY1ddzFnRF8
+ MmrgpQy7N7xqk/ncTlRltOsk4qKxygTmeXtrcEdAoioViZmfZ42jKo9i9qrZ4lFsB8
+ OUhhMrK5exChw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9C81C191E8C;
+ by isrv.corpit.ru (Postfix) with ESMTP id 06FCC191E85;
  Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 81FB137C2CD;
- Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E79AB37C2C6;
+ Wed, 11 Mar 2026 18:05:18 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
+Cc: qemu-stable@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 09/46] docs/about/emulation: Add documentation for
- hotblocks plugin arguments
-Date: Wed, 11 Mar 2026 18:02:45 +0300
-Message-ID: <20260311150327.1084669-9-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 02/46] plugins: fix cross-build using LLVM for Windows
+ targets
+Date: Wed, 11 Mar 2026 18:02:38 +0300
+Message-ID: <20260311150327.1084669-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
@@ -71,38 +71,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Currently just 'inline'.
+llvm-dlltool assumes that it's by default targeting the host architecture
+it's running on. That assumption doesn't hold true when cross-compiling.
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/35128cc5a86a0c18418f9d3150fb8771c54ef7d8.1753857212.git.asb@igalia.com
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260210040722.11375-1-mohamed@unpredictable.fr
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit e4ed74c9aef68cb2e7c10c2b7597fee5491a506a)
+(cherry picked from commit b0353beebb0c4fa4059c88362561a8362ada8b4c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
-index 456d01d5b0..9c963f4705 100644
---- a/docs/about/emulation.rst
-+++ b/docs/about/emulation.rst
-@@ -463,6 +463,16 @@ Example::
-   0x000000004002b0, 1, 4, 66087
-   ...
- 
-+Behaviour can be tweaked with the following arguments:
-+
-+.. list-table:: Hot Blocks plugin arguments
-+  :widths: 20 80
-+  :header-rows: 1
-+
-+  * - Option
-+    - Description
-+  * - inline=true|false
-+    - Use faster inline addition of a single counter.
- 
- Hot Pages
- .........
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 62c991d87f..222aed8c2e 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -41,9 +41,16 @@ if host_os == 'windows'
+   # to find missing symbols in current program.
+   win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
+   if meson.get_compiler('c').get_id() == 'clang'
++    if host_machine.cpu() == 'x86_64'
++      dlltool_target = 'i386:x86-64'
++    elif host_machine.cpu() == 'aarch64'
++      dlltool_target = 'arm64'
++    else
++      error('Unknown machine')
++    endif
+     # With LLVM/lld, delaylib is specified at link time (-delayload)
+     dlltool = find_program('llvm-dlltool', required: true)
+-    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
++    dlltool_cmd = [dlltool, '-m', dlltool_target,'-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
+     win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
+   else
+     # With gcc/ld, delay lib is built with a specific delay parameter.
 -- 
 2.47.3
 
