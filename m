@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA774112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52540112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:07:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L6f-0006wT-6R; Wed, 11 Mar 2026 11:04:17 -0400
+	id 1w0L87-0001bl-RT; Wed, 11 Mar 2026 11:05:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6A-0005RS-AB; Wed, 11 Mar 2026 11:03:51 -0400
+ id 1w0L79-00085S-7q; Wed, 11 Mar 2026 11:04:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L68-00046V-Ln; Wed, 11 Mar 2026 11:03:46 -0400
+ id 1w0L74-0004Ik-BP; Wed, 11 Mar 2026 11:04:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241304; bh=JNL2rIu2vfEaYsIMtje72Dk25oI+UsT0THp6K99zEqc=;
+ t=1773241305; bh=A9jvgvkR+9aQb0FBA+kJd/OusEvZUMk5dvOgKDr2OPc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=rGPy4ahtfN2/EewjLBRs84wrSkA2jchG4PnSRpkevgGrmvvUpu05aFfcv/Y02Uxw0
- fPiZlCCC9XBb+DqjOOYvKGWgY1wgbSkbQ8f8xN2NCJ2oNFDNKtXjY8ULa2qLgznqv3
- 2CkyQFhsac+EO3ykQtx4DEg3NZGzMuplxYpbclJPe+th3MNcJQtyw6odz4KtByU3HI
- POeity09nnyhGjRoHNaZK2g7rxKSLlURUJK5QRfB3n3k1xqtD4ibr6bUwn9hOn7Huu
- 6dHxQPQQ/saOxdnbsMO6e7ICDIqh9EdNpvprnjHEWDHiW0ic97RQpdXmuUsdaEP3zJ
- EdxDRp6VspbNw==
+ b=HLLIxfRgshVvYKMdAKBtaZ36LLPqY/06dP4rh/Wxz5swUycFxqyHFdUJDYJdJYrnY
+ CVeB2I7KQfHbw3/msytmab4gW9VLX1ielijXwAw5bNixyQTNdy28i4RDKNWV0PHyUy
+ g8TZlp1JRrOrEDao4XPr4AzPT5ID/8UYC3cuEgGVh9R39xwT6ZU0A39hCakwoKL8eF
+ ef1vU3OThbrNVKR2v9qTP2LrgPjgLlLhsL+D/9q974xpMIdyaV5LY8Qu8YkxVK+OP+
+ EWCcUHx10go5HBw+QgX4F2Smmdw8egz492fUxOfUwBQsQeTXd8NPXJfDypBmdx6ZN0
+ E9zgy0rXwlIUw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 9B736191E50;
- Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 69641191E5A;
+ Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7E69137C2A2;
- Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5892937C2AC;
+ Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 18/44] hw/misc/virt_ctrl: Fix incorrect trace event in
- read operation
-Date: Wed, 11 Mar 2026 18:01:50 +0300
-Message-ID: <20260311150221.1084186-18-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 28/44] io: fix cleanup for websock I/O source data on
+ cancellation
+Date: Wed, 11 Mar 2026 18:02:00 +0300
+Message-ID: <20260311150221.1084186-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -72,37 +72,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-The virt_ctrl_read() function currently invokes trace_virt_ctrl_write()
-instead of trace_virt_ctrl_read(). This results in read operations
-appearing as write operations in the trace output, which is misleading
-during debugging and analysis.
+The websock code will create a GSource for tracking completion of the
+handshake process, passing a QIOTask which is freed by the callback
+when it completes, which means when a source is cancelled, nothing is
+free'ing the task.
 
-Replace the incorrect trace call with the proper read-specific trace
-event to accurately reflect the hardware behavior.
+Switch to provide a data free callback to the GSource, which ensures
+the QIOTask is always freed even when the main event callback never
+fires.
 
-Fixes: 0791bc02b8fb ("m68k: add a system controller")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260111184915.1363318-1-visitorckw@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 8608ed356ef90815cc5bcf04fcdbde987fd24bca)
+Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 9545c059f77e3f814fcbaba83203572ea655c50e)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/virt_ctrl.c b/hw/misc/virt_ctrl.c
-index a210a5924c..ee31b10210 100644
---- a/hw/misc/virt_ctrl.c
-+++ b/hw/misc/virt_ctrl.c
-@@ -43,7 +43,7 @@ static uint64_t virt_ctrl_read(void *opaque, hwaddr addr, unsigned size)
-         break;
-     }
- 
--    trace_virt_ctrl_write(s, addr, size, value);
-+    trace_virt_ctrl_read(s, addr, size, value);
- 
-     return value;
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index 1cd3a1e45d..c8c8340cbd 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -526,11 +526,32 @@ static int qio_channel_websock_handshake_read(QIOChannelWebsock *ioc,
+     return 1;
  }
+ 
++typedef struct QIOChannelWebsockData {
++    QIOTask *task;
++} QIOChannelWebsockData;
++
++static void qio_channel_websock_data_free(gpointer user_data)
++{
++    QIOChannelWebsockData *data = user_data;
++    /*
++     * Usually 'task' will be NULL since the GSource
++     * callback will either complete the task or pass
++     * it on to a new GSource. We'll see a non-NULL
++     * task here only if the GSource was released before
++     * its callback triggers
++     */
++    if (data->task) {
++        qio_task_free(data->task);
++    }
++    g_free(data);
++}
++
+ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+                                                    GIOCondition condition,
+                                                    gpointer user_data)
+ {
+-    QIOTask *task = user_data;
++    QIOChannelWebsockData *data = user_data;
++    QIOTask *task = data->task;
+     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
+         qio_task_get_source(task));
+     Error *err = NULL;
+@@ -545,7 +566,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
+-        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -562,7 +582,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+             trace_qio_channel_websock_handshake_complete(ioc);
+             qio_task_complete(task);
+         }
+-        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -574,7 +593,8 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+                                                  GIOCondition condition,
+                                                  gpointer user_data)
+ {
+-    QIOTask *task = user_data;
++    QIOChannelWebsockData *data = user_data, *newdata = NULL;
++    QIOTask *task = data->task;
+     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
+         qio_task_get_source(task));
+     Error *err = NULL;
+@@ -590,7 +610,6 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
+-        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -603,12 +622,14 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+     error_propagate(&wioc->io_err, err);
+ 
+     trace_qio_channel_websock_handshake_reply(ioc);
++    newdata = g_new0(QIOChannelWebsockData, 1);
++    newdata->task = g_steal_pointer(&data->task);
+     wioc->hs_io_tag = qio_channel_add_watch(
+         wioc->master,
+         G_IO_OUT,
+         qio_channel_websock_handshake_send,
+-        task,
+-        NULL);
++        newdata,
++        qio_channel_websock_data_free);
+     return FALSE;
+ }
+ 
+@@ -904,12 +925,12 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
+                                    gpointer opaque,
+                                    GDestroyNotify destroy)
+ {
+-    QIOTask *task;
++    QIOChannelWebsockData *data = g_new0(QIOChannelWebsockData, 1);
+ 
+-    task = qio_task_new(OBJECT(ioc),
+-                        func,
+-                        opaque,
+-                        destroy);
++    data->task = qio_task_new(OBJECT(ioc),
++                              func,
++                              opaque,
++                              destroy);
+ 
+     trace_qio_channel_websock_handshake_start(ioc);
+     trace_qio_channel_websock_handshake_pending(ioc, G_IO_IN);
+@@ -917,8 +938,8 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
+         ioc->master,
+         G_IO_IN,
+         qio_channel_websock_handshake_io,
+-        task,
+-        NULL);
++        data,
++        qio_channel_websock_data_free);
+ }
+ 
+ 
 -- 
 2.47.3
 
