@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 445291125875
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 164141125892
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PL0-0007Sx-IF; Wed, 11 Mar 2026 15:35:24 -0400
+	id 1w0PLW-0007ji-Cz; Wed, 11 Mar 2026 15:35:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKn-0007RP-Sg; Wed, 11 Mar 2026 15:35:09 -0400
+ id 1w0PLU-0007ii-Fk; Wed, 11 Mar 2026 15:35:52 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKj-0008UH-Vm; Wed, 11 Mar 2026 15:35:08 -0400
+ id 1w0PLS-00008a-BF; Wed, 11 Mar 2026 15:35:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257665; bh=LKvMLuP67wh1wfkP2YjbH5OAxzraP19Fv3VPJ3Q/vDw=;
+ t=1773257667; bh=YtDoghmkkyVJMChQomssBGKozuJ8XG9j41PlyEXUoaY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=P3ZO+OTQNvjyIjTSwsawMa92wu7Xj7+awg+J4XEurcJBVSff8U/A5FBHXOT3A1DIp
- Emzd6DyADZvMebmwjH+euorIiuEYlF/md7DObXd2LfAeVwTahajEiut4pi831cfszb
- L0ua+daY9osdb9MfW2UgxX/ZufYTTt6u31Usbuh576t3rE1ZFa1olJPRUfL0XHDFD5
- TS2OjWqwKcfQ8HUD/DeZ87sg21X9cilViUrmMLwF7kxrjWg4VEOaJY7ME3c3erozvP
- 3hJeP+PPrcXFEiyBysSqX/W1bJIt6wWS2knUUDPtt/kfjGHNo43jPfGVEs498YFs7t
- jOcbCrCulCj4g==
+ b=xYsLZJJM2VTN7GYCx6sqoyZmspq9Cne/DYm/TABier9j0ORlg7DE4nlMrUaz/IMoZ
+ 7G5lehVw7up9eZu1CWcMxovzBV84uoplUr2fsxspfF6Fuhs3cDTUv4PwbQeQkdGBUq
+ bwysDF682MDK7KHcmga5TJwBqNqmFEqrfQ2kcnYPth/di2W/GGNL13cBE51TSsikHz
+ en8+zrMLXSY9Soy+MV7p3oUo4O8yw0p3Cn7KZOVbrKlLRkltSztzm2oJvYYR/WJ6nl
+ XiIV2cfnwoZUGvnqeU/oZKQZsq4WDOBBAdsLnNLLJRL4sblT9OTO4SbAyVqmkDeCgp
+ 7iPaEcNOw0j4A==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E07001920E9;
- Wed, 11 Mar 2026 22:34:25 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0C5451920F4;
+ Wed, 11 Mar 2026 22:34:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 29C6D37C44E;
- Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4E9AA37C459;
+ Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jaehoon Kim <jhkim@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 01/53] s390x/pci: Fix endianness for zPCI BAR values.
-Date: Wed, 11 Mar 2026 22:33:54 +0300
-Message-ID: <20260311193449.1096110-1-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 12/53] target/arm: Fix feature check in DO_SVE2_RRX,
+ DO_SVE2_RRX_TB
+Date: Wed, 11 Mar 2026 22:34:05 +0300
+Message-ID: <20260311193449.1096110-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -71,60 +72,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jaehoon Kim <jhkim@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-During zPCI scan, BAR configuration data retrieved via CLP Query was
-misinterpreted due to an endianness mismatch between QEMU and the guest
-kernel.
+In the macros DO_SVE2_RRX and DO_SVE2_RRX_TB we use the
+feature check aa64_sve, thus exposing this set of instructions
+in SVE as well as SVE2. Use aa64_sve2 instead, so they UNDEF
+on an SVE1-only CPU as they should.
 
-The guest kernel's clp_store_query_pci_fn() expects BAR values in
-little-endian format and converts them with le32_to_cpu(). However, QEMU
-was incorrectly sending them in big-endian format, not following the
-architecture specification. This caused incorrect bit-swapping in the
-kernel, leading zpci_setup_bus_resources() to perform registration checks
-against invalid flags, making the process ineffective.
+Strictly, the condition here should be "SVE2 or SME"; but we
+will correct that in a following commit with all the other
+missing "or SME" checks.
 
-Observation values for zPCI device (NVMe passthrough):
-LPAR from real CLP:
-[    0.865595] Resource: PCI Bus 0000:00 -> zdev->bar[0].val: 0x4
-[    0.865597]  start: 0x4000000000000000
-[    0.865598]  end:   0x4000000000003fff
-[    0.865600]  flags: 0x100200
-
-QEMU before fix (wrong):
-[    0.601083] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4000000
-[    0.601085]  start: 0x4003000000000000
-[    0.601086]  end:   0x4003000000003fff
-[    0.601087]  flags: 0x200
-
-QEMU after fix (correct):
-[    0.601116] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4
-[    0.601117]  start: 0x4003000000000000
-[    0.601118]  end:   0x4003000000003fff
-[    0.601119]  flags: 0x100200
-
-Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Message-ID: <20260206164645.1845366-1-jhkim@linux.ibm.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 00ebc44514a67fb75a46d60e4b44614ebf91230f)
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-id: 20260202133353.2231685-4-peter.maydell@linaro.org
+(cherry picked from commit ee5bf0962ed6e0eb42d6bc9bfb3687f2408e3580)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 5841dfc4fe..a8f08272fe 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -307,7 +307,7 @@ int clp_service_call(S390CPU *cpu, uint8_t r2, uintptr_t ra)
-             uint32_t data = pci_get_long(pbdev->pdev->config +
-                 PCI_BASE_ADDRESS_0 + (i * 4));
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 07b827fa8e..d69a2f5d75 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -3769,7 +3769,7 @@ TRANS_FEAT(UDOT_zzxw_2s, aa64_sme2_or_sve2p1, gen_gvec_ool_arg_zzxz,
+            gen_helper_gvec_udot_idx_2h, a)
  
--            stl_be_p(&resquery->bar[i], data);
-+            stl_le_p(&resquery->bar[i], data);
-             resquery->bar_size[i] = pbdev->pdev->io_regions[i].size ?
-                                     ctz64(pbdev->pdev->io_regions[i].size) : 0;
-             trace_s390_pci_bar(i,
+ #define DO_SVE2_RRX(NAME, FUNC) \
+-    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
++    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
+                a->rd, a->rn, a->rm, a->index)
+ 
+ DO_SVE2_RRX(MUL_zzx_h, gen_helper_gvec_mul_idx_h)
+@@ -3787,7 +3787,7 @@ DO_SVE2_RRX(SQRDMULH_zzx_d, gen_helper_sve2_sqrdmulh_idx_d)
+ #undef DO_SVE2_RRX
+ 
+ #define DO_SVE2_RRX_TB(NAME, FUNC, TOP) \
+-    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
++    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
+                a->rd, a->rn, a->rm, (a->index << 1) | TOP)
+ 
+ DO_SVE2_RRX_TB(SQDMULLB_zzx_s, gen_helper_sve2_sqdmull_idx_s, false)
 -- 
 2.47.3
 
