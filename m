@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29E111125845
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD251125842
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LCI-0002dD-3N; Wed, 11 Mar 2026 11:10:06 -0400
+	id 1w0LAV-000672-Cm; Wed, 11 Mar 2026 11:08:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAq-0006lT-7A; Wed, 11 Mar 2026 11:08:38 -0400
+ id 1w0L7C-00085r-TE; Wed, 11 Mar 2026 11:04:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAn-0005cH-Eu; Wed, 11 Mar 2026 11:08:35 -0400
+ id 1w0L7B-0004Jb-DM; Wed, 11 Mar 2026 11:04:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241482; bh=N0GMzjC3W7RYbcpelKlOxpYSyS8lFWCXR90eEAeuy70=;
+ t=1773241305; bh=5gcbLveQYJeMxh9AzYQZOmJnl2B2tTcvAjJUsd4Kvhc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=caRHpBDGqRJ8JN1hbgYhl5vlmmFAhKrYdhQuwzYG6jATNqN3CjlimTSETn1nIBKmi
- H35mkAlBvzjP3Df7RAu6V0mgtNJOV0daXQ25L084TWq0q3MAo0qEIzudRyrTVugMD7
- 9drHVam8vm1erE1qDKJxbbA7eegaUR0AZYVk8YrgAfvdKgBEisP22+N+HewZkVZHGM
- JYjgfsY/Pi7KyYNL/zX7P1QAt2cjX0QnXunDTFKiUcdChnI3wx5nrVAjGl76jyOz2e
- Dvk9Fimg4SwkbHs9/shLfSAzeYS0Xd2b8UF8s/NwlAguGD1gRyV7AHImlovYHlcPvV
- b9hFTKqEzwyJQ==
+ b=lZ3Byfx7/V67u7Yc2ak7zYUdl7CPxS1MaQPju9BLaP//qSlefReJSQGE0ZVmYWZeU
+ 139YhZLm73eG4EOBcWPYCmTHqw3crHLKJu5COL0/kdet0hYw8B4fy0vhRqVV9C9BZz
+ xtqkrV8ceaU1nZkcPyygcW8LWYNr64NVenTv/X6azmvi+FJPac7U+yVsPFv/91DLkl
+ /2hjG4iScsw97V08w2zS9+k+P/Uz14AlLXq1HQ2FCQjS4QQjGi+VVmp1x4daiYnKXZ
+ 4NcykoduiCsLLepDMcTr/ZagirmHIT3+/pD6lzlhLKSq4CFtGK9zZtylU7mmBtCxEN
+ AgCjb4MlNlAzw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 66AB5191E97;
- Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 928A2191E5C;
+ Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 4B75637C2D8;
- Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7634337C2AE;
+ Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 20/46] hw/misc/virt_ctrl: Fix incorrect trace event in
- read operation
-Date: Wed, 11 Mar 2026 18:02:56 +0300
-Message-ID: <20260311150327.1084669-20-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>,
+ Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 30/44] block/vmdk: fix OOB read in vmdk_read_extent()
+Date: Wed, 11 Mar 2026 18:02:02 +0300
+Message-ID: <20260311150221.1084186-30-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,37 +70,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kuan-Wei Chiu <visitorckw@gmail.com>
+From: "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>
 
-The virt_ctrl_read() function currently invokes trace_virt_ctrl_write()
-instead of trace_virt_ctrl_read(). This results in read operations
-appearing as write operations in the trace output, which is misleading
-during debugging and analysis.
+Bounds check for marker.size doesn't account for the 12-byte marker
+header, allowing zlib to read past the allocated buffer.
 
-Replace the incorrect trace call with the proper read-specific trace
-event to accurately reflect the hardware behavior.
+Move the check inside the has_marker block and subtract the marker size.
 
-Fixes: 0791bc02b8fb ("m68k: add a system controller")
-Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260111184915.1363318-1-visitorckw@gmail.com>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 8608ed356ef90815cc5bcf04fcdbde987fd24bca)
+Fixes: CVE-2026-2243
+Reported-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
+Signed-off-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
+Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit cfda94eddb6c9c49b66461c950b22845a46a75c9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/misc/virt_ctrl.c b/hw/misc/virt_ctrl.c
-index 9f16093ca2..7dc2fe4f94 100644
---- a/hw/misc/virt_ctrl.c
-+++ b/hw/misc/virt_ctrl.c
-@@ -43,7 +43,7 @@ static uint64_t virt_ctrl_read(void *opaque, hwaddr addr, unsigned size)
-         break;
+diff --git a/block/vmdk.c b/block/vmdk.c
+index 5a53c4624a..ffdaf3c901 100644
+--- a/block/vmdk.c
++++ b/block/vmdk.c
+@@ -1949,10 +1949,10 @@ vmdk_read_extent(VmdkExtent *extent, int64_t cluster_offset,
+         marker = (VmdkGrainMarker *)cluster_buf;
+         compressed_data = marker->data;
+         data_len = le32_to_cpu(marker->size);
+-    }
+-    if (!data_len || data_len > buf_bytes) {
+-        ret = -EINVAL;
+-        goto out;
++        if (!data_len || data_len > buf_bytes - sizeof(VmdkGrainMarker)) {
++            ret = -EINVAL;
++            goto out;
++        }
      }
- 
--    trace_virt_ctrl_write(s, addr, size, value);
-+    trace_virt_ctrl_read(s, addr, size, value);
- 
-     return value;
- }
+     ret = uncompress(uncomp_buf, &buf_len, compressed_data, data_len);
+     if (ret != Z_OK) {
 -- 
 2.47.3
 
