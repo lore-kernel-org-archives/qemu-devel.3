@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD830112588E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6A431125893
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:38:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PNC-0003Sg-P7; Wed, 11 Mar 2026 15:37:38 -0400
+	id 1w0PLM-0007ax-NJ; Wed, 11 Mar 2026 15:35:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PN0-0003Gp-OM; Wed, 11 Mar 2026 15:37:28 -0400
+ id 1w0PKz-0007Tw-Vx; Wed, 11 Mar 2026 15:35:22 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PMz-0000Q5-0z; Wed, 11 Mar 2026 15:37:26 -0400
+ id 1w0PKy-000071-CZ; Wed, 11 Mar 2026 15:35:21 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257668; bh=QbV5kzJABNYAHlYOieplc3Hn5dbU2xz3lMqVEkf4yoo=;
+ t=1773257666; bh=cfcf1z7/JpS4xZDWqSxPZgHSdgbv846o0KdJ0aeJQi0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=LaTGl/GNGttorzstmDXgLm78tQ23gUZ1Gwdg1PakzO80BCVZy0QbBBCnbvKzFXKmM
- YKfbtVpqnbBXGZGMsK/L/HAe5P4LHxsglL5s8R+dnq5a7AFVdYRxECSDh/6mdr/eoc
- mnyeDS1GaDrNRoKV7dTIXaY/0a5v+oIiLnxJlvd+eJbrQBxCubJsZgBr0mu0yvkEgV
- E++SIKKev75Gs+h2fRzl7V4QHSH0tYKXD4LIfP3BBqSGHHwMCBBfy5t5ipNWj4x8RP
- Mmgbl7YSCcxCioCzfCIdOJMK4wihF2rkgEAQXkVbXq9lZhbGGHN0AWcAkVegSZX5lD
- s4TStBcqvS+sg==
+ b=gtdJY8fRMZ46i44DRuu4sCX7bZRHPGKxlKkBfqg54dir/IPZTq3nP6HaL18EQ9Zjw
+ CZOfVwZmYCHV+J5yf2egc83yHAUaDjdEn/GC6OQPeDLNHLM5+jCsirxDPOPevcsbTP
+ ji6PGAwhgnof+XQdu19QfY1rrfawTDMcQGTaGrBIBHyPjDq4oEAp5FOxpS4YHkTVa8
+ YS0Tff/tIzN1Xje1DTqYiUqyxMGeakFSsGcee3jqKwO6bHiwvet8AaPo26fncRhqYB
+ PAPYMz9c7HGEUn//viZE8eBMJWAUm0rHgtvKYhWnEPKVLH0yuWajCiBpfo4I3HQCIy
+ rkpB3e6LNhNlQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7AF10192105;
- Wed, 11 Mar 2026 22:34:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 91C2C1920EF;
+ Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id B947437C46A;
- Wed, 11 Mar 2026 22:35:06 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D4E9B37C454;
+ Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- "Wei Liu (Microsoft)" <wei.liu@kernel.org>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 29/53] target/i386/emulate/x86_decode: Actually use
- stream in decode_instruction_stream()
-Date: Wed, 11 Mar 2026 22:34:22 +0300
-Message-ID: <20260311193449.1096110-29-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 07/53] contrib/plugins/hotblocks: Fix off by one error
+ in iteration of sorted blocks
+Date: Wed, 11 Mar 2026 22:34:00 +0300
+Message-ID: <20260311193449.1096110-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -73,51 +71,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Alex Bradbury <asb@igalia.com>
 
-Compared to decode_instruction(), decode_instruction_stream() has an additional
-stream parameter which avoids some guest memory accesses during instruction
-decoding. Both functions defer the actual work to decode_opcode() which would
-set the stream pointer to zero such that decode_instruction_stream() essentially
-behaved like decode_instruction(). Given that all callers of
-decode_instruction_stream() properly zero-initialize the decode parameter, the
-memset() call can be moved into decode_instruction() which is the only other
-user of decode_opcode(). This preserves the non-zero stream pointer which
-avoids extra guest memory accesses.
+The logic to iterate over the hottest blocks will never reach the last
+item in the list, as it checks `it->next != NULL` before entering the
+loop. It's hard to trigger this off-by-one error with the default
+limit=20, but it is a bug and is problematic if that default is changed
+to something larger.
 
-Fixes: 1e25327b244a ("target/i386/emulate: Allow instruction decoding from stream")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
-Tested-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
-Link: https://lore.kernel.org/r/20260223233950.96076-4-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 1b93832f55927b1b76a6587ca75a5a35676188de)
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/f1ba2e57c6126472c0c8310774009f2455efc370.1753857212.git.asb@igalia.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+(cherry picked from commit 1c1e45fcd66269f8a6dbd97fd7b8267d8f6f58af)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
-index 6ad03b71b0..7bbcd2a9a2 100644
---- a/target/i386/emulate/x86_decode.c
-+++ b/target/i386/emulate/x86_decode.c
-@@ -2088,8 +2088,6 @@ static void decode_opcodes(CPUX86State *env, struct x86_decode *decode)
+diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+index d3dd23ed9f..cf4d6b8c36 100644
+--- a/contrib/plugins/hotblocks.c
++++ b/contrib/plugins/hotblocks.c
+@@ -82,10 +82,9 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
  
- static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
- {
--    memset(decode, 0, sizeof(*decode));
--
-     decode_prefix(env, decode);
-     set_addressing_size(env, decode);
-     set_operand_size(env, decode);
-@@ -2101,6 +2099,8 @@ static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
+     if (sorted_counts) {
+-        it = sorted_counts;
+         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
  
- uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
- {
-+    memset(decode, 0, sizeof(*decode));
-+
-     return decode_opcode(env, decode);
- }
- 
+-        for (i = 0; i < limit && it->next; i++, it = it->next) {
++        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
+             ExecCount *rec = (ExecCount *) it->data;
+             g_string_append_printf(
+                 report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
 -- 
 2.47.3
 
