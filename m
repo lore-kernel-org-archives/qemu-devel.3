@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41F7112584D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212E51125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LDR-0003uv-0q; Wed, 11 Mar 2026 11:11:19 -0400
+	id 1w0LEx-0001Im-Re; Wed, 11 Mar 2026 11:12:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBH-0007Y8-Bf; Wed, 11 Mar 2026 11:09:03 -0400
+ id 1w0LCi-0003Ks-7B; Wed, 11 Mar 2026 11:10:33 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBF-0005fk-Ky; Wed, 11 Mar 2026 11:09:03 -0400
+ id 1w0LCg-00066a-F6; Wed, 11 Mar 2026 11:10:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241482; bh=r3LcDIg2pnrfXeb/zGiJh/vlHgX5s501/V26fC4Qu3A=;
+ t=1773241483; bh=NyOkkYHXSesyPk6l9bUYnlkfII1YnExUjDXhYWA9fOw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=EbubaTsd2lJjfp9cXvceQnNWxz11dEeSn11vGsI0IOqXNMYNC3fjATgM/70JJi8E9
- 4n9BFhXwOUjBHhij9LEaeRW7xLnxo7Zdj2RxfyIHMhGRu6qZ0O7XctjI7p0tFqSKZ5
- Y6IcO66Fkm+PJtAOwuu/89XpTwJXtzsA8U8Wh38FIr3Gm2ca2RVejeQVsPBDd+pLBn
- iP3lcY20b7GrpJAiGrtQeSPrNALX2iO8hjmtNMNUrDzudNHtxNRUr0XARTsspo2i0F
- rl47GEDvaEGyaCPZYOj93D6t27lyQsOry9SpbWhIlx47sDhc9Z2wKWOtrJKJywIDT6
- UpZ3Tng94dWAA==
+ b=w+FrniagMYNaF/12OImMHfIENs2X7kMztctcFVibO1lsrCThMpFxl4oplvntBiPDl
+ wbiLO3I0Icce0FSiHCkxaZcG5eGTZG4C3CCtIwvExfW1OZ8sc4hUerS5bcY5K/uwqF
+ ftYoUuPs7Hipsfy9P3le5ylXxsNuJvixvjTDs0d58W2sXhnkedZE+VbVcCIeDVp9aa
+ PsYvymPHj/QtMvRahA+yapV1icatKnAoxDIwRpotCcnorSaGgn/7Z4jPM27n4ggvVE
+ 1m9GIv63QUntskFYIVV88+cqQS74d9fuWlUugPEugjVVLOQ7cIZCLl6TKZ3pk0IN1s
+ lZzbVozMY1RDw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B3126191E9B;
- Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D57CB191EAA;
+ Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A131E37C2DC;
- Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id BBBBC37C2EB;
+ Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
- Oliver Chang <ochang@google.com>, Greg Kurz <groug@kaod.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 24/46] hw/9pfs: fix missing EOPNOTSUPP on Twstat and
- Trenameat for fs synth driver
-Date: Wed, 11 Mar 2026 18:03:00 +0300
-Message-ID: <20260311150327.1084669-24-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 39/46] hw/net/xilinx_ethlite: Check for oversized TX
+ packets
+Date: Wed, 11 Mar 2026 18:03:15 +0300
+Message-ID: <20260311150327.1084669-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,62 +74,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christian Schoenebeck <qemu_oss@crudebyte.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Renaming files/dirs is only supported by path-based fs drivers. EOPNOTSUPP
-should be returned on any renaming attempt for not path-based fs drivers.
-This was already the case for 9p "Trename" request type. However for 9p
-request types "Trenameat" and "Twstat" this was yet missing.
+The xilinx_ethlite network device wasn't checking that the TX packet
+size set by the guest was within the size of its dual port RAM, with
+the effect that the guest could get it to read off the end of the RAM
+block.
 
-So fix this by checking in Twstat and Trenameat request handlers whether
-the fs driver in use is really path based, if not return EOPNOTSUPP and
-abort further handling of the request.
+Check the length.  There is no provision in this very simple device
+for reporting errors, so as with various RX errors we just report via
+tracepoint.
 
-This fixes a crash with the 9p "synth" fs driver which is not path-based.
+This lack of length check has been present since the device was first
+introduced, though the code implementing the tx path has changed
+somewhat since then.
 
-The crash happened because the synth driver stores and expects a raw
-V9fsSynthNode pointer instead of a C-string on V9fsPath.data. So the
-C-string delivered by 9p server to synth fs driver was incorrectly
-casted to a V9fsSynthNode pointer, eventually causing a segfault.
-
-Reported-by: Oliver Chang <ochang@google.com>
-Fixes: https://issues.oss-fuzz.com/issues/477990727
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3298
-Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Greg Kurz <groug@kaod.org>
-Link: https://lore.kernel.org/qemu-devel/E1vrbaP-000Gqb-B3@kylie.crudebyte.com/
-(cherry picked from commit b72d15f47cbd2fc93580f33fa86a7e23595a68dd)
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3317
+Fixes: b43848a1005ce ("xilinx: Add ethlite emulation")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-ID: <20260303172718.437015-1-peter.maydell@linaro.org>
+[PMD: renamed size -> tx_size to avoid shadow=compatible-local error]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 6595a8d5d17ea1716ddafb34455ec2b29381e232)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
-index c70096e6be..388b2418ea 100644
---- a/hw/9pfs/9p.c
-+++ b/hw/9pfs/9p.c
-@@ -3514,6 +3514,12 @@ static void coroutine_fn v9fs_renameat(void *opaque)
-         goto out_err;
-     }
- 
-+    /* if fs driver is not path based, return EOPNOTSUPP */
-+    if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
-+        err = -EOPNOTSUPP;
-+        goto out_err;
-+    }
+diff --git a/hw/net/trace-events b/hw/net/trace-events
+index 72b69c4a8b..698290fe79 100644
+--- a/hw/net/trace-events
++++ b/hw/net/trace-events
+@@ -517,3 +517,4 @@ xen_netdev_rx(int dev, int idx, int status, int flags) "vif%u idx %d status %d f
+ # xilinx_ethlite.c
+ ethlite_pkt_lost(uint32_t rx_ctrl) "rx_ctrl:0x%" PRIx32
+ ethlite_pkt_size_too_big(uint64_t size) "size:0x%" PRIx64
++ethlite_pkt_tx_size_too_big(uint64_t size) "size:0x%" PRIx64
+diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+index 42b19d07c7..665def8a34 100644
+--- a/hw/net/xilinx_ethlite.c
++++ b/hw/net/xilinx_ethlite.c
+@@ -162,9 +162,15 @@ static void port_tx_write(void *opaque, hwaddr addr, uint64_t value,
+         break;
+     case TX_CTRL:
+         if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
+-            qemu_send_packet(qemu_get_queue(s->nic),
+-                             txbuf_ptr(s, port_index),
+-                             s->port[port_index].reg.tx_len);
++            uint32_t tx_size = s->port[port_index].reg.tx_len;
 +
-     v9fs_path_write_lock(s);
-     err = v9fs_complete_renameat(pdu, olddirfid,
-                                  &old_name, newdirfid, &new_name);
-@@ -3604,6 +3610,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
-         }
-     }
-     if (v9stat.name.size != 0) {
-+        /* if fs driver is not path based, return EOPNOTSUPP */
-+        if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
-+            err = -EOPNOTSUPP;
-+            goto out;
-+        }
-         v9fs_path_write_lock(s);
-         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
-         v9fs_path_unlock(s);
++            if (tx_size >= BUFSZ_MAX) {
++                trace_ethlite_pkt_tx_size_too_big(tx_size);
++            } else {
++                qemu_send_packet(qemu_get_queue(s->nic),
++                                 txbuf_ptr(s, port_index),
++                                 tx_size);
++            }
+             if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
+                 eth_pulse_irq(s);
+             }
 -- 
 2.47.3
 
