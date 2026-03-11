@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00907112588E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:41:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02C571125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:41:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PNX-0004jI-J7; Wed, 11 Mar 2026 15:37:59 -0400
+	id 1w0PNu-0005Oo-42; Wed, 11 Mar 2026 15:38:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNV-0004dX-6t; Wed, 11 Mar 2026 15:37:57 -0400
+ id 1w0PNs-0005O2-9P; Wed, 11 Mar 2026 15:38:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNT-0000VG-Ln; Wed, 11 Mar 2026 15:37:56 -0400
+ id 1w0PNq-0000Vr-HQ; Wed, 11 Mar 2026 15:38:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257668; bh=snqvXBZiy7swWW5vj6bRvOATZK4yLblfbZJNO3MMtsA=;
+ t=1773257669; bh=eF3GHeGDQgncqVtw2bAv743vc7IEjgHLgFSfcV78Oqg=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ka+aB5vtWb85H8nIL37trQMwmrkVq5Qh6/T+Qaq8zRfs52+DetSv4AzS+lHVzLryw
- HLGdBngqUHQheKXPqQZPPTiaQWUM+aBW54bG7RdeWcLeyVhqepzzIJHOu7xAUaztOS
- r2APWhqsVflKZPMZ2Sy7c7Vi01qIuM+0J5MHkJ1cah/v73eGOUMNhMVMliN4hJxV/w
- ueYMNCpLNGGG/HDWLJx8MF7c0129dJaRyOS/ZaWiYfFNqtyWs/KOkIZ0e8uiV7r8c4
- yf/mDoCzP1B4bLtAbLOJTTtsLZmNYI15wd/BzGd1bCLXbynDNoRCDx5sgXa9qWQzHF
- lMnvZQ1SbkSzg==
+ b=imi6p270j8PXCc6W4m/iyoRUg4Axez/ahctYoT9/GlFtxjXEICMHoPcSvGYV8uywO
+ VjUh+T13OZtIICCBL9QA8aAaxkNMvEig+d3lJMfrJTbiCTyXK87Xx2ni576ZkYPN+f
+ kwGKpXaCn0CiQ/u/uh3PApp9UYfU/hzUT9u2lCTnINOaFVac8gD2hoqatuotiwitMJ
+ JNo4jj8bPSUB5q6nUVzBfEmcbaopf5YIcPOWpaABqarjDOd0YybxEy1BgWqrcnJ5T/
+ xohRkmMvj6K0O68rGKBe/z2pz1l7k7U5U+z9LjpKyLHvyYb7nfx7BJ6YytUuqZZh7y
+ mWEUoce9IqidA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id ED74719210B;
- Wed, 11 Mar 2026 22:34:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0B06E19210C;
+ Wed, 11 Mar 2026 22:34:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 318A837C470;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4C29E37C471;
  Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>,
+Cc: qemu-stable@nongnu.org, Antoine Damhet <adamhet@scaleway.com>,
  Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 35/53] block/vmdk: fix OOB read in vmdk_read_extent()
-Date: Wed, 11 Mar 2026 22:34:28 +0300
-Message-ID: <20260311193449.1096110-35-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 36/53] block/curl: fix concurrent completion handling
+Date: Wed, 11 Mar 2026 22:34:29 +0300
+Message-ID: <20260311193449.1096110-36-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -70,40 +69,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>
+From: Antoine Damhet <adamhet@scaleway.com>
 
-Bounds check for marker.size doesn't account for the 12-byte marker
-header, allowing zlib to read past the allocated buffer.
+curl_multi_check_completion would bail upon the first completed
+transfer even if more completion messages were available thus leaving
+some in flight IOs stuck.
 
-Move the check inside the has_marker block and subtract the marker size.
+Rework a bit the loop to make the iterations clearer and drop the breaks.
 
-Fixes: CVE-2026-2243
-Reported-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
-Signed-off-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
+The original hang can be somewhat reproduced with the following command:
+
+$ qemu-img convert -p -m 16 -O qcow2 -c --image-opts \
+  'file.driver=https,file.url=https://scaleway.testdebit.info/10G.iso,file.readahead=1M' \
+  /tmp/test.qcow2
+
+Fixes: 1f2cead32443 ("curl: Ensure all informationals are checked for completion")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Antoine Damhet <adamhet@scaleway.com>
+Message-ID: <20260212162730.440855-2-adamhet@scaleway.com>
 Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit cfda94eddb6c9c49b66461c950b22845a46a75c9)
+(cherry picked from commit 6f7b0a23a6ea0cc72ad222ab37936248d99d4256)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 89e89cd10e..cd8b4ec7c8 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1951,10 +1951,10 @@ vmdk_read_extent(VmdkExtent *extent, int64_t cluster_offset,
-         marker = (VmdkGrainMarker *)cluster_buf;
-         compressed_data = marker->data;
-         data_len = le32_to_cpu(marker->size);
--    }
--    if (!data_len || data_len > buf_bytes) {
--        ret = -EINVAL;
--        goto out;
-+        if (!data_len || data_len > buf_bytes - sizeof(VmdkGrainMarker)) {
-+            ret = -EINVAL;
-+            goto out;
-+        }
+diff --git a/block/curl.c b/block/curl.c
+index 4e77c93b46..6dccf00256 100644
+--- a/block/curl.c
++++ b/block/curl.c
+@@ -324,17 +324,11 @@ curl_find_buf(BDRVCURLState *s, uint64_t start, uint64_t len, CURLAIOCB *acb)
+ static void curl_multi_check_completion(BDRVCURLState *s)
+ {
+     int msgs_in_queue;
++    CURLMsg *msg;
+ 
+     /* Try to find done transfers, so we can free the easy
+      * handle again. */
+-    for (;;) {
+-        CURLMsg *msg;
+-        msg = curl_multi_info_read(s->multi, &msgs_in_queue);
+-
+-        /* Quit when there are no more completions */
+-        if (!msg)
+-            break;
+-
++    while ((msg = curl_multi_info_read(s->multi, &msgs_in_queue))) {
+         if (msg->msg == CURLMSG_DONE) {
+             int i;
+             CURLState *state = NULL;
+@@ -397,7 +391,6 @@ static void curl_multi_check_completion(BDRVCURLState *s)
+             }
+ 
+             curl_clean_state(state);
+-            break;
+         }
      }
-     ret = uncompress(uncomp_buf, &buf_len, compressed_data, data_len);
-     if (ret != Z_OK) {
+ }
 -- 
 2.47.3
 
