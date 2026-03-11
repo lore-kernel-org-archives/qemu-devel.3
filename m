@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14E9DFD88D8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD55EFD88D8
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w08XW-00043O-8i; Tue, 10 Mar 2026 21:39:10 -0400
+	id 1w08Xc-00046q-D4; Tue, 10 Mar 2026 21:39:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XS-00041g-SJ
+ id 1w08XR-00041C-Tq
  for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:06 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XP-0004sZ-Qw
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:06 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ad9a9be502so88193055ad.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:39:03 -0700 (PDT)
+ id 1w08XO-0004sE-ME
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:05 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2a9296b3926so105010755ad.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:39:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773193142; x=1773797942; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773193141; x=1773797941; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=hBOqSa1r8WJ9Kn5oraKJkRksFDgpShnw3SyjmD/FkTY=;
- b=swftMPpcuECQhdnmV6KLeBlR+oT/F+Plf/xwXlHZRVuhqgmU1KjUADdN3c5ncx+USb
- gQ1N2fgj42V1m443xRyxui/sU2pG6ynxwvj48/sHwz1tzhkqLNsL6D2dhbycf9SbpGHd
- 6OrpgmFDmD1piX2lTVdNTwj+XrKE1+nopZ//UDrLDZdlj9Q9J+fAty/N8qgKrjYzlbGn
- PKO8kK4t9tCToDTiTZgP55v8beTzvKqXRso8fqYvqHpXA5jM5SZR0ZnrOxBsl3F5J4Kt
- 65Qw/wk6lgrV+SoniqWJPkLjk5ry6cQB1rwZ1U7oje8bEqeKvkRoUOPS6h0krZY49THn
- rE0w==
+ bh=MfRAoui1W3GNT7BYNx2cQj5d4SZ3fpuOM5tvGd9Nukc=;
+ b=FoTAq+tktJzayhYm/J4RAibyK0PkID0eoyCGsiWF7sa0EJhINsfC6LXLDR+2pOqoVY
+ LaNDjRKzyAxccFBnaaAHgxxSeXomc/Vdd5/zKsO15fpJSJX0d3otODJLAt336fndUI36
+ NmRD9ZqvgttGRayPCabuDG0lW6iSzq6TpzwLJ6PGJH+QHLItPa83jVeea6qr2NCFvlIl
+ wH+Sx/BNbZRyCqlYkCvdo7h9ocxsNvtS5LUk2CXsn0kw5sLDvjAbQIqyivm4t6G5Ywww
+ T2idWi++p10LUHObf/eaBV7iggnmLewo0NPUcmoCL3cKUlF2+JojFiLKjNNIfs9WzAyk
+ TGsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773193142; x=1773797942;
+ d=1e100.net; s=20230601; t=1773193141; x=1773797941;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=hBOqSa1r8WJ9Kn5oraKJkRksFDgpShnw3SyjmD/FkTY=;
- b=o+lZy5LPJO6DIKDfmuyyg6KVd8eI1JtsbrsRXV6/a09wijvL3Pl+C4F9ge4Fj9xB2H
- eIQUBNbGZvyjNTNtjtg5h/aFDE7X29IXkBBONyP2lfoB0MpGgkHbvkyGPfhx0dbp/ry2
- /NrgnufTYYMMb3CtDRFooRyX9zqFDHtmFfoFhC6kMMrwQGNeOseVZK0ZADRnJhh88io0
- sxBYNTAqutqJnMfBmsHYRd1aOpnw3xgztD+PQZPlQXxEkv6ssd7lLtepl1a0nTiKdWRr
- Uv6f+nCFbRdKIJjRKUveNn/G0gIy3ydY6mm5WpwFbE5dpRT1Ftq2eLQjZDDcetIMwnr9
- Qwdg==
-X-Gm-Message-State: AOJu0YzLO6lcZLFoNFdBbXIc2IMo8+UUbviRFnR7OcP5tXYMW6oUGNx0
- WfQM0RnPp5aAMYPIpqy/xEdtVu875+AUSLK2GXETzhecH00h4u48PLatVCQUT21gxyiax8k5usO
- DqVmT
-X-Gm-Gg: ATEYQzwJ+ixU05tq3piM3VLMapreVSGkO+Z4GEmKZ2r2t2CDU0GJW5MhmvgEWcFKvAS
- oAjMhfV+hphA2r4Y2/H5gzeBahil3XO1n/kVdV+Ircc3QpvKH60oioSJzgEzt/mGsqhBbhui6Py
- b4KDx7RqubamX4E/3tE5Ie0rP5nyr45SWbOivYwloyb5deQKdQtoVPS3nKiHn4+rAtuHNRh43Co
- z4lzq2o2QwJfmsr81a1WIJdmAceB0cyZsUs08KncBQAEAN1TM2d1/N0ESZSavo4KVtGxvr6hsp2
- UU0Lf3yyJyYBcm7Sg1yXS85jK5GN2jPafNBBuPqijhmageaVzg2E+BO1n/0k0F7R2O9Pr/HDVe0
- YWGCKcNiTRRnwWHDWRog2EfB/wexUZ7KWRNUt+hSmbEcyKp27nBmaebk5hpwjY0Q2rA8dUcDpDO
- OQ/FsGtQXV8Z6FyzpEgzWKO9n0aVwSjRRfS5zM2X+Do7sEkxL+nSU6rYdOfnEqdo01sRwZVgB5e
- t+5
-X-Received: by 2002:a17:902:d482:b0:2ae:4fc7:8053 with SMTP id
- d9443c01a7336-2aeae8b42f5mr7838585ad.46.1773193142177; 
- Tue, 10 Mar 2026 18:39:02 -0700 (PDT)
+ bh=MfRAoui1W3GNT7BYNx2cQj5d4SZ3fpuOM5tvGd9Nukc=;
+ b=n0uXQ3XnUpNrcB2vxZYCKdkBClb2HhcVokej4x4hT06ejx+DRsy87yvFPyMPLHE8kB
+ +F/8MYyRn9sMvmBClRqDccQmhaz15L74Ro4mszkbl8opwomj/xaR0KZgrAbKEee6JJSi
+ SHnd4mAehd/ApFSHw7Czz9siQYYirCD4KtFXIfE0S0Z6LnxNd32TMWCGwGd5Y9taW+qz
+ pAwkfLgad50OVkPXePdoE7HYxta/EwffpvcVQuXKDcHUV3sbj2jxjeWORrRZ2eUGfL71
+ A4PzU5yHiztdH/VkNVvNViiwgEMpjdR31IoD9aeTSqVwCnT0lAGjNlyISU6OeiYefQr+
+ 7+ww==
+X-Gm-Message-State: AOJu0YxSm376mx31uRc053yISAhlq/AU9pj77P8EO/ARo2TjOMXT7ozi
+ zWvvNUMnDH1IIrMdydUc6MOihvl0YfkUrmJi5Xmx3Mkisd1VptMpYU5WircbwoJHzExgTbYli/C
+ REXCK
+X-Gm-Gg: ATEYQzwwEpvx9xc3yZvTRcrupMQLPlm3k8X0ofqjcu3X95cdrQm3oTcRQj39YU4UNWp
+ SDWl4O3sz9zq6SfJZuniNegZ25QtVRY7gsrpPvfehKE52DqNryLRJdzGxU4f4vY+IoAA+ymDFOJ
+ gMfaopgsyd5KtDBc5QgBViZHVNa0SDhrUEyQRnvFuB3MUt2oKfT1nei+5ogtNiMjBhneY4/c03+
+ j/Jvljw0T5YBYkMG2MHmZs7MRujOWNOX9K+Q3QhmENkriGCCGDa3VqK/5Gl0fl9+953p1M2y62r
+ qvrOoFovu+XUqru5cFSRrcEBI54UiQpelqVscDVF3BwfufAShXfB0HtUHY/djrlpsuSC7by50tz
+ giG9ph3z4PldhgyYo4VGvnzB5E9eHdNhc5IYG/dtXxFAtIH69468GD4GrFUoWaZVqkpjYpcAI+z
+ bwwlX1ycyDEl7I21OEmKkLdaMPdDpk/TAXpvTJ/1aaqDvo3K8OXpF2RsjRH1chB4sCUzu4pbyTC
+ PlR
+X-Received: by 2002:a17:902:e851:b0:2ae:ab4c:d583 with SMTP id
+ d9443c01a7336-2aeae7ba3abmr8432115ad.20.1773193141184; 
+ Tue, 10 Mar 2026 18:39:01 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.39.01
+ d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.39.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 18:39:01 -0700 (PDT)
+ Tue, 10 Mar 2026 18:39:00 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 15/16] gdbstub: Move gdb-xml/ within gdbstub/
-Date: Tue, 10 Mar 2026 18:38:36 -0700
-Message-ID: <20260311013837.69945-16-pierrick.bouvier@linaro.org>
+Subject: [PULL 14/16] gdbstub: Remove 'gdb-xml/' directory prefix in
+ TARGET_XML_FILES
+Date: Tue, 10 Mar 2026 18:38:35 -0700
+Message-ID: <20260311013837.69945-15-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,495 +106,615 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-gdb-xml/ files are only consumed by gdbstub API.
-No need for a top-level entry, move them to gdbstub/.
+All GDB XML files are in the gdb-xml/ directory. No need to be
+so verbose in TARGET_XML_FILES, let meson prepend the directory.
+
+Except meson.build lines, this is a mechanical change done running:
+
+ $ sed -i -e s,gdb-xml/,,g $(git grep -l gdb-xml configs/targets/)
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Alex Bennée <alex.bennee@linaro.org>
 Acked-by: Alex Bennée <alex.bennee@linaro.org>
 Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-16-philmd@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-15-philmd@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- MAINTAINERS                                   | 19 +++++++++----------
- docs/devel/codebase.rst                       |  2 --
- meson.build                                   |  2 +-
- {gdb-xml => gdbstub/gdb-xml}/aarch64-core.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/aarch64-fpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/aarch64-mte.xml  |  0
- .../gdb-xml}/aarch64-pauth.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/aarch64-sme2.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/alpha-core.xml   |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-core.xml     |  0
- .../gdb-xml}/arm-m-profile-mve.xml            |  0
- .../gdb-xml}/arm-m-profile.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-neon.xml     |  0
- .../gdb-xml}/arm-vfp-sysregs.xml              |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-vfp.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/arm-vfp3.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/avr-cpu.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/cf-core.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/cf-fp.xml        |  0
- {gdb-xml => gdbstub/gdb-xml}/hexagon-core.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/hexagon-hvx.xml  |  0
- .../gdb-xml}/i386-32bit-linux.xml             |  0
- {gdb-xml => gdbstub/gdb-xml}/i386-32bit.xml   |  0
- .../gdb-xml}/i386-64bit-apx.xml               |  0
- .../gdb-xml}/i386-64bit-linux.xml             |  0
- {gdb-xml => gdbstub/gdb-xml}/i386-64bit.xml   |  0
- .../gdb-xml}/loongarch-base32.xml             |  0
- .../gdb-xml}/loongarch-base64.xml             |  0
- .../gdb-xml}/loongarch-fpu.xml                |  0
- .../gdb-xml}/loongarch-lasx.xml               |  0
- .../gdb-xml}/loongarch-lsx.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/m68k-core.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/m68k-fp.xml      |  0
- .../gdb-xml}/microblaze-core.xml              |  0
- .../gdb-xml}/microblaze-stack-protect.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/or1k-core.xml    |  0
- .../gdb-xml}/power-altivec.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/power-core.xml   |  0
- {gdb-xml => gdbstub/gdb-xml}/power-fpu.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/power-spe.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/power-vsx.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/power64-core.xml |  0
- .../gdb-xml}/riscv-32bit-cpu.xml              |  0
- .../gdb-xml}/riscv-32bit-fpu.xml              |  0
- .../gdb-xml}/riscv-32bit-virtual.xml          |  0
- .../gdb-xml}/riscv-64bit-cpu.xml              |  0
- .../gdb-xml}/riscv-64bit-fpu.xml              |  0
- .../gdb-xml}/riscv-64bit-virtual.xml          |  0
- {gdb-xml => gdbstub/gdb-xml}/rx-core.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-acr.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-cr.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-fpr.xml     |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-gs.xml      |  0
- .../gdb-xml}/s390-virt-kvm.xml                |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-virt.xml    |  0
- {gdb-xml => gdbstub/gdb-xml}/s390-vx.xml      |  0
- {gdb-xml => gdbstub/gdb-xml}/s390x-core64.xml |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc32-cp0.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc32-cpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc32-fpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc64-cp0.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc64-cpu.xml  |  0
- {gdb-xml => gdbstub/gdb-xml}/sparc64-fpu.xml  |  0
- 63 files changed, 10 insertions(+), 13 deletions(-)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-mte.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-pauth.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/aarch64-sme2.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/alpha-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-m-profile-mve.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-m-profile.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-neon.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp-sysregs.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/arm-vfp3.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/avr-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/cf-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/cf-fp.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/hexagon-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/hexagon-hvx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-32bit-linux.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-32bit.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit-apx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit-linux.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/i386-64bit.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-base32.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-base64.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-lasx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/loongarch-lsx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/m68k-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/m68k-fp.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/microblaze-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/microblaze-stack-protect.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/or1k-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-altivec.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-spe.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power-vsx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/power64-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-32bit-virtual.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/riscv-64bit-virtual.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/rx-core.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-acr.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-cr.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-fpr.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-gs.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-virt-kvm.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-virt.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390-vx.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/s390x-core64.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc32-cp0.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc32-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc32-fpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc64-cp0.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc64-cpu.xml (100%)
- rename {gdb-xml => gdbstub/gdb-xml}/sparc64-fpu.xml (100%)
+ configs/targets/aarch64-bsd-user.mak        | 2 +-
+ configs/targets/aarch64-linux-user.mak      | 2 +-
+ configs/targets/aarch64-softmmu.mak         | 2 +-
+ configs/targets/aarch64_be-linux-user.mak   | 2 +-
+ configs/targets/alpha-linux-user.mak        | 2 +-
+ configs/targets/alpha-softmmu.mak           | 2 +-
+ configs/targets/arm-bsd-user.mak            | 2 +-
+ configs/targets/arm-linux-user.mak          | 2 +-
+ configs/targets/arm-softmmu.mak             | 2 +-
+ configs/targets/armeb-linux-user.mak        | 2 +-
+ configs/targets/avr-softmmu.mak             | 2 +-
+ configs/targets/hexagon-linux-user.mak      | 2 +-
+ configs/targets/i386-bsd-user.mak           | 2 +-
+ configs/targets/i386-linux-user.mak         | 2 +-
+ configs/targets/i386-softmmu.mak            | 2 +-
+ configs/targets/loongarch64-linux-user.mak  | 2 +-
+ configs/targets/loongarch64-softmmu.mak     | 2 +-
+ configs/targets/m68k-linux-user.mak         | 2 +-
+ configs/targets/m68k-softmmu.mak            | 2 +-
+ configs/targets/microblaze-linux-user.mak   | 2 +-
+ configs/targets/microblaze-softmmu.mak      | 2 +-
+ configs/targets/microblazeel-linux-user.mak | 2 +-
+ configs/targets/or1k-linux-user.mak         | 2 +-
+ configs/targets/or1k-softmmu.mak            | 2 +-
+ configs/targets/ppc-linux-user.mak          | 2 +-
+ configs/targets/ppc-softmmu.mak             | 2 +-
+ configs/targets/ppc64-linux-user.mak        | 2 +-
+ configs/targets/ppc64-softmmu.mak           | 2 +-
+ configs/targets/ppc64le-linux-user.mak      | 2 +-
+ configs/targets/riscv32-linux-user.mak      | 2 +-
+ configs/targets/riscv32-softmmu.mak         | 2 +-
+ configs/targets/riscv64-bsd-user.mak        | 2 +-
+ configs/targets/riscv64-linux-user.mak      | 2 +-
+ configs/targets/riscv64-softmmu.mak         | 2 +-
+ configs/targets/rx-softmmu.mak              | 2 +-
+ configs/targets/s390x-linux-user.mak        | 2 +-
+ configs/targets/s390x-softmmu.mak           | 2 +-
+ configs/targets/sparc-linux-user.mak        | 2 +-
+ configs/targets/sparc-softmmu.mak           | 2 +-
+ configs/targets/sparc32plus-linux-user.mak  | 2 +-
+ configs/targets/sparc64-linux-user.mak      | 2 +-
+ configs/targets/sparc64-softmmu.mak         | 2 +-
+ configs/targets/x86_64-bsd-user.mak         | 2 +-
+ configs/targets/x86_64-linux-user.mak       | 2 +-
+ configs/targets/x86_64-softmmu.mak          | 2 +-
+ meson.build                                 | 6 +++++-
+ 46 files changed, 50 insertions(+), 46 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d1614fd7e9..247799c817c 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -106,7 +106,7 @@ M: Thomas Huth <thuth@redhat.com>
- S: Supported
- F: configs/devices/s390x-softmmu/default.mak
- F: configs/targets/s390x-softmmu.mak
--F: gdb-xml/s390*.xml
-+F: gdbstub/gdb-xml/s390*.xml
- F: hw/char/sclp*.[hc]
- F: hw/char/terminal3270.c
- F: hw/intc/s390_flic.c
-@@ -221,8 +221,8 @@ F: include/hw/cpu/a*mpcore.h
- F: docs/system/target-arm.rst
- F: docs/system/arm/cpu-features.rst
- F: docs/system/arm/emulation.rst
--F: gdb-xml/arm*.xml
--F: gdb-xml/aarch64*.xml
-+F: gdbstub/gdb-xml/arm*.xml
-+F: gdbstub/gdb-xml/aarch64*.xml
- 
- ARM SMMU
- M: Eric Auger <eric.auger@redhat.com>
-@@ -237,7 +237,7 @@ AVR TCG CPUs
- M: Michael Rolnik <mrolnik@gmail.com>
- S: Maintained
- F: docs/system/target-avr.rst
--F: gdb-xml/avr-cpu.xml
-+F: gdbstub/gdb-xml/avr-cpu.xml
- F: target/avr/
- F: tests/functional/avr/
- 
-@@ -252,7 +252,7 @@ F: tests/tcg/hexagon/
- F: disas/hexagon.c
- F: configs/targets/hexagon-linux-user/default.mak
- F: docker/dockerfiles/debian-hexagon-cross.docker
--F: gdb-xml/hexagon*.xml
-+F: gdbstub/gdb-xml/hexagon*.xml
- T: git https://github.com/quic/qemu.git hex-next
- 
- Hexagon idef-parser
-@@ -311,7 +311,7 @@ M: Stafford Horne <shorne@gmail.com>
- S: Odd Fixes
- F: docs/system/or1k/cpu-features.rst
- F: target/or1k/
--F: gdb-xml/or1k-core.xml
-+F: gdbstub/gdb-xml/or1k-core.xml
- F: hw/or1k/
- F: include/hw/or1k/
- F: tests/functional/or1k/meson.build
-@@ -411,7 +411,7 @@ M: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
- M: Artyom Tarasenko <atar4qemu@gmail.com>
- S: Maintained
- F: target/sparc/
--F: gdb-xml/sparc*.xml
-+F: gdbstub/gdb-xml/sparc*.xml
- F: hw/sparc/
- F: hw/sparc64/
- F: include/hw/sparc/sparc64.h
-@@ -499,7 +499,7 @@ S: Supported
- F: target/s390x/kvm/
- F: target/s390x/machine.c
- F: target/s390x/sigp.c
--F: gdb-xml/s390*.xml
-+F: gdbstub/gdb-xml/s390*.xml
- T: git https://github.com/borntraeger/qemu.git s390-next
- L: qemu-s390x@nongnu.org
- 
-@@ -1352,7 +1352,7 @@ F: include/hw/intc/loongson_ipi_common.h
- F: hw/intc/loongarch_*.c
- F: hw/intc/loongson_ipi_common.c
- F: hw/rtc/ls7a_rtc.c
--F: gdb-xml/loongarch*.xml
-+F: gdbstub/gdb-xml/loongarch*.xml
- 
- M68K Machines
- -------------
-@@ -3311,7 +3311,6 @@ F: docs/system/gdb.rst
- F: gdbstub/*
- F: include/exec/gdbstub.h
- F: include/gdbstub/*
--F: gdb-xml/
- F: tests/tcg/multiarch/gdbstub/*
- F: scripts/feature_to_c.py
- F: scripts/probe-gdb-support.py
-diff --git a/docs/devel/codebase.rst b/docs/devel/codebase.rst
-index 69d88271178..f09307b8971 100644
---- a/docs/devel/codebase.rst
-+++ b/docs/devel/codebase.rst
-@@ -88,8 +88,6 @@ yet, so sometimes the source code is all you have.
-   `VirtFS <https://www.linux-kvm.org/page/VirtFS>`_ support.
- * `gdbstub <https://gitlab.com/qemu-project/qemu/-/tree/master/gdbstub>`_:
-   `GDB <GDB usage>` support.
--* `gdb-xml <https://gitlab.com/qemu-project/qemu/-/tree/master/gdb-xml>`_:
--  Set of XML files describing architectures and used by `gdbstub <GDB usage>`.
- * `host <https://gitlab.com/qemu-project/qemu/-/tree/master/host>`_:
-   Various architecture specific header files (crypto, atomic, memory
-   operations).
+diff --git a/configs/targets/aarch64-bsd-user.mak b/configs/targets/aarch64-bsd-user.mak
+index 03979d82402..814ed2d8bfe 100644
+--- a/configs/targets/aarch64-bsd-user.mak
++++ b/configs/targets/aarch64-bsd-user.mak
+@@ -1,4 +1,4 @@
+ TARGET_ARCH=aarch64
+ TARGET_BASE_ARCH=arm
+-TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xml
++TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aarch64-mte.xml aarch64-sme2.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/aarch64-linux-user.mak b/configs/targets/aarch64-linux-user.mak
+index bf328b3b80c..ddfacc092dd 100644
+--- a/configs/targets/aarch64-linux-user.mak
++++ b/configs/targets/aarch64-linux-user.mak
+@@ -1,6 +1,6 @@
+ TARGET_ARCH=aarch64
+ TARGET_BASE_ARCH=arm
+-TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xml
++TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aarch64-mte.xml aarch64-sme2.xml
+ TARGET_HAS_BFLT=y
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
+index d14bcfc4900..9a20187e2c1 100644
+--- a/configs/targets/aarch64-softmmu.mak
++++ b/configs/targets/aarch64-softmmu.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=aarch64
+ TARGET_BASE_ARCH=arm
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-sme2.xml
++TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml aarch64-pauth.xml aarch64-sme2.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/aarch64_be-linux-user.mak b/configs/targets/aarch64_be-linux-user.mak
+index 284430add7b..83209fa2ae5 100644
+--- a/configs/targets/aarch64_be-linux-user.mak
++++ b/configs/targets/aarch64_be-linux-user.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=aarch64
+ TARGET_BASE_ARCH=arm
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xml
++TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aarch64-mte.xml aarch64-sme2.xml
+ TARGET_HAS_BFLT=y
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+diff --git a/configs/targets/alpha-linux-user.mak b/configs/targets/alpha-linux-user.mak
+index 2f1312f0362..fbb9c680915 100644
+--- a/configs/targets/alpha-linux-user.mak
++++ b/configs/targets/alpha-linux-user.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=alpha
+ TARGET_SYSTBL_ABI=common
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_LONG_BITS=64
+-TARGET_XML_FILES= gdb-xml/alpha-core.xml
++TARGET_XML_FILES= alpha-core.xml
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/alpha-softmmu.mak b/configs/targets/alpha-softmmu.mak
+index 5c6af0eafc1..fb412d1b53f 100644
+--- a/configs/targets/alpha-softmmu.mak
++++ b/configs/targets/alpha-softmmu.mak
+@@ -1,5 +1,5 @@
+ TARGET_ARCH=alpha
+ TARGET_LONG_BITS=64
+-TARGET_XML_FILES= gdb-xml/alpha-core.xml
++TARGET_XML_FILES= alpha-core.xml
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/arm-bsd-user.mak b/configs/targets/arm-bsd-user.mak
+index 472a4f9fb11..b520819e776 100644
+--- a/configs/targets/arm-bsd-user.mak
++++ b/configs/targets/arm-bsd-user.mak
+@@ -1,3 +1,3 @@
+ TARGET_ARCH=arm
+-TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
++TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/arm-linux-user.mak b/configs/targets/arm-linux-user.mak
+index bf35ded7fea..3793782d067 100644
+--- a/configs/targets/arm-linux-user.mak
++++ b/configs/targets/arm-linux-user.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=arm
+ TARGET_SYSTBL_ABI=common,oabi
+ TARGET_SYSTBL=syscall.tbl
+-TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
++TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
+ TARGET_HAS_BFLT=y
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+diff --git a/configs/targets/arm-softmmu.mak b/configs/targets/arm-softmmu.mak
+index 6a5a8eda949..35af7da79f2 100644
+--- a/configs/targets/arm-softmmu.mak
++++ b/configs/targets/arm-softmmu.mak
+@@ -1,5 +1,5 @@
+ TARGET_ARCH=arm
+-TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
++TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/armeb-linux-user.mak b/configs/targets/armeb-linux-user.mak
+index 35fa4d91b3c..536bc95af71 100644
+--- a/configs/targets/armeb-linux-user.mak
++++ b/configs/targets/armeb-linux-user.mak
+@@ -2,7 +2,7 @@ TARGET_ARCH=arm
+ TARGET_SYSTBL_ABI=common,oabi
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
++TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
+ TARGET_HAS_BFLT=y
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+diff --git a/configs/targets/avr-softmmu.mak b/configs/targets/avr-softmmu.mak
+index baf20fb7f2f..0a00f128749 100644
+--- a/configs/targets/avr-softmmu.mak
++++ b/configs/targets/avr-softmmu.mak
+@@ -1,4 +1,4 @@
+ TARGET_ARCH=avr
+-TARGET_XML_FILES= gdb-xml/avr-cpu.xml
++TARGET_XML_FILES= avr-cpu.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/hexagon-linux-user.mak b/configs/targets/hexagon-linux-user.mak
+index 6763e2111d5..51fde5d60e6 100644
+--- a/configs/targets/hexagon-linux-user.mak
++++ b/configs/targets/hexagon-linux-user.mak
+@@ -1,5 +1,5 @@
+ TARGET_ARCH=hexagon
+-TARGET_XML_FILES=gdb-xml/hexagon-core.xml gdb-xml/hexagon-hvx.xml
++TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_SYSTBL_ABI=common,32,hexagon,time32,stat64,rlimit,renameat
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/i386-bsd-user.mak b/configs/targets/i386-bsd-user.mak
+index 70e098da491..485f571cb6c 100644
+--- a/configs/targets/i386-bsd-user.mak
++++ b/configs/targets/i386-bsd-user.mak
+@@ -1,3 +1,3 @@
+ TARGET_ARCH=i386
+-TARGET_XML_FILES= gdb-xml/i386-32bit.xml
++TARGET_XML_FILES= i386-32bit.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/i386-linux-user.mak b/configs/targets/i386-linux-user.mak
+index ea68a266fce..a3ea4c39c52 100644
+--- a/configs/targets/i386-linux-user.mak
++++ b/configs/targets/i386-linux-user.mak
+@@ -1,5 +1,5 @@
+ TARGET_ARCH=i386
+ TARGET_SYSTBL_ABI=i386
+ TARGET_SYSTBL=syscall_32.tbl
+-TARGET_XML_FILES= gdb-xml/i386-32bit.xml gdb-xml/i386-32bit-linux.xml
++TARGET_XML_FILES= i386-32bit.xml i386-32bit-linux.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
+index 19ef4a6690d..38a8f85201f 100644
+--- a/configs/targets/i386-softmmu.mak
++++ b/configs/targets/i386-softmmu.mak
+@@ -1,6 +1,6 @@
+ TARGET_ARCH=i386
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+-TARGET_XML_FILES= gdb-xml/i386-32bit.xml
++TARGET_XML_FILES= i386-32bit.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
+index 4ea12794705..63b0bfc07b8 100644
+--- a/configs/targets/loongarch64-linux-user.mak
++++ b/configs/targets/loongarch64-linux-user.mak
+@@ -1,7 +1,7 @@
+ # Default configuration for loongarch64-linux-user
+ TARGET_ARCH=loongarch64
+ TARGET_BASE_ARCH=loongarch
+-TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
++TARGET_XML_FILES=loongarch-base64.xml loongarch-fpu.xml loongarch-lsx.xml loongarch-lasx.xml
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
+index 38c0f68ddbc..476407f9413 100644
+--- a/configs/targets/loongarch64-softmmu.mak
++++ b/configs/targets/loongarch64-softmmu.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=loongarch64
+ TARGET_BASE_ARCH=loongarch
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
++TARGET_XML_FILES= loongarch-base32.xml loongarch-base64.xml loongarch-fpu.xml loongarch-lsx.xml loongarch-lasx.xml
+ # all boards require libfdt
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/m68k-linux-user.mak b/configs/targets/m68k-linux-user.mak
+index 2d9bae22707..b64f33e759a 100644
+--- a/configs/targets/m68k-linux-user.mak
++++ b/configs/targets/m68k-linux-user.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=m68k
+ TARGET_SYSTBL_ABI=common
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/cf-core.xml gdb-xml/cf-fp.xml gdb-xml/m68k-core.xml gdb-xml/m68k-fp.xml
++TARGET_XML_FILES= cf-core.xml cf-fp.xml m68k-core.xml m68k-fp.xml
+ TARGET_HAS_BFLT=y
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/m68k-softmmu.mak b/configs/targets/m68k-softmmu.mak
+index bacc52e96a9..0bc889f326e 100644
+--- a/configs/targets/m68k-softmmu.mak
++++ b/configs/targets/m68k-softmmu.mak
+@@ -1,4 +1,4 @@
+ TARGET_ARCH=m68k
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/cf-core.xml gdb-xml/cf-fp.xml gdb-xml/m68k-core.xml gdb-xml/m68k-fp.xml
++TARGET_XML_FILES= cf-core.xml cf-fp.xml m68k-core.xml m68k-fp.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/microblaze-linux-user.mak b/configs/targets/microblaze-linux-user.mak
+index 37727797695..31150f980c8 100644
+--- a/configs/targets/microblaze-linux-user.mak
++++ b/configs/targets/microblaze-linux-user.mak
+@@ -3,5 +3,5 @@ TARGET_SYSTBL_ABI=common
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+ TARGET_HAS_BFLT=y
+-TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
++TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/microblaze-softmmu.mak b/configs/targets/microblaze-softmmu.mak
+index cf635798c90..f2b6ab93fbe 100644
+--- a/configs/targets/microblaze-softmmu.mak
++++ b/configs/targets/microblaze-softmmu.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=microblaze
+ TARGET_BIG_ENDIAN=y
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+-TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
++TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+diff --git a/configs/targets/microblazeel-linux-user.mak b/configs/targets/microblazeel-linux-user.mak
+index a51a05488d3..5dcd4b5b183 100644
+--- a/configs/targets/microblazeel-linux-user.mak
++++ b/configs/targets/microblazeel-linux-user.mak
+@@ -2,5 +2,5 @@ TARGET_ARCH=microblaze
+ TARGET_SYSTBL_ABI=common
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_HAS_BFLT=y
+-TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
++TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/or1k-linux-user.mak b/configs/targets/or1k-linux-user.mak
+index 9f8c178ef10..ecb95253680 100644
+--- a/configs/targets/or1k-linux-user.mak
++++ b/configs/targets/or1k-linux-user.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=or1k
+ TARGET_BIG_ENDIAN=y
+ TARGET_SYSTBL_ABI=common,32,or1k,time32,stat64,rlimit,renameat
+ TARGET_SYSTBL=syscall.tbl
+-TARGET_XML_FILES= gdb-xml/or1k-core.xml
++TARGET_XML_FILES= or1k-core.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-softmmu.mak
+index 24d89bc3e65..c3ca0a2c6ba 100644
+--- a/configs/targets/or1k-softmmu.mak
++++ b/configs/targets/or1k-softmmu.mak
+@@ -2,7 +2,7 @@ TARGET_ARCH=or1k
+ TARGET_BIG_ENDIAN=y
+ # needed by boot.c and all boards
+ TARGET_NEED_FDT=y
+-TARGET_XML_FILES= gdb-xml/or1k-core.xml
++TARGET_XML_FILES= or1k-core.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/ppc-linux-user.mak b/configs/targets/ppc-linux-user.mak
+index 970d04a5ba1..5ddec598760 100644
+--- a/configs/targets/ppc-linux-user.mak
++++ b/configs/targets/ppc-linux-user.mak
+@@ -2,5 +2,5 @@ TARGET_ARCH=ppc
+ TARGET_SYSTBL_ABI=common,nospu,32
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/power-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml
++TARGET_XML_FILES= power-core.xml power-fpu.xml power-altivec.xml power-spe.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/ppc-softmmu.mak b/configs/targets/ppc-softmmu.mak
+index 9bfa7df6c36..867898bd47c 100644
+--- a/configs/targets/ppc-softmmu.mak
++++ b/configs/targets/ppc-softmmu.mak
+@@ -1,5 +1,5 @@
+ TARGET_ARCH=ppc
+ TARGET_BIG_ENDIAN=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= gdb-xml/power-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml
++TARGET_XML_FILES= power-core.xml power-fpu.xml power-altivec.xml power-spe.xml
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/ppc64-linux-user.mak b/configs/targets/ppc64-linux-user.mak
+index 461f1c67d15..fcedce1b4e0 100644
+--- a/configs/targets/ppc64-linux-user.mak
++++ b/configs/targets/ppc64-linux-user.mak
+@@ -4,5 +4,5 @@ TARGET_ABI_DIR=ppc
+ TARGET_SYSTBL_ABI=common,nospu,64
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
++TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml power-vsx.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/ppc64-softmmu.mak b/configs/targets/ppc64-softmmu.mak
+index 74572864b36..10d7a2681e7 100644
+--- a/configs/targets/ppc64-softmmu.mak
++++ b/configs/targets/ppc64-softmmu.mak
+@@ -2,7 +2,7 @@ TARGET_ARCH=ppc64
+ TARGET_BASE_ARCH=ppc
+ TARGET_BIG_ENDIAN=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
++TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml power-vsx.xml
+ # all boards require libfdt
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/ppc64le-linux-user.mak b/configs/targets/ppc64le-linux-user.mak
+index cf9d8a400d9..b5a81b58868 100644
+--- a/configs/targets/ppc64le-linux-user.mak
++++ b/configs/targets/ppc64le-linux-user.mak
+@@ -3,5 +3,5 @@ TARGET_BASE_ARCH=ppc
+ TARGET_ABI_DIR=ppc
+ TARGET_SYSTBL_ABI=common,nospu,64
+ TARGET_SYSTBL=syscall.tbl
+-TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
++TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml power-vsx.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/riscv32-linux-user.mak b/configs/targets/riscv32-linux-user.mak
+index a0ef03c0c3f..f069ab9a0f9 100644
+--- a/configs/targets/riscv32-linux-user.mak
++++ b/configs/targets/riscv32-linux-user.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=riscv32
+ TARGET_BASE_ARCH=riscv
+ TARGET_ABI_DIR=riscv
+-TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
++TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+ TARGET_SYSTBL_ABI=32
+diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv32-softmmu.mak
+index 7476e596082..26080599be7 100644
+--- a/configs/targets/riscv32-softmmu.mak
++++ b/configs/targets/riscv32-softmmu.mak
+@@ -1,6 +1,6 @@
+ TARGET_ARCH=riscv32
+ TARGET_BASE_ARCH=riscv
+-TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
++TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
+index c6348a79629..bc85d9ed04e 100644
+--- a/configs/targets/riscv64-bsd-user.mak
++++ b/configs/targets/riscv64-bsd-user.mak
+@@ -1,5 +1,5 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_ABI_DIR=riscv
+-TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
++TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/riscv64-linux-user.mak b/configs/targets/riscv64-linux-user.mak
+index aac7568305d..bca08645124 100644
+--- a/configs/targets/riscv64-linux-user.mak
++++ b/configs/targets/riscv64-linux-user.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_ABI_DIR=riscv
+-TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
++TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml
+ CONFIG_SEMIHOSTING=y
+ CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
+ TARGET_SYSTBL_ABI=64
+diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
+index f836f08c5b9..5059c550480 100644
+--- a/configs/targets/riscv64-softmmu.mak
++++ b/configs/targets/riscv64-softmmu.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=riscv64
+ TARGET_BASE_ARCH=riscv
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-virtual.xml
++TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml riscv-32bit-cpu.xml riscv-32bit-virtual.xml
+ # needed by boot.c
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/rx-softmmu.mak b/configs/targets/rx-softmmu.mak
+index 281a165873a..1959d1b4ccc 100644
+--- a/configs/targets/rx-softmmu.mak
++++ b/configs/targets/rx-softmmu.mak
+@@ -1,5 +1,5 @@
+ TARGET_ARCH=rx
+-TARGET_XML_FILES= gdb-xml/rx-core.xml
++TARGET_XML_FILES= rx-core.xml
+ # all boards require libfdt
+ TARGET_NEED_FDT=y
+ TARGET_LONG_BITS=32
+diff --git a/configs/targets/s390x-linux-user.mak b/configs/targets/s390x-linux-user.mak
+index e3723f5dc54..2dbcae0a6e2 100644
+--- a/configs/targets/s390x-linux-user.mak
++++ b/configs/targets/s390x-linux-user.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=s390x
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
++TARGET_XML_FILES= s390x-core64.xml s390-acr.xml s390-fpr.xml s390-vx.xml s390-cr.xml s390-virt.xml s390-virt-kvm.xml s390-gs.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/s390x-softmmu.mak b/configs/targets/s390x-softmmu.mak
+index 544657cfe2d..e273075f1a9 100644
+--- a/configs/targets/s390x-softmmu.mak
++++ b/configs/targets/s390x-softmmu.mak
+@@ -1,6 +1,6 @@
+ TARGET_ARCH=s390x
+ TARGET_BIG_ENDIAN=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+-TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
++TARGET_XML_FILES= s390x-core64.xml s390-acr.xml s390-fpr.xml s390-vx.xml s390-cr.xml s390-virt.xml s390-virt-kvm.xml s390-gs.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc-linux-user.mak b/configs/targets/sparc-linux-user.mak
+index 01446e28783..2b6f8077399 100644
+--- a/configs/targets/sparc-linux-user.mak
++++ b/configs/targets/sparc-linux-user.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=sparc
+ TARGET_SYSTBL_ABI=common,32
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc32-cpu.xml gdb-xml/sparc32-fpu.xml gdb-xml/sparc32-cp0.xml
++TARGET_XML_FILES=sparc32-cpu.xml sparc32-fpu.xml sparc32-cp0.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc-softmmu.mak b/configs/targets/sparc-softmmu.mak
+index ed846735f41..126ce12abb0 100644
+--- a/configs/targets/sparc-softmmu.mak
++++ b/configs/targets/sparc-softmmu.mak
+@@ -1,6 +1,6 @@
+ TARGET_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc32-cpu.xml gdb-xml/sparc32-fpu.xml gdb-xml/sparc32-cp0.xml
++TARGET_XML_FILES=sparc32-cpu.xml sparc32-fpu.xml sparc32-cp0.xml
+ TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc32plus-linux-user.mak b/configs/targets/sparc32plus-linux-user.mak
+index cf49c53ce44..a1d8530ecfd 100644
+--- a/configs/targets/sparc32plus-linux-user.mak
++++ b/configs/targets/sparc32plus-linux-user.mak
+@@ -5,6 +5,6 @@ TARGET_ABI_DIR=sparc
+ TARGET_SYSTBL_ABI=common,32
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
++TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
+index 81d18fcc85b..c48a03aeb9e 100644
+--- a/configs/targets/sparc64-linux-user.mak
++++ b/configs/targets/sparc64-linux-user.mak
+@@ -4,6 +4,6 @@ TARGET_ABI_DIR=sparc
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall.tbl
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
++TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
+index 602783ef0f6..4e621fb8e39 100644
+--- a/configs/targets/sparc64-softmmu.mak
++++ b/configs/targets/sparc64-softmmu.mak
+@@ -1,7 +1,7 @@
+ TARGET_ARCH=sparc64
+ TARGET_BASE_ARCH=sparc
+ TARGET_BIG_ENDIAN=y
+-TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
++TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+diff --git a/configs/targets/x86_64-bsd-user.mak b/configs/targets/x86_64-bsd-user.mak
+index d62d656f2c6..d754186347f 100644
+--- a/configs/targets/x86_64-bsd-user.mak
++++ b/configs/targets/x86_64-bsd-user.mak
+@@ -1,4 +1,4 @@
+ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+-TARGET_XML_FILES= gdb-xml/i386-64bit.xml
++TARGET_XML_FILES= i386-64bit.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/x86_64-linux-user.mak b/configs/targets/x86_64-linux-user.mak
+index b093ab5a167..7f9527fd1de 100644
+--- a/configs/targets/x86_64-linux-user.mak
++++ b/configs/targets/x86_64-linux-user.mak
+@@ -2,5 +2,5 @@ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+ TARGET_SYSTBL_ABI=common,64
+ TARGET_SYSTBL=syscall_64.tbl
+-TARGET_XML_FILES= gdb-xml/i386-64bit.xml gdb-xml/i386-64bit-linux.xml
++TARGET_XML_FILES= i386-64bit.xml i386-64bit-linux.xml
+ TARGET_LONG_BITS=64
+diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
+index 151862158c7..c7f8746b4f5 100644
+--- a/configs/targets/x86_64-softmmu.mak
++++ b/configs/targets/x86_64-softmmu.mak
+@@ -2,6 +2,6 @@ TARGET_ARCH=x86_64
+ TARGET_BASE_ARCH=i386
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
+-TARGET_XML_FILES= gdb-xml/i386-64bit.xml gdb-xml/i386-64bit-apx.xml
++TARGET_XML_FILES= i386-64bit.xml i386-64bit-apx.xml
+ TARGET_LONG_BITS=64
+ TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
 diff --git a/meson.build b/meson.build
-index 8e8440941c0..503cde5ea90 100644
+index db8918dd303..8e8440941c0 100644
 --- a/meson.build
 +++ b/meson.build
-@@ -4331,7 +4331,7 @@ foreach target : target_dirs
+@@ -4329,9 +4329,13 @@ foreach target : target_dirs
+   endif
+ 
    if 'TARGET_XML_FILES' in config_target
-     gdbstub_xml_files = []
-     foreach gdbstub_xml : config_target['TARGET_XML_FILES'].split()
--      gdbstub_xml_files += 'gdb-xml/' + gdbstub_xml
-+      gdbstub_xml_files += 'gdbstub/gdb-xml/' + gdbstub_xml
-     endforeach
++    gdbstub_xml_files = []
++    foreach gdbstub_xml : config_target['TARGET_XML_FILES'].split()
++      gdbstub_xml_files += 'gdb-xml/' + gdbstub_xml
++    endforeach
      gdbstub_xml = custom_target(target + '-gdbstub-xml.c',
                                  output: target + '-gdbstub-xml.c',
-diff --git a/gdb-xml/aarch64-core.xml b/gdbstub/gdb-xml/aarch64-core.xml
-similarity index 100%
-rename from gdb-xml/aarch64-core.xml
-rename to gdbstub/gdb-xml/aarch64-core.xml
-diff --git a/gdb-xml/aarch64-fpu.xml b/gdbstub/gdb-xml/aarch64-fpu.xml
-similarity index 100%
-rename from gdb-xml/aarch64-fpu.xml
-rename to gdbstub/gdb-xml/aarch64-fpu.xml
-diff --git a/gdb-xml/aarch64-mte.xml b/gdbstub/gdb-xml/aarch64-mte.xml
-similarity index 100%
-rename from gdb-xml/aarch64-mte.xml
-rename to gdbstub/gdb-xml/aarch64-mte.xml
-diff --git a/gdb-xml/aarch64-pauth.xml b/gdbstub/gdb-xml/aarch64-pauth.xml
-similarity index 100%
-rename from gdb-xml/aarch64-pauth.xml
-rename to gdbstub/gdb-xml/aarch64-pauth.xml
-diff --git a/gdb-xml/aarch64-sme2.xml b/gdbstub/gdb-xml/aarch64-sme2.xml
-similarity index 100%
-rename from gdb-xml/aarch64-sme2.xml
-rename to gdbstub/gdb-xml/aarch64-sme2.xml
-diff --git a/gdb-xml/alpha-core.xml b/gdbstub/gdb-xml/alpha-core.xml
-similarity index 100%
-rename from gdb-xml/alpha-core.xml
-rename to gdbstub/gdb-xml/alpha-core.xml
-diff --git a/gdb-xml/arm-core.xml b/gdbstub/gdb-xml/arm-core.xml
-similarity index 100%
-rename from gdb-xml/arm-core.xml
-rename to gdbstub/gdb-xml/arm-core.xml
-diff --git a/gdb-xml/arm-m-profile-mve.xml b/gdbstub/gdb-xml/arm-m-profile-mve.xml
-similarity index 100%
-rename from gdb-xml/arm-m-profile-mve.xml
-rename to gdbstub/gdb-xml/arm-m-profile-mve.xml
-diff --git a/gdb-xml/arm-m-profile.xml b/gdbstub/gdb-xml/arm-m-profile.xml
-similarity index 100%
-rename from gdb-xml/arm-m-profile.xml
-rename to gdbstub/gdb-xml/arm-m-profile.xml
-diff --git a/gdb-xml/arm-neon.xml b/gdbstub/gdb-xml/arm-neon.xml
-similarity index 100%
-rename from gdb-xml/arm-neon.xml
-rename to gdbstub/gdb-xml/arm-neon.xml
-diff --git a/gdb-xml/arm-vfp-sysregs.xml b/gdbstub/gdb-xml/arm-vfp-sysregs.xml
-similarity index 100%
-rename from gdb-xml/arm-vfp-sysregs.xml
-rename to gdbstub/gdb-xml/arm-vfp-sysregs.xml
-diff --git a/gdb-xml/arm-vfp.xml b/gdbstub/gdb-xml/arm-vfp.xml
-similarity index 100%
-rename from gdb-xml/arm-vfp.xml
-rename to gdbstub/gdb-xml/arm-vfp.xml
-diff --git a/gdb-xml/arm-vfp3.xml b/gdbstub/gdb-xml/arm-vfp3.xml
-similarity index 100%
-rename from gdb-xml/arm-vfp3.xml
-rename to gdbstub/gdb-xml/arm-vfp3.xml
-diff --git a/gdb-xml/avr-cpu.xml b/gdbstub/gdb-xml/avr-cpu.xml
-similarity index 100%
-rename from gdb-xml/avr-cpu.xml
-rename to gdbstub/gdb-xml/avr-cpu.xml
-diff --git a/gdb-xml/cf-core.xml b/gdbstub/gdb-xml/cf-core.xml
-similarity index 100%
-rename from gdb-xml/cf-core.xml
-rename to gdbstub/gdb-xml/cf-core.xml
-diff --git a/gdb-xml/cf-fp.xml b/gdbstub/gdb-xml/cf-fp.xml
-similarity index 100%
-rename from gdb-xml/cf-fp.xml
-rename to gdbstub/gdb-xml/cf-fp.xml
-diff --git a/gdb-xml/hexagon-core.xml b/gdbstub/gdb-xml/hexagon-core.xml
-similarity index 100%
-rename from gdb-xml/hexagon-core.xml
-rename to gdbstub/gdb-xml/hexagon-core.xml
-diff --git a/gdb-xml/hexagon-hvx.xml b/gdbstub/gdb-xml/hexagon-hvx.xml
-similarity index 100%
-rename from gdb-xml/hexagon-hvx.xml
-rename to gdbstub/gdb-xml/hexagon-hvx.xml
-diff --git a/gdb-xml/i386-32bit-linux.xml b/gdbstub/gdb-xml/i386-32bit-linux.xml
-similarity index 100%
-rename from gdb-xml/i386-32bit-linux.xml
-rename to gdbstub/gdb-xml/i386-32bit-linux.xml
-diff --git a/gdb-xml/i386-32bit.xml b/gdbstub/gdb-xml/i386-32bit.xml
-similarity index 100%
-rename from gdb-xml/i386-32bit.xml
-rename to gdbstub/gdb-xml/i386-32bit.xml
-diff --git a/gdb-xml/i386-64bit-apx.xml b/gdbstub/gdb-xml/i386-64bit-apx.xml
-similarity index 100%
-rename from gdb-xml/i386-64bit-apx.xml
-rename to gdbstub/gdb-xml/i386-64bit-apx.xml
-diff --git a/gdb-xml/i386-64bit-linux.xml b/gdbstub/gdb-xml/i386-64bit-linux.xml
-similarity index 100%
-rename from gdb-xml/i386-64bit-linux.xml
-rename to gdbstub/gdb-xml/i386-64bit-linux.xml
-diff --git a/gdb-xml/i386-64bit.xml b/gdbstub/gdb-xml/i386-64bit.xml
-similarity index 100%
-rename from gdb-xml/i386-64bit.xml
-rename to gdbstub/gdb-xml/i386-64bit.xml
-diff --git a/gdb-xml/loongarch-base32.xml b/gdbstub/gdb-xml/loongarch-base32.xml
-similarity index 100%
-rename from gdb-xml/loongarch-base32.xml
-rename to gdbstub/gdb-xml/loongarch-base32.xml
-diff --git a/gdb-xml/loongarch-base64.xml b/gdbstub/gdb-xml/loongarch-base64.xml
-similarity index 100%
-rename from gdb-xml/loongarch-base64.xml
-rename to gdbstub/gdb-xml/loongarch-base64.xml
-diff --git a/gdb-xml/loongarch-fpu.xml b/gdbstub/gdb-xml/loongarch-fpu.xml
-similarity index 100%
-rename from gdb-xml/loongarch-fpu.xml
-rename to gdbstub/gdb-xml/loongarch-fpu.xml
-diff --git a/gdb-xml/loongarch-lasx.xml b/gdbstub/gdb-xml/loongarch-lasx.xml
-similarity index 100%
-rename from gdb-xml/loongarch-lasx.xml
-rename to gdbstub/gdb-xml/loongarch-lasx.xml
-diff --git a/gdb-xml/loongarch-lsx.xml b/gdbstub/gdb-xml/loongarch-lsx.xml
-similarity index 100%
-rename from gdb-xml/loongarch-lsx.xml
-rename to gdbstub/gdb-xml/loongarch-lsx.xml
-diff --git a/gdb-xml/m68k-core.xml b/gdbstub/gdb-xml/m68k-core.xml
-similarity index 100%
-rename from gdb-xml/m68k-core.xml
-rename to gdbstub/gdb-xml/m68k-core.xml
-diff --git a/gdb-xml/m68k-fp.xml b/gdbstub/gdb-xml/m68k-fp.xml
-similarity index 100%
-rename from gdb-xml/m68k-fp.xml
-rename to gdbstub/gdb-xml/m68k-fp.xml
-diff --git a/gdb-xml/microblaze-core.xml b/gdbstub/gdb-xml/microblaze-core.xml
-similarity index 100%
-rename from gdb-xml/microblaze-core.xml
-rename to gdbstub/gdb-xml/microblaze-core.xml
-diff --git a/gdb-xml/microblaze-stack-protect.xml b/gdbstub/gdb-xml/microblaze-stack-protect.xml
-similarity index 100%
-rename from gdb-xml/microblaze-stack-protect.xml
-rename to gdbstub/gdb-xml/microblaze-stack-protect.xml
-diff --git a/gdb-xml/or1k-core.xml b/gdbstub/gdb-xml/or1k-core.xml
-similarity index 100%
-rename from gdb-xml/or1k-core.xml
-rename to gdbstub/gdb-xml/or1k-core.xml
-diff --git a/gdb-xml/power-altivec.xml b/gdbstub/gdb-xml/power-altivec.xml
-similarity index 100%
-rename from gdb-xml/power-altivec.xml
-rename to gdbstub/gdb-xml/power-altivec.xml
-diff --git a/gdb-xml/power-core.xml b/gdbstub/gdb-xml/power-core.xml
-similarity index 100%
-rename from gdb-xml/power-core.xml
-rename to gdbstub/gdb-xml/power-core.xml
-diff --git a/gdb-xml/power-fpu.xml b/gdbstub/gdb-xml/power-fpu.xml
-similarity index 100%
-rename from gdb-xml/power-fpu.xml
-rename to gdbstub/gdb-xml/power-fpu.xml
-diff --git a/gdb-xml/power-spe.xml b/gdbstub/gdb-xml/power-spe.xml
-similarity index 100%
-rename from gdb-xml/power-spe.xml
-rename to gdbstub/gdb-xml/power-spe.xml
-diff --git a/gdb-xml/power-vsx.xml b/gdbstub/gdb-xml/power-vsx.xml
-similarity index 100%
-rename from gdb-xml/power-vsx.xml
-rename to gdbstub/gdb-xml/power-vsx.xml
-diff --git a/gdb-xml/power64-core.xml b/gdbstub/gdb-xml/power64-core.xml
-similarity index 100%
-rename from gdb-xml/power64-core.xml
-rename to gdbstub/gdb-xml/power64-core.xml
-diff --git a/gdb-xml/riscv-32bit-cpu.xml b/gdbstub/gdb-xml/riscv-32bit-cpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-32bit-cpu.xml
-rename to gdbstub/gdb-xml/riscv-32bit-cpu.xml
-diff --git a/gdb-xml/riscv-32bit-fpu.xml b/gdbstub/gdb-xml/riscv-32bit-fpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-32bit-fpu.xml
-rename to gdbstub/gdb-xml/riscv-32bit-fpu.xml
-diff --git a/gdb-xml/riscv-32bit-virtual.xml b/gdbstub/gdb-xml/riscv-32bit-virtual.xml
-similarity index 100%
-rename from gdb-xml/riscv-32bit-virtual.xml
-rename to gdbstub/gdb-xml/riscv-32bit-virtual.xml
-diff --git a/gdb-xml/riscv-64bit-cpu.xml b/gdbstub/gdb-xml/riscv-64bit-cpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-64bit-cpu.xml
-rename to gdbstub/gdb-xml/riscv-64bit-cpu.xml
-diff --git a/gdb-xml/riscv-64bit-fpu.xml b/gdbstub/gdb-xml/riscv-64bit-fpu.xml
-similarity index 100%
-rename from gdb-xml/riscv-64bit-fpu.xml
-rename to gdbstub/gdb-xml/riscv-64bit-fpu.xml
-diff --git a/gdb-xml/riscv-64bit-virtual.xml b/gdbstub/gdb-xml/riscv-64bit-virtual.xml
-similarity index 100%
-rename from gdb-xml/riscv-64bit-virtual.xml
-rename to gdbstub/gdb-xml/riscv-64bit-virtual.xml
-diff --git a/gdb-xml/rx-core.xml b/gdbstub/gdb-xml/rx-core.xml
-similarity index 100%
-rename from gdb-xml/rx-core.xml
-rename to gdbstub/gdb-xml/rx-core.xml
-diff --git a/gdb-xml/s390-acr.xml b/gdbstub/gdb-xml/s390-acr.xml
-similarity index 100%
-rename from gdb-xml/s390-acr.xml
-rename to gdbstub/gdb-xml/s390-acr.xml
-diff --git a/gdb-xml/s390-cr.xml b/gdbstub/gdb-xml/s390-cr.xml
-similarity index 100%
-rename from gdb-xml/s390-cr.xml
-rename to gdbstub/gdb-xml/s390-cr.xml
-diff --git a/gdb-xml/s390-fpr.xml b/gdbstub/gdb-xml/s390-fpr.xml
-similarity index 100%
-rename from gdb-xml/s390-fpr.xml
-rename to gdbstub/gdb-xml/s390-fpr.xml
-diff --git a/gdb-xml/s390-gs.xml b/gdbstub/gdb-xml/s390-gs.xml
-similarity index 100%
-rename from gdb-xml/s390-gs.xml
-rename to gdbstub/gdb-xml/s390-gs.xml
-diff --git a/gdb-xml/s390-virt-kvm.xml b/gdbstub/gdb-xml/s390-virt-kvm.xml
-similarity index 100%
-rename from gdb-xml/s390-virt-kvm.xml
-rename to gdbstub/gdb-xml/s390-virt-kvm.xml
-diff --git a/gdb-xml/s390-virt.xml b/gdbstub/gdb-xml/s390-virt.xml
-similarity index 100%
-rename from gdb-xml/s390-virt.xml
-rename to gdbstub/gdb-xml/s390-virt.xml
-diff --git a/gdb-xml/s390-vx.xml b/gdbstub/gdb-xml/s390-vx.xml
-similarity index 100%
-rename from gdb-xml/s390-vx.xml
-rename to gdbstub/gdb-xml/s390-vx.xml
-diff --git a/gdb-xml/s390x-core64.xml b/gdbstub/gdb-xml/s390x-core64.xml
-similarity index 100%
-rename from gdb-xml/s390x-core64.xml
-rename to gdbstub/gdb-xml/s390x-core64.xml
-diff --git a/gdb-xml/sparc32-cp0.xml b/gdbstub/gdb-xml/sparc32-cp0.xml
-similarity index 100%
-rename from gdb-xml/sparc32-cp0.xml
-rename to gdbstub/gdb-xml/sparc32-cp0.xml
-diff --git a/gdb-xml/sparc32-cpu.xml b/gdbstub/gdb-xml/sparc32-cpu.xml
-similarity index 100%
-rename from gdb-xml/sparc32-cpu.xml
-rename to gdbstub/gdb-xml/sparc32-cpu.xml
-diff --git a/gdb-xml/sparc32-fpu.xml b/gdbstub/gdb-xml/sparc32-fpu.xml
-similarity index 100%
-rename from gdb-xml/sparc32-fpu.xml
-rename to gdbstub/gdb-xml/sparc32-fpu.xml
-diff --git a/gdb-xml/sparc64-cp0.xml b/gdbstub/gdb-xml/sparc64-cp0.xml
-similarity index 100%
-rename from gdb-xml/sparc64-cp0.xml
-rename to gdbstub/gdb-xml/sparc64-cp0.xml
-diff --git a/gdb-xml/sparc64-cpu.xml b/gdbstub/gdb-xml/sparc64-cpu.xml
-similarity index 100%
-rename from gdb-xml/sparc64-cpu.xml
-rename to gdbstub/gdb-xml/sparc64-cpu.xml
-diff --git a/gdb-xml/sparc64-fpu.xml b/gdbstub/gdb-xml/sparc64-fpu.xml
-similarity index 100%
-rename from gdb-xml/sparc64-fpu.xml
-rename to gdbstub/gdb-xml/sparc64-fpu.xml
+-                                input: files(config_target['TARGET_XML_FILES'].split()),
++                                input: files(gdbstub_xml_files),
+                                 command: [feature_to_c, '@INPUT@'],
+                                 capture: true)
+     arch_srcs += gdbstub_xml
 -- 
 2.47.3
 
