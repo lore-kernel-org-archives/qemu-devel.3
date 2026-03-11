@@ -4,84 +4,121 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D613FD88D9
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE0AFD88D4
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:42:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w08XV-00042V-Kh; Tue, 10 Mar 2026 21:39:09 -0400
+	id 1w08aT-0001Y2-Nt; Tue, 10 Mar 2026 21:42:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XL-0003ya-L4
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:00 -0400
-Received: from mail-pl1-x62d.google.com ([2607:f8b0:4864:20::62d])
+ id 1w08aK-0001U7-10
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:42:07 -0400
+Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XJ-0004qJ-OB
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:59 -0400
-Received: by mail-pl1-x62d.google.com with SMTP id
- d9443c01a7336-2ab39b111b9so60584625ad.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:38:57 -0700 (PDT)
+ id 1w08aH-0006OR-FW
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:42:03 -0400
+Received: by mail-qk1-x72c.google.com with SMTP id
+ af79cd13be357-8cd78a4ce8dso494039585a.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:41:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773193136; x=1773797936; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rzIZT+O9WouNnlbZw1uqmZ1dd0NGIjRk4rEHgD+bYRU=;
- b=Wp6lknew2uYst5zyLgPhrzu/3IzinyREA2vDqhqLHNNnMnreIJRprx+KRimn4Z8HVt
- 5ZaWLK7XA3+67qGmNyL+NUQpTYSphHtS95hOkcWcszut7PpwRk+2nGKR2kWJjVh33QsF
- 4XKjBMZm5617aSJ7QnsCuLSeHMGacblgxRclP8wzLVFdbdXvjZ852LokDC9SMV2CXLaV
- HvWzMXVCg4S2CLrt7IqVoxvKCBsMI+DOq30DSttuJptFos37mWwqrpL7nqesGRxo46mx
- aVjSQuL9/4mjuw0Q4X1DPzOeEfFpG1NcodbjBHYVyzIbmjLA7/05x1MYFqCDBe3rdt9X
- Trkg==
+ d=linaro.org; s=google; t=1773193319; x=1773798119; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:cc:autocrypt:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2BE3AUNIINDYc+tYjNIEEmAuAQPk6dAGTez1Ow7YGUg=;
+ b=nXC1gJXX1+k6/K9/XEmURnlkgyOgiC6VIu9NWAKPuCPy5xZMBdQa3mVXIc/ibK7hnv
+ QJke1acwPcKlc3aHY6KzQXaVZhNt1fHqMKuFRM3hKU3wBii/2TXLZvi5B4WFOhx7hKEI
+ hdXGYoQiG0gxARK1sMXqv/hYg9ZIzWi99GCkn+fsmgZFwjdix7wQZaU1kCdW3scfHhMv
+ +tjXg9JyL4nfL49Iedfricn6vOKwkxTrglUe2BRKEVmgWt1OPuPZy+3tWRH2H+iHwwc2
+ iNJtC4qLz217Vwk+4GHW0kEyoZMCCj8qYos1AejM8jU9YdeF9H9hJpSIv73qa/wcSD7n
+ sLFw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773193136; x=1773797936;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rzIZT+O9WouNnlbZw1uqmZ1dd0NGIjRk4rEHgD+bYRU=;
- b=L3UEtF3405qje+SF7zASoHyzRNu9i3HxhtSKDJy5XWZNRiyhQaqAxFoytLSTHzkYCN
- b3++HRfR8cFMXqje8tRi2x4SAYSH9x4r9+2X+cq6M/WpC0r3goZVzS/RufYBpy2JT/tZ
- A5G5cQjY99cl/R4orPycKR/oeQP9zpUqPyVxKIhQnE5WlXw0M3/octsu1fma8wKsG1RP
- m8SeeLDlttJZhCNa1Ca9E72Uk1momPbleFIdn7Az0GmnWCDbMzCMCoi+aRbcycqwAKdx
- 6rdRXUhegfKgBfFW+nfxRmU8hOjq7bUmQy1BJ7UcoaC/3Jz6tKziWgf9UWkW/S8mIn4s
- q1iA==
-X-Gm-Message-State: AOJu0YwsZwRf3YCKgr22bbjp6IDebbYX8lp0KCcVNOiUWFbHd3lhabYc
- lAd1vNd8FIFVOXYcYel4vOj3x4zIdQYPsFjh/uT0grX2a7o7AQViFBCDxch3FLVNCdxQUPvHjLc
- ZMDeP
-X-Gm-Gg: ATEYQzzb+PjX6kIZadBvlDLMRXHJ2I053l4CrzhD2QwXkASSn3rLF6UDi0g51YPREuh
- jfoppYMDhk/6Hu2otmp9R48rwGUMjCh37vtxRLEl+Y0FIF8ofXR6UCixFPiJtD4NtN4LGDLHNAq
- FuYODKXDb2P/fS1NAf/KY1ESZlJDsmw4EB0Bc5zZPzEt5svRnQkCwprWUnuiaSBVpWSJ9I8KPw7
- ikHny8SF2dUhR/oWt4fy0lQb/4VC1bC1xABgbUyoQX6gQENNBxS41SWROlQUIZTKRK6iGnYsrCY
- Mb+0BVnAyC4U06dmNi09HIwqUk7BVfNW6DbbjBB/Ef+dQZZxsuZ6yTsRB75bvbXe43MWl/4MjED
- ckrAMvvmhN/eR1p7UNF1HUt9zhOgq1R9Jk9r7VGQEL5cYl/GGk84O3nDINiYQZvmj4LNvo38pHO
- ushrEzauP5ENleIJDAw7yWunE1TZKR8Vqn3756jaOYHPj7Kft2VzqnX652XBKZZoPj0xN7OzsOs
- VFD0UwbOt7mDe4=
-X-Received: by 2002:a17:903:234a:b0:2ae:5f65:171 with SMTP id
- d9443c01a7336-2aeae8720e0mr7240695ad.33.1773193136295; 
- Tue, 10 Mar 2026 18:38:56 -0700 (PDT)
-Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
- [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.38.55
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 18:38:55 -0700 (PDT)
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
-Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 09/16] gdbstub: Make base register explicit in m68k GDB XML
- files
-Date: Tue, 10 Mar 2026 18:38:30 -0700
-Message-ID: <20260311013837.69945-10-pierrick.bouvier@linaro.org>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
-References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
+ d=1e100.net; s=20230601; t=1773193319; x=1773798119;
+ h=content-transfer-encoding:in-reply-to:cc:autocrypt:from:references
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2BE3AUNIINDYc+tYjNIEEmAuAQPk6dAGTez1Ow7YGUg=;
+ b=IXOmp6rxLHjI2Z+R62ldLJvL7EkXHdrQi3x5e6cKxSjmqVJxewUkH2OhtRy3ZkGnu/
+ ws1ErdLVYRtX5JPX1yeXoPHBejicqEMND5Tf3P0B46i+yIURJ/alofcfGBmxmyw4DiWY
+ yzyE7q3PEWNwrQvIUj7zf/UxzCwkBhTkM3gk/tpO9t0sEOp86D9y9SZ2tUcjCfBQze1o
+ F5W/rX5UMbvqRH9COR9usvJyiUz9vY5pIt2FjJ0f2XjHBqvtfaZnsdjqvDl6JQbuJeWQ
+ Y+0+l7K0PWlhjL7nHSSz+ChZFHlvfJt88fACEDA2xmjZoOFttelGfz3+anlTpY1PLRWz
+ +INg==
+X-Gm-Message-State: AOJu0YweyVr08pvDUa9M8RdsKAD26YGvs43nvewSVOW/jB8UTWS1mEkE
+ w49WbnEOX2SIKPf9EfSsNt+4h8L0z54O/OvRPG+HZdtVa0KMYpIQa2uOlaqSyeMCl9THA4XD0dR
+ G557P
+X-Gm-Gg: ATEYQzyXw2gmQ0UbWWP5EPGytPRe7WBPPoFwpCM3tfH4hjDeBOOVkmi+J/nhgYbb6oe
+ axIgPjng/geQQokKQE/u+zEG6UbPXAUBDsQfnSxSK61/mIrdhJjNmCqR7Fnql1qM4adqdhTYHWW
+ tEvdIvR1ZaI2CGNzPjq3TcU869HWubPtZtio1lW1fv+nitNMV+qoa8mTZLwk5IPdyEB9/OMivL4
+ JVX/oEdpVUJ22dPHqbCaUO2cfmlLGss2OCbrH1/QcgTRWYk1j2gKEH1rrsrE2OPBkq2bGgkB/4o
+ e5UcStaVsd6YZX3t4Fflwhe49IsdvM1ZJRD76uKDYqVIZYirONGQ0AKpNjQVv4aCZ0DH5EjxMAD
+ CTiZEDbcHLq1r2bX+EqjUlBesmnnus+FWf4gHzeulVl/OIFjIew8VJTJuBNOdQS6vp/TcH+5IPE
+ 7j+EyQe/T3S4rp29u+ctTbalQQsBtDMLuptLUbjKl6CJff7E8ADkv71OEkPgyn7QG1iRcyj/Snh
+ UkNpEo=
+X-Received: by 2002:a05:620a:1903:b0:8cb:3df5:4b6b with SMTP id
+ af79cd13be357-8cda1a56377mr131834985a.61.1773193318842; 
+ Tue, 10 Mar 2026 18:41:58 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cda21348e2sm40397285a.35.2026.03.10.18.41.57
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 10 Mar 2026 18:41:58 -0700 (PDT)
+Message-ID: <6ea61ae5-0a83-4279-8a8b-897a162d54a9@linaro.org>
+Date: Tue, 10 Mar 2026 18:41:56 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/16] gdbstub: Always infer base register index from GDB
+ XML
+Content-Language: en-US
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62d;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x72c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,71 +141,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Philippe Mathieu-Daudé <philmd@linaro.org>
+On 3/10/26 6:38 PM, Pierrick Bouvier wrote:
+> The following changes since commit ae56950eac7b61b1abf42003329ee0f3ce111711:
+> 
+>    Merge tag 'firmware-20260310-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-03-10 13:32:30 +0000)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.com/pbo-linaro/qemu tags/pr-gdbstub-20260310
+> 
+> for you to fetch changes up to 6511d4eed79a7e59f03e661f31924277e4d6e600:
+> 
+>    gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[] (2026-03-10 17:12:18 -0700)
+> 
+> ----------------------------------------------------------------
+> - [PATCH v4 00/16] gdbstub: Always infer base register index from GDB (=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>)
+>    Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-1-philmd@linaro.org
+> 
+> ----------------------------------------------------------------
+> Alex Bennée (1):
+>        tests/docker: add gdb-multiarch to all-test-cross
+> 
+> Philippe Mathieu-Daudé (15):
+>        tests/tcg: Temporary disable multiarch tests for PPC targets
+>        tests/tcg: Disable prot-none test on GitLab
+>        target/i386/gdbstub: Remove stale comment
+>        meson: Restrict gdbstub to user/system builds
+>        gdbstub: Simplify gdb_init_cpu() logic
+>        gdbstub: Add trace events for around XML parsing / generation
+>        gdbstub: Have scripts/feature_to_c.py generate more verbose output
+>        gdbstub: Make base register explicit in m68k GDB XML files
+>        gdbstub: Remove @g_pos argument in gdb_register_coprocessor()
+>        gdbstub: Emit base_register index in GDBFeature entries
+>        gdbstub: Consider GDBFeature::base_reg in gdb_register_coprocessor()
+>        tests/tcg: Re-enable disabled multiarch tests for PPC targets
+>        gdbstub: Remove 'gdb-xml/' directory prefix in TARGET_XML_FILES
+>        gdbstub: Move gdb-xml/ within gdbstub/
+>        gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[]
+>
+Send this PR for Philippe, as it's the last day for soft freeze, and 
+that it's already the middle of the night in his timezone. We tested it 
+together.
 
-Both gdb-xml/cf-fp.xml and gdb-xml/m68k-fp.xml aren't imported
-from GDB repository. Presumably they are hand-written, and lack
-the @regnum XML tag.
+This series fixes original issue reported here:
+https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
 
-This might explain why gdb_register_coprocessor() have a @g_pos
-argument, only used for these 2 m68k files.
+As well, it enables gdbstub tests that were never ran in CI since 
+gdb-multiarch was not installed.
 
-Fixes: 56aebc89167 ("Add GDB XML register description support")
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-10-philmd@linaro.org
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- target/m68k/helper.c | 4 ++--
- gdb-xml/cf-fp.xml    | 2 +-
- gdb-xml/m68k-fp.xml  | 2 +-
- 3 files changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/target/m68k/helper.c b/target/m68k/helper.c
-index 15f110fa7a2..c566cb0a16c 100644
---- a/target/m68k/helper.c
-+++ b/target/m68k/helper.c
-@@ -129,10 +129,10 @@ void m68k_cpu_init_gdb(M68kCPU *cpu)
- 
-     if (m68k_feature(env, M68K_FEATURE_CF_FPU)) {
-         gdb_register_coprocessor(cs, cf_fpu_gdb_get_reg, cf_fpu_gdb_set_reg,
--                                 gdb_find_static_feature("cf-fp.xml"), 18);
-+                                 gdb_find_static_feature("cf-fp.xml"), 0);
-     } else if (m68k_feature(env, M68K_FEATURE_FPU)) {
-         gdb_register_coprocessor(cs, m68k_fpu_gdb_get_reg, m68k_fpu_gdb_set_reg,
--                                 gdb_find_static_feature("m68k-fp.xml"), 18);
-+                                 gdb_find_static_feature("m68k-fp.xml"), 0);
-     }
-     /* TODO: Add [E]MAC registers.  */
- }
-diff --git a/gdb-xml/cf-fp.xml b/gdb-xml/cf-fp.xml
-index bf71c320bfc..27db66ae963 100644
---- a/gdb-xml/cf-fp.xml
-+++ b/gdb-xml/cf-fp.xml
-@@ -6,7 +6,7 @@
-      notice and this notice are preserved.  -->
- <!DOCTYPE feature SYSTEM "gdb-target.dtd">
- <feature name="org.gnu.gdb.coldfire.fp">
--  <reg name="fp0" bitsize="64" type="float" group="float"/>
-+  <reg name="fp0" bitsize="64" type="float" group="float" regnum="18"/>
-   <reg name="fp1" bitsize="64" type="float" group="float"/>
-   <reg name="fp2" bitsize="64" type="float" group="float"/>
-   <reg name="fp3" bitsize="64" type="float" group="float"/>
-diff --git a/gdb-xml/m68k-fp.xml b/gdb-xml/m68k-fp.xml
-index 64290d16306..ec45931b673 100644
---- a/gdb-xml/m68k-fp.xml
-+++ b/gdb-xml/m68k-fp.xml
-@@ -6,7 +6,7 @@
-      notice and this notice are preserved.  -->
- <!DOCTYPE feature SYSTEM "gdb-target.dtd">
- <feature name="org.gnu.gdb.coldfire.fp">
--  <reg name="fp0" bitsize="96" type="float" group="float"/>
-+  <reg name="fp0" bitsize="96" type="float" group="float" regnum="18"/>
-   <reg name="fp1" bitsize="96" type="float" group="float"/>
-   <reg name="fp2" bitsize="96" type="float" group="float"/>
-   <reg name="fp3" bitsize="96" type="float" group="float"/>
--- 
-2.47.3
-
+Regards,
+Pierrick
 
