@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABACB1125847
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01760112584E
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:28:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LF3-00022b-7z; Wed, 11 Mar 2026 11:12:57 -0400
+	id 1w0LEO-0007mX-Fm; Wed, 11 Mar 2026 11:12:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LD5-0003Zp-Mo; Wed, 11 Mar 2026 11:10:58 -0400
+ id 1w0LCD-0002cM-PU; Wed, 11 Mar 2026 11:10:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LD4-00067G-37; Wed, 11 Mar 2026 11:10:55 -0400
+ id 1w0LCB-0005pV-Mb; Wed, 11 Mar 2026 11:10:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241483; bh=5nIFjrc047+JvsJsHpfsBbnpEIAWbY0o4NYp3LQnSc8=;
+ t=1773241483; bh=CLgO+i9uE6yw0o/c7fPWp6c3Ly99nYGSb8fZpZqd5P0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=QnPSsje6ZJC27y3ZxNml9C1rYT787vGd7K896kYCSDrHuJc/GgUPjfZQLPUr9hplb
- X/uOjZe63VfR4ya2v6zGnBUn5VGXGcWWdgfmMRZzKvAoyufqiLx0Rn69xPKVgRcZAw
- puQM6zYLn+7BsDT7mE0lz37LlRSrqgjZ+PWOnm2Z/PLQ3Q3krsQFUdVqXcS01ACpoP
- UFRqasu4r3qW13e1y7/s3FGperr+nvSKyonq4kEkl2gzwFwLCKG3V3pod7QavOx9Ib
- +RPHO7QAVQrVcNL9RRSVbFsUgRLX0HGdzNyHABPV9gweI8gYb6/rxSmDMxWKnSB/+h
- ZUD79vs49s0rQ==
+ b=AXHf5pzOYJ2iAFh7cOHIMbEZO2j4hyUD7jtlojOjjMXROwljwqUUpy1foURHxq6Xk
+ FubPjl5BlV/iT/tHllHNBQ8lPgxFm3D7hPLfPrrPop7VKvkVUpOx1pIL6gFi7N8VQb
+ EwJnLixXNER+jo32LcZqse4ObODSRiv2mqzwxfR2SlxQf5xQoTw80bsk6dVDI2A74O
+ QLeCfat2lwpEBvJEAvT1MRjL3tvuXQjuSuKMSsQ6YER0Xv5OU166ZIUn5wBxw2oRi/
+ 4fYBO8rc6mXT8wIs2k5fIm1SRiDvzDIW9fZu0NSu8EXriBHETCwMz/dYiJTIEufArK
+ EGc0sAsECCN+Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id F3C00191EAC;
+ by isrv.corpit.ru (Postfix) with ESMTP id 77265191EA5;
  Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E1A2137C2ED;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 61B9E37C2E6;
  Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bingwu Zhang <xtex@astrafall.org>,
- Helge Deller <deller@gmx.de>, Warner Losh <imp@bsdimp.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 41/46] bsd-user: Deal with mmap where start >
- reserved_va
-Date: Wed, 11 Mar 2026 18:03:17 +0300
-Message-ID: <20260311150327.1084669-41-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ Fiona Ebner <f.ebner@proxmox.com>,
+ Jean-Louis Dupond <jean-louis@dupond.be>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 34/46] mirror: Fix missed dirty bitmap writes during
+ startup
+Date: Wed, 11 Mar 2026 18:03:10 +0300
+Message-ID: <20260311150327.1084669-34-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
@@ -71,38 +71,152 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bingwu Zhang <xtex@astrafall.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-Fixes: f12294b5bd21 ("bsd-user: Use page_find_range_empty for mmap_find_vma_reserved")
-Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit e8e7d1f97785be2fd81fc520e0c7b9d228c10a56)
+Currently, mirror disables the block layer's dirty bitmap before its own
+replacement is working. This means that during startup, there is a
+window in which the allocation status of blocks in the source has
+already been checked, but new writes coming in aren't tracked yet,
+resulting in a corrupted copy:
+
+1. Dirty bitmap is disabled in mirror_start_job()
+2. Some request are started in mirror_top_bs while s->job == NULL
+3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
+   the request hasn't completed yet, the block isn't allocated
+4. The request completes, still sees s->job == NULL and skips the
+   bitmap, and nothing else will mark it dirty either
+
+One ingredient is that mirror_top_opaque->job is only set after the
+job is fully initialized. For the rationale, see commit 32125b1460
+("mirror: Fix access of uninitialised fields during start").
+
+Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
+to track writes from the beginning. Disabling the block layer's tracking
+and enabling the mirror_top_bs one happens in a drained section, so
+there is no danger of races with in-flight requests any more. All of
+this happens well before the block allocation status is checked, so we
+can be sure that no writes will be missed.
+
+Cc: qemu-stable@nongnu.org
+Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
+Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260219202446.312493-1-kwolf@redhat.com>
+Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
+Tested-by: Jean-Louis Dupond <jean-louis@dupond.be>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 0f51f9c3420b31bb383e456dd7bf24d3056eeb73)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
-index 47e317517c..3cb8057ca1 100644
---- a/bsd-user/mmap.c
-+++ b/bsd-user/mmap.c
-@@ -258,12 +258,14 @@ abi_ulong mmap_next_start = TASK_UNMAPPED_BASE;
- static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
-                                         abi_ulong alignment)
- {
--    abi_ulong ret;
-+    abi_ulong ret = -1;
+diff --git a/block/mirror.c b/block/mirror.c
+index bc982cb99a..fa1d975eb9 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
  
--    ret = page_find_range_empty(start, reserved_va, size, alignment);
-+    if (start <= reserved_va) {
-+        ret = page_find_range_empty(start, reserved_va, size, alignment);
-+    }
-     if (ret == -1 && start > TARGET_PAGE_SIZE) {
-         /* Restart at the beginning of the address space. */
--        ret = page_find_range_empty(TARGET_PAGE_SIZE, start - 1,
-+        ret = page_find_range_empty(TARGET_PAGE_SIZE, MIN(start - 1, reserved_va),
-                                     size, alignment);
+ typedef struct MirrorBDSOpaque {
+     MirrorBlockJob *job;
++    BdrvDirtyBitmap *dirty_bitmap;
+     bool stop;
+     bool is_commit;
+ } MirrorBDSOpaque;
+@@ -1675,9 +1676,11 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
+         abort();
      }
  
+-    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
+-        qatomic_set(&s->job->actively_synced, false);
+-        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
++    if (!copy_to_target) {
++        if (s->job) {
++            qatomic_set(&s->job->actively_synced, false);
++        }
++        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
+     }
+ 
+     if (ret < 0) {
+@@ -1904,13 +1907,35 @@ static BlockJob *mirror_start_job(
+ 
+     bdrv_drained_begin(bs);
+     ret = bdrv_append(mirror_top_bs, bs, errp);
+-    bdrv_drained_end(bs);
+-
+     if (ret < 0) {
++        bdrv_drained_end(bs);
++        bdrv_unref(mirror_top_bs);
++        return NULL;
++    }
++
++    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
++                                                       granularity,
++                                                       NULL, errp);
++    if (!bs_opaque->dirty_bitmap) {
++        bdrv_drained_end(bs);
+         bdrv_unref(mirror_top_bs);
+         return NULL;
+     }
+ 
++    /*
++     * The mirror job doesn't use the block layer's dirty tracking because it
++     * needs to be able to switch seemlessly between background copy mode (which
++     * does need dirty tracking) and write blocking mode (which doesn't) and
++     * doing that would require draining the node. Instead, mirror_top_bs takes
++     * care of updating the dirty bitmap as appropriate.
++     *
++     * Note that write blocking mode only becomes effective after mirror_run()
++     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
++     * we're still in background copy mode irrespective of @copy_mode.
++     */
++    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
++    bdrv_drained_end(bs);
++
+     /* Make sure that the source is not resized while the job is running */
+     s = block_job_create(job_id, driver, NULL, mirror_top_bs,
+                          BLK_PERM_CONSISTENT_READ,
+@@ -2005,24 +2030,13 @@ static BlockJob *mirror_start_job(
+     s->base_overlay = bdrv_find_overlay(bs, base);
+     s->granularity = granularity;
+     s->buf_size = ROUND_UP(buf_size, granularity);
++    s->dirty_bitmap = bs_opaque->dirty_bitmap;
+     s->unmap = unmap;
+     if (auto_complete) {
+         s->should_complete = true;
+     }
+     bdrv_graph_rdunlock_main_loop();
+ 
+-    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
+-                                               NULL, errp);
+-    if (!s->dirty_bitmap) {
+-        goto fail;
+-    }
+-
+-    /*
+-     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
+-     * mode.
+-     */
+-    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
+-
+     bdrv_graph_wrlock_drained();
+     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
+                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
+@@ -2102,9 +2116,6 @@ fail:
+         g_free(s->replaces);
+         blk_unref(s->target);
+         bs_opaque->job = NULL;
+-        if (s->dirty_bitmap) {
+-            bdrv_release_dirty_bitmap(s->dirty_bitmap);
+-        }
+         job_early_fail(&s->common.job);
+     }
+ 
+@@ -2118,6 +2129,7 @@ fail:
+     bdrv_graph_wrunlock();
+     bdrv_drained_end(bs);
+ 
++    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
+     bdrv_unref(mirror_top_bs);
+ 
+     return NULL;
 -- 
 2.47.3
 
