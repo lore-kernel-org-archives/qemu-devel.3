@@ -4,105 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7D42FD064D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 07:48:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 10E2FFD064D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 07:53:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0EIC-0007Ji-NG; Wed, 11 Mar 2026 03:47:44 -0400
+	id 1w0ENa-0001NP-VS; Wed, 11 Mar 2026 03:53:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w0EIB-0007J7-Gl
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 03:47:43 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0ENV-0001Ln-Kl
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 03:53:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w0EI8-0006f9-VF
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 03:47:43 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0ENS-0007G7-4G
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 03:53:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773215259;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
+ s=mimecast20190719; t=1773215588;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=P+fsP1XwYsRAZxyuNOZ5mhavOisUumObJg+dNEcyyyg=;
- b=iBX6UPzQfjWhLsco6u7Iy6sBPsK1JOS2wt8i9hXdlnzRrxilXbMCW+1nVLndrPmtVcthAM
- gL5Dz3RnEwHj+bVAv+UP1CWBE3eJV0zPWtBQnjGb1JgR6oHHb/pdVC1QblxXpC+zfUt1Qi
- 7kEXM21ULXiZcrhZFeGNEOYdRezg4t8=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-112-iZ3DxQjQMpKVyaJTatF5FQ-1; Wed, 11 Mar 2026 03:47:38 -0400
-X-MC-Unique: iZ3DxQjQMpKVyaJTatF5FQ-1
-X-Mimecast-MFC-AGG-ID: iZ3DxQjQMpKVyaJTatF5FQ_1773215257
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-48532df52c5so36396015e9.1
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 00:47:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773215257; x=1773820057;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=P+fsP1XwYsRAZxyuNOZ5mhavOisUumObJg+dNEcyyyg=;
- b=B+JzscOveaC97ZFwwyAKGwru+h76DzHxDrtJhNQG4xFie0yo5ydg1weTxduJE25APh
- 4IQtdB6XnCHQ8Owcqax4JfTCzrBIMjHI+anCclOIN60mJFeRx6au75xQJLI0hCGQhtD7
- 5EnJ5+Ylb8J6u+BaS5NWClOVGYnupNlISgjUbe8zXDlKCxqK82vdaAANGwRmtqAR1SLn
- hEDZh3XWQJKOauxWcTnpt1m8YBd9CHZOEnOuRJX3efcPxzMJaiqJL8pUpOGBIKUoXBfn
- 69IygElQ3cJE8lueUUdDLjfQcD/2rDsQZpinGGR5KkgtJpfYSeuXDHxEzEx7c2rElqg6
- i1Xw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX99GQrYsE1nBizzNdgvWvROkm7UHwp+fvZWcWYcsJZqfFQMdULhimrSv0/IsXyGlBMOoTHSqFfq4lF@nongnu.org
-X-Gm-Message-State: AOJu0YyvflF36d3LSZ3S7t0MEb6Uah6QHBFnAH+26ZhZQrwZ7aOnTpmw
- nsTXHesH21u8Noqcx5Hp7lfIGXelLPyvpa+iyV85oeVEM05w7ckWggQ50IOlMIySoHPdPh3bDqf
- Ra4nC9Gld3mYygkaPstVgMPkIPGHLGJ1ihjjl9XcCi+RtoYo+VLrvTaUk
-X-Gm-Gg: ATEYQzx92Sjk7O6fF+yryBdxrBE0B+T+BEhl9zxF9Xqw+Ya7YyPlzBXcvVEUbWmEqgv
- c8R6X2cMqiEdkeThuCVDL94yGaBMH8Ln3+xvsluvQamiC50AYVvRBr81YME2J7bhoMYkfVOsKND
- rL/PA1kJTiJy1kVYppSzBr3Vfzl83MNaknIVNOJl+WhCNPaw6rmygNuBNGAJmNi2QgvlJcY+Bs4
- x6W0K+RDWCNXnfSzaGOh0WQYjLs25UUivOH09M6i6pfylJRa8ZyVmeR7T1dxA3YNZck2ak8UMGP
- GMKp6KgT7mCVZFTkS4EvmC6k9eS1lXNF9lOFE2wjqNIpDaYclZTH/LxhGT/e6F47T23cIcLg5DJ
- aih/dBwn7nCk16vA2Ge0FkA0mZsdP25YgwymxFQnl7mJqcU/ul9osy3+ywKJ9crwiBXOLOQ==
-X-Received: by 2002:a05:600c:3b18:b0:477:5c58:3d42 with SMTP id
- 5b1f17b1804b1-4854b0b3546mr26320545e9.10.1773215256989; 
- Wed, 11 Mar 2026 00:47:36 -0700 (PDT)
-X-Received: by 2002:a05:600c:3b18:b0:477:5c58:3d42 with SMTP id
- 5b1f17b1804b1-4854b0b3546mr26320175e9.10.1773215256366; 
- Wed, 11 Mar 2026 00:47:36 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b5e92d5sm31185705e9.1.2026.03.11.00.47.34
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 00:47:35 -0700 (PDT)
-Message-ID: <f91ee74c-fa53-4a0c-a199-af39b67c0853@redhat.com>
-Date: Wed, 11 Mar 2026 08:47:33 +0100
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=9N2IWT59fxgQabEC8bylkcIS1ZJ5B4ACoIev29+sUPM=;
+ b=QHbvEqwz4X2imlgUsCrC6e7TL61QxrIX6vG7AYAlXG1EVywUJEPXuWQZhDTQA7g3H//HM8
+ xN2aE+tcd+p49rkReNYRTyZgQbbT6bVKDsZbCvunZfzE4K/ZX4ugUgIGYxxdf7YH9yri/k
+ 4vBTckH9dKEoH4RhoApphKY1E9a/Nr8=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-_GnqRqtAP5uZoH-40aQ0yQ-1; Wed,
+ 11 Mar 2026 03:53:05 -0400
+X-MC-Unique: _GnqRqtAP5uZoH-40aQ0yQ-1
+X-Mimecast-MFC-AGG-ID: _GnqRqtAP5uZoH-40aQ0yQ_1773215584
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E5802195608E; Wed, 11 Mar 2026 07:53:03 +0000 (UTC)
+Received: from [10.45.224.219] (unknown [10.45.224.219])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 12247180075B; Wed, 11 Mar 2026 07:53:01 +0000 (UTC)
+Message-ID: <a2db11f6-9183-442a-952e-faaec9f97313@redhat.com>
+Date: Wed, 11 Mar 2026 08:53:00 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 14/32] hw/arm/tegra241-cmdqv: Emulate global CMDQV
- registers
+Subject: Re: [PULL 00/10] PPC PR for 11.0 soft-freeze
+To: Aditya Gupta <adityag@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
+References: <20260310151432.92531-1-harshpb@linux.ibm.com>
+ <CAFEAcA9FjtvJanmbvpAXMjY0zURZch9PruHUsXEXOtPiVJgarg@mail.gmail.com>
+ <1389084e-3ed8-4a5c-aac5-bfee420b0916@linux.ibm.com>
+ <abEDACgG6T4N9F0P@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <20260226105056.897-15-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260226105056.897-15-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <abEDACgG6T4N9F0P@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -117,321 +127,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Shameer,
+On 11/03/2026 07.03, Aditya Gupta wrote:
+> Hello Peter,
+> 
+> I run the pipeline everytime before sending, curious about the tests I
+> missed.
+> 
+> 1. How can I get the console log of the failed centos test ? Or how to
+> (or if I can) run that test on my system ?
+> 
+> I did not find the log in the gitlab test's artifacts.
+> Surprised with the failure on the particular centos distro.
 
-On 2/26/26 11:50 AM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Tegra241 CMDQV defines a set of global control and status registers
-> used to configure virtual command queue allocation and interrupt
-> behavior.
->
-> Add read/write emulation for the global CMDQV register page
-> (offset 0x00000), backed by a simple register cache. This includes
-> CONFIG, PARAM, STATUS, VI error and interrupt maps, CMDQ allocation
-> map and the VINTF0 related registers defined in the global CMDQV
-> register space.
-This is called CMDQ-V Config within [CMDQV_BASE, CMDQV-CMDQ_BASE] in the
-spec.
+The console log can be found here:
 
-Precise we only support a single VINTF0 and VINTF1-63 are not supported.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/tegra241-cmdqv.h | 108 +++++++++++++++++++++++++++++++++++
->  hw/arm/tegra241-cmdqv.c | 121 +++++++++++++++++++++++++++++++++++++++-
->  2 files changed, 228 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-> index 46aa9e8a9f..50bcecee9d 100644
-> --- a/hw/arm/tegra241-cmdqv.h
-> +++ b/hw/arm/tegra241-cmdqv.h
-> @@ -10,6 +10,9 @@
->  #ifndef HW_ARM_TEGRA241_CMDQV_H
->  #define HW_ARM_TEGRA241_CMDQV_H
->  
-> +#include "hw/core/registerfields.h"
-> +#include "smmuv3-accel.h"
-> +
->  #define TEGRA241_CMDQV_VERSION             1
->  #define TEGRA241_CMDQV_NUM_CMDQ_LOG2       1
->  #define TEGRA241_CMDQV_MAX_CMDQ            (1U << TEGRA241_CMDQV_NUM_CMDQ_LOG2)
-> @@ -31,8 +34,113 @@ typedef struct Tegra241CMDQV {
->      SMMUv3AccelState *s_accel;
->      MemoryRegion mmio_cmdqv;
->      qemu_irq irq;
-> +
-> +    /* Register Cache */
-> +    uint32_t config;
-> +    uint32_t param;
-> +    uint32_t status;
-> +    uint32_t vi_err_map[2];
-> +    uint32_t vi_int_mask[2];
-> +    uint32_t cmdq_err_map[4];
-> +    uint32_t cmdq_alloc_map[TEGRA241_CMDQV_MAX_CMDQ];
-> +    uint32_t vintf_config;
-> +    uint32_t vintf_status;
-> +    uint32_t vintf_sid_match[16];
-> +    uint32_t vintf_sid_replace[16];
-> +    uint32_t vintf_cmdq_err_map[4];
->  } Tegra241CMDQV;
->  
-> +/* Global CMDQV MMIO registers (offset 0x00000) */
-> +REG32(CONFIG, 0x0)
-> +FIELD(CONFIG, CMDQV_EN, 0, 1)
-> +FIELD(CONFIG, CMDQV_PER_CMD_OFFSET, 1, 3)
-> +FIELD(CONFIG, CMDQ_MAX_CLK_BATCH, 4, 8)
-> +FIELD(CONFIG, CMDQ_MAX_CMD_BATCH, 12, 8)
-> +FIELD(CONFIG, CONS_DRAM_EN, 20, 1)
-> +
-> +REG32(PARAM, 0x4)
-> +FIELD(PARAM, CMDQV_VER, 0, 4)
-> +FIELD(PARAM, CMDQV_NUM_CMDQ_LOG2, 4, 4)
-> +FIELD(PARAM, CMDQV_NUM_VM_LOG2, 8, 4)
-> +FIELD(PARAM, CMDQV_NUM_SID_PER_VM_LOG2, 12, 4)
-> +
-> +REG32(STATUS, 0x8)
-> +FIELD(STATUS, CMDQV_ENABLED, 0, 1)
-> +
-> +#define A_VI_ERR_MAP 0x14
-> +#define A_VI_ERR_MAP_1 0x18
-> +#define V_VI_ERR_MAP_NO_ERROR (0)
-> +#define V_VI_ERR_MAP_ERROR (1)
-> +
-> +#define A_VI_INT_MASK 0x1c
-> +#define A_VI_INT_MASK_1 0x20
-> +#define V_VI_INT_MASK_NOT_MASKED (0)
-> +#define V_VI_INT_MASK_MASKED (1)
-> +
-> +#define A_CMDQ_ERR_MAP 0x24
-> +#define A_CMDQ_ERR_MAP_1 0x28
-> +#define A_CMDQ_ERR_MAP_2 0x2c
-> +#define A_CMDQ_ERR_MAP_3 0x30
-> +
-> +/* i = [0, 1] */
-> +#define A_CMDQ_ALLOC_MAP_(i)                 \
-> +    REG32(CMDQ_ALLOC_MAP_##i, 0x200 + i * 4) \
-> +    FIELD(CMDQ_ALLOC_MAP_##i, ALLOC, 0, 1)   \
-> +    FIELD(CMDQ_ALLOC_MAP_##i, LVCMDQ, 1, 7)  \
-> +    FIELD(CMDQ_ALLOC_MAP_##i, VIRT_INTF_INDX, 15, 6)
-> +
-> +A_CMDQ_ALLOC_MAP_(0)
-> +A_CMDQ_ALLOC_MAP_(1)
-> +
-> +
-> +/* i = [0, 0] */
-> +#define A_VINTFi_CONFIG(i)                       \
-> +    REG32(VINTF##i##_CONFIG, 0x1000 + i * 0x100) \
-> +    FIELD(VINTF##i##_CONFIG, ENABLE, 0, 1)       \
-> +    FIELD(VINTF##i##_CONFIG, VMID, 1, 16)        \
-> +    FIELD(VINTF##i##_CONFIG, HYP_OWN, 17, 1)
-> +
-> +A_VINTFi_CONFIG(0)
-> +
-> +#define A_VINTFi_STATUS(i)                       \
-> +    REG32(VINTF##i##_STATUS, 0x1004 + i * 0x100) \
-> +    FIELD(VINTF##i##_STATUS, ENABLE_OK, 0, 1)    \
-> +    FIELD(VINTF##i##_STATUS, STATUS, 1, 3)       \
-> +    FIELD(VINTF##i##_STATUS, VI_NUM_LVCMDQ, 16, 8)
-> +
-> +A_VINTFi_STATUS(0)
-> +
-> +#define V_VINTF_STATUS_NO_ERROR (0 << 1)
-> +#define V_VINTF_STATUS_VCMDQ_EROR (1 << 1)
-> +
-> +/* i = [0, 0], j = [0, 15] */
-> +#define A_VINTFi_SID_MATCH_(i, j)                               \
-> +    REG32(VINTF##i##_SID_MATCH_##j, 0x1040 + j * 4 + i * 0x100) \
-> +    FIELD(VINTF##i##_SID_MATCH_##j, ENABLE, 0, 1)               \
-> +    FIELD(VINTF##i##_SID_MATCH_##j, VIRT_SID, 1, 20)
-> +
-> +A_VINTFi_SID_MATCH_(0, 0)
-> +/* Omitting [0][1~14] as not being directly called */
-> +A_VINTFi_SID_MATCH_(0, 15)
-> +
-> +/* i = [0, 0], j = [0, 15] */
-> +#define A_VINTFi_SID_REPLACE_(i, j)                               \
-> +    REG32(VINTF##i##_SID_REPLACE_##j, 0x1080 + j * 4 + i * 0x100) \
-> +    FIELD(VINTF##i##_SID_REPLACE_##j, PHYS_SID, 0, 19)
-> +
-> +A_VINTFi_SID_REPLACE_(0, 0)
-> +/* Omitting [0][1~14] as not being directly called */
-> +A_VINTFi_SID_REPLACE_(0, 15)
-> +
-> +/* i = [0, 0], j = [0, 3] */
-> +#define A_VINTFi_LVCMDQ_ERR_MAP_(i, j)                               \
-> +    REG32(VINTF##i##_LVCMDQ_ERR_MAP_##j, 0x10c0 + j * 4 + i * 0x100) \
-> +    FIELD(VINTF##i##_LVCMDQ_ERR_MAP_##j, LVCMDQ_ERR_MAP, 0, 32)
-> +
-> +A_VINTFi_LVCMDQ_ERR_MAP_(0, 0)
-> +/* Omitting [0][1~2] as not being directly called */
-> +A_VINTFi_LVCMDQ_ERR_MAP_(0, 3)
-> +
->  const SMMUv3AccelCmdqvOps *tegra241_cmdqv_get_ops(void);
->  
->  #endif /* HW_ARM_TEGRA241_CMDQV_H */
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index d487612ba2..a3830a02d6 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -8,19 +8,138 @@
->   */
->  
->  #include "qemu/osdep.h"
-> +#include "qemu/log.h"
->  
->  #include "hw/arm/smmuv3.h"
->  #include "smmuv3-accel.h"
->  #include "tegra241-cmdqv.h"
->  
-> +static uint64_t tegra241_cmdqv_read_vintf(Tegra241CMDQV *cmdqv, hwaddr offset)
-since it belong to the Config region, can we normalize the names
+https://gitlab.com/qemu-project/qemu/-/jobs/13431423958/artifacts/browse/build/tests/functional/ppc64/test_fadump.QEMUFadump.test_fadump_powernv/
 
-tegra241_cmdqv_config_vintf_read()
+See docs/devel/testing/functional.rst for information on how to run 
+functional tests locally.
 
+> 2. Is there a way to enable these tests, or to get access to these
+> tests: aarch64-macos-build & x64-freebsd-14-build
+> 
+> I read these are run using cirrus ci, can these be run on our systems,
+> if not on gitlab ?
 
-> +{
-> +    int i;
-> +
-> +    switch (offset) {
-> +    case A_VINTF0_CONFIG:
-> +        return cmdqv->vintf_config;
-> +    case A_VINTF0_STATUS:
-> +        return cmdqv->vintf_status;
-> +    case A_VINTF0_SID_MATCH_0 ... A_VINTF0_SID_MATCH_15:
-> +        i = (offset - A_VINTF0_SID_MATCH_0) / 4;
-> +        return cmdqv->vintf_sid_match[i];
-> +    case A_VINTF0_SID_REPLACE_0 ... A_VINTF0_SID_REPLACE_15:
-> +        i = (offset - A_VINTF0_SID_REPLACE_0) / 4;
-> +        return cmdqv->vintf_sid_replace[i];
-> +    case A_VINTF0_LVCMDQ_ERR_MAP_0 ... A_VINTF0_LVCMDQ_ERR_MAP_3:
-> +        i = (offset - A_VINTF0_LVCMDQ_ERR_MAP_0) / 4;
-> +        return cmdqv->vintf_cmdq_err_map[i];
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s unhandled read access at 0x%" PRIx64 "\n",
-> +                      __func__, offset);
-> +        return 0;
-> +    }
-> +}
-> +
->  static uint64_t tegra241_cmdqv_read(void *opaque, hwaddr offset, unsigned size)
+See .gitlab-ci.d/cirrus/README.rst for information on how to set up the 
+Cirrus-CI for your own cloned repository on gitlab.
 
-tegra241_cmdqv_config_read
-and same for the rest
-
->  {
-> -    return 0;
-> +    Tegra241CMDQV *cmdqv = (Tegra241CMDQV *)opaque;
-> +
-> +    if (offset >= TEGRA241_CMDQV_IO_LEN) {
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s offset 0x%" PRIx64 " off limit (0x50000)\n", __func__,
-> +                      offset);
-> +        return 0;
-> +    }
-> +
-> +    switch (offset) {
-> +    case A_CONFIG:
-> +        return cmdqv->config;
-> +    case A_PARAM:
-> +        return cmdqv->param;
-> +    case A_STATUS:
-> +        return cmdqv->status;
-> +    case A_VI_ERR_MAP ... A_VI_ERR_MAP_1:
-> +        return cmdqv->vi_err_map[(offset - A_VI_ERR_MAP) / 4];
-> +    case A_VI_INT_MASK ... A_VI_INT_MASK_1:
-> +        return cmdqv->vi_int_mask[(offset - A_VI_INT_MASK) / 4];
-> +    case A_CMDQ_ERR_MAP ... A_CMDQ_ERR_MAP_3:
-> +        return cmdqv->cmdq_err_map[(offset - A_CMDQ_ERR_MAP) / 4];
-> +    case A_CMDQ_ALLOC_MAP_0 ... A_CMDQ_ALLOC_MAP_1:
-> +        return cmdqv->cmdq_alloc_map[(offset - A_CMDQ_ALLOC_MAP_0) / 4];
-> +    case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
-> +        return tegra241_cmdqv_read_vintf(cmdqv, offset);
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s unhandled read access at 0x%" PRIx64 "\n",
-> +                      __func__, offset);
-> +        return 0;
-> +    }
-> +}
-> +
-> +static void tegra241_cmdqv_write_vintf(Tegra241CMDQV *cmdqv, hwaddr offset,
-> +                                       uint64_t value)
-> +{
-> +    int i;
-> +
-> +    switch (offset) {
-> +    case A_VINTF0_CONFIG:
-> +        /* Strip off HYP_OWN setting from guest kernel */
-> +        value &= ~R_VINTF0_CONFIG_HYP_OWN_MASK;
-> +
-> +        cmdqv->vintf_config = value;
-> +        if (value & R_VINTF0_CONFIG_ENABLE_MASK) {
-> +            cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
-> +        } else {
-> +            cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
-> +        }
-> +        break;
-what about the GLB_FILT_CFG_0 and FILT_DATA-0, at least document why you
-don't support it neither in R nor W
-> +    case A_VINTF0_SID_MATCH_0 ... A_VINTF0_SID_MATCH_15:
-> +        i = (offset - A_VINTF0_SID_MATCH_0) / 4;
-> +        cmdqv->vintf_sid_match[i] = value;
-> +        break;
-> +    case A_VINTF0_SID_REPLACE_0 ... A_VINTF0_SID_REPLACE_15:
-> +        i = (offset - A_VINTF0_SID_REPLACE_0) / 4;
-> +        cmdqv->vintf_sid_replace[i] = value;
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
-> +                      __func__, offset);
-> +        return;
-> +    }
->  }
->  
->  static void tegra241_cmdqv_write(void *opaque, hwaddr offset, uint64_t value,
->                                   unsigned size)
->  {
-> +    Tegra241CMDQV *cmdqv = (Tegra241CMDQV *)opaque;
-> +
-> +    if (offset >= TEGRA241_CMDQV_IO_LEN) {
-> +        qemu_log_mask(LOG_UNIMP,
-> +                      "%s offset 0x%" PRIx64 " off limit (0x50000)\n", __func__,
-> +                      offset);
-> +        return;
-> +    }
-> +
-> +    switch (offset) {
-> +    case A_CONFIG:
-> +        cmdqv->config = value;
-> +        if (value & R_CONFIG_CMDQV_EN_MASK) {
-> +            cmdqv->status |= R_STATUS_CMDQV_ENABLED_MASK;
-> +        } else {
-> +            cmdqv->status &= ~R_STATUS_CMDQV_ENABLED_MASK;
-> +        }
-> +        break;
-> +    case A_VI_INT_MASK ... A_VI_INT_MASK_1:
-> +        cmdqv->vi_int_mask[(offset - A_VI_INT_MASK) / 4] = value;
-> +        break;
-> +    case A_CMDQ_ALLOC_MAP_0 ... A_CMDQ_ALLOC_MAP_1:
-> +        cmdqv->cmdq_alloc_map[(offset - A_CMDQ_ALLOC_MAP_0) / 4] = value;
-> +        break;
-> +    case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
-> +        tegra241_cmdqv_write_vintf(cmdqv, offset, value);
-> +        break;
-> +    default:
-> +        qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
-> +                      __func__, offset);
-> +    }
->  }
->  
->  static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
-Otherwise I reviewed the macros and they look good to me
-
-Eric
+  HTH,
+   Thomas
 
 
