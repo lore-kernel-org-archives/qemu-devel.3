@@ -4,56 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D70AEFD88DF
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 02:57:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B15CFFD88E3
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 02:57:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w09ke-0000UE-Sw; Tue, 10 Mar 2026 22:56:48 -0400
+	id 1w09kd-0000TS-MF; Tue, 10 Mar 2026 22:56:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1w09kd-0000Ss-7q
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:56:47 -0400
+ id 1w09kb-0000S6-Pm
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:56:45 -0400
 Received: from mgamail.intel.com ([192.198.163.13])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1w09kb-00063p-EU
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:56:46 -0400
+ id 1w09kZ-000648-Bh
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:56:45 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773197805; x=1804733805;
+ t=1773197803; x=1804733803;
  h=from:to:cc:subject:date:message-id:in-reply-to:
  references:mime-version:content-transfer-encoding;
- bh=08119oWNX6HNfHpJjN7BnHeokG/3MBZuZM69MALLN+s=;
- b=GJqta/8T+/cb7hZgOQ5x7jdfdrRQZsPTLPNWWxCXKEx3V4qmYWPdF8ET
- 6haqFAfc+NMc3L40EI4y9+UFAs8QrZ4qYyDHNkOzd1zNawcb7iMF9hC1/
- exb6kO30UvLrqU5tFiTsxDizH+PyBj1lIdr0VD0dN0F0cII0X+KhZ2Oag
- qhA4DIEh91jwrClmagvQirpd7iHjuZ6eALduL5NAAjOVZJYr19NXe1hlF
- xWLDj24wsBO1GrxNPuhmf89Mf/WIOEdnDLmGlq1IQgWRW0N4E0l+2RbEy
- xpdmy7iIdDVM3F/LLR3TqNVP6LYKGz8oMJCVZxKC9TxtaK2XgOBZjDwIS g==;
-X-CSE-ConnectionGUID: IRzMAHRqQMqRtPX0qNiz7w==
-X-CSE-MsgGUID: 7yZk6gaTSvOR53JvgfJJgA==
-X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="76867927"
-X-IronPort-AV: E=Sophos;i="6.23,113,1770624000"; d="scan'208";a="76867927"
+ bh=8DjDopZg0XVik4k1ICxjRmt2mb1IxbLdY763BFKsh0Y=;
+ b=D+pSZ3VW2SuBu7eaZm+cVuYhBps0LWj4UTbf/EQtHbQUkJHGXwMc5yeQ
+ 1KwaEjYDvQUqveoZ4OqKuImG9uJsyC3KsKv1WTRHfVSZtnRZE6I4vhMJ+
+ bzbPo5Jq5Ni6BhuDenHHFBdMyLoaRg8g0hRrCCXr7fuXKn22+OrSe2kCu
+ zF0zb5E9wgRkeDf4zTkkyJqMQNGOww00oj9y1H77Jt8FZoo9S9m/ZIyGu
+ Po2P9YBbPia+yRLTBjRYuNZAQGTsBh0WNoAAPyZGqo40bLlUIu146SUg2
+ cOZXBhDnEK2GUBce9HcIgebCf1vqavEIzHdMATVp42WBLNYk0G75oWFkP A==;
+X-CSE-ConnectionGUID: vYFyM+xlRM28nvLhlECXSQ==
+X-CSE-MsgGUID: KvBd13DJQQylbKcauPjp/w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11725"; a="76867904"
+X-IronPort-AV: E=Sophos;i="6.23,113,1770624000"; d="scan'208";a="76867904"
 Received: from fmviesa009.fm.intel.com ([10.60.135.149])
  by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  10 Mar 2026 19:56:29 -0700
-X-CSE-ConnectionGUID: ytok5TbrRUmGmDlnGMP1cw==
-X-CSE-MsgGUID: 1OMY7PnMTTOYKimVFTanLg==
+X-CSE-ConnectionGUID: qEAhxsBsS+6scMEUggt5/w==
+X-CSE-MsgGUID: goaiGQl4RKqtFPSb8iBh+A==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,113,1770624000"; d="scan'208";a="215611453"
+X-IronPort-AV: E=Sophos;i="6.23,113,1770624000"; d="scan'208";a="215611441"
 Received: from vkasired-desk2.fm.intel.com ([10.105.128.132])
  by fmviesa009-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
  10 Mar 2026 19:56:29 -0700
 From: Vivek Kasireddy <vivek.kasireddy@intel.com>
 To: qemu-devel@nongnu.org
 Cc: Vivek Kasireddy <vivek.kasireddy@intel.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Alex Williamson <alex@shazbot.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>
-Subject: [PATCH v11 08/10] vfio/device: Add a helper to mmap a dmabuf
-Date: Tue, 10 Mar 2026 19:50:50 -0700
-Message-ID: <20260311025340.1335673-9-vivek.kasireddy@intel.com>
+Subject: [PATCH v11 04/10] virtio-gpu-dmabuf: Remove rcu_read_lock/unlock from
+ virtio_gpu_create_udmabuf()
+Date: Tue, 10 Mar 2026 19:50:46 -0700
+Message-ID: <20260311025340.1335673-5-vivek.kasireddy@intel.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260311025340.1335673-1-vivek.kasireddy@intel.com>
 References: <20260311025340.1335673-1-vivek.kasireddy@intel.com>
@@ -85,134 +90,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In order to mmap a dmabuf, we first need to create a placeholder
-mapping that would fit the entire size of the dmabuf. This mapping
-would then be replaced with smaller mappings of individual dmabuf
-segments.
+There is no need to wrap the call to qemu_ram_block_from_host() with
+rcu_read_lock/unlock as we already hold a reference to the memory
+region that owns the ram block. Note that, the reference was obtained
+via dma_memory_map() while creating the mapping.
 
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Cc: Alex Bennée <alex.bennee@linaro.org>
+Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
 Cc: Alex Williamson <alex@shazbot.org>
 Cc: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
 ---
- hw/vfio/device.c              | 64 +++++++++++++++++++++++++++++++++++
- hw/vfio/dmabuf-stubs.c        |  7 ++++
- include/hw/vfio/vfio-device.h | 16 +++++++++
- 3 files changed, 87 insertions(+)
+ hw/display/virtio-gpu-dmabuf.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-index 2d01059be0..fdb94f1457 100644
---- a/hw/vfio/device.c
-+++ b/hw/vfio/device.c
-@@ -725,3 +725,67 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     }
-     return ret;
- }
-+
-+void *vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                              size_t total_size, Error **errp)
-+{
-+    struct vfio_region_info *info = NULL;
-+    VFIODevice *vbasedev = NULL;
-+    ram_addr_t offset, len = 0;
-+    RAMBlock *first_rb, *rb;
-+    void *map, *submap;
-+    int i, index;
-+
-+    if (!vfio_device_lookup(iov, &vbasedev, errp)) {
-+        return NULL;
-+    }
-+
-+    /*
-+     * We first reserve a contiguous chunk of address space for the entire
-+     * dmabuf, then replace it with smaller mappings that correspond to the
-+     * individual segments of the dmabuf.
-+     */
-+    map = mmap(NULL, total_size, PROT_NONE, MAP_SHARED | MAP_ANONYMOUS, -1, 0);
-+    if (map == MAP_FAILED) {
-+        error_setg_errno(errp, errno, "Could not reserve placeholder mapping");
-+        return NULL;
-+    }
-+
-+    for (i = 0; i < iov_cnt; i++) {
-+        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
-+        if (i == 0) {
-+            first_rb = rb;
-+        }
-+        if (!rb || rb != first_rb) {
-+            error_setg(errp, "Cannot mmap dmabuf with different regions\n");
-+            goto err;
-+        }
-+
-+        index = vfio_get_region_index_from_mr(rb->mr);
-+        if (index < 0) {
-+            error_setg(errp, "Cannot find region index for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        if (vfio_device_get_region_info(vbasedev, index, &info)) {
-+            error_setg(errp, "Cannot find region info for dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        submap = mmap(map + len, iov[i].iov_len, PROT_READ,
-+                      MAP_SHARED | MAP_FIXED, vbasedev->fd,
-+                      info->offset + offset);
-+        if (submap == MAP_FAILED) {
-+            error_setg_errno(errp, errno, "Could not mmap dmabuf segment\n");
-+            goto err;
-+        }
-+
-+        len += iov[i].iov_len;
-+    }
-+    return map;
-+err:
-+    munmap(map, total_size);
-+    error_prepend(errp, "VFIO dmabuf mmap failed: ");
-+    return NULL;
-+}
-+
-diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
-index e71e2b68dd..92b52bc60d 100644
---- a/hw/vfio/dmabuf-stubs.c
-+++ b/hw/vfio/dmabuf-stubs.c
-@@ -15,3 +15,10 @@ int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-     error_setg(errp, "VFIO dmabuf support is not enabled");
-     return VFIO_DMABUF_CREATE_HOST_ERROR;
- }
-+
-+void *vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                              size_t total_size, Error **errp)
-+{
-+    error_setg(errp, "VFIO mmap dmabuf support is not enabled");
-+    return NULL;
-+}
-diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-index 566e5d8bc0..60783d6fd5 100644
---- a/include/hw/vfio/vfio-device.h
-+++ b/include/hw/vfio/vfio-device.h
-@@ -340,6 +340,22 @@ int vfio_get_region_index_from_mr(MemoryRegion *mr);
-  */
- int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-                                  Error **errp);
-+
-+/**
-+ * Mmap a dmabuf by first translating the addresses in the iovec
-+ * array into VFIO region offsets and then creating a placeholder
-+ * mapping that would be replaced later with mappings that
-+ * correspond to the dmabuf segments.
-+ *
-+ * @iov: array of iovec entries associated with the dmabuf
-+ * @iov_cnt: number of entries in the iovec array
-+ * @total_size: total size of the dmabuf
-+ * @errp: pointer to Error*, to store an error if it happens.
-+ *
-+ * Returns the mapped pointer on success and NULL on error.
-+ */
-+void *vfio_device_mmap_dmabuf(struct iovec *iov, unsigned int iov_cnt,
-+                              size_t total_size, Error **errp);
- #endif
+diff --git a/hw/display/virtio-gpu-dmabuf.c b/hw/display/virtio-gpu-dmabuf.c
+index c34d4c85bc..0782bcf3a1 100644
+--- a/hw/display/virtio-gpu-dmabuf.c
++++ b/hw/display/virtio-gpu-dmabuf.c
+@@ -43,10 +43,7 @@ static void virtio_gpu_create_udmabuf(struct virtio_gpu_simple_resource *res)
+                      sizeof(struct udmabuf_create_item) * res->iov_cnt);
  
- /* Returns 0 on success, or a negative errno. */
+     for (i = 0; i < res->iov_cnt; i++) {
+-        rcu_read_lock();
+         rb = qemu_ram_block_from_host(res->iov[i].iov_base, false, &offset);
+-        rcu_read_unlock();
+-
+         if (!rb || rb->fd < 0) {
+             g_free(list);
+             return;
 -- 
 2.53.0
 
