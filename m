@@ -4,81 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DDD591062871
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:02:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABECF106286D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:08:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0IGo-0002Wu-Df; Wed, 11 Mar 2026 08:02:34 -0400
+	id 1w0ILh-00072j-2o; Wed, 11 Mar 2026 08:07:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0IGa-0002Hu-Fy
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:02:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0IGY-0005dz-6Q
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:02:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773230536;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=IoYZSMUXLiKFO9q3cK1qRXf0gZW5P67gqip9HXFZRJ4=;
- b=WRCGEac6cEAKYY5YJsSx5T0HBsQg8t8qN3PFGhGZwLktuCA9BgS3HuwVUbl6HipgWevlDQ
- 1VVDT0KQE3qxlUcP+b/E4JDD5KgItzSsW1mL319oJwkrwz8hsncA0oXMsMAdwXkmbbTzjv
- +MloXQlJLAMicCHpp2mtRO6ARfbhBg4=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-674-i43VzrgzNz6S52z33yy1bQ-1; Wed,
- 11 Mar 2026 08:02:13 -0400
-X-MC-Unique: i43VzrgzNz6S52z33yy1bQ-1
-X-Mimecast-MFC-AGG-ID: i43VzrgzNz6S52z33yy1bQ_1773230532
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 512391955F39; Wed, 11 Mar 2026 12:02:12 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.160])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B5770195410D; Wed, 11 Mar 2026 12:02:09 +0000 (UTC)
-Date: Wed, 11 Mar 2026 12:02:05 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Tejus GK <tejus.gk@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 1/1] io: make zerocopy fallback accounting more accurate
-Message-ID: <abFZvUoinIjfMlNX@redhat.com>
-References: <20260309090907.956330-1-tejus.gk@nutanix.com>
- <aa755Yc6t_bBzM_u@redhat.com> <aa78gMsQrt1BeXt3@x1.local>
- <aa8AqKqOa8YhEiF9@redhat.com>
- <0DF1A5F6-E20D-4A3F-9285-9205E87DE641@nutanix.com>
- <aa8IoQOZHzQvacSh@redhat.com> <aa8Pvd5O-OLKIXam@x1.local>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0IL7-0006vO-Kp
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:07:08 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0IKr-0006cV-J3
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:06:47 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4852fdb36a8so49735125e9.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 05:06:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773230800; x=1773835600; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=CqG10todXxIv4CFC9T06Q6am0ykbPaDaDJOCxk0X/0I=;
+ b=YFqWXYMIbRyFNK+6B3RU0siYL4QcbLxn4FIz8zCH2tBBmjDRxl1KKw7ukOMt/Wq444
+ xXB+Mt4csRUy+GQPKc7uC+DHbkYiGdM8Je73k6CR84IOSuPCQc8abC/3V54QA0wWkraF
+ BcR+HlZ7ckXfcTTc8UeRs5b+iclZvkcS5uSEfDj+qIWMmD+KtTokact5Fz1iGrthNYE7
+ TsLJy5yaAFewOGwUgzMHZIEDk06gyMGHVpv5UMgxnVjeNXnG/BJFifxD8jxpJtUojDoC
+ LnfOZpiTAtGqpEbRLbxdqUskDTN6EN7YHl9j8f3TjF/kjEu3Wakg0zGCJYB3Z89qxRLw
+ +HqQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773230800; x=1773835600;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=CqG10todXxIv4CFC9T06Q6am0ykbPaDaDJOCxk0X/0I=;
+ b=HRXBpUMfds36m2MUJywwU34R6oxHEudZ0dMBnBa6IlkMCMFt4TFiTWjjzSf+UbLCQb
+ JjlVj7RHnMxFVidBM2Pw/UfSIT39D7uXsjN3ewtgifi/dDvKW12ZcHb/taMigSwuSpaI
+ HYKqVXPRgyofFlRm/IQHAd4dYCTWxVqG+wtxD0ykXC7mzpbarl9gGgfu0yxgoSRCOs25
+ nupdQSxweABjpkOPDrF2dM2rfArWQiKLukfCNLLboJh/RSBIoO1ocXuoHoB5F7s9Ou5Y
+ HeL/i+DODwgxzoyf6mTB5i8M5kSAd2h/ULZkaNS/CRV+CoYHY7slSQXfqHoGUL997hpI
+ n/7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUDDFYpn+DgZEY4jcR5huucA+JugxcpVYTXn41egjkvLCPM3JwaFKZ+EXLSmEAKTEu6v+RsZY5ErFwL@nongnu.org
+X-Gm-Message-State: AOJu0YyZeOSYxLAomKkWasXwGnPWO3Y71/ZEi/L5uVG26WPCIX/BuFPY
+ 5jnJqghQpiM4ukUD4JLbI1oIdA4ro5KRm9OwW/hBpDP+x/i9CfSqy6snioHZPnkkuNg=
+X-Gm-Gg: ATEYQzwLt/68m0MNiJio+/Ti0MZ4acKzw0Dvsei94G3nlA5nA0gVcPJ/7rJ7ZvrF6/n
+ rn5u2tCghwb4ZMU14tDumoEpCGy7IuQUURH0wwyO6gVMSkQKOAm6YBagidn1OdNcijoZEaRY8Aq
+ ynrdaFltijM2pktsLtiZ8aEyQh3O/9qtHDdKgoza/5Z0pnz1qX+G+zBDdk7oGtNrSB/0dp7Wyw2
+ lG8cvJPHISmSO4DIa5KQ8S1vCjuYrInKswWdIdCXVinNViLbRAmck9OlslEC2+fGgJzP1kDVHdi
+ VA7Yh0p0gAYuyThcoROL6FvjtF8UKmbK02PMs5ymL0sBwEx6PG5XZa89wqsHaEwU30YSx4UiDLf
+ fKY1/gunFo0ULzLJIVNKPSlx1XwbHx/M6u66lLB7ExeAIu8jEvaD7+4Y+m85/L4s+5DFIywbrOJ
+ /Y+J4l1ESY2cbFcbQhYUr59KA9pVF7mSu+6uCPYmLoa9SqNvnc7rSMsmufiM6WmOOed3ldttctw
+ Ofs
+X-Received: by 2002:a05:600c:c163:b0:485:33ad:3c9f with SMTP id
+ 5b1f17b1804b1-4854b145656mr35230245e9.25.1773230800041; 
+ Wed, 11 Mar 2026 05:06:40 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4854b0b906esm24752125e9.4.2026.03.11.05.06.38
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 05:06:39 -0700 (PDT)
+Message-ID: <3b45a285-a10f-4a85-8482-c7532c7c1814@linaro.org>
+Date: Wed, 11 Mar 2026 13:06:38 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/9] target/riscv: Define MSTATUS_SBE and MSTATUS_MBE
+ bit masks
+Content-Language: en-US
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
+ <20260311115910.564481-2-djordje.todorovic@htecgroup.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260311115910.564481-2-djordje.todorovic@htecgroup.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <aa8Pvd5O-OLKIXam@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,98 +108,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 09, 2026 at 02:21:49PM -0400, Peter Xu wrote:
-> On Mon, Mar 09, 2026 at 05:51:29PM +0000, Daniel P. Berrangé wrote:
-> > On Mon, Mar 09, 2026 at 05:42:08PM +0000, Tejus GK wrote:
-> > > 
-> > > 
-> > > > On 9 Mar 2026, at 10:47 PM, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > > 
-> > > > !-------------------------------------------------------------------|
-> > > >  CAUTION: External Email
-> > > > 
-> > > > |-------------------------------------------------------------------!
-> > > > 
-> > > > On Mon, Mar 09, 2026 at 12:59:44PM -0400, Peter Xu wrote:
-> > > >> On Mon, Mar 09, 2026 at 04:48:37PM +0000, Daniel P. Berrangé wrote:
-> > > >>>> @@ -881,8 +881,8 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> > > >>>>         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
-> > > >>>> 
-> > > >>>>         /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
-> > > >>>> -        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> > > >>>> -            sioc->new_zero_copy_sent_success = true;
-> > > >>>> +        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
-> > > >>>> +            sioc->zero_copy_fallback++;
-> > > >>> 
-> > > >>> ...this is counting the number of MSG_ERRQUEUE items, which is not
-> > > >>> the same as the number of IO requests. That's why we only used it
-> > > >>> as a boolean marker originally, rather than making it a counter.
-> > > >> 
-> > > >> Would the logic still work and better than before?  Say, it's a counter of
-> > > >> "messages" rather than "IOs" then.
-> > > > 
-> > > > IIUC it is a counter of processing notifications which is not directly
-> > > > correlated to any action by QEMU - neither bytes nor syscalls.
-> > > 
-> > > Please correct me if I'm wrong about this, isn’t each notification an information 
-> > > about what happened to an individual IO?
-> > 
-> > If userspace hasn't read a queued notification yet, the kernel will
-> > merge new notifications with the existing queued one.
-> > 
-> > The line above your change
-> > 
-> >   serr->ee_data - serr->ee_info + 1;
-> > 
-> > records how many notifications were merged, so we now how many
-> > syscalls were processed.
-> > 
-> > If ee_code is  SO_EE_CODE_ZEROCOPY_COPIED though it means at least
-> > one syscall resulted in a copy, but that doesn't imply that *all*
-> > syscalls resulted in a copy.
-> > 
-> > AFAICT, it could be 1 out of a 1000 syscalls resulted in a copy,
-> > or it could be 1000 out of 1000 resulted in a copy. We don't know.
-> > 
-> > IIUC the kernel's merging of notifications appears lossy wrt this
-> > information. It could be partially mitigated by doing a flush for
-> > notifications really really frequently but that feels like it would
-> > have its own downsides
+On 11/3/26 12:59, Djordje Todorovic wrote:
+> Add the RISC-V privileged ISA defined bit positions for the Supervisor
+> Big-Endian (SBE, bit 36) and Machine Big-Endian (MBE, bit 37) fields
+> in the mstatus register. These are used alongside the existing
+> MSTATUS_UBE (bit 6) to control data endianness at each privilege level.
 > 
-> IMHO what this change does is removing the false negatives.
-> 
-> Before this patch, if QEMU reports fallback=0, it doesn't mean all the
-> MSG_ZEROCOPY requests were all fulfilled by zerocopy.  It's because we
-> justify it with one boolean over "a period of time" between two flushes, we
-> set the boolean to TRUE as long as there is _one_ successful report of
-> MSG_ZEROCOPY.  So even if every flush reports TRUE it only means "there is
-> at least one MSG_ZEROCOPY request that didn't fallback".  It has no
-> implication of whether a fallback happened.
-> 
-> Hence, before this v2 patch, there can be false negative reported by QEMU,
-> assuming there's no fallback (reflected in stats) but it actually happened.
-> 
-> After this patch, if QEMU reports fallback=0, it guarantees that _all_
-> MSG_ZEROCOPY requests are fulfilled with zerocopy.  It's because we monitor
-> all messages and accumulate any fallback cases.  Even if the messages can
-> be merged, when "fallback" shows anything non-zero would imply some
-> fallback happened.  Here, the counter value doesn't really matter much
-> IMHO, as long as it becomes non-zero.
+> The MSTATUS_UBE definition was already present, but SBE and MBE were
+> missing.
+> ---
+>   target/riscv/cpu_bits.h | 2 ++
+>   1 file changed, 2 insertions(+)
 
-AFAICT, the v1 of this patch was sufficient to address the original
-bug and maintain the current intended semantics of the migration
-counter. This v2 is mixing a bug fix with functional change in
-behaviour and I don't think the latter is justified.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
