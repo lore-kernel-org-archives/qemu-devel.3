@@ -4,115 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11561062896
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:05:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16ACA1062899
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0JF8-0005aE-AO; Wed, 11 Mar 2026 09:04:54 -0400
+	id 1w0JFu-00064e-V5; Wed, 11 Mar 2026 09:05:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0JEp-0005Ve-9J
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:04:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0JFr-00062s-W0
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:05:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0JEl-000682-A6
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:04:33 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0JFo-0006c8-SG
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:05:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773234266;
+ s=mimecast20190719; t=1773234335;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=ham4TULCnBDBSop4e24EP2qmSFVparDs9MmU7aOYPjo=;
- b=SpYgUWYwZtaFCkT/qe0L4SAjEQQo4geW5xYLnTl6iQNN/NvkIq2TLOt60YnLcvXHK2pSqT
- zVtK2X2r9/gzxJHShZKBkxiMrqDRyruyPFkfph1d5z7D2X+CaKRO+VoM9UuBiBgzCqX0Aq
- DTQWEUAqBTRS6+W2AVaKxbOYlom/HNo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=vsSv4S/wdFecYhOHNRRkZWj+f24B0cWa6fpS1ZRcbjA=;
+ b=c2WBcUt5HINWo+raSdfHYepHS++PJ3Tp0Vtws5yNr+A5oJIe4RSLczHhWwOU2omsF+LXuy
+ 7LYcS7LoucxYlMd2GsxdzMv9ixpsSHxF0cCRa9/dGUfw4izJPShXfjionj2I3Bc3KrvzBO
+ ZAE1l5fgtsRjr17slP+3geQ6ncfnLBY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-4laNQYqJNrKzjLgFPFB33A-1; Wed,
- 11 Mar 2026 09:04:23 -0400
-X-MC-Unique: 4laNQYqJNrKzjLgFPFB33A-1
-X-Mimecast-MFC-AGG-ID: 4laNQYqJNrKzjLgFPFB33A_1773234262
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-159-XF2JdODENIKolEqux8jHbg-1; Wed,
+ 11 Mar 2026 09:05:30 -0400
+X-MC-Unique: XF2JdODENIKolEqux8jHbg-1
+X-Mimecast-MFC-AGG-ID: XF2JdODENIKolEqux8jHbg_1773234328
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9628618005B3; Wed, 11 Mar 2026 13:04:21 +0000 (UTC)
-Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 93AFE180049D; Wed, 11 Mar 2026 13:04:18 +0000 (UTC)
-Message-ID: <da461649-9f1d-4d12-9f49-22b1b4155d69@redhat.com>
-Date: Wed, 11 Mar 2026 14:04:17 +0100
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 95B461956096; Wed, 11 Mar 2026 13:05:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 127E9195410D; Wed, 11 Mar 2026 13:05:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 727A121E681E; Wed, 11 Mar 2026 14:05:24 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhao Liu <zhao1.liu@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,  Daniel P . =?utf-8?Q?Berrang?=
+ =?utf-8?Q?=C3=A9?=
+ <berrange@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,  Thomas
+ Huth <thuth@redhat.com>,  Igor Mammedov <imammedo@redhat.com>,  Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,  BALATON Zoltan
+ <balaton@eik.bme.hu>,  Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,  Zide Chen
+ <zide.chen@intel.com>,  Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ qemu-devel@nongnu.org,  devel@lists.libvirt.org
+Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track
+ external user input
+In-Reply-To: <20260210032348.987549-1-zhao1.liu@intel.com> (Zhao Liu's message
+ of "Tue, 10 Feb 2026 11:23:27 +0800")
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+Date: Wed, 11 Mar 2026 14:05:24 +0100
+Message-ID: <877bricy97.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i386/pc: Add a proper owner for the ioport memory
- regions
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
- Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
-Cc: qemu-trivial@nongnu.org, Richard Henderson
- <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
-References: <20260217141827.534426-1-thuth@redhat.com>
- <8f4f6df9-ec18-4d74-8a33-538e2d693023@tls.msk.ru>
-Content-Language: en-US
-From: Thomas Huth <thuth@redhat.com>
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <8f4f6df9-ec18-4d74-8a33-538e2d693023@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -130,18 +95,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/03/2026 12.53, Michael Tokarev wrote:
-> On 17.02.2026 17:18, Thomas Huth wrote:
->> From: Thomas Huth <thuth@redhat.com>
->>
->> Without a proper owner, the memory regions show up in /machine/unattached
->> in the QOM tree, which is something that should be avoided.
-> 
-> Does this break migration from/to older releases?
+I can't find a good spot in the existing discussion where the following
+would fit neatly as a reply, so I'm starting at the top again.
 
-AFAIK the QOM tree ordering is orthogonal to the migration logic ... or did 
-we ever have any problems with this in the past?
+Fact: a huge part of our external interface is *accidental* and
+virtually undocumented.
 
-  Thomas
+The sane way to do an external interface is to layer it on top of more
+powerful internal interfaces.  The external interface exposes just the
+functionality that's wanted there.  The internal interfaces can evolve
+without affecting the external one.
+
+QMP works that way.  QEMU code uses internal C interfaces.  QEMU doesn't
+send QMP commands to itself.  If we need something internally, we add it
+to a suitable internal interface.  There's no need to add it to the
+external interface just for that.
+
+QOM does not work that way.  The internal and the external object
+configuration interface is one and the same.  So, if we add a property
+for internal use, we can't *not* add it to the external interface.
+
+This has led to an external interface that is frickin' huge: I count
+~1000 device types with ~16000 properties in qemu-system-aarch64 alone.
+The vast majority is undocumented.
+
+Time and again we've found ourselves unsure whether certain properties
+have external uses, or are even meant for external use.
+
+We have been unable / unwilling to isolate the external interface from
+internal detail.  This is madness.
+
+As long as we persist in this madness, a sane, properly documented
+external interface will remain impossible.
+
+Do we care?  If yes, we should discuss how to isolate external and
+internal interfaces.
+
+This series attempts to create a bit of infrastructure for such
+isolation: means to mark properties as internal.  Is it the right
+infrastructure?  Is it enough to be a useful step?  Maybe not, but then
+I'd like to hear better ideas.
+
+
+
+
+Prior discussion in this thread:
+
+    Subject: How to mark internal properties (was: Re: [PATCH v4 12/27]
+        target/i386/cpu:  Remove CPUX86State::enable_cpuid_0xb field)
+    Date: Fri, 9 May 2025 12:04:19 +0200
+    Message-ID: <2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com>
+    https://lore.kernel.org/qemu-devel/2f526570-7ab0-479c-967c-b3f95f9f19e3@redhat.com
 
 
