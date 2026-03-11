@@ -4,73 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DBB1125847
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FB40112584D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:19:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LIm-0008NG-Bs; Wed, 11 Mar 2026 11:16:54 -0400
+	id 1w0LGm-0005GO-O1; Wed, 11 Mar 2026 11:14:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LIT-00084B-Ce; Wed, 11 Mar 2026 11:16:31 -0400
-Received: from sender4-of-o54.zoho.com ([136.143.188.54])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0LCy-0003Y4-Sy
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:50 -0400
+Received: from p-west2-cluster3-host10-snip4-10.eps.apple.com ([57.103.69.83]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LIR-0000QV-85; Wed, 11 Mar 2026 11:16:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1773242174; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=BKS8tkW1+MhgLeTfchmF86Fi0ufPK3DH++LM6ESYyX7dIZim7MfmniNOQqlvcXwbzColuIkaRCXuuKh19mhIE9M5migAxPFtV94Ucybba8jrBERjT1dwSfcNedy7kAkL/A2cbcQC2L5M1w9EF9/OY9+ilCAtQH+q5c6SK8Pn04g=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1773242174;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=EdsQt9XAkhr3J9fJ/2sTgcnnBkZM2wyLclrl9WyqDG4=; 
- b=aJalXG8D7MRxX1AuZUjkRoGpns+5HKa7PfYWesNFA5NWojXE9SMOSnCy3OOFP7Egc8Ktg9WeyHkmGNb1MRb71VGg7PdJh1sgruMLM6hed9OVTc3VVBs9cz2mayt0nn+CFGCfiI5OMsqm24fzv7K9eCWzf/j2JkcC7YaDVEXt0F4=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=anirudhrb.com;
- spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
- dmarc=pass header.from=<anirudh@anirudhrb.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242174; 
- s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
- h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
- bh=EdsQt9XAkhr3J9fJ/2sTgcnnBkZM2wyLclrl9WyqDG4=;
- b=ArY5FdC+Z1HudFTEsqAumIPDnWKF+nD3RQQhdpin0ZFGbz/sqFQLqemtwssf1iwx
- 025iKSfKYuJCoYXjnp4eeTKLQMnMcysGFm6dZWfzU5BEQb/i8n2nJlGdL/SYpV/mOQz
- NVwNWrM/sl9UAvmJET56DkQ2mEBkkmnplXz+P+6E=
-Received: by mx.zohomail.com with SMTPS id 1773242172116262.8075739050563;
- Wed, 11 Mar 2026 08:16:12 -0700 (PDT)
-From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
-Subject: [PATCH 00/14] Add ARM64 support for MSHV accelerator
-Date: Wed, 11 Mar 2026 15:15:27 +0000
-Message-Id: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAA+HsWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
- vPSU3UzU4B8JSMDIzMDY0ND3dzijLL4xOTk1Jz4xKJcM5P44tKCAt1UC7MkAwMLo8TUVBMloN6
- CotS0zAqwudGxtbUARDakIGcAAAA=
-X-Change-ID: 20260311-mshv_accel_arm64_supp-e86b0082aee4
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0LCt-00069Z-4g
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:45 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPS id
+ A3AED18015C4; Wed, 11 Mar 2026 15:10:38 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1773241841; x=1775833841;
+ bh=YQagLCwFmO4F67dvVU7R6YOfqGT2OsNatNHouVOdmCw=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
+ b=PiQKPxuDZP498Zz+8wkY5h+j81lGE0br5WLCfwJ2QleYOehn6e1aRY1mGxm2V4HPAoi+kWhdmAY0wjWX6Z8aonHYrDk1zUEaYjyH7btwboE55yY9vr77c8+04UmuLjhGbqi/LCt9jKdXkbau9SeX9h93ODKfTk157DABj/C1R2DagsE7eZWb5CRtgFoH4d5pi9ZNcWWigxhT4Cw9VBavDVn8csia2AVxzMIZhao+/q+IppQe6IAntgg9iisjyYMtD8y2R8KDwKpWFQoi+5npEVvbGjPYjoY4PS6Zxs9L3qTsJuhFLmuasgDxIVknKM3af9wnq0d2WEYBUkRFm9EAtw==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPSA id
+ B8C4E18015F9; Wed, 11 Mar 2026 15:10:23 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
-X-Mailer: b4 0.14.3
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.54;
- envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org
+Subject: [PATCH v2 4/5] whpx: arm: remove comment bit that is no longer
+ accurate
+Date: Wed, 11 Mar 2026 16:10:13 +0100
+Message-ID: <20260311151014.55915-5-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260311151014.55915-1-mohamed@unpredictable.fr>
+References: <20260311151014.55915-1-mohamed@unpredictable.fr>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDEyOCBTYWx0ZWRfXwmftUv4/EzwE
+ KD3XzuPAs/ElgHGrhMi4iJlAaTqgHSCZJKkT2ToL9m+9b14A4pS+fRRMtJxPfUF4YUKXIaxK7jz
+ hG7OiMMZXte8+D7KG7nmWfhTMdBXfpGNRO1z7IVytjlMcIfLUJd0FX9yPwGmPpPtdkwXKTDSO/6
+ AAITjZJZRviq7BXNHwBSnKzyHh4OoQ3pIlFuYvxW5fkz6Ie0fcYnDPmndjZpVaZPW6Yb4X9hODd
+ qA7ITfl49VzbA/pYtC9z1r95PG9Pvogx8k7pv8zAIQN0xhtf6J02chtwbICBWazub08zVxfVIJ0
+ n3WT9t0E11UUxQzOTqJVuJA3mOeyTTQCqslxds9+hM9+3fIz9UbNudMhbqq6fo=
+X-Authority-Info-Out: v=2.4 cv=PL0COPqC c=1 sm=1 tr=0 ts=69b185ee
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=91AnuRma_Mvq6p0JRGsA:9
+X-Proofpoint-GUID: CqLuOZP1rlcq9M-AO_a2XDk-LHNbx3vf
+X-Proofpoint-ORIG-GUID: CqLuOZP1rlcq9M-AO_a2XDk-LHNbx3vf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
+ adultscore=0 phishscore=0 spamscore=0 bulkscore=0
+ clxscore=1030
+ lowpriorityscore=0 suspectscore=0 malwarescore=0 mlxscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603110128
+X-JNJ: AAAAAAABBdqbsl5/geQC/BJo9nfit/0qZ6JDbQTjzTg4QxPcWWMy8dS/rD7jQgr0jyxDMxcdZIj6VF0DuWIZz6nKnPZG969UXawDERKZp9ABRBVNdwtXvdYt6a4O18Se+ZNPR4yttaRUo6EfrGcTloiSHIG65cYX2+2/FTklG+vfjVEZ1R+PhOsPz8McgOb4FPAKd4rHYT5TEGlcE8xFMnjSw4qgREMqnI22VyzjOXp683ajN8D6O1kDKDiACOrxabaUjplTvS2L8EU5m6h+ROafVbmlp8/iUkN7Pjij1ghw2n/9pYIlj5dY/cUkbMosptY1GSppJqIL9Ujz7dYzv2ILEPpyHhjyf8Nta+PNNh5hTTJWphA2aCr1J2FYkR2o0PZxIO1jUYWrdOCWbjJcYLPvScky9AwzsLPXPxbHoB/MH/9UDgOJZMZ8UPrzMQnj62tO7LcKqchG8ADNmfKB4vsAN8sB0F8nXjKDbkcmh7DYpSSZA/14ZqWVvmWv70/w8vgeIYAiiVBX1eIARriudJVorx/+K2nMGjiZNoxXxUmBIjzq4H6Wb19e1XD8GZVxhL4Vi38o4KC2hDUeXq7WuB6fAVvrL/4ixiqFNi6PJBG1YdTUQXPbuuT2T9vsFvglg1zay+VSCs9JwTk=
+Received-SPF: pass client-ip=57.103.69.83;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,85 +94,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series adds ARM64 guest support to the MSHV (Microsoft Hypervisor)
-accelerator, enabling QEMU to run aarch64 VMs on Microsoft's hypervisor
-using the mshv Linux kernel module.
+As of Windows 11 version 26H1, SME support shipped. However the MIT-licensed headers aren't updated yet.
 
-The first few patches refactor the existing x86 MSHV code to separate
-arch-specific pieces from common infrastructure: moving MSR handling to
-target/i386, extracting shared register hypercall helpers, provisioning
-host CPU features, and introducing arch-specific init hooks.
-
-The remaining patches add the ARM64 backend:
- - vCPU state get/set using hypervisor register hypercalls
- - -cpu host support by querying ID registers from the hypervisor
- - vCPU run loop with MMIO emulation via ESR_EL2 syndrome decoding
- - In-kernel vGICv3 backed by HVCALL_ASSERT_VIRTUAL_INTERRUPT
- - Interrupt control structure adjustments for arm64
-
-With this series, a standard aarch64 virt machine can be launched with:
-  qemu-system-aarch64 -accel mshv -cpu host -M virt ...
-
-Caveats:
-- Currently only direct kernel is supported. We're still debugging edk2
-  firmware boot. 
-- Live migration is not yet supported.
-
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
-Aastha Rawat (7):
-      accel/mshv: move msr.c to target/i386
-      accel/mshv: extract common CPU register helpers
-      meson, target/arm/mshv: Enable arm64 build & add initial MSHV support
-      target/arm/mshv: implement vcpu state operations for ARM64
-      target/arm/mshv: implement -cpu host for MSHV
-      accel/mshv: Add access_vp_regs synthetic proc features
-      target/arm: cpu: Mark MSHV supporting PSCI 1.3
+ target/arm/whpx/whpx-all.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Anirudh Rayabharam (Microsoft) (6):
-      accel/mshv: provision guests with the same features as host
-      accel/mshv: add arch-specific accelerator init hook
-      target/arm/mshv: add vCPU run loop
-      include/hw/hyperv: adjust hv_interrupt_control structure for arm64
-      hw/intc,target/arm/mshv: add MSHV vGICv3 implementation
-      MAINTAINERS: updates for MSHV arm64 code
-
-Magnus Kulke (1):
-      accel/mshv: implement cpu_thread_is_idle() hook
-
- MAINTAINERS                        |   8 +
- accel/mshv/irq.c                   |   2 +
- accel/mshv/meson.build             |   4 +-
- accel/mshv/mshv-all.c              |  73 +++-
- accel/mshv/mshv-cpu-common.c       | 151 +++++++++
- hw/arm/virt.c                      |  11 +-
- hw/intc/arm_gicv3_common.c         |   3 +
- hw/intc/arm_gicv3_mshv.c           | 180 ++++++++++
- hw/intc/meson.build                |   1 +
- include/hw/hyperv/hvgdk_mini.h     | 130 ++++++++
- include/hw/hyperv/hvhdk.h          |  97 +++++-
- include/hw/hyperv/hvhdk_mini.h     |   6 +
- include/hw/intc/arm_gicv3_common.h |   1 +
- include/system/hw_accel.h          |   3 +-
- include/system/mshv.h              |   2 +
- include/system/mshv_int.h          |   5 +
- meson.build                        |   7 +-
- target/arm/cpu.c                   |   7 +-
- target/arm/cpu64.c                 |  24 +-
- target/arm/meson.build             |   1 +
- target/arm/mshv/meson.build        |   7 +
- target/arm/mshv/mshv-all.c         | 665 +++++++++++++++++++++++++++++++++++++
- target/arm/mshv_arm.h              |  18 +
- target/i386/mshv/meson.build       |   2 +
- target/i386/mshv/mshv-all.c        |  85 +++++
- target/i386/mshv/mshv-cpu.c        | 170 +---------
- {accel => target/i386}/mshv/msr.c  |   0
- 27 files changed, 1465 insertions(+), 198 deletions(-)
----
-base-commit: 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455
-change-id: 20260311-mshv_accel_arm64_supp-e86b0082aee4
-
-Best regards,
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 9e5bc03a21..8aa24f2adc 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -717,7 +717,7 @@ static bool whpx_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+      * Work needed for SVE support:
+      * - SVE state save/restore
+      * - any potentially needed VL management
+-     * Also disable SME at the same time. (not currently supported by Hyper-V)
++     * Also disable SME at the same time.
+      */
+     SET_IDREG(&ahcf->isar, ID_AA64PFR0,
+               GET_IDREG(&ahcf->isar, ID_AA64PFR0) & ~R_ID_AA64PFR0_SVE_MASK);
 -- 
-Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+2.50.1 (Apple Git-155)
 
 
