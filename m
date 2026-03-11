@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6A431125893
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:38:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71C961125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:38:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PLM-0007ax-NJ; Wed, 11 Mar 2026 15:35:44 -0400
+	id 1w0PLi-0007uY-HR; Wed, 11 Mar 2026 15:36:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKz-0007Tw-Vx; Wed, 11 Mar 2026 15:35:22 -0400
+ id 1w0PLc-0007nh-84; Wed, 11 Mar 2026 15:36:01 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKy-000071-CZ; Wed, 11 Mar 2026 15:35:21 -0400
+ id 1w0PLa-0000Cy-8X; Wed, 11 Mar 2026 15:35:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257666; bh=cfcf1z7/JpS4xZDWqSxPZgHSdgbv846o0KdJ0aeJQi0=;
+ t=1773257667; bh=S2/IgILclxRZ7ljyqnMuw+A6wuBRT3cl3juQKdZVFKw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=gtdJY8fRMZ46i44DRuu4sCX7bZRHPGKxlKkBfqg54dir/IPZTq3nP6HaL18EQ9Zjw
- CZOfVwZmYCHV+J5yf2egc83yHAUaDjdEn/GC6OQPeDLNHLM5+jCsirxDPOPevcsbTP
- ji6PGAwhgnof+XQdu19QfY1rrfawTDMcQGTaGrBIBHyPjDq4oEAp5FOxpS4YHkTVa8
- YS0Tff/tIzN1Xje1DTqYiUqyxMGeakFSsGcee3jqKwO6bHiwvet8AaPo26fncRhqYB
- PAPYMz9c7HGEUn//viZE8eBMJWAUm0rHgtvKYhWnEPKVLH0yuWajCiBpfo4I3HQCIy
- rkpB3e6LNhNlQ==
+ b=w7wF94825tsqLtW9TShEHklywyVnx0KIe5e85MwCeB8YX1PoWUgZDHWf16j9CWrYr
+ LaZNpa1ptpFtiJm+dsyc4Kn77XooWfWKYTQDTK4y7KJBYNXcJVOkxSvHfFW/ZGISUl
+ f6cu157rEhuUviEtYY7IYojJtahYgasSdMlpzZrBMvxFGbEYe7G9FL8I36OIinD00X
+ dnHIobbXDKsiR8RNeqcjDZWam4XpsT7wUOcFp8+8GsftItMTqHZvs4IoHMj+h3sgm6
+ oYqjd1WnKK8/csyTbcPv27Hp35LFohyGlzO9mPahrfmzSpfhAjJinjdZ6iFBnehlBK
+ VRSC5SMcecHLg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 91C2C1920EF;
- Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 5CC9E1920F8;
+ Wed, 11 Mar 2026 22:34:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D4E9B37C454;
- Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9B95A37C45D;
+ Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Joelle van Dyne <j@getutm.app>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 07/53] contrib/plugins/hotblocks: Fix off by one error
- in iteration of sorted blocks
-Date: Wed, 11 Mar 2026 22:34:00 +0300
-Message-ID: <20260311193449.1096110-7-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 16/53] virtio-gpu-virgl: Add
+ virtio-gpu-virgl-hostmem-region type
+Date: Wed, 11 Mar 2026 22:34:09 +0300
+Message-ID: <20260311193449.1096110-16-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -71,37 +72,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-The logic to iterate over the hottest blocks will never reach the last
-item in the list, as it checks `it->next != NULL` before entering the
-loop. It's hard to trigger this off-by-one error with the default
-limit=20, but it is a bug and is problematic if that default is changed
-to something larger.
+Commit e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory
+region") made the name member of MemoryRegion unset, causing a NULL
+pointer dereference[1]:
+> Thread 2 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> (gdb) bt
+> #0  0x00007ffff56565e2 in __strcmp_evex () at /lib64/libc.so.6
+> #1  0x0000555555841bdb in find_fd (head=0x5555572337d0 <cpr_state>,
+> name=0x0, id=0) at ../migration/cpr.c:68
+> #2  cpr_delete_fd (name=name@entry=0x0, id=id@entry=0) at
+> ../migration/cpr.c:77
+> #3  0x000055555582290a in qemu_ram_free (block=0x7ff7e93aa7f0) at
+> ../system/physmem.c:2615
+> #4  0x000055555581ae02 in memory_region_finalize (obj=<optimized out>)
+> at ../system/memory.c:1816
+> #5  0x0000555555a70ab9 in object_deinit (obj=<optimized out>,
+> type=<optimized out>) at ../qom/object.c:715
+> #6  object_finalize (data=0x7ff7e936eff0) at ../qom/object.c:729
+> #7  object_unref (objptr=0x7ff7e936eff0) at ../qom/object.c:1232
+> #8  0x0000555555814fae in memory_region_unref (mr=<optimized out>) at
+> ../system/memory.c:1848
+> #9  flatview_destroy (view=0x555559ed6c40) at ../system/memory.c:301
+> #10 0x0000555555bfc122 in call_rcu_thread (opaque=<optimized out>) at
+> ../util/rcu.c:324
+> #11 0x0000555555bf17a7 in qemu_thread_start (args=0x555557b99520) at
+> ../util/qemu-thread-posix.c:393
+> #12 0x00007ffff556f464 in start_thread () at /lib64/libc.so.6
+> #13 0x00007ffff55f25ac in __clone3 () at /lib64/libc.so.6
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/f1ba2e57c6126472c0c8310774009f2455efc370.1753857212.git.asb@igalia.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit 1c1e45fcd66269f8a6dbd97fd7b8267d8f6f58af)
+The intention of the aforementioned commit is to prevent a MemoryRegion
+from parenting itself while its references is counted indendependently
+of the device. To achieve the same goal, add a type of QOM objects that
+count references and parent MemoryRegions.
+
+[1] https://lore.kernel.org/qemu-devel/4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com/
+
+Cc: qemu-stable@nongnu.org
+Fixes: e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory region")
+Fixes: be88ad424c0b ("virtio-gpu-virgl: correct parent for blob memory region") for 10.2.x
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Joelle van Dyne <j@getutm.app>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit b2a279094c3b86667969cc645f7fb1087e08dd19)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index d3dd23ed9f..cf4d6b8c36 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -82,10 +82,9 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index 741728cabb..4e515c4ef6 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -52,11 +52,17 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
  
-     if (sorted_counts) {
--        it = sorted_counts;
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+ #if VIRGL_VERSION_MAJOR >= 1
+ struct virtio_gpu_virgl_hostmem_region {
++    Object parent_obj;
+     MemoryRegion mr;
+     struct VirtIOGPU *g;
+     bool finish_unmapping;
+ };
  
--        for (i = 0; i < limit && it->next; i++, it = it->next) {
-+        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
-                 report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
++#define TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION "virtio-gpu-virgl-hostmem-region"
++
++OBJECT_DECLARE_SIMPLE_TYPE(virtio_gpu_virgl_hostmem_region,
++                           VIRTIO_GPU_VIRGL_HOSTMEM_REGION)
++
+ static struct virtio_gpu_virgl_hostmem_region *
+ to_hostmem_region(MemoryRegion *mr)
+ {
+@@ -70,14 +76,22 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+     virtio_gpu_process_cmdq(g);
+ }
+ 
+-static void virtio_gpu_virgl_hostmem_region_free(void *obj)
++/*
++ * MR could outlive the resource if MR's reference is held outside of
++ * virtio-gpu. In order to prevent unmapping resource while MR is alive,
++ * and thus, making the data pointer invalid, we will block virtio-gpu
++ * command processing until MR is fully unreferenced and freed.
++ */
++static void virtio_gpu_virgl_hostmem_region_finalize(Object *obj)
+ {
+-    MemoryRegion *mr = MEMORY_REGION(obj);
+-    struct virtio_gpu_virgl_hostmem_region *vmr;
++    struct virtio_gpu_virgl_hostmem_region *vmr = VIRTIO_GPU_VIRGL_HOSTMEM_REGION(obj);
+     VirtIOGPUBase *b;
+     VirtIOGPUGL *gl;
+ 
+-    vmr = to_hostmem_region(mr);
++    if (!vmr->g) {
++        return;
++    }
++
+     vmr->finish_unmapping = true;
+ 
+     b = VIRTIO_GPU_BASE(vmr->g);
+@@ -92,11 +106,26 @@ static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+     qemu_bh_schedule(gl->cmdq_resume_bh);
+ }
+ 
++static const TypeInfo virtio_gpu_virgl_hostmem_region_info = {
++    .parent = TYPE_OBJECT,
++    .name = TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION,
++    .instance_size = sizeof(struct virtio_gpu_virgl_hostmem_region),
++    .instance_finalize = virtio_gpu_virgl_hostmem_region_finalize
++};
++
++static void virtio_gpu_virgl_types(void)
++{
++    type_register_static(&virtio_gpu_virgl_hostmem_region_info);
++}
++
++type_init(virtio_gpu_virgl_types)
++
+ static int
+ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+                                    struct virtio_gpu_virgl_resource *res,
+                                    uint64_t offset)
+ {
++    g_autofree char *name = NULL;
+     struct virtio_gpu_virgl_hostmem_region *vmr;
+     VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+     MemoryRegion *mr;
+@@ -117,21 +146,16 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     }
+ 
+     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
++    name = g_strdup_printf("blob[%" PRIu32 "]", res->base.resource_id);
++    object_initialize_child(OBJECT(g), name, vmr,
++                            TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION);
+     vmr->g = g;
+ 
+     mr = &vmr->mr;
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+ 
+-    /*
+-     * MR could outlive the resource if MR's reference is held outside of
+-     * virtio-gpu. In order to prevent unmapping resource while MR is alive,
+-     * and thus, making the data pointer invalid, we will block virtio-gpu
+-     * command processing until MR is fully unreferenced and freed.
+-     */
+-    OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
+-
+     res->mr = mr;
+ 
+     trace_virtio_gpu_cmd_res_map_blob(res->base.resource_id, vmr, mr);
+@@ -163,7 +187,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+      * 1. Begin async unmapping with memory_region_del_subregion()
+      *    and suspend/block cmd processing.
+      * 2. Wait for res->mr to be freed and cmd processing resumed
+-     *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
++     *    asynchronously by virtio_gpu_virgl_hostmem_region_finalize().
+      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
+      */
+     if (vmr->finish_unmapping) {
+@@ -186,7 +210,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+-        object_unref(OBJECT(mr));
++        object_unparent(OBJECT(vmr));
+     }
+ 
+     return 0;
 -- 
 2.47.3
 
