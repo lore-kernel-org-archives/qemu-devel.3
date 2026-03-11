@@ -4,74 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD4321125857
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:47:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 967331125858
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:47:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0NeL-0007V5-Jr; Wed, 11 Mar 2026 13:47:13 -0400
+	id 1w0NeA-0007Iy-CS; Wed, 11 Mar 2026 13:47:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0NeK-0007U0-1m
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:47:12 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w0Ne8-0007Dj-HE
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:47:00 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0NeI-0004xS-4H
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:47:11 -0400
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w0Ne6-0004vp-G5
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:47:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773251229;
+ s=mimecast20190719; t=1773251217;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=B31CzLXzuJ2SA6V3pj/p4i9ECdu7BbR5C1VXRKOYOA4=;
- b=V9qnutnG1CKvCjjDxlUMjv9cvXqtPRY7ZujYE6bAYQ+zsPJvdlzKXFYQveRIq5tDRv+FTX
- d65J4+RFKF+sLzJf50oOnChoa9Rwh14Xs5fZ+FYf79cwGZ4T01ZULzQksYxT7Cv+Kp6a/p
- TRtWoEQxPRI2ss/xaNqb45y5gUJDi5k=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-2aAuPwLaME2G8qzqnr4wZA-1; Wed,
- 11 Mar 2026 13:47:06 -0400
-X-MC-Unique: 2aAuPwLaME2G8qzqnr4wZA-1
-X-Mimecast-MFC-AGG-ID: 2aAuPwLaME2G8qzqnr4wZA_1773251225
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 934921954111; Wed, 11 Mar 2026 17:47:02 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.160])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 21CEC19560A6; Wed, 11 Mar 2026 17:46:59 +0000 (UTC)
-Date: Wed, 11 Mar 2026 17:46:56 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Tejus GK <tejus.gk@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 1/1] io: make zerocopy fallback accounting more accurate
-Message-ID: <abGqkFCoApJv2rT1@redhat.com>
-References: <aa755Yc6t_bBzM_u@redhat.com> <aa78gMsQrt1BeXt3@x1.local>
- <aa8AqKqOa8YhEiF9@redhat.com>
- <0DF1A5F6-E20D-4A3F-9285-9205E87DE641@nutanix.com>
- <aa8IoQOZHzQvacSh@redhat.com> <aa8Pvd5O-OLKIXam@x1.local>
- <abFZvUoinIjfMlNX@redhat.com> <abGKkoFfy1RILXA0@x1.local>
- <abGesQMQuVSYJy1W@redhat.com> <abGmRItAZiiRIeIY@x1.local>
+ bh=Z7WEdiC7LylnM+n8hK2gQer38goK4GIMDUoZGm9jXi8=;
+ b=NwHDlw2AkEvvI17E4XADli1P67P3whA4ro4gFAqDvglMtnr4dmD4jbvN9EKNypma/38ySx
+ QcrmQE/ciD2tz70DJ5mjlX7t3p3UvYW11oYVqMxhUVj2jbk6XbddboltFNI8Sz23kBAlZD
+ w0WqFLI5lqHwG/iB7AGNaCHe3wsEEIg=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-144-UCggr-zkMN6HwQ1W5M5SNA-1; Wed, 11 Mar 2026 13:46:56 -0400
+X-MC-Unique: UCggr-zkMN6HwQ1W5M5SNA-1
+X-Mimecast-MFC-AGG-ID: UCggr-zkMN6HwQ1W5M5SNA_1773251215
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-48535f4d5e1so1062235e9.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 10:46:56 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773251215; x=1773856015;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Z7WEdiC7LylnM+n8hK2gQer38goK4GIMDUoZGm9jXi8=;
+ b=mfrnodAdTxXyAtxsnZdPGC06lwd7Fzpnn3NCYFRf2jYC7ZUiQJSuySaGxHXLWcLF1s
+ h1OZeH2NmQClpU06Ktva6jS0u4C6dvQ9US7TgVkoRxfS/ORKfOsqyUGS5rlbrSjHrhb4
+ boSy87xgRL2F5vu+jLGihxQuwwpFChxPmUeKY+FX7hi6Ups3mPNJ/+ufxKapn5oQou1X
+ 6SU1AkBVnkWunjaqYOK2uyGqTYOy2CwmfJMazCX8EAgfwDPFkvFoGSQTfoS2QfNOI+qD
+ 3Nzm9tmyyyoXyoG7X9opsFMcmcUFt611WycRKMwGhPpyGhVgvTjD6PKD3VnF8udsUY6j
+ kSBQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXkeoi6VFxZgPuy3U3u1wJ9rOyLhe1qcwASRdWvay5tOmTW1t8KLz0Sd1Xe3I6O5Ewv6poei2zgmHU@nongnu.org
+X-Gm-Message-State: AOJu0YyRvqxt3PYCrHuqInfgtsHj5EhWTLP826KZE1VY0rmJkSlmoukQ
+ 4rshRhtgMrtL1nPT5LfHUivf30n1nOz81eElXs0QK/w1HpYhbllY3QMViMQy1pxTxeKaP9suVOc
+ ldTIs6HOsT1ryVPZ8rREDNn7xuxthGCKLx6sjGfhGhP/7txY4iSP0E6Ic
+X-Gm-Gg: ATEYQzxZZY0dpKAG8XYL02cKlRhQksetOpyuOobDcx2BazK/G1aQm5i+879wv6Gj5L2
+ YIaTconQL/6BOp/XCxFekl/ReBf66MMghj1f3S4wB5uP0bIrFSa4FlVnY91k4fGus0GqUhuZtFz
+ rFc13Fja3KwdYTsEb/bK5YIw5GCItG8wgLO6QmzXgYEcrmacOZ/zmbl26cOjpgIOkofSwZXDiGg
+ YotGH3hy70r4dOqkFASdy4RfJTSxNH/SejwmJAlfx4LfXRx61QPKfjbeECyjHicDjnwx2LOPUco
+ 0wn7zRlAFjTvIHvpjwe8TwMoj8B4zeoTLzklgqCd+rLTQdCeu/0p07Tul8BAGatSPQX+Vl6FJIW
+ 27YSKEPHCfAXT/AFRi3fvDatM97IrfI4rbnbtMQCEQ2OtZnIItIMYiFjo4IeUtSNdIvgiDw==
+X-Received: by 2002:a05:600c:4583:b0:485:4278:2558 with SMTP id
+ 5b1f17b1804b1-4854b0a4911mr66152485e9.6.1773251214984; 
+ Wed, 11 Mar 2026 10:46:54 -0700 (PDT)
+X-Received: by 2002:a05:600c:4583:b0:485:4278:2558 with SMTP id
+ 5b1f17b1804b1-4854b0a4911mr66151915e9.6.1773251214434; 
+ Wed, 11 Mar 2026 10:46:54 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439fe20c0b4sm917620f8f.25.2026.03.11.10.46.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 10:46:54 -0700 (PDT)
+Message-ID: <df333115-cf74-4ce5-9393-4cab1013c2dd@redhat.com>
+Date: Wed, 11 Mar 2026 18:46:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <abGmRItAZiiRIeIY@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 2/8] hw/arm/smmuv3-accel: Introduce _AUTO support for
+ ATS
+Content-Language: en-US
+To: Nathan Chen <nathanc@nvidia.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>
+References: <20260309192119.870186-1-nathanc@nvidia.com>
+ <20260309192119.870186-3-nathanc@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260309192119.870186-3-nathanc@nvidia.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -92,149 +122,167 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 11, 2026 at 01:28:36PM -0400, Peter Xu wrote:
-> On Wed, Mar 11, 2026 at 04:56:17PM +0000, Daniel P. Berrangé wrote:
-> > On Wed, Mar 11, 2026 at 11:30:26AM -0400, Peter Xu wrote:
-> > > On Wed, Mar 11, 2026 at 12:02:05PM +0000, Daniel P. Berrangé wrote:
-> > > > On Mon, Mar 09, 2026 at 02:21:49PM -0400, Peter Xu wrote:
-> > > > > On Mon, Mar 09, 2026 at 05:51:29PM +0000, Daniel P. Berrangé wrote:
-> > > > > > On Mon, Mar 09, 2026 at 05:42:08PM +0000, Tejus GK wrote:
-> > > > > > > 
-> > > > > > > 
-> > > > > > > > On 9 Mar 2026, at 10:47 PM, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > > > > > > 
-> > > > > > > > !-------------------------------------------------------------------|
-> > > > > > > >  CAUTION: External Email
-> > > > > > > > 
-> > > > > > > > |-------------------------------------------------------------------!
-> > > > > > > > 
-> > > > > > > > On Mon, Mar 09, 2026 at 12:59:44PM -0400, Peter Xu wrote:
-> > > > > > > >> On Mon, Mar 09, 2026 at 04:48:37PM +0000, Daniel P. Berrangé wrote:
-> > > > > > > >>>> @@ -881,8 +881,8 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> > > > > > > >>>>         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
-> > > > > > > >>>> 
-> > > > > > > >>>>         /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
-> > > > > > > >>>> -        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> > > > > > > >>>> -            sioc->new_zero_copy_sent_success = true;
-> > > > > > > >>>> +        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
-> > > > > > > >>>> +            sioc->zero_copy_fallback++;
-> > > > > > > >>> 
-> > > > > > > >>> ...this is counting the number of MSG_ERRQUEUE items, which is not
-> > > > > > > >>> the same as the number of IO requests. That's why we only used it
-> > > > > > > >>> as a boolean marker originally, rather than making it a counter.
-> > > > > > > >> 
-> > > > > > > >> Would the logic still work and better than before?  Say, it's a counter of
-> > > > > > > >> "messages" rather than "IOs" then.
-> > > > > > > > 
-> > > > > > > > IIUC it is a counter of processing notifications which is not directly
-> > > > > > > > correlated to any action by QEMU - neither bytes nor syscalls.
-> > > > > > > 
-> > > > > > > Please correct me if I'm wrong about this, isn’t each notification an information 
-> > > > > > > about what happened to an individual IO?
-> > > > > > 
-> > > > > > If userspace hasn't read a queued notification yet, the kernel will
-> > > > > > merge new notifications with the existing queued one.
-> > > > > > 
-> > > > > > The line above your change
-> > > > > > 
-> > > > > >   serr->ee_data - serr->ee_info + 1;
-> > > > > > 
-> > > > > > records how many notifications were merged, so we now how many
-> > > > > > syscalls were processed.
-> > > > > > 
-> > > > > > If ee_code is  SO_EE_CODE_ZEROCOPY_COPIED though it means at least
-> > > > > > one syscall resulted in a copy, but that doesn't imply that *all*
-> > > > > > syscalls resulted in a copy.
-> > > > > > 
-> > > > > > AFAICT, it could be 1 out of a 1000 syscalls resulted in a copy,
-> > > > > > or it could be 1000 out of 1000 resulted in a copy. We don't know.
-> > > > > > 
-> > > > > > IIUC the kernel's merging of notifications appears lossy wrt this
-> > > > > > information. It could be partially mitigated by doing a flush for
-> > > > > > notifications really really frequently but that feels like it would
-> > > > > > have its own downsides
-> > > > > 
-> > > > > IMHO what this change does is removing the false negatives.
-> > > > > 
-> > > > > Before this patch, if QEMU reports fallback=0, it doesn't mean all the
-> > > > > MSG_ZEROCOPY requests were all fulfilled by zerocopy.  It's because we
-> > > > > justify it with one boolean over "a period of time" between two flushes, we
-> > > > > set the boolean to TRUE as long as there is _one_ successful report of
-> > > > > MSG_ZEROCOPY.  So even if every flush reports TRUE it only means "there is
-> > > > > at least one MSG_ZEROCOPY request that didn't fallback".  It has no
-> > > > > implication of whether a fallback happened.
-> > > > > 
-> > > > > Hence, before this v2 patch, there can be false negative reported by QEMU,
-> > > > > assuming there's no fallback (reflected in stats) but it actually happened.
-> > > > > 
-> > > > > After this patch, if QEMU reports fallback=0, it guarantees that _all_
-> > > > > MSG_ZEROCOPY requests are fulfilled with zerocopy.  It's because we monitor
-> > > > > all messages and accumulate any fallback cases.  Even if the messages can
-> > > > > be merged, when "fallback" shows anything non-zero would imply some
-> > > > > fallback happened.  Here, the counter value doesn't really matter much
-> > > > > IMHO, as long as it becomes non-zero.
-> > > > 
-> > > > AFAICT, the v1 of this patch was sufficient to address the original
-> > > > bug and maintain the current intended semantics of the migration
-> > > > counter. This v2 is mixing a bug fix with functional change in
-> > > > behaviour and I don't think the latter is justified.
-> > > 
-> > > It's just that when it cannot report all fallback cases, I don't yet see
-> > > how it would help much even if we fix the previous behavior with v1..
-> > > 
-> > > OTOH, the new behavior will be deemed to have no issue on the problem v1
-> > > was fixing.
-> > > 
-> > > So IIUC v2's behavior is the one we want, and helps identify fallback
-> > > happened.
-> > 
-> > I don't consider v2 acceptable as the value its returning is an
-> > meaningless counter that doesn't correlate to any quantity that
-> > is used by QEMU, nor visible to users of QEMU.
-> 
-> It can be a boolean if we want showing "if any fallback happened", that'll
-> at least make it accurate and avoid false negatives. But IMHO a counter is
-> always better, e.g. when we dump it from time to time we know if any more
-> fallback happened.
-> 
-> In that case, no matter how that counter is defined in granularity that'll
-> help, as long as it get boosted when fallback happened.
-> 
-> I also don't expect this value to be consumed by an user, but only reported
-> by an user and should only be consumed by a developer.
-
-Ok, so the problem is that we've got a design inversion between what
-the kernel is reporting and what the io channel is reporting.
-
-With the kernel notifications we can determine
-
- * All syscalls successfully used zero copy
- * At least one syscall failed to use zero copy
-
-whereas what the io channel flush is (claiming) to report is
-
- * 1 => all syscalls failed to use zero copy
- * 0 => at least one syscall successfully used zero copy
-
-and you cannot infer the latter from the former, as we have missing
-information due to merging of notifications.
-
-So we need to invert the return values semantics of the flush method
-to account for the missing information:
-
- * 1 => at least one syscall failed to use zero copy
- * 0 => all syscalls successfully used zero copy
 
 
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+On 3/9/26 8:21 PM, Nathan Chen wrote:
+> From: Nathan Chen <nathanc@nvidia.com>
+>
+> Allow accelerated SMMUv3 Address Translation Services support property
+> to be derived from host IOMMU capabilities. Derive host values using
+> IOMMU_GET_HW_INFO, retrieving ATS capability from IDR0.
+>
+> Set the default value of ATS to auto. The default for ATS support used
+> to be set to off, but we change it to match what the host IOMMU
+> properties report.
+>
+> Add a "ats-enabled" read-only property for smmuv3 to address an
+> expected bool for the "ats" property in iort_smmuv3_devices().
+>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c    | 25 +++++++++++++++++++++++--
+>  hw/arm/smmuv3.c          | 12 ++++++++++--
+>  hw/arm/virt-acpi-build.c |  2 +-
+>  include/hw/arm/smmuv3.h  |  2 +-
+>  4 files changed, 35 insertions(+), 6 deletions(-)
+>
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 617629bacd..8fec335557 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -52,6 +52,12 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice *pdev,
+>          return;
+>      }
+>  
+> +    /* Update ATS if auto from info */
+> +    if (s->ats == ON_OFF_AUTO_AUTO) {
+> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS,
+> +                               FIELD_EX32(info->idr[0], IDR0, ATS));
+> +    }
+> +
+>      accel->auto_finalised = true;
+>  }
+>  
+> @@ -124,6 +130,13 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
+>                     smmuv3_oas_bits(FIELD_EX32(s->idr[5], IDR5, OAS)));
+>          return false;
+>      }
+> +    /* Check ATS value opted is compatible with Host SMMUv3 */
+> +    if (FIELD_EX32(info->idr[0], IDR0, ATS) <
+> +                FIELD_EX32(s->idr[0], IDR0, ATS)) {
+> +        error_setg(errp, "Host SMMUv3 doesn't support Address Translation"
+> +                   " Services");
+> +        return false;
+> +    }
+>  
+>      /* QEMU SMMUv3 supports GRAN4K/GRAN16K/GRAN64K translation granules */
+>      if (FIELD_EX32(info->idr[5], IDR5, GRAN4K) !=
+> @@ -844,8 +857,12 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+>      /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
+>      s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
+>  
+> -    /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
+> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
+> +    /* Only override ATS if user explicitly set ON or OFF */
+> +    if (s->ats == ON_OFF_AUTO_ON) {
+> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 1);
+> +    } else if (s->ats == ON_OFF_AUTO_OFF) {
+> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 0);
+> +    }
+>  
+>      /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
+>      if (s->oas == SMMU_OAS_48BIT) {
+> @@ -923,4 +940,8 @@ void smmuv3_accel_init(SMMUv3State *s)
+>      s->s_accel = g_new0(SMMUv3AccelState, 1);
+>      bs->iommu_ops = &smmuv3_accel_ops;
+>      smmuv3_accel_as_init(s);
+> +
+> +    if (s->ats == ON_OFF_AUTO_AUTO) {
+> +        s->s_accel->auto_mode = true;
+> +    }
+>  }
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 068108e49b..197ba7c77b 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -317,6 +317,12 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
+>      smmuv3_accel_idr_override(s);
+>  }
+>  
+> +static bool get_ats_enabled(Object *obj, Error **errp)
+> +{
+> +    SMMUv3State *s = ARM_SMMUV3(obj);
+> +    return FIELD_EX32(s->idr[0], IDR0, ATS);
+> +}
+> +
+>  static void smmuv3_reset(SMMUv3State *s)
+>  {
+>      s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
+> @@ -1971,7 +1977,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+>              error_setg(errp, "ril can only be disabled if accel=on");
+>              return false;
+>          }
+> -        if (s->ats) {
+> +        if (s->ats == ON_OFF_AUTO_ON) {
+>              error_setg(errp, "ats can only be enabled if accel=on");
+>              return false;
+>          }
+> @@ -2128,7 +2134,7 @@ static const Property smmuv3_properties[] = {
+>      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+>      /* RIL can be turned off for accel cases */
+>      DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
+> -    DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
+> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
+In general you cannot change the default value like that. This requires
+compat handling
+in virt machine: See
+https://lore.kernel.org/all/20240307134445.92296-4-eric.auger@redhat.com/
+for instance
+
+Eric
+
+
+>      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
+>      DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
+>  };
+> @@ -2153,6 +2159,8 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+>      dc->hotpluggable = false;
+>      dc->user_creatable = true;
+>  
+> +    object_class_property_add_bool(klass, "ats-enabled", get_ats_enabled, NULL);
+> +
+>      object_class_property_set_description(klass, "accel",
+>          "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
+>          "configured in nested mode for vfio-pci dev assignment");
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 719d2f994e..6c77fc5f6a 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -402,7 +402,7 @@ static int iort_smmuv3_devices(Object *obj, void *opaque)
+>  
+>      bus = PCI_BUS(object_property_get_link(obj, "primary-bus", &error_abort));
+>      sdev.accel = object_property_get_bool(obj, "accel", &error_abort);
+> -    sdev.ats = object_property_get_bool(obj, "ats", &error_abort);
+> +    sdev.ats = object_property_get_bool(obj, "ats-enabled", &error_abort);
+>      pbus = PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+>      sbdev = SYS_BUS_DEVICE(obj);
+>      sdev.base = platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 26b2fc42fd..2ca49ded36 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -70,7 +70,7 @@ struct SMMUv3State {
+>      uint64_t msi_gpa;
+>      Error *migration_blocker;
+>      bool ril;
+> -    bool ats;
+> +    OnOffAuto ats;
+>      uint8_t oas;
+>      uint8_t ssidsize;
+>  };
 
 
