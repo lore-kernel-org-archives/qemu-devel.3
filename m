@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2953B1062871
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:01:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D106C106286D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:02:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0IEL-0000Q5-UQ; Wed, 11 Mar 2026 08:00:02 -0400
+	id 1w0IEH-0000Cl-2m; Wed, 11 Mar 2026 07:59:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1w0IE0-0008K2-W9; Wed, 11 Mar 2026 07:59:43 -0400
+ id 1w0IDu-0008G1-0T; Wed, 11 Mar 2026 07:59:36 -0400
 Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
  ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1w0IDu-0004dU-Po; Wed, 11 Mar 2026 07:59:37 -0400
+ id 1w0IDr-0004dU-O7; Wed, 11 Mar 2026 07:59:32 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=HfL3iuOeOrpyVh6RAITO/66Nocmj57I0GAC1+bUFRHwu59g1cZ4da2JwysstAj0JR/aQqQM1h5L4BsjiroSqnVAbqotdaIGUYN7r1dcdiUEeH+lq89vObQ/QKkzAJiMolivuFa+gJ5K+9D5dB/kMkm98D7IrGwfgxnSq2MZ6TojMSWvOs+fBTtY9T09HhUlv+Dt3RN+ApbAxosoK2Ni/Z/hQCWdy8CS1O2911Us1Od6dcc5/XSRE6QvcXYifx8X5WfeoouwuaVZDjR+uechhKKiNDokVBadkA+9f9PfM7Jh5qytpmR4Npvd+fpeOaFK1+ebDeLLpnxg8r2KR/Skhnw==
+ b=aNHsScdhU+n5lQve/lGQJCVYbrxeCyGHWJtRxyi/0yHOtIb6AcFcnMveuAOqpbXY+CFsTn2n/PXTDT3HsOBUYMOfYuOfnCnxHe/0XsA4Avm6qWY07t/Vlbgcbx2jQAlSuIhaABO6UzzMElyAP0JNO5kKmy0GkBLEANLQZvZn450Ujo4Fww1uZwjBiirvfdfSYO10nuNYZjfLKrp43h31Cqx/OHM8d/xrPRnT0wFlhZqprDGui+XHS9b7To8NWf0IDYmCUG2hdXcjVQtwiHUxg5bj+TWjRVhNS08Wre3jTY8w4uW9jySdwdWOYUwMVK/d4aisePE+rVyMedxtlrqrRg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=obg22XJW8rFs/l+JFsffm5A0qb9DwXngOOCrpt6CGgU=;
- b=eyE7+8/gFFc+fQGMORmIOlpQR/kiHEFDiAS8anK+Vpzszl/+4C0+jaSsFabjSRNYDGjhhOBkR9no6molVBIEcTJ09MPZgrrgvn8sQy5nGS/VStPHF0blKiDt3TcK2S/9rZ+OwyHmiRFeQZ/adRxg2fPVxcK4vbKN8CTdioZgpNscf8yb0Nuydg8avCdPoHxx4i11RqAU4+bVi2SZKRB8Y8ymIKLauizM0E5tqpNyXF8QIreCKBAUN0bT1wEodc0Qfe6/xlydikorcn4xEFf96s426MD10+hsXFrpvQ02HZfA9Zs2Vj8v2oFWAOTGRt3qVEYhPlqBF0YeIShLmNnZ4w==
+ bh=TpZRMbEu+DbcxNsi0jFoqxmY97B3yL0FLW/gg070UHI=;
+ b=kbeaBeNwpBNo/zwUKn7HqmmOa+LBv+PJQoOUh17w4jqe+wNHBrVcLmIbGNN1UtbpiiuhOK3lFXgtAqYzmKEEpA2Lw+v8eoYPk0TLalEChnDUmSywAoPtW1A/HN2OveaBXWpO1IhQ3MbqYKOj5VDuHrOQnvR9TO868lJiwrq7WeqPGp+qBRLjId8GYtVZha8pv2+vtzVJJDDwGvEqAoRei3l/ZLuryxfPzi8Nb3WLoTzNfxP8lznJMMST+ffYoUJKPbcTREHY0xIam1R3lNimh5CY/NZEyTeV4jDsDlFsJ9vTbnM7QfEJH8pbmMwcAo6V269TDvFVs//wZZmmG5YQ3Q==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=htecgroup.com; dmarc=pass action=none
  header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=obg22XJW8rFs/l+JFsffm5A0qb9DwXngOOCrpt6CGgU=;
- b=HtMdM8sf2jQMe+M4j1r00EmWmqc0HGLnIWSrGtn9oYWd7H0GVAdqmJtpMjDo1bAZMw0HNx1+KGaEWnbzDkd4+jVwX5qF8le1UHaueAES8EmFh7whgrA6b4584MleSyZVIszsqtFJ9nBUPtXrlRXOPquvZSvzcusqBrrQ+fmlHKRRvRRFstP2qR9P8WuaSwBWru2V4DrDxG72U1M7i3I9V5iS6rTrXT13rheIoBCubXjpngxEAFLNt1xb1+89+K6RfL63qk9kXrG9yTi8qqEuvx74GhY5I3EcpYTxQ8+Dnp4ktCnNarTgFQere5bM7nRTibR5eZFjc9jopjEKHlyA/Q==
+ bh=TpZRMbEu+DbcxNsi0jFoqxmY97B3yL0FLW/gg070UHI=;
+ b=SGmZM1xJ2S1aJesMKdvjGFMxbVzSwI6dNBCPw7903OzG58ZMQvouzBY7Z/eaCZHWoyPobNzH3SCzcicm0d0D4FNSxEHaYkO5kZAgVPBifQpw95WsFuRiqSi/0ZlyJxlVSI0lLuB2vOE0GaMKewTXRH/JyIwSs4vixSpqxG/Cq3qn1u+5SOpRE6oMD//WYMOZ1NSIkyuF1QQOuciEqCdLSHBxsdZuT2EJlB7IHFvVyTaYHG3YHoMKHT93yJP2r/c4rUJ21ixcrGbl0fsqUeDcLuK9EdxGv3gb00bSSaJ7NVwmt+oc5EQw4Avsg9B1b9+pR+DwZy13aSbctBdoSXu+pg==
 Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
  by DU0PR09MB6069.eurprd09.prod.outlook.com (2603:10a6:10:407::14)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.25; Wed, 11 Mar
- 2026 11:59:20 +0000
+ 2026 11:59:19 +0000
 Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
  ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
  ([fe80::939c:95df:4890:ce63%3]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
- 11:59:20 +0000
+ 11:59:19 +0000
 From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
@@ -52,12 +52,12 @@ CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
  <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
  "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
  <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH v3 6/9] hw/riscv: Make boot code endianness-aware at runtime
-Thread-Topic: [PATCH v3 6/9] hw/riscv: Make boot code endianness-aware at
- runtime
-Thread-Index: AQHcsU59cwikxk0gFkGPIH+ONT2gVQ==
-Date: Wed, 11 Mar 2026 11:59:19 +0000
-Message-ID: <20260311115910.564481-7-djordje.todorovic@htecgroup.com>
+Subject: [PATCH v3 4/9] target/riscv: Set endianness MSTATUS bits at CPU reset
+Thread-Topic: [PATCH v3 4/9] target/riscv: Set endianness MSTATUS bits at CPU
+ reset
+Thread-Index: AQHcsU5967JdqHXbmECHWiSK6MnYgw==
+Date: Wed, 11 Mar 2026 11:59:18 +0000
+Message-ID: <20260311115910.564481-5-djordje.todorovic@htecgroup.com>
 References: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
 In-Reply-To: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
 Accept-Language: en-US
@@ -68,60 +68,60 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=htecgroup.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|DU0PR09MB6069:EE_
-x-ms-office365-filtering-correlation-id: ae473d2c-a68f-40eb-d299-08de7f65a0de
+x-ms-office365-filtering-correlation-id: fe46bcbc-c589-4ef5-fedf-08de7f65a05d
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|376014|366016|1800799024|38070700021|18002099003|22082099003|56012099003;
-x-microsoft-antispam-message-info: OOd40125Azwv6/0QhwUQQvhB/d/6HdaARoDVV8YJHtcOYMLEtRnQz6WWMfYkZ4Yllp2vVUsTKhh1iS96Jt9rUlgo/zGmtGH8heYsdBSB08mVNBZCc0hQSeATI5moV6xzq9t3WPh3swnCzF3FVGvZa0vvnkh3khLGwslO2P2OsF+slPjQbrJN1XajeekXVYsgWE8xxItgvitz35viGZsLMmv7yaHsJuJ4l8U1qI9UIFJUQQQXBOSoZUocLTDUwPl089pFjEU8OJLgPT3/cfn0GrDgobUD2aU4cMnbRUb0osnYBpjlg3E4bfzuzYX/DZPnOZyahzvYiF5PvxTehMJAmz6VWsx9N/TLsNB6sd8Bgvcq+Emo0CQP2cayr9QTG1WofT3XAj1P7ET/T3BRX1UVWmCUSVhrZJ1g4OgQekWfwh3Wpaxg//WM/tL5dz0tR/j/wOo0A7jKD7psoeEJlJ0CVS5Ihmwa2rh+l1g2mmtST0y8cz32CYlsRbRRJRvIrBxKT0VIEeg+ZQAEtJXakJz3krxXN7EirEXtEllebdhyOp8iyZkgexdTxeYq1cB9qTKpQlr0ZAjCF7F9vkdbbn+PoP8QiYEBzWMvHhQFITnoIkbqP42RqDKiEAe0BeBj2i/J4jiGdMBUAOsazHXsOSpQQIKUoE38NgFoDeAvpCXoyyXBKL1W+xdc4621N+s0d9fKKPwV9nJ5hpzKSUOVEI08rJwxCimYpSUfVka1SN1K2W/lKev9tiM9PfjXYK3WDyyvTmqDKtcDtQ93+jHk59wzfXLb6ya7538MGt6IpeFKC48=
+x-microsoft-antispam-message-info: dkiNchxIE/r7ZqX7JaAkVnUFobweQaduBdmrqlruPncpGDtwB6fsxth2bKBM2+CDQHIJSor7FypECQp/8LkrItGAI+QddQPqwp+BZWEel2yPMrXhWr4xCQZiLiOcnb2fkQthBLB6SfzTSzNNpjOvdio7F2JYGh0/ZOh58hwDmg0Uffa/g8XoRD1wOhgy6SRwI5at1FJ+gID59YigpiPspt0clKdIilAewt6YpeVxOgyKvV7sDcpfAh+EqYpIAu2bJgzbR/4i+7VIjjIIeQlne5jYW+U4sHJWBg4rMwM7f4Bux5qqHVJLLawu8wZxvFlPjVbmfLfJWQwPnNuvHeP+12tiRdBQWH6YGpii+qGDWZXw30QqnxdIL58xl63DR3tAHj1DRmXyp3GNQ8bguPrFkaEJwJ8pj6lsn3vWl1a+h97xDHjFrBeNtkrnRQhZHToXuNisYzSAotCGJLBubuAleLYUcP9KOS1ev630cjcey9jH6THV7rvEhKR94MQzAfezWEz5nTe7hXMwbN0lj7WzRqHEcU+OrH7petd3/rp8WaogGlQpfA1P5UYdlyxkWkG4mM7SkfrzjEq+W36ooqHtc8IvWbSw42nWQGWQmZxfVsSYdqNt2kdDX9ylxO6e0LdEAe1GXNm0E8tQ/0foGFL/5Qru+0VmDImkfZNN/tZRQPDm2jbpJNS3aAugrl+c/yownbPHpLJel+JpAqgX/7JaxV/hkGold1t2xzAnVbX/Dqbnka1JiUAMzQ7bkqgB8KkHvrBSWAsxl1wRYd5PXNJSCsOx4Pu+bDgzjprU2aiDXzc=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(18002099003)(22082099003)(56012099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?m7+FlY4nfCeKJ5ymJgeJIcl2q95NhRREApqRrYQFc7JWM0Hpg0b5Ker72r?=
- =?iso-8859-1?Q?XIcItYkA13IYch2QozwoinnGKwBWSU0UqemjJtQU3rZyf6k74pCNCTJAgB?=
- =?iso-8859-1?Q?D3YsG16bLO4oZwEXXlZCQqocQlgyM7bsR2XkZ6xLdwHtyK14gC7uHBF0HK?=
- =?iso-8859-1?Q?e3LOLwKF3yS3DjZN+CplJgBtCc4v17OcJJkGfoWNbLZIVdVSHIpg/PsO+v?=
- =?iso-8859-1?Q?QnQhqAij0jcDCV+OQPfPZEv8ktcfIIhCGhwJIkZacFfq8NIaPSV6WylOF0?=
- =?iso-8859-1?Q?y18rQu7giy9xyXCnf4rdYxwsUjOR82EN42G/gJgRNvJmHHEcO2pYGj5aNP?=
- =?iso-8859-1?Q?2bCjJ2+kTc1Esuo10gIEfYaDu56xeukDn54M/9nkGXU6qcxlZX7uKx0pRE?=
- =?iso-8859-1?Q?eT8vvtekBXsM1mSPFrHSDX0Yoccml2YfY7yBzEv5FV6LzN05O/nsyt8DiL?=
- =?iso-8859-1?Q?wMfXav/V+qbWeSwwP827lnFDapUKazu+8kg/cIxwFBWkfwtXCSRqUxxAyN?=
- =?iso-8859-1?Q?5ms51002rVMUzkNi/S2j4r2PfxIAl31RjewZ1GUNFZVmWwraTPE4nevY1J?=
- =?iso-8859-1?Q?P9DfiwjDDxiPlyKKGpKRLihYP1fpyW26D6O28RbdnW6YC7IExGf0aW6H3C?=
- =?iso-8859-1?Q?84KzFWdmJP0rYbLY0mXo7AYlx5Bcc8gnd9YJj96vb76EsLPr8lFjS15wd+?=
- =?iso-8859-1?Q?sft16Jk1ngPXseOv1QMzk9srwsOj/W8k/JAaEDvXZIvZN8cY49tH3I/sbb?=
- =?iso-8859-1?Q?maXfJ/dK72k4l/rdSD/y5BhUP85YRYK1NXYyVZzwvD6vJMh5kSjo+8OHjN?=
- =?iso-8859-1?Q?SFeJ/CZSvCH3132M4fyvKSV6bEm18n2qLWnr+9kv0FJUg8SX4JFHoWcKSN?=
- =?iso-8859-1?Q?JjYSftGSgZiECJ4Y5sTEBDMq/cRafbvJ6l5YFvfvOxAtSAtn2ZzemYswOU?=
- =?iso-8859-1?Q?IcYoKnWtWJxTyjDkQF9ERUpFSDjbPxxOMrAFmqMhG6j6he8KXhJVb05IJn?=
- =?iso-8859-1?Q?nevgjLIudtm5mgZQZo+SBVezllFDyCHqaPHOsTq/8q5ybWrfeNUISrI8n9?=
- =?iso-8859-1?Q?9pCVaTgB4O/bVsrkX1fWlTl/HZnUrk4YWrBFsieuzJg81eQ/MdA+BT6Y4d?=
- =?iso-8859-1?Q?uXiw2/vSfzGwWDPPTYmAQmoOkEG8PlXhSRh75ypXDpcSK/+Z5xE0HeRf5l?=
- =?iso-8859-1?Q?pjmIKaAue8jjwuTh+Mc2blGZxJOV+9SISOj9aeonMd8vqS7ysmrktOBvW9?=
- =?iso-8859-1?Q?wPouQKR0kmC855BXqpD5Xcn60PHaFe2fV/LjMJOTo3j8FZcy9vJXk2ZEhV?=
- =?iso-8859-1?Q?KbNh1HXlxV2dpGSAqijx6U+LrmgHTmVO67yTPyZe4LcK6j+aKjuQyRFWM7?=
- =?iso-8859-1?Q?N0lzOXUH+G9ObLktCokVjphgxDDaFiFJqcSixFHGLpXSwfZ224q/+9YRWn?=
- =?iso-8859-1?Q?0Z7VeCUDY8Vd/Aqn+DwDgsJsiA6ywYtEPUIk22uJcudBd0iHFfMhmHNvoK?=
- =?iso-8859-1?Q?nQi/As51h+B6orWgLqdsbGFvE3362bVPinFWqA65PU63NT2CAfqQa7Mgty?=
- =?iso-8859-1?Q?iJhDtG5g5VU8phfcU08ucv4+F01niXhXrZLjsJ4pptwij5VQVdYWnEBi7b?=
- =?iso-8859-1?Q?JI+2WeTaHXBYttp2PrsuKGqfO93wWsK4omF1Xfl11gCD8UyaH+dp8FD8Cy?=
- =?iso-8859-1?Q?dDmCohmZFsIjMZI74srsGmUinQrS5KzgM2HkOQz20bdUZ5NCaSn6Gn0spT?=
- =?iso-8859-1?Q?qRHzvm8bTNinuwznAZTzDQYVn8VRkcd2zMWB8bPANMnywPGYyzFVPrMyYR?=
- =?iso-8859-1?Q?8sfHi1GURlWHa4lpqZY9HPgItJp5sy3EkwMrCTVCpBvkt1B7liq3?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?0+lkIFTs0ao9FvuYLLGdS0Fn3dis2tlSjRGw8GS063txhI7g0u1qJhocCO?=
+ =?iso-8859-1?Q?sPFVJQptOuLSBiyvIKcF67kdqWaAEA9rrOQiR5ub+lCB9od/TOMU0JamrV?=
+ =?iso-8859-1?Q?2Fq3bcFVeFGAZllK74iQs8QgTSdbCnI7ck1aG8lSoEeFbE1psDKtJW38NW?=
+ =?iso-8859-1?Q?6iwBK+v4nphXuLgj/YqM2oUevOiN5MfPnBlrCErZSuJ5/CeSg2q44TS9pV?=
+ =?iso-8859-1?Q?LEdk+ybU2PQHJVK2bjCaRS+jCfs4XCSdMy78rS4njrWgAzlimoDxUlPQJj?=
+ =?iso-8859-1?Q?zX2uYUbWEfQmoxjgEtXyxZvsSlIlroU3ZWr9hUxPDLmYOq4NnmcWUYvFlP?=
+ =?iso-8859-1?Q?x9uaqGtrjfPgWOy0/+7CbYvOsTXCGEr6wOZ9r29q5l/I18BXUGas/01ybe?=
+ =?iso-8859-1?Q?Wplb+sUYPbK4/olWIksJhmow+niPTc+WTqmEAQ6aajvn4E8G8cJ3fvy6PZ?=
+ =?iso-8859-1?Q?MTftEwBdNvXaZi1yXNg05o1WjRbwm/fRV2l/S1IfRunD7NjcSMp5FEuB7x?=
+ =?iso-8859-1?Q?1UJh5gUwZ0RGwED+DhLGcqQUJcL5SLr4/LAB2nGcKnu/5ovQ/c3bSKCxFI?=
+ =?iso-8859-1?Q?kc+SmoHy4GwFFMczq/wY6sJKHSEX42vQpyR5suqkwOqt7d2cop74MHnS1s?=
+ =?iso-8859-1?Q?JlQHi1WPXdjD9swM6eO/+aHcmxC5524/DsiGzt3xeFVSkfJnaE/73MDtBA?=
+ =?iso-8859-1?Q?iv2EhpYlvDSXeX+vJKQwM6WZU3qynfByIdXIaegs0LzwflAqHaHKvi9Gch?=
+ =?iso-8859-1?Q?go/Rh1Q/Fvcc/1JSBzzFttLiG0/Phs8Y57x3QzWnUhQ/SOYeBlH9qrm0qr?=
+ =?iso-8859-1?Q?+pPZanGKReFSzBpfMy/QhCZWmA1fVInT06PnwNT0Wtjbr8A5Akz5rJJD7Q?=
+ =?iso-8859-1?Q?xFtxdfgQdDHGSiSxDRxDxSPTo4OpCsReKKSIeSuj73mk9xcZj1NbWAXA8H?=
+ =?iso-8859-1?Q?heEjfEYALaI/T6Ne4Ihex120/SD2lbnVUJGiGYj2PDGfZ1NvMQXECshIMm?=
+ =?iso-8859-1?Q?40iNEdtPUXHMG2mNENLZWJypgaTexIZYk8xrjYN4x8At5xY4jxhE53fAUl?=
+ =?iso-8859-1?Q?gQOnKZjqTAj7ZxyurWrNnXw6xm616gYzlSjosSkCIjVipvcgZlhNLNm4bK?=
+ =?iso-8859-1?Q?DP9CvdrtiMc0R8RLDuEDO0pSvb2UbSlFhq0IysPIY//Ml9xwiUIFgaE6rx?=
+ =?iso-8859-1?Q?j21R3XAbXwYQtsMXksAXUir7SLryzLNGuN8EMJLxrrHPJctqha5NAkWyQb?=
+ =?iso-8859-1?Q?afk2j+oJtCAEP/8dHWYKnQesGL7PfgXTufkNViOQXEgOczT7owVeU/3OIO?=
+ =?iso-8859-1?Q?MsRbSlRUuJk0GHE5m3uJEFHRFT1yMb+TGbzTmyYhJ9BoOF08OOSDbuJQE/?=
+ =?iso-8859-1?Q?CsLXTa6rFG7Yg1xJGb+ukXlqsroa6A/7l75Gilyyp1E/3J9c4YJBiJcb5u?=
+ =?iso-8859-1?Q?hfLC0amNvNPQ6RT4/8qKzT3gQ8GEXdDWKaTY/H1sdn3RBztERG81FW2Y3O?=
+ =?iso-8859-1?Q?gbfCQ0JyjwGbkJwevhGFhxuFt2KZzBbOzbthRhAYJETEiE+4DWtgqCLLOG?=
+ =?iso-8859-1?Q?X/jguer6KSKTs3z/um/D4rXU8OtYkqXsgL5BtzZnyAepyT0F/WTvzPhn7c?=
+ =?iso-8859-1?Q?txrkQ/mAWsCc3oiZLXgHQKA8FQjfoYWXzknoyI4DqoDudx0GnTrtorZQ17?=
+ =?iso-8859-1?Q?v0zGgcsWgqehjiKoaLkS/dBoYcjmkfHk5EbksbrNVCmOhq5J+FMfiSmJXU?=
+ =?iso-8859-1?Q?tlmgFPp/4F1Fd/4d57/39KW/LLUZEqe0K6DHEX4gP2NQlcrhkZtj+NdLPJ?=
+ =?iso-8859-1?Q?9dvjvdyPLCWqePDqVQNpjdpm1FYmcW4NvuHbRvwMexDqQS47hyCZ?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: htecgroup.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: ae473d2c-a68f-40eb-d299-08de7f65a0de
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2026 11:59:19.3202 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: fe46bcbc-c589-4ef5-fedf-08de7f65a05d
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2026 11:59:18.3232 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 8CmSKEk3Q2VUdV6oj+3ZbNetAIfxqKceqmXL5VNlV0YqhGHLeYhrekkHLMdZyBplyJPSEP7QOkfkUDI38JsA2JwCNqQkRC81QnAekMfDFkE=
+X-MS-Exchange-CrossTenant-userprincipalname: bY9olr6Sw+nwnZBx3N84Bij/WG+yEVzuauWX3nvBynxwv523TfomPx2Sgw1BvT5mVvWQKCUnIIsbXECzT485PGlgDvEsJfbe+yxgHBtDokU=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR09MB6069
 Received-SPF: pass client-ip=2a01:111:f403:c201::3;
  envelope-from=Djordje.Todorovic@htecgroup.com;
@@ -147,167 +147,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add riscv_is_big_endian() helper that checks the hart's big-endian CPU
-property and use it throughout the boot code:
+When the big-endian CPU property is enabled, set the MSTATUS_UBE
+(User Big-Endian), MSTATUS_SBE (Supervisor Big-Endian), and
+MSTATUS_MBE (Machine Big-Endian) bits during CPU reset.
 
-- ELF loading: pass ELFDATA2MSB or ELFDATA2LSB based on endianness
-- Firmware dynamic info: use cpu_to_be* or cpu_to_le* based on endianness
-- Reset vector: instructions (entries 0-5) remain always little-endian,
-  data words (entries 6-9) use target data endianness. For RV64 BE, the
-  hi/lo word pairs within each dword are swapped since LD reads as BE.
+This configures all privilege levels for big-endian data access,
+matching the RISC-V privileged specification's endianness control
+mechanism. Instructions remain little-endian regardless.
 
-This is part of the runtime big-endian support series which avoids
-separate BE binaries by handling endianness as a CPU property.
+Also update the disassembler comment to clarify that
+BFD_ENDIAN_LITTLE is correct because RISC-V instructions are
+always little-endian per the ISA specification.
 ---
- hw/riscv/boot.c         | 68 +++++++++++++++++++++++++++++++++--------
- include/hw/riscv/boot.h |  2 ++
- 2 files changed, 58 insertions(+), 12 deletions(-)
+ target/riscv/cpu.c | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/riscv/boot.c b/hw/riscv/boot.c
-index e5490beda0..e9a049d2ba 100644
---- a/hw/riscv/boot.c
-+++ b/hw/riscv/boot.c
-@@ -40,6 +40,11 @@ bool riscv_is_32bit(RISCVHartArrayState *harts)
-     return mcc->def->misa_mxl_max =3D=3D MXL_RV32;
- }
-=20
-+bool riscv_is_big_endian(RISCVHartArrayState *harts)
-+{
-+    return harts->harts[0].cfg.big_endian;
-+}
-+
- /*
-  * Return the per-socket PLIC hart topology configuration string
-  * (caller must free with g_free())
-@@ -72,6 +77,7 @@ void riscv_boot_info_init(RISCVBootInfo *info, RISCVHartA=
-rrayState *harts)
-     info->kernel_size =3D 0;
-     info->initrd_size =3D 0;
-     info->is_32bit =3D riscv_is_32bit(harts);
-+    info->is_big_endian =3D riscv_is_big_endian(harts);
- }
-=20
- vaddr riscv_calc_kernel_start_addr(RISCVBootInfo *info,
-@@ -247,8 +253,10 @@ void riscv_load_kernel(MachineState *machine,
-      */
-     kernel_size =3D load_elf_ram_sym(kernel_filename, NULL, NULL, NULL, NU=
-LL,
-                                    &info->image_low_addr, &info->image_hig=
-h_addr,
--                                   NULL, ELFDATA2LSB, EM_RISCV,
--                                   1, 0, NULL, true, sym_cb);
-+                                   NULL,
-+                                   info->is_big_endian ? ELFDATA2MSB
-+                                                       : ELFDATA2LSB,
-+                                   EM_RISCV, 1, 0, NULL, true, sym_cb);
-     if (kernel_size > 0) {
-         info->kernel_size =3D kernel_size;
-         goto out;
-@@ -391,21 +399,32 @@ void riscv_rom_copy_firmware_info(MachineState *machi=
-ne,
-     struct fw_dynamic_info64 dinfo64;
-     void *dinfo_ptr =3D NULL;
-     size_t dinfo_len;
-+    bool big_endian =3D riscv_is_big_endian(harts);
-=20
-     if (riscv_is_32bit(harts)) {
--        dinfo32.magic =3D cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VALUE);
--        dinfo32.version =3D cpu_to_le32(FW_DYNAMIC_INFO_VERSION);
--        dinfo32.next_mode =3D cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
--        dinfo32.next_addr =3D cpu_to_le32(kernel_entry);
-+        dinfo32.magic =3D big_endian ? cpu_to_be32(FW_DYNAMIC_INFO_MAGIC_V=
-ALUE)
-+                                   : cpu_to_le32(FW_DYNAMIC_INFO_MAGIC_VAL=
-UE);
-+        dinfo32.version =3D big_endian ? cpu_to_be32(FW_DYNAMIC_INFO_VERSI=
-ON)
-+                                     : cpu_to_le32(FW_DYNAMIC_INFO_VERSION=
-);
-+        dinfo32.next_mode =3D big_endian
-+                          ? cpu_to_be32(FW_DYNAMIC_INFO_NEXT_MODE_S)
-+                          : cpu_to_le32(FW_DYNAMIC_INFO_NEXT_MODE_S);
-+        dinfo32.next_addr =3D big_endian ? cpu_to_be32(kernel_entry)
-+                                       : cpu_to_le32(kernel_entry);
-         dinfo32.options =3D 0;
-         dinfo32.boot_hart =3D 0;
-         dinfo_ptr =3D &dinfo32;
-         dinfo_len =3D sizeof(dinfo32);
-     } else {
--        dinfo64.magic =3D cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VALUE);
--        dinfo64.version =3D cpu_to_le64(FW_DYNAMIC_INFO_VERSION);
--        dinfo64.next_mode =3D cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
--        dinfo64.next_addr =3D cpu_to_le64(kernel_entry);
-+        dinfo64.magic =3D big_endian ? cpu_to_be64(FW_DYNAMIC_INFO_MAGIC_V=
-ALUE)
-+                                   : cpu_to_le64(FW_DYNAMIC_INFO_MAGIC_VAL=
-UE);
-+        dinfo64.version =3D big_endian ? cpu_to_be64(FW_DYNAMIC_INFO_VERSI=
-ON)
-+                                     : cpu_to_le64(FW_DYNAMIC_INFO_VERSION=
-);
-+        dinfo64.next_mode =3D big_endian
-+                          ? cpu_to_be64(FW_DYNAMIC_INFO_NEXT_MODE_S)
-+                          : cpu_to_le64(FW_DYNAMIC_INFO_NEXT_MODE_S);
-+        dinfo64.next_addr =3D big_endian ? cpu_to_be64(kernel_entry)
-+                                       : cpu_to_le64(kernel_entry);
-         dinfo64.options =3D 0;
-         dinfo64.boot_hart =3D 0;
-         dinfo_ptr =3D &dinfo64;
-@@ -474,10 +493,35 @@ void riscv_setup_rom_reset_vec(MachineState *machine,=
- RISCVHartArrayState *harts
-         reset_vec[2] =3D 0x00000013;   /*     addi   x0, x0, 0 */
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 305a8d73ad..4e5781ff04 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -717,6 +717,9 @@ static void riscv_cpu_reset_hold(Object *obj, ResetType=
+ type)
+             env->mstatus =3D set_field(env->mstatus, MSTATUS_MDT, 1);
+         }
      }
-=20
--    /* copy in the reset vector in little_endian byte order */
--    for (i =3D 0; i < ARRAY_SIZE(reset_vec); i++) {
-+    /* RISC-V instructions are always little-endian */
-+    for (i =3D 0; i < 6; i++) {
-         reset_vec[i] =3D cpu_to_le32(reset_vec[i]);
-     }
-+
-+    /*
-+     * Data words (addresses at entries 6-9) must match the firmware's dat=
-a
-+     * endianness. For 64-bit big-endian, the high/low word order within
-+     * each dword must also be swapped since LD interprets bytes as BE.
-+     */
-+    if (riscv_is_big_endian(harts)) {
-+        if (!riscv_is_32bit(harts)) {
-+            uint32_t tmp;
-+            tmp =3D reset_vec[6];
-+            reset_vec[6] =3D cpu_to_be32(reset_vec[7]);
-+            reset_vec[7] =3D cpu_to_be32(tmp);
-+            tmp =3D reset_vec[8];
-+            reset_vec[8] =3D cpu_to_be32(reset_vec[9]);
-+            reset_vec[9] =3D cpu_to_be32(tmp);
-+        } else {
-+            for (i =3D 6; i < ARRAY_SIZE(reset_vec); i++) {
-+                reset_vec[i] =3D cpu_to_be32(reset_vec[i]);
-+            }
-+        }
-+    } else {
-+        for (i =3D 6; i < ARRAY_SIZE(reset_vec); i++) {
-+            reset_vec[i] =3D cpu_to_le32(reset_vec[i]);
-+        }
++    if (cpu->cfg.big_endian) {
++        env->mstatus |=3D MSTATUS_UBE | MSTATUS_SBE | MSTATUS_MBE;
 +    }
-     rom_add_blob_fixed_as("mrom.reset", reset_vec, sizeof(reset_vec),
-                           rom_base, &address_space_memory);
-     riscv_rom_copy_firmware_info(machine, harts,
-diff --git a/include/hw/riscv/boot.h b/include/hw/riscv/boot.h
-index f00b3ca122..a54c2b397d 100644
---- a/include/hw/riscv/boot.h
-+++ b/include/hw/riscv/boot.h
-@@ -36,9 +36,11 @@ typedef struct RISCVBootInfo {
-     ssize_t initrd_size;
+     env->mcause =3D 0;
+     env->miclaim =3D MIP_SGEIP;
+     env->pc =3D env->resetvec;
+@@ -804,11 +807,8 @@ static void riscv_cpu_disas_set_info(const CPUState *s=
+, disassemble_info *info)
+     info->target_info =3D &cpu->cfg;
 =20
-     bool is_32bit;
-+    bool is_big_endian;
- } RISCVBootInfo;
-=20
- bool riscv_is_32bit(RISCVHartArrayState *harts);
-+bool riscv_is_big_endian(RISCVHartArrayState *harts);
-=20
- char *riscv_plic_hart_config_string(int hart_count);
+     /*
+-     * A couple of bits in MSTATUS set the endianness:
+-     *  - MSTATUS_UBE (User-mode),
+-     *  - MSTATUS_SBE (Supervisor-mode),
+-     *  - MSTATUS_MBE (Machine-mode)
+-     * but we don't implement that yet.
++     * RISC-V instructions are always little-endian, regardless of the
++     * data endianness configured via MSTATUS UBE/SBE/MBE bits.
+      */
+     info->endian =3D BFD_ENDIAN_LITTLE;
 =20
 --=20
 2.34.1
