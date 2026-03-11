@@ -4,54 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50C281125847
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:49:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B0111125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:50:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LoB-0001q4-5n; Wed, 11 Mar 2026 11:49:15 -0400
+	id 1w0LpM-00035R-CI; Wed, 11 Mar 2026 11:50:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0Lnq-0001TC-0M; Wed, 11 Mar 2026 11:48:57 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LpH-00033O-Hd; Wed, 11 Mar 2026 11:50:23 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0Lnm-000137-H3; Wed, 11 Mar 2026 11:48:52 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWFXS2cDYzHnH5R;
- Wed, 11 Mar 2026 23:48:40 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 4DC164056A;
- Wed, 11 Mar 2026 23:48:48 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 11 Mar
- 2026 15:48:47 +0000
-Date: Wed, 11 Mar 2026 15:48:46 +0000
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 33/65] target/arm: GICv5 cpuif: Implement ICC_IAFFIDR_EL1
-Message-ID: <20260311154846.0000098c@huawei.com>
-In-Reply-To: <20260223170212.441276-34-peter.maydell@linaro.org>
-References: <20260223170212.441276-1-peter.maydell@linaro.org>
- <20260223170212.441276-34-peter.maydell@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LpF-0001W2-Im; Wed, 11 Mar 2026 11:50:23 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773244209; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=noPJQKYSCNMwyEaDKkL47dG3XHD/4YXZnNwMiPq++faRYQaXgnZ6aGwEP2UMftG3KkKgUeezsCKX2nl1or1D3UeF8likl6kfi8bpuyIR0/8uGMcDqNK12yFuZxkv6LX6SDug0SVmutpdyGLGO0md199G6EbQbZGpkiQymHdovRY=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773244209;
+ h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=rOHtAu21/nhMjEVF9QL94+aY0c5AdHXy2IwiMewilvg=; 
+ b=YWO/NGDLUl2XQlHX0XY3vP6x8hd1CV5bYdski12j+w+tZjOIguPGlIPsncxIuwQ2LQV2qFSz05AY/ctH9NSZulJrUEYtaxICBzg+BUXuWl/Xmq5sYRu+BgGJ2VPh7LWv2r6IoHj9FYlvWwdyvwylTID9xJHAZnZMOjJHyDN+SHs=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773244209; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+ bh=rOHtAu21/nhMjEVF9QL94+aY0c5AdHXy2IwiMewilvg=;
+ b=ZV723ulfzNwfpSUNnaX3Dc4mhHpQFiDQ3Give0xhGwDXWxnmbHuuFcWshcI6y6GG
+ szW5FLQKyNXiwExjPBnvuSDRRkvUM/SAH1BbhRXSgGmHUXStpHnHcNyxuDgkUKo9twt
+ Z1UxnnVqnoD9OQ1ySYC4JeXGv5alu0X7M3t9yJRg=
+Received: by mx.zohomail.com with SMTPS id 1773244208119410.32290772941315;
+ Wed, 11 Mar 2026 08:50:08 -0700 (PDT)
+Date: Wed, 11 Mar 2026 15:50:03 +0000
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ Daniel =?iso-8859-1?Q?P=2E_Berrang=E9?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 01/14] accel/mshv: provision guests with the same
+ features as host
+Message-ID: <20260311-rebel-impressive-civet-6fb011@anirudhrb>
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+ <20260311-mshv_accel_arm64_supp-v1-1-c31699b7bc1f@anirudhrb.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500011.china.huawei.com (7.191.174.215) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-1-c31699b7bc1f@anirudhrb.com>
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,31 +81,20 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Feb 2026 17:01:40 +0000
-Peter Maydell <peter.maydell@linaro.org> wrote:
+On Wed, Mar 11, 2026 at 03:15:28PM +0000, Anirudh Rayabharam (Microsoft) wrote:
+> Query HV_PARTITION_PROPERTY_PROCESSOR_FEATURES to obtain the feature set
+> supported by the host and pass on this feature set to the guest during
+> partition creation.
+> 
+> Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 
-> The CPU system register ICC_IAFFIDR_EL1 is a read-only register that
-> tells the guest what the affinity ID of that CPU is.
-> 
-> Implement this register.  In real hardware using the stream protocol,
-> the IRS tells the CPU its IAFFID using a DownstreamControl command as
-> part of the handshake process when the IRS-CPU link is brought
-> online.  Our analogue of this is to pass the IAFFID as an extra
-> argument to gicv5_set_gicv5state().  (We could have the CPU call into
-> the GIC every time to ask for the value, but this would mean we had
-> to search the cpus[] array for the right CPU to return its IAFFID.)
-> 
-> Note that we don't put the IAFFID into the gicv5_cpuif sub-struct,
-> because that part of the CPU struct is zeroed on reset, and we must
-> keep the IAFFID across reset (we only set it up when the GIC device
-> is created).
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+I'll drop this patch in v2 in favor of Magnus' patch here:
+
+https://lore.kernel.org/qemu-devel/20260311113505.1177878-2-magnuskulke@linux.microsoft.com/#t
+
+Anirudh.
 
 
