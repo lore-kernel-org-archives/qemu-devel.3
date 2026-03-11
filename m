@@ -4,78 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01265104951C
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 09:42:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5A891049516
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 09:45:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0G4f-0001Ec-Vu; Wed, 11 Mar 2026 05:41:54 -0400
+	id 1w0G7i-0001yz-JK; Wed, 11 Mar 2026 05:45:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0G4e-0001EU-Li
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:41:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1w0G7g-0001xl-2u
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:45:00 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0G4W-0004WI-D0
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:41:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773222103;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=JSan74KEyl6KEfaXzxhiR1mv1JlLuRA7008o5bHBM3Y=;
- b=CCFgqSRqzcJfDOf2hLsrIn6bulJ/JCVVMjhiXDJazNAAC0gC61DNl/5r/21ItoIFUJ/qld
- Z34SggnSW3hUbD8mSwiqhhYqvv5gr6vjcvoIYCRpgopyj8yi0bI8IjokJioJLQhqa+jaeg
- uvj3AqkQ2+XJUip0p+y+trd13UBWCG4=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-647-LxFPAlEIN5Cn4npR7emuhQ-1; Wed,
- 11 Mar 2026 05:41:40 -0400
-X-MC-Unique: LxFPAlEIN5Cn4npR7emuhQ-1
-X-Mimecast-MFC-AGG-ID: LxFPAlEIN5Cn4npR7emuhQ_1773222099
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ (Exim 4.90_1) (envelope-from <heinrich.schuchardt@canonical.com>)
+ id 1w0G7d-00056Z-2d
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:44:58 -0400
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 00B88195608F; Wed, 11 Mar 2026 09:41:39 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.160])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 203C5180075F; Wed, 11 Mar 2026 09:41:35 +0000 (UTC)
-Date: Wed, 11 Mar 2026 09:41:32 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Fabiano Rosas <farosas@suse.de>, Peter Maydell <peter.maydell@linaro.org>,
- Nia Alarie <nia@netbsd.org>
-Subject: Re: [PATCH] meson.build: Bump the minimum GCC version to v10.4
-Message-ID: <abE4zGr6hSXo6lio@redhat.com>
-References: <20260310155331.320066-1-thuth@redhat.com>
+ by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 807853F7DD
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 09:44:53 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1773222293;
+ bh=XGPHKnLAO2hDcslSBTaYCljDNJnfQ9V/FHYuMS8Kyc4=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=PyMw4perKx/5cUZXlUWrqdl1nGOI87HG8UT61/kioM49dZ/bl+wXf56/enS+OCkxm
+ 2FGSq2zBC5ZIT+y1M+XflP4DFzY4pmsO0KzApV9+A+MnBOHR+cmOL4Yjvj/h1fFeYl
+ mECeUNYtvN7/9Pm96+Uzxydnt5zL6UHzBE5mwCXO6/KzcHgFnQ4Mrr8MfRXso8kybY
+ pxK6spgsr7QmAOY8bZFmHLB4aBTvaUPJ9AQCsrgFBO7SUS3hca+MJCBrX4X/YD+z3p
+ 8428Y4Pg0oa/trVh+SzrtkVFmGeOG9NYF0k4lxcYIBdUWnbERcepFlKjxHjH2mHK6g
+ l3E9+RSoLD+aEestyd0j+5i6TyJS79MriqzMcsXv0dGQudgGZ1j99mRuGTvxuBX12r
+ oJp/MjbqdL0ERVoHAts5211MfiWNhfY3/+vWLhB1Exlux2IcRLjFtePKwZ40f3yy0k
+ jw1wicnE3+lle5+kX/gnwzGn3bZuG6MbXUHzp612oUfi6I1u+r5VBrQbxXjfrOPaPi
+ px71/5usZ/uyrziYXLydHa64k8ry2Rh94UW9TzKFzBSlLgz80YUMw6/i7G9MA/mfK1
+ KHeYHhi4QQi+DAOlckoUXB5j7Ui/Xv/2PvCOwWJbmq/bSPZ6jqNKXLXrmDO89HAF+3
+ co7AZvQ6fc/AnpcSRlZoSdg0=
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-439fbfd93e8so32377f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 02:44:53 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773222293; x=1773827093;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=XGPHKnLAO2hDcslSBTaYCljDNJnfQ9V/FHYuMS8Kyc4=;
+ b=CE3j2y74ghN1apQcqV5zLWnARAPd5iKp2y57k8eRezL0Ydcm3+McLMWDC8cgyhATiL
+ i3bfgQXfVSYcZ2FNtYySfhLe3MHIcWbvwwfHKEPl541RZmzh1Zy6swNU+gx5ANt1Aago
+ L5tq9UTH/6aMB8o10zDn7V4IQy7fyb/2cfQJS6ka3W5wNBAbirO3uWXbN/FgXS+9K3gv
+ ddaj9MkfnQFyUt4rf7IFsqvO0gdm8HTTn++rovQLrbgJ/cFjF19/Y+wJJFaULNWlCn5M
+ bsDpZ756Pt8K/KnbB7mHGjRJDJuqZ4Zzegk9yj369n8g0hVs5xwFIZPJypXpc6QXOQUE
+ 4kSQ==
+X-Gm-Message-State: AOJu0Yx/0dEZwTbwPQZgQFO2jqmJjxVZ+rspeP/eyMF86rvpVp6En5xn
+ +JqQBspfPejHSEX9TieqDEQdj4t33ayVn1Uq4Bv2rYbPY4B3TP3MnpzZ0c7x19hbQRrkTC438Yw
+ QZlXGLhoONJ/SH2ON5ozNmr09uHVLlWsTeXbK7pw3MzMCZcphlSH3WPFuCHZfn12aCOKUnXTP
+X-Gm-Gg: ATEYQzwdFwL//2vP9XKK+m1F6Mmebk/Zwx8Y8Foruh/AbGA7vFuowBTBvTsKrB+9pXM
+ 76+/gvXSp6w+qZyXXdD1seZnB1qe5zMilNQ75YdWLnxljmjiYt9HRhsxztPDXYoyhr9duNVAU++
+ nQ4xsop+VcoTaFEaZ2gum8OdUxig72wr2d+R2tpNGIdJvj8EhT9/JKtdDOUMLamoLo7qHHOnkPl
+ zP4apLb1obpUOp8BGp5+7FgRQXMwH7KkHAzGLb8PgxUOrVJ7HqmoJ+LyoLbhSKOnYVjSBLSiv2k
+ R/UlnoBPYKg3TWdgPci67F4l048ejASBUyPnC5GWmV2JmbWxgJ9RDL5EpoZdw3aLe1gER2c7gb5
+ 95Do/21nsawQY6hrf2bj7u5SCv/lSS1lkw4M7N4htvsQ5B5bUBrKHlcOKIu1NKO4nplxqGu26F8
+ xIKpAMzBdFU/5MOFUa+NAlJNTwZoN77Yn7sa2YdtTSqZ+a4Ip/n94=
+X-Received: by 2002:a05:6000:4202:b0:439:bc31:a05a with SMTP id
+ ffacd0b85a97d-439f8222ee3mr3508468f8f.43.1773222292977; 
+ Wed, 11 Mar 2026 02:44:52 -0700 (PDT)
+X-Received: by 2002:a05:6000:4202:b0:439:bc31:a05a with SMTP id
+ ffacd0b85a97d-439f8222ee3mr3508432f8f.43.1773222292568; 
+ Wed, 11 Mar 2026 02:44:52 -0700 (PDT)
+Received: from [192.168.103.129]
+ (ip-005-147-080-091.um06.pools.vodafone-ip.de. [5.147.80.91])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439f81f143asm5765840f8f.23.2026.03.11.02.44.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 02:44:52 -0700 (PDT)
+Message-ID: <866317ff-70c1-47a7-8347-e84e519c2716@canonical.com>
+Date: Wed, 11 Mar 2026 10:44:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260310155331.320066-1-thuth@redhat.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 0/4] linux-user/riscv: add vector state to signal
+ context
+To: Laurent Vivier <laurent@vivier.eu>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Cc: qemu-devel@nongnu.org, Nicholas Piggin <npiggin@gmail.com>,
+ qemu-riscv@nongnu.org, Christian Ehrhardt <christian.ehrhardt@canonical.com>
+References: <20250903081417.338515-1-npiggin@gmail.com>
+Content-Language: en-US
+From: Heinrich Schuchardt <heinrich.schuchardt@canonical.com>
+In-Reply-To: <20250903081417.338515-1-npiggin@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.125.188.122;
+ envelope-from=heinrich.schuchardt@canonical.com;
+ helo=smtp-relay-internal-0.canonical.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,58 +122,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Mar 10, 2026 at 04:53:31PM +0100, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+On 9/3/25 10:14, Nicholas Piggin wrote:
+> Changes in v2:
+> - Fix 32-bit compile
+> - Moved sizeof_rt_sigframe change to its correct patch (patch 2 is the
+>    one that extends the size of rt_sigframe, patch 3 is adding new
+>    extended state to the frame which is added dynamically).
 > 
-> Our minimum supported version of GCC used to be v7.4 since we still
-> wanted to support NetBSD 9.x in the past:
+> This series adds vector state to the linux-user signal handler,
+> and adds a basic signal handling test case. As a sanity check, I
+> also verified the signal handling test works in the same way when
+> run under a real Linux kernel.
 > 
->  https://gitlab.com/qemu-project/qemu/-/issues/614
->  https://gitlab.com/qemu-project/qemu/-/commit/3830df5f83b9b52d949676
+> The signal handler test has some gross header hacks in it to make
+> it work for me (debian arm64->riscv64 cross compile environment),
+> I would not be surprised if it breaks in other environments, any
+> ideas or breakages let me know. May just have to define the types
+> by hand for now if it becomes intractable.
 > 
-> However, NetBSD 10 has already been released since two years ago
-> (see https://www.netbsd.org/releases/formal-10/NetBSD-10.0.html),
-> so according to our support policy, starting with QEMU v11.0, we
-> don't have to take care of the previous major release of NetBSD
-> anymore.
+> I couldn't find much in the way of previous discussion or work on
+> this, forgive me if I've missed it.
 > 
-> Looking at the various distros that we take care of (see e.g.
-> https://repology.org/project/gcc/versions), and the NetBSD 10.0
-> 3rd party package information:
+> Thanks,
+> Nick
 > 
->  https://cvsweb.netbsd.org/bsdweb.cgi/src/doc/3RDPARTY?rev=1.1905.2.14;content-type=text%2Fplain;only_with_tag=netbsd-10-0-RELEASE
+> Nicholas Piggin (4):
+>    tests/tcg/riscv64: Add a user signal handling test
+>    linux-user/riscv: Add extended state to sigcontext
+>    linux-user/riscv: Add vector state to signal context
+>    tests/tcg/riscv64: Add vector state to signal test
 > 
-> ... it seems like NetBSD 10 has the lowest version of GCC again,
-> but at least it's GCC 10.4 now. Thus bump our GCC requirement to
-> this version now.
+>   linux-user/riscv/signal.c                | 197 ++++++++-
+>   linux-user/riscv/vdso-asmoffset.h        |   4 +-
+>   tests/tcg/riscv64/Makefile.target        |   5 +
+>   tests/tcg/riscv64/test-signal-handling.c | 507 +++++++++++++++++++++++
+>   4 files changed, 700 insertions(+), 13 deletions(-)
+>   create mode 100644 tests/tcg/riscv64/test-signal-handling.c
 > 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->  meson.build | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
 
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+This patch series
+https://lore.kernel.org/qemu-riscv/20250903081417.338515-1-npiggin@gmail.com/
+relates to
+https://gitlab.com/qemu-project/qemu/-/work_items/3224 .
 
+In January it was no applying cleanly but it does apply as of today 
+(ae56950eac7b61b1abf42003329ee0f3ce111711).
 
-AFAICT,  GCC 10.4  ships with gnu17 as its default C standard.
+Could one of the maintainers, please, have a look at it.
 
-CLang 10.x also seems to support gnu17.
+Best regards
 
-So separate from this patch, we could likely bump our C stndard
-from gnu11 to gnu17. Though C17 doesn't seem to have any big
-ticket items that help us compared  C11, it makes sense to
-track the newer standard versions as they become available to
-us.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
-
+Heinrich
 
