@@ -4,49 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5D6851125892
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:36:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 144301125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:36:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PLQ-0007h5-RZ; Wed, 11 Mar 2026 15:35:48 -0400
+	id 1w0PLR-0007hJ-Qm; Wed, 11 Mar 2026 15:35:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PL3-0007Uy-N8; Wed, 11 Mar 2026 15:35:26 -0400
+ id 1w0PL7-0007Vd-JP; Wed, 11 Mar 2026 15:35:29 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PL0-00007P-Id; Wed, 11 Mar 2026 15:35:25 -0400
+ id 1w0PL6-00008C-0C; Wed, 11 Mar 2026 15:35:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257666; bh=FSMGlYph0E646l8xPKs1QSoOKQfE4LlZnojK7QnNiVY=;
+ t=1773257666; bh=FWx38I5a5emH/5IenvOoVjTCDmASckiQpQhd//9ez0Y=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nWIAG4VwPlLgRdG7WBU4F6YoUhaXDsUbphBHBTqtsndjriJ+osIjvokSgGIOryE9c
- zoVoAT9qSM3mSdUtVrjWyOPh0PxjtirK7DD2Tc9F5TlwXEAgz4xmz3ZD421htrr+zL
- qJLIhked0xZXWY6lbWlZZxw+l/ox95wnbRmSzZf7reaz9BTdDE8cAwM/aRLCcYzYMg
- /Xe2TNln0ECBQAw9f0KNuA9/iVboqXH53eL87ddkAaO45+G34ekXGn3NpKybIk0Apq
- WPokrZypqdg4cz7l6KicgxcRjmD3H7j8yRJZ4qYXgmX1aJMDI+E8Fru3aIbA/0gicE
- kXfUfc//3Xh4w==
+ b=VrM2/A5h5n5ipCKXf6DbFO7GgAQ4HKgWwS+C4kKDAaBZqqRs6RnXNwLbV6yQ+WpbA
+ osshc71B6rNGuc/kwjZ8xeBElu8w9Q/TEqT7Q2Vh19vTCmgwa90PItcb8MQB4RCH1j
+ 8NpMQexxfGgt/wJvekoQc7n7DdLPYC19QSfgJYRUZi+PgYsXgse9jFe2kvmusjJ6II
+ FlGiHRLNgVUhQUR7laJkOcpgeaQSvMKLlwBBMO7d5oITSEcsQXtAD3KDy4UkzTHVIv
+ RDd5qg1DX0JbZIWz2otBZKCHH68p9iF38JE0CQx0N9KIOLioxstEREiCN+pQtUcDCj
+ GFgFTklFMsDDg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AE5A31920F0;
+ by isrv.corpit.ru (Postfix) with ESMTP id EF6921920F3;
  Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E53C537C455;
- Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3A78237C458;
+ Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 08/53] contrib/plugins/hotblocks: Print uint64_t with
- PRIu64 rather than PRId64
-Date: Wed, 11 Mar 2026 22:34:01 +0300
-Message-ID: <20260311193449.1096110-8-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 11/53] target/arm: Account for SME in
+ aarch64_sve_narrow_vq() assertion
+Date: Wed, 11 Mar 2026 22:34:04 +0300
+Message-ID: <20260311193449.1096110-11-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,32 +74,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-qemu_plugin_u64_sum returns a uint64_t, so PRIu64 is the correct format
-specifier.
+In aarch64_sve_narrow_vq() we assert that the new VQ is within
+the maximum supported range for the CPU. We forgot to update
+this to account for SME, which might have a different maximum.
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/5d26c9d99ee87ac4a4034ff64e3d8881253eedf3.1753857212.git.asb@igalia.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit e777f6ab91406884136b5679a9d64124832668d8)
+Update the assert to permit any VQ which is valid for either
+SVE or SME.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260202133353.2231685-2-peter.maydell@linaro.org
+(cherry picked from commit 42eab40a12f12f044a5ca7b7d889d9a1f0d172ee)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index cf4d6b8c36..40d8dae1cd 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -87,7 +87,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-         for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
--                report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
-+                report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
-                 rec->start_addr, rec->trans_count,
-                 rec->insns,
-                 qemu_plugin_u64_sum(
+diff --git a/target/arm/helper.c b/target/arm/helper.c
+index 633d314edf..5d31c551e1 100644
+--- a/target/arm/helper.c
++++ b/target/arm/helper.c
+@@ -10058,7 +10058,7 @@ void aarch64_sve_narrow_vq(CPUARMState *env, unsigned vq)
+     uint64_t pmask;
+ 
+     assert(vq >= 1 && vq <= ARM_MAX_VQ);
+-    assert(vq <= env_archcpu(env)->sve_max_vq);
++    assert(vq <= arm_max_vq(env_archcpu(env)));
+ 
+     /* Zap the high bits of the zregs.  */
+     for (i = 0; i < 32; i++) {
+diff --git a/target/arm/internals.h b/target/arm/internals.h
+index 75677945af..d5f6d6546f 100644
+--- a/target/arm/internals.h
++++ b/target/arm/internals.h
+@@ -1807,6 +1807,15 @@ static inline uint64_t arm_mdcr_el2_eff(CPUARMState *env)
+     ((1 << (1 - 1)) | (1 << (2 - 1)) |                  \
+      (1 << (4 - 1)) | (1 << (8 - 1)) | (1 << (16 - 1)))
+ 
++/*
++ * Return the maximum SVE/SME VQ for this CPU. This defines
++ * the maximum possible size of the Zn vector registers.
++ */
++static inline int arm_max_vq(ARMCPU *cpu)
++{
++    return MAX(cpu->sve_max_vq, cpu->sme_max_vq);
++}
++
+ /*
+  * Return true if it is possible to take a fine-grained-trap to EL2.
+  */
 -- 
 2.47.3
 
