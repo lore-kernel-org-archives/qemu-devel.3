@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01D15112588E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A47B1125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PLE-0007YD-Ar; Wed, 11 Mar 2026 15:35:36 -0400
+	id 1w0PLy-0000UL-Sh; Wed, 11 Mar 2026 15:36:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKw-0007TD-VZ; Wed, 11 Mar 2026 15:35:20 -0400
+ id 1w0PLw-0000Mn-Me; Wed, 11 Mar 2026 15:36:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKt-00005M-20; Wed, 11 Mar 2026 15:35:18 -0400
+ id 1w0PLu-0000Cx-Bo; Wed, 11 Mar 2026 15:36:20 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257666; bh=0uZ5ATjhIzDgyacoMi6E796UKRKgVRPT0yaUj1O9yhM=;
+ t=1773257667; bh=CP+lTb6QIOJ90ijqeHOLJxYZwKH3HY6JpSgt3R7n9Vs=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=G+3v5oEUBO1t6BItSW000nUgCswMiwXKw5qFOaGW5ad41zQtobeA87Dq8aH8jQQ7p
- 392uZYSjYmt7pF7a9Y6U74xTZACMsjMpfIccYNMLddoN6/n/HVjSD1uaCami3Va/I+
- nqoDYr0JyyABbw9k2jihsaDAGFkJKzZhzzFsuPALziePzM5AiEMEvkkDnhHtFiB5gs
- WOa+i3AtX8Q7wCGbg26aO7RNCEHHu57MAgWdck4bNUIbOIfTb6/5shYC5P6nxYpo+t
- oZrAWhOQ/QijcA5gljl2kn7cm8yGVT9CSPouAleAcL0/TfmJqXjhxG2pkgFbgy8nzH
- AxQkRJvR6h4EA==
+ b=TMrnyNWEToPWeWJmaDuUVpQmxcLUwY/8MSnPr2WBAB4yX50Q2dfWW0ynFYLmpIN1A
+ 5I0Yh3UAnuDEYhJ45rmaUe5+JE7RBb3tKF9dCAkzNPjGDjaOpGBMN12EfGUJ/bYvaz
+ CVjzXphZrU77/aoEIBTu+VmvRrR3QWrntZDdSj+1tjCwPShq17mH4y/781MukPYEo3
+ 7hidjfn7/Y3XAJrGINgnzZH55YJmOdf+BcW3aH1RBECpHdRxN2ODKmXbq8yjlTAD+V
+ ZbC3Bojc9fqEYb4T92YLid8C4a6DPYeLgAhnJtjc27hfiMv6M+6rVCQLBRpggTw5yR
+ 2zOo8jzu3YSVQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6F6B71920ED;
- Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6D22F1920F9;
+ Wed, 11 Mar 2026 22:34:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A531637C452;
- Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id AFF5737C45E;
+ Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 05/53] python: drop uses of pkg_resources
-Date: Wed, 11 Mar 2026 22:33:58 +0300
-Message-ID: <20260311193449.1096110-5-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 17/53] virtio-snd: remove TODO comments
+Date: Wed, 11 Mar 2026 22:34:10 +0300
+Message-ID: <20260311193449.1096110-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -70,43 +70,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-pkg_resources has been fully dropped from modern pip/setuptools
-distributions and we should phase out its use. This patch is enough to,
-by itself, repair most GitLab CI tests upstream; with the exception of
-tox tests which are still making use of avocado - which will be dropped
-in a separate series to restore functionality there.
+Replying with a VIRTIO_SND_S_BAD_MSG error does not warrant a device
+reset. Instead, a device reset happens when the driver requests it from the
+transport.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260211195804.135144-3-jsnow@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit e44a26ba940214824b61976324058e73d9f41658)
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260220-virtio-snd-series-v1-2-207c4f7200a2@linaro.org>
+(cherry picked from commit 34238f078a04f24b91199249b83846ab082b4e05)
+(Mjt: pick this one up so the next commit applies cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/python/setup.py b/python/setup.py
-index c5bc45919a..789fa39b0f 100755
---- a/python/setup.py
-+++ b/python/setup.py
-@@ -7,7 +7,6 @@
- import setuptools
- from setuptools.command import bdist_egg
- import sys
--import pkg_resources
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 9101560f38..fd03efc120 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -168,9 +168,6 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
+                                sizeof(virtio_snd_query_info));
  
+     if (msg_sz != sizeof(virtio_snd_query_info)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(virtio_snd_query_info));
+@@ -184,9 +181,6 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
  
- class bdist_egg_guard(bdist_egg.bdist_egg):
-@@ -30,9 +29,6 @@ def main():
-     QEMU tooling installer
-     """
+     if (iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
+         sizeof(virtio_snd_hdr) + size * count) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         error_report("pcm info: buffer too small, got: %zu, needed: %zu",
+                 iov_size(cmd->elem->in_sg, cmd->elem->in_num),
+                 sizeof(virtio_snd_pcm_info));
+@@ -244,9 +238,6 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+     virtio_snd_pcm_set_params *st_params;
  
--    # https://medium.com/@daveshawley/safely-using-setup-cfg-for-metadata-1babbe54c108
--    pkg_resources.require('setuptools>=39.2')
--
-     setuptools.setup(cmdclass={'bdist_egg': bdist_egg_guard})
+     if (stream_id >= s->snd_conf.streams || s->pcm->pcm_params == NULL) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         virtio_error(VIRTIO_DEVICE(s), "Streams have not been initialized.\n");
+         return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
+     }
+@@ -297,9 +288,6 @@ static void virtio_snd_handle_pcm_set_params(VirtIOSound *s,
+                                sizeof(virtio_snd_pcm_set_params));
  
+     if (msg_sz != sizeof(virtio_snd_pcm_set_params)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(virtio_snd_pcm_set_params));
+@@ -609,9 +597,6 @@ static void virtio_snd_handle_pcm_release(VirtIOSound *s,
+                                sizeof(stream_id));
  
+     if (msg_sz != sizeof(stream_id)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(stream_id));
+@@ -623,9 +608,6 @@ static void virtio_snd_handle_pcm_release(VirtIOSound *s,
+     trace_virtio_snd_handle_pcm_release(stream_id);
+     stream = virtio_snd_pcm_get_stream(s, stream_id);
+     if (stream == NULL) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         error_report("already released stream %"PRIu32, stream_id);
+         virtio_error(VIRTIO_DEVICE(s),
+                      "already released stream %"PRIu32,
+@@ -668,9 +650,6 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
+                                sizeof(virtio_snd_hdr));
+ 
+     if (msg_sz != sizeof(virtio_snd_hdr)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(virtio_snd_hdr));
 -- 
 2.47.3
 
