@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C7981125847
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85BD2112583A
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LEJ-0007FR-Jz; Wed, 11 Mar 2026 11:12:13 -0400
+	id 1w0LDv-0005AB-3D; Wed, 11 Mar 2026 11:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LCg-0003KH-PU; Wed, 11 Mar 2026 11:10:33 -0400
+ id 1w0LBj-00015f-KX; Wed, 11 Mar 2026 11:09:31 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LCf-00066C-0Z; Wed, 11 Mar 2026 11:10:30 -0400
+ id 1w0LBh-0005hR-BH; Wed, 11 Mar 2026 11:09:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241483; bh=Tap+1p3sDYHUxlsdu61MBmComIk/a+J4T9/QEAPfN1U=;
+ t=1773241483; bh=e14xFKU6PZwBStPyZdwDeVLuMz+xSw0CgIS4SxWRuqc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=RpEsRKT/rHyU084XStEQU8Rp6OwGQYmgAQgDsD7xDigFvhK3dgjwHc8Z5PEvM73pW
- lt3yVDVC0VcMZkjq6dyl5exdtALLmKJ0btFfLaYDJQVj8ubmWZor5VVnzghhbOm3d9
- MmxDiuiBA3FHxvmTJEaQlIr919jrDFjYF/qh2S/2+OrFof9zs2tK72Xmz0lKjgDNpa
- s3sZzsDrJglT+1ccW/naqkpJ6MoHxu32s5dKsKR1dHmUroWLWMmPG/0qi9liRUcBMh
- 92VpXvkKk1rGPN/9eyq5rdksEQly0UU/Xfj632gsr6UR600maVpw8hZ0YbGeV4VBOW
- NLn7tHTAZoosg==
+ b=bwqmhYqYf75eV5bF2uGaOf5kzcQopYBwp4J+50l3p1hOOhXrtP/ZUEYCu2ZlyHdJH
+ 5HXPN0KBi0cZgXMRvbzaCrZRQ3n9w/wU4WaKwoYTbSlG30Yy52XEqTtyYBGxI9kwAk
+ nxzoKccZriQan6mlNj+7PHzjlwmTXdTtkGOMPCrWGYPTpHlzyjdHLfCtWr6l5BZg2m
+ qeetV5Q5nsx7PYjyAK6eECKjlSaLC+RwonJ3hw/6/GDvD+TqgCHZSP6SIzRiZrCkq+
+ MSAP9EBt9SsBgoMBARGgA1dOqmlgaOP4ZLo+FGx38oGlgADfLBtjtt4H0/5cBDOWS+
+ Hifr34hkWunuA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD3C0191EA9;
+ by isrv.corpit.ru (Postfix) with ESMTP id 06CBD191E9F;
  Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB04037C2EA;
- Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id E846237C2E0;
+ Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 38/46] virtio-gpu: Ensure BHs are invoked only from
- main-loop thread
-Date: Wed, 11 Mar 2026 18:03:14 +0300
-Message-ID: <20260311150327.1084669-38-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 28/46] io: separate freeing of tasks from marking them
+ as complete
+Date: Wed, 11 Mar 2026 18:03:04 +0300
+Message-ID: <20260311150327.1084669-28-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
@@ -72,117 +73,251 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+From: Daniel P. Berrangé <berrange@redhat.com>
 
-QEMU's display GL core is tied to main-loop thread and virtio-gpu
-interacts with display while processing GPU commands. Virtio-gpu BHs
-work in generic AIO context that can be invoked on vCPU thread, while
-GL and UI toolkits are bound to the main-loop thread.
+The original design of QIOTask was intended to simplify lifecycle
+management by automatically freeing it when the task was marked as
+complete. This overlooked the fact that when a QIOTask is used in
+combination with a GSource, there may be times when the source
+callback is never invoked. This is typically when a GSource is
+released before any I/O event arrives. In such cases it is not
+desirable to mark a QIOTask as complete, but it still needs to be
+freed. To satisfy this, the task must be released manually.
 
-Make virtio-gpu BHs use iohandler AIO context that is handled in a
-main-loop thread only.
-
- 0  SDL_GL_MakeCurrent() (libSDL3)
- 1  SDL_GL_MakeCurrent_REAL() (libSDL2)
- 2  sdl2_gl_make_context_current() (ui/sdl2-gl.c:201)
- 3  make_current() (virglrenderer.c:639)
- 4  vrend_finish_context_switch() (vrend_renderer.c:11630)
- 5  vrend_hw_switch_context() (vrend_renderer.c:11613)
- 6  vrend_renderer_force_ctx_0() (vrend_renderer.c:12986)
- 7  virgl_renderer_force_ctx_0() (virglrenderer.c:460)
- 8  virtio_gpu_virgl_process_cmd() (virtio-gpu-virgl.c:1013)
- 9  virtio_gpu_process_cmdq() (virtio-gpu.c:1050)
- 10 virtio_gpu_gl_handle_ctrl() (virtio-gpu-gl.c:86)
- 11 aio_bh_poll() (util/async.c)
- 12 aio_poll() (util/aio-posix.c)
- 13 blk_pwrite() (block/block-gen.c:1985)
- 14 pflash_update() (pflash_cfi01.c:396)
- 15 pflash_write() (pflash_cfi01.c:541)
- 16 memory_region_dispatch_write() (system/memory.c:1554)
- 17 flatview_write() (system/physmem.c:3333)
- 18 address_space_write() (system/physmem.c:3453)
- 19 kvm_cpu_exec() (accel/kvm/kall-all.c:3248)
- 20 kvm_vcpu_thread_fn() (accel/kvm/kaccel-ops.c:53)
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-Message-ID: <20260303151422.977399-8-dmitry.osipenko@collabora.com>
-Message-ID: <20260304165043.1437519-10-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit 235f9b36383e4cc7a790bca51eddbe38edd5438c)
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
+(cherry picked from commit 163cd0ae1182e67509b271f244a73dfd938337b9)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
-index 362828f54e..a65fca9c62 100644
---- a/hw/display/virtio-gpu-virgl.c
-+++ b/hw/display/virtio-gpu-virgl.c
-@@ -1199,9 +1199,9 @@ int virtio_gpu_virgl_init(VirtIOGPU *g)
+diff --git a/include/io/task.h b/include/io/task.h
+index 0b5342ee84..98847f5994 100644
+--- a/include/io/task.h
++++ b/include/io/task.h
+@@ -96,7 +96,7 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
+  *                         1000,
+  *                         myobject_operation_timer,
+  *                         task,
+- *                         NULL);
++ *                         qio_task_free);
+  *    }
+  *   </programlisting>
+  * </example>
+@@ -138,9 +138,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
+  * the callback func 'myobject_operation_notify' shown
+  * earlier to deal with the results.
+  *
+- * Once this function returns false, object_unref will be called
+- * automatically on the task causing it to be released and the
+- * ref on QMyObject dropped too.
++ * Once this function returns FALSE, the task will be freed,
++ * causing it release the ref on QMyObject too.
+  *
+  * The QIOTask module can also be used to perform operations
+  * in a background thread context, while still reporting the
+@@ -208,8 +207,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
+  * 'err' attribute in the task object to determine if
+  * the operation was successful or not.
+  *
+- * The returned task will be released when qio_task_complete()
+- * is invoked.
++ * The returned task must be released by calling
++ * qio_task_free() when no longer required.
+  *
+  * Returns: the task struct
+  */
+@@ -218,6 +217,19 @@ QIOTask *qio_task_new(Object *source,
+                       gpointer opaque,
+                       GDestroyNotify destroy);
+ 
++/**
++ * qio_task_free:
++ * task: the task object to free
++ *
++ * Free the resources associated with the task. Typically
++ * the qio_task_complete() method will be called immediately
++ * before this to trigger the task callback, however, it is
++ * permissible to free the task in the case of cancellation.
++ * The destroy callback will be used to release the opaque
++ * data provided to qio_task_new().
++ */
++void qio_task_free(QIOTask *task);
++
+ /**
+  * qio_task_run_in_thread:
+  * @task: the task struct
+@@ -268,8 +280,9 @@ void qio_task_wait_thread(QIOTask *task);
+  * qio_task_complete:
+  * @task: the task struct
+  *
+- * Invoke the completion callback for @task and
+- * then free its memory.
++ * Invoke the completion callback for @task. This should typically
++ * only be invoked once on a task, and then qio_task_free() used
++ * to free it.
+  */
+ void qio_task_complete(QIOTask *task);
+ 
+diff --git a/io/channel-tls.c b/io/channel-tls.c
+index d1c6cf72b2..ce4ee6bb98 100644
+--- a/io/channel-tls.c
++++ b/io/channel-tls.c
+@@ -170,6 +170,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+         trace_qio_channel_tls_handshake_fail(ioc);
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         return;
      }
  
- #if VIRGL_VERSION_MAJOR >= 1
--    gl->cmdq_resume_bh = aio_bh_new(qemu_get_aio_context(),
--                                    virtio_gpu_virgl_resume_cmdq_bh,
--                                    g);
-+    gl->cmdq_resume_bh = virtio_bh_io_new_guarded(DEVICE(g),
-+                                                  virtio_gpu_virgl_resume_cmdq_bh,
-+                                                  g);
- #endif
+@@ -183,6 +184,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
+             trace_qio_channel_tls_credentials_allow(ioc);
+         }
+         qio_task_complete(task);
++        qio_task_free(task);
+     } else {
+         GIOCondition condition;
+         QIOChannelTLSData *data = g_new0(typeof(*data), 1);
+@@ -270,11 +272,13 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
+         trace_qio_channel_tls_bye_fail(ioc);
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         return;
+     }
  
-     return 0;
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index 0a1a625b0e..3a71a80677 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1514,9 +1514,9 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+     if (status == QCRYPTO_TLS_BYE_COMPLETE) {
+         qio_task_complete(task);
++        qio_task_free(task);
+         return;
+     }
  
-     g->ctrl_vq = virtio_get_queue(vdev, 0);
-     g->cursor_vq = virtio_get_queue(vdev, 1);
--    g->ctrl_bh = virtio_bh_new_guarded(qdev, virtio_gpu_ctrl_bh, g);
--    g->cursor_bh = virtio_bh_new_guarded(qdev, virtio_gpu_cursor_bh, g);
--    g->reset_bh = qemu_bh_new(virtio_gpu_reset_bh, g);
-+    g->ctrl_bh = virtio_bh_io_new_guarded(qdev, virtio_gpu_ctrl_bh, g);
-+    g->cursor_bh = virtio_bh_io_new_guarded(qdev, virtio_gpu_cursor_bh, g);
-+    g->reset_bh = virtio_bh_io_new_guarded(qdev, virtio_gpu_reset_bh, g);
-     qemu_cond_init(&g->reset_cond);
-     QTAILQ_INIT(&g->reslist);
-     QTAILQ_INIT(&g->cmdq);
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 9a81ad912e..4698b47426 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -4418,3 +4418,13 @@ QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
-     return qemu_bh_new_full(cb, opaque, name,
-                             &transport->mem_reentrancy_guard);
+diff --git a/io/channel-websock.c b/io/channel-websock.c
+index ec5e09f9ab..13975de4d8 100644
+--- a/io/channel-websock.c
++++ b/io/channel-websock.c
+@@ -545,6 +545,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -561,6 +562,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
+             trace_qio_channel_websock_handshake_complete(ioc);
+             qio_task_complete(task);
+         }
++        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+@@ -588,6 +590,7 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
+         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
+         qio_task_set_error(task, err);
+         qio_task_complete(task);
++        qio_task_free(task);
+         wioc->hs_io_tag = 0;
+         return FALSE;
+     }
+diff --git a/io/task.c b/io/task.c
+index 451f26f8b4..331febd4e1 100644
+--- a/io/task.c
++++ b/io/task.c
+@@ -70,8 +70,12 @@ QIOTask *qio_task_new(Object *source,
+     return task;
  }
-+
-+QEMUBH *virtio_bh_io_new_guarded_full(DeviceState *dev,
-+                                      QEMUBHFunc *cb, void *opaque,
-+                                      const char *name)
-+{
-+    DeviceState *transport = qdev_get_parent_bus(dev)->parent;
-+
-+    return aio_bh_new_full(iohandler_get_aio_context(), cb, opaque, name,
-+                           &transport->mem_reentrancy_guard);
-+}
-diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index c594764f23..963bcba825 100644
---- a/include/hw/virtio/virtio.h
-+++ b/include/hw/virtio/virtio.h
-@@ -543,4 +543,14 @@ QEMUBH *virtio_bh_new_guarded_full(DeviceState *dev,
- #define virtio_bh_new_guarded(dev, cb, opaque) \
-     virtio_bh_new_guarded_full((dev), (cb), (opaque), (stringify(cb)))
  
-+/*
-+ * The "_io" variant runs BH only on a main-loop thread, while generic BH
-+ * may run on a vCPU thread.
-+ */
-+QEMUBH *virtio_bh_io_new_guarded_full(DeviceState *dev,
-+                                      QEMUBHFunc *cb, void *opaque,
-+                                      const char *name);
-+#define virtio_bh_io_new_guarded(dev, cb, opaque) \
-+    virtio_bh_io_new_guarded_full((dev), (cb), (opaque), (stringify(cb)))
+-static void qio_task_free(QIOTask *task)
++void qio_task_free(QIOTask *task)
+ {
++    if (!task) {
++        return;
++    }
 +
- #endif
+     qemu_mutex_lock(&task->thread_lock);
+     if (task->thread) {
+         if (task->thread->destroy) {
+@@ -110,6 +114,7 @@ static gboolean qio_task_thread_result(gpointer opaque)
+ 
+     trace_qio_task_thread_result(task);
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     return FALSE;
+ }
+@@ -196,7 +201,6 @@ void qio_task_complete(QIOTask *task)
+ {
+     task->func(task, task->opaque);
+     trace_qio_task_complete(task);
+-    qio_task_free(task);
+ }
+ 
+ 
+diff --git a/tests/unit/test-io-task.c b/tests/unit/test-io-task.c
+index 115dba8970..b1c8ecb7ab 100644
+--- a/tests/unit/test-io-task.c
++++ b/tests/unit/test-io-task.c
+@@ -73,6 +73,7 @@ static void test_task_complete(void)
+     src = qio_task_get_source(task);
+ 
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     g_assert(obj == src);
+ 
+@@ -84,6 +85,28 @@ static void test_task_complete(void)
+ }
+ 
+ 
++static void test_task_cancel(void)
++{
++    QIOTask *task;
++    Object *obj = object_new(TYPE_DUMMY);
++    Object *src;
++    struct TestTaskData data = { NULL, NULL, false };
++
++    task = qio_task_new(obj, task_callback, &data, NULL);
++    src = qio_task_get_source(task);
++
++    qio_task_free(task);
++
++    g_assert(obj == src);
++
++    object_unref(obj);
++
++    g_assert(data.source == NULL);
++    g_assert(data.err == NULL);
++    g_assert(data.freed == false);
++}
++
++
+ static void task_data_free(gpointer opaque)
+ {
+     struct TestTaskData *data = opaque;
+@@ -101,6 +124,7 @@ static void test_task_data_free(void)
+     task = qio_task_new(obj, task_callback, &data, task_data_free);
+ 
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     object_unref(obj);
+ 
+@@ -123,6 +147,7 @@ static void test_task_failure(void)
+ 
+     qio_task_set_error(task, err);
+     qio_task_complete(task);
++    qio_task_free(task);
+ 
+     object_unref(obj);
+ 
+@@ -260,6 +285,7 @@ int main(int argc, char **argv)
+     module_call_init(MODULE_INIT_QOM);
+     type_register_static(&dummy_info);
+     g_test_add_func("/crypto/task/complete", test_task_complete);
++    g_test_add_func("/crypto/task/cancel", test_task_cancel);
+     g_test_add_func("/crypto/task/datafree", test_task_data_free);
+     g_test_add_func("/crypto/task/failure", test_task_failure);
+     g_test_add_func("/crypto/task/thread_complete", test_task_thread_complete);
 -- 
 2.47.3
 
