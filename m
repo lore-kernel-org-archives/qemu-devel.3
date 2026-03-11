@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B7521125875
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:39:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6979112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:39:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PO0-0005Re-CL; Wed, 11 Mar 2026 15:38:28 -0400
+	id 1w0PLA-0007WQ-5l; Wed, 11 Mar 2026 15:35:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNv-0005Pf-Ha; Wed, 11 Mar 2026 15:38:23 -0400
+ id 1w0PKr-0007S0-Gq; Wed, 11 Mar 2026 15:35:15 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNt-0000ZK-QD; Wed, 11 Mar 2026 15:38:23 -0400
+ id 1w0PKp-0008W8-Bq; Wed, 11 Mar 2026 15:35:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257669; bh=UGBbBxhOn8DTGsq59K6g9NwOYbkKfELTilKfS+WEXZI=;
+ t=1773257666; bh=29LT6J/dsLVkqfhdajZM0lyy+YR1nzRrR8wysJ6fTn8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ekbk8C4xM7iCb57kM7lKcuoUfvZfKrv8YHX1jPwqN6zb1UdVDtv5Jwc7qoDZ9VCsY
- yspTeXMsM8ABYccw08MaV5MFfOhOe0ML7P/fXAFmZ4Bpveu2AP1ErFER8xuIFguCUB
- PY9rFkQ5NfVcFoO2WxSrq4jRilUTA1agr5lDmwPuc9P21Y0Vrs45MNdPs3IWgjRBa9
- 8ToeF8H5p1zCa5WQG7xjk+GBXc81bn9z2Z1PX7U5e+EWDynd64lpv99ukHmxFpw8oa
- UcWrk375SA6Y1kxYmAYegLJJYLueOzp81e29o9+AoCy6IiuD/FdhxIQcG/mdgmHIJQ
- KhxOVeA/La+sA==
+ b=wd7JSqXOOYG1PYd9x53fp9gHIhpl/CRjk0S1HoARe5yK/E8a0vGZ8pNH7fix4W9ja
+ HJSXua0S0okME+MeO9gS0VKKr9Z/F1Y45cg42+q7g3sVPTwQl8kxmGpi3P8Moaigg1
+ 3H1QyLBhdT/mVtrTVtwxsW51t1O6CWWdFNGLsgjdjnSkenlJv86fDt2jf/ge7TQelY
+ Z6VUr+f4aqloqwaIn6YUWIyVzEmGi9UYO/YQ3vmOB7rMboTV2aZfEiFKjjzv5C8FmT
+ 9zi6GU6/MChn+kELhUz1C/i1TP9PJI2fHXq569nHLTlrdAwXIIh12pRJbnIrL4qY7W
+ NnBifzkHSAcKQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 61E8719210E;
- Wed, 11 Mar 2026 22:34:29 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0B7E61920EB;
+ Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id A35E737C473;
- Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 4EBD637C450;
+ Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dmitry Guryanov <dmitry.guryanov@gmail.com>,
- Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 38/53] block/throttle-groups: fix deadlock with
- iolimits and muliple iothreads
-Date: Wed, 11 Mar 2026 22:34:31 +0300
-Message-ID: <20260311193449.1096110-38-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 03/53] block/mirror: check range when setting zero
+ bitmap for sync write
+Date: Wed, 11 Mar 2026 22:33:56 +0300
+Message-ID: <20260311193449.1096110-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -71,133 +71,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
+Some Proxmox users reported an occasional assertion failure [0][1] in
+busy VMs when using drive mirror with active mode. In particular, the
+failure may occur for zero writes shorter than the job granularity:
 
-The function schedule_next_request is called with tg->lock held and
-it may call throttle_group_co_restart_queue, which takes
-tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
-coroutine if other iothread has taken the lock. If the next
-coroutine will call throttle_group_co_io_limits_intercept - it
-will try to take the mutex tg->lock which will never be released.
+> #0  0x00007b421154b507 in abort ()
+> #1  0x00007b421154b420 in ?? ()
+> #2  0x0000641c582e061f in bitmap_set (map=0x7b4204014e00, start=14, nr=-1)
+> #3  0x0000641c58062824 in do_sync_target_write (job=0x641c7e73d1e0,
+>       method=MIRROR_METHOD_ZERO, offset=852480, bytes=4096, qiov=0x0, flags=0)
+> #4  0x0000641c58062250 in bdrv_mirror_top_do_write (bs=0x641c7e62e1f0,
+        method=MIRROR_METHOD_ZERO, copy_to_target=true, offset=852480,
+        bytes=4096, qiov=0x0, flags=0)
+> #5  0x0000641c58061f31 in bdrv_mirror_top_pwrite_zeroes (bs=0x641c7e62e1f0,
+        offset=852480, bytes=4096, flags=0)
 
-Here is the backtrace of the iothread:
-Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) "IO iothread2"):
- #0  futex_wait (futex_word=0x5611adb7d828, expected=2, private=0) at ../sysdeps/nptl/futex-internal.h:146
- #1  __GI___lll_lock_wait (futex=futex@entry=0x5611adb7d828, private=0) at lowlevellock.c:49
- #2  0x00007f8ab5a97501 in lll_mutex_lock_optimized (mutex=0x5611adb7d828) at pthread_mutex_lock.c:48
- #3  ___pthread_mutex_lock (mutex=0x5611adb7d828) at pthread_mutex_lock.c:93
- #4  0x00005611823f5482 in qemu_mutex_lock_impl (mutex=0x5611adb7d828, file=0x56118289daca "../block/throttle-groups.c", line=372) at ../util/qemu-thread-posix.c:94
- #5  0x00005611822b0b39 in throttle_group_co_io_limits_intercept (tgm=0x5611af1bb4d8, bytes=4096, direction=THROTTLE_READ) at ../block/throttle-groups.c:372
- #6  0x00005611822473b1 in blk_co_do_preadv_part (blk=0x5611af1bb490, offset=15972311040, bytes=4096, qiov=0x7f8aa4000f98, qiov_offset=0, flags=BDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1354
- #7  0x0000561182247fa0 in blk_aio_read_entry (opaque=0x7f8aa4005910) at ../block/block-backend.c:1619
- #8  0x000056118241952e in coroutine_trampoline (i0=-1543497424, i1=32650) at ../util/coroutine-ucontext.c:175
- #9  0x00007f8ab5a56f70 in ?? () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:66 from target:/lib64/libc.so.6
- #10 0x00007f8aad1ef190 in ?? ()
- #11 0x0000000000000000 in ?? ()
+The range for the dirty bitmap described by dirty_bitmap_offset and
+dirty_bitmap_end is narrower than the original range and in fact,
+dirty_bitmap_end might be smaller than dirty_bitmap_offset. There
+already is a check for 'dirty_bitmap_offset < dirty_bitmap_end' before
+resetting the dirty bitmap. Add such a check for setting the zero
+bitmap too, which uses the same narrower range.
 
-The lock is taken in line 386:
-(gdb) p tg.lock
-$1 = {lock = {__data = {__lock = 2, __count = 0, __owner = 24240, __nusers = 1, __kind = 0, __spins = 0, __elision = 0, __list = {__prev = 0x0, __next = 0x0}},
-    __size = "\002\000\000\000\000\000\000\000\260^\000\000\001", '\000' <repeats 26 times>, __align = 2}, file = 0x56118289daca "../block/throttle-groups.c",
-  line = 386, initialized = true}
+[0]: https://forum.proxmox.com/threads/177981/
+[1]: https://bugzilla.proxmox.com/show_bug.cgi?id=7222
 
-The solution is to use tg->lock to protect both ThreadGroup fields and
-ThrottleGroupMember.throttled_reqs. It doesn't seem to be possible
-to use separate locks because we need to first manipulate ThrottleGroup
-fields, then schedule next coroutine using throttled_reqs and after than
-update token field from ThrottleGroup depending on the throttled_reqs
-state.
-
-Signed-off-by: Dmitry Guryanov <dmitry.guryanov@gmail.com>
-Message-ID: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit d4816177654d59e26ce212c436513f01842eb410)
+Cc: qemu-stable@nongnu.org
+Fixes: 7e277545b9 ("mirror: Skip writing zeroes when target is already zero")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260112152544.261923-1-f.ebner@proxmox.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 4a7b1bd18d2e1a6b3796e177ae5df9b198264a0b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 66fdce9a90..5329ff1fdb 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -295,19 +295,15 @@ static bool throttle_group_schedule_timer(ThrottleGroupMember *tgm,
- /* Start the next pending I/O request for a ThrottleGroupMember. Return whether
-  * any request was actually pending.
-  *
-+ * This assumes that tg->lock is held.
-+ *
-  * @tgm:       the current ThrottleGroupMember
-  * @direction: the ThrottleDirection
-  */
- static bool coroutine_fn throttle_group_co_restart_queue(ThrottleGroupMember *tgm,
-                                                          ThrottleDirection direction)
- {
--    bool ret;
--
--    qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
--    ret = qemu_co_queue_next(&tgm->throttled_reqs[direction]);
--    qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
--
--    return ret;
-+    return qemu_co_queue_next(&tgm->throttled_reqs[direction]);
- }
+diff --git a/block/mirror.c b/block/mirror.c
+index b344182c74..bc982cb99a 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -1514,9 +1514,12 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+         assert(!qiov);
+         ret = blk_co_pwrite_zeroes(job->target, offset, bytes, flags);
+         if (job->zero_bitmap && ret >= 0) {
+-            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granularity,
+-                       (dirty_bitmap_end - dirty_bitmap_offset) /
+-                       job->granularity);
++            if (dirty_bitmap_offset < dirty_bitmap_end) {
++                bitmap_set(job->zero_bitmap,
++                           dirty_bitmap_offset / job->granularity,
++                           (dirty_bitmap_end - dirty_bitmap_offset) /
++                           job->granularity);
++            }
+         }
+         break;
  
- /* Look for the next pending I/O request and schedule it.
-@@ -378,12 +374,8 @@ void coroutine_fn throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
-     /* Wait if there's a timer set or queued requests of this type */
-     if (must_wait || tgm->pending_reqs[direction]) {
-         tgm->pending_reqs[direction]++;
--        qemu_mutex_unlock(&tg->lock);
--        qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
-         qemu_co_queue_wait(&tgm->throttled_reqs[direction],
--                           &tgm->throttled_reqs_lock);
--        qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
--        qemu_mutex_lock(&tg->lock);
-+                           &tg->lock);
-         tgm->pending_reqs[direction]--;
-     }
- 
-@@ -410,15 +402,15 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
-     ThrottleDirection direction = data->direction;
-     bool empty_queue;
- 
-+    qemu_mutex_lock(&tg->lock);
-     empty_queue = !throttle_group_co_restart_queue(tgm, direction);
- 
-     /* If the request queue was empty then we have to take care of
-      * scheduling the next one */
-     if (empty_queue) {
--        qemu_mutex_lock(&tg->lock);
-         schedule_next_request(tgm, direction);
--        qemu_mutex_unlock(&tg->lock);
-     }
-+    qemu_mutex_unlock(&tg->lock);
- 
-     g_free(data);
- 
-@@ -569,7 +561,6 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
-                          read_timer_cb,
-                          write_timer_cb,
-                          tgm);
--    qemu_co_mutex_init(&tgm->throttled_reqs_lock);
- }
- 
- /* Unregister a ThrottleGroupMember from its group, removing it from the list,
-diff --git a/include/block/throttle-groups.h b/include/block/throttle-groups.h
-index 2355e8d9de..7dfc81f7b5 100644
---- a/include/block/throttle-groups.h
-+++ b/include/block/throttle-groups.h
-@@ -35,8 +35,7 @@
- 
- typedef struct ThrottleGroupMember {
-     AioContext   *aio_context;
--    /* throttled_reqs_lock protects the CoQueues for throttled requests.  */
--    CoMutex      throttled_reqs_lock;
-+    /* Protected by ThrottleGroup.lock */
-     CoQueue      throttled_reqs[THROTTLE_MAX];
- 
-     /* Nonzero if the I/O limits are currently being ignored; generally
 -- 
 2.47.3
 
