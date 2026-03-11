@@ -4,118 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD13F1062896
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:58:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F11561062896
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:05:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0J8X-0003Fu-8W; Wed, 11 Mar 2026 08:58:05 -0400
+	id 1w0JF8-0005aE-AO; Wed, 11 Mar 2026 09:04:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0J8V-0003FV-QH
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:58:03 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0J8S-0003m4-VC
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 08:58:03 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0JEp-0005Ve-9J
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:04:38 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0JEl-000682-A6
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:04:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773234266;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=ham4TULCnBDBSop4e24EP2qmSFVparDs9MmU7aOYPjo=;
+ b=SpYgUWYwZtaFCkT/qe0L4SAjEQQo4geW5xYLnTl6iQNN/NvkIq2TLOt60YnLcvXHK2pSqT
+ zVtK2X2r9/gzxJHShZKBkxiMrqDRyruyPFkfph1d5z7D2X+CaKRO+VoM9UuBiBgzCqX0Aq
+ DTQWEUAqBTRS6+W2AVaKxbOYlom/HNo=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-294-4laNQYqJNrKzjLgFPFB33A-1; Wed,
+ 11 Mar 2026 09:04:23 -0400
+X-MC-Unique: 4laNQYqJNrKzjLgFPFB33A-1
+X-Mimecast-MFC-AGG-ID: 4laNQYqJNrKzjLgFPFB33A_1773234262
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 2DDB04D351;
- Wed, 11 Mar 2026 12:57:58 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773233879; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WV6bzWHaMgApHRW5jWJFeZ8L1ZJJRM8OCcsl+9XJhzg=;
- b=gTdaOu5AFLsyi23m8zpvlodFJtb8eyzxRU1E8brwDnUnubPeK94DQigfYlOJICG7dlBlxW
- AkVdzfSRSOzxyxvKdlA0hHWFFrsEMgBdUSX9j7I17HY+m19BaZan1Ha2YOw5j+hp9JUPG9
- a7HqwpYLXcITbGa9iyg89+11sb05KOo=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773233879;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WV6bzWHaMgApHRW5jWJFeZ8L1ZJJRM8OCcsl+9XJhzg=;
- b=jv0Mn5swmaHTxDvkcigUobAik92JV9GZ/tgA+DpAhk4P7JUXcEMTUcjEyGRwrkgMg3mJ8w
- wRrd/wL/lLhX/+Bw==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b="TrZHr35/";
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=jLBEO1CT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773233878; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WV6bzWHaMgApHRW5jWJFeZ8L1ZJJRM8OCcsl+9XJhzg=;
- b=TrZHr35/ltWH3NQvxlGONlmWc2OfD1OLSTyA3MQ+tez2B/uI5rI5nJmXe/wLs1BhVR5avP
- D95nVQOimVgga+4K/aNRnOsL+1qacEcPjTrPLsAz116+d6JDt9jnA3udEV0zrpFvVk2xlf
- cOztHJB67M/tYrYi5dAqajjVTwoXkng=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773233878;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=WV6bzWHaMgApHRW5jWJFeZ8L1ZJJRM8OCcsl+9XJhzg=;
- b=jLBEO1CTBUWmCymd/HhlyJUfqWOkR9yHSp3iJgtKE3l8eplSC6+7lKO77kht23yXyeLc2v
- LkdwLopayCdCHMCQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id ACBFD3FA19;
- Wed, 11 Mar 2026 12:57:57 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id vP3BHNVmsWm8NwAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 11 Mar 2026 12:57:57 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Prasad Pandit <ppandit@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, Peter
- Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini
- <pbonzini@redhat.com>
-Subject: Re: [PATCH 1/8] tests/qtest/migration: Fix leak of migration tests
- data
-In-Reply-To: <CAE8KmOx5XbY1m40gGb5_kDOwt5D_YMT1YDp1JFugK-6NMRW3YA@mail.gmail.com>
-References: <20260310135540.8679-1-farosas@suse.de>
- <CAE8KmOx5XbY1m40gGb5_kDOwt5D_YMT1YDp1JFugK-6NMRW3YA@mail.gmail.com>
-Date: Wed, 11 Mar 2026 09:57:55 -0300
-Message-ID: <87ikb2zfos.fsf@suse.de>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 9628618005B3; Wed, 11 Mar 2026 13:04:21 +0000 (UTC)
+Received: from [10.33.192.176] (dhcp-192-176.str.redhat.com [10.33.192.176])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 93AFE180049D; Wed, 11 Mar 2026 13:04:18 +0000 (UTC)
+Message-ID: <da461649-9f1d-4d12-9f49-22b1b4155d69@redhat.com>
+Date: Wed, 11 Mar 2026 14:04:17 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Spamd-Result: default: False [-5.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- DWL_DNSWL_LOW(-1.00)[suse.de:dkim];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; MIME_TRACE(0.00)[0:+];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- ARC_NA(0.00)[]; TO_DN_SOME(0.00)[];
- RBL_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:104:10:150:64:97:from]; 
- FUZZY_RATELIMITED(0.00)[rspamd.com]; FROM_HAS_DN(0.00)[];
- RCVD_TLS_ALL(0.00)[]; RCPT_COUNT_FIVE(0.00)[6];
- MID_RHS_MATCH_FROM(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RECEIVED_SPAMHAUS_BLOCKED_OPENRESOLVER(0.00)[2a07:de40:b281:106:10:150:64:167:received];
- MISSING_XM_UA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid, suse.de:dkim, suse.de:email,
- fedoraproject.org:email, imap1.dmz-prg2.suse.org:helo,
- imap1.dmz-prg2.suse.org:rdns]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: 2DDB04D351
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/i386/pc: Add a proper owner for the ioport memory
+ regions
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: qemu-trivial@nongnu.org, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
+References: <20260217141827.534426-1-thuth@redhat.com>
+ <8f4f6df9-ec18-4d74-8a33-538e2d693023@tls.msk.ru>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <8f4f6df9-ec18-4d74-8a33-538e2d693023@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,135 +130,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prasad Pandit <ppandit@redhat.com> writes:
+On 11/03/2026 12.53, Michael Tokarev wrote:
+> On 17.02.2026 17:18, Thomas Huth wrote:
+>> From: Thomas Huth <thuth@redhat.com>
+>>
+>> Without a proper owner, the memory regions show up in /machine/unattached
+>> in the QOM tree, which is something that should be avoided.
+> 
+> Does this break migration from/to older releases?
 
-> On Tue, 10 Mar 2026 at 19:26, Fabiano Rosas <farosas@suse.de> wrote:
->> When the migration-test is invoked with the '-p' flag (to run a single
->> test), the glib code won't call the destroy function for the
->> not-executed tests, causing the MigrationTest wrapper data to leak.
->
-> * With -p, only test data for that test should be loaded, right?
-> Freeing the data for non-executed tests does not seem right.
->
+AFAIK the QOM tree ordering is orthogonal to the migration logic ... or did 
+we ever have any problems with this in the past?
 
-Hm, I don't know what you mean by loaded. Glib will call only the
-specific test, passing the data that was registered along with that
-test. That registration is done beforehand with the glib_add_data_func
-functions. We need to allocate that somehow. If we allocated it, we must
-free it.
+  Thomas
 
-Ideally, glib would provide a hook for setup and another one for
-teardown, which would work like (I think) you expect. But it doesn't do
-that. The "destroy" hook is semantically "undo what was done in the
-test", not free resources allocated outside of glib.
-
-Some simpler tests can avoid dynamically allocation, but migration-test
-is a bit more complex, so I don't see a way to do that at the moment.
-
->> This doesn't affect make check, but affects debugging use-cases where
->> having a leak pop up in ASAN output is extra annoying.
->>
->> Fix by adding the tests data to a list and freeing them all at the end
->> of migration-test execution. Any tests actually dispatched by glib
->> will have the destroy function called as usual.
->>
->> Note that migration_test_add_suffix() is altered to call
->> migration_test_add() so that there's only one place adding the data to
->> the list.
->>
->> Performance is not an issue at the moment, we have < 100 tests.
->>
->> Signed-off-by: Fabiano Rosas <farosas@suse.de>
->> ---
->>  tests/qtest/migration/framework.c      |  2 ++
->>  tests/qtest/migration/migration-util.c | 19 ++++++++++++++-----
->>  tests/qtest/migration/migration-util.h |  2 +-
->>  3 files changed, 17 insertions(+), 6 deletions(-)
->>
->> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
->> index 0bfc241914..b9371372de 100644
->> --- a/tests/qtest/migration/framework.c
->> +++ b/tests/qtest/migration/framework.c
->> @@ -1162,5 +1162,7 @@ int migration_env_clean(MigrationTestEnv *env)
->>      }
->>      g_free(tmpfs);
->>
->> +    migration_tests_free();
->> +
->>      return ret;
->>  }
->> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
->> index c2462306a1..2648ad7f61 100644
->> --- a/tests/qtest/migration/migration-util.c
->> +++ b/tests/qtest/migration/migration-util.c
->> @@ -38,6 +38,7 @@
->>  #include "linux/kvm.h"
->>  #endif
->>
->> +GQueue *tests;
->>
->>  static char *SocketAddress_to_str(SocketAddress *addr)
->>  {
->> @@ -243,6 +244,8 @@ static void migration_test_destroy(gpointer data)
->>  {
->>      MigrationTest *test = (MigrationTest *)data;
->>
->> +    g_queue_remove(tests, test);
->> +
->>      g_free(test->data);
->>      g_free(test->name);
->>      g_free(test);
->> @@ -268,21 +271,27 @@ void migration_test_add(const char *path,
->>
->>      qtest_add_data_func_full(path, test, migration_test_wrapper,
->>                               migration_test_destroy);
->> +    if (!tests) {
->> +        tests = g_queue_new();
->> +    }
->> +    g_queue_push_tail(tests, test);
->>  }
->>
->>  void migration_test_add_suffix(const char *path, const char *suffix,
->>                                 void (*fn)(char *name, MigrateCommon *args))
->>  {
->> -    MigrationTest *test = g_new0(MigrationTest, 1);
->> +    g_autofree char *name = NULL;
->>
->>      g_assert(g_str_has_suffix(path, "/"));
->>      g_assert(!g_str_has_prefix(suffix, "/"));
->>
->> -    test->func = fn;
->> -    test->name = g_strconcat(path, suffix, NULL);
->> +    name = g_strconcat(path, suffix, NULL);
->> +    migration_test_add(name, fn);
->> +}
->>
->> -    qtest_add_data_func_full(test->name, test, migration_test_wrapper,
->> -                             migration_test_destroy);
->> +void migration_tests_free(void)
->> +{
->> +    g_queue_free_full(tests, migration_test_destroy);
->>  }
->>
->>  #ifdef O_DIRECT
->> diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
->> index e73d69bab0..694773e594 100644
->> --- a/tests/qtest/migration/migration-util.h
->> +++ b/tests/qtest/migration/migration-util.h
->> @@ -59,5 +59,5 @@ void migration_test_add_suffix(const char *path, const char *suffix,
->>                                 void (*fn)(char *name, MigrateCommon *args));
->>  char *migrate_get_connect_uri(QTestState *who);
->>  void migrate_set_ports(QTestState *to, QList *channel_list);
->> -
->> +void migration_tests_free(void);
->>  #endif /* MIGRATION_UTIL_H */
->> --
->
-> * Change looks okay. Still I think there could be a way to load only
-> the data required for the specific test.
-> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
->
-> Thank you.
-> ---
->   - Prasad
 
