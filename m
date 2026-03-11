@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD55EFD88D8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6991FD88D8
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w08Xc-00046q-D4; Tue, 10 Mar 2026 21:39:16 -0400
+	id 1w08XM-0003yt-T8; Tue, 10 Mar 2026 21:39:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XR-00041C-Tq
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:06 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1w08XG-0003xL-Un
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:55 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XO-0004sE-ME
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:05 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2a9296b3926so105010755ad.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:39:02 -0700 (PDT)
+ id 1w08XF-0004oq-8Z
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:54 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2a9296b3926so105009885ad.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773193141; x=1773797941; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773193132; x=1773797932; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=MfRAoui1W3GNT7BYNx2cQj5d4SZ3fpuOM5tvGd9Nukc=;
- b=FoTAq+tktJzayhYm/J4RAibyK0PkID0eoyCGsiWF7sa0EJhINsfC6LXLDR+2pOqoVY
- LaNDjRKzyAxccFBnaaAHgxxSeXomc/Vdd5/zKsO15fpJSJX0d3otODJLAt336fndUI36
- NmRD9ZqvgttGRayPCabuDG0lW6iSzq6TpzwLJ6PGJH+QHLItPa83jVeea6qr2NCFvlIl
- wH+Sx/BNbZRyCqlYkCvdo7h9ocxsNvtS5LUk2CXsn0kw5sLDvjAbQIqyivm4t6G5Ywww
- T2idWi++p10LUHObf/eaBV7iggnmLewo0NPUcmoCL3cKUlF2+JojFiLKjNNIfs9WzAyk
- TGsw==
+ bh=lncb1lFJfonHWeqTY58GJy7/jsyPovxRUa7lsbNPfmk=;
+ b=BazHiuv93RhoF40nIjOguBcX101YpUk+3LX5VoCOQjj8SGJ+ov0wRIoSlVICKRe0po
+ mvLpqw2znjwtlI0O/NWJbSUVm1sjlgKyPPSnQbtu0VAenquVMgy+qmRhON+DEszHF8hi
+ UNZ9QIxjcE0Wi705EiLoBPabWcNAja1/CibFj2aA1E+YFtZiWGbA73yYhb00cdYquTEw
+ dAasdGYBHxVtkCxy/cj9ksMSpk3EiAOAXb9lOZ8iXWCchgbOWMTob2JP+jGmtgl+9aO+
+ /6pN5ZKuwdDAu0ykoIkM4HV6xSbcNQZLwNIBbw6lg3RL/AqKyTXr+v2nfpu/7JDEv7Dh
+ 4POg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773193141; x=1773797941;
+ d=1e100.net; s=20230601; t=1773193132; x=1773797932;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=MfRAoui1W3GNT7BYNx2cQj5d4SZ3fpuOM5tvGd9Nukc=;
- b=n0uXQ3XnUpNrcB2vxZYCKdkBClb2HhcVokej4x4hT06ejx+DRsy87yvFPyMPLHE8kB
- +F/8MYyRn9sMvmBClRqDccQmhaz15L74Ro4mszkbl8opwomj/xaR0KZgrAbKEee6JJSi
- SHnd4mAehd/ApFSHw7Czz9siQYYirCD4KtFXIfE0S0Z6LnxNd32TMWCGwGd5Y9taW+qz
- pAwkfLgad50OVkPXePdoE7HYxta/EwffpvcVQuXKDcHUV3sbj2jxjeWORrRZ2eUGfL71
- A4PzU5yHiztdH/VkNVvNViiwgEMpjdR31IoD9aeTSqVwCnT0lAGjNlyISU6OeiYefQr+
- 7+ww==
-X-Gm-Message-State: AOJu0YxSm376mx31uRc053yISAhlq/AU9pj77P8EO/ARo2TjOMXT7ozi
- zWvvNUMnDH1IIrMdydUc6MOihvl0YfkUrmJi5Xmx3Mkisd1VptMpYU5WircbwoJHzExgTbYli/C
- REXCK
-X-Gm-Gg: ATEYQzwwEpvx9xc3yZvTRcrupMQLPlm3k8X0ofqjcu3X95cdrQm3oTcRQj39YU4UNWp
- SDWl4O3sz9zq6SfJZuniNegZ25QtVRY7gsrpPvfehKE52DqNryLRJdzGxU4f4vY+IoAA+ymDFOJ
- gMfaopgsyd5KtDBc5QgBViZHVNa0SDhrUEyQRnvFuB3MUt2oKfT1nei+5ogtNiMjBhneY4/c03+
- j/Jvljw0T5YBYkMG2MHmZs7MRujOWNOX9K+Q3QhmENkriGCCGDa3VqK/5Gl0fl9+953p1M2y62r
- qvrOoFovu+XUqru5cFSRrcEBI54UiQpelqVscDVF3BwfufAShXfB0HtUHY/djrlpsuSC7by50tz
- giG9ph3z4PldhgyYo4VGvnzB5E9eHdNhc5IYG/dtXxFAtIH69468GD4GrFUoWaZVqkpjYpcAI+z
- bwwlX1ycyDEl7I21OEmKkLdaMPdDpk/TAXpvTJ/1aaqDvo3K8OXpF2RsjRH1chB4sCUzu4pbyTC
- PlR
-X-Received: by 2002:a17:902:e851:b0:2ae:ab4c:d583 with SMTP id
- d9443c01a7336-2aeae7ba3abmr8432115ad.20.1773193141184; 
- Tue, 10 Mar 2026 18:39:01 -0700 (PDT)
+ bh=lncb1lFJfonHWeqTY58GJy7/jsyPovxRUa7lsbNPfmk=;
+ b=SIdOYjUDXVB0MqqqPs6I9O9aJemD8qcRdS+8OgVc5aF+aTGYRAD82AKxHjJKjsLzoZ
+ 8qz36Tveb3nhW7VFmm727LilL/h+uvSt9pNIEAS0qxOu9fjK/xtvBlZhhKGenXNAFg88
+ 6VVlZx5KMRRMra7H4/RzskPLq1OZmHypmyKi0dCsMOwRV7nfP3yEYQTW0ENL8ddMWtF+
+ X63zGsYR1sCzioeyCC5MWfzB52SoHG/+jZUwVMJZFPm2b66ZUNMH6uDFAV4QuWw7P6eL
+ iNj3/Lt2lbsOn6+1LEI7g4b+XdBxbhsndqJr7qoi9wTMJLHyHIr43PmBrow17YsXLmct
+ uGDg==
+X-Gm-Message-State: AOJu0YyeuTJCmOYmjku5YfzWXWEF50NWMobrV+2Xi4pz3+wI1DQC5Vaa
+ qZ8qXICKMVNFlp0CNQfQS1dn0EFVabXFXT2zSZZbC7381K0OgxhPoHQLevhjpE2epcb1zK3/IPi
+ jIFV5
+X-Gm-Gg: ATEYQzxvCJOm/IQVG+s2GrUcv25aa/PqUzREqoRy5UkIRfCmSCkeLQcopt6DjgjXB54
+ nUy5Mwu0fO7hmbQMrcJ+rwDaGO8gXIjZ/fmRQhpfbPfyMKTpZb9S+05hy5VZQkaUSgoX+C6j7F0
+ lNpJ2uE0m7txm7iHhTuzdwTcf24/inu/hWK3IYtkuuVpw428Z5ZBgqY35WO6osO2ccSwI/MId2L
+ j1WBtUTfGl/HxuXxP00gdtrK40q9Gk8NZkCT/BHj6OdpSr3AI1tENvT42LtAA1Kg1ixcwowiR09
+ wVX2rzrRiz85/6z/smlzfXIyx0YzK4LhKO5KtfumWY83PNXPeUMlTSTEYcZ4Hs6o+ETs+8yquwQ
+ hh/iplTEc46cY39C7RHeoxvf9BjQjJDFGkVYqSv0OaVl0QtJGWdsCjeT+Bxkkw0bNbdsg/Hyp99
+ tjsWCE7cFaVSCp2IQWLBAujao3448LLj9NRGHC12QbGnOLFnATkN6bNFGZb+kbWTVMotsYSyqCh
+ cFD
+X-Received: by 2002:a17:902:f651:b0:2ae:3a77:a1f4 with SMTP id
+ d9443c01a7336-2aeae7d8956mr8957775ad.24.1773193131578; 
+ Tue, 10 Mar 2026 18:38:51 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.39.00
+ d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.38.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 18:39:00 -0700 (PDT)
+ Tue, 10 Mar 2026 18:38:50 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 14/16] gdbstub: Remove 'gdb-xml/' directory prefix in
- TARGET_XML_FILES
-Date: Tue, 10 Mar 2026 18:38:35 -0700
-Message-ID: <20260311013837.69945-15-pierrick.bouvier@linaro.org>
+Subject: [PULL 04/16] target/i386/gdbstub: Remove stale comment
+Date: Tue, 10 Mar 2026 18:38:25 -0700
+Message-ID: <20260311013837.69945-5-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,615 +105,34 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-All GDB XML files are in the gdb-xml/ directory. No need to be
-so verbose in TARGET_XML_FILES, let meson prepend the directory.
-
-Except meson.build lines, this is a mechanical change done running:
-
- $ sed -i -e s,gdb-xml/,,g $(git grep -l gdb-xml configs/targets/)
+Since commit ecd6f6a8820 ("gdbstub: Infer number of core
+registers from XML") gdb_num_core_regs is inferred for
+the x86 targets. Remove a stale comment.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Warner Losh <imp@bsdimp.com>
-Reviewed-by: Alex Bennée <alex.bennee@linaro.org>
-Tested-by: Alex Bennée <alex.bennee@linaro.org>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-15-philmd@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-5-philmd@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- configs/targets/aarch64-bsd-user.mak        | 2 +-
- configs/targets/aarch64-linux-user.mak      | 2 +-
- configs/targets/aarch64-softmmu.mak         | 2 +-
- configs/targets/aarch64_be-linux-user.mak   | 2 +-
- configs/targets/alpha-linux-user.mak        | 2 +-
- configs/targets/alpha-softmmu.mak           | 2 +-
- configs/targets/arm-bsd-user.mak            | 2 +-
- configs/targets/arm-linux-user.mak          | 2 +-
- configs/targets/arm-softmmu.mak             | 2 +-
- configs/targets/armeb-linux-user.mak        | 2 +-
- configs/targets/avr-softmmu.mak             | 2 +-
- configs/targets/hexagon-linux-user.mak      | 2 +-
- configs/targets/i386-bsd-user.mak           | 2 +-
- configs/targets/i386-linux-user.mak         | 2 +-
- configs/targets/i386-softmmu.mak            | 2 +-
- configs/targets/loongarch64-linux-user.mak  | 2 +-
- configs/targets/loongarch64-softmmu.mak     | 2 +-
- configs/targets/m68k-linux-user.mak         | 2 +-
- configs/targets/m68k-softmmu.mak            | 2 +-
- configs/targets/microblaze-linux-user.mak   | 2 +-
- configs/targets/microblaze-softmmu.mak      | 2 +-
- configs/targets/microblazeel-linux-user.mak | 2 +-
- configs/targets/or1k-linux-user.mak         | 2 +-
- configs/targets/or1k-softmmu.mak            | 2 +-
- configs/targets/ppc-linux-user.mak          | 2 +-
- configs/targets/ppc-softmmu.mak             | 2 +-
- configs/targets/ppc64-linux-user.mak        | 2 +-
- configs/targets/ppc64-softmmu.mak           | 2 +-
- configs/targets/ppc64le-linux-user.mak      | 2 +-
- configs/targets/riscv32-linux-user.mak      | 2 +-
- configs/targets/riscv32-softmmu.mak         | 2 +-
- configs/targets/riscv64-bsd-user.mak        | 2 +-
- configs/targets/riscv64-linux-user.mak      | 2 +-
- configs/targets/riscv64-softmmu.mak         | 2 +-
- configs/targets/rx-softmmu.mak              | 2 +-
- configs/targets/s390x-linux-user.mak        | 2 +-
- configs/targets/s390x-softmmu.mak           | 2 +-
- configs/targets/sparc-linux-user.mak        | 2 +-
- configs/targets/sparc-softmmu.mak           | 2 +-
- configs/targets/sparc32plus-linux-user.mak  | 2 +-
- configs/targets/sparc64-linux-user.mak      | 2 +-
- configs/targets/sparc64-softmmu.mak         | 2 +-
- configs/targets/x86_64-bsd-user.mak         | 2 +-
- configs/targets/x86_64-linux-user.mak       | 2 +-
- configs/targets/x86_64-softmmu.mak          | 2 +-
- meson.build                                 | 6 +++++-
- 46 files changed, 50 insertions(+), 46 deletions(-)
+ target/i386/gdbstub.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
 
-diff --git a/configs/targets/aarch64-bsd-user.mak b/configs/targets/aarch64-bsd-user.mak
-index 03979d82402..814ed2d8bfe 100644
---- a/configs/targets/aarch64-bsd-user.mak
-+++ b/configs/targets/aarch64-bsd-user.mak
-@@ -1,4 +1,4 @@
- TARGET_ARCH=aarch64
- TARGET_BASE_ARCH=arm
--TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xml
-+TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aarch64-mte.xml aarch64-sme2.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/aarch64-linux-user.mak b/configs/targets/aarch64-linux-user.mak
-index bf328b3b80c..ddfacc092dd 100644
---- a/configs/targets/aarch64-linux-user.mak
-+++ b/configs/targets/aarch64-linux-user.mak
-@@ -1,6 +1,6 @@
- TARGET_ARCH=aarch64
- TARGET_BASE_ARCH=arm
--TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xml
-+TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aarch64-mte.xml aarch64-sme2.xml
- TARGET_HAS_BFLT=y
- CONFIG_SEMIHOSTING=y
- CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
-diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
-index d14bcfc4900..9a20187e2c1 100644
---- a/configs/targets/aarch64-softmmu.mak
-+++ b/configs/targets/aarch64-softmmu.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=aarch64
- TARGET_BASE_ARCH=arm
- TARGET_KVM_HAVE_GUEST_DEBUG=y
--TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-sme2.xml
-+TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml aarch64-pauth.xml aarch64-sme2.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/aarch64_be-linux-user.mak b/configs/targets/aarch64_be-linux-user.mak
-index 284430add7b..83209fa2ae5 100644
---- a/configs/targets/aarch64_be-linux-user.mak
-+++ b/configs/targets/aarch64_be-linux-user.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=aarch64
- TARGET_BASE_ARCH=arm
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/aarch64-core.xml gdb-xml/aarch64-fpu.xml gdb-xml/aarch64-pauth.xml gdb-xml/aarch64-mte.xml gdb-xml/aarch64-sme2.xml
-+TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml aarch64-pauth.xml aarch64-mte.xml aarch64-sme2.xml
- TARGET_HAS_BFLT=y
- CONFIG_SEMIHOSTING=y
- CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
-diff --git a/configs/targets/alpha-linux-user.mak b/configs/targets/alpha-linux-user.mak
-index 2f1312f0362..fbb9c680915 100644
---- a/configs/targets/alpha-linux-user.mak
-+++ b/configs/targets/alpha-linux-user.mak
-@@ -2,6 +2,6 @@ TARGET_ARCH=alpha
- TARGET_SYSTBL_ABI=common
- TARGET_SYSTBL=syscall.tbl
- TARGET_LONG_BITS=64
--TARGET_XML_FILES= gdb-xml/alpha-core.xml
-+TARGET_XML_FILES= alpha-core.xml
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/alpha-softmmu.mak b/configs/targets/alpha-softmmu.mak
-index 5c6af0eafc1..fb412d1b53f 100644
---- a/configs/targets/alpha-softmmu.mak
-+++ b/configs/targets/alpha-softmmu.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=alpha
- TARGET_LONG_BITS=64
--TARGET_XML_FILES= gdb-xml/alpha-core.xml
-+TARGET_XML_FILES= alpha-core.xml
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/arm-bsd-user.mak b/configs/targets/arm-bsd-user.mak
-index 472a4f9fb11..b520819e776 100644
---- a/configs/targets/arm-bsd-user.mak
-+++ b/configs/targets/arm-bsd-user.mak
-@@ -1,3 +1,3 @@
- TARGET_ARCH=arm
--TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
-+TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/arm-linux-user.mak b/configs/targets/arm-linux-user.mak
-index bf35ded7fea..3793782d067 100644
---- a/configs/targets/arm-linux-user.mak
-+++ b/configs/targets/arm-linux-user.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=arm
- TARGET_SYSTBL_ABI=common,oabi
- TARGET_SYSTBL=syscall.tbl
--TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
-+TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
- TARGET_HAS_BFLT=y
- CONFIG_SEMIHOSTING=y
- CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
-diff --git a/configs/targets/arm-softmmu.mak b/configs/targets/arm-softmmu.mak
-index 6a5a8eda949..35af7da79f2 100644
---- a/configs/targets/arm-softmmu.mak
-+++ b/configs/targets/arm-softmmu.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=arm
--TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
-+TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/armeb-linux-user.mak b/configs/targets/armeb-linux-user.mak
-index 35fa4d91b3c..536bc95af71 100644
---- a/configs/targets/armeb-linux-user.mak
-+++ b/configs/targets/armeb-linux-user.mak
-@@ -2,7 +2,7 @@ TARGET_ARCH=arm
- TARGET_SYSTBL_ABI=common,oabi
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/arm-core.xml gdb-xml/arm-vfp.xml gdb-xml/arm-vfp3.xml gdb-xml/arm-vfp-sysregs.xml gdb-xml/arm-neon.xml gdb-xml/arm-m-profile.xml gdb-xml/arm-m-profile-mve.xml
-+TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-neon.xml arm-m-profile.xml arm-m-profile-mve.xml
- TARGET_HAS_BFLT=y
- CONFIG_SEMIHOSTING=y
- CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
-diff --git a/configs/targets/avr-softmmu.mak b/configs/targets/avr-softmmu.mak
-index baf20fb7f2f..0a00f128749 100644
---- a/configs/targets/avr-softmmu.mak
-+++ b/configs/targets/avr-softmmu.mak
-@@ -1,4 +1,4 @@
- TARGET_ARCH=avr
--TARGET_XML_FILES= gdb-xml/avr-cpu.xml
-+TARGET_XML_FILES= avr-cpu.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/hexagon-linux-user.mak b/configs/targets/hexagon-linux-user.mak
-index 6763e2111d5..51fde5d60e6 100644
---- a/configs/targets/hexagon-linux-user.mak
-+++ b/configs/targets/hexagon-linux-user.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=hexagon
--TARGET_XML_FILES=gdb-xml/hexagon-core.xml gdb-xml/hexagon-hvx.xml
-+TARGET_XML_FILES=hexagon-core.xml hexagon-hvx.xml
- TARGET_SYSTBL=syscall.tbl
- TARGET_SYSTBL_ABI=common,32,hexagon,time32,stat64,rlimit,renameat
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/i386-bsd-user.mak b/configs/targets/i386-bsd-user.mak
-index 70e098da491..485f571cb6c 100644
---- a/configs/targets/i386-bsd-user.mak
-+++ b/configs/targets/i386-bsd-user.mak
-@@ -1,3 +1,3 @@
- TARGET_ARCH=i386
--TARGET_XML_FILES= gdb-xml/i386-32bit.xml
-+TARGET_XML_FILES= i386-32bit.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/i386-linux-user.mak b/configs/targets/i386-linux-user.mak
-index ea68a266fce..a3ea4c39c52 100644
---- a/configs/targets/i386-linux-user.mak
-+++ b/configs/targets/i386-linux-user.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=i386
- TARGET_SYSTBL_ABI=i386
- TARGET_SYSTBL=syscall_32.tbl
--TARGET_XML_FILES= gdb-xml/i386-32bit.xml gdb-xml/i386-32bit-linux.xml
-+TARGET_XML_FILES= i386-32bit.xml i386-32bit-linux.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/i386-softmmu.mak b/configs/targets/i386-softmmu.mak
-index 19ef4a6690d..38a8f85201f 100644
---- a/configs/targets/i386-softmmu.mak
-+++ b/configs/targets/i386-softmmu.mak
-@@ -1,6 +1,6 @@
- TARGET_ARCH=i386
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
--TARGET_XML_FILES= gdb-xml/i386-32bit.xml
-+TARGET_XML_FILES= i386-32bit.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/loongarch64-linux-user.mak b/configs/targets/loongarch64-linux-user.mak
-index 4ea12794705..63b0bfc07b8 100644
---- a/configs/targets/loongarch64-linux-user.mak
-+++ b/configs/targets/loongarch64-linux-user.mak
-@@ -1,7 +1,7 @@
- # Default configuration for loongarch64-linux-user
- TARGET_ARCH=loongarch64
- TARGET_BASE_ARCH=loongarch
--TARGET_XML_FILES=gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
-+TARGET_XML_FILES=loongarch-base64.xml loongarch-fpu.xml loongarch-lsx.xml loongarch-lasx.xml
- TARGET_SYSTBL=syscall.tbl
- TARGET_SYSTBL_ABI=common,64
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
-index 38c0f68ddbc..476407f9413 100644
---- a/configs/targets/loongarch64-softmmu.mak
-+++ b/configs/targets/loongarch64-softmmu.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=loongarch64
- TARGET_BASE_ARCH=loongarch
- TARGET_KVM_HAVE_GUEST_DEBUG=y
--TARGET_XML_FILES= gdb-xml/loongarch-base32.xml gdb-xml/loongarch-base64.xml gdb-xml/loongarch-fpu.xml gdb-xml/loongarch-lsx.xml gdb-xml/loongarch-lasx.xml
-+TARGET_XML_FILES= loongarch-base32.xml loongarch-base64.xml loongarch-fpu.xml loongarch-lsx.xml loongarch-lasx.xml
- # all boards require libfdt
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/m68k-linux-user.mak b/configs/targets/m68k-linux-user.mak
-index 2d9bae22707..b64f33e759a 100644
---- a/configs/targets/m68k-linux-user.mak
-+++ b/configs/targets/m68k-linux-user.mak
-@@ -2,6 +2,6 @@ TARGET_ARCH=m68k
- TARGET_SYSTBL_ABI=common
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/cf-core.xml gdb-xml/cf-fp.xml gdb-xml/m68k-core.xml gdb-xml/m68k-fp.xml
-+TARGET_XML_FILES= cf-core.xml cf-fp.xml m68k-core.xml m68k-fp.xml
- TARGET_HAS_BFLT=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/m68k-softmmu.mak b/configs/targets/m68k-softmmu.mak
-index bacc52e96a9..0bc889f326e 100644
---- a/configs/targets/m68k-softmmu.mak
-+++ b/configs/targets/m68k-softmmu.mak
-@@ -1,4 +1,4 @@
- TARGET_ARCH=m68k
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/cf-core.xml gdb-xml/cf-fp.xml gdb-xml/m68k-core.xml gdb-xml/m68k-fp.xml
-+TARGET_XML_FILES= cf-core.xml cf-fp.xml m68k-core.xml m68k-fp.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/microblaze-linux-user.mak b/configs/targets/microblaze-linux-user.mak
-index 37727797695..31150f980c8 100644
---- a/configs/targets/microblaze-linux-user.mak
-+++ b/configs/targets/microblaze-linux-user.mak
-@@ -3,5 +3,5 @@ TARGET_SYSTBL_ABI=common
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
- TARGET_HAS_BFLT=y
--TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
-+TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/microblaze-softmmu.mak b/configs/targets/microblaze-softmmu.mak
-index cf635798c90..f2b6ab93fbe 100644
---- a/configs/targets/microblaze-softmmu.mak
-+++ b/configs/targets/microblaze-softmmu.mak
-@@ -2,6 +2,6 @@ TARGET_ARCH=microblaze
- TARGET_BIG_ENDIAN=y
- # needed by boot.c
- TARGET_NEED_FDT=y
--TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
-+TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/microblazeel-linux-user.mak b/configs/targets/microblazeel-linux-user.mak
-index a51a05488d3..5dcd4b5b183 100644
---- a/configs/targets/microblazeel-linux-user.mak
-+++ b/configs/targets/microblazeel-linux-user.mak
-@@ -2,5 +2,5 @@ TARGET_ARCH=microblaze
- TARGET_SYSTBL_ABI=common
- TARGET_SYSTBL=syscall.tbl
- TARGET_HAS_BFLT=y
--TARGET_XML_FILES=gdb-xml/microblaze-core.xml gdb-xml/microblaze-stack-protect.xml
-+TARGET_XML_FILES=microblaze-core.xml microblaze-stack-protect.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/or1k-linux-user.mak b/configs/targets/or1k-linux-user.mak
-index 9f8c178ef10..ecb95253680 100644
---- a/configs/targets/or1k-linux-user.mak
-+++ b/configs/targets/or1k-linux-user.mak
-@@ -2,6 +2,6 @@ TARGET_ARCH=or1k
- TARGET_BIG_ENDIAN=y
- TARGET_SYSTBL_ABI=common,32,or1k,time32,stat64,rlimit,renameat
- TARGET_SYSTBL=syscall.tbl
--TARGET_XML_FILES= gdb-xml/or1k-core.xml
-+TARGET_XML_FILES= or1k-core.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/or1k-softmmu.mak b/configs/targets/or1k-softmmu.mak
-index 24d89bc3e65..c3ca0a2c6ba 100644
---- a/configs/targets/or1k-softmmu.mak
-+++ b/configs/targets/or1k-softmmu.mak
-@@ -2,7 +2,7 @@ TARGET_ARCH=or1k
- TARGET_BIG_ENDIAN=y
- # needed by boot.c and all boards
- TARGET_NEED_FDT=y
--TARGET_XML_FILES= gdb-xml/or1k-core.xml
-+TARGET_XML_FILES= or1k-core.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/ppc-linux-user.mak b/configs/targets/ppc-linux-user.mak
-index 970d04a5ba1..5ddec598760 100644
---- a/configs/targets/ppc-linux-user.mak
-+++ b/configs/targets/ppc-linux-user.mak
-@@ -2,5 +2,5 @@ TARGET_ARCH=ppc
- TARGET_SYSTBL_ABI=common,nospu,32
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/power-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml
-+TARGET_XML_FILES= power-core.xml power-fpu.xml power-altivec.xml power-spe.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/ppc-softmmu.mak b/configs/targets/ppc-softmmu.mak
-index 9bfa7df6c36..867898bd47c 100644
---- a/configs/targets/ppc-softmmu.mak
-+++ b/configs/targets/ppc-softmmu.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=ppc
- TARGET_BIG_ENDIAN=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
--TARGET_XML_FILES= gdb-xml/power-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml
-+TARGET_XML_FILES= power-core.xml power-fpu.xml power-altivec.xml power-spe.xml
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/ppc64-linux-user.mak b/configs/targets/ppc64-linux-user.mak
-index 461f1c67d15..fcedce1b4e0 100644
---- a/configs/targets/ppc64-linux-user.mak
-+++ b/configs/targets/ppc64-linux-user.mak
-@@ -4,5 +4,5 @@ TARGET_ABI_DIR=ppc
- TARGET_SYSTBL_ABI=common,nospu,64
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
-+TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml power-vsx.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/ppc64-softmmu.mak b/configs/targets/ppc64-softmmu.mak
-index 74572864b36..10d7a2681e7 100644
---- a/configs/targets/ppc64-softmmu.mak
-+++ b/configs/targets/ppc64-softmmu.mak
-@@ -2,7 +2,7 @@ TARGET_ARCH=ppc64
- TARGET_BASE_ARCH=ppc
- TARGET_BIG_ENDIAN=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
--TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
-+TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml power-vsx.xml
- # all boards require libfdt
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/ppc64le-linux-user.mak b/configs/targets/ppc64le-linux-user.mak
-index cf9d8a400d9..b5a81b58868 100644
---- a/configs/targets/ppc64le-linux-user.mak
-+++ b/configs/targets/ppc64le-linux-user.mak
-@@ -3,5 +3,5 @@ TARGET_BASE_ARCH=ppc
- TARGET_ABI_DIR=ppc
- TARGET_SYSTBL_ABI=common,nospu,64
- TARGET_SYSTBL=syscall.tbl
--TARGET_XML_FILES= gdb-xml/power64-core.xml gdb-xml/power-fpu.xml gdb-xml/power-altivec.xml gdb-xml/power-spe.xml gdb-xml/power-vsx.xml
-+TARGET_XML_FILES= power64-core.xml power-fpu.xml power-altivec.xml power-spe.xml power-vsx.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/riscv32-linux-user.mak b/configs/targets/riscv32-linux-user.mak
-index a0ef03c0c3f..f069ab9a0f9 100644
---- a/configs/targets/riscv32-linux-user.mak
-+++ b/configs/targets/riscv32-linux-user.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=riscv32
- TARGET_BASE_ARCH=riscv
- TARGET_ABI_DIR=riscv
--TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
-+TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml
- CONFIG_SEMIHOSTING=y
- CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
- TARGET_SYSTBL_ABI=32
-diff --git a/configs/targets/riscv32-softmmu.mak b/configs/targets/riscv32-softmmu.mak
-index 7476e596082..26080599be7 100644
---- a/configs/targets/riscv32-softmmu.mak
-+++ b/configs/targets/riscv32-softmmu.mak
-@@ -1,6 +1,6 @@
- TARGET_ARCH=riscv32
- TARGET_BASE_ARCH=riscv
--TARGET_XML_FILES= gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-32bit-virtual.xml
-+TARGET_XML_FILES= riscv-32bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-32bit-virtual.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/riscv64-bsd-user.mak b/configs/targets/riscv64-bsd-user.mak
-index c6348a79629..bc85d9ed04e 100644
---- a/configs/targets/riscv64-bsd-user.mak
-+++ b/configs/targets/riscv64-bsd-user.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=riscv64
- TARGET_BASE_ARCH=riscv
- TARGET_ABI_DIR=riscv
--TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
-+TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/riscv64-linux-user.mak b/configs/targets/riscv64-linux-user.mak
-index aac7568305d..bca08645124 100644
---- a/configs/targets/riscv64-linux-user.mak
-+++ b/configs/targets/riscv64-linux-user.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=riscv64
- TARGET_BASE_ARCH=riscv
- TARGET_ABI_DIR=riscv
--TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml
-+TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml
- CONFIG_SEMIHOSTING=y
- CONFIG_ARM_COMPATIBLE_SEMIHOSTING=y
- TARGET_SYSTBL_ABI=64
-diff --git a/configs/targets/riscv64-softmmu.mak b/configs/targets/riscv64-softmmu.mak
-index f836f08c5b9..5059c550480 100644
---- a/configs/targets/riscv64-softmmu.mak
-+++ b/configs/targets/riscv64-softmmu.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=riscv64
- TARGET_BASE_ARCH=riscv
- TARGET_KVM_HAVE_GUEST_DEBUG=y
--TARGET_XML_FILES= gdb-xml/riscv-64bit-cpu.xml gdb-xml/riscv-32bit-fpu.xml gdb-xml/riscv-64bit-fpu.xml gdb-xml/riscv-64bit-virtual.xml gdb-xml/riscv-32bit-cpu.xml gdb-xml/riscv-32bit-virtual.xml
-+TARGET_XML_FILES= riscv-64bit-cpu.xml riscv-32bit-fpu.xml riscv-64bit-fpu.xml riscv-64bit-virtual.xml riscv-32bit-cpu.xml riscv-32bit-virtual.xml
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/rx-softmmu.mak b/configs/targets/rx-softmmu.mak
-index 281a165873a..1959d1b4ccc 100644
---- a/configs/targets/rx-softmmu.mak
-+++ b/configs/targets/rx-softmmu.mak
-@@ -1,5 +1,5 @@
- TARGET_ARCH=rx
--TARGET_XML_FILES= gdb-xml/rx-core.xml
-+TARGET_XML_FILES= rx-core.xml
- # all boards require libfdt
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
-diff --git a/configs/targets/s390x-linux-user.mak b/configs/targets/s390x-linux-user.mak
-index e3723f5dc54..2dbcae0a6e2 100644
---- a/configs/targets/s390x-linux-user.mak
-+++ b/configs/targets/s390x-linux-user.mak
-@@ -2,6 +2,6 @@ TARGET_ARCH=s390x
- TARGET_SYSTBL_ABI=common,64
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
-+TARGET_XML_FILES= s390x-core64.xml s390-acr.xml s390-fpr.xml s390-vx.xml s390-cr.xml s390-virt.xml s390-virt-kvm.xml s390-gs.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/s390x-softmmu.mak b/configs/targets/s390x-softmmu.mak
-index 544657cfe2d..e273075f1a9 100644
---- a/configs/targets/s390x-softmmu.mak
-+++ b/configs/targets/s390x-softmmu.mak
-@@ -1,6 +1,6 @@
- TARGET_ARCH=s390x
- TARGET_BIG_ENDIAN=y
- TARGET_KVM_HAVE_GUEST_DEBUG=y
--TARGET_XML_FILES= gdb-xml/s390x-core64.xml gdb-xml/s390-acr.xml gdb-xml/s390-fpr.xml gdb-xml/s390-vx.xml gdb-xml/s390-cr.xml gdb-xml/s390-virt.xml gdb-xml/s390-virt-kvm.xml gdb-xml/s390-gs.xml
-+TARGET_XML_FILES= s390x-core64.xml s390-acr.xml s390-fpr.xml s390-vx.xml s390-cr.xml s390-virt.xml s390-virt-kvm.xml s390-gs.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/sparc-linux-user.mak b/configs/targets/sparc-linux-user.mak
-index 01446e28783..2b6f8077399 100644
---- a/configs/targets/sparc-linux-user.mak
-+++ b/configs/targets/sparc-linux-user.mak
-@@ -2,6 +2,6 @@ TARGET_ARCH=sparc
- TARGET_SYSTBL_ABI=common,32
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES=gdb-xml/sparc32-cpu.xml gdb-xml/sparc32-fpu.xml gdb-xml/sparc32-cp0.xml
-+TARGET_XML_FILES=sparc32-cpu.xml sparc32-fpu.xml sparc32-cp0.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/sparc-softmmu.mak b/configs/targets/sparc-softmmu.mak
-index ed846735f41..126ce12abb0 100644
---- a/configs/targets/sparc-softmmu.mak
-+++ b/configs/targets/sparc-softmmu.mak
-@@ -1,6 +1,6 @@
- TARGET_ARCH=sparc
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES=gdb-xml/sparc32-cpu.xml gdb-xml/sparc32-fpu.xml gdb-xml/sparc32-cp0.xml
-+TARGET_XML_FILES=sparc32-cpu.xml sparc32-fpu.xml sparc32-cp0.xml
- TARGET_LONG_BITS=32
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/sparc32plus-linux-user.mak b/configs/targets/sparc32plus-linux-user.mak
-index cf49c53ce44..a1d8530ecfd 100644
---- a/configs/targets/sparc32plus-linux-user.mak
-+++ b/configs/targets/sparc32plus-linux-user.mak
-@@ -5,6 +5,6 @@ TARGET_ABI_DIR=sparc
- TARGET_SYSTBL_ABI=common,32
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
-+TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/sparc64-linux-user.mak b/configs/targets/sparc64-linux-user.mak
-index 81d18fcc85b..c48a03aeb9e 100644
---- a/configs/targets/sparc64-linux-user.mak
-+++ b/configs/targets/sparc64-linux-user.mak
-@@ -4,6 +4,6 @@ TARGET_ABI_DIR=sparc
- TARGET_SYSTBL_ABI=common,64
- TARGET_SYSTBL=syscall.tbl
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
-+TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/sparc64-softmmu.mak b/configs/targets/sparc64-softmmu.mak
-index 602783ef0f6..4e621fb8e39 100644
---- a/configs/targets/sparc64-softmmu.mak
-+++ b/configs/targets/sparc64-softmmu.mak
-@@ -1,7 +1,7 @@
- TARGET_ARCH=sparc64
- TARGET_BASE_ARCH=sparc
- TARGET_BIG_ENDIAN=y
--TARGET_XML_FILES=gdb-xml/sparc64-cpu.xml gdb-xml/sparc64-fpu.xml gdb-xml/sparc64-cp0.xml
-+TARGET_XML_FILES=sparc64-cpu.xml sparc64-fpu.xml sparc64-cp0.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
- TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
-diff --git a/configs/targets/x86_64-bsd-user.mak b/configs/targets/x86_64-bsd-user.mak
-index d62d656f2c6..d754186347f 100644
---- a/configs/targets/x86_64-bsd-user.mak
-+++ b/configs/targets/x86_64-bsd-user.mak
-@@ -1,4 +1,4 @@
- TARGET_ARCH=x86_64
- TARGET_BASE_ARCH=i386
--TARGET_XML_FILES= gdb-xml/i386-64bit.xml
-+TARGET_XML_FILES= i386-64bit.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/x86_64-linux-user.mak b/configs/targets/x86_64-linux-user.mak
-index b093ab5a167..7f9527fd1de 100644
---- a/configs/targets/x86_64-linux-user.mak
-+++ b/configs/targets/x86_64-linux-user.mak
-@@ -2,5 +2,5 @@ TARGET_ARCH=x86_64
- TARGET_BASE_ARCH=i386
- TARGET_SYSTBL_ABI=common,64
- TARGET_SYSTBL=syscall_64.tbl
--TARGET_XML_FILES= gdb-xml/i386-64bit.xml gdb-xml/i386-64bit-linux.xml
-+TARGET_XML_FILES= i386-64bit.xml i386-64bit-linux.xml
- TARGET_LONG_BITS=64
-diff --git a/configs/targets/x86_64-softmmu.mak b/configs/targets/x86_64-softmmu.mak
-index 151862158c7..c7f8746b4f5 100644
---- a/configs/targets/x86_64-softmmu.mak
-+++ b/configs/targets/x86_64-softmmu.mak
-@@ -2,6 +2,6 @@ TARGET_ARCH=x86_64
- TARGET_BASE_ARCH=i386
- TARGET_KVM_HAVE_GUEST_DEBUG=y
- TARGET_KVM_HAVE_RESET_PARKED_VCPU=y
--TARGET_XML_FILES= gdb-xml/i386-64bit.xml gdb-xml/i386-64bit-apx.xml
-+TARGET_XML_FILES= i386-64bit.xml i386-64bit-apx.xml
- TARGET_LONG_BITS=64
- TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/meson.build b/meson.build
-index db8918dd303..8e8440941c0 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4329,9 +4329,13 @@ foreach target : target_dirs
-   endif
+diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
+index f1ce90a046e..b86520f8f9c 100644
+--- a/target/i386/gdbstub.c
++++ b/target/i386/gdbstub.c
+@@ -39,9 +39,7 @@ static const int gpr_map[CPU_NB_EREGS] = {
+ static const int gpr_map32[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
  
-   if 'TARGET_XML_FILES' in config_target
-+    gdbstub_xml_files = []
-+    foreach gdbstub_xml : config_target['TARGET_XML_FILES'].split()
-+      gdbstub_xml_files += 'gdb-xml/' + gdbstub_xml
-+    endforeach
-     gdbstub_xml = custom_target(target + '-gdbstub-xml.c',
-                                 output: target + '-gdbstub-xml.c',
--                                input: files(config_target['TARGET_XML_FILES'].split()),
-+                                input: files(gdbstub_xml_files),
-                                 command: [feature_to_c, '@INPUT@'],
-                                 capture: true)
-     arch_srcs += gdbstub_xml
+ /*
+- * Keep these in sync with assignment to
+- * gdb_num_core_regs in target/i386/cpu.c
+- * and with the machine description
++ * Keep these in sync with the machine description
+  */
+ 
+ /*
 -- 
 2.47.3
 
