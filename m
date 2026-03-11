@@ -4,44 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0522A112588E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0D06112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PLJ-0007Z4-Tk; Wed, 11 Mar 2026 15:35:42 -0400
+	id 1w0PLf-0007nL-Ly; Wed, 11 Mar 2026 15:36:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKv-0007Sb-4W; Wed, 11 Mar 2026 15:35:18 -0400
+ id 1w0PLY-0007lY-IJ; Wed, 11 Mar 2026 15:35:56 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKr-000056-RB; Wed, 11 Mar 2026 15:35:15 -0400
+ id 1w0PLW-0000C1-Gi; Wed, 11 Mar 2026 15:35:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257666; bh=AkGdtL1378GuYkw9TJKFVH4lXWbLXsqU//G2VlqmrT0=;
+ t=1773257667; bh=bbmqjRM2rDQUjJA1YR13aTuu13pDhP4NF8kBbLuGsTo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=o6FFREF6OdLxWQBA78ng80EZGxIAwha7top/k4P4rxq60CLjOOfhSGY2a5h64LV1N
- xZPokuIy660QnOof133zdLhP0a+Igv1bEG59uVNUuJe5hi9D35Iua5ahJDxg65Hew6
- 12oUOpgQOhsVnLBEb2GJMniWMm2niehtjp4xF1G10hd80GO4AyOMhjn0SnSjzFnuYi
- pDpqc6JSHUZFkGh2+nGXAtlkjboIGKDeq43afDWpfcTb/8LJqci+j0j43fFSK/relk
- vzUtDbBBC5ww1/xyZaEFgrN6fKRmshc5NNimxmbheb4oyTIZeBVIUBshrDJyK/KTo4
- d781b6R9hfyGA==
+ b=Nx5/wgHZSM6LVrz0QBL7R3F41Yeo7lAyR/ZXh/QospPlJDoCFchkHBCtmCJPjO1/L
+ 1wo/oZ9I1i8ytb0vdv1vmKOTjZ8XEaVAPIrvPwvhtZ2i5Kh+LiMA7Qo7XJhvNF32xh
+ oxv9XM+QuO2mcE3TRbjt5FXa8Thegm25WcdSacZFYkObUeqhpMqro2yIwYYHjVu2bk
+ smS3yOZaViwkpsDMXrGP2oLFegcGDx4BUsknJbgTRSAMDaA1/HNCh0PJtPBR4CR5jC
+ WzXtKi/Ey38RuAQorNCn/XKAnqaE2k2nqYGfgm1P3bdpVq5ZgQbUiceb6JVIFbresM
+ 4mssXpPTnqmtQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 51CFA1920EC;
- Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 2F1541920F6;
+ Wed, 11 Mar 2026 22:34:27 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 93C9C37C451;
- Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7028F37C45B;
+ Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 04/53] iotests: test active mirror with unaligned,
- small write zeroes op
-Date: Wed, 11 Mar 2026 22:33:57 +0300
-Message-ID: <20260311193449.1096110-4-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 14/53] target/arm: Don't let 'sme=on' downgrade SME
+Date: Wed, 11 Mar 2026 22:34:07 +0300
+Message-ID: <20260311193449.1096110-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -71,64 +71,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-This tests the scenario fixed by "block/mirror: check range
-when setting zero bitmap for sync write" [0].
+In our handling of the boolean 'sme' CPU property, we write this 0/1
+value directly to ID_AA64PFR1_EL1.SME.  This worked when the only
+valid values in that field were 0 (for no SME) and 1 (for SME1).
+However, with the addition of SME2 the SME field can now also read 2.
+This means that "-cpu max,sme=on" will result in an inconsistent set
+of ID registers, where ID_AA64PFR1_EL1.SME claims SME1 but
+ID_AA64SMFR0_EL1.SMEver claims SME2p1.  This isn't a valid thing to
+report, and confuses Linux into reporting SME2 to userspace but not
+actually enabling userspace access for it.
 
-[0] https://lore.kernel.org/qemu-devel/20260112152544.261923-1-f.ebner@proxmox.com/
+Fix this bug by having arm_cpu_sme_finalize() fix up the
+ID_AA64PFR1_EL1.SME field to match ID_AA64SMFR0.SMEver.  This means
+the "sme" property's semantics are "off" for "no SME" and "on" for
+"enable at whatever the default SME version this CPU provides is".
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Message-ID: <20260120113859.251743-1-f.ebner@proxmox.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-(cherry picked from commit 267d7ae99a1d3b5be9d3421db3bdf651cc18c7ab)
+Update the documentation to clarify what 'sve=on' and 'sme=on' do.
+(We don't have the equivalent bug for 'sve=on' because
+ID_AA64PFR0_EL1.SVE only has 0 and 1 as valid values, but the
+semantics of the property are the same.)
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Message-id: 20260202133353.2231685-6-peter.maydell@linaro.org
+(cherry picked from commit aeb3c147fc4a1eb9a73f9f10923fc06def088aeb)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/qemu-iotests/151 b/tests/qemu-iotests/151
-index 06ee3585db..9b9c815db5 100755
---- a/tests/qemu-iotests/151
-+++ b/tests/qemu-iotests/151
-@@ -191,6 +191,26 @@ class TestActiveMirror(iotests.QMPTestCase):
+diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
+index 37d5dfd15b..024119449c 100644
+--- a/docs/system/arm/cpu-features.rst
++++ b/docs/system/arm/cpu-features.rst
+@@ -318,6 +318,11 @@ SVE CPU Property Parsing Semantics
+      provided an error will be generated.  To avoid this error, one must
+      enable at least one vector length prior to enabling SVE.
  
-         self.potential_writes_in_flight = False
++  10) Enabling SVE (with ``sve=on`` or by default) enables all the SVE
++      sub-features that the CPU supports (for example, it may also
++      enable SVE2). There are not generally any lower-level controls
++      for disabling specific SVE sub-features.
++
+ SVE CPU Property Examples
+ -------------------------
  
-+    def testUnalignedSmallerThanGranularityWriteZeroes(self):
-+        # Fill the source image
-+        self.vm.hmp_qemu_io('source', 'write -P 1 0 %i' % self.image_len);
-+
-+        # Start the block job
-+        self.vm.cmd('blockdev-mirror',
-+                    job_id='mirror',
-+                    filter_node_name='mirror-node',
-+                    device='source-node',
-+                    target='target-node',
-+                    sync='full',
-+                    copy_mode='write-blocking')
-+
-+        # Wait for the READY event
-+        self.wait_ready(drive='mirror')
-+
-+        for offset in range(6 * self.image_len // 8, 7 * self.image_len // 8, 1024 * 1024):
-+            self.vm.hmp_qemu_io('source', 'aio_write -z %i 512' % (offset + 512))
-+
-+        self.complete_and_wait(drive='mirror', wait_ready=False)
+@@ -430,6 +435,11 @@ and all vector lengths must be powers of 2.  The maximum vector
+ length supported by qemu is 2048 bits.  Otherwise, there are no
+ additional constraints on the set of vector lengths supported by SME.
  
- class TestThrottledWithNbdExportBase(iotests.QMPTestCase):
-     image_len = 128 * 1024 * 1024  # MB
-diff --git a/tests/qemu-iotests/151.out b/tests/qemu-iotests/151.out
-index 3f8a935a08..2f7d3902f2 100644
---- a/tests/qemu-iotests/151.out
-+++ b/tests/qemu-iotests/151.out
-@@ -1,5 +1,5 @@
--......
-+.......
- ----------------------------------------------------------------------
--Ran 6 tests
-+Ran 7 tests
++As with SVE, ``sme=on`` enables all the SME sub-features the CPU
++supports (for example, it may also enable SME2), and there are
++no lower-level controls for fine-grained disabling of specific
++SME sub-features.
++
+ SME User-mode Default Vector Length Property
+ --------------------------------------------
  
- OK
+diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
+index ae84d8e420..2082672dea 100644
+--- a/target/arm/cpu64.c
++++ b/target/arm/cpu64.c
+@@ -363,6 +363,16 @@ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
+ 
+     cpu->sme_vq.map = vq_map;
+     cpu->sme_max_vq = 32 - clz32(vq_map);
++
++    /*
++     * The "sme" property setter writes a bool value into ID_AA64PFR1_EL1.SME
++     * (and at this point we know it's not 0). Correct that value to report
++     * the same SME version as ID_AA64SMFR0_EL1.SMEver.
++     */
++    if (FIELD_EX64_IDREG(&cpu->isar, ID_AA64SMFR0, SMEVER) != 0) {
++        /* SME2 or better */
++        FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, 2);
++    }
+ }
+ 
+ static bool cpu_arm_get_sme(Object *obj, Error **errp)
+@@ -375,6 +385,11 @@ static void cpu_arm_set_sme(Object *obj, bool value, Error **errp)
+ {
+     ARMCPU *cpu = ARM_CPU(obj);
+ 
++    /*
++     * For now, write 0 for "off" and 1 for "on" into the PFR1 field.
++     * We will correct this value to report the right SME
++     * level (SME vs SME2) in arm_cpu_sme_finalize() later.
++     */
+     FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, value);
+ }
+ 
 -- 
 2.47.3
 
