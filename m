@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C465FD88D4
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5DF6FD88D8
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w08Xb-00046H-MG; Tue, 10 Mar 2026 21:39:15 -0400
+	id 1w08XW-00043N-8g; Tue, 10 Mar 2026 21:39:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XT-00041m-5l
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:08 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1w08XO-0003ze-IO
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:02 -0400
+Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XQ-0004sm-Hx
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:06 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2ab39b111b9so60584935ad.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:39:04 -0700 (PDT)
+ id 1w08XM-0004rY-NC
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:39:02 -0400
+Received: by mail-pl1-x636.google.com with SMTP id
+ d9443c01a7336-2aaf59c4f7cso59295645ad.1
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:39:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773193143; x=1773797943; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773193139; x=1773797939; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A4Wp7/fhzYKiB17fh69l1UR/8i6fmLxfGHsplNPX9Rc=;
- b=IDhpy3QAsiPxg8DaD9oQHkESPR+lmAnMQZturlH5iuHQ/umZeiBhDJ2MzuQie47OHA
- Q166TTf6qWPcHNJTeyHUN09V6ljVlqmeluwYmONCcx8z5K+6B6Va0xAPVJj7bsSt7nI0
- kwX7ah/w8ux4AWs0igDBCG1BWETPb/XcP5WRR5s31yEQPPc0uA7Eb78lPjWhwWUFVUyo
- 2LoXv5apZiGR5Qfa+g0tJSiO0HbnNs9VaFAom+XiySuVSfXX/ySPkWCtNMW/+J7HS+Kv
- QY4wQUDKu0jsfpCCSr3LJ9E7IEdUXst0G9+HzULr4W8z7BL0Zk6FwrGMXSl/b6Rx1MOz
- tmIg==
+ bh=f8a1x0CIz1Dz3JdywSYiJEs59NB9UmqDZiiGwWJXBpo=;
+ b=qDk8uQRfGusbAO2cTDYcAHh8g+AenHNY58fsyizS30z9v5Qkk62NFwlCJ+nEy98M/T
+ DvG+5zMvZk+T7NQkA4B46gmCfM7y0VOREVIs3uAc1ApXdY+34U9exkq9ZFnT6cbLA3T5
+ 8KissKxx4qWAw/dxkuZxzjkEpWqFv9ssbiXez9grvIx5oczex0tggCmVcrKIgodbxV+W
+ Qd+mM6OYuKkoevILTDI3KkADKEfIdCOCDO4jfbLQIAgM6u1dZyKbqA8vCguDJBm+bjWS
+ XSuXBKtHAU7fbrI5488SOJsNux2//fafRF41872jBaaplJhiyF201S/z0S4ZSgA9qMrz
+ HlJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773193143; x=1773797943;
+ d=1e100.net; s=20230601; t=1773193139; x=1773797939;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=A4Wp7/fhzYKiB17fh69l1UR/8i6fmLxfGHsplNPX9Rc=;
- b=SXQZ8y+ghjy3Rzn7QF7eFc6pSO247VxdDVcPIP6M6ltswBnFp/sykDZe9wPKnmuUlY
- levl247/6pIMq/bx6Puyq45e0PqdGfnGY2CLaEGAB77m5li3pOOQs5ib+av6BqtHYyYm
- g43/SwKnz+rEtfLQUD6lHg/OFVmE4VXKlTGUyrEtpl6/Ed/9exm0seXNFyCs95k2GBRk
- saS1UwCGMCqfBp21ePKRKYNF8pnbvexpUtqWt6TkuFN/Er/lB4NViLe3PWoxYDRZSrgc
- xs1V2eNlFMf6ZzDx43EddfHG1IlESCz0pGpHPi6qhWqyL50dB87jvxHAmGYpkZXX4+31
- bwpw==
-X-Gm-Message-State: AOJu0YzKgRc+T+4limISbkLh2bF8/yIT6sc1YB9XiEqVSmlOFNd0A7YH
- d4DkHPVRsSz7pjzdLwCb/O6SA7/Teol3TS5JiW3V2IaVJCPf+UwWejAhTMSviAt0kYftmz5NQoD
- bnBt2
-X-Gm-Gg: ATEYQzw+Lk+jcbO/fqSuJ1zEx5cBapNlehYH2hNyu917M2Cl/Xpo7DZ4uICcSPCh/eA
- tE9K+AEtG2fGcX9e0qKUbo4GkzvCyZPhSjYF0HGj1APLsBn1erkJjNaSx7I/PL1g7i0rVXECztc
- SqZeHJ1Xt5BOV2LPeAw1kw0Tu2tLnGHqg92RwhutyTKtg947PVbitNW/PNtLKg55TNyuJb4nJvz
- +qtYppUsZwavO85rtZStMP4z3BqQJJQcKm5cP4bCld1t9wUIhWQCtMnQcfN5JBkQm6KmQof7l9q
- xrdDwOxSjm7eOAjIpWT2CubzQCH84XKwgM24TCsRrRUhLnoAttVtpJ4IveDJGBuZREqp8cKko8A
- yRMqKlQZpZwyXdVrd2ftbA2f81uZNMeHNpP8SdXno1cQOc6aACxZYEsCgphdQlh6KSv6qspcMAM
- gPcjngToJLkt06GOV6duDSURTArqZ76R/ctqOWvNqWi/9yg+q5qrVBO/x40ZfgSQI85SY9GnGQt
- EwL
-X-Received: by 2002:a17:902:ea04:b0:2ae:8293:74ee with SMTP id
- d9443c01a7336-2aeae8f21b1mr8620065ad.48.1773193143071; 
- Tue, 10 Mar 2026 18:39:03 -0700 (PDT)
+ bh=f8a1x0CIz1Dz3JdywSYiJEs59NB9UmqDZiiGwWJXBpo=;
+ b=McYoljFDRKMGMqB/YID0XOQEasZ7SDsyELytVOa7C9eHP1wwWFkECFIcf/dvvzowcC
+ 00dw+xPiLwfi2loI/0yOB2U+ifgEDDx7uMaZc76pVYr+AUnj4Fnn6VOBOvf9Ku0+qGVm
+ Q0qYp/ow+HWTjZjvJmhGTceIAWwV45FNbf9NcNwcQ7f8RsMUgRqe72wHLNeeC1QSlfE7
+ 5IA5++Uf1gp5zeibV/0sZzu1VxwH+ow1wUq5PllpkywToZ4x2wx5XQrAnlFH8QQuf3sR
+ kgZ2cWToI1EIzDYlF1Si5CPVwfoqIZT8ew9tK+HnJspq0i3QLbuGQNo/MxKbV6nyliZt
+ UlHA==
+X-Gm-Message-State: AOJu0YwGt8cKIaQmhbyyEiBGQT2ZID8ExNJfArR20LbdE38sW6IAgX6e
+ 2CwyhjPHlTEHAZTaHloplmAcm9PNM3mPoWQNVZcxqrquikYbsWXiQE3YVay1eEKW2+dHatDGK1L
+ 73TfK
+X-Gm-Gg: ATEYQzxJIoe/3FwhrAwkQ1ZkkG6fve5ZM0kTmIiBTPKuUvROn0/VsRABbuJaaOHHcxH
+ Bl/sf6YCHD2HWdxxeoV8yQz4dn7YBQi3g6g3yO/99er+rFL5b3Qpt4qTcMjClRsRfOElD/o//9F
+ yXjYD7kfui29PnGoxBE5xhR9HQ5C/7Cf67dd4N/naGUhGExWw1h2M5hrW6+vTiUt/4tXL2sBfUr
+ A6YLbYdQwaZNEiZ/jAGww8M9gW81izZrswwYfb+2BJp1UiyOO0a4jWveKb7vmvJoMcrSlmjwhfS
+ umDW0JEuhUonwa7FVBF6TfRTnHT1WIHGYDfgjKrRZfzb9AHbqwAW7zBEk/J5oIP2yDfhZXOGeoT
+ p7YQaW8OeNdonM85ZL+Xw6raB2E/Xk1YOqAA7JxtKpDJ2gyTybAOKtHpgAWFlZO5DjvP3xGFQJG
+ 52Sdwr6ZSGTcCmFZtgHM9YEkDiUv1X1q2eE9JoNNmnytngL/jEI8uz0yS6Z9DwmSifL72ke5AXo
+ 6s+
+X-Received: by 2002:a17:903:1b4c:b0:2ad:e975:4735 with SMTP id
+ d9443c01a7336-2aeae7f4b9amr8124765ad.20.1773193139179; 
+ Tue, 10 Mar 2026 18:38:59 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.39.02
+ d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.38.58
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 18:39:02 -0700 (PDT)
+ Tue, 10 Mar 2026 18:38:58 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 16/16] gdbstub: Generate a single gdbstub-xml.c /
- gdb_static_features[]
-Date: Tue, 10 Mar 2026 18:38:37 -0700
-Message-ID: <20260311013837.69945-17-pierrick.bouvier@linaro.org>
+Subject: [PULL 12/16] gdbstub: Consider GDBFeature::base_reg in
+ gdb_register_coprocessor()
+Date: Tue, 10 Mar 2026 18:38:33 -0700
+Message-ID: <20260311013837.69945-13-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,109 +106,65 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-gdb_static_features[] does not depend on target-specific code.
-Instead of generating one file per target, generate a single file
-with a single gdb_static_features[] array.
+When a feature XML file provides a "regnum=" tag to indicate
+the registers base index, respect it, as it might not be the
+same as our current number of registered entries, in particular
+when there are gaps.
 
-Co-developed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+This fixes a bug with the "power-fpu.xml" file [*] which was
+loaded at index 70 while the base register is 71. This latent
+bug was exposed by commit 1ec0fbe2dda ("target/ppc: Fix
+CPUClass::gdb_num_core_regs value").
+
+[*] https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
+
+Reported-by: Florian Hofhammer <florian.hofhammer@fhofhammer.de>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Acked-by: Alex Bennée <alex.bennee@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-17-philmd@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-13-philmd@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- meson.build                               | 14 --------------
- stubs/gdbstub.c => gdbstub/gdb-xml-stub.c |  0
- gdbstub/meson.build                       | 23 +++++++++++++++++++++++
- stubs/meson.build                         |  2 --
- 4 files changed, 23 insertions(+), 16 deletions(-)
- rename stubs/gdbstub.c => gdbstub/gdb-xml-stub.c (100%)
+ gdbstub/gdbstub.c    | 6 ++++++
+ gdbstub/trace-events | 1 +
+ 2 files changed, 7 insertions(+)
 
-diff --git a/meson.build b/meson.build
-index 503cde5ea90..538efb7092d 100644
---- a/meson.build
-+++ b/meson.build
-@@ -4248,7 +4248,6 @@ if have_rust
- endif
+diff --git a/gdbstub/gdbstub.c b/gdbstub/gdbstub.c
+index 69038c66f2b..c3c944e965b 100644
+--- a/gdbstub/gdbstub.c
++++ b/gdbstub/gdbstub.c
+@@ -601,6 +601,7 @@ void gdb_init_cpu(CPUState *cpu)
+     if (xmlfile) {
+         assert(!cc->gdb_num_core_regs);
+         feature = gdb_find_static_feature(xmlfile);
++        assert(feature->base_reg == 0);
+         gdb_register_feature(cpu, 0,
+                              cc->gdb_read_register, cc->gdb_write_register,
+                              feature);
+@@ -630,6 +631,11 @@ void gdb_register_coprocessor(CPUState *cpu,
+         }
+     }
  
++    if (base_reg < feature->base_reg) {
++        trace_gdbxml_register_coprocessor_gap(base_reg,
++                                              feature->base_reg);
++        base_reg = feature->base_reg;
++    }
+     gdb_register_feature(cpu, base_reg, get_reg, set_reg, feature);
  
--feature_to_c = find_program('scripts/feature_to_c.py')
- rust_root_crate = find_program('scripts/rust/rust_root_crate.sh')
+     /* Add to end of list.  */
+diff --git a/gdbstub/trace-events b/gdbstub/trace-events
+index 8caee36c242..5bc83946743 100644
+--- a/gdbstub/trace-events
++++ b/gdbstub/trace-events
+@@ -29,6 +29,7 @@ gdbstub_err_checksum_incorrect(uint8_t expected, uint8_t got) "got command packe
+ gdbstub_err_unexpected_runpkt(uint8_t ch) "unexpected packet (0x%02x) while target running"
  
- if host_os == 'darwin'
-@@ -4328,19 +4327,6 @@ foreach target : target_dirs
-     endif
-   endif
- 
--  if 'TARGET_XML_FILES' in config_target
--    gdbstub_xml_files = []
--    foreach gdbstub_xml : config_target['TARGET_XML_FILES'].split()
--      gdbstub_xml_files += 'gdbstub/gdb-xml/' + gdbstub_xml
--    endforeach
--    gdbstub_xml = custom_target(target + '-gdbstub-xml.c',
--                                output: target + '-gdbstub-xml.c',
--                                input: files(gdbstub_xml_files),
--                                command: [feature_to_c, '@INPUT@'],
--                                capture: true)
--    arch_srcs += gdbstub_xml
--  endif
--
-   if target in config_target_info
-     arch_srcs += config_target_info[target]
-   else
-diff --git a/stubs/gdbstub.c b/gdbstub/gdb-xml-stub.c
-similarity index 100%
-rename from stubs/gdbstub.c
-rename to gdbstub/gdb-xml-stub.c
-diff --git a/gdbstub/meson.build b/gdbstub/meson.build
-index 15c666f5752..b61d2e915c1 100644
---- a/gdbstub/meson.build
-+++ b/gdbstub/meson.build
-@@ -4,6 +4,29 @@
- # types such as hwaddr.
- #
- 
-+gdbstub_xml_files = []
-+foreach target : target_dirs
-+  config_target = config_target_mak[target]
-+  if 'TARGET_XML_FILES' in config_target
-+    foreach gdbstub_xml : config_target['TARGET_XML_FILES'].split()
-+      if not gdbstub_xml_files.contains('gdb-xml/' + gdbstub_xml)
-+        gdbstub_xml_files += 'gdb-xml/' + gdbstub_xml
-+      endif
-+    endforeach
-+  endif
-+endforeach
-+if gdbstub_xml_files.length() > 0
-+  feature_to_c = find_program('../scripts/feature_to_c.py')
-+  gdbstub_xml = custom_target('gdbstub-xml.c',
-+                              output: 'gdbstub-xml.c',
-+                              input: files(gdbstub_xml_files),
-+                              command: [feature_to_c, '@INPUT@'],
-+                              capture: true)
-+else
-+  gdbstub_xml = files('gdb-xml-stub.c')
-+endif
-+common_ss.add(gdbstub_xml)
-+
- # We build two versions of gdbstub, one for each mode
- user_ss.add(files(
-   'gdbstub.c',
-diff --git a/stubs/meson.build b/stubs/meson.build
-index fad796a49da..7189ff63ed5 100644
---- a/stubs/meson.build
-+++ b/stubs/meson.build
-@@ -89,8 +89,6 @@ if have_system
- endif
- 
- if have_system or have_user
--  stub_ss.add(files('gdbstub.c'))
--
-   # Also included in have_system for --disable-tcg builds
-   stub_ss.add(files('replay.c'))
- 
+ gdbxml_init_cpu(const char *typename, unsigned id, unsigned gdb_num_regs, unsigned gdb_num_g_regs, unsigned gdb_num_core_regs) "%s:%d regs:%u g_regs:%u core_regs:%u"
++gdbxml_register_coprocessor_gap(unsigned gdb_num_regs, unsigned base_reg) "regs %u -> %u"
+ gdbxml_register_feature(const char *featname, const char *xmlname, unsigned base_reg, unsigned num_regs) "%s (%s) @%u +%u"
+ gdbxml_feature_builder_header(const char *name, const char *xmlname, int num_regs) "%s (%s) regs:%d"
+ gdbxml_feature_builder_content(const char *xml) "%s"
 -- 
 2.47.3
 
