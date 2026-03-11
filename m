@@ -4,50 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2231112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:08:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2970112583F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:08:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L9k-0004Cc-KH; Wed, 11 Mar 2026 11:07:38 -0400
+	id 1w0LAS-0005PA-0q; Wed, 11 Mar 2026 11:08:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6g-0007Gv-UN; Wed, 11 Mar 2026 11:04:19 -0400
+ id 1w0L7j-00008P-8t; Wed, 11 Mar 2026 11:05:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6e-0004Ec-SE; Wed, 11 Mar 2026 11:04:18 -0400
+ id 1w0L7c-0004Zp-8J; Wed, 11 Mar 2026 11:05:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=T9t/ctxvV0jRUZCR6Umy+mIXPjBC9aWRuUhHC4N58KM=;
+ t=1773241305; bh=IWzwU49V5a1A0MEg9tth+bQYl9/AuKMtjnmErL6ohqM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=A0VCfNBKxvQdA7sDyXic5FgjWjdvwHHGSIvTZBdRn7coI7fImRq5xiwPcgCNeoY0Z
- WB+zGkg+H/G0BrUr8T+POTNtqDOl7oUMf4APImXArMn6spcd957eJgb/YIF2HwS/rH
- 3NTv4H3Hpt3ksgWX9mEClTRJuKNj5lQyQLkWP8GE5jKVDx/Q9KyuxMKD4LIBOjfnDr
- ccMZZg2doZrAHBrNVpn3rKh2SakafUitxhYD8zcq/N3gW8CCYjMp5+2rP9NLSP/sXp
- sOJWlEGtVad6sfPYl50cgvLRCE/5LgN7SPqa8FSweFFpHPN/KyKd3lRf2zi0GHn/jh
- jWe8wvVHhjWnA==
+ b=BHvDwdqR/FbAMvohnpSMYGtY7UvVKnGd8xUPAENnuYmFdjF8Em6eFC2ejA9VNxp73
+ HrzkruMTYL4T5BmSeimrzA73HD3Gm3X2R7pmF66bXPpaG63MWvgBguPh7zrQsmIFTo
+ ql3xmST2+wX2Dr84N3cVOoOty+IdQ75QvfmB3WgeK+wEW1HzKb32Doo/LKE1jqXJOx
+ NykhDtP304+sPdOe6rAl5vuuPXx5+13t3jbsYajXo6upSmRQ6LnU1MfCnm7lEYTVTo
+ JKfnEwxavroVIe1fcvVgzjw85jazdTygGB0FBsN/eLsC+jsj4LC6PjU1sPF/mh9QHv
+ jOHc+55stAhMw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 37852191E57;
+ by isrv.corpit.ru (Postfix) with ESMTP id C3C5F191E5F;
  Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2086F37C2A9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id AF9DB37C2B1;
  Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Wei Liu (Microsoft)" <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 25/44] target/i386/hvf/x86_mmu: Fix compiler warning
-Date: Wed, 11 Mar 2026 18:01:57 +0300
-Message-ID: <20260311150221.1084186-25-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Dmitry Guryanov <dmitry.guryanov@gmail.com>,
+ Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 33/44] block/throttle-groups: fix deadlock with
+ iolimits and muliple iothreads
+Date: Wed, 11 Mar 2026 18:02:05 +0300
+Message-ID: <20260311150221.1084186-33-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,66 +71,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Dmitry Guryanov <dmitry.guryanov@gmail.com>
 
-When reusing the code in WHPX, GCC emits the following warning when compiling
-for i386-softmmu under MSYS2:
+Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
 
-  In file included from ../src/target/i386/emulate/x86_mmu.c:20:
-  ../src/target/i386/emulate/x86_mmu.c: In function 'vmx_write_mem':
-  ../src/target/i386/emulate/x86_mmu.c:251:25: error: format '%llx' expects argument of type 'long long unsigned int', but argument 3 has type 'target_ulong' {aka 'unsigned int'} [-Werror=format=]
-    251 |             VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            ~~~
-        |                                                                       |
-        |                                                                       target_ulong {aka unsigned int}
-  ../src/target/i386/emulate/panic.h:34:12: note: in definition of macro 'VM_PANIC_EX'
-     34 |     printf(__VA_ARGS__); \
-        |            ^~~~~~~~~~~
-  ../src/target/i386/emulate/x86_mmu.c:251:48: note: format string is defined here
-    251 |             VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-        |                                             ~~~^
-        |                                                |
-        |                                                long long unsigned int
-        |                                             %x
+The function schedule_next_request is called with tg->lock held and
+it may call throttle_group_co_restart_queue, which takes
+tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
+coroutine if other iothread has taken the lock. If the next
+coroutine will call throttle_group_co_io_limits_intercept - it
+will try to take the mutex tg->lock which will never be released.
 
-Fix the warning by reusing the target-specific macro TARGET_FMT_lx which exists
-for this exact purpose.
+Here is the backtrace of the iothread:
+Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) "IO iothread2"):
+ #0  futex_wait (futex_word=0x5611adb7d828, expected=2, private=0) at ../sysdeps/nptl/futex-internal.h:146
+ #1  __GI___lll_lock_wait (futex=futex@entry=0x5611adb7d828, private=0) at lowlevellock.c:49
+ #2  0x00007f8ab5a97501 in lll_mutex_lock_optimized (mutex=0x5611adb7d828) at pthread_mutex_lock.c:48
+ #3  ___pthread_mutex_lock (mutex=0x5611adb7d828) at pthread_mutex_lock.c:93
+ #4  0x00005611823f5482 in qemu_mutex_lock_impl (mutex=0x5611adb7d828, file=0x56118289daca "../block/throttle-groups.c", line=372) at ../util/qemu-thread-posix.c:94
+ #5  0x00005611822b0b39 in throttle_group_co_io_limits_intercept (tgm=0x5611af1bb4d8, bytes=4096, direction=THROTTLE_READ) at ../block/throttle-groups.c:372
+ #6  0x00005611822473b1 in blk_co_do_preadv_part (blk=0x5611af1bb490, offset=15972311040, bytes=4096, qiov=0x7f8aa4000f98, qiov_offset=0, flags=BDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1354
+ #7  0x0000561182247fa0 in blk_aio_read_entry (opaque=0x7f8aa4005910) at ../block/block-backend.c:1619
+ #8  0x000056118241952e in coroutine_trampoline (i0=-1543497424, i1=32650) at ../util/coroutine-ucontext.c:175
+ #9  0x00007f8ab5a56f70 in ?? () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:66 from target:/lib64/libc.so.6
+ #10 0x00007f8aad1ef190 in ?? ()
+ #11 0x0000000000000000 in ?? ()
 
-Fixes: c97d6d2cdf97 ("i386: hvf: add code base from Google's QEMU repository")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
-Link: https://lore.kernel.org/r/20260223233950.96076-3-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 529e5e7643078e19d65e694f51cad64be49090ab)
+The lock is taken in line 386:
+(gdb) p tg.lock
+$1 = {lock = {__data = {__lock = 2, __count = 0, __owner = 24240, __nusers = 1, __kind = 0, __spins = 0, __elision = 0, __list = {__prev = 0x0, __next = 0x0}},
+    __size = "\002\000\000\000\000\000\000\000\260^\000\000\001", '\000' <repeats 26 times>, __align = 2}, file = 0x56118289daca "../block/throttle-groups.c",
+  line = 386, initialized = true}
+
+The solution is to use tg->lock to protect both ThreadGroup fields and
+ThrottleGroupMember.throttled_reqs. It doesn't seem to be possible
+to use separate locks because we need to first manipulate ThrottleGroup
+fields, then schedule next coroutine using throttled_reqs and after than
+update token field from ThrottleGroup depending on the throttled_reqs
+state.
+
+Signed-off-by: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+Message-ID: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit d4816177654d59e26ce212c436513f01842eb410)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
-index 579d0c3a4c..e0d39737ea 100644
---- a/target/i386/hvf/x86_mmu.c
-+++ b/target/i386/hvf/x86_mmu.c
-@@ -244,7 +244,8 @@ void vmx_write_mem(CPUState *cpu, target_ulong gva, void *data, int bytes)
-         int copy = MIN(bytes, 0x1000 - (gva & 0xfff));
+diff --git a/block/throttle-groups.c b/block/throttle-groups.c
+index 32553b39e3..4385748bbf 100644
+--- a/block/throttle-groups.c
++++ b/block/throttle-groups.c
+@@ -295,19 +295,15 @@ static bool throttle_group_schedule_timer(ThrottleGroupMember *tgm,
+ /* Start the next pending I/O request for a ThrottleGroupMember. Return whether
+  * any request was actually pending.
+  *
++ * This assumes that tg->lock is held.
++ *
+  * @tgm:       the current ThrottleGroupMember
+  * @direction: the ThrottleDirection
+  */
+ static bool coroutine_fn throttle_group_co_restart_queue(ThrottleGroupMember *tgm,
+                                                          ThrottleDirection direction)
+ {
+-    bool ret;
+-
+-    qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
+-    ret = qemu_co_queue_next(&tgm->throttled_reqs[direction]);
+-    qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
+-
+-    return ret;
++    return qemu_co_queue_next(&tgm->throttled_reqs[direction]);
+ }
  
-         if (!mmu_gva_to_gpa(cpu, gva, &gpa)) {
--            VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-+            VM_PANIC_EX("%s: mmu_gva_to_gpa " TARGET_FMT_lx " failed\n",
-+                        __func__, gva);
-         } else {
-             address_space_write(&address_space_memory, gpa,
-                                 MEMTXATTRS_UNSPECIFIED, data, copy);
-@@ -265,7 +266,8 @@ void vmx_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
-         int copy = MIN(bytes, 0x1000 - (gva & 0xfff));
+ /* Look for the next pending I/O request and schedule it.
+@@ -378,12 +374,8 @@ void coroutine_fn throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
+     /* Wait if there's a timer set or queued requests of this type */
+     if (must_wait || tgm->pending_reqs[direction]) {
+         tgm->pending_reqs[direction]++;
+-        qemu_mutex_unlock(&tg->lock);
+-        qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
+         qemu_co_queue_wait(&tgm->throttled_reqs[direction],
+-                           &tgm->throttled_reqs_lock);
+-        qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
+-        qemu_mutex_lock(&tg->lock);
++                           &tg->lock);
+         tgm->pending_reqs[direction]--;
+     }
  
-         if (!mmu_gva_to_gpa(cpu, gva, &gpa)) {
--            VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-+            VM_PANIC_EX("%s: mmu_gva_to_gpa " TARGET_FMT_lx " failed\n",
-+                        __func__, gva);
-         }
-         address_space_read(&address_space_memory, gpa, MEMTXATTRS_UNSPECIFIED,
-                            data, copy);
+@@ -410,15 +402,15 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
+     ThrottleDirection direction = data->direction;
+     bool empty_queue;
+ 
++    qemu_mutex_lock(&tg->lock);
+     empty_queue = !throttle_group_co_restart_queue(tgm, direction);
+ 
+     /* If the request queue was empty then we have to take care of
+      * scheduling the next one */
+     if (empty_queue) {
+-        qemu_mutex_lock(&tg->lock);
+         schedule_next_request(tgm, direction);
+-        qemu_mutex_unlock(&tg->lock);
+     }
++    qemu_mutex_unlock(&tg->lock);
+ 
+     g_free(data);
+ 
+@@ -569,7 +561,6 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
+                          read_timer_cb,
+                          write_timer_cb,
+                          tgm);
+-    qemu_co_mutex_init(&tgm->throttled_reqs_lock);
+ }
+ 
+ /* Unregister a ThrottleGroupMember from its group, removing it from the list,
+diff --git a/include/block/throttle-groups.h b/include/block/throttle-groups.h
+index 2355e8d9de..7dfc81f7b5 100644
+--- a/include/block/throttle-groups.h
++++ b/include/block/throttle-groups.h
+@@ -35,8 +35,7 @@
+ 
+ typedef struct ThrottleGroupMember {
+     AioContext   *aio_context;
+-    /* throttled_reqs_lock protects the CoQueues for throttled requests.  */
+-    CoMutex      throttled_reqs_lock;
++    /* Protected by ThrottleGroup.lock */
+     CoQueue      throttled_reqs[THROTTLE_MAX];
+ 
+     /* Nonzero if the I/O limits are currently being ignored; generally
 -- 
 2.47.3
 
