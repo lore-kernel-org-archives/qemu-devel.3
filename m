@@ -4,80 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A730106286E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:55:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 27653106286B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:57:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0I94-0005zb-Mx; Wed, 11 Mar 2026 07:54:34 -0400
+	id 1w0IBO-00077e-If; Wed, 11 Mar 2026 07:56:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0I92-0005w1-7k
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:54:32 -0400
-Received: from p-east2-cluster4-host12-snip4-4.eps.apple.com ([57.103.78.185]
- helo=outbound.st.icloud.com)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w0IBM-00077U-Oo
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:56:57 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0I90-0003hb-9S
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:54:31 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPS id
- 668411800235; Wed, 11 Mar 2026 11:54:26 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773230068; x=1775822068;
- bh=ezBgT9B9v7HyZ9m0ZCmwmGTcNvYHrFJRAGCmzmwAKbQ=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=KXXFMmA1qX000LoddDp+sDOq2MuqxewNS6+QOmHHfNCiR+UrVzISKLmvaT49wVIb+tLbXL/pU9f/DelwQecKr7DfAkDWGqqkUEZAhSA9jnywx//BR3zQxgHOAQ+XDq/X9zZsgo1ACblu7P85joPybZS43FDcFeFpki2H00aIy6l9HPckf70twKgIPblM7T9iMPsdhIjqB3eix9wJ7ffPPbYhr2sr8jYULwa7/UbO+Ood58JKGBH+Ik8hKdCxbItvPNZK4Ilo+wj7XXaNzd2fMmsm+t0HQP9zUZLOtHqZmBln/tdUdTsAv/9dxlIavbEhlOuUg31EU8Hmwy2uc2GsxQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPSA id
- BD9A1180020A; Wed, 11 Mar 2026 11:54:24 +0000 (UTC)
-Content-Type: text/plain;
-	charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH v2 9/9] accel/mshv: disable la57 (5lvl paging)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260311113505.1177878-10-magnuskulke@linux.microsoft.com>
-Date: Wed, 11 Mar 2026 12:54:12 +0100
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <2D1F935F-865A-4B24-B616-BEE57B22FB2B@unpredictable.fr>
-References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
- <20260311113505.1177878-10-magnuskulke@linux.microsoft.com>
-To: Magnus Kulke <magnuskulke@linux.microsoft.com>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-ORIG-GUID: O3Mtqluxp2F1EnWXQrZOT6uewlCaDLzi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDEwMCBTYWx0ZWRfX4wJvWxGiOeqH
- 2EP5Hkz0G52jVJEFZ6lFNBLwSqPYBOpLJptY6tVqbW034ujlvq0IkBFzmwnsrLNDdxOfwDFesVT
- L1kl/TFsftyAMw32ctEDMuLrQ2Leat9Yu56MmiGy2G504MsrkStc1add3QJ6LSWZutcY7hZkkGE
- DMa97jJcWa1l4mXHCEVJibCfr2IXGsF1DbOiCs4THFsUV9SOLx26SmQlzIEjs6pP78ZZ5z4+k9K
- cahBgD8bGpUQsEBJ2qBh8fE/biJbUeAwlMfZ8sUMJIFKG5PRry/EkSR02lQsVfKxKFDjjZ6HU8O
- P+z+k3G/rSv2HCFp3duys1nuV8VBuOFKtVOI+p7Om/QTmUeiqqX1C02/e8XQqw=
-X-Proofpoint-GUID: O3Mtqluxp2F1EnWXQrZOT6uewlCaDLzi
-X-Authority-Info-Out: v=2.4 cv=Vtwuwu2n c=1 sm=1 tr=0 ts=69b157f2
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=yMhMjlubAAAA:8 a=GySLw-dI4Ghi5hKW5BoA:9
- a=CjuIK1q_8ugA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-11_01,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- mlxscore=0 mlxlogscore=999 clxscore=1030 malwarescore=0 spamscore=0
- bulkscore=0 suspectscore=0 lowpriorityscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603110100
-X-JNJ: AAAAAAAB/ytSNRo55A3jxJiabSVziTyqMA8fQxOCvkeRMFOMoCT8ojXlWlg7363EtdRz1vptoUmPRk0Yiy2RRj5uvIOXqsiKyU76dB8Bd4iNbifb1DEhcgj1qWW7PXtIsQgers3GwEPQT39sVOrdUHofuZd1ez0gR/iLFRRQ8WT3K5Z0lntq5Zr3qY4Mhjv5smXehp4wmDoz1agCjrs08l/OGT6pImHXGKhH10/h2JQCIOisFg+kQHuE3g1aCCFdhF/uWc9PRyzjvnzCP+dmQKnwkWnZ0qcjIbcjd6TSeTD/6DvppbUauRfb5Orcnk2VBbQhbfwMq8gNxZ1fgaruDAjDpjJ5ovNcDYVGOmMhUBPKbINrnKfClWlPzoiml/pWRfTTCFeK9hPloCZlLWn0yWhJrBJI6T52ZzPfD+c6YepB1ZjI319BzWYRRPMmc8QM3IAFNbZIJdqy8oCnZIlOdsC89vPTMSUG6tZRiH1PWLhN3UMoe62if0e1VEsxqAXEqeArIf3lAQueCiBgxA7CS4i/MOmfCVUeYMBa89puPlmCYSrPzFO3Vp9nAFp0OQANTgKfsrxPSFmk7wIU/LZAQtECnf6PkTYsXUeRWnN4O7l8xtxtBiRbK9rJkh3jd0tSgk5ObMtQU0yHmLHc15QgATI9EKEP7yP39SkJeT4dY4y4aQ+BdClGxvbgiw==
-Received-SPF: pass client-ip=57.103.78.185;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w0IBI-0004DN-Nv
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:56:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773230210;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=WZWCOfnSTZaNddYFcTXxhPDLbJWNn6W8B38ew0C4mm8=;
+ b=VZcbZbwJUYfMavg6WnbDEkUmlBlAE8fd/RHbAX6ul6i678DG4nJLYXb0Ms88WSZzIR0cmN
+ YS4bVPuWocYpok3ru1zF28EBtQPapVttDXg4HKvlhWOFnpKfJ1F0cT3lOtUKaOZ3/kEPXZ
+ I0JIlpg6sDiZtJjFUHRJ01GQKK5Jj2s=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-14-juZuyfv-NoOK8a__or_F3Q-1; Wed, 11 Mar 2026 07:56:47 -0400
+X-MC-Unique: juZuyfv-NoOK8a__or_F3Q-1
+X-Mimecast-MFC-AGG-ID: juZuyfv-NoOK8a__or_F3Q_1773230206
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4852cf0318dso47227665e9.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 04:56:46 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773230206; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ZvFZvWtDPtYZB7vRJV1KliPrqkBdYx9XLhwgX8U08JTDhOCdwqdmM7qHW9Be0cXhoZ
+ LYA0akVpYtgQ8kbTZEcEYOZeJ6k7LBj8AcW4MbDFnEJC/9ddK7ZfxQcNpnOCVxtx5zJ4
+ jR8xPQJtaAwUBdVgo7qvLUuCU03dRJ/a5qHW1uZqKbTGXa72GxBxglhHcHmA5gnoCxBc
+ HR/0e3d6oM15tE0gari+PuFuoSmqcjGLEOEQ1EfJwLJHCoiZDXP/bV0vLJrAZ4EGV+dD
+ 8XrdNlgpUAgnsf/kGPS8x1DlIbaXnrlRXLtdXQjDUZ12kBn+SPmRL217wqCo4NA3aNzl
+ W1Dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=WZWCOfnSTZaNddYFcTXxhPDLbJWNn6W8B38ew0C4mm8=;
+ fh=jJSuppldnKTzKFj6lwnMFqs9z6PbYca7cw17lgQhG4M=;
+ b=LgZx5NIaJSXtA8B7kxxVqOQTSFkumKB7iyh2UEKUzrl5NyzwgG86rA32pkeZKLAa/S
+ msK5yVdfSIuiuWa/opWp6dU/KDicDe7/78Kt/F6nFfxFSDEYm/wrjvjEQCTAFBy+loEo
+ VwkQnQwQ1EqQ9iQCEzzN7G0qhMJgOFZPmgHnaHJrqosP4U9rJ4Qebkk2dPRUejwCCUmY
+ TJ7fjjRXLmjVPdmFlPR3bcjbZEByx3hVC4r1uxV3XzdBed4Ug0HwWnDsWxbGiqvrBllf
+ XFwy9lpnjxKDiQ5akWZJpVHIZy6y9IJ2jBItgVy2NC+c3fJaDslMOuNM/Bsw+2pl2zdv
+ rzSw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773230206; x=1773835006; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=WZWCOfnSTZaNddYFcTXxhPDLbJWNn6W8B38ew0C4mm8=;
+ b=t4C3VKqZJ3ivEmKXlCypJAMvCpHQmYDB7uuc9oPwWhJoMgdfQT1v77JBCLYuaa4jkJ
+ 9K7bsCzE6XN1RsfnpTXTSe1kkPYbZBcYB+MK7IQCbViQyl5vZP7usbSRHHCEYOeYOhgx
+ Hut9d3hxNOG27n0cZLXm0OXJl4pOf+fjfZkS+pA8ks9Fnhnm0HKd6n2BKCTMnhSy7zU2
+ iuPCExgdGUDRewQd5GojRPccDPBc6nyrU3theBBqMsr28DwowtfZpxcnXLzoE5K2DnX/
+ JnSsotbVPe0JK+cm021w+1+gCwTxyYXQKekPrQZ0kMDqmBFEDbkPTGTfPVL2anWaOrm+
+ afEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773230206; x=1773835006;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=WZWCOfnSTZaNddYFcTXxhPDLbJWNn6W8B38ew0C4mm8=;
+ b=c8rda/xYN8H17ZxVt52poMRYlzza/hPs2YpQ6l/PL0/EwM4l5lnA3SAXQ9fqd+t/jJ
+ JvsKSp+/hbXkaacN5kaxugV9N8ZOv9k+H2uN6h6kdv4pfrKpCEDqvjuA2I/Iwd3vBxTl
+ cM09lGPniKIY3RpCvDlOr0GzAISYKO/s7imY74N/2l0DPvwItMOH5T4N316Irq05BBqO
+ pXljuNXZ+5rFs6yoZVFRugN3cz0bOcTEAsDax5pie5FtMvxY70KOKAU+K1Ouz5T+FUsx
+ 4BVEvDKlAJ/9SCYpwv+h+tOh4yWU5ZPTho3e1jg29Fj4tFGaMrHQcaHADVhuo/fMiSiO
+ Uo2w==
+X-Gm-Message-State: AOJu0YwzEkM7uhc5Cg2aumGuDfwEk805V5SLZcEwdk9vAav0yfe9PJrn
+ XaDrcOMiQdeyutPkoCbZRcRN3nB/P35NCNmmVYY1VL4Gi0KsciA7aE3kFj0sqYYN0lTYJTkYCQA
+ okReXGwHhkHRumvBku9oD7rVcK3r80zM/jMdnvxM8LFicy6hlf/dayMPURlYalcjyQ2u6K0BDm0
+ dMXoyI8VXHbf/z6uxvHJJzuPzm8d1onlI=
+X-Gm-Gg: ATEYQzwb4AEzmhhzmHqabF1sb3FSKYwE6Vlt2znSAF1PpM/2pAlC/6FOTWjBE9VI2XK
+ dhw7ZLfF5MxCh9HBEwFUEsqXLiybBuZ68eyZenntHpAB1dnxTV8UXwJAUDDXHBGkYpHnQrXOeJI
+ rhC0Y9osi74VnSjHVLipwzVmDQzsUjyV5KUf2N2EqfZ4UatsdSLkiXuTjQrlc3mFAHUe4or/88D
+ hLakr+SxVvdjAP5iO2luOTsogBIXJoQG6XvYLSC3xcbCBIbhBCNnns3xRvabtsoOU81
+X-Received: by 2002:a05:600c:a44:b0:485:4100:1eee with SMTP id
+ 5b1f17b1804b1-4854b10c539mr34987475e9.24.1773230205701; 
+ Wed, 11 Mar 2026 04:56:45 -0700 (PDT)
+X-Received: by 2002:a05:600c:a44:b0:485:4100:1eee with SMTP id
+ 5b1f17b1804b1-4854b10c539mr34987045e9.24.1773230205228; Wed, 11 Mar 2026
+ 04:56:45 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260310135540.8679-1-farosas@suse.de>
+In-Reply-To: <20260310135540.8679-1-farosas@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Wed, 11 Mar 2026 17:26:28 +0530
+X-Gm-Features: AaiRm50BsmrHxtgA1TvxXn0E2Lx0C8IxbgsLLibIki0DkGbFz27lW5BXGvYR8xs
+Message-ID: <CAE8KmOx5XbY1m40gGb5_kDOwt5D_YMT1YDp1JFugK-6NMRW3YA@mail.gmail.com>
+Subject: Re: [PATCH 1/8] tests/qtest/migration: Fix leak of migration tests
+ data
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
+ Peter Xu <peterx@redhat.com>, Laurent Vivier <lvivier@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -95,85 +135,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Tue, 10 Mar 2026 at 19:26, Fabiano Rosas <farosas@suse.de> wrote:
+> When the migration-test is invoked with the '-p' flag (to run a single
+> test), the glib code won't call the destroy function for the
+> not-executed tests, causing the MigrationTest wrapper data to leak.
 
+* With -p, only test data for that test should be loaded, right?
+Freeing the data for non-executed tests does not seem right.
 
-> On 11. Mar 2026, at 12:35, Magnus Kulke =
-<magnuskulke@linux.microsoft.com> wrote:
->=20
-> This change disable la57 paging on the mshv hypervisor on both the
-> mshv processor feature bitmap and mask the cpuid feature leaf to the
-> guest.
->=20
-> Since the removal of hypervisor-assisted gva=3D>gpa translation in
-> 1c85a4a3d7 we have seen MMIO errors in guests on la57-enabled hw. We
-> will have to investigate and test this further.
-
-Hello,
-
-This should already be fixed on master since yesterday. Can you repro =
-this?
-
-Thank you,
--Mohamed
->=20
-> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> This doesn't affect make check, but affects debugging use-cases where
+> having a leak pop up in ASAN output is extra annoying.
+>
+> Fix by adding the tests data to a list and freeing them all at the end
+> of migration-test execution. Any tests actually dispatched by glib
+> will have the destroy function called as usual.
+>
+> Note that migration_test_add_suffix() is altered to call
+> migration_test_add() so that there's only one place adding the data to
+> the list.
+>
+> Performance is not an issue at the moment, we have < 100 tests.
+>
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
-> accel/mshv/mshv-all.c       | 7 +++++++
-> target/i386/mshv/mshv-cpu.c | 6 ++++++
-> 2 files changed, 13 insertions(+)
->=20
-> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
-> index eab967ff07..ea3aacf6e0 100644
-> --- a/accel/mshv/mshv-all.c
-> +++ b/accel/mshv/mshv-all.c
-> @@ -142,6 +142,8 @@ static int create_partition(int mshv_fd, int =
-*vm_fd)
->     int ret;
->     uint64_t pt_flags, host_proc_features;
->     union hv_partition_processor_xsave_features =
-disabled_xsave_features;
-> +    union hv_partition_processor_features disabled_proc_features =3D =
-{0};
+>  tests/qtest/migration/framework.c      |  2 ++
+>  tests/qtest/migration/migration-util.c | 19 ++++++++++++++-----
+>  tests/qtest/migration/migration-util.h |  2 +-
+>  3 files changed, 17 insertions(+), 6 deletions(-)
+>
+> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+> index 0bfc241914..b9371372de 100644
+> --- a/tests/qtest/migration/framework.c
+> +++ b/tests/qtest/migration/framework.c
+> @@ -1162,5 +1162,7 @@ int migration_env_clean(MigrationTestEnv *env)
+>      }
+>      g_free(tmpfs);
+>
+> +    migration_tests_free();
 > +
->     struct mshv_create_partition_v2 args =3D {0};
->     uint32_t feature_banks[] =3D {
->         HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
-> @@ -181,6 +183,11 @@ static int create_partition(int mshv_fd, int =
-*vm_fd)
->     }
->     args.pt_cpu_fbanks[1] =3D ~host_proc_features;
->=20
-> +    /* features we disable regardless of host support */
-> +    disabled_proc_features.la57_support =3D 1;
-> +    args.pt_cpu_fbanks[0] |=3D disabled_proc_features.as_uint64[0];
-> +    args.pt_cpu_fbanks[1] |=3D disabled_proc_features.as_uint64[1];
+>      return ret;
+>  }
+> diff --git a/tests/qtest/migration/migration-util.c b/tests/qtest/migration/migration-util.c
+> index c2462306a1..2648ad7f61 100644
+> --- a/tests/qtest/migration/migration-util.c
+> +++ b/tests/qtest/migration/migration-util.c
+> @@ -38,6 +38,7 @@
+>  #include "linux/kvm.h"
+>  #endif
+>
+> +GQueue *tests;
+>
+>  static char *SocketAddress_to_str(SocketAddress *addr)
+>  {
+> @@ -243,6 +244,8 @@ static void migration_test_destroy(gpointer data)
+>  {
+>      MigrationTest *test = (MigrationTest *)data;
+>
+> +    g_queue_remove(tests, test);
 > +
->     /* populate args structure */
->     args.pt_flags =3D pt_flags;
->     args.pt_isolation =3D MSHV_PT_ISOLATION_NONE;
-> diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-> index 2c66a52709..31fb788657 100644
-> --- a/target/i386/mshv/mshv-cpu.c
-> +++ b/target/i386/mshv/mshv-cpu.c
-> @@ -1677,6 +1677,12 @@ uint32_t mshv_get_supported_cpuid(uint32_t =
-func, uint32_t idx, int reg)
->      */
->     if (func =3D=3D 0x07 && idx =3D=3D 0 && reg =3D=3D R_ECX) {
->         ret &=3D ~CPUID_7_0_ECX_CET_SHSTK;
-> +        /*
-> +         * LA57 (5-level paging) causes incorrect GVA=3D>GPA =
-translations
-> +         * in the instruction decoder/emulator. Disable until page =
-table
-> +         * walk in x86_mmu.c works w/ 5-level paging.
-> +         */
-> +        ret &=3D ~CPUID_7_0_ECX_LA57;
->     }
->     if (func =3D=3D 0x07 && idx =3D=3D 0 && reg =3D=3D R_EDX) {
->         ret &=3D ~CPUID_7_0_EDX_CET_IBT;
-> --=20
-> 2.34.1
->=20
->=20
+>      g_free(test->data);
+>      g_free(test->name);
+>      g_free(test);
+> @@ -268,21 +271,27 @@ void migration_test_add(const char *path,
+>
+>      qtest_add_data_func_full(path, test, migration_test_wrapper,
+>                               migration_test_destroy);
+> +    if (!tests) {
+> +        tests = g_queue_new();
+> +    }
+> +    g_queue_push_tail(tests, test);
+>  }
+>
+>  void migration_test_add_suffix(const char *path, const char *suffix,
+>                                 void (*fn)(char *name, MigrateCommon *args))
+>  {
+> -    MigrationTest *test = g_new0(MigrationTest, 1);
+> +    g_autofree char *name = NULL;
+>
+>      g_assert(g_str_has_suffix(path, "/"));
+>      g_assert(!g_str_has_prefix(suffix, "/"));
+>
+> -    test->func = fn;
+> -    test->name = g_strconcat(path, suffix, NULL);
+> +    name = g_strconcat(path, suffix, NULL);
+> +    migration_test_add(name, fn);
+> +}
+>
+> -    qtest_add_data_func_full(test->name, test, migration_test_wrapper,
+> -                             migration_test_destroy);
+> +void migration_tests_free(void)
+> +{
+> +    g_queue_free_full(tests, migration_test_destroy);
+>  }
+>
+>  #ifdef O_DIRECT
+> diff --git a/tests/qtest/migration/migration-util.h b/tests/qtest/migration/migration-util.h
+> index e73d69bab0..694773e594 100644
+> --- a/tests/qtest/migration/migration-util.h
+> +++ b/tests/qtest/migration/migration-util.h
+> @@ -59,5 +59,5 @@ void migration_test_add_suffix(const char *path, const char *suffix,
+>                                 void (*fn)(char *name, MigrateCommon *args));
+>  char *migrate_get_connect_uri(QTestState *who);
+>  void migrate_set_ports(QTestState *to, QList *channel_list);
+> -
+> +void migration_tests_free(void);
+>  #endif /* MIGRATION_UTIL_H */
+> --
+
+* Change looks okay. Still I think there could be a way to load only
+the data required for the specific test.
+Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+
+Thank you.
+---
+  - Prasad
 
 
