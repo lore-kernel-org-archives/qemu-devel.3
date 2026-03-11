@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCA3112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2A7D112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L6c-0006bt-BG; Wed, 11 Mar 2026 11:04:14 -0400
+	id 1w0L6V-0005le-0C; Wed, 11 Mar 2026 11:04:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6C-0005Rm-6f; Wed, 11 Mar 2026 11:03:51 -0400
+ id 1w0L5A-0004S2-Pe; Wed, 11 Mar 2026 11:02:47 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6A-000494-MF; Wed, 11 Mar 2026 11:03:47 -0400
+ id 1w0L58-0003pc-7Z; Wed, 11 Mar 2026 11:02:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241304; bh=lLLSedyNCQhyA9RJ4psxHKwKyNFw5bmd1lU8fvbFqOk=;
+ t=1773241303; bh=Scoz5vWWtJuOsOhmD5izBqmtOTiJUw+vyXNsSYupuQc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=sswHMId9Q4FQhftorg2ewHjPkQXdi2XjO1RWrjy9A9KZXtYpwqiw08cVneIczLrRM
- rscuh+QB2h0QkPCwWctJfw2RCuSIq8dridQsNAORVC1di3kk7zQKC80oh2tqfuHpxH
- 5cOEwNxGp7qzwL3fkZs83LGdoLy1elMU6kjoevPJ4O+UAuTcSwUbeRGeO3GvYmBpYx
- Eys+UU+bszeyoDQL1V+nP302rjYOoPAe80iKMBQwslwYfa6EGre5xQ+tpi9XyaBtk/
- 5Ledoj9E0w33t+N6TGDq5Vr9lXU2/AondTTBVQFQNiu07b2V0fxxs42O8NFP3cXsSU
- +PT92qF+M+jpg==
+ b=SiD40WsVs/KtSZe7SA4lvZddxM175TbFxljy/8u4OALdX2qx9Qx4UWOdLFaEbHy/C
+ q4MCxBaxDzj/LRor4jxpO/abDrb4aHg7sO5mUGkglDWqxE7aoY+I2bnoSpJD0m352i
+ GxbTSRsYymMvkQ6tJvGfOme948fOm9Dp64WY7u1LZuH6hHIeEdxg+bexu/w5luGUjR
+ CkQeaCKJTbI3mCP42nwfxtc3tR9Z5jYdfUHzyMJn5Jb2SSOv/Grz+oDAhqHptSvk3S
+ Ylg7+2jH3GBWt127A/z1p0Gl4Z7RUyDi6gC3FxZuHBNp0LjdBU737BAwrrYHxHV9Wk
+ /MjQ/j0Cg268Q==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AF375191E51;
- Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id D00BC191E46;
+ Wed, 11 Mar 2026 18:01:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9878037C2A3;
- Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B47C737C298;
+ Wed, 11 Mar 2026 18:02:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Weixie Cui <cuiweixie@gmail.com>,
- Thomas Huth <thuth@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 19/44] hw/ssi/xilinx_spips: Reset TX FIFO in reset
-Date: Wed, 11 Mar 2026 18:01:51 +0300
-Message-ID: <20260311150221.1084186-19-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 08/44] docs/about/emulation: Add documentation for
+ hotblocks plugin arguments
+Date: Wed, 11 Mar 2026 18:01:40 +0300
+Message-ID: <20260311150221.1084186-8-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -72,45 +71,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weixie Cui <cuiweixie@gmail.com>
+From: Alex Bradbury <asb@igalia.com>
 
-In xilinx_spips_reset() and xlnx_zynqmp_qspips_reset() a cut and
-paste error meant we reset the RX FIFO twice and the TX FIFO not at
-all.  Correct this to reset both FIFOs.
+Currently just 'inline'.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Weixie Cui <cuiweixie@gmail.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260223095905.67709-1-cuiweixie@gmail.com
-[Rewrote commit message]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 669683cf1414ce442d2faea160dbc69747aef007)
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/35128cc5a86a0c18418f9d3150fb8771c54ef7d8.1753857212.git.asb@igalia.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+(cherry picked from commit e4ed74c9aef68cb2e7c10c2b7597fee5491a506a)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-index 60d092039f..1a51aeed91 100644
---- a/hw/ssi/xilinx_spips.c
-+++ b/hw/ssi/xilinx_spips.c
-@@ -369,7 +369,7 @@ static void xilinx_spips_reset(DeviceState *d)
-     memset(s->regs, 0, sizeof(s->regs));
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index a72591ee4d..73b193a727 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -463,6 +463,16 @@ Example::
+   0x000000004002b0, 1, 4, 66087
+   ...
  
-     fifo8_reset(&s->rx_fifo);
--    fifo8_reset(&s->rx_fifo);
-+    fifo8_reset(&s->tx_fifo);
-     /* non zero resets */
-     s->regs[R_CONFIG] |= MODEFAIL_GEN_EN;
-     s->regs[R_SLAVE_IDLE_COUNT] = 0xFF;
-@@ -397,7 +397,7 @@ static void xlnx_zynqmp_qspips_reset(DeviceState *d)
-     memset(s->regs, 0, sizeof(s->regs));
++Behaviour can be tweaked with the following arguments:
++
++.. list-table:: Hot Blocks plugin arguments
++  :widths: 20 80
++  :header-rows: 1
++
++  * - Option
++    - Description
++  * - inline=true|false
++    - Use faster inline addition of a single counter.
  
-     fifo8_reset(&s->rx_fifo_g);
--    fifo8_reset(&s->rx_fifo_g);
-+    fifo8_reset(&s->tx_fifo_g);
-     fifo32_reset(&s->fifo_g);
-     s->regs[R_INTR_STATUS] = R_INTR_STATUS_RESET;
-     s->regs[R_GPIO] = 1;
+ Hot Pages
+ .........
 -- 
 2.47.3
 
