@@ -4,119 +4,164 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 948541125851
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:28:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CB751125851
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0MPI-0002xh-Sx; Wed, 11 Mar 2026 12:27:38 -0400
+	id 1w0MOA-00025d-4p; Wed, 11 Mar 2026 12:26:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w0MP0-0002qC-Nd
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:27:20 -0400
-Received: from smtpout1.mo534.mail-out.ovh.net ([51.210.94.140])
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1w0MO5-000249-CT
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:26:22 -0400
+Received: from mx0b-002c1b01.pphosted.com ([148.163.155.12])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w0MOy-0005bL-B1
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:27:18 -0400
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net [152.228.215.222])
- by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4fWGNv2GClz5xMK;
- Wed, 11 Mar 2026 16:27:11 +0000 (UTC)
-Received: from director3.derp.mail-out.ovh.net
- (director3.derp.mail-out.ovh.net. [127.0.0.1])
- by director3.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Wed, 11 Mar 2026 16:27:11 +0000 (UTC)
-Received: from mta11.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.109.231.223])
- by director3.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4fWGNv13JJz5vsM;
- Wed, 11 Mar 2026 16:27:11 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.2])
- (Authenticated sender: clg@kaod.org)
- by mta11.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id
- E578424038E0; Wed, 11 Mar 2026 16:27:09 +0000 (UTC)
-Authentication-Results: garm.ovh; auth=pass
- (GARM-95G00185eb2871-1e19-4a90-8ac2-1f4b15cddaef,
- 7A8A5CC3985C6570B0E5DE6DFA92F911D35F4D79) smtp.auth=clg@kaod.org
-X-OVh-ClientIp: 82.64.250.170
-Message-ID: <de208140-b969-4f5a-a910-6ee2788e1027@kaod.org>
-Date: Wed, 11 Mar 2026 17:27:09 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/i2c/aspeed: fix lost interrupts on back-to-back
- commands
-To: Jithu Joseph <jithu.joseph@oss.qualcomm.com>, peter.maydell@linaro.org
-Cc: steven_lee@aspeedtech.com, leetroy@gmail.com, jamin_lin@aspeedtech.com,
- andrew@codeconstruct.com.au, joel@jms.id.au, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, quan@os.amperecomputing.com, jae.yoo@oss.qualcomm.com
-References: <20260311023712.2730185-1-jithu.joseph@oss.qualcomm.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
-Autocrypt: addr=clg@kaod.org; keydata=
- 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
-In-Reply-To: <20260311023712.2730185-1-jithu.joseph@oss.qualcomm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+ (Exim 4.90_1) (envelope-from <mark.caveayland@nutanix.com>)
+ id 1w0MNx-0004Cf-Rb
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:26:17 -0400
+Received: from pps.filterd (m0127844.ppops.net [127.0.0.1])
+ by mx0b-002c1b01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62BFn8IR1315593; Wed, 11 Mar 2026 09:26:10 -0700
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com; h=
+ content-transfer-encoding:content-type:date:from:message-id
+ :mime-version:subject:to; s=proofpoint20171006; bh=iHXYiymWMNjKr
+ skyHI5sMyiqaY4A9nQ4vSAFdTz15fU=; b=yY9joaugloXrGw217ldEB4NPS4GLo
+ dvcag3wMRYYIC+ESAo59yuW1i3mUIFcVLlqZndKS4ayOuTCyCCF/Ept2oMTyowA5
+ wHzQ6vwiNw1KHrAOefcd/8silQEXMkrm/DCoDyjRMCZdrdwGN5UfUd2QcSSRZ4Q3
+ isctDSzJKkns+72uevMr5SLQhhj8Wa/CqcIDrBpEb3gJVK/YAnEr77yd/ygrlvKM
+ zkXVjU9ZGd4O8ilG7rkyxg5ZKyOgaUGs/kNnbAEOoD7GWRAARtcZxJAycyGSAwkX
+ q6eJuXrZpu6zInm/xK//laFkJNs5D++kOipyzHQexzfswwyNjP2f92GEA==
+Received: from ch5pr02cu005.outbound.protection.outlook.com
+ (mail-northcentralusazon11022108.outbound.protection.outlook.com
+ [40.107.200.108])
+ by mx0b-002c1b01.pphosted.com (PPS) with ESMTPS id 4ctu562dsu-1
+ (version=TLSv1.3 cipher=TLS_AES_256_GCM_SHA384 bits=256 verify=NOT);
+ Wed, 11 Mar 2026 09:26:10 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=XvfeEOmLDv7acpEw02t32C4fVyxFXdOnWHa7H0hHUeptw0vWiKoDzX3EF8JjqHT7TPrnjNwsVjn4NzkTazV0VPI5MpVcImzK0HPsVxwUa59BAImMI33hCeV9n6SY1PN8wz6ULdMaV917cLb9s3/HHPMuGnlSmGDjn7SmrqXrB7wBQs5lZ+NLJB/glqwtuzpGPL7nO7zD1gwiUt3lyR2XWrKTi8Omxv6eOZ2YFiUoertub4HD6vy+QgDvFgoKFOEIbJoy/K1YaHtuqkobNjp93g3atEWe2Oiy6O3Zi+/E4Wo1A9l9b6q9GOI3siqlVCfoYUj/9HXo3AhN4hrtQqcmkQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=iHXYiymWMNjKrskyHI5sMyiqaY4A9nQ4vSAFdTz15fU=;
+ b=M9zOc2g0QaGIjBX5jDklwf4gEVTsMYTqrWE5PXR6g8dizSVYZQbgAf0QJgTgcfODrWlISwn6zZn/KbKHZ5+B/Iv96FDqIG7Rgr0Fv5DOISAJeZFglcINEmaHN6QFikjoRwEBGkOGpLNZUCRvgk/HDl3NZJehYSybhvc/UfCjrLwdFHklnsrm5udH11uen35ZYGbQqrMD9zTQvXk1+q/SJlidmbaVbiF+iyI4P0RmfAinjY85Na9+Fk2T9O6QnYCxkfa6iMmO+OX0E8lIbAYwTevx541x3+vJUwmHK4fLCTAJA0UukOpzvtUvWQwbDeQcFt/OehPH0/DrTY/pvZ9SpQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nutanix.com; dmarc=pass action=none header.from=nutanix.com;
+ dkim=pass header.d=nutanix.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=nutanix.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=iHXYiymWMNjKrskyHI5sMyiqaY4A9nQ4vSAFdTz15fU=;
+ b=MYnKW8qfmQ3DmduZJnJc3NapUnzvyZXoTmvxG4FdtWr8ltvKAI5Ryv575D6p3yPTxLep/gipt8G5F7joYSrfTKELTq9TU6vM5fBtVseNAeA4LAjGRonoqneuoeG88gFJEiCViVBRY71MlJAlRa1lxyOoILq3Nl4AIyyRq8HvIYRRAq5xufpCDEclkdLqWHvlJSqAw6vXLvAw+sNgLsdHvBgjIq3J1oHxzOGX4RC4kq9r4XeUHh2MEpIpUSXOuogj6lngwh/HUni5SJ3/1KUVgXF/ugl5KNOTVHjZ+JmITVYH2f8tZekYY4iQt6IOwgTuoa/mvhVohRSlQ6plr92o/g==
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com (2603:10b6:510:16::8)
+ by LV0PR02MB11111.namprd02.prod.outlook.com (2603:10b6:408:334::24) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.12; Wed, 11 Mar
+ 2026 16:26:08 +0000
+Received: from PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250]) by PH0PR02MB7159.namprd02.prod.outlook.com
+ ([fe80::8e97:bc32:822c:b250%6]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
+ 16:26:08 +0000
+From: Mark Cave-Ayland <mark.caveayland@nutanix.com>
+To: mst@redhat.com, imammedo@redhat.com, anisinha@redhat.com,
+ pbonzini@redhat.com, marcandre.lureau@redhat.com,
+ marcel.apfelbaum@gmail.com, qemu-devel@nongnu.org
+Subject: [PATCH v2 0/4] isa-serial: acpi: declare shared IRQs for COM1/3 and
+ COM2/4
+Date: Wed, 11 Mar 2026 16:24:25 +0000
+Message-ID: <20260311162605.2976339-1-mark.caveayland@nutanix.com>
+X-Mailer: git-send-email 2.43.0
 Content-Transfer-Encoding: 8bit
-x-ovh-tracer-id: 10943465621532290070
-X-VR-SPAMSTATE: OK
-X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTGXXYAVirfSElxofsk4snbVzFsmVD8drUxF5IrxUuFK7cGpS+9jnGb3eq5szFQdkqNDaOU2uvsG7uXyWXJxRU8MhPx8UMBt6Vcs8nNZUX0Yk1kwasyYJp+86WSjOUMfbjS4Qu1XXc/V6spM/70sV4R9ZUnAvlITEh0WjQGUJ/qbMHGdtAct6PpgrOvczuFU6vxK3HmxW4nqp1+KR3IDPJWk/NmHpHk3YAeMFVDmt8QpvZGJImeCvmWO7GlvNOxbd0+8VRQraAYQXP8Ft42Vrv53ifkWsrMAY6/QGzQxb8IvFso/urX3d5+mPPxwyASFHadojpapZYeTBcV1x07bUmKjbxqBtKkC+IBsSDMmEi8M3O6gzNzRSMQZnhKI+CMGDIdkJnbmSq8AwARez+6n5i1RgJ+GEqHdydBiSzWHxY2toxUZejKObxZf5AbMf2TdeEMZ5TmAy+wlZd1d6NxSrrCPVUgzXk75ddNfv5t++qtcRZxAqbAiZPL5mGrpRJu2WaPJsKIJ+tEvLwtM+OC3pJjcZgBov+amTM7jTWMKIUGiKzM8WAirXdpl5gW337E2o2C6ZIFRZcXjY+XOiGdyxht6l6yHyjmQRHVCQ+yM3rj8pYz2x08sm9kpl3iQjQjyB/bbNu4RUVixfnRa6trgYdVWAk2Le5HxBiT+M0rXoWB6lw
-DKIM-Signature: a=rsa-sha256; bh=wTSqWSKRC3jn1rkV22uBPE0gJU4MceVmslkYwgdvn7k=; 
- c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1773246433; v=1;
- b=AYu2TGLY0EuFmwAKt6W8WVRBXOs23cONh5YLxxYcBtU/xYFUX+dvLnhzJoouSSq44dCc9fib
- AuWa1CMrxt0xYhnrOhxve7Mnv3FDb+hK9TNb1szTkzUj3WfRFPKoZlKdAX5h1ARueEQaz/3kB0U
- WMkmDKcGoVNAxUsgHa0T1D236HEgmLLQQEQBEgeT8YW14lXmWUd1elQXRFbBNeeQJClCAfFZ7Wp
- JBT3sMnDF7B01nX2d/Vih8YSsPpHFJTFeme9H89cyA4uykwuHVRl/CqIfyzLBnNHRZzFiQavEDP
- 6EwlOIu4gjoJRJUtMU/NGEjJCTVFJo9mMFi4Jyyk4Ipyg==
-Received-SPF: pass client-ip=51.210.94.140; envelope-from=clg@kaod.org;
- helo=smtpout1.mo534.mail-out.ovh.net
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain
+X-ClientProxiedBy: CH5P221CA0002.NAMP221.PROD.OUTLOOK.COM
+ (2603:10b6:610:1f2::27) To PH0PR02MB7159.namprd02.prod.outlook.com
+ (2603:10b6:510:16::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: PH0PR02MB7159:EE_|LV0PR02MB11111:EE_
+X-MS-Office365-Filtering-Correlation-Id: f8d79c95-d475-4827-0351-08de7f8ae6b5
+x-proofpoint-crosstenant: true
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|56012099003|18002099003; 
+X-Microsoft-Antispam-Message-Info: wSTqHz9e50BqULIBxQLRIfBl2XAay5C3fSOXJjAtmuynZ4SPRQ8QoV/uWpGhYfpMFcOzRv6jATv1AwgIWC4LlNLYC6qPotn7u1BopwQBLdNkkNmOBDw1ibMBvaD4ERB1Qb9lShH14jigMI0/V3GlTNFE8q2C8UnvEophBISsgIpK62esCBN0ExUflKz7dcgxw+9XN0fFU56eTgcvklxvdRpJOsYjHwE5lPR5sdy+yJJSc/yiLRmCt1FlEXvppr0NJLU7dhYRCkriQ8jCebmtwIYU9MXPne8UATLkFoRjMZ4+U90JTYvmc7rdhcYxuMJJVLlo6L/cztXdCQZ1NDtlMHX6yyKQEjLbQupI5lG/LpA57q+R0utT61H3znRsJPYZUKl+A0BbxH7VPCc84CLRZ0oJQK43nhhaNcBHaIjJBv6bQ1HhBSWlfFV6RgYPmOQsVoTbGptZIhV/OtQGdz0M++LshMxGOZvTNV/GL5DEbrGML21a2ziu6om/fmES8JUo8b03AYoYU6fKnn5/4ArUGy4PmW1G/j8OW93ZiWMcQTkUwQGJtNMjbCa6XinkNxv4MWoG+nmJMkOIorJmrdlY41zPoZ7uCDWcrAunLtq8bBmlh1iifGcjDMENmTkdpwD06Xod+FGN47UVLDmMlRWe3agwqmyYgI54NKfvpw3+0pmlQhhUFaqvnHFlh8SCzQD/sOYjoIl3yYMaCxNZFps01iu5QJp8GNtLV2J5wXOTVgc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:PH0PR02MB7159.namprd02.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(56012099003)(18002099003); DIR:OUT;
+ SFP:1102; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?y53+w+9ubOKm/JqtYCCNcg2RlJ4OeI40Ib+w/1ID51UfIhfE99g2yNgGu/8o?=
+ =?us-ascii?Q?L2X221CKV1jKTn9x5BV+1M4MkkSt9Bk8mdAc7tHkt8A5Q7iDSuKcadjSq0VC?=
+ =?us-ascii?Q?2wnRkpoFzbJCmMY+EsRzBqCj+a/a3z3tLh5oHdgLmy+khef7oEyqVSj50Gdr?=
+ =?us-ascii?Q?K4//qBFXGUk+QHfQSKwExWSGexFfyDKMicV1krb2QXbBtqzsKndtw195p3UT?=
+ =?us-ascii?Q?TBOxoJ/73wIcFb1An02Ket32+GUaloRqQGbWIKaic5dxptTjcXYNpUTqAUYV?=
+ =?us-ascii?Q?8zU35eBT5GwzHxbwmWjFE8kJ6GZWQJlErH7CrHZ8ENk/aBs5K1f+JfelH2yW?=
+ =?us-ascii?Q?NQhdpEICaPGlI8E6JPIhJdpATWs/Hz+JvPEAeCKPprJew/+IJFwJkTwIPYi2?=
+ =?us-ascii?Q?1U0bpEecqQ19meC3dbIsmD6FxBv0Nrs4CCp5NEYvR2lcvpRCgfi8hJMmahK5?=
+ =?us-ascii?Q?vlS9H+M01rITgCiYTHqzcNMZUyD88+gxebrUADEHQreRZddtqrOuHGu+5unG?=
+ =?us-ascii?Q?39r7477c+CejOe62GXHw1ufJH0spdiPnkLhRCJ/g4JWtifYCI20iQ20M6qsG?=
+ =?us-ascii?Q?ikVedGMiSdF7gDVOQmESNc0XqJjJgzRIoUl9DoG2501Gt7E1R54k7OV0qriy?=
+ =?us-ascii?Q?Qcr0NUMVKMpHagS1cbUfFHdSa2M3NysS4QMC8ssdtrSZLHh6Ffc6icKVXtUF?=
+ =?us-ascii?Q?Lc1LzfbO412xJszJ99h1fnR6qdWodj2NSK0/bU60+RV6VI7dmD75oeyOM3Pf?=
+ =?us-ascii?Q?0jKXg2Ylk9dXxMTWPH5twwvT3V3qZoZpg7pReE9X3Hm1iCAf5TMThorJGo1d?=
+ =?us-ascii?Q?MZON65uKmZh6ph/fhjdTHyKMFVRnI6Iykx3zRKstEpMyXHbDEuSmTrNnGL9Q?=
+ =?us-ascii?Q?4egiz8/afsQ5DG1YphxyboCbAvZUr+kEFw84nxqrhDhfRzBjQ/nkH2m56pAp?=
+ =?us-ascii?Q?2SQAVRft/oAHa2gbvamDSwv5+3r/Jngr79WkptD5rRThA4wonXcNqS5mhzcZ?=
+ =?us-ascii?Q?onOycJdjR965+9V08vaXrmslX49bhfbgNW2JYCMSwkIu6gldUQD+CeeJR4a4?=
+ =?us-ascii?Q?JXdIhDebHjkgY/3WONhi5e15WsMZbDTEre6YUztgCAvfEBOsujFsYbSqj322?=
+ =?us-ascii?Q?qNzKPxg5CXL/ywfRpUjAepWvwRYvbp6xzV7+93ArQb4bJ4jdCezAso/TwbSK?=
+ =?us-ascii?Q?VQSpFTtMlICXM3lC4JQRXnAaofcIZf3OISblePqbltMN0PYEUkRXlStyTc5y?=
+ =?us-ascii?Q?X7DxIzXGbnW+8RlBNBrwr7SUpxWg6/dcdoWn3/zeF8xjTgtYLx6GEZILrVOk?=
+ =?us-ascii?Q?PEIcdG5jiMCZeAazo+QtcfxStwHdS+H3fmkQIRTgOVm760+wuxGiZ0/YddxF?=
+ =?us-ascii?Q?RE3fIyLuCKfB6ko/l4TeUYNEZqsQOv9KCTINOufa1katSLIGrRlH09vf9Pd2?=
+ =?us-ascii?Q?Qquv4dIGgqZEzqsHzX8J4sCwbLtiA0nJ1Pewt6P3ng/y1LTBbtXVGwS2a4D5?=
+ =?us-ascii?Q?0P/aQS0O+fKARl1PM8B1WeuUnZva8UhQ2n7536jSGMz1FpsGEaZjwBzVfcr3?=
+ =?us-ascii?Q?3yHHde7x+2GKbAWkoDdT3MSKFWbGjQkCmRAvNa/maHw0anYGpktws10MTkF/?=
+ =?us-ascii?Q?+oX35TtyRhpXLWBw+Imwf/uhorQd4i9tBxqmCPPfqCmifV/ooqBl8kANsEFr?=
+ =?us-ascii?Q?zr0g4JSakJjpYT16azcmP4u731xBWPNQbfffM0dHC8c1AeEo+c7kJaV3ovAk?=
+ =?us-ascii?Q?p5RHyiHypkOoPFn0cZ9lF/NhRg99Qcc=3D?=
+X-Exchange-RoutingPolicyChecked: SJbQlHFj4tPq+YMGjf6uLQNwqmfyyf7OZAuF9RQFR+JAtqQTLc5ZfN2DwMt5aviw/dQHti1EhmtyUVCKomwhZ91Mk6vn254A3Sw2BwTX4Ve77RS92xxDiPf/gEIm27b2IfcWgsEuZHbxuGQl6XVQwgD35IvQWPLX8Tsw+/K/W5mxe66bR62bCTgKS2ybbDZdKx7E/H518sHVNxjxeu8jZCz9Iek6ONX99ojfK+D+pk3DDNaZ/jYBhquz6ldCB+qRmrD//YTrQBvXhKfFw0r6AL+Xs547ssUXC4yHpEWIdGk5ZWe6sGUIrL+ZYmYcZUpUjiuSl3qzLmWtAvbCDkrpqQ==
+X-OriginatorOrg: nutanix.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f8d79c95-d475-4827-0351-08de7f8ae6b5
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR02MB7159.namprd02.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2026 16:26:08.6804 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: bb047546-786f-4de1-bd75-24e5b6f79043
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: v2s/K974qv3bZbd4tQb1wYaG7h4kuo7VNHqIcpx//fvcsQTg9dtbFJTKSkhm7csFbuddK2+jkncSoK29ETYpByhRiCe71QjlzLZzR8JIgZw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV0PR02MB11111
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDEzOSBTYWx0ZWRfX4ngLIZd5lPQ4
+ kMOlwzQHpRGVjQAWInb8CxrGYsu9hkdBjsa5RXX1n+RQ82Y6xFkShpvSI7CCHORvFqEiu/5ewFv
+ 6ZMc1LYRyGAwnQfnZJyEBH1Osm/w7cO3QIs0meQsh1EhCIqwVxMay/ouof68rhzEAVJx4fHGAQR
+ GzdWvx0Jp7j5Ch5nApjamfgeZppDUO0aa9198VJwS5oifNPqjQITdbOOLJcq6lAvp6blecqiFL7
+ Lao/6T+z7UHVjHgf3Y8GFqKfE8sJ1RORg/vtgYSrQ84OESc9D8iprbb9NvxH90nWNfZ1TQAgikT
+ 9NJ2d3vqqTpOYBdQvSRk5YJ87NTf81AvF0zl1Xmf7mBG2c/CPzJ5G/A/gA/FYeK87YOm8F70UDV
+ hcRLhsIBfMOrsQSLz2mbmuSaSd7K11TEuEpyAh4Wngkkd7qZBOR+Hx+lFO4mBCZiiAZRP9mc0pW
+ TJ4ju4BftZOxg+wKo9g==
+X-Proofpoint-GUID: oi5pGkcjEIXNarABlen9I9m4K-oAYgh0
+X-Proofpoint-ORIG-GUID: oi5pGkcjEIXNarABlen9I9m4K-oAYgh0
+X-Authority-Analysis: v=2.4 cv=OLkqHCaB c=1 sm=1 tr=0 ts=69b197a2 cx=c_pps
+ a=s/l6Ps6BKnbfTvrvnp3tLg==:117 a=6eWqkTHjU83fiwn7nKZWdM+Sl24=:19
+ a=z/mQ4Ysz8XfWz/Q5cLBRGdckG28=:19 a=lCpzRmAYbLLaTzLvsPZ7Mbvzbb8=:19
+ a=xqWC_Br6kY4A:10 a=Yq5XynenixoA:10 a=0kUYKlekyDsA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=VofLwUrZ8Iiv6rRUPXIb:22 a=0LlEyIVc8U2lsR7dKhuH:22
+ a=64Cc0HZtAAAA:8 a=uA7iVV4f9_HlATIxyLUA:9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Reason: safe
+Received-SPF: pass client-ip=148.163.155.12;
+ envelope-from=mark.caveayland@nutanix.com; helo=mx0b-002c1b01.pphosted.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,216 +177,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Jithu
+From Windows 8.1 onwards ISA serial IRQs cannot be shared when ACPI Revision
+5.0 is used in the FACP table. The reason for this is that if a 2-byte IRQ
+Descriptor is used then the interrupt is considered to be high true, edge
+sensitive, non-shareable. Since legacy serial ports COM1/3 and COM2/4 share
+an IRQ then if more than 2 serial ports are added, Windows indicates a
+conflict in Device Manager and these combinations cannot be used together.
 
-On 3/11/26 03:37, Jithu Joseph wrote:
-> QEMU executes I2C commands synchronously inside the CMD register write
-> handler. On real hardware each command takes time on the bus, so the
-> ISR can clear the previous interrupt status before the next completion
-> arrives. In QEMU, when the guest ISR handles a TX_ACK and immediately
-> issues the next command by writing to CMD, that command completes
-> instantly — before the ISR returns to W1C-clear the first TX_ACK.
-> Since the bit is already set, setting it again is a no-op. The ISR
-> then clears it, wiping both completions at once. No interrupt fires
-> for the second command and the driver stalls.
-> 
-> This affects any multi-step I2C transaction: register reads, SMBus
-> word reads, and PMBus device probes all fail ("Error: Read failed"
-> from i2cget, -ETIMEDOUT from kernel drivers).
-> 
-> The issue is exposed when the guest kernel includes commit "i2c:
-> aspeed: Acknowledge Tx done with and without ACK irq late" [1] which
-> defers W1C acknowledgment of TX_ACK until after the ISR has issued
-> the next command. This means the old TX_ACK is still set when the
-> next command completes synchronously, and the subsequent W1C wipes
-> both completions at once.
-> 
-> The trace below shows `i2cget -y 15 0x50 0x00` (read EEPROM register
-> 0x00) failing without the fix. The first START+TX sets TX_ACK. The
-> ISR handles it and issues a second TX to send the register address.
-> That TX completes synchronously while TX_ACK is still set:
-> 
->    aspeed_i2c_bus_cmd cmd=0x3 start|tx| intr=0x0    # START+TX, clean
->    aspeed_i2c_bus_raise_interrupt intr=0x1 ack|      # TX_ACK set
->    aspeed_i2c_bus_read  0x10: 0x1                    # ISR reads TX_ACK
->    aspeed_i2c_bus_write 0x14: 0x2                    # ISR issues TX cmd
->    aspeed_i2c_bus_cmd cmd=0x400002 tx| intr=0x1      # TX runs, TX_ACK already set!
->    aspeed_i2c_bus_raise_interrupt intr=0x1 ack|      # re-set is no-op
->    aspeed_i2c_bus_write 0x10: 0x1                    # ISR W1C clears TX_ACK
->    aspeed_i2c_bus_read  0x10: 0x0                    # LOST — both ACKs wiped
-> 
-> The driver sees INTR_STS=0 and never proceeds to the read phase.
-> 
-> Fix this by tracking interrupt bits that collide with already-pending
-> bits. Before calling aspeed_i2c_bus_handle_cmd(), save and clear
-> INTR_STS so that only freshly set bits are visible after the call.
-> Any overlap between the old and new bits is saved in pending_intr_sts.
-> When the ISR later W1C-clears the old bits, re-apply the saved
-> pending bits so the ISR sees them on its next loop iteration.
-> 
-> With the fix, the same operation completes successfully:
-> 
->    aspeed_i2c_bus_cmd cmd=0x3 start|tx| intr=0x0    # START+TX, clean
->    aspeed_i2c_bus_raise_interrupt intr=0x1 ack|      # TX_ACK set
->    aspeed_i2c_bus_read  0x10: 0x1                    # ISR reads TX_ACK
->    aspeed_i2c_bus_write 0x14: 0x2                    # ISR issues TX cmd
->    aspeed_i2c_bus_cmd cmd=0x400002 tx| intr=0x0      # INTR_STS cleared first
->    aspeed_i2c_bus_raise_interrupt intr=0x1 ack|      # TX_ACK freshly set
->    aspeed_i2c_bus_write 0x10: 0x1                    # ISR W1C clears TX_ACK
->    aspeed_i2c_bus_read  0x10: 0x1                    # RE-DELIVERED from pending
->    aspeed_i2c_bus_write 0x14: 0x1b                   # ISR proceeds: START+RX
->    aspeed_i2c_bus_cmd cmd=0x40001b start|tx|rx|last| # read phase completes
->    i2c_recv recv(addr:0x50) data:0x00                # data received
-> 
-> [1] https://lore.kernel.org/all/20231211102217.2436294-3-quan@os.amperecomputing.com/
-> 
-> Signed-off-by: Jithu Joseph <jithu.joseph@oss.qualcomm.com>
+Add a new 3-byte IRQ Descriptor to the _CRS resource indicating that the
+ISA serial IRQ is low true, edge sensitive and shareable. This enables all 4
+legacy serial ports to be used in Windows without conflict.
 
-Could you please provide a Fixes: tag for this change ?
+Tested on Windows 8.1 and Windows 11 with 4 instances of -serial on the command
+line and copying data simultaneously across serial ports COM1/3 and COM2/4.
+Note that with this series applied, if extra ISA serial ports are added to an
+existing VM then it is necessary to go to Device Manager, select "Add legacy
+hardware" from the "Action" menu, and then reboot the VM for the serial ports
+to be detected correctly without Device Manager indicating a conflict.
 
-> ---
-> Background: A Linux kernel patch series by Quan Nguyen (Ampere) reworked
-> the i2c-aspeed driver's interrupt handling to delay the W1C clear of
-> TX_ACK until after the ISR has processed the completion and issued any
-> follow-up command. The motivation was to correctly handle AST2600 and
-> AST2500 hardware where I2C slave mode requires this ordering — the
-> authors explicitly verified the series on both platforms. On our internal
-> AST2600 hardware we carry this patch as a necessary fix for I2C slave
-> mode to work correctly.
-> 
-> The series did not make it into the upstream Linux kernel because test
-> failures on QEMU blocked it. 
+Signed-off-by: Mark Cave-Ayland <mark.caveayland@nutanix.com>
 
-Oh. Good to see that QEMU is trusted (even when wrong). Time for a fix !
+v2
+- Remove _PRS changes (including AML build changes that are no longer required)
+  and compatibility property as suggested by Igor
 
-> However, the failures are on the emulation
-> side: QEMU executes I2C commands synchronously inside the MMIO write
-> handler, causing a follow-up command to complete and re-raise an
-> already-pending interrupt bit before the ISR has had a chance to
-> W1C-clear it. On real hardware this race cannot occur since bus
-> transactions take measurable time.
-> 
-> Since the kernel patch reflects correct real-hardware behaviour, the
-> right fix is to adapt QEMU's interrupt delivery to handle this ordering,
-> rather than requiring the kernel driver to work around a QEMU-specific
-> timing artifact. This patch does that.
 
-LGTM,
+Mark Cave-Ayland (4):
+  hw/acpi/aml-build.c: add aml_irq() representing the 3-byte IRQ
+    descriptor
+  tests/acpi: allow DSDT acpi table changes
+  hw/char/serial-isa.c: declare IRQ as shared in ACPI IRQ descriptor
+  tests: data: update x86 ACPI tables
 
-Thanks for this detailed report.
+ include/hw/acpi/aml-build.h                   |   2 ++
+ hw/acpi/aml-build-stub.c                      |   6 +++++
+ hw/acpi/aml-build.c                           |  25 ++++++++++++++++++
+ hw/char/serial-isa.c                          |   3 ++-
+ tests/data/acpi/x86/microvm/DSDT              | Bin 365 -> 366 bytes
+ tests/data/acpi/x86/microvm/DSDT.ioapic2      | Bin 365 -> 366 bytes
+ tests/data/acpi/x86/microvm/DSDT.pcie         | Bin 2985 -> 2986 bytes
+ tests/data/acpi/x86/microvm/DSDT.rtc          | Bin 404 -> 405 bytes
+ tests/data/acpi/x86/microvm/DSDT.usb          | Bin 414 -> 415 bytes
+ tests/data/acpi/x86/pc/DSDT                   | Bin 8598 -> 8599 bytes
+ tests/data/acpi/x86/pc/DSDT.acpierst          | Bin 8509 -> 8510 bytes
+ tests/data/acpi/x86/pc/DSDT.acpihmat          | Bin 9923 -> 9924 bytes
+ tests/data/acpi/x86/pc/DSDT.bridge            | Bin 15469 -> 15470 bytes
+ tests/data/acpi/x86/pc/DSDT.cphp              | Bin 9062 -> 9063 bytes
+ tests/data/acpi/x86/pc/DSDT.dimmpxm           | Bin 10252 -> 10253 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbridge          | Bin 8549 -> 8550 bytes
+ tests/data/acpi/x86/pc/DSDT.hpbrroot          | Bin 5087 -> 5088 bytes
+ tests/data/acpi/x86/pc/DSDT.ipmikcs           | Bin 8670 -> 8671 bytes
+ tests/data/acpi/x86/pc/DSDT.memhp             | Bin 9957 -> 9958 bytes
+ tests/data/acpi/x86/pc/DSDT.nohpet            | Bin 8456 -> 8457 bytes
+ tests/data/acpi/x86/pc/DSDT.numamem           | Bin 8604 -> 8605 bytes
+ tests/data/acpi/x86/pc/DSDT.roothp            | Bin 12391 -> 12392 bytes
+ tests/data/acpi/x86/q35/DSDT                  | Bin 8427 -> 8428 bytes
+ tests/data/acpi/x86/q35/DSDT.acpierst         | Bin 8444 -> 8445 bytes
+ tests/data/acpi/x86/q35/DSDT.acpihmat         | Bin 9752 -> 9753 bytes
+ .../data/acpi/x86/q35/DSDT.acpihmat-generic-x | Bin 12637 -> 12638 bytes
+ .../acpi/x86/q35/DSDT.acpihmat-noinitiator    | Bin 8706 -> 8707 bytes
+ tests/data/acpi/x86/q35/DSDT.applesmc         | Bin 8473 -> 8474 bytes
+ tests/data/acpi/x86/q35/DSDT.bridge           | Bin 12040 -> 12041 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count       | Bin 12985 -> 12986 bytes
+ tests/data/acpi/x86/q35/DSDT.core-count2      | Bin 33842 -> 33843 bytes
+ tests/data/acpi/x86/q35/DSDT.cphp             | Bin 8891 -> 8892 bytes
+ tests/data/acpi/x86/q35/DSDT.cxl              | Bin 13218 -> 13219 bytes
+ tests/data/acpi/x86/q35/DSDT.dimmpxm          | Bin 10081 -> 10082 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmibt           | Bin 8502 -> 8503 bytes
+ tests/data/acpi/x86/q35/DSDT.ipmismbus        | Bin 8515 -> 8516 bytes
+ tests/data/acpi/x86/q35/DSDT.ivrs             | Bin 8444 -> 8445 bytes
+ tests/data/acpi/x86/q35/DSDT.memhp            | Bin 9786 -> 9787 bytes
+ tests/data/acpi/x86/q35/DSDT.mmio64           | Bin 9557 -> 9558 bytes
+ tests/data/acpi/x86/q35/DSDT.multi-bridge     | Bin 13280 -> 13281 bytes
+ tests/data/acpi/x86/q35/DSDT.noacpihp         | Bin 8289 -> 8290 bytes
+ tests/data/acpi/x86/q35/DSDT.nohpet           | Bin 8285 -> 8286 bytes
+ tests/data/acpi/x86/q35/DSDT.numamem          | Bin 8433 -> 8434 bytes
+ tests/data/acpi/x86/q35/DSDT.pvpanic-isa      | Bin 8528 -> 8529 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count     | Bin 12985 -> 12986 bytes
+ tests/data/acpi/x86/q35/DSDT.thread-count2    | Bin 33842 -> 33843 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm12        | Bin 9033 -> 9034 bytes
+ tests/data/acpi/x86/q35/DSDT.tis.tpm2         | Bin 9059 -> 9060 bytes
+ tests/data/acpi/x86/q35/DSDT.type4-count      | Bin 18661 -> 18662 bytes
+ tests/data/acpi/x86/q35/DSDT.viot             | Bin 14684 -> 14685 bytes
+ tests/data/acpi/x86/q35/DSDT.xapic            | Bin 35790 -> 35791 bytes
+ 51 files changed, 35 insertions(+), 1 deletion(-)
 
-C.
-  
-> 
->   include/hw/i2c/aspeed_i2c.h |  1 +
->   hw/i2c/aspeed_i2c.c         | 46 +++++++++++++++++++++++++++++++++++++
->   2 files changed, 47 insertions(+)
-> 
-> diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-> index 53a9dba71b07..d42cb4865aa5 100644
-> --- a/include/hw/i2c/aspeed_i2c.h
-> +++ b/include/hw/i2c/aspeed_i2c.h
-> @@ -256,6 +256,7 @@ struct AspeedI2CBus {
->       qemu_irq irq;
->   
->       uint32_t regs[ASPEED_I2C_NEW_NUM_REG];
-> +    uint32_t pending_intr_sts;
->       uint8_t pool[ASPEED_I2C_BUS_POOL_SIZE];
->       uint64_t dma_dram_offset;
->   };
-> diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-> index 8022938f3478..ad6342bec0d4 100644
-> --- a/hw/i2c/aspeed_i2c.c
-> +++ b/hw/i2c/aspeed_i2c.c
-> @@ -628,6 +628,8 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->       AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
->       bool handle_rx;
->       bool w1t;
-> +    uint32_t old_intr;
-> +    uint32_t cmd_intr;
->   
->       trace_aspeed_i2c_bus_write(bus->id, offset, size, value);
->   
-> @@ -665,6 +667,17 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->               break;
->           }
->           bus->regs[R_I2CM_INTR_STS] &= ~(value & 0xf007f07f);
-> +        /*
-> +         * Re-apply interrupts lost due to synchronous command completion.
-> +         * When a command completes instantly during an MMIO write, the new
-> +         * interrupt status bits collide with already-pending bits. After
-> +         * the ISR clears them, re-apply the saved bits so the ISR can
-> +         * process the new completion.
-> +         */
-> +        if (bus->pending_intr_sts) {
-> +            bus->regs[R_I2CM_INTR_STS] |= bus->pending_intr_sts;
-> +            bus->pending_intr_sts = 0;
-> +        }
->           if (!bus->regs[R_I2CM_INTR_STS]) {
->               bus->controller->intr_status &= ~(1 << bus->id);
->               qemu_irq_lower(aic->bus_get_irq(bus));
-> @@ -708,7 +721,17 @@ static void aspeed_i2c_bus_new_write(AspeedI2CBus *bus, hwaddr offset,
->               bus->regs[R_I2CM_CMD] = value;
->           }
->   
-> +        old_intr = bus->regs[R_I2CM_INTR_STS];
-> +        bus->regs[R_I2CM_INTR_STS] = 0;
->           aspeed_i2c_bus_handle_cmd(bus, value);
-> +        /*
-> +         * cmd_intr has only the bits handle_cmd freshly set.
-> +         * Overlap with old_intr means the same bit was re-fired
-> +         * and would be lost when the ISR W1C-clears the old one.
-> +         */
-> +        cmd_intr = bus->regs[R_I2CM_INTR_STS];
-> +        bus->regs[R_I2CM_INTR_STS] = cmd_intr | old_intr;
-> +        bus->pending_intr_sts |= old_intr & cmd_intr;
->           aspeed_i2c_bus_raise_interrupt(bus);
->           break;
->       case A_I2CM_DMA_TX_ADDR:
-> @@ -845,6 +868,8 @@ static void aspeed_i2c_bus_old_write(AspeedI2CBus *bus, hwaddr offset,
->   {
->       AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
->       bool handle_rx;
-> +    uint32_t old_intr;
-> +    uint32_t cmd_intr;
->   
->       trace_aspeed_i2c_bus_write(bus->id, offset, size, value);
->   
-> @@ -868,6 +893,17 @@ static void aspeed_i2c_bus_old_write(AspeedI2CBus *bus, hwaddr offset,
->           handle_rx = SHARED_ARRAY_FIELD_EX32(bus->regs, R_I2CD_INTR_STS, RX_DONE)
->                       && SHARED_FIELD_EX32(value, RX_DONE);
->           bus->regs[R_I2CD_INTR_STS] &= ~(value & 0x7FFF);
-> +        /*
-> +         * Re-apply interrupts lost due to synchronous command completion.
-> +         * When a command completes instantly during an MMIO write, the new
-> +         * interrupt status bits collide with already-pending bits. After
-> +         * the ISR clears them, re-apply the saved bits so the ISR can
-> +         * process the new completion.
-> +         */
-> +        if (bus->pending_intr_sts) {
-> +            bus->regs[R_I2CD_INTR_STS] |= bus->pending_intr_sts;
-> +            bus->pending_intr_sts = 0;
-> +        }
->           if (!bus->regs[R_I2CD_INTR_STS]) {
->               bus->controller->intr_status &= ~(1 << bus->id);
->               qemu_irq_lower(aic->bus_get_irq(bus));
-> @@ -915,7 +951,17 @@ static void aspeed_i2c_bus_old_write(AspeedI2CBus *bus, hwaddr offset,
->           bus->regs[R_I2CD_CMD] &= ~0xFFFF;
->           bus->regs[R_I2CD_CMD] |= value & 0xFFFF;
->   
-> +        old_intr = bus->regs[R_I2CD_INTR_STS];
-> +        bus->regs[R_I2CD_INTR_STS] = 0;
->           aspeed_i2c_bus_handle_cmd(bus, value);
-> +        /*
-> +         * cmd_intr has only the bits handle_cmd freshly set.
-> +         * Overlap with old_intr means the same bit was re-fired
-> +         * and would be lost when the ISR W1C-clears the old one.
-> +         */
-> +        cmd_intr = bus->regs[R_I2CD_INTR_STS];
-> +        bus->regs[R_I2CD_INTR_STS] = cmd_intr | old_intr;
-> +        bus->pending_intr_sts |= old_intr & cmd_intr;
->           aspeed_i2c_bus_raise_interrupt(bus);
->           break;
->       case A_I2CD_DMA_ADDR:
+-- 
+2.43.0
 
 
