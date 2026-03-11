@@ -4,48 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A5F1125842
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0CFA2112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBr-0001ep-AE; Wed, 11 Mar 2026 11:09:39 -0400
+	id 1w0LAR-0005FZ-5B; Wed, 11 Mar 2026 11:08:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9n-0004K4-1E; Wed, 11 Mar 2026 11:07:38 -0400
+ id 1w0L8F-00027p-Pi; Wed, 11 Mar 2026 11:05:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9h-0004yi-BD; Wed, 11 Mar 2026 11:07:28 -0400
+ id 1w0L89-0004gr-9i; Wed, 11 Mar 2026 11:05:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241481; bh=cfcf1z7/JpS4xZDWqSxPZgHSdgbv846o0KdJ0aeJQi0=;
+ t=1773241306; bh=CI6sjz8BUnkol5NPtEPnjU388I519lcydZCmaSFzMPI=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=xQsHag3kE+tM2lPWDMVEEGCAj2lBiGRGQt7cSK/XTSk/FQltHFLu9daQGbU2cOvCv
- RwmO/BDEhm5tk6csbKQ8MLLOWBF0B4RQwgG3L+DZ9UVSxb8fc5AlPcNvZzD4A4Akdt
- o/DmxPItlyRnmNUG84O4uWj8rNp/j3N1mSg8EoHuD5Z34Szc9/9Mr73vDHUYqIIzos
- 3kEP3s/xPoc2Fgan8kxBoo/gZnbCARQNprhJub+nIerAme7m7omOzsjVtnxez5SNyS
- 3+RMvukV5cfDWx3n3C6eq2tpHo4WS/sr3BXccZWMkoLB2SKY6RLrjtHFUMNrGkGYdc
- 2593zJIKnZkmA==
+ b=tdePONr2Q64EwLRFi6y27F8VvbGEgVBsJnww+/yT7KA+Dqfs2gehg/FHCSMPAXJwc
+ dkJ/dhiaO4gt5gNCv+/N+YWDy0gHC4WyzMzGyfFX5lUG5y8lQ+l5TGZTBXTQTVkk3j
+ pE3XpX+XMr3hO/5Of+/lcsX1gJW8RyH8wKfX+YGOVdppOmZDK1WE4/0iWx1ZSkY9Ri
+ /c6jQmZjnLmbbZM0tli2Anvx3tDYDb0Iy1GtSdVXAo01uqrYT3q4aSe3lxwvHUjnU6
+ /23bWHVzQs6idrhYSIX3+sUBo326W7+nMqEeFr+W+f+7WwIZv/ZU9Sr5+JIt/8hJBv
+ Ilvd0gihHohdQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6A991191E8A;
- Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0B878191E63;
+ Wed, 11 Mar 2026 18:01:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5908037C2CB;
- Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id EACB137C2B5;
+ Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 07/46] contrib/plugins/hotblocks: Fix off by one error
- in iteration of sorted blocks
-Date: Wed, 11 Mar 2026 18:02:43 +0300
-Message-ID: <20260311150327.1084669-7-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 37/44] hw/net/xilinx_ethlite: Check for oversized TX
+ packets
+Date: Wed, 11 Mar 2026 18:02:09 +0300
+Message-ID: <20260311150221.1084186-37-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -71,37 +74,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The logic to iterate over the hottest blocks will never reach the last
-item in the list, as it checks `it->next != NULL` before entering the
-loop. It's hard to trigger this off-by-one error with the default
-limit=20, but it is a bug and is problematic if that default is changed
-to something larger.
+The xilinx_ethlite network device wasn't checking that the TX packet
+size set by the guest was within the size of its dual port RAM, with
+the effect that the guest could get it to read off the end of the RAM
+block.
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/f1ba2e57c6126472c0c8310774009f2455efc370.1753857212.git.asb@igalia.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit 1c1e45fcd66269f8a6dbd97fd7b8267d8f6f58af)
+Check the length.  There is no provision in this very simple device
+for reporting errors, so as with various RX errors we just report via
+tracepoint.
+
+This lack of length check has been present since the device was first
+introduced, though the code implementing the tx path has changed
+somewhat since then.
+
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3317
+Fixes: b43848a1005ce ("xilinx: Add ethlite emulation")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
+Message-ID: <20260303172718.437015-1-peter.maydell@linaro.org>
+[PMD: renamed size -> tx_size to avoid shadow=compatible-local error]
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 6595a8d5d17ea1716ddafb34455ec2b29381e232)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index d3dd23ed9f..cf4d6b8c36 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -82,10 +82,9 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-     sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
- 
-     if (sorted_counts) {
--        it = sorted_counts;
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
- 
--        for (i = 0; i < limit && it->next; i++, it = it->next) {
-+        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
-                 report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
+diff --git a/hw/net/trace-events b/hw/net/trace-events
+index 72b69c4a8b..698290fe79 100644
+--- a/hw/net/trace-events
++++ b/hw/net/trace-events
+@@ -517,3 +517,4 @@ xen_netdev_rx(int dev, int idx, int status, int flags) "vif%u idx %d status %d f
+ # xilinx_ethlite.c
+ ethlite_pkt_lost(uint32_t rx_ctrl) "rx_ctrl:0x%" PRIx32
+ ethlite_pkt_size_too_big(uint64_t size) "size:0x%" PRIx64
++ethlite_pkt_tx_size_too_big(uint64_t size) "size:0x%" PRIx64
+diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
+index 15d9b95aa8..b5a18f6ef7 100644
+--- a/hw/net/xilinx_ethlite.c
++++ b/hw/net/xilinx_ethlite.c
+@@ -162,9 +162,15 @@ static void port_tx_write(void *opaque, hwaddr addr, uint64_t value,
+         break;
+     case TX_CTRL:
+         if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
+-            qemu_send_packet(qemu_get_queue(s->nic),
+-                             txbuf_ptr(s, port_index),
+-                             s->port[port_index].reg.tx_len);
++            uint32_t tx_size = s->port[port_index].reg.tx_len;
++
++            if (tx_size >= BUFSZ_MAX) {
++                trace_ethlite_pkt_tx_size_too_big(tx_size);
++            } else {
++                qemu_send_packet(qemu_get_queue(s->nic),
++                                 txbuf_ptr(s, port_index),
++                                 tx_size);
++            }
+             if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
+                 eth_pulse_irq(s);
+             }
 -- 
 2.47.3
 
