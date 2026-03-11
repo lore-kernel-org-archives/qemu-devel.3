@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F66C112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDCA3112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L6Z-0006Q1-Vw; Wed, 11 Mar 2026 11:04:12 -0400
+	id 1w0L6c-0006bt-BG; Wed, 11 Mar 2026 11:04:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L69-0005Lb-6V; Wed, 11 Mar 2026 11:03:49 -0400
+ id 1w0L6C-0005Rm-6f; Wed, 11 Mar 2026 11:03:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L67-000465-M7; Wed, 11 Mar 2026 11:03:44 -0400
+ id 1w0L6A-000494-MF; Wed, 11 Mar 2026 11:03:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241304; bh=DtZQY6XeRzC5KZ+gX9mOuCpE3BdRSgH1u565E2eo52g=;
+ t=1773241304; bh=lLLSedyNCQhyA9RJ4psxHKwKyNFw5bmd1lU8fvbFqOk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=nSK41s8vE/zh+U5Oubtnu7ZFMd4oi8P0PZ4XwAfPvMY/2ibzDlNyqu0R6WqJIzDSU
- CKD1z7rnoSp91OHfHD6rf4oVtoHWYNqZcJjuwYoGR4D/zHH5mBnnPCGnPvT1Gnx5zu
- D0rP8kHd1RzJ4tGETmQnft3/eFpGtFGCNDSwU6TdgRFDJ9b0eGP7RUcKdsH3ic3rOE
- 0i1DngssxyDg49RHhlV8+4SnObeLJ8ZijclCXe1Ufr4y0eswCrvK5jcSEc7b4ZH4U0
- y8D3ljPqhuhq9Fgwav0KhDJyY5RcwlUp1LXGo99tSEZQtZ7sSR4O8YxsDRs7kHnYir
- k43+imikcvcPw==
+ b=sswHMId9Q4FQhftorg2ewHjPkQXdi2XjO1RWrjy9A9KZXtYpwqiw08cVneIczLrRM
+ rscuh+QB2h0QkPCwWctJfw2RCuSIq8dridQsNAORVC1di3kk7zQKC80oh2tqfuHpxH
+ 5cOEwNxGp7qzwL3fkZs83LGdoLy1elMU6kjoevPJ4O+UAuTcSwUbeRGeO3GvYmBpYx
+ Eys+UU+bszeyoDQL1V+nP302rjYOoPAe80iKMBQwslwYfa6EGre5xQ+tpi9XyaBtk/
+ 5Ledoj9E0w33t+N6TGDq5Vr9lXU2/AondTTBVQFQNiu07b2V0fxxs42O8NFP3cXsSU
+ +PT92qF+M+jpg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 81B97191E4F;
+ by isrv.corpit.ru (Postfix) with ESMTP id AF375191E51;
  Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 6D96537C2A1;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9878037C2A3;
  Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- DARKNAVY <vr@darknavy.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 17/44] virtio-snd: tighten read amount in in_cb
-Date: Wed, 11 Mar 2026 18:01:49 +0300
-Message-ID: <20260311150221.1084186-17-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Weixie Cui <cuiweixie@gmail.com>,
+ Thomas Huth <thuth@redhat.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 19/44] hw/ssi/xilinx_spips: Reset TX FIFO in reset
+Date: Wed, 11 Mar 2026 18:01:51 +0300
+Message-ID: <20260311150221.1084186-19-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -71,51 +72,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+From: Weixie Cui <cuiweixie@gmail.com>
 
-The amount of bytes to read passed to AUD_read() should never surpass
-the maximum available buffer length. Tighten the current amount by
-MIN(<amount>, max_size - <existing size>).
+In xilinx_spips_reset() and xlnx_zynqmp_qspips_reset() a cut and
+paste error meant we reset the RX FIFO twice and the TX FIFO not at
+all.  Correct this to reset both FIFOs.
 
 Cc: qemu-stable@nongnu.org
-Fixes: 98e77e3dd8dd6e7aa9a7dffa60f49c8c8a49d4e3 ("virtio-snd: add max size bounds check in input cb")
-Reported-by: DARKNAVY <vr@darknavy.com>
-Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
-Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
-Message-Id: <20260220-virtio-snd-series-v1-5-207c4f7200a2@linaro.org>
-(cherry picked from commit 7994203bb1b83a6604f3ab00fe9598909bb66164)
+Signed-off-by: Weixie Cui <cuiweixie@gmail.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-id: 20260223095905.67709-1-cuiweixie@gmail.com
+[Rewrote commit message]
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+(cherry picked from commit 669683cf1414ce442d2faea160dbc69747aef007)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
-index 4ea2d4db95..3653b52d7e 100644
---- a/hw/audio/virtio-snd.c
-+++ b/hw/audio/virtio-snd.c
-@@ -1240,7 +1240,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
- {
-     VirtIOSoundPCMStream *stream = data;
-     VirtIOSoundPCMBuffer *buffer;
--    size_t size, max_size;
-+    size_t size, max_size, to_read;
+diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
+index 60d092039f..1a51aeed91 100644
+--- a/hw/ssi/xilinx_spips.c
++++ b/hw/ssi/xilinx_spips.c
+@@ -369,7 +369,7 @@ static void xilinx_spips_reset(DeviceState *d)
+     memset(s->regs, 0, sizeof(s->regs));
  
-     WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
-         while (!QSIMPLEQ_EMPTY(&stream->queue)) {
-@@ -1266,10 +1266,12 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
-                     return_rx_buffer(stream, buffer);
-                     break;
-                 }
-+                to_read = stream->params.period_bytes - buffer->size;
-+                to_read = MIN(to_read, available);
-+                to_read = MIN(to_read, max_size - buffer->size);
-                 size = AUD_read(stream->voice.in,
--                        buffer->data + buffer->size,
--                        MIN(available, (stream->params.period_bytes -
--                                        buffer->size)));
-+                                buffer->data + buffer->size,
-+                                to_read);
-                 if (!size) {
-                     available = 0;
-                     break;
+     fifo8_reset(&s->rx_fifo);
+-    fifo8_reset(&s->rx_fifo);
++    fifo8_reset(&s->tx_fifo);
+     /* non zero resets */
+     s->regs[R_CONFIG] |= MODEFAIL_GEN_EN;
+     s->regs[R_SLAVE_IDLE_COUNT] = 0xFF;
+@@ -397,7 +397,7 @@ static void xlnx_zynqmp_qspips_reset(DeviceState *d)
+     memset(s->regs, 0, sizeof(s->regs));
+ 
+     fifo8_reset(&s->rx_fifo_g);
+-    fifo8_reset(&s->rx_fifo_g);
++    fifo8_reset(&s->tx_fifo_g);
+     fifo32_reset(&s->fifo_g);
+     s->regs[R_INTR_STATUS] = R_INTR_STATUS_RESET;
+     s->regs[R_GPIO] = 1;
 -- 
 2.47.3
 
