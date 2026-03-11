@@ -4,58 +4,73 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 49AB3112584D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6DBB1125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBo-0001Ux-Ht; Wed, 11 Mar 2026 11:09:36 -0400
+	id 1w0LIm-0008NG-Bs; Wed, 11 Mar 2026 11:16:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAK-00055q-VP; Wed, 11 Mar 2026 11:08:09 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LIT-00084B-Ce; Wed, 11 Mar 2026 11:16:31 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAJ-0005Sw-DC; Wed, 11 Mar 2026 11:08:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241481; bh=E3cGNeFeUOznE9BBJTE5+LSH/VZ5Z74D9SNno9Uqbrg=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=TEG1gsecXPEhLb/TBppUtkMRVtQtiNx9/fkNtRyzskcUuGAcgOCTU+I3tkShB4mqg
- PcACnJDtAyZqQ5shGpI+YkcUpHaMuww7UGT/3q8efbm4zoeWbcd0QmDhvzZFrwLr4A
- uG/GjjBF638O/5l4lHuTHNAtnruIVAQztwaKs7p48m7JmP34bVNAx/JvGqsUfSqPWK
- qg5KmwR2WiLJd/6fuxkEvFjP7k9rg/Il4pDRmMtDQ1ybU0Pf96p6fM1vRRKw1FSxLm
- COIiKx6V8yMe8aowlnbHbtHLppTrqp2hkjesRznqpCSg6PjTstGe/v1w8JTjISBkUc
- HlraiVubJdOCg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id DA990191E90;
- Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C8D0237C2D1;
- Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 13/46] target/arm/tcg: Allow SVE RAX1 in SME2p1
- streaming mode
-Date: Wed, 11 Mar 2026 18:02:49 +0300
-Message-ID: <20260311150327.1084669-13-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LIR-0000QV-85; Wed, 11 Mar 2026 11:16:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773242174; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=BKS8tkW1+MhgLeTfchmF86Fi0ufPK3DH++LM6ESYyX7dIZim7MfmniNOQqlvcXwbzColuIkaRCXuuKh19mhIE9M5migAxPFtV94Ucybba8jrBERjT1dwSfcNedy7kAkL/A2cbcQC2L5M1w9EF9/OY9+ilCAtQH+q5c6SK8Pn04g=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773242174;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:MIME-Version:Message-ID:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=EdsQt9XAkhr3J9fJ/2sTgcnnBkZM2wyLclrl9WyqDG4=; 
+ b=aJalXG8D7MRxX1AuZUjkRoGpns+5HKa7PfYWesNFA5NWojXE9SMOSnCy3OOFP7Egc8Ktg9WeyHkmGNb1MRb71VGg7PdJh1sgruMLM6hed9OVTc3VVBs9cz2mayt0nn+CFGCfiI5OMsqm24fzv7K9eCWzf/j2JkcC7YaDVEXt0F4=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242174; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=From:From:Subject:Subject:Date:Date:Message-Id:Message-Id:MIME-Version:Content-Type:Content-Transfer-Encoding:To:To:Cc:Cc:Reply-To;
+ bh=EdsQt9XAkhr3J9fJ/2sTgcnnBkZM2wyLclrl9WyqDG4=;
+ b=ArY5FdC+Z1HudFTEsqAumIPDnWKF+nD3RQQhdpin0ZFGbz/sqFQLqemtwssf1iwx
+ 025iKSfKYuJCoYXjnp4eeTKLQMnMcysGFm6dZWfzU5BEQb/i8n2nJlGdL/SYpV/mOQz
+ NVwNWrM/sl9UAvmJET56DkQ2mEBkkmnplXz+P+6E=
+Received: by mx.zohomail.com with SMTPS id 1773242172116262.8075739050563;
+ Wed, 11 Mar 2026 08:16:12 -0700 (PDT)
+From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+Subject: [PATCH 00/14] Add ARM64 support for MSHV accelerator
+Date: Wed, 11 Mar 2026 15:15:27 +0000
+Message-Id: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+X-B4-Tracking: v=1; b=H4sIAA+HsWkC/6tWKk4tykwtVrJSqFYqSi3LLM7MzwNyDHUUlJIzE
+ vPSU3UzU4B8JSMDIzMDY0ND3dzijLL4xOTk1Jz4xKJcM5P44tKCAt1UC7MkAwMLo8TUVBMloN6
+ CotS0zAqwudGxtbUARDakIGcAAAA=
+X-Change-ID: 20260311-mshv_accel_arm64_supp-e86b0082aee4
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+X-Mailer: b4 0.14.3
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,45 +86,85 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+This series adds ARM64 guest support to the MSHV (Microsoft Hypervisor)
+accelerator, enabling QEMU to run aarch64 VMs on Microsoft's hypervisor
+using the mshv Linux kernel module.
 
-The SVE RAX1 instruction is permitted in SME streaming mode starting
-from SME2p1.  We forgot to allow this relaxation when we implemented
-SME2p1.
+The first few patches refactor the existing x86 MSHV code to separate
+arch-specific pieces from common infrastructure: moving MSR handling to
+target/i386, extracting shared register hypercall helpers, provisioning
+host CPU features, and introducing arch-specific init hooks.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7b1613a1020d2 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260202133353.2231685-5-peter.maydell@linaro.org
-(cherry picked from commit 433097a2242120918090201129e5fbb8e16b3e34)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+The remaining patches add the ARM64 backend:
+ - vCPU state get/set using hypervisor register hypercalls
+ - -cpu host support by querying ID registers from the hypervisor
+ - vCPU run loop with MMIO emulation via ESR_EL2 syndrome decoding
+ - In-kernel vGICv3 backed by HVCALL_ASSERT_VIRTUAL_INTERRUPT
+ - Interrupt control structure adjustments for arm64
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index d69a2f5d75..76e4a6c52c 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7803,8 +7803,17 @@ TRANS_FEAT_NONSTREAMING(SM4E, aa64_sve2_sm4, gen_gvec_ool_arg_zzz,
- TRANS_FEAT_NONSTREAMING(SM4EKEY, aa64_sve2_sm4, gen_gvec_ool_arg_zzz,
-                         gen_helper_crypto_sm4ekey, a, 0)
- 
--TRANS_FEAT_NONSTREAMING(RAX1, aa64_sve2_sha3, gen_gvec_fn_arg_zzz,
--                        gen_gvec_rax1, a)
-+static bool trans_RAX1(DisasContext *s, arg_RAX1 *a)
-+{
-+    if (!dc_isar_feature(aa64_sve2_sha3, s)) {
-+        return false;
-+    }
-+    if (!dc_isar_feature(aa64_sme2p1, s)) {
-+        /* SME2p1 adds this as valid in streaming SVE mode */
-+        s->is_nonstreaming = true;
-+    }
-+    return gen_gvec_fn_arg_zzz(s, gen_gvec_rax1, a);
-+}
- 
- TRANS_FEAT(FCVTNT_sh, aa64_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtnt_sh, a, 0, FPST_A64)
+With this series, a standard aarch64 virt machine can be launched with:
+  qemu-system-aarch64 -accel mshv -cpu host -M virt ...
+
+Caveats:
+- Currently only direct kernel is supported. We're still debugging edk2
+  firmware boot. 
+- Live migration is not yet supported.
+
+---
+Aastha Rawat (7):
+      accel/mshv: move msr.c to target/i386
+      accel/mshv: extract common CPU register helpers
+      meson, target/arm/mshv: Enable arm64 build & add initial MSHV support
+      target/arm/mshv: implement vcpu state operations for ARM64
+      target/arm/mshv: implement -cpu host for MSHV
+      accel/mshv: Add access_vp_regs synthetic proc features
+      target/arm: cpu: Mark MSHV supporting PSCI 1.3
+
+Anirudh Rayabharam (Microsoft) (6):
+      accel/mshv: provision guests with the same features as host
+      accel/mshv: add arch-specific accelerator init hook
+      target/arm/mshv: add vCPU run loop
+      include/hw/hyperv: adjust hv_interrupt_control structure for arm64
+      hw/intc,target/arm/mshv: add MSHV vGICv3 implementation
+      MAINTAINERS: updates for MSHV arm64 code
+
+Magnus Kulke (1):
+      accel/mshv: implement cpu_thread_is_idle() hook
+
+ MAINTAINERS                        |   8 +
+ accel/mshv/irq.c                   |   2 +
+ accel/mshv/meson.build             |   4 +-
+ accel/mshv/mshv-all.c              |  73 +++-
+ accel/mshv/mshv-cpu-common.c       | 151 +++++++++
+ hw/arm/virt.c                      |  11 +-
+ hw/intc/arm_gicv3_common.c         |   3 +
+ hw/intc/arm_gicv3_mshv.c           | 180 ++++++++++
+ hw/intc/meson.build                |   1 +
+ include/hw/hyperv/hvgdk_mini.h     | 130 ++++++++
+ include/hw/hyperv/hvhdk.h          |  97 +++++-
+ include/hw/hyperv/hvhdk_mini.h     |   6 +
+ include/hw/intc/arm_gicv3_common.h |   1 +
+ include/system/hw_accel.h          |   3 +-
+ include/system/mshv.h              |   2 +
+ include/system/mshv_int.h          |   5 +
+ meson.build                        |   7 +-
+ target/arm/cpu.c                   |   7 +-
+ target/arm/cpu64.c                 |  24 +-
+ target/arm/meson.build             |   1 +
+ target/arm/mshv/meson.build        |   7 +
+ target/arm/mshv/mshv-all.c         | 665 +++++++++++++++++++++++++++++++++++++
+ target/arm/mshv_arm.h              |  18 +
+ target/i386/mshv/meson.build       |   2 +
+ target/i386/mshv/mshv-all.c        |  85 +++++
+ target/i386/mshv/mshv-cpu.c        | 170 +---------
+ {accel => target/i386}/mshv/msr.c  |   0
+ 27 files changed, 1465 insertions(+), 198 deletions(-)
+---
+base-commit: 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455
+change-id: 20260311-mshv_accel_arm64_supp-e86b0082aee4
+
+Best regards,
 -- 
-2.47.3
+Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 
 
