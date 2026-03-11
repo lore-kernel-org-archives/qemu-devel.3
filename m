@@ -4,106 +4,142 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB2B21125824
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:59:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DE5801125825
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:59:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0K5t-00074E-RK; Wed, 11 Mar 2026 09:59:25 -0400
+	id 1w0K6D-0007EW-LN; Wed, 11 Mar 2026 09:59:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w0K5r-00073v-Bt
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:59:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1w0K66-0007CE-8l; Wed, 11 Mar 2026 09:59:38 -0400
+Received: from mail-westus3azlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c107::3] helo=PH0PR06CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w0K5o-0004fq-Al
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 09:59:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773237558;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jyxHV7EAj7S/AOcQBmSx3UDgudBsPBAjMuyhGS9Ssao=;
- b=EmZ9Xzxtp97brk23c26qy4tr5FJzxGCgX38cHDjoJ2sxG8Nm6/03Y87q9igYK6zpIG5dXN
- LmAyepIdHraBL2VXjI3wZtSj1Qidj6PHDpB2S5o+OkyBaaU4Wh/5Ir8V5UAejtTHXssYZK
- jcL7G8JgqUSh39e4qumm4dcpn8WtxZg=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-530-epUeVYy4OVy0_WvzvwcZDg-1; Wed, 11 Mar 2026 09:59:17 -0400
-X-MC-Unique: epUeVYy4OVy0_WvzvwcZDg-1
-X-Mimecast-MFC-AGG-ID: epUeVYy4OVy0_WvzvwcZDg_1773237556
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-439bcec86dfso9151125f8f.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 06:59:17 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773237556; x=1773842356;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jyxHV7EAj7S/AOcQBmSx3UDgudBsPBAjMuyhGS9Ssao=;
- b=dKN5gM8kQL+apxzacQs20Z+SyBww66AJz4nZ0LPjnoL2dRaIYrn/5UZZSN75jSW+Hq
- 7KgxEITpVUxpbfXKlsK4cf0lImcFsDI5juP+xAKnVhoZHmPmmV3Tom5XrUOBCdxwF4V5
- CEX9ZFUZkWwSNqfzNu4MGVQDcYM8pfJrAFMZurz/pS8YNWkL9zQbEB6FXngT2jHrYHK5
- Y5eQ9EdsMJDKY/ChHwUd1jaRmhyeGOT/upwHRD8rCkKMiXP9plVXI6XTI2B1XV1q9HP7
- bQl6njU3vQinz9w9X02//jcCFkqaXl4d5N80IL3mkH/dt7e8i8uF5KJR1GaKDRPVRzdP
- ZS6w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWPZzlhL8tNV1sfmsj/6l1Madg4hduMaMzqtrDftIuOWiCFh2DrCR9ebQTzQJ/a3RUENiGAlmvHn9xL@nongnu.org
-X-Gm-Message-State: AOJu0Yz0Ppe7layHCXnRDYA4FeUbaizoMa8j5nkZtSMLJqDCguYkJRIy
- PyTFANOAHOLu68079PbxmcQ9AsO12mDDkhLgRJSw3Yo4Gnblg4xSBUxsQ/lcLpr5Ag8dCH4jnCz
- 2IgK1BwKNM3KzOp1H8bPw0rlILURo9HIJIv8g8G0ydpNKBhowEeOsvrX5
-X-Gm-Gg: ATEYQzxaVNY83UeZRCwHFRTow1qy3yWLGzYxMVGJbG+wg4ql7rh2IZXvYrrTzP1jaov
- +MsXo6fTibDbdlBZhNDBv7uI10g8B/ICYhLp4AVzenuo6FeFIZ+WWIEDIxORurxY/Zm084KiDt2
- 0tO2SlvBI0FrbOl4uBlNDy0Rpfkl3Py8WDU3tU6vAlL6hLJSh/sncWs8sY5hxKxlXZ933/s7/Ii
- /XYFzFFX3z7y8flQ3dITPoQfGUIBUdkRNOcORfLNvxWn68em1Yw83f+F5kJNM5v+bP3fa1OZL3Z
- keLs3t+rF8MK/5uno/StAEkT4L1cVm601qyCnGAYdMhkLBJc10BK8McUoq60ZTK7ZiQBgYxgt7y
- +9o218EXGlKD3oZ6j8XEnFCMLOHOBks/dKmEvWiRUqjQOzMUxzDPft8mSmJJUo4GtzIpXeA==
-X-Received: by 2002:a05:6000:4014:b0:439:b4c5:cef2 with SMTP id
- ffacd0b85a97d-439f820137fmr5040158f8f.24.1773237555925; 
- Wed, 11 Mar 2026 06:59:15 -0700 (PDT)
-X-Received: by 2002:a05:6000:4014:b0:439:b4c5:cef2 with SMTP id
- ffacd0b85a97d-439f820137fmr5040097f8f.24.1773237555418; 
- Wed, 11 Mar 2026 06:59:15 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439f8104515sm6932204f8f.0.2026.03.11.06.59.14
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 06:59:14 -0700 (PDT)
-Message-ID: <e5764435-fba0-43d6-8402-4f0b74bada88@redhat.com>
-Date: Wed, 11 Mar 2026 14:59:13 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF Page0 for CMDQV
-Content-Language: en-US
-To: Shameer Kolothum <skolothumtho@nvidia.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, clg@redhat.com, alex@shazbot.org,
- nicolinc@nvidia.com, nathanc@nvidia.com, mochs@nvidia.com, jan@nvidia.com,
- jgg@nvidia.com, jonathan.cameron@huawei.com, zhangfei.gao@linaro.org,
- zhenzhong.duan@intel.com, kjaju@nvidia.com, phrdina@redhat.com
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1w0K64-0004he-6M; Wed, 11 Mar 2026 09:59:38 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=CwhBKKWc+S7yoSBMSm76iMadI3XeEC1lLpTntjffD1tKXEAhjDxyHwZ6Ga2XF4l6mGwrDTP3N5ARxOwVHYzhZ2zQflZfqUCECc6K4TGohfYbKT5XaLalqvJdzL0yo9p21b95PL59G5QC/N6ymyiXul8Q4x20hnjiCcFI06WHAeLaaueTXlsGKceUb26HtZFk/PveuV9etzothD1UyzFM+L/yDvfQkwTCx152GO4op7hUmzjrhSCGX5F+E7i6E2KYMOsyydqifokJQ28Flx11oDru+zcaaAfw1Gjc2Ld4//AqOhVqToZIdbaJKCmGPN7Cnx8XwNUfk26tHdZVMoFtNg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=Fb3fHbukx4VGa6IZXUDQtg3E8cYLrSf+IGxuuYOusRE=;
+ b=iXdrgESzK0y+zXehvgePh/CzXuxKmlQTxoUzACcKdni4rQheqv+Hy3JAx9lfiGJImnVcDaIfA4KueOrDgMYRA4GBQ3fMNNU7n8GyzJ6asH4dH6K7vhIUb8uwRUgZGv3hlp1Gt+XgmxCebkFs+15qcHsGfmnm3Wgvyhf7LJo5TwKSTMHtnftcKeRUWb9TLxxTrxLXUgrItii1shQCiVyW4pxYiOfg5bYyTVdorWAdE3sZjirSXKsaktiBYGFxFasse7HhoYVAEoBzPbEyQESGf9Gktf0Ghd0b1yVn5aewnhqsZxzYROmMbGwp6C66oqEQ74YuKKr2R3C0TjX8cDGfWw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=Fb3fHbukx4VGa6IZXUDQtg3E8cYLrSf+IGxuuYOusRE=;
+ b=UeyoW109L0+vKH20jef9DxWKRudTUUuyjAxunbCT4+FVEZBAuO+VTV3NNiknia3jUd3Ll9Gu+QsCQIUGhH1vzh6DT4YFrJYkyzJsLHqMCverSBeIv7APhXKMeoL4YkPRVCLk8O5RKgpsWVJdaYkgCJOrt6SeHB8AmPit2eDoKnMg3N/D8RlkvDzaRGoGTfeO37WQkHAZKwS8IB3+ddqPjPKrrG8DOY95GdANT43ClYfnoTLm3B1p5GbWQo6xraWt13CIFMg7TZISqPJJCKjy4iF63XRq2hs1JgftCjjHth4ntMdFNQB5QczqX/B+uvQHIeulwloJtY2bkErYzM/gOQ==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by SA1PR12MB7367.namprd12.prod.outlook.com (2603:10b6:806:2b5::12)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.7; Wed, 11 Mar
+ 2026 13:59:29 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
+ 13:59:29 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
+ <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
+ <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nicolin Chen
+ <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
+ <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, Jason Gunthorpe
+ <jgg@nvidia.com>, "jonathan.cameron@huawei.com"
+ <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
+ <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
+ <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>,
+ "phrdina@redhat.com" <phrdina@redhat.com>
+Subject: RE: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF Page0 for CMDQV
+Thread-Topic: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF Page0 for
+ CMDQV
+Thread-Index: AQHcpw4RCbTPqX85HUillxSq8Ev4K7WpCqgAgAAKhZCAABnNAIAAJ8xwgAAObICAAACicA==
+Date: Wed, 11 Mar 2026 13:59:29 +0000
+Message-ID: <CH3PR12MB7548AB5CBDD893E34F4542E7AB47A@CH3PR12MB7548.namprd12.prod.outlook.com>
 References: <20260226105056.897-1-skolothumtho@nvidia.com>
  <20260226105056.897-18-skolothumtho@nvidia.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260226105056.897-18-skolothumtho@nvidia.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ <22acfd93-72cd-49ca-b2f6-a080bf66104c@redhat.com>
+ <CH3PR12MB754885F68C4F08CC39732EB2AB47A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <8ee0ec15-bf22-473e-85f4-96426a9e763d@redhat.com>
+ <CH3PR12MB7548CED599FE7D572486BD6AAB47A@CH3PR12MB7548.namprd12.prod.outlook.com>
+ <641d5a7b-e487-49c5-abcd-4efce4cfd56d@redhat.com>
+In-Reply-To: <641d5a7b-e487-49c5-abcd-4efce4cfd56d@redhat.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SA1PR12MB7367:EE_
+x-ms-office365-filtering-correlation-id: e19be8f9-887e-427f-e10d-08de7f7669fc
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|7416014|366016|1800799024|38070700021|18002099003|56012099003|22082099003;
+x-microsoft-antispam-message-info: xw7j8cRQSQHepdJwQi5eeHg2heuDgFVe/SmTtvKMgaI6FjTsRODx4GIS+P9niVR8ucxBmST9ipkch1EYrrmJc4sX0nmngGXGDUn7Mm1aydkgp+QbvTWEz0tzVZ3PKbOnS8jXiBTadjGVgJ/hPnul8mWhVAexNcRwnW2PKOHTszrUFhLEeBOUnOYbbjrX/vcGCygFbimbFPlyL4Lqre/x+ens0Gc4GMg+3r+bynCmrwNztJsNM3gqMMF98NTXuD2Dvcza4GCYZoRlQ3n9m41pTZQVzZGYGwXMDNH6GDEXk3lMJTtaCRi+ITEpb/J7bS4PFx/nfC4lub9Y1jAR/+9KGUlylunmfSxfC2tbLBVHjs669tfzWgOh6K3vjE+wuFJ1ZAm0V6tkm8dElbdvcDj3OV573mXEIdLxRG/5WAxkk2cFfHEQO/5Gog7weaxaNQTezKyKRid4rF5C/EOIMmwxAaOC36WW0YUfba9vJms//WbDahHGmxcZfjHqvPTXN6T3LctyM4oqoEf3ACGCBkjqWQuwbodpMly7Gq62BNO2osxhYa3uOJoI4bDZE7lh7u5NKw9EzzpBEynAdwvd5xbSdzD8mQRX83wl0+RZwcDrrY7KmhibpuX199ux/wPbLMy7XcsG8XsiywRdZqltmIiMUOqv6sT4sXH+VxvZd0wE4qYieo6Ow6s4OnqRpOhKdsHQhRiyj8WwlpLDAYkabzvG3Y5X26rbjvEZn2cCd7G+neeqYa5UeO1sUQ+qcUPLHg6L3hONcYf44pjOAHff5Y6FlrW22uhToM+ufusXUXIKzFU=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024)(38070700021)(18002099003)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?U5avAApIjgzhgW4kYltpVXdId9/U6O1c1euFxBaZxfwAaL3bZa++8ea54R7c?=
+ =?us-ascii?Q?tm7HX1hqICWW7ZE/kuqWtt9butqWrpePX3capX0slL6JEfyglxc3rgTb2A8J?=
+ =?us-ascii?Q?yp8OvVdE7eJhfWx3jO2K+4rpT2nguETNmmDSpotxt5RtAlqO5JsUkmWntr2T?=
+ =?us-ascii?Q?FQJhBLV5wA9CCpwKKtlC1slPDsT0sp+Dmg7xLuI8L8JjxatneAK+/SjVde5g?=
+ =?us-ascii?Q?9eGrvTgmgb+buTzJ4qNE1JrlXfWcroqXAHW0S+1aWsOKPTtLnAQnDS30TjB1?=
+ =?us-ascii?Q?umPDmtLE3Jd0nZyw5jwljHDPAXUj4sCSErY8pnZw0NLiac7MZSgo63f4zQCM?=
+ =?us-ascii?Q?xzfss9WGkUnMtk16JyQHsz7LJxwbpMARoIXr+ubPYvjtSHyl8UdqcgSUlRID?=
+ =?us-ascii?Q?pOR2YulBexM5aqgTVpbHcDqEdAa04H+YyHcpb2WF/+eSGGNHKR+beAWRojvh?=
+ =?us-ascii?Q?PUfzSqDk8prjYkO+57Ap8Lby1rAfoZRYuUdIMq/mZDjaFkOWs/S0c4VRYGrX?=
+ =?us-ascii?Q?Bk86MY8K3eMs64m7jtomfsnVayqVkiQ/IJV2i+miaZWq0rV/SSVht4QI28lB?=
+ =?us-ascii?Q?T+P3kxfOtRHIrDlffXLE1/RTIvv2t0++LH8gPd2ybJHYvaAvbWzpbYmd89G9?=
+ =?us-ascii?Q?/ByvHuJ6kvZT+EO0Ng6Z8cuit+Yohv3mwaVzDAaGoVQmMowcT4JF+g5GD+tm?=
+ =?us-ascii?Q?VSl7+nWXkvHeoTu3YbRKpqGkHp+KBMvXB/61HubbCcs3diAgRFmUw23XvFAf?=
+ =?us-ascii?Q?NOoM61Qy+etXFuYAuEfC/LVDvuH9u+opPHMWzWX3S+9WqrHN/SOUcc1k02VQ?=
+ =?us-ascii?Q?qG875kbAYiGz6qcS8POy+AXMxaI9zrXmlS8pgva5FCxn64xO20JHdHi5e+Mc?=
+ =?us-ascii?Q?ZrT9yJu+vtUjZGuf6sQhbYksGLkeBGRlK+4XmAS2onVG/gNzozwpQFk1n/80?=
+ =?us-ascii?Q?3s73WZ+N4NLX51Se3hbpYlQ2n2f/fgMF785XFOyJtitSYS+QEEJ2ECG6ADp+?=
+ =?us-ascii?Q?eaMYNBz/TrnG9ik7NKmwFCb11CP7sx0/7CUEUt6BqNSmYOa3+6HQIUBlLzyU?=
+ =?us-ascii?Q?8lUzQPqf8V0Qz3NpJe/o7g2AGcMP9bYGoNw1LCjYdiKvlMkTnDbdj248ctTc?=
+ =?us-ascii?Q?PKeQf06279fD2YqXyK3adj+QZflpESGFCF+8Ke1zIyeiJpZC2NaDGupgooqy?=
+ =?us-ascii?Q?wD4kK0+HwO+ebcD/b6yCQ0GPqTPdIo988K0r9L+X1tWOwvIBsEB9bq0KyRZZ?=
+ =?us-ascii?Q?zstkcozhYwlouWLT6P5SA9wf/pTAULykqSJQbOt5FWvXMG9WoqMrVj+W2mSI?=
+ =?us-ascii?Q?VKWfT0ITullzW4tiBRzTtbSpHMjjuuineKP0BUgyb1IKrWDZW5DXYZ7svkUP?=
+ =?us-ascii?Q?3sLsylyBLlgEqqn8oWzqqkaJ1eB7TkXDu5uDceFGEnf4VjoK/W3wER91i76p?=
+ =?us-ascii?Q?3ukx0Seroe34HdyzXTG9SSz5P9fOdlj3KZLOUH0OjV1KuV8M6auszn/ScTf+?=
+ =?us-ascii?Q?obe9+WaB1xivR0BDTfU+2CJzheFUdT/8NI+r0RYyZnIY3bm2AYrFbCQ0gVHa?=
+ =?us-ascii?Q?ClvcTMT4ShZG20oG0sJNUbBxigQaqIS6BliqDUX7tXKytozsB9l0RUK5RbhO?=
+ =?us-ascii?Q?hXnHVOiNvph8V0Iqk0L3rvm7UUkjO3mZh92O5DfcttnpXzozAhbu4RFrbDzc?=
+ =?us-ascii?Q?pJ+8YSxyyFz1ZDYVfAwAcsZ6bQehnDh/NsPJodR7frd7ZAs+vqjMvnmDO5Fu?=
+ =?us-ascii?Q?mVDiFUcO2g=3D=3D?=
+Content-Type: text/plain; charset="us-ascii"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e19be8f9-887e-427f-e10d-08de7f7669fc
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2026 13:59:29.4212 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: EKXOk6G5uBWEOGUkbvbUABbmVX50z8AwgU/9OP3gciQyU9s54wKICId6pteGt5qqHhutHp1zkHBcs1S0pQe52Q==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SA1PR12MB7367
+Received-SPF: permerror client-ip=2a01:111:f403:c107::3;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=PH0PR06CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,154 +152,177 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-On 2/26/26 11:50 AM, Shameer Kolothum wrote:
-> From: Nicolin Chen <nicolinc@nvidia.com>
->
-> Global VCMDQ pages provide a VM wide view of all VCMDQs, while the
-> VINTF pages expose a logical view local to a given VINTF. Although real
-> hardware may support multiple VINTFs, the kernel currently exposes a
-> single VINTF per VM.
->
-> The kernel provides an mmap offset for the VINTF Page0 region during
-> vIOMMU allocation. However, the logical-to-physical association between
-> VCMDQs and a VINTF is only established after HW_QUEUE allocation. Prior
-> to that, the mapped Page0 does not back any real VCMDQ state.
->
-> When VINTF is enabled, mmap the kernel provided Page0 region and
-> unmap it when VINTF is disabled. This prepares the VINTF mapping
-> in advance of subsequent patches that add VCMDQ allocation support.
->
-> Signed-off-by: Nicolin Chen <nicolinc@nvidia.com>
-> Signed-off-by: Shameer Kolothum <skolothumtho@nvidia.com>
-> ---
->  hw/arm/tegra241-cmdqv.h |  3 +++
->  hw/arm/tegra241-cmdqv.c | 44 +++++++++++++++++++++++++++++++++++++++--
->  2 files changed, 45 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/arm/tegra241-cmdqv.h b/hw/arm/tegra241-cmdqv.h
-> index d379b8860c..3ce9f539ae 100644
-> --- a/hw/arm/tegra241-cmdqv.h
-> +++ b/hw/arm/tegra241-cmdqv.h
-> @@ -18,6 +18,8 @@
->  #define TEGRA241_CMDQV_MAX_CMDQ            (1U << TEGRA241_CMDQV_NUM_CMDQ_LOG2)
->  #define TEGRA241_CMDQV_NUM_SID_PER_VM_LOG2 4
->  
-> +#define VINTF_PAGE_SIZE 0x10000
-> +
->  /*
->   * Tegra241 CMDQV MMIO layout (64KB pages)
->   *
-> @@ -34,6 +36,7 @@ typedef struct Tegra241CMDQV {
->      SMMUv3AccelState *s_accel;
->      MemoryRegion mmio_cmdqv;
->      qemu_irq irq;
-> +    void *vintf_page0;
->  
->      /* Register Cache */
->      uint32_t config;
-> diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-> index e1f1562c44..a3767a85a3 100644
-> --- a/hw/arm/tegra241-cmdqv.c
-> +++ b/hw/arm/tegra241-cmdqv.c
-> @@ -151,6 +151,39 @@ static uint64_t tegra241_cmdqv_read(void *opaque, hwaddr offset, unsigned size)
->      }
->  }
->  
-> +static bool
-> +tegra241_cmdqv_munmap_vintf_page0(Tegra241CMDQV *cmdqv, Error **errp)
-> +{
-> +    if (!cmdqv->vintf_page0) {
-> +        return true;
-> +    }
-> +
-> +    if (munmap(cmdqv->vintf_page0, VINTF_PAGE_SIZE) < 0) {
-> +        error_setg_errno(errp, errno, "Failed to unmap VINTF page0");
-> +        return false;
-> +    }
-> +    cmdqv->vintf_page0 = NULL;
-> +    return true;
-> +}
-> +
-> +static bool tegra241_cmdqv_mmap_vintf_page0(Tegra241CMDQV *cmdqv, Error **errp)
-> +{
-> +    IOMMUFDViommu *viommu = cmdqv->s_accel->viommu;
-> +
-> +    if (cmdqv->vintf_page0) {
-> +        return true;
-> +    }
-> +
-> +    if (!iommufd_backend_viommu_mmap(viommu->iommufd, viommu->viommu_id,
-> +                                     VINTF_PAGE_SIZE,
-> +                                     cmdqv->cmdqv_data.out_vintf_mmap_offset,
-If I am not wrong the mmap_offset is only available after
-iommufd_backend_alloc_hw_queue(). So I would suggest to first introduce
-the patch that does the iommufd_backend_alloc_hw_queue (ie. 19/32) and
-then this one
+> -----Original Message-----
+> From: Eric Auger <eric.auger@redhat.com>
+> Sent: 11 March 2026 13:19
+> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+> arm@nongnu.org; qemu-devel@nongnu.org
+> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nicolin
+> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt
+> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+> <kjaju@nvidia.com>; phrdina@redhat.com
+> Subject: Re: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF Page0
+> for CMDQV
+>=20
+> External email: Use caution opening links or attachments
+>=20
+>=20
+> On 3/11/26 1:34 PM, Shameer Kolothum Thodi wrote:
+> >
+> >> -----Original Message-----
+> >> From: Eric Auger <eric.auger@redhat.com>
+> >> Sent: 11 March 2026 10:05
+> >> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+> >> arm@nongnu.org; qemu-devel@nongnu.org
+> >> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org; Nicoli=
+n
+> >> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>; Matt
+> >> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason Gunthorpe
+> >> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> >> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+> >> <kjaju@nvidia.com>; phrdina@redhat.com
+> >> Subject: Re: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF
+> Page0
+> >> for CMDQV
+> >>
+> >> External email: Use caution opening links or attachments
+> >>
+> >>
+> >> On 3/11/26 10:26 AM, Shameer Kolothum Thodi wrote:
+> >>>> -----Original Message-----
+> >>>> From: Eric Auger <eric.auger@redhat.com>
+> >>>> Sent: 11 March 2026 07:55
+> >>>> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>; qemu-
+> >>>> arm@nongnu.org; qemu-devel@nongnu.org
+> >>>> Cc: peter.maydell@linaro.org; clg@redhat.com; alex@shazbot.org;
+> Nicolin
+> >>>> Chen <nicolinc@nvidia.com>; Nathan Chen <nathanc@nvidia.com>;
+> Matt
+> >>>> Ochs <mochs@nvidia.com>; Jiandi An <jan@nvidia.com>; Jason
+> Gunthorpe
+> >>>> <jgg@nvidia.com>; jonathan.cameron@huawei.com;
+> >>>> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
+> >>>> <kjaju@nvidia.com>; phrdina@redhat.com
+> >>>> Subject: Re: [PATCH v3 17/32] hw/arm/tegra241-cmdqv: mmap VINTF
+> >> Page0
+> >>>> for CMDQV
+> >>>>
+> >>>> External email: Use caution opening links or attachments
+> >>>>
+> >>>>
+> >>>> On 2/26/26 11:50 AM, Shameer Kolothum wrote:
+> >>>>> From: Nicolin Chen <nicolinc@nvidia.com>
+> >>>>>
+> >>>>> Global VCMDQ pages provide a VM wide view of all VCMDQs, while the
+> >>>>> VINTF pages expose a logical view local to a given VINTF. Although =
+real
+> >>>>> hardware may support multiple VINTFs, the kernel currently exposes =
+a
+> >>>>> single VINTF per VM.
+> >>>>>
+> >>>>> The kernel provides an mmap offset for the VINTF Page0 region durin=
+g
+> >>>>> vIOMMU allocation. However, the logical-to-physical association
+> between
+> >>>>> VCMDQs and a VINTF is only established after HW_QUEUE allocation.
+> Prior
+> >>>>> to that, the mapped Page0 does not back any real VCMDQ state.
+> >>>>>
+> >>>>> When VINTF is enabled, mmap the kernel provided Page0 region and
+> >>>>> unmap it when VINTF is disabled. This prepares the VINTF mapping
+> >>>>> in advance of subsequent patches that add VCMDQ allocation support.
+> >>>> So at some point we transition from something that is purely emulate=
+d
+> >>>> (page 1 global cmdq) to something that is mmapped on a host page.
+> How
+> >> do
+> >>>> we transfer the state of the cmdq from one to the other?
+> >>> Right. If a guest uses both the "Global VCMDQ registers Page0" and th=
+e
+> >>> "VINTF0 Logical VCMDQ registers Page0" interchangeably (and I see
+> >>> nothing in the spec that forbids this), then we need to keep the two
+> >>> views in sync.
+> >> Also assuming the global VCMDQs are accessible and thus used, I guess =
+we
+> >> shall properly handle the actual commands (equivalent of
+> >> smmuv3_cmdq_consume()), no?
+> >> I don't see it done at the moment.
+> >>
+> >> By the way, do we want support of VCMDQs in fully emulated mode. I
+> guess
+> >> it would be sensible?
+> > Yes, command handling is not implemented now.
+> >
+> > Since this is part of the accelerated SMMUv3 feature, I am not sure it
+> > makes sense to implement full command handling in QEMU and then
+> forward
+> > the supported invalidation commands back to the host again.
+> >
+> > The idea here is to accelerate the CMDQ processing through the hardware=
+.
+> > I am not sure a guest would have a real use case for VCMDQ in a fully
+> > emulated mode.
+>=20
+> OK but really the whole user model is really confusing. One starts using
+> a "global" vcmdq and then switches to a logical one.
+> On real HW I guess they are synced. But on emulation, currently they are
+> not. Also when the guest is using the global vcmdq, it can
+> access the registers but they actually do not trigger any commands. This
+> really needs to be clarified.
 
-Eric
-> +                                     &cmdqv->vintf_page0, errp)) {
-> +        return false;
-> +    }
-> +
-> +    return true;
-> +}
-> +
->  /*
->   * Write a VCMDQ register using VCMDQ0_* offsets.
->   *
-> @@ -216,7 +249,7 @@ tegra241_cmdqv_write_vcmdq(Tegra241CMDQV *cmdqv, hwaddr offset0, int index,
->  }
->  
->  static void tegra241_cmdqv_write_vintf(Tegra241CMDQV *cmdqv, hwaddr offset,
-> -                                       uint64_t value)
-> +                                       uint64_t value, Error **errp)
->  {
->      int i;
->  
-> @@ -227,8 +260,10 @@ static void tegra241_cmdqv_write_vintf(Tegra241CMDQV *cmdqv, hwaddr offset,
->  
->          cmdqv->vintf_config = value;
->          if (value & R_VINTF0_CONFIG_ENABLE_MASK) {
-> +            tegra241_cmdqv_mmap_vintf_page0(cmdqv, errp);
->              cmdqv->vintf_status |= R_VINTF0_STATUS_ENABLE_OK_MASK;
->          } else {
-> +            tegra241_cmdqv_munmap_vintf_page0(cmdqv, errp);
->              cmdqv->vintf_status &= ~R_VINTF0_STATUS_ENABLE_OK_MASK;
->          }
->          break;
-> @@ -251,6 +286,7 @@ static void tegra241_cmdqv_write(void *opaque, hwaddr offset, uint64_t value,
->                                   unsigned size)
->  {
->      Tegra241CMDQV *cmdqv = (Tegra241CMDQV *)opaque;
-> +    Error *local_err = NULL;
->      int index;
->  
->      if (offset >= TEGRA241_CMDQV_IO_LEN) {
-> @@ -276,7 +312,7 @@ static void tegra241_cmdqv_write(void *opaque, hwaddr offset, uint64_t value,
->          cmdqv->cmdq_alloc_map[(offset - A_CMDQ_ALLOC_MAP_0) / 4] = value;
->          break;
->      case A_VINTF0_CONFIG ... A_VINTF0_LVCMDQ_ERR_MAP_3:
-> -        tegra241_cmdqv_write_vintf(cmdqv, offset, value);
-> +        tegra241_cmdqv_write_vintf(cmdqv, offset, value, &local_err);
->          break;
->      case A_VI_VCMDQ0_CONS_INDX ... A_VI_VCMDQ1_GERRORN:
->          /* Same decoding as read() case: See comments above */
-> @@ -300,6 +336,10 @@ static void tegra241_cmdqv_write(void *opaque, hwaddr offset, uint64_t value,
->          qemu_log_mask(LOG_UNIMP, "%s unhandled write access at 0x%" PRIx64 "\n",
->                        __func__, offset);
->      }
-> +
-> +    if (local_err) {
-> +        error_report_err(local_err);
-> +    }
->  }
->  
->  static void tegra241_cmdqv_free_viommu(SMMUv3State *s)
+Yes, this could use better documentation. I can clarify the model in the
+commit message and code comments.
 
+One option we discussed earlier to avoid the confusion was to restrict
+usage to the "VINTF logical VCMDQ" interface and return an error if the
+guest accesses the "Global VCMDQ registers".
+
+However, since this is still MMIO space, the thinking was that it may be
+better to allow the access even if it is effectively non-functional, rather
+than making the behaviour unpredictable.
+
+See the discussion:
+https://lore.kernel.org/qemu-devel/aa8cJszkOKGLUYdD@Asurada-Nvidia/
+
+> Then I understand we want to focus on accel mode but above points need
+> to be clatified. I just wanted to mention that vcmdq should logically
+> also work in fully emulated mode (and you seemed to implement a mix
+> actually when you have emulated access to vi vcmdq) as it replaces the
+> SMMU standard cmdq, if I understand correctly
+
+IIUC, in the current Linux implementation VCMDQ does not replace the
+standard SMMU CMDQ from the guest perspective. This is also why we do
+not expose the HYP_OWN bit to the guest.
+
+When HYP_OWN is not set, guest still uses the normal SMMU CMDQ.=20
+CMDQ is only used as a fast-path for a small set of invalidation commands
+that can be sent directly to the host hardware.
+
+See:
+
+static bool tegra241_guest_vcmdq_supports_cmd(struct arm_smmu_cmdq_ent *ent=
+)
+{
+        switch (ent->opcode) {
+        case CMDQ_OP_TLBI_NH_ASID:
+        case CMDQ_OP_TLBI_NH_VA:
+        case CMDQ_OP_ATC_INV:
+                return true;
+        default:
+                return false;
+        }
+}
+
+So VCMDQ is not a replacement for the SMMU CMDQ in the guest. It is
+only used to accelerate these invalidation commands.
+
+Thanks,
+Shameer
 
