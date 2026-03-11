@@ -4,128 +4,133 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FE0AFD88D4
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:42:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CC4FD88D8
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 02:19:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w08aT-0001Y2-Nt; Tue, 10 Mar 2026 21:42:14 -0400
+	id 1w099d-00063Y-UK; Tue, 10 Mar 2026 22:18:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08aK-0001U7-10
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:42:07 -0400
-Received: from mail-qk1-x72c.google.com ([2607:f8b0:4864:20::72c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08aH-0006OR-FW
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:42:03 -0400
-Received: by mail-qk1-x72c.google.com with SMTP id
- af79cd13be357-8cd78a4ce8dso494039585a.3
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:41:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773193319; x=1773798119; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:cc:autocrypt:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=2BE3AUNIINDYc+tYjNIEEmAuAQPk6dAGTez1Ow7YGUg=;
- b=nXC1gJXX1+k6/K9/XEmURnlkgyOgiC6VIu9NWAKPuCPy5xZMBdQa3mVXIc/ibK7hnv
- QJke1acwPcKlc3aHY6KzQXaVZhNt1fHqMKuFRM3hKU3wBii/2TXLZvi5B4WFOhx7hKEI
- hdXGYoQiG0gxARK1sMXqv/hYg9ZIzWi99GCkn+fsmgZFwjdix7wQZaU1kCdW3scfHhMv
- +tjXg9JyL4nfL49Iedfricn6vOKwkxTrglUe2BRKEVmgWt1OPuPZy+3tWRH2H+iHwwc2
- iNJtC4qLz217Vwk+4GHW0kEyoZMCCj8qYos1AejM8jU9YdeF9H9hJpSIv73qa/wcSD7n
- sLFw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773193319; x=1773798119;
- h=content-transfer-encoding:in-reply-to:cc:autocrypt:from:references
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=2BE3AUNIINDYc+tYjNIEEmAuAQPk6dAGTez1Ow7YGUg=;
- b=IXOmp6rxLHjI2Z+R62ldLJvL7EkXHdrQi3x5e6cKxSjmqVJxewUkH2OhtRy3ZkGnu/
- ws1ErdLVYRtX5JPX1yeXoPHBejicqEMND5Tf3P0B46i+yIURJ/alofcfGBmxmyw4DiWY
- yzyE7q3PEWNwrQvIUj7zf/UxzCwkBhTkM3gk/tpO9t0sEOp86D9y9SZ2tUcjCfBQze1o
- F5W/rX5UMbvqRH9COR9usvJyiUz9vY5pIt2FjJ0f2XjHBqvtfaZnsdjqvDl6JQbuJeWQ
- Y+0+l7K0PWlhjL7nHSSz+ChZFHlvfJt88fACEDA2xmjZoOFttelGfz3+anlTpY1PLRWz
- +INg==
-X-Gm-Message-State: AOJu0YweyVr08pvDUa9M8RdsKAD26YGvs43nvewSVOW/jB8UTWS1mEkE
- w49WbnEOX2SIKPf9EfSsNt+4h8L0z54O/OvRPG+HZdtVa0KMYpIQa2uOlaqSyeMCl9THA4XD0dR
- G557P
-X-Gm-Gg: ATEYQzyXw2gmQ0UbWWP5EPGytPRe7WBPPoFwpCM3tfH4hjDeBOOVkmi+J/nhgYbb6oe
- axIgPjng/geQQokKQE/u+zEG6UbPXAUBDsQfnSxSK61/mIrdhJjNmCqR7Fnql1qM4adqdhTYHWW
- tEvdIvR1ZaI2CGNzPjq3TcU869HWubPtZtio1lW1fv+nitNMV+qoa8mTZLwk5IPdyEB9/OMivL4
- JVX/oEdpVUJ22dPHqbCaUO2cfmlLGss2OCbrH1/QcgTRWYk1j2gKEH1rrsrE2OPBkq2bGgkB/4o
- e5UcStaVsd6YZX3t4Fflwhe49IsdvM1ZJRD76uKDYqVIZYirONGQ0AKpNjQVv4aCZ0DH5EjxMAD
- CTiZEDbcHLq1r2bX+EqjUlBesmnnus+FWf4gHzeulVl/OIFjIew8VJTJuBNOdQS6vp/TcH+5IPE
- 7j+EyQe/T3S4rp29u+ctTbalQQsBtDMLuptLUbjKl6CJff7E8ADkv71OEkPgyn7QG1iRcyj/Snh
- UkNpEo=
-X-Received: by 2002:a05:620a:1903:b0:8cb:3df5:4b6b with SMTP id
- af79cd13be357-8cda1a56377mr131834985a.61.1773193318842; 
- Tue, 10 Mar 2026 18:41:58 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda21348e2sm40397285a.35.2026.03.10.18.41.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 10 Mar 2026 18:41:58 -0700 (PDT)
-Message-ID: <6ea61ae5-0a83-4279-8a8b-897a162d54a9@linaro.org>
-Date: Tue, 10 Mar 2026 18:41:56 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] gdbstub: Always infer base register index from GDB
- XML
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1w099b-00062a-3I
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:18:31 -0400
+Received: from mail-japaneastazon11023127.outbound.protection.outlook.com
+ ([52.101.127.127] helo=TYDPR03CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1w099Z-0000nD-3U
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:18:30 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=PYt7jeE2SVB+y0rTeBiMVtsJgBiXWSvUPpPLnxNzeEJ8CHeYV7Uh1CcBhEdb/JsGM/LNt7CB6vGZEyvl0VNCT7TR21rFxlAxhgFPwwOfoS3FwPaA0tdd1LKZ2unZIsUta1ogpE3G1jp/j30ZII/wFm4gGhCJMN9hFTnaTJD9Ez4KMfYlrdQf5vRM/lkKa6gMEQ7d9+G45OsnnjFaD+TH2P7rlRbKTzBFqP4pDFRMwWf0FCFPcyAQfGtkGGApKZ/pVKxJ9Q5lIBzhZohKz5ZUKzMThAPFh4jEhKIfHBsTVJkZ4dAxpflCKBdL0VKY5XIlWVMp61WeFmG/Aky4o9KwWg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=123jYLVxoTnmAJpjhuS5Rccd3GCZdPg6ywh3k++69Zo=;
+ b=inK8h85nttzmrRRYNXFjK3CfSV4BPUeIL0nOQ+fJNsKhyblGj+t7ugYZICLFwXTwrlyFceCPwidr0AzZ5BAMpzAa6vzEnOqVcPl8MvI36wVWTrY1FW1umoKo2Z+GDmlcll4jxINJVGpRiWyum5XGHsaLDm7NFA3234qZBKMZsCn1P0l0vm88oG9UUytrpFqpNXsc2yX2t0XoyHwJc0K+6TxvdHZzkVUgFA18MzYuG6oIadICfI9GgDORKwD+KtK5A6z7WqEpO34PM7dZQBPgQW3dU6ZIjeeS5KlB/cGh2i+OqbOxX4Ey9VHaREdcYhaIOBE8kK1wwg06SaFqNJKGVQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=123jYLVxoTnmAJpjhuS5Rccd3GCZdPg6ywh3k++69Zo=;
+ b=DgSA7uM6tAzdsSBaF0LKxaUyrtPSo+TTw2sRdlb0uzwNzVI31cb6EEgNSWoCQdnEoVFpe++nf7ZEnpmtAHMUERqXNzpqzby7F1CxC+pZvxS9R4aLNF72wfdNlKFCDV9Ew6yGyoPRytjQtPjYPSM7t2DevX8iciLsLUjNvY4KqzbB7cezEf7eIko9KsSiwrBisRV9Y65tezWuAEXSCoq0+3xQFMLj5eyYlrEGyt7xUgEjWhu3jOsA6MmnsrQRMKJYIQxfYLA9oVC2KaDToiqKrAM2DWXLpiylXNLBbCFhIFBYGmdrQ1DPNjz7Iljo0wleGjbbQkYY28GyqJ5jC+aIVg==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by SEZPR06MB6873.apcprd06.prod.outlook.com (2603:1096:101:18e::10)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.11; Wed, 11 Mar
+ 2026 02:13:20 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
+ 02:13:20 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: Joe Komlodi <komlodi@google.com>, =?iso-8859-1?Q?C=E9dric_Le_Goater?=
+ <clg@kaod.org>, Nabih Estefan <nabihestefan@google.com>, "open list:All
+ patches CC here" <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>
+Subject: [PATCH v1] hw/i3c/dw-i3c: Fix uninitialized data use in short transfer
+Thread-Topic: [PATCH v1] hw/i3c/dw-i3c: Fix uninitialized data use in short
+ transfer
+Thread-Index: AQHcsPyhgpaQzU12H0escCbAtDQeyA==
+Date: Wed, 11 Mar 2026 02:13:20 +0000
+Message-ID: <20260311021319.1053774-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
 Content-Language: en-US
-To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::72c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x72c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|SEZPR06MB6873:EE_
+x-ms-office365-filtering-correlation-id: 76dd6a60-03ee-422d-7f64-08de7f13c3eb
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|38070700021|18002099003|56012099003; 
+x-microsoft-antispam-message-info: K1eERmO+TsoBe6UmQ4v/9/MjACnFr5x4iwlgH/tRdkDHd2w/JyL6xf6XRkQWX3L4yRcqLNVO889ymjahAnRlfOrwIuxd1iFIEIUkIHjg8zaNHl7vKnX0ZOMt/Ylw72paj9N9hL527cTOBfx8qv/14zFRoD/xahWdoEe30alIe4xmj2gpMW0SLhpvxuws/3fAUsNS6TLuVX+TxQvrYm9SEB5T9PxY1xE22n68nQeBM+zzpmjR/RquW6iUJTfksMh3g/ViGzOPlz40DQjRJbUtROnAy+Mo7LszzN2vWSqs+tmyvBiuOT93Lxa0r/w+W91AaYXG6DJZOMsrS/Nfv4j9DjQdCWe65Fa1FItBtObuZJy/PLto46lQAB9HzhbkYnlg6vVDSBtTBrTTjvNoZcjExwlZF5CP5+HJ6xUng23nncJN40WmD6BYki7+Cty2Kc/fZeYW2Locz51+bTbDDgrQ4t2fj2C89TQIuzBaAgOG9ldZfbBwM/CSfFxQkEYqst9e+EDQtTpVzMSBARJs5NgdY8TdRaZeT1eeUSWj/QfHsza4LjqAmZd9JjUAGFpIH0+sMK+tsUSdPPWuFq68u9YRjEjc4hvnha9XX1qtojJSBeWPhj28VT5KqBiZMFFplDvyHTzwqoZ7iwT3yhJ5DOvfID4GheZJZVHnrEPCx0SwMxJ1OMUxnts42m/emNRzix7oC30FTUsY7x3g6wWpYBwMGjkDFMAacuLwKGcys8FW5YuyAMibTvFdNMyXL3SFoFzzQoVrrnWtJDAV5wIqaqQjZ2mW78M6f2Epz4icCNoitUg=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(18002099003)(56012099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?HoJvMTXz6r0ZGPK0NeuK+qIu/rYS3PpbkdUdlpWdP9YDMYWujBtbmFTwsh?=
+ =?iso-8859-1?Q?Vmy/GHZ+oPVa54JxpMih7wOwYQEHUJftafUMSYR76LycZVl+D0TSZ1S/02?=
+ =?iso-8859-1?Q?mx9xub9BFObz8v0Uyo35o1PkrR0jns758eybO+yjTQ9WiD4IA5oxsTjpB5?=
+ =?iso-8859-1?Q?pn+VDBeBi6PVcfWDlqdWXT9q17Hy3+JDhaHuO0how0CcDLoWWMetAepZGZ?=
+ =?iso-8859-1?Q?Sp0+Y0po29XNSSOFLiWuExY9UcxJdTQwcr2+jsJYrFB7mkD6194E3ZLDB7?=
+ =?iso-8859-1?Q?6FXBXapKGcSJklKg5p5Rx6e9mOYrhSl3XwbAmo+QmPLl2gEVp2p+yCN9NX?=
+ =?iso-8859-1?Q?70Ko2wbt0SvtVeClsjq1u9b8igT3lsT7O7tyf3XfpPHoUKSKii7351B6bt?=
+ =?iso-8859-1?Q?KOZNMLPPnTgMuMDSK7I8JQdwgQbpH8kA6QpG4TzGTzLaqNzkchJcaSEgv1?=
+ =?iso-8859-1?Q?LGNRMcJi+WlMGrKIRMV/ucSccMOQtJ5Co6dwcduA4nWhpdRH4GtGp5K+Fh?=
+ =?iso-8859-1?Q?5yMBWX1K4yJehA+YN7AlOafNO6gl5AY0sk3FKsqniUycLO5fIafCaL6dj9?=
+ =?iso-8859-1?Q?TFSPMWWOvBgNt4K9cbqSENja23hKpK4WWHet3vKw/jKgvDoCi9D98Cpl1E?=
+ =?iso-8859-1?Q?PGkSwDFBeYNtjGV3pdeDVnJoENsM9D6ruCB7585jS6HiVHxqOfCvt308Jk?=
+ =?iso-8859-1?Q?x6cnm4rWGUcmurJc+GB9ufHf7yXIHrgjjy57dQUZlomYnizZ9NDZVT2rrH?=
+ =?iso-8859-1?Q?f2FukI45ksxAJm5Kf3cMdmZXwVh0khdfkv2XEgTdXWZ8nKSbNpp8sXTSdw?=
+ =?iso-8859-1?Q?+jVYzZdB/cGBvDC7AuVEkiCbbEERoxxpHsUKZaRFHB8r4ASuM6c+XeylVq?=
+ =?iso-8859-1?Q?s7a1ZgjMXNw9tXDrovIzmwKdaX72xnx2sl2T91wT/xSorC7nRA8KuT3fnn?=
+ =?iso-8859-1?Q?mdcNJfZcK0fjr7Y6iZnVs4V/vYmgde/aLr202rCqW/4v3X3xapmEBEX7XW?=
+ =?iso-8859-1?Q?dwkhGNomY1C8J2E0H2gfcmuS+YGDr3ChSZOjH946gr8hLeEbOD1Fo+xISQ?=
+ =?iso-8859-1?Q?LaSK3TEG2771XvXWRLCMVRsRtglQwtBwNY1IUR+WlQQ2HnBlPrvxFEvnDj?=
+ =?iso-8859-1?Q?g8Q87pnD5CC07fWQ13yT/PPGa6oVfN76sxHTY+JEK03KAgDVYcn5pAkspy?=
+ =?iso-8859-1?Q?fQKUwuXiBLAfNXA7xWO0Z1pfrnOeNpmfI33YPrS/sNv1zRnFV1iJwSFLEY?=
+ =?iso-8859-1?Q?d1UKMOk/tnyDkhE5YYzvD67Kt80bHcbBDxO4rMrwzZzoMx8paf2GdE8EzA?=
+ =?iso-8859-1?Q?ewgGCTxmkmp0b17PKrJym2mzG2PeI51pfJbGHp1e285B8i9/lUhkXI8WsD?=
+ =?iso-8859-1?Q?CrJB8F1l8hFTggIeHmAxeCOcAEgWcF6KTMGc8X887bQqm03yghygVrl4K+?=
+ =?iso-8859-1?Q?+kp1PGOP5r6MOGztmuUYCpXW17R3LcQNc+Phk5ASezKvBxJ1Erth6vUDeo?=
+ =?iso-8859-1?Q?7Ke3yrWT2Et24PMrPdl+3c8jlYP7B7avfdlmniOt02oM6G5j/BfQdFuoHX?=
+ =?iso-8859-1?Q?5yt9rnm9tyGTeCq9D0jY7pEbiR8NTVuEKl5xMm9iBF+ErCeNeoQYoay1Hd?=
+ =?iso-8859-1?Q?dQGAHSVyC0SkCMs6rtFxwOa5pYqCDZ7pupHmaLCW7Mw26ZtgaoajU/kmK2?=
+ =?iso-8859-1?Q?7ASY3XGGVtNonEklB33ODBQQXxceTw9fVbcQQrui2Ui6Q8onjvEfqbZQKs?=
+ =?iso-8859-1?Q?ux5V4Df4r9L34umS7V8Mq0DQLOBE0ARm95UrrpTQ+yjA/pxbWa7DzSI+rz?=
+ =?iso-8859-1?Q?dfTlB3LmKg=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 76dd6a60-03ee-422d-7f64-08de7f13c3eb
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2026 02:13:20.1039 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: TGGWCOpJVR5y5UdqJNNJIeeDMlgud/k3eONHWOaX1A8Y52v0gT+gi/9an38eM8Hiy+C5CjtnJENox7mVZ/HokBvAUoSRcNsRMXespOyGVLQ=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SEZPR06MB6873
+Received-SPF: pass client-ip=52.101.127.127;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,54 +146,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/10/26 6:38 PM, Pierrick Bouvier wrote:
-> The following changes since commit ae56950eac7b61b1abf42003329ee0f3ce111711:
-> 
->    Merge tag 'firmware-20260310-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-03-10 13:32:30 +0000)
-> 
-> are available in the Git repository at:
-> 
->    https://gitlab.com/pbo-linaro/qemu tags/pr-gdbstub-20260310
-> 
-> for you to fetch changes up to 6511d4eed79a7e59f03e661f31924277e4d6e600:
-> 
->    gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[] (2026-03-10 17:12:18 -0700)
-> 
-> ----------------------------------------------------------------
-> - [PATCH v4 00/16] gdbstub: Always infer base register index from GDB (=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>)
->    Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-1-philmd@linaro.org
-> 
-> ----------------------------------------------------------------
-> Alex Bennée (1):
->        tests/docker: add gdb-multiarch to all-test-cross
-> 
-> Philippe Mathieu-Daudé (15):
->        tests/tcg: Temporary disable multiarch tests for PPC targets
->        tests/tcg: Disable prot-none test on GitLab
->        target/i386/gdbstub: Remove stale comment
->        meson: Restrict gdbstub to user/system builds
->        gdbstub: Simplify gdb_init_cpu() logic
->        gdbstub: Add trace events for around XML parsing / generation
->        gdbstub: Have scripts/feature_to_c.py generate more verbose output
->        gdbstub: Make base register explicit in m68k GDB XML files
->        gdbstub: Remove @g_pos argument in gdb_register_coprocessor()
->        gdbstub: Emit base_register index in GDBFeature entries
->        gdbstub: Consider GDBFeature::base_reg in gdb_register_coprocessor()
->        tests/tcg: Re-enable disabled multiarch tests for PPC targets
->        gdbstub: Remove 'gdb-xml/' directory prefix in TARGET_XML_FILES
->        gdbstub: Move gdb-xml/ within gdbstub/
->        gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[]
->
-Send this PR for Philippe, as it's the last day for soft freeze, and 
-that it's already the middle of the night in his timezone. We tested it 
-together.
-
-This series fixes original issue reported here:
-https://lore.kernel.org/qemu-devel/e44df309-d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
-
-As well, it enables gdbstub tests that were never ran in CI since 
-gdb-multiarch was not installed.
-
-Regards,
-Pierrick
+Coverity reports that dw_i3c_short_transfer() may pass an=0A=
+uninitialized buffer to dw_i3c_send().=0A=
+=0A=
+The immediate cause is the use of `data[len] +=3D arg.byte0`, which=0A=
+reads from an uninitialized element of the buffer. Replace this with=0A=
+a simple assignment.=0A=
+=0A=
+Additionally, avoid calling dw_i3c_send() when the constructed payload=0A=
+length is zero. In that case the transfer has no data phase, so the=0A=
+controller can transition to the idle state directly.=0A=
+=0A=
+This resolves the Coverity UNINIT warning and clarifies the handling=0A=
+of zero-length short transfers.=0A=
+=0A=
+Resolves: Coverity CID 1645555=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ hw/i3c/dw-i3c.c | 14 ++++++++++----=0A=
+ 1 file changed, 10 insertions(+), 4 deletions(-)=0A=
+=0A=
+diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c=0A=
+index 3d8b95a14c..aa6c27c8de 100644=0A=
+--- a/hw/i3c/dw-i3c.c=0A=
++++ b/hw/i3c/dw-i3c.c=0A=
+@@ -1211,7 +1211,7 @@ static void dw_i3c_short_transfer(DWI3C *s, DWI3CTran=
+sferCmd cmd,=0A=
+          * ignored.=0A=
+          */=0A=
+         if (cmd.dbp) {=0A=
+-            data[len] +=3D arg.byte0;=0A=
++            data[len] =3D arg.byte0;=0A=
+             len++;=0A=
+         }=0A=
+     }=0A=
+@@ -1226,10 +1226,16 @@ static void dw_i3c_short_transfer(DWI3C *s, DWI3CTr=
+ansferCmd cmd,=0A=
+         len++;=0A=
+     }=0A=
+ =0A=
+-    if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {=0A=
+-        err =3D DW_I3C_RESP_QUEUE_ERR_I2C_NACK;=0A=
++    if (len > 0) {=0A=
++        if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {=0A=
++            err =3D DW_I3C_RESP_QUEUE_ERR_I2C_NACK;=0A=
++        } else {=0A=
++            /* Only go to an idle state on a successful transfer. */=0A=
++            ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,=0A=
++                             DW_I3C_TRANSFER_STATE_IDLE);=0A=
++        }=0A=
+     } else {=0A=
+-        /* Only go to an idle state on a successful transfer. */=0A=
++        /* No payload bytes for this short transfer. */=0A=
+         ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,=0A=
+                          DW_I3C_TRANSFER_STATE_IDLE);=0A=
+     }=0A=
+-- =0A=
+2.43.0=0A=
 
