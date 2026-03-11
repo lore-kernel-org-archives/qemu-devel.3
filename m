@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5116A112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:14:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A2B61125842
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:14:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBA-00071p-QC; Wed, 11 Mar 2026 11:08:57 -0400
+	id 1w0LBk-0001B2-VI; Wed, 11 Mar 2026 11:09:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9L-0003wy-Lz; Wed, 11 Mar 2026 11:07:06 -0400
+ id 1w0L9I-0003tZ-TO; Wed, 11 Mar 2026 11:07:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9I-0004xb-Uz; Wed, 11 Mar 2026 11:07:03 -0400
+ id 1w0L9G-0004xM-H2; Wed, 11 Mar 2026 11:07:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241481; bh=0uZ5ATjhIzDgyacoMi6E796UKRKgVRPT0yaUj1O9yhM=;
+ t=1773241481; bh=AkGdtL1378GuYkw9TJKFVH4lXWbLXsqU//G2VlqmrT0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=r5MyusYyCStSH+h2EmL0/1UmFxYTmGYCC05s0hHOdRVTkFG9KjvOr4Vq4B0r9v8g5
- KwOMXWbtazWtPTeExRIKiSWeuQlPZLH5tH5HN+TkjyRpNCfmmzQt3muxhO0nm1xYsY
- Nk3WjRTtyEmOg4g4CZnVP04HrAtUedfpY+qUnF/89HCgeeGFOxPd2LR2GRp3cDdXNI
- OWrXQkfVls/TPXUZY00KU+mH7XVwEIgEhgZB/rcaazDW/zYFzy0Qq72K3MtZDYGjqp
- z6t4ymp198C7x3Yh3p1TtqWV7rF9kZBH2eq6HdXoyVdJ6a3cvoJVu3YFpTMFuXYSPz
- cG6ZoDqHe5GEg==
+ b=aovRuT10/jfty8MxrmpY6NKCWrV16PAQy3co/wPTdSncNTXwP6l3GjJxJ38oE+1k9
+ 9fIrs54vvNjB6MUSqSIgHrSOINCGKYxqe3EMjfeke1Uu8+2V8zO4AFFDdK9aSXD9fJ
+ SM3jf1LI9EFbSvfQsb8mwrutmy89RvlV/dkcE9ML8/fBZvLjthvKYLS14g2EBzr5kE
+ zaOXrgXSGxJbEjQSSuut1Y985ssg/Gq3Rvjy6Imfcx2LLIi9Zf3mv1fwmx6OgTsjts
+ KWDtLy/U6k1bYXu54BSmQr4yWMCNTXsFxdrOhpbEUEtAo8Op23cS5EeiedmYKFYvR6
+ tKmWBP1SFADXw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 490CC191E88;
+ by isrv.corpit.ru (Postfix) with ESMTP id 2B045191E87;
  Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 2928537C2C9;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 1686437C2C8;
  Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 05/46] python: drop uses of pkg_resources
-Date: Wed, 11 Mar 2026 18:02:41 +0300
-Message-ID: <20260311150327.1084669-5-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 04/46] iotests: test active mirror with unaligned,
+ small write zeroes op
+Date: Wed, 11 Mar 2026 18:02:40 +0300
+Message-ID: <20260311150327.1084669-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
@@ -70,43 +71,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-pkg_resources has been fully dropped from modern pip/setuptools
-distributions and we should phase out its use. This patch is enough to,
-by itself, repair most GitLab CI tests upstream; with the exception of
-tox tests which are still making use of avocado - which will be dropped
-in a separate series to restore functionality there.
+This tests the scenario fixed by "block/mirror: check range
+when setting zero bitmap for sync write" [0].
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-Message-ID: <20260211195804.135144-3-jsnow@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit e44a26ba940214824b61976324058e73d9f41658)
+[0] https://lore.kernel.org/qemu-devel/20260112152544.261923-1-f.ebner@proxmox.com/
+
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260120113859.251743-1-f.ebner@proxmox.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 267d7ae99a1d3b5be9d3421db3bdf651cc18c7ab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/python/setup.py b/python/setup.py
-index c5bc45919a..789fa39b0f 100755
---- a/python/setup.py
-+++ b/python/setup.py
-@@ -7,7 +7,6 @@
- import setuptools
- from setuptools.command import bdist_egg
- import sys
--import pkg_resources
+diff --git a/tests/qemu-iotests/151 b/tests/qemu-iotests/151
+index 06ee3585db..9b9c815db5 100755
+--- a/tests/qemu-iotests/151
++++ b/tests/qemu-iotests/151
+@@ -191,6 +191,26 @@ class TestActiveMirror(iotests.QMPTestCase):
  
+         self.potential_writes_in_flight = False
  
- class bdist_egg_guard(bdist_egg.bdist_egg):
-@@ -30,9 +29,6 @@ def main():
-     QEMU tooling installer
-     """
++    def testUnalignedSmallerThanGranularityWriteZeroes(self):
++        # Fill the source image
++        self.vm.hmp_qemu_io('source', 'write -P 1 0 %i' % self.image_len);
++
++        # Start the block job
++        self.vm.cmd('blockdev-mirror',
++                    job_id='mirror',
++                    filter_node_name='mirror-node',
++                    device='source-node',
++                    target='target-node',
++                    sync='full',
++                    copy_mode='write-blocking')
++
++        # Wait for the READY event
++        self.wait_ready(drive='mirror')
++
++        for offset in range(6 * self.image_len // 8, 7 * self.image_len // 8, 1024 * 1024):
++            self.vm.hmp_qemu_io('source', 'aio_write -z %i 512' % (offset + 512))
++
++        self.complete_and_wait(drive='mirror', wait_ready=False)
  
--    # https://medium.com/@daveshawley/safely-using-setup-cfg-for-metadata-1babbe54c108
--    pkg_resources.require('setuptools>=39.2')
--
-     setuptools.setup(cmdclass={'bdist_egg': bdist_egg_guard})
+ class TestThrottledWithNbdExportBase(iotests.QMPTestCase):
+     image_len = 128 * 1024 * 1024  # MB
+diff --git a/tests/qemu-iotests/151.out b/tests/qemu-iotests/151.out
+index 3f8a935a08..2f7d3902f2 100644
+--- a/tests/qemu-iotests/151.out
++++ b/tests/qemu-iotests/151.out
+@@ -1,5 +1,5 @@
+-......
++.......
+ ----------------------------------------------------------------------
+-Ran 6 tests
++Ran 7 tests
  
- 
+ OK
 -- 
 2.47.3
 
