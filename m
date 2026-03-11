@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A69103E2E8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:24:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90D54103E2E8
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:30:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0RyM-0005DJ-Pv; Wed, 11 Mar 2026 18:24:10 -0400
+	id 1w0S3H-0006MT-RP; Wed, 11 Mar 2026 18:29:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0RyL-0005Ca-Ej
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:24:09 -0400
-Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
+ id 1w0S3G-0006MD-ME
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:29:14 -0400
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0RyJ-00072j-R6
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:24:09 -0400
-Received: by mail-qk1-x736.google.com with SMTP id
- af79cd13be357-8cd8576a512so155563485a.0
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 15:24:07 -0700 (PDT)
+ id 1w0S3E-0007vd-SR
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:29:14 -0400
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-8cd78a4ce8dso41333285a.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 15:29:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773267846; x=1773872646; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773268151; x=1773872951; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=xuVOSGMFCt+MSxA46iiqDcqmlQbYvK5jCiLGJ/N5wEY=;
- b=k1F0YCqXqQAgoi6DsVVm2P8yJtyfZOa7K7g71iyMbEatdlH+NrS8EEHvjR1pB8HFd2
- zwNmMktDJQ5JOcH8tUoR+FBRaf3hM5JLpoyO4h2TNctMxp9o5Su0lB5K2T0k5JDCa7fW
- nVuywWTMFfbvg2moJ2xilLqlPT4RjfnGjAVHvMqEOta+vsViH+9VhGMMPBvhedUeQ+/K
- bJRWhwXQQMbGzME/gWwq9brJaQeRrpq/yUE9ucl8IUuZ64CXryEFuieJxd5eIL9qY+Cy
- 0vyRm3YMsBRnyVZSSg9apiPSN06ozavB1pL8Op4nrdz6pP1sx2q0V4Vj05UlLpJa/usD
- sF2w==
+ bh=DdxfVqvcQUbqSK7nWN42MCG3eGRfjdJ5IfyBB4fJnpo=;
+ b=jW482CGZm0XHLPAaBaXnFMJFZoH6Dv+SpliDWPE5ufWb8wg/5M+wb0AlFLHt9hbxAo
+ AsiwL8dn8KaBa5f8osNJh75TVkebSJ8LxTCe3ex11IFJLJiPLtQbyoJ2jK/e2lLOQzz/
+ 5X7/scyRFQYBEeLwM5cTHbdrVpRaYe1PrC1oq2IkT9/8aVhztCFrZjVJHCFYfWUp+a7R
+ pj8iyX+NmmC1/mGOzCYU6r6TA7VLGJRNiq0ZGuME7PL9roDe3C0SXlvTOZBjACKxmbO2
+ GvAHLa8ZhpkuUKY4do92Z6Az72zSWztxDtCfbixTCznahq69bZ55fQotwfZ9BilZqWlS
+ uLZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773267846; x=1773872646;
+ d=1e100.net; s=20230601; t=1773268151; x=1773872951;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=xuVOSGMFCt+MSxA46iiqDcqmlQbYvK5jCiLGJ/N5wEY=;
- b=vUnpBdvibIH+w+XBz6SvnFMbP1Le1R4inGmlzqoojTkHp+6ezwPPWs+vwfSL/swjB2
- 8EIJgCLJhbi0ew4qyXh6zhpfQtq5g4HjOJ06GqJ1DsbyAfsSLIO2kkPrqwB5QfsgY902
- BP9KulQToWCbIsHT5DUSsb81Go3xfbiHO49s2IW3pCRw77SjS94gWY3suDlwndsnjHl0
- DU0b1kAGB4rI5POstb7HHagodQHmc6EgUDuo4y4exK+ju0LIZ1XmBAkEeHytkF0gq8qW
- dUZRyuba9fN7zLa4kPBUFx+qZRX5Y2vRk5LDjdKmYA5IVrGsN5yYQZK3YrrwlZdoPaJn
- OrSA==
+ bh=DdxfVqvcQUbqSK7nWN42MCG3eGRfjdJ5IfyBB4fJnpo=;
+ b=tY0I0LdtMG/P8bma62iBTZXjfrn775pSWSDoYCZVjRDFREmQo2jtP594kqIZqmgvWO
+ L0vVTGGe7fdLWSZaUxdrfG3UgfvkjZHAxUym80N5vMivliZpqH7vnsdA0k30d8OdDypf
+ cH+NbJDI915l75vwS2fCpu1tXD1ruYAlirYByy71E4bF1yScxMnxjlmW3ZHVpjiyO8cV
+ VmIGnZWR7+hGHKWrGYstcZYZmzYRAnsQVwT2z7K8GaafrpibJQKODUMsNm8UTz1BAJmA
+ WgSE/eLzFQFKbYmlNmNZ3Ycm98UL1lQZN4HhCzuiPQOCG/iq5D5e5Xtpg3PzjX9VWvJS
+ 3yNw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVhIFhvbYLflvlnI6RBOohJMf+F5o7AUcaQFZRQQ6q3zzIQKYJaKI8A9L5tPFd0muP6JY4I4o78Ys88@nongnu.org
-X-Gm-Message-State: AOJu0YzLTRCtG8PKBSGSrCiJRKDrxjjatlzDH/c3Smq3g6k9ozSZK8Bb
- +DlFoYVdTuZzfFPAiUOB92fpxkBduOLaI3/8u2082MZLojF4uM9+DAPTekybk9xBZg4=
-X-Gm-Gg: ATEYQzzUvNxJivBwKGJrgXI6UnY8fTZZctoGuzSorwh+kdtoRK4D9JLEx5yJ7ui0YTU
- AivZdxamSbBuYbMbEvFt+OiMBiCO81puRHlRiANAdRmw5RVwhtaeLuTXBiltqa17nSWFJqbgjK4
- Uz9+efF1pJ6PND7TypbqcrCJnlpyUkaQFVt9272ao0C/plsiAbO21oejBrcnVLFqmNepgpVtgjJ
- dpiPnSdOg6yQNSGSDqcf3dXtWoOE40nLrOaBHqfr8krcN8Yz8FA0wEgfCuQmI73BAM2yyDgd/6Z
- 2A2WKuzjhPZnjjCPi7SMmec8RDa0hhEastxNe2iKzGp85KGiP23nlosgRVd+sn/EPFNMGFkUYL/
- SkoM9r3qQffcUkYU+a3USais5QwH6jbXwMrZnUmIleVWx6Z7MPYKpWcG/jW7prWNC3L1DVB316b
- VvXXA3+LKRD44bHh9JG+kbqa1xKUnPeGsgtLUrWAcrsRRhuNHBs3+aUbGE+kiUFR6ijECH
-X-Received: by 2002:a05:622a:50d:b0:509:1342:b213 with SMTP id
- d75a77b69052e-509471bf32bmr18536351cf.12.1773267846274; 
- Wed, 11 Mar 2026 15:24:06 -0700 (PDT)
+ AJvYcCXcX1Qe2m8UtQmXVlBmlM5G6FAZl//Cz1581tjHmaqxXKTUv+/PuYid7P7imScoSOG8k7krk3MGmYkP@nongnu.org
+X-Gm-Message-State: AOJu0YwIp3o9oJ+6bOoOSTNpmH1WD8ndICKsU8IHWRIY6KTw03ZHLNaE
+ eCDUdJgpge1Ls/+uV3zTYi1P7+gvOR3VLJP7l/BdAbr4a+2FasYPCS633b+uRqSDrB8=
+X-Gm-Gg: ATEYQzxhaZE/n1gICqo2jwUow8SesBJyraq+Cp04/9e+zaocz3HRFU78AJUJFYoMOCZ
+ l7jWO4Slf5QwZ9/Czfowsw4sELqr5WjZuZAWKfX+LHvUcTHxNrt9ohg8Sih7GREkcMaeh2AdjUU
+ ed2DQhCuOulLPF4IOMlMUndAyTJD90E7REl9C83yes+AapgvYH4Aqvc6A8Lxkn+bf9adiiF+qaf
+ 5f9H4ieDUrbbQ4mtUy/4wpOcPxomDA4t04SqZXlHR0624xPe2unbROJhGBwhRovLKK5z2zpNQHY
+ bsJ1Vlzy9lE7ovUMs9VH6CRl1TNxppY4hrDwjsu6JiQqoWgCqA77rztVT62Uk5V+Edkq0B7BbPA
+ pYC6uTKCOezbkadOd57R2AfsqEtCWcW+sKs52u6Xrjgjnsd1DL42LF6ESDZVfg/DTh15Sd85hr/
+ DSGCkFfan6kl/4CcmIkiHbY4GgXGeeI2gtwUSM+RAo8lPdE1Y6KkeX4roLB8c0RIoz8NGD
+X-Received: by 2002:a05:620a:1928:b0:8ca:2e37:ad07 with SMTP id
+ af79cd13be357-8cda1936a84mr568586785a.8.1773268151568; 
+ Wed, 11 Mar 2026 15:29:11 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50939ec5017sm20351841cf.8.2026.03.11.15.24.05
+ af79cd13be357-8cda1fbcd2esm226929985a.5.2026.03.11.15.29.10
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 15:24:05 -0700 (PDT)
-Message-ID: <0b4976f9-cf83-47b4-8f00-cc68c9cf47fd@linaro.org>
-Date: Wed, 11 Mar 2026 15:24:04 -0700
+ Wed, 11 Mar 2026 15:29:11 -0700 (PDT)
+Message-ID: <e7a2aa40-400b-444f-8c22-fc6895e376e3@linaro.org>
+Date: Wed, 11 Mar 2026 15:29:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/arm/virt: add serial-debug-level property for EDK2
- firmware
+Subject: Re: [PATCH 00/14] Add ARM64 support for MSHV accelerator
 Content-Language: en-US
-To: Luigi Leonardi <leonardi@redhat.com>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Oliver Steffen <osteffen@redhat.com>, qemu-arm@nongnu.org,
- Gerd Hoffmann <kraxel@redhat.com>
-References: <20260311-edk2_arm_serial-v1-1-c25e237116f3@redhat.com>
+To: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
+ qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -114,18 +118,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260311-edk2_arm_serial-v1-1-c25e237116f3@redhat.com>
+In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x736.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x734.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,42 +145,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Luigi,
+Hi Anirudh,
 
-On 3/11/26 6:43 AM, Luigi Leonardi wrote:
-> Add a machine property to pass a debug level to EDK2 firmware via the
-> device tree. The value is set as an "edk2,debug-level" property on all
-> pl011 UART nodes.
+On 3/11/26 8:15 AM, Anirudh Rayabharam (Microsoft) wrote:
+> This series adds ARM64 guest support to the MSHV (Microsoft Hypervisor)
+> accelerator, enabling QEMU to run aarch64 VMs on Microsoft's hypervisor
+> using the mshv Linux kernel module.
 > 
-> This is to create a runtime parameter to set the verbosity of the debug
-> log on the serial ports in edk2. Currently, the only way to set the
-> verbosity is a compile-time option.
+> The first few patches refactor the existing x86 MSHV code to separate
+> arch-specific pieces from common infrastructure: moving MSR handling to
+> target/i386, extracting shared register hypercall helpers, provisioning
+> host CPU features, and introducing arch-specific init hooks.
 > 
-> DT is used because the fw_cfg interface is not yet initialized in early
-> boot phases.
+> The remaining patches add the ARM64 backend:
+>   - vCPU state get/set using hypervisor register hypercalls
+>   - -cpu host support by querying ID registers from the hypervisor
+>   - vCPU run loop with MMIO emulation via ESR_EL2 syndrome decoding
+>   - In-kernel vGICv3 backed by HVCALL_ASSERT_VIRTUAL_INTERRUPT
+>   - Interrupt control structure adjustments for arm64
 > 
-> Corresponding edk2 PR: https://github.com/tianocore/edk2/pull/12277
+> With this series, a standard aarch64 virt machine can be launched with:
+>    qemu-system-aarch64 -accel mshv -cpu host -M virt ...
 > 
-> Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
-> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+> Caveats:
+> - Currently only direct kernel is supported. We're still debugging edk2
+>    firmware boot.
+> - Live migration is not yet supported.
+> 
 > ---
->   docs/system/arm/virt.rst |  6 ++++++
->   hw/arm/virt.c            | 38 ++++++++++++++++++++++++++++++++++++++
->   include/hw/arm/virt.h    |  2 ++
->   3 files changed, 46 insertions(+)
+> Aastha Rawat (7):
+>        accel/mshv: move msr.c to target/i386
+>        accel/mshv: extract common CPU register helpers
+>        meson, target/arm/mshv: Enable arm64 build & add initial MSHV support
+>        target/arm/mshv: implement vcpu state operations for ARM64
+>        target/arm/mshv: implement -cpu host for MSHV
+>        accel/mshv: Add access_vp_regs synthetic proc features
+>        target/arm: cpu: Mark MSHV supporting PSCI 1.3
 > 
+> Anirudh Rayabharam (Microsoft) (6):
+>        accel/mshv: provision guests with the same features as host
+>        accel/mshv: add arch-specific accelerator init hook
+>        target/arm/mshv: add vCPU run loop
+>        include/hw/hyperv: adjust hv_interrupt_control structure for arm64
+>        hw/intc,target/arm/mshv: add MSHV vGICv3 implementation
+>        MAINTAINERS: updates for MSHV arm64 code
+> 
+> Magnus Kulke (1):
+>        accel/mshv: implement cpu_thread_is_idle() hook
+> 
+>   MAINTAINERS                        |   8 +
+>   accel/mshv/irq.c                   |   2 +
+>   accel/mshv/meson.build             |   4 +-
+>   accel/mshv/mshv-all.c              |  73 +++-
+>   accel/mshv/mshv-cpu-common.c       | 151 +++++++++
+>   hw/arm/virt.c                      |  11 +-
+>   hw/intc/arm_gicv3_common.c         |   3 +
+>   hw/intc/arm_gicv3_mshv.c           | 180 ++++++++++
+>   hw/intc/meson.build                |   1 +
+>   include/hw/hyperv/hvgdk_mini.h     | 130 ++++++++
+>   include/hw/hyperv/hvhdk.h          |  97 +++++-
+>   include/hw/hyperv/hvhdk_mini.h     |   6 +
+>   include/hw/intc/arm_gicv3_common.h |   1 +
+>   include/system/hw_accel.h          |   3 +-
+>   include/system/mshv.h              |   2 +
+>   include/system/mshv_int.h          |   5 +
+>   meson.build                        |   7 +-
+>   target/arm/cpu.c                   |   7 +-
+>   target/arm/cpu64.c                 |  24 +-
+>   target/arm/meson.build             |   1 +
+>   target/arm/mshv/meson.build        |   7 +
+>   target/arm/mshv/mshv-all.c         | 665 +++++++++++++++++++++++++++++++++++++
+>   target/arm/mshv_arm.h              |  18 +
+>   target/i386/mshv/meson.build       |   2 +
+>   target/i386/mshv/mshv-all.c        |  85 +++++
+>   target/i386/mshv/mshv-cpu.c        | 170 +---------
+>   {accel => target/i386}/mshv/msr.c  |   0
+>   27 files changed, 1465 insertions(+), 198 deletions(-)
+> ---
+> base-commit: 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455
+> change-id: 20260311-mshv_accel_arm64_supp-e86b0082aee4
+> 
+> Best regards,
 
-I am not sure if maintainer want to have bootloader specific options in 
-machine code.
+I have a question about MSHV itself.
 
-Alternatively, it's possible to dump virt dtb, modify it, and pass it.
-$ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
-$ ... modify dt ...
-$ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
-
-It has the advantage to be extensible to any other kind of options you 
-want to pass through dtb without needing modification on QEMU itself, 
-the downside being that it's less convenient than a command line option.
+Is it possible to get access to it through a Windows install, or a 
+custom binary or disk image, or is it not redistributed and available 
+only through Azure instances?
 
 Regards,
 Pierrick
