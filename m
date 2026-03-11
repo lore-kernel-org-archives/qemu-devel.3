@@ -4,79 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 245FA112583A
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCC0D112584D
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:20:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LGL-0004Kj-QU; Wed, 11 Mar 2026 11:14:17 -0400
+	id 1w0LEH-00077V-JS; Wed, 11 Mar 2026 11:12:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0LCt-0003Vi-Bs
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:46 -0400
-Received: from p-west2-cluster3-host8-snip4-2.eps.apple.com ([57.103.69.55]
+ id 1w0LCq-0003RM-48
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:40 -0400
+Received: from p-west2-cluster6-host7-snip4-5.eps.apple.com ([57.103.70.48]
  helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0LCq-00068w-NS
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:42 -0400
+ id 1w0LCl-00067U-Dy
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:38 -0400
 Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPS id
- AEFEC1804E5E; Wed, 11 Mar 2026 15:10:36 +0000 (UTC)
+ 675E21804E61; Wed, 11 Mar 2026 15:10:31 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773241839; x=1775833839;
- bh=ocVBiiCbfqFuJ/DgB2v8laNKE69rBUiexmnNbVFv6+4=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=BGjo8BEvE/dIObmpYDqmoyTOmrOfXOsN+SCgB92SdUCdIRaQZr4rd6C2tCw27RO5crWgjkw5G52It8n49Efv2Iax9vwMFzAY0004m6MrHmCy/KKyLdNY0XKTEs78EhFEjZIfUPUXqpM/pfPnIEcTOgwRxoKJ309ee0bZq0w9IrbxApcxYu2ysoQtQB44xLD4YXcP4KgWbwqFKdnNzI2QOZeL12lMRDx7yY5/U5MYqRQwr5YULDC0McZFGP+1yW+WPjujRxpuP7Wi4OZX7LRBeIM0nWjGXAGbwNDJ4fq0SjrixujcCLQGmKRcf/Bo2bS9AxN752l2o5ALBauNm4MN1A==
+ s=sig1; t=1773241833; x=1775833833;
+ bh=F7MB9xDK8Y/KCWxyNNFo79pG87u3BYQyDUlbbG4/TL0=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=B9dKMwxRZtzAQEdJHcuG7iiO58LkGfMI3nHIAvVR7aVG+cUrIGWzbGuTDcKbjnis/UCbARH0sryCtZVa7CdJi3Q6cNpHZUxGPzobm2h+cN4+QM5/UA+g6dWBb/3kQNe/pObohd0lk+Aa6UOQ/oFfNEabbKMUeKh7T07CnJ1Z1H9z5ObMv8Pn6hv7vs0obUNqVOvcV7idZnRWT4c2M6PcPNmUMHFFOh/bjUAJEH5z7CRv9knFbHm8CiimsxTMwBxYsm+MaVJNY9F5VHxM5ncSvTTcxIQK2OFZr+WTcMhSDsAkGOPD9wINI8awrn8zp2sX0Pu/jTGz5cldoMscuntOxg==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.152.38])
  by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPSA id
- 41A3518015DF; Wed, 11 Mar 2026 15:10:22 +0000 (UTC)
+ 9796F18015EE; Wed, 11 Mar 2026 15:10:17 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org
-Subject: [PATCH v2 3/5] whpx: arm: enable more enlightements
-Date: Wed, 11 Mar 2026 16:10:12 +0100
-Message-ID: <20260311151014.55915-4-mohamed@unpredictable.fr>
+Subject: [PATCH v2 0/5] whpx: arm: set of small fixes
+Date: Wed, 11 Mar 2026 16:10:09 +0100
+Message-ID: <20260311151014.55915-1-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260311151014.55915-1-mohamed@unpredictable.fr>
-References: <20260311151014.55915-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: 6WnhRkoYeK8ueazYIpvWbykpQ92SeqG2
-X-Proofpoint-ORIG-GUID: 6WnhRkoYeK8ueazYIpvWbykpQ92SeqG2
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDEyOCBTYWx0ZWRfX+LmahOYqqwvh
- CAdTajWrtJ3uHuIc3sP1yGuX7Bm5KfDvf1Uw02cffTe2gyXdpvTeVZYXCn8xlBjHVzlTE6nbGg1
- 5lqw+es6xsztfhe0KZONG8iaYe8Lxj7hBl+USlu48s1o+ZKoeDzfgMVFjDOLif7VCmcFMw5uUiR
- /+8LIFO5uOd9kD3c2WXPQ65CHpwklnMfrkxJ9VgBG2jrsAdhnmPvwNJMHcJ+hP0WbrhuxVX0sAK
- pCPsbbVD+tHhXgWCOX0sQUDX5f1BURu51V/pRISbqVGDAkl/q7ED+4R9WvUoAOQ+EpY5DDgwK/v
- VgU7vXrwVSr/c0AzW7eXH8/i3SJLCkUbMgFUXOceFVHskvlwN0pkS65PVzKdus=
-X-Authority-Info-Out: v=2.4 cv=OZmVzxTY c=1 sm=1 tr=0 ts=69b185ed
+X-Proofpoint-GUID: Nu9Xp1TAAe6OdSlsLCZHggDCPVPy8XK1
+X-Authority-Info-Out: v=2.4 cv=OZWVzxTY c=1 sm=1 tr=0 ts=69b185e7
  cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=qTR2NBNECMohrFtl0CEA:9
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=ITCvsc7dFgX-EMZVpccA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDEyOCBTYWx0ZWRfX1Fb976SPwszo
+ 79iC4LWkZAUH7seTBn2VRsc8/V/AjrhKpHV1yruwVgIaMjVIIXc9m622VwRGVbstPF1tiQlxe+2
+ IS4eLO4ynRWTuTBXfzGd7zknBM32yfgwtqxgxS4UreqgWgUmoGUHH+TpL70x/PYlfKP6xrahFVv
+ 9H+09bscFwYr2AIt85dtU6QhPrIccSkoEwSdLSOJftnv53mpj3pFzBDA0X/+WyJo2V0UI5T8KOs
+ PTiqHFNzmCASBqjkPpi0WE5WtkRtlVfK/VVFfM9wgVjRPDRXSfs7/RoLilXh0Iziwraccku4xVO
+ tuxv8sxvCcGYZbRZ3CuAvI/t8OOBLT6G3jqgBJ2aM/2As4QrFlpmXDOuAr9Le4=
+X-Proofpoint-ORIG-GUID: Nu9Xp1TAAe6OdSlsLCZHggDCPVPy8XK1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 malwarescore=0 spamscore=0 mlxscore=0 suspectscore=0
- clxscore=1030 bulkscore=0 mlxlogscore=731 phishscore=0 adultscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2603110128
-X-JNJ: AAAAAAABK/Xh2/RcXRUdIGcJhNUxcUbtQ3YPUTfvbkwGpSBNRj/iKMuebVpt2IUDxkTSl3rnd4Z/+RZmN+gXoBmdby7XAJVADw2899Xz4th4Zb00qIwltPXS2PqbUZP6lE93iPhT9VZUvHIHNtxAtwVr7WkWNoxMAQLmToYp13Mvt8fosHumsXexY7SGv7FaioqO0ADwqbgnn0ZbPP9LOvBaagTj9w+Ajt/q3aOeL/j/ayrV+c88LXVHdPXKBPIM7ztKn5XmEJ+XhtiNsl3gDe6irsXeYgSvP/++YQQltkeHjW0NLnAuO165ERFM0oaHdpoiGmPBnjZttPoZUMOUMKGje8+Vo90AKW2ADejWxJ4IzvDEUKFEcQSZ+LBMX+Odb+nbddmgb0AkSPzdgwu6e0ophk9wItBBt3F65p8kVxfRerc4igXCEPqvvO+pxtGp3duQ6OPnAswBHkToe7cAt/W8GlZv5KgaVZUfVv7qifM+uwFcQd8xIbIbBLlMthOU7UFz3zGcubAbesm29pkmirpMV0ePPkg+MH38pWP97Wy/wiK/NumFFqEq5CHPn3ROJq63m37HGzaDq1y/elRiwAOrG83OhacXYz8m99XIBJyGkkKzxGe23gSiAfja
-Received-SPF: pass client-ip=57.103.69.55;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 adultscore=0
+ bulkscore=0 spamscore=0 suspectscore=0 lowpriorityscore=0 phishscore=0
+ mlxlogscore=618 mlxscore=0 clxscore=1030 malwarescore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603110128
+X-JNJ: AAAAAAABywpwkN7GlaDy3Ee6zOaCDGU8iGuWXeyqNHSNySyE5ceSBZ3QdlzoyhWmFffJ3BF8USgPZC/JwV8J4jUQf4/jUZRszQLZeP+sBQm9WhEWAbU/CvWnMqW6EuofmwBLG90/t7/ET0DvtVBvMPV3y5h32xl+hwUPX+JGYxQcs37Wi0vvwbcPOsuvPlF2qnu/afOejHu2MW+Xtlx4g0KbkDd05zbySeSrd7b8bMxxYOj2dmDUkVTmwdFuiqm4378OI+21pegKRM2L/yrJ+fZNjy2zuYxE7W5gUf2YE8nwESKpCib4QkJ3KhfTjwE3PLApy6cGPOwybIZ0OFSv5/dcreFXWL9jWbbLE+Bfsa9lKEol5jcwmo5ZNp64d7cXkOo52Gu+2jPQ/uuUeUMJNhYHH8tPMgeb50Y6i+07TvQa6LI6QeUIzs+IsaASSwje/hmsGF/GftFiGBphO2f8G4tvUDeu722Dt+Mv0TcaPlTMFH/n3H+G8t+OmJz+CPfcXlxXkMz4JNgvZ81nU4xlXq+1QD+70S4xgPM38aBJweb4Kjr1HLFXVNp5iLJ9PRRVQFyimJi++5WWkpZmvpdRp/NhRUx4i/LZLPhzFwW3di2hRVU1HMlMwGK3YWw05HU=
+Received-SPF: pass client-ip=57.103.70.48;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,50 +90,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Linux uses AccessVpRegs without checking availability and panics if it's not there. Expose it unconditionally.
+Highlight is probably getting -cpu host working on WHPX again, but otherwise pretty small
+set of fixes.
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- target/arm/whpx/whpx-all.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+Mohamed Mediouni (5):
+  whpx: arm: fix -cpu host
+  whpx: arm: add EC_DATAABORT assert for
+    WHvRunVpExitReasonGpaIntercept/UnmappedGpa
+  whpx: arm: enable more enlightements
+  whpx: arm: remove comment bit that is no longer accurate
+  target/arm: cpu: alter error message for host CPU type
 
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 3df60a950d..9e5bc03a21 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -832,6 +832,7 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     UINT32 whpx_cap_size;
-     WHV_PARTITION_PROPERTY prop;
-     WHV_CAPABILITY_FEATURES features;
-+    WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS synthetic_features;
-     MachineClass *mc = MACHINE_GET_CLASS(ms);
-     int pa_range = 0;
- 
-@@ -942,7 +943,6 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     }
- 
-     /* Enable synthetic processor features */
--    WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS synthetic_features;
-     memset(&synthetic_features, 0, sizeof(WHV_SYNTHETIC_PROCESSOR_FEATURES_BANKS));
-     synthetic_features.BanksCount = 1;
- 
-@@ -953,13 +953,15 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
-     synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
-     synthetic_features.Bank0.AccessHypercallRegs = 1;
-     synthetic_features.Bank0.AccessVpIndex = 1;
--    synthetic_features.Bank0.AccessHypercallRegs = 1;
-     synthetic_features.Bank0.TbFlushHypercalls = 1;
-     synthetic_features.Bank0.AccessSynicRegs = 1;
-     synthetic_features.Bank0.AccessSyntheticTimerRegs = 1;
-     synthetic_features.Bank0.AccessIntrCtrlRegs = 1;
-     synthetic_features.Bank0.SyntheticClusterIpi = 1;
-     synthetic_features.Bank0.DirectSyntheticTimers = 1;
-+    synthetic_features.Bank0.FastHypercallOutput = 1;
-+    synthetic_features.Bank0.AccessVpRegs = 1;
-+    synthetic_features.Bank0.SyncContext = 1;
- 
-     /*
-      * On ARM64, have enlightenments off by default
+ hw/arm/virt.c              | 2 +-
+ target/arm/cpu.c           | 4 ++--
+ target/arm/whpx/whpx-all.c | 9 ++++++---
+ 3 files changed, 9 insertions(+), 6 deletions(-)
+
 -- 
 2.50.1 (Apple Git-155)
 
