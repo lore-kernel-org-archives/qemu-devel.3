@@ -4,78 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93E2B1049515
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:27:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9A9E1104BED3
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:27:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0GmF-0002Q0-Fm; Wed, 11 Mar 2026 06:26:55 -0400
+	id 1w0GmF-0002PZ-3J; Wed, 11 Mar 2026 06:26:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0Gm5-0002IL-CZ
+ id 1w0Gm5-0002IK-C0
  for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:26:45 -0400
-Received: from ci-2004c-snip4-11.eps.apple.com ([57.103.89.33]
+Received: from ci-2004a-snip4-7.eps.apple.com ([57.103.89.10]
  helo=outbound.ci.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0Gm2-0001md-6b
+ id 1w0Gm2-0001ml-5b
  for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:26:45 -0400
 Received: from outbound.ci.icloud.com (unknown [127.0.0.2])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-0 (Postfix) with ESMTPS id
- 0B3401800108; Wed, 11 Mar 2026 10:26:32 +0000 (UTC)
+ 24BF01800553; Wed, 11 Mar 2026 10:26:32 +0000 (UTC)
 Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773224794; x=1775816794;
- bh=WYWW55OHPn7bG5onS6coAsknXdJYCR6ZZ92rG3QEQEo=;
+ s=sig1; t=1773224795; x=1775816795;
+ bh=K3brj/ASNYjHTSBXLo+q7yds8j53cFxDjP5cTMgpO0Y=;
  h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=NPVsTvJcXJBhgoh0pPLxmS489WzF7LQtj1MhWCQzNfxXxuBqev1q4Vt2nXL3M/ywD8SaovvlNIYmap4Kgz7sJXLBNlw6z7kWhQGdTyes7/am2EHt39cuRbcRdgtnF87v4tj7iHQSurkY3qAtvoSSkBVDb4EW1wzJ810F3Y4YPVUUJxs55dUBe/4WV6CdVKMdm9sWaw80jishMLMgBsfSU5UclewxMqTNAdg9tQG3GPuaxw4smE1baBEsYP5uq5dp4IvgQ9YK46XJpmfWiji4PWsv+Pyp9QwzYEWj3Wjjr5S66tZGOYCAbAOWF8xZf71LNXFFXro7VnMepfdnD+ufaw==
+ b=WdKcasV48xKDMp7Yed9TMws6Nfn+bVIfqa0DoWM+e/I3wuO8Yh7fzrDZl9NMYa8QsgMeW7V3EU6a0mmddftgIhdsrYdn3UbBR4cvSjW5EA80X47n2mK71IxFVfJrLGwqeXuti8bVauZTpvM/2gCCdyaXhwxtDOWnmJqGUlTIDRTnxvOnLD1L3LVZT9OGFWi2cxFjFa52rQNlT/74854if+ziYFvniIe7hYf/JIaU+BZYicwReFsJgJXjqGdDp+Xcwneoxjir0gsbqzkJjrkx+9OVbZFhDRmcoPEkShQ7Iw0itlRs0Vrgly3jomREyeFk0kG8KdYZvibMLZ2A6b5ysA==
 mail-alias-created-date: 1752046281608
 Received: from localhost.localdomain (unknown [17.57.156.36])
  by p00-icloudmta-asmtp-us-central-1k-100-percent-0 (Postfix) with ESMTPSA id
- A177E18000A4; Wed, 11 Mar 2026 10:26:31 +0000 (UTC)
+ 05CEB1800097; Wed, 11 Mar 2026 10:26:29 +0000 (UTC)
 From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH 3/3] docs: mention that WHPX supports Arm too
-Date: Wed, 11 Mar 2026 11:26:26 +0100
-Message-ID: <20260311102626.46546-4-mohamed@unpredictable.fr>
+Subject: [PATCH 1/3] docs: remove 64-bit only mentions for accelerators
+Date: Wed, 11 Mar 2026 11:26:24 +0100
+Message-ID: <20260311102626.46546-2-mohamed@unpredictable.fr>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260311102626.46546-1-mohamed@unpredictable.fr>
 References: <20260311102626.46546-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-ORIG-GUID: Qv57gAJ4PKSPQ4Wg03j-ySGWqHZ3c2th
-X-Authority-Info-Out: v=2.4 cv=ULTQ3Sfy c=1 sm=1 tr=0 ts=69b14359
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA4NyBTYWx0ZWRfX/wa8M5LoUYdN
+ 0EYfkGUzGw2rgsiZ/pZwx/KnImxXH5H9u4kN+4O/Q00a7OjS1gbegZKAPtpL92N2GVbXo7+fhqA
+ fLMnqZVaRGBjsWvwMvZc/jFEkj/cizic24KxY50W6Q8BT8jka3meMBG7FT3Tt+GURaBTS0ioyig
+ JZO5JMKYjrA4g6S/Er9PVrAyP3cBnry6qkVqggNytGOi2MqJRWqDDWLJqqU1OzlNGRmV/YbDxFD
+ oiO1ZeCy44A1dEa3OoF51wPZf9wviffuHTwG9HBb3jQPK7VHSIWbCKoYrRuCPeL+DZSREQaYWsC
+ 6HTgroNjPJtGDAXU4hUwOFTLPY/E6irX4jCdAR8fKUfQ4dwp8yRataBZ55fE2E=
+X-Authority-Info-Out: v=2.4 cv=AeK83nXG c=1 sm=1 tr=0 ts=69b14359
  cx=c_apl:c_pps:t_out a=2G65uMN5HjSv0sBfM2Yj2w==:117
  a=2G65uMN5HjSv0sBfM2Yj2w==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=dI0m1LqQuSCw5fg3QP0A:9
-X-Proofpoint-GUID: Qv57gAJ4PKSPQ4Wg03j-ySGWqHZ3c2th
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA4NyBTYWx0ZWRfX7yk4X3JVyJlm
- QejIsOzsFLSNq9l+ctJ+j226hDp3PH2Mq1fT7Aka5/Nf3W1OJFbDKGtON2zteTPl9C2J8h+pP5G
- OrQbSHiK3dMdDWZW3raYAWDmUTdKtLNUp8uOxZDSt4U8rMZBcy3mbarshNC//n5IRBp0ladPrSA
- oYUzjc8uMLAhilY8BXcNqZ3uiKEGu26XXdYiEF4MEGVl5AlL2xk002LGwZKiaIG+4JuiFKCstXO
- rOIyaP0opjtV3CraWFpQDtzkeeQiFPud7zwGwaDDVfgBV2N79NU3+uFBlUevEqJU3cvpbs7nbtn
- P74iKxu1DqlRF6SE3jajL3jKtZgHcC5GAJJlfsyGfx0DG7ImJJ8p4MCJjF6HNU=
+ a=areVBzcA72p8uwxwuq8A:9
+X-Proofpoint-ORIG-GUID: Fsxb5IePGXM-QHAKD_HgONmWLr7fo7z1
+X-Proofpoint-GUID: Fsxb5IePGXM-QHAKD_HgONmWLr7fo7z1
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-11_01,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
- bulkscore=0 spamscore=0 mlxscore=0 lowpriorityscore=0 mlxlogscore=718
- suspectscore=0 clxscore=1030 malwarescore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603110087
-X-JNJ: AAAAAAAB5u3/ZbeZykaecSXWGV+i0tb4ATRv/cvwR7qPPNkksBGk27XmYSkroAetB5PoJtfirfmtDx7xa35Ou6uI0kunPQB9hm7/d1GMbP2cR/zUzwuLoCLUkjk1XcP9WOoT8uiZQdTzi7rtfAwCmXiiSk7ETdTSh9Ms+WbXjM6cZdeWwUTslxqRSP5dxONfVUkRlOJSR90pQUjYgpZ3sMKCiBtw7WRonQvRk7+l8J7ntU81buG/48jMztU5RS4GzTxyqzYccjRZdBlrSHXuZ/v/PguFgrC5E5HAh0eAbRixD0u9FZeaRUzEH7nslE2BxKechoqmx42gTHQOvhDxAB/DMVi4Hkw8DGGMszqHFCuM9drfAzxVDqaFvhDPCc2JXy520SojOIYLBOaX6xUcbIhqXpuAm/RoNcuCx1UMPIV3pXlacyq6fBLveBS2guriFUkK/8aclFAZTR39pjN3UynGH8lBKSY0SAasWTXIpXzM1dnmvlcutFT9KN6Su8hL8T3wrBCpaTotgpHDn5tDm+BjnIoMuSWbGcjw90Syi9S5YECVM2/U/62GrFFhyOg/fXOWBBHR3t32JoXLWZg8lCxLx87993LdAcoylktDCWPjiEZGGktP+1HKaa/taRZMZA0=
-Received-SPF: pass client-ip=57.103.89.33;
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
+ lowpriorityscore=0 mlxscore=0 bulkscore=0 suspectscore=0 mlxlogscore=988
+ phishscore=0 spamscore=0 malwarescore=0 adultscore=0 clxscore=1030
+ classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
+ engine=8.22.0-2601150000 definitions=main-2603110087
+X-JNJ: AAAAAAABLoon0gke3E1xPUNO9P7RyQYVhMJIdELMaaFGQa9l2+1Z8IWXqr705SyJ7f9heBK355ZJ79814YVT7/5pEfeps20xZrMtt+5c14nO5fy1QWZgf8SiaNQ1ZWv24aeaJsUFGnF9QEKLen8XEgUNCyWrb+eTQxk6DG1zZEvd979KUghq3fxK5LebsNu6YflDH4vziubyxBAE9AxByjxzPUFSXaQnUwsc80aFggQ1jSomZE+9x33Q/R7ObiUSl1poU+Dzq/9MSVKWbuBl1UlSCvkm9OAhsHQtIpikWy6xW1yErL28EzRpygShdgwLbh7PPY5bEI11wAqJdizCzjUHwzF8/MHyNBJGhJN8x1cLWfgcp0p2fhqlJOE47wm2uQX5hNmJdc9dBvALT6BEf2TZ79Dk7e1Qp+VOtAOmzPklMoINSxzccpsz8R1vWTttrfGEK+Jct8k7ni/MEUEUkoL4gYjXx+hsj5ga4tQyn9OJLHvI/UvUkPH6pzs9khNvoFcuPly0Og5/1ZZeAcMnH69pHaNtw5Kvqxpy9Z5rbVo3aUhNkxtjKpT8T5XL7HugJvQhANAUiUVjWAeB433FpDiN5i/NsHbhsnWtOUGiF+URu4GMsjNBug==
+Received-SPF: pass client-ip=57.103.89.10;
  envelope-from=mohamed@unpredictable.fr; helo=outbound.ci.icloud.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,37 +90,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+QEMU itself no longer supports 32-bit systems.
+
 Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 ---
- docs/about/build-platforms.rst | 2 +-
- docs/system/introduction.rst   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ docs/about/build-platforms.rst | 4 ++--
+ docs/system/introduction.rst   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
 diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index ae138ff0e0..6e3088d524 100644
+index e95784cdb5..ae138ff0e0 100644
 --- a/docs/about/build-platforms.rst
 +++ b/docs/about/build-platforms.rst
 @@ -43,7 +43,7 @@ Those hosts are officially supported, with various accelerators:
     * - CPU Architecture
       - Accelerators
     * - Arm
--     - hvf, kvm, tcg, xen
-+     - hvf, kvm, tcg, whpx, xen
+-     - hvf (64 bit only), kvm (64 bit only), tcg, xen
++     - hvf, kvm, tcg, xen
     * - PPC
       - kvm, tcg
     * - RISC-V
+@@ -53,7 +53,7 @@ Those hosts are officially supported, with various accelerators:
+    * - SPARC
+      - tcg
+    * - x86
+-     - hvf (64 bit only), mshv (64 bit only), kvm, nvmm, tcg, whpx (64 bit only), xen
++     - hvf, mshv, kvm, nvmm, tcg, whpx, xen
+ 
+ Other host architectures are not supported. It is possible to build QEMU system
+ emulation on an unsupported host architecture using the configure
 diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
-index 2dfa371e0f..be387a6645 100644
+index 9c57523b6c..2dfa371e0f 100644
 --- a/docs/system/introduction.rst
 +++ b/docs/system/introduction.rst
-@@ -31,7 +31,7 @@ Tiny Code Generator (TCG) capable of emulating many CPUs.
-     - x86, Arm
+@@ -19,7 +19,7 @@ Tiny Code Generator (TCG) capable of emulating many CPUs.
+     - Host Architectures
+   * - KVM
+     - Linux
+-    - Arm (64 bit only), MIPS, PPC, RISC-V, s390x, x86
++    - Arm, MIPS, PPC, RISC-V, s390x, x86
+   * - Xen
+     - Linux (as dom0)
+     - Arm, x86
+@@ -28,7 +28,7 @@ Tiny Code Generator (TCG) capable of emulating many CPUs.
+     - x86
+   * - Hypervisor Framework (hvf)
+     - MacOS
+-    - x86 (64 bit only), Arm (64 bit only)
++    - x86, Arm
    * - Windows Hypervisor Platform (whpx)
      - Windows
--    - x86
-+    - Arm, x86
-   * - NetBSD Virtual Machine Monitor (nvmm)
-     - NetBSD
      - x86
 -- 
 2.50.1 (Apple Git-155)
