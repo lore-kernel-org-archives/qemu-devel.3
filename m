@@ -4,43 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E106E112583E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F41F7112584D
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LEM-0007P6-01; Wed, 11 Mar 2026 11:12:14 -0400
+	id 1w0LDR-0003uv-0q; Wed, 11 Mar 2026 11:11:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LCA-0002RI-6T; Wed, 11 Mar 2026 11:09:59 -0400
+ id 1w0LBH-0007Y8-Bf; Wed, 11 Mar 2026 11:09:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LC8-0005mz-QM; Wed, 11 Mar 2026 11:09:57 -0400
+ id 1w0LBF-0005fk-Ky; Wed, 11 Mar 2026 11:09:03 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241483; bh=uIKZ9OHCybJ/gZkACDfYorTkJXG2LgGPSPVro8zrSvk=;
+ t=1773241482; bh=r3LcDIg2pnrfXeb/zGiJh/vlHgX5s501/V26fC4Qu3A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=kQEl0AHtM41lDJ3E/WfFfBYBLE7kpxR/XX9Yz8siFoh+X5RP6JMvMgTcR3/XX88OR
- ZPeAs+VOAupsd4iEOcLQpUxDR4SZr2vr1KeG0+btlX+YO2TJYIVIniyhxy3juGUlOc
- Z3W+u/6jarLPs82iPFKn3Cz74RP6Fh6V+L6GCVTy+1gZNec6z3W+zdFZIoKI1mogYQ
- 18kdHnYCZmgMxwUrAZ9BjHSOrKhYWnUwen8JXIz6TB8x6abYsIGCN0dwTYz/BYRAvp
- nHKXZYTh0KIeiF+b7p5OPvJP4KOnXDth2dCtjmMARQGsuzr3v0Isw4fEHgQqT5swVR
- 428/ZACITSjlg==
+ b=EbubaTsd2lJjfp9cXvceQnNWxz11dEeSn11vGsI0IOqXNMYNC3fjATgM/70JJi8E9
+ 4n9BFhXwOUjBHhij9LEaeRW7xLnxo7Zdj2RxfyIHMhGRu6qZ0O7XctjI7p0tFqSKZ5
+ Y6IcO66Fkm+PJtAOwuu/89XpTwJXtzsA8U8Wh38FIr3Gm2ca2RVejeQVsPBDd+pLBn
+ iP3lcY20b7GrpJAiGrtQeSPrNALX2iO8hjmtNMNUrDzudNHtxNRUr0XARTsspo2i0F
+ rl47GEDvaEGyaCPZYOj93D6t27lyQsOry9SpbWhIlx47sDhc9Z2wKWOtrJKJywIDT6
+ UpZ3Tng94dWAA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5272B191EA3;
- Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id B3126191E9B;
+ Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 36A8937C2E4;
- Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id A131E37C2DC;
+ Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 32/46] block/vmdk: fix OOB read in vmdk_read_extent()
-Date: Wed, 11 Mar 2026 18:03:08 +0300
-Message-ID: <20260311150327.1084669-32-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Oliver Chang <ochang@google.com>, Greg Kurz <groug@kaod.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 24/46] hw/9pfs: fix missing EOPNOTSUPP on Twstat and
+ Trenameat for fs synth driver
+Date: Wed, 11 Mar 2026 18:03:00 +0300
+Message-ID: <20260311150327.1084669-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
@@ -70,40 +71,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>
+From: Christian Schoenebeck <qemu_oss@crudebyte.com>
 
-Bounds check for marker.size doesn't account for the 12-byte marker
-header, allowing zlib to read past the allocated buffer.
+Renaming files/dirs is only supported by path-based fs drivers. EOPNOTSUPP
+should be returned on any renaming attempt for not path-based fs drivers.
+This was already the case for 9p "Trename" request type. However for 9p
+request types "Trenameat" and "Twstat" this was yet missing.
 
-Move the check inside the has_marker block and subtract the marker size.
+So fix this by checking in Twstat and Trenameat request handlers whether
+the fs driver in use is really path based, if not return EOPNOTSUPP and
+abort further handling of the request.
 
-Fixes: CVE-2026-2243
-Reported-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
-Signed-off-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit cfda94eddb6c9c49b66461c950b22845a46a75c9)
+This fixes a crash with the 9p "synth" fs driver which is not path-based.
+
+The crash happened because the synth driver stores and expects a raw
+V9fsSynthNode pointer instead of a C-string on V9fsPath.data. So the
+C-string delivered by 9p server to synth fs driver was incorrectly
+casted to a V9fsSynthNode pointer, eventually causing a segfault.
+
+Reported-by: Oliver Chang <ochang@google.com>
+Fixes: https://issues.oss-fuzz.com/issues/477990727
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3298
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+Reviewed-by: Greg Kurz <groug@kaod.org>
+Link: https://lore.kernel.org/qemu-devel/E1vrbaP-000Gqb-B3@kylie.crudebyte.com/
+(cherry picked from commit b72d15f47cbd2fc93580f33fa86a7e23595a68dd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 64051d55aa..af9387ee0e 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1951,10 +1951,10 @@ vmdk_read_extent(VmdkExtent *extent, int64_t cluster_offset,
-         marker = (VmdkGrainMarker *)cluster_buf;
-         compressed_data = marker->data;
-         data_len = le32_to_cpu(marker->size);
--    }
--    if (!data_len || data_len > buf_bytes) {
--        ret = -EINVAL;
--        goto out;
-+        if (!data_len || data_len > buf_bytes - sizeof(VmdkGrainMarker)) {
-+            ret = -EINVAL;
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index c70096e6be..388b2418ea 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -3514,6 +3514,12 @@ static void coroutine_fn v9fs_renameat(void *opaque)
+         goto out_err;
+     }
+ 
++    /* if fs driver is not path based, return EOPNOTSUPP */
++    if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
++        err = -EOPNOTSUPP;
++        goto out_err;
++    }
++
+     v9fs_path_write_lock(s);
+     err = v9fs_complete_renameat(pdu, olddirfid,
+                                  &old_name, newdirfid, &new_name);
+@@ -3604,6 +3610,11 @@ static void coroutine_fn v9fs_wstat(void *opaque)
+         }
+     }
+     if (v9stat.name.size != 0) {
++        /* if fs driver is not path based, return EOPNOTSUPP */
++        if (!(s->ctx.export_flags & V9FS_PATHNAME_FSCONTEXT)) {
++            err = -EOPNOTSUPP;
 +            goto out;
 +        }
-     }
-     ret = uncompress(uncomp_buf, &buf_len, compressed_data, data_len);
-     if (ret != Z_OK) {
+         v9fs_path_write_lock(s);
+         err = v9fs_complete_rename(pdu, fidp, -1, &v9stat.name);
+         v9fs_path_unlock(s);
 -- 
 2.47.3
 
