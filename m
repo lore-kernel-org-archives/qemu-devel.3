@@ -4,146 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2ED511125858
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:53:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E59C11125858
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0NkU-00043B-1g; Wed, 11 Mar 2026 13:53:34 -0400
+	id 1w0NlI-0004W2-0Z; Wed, 11 Mar 2026 13:54:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w0NkQ-00041d-KX; Wed, 11 Mar 2026 13:53:31 -0400
-Received: from mail-northcentralusazlp170120005.outbound.protection.outlook.com
- ([2a01:111:f403:c105::5] helo=CH5PR02CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w0NkO-00068K-Bt; Wed, 11 Mar 2026 13:53:30 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=CL++1mbqsYiB7ghYoh47XX5XKI4QTPHl68NZjsXtA/yH/xZoU3ST79FjHJxUi1PDR3hqOlPUqvdoPwnl/lr+gYg/u7Do94mhPsdwNTQkRNsCZPIMK/Fl9AwEjIyi1DsOgooLuA3ocPEFuWgWfxLZ6uNZB/oF5ZmTonk7/iWvwX588h5a/ZwgwEa+uQl3YykP61Msbmn54nIaKyn/FaJkCGyWnAXSl6KfuSkpNHUSpIp99pgOpFkS93Ym2mw/tW6rXgnagEQoLVuQoyC+CB+2dhFCehx/QKuFq8TOTDsE798O0LcstsBLMnDD8Q1URrGN9iiequfIthvw2jEihpGSbQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=bQjCkDCZZMM8q3J9vYkwkIJQQGGzo0GzzdH02eMpsZo=;
- b=BQC71psNPZqEtPNktw3qR57PXYOLkySGF5q9Ysp5V3jdXz58SQBA6Ri0zClYArf6QjK6bUW+F3BOM1imi4jIHTFRERxwvfla8t351bWldTAwFgXy7tDo2nPEL4FHqshBdX8hR6Q1l1URCaVZHGWDAeIL81EkPfF725hbD5hNFwnBvHp9RDOipIK6VNT6Oi1LuUl7vg+7RTveGklgRraoxmXipJPhau44+2JBuAs0QkqI8ttSwilpRUhTMKMnshw+fJZpoNt1cg06XFYzVhRWpht6xQFVC4gqM92Q7+hsmaLlJsZW/bJnGsQM3T8Q7WhnyOjzfPzKcBDU4cVR1Ff6fw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=bQjCkDCZZMM8q3J9vYkwkIJQQGGzo0GzzdH02eMpsZo=;
- b=hrwO5ZQevU7RPG/lL91MiAxMUvBAO36Snh5p8mrVs7IWAC2w9DqQGwDOllqIhmVcL7eRhFcP3vCyNwDUgKVAJePDtCzGyilW/NVMmXzIjn/yWvUgCtzH3x+OIS4hAglxE/dSrmH+T/T6rqufa455b6sM8G6yStzE6nNp9lsCG3QkzBO2GZFAnWzUAmmWMguyLFhM83BA1NGToBGpBMsItAvRUBfLC4U/fFs4Eq7hUh7ThfiUOOshmWz7mkPCYmssjr9/s9ZpcUfNHvMy6O25YDFwixFjimLSDJ9wykPaEw6fDrywrxrYJCjGWRu0lu5R0H/A3bL1ynT0gntIwwqfcw==
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-Received: from DS2PR12MB9567.namprd12.prod.outlook.com (2603:10b6:8:27c::8) by
- DM4PR12MB6135.namprd12.prod.outlook.com (2603:10b6:8:ac::5) with
- Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9723.4; Wed, 11 Mar 2026 17:53:19 +0000
-Received: from DS2PR12MB9567.namprd12.prod.outlook.com
- ([fe80::636:1b52:24ca:d7e5]) by DS2PR12MB9567.namprd12.prod.outlook.com
- ([fe80::636:1b52:24ca:d7e5%3]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
- 17:53:19 +0000
-Message-ID: <eb361325-6a67-4834-87bc-2be906ef68b3@nvidia.com>
-Date: Wed, 11 Mar 2026 10:53:17 -0700
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0Nl5-0004VI-FT
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:54:11 -0400
+Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0Nl3-0006Fr-G8
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:54:11 -0400
+Received: by mail-wr1-x42d.google.com with SMTP id
+ ffacd0b85a97d-439a89b6fd0so144714f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 10:54:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773251646; x=1773856446; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=HLjJwZFhOKyALEg8hi6m2YzhNLS3Our6fPQAStPiJRo=;
+ b=vwY5YxJI8IHjerI+23s0TlzLt0ymU0d/y+vdXbzo2ftQhkJT8a7PzuKYktP9vDnVaU
+ lv1HeBXsVmmBZJrxo4Vdt6uCGT6J3aShdFR6d0wWL5018yJmVA/SRbv6Hojx6YvBp+Tn
+ FRhIlbMTgE6eagTNRjxbO7wwHnFeNxJTktpWPd8TyocGv+FpqxNQ9dEb6yevt16wT3EE
+ Plj0Pn7Rer18BgM2DpVzu5Uys2QduMARxizeVQdKlkCN/nMiTS5e2R+ZQ61t5rp5bSQO
+ KOenfcDLoul3urs/o3p5vm5zjx21QLaoE9Cd5a5OjlF/7XTkd0yiZlFkJ/GmaoSpRUqd
+ ClLw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773251646; x=1773856446;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=HLjJwZFhOKyALEg8hi6m2YzhNLS3Our6fPQAStPiJRo=;
+ b=p7FFmjfpIYBKtrRHeTPTIGH0iztO1wB8L9WiH8nwzJOuVfT5k04eYhoFgu9zIvgVkI
+ bx+gT12nzZ9u2VkxKcvBsHImjFNTSkU7r5lN1faL1pUVIPNL6JGG9RbisuW2BvcjbH4E
+ cN0nj7AAhiMP8m1xv3CKfPnhqYHxrBitI7UUmC6wvHUICsvoIXh6v6QIk99+2QuPnMkn
+ sCUCjPERBn9mteqadryTddx5eQtLo7+eM2Jp7YbSN/uU6RvWTYZ5v7ZsBuQnmfTb5UNN
+ J3ZT0lYOAVrT4oj1csZiYcr5q+MqxA8XCmSe4OzYMwu+hjhGFKpxKHL9s/oXG7lQ6O/f
+ ITsw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVAah00OfhPLgHLRpBdKVjtpMUIogKzTvnJEzuAZT83yZMumbFpjcq4Yt6FoDG3ibjoSGhjTmeWiFLp@nongnu.org
+X-Gm-Message-State: AOJu0YxcOcvlajF0J+tnCTRCeTk4BoZmLTgcIOPwL14L5uG82CANejdA
+ XE18zuSqsXKYtxQG1pm/3ou0EtdLyeUs590FHm+lD0Dzgdi9Qk82fqJgkbuZqcRcNvI=
+X-Gm-Gg: ATEYQzzmgV5RYJKAxskK+2eoxQn9afxuPWYJeUzdoFIOd4aHOgtSK5st/UlBMbXGu+W
+ S16y1qoGhuQTqVb8caHzBYBVWgimgN9g8HQJUZrEY3UP/v8vmkxyZ0u66Cnv3ZfXyHtZo+tAbSC
+ Ek4TS3/ZXLw2BCXCFKUE2kIgn2BHK94JK0TyppTimh543uYxHblw6wpYT/n8c2hJ3Y9H7w8q2rj
+ Lg8KFez+n1K8b2Zi7W/of/2UrwNhUhFMfr7D4F8MUzHAMYd+Ldok1QxoxMzPC6P7zSdOvX7DG+0
+ ffQEhm9GU8C8QkfVK2HX0Mm8W52owD6iMwqPmak2tkh1O36vX4pE7sb7wf3qrp6Y1w0iCFgAfna
+ u8FK/xiQM06RtJnW+VUGhqkIFPd5VEAI1nILyHCvrw8w0KhED8E4QRifmTL6i200HmxtjH7//aJ
+ pI2YXiB3obIrAvRA7cCnSx0uIwh5wg9leeW5uX05cSxIUeu2Q1j93Yz+9gOpko7AUtvQ==
+X-Received: by 2002:a05:6000:4310:b0:439:c596:fa13 with SMTP id
+ ffacd0b85a97d-439f81bc69bmr7004155f8f.4.1773251646417; 
+ Wed, 11 Mar 2026 10:54:06 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439fe19aec5sm898190f8f.4.2026.03.11.10.54.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 10:54:05 -0700 (PDT)
+Message-ID: <88a2420d-5927-47bc-8192-4c218f219531@linaro.org>
+Date: Wed, 11 Mar 2026 18:54:04 +0100
+MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH 2/8] hw/arm/smmuv3-accel: Introduce _AUTO support for
- ATS
-To: eric.auger@redhat.com, qemu-devel@nongnu.org, qemu-arm@nongnu.org
-Cc: Yi Liu <yi.l.liu@intel.com>, Zhenzhong Duan <zhenzhong.duan@intel.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S . Tsirkin"
- <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-References: <20260309192119.870186-1-nathanc@nvidia.com>
- <20260309192119.870186-3-nathanc@nvidia.com>
- <df333115-cf74-4ce5-9393-4cab1013c2dd@redhat.com>
+Subject: Re: [PATCH v3 4/9] hw/hexagon: Add v68, sa8775-cdsp0 defs
 Content-Language: en-US
-From: Nathan Chen <nathanc@nvidia.com>
-In-Reply-To: <df333115-cf74-4ce5-9393-4cab1013c2dd@redhat.com>
+To: Brian Cain <brian.cain@oss.qualcomm.com>, qemu-devel@nongnu.org
+Cc: ltaylorsimpson@gmail.com, matheus.bernardino@oss.qualcomm.com,
+ marco.liebel@oss.qualcomm.com, quic_mburton@quicinc.com,
+ sid.manning@oss.qualcomm.com, ale@rev.ng, anjo@rev.ng,
+ Brian Cain <bcain@quicinc.com>
+References: <20260311042019.1085030-1-brian.cain@oss.qualcomm.com>
+ <20260311042019.1085030-5-brian.cain@oss.qualcomm.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260311042019.1085030-5-brian.cain@oss.qualcomm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: SJ0PR05CA0171.namprd05.prod.outlook.com
- (2603:10b6:a03:339::26) To DS2PR12MB9567.namprd12.prod.outlook.com
- (2603:10b6:8:27c::8)
-MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: DS2PR12MB9567:EE_|DM4PR12MB6135:EE_
-X-MS-Office365-Filtering-Correlation-Id: 3cf6dcf6-a50d-4f46-2252-08de7f971496
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|22082099003|18002099003|56012099003;
-X-Microsoft-Antispam-Message-Info: RrGF+L/Y7yAB3gEaZf8MAs+7rmjITQko99mK7y5EkmDBNA2DX+TRUlGYMGOMEm+bNR9OE3xOI1vTbVAPCgC3V9A12yOYcnClREPoSplTZOm5xFWtbJM0ZIOOvVoZkfsEa+gP08Sj6j4+2mROjGvyhhcrTTlaJUjpAohlU70hpZ5bikQsNyCqQ84hM0fBVqCcsfVpawDiyjTtzDO7QuxAdGKEhERromfCgEEZh0XXm/Eoe97FjKyQjMactWaBvb+HQwhHl1QX/F0aQw2ekQhNpYbYu94HOnBk2S7+UF3hNLMaCp4CvH9U2DdChv+CLpGMW2S70jJk6MWiBUUYcaZ3DCxXya5oUmWmMOqX973MKnIfxynfe6cxVxOxWi2PNDt88xlaUAMs5zBi4Oo8Ezhv681aW0V3wZ7aPvZ4omtKi+meht/rTPEEFulOI3iCAd5JMSO68DclV1ERONcMVVfwcDaJAZxNvIkw/SkHnKGiheNFNEgrRAHeVUzZylSqc2eLy3ZLyvmuI4faz8XKswmzrftuER8TtTZNxEI0g5fiMTVDBGSWf7OO9i0crXEwAZK9DKmT38SJ3wLGoSEm92f+GM5k3UqxuocYTLMZUtxNCLOV0dbBmpTGQ+quOLN5FiDHW5TB7xOkPvu3TZQ4O+COIt48pY+DATd0511bSQ1ojF+bhIGQGBM//udzGMtkF+659d7/pym7v5rQnZIEj1NDkwVwRGYhU3YqbBdZ1NFAVmJsFycuLmzjUEqJ/nWr1GHa
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:DS2PR12MB9567.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(22082099003)(18002099003)(56012099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?OGRJWmVtZjkwSVhUL20zdFJxMHdndm43cVVIRFhLQ1dvbVM0eGNmVFJvaTFG?=
- =?utf-8?B?L0lwMERCOXlJekE2aDdJaktQL3BlWERwUW1TMHY3TXZPQkxMK0xjUk9oYVBD?=
- =?utf-8?B?VlJjR2lrZVZVVjRsRnJoSXVLandKU2Vqa0d4NzE4aG1ZR1JKTWk3b28wdnd4?=
- =?utf-8?B?MXpQQjZOOXFvRFkrdlpOMnQ0R3kvblE3SXZMNkY5NmVYdXp4WVRHQ0l5TmNB?=
- =?utf-8?B?c3Vnb0lET1h5bDhZUnhsMWM5UUs2aWN2TWRWWXZienBEZFZsMGt2dlpGM3ZS?=
- =?utf-8?B?VVg5UkVKSllhbjJWbTJtZDBVTE03QlpmaTdXZWRGcmh5azVnVTNtam5KbVlU?=
- =?utf-8?B?QnFndXBhM1F0SGpmQ3dDeU9xUE82bzAzbGlzNE5SUW9tVUcwaFpvanVWVEFS?=
- =?utf-8?B?c1hGQXhJNVp4b0UwUDBaK3NTZVBqRkVFenlSaEdQY2pVVVl1ci9QbkJPNlI3?=
- =?utf-8?B?cURFdndBTHdlK0ZUb0lCam5wVzFZS2RJNFVVQi9LeE02WW8zYkIvOXptem00?=
- =?utf-8?B?L2h1MXBoSndTNFZMQUQyR2M5bXM2STlQemVLLzQ2UVhmTXhyME14K3hmNUs3?=
- =?utf-8?B?czI0d0lrWEZIT0hERGxsamRPREsxdkVoOVJZWDNXWCtQclcyVEpQZWRGdGdU?=
- =?utf-8?B?RHhvcnlZbWFNanQ1eGh2aDZaNjhadzAzaUpaWEFiVVU1a1cyaXhqczJjSC90?=
- =?utf-8?B?QmhxODJkRlpLUFArbEcrMTlrS1F6ZE9RK1FKejNMR3hPWHZxNW02T0Z6eFZy?=
- =?utf-8?B?MFVxeVJoOTRTYUI3bDU3ZE1BVzdqdHM0UVpLSHpzZk96OHdaU25xZU8xcTNB?=
- =?utf-8?B?MFlRbW1QQU1ndGZqcTVOdjAxR1JCQmovVmhHcVVKQjgvKzZFTW45bHJpY2g1?=
- =?utf-8?B?TFhCS2JSbThJYlZ0YUdRT1FlZFF4ekZoMWhORkRUMkFVaU0xalpEcWJIU1BE?=
- =?utf-8?B?YzFOS3lRVWdoMzA0NExBd3JES1N2azBKZEwrUmZLRkY0UnhCQ01iaGFrVHlS?=
- =?utf-8?B?SXBVSU56UW9JTEt3M0hTT1lvbmdudkRqVlRTUzJuOVdLL3Z3Mnd1djNSNkM0?=
- =?utf-8?B?VnJORkN3NVgyaUhEcGZkbzM2bjVwRmcxVHJZYUtzenRJbHh2ZGlBUkZrdXZY?=
- =?utf-8?B?c3ZzejBmU3YvSHpRbGEzUmsvOVh2VUMzRVBNZUpIeE1nWXdnaFE5Q1FQeE5r?=
- =?utf-8?B?ajU4bVBrVGFYSkVoYXBjcDFmTjQyRG1xUDY0b01HZkszR1dnR3ZJVUI4YWho?=
- =?utf-8?B?OEFEYXlXVzZQNEdUd0xNY09GcTU5VGdJVnFmZDRycjd0Slp5ZG9YOGwydHZi?=
- =?utf-8?B?eXBsVnhlNEMzYUdCU05WcnN1Y055ck01WHJSSWh4eUJ2ZnRCaS95c2pSVVJ0?=
- =?utf-8?B?Ry9jN3N4cytPbWsrWXlJSWxCTXZubE1JMVlFYk50YVhjUkxlUFlJZG1lcVNC?=
- =?utf-8?B?cWlKUytUeWllVU0xa01ubUpmMW1QNGFKMTh0SHA1SS84TjFBY1Q1UWJxdUpF?=
- =?utf-8?B?UDBkc2IxZ2crTXlqVUc4Y0w3UkRqN1ArSEQrbHFSL0tPbkV1bFhHWWN3b1dm?=
- =?utf-8?B?K3ZtVTZwTjRyVllmcGdPL042T2lVUnY1OXNwN3FIdlZjN296SVdDRHNFaUNy?=
- =?utf-8?B?L0dha2JTYjRlVXdEZ202VUllc1l2WEM5dWtKVThHU2x0UlVwSGduZ0UrbEV0?=
- =?utf-8?B?bnhkYTNMUjJUcVNJbEs3WTg0ZjRBbDEyTjJPRDZRVmo0d3JVU044SEdCRWpV?=
- =?utf-8?B?Skg2ZzhrSUdsc1Q3bytVdy9TSUpPQkpnQW9GTGdFaldpdllOT3ZLR2tpNllz?=
- =?utf-8?B?bkhOOFd4c1dESmhNL3VQMUVqa2NUVkhQaFRxdnF5d25ReTVsK3JkWjZEd003?=
- =?utf-8?B?RHZoWnJVM1ZUM3FldURzTVVZLzYrSXVNUHhRS0pWVnF1Nk85VHFyNkJsaXR6?=
- =?utf-8?B?YzRUMG5SYW5xdzdkeDlDdkFidEVlR1lMSHViU2lnMFZZT09yOWp3a2RTTVNH?=
- =?utf-8?B?NXpZMDdNcUJNWDBNY1ZkS0N4TmxwRmlPZEQ1T05pU2prY1N1c0JZL3VQaVNj?=
- =?utf-8?B?Q2xxK2ptRUZ3T0x2TjZ5TC81Rm9BQnNwVzEwa0Z6S2MxbUJGSmU2TjA3b1cv?=
- =?utf-8?B?U1FUcThlSHk5cXc4MnhSRXUrT3dJTHMxUng4R3NJdWk2eFhmQXVxWlFqTjlH?=
- =?utf-8?B?MU5HYW50MXh1MGV1ajh0UHUzcUQxNEJZTVhLc0Q4aG1jOVFTUVpuV1FFdFlX?=
- =?utf-8?B?MWpyaHlhNi9RR3BkMVR5Uyt6MFJZSExOcXhJUkFGcmVBNkl2U0dESE52b0J1?=
- =?utf-8?B?ZkRUcHlsYy9DZVlRdENxeXVOOWhxZVdKLytmOGh3RHlFSHE2MitzQT09?=
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 3cf6dcf6-a50d-4f46-2252-08de7f971496
-X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9567.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 11 Mar 2026 17:53:19.6709 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: TaVfPxTEuwHhRDV10l43CTtooBGTxQAVAUKvh71r08gFzugVQglxpTYFmdlUtcGEdSmNmOXrc325Dd1f+YyK1g==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DM4PR12MB6135
-Received-SPF: permerror client-ip=2a01:111:f403:c105::5;
- envelope-from=nathanc@nvidia.com;
- helo=CH5PR02CU005.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -159,128 +106,166 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/11/2026 10:46 AM, Eric Auger wrote:
+On 11/3/26 05:20, Brian Cain wrote:
+> From: Brian Cain <bcain@quicinc.com>
 > 
-> On 3/9/26 8:21 PM, Nathan Chen wrote:
->> From: Nathan Chen<nathanc@nvidia.com>
->>
->> Allow accelerated SMMUv3 Address Translation Services support property
->> to be derived from host IOMMU capabilities. Derive host values using
->> IOMMU_GET_HW_INFO, retrieving ATS capability from IDR0.
->>
->> Set the default value of ATS to auto. The default for ATS support used
->> to be set to off, but we change it to match what the host IOMMU
->> properties report.
->>
->> Add a "ats-enabled" read-only property for smmuv3 to address an
->> expected bool for the "ats" property in iort_smmuv3_devices().
->>
->> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
->> ---
->>   hw/arm/smmuv3-accel.c    | 25 +++++++++++++++++++++++--
->>   hw/arm/smmuv3.c          | 12 ++++++++++--
->>   hw/arm/virt-acpi-build.c |  2 +-
->>   include/hw/arm/smmuv3.h  |  2 +-
->>   4 files changed, 35 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->> index 617629bacd..8fec335557 100644
->> --- a/hw/arm/smmuv3-accel.c
->> +++ b/hw/arm/smmuv3-accel.c
->> @@ -52,6 +52,12 @@ static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice *pdev,
->>           return;
->>       }
->>   
->> +    /* Update ATS if auto from info */
->> +    if (s->ats == ON_OFF_AUTO_AUTO) {
->> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS,
->> +                               FIELD_EX32(info->idr[0], IDR0, ATS));
->> +    }
->> +
->>       accel->auto_finalised = true;
->>   }
->>   
->> @@ -124,6 +130,13 @@ smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->>                      smmuv3_oas_bits(FIELD_EX32(s->idr[5], IDR5, OAS)));
->>           return false;
->>       }
->> +    /* Check ATS value opted is compatible with Host SMMUv3 */
->> +    if (FIELD_EX32(info->idr[0], IDR0, ATS) <
->> +                FIELD_EX32(s->idr[0], IDR0, ATS)) {
->> +        error_setg(errp, "Host SMMUv3 doesn't support Address Translation"
->> +                   " Services");
->> +        return false;
->> +    }
->>   
->>       /* QEMU SMMUv3 supports GRAN4K/GRAN16K/GRAN64K translation granules */
->>       if (FIELD_EX32(info->idr[5], IDR5, GRAN4K) !=
->> @@ -844,8 +857,12 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->>       /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled it */
->>       s->idr[3] = FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
->>   
->> -    /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
->> -    s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
->> +    /* Only override ATS if user explicitly set ON or OFF */
->> +    if (s->ats == ON_OFF_AUTO_ON) {
->> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 1);
->> +    } else if (s->ats == ON_OFF_AUTO_OFF) {
->> +        s->idr[0] = FIELD_DP32(s->idr[0], IDR0, ATS, 0);
->> +    }
->>   
->>       /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
->>       if (s->oas == SMMU_OAS_48BIT) {
->> @@ -923,4 +940,8 @@ void smmuv3_accel_init(SMMUv3State *s)
->>       s->s_accel = g_new0(SMMUv3AccelState, 1);
->>       bs->iommu_ops = &smmuv3_accel_ops;
->>       smmuv3_accel_as_init(s);
->> +
->> +    if (s->ats == ON_OFF_AUTO_AUTO) {
->> +        s->s_accel->auto_mode = true;
->> +    }
->>   }
->> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
->> index 068108e49b..197ba7c77b 100644
->> --- a/hw/arm/smmuv3.c
->> +++ b/hw/arm/smmuv3.c
->> @@ -317,6 +317,12 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
->>       smmuv3_accel_idr_override(s);
->>   }
->>   
->> +static bool get_ats_enabled(Object *obj, Error **errp)
->> +{
->> +    SMMUv3State *s = ARM_SMMUV3(obj);
->> +    return FIELD_EX32(s->idr[0], IDR0, ATS);
->> +}
->> +
->>   static void smmuv3_reset(SMMUv3State *s)
->>   {
->>       s->cmdq.base = deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
->> @@ -1971,7 +1977,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->>               error_setg(errp, "ril can only be disabled if accel=on");
->>               return false;
->>           }
->> -        if (s->ats) {
->> +        if (s->ats == ON_OFF_AUTO_ON) {
->>               error_setg(errp, "ats can only be enabled if accel=on");
->>               return false;
->>           }
->> @@ -2128,7 +2134,7 @@ static const Property smmuv3_properties[] = {
->>       DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
->>       /* RIL can be turned off for accel cases */
->>       DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
->> -    DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
->> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_AUTO),
-> In general you cannot change the default value like that. This requires
-> compat handling
-> in virt machine: See
-> https://lore.kernel.org/all/20240307134445.92296-4-eric.auger@redhat.com/
-> for instance
+> Acked-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>   hw/hexagon/machine_cfg_sa8775_cdsp0.h.inc | 64 ++++++++++++++++++++++
+>   hw/hexagon/machine_cfg_v68n_1024.h.inc    | 65 +++++++++++++++++++++++
+>   2 files changed, 129 insertions(+)
+>   create mode 100644 hw/hexagon/machine_cfg_sa8775_cdsp0.h.inc
+>   create mode 100644 hw/hexagon/machine_cfg_v68n_1024.h.inc
+> 
+> diff --git a/hw/hexagon/machine_cfg_sa8775_cdsp0.h.inc b/hw/hexagon/machine_cfg_sa8775_cdsp0.h.inc
+> new file mode 100644
+> index 00000000000..3d787c104ff
+> --- /dev/null
+> +++ b/hw/hexagon/machine_cfg_sa8775_cdsp0.h.inc
+> @@ -0,0 +1,64 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +static 
 
-Ok, I will handle the default value change similarly in the next 
-revision to account for virt machine compat handling.
+const
 
-Thanks,
-Nathan
+   struct hexagon_machine_config SA8775P_cdsp0 = {
+> +    .cfgbase =         0x24000000 + 0x180000,
+> +    .l2tcm_size =      0x00000000,
+> +    .l2vic_base =      0x26300000 + 0x90000,
+> +    .l2vic_size =      0x00001000,
+> +    .csr_base =        0x26300000,
+> +    .qtmr_region =     0x26300000 + 0xA1000,
+> +    .cfgtable = {
+> +        .l2tcm_base = 0x00002400,
+> +        .reserved0 = 0x00000000,
+> +        .subsystem_base = 0x00002638,
+> +        .etm_base = 0x00002419,
+> +        .l2cfg_base = 0x0000241a,
+> +        .reserved1 = 0x0000241b,
+> +        .l1s0_base = 0x00002500,
+> +        .axi2_lowaddr = 0x00000000,
+> +        .streamer_base = 0x00000000,
+> +        .reserved2 = 0x00000000,
+> +        .fastl2vic_base = 0x0000241e,
+> +        .jtlb_size_entries = 0x00000080,
+> +        .coproc_present = 0x00000001,
+> +        .ext_contexts = 0x00000004,
+> +        .vtcm_base = 0x00002500,
+> +        .vtcm_size_kb = 0x00002000,
+> +        .l2tag_size = 0x00000400,
+> +        .l2ecomem_size = 0x00000000,
+> +        .thread_enable_mask = 0x0000003f,
+> +        .eccreg_base = 0x0000241f,
+> +        .l2line_size = 0x00000080,
+> +        .tiny_core = 0x00000000,
+> +        .l2itcm_size = 0x00000000,
+> +        .l2itcm_base = 0x00002400,
+> +        .reserved3 = 0x00000000,
+> +        .dtm_present = 0x00000000,
+> +        .dma_version = 0x00000003,
+> +        .hvx_vec_log_length = 0x00000007,
+> +        .core_id = 0x00000000,
+> +        .core_count = 0x00000000,
+> +        .coproc2_reg0 = 0x00000040,
+> +        .coproc2_reg1 = 0x00000020,
+> +        .v2x_mode = 0x00000001,
+> +        .coproc2_reg2 = 0x00000008,
+> +        .coproc2_reg3 = 0x00000020,
+> +        .coproc2_reg4 = 0x00000000,
+> +        .coproc2_reg5 = 0x00000002,
+> +        .coproc2_reg6 = 0x00000016,
+> +        .coproc2_reg7 = 0x00000006,
+> +        .acd_preset = 0x00000001,
+> +        .mnd_preset = 0x00000000,
+> +        .l1d_size_kb = 0x00000010,
+> +        .l1i_size_kb = 0x00000020,
+> +        .l1d_write_policy = 0x00000002,
+> +        .vtcm_bank_width = 0x00000080,
+> +        .reserved4 = 0x00000001,
+> +        .reserved5 = 0x00000000,
+> +        .reserved6 = 0x00000003,
+> +        .coproc2_cvt_mpy_size = 0x0000000a,
+> +        .consistency_domain = 0x000000e0,
+> +        .capacity_domain = 0x00000080,
+> +        .axi3_lowaddr = 0x00000000,
+> +    },
+> +};
+> diff --git a/hw/hexagon/machine_cfg_v68n_1024.h.inc b/hw/hexagon/machine_cfg_v68n_1024.h.inc
+> new file mode 100644
+> index 00000000000..734a12a2f12
+> --- /dev/null
+> +++ b/hw/hexagon/machine_cfg_v68n_1024.h.inc
+> @@ -0,0 +1,65 @@
+> +/* SPDX-License-Identifier: GPL-2.0-or-later */
+> +
+> +static struct hexagon_machine_config v68n_1024 = {
+
+Ditto.
+
+> +    .cfgbase =           0xde000000,
+> +    .l2tcm_size =        0x00000000,
+> +    .l2vic_base =        0xfc910000,
+> +    .l2vic_size =        0x00001000,
+> +    .csr_base =          0xfc900000,
+> +    .qtmr_region =       0xfc921000,
+> +    .cfgtable = {
+> +        .l2tcm_base = 0x0000d800,
+> +        .reserved0 = 0x00000000,
+> +        .subsystem_base = 0x0000fc90,
+> +        .etm_base = 0x0000d819,
+> +        .l2cfg_base = 0x0000d81a,
+> +        .reserved1 = 0x00000000,
+> +        .l1s0_base = 0x0000d840,
+> +        .axi2_lowaddr = 0x00003000,
+> +        .streamer_base = 0x0000d81c,
+> +        .reserved2 = 0x0000d81d,
+> +        .fastl2vic_base = 0x0000d81e,
+> +        .jtlb_size_entries = 0x00000080,
+> +        .coproc_present = 0x00000001,
+> +        .ext_contexts = 0x00000004,
+> +        .vtcm_base = 0x0000d840,
+> +        .vtcm_size_kb = 0x00001000,
+> +        .l2tag_size = 0x00000400,
+> +        .l2ecomem_size = 0x00000400,
+> +        .thread_enable_mask = 0x0000003f,
+> +        .eccreg_base = 0x0000d81f,
+> +        .l2line_size = 0x00000080,
+> +        .tiny_core = 0x00000000,
+> +        .l2itcm_size = 0x00000000,
+> +        .l2itcm_base = 0x0000d820,
+> +        .reserved3 = 0x00000000,
+> +        .dtm_present = 0x00000000,
+> +        .dma_version = 0x00000001,
+> +        .hvx_vec_log_length = 0x00000007,
+> +        .core_id = 0x00000000,
+> +        .core_count = 0x00000000,
+> +        .coproc2_reg0 = 0x00000040,
+> +        .coproc2_reg1 = 0x00000020,
+> +        .v2x_mode = 0x1f1f1f1f,
+> +        .coproc2_reg2 = 0x1f1f1f1f,
+> +        .coproc2_reg3 = 0x1f1f1f1f,
+> +        .coproc2_reg4 = 0x1f1f1f1f,
+> +        .coproc2_reg5 = 0x1f1f1f1f,
+> +        .coproc2_reg6 = 0x1f1f1f1f,
+> +        .coproc2_reg7 = 0x1f1f1f1f,
+> +        .acd_preset = 0x1f1f1f1f,
+> +        .mnd_preset = 0x1f1f1f1f,
+> +        .l1d_size_kb = 0x1f1f1f1f,
+> +        .l1i_size_kb = 0x1f1f1f1f,
+> +        .l1d_write_policy = 0x1f1f1f1f,
+> +        .vtcm_bank_width = 0x1f1f1f1f,
+> +        .reserved4 = 0x1f1f1f1f,
+> +        .reserved5 = 0x1f1f1f1f,
+> +        .reserved6 = 0x1f1f1f1f,
+> +        .coproc2_cvt_mpy_size = 0x1f1f1f1f,
+> +        .consistency_domain = 0x1f1f1f1f,
+> +        .capacity_domain = 0x1f1f1f1f,
+> +        .axi3_lowaddr = 0x1f1f1f1f,
+> +    },
+> +};
+> +
+
+Are these configs generated?
 
