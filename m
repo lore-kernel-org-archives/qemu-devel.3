@@ -4,109 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E35EFCC9B0
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 837A3FCC9B1
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 06:03:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0CfU-00036c-Oc; Wed, 11 Mar 2026 02:03:41 -0400
+	id 1w0Cf7-00030Y-6e; Wed, 11 Mar 2026 02:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w0CfS-00034m-Dl
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 02:03:38 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w0Cf5-0002zr-8D; Wed, 11 Mar 2026 02:03:15 -0400
+Received: from www3579.sakura.ne.jp ([49.212.243.89])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w0CfP-0000TL-KR
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 02:03:37 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62AJkWhW1524531; Wed, 11 Mar 2026 06:03:32 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=VXX6BaFh09ZlNLldK7h7p/JTMzNLGd
- diJcb6mR8gpgU=; b=VVo+/NpyWP0gg7wroWpHTbhu1zSKHbHU25qJ8Lz1t5RHYy
- P+Sy7HrnnhSvohtBMJfVEQa8UlgEQwP+e56ZoTGbiY50ExLnnPq4go3p0DZ0QxgV
- 6VZkYp4USzILV71F9vGbnLEcealP44PfD5lBXK4XGeuUu2qJW34d43OzPugu3s/1
- R5c4QXzLiMQv2OOo6309nCPlKtI2oD1LJHgroPiI+qMfPSMU9wNZIXpZULrqS9AK
- c5r2siTyrzbcgEGQ8rkX+6w5Jqpd1CbNEDk53Q+IFgVn5e4/mkH6DnlVyeL3Aqih
- XXe9N1l4ujfnn8ob181vpbdZGubqe6QWJ4aZUgAw==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmegku-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 11 Mar 2026 06:03:31 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62B0p0fE015633;
- Wed, 11 Mar 2026 06:03:30 GMT
-Received: from smtprelay05.fra02v.mail.ibm.com ([9.218.2.225])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4crybnc94r-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 11 Mar 2026 06:03:30 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay05.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62B63Qs046006722
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 11 Mar 2026 06:03:27 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id E2A4E2005A;
- Wed, 11 Mar 2026 06:03:26 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 13F6120063;
- Wed, 11 Mar 2026 06:03:25 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.213.196])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Wed, 11 Mar 2026 06:03:24 +0000 (GMT)
-Date: Wed, 11 Mar 2026 11:33:21 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-Subject: Re: [PULL 00/10] PPC PR for 11.0 soft-freeze
-Message-ID: <abEDACgG6T4N9F0P@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260310151432.92531-1-harshpb@linux.ibm.com>
- <CAFEAcA9FjtvJanmbvpAXMjY0zURZch9PruHUsXEXOtPiVJgarg@mail.gmail.com>
- <1389084e-3ed8-4a5c-aac5-bfee420b0916@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
+ id 1w0Cf1-0000RF-EM; Wed, 11 Mar 2026 02:03:14 -0400
+Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
+ (authenticated bits=0)
+ by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62B628Nt065995
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
+ Wed, 11 Mar 2026 15:02:16 +0900 (JST)
+ (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
+DKIM-Signature: a=rsa-sha256; bh=Gq84KcuthkR85EwZsQAdZjPBPNAvSQUW+eLJxTU94Hg=; 
+ c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
+ h=From:Message-ID:To:Subject:Date;
+ s=rs20250326; t=1773208937; v=1;
+ b=PjHspEPmqa/ZhtvRQ80HuNHHke6xmrDLPIlMG+rtAXKsX6JJPff0/Lp7WmCoY8Kt
+ +tyB8Pvf2IdrzUEAuXQsCB7+WoO62LXeKpjozVHnJZ9Jc0iWAecsPbE0/+HaQFBT
+ +L1cHajrehJFIaP4E0agRmv8Nz63gm6DPCxyd+ZSrA0XZWGQvO9dlMTrY3gAIRum
+ mCkuSHueiROb4G8hx/4PLYOLhHK/KPRabiE5PDHWmzo1i1LBfpU+Ro6iRlCos4ly
+ TqsCGBj+3bgCjvpAB08VYLXaPewXYlvYr8pZK9+1vdhfzbIXl2yktRQX/EnToAyl
+ YrPn4sUxo1ezhBYjkeYBbA==
+Message-ID: <f4fa986c-b7d7-4784-a846-ccf58a33a87f@rsg.ci.i.u-tokyo.ac.jp>
+Date: Wed, 11 Mar 2026 15:02:08 +0900
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1389084e-3ed8-4a5c-aac5-bfee420b0916@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: LF92K4YNVkzhkFb_CqX2bcWUWtsyhJOi
-X-Proofpoint-ORIG-GUID: LF92K4YNVkzhkFb_CqX2bcWUWtsyhJOi
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA0OSBTYWx0ZWRfX/xT28+EfMxbQ
- Gv/n0y72EFbDwkCcQ0M3UahuKAfniAlJxVwP6B2Ii2sZlihCTwinAQ9Dp9DiKqPf5th9umRkltZ
- bXSfUa1Y6P9mLHJj+WuM1f7Lk+SLKoYtW70cG9ZuTpdCNeREGwVkD4xlIvAZGUmAmpjIJFUn8nR
- B1RGxZmj6sOwL4Ig1BX0ucuLIUeYMM+SWpOqnztIuFIynN/ihAvPdTy2RGW4RJbvwa+gOWuQniE
- 7YHknI9QimfMnfkgrKPOdiXMar8JkqHfKt82bL3r6lQQgwi7ZPMfokbiakYoTL7+qEdcDcRJc9K
- LRcPlUEBzShcvBVl8XFj3A89ACrsHGKJ1C2cwnvFq1I1Sj75MaBA5QgbYPSj7xxVdJs0jIfCRQg
- CgJrvnPTGdioRNlTeRlBFegdvAEIKrmOhB1wg3/MasvjrWr4A3VqAvYhwKmNwTs/3xBGrnH7rrD
- hc+5hHohnOioEqqkiBA==
-X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b105b3 cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=US1h2DCW-XsVH_cf1JMA:9
- a=CjuIK1q_8ugA:10 a=zZCYzV9kfG8A:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-10_05,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 clxscore=1015 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603110049
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v5 1/2] vmapple: apple-gfx: make it work on the latest
+ macOS release
+Content-Language: en-US
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Xu <peterx@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org,
+ Phil Dennis-Jordan <phil@philjordan.eu>, Mads Ynddal <mads@ynddal.dk>,
+ qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
+ Paolo Bonzini <pbonzini@redhat.com>, Alexander Bulekov <alxndr@bu.edu>
+References: <20260306145246.10274-1-mohamed@unpredictable.fr>
+ <20260306145246.10274-2-mohamed@unpredictable.fr>
+ <8908689a-f5c1-490e-925d-7a664093963f@rsg.ci.i.u-tokyo.ac.jp>
+ <a24c76d0-4106-4d49-b032-35f7f6310e69@linaro.org>
+ <f94bebf5-a452-46cf-ad46-acb71c619917@rsg.ci.i.u-tokyo.ac.jp>
+ <abBE6NuYJIJgM0rj@x1.local>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+In-Reply-To: <abBE6NuYJIJgM0rj@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=49.212.243.89;
+ envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
+X-Spam_score_int: 0
+X-Spam_score: 0.0
+X-Spam_bar: /
+X-Spam_report: (0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
+ DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,27 +82,110 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hello Peter,
+On 2026/03/11 1:20, Peter Xu wrote:
+> On Tue, Mar 10, 2026 at 03:55:41PM +0900, Akihiko Odaki wrote:
+>> On 2026/03/10 7:21, Philippe Mathieu-Daudé wrote:
+>>> +Peter/Paolo
+>>>
+>>> On 7/3/26 04:08, Akihiko Odaki wrote:
+>>>> On 2026/03/06 23:52, Mohamed Mediouni wrote:
+>>>>> Follow changes in memory management introduced on macOS 15.4.
+>>>>>
+>>>>> The legacy memory management API has been removed for the
+>>>>> IOSurface mapper on that macOS version.
+>>>>>
+>>>>> Also enable process isolation for a sandboxed GPU process when
+>>>>> on a new OS.
+>>>>>
+>>>>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>>>>> ---
+>>>>>    hw/display/apple-gfx-mmio.m | 62 ++++++++++++++++++++++++++++---------
+>>>>>    hw/display/apple-gfx.h      | 18 +++++++++++
+>>>>>    hw/display/apple-gfx.m      | 43 ++++++++++++++++++++++++-
+>>>>>    3 files changed, 107 insertions(+), 16 deletions(-)
+>>>
+>>>
+>>>>> diff --git a/hw/display/apple-gfx.m b/hw/display/apple-gfx.m
+>>>>> index e0a765fcb1..92404d20bf 100644
+>>>>> --- a/hw/display/apple-gfx.m
+>>>>> +++ b/hw/display/apple-gfx.m
+>>>>> @@ -21,6 +21,7 @@
+>>>>>    #include "system/address-spaces.h"
+>>>>>    #include "system/dma.h"
+>>>>>    #include "migration/blocker.h"
+>>>>> +#include "system/memory.h"
+>>>>>    #include "ui/console.h"
+>>>>>    #include "apple-gfx.h"
+>>>>>    #include "trace.h"
+>>>>> @@ -596,6 +597,37 @@ void apple_gfx_common_init(Object *obj,
+>>>>> AppleGFXState *s, const char* obj_name)
+>>>>>        /* TODO: PVG framework supports serialising device state:
+>>>>> integrate it! */
+>>>>>    }
+>>>>> +@interface PGDeviceDescriptor (IOSurfaceMapper)
+>>>>> +@property (readwrite, nonatomic, copy, nullable)
+>>>>> PGMemoryMapDescriptor* memoryMapDescriptor;
+>>>>> +@end
+>>>>> +
+>>>>> +bool apple_gfx_register_memory_cb(Int128 start, Int128 len,
+>>>>> +                                  const MemoryRegion *mr_const,
+>>>>> +                                  hwaddr offset_in_region, void
+>>>>> *opaque) {
+>>>>> +    MemoryRegion *mr = (MemoryRegion *)mr_const;
+>>>>
+>>>> flatview_for_each_range() should be changed to pass non-const
+>>>> pointers instead.
+>>>
+>>> flatview_for_each_range() was added in commit fb5ef4eeecd ("memory: Add
+>>> FlatView foreach function") with memory fuzzing in mind, so const MR was
+>>> the correct choice then IMO.
+>>>
+>>> FlatView is more of an internal memory API, I'm not sure it should be
+>>> used by hw/ layer.
+>>>
+>>> $ git grep -w flatview_for_each_range
+>>> hw/core/loader.c:1656:    flatview_for_each_range(fv, find_rom_cb,
+>>> &cbdata);
+>>> semihosting/arm-compat-semi.c:158:    flatview_for_each_range(fv,
+>>> find_ram_cb, &info);
+>>> tests/qtest/fuzz/generic_fuzz.c:310: flatview_for_each_range(view,
+>>> get_io_address_cb , &cb_info);
+>>>
+>>> Semihosting is special, as it the ROM loader helper, and fuzzing code.
+>>>
+>>>
+>>> We provide MemoryRegionSection, MemoryListener and RamDiscardListener
+>>> APIs. Maybe one of them is more appropriate here? See:
+>>>
+>>>    * A #RamDiscardManager coordinates which parts of specific RAM
+>>>    * #MemoryRegion regions are currently populated to be used/accessed
+>>>    * by the VM, notifying after parts were discarded (freeing up memory)
+>>>    * and before parts will be populated (consuming memory), to be used/
+>>>    * accessed by the VM.
+>>>
+>>> Could this be what this code needs to do?
+>>
+>> The problem here is that the reverse-engineered interface is insufficient to
+>> keep the memory map synchronized so it can only populate the memory map
+>> during initialization. flatview_for_each_range() fits for this purpose.
+>>
+>> Ideally the interface may be reverse-engineered more thoroughly to
+>> synchronize the memory map at runtime but that needs more work.
+> 
+> IIUC we could still use memory_listener_register(), and I agree with Phil
+> it might be good to avoid exporting flatview API further to hw/ if ever
+> possible.
+> 
+> memory_listener_register() will properly replay all the memory regions
+> similarly when adding the new listener, via region_add().
 
-I run the pipeline everytime before sending, curious about the tests I
-missed.
+That makes a point but calling memory_listener_register() and 
+memory_listener_unregister() immediately after that (since we don't want 
+be notified for future updates) is a bit weird.
 
-1. How can I get the console log of the failed centos test ? Or how to
-(or if I can) run that test on my system ?
+It's practically not a problem, so if Phil agrees with using 
+memory_listener_register() then I guess it's the way to go.
 
-I did not find the log in the gitlab test's artifacts.
-Surprised with the failure on the particular centos distro.
-
-2. Is there a way to enable these tests, or to get access to these
-tests: aarch64-macos-build & x64-freebsd-14-build
-
-I read these are run using cirrus ci, can these be run on our systems,
-if not on gitlab ?
-
-Thanks for the suggestions Peter, i have the fixes ready for the next
-version.
-
-Thanks,
-- Aditya G
-
+Regards,
+Akihiko Odaki
 
