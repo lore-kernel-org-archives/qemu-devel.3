@@ -4,44 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B9C75112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:02:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E8DA1125841
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:02:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L5B-0004Ql-O0; Wed, 11 Mar 2026 11:02:47 -0400
+	id 1w0L5E-0004RJ-Mb; Wed, 11 Mar 2026 11:02:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L4u-0004Ng-Ka; Wed, 11 Mar 2026 11:02:30 -0400
+ id 1w0L4y-0004Od-Nx; Wed, 11 Mar 2026 11:02:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L4r-0003hf-7w; Wed, 11 Mar 2026 11:02:28 -0400
+ id 1w0L4x-0003jg-3z; Wed, 11 Mar 2026 11:02:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241303; bh=UC2nUUBeCWy1t4hy/Y/w1gkN+VN65Za29soopU2COAw=;
+ t=1773241303; bh=0uZ5ATjhIzDgyacoMi6E796UKRKgVRPT0yaUj1O9yhM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=tT/x3ElPClmO86Og2SN6dW2QCLS5wfhwFMUhvs2M80t9T+HaMv5WdcZEkSBQ4CfkN
- oMke3LGLGCrFCIo7PJ2FwnqIYIBDY+4tQhizeuTjxk3YT3TvoXNntrmq1ftCIVaUWS
- vWUsdgYP5u2lSbxcNReuNFeIo1nqejQHNdRmxf1vEKZ0HMFEko1jvlhw+fUYQHVKes
- 6OdirRF5RghUW8KceodQkkdqur8qDsT1KrhuEBKSrfy2PQF9MJyqjn2uIQjIjYHVYy
- BoawijxNLcXphhwd9nlti440wrH2LH1ny9y7AThNXuYpOdj8Y+/Vzjh+nGuC500Zdd
- 51/Qb0rihDzaw==
+ b=FN5vCu3Yrcznhlv9865CAfNj71vWdBvKov9p1S28oAigNNN5HJJdNnAcbCrfPu0PV
+ loakVqQT3/5AqmzvdPlhYc58h//XxTVAVhs/ciA1FhQ9ddO84JKa/09B23mKEc/Lh+
+ wN4i6xzAx77QZirx6nVl1s++Guto5wu5c7Fljy9ntT8/tW7O4vKwQZvU7JUMEhGNdg
+ CGY3b5ykshqgmxbQzrSbfgAyMyO4DDBApKf1hqXnwmHDgIDtzXkt8j4LylM9B7Tir5
+ ThmPQJJdzp7yk7AikA2oZSkWT3ltW5tlg1wCVima99B9ImV9i+ZrBP+ZArF1B9DK+B
+ Var59tR+UB1yg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 30ADB191E3F;
+ by isrv.corpit.ru (Postfix) with ESMTP id 605A7191E41;
  Wed, 11 Mar 2026 18:01:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 17CC537C291;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3EB9B37C293;
  Wed, 11 Mar 2026 18:02:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jaehoon Kim <jhkim@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, Farhan Ali <alifm@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 01/44] s390x/pci: Fix endianness for zPCI BAR values.
-Date: Wed, 11 Mar 2026 18:01:33 +0300
-Message-ID: <20260311150221.1084186-1-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 03/44] python: drop uses of pkg_resources
+Date: Wed, 11 Mar 2026 18:01:35 +0300
+Message-ID: <20260311150221.1084186-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -71,60 +70,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jaehoon Kim <jhkim@linux.ibm.com>
+From: John Snow <jsnow@redhat.com>
 
-During zPCI scan, BAR configuration data retrieved via CLP Query was
-misinterpreted due to an endianness mismatch between QEMU and the guest
-kernel.
+pkg_resources has been fully dropped from modern pip/setuptools
+distributions and we should phase out its use. This patch is enough to,
+by itself, repair most GitLab CI tests upstream; with the exception of
+tox tests which are still making use of avocado - which will be dropped
+in a separate series to restore functionality there.
 
-The guest kernel's clp_store_query_pci_fn() expects BAR values in
-little-endian format and converts them with le32_to_cpu(). However, QEMU
-was incorrectly sending them in big-endian format, not following the
-architecture specification. This caused incorrect bit-swapping in the
-kernel, leading zpci_setup_bus_resources() to perform registration checks
-against invalid flags, making the process ineffective.
-
-Observation values for zPCI device (NVMe passthrough):
-LPAR from real CLP:
-[    0.865595] Resource: PCI Bus 0000:00 -> zdev->bar[0].val: 0x4
-[    0.865597]  start: 0x4000000000000000
-[    0.865598]  end:   0x4000000000003fff
-[    0.865600]  flags: 0x100200
-
-QEMU before fix (wrong):
-[    0.601083] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4000000
-[    0.601085]  start: 0x4003000000000000
-[    0.601086]  end:   0x4003000000003fff
-[    0.601087]  flags: 0x200
-
-QEMU after fix (correct):
-[    0.601116] Resource: PCI Bus 0001:00 -> zdev->bar[0].val: 0x4
-[    0.601117]  start: 0x4003000000000000
-[    0.601118]  end:   0x4003000000003fff
-[    0.601119]  flags: 0x100200
-
-Signed-off-by: Jaehoon Kim <jhkim@linux.ibm.com>
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
-Reviewed-by: Farhan Ali <alifm@linux.ibm.com>
-Reviewed-by: Eric Farman <farman@linux.ibm.com>
-Message-ID: <20260206164645.1845366-1-jhkim@linux.ibm.com>
+Signed-off-by: John Snow <jsnow@redhat.com>
+Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+Message-ID: <20260211195804.135144-3-jsnow@redhat.com>
 Signed-off-by: Thomas Huth <thuth@redhat.com>
-(cherry picked from commit 00ebc44514a67fb75a46d60e4b44614ebf91230f)
+(cherry picked from commit e44a26ba940214824b61976324058e73d9f41658)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/s390x/s390-pci-inst.c b/hw/s390x/s390-pci-inst.c
-index 8cdeb6cb7f..6d95b96bef 100644
---- a/hw/s390x/s390-pci-inst.c
-+++ b/hw/s390x/s390-pci-inst.c
-@@ -305,7 +305,7 @@ int clp_service_call(S390CPU *cpu, uint8_t r2, uintptr_t ra)
-             uint32_t data = pci_get_long(pbdev->pdev->config +
-                 PCI_BASE_ADDRESS_0 + (i * 4));
+diff --git a/python/setup.py b/python/setup.py
+index c5bc45919a..789fa39b0f 100755
+--- a/python/setup.py
++++ b/python/setup.py
+@@ -7,7 +7,6 @@
+ import setuptools
+ from setuptools.command import bdist_egg
+ import sys
+-import pkg_resources
  
--            stl_be_p(&resquery->bar[i], data);
-+            stl_le_p(&resquery->bar[i], data);
-             resquery->bar_size[i] = pbdev->pdev->io_regions[i].size ?
-                                     ctz64(pbdev->pdev->io_regions[i].size) : 0;
-             trace_s390_pci_bar(i,
+ 
+ class bdist_egg_guard(bdist_egg.bdist_egg):
+@@ -30,9 +29,6 @@ def main():
+     QEMU tooling installer
+     """
+ 
+-    # https://medium.com/@daveshawley/safely-using-setup-cfg-for-metadata-1babbe54c108
+-    pkg_resources.require('setuptools>=39.2')
+-
+     setuptools.setup(cmdclass={'bdist_egg': bdist_egg_guard})
+ 
+ 
 -- 
 2.47.3
 
