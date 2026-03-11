@@ -4,41 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EAB991062862
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:36:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8481D1062862
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:36:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Hqa-0006cA-65; Wed, 11 Mar 2026 07:35:28 -0400
+	id 1w0Hqd-0006hP-69; Wed, 11 Mar 2026 07:35:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w0HqY-0006b3-KO
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:26 -0400
+ id 1w0Hqc-0006gE-DW
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:30 -0400
 Received: from linux.microsoft.com ([13.77.154.182])
  by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0HqX-0006Fe-1C
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:26 -0400
+ (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0HqZ-0006G5-L4
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:30 -0400
 Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.53])
- by linux.microsoft.com (Postfix) with ESMTPSA id 6EA1E20B7128;
- Wed, 11 Mar 2026 04:35:22 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 6EA1E20B7128
+ by linux.microsoft.com (Postfix) with ESMTPSA id A87D820B712B;
+ Wed, 11 Mar 2026 04:35:24 -0700 (PDT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com A87D820B712B
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1773228924;
- bh=yH//92yEE/RfpcyMnJP346FPLTO4pOz0FQlMYOR+8A8=;
+ s=default; t=1773228926;
+ bh=d5KCnfT2zqdtIdnJ1MUMUbUk/2AA80D4iEmyMQYnSdc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=OR30jzYtDt2tZDi0HGh9Y576no94El9ejM9Gi4rv23D/iAtAXaWwdCcGqt8aUU/1W
- k2R/pH64eNuV+ciYZi8Bjv+pwFn5M9Hv+VJW6l4xNh9lnfSshQG1kZjDrvkdu6HOHm
- YEqwHtlzO9Wf7/nBN65LWT2mbbGE5y6E40o777tQ=
+ b=tFiCrUVTX6XhJ/PkAZnO9/EWrsXtDq/iNsL3Ynsb5A2OuREncs+JRIWBG/kw4KwPB
+ OxmiClMfhToF8gzRmxzSuKfbmbG/jQywZ1XaIDY1/NsGSAthe8H77xoLftatERsaj/
+ 8m2UfjuS7D3aiRVMzKPxd0IMpoawYVfJG2ImdPok=
 From: Magnus Kulke <magnuskulke@linux.microsoft.com>
 To: qemu-devel@nongnu.org
 Cc: Zhao Liu <zhao1.liu@intel.com>,
  Magnus Kulke <magnuskulke@linux.microsoft.com>,
  Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
  Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v2 4/9] target/i386/mshv: change cpuid mask to UINT32_MAX
-Date: Wed, 11 Mar 2026 12:35:00 +0100
-Message-Id: <20260311113505.1177878-5-magnuskulke@linux.microsoft.com>
+Subject: [PATCH v2 5/9] target/i386/mshv: set cpu model name on -cpu host
+Date: Wed, 11 Mar 2026 12:35:01 +0100
+Message-Id: <20260311113505.1177878-6-magnuskulke@linux.microsoft.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
 References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
@@ -68,48 +68,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The current implementation would only override the feature bits that are
-enabled, however we also want to consider disabled features, hence all
-bits are set on the masks in the hypercall argument.
+By registering a cpu_accel_class for mshv, we can report an accurate
+model name on -cpu host.
 
 Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 ---
- target/i386/mshv/mshv-cpu.c | 17 ++++++-----------
- 1 file changed, 6 insertions(+), 11 deletions(-)
+ target/i386/mshv/mshv-cpu.c | 31 +++++++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
 diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 4183727a86..e42b5a614d 100644
+index e42b5a614d..09878ef357 100644
 --- a/target/i386/mshv/mshv-cpu.c
 +++ b/target/i386/mshv/mshv-cpu.c
-@@ -538,22 +538,17 @@ static int register_intercept_result_cpuid_entry(const CPUState *cpu,
-         .input.always_override = always_override,
-         .input.padding = 0,
-         /*
--         * With regard to masks - these are to specify bits to be overwritten
--         * The current CpuidEntry structure wouldn't allow to carry the masks
--         * in addition to the actual register values. For this reason, the
--         * masks are set to the exact values of the corresponding register bits
--         * to be registered for an overwrite. To view resulting values the
--         * hypervisor would return, HvCallGetVpCpuidValues hypercall can be
--         * used.
-+         * Masks specify which bits to override. Set to 0xFFFFFFFF to
-+         * override all bits with the values from the QEMU CPU model.
-          */
-         .result.eax = entry->eax,
--        .result.eax_mask = entry->eax,
-+        .result.eax_mask = 0xFFFFFFFF,
-         .result.ebx = entry->ebx,
--        .result.ebx_mask = entry->ebx,
-+        .result.ebx_mask = 0xFFFFFFFF,
-         .result.ecx = entry->ecx,
--        .result.ecx_mask = entry->ecx,
-+        .result.ecx_mask = 0xFFFFFFFF,
-         .result.edx = entry->edx,
--        .result.edx_mask = entry->edx,
-+        .result.edx_mask = 0xFFFFFFFF,
-     };
-     union hv_register_intercept_result_parameters parameters = {
-         .cpuid = cpuid_params,
+@@ -24,10 +24,13 @@
+ #include "hw/i386/apic_internal.h"
+ 
+ #include "cpu.h"
++#include "host-cpu.h"
+ #include "emulate/x86_decode.h"
+ #include "emulate/x86_emu.h"
+ #include "emulate/x86_flags.h"
+ 
++#include "accel/accel-cpu-target.h"
++
+ #include "trace-accel_mshv.h"
+ #include "trace.h"
+ 
+@@ -1675,3 +1678,31 @@ int mshv_arch_post_init_vm(int vm_fd)
+ 
+     return ret;
+ }
++
++static void mshv_cpu_instance_init(CPUState *cs)
++{
++    X86CPU *cpu = X86_CPU(cs);
++
++    host_cpu_instance_init(cpu);
++}
++
++static void mshv_cpu_accel_class_init(ObjectClass *oc, const void *data)
++{
++    AccelCPUClass *acc = ACCEL_CPU_CLASS(oc);
++
++    acc->cpu_instance_init = mshv_cpu_instance_init;
++}
++
++static const TypeInfo mshv_cpu_accel_type_info = {
++    .name = ACCEL_CPU_NAME("mshv"),
++    .parent = TYPE_ACCEL_CPU,
++    .class_init = mshv_cpu_accel_class_init,
++    .abstract = true,
++};
++
++static void mshv_cpu_accel_register_types(void)
++{
++    type_register_static(&mshv_cpu_accel_type_info);
++}
++
++type_init(mshv_cpu_accel_register_types);
 -- 
 2.34.1
 
