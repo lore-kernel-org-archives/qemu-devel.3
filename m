@@ -4,50 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 093ED112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:04:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7FEA112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:05:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L6b-0006Xc-H8; Wed, 11 Mar 2026 11:04:13 -0400
+	id 1w0L6k-0007RC-P7; Wed, 11 Mar 2026 11:04:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6D-0005Rn-IT; Wed, 11 Mar 2026 11:03:51 -0400
+ id 1w0L5k-0004v5-5n; Wed, 11 Mar 2026 11:03:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6B-00049K-Pf; Wed, 11 Mar 2026 11:03:49 -0400
+ id 1w0L5g-00044v-Vv; Wed, 11 Mar 2026 11:03:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241304; bh=NffVCPGSp5i3clKr46RBGcZPHeUchWgm4o7EnCjgvWg=;
+ t=1773241304; bh=70/i7Jv60BeMJubq03AYNnhISETNLN5vagvkMkl2Th4=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Ly6a9aJOzw5kWvdB8dh/OFeOILflPPH5+7mVLgq5tE14X7SJ1zGV4KbzaIbEqMZGP
- YFUjOqeqrxjNkdXeH75RcI60E+rKZM9mRBcZl0q+woRQvEI4OvDRBDSjSUngJXJDdN
- yyPUtAz1PT3P+gH9XmRsvud5u8k87Wjr1d2Ue58RveomsKJQihK/afPbQWR8d+Xx/B
- CFMTs4v29kEKms/ny7KuGozZxotNtOfZcWYHsQckGW09KUR8jJ32wfH8CmzZ4WcJ2q
- 0otJKboeDnV+Twhg5lwdcxBtR/ocZhevXkYqCU1rQVdAELwkyNzndaWV6A5kqkaAZ1
- r1UtfBeynjyBg==
+ b=XXFAPgUFGK1GgFwDiAL0jjXFnHRm/fEozGWAEOKD+Ow6pWpQB2gQmC0UghlzaprHA
+ ozXHV4Qxw7YCpDOxaSlsapCDL+BkhImiLDMAXHHJR8xinlHtDU5lnF6C1omfJs1KQQ
+ LyQSG1eTwnUttv+umO5qLRIJ6JQkSg7JzA5UA8RRg2Pat3COccUNEC2yEx5Q49KuVb
+ +9i4+/Bi4VllJwsnVY6h05u8crdOTTMOWyBsvcRFAGN36AOaiJRUEV29nsiQM/UxGa
+ 5XAtL54zsjRgyaRwLvLDQEujm96bgsXiZyx78aiSzQTJ8wJhx1EDSfreHcF+5uT8Uo
+ MvQLcp47yLaNQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CA8F2191E52;
+ by isrv.corpit.ru (Postfix) with ESMTP id 4D616191E4C;
  Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AB87F37C2A4;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 3AA0137C29E;
  Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 20/44] target/arm: set the correct TI bits for WFIT
- traps
-Date: Wed, 11 Mar 2026 18:01:52 +0300
-Message-ID: <20260311150221.1084186-20-mjt@tls.msk.ru>
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 14/44] virtio-snd: remove TODO comments
+Date: Wed, 11 Mar 2026 18:01:46 +0300
+Message-ID: <20260311150221.1084186-14-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -73,32 +70,94 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-The WFIT trap should be reported as 0b10.
+Replying with a VIRTIO_SND_S_BAD_MSG error does not warrant a device
+reset. Instead, a device reset happens when the driver requests it from the
+transport.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-id: 20260220171945.1065102-1-alex.bennee@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 662fd548a027c9362df71ebfc0c9cdd7b1f349fb)
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260220-virtio-snd-series-v1-2-207c4f7200a2@linaro.org>
+(cherry picked from commit 34238f078a04f24b91199249b83846ab082b4e05)
+(Mjt: pick this one up so the next commit applies cleanly)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 30786fd1ff..4e87b37a64 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -447,7 +447,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 0b47741f01..6266e84fd9 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -168,9 +168,6 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
+                                sizeof(virtio_snd_query_info));
  
-     if (target_el) {
-         env->pc -= 4;
--        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false), target_el);
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 2, false), target_el);
+     if (msg_sz != sizeof(virtio_snd_query_info)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(virtio_snd_query_info));
+@@ -184,9 +181,6 @@ static void virtio_snd_handle_pcm_info(VirtIOSound *s,
+ 
+     if (iov_size(cmd->elem->in_sg, cmd->elem->in_num) <
+         sizeof(virtio_snd_hdr) + size * count) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         error_report("pcm info: buffer too small, got: %zu, needed: %zu",
+                 iov_size(cmd->elem->in_sg, cmd->elem->in_num),
+                 sizeof(virtio_snd_pcm_info));
+@@ -244,9 +238,6 @@ uint32_t virtio_snd_set_pcm_params(VirtIOSound *s,
+     virtio_snd_pcm_set_params *st_params;
+ 
+     if (stream_id >= s->snd_conf.streams || s->pcm->pcm_params == NULL) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         virtio_error(VIRTIO_DEVICE(s), "Streams have not been initialized.\n");
+         return cpu_to_le32(VIRTIO_SND_S_BAD_MSG);
      }
+@@ -297,9 +288,6 @@ static void virtio_snd_handle_pcm_set_params(VirtIOSound *s,
+                                sizeof(virtio_snd_pcm_set_params));
  
-     if (uadd64_overflow(timeout, offset, &nexttick)) {
+     if (msg_sz != sizeof(virtio_snd_pcm_set_params)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(virtio_snd_pcm_set_params));
+@@ -609,9 +597,6 @@ static void virtio_snd_handle_pcm_release(VirtIOSound *s,
+                                sizeof(stream_id));
+ 
+     if (msg_sz != sizeof(stream_id)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(stream_id));
+@@ -623,9 +608,6 @@ static void virtio_snd_handle_pcm_release(VirtIOSound *s,
+     trace_virtio_snd_handle_pcm_release(stream_id);
+     stream = virtio_snd_pcm_get_stream(s, stream_id);
+     if (stream == NULL) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         error_report("already released stream %"PRIu32, stream_id);
+         virtio_error(VIRTIO_DEVICE(s),
+                      "already released stream %"PRIu32,
+@@ -668,9 +650,6 @@ process_cmd(VirtIOSound *s, virtio_snd_ctrl_command *cmd)
+                                sizeof(virtio_snd_hdr));
+ 
+     if (msg_sz != sizeof(virtio_snd_hdr)) {
+-        /*
+-         * TODO: do we need to set DEVICE_NEEDS_RESET?
+-         */
+         qemu_log_mask(LOG_GUEST_ERROR,
+                 "%s: virtio-snd command size incorrect %zu vs \
+                 %zu\n", __func__, msg_sz, sizeof(virtio_snd_hdr));
 -- 
 2.47.3
 
