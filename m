@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3A9BC1125893
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0522A112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PLE-0007YQ-GF; Wed, 11 Mar 2026 15:35:36 -0400
+	id 1w0PLJ-0007Z4-Tk; Wed, 11 Mar 2026 15:35:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKy-0007Th-T4; Wed, 11 Mar 2026 15:35:22 -0400
+ id 1w0PKv-0007Sb-4W; Wed, 11 Mar 2026 15:35:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PKx-00006e-42; Wed, 11 Mar 2026 15:35:20 -0400
+ id 1w0PKr-000056-RB; Wed, 11 Mar 2026 15:35:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257666; bh=AREQ/dFnXzezlRlc40BNW1VnJ2gwDKJL+a4jQQus1S0=;
+ t=1773257666; bh=AkGdtL1378GuYkw9TJKFVH4lXWbLXsqU//G2VlqmrT0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ifY6Yu441iA5OBaq4XhXByO/DJhXfyQmUhkgtcMardFy8ZtVIGW7c3zu28NsccWPd
- /Qz23KWDhC8cX+WAtb+qeEbrsEfEo4IiruBRgNuBAXuDSBaw4hGjBmYkRMpzRWpPfZ
- LXQ/C+LmIkYshR/iAcdv1d5fOo2I0flbp2b1ZWaorjJ52SHNgLcliLEQZH1++5M4JL
- Zz4mqwGd9/AoImxBggYPy/dNVpxyDw5VoDKGfrGxIpg4O51Sbnrg5urFekmSb6p+pS
- JSOZRL7lp5SnwGL4Q2kVn2DiLPnKDuXeW/ds33VPsAl845u5DurwTrtiiCfIm8x6Cj
- 4+iqQ2OfLphpg==
+ b=o6FFREF6OdLxWQBA78ng80EZGxIAwha7top/k4P4rxq60CLjOOfhSGY2a5h64LV1N
+ xZPokuIy660QnOof133zdLhP0a+Igv1bEG59uVNUuJe5hi9D35Iua5ahJDxg65Hew6
+ 12oUOpgQOhsVnLBEb2GJMniWMm2niehtjp4xF1G10hd80GO4AyOMhjn0SnSjzFnuYi
+ pDpqc6JSHUZFkGh2+nGXAtlkjboIGKDeq43afDWpfcTb/8LJqci+j0j43fFSK/relk
+ vzUtDbBBC5ww1/xyZaEFgrN6fKRmshc5NNimxmbheb4oyTIZeBVIUBshrDJyK/KTo4
+ d781b6R9hfyGA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 820DA1920EE;
+ by isrv.corpit.ru (Postfix) with ESMTP id 51CFA1920EC;
  Wed, 11 Mar 2026 22:34:26 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id C320537C453;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 93C9C37C451;
  Wed, 11 Mar 2026 22:35:04 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 06/53] contrib/plugins/hotblocks: Correctly free
- sorted counts list
-Date: Wed, 11 Mar 2026 22:33:59 +0300
-Message-ID: <20260311193449.1096110-6-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 04/53] iotests: test active mirror with unaligned,
+ small write zeroes op
+Date: Wed, 11 Mar 2026 22:33:57 +0300
+Message-ID: <20260311193449.1096110-4-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -72,51 +71,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-g_list_free should be passed the head of the list.
+This tests the scenario fixed by "block/mirror: check range
+when setting zero bitmap for sync write" [0].
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/cf5a00136738b981a12270b76572e8d502daf208.1753857212.git.asb@igalia.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit 90fabd5ddace6ffa5a62a5186201fd071b4e2b74)
+[0] https://lore.kernel.org/qemu-devel/20260112152544.261923-1-f.ebner@proxmox.com/
+
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260120113859.251743-1-f.ebner@proxmox.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Tested-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 267d7ae99a1d3b5be9d3421db3bdf651cc18c7ab)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index 98404b6885..d3dd23ed9f 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -73,15 +73,16 @@ static void exec_count_free(gpointer key, gpointer value, gpointer user_data)
- static void plugin_exit(qemu_plugin_id_t id, void *p)
- {
-     g_autoptr(GString) report = g_string_new("collected ");
--    GList *counts, *it;
-+    GList *counts, *sorted_counts, *it;
-     int i;
+diff --git a/tests/qemu-iotests/151 b/tests/qemu-iotests/151
+index 06ee3585db..9b9c815db5 100755
+--- a/tests/qemu-iotests/151
++++ b/tests/qemu-iotests/151
+@@ -191,6 +191,26 @@ class TestActiveMirror(iotests.QMPTestCase):
  
-     g_string_append_printf(report, "%d entries in the hash table\n",
-                            g_hash_table_size(hotblocks));
-     counts = g_hash_table_get_values(hotblocks);
--    it = g_list_sort_with_data(counts, cmp_exec_count, NULL);
-+    sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+         self.potential_writes_in_flight = False
  
--    if (it) {
-+    if (sorted_counts) {
-+        it = sorted_counts;
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
++    def testUnalignedSmallerThanGranularityWriteZeroes(self):
++        # Fill the source image
++        self.vm.hmp_qemu_io('source', 'write -P 1 0 %i' % self.image_len);
++
++        # Start the block job
++        self.vm.cmd('blockdev-mirror',
++                    job_id='mirror',
++                    filter_node_name='mirror-node',
++                    device='source-node',
++                    target='target-node',
++                    sync='full',
++                    copy_mode='write-blocking')
++
++        # Wait for the READY event
++        self.wait_ready(drive='mirror')
++
++        for offset in range(6 * self.image_len // 8, 7 * self.image_len // 8, 1024 * 1024):
++            self.vm.hmp_qemu_io('source', 'aio_write -z %i 512' % (offset + 512))
++
++        self.complete_and_wait(drive='mirror', wait_ready=False)
  
-         for (i = 0; i < limit && it->next; i++, it = it->next) {
-@@ -94,7 +95,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-                     qemu_plugin_scoreboard_u64(rec->exec_count)));
-         }
+ class TestThrottledWithNbdExportBase(iotests.QMPTestCase):
+     image_len = 128 * 1024 * 1024  # MB
+diff --git a/tests/qemu-iotests/151.out b/tests/qemu-iotests/151.out
+index 3f8a935a08..2f7d3902f2 100644
+--- a/tests/qemu-iotests/151.out
++++ b/tests/qemu-iotests/151.out
+@@ -1,5 +1,5 @@
+-......
++.......
+ ----------------------------------------------------------------------
+-Ran 6 tests
++Ran 7 tests
  
--        g_list_free(it);
-+        g_list_free(sorted_counts);
-     }
- 
-     qemu_plugin_outs(report->str);
+ OK
 -- 
 2.47.3
 
