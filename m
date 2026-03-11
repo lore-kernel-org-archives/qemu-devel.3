@@ -4,48 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B9F41125842
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 68610112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LCy-0003PF-Kc; Wed, 11 Mar 2026 11:10:50 -0400
+	id 1w0LAT-0005bQ-2j; Wed, 11 Mar 2026 11:08:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBE-0007MC-3u; Wed, 11 Mar 2026 11:09:00 -0400
+ id 1w0L7B-00085h-BK; Wed, 11 Mar 2026 11:04:53 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBC-0005cw-H1; Wed, 11 Mar 2026 11:08:59 -0400
+ id 1w0L77-0004JC-MV; Wed, 11 Mar 2026 11:04:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241482; bh=HjMOGCTo1aZscX1vCw2n+onzv51zYPcKRM6CWfJzUog=;
+ t=1773241305; bh=AUUDO7q3YbgWrK2s3KDfeGNU5tgRA6Ni7c41Dyf/AfE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=ILtqm+dkoWyUcFgUBAN+ME7dedSXurudUfthVqLo5cvUJUDv5VuSdBxndStvLv6Fb
- bPH/x/62dxGUNZGZkcfJzugcqEygNG3YiisIReAC8/wmHHyjEcz6oRpAXg5XvhxVHz
- Qk3VPvRbdygy66b175hM+zuTgM7KjuQylEm2OLBSt6v2riykN629OpZlwpvH+QYp+e
- zJnvnEEWKH/nsL/JgdhsuncWRKdXyXTOAOZtTPQBnb79K0Vxt5tZ4qznPOGrDelFgz
- 9CBbcBdqSCnTEZlr/pqE6gPklcpmDyLtaPOJzBXJBlF431+AFPbqu1J0/2/35nbXPl
- qHF/eylBbsnhQ==
+ b=iTdz+qnTh6UR//fx/a55i5siaFJ7U6KgnzejzV8nOGeCJr0LKXKC7nZYG0yRvnj1f
+ vRgzHlg5EE0RwuUmYzEggX04nuxDTX1wBm74PshdMlEmqT5K4vzxqjq6NBKFwZqsjb
+ 8T7+eKw5kx6+LOaRz5hNiEz0jKn4hjoF9xBff+u76TrQDVXcB1LQBDE88Srdvjjugj
+ YDP+kyu35xyXs/5cJuZ8nbYWn3k07tXTssgeZx77jymv03gxUkLEFDPpfFA32g3d3w
+ ZJCaCIY0d3dtQfNpn/CiUs13sv7+YATjQJYs9oG0Jif7vD8NNohHsUjS4w5vOY2lV0
+ KzeLpXV7q4QJg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 955AD191E99;
- Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 79377191E5B;
+ Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7952737C2DA;
- Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6665E37C2AD;
+ Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Gustavo Romero <gustavo.romero@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 22/46] target/arm: set the correct TI bits for WFIT
- traps
-Date: Wed, 11 Mar 2026 18:02:58 +0300
-Message-ID: <20260311150327.1084669-22-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 29/44] hw/net/smc91c111: Don't allow negative-length
+ packets
+Date: Wed, 11 Mar 2026 18:02:01 +0300
+Message-ID: <20260311150221.1084186-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -73,32 +72,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bennée <alex.bennee@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-The WFIT trap should be reported as 0b10.
+The smc91c111 data frame format in memory (figure 8-1 in the
+datasheet) includes a "byte count" field which is intended to be the
+total size of the data frame, including not just the packet data but
+also the leading and trailing information like the status word and
+the byte count field itself.  It is therefore possible for the guest
+to set this to a value so small that the leading and trailing fields
+won't fit and the packet has effectively a negative area.
+
+We weren't checking for this, with the result that when we subtract 6
+from the length to get the length of the packet proper we end up with
+a negative length, which is then inconsistently handled in the
+qemu_send_packet() code such that we can try to transmit a very large
+amount of data and read off the end of the device's data array.
+
+Treat excessively small length values the same way we do excessively
+large values.  As with the oversized case, the datasheet does not
+describe what happens for this software error case, and there is no
+relevant tx error condition for this, so we just log and drop the
+packet.
 
 Cc: qemu-stable@nongnu.org
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-Reviewed-by: Gustavo Romero <gustavo.romero@linaro.org>
-Message-id: 20260220171945.1065102-1-alex.bennee@linaro.org
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3304
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 662fd548a027c9362df71ebfc0c9cdd7b1f349fb)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260226175549.1319476-1-peter.maydell@linaro.org
+(cherry picked from commit d8e19f8042dcaff8e077292209c8196acb150bdd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/op_helper.c b/target/arm/tcg/op_helper.c
-index 575e566280..048090369f 100644
---- a/target/arm/tcg/op_helper.c
-+++ b/target/arm/tcg/op_helper.c
-@@ -448,7 +448,7 @@ void HELPER(wfit)(CPUARMState *env, uint64_t timeout)
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 9ce42b5615..751e9e6f97 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -30,6 +30,12 @@
+  * LAN91C111 datasheet).
+  */
+ #define MAX_PACKET_SIZE 2048
++/*
++ * Size of the non-data fields in a data frame: status word,
++ * byte count, control byte, and last data byte; this defines
++ * the smallest value the byte count in the frame can validly be.
++ */
++#define MIN_PACKET_SIZE 6
  
-     if (target_el) {
-         env->pc -= 4;
--        raise_exception(env, excp, syn_wfx(1, 0xe, 0, false), target_el);
-+        raise_exception(env, excp, syn_wfx(1, 0xe, 2, false), target_el);
-     }
- 
-     if (uadd64_overflow(timeout, offset, &nexttick)) {
+ #define TYPE_SMC91C111 "smc91c111"
+ OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
+@@ -289,7 +295,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
+         *(p++) = 0x40;
+         len = *(p++);
+         len |= ((int)*(p++)) << 8;
+-        if (len > MAX_PACKET_SIZE) {
++        if (len < MIN_PACKET_SIZE || len > MAX_PACKET_SIZE) {
+             /*
+              * Datasheet doesn't say what to do here, and there is no
+              * relevant tx error condition listed. Log, and drop the packet.
+@@ -300,7 +306,13 @@ static void smc91c111_do_tx(smc91c111_state *s)
+             smc91c111_complete_tx_packet(s, packetnum);
+             continue;
+         }
+-        len -= 6;
++        /*
++         * Convert from size of the data frame to number of bytes of
++         * actual packet data. Whether the "last data byte" field is
++         * included in the packet depends on the ODD bit in the control
++         * byte at the end of the frame.
++         */
++        len -= MIN_PACKET_SIZE;
+         control = p[len + 1];
+         if (control & 0x20)
+             len++;
 -- 
 2.47.3
 
