@@ -4,69 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576C6112583B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 452AA112583A
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 14:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0KuV-0005v4-Kk; Wed, 11 Mar 2026 10:51:43 -0400
+	id 1w0KuV-0005vE-Rf; Wed, 11 Mar 2026 10:51:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <1774596582@qq.com>)
- id 1w0KUz-0007CP-5A; Wed, 11 Mar 2026 10:25:21 -0400
-Received: from out162-62-57-64.mail.qq.com ([162.62.57.64])
+ id 1w0KV0-0007Co-VE; Wed, 11 Mar 2026 10:25:24 -0400
+Received: from out203-205-221-242.mail.qq.com ([203.205.221.242])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <1774596582@qq.com>)
- id 1w0KUv-0000Km-D7; Wed, 11 Mar 2026 10:25:20 -0400
+ id 1w0KUw-0000Ku-1B; Wed, 11 Mar 2026 10:25:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
- t=1773239107; bh=VvHpoEpak5oD4BWW2VNZzlgx/0J0ttLib2JoncQTjDQ=;
- h=From:To:Cc:Subject:Date;
- b=KQZZRweuMEVFmBLeueJD/XIdNgMww2nxFImadnHRAtMdA4iiH4o0sczLRQ38N4Q57
- zyIBlXl19opH0+FVRBNPsw6CpTri2yVsYOd7NbQreT+lrSvnlRduxtILY8h73Qxgp2
- 3hrMRh/VZnlQ9Hugpg6YRnqcOtull1pRiuyVjmxY=
+ t=1773239109; bh=8b7SihBX8BbtdsXQqE1ZD4tPD47XInlkkrnuFAzhkok=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=DHuK2xhQwDVMG/hy+7vjJIfalriPx//lnd+aGtxFwoXkvWzmoXs8qyzaxSjUNumSw
+ JLtCnH8nLS7vLtk1Te8xYZ8mwoYbhrFiaBGgMG1xGqfjqwilRHA+DIrCtz54hd8ZOX
+ bj+9fMYyKVTmHNhtiLL0PmyrkIrkbtmo5JYSxJF4=
 Received: from dt-VM.localdomain ([175.152.130.74])
  by newxmesmtplogicsvrsza63-0.qq.com (NewEsmtp) with SMTP
  id 6460A831; Wed, 11 Mar 2026 22:25:06 +0800
-X-QQ-mid: xmsmtpt1773239106tcpzbhgk8
-Message-ID: <tencent_1BF621A658E043C088A2681178D57ED14A09@qq.com>
-X-QQ-XMAILINFO: NGZp1yYNf7Y+WrIA1BOiSRIdpssHXSykV3Q5QTFmdRXJ77DEKJ9otZ5mTg4qRK
- dYyBEGAkaM79zem/hK6VEUISAVLLBvsL34DDqaQO62yixOy15T904SuOmxSHA0lSva9L38mGjSRa
- yLYWLWfKloiYk4HallyBM6yQmnsNGXTY0nMUb35Rp0jm2VyalDvhiO5kIZQoE8ap83zcQGqfujCM
- pi1PFbAS6J72UnEaxmJgJXezrMkdNrshqooHnWkkV3VutoeEidl98yQxfRJ6igLxESf3a/LlrI3D
- oJmSFV7doo9po5csqLAnJ+ExlscpPglIBpNDeJIdWC15G02qw4LNx+UEdv/PAuhsrQnpEwK+V8u/
- rRxzkrZAMosbDsco6L575eUROeq7ZNMOtEcVDGHcCBYEGnCVH4ZydzqNZZ3oWwxyYf69k/y7q0Oz
- LELVlnEeuI2Mu+Hqj5NazsSWMImQqJyZlnST7sJ/DPj/NV3eFUh8St8RVZIuF55bBCn/aoB8l4x4
- 51sit70CxpDPkCtkWLhh9UdPaPWgMbo79DC0dEPLseeCy5aR3OilZ8jBOhYBY7uB/T2wJcL3iWr9
- /9S/870ZmqBkYwJ1SHoVMQSCQxEOFxaRHaB0gfMXOMto4Ueg73OsKaO2pOP2CHTTyrWAdv7KRGW4
- 3xuizRvS6p4XAw5VX6ySinLHl/LvzES/zcK7ptZHpBIjafajm/mNojN55q8r4xTpp29ijVk++rq4
- pAQLjBPgsnkFBm+gzzCtQj9NQr6sm/2O9SeDX90/40lKiIu70shDXUHFE23t87BUxZwIZn6rfPEY
- 3I3/z+A1ZxruKewsPOO9KRFRSjVdH3UDxrsRkrRMKv9BWfpCYvAXElNO8JOIbd4zrpsjyxo8fC62
- COJUw1EuVojlfngUgqri//lKBXbRnEIbQC2K1nLx7xHGXpYywrtsC1FWqy0d7LYBcFTGWd9mZWcy
- l5T8AKozuQxtnxGlKH0hZwn0sJxlxC7WOw9p/7UOoevUocqQ0aZzmPMM6mbmVExWskJXi87eM05T
- 9k/O8x1dkFJUWvkl6kNVrSpWw8NuRi+BfCfkiIgvHpuI4Z8dQzEPzixAwCoUY=
-X-QQ-XMRINFO: NyFYKkN4Ny6FuXrnB5Ye7Aabb3ujjtK+gg==
+X-QQ-mid: xmsmtpt1773239108tfmx7w0bz
+Message-ID: <tencent_7B1A04150B5EC83A51332D26AFC3EF7DC906@qq.com>
+X-QQ-XMAILINFO: MyzM/wvJS/65xy4JbzP99Z//k2GG5e8sMRl/C8kKhCHiyj8sSJkFk3M+1I4MAm
+ vQxzLfjlVXuEapkrrr3TTuGIaooR2IiOE4Y8M+5w2m5Ktls9rWiE4mKr3pK1Xy5TjVfGKW0jrdMY
+ wgjW24/K0SnWjkJHcYzLdSGjcCp/U4ZFGRKPkW9ZAG6LcCo8fJL1NDZbPoyZipN8lJneZQcEqorp
+ 3vTDaOub25jEHLYELmeNujtCSBbNprHvV+uRwKpkxp2Q8sRHSVpQ9uG5Wg1jnghR9+ob567ZEOZi
+ V8XL30ePc789iEokIh4jcYxZVIdxBTDpcRHOwdpm9Ja9bSDN1asL36X+qp/myQR3hEmMzgUR4g9h
+ crS8WkTJ8AGKGrOHGRDOlb9RlD5vLbS3TEbcHQAQMERv0dJ2B58JsfznePLdxZ8Padbgl5wlsy6Y
+ PJkGm3vfq0I2hSysnCMKPmvaC+wBMXAYbOF0Uw8I8n4v3/58V0w2aYjbi06snBHMTK3velYMu8MG
+ yAa/MVqF/L50DyqMo2/A6kdr4MZHITbn/Uu7puAYNvV3kvp3LbtdW4CeyUlgDLAoY1DTSYVOrHQf
+ wTlMTqG6VGL5zTG4aCAlbNnHW5SUC/Q0Qjwm1D9AJBMnrkmug+H6xxr1Lirlh4fRVlJXnFHdNHGv
+ yNG06l6zN3Oduh/bDQ4XxqwcjAIoJTb1d9pkbriKliIIF5zflE8ItbxE7gSy9JPnKKSGq5NQI1XK
+ gjtXXwaFEeGfecS6YNjUBtEyQpMjW6FO8RdpCvYVnjtMxNhnZDodm5cTFX4jfs3rlkUJmxRwgUmE
+ 8aA4bKi/Wc45jD9WWFL4jBar7ovtARFuiAKmbgN+k2Ec92s52Fr3yHbumlGPKrziOB4CP/qnGK5m
+ XOE+L5z7+Pqw1WGstofvukU5Mcfp0UeeoJDXDeC9zx78vw4OzRKeoSXMHwHrUOGve3RwlyKYpVGN
+ Xg34LjU1JortAp7gcWbxAAa0pMYNrMhhOnwW0Gv1g6fi6R13DoPR7gkMqILAeU4q6JyW430Pso9d
+ 07ryJUjpi8XubFCIsyEGkyPFAAL714MDJoyqvRDVYMOF3Ax7l0eb36juDzjniNL19U6yxU4KSJj4
+ yA6bh9
+X-QQ-XMRINFO: MSVp+SPm3vtSI1QTLgDHQqIV1w2oNKDqfg==
 From: 1774596582@qq.com
 To: Peter Maydell <peter.maydell@linaro.org>,
 	qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org,
 	TaoDing <1774596582@qq.com>
-Subject: [PATCH v1 0/3] Fixed bugs in pl080
-Date: Wed, 11 Mar 2026 22:24:55 +0800
-X-OQ-MSGID: <cover.1773236195.git.1774596582@qq.com>
+Subject: [PATCH v1 2/3] The swidth and dwidth of pl080 are not equal.
+Date: Wed, 11 Mar 2026 22:24:57 +0800
+X-OQ-MSGID: <d149752c8bfa748039d42d2e5c8cdd5bed26d414.1773236195.git.1774596582@qq.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <cover.1773236195.git.1774596582@qq.com>
+References: <cover.1773236195.git.1774596582@qq.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=162.62.57.64; envelope-from=1774596582@qq.com;
- helo=out162-62-57-64.mail.qq.com
+Received-SPF: pass client-ip=203.205.221.242; envelope-from=1774596582@qq.com;
+ helo=out203-205-221-242.mail.qq.com
 X-Spam_score_int: 0
 X-Spam_score: -0.1
 X-Spam_bar: /
 X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-Mailman-Approved-At: Wed, 11 Mar 2026 10:51:41 -0400
 X-BeenThere: qemu-devel@nongnu.org
@@ -85,20 +88,80 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: TaoDing <1774596582@qq.com>
 
-Hi all,
-When I tested pl080 using the existing dmatest tool in Linux, 
-I found that pl080 could not output the results correctly.
-The main issues involved are inconsistent source and destination bit widths, 
-misalignment of LLI, which can lead to incorrect data and even cause qemu crashes.
 
-TaoDing (3):
-  An interrupt is generated after the DMA transfer complete.
-  The swidth and dwidth of pl080 are not equal.
-  The LLI of pl080 should be aligned with 4 bytes.
+The amount of data transmitted each time is the maximum value between s and w, 
+but it should be noted that the remaining transmission amount is less than the width.
 
- hw/dma/pl080.c | 37 ++++++++++++++++++++++++-------------
- 1 file changed, 24 insertions(+), 13 deletions(-)
+Configure swidth to 1 byte, width to 4 bytes, and transfer size to 4.
 
+Configuration
+    ../configure --target-list=arm-softmmu --enable-debug
+Reproducer
+    ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
+    -device loader,addr=0x00000000,data=0x44332211,data-len=4 \
+    -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
+    -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
+    -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
+    -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
+    -device loader,addr=0x10130108,data=0x00000000,data-len=4 \
+    -device loader,addr=0x1013010C,data=0x9e47f004,data-len=4 \
+    -device loader,addr=0x10130110,data=0x0000c001,data-len=4 
+
+Qemu monitor
+    (qemu) xp /1wx 0x00001000
+    00001000: 0x00002211
+
+The result correctly after fixed
+    (qemu) xp /1wx 0x00001000
+    00001000: 0x44332211
+
+---
+ hw/dma/pl080.c | 24 ++++++++++++++++--------
+ 1 file changed, 16 insertions(+), 8 deletions(-)
+
+diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+index 1a39954f04..f8a0ae0342 100644
+--- a/hw/dma/pl080.c
++++ b/hw/dma/pl080.c
+@@ -164,22 +164,30 @@ again:
+                destination widths are different.  */
+             swidth = 1 << ((ch->ctrl >> 18) & 7);
+             dwidth = 1 << ((ch->ctrl >> 21) & 7);
+-            for (n = 0; n < dwidth; n+= swidth) {
++            xsize = (dwidth < swidth) ? swidth : dwidth;
++            xsize = (xsize < size * swidth) ? xsize : (size * swidth);
++            for (n = 0; n < xsize; n+= swidth) {
+                 address_space_read(&s->downstream_as, ch->src,
+                                    MEMTXATTRS_UNSPECIFIED, buff + n, swidth);
+                 if (ch->ctrl & PL080_CCTRL_SI)
+                     ch->src += swidth;
+             }
+-            xsize = (dwidth < swidth) ? swidth : dwidth;
+             /* ??? This may pad the value incorrectly for dwidth < 32.  */
+-            for (n = 0; n < xsize; n += dwidth) {
+-                address_space_write(&s->downstream_as, ch->dest + n,
+-                                    MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
++            if(xsize < dwidth){
++                address_space_write(&s->downstream_as, ch->dest,
++                                    MEMTXATTRS_UNSPECIFIED, buff, xsize);
+                 if (ch->ctrl & PL080_CCTRL_DI)
+-                    ch->dest += swidth;
++                    ch->dest += xsize;
+             }
+-
+-            size--;
++            else{
++                for (n = 0; n < xsize; n += dwidth) {
++                    address_space_write(&s->downstream_as, ch->dest,
++                                        MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
++                    if (ch->ctrl & PL080_CCTRL_DI)
++                        ch->dest += dwidth;
++                }
++            }
++            size -= xsize / swidth;
+             ch->ctrl = (ch->ctrl & 0xfffff000) | size;
+             if (size == 0) {
+                 /* Transfer complete.  */
 -- 
 2.43.0
 
