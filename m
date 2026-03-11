@@ -4,58 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 01760112584E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:28:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C05D21125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:28:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LEO-0007mX-Fm; Wed, 11 Mar 2026 11:12:16 -0400
+	id 1w0LJs-0000Mf-DO; Wed, 11 Mar 2026 11:18:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LCD-0002cM-PU; Wed, 11 Mar 2026 11:10:02 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LIm-0008R2-GQ; Wed, 11 Mar 2026 11:16:54 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LCB-0005pV-Mb; Wed, 11 Mar 2026 11:10:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241483; bh=CLgO+i9uE6yw0o/c7fPWp6c3Ly99nYGSb8fZpZqd5P0=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AXHf5pzOYJ2iAFh7cOHIMbEZO2j4hyUD7jtlojOjjMXROwljwqUUpy1foURHxq6Xk
- FubPjl5BlV/iT/tHllHNBQ8lPgxFm3D7hPLfPrrPop7VKvkVUpOx1pIL6gFi7N8VQb
- EwJnLixXNER+jo32LcZqse4ObODSRiv2mqzwxfR2SlxQf5xQoTw80bsk6dVDI2A74O
- QLeCfat2lwpEBvJEAvT1MRjL3tvuXQjuSuKMSsQ6YER0Xv5OU166ZIUn5wBxw2oRi/
- 4fYBO8rc6mXT8wIs2k5fIm1SRiDvzDIW9fZu0NSu8EXriBHETCwMz/dYiJTIEufArK
- EGc0sAsECCN+Q==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 77265191EA5;
- Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 61B9E37C2E6;
- Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>,
- Jean-Louis Dupond <jean-louis@dupond.be>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 34/46] mirror: Fix missed dirty bitmap writes during
- startup
-Date: Wed, 11 Mar 2026 18:03:10 +0300
-Message-ID: <20260311150327.1084669-34-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LIb-0000Td-B9; Wed, 11 Mar 2026 11:16:47 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773242179; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=QDMYEVrlJwbcXce5Yk7h/LeJRAE8tg4VM5w2nM3XM/E+1XRQs03iHk2Uwk8XoyBLPXkMeK1BfPq4LZByYzxLdlwX5ZympU4WfLRrdsCGFWmzweDZOcWJnTHSlnO4GwueqoeHnj4F6ZtWbObZduLpF0Vs6SP6XFMD7MlJZqy6+6c=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773242179;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=nnxi2E4Xn74nsogu63Kucnhb6M6Yf3N0O05qPW20wss=; 
+ b=M3oiPHwbybrbxn/u3Aqm9+NsmsnlN0TRf21oy9QEHQXBBet46Oh+mZnBf7BEQOsUBWWzbpvdDRf8dU4qpjgG6RcBYKTMPrQxtkeSnUuwSFXrP3QqBE/NeEiu8r/piG3AQsSc+dzYB51dMb4VaiwDC4Eu54XlXblayMBcudDcqd0=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242179; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
+ bh=nnxi2E4Xn74nsogu63Kucnhb6M6Yf3N0O05qPW20wss=;
+ b=QP5qb4GGklg4FKd5uiRlEp3rHI1rFLHyjordBO9H/2Vzv1XrqFDVvUDS9fNHKb6V
+ E3eiVz5xlyb4Uxn8uLfkyo0IQR/65jHMT5Hxm0L0T4Ps8/s0iBshK/RbR2faLALODvD
+ mbYXyCfnvG2TRme2/xWMkf+gYPWD7j06nhCXuExA=
+Received: by mx.zohomail.com with SMTPS id 1773242177382941.9424272222914;
+ Wed, 11 Mar 2026 08:16:17 -0700 (PDT)
+From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
+Date: Wed, 11 Mar 2026 15:15:28 +0000
+Subject: [PATCH 01/14] accel/mshv: provision guests with the same features
+ as host
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260311-mshv_accel_arm64_supp-v1-1-c31699b7bc1f@anirudhrb.com>
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+X-Mailer: b4 0.14.3
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,153 +85,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+Query HV_PARTITION_PROPERTY_PROCESSOR_FEATURES to obtain the feature set
+supported by the host and pass on this feature set to the guest during
+partition creation.
 
-Currently, mirror disables the block layer's dirty bitmap before its own
-replacement is working. This means that during startup, there is a
-window in which the allocation status of blocks in the source has
-already been checked, but new writes coming in aren't tracked yet,
-resulting in a corrupted copy:
+Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+---
+ accel/mshv/mshv-all.c | 47 +++++++++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 45 insertions(+), 2 deletions(-)
 
-1. Dirty bitmap is disabled in mirror_start_job()
-2. Some request are started in mirror_top_bs while s->job == NULL
-3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-   the request hasn't completed yet, the block isn't allocated
-4. The request completes, still sees s->job == NULL and skips the
-   bitmap, and nothing else will mark it dirty either
-
-One ingredient is that mirror_top_opaque->job is only set after the
-job is fully initialized. For the rationale, see commit 32125b1460
-("mirror: Fix access of uninitialised fields during start").
-
-Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
-to track writes from the beginning. Disabling the block layer's tracking
-and enabling the mirror_top_bs one happens in a drained section, so
-there is no danger of races with in-flight requests any more. All of
-this happens well before the block allocation status is checked, so we
-can be sure that no writes will be missed.
-
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260219202446.312493-1-kwolf@redhat.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Jean-Louis Dupond <jean-louis@dupond.be>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 0f51f9c3420b31bb383e456dd7bf24d3056eeb73)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/block/mirror.c b/block/mirror.c
-index bc982cb99a..fa1d975eb9 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -99,6 +99,7 @@ typedef struct MirrorBlockJob {
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index d4cc7f5371..3b8b9ef116 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -110,21 +110,64 @@ static int resume_vm(int vm_fd)
+     return 0;
+ }
  
- typedef struct MirrorBDSOpaque {
-     MirrorBlockJob *job;
-+    BdrvDirtyBitmap *dirty_bitmap;
-     bool stop;
-     bool is_commit;
- } MirrorBDSOpaque;
-@@ -1675,9 +1676,11 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-         abort();
-     }
- 
--    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
--        qatomic_set(&s->job->actively_synced, false);
--        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-+    if (!copy_to_target) {
-+        if (s->job) {
-+            qatomic_set(&s->job->actively_synced, false);
-+        }
-+        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
-     }
- 
-     if (ret < 0) {
-@@ -1904,13 +1907,35 @@ static BlockJob *mirror_start_job(
- 
-     bdrv_drained_begin(bs);
-     ret = bdrv_append(mirror_top_bs, bs, errp);
--    bdrv_drained_end(bs);
--
-     if (ret < 0) {
-+        bdrv_drained_end(bs);
-+        bdrv_unref(mirror_top_bs);
-+        return NULL;
++static int get_host_property(int mshv_fd, uint32_t prop_code, uint64_t *value)
++{
++    int ret;
++    struct hv_input_get_partition_property in = {0};
++    struct mshv_root_hvcall args = {0};
++    struct hv_output_get_partition_property out = {0};
++
++    in.property_code = prop_code;
++
++    args.code = HVCALL_GET_PARTITION_PROPERTY;
++    args.in_sz = sizeof(in);
++    args.in_ptr = (uint64_t)&in;
++    args.out_sz = sizeof(out);
++    args.out_ptr = (uint64_t)&out;
++
++    ret = mshv_hvcall(mshv_fd, &args);
++    if (ret < 0) {
++        return -errno;
 +    }
 +
-+    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-+                                                       granularity,
-+                                                       NULL, errp);
-+    if (!bs_opaque->dirty_bitmap) {
-+        bdrv_drained_end(bs);
-         bdrv_unref(mirror_top_bs);
-         return NULL;
-     }
- 
-+    /*
-+     * The mirror job doesn't use the block layer's dirty tracking because it
-+     * needs to be able to switch seemlessly between background copy mode (which
-+     * does need dirty tracking) and write blocking mode (which doesn't) and
-+     * doing that would require draining the node. Instead, mirror_top_bs takes
-+     * care of updating the dirty bitmap as appropriate.
-+     *
-+     * Note that write blocking mode only becomes effective after mirror_run()
-+     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
-+     * we're still in background copy mode irrespective of @copy_mode.
-+     */
-+    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-+    bdrv_drained_end(bs);
++    *value = out.property_value;
++    return 0;
++}
 +
-     /* Make sure that the source is not resized while the job is running */
-     s = block_job_create(job_id, driver, NULL, mirror_top_bs,
-                          BLK_PERM_CONSISTENT_READ,
-@@ -2005,24 +2030,13 @@ static BlockJob *mirror_start_job(
-     s->base_overlay = bdrv_find_overlay(bs, base);
-     s->granularity = granularity;
-     s->buf_size = ROUND_UP(buf_size, granularity);
-+    s->dirty_bitmap = bs_opaque->dirty_bitmap;
-     s->unmap = unmap;
-     if (auto_complete) {
-         s->should_complete = true;
-     }
-     bdrv_graph_rdunlock_main_loop();
+ static int create_partition(int mshv_fd, int *vm_fd)
+ {
+     int ret;
+-    struct mshv_create_partition args = {0};
++    struct mshv_create_partition_v2 args = {0};
++    uint64_t host_proc_features0, host_proc_features1;
++
++    ret = get_host_property(mshv_fd, HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
++                    &host_proc_features0);
++    if (ret < 0) {
++        error_report("Failed to get host processor features (bank 0)");
++        return -1;
++    }
++
++    ret = get_host_property(mshv_fd, HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
++                    &host_proc_features1);
++    if (ret < 0) {
++        error_report("Failed to get host processor features (bank 1)");
++        return -1;
++    }
  
--    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
--                                               NULL, errp);
--    if (!s->dirty_bitmap) {
--        goto fail;
--    }
--
--    /*
--     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
--     */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
--
-     bdrv_graph_wrlock_drained();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-@@ -2102,9 +2116,6 @@ fail:
-         g_free(s->replaces);
-         blk_unref(s->target);
-         bs_opaque->job = NULL;
--        if (s->dirty_bitmap) {
--            bdrv_release_dirty_bitmap(s->dirty_bitmap);
--        }
-         job_early_fail(&s->common.job);
-     }
+     /* Initialize pt_flags with the desired features */
+     uint64_t pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
+                         (1ULL << MSHV_PT_BIT_X2APIC) |
+-                        (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES);
++                        (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
++                        (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
  
-@@ -2118,6 +2129,7 @@ fail:
-     bdrv_graph_wrunlock();
-     bdrv_drained_end(bs);
+     /* Set default isolation type */
+     uint64_t pt_isolation = MSHV_PT_ISOLATION_NONE;
  
-+    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
-     bdrv_unref(mirror_top_bs);
+     args.pt_flags = pt_flags;
+     args.pt_isolation = pt_isolation;
++    args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
++    args.pt_cpu_fbanks[0] = ~host_proc_features0;
++    args.pt_cpu_fbanks[1] = ~host_proc_features1;
  
-     return NULL;
+     ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
+     if (ret < 0) {
+
 -- 
-2.47.3
+2.43.0
 
 
