@@ -4,70 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80BC1103E2E6
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 21:17:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BEEB103E2E6
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 21:35:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Qv8-0008Ef-MG; Wed, 11 Mar 2026 17:16:46 -0400
+	id 1w0RCP-0005Mr-9l; Wed, 11 Mar 2026 17:34:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0Qv6-0008EE-RF
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 17:16:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0Qv5-0006ns-18
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 17:16:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773263801;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=0H6unT8VEZNo3CiJ+IQ8BYcYvkyYdKqtJtk19LAOfnU=;
- b=VKry6gOBq0Vk65AGob5FaD9oVrFWYslQINJajYNx27e5K+tzOXTYqfVg1tWz9RUbjj4nYB
- Ynsb4yiXErs8hdyegu6Xoa9cg5d0ZCu3Au4TOYSJxH7unEvjjbUMcN/jUa+iRhi6cM2fgP
- al11Ojdqo2ZbEpoW5T8MXwBBRvElWCE=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-146-kD4KKEPCO0KKgjhUpHrCzQ-1; Wed,
- 11 Mar 2026 17:16:37 -0400
-X-MC-Unique: kD4KKEPCO0KKgjhUpHrCzQ-1
-X-Mimecast-MFC-AGG-ID: kD4KKEPCO0KKgjhUpHrCzQ_1773263796
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0RCH-0005Lo-Kr
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 17:34:30 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0RCC-00034P-OJ
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 17:34:26 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D99DC1956094; Wed, 11 Mar 2026 21:16:35 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.35.99])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C973C1800361; Wed, 11 Mar 2026 21:16:31 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Aurelien Jarno <aurelien@aurel32.net>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PATCH] target/mips/cpu: Move initialization of memory region to
- realize function
-Date: Wed, 11 Mar 2026 22:16:29 +0100
-Message-ID: <20260311211629.118608-1-thuth@redhat.com>
+ by smtp-out2.suse.de (Postfix) with ESMTPS id AEE185BD30;
+ Wed, 11 Mar 2026 21:34:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773264862; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wkt4vLDDlWeSPeqcQoUkx4lx9wcHrIbFyBvj8ydtUtc=;
+ b=OD4+54dg+GRIpKfu6gLcZkuLkI0nAe7YVRc47KK8q6ATRqmVjIMnuXk0irpp+9vtdLGSXw
+ /q1tVEp8AhjV6yT4J5xcwvsVDOyXla/+Pq2xWW251JB7koXXsra6ABXVqmbz4MMQ8chJ5N
+ xEFvd/t9C9f6vPFfco4trz7ORc3QR/0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773264862;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wkt4vLDDlWeSPeqcQoUkx4lx9wcHrIbFyBvj8ydtUtc=;
+ b=SMhqRtBKeG3aMqL4U/SglnNWNBeEXm6DVNb7ZBCXImmkSAO7AggewhVb2SAtV7qwlV6Ecx
+ a4sWcpypq05eZRAA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773264862; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wkt4vLDDlWeSPeqcQoUkx4lx9wcHrIbFyBvj8ydtUtc=;
+ b=OD4+54dg+GRIpKfu6gLcZkuLkI0nAe7YVRc47KK8q6ATRqmVjIMnuXk0irpp+9vtdLGSXw
+ /q1tVEp8AhjV6yT4J5xcwvsVDOyXla/+Pq2xWW251JB7koXXsra6ABXVqmbz4MMQ8chJ5N
+ xEFvd/t9C9f6vPFfco4trz7ORc3QR/0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773264862;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wkt4vLDDlWeSPeqcQoUkx4lx9wcHrIbFyBvj8ydtUtc=;
+ b=SMhqRtBKeG3aMqL4U/SglnNWNBeEXm6DVNb7ZBCXImmkSAO7AggewhVb2SAtV7qwlV6Ecx
+ a4sWcpypq05eZRAA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 383303FC1B;
+ Wed, 11 Mar 2026 21:34:20 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id XyYIO9zfsWngUgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Wed, 11 Mar 2026 21:34:20 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Prasad Pandit <ppandit@redhat.com>
+Subject: [PATCH v2 0/5] migration-test: Plumbing
+Date: Wed, 11 Mar 2026 18:34:13 -0300
+Message-ID: <20260311213418.16951-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spamd-Result: default: False [-3.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.983]; MIME_GOOD(-0.10)[text/plain];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ ARC_NA(0.00)[]; FROM_HAS_DN(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ RCPT_COUNT_THREE(0.00)[4]; FROM_EQ_ENVFROM(0.00)[];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,60 +114,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Fix leaks. A couple of normal ones and a few that happen due to a test
+expecting failure in the destination side, but 'exit-on-error' is set
+so the coroutine just exits the entire process while a few resources
+are still allocated, but outside of the scope of the migration code.
 
-When introspecting the Loongson-3A4000 CPUs from the command line, QEMU
-currently crashes:
+For v2 I set exit-on-error unconditionally in migration-test. The QEMU
+process should never return 1 anymore.
 
- $ ./qemu-system-mips64el -device Loongson-3A4000-mips64-cpu,help
- qemu-system-mips64el: ../../devel/qemu/system/physmem.c:1401:
-  register_multipage: Assertion `num_pages' failed.
- Aborted (core dumped)
+I also removed the cleanup patches because they are no longer strictly
+necessary, I'll add them for the next release cyle to keep the changes
+during the freeze restricted to what is necessary to fix the bugs.
 
-Move the initialization of the memory regions to the realize function
-to fix this problem.
+CI run: https://gitlab.com/farosas/qemu/-/pipelines/2379240537
+--enable-asan --enable-ubsan build is clean for x86_64 migration-test --full
 
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
----
- target/mips/cpu.c | 16 ++++++++--------
- 1 file changed, 8 insertions(+), 8 deletions(-)
+v1:
+cover: https://lore.kernel.org/r/20260310142134.15137-1-farosas@suse.de
+series: https://lore.kernel.org/r/20260310135540.8679-1-farosas@suse.de
 
-diff --git a/target/mips/cpu.c b/target/mips/cpu.c
-index e424d115018..5f88c077dbf 100644
---- a/target/mips/cpu.c
-+++ b/target/mips/cpu.c
-@@ -460,6 +460,14 @@ static void mips_cpu_realizefn(DeviceState *dev, Error **errp)
-     MIPSCPUClass *mcc = MIPS_CPU_GET_CLASS(dev);
-     Error *local_err = NULL;
- 
-+#ifndef CONFIG_USER_ONLY
-+    if (mcc->cpu_def->lcsr_cpucfg2 & (1 << CPUCFG2_LCSRP)) {
-+        memory_region_init_io(&env->iocsr.mr, OBJECT(cpu), NULL,
-+                              env, "iocsr", UINT64_MAX);
-+        address_space_init(&env->iocsr.as, &env->iocsr.mr, "IOCSR");
-+    }
-+#endif
-+
-     if (!clock_get(cpu->clock)) {
- #ifndef CONFIG_USER_ONLY
-         if (!qtest_enabled()) {
-@@ -504,14 +512,6 @@ static void mips_cpu_initfn(Object *obj)
-     cpu->count_div = clock_new(OBJECT(obj), "clk-div-count");
-     env->count_clock = clock_new(OBJECT(obj), "clk-count");
-     env->cpu_model = mcc->cpu_def;
--#ifndef CONFIG_USER_ONLY
--    if (mcc->cpu_def->lcsr_cpucfg2 & (1 << CPUCFG2_LCSRP)) {
--        memory_region_init_io(&env->iocsr.mr, OBJECT(cpu), NULL,
--                                env, "iocsr", UINT64_MAX);
--        address_space_init(&env->iocsr.as,
--                            &env->iocsr.mr, "IOCSR");
--    }
--#endif
- }
- 
- static char *mips_cpu_type_name(const char *cpu_model)
+Fabiano Rosas (5):
+  tests/qtest/migration: Fix leak of migration tests data
+  io: Fix TLS bye task leak
+  tests/qtest/migration: Fix leak in CPR exec test
+  migration/multifd: Fix leaks of TLS error objects
+  tests/qtest/migration: Force exit-on-error=false
+
+ io/channel-tls.c                       |  4 +++-
+ migration/migration.c                  |  5 +++++
+ migration/multifd.c                    | 27 ++++++++++++--------------
+ tests/qtest/dbus-vmstate-test.c        |  5 +++--
+ tests/qtest/migration/cpr-tests.c      |  5 +++--
+ tests/qtest/migration/framework.c      |  7 +++----
+ tests/qtest/migration/framework.h      |  2 --
+ tests/qtest/migration/migration-qmp.c  |  6 ++++++
+ tests/qtest/migration/migration-util.c | 19 +++++++++++++-----
+ tests/qtest/migration/migration-util.h |  2 +-
+ tests/qtest/migration/misc-tests.c     |  4 ++--
+ tests/qtest/migration/precopy-tests.c  | 12 +++++-------
+ tests/qtest/migration/tls-tests.c      | 14 +++++++------
+ 13 files changed, 65 insertions(+), 47 deletions(-)
+
 -- 
-2.53.0
+2.51.0
 
 
