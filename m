@@ -4,125 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85F3D1125858
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:50:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AC7F1125858
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:51:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Nhg-0001eh-Mx; Wed, 11 Mar 2026 13:50:40 -0400
+	id 1w0Nhz-0001lL-CY; Wed, 11 Mar 2026 13:50:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0Nhe-0001du-De
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:50:38 -0400
-Received: from mail-pf1-x42c.google.com ([2607:f8b0:4864:20::42c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0Nhc-0005mY-OJ
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:50:38 -0400
-Received: by mail-pf1-x42c.google.com with SMTP id
- d2e1a72fcca58-82985f42664so110631b3a.0
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 10:50:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w0Nhw-0001ky-VU
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:50:56 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jsnow@redhat.com>) id 1w0Nhv-0005o9-87
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:50:56 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773251454;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=TOTYeHIHWqapF6z7iW/Ae/k239I5+uwzuiv/Vhz3ugA=;
+ b=JO8+LOA7JjLQP7id0D/IYKrd+zx7zDh5iVljWu3JZZ+MjK0eygohSoKefDcRJDZer4lzb3
+ gAhpixcKoMWvdMVgDjIJXSykcgaKZTP5rlGaNlu3iaZqWaGGVbfuyDDa/Ij41cYJ/78LUA
+ gAlQI6KcNSmJ/Usai6mmZlF3u4GUNis=
+Received: from mail-yw1-f200.google.com (mail-yw1-f200.google.com
+ [209.85.128.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-352-sJmazy9tPb2IkRteWFpMbQ-1; Wed, 11 Mar 2026 13:50:51 -0400
+X-MC-Unique: sJmazy9tPb2IkRteWFpMbQ-1
+X-Mimecast-MFC-AGG-ID: sJmazy9tPb2IkRteWFpMbQ_1773251450
+Received: by mail-yw1-f200.google.com with SMTP id
+ 00721157ae682-7986f771f69so36637207b3.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 10:50:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773251450; cv=none;
+ d=google.com; s=arc-20240605;
+ b=faWsNIG//StSw2OL6sFES699e1o0ScCfqh0S36prj05tCexx/mMXHhp7CbnZB2sbKZ
+ 3YTTj15/94gqz3QCwd3V0AbHybEdy94wp/kI3YX+z1XOpmbw7G3+pgp7bMF7THfDOlK8
+ 1ZQZtQBDr+bQfMqV1RJR7gZSRQwAG0BQdwig4RaCxFKuCQ/i4T91sjHXMzny/xU8pNy1
+ PZTP+vQaSU2ujZ6cM8yYMD/eIsxD7fKM4fYz8KLHNF+L914s/RhcmkVDXuAMdU9ILXOO
+ 1SPVZcaArBCQQqmClTWI73YKhnj9GgDR2Q8t9YsgwgsA9fRWAbhwoVFqt60DTpU+B35c
+ KzLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=TOTYeHIHWqapF6z7iW/Ae/k239I5+uwzuiv/Vhz3ugA=;
+ fh=ElQKVI4Dk6HA0JYXCzp039d/Vuy6kuE9fuR7MvVeTmo=;
+ b=ONNEzF6xw2z9RrAmMHQZdKWj0q4DcYZqjA1gmFkC+fPU3stsQTETYU0UT1xRFCIDSa
+ ojImnSCEzJ7CN+lYeQw25FnZcl525nCh4PnmdtcLGS2wqfckNbRDewj1jNpiXbdWGb9J
+ mu9aBnF5++4HXlpSyCk9XXh28i58v7LDuPfafSqzcOQ7moPop5DwsN6dB6tU+B8yGCFi
+ gc9bVjGM7Vd21f7WsvRKygEagwizggcZ3OV9b7rHq6MZiJ0LVlCaE9Fi8B+kb6f/Zsec
+ CxIvIUSa4q2soOlfqqXrNaFg9rOeYDioqGl0tjsSEXR4furkhErgBpvTnGkRtKfjDOQE
+ uBvg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773251434; x=1773856234; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1Hr3CJ529aQUAC6Gc0ww+0xsT8MqRoRjBREHxdIbU84=;
- b=ixsd6x0mjisdyUoCoCPxAcAkdqwXR2YqORrWSNmsf3eGKvdWZ40bbpvfbGL17JQOsc
- hrLqTL/ZwYT98OIG78IH079bVkFt5WQbDBILHfME36VToCywFIDn9DfDWFqeCJJ7ZIve
- aH8L0KUnKS/SeRi77AbjkV4tK0qBQiajkA1c7JyL3FCBWbdjpdZebesasQX4ff2u5l9i
- SxB+T3TtEDA1aTqLdqf+8Et7ef9cAuJoud5EHFVvjja+t6mrVt263PwrDu13VEFAPMaQ
- 2+PfL9Z0pLsZILGyTBX1kfxQd+TzVdZDEPSa+pltT5rjqzyS1/PSPF5zxYOjUsQb5MlI
- qr8Q==
+ d=redhat.com; s=google; t=1773251450; x=1773856250; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TOTYeHIHWqapF6z7iW/Ae/k239I5+uwzuiv/Vhz3ugA=;
+ b=SfX6mXfIsXJswPSYgj0zTMsDCp/ki7xN3C59Jl8snYe0BzXqy5cTl9DUJ/yLV1Q/K8
+ YKYT2cLojGvxC7/T5MHYTxDS3y149TPu7PEUPx4xacVcUrtztJp91JN5tEzPy80E/w8B
+ 5uYeB57r86nHyxz9VmM1qv3qhfh5afagsubFuiDtON2ILiNRTGZirD2U+tnW5+gxwd5P
+ TbjB38v/gJZg1gglhxCLtFXCSBweSYWgAb8LRCPv7kiar113ztoYfTfW4yXuWOguLCo7
+ nl72Cmrvfc13pC52IjcfHlS5m4EMaXird0XAbW0uWoCj2zVec5vSjCnDOiqSyZk824js
+ NqmQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773251434; x=1773856234;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=1Hr3CJ529aQUAC6Gc0ww+0xsT8MqRoRjBREHxdIbU84=;
- b=XZfTIzyZHwMWwcToKNx4wd7np/cWDAgHOxtuxFgYdTkHzTOPNwNgIFFRq2+tS6VgnQ
- 3TAl/2sqTEOVxFF2CCUtdIIO5WDvRnUOsUhRG6zjS5FlVVEmLYrecIetNmkYE2po1iDD
- TSWT7tLaRN1b071Vx0314K7z10CkNj1Zl02J56/OUlJU+eQ4hfrCsOy6ie5V7JjZIB09
- Y16oX8lWvkvKunLRJEs4EGdvIbv2QdaxM+S+zmoHfsJFkcZEycxvwM3opeBGFVfAyoyC
- Z0fafwUlFD0x9kRGSFodx6ooGIbIfR98dhEjbFTGQ/sgbGpadsO3SXqackH/Tpy70aA7
- wVBQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVtns4c9ON9/N2dQIE4pUjFAAerJ68N7fYcCQ0QltWCf2wS16ioVY2O7GZ3rn8m8ETrhcfggx6Xwk43@nongnu.org
-X-Gm-Message-State: AOJu0YxOt3fbE4Wt3K717f56V4RVvjTBlc9NBq5tNTSgzGMVvQW8tINW
- t/MjnTWuQJKQWcXFcdx8gVvliq/BmpRIO3uMX5ZedRpfkRAK01hsw3NfgWgrCdiiafYVtpYr0kA
- /SQow
-X-Gm-Gg: ATEYQzyZgCPjep4LAQaZPHHUXMQSH2ptvIaw1vnpRqo6Xnc+1z8U1dU6GDAf3hrLrfU
- xUuM4pNk6LfEkkVwZMd6RUBVWIoiNC6tizML3AUu2CWlH/Ga/psg/Mv+hsVgsbCjgnfTOqY9AzB
- oksTRLK2cYO80zoImmer1cmg9FkFB0biTFAEhF4wocnoqIkBDNYOnC28ch/TQc+1d6M/TbxgP/Q
- JPx98/ob6mIthl510zrqkR4YzeHNLtO5B3uVen7dFEa6htn8izbZIRQv1Mq/hJw/ZVEGjU++W5T
- NicSLuJRZhEh5DY4C9L2j+SD03qSoUgTd/T8d2Kox6pwEuPgTen3QA2v7YfZa/WL2oPW7j3Qd0E
- VM+GTR+ShsqaObSvwRRMfMYhF2o23iutmxIgl6xNGLcjbxq4hPmbNtxwQQ2l/99i3kvBuWS2kN7
- 0RDxJlk6mjJ04HbdHm/z6BuGDyLeJIbtfCZ7fZ5gY9QVcjxqPKbgURAXlxpJIoynpo3O6R
-X-Received: by 2002:a05:6a00:7617:b0:81f:40e5:34c2 with SMTP id
- d2e1a72fcca58-829f70f0602mr2600178b3a.32.1773251434389; 
- Wed, 11 Mar 2026 10:50:34 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a0736e64bsm248768b3a.50.2026.03.11.10.50.33
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 10:50:34 -0700 (PDT)
-Message-ID: <3a411a2e-a853-410f-a3f1-5af02c04005e@linaro.org>
-Date: Wed, 11 Mar 2026 10:50:33 -0700
+ d=1e100.net; s=20230601; t=1773251450; x=1773856250;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=TOTYeHIHWqapF6z7iW/Ae/k239I5+uwzuiv/Vhz3ugA=;
+ b=hEVEAPKY5HjClBhsmlDLzX/LmopZH7QBK2goKyISe5ryqL/DopwGWY6nQkTDFkGEBd
+ i6o30x8GCJzfCgorpvyqOCHo9NsR8CX0BU12OfsHT9v3mrJG95zfdO6F021DRrwQ7epZ
+ GeSMR1rymFCpCfd6dNhFcPNrBzkF3wDf4re9UM4V7ukj4Ifm8e8On49KcN8W9KKtBWmL
+ 2kgVZA85SzLaeA3n9+Sglu3wVwPXUIK0RnJBK88UjJj+JYAHDUZmytv1XYNTrIw6qq8v
+ vweZaBbU8P4/+kE8ewq9DxZU7ihzODC0CCbyDB7skXlQ7EVnBeXbEjfAXL798/jHpVXG
+ mmdw==
+X-Gm-Message-State: AOJu0YwyXXMQrziWmQKCDBrsMZc8rZf+6cLhWRaPP4XpBxbCas81bvpo
+ OYPkH53AocCIcxrK5GaiMAsiVudmmOzUqtOIxXa/6XlnYyCryV6CLpGXiVt9zb3OscHDwpAnvvt
+ 3hawwaareCAx7AQQgrx/E0FJkpNQcddCQLDyFBhtVDKXik30kJIOk86U2DP6p4DeqAfyKdDVIOc
+ MVWImj5YV47V/FJzGx9m8fdefHE+VpKwE=
+X-Gm-Gg: ATEYQzyvtdVaHruR7ZUAwCmuuwzBmNFZw9okB5ZyTCgOM6VY+z+HFe+t2jhJQQAPJx3
+ bIeNbteve4nOp8wrNtqj7RjfkyoIStFcVGnTkaSYxBC+J3oUrVqUbU7wfLzpd1msw6x1yANJLLt
+ WpP/EkOksufl469XVreLYQsnAthg/l8FqWihaRCSD1+jSafkZCCjJYaamALAA1s3PRwRbcGehkq
+ SHgngk/iAMNVQ+TbdLEUgikWg3aNCqlNhYZDA==
+X-Received: by 2002:a05:690c:6604:b0:799:1a03:84c1 with SMTP id
+ 00721157ae682-79940fc3dbdmr5210877b3.4.1773251450458; 
+ Wed, 11 Mar 2026 10:50:50 -0700 (PDT)
+X-Received: by 2002:a05:690c:6604:b0:799:1a03:84c1 with SMTP id
+ 00721157ae682-79940fc3dbdmr5210657b3.4.1773251450034; Wed, 11 Mar 2026
+ 10:50:50 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: OS command injection in QEMU
-Content-Language: en-US
-To: =?UTF-8?Q?Yakup_Ate=C5=9F?= <yakup.ates@yatesh.de>, qemu-devel@nongnu.org
-References: <17617957-ddba-4c4d-aa0c-c7bc26e06166@yatesh.de>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <17617957-ddba-4c4d-aa0c-c7bc26e06166@yatesh.de>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+ <20260311150327.1084669-5-mjt@tls.msk.ru>
+In-Reply-To: <20260311150327.1084669-5-mjt@tls.msk.ru>
+From: John Snow <jsnow@redhat.com>
+Date: Wed, 11 Mar 2026 13:50:39 -0400
+X-Gm-Features: AaiRm50ThViT4k_pICk6xAHj1wrlYzUT2JkBzlzs1tp7U1f0zDneRP7N0-mHSOc
+Message-ID: <CAFn=p-b1RbHmJgKvonqDX6H5+7dwcXfNEMTsMiU7GmSW=L-yQA@mail.gmail.com>
+Subject: Re: [Stable-10.1.5 05/46] python: drop uses of pkg_resources
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org, 
+ Peter Maydell <peter.maydell@linaro.org>, Thomas Huth <thuth@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=jsnow@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -138,52 +135,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Yakup,
+On Wed, Mar 11, 2026 at 11:05=E2=80=AFAM Michael Tokarev <mjt@tls.msk.ru> w=
+rote:
+>
+> From: John Snow <jsnow@redhat.com>
+>
+> pkg_resources has been fully dropped from modern pip/setuptools
+> distributions and we should phase out its use. This patch is enough to,
+> by itself, repair most GitLab CI tests upstream; with the exception of
+> tox tests which are still making use of avocado - which will be dropped
+> in a separate series to restore functionality there.
 
-On 3/11/26 9:56 AM, Yakup Ateş wrote:
-> Dear ladies and gentleman,
-> 
-> I found an OS command injection vulnerability in QEMU.
-> 
-> I want to file a CVE ID and explain  the vulnerability to you and get 
-> you to confirm the vulnerability for the CVE ID.
-> 
-> How does the process work exactly with you guys? How can I transmit this 
-> to you on an encrypted channel?
-> 
-> Thank you in advance!
-> 
-> -- 
-> 
-> Best Regards
-> 
-> *Yakup Ateş*
-> 
-> Chief Executive Officer
-> 
-> yatesh
-> 
-> 	yatesh Logo
-> 
-> Phone Icon +49 1523 8023340
-> Email Icon yakup.ates@yatesh.de
-> Website Icon yatesh.de <https://yatesh.de>
-> Address Icon Kostheimer Straße 12, 60326 Frankfurt am Main
-> 
-> *yatesh thinks green.* Please consider the environment before printing 
-> this email.
-> 
-> This email message and any attachments are sent by yatesh, are 
-> confidential, and may be proprietary or privileged. If you are not the 
-> named or intended recipient, please notify us immediately by replying to 
-> this message or sending an email to info@yatesh.de and delete all copies 
-> of this message and attachments. Do not disseminate, distribute, or copy 
-> this email.
-> 
+Hiya mjt - that separate series mentioned in this commit has now also
+been merged and you may wish to consider it for stable inclusion. It's
+a four patch python PR that adds Python 3.14 testing support and drops
+avocado and it makes the optional check-python-tox GitLab CI test
+green again.
 
-you can report it using this process:
-https://www.qemu.org/contribute/security-process/
+--js
 
-Thanks,
-Pierrick
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
+> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+> Message-ID: <20260211195804.135144-3-jsnow@redhat.com>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> (cherry picked from commit e44a26ba940214824b61976324058e73d9f41658)
+> Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+>
+> diff --git a/python/setup.py b/python/setup.py
+> index c5bc45919a..789fa39b0f 100755
+> --- a/python/setup.py
+> +++ b/python/setup.py
+> @@ -7,7 +7,6 @@
+>  import setuptools
+>  from setuptools.command import bdist_egg
+>  import sys
+> -import pkg_resources
+>
+>
+>  class bdist_egg_guard(bdist_egg.bdist_egg):
+> @@ -30,9 +29,6 @@ def main():
+>      QEMU tooling installer
+>      """
+>
+> -    # https://medium.com/@daveshawley/safely-using-setup-cfg-for-metadat=
+a-1babbe54c108
+> -    pkg_resources.require('setuptools>=3D39.2')
+> -
+>      setuptools.setup(cmdclass=3D{'bdist_egg': bdist_egg_guard})
+>
+>
+> --
+> 2.47.3
+>
+
 
