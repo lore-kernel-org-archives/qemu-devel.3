@@ -4,46 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 212E51125847
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB480112584E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:18:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LEx-0001Im-Re; Wed, 11 Mar 2026 11:12:52 -0400
+	id 1w0LDZ-00040s-TH; Wed, 11 Mar 2026 11:11:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LCi-0003Ks-7B; Wed, 11 Mar 2026 11:10:33 -0400
+ id 1w0LC8-0002R6-Um; Wed, 11 Mar 2026 11:09:59 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LCg-00066a-F6; Wed, 11 Mar 2026 11:10:31 -0400
+ id 1w0LC7-0005mQ-9r; Wed, 11 Mar 2026 11:09:56 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241483; bh=NyOkkYHXSesyPk6l9bUYnlkfII1YnExUjDXhYWA9fOw=;
+ t=1773241483; bh=h/kUl/xQLmRb/S4svpv2ZTc8FHO1O9r77yc2rDjhLuM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=w+FrniagMYNaF/12OImMHfIENs2X7kMztctcFVibO1lsrCThMpFxl4oplvntBiPDl
- wbiLO3I0Icce0FSiHCkxaZcG5eGTZG4C3CCtIwvExfW1OZ8sc4hUerS5bcY5K/uwqF
- ftYoUuPs7Hipsfy9P3le5ylXxsNuJvixvjTDs0d58W2sXhnkedZE+VbVcCIeDVp9aa
- PsYvymPHj/QtMvRahA+yapV1icatKnAoxDIwRpotCcnorSaGgn/7Z4jPM27n4ggvVE
- 1m9GIv63QUntskFYIVV88+cqQS74d9fuWlUugPEugjVVLOQ7cIZCLl6TKZ3pk0IN1s
- lZzbVozMY1RDw==
+ b=b/NkV7Yt78mzjgOuzF/yV5Qs46geax5JXz7dzaksXl0R/NqZKxIB9CVbRPCs5gGId
+ WQMM1d9gAp97IwOXgVaKSxpo4wsD0XWF7IUSy83Y5kj0W2BRLOIcozscAkO55DbbYr
+ ti1Z7OXpAZ/sFZbhLiecaS4XhxPeSfetEJzKI9gfB/tah/SyLYE2hV0JqVRx7IvYoo
+ tS2JT0x0s2tpt6Gy45OmgJctyXKtt32NJm5R4v5TfAmDL0TTfzKFhDGuwdVIOLOwKL
+ oQBWGUknJe/qy1UkLMC/4zm+1vZkjKDofH06ss4ZvCckHL8BChvuB1I0kXwu+p6aFj
+ 5QXmnPz4CJcVA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id D57CB191EAA;
+ by isrv.corpit.ru (Postfix) with ESMTP id 38AEF191EA2;
  Wed, 11 Mar 2026 18:04:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id BBBBC37C2EB;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 256C137C2E3;
  Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Alistair Francis <alistair.francis@wdc.com>,
- "Edgar E. Iglesias" <edgar.iglesias@amd.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 39/46] hw/net/xilinx_ethlite: Check for oversized TX
+Subject: [Stable-10.1.5 31/46] hw/net/smc91c111: Don't allow negative-length
  packets
-Date: Wed, 11 Mar 2026 18:03:15 +0300
-Message-ID: <20260311150327.1084669-39-mjt@tls.msk.ru>
+Date: Wed, 11 Mar 2026 18:03:07 +0300
+Message-ID: <20260311150327.1084669-31-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
@@ -76,63 +74,75 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Peter Maydell <peter.maydell@linaro.org>
 
-The xilinx_ethlite network device wasn't checking that the TX packet
-size set by the guest was within the size of its dual port RAM, with
-the effect that the guest could get it to read off the end of the RAM
-block.
+The smc91c111 data frame format in memory (figure 8-1 in the
+datasheet) includes a "byte count" field which is intended to be the
+total size of the data frame, including not just the packet data but
+also the leading and trailing information like the status word and
+the byte count field itself.  It is therefore possible for the guest
+to set this to a value so small that the leading and trailing fields
+won't fit and the packet has effectively a negative area.
 
-Check the length.  There is no provision in this very simple device
-for reporting errors, so as with various RX errors we just report via
-tracepoint.
+We weren't checking for this, with the result that when we subtract 6
+from the length to get the length of the packet proper we end up with
+a negative length, which is then inconsistently handled in the
+qemu_send_packet() code such that we can try to transmit a very large
+amount of data and read off the end of the device's data array.
 
-This lack of length check has been present since the device was first
-introduced, though the code implementing the tx path has changed
-somewhat since then.
+Treat excessively small length values the same way we do excessively
+large values.  As with the oversized case, the datasheet does not
+describe what happens for this software error case, and there is no
+relevant tx error condition for this, so we just log and drop the
+packet.
 
 Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3317
-Fixes: b43848a1005ce ("xilinx: Add ethlite emulation")
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3304
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Edgar E. Iglesias <edgar.iglesias@amd.com>
-Message-ID: <20260303172718.437015-1-peter.maydell@linaro.org>
-[PMD: renamed size -> tx_size to avoid shadow=compatible-local error]
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 6595a8d5d17ea1716ddafb34455ec2b29381e232)
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260226175549.1319476-1-peter.maydell@linaro.org
+(cherry picked from commit d8e19f8042dcaff8e077292209c8196acb150bdd)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/trace-events b/hw/net/trace-events
-index 72b69c4a8b..698290fe79 100644
---- a/hw/net/trace-events
-+++ b/hw/net/trace-events
-@@ -517,3 +517,4 @@ xen_netdev_rx(int dev, int idx, int status, int flags) "vif%u idx %d status %d f
- # xilinx_ethlite.c
- ethlite_pkt_lost(uint32_t rx_ctrl) "rx_ctrl:0x%" PRIx32
- ethlite_pkt_size_too_big(uint64_t size) "size:0x%" PRIx64
-+ethlite_pkt_tx_size_too_big(uint64_t size) "size:0x%" PRIx64
-diff --git a/hw/net/xilinx_ethlite.c b/hw/net/xilinx_ethlite.c
-index 42b19d07c7..665def8a34 100644
---- a/hw/net/xilinx_ethlite.c
-+++ b/hw/net/xilinx_ethlite.c
-@@ -162,9 +162,15 @@ static void port_tx_write(void *opaque, hwaddr addr, uint64_t value,
-         break;
-     case TX_CTRL:
-         if ((value & (CTRL_P | CTRL_S)) == CTRL_S) {
--            qemu_send_packet(qemu_get_queue(s->nic),
--                             txbuf_ptr(s, port_index),
--                             s->port[port_index].reg.tx_len);
-+            uint32_t tx_size = s->port[port_index].reg.tx_len;
-+
-+            if (tx_size >= BUFSZ_MAX) {
-+                trace_ethlite_pkt_tx_size_too_big(tx_size);
-+            } else {
-+                qemu_send_packet(qemu_get_queue(s->nic),
-+                                 txbuf_ptr(s, port_index),
-+                                 tx_size);
-+            }
-             if (s->port[port_index].reg.tx_ctrl & CTRL_I) {
-                 eth_pulse_irq(s);
-             }
+diff --git a/hw/net/smc91c111.c b/hw/net/smc91c111.c
+index 5cd78e334b..f2c2e22dd0 100644
+--- a/hw/net/smc91c111.c
++++ b/hw/net/smc91c111.c
+@@ -30,6 +30,12 @@
+  * LAN91C111 datasheet).
+  */
+ #define MAX_PACKET_SIZE 2048
++/*
++ * Size of the non-data fields in a data frame: status word,
++ * byte count, control byte, and last data byte; this defines
++ * the smallest value the byte count in the frame can validly be.
++ */
++#define MIN_PACKET_SIZE 6
+ 
+ #define TYPE_SMC91C111 "smc91c111"
+ OBJECT_DECLARE_SIMPLE_TYPE(smc91c111_state, SMC91C111)
+@@ -289,7 +295,7 @@ static void smc91c111_do_tx(smc91c111_state *s)
+         *(p++) = 0x40;
+         len = *(p++);
+         len |= ((int)*(p++)) << 8;
+-        if (len > MAX_PACKET_SIZE) {
++        if (len < MIN_PACKET_SIZE || len > MAX_PACKET_SIZE) {
+             /*
+              * Datasheet doesn't say what to do here, and there is no
+              * relevant tx error condition listed. Log, and drop the packet.
+@@ -300,7 +306,13 @@ static void smc91c111_do_tx(smc91c111_state *s)
+             smc91c111_complete_tx_packet(s, packetnum);
+             continue;
+         }
+-        len -= 6;
++        /*
++         * Convert from size of the data frame to number of bytes of
++         * actual packet data. Whether the "last data byte" field is
++         * included in the packet depends on the ODD bit in the control
++         * byte at the end of the frame.
++         */
++        len -= MIN_PACKET_SIZE;
+         control = p[len + 1];
+         if (control & 0x20)
+             len++;
 -- 
 2.47.3
 
