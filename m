@@ -4,114 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAD36103E2E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:14:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D957103E2E9
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:18:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0RoD-0000vc-78; Wed, 11 Mar 2026 18:13:41 -0400
+	id 1w0RsY-0004A0-HC; Wed, 11 Mar 2026 18:18:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0RoB-0000us-6u
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:13:39 -0400
-Received: from smtp-out1.suse.de ([195.135.223.130])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0RsX-00049s-Q8
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:18:09 -0400
+Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0Ro7-0004zu-NS
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:13:37 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id B51D44D642;
- Wed, 11 Mar 2026 22:13:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773267206; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XXKCgnqGyH/v/Xg2Zt+YIbaZeNFOItL55qSzGq0aF5w=;
- b=k+KXuRzUyd3XzkXm+e1RoZSMpJqx/sywaLVIkx+g+11T0L+Thk2gcfZSQ3Z16P6yfb5R3k
- OEt3cJ+6Jaqr9hjZ8AkHxuFZES9lIduOiRuIsIKd1gAF25IZJ9KyirryzyxrkXXD2fnVqp
- miJ6FQA+qTWwbB/LocrPOxSSCO7qpUE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773267206;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XXKCgnqGyH/v/Xg2Zt+YIbaZeNFOItL55qSzGq0aF5w=;
- b=NrFZBqBosCFBwzs2wd8Js9Y2A3TxmtuWoSO56ZH4pBxxf6Len7QgdItD//5XmUFz5IS3el
- gB0/Wpr0FzC42RBg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=k+KXuRzU;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=NrFZBqBo
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773267206; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XXKCgnqGyH/v/Xg2Zt+YIbaZeNFOItL55qSzGq0aF5w=;
- b=k+KXuRzUyd3XzkXm+e1RoZSMpJqx/sywaLVIkx+g+11T0L+Thk2gcfZSQ3Z16P6yfb5R3k
- OEt3cJ+6Jaqr9hjZ8AkHxuFZES9lIduOiRuIsIKd1gAF25IZJ9KyirryzyxrkXXD2fnVqp
- miJ6FQA+qTWwbB/LocrPOxSSCO7qpUE=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773267206;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=XXKCgnqGyH/v/Xg2Zt+YIbaZeNFOItL55qSzGq0aF5w=;
- b=NrFZBqBosCFBwzs2wd8Js9Y2A3TxmtuWoSO56ZH4pBxxf6Len7QgdItD//5XmUFz5IS3el
- gB0/Wpr0FzC42RBg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id C5BC43FC44;
- Wed, 11 Mar 2026 22:13:25 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id QLO8IgXpsWnCeQAAD6G6ig
- (envelope-from <farosas@suse.de>); Wed, 11 Mar 2026 22:13:25 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 2/3] tests/qtest/test-x86-cpuid-compat: Switch test_cpuid_prop
- to data-driven
-Date: Wed, 11 Mar 2026 19:13:19 -0300
-Message-ID: <20260311221320.22112-3-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
-In-Reply-To: <20260311221320.22112-1-farosas@suse.de>
-References: <20260311221320.22112-1-farosas@suse.de>
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0RsU-00062K-IM
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:18:07 -0400
+Received: by mail-pj1-x1030.google.com with SMTP id
+ 98e67ed59e1d1-359f35dfef6so175413a91.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 15:18:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773267484; x=1773872284; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=LzBqCwuN/iK8IbM5ajAVsOTNH0vG60Ih9ZnsHIuhMhk=;
+ b=C/2HmQppgjoe/+4O0HNB6Y6D5Fez+R1fzdcmMHbk9zapG16XRE9+XkuSLS90MtzKBz
+ uwMhhOISrfUZJvXHnlVqS/gxsrRDouTrluMvc4gKx/HVr+wF5c9RLEY7+YDXWm+R7iaK
+ QdJS2vgNiJkiPPe0T/c/omM49P+X3vOIh4+fymYL3YZq8wwtobkFzw3tjd4lrCudLJza
+ +6852rWVsjRN0WeCoQ6WqSOTd74/UCcMyBzhSKaQuXY/QKnKaerX9t+EPRW4RTLJY1Jz
+ u5tEJvhQW9/pZy11r94x7T78G0va+ZeBl63BhRQsA3Wtz/qBaVLkgxpTU2aLBjSDnZAh
+ 2IYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773267484; x=1773872284;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=LzBqCwuN/iK8IbM5ajAVsOTNH0vG60Ih9ZnsHIuhMhk=;
+ b=cPlxcLI9oBs7Kpg0C5vTmHep2XXrUhgAtB0s+NH8DZIaNZ6kPEu1CvVKKoNbqYqg5D
+ /VtfUdXO6L/LBuUjjdKmYU1dn37V2haYbSqwrT6rgHuk5mR+GPs31hOzdU3cnDI60G/l
+ ZzuOIgAbSMy4OfWPW7W2EGsRaNHlg972EVvJ5mIXSqKO8MYaVVXKwt68NV9H5dOa3H2v
+ svc2KHQA3X6zCEOqg+p4MJ8GEtKNRRL+eMGPjeRKTmTfYOO/Pk24zXPFFLdxE0uPm4mr
+ Wnk6UdfTtT5dClQW+1TCctqyC+r9NsBg4CCBRgEX3JWthk5I6OCULH/ggd2oJaEN86/c
+ 99Ow==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVUdcM0zRbwy9AfUmUA3P4a4awPMJPbdePHxMFh6glDYYMo15aUAUFj3MQQQp47xuSzPa8EzWSw7mHs@nongnu.org
+X-Gm-Message-State: AOJu0Yy7gTt/PrjtW/8Pe1I1HefsL+mY6BN+0DZZHolmOcUkDHloc9eg
+ AJV5hDtSyk4jlV/4A6tEttutoKIlFHlvsTmnaXjSG3VoP8DBaoCp3hpHV3Lkp3s3/Qg=
+X-Gm-Gg: ATEYQzzF01YCpMxCQuYrIVbIrVfQi8H0L5LZc+Al1EUuO+OBF2P4OSZBHfENA1sjEUu
+ JSfQV0wsJjTxc1R7ikKqiKnBDc+MHbkZbwrMJsTkci61mKHtSVs14+3Sdn5zO9t5Wz94bepTYdF
+ vx3aXhw9rfash5KazEuGxEWOmO1q4YapPKpqRMN5FGhbGfsE1CqrZi3sqrlHRbhKNgzTyBMrWzD
+ pD/TC5TSD+A9s84rmECAvszogBqT5VffuVKJlcB0jAwxkAqcIQXB6YG/9JFAgqvBVBH1p6EixzO
+ uZL7zjYRk2uoelXjyebo2bVvA7CM7bQDhd2qOSHBYVQZp99M6kAJW/BTVdK/+RrQE6M4yWLdk/6
+ chGRi4zGot1aAMtC6O7sG5jxWN051jgEA3bVuEGXJUtPp56lxRn+FO6kg+7g40SunvjR0qMojGR
+ 60fqBInJRpcQGcAUAH0GGDCNu1nfFz+RBwKdWavfSzRm4bwADtjXT9trQbtcyWQlkUMEE/
+X-Received: by 2002:a17:90b:3844:b0:353:49f2:1e7a with SMTP id
+ 98e67ed59e1d1-35a0133c134mr4029226a91.17.1773267483369; 
+ Wed, 11 Mar 2026 15:18:03 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35a02fc8465sm3225955a91.9.2026.03.11.15.18.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 15:18:03 -0700 (PDT)
+Message-ID: <8b0df43e-aa4e-4d2d-a975-b43144503268@linaro.org>
+Date: Wed, 11 Mar 2026 15:18:02 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-3.01 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
- MIME_TRACE(0.00)[0:+]; FROM_HAS_DN(0.00)[];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:dkim,suse.de:email,linaro.org:email];
- RCVD_TLS_ALL(0.00)[]; RCVD_COUNT_TWO(0.00)[2];
- FROM_EQ_ENVFROM(0.00)[];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_TWO(0.00)[2]; TO_DN_SOME(0.00)[];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
-X-Rspamd-Queue-Id: B51D44D642
-Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
- helo=smtp-out1.suse.de
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/3] docs: some doc updates
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+References: <20260311102626.46546-1-mohamed@unpredictable.fr>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <20260311102626.46546-1-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -128,367 +137,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+On 3/11/26 3:26 AM, Mohamed Mediouni wrote:
+> A documentation update, no code.
+> 
+> Mohamed Mediouni (3):
+>    docs: remove 64-bit only mentions for accelerators
+>    qemu-options.hx: document Hyper-V enlightenments accelerator option
+>    docs: mention that WHPX supports Arm too
+> 
+>   docs/about/build-platforms.rst | 4 ++--
+>   docs/system/introduction.rst   | 6 +++---
+>   qemu-options.hx                | 5 +++++
+>   3 files changed, 10 insertions(+), 5 deletions(-)
+> 
 
-In test-x86-cpuid-compat, we allocate memory in add_cpuid_test()
-which is then freed in the test function test_cpuid_prop().  This
-means that this memory is leaked if the test is never run, which
-happens in several cases:
- * user asks to list tests with -l option
- * user asks to run only some tests with -p or similar option
- * we are running a "subprocess" test and glib re-invokes the
-   test binary telling it to run a specific single test
-
-As noted in the commit message of commit 93ed7d330321dc, we cannot
-deal with this by using g_test_add_data_func_full() and passing a
-free-function, because glib doesn't call that if the test is not
-executed.
-
-Instead, move all the data allocations into test_cpuid_prop(),
-and pass it a pointer to a struct with the necessary parameters
-which is a compile-time constant.
-
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Fabiano Rosas <farosas@suse.de>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
- tests/qtest/test-x86-cpuid-compat.c | 278 ++++++++++++++++------------
- 1 file changed, 164 insertions(+), 114 deletions(-)
-
-diff --git a/tests/qtest/test-x86-cpuid-compat.c b/tests/qtest/test-x86-cpuid-compat.c
-index be67631a85..fc90a46d37 100644
---- a/tests/qtest/test-x86-cpuid-compat.c
-+++ b/tests/qtest/test-x86-cpuid-compat.c
-@@ -44,19 +44,43 @@ static bool qom_get_bool(const char *path, const char *prop)
- }
- 
- typedef struct CpuidTestArgs {
--    const char *cmdline;
-+    /* test name */
-+    const char *name;
-+    /* CPU type */
-+    const char *cpu;
-+    /* CPU features (may be NULL) */
-+    const char *cpufeat;
-+    /* machine type (may be NULL to use default machine) */
-+    const char *machine;
-+    /* CPU property to read */
-     const char *property;
-+    /* expected value of the property */
-     int64_t expected_value;
- } CpuidTestArgs;
- 
- static void test_cpuid_prop(const void *data)
- {
-     const CpuidTestArgs *args = data;
-+    char *cmdline;
-+    char *save;
-     char *path;
-     QNum *value;
-     int64_t val;
- 
--    qtest_start(args->cmdline);
-+    cmdline = g_strdup_printf("-cpu %s", args->cpu);
-+
-+    if (args->cpufeat) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("%s,%s", cmdline, args->cpufeat);
-+        g_free(save);
-+    }
-+    if (args->machine) {
-+        save = cmdline;
-+        cmdline = g_strdup_printf("-machine %s %s", args->machine, cmdline);
-+        g_free(save);
-+    }
-+
-+    qtest_start(cmdline);
-     path = get_cpu0_qom_path();
-     value = qobject_to(QNum, qom_get(path, args->property));
-     g_assert(qnum_get_try_int(value, &val));
-@@ -65,40 +89,9 @@ static void test_cpuid_prop(const void *data)
- 
-     qobject_unref(value);
-     g_free(path);
--    g_free((void *)args->cmdline);
--    g_free((void *)data);
-+    g_free(cmdline);
- }
- 
--static void add_cpuid_test(const char *name, const char *cpu,
--                           const char *cpufeat, const char *machine,
--                           const char *property, int64_t expected_value)
--{
--    CpuidTestArgs *args = g_new0(CpuidTestArgs, 1);
--    char *cmdline;
--    char *save;
--
--    if (!qtest_has_cpu_model(cpu)) {
--        return;
--    }
--    cmdline = g_strdup_printf("-cpu %s", cpu);
--
--    if (cpufeat) {
--        save = cmdline;
--        cmdline = g_strdup_printf("%s,%s", cmdline, cpufeat);
--        g_free(save);
--    }
--    if (machine) {
--        save = cmdline;
--        cmdline = g_strdup_printf("-machine %s %s", machine, cmdline);
--        g_free(save);
--    }
--    args->cmdline = cmdline;
--    args->property = property;
--    args->expected_value = expected_value;
--    qtest_add_data_func(name, args, test_cpuid_prop);
--}
--
--
- /* Parameters to a add_feature_test() test case */
- typedef struct FeatureTestArgs {
-     /* cmdline to start QEMU */
-@@ -249,103 +242,160 @@ static void test_plus_minus(void)
-     g_test_trap_assert_stdout("");
- }
- 
--int main(int argc, char **argv)
--{
--    g_test_init(&argc, &argv, NULL);
--
--    g_test_add_func("/x86/cpuid/parsing-plus-minus/subprocess",
--                    test_plus_minus_subprocess);
--    g_test_add_func("/x86/cpuid/parsing-plus-minus", test_plus_minus);
--
-+static const CpuidTestArgs cpuid_tests[] = {
-     /* Original level values for CPU models: */
--    add_cpuid_test("x86/cpuid/phenom/level",
--                   "phenom", NULL, NULL, "level", 5);
--    add_cpuid_test("x86/cpuid/Conroe/level",
--                   "Conroe", NULL, NULL, "level", 10);
--    add_cpuid_test("x86/cpuid/SandyBridge/level",
--                   "SandyBridge", NULL, NULL, "level", 0xd);
--    add_cpuid_test("x86/cpuid/486/xlevel",
--                   "486", NULL, NULL, "xlevel", 0);
--    add_cpuid_test("x86/cpuid/core2duo/xlevel",
--                   "core2duo", NULL, NULL, "xlevel", 0x80000008);
--    add_cpuid_test("x86/cpuid/phenom/xlevel",
--                   "phenom", NULL, NULL, "xlevel", 0x8000001A);
--    add_cpuid_test("x86/cpuid/athlon/xlevel",
--                   "athlon", NULL, NULL, "xlevel", 0x80000008);
--
-+    {
-+        "x86/cpuid/phenom/level",
-+        "phenom", NULL, NULL, "level", 5,
-+    },
-+    {
-+        "x86/cpuid/Conroe/level",
-+        "Conroe", NULL, NULL, "level", 10,
-+    },
-+    {
-+        "x86/cpuid/SandyBridge/level",
-+        "SandyBridge", NULL, NULL, "level", 0xd,
-+    },
-+    {
-+        "x86/cpuid/486/xlevel",
-+        "486", NULL, NULL, "xlevel", 0,
-+    },
-+    {
-+        "x86/cpuid/core2duo/xlevel",
-+        "core2duo", NULL, NULL, "xlevel", 0x80000008,
-+    },
-+    {
-+        "x86/cpuid/phenom/xlevel",
-+        "phenom", NULL, NULL, "xlevel", 0x8000001A,
-+    },
-+    {
-+        "x86/cpuid/athlon/xlevel",
-+        "athlon", NULL, NULL, "xlevel", 0x80000008,
-+    },
-     /* If level is not large enough, it should increase automatically: */
-     /* CPUID[6].EAX: */
--    add_cpuid_test("x86/cpuid/auto-level/486/arat",
--                   "486", "arat=on", NULL, "level", 6);
-+    {
-+        "x86/cpuid/auto-level/486/arat",
-+        "486", "arat=on", NULL, "level", 6,
-+    },
-     /* CPUID[EAX=7,ECX=0].EBX: */
--    add_cpuid_test("x86/cpuid/auto-level/phenom/fsgsbase",
--                   "phenom", "fsgsbase=on", NULL, "level", 7);
-+    {
-+        "x86/cpuid/auto-level/phenom/fsgsbase",
-+        "phenom", "fsgsbase=on", NULL, "level", 7,
-+    },
-     /* CPUID[EAX=7,ECX=0].ECX: */
--    add_cpuid_test("x86/cpuid/auto-level/phenom/avx512vbmi",
--                   "phenom", "avx512vbmi=on", NULL, "level", 7);
-+    {
-+        "x86/cpuid/auto-level/phenom/avx512vbmi",
-+        "phenom", "avx512vbmi=on", NULL, "level", 7,
-+    },
-     /* CPUID[EAX=0xd,ECX=1].EAX: */
--    add_cpuid_test("x86/cpuid/auto-level/phenom/xsaveopt",
--                   "phenom", "xsaveopt=on", NULL, "level", 0xd);
-+    {
-+        "x86/cpuid/auto-level/phenom/xsaveopt",
-+        "phenom", "xsaveopt=on", NULL, "level", 0xd,
-+    },
-     /* CPUID[8000_0001].EDX: */
--    add_cpuid_test("x86/cpuid/auto-xlevel/486/3dnow",
--                   "486", "3dnow=on", NULL, "xlevel", 0x80000001);
-+    {
-+        "x86/cpuid/auto-xlevel/486/3dnow",
-+        "486", "3dnow=on", NULL, "xlevel", 0x80000001,
-+    },
-     /* CPUID[8000_0001].ECX: */
--    add_cpuid_test("x86/cpuid/auto-xlevel/486/sse4a",
--                   "486", "sse4a=on", NULL, "xlevel", 0x80000001);
-+    {
-+        "x86/cpuid/auto-xlevel/486/sse4a",
-+        "486", "sse4a=on", NULL, "xlevel", 0x80000001,
-+    },
-     /* CPUID[8000_0007].EDX: */
--    add_cpuid_test("x86/cpuid/auto-xlevel/486/invtsc",
--                   "486", "invtsc=on", NULL, "xlevel", 0x80000007);
-+    {
-+        "x86/cpuid/auto-xlevel/486/invtsc",
-+        "486", "invtsc=on", NULL, "xlevel", 0x80000007,
-+    },
-     /* CPUID[8000_000A].EDX: */
--    add_cpuid_test("x86/cpuid/auto-xlevel/486/npt",
--                   "486", "svm=on,npt=on", NULL, "xlevel", 0x8000000A);
-+    {
-+        "x86/cpuid/auto-xlevel/486/npt",
-+        "486", "svm=on,npt=on", NULL, "xlevel", 0x8000000A,
-+    },
-     /* CPUID[C000_0001].EDX: */
--    add_cpuid_test("x86/cpuid/auto-xlevel2/phenom/xstore",
--                   "phenom", "xstore=on", NULL, "xlevel2", 0xC0000001);
-+    {
-+        "x86/cpuid/auto-xlevel2/phenom/xstore",
-+        "phenom", "xstore=on", NULL, "xlevel2", 0xC0000001,
-+    },
-     /* SVM needs CPUID[0x8000000A] */
--    add_cpuid_test("x86/cpuid/auto-xlevel/athlon/svm",
--                   "athlon", "svm=on", NULL, "xlevel", 0x8000000A);
--
--
-+    {
-+        "x86/cpuid/auto-xlevel/athlon/svm",
-+        "athlon", "svm=on", NULL, "xlevel", 0x8000000A,
-+    },
-     /* If level is already large enough, it shouldn't change: */
--    add_cpuid_test("x86/cpuid/auto-level/SandyBridge/multiple",
--                   "SandyBridge", "arat=on,fsgsbase=on,avx512vbmi=on",
--                   NULL, "level", 0xd);
-+    {
-+        "x86/cpuid/auto-level/SandyBridge/multiple",
-+        "SandyBridge", "arat=on,fsgsbase=on,avx512vbmi=on",
-+        NULL, "level", 0xd,
-+    },
-     /* If level is explicitly set, it shouldn't change: */
--    add_cpuid_test("x86/cpuid/auto-level/486/fixed/0xF",
--                   "486",
--                   "level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   NULL, "level", 0xF);
--    add_cpuid_test("x86/cpuid/auto-level/486/fixed/2",
--                   "486",
--                   "level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   NULL, "level", 2);
--    add_cpuid_test("x86/cpuid/auto-level/486/fixed/0",
--                   "486",
--                   "level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
--                   NULL, "level", 0);
--
-+    {
-+        "x86/cpuid/auto-level/486/fixed/0xF",
-+        "486",
-+        "level=0xF,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+        NULL, "level", 0xF,
-+    },
-+    {
-+        "x86/cpuid/auto-level/486/fixed/2",
-+        "486",
-+        "level=2,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+        NULL, "level", 2,
-+    },
-+    {
-+        "x86/cpuid/auto-level/486/fixed/0",
-+        "486",
-+        "level=0,arat=on,fsgsbase=on,avx512vbmi=on,xsaveopt=on",
-+        NULL, "level", 0,
-+    },
-     /* if xlevel is already large enough, it shouldn't change: */
--    add_cpuid_test("x86/cpuid/auto-xlevel/phenom/3dnow",
--                   "phenom", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   NULL, "xlevel", 0x8000001A);
-+    {
-+        "x86/cpuid/auto-xlevel/phenom/3dnow",
-+        "phenom", "3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+        NULL, "xlevel", 0x8000001A,
-+    },
-     /* If xlevel is explicitly set, it shouldn't change: */
--    add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/80000002",
--                   "486",
--                   "xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   NULL, "xlevel", 0x80000002);
--    add_cpuid_test("x86/cpuid/auto-xlevel/486/fixed/8000001A",
--                   "486",
--                   "xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   NULL, "xlevel", 0x8000001A);
--    add_cpuid_test("x86/cpuid/auto-xlevel/phenom/fixed/0",
--                   "486",
--                   "xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
--                   NULL, "xlevel", 0);
--
-+    {
-+        "x86/cpuid/auto-xlevel/486/fixed/80000002",
-+        "486",
-+        "xlevel=0x80000002,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+        NULL, "xlevel", 0x80000002,
-+    },
-+    {
-+        "x86/cpuid/auto-xlevel/486/fixed/8000001A",
-+        "486",
-+        "xlevel=0x8000001A,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+        NULL, "xlevel", 0x8000001A,
-+    },
-+    {
-+        "x86/cpuid/auto-xlevel/phenom/fixed/0",
-+        "486",
-+        "xlevel=0,3dnow=on,sse4a=on,invtsc=on,npt=on,svm=on",
-+        NULL, "xlevel", 0,
-+    },
-     /* if xlevel2 is already large enough, it shouldn't change: */
--    add_cpuid_test("x86/cpuid/auto-xlevel2/486/fixed",
--                   "486", "xlevel2=0xC0000002,xstore=on",
--                   NULL, "xlevel2", 0xC0000002);
-+    {
-+        "x86/cpuid/auto-xlevel2/486/fixed",
-+        "486", "xlevel2=0xC0000002,xstore=on",
-+        NULL, "xlevel2", 0xC0000002,
-+    },
-+};
-+
-+int main(int argc, char **argv)
-+{
-+    g_test_init(&argc, &argv, NULL);
-+
-+    g_test_add_func("/x86/cpuid/parsing-plus-minus/subprocess",
-+                    test_plus_minus_subprocess);
-+    g_test_add_func("/x86/cpuid/parsing-plus-minus", test_plus_minus);
-+
-+    for (int i = 0; i < ARRAY_SIZE(cpuid_tests); i++) {
-+        if (!qtest_has_cpu_model(cpuid_tests[i].cpu)) {
-+            continue;
-+        }
-+        qtest_add_data_func(cpuid_tests[i].name,
-+                            &cpuid_tests[i], test_cpuid_prop);
-+    }
- 
-     /* Test feature parsing */
-     add_feature_test("x86/cpuid/features/plus",
--- 
-2.51.0
+For the whole series:
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
 
