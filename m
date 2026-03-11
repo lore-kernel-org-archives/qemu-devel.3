@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A441F1125808
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A691125807
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:16:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0JPZ-0000oW-Lz; Wed, 11 Mar 2026 09:15:42 -0400
+	id 1w0JPo-0000rE-1R; Wed, 11 Mar 2026 09:15:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w0JPR-0000mn-Bm; Wed, 11 Mar 2026 09:15:33 -0400
-Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ id 1w0JPR-0000mm-Bf; Wed, 11 Mar 2026 09:15:33 -0400
+Received: from forwardcorp1a.mail.yandex.net
+ ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w0JPN-0000Mc-Gh; Wed, 11 Mar 2026 09:15:33 -0400
+ id 1w0JPN-0000MZ-DP; Wed, 11 Mar 2026 09:15:31 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 22913C01FD;
- Wed, 11 Mar 2026 16:15:26 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 18C7EC01F7;
+ Wed, 11 Mar 2026 16:15:24 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:d28::1:5])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id MFGaO30AdeA0-rzyliYDq; Wed, 11 Mar 2026 16:15:25 +0300
+ ESMTPSA id MFGaO30AdeA0-utayagAb; Wed, 11 Mar 2026 16:15:23 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1773234925;
- bh=iUTREIsMsoxJZYrRIxYpYeInFZJ/vFfyLJNkWygU7M8=;
- h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=YBc4aiBfHGr7XExuH6wBZ/fLtXfk6o3DhfFDRq0p3dju7PYq5et5fS+/r2Xlck1w8
- Be4r3B5BPsiNj+qoibk3YP6aJgSJVOL05gGxRRS7CepmE1OCZTZNJb//lyj9xBPlKw
- mNKd/u9GdXxUDLfm7/xyyYto56eNJp335O+rLVrI=
+ s=default; t=1773234923;
+ bh=iz6p7m9EDk2Vrc5w/nLOhSrRhal4+0T/3hF17eQnydo=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=FiI3+Rf3FT6ap8Pc5DxNEqqh5C2eKHelIcuXpoDMmBvjB4aolMQs1ht/j9DI4TJ4E
+ bQ4osiO/XKrd6odMhPqdJznBdAr1NsteegSvv4Dj8Auw1Ky2ZTG+ezKQ7S12KQtMqA
+ /BchWcgZMqwH4WAP4ulQRU4MaGygCjFT++fWbKug=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
@@ -43,24 +44,22 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Xu <peterx@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-trivial@nongnu.org, Laurent Vivier <laurent@vivier.eu>
-Subject: [PATCH v4 2/4] dump/dump.c: reorder usage and assertion of block
-Date: Wed, 11 Mar 2026 18:15:20 +0500
-Message-Id: <20260311131522.58600-3-heifetz@yandex-team.com>
+ qemu-trivial@nongnu.org
+Subject: [PATCH v4 0/4] Fix a few minor issues reported by Coverity
+Date: Wed, 11 Mar 2026 18:15:18 +0500
+Message-Id: <20260311131522.58600-1-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260311131522.58600-1-heifetz@yandex-team.com>
-References: <20260311131522.58600-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.72;
+Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
  envelope-from=heifetz@yandex-team.com; helo=forwardcorp1a.mail.yandex.net
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_score_int: -27
+X-Spam_score: -2.8
+X-Spam_bar: --
+X-Spam_report: (-2.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_LOW=-0.7, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,35 +75,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reorder the code so the assertion of block occurs before it is
-used in the subsequent lines.
+Hi. This patch series fixes several minor issues reported by our local
+Coverity installation.
 
-Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
-Reviewed-by: Laurent Vivier <laurent@vivier.eu>
----
- dump/dump.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Changes in v4:
+- Included Peter's explanation why `assert` is redundant in the commit
+  message of the third patch.
+- Added `Reviewed-by` tags that I missed in v2 to the other three patches.
 
-diff --git a/dump/dump.c b/dump/dump.c
-index f7a99a7af2e..80ed6c8d219 100644
---- a/dump/dump.c
-+++ b/dump/dump.c
-@@ -1288,6 +1288,7 @@ static bool get_next_page(GuestPhysBlock **blockptr, uint64_t *pfnptr,
-     /* block == NULL means the start of the iteration */
-     if (!block) {
-         block = QTAILQ_FIRST(&s->guest_phys_blocks.head);
-+        assert(block);
-         *blockptr = block;
-         addr = block->target_start;
-         *pfnptr = dump_paddr_to_pfn(s, addr);
-@@ -1295,7 +1296,6 @@ static bool get_next_page(GuestPhysBlock **blockptr, uint64_t *pfnptr,
-         *pfnptr += 1;
-         addr = dump_pfn_to_paddr(s, *pfnptr);
-     }
--    assert(block != NULL);
- 
-     while (1) {
-         if (addr >= block->target_start && addr < block->target_end) {
+Changes in v3:
+- Nothing. I sent the second version of the series without the corresponding
+'v2' suffix by mistake. I apologise.
+
+Changes in v2:
+- Remove assert(block) in system/physmem.c instead of placing it
+  before the dereference.
+
+Sergei Heifetz (4):
+  migration/savevm.c: reorder usage and assertion of mis->from_src_file
+  dump/dump.c: reorder usage and assertion of block
+  system/physmem.c: remove useless assertion of block
+  hw/usb/core.c: reorder usage and assertion of p->ep
+
+ dump/dump.c        | 2 +-
+ hw/usb/core.c      | 2 +-
+ migration/savevm.c | 3 ++-
+ system/physmem.c   | 2 --
+ 4 files changed, 4 insertions(+), 5 deletions(-)
+
 -- 
 2.34.1
 
