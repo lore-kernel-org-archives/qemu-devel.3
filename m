@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2F6B112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA774112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L8K-0002Nq-2c; Wed, 11 Mar 2026 11:06:01 -0400
+	id 1w0L6f-0006wT-6R; Wed, 11 Mar 2026 11:04:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6d-0006lh-AS; Wed, 11 Mar 2026 11:04:15 -0400
+ id 1w0L6A-0005RS-AB; Wed, 11 Mar 2026 11:03:51 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L6b-0004AJ-1F; Wed, 11 Mar 2026 11:04:14 -0400
+ id 1w0L68-00046V-Ln; Wed, 11 Mar 2026 11:03:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=AIrqPt+dnRLFsZxahbC8ZGLB9VyUjCWnNavT0kX01pc=;
+ t=1773241304; bh=JNL2rIu2vfEaYsIMtje72Dk25oI+UsT0THp6K99zEqc=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=KjSaDWb3B38FZt3cNlgoFqC1uRJB7DyHw9/DR0C0pwNmBTaB+O8NHWk7LjNGN0b3m
- fEVIRETz9yG94GfqJ3DMnyURdpH8MMBpfxOjnmHs0vyIeha8R76YPy/1DdgDz/Tvfy
- QOZFQmLgBxDjyYZB/un9WY1ZV07ZJjaadqR1359RHzc4dXVuUssYYUUsAjy8r0p3zm
- frvWO1MKOImDW66pLQ+12C/ZT1chmGY1KJBlkI3xDEDH+OZUL7sh0TdPechzxQtngJ
- PiQ3Ra1f5Sis9bsEG/S/ncb0hrqLdXr1UPQbf8r8tHTneGlCgs7K1KYOtJLdhoDP7k
- oSyyn1NrNcNDg==
+ b=rGPy4ahtfN2/EewjLBRs84wrSkA2jchG4PnSRpkevgGrmvvUpu05aFfcv/Y02Uxw0
+ fPiZlCCC9XBb+DqjOOYvKGWgY1wgbSkbQ8f8xN2NCJ2oNFDNKtXjY8ULa2qLgznqv3
+ 2CkyQFhsac+EO3ykQtx4DEg3NZGzMuplxYpbclJPe+th3MNcJQtyw6odz4KtByU3HI
+ POeity09nnyhGjRoHNaZK2g7rxKSLlURUJK5QRfB3n3k1xqtD4ibr6bUwn9hOn7Huu
+ 6dHxQPQQ/saOxdnbsMO6e7ICDIqh9EdNpvprnjHEWDHiW0ic97RQpdXmuUsdaEP3zJ
+ EdxDRp6VspbNw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0C384191E55;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 9B736191E50;
+ Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E9EA537C2A7;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 7E69137C2A2;
  Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, John Snow <jsnow@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+Cc: qemu-stable@nongnu.org, Kuan-Wei Chiu <visitorckw@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 23/44] tests/docker: upgrade most non-lcitool debian
- tests to debian 13
-Date: Wed, 11 Mar 2026 18:01:55 +0300
-Message-ID: <20260311150221.1084186-23-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 18/44] hw/misc/virt_ctrl: Fix incorrect trace event in
+ read operation
+Date: Wed, 11 Mar 2026 18:01:50 +0300
+Message-ID: <20260311150221.1084186-18-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -73,165 +72,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: John Snow <jsnow@redhat.com>
+From: Kuan-Wei Chiu <visitorckw@gmail.com>
 
-Debian 11 was EOL in 2024, and Debian 12 will be EOL this June. This
-patch moves all but one of our tests, debian-legacy-test-cross, onto
-Debian 13.
+The virt_ctrl_read() function currently invokes trace_virt_ctrl_write()
+instead of trace_virt_ctrl_read(). This results in read operations
+appearing as write operations in the trace output, which is misleading
+during debugging and analysis.
 
-This patch does the bare minimum to upgrade these tests and doesn't make
-any attempt at optimization or cleanup that may or may not be possible
-with this upgrade.
+Replace the incorrect trace call with the proper read-specific trace
+event to accurately reflect the hardware behavior.
 
-Signed-off-by: John Snow <jsnow@redhat.com>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-[AJB: tweak summary line]
-Message-ID: <20260226185303.1920021-2-alex.bennee@linaro.org>
-Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
-(cherry picked from commit e2d4646a02689c8428f267e66ab422f04aa717ba)
+Fixes: 0791bc02b8fb ("m68k: add a system controller")
+Signed-off-by: Kuan-Wei Chiu <visitorckw@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260111184915.1363318-1-visitorckw@gmail.com>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+(cherry picked from commit 8608ed356ef90815cc5bcf04fcdbde987fd24bca)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/docker/dockerfiles/debian-hexagon-cross.docker b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-index 23152b4918..91d4b71ac9 100644
---- a/tests/docker/dockerfiles/debian-hexagon-cross.docker
-+++ b/tests/docker/dockerfiles/debian-hexagon-cross.docker
-@@ -5,10 +5,12 @@
- # needs to be able to build QEMU itself in CI we include its
- # build-deps.
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
-+
-+# Add deb-src repository sources
-+RUN sed -i "s/^Types: deb$/Types: deb deb-src/" \
-+    /etc/apt/sources.list.d/debian.sources
+diff --git a/hw/misc/virt_ctrl.c b/hw/misc/virt_ctrl.c
+index a210a5924c..ee31b10210 100644
+--- a/hw/misc/virt_ctrl.c
++++ b/hw/misc/virt_ctrl.c
+@@ -43,7 +43,7 @@ static uint64_t virt_ctrl_read(void *opaque, hwaddr addr, unsigned size)
+         break;
+     }
  
--# Duplicate deb line as deb-src
--RUN cat /etc/apt/sources.list | sed "s/^deb\ /deb-src /" >> /etc/apt/sources.list
- RUN apt-get update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-     DEBIAN_FRONTEND=noninteractive eatmydata \
-@@ -24,6 +26,7 @@ RUN apt-get update && \
-         ninja-build \
-         python3-pip \
-         python3-setuptools \
-+        python3-tomli \
-         python3-venv \
-         python3-wheel && \
- # Install QEMU build deps for use in CI
-@@ -36,8 +39,6 @@ RUN apt-get update && \
-     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc && \
-     dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
+-    trace_virt_ctrl_write(s, addr, size, value);
++    trace_virt_ctrl_read(s, addr, size, value);
  
--RUN /usr/bin/pip3 install tomli
--
- ENV TOOLCHAIN_INSTALL /opt
- ENV TOOLCHAIN_RELEASE 12.Dec.2023
- ENV TOOLCHAIN_BASENAME "clang+llvm-${TOOLCHAIN_RELEASE}-cross-hexagon-unknown-linux-musl"
-diff --git a/tests/docker/dockerfiles/debian-loongarch-cross.docker b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-index 538ab53490..55b3dbe451 100644
---- a/tests/docker/dockerfiles/debian-loongarch-cross.docker
-+++ b/tests/docker/dockerfiles/debian-loongarch-cross.docker
-@@ -4,10 +4,11 @@
- # This docker target uses prebuilt toolchains for LoongArch64 from:
- # https://github.com/loongson/build-tools/releases
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- 
--# Duplicate deb line as deb-src
--RUN cat /etc/apt/sources.list | sed "s/^deb\ /deb-src /" >> /etc/apt/sources.list
-+# Add deb-src repository sources
-+RUN sed -i "s/^Types: deb$/Types: deb deb-src/" \
-+    /etc/apt/sources.list.d/debian.sources
- 
- RUN export DEBIAN_FRONTEND=noninteractive && \
-     apt-get update && \
-@@ -31,12 +32,11 @@ RUN apt-get update && \
-         ninja-build \
-         python3-pip \
-         python3-setuptools \
-+        python3-tomli \
-         python3-venv \
-         python3-wheel && \
-         dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
--RUN /usr/bin/pip3 install tomli
--
- RUN curl -#SL https://github.com/loongson/build-tools/releases/download/2023.08.08/CLFS-loongarch64-8.1-x86_64-cross-tools-gcc-glibc.tar.xz \
-     | tar -xJC /opt
- 
-diff --git a/tests/docker/dockerfiles/debian-toolchain.docker b/tests/docker/dockerfiles/debian-toolchain.docker
-index ab4ce29533..9a256209a7 100644
---- a/tests/docker/dockerfiles/debian-toolchain.docker
-+++ b/tests/docker/dockerfiles/debian-toolchain.docker
-@@ -4,13 +4,15 @@
- # This dockerfile is used for building a cross-compiler toolchain.
- # The script for building the toolchain is supplied via extra-files.
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- 
- # Install build utilities for building gcc and glibc.
- # ??? The build-dep isn't working, missing a number of
- # minimal build dependiencies, e.g. libmpc.
- 
--RUN sed 's/^deb /deb-src /' </etc/apt/sources.list >/etc/apt/sources.list.d/deb-src.list
-+# Add deb-src repository sources
-+RUN sed -i "s/^Types: deb$/Types: deb deb-src/" \
-+    /etc/apt/sources.list.d/debian.sources
- 
- RUN apt update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-@@ -34,7 +36,7 @@ RUN cd /root && ./build-toolchain.sh
- # Throw away the extra toolchain build deps, the downloaded source,
- # and the build trees by restoring the original image,
- # then copying the built toolchain from stage 0.
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- RUN apt update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-     DEBIAN_FRONTEND=noninteractive eatmydata \
-diff --git a/tests/docker/dockerfiles/debian-tricore-cross.docker b/tests/docker/dockerfiles/debian-tricore-cross.docker
-index 7e00e870ce..fd797dc7ee 100644
---- a/tests/docker/dockerfiles/debian-tricore-cross.docker
-+++ b/tests/docker/dockerfiles/debian-tricore-cross.docker
-@@ -9,7 +9,7 @@
- #
- # SPDX-License-Identifier: GPL-2.0-or-later
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- 
- RUN apt update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
-@@ -31,12 +31,11 @@ RUN apt update && \
-        pkgconf \
-        python3-pip \
-        python3-setuptools \
-+       python3-tomli \
-        python3-wheel \
-        python3-venv && \
-        dpkg-query --showformat '${Package}_${Version}_${Architecture}\n' --show > /packages.txt
- 
--RUN /usr/bin/pip3 install tomli
--
- RUN curl -#SL https://github.com/bkoppelmann/package_940/releases/download/tricore-toolchain-9.40/tricore-toolchain-9.4.0.tar.gz \
-     | tar -xzC /usr/local/
- 
-diff --git a/tests/docker/dockerfiles/debian-xtensa-cross.docker b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-index d011eee2ad..ef63e44e2e 100644
---- a/tests/docker/dockerfiles/debian-xtensa-cross.docker
-+++ b/tests/docker/dockerfiles/debian-xtensa-cross.docker
-@@ -5,7 +5,7 @@
- # using a prebuilt toolchains for Xtensa cores from:
- # https://github.com/foss-xtensa/toolchain/releases
- #
--FROM docker.io/library/debian:11-slim
-+FROM docker.io/library/debian:13-slim
- 
- RUN apt-get update && \
-     DEBIAN_FRONTEND=noninteractive apt install -yy eatmydata && \
+     return value;
+ }
 -- 
 2.47.3
 
