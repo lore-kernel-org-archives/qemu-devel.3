@@ -4,49 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74A0B1125893
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3786B1125892
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:41:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0POw-00019O-GQ; Wed, 11 Mar 2026 15:39:26 -0400
+	id 1w0PO0-0005SF-V1; Wed, 11 Mar 2026 15:38:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0POt-0000qX-S5; Wed, 11 Mar 2026 15:39:24 -0400
+ id 1w0PNw-0005Qi-P0; Wed, 11 Mar 2026 15:38:24 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0POs-0000l3-0p; Wed, 11 Mar 2026 15:39:23 -0400
+ id 1w0PNv-0000Zf-6E; Wed, 11 Mar 2026 15:38:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257670; bh=0AjJCEY3OniQicr/5x6Rf/4txbaYcDKZPAUmt5ItGJQ=;
+ t=1773257669; bh=yCKxN9EXM7m2KtiXHZxlia3V3HlZRy1DYdmyeoobu5A=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=n0YEMJAJ0EfTJFCAIfa/Hj3c4LZ538akP7LVQItI9s81P08HiCXngRmvTZfFw1z0q
- rC4NOQo8q1+u8CRJkTXEkOgXtmlQzUiti8Edae4/Ef5zHlOqoHn14kepudDLRb10DL
- 447iNIjSrUZRDA++4al12uCHdmHxUdgXYU1H1TWCo+nyn+WRCkpbFjWGAOENuH7SgB
- Thm1VP6/Zr8cwz2E6xrtB8M+CHsxII4m2NIXd6Nic5aC1uMwvMR2V48By7nNE9l15D
- g2l47V+g7d8QRhsFvZX15F885RWiQIksPlV4qC90YVtZSWSdrfP9FGhzaTbdUPeMIa
- 9RLSBkdu+5Dbg==
+ b=YetG6JmdiQHozDRztTHcPtnSKX7TrVc6d00uwPEPvWj1bwoQ8gHVihrPO0EQ3LdxN
+ KWvl3MX3sOAqp9uEzKiPm2GNHsehnx2bUAaztMBPQcQQ/sJdTfBnvQdegZH8ZuDE+B
+ 1121Izx3Btak4bbGvtA9VfcMEmitLlMC+4kNZQ/tRnawE0/uEP6Dk6notJSW7wPpyN
+ jqQ5eqm4A5QxlyB8LU58miLXaEw1rYZn/of0RnqrmhEVEVn9zginYA5ubguaIjiKru
+ iFMwjzNOHzMw5ABloPycn4QZ9eK47WqEnZmbkXVg65BnV3casGZhWvRpjlgHgu/Mpz
+ ZFIpfr2zaKgPA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2FD05192119;
- Wed, 11 Mar 2026 22:34:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6F74A19210F;
+ Wed, 11 Mar 2026 22:34:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7296B37C47E;
- Wed, 11 Mar 2026 22:35:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B4F1737C474;
+ Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 49/53] hw/net/npcm_gmac: Catch accesses off the end of
- the register array
-Date: Wed, 11 Mar 2026 22:34:42 +0300
-Message-ID: <20260311193449.1096110-49-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 39/53] block: Never drop BLOCK_IO_ERROR with
+ action=stop for rate limiting
+Date: Wed, 11 Mar 2026 22:34:32 +0300
+Message-ID: <20260311193449.1096110-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,71 +70,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Kevin Wolf <kwolf@redhat.com>
 
-In the npcm_gmac device, we create the iomem MemoryRegion with
-a size of 8KB, but NPCM_GMAC_NR_REGS is only 0x1060 / 4. This
-means there's a range of offsets that the guest can access
-that don't have gmac->regs[] entries. We weren't catching this,
-so the guest could get us to index off the end of the regs array.
+Commit 2155d2dd introduced rate limiting for BLOCK_IO_ERROR to emit an
+event only once a second. This makes sense for cases in which the guest
+keeps running and can submit more requests that would possibly also fail
+because there is a problem with the backend.
 
-Catch and log these invalid accesses.
+However, if the error policy is configured so that the VM is stopped on
+errors, this is both unnecessary because stopping the VM means that the
+guest can't issue more requests and in fact harmful because stopping the
+VM is an important state change that management tools need to keep track
+of even if it happens more than once in a given second. If an event is
+dropped, the management tool would see a VM randomly going to paused
+state without an associated error, so it has a hard time deciding how to
+handle the situation.
 
-Cc: qemu-stable@nongnu.org
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3316
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Message-ID: <20260306154016.2194091-1-peter.maydell@linaro.org>
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-(cherry picked from commit 550391c7134d295d73b2b0e7a1111a922b78c13c)
+This patch disables rate limiting for action=stop by not relying on the
+event type alone any more in monitor_qapi_event_queue_no_reenter(), but
+checking action for BLOCK_IO_ERROR, too. If the error is reported to the
+guest or ignored, the rate limiting stays in place.
+
+Fixes: 2155d2dd7f73 ('block-backend: per-device throttling of BLOCK_IO_ERROR reports')
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+Message-ID: <20260304122800.51923-1-kwolf@redhat.com>
+Signed-off-by: Kevin Wolf <kwolf@redhat.com>
+(cherry picked from commit 544ddbb6373d61292a0e2dc269809cd6bd5edec6)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/net/npcm_gmac.c b/hw/net/npcm_gmac.c
-index 5e32cd3edf..176cd604d8 100644
---- a/hw/net/npcm_gmac.c
-+++ b/hw/net/npcm_gmac.c
-@@ -700,6 +700,13 @@ static uint64_t npcm_gmac_read(void *opaque, hwaddr offset, unsigned size)
-     NPCMGMACState *gmac = opaque;
-     uint32_t v = 0;
+diff --git a/monitor/monitor.c b/monitor/monitor.c
+index c5a5d30877..ae7cf64de0 100644
+--- a/monitor/monitor.c
++++ b/monitor/monitor.c
+@@ -363,14 +363,33 @@ monitor_qapi_event_queue_no_reenter(QAPIEvent event, QDict *qdict)
+ {
+     MonitorQAPIEventConf *evconf;
+     MonitorQAPIEventState *evstate;
++    bool throttled;
  
-+    if (offset >= NPCM_GMAC_REG_SIZE) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: invalid register offset: 0x%04" HWADDR_PRIx"\n",
-+                      DEVICE(gmac)->canonical_path, offset);
-+        return v;
-+    }
+     assert(event < QAPI_EVENT__MAX);
+     evconf = &monitor_qapi_event_conf[event];
+     trace_monitor_protocol_event_queue(event, qdict, evconf->rate);
++    throttled = evconf->rate;
 +
-     switch (offset) {
-     /* Write only registers */
-     case A_NPCM_DMA_XMT_POLL_DEMAND:
-@@ -724,6 +731,13 @@ static void npcm_gmac_write(void *opaque, hwaddr offset,
- 
-     trace_npcm_gmac_reg_write(DEVICE(gmac)->canonical_path, offset, v);
- 
-+    if (offset >= NPCM_GMAC_REG_SIZE) {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: invalid register offset: 0x%04" HWADDR_PRIx"\n",
-+                      DEVICE(gmac)->canonical_path, offset);
-+        return;
++    /*
++     * Rate limit BLOCK_IO_ERROR only for action != "stop".
++     *
++     * If the VM is stopped after an I/O error, this is important information
++     * for the management tool to keep track of the state of QEMU and we can't
++     * merge any events. At the same time, stopping the VM means that the guest
++     * can't send additional requests and the number of events is already
++     * limited, so we can do without rate limiting.
++     */
++    if (event == QAPI_EVENT_BLOCK_IO_ERROR) {
++        QDict *data = qobject_to(QDict, qdict_get(qdict, "data"));
++        const char *action = qdict_get_str(data, "action");
++        if (!strcmp(action, "stop")) {
++            throttled = false;
++        }
 +    }
-+
-     switch (offset) {
-     /* Read only registers */
-     case A_NPCM_GMAC_VERSION:
-diff --git a/include/hw/net/npcm_gmac.h b/include/hw/net/npcm_gmac.h
-index 6340ffe92c..0c21b25a82 100644
---- a/include/hw/net/npcm_gmac.h
-+++ b/include/hw/net/npcm_gmac.h
-@@ -24,7 +24,8 @@
- #include "hw/sysbus.h"
- #include "net/net.h"
  
--#define NPCM_GMAC_NR_REGS (0x1060 / sizeof(uint32_t))
-+#define NPCM_GMAC_REG_SIZE 0x1060
-+#define NPCM_GMAC_NR_REGS (NPCM_GMAC_REG_SIZE / sizeof(uint32_t))
+     QEMU_LOCK_GUARD(&monitor_lock);
  
- #define NPCM_GMAC_MAX_PHYS 32
- #define NPCM_GMAC_MAX_PHY_REGS 32
+-    if (!evconf->rate) {
++    if (!throttled) {
+         /* Unthrottled event */
+         monitor_qapi_event_emit(event, qdict);
+     } else {
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index b82af74256..4118d884f4 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -5789,7 +5789,7 @@
+ # .. note:: If action is "stop", a `STOP` event will eventually follow
+ #    the `BLOCK_IO_ERROR` event.
+ #
+-# .. note:: This event is rate-limited.
++# .. note:: This event is rate-limited, except if action is "stop".
+ #
+ # Since: 0.13
+ #
 -- 
 2.47.3
 
