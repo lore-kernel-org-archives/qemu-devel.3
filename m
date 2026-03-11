@@ -4,82 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 074541125856
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:56:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1AC1D1125857
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:00:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0MrI-0000xC-Hw; Wed, 11 Mar 2026 12:56:32 -0400
+	id 1w0MuH-0002sf-KY; Wed, 11 Mar 2026 12:59:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0MrH-0000wq-Kg
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:56:31 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1w0MuB-0002rd-S8; Wed, 11 Mar 2026 12:59:33 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0MrF-0007FA-Jw
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:56:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773248187;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ItsFVeR/yXcZZl7juHJlGeNx5UjWRH6i/hWeow7on7A=;
- b=SXf4JGmxEaZQSaSViG2Ka/dY9I5WSYFCOzj8krY5oyVAVsGagyuimJVJODGWhsrUqP2PuE
- cptE2CTvfFcwSQG3JF1yfRQATPKfOo8i2PnvhRp2is0OZX1aGgelqR5Q52ApBMU33efy8+
- BkaczdDI3dGWJ2EaEBqZQ2VS+tYw2bg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-437-9kcQ9TlaNfibXBDDJo5cbQ-1; Wed,
- 11 Mar 2026 12:56:26 -0400
-X-MC-Unique: 9kcQ9TlaNfibXBDDJo5cbQ-1
-X-Mimecast-MFC-AGG-ID: 9kcQ9TlaNfibXBDDJo5cbQ_1773248185
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id D49A81956094; Wed, 11 Mar 2026 16:56:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.160])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EF7A3000223; Wed, 11 Mar 2026 16:56:21 +0000 (UTC)
-Date: Wed, 11 Mar 2026 16:56:17 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Tejus GK <tejus.gk@nutanix.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- Fabiano Rosas <farosas@suse.de>, Eric Blake <eblake@redhat.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: Re: [PATCH v2 1/1] io: make zerocopy fallback accounting more accurate
-Message-ID: <abGesQMQuVSYJy1W@redhat.com>
-References: <20260309090907.956330-1-tejus.gk@nutanix.com>
- <aa755Yc6t_bBzM_u@redhat.com> <aa78gMsQrt1BeXt3@x1.local>
- <aa8AqKqOa8YhEiF9@redhat.com>
- <0DF1A5F6-E20D-4A3F-9285-9205E87DE641@nutanix.com>
- <aa8IoQOZHzQvacSh@redhat.com> <aa8Pvd5O-OLKIXam@x1.local>
- <abFZvUoinIjfMlNX@redhat.com> <abGKkoFfy1RILXA0@x1.local>
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1w0Mu8-0008Br-Dq; Wed, 11 Mar 2026 12:59:31 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWH5v4gtDzHnH4v;
+ Thu, 12 Mar 2026 00:59:15 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id AD2854056F;
+ Thu, 12 Mar 2026 00:59:23 +0800 (CST)
+Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 11 Mar
+ 2026 16:59:23 +0000
+Date: Wed, 11 Mar 2026 16:59:21 +0000
+To: Peter Maydell <peter.maydell@linaro.org>
+CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
+Subject: Re: [PATCH 42/65] hw/intc/arm_gicv5: Calculate HPPI in the IRS
+Message-ID: <20260311165921.00001bd1@huawei.com>
+In-Reply-To: <20260223170212.441276-43-peter.maydell@linaro.org>
+References: <20260223170212.441276-1-peter.maydell@linaro.org>
+ <20260223170212.441276-43-peter.maydell@linaro.org>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <abGKkoFfy1RILXA0@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.203.177.15]
+X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
+X-Spam_bar: --
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,113 +64,31 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 11, 2026 at 11:30:26AM -0400, Peter Xu wrote:
-> On Wed, Mar 11, 2026 at 12:02:05PM +0000, Daniel P. Berrangé wrote:
-> > On Mon, Mar 09, 2026 at 02:21:49PM -0400, Peter Xu wrote:
-> > > On Mon, Mar 09, 2026 at 05:51:29PM +0000, Daniel P. Berrangé wrote:
-> > > > On Mon, Mar 09, 2026 at 05:42:08PM +0000, Tejus GK wrote:
-> > > > > 
-> > > > > 
-> > > > > > On 9 Mar 2026, at 10:47 PM, Daniel P. Berrangé <berrange@redhat.com> wrote:
-> > > > > > 
-> > > > > > !-------------------------------------------------------------------|
-> > > > > >  CAUTION: External Email
-> > > > > > 
-> > > > > > |-------------------------------------------------------------------!
-> > > > > > 
-> > > > > > On Mon, Mar 09, 2026 at 12:59:44PM -0400, Peter Xu wrote:
-> > > > > >> On Mon, Mar 09, 2026 at 04:48:37PM +0000, Daniel P. Berrangé wrote:
-> > > > > >>>> @@ -881,8 +881,8 @@ static int qio_channel_socket_flush_internal(QIOChannel *ioc,
-> > > > > >>>>         sioc->zero_copy_sent += serr->ee_data - serr->ee_info + 1;
-> > > > > >>>> 
-> > > > > >>>>         /* If any sendmsg() succeeded using zero copy, mark zerocopy success */
-> > > > > >>>> -        if (serr->ee_code != SO_EE_CODE_ZEROCOPY_COPIED) {
-> > > > > >>>> -            sioc->new_zero_copy_sent_success = true;
-> > > > > >>>> +        if (serr->ee_code == SO_EE_CODE_ZEROCOPY_COPIED) {
-> > > > > >>>> +            sioc->zero_copy_fallback++;
-> > > > > >>> 
-> > > > > >>> ...this is counting the number of MSG_ERRQUEUE items, which is not
-> > > > > >>> the same as the number of IO requests. That's why we only used it
-> > > > > >>> as a boolean marker originally, rather than making it a counter.
-> > > > > >> 
-> > > > > >> Would the logic still work and better than before?  Say, it's a counter of
-> > > > > >> "messages" rather than "IOs" then.
-> > > > > > 
-> > > > > > IIUC it is a counter of processing notifications which is not directly
-> > > > > > correlated to any action by QEMU - neither bytes nor syscalls.
-> > > > > 
-> > > > > Please correct me if I'm wrong about this, isn’t each notification an information 
-> > > > > about what happened to an individual IO?
-> > > > 
-> > > > If userspace hasn't read a queued notification yet, the kernel will
-> > > > merge new notifications with the existing queued one.
-> > > > 
-> > > > The line above your change
-> > > > 
-> > > >   serr->ee_data - serr->ee_info + 1;
-> > > > 
-> > > > records how many notifications were merged, so we now how many
-> > > > syscalls were processed.
-> > > > 
-> > > > If ee_code is  SO_EE_CODE_ZEROCOPY_COPIED though it means at least
-> > > > one syscall resulted in a copy, but that doesn't imply that *all*
-> > > > syscalls resulted in a copy.
-> > > > 
-> > > > AFAICT, it could be 1 out of a 1000 syscalls resulted in a copy,
-> > > > or it could be 1000 out of 1000 resulted in a copy. We don't know.
-> > > > 
-> > > > IIUC the kernel's merging of notifications appears lossy wrt this
-> > > > information. It could be partially mitigated by doing a flush for
-> > > > notifications really really frequently but that feels like it would
-> > > > have its own downsides
-> > > 
-> > > IMHO what this change does is removing the false negatives.
-> > > 
-> > > Before this patch, if QEMU reports fallback=0, it doesn't mean all the
-> > > MSG_ZEROCOPY requests were all fulfilled by zerocopy.  It's because we
-> > > justify it with one boolean over "a period of time" between two flushes, we
-> > > set the boolean to TRUE as long as there is _one_ successful report of
-> > > MSG_ZEROCOPY.  So even if every flush reports TRUE it only means "there is
-> > > at least one MSG_ZEROCOPY request that didn't fallback".  It has no
-> > > implication of whether a fallback happened.
-> > > 
-> > > Hence, before this v2 patch, there can be false negative reported by QEMU,
-> > > assuming there's no fallback (reflected in stats) but it actually happened.
-> > > 
-> > > After this patch, if QEMU reports fallback=0, it guarantees that _all_
-> > > MSG_ZEROCOPY requests are fulfilled with zerocopy.  It's because we monitor
-> > > all messages and accumulate any fallback cases.  Even if the messages can
-> > > be merged, when "fallback" shows anything non-zero would imply some
-> > > fallback happened.  Here, the counter value doesn't really matter much
-> > > IMHO, as long as it becomes non-zero.
-> > 
-> > AFAICT, the v1 of this patch was sufficient to address the original
-> > bug and maintain the current intended semantics of the migration
-> > counter. This v2 is mixing a bug fix with functional change in
-> > behaviour and I don't think the latter is justified.
-> 
-> It's just that when it cannot report all fallback cases, I don't yet see
-> how it would help much even if we fix the previous behavior with v1..
-> 
-> OTOH, the new behavior will be deemed to have no issue on the problem v1
-> was fixing.
-> 
-> So IIUC v2's behavior is the one we want, and helps identify fallback
-> happened.
+On Mon, 23 Feb 2026 17:01:49 +0000
+Peter Maydell <peter.maydell@linaro.org> wrote:
 
-I don't consider v2 acceptable as the value its returning is an
-meaningless counter that doesn't correlate to any quantity that
-is used by QEMU, nor visible to users of QEMU.
-
-With regards,
-Daniel
--- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+> The IRS is required to present the highest priority pending interrupt
+> that it has for each domain for each cpu interface.  We implement
+> this in the irs_recalc_hppi() function, which we call at every point
+> where some relevant IRS state changes.
+> 
+> This function calls gicv5_forward_interrupt() to do the equivalent of
+> the GICv5 stream protocol Forward and Recall commands.  For the
+> moment we simply record the HPPI on the CPU interface side without
+> trying to process it; the handling of the HPPI in the cpuif will be
+> added in subsequent commits.
+> 
+> There are some cases where we could skip doing the full HPPI
+> recalculation, e.g.  when the guest changes the config of an
+> interrupt that is disabled; we expect that the guest will only do
+> interrupt config at startup, so we don't attempt to optimise this.
+> 
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 
 
