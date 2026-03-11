@@ -4,47 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E27B1062871
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0FB1106286F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:53:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0I5g-00047z-Og; Wed, 11 Mar 2026 07:51:07 -0400
+	id 1w0I7w-0005Kc-7K; Wed, 11 Mar 2026 07:53:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0I5S-00047T-Qv; Wed, 11 Mar 2026 07:50:50 -0400
+ id 1w0I7p-0005It-7K; Wed, 11 Mar 2026 07:53:18 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0I5O-0001L4-TA; Wed, 11 Mar 2026 07:50:50 -0400
+ id 1w0I7m-0001p2-Oa; Wed, 11 Mar 2026 07:53:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773229802; bh=p0hye6KKTpSk7A1ZldAKcdfiAgCXmBPYnatRPxph8FM=;
+ t=1773229953; bh=8UYdca07zlWdJaB0mpOz4y0DUUXjDh3IBU4aT263oSw=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Cwc0YKji6BpYHwfxbQoAiOhHhyP2Q5hTxWNxYEF0JGlqJEyUw1cUK3+ZBrYVoB2/i
- 376/ZB6div4nCrg0SKxHUtOLFrAUCowkzDPtB14Tu9i1VGnGO9YiNV808baV5v+YhI
- pliZiC42TQpQCakZQ3BDJ7lt6rC1dUfFTxnD+Y3n/9G0U3V0GzXZAnDaZ8AqvcrIs8
- F1jqvD/oShYS4KZ6d/CABnrW6AUi0NOFxXk6V7z+c6KKo8tE2cva8zYOpnWY1oiZo8
- vGsI0Ie1Eb5KrM6OTLlmaGZCWbfz6jwn5p15GCrnpL3LyzY9QlYIzbKwgXbYGCQHTo
- XC24wByefi3GA==
+ b=nkIv9OtCUH4C8coVVuNwdhYoOeiptDkU54VGjfG1DKbUdR6y2RNWVj42UV9c307SW
+ +BJ53XF/CI6oLUQf+CiZqia6dIs4rxc9SsKHBHy4m2+qmHlR36ZDbGtROelcsyAijQ
+ VsnVL16FS7XOQBYgs6qQuiqU9vIKBJ2NGdc1YgVXYKVCqo3ACipNPjcSK6FXLedldv
+ PgGRwbV8DBUyaXa0Pd3lx+BQ7C5VcLbWxdy6T4cSi2mbzvUSaGUDObrKutSjTasgiN
+ 72d0xiAOsxRNATZlAA3YVpDVI7Z3UIbJlUr0DEsnIomGHmdIOgiKzJ1JPYjFiMSn6r
+ gYMXPfBra/q7g==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 07AA8191D00;
- Wed, 11 Mar 2026 14:50:02 +0300 (MSK)
-Message-ID: <fe9eeb1f-b964-43f3-8147-7e302bdef268@tls.msk.ru>
-Date: Wed, 11 Mar 2026 14:50:39 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id 9E2C8191D07;
+ Wed, 11 Mar 2026 14:52:33 +0300 (MSK)
+Message-ID: <8f4f6df9-ec18-4d74-8a33-538e2d693023@tls.msk.ru>
+Date: Wed, 11 Mar 2026 14:53:11 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/7] Add VIRTIO_F_IN_ORDER support to vhost shadow
- virtqueue
-To: =?UTF-8?Q?Eugenio_P=C3=A9rez?= <eperezma@redhat.com>, qemu-devel@nongnu.org
-Cc: Laurent Vivier <lvivier@redhat.com>, Jason Wang <jasowang@redhat.com>,
- Dragos Tatulea DE <dtatulea@nvidia.com>,
- Jonah Palmer <jonah.palmer@oracle.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Lei Yang <leiyang@redhat.com>,
- Koushik Dutta <kdutta@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- qemu-stable@nongnu.org, Cindy Lu <lulu@redhat.com>,
- Maxime Coquelin <mcoqueli@redhat.com>
-References: <20260304173535.2702587-1-eperezma@redhat.com>
+Subject: Re: [PATCH] hw/i386/pc: Add a proper owner for the ioport memory
+ regions
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Paolo Bonzini <pbonzini@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Cc: qemu-trivial@nongnu.org, Richard Henderson
+ <richard.henderson@linaro.org>, Eduardo Habkost <eduardo@habkost.net>
+References: <20260217141827.534426-1-thuth@redhat.com>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -90,9 +86,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260304173535.2702587-1-eperezma@redhat.com>
+In-Reply-To: <20260217141827.534426-1-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -2
@@ -117,47 +113,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 04.03.2026 20:35, Eugenio Pérez wrote:
-> This series adds support for the VIRTIO_F_IN_ORDER feature flag to vhost shadow
-> virtqueue (SVQ), enabling migration of vDPA devices that offer this feature.
-> As SVQ acts as a virtio driver, the series follows the Linux kernel
-> implementation for the feature by Jason Wang.  This enables the live migration
-> of vhost-vdpa devices that supports IN_ORDER.
+On 17.02.2026 17:18, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
-> The IN_ORDER feature allows virtio devices to use many descriptors in batch,
-> just by marking the last one of the set as used.
-> 
-> The series is structured in three parts.  First, max_steps calculation in
-> virtqueue_ordered_fill is fixed to allow filling the entire virtqueue at once.
-> Otherwise, a full queue cannot be used with just one used entry.
-> 
-> Afterwards, the series extracts helper functions for descriptor processing to
-> prepare for in order changes:
-> 
-> Finally, the series adds IN_ORDER support, first adding conditional logic for
-> in-order vs regular processing and whitelisting the feature flag in SVQ.
-> 
-> Eugenio Pérez (7):
->    virtio: Allow to fill a whole virtqueue in order
->    vhost: move svq next desc array to descs state struct
->    vhost: factor out the descriptor next fetching
->    vhost: factor out the get of last used desc in SVQ
->    vhost: factor out the detach buf logic in SVQ
->    vhost: add in_order feature to shadow virtqueue
->    vhost: accept in order feature flag
-> 
->   hw/virtio/vhost-shadow-virtqueue.c | 215 +++++++++++++++++++++++++----
->   hw/virtio/vhost-shadow-virtqueue.h |  38 ++++-
->   hw/virtio/virtio.c                 |   2 +-
+> Without a proper owner, the memory regions show up in /machine/unattached
+> in the QOM tree, which is something that should be avoided.
 
-Hi!
-
-This whole patchset is being Cc'ed to qemu-stable@.  Does this mean
-that whole patch set should be picked up for the qemu stable series?
-It's a rather unusual thing to do - to pick up new feature into a
-stable series.  Is it what you have in mind?
+Does this break migration from/to older releases?
 
 Thanks,
 
 /mjt
+
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   hw/i386/pc.c | 6 ++++--
+>   1 file changed, 4 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+> index 0dd3fd01d98..ee72dd47590 100644
+> --- a/hw/i386/pc.c
+> +++ b/hw/i386/pc.c
+> @@ -1127,10 +1127,12 @@ void pc_basic_device_init(struct PCMachineState *pcms,
+>       MemoryRegion *ioportF0_io = g_new(MemoryRegion, 1);
+>       X86MachineState *x86ms = X86_MACHINE(pcms);
+>   
+> -    memory_region_init_io(ioport80_io, NULL, &ioport80_io_ops, NULL, "ioport80", 1);
+> +    memory_region_init_io(ioport80_io, OBJECT(pcms), &ioport80_io_ops, NULL,
+> +                          "ioport80", 1);
+>       memory_region_add_subregion(isa_bus->address_space_io, 0x80, ioport80_io);
+>   
+> -    memory_region_init_io(ioportF0_io, NULL, &ioportF0_io_ops, NULL, "ioportF0", 1);
+> +    memory_region_init_io(ioportF0_io, OBJECT(pcms), &ioportF0_io_ops, NULL,
+> +                          "ioportF0", 1);
+>       memory_region_add_subregion(isa_bus->address_space_io, 0xf0, ioportF0_io);
+>   
+>       /*
+
 
