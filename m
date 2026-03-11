@@ -4,60 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 74EE1112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36AE11125841
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L8F-00021K-Qm; Wed, 11 Mar 2026 11:05:56 -0400
+	id 1w0LBE-0007Jq-4Z; Wed, 11 Mar 2026 11:09:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L72-0007xb-PQ; Wed, 11 Mar 2026 11:04:41 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0L8I-0002R4-Ew
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:06:00 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L70-0004F2-CC; Wed, 11 Mar 2026 11:04:40 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=dXzl4n7CmTMRGx/JKM5xPZwU9mMM1+bSSJ5HGzcyKJA=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lpHvyUpbb2QGOOHcLQXImiZAOAwDxpGUFP/ELYlGkXnJhLAPi1PPniWc74EcPzkY/
- qjqbfAOsMqywwfkpcu++9d7J8OxEuCp7nZGDjpkV1COGNybxhjwQNXd90V5fDWX+KE
- YMZ//KrwHALxYpcvzyfNqLpV/IPS5+esey6uA56+ka2DjKx+GKQQB3j1pudHiqLGfZ
- NuDCfWmvDa/MXcGSxMaUWxPj/KMC4cTlzX54tV6VeftLtcpc7jB9mdxkaA98Fc0byC
- UmiqSHKnPJL3fHcujvNdzQk+BFVs2DHY3+OOlUwlvO+eOmBVoEl46F1DRRwN6LD3g/
- 730V8Fqc0IHMw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 4994A191E58;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 35CBB37C2AA;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 26/44] io: separate freeing of tasks from marking them
- as complete
-Date: Wed, 11 Mar 2026 18:01:58 +0300
-Message-ID: <20260311150221.1084186-26-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
-References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0L88-0004k0-Rw
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:05:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773241545;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=lIIqS8ysEuzUqZKlSW5Y4ajtTF4Cn2lMBwuDl4tuulo=;
+ b=VCR2Kac3bhp5DLR2Cth0R7u90KasrLUNY4xdi+wskqpxoRR6GHcW8MM0qrZQ/OxRctxh+Y
+ rNLBjERJTMsCevRP/yfFBDxkpcnnmN6a9/wFATQe1dNKJfQfpDgrvTU6Guq5ggi4O3CY3x
+ bTcXWy18KrTa+9i+qQK7aToJvwfSzE4=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-160-sjsiV7SNM-y_u1rCxi_cVg-1; Wed, 11 Mar 2026 11:05:42 -0400
+X-MC-Unique: sjsiV7SNM-y_u1rCxi_cVg-1
+X-Mimecast-MFC-AGG-ID: sjsiV7SNM-y_u1rCxi_cVg_1773241541
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8cd773dd39bso3053670685a.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 08:05:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773241541; x=1773846341; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=lIIqS8ysEuzUqZKlSW5Y4ajtTF4Cn2lMBwuDl4tuulo=;
+ b=aJmZQ28522PRnHYlmXz0fmGR5ClohZgwqCKKRygTqC/vT7Agl8Llb+ZWIOlabdCF/q
+ UFvyh3/kleJNR5WJtkz8HHT6xSV2Vgfilrt1UnbRDJoJAUKK4AcFnM4nadR+IHo2MiQM
+ 9aG2kblQ7177c+DkxBz5rmzCvlORMw2fvQQFFPxC0ZBx8X4CVbFpPzBONGgyzHfrZrwF
+ YG4t3RoLOQVB3w7LTt6tqaFC40vEr2I8FkmybwFC+OnHS2E9LBNgQvd79ynngNWodkqa
+ X0R+yxzjvmrqKkxpATPAjxHBi8e1RTtkusJxDE2qZ4z0rVfXdrGbFeZjVCrLGnNlzZbb
+ puYA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773241541; x=1773846341;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=lIIqS8ysEuzUqZKlSW5Y4ajtTF4Cn2lMBwuDl4tuulo=;
+ b=F01LE/Ct7JUXeLQHi4FdVkUZqGMJ7lEzwZd2EgaekKIEj5Rk/m+aSAykRCOWPbKWSC
+ Yau0VlRsF71f88U5N2q2SaKnlirUoxY035l4oFr2cMb+tnygvjBeGGSnxlk+gIc5N/jS
+ byLojwp5GEb90Uv4Ve20/uCZ2fDW4Lol3ZbgGJjhevAr+OMulQ7mC3uoe4nPrUu0L3Fe
+ hTDpb2DV1zjUdD3Qtln96bVdNpGb/Ddsc7uLVDScV4jX87TeBRpGB5BlwGv7TXSirE0R
+ 1VJ92zucXlE70z7EwwdAuV6wmtp/Z1CmfV/EMjRjYdRwTqdXPUte6dvYCU3Imj17GTab
+ GBLg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZNxz4Cds5BDcAmuM5Dqzvp2yOPM1CA8DC2/N/grtuS9PlQlpYrsQonNT+PnS8RKuAuibfS5/zsh4F@nongnu.org
+X-Gm-Message-State: AOJu0YyGEQ9+QueoTwMul5/jMly8e+iMGJZ8JlN5n9bMQVXg6m5WB05u
+ 7wjtXYZT3YYO/zfaI4ZDpKYZxBgvkK+EHH7toIKEl6GC014BlrCKvRpJiR5uGi2b+zVUxtNb2+0
+ Wo6+dRQTgxa8VyRUldMWK6/phx8KGIxnIs5c4itlrJDDoUfgNJXDu1Ltr
+X-Gm-Gg: ATEYQzxcz/HUDuvJ9DVpNI4a3Il28uzuSLRiqT143ZDV9YEfcQWyQSvv0UCAgfcJ+fh
+ Jn60LFC190M77ouH+m+eZFmp6ucr7QiTaNuK9CXKj2oZR6dFLWy6EOsu8FWLWeUuc89loE1WtRR
+ KE40R8Q0zNRgU/Vlt08PftdKDjZThpKPUf+6MDxKjON/Zu2D6j2U22YltzOPkRY/+na3JxwR6ew
+ CVeoj6BRZZIkCPbiUl8HfoooM4QRWhBS/bCIftIYKnWCZiw+1SpQVb7nBFOh9+Qf7rJ462CkTi9
+ C9mPpcryYbjjxq2Yvx8JCOkTPuqv2/+u4JVl2nphVhK5AjOQCm6Eoq8yMaKSya6T8d7btqtQluP
+ 074h0DclCEvhqKw==
+X-Received: by 2002:a05:620a:1998:b0:8cb:9fd4:2ecb with SMTP id
+ af79cd13be357-8cda1a3fa71mr348745085a.54.1773241540654; 
+ Wed, 11 Mar 2026 08:05:40 -0700 (PDT)
+X-Received: by 2002:a05:620a:1998:b0:8cb:9fd4:2ecb with SMTP id
+ af79cd13be357-8cda1a3fa71mr348736885a.54.1773241539885; 
+ Wed, 11 Mar 2026 08:05:39 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cda21484casm147805285a.40.2026.03.11.08.05.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Mar 2026 08:05:39 -0700 (PDT)
+Date: Wed, 11 Mar 2026 11:05:37 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2] vmstate: fix subsection load name check
+Message-ID: <abGEwf-AG1rZ3kam@x1.local>
+References: <20260302070626.613396-1-dtalexundeer@yandex-team.ru>
+ <87y0k5136i.fsf@suse.de>
+ <714e4329-6001-4c77-b004-ed7beb11c154@yandex-team.ru>
+ <e81360d5-cab4-47a4-840b-7d948b51a5c0@yandex-team.ru>
+ <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
+ <abBcN2B4QNBT_Oh9@x1.local>
+ <f37dc7af-7ffd-4a7b-b4fa-552c2d2eb888@yandex-team.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <f37dc7af-7ffd-4a7b-b4fa-552c2d2eb888@yandex-team.ru>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,252 +125,114 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+On Wed, Mar 11, 2026 at 09:53:07AM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> On 10.03.26 21:00, Peter Xu wrote:
+> > On Tue, Mar 10, 2026 at 01:39:04PM +0000, Peter Maydell wrote:
+> > > On Tue, 10 Mar 2026 at 13:28, Alexandr Moshkov
+> > > <dtalexundeer@yandex-team.ru> wrote:
+> > > > Hi, this breaks migration for s390x and ppc64:
+> > > > 
+> > > > qemu-system-s390x: Missing section footer for qemu-s390-flic
+> > > > 
+> > > > Thanks for reply! It happens because "qemu-s390-flic" vmsd has "qemu-s390-flic-full" subsection. I'm not sure if we can change the names of the existing subsections. Peter, what do you think?
+> > > > 
+> > > > It seems to be a bigger problem that the migration framework does not document the names for subsections in any way. At the same time, the code implies that at least the names should be a substring with its parent. There is even such a code comment `subsection name has to be "section_name/a"`, that seems to imply the presence of /.
+> > > > 
+> > > > Also I tried to put together a list of devices whose separator in subsections is not /:
+> > > 
+> > > > or-irq
+> > > 
+> > > This one and probably some of the others are my mistake, I think.
+> > > I think this is because:
+> > >   * the migration code imposes a constraint on the subsection names
+> > >   * the migration documentation does not mention this constraint
+> > >   * the migration code does not effectively enforce this constraint
+> > >     (e.g. by asserting when the vmstate with a bad name is registered)
+> > > 
+> > > My assumption when writing that code was very likely that the
+> > > name of the subsection didn't have to have any relation to
+> > > the name of its parent subsection (after all, the migration
+> > > code knows it is a subsection, so if it needed to have the
+> > > name on the wire be "parentname/subsectionname" it could construct
+> > > that itself), and since it all just worked I never noticed the
+> > > mistake...
+> > 
+> > Indeed, we can do better on the 2nd/3rd bullets.. so we should document it
+> > in struct VMStateDescription definition, and enforce it when registering
+> > new VMSDs.
+> > 
+> > One thing to double check with Alexandr on this one:
+> > 
+> > > They using `_`, `-` or `.` as separator
+> > 
+> > Does it mean we also can't simply whitelist all these characters (including
+> > "/"), because it won't always work?
+> > 
+> > For example in your case, it's "virtio-blk" being the parent VMSD, "virtio"
+> > being the child VMSD, followed with a subsection belongs to virtio-blk.
+> > We want to make that subsection be recognizable as virtio-blk's.
+> > 
+> > Then if we treat "-" also to be a separator, then "virtio" will still
+> > mis-recognize virtio-blk's as its own (because its name is "virtio-blk/..."
+> > hence it also satisfies the "virtio" check)?
+> > 
+> 
+> I have an idea. What if we simply change the order, instead of
+> 
+> 1. check prefix (with '/' at the end). and stop the loop if it doesn't match
+> 2. call vmstate_get_subsection(vmsd->subsections, idstr)
+> 
+> do
+> 
+> 0. Document, and check, that starting from 11.0 any new subsections must follow <section name>/<subsection name> notation
+> 
+> in vmstate_subsection_load():
+> 
+> 1. call vmstate_get_subsection, if it succeeded we are done
+> 2. check prefix with '/' at the end. If match - it's a new subsection, added after 11.0 point, in correct notation. If does not match - it's subsection of another state, stop the loop.
 
-The original design of QIOTask was intended to simplify lifecycle
-management by automatically freeing it when the task was marked as
-complete. This overlooked the fact that when a QIOTask is used in
-combination with a GSource, there may be times when the source
-callback is never invoked. This is typically when a GSource is
-released before any I/O event arrives. In such cases it is not
-desirable to mark a QIOTask as complete, but it still needs to be
-freed. To satisfy this, the task must be released manually.
+Yep, this sounds working.
 
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 403d3a5f4a2d86bfe1f1f33aa337f2eb3a71182b)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+But I wonder do we need (2) at all?  Say, can we sololy rely on
+vmstate_get_subsection() to identify if we should take it or just leave it
+for upper layers?  So we will never fail a subsection lookup, only either
+(1) load it if owned, or (2) ignore it and pop the VMSD stack.
 
-diff --git a/include/io/task.h b/include/io/task.h
-index 0b5342ee84..98847f5994 100644
---- a/include/io/task.h
-+++ b/include/io/task.h
-@@ -96,7 +96,7 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  *                         1000,
-  *                         myobject_operation_timer,
-  *                         task,
-- *                         NULL);
-+ *                         qio_task_free);
-  *    }
-  *   </programlisting>
-  * </example>
-@@ -138,9 +138,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  * the callback func 'myobject_operation_notify' shown
-  * earlier to deal with the results.
-  *
-- * Once this function returns false, object_unref will be called
-- * automatically on the task causing it to be released and the
-- * ref on QMyObject dropped too.
-+ * Once this function returns FALSE, the task will be freed,
-+ * causing it release the ref on QMyObject too.
-  *
-  * The QIOTask module can also be used to perform operations
-  * in a background thread context, while still reporting the
-@@ -208,8 +207,8 @@ typedef void (*QIOTaskWorker)(QIOTask *task,
-  * 'err' attribute in the task object to determine if
-  * the operation was successful or not.
-  *
-- * The returned task will be released when qio_task_complete()
-- * is invoked.
-+ * The returned task must be released by calling
-+ * qio_task_free() when no longer required.
-  *
-  * Returns: the task struct
-  */
-@@ -218,6 +217,19 @@ QIOTask *qio_task_new(Object *source,
-                       gpointer opaque,
-                       GDestroyNotify destroy);
- 
-+/**
-+ * qio_task_free:
-+ * task: the task object to free
-+ *
-+ * Free the resources associated with the task. Typically
-+ * the qio_task_complete() method will be called immediately
-+ * before this to trigger the task callback, however, it is
-+ * permissible to free the task in the case of cancellation.
-+ * The destroy callback will be used to release the opaque
-+ * data provided to qio_task_new().
-+ */
-+void qio_task_free(QIOTask *task);
-+
- /**
-  * qio_task_run_in_thread:
-  * @task: the task struct
-@@ -268,8 +280,9 @@ void qio_task_wait_thread(QIOTask *task);
-  * qio_task_complete:
-  * @task: the task struct
-  *
-- * Invoke the completion callback for @task and
-- * then free its memory.
-+ * Invoke the completion callback for @task. This should typically
-+ * only be invoked once on a task, and then qio_task_free() used
-+ * to free it.
-  */
- void qio_task_complete(QIOTask *task);
- 
-diff --git a/io/channel-tls.c b/io/channel-tls.c
-index f8b03aa63c..919bbf10dd 100644
---- a/io/channel-tls.c
-+++ b/io/channel-tls.c
-@@ -170,6 +170,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-         trace_qio_channel_tls_handshake_fail(ioc);
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         return;
-     }
- 
-@@ -183,6 +184,7 @@ static void qio_channel_tls_handshake_task(QIOChannelTLS *ioc,
-             trace_qio_channel_tls_credentials_allow(ioc);
-         }
-         qio_task_complete(task);
-+        qio_task_free(task);
-     } else {
-         GIOCondition condition;
-         QIOChannelTLSData *data = g_new0(typeof(*data), 1);
-@@ -265,11 +267,13 @@ static void qio_channel_tls_bye_task(QIOChannelTLS *ioc, QIOTask *task,
-         trace_qio_channel_tls_bye_fail(ioc);
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         return;
-     }
- 
-     if (status == QCRYPTO_TLS_BYE_COMPLETE) {
-         qio_task_complete(task);
-+        qio_task_free(task);
-         return;
-     }
- 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 7f8eded4ff..1cd3a1e45d 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -545,6 +545,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -561,6 +562,7 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-             trace_qio_channel_websock_handshake_complete(ioc);
-             qio_task_complete(task);
-         }
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -588,6 +590,7 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
-+        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-diff --git a/io/task.c b/io/task.c
-index 451f26f8b4..331febd4e1 100644
---- a/io/task.c
-+++ b/io/task.c
-@@ -70,8 +70,12 @@ QIOTask *qio_task_new(Object *source,
-     return task;
- }
- 
--static void qio_task_free(QIOTask *task)
-+void qio_task_free(QIOTask *task)
- {
-+    if (!task) {
-+        return;
-+    }
-+
-     qemu_mutex_lock(&task->thread_lock);
-     if (task->thread) {
-         if (task->thread->destroy) {
-@@ -110,6 +114,7 @@ static gboolean qio_task_thread_result(gpointer opaque)
- 
-     trace_qio_task_thread_result(task);
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     return FALSE;
- }
-@@ -196,7 +201,6 @@ void qio_task_complete(QIOTask *task)
- {
-     task->func(task, task->opaque);
-     trace_qio_task_complete(task);
--    qio_task_free(task);
- }
- 
- 
-diff --git a/tests/unit/test-io-task.c b/tests/unit/test-io-task.c
-index 115dba8970..b1c8ecb7ab 100644
---- a/tests/unit/test-io-task.c
-+++ b/tests/unit/test-io-task.c
-@@ -73,6 +73,7 @@ static void test_task_complete(void)
-     src = qio_task_get_source(task);
- 
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     g_assert(obj == src);
- 
-@@ -84,6 +85,28 @@ static void test_task_complete(void)
- }
- 
- 
-+static void test_task_cancel(void)
-+{
-+    QIOTask *task;
-+    Object *obj = object_new(TYPE_DUMMY);
-+    Object *src;
-+    struct TestTaskData data = { NULL, NULL, false };
-+
-+    task = qio_task_new(obj, task_callback, &data, NULL);
-+    src = qio_task_get_source(task);
-+
-+    qio_task_free(task);
-+
-+    g_assert(obj == src);
-+
-+    object_unref(obj);
-+
-+    g_assert(data.source == NULL);
-+    g_assert(data.err == NULL);
-+    g_assert(data.freed == false);
-+}
-+
-+
- static void task_data_free(gpointer opaque)
- {
-     struct TestTaskData *data = opaque;
-@@ -101,6 +124,7 @@ static void test_task_data_free(void)
-     task = qio_task_new(obj, task_callback, &data, task_data_free);
- 
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     object_unref(obj);
- 
-@@ -123,6 +147,7 @@ static void test_task_failure(void)
- 
-     qio_task_set_error(task, err);
-     qio_task_complete(task);
-+    qio_task_free(task);
- 
-     object_unref(obj);
- 
-@@ -260,6 +285,7 @@ int main(int argc, char **argv)
-     module_call_init(MODULE_INIT_QOM);
-     type_register_static(&dummy_info);
-     g_test_add_func("/crypto/task/complete", test_task_complete);
-+    g_test_add_func("/crypto/task/cancel", test_task_cancel);
-     g_test_add_func("/crypto/task/datafree", test_task_data_free);
-     g_test_add_func("/crypto/task/failure", test_task_failure);
-     g_test_add_func("/crypto/task/thread_complete", test_task_thread_complete);
+It means in code we don't restrict subsection name to be "$PARENT_NAME/*".
+
+However we should likely still suggest that in doc of subsections, so we at
+least avoid one parent VMSD having subsection S1, then its field having
+subsection S2, and by accident S1 and S2 has the same name..
+
+> 
+> 
+> Possible problems:
+> 
+> 1. may be some subsections (with wrong notation), which were added before 11.0, but then removed (we break migration from old version to new).
+
+If a subsection with wrong notation got removed, then it should require a
+machine compat property otherwise migration should be broken anyway?
+
+> 
+> This can be checked by git-grepping for subsections through qemu releases.
+> 
+> 2. may be some downstream subsections (we may break migration from some downstream versions to upstream).
+> 
+> Should we care of it? Probably not.
+
+Not sure if this is an issue if we drop (2) directly above.
+
+There seems to have a 3rd possible "issue": the failure will be more
+obscure on a subsection that nobody recognizes; we used to try our best say
+"VM subsection '...' in '...' does not exist", but then it'll always pop
+the VMSD stack then the upper layer may read the SUBSECTION byte anywhere.
+So debugging a stream with an extra subsection can be slightly more
+awkward, but I'm not sure how much.  Meanwhile for a compatible / normal
+migration it'll be all fine.  It just means when seeing a subsection will
+try to pick it up from the inner VMSD and fallback to outter VMSD every
+time.
+
 -- 
-2.47.3
+Peter Xu
 
 
