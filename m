@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCEC31125854
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:42:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C9B08104BEC9
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:52:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Mcy-0002ds-0l; Wed, 11 Mar 2026 12:41:44 -0400
+	id 1w0Mmz-00072z-Vd; Wed, 11 Mar 2026 12:52:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0McT-0002TZ-5q; Wed, 11 Mar 2026 12:41:19 -0400
+ id 1w0Mmt-00070m-RB; Wed, 11 Mar 2026 12:51:59 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0McP-0003Xu-Ni; Wed, 11 Mar 2026 12:41:12 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWGhk2zGczHnGk2;
- Thu, 12 Mar 2026 00:40:54 +0800 (CST)
+ id 1w0Mmr-0005v8-5z; Wed, 11 Mar 2026 12:51:58 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.83])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWGxF5KjKzHnGkZ;
+ Thu, 12 Mar 2026 00:51:45 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 6BC2040589;
- Thu, 12 Mar 2026 00:41:02 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id C0E3440569;
+ Thu, 12 Mar 2026 00:51:53 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
  (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 11 Mar
- 2026 16:41:01 +0000
-Date: Wed, 11 Mar 2026 16:41:00 +0000
+ 2026 16:51:53 +0000
+Date: Wed, 11 Mar 2026 16:51:51 +0000
 To: Peter Maydell <peter.maydell@linaro.org>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 40/65] target/arm: GICv5 cpuif: Implement ICC_APR_EL1
- and ICC_HAPR_EL1
-Message-ID: <20260311164100.000057f3@huawei.com>
-In-Reply-To: <20260223170212.441276-41-peter.maydell@linaro.org>
+Subject: Re: [PATCH 41/65] target/arm: GICv5 cpuif: Calculate the highest
+ priority PPI
+Message-ID: <20260311165151.00004669@huawei.com>
+In-Reply-To: <20260223170212.441276-42-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
- <20260223170212.441276-41-peter.maydell@linaro.org>
+ <20260223170212.441276-42-peter.maydell@linaro.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -70,30 +70,41 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Feb 2026 17:01:47 +0000
+On Mon, 23 Feb 2026 17:01:48 +0000
 Peter Maydell <peter.maydell@linaro.org> wrote:
 
-> The ICC_APR_EL1 GICv5 cpuif register records the physical active
-> priorities.  Since the GICv5 always uses 5 bits of priority, this
-> register always has 32 non-RES0 bits, and we don't need the
-> complicated GICv3 setup where there might be 1, 2 or 4 APR registers.
-> 
-> ICC_HAPR_EL1 is a read-only register which reports the current
-> running priority.  This is defined to be the lowest set bit (i.e.
-> the highest priority) in the APR, or the Idle priority 0xff if there
-> are no active interrupts, so it is effectively a convenience
-> re-presentation of the APR register data.
-> 
-> The APR register is banked per interrupt domain; ICC_APR_EL1 accesses
-> the version of the register corresponding to the current logical
-> interrupt domain.  The APR data for the final domain (EL3) is
-> accessed via ICC_APR_EL3.  Although we are starting with an EL1-only
-> implementation, we define the CPU state as banked here so we don't
-> have to change our representation of it later when we add EL3 and RME
-> support.
+> When the state of PPIs changes, recalculate the highest priority PPI.
+> In subsequent commits we will use this cached value to provide the
+> HPPI info to the guest, decide whether to signal IRQ or FIQ, handle
+> interrupt acknowldge from the guest, and so on.
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+
+Other than struggling with the reference, LGTM
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+
+> +/*
+> + * We keep track of candidate highest possible pending interrupts
+> + * using this struct.
+> + *
+> + * Unlike GICv3, we don't need a separate NMI bool, because for
+> + * GICv5 superpriority is signaled by @prio == 0.
+> + *
+> + * In this struct the intid includes the interrupt type in bits [31:29]
+> + * (i.e. it is in the form defined by R_TJPHS).
+Not sure it matters, but the particular GIC v5 spec I'm looking doesn't
+seem to have a R_TJPHS (I happen to have EAC0)
+
+> + */
+> +typedef struct GICv5PendingIrq {
+> +    uint32_t intid;
+> +    uint8_t prio;
+> +} GICv5PendingIrq;
+> +
+> +/* Fields in a generic 32-bit INTID, per R_TJPHS */
+> +FIELD(INTID, ID, 0, 24)
+> +FIELD(INTID, TYPE, 29, 3)
+> +
 
 
 
