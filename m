@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4C5D112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:05:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F66C112583F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:06:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L6k-0007LD-As; Wed, 11 Mar 2026 11:04:22 -0400
+	id 1w0L6Z-0006Q1-Vw; Wed, 11 Mar 2026 11:04:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L56-0004RK-Cm; Wed, 11 Mar 2026 11:02:43 -0400
+ id 1w0L69-0005Lb-6V; Wed, 11 Mar 2026 11:03:49 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L54-0003lo-QF; Wed, 11 Mar 2026 11:02:40 -0400
+ id 1w0L67-000465-M7; Wed, 11 Mar 2026 11:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241303; bh=FSMGlYph0E646l8xPKs1QSoOKQfE4LlZnojK7QnNiVY=;
+ t=1773241304; bh=DtZQY6XeRzC5KZ+gX9mOuCpE3BdRSgH1u565E2eo52g=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=AWZsPCkZ9mjcmjm/elz3BoEUnuD9wUOTl6yoOGrvFQoqikvZbxYuHYUCGxX6yRMtz
- xhpuqoJ+4P7XAECrZZCVgO4tlHlZX+ZkVxCrROuNDa93eyfpeKVhawbsu3pZMzIAdP
- OJv3r2CZM8wfUJg5Sk4FqL/AExrOPqr4C0YnZMG6RGqFCRh6sfDkZiOJ1N6o1/G+kj
- ZBxWDSfCjqz3MAqElQVjn6dHbRwNBvY50AyDyhlU7jQGP5sj5SaY1T/GTgQZwF1Tuz
- Fp8kcpjq7I/gdMusoIm8RC//AzCzOTPZI6UXq7VycmcNi4Bqxy+JyUV9/sqCg55XCB
- jMULI2aPaN2VA==
+ b=nSK41s8vE/zh+U5Oubtnu7ZFMd4oi8P0PZ4XwAfPvMY/2ibzDlNyqu0R6WqJIzDSU
+ CKD1z7rnoSp91OHfHD6rf4oVtoHWYNqZcJjuwYoGR4D/zHH5mBnnPCGnPvT1Gnx5zu
+ D0rP8kHd1RzJ4tGETmQnft3/eFpGtFGCNDSwU6TdgRFDJ9b0eGP7RUcKdsH3ic3rOE
+ 0i1DngssxyDg49RHhlV8+4SnObeLJ8ZijclCXe1Ufr4y0eswCrvK5jcSEc7b4ZH4U0
+ y8D3ljPqhuhq9Fgwav0KhDJyY5RcwlUp1LXGo99tSEZQtZ7sSR4O8YxsDRs7kHnYir
+ k43+imikcvcPw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B86CB191E45;
- Wed, 11 Mar 2026 18:01:43 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 81B97191E4F;
+ Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9795137C297;
- Wed, 11 Mar 2026 18:02:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6D96537C2A1;
+ Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
+Cc: qemu-stable@nongnu.org,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ DARKNAVY <vr@darknavy.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 07/44] contrib/plugins/hotblocks: Print uint64_t with
- PRIu64 rather than PRId64
-Date: Wed, 11 Mar 2026 18:01:39 +0300
-Message-ID: <20260311150221.1084186-7-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 17/44] virtio-snd: tighten read amount in in_cb
+Date: Wed, 11 Mar 2026 18:01:49 +0300
+Message-ID: <20260311150221.1084186-17-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -72,32 +71,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
 
-qemu_plugin_u64_sum returns a uint64_t, so PRIu64 is the correct format
-specifier.
+The amount of bytes to read passed to AUD_read() should never surpass
+the maximum available buffer length. Tighten the current amount by
+MIN(<amount>, max_size - <existing size>).
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/5d26c9d99ee87ac4a4034ff64e3d8881253eedf3.1753857212.git.asb@igalia.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit e777f6ab91406884136b5679a9d64124832668d8)
+Cc: qemu-stable@nongnu.org
+Fixes: 98e77e3dd8dd6e7aa9a7dffa60f49c8c8a49d4e3 ("virtio-snd: add max size bounds check in input cb")
+Reported-by: DARKNAVY <vr@darknavy.com>
+Signed-off-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260220-virtio-snd-series-v1-5-207c4f7200a2@linaro.org>
+(cherry picked from commit 7994203bb1b83a6604f3ab00fe9598909bb66164)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index cf4d6b8c36..40d8dae1cd 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -87,7 +87,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-         for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
-             ExecCount *rec = (ExecCount *) it->data;
-             g_string_append_printf(
--                report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
-+                report, "0x%016"PRIx64", %d, %ld, %"PRIu64"\n",
-                 rec->start_addr, rec->trans_count,
-                 rec->insns,
-                 qemu_plugin_u64_sum(
+diff --git a/hw/audio/virtio-snd.c b/hw/audio/virtio-snd.c
+index 4ea2d4db95..3653b52d7e 100644
+--- a/hw/audio/virtio-snd.c
++++ b/hw/audio/virtio-snd.c
+@@ -1240,7 +1240,7 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
+ {
+     VirtIOSoundPCMStream *stream = data;
+     VirtIOSoundPCMBuffer *buffer;
+-    size_t size, max_size;
++    size_t size, max_size, to_read;
+ 
+     WITH_QEMU_LOCK_GUARD(&stream->queue_mutex) {
+         while (!QSIMPLEQ_EMPTY(&stream->queue)) {
+@@ -1266,10 +1266,12 @@ static void virtio_snd_pcm_in_cb(void *data, int available)
+                     return_rx_buffer(stream, buffer);
+                     break;
+                 }
++                to_read = stream->params.period_bytes - buffer->size;
++                to_read = MIN(to_read, available);
++                to_read = MIN(to_read, max_size - buffer->size);
+                 size = AUD_read(stream->voice.in,
+-                        buffer->data + buffer->size,
+-                        MIN(available, (stream->params.period_bytes -
+-                                        buffer->size)));
++                                buffer->data + buffer->size,
++                                to_read);
+                 if (!size) {
+                     available = 0;
+                     break;
 -- 
 2.47.3
 
