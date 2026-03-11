@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8308C1125851
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B221F112584F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:34:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0MUv-000831-Bp; Wed, 11 Mar 2026 12:33:25 -0400
+	id 1w0MWH-0000io-NM; Wed, 11 Mar 2026 12:34:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0MUF-0007lM-00; Wed, 11 Mar 2026 12:33:12 -0400
+ id 1w0MW4-0000W4-ON; Wed, 11 Mar 2026 12:34:45 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0MUC-0000rf-4c; Wed, 11 Mar 2026 12:32:41 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWGW01tdjzHnGd4;
- Thu, 12 Mar 2026 00:32:28 +0800 (CST)
+ id 1w0MW0-0001cx-RF; Wed, 11 Mar 2026 12:34:34 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWGXP6Lc5zJ46BP;
+ Thu, 12 Mar 2026 00:33:41 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 33DBD40569;
- Thu, 12 Mar 2026 00:32:36 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id 5F94A40585;
+ Thu, 12 Mar 2026 00:34:28 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
  (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 11 Mar
- 2026 16:32:35 +0000
-Date: Wed, 11 Mar 2026 16:32:34 +0000
+ 2026 16:34:27 +0000
+Date: Wed, 11 Mar 2026 16:34:26 +0000
 To: Peter Maydell <peter.maydell@linaro.org>
 CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 38/65] target/arm: GICv5 cpuif: Implement PPI enable
- register
-Message-ID: <20260311163234.00004042@huawei.com>
-In-Reply-To: <20260223170212.441276-39-peter.maydell@linaro.org>
+Subject: Re: [PATCH 39/65] target/arm: GICv5 cpuif: Implement PPI priority
+ registers
+Message-ID: <20260311163426.00003931@huawei.com>
+In-Reply-To: <20260223170212.441276-40-peter.maydell@linaro.org>
 References: <20260223170212.441276-1-peter.maydell@linaro.org>
- <20260223170212.441276-39-peter.maydell@linaro.org>
+ <20260223170212.441276-40-peter.maydell@linaro.org>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -70,11 +70,14 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Feb 2026 17:01:45 +0000
+On Mon, 23 Feb 2026 17:01:46 +0000
 Peter Maydell <peter.maydell@linaro.org> wrote:
 
-> Implement the GICv5 register which holds the enable state of PPIs:
-> ICC_PPI_ENABLER<n>_EL1.
+> Implement the GICv5 registers which hold the priority of the PPIs.
+> Each 64-bit register has the priority fields for 8 PPIs, so there are
+> 16 registers in total.  This would be a lot of duplication if we
+> wrote it out statically in the array, so instead create each register
+> via a loop in define_gicv5_cpuif_regs().
 > 
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
