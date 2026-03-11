@@ -4,103 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22E581062870
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:59:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1552106286B
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:59:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0IDX-00081Q-RH; Wed, 11 Mar 2026 07:59:13 -0400
+	id 1w0IE0-0008H4-QR; Wed, 11 Mar 2026 07:59:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w0IDS-0007zg-MP
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:59:06 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1w0IDp-0008E0-Ii; Wed, 11 Mar 2026 07:59:30 -0400
+Received: from mail-francesouthazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c207::3] helo=MRWPR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w0IDO-0004bf-RK
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:59:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773230303; bh=pV4beLUrwTJ7+JIIP2uPhWKw7dJxLBQ5YI1qZ9RACbc=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=ULxFxEhDM8oiIk2mL5Hye6MKVQOlCx9P31plVcNweZ62uPKAqIYAxylxbg9m/d93v
- DfUcJ4T5ml6KQYeVUDR159ASWuBua1qhYfq9ZMdJdvm8WFQK+2mVKS/uPFk6dA0pYK
- ZVLFofzJWTU9fzmbgjZ3tb0WS5YyHtOdwwPzVIvcr07qmvYklSgAa2872gToMgYbvJ
- pCWkH6CRQIZAn0sQg8XaqdQZwcvi56nTYCl1kB/mLKaoaIdOzOJF5WsBWZdHNVYN1k
- smxCjHpXMU5s1WLcKp1Tw6BuSZN4vTt0CSvjERmjcQgD/XYZu8P5292Hf7IB3qey46
- SoFKJRMy5CM0w==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id E7BD4191D13;
- Wed, 11 Mar 2026 14:58:22 +0300 (MSK)
-Message-ID: <cf4de23a-f550-4832-9143-c7ca209b49e9@tls.msk.ru>
-Date: Wed, 11 Mar 2026 14:59:00 +0300
+ (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
+ id 1w0IDn-0004dz-BL; Wed, 11 Mar 2026 07:59:29 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=sq3xcA6gpFWh89FpERU5XNoTHhnphGt4m2gLYAm4ufefR+4vmn7caKKgX+L9YuxvHRmC0id6VMOP23U6TNtNKkhzMZ5GeIVCAaLqH+o74lQisl8yMk51QVmoAgKw02fAPx31MEpcsi+0ggUvdpHrLLuZ5Ipzd4DLVkdINIcdFR/CwS0+UKD+fcnplqviO+Bd33ShUomxpVPw16ISnmjeZxGa6OFJWjppc+qcSZJ53GTiPFdLxEAwpOPFsWCRZocKTQQn+GOnmVb6VglNOkrhLz1etHGW3BR0kWSIWdBagbbYPo4ugulbfgyaiY73zWUnY0RvfI9GuuGs1wpGZncUPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=9NBWaBO6GHUWjWfO4FwPAN9bxG4mA7RE0n6gAautICY=;
+ b=UfgTSypzlYROGvrTwOXq8ivwf2vGxae7q0mmFn82pzTcgOzkSNwD1jbGigm4uavbGHBdNAxOouHzVBg4G8VhioeL/ZrXthqYz8hy55h0U9gv8EXBsCGijbXGf4tcSJAWJ2VTlXhbbbWv7IzuPprCFS6OBTscvF+F66UflObw8S/lKlYyu8amq7VD4wQEGW8gi8T7RjStxyshtdi6DargSoaDlPQs+1DUm5lfrD/izzBh/jOpEmB8K1pv3lSCff3zdxB9shMhOu6LAEXyPJ1RsCNu7CJjBFofjXwxEAjM0wZ+7xDhOQ0Jc4wXnmveZWsbngA2PDhEu4VFnR/7+tuIUg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=htecgroup.com; dmarc=pass action=none
+ header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=9NBWaBO6GHUWjWfO4FwPAN9bxG4mA7RE0n6gAautICY=;
+ b=PkTWoUSCwE3y44mDagDnPlPhKX0eNy+miZwoZW8+MFFJNwZDd5gShXQiEU4jej1z77gV9SffR0K6Dv+yFwL9NZ+h6tvIUzn849L7Dco8WDCEg174kmmNIP+uu1D0rSc4ZfVP9HJbSFO5RoLW9RIk01Uin1rJrDTajizGUUZN2/WizO9velbfEnTjoiLQz19YhHg/iICry2K0/YuV6WXw+ijjJEXlpvGIseOAhsDLqNPqo0YeBCduPa0Hg0r6+trNz8RsF3WORPFth8ILr9QX47UymKKRIRBqo1vhbHcgSONbjvE+zm1DVXAjXbZAOwsvmy08c7/1ZbuPoocSWKa0YA==
+Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
+ by GV4PR09MB8104.eurprd09.prod.outlook.com (2603:10a6:150:27e::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.25; Wed, 11 Mar
+ 2026 11:59:17 +0000
+Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
+ ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
+ ([fe80::939c:95df:4890:ce63%3]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
+ 11:59:17 +0000
+From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
+ <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>, "philmd@linaro.org"
+ <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
+ <Djordje.Todorovic@htecgroup.com>
+Subject: [PATCH v3 0/9] Add RISC-V big-endian target support
+Thread-Topic: [PATCH v3 0/9] Add RISC-V big-endian target support
+Thread-Index: AQHcsU58cRjCbjsaikytPPgbpanVMg==
+Date: Wed, 11 Mar 2026 11:59:16 +0000
+Message-ID: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=htecgroup.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|GV4PR09MB8104:EE_
+x-ms-office365-filtering-correlation-id: 47aea91e-3ac9-44d2-af99-08de7f659f0c
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|38070700021|18002099003|56012099003; 
+x-microsoft-antispam-message-info: xoWioUuMVjSd4J3UjXkgIXhBQ1KpTvUYAbzn0OlPrzOJ695ztXZTHg9WDkx+4CT8tQCClw782uhZrJIDpOT6ySPioSPmvb7sDLfT9cl6UDrjJ7bBrygnC69JHssWhsQRH/bZqE3jBtQUsKuIAhjd6fYywp+EZC0FwhfDjo0sZZOYoYGlQZSHLRVvSMJ1fKLB59/05S0z0nEomqK/xq70jySRZAGuZz75XZ6t8YYeM0liVC4HEoa008hxwI4J8N3yGGTiLbqOJZpmX+wMFeSm59h89qEelARr0nxBy1uaATvMQW2bughvbUkc38d7wFEx+iDKf4s41VOQKL5c7Qn3V0qnYocbVEPQL3EvFd/QduqWnL4Frxcj/U6GowNd9Uj+cGfSYxsuhiQ/AIsZ6x5VRiFHsTUOeKpzWRZITmlwtG5EgQzBmTy6ViFXNdMl1oWdJjDZiIGlpg2vITRdpOHnRe829NbPUSXMna1PRH1cQd+VAZeXuBsZGijmLjFXE1gt+sW1w6Plysxj3UeKbqZSNQrbdZ53vLknTDiThp1Fkmzl6ihjKhaS9qPv4X1BaWZz9JH+rjmcqFUqA9TTh/7Qn3QGoKge4sGN/7oSQpyZH8MLjwRU/4mC76rrhwzEcDQAmYuWsHlCsPM/xg6ZxRa5jYs7P5x9n6iiy7U5/meztwbTlF0wkyiLg4IHX8SrVn5+RacyKHzG4nTOVSHWyube5pRcN+BfwGBkW1wBvSyDFZQuKoZjLe7NvwEi3AbSJL2qTJefgjNz8JEV+jfieYcDAKisC/DDdMhBMmtwhTWlciE=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(38070700021)(18002099003)(56012099003);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?Jn0nFzfO6Hi7m2ogbdnSEBWuMxZSeo3dzAcuOswVqRjft2gtfpHowT4x7t?=
+ =?iso-8859-1?Q?AmJFxRmL3cUPUoChXt2EpUU+Tgkq3+e+1WHUqXMFtIOYw7TgGBx/WvtHZN?=
+ =?iso-8859-1?Q?99b7MavKmR3RjV1vuLrpIAMTa5tqkVSve81dugfQDmpj6IlJSlxLbnJfKq?=
+ =?iso-8859-1?Q?yy6PDDSWf8qs1zPbF/g9QHcZIkjrhiI9qtLNsvisFev1b8IEWv6vJS2C5I?=
+ =?iso-8859-1?Q?XChASfKyXP/DQ38S1zMo28+rVpXZEkPBxgzWiUoCkzcGwXxpKxy3O/4Mw+?=
+ =?iso-8859-1?Q?UlD8CtCaIXFq/iI4F1pCMO/ZUt0np6N2oztbdLmpybuJJBNjLo+oFAZBPT?=
+ =?iso-8859-1?Q?3sTjkQvvRzL48+zwYM+Ix8XHIGq7J9ashht90+BqAXEXPMSlcKTrJk//3L?=
+ =?iso-8859-1?Q?xO7P1TUVxlzD1+aGXZy7zmZjeCUPvvuvJap3sHXYJnsnqEg7ubm+gqfAwa?=
+ =?iso-8859-1?Q?rvw1xYiQleVEeqSBPcuN84S/vbiq8V5QskdaOl0wQu1Nh+K5ccJTHK8e9N?=
+ =?iso-8859-1?Q?6dyXlEQpHtonzvt4FRUD5cDyob3W6ymdW7Zd4F9aWXGWBE3UiyC45RF3Nd?=
+ =?iso-8859-1?Q?4T7M9V6ge5aXAmEFFpHuPuML80CuNHREc+kvzlL55F8PGtf0/m5hM8iaPN?=
+ =?iso-8859-1?Q?7HIkc/R8eQEB0YRbvFDr5lBYRQ+WMjZBEGXDzsSe2iWdV8pRAw+OgN8vqd?=
+ =?iso-8859-1?Q?NgbD2KLWTn4rE+IzHfy7wAzIUI6zsZPKv8tRWncUUQQzz2Hi8bv3YO3WE4?=
+ =?iso-8859-1?Q?DAFGs1b2wOHXJ5rr0jpvIFIS7Fr2MYeX6ZVNNnv84vEyXCdkzItjDwIs9N?=
+ =?iso-8859-1?Q?z9uT9tVxXq0DUd9vc5yHfrNDR2pf7ATfJI68vt63MUBF24uuLbU1xjPx5/?=
+ =?iso-8859-1?Q?zu8E+9thrfnUUBP/Zkt9BEbkxpzy3SHpstNesCEWn/Ni7Tfi61bEyW58Js?=
+ =?iso-8859-1?Q?3AySnibigqIUnEGGDyeFCZhl9VCFD1qRh+DTyJBX81mRRPVhxbJKbaSih7?=
+ =?iso-8859-1?Q?90Qk3pjr1U2kGxn367ZIMm+Kva0BKM5Rx5PnBtFIDREKhp/LxSa01Cp/Og?=
+ =?iso-8859-1?Q?6rfnUFI3IKr6RHshT0aCzi4K0r+CST/9rccg3dknYerv4ANOoZqpPtRvbY?=
+ =?iso-8859-1?Q?MwdK8nbXE934rEAx60BR63+yYZfvvrPd1dtT8cfsiJloCCsTO6Mgl8jZWt?=
+ =?iso-8859-1?Q?8wni0Rls4kxoV0XJCKj+5fTLnLWS4AceV1zUyx8Iy8XSqkkCuIF6SqnKYX?=
+ =?iso-8859-1?Q?VX8wTxEHjFdx1ZT/JydOTDO9Ti/jZtH9ULgHE1epJOy6URZ1nj445NoaTd?=
+ =?iso-8859-1?Q?U7+aGWLAih/kiLUeVMnJDtGUQIO6qjJlbT2u1uXPzDzld/yZ+kVjnraHL0?=
+ =?iso-8859-1?Q?jpjjnXmAGYhe7LpZ0FKrprLfrKlfD0ti+Y2im4kO4G4pLTW2Cms5FL/1oZ?=
+ =?iso-8859-1?Q?zQKSUou3bzB+7pexfkfZYPZH1BBlhA+IvDqeUSHRFZw1N0XuIA/IwOCRQu?=
+ =?iso-8859-1?Q?LnlxTJyjn5g8pRqrmhs9/6iP5LgS+UZlC8za13R0grgwmW2ElyvfrPTiei?=
+ =?iso-8859-1?Q?zJ5JptffFF7Vqdba4vWkVdE/IHMx5/2Z4N2YNDt+w5z2f/Vwj0D9aeBmY/?=
+ =?iso-8859-1?Q?6N5y4YPRz5IqeL1jsLbNeFkjuFSvbBuaWxyRo66tC53MbKKrJaG6VKuGxf?=
+ =?iso-8859-1?Q?2lAwFlXaBk8cUbd8GtpYhC5FsV3F2xdIF9aR9fub/QUFlOZpvlwlkVjuP4?=
+ =?iso-8859-1?Q?06dnxzFdMTtSN8QKduKu7jP5p+ttKSoPIFX0QQd0Akr3Ojmn3lh3lCPAlA?=
+ =?iso-8859-1?Q?+xGHoXQGkqDGPNThW+T2md9GVXntA0niVb5UxuGEcgavC+Ca2KFs?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 01/24] freebsd: FreeBSD 15 has native inotify
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Riku Voipio <riku.voipio@iki.fi>
-References: <20260224-bsd-user-claude-v4-0-8ee5ae17056f@bsdimp.com>
- <20260224-bsd-user-claude-v4-1-8ee5ae17056f@bsdimp.com>
-Content-Language: en-US, ru-RU
-From: Michael Tokarev <mjt@tls.msk.ru>
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-In-Reply-To: <20260224-bsd-user-claude-v4-1-8ee5ae17056f@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-OriginatorOrg: htecgroup.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 47aea91e-3ac9-44d2-af99-08de7f659f0c
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2026 11:59:16.9804 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: CgTCakEDQwA/6K2HTeR+31UfE2YeGaxUjdNdJ5TjoVcjtUcx6wpLV6Y920oOa7UUZIRqTeElJqZLsbtzIJaS80RbctNiiLm7PzsbgXtLE18=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: GV4PR09MB8104
+Received-SPF: pass client-ip=2a01:111:f403:c207::3;
+ envelope-from=Djordje.Todorovic@htecgroup.com;
+ helo=MRWPR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,62 +144,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 24.02.2026 17:40, Warner Losh wrote:
-> Check to make sure that we have inotify in libc, before looking for it
-> in libinotify.
-> 
-> Cc: Paolo Bonzini <pbonzini@redhat.com>
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Daniel P. Berrange <berrange@redhat.com>
-> Cc: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
->   meson.build      | 14 +++++---------
->   util/meson.build |  6 +-----
->   2 files changed, 6 insertions(+), 14 deletions(-)
-> 
-> diff --git a/meson.build b/meson.build
-> index 4af32c3e1f..3d761f89b5 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -2664,18 +2664,14 @@ else
->   endif
->   config_host_data.set('CONFIG_ASAN_IFACE_FIBER', have_asan_fiber)
->   
-> +inotify = not_found
->   have_inotify_init = cc.has_header_symbol('sys/inotify.h', 'inotify_init')
->   have_inotify_init1 = cc.has_header_symbol('sys/inotify.h', 'inotify_init1')
-> -inotify = not_found
-> -if (have_inotify_init or have_inotify_init1) and host_os == 'freebsd'
-> -  # libinotify-kqueue
-> +if (have_inotify_init or have_inotify_init1) and not cc.has_function('inotify_init1')
-> +  # FreeBSD 14 and older need libinotify-kqueue wrapper
->     inotify = cc.find_library('inotify')
-> -  if have_inotify_init
-> -    have_inotify_init = inotify.found()
-> -  endif
-> -  if have_inotify_init1
-> -    have_inotify_init1 = inotify.found()
-> -  endif
-> +  have_inotify_init = have_inotify_init and inotify.found()
-> +  have_inotify_init1 = have_inotify_init1 and inotify.found()
->   endif
->   config_host_data.set('CONFIG_INOTIFY', have_inotify_init)
->   config_host_data.set('CONFIG_INOTIFY1', have_inotify_init1)
+- Address comments from reviewers
+- Handle both endianness within signle binary
+- Rebase on top of main branch
 
-Does freebsd have inotify_init() or inotify_init1() or both?
+Djordje Todorovic (9):
+  target/riscv: Define MSTATUS_SBE and MSTATUS_MBE bit masks
+  target/riscv: Use MO_LE for instruction fetch
+  target/riscv: Add big-endian CPU property
+  target/riscv: Set endianness MSTATUS bits at CPU reset
+  target/riscv: Implement runtime data endianness via MSTATUS bits
+  hw/riscv: Make boot code endianness-aware at runtime
+  target/riscv: Fix page table walk endianness for big-endian harts
+  system/memory: Fix subpage endianness for big-endian targets
+  hw/virtio: Support runtime endianness in virtio access helpers
 
-I sent another patch for this area, which drops checking for
-the original/early inotify_init(), because this function is
-actually not used in qemu, - qemu only uses the more modern
-inotify_init1() interface.
+ hw/riscv/boot.c                   | 68 +++++++++++++++++++++++++------
+ include/hw/riscv/boot.h           |  2 +
+ include/hw/virtio/virtio-access.h |  6 ++-
+ include/qemu/target-info.h        |  9 ++++
+ system/physmem.c                  |  2 +-
+ target-info-stub.c                |  8 +++-
+ target/riscv/cpu.c                | 16 +++++---
+ target/riscv/cpu.h                | 24 +++++++++++
+ target/riscv/cpu_bits.h           |  2 +
+ target/riscv/cpu_cfg_fields.h.inc |  1 +
+ target/riscv/cpu_helper.c         | 26 +++++++++---
+ target/riscv/op_helper.c          |  9 +---
+ target/riscv/tcg/tcg-cpu.c        |  9 +++-
+ target/riscv/translate.c          | 20 ++++-----
+ 14 files changed, 155 insertions(+), 47 deletions(-)
 
-Now my change clashes with this change in a fun way.
-
-Do we really need to check for inotify_init() at all?
-
-Thanks,
-
-/mjt
+--=20
+2.34.1
 
