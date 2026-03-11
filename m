@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E693112584D
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:23:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04361112584F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:23:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LLy-0003Ms-Ez; Wed, 11 Mar 2026 11:20:07 -0400
+	id 1w0LLg-0002qo-91; Wed, 11 Mar 2026 11:19:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LLb-0002Lp-D5; Wed, 11 Mar 2026 11:19:43 -0400
+ id 1w0LKR-0001Px-SV; Wed, 11 Mar 2026 11:18:36 -0400
 Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LLZ-00012t-LF; Wed, 11 Mar 2026 11:19:43 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1773242230; cv=none; 
+ id 1w0LKP-0000ud-Mp; Wed, 11 Mar 2026 11:18:31 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773242203; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=mjZGFSlSgaCwIkrL7LayG+y0T/AUrxm/lxfSpxtHzviFbp+LyHYGVPI466ZHfl0HIwT0pTumjavK2JHTtYGDrcR24nMG82fQ4F70KIR3mQhgYfEKNLia/KlrrBUla9L5nDzuYRlzxuf7NNDbkpP+byS60oBeqNzQwW/Y/OUwvr8=
+ b=C4i9+vFfhsXeNgFaubJCBwaUV0EyA1H9+PSsz0JqpRsmnFlw4FvsITiu7DDTBYNvjB9HiucbZ9Q367cx6vS0SYGjssLBwCs33U4axqeA3boKInJ5rtqRuQFuQlAsV2W2P64S/7j3eGTEv3xagjYW25xJ/80KWnEo8DGVScfKXXk=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1773242230;
+ s=zohoarc; t=1773242203;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=diw+ikQFEGuRZqEiB8tryGpZD6ZRwHVrWgg/iJylPK0=; 
- b=Nu0b3N9IMOtvpkDSA6xRJT+x4R7++Dri4nzLFRwhvqtjuUcghRBDj7vhVUQbf0BOphzu66rKsAxYjpVK39y6mKO8U2xnhe5cFtZhvXVBoFSSAQgdFH5r7UeaybDyjP6+7VwuP14qPFD99FuAKgVjJOp175UsTan83XMYajvZ3A0=
+ bh=cnJTxXOgBy6MJhIg55PhHTZzBdD3gmEon1dDZyH3s7g=; 
+ b=S1cyznRc8CKAGS/CodC2JIaDfD/0pNL53bcGrMpg1n3XfOmVdEcG9WsLKT0SSZj7UtnxuNk+hmTDX9+jGp8hzSrnluJi0FiTvre6qDj24hlDUAsK4Fl3dI5vRsc7ndpghh2MmOwIRR7No1U0gEIjS4cZqD2u75Fs99pmEwPejnM=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=anirudhrb.com;
  spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
  dmarc=pass header.from=<anirudh@anirudhrb.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242230; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242203; 
  s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
  h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
- bh=diw+ikQFEGuRZqEiB8tryGpZD6ZRwHVrWgg/iJylPK0=;
- b=J4xznKLFQ7yCw7Ilk0hFgwODiAFiuJVJSFqQgoay+nWd/wJSRqYWpv1B27x8lhtt
- 3+qQhseA+E3WFxWfhPNUo4V5m7tiIp1KDBkCmuJ4QCYYjIpc3Hp4hH2yr7/pHik0oIK
- 53F5VgAW3ZxKgqlWOtGfz0xQ5BR1X+WaITv/kLSI=
-Received: by mx.zohomail.com with SMTPS id 1773242228842311.86975317946917;
- Wed, 11 Mar 2026 08:17:08 -0700 (PDT)
+ bh=cnJTxXOgBy6MJhIg55PhHTZzBdD3gmEon1dDZyH3s7g=;
+ b=kRJEWI+hAjSWD+0m7F37M6eZBF4PWXlYTT+e992V+w0OEKqyPgjYeCwYt41poaBu
+ dAWWDVcBykG2GDMWKb3vivsMJMz8gxMafa+GcGUeU+4rFzGoAOf3Eig5T5rMXO1ylJR
+ hIEQEtH7sUY+YYigZ5l+AKo/z1TGgvjWlLJxEUlk=
+Received: by mx.zohomail.com with SMTPS id 1773242201333184.4496247944328;
+ Wed, 11 Mar 2026 08:16:41 -0700 (PDT)
 From: "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>
-Date: Wed, 11 Mar 2026 15:15:41 +0000
-Subject: [PATCH 14/14] MAINTAINERS: updates for MSHV arm64 code
+Date: Wed, 11 Mar 2026 15:15:34 +0000
+Subject: [PATCH 07/14] accel/mshv: add arch-specific accelerator init hook
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260311-mshv_accel_arm64_supp-v1-14-c31699b7bc1f@anirudhrb.com>
+Message-Id: <20260311-mshv_accel_arm64_supp-v1-7-c31699b7bc1f@anirudhrb.com>
 References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
 In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
 To: qemu-devel@nongnu.org
@@ -84,34 +84,257 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add myself and Aastha Rawat as maintainers.
+Introduce mshv_arch_accel_init() as an arch-specific hook called early
+in mshv_init(), before VM creation. This allows each architecture to
+perform platform-specific initialization at accelerator init time.
 
-Add Magnus Kulke as reviewer.
+For arm64, the hook queries the hypervisor for the supported IPA bit
+size and validates it against the guest memory map via the machine's
+get_physical_address_range callback, following the same pattern used by
+HVF and WHPX. This also populates the memory map which comes in handy
+later when retreiving the vGIC layout.
+
+For x86, the hook calls mshv_init_mmio_emu() which was previously called
+directly from the common init path. Also move set_unimplemented_msr_action()
+and mshv_arch_post_init_vm() from mshv-cpu.c to the new mshv-all.c, as
+they are not vCPU-specific.
 
 Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
 ---
- MAINTAINERS | 8 ++++++++
- 1 file changed, 8 insertions(+)
+ accel/mshv/mshv-all.c        |  5 ++-
+ include/system/mshv_int.h    |  1 +
+ target/arm/mshv/mshv-all.c   | 25 ++++++++++----
+ target/i386/mshv/meson.build |  1 +
+ target/i386/mshv/mshv-all.c  | 80 ++++++++++++++++++++++++++++++++++++++++++++
+ target/i386/mshv/mshv-cpu.c  | 40 ----------------------
+ 6 files changed, 105 insertions(+), 47 deletions(-)
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d1614fd7e..e36b10a8dc 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -606,6 +606,14 @@ R: Wei Liu <wei.liu@kernel.org>
- S: Supported
- F: target/i386/mshv/
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index c6dad18d2f..d63b3a53bf 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -477,7 +477,10 @@ static int mshv_init(AccelState *as, MachineState *ms)
+         return -1;
+     }
  
-+ARM64 MSHV CPUs
-+M: Anirudh Rayabharam <anirudh@anirudhrb.com>
-+M: Aastha Rawat <aastharawat@linux.microsoft.com>
-+R: Magnus Kulke <magnus.kulke@linux.microsoft.com>
-+S: Supported
-+F: target/arm/mshv/
-+F: hw/intc/arm_gicv3_mshv.c
+-    mshv_init_mmio_emu();
++    ret = mshv_arch_accel_init(as, ms, mshv_fd);
++    if (ret < 0) {
++        return -1;
++    }
+ 
+     mshv_init_msicontrol();
+ 
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index ff3ab957b5..c72c91cd23 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -96,6 +96,7 @@ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd);
+ int mshv_arch_post_init_vm(int vm_fd);
+ void mshv_setup_hvcall_args(AccelCPUState *state);
+ 
+diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+index 0102297305..2b983845d3 100644
+--- a/target/arm/mshv/mshv-all.c
++++ b/target/arm/mshv/mshv-all.c
+@@ -9,12 +9,13 @@
+  * SPDX-License-Identifier: GPL-2.0-or-later
+  */
+ 
+-
+ #include "qemu/osdep.h"
+ #include <sys/ioctl.h>
+ 
+ #include "qemu/error-report.h"
+ #include "qemu/memalign.h"
++#include "hw/arm/bsa.h"
++#include "hw/arm/virt.h"
+ 
+ #include "system/cpus.h"
+ #include "target/arm/cpu.h"
+@@ -188,11 +189,6 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     state->hvcall_args = (MshvHvCallArgs){0};
+ }
+ 
+-void mshv_init_mmio_emu(void)
+-{
+-
+-}
+-
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features)
+ {
+@@ -390,3 +386,20 @@ void mshv_arm_set_cpu_features_from_host(ARMCPU *cpu)
+     cpu->midr = arm_host_cpu_features.midr;
+     cpu->reset_sctlr = arm_host_cpu_features.reset_sctlr;
+ }
 +
- X86 Instruction Emulator
- M: Cameron Esfahani <dirty@apple.com>
- M: Roman Bolshakov <rbolshakov@ddn.com>
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
++{
++    MachineClass *mc = MACHINE_GET_CLASS(ms);
++    int pa_range;
++    uint32_t ipa_size;
++
++    if (mc->get_physical_address_range) {
++        ipa_size = mshv_arm_get_ipa_bit_size(mshv_fd);
++        pa_range = mc->get_physical_address_range(ms, ipa_size, ipa_size);
++        if (pa_range < 0) {
++            return -EINVAL;
++        }
++    }
++
++    return 0;
++}
+diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
+index 6091c21887..ce54e134cb 100644
+--- a/target/i386/mshv/meson.build
++++ b/target/i386/mshv/meson.build
+@@ -1,6 +1,7 @@
+ i386_mshv_ss = ss.source_set()
+ 
+ i386_mshv_ss.add(files(
++  'mshv-all.c',
+   'mshv-cpu.c',
+   'msr.c',
+ ))
+diff --git a/target/i386/mshv/mshv-all.c b/target/i386/mshv/mshv-all.c
+new file mode 100644
+index 0000000000..f0b43aa86f
+--- /dev/null
++++ b/target/i386/mshv/mshv-all.c
+@@ -0,0 +1,80 @@
++/*
++ * QEMU MSHV support
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
++ *          Magnus Kulke  <magnuskulke@microsoft.com>
++ *          Jinank Jain   <jinankjain@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qemu/memalign.h"
++
++#include "system/mshv.h"
++#include "system/mshv_int.h"
++#include "system/address-spaces.h"
++#include "linux/mshv.h"
++#include "hw/hyperv/hvgdk.h"
++#include "hw/hyperv/hvgdk_mini.h"
++#include "hw/hyperv/hvhdk_mini.h"
++#include "hw/i386/apic_internal.h"
++
++#include "cpu.h"
++#include "emulate/x86_decode.h"
++#include "emulate/x86_emu.h"
++#include "emulate/x86_flags.h"
++
++#include "trace-accel_mshv.h"
++#include "trace.h"
++
++#include <sys/ioctl.h>
++
++int mshv_arch_accel_init(AccelState *as, MachineState *ms, int mshv_fd)
++{
++    mshv_init_mmio_emu();
++    return 0;
++}
++
++/*
++ * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
++ * fault to the guest if it tries to access it. It is possible to override
++ * this behavior with a more suitable option i.e., ignore writes from the guest
++ * and return zero in attempt to read unimplemented.
++ */
++static int set_unimplemented_msr_action(int vm_fd)
++{
++    struct hv_input_set_partition_property in = {0};
++    struct mshv_root_hvcall args = {0};
++
++    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
++    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
++
++    args.code   = HVCALL_SET_PARTITION_PROPERTY;
++    args.in_sz  = sizeof(in);
++    args.in_ptr = (uint64_t)&in;
++
++    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
++
++    int ret = mshv_hvcall(vm_fd, &args);
++    if (ret < 0) {
++        error_report("Failed to set unimplemented MSR action");
++        return -1;
++    }
++    return 0;
++}
++
++int mshv_arch_post_init_vm(int vm_fd)
++{
++    int ret;
++
++    ret = set_unimplemented_msr_action(vm_fd);
++    if (ret < 0) {
++        error_report("Failed to set unimplemented MSR action");
++    }
++
++    return ret;
++}
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 9a80dc34d0..8325ac74a3 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -1482,43 +1482,3 @@ void mshv_arch_destroy_vcpu(CPUState *cpu)
+     state->hvcall_args = (MshvHvCallArgs){0};
+     g_clear_pointer(&env->emu_mmio_buf, g_free);
+ }
+-
+-/*
+- * Default Microsoft Hypervisor behavior for unimplemented MSR is to send a
+- * fault to the guest if it tries to access it. It is possible to override
+- * this behavior with a more suitable option i.e., ignore writes from the guest
+- * and return zero in attempt to read unimplemented.
+- */
+-static int set_unimplemented_msr_action(int vm_fd)
+-{
+-    struct hv_input_set_partition_property in = {0};
+-    struct mshv_root_hvcall args = {0};
+-
+-    in.property_code  = HV_PARTITION_PROPERTY_UNIMPLEMENTED_MSR_ACTION;
+-    in.property_value = HV_UNIMPLEMENTED_MSR_ACTION_IGNORE_WRITE_READ_ZERO;
+-
+-    args.code   = HVCALL_SET_PARTITION_PROPERTY;
+-    args.in_sz  = sizeof(in);
+-    args.in_ptr = (uint64_t)&in;
+-
+-    trace_mshv_hvcall_args("unimplemented_msr_action", args.code, args.in_sz);
+-
+-    int ret = mshv_hvcall(vm_fd, &args);
+-    if (ret < 0) {
+-        error_report("Failed to set unimplemented MSR action");
+-        return -1;
+-    }
+-    return 0;
+-}
+-
+-int mshv_arch_post_init_vm(int vm_fd)
+-{
+-    int ret;
+-
+-    ret = set_unimplemented_msr_action(vm_fd);
+-    if (ret < 0) {
+-        error_report("Failed to set unimplemented MSR action");
+-    }
+-
+-    return ret;
+-}
 
 -- 
 2.43.0
