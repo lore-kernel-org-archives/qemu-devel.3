@@ -4,66 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B3D6FD88F9
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 05:17:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43C14FCA19A
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 05:17:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Bvq-0007gT-0e; Wed, 11 Mar 2026 01:16:30 -0400
+	id 1w0Bwq-0007sz-Fo; Wed, 11 Mar 2026 01:17:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w0Bvn-0007gA-24
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:16:27 -0400
-Received: from www3579.sakura.ne.jp ([49.212.243.89])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <odaki@rsg.ci.i.u-tokyo.ac.jp>)
- id 1w0Bvk-0002ym-9c
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:16:26 -0400
-Received: from [133.11.54.205] (h205.csg.ci.i.u-tokyo.ac.jp [133.11.54.205])
- (authenticated bits=0)
- by www3579.sakura.ne.jp (8.16.1/8.16.1) with ESMTPSA id 62B5G6Yq049467
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NO);
- Wed, 11 Mar 2026 14:16:15 +0900 (JST)
- (envelope-from odaki@rsg.ci.i.u-tokyo.ac.jp)
-DKIM-Signature: a=rsa-sha256; bh=Jy+gfqv4PhbO8y6jLwZK8c5qFexew6aypE67b0LJyQo=; 
- c=relaxed/relaxed; d=rsg.ci.i.u-tokyo.ac.jp;
- h=From:Message-ID:To:Subject:Date;
- s=rs20250326; t=1773206175; v=1;
- b=cOJ/DBMP95t4XGhIkpw7QYtRTN3uYohrCkmczQzebH0hfXs+/Ikpx+7BVxL8UWmH
- zJa0+a0zF5Ug+xuPv0HIr8q6Yg7glh84QGmFGmqJwYsKDOKfHPqNpGYAMuHMVsG5
- 0jHKS1INK1gPFLs72063jXXlB9C7hKfdwwEq26NN61kc7IwuoGMPaIju2CS1ZH8n
- OuYRT8NuShAbObytz+XQADgH+SXOb4vudyhBQNROFyJv86yFBzFe1Fr1eyqKm+rW
- RcRRoI+yTE7J3IuM4Xce2sFBHS+MCevFVN66BKgdqHGIDTxqHwnqgLtM9I4J4qCT
- 3YKpqHiGgZ/kq3zlHy5Zaw==
-Message-ID: <bd715e5d-5de0-43fd-97e3-e539595824d1@rsg.ci.i.u-tokyo.ac.jp>
-Date: Wed, 11 Mar 2026 14:16:06 +0900
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 09/10] virtio-gpu-dmabuf: Improve error handling with
- 'Error **' and err enum
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Dmitry Osipenko <dmitry.osipenko@collabora.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>
-References: <20260311025340.1335673-1-vivek.kasireddy@intel.com>
- <20260311025340.1335673-10-vivek.kasireddy@intel.com>
-Content-Language: en-US
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-In-Reply-To: <20260311025340.1335673-10-vivek.kasireddy@intel.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=49.212.243.89;
- envelope-from=odaki@rsg.ci.i.u-tokyo.ac.jp; helo=www3579.sakura.ne.jp
-X-Spam_score_int: 0
-X-Spam_score: 0.0
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1w0Bwo-0007sg-IZ
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:17:30 -0400
+Received: from va-2-111.ptr.blmpb.com ([209.127.231.111])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <yanfei.xu@bytedance.com>)
+ id 1w0Bwj-0003LX-Oh
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 01:17:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1773206232; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=Gy4SfHfJxOuY+25XeZZKLoUaXoKj3Tsevtcwd81Vgxw=;
+ b=ErTl02moxsMS3yLcqFCiavN7vqYbeXhcxdev7R21eXnQjiWZKaXxNPCT1kTTZYjBN2zLgV
+ DuU9083yfSZ9lO5zorVKBDdETAnENh37CM33v9IP49rcqHscpPIlpu2FW9+8BR9XcFQ3l4
+ kXXyln+ghPJtKy1UdXyl7DLyXPBdSzFp9atb/Jigvdvd3p7vPH7VozENj5PFrzjq38LLfK
+ tD2v3SWdGEhzUbkvBSgobvtwhAJKMwDckZn66jpdq0cHAGSredIxBCgFBrhW6/sX1GRSbo
+ Vp9bz29CmTXxx7EyPctTxEVnRVSUkQ884u6YBp9YDljQXKrQh0jxxuriGzsvNw==
+Mime-Version: 1.0
+X-Lms-Return-Path: <lba+269b0fad6+3463a7+nongnu.org+yanfei.xu@bytedance.com>
+From: "Yanfei Xu" <yanfei.xu@bytedance.com>
+X-Mailer: git-send-email 2.20.1
+Content-Type: text/plain; charset=UTF-8
+Subject: [PATCH] migration: check is_active for old-style vmstate
+Date: Wed, 11 Mar 2026 13:16:58 +0800
+To: <qemu-devel@nongnu.org>
+Cc: <peterx@redhat.com>, <farosas@suse.de>, <caixiangfeng@bytedance.com>, 
+ <liwenbo.liwenbo@bytedance.com>, <yanfei.xu@bytedance.com>
+Message-Id: <20260311051658.1074299-1-yanfei.xu@bytedance.com>
+X-Original-From: Yanfei Xu <yanfei.xu@bytedance.com>
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=209.127.231.111;
+ envelope-from=yanfei.xu@bytedance.com; helo=va-2-111.ptr.blmpb.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,20 +67,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026/03/11 11:50, Vivek Kasireddy wrote:
-> Make the error handling more robust in virtio_gpu_init_udmabuf()
-> by introducing 'Error **' parameter to capture errors and using
-> an enum from VFIO to categorize different errors. This allows for
-> better error reporting and handling of errors from
-> virtio_gpu_create_udmabuf() and virtio_gpu_remap_dmabuf().
-> 
-> Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
-> Cc: Alex Bennée <alex.bennee@linaro.org>
-> Cc: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+old-style vmstate doesn't use vmsd and instead rely on SaveStateEntry
+ops. Check is_active for old-style vmstate to determine whether they
+should be skipped during migration.
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Signed-off-by: Yanfei Xu <yanfei.xu@bytedance.com>
+---
+ migration/savevm.c | 14 +++++++++++++-
+ 1 file changed, 13 insertions(+), 1 deletion(-)
+
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 197c89e0e6..7eee83ffca 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -1030,15 +1030,27 @@ static int vmstate_save(QEMUFile *f, SaveStateEntry *se, JSONWriter *vmdesc,
+                         Error **errp)
+ {
+     int ret;
++    const bool has_old_style = se->ops && se->ops->save_state;
+ 
+-    if ((!se->ops || !se->ops->save_state) && !se->vmsd) {
++    if (!has_old_style && !se->vmsd) {
+         return 0;
++    } else if (has_old_style && se->vmsd) {
++        error_report("%s: '%s' (section_id=%u): unexpected: both vmsd (%s) and"
++                     " old-style save_state are set", __func__, se->idstr,
++                     se->section_id, se->vmsd->name);
++        return -EINVAL;
+     }
++
+     if (se->vmsd && !vmstate_section_needed(se->vmsd, se->opaque)) {
+         trace_savevm_section_skip(se->idstr, se->section_id);
+         return 0;
+     }
+ 
++    if (has_old_style && se->ops->is_active && !se->ops->is_active(se->opaque)) {
++        trace_savevm_section_skip(se->idstr, se->section_id);
++        return 0;
++    }
++
+     trace_savevm_section_start(se->idstr, se->section_id);
+     save_section_header(f, se, QEMU_VM_SECTION_FULL);
+     if (vmdesc) {
+-- 
+2.20.1
 
