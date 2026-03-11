@@ -4,99 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC767FD88D8
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 02:29:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B179FD88DF
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 02:29:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w09JT-00026K-8f; Tue, 10 Mar 2026 22:28:44 -0400
+	id 1w09KB-0002PL-JS; Tue, 10 Mar 2026 22:29:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1w09JE-0001lH-Pi
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:28:30 -0400
-Received: from mail-ed1-x535.google.com ([2a00:1450:4864:20::535])
+ id 1w09Jg-0002HP-5D
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:28:57 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
- id 1w09JB-0003ww-J7
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:28:28 -0400
-Received: by mail-ed1-x535.google.com with SMTP id
- 4fb4d7f45d1cf-662ac74fd85so3235595a12.0
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 19:28:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773196103; cv=none;
+ id 1w09Jd-0003y8-Lc
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 22:28:55 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-662bf05f7a4so2505559a12.3
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 19:28:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773196118; cv=none;
  d=google.com; s=arc-20240605;
- b=FgXRA2DEDxzWw3mPzNEQMKpHMEjCAvxYO/0UNHTAhU341xst6vpMvVqgJO9VpMhD/u
- odVgK6yOc5logrxGNmOensVHS6V48o9SXl6R46U/dunyl940cmDnxzhImjRNOlPCauR/
- ZwkgoV1dFuo4zQzTSzWdAOEYlOtfIIvlsPCCjLDnKlxzcZnvu1U4lJKJ4xquQO0wIPuk
- BNPLvfI6IVSiqfn9WOy8jqOHn0S9pKbcyfUqLKXlrvd9kez31YW6pcop2iDX+OP3MckT
- 2RLdd9c9wfS8ZkgfyQpK/KUJaFa9zbTdaxHakI78Z7JPRN1kHjY81TzpFKMuHRMfcygE
- 0X0g==
+ b=UUGJg5lGSRFxTtU2f1ZbR2fEYwVkjpogm00R2z/YAdj+zkrJeQ6gUAWyqNBov7xyQi
+ u3Y+CvgMVRUvBw621Q5LuUfrB7q6fXs47uq9zCdO/t9MIM40/jxuAfOnQkXR5iabgui7
+ slB1SE6cXvZ8Gbiivw5kAjTYSb0jcjrXlMzAx/I/LAVWYrOmi4gFq2gdHDy0w1t9Qahx
+ PQhhQku4zXrw2tZLTYWsQyE41PGmQRLFC1Gh68OqnJ4Z0K/fTBQQ5kIG5nF8YRM9/3mU
+ XNw53FT+Lhjr+Y0HC/oV2FWT4waTVWH3f+I8HAV1FtdbshAePhQX/3l2DRpxPI7ENFKT
+ eYYQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=/ClLbnvdevCZpZ9ZMhhQftBL9fvC2U+VXLtSIloIljs=;
- fh=ybYiV9RTOFSKEH2bLIBq3Mn1/PZ7+JiMV8qNBkyQbaY=;
- b=UXvBYlD7L3wuyd8b3f+YXw6stlOfOOQj+CkFyoXaekXvQ1Uw5CemL/VWWolOXihGWM
- UWeYfDUXGTARM5yaKvOoMRGtFxwPeI1UE/7mjXHvXwCZWb3hcxFdYqaF8M/Yjx5MsXnm
- LU6O7ghPHKcRBIZq7jnAM9qBOj5rrR8Yz27tbCSOOyWzwA+7QR8sITC69UcXr1xXK0Wg
- 0v1sB51o1l6qYFBWEVgapVu/pygroRXQTOgTzPx0AwDAC2eu5vKKoOKEwinT3Br5EQeH
- g+4RvpebnsJrN6ie2LdCL6j5BK40wZOJf61wO+pqQUITVdAEHwTIJul11IYWdKDv/npO
- eZ1Q==; darn=nongnu.org
+ bh=2PywI1npjVw8CIZhO7uwzsJnw8ecWqiaaLidatsyk5o=;
+ fh=oP/9QI21LCU/DRwoSKb7f5DjNQL7Ft0NgPbpQymbh3w=;
+ b=OyTJfSB+RjrFmMXYzOFcW308Hve2Vl6d8dfXxVljW3wQNmgbwCa1BkciMeJEAHpE3k
+ dYhhRZJDYdcAxTYCnPxRdfgkZyM2n27FcJnxRPz7Bwn0004ny6sqpl3QqBCSqJCEHwF8
+ 5Shww5rMb00BrItQBGD3y9qZWtjw7xIdLJSFX72LUuS0iEwNa0lwu51ZzRnGqiOx6Cxa
+ 6DaBPiKGNFXDIlB/giACDL5qc0XOsUjLcbCGh2rYSISQojB7qfQDFmlux00rpl291dkK
+ z6LafLui6jREKotG9QBZtpSDNnj6uOFEN6ApLNl3g2zuVvp03+2b8+ZYQG0FIMtcLi2e
+ x7Bw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1773196103; x=1773800903; darn=nongnu.org;
+ d=sifive.com; s=google; t=1773196118; x=1773800918; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/ClLbnvdevCZpZ9ZMhhQftBL9fvC2U+VXLtSIloIljs=;
- b=jWAK5442nvS3ayH5Rz8Sq57sYgFSvVz5fAsI0z6xiB9cZDdFbTDEzG+s2FhXRmslF3
- CDphcyC4KZhzv2gPmFhfNg3zru6s+tR8r/TBHOfVu5iYDJUuJyPMPpc/mwP8NqTt0p37
- 7cLIDpBEkOa3f5ZFkfsqOozi4Ae5Vws8dSYo4DHGrTNE2MFYURDV14VSbyGSX1JW7rVL
- ewsl3Px5cu4aP5rIc+O0kyhxRXH5ioamcJcWPumVpAOWYHjGu/qckXJJU/QEFNZquU5V
- QEZmYKd4rrw+KTWuzCgQM+q7pHI/dct8vfVLnuTYZb0XJkcYeJgoOhUxLzMdve9a07Gw
- 2xHQ==
+ bh=2PywI1npjVw8CIZhO7uwzsJnw8ecWqiaaLidatsyk5o=;
+ b=aLQ9nb3T3AU/U1kYUu6ysWw5ltAlAzaDRpCFgX6S2XQziEnOLnEvHwHcXbkCwbl3RA
+ Qae/vFrQsCJgOLH1+oxdixsPn9uiuiFVmkqbLHdRFxHvuYrk2l8FxlikkEdu6idsAQpk
+ KlvGX6ZabUEqSOzLOJXkwNXMPzklWmnACZxfXHmW9TH66Fk+uOS061aUQcWqhA9I3RTg
+ QBjNG5AozGsQrAys4fDrtAANWDMftBF2lOWMHtGey1odtcsBhWYSw3b+bRuzEbd6/SKU
+ 6SOX6q0/oCqG2S8TbQscFoSgMoZ8RwIMjQOWbIvraNnfYv7EN/7wIuqRFuihWgXhALUj
+ RQGg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773196103; x=1773800903;
+ d=1e100.net; s=20230601; t=1773196118; x=1773800918;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/ClLbnvdevCZpZ9ZMhhQftBL9fvC2U+VXLtSIloIljs=;
- b=WdT62udeuzwnXe2m3fDjgsbL55jvMoWlg2Tmwu5QsiGUQwj6vTb31CSY572sUwuUnJ
- SOwYsdH5P7ssQWo5xkV2pHheiUn0ZGCMHR5e437Ku39uEzs5n7vPUHcvdWf94x+jstvO
- KwqawP+sAdeLYefsEH0o/q2LtYajddNceuFecuCcUcTET5r8217VOfNN4PSlWLh/DFe0
- RcoTWK247/nXdBRGnZTp0kkzJRao5qF6ugHKhX/icsD9c1uSiI35cTbtPiG7zpfi/cyn
- SXejmsXFFjkQxf6uqYRbHO3aumpJWSdS/hoTcL6nMytepe1G/r5co7F8B6r9uMNjskZO
- NnLw==
-X-Gm-Message-State: AOJu0Yx+l0r7QkNISit/UoMvpZCuX038CdU9teBVxY0mwqI06bMCqiQF
- 8LKliPYRkmOtUl9b7H0SU3lA/am9OL/3/2Q0rSLZnqvSYOYlNJRwrCT8ZOzDpKiO22RUIjl+4Yj
- pg5KYGEL2riZEUpu/g9ZFYblD/1tApPmTPtp4IRpAdS0jl+zfKMgm51pqlQ==
-X-Gm-Gg: ATEYQzyt6HYGrwXZ+SJSq6ZjZKQxg6NBfvIjkkvKbztLp5/RSej0+c913M7aEVaxV5X
- jBtMMAangvv8ImH0YntI0t1pwiaqmDZsyWiPqakip4J15GmTTbWZrMx+nvTQ2m+5bOWaPi4YW4w
- VqLqOmE+l7Oi1RtVrMGTy/exJNOXRMNHDGD81QggyGzWPg1EalRv+1SaeB0DdfANn7xHqNFwRj3
- lHUKhuZ6VJwjZ+xhlsAyCgr09amKPonMSvzX+e9G7vxeTriY2rQDGj8Ng7prgPBs8DkD+/ZYelN
- rWH5LAiwiQ==
-X-Received: by 2002:a05:6402:2354:b0:65f:7f90:fb89 with SMTP id
- 4fb4d7f45d1cf-66319cc2b62mr432908a12.17.1773196103153; Tue, 10 Mar 2026
- 19:28:23 -0700 (PDT)
+ bh=2PywI1npjVw8CIZhO7uwzsJnw8ecWqiaaLidatsyk5o=;
+ b=J0GjChicY6JoUJ0LsYP220TLq6OTXCPDxSTFD1OAyHA5q1RwTtyPxU8QBF0NBik4PE
+ 5ABHbZ83ECaa1mFYLHnMzHQsgL9+e8kT93y01hhfJHrl3USebGNxIHQ0uClrr89izuRG
+ zJon0QDvARzwq27XTKzOaWsvFPvpSRycM4Z4ezfqRCA7Y9hC1j6P/tXOzY/qj+bOiJK/
+ SyjV1fWoi1S4tn0uGx3U5xpRRvcNcjbsboXP9MMRdihGeY7JWszRf4D43SaiopgiJAQ6
+ v13ecm+88U36EIMAla1ZQUcxGl2lysFHbZ4UkfLJXmIdQAHP7km2y2/ojISSqdDQOed3
+ MaVw==
+X-Gm-Message-State: AOJu0YwhZMUeufCrtMVUTOwFV7DT3B1H5b3hrF9LwXZ98AfAjxl1SSZM
+ lx7rFeWxFsN5/LBdrasW2hsJuStgrzpS8ZuQ8dTBz2V3sNEoJGF6h/W6/rZ34oa9aSMhM8WWEkn
+ ZY7i+9yrsfpBvNOUgMCAEVhE1uaXLhkYOsfZYId/XisoPFBH8xdS8mfjWKA==
+X-Gm-Gg: ATEYQzz78l7pAjAOrHjEdNZTQl4zt5hmbyfIrYvLPppwvMJqbPIp26L2LhdxrnU3PU9
+ uZSINdJb+yvvq7B3uyakUJV/NHqaw4uykUgYrt/DWJCvmF/FvTGhncPgb4JPpbpyTYP1kFCu5f+
+ yJcKouq7yFOqwUWVwCDWPKzWTYsSpBsNzzrghE3t366VZCagohFuV3SjqFEywB/D/cl/Y/a+Rkw
+ efO5NOmaDKhnXEtSxRp35XPV18fQsSP0hQqdmptyZqVKncdkNR5LrW/PINWWjB4MVpWri+2lrl8
+ pMtwEkTcIg==
+X-Received: by 2002:a05:6402:84e:b0:663:4c4:e63c with SMTP id
+ 4fb4d7f45d1cf-6631a5e4b58mr284380a12.25.1773196118592; Tue, 10 Mar 2026
+ 19:28:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <20251211163826.3998266-1-frank.chang@sifive.com>
- <CAE_xrPiRHMZWiSvbkBQhVV4G25ws_E3xJt5NPv=0rRv09MFdUA@mail.gmail.com>
-In-Reply-To: <CAE_xrPiRHMZWiSvbkBQhVV4G25ws_E3xJt5NPv=0rRv09MFdUA@mail.gmail.com>
+References: <20251209160117.1239596-1-frank.chang@sifive.com>
+ <CAE_xrPjvVPqamRqsaqtuvPj930endqTcxRwknY-0_L8FQ_O9bQ@mail.gmail.com>
+In-Reply-To: <CAE_xrPjvVPqamRqsaqtuvPj930endqTcxRwknY-0_L8FQ_O9bQ@mail.gmail.com>
 From: Frank Chang <frank.chang@sifive.com>
-Date: Wed, 11 Mar 2026 10:28:12 +0800
-X-Gm-Features: AaiRm53tMMwIu9OvdvnC1JCEti9rj8bAPjfwU42Nrzes9sOXNI1CTxehy9N3xq8
-Message-ID: <CAE_xrPgtGnNkvUaA0E1pXc-55Oai-LyUN5kft35=wk76cjiyhw@mail.gmail.com>
-Subject: Re: [PATCH v3 0/6] Fix Zjpm implementation
+Date: Wed, 11 Mar 2026 10:28:27 +0800
+X-Gm-Features: AaiRm50x47tU4gFIzpLXbcx19ho71drUDsNzvDSYO_kvICuHmRhOFcM6jqAoHgA
+Message-ID: <CAE_xrPiutr4Px6yTvf51Rn19-jSFnpBs4sQiKG0OjG+72Xj4qg@mail.gmail.com>
+Subject: Re: [PATCH 0/4] Fix SiFive UART spurious IRQ issue and misc updates
 To: qemu-devel@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
- "open list:RISC-V TCG CPUs" <qemu-riscv@nongnu.org>
-Content-Type: multipart/alternative; boundary="000000000000d889ab064cb66370"
-Received-SPF: pass client-ip=2a00:1450:4864:20::535;
- envelope-from=frank.chang@sifive.com; helo=mail-ed1-x535.google.com
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:SiFive Machines" <qemu-riscv@nongnu.org>
+Content-Type: multipart/alternative; boundary="000000000000c42074064cb6642d"
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=frank.chang@sifive.com; helo=mail-ed1-x530.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,7 +118,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000d889ab064cb66370
+--000000000000c42074064cb6642d
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -127,140 +126,117 @@ Gentle ping.
 
 Thanks~
 
-On Wed, Jan 28, 2026 at 4:24=E2=80=AFPM Frank Chang <frank.chang@sifive.com=
+On Mon, Jan 19, 2026 at 4:13=E2=80=AFPM Frank Chang <frank.chang@sifive.com=
 > wrote:
 
-> Hi all,
+> Sorry, the title should be: "[PATCH v2 0/4] Fix SiFive UART spurious IRQ
+> issue and misc updates" instead.
 >
-> Gentle ping.
+> ping
 >
-> Thanks,
+> Regards,
 > Frank Chang
 >
-> On Fri, Dec 12, 2025 at 12:38=E2=80=AFAM <frank.chang@sifive.com> wrote:
+> On Wed, Dec 10, 2025 at 12:01=E2=80=AFAM <frank.chang@sifive.com> wrote:
 >
 >> From: Frank Chang <frank.chang@sifive.com>
 >>
->> The current Zjpm implementation has the following issues:
+>> This patch series fixes the spurious IRQ issue in the SiFive UART on Lin=
+ux
+>> introduced after commit [1], which changed character transmission from
+>> synchronous to asynchronous.
 >>
->> 1. The address is shifted before obtaining the correct PMLEN value.
->> 2. riscv_pm_get_pmm() does not handle effective privilege mode correctly=
-.
->> 3. mstatus.MPRV does not affect virtual-machine load/store instructions.
->> 4. Sign extension for virtual-machine load/store instructions (HLV.* and
->>    HSV.*) must be performed when vsatp.MODE !=3D Bare.
+>> Currently, the txwm interrupt pending status is only updated when the
+>> asynchronous transmit handler runs. This can cause the txwm interrupt
+>> state to become unsynchronized between the SiFive UART and the interrupt
+>> controller.
 >>
->> This patchset fixes the above issues and also renames
->> riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm(), as the helper
->> is only used when checking the PMM configuration for virtual-machine
->> load/store instructions, rather than for VS/VU modes.
+>> This issue has been observed on resource-constrained systems, where
+>> Linux reports spurious IRQ errors. In these cases, the asynchronous
+>> transmit handler is unable to drain the TX FIFO quickly enough to update
+>> the txwm pending status before software reads the IP register, which
+>> derives the txwm pending state directly from the actual number of
+>> characters in the TX FIFO.
 >>
->> Changelog:
+>> The remaining patches contain miscellaneous updates, including
+>> implementing txctrl.txen and rxctrl.rxen, update IRQ when rxctrl is
+>> written and remove the unused ip variable.
 >>
->> v3:
->>   * Move riscv_cpu_eff_priv() to the header file and declare it as a
->>     static inline function.
->>   * Fix the MXR check bugs pointed out by Radim Kr=C4=8Dm=C3=A1=C5=99.
+>> [1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
 >>
->> v2:
->>   * Check effective privilege mode in riscv_pm_get_pmm().
->>   * Fix pointer masking for virtual-machine load/store instructions
->>     (HLV.* and HSV.*).
->>   * Rename riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm().
+>> Frank Chang (4):
+>>   hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen
+>>   hw/char: sifive_uart: Sync txwm interrupt pending status after TX FIFO
+>>     enqueue
+>>   hw/char: sifive_uart: Update IRQ when rxctrl is written
+>>   hw/char: sifive_uart: Remove ip variable
 >>
->> Frank Chang (5):
->>   target/riscv: Add a helper to return the current effective priv mode
->>   target/riscv: Fix pointer masking PMM field selection logic
->>   target/riscv: Fix pointer masking for virtual-machine load/store insns
->>   target/riscv: Rename riscv_pm_get_virt_pmm() to
->>     riscv_pm_get_vm_ldst_pmm()
->>   target/riscv: Fix pointer masking translation mode check bug
->>
->> Yong-Xuan Wang (1):
->>   target/riscv: fix address masking
->>
->>  target/riscv/cpu.h         |  41 +++++++++++++-
->>  target/riscv/cpu_helper.c  | 110 +++++++++++++++++++++++++++----------
->>  target/riscv/internals.h   |   8 +--
->>  target/riscv/tcg/tcg-cpu.c |   4 +-
->>  4 files changed, 124 insertions(+), 39 deletions(-)
+>>  hw/char/sifive_uart.c         | 46 ++++++++++++++++++++++++++++-------
+>>  include/hw/char/sifive_uart.h |  3 ++-
+>>  2 files changed, 39 insertions(+), 10 deletions(-)
 >>
 >> --
 >> 2.43.0
 >>
 >>
 
---000000000000d889ab064cb66370
+--000000000000c42074064cb6642d
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
 <div dir=3D"ltr">Gentle ping.<div><br></div><div>Thanks~</div></div><br><di=
 v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
-il_attr">On Wed, Jan 28, 2026 at 4:24=E2=80=AFPM Frank Chang &lt;<a href=3D=
+il_attr">On Mon, Jan 19, 2026 at 4:13=E2=80=AFPM Frank Chang &lt;<a href=3D=
 "mailto:frank.chang@sifive.com">frank.chang@sifive.com</a>&gt; wrote:<br></=
 div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bor=
-der-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Hi a=
-ll,<br><br><span><span>Gentle ping</span></span>.<div><br></div><div>Thanks=
-,</div><div>Frank Chang</div></div><br><div class=3D"gmail_quote"><div dir=
-=3D"ltr" class=3D"gmail_attr">On Fri, Dec 12, 2025 at 12:38=E2=80=AFAM &lt;=
-<a href=3D"mailto:frank.chang@sifive.com" target=3D"_blank">frank.chang@sif=
-ive.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"=
-margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-lef=
-t:1ex">From: Frank Chang &lt;<a href=3D"mailto:frank.chang@sifive.com" targ=
-et=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
+der-left:1px solid rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr">Sorr=
+y, the title should be: &quot;[PATCH v2 0/4] Fix SiFive UART spurious IRQ i=
+ssue and misc updates&quot; instead.<div><br></div><div>ping</div><div><br>=
+</div><div>Regards,</div><div>Frank Chang</div></div><br><div class=3D"gmai=
+l_quote"><div dir=3D"ltr" class=3D"gmail_attr">On Wed, Dec 10, 2025 at 12:0=
+1=E2=80=AFAM &lt;<a href=3D"mailto:frank.chang@sifive.com" target=3D"_blank=
+">frank.chang@sifive.com</a>&gt; wrote:<br></div><blockquote class=3D"gmail=
+_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204=
+,204);padding-left:1ex">From: Frank Chang &lt;<a href=3D"mailto:frank.chang=
+@sifive.com" target=3D"_blank">frank.chang@sifive.com</a>&gt;<br>
 <br>
-The current Zjpm implementation has the following issues:<br>
+This patch series fixes the spurious IRQ issue in the SiFive UART on Linux<=
+br>
+introduced after commit [1], which changed character transmission from<br>
+synchronous to asynchronous.<br>
 <br>
-1. The address is shifted before obtaining the correct PMLEN value.<br>
-2. riscv_pm_get_pmm() does not handle effective privilege mode correctly.<b=
-r>
-3. mstatus.MPRV does not affect virtual-machine load/store instructions.<br=
+Currently, the txwm interrupt pending status is only updated when the<br>
+asynchronous transmit handler runs. This can cause the txwm interrupt<br>
+state to become unsynchronized between the SiFive UART and the interrupt<br=
 >
-4. Sign extension for virtual-machine load/store instructions (HLV.* and<br=
+controller.<br>
+<br>
+This issue has been observed on resource-constrained systems, where<br>
+Linux reports spurious IRQ errors. In these cases, the asynchronous<br>
+transmit handler is unable to drain the TX FIFO quickly enough to update<br=
 >
-=C2=A0 =C2=A0HSV.*) must be performed when vsatp.MODE !=3D Bare.<br>
+the txwm pending status before software reads the IP register, which<br>
+derives the txwm pending state directly from the actual number of<br>
+characters in the TX FIFO.<br>
 <br>
-This patchset fixes the above issues and also renames<br>
-riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm(), as the helper<br>
-is only used when checking the PMM configuration for virtual-machine<br>
-load/store instructions, rather than for VS/VU modes.<br>
+The remaining patches contain miscellaneous updates, including<br>
+implementing txctrl.txen and rxctrl.rxen, update IRQ when rxctrl is<br>
+written and remove the unused ip variable.<br>
 <br>
-Changelog:<br>
+[1] 53c1557b230986ab6320a58e1b2c26216ecd86d5<br>
 <br>
-v3:<br>
-=C2=A0 * Move riscv_cpu_eff_priv() to the header file and declare it as a<b=
-r>
-=C2=A0 =C2=A0 static inline function.<br>
-=C2=A0 * Fix the MXR check bugs pointed out by Radim Kr=C4=8Dm=C3=A1=C5=99.=
+Frank Chang (4):<br>
+=C2=A0 hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen<br>
+=C2=A0 hw/char: sifive_uart: Sync txwm interrupt pending status after TX FI=
+FO<br>
+=C2=A0 =C2=A0 enqueue<br>
+=C2=A0 hw/char: sifive_uart: Update IRQ when rxctrl is written<br>
+=C2=A0 hw/char: sifive_uart: Remove ip variable<br>
 <br>
-<br>
-v2:<br>
-=C2=A0 * Check effective privilege mode in riscv_pm_get_pmm().<br>
-=C2=A0 * Fix pointer masking for virtual-machine load/store instructions<br=
->
-=C2=A0 =C2=A0 (HLV.* and HSV.*).<br>
-=C2=A0 * Rename riscv_pm_get_virt_pmm() to riscv_pm_get_vm_ldst_pmm().<br>
-<br>
-Frank Chang (5):<br>
-=C2=A0 target/riscv: Add a helper to return the current effective priv mode=
-<br>
-=C2=A0 target/riscv: Fix pointer masking PMM field selection logic<br>
-=C2=A0 target/riscv: Fix pointer masking for virtual-machine load/store ins=
-ns<br>
-=C2=A0 target/riscv: Rename riscv_pm_get_virt_pmm() to<br>
-=C2=A0 =C2=A0 riscv_pm_get_vm_ldst_pmm()<br>
-=C2=A0 target/riscv: Fix pointer masking translation mode check bug<br>
-<br>
-Yong-Xuan Wang (1):<br>
-=C2=A0 target/riscv: fix address masking<br>
-<br>
-=C2=A0target/riscv/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0|=C2=A0 41 ++++++=
-+++++++-<br>
-=C2=A0target/riscv/cpu_helper.c=C2=A0 | 110 +++++++++++++++++++++++++++----=
-------<br>
-=C2=A0target/riscv/internals.h=C2=A0 =C2=A0|=C2=A0 =C2=A08 +--<br>
-=C2=A0target/riscv/tcg/tcg-cpu.c |=C2=A0 =C2=A04 +-<br>
-=C2=A04 files changed, 124 insertions(+), 39 deletions(-)<br>
+=C2=A0hw/char/sifive_uart.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 46 +++++++++=
++++++++++++++++++++-------<br>
+=C2=A0include/hw/char/sifive_uart.h |=C2=A0 3 ++-<br>
+=C2=A02 files changed, 39 insertions(+), 10 deletions(-)<br>
 <br>
 --<br>
 2.43.0<br>
@@ -268,5 +244,5 @@ Yong-Xuan Wang (1):<br>
 </blockquote></div>
 </blockquote></div>
 
---000000000000d889ab064cb66370--
+--000000000000c42074064cb6642d--
 
