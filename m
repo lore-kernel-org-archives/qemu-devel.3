@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFB36112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:10:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BFA1125841
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LC1-0002Ch-Uo; Wed, 11 Mar 2026 11:09:53 -0400
+	id 1w0LBs-0001lr-SS; Wed, 11 Mar 2026 11:09:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAu-0006rP-5W; Wed, 11 Mar 2026 11:08:41 -0400
+ id 1w0L9q-0004Kb-QA; Wed, 11 Mar 2026 11:07:40 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAq-0005ce-CD; Wed, 11 Mar 2026 11:08:38 -0400
+ id 1w0L9o-0005NL-W0; Wed, 11 Mar 2026 11:07:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241482; bh=OQyjN3JiNQKujPfiQykMp7epgbhDBXLON+2RERmtywM=;
+ t=1773241481; bh=yQnZjgyMz3ySbNBJU7G+jkBzponQ6pRrFaMlgEJtwFA=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XJY+9ZnGIaSjg5t+u5+6+H5Om/gTiM36vFOvM/TiiJmBGsnQ5YRpbjo8Zt/WwzD25
- nyFQ+h7AcAAcho9s5bsbzR+e7737MS9a8FK3a6nB22+0EX01RyXlkPalm1msom+vYC
- n62pxTeOBGnrK38vRRs74EpOx/q6JlWxXdXoJQ6Zn1/3lHEjH7tUsOUlM3f6KpUNmZ
- Ephgkj3HKmUaWp6fhEn94Knc19ZO0mTFPw0BtGrBN4pSj8K+SfZIhtstbg7UYw+uin
- dHG182groP6H0xSmnxoDxGKJjHYICyuHJhFUE+teIjvs30sUz2xNoWMeE61PMZflbT
- /jeqVrWwBCMxg==
+ b=j45f77DDIt6UyheXiIFKVj/jlT6PAv8AEeXx4L/pBC3Zi/gacCpf/rLzhL1JFXdaD
+ 8JxgQ9c/sfmeItiyobzY5TlZUAE06be6cwLU1eUH22Cc38f84x2C26vtfC+TDwUTvn
+ 3nFhJ29HygLL9CydM2vUm5cuK56mjPv0Vvq3zmNXhuRYe3YRImSlCm4CUFpRzPgMwo
+ vKy76Boz+kllmybKeI8lSPx81C/IROYudRhUxEoPyXCg878V7bOeu4veqOgvMgDdCd
+ PFDac/6gl2Sl3B/MWS90egpoz01SK0jCW1BAF4Cto11Clo72xln0lw8jWNLmlFbk4r
+ CjM6mD008RVqw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7B131191E98;
- Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id AAEAD191E8D;
+ Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 64C4B37C2D9;
- Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 99C4C37C2CE;
+ Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Weixie Cui <cuiweixie@gmail.com>,
- Thomas Huth <thuth@redhat.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 21/46] hw/ssi/xilinx_spips: Reset TX FIFO in reset
-Date: Wed, 11 Mar 2026 18:02:57 +0300
-Message-ID: <20260311150327.1084669-21-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 10/46] hw/i2c/aspeed_i2c: Fix out-of-bounds read in
+ I2C MMIO handlers
+Date: Wed, 11 Mar 2026 18:02:46 +0300
+Message-ID: <20260311150327.1084669-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,45 +72,131 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Weixie Cui <cuiweixie@gmail.com>
+From: Jamin Lin <jamin_lin@aspeedtech.com>
 
-In xilinx_spips_reset() and xlnx_zynqmp_qspips_reset() a cut and
-paste error meant we reset the RX FIFO twice and the TX FIFO not at
-all.  Correct this to reset both FIFOs.
+The ASPEED I2C controller exposes a per-bus MMIO window of 0x80 bytes on
+AST2600/AST1030/AST2700, but the backing regs[] array was sized for only
+28 dwords (0x70 bytes). This allows guest reads in the range [0x70..0x7f]
+to index past the end of regs[].
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Weixie Cui <cuiweixie@gmail.com>
-Reviewed-by: Thomas Huth <thuth@redhat.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260223095905.67709-1-cuiweixie@gmail.com
-[Rewrote commit message]
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-(cherry picked from commit 669683cf1414ce442d2faea160dbc69747aef007)
+Fix this by:
+- Sizing ASPEED_I2C_NEW_NUM_REG to match the 0x80-byte window
+  (0x80 >> 2 = 32 dwords).
+- Avoiding an unconditional pre-read from regs[] in the legacy/new read
+  handlers. Initialize the return value to -1 and only read regs[] for
+  offsets that are explicitly handled/valid, leaving invalid offsets to
+  return -1 with a guest error log.
+
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3290
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Link: https://lore.kernel.org/qemu-devel/20260210024331.3984696-2-jamin_lin@aspeedtech.com
+Signed-off-by: Cédric Le Goater <clg@redhat.com>
+(cherry picked from commit c2c5beec42bf9872b37e78b9e259132df7435cb5)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/ssi/xilinx_spips.c b/hw/ssi/xilinx_spips.c
-index a79f3b8e49..9c5b58a9ec 100644
---- a/hw/ssi/xilinx_spips.c
-+++ b/hw/ssi/xilinx_spips.c
-@@ -369,7 +369,7 @@ static void xilinx_spips_reset(DeviceState *d)
-     memset(s->regs, 0, sizeof(s->regs));
+diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
+index c48fa2050b..c455c3eb7c 100644
+--- a/hw/i2c/aspeed_i2c.c
++++ b/hw/i2c/aspeed_i2c.c
+@@ -94,7 +94,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+                                         unsigned size)
+ {
+     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+-    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
++    uint64_t value = -1;
  
-     fifo8_reset(&s->rx_fifo);
--    fifo8_reset(&s->rx_fifo);
-+    fifo8_reset(&s->tx_fifo);
-     /* non zero resets */
-     s->regs[R_CONFIG] |= MODEFAIL_GEN_EN;
-     s->regs[R_SLAVE_IDLE_COUNT] = 0xFF;
-@@ -397,7 +397,7 @@ static void xlnx_zynqmp_qspips_reset(DeviceState *d)
-     memset(s->regs, 0, sizeof(s->regs));
+     switch (offset) {
+     case A_I2CD_FUN_CTRL:
+@@ -105,7 +105,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CD_DEV_ADDR:
+     case A_I2CD_POOL_CTRL:
+     case A_I2CD_BYTE_BUF:
+-        /* Value is already set, don't do anything. */
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CD_CMD:
+         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
+@@ -113,21 +113,20 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CD_DMA_ADDR:
+         if (!aic->has_dma) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
+-            value = -1;
+             break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CD_DMA_LEN:
+         if (!aic->has_dma) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
+-            value = -1;
++            break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+-
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
+-        value = -1;
+         break;
+     }
  
-     fifo8_reset(&s->rx_fifo_g);
--    fifo8_reset(&s->rx_fifo_g);
-+    fifo8_reset(&s->tx_fifo_g);
-     fifo32_reset(&s->fifo_g);
-     s->regs[R_INTR_STATUS] = R_INTR_STATUS_RESET;
-     s->regs[R_GPIO] = 1;
+@@ -139,7 +138,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+                                         unsigned size)
+ {
+     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
+-    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
++    uint64_t value = -1;
+ 
+     switch (offset) {
+     case A_I2CC_FUN_CTRL:
+@@ -159,13 +158,12 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+     case A_I2CS_CMD:
+     case A_I2CS_INTR_CTRL:
+     case A_I2CS_DMA_LEN_STS:
+-        /* Value is already set, don't do anything. */
++    case A_I2CS_INTR_STS:
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     case A_I2CC_DMA_ADDR:
+         value = extract64(bus->dma_dram_offset, 0, 32);
+         break;
+-    case A_I2CS_INTR_STS:
+-        break;
+     case A_I2CM_CMD:
+         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
+         break;
+@@ -176,13 +174,13 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
+         if (!aic->has_dma64) {
+             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
+             __func__);
+-            value = -1;
++            break;
+         }
++        value = bus->regs[offset / sizeof(*bus->regs)];
+         break;
+     default:
+         qemu_log_mask(LOG_GUEST_ERROR,
+                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
+-        value = -1;
+         break;
+     }
+ 
+diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
+index 2daacc10ce..efe8b1a0c5 100644
+--- a/include/hw/i2c/aspeed_i2c.h
++++ b/include/hw/i2c/aspeed_i2c.h
+@@ -36,8 +36,7 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
+ #define ASPEED_I2C_NR_BUSSES 16
+ #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
+ #define ASPEED_I2C_BUS_POOL_SIZE 0x20
+-#define ASPEED_I2C_OLD_NUM_REG 11
+-#define ASPEED_I2C_NEW_NUM_REG 28
++#define ASPEED_I2C_NEW_NUM_REG (0x80 >> 2)
+ 
+ #define A_I2CD_M_STOP_CMD       BIT(5)
+ #define A_I2CD_M_RX_CMD         BIT(3)
 -- 
 2.47.3
 
