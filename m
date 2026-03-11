@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 095161125847
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0946B1125842
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LEN-0007bC-0r; Wed, 11 Mar 2026 11:12:15 -0400
+	id 1w0LBX-00008L-EE; Wed, 11 Mar 2026 11:09:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LD7-0003az-Ig; Wed, 11 Mar 2026 11:11:01 -0400
+ id 1w0L8J-0002Zh-BG; Wed, 11 Mar 2026 11:06:00 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LD5-00067g-Pr; Wed, 11 Mar 2026 11:10:57 -0400
+ id 1w0L8H-0004lp-FJ; Wed, 11 Mar 2026 11:05:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241484; bh=+W3eicgXEE2AmYSo7J29g83NNYv1Bgs92Oh+32965CA=;
+ t=1773241306; bh=BHOviuHP5foff2AjkdUA6ZMcXXULNC4ThKsRfXFMgTE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=adbfE1GZj0+J4NvKhdhMj3LDmE6GygSWSuyvsfbGNWrfztrcOEhQwQbZarMtIb2Sd
- UDR9EpaiS+wOlEakcZ9uiO2fXctflORFRa8OeUuV48qDIYk42waFscd2MTwQ3jGJRc
- ox4caIJfPYnwEycrCSxU3MqXTq6sfrPe5FFPPvtTFcez7T8KpDvRuWzEBkPLQImdCR
- GAaKGCQfSSk+Mg6teqM4mqUdWj3XBu0nSvFd+592PqiaDHdoEYl0Z/n4bPHJgD7WDq
- FFEQxlPlc17fUm/Al8QX9NgkN8FSXf/Cun8+HDWKJdCxdaj7HlgR0bXHT9OOhlaNe8
- F+FZadrQ5l+/Q==
+ b=sRq1knxVrwotdFEZOi5uNY+GVfsZPuLFYT4Dyjlh9FRYWwcvprhDLdfjD/nsqgREr
+ qYLgtWby8CXrKWKOJrzPdlbPYQqjlZBiS1odKftr8CLGeylGZOIhssvybcneYE6kHz
+ 65c9KB+a18cYBdgR0WB/oFrkdarJSgat4FghHYNOKsdL+9XAMRJRpK9SYpBAVJk8DC
+ L/pgMWHPN0XF7wQeeeW0XPwbLhNSpxb/SS2OQ7t5Pd+MNjtkJ3NpT+57asWbIghcgU
+ xOkDHF/Q6SyftNz0cLNz2m+fx0HKmHySonnRLR8uZqaQOJFwwkDQqY3CsHgQWRRmqE
+ 2L8AmcTP7bauA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 0E8DE191EAD;
- Wed, 11 Mar 2026 18:04:44 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 276FF191E65;
+ Wed, 11 Mar 2026 18:01:46 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id F10AF37C2EE;
- Wed, 11 Mar 2026 18:05:21 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 15F9E37C2B7;
+ Wed, 11 Mar 2026 18:02:24 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: qemu-stable@nongnu.org, Bingwu Zhang <xtex@astrafall.org>,
- Helge Deller <deller@gmx.de>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 42/46] tests/tcg/multiarch/test-mmap: Check mmaps
- beyond reserved_va
-Date: Wed, 11 Mar 2026 18:03:18 +0300
-Message-ID: <20260311150327.1084669-42-mjt@tls.msk.ru>
+ Helge Deller <deller@gmx.de>, Warner Losh <imp@bsdimp.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 39/44] bsd-user: Deal with mmap where start >
+ reserved_va
+Date: Wed, 11 Mar 2026 18:02:11 +0300
+Message-ID: <20260311150221.1084186-39-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -72,47 +73,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Bingwu Zhang <xtex@astrafall.org>
 
-Unfixed mmap calls where start > reserved_va or the max guest addr
-should have a valid result.
-
+Fixes: f12294b5bd21 ("bsd-user: Use page_find_range_empty for mmap_find_vma_reserved")
 Signed-off-by: Bingwu Zhang <xtex@astrafall.org>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Warner Losh <imp@bsdimp.com>
 Signed-off-by: Helge Deller <deller@gmx.de>
-(cherry picked from commit c865b6bce5d0c882b86fb7c3512174cdaf235017)
+(cherry picked from commit e8e7d1f97785be2fd81fc520e0c7b9d228c10a56)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/tests/tcg/multiarch/test-mmap.c b/tests/tcg/multiarch/test-mmap.c
-index e297f4b1e9..fd9055a90e 100644
---- a/tests/tcg/multiarch/test-mmap.c
-+++ b/tests/tcg/multiarch/test-mmap.c
-@@ -491,6 +491,20 @@ void check_shrink_mmaps(void)
-     munmap(c, 2 * pagesize);
- }
- 
-+void check_mmaps_beyond_addr_space(void)
-+{
-+    unsigned char *addr;
-+    addr = mmap((void *)(-(unsigned long)pagesize * 10), pagesize * 2,
-+                PROT_READ, MAP_PRIVATE | MAP_ANONYMOUS, -1, 0);
-+    fprintf(stdout, "%s addr=%p errno=%d", __func__, (void *)addr, errno);
-+    fail_unless(addr != MAP_FAILED);
-+
-+    memcpy(dummybuf, addr, 2 * pagesize);
-+    munmap(addr, 2 * pagesize);
-+
-+    fprintf(stdout, " passed\n");
-+}
-+
- int main(int argc, char **argv)
+diff --git a/bsd-user/mmap.c b/bsd-user/mmap.c
+index 3f0df79c37..00305463e6 100644
+--- a/bsd-user/mmap.c
++++ b/bsd-user/mmap.c
+@@ -257,12 +257,14 @@ abi_ulong mmap_next_start = TASK_UNMAPPED_BASE;
+ static abi_ulong mmap_find_vma_reserved(abi_ulong start, abi_ulong size,
+                                         abi_ulong alignment)
  {
- 	char tempname[] = "/tmp/.cmmapXXXXXX";
-@@ -534,6 +548,7 @@ int main(int argc, char **argv)
- 	check_file_unfixed_eof_mmaps();
- 	check_invalid_mmaps();
-     check_shrink_mmaps();
-+    check_mmaps_beyond_addr_space();
+-    abi_ulong ret;
++    abi_ulong ret = -1;
  
- 	/* Fails at the moment.  */
- 	/* check_aligned_anonymous_fixed_mmaps_collide_with_host(); */
+-    ret = page_find_range_empty(start, reserved_va, size, alignment);
++    if (start <= reserved_va) {
++        ret = page_find_range_empty(start, reserved_va, size, alignment);
++    }
+     if (ret == -1 && start > TARGET_PAGE_SIZE) {
+         /* Restart at the beginning of the address space. */
+-        ret = page_find_range_empty(TARGET_PAGE_SIZE, start - 1,
++        ret = page_find_range_empty(TARGET_PAGE_SIZE, MIN(start - 1, reserved_va),
+                                     size, alignment);
+     }
+ 
 -- 
 2.47.3
 
