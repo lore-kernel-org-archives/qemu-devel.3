@@ -4,63 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 647DF1125821
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:44:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AFC81125823
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:49:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Jr4-0003FH-04; Wed, 11 Mar 2026 09:44:06 -0400
+	id 1w0Jw3-0004uR-VN; Wed, 11 Mar 2026 09:49:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w0Jr2-0003F3-KR; Wed, 11 Mar 2026 09:44:04 -0400
-Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0Jw2-0004tH-6K; Wed, 11 Mar 2026 09:49:14 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w0Jqz-00073e-Ob; Wed, 11 Mar 2026 09:44:04 -0400
-Received: from mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net
- [IPv6:2a02:6b8:c42:65a0:0:640:e1de:0])
- by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id CB1548074D;
- Wed, 11 Mar 2026 16:43:57 +0300 (MSK)
-Received: from localhost (unknown [2a02:6bf:8080:d28::1:5])
- by mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uhGFm30AaGk0-tpmXgvPO; Wed, 11 Mar 2026 16:43:57 +0300
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1773236637;
- bh=dRACo3oAkHHnwWt5e0bmNSEYoPq1TWoQSR8PzCsJBsw=;
- h=In-Reply-To:Subject:Cc:Message-Id:Date:References:To:From;
- b=TXYVe/tkTR2Mm9oMDBnupq/IJ+CPNYeI0+LhlqsuNUzaQ/Imt9urqj1E9QUIwYsnX
- YmuI+2+1e2YJe9CsjRoG5YsyqOhghx//6MPPQnVZNgzSQUd7GdS7rd8QcbTyxo+0rl
- m6BL27aqIMa7pDzx0hWRxCOdEoPdGffWYOuzAAHk=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-56.klg.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.com
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 11 Mar 2026 18:43:56 +0500
-Message-Id: <DGZZXCXXYK0L.1ZBGURAHY5Y5S@yandex-team.com>
-Cc: <qemu-trivial@nongnu.org>
-Subject: Re: [PATCH v3 0/4] Fix a few minor issues reported by Coverity
-From: "Sergei Heifetz" <heifetz@yandex-team.com>
-To: "Michael Tokarev" <mjt@tls.msk.ru>, "Sergei Heifetz"
- <heifetz@yandex-team.com>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0-119-g0a449d4a7ff3
-References: <20260208103958.121455-1-heifetz@yandex-team.com>
- <47a14220-139f-4be6-a19d-503924d5e90b@tls.msk.ru>
- <DGZZGGO06GZ5.3UDKO7EUE6XMP@yandex-team.com>
- <54bf3ef9-2fdd-4d0e-b5cc-5e429165f75b@tls.msk.ru>
-In-Reply-To: <54bf3ef9-2fdd-4d0e-b5cc-5e429165f75b@tls.msk.ru>
-Received-SPF: pass client-ip=178.154.239.200;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0Jvz-0001ls-Gw; Wed, 11 Mar 2026 09:49:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773236910; bh=gl3X1d/VNPvqw08kqdle1nQ1bBNs7PDRJOErFketQsg=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=fYCjfL7YfdEGlQWqmRyV2/z4AoUL6e6NfC31a6SaGWdqFOn8dglS1iuL/fjwmWTWS
+ w6Y6p/37LyJFijt+Fy6HA7yd7HeIfx5NeGmbMeaU5TZ29ODjH0Ple22KOezit9CUsE
+ 0quUoGkhbKZHL/TLcgF7y3plzXKcR/7g2QmX8PsfdcEnWLdjkFgzVWNg7aP3PQ6TBl
+ PFQAFDd6RfRGcUhCF9ZLti+ywDMAqEtUDvD01rq1eQd/glwPVtVvkWGJoBtqffZW3H
+ xacdnZaieAhformTfIGCPNeCbV958Xhr00mMbhvnGfyxbgaY33lAUiRJA3MnVp+eA+
+ sY6g3euXLHzpw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 216BE191DB8;
+ Wed, 11 Mar 2026 16:48:30 +0300 (MSK)
+Message-ID: <14f217e1-a5d0-4cc7-82be-bd76f2483fcf@tls.msk.ru>
+Date: Wed, 11 Mar 2026 16:49:07 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/7] Add VIRTIO_F_IN_ORDER support to vhost shadow
+ virtqueue
+To: Eugenio Perez Martin <eperezma@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-stable@nongnu.org
+References: <20260304173535.2702587-1-eperezma@redhat.com>
+ <fe9eeb1f-b964-43f3-8147-7e302bdef268@tls.msk.ru>
+ <CAJaqyWfYXf8O1ECXuWQPPi2Th_ekdaPpFM6Gq7S7dRJByOW3EQ@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <CAJaqyWfYXf8O1ECXuWQPPi2Th_ekdaPpFM6Gq7S7dRJByOW3EQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,18 +113,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed Mar 11, 2026 at 6:25 PM +05, Michael Tokarev wrote:
-> On 11.03.2026 16:21, Sergei Heifetz wrote:
->
->> I've just resubmitted the series with a change to the commit message of
->> the `physmem.c` patch. As pointed out by Peter Maydell, there is a good
->> reason to consider the assertion redundant.
->
-> Sigh.. I already picked all the patches up.
->
-> Lemme re-pick stuff..
->
-> /mjt
+On 11.03.2026 15:24, Eugenio Perez Martin wrote:
+> On Wed, Mar 11, 2026 at 12:50 PM Michael Tokarev <mjt@tls.msk.ru> wrote:
 
-Yeah, sorry about that. Thanks for your time.
+>> This whole patchset is being Cc'ed to qemu-stable@.  Does this mean
+>> that whole patch set should be picked up for the qemu stable series?
+>> It's a rather unusual thing to do - to pick up new feature into a
+>> stable series.  Is it what you have in mind?
+
+> No, only the first patch. Sorry for not being clear, I thought it was
+> enough with the Fixes: tag, but thinking it twice I see how it might
+> not be clear enough. I'll make it clearer in the cover letter next
+> time, or is there a better way to handle this?
+
+If not whole series should be picked up for stable, you can add
+Cc: qemu-stable@.. to individual patches which should be.
+
+The presence of Fixes: doesn't make it clear :)
+
+But it's very good that you do care about stable series!
+
+Thank you.  I've noted for this particular series, there's nothing
+extra to do here.
+
+Thanks,
+
+/mjt
 
