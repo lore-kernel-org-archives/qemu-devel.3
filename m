@@ -4,44 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4C1F61125892
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:37:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD830112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:38:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PLX-0007kZ-9D; Wed, 11 Mar 2026 15:35:55 -0400
+	id 1w0PNC-0003Sg-P7; Wed, 11 Mar 2026 15:37:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PLV-0007j8-5k; Wed, 11 Mar 2026 15:35:53 -0400
+ id 1w0PN0-0003Gp-OM; Wed, 11 Mar 2026 15:37:28 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PLT-00008m-3g; Wed, 11 Mar 2026 15:35:52 -0400
+ id 1w0PMz-0000Q5-0z; Wed, 11 Mar 2026 15:37:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257667; bh=E3cGNeFeUOznE9BBJTE5+LSH/VZ5Z74D9SNno9Uqbrg=;
+ t=1773257668; bh=QbV5kzJABNYAHlYOieplc3Hn5dbU2xz3lMqVEkf4yoo=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=abuf16FW56Hg/3ljW0+24xJCzTgVzqvCoHe5/YYlrHpUxpDTSbyQSvcJrIK/DpstW
- XDEKgvmuEYvBv1mhTwDC5xYK/834GZWSm3BHbVOwABo4LRxnlbYIyos6T0zviT5Shn
- FBwWJMd+a/VrFDHHBqC1eL0Z7ER57BXwTOhV6Z3hK2SPWc9Su14A8y3ZlKV4XwtbYG
- HweruSDKXkPWs3NM9Pr2JMaMmckHSwrO5dE4TCyOHhgOx+YuhkT2H9nrylsDXfc5wG
- vLhykdywhLCPadbpHAXjFHMNEQlQ+6a0X39KSuBbkNJzrQIrY1MlpyYoyzJsc53/cs
- zbJ7bLD0IWmwg==
+ b=LaTGl/GNGttorzstmDXgLm78tQ23gUZ1Gwdg1PakzO80BCVZy0QbBBCnbvKzFXKmM
+ YKfbtVpqnbBXGZGMsK/L/HAe5P4LHxsglL5s8R+dnq5a7AFVdYRxECSDh/6mdr/eoc
+ mnyeDS1GaDrNRoKV7dTIXaY/0a5v+oIiLnxJlvd+eJbrQBxCubJsZgBr0mu0yvkEgV
+ E++SIKKev75Gs+h2fRzl7V4QHSH0tYKXD4LIfP3BBqSGHHwMCBBfy5t5ipNWj4x8RP
+ Mmgbl7YSCcxCioCzfCIdOJMK4wihF2rkgEAQXkVbXq9lZhbGGHN0AWcAkVegSZX5lD
+ s4TStBcqvS+sg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 1C2431920F5;
- Wed, 11 Mar 2026 22:34:27 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 7AF10192105;
+ Wed, 11 Mar 2026 22:34:28 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5F96837C45A;
- Wed, 11 Mar 2026 22:35:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id B947437C46A;
+ Wed, 11 Mar 2026 22:35:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 13/53] target/arm/tcg: Allow SVE RAX1 in SME2p1
- streaming mode
-Date: Wed, 11 Mar 2026 22:34:06 +0300
-Message-ID: <20260311193449.1096110-13-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ "Wei Liu (Microsoft)" <wei.liu@kernel.org>,
+ Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 29/53] target/i386/emulate/x86_decode: Actually use
+ stream in decode_instruction_stream()
+Date: Wed, 11 Mar 2026 22:34:22 +0300
+Message-ID: <20260311193449.1096110-29-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -71,44 +73,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Bernhard Beschow <shentey@gmail.com>
 
-The SVE RAX1 instruction is permitted in SME streaming mode starting
-from SME2p1.  We forgot to allow this relaxation when we implemented
-SME2p1.
+Compared to decode_instruction(), decode_instruction_stream() has an additional
+stream parameter which avoids some guest memory accesses during instruction
+decoding. Both functions defer the actual work to decode_opcode() which would
+set the stream pointer to zero such that decode_instruction_stream() essentially
+behaved like decode_instruction(). Given that all callers of
+decode_instruction_stream() properly zero-initialize the decode parameter, the
+memset() call can be moved into decode_instruction() which is the only other
+user of decode_opcode(). This preserves the non-zero stream pointer which
+avoids extra guest memory accesses.
 
-Cc: qemu-stable@nongnu.org
-Fixes: 7b1613a1020d2 ("target/arm: Enable FEAT_SME2p1 on -cpu max")
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-id: 20260202133353.2231685-5-peter.maydell@linaro.org
-(cherry picked from commit 433097a2242120918090201129e5fbb8e16b3e34)
+Fixes: 1e25327b244a ("target/i386/emulate: Allow instruction decoding from stream")
+cc: qemu-stable
+Signed-off-by: Bernhard Beschow <shentey@gmail.com>
+Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Reviewed-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
+Tested-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Link: https://lore.kernel.org/r/20260223233950.96076-4-mohamed@unpredictable.fr
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 1b93832f55927b1b76a6587ca75a5a35676188de)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index d69a2f5d75..76e4a6c52c 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -7803,8 +7803,17 @@ TRANS_FEAT_NONSTREAMING(SM4E, aa64_sve2_sm4, gen_gvec_ool_arg_zzz,
- TRANS_FEAT_NONSTREAMING(SM4EKEY, aa64_sve2_sm4, gen_gvec_ool_arg_zzz,
-                         gen_helper_crypto_sm4ekey, a, 0)
+diff --git a/target/i386/emulate/x86_decode.c b/target/i386/emulate/x86_decode.c
+index 6ad03b71b0..7bbcd2a9a2 100644
+--- a/target/i386/emulate/x86_decode.c
++++ b/target/i386/emulate/x86_decode.c
+@@ -2088,8 +2088,6 @@ static void decode_opcodes(CPUX86State *env, struct x86_decode *decode)
  
--TRANS_FEAT_NONSTREAMING(RAX1, aa64_sve2_sha3, gen_gvec_fn_arg_zzz,
--                        gen_gvec_rax1, a)
-+static bool trans_RAX1(DisasContext *s, arg_RAX1 *a)
-+{
-+    if (!dc_isar_feature(aa64_sve2_sha3, s)) {
-+        return false;
-+    }
-+    if (!dc_isar_feature(aa64_sme2p1, s)) {
-+        /* SME2p1 adds this as valid in streaming SVE mode */
-+        s->is_nonstreaming = true;
-+    }
-+    return gen_gvec_fn_arg_zzz(s, gen_gvec_rax1, a);
-+}
+ static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
+ {
+-    memset(decode, 0, sizeof(*decode));
+-
+     decode_prefix(env, decode);
+     set_addressing_size(env, decode);
+     set_operand_size(env, decode);
+@@ -2101,6 +2099,8 @@ static uint32_t decode_opcode(CPUX86State *env, struct x86_decode *decode)
  
- TRANS_FEAT(FCVTNT_sh, aa64_sve2, gen_gvec_fpst_arg_zpz,
-            gen_helper_sve2_fcvtnt_sh, a, 0, FPST_A64)
+ uint32_t decode_instruction(CPUX86State *env, struct x86_decode *decode)
+ {
++    memset(decode, 0, sizeof(*decode));
++
+     return decode_opcode(env, decode);
+ }
+ 
 -- 
 2.47.3
 
