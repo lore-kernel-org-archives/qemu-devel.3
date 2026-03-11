@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2469112583A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC99D1125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBL-0007r6-5K; Wed, 11 Mar 2026 11:09:07 -0400
+	id 1w0LBv-0001uS-C5; Wed, 11 Mar 2026 11:09:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9M-0003x7-9j; Wed, 11 Mar 2026 11:07:06 -0400
+ id 1w0LAG-00050A-B8; Wed, 11 Mar 2026 11:08:02 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9K-0004xr-Df; Wed, 11 Mar 2026 11:07:03 -0400
+ id 1w0LAE-0005Pk-PN; Wed, 11 Mar 2026 11:08:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241481; bh=AREQ/dFnXzezlRlc40BNW1VnJ2gwDKJL+a4jQQus1S0=;
+ t=1773241481; bh=YtDoghmkkyVJMChQomssBGKozuJ8XG9j41PlyEXUoaY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=DCySK9BW6wmyKWSutjEWEw7veRgdOBWOWTnUL8exww5M3XdXH3D8f/B0F5+IeC/RQ
- OXidWZ934wXjnusW46CwLvEULuVBW/lbTS6wES3nOsWnBNc6LFP0nKCoCKyCww+piH
- 6G7fAZ14mP4t2K26dOuEWse+PwiYpp+QWY81SM7LqU56xThjVmMoTGSlW3tOVugS4H
- bfFuJGp++EOgpVhhZ3L9qTdCmoYA6pHqbF6C4qu6p9qaD0lSN40gKle8rWFmK7LHY5
- sw+ufVK0XF60M37yT+8oge7uWN2ZrgN+WXwc6yBZ6r3FSPBJNNmb8nzhulavMwk5Iw
- xMKVdiQb4ZwEw==
+ b=oILzqdkb1eXsLcdZlbwUP7sjBItwGinpCzgPRsu/pITlfiZpiHciTQT/tC88RFysk
+ uOJj0FAUgTRbAtDpH1NWcLpTZoCtaN5DAc8eLa13r29eYkI08bE7CqCjPLVPdl/fYt
+ kPs2y1zUbpKynDmdSmsv9m1IAqd0nnsm04ENUCsfQCRNteKhzqN5W9CA4N3NzPRQMZ
+ jTzna6I+TIM6GmiG7bhS4Fy88tehwodTzaCcxGNan4Wp7yffjyGQnO1rM1obyptS9G
+ kA7Z00luh0YMJgproEIDMco9oNuF18tVUemOivgLeELKToskqnQhDioGPWmAxkroIG
+ lIUZnUiArovDQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5B04A191E89;
+ by isrv.corpit.ru (Postfix) with ESMTP id CB89A191E8F;
  Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 472C537C2CA;
+ by tsrv.corpit.ru (Postfix) with ESMTP id B9E8737C2D0;
  Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
+Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 06/46] contrib/plugins/hotblocks: Correctly free
- sorted counts list
-Date: Wed, 11 Mar 2026 18:02:42 +0300
-Message-ID: <20260311150327.1084669-6-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 12/46] target/arm: Fix feature check in DO_SVE2_RRX,
+ DO_SVE2_RRX_TB
+Date: Wed, 11 Mar 2026 18:02:48 +0300
+Message-ID: <20260311150327.1084669-12-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
@@ -72,51 +72,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-g_list_free should be passed the head of the list.
+In the macros DO_SVE2_RRX and DO_SVE2_RRX_TB we use the
+feature check aa64_sve, thus exposing this set of instructions
+in SVE as well as SVE2. Use aa64_sve2 instead, so they UNDEF
+on an SVE1-only CPU as they should.
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
+Strictly, the condition here should be "SVE2 or SME"; but we
+will correct that in a following commit with all the other
+missing "or SME" checks.
+
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/cf5a00136738b981a12270b76572e8d502daf208.1753857212.git.asb@igalia.com
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit 90fabd5ddace6ffa5a62a5186201fd071b4e2b74)
+Message-id: 20260202133353.2231685-4-peter.maydell@linaro.org
+(cherry picked from commit ee5bf0962ed6e0eb42d6bc9bfb3687f2408e3580)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index 98404b6885..d3dd23ed9f 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -73,15 +73,16 @@ static void exec_count_free(gpointer key, gpointer value, gpointer user_data)
- static void plugin_exit(qemu_plugin_id_t id, void *p)
- {
-     g_autoptr(GString) report = g_string_new("collected ");
--    GList *counts, *it;
-+    GList *counts, *sorted_counts, *it;
-     int i;
+diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
+index 07b827fa8e..d69a2f5d75 100644
+--- a/target/arm/tcg/translate-sve.c
++++ b/target/arm/tcg/translate-sve.c
+@@ -3769,7 +3769,7 @@ TRANS_FEAT(UDOT_zzxw_2s, aa64_sme2_or_sve2p1, gen_gvec_ool_arg_zzxz,
+            gen_helper_gvec_udot_idx_2h, a)
  
-     g_string_append_printf(report, "%d entries in the hash table\n",
-                            g_hash_table_size(hotblocks));
-     counts = g_hash_table_get_values(hotblocks);
--    it = g_list_sort_with_data(counts, cmp_exec_count, NULL);
-+    sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+ #define DO_SVE2_RRX(NAME, FUNC) \
+-    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
++    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
+                a->rd, a->rn, a->rm, a->index)
  
--    if (it) {
-+    if (sorted_counts) {
-+        it = sorted_counts;
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+ DO_SVE2_RRX(MUL_zzx_h, gen_helper_gvec_mul_idx_h)
+@@ -3787,7 +3787,7 @@ DO_SVE2_RRX(SQRDMULH_zzx_d, gen_helper_sve2_sqrdmulh_idx_d)
+ #undef DO_SVE2_RRX
  
-         for (i = 0; i < limit && it->next; i++, it = it->next) {
-@@ -94,7 +95,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-                     qemu_plugin_scoreboard_u64(rec->exec_count)));
-         }
+ #define DO_SVE2_RRX_TB(NAME, FUNC, TOP) \
+-    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
++    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
+                a->rd, a->rn, a->rm, (a->index << 1) | TOP)
  
--        g_list_free(it);
-+        g_list_free(sorted_counts);
-     }
- 
-     qemu_plugin_outs(report->str);
+ DO_SVE2_RRX_TB(SQDMULLB_zzx_s, gen_helper_sve2_sqdmull_idx_s, false)
 -- 
 2.47.3
 
