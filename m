@@ -4,79 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CA2C112583E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 451C1112584D
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:16:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LEz-0001V8-Cp; Wed, 11 Mar 2026 11:12:53 -0400
+	id 1w0LDJ-0003ah-7L; Wed, 11 Mar 2026 11:11:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0LCn-0003Oi-Mm
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:40 -0400
-Received: from p-west2-cluster6-host4-snip4-2.eps.apple.com ([57.103.70.15]
- helo=outbound.mr.icloud.com)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0LBI-0007cy-D5; Wed, 11 Mar 2026 11:09:04 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0LCl-00067n-QX
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:37 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPS id
- 522F31801B7D; Wed, 11 Mar 2026 15:10:33 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773241834; x=1775833834;
- bh=MhnkV5c/dOH7V/+SH0BEkMY4F6uembWguGSpYqFssOw=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:x-icloud-hme;
- b=TtIX8DhrEiaEBviC8XpEYhvRHN2mMMeIVvWZH0TCbXLsf+Ly0Tdx0hdnSjv3FL8QsW9HQC/fyf3Gp2hhBYRhd3poANEFAMVyiWzC2Z+LiG4MD5ql+NaEVSnb8tK3GsE6ftzWHn3LzdR7YYEdTI/xWT1goAnia4GYuMmJYH9tBMd342d8BLB9Ercyeq/zCuGYpnHOA1/nH6ngl4BfBA82vKqlLo3SHS+t9eTdIVFSfvrz5W7uP339rSf56dfHz89T3Jg8aYE+j39LuyMn68C8D8KBNGjf34tXSeTX7dF895iwaxmJZCC9Z2EnwOJfSaFAUmgUAIpgeRdjHbqnuikciw==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPSA id
- 1CB9118015F5; Wed, 11 Mar 2026 15:10:18 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0LBG-0005dr-2l; Wed, 11 Mar 2026 11:09:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773241482; bh=ehjHPasUuekmBpODA5II2+xVPRfhwkoUi23mVAH+18U=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=g/dWcJy8gHk2SJGoL2bTa9fHuMI1CR3DkX2EU+vwM/GPwDw0IF+ed2L70JaomqUZa
+ XpkZb+h1+TnZdLm/4cpMHVBeMg2dLtYstmaBlSTHow0X/5HFW2WAzH1B5Pq3f2Pasz
+ XTJR0qpQLOFVx4upWx/Tmu9n/v7FwgqcFb4neFdOYrY9SQTZAtAj06gv01ql/m5hJq
+ vyqOAA5NYtYReyrROUOqSvD0dUO10uOAHjVtXYKmW/ULPCgCtCxLZ4QjoeHO3NCu/Y
+ XMA6dtBYURPnMcOIZqU68La0fVsgkZeIaNHcLfGUkdh3FEhyV/PQMh7ByNzYjYJ2ML
+ oux/mdP7XiYpw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id A3B38191E9A;
+ Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 9271037C2DB;
+ Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org
-Subject: [PATCH v2 1/5] whpx: arm: fix -cpu host
-Date: Wed, 11 Mar 2026 16:10:10 +0100
-Message-ID: <20260311151014.55915-2-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260311151014.55915-1-mohamed@unpredictable.fr>
-References: <20260311151014.55915-1-mohamed@unpredictable.fr>
+Cc: qemu-stable@nongnu.org, Richie Buturla <richie@linux.ibm.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 23/46] hw/9pfs: fix data race in
+ v9fs_mark_fids_unreclaim()
+Date: Wed, 11 Mar 2026 18:02:59 +0300
+Message-ID: <20260311150327.1084669-23-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: N1dWNxlakdOa5Ye1CvQc4y4H_AF4W9FP
-X-Authority-Info-Out: v=2.4 cv=RJO+3oi+ c=1 sm=1 tr=0 ts=69b185e9
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=XosdkutOKJZ40ZxHwN4A:9
-X-Proofpoint-ORIG-GUID: N1dWNxlakdOa5Ye1CvQc4y4H_AF4W9FP
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDEyOCBTYWx0ZWRfX7Wcs15bYTezi
- 4Ujm2ZpkSRsid/zVX/tCicC1n+Of7S3vmxgKypmm0KQFFduS+MXS8y8K3etV91OkijlhX8+eZTz
- PtQx7gC436xIS4WS6DR10qAxLO1DtdQPuk54Mi5SYBz3WZ/C3bQpV9+Y2gDxYxfRjHd52l5XRYT
- Ur/HOQZPWbu2cXg3qEcTr6/9rF4Q4cHrsXn5lm35P0H+oAjY3wKQ42m3n5FMIXcGIC5gKv+F8E3
- cGLcb5dl8Hia8jewTYikDYU+k3YZTv3m/q81n+8rySztUDe97P9VfAP3v4WSyjwZUk35ITn5+Ap
- 7mWhJsGCfLOzgifrqw0B8DaFlFo8n+oG9z9/hK484W+vFqyFT8iPXy4ejKznXk=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- clxscore=1030 mlxlogscore=909 suspectscore=0
- spamscore=0 adultscore=0
- bulkscore=0 lowpriorityscore=0 phishscore=0 mlxscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603110128
-X-JNJ: AAAAAAABFkdV9oYQyTg8xUkE8h4uQ/lupJXI0w/zpS+TsR2Og0ZKjYF6iLOPJzXcWQp1MGLkGIMimfXjMfkwNp39cHnS+n8lSr3gVWYYyFpiwbS0Gb+U2A7WC8DIky/6JLwgi0P5LOll/EzMMcJBkS9jGTcRBMxk93zXXgUMgocYWAFhqIkI+0vXOdk5vTEnOFrc1KXkKWyVWxuwW8Z91bLSJcscssuiqlCZjcHnTvu05sK0QVM0CU2peFKkf9LQhIx3fAEdXGCKtyn4zAoiHIx1WnIhUnxvdabWOUtYbMYQF95xZ3L7w1c3CNJODtOJMgcFKUUYrT6pGFCbEgbwCH5vktVjgNL3mrIvwYCfJ7On1LFLjK/wOL8PNJvrk/FM/0hTEoaB0yeIBtfkyrbi1V4U2jn1p7gqSdYMnPu2d7mkTCr9NFypjUd+GBvdkKR5Amn4AZg+DFlL6naX83R4gGbRX4cX5y9abP64a5cJhMgs/caYo1yIMZ6/NfyrdILaxVE/XLvX9w6S6nlV8f7tb4tO6WzJiB+7XdDpWRH/EnYQDaHlwGCndH8Rna3L+KHKAP/aX2pqpMyOSevTFuVyv1sSaLyqIXPhGATB3ZCGkc0iQr/5LTBZM5fCrevJ7ZgGvxg80zXqeA==
-Received-SPF: pass client-ip=57.103.70.15;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -92,27 +71,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-"hw/arm/virt: Register valid CPU types dynamically" went under my radar, so fix this for WHPX.
+From: Richie Buturla <richie@linux.ibm.com>
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
----
- hw/arm/virt.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+A data race between v9fs_mark_fids_unreclaim() and v9fs_path_copy()
+causes an inconsistent read of fidp->path. In v9fs_path_copy(), the
+path size is set before the data pointer is allocated, creating a
+window where size is non-zero but data is NULL.
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index bced9f67f4..af3f03ced3 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -3477,7 +3477,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
-     if (target_aarch64()) {
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
-         g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
--        if (kvm_enabled() || hvf_enabled()) {
-+        if (kvm_enabled() || hvf_enabled() || whpx_enabled()) {
-             g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
+v9fs_co_open2() holds a write lock during path modifications,
+but v9fs_mark_fids_unreclaim() was not acquiring a read
+lock, allowing it to race.
+
+Fix by holding the path read lock during FID table iteration.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3300
+Signed-off-by: Richie Buturla <richie@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260211154450.254338-1-richie@linux.ibm.com/
+Fixes: 7a46274529 ("hw/9pfs: Add file descriptor reclaim support")
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit c96f6d2398a9dc068fa82088ea43020a52e2b26d)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index acfa7db4e1..c70096e6be 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -558,6 +558,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             sizeof(V9fsFidState *), 1);
+     gint i;
+ 
++    v9fs_path_read_lock(s);
+     g_hash_table_iter_init(&iter, s->fids);
+ 
+     /*
+@@ -578,6 +579,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             g_array_append_val(to_reopen, fidp);
          }
      }
++    v9fs_path_unlock(s);
+ 
+     for (i = 0; i < to_reopen->len; i++) {
+         fidp = g_array_index(to_reopen, V9fsFidState*, i);
 -- 
-2.50.1 (Apple Git-155)
+2.47.3
 
 
