@@ -4,37 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94A691125807
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:16:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EF881062897
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 13:16:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0JPo-0000rE-1R; Wed, 11 Mar 2026 09:15:56 -0400
+	id 1w0JPo-0000ty-UH; Wed, 11 Mar 2026 09:15:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w0JPR-0000mm-Bf; Wed, 11 Mar 2026 09:15:33 -0400
+ id 1w0JPR-0000mp-By; Wed, 11 Mar 2026 09:15:33 -0400
 Received: from forwardcorp1a.mail.yandex.net
  ([2a02:6b8:c0e:500:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w0JPN-0000MZ-DP; Wed, 11 Mar 2026 09:15:31 -0400
+ id 1w0JPN-0000Mk-H5; Wed, 11 Mar 2026 09:15:31 -0400
 Received: from mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net
  [IPv6:2a02:6b8:c0c:bf1f:0:640:c739:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 18C7EC01F7;
- Wed, 11 Mar 2026 16:15:24 +0300 (MSK)
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 15029C0209;
+ Wed, 11 Mar 2026 16:15:27 +0300 (MSK)
 Received: from heifetz-lin.yandex-team.ru (unknown [2a02:6bf:8080:d28::1:5])
  by mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id MFGaO30AdeA0-utayagAb; Wed, 11 Mar 2026 16:15:23 +0300
+ ESMTPSA id MFGaO30AdeA0-5q90nciX; Wed, 11 Mar 2026 16:15:26 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1773234923;
- bh=iz6p7m9EDk2Vrc5w/nLOhSrRhal4+0T/3hF17eQnydo=;
- h=Message-Id:Date:Cc:Subject:To:From;
- b=FiI3+Rf3FT6ap8Pc5DxNEqqh5C2eKHelIcuXpoDMmBvjB4aolMQs1ht/j9DI4TJ4E
- bQ4osiO/XKrd6odMhPqdJznBdAr1NsteegSvv4Dj8Auw1Ky2ZTG+ezKQ7S12KQtMqA
- /BchWcgZMqwH4WAP4ulQRU4MaGygCjFT++fWbKug=
+ s=default; t=1773234926;
+ bh=UA/R0WQkrgbt3pL8qQzjwpD0OPbLj/fizGAQeQVn4Gk=;
+ h=Message-Id:Date:In-Reply-To:Cc:Subject:References:To:From;
+ b=ecItJ24nPn4ugGBF2B7038+TGQbLwc/guKbqQRSge3zrAlwCwQ/9GRYkrtaBrjuTr
+ 5dTR0oupsNDsCVKbfF2QpdVUv6j6F0k2/JNLZGvCg4OtR73L3OD9VFdfBdH9wqhNtj
+ hR6lWmZo7TcBko+iv7/4wSzcn3fnm1sDk8SoBlbg=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-66.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
@@ -44,11 +44,13 @@ Cc: Fabiano Rosas <farosas@suse.de>,
  Paolo Bonzini <pbonzini@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Peter Xu <peterx@redhat.com>, Ani Sinha <anisinha@redhat.com>,
- qemu-trivial@nongnu.org
-Subject: [PATCH v4 0/4] Fix a few minor issues reported by Coverity
-Date: Wed, 11 Mar 2026 18:15:18 +0500
-Message-Id: <20260311131522.58600-1-heifetz@yandex-team.com>
+ qemu-trivial@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v4 3/4] system/physmem.c: remove useless assertion of block
+Date: Wed, 11 Mar 2026 18:15:21 +0500
+Message-Id: <20260311131522.58600-4-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260311131522.58600-1-heifetz@yandex-team.com>
+References: <20260311131522.58600-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a02:6b8:c0e:500:1:45:d181:df01;
@@ -75,34 +77,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi. This patch series fixes several minor issues reported by our local
-Coverity installation.
+It is useless to assert that block is not NULL because it is
+already dereferenced in the first line of the function.
 
-Changes in v4:
-- Included Peter's explanation why `assert` is redundant in the commit
-  message of the third patch.
-- Added `Reviewed-by` tags that I missed in v2 to the other three patches.
+The assertion is also unnecessary because the function is called
+in only two places, and `block` can't be NULL in either of them:
+- In `migration/ram.c`, we have already dereferenced `block` in
+  the code just before the call.
+- In `system/memory.c`, we assert `mr->ram_block` before passing
+  it to the function.
 
-Changes in v3:
-- Nothing. I sent the second version of the series without the corresponding
-'v2' suffix by mistake. I apologise.
+(We could split the declaration and initialization of oldsize,
+but then we would need to remove the const qualifier. As the
+assertion is useless anyway, removing the const qualifier seems
+worse.)
 
-Changes in v2:
-- Remove assert(block) in system/physmem.c instead of placing it
-  before the dereference.
+Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ system/physmem.c | 2 --
+ 1 file changed, 2 deletions(-)
 
-Sergei Heifetz (4):
-  migration/savevm.c: reorder usage and assertion of mis->from_src_file
-  dump/dump.c: reorder usage and assertion of block
-  system/physmem.c: remove useless assertion of block
-  hw/usb/core.c: reorder usage and assertion of p->ep
-
- dump/dump.c        | 2 +-
- hw/usb/core.c      | 2 +-
- migration/savevm.c | 3 ++-
- system/physmem.c   | 2 --
- 4 files changed, 4 insertions(+), 5 deletions(-)
-
+diff --git a/system/physmem.c b/system/physmem.c
+index b0311f45312..317b359ebe2 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -2057,8 +2057,6 @@ int qemu_ram_resize(RAMBlock *block, ram_addr_t newsize, Error **errp)
+     const ram_addr_t oldsize = block->used_length;
+     const ram_addr_t unaligned_size = newsize;
+ 
+-    assert(block);
+-
+     newsize = TARGET_PAGE_ALIGN(newsize);
+     newsize = REAL_HOST_PAGE_ALIGN(newsize);
+ 
 -- 
 2.34.1
 
