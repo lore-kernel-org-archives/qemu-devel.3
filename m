@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2051112588E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:44:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B20F112588E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:44:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PNT-0004XH-If; Wed, 11 Mar 2026 15:37:55 -0400
+	id 1w0PPK-0002Fa-3x; Wed, 11 Mar 2026 15:39:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNR-0004Va-K7; Wed, 11 Mar 2026 15:37:53 -0400
+ id 1w0PPI-0002As-Bo; Wed, 11 Mar 2026 15:39:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PNP-0000Ue-Qg; Wed, 11 Mar 2026 15:37:53 -0400
+ id 1w0PPG-0000sD-0M; Wed, 11 Mar 2026 15:39:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257668; bh=UieJ/jT2rH8oFQdAVtltbswdEUQ7QiFpJvjfuHuSucg=;
+ t=1773257670; bh=kTB2qgTylvkGxZjaODqvgfPdl8AO0j9ezC13KYJ/oFE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=u2hotqksFuHHKGknHOuUWEeoN0i35q2KXhB5sUAzEPwi/Ld28Y8PYATGCpiDV1IJW
- SaKL+aADuVG0I1b9+u3kbhcLYZry/k0ErnpdJ1Y6C6pov9mfPLoYPlm6eSp0d4SRc7
- sOK1X+m7DdlWl+RaByNixvcIOjPxohjO0paxCjeUJtESGiScGGV5rb17jbWBBrolJj
- Z5M19zxsmTP5gOCwiG4hxa9fgOr0OEWRhQF+oYcP/oWS+BhwNU93OFzlJ+Xgz4ej+9
- BnxjG7HfJuhvk7hxqB0M3ojopf5odgVZS3QeY2cQSBdfYH9lB4W9b7wfv6Dc4HIzwd
- d0/y2cQzN2wHg==
+ b=oLrgjCgecxz0tn4mk4I4Z/KRsVYk8f2XZvOvXD0Dvp9GDcqAb6bpBi1UYsHAOGSDu
+ +uHyfDB6X8jhsl/GmAy0aV8/0Ue1UkOg4D9L2g2ULiDE67olv0GHRubrNuE7fofrW0
+ ZxinlvCa/gg6dBRLI4Rl5y1vqDiwgMV1S8x63UFCjVb4irAiSoRdRdplmvHnsu+GQh
+ fG+tHwiIaJCIRad9YNeHiWM2k9X+FzbQyPaD+ugD32l3sE74czCPTJVg88XEFQdHVB
+ 2vZ4X7LzzzOKvcLJ3NAFJmTuk7pZvcfG9saMa7z/O+74nrM5uLILJOvSNQVAJi9n/d
+ nxIGDol2GqZWg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id BD163192109;
- Wed, 11 Mar 2026 22:34:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 95CD619211C;
+ Wed, 11 Mar 2026 22:34:30 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 0CD8A37C46E;
- Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D817B37C481;
+ Wed, 11 Mar 2026 22:35:08 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, rail5 <andrew@rail5.org>,
+ Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 33/53] io: fix cleanup for websock I/O source data on
- cancellation
-Date: Wed, 11 Mar 2026 22:34:26 +0300
-Message-ID: <20260311193449.1096110-33-mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 52/53] target/loongarch: Preserve PTE permission bits
+ in LDPTE
+Date: Wed, 11 Mar 2026 22:34:45 +0300
+Message-ID: <20260311193449.1096110-52-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,139 +71,135 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: rail5 <andrew@rail5.org>
 
-The websock code will create a GSource for tracking completion of the
-handshake process, passing a QIOTask which is freed by the callback
-when it completes, which means when a source is cancelled, nothing is
-free'ing the task.
+The LDPTE helper loads a page table entry (or huge page entry) from guest
+memory and currently applies the PALEN mask to the whole 64-bit value.
 
-Switch to provide a data free callback to the GSource, which ensures
-the QIOTask is always freed even when the main event callback never
-fires.
+That mask is intended to constrain the physical address bits, but masking
+the full entry also clears upper permission bits in the PTE, including NX
+(bit 62). As a result, LoongArch TCG can incorrectly allow instruction
+fetches from NX mappings when translation is driven through software
+page-walk.
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 9545c059f77e3f814fcbaba83203572ea655c50e)
+Fix this by masking only the PPN/address field with PALEN while preserving
+permission bits, and by clearing any non-architectural (software) bits
+using a hardware PTE mask. LDDIR is unchanged since it returns the base
+address of the next page table level.
+
+Reported at: https://gitlab.com/qemu-project/qemu/-/issues/3319
+
+Fixes: 56599a705f2 ("target/loongarch: Introduce loongarch_palen_mask()")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: rail5 (Andrew S. Rightenburg) <andrew@rail5.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit 2d877bc02a3b94998cbdd784d194c173d308a98a)
+(Mjt: backport to 10.2.x which lacks v10.2.0-1568-g56599a705f
+ "target/loongarch: Introduce loongarch_palen_mask()")
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index b4f96a0af4..bb10bc4f7f 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -526,11 +526,32 @@ static int qio_channel_websock_handshake_read(QIOChannelWebsock *ioc,
-     return 1;
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index d74c3c3766..e9b07382a5 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -430,6 +430,17 @@ static void loongarch_cpu_reset_hold(Object *obj, ResetType type)
+ 
+ #ifdef CONFIG_TCG
+     env->fcsr0_mask = FCSR0_M1 | FCSR0_M2 | FCSR0_M3;
++
++    if (is_la64(env)) {
++        env->hw_pte_mask = MAKE_64BIT_MASK(0, 9) |
++                           R_TLBENTRY_64_PPN_MASK |
++                           R_TLBENTRY_64_NR_MASK |
++                           R_TLBENTRY_64_NX_MASK |
++                           R_TLBENTRY_64_RPLV_MASK;
++    } else {
++        env->hw_pte_mask = MAKE_64BIT_MASK(0, 9) |
++                           R_TLBENTRY_32_PPN_MASK;
++    }
+ #endif
+     env->fcsr0 = 0x0;
+ 
+diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
+index 1a14469b3b..6fa2045fea 100644
+--- a/target/loongarch/cpu.h
++++ b/target/loongarch/cpu.h
+@@ -373,6 +373,7 @@ typedef struct CPUArchState {
+     uint32_t fcsr0_mask;
+     uint64_t lladdr; /* LL virtual address compared against SC */
+     uint64_t llval;
++    uint64_t hw_pte_mask; /* Mask of architecturally-defined (hardware) PTE bits. */
+ #endif
+ #ifndef CONFIG_USER_ONLY
+ #ifdef CONFIG_TCG
+diff --git a/target/loongarch/tcg/tlb_helper.c b/target/loongarch/tcg/tlb_helper.c
+index 01e0a27f0b..02b6a35f87 100644
+--- a/target/loongarch/tcg/tlb_helper.c
++++ b/target/loongarch/tcg/tlb_helper.c
+@@ -686,6 +686,20 @@ bool loongarch_cpu_tlb_fill(CPUState *cs, vaddr address, int size,
+     cpu_loop_exit_restore(cs, retaddr);
  }
  
-+typedef struct QIOChannelWebsockData {
-+    QIOTask *task;
-+} QIOChannelWebsockData;
-+
-+static void qio_channel_websock_data_free(gpointer user_data)
++static inline uint64_t loongarch_sanitize_hw_pte(CPULoongArchState *env,
++                                                 uint64_t pte)
 +{
-+    QIOChannelWebsockData *data = user_data;
++    uint64_t ppn_mask = is_la64(env) ? R_TLBENTRY_64_PPN_MASK : R_TLBENTRY_32_PPN_MASK;
++
 +    /*
-+     * Usually 'task' will be NULL since the GSource
-+     * callback will either complete the task or pass
-+     * it on to a new GSource. We'll see a non-NULL
-+     * task here only if the GSource was released before
-+     * its callback triggers
++     * Keep only architecturally-defined PTE bits. Guests may use some
++     * otherwise-unused bits for software purposes.
 +     */
-+    if (data->task) {
-+        qio_task_free(data->task);
-+    }
-+    g_free(data);
++    pte &= env->hw_pte_mask;
++
++    return (pte & ~ppn_mask) | ((pte & ppn_mask) & TARGET_PHYS_MASK);
 +}
 +
- static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-                                                    GIOCondition condition,
-                                                    gpointer user_data)
+ target_ulong helper_lddir(CPULoongArchState *env, target_ulong base,
+                           uint32_t level, uint32_t mem_idx)
  {
--    QIOTask *task = user_data;
-+    QIOChannelWebsockData *data = user_data;
-+    QIOTask *task = data->task;
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
-         qio_task_get_source(task));
-     Error *err = NULL;
-@@ -545,7 +566,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -562,7 +582,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-             trace_qio_channel_websock_handshake_complete(ioc);
-             qio_task_complete(task);
+@@ -726,6 +740,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+ {
+     CPUState *cs = env_cpu(env);
+     target_ulong phys, tmp0, ptindex, ptoffset0, ptoffset1, badv;
++    uint64_t pte_raw;
+     uint64_t ptbase = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTBASE);
+     uint64_t ptwidth = FIELD_EX64(env->CSR_PWCL, CSR_PWCL, PTWIDTH);
+     uint64_t dir_base, dir_width;
+@@ -738,7 +753,6 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+      * and the other is the huge page entry,
+      * whose bit 6 should be 1.
+      */
+-    base = base & TARGET_PHYS_MASK;
+     if (FIELD_EX64(base, TLBENTRY, HUGE)) {
+         /*
+          * Gets the huge page level and Gets huge page size.
+@@ -762,7 +776,7 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+          * when loaded into the tlb,
+          * so the tlb page size needs to be divided by 2.
+          */
+-        tmp0 = base;
++        tmp0 = loongarch_sanitize_hw_pte(env, base);
+         if (odd) {
+             tmp0 += MAKE_64BIT_MASK(ps, 1);
          }
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
+@@ -774,12 +788,15 @@ void helper_ldpte(CPULoongArchState *env, target_ulong base, target_ulong odd,
+     } else {
+         badv = env->CSR_TLBRBADV;
+ 
++        base = base & TARGET_PHYS_MASK;
++
+         ptindex = (badv >> ptbase) & ((1 << ptwidth) - 1);
+         ptindex = ptindex & ~0x1;   /* clear bit 0 */
+         ptoffset0 = ptindex << 3;
+         ptoffset1 = (ptindex + 1) << 3;
+         phys = base | (odd ? ptoffset1 : ptoffset0);
+-        tmp0 = ldq_phys(cs->as, phys) & TARGET_PHYS_MASK;
++        pte_raw = ldq_le_phys(cs->as, phys);
++        tmp0 = loongarch_sanitize_hw_pte(env, pte_raw);
+         ps = ptbase;
      }
-@@ -574,7 +593,8 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-                                                  GIOCondition condition,
-                                                  gpointer user_data)
- {
--    QIOTask *task = user_data;
-+    QIOChannelWebsockData *data = user_data, *newdata = NULL;
-+    QIOTask *task = data->task;
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
-         qio_task_get_source(task));
-     Error *err = NULL;
-@@ -590,7 +610,6 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -603,12 +622,14 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-     error_propagate(&wioc->io_err, err);
- 
-     trace_qio_channel_websock_handshake_reply(ioc);
-+    newdata = g_new0(QIOChannelWebsockData, 1);
-+    newdata->task = g_steal_pointer(&data->task);
-     wioc->hs_io_tag = qio_channel_add_watch(
-         wioc->master,
-         G_IO_OUT,
-         qio_channel_websock_handshake_send,
--        task,
--        NULL);
-+        newdata,
-+        qio_channel_websock_data_free);
-     return FALSE;
- }
- 
-@@ -904,12 +925,12 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
-                                    gpointer opaque,
-                                    GDestroyNotify destroy)
- {
--    QIOTask *task;
-+    QIOChannelWebsockData *data = g_new0(QIOChannelWebsockData, 1);
- 
--    task = qio_task_new(OBJECT(ioc),
--                        func,
--                        opaque,
--                        destroy);
-+    data->task = qio_task_new(OBJECT(ioc),
-+                              func,
-+                              opaque,
-+                              destroy);
- 
-     trace_qio_channel_websock_handshake_start(ioc);
-     trace_qio_channel_websock_handshake_pending(ioc, G_IO_IN);
-@@ -917,8 +938,8 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
-         ioc->master,
-         G_IO_IN,
-         qio_channel_websock_handshake_io,
--        task,
--        NULL);
-+        data,
-+        qio_channel_websock_data_free);
- }
- 
  
 -- 
 2.47.3
