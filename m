@@ -4,55 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D73741062862
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:36:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D081A106286D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 11:41:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0HqX-0006aw-LG; Wed, 11 Mar 2026 07:35:25 -0400
+	id 1w0HwD-0002GQ-GD; Wed, 11 Mar 2026 07:41:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <magnuskulke@linux.microsoft.com>)
- id 1w0HqW-0006aB-BK
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:24 -0400
-Received: from linux.microsoft.com ([13.77.154.182])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <magnuskulke@linux.microsoft.com>) id 1w0HqU-0006Ep-Jz
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:35:24 -0400
-Received: from DESKTOP-TUU1E5L.localdomain (unknown [167.220.208.53])
- by linux.microsoft.com (Postfix) with ESMTPSA id 1F3D120B710C;
- Wed, 11 Mar 2026 04:35:19 -0700 (PDT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 linux.microsoft.com 1F3D120B710C
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.microsoft.com;
- s=default; t=1773228921;
- bh=SATElNIHN06LgJXwsz75xx+zuRFtr4SWYZ0QQb8K+/w=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=XHdvHjKQfPg3UIONTkjCkyTcFqxRvL7ifirCQUE9D8KTenYArWeSpQa0XFjlI4AkS
- 1bJ+mYl5+eDXbVhXgZYsPwmmt5lxPk2kg8kMO+DYKb2bbDF4tnFJpNMLpKZNt33XQb
- WRjJO+lYuldnnd5dV93LYzgGLNoKKfpFHgPWS0RE=
-From: Magnus Kulke <magnuskulke@linux.microsoft.com>
-To: qemu-devel@nongnu.org
-Cc: Zhao Liu <zhao1.liu@intel.com>,
- Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
- Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
-Subject: [PATCH v2 3/9] target/i386/mshv: fix various cpuid traversal bugs
-Date: Wed, 11 Mar 2026 12:34:59 +0100
-Message-Id: <20260311113505.1177878-4-magnuskulke@linux.microsoft.com>
-X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
-References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0Hw2-0002CR-GB
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:41:07 -0400
+Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0Hvy-0007NM-PD
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 07:41:05 -0400
+Received: by mail-wr1-x432.google.com with SMTP id
+ ffacd0b85a97d-439d8dc4ae4so3792025f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 04:41:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773229260; x=1773834060; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=wvX29Vy+lLgdmAcr0PHqm1/oXxBMvoJrMR4HsjlwwGM=;
+ b=qwioiDa70ACVXMM6IV4hsbYrRePHf2H4kYZVxVrU0dIo3tFLJ4bJY/h98mU982D7n/
+ oxs+mvxLh986Zx8mq+X/3UoEuQm89HObrIAVTX+QSL8Ndi8xeF0cs0mp9Z0CqjHx6u4O
+ SGexkVSbuVn8Puc3BvFBXuo8cCWEksSsm5aqXlznwZuxN7yp2nAd7KhQiedaeRazJCMX
+ Z5Lbb0OZN9ABx2TPJz1gKKGlXb/UfCNPDpOvCBmCU5cRn8SpajQ+xe4U4T74ZlfebOTn
+ Fq/JEEB9BiRn31eQePkeqxiwE6VgnwOf+/evAiIInHevHL957Vv2BpSGxZ8xR9WWAaMo
+ 4sBg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773229260; x=1773834060;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=wvX29Vy+lLgdmAcr0PHqm1/oXxBMvoJrMR4HsjlwwGM=;
+ b=bVgdcEf6E8i7RAkJ0FC5WRpzi6kDKOeaAZpz4Khc771/rIPDJI09AKzRc3/W8JA8e4
+ 5hX9nDWVNm7rgQ8DIzmAI7M/CrRyMPxHO1RgkUY2uPaSrXG0EpC5Tu9271+LKYbonkal
+ lxCIurT6qfZARCjoPqzaM4cM++awB5zOnOq7e7rotl59qtL+iI5AtwADmYPYqw8bWO1N
+ qBcg5tBVJiy9Ffr3OQo1gMSIwgLjktdjEdgfjLcmoVEgD4fYYaMojUa4YCbQqDewyrzK
+ +GZw0kPtzvSCFEh1ONX1+Iqiff1pHqEpGOS8mLJQMxruXBD6b2oqJRDwSZXjQ5dLTDg1
+ EO3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVKjq+Rd1J//56kIcRWnA872tULqSDxiae69Z+HbPy7AwV/HDCM6XkAcv1T7uJ9NBO2G2CRinAikaVM@nongnu.org
+X-Gm-Message-State: AOJu0YwuMPEQxJXcfAGlXnnuFzjGYkWYJmtUoJsRtVkKktF2rD8jrBq3
+ CJcYvUqWGt+PWAWgd52KNtIlfQzAs1h/QvCxPJ5Y4OTHnJHJeVqEp8/7PuQ9YwUud6jIjUOfPmF
+ 3Wpc2ldg=
+X-Gm-Gg: ATEYQzwkBpZ3fyQKAYbMt8gmn7OliGKEUd4aTNMr3X1SjmYEbOJEw5kIpPolkfPgo8r
+ 8IjELXToZCNf6tbxAdzLRENO99m9q4Pns1MkCVc9kfLpjZweGvHAk5lE9VoCOyZbr9cS7cJId7c
+ ld1QSP+PrW86TiIRjgDfdzJOA9rYp6uLevHYeOWtA9CgBLbqRQbpSoJpYU6ZP0KxsQa/8XT4fVZ
+ XkyXyMrOdEZ3IklPOn69P5XnCeJ1gcDvGH1Xq8DB9CownsIzGO4wnhHgLz4IGsp0xG9rrJHWwy7
+ g6n+9wH0E5HZA7aQ7PaYBMG/JZNGM5/RFC5GIXczmSCGhP9a+XYQURpphKHvrMxW4fiQ24nsJBV
+ ziix+CQAU7EUbG84ylBE8olA6yT7KMEV1wbaVuQ1THAzLp+kAGWgUqDMWf60up5FkOOlPHZewSt
+ BVgnkl+P0RY+fHFo+kMnmwqadTzCDHNc3tyhQwP9+e9eCsVUJCJQyUb531++aIpKaXx0aK9P406
+ gux
+X-Received: by 2002:a05:6000:2f86:b0:439:abfb:6d34 with SMTP id
+ ffacd0b85a97d-439f84359d8mr3989802f8f.50.1773229260477; 
+ Wed, 11 Mar 2026 04:41:00 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439f818ff0fsm6624753f8f.4.2026.03.11.04.40.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 11 Mar 2026 04:40:59 -0700 (PDT)
+Message-ID: <69022858-e838-4d43-bb0d-0ee7835561ba@linaro.org>
+Date: Wed, 11 Mar 2026 12:40:58 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 2/9] target/i386/mshv: fix cpuid propagation bug
+Content-Language: en-US
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>, qemu-devel@nongnu.org
+Cc: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Wei Liu <liuwe@microsoft.com>, Magnus Kulke <magnuskulke@microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>
+References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
+ <20260311113505.1177878-3-magnuskulke@linux.microsoft.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260311113505.1177878-3-magnuskulke@linux.microsoft.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=13.77.154.182;
- envelope-from=magnuskulke@linux.microsoft.com; helo=linux.microsoft.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::432;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,158 +107,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Hardcoded max_leaf was not accurate. We query leaf 0x0 and 0x80000000 to
-  get the actual max leaves
+On 11/3/26 12:34, Magnus Kulke wrote:
+> The list argument was missing a pointer and hence e.g. -cpu qemu64 and
+> -cpu EPYC would produce the same of cpuid leaves.
+> 
 
-- On all 0 zeroes on leaf 0x0d, we register 0-63 subleaves with zeros
-  indicating XSAVE is disabled
+Fixes: 4fa04dd1621 ("target/i386: Register CPUID entries with MSHV")
 
-- Subleaf 0 was hardcoded, so the Hypervisor returned defaults for other
-  subleaves
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>   target/i386/mshv/mshv-cpu.c | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 
-- Subleaf 0 war hardcoded, so we were passing 0 instead of actual subleaf
-  when adding entries. We now pass the correct subleaf value to
-  add_cpuid_entry()
-
-- Leaves 0x04,0x07,0d,0f,10 weren't marked as subleaf-specific
-
-Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
----
- target/i386/mshv/mshv-cpu.c | 88 +++++++++++++++++++++++++------------
- 1 file changed, 61 insertions(+), 27 deletions(-)
-
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index f1cc4abc5c..4183727a86 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -465,14 +465,17 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
-     CPUX86State *env = &x86_cpu->env;
-     uint32_t eax, ebx, ecx, edx;
-     uint32_t leaf, subleaf;
--    size_t max_leaf = 0x1F;
--    size_t max_subleaf = 0x20;
--
--    uint32_t leaves_with_subleaves[] = {0x4, 0x7, 0xD, 0xF, 0x10};
-+    uint32_t max_basic_leaf, max_extended_leaf;
-+    uint32_t max_subleaf = 0x20;
-+    uint32_t leaves_with_subleaves[] = {0x04, 0x07, 0x0d, 0x0f, 0x10};
-     int n_subleaf_leaves = ARRAY_SIZE(leaves_with_subleaves);
- 
--    /* Regular leaves without subleaves */
--    for (leaf = 0; leaf <= max_leaf; leaf++) {
-+    /* Get maximum basic and and extended CPUID leaves */
-+    cpu_x86_cpuid(env, 0, 0, &max_basic_leaf, &ebx, &ecx, &edx);
-+    cpu_x86_cpuid(env, 0x80000000, 0, &max_extended_leaf, &ebx, &ecx, &edx);
-+
-+    /* Collect basic leaves (0x0 to max_basic_leaf) */
-+    for (leaf = 0; leaf <= max_basic_leaf; leaf++) {
-         bool has_subleaves = false;
-         for (int i = 0; i < n_subleaf_leaves; i++) {
-             if (leaf == leaves_with_subleaves[i]) {
-@@ -483,27 +486,40 @@ static void collect_cpuid_entries(const CPUState *cpu, GList **cpuid_entries)
- 
-         if (!has_subleaves) {
-             cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
--            if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
--                /* all zeroes indicates no more leaves */
--                continue;
--            }
--
-             add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-             continue;
-         }
- 
-+        /*
-+         * Valid XSAVE components can exist at a higher index se we need to set
-+         * all subleaves for leaf 0x0d, even if we encounter an empty one.
-+         */
-+        if (leaf == 0x0d) {
-+            for (subleaf = 0; subleaf <= 63; subleaf++) {
-+                cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
-+                add_cpuid_entry(cpuid_entries, leaf, subleaf,
-+                                eax, ebx, ecx, edx);
-+            }
-+            continue;
-+        }
-+
-         subleaf = 0;
-         while (subleaf < max_subleaf) {
-             cpu_x86_cpuid(env, leaf, subleaf, &eax, &ebx, &ecx, &edx);
- 
-             if (eax == 0 && ebx == 0 && ecx == 0 && edx == 0) {
--                /* all zeroes indicates no more leaves */
-                 break;
-             }
--            add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-+            add_cpuid_entry(cpuid_entries, leaf, subleaf, eax, ebx, ecx, edx);
-             subleaf++;
-         }
-     }
-+
-+    /* Collect extended leaves (0x80000000 to max_extended_leaf) */
-+    for (leaf = 0x80000000; leaf <= max_extended_leaf; leaf++) {
-+        cpu_x86_cpuid(env, leaf, 0, &eax, &ebx, &ecx, &edx);
-+        add_cpuid_entry(cpuid_entries, leaf, 0, eax, ebx, ecx, edx);
-+    }
- }
- 
- static int register_intercept_result_cpuid_entry(const CPUState *cpu,
-@@ -576,22 +592,40 @@ static int register_intercept_result_cpuid(const CPUState *cpu,
-         subleaf_specific = 0;
-         always_override = 1;
- 
--        /* Intel */
--        /* 0xb - Extended Topology Enumeration Leaf */
--        /* 0x1f - V2 Extended Topology Enumeration Leaf */
--        /* AMD */
--        /* 0x8000_001e - Processor Topology Information */
--        /* 0x8000_0026 - Extended CPU Topology */
--        if (entry->function == 0xb
--            || entry->function == 0x1f
--            || entry->function == 0x8000001e
--            || entry->function == 0x80000026) {
-+        /*
-+         * Intel
-+         * 0xb - Extended Topology Enumeration Leaf
-+         * 0x1f - V2 Extended Topology Enumeration Leaf
-+         * AMD
-+         * 0x8000_001e - Processor Topology Information
-+         * 0x8000_0026 - Extended CPU Topology
-+         */
-+        if (entry->function == 0xb ||
-+            entry->function == 0x1f ||
-+            entry->function == 0x8000001e ||
-+            entry->function == 0x80000026) {
-+            subleaf_specific = 1;
-+            always_override = 1;
-+        /*
-+         * Feature enumeration leaves (subleaf-specific)
-+         * 0x04: Deterministic Cache Parameters
-+         * 0x07: Structured Extended Feature Flags
-+         * 0x0D: Processor Extended State Enumeration
-+         * 0x0F: Platform QoS Monitoring
-+         * 0x10: Platform QoS Enforcement
-+         */
-+        } else if (entry->function == 0x04 ||
-+                   entry->function == 0x07 ||
-+                   entry->function == 0x0d ||
-+                   entry->function == 0x0f ||
-+                   entry->function == 0x10) {
-             subleaf_specific = 1;
-             always_override = 1;
--        } else if (entry->function == 0x00000001
--            || entry->function == 0x80000000
--            || entry->function == 0x80000001
--            || entry->function == 0x80000008) {
-+        /* Basic feature leaves (no subleaves) */
-+        } else if (entry->function == 0x00000001 ||
-+                   entry->function == 0x80000000 ||
-+                   entry->function == 0x80000001 ||
-+                   entry->function == 0x80000008) {
-             subleaf_specific = 0;
-             always_override = 1;
-         }
--- 
-2.34.1
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
