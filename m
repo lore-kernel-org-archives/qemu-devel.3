@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C44B81062871
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:01:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F176106286D
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 12:01:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0IEI-0000I8-2C; Wed, 11 Mar 2026 07:59:58 -0400
+	id 1w0IEG-0000BX-Oj; Wed, 11 Mar 2026 07:59:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1w0IDw-0008Gl-95; Wed, 11 Mar 2026 07:59:40 -0400
-Received: from mail-northeuropeazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c200::1] helo=DB3PR0202CU003.outbound.protection.outlook.com)
+ id 1w0IE3-0008L9-8S; Wed, 11 Mar 2026 07:59:44 -0400
+Received: from mail-westeuropeazlp170110003.outbound.protection.outlook.com
+ ([2a01:111:f403:c201::3] helo=AS8PR04CU009.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <Djordje.Todorovic@htecgroup.com>)
- id 1w0IDu-0004do-Oa; Wed, 11 Mar 2026 07:59:36 -0400
+ id 1w0IE1-0004dU-KD; Wed, 11 Mar 2026 07:59:42 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=C9kQQi2vIaIU9IIy8cHIs8pbrEjZkv/0CfFfkDcKdK8iK6de0lwoKLC7ljyPoTmWttQWJ+xYDrz13Tvsds5LINYuMOIU2QYX//e8/gbmboiS8U61WjsjnaITXndrsm67c84kYKnGMulrCXFaMZ0wp/fQ1q+JLI7C4Su8jBESs5m63NdbFfYto+yBuvGfsQRUab5i4S7VwdzVNSEzxnUa68VOHV2Mj2XxrXmYXh+3MoJQfiYA5GshAgpmCgpw3VLDzwU7DByPeSN0nOY7QncSyI9h+dKNOV0x+966SgrkYIEatom7qTO0iMaoO9i1GNIN2ma0jIFaYvri/X9si9bNzg==
+ b=JcTmyxZF1KBEenljZ+SI928YL/T6kX2+Mq34ncsJtNcLL9EJZbQE/GV3TzZJuRo9CRhcWH4LH5VdTZQBDtsFYyHxdlJdjVpEYz+97r3Y+rX8u13SfLzJdzSPXf+lTQlWj1mJBPLC5eVUdwh9C1I1+rLNm8hm5lqwOJGJBigrlqGRtDwqpfrPLreJv07yHpisSGJ5LvC+9N6N1lkt0j5Ajd3A4s89eQ4tKv7zxwJ8uNLUnvynx+cRE3+VjpLS/PIuVU59IxXKF1ftzvN9j8rSse7cjiBfMGcHgHJfzfhUD+HYmQUUQDCmUe/sbuNeLxwAKj6eSyKbXFDmX5qv3ybBxg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=6n6E2MSxiqkKsSp7HrCz7LjmyI+FmXyYjxobjKU8SxI=;
- b=lBfbK8afOV/DMNfGG08NHTthpTGAKXbufG1a1DSYnyJ88ARYH8r5xxQhlks9sOgzm6X2TESjiXY8bxDDfmf6mzgzHpb82CC4LivMN301bklQwkLY1Hlj7NuYLjIWHVQ8nc/Z+iP1BgHZgLDNmJQCXdHq5Mf1OX/y/vH4DXvkDTderfUfkg9UEY6UMElBbcjxCpRXPoR8N6yJ1IjavWzZKDOfSqtFC/CYShBnm83Zqzp8Aj2bEJf1fd/3bOYiaAsTOtpBQ/lDqUPpl1gBQKoJD7aV5Iit+pmZ8Nuh8oJxc3jYWrR3Q1ubfTufcG2hZHv52gWHXxOSfGxy9sjyBkecTA==
+ bh=lBzxtKLY3GASShKyHU5lxuF6BWzoJXWLEaL/nUZ9J9Y=;
+ b=tS661BHCfLz3Pvz4pEbFnzqWQqnE9Jr2zg133DGbtvTdbdjDCNdW5NrULDMLOnkaR/p18bSoYuJMeUjmEP4Beu6NGx5P1QyDDp2IHvQ9/i0cVb6TINLq6o03uKsHxTacaSuLBJ6umqAZ4Z49oK56XMdoNIDEf1Z1OeQCYF8TIubIfjCs5k+I/0gIk0cfJWsS5XAf2mePiFMQvyrhb1LKdK7e6U7nzpaWfAtdVFtUjlGB15HS3DBl7g/zR3x56OLsKW7V/xWnxIy4BsIPLqnzjhxixa9eWRzemI+FuFkiGfKX87nlLYWHg0kUKM6eXeVl/+ZqUVrnlKKoopbWU0g6mw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=htecgroup.com; dmarc=pass action=none
  header.from=htecgroup.com; dkim=pass header.d=htecgroup.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=htecgroup.com;
  s=selector1;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=6n6E2MSxiqkKsSp7HrCz7LjmyI+FmXyYjxobjKU8SxI=;
- b=KeWq12Z5N/DXsGZLmzNcw7/9kFTfA1TcRvb8ae/CMH8pIYM8zOZ59RZ2kZ7FUCGLjYKOX8HfhfHRUO1C9IlKLwQRLy9fOhyrPB3m7Z9ZqEwRURjf5gp9TBy0WnGAT52ErR1ztWbtJFfhdemlwRlPXqcwx+CQLc8W52KNrcC0Y6muu9QsPLRAtoiql1gsN98YoFnOdkBiIbVzFLbvzI7f3h8Tr/edgJGg1Mf2G4zZsunjq3tRZq29ZIWOaMFcq8VeO5G34EIzQUjUNmzI/fMM4JKA/FXVGnZK/w1NLQI4x2WydwthcCzRONqhqt0WJTh5n+84TVMoTL2EJWEKPqvnzA==
+ bh=lBzxtKLY3GASShKyHU5lxuF6BWzoJXWLEaL/nUZ9J9Y=;
+ b=tScVI93En9Zd48RRWSAA5LL4AZiLlr1fYpSapiTXHYj6GKJ1LX/eXwhG9S98NHDDaTFoQZb2ovBRYR47UHaO5Y2IdJfuXWLsKQdS7BglyoIg0wXkQ2GfVxmvUDzg8a7YCX6lF1vlWj8dijQqaf1ahvtzvcNAieCoXCp6tm/YeLD1htqz2KSnvUmuQ2ufwP9Mz689VtnT162XNV70wKKqyHiQc+D7wuYNSDPiB2prKDrpeZ8G7KYsZjWyWLsEyZuLNZCmcH4naGcyJEpzb9XZz5eu66BaSuVrYmZJI2PUm9TnD/1jpeQ4ElKOKxwy9A5FnTIkXKhIKH5hXeiL54ByIw==
 Received: from GV2PR09MB8755.eurprd09.prod.outlook.com (2603:10a6:150:358::6)
  by DU0PR09MB6069.eurprd09.prod.outlook.com (2603:10a6:10:407::14)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9678.25; Wed, 11 Mar
- 2026 11:59:20 +0000
+ 2026 11:59:21 +0000
 Received: from GV2PR09MB8755.eurprd09.prod.outlook.com
  ([fe80::939c:95df:4890:ce63]) by GV2PR09MB8755.eurprd09.prod.outlook.com
  ([fe80::939c:95df:4890:ce63%3]) with mapi id 15.20.9700.010; Wed, 11 Mar 2026
- 11:59:20 +0000
+ 11:59:21 +0000
 From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
 To: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
 CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
@@ -52,13 +52,13 @@ CC: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>, "cfu@mips.com"
  <philmd@linaro.org>, "alistair23@gmail.com" <alistair23@gmail.com>,
  "thuth@redhat.com" <thuth@redhat.com>, Djordje Todorovic
  <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH v3 7/9] target/riscv: Fix page table walk endianness for
- big-endian harts
-Thread-Topic: [PATCH v3 7/9] target/riscv: Fix page table walk endianness for
- big-endian harts
-Thread-Index: AQHcsU5+8M7u1FBfEUudHg0nX57WTQ==
-Date: Wed, 11 Mar 2026 11:59:19 +0000
-Message-ID: <20260311115910.564481-8-djordje.todorovic@htecgroup.com>
+Subject: [PATCH v3 9/9] hw/virtio: Support runtime endianness in virtio access
+ helpers
+Thread-Topic: [PATCH v3 9/9] hw/virtio: Support runtime endianness in virtio
+ access helpers
+Thread-Index: AQHcsU5+9voeSU0fEEuP4wmL1ve81Q==
+Date: Wed, 11 Mar 2026 11:59:20 +0000
+Message-ID: <20260311115910.564481-10-djordje.todorovic@htecgroup.com>
 References: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
 In-Reply-To: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
 Accept-Language: en-US
@@ -69,64 +69,64 @@ authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=htecgroup.com;
 x-ms-publictraffictype: Email
 x-ms-traffictypediagnostic: GV2PR09MB8755:EE_|DU0PR09MB6069:EE_
-x-ms-office365-filtering-correlation-id: a5920a16-efb7-4059-9dba-08de7f65a117
+x-ms-office365-filtering-correlation-id: 73154ff3-4558-47ed-c146-08de7f65a17e
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
  ARA:13230040|376014|366016|1800799024|38070700021|18002099003|22082099003|56012099003;
-x-microsoft-antispam-message-info: LY7emsi9f4mp1Q85MyMdGxXcPVlXT5glqn0O4D78A2/31hcfKeCpNJwIjp8ji6RyOy7dBzllIkI0Vf7m1R3dLIcipNvK74iNhKDfS5oUAFGfZZFHlcLIkKV2SvjDtR7g42eDBkqBsAPF+eHLSaopfcyFjN9hzbytYek/T7KnqRXnkYFfr68/4se/WW8tqGgyMm75q7Ags/VpNgtGId3b8FmBCJFWNDYanjsZYqC4WynZx2Q8g+/674C3sxIGyDBx3noxSJUU28jKadmJs3bQy5Ug10tsspzkfWJBsqOYnWrqx1dsQOrXv1/o1dAmTcg3F7nMdr0Y4zo//4gA3d6g539B/7dwk4mV+w1wVYX+/vlwWN8CaMTohx94411Zd92OKTrVMcNv/R/Uhp6cLfK96ie0RS48ckMVOpz31kvUwF0odNVXRaG7Os22YBNwm8JJpQP+Y242RLiVW2vL4TDkouQK7rXPLbCbZyT/N0+Nuc5YBsoNhhkUImJ9zMJ7Wqi/w7cyiv//snJnqeR/Syzg05VHT1vfiV4XbpdrFXpeaPmENf+F8/5XnyQG6Cf6yePVoAcikSQVdAw3+jm755NPh8pmOyyyFvpXWNQBEYlhbwY1QdrzErME1+Kp1xhbwFMwZ/9jjP88kVaKjTn5dgFkwjJwCzgwLXAzk+XcW1tEtLkBsl98UFt7DZvJs45/tUyEkWDAAJNQMP2ksiLG3zdLQG483UOLbn0eu7wysFflfEwRDVz5kiJMy+MW4S6lC7hjIFPa4pksxea+eShVDWICanPwGFVUfgnD2nVbkU0WhPo=
+x-microsoft-antispam-message-info: GnKfZOlgoXcNEdzVCjQdzvmbu0YzJmt8SZ5GYzClVPus+hv7e/SBG9STZF3/PteyWgqmTgHu+CmdCku3SELl+auj8fXv0uVgrJ1wIzKOw1un3LDoLNRTqv9DTpmqG/r2GiK5QfRvnnaN9YwQLNMqYgJ1KhnR9kEjCKPP/6WFIYR3pxNGOrdLB7J7yAFrCs15BhxW4hXHMzMXK40TsTYhkmmwalbLajvtdPTEPZEs8D47pRbresUiLjOpPHtVaCzpq7DEe8yihysA7QpifiBEyfAWcwOz4lgZB17Q+i+9jZsB9Oa6QZRkMwOdMM+WxDoytMHB1bnif4l2podUOKejX47V2U9D11RjDQKe1V8WPjpW421xh6TMnJFwRNcs/H5b2mClTDS3T0eocWkWTTTACsQUgG0DCTHhWTtLdSvYxYRqVJtg1Fl9D6SJD0nyZxcfV5bhn4oicNH45eSphWHEm6UoFGz0i/1kirdljRsmA8ChQb7W/Vg+1GA5nunvgdtgmJJ1oJ8OM1fyIFHL3CCJqnT6vEZc1wA78GATHZ0xQieDlq7Gy3aIyTbSz5oQd6JGcx3HBOHb1gI5yLbSE2ZCprj6OOIXG9GpO5D6QvchRAJHhNys/sG7Yczk1Oo6d0EHPeFc2ldDk0FaoeMNMWbOy5hMn9YhSA/wpOjgc4v5kaLjyLXf7qpHyhiwnn3pMZCPkKInqNIIPAf9QDcEvEfbWH4WqZz1zdNE8Jw+u/LddyG6UcwA7Dx7mohJesvpoEq16rgXXQVFGN5owh9IKYVk/xZaLsJ9ZO2oQP0X1sQMFkY=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:GV2PR09MB8755.eurprd09.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(18002099003)(22082099003)(56012099003);
  DIR:OUT; SFP:1102; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?yN483l09jZvegKA4fP0nHFximm5/tTPhs6q5jeXfUM0QBl5p1voQGPMXHe?=
- =?iso-8859-1?Q?7OwsvulZAzeZ3t6UegcEZT+mjTgcYpIw3h1RpuVqT92VjzDaGfjZyeCAeJ?=
- =?iso-8859-1?Q?mvQ8dNAen78Uz0mQ+ymLAGziy95yYG8UD+hINYm8hBJ7LZq7FYpZOS+hge?=
- =?iso-8859-1?Q?K2ZQyyncQipUws4JsC5K5byYwUYk8zsaQQCTRpkmydxY/JzyLXLMNRJNZQ?=
- =?iso-8859-1?Q?ZHdFRCugbiOaHBHGQ1U5ykAhv9VsZismGwjDlQ3EObo+h2nwhIjgBY6PxT?=
- =?iso-8859-1?Q?brEXpFGyJNM19CS/R7Ycx1wySCJeHH7hlWJ2c5z1CygkyvCXhRvDsJdIck?=
- =?iso-8859-1?Q?cB/f4TvOsNpbWAlRiKpnr1zZIaBpOq6UVBYBsS+WA9/c1pCuI6+0vn6Iua?=
- =?iso-8859-1?Q?pSSE2O89Oj5YIN88qkLbUoSJFN8Cs/ocoeTf2SaIfGK4ZS3chRNJO5qCsn?=
- =?iso-8859-1?Q?hmykdYb3K3ua384nk065FcocyYqffWnpp3hKmQpAoO3O7GGroZOCbjsIx3?=
- =?iso-8859-1?Q?YvAq78IpTlLMgRGyQAlHi3JL6hUuFsQ7UG4JcgzXfoaw8vGampb5yt1dmK?=
- =?iso-8859-1?Q?WlpSh++Zmd+StZwACOE0X42s2xQyMSRJpKvKx6+H28MfqFZjz9rmdqQFBn?=
- =?iso-8859-1?Q?ExNvP93rk6jXHIqMYbLM3+657PPfy3ZRieeJ7gytRHh0y3voRg1oMiIW7p?=
- =?iso-8859-1?Q?ndhkxqixTlTCYZsiH/PdjK9yM5lW/vYo8fGYyB1WVyg2wrz41a19Mj2cVi?=
- =?iso-8859-1?Q?do93kF6VDhJ3rNznIzoyFJeCHofmt4dNHmXyGKLFh0dd4tydkSbaT+W0NN?=
- =?iso-8859-1?Q?YgEWkWeQOkghvQtkY101UCPXcTy7i/j7kakkHtFwClUUq5O2+Q+tZU6x1o?=
- =?iso-8859-1?Q?1cOWC6DrDZX6wja4W1X0Q0umliOcLW3Jyl3fpHnO3ololNVNkfT/Xhkj3T?=
- =?iso-8859-1?Q?GheCwoieDmH+lv2WA53ccprUd5fqv/hcwdsnARJDn6AtDCAqcePxGzCrXR?=
- =?iso-8859-1?Q?OVk9LItoWe4Z3o5SB27JJZ97xoJ+pYbdFKOVs0WlVGJFYA6LlptLOdfzME?=
- =?iso-8859-1?Q?BviQxkhHx895zZoq5HK6nmY0nzPWIyIcHGFU5t8e9tYvA4APeq+Ueavfq4?=
- =?iso-8859-1?Q?OMilycIvEHVderEcXw+Bkuy1810U1KEIYTRpM7Wu9NhJI4QHJrlPyS1yFj?=
- =?iso-8859-1?Q?SYG7RXiVl2zX1xqIl68uAYiWX8ZqA9m+ui0ijm0bUQ3ot5/PZrhzVqRf9k?=
- =?iso-8859-1?Q?LnmjYZyLwjZPfCOl/ZolxTIiZbvDq1OPesDH6EsT39pdMENu1z0NcsTqhw?=
- =?iso-8859-1?Q?NcpIxRMjFYN5LqGlMBHOV3M5CeHgwbVHKCGENOqw0GeEScAueYvvSMV3hr?=
- =?iso-8859-1?Q?uc6gdotT0EsWwqj+wn3z9ptvetaWC91pNQQHNkwYpthO6PQbKpf3BFJ5o+?=
- =?iso-8859-1?Q?n+qRF9ejDvKiKB6+POXqQJ/n3sJe/qk6L4nH/yeQLNwc1k949aKMeWN9Re?=
- =?iso-8859-1?Q?oXbNeqUOmzgZr9X6WjZ3R6ghzPceUEN6Vb8V+NPJYSOXkzls8AiM6j4jDs?=
- =?iso-8859-1?Q?16ebJnYxywETfSGstpwLud0iGOc7iPUVA4lFM/MZgKN32gF0hQHjqbLpbL?=
- =?iso-8859-1?Q?G6tBhnnEi5coLHs4Dxdrrwsyy2RO6qidvv64vwiuo/ZjctBWOWwFILsE1O?=
- =?iso-8859-1?Q?9B4cZAajtglTSelndIJX30iw8I/DirTF5rkVv4c6t69BKmPuxCnplAnFgm?=
- =?iso-8859-1?Q?Vxva5almq4jPyQXAEZlQwpTGMlk8amqaXrfKvVk24czZoiU9vBE3qvXB1B?=
- =?iso-8859-1?Q?Vj8Ne+APYjNuUckHCpHm90dwl1BXcawOXHfKsrZCntn4aAGFGeo9?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?+mYyoe3cdotYR8mHL+G76ObnRcU5dS8ay1Gr3SLQC3akdhYn9+u/UORdXq?=
+ =?iso-8859-1?Q?cfsRs7V7bvvT2nVbOrwPqOCGSHLTnwjzgjCNUNVMsVimSnQVcgLsRIQa0x?=
+ =?iso-8859-1?Q?W4n1P+UuK2kbW4sQs8CyaHSuqmeK00+rSVCh/OiW/WjrNzmqF3q4oJunSb?=
+ =?iso-8859-1?Q?492MSLGFZPFzkYmm6DlqvMW/cCYR94LhxYbiqkrjvrk8wETe9pcrCkn2m8?=
+ =?iso-8859-1?Q?aBHVP/hsCd36kH7+cF5m0YhYH9cDINP0+TW8HAo3p0O0+u4pBBVfPDFkU/?=
+ =?iso-8859-1?Q?2JWrBz7tHt4xGIGOzuZBCNI0ruponhFNanfQ3O7OQhkcYYrK9wnoplkYbB?=
+ =?iso-8859-1?Q?PYyRzxG/Yo+bZoiIWHDHov2kY3yPmTM+Wy0+AAz5UJGwtNcVJLk/BK0MU2?=
+ =?iso-8859-1?Q?tMmFW8pK3itBMQsSewQLKEK+hu9xYvrCjbfZHg6+58XqcFnxmCRIfCtTHM?=
+ =?iso-8859-1?Q?FP8NhVzwwjCpw811l+sQTFzC6bCmzMFuRjkY/bjspusnkVjI0SITqDQEzG?=
+ =?iso-8859-1?Q?+aNvwmZrZb+ON5TLIgp3Qdn1pdmb6dsWzTxuhBw12aQEoQaZGO/Y92S7VM?=
+ =?iso-8859-1?Q?Qm9o85aAcoINIBNs+wouZ9f7frJubpgOxV5Z9ngip8K9v9+N6ePy0UW5mh?=
+ =?iso-8859-1?Q?wriqtVYDLDdGLmiiU27qeAz3d1WKeI6WlzpakyM3INPMzXnQRem0eAmiAi?=
+ =?iso-8859-1?Q?7r3ttNmvxUfNpsf4hqqXBTlpIKtQ9HyfriYRmRixvr2bYcfPNGGpbyYS9n?=
+ =?iso-8859-1?Q?B1Ylfd7PD6D85pZVtQdERTXJCIFpwGl4VuNYjSnA32ots3wEYeCC+CifPA?=
+ =?iso-8859-1?Q?G2XYs3ZE8EKLvuw96hCcebJXBKPSnWpHyhBcSsaamycy2MDvasAj7Zq17T?=
+ =?iso-8859-1?Q?7EVdajRfAx1PYO+psb+WVPPxZAcGBuTjNwwJxY4L6J4sJLd75t6xb0Zv6G?=
+ =?iso-8859-1?Q?ep37MPVGrWIcGKrWqc5sOOkml4aoHi65BsJS9uUrylfidCoRKMfIs78vYF?=
+ =?iso-8859-1?Q?4Baln+ishYXda7xVczN+geCQcG2sP8/0a9+kBDuT23BMKM5Galrsb08yt5?=
+ =?iso-8859-1?Q?YtGn3y8LFvGBKOe2vkAgFtcK1uzMcS6gohhjBovbeJToxVYynKS1a5eq4Q?=
+ =?iso-8859-1?Q?5BbYC2Zyaq1jSUFYQBmewvE/XJ509zE31C6QSTudhaBTX+QDkzpeBq6nAm?=
+ =?iso-8859-1?Q?hhImPG45zbQTrk+DM4P+gCHNq5gF2NUXhJpqxtp2w7JXqWnlP1W3no3PON?=
+ =?iso-8859-1?Q?fPFPOOPkXOGS+93K3GDa5ywKRUx4JVxqF/+6CrHPGrqOLjfkBkwlrLVimO?=
+ =?iso-8859-1?Q?orZovrOjkypStVSpr+6yiISoKuDIBjYUFIMwVkgRApGSIr7zepfSV52HBV?=
+ =?iso-8859-1?Q?tHJHR63z264qLt01c+6d8IF6K5Jb7qzwJABK6esE7+cqDD+KcW0WLzzlfJ?=
+ =?iso-8859-1?Q?xqG4XLoc3Kslhd1GdTeB0F1BHrHM3HynKy1jYCv+c3S1c+0Nlg6UQw9JmZ?=
+ =?iso-8859-1?Q?9GTO+enoSJfmUaRtTc/h1SnLlscNLuw6q4wktwUJr9pCy3zRbvNecE+FAr?=
+ =?iso-8859-1?Q?cO7AIHmJnvC+K3/XHXIGbrxrloR38M0VQp7j4xIu0n4CF5OIVazPxaMtzQ?=
+ =?iso-8859-1?Q?r6POyr09bGMqeuzeeLYDyfHCGhsycZMeZ+WRqRC1gHJeG0owW2oiTl+tIb?=
+ =?iso-8859-1?Q?UhMSxoClDbIfsQ80Yvkf2LOWTi5mX+SiRxVk9drxlQBDXvRyyUjgKl6wqb?=
+ =?iso-8859-1?Q?koS3JfvuAs892lCol11QcaULyY+VUloU0MHcbLToQozu2gzSytSSlS9MQ2?=
+ =?iso-8859-1?Q?NYQBZF7HTFKxSgcUyjHvKS/fyWQKVPiIX0/fpVd/MhiS1JpVsoOQ?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
 X-OriginatorOrg: htecgroup.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: GV2PR09MB8755.eurprd09.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: a5920a16-efb7-4059-9dba-08de7f65a117
-X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2026 11:59:19.6260 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: 73154ff3-4558-47ed-c146-08de7f65a17e
+X-MS-Exchange-CrossTenant-originalarrivaltime: 11 Mar 2026 11:59:20.2730 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 9f85665b-7efd-4776-9dfe-b6bfda2565ee
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: /OkpBLNINf37aesq6T/g+Ta98VdkRDiWSfaenibtRLFp99VQ0hftB5I8ETU5/HVXCi08uaVwiwuwIE2oRXeOIlN3X+Czr/3ECqDlMZwxrs8=
+X-MS-Exchange-CrossTenant-userprincipalname: otcT1Ik50hBbvFrKLvHDLqbp92yGk6KXc+MOOKN0ma+dp4kU5El3NQpgbBcvfZxWb2VJLqt1U377KSRCwiuS2hxl3qNxJkkAdh68VUr/W7Y=
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: DU0PR09MB6069
-Received-SPF: pass client-ip=2a01:111:f403:c200::1;
+Received-SPF: pass client-ip=2a01:111:f403:c201::3;
  envelope-from=Djordje.Todorovic@htecgroup.com;
- helo=DB3PR0202CU003.outbound.protection.outlook.com
+ helo=AS8PR04CU009.outbound.protection.outlook.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -148,77 +148,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The page table walker reads PTEs using address_space_ldl/ldq which use
-compile-time native endianness (always LE for RISC-V). However, when a
-big-endian kernel writes PTEs via normal store instructions, they are
-stored in big-endian byte order. The walker then misinterprets the PTE
-values, causing page faults and a hang when the kernel enables the MMU.
+For targets compiled as little-endian but supporting runtime big-endian
+mode (e.g. RISC-V with big-endian=3Dtrue), virtio_access_is_big_endian()
+unconditionally returned false. This caused legacy virtio config space
+values to be stored in LE byte order even when the guest runs in BE mode,
+leading to byte-swapped config reads (e.g. virtio-blk block size 512
+read as 131072).
 
-The RISC-V privileged specification states that implicit data memory
-accesses to supervisor-level memory management data structures follow
-the hart's endianness setting (MSTATUS SBE/MBE bits).
-
-Fix both PTE reads and atomic A/D bit updates to use the explicit _le
-or _be memory access variants based on the hart's runtime endianness.
+Use target_big_endian() in the #else branch to detect runtime endianness.
+For LE targets that are truly LE, target_big_endian() returns false so
+behavior is unchanged. For bi-endian targets running in BE mode, config
+values are now correctly stored in BE byte order, matching what the
+guest's le32_to_cpu() conversion expects.
 ---
- target/riscv/cpu_helper.c | 26 ++++++++++++++++++++------
- 1 file changed, 20 insertions(+), 6 deletions(-)
+ include/hw/virtio/virtio-access.h | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
 
-diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
-index dd6c861a90..052ec19b23 100644
---- a/target/riscv/cpu_helper.c
-+++ b/target/riscv/cpu_helper.c
-@@ -1365,9 +1365,13 @@ static int get_physical_address(CPURISCVState *env, =
-hwaddr *physical,
-         }
+diff --git a/include/hw/virtio/virtio-access.h b/include/hw/virtio/virtio-a=
+ccess.h
+index b58fb6ed7e..a3f1b9f5fe 100644
+--- a/include/hw/virtio/virtio-access.h
++++ b/include/hw/virtio/virtio-access.h
+@@ -20,6 +20,7 @@
+ #include "system/memory_cached.h"
+ #include "hw/virtio/virtio.h"
+ #include "hw/virtio/virtio-bus.h"
++#include "qemu/target-info.h"
 =20
-         if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
--            pte =3D address_space_ldl(cs->as, pte_addr, attrs, &res);
-+            pte =3D riscv_cpu_data_is_big_endian(env)
-+                ? address_space_ldl_be(cs->as, pte_addr, attrs, &res)
-+                : address_space_ldl_le(cs->as, pte_addr, attrs, &res);
-         } else {
--            pte =3D address_space_ldq(cs->as, pte_addr, attrs, &res);
-+            pte =3D riscv_cpu_data_is_big_endian(env)
-+                ? address_space_ldq_be(cs->as, pte_addr, attrs, &res)
-+                : address_space_ldq_le(cs->as, pte_addr, attrs, &res);
-         }
+ #if defined(TARGET_PPC64) || defined(TARGET_ARM)
+ #define LEGACY_VIRTIO_IS_BIENDIAN 1
+@@ -36,7 +37,10 @@ static inline bool virtio_access_is_big_endian(VirtIODev=
+ice *vdev)
+     }
+     return true;
+ #else
+-    return false;
++    if (virtio_vdev_has_feature(vdev, VIRTIO_F_VERSION_1)) {
++        return false;
++    }
++    return target_big_endian();
+ #endif
+ }
 =20
-         if (res !=3D MEMTX_OK) {
-@@ -1567,11 +1571,21 @@ static int get_physical_address(CPURISCVState *env,=
- hwaddr *physical,
-             target_ulong *pte_pa =3D qemu_map_ram_ptr(mr->ram_block, addr1=
-);
-             target_ulong old_pte;
-             if (riscv_cpu_sxl(env) =3D=3D MXL_RV32) {
--                old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to_le3=
-2(pte), cpu_to_le32(updated_pte));
--                old_pte =3D le32_to_cpu(old_pte);
-+                if (riscv_cpu_data_is_big_endian(env)) {
-+                    old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to=
-_be32(pte), cpu_to_be32(updated_pte));
-+                    old_pte =3D be32_to_cpu(old_pte);
-+                } else {
-+                    old_pte =3D qatomic_cmpxchg((uint32_t *)pte_pa, cpu_to=
-_le32(pte), cpu_to_le32(updated_pte));
-+                    old_pte =3D le32_to_cpu(old_pte);
-+                }
-             } else {
--                old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), cpu_=
-to_le64(updated_pte));
--                old_pte =3D le64_to_cpu(old_pte);
-+                if (riscv_cpu_data_is_big_endian(env)) {
-+                    old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_be64(pte), =
-cpu_to_be64(updated_pte));
-+                    old_pte =3D be64_to_cpu(old_pte);
-+                } else {
-+                    old_pte =3D qatomic_cmpxchg(pte_pa, cpu_to_le64(pte), =
-cpu_to_le64(updated_pte));
-+                    old_pte =3D le64_to_cpu(old_pte);
-+                }
-             }
-             if (old_pte !=3D pte) {
-                 goto restart;
 --=20
 2.34.1
 
