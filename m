@@ -4,108 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3B181125851
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:14:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DFCD1125852
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 16:14:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0MC7-0003BO-5t; Wed, 11 Mar 2026 12:13:59 -0400
+	id 1w0M9x-0000ea-21; Wed, 11 Mar 2026 12:11:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0MBj-0002y7-CB
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:13:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1w0M9K-0000Fm-0V; Wed, 11 Mar 2026 12:11:08 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0MBg-0008Bz-Ex
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 12:13:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773245611;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=Ms3fJrn8QkmTGBfUHjGIungq8i2FyVgCzXBMDKS5rDXzaa32c8M52dCdQTH0nz/ee3n3CX
- sHL+ZNNcxw1ZctGipyUbhvPdXSYi2QPgIdM2/ax/FCSQ9frdPHlukKOKc8gz3cvQ/V+5q7
- GSKrlvw+O8fUYKPSRIkqZSmamHZROSE=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-685-dPlud3UaMLK0w_e5WERrfQ-1; Wed, 11 Mar 2026 12:13:30 -0400
-X-MC-Unique: dPlud3UaMLK0w_e5WERrfQ-1
-X-Mimecast-MFC-AGG-ID: dPlud3UaMLK0w_e5WERrfQ_1773245609
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4853f33b7dbso82825e9.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 09:13:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773245608; x=1773850408; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=I4mW0EEJT3ywfr7rm+ViicXP1YsPjna5NPXKeQcAYd++S5t2rIxGFKkIGCSLPpGMe6
- iwuGtjyWZPk++F/fWEtV/Y7GWKfwzA7H9d/jHs2MhioB1ERCfstdNQkDUD40Eo59tqus
- ayvvKF/tubwTIvGX6Tn4iLybqRKvCHUerAmgGnjPCowvoqISQ7IRI2ftBIiUQuYqk2vs
- T7AAYMyA9mmb7vr9jxkbAe8vpPPSwvcl4IWkLtE4nl7v+6eLZvRfACzAAZT/IbGfkKxU
- vdevdkz2tx3Dal5odX/4Sop3vi/uQ/A1omVHAsMm5ipmRlvjdsateM4Zr0pNS1Ys+7zV
- /ZuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773245608; x=1773850408;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=h8yEvhqbYU/s0PRCLkH+w7kxhTwnnb07s5kD1R7ZXrxxObU4H3TsOYF0ENCe1SR2fI
- qJr8Qc+RlWdRMzyIk1VfVWGCq+jF8tygFH27rYSYhsxuhTPuvtdmLJASYTNQ25iBTceJ
- 7HxhqJDdWoXnFuz4JnZFMyFY8MvNpseap4FLq4V09H0UAghtFY8ew8ErzeoUsrOXARMn
- /cD4pMbhC+xOLS3FXKuH35IJY51u9JTQ7vyuezaZTMgiTVljLkmmOIiCm8v1dOwmUC3X
- dLGR/A3KALCPEbTu9T1Vx9OZzbh12yjGeoPKsDTiQL3w/tmX3N7WgPP08yPoYvrI6NsR
- /X1g==
-X-Gm-Message-State: AOJu0YxAl72jg7SS3VdosZMAm+pSFaQlWHgkVbeji+5OTmplFuyoGe8I
- c4PYP8uy4XClTPoU/PuP5CnYMNofIoHWfCeYxksuuRigQpJGPO/FLrlAezRhFJTqw7QDnZP3sQE
- D7hEze/j93l/eThEg4lJ7JhMG+be68tcrunLW/UQyPgb84UW13cyYwkg8olmypHWI
-X-Gm-Gg: ATEYQzw0Fu8EurHSDp7hG+EQlTRDUsBYXtlELmYsL9C13+N94vqjE6uOUPu/os4fsr9
- ySBYWyKcFgO63gN7d6WenmYLWIEKkLw8IzpTm0B2oYp+LtMtln6AEMqZoPzNmRp5JiE9acTECX8
- ZPBNQXVkWH+1vhMsuiWyCOptymwz4wjOPpteDtWTbO25xU8hUFlgHPS5gW+P6/fF1Wq4oWkwbPS
- HaTQueWSOgmI0gChy1hjDKK6yvQ3H6bXFKg20gRSInM445SK8/bKY1ruSiPeepT9mJ44eWIYPRY
- TW5cBJQRm2bo0eGAAWtVE8xhthujoh2ag0TWkgLZ/iN8Nq67rdEODpN/+3rMsEUTaLY2pFxmceK
- tHHJ6NUDfy+ncQT9i8jurqpbf2ByWVYeYl+XnGY80IahrW5fovNmObvOkwD+P+6R6xqPIKXmqIr
- uh/ySVNXcwwZv+lJOEwDkSVjxHQgs=
-X-Received: by 2002:a05:600c:3115:b0:485:3dfc:569 with SMTP id
- 5b1f17b1804b1-4854b0fb19bmr51021615e9.16.1773245608421; 
- Wed, 11 Mar 2026 09:13:28 -0700 (PDT)
-X-Received: by 2002:a05:600c:3115:b0:485:3dfc:569 with SMTP id
- 5b1f17b1804b1-4854b0fb19bmr51021015e9.16.1773245607929; 
- Wed, 11 Mar 2026 09:13:27 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854a18ddedsm61846545e9.0.2026.03.11.09.13.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 09:13:27 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org,
-	Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH 0/3] docs: some doc updates
-Date: Wed, 11 Mar 2026 17:13:19 +0100
-Message-ID: <20260311161319.558220-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260311102626.46546-1-mohamed@unpredictable.fr>
-References: 
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1w0M9G-0007tM-UU; Wed, 11 Mar 2026 12:11:05 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 74E74874F7;
+ Wed, 11 Mar 2026 17:10:59 +0100 (CET)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org, mst@redhat.com, marcel.apfelbaum@gmail.com,
+ pbonzini@redhat.com, richard.henderson@linaro.org, eduardo@habkost.net,
+ zhao1.liu@intel.com, peterx@redhat.com, farosas@suse.de,
+ wangxinxin.wang@huawei.com
+Subject: [PATCH v3] target/i386: add compat for migrating error code
+Date: Wed, 11 Mar 2026 17:10:13 +0100
+Message-ID: <20260311161053.704233-1-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1773245423859
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: 28
+X-Spam_score: 2.8
+X-Spam_bar: ++
+X-Spam_report: (2.8 / 5.0 requ) BAYES_00=-1.9, HEXHASH_WORD=2.999,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,8 +58,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+If cpu->env.has_error_code is true, backwards migration of a VM from
+a QEMU binary with commit 27535e9cca to a QEMU binary without commit
+27535e9cca will fail:
 
-Paolo
+> kvm: error while loading state for instance 0x0 of device 'cpu'
+
+In practice, wrongly setting the error code to 0 on the target is
+often unproblematic, so additionally checking error_code != 0 in
+cpu_errcode_needed() is not enough to mitigate the issue. Instead, add
+proper machine version compat handling.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 27535e9cca ("target/i386: Add support for save/load of exception error code")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+---
+
+Changes in v3:
+* Add comment above compatibility flag.
+* Add R-b trailer from Zaho Liu.
+
+ hw/i386/pc.c          | 1 +
+ target/i386/cpu.c     | 1 +
+ target/i386/cpu.h     | 5 +++++
+ target/i386/machine.c | 2 +-
+ 4 files changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index addf602da0..4b53b5be4a 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -78,6 +78,7 @@ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
+ 
+ GlobalProperty pc_compat_10_1[] = {
+     { "mch", "extended-tseg-mbytes", "16" },
++    { TYPE_X86_CPU, "x-migrate-error-code", "false" },
+ };
+ const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
+ 
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 0a29ff805f..abf129c7d5 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10561,6 +10561,7 @@ static const Property x86_cpu_properties[] = {
+     DEFINE_PROP_BOOL("tcg-cpuid", X86CPU, expose_tcg, true),
+     DEFINE_PROP_BOOL("x-migrate-smi-count", X86CPU, migrate_smi_count,
+                      true),
++    DEFINE_PROP_BOOL("x-migrate-error-code", X86CPU, migrate_error_code, true),
+     /*
+      * lecacy_cache defaults to true unless the CPU model provides its
+      * own cache information (see x86_cpu_load_def()).
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 5a62aa6157..e88cdadb18 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -2361,6 +2361,11 @@ struct ArchCPU {
+     bool expose_tcg;
+     bool migratable;
+     bool migrate_smi_count;
++    /*
++     * Compatibility bits for old machine types.
++     * If true, allow including env.error_code in migration stream.
++     */
++    bool migrate_error_code;
+     uint32_t apic_id;
+ 
+     /* Enables publishing of TSC increment and Local APIC bus frequencies to
+diff --git a/target/i386/machine.c b/target/i386/machine.c
+index c913961281..48a2a4b319 100644
+--- a/target/i386/machine.c
++++ b/target/i386/machine.c
+@@ -466,7 +466,7 @@ static bool cpu_errcode_needed(void *opaque)
+ {
+     X86CPU *cpu = opaque;
+ 
+-    return cpu->env.has_error_code != 0;
++    return cpu->env.has_error_code != 0 && cpu->migrate_error_code;
+ }
+ 
+ static const VMStateDescription vmstate_error_code = {
+-- 
+2.47.3
+
 
 
