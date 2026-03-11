@@ -4,60 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 85945112583A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:26:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3BFF8112583A
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:26:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LDt-0004wn-8B; Wed, 11 Mar 2026 11:11:45 -0400
+	id 1w0LLx-0003Ct-I3; Wed, 11 Mar 2026 11:20:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBi-0000x0-7b; Wed, 11 Mar 2026 11:09:30 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LKa-0001Rn-K2; Wed, 11 Mar 2026 11:18:43 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LBg-0005gx-D5; Wed, 11 Mar 2026 11:09:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241482; bh=tKIQbFDzUG8EirEZwKlk5qDDgVJRTRx1UDa675ZwRzM=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=wehspkt1jYFZvLOV566PlDYzX7A0notWtmJqhYTgH2mZGCuX4PWcaBZEfJMnvTzRo
- Kc5PbyWjY8lbr9uParlhZnaJvC5pAWZbostCoZb+JNCGG6Vxwzh0QfHyFN7ZW56jb2
- NqLoCjkch/BQ03x+HHjouVbVWgp/C3KZFTjwa5P8Xiv9FUWt6mDQ397HG/F1T4Ywj7
- qiE7jvDpI1AMLMqbJLBY7nq4+uZsNfepjBrRnBS2HawnpwARH+8Z/3y3sIaI8rFJi6
- 7Wo3hLOAeEMnU01vSfnPnTi8w1o5m3KNER3CmE+5gsYJNL2mpTFcmNhhX3l44z5K6G
- d3DU7sWdcoagw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id E9DD8191E9E;
- Wed, 11 Mar 2026 18:04:42 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D476337C2DF;
- Wed, 11 Mar 2026 18:05:20 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Bernhard Beschow <shentey@gmail.com>,
- Mohamed Mediouni <mohamed@unpredictable.fr>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- "Wei Liu (Microsoft)" <wei.liu@kernel.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 27/46] target/i386/hvf/x86_mmu: Fix compiler warning
-Date: Wed, 11 Mar 2026 18:03:03 +0300
-Message-ID: <20260311150327.1084669-27-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LKY-0000vl-PA; Wed, 11 Mar 2026 11:18:40 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773242207; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=kLgUTAhScFZl+zxcrRpPSc6vFRn7QkxJO7YIuL8HbKpYzBxTF3tjxjP4HD9iLOyLBbdlwOPhe4ZTay5DNi4hM2RhZqgyLh98E235mY5aA53TMHMzqP7tJeGgHW72L8holLNtF0qw4tNuj2jZvPF/rCc11gBzNdnPjOPm6VHqMD4=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773242207;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=lD9ou+1I9HOVjEJNifDaRGSbUzrNGOkYSGBU+Trapw8=; 
+ b=QlYBHOmi6cUQ9x+FjpI/JpyVcOV5tEHHMSyLvKcV4vVeWmyI3CTrCEOeJxhIRYIOro8nb7LJjn/dDIaUk8pQSwfA3WCrx8ipoWAUQl+7BR1/sMUdgggv0nHsUvMt5kYcyWORzV/53D4jpZ+CovaoT+KOptoty4h4H2s257t9hTE=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242207; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
+ bh=lD9ou+1I9HOVjEJNifDaRGSbUzrNGOkYSGBU+Trapw8=;
+ b=coEbFV0ZL2oxX1fcKo6XFsryDw3WqVNcXTLqDTP4DlRZGnKU4QnuHz+qIB2H/+3o
+ 5l+WMGfUp/8UgUjhzk80xg1DsaVpShDR6JMD6J4vKqjtnxwrNJd/aFT4T7ELoWiwohi
+ 0dkFKIbKYyW+CyS69bEkxXDk81FdVc87ca+OFp4M=
+Received: by mx.zohomail.com with SMTPS id 1773242205245914.9982326926611;
+ Wed, 11 Mar 2026 08:16:45 -0700 (PDT)
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+Date: Wed, 11 Mar 2026 15:15:35 +0000
+Subject: [PATCH 08/14] accel/mshv: Add access_vp_regs synthetic proc features
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260311-mshv_accel_arm64_supp-v1-8-c31699b7bc1f@anirudhrb.com>
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+X-Mailer: b4 0.14.3
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -73,67 +84,159 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Bernhard Beschow <shentey@gmail.com>
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
 
-When reusing the code in WHPX, GCC emits the following warning when compiling
-for i386-softmmu under MSYS2:
+Enable access_vp_regs feature for regs. In arm64, this feature bit
+allows the guest to set VP registers using hypercall. This wasn't
+required for x86 because such registers are set using wrmsr instead of
+hypercall.
 
-  In file included from ../src/target/i386/emulate/x86_mmu.c:20:
-  ../src/target/i386/emulate/x86_mmu.c: In function 'vmx_write_mem':
-  ../src/target/i386/emulate/x86_mmu.c:251:25: error: format '%llx' expects argument of type 'long long unsigned int', but argument 3 has type 'target_ulong' {aka 'unsigned int'} [-Werror=format=]
-    251 |             VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-        |                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~            ~~~
-        |                                                                       |
-        |                                                                       target_ulong {aka unsigned int}
-  ../src/target/i386/emulate/panic.h:34:12: note: in definition of macro 'VM_PANIC_EX'
-     34 |     printf(__VA_ARGS__); \
-        |            ^~~~~~~~~~~
-  ../src/target/i386/emulate/x86_mmu.c:251:48: note: format string is defined here
-    251 |             VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-        |                                             ~~~^
-        |                                                |
-        |                                                long long unsigned int
-        |                                             %x
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+---
+ accel/mshv/mshv-all.c     |  1 +
+ include/hw/hyperv/hvhdk.h | 87 +++++++++++++++++++++++++++++++++++++++++++++--
+ 2 files changed, 85 insertions(+), 3 deletions(-)
 
-Fix the warning by reusing the target-specific macro TARGET_FMT_lx which exists
-for this exact purpose.
-
-Fixes: c97d6d2cdf97 ("i386: hvf: add code base from Google's QEMU repository")
-cc: qemu-stable
-Signed-off-by: Bernhard Beschow <shentey@gmail.com>
-Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Wei Liu (Microsoft) <wei.liu@kernel.org>
-Link: https://lore.kernel.org/r/20260223233950.96076-3-mohamed@unpredictable.fr
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 529e5e7643078e19d65e694f51cad64be49090ab)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/target/i386/hvf/x86_mmu.c b/target/i386/hvf/x86_mmu.c
-index afc5c17d5d..fe44d2edf4 100644
---- a/target/i386/hvf/x86_mmu.c
-+++ b/target/i386/hvf/x86_mmu.c
-@@ -244,7 +244,8 @@ void vmx_write_mem(CPUState *cpu, target_ulong gva, void *data, int bytes)
-         int copy = MIN(bytes, 0x1000 - (gva & 0xfff));
+diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+index d63b3a53bf..563599ef6a 100644
+--- a/accel/mshv/mshv-all.c
++++ b/accel/mshv/mshv-all.c
+@@ -199,6 +199,7 @@ static int set_synthetic_proc_features(int vm_fd)
+     features.tb_flush_hypercalls = 1;
+     features.synthetic_cluster_ipi = 1;
+     features.direct_synthetic_timers = 1;
++    features.access_vp_regs = 1;
  
-         if (!mmu_gva_to_gpa(cpu, gva, &gpa)) {
--            VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-+            VM_PANIC_EX("%s: mmu_gva_to_gpa " TARGET_FMT_lx " failed\n",
-+                        __func__, gva);
-         } else {
-             address_space_write(&address_space_memory, gpa,
-                                 MEMTXATTRS_UNSPECIFIED, data, copy);
-@@ -265,7 +266,8 @@ void vmx_read_mem(CPUState *cpu, void *data, target_ulong gva, int bytes)
-         int copy = MIN(bytes, 0x1000 - (gva & 0xfff));
+     mshv_arch_amend_proc_features(&features);
  
-         if (!mmu_gva_to_gpa(cpu, gva, &gpa)) {
--            VM_PANIC_EX("%s: mmu_gva_to_gpa %llx failed\n", __func__, gva);
-+            VM_PANIC_EX("%s: mmu_gva_to_gpa " TARGET_FMT_lx " failed\n",
-+                        __func__, gva);
-         }
-         address_space_read(&address_space_memory, gpa, MEMTXATTRS_UNSPECIFIED,
-                            data, copy);
+diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+index 2e1ef80972..38af01f8ea 100644
+--- a/include/hw/hyperv/hvhdk.h
++++ b/include/hw/hyperv/hvhdk.h
+@@ -94,11 +94,15 @@ union hv_partition_synthetic_processor_features {
+          */
+         uint64_t access_partition_reference_tsc:1;
+ 
+-        /*
+-         * Partition has access to the guest idle reg. Corresponds to
++#if defined(__x86_64__)
++
++        /* Partition has access to the guest idle reg. Corresponds to
+          * access_guest_idle_reg privilege.
+          */
+         uint64_t access_guest_idle_reg:1;
++#else
++        uint64_t reserved_z10:1;
++#endif
+ 
+         /*
+          * Partition has access to frequency regs. corresponds to
+@@ -110,11 +114,16 @@ union hv_partition_synthetic_processor_features {
+         uint64_t reserved_z13:1; /* Reserved for access_root_scheduler_reg */
+         uint64_t reserved_z14:1; /* Reserved for access_tsc_invariant_controls */
+ 
++#if defined(__x86_64__)
++
+         /*
+          * Extended GVA ranges for HvCallFlushVirtualAddressList hypercall.
+          * Corresponds to privilege.
+          */
+         uint64_t enable_extended_gva_ranges_for_flush_virtual_address_list:1;
++#else
++        uint64_t reserved_z15:1;
++#endif
+ 
+         uint64_t reserved_z16:1; /* Reserved for access_vsm. */
+         uint64_t reserved_z17:1; /* Reserved for access_vp_registers. */
+@@ -161,13 +170,85 @@ union hv_partition_synthetic_processor_features {
+         /* HvCallRetargetDeviceInterrupt is supported. */
+         uint64_t retarget_device_interrupt:1;
+ 
++#if defined(__x86_64__)
+         /* HvCallRestorePartitionTime is supported. */
+         uint64_t restore_time:1;
+ 
+         /* EnlightenedVmcs nested enlightenment is supported. */
+         uint64_t enlightened_vmcs:1;
+ 
+-        uint64_t reserved:30;
++        uint64_t nested_debug_ctl:1;
++        uint64_t synthetic_time_unhalted_timer:1;
++        uint64_t idle_spec_ctrl:1;
++
++#else
++        uint64_t reserved_z31:1;
++        uint64_t reserved_z32:1;
++        uint64_t reserved_z33:1;
++        uint64_t reserved_z34:1;
++        uint64_t reserved_z35:1;
++#endif
++
++#if defined(__aarch64__)
++        /* Register intercepts supported in V1. As more registers are supported in future
++         * releases, new bits will be added here to prevent migration between incompatible hosts.
++         *
++         * List of registers supported in V1:
++         * 1. TPIDRRO_EL0
++         * 2. TPIDR_EL1
++         * 3. SCTLR_EL1 - Supports write intercept mask.
++         * 4. VBAR_EL1
++         * 5. TCR_EL1 - Supports write intercept mask.
++         * 6. MAIR_EL1 - Supports write intercept mask.
++         * 7. CPACR_EL1 - Supports write intercept mask.
++         * 8. CONTEXTIDR_EL1
++         * 9. PAuth keys (total 10 registers)
++         * 10. HvArm64RegisterSyntheticException
++         */
++        uint64_t register_intercepts_v1:1;
++#else
++        uint64_t reserved_z36:1;
++#endif
++
++        /* HvCallWakeVps is supported */
++        uint64_t wake_vps:1;
++
++        /* HvCallGet/SetVpRegisters is supported.
++         * Corresponds to AccessVpRegisters privilege.
++         * This feature only affects exo partitions.
++         */
++        uint64_t access_vp_regs:1;
++
++#if defined(__aarch64__)
++        /* HvCallSyncContext/Ex is supported. */
++        uint64_t sync_context:1;
++#else
++        uint64_t reserved_z39:1;
++#endif /* __aarch64__ */
++
++        /* Management VTL synic support is allowed.
++         * Corresponds to the ManagementVtlSynicSupport privilege.
++         */
++        uint64_t management_vtl_synic_support:1;
++
++#if defined(__x86_64__)
++        /* Hypervisor supports guest mechanism to signal pending interrupts to paravisor. */
++        uint64_t proxy_interrupt_doorbell_support:1;
++#else
++        uint64_t reserved_z41:1;
++#endif
++
++#if defined(__aarch64__)
++        /* InterceptSystemResetAvailable is exposed. */
++        uint64_t intercept_system_reset:1;
++#else
++        uint64_t reserved_z42:1;
++#endif
++
++        /* Hypercalls for host MMIO operations are available. */
++        uint64_t mmio_hypercalls:1;
++
++        uint64_t reserved:20;
+     };
+ };
+ 
+
 -- 
-2.47.3
+2.43.0
 
 
