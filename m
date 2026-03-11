@@ -4,120 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE805104C00E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:48:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADF2F104C007
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:48:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0H6b-0001dj-9e; Wed, 11 Mar 2026 06:47:57 -0400
+	id 1w0H6c-0001eI-Vd; Wed, 11 Mar 2026 06:47:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1w0H6O-0001cK-F1; Wed, 11 Mar 2026 06:47:45 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0H6R-0001cS-AZ; Wed, 11 Mar 2026 06:47:48 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
- id 1w0H6M-0001Ez-7Z; Wed, 11 Mar 2026 06:47:44 -0400
-Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62B1vV4m049228; Wed, 11 Mar 2026 10:47:38 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=jF/Ken
- oI3xWzufMFlxgeCnulwbQylHRPVFFbFeR7+F0=; b=tPOVJuemok0tE14mzXO3b2
- 3EZEwBOcUzO7BpB1yNNI2RIYN3qFawbzcogzRMtEc3Hk4LATBNSAQvuuNawgwTq8
- Y+OWkV0mqcbHTX5kMJrl07Bd6OOOZYpG/EQE/Gl25NWqTPeo/iTpfStu1W0aVEE+
- ihD+Jfz+qTcsVEYjhsS6tb7RGAxkNqcEX+GJi30WuDVfMdQkVYAisKuxbI2GosWU
- eKxCPmZgniUQqk6ckrdfMBp+emwTrOmobmCpSpwzg+D1Jz+0XOtr5HoGc0YhSd0e
- RNoJ9i4EAbMFzSJls0JlLkQxHhGqYA34KQ1hlz5hXR521qxPkD/V2yDZ8L5UvNHQ
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmfg21-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 11 Mar 2026 10:47:38 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62B83s7t024660;
- Wed, 11 Mar 2026 10:47:37 GMT
-Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs0jk4wq0-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 11 Mar 2026 10:47:37 +0000
-Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
- [10.241.53.100])
- by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62BAlZtS38797832
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 11 Mar 2026 10:47:35 GMT
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 25D1D58059;
- Wed, 11 Mar 2026 10:47:35 +0000 (GMT)
-Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1821C58057;
- Wed, 11 Mar 2026 10:47:34 +0000 (GMT)
-Received: from [9.61.143.63] (unknown [9.61.143.63])
- by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 11 Mar 2026 10:47:33 +0000 (GMT)
-Message-ID: <cc51de63-ab94-4044-89c0-c440b724a344@linux.ibm.com>
-Date: Wed, 11 Mar 2026 06:47:33 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0H6O-0001FN-LJ; Wed, 11 Mar 2026 06:47:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773226023; bh=k5HEHU3ymOSulB3iuObf0UP54o65Fq5C9v6Z25l3zGM=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=XYnCRmJnNq4iSGKAq4XWKUDzB62wKk2TKSv4yEktzGlj26tK6oNgBkzL35IeRgFeT
+ iOerexPPf9oDOIgQSMZq52aLjVypmKCyfMp0/Hs/y1Q/vwM9dNsdkxbGSdJ9DFpw50
+ kUwIEJBrsj9JzdUq/H/uK2gAGzq066M0qgrPxGVz5wSob7so+BE3UWUoOXa6TnBGxm
+ M/Dy7XtBjEZwYgQBHgx+7Fh7f6N+ejHDzCT3FBeA+N1oPeYg74p9oL5pHfDMbKsd1Q
+ vx0zHS0jeWkxySTtKSPrm5WeF8+RlKZVaUEeWxetKLvl7aEXiAnb7q/Z3u4EkvT1Kd
+ GX7UGA+FNbtIg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 43BE6191CAB;
+ Wed, 11 Mar 2026 13:47:03 +0300 (MSK)
+Message-ID: <47a14220-139f-4be6-a19d-503924d5e90b@tls.msk.ru>
+Date: Wed, 11 Mar 2026 13:47:40 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/4] util/event_notifier: fix error handling for
- event_notifier_init callers
-To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
-Cc: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Thomas Huth <thuth@redhat.com>, Alex Williamson <alex@shazbot.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
- Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>, "Michael S. Tsirkin"
- <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>, qemu-s390x@nongnu.org
-References: <20260310182801.196443-1-viking4@gmail.com>
- <20260310182801.196443-4-viking4@gmail.com>
-Content-Language: en-US
-From: Anthony Krowiak <akrowiak@linux.ibm.com>
-In-Reply-To: <20260310182801.196443-4-viking4@gmail.com>
+Subject: Re: [PATCH v3 0/4] Fix a few minor issues reported by Coverity
+To: Sergei Heifetz <heifetz@yandex-team.com>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org
+References: <20260208103958.121455-1-heifetz@yandex-team.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260208103958.121455-1-heifetz@yandex-team.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-GUID: m_e2cJjvG5riBDcIkUCHSvA4U9_C_zev
-X-Proofpoint-ORIG-GUID: HWVFOLtRPfE32H2hlV0lHwCpcbMPRYKB
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA4OCBTYWx0ZWRfXzzNW+Rak04dw
- IUND1BcGA+sBhpplhpXNvScHptvjwtyptwI/2DHKGzth707BtiG/ijU55PtecWzl/AVi/l77ivd
- 4gAgCXR0F8dt1oTZUJN2mlMPAUMLim8BniO7FbXcIDb18j4JcYIfRL7sjLe5NJrOcs3M5F2laN7
- AJoxy8ffaeJfZ5Xee4eCwRSX0FMUmJ2RtSVldldusRRmooZxUH7FQVVUaahRsklX9ToaqOVF/Rw
- OeOcxTA8B7kuOWwGtn8I3+B1Ab5FcYFjOpK/hHlKDOMZ2C3uT/Jbz2pmW7CQ9YcU0t33EILIKRU
- PbZa/p7Fp6nVo2DJdlTbPQsrLBU8cFYhExq0qeBKT680j7dMMNPGleqFCh7DvOhXfjOCxZb769T
- 4MUKjSX0AHRoxs6Gq93pcIO+ZpsmfaOsd63pYf7H/hqMK+/DDAVwcXPo7HQrD89R01yQd41wqcg
- eB/kvADaFIHnO41M0IA==
-X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b1484a cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8
- a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=EgclEWYoO7V04lid-PAA:9 a=3ZKOabzyN94A:10
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-11_01,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
- priorityscore=1501 spamscore=0 clxscore=1011 impostorscore=0 suspectscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603110088
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -133,174 +110,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 08.02.2026 13:39, Sergei Heifetz wrote:
+> Hi. This patch series fixes several minor issues reported by our local
+> Coverity installation.
+> 
+> Changes in v3:
+> - Nothing. I sent the second version of the series without the corresponding 'v2'
+>    suffix by mistake. I apologise.
+> 
+> Changes in v2:
+> - Remove assert(block) in system/physmem.c instead of placing it
+>    before the dereference.
+> 
+> Sergei Heifetz (4):
+>    migration/savevm.c: reorder usage and assertion of mis->from_src_file
+>    dump/dump.c: reorder usage and assertion of block
+>    system/physmem.c: remove useless assertion of block
+>    hw/usb/core.c: reorder usage and assertion of p->ep
 
+Hi!
 
-On 3/10/26 2:27 PM, Trieu Huynh wrote:
-> From: Trieu Huynh <vikingtc4@gmail.com>
->
-> Check return value of event_notifier_init() and return early on
-> failure instead of continuing with invalid state.
-> - Use ret < 0 to handle negative return value.
-> - No functional changes.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> ---
->   hw/hyperv/hyperv.c     |  4 ++--
->   hw/hyperv/vmbus.c      |  4 ++--
->   hw/remote/proxy.c      | 15 +++++++++++++--
->   hw/vfio/ap.c           |  2 +-
->   hw/vfio/ccw.c          |  2 +-
->   hw/vfio/pci-quirks.c   |  2 +-
->   hw/vfio/pci.c          |  2 +-
->   hw/virtio/vhost-vdpa.c |  4 ++--
->   8 files changed, 23 insertions(+), 12 deletions(-)
->
-> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-> index 27e323a819..aa278b179e 100644
-> --- a/hw/hyperv/hyperv.c
-> +++ b/hw/hyperv/hyperv.c
-> @@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
->           sint_route->staged_msg->cb_data = cb_data;
->   
->           r = event_notifier_init(ack_notifier, false);
-> -        if (r) {
-> +        if (r < 0) {
->               goto cleanup_err_sint;
->           }
->           event_notifier_set_handler(ack_notifier, sint_ack_handler);
-> @@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
->   
->       /* We need to setup a GSI for this SintRoute */
->       r = event_notifier_init(&sint_route->sint_set_notifier, false);
-> -    if (r) {
-> +    if (r < 0) {
->           goto cleanup_err_sint;
->       }
->   
-> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-> index c5bab5d245..2f0d2a03d8 100644
-> --- a/hw/hyperv/vmbus.c
-> +++ b/hw/hyperv/vmbus.c
-> @@ -1425,7 +1425,7 @@ static void open_channel(VMBusChannel *chan)
->           goto put_gpadl;
->       }
->   
-> -    if (event_notifier_init(&chan->notifier, 0)) {
-> +    if (event_notifier_init(&chan->notifier, 0) < 0) {
->           goto put_gpadl;
->       }
->   
-> @@ -2416,7 +2416,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
->       }
->   
->       ret = event_notifier_init(&vmbus->notifier, 0);
-> -    if (ret != 0) {
-> +    if (ret < 0) {
->           error_setg(errp, "event notifier failed to init with %d", ret);
->           goto remove_msg_handler;
->       }
-> diff --git a/hw/remote/proxy.c b/hw/remote/proxy.c
-> index 5081d67e7f..e91566509f 100644
-> --- a/hw/remote/proxy.c
-> +++ b/hw/remote/proxy.c
-> @@ -52,9 +52,20 @@ static void setup_irqfd(PCIProxyDev *dev)
->       PCIDevice *pci_dev = PCI_DEVICE(dev);
->       MPQemuMsg msg;
->       Error *local_err = NULL;
-> +    int ret = 0;
->   
-> -    event_notifier_init(&dev->intr, 0);
-> -    event_notifier_init(&dev->resample, 0);
-> +    ret = event_notifier_init(&dev->intr, 0);
-> +    if (ret < 0) {
-> +        error_report("Failed to init intr notifier: %s", strerror(-ret));
-> +        return;
-> +    }
-> +
-> +    ret = event_notifier_init(&dev->resample, 0);
-> +    if (ret < 0) {
-> +        error_report("Failed to init resample notifier: %s", strerror(-ret));
-> +        event_notifier_cleanup(&dev->intr);
-> +        return;
-> +    }
->   
->       memset(&msg, 0, sizeof(MPQemuMsg));
->       msg.cmd = MPQEMU_CMD_SET_IRQFD;
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index e58a0169af..5c8f305653 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -180,7 +180,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->           return false;
->       }
->   
-> -    if (event_notifier_init(notifier, 0)) {
-> +    if (event_notifier_init(notifier, 0) < 0) {
+I applied 3 patches from this series - all but the physmem.c one.
+It's ugly either way, so I'm not picking it up.  Sigh.
 
-Acked-by:  Anthony Krowiak <akrowiak@linux.ibm.com>
+Sorry it took so long.
 
->           error_setg_errno(errp, errno,
->                            "vfio: Unable to init event notifier for irq (%d)",
->                            irq);
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index 2251facb35..ce9c014e6a 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -418,7 +418,7 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->           return false;
->       }
->   
-> -    if (event_notifier_init(notifier, 0)) {
-> +    if (event_notifier_init(notifier, 0) < 0) {
->           error_setg_errno(errp, errno,
->                            "vfio: Unable to init event notifier for irq (%d)",
->                            irq);
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index 7b907b9360..66e02b15a4 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -318,7 +318,7 @@ static VFIOIOEventFD *vfio_ioeventfd_init(VFIOPCIDevice *vdev,
->   
->       ioeventfd = g_malloc0(sizeof(*ioeventfd));
->   
-> -    if (event_notifier_init(&ioeventfd->e, 0)) {
-> +    if (event_notifier_init(&ioeventfd->e, 0) < 0) {
->           g_free(ioeventfd);
->           return NULL;
->       }
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index c89f3fbea3..29bf6511b3 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -70,7 +70,7 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
->       }
->   
->       ret = event_notifier_init(e, 0);
-> -    if (ret) {
-> +    if (ret < 0) {
->           error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
->           return false;
->       }
-> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-> index 2f8f11df86..9c7634e243 100644
-> --- a/hw/virtio/vhost-vdpa.c
-> +++ b/hw/virtio/vhost-vdpa.c
-> @@ -1075,13 +1075,13 @@ static int vhost_vdpa_svq_set_fds(struct vhost_dev *dev,
->       int r;
->   
->       r = event_notifier_init(&svq->hdev_kick, 0);
-> -    if (r != 0) {
-> +    if (r < 0) {
->           error_setg_errno(errp, -r, "Couldn't create kick event notifier");
->           goto err_init_hdev_kick;
->       }
->   
->       r = event_notifier_init(&svq->hdev_call, 0);
-> -    if (r != 0) {
-> +    if (r < 0) {
->           error_setg_errno(errp, -r, "Couldn't create call event notifier");
->           goto err_init_hdev_call;
->       }
+Thanks,
 
+/mjt
 
