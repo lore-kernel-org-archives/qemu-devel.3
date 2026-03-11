@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61BFA1125841
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667021125842
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:10:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBs-0001lr-SS; Wed, 11 Mar 2026 11:09:41 -0400
+	id 1w0LBI-0007bk-QU; Wed, 11 Mar 2026 11:09:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9q-0004Kb-QA; Wed, 11 Mar 2026 11:07:40 -0400
+ id 1w0L9G-0003tR-Ef; Wed, 11 Mar 2026 11:07:03 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L9o-0005NL-W0; Wed, 11 Mar 2026 11:07:34 -0400
+ id 1w0L9C-0004rm-6t; Wed, 11 Mar 2026 11:06:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241481; bh=yQnZjgyMz3ySbNBJU7G+jkBzponQ6pRrFaMlgEJtwFA=;
+ t=1773241481; bh=29LT6J/dsLVkqfhdajZM0lyy+YR1nzRrR8wysJ6fTn8=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=j45f77DDIt6UyheXiIFKVj/jlT6PAv8AEeXx4L/pBC3Zi/gacCpf/rLzhL1JFXdaD
- 8JxgQ9c/sfmeItiyobzY5TlZUAE06be6cwLU1eUH22Cc38f84x2C26vtfC+TDwUTvn
- 3nFhJ29HygLL9CydM2vUm5cuK56mjPv0Vvq3zmNXhuRYe3YRImSlCm4CUFpRzPgMwo
- vKy76Boz+kllmybKeI8lSPx81C/IROYudRhUxEoPyXCg878V7bOeu4veqOgvMgDdCd
- PFDac/6gl2Sl3B/MWS90egpoz01SK0jCW1BAF4Cto11Clo72xln0lw8jWNLmlFbk4r
- CjM6mD008RVqw==
+ b=AtJPj/8MddmNbLruhV8QZfeTv+0uzwdYBScJ9Qhb5UscMVqRrsXnHPfjRCoGkhvCg
+ qOrqJ7M02KdWizJeHOqZo/QAqvfI7n335mEKIMFHGEDSiLNAkNnWD2oakqZtrL6oJh
+ C98/XJFlUAQNIvnMPqhprZ29OYnLsCO7FE+sPy15DuX/uJO14vk075wgLkUAXsjrna
+ RqBY3ZkaboafeBFr9Xk3nYXyKZ8YGdg6mfru79Pv8uEDLjCofDRtF2FDBkdxvyLob7
+ hKhZEATAd1q/pW7N2bj4yIl/sLGT5gG1gyQV5eUJlm5/fyhP4F2dS3rbf4J5nKuc5c
+ Bu/2gXSOgNz9g==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id AAEAD191E8D;
+ by isrv.corpit.ru (Postfix) with ESMTP id 17F6C191E86;
  Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 99C4C37C2CE;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 054D437C2C7;
  Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Jamin Lin <jamin_lin@aspeedtech.com>,
- =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+Cc: qemu-stable@nongnu.org, Fiona Ebner <f.ebner@proxmox.com>,
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 10/46] hw/i2c/aspeed_i2c: Fix out-of-bounds read in
- I2C MMIO handlers
-Date: Wed, 11 Mar 2026 18:02:46 +0300
-Message-ID: <20260311150327.1084669-10-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 03/46] block/mirror: check range when setting zero
+ bitmap for sync write
+Date: Wed, 11 Mar 2026 18:02:39 +0300
+Message-ID: <20260311150327.1084669-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,131 +71,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jamin Lin <jamin_lin@aspeedtech.com>
+From: Fiona Ebner <f.ebner@proxmox.com>
 
-The ASPEED I2C controller exposes a per-bus MMIO window of 0x80 bytes on
-AST2600/AST1030/AST2700, but the backing regs[] array was sized for only
-28 dwords (0x70 bytes). This allows guest reads in the range [0x70..0x7f]
-to index past the end of regs[].
+Some Proxmox users reported an occasional assertion failure [0][1] in
+busy VMs when using drive mirror with active mode. In particular, the
+failure may occur for zero writes shorter than the job granularity:
 
-Fix this by:
-- Sizing ASPEED_I2C_NEW_NUM_REG to match the 0x80-byte window
-  (0x80 >> 2 = 32 dwords).
-- Avoiding an unconditional pre-read from regs[] in the legacy/new read
-  handlers. Initialize the return value to -1 and only read regs[] for
-  offsets that are explicitly handled/valid, leaving invalid offsets to
-  return -1 with a guest error log.
+> #0  0x00007b421154b507 in abort ()
+> #1  0x00007b421154b420 in ?? ()
+> #2  0x0000641c582e061f in bitmap_set (map=0x7b4204014e00, start=14, nr=-1)
+> #3  0x0000641c58062824 in do_sync_target_write (job=0x641c7e73d1e0,
+>       method=MIRROR_METHOD_ZERO, offset=852480, bytes=4096, qiov=0x0, flags=0)
+> #4  0x0000641c58062250 in bdrv_mirror_top_do_write (bs=0x641c7e62e1f0,
+        method=MIRROR_METHOD_ZERO, copy_to_target=true, offset=852480,
+        bytes=4096, qiov=0x0, flags=0)
+> #5  0x0000641c58061f31 in bdrv_mirror_top_pwrite_zeroes (bs=0x641c7e62e1f0,
+        offset=852480, bytes=4096, flags=0)
 
-Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3290
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Link: https://lore.kernel.org/qemu-devel/20260210024331.3984696-2-jamin_lin@aspeedtech.com
-Signed-off-by: Cédric Le Goater <clg@redhat.com>
-(cherry picked from commit c2c5beec42bf9872b37e78b9e259132df7435cb5)
+The range for the dirty bitmap described by dirty_bitmap_offset and
+dirty_bitmap_end is narrower than the original range and in fact,
+dirty_bitmap_end might be smaller than dirty_bitmap_offset. There
+already is a check for 'dirty_bitmap_offset < dirty_bitmap_end' before
+resetting the dirty bitmap. Add such a check for setting the zero
+bitmap too, which uses the same narrower range.
+
+[0]: https://forum.proxmox.com/threads/177981/
+[1]: https://bugzilla.proxmox.com/show_bug.cgi?id=7222
+
+Cc: qemu-stable@nongnu.org
+Fixes: 7e277545b9 ("mirror: Skip writing zeroes when target is already zero")
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
+Message-ID: <20260112152544.261923-1-f.ebner@proxmox.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+(cherry picked from commit 4a7b1bd18d2e1a6b3796e177ae5df9b198264a0b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/i2c/aspeed_i2c.c b/hw/i2c/aspeed_i2c.c
-index c48fa2050b..c455c3eb7c 100644
---- a/hw/i2c/aspeed_i2c.c
-+++ b/hw/i2c/aspeed_i2c.c
-@@ -94,7 +94,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
-                                         unsigned size)
- {
-     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
--    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
-+    uint64_t value = -1;
- 
-     switch (offset) {
-     case A_I2CD_FUN_CTRL:
-@@ -105,7 +105,7 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
-     case A_I2CD_DEV_ADDR:
-     case A_I2CD_POOL_CTRL:
-     case A_I2CD_BYTE_BUF:
--        /* Value is already set, don't do anything. */
-+        value = bus->regs[offset / sizeof(*bus->regs)];
-         break;
-     case A_I2CD_CMD:
-         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
-@@ -113,21 +113,20 @@ static uint64_t aspeed_i2c_bus_old_read(AspeedI2CBus *bus, hwaddr offset,
-     case A_I2CD_DMA_ADDR:
-         if (!aic->has_dma) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
--            value = -1;
-             break;
+diff --git a/block/mirror.c b/block/mirror.c
+index b344182c74..bc982cb99a 100644
+--- a/block/mirror.c
++++ b/block/mirror.c
+@@ -1514,9 +1514,12 @@ do_sync_target_write(MirrorBlockJob *job, MirrorMethod method,
+         assert(!qiov);
+         ret = blk_co_pwrite_zeroes(job->target, offset, bytes, flags);
+         if (job->zero_bitmap && ret >= 0) {
+-            bitmap_set(job->zero_bitmap, dirty_bitmap_offset / job->granularity,
+-                       (dirty_bitmap_end - dirty_bitmap_offset) /
+-                       job->granularity);
++            if (dirty_bitmap_offset < dirty_bitmap_end) {
++                bitmap_set(job->zero_bitmap,
++                           dirty_bitmap_offset / job->granularity,
++                           (dirty_bitmap_end - dirty_bitmap_offset) /
++                           job->granularity);
++            }
          }
-+        value = bus->regs[offset / sizeof(*bus->regs)];
          break;
-     case A_I2CD_DMA_LEN:
-         if (!aic->has_dma) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA support\n",  __func__);
--            value = -1;
-+            break;
-         }
-+        value = bus->regs[offset / sizeof(*bus->regs)];
-         break;
--
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
--        value = -1;
-         break;
-     }
  
-@@ -139,7 +138,7 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
-                                         unsigned size)
- {
-     AspeedI2CClass *aic = ASPEED_I2C_GET_CLASS(bus->controller);
--    uint64_t value = bus->regs[offset / sizeof(*bus->regs)];
-+    uint64_t value = -1;
- 
-     switch (offset) {
-     case A_I2CC_FUN_CTRL:
-@@ -159,13 +158,12 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
-     case A_I2CS_CMD:
-     case A_I2CS_INTR_CTRL:
-     case A_I2CS_DMA_LEN_STS:
--        /* Value is already set, don't do anything. */
-+    case A_I2CS_INTR_STS:
-+        value = bus->regs[offset / sizeof(*bus->regs)];
-         break;
-     case A_I2CC_DMA_ADDR:
-         value = extract64(bus->dma_dram_offset, 0, 32);
-         break;
--    case A_I2CS_INTR_STS:
--        break;
-     case A_I2CM_CMD:
-         value = SHARED_FIELD_DP32(value, BUS_BUSY_STS, i2c_bus_busy(bus->bus));
-         break;
-@@ -176,13 +174,13 @@ static uint64_t aspeed_i2c_bus_new_read(AspeedI2CBus *bus, hwaddr offset,
-         if (!aic->has_dma64) {
-             qemu_log_mask(LOG_GUEST_ERROR, "%s: No DMA 64 bits support\n",
-             __func__);
--            value = -1;
-+            break;
-         }
-+        value = bus->regs[offset / sizeof(*bus->regs)];
-         break;
-     default:
-         qemu_log_mask(LOG_GUEST_ERROR,
-                       "%s: Bad offset 0x%" HWADDR_PRIx "\n", __func__, offset);
--        value = -1;
-         break;
-     }
- 
-diff --git a/include/hw/i2c/aspeed_i2c.h b/include/hw/i2c/aspeed_i2c.h
-index 2daacc10ce..efe8b1a0c5 100644
---- a/include/hw/i2c/aspeed_i2c.h
-+++ b/include/hw/i2c/aspeed_i2c.h
-@@ -36,8 +36,7 @@ OBJECT_DECLARE_TYPE(AspeedI2CState, AspeedI2CClass, ASPEED_I2C)
- #define ASPEED_I2C_NR_BUSSES 16
- #define ASPEED_I2C_SHARE_POOL_SIZE 0x800
- #define ASPEED_I2C_BUS_POOL_SIZE 0x20
--#define ASPEED_I2C_OLD_NUM_REG 11
--#define ASPEED_I2C_NEW_NUM_REG 28
-+#define ASPEED_I2C_NEW_NUM_REG (0x80 >> 2)
- 
- #define A_I2CD_M_STOP_CMD       BIT(5)
- #define A_I2CD_M_RX_CMD         BIT(3)
 -- 
 2.47.3
 
