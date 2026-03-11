@@ -4,79 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E581125811
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F00A91125863
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 18:08:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0NyY-00034u-MU; Wed, 11 Mar 2026 14:08:06 -0400
+	id 1w0NyF-000309-07; Wed, 11 Mar 2026 14:07:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w0NyW-00033j-3e
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:08:04 -0400
-Received: from v512.v5f06b487.use4.send.mailgun.net ([143.55.232.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1)
- (envelope-from <bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev>)
- id 1w0NyU-0002uz-D4
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:08:03 -0400
-X-Mailgun-Sid: WyI4ZDFlNiIsInFlbXUtZGV2ZWxAbm9uZ251Lm9yZyIsIjk3NjA3ZSJd
-Received: from mail.yodel.dev (mail.yodel.dev [35.209.39.246]) by
- a8ccd0bcda0aa330ef475c8a55a2c4da82a545dbae874159e3564d95b69cf6a3 with SMTP id
- 69b1af80fc41d7a42a109b00; Wed, 11 Mar 2026 18:08:00 GMT
-X-Mailgun-Sending-Ip: 143.55.232.12
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yodel.dev;
- s=rsa2048; t=1773252479;
- bh=1U7/vjK2LA6Phidiuu9ZV2hcGkPsOeOxCVzmz3nA/VE=;
- h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:
- X-Mailgun-Dkim:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:From:Reply-to:Subject:Date:Message-id:To:
- Cc:Mime-version:Content-type:Content-transfer-encoding:In-reply-to:
- References;
- b=JTJTk9M27Bdk5i2dD0nBmu58rfzfseN57kQZsRDRSKd6YH1DYXE1+Kfckia6ND3Wr
- yTVoTcoRzzKey298u+knL0BY55n1yRPXe4/AvdWriDdCQKcC/GBFGuCgem/AcR+qhd
- ziQATesiOthIXctdQb4hFrLSdlfTtfFafF8313cp6+Jlpoqj8KAWJu81M0Rf0fSycX
- 4Sm1Mc1Rd3ADqb6V5vHTCR0Fp1cbROGF3McZgZMbQDp8RqEB6NgQT+uVmJygr7QdTu
- Q2Tx0Ypw8mF1M2UMMi97jcTECIYs8uCvuvLAH8oX943t8UTjJ5JnGHfuyF3lWbYSjc
- kwubCwE95alhA==
-Message-ID: <e833b8b3-b00e-4a71-a40c-85d92654a177@yodel.dev>
-Date: Wed, 11 Mar 2026 13:07:58 -0500
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w0NyD-0002za-34
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:07:45 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w0Ny9-0002rj-JM
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:07:44 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773252412; bh=YQHy5bKUVLGPBuMhQMes9aK1F63yvUs1Lzyyp37j/c8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=OOTxoY61fOR2Tlx9SnZEGFcrVaOG3MKEelol4weWEkosiFWaefvSbpC0kIn+WlV06
+ YZ3gvlYb0jjZ9dDJWa4YxhP7WGTiz1HG8AYXMrkO1mIm7xYUmocpblTSMdmp9vva58
+ sUo7bqiZxYWm9Ckvq+8pGmQbGTDvfD+uYVP9yVh5UbTlUX+Ig8QmDceuz3s7w+d3rP
+ lVos4AoEpSbmfBF6GBCcXZYveDlWhCxnYxkuBeLsoOzM2mUvgmkJfLByg7I84QyQ9L
+ ps86UYLGwL0gEhwAO6k77ZxORK5paGJHlISiiYQFy5zPSQ3dlGNGKtgfuFfjNP6EC2
+ Inc67622SQBew==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 351431920AF;
+ Wed, 11 Mar 2026 21:06:52 +0300 (MSK)
+Message-ID: <4359852e-2d50-42d3-a999-1df743cff447@tls.msk.ru>
+Date: Wed, 11 Mar 2026 21:07:25 +0300
 MIME-Version: 1.0
-Subject: Re: [PATCH 05/15] hw/alpha/typhoon: Create instance_init and
- class_init
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>
-References: <20260310-qomify-alpha-v1-0-4375b00a85ff@yodel.dev>
- <20260310-qomify-alpha-v1-5-4375b00a85ff@yodel.dev>
- <0ab6bb36-0938-4ab9-a769-e0aa364c40e2@linaro.org>
-Content-Language: en-US
-X-Mailgun-Dkim: no
-X-Mailgun-Dkim: no
-From: Yodel Eldar <yodel.eldar@yodel.dev>
-Autocrypt: addr=yodel.eldar@yodel.dev; keydata=
- xjMEZxqXdhYJKwYBBAHaRw8BAQdAkletQdG3CLyANZyuf2t7Z9PK4b6HiT+DdSPUB2mHzmPN
- I1lvZGVsIEVsZGFyIDx5b2RlbC5lbGRhckB5b2RlbC5kZXY+wpkEExYKAEECGwMFCQOcG00F
- CwkIBwIGFQoJCAsCBBYCAwECHgECF4AWIQTTzRjNQG27imap+N+V7k+3NmVNrAUCaNWASwIZ
- AQAKCRCV7k+3NmVNrNnSAPoDjQXa6v7ZzdQSaLdRfAQy/5SsUucv+zp3WAP4pXdgJQEAzMMC
- Ctx4l6b13Fs2hZdRXEnF/4BZ9t1K68nwzZOV3QnOOARnGpd2EgorBgEEAZdVAQUBAQdAKPIy
- 3W/DKFsm1e+31zoqmOY0pqz8vjIM846wM6lEY2QDAQgHwn4EGBYIACYCGwwWIQTTzRjNQG27
- imap+N+V7k+3NmVNrAUCaNWG7QUJA5wi9wAKCRCV7k+3NmVNrPusAQCQDQwETy7VT6UhHPho
- TkrQnsNqQfFU3tXqCTiViToktQD7B/U2/to97hQIJCWbK6yd3T+KPZJPMcHMg2XRyedUvgA=
-In-Reply-To: <0ab6bb36-0938-4ab9-a769-e0aa364c40e2@linaro.org>
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] meson.build: stop checking for inotify_init()
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ "Daniel P . Berrange" <berrange@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260311160238.551773-1-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260311160238.551773-1-pbonzini@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=143.55.232.12;
- envelope-from=bounce+0e9322.97607e-qemu-devel=nongnu.org@yodel.dev;
- helo=v512.v5f06b487.use4.send.mailgun.net
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- HELO_STATIC_HOST=-0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
  RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -94,66 +113,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi, Philippe! Thanks for commenting here and your review
-of Patch 10.
+On 11.03.2026 19:02, Paolo Bonzini wrote:
+> Queued, thanks.
 
-On 11/03/2026 07:43, Philippe Mathieu-Daudé wrote:
-> On 10/3/26 23:31, Yodel Eldar wrote:
->> Define the Typhoon class and instance initializers.
->>
->> Add "cpu[*]" link properties in the instance_init of Typhoon.
->> Setting these cpu link properties will occur in a later commit.
->>
->> Note: This is one step towards splitting typhoon_init() into the
->> instance_init and realize hooks. typhoon_init() currently takes
->> a fixed cpus array as a parameter; that array will be removed soon.
->>
->> Signed-off-by: Yodel Eldar <yodel.eldar@yodel.dev>
->> ---
->>   hw/alpha/typhoon.c | 23 +++++++++++++++++++++++
->>   1 file changed, 23 insertions(+)
-> 
-> 
->> +static void typhoon_pcihost_init(Object *obj)
->> +{
->> +    TyphoonState *s = TYPHOON_PCI_HOST_BRIDGE(obj);
->> +
->> +    int i;
->> +    for (i = 0; i < 4; ++i) {
->> +        g_autofree char *name = g_strdup_printf("cpu[%d]", i);
->> +        object_property_add_link(obj, name,  TYPE_ALPHA_CPU,
->> +                                 (Object **)&s->cchip.cpu[i],
->> +                                 
->> qdev_prop_allow_set_link_before_realize, 0);
->> +    }
->> +}
-> 
-> Hmm this machine is modelled using quite legacy style. The Typhoon
-> PCIHost object shouldn't have direct access to CPUs but only expose
-> IRQ lines, then the board layer wire these lines to CPUs.
+Please don't queue it up without the previous patch which
+stops linux-user/ from checking CONFIG_INOTIFY.
 
-Yeah, by inheritance the Typhoon is a PCI_HOST_BRIDGE, but
-it's doing much more than that, so it's currently tightly
-integrated with the CPUs.
+https://lore.kernel.org/qemu-trivial/20260119140557.2167351-2-mjt@tls.msk.ru/T/#u
 
-I narrowly limited the scope of the series, so I hadn't even
-considered decoupling the CPUs before your comment, but now
-that I've been looking at it more closely: AFAICT there are
-three nexuses we'd have to disentangle (please let me know
-if I missed anything):
-  (1) the CPU interrupts you mentioned
-  (2) the timers that live in the CPUs (for now)
-  (3) returning the cpu index when reading the MISC register
+I planned to submit whole thing through the trivial-patches
+tree for 11.0.
 
-I think (1) and (2) are relatively straightforward: connect the
-wires as you suggested with the IRQ handler in the cpu, and move
-the timers into TyphoonState, respectively. (3)'s a bit trickier
-IMHO: I suppose we could keep using current_cpu for (3) since
-resolving (1) and (2) already lets us eliminate TyphoonState's
-cchip.cpu, but it would be nice to remove that, too.
-Open to suggestions. WDYT?
+Or if you queue it up, please queue the mentioned patch before
+this one.
 
 Thanks,
-Yodel
 
+/mjt
 
