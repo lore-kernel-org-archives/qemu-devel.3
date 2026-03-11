@@ -4,48 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13824112583A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:20:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 890BB1125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LKJ-0000vQ-0o; Wed, 11 Mar 2026 11:18:23 -0400
+	id 1w0LLY-0002Ar-Sr; Wed, 11 Mar 2026 11:19:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LJf-0000Lo-Cw; Wed, 11 Mar 2026 11:17:44 -0400
+ id 1w0LKm-0001cT-PL; Wed, 11 Mar 2026 11:18:53 -0400
 Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LJb-0000Yv-Gn; Wed, 11 Mar 2026 11:17:42 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1773242187; cv=none; 
+ id 1w0LKl-0000xW-Af; Wed, 11 Mar 2026 11:18:52 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773242212; cv=none; 
  d=zohomail.com; s=zohoarc; 
- b=gw7OU43nnhcS6Gavue8nUuzNDxmQtlwdamgfjYaJo5HRO01ZpllLcU2X9hElgU+HDPjbK2b9sCRnuCqRngOuF/wM/Hjjf0A2oP8iNPw+LI+VWO36HubeyF0tIr94TwRPGB04TYmu+UYmJZmDnq9YRGPJ6yzdWUbwnT6rPyf7jBk=
+ b=GI7VVaDmpWAiApiWH9BukEkFSI4c6sC7L+TMUazcL0BGaQQToaFYc9KmBGkXua3LBH1GrdXbsf2syVqFS6u3Gw47s5FiV3Rk9QSRaqqo/TZI9ctzUcHTVh5oZJQYQRsiBaXH2zWrCtH517gOlHIDZXNcjJ1AIorf2OS3qKflHQs=
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1773242187;
+ s=zohoarc; t=1773242212;
  h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=zduXhp1bdCAfCRYLwUyJJOb4zDQ8rEZPVnGEODhdOSU=; 
- b=VhZMMMeqeCCjUNv6Wbh6NSqB63ntUjc04oiqnSZt30v60mLu/Hx9jRYUABvLxJv9W0Rl+4kaeBFQwwhxunISpVPvARx49o/cJMV0xCSOnFlK4HTUn+/N1O8CRyJBQr4Jsnr/l3vnpVBBkiW7q0eeDtgd8tGupvt9q1mo19e5v/c=
+ bh=TtHVV09/azBFz2Seh9PYlKsEIwHX8fbx5TVphaMR2YA=; 
+ b=PX/yC5FQ61oiEjn3y/HPY78ZCFOFI8CzucrzcAmcsFtHyzz30CrMZ7vPCXzCUI7yuI5XU8gxpNQr11V9s8nbo/VcM5fNUIjdU2tBAS72zO5aTBLRCelpnFuMMjk/MA0/JdQxShGl57alKpSbCOXJAady8Day55X3TX79nwgRyCs=
 ARC-Authentication-Results: i=1; mx.zohomail.com;
  dkim=pass  header.i=anirudhrb.com;
  spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
  dmarc=pass header.from=<anirudh@anirudhrb.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242187; 
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242212; 
  s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
  h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
- bh=zduXhp1bdCAfCRYLwUyJJOb4zDQ8rEZPVnGEODhdOSU=;
- b=XpXelsIEn7TjQdSzrhIeRBvdnG5up5nOTxPE+yAUpQOjnPo8eLcXJ6jSzENulpJY
- Zs5JXZoe8KpJ1h8egf2DF/8RIz3Zwy90Pv2oSQpa9hfQXytT/2AzONk20cBXxWGRDU3
- 4SvqyUWIEVUFOxiiYuKRB+UdmrNIS3wzl9sCc9xI=
-Received: by mx.zohomail.com with SMTPS id 17732421852132.641422523197548;
- Wed, 11 Mar 2026 08:16:25 -0700 (PDT)
+ bh=TtHVV09/azBFz2Seh9PYlKsEIwHX8fbx5TVphaMR2YA=;
+ b=pWt2EdvvteRCwbFsHc20kbQ9TpJyhMW+s3m2X6V7tcX80jq4v+ZlcUS9TtT3Vb1s
+ XqcYD4T3hDR4JVNLshRVF1r1RFsEosIrijFTylWbm+XwH4lLACXp5EdGbdf1if8UDdx
+ 6ZDimYP93Fug5YwOqImxiLVrS44jBuEYdbyUboqI=
+Received: by mx.zohomail.com with SMTPS id 1773242209175320.2625669690708;
+ Wed, 11 Mar 2026 08:16:49 -0700 (PDT)
 From: Anirudh Rayabharam <anirudh@anirudhrb.com>
-Date: Wed, 11 Mar 2026 15:15:30 +0000
-Subject: [PATCH 03/14] accel/mshv: extract common CPU register helpers
+Date: Wed, 11 Mar 2026 15:15:36 +0000
+Subject: [PATCH 09/14] target/arm: cpu: Mark MSHV supporting PSCI 1.3
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
-Message-Id: <20260311-mshv_accel_arm64_supp-v1-3-c31699b7bc1f@anirudhrb.com>
+Message-Id: <20260311-mshv_accel_arm64_supp-v1-9-c31699b7bc1f@anirudhrb.com>
 References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
 In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
 To: qemu-devel@nongnu.org
@@ -86,385 +86,25 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Aastha Rawat <aastharawat@linux.microsoft.com>
 
-Move arch-independent MSHV CPU register handling functions into
-accel/mshv/mshv-cpu-common.c. Update x86 MSHV backends to use these
-shared helpers.
-
-Prefix get_generic_regs() with mshv_ for proper namespacing since it
-is now public.
+MSHV supports PSCI 1.3. Expose this version to guests.
 
 Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
 ---
- accel/mshv/meson.build       |   3 +-
- accel/mshv/mshv-cpu-common.c | 151 +++++++++++++++++++++++++++++++++++++++++++
- include/system/mshv_int.h    |   3 +
- target/i386/mshv/mshv-cpu.c  | 130 +------------------------------------
- 4 files changed, 159 insertions(+), 128 deletions(-)
+ target/arm/cpu.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-index e433187cde..ebe32921b3 100644
---- a/accel/mshv/meson.build
-+++ b/accel/mshv/meson.build
-@@ -1,5 +1,6 @@
- system_ss.add(when: 'CONFIG_MSHV', if_true: files(
-   'irq.c',
-   'mem.c',
--  'mshv-all.c'
-+  'mshv-all.c',
-+  'mshv-cpu-common.c'
- ))
-diff --git a/accel/mshv/mshv-cpu-common.c b/accel/mshv/mshv-cpu-common.c
-new file mode 100644
-index 0000000000..b104720161
---- /dev/null
-+++ b/accel/mshv/mshv-cpu-common.c
-@@ -0,0 +1,151 @@
-+/*
-+ * QEMU MSHV common CPU register helpers
-+ *
-+ * Copyright Microsoft, Corp. 2026
-+ *
-+ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
-+ *          Magnus Kulke  <magnuskulke@microsoft.com>
-+ *          Jinank Jain   <jinankjain@microsoft.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+#include "qemu/osdep.h"
-+#include "qemu/error-report.h"
-+#include "qemu/memalign.h"
-+
-+#include "system/mshv.h"
-+#include "system/mshv_int.h"
-+
-+#include "hw/core/cpu.h"
-+#include "linux/mshv.h"
-+
-+#include <sys/ioctl.h>
-+
-+int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-+                          size_t n_regs)
-+{
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int vp_index = cpu->cpu_index;
-+    size_t in_sz, assocs_sz;
-+    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
-+    struct mshv_root_hvcall args = {0};
-+    int ret;
-+
-+    /* find out the size of the struct w/ a flexible array at the tail */
-+    assocs_sz = n_regs * sizeof(hv_register_assoc);
-+    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
-+
-+    /* fill the input struct */
-+    memset(in, 0, sizeof(hv_input_set_vp_registers));
-+    in->vp_index = vp_index;
-+    memcpy(in->elements, assocs, assocs_sz);
-+
-+    /* create the hvcall envelope */
-+    args.code = HVCALL_SET_VP_REGISTERS;
-+    args.in_sz = in_sz;
-+    args.in_ptr = (uint64_t) in;
-+    args.reps = (uint16_t) n_regs;
-+
-+    /* perform the call */
-+    ret = mshv_hvcall(cpu_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to set registers");
-+        return -1;
-+    }
-+
-+    /* assert we set all registers */
-+    if (args.reps != n_regs) {
-+        error_report("Failed to set registers: expected %zu elements"
-+                     ", got %u", n_regs, args.reps);
-+        return -1;
-+    }
-+
-+    return 0;
-+}
-+
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                            size_t n_regs)
-+{
-+    int cpu_fd = mshv_vcpufd(cpu);
-+    int vp_index = cpu->cpu_index;
-+    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
-+    hv_register_value *values = cpu->accel->hvcall_args.output_page;
-+    size_t in_sz, names_sz, values_sz;
-+    int i, ret;
-+    struct mshv_root_hvcall args = {0};
-+
-+    /* find out the size of the struct w/ a flexible array at the tail */
-+    names_sz = n_regs * sizeof(hv_register_name);
-+    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
-+
-+    /* fill the input struct */
-+    memset(in, 0, sizeof(hv_input_get_vp_registers));
-+    in->vp_index = vp_index;
-+    for (i = 0; i < n_regs; i++) {
-+        in->names[i] = assocs[i].name;
-+    }
-+
-+    /* determine size of value output buffer */
-+    values_sz = n_regs * sizeof(union hv_register_value);
-+
-+    /* create the hvcall envelope */
-+    args.code = HVCALL_GET_VP_REGISTERS;
-+    args.in_sz = in_sz;
-+    args.in_ptr = (uint64_t) in;
-+    args.out_sz = values_sz;
-+    args.out_ptr = (uint64_t) values;
-+    args.reps = (uint16_t) n_regs;
-+
-+    /* perform the call */
-+    ret = mshv_hvcall(cpu_fd, &args);
-+    if (ret < 0) {
-+        error_report("Failed to retrieve registers");
-+        return -1;
-+    }
-+
-+    /* assert we got all registers */
-+    if (args.reps != n_regs) {
-+        error_report("Failed to retrieve registers: expected %zu elements"
-+                     ", got %u", n_regs, args.reps);
-+        return -1;
-+    }
-+
-+    /* copy values into assoc */
-+    for (i = 0; i < n_regs; i++) {
-+        assocs[i].value = values[i];
-+    }
-+
-+    return 0;
-+}
-+
-+int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
-+{
-+    int ret;
-+    struct mshv_create_vp vp_arg = {
-+        .vp_index = vp_index,
-+    };
-+
-+    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
-+    if (ret < 0) {
-+        error_report("failed to create mshv vcpu: %s", strerror(errno));
-+        return -1;
-+    }
-+
-+    *cpu_fd = ret;
-+
-+    return 0;
-+}
-+
-+void mshv_remove_vcpu(int vm_fd, int cpu_fd)
-+{
-+    close(cpu_fd);
-+}
-+
-+void mshv_setup_hvcall_args(AccelCPUState *state)
-+{
-+    void *mem = qemu_memalign(HV_HYP_PAGE_SIZE, 2 * HV_HYP_PAGE_SIZE);
-+
-+    state->hvcall_args.base = mem;
-+    state->hvcall_args.input_page = mem;
-+    state->hvcall_args.output_page = (uint8_t *)mem + HV_HYP_PAGE_SIZE;
-+}
-diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
-index 35386c422f..ff3ab957b5 100644
---- a/include/system/mshv_int.h
-+++ b/include/system/mshv_int.h
-@@ -89,12 +89,15 @@ int mshv_load_regs(CPUState *cpu);
- int mshv_store_regs(CPUState *cpu);
- int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
-                           size_t n_regs);
-+int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
-+                        size_t n_regs);
- int mshv_arch_put_registers(const CPUState *cpu);
- void mshv_arch_init_vcpu(CPUState *cpu);
- void mshv_arch_destroy_vcpu(CPUState *cpu);
- void mshv_arch_amend_proc_features(
-     union hv_partition_synthetic_processor_features *features);
- int mshv_arch_post_init_vm(int vm_fd);
-+void mshv_setup_hvcall_args(AccelCPUState *state);
- 
- typedef struct mshv_root_hvcall mshv_root_hvcall;
- int mshv_hvcall(int fd, const mshv_root_hvcall *args);
-diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
-index 2bc978deb2..9a80dc34d0 100644
---- a/target/i386/mshv/mshv-cpu.c
-+++ b/target/i386/mshv/mshv-cpu.c
-@@ -148,103 +148,6 @@ static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
-     return 0;
- }
- 
--int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
--                          size_t n_regs)
--{
--    int cpu_fd = mshv_vcpufd(cpu);
--    int vp_index = cpu->cpu_index;
--    size_t in_sz, assocs_sz;
--    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
--    struct mshv_root_hvcall args = {0};
--    int ret;
--
--    /* find out the size of the struct w/ a flexible array at the tail */
--    assocs_sz = n_regs * sizeof(hv_register_assoc);
--    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
--
--    /* fill the input struct */
--    memset(in, 0, sizeof(hv_input_set_vp_registers));
--    in->vp_index = vp_index;
--    memcpy(in->elements, assocs, assocs_sz);
--
--    /* create the hvcall envelope */
--    args.code = HVCALL_SET_VP_REGISTERS;
--    args.in_sz = in_sz;
--    args.in_ptr = (uint64_t) in;
--    args.reps = (uint16_t) n_regs;
--
--    /* perform the call */
--    ret = mshv_hvcall(cpu_fd, &args);
--    if (ret < 0) {
--        error_report("Failed to set registers");
--        return -1;
--    }
--
--    /* assert we set all registers */
--    if (args.reps != n_regs) {
--        error_report("Failed to set registers: expected %zu elements"
--                     ", got %u", n_regs, args.reps);
--        return -1;
--    }
--
--    return 0;
--}
--
--static int get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
--                            size_t n_regs)
--{
--    int cpu_fd = mshv_vcpufd(cpu);
--    int vp_index = cpu->cpu_index;
--    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
--    hv_register_value *values = cpu->accel->hvcall_args.output_page;
--    size_t in_sz, names_sz, values_sz;
--    int i, ret;
--    struct mshv_root_hvcall args = {0};
--
--    /* find out the size of the struct w/ a flexible array at the tail */
--    names_sz = n_regs * sizeof(hv_register_name);
--    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
--
--    /* fill the input struct */
--    memset(in, 0, sizeof(hv_input_get_vp_registers));
--    in->vp_index = vp_index;
--    for (i = 0; i < n_regs; i++) {
--        in->names[i] = assocs[i].name;
--    }
--
--    /* determine size of value output buffer */
--    values_sz = n_regs * sizeof(union hv_register_value);
--
--    /* create the hvcall envelope */
--    args.code = HVCALL_GET_VP_REGISTERS;
--    args.in_sz = in_sz;
--    args.in_ptr = (uint64_t) in;
--    args.out_sz = values_sz;
--    args.out_ptr = (uint64_t) values;
--    args.reps = (uint16_t) n_regs;
--
--    /* perform the call */
--    ret = mshv_hvcall(cpu_fd, &args);
--    if (ret < 0) {
--        error_report("Failed to retrieve registers");
--        return -1;
--    }
--
--    /* assert we got all registers */
--    if (args.reps != n_regs) {
--        error_report("Failed to retrieve registers: expected %zu elements"
--                     ", got %u", n_regs, args.reps);
--        return -1;
--    }
--
--    /* copy values into assoc */
--    for (i = 0; i < n_regs; i++) {
--        assocs[i].value = values[i];
--    }
--
--    return 0;
--}
--
- static int set_standard_regs(const CPUState *cpu)
- {
-     X86CPU *x86cpu = X86_CPU(cpu);
-@@ -334,7 +237,7 @@ int mshv_get_standard_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = STANDARD_REGISTER_NAMES[i];
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 4b1e9750e6..a0a018a8cd 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1157,7 +1157,7 @@ static void arm_cpu_initfn(Object *obj)
+     if (tcg_enabled() || hvf_enabled()) {
+         /* TCG and HVF implement PSCI 1.1 */
+         cpu->psci_version = QEMU_PSCI_VERSION_1_1;
+-    } else if (whpx_enabled()) {
++    } else if (whpx_enabled() || mshv_enabled()) {
+         cpu->psci_version = QEMU_PSCI_VERSION_1_3;
      }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get standard registers");
-         return -1;
-@@ -412,7 +315,7 @@ int mshv_get_special_regs(CPUState *cpu)
-     for (size_t i = 0; i < n_regs; i++) {
-         assocs[i].name = SPECIAL_REGISTER_NAMES[i];
-     }
--    ret = get_generic_regs(cpu, assocs, n_regs);
-+    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
-     if (ret < 0) {
-         error_report("failed to get special registers");
-         return -errno;
-@@ -1525,29 +1428,6 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
-     return 0;
- }
- 
--void mshv_remove_vcpu(int vm_fd, int cpu_fd)
--{
--    close(cpu_fd);
--}
--
--
--int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
--{
--    int ret;
--    struct mshv_create_vp vp_arg = {
--        .vp_index = vp_index,
--    };
--    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
--    if (ret < 0) {
--        error_report("failed to create mshv vcpu: %s", strerror(errno));
--        return -1;
--    }
--
--    *cpu_fd = ret;
--
--    return 0;
--}
--
- static void read_segment_descriptor(CPUState *cpu,
-                                     struct x86_segment_descriptor *desc,
-                                     enum X86Seg seg_idx)
-@@ -1580,8 +1460,6 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-     X86CPU *x86_cpu = X86_CPU(cpu);
-     CPUX86State *env = &x86_cpu->env;
-     AccelCPUState *state = cpu->accel;
--    size_t page = HV_HYP_PAGE_SIZE;
--    void *mem = qemu_memalign(page, 2 * page);
- 
-     /* sanity check, to make sure we don't overflow the page */
-     QEMU_BUILD_BUG_ON((MAX_REGISTER_COUNT
-@@ -1589,9 +1467,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
-                       + sizeof(hv_input_get_vp_registers)
-                       > HV_HYP_PAGE_SIZE));
- 
--    state->hvcall_args.base = mem;
--    state->hvcall_args.input_page = mem;
--    state->hvcall_args.output_page = (uint8_t *)mem + page;
-+    mshv_setup_hvcall_args(state);
- 
-     env->emu_mmio_buf = g_new(char, 4096);
  }
 
 -- 
