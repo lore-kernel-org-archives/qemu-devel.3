@@ -4,55 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A19C1125864
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 18:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12E6B1125863
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 18:05:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0NsL-0000DU-Ez; Wed, 11 Mar 2026 14:01:41 -0400
+	id 1w0NvE-0001Hw-C9; Wed, 11 Mar 2026 14:04:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0NsI-0000CN-2D; Wed, 11 Mar 2026 14:01:38 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <1774596582@qq.com>)
+ id 1w0Nuu-0001Dv-FC; Wed, 11 Mar 2026 14:04:22 -0400
+Received: from out162-62-57-210.mail.qq.com ([162.62.57.210])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w0NsF-0008DE-Ms; Wed, 11 Mar 2026 14:01:37 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.150])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fWJTc0kp8zHnGkY;
- Thu, 12 Mar 2026 02:01:24 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 39FE64056A;
- Thu, 12 Mar 2026 02:01:32 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 11 Mar
- 2026 18:01:31 +0000
-Date: Wed, 11 Mar 2026 18:01:30 +0000
-To: Peter Maydell <peter.maydell@linaro.org>
-CC: <qemu-arm@nongnu.org>, <qemu-devel@nongnu.org>
-Subject: Re: [PATCH 58/65] hw/arm/virt: Pull "wire CPU interrupts" out of
- create_gic()
-Message-ID: <20260311180130.00000add@huawei.com>
-In-Reply-To: <20260223170212.441276-59-peter.maydell@linaro.org>
-References: <20260223170212.441276-1-peter.maydell@linaro.org>
- <20260223170212.441276-59-peter.maydell@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
-MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml500010.china.huawei.com (7.191.174.240) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ (Exim 4.90_1) (envelope-from <1774596582@qq.com>)
+ id 1w0Nuq-0000yO-Jm; Wed, 11 Mar 2026 14:04:20 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=qq.com; s=s201512;
+ t=1773252246; bh=4UfPTvXA39x2MxOiHxFgkDgF8ump+hr12H5O0w9X8Dk=;
+ h=From:To:Cc:Subject:Date:References:In-Reply-To;
+ b=zETLVXLG/lwP2DHqlVsGhts8Q9fWng5HQzi5WUg+QFs75P7FLOv//xwXcOlKdcNJ9
+ 3qFR2w5KVgzGFCleP2ANSaVtomPuFpMvk5nGfbNC3rTfAg+Gf7P6Ehlt2Jp6HDpmrt
+ gPMFxAeb4P0eX6zN0ZZHrfXZDjhDphWC5GoTesXw=
+X-QQ-XMRINFO: NyFYKkN4Ny6FX4NiwmKsDI1hyetVQtLA/w==
+X-QQ-XMAILINFO: MH8uueUTAa4z+v48Gv1zVV1YVYEemYWJR9CCyfTK86bYG7ah5L77YH8lXOBpX0
+ /VcgYEW/dHmosfjq+AVX/hfbDZIkNjReryll7SUDbgnpVVeybP7MV+UI8ak/kWl8ml8vpQ8V27Ejr
+ n4K60QZvM3BkA+iNH/ynnmHvbRrfzTsaTDAdNQBKYFRBmOveeNQ9IJ+bxCcmnmoUcL+EH0y+jax3D
+ msGY9ywlqLmhkiE+pOB3Z6vJub6FrhUJVjjAmJbDZ4y0ReQhnCmrwiXU+KqXSWX/3Gpn4B1SasXjC
+ NDNVTVfc+njtcRr9DsjjphT5xFgHidviHjZOO9yYj8Soi8YmSQTbGH2P0t9ROypueHSw8FmLzmXpb
+ 67jhSWpGQJ2AG38rNoSUmt9msHDJQJXuvoFOsuYzYgdsNHLBF/SQkvlsJRscIqLTqbsde+rMvJZYX
+ c7Z+4e+aE7Qaz+kVTe/t7JRKrYRSIQhMq0juaLWEfzI2D59wQvGx7lvQecITHMLzmlliADiG/1alv
+ AjbNfgr89263///oTMel30LsPl67p73yV6F+90tCfivV6kCg+Lc1LYcH53ME0I0CnIpBBLE6+EDAD
+ Hc/hvzkXf87w8PHFEj2VoMOgGOOsIkc4oCZg4bWTAomcOX4JM8SS/R6hbR6l6dy/mbbh1m6/JOn3r
+ lS43ClF+a8UPiaRaars3IBTpWAQsD5Q/NHVvCZ2plxyfPSfQcf5nk9xbiKsgIyLKq13NdRVGxr5mp
+ M/3fa+kRxq2KexFh8SBEZ92J0giSEobrumXMIGD0iWAUI3IxQOouGsZw/sbPNWzELg3+nF2QaGCkl
+ SqtE+sSiUFoa6Xiq7jNvDnVk56SqlI/vpW+Tx9Z0Dhqj4DrZsPmEwGO/UbTxu066qe38W+WLwn+yv
+ A6+fBk3Bj+RFvXeV/BTSrwp7CJI4FJNItLocRFTSni9b0/IXEfdBrOW9zYUZm7EnZ0oGMb3K2knWE
+ eo/Q0qjsWcTNGjlSwa17GKIfVob9tcMJxW1KC2nQE49D/6Wud5wCrEWg4aWaEuTNcUYg1PAoPOvto
+ V4y3I0OOHtQUXYK1hnA7FCqTVK2ouQNpXVQwOrdtVwPjwVzvWo3bzyLN87zU6KmHvF4CY9ea3+ot5
+ ngNDHy6GGGYRZb2siBKd6xHz8mBD1Tjtd9BXDs4fKgWL8AzOqUPfvAw3
+From: "=?utf-8?B?5pyJ54K5?=" <1774596582@qq.com>
+To: "=?utf-8?B?UGV0ZXIgTWF5ZGVsbA==?=" <peter.maydell@linaro.org>,
+ "=?utf-8?B?VGFvIFRhbmc=?=" <tangtao1634@phytium.com.cn>
+Cc: "=?utf-8?B?cWVtdS1hcm0=?=" <qemu-arm@nongnu.org>,
+ "=?utf-8?B?cWVtdS1kZXZlbA==?=" <qemu-devel@nongnu.org>
+Subject: Re: [PATCH v1 0/3] Fixed bugs in pl080
+Mime-Version: 1.0
+Content-Type: multipart/alternative;
+ boundary="----=_NextPart_69B1AE95_4EE22240_3608675E"
+Content-Transfer-Encoding: 8Bit
+Date: Thu, 12 Mar 2026 02:04:05 +0800
+X-Priority: 3
+Message-ID: <tencent_022C11016D29AFD1AF704904C4084B450806@qq.com>
+X-QQ-MIME: TCMime 1.0 by Tencent
+X-Mailer: QQMail 2.x
+X-QQ-Mailer: QQMail 2.x
+References: <tencent_1BF621A658E043C088A2681178D57ED14A09@qq.com>
+ <a8e75e56-a34b-4df0-866e-3ce5828dd472@phytium.com.cn>
+ <CAFEAcA8kPQwFFdhYWr5WQisAgSs3s4YOuvZm2UoFT83LF5dgHg@mail.gmail.com>
+In-Reply-To: <CAFEAcA8kPQwFFdhYWr5WQisAgSs3s4YOuvZm2UoFT83LF5dgHg@mail.gmail.com>
+X-QQ-mid: xmsepub5-0t1773252245t8vzegb8r
+Received-SPF: pass client-ip=162.62.57.210; envelope-from=1774596582@qq.com;
+ helo=out162-62-57-210.mail.qq.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HELO_STATIC_HOST=-0.001,
+ HTML_MESSAGE=0.001, NO_FM_NAME_IP_HOSTN=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,55 +86,135 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 23 Feb 2026 17:02:05 +0000
-Peter Maydell <peter.maydell@linaro.org> wrote:
+This is a multi-part message in MIME format.
 
-> create_gic() is quite long and mixes GICv2 and GICv3 even though
-> they're mostly different in their creation.  As a preliminary to
-> splitting it up, pull out the "wire the CPU interrupts to the GIC PPI
-> inputs" code out into its own function.  This is a long and
-> self-contained piece of code that is the main thing that we need to
-> do basically the same way for GICv2 and GICv3.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-One trivial, "whilst you are here" inline.
-Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+------=_NextPart_69B1AE95_4EE22240_3608675E
+Content-Type: text/plain;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> ---
->  hw/arm/virt.c | 127 +++++++++++++++++++++++++++-----------------------
->  1 file changed, 69 insertions(+), 58 deletions(-)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index 3c318680f8..ec6e49099a 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -795,13 +795,80 @@ static bool gicv3_nmi_present(VirtMachineState *vms)
->             (vms->gic_version != VIRT_GIC_VERSION_2);
->  }
->  
-> +static void gic_connect_ppis(VirtMachineState *vms)
-> +{
-> +    /*
-> +     * Wire the outputs from each CPU's generic timer and the GICv3
-> +     * maintenance interrupt signal to the appropriate GIC PPI inputs,
-> +     * and the GIC's IRQ/FIQ/VIRQ/VFIQ/NMI/VINMI interrupt outputs to the
-> +     * CPU's inputs.
-> +     */
-> +    MachineState *ms = MACHINE(vms);
-> +    int i;
-> +    unsigned int smp_cpus = ms->smp.cpus;
-> +    SysBusDevice *gicbusdev = SYS_BUS_DEVICE(vms->gic);
-> +
-> +    for (i = 0; i < smp_cpus; i++) {
+SGksDQoNCg0KVGhhbmsgeW91IHZlcnkgbXVjaCBmb3IgeW91ciBndWlkYW5jZQ0KVGhpcyBp
+cyBteSBmaXJzdCB0aW1lIHVzaW5nIHRoaXMgc3lzdGVtIHRvIHN1Ym1pdCBjb2RlLg0KVGhl
+IG1lc3NhZ2UgSUQgZm9yIHBhdGNoIHYxIDAvMyBoYXMgdW5leHBlY3RlZGx5IGNoYW5nZWQs
+IEkgYW0gdHJ5aW5nIHRvIHN1Ym1pdCBpdCB1c2luZyBhIG90aGVyIGVtYWlsLg0KDQoNCg0K
+DQogICAgICAgICDljp/lp4vpgq7ku7YNCiAgICAgICAgIA0KICAgICAgIA0K5Y+R5Lu25Lq6
+77yaUGV0ZXIgTWF5ZGVsbCA8cGV0ZXIubWF5ZGVsbEBsaW5hcm8ub3JnJmd0Ow0K5Y+R5Lu2
+5pe26Ze077yaMjAyNuW5tDPmnIgxMuaXpSAwMTowNQ0K5pS25Lu25Lq677yaVGFvIFRhbmcg
+PHRhbmd0YW8xNjM0QHBoeXRpdW0uY29tLmNuJmd0Ow0K5oqE6YCB77yaMTc3NDU5NjU4MiA8
+MTc3NDU5NjU4MkBxcS5jb20mZ3Q7LCBxZW11LWFybSA8cWVtdS1hcm1Abm9uZ251Lm9yZyZn
+dDssIHFlbXUtZGV2ZWwgPHFlbXUtZGV2ZWxAbm9uZ251Lm9yZyZndDsNCuS4u+mimO+8mlJl
+OiBbUEFUQ0ggdjEgMC8zXSBGaXhlZCBidWdzIGluIHBsMDgwDQoNCg0KDQogICAgICAgT24m
+bmJzcDtXZWQsJm5ic3A7MTEmbmJzcDtNYXImbmJzcDsyMDI2Jm5ic3A7YXQmbmJzcDsxNjox
+NCwmbmJzcDtUYW8mbmJzcDtUYW5nJm5ic3A7PHRhbmd0YW8xNjM0QHBoeXRpdW0uY29tLmNu
+Jmd0OyZuYnNwO3dyb3RlOg0KJmd0Ow0KJmd0OyZuYnNwO0hpLA0KJmd0Ow0KJmd0OyZuYnNw
+O0l0Jm5ic3A7bG9va3MmbmJzcDtsaWtlJm5ic3A7dGhyZWUmbmJzcDtwYXRjaGVzJm5ic3A7
+b2YmbmJzcDt0aGlzJm5ic3A7c2VyaWVzJm5ic3A7d2VyZSZuYnNwO3NlbnQmbmJzcDtvdXQt
+b2YtdGhyZWFkJm5ic3A7YW5kDQomZ3Q7Jm5ic3A7YXJlJm5ic3A7bm90Jm5ic3A7YXR0YWNo
+ZWQmbmJzcDt0byZuYnNwO3RoaXMmbmJzcDtjb3ZlciZuYnNwO2xldHRlci4NCiZndDsNCiZn
+dDsmbmJzcDtZb3UmbmJzcDttYXkmbmJzcDt3YW50Jm5ic3A7dG8mbmJzcDtyZXNlbmQmbmJz
+cDt0aGUmbmJzcDtmdWxsJm5ic3A7c2VyaWVzLCZuYnNwO29yJm5ic3A7cmVzZW5kJm5ic3A7
+dGhvc2UmbmJzcDtwYXRjaGVzJm5ic3A7d2l0aA0KJmd0OyZuYnNwO0luLVJlcGx5LVRvJm5i
+c3A7cG9pbnRpbmcmbmJzcDt0byZuYnNwO3RoZSZuYnNwO01lc3NhZ2UtSUQmbmJzcDtvZiZu
+YnNwO3RoaXMmbmJzcDtjb3ZlciZuYnNwO2xldHRlciZuYnNwO3NvJm5ic3A7dGhleQ0KJmd0
+OyZuYnNwO2FwcGVhciZuYnNwO2luJm5ic3A7dGhlJm5ic3A7c2FtZSZuYnNwO3RocmVhZDoN
+CiZndDsNCiZndDsmbmJzcDtnaXQNCiZndDsmbmJzcDtzZW5kLWVtYWlsJm5ic3A7LS1pbi1y
+ZXBseS10bz0idGVuY2VudF8xQkY2MjFBNjU4RTA0M0MwODhBMjY4MTE3OEQ1N0VEMTRBMDlA
+cXEuY29tIg0KJmd0OyZuYnNwO3h4eHh4DQoNCkl0Jm5ic3A7bG9va3MmbmJzcDt0byZuYnNw
+O21lJm5ic3A7bG9va2luZyZuYnNwO2F0Jm5ic3A7dGhlJm5ic3A7aGVhZGVycyZuYnNwO3Ro
+YXQmbmJzcDt0aGUmbmJzcDtlbWFpbHMmbmJzcDt3ZXJlJm5ic3A7c2VudCZuYnNwO3dpdGgm
+bmJzcDtjb3JyZWN0DQptZXNzYWdlLWlkJm5ic3A7YW5kJm5ic3A7aW4tcmVwbHktdG8mbmJz
+cDtoZWFkZXJzLCZuYnNwO2J1dCZuYnNwO3NvbWV0aGluZyZuYnNwO2luJm5ic3A7dGhlJm5i
+c3A7cXEuY29tDQptYWlsJm5ic3A7aW5mcmFzdHJ1Y3R1cmUmbmJzcDtoYXMmbmJzcDtyZS13
+cml0dGVuJm5ic3A7dGhlJm5ic3A7bWVzc2FnZS1JRHMmbmJzcDthbmQmbmJzcDticm9rZW4m
+bmJzcDt0aGUNCnRocmVhZGluZy4NCg0KLS0mbmJzcDtQTU0=
 
-If this doesn't get changed later in a way that prevents it, maybe sneak in
-moving the  int i into the loop init?  It looks messy above.
+------=_NextPart_69B1AE95_4EE22240_3608675E
+Content-Type: text/html;
+	charset="utf-8"
+Content-Transfer-Encoding: base64
 
-> +        DeviceState *cpudev = DEVICE(qemu_get_cpu(i));
-> +        int intidbase = NUM_IRQS + i * GIC_INTERNAL;
+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IC1hcHBsZS1zeXN0ZW0sIHN5c3RlbS11aTsgZm9u
+dC1zaXplOiAxNHB4OyBjb2xvcjogcmdiKDAsIDAsIDApOyBsaW5lLWhlaWdodDogMS40Mzsi
+PkhpLDwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiAtYXBwbGUtc3lzdGVtLCBzeXN0
+ZW0tdWk7IGZvbnQtc2l6ZTogMTRweDsgY29sb3I6IHJnYigwLCAwLCAwKTsgbGluZS1oZWln
+aHQ6IDEuNDM7Ij48YnIgIC8+PC9kaXY+PGRpdiBzdHlsZT0iZm9udC1mYW1pbHk6IC1hcHBs
+ZS1zeXN0ZW0sIHN5c3RlbS11aTsgZm9udC1zaXplOiAxNHB4OyBjb2xvcjogcmdiKDAsIDAs
+IDApOyBsaW5lLWhlaWdodDogMS40MzsiPlRoYW5rIHlvdSB2ZXJ5IG11Y2ggZm9yIHlvdXIg
+Z3VpZGFuY2U8L2Rpdj48ZGl2IHN0eWxlPSJmb250LWZhbWlseTogLWFwcGxlLXN5c3RlbSwg
+c3lzdGVtLXVpOyBmb250LXNpemU6IDE0cHg7IGNvbG9yOiByZ2IoMCwgMCwgMCk7IGxpbmUt
+aGVpZ2h0OiAxLjQzOyI+VGhpcyBpcyBteSBmaXJzdCB0aW1lIHVzaW5nIHRoaXMgc3lzdGVt
+IHRvIHN1Ym1pdCBjb2RlLjwvZGl2PjxkaXYgc3R5bGU9ImZvbnQtZmFtaWx5OiAtYXBwbGUt
+c3lzdGVtLCBzeXN0ZW0tdWk7IGZvbnQtc2l6ZTogMTRweDsgY29sb3I6IHJnYigwLCAwLCAw
+KTsgbGluZS1oZWlnaHQ6IDEuNDM7Ij5UaGUgbWVzc2FnZSBJRCBmb3IgcGF0Y2ggdjEgMC8z
+IGhhcyB1bmV4cGVjdGVkbHkgY2hhbmdlZCwgSSBhbSB0cnlpbmcgdG8gc3VibWl0IGl0IHVz
+aW5nIGEgb3RoZXIgZW1haWwuPC9kaXY+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6IDEuNDM7
+Ij48YnIgIC8+PC9kaXY+PGRpdiBzdHlsZT0ibGluZS1oZWlnaHQ6IDEuNDM7Ij48YnIgIC8+
+PC9kaXY+PGFydGljbGUgc3R5bGU9ImxpbmUtaGVpZ2h0OiAxLjQzOyI+PGRpdiBzdHlsZT0i
+ZGlzcGxheTpmbGV4O2FsaWduLWl0ZW1zOmNlbnRlcjtwYWRkaW5nLXRvcDo4cHgiIGNvbnRl
+bnRlZGl0YWJsZT0iZmFsc2UiPgogICAgICAgIDxkaXYgc3R5bGU9ImNvbG9yOiM5NTlEQTY7
+Zm9udC1zaXplOjEycHg7bGluZS1oZWlnaHQ6MzBweCI+5Y6f5aeL6YKu5Lu2PC9kaXY+CiAg
+ICAgICAgPGhyIHN0eWxlPSJib3JkZXI6IG5vbmU7ZmxleC1ncm93OjE7Ym9yZGVyLXRvcDox
+cHggc29saWQgcmdiYSgyMSwgNDYsIDc0LCAwLjA3KTttYXJnaW4tbGVmdDo4cHgiICAvPgog
+ICAgICA8L2Rpdj48dGFibGUgZGF0YS11bmVkaXRhYmxlPSJ0cnVlIiBzdHlsZT0ibGluZS1o
+ZWlnaHQ6IDIwcHg7IGJvcmRlci1yYWRpdXM6IDZweDsgYmFja2dyb3VuZC1jb2xvcjogcmdi
+YSgyMCwgNDYsIDc3LCAwLjA1KTsgbWFyZ2luOiAwcHg7IHdpZHRoOiAxMDAlOyI+PHRib2R5
+Pjx0cj48dGQgc3R5bGU9ImxpbmUtaGVpZ2h0OiAyMHB4OyBwYWRkaW5nOiA4cHg7Ij48ZGl2
+IHN0eWxlPSJsaW5lLWhlaWdodDogMjBweDsgZm9udC1zaXplOiAxMnB4OyI+PHNwYW4gc3R5
+bGU9ImNvbG9yOiByZ2IoOTIsIDk3LCAxMDIpOyI+5Y+R5Lu25Lq677yaPC9zcGFuPjxzcGFu
+IHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyI+UGV0ZXIgTWF5ZGVsbDwvc3Bhbj4gPHNw
+YW4gc3R5bGU9ImNvbG9yOiByZ2IoMTQ5LCAxNTcsIDE2Nik7Ij4mbHQ7cGV0ZXIubWF5ZGVs
+bEBsaW5hcm8ub3JnJmd0Ozwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDog
+MjBweDsgZm9udC1zaXplOiAxMnB4OyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoOTIsIDk3
+LCAxMDIpOyI+5Y+R5Lu25pe26Ze077yaPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdi
+KDAsIDAsIDApOyI+MjAyNuW5tDPmnIgxMuaXpSAwMTowNTwvc3Bhbj48L2Rpdj48ZGl2IHN0
+eWxlPSJsaW5lLWhlaWdodDogMjBweDsgZm9udC1zaXplOiAxMnB4OyI+PHNwYW4gc3R5bGU9
+ImNvbG9yOiByZ2IoOTIsIDk3LCAxMDIpOyI+5pS25Lu25Lq677yaPC9zcGFuPjxzcGFuIHN0
+eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyI+VGFvIFRhbmc8L3NwYW4+IDxzcGFuIHN0eWxl
+PSJjb2xvcjogcmdiKDE0OSwgMTU3LCAxNjYpOyI+Jmx0O3Rhbmd0YW8xNjM0QHBoeXRpdW0u
+Y29tLmNuJmd0Ozwvc3Bhbj48L2Rpdj48ZGl2IHN0eWxlPSJsaW5lLWhlaWdodDogMjBweDsg
+Zm9udC1zaXplOiAxMnB4OyI+PHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoOTIsIDk3LCAxMDIp
+OyI+5oqE6YCB77yaPC9zcGFuPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyI+
+MTc3NDU5NjU4Mjwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9yOiByZ2IoMTQ5LCAxNTcsIDE2
+Nik7Ij4mbHQ7MTc3NDU5NjU4MkBxcS5jb20mZ3Q7LCA8L3NwYW4+PHNwYW4gc3R5bGU9ImNv
+bG9yOiByZ2IoMCwgMCwgMCk7Ij5xZW11LWFybTwvc3Bhbj4gPHNwYW4gc3R5bGU9ImNvbG9y
+OiByZ2IoMTQ5LCAxNTcsIDE2Nik7Ij4mbHQ7cWVtdS1hcm1Abm9uZ251Lm9yZyZndDssIDwv
+c3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6IHJnYigwLCAwLCAwKTsiPnFlbXUtZGV2ZWw8L3Nw
+YW4+IDxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDE0OSwgMTU3LCAxNjYpOyI+Jmx0O3FlbXUt
+ZGV2ZWxAbm9uZ251Lm9yZyZndDs8L3NwYW4+PC9kaXY+PGRpdiBzdHlsZT0ibGluZS1oZWln
+aHQ6IDIwcHg7IGZvbnQtc2l6ZTogMTJweDsiPjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDky
+LCA5NywgMTAyKTsiPuS4u+mimO+8mjwvc3Bhbj48c3BhbiBzdHlsZT0iY29sb3I6IHJnYigw
+LCAwLCAwKTsiPlJlOiBbUEFUQ0ggdjEgMC8zXSBGaXhlZCBidWdzIGluIHBsMDgwPC9zcGFu
+PjwvZGl2PjwvdGQ+PC90cj48L3Rib2R5PjwvdGFibGU+PGRpdj48YnIgIC8+PC9kaXY+CiAg
+ICAgIE9uJm5ic3A7V2VkLCZuYnNwOzExJm5ic3A7TWFyJm5ic3A7MjAyNiZuYnNwO2F0Jm5i
+c3A7MTY6MTQsJm5ic3A7VGFvJm5ic3A7VGFuZyZuYnNwOyZsdDt0YW5ndGFvMTYzNEBwaHl0
+aXVtLmNvbS5jbiZndDsmbmJzcDt3cm90ZTo8YnIgIC8+Jmd0OzxiciAgLz4mZ3Q7Jm5ic3A7
+SGksPGJyICAvPiZndDs8YnIgIC8+Jmd0OyZuYnNwO0l0Jm5ic3A7bG9va3MmbmJzcDtsaWtl
+Jm5ic3A7dGhyZWUmbmJzcDtwYXRjaGVzJm5ic3A7b2YmbmJzcDt0aGlzJm5ic3A7c2VyaWVz
+Jm5ic3A7d2VyZSZuYnNwO3NlbnQmbmJzcDtvdXQtb2YtdGhyZWFkJm5ic3A7YW5kPGJyICAv
+PiZndDsmbmJzcDthcmUmbmJzcDtub3QmbmJzcDthdHRhY2hlZCZuYnNwO3RvJm5ic3A7dGhp
+cyZuYnNwO2NvdmVyJm5ic3A7bGV0dGVyLjxiciAgLz4mZ3Q7PGJyICAvPiZndDsmbmJzcDtZ
+b3UmbmJzcDttYXkmbmJzcDt3YW50Jm5ic3A7dG8mbmJzcDtyZXNlbmQmbmJzcDt0aGUmbmJz
+cDtmdWxsJm5ic3A7c2VyaWVzLCZuYnNwO29yJm5ic3A7cmVzZW5kJm5ic3A7dGhvc2UmbmJz
+cDtwYXRjaGVzJm5ic3A7d2l0aDxiciAgLz4mZ3Q7Jm5ic3A7SW4tUmVwbHktVG8mbmJzcDtw
+b2ludGluZyZuYnNwO3RvJm5ic3A7dGhlJm5ic3A7TWVzc2FnZS1JRCZuYnNwO29mJm5ic3A7
+dGhpcyZuYnNwO2NvdmVyJm5ic3A7bGV0dGVyJm5ic3A7c28mbmJzcDt0aGV5PGJyICAvPiZn
+dDsmbmJzcDthcHBlYXImbmJzcDtpbiZuYnNwO3RoZSZuYnNwO3NhbWUmbmJzcDt0aHJlYWQ6
+PGJyICAvPiZndDs8YnIgIC8+Jmd0OyZuYnNwO2dpdDxiciAgLz4mZ3Q7Jm5ic3A7c2VuZC1l
+bWFpbCZuYnNwOy0taW4tcmVwbHktdG89InRlbmNlbnRfMUJGNjIxQTY1OEUwNDNDMDg4QTI2
+ODExNzhENTdFRDE0QTA5QHFxLmNvbSI8YnIgIC8+Jmd0OyZuYnNwO3h4eHh4PGJyICAvPjxi
+ciAgLz5JdCZuYnNwO2xvb2tzJm5ic3A7dG8mbmJzcDttZSZuYnNwO2xvb2tpbmcmbmJzcDth
+dCZuYnNwO3RoZSZuYnNwO2hlYWRlcnMmbmJzcDt0aGF0Jm5ic3A7dGhlJm5ic3A7ZW1haWxz
+Jm5ic3A7d2VyZSZuYnNwO3NlbnQmbmJzcDt3aXRoJm5ic3A7Y29ycmVjdDxiciAgLz5tZXNz
+YWdlLWlkJm5ic3A7YW5kJm5ic3A7aW4tcmVwbHktdG8mbmJzcDtoZWFkZXJzLCZuYnNwO2J1
+dCZuYnNwO3NvbWV0aGluZyZuYnNwO2luJm5ic3A7dGhlJm5ic3A7cXEuY29tPGJyICAvPm1h
+aWwmbmJzcDtpbmZyYXN0cnVjdHVyZSZuYnNwO2hhcyZuYnNwO3JlLXdyaXR0ZW4mbmJzcDt0
+aGUmbmJzcDttZXNzYWdlLUlEcyZuYnNwO2FuZCZuYnNwO2Jyb2tlbiZuYnNwO3RoZTxiciAg
+Lz50aHJlYWRpbmcuPGJyICAvPjxiciAgLz4tLSZuYnNwO1BNTQo8L2FydGljbGU+PGRpdiBz
+dHlsZT0ibGluZS1oZWlnaHQ6IDEuNDM7Ij48YnIgIC8+PC9kaXY+
+
+------=_NextPart_69B1AE95_4EE22240_3608675E--
+
 
