@@ -4,46 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CBD251125842
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 88A5F1125842
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:12:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LAV-000672-Cm; Wed, 11 Mar 2026 11:08:15 -0400
+	id 1w0LBr-0001ep-AE; Wed, 11 Mar 2026 11:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7C-00085r-TE; Wed, 11 Mar 2026 11:04:53 -0400
+ id 1w0L9n-0004K4-1E; Wed, 11 Mar 2026 11:07:38 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7B-0004Jb-DM; Wed, 11 Mar 2026 11:04:50 -0400
+ id 1w0L9h-0004yi-BD; Wed, 11 Mar 2026 11:07:28 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=5gcbLveQYJeMxh9AzYQZOmJnl2B2tTcvAjJUsd4Kvhc=;
+ t=1773241481; bh=cfcf1z7/JpS4xZDWqSxPZgHSdgbv846o0KdJ0aeJQi0=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=lZ3Byfx7/V67u7Yc2ak7zYUdl7CPxS1MaQPju9BLaP//qSlefReJSQGE0ZVmYWZeU
- 139YhZLm73eG4EOBcWPYCmTHqw3crHLKJu5COL0/kdet0hYw8B4fy0vhRqVV9C9BZz
- xtqkrV8ceaU1nZkcPyygcW8LWYNr64NVenTv/X6azmvi+FJPac7U+yVsPFv/91DLkl
- /2hjG4iScsw97V08w2zS9+k+P/Uz14AlLXq1HQ2FCQjS4QQjGi+VVmp1x4daiYnKXZ
- 4NcykoduiCsLLepDMcTr/ZagirmHIT3+/pD6lzlhLKSq4CFtGK9zZtylU7mmBtCxEN
- AgCjb4MlNlAzw==
+ b=xQsHag3kE+tM2lPWDMVEEGCAj2lBiGRGQt7cSK/XTSk/FQltHFLu9daQGbU2cOvCv
+ RwmO/BDEhm5tk6csbKQ8MLLOWBF0B4RQwgG3L+DZ9UVSxb8fc5AlPcNvZzD4A4Akdt
+ o/DmxPItlyRnmNUG84O4uWj8rNp/j3N1mSg8EoHuD5Z34Szc9/9Mr73vDHUYqIIzos
+ 3kEP3s/xPoc2Fgan8kxBoo/gZnbCARQNprhJub+nIerAme7m7omOzsjVtnxez5SNyS
+ 3+RMvukV5cfDWx3n3C6eq2tpHo4WS/sr3BXccZWMkoLB2SKY6RLrjtHFUMNrGkGYdc
+ 2593zJIKnZkmA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 928A2191E5C;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 6A991191E8A;
+ Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 7634337C2AE;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5908037C2CB;
+ Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 30/44] block/vmdk: fix OOB read in vmdk_read_extent()
-Date: Wed, 11 Mar 2026 18:02:02 +0300
-Message-ID: <20260311150221.1084186-30-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 07/46] contrib/plugins/hotblocks: Fix off by one error
+ in iteration of sorted blocks
+Date: Wed, 11 Mar 2026 18:02:43 +0300
+Message-ID: <20260311150327.1084669-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
-References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -70,40 +71,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "Halil Oktay (oblivionsage)" <cookieandcream560@gmail.com>
+From: Alex Bradbury <asb@igalia.com>
 
-Bounds check for marker.size doesn't account for the 12-byte marker
-header, allowing zlib to read past the allocated buffer.
+The logic to iterate over the hottest blocks will never reach the last
+item in the list, as it checks `it->next != NULL` before entering the
+loop. It's hard to trigger this off-by-one error with the default
+limit=20, but it is a bug and is problematic if that default is changed
+to something larger.
 
-Move the check inside the has_marker block and subtract the marker size.
-
-Fixes: CVE-2026-2243
-Reported-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
-Signed-off-by: Halil Oktay (oblivionsage) <cookieandcream560@gmail.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit cfda94eddb6c9c49b66461c950b22845a46a75c9)
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/f1ba2e57c6126472c0c8310774009f2455efc370.1753857212.git.asb@igalia.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+(cherry picked from commit 1c1e45fcd66269f8a6dbd97fd7b8267d8f6f58af)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/vmdk.c b/block/vmdk.c
-index 5a53c4624a..ffdaf3c901 100644
---- a/block/vmdk.c
-+++ b/block/vmdk.c
-@@ -1949,10 +1949,10 @@ vmdk_read_extent(VmdkExtent *extent, int64_t cluster_offset,
-         marker = (VmdkGrainMarker *)cluster_buf;
-         compressed_data = marker->data;
-         data_len = le32_to_cpu(marker->size);
--    }
--    if (!data_len || data_len > buf_bytes) {
--        ret = -EINVAL;
--        goto out;
-+        if (!data_len || data_len > buf_bytes - sizeof(VmdkGrainMarker)) {
-+            ret = -EINVAL;
-+            goto out;
-+        }
-     }
-     ret = uncompress(uncomp_buf, &buf_len, compressed_data, data_len);
-     if (ret != Z_OK) {
+diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+index d3dd23ed9f..cf4d6b8c36 100644
+--- a/contrib/plugins/hotblocks.c
++++ b/contrib/plugins/hotblocks.c
+@@ -82,10 +82,9 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+     sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
+ 
+     if (sorted_counts) {
+-        it = sorted_counts;
+         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+ 
+-        for (i = 0; i < limit && it->next; i++, it = it->next) {
++        for (i = 0, it = sorted_counts; i < limit && it; i++, it = it->next) {
+             ExecCount *rec = (ExecCount *) it->data;
+             g_string_append_printf(
+                 report, "0x%016"PRIx64", %d, %ld, %"PRId64"\n",
 -- 
 2.47.3
 
