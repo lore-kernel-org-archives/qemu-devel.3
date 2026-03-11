@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 98C63103E2E7
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 20:56:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C45C103E2E7
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 20:57:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Qai-0003el-EV; Wed, 11 Mar 2026 16:55:40 -0400
+	id 1w0Qat-0003r6-IE; Wed, 11 Mar 2026 16:55:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0QaQ-0003Zs-LU; Wed, 11 Mar 2026 16:55:26 -0400
+ id 1w0Qao-0003lD-FE; Wed, 11 Mar 2026 16:55:46 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0QaF-0007qW-1z; Wed, 11 Mar 2026 16:55:15 -0400
+ id 1w0Qal-0008FI-CF; Wed, 11 Mar 2026 16:55:46 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773262468; bh=maegopCUP/tozWfVxHo90LVYVuWpHvg/lE5sloss4Xw=;
- h=From:To:Cc:Subject:Date;
- b=wjpVTeytp3EIneLdCSnC2vLfSs0iVjI7T+osXH85T5ME2t+aWgazH69EFIItA6UF+
- PZa3VdnzDZh7i+bTttpwk9GWsAMXEwoVt6pBfAZN1YnLTwRz6hZBWcopOsvd13w051
- 9PkR0iGrWfL7JeKzt/Rz4gCI4EfGNdf6j+lrHguFUtCx8+p/u3VC1AP5qGywJ6iCG+
- e07w6ASrqQww3iXpN/urBNnK/aEn8p0ZTII3eVz7jofZBHFye46x7rESm3yVpmlDAB
- 4kNqlMV3D7AWTcF2T4slU4HpObiKLXrtHNHg3LE52kDg58sHPjtnidWxqhjK5BCAuo
- yd3syI3U5CZSA==
+ t=1773262469; bh=AcNMYIFDrEN54FI0tN/yss+Qg87nVMQ2Wyhg1uY/8v4=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=R/RpijkIDUEzvztXohHh74cU22bDDulRaPK5OTLZtkswPXyz7UD4D0W31/KyLmVNw
+ KYMxca1VodUoo5OaSODRmwDlfwQdO94FOzLQNuHnAIyi18ZTLtSz3BRe9d6KjyRRZv
+ 5iVKPt3shNIPb2wZOq4l9imSIsA5MbuRZ8II7RSvGPwBlL+p3TTI2OwzvliTITX09U
+ 5Yim/H0PV1xqPx0k7bR3QbutuJHfQfFXcrF0+h91IqZTNIRtH12U9hW011gAQhuA+V
+ lI0cuWqfgxsWjWZE6AH6/aNiRGZB6dMKxiksTZTO7vXnAoUfs4fvK56TR4jmFGxv/d
+ bapG7oELG7gsw==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C9BB61921ED;
- Wed, 11 Mar 2026 23:54:28 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 0E7561921F2;
+ Wed, 11 Mar 2026 23:54:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 05B7037C4D2;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 6B59637C4D7;
  Wed, 11 Mar 2026 23:55:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Michael Tokarev <mjt@tls.msk.ru>, qemu-trivial@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH trivial v2 0/7] a few cleanups for linux-user: splice, inotify,
- epoll
-Date: Wed, 11 Mar 2026 23:54:48 +0300
-Message-ID: <20260311205459.1101023-1-mjt@tls.msk.ru>
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: [PATCH trivial v2 5/7] linux-user: assume epoll is always present
+Date: Wed, 11 Mar 2026 23:54:53 +0300
+Message-ID: <20260311205459.1101023-6-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260311205459.1101023-1-mjt@tls.msk.ru>
+References: <20260311205459.1101023-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -68,37 +69,91 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Stop checking for linux syscalls which has been introduced long
-ago, - on modern system where qemu can run, these syscalls are
-always present.
+epoll is in linux since 2.6 (glibc 2.3.2).
+epoll_init1 has been added in 2.6.27 (glibc 2.9).
+There's no need to check for its presence, including all other
+epoll-related syscalls.
 
-I kept CONFIG_EPOLL separate, not replacing it with CONFIG_LINUX,
-since I think it is more understandable this way.  As an option,
-the last patch can make s/CONFIG_EPOLL/CONFIG_LINUX_EPOLL/ to make
-it explicit, but I'd love to make it EPOLL not LINUX.
+Modern architectures don't have epoll_create(), only
+epoll_create1(), so keep conditional around the former.
 
-v2: rebase on top of native inotify on freebsd changes
- (meson.build: stop checking for inotify_init())
-
-Michael Tokarev (7):
-  linux-user/syscall.c: assume splice is always present
-  meson.build: stop checking for splice()
-  linux-user: assume inotify sycalls are always present
-  meson.build: stop checking for inotify_init()
-  linux-user: assume epoll is always present
-  meson.build: do not check for epoll.h (CONFIG_EPOLL)
-  rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL, and stop checking for
-    epoll in meson.build
-
- linux-user/fd-trans.c     |  5 -----
- linux-user/fd-trans.h     |  4 ----
- linux-user/syscall.c      | 44 +++++++--------------------------------
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ linux-user/syscall.c      | 10 ++--------
  linux-user/syscall_defs.h |  3 ---
- meson.build               | 19 +++--------------
- util/aio-posix.h          |  4 ++--
- util/meson.build          |  2 +-
- 7 files changed, 13 insertions(+), 68 deletions(-)
+ 2 files changed, 2 insertions(+), 11 deletions(-)
 
+diff --git a/linux-user/syscall.c b/linux-user/syscall.c
+index 1f28e7e93f..7832a1aba5 100644
+--- a/linux-user/syscall.c
++++ b/linux-user/syscall.c
+@@ -73,9 +73,7 @@
+ #ifdef CONFIG_EVENTFD
+ #include <sys/eventfd.h>
+ #endif
+-#ifdef CONFIG_EPOLL
+ #include <sys/epoll.h>
+-#endif
+ #ifdef CONFIG_ATTR
+ #include "qemu/xattr.h"
+ #endif
+@@ -13732,16 +13730,13 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+     case TARGET_NR_signalfd:
+         return do_signalfd4(arg1, arg2, 0);
+ #endif
+-#if defined(CONFIG_EPOLL)
++
+ #if defined(TARGET_NR_epoll_create)
+     case TARGET_NR_epoll_create:
+         return get_errno(epoll_create(arg1));
+ #endif
+-#if defined(TARGET_NR_epoll_create1) && defined(CONFIG_EPOLL_CREATE1)
+     case TARGET_NR_epoll_create1:
+         return get_errno(epoll_create1(target_to_host_bitmask(arg1, fcntl_flags_tbl)));
+-#endif
+-#if defined(TARGET_NR_epoll_ctl)
+     case TARGET_NR_epoll_ctl:
+     {
+         struct epoll_event ep;
+@@ -13770,7 +13765,6 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         }
+         return get_errno(epoll_ctl(arg1, arg2, arg3, epp));
+     }
+-#endif
+ 
+ #if defined(TARGET_NR_epoll_wait)
+     case TARGET_NR_epoll_wait:
+@@ -13856,7 +13850,7 @@ static abi_long do_syscall1(CPUArchState *cpu_env, int num, abi_long arg1,
+         g_free(ep);
+         return ret;
+     }
+-#endif /* CONFIG_EPOLL */
++
+ #ifdef TARGET_NR_prlimit64
+     case TARGET_NR_prlimit64:
+     {
+diff --git a/linux-user/syscall_defs.h b/linux-user/syscall_defs.h
+index 20d862fd8b..aac8b0c574 100644
+--- a/linux-user/syscall_defs.h
++++ b/linux-user/syscall_defs.h
+@@ -2595,7 +2595,6 @@ struct target_drm_i915_getparam {
+ #define FUTEX_CLOCK_REALTIME    256
+ #define FUTEX_CMD_MASK          ~(FUTEX_PRIVATE_FLAG | FUTEX_CLOCK_REALTIME)
+ 
+-#ifdef CONFIG_EPOLL
+ #if defined(TARGET_X86_64)
+ #define TARGET_EPOLL_PACKED QEMU_PACKED
+ #else
+@@ -2616,8 +2615,6 @@ struct target_epoll_event {
+ 
+ #define TARGET_EP_MAX_EVENTS (INT_MAX / sizeof(struct target_epoll_event))
+ 
+-#endif
+-
+ struct target_ucred {
+     abi_uint pid;
+     abi_uint uid;
 -- 
 2.47.3
 
