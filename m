@@ -4,78 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D957103E2E9
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:18:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A69103E2E8
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 22:24:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0RsY-0004A0-HC; Wed, 11 Mar 2026 18:18:10 -0400
+	id 1w0RyM-0005DJ-Pv; Wed, 11 Mar 2026 18:24:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0RsX-00049s-Q8
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:18:09 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
+ id 1w0RyL-0005Ca-Ej
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:24:09 -0400
+Received: from mail-qk1-x736.google.com ([2607:f8b0:4864:20::736])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0RsU-00062K-IM
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:18:07 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-359f35dfef6so175413a91.2
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 15:18:05 -0700 (PDT)
+ id 1w0RyJ-00072j-R6
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 18:24:09 -0400
+Received: by mail-qk1-x736.google.com with SMTP id
+ af79cd13be357-8cd8576a512so155563485a.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 15:24:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773267484; x=1773872284; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1773267846; x=1773872646; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=LzBqCwuN/iK8IbM5ajAVsOTNH0vG60Ih9ZnsHIuhMhk=;
- b=C/2HmQppgjoe/+4O0HNB6Y6D5Fez+R1fzdcmMHbk9zapG16XRE9+XkuSLS90MtzKBz
- uwMhhOISrfUZJvXHnlVqS/gxsrRDouTrluMvc4gKx/HVr+wF5c9RLEY7+YDXWm+R7iaK
- QdJS2vgNiJkiPPe0T/c/omM49P+X3vOIh4+fymYL3YZq8wwtobkFzw3tjd4lrCudLJza
- +6852rWVsjRN0WeCoQ6WqSOTd74/UCcMyBzhSKaQuXY/QKnKaerX9t+EPRW4RTLJY1Jz
- u5tEJvhQW9/pZy11r94x7T78G0va+ZeBl63BhRQsA3Wtz/qBaVLkgxpTU2aLBjSDnZAh
- 2IYg==
+ bh=xuVOSGMFCt+MSxA46iiqDcqmlQbYvK5jCiLGJ/N5wEY=;
+ b=k1F0YCqXqQAgoi6DsVVm2P8yJtyfZOa7K7g71iyMbEatdlH+NrS8EEHvjR1pB8HFd2
+ zwNmMktDJQ5JOcH8tUoR+FBRaf3hM5JLpoyO4h2TNctMxp9o5Su0lB5K2T0k5JDCa7fW
+ nVuywWTMFfbvg2moJ2xilLqlPT4RjfnGjAVHvMqEOta+vsViH+9VhGMMPBvhedUeQ+/K
+ bJRWhwXQQMbGzME/gWwq9brJaQeRrpq/yUE9ucl8IUuZ64CXryEFuieJxd5eIL9qY+Cy
+ 0vyRm3YMsBRnyVZSSg9apiPSN06ozavB1pL8Op4nrdz6pP1sx2q0V4Vj05UlLpJa/usD
+ sF2w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773267484; x=1773872284;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:to:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20230601; t=1773267846; x=1773872646;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=LzBqCwuN/iK8IbM5ajAVsOTNH0vG60Ih9ZnsHIuhMhk=;
- b=cPlxcLI9oBs7Kpg0C5vTmHep2XXrUhgAtB0s+NH8DZIaNZ6kPEu1CvVKKoNbqYqg5D
- /VtfUdXO6L/LBuUjjdKmYU1dn37V2haYbSqwrT6rgHuk5mR+GPs31hOzdU3cnDI60G/l
- ZzuOIgAbSMy4OfWPW7W2EGsRaNHlg972EVvJ5mIXSqKO8MYaVVXKwt68NV9H5dOa3H2v
- svc2KHQA3X6zCEOqg+p4MJ8GEtKNRRL+eMGPjeRKTmTfYOO/Pk24zXPFFLdxE0uPm4mr
- Wnk6UdfTtT5dClQW+1TCctqyC+r9NsBg4CCBRgEX3JWthk5I6OCULH/ggd2oJaEN86/c
- 99Ow==
+ bh=xuVOSGMFCt+MSxA46iiqDcqmlQbYvK5jCiLGJ/N5wEY=;
+ b=vUnpBdvibIH+w+XBz6SvnFMbP1Le1R4inGmlzqoojTkHp+6ezwPPWs+vwfSL/swjB2
+ 8EIJgCLJhbi0ew4qyXh6zhpfQtq5g4HjOJ06GqJ1DsbyAfsSLIO2kkPrqwB5QfsgY902
+ BP9KulQToWCbIsHT5DUSsb81Go3xfbiHO49s2IW3pCRw77SjS94gWY3suDlwndsnjHl0
+ DU0b1kAGB4rI5POstb7HHagodQHmc6EgUDuo4y4exK+ju0LIZ1XmBAkEeHytkF0gq8qW
+ dUZRyuba9fN7zLa4kPBUFx+qZRX5Y2vRk5LDjdKmYA5IVrGsN5yYQZK3YrrwlZdoPaJn
+ OrSA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVUdcM0zRbwy9AfUmUA3P4a4awPMJPbdePHxMFh6glDYYMo15aUAUFj3MQQQp47xuSzPa8EzWSw7mHs@nongnu.org
-X-Gm-Message-State: AOJu0Yy7gTt/PrjtW/8Pe1I1HefsL+mY6BN+0DZZHolmOcUkDHloc9eg
- AJV5hDtSyk4jlV/4A6tEttutoKIlFHlvsTmnaXjSG3VoP8DBaoCp3hpHV3Lkp3s3/Qg=
-X-Gm-Gg: ATEYQzzF01YCpMxCQuYrIVbIrVfQi8H0L5LZc+Al1EUuO+OBF2P4OSZBHfENA1sjEUu
- JSfQV0wsJjTxc1R7ikKqiKnBDc+MHbkZbwrMJsTkci61mKHtSVs14+3Sdn5zO9t5Wz94bepTYdF
- vx3aXhw9rfash5KazEuGxEWOmO1q4YapPKpqRMN5FGhbGfsE1CqrZi3sqrlHRbhKNgzTyBMrWzD
- pD/TC5TSD+A9s84rmECAvszogBqT5VffuVKJlcB0jAwxkAqcIQXB6YG/9JFAgqvBVBH1p6EixzO
- uZL7zjYRk2uoelXjyebo2bVvA7CM7bQDhd2qOSHBYVQZp99M6kAJW/BTVdK/+RrQE6M4yWLdk/6
- chGRi4zGot1aAMtC6O7sG5jxWN051jgEA3bVuEGXJUtPp56lxRn+FO6kg+7g40SunvjR0qMojGR
- 60fqBInJRpcQGcAUAH0GGDCNu1nfFz+RBwKdWavfSzRm4bwADtjXT9trQbtcyWQlkUMEE/
-X-Received: by 2002:a17:90b:3844:b0:353:49f2:1e7a with SMTP id
- 98e67ed59e1d1-35a0133c134mr4029226a91.17.1773267483369; 
- Wed, 11 Mar 2026 15:18:03 -0700 (PDT)
+ AJvYcCVhIFhvbYLflvlnI6RBOohJMf+F5o7AUcaQFZRQQ6q3zzIQKYJaKI8A9L5tPFd0muP6JY4I4o78Ys88@nongnu.org
+X-Gm-Message-State: AOJu0YzLTRCtG8PKBSGSrCiJRKDrxjjatlzDH/c3Smq3g6k9ozSZK8Bb
+ +DlFoYVdTuZzfFPAiUOB92fpxkBduOLaI3/8u2082MZLojF4uM9+DAPTekybk9xBZg4=
+X-Gm-Gg: ATEYQzzUvNxJivBwKGJrgXI6UnY8fTZZctoGuzSorwh+kdtoRK4D9JLEx5yJ7ui0YTU
+ AivZdxamSbBuYbMbEvFt+OiMBiCO81puRHlRiANAdRmw5RVwhtaeLuTXBiltqa17nSWFJqbgjK4
+ Uz9+efF1pJ6PND7TypbqcrCJnlpyUkaQFVt9272ao0C/plsiAbO21oejBrcnVLFqmNepgpVtgjJ
+ dpiPnSdOg6yQNSGSDqcf3dXtWoOE40nLrOaBHqfr8krcN8Yz8FA0wEgfCuQmI73BAM2yyDgd/6Z
+ 2A2WKuzjhPZnjjCPi7SMmec8RDa0hhEastxNe2iKzGp85KGiP23nlosgRVd+sn/EPFNMGFkUYL/
+ SkoM9r3qQffcUkYU+a3USais5QwH6jbXwMrZnUmIleVWx6Z7MPYKpWcG/jW7prWNC3L1DVB316b
+ VvXXA3+LKRD44bHh9JG+kbqa1xKUnPeGsgtLUrWAcrsRRhuNHBs3+aUbGE+kiUFR6ijECH
+X-Received: by 2002:a05:622a:50d:b0:509:1342:b213 with SMTP id
+ d75a77b69052e-509471bf32bmr18536351cf.12.1773267846274; 
+ Wed, 11 Mar 2026 15:24:06 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35a02fc8465sm3225955a91.9.2026.03.11.15.18.02
+ d75a77b69052e-50939ec5017sm20351841cf.8.2026.03.11.15.24.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 15:18:03 -0700 (PDT)
-Message-ID: <8b0df43e-aa4e-4d2d-a975-b43144503268@linaro.org>
-Date: Wed, 11 Mar 2026 15:18:02 -0700
+ Wed, 11 Mar 2026 15:24:05 -0700 (PDT)
+Message-ID: <0b4976f9-cf83-47b4-8f00-cc68c9cf47fd@linaro.org>
+Date: Wed, 11 Mar 2026 15:24:04 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] docs: some doc updates
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-References: <20260311102626.46546-1-mohamed@unpredictable.fr>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH] hw/arm/virt: add serial-debug-level property for EDK2
+ firmware
 Content-Language: en-US
+To: Luigi Leonardi <leonardi@redhat.com>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Oliver Steffen <osteffen@redhat.com>, qemu-arm@nongnu.org,
+ Gerd Hoffmann <kraxel@redhat.com>
+References: <20260311-edk2_arm_serial-v1-1-c25e237116f3@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -110,11 +114,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260311102626.46546-1-mohamed@unpredictable.fr>
+In-Reply-To: <20260311-edk2_arm_serial-v1-1-c25e237116f3@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::736;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qk1-x736.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -137,21 +141,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/26 3:26 AM, Mohamed Mediouni wrote:
-> A documentation update, no code.
+Hi Luigi,
+
+On 3/11/26 6:43 AM, Luigi Leonardi wrote:
+> Add a machine property to pass a debug level to EDK2 firmware via the
+> device tree. The value is set as an "edk2,debug-level" property on all
+> pl011 UART nodes.
 > 
-> Mohamed Mediouni (3):
->    docs: remove 64-bit only mentions for accelerators
->    qemu-options.hx: document Hyper-V enlightenments accelerator option
->    docs: mention that WHPX supports Arm too
+> This is to create a runtime parameter to set the verbosity of the debug
+> log on the serial ports in edk2. Currently, the only way to set the
+> verbosity is a compile-time option.
 > 
->   docs/about/build-platforms.rst | 4 ++--
->   docs/system/introduction.rst   | 6 +++---
->   qemu-options.hx                | 5 +++++
->   3 files changed, 10 insertions(+), 5 deletions(-)
+> DT is used because the fw_cfg interface is not yet initialized in early
+> boot phases.
+> 
+> Corresponding edk2 PR: https://github.com/tianocore/edk2/pull/12277
+> 
+> Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
+> Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
+> ---
+>   docs/system/arm/virt.rst |  6 ++++++
+>   hw/arm/virt.c            | 38 ++++++++++++++++++++++++++++++++++++++
+>   include/hw/arm/virt.h    |  2 ++
+>   3 files changed, 46 insertions(+)
 > 
 
-For the whole series:
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+I am not sure if maintainer want to have bootloader specific options in 
+machine code.
 
+Alternatively, it's possible to dump virt dtb, modify it, and pass it.
+$ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
+$ ... modify dt ...
+$ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
+
+It has the advantage to be extensible to any other kind of options you 
+want to pass through dtb without needing modification on QEMU itself, 
+the downside being that it's less convenient than a command line option.
+
+Regards,
+Pierrick
 
