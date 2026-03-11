@@ -4,58 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C0D9112583A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:20:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13824112583A
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LBu-0001q6-VR; Wed, 11 Mar 2026 11:09:43 -0400
+	id 1w0LKJ-0000vQ-0o; Wed, 11 Mar 2026 11:18:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAJ-00053w-FM; Wed, 11 Mar 2026 11:08:05 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LJf-0000Lo-Cw; Wed, 11 Mar 2026 11:17:44 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0LAH-0005Wx-Qv; Wed, 11 Mar 2026 11:08:03 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241481; bh=NdhzromMZdMHzC5HcOa4NW5LzPrFNoc2g+/F4uDGNmE=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=XTD7QTUaqsE50Ol8eaAPJNuye43z09tNfr+2ut6YCc3+lb6YLh6SxnVDW98PMen26
- bkEQVW3j716gNhAa+Jf6SLHXgVomv3KpW4EpWDeXzsicS+elB27vPVsvh/6e9JjEpt
- cfrmdudJmV8MdRjDQ9Xxh/FSp8hnVjslUccpCIUZX4VszFnPw1gUtYvM9h2KVQenxl
- ZProcWAGecBbeWN8V1XTMED/QgoJJZQXI8+ke5RK/G1KOYduQ6c/PuiFaPAFaZfNg5
- Pn+bFoz1PtWfAuOHbm4JXk4Z63NbkU7/2uzy3UsbBYZ+TwZ/QlWdCszBMoH+ZNbkal
- d3JrEOHJOIlsg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id EC002191E91;
- Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D8B3A37C2D2;
- Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.1.5 14/46] target/arm: Don't let 'sme=on' downgrade SME
-Date: Wed, 11 Mar 2026 18:02:50 +0300
-Message-ID: <20260311150327.1084669-14-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
-References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0LJb-0000Yv-Gn; Wed, 11 Mar 2026 11:17:42 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773242187; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=gw7OU43nnhcS6Gavue8nUuzNDxmQtlwdamgfjYaJo5HRO01ZpllLcU2X9hElgU+HDPjbK2b9sCRnuCqRngOuF/wM/Hjjf0A2oP8iNPw+LI+VWO36HubeyF0tIr94TwRPGB04TYmu+UYmJZmDnq9YRGPJ6yzdWUbwnT6rPyf7jBk=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773242187;
+ h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=zduXhp1bdCAfCRYLwUyJJOb4zDQ8rEZPVnGEODhdOSU=; 
+ b=VhZMMMeqeCCjUNv6Wbh6NSqB63ntUjc04oiqnSZt30v60mLu/Hx9jRYUABvLxJv9W0Rl+4kaeBFQwwhxunISpVPvARx49o/cJMV0xCSOnFlK4HTUn+/N1O8CRyJBQr4Jsnr/l3vnpVBBkiW7q0eeDtgd8tGupvt9q1mo19e5v/c=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242187; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
+ bh=zduXhp1bdCAfCRYLwUyJJOb4zDQ8rEZPVnGEODhdOSU=;
+ b=XpXelsIEn7TjQdSzrhIeRBvdnG5up5nOTxPE+yAUpQOjnPo8eLcXJ6jSzENulpJY
+ Zs5JXZoe8KpJ1h8egf2DF/8RIz3Zwy90Pv2oSQpa9hfQXytT/2AzONk20cBXxWGRDU3
+ 4SvqyUWIEVUFOxiiYuKRB+UdmrNIS3wzl9sCc9xI=
+Received: by mx.zohomail.com with SMTPS id 17732421852132.641422523197548;
+ Wed, 11 Mar 2026 08:16:25 -0700 (PDT)
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+Date: Wed, 11 Mar 2026 15:15:30 +0000
+Subject: [PATCH 03/14] accel/mshv: extract common CPU register helpers
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260311-mshv_accel_arm64_supp-v1-3-c31699b7bc1f@anirudhrb.com>
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+To: qemu-devel@nongnu.org
+Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
+ =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
+ =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ Anirudh Rayabharam <anirudh@anirudhrb.com>, 
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+X-Mailer: b4 0.14.3
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,98 +84,390 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Aastha Rawat <aastharawat@linux.microsoft.com>
 
-In our handling of the boolean 'sme' CPU property, we write this 0/1
-value directly to ID_AA64PFR1_EL1.SME.  This worked when the only
-valid values in that field were 0 (for no SME) and 1 (for SME1).
-However, with the addition of SME2 the SME field can now also read 2.
-This means that "-cpu max,sme=on" will result in an inconsistent set
-of ID registers, where ID_AA64PFR1_EL1.SME claims SME1 but
-ID_AA64SMFR0_EL1.SMEver claims SME2p1.  This isn't a valid thing to
-report, and confuses Linux into reporting SME2 to userspace but not
-actually enabling userspace access for it.
+Move arch-independent MSHV CPU register handling functions into
+accel/mshv/mshv-cpu-common.c. Update x86 MSHV backends to use these
+shared helpers.
 
-Fix this bug by having arm_cpu_sme_finalize() fix up the
-ID_AA64PFR1_EL1.SME field to match ID_AA64SMFR0.SMEver.  This means
-the "sme" property's semantics are "off" for "no SME" and "on" for
-"enable at whatever the default SME version this CPU provides is".
+Prefix get_generic_regs() with mshv_ for proper namespacing since it
+is now public.
 
-Update the documentation to clarify what 'sve=on' and 'sme=on' do.
-(We don't have the equivalent bug for 'sve=on' because
-ID_AA64PFR0_EL1.SVE only has 0 and 1 as valid values, but the
-semantics of the property are the same.)
+Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
+---
+ accel/mshv/meson.build       |   3 +-
+ accel/mshv/mshv-cpu-common.c | 151 +++++++++++++++++++++++++++++++++++++++++++
+ include/system/mshv_int.h    |   3 +
+ target/i386/mshv/mshv-cpu.c  | 130 +------------------------------------
+ 4 files changed, 159 insertions(+), 128 deletions(-)
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-id: 20260202133353.2231685-6-peter.maydell@linaro.org
-(cherry picked from commit aeb3c147fc4a1eb9a73f9f10923fc06def088aeb)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/docs/system/arm/cpu-features.rst b/docs/system/arm/cpu-features.rst
-index 37d5dfd15b..024119449c 100644
---- a/docs/system/arm/cpu-features.rst
-+++ b/docs/system/arm/cpu-features.rst
-@@ -318,6 +318,11 @@ SVE CPU Property Parsing Semantics
-      provided an error will be generated.  To avoid this error, one must
-      enable at least one vector length prior to enabling SVE.
- 
-+  10) Enabling SVE (with ``sve=on`` or by default) enables all the SVE
-+      sub-features that the CPU supports (for example, it may also
-+      enable SVE2). There are not generally any lower-level controls
-+      for disabling specific SVE sub-features.
+diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
+index e433187cde..ebe32921b3 100644
+--- a/accel/mshv/meson.build
++++ b/accel/mshv/meson.build
+@@ -1,5 +1,6 @@
+ system_ss.add(when: 'CONFIG_MSHV', if_true: files(
+   'irq.c',
+   'mem.c',
+-  'mshv-all.c'
++  'mshv-all.c',
++  'mshv-cpu-common.c'
+ ))
+diff --git a/accel/mshv/mshv-cpu-common.c b/accel/mshv/mshv-cpu-common.c
+new file mode 100644
+index 0000000000..b104720161
+--- /dev/null
++++ b/accel/mshv/mshv-cpu-common.c
+@@ -0,0 +1,151 @@
++/*
++ * QEMU MSHV common CPU register helpers
++ *
++ * Copyright Microsoft, Corp. 2026
++ *
++ * Authors: Ziqiao Zhou   <ziqiaozhou@microsoft.com>
++ *          Magnus Kulke  <magnuskulke@microsoft.com>
++ *          Jinank Jain   <jinankjain@microsoft.com>
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
++#include "qemu/error-report.h"
++#include "qemu/memalign.h"
 +
- SVE CPU Property Examples
- -------------------------
- 
-@@ -430,6 +435,11 @@ and all vector lengths must be powers of 2.  The maximum vector
- length supported by qemu is 2048 bits.  Otherwise, there are no
- additional constraints on the set of vector lengths supported by SME.
- 
-+As with SVE, ``sme=on`` enables all the SME sub-features the CPU
-+supports (for example, it may also enable SME2), and there are
-+no lower-level controls for fine-grained disabling of specific
-+SME sub-features.
++#include "system/mshv.h"
++#include "system/mshv_int.h"
 +
- SME User-mode Default Vector Length Property
- --------------------------------------------
- 
-diff --git a/target/arm/cpu64.c b/target/arm/cpu64.c
-index 26cf7e6dfa..057e9fa431 100644
---- a/target/arm/cpu64.c
-+++ b/target/arm/cpu64.c
-@@ -364,6 +364,16 @@ void arm_cpu_sme_finalize(ARMCPU *cpu, Error **errp)
- 
-     cpu->sme_vq.map = vq_map;
-     cpu->sme_max_vq = 32 - clz32(vq_map);
++#include "hw/core/cpu.h"
++#include "linux/mshv.h"
 +
-+    /*
-+     * The "sme" property setter writes a bool value into ID_AA64PFR1_EL1.SME
-+     * (and at this point we know it's not 0). Correct that value to report
-+     * the same SME version as ID_AA64SMFR0_EL1.SMEver.
-+     */
-+    if (FIELD_EX64_IDREG(&cpu->isar, ID_AA64SMFR0, SMEVER) != 0) {
-+        /* SME2 or better */
-+        FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, 2);
++#include <sys/ioctl.h>
++
++int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
++                          size_t n_regs)
++{
++    int cpu_fd = mshv_vcpufd(cpu);
++    int vp_index = cpu->cpu_index;
++    size_t in_sz, assocs_sz;
++    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
++    struct mshv_root_hvcall args = {0};
++    int ret;
++
++    /* find out the size of the struct w/ a flexible array at the tail */
++    assocs_sz = n_regs * sizeof(hv_register_assoc);
++    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
++
++    /* fill the input struct */
++    memset(in, 0, sizeof(hv_input_set_vp_registers));
++    in->vp_index = vp_index;
++    memcpy(in->elements, assocs, assocs_sz);
++
++    /* create the hvcall envelope */
++    args.code = HVCALL_SET_VP_REGISTERS;
++    args.in_sz = in_sz;
++    args.in_ptr = (uint64_t) in;
++    args.reps = (uint16_t) n_regs;
++
++    /* perform the call */
++    ret = mshv_hvcall(cpu_fd, &args);
++    if (ret < 0) {
++        error_report("Failed to set registers");
++        return -1;
 +    }
++
++    /* assert we set all registers */
++    if (args.reps != n_regs) {
++        error_report("Failed to set registers: expected %zu elements"
++                     ", got %u", n_regs, args.reps);
++        return -1;
++    }
++
++    return 0;
++}
++
++int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
++                            size_t n_regs)
++{
++    int cpu_fd = mshv_vcpufd(cpu);
++    int vp_index = cpu->cpu_index;
++    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
++    hv_register_value *values = cpu->accel->hvcall_args.output_page;
++    size_t in_sz, names_sz, values_sz;
++    int i, ret;
++    struct mshv_root_hvcall args = {0};
++
++    /* find out the size of the struct w/ a flexible array at the tail */
++    names_sz = n_regs * sizeof(hv_register_name);
++    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
++
++    /* fill the input struct */
++    memset(in, 0, sizeof(hv_input_get_vp_registers));
++    in->vp_index = vp_index;
++    for (i = 0; i < n_regs; i++) {
++        in->names[i] = assocs[i].name;
++    }
++
++    /* determine size of value output buffer */
++    values_sz = n_regs * sizeof(union hv_register_value);
++
++    /* create the hvcall envelope */
++    args.code = HVCALL_GET_VP_REGISTERS;
++    args.in_sz = in_sz;
++    args.in_ptr = (uint64_t) in;
++    args.out_sz = values_sz;
++    args.out_ptr = (uint64_t) values;
++    args.reps = (uint16_t) n_regs;
++
++    /* perform the call */
++    ret = mshv_hvcall(cpu_fd, &args);
++    if (ret < 0) {
++        error_report("Failed to retrieve registers");
++        return -1;
++    }
++
++    /* assert we got all registers */
++    if (args.reps != n_regs) {
++        error_report("Failed to retrieve registers: expected %zu elements"
++                     ", got %u", n_regs, args.reps);
++        return -1;
++    }
++
++    /* copy values into assoc */
++    for (i = 0; i < n_regs; i++) {
++        assocs[i].value = values[i];
++    }
++
++    return 0;
++}
++
++int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
++{
++    int ret;
++    struct mshv_create_vp vp_arg = {
++        .vp_index = vp_index,
++    };
++
++    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
++    if (ret < 0) {
++        error_report("failed to create mshv vcpu: %s", strerror(errno));
++        return -1;
++    }
++
++    *cpu_fd = ret;
++
++    return 0;
++}
++
++void mshv_remove_vcpu(int vm_fd, int cpu_fd)
++{
++    close(cpu_fd);
++}
++
++void mshv_setup_hvcall_args(AccelCPUState *state)
++{
++    void *mem = qemu_memalign(HV_HYP_PAGE_SIZE, 2 * HV_HYP_PAGE_SIZE);
++
++    state->hvcall_args.base = mem;
++    state->hvcall_args.input_page = mem;
++    state->hvcall_args.output_page = (uint8_t *)mem + HV_HYP_PAGE_SIZE;
++}
+diff --git a/include/system/mshv_int.h b/include/system/mshv_int.h
+index 35386c422f..ff3ab957b5 100644
+--- a/include/system/mshv_int.h
++++ b/include/system/mshv_int.h
+@@ -89,12 +89,15 @@ int mshv_load_regs(CPUState *cpu);
+ int mshv_store_regs(CPUState *cpu);
+ int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
+                           size_t n_regs);
++int mshv_get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
++                        size_t n_regs);
+ int mshv_arch_put_registers(const CPUState *cpu);
+ void mshv_arch_init_vcpu(CPUState *cpu);
+ void mshv_arch_destroy_vcpu(CPUState *cpu);
+ void mshv_arch_amend_proc_features(
+     union hv_partition_synthetic_processor_features *features);
+ int mshv_arch_post_init_vm(int vm_fd);
++void mshv_setup_hvcall_args(AccelCPUState *state);
+ 
+ typedef struct mshv_root_hvcall mshv_root_hvcall;
+ int mshv_hvcall(int fd, const mshv_root_hvcall *args);
+diff --git a/target/i386/mshv/mshv-cpu.c b/target/i386/mshv/mshv-cpu.c
+index 2bc978deb2..9a80dc34d0 100644
+--- a/target/i386/mshv/mshv-cpu.c
++++ b/target/i386/mshv/mshv-cpu.c
+@@ -148,103 +148,6 @@ static int translate_gva(const CPUState *cpu, uint64_t gva, uint64_t *gpa,
+     return 0;
  }
  
- static bool cpu_arm_get_sme(Object *obj, Error **errp)
-@@ -376,6 +386,11 @@ static void cpu_arm_set_sme(Object *obj, bool value, Error **errp)
+-int mshv_set_generic_regs(const CPUState *cpu, const hv_register_assoc *assocs,
+-                          size_t n_regs)
+-{
+-    int cpu_fd = mshv_vcpufd(cpu);
+-    int vp_index = cpu->cpu_index;
+-    size_t in_sz, assocs_sz;
+-    hv_input_set_vp_registers *in = cpu->accel->hvcall_args.input_page;
+-    struct mshv_root_hvcall args = {0};
+-    int ret;
+-
+-    /* find out the size of the struct w/ a flexible array at the tail */
+-    assocs_sz = n_regs * sizeof(hv_register_assoc);
+-    in_sz = sizeof(hv_input_set_vp_registers) + assocs_sz;
+-
+-    /* fill the input struct */
+-    memset(in, 0, sizeof(hv_input_set_vp_registers));
+-    in->vp_index = vp_index;
+-    memcpy(in->elements, assocs, assocs_sz);
+-
+-    /* create the hvcall envelope */
+-    args.code = HVCALL_SET_VP_REGISTERS;
+-    args.in_sz = in_sz;
+-    args.in_ptr = (uint64_t) in;
+-    args.reps = (uint16_t) n_regs;
+-
+-    /* perform the call */
+-    ret = mshv_hvcall(cpu_fd, &args);
+-    if (ret < 0) {
+-        error_report("Failed to set registers");
+-        return -1;
+-    }
+-
+-    /* assert we set all registers */
+-    if (args.reps != n_regs) {
+-        error_report("Failed to set registers: expected %zu elements"
+-                     ", got %u", n_regs, args.reps);
+-        return -1;
+-    }
+-
+-    return 0;
+-}
+-
+-static int get_generic_regs(CPUState *cpu, hv_register_assoc *assocs,
+-                            size_t n_regs)
+-{
+-    int cpu_fd = mshv_vcpufd(cpu);
+-    int vp_index = cpu->cpu_index;
+-    hv_input_get_vp_registers *in = cpu->accel->hvcall_args.input_page;
+-    hv_register_value *values = cpu->accel->hvcall_args.output_page;
+-    size_t in_sz, names_sz, values_sz;
+-    int i, ret;
+-    struct mshv_root_hvcall args = {0};
+-
+-    /* find out the size of the struct w/ a flexible array at the tail */
+-    names_sz = n_regs * sizeof(hv_register_name);
+-    in_sz = sizeof(hv_input_get_vp_registers) + names_sz;
+-
+-    /* fill the input struct */
+-    memset(in, 0, sizeof(hv_input_get_vp_registers));
+-    in->vp_index = vp_index;
+-    for (i = 0; i < n_regs; i++) {
+-        in->names[i] = assocs[i].name;
+-    }
+-
+-    /* determine size of value output buffer */
+-    values_sz = n_regs * sizeof(union hv_register_value);
+-
+-    /* create the hvcall envelope */
+-    args.code = HVCALL_GET_VP_REGISTERS;
+-    args.in_sz = in_sz;
+-    args.in_ptr = (uint64_t) in;
+-    args.out_sz = values_sz;
+-    args.out_ptr = (uint64_t) values;
+-    args.reps = (uint16_t) n_regs;
+-
+-    /* perform the call */
+-    ret = mshv_hvcall(cpu_fd, &args);
+-    if (ret < 0) {
+-        error_report("Failed to retrieve registers");
+-        return -1;
+-    }
+-
+-    /* assert we got all registers */
+-    if (args.reps != n_regs) {
+-        error_report("Failed to retrieve registers: expected %zu elements"
+-                     ", got %u", n_regs, args.reps);
+-        return -1;
+-    }
+-
+-    /* copy values into assoc */
+-    for (i = 0; i < n_regs; i++) {
+-        assocs[i].value = values[i];
+-    }
+-
+-    return 0;
+-}
+-
+ static int set_standard_regs(const CPUState *cpu)
  {
-     ARMCPU *cpu = ARM_CPU(obj);
- 
-+    /*
-+     * For now, write 0 for "off" and 1 for "on" into the PFR1 field.
-+     * We will correct this value to report the right SME
-+     * level (SME vs SME2) in arm_cpu_sme_finalize() later.
-+     */
-     FIELD_DP64_IDREG(&cpu->isar, ID_AA64PFR1, SME, value);
+     X86CPU *x86cpu = X86_CPU(cpu);
+@@ -334,7 +237,7 @@ int mshv_get_standard_regs(CPUState *cpu)
+     for (size_t i = 0; i < n_regs; i++) {
+         assocs[i].name = STANDARD_REGISTER_NAMES[i];
+     }
+-    ret = get_generic_regs(cpu, assocs, n_regs);
++    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+     if (ret < 0) {
+         error_report("failed to get standard registers");
+         return -1;
+@@ -412,7 +315,7 @@ int mshv_get_special_regs(CPUState *cpu)
+     for (size_t i = 0; i < n_regs; i++) {
+         assocs[i].name = SPECIAL_REGISTER_NAMES[i];
+     }
+-    ret = get_generic_regs(cpu, assocs, n_regs);
++    ret = mshv_get_generic_regs(cpu, assocs, n_regs);
+     if (ret < 0) {
+         error_report("failed to get special registers");
+         return -errno;
+@@ -1525,29 +1428,6 @@ int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+     return 0;
  }
  
+-void mshv_remove_vcpu(int vm_fd, int cpu_fd)
+-{
+-    close(cpu_fd);
+-}
+-
+-
+-int mshv_create_vcpu(int vm_fd, uint8_t vp_index, int *cpu_fd)
+-{
+-    int ret;
+-    struct mshv_create_vp vp_arg = {
+-        .vp_index = vp_index,
+-    };
+-    ret = ioctl(vm_fd, MSHV_CREATE_VP, &vp_arg);
+-    if (ret < 0) {
+-        error_report("failed to create mshv vcpu: %s", strerror(errno));
+-        return -1;
+-    }
+-
+-    *cpu_fd = ret;
+-
+-    return 0;
+-}
+-
+ static void read_segment_descriptor(CPUState *cpu,
+                                     struct x86_segment_descriptor *desc,
+                                     enum X86Seg seg_idx)
+@@ -1580,8 +1460,6 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+     X86CPU *x86_cpu = X86_CPU(cpu);
+     CPUX86State *env = &x86_cpu->env;
+     AccelCPUState *state = cpu->accel;
+-    size_t page = HV_HYP_PAGE_SIZE;
+-    void *mem = qemu_memalign(page, 2 * page);
+ 
+     /* sanity check, to make sure we don't overflow the page */
+     QEMU_BUILD_BUG_ON((MAX_REGISTER_COUNT
+@@ -1589,9 +1467,7 @@ void mshv_arch_init_vcpu(CPUState *cpu)
+                       + sizeof(hv_input_get_vp_registers)
+                       > HV_HYP_PAGE_SIZE));
+ 
+-    state->hvcall_args.base = mem;
+-    state->hvcall_args.input_page = mem;
+-    state->hvcall_args.output_page = (uint8_t *)mem + page;
++    mshv_setup_hvcall_args(state);
+ 
+     env->emu_mmio_buf = g_new(char, 4096);
+ }
+
 -- 
-2.47.3
+2.43.0
 
 
