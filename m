@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DDD91125863
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 18:35:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 386591125865
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 18:36:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0OOK-0004Of-74; Wed, 11 Mar 2026 14:34:44 -0400
+	id 1w0OOn-0004ne-BR; Wed, 11 Mar 2026 14:35:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w0OOI-0004OW-Iy
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:34:42 -0400
-Received: from mail-pg1-x532.google.com ([2607:f8b0:4864:20::532])
+ id 1w0OOl-0004jE-3C
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:35:11 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w0OOH-0000VF-1e
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:34:42 -0400
-Received: by mail-pg1-x532.google.com with SMTP id
- 41be03b00d2f7-c7384f5a9cdso67034a12.0
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 11:34:40 -0700 (PDT)
+ id 1w0OOj-0000jO-CJ
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 14:35:10 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2ae43042ea7so3061115ad.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 11:35:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773254079; x=1773858879; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=FrPnx4TE/249DH/6+ivRlHOe7XZAi9rhm/k579I4fmk=;
- b=TsE6pMyAUmiFZhh2qSzr2G1FsrUoqD9y7XrITwMQZfG4mHPdlDxTgoSo1TvBR5nfIY
- MiwP5tnSK0mkiZmWoX7uySaq1kmyZO98MnGrTJtyoDEV6y27v9H+QdF7QLsaXbgGnHDw
- HoBy9UnYL1dmUDQEblqrip+oCbh0IEBn3fXFd02m7ssyEd2BSfxeXhbV8JNvhEg5KxWF
- sgOpo0l7n7/1niRe8nS3eRSlR4IlA7gR9WbElikLBnSdsRO5vatnIfMVSiP3inQ6p1nq
- B6ZoBpz5flbX3KrSMqacmRm//ZGVE+vsKZ2bF9Vc7HQVzMSX6iGxYo5zgMCQULPdCcBW
- +Bmw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773254079; x=1773858879;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773254107; x=1773858907; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FrPnx4TE/249DH/6+ivRlHOe7XZAi9rhm/k579I4fmk=;
- b=vuoIqG9gjFKVXMGiqeAWVbv14PQsvM2CGoAlElallD1gp0BzvF/whs6NdjbrFuJYau
- V+QDp7TRcoPPXSit9WmumviPQwkxiICwPDrvBpH0C/BHK16IGghvtW/QmMPtpQV0JFEa
- 6DkCTSNWVoSk4XEq+kxmSpFJwCS1PuM8i0u0O7Tc7OBR2m87y8vl3rvZodOXMyVbAaX8
- FiiZuCQeO66qeE+nCnkoBN3R6UkOBfcSqxnY3wSjj1zlmWr57dHg+lSCWgOfpiY74gW7
- 0vadiymVJVLG/gxUEGFMVnUp6zj3+DU6HkGDqs2R+eYtnVYbd4mekddPQ8tW1WceRXbU
- ILoQ==
-X-Gm-Message-State: AOJu0Yy9hmQXXPSg/KTusNt6dbWep4lYh4mhkkf0Rbyqyo+FOdom6Rl4
- mQzdJefy3kQ/pydT9UL4YBmALMBetiovzWpvS9MqHAtwh7AVrCTIeP7wb1VM+65i1yR6Cw==
-X-Gm-Gg: ATEYQzxUYsKLyHo30VhLMIxPM92rAo2NJVjV8WKe7I1tiD0AqNOT+Bs/WRPJX1yIL9f
- kl3htJmO2RhTqYazKsY+BPvxskrjkwm0r0iD9r0tzVscRNev/+yNe368K7qc2nKlv0Xr/W1dVfj
- lHY3jxrQ/AB0skCxo6TbpIZYRphkLTCbJnoLPqW7DOlLQtVZ+GmKNxUK21XYy5qsmuQ5dzFSp1+
- 2hK/y003muR+9l095q9NkyrgERGat08HTlObSRPbSljnyICq1EIGYpNtmrs8WRQOW9kPrcQfaWh
- XYiLbaaQZ1+NxMbkhR2zLii1QdV1xdBtX+NuDAc89qs+5L7VyvA3MYAIprpz3xYDxFVDlGZclBT
- gVPXGeGpozw6n9qzn/+o6w/TdnFH32zkAkP0lj4MRj1a1upgKHNLuqnh4BqGLGFtQlsjoc99gPg
- mCfLmRMAj5RYt0GgRNRYXF+58sQi1IHS0SeM82VaBYWNEP5w==
-X-Received: by 2002:a17:903:2a88:b0:2ae:7f70:b2aa with SMTP id
- d9443c01a7336-2aeae892fadmr40712365ad.29.1773254079215; 
- Wed, 11 Mar 2026 11:34:39 -0700 (PDT)
+ bh=RNM/dVkkML5tzgLzxAijspCwne80ByQcKUUWMceF6EY=;
+ b=jYImN7sJVtlVRQSUwKisn81gxPApIvvzm694SitsegN8XF/SeOdkRZXeXNWFecyvdh
+ Ary4kGtRDQ/WdUfCmZT0/4Nl/rbV/ZZVFL8pfRVSLEVC5JxSgO89q9noFhi4Jh5hFnmT
+ R5SbJQ6qFl7B3xVhiIDQ2z/CKRvOAZYKS+wiZE7IKqHahnEBN5R+TifW1G6XUEZrICoV
+ ZnzXa5EUxhV2Vye1TgNWZ9d64em+ghs7uO7Rq++gcWuA9ombNdFKv0byyptdIOkHhWr+
+ z7tsiuT3ngqMzJdCjzGrYzDOsckkFMQU+cjfYKMi68aXaIeEyrgCWG+Yk05cInJIlzkg
+ aloA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773254107; x=1773858907;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RNM/dVkkML5tzgLzxAijspCwne80ByQcKUUWMceF6EY=;
+ b=ZxKI2IWlBY2BDKTjR0P3iNhMYSg1H/YKEWwZZIm8NLhcS2zvJzBdvkHGO1bgt3WdmH
+ /Rjdh4Y+nF0roaiLZqab8wBZ0Tp5fl458i3Z1mrnc+ERjbIgXGzHoOU2T33r3Z649LbE
+ N0PxDv7Cd6IT6o/DymQDC7vYdB1TbdiUx+oZnlPUAYUbeS3PitEp8d3fwX3OrrjAiyDE
+ byMmlQmDoSseemLcri0dnQck9N53Cj0qs6af0IQapmxFr1xXB1EhjrNUljbeO5cpn7dP
+ G/KzW4PXZzEWePEwrqJMKgVCs3uT/JBkGzj7cgzlSgTYJksuhcXciKoLa1kFD0SfZUt7
+ dsfA==
+X-Gm-Message-State: AOJu0YykM4tk8mODMTZUxXzFZmqHUiDzUz+vTK7J/7d2J3C7KzWsW5m4
+ WHRRvUIAAKVqxrxcuJEx/OIC56vi4W17gFo2Bdri9O9PpAagmyYZL9DxlWa2m4NYHm3mQg==
+X-Gm-Gg: ATEYQzw4CmADQwHPgODfq8yriD2emkz8JvlSQhmd0kdgSwfyKhuY0Nz1iWhHlZ0dNqo
+ 6DjEk4WH27wDWJQ5NcjyNFXHzLhexaUNUlnDRbZKyO+xAWMu4uChgd2QKrYphRlA0C4xgtERzFC
+ J7ncy7qVze3AoeoeCHO4Jp0ZKubuZOwwBmNK9Lif+wQeU6YeE50ZXxmNF8OWQukthELqvqyhP20
+ tPZwRMWcLW2tdaxU664WWggt+ve44yq59JTDx9z1q286a9JH/1V0G0pSsDu53OzH7HobMHzxAqQ
+ tncas2UhDMUNguRiY0qgw8DsBWgJmkLPSquZZAxFcGaA5kgAJLORtmc7sXd4nkGogo77BwjUcu/
+ EZhLWZDVL7h9bASrhRAHbJmh4QitqVpHdvP/swVnLnET5GoDNeOfNzjN+l9iUmzHAJ8hMefngNG
+ qC0t64raSQboGX9navYy64B28jBCP9/q76u2IA2tIycuSUcQ==
+X-Received: by 2002:a17:902:e80b:b0:2ae:80d5:bfa7 with SMTP id
+ d9443c01a7336-2aeae76f5famr37277905ad.7.1773254107247; 
+ Wed, 11 Mar 2026 11:35:07 -0700 (PDT)
 Received: from localhost.localdomain ([123.19.166.13])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae222e2fsm42124115ad.2.2026.03.11.11.34.37
+ d9443c01a7336-2aeae222e2fsm42124115ad.2.2026.03.11.11.35.05
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 11:34:38 -0700 (PDT)
+ Wed, 11 Mar 2026 11:35:06 -0700 (PDT)
 From: Trieu Huynh <vikingtc4@gmail.com>
 X-Google-Original-From: Trieu Huynh <viking4@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>
-Subject: [PATCH v2 0/4] Fix error handling for callers of load_image_targphys,
- get_image_size, event_notifier_init, msix_init
-Date: Thu, 12 Mar 2026 01:34:26 +0700
-Message-ID: <20260311183432.214960-1-viking4@gmail.com>
+Cc: Trieu Huynh <vikingtc4@gmail.com>, Corey Minyard <minyard@acm.org>,
+ =?UTF-8?q?Cl=C3=A9ment=20Chigot?= <chigot@adacore.com>,
+ Frederic Konrad <konrad.frederic@yahoo.fr>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH v2 2/4] hw/core/loader: fix error handling for get_image_size
+ callers
+Date: Thu, 12 Mar 2026 01:34:28 +0700
+Message-ID: <20260311183432.214960-3-viking4@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260311183432.214960-1-viking4@gmail.com>
+References: <20260311183432.214960-1-viking4@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::532;
- envelope-from=vikingtc4@gmail.com; helo=mail-pg1-x532.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -101,49 +107,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Trieu Huynh <vikingtc4@gmail.com>
 
-Changes in v2:
-- Patch 1: Remove redundant if (ret < 0) checks added after calls that
-already use &error_fatal (dead code, pointed out by BALATON Zoltan
-and Aditya Gupta). Use &error_fatal directly for NULL callers where
-failure is fatal.
-- Patch 2: Fix to only exit when size < 0 since it is not mandatory,
-either BIOS or FRU (pointed out by Clément Chigot).
-- Patch 3: No code changes. Add Acked-by and Reviewed-by tags.
-- Patch 4: Use errp param instead of passing NULL as default to handle
-failure (pointed out by Akihiko Odaki).
+Check the return value of get_image_size() and report failures
+for non-mandatory files such as BIOS or FRU images.
+
+- Use ret < 0 to detect failures in getting image size.
+- No functional changes.
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 
-Trieu Huynh (4):
-  hw/core/loader: fix error handling for load_image_targphys callers
-  hw/core/loader: fix error handling for get_image_size callers
-  util/event_notifier: fix error handling for event_notifier_init
-    callers
-  hw/pci/msix: fix error handling for msix_init callers
+---
+v2:
+- Keep error reporting as it is.
+- Remove exit on error since it is not mandatory.
+---
+ hw/ipmi/ipmi_bmc_sim.c | 2 ++
+ hw/sparc/leon3.c       | 4 ++++
+ 2 files changed, 6 insertions(+)
 
- hw/alpha/dp264.c       |  2 +-
- hw/hppa/machine.c      |  2 +-
- hw/hyperv/hyperv.c     |  4 ++--
- hw/hyperv/vmbus.c      |  4 ++--
- hw/ipmi/ipmi_bmc_sim.c |  2 ++
- hw/m68k/next-cube.c    |  2 +-
- hw/m68k/q800.c         |  2 +-
- hw/m68k/virt.c         |  2 +-
- hw/microblaze/boot.c   |  3 ++-
- hw/net/igbvf.c         |  2 +-
- hw/net/rocker/rocker.c |  2 +-
- hw/pci/msix.c          |  2 +-
- hw/remote/proxy.c      | 15 +++++++++++++--
- hw/scsi/megasas.c      | 18 +++++++++++++-----
- hw/sparc/leon3.c       |  4 ++++
- hw/usb/hcd-xhci-pci.c  | 19 ++++++++++++++-----
- hw/vfio/ap.c           |  2 +-
- hw/vfio/ccw.c          |  2 +-
- hw/vfio/pci-quirks.c   |  2 +-
- hw/vfio/pci.c          |  2 +-
- hw/virtio/vhost-vdpa.c |  4 ++--
- 21 files changed, 66 insertions(+), 31 deletions(-)
-
+diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+index 012e2ee4fe..fd875491f5 100644
+--- a/hw/ipmi/ipmi_bmc_sim.c
++++ b/hw/ipmi/ipmi_bmc_sim.c
+@@ -2561,6 +2561,8 @@ static void ipmi_fru_init(IPMIFru *fru)
+             g_free(fru->data);
+             fru->data = NULL;
+         }
++    } else {
++        error_report("Could not get file size '%s'", fru->filename);
+     }
+ 
+ out:
+diff --git a/hw/sparc/leon3.c b/hw/sparc/leon3.c
+index 9147d56bd4..122366829d 100644
+--- a/hw/sparc/leon3.c
++++ b/hw/sparc/leon3.c
+@@ -354,6 +354,10 @@ static void leon3_generic_hw_init(MachineState *machine)
+     } else {
+         bios_size = -1;
+     }
++    if (bios_size < 0) {
++        error_report("could not found or failed to get file size: '%s'",
++                     filename);
++    }
+ 
+     if (bios_size > prom_size) {
+         error_report("could not load prom '%s': file too big", filename);
 -- 
 2.43.0
 
