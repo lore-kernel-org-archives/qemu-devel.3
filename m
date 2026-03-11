@@ -4,103 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06CFE1125854
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:06:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61E171125857
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 17:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0N0S-0006jp-J6; Wed, 11 Mar 2026 13:06:00 -0400
+	id 1w0N0C-0006Eu-Ha; Wed, 11 Mar 2026 13:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0N0I-0006PC-Cc
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:05:51 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
+ id 1w0MyG-0004kt-TN
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:03:45 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0N06-0001hP-Tu
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:05:45 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-64ad79dfb6eso145742d50.0
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 10:05:36 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773248736; cv=none;
+ id 1w0MyF-0000tq-3q
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 13:03:44 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64ca2b32f46so63218d50.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 10:03:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773248622; cv=none;
  d=google.com; s=arc-20240605;
- b=fI8Okd+FA15IG8vtT3GsqMrThmR0yoNw1cLOtAEgAPhkQPVEYvlQVtI5/JS78OQQ9E
- HXb7R5ddE1Dy7cHkFHAALzxiVgWz+R/7GTnWMw7a3rC4uVk4cJ/RydWZnUmuImJHgGeq
- /QWDakhTtL3g+nkXrRh16t+t4rM3CGqbQZPxgKGMmoIEgtFnUetvWxvqUbZcJPG19lTP
- b+rp80iHOZB2qiknkHGuMHveDN4e+GEs7Z44BoPoa1JhUiWnsLZKgC/UxyblckB/H9DY
- ex2TgYBeqUykk2N2SDVJVKrLkYkQk2Ck89zz0Rg5BzMC2MK47UBRsuj3nGTitAEsDN1z
- q3zQ==
+ b=Fwgn8PjknVqpC303HrWQUrGF8oWLWA1cXpo166dhKCcGaT+9MVkYGWJ/u5v7ENhevB
+ KYDfYoV46ejfC2cGLmNbyhGWsWdt2qK+HXuZdIZVqZ3mLrM4DCAWhJlwUHydPmtq+tKw
+ 6dL7OLdmwYnnHIzKsN4nF1pj0JVa60mydORhbU8JfFbmG91e+0QpsYHaXvrJGrW6K+lR
+ 6YDhdE95vNatKUffMY0lf7SgfuZ6hVgiLQMKU8A230BCjI0XD4AYI/h5Ijgwu4tAsQl4
+ BT3bqbAk+2+wU4YH4MByeqmPxQyrM4WxO83jCaqZUFh0yITUHCYITASyUl0Bmr4AmRCk
+ d/Sg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=s8hhLwgIhU2/sosIgArVE4EJu0fvWf6z/Nekl4sBFGU=;
- fh=q6StGydl/SY888ZIkwkPLi1fS97Df6esIzpIoXWZ2us=;
- b=C+VqTbRo0d+ZID20g7/HR7TcVXrZGNUtZLs4BWDUPxHWoQMZYEuzbE/0zToVt6n9h+
- vVTN09wQK6aVmTkB8N7B60SyPm2CpQ3i/4avUmiY4gmgW1GBu3LeuCOeabECV0iuhTn4
- swWe/E8ZhMe6bge4y4Mo7qp3CPhNnXmT3Eace4kXzAET3NtBKsqXZzojjc07AEOQhMa8
- QVrw8uDPZpsuai/o0/zuQ12ntPqKC7ocW/rs+nsUnjwV5niX0zu0UBz8jUcG4K28TvIK
- zpMZlmDJxHpxD08jRE+QfcFhxbxcge2ctXLEQlgX4MdyiTS1hh3jDwXjB7Cq1g13adYC
- yy6A==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=RJnkcIquPOFwO8qegqW/YJg1YrDqow8L+C0wncK6ATU=;
+ fh=z6j9M87EymxnsgtjPJeI9rpgOf3JYcAq+ll2+QME55o=;
+ b=K8Zw2j0ZcH3WyztHugq9lvramg2JRgDRogao/oN1BH6OuL30Li1v3WeeYVna42+izb
+ f1x4lR3CcAdK4kr2Ox8J9vwzfg0c+6Yj9zhwpfM5g2oU8vA/bIW1WfwyTL2PqVOIIlWv
+ tImSVkD2Q6vlssUuY1/Lz2UDMuZ3y19JlaAC1JXwm2/266K75y9EEN5AvC8oFwuGBN7V
+ 7DBbTuzlKn3dq/wzVv8W9c+1TZ0tQDy7HkXcmGvcx7ZQtpoc0fzHFg80MuPhx4XR4FDR
+ 23G72wYvIKU6ezmsvZZqOnysqwVupUXzKZbRaKRBPAVTtGz9QMfnS5LDAJZHIoMwf9pv
+ j11A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773248736; x=1773853536; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=s8hhLwgIhU2/sosIgArVE4EJu0fvWf6z/Nekl4sBFGU=;
- b=ukJxvEFMty8wzC0vR8c5b5bBitLWch1ymK7GpYJkIKm+rv8Mnm6lPTKTTQbJlBish0
- ae5w6bNQZvFmMlkWCsuiMKe4NZQmTpsA+uWvAIBIcc1rxtpkT26kWF0fMqwxSSSCDAwb
- MhF3xlefFSIz7PMtjS+ryNq5ROi++ufgXpTXlFm5SSTVKON8yn/K4SmyvY6W0vW6eqoF
- tYSLO5iXv2Yh03BkC2GGGbl+6zWyNHVjqRBNdYGlX98a705RiVxhYPIUkAQ1+PuehaGM
- hRMxRdvrP5I7lYmk450XMpq8X3IlE7ghjHpg5kdc4VmtYiQ2ovmrGq8q7DjbuWmAZdjR
- MgOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773248736; x=1773853536;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773248622; x=1773853422; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=s8hhLwgIhU2/sosIgArVE4EJu0fvWf6z/Nekl4sBFGU=;
- b=BkW4oDgUQ6Sh9Ve2bvrAVcU6+oVHsHtWeMy1j2XofKVnYzKJMCrmBh49Byqvl/S4U+
- WT7qLmbUq+gwnvcduqW7gK026/2H8jTeYH7Fcy9tHEtDu8+diq8tFwM8EV1ZxOY7ERa4
- LIJkzTA5BpxokcecGc1u5ifMRGd3jjAsubD4+xWxkhFJvbirkM8qd5AgkLwMSpoJrTTB
- 8DoqvfQAjQAb0IZDeW+wknnRccqqugi+G6XPyUCkL9lNbywGZnXq+zwyR/QV1xMaGv43
- 1pu4t3RCxA8oXyk525qXfGZbJC8Ovtk6//35iGQhwd+3P9YmCUCWmjsWaXVEdzl/Jhid
- JG9Q==
+ bh=RJnkcIquPOFwO8qegqW/YJg1YrDqow8L+C0wncK6ATU=;
+ b=W3CnMoSKklnRqR+iruEfCNj4gyJCi46xf2ry1qhzWlb34kczSrNBdeO6ksGrEgmm7b
+ /IjT1P8vhktbYBFNapB3tnH1KoijJmYjDCD7J9OHp2yR7ZdLaOTq0FBTkTwJZ/K7/NbL
+ EoTws3uCXRmty23STn6HjZVnQHFZjcwS/ONyFLjr2ROXtaQ9+xIYPxARoAfz831/JW7O
+ KSOGcsV9BuOjyTze0ks7t4VfcBM81phLmkaM0cLyzm4yI3ulgmBhqVK8DvVUem5qcDk0
+ Cou9KNHSlyoomE5Dzu7wCz1Y+jn6MhaKsvGy9PhaWOdaZIZEGUuvHbr6N+df5Hr69Yx3
+ R6HQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773248622; x=1773853422;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RJnkcIquPOFwO8qegqW/YJg1YrDqow8L+C0wncK6ATU=;
+ b=I+V+hQ9mo/S7hUW5ZXo3Hpb5dMutAzMajsgEQ3p4w/uSQOQ7gO2F2F46Zl8K9ax92i
+ gENz+aAzrAGUcn+eMJNinxVGfnfklt7ikZticBPTatK4b57528GF67sU15nRVLTF/ylU
+ sxEGTcK9rGlMIs11vBe4xt5QraHIQAyGBHbLfr1Gl9sYx7hOmoQ+ZzmWuJ3OPbbfKAkd
+ xg5xKttUNZfAYS3o7B+Q+stskjTruzOru70BScMWCtjy16TAsMc4CUxK5zeGW6XQMU1c
+ qxVTkWmpZ133JCtv27PxQ9b+kJ2jB7qZfqHyiGSG5Qx6JohLzg+qJjncPtBdAXzrbPYH
+ hkhA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXBWvCakWWLQ9EsK/D6ljdnvTZCZGbgxJ0YpF7MZpKEIPs+/ls6mKonVMxv9uaJKeXPIWDNDV2U81IK@nongnu.org
-X-Gm-Message-State: AOJu0Yz8OgIF2ozrc/pmaEvb2Sq+HjhuX1FZIbk+ueLnlltqT7uytcIs
- 5eZdQy+LJNbofj7/NpWFgNS0/so58us3miz/8/qywI0fW1nefcC3emv/3c2f/v/sC3tTo42C8UF
- nYZp0xlg5pXyeGolM+mvPPnHtjIfjnLsiqd/CUJ6TQQ==
-X-Gm-Gg: ATEYQzy/lRoaeb/CSJzc7cB9hzK/CT3mEIYNd+6sMLekyegU3rFKsl0NXlvtBYidOY9
- J072JWAAQxUswd6s3yMHxfJorWRw/AVfdFM4rj1XqsbuN3R546tQiSz0XNRPFfUXVT11tw5LMsp
- zSs6kdIJ4NMJ33q7eJZ0J+QJihobYBTE0x99cqlbt1cYXsFz6RpY3sJeMrF8kjeXy03g4ZelHGF
- 0a86EoHzDWBLHwQbCWSGUfDmnkKe2qfOvzqcwwKYCDjGN9q4scl75TnMTWjCiHv6E39TE2lgoQD
- MmUg8CsoIOIPGMXv97UroUHx25VmZhfUQexYd3NGBtQEvRZKzK+/nFxJ47PFSNWoZNw=
-X-Received: by 2002:a05:690e:1595:20b0:649:cc0d:a99b with SMTP id
- 956f58d0204a3-64d656a9681mr2304942d50.11.1773248735633; Wed, 11 Mar 2026
- 10:05:35 -0700 (PDT)
+ AJvYcCU/7JZaO/r/Uqcxtj2ygWfMexArVcVkJ6lArSntc9Z5a0D17YlYuKbq+zri763tP8sM4A532JrTIZZR@nongnu.org
+X-Gm-Message-State: AOJu0Yxs/+P3YzYbSgjqC2IR4uYVlS0I2rgC0jQbUY0oiwrp8oZKpcsz
+ T5sq88+M7WRnNgJQaMoaty4LWUT0HyYjcjuP9HZL6B00NeW9hpZPR3b54R1jkSs8HagPLpnF6t7
+ cvsOHdGqlzF9wAB3a8adokDm44EiogZCgA+cgLSzkgA==
+X-Gm-Gg: ATEYQzz6C3/S7o2tnBbMfAQ4/FORkeNnF5y5CJCfS3Q7l64KG8c1gv28wzTaaOC7ONp
+ uxPxnoqym+V965jMHPKOKVy07LJclvPAMhKM484pXQ3IIx91MoVyrRZZnHelyWp4a6Cd9BKtaEr
+ wj9L3rz2MkUVS3gUNr9hsZZmaFDOdID1tLe/e3I7CU5PHZVKsiHgmcjx0mkJfHeBoyYtePJo0TG
+ JWmjWWQRvwvpG2mfcrB60JcfyHatoCl5jOtB/OspPbempBATunpnSBvcduyhNJbcY8x0C2iRw/Q
+ +doNUXxjF40bJXZ1o1umTj28ZkRqCkalHc61fygGm0SAgGS2e1UaZKqZzEM7Q1mnvM4=
+X-Received: by 2002:a05:690e:d09:b0:64c:ed9e:2e22 with SMTP id
+ 956f58d0204a3-64d65823d64mr3091544d50.80.1773248621603; Wed, 11 Mar 2026
+ 10:03:41 -0700 (PDT)
 MIME-Version: 1.0
-References: <tencent_1BF621A658E043C088A2681178D57ED14A09@qq.com>
- <a8e75e56-a34b-4df0-866e-3ce5828dd472@phytium.com.cn>
-In-Reply-To: <a8e75e56-a34b-4df0-866e-3ce5828dd472@phytium.com.cn>
+References: <20260311095405.26297-1-hi@alyssa.is>
+In-Reply-To: <20260311095405.26297-1-hi@alyssa.is>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Mar 2026 17:05:24 +0000
-X-Gm-Features: AaiRm51nohGj-1LpdtU9r14KeB2EsJn9ggPWTylVdOQVeHhkL01hqU7w0bB__ys
-Message-ID: <CAFEAcA8kPQwFFdhYWr5WQisAgSs3s4YOuvZm2UoFT83LF5dgHg@mail.gmail.com>
-Subject: Re: [PATCH v1 0/3] Fixed bugs in pl080
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: 1774596582@qq.com, qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Date: Wed, 11 Mar 2026 17:03:30 +0000
+X-Gm-Features: AaiRm53fXzB5o-jO-zwjARu-4kwiJI74QwIG80HyHBOohcZT9gDOVcJOmSsF_wg
+Message-ID: <CAFEAcA8GCz2c18e3+bwFooAxYZzBrX3OjjQ58CWJOdLfTYL_dA@mail.gmail.com>
+Subject: Re: [PATCH] target/arm/kvm: fall back if nested unsupported
+To: Alyssa Ross <hi@alyssa.is>
+Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org, 
+ kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
+ Miguel Luis <miguel.luis@oracle.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,25 +120,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Mar 2026 at 16:14, Tao Tang <tangtao1634@phytium.com.cn> wrote:
+On Wed, 11 Mar 2026 at 09:54, Alyssa Ross <hi@alyssa.is> wrote:
 >
-> Hi,
+> If I create a machine with more CPUs than KVM supports, but specify
+> multiple accelerator options, QEMU will fall back to the next
+> accelerator.  This is great, because if I've explicitly specified
+> multiple accelerators, I've told QEMU I'm fine with any of them being
+> used to provide the machine I want.
 >
-> It looks like three patches of this series were sent out-of-thread and
-> are not attached to this cover letter.
+> When I create a machine with nested virtualization enabled, though,
+> this doesn't happen.  KVM often doesn't support it, but TCG always
+> does.  The nice thing to do would be for QEMU to fall back to TCG if
+> KVM can't provide, like it does when too many CPUs are requested.
+> This patch adjusts the behaviour to do that.
 >
-> You may want to resend the full series, or resend those patches with
-> In-Reply-To pointing to the Message-ID of this cover letter so they
-> appear in the same thread:
+> This is very helpful for OS development scripts that run an OS in QEMU
+> =E2=80=94 I want everybody to be able to run the script, always with
+> virtualization enabled because the OS requires it, but for it to take
+> advantage of KVM acceleration when available.
 >
-> git
-> send-email --in-reply-to="tencent_1BF621A658E043C088A2681178D57ED14A09@qq.com"
-> xxxxx
+> Signed-off-by: Alyssa Ross <hi@alyssa.is>
+> ---
+>  hw/arm/virt.c    | 6 ------
+>  target/arm/kvm.c | 8 ++++++++
+>  2 files changed, 8 insertions(+), 6 deletions(-)
+>
+> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+> index 7456614d05..0b63b2eac3 100644
+> --- a/hw/arm/virt.c
+> +++ b/hw/arm/virt.c
+> @@ -2372,12 +2372,6 @@ static void machvirt_init(MachineState *machine)
+>          exit(1);
+>      }
+>
+> -    if (vms->virt && kvm_enabled() && !kvm_arm_el2_supported()) {
+> -        error_report("mach-virt: host kernel KVM does not support provid=
+ing "
+> -                     "Virtualization extensions to the guest CPU");
+> -        exit(1);
+> -    }
+> -
+>      if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled(=
+)) {
+>          error_report("mach-virt: %s does not support providing "
+>                       "Virtualization extensions to the guest CPU",
 
-It looks to me looking at the headers that the emails were sent with correct
-message-id and in-reply-to headers, but something in the qq.com
-mail infrastructure has re-written the message-IDs and broken the
-threading.
+I think there is a bigger problem here. The code in the virt
+board init assumes that the accelerator has already been
+selected: based on whether kvm_enabled() or tcg_enabled()
+it decides things like which GIC version can be used, whether
+"-machine gic-version=3Dhost" is valid or not, and so on.
 
+This bit we're deleting here is just one of multiple checks
+we do that assume that we know the accelerator already. If
+we actually don't know if we're going to be using TCG or KVM
+then all this code needs to be rethought.
+
+Paolo, can you unqueue this for a bit while we think about it?
+
+thanks
 -- PMM
 
