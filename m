@@ -4,71 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F9501125847
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2469112583A
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:22:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LK1-0000Tb-T4; Wed, 11 Mar 2026 11:18:06 -0400
+	id 1w0LBL-0007r6-5K; Wed, 11 Mar 2026 11:09:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LJ0-00006w-Us; Wed, 11 Mar 2026 11:17:08 -0400
-Received: from sender4-of-o54.zoho.com ([136.143.188.54])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0L9M-0003x7-9j; Wed, 11 Mar 2026 11:07:06 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
- id 1w0LIx-0000Wx-8m; Wed, 11 Mar 2026 11:17:02 -0400
-ARC-Seal: i=1; a=rsa-sha256; t=1773242183; cv=none; 
- d=zohomail.com; s=zohoarc; 
- b=G1hagRa4xojlEj9k9aUjM5hZnaxAlpbf5aPag3qOp4sJfvDKre8+jw3xXQIhvbW7WQkIjdCrfRvMeYH5iNGwcjNq4lTdz6/wRmeDfzyncMCU5hAUKa/CN+7QJEUjiJe7Nsgwl6V4sLrQkQIwED0m8GHFwZ3/Fy7HT2aMJ2f5+eg=
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
- s=zohoarc; t=1773242183;
- h=Content-Type:Content-Transfer-Encoding:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
- bh=Xiwc6ZTsoVE3sApNhrgrxie2j913R3HBh0AQxHunnbc=; 
- b=QIN7WirFHOLQw71nqs2JYJLBvb7+gV77MLArw/rFPWVopAAbZcDT4w3cuvvy4fMN3YvKQI7DFCs0nXJ+gZJO4VQHHkVwq9Yo9ASFV1Y+n83hGJYIcfBWd9PZyD5kdgMltJ6YtpEC81VUoLWdsxTggPNQdKUHgYal8EPoaRh1YEM=
-ARC-Authentication-Results: i=1; mx.zohomail.com;
- dkim=pass  header.i=anirudhrb.com;
- spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
- dmarc=pass header.from=<anirudh@anirudhrb.com>
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773242183; 
- s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
- h=From:From:Date:Date:Subject:Subject:MIME-Version:Content-Type:Content-Transfer-Encoding:Message-Id:Message-Id:References:In-Reply-To:To:To:Cc:Cc:Reply-To;
- bh=Xiwc6ZTsoVE3sApNhrgrxie2j913R3HBh0AQxHunnbc=;
- b=v7nhr3pycgbbJZUYSfbkc0/cOtQTLzLolsHYkCEQ0s7qBE3It80+/P5Vs/lFCSGt
- UAIdnT2u3O00gzNtysCmoaZNuK8Iu19jomFXEA6KvXKfRIdn88t+9DbLu1X+SeFiAMe
- U4lcEiSG7OVAssd2dJ/vPc2ZnpPH+nKXey0UPesM=
-Received: by mx.zohomail.com with SMTPS id 1773242181330266.4815230829188;
- Wed, 11 Mar 2026 08:16:21 -0700 (PDT)
-From: Anirudh Rayabharam <anirudh@anirudhrb.com>
-Date: Wed, 11 Mar 2026 15:15:29 +0000
-Subject: [PATCH 02/14] accel/mshv: move msr.c to target/i386
-MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Message-Id: <20260311-mshv_accel_arm64_supp-v1-2-c31699b7bc1f@anirudhrb.com>
-References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
-In-Reply-To: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0L9K-0004xr-Df; Wed, 11 Mar 2026 11:07:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773241481; bh=AREQ/dFnXzezlRlc40BNW1VnJ2gwDKJL+a4jQQus1S0=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=DCySK9BW6wmyKWSutjEWEw7veRgdOBWOWTnUL8exww5M3XdXH3D8f/B0F5+IeC/RQ
+ OXidWZ934wXjnusW46CwLvEULuVBW/lbTS6wES3nOsWnBNc6LFP0nKCoCKyCww+piH
+ 6G7fAZ14mP4t2K26dOuEWse+PwiYpp+QWY81SM7LqU56xThjVmMoTGSlW3tOVugS4H
+ bfFuJGp++EOgpVhhZ3L9qTdCmoYA6pHqbF6C4qu6p9qaD0lSN40gKle8rWFmK7LHY5
+ sw+ufVK0XF60M37yT+8oge7uWN2ZrgN+WXwc6yBZ6r3FSPBJNNmb8nzhulavMwk5Iw
+ xMKVdiQb4ZwEw==
+Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
+ by isrv.corpit.ru (Postfix) with ESMTP id 5B04A191E89;
+ Wed, 11 Mar 2026 18:04:41 +0300 (MSK)
+Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by tsrv.corpit.ru (Postfix) with ESMTP id 472C537C2CA;
+ Wed, 11 Mar 2026 18:05:19 +0300 (MSK)
+From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Magnus Kulke <magnuskulke@linux.microsoft.com>, 
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, 
- =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>, 
- =?utf-8?q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- Anirudh Rayabharam <anirudh@anirudhrb.com>, 
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
-X-Mailer: b4 0.14.3
-X-ZohoMailClient: External
-Received-SPF: pass client-ip=136.143.188.54;
- envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 06/46] contrib/plugins/hotblocks: Correctly free
+ sorted counts list
+Date: Wed, 11 Mar 2026 18:02:42 +0300
+Message-ID: <20260311150327.1084669-6-mjt@tls.msk.ru>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+References: <qemu-stable-10.1.5-20260311180252@cover.tls.msk.ru>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -84,47 +72,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Aastha Rawat <aastharawat@linux.microsoft.com>
+From: Alex Bradbury <asb@igalia.com>
 
-This file has x86 specific implementations. Move this file to i386
-folder in preparation for ARM64 MSHV support.
+g_list_free should be passed the head of the list.
 
-Signed-off-by: Aastha Rawat <aastharawat@linux.microsoft.com>
----
- accel/mshv/meson.build            | 1 -
- target/i386/mshv/meson.build      | 1 +
- {accel => target/i386}/mshv/msr.c | 0
- 3 files changed, 1 insertion(+), 1 deletion(-)
+Signed-off-by: Alex Bradbury <asb@igalia.com>
+Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/cf5a00136738b981a12270b76572e8d502daf208.1753857212.git.asb@igalia.com
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+(cherry picked from commit 90fabd5ddace6ffa5a62a5186201fd071b4e2b74)
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/accel/mshv/meson.build b/accel/mshv/meson.build
-index c1b1787c5e..e433187cde 100644
---- a/accel/mshv/meson.build
-+++ b/accel/mshv/meson.build
-@@ -1,6 +1,5 @@
- system_ss.add(when: 'CONFIG_MSHV', if_true: files(
-   'irq.c',
-   'mem.c',
--  'msr.c',
-   'mshv-all.c'
- ))
-diff --git a/target/i386/mshv/meson.build b/target/i386/mshv/meson.build
-index 49f28d4a5b..6091c21887 100644
---- a/target/i386/mshv/meson.build
-+++ b/target/i386/mshv/meson.build
-@@ -2,6 +2,7 @@ i386_mshv_ss = ss.source_set()
+diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
+index 98404b6885..d3dd23ed9f 100644
+--- a/contrib/plugins/hotblocks.c
++++ b/contrib/plugins/hotblocks.c
+@@ -73,15 +73,16 @@ static void exec_count_free(gpointer key, gpointer value, gpointer user_data)
+ static void plugin_exit(qemu_plugin_id_t id, void *p)
+ {
+     g_autoptr(GString) report = g_string_new("collected ");
+-    GList *counts, *it;
++    GList *counts, *sorted_counts, *it;
+     int i;
  
- i386_mshv_ss.add(files(
-   'mshv-cpu.c',
-+  'msr.c',
- ))
+     g_string_append_printf(report, "%d entries in the hash table\n",
+                            g_hash_table_size(hotblocks));
+     counts = g_hash_table_get_values(hotblocks);
+-    it = g_list_sort_with_data(counts, cmp_exec_count, NULL);
++    sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
  
- i386_system_ss.add_all(when: 'CONFIG_MSHV', if_true: i386_mshv_ss)
-diff --git a/accel/mshv/msr.c b/target/i386/mshv/msr.c
-similarity index 100%
-rename from accel/mshv/msr.c
-rename to target/i386/mshv/msr.c
-
+-    if (it) {
++    if (sorted_counts) {
++        it = sorted_counts;
+         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
+ 
+         for (i = 0; i < limit && it->next; i++, it = it->next) {
+@@ -94,7 +95,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
+                     qemu_plugin_scoreboard_u64(rec->exec_count)));
+         }
+ 
+-        g_list_free(it);
++        g_list_free(sorted_counts);
+     }
+ 
+     qemu_plugin_outs(report->str);
 -- 
-2.43.0
+2.47.3
 
 
