@@ -4,46 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CCCC5112583A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 14:58:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3303A1125839
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 14:58:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L0F-0001Pf-3r; Wed, 11 Mar 2026 10:57:39 -0400
+	id 1w0L0J-0001Rz-8S; Wed, 11 Mar 2026 10:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1w0L0D-0001NL-1A; Wed, 11 Mar 2026 10:57:37 -0400
-Received: from proxmox-new.maurer-it.com ([94.136.29.106])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
- id 1w0L0A-0002oQ-Pz; Wed, 11 Mar 2026 10:57:36 -0400
-Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
- by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 2837A874F9;
- Wed, 11 Mar 2026 15:57:26 +0100 (CET)
-From: Fiona Ebner <f.ebner@proxmox.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, hreitz@redhat.com, kwolf@redhat.com,
- vsementsov@yandex-team.ru, jsnow@redhat.com, qemu-stable@nongnu.org
-Subject: [PATCH 2/3] iotests/041: add test for mirror with throttled NBD
- export as target
-Date: Wed, 11 Mar 2026 15:54:26 +0100
-Message-ID: <20260311145717.668492-3-f.ebner@proxmox.com>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260311145717.668492-1-f.ebner@proxmox.com>
-References: <20260311145717.668492-1-f.ebner@proxmox.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0L0F-0001Pe-2m
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 10:57:39 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0L0C-0002qE-Gv
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 10:57:38 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64acd19e1dfso12043058d50.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 07:57:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773241055; cv=none;
+ d=google.com; s=arc-20240605;
+ b=S7A3ecsqJ6/aci+118kOuAhBlFcTX9dYQy0L0845RlWUrtK7lMsnWsg4tFDRDWRY3z
+ xc/kOC0O/wBAE41I97s+2X9GF+w2ej7K5jXbcxCHBojCHlH5fNllQSslLHJGwQ9wUYMp
+ JVX3mhg4mg0Yiw3MaWCQkMjRLg9kn9dejAHJq3lBaVtvTWd+58vck9hVifD2Pm0mMAXa
+ G5boVa/KC3maaidPZ4x9JBL5OQZzlXdwhqwK0o7xFZeLQwGRfEbaOkpsyVNxJQPGjVgt
+ 6Kt60NfQKnpB1pZwPyvs0qrfdu6BzPuKQ84XfCPTrSZb7eVWmVfue8Ar4pst/KBbmzP/
+ SYgQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=bh9m71vS1r2zO92bncjCpyAPe2SZe0FccD4Tht2t33I=;
+ fh=0KMuFbQh6/015PlQGbmhuo/mPfRDSg2dtTQRkZinmsM=;
+ b=cHTC5/R4DmySjS+olyXHbM54WFka9nzVTQ3jnjH79Z+KM2YwRlHSM/Su+r61ndG+Lc
+ hUKvsrJLpk+aD8V0RIDBiyOFDgtsGDDbuYul3UKkCHM2iG52GxiJJHBKmQ4aswgKlm4q
+ bv98di5F7qG68bv2pURO4d48e/cnPhSDCVkcfHc/fUmyUgE/x9+F+3YmZHD0i3snso7d
+ u+NTRkmlAcuafwOS8uwToOF7rEYPQ4FmM12WDmICkPujWXu5tRWGa9KOMFyKD2AL64Ys
+ p4K+TE14GytVSMpLOmQTCk+ZLNKx9GZBfxaLuQ6s3gZYO9Z3cQkWvoDlgIK0OERC/xce
+ agWQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773241055; x=1773845855; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=bh9m71vS1r2zO92bncjCpyAPe2SZe0FccD4Tht2t33I=;
+ b=eKqBjdDvyMNmOkfOlrBDJfFvjaTIxIRZZpTIXAjXPWbJgHbsoSlZIYgiC3xTlwToBF
+ cIkfmvteRRe1hdTZRuDMNRP2NAxLu7/1Rvl67TCBwZ+xU/tt+jQoovyyxQ69M6MDj3tm
+ 6Zp60yDTe17VOaM573eMC6ytOTRfT3rRw1EgX8b0Co/VNVsnMMVzxVNLLqP3zoTv2ngK
+ imyNE0/FuBz9Z1IyUbcg2yMBXpfGiNAFyltnweOLCh9P2RwdSyhn3V8M7LQH1VnOjp4d
+ s/soPPb+M9D8z7ZnyFN0z98be8v6XkG+b0nipY0A5IPn2pPEGbLhHhGTCkghL6P1+VA2
+ d2/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773241055; x=1773845855;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=bh9m71vS1r2zO92bncjCpyAPe2SZe0FccD4Tht2t33I=;
+ b=u1EtjkziCUrVQ7iXYzeoxA21PhUI3WyLMfuWYPx1HBatVHn7nytWADYZ9qEKiPsSDO
+ 8k2hcWd3HhoM9ehwUrzCxwTFh4CKZXLJ7R0GYbFwdSRkB+H/faHJ+9i6yscqmREgWnn5
+ +GYJCsRVZRavTkdE4zzRBJw9XuC22OBbBCWZYVOsQq1SzNBzm7yW7EkmykXd6kbjdjId
+ yozPS4iTjuXJBq2FlMQZPBWJrno/R/SKhv+pUKHqbMOCH6XRDqB16vSdacE+kEh127ST
+ 2fnY4Frnv5h4y3Na/ZjR0zMjQOMKXSAWDxHiswzW8jrztLHxZwMfyngS6FyUImVQeCvO
+ Yc7A==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWZC9hewrrKaXcgfAnTjda3BlpMtS77Hr3+DVGp93A7W3s+aofiDrYcO7Tri2lZ68udZmjdSOxj1a46@nongnu.org
+X-Gm-Message-State: AOJu0YyC2ZPZzgwRSXepGVr79+GQYi8PNI+y7GLssz0qKyNrQWj/onFR
+ rXr44vOplIjyw0rov9BcrppHn3Mpqbmq1SAJVtk2YtPhG+7dJFBqFDQ2r26O/gZ8CHP4NIga6Bm
+ dAVrOsXp4xpAG2no4gGziyIn17gv8GATlODnwl0Kzhg==
+X-Gm-Gg: ATEYQzwdfhhGu/Jt8Hch1/XnBpqKdMHAd+o7P0mbJUdDe4A3dR4ah56pgeBPuBhXdzT
+ yqCZSJfTPRZy0wJUZB+XKncq2BZopwCEzQmrQCwrJRIewMHkhF+wJQon6MHc1JbtLbqwvLa81Hc
+ EYeyjIUUZgcH6KxPtoh1NYm4grahddmkQpuSwnwhBGhpAcI0iUD/a6zD8APnTcl7/0Jcw2hQeVN
+ X741DNAd8raN33wCTefiHQLTwJq+fXtXg3gU1AOEVjFi6WGUtaw1GmnpQfsq42whvuNGje0B6xY
+ hDLU6q9++d1/iPQ87vpV6hsRinFhQmvrxZqac1e+3g+Iftzj4ePCM9uJ6qvSAUHdf6db0O0Zttu
+ o/A==
+X-Received: by 2002:a05:690e:4184:b0:64a:e366:f511 with SMTP id
+ 956f58d0204a3-64d6569e129mr2390914d50.7.1773241054893; Wed, 11 Mar 2026
+ 07:57:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
-X-Bm-Transport-Timestamp: 1773241010367
-Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
- helo=proxmox-new.maurer-it.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260311143549.118720-1-shivangu@linux.ibm.com>
+In-Reply-To: <20260311143549.118720-1-shivangu@linux.ibm.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 11 Mar 2026 14:57:23 +0000
+X-Gm-Features: AaiRm51qTG4MuYps8m3nAV3s4eBwmhDWUqaWh3XTC_5ToABBFzVUlllPluANh6k
+Message-ID: <CAFEAcA-MHLyKvJcbSpEGQz74dgFLJm2Bhda2=xSgXigdU=32eg@mail.gmail.com>
+Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com, 
+ milesg@linux.ibm.com, Aditya Gupta <adityag@linux.ibm.com>, 
+ Harsh Prateek Bora <harshpb@linux.ibm.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-stable@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -59,159 +119,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Mostly in preparation for commit "iotests/041: add test for duplicate
-job-complete with throttled target".
+On Wed, 11 Mar 2026 at 14:36, Shivang Upadhyay <shivangu@linux.ibm.com> wrote:
+>
+> The '-machine dumpdtb' command line option stopped working on
+> PowerPC/pnv systems after recent design change [1].
+>
+> Fixing this by generating fdt blob in `pnv_init`.
+>
+> [1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
+>
+> Cc: Aditya Gupta <adityag@linux.ibm.com>
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+>
+> ---
 
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
----
- tests/qemu-iotests/041     | 112 ++++++++++++++++++++++++++++++++++++-
- tests/qemu-iotests/041.out |   4 +-
- 2 files changed, 113 insertions(+), 3 deletions(-)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
-diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
-index 8452845f44..a7e1980f13 100755
---- a/tests/qemu-iotests/041
-+++ b/tests/qemu-iotests/041
-@@ -24,7 +24,7 @@ import os
- import re
- import json
- import iotests
--from iotests import qemu_img, qemu_img_map, qemu_io
-+from iotests import qemu_img, qemu_img_map, qemu_io, QemuStorageDaemon
- 
- backing_img = os.path.join(iotests.test_dir, 'backing.img')
- target_backing_img = os.path.join(iotests.test_dir, 'target-backing.img')
-@@ -1373,6 +1373,116 @@ class TestFilters(iotests.QMPTestCase):
- 
-         self.complete_and_wait('mirror')
- 
-+# Tests for mirror where the target is a throttled NBD export.
-+class TestThrottledNBDTarget(iotests.QMPTestCase):
-+    image_len = 3 * 1024 * 1024
-+    bps_total = 1 * 1024 * 1024
-+
-+    def setUp(self):
-+        iotests.create_image(backing_img, self.image_len)
-+        iotests.create_image(target_backing_img, self.image_len)
-+        qemu_img('create', '-f', iotests.imgfmt,
-+                 '-o', f'backing_file={backing_img}', '-F', 'raw', test_img)
-+        qemu_img('create', '-f', iotests.imgfmt,
-+                 '-o', f'backing_file={target_backing_img}', '-F', 'raw',
-+                 target_img)
-+        qemu_io('-c', 'write -P 23 0 3M', test_img)
-+
-+        self.qsd = QemuStorageDaemon('--nbd-server',
-+                                     f'addr.type=unix,addr.path={nbd_sock_path}',
-+                                     qmp=True)
-+
-+        self.qsd.cmd('object-add', {
-+            'qom-type': 'throttle-group',
-+            'id': 'thrgr-target',
-+            'limits': {
-+                'bps-total': self.bps_total,
-+            }
-+        })
-+
-+        self.qsd.cmd('blockdev-add', {
-+            'node-name': 'target',
-+            'driver': 'throttle',
-+            'throttle-group': 'thrgr-target',
-+            'file': {
-+                'driver': iotests.imgfmt,
-+                'file': {
-+                    'driver': 'file',
-+                    'filename': target_img
-+                }
-+            }
-+        })
-+
-+        self.qsd.cmd('block-export-add', {
-+            'id': 'exp0',
-+            'type': 'nbd',
-+            'node-name': 'target',
-+            'writable': True
-+        })
-+
-+        self.vm = iotests.VM().add_device('virtio-scsi,id=vio-scsi')
-+        self.vm.launch()
-+
-+        self.vm.cmd('blockdev-add',{
-+            'node-name': 'source',
-+            'driver': iotests.imgfmt,
-+            'file': {
-+                'driver': 'file',
-+                'filename': test_img
-+            },
-+            'backing': {
-+                'node-name': 'backing',
-+                'driver': 'raw',
-+                'file': {
-+                    'driver': 'file',
-+                    'filename': backing_img
-+                }
-+            }
-+        })
-+
-+        self.vm.cmd('device_add',
-+                    driver='scsi-hd',
-+                    id='virtio',
-+                    bus='vio-scsi.0',
-+                    drive='source')
-+
-+        self.vm.cmd('blockdev-add', {
-+            'node-name': 'target',
-+            'driver': 'nbd',
-+            'export': 'target',
-+            'server': {
-+                'type': 'unix',
-+                'path': nbd_sock_path
-+            }
-+        })
-+
-+    def tearDown(self):
-+        os.remove(test_img)
-+        os.remove(target_img)
-+        os.remove(backing_img)
-+        os.remove(target_backing_img)
-+
-+    def test_throttled(self):
-+        self.vm.cmd('blockdev-mirror',
-+                    job_id='mirror',
-+                    device='source',
-+                    target='target',
-+                    sync='full')
-+
-+        time.sleep(1)
-+        result = self.vm.qmp('query-block-jobs')
-+        self.assert_qmp(result, 'return[0]/ready', False)
-+        self.vm.qtest(f'clock_step {4 * 1000 * 1000 * 1000}')
-+        time.sleep(1) # in real time, the rest should now comlpete fast
-+        result = self.vm.qmp('query-block-jobs')
-+        self.assert_qmp(result, 'return[0]/ready', True)
-+
-+        self.complete_and_wait('mirror')
-+        self.vm.shutdown()
-+        self.qsd.stop()
-+        self.assertTrue(iotests.compare_images(test_img, target_img),
-+                        'target image does not match source after mirroring')
-+
- 
- if __name__ == '__main__':
-     iotests.main(supported_fmts=['qcow2', 'qed'],
-diff --git a/tests/qemu-iotests/041.out b/tests/qemu-iotests/041.out
-index 46651953e8..5273ce86c3 100644
---- a/tests/qemu-iotests/041.out
-+++ b/tests/qemu-iotests/041.out
-@@ -1,5 +1,5 @@
--...........................................................................................................
-+............................................................................................................
- ----------------------------------------------------------------------
--Ran 107 tests
-+Ran 108 tests
- 
- OK
--- 
-2.47.3
-
-
+thanks
+-- PMM
 
