@@ -4,58 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C5A9112583A
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:23:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 592B21125847
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:23:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LAJ-0004xO-53; Wed, 11 Mar 2026 11:08:05 -0400
+	id 1w0LEM-0007TL-3U; Wed, 11 Mar 2026 11:12:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7c-0008Qm-48; Wed, 11 Mar 2026 11:05:18 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0LCt-0003Vl-CL
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:46 -0400
+Received: from p-west2-cluster3-host9-snip4-6.eps.apple.com ([57.103.69.69]
+ helo=outbound.mr.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7Z-0004KM-Mo; Wed, 11 Mar 2026 11:05:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=EobHR6aZuNGAg48s15DbsxWeloD5KaiXWl+B9fhDdvc=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=Iti9VnXkjKZ+HeEB0ukEX08k1JW7uxg/KgcEoGQOabBCb+uyRE4Jmst3+5SrcsdAN
- WiCAYlzk6QwTjpveLcwhP8TBl3UThgMvmvYN3xUfb9DeQQqwholDuHyHVQNTFsNrlW
- hEpPFil3bqiGqXf67+AvzqRSs4R/Elk6r+A5tzS/nOUv1IZo/tJq/za6dzUeChLRSH
- yvCFNRHGjC05pXn97OiCwjCymvTqNFLeRTy1G78CXKTxyv6JZkNoOk7WJdgASOWBUh
- 5ILFm9+qRZyUwB0bKc2dRp4DNZqNb/4N3VeuDSk828JzuBoLfFhm1ynY0KfciOV4q4
- ieSIzUQwMSPgw==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id B3C9F191E5E;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 9EE1337C2B0;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0LCr-00068e-3L
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 11:10:42 -0400
+Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPS id
+ 2B44E1800FB5; Wed, 11 Mar 2026 15:10:35 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1773241839; x=1775833839;
+ bh=4icJ72AU1OOM5tOrqHPkWr3ogIPSAmTNwYbIOrNfOTo=;
+ h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
+ b=Zzmy5bYt101PVnWTD4+CDcunetntJWbqXhAR46xGPQqoYmrdFj5lSJv1a5jlN2qbM/HyF0dBKkgoQpZNz5joh1ELJSxavnKHajLP/aArfwQfB7hU4PJAe+Fe4pVqYt1/gW+FH2E/zmWKcATyg8nA5RlVOSkdG1ASGdcMY/I7CUbwsT9ElponvbLSrUXrVDnmSPlA54nZK8nE8qHFvNDn9DaZyj8eskvqn/PBG4Bqnjp0fKhx6fWzvmCfH0VQNM9zzZb57bFPRFpCcD8vZ5IA49momP4VjYvdRLIcNMjN7eVTf2zknBMD1VKZ6JJmbif0CAEZRZ56dhTkd28PcZVybg==
+mail-alias-created-date: 1752046281608
+Received: from localhost.localdomain (unknown [17.57.152.38])
+ by p00-icloudmta-asmtp-us-west-2a-100-percent-2 (Postfix) with ESMTPSA id
+ 967B71804E40; Wed, 11 Mar 2026 15:10:20 +0000 (UTC)
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- Fiona Ebner <f.ebner@proxmox.com>,
- Jean-Louis Dupond <jean-louis@dupond.be>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 32/44] mirror: Fix missed dirty bitmap writes during
- startup
-Date: Wed, 11 Mar 2026 18:02:04 +0300
-Message-ID: <20260311150221.1084186-32-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
-References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Mohamed Mediouni <mohamed@unpredictable.fr>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH v2 2/5] whpx: arm: add EC_DATAABORT assert for
+ WHvRunVpExitReasonGpaIntercept/UnmappedGpa
+Date: Wed, 11 Mar 2026 16:10:11 +0100
+Message-ID: <20260311151014.55915-3-mohamed@unpredictable.fr>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260311151014.55915-1-mohamed@unpredictable.fr>
+References: <20260311151014.55915-1-mohamed@unpredictable.fr>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+X-Proofpoint-GUID: azrnpYiJsT2gFNFSbzJG4vboOO9_Mb0t
+X-Proofpoint-ORIG-GUID: azrnpYiJsT2gFNFSbzJG4vboOO9_Mb0t
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDEyOCBTYWx0ZWRfX2p9HmN3vs4Qd
+ QG3WLoVnLmYZ2AdcFWQqdVcRvNaJMjkoou9ArTPhDPYAVqnWXb7O7a9Ry+D5HrSu/DJ81Qo9AJo
+ 5NZC0WLFJcr6eAEWFLYjzqXfwc78+W8cAQ9XOAJAXk6KAlF+7O7zK82/9K3W0MDe2TjSVWh9oU5
+ 2v9Ge2+WufMFEZEzd/YYenlHiWPIEw1ujD+Bm6xNyvKd3km4Up/XGgY+4jIkjSEk1qDWypbjV4c
+ ZrPP2k1ku/XRywSHBBWXedayVLjA1tKyZbb8ZENpp4+BHcWXk+lKRf6PO+n7BA8BXHHcAVJO1Om
+ 54UOtJrIE6q4ZO6Ji1aF7Gx/3+m7AhW+xyvyN+VmaFSri1Q5GV7Bj82fGCaZq8=
+X-Authority-Info-Out: v=2.4 cv=dfmNHHXe c=1 sm=1 tr=0 ts=69b185eb
+ cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
+ a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=iF5FY4ceKisILDQj2E8A:9
+ a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ mlxscore=0 phishscore=0 bulkscore=0 mlxlogscore=659
+ suspectscore=0
+ lowpriorityscore=0 clxscore=1030 spamscore=0 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603110128
+X-JNJ: AAAAAAAB+8OTMr/my65dSUzA9MN28twdwIxmI3M0J2kxSUzBsKLLymMxIklEOkW3IubX9beGo+/KD6jHiNNadaZ1vUpkv6kCIrfXpmr6CPADKQhDazewAzQzs/WZely7XCk04QW5Tp3uKKnC5yLv73qohgezkgvE0aNL1BA06KdH1QLRkMbLdDdu2NADOGbFPF0gK6oJxMOGZwk5aY9eFY3lsVLgcS/mKTQe6wjOK5PwLQPGMQj7OgGOz560D8fSrV1e8fSbqNGi35VDRnUC8QQk3r8x4ubvTXheaHAuYYiu0/PYCdRHB9FeKeGNgAvT4xHmALZlV0jwDyix8SvoBH3WiVqylYxMXh3xYowiNjE8UI//hizXTA0+sWntJSE2Y9ibCjRubC2phWEthEBxj0ovK4jQo+R0jpbdiGquMkJZk5ZEZT2OwAktra/4KNyPDK6F6QlXl0qN8/CVGLIRmi64hKrgJB/R31wG36AQt6M2Mav6XoIbEQ34FCB4YmynGhz7RKmUQgxxJQIJRnKdm3I/w56Y4mQRz85r6lyW6KiNS2MFqcu6T9InDNqBkSDJnvrgdl4FGwXKvuetGVydWaiYpHfvBdelxINxhSTziG492CI8rWGOwKwDX4y3+Vh5hzlcorecHttaoUxF/2pyxHj02fGJxU4E2GfdjR+8yQWl8Vbn+pHmFDiIYgaaOlpP7FSiGKYknTBZu++HPVpusACUBQ==
+Received-SPF: pass client-ip=57.103.69.69;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,154 +96,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Kevin Wolf <kwolf@redhat.com>
+If we get anything else from Hyper-V there's a problem, so enforce this.
 
-Currently, mirror disables the block layer's dirty bitmap before its own
-replacement is working. This means that during startup, there is a
-window in which the allocation status of blocks in the source has
-already been checked, but new writes coming in aren't tracked yet,
-resulting in a corrupted copy:
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Suggested-by: Alex Bennée <alex.bennee@linaro.org>
+---
+ target/arm/whpx/whpx-all.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-1. Dirty bitmap is disabled in mirror_start_job()
-2. Some request are started in mirror_top_bs while s->job == NULL
-3. mirror_dirty_init() -> bdrv_co_is_allocated_above() runs and because
-   the request hasn't completed yet, the block isn't allocated
-4. The request completes, still sees s->job == NULL and skips the
-   bitmap, and nothing else will mark it dirty either
-
-One ingredient is that mirror_top_opaque->job is only set after the
-job is fully initialized. For the rationale, see commit 32125b1460
-("mirror: Fix access of uninitialised fields during start").
-
-Fix this by giving mirror_top_bs access to dirty_bitmap and enabling it
-to track writes from the beginning. Disabling the block layer's tracking
-and enabling the mirror_top_bs one happens in a drained section, so
-there is no danger of races with in-flight requests any more. All of
-this happens well before the block allocation status is checked, so we
-can be sure that no writes will be missed.
-
-Cc: qemu-stable@nongnu.org
-Closes: https://gitlab.com/qemu-project/qemu/-/issues/3273
-Fixes: 32125b14606a ('mirror: Fix access of uninitialised fields during start')
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-Message-ID: <20260219202446.312493-1-kwolf@redhat.com>
-Reviewed-by: Fiona Ebner <f.ebner@proxmox.com>
-Tested-by: Jean-Louis Dupond <jean-louis@dupond.be>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit 0f51f9c3420b31bb383e456dd7bf24d3056eeb73)
-(Mjt: context fix in block/mirror.c:mirror_start_job() - bdrv_graph_wrlock_drained() is not in 10.0)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/block/mirror.c b/block/mirror.c
-index a53582f17b..db2af08050 100644
---- a/block/mirror.c
-+++ b/block/mirror.c
-@@ -98,6 +98,7 @@ typedef struct MirrorBlockJob {
+diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
+index 513551bec1..3df60a950d 100644
+--- a/target/arm/whpx/whpx-all.c
++++ b/target/arm/whpx/whpx-all.c
+@@ -439,6 +439,7 @@ int whpx_vcpu_run(CPUState *cpu)
+         switch (vcpu->exit_ctx.ExitReason) {
+         case WHvRunVpExitReasonGpaIntercept:
+         case WHvRunVpExitReasonUnmappedGpa:
++            assert(syn_get_ec(vcpu->exit_ctx.MemoryAccess.Syndrome) == EC_DATAABORT);
+             advance_pc = true;
  
- typedef struct MirrorBDSOpaque {
-     MirrorBlockJob *job;
-+    BdrvDirtyBitmap *dirty_bitmap;
-     bool stop;
-     bool is_commit;
- } MirrorBDSOpaque;
-@@ -1557,9 +1558,11 @@ bdrv_mirror_top_do_write(BlockDriverState *bs, MirrorMethod method,
-         abort();
-     }
- 
--    if (!copy_to_target && s->job && s->job->dirty_bitmap) {
--        qatomic_set(&s->job->actively_synced, false);
--        bdrv_set_dirty_bitmap(s->job->dirty_bitmap, offset, bytes);
-+    if (!copy_to_target) {
-+        if (s->job) {
-+            qatomic_set(&s->job->actively_synced, false);
-+        }
-+        bdrv_set_dirty_bitmap(s->dirty_bitmap, offset, bytes);
-     }
- 
-     if (ret < 0) {
-@@ -1785,13 +1788,35 @@ static BlockJob *mirror_start_job(
- 
-     bdrv_drained_begin(bs);
-     ret = bdrv_append(mirror_top_bs, bs, errp);
--    bdrv_drained_end(bs);
--
-     if (ret < 0) {
-+        bdrv_drained_end(bs);
-+        bdrv_unref(mirror_top_bs);
-+        return NULL;
-+    }
-+
-+    bs_opaque->dirty_bitmap = bdrv_create_dirty_bitmap(mirror_top_bs,
-+                                                       granularity,
-+                                                       NULL, errp);
-+    if (!bs_opaque->dirty_bitmap) {
-+        bdrv_drained_end(bs);
-         bdrv_unref(mirror_top_bs);
-         return NULL;
-     }
- 
-+    /*
-+     * The mirror job doesn't use the block layer's dirty tracking because it
-+     * needs to be able to switch seemlessly between background copy mode (which
-+     * does need dirty tracking) and write blocking mode (which doesn't) and
-+     * doing that would require draining the node. Instead, mirror_top_bs takes
-+     * care of updating the dirty bitmap as appropriate.
-+     *
-+     * Note that write blocking mode only becomes effective after mirror_run()
-+     * sets mirror_top_opaque->job (see should_copy_to_target()). Until then,
-+     * we're still in background copy mode irrespective of @copy_mode.
-+     */
-+    bdrv_disable_dirty_bitmap(bs_opaque->dirty_bitmap);
-+    bdrv_drained_end(bs);
-+
-     /* Make sure that the source is not resized while the job is running */
-     s = block_job_create(job_id, driver, NULL, mirror_top_bs,
-                          BLK_PERM_CONSISTENT_READ,
-@@ -1886,24 +1911,13 @@ static BlockJob *mirror_start_job(
-     s->base_overlay = bdrv_find_overlay(bs, base);
-     s->granularity = granularity;
-     s->buf_size = ROUND_UP(buf_size, granularity);
-+    s->dirty_bitmap = bs_opaque->dirty_bitmap;
-     s->unmap = unmap;
-     if (auto_complete) {
-         s->should_complete = true;
-     }
-     bdrv_graph_rdunlock_main_loop();
- 
--    s->dirty_bitmap = bdrv_create_dirty_bitmap(s->mirror_top_bs, granularity,
--                                               NULL, errp);
--    if (!s->dirty_bitmap) {
--        goto fail;
--    }
--
--    /*
--     * The dirty bitmap is set by bdrv_mirror_top_do_write() when not in active
--     * mode.
--     */
--    bdrv_disable_dirty_bitmap(s->dirty_bitmap);
--
-     bdrv_graph_wrlock();
-     ret = block_job_add_bdrv(&s->common, "source", bs, 0,
-                              BLK_PERM_WRITE_UNCHANGED | BLK_PERM_WRITE |
-@@ -1983,9 +1997,6 @@ fail:
-         g_free(s->replaces);
-         blk_unref(s->target);
-         bs_opaque->job = NULL;
--        if (s->dirty_bitmap) {
--            bdrv_release_dirty_bitmap(s->dirty_bitmap);
--        }
-         job_early_fail(&s->common.job);
-     }
- 
-@@ -1999,6 +2010,7 @@ fail:
-     bdrv_graph_wrunlock();
-     bdrv_drained_end(bs);
- 
-+    bdrv_release_dirty_bitmap(bs_opaque->dirty_bitmap);
-     bdrv_unref(mirror_top_bs);
- 
-     return NULL;
+             if (vcpu->exit_ctx.MemoryAccess.Syndrome & BIT(8)) {
 -- 
-2.47.3
+2.50.1 (Apple Git-155)
 
 
