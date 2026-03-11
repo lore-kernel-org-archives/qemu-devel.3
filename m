@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 060FB112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:05:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C8B4112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:05:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L6V-0005sD-EW; Wed, 11 Mar 2026 11:04:07 -0400
+	id 1w0L7l-00004t-SN; Wed, 11 Mar 2026 11:05:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L5c-0004of-Po; Wed, 11 Mar 2026 11:03:18 -0400
+ id 1w0L6F-0005Sb-Hp; Wed, 11 Mar 2026 11:03:55 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L5a-0003xv-QH; Wed, 11 Mar 2026 11:03:12 -0400
+ id 1w0L6D-00049j-NT; Wed, 11 Mar 2026 11:03:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241304; bh=CnOfKUuD/+LcPeqpZmNqF5xea++p36tqP+EroKnGnYw=;
+ t=1773241304; bh=Jyh1Fr9LA2lKwnx5fFYLqhpftjyZTAdmbu/4IxxV/iw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fjia6CfYAidiu4bFRAH8f5OEnrnKjX0KhiL5iD7PQNTt1EeFhka5O0CXMviO9M+I2
- NKrl4ZeKyIQ81+uqUHWP+eCMyEpY7xAzU1RwbKkH6J/ogtdMLzAVSTy9JrujjiUU7a
- fYTl+hK2OnQHyz1Qfq4MumkbDfhxOB7m1Qj0OOKIikbVvY1UqSeZe8JvB+e4F11+g3
- q5MsHzGLpJzmj+TMUSyKimre3QJ/GD2UN0sTo34k/YYFECQ7NpW9XDYzPscNKuJbpe
- GqWP0EIHy2NUuqGiWNA+XEjwN08yDJSmwcVXr3a5l/36LiXRimdSoCq+7HaE1AVoVV
- fJIqmyXhJXakg==
+ b=sPRDnU0JKjEYyUj/15eOZlWHDhv5WCwz2oMtHx/dr5ULxRWLn5QJwxNe9rudtE+No
+ pDJawd0PWg+654w9/eZxRQu1AZE9sZFOy7tZ/yY+1Yt7uExXdaMPs40kGmHoPtj9Ep
+ O0Dbtfj2Co5h59gWMBBQjmPmmMFr2NDiC+IcxeLVnMkIeTMohPfoLSuljI5whb+mL8
+ ruifGisdqg6yv94V3M6TfFKymMdgYARKvQ5bclxMHyQTU2sho63nOirXiE7XJNuYp9
+ oediSeKlVOKJQaizupm4htzPvTQVZrV2T1KANEmv1/i2HS+07eIa3uyPtHlntrHoGF
+ uVccsh3W6UYxQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 2AAEC191E4A;
+ by isrv.corpit.ru (Postfix) with ESMTP id DAE29191E53;
  Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1670037C29C;
+ by tsrv.corpit.ru (Postfix) with ESMTP id C7E8C37C2A5;
  Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Richard Henderson <richard.henderson@linaro.org>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Cc: qemu-stable@nongnu.org, Richie Buturla <richie@linux.ibm.com>,
+ Christian Schoenebeck <qemu_oss@crudebyte.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 12/44] target/arm: Fix feature check in DO_SVE2_RRX,
- DO_SVE2_RRX_TB
-Date: Wed, 11 Mar 2026 18:01:44 +0300
-Message-ID: <20260311150221.1084186-12-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 21/44] hw/9pfs: fix data race in
+ v9fs_mark_fids_unreclaim()
+Date: Wed, 11 Mar 2026 18:01:53 +0300
+Message-ID: <20260311150221.1084186-21-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -72,47 +71,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Peter Maydell <peter.maydell@linaro.org>
+From: Richie Buturla <richie@linux.ibm.com>
 
-In the macros DO_SVE2_RRX and DO_SVE2_RRX_TB we use the
-feature check aa64_sve, thus exposing this set of instructions
-in SVE as well as SVE2. Use aa64_sve2 instead, so they UNDEF
-on an SVE1-only CPU as they should.
+A data race between v9fs_mark_fids_unreclaim() and v9fs_path_copy()
+causes an inconsistent read of fidp->path. In v9fs_path_copy(), the
+path size is set before the data pointer is allocated, creating a
+window where size is non-zero but data is NULL.
 
-Strictly, the condition here should be "SVE2 or SME"; but we
-will correct that in a following commit with all the other
-missing "or SME" checks.
+v9fs_co_open2() holds a write lock during path modifications,
+but v9fs_mark_fids_unreclaim() was not acquiring a read
+lock, allowing it to race.
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
-Message-id: 20260202133353.2231685-4-peter.maydell@linaro.org
-(cherry picked from commit ee5bf0962ed6e0eb42d6bc9bfb3687f2408e3580)
+Fix by holding the path read lock during FID table iteration.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3300
+Signed-off-by: Richie Buturla <richie@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260211154450.254338-1-richie@linux.ibm.com/
+Fixes: 7a46274529 ("hw/9pfs: Add file descriptor reclaim support")
+Signed-off-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
+(cherry picked from commit c96f6d2398a9dc068fa82088ea43020a52e2b26d)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/target/arm/tcg/translate-sve.c b/target/arm/tcg/translate-sve.c
-index b6fa0b67b1..81616210aa 100644
---- a/target/arm/tcg/translate-sve.c
-+++ b/target/arm/tcg/translate-sve.c
-@@ -3427,7 +3427,7 @@ TRANS_FEAT(USDOT_zzxw_s, aa64_sve_i8mm, gen_gvec_ool_arg_zzxz,
-            gen_helper_gvec_usdot_idx_b, a)
+diff --git a/hw/9pfs/9p.c b/hw/9pfs/9p.c
+index 80b190ff5b..b1fcda574d 100644
+--- a/hw/9pfs/9p.c
++++ b/hw/9pfs/9p.c
+@@ -551,6 +551,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             sizeof(V9fsFidState *), 1);
+     gint i;
  
- #define DO_SVE2_RRX(NAME, FUNC) \
--    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
-+    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
-                a->rd, a->rn, a->rm, a->index)
++    v9fs_path_read_lock(s);
+     g_hash_table_iter_init(&iter, s->fids);
  
- DO_SVE2_RRX(MUL_zzx_h, gen_helper_gvec_mul_idx_h)
-@@ -3445,7 +3445,7 @@ DO_SVE2_RRX(SQRDMULH_zzx_d, gen_helper_sve2_sqrdmulh_idx_d)
- #undef DO_SVE2_RRX
+     /*
+@@ -571,6 +572,7 @@ static int coroutine_fn v9fs_mark_fids_unreclaim(V9fsPDU *pdu, V9fsPath *path)
+             g_array_append_val(to_reopen, fidp);
+         }
+     }
++    v9fs_path_unlock(s);
  
- #define DO_SVE2_RRX_TB(NAME, FUNC, TOP) \
--    TRANS_FEAT(NAME, aa64_sve, gen_gvec_ool_zzz, FUNC,          \
-+    TRANS_FEAT(NAME, aa64_sve2, gen_gvec_ool_zzz, FUNC,          \
-                a->rd, a->rn, a->rm, (a->index << 1) | TOP)
- 
- DO_SVE2_RRX_TB(SQDMULLB_zzx_s, gen_helper_sve2_sqdmull_idx_s, false)
+     for (i = 0; i < to_reopen->len; i++) {
+         fidp = g_array_index(to_reopen, V9fsFidState*, i);
 -- 
 2.47.3
 
