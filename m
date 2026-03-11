@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52540112583E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:07:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18A3E112583F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:07:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L87-0001bl-RT; Wed, 11 Mar 2026 11:05:51 -0400
+	id 1w0L8Y-00035Z-Gi; Wed, 11 Mar 2026 11:06:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L79-00085S-7q; Wed, 11 Mar 2026 11:04:53 -0400
+ id 1w0L6e-0006wa-Ov; Wed, 11 Mar 2026 11:04:16 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L74-0004Ik-BP; Wed, 11 Mar 2026 11:04:43 -0400
+ id 1w0L6c-0004Dw-NE; Wed, 11 Mar 2026 11:04:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=A9jvgvkR+9aQb0FBA+kJd/OusEvZUMk5dvOgKDr2OPc=;
+ t=1773241305; bh=lweadc1MEUVuSuelnhIcbt8w/kR3cRh3F5VZUGtyz0E=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=HLLIxfRgshVvYKMdAKBtaZ36LLPqY/06dP4rh/Wxz5swUycFxqyHFdUJDYJdJYrnY
- CVeB2I7KQfHbw3/msytmab4gW9VLX1ielijXwAw5bNixyQTNdy28i4RDKNWV0PHyUy
- g8TZlp1JRrOrEDao4XPr4AzPT5ID/8UYC3cuEgGVh9R39xwT6ZU0A39hCakwoKL8eF
- ef1vU3OThbrNVKR2v9qTP2LrgPjgLlLhsL+D/9q974xpMIdyaV5LY8Qu8YkxVK+OP+
- EWCcUHx10go5HBw+QgX4F2Smmdw8egz492fUxOfUwBQsQeTXd8NPXJfDypBmdx6ZN0
- E9zgy0rXwlIUw==
+ b=T0hfDHybOBVLAiP6+4HP5oyLxEUbgh6/5loP4eepSSafbYsiOyj2PwcWaV4aeBv6b
+ kvbRQdSiswmWKrJpALfa0XdtNyWwBUTmzfWb9pO1APKoqBSfvPh4faOkpn6Ai7Nydj
+ qQDfKipPqPMO6T4xFPK2IWUHkF7X9wWI8zeayQsv1naRjkZQL93QqeYG5FTqpgIliB
+ nM3B81Sam/ZU0iDaux1RkgPoh9PA89zF3x7kY2drqyPBlPWpK1Sh2MO/cI4USIGlM3
+ eT9QLHShfOpkzRHjWIJY6NkXJFzcmyq3Wljmukl2DtqPjO33pF7oOjbGiwySYEUP5Y
+ t81u3hX3La7Pg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 69641191E5A;
+ by isrv.corpit.ru (Postfix) with ESMTP id 22F45191E56;
  Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 5892937C2AC;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 09BE137C2A8;
  Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 28/44] io: fix cleanup for websock I/O source data on
- cancellation
-Date: Wed, 11 Mar 2026 18:02:00 +0300
-Message-ID: <20260311150221.1084186-28-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Josh Poimboeuf <jpoimboe@kernel.org>,
+ Justin Forbes <jforbes@fedoraproject.org>,
+ Alexey Makhalov <alexey.makhalov@broadcom.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 24/44] hw/i386/vmmouse: Fix hypercall clobbers
+Date: Wed, 11 Mar 2026 18:01:56 +0300
+Message-ID: <20260311150221.1084186-24-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -72,140 +73,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Daniel P. Berrangé <berrange@redhat.com>
+From: Josh Poimboeuf <jpoimboe@kernel.org>
 
-The websock code will create a GSource for tracking completion of the
-handshake process, passing a QIOTask which is freed by the callback
-when it completes, which means when a source is cancelled, nothing is
-free'ing the task.
+Fedora QA reported the following kernel panic:
 
-Switch to provide a data free callback to the GSource, which ensures
-the QIOTask is always freed even when the main event callback never
-fires.
+  BUG: unable to handle page fault for address: 0000000040003e54
+  #PF: supervisor write access in kernel mode
+  #PF: error_code(0x0002) - not-present page
+  PGD 1082ec067 P4D 0
+  Oops: Oops: 0002 [#1] SMP NOPTI
+  CPU: 0 UID: 0 PID: 0 Comm: swapper/0 Not tainted 6.19.0-0.rc4.260108gf0b9d8eb98df.34.fc43.x86_64 #1 PREEMPT(lazy)
+  Hardware name: QEMU Standard PC (Q35 + ICH9, 2009), BIOS edk2-20251119-3.fc43 11/19/2025
+  RIP: 0010:vmware_hypercall4.constprop.0+0x52/0x90
+  Code: 48 83 c4 20 5b e9 69 f0 fc fe 8b 05 a0 c1 b2 01 85 c0 74 23 b8 68 58 4d 56 b9 27 00 00 00 31 d2 bb 04 00 00 00 66 ba 58 56 ed <89> 1f 89 0e 41 89 10 5b e9 3c f0 fc fe 6a 00 49 89 f9 45 31 c0 31
+  RSP: 0018:ff5eeb3240003e40 EFLAGS: 00010046
+  RAX: 0000000000000000 RBX: 000000000000ffca RCX: 000000000000ffac
+  RDX: 0000000000000000 RSI: 0000000040003e58 RDI: 0000000040003e54
+  RBP: ff1e05f3c1204800 R08: ff5eeb3240003e5c R09: 000000009d899c41
+  R10: 000000000000003d R11: ff5eeb3240003ff8 R12: 0000000000000000
+  R13: 00000000000000ff R14: ff1e05f3c02f9e00 R15: 000000000000000c
+  FS:  0000000000000000(0000) GS:ff1e05f489e40000(0000) knlGS:0000000000000000
+  CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+  CR2: 0000000040003e54 CR3: 000000010841d002 CR4: 0000000000771ef0
+  PKRU: 55555554
+  Call Trace:
+   <IRQ>
+   vmmouse_report_events+0x13e/0x1b0
+   psmouse_handle_byte+0x15/0x60
+   ps2_interrupt+0x8a/0xd0
+   ...
 
-Fixes: https://gitlab.com/qemu-project/qemu/-/issues/3114
-Signed-off-by: Daniel P. Berrangé <berrange@redhat.com>
-(cherry picked from commit 9545c059f77e3f814fcbaba83203572ea655c50e)
+It was triggered by dereferencing a bad pointer (RDI) immediately after
+a VMware hypercall for VMWARE_CMD_ABSPOINTER_DATA in the vmmouse driver:
+
+  ffffffff82135070 <vmware_hypercall4.constprop.0>:
+  ...
+  ffffffff821350ac:       b8 68 58 4d 56          mov    $0x564d5868,%eax
+  ffffffff821350b1:       b9 27 00 00 00          mov    $0x27,%ecx
+  ffffffff821350b6:       31 d2                   xor    %edx,%edx
+  ffffffff821350b8:       bb 04 00 00 00          mov    $0x4,%ebx
+  ffffffff821350bd:       66 ba 58 56             mov    $0x5658,%dx
+  ffffffff821350c1:       ed                      in     (%dx),%eax	<-- hypercall
+  ffffffff821350c2:       89 1f                   mov    %ebx,(%rdi)	<-- crash
+
+Reading the kernel disassembly shows that RDI should contain the value
+of a valid kernel stack address here (0xff5eeb3240003e54).  Instead it
+contains 0x40003e54, suggesting the hypervisor cleared the upper 32
+bits.
+
+And indeed, Alexey discovered that QEMU's vmmouse_get_data() and
+vmmouse_set_data() are only saving/restoring the lower 32 bits, while
+clearing the upper 32.  Fix that by changing the type of the saved data
+array from uint32_t to uint64_t.
+
+Fixes: 548df2acc6fc ("VMMouse Emulation, by Anthony Liguori.")
+Reported-by: Justin Forbes <jforbes@fedoraproject.org>
+Debugged-by: Alexey Makhalov <alexey.makhalov@broadcom.com>
+Signed-off-by: Josh Poimboeuf <jpoimboe@kernel.org>
+Link: https://lore.kernel.org/r/c508fc1d4a4ccd8c9fb1e51b71df089e31115a53.1770309998.git.jpoimboe@kernel.org
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3293
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+(cherry picked from commit 48c8916aec4319efc60324d9d971831a8a1d6350)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/io/channel-websock.c b/io/channel-websock.c
-index 1cd3a1e45d..c8c8340cbd 100644
---- a/io/channel-websock.c
-+++ b/io/channel-websock.c
-@@ -526,11 +526,32 @@ static int qio_channel_websock_handshake_read(QIOChannelWebsock *ioc,
-     return 1;
+diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
+index 3e07d12512..388d493fe9 100644
+--- a/hw/i386/vmmouse.c
++++ b/hw/i386/vmmouse.c
+@@ -72,7 +72,7 @@ struct VMMouseState {
+     ISAKBDState *i8042;
+ };
+ 
+-static void vmmouse_get_data(uint32_t *data)
++static void vmmouse_get_data(uint64_t *data)
+ {
+     X86CPU *cpu = X86_CPU(current_cpu);
+     CPUX86State *env = &cpu->env;
+@@ -82,7 +82,7 @@ static void vmmouse_get_data(uint32_t *data)
+     data[4] = env->regs[R_ESI]; data[5] = env->regs[R_EDI];
  }
  
-+typedef struct QIOChannelWebsockData {
-+    QIOTask *task;
-+} QIOChannelWebsockData;
-+
-+static void qio_channel_websock_data_free(gpointer user_data)
-+{
-+    QIOChannelWebsockData *data = user_data;
-+    /*
-+     * Usually 'task' will be NULL since the GSource
-+     * callback will either complete the task or pass
-+     * it on to a new GSource. We'll see a non-NULL
-+     * task here only if the GSource was released before
-+     * its callback triggers
-+     */
-+    if (data->task) {
-+        qio_task_free(data->task);
-+    }
-+    g_free(data);
-+}
-+
- static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-                                                    GIOCondition condition,
-                                                    gpointer user_data)
+-static void vmmouse_set_data(const uint32_t *data)
++static void vmmouse_set_data(const uint64_t *data)
  {
--    QIOTask *task = user_data;
-+    QIOChannelWebsockData *data = user_data;
-+    QIOTask *task = data->task;
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
-         qio_task_get_source(task));
-     Error *err = NULL;
-@@ -545,7 +566,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -562,7 +582,6 @@ static gboolean qio_channel_websock_handshake_send(QIOChannel *ioc,
-             trace_qio_channel_websock_handshake_complete(ioc);
-             qio_task_complete(task);
+     X86CPU *cpu = X86_CPU(current_cpu);
+     CPUX86State *env = &cpu->env;
+@@ -197,7 +197,7 @@ static void vmmouse_disable(VMMouseState *s)
+     vmmouse_remove_handler(s);
+ }
+ 
+-static void vmmouse_data(VMMouseState *s, uint32_t *data, uint32_t size)
++static void vmmouse_data(VMMouseState *s, uint64_t *data, uint32_t size)
+ {
+     int i;
+ 
+@@ -221,7 +221,7 @@ static void vmmouse_data(VMMouseState *s, uint32_t *data, uint32_t size)
+ static uint32_t vmmouse_ioport_read(void *opaque, uint32_t addr)
+ {
+     VMMouseState *s = opaque;
+-    uint32_t data[6];
++    uint64_t data[6];
+     uint16_t command;
+ 
+     vmmouse_get_data(data);
+@@ -247,7 +247,7 @@ static uint32_t vmmouse_ioport_read(void *opaque, uint32_t addr)
+             vmmouse_request_absolute(s);
+             break;
+         default:
+-            printf("vmmouse: unknown command %x\n", data[1]);
++            printf("vmmouse: unknown command %" PRIx64 "\n", data[1]);
+             break;
          }
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -574,7 +593,8 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-                                                  GIOCondition condition,
-                                                  gpointer user_data)
- {
--    QIOTask *task = user_data;
-+    QIOChannelWebsockData *data = user_data, *newdata = NULL;
-+    QIOTask *task = data->task;
-     QIOChannelWebsock *wioc = QIO_CHANNEL_WEBSOCK(
-         qio_task_get_source(task));
-     Error *err = NULL;
-@@ -590,7 +610,6 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-         trace_qio_channel_websock_handshake_fail(ioc, error_get_pretty(err));
-         qio_task_set_error(task, err);
-         qio_task_complete(task);
--        qio_task_free(task);
-         wioc->hs_io_tag = 0;
-         return FALSE;
-     }
-@@ -603,12 +622,14 @@ static gboolean qio_channel_websock_handshake_io(QIOChannel *ioc,
-     error_propagate(&wioc->io_err, err);
- 
-     trace_qio_channel_websock_handshake_reply(ioc);
-+    newdata = g_new0(QIOChannelWebsockData, 1);
-+    newdata->task = g_steal_pointer(&data->task);
-     wioc->hs_io_tag = qio_channel_add_watch(
-         wioc->master,
-         G_IO_OUT,
-         qio_channel_websock_handshake_send,
--        task,
--        NULL);
-+        newdata,
-+        qio_channel_websock_data_free);
-     return FALSE;
- }
- 
-@@ -904,12 +925,12 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
-                                    gpointer opaque,
-                                    GDestroyNotify destroy)
- {
--    QIOTask *task;
-+    QIOChannelWebsockData *data = g_new0(QIOChannelWebsockData, 1);
- 
--    task = qio_task_new(OBJECT(ioc),
--                        func,
--                        opaque,
--                        destroy);
-+    data->task = qio_task_new(OBJECT(ioc),
-+                              func,
-+                              opaque,
-+                              destroy);
- 
-     trace_qio_channel_websock_handshake_start(ioc);
-     trace_qio_channel_websock_handshake_pending(ioc, G_IO_IN);
-@@ -917,8 +938,8 @@ void qio_channel_websock_handshake(QIOChannelWebsock *ioc,
-         ioc->master,
-         G_IO_IN,
-         qio_channel_websock_handshake_io,
--        task,
--        NULL);
-+        data,
-+        qio_channel_websock_data_free);
- }
- 
- 
+         break;
 -- 
 2.47.3
 
