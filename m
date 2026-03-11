@@ -4,123 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9D8251049526
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 09:57:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8443104953F
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:00:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0GJT-0004Vk-16; Wed, 11 Mar 2026 05:57:11 -0400
+	id 1w0GM3-0004zx-Ku; Wed, 11 Mar 2026 05:59:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w0GJR-0004VN-EX
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:57:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w0GJP-0008GS-HL
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:57:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773223026;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=2/gdfKTPDRLDzNitVP5BB7zPQcxZ/nV8FvQ9vDJUvvc=;
- b=Oa6yuZFagkGEKXtCYFR3FtaIXlgN1vNrd7ECqSVWCxiPOGRDohmRNb5FacTiIrMQZrQUEC
- SGoVg20IjEGiWsZtfbwkscHfTmJXwGe+u8HHwU0utgc5sgHehtKwNtwXaoepEydJYSMK3D
- ZtuNES4MF4Ap6Hlt5qG1JuU3EH9Sk9U=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-635-l29LoYrsOjmF5bNaB-PoXg-1; Wed, 11 Mar 2026 05:57:05 -0400
-X-MC-Unique: l29LoYrsOjmF5bNaB-PoXg-1
-X-Mimecast-MFC-AGG-ID: l29LoYrsOjmF5bNaB-PoXg_1773223024
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-485390246c8so40045495e9.0
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 02:57:04 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773223024; cv=none;
- d=google.com; s=arc-20240605;
- b=G+4uIEhV3yGuFXkVig4257hDL4r3Z5mkoztFHrcIebxrxu+zNg49Irm3AQI2QM7FEy
- 9YkoXNS1hY/BHZaZWZcMZfbmzuCEmwFTll3EJisgg1aNsYxtcMPrMqx585tsrj/juc3P
- 1eBTPWywARToQqm9a+6IWV9T6TqC40H5HONQ09tbFx7yoCDIgnoSFj4FaMnKrCo9tVtT
- 8gyf2LgsCAnkQXtC1DV/D9AQRt0JJGViuigsIXamvKFAFku61WV0KxgCuHePJ4srNCFb
- Po1et6bc0EadcCid5lHiwmYjepp+wgOl4bFiB5N2jyFNxaXD3JIz63W/kSWgtbDidIY6
- iAmg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=2/gdfKTPDRLDzNitVP5BB7zPQcxZ/nV8FvQ9vDJUvvc=;
- fh=lEWXKvk4W56vl9FK7s09UGvbWa3LPQFvWfq78Fg89M0=;
- b=NOodMAQfZ9jsIUOzOc6Uc4S4C4LkOFPLkBsWqtAUEjAw6o6Ghl9xb3QBbIlg5kuJel
- L2wnVazMbeOlj4lW3A8XpsTwkkED2y6yrxvUBrZfq3CUhA589e0OOOJcy/AM9QRWvizF
- DxGVTyJKssnl4QwWSKgjXU0uMLHgr0eR8gFUPqgwA3qbwpN8iMdtAok1z9Rq87jmV3AZ
- eCcGpOtb0dHA8JeKawc9djTuHLo6miBw/L4OsUB6ueGIlooOF6iuIM7yk7+/NJDzULVy
- 40U5Gn9KWItSeDW4jux9voa8LmiPpc2KWURGiXAI3jM1FZYbU7aUKj6fBj4uqC9W0iy7
- miiw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w0GLy-0004zR-Sq
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:59:47 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w0GLv-0000bp-0p
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 05:59:45 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-485392de558so19723325e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 02:59:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773223024; x=1773827824; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=2/gdfKTPDRLDzNitVP5BB7zPQcxZ/nV8FvQ9vDJUvvc=;
- b=lPMspGrVcD4ZY8FfWvLyi8TGOpxpnY3SQ+v8rmx1pMUgr/orPthCkFIqb8MLfLFKxR
- YpsJZtMdDp0MwSrvfzpc/KeSW3sjQdahmOi5Twt5G76HsE6D046z6ucmSJTKMDS4DNA5
- Of3YmDbemcUFls4LT+01v/IrtSc2MQM0pZl7xnAAjrijihZAUeuXeoB/YwTWXk0/M8EU
- Gtht3JfnEDuo6e1zbIhAbvPffvUgnb/CT0eC+5hnadiuOdqnBX+6QxPvPm9usywie586
- KtcL15EkDIThHm68A2JnrAosogRqJ18G7+rI38t76cOmtCVWMb0DE+BdV2U5KBxGBSJk
- K84Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773223024; x=1773827824;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773223179; x=1773827979; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=2/gdfKTPDRLDzNitVP5BB7zPQcxZ/nV8FvQ9vDJUvvc=;
- b=wovxVC5bUPT4YpdTvSJwzkQsHAwm3DHPt3+E+NTfwChvII+eQYCgU2mhbyW6zAX95A
- hVeQue7QkLy4dzEEAaSqIPLbY9VNExturL9OmCp8bMZaz74Fu7R0zTwZMr+IUxYuADyy
- /jv445VnaRviRa2oo67pSSPNj7gI7QQ4v95Bf2uJXtuj9K9+26noHqk7G5eliPH8Wb7m
- L+3CLXjIssDj8AOjd+/4Wu8HD9DQZsvHntM5zuuDF8HxJ69hQXqL7uHS2poc41Bf6jXQ
- 4KnvevFmQHsWQBaQOQURBKmKMpETOLkwZaLgWEKADcyqzK7leuT/QGbrJ8mhuDyOIefu
- AVHg==
-X-Gm-Message-State: AOJu0YwT079Eg4liez7CI5ZJIpvDLlnr7Rc+iJXsac3S1dG2plyJYpuZ
- jBxz87YvGoiTR/UZ3/CZpETFDzqvuJFDATwPtZnb15I+YgTxd1+1dRQ09gvAsg46iqpEveSoX1C
- ONfHYpfD4FcLMNKNqztgMU7oA2iE4tBlF73/GIKL6sQqKsYee1E1OHolWg6SQY8Jdh69cvdW5MA
- vb3DGvUgUkIuPj0iT9+9H16gNSUx97zxs=
-X-Gm-Gg: ATEYQzxGzHErCTYbAE9Ch9jUba7ZJkwVc0yBh7fa0wT9k1nxu0jvqcsOD+GyMEEyrNe
- MD+warzdMpQqWAxEJLtejX/dtxU2Vy3n5ghKr2OqOoLl/e3mDGjjvn8rhsb2rv3ofJwd3dcyD0D
- B6Grl3JKmWD5vd6gZnpto6MboPSlcOoe7oxbg/477F6yaTIGde53hQVDcDF6eqWiiuotEraI8pK
- Q8JkGLeY7DVNwEIR5KFsqrWn69IDmWwPWgA/G8+F4C4rqETVbGbdOUGC+60EufMXO9O
-X-Received: by 2002:a05:600c:314e:b0:477:6d96:b3c8 with SMTP id
- 5b1f17b1804b1-4854b10f1e5mr33409985e9.23.1773223023683; 
- Wed, 11 Mar 2026 02:57:03 -0700 (PDT)
-X-Received: by 2002:a05:600c:314e:b0:477:6d96:b3c8 with SMTP id
- 5b1f17b1804b1-4854b10f1e5mr33409565e9.23.1773223023270; Wed, 11 Mar 2026
- 02:57:03 -0700 (PDT)
+ bh=N8wZt4XB77QBsDVJLkD1cJ8p8swY8/o57zXOJbb8EwU=;
+ b=ayZNJ49sM9g8gJEiVBrEILZ7ONirXZ6eDw9Ou1t9PtCebd8Z5qdn6AtCar9+a/dX+u
+ HIfSYi/Bql2qXBKEnS7pKb6yqKV4EzTWl0ZemdRN+xPmCZ6Q0WP++Oszg8mR3tYQQrqQ
+ 7pZ62mULl1mtiTMR/jtNajX4w9gUkfeWhD7F+zE78DpDjkrQgxaF3mPHiodbH3N9HTlG
+ o0GyApu7EeLfdEN8atI2SFGC1LELy3FOZrUuNMqmG9JM3UUFfOEreFmXRHKVQeC4nyuN
+ eEcTnxEnLNrYWp+JgVUKW5/CTlr4YRzLxz8YnIuySfTVkVZ5VBTXmDjJbu/asJ0uYFjP
+ YJBw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773223179; x=1773827979;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=N8wZt4XB77QBsDVJLkD1cJ8p8swY8/o57zXOJbb8EwU=;
+ b=WNdO9hYQcmiqDPG0fsO1wFdbpiJ9C4lAt9i3vU+MgfhDh6Lgyw5jkeUy7CsSahhH4r
+ LMok9/GCK1VJ/a7/cnUIYY7Tvsyz/+V/WTqBV0hoRJ09UTWd3AuPrIEPKi0jFgkq6Owr
+ 1FL1UVn+bSCfNk1O4AbSD28WQh2WcPZzkgcqLjJOy7UiqrxYR/+ue2om0lMV4X0+ha75
+ vUvTONM3W1mtCLO6glAW1m24YTZS3tqD57ivFioKuUNONCFn1h40o+8dznRKEZz2/mt3
+ qJm4p1bl4HNCcP4/sYix8yFDrrLW5VhM32B5QNWgbwnFEQ9Z6AZPjy0CRtb3ZGDROt1a
+ H7UQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVhKXhISA6GgXUyq+HO2zHwf07sEN7eCveBrxWStwRO/b7YYxxpVHGLDE59sAxqrNeJtsrK2QSPRyvi@nongnu.org
+X-Gm-Message-State: AOJu0Yw4tcC2n80P4v0ErUXJMUO1jQUo1alZ6mG180tIa5xJ3vaRSyYu
+ RzKaMvTr9LvJCu28lpwEEnn70M6JYwvIgV4iEsv2cvELNu8D+vkSFpe7QHnZA/w2vRYdSUaEvFW
+ GCmGstoA=
+X-Gm-Gg: ATEYQzwCSVpgMmT9pkqG5f0zHml16twFErFPsdnZdnYWIITvk2yuvfd1HQ5Sz75d7TT
+ w3DI5wyEB0ZJpRz0tYQwkfzilP9uDXJSqPoEXiSh1Zjk9fsLqHWW5bMgmUkypOJxqL+aEZvfMkB
+ xhiy8O/ew0Ckavx8kv4iwOBztIsXy2YIfW5GSA4dxkolpoM1+vl22lrqwOw2cwCKtQ1lOMigawg
+ EvzAlBAvpErgBsl01AFoUUr+7qbzfvAyTginlSOH+ZFECWF7a1fOzH4I3BjLwmn6oQgW/OchaE8
+ 7+xEb1vodItFLDzR8BlxcQpvetbQpz3lJjDQPPiJAkKfyjw2Wc8YcvOsZIVwyahjsftjgmKOcQ2
+ qK7uy38yEid7pdwHkA4pze5ErB0tooxtFFeuoo1X6xAz5WETyzB/HXTc6XrCRMN5QMArhNlfo3i
+ taMpX9USXEomaHTeDXcQM507w=
+X-Received: by 2002:a05:600c:c4a2:b0:485:4371:539a with SMTP id
+ 5b1f17b1804b1-4854b134965mr32932115e9.31.1773223179402; 
+ Wed, 11 Mar 2026 02:59:39 -0700 (PDT)
+Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439f81a5143sm5210210f8f.14.2026.03.11.02.59.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Mar 2026 02:59:38 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id CF38E5F813;
+ Wed, 11 Mar 2026 09:59:37 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Cc: Florian Hofhammer <florian.hofhammer@epfl.ch>,  qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org,  richard.henderson@linaro.org
+Subject: Re: [PATCH trivial] plugins: add missing docstrings to qemu-plugin.h
+In-Reply-To: <f624f3d9-aa11-406a-ac9b-f3fa2b103291@linaro.org> (Pierrick
+ Bouvier's message of "Mon, 9 Mar 2026 10:25:19 -0700")
+References: <20260309-add-missing-plugin-docs-v1-1-41dddcd177c8@epfl.ch>
+ <f624f3d9-aa11-406a-ac9b-f3fa2b103291@linaro.org>
+User-Agent: mu4e 1.14.0-pre2; emacs 30.1
+Date: Wed, 11 Mar 2026 09:59:37 +0000
+Message-ID: <87o6kuit4m.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260310135540.8679-1-farosas@suse.de>
- <20260310135540.8679-7-farosas@suse.de>
-In-Reply-To: <20260310135540.8679-7-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Wed, 11 Mar 2026 15:26:46 +0530
-X-Gm-Features: AaiRm53k_6-wFpy8ce8E53rLgSqqg3MQcK6DbEJseX697dpony4ZZ5rAke7jy18
-Message-ID: <CAE8KmOyPah_+dFEffqW+yK3DK2MQ4eui=sFH3QaEuiCQWcRDNw@mail.gmail.com>
-Subject: Re: [PATCH 7/8] tests/qtest/migration: Fix leak in CPR exec test
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>, 
- Peter Xu <peterx@redhat.com>, Mark Kanda <mark.kanda@oracle.com>, 
- Ben Chaney <bchaney@akamai.com>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x336.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,46 +108,240 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Mar 2026 at 19:26, Fabiano Rosas <farosas@suse.de> wrote:
-> The string was being dup'ed only to get around the const of the
-> qdict_get_str() return value.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  tests/qtest/migration/cpr-tests.c | 5 +++--
->  1 file changed, 3 insertions(+), 2 deletions(-)
->
-> diff --git a/tests/qtest/migration/cpr-tests.c b/tests/qtest/migration/cpr-tests.c
-> index 1b3d42e51c..fabdec4ff3 100644
-> --- a/tests/qtest/migration/cpr-tests.c
-> +++ b/tests/qtest/migration/cpr-tests.c
-> @@ -161,15 +161,16 @@ static void set_cpr_exec_args(QTestState *who, MigrateCommon *args)
->  static void wait_for_migration_event(QTestState *who, const char *waitfor)
->  {
->      QDict *rsp, *data;
-> -    char *status;
->      bool done = false;
->
->      while (!done) {
-> +        const char *status;
-> +
->          rsp = qtest_qmp_eventwait_ref(who, "MIGRATION");
->          g_assert(qdict_haskey(rsp, "data"));
->          data = qdict_get_qdict(rsp, "data");
->          g_assert(qdict_haskey(data, "status"));
-> -        status = g_strdup(qdict_get_str(data, "status"));
-> +        status = qdict_get_str(data, "status");
->          g_assert(strcmp(status, "failed"));
->          done = !strcmp(status, waitfor);
->          qobject_unref(rsp);
-> --
-> 2.51.0
+Pierrick Bouvier <pierrick.bouvier@linaro.org> writes:
 
-* Look okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+> On 3/9/26 9:21 AM, Florian Hofhammer wrote:
+>> This patch adds docstrings for typedefs and function declarations in
+>> include/plugins/qemu-plugin.h that were previously missing. This
+>> resolves inconsistencies in the docs, e.g., the description for
+>> qemu_plugin_read_register() referring to qemu_plugin_register_flush_cb()
+>> but code cache flush callbacks not being documented themselves.
+>> Signed-off-by: Florian Hofhammer <florian.hofhammer@epfl.ch>
+>> ---
+>> Hi,
+>> While working on a QEMU plugin and browsing the online docs at
+>> https://www.qemu.org/docs/master/devel/tcg-plugins.html, I noticed that
+>> some of the API functions were not actually documented.
+>> I went through the include/plugins/qemu-plugin.h header file and
+>> added
+>> docstrings where they were missing, hoping of course that I documented
+>> the correct functionality based on my understanding of the plugin
+>> internals.
+>> I hope that's useful and I didn't miss anything!
+>>
+>
+> Thanks for the effort, that's always welcome to add documentation on a
+> public API like this!
+>
+>> Best regards,
+>> Florian
+>> --
+>> Florian Hofhammer
+>> ---
+>>   include/plugins/qemu-plugin.h | 98 +++++++++++++++++++++++++++++++++++=
++++-----
+>>   1 file changed, 88 insertions(+), 10 deletions(-)
+>> diff --git a/include/plugins/qemu-plugin.h
+>> b/include/plugins/qemu-plugin.h
+>> index 827e8e1787..fcf5af52ed 100644
+>> --- a/include/plugins/qemu-plugin.h
+>> +++ b/include/plugins/qemu-plugin.h
+>> @@ -339,12 +339,28 @@ enum qemu_plugin_cb_flags {
+>>       QEMU_PLUGIN_CB_RW_REGS_PC,
+>>   };
+>>   +/**
+>> + * enum qemu_plugin_mem_rw - type of memory access
+>> + *
+>> + * @QEMU_PLUGIN_MEM_R: memory read access only
+>> + * @QEMU_PLUGIN_MEM_W: memory write access only
+>> + * @QEMU_PLUGIN_MEM_RW: memory read and write access
+>> + */
+>>   enum qemu_plugin_mem_rw {
+>>       QEMU_PLUGIN_MEM_R =3D 1,
+>>       QEMU_PLUGIN_MEM_W,
+>>       QEMU_PLUGIN_MEM_RW,
+>>   };
+>>   +/**
+>> + * enum qemu_plugin_mem_value_type - size of memory value
+>> + *
+>> + * @QEMU_PLUGIN_MEM_VALUE_U8: unsigned 8-bit value
+>> + * @QEMU_PLUGIN_MEM_VALUE_U16: unsigned 16-bit value
+>> + * @QEMU_PLUGIN_MEM_VALUE_U32: unsigned 32-bit value
+>> + * @QEMU_PLUGIN_MEM_VALUE_U64: unsigned 64-bit value
+>> + * @QEMU_PLUGIN_MEM_VALUE_U128: unsigned 128-bit value
+>> + */
+>>   enum qemu_plugin_mem_value_type {
+>>       QEMU_PLUGIN_MEM_VALUE_U8,
+>>       QEMU_PLUGIN_MEM_VALUE_U16,
+>> @@ -353,7 +369,13 @@ enum qemu_plugin_mem_value_type {
+>>       QEMU_PLUGIN_MEM_VALUE_U128,
+>>   };
+>>   -/* typedef qemu_plugin_mem_value - value accessed during a
+>> load/store */
+>> +/**
+>> + * typedef qemu_plugin_mem_value - value accessed during a load/store
+>> + *
+>> + * @type: the memory access size
+>> + * @data: the value accessed during the memory operation (value after
+>> + *        read/write)
+>> + */
+>>   typedef struct {
+>>       enum qemu_plugin_mem_value_type type;
+>>       union {
+>> @@ -462,7 +484,6 @@ void qemu_plugin_register_vcpu_tb_exec_cond_cb(struc=
+t qemu_plugin_tb *tb,
+>>    * @QEMU_PLUGIN_INLINE_ADD_U64: add an immediate value uint64_t
+>>    * @QEMU_PLUGIN_INLINE_STORE_U64: store an immediate value uint64_t
+>>    */
+>> -
+>>   enum qemu_plugin_op {
+>>       QEMU_PLUGIN_INLINE_ADD_U64,
+>>       QEMU_PLUGIN_INLINE_STORE_U64,
+>> @@ -803,6 +824,20 @@ const void *qemu_plugin_request_time_control(void);
+>>   QEMU_PLUGIN_API
+>>   void qemu_plugin_update_ns(const void *handle, int64_t time);
+>>   +/**
+>> + * typedef qemu_plugin_vcpu_syscall_cb_t - vCPU syscall callback functi=
+on type
+>> + * @id: plugin id
+>> + * @vcpu_index: the executing vCPU
+>> + * @num: the syscall number
+>> + * @a1: the 1st syscall argument
+>> + * @a2: the 2nd syscall argument
+>> + * @a3: the 3rd syscall argument
+>> + * @a4: the 4th syscall argument
+>> + * @a5: the 5th syscall argument
+>> + * @a6: the 6th syscall argument
+>> + * @a7: the 7th syscall argument
+>> + * @a8: the 8th syscall argument
+>> + */
+>>   typedef void
+>>   (*qemu_plugin_vcpu_syscall_cb_t)(qemu_plugin_id_t id, unsigned int vcp=
+u_index,
+>>                                    int64_t num, uint64_t a1, uint64_t a2,
+>> @@ -836,24 +871,61 @@ typedef bool
+>>                                           uint64_t a6, uint64_t a7, uint=
+64_t a8,
+>>                                           uint64_t *sysret);
+>>   -QEMU_PLUGIN_API
+>> -void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
+>> -                                          qemu_plugin_vcpu_syscall_cb_t=
+ cb);
+>> -
+>> +/**
+>> + * typedef qemu_plugin_vcpu_syscall_ret_cb_t - vCPU syscall return call=
+back
+>> + * function type
+>> + * @id: plugin id
+>> + * @vcpu_index: the executing vCPU
+>> + * @num: the syscall number
+>> + * @ret: the syscall return value
+>> + */
+>>   typedef void
+>>   (*qemu_plugin_vcpu_syscall_ret_cb_t)(qemu_plugin_id_t id, unsigned int=
+ vcpu_idx,
+>>                                        int64_t num, int64_t ret);
+>>   +/**
+>> + * qemu_plugin_register_vcpu_syscall_cb() - register a syscall entry ca=
+llback
+>> + * @id: plugin id
+>> + * @cb: callback of type qemu_plugin_vcpu_syscall_cb_t
+>> + *
+>> + * This registers a callback for every syscall executed by the guest. T=
+he @cb
+>> + * function is executed before a syscall is handled by the host.
+>> + */
+>>   QEMU_PLUGIN_API
+>> -void
+>> -qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
+>> -                                         qemu_plugin_vcpu_syscall_ret_c=
+b_t cb);
+>> +void qemu_plugin_register_vcpu_syscall_cb(qemu_plugin_id_t id,
+>> +                                          qemu_plugin_vcpu_syscall_cb_t=
+ cb);
+>>   +/**
+>> + * qemu_plugin_register_vcpu_syscall_filter_cb() - register a syscall f=
+ilter
+>> + * callback
+>> + * @id: plugin id
+>> + * @cb: callback of type qemu_plugin_vcpu_syscall_filter_cb_t
+>> + *
+>> + * This registers a callback for every syscall executed by the guest. T=
+he @cb
+>> + * function is executed before a syscall is handled by the host. If the
+>> + * callback returns true, the syscall is filtered and will not be execu=
+ted by
+>> + * the host. The callback must then set the syscall return value via the
+>> + * corresponding pointer passed to it.
+>> + */
+>>   QEMU_PLUGIN_API
+>>   void
+>>   qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plugin_id_t id,
+>>                                               qemu_plugin_vcpu_syscall_f=
+ilter_cb_t cb);
+>>   +/**
+>> + * qemu_plugin_register_vcpu_syscall_ret_cb() - register a syscall entry
+>> + * callback
+>> + * @id: plugin id
+>> + * @cb: callback of type qemu_plugin_vcpu_syscall_ret_cb_t
+>> + *
+>> + * This registers a callback for every syscall executed by the guest. T=
+he @cb
+>> + * function is executed upon return from the host syscall before execut=
+ion is
+>> + * handed back to the guest.
+>> + */
+>> +QEMU_PLUGIN_API
+>> +void
+>> +qemu_plugin_register_vcpu_syscall_ret_cb(qemu_plugin_id_t id,
+>> +                                         qemu_plugin_vcpu_syscall_ret_c=
+b_t cb);
+>>     /**
+>>    * qemu_plugin_insn_disas() - return disassembly string for instruction
+>> @@ -861,7 +933,6 @@ qemu_plugin_register_vcpu_syscall_filter_cb(qemu_plu=
+gin_id_t id,
+>>    *
+>>    * Returns an allocated string containing the disassembly
+>>    */
+>> -
+>>   QEMU_PLUGIN_API
+>>   char *qemu_plugin_insn_disas(const struct qemu_plugin_insn *insn);
+>>   @@ -888,6 +959,13 @@ QEMU_PLUGIN_API
+>>   void qemu_plugin_vcpu_for_each(qemu_plugin_id_t id,
+>>                                  qemu_plugin_vcpu_simple_cb_t cb);
+>>   +/**
+>> + * qemu_plugin_register_flush_cb() - register code cache flush callback
+>> + * @id: plugin ID
+>> + * @cb: callback
+>> + *
+>> + * The @cb function is called every time the code cache is flushed.
+>> + */
+>
+> Thanks, I was thinking to document this since someone asked a question
+> on IRC a few weeks ago.
+>
+> May you add here:
+> "This callback can be used to free resources associated with existing
+> translated blocks in a plugin. @cb is guaranteed to run with all cpus
+> being stopped, thus no lock is required within it."
 
-Thank you.
----
-  - Prasad
+This does make me wonder what the use case for this callback is? In
+theory the state of the code cache should be an internal implementation
+detail that plugins shouldn't need to concern themselves with.
 
+>
+>>   QEMU_PLUGIN_API
+>>   void qemu_plugin_register_flush_cb(qemu_plugin_id_t id,
+>>                                      qemu_plugin_simple_cb_t cb);
+>> ---
+>> base-commit: 7608a95d2e0bd8c8d069ab77824d02586dd94648
+>> change-id: 20260309-add-missing-plugin-docs-159d7ff315f9
+>>=20
+>
+> Regards,
+> Pierrick
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
