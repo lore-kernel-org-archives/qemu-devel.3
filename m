@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2970112583F
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:08:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23626112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:09:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0LAS-0005PA-0q; Wed, 11 Mar 2026 11:08:12 -0400
+	id 1w0L7m-0000OY-S4; Wed, 11 Mar 2026 11:05:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7j-00008P-8t; Wed, 11 Mar 2026 11:05:25 -0400
+ id 1w0L5g-0004oy-T4; Wed, 11 Mar 2026 11:03:20 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L7c-0004Zp-8J; Wed, 11 Mar 2026 11:05:23 -0400
+ id 1w0L5b-0003zJ-F8; Wed, 11 Mar 2026 11:03:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241305; bh=IWzwU49V5a1A0MEg9tth+bQYl9/AuKMtjnmErL6ohqM=;
+ t=1773241304; bh=G755aRR8g+DB8Ndai7mnkZddJynlIh/TbgQ/RmnQewY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BHvDwdqR/FbAMvohnpSMYGtY7UvVKnGd8xUPAENnuYmFdjF8Em6eFC2ejA9VNxp73
- HrzkruMTYL4T5BmSeimrzA73HD3Gm3X2R7pmF66bXPpaG63MWvgBguPh7zrQsmIFTo
- ql3xmST2+wX2Dr84N3cVOoOty+IdQ75QvfmB3WgeK+wEW1HzKb32Doo/LKE1jqXJOx
- NykhDtP304+sPdOe6rAl5vuuPXx5+13t3jbsYajXo6upSmRQ6LnU1MfCnm7lEYTVTo
- JKfnEwxavroVIe1fcvVgzjw85jazdTygGB0FBsN/eLsC+jsj4LC6PjU1sPF/mh9QHv
- jOHc+55stAhMw==
+ b=alUi1wzlwYPhxuN92i57z452/CrreJ0jjV5+xuNjf7um3efMtp+XFL1H0wKV3PkDl
+ isERZkVrqOHEfSEacb0iHagAHCXMxmHrv50vevVh6ycUgbvvbIMCZ0/R9XdmKr1n4D
+ w7JpAN/LgFJK2D8opo2ULYY9TM4105x/sELmAPmuhLjeOm2K82j2JxLa0m/BJxuhNB
+ 9zvmUDEh4EQppTABvX813eExXwPF8odOhOW2cs3QkcphmbDTFLadrvL4wf/0DT+Hex
+ m4eDp58YuwDnLBVExBoiIEwKNPH+r3GJIiCnKMtXZPqQaf+Pok/N3M2KvZSVkxS5wl
+ r9GOZ/A2eGGkQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id C3C5F191E5F;
- Wed, 11 Mar 2026 18:01:45 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 3D9D5191E4B;
+ Wed, 11 Mar 2026 18:01:44 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id AF9DB37C2B1;
- Wed, 11 Mar 2026 18:02:23 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 27AC637C29D;
+ Wed, 11 Mar 2026 18:02:22 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Dmitry Guryanov <dmitry.guryanov@gmail.com>,
- Hanna Czenczek <hreitz@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+Cc: qemu-stable@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dmitry Osipenko <dmitry.osipenko@collabora.com>,
+ Joelle van Dyne <j@getutm.app>, "Michael S. Tsirkin" <mst@redhat.com>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 33/44] block/throttle-groups: fix deadlock with
- iolimits and muliple iothreads
-Date: Wed, 11 Mar 2026 18:02:05 +0300
-Message-ID: <20260311150221.1084186-33-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 13/44] virtio-gpu-virgl: Add
+ virtio-gpu-virgl-hostmem-region type
+Date: Wed, 11 Mar 2026 18:01:45 +0300
+Message-ID: <20260311150221.1084186-13-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -71,133 +72,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Dmitry Guryanov <dmitry.guryanov@gmail.com>
+From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-Details: https://gitlab.com/qemu-project/qemu/-/issues/3144
+Commit e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory
+region") made the name member of MemoryRegion unset, causing a NULL
+pointer dereference[1]:
+> Thread 2 "qemu-system-x86" received signal SIGSEGV, Segmentation fault.
+> (gdb) bt
+> #0  0x00007ffff56565e2 in __strcmp_evex () at /lib64/libc.so.6
+> #1  0x0000555555841bdb in find_fd (head=0x5555572337d0 <cpr_state>,
+> name=0x0, id=0) at ../migration/cpr.c:68
+> #2  cpr_delete_fd (name=name@entry=0x0, id=id@entry=0) at
+> ../migration/cpr.c:77
+> #3  0x000055555582290a in qemu_ram_free (block=0x7ff7e93aa7f0) at
+> ../system/physmem.c:2615
+> #4  0x000055555581ae02 in memory_region_finalize (obj=<optimized out>)
+> at ../system/memory.c:1816
+> #5  0x0000555555a70ab9 in object_deinit (obj=<optimized out>,
+> type=<optimized out>) at ../qom/object.c:715
+> #6  object_finalize (data=0x7ff7e936eff0) at ../qom/object.c:729
+> #7  object_unref (objptr=0x7ff7e936eff0) at ../qom/object.c:1232
+> #8  0x0000555555814fae in memory_region_unref (mr=<optimized out>) at
+> ../system/memory.c:1848
+> #9  flatview_destroy (view=0x555559ed6c40) at ../system/memory.c:301
+> #10 0x0000555555bfc122 in call_rcu_thread (opaque=<optimized out>) at
+> ../util/rcu.c:324
+> #11 0x0000555555bf17a7 in qemu_thread_start (args=0x555557b99520) at
+> ../util/qemu-thread-posix.c:393
+> #12 0x00007ffff556f464 in start_thread () at /lib64/libc.so.6
+> #13 0x00007ffff55f25ac in __clone3 () at /lib64/libc.so.6
 
-The function schedule_next_request is called with tg->lock held and
-it may call throttle_group_co_restart_queue, which takes
-tgm->throttled_reqs_lock, qemu_co_mutex_lock may leave current
-coroutine if other iothread has taken the lock. If the next
-coroutine will call throttle_group_co_io_limits_intercept - it
-will try to take the mutex tg->lock which will never be released.
+The intention of the aforementioned commit is to prevent a MemoryRegion
+from parenting itself while its references is counted indendependently
+of the device. To achieve the same goal, add a type of QOM objects that
+count references and parent MemoryRegions.
 
-Here is the backtrace of the iothread:
-Thread 30 (Thread 0x7f8aad1fd6c0 (LWP 24240) "IO iothread2"):
- #0  futex_wait (futex_word=0x5611adb7d828, expected=2, private=0) at ../sysdeps/nptl/futex-internal.h:146
- #1  __GI___lll_lock_wait (futex=futex@entry=0x5611adb7d828, private=0) at lowlevellock.c:49
- #2  0x00007f8ab5a97501 in lll_mutex_lock_optimized (mutex=0x5611adb7d828) at pthread_mutex_lock.c:48
- #3  ___pthread_mutex_lock (mutex=0x5611adb7d828) at pthread_mutex_lock.c:93
- #4  0x00005611823f5482 in qemu_mutex_lock_impl (mutex=0x5611adb7d828, file=0x56118289daca "../block/throttle-groups.c", line=372) at ../util/qemu-thread-posix.c:94
- #5  0x00005611822b0b39 in throttle_group_co_io_limits_intercept (tgm=0x5611af1bb4d8, bytes=4096, direction=THROTTLE_READ) at ../block/throttle-groups.c:372
- #6  0x00005611822473b1 in blk_co_do_preadv_part (blk=0x5611af1bb490, offset=15972311040, bytes=4096, qiov=0x7f8aa4000f98, qiov_offset=0, flags=BDRV_REQ_REGISTERED_BUF) at ../block/block-backend.c:1354
- #7  0x0000561182247fa0 in blk_aio_read_entry (opaque=0x7f8aa4005910) at ../block/block-backend.c:1619
- #8  0x000056118241952e in coroutine_trampoline (i0=-1543497424, i1=32650) at ../util/coroutine-ucontext.c:175
- #9  0x00007f8ab5a56f70 in ?? () at ../sysdeps/unix/sysv/linux/x86_64/__start_context.S:66 from target:/lib64/libc.so.6
- #10 0x00007f8aad1ef190 in ?? ()
- #11 0x0000000000000000 in ?? ()
+[1] https://lore.kernel.org/qemu-devel/4eb93d7a-1fa9-4b3c-8ad7-a2eb64f025a0@collabora.com/
 
-The lock is taken in line 386:
-(gdb) p tg.lock
-$1 = {lock = {__data = {__lock = 2, __count = 0, __owner = 24240, __nusers = 1, __kind = 0, __spins = 0, __elision = 0, __list = {__prev = 0x0, __next = 0x0}},
-    __size = "\002\000\000\000\000\000\000\000\260^\000\000\001", '\000' <repeats 26 times>, __align = 2}, file = 0x56118289daca "../block/throttle-groups.c",
-  line = 386, initialized = true}
-
-The solution is to use tg->lock to protect both ThreadGroup fields and
-ThrottleGroupMember.throttled_reqs. It doesn't seem to be possible
-to use separate locks because we need to first manipulate ThrottleGroup
-fields, then schedule next coroutine using throttled_reqs and after than
-update token field from ThrottleGroup depending on the throttled_reqs
-state.
-
-Signed-off-by: Dmitry Guryanov <dmitry.guryanov@gmail.com>
-Message-ID: <20251208085528.890098-1-dmitry.guryanov@gmail.com>
-Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit d4816177654d59e26ce212c436513f01842eb410)
+Cc: qemu-stable@nongnu.org
+Fixes: e27194e087ae ("virtio-gpu-virgl: correct parent for blob memory region")
+Fixes: 8d5a8ebaaff2 ("virtio-gpu-virgl: correct parent for blob memory region") in 10.0.x
+Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Tested-by: Dmitry Osipenko <dmitry.osipenko@collabora.com>
+Tested-by: Joelle van Dyne <j@getutm.app>
+Reviewed-by: Michael S. Tsirkin <mst@redhat.com>
+Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+Message-Id: <20260214-region-v1-1-229f00ae1f38@rsg.ci.i.u-tokyo.ac.jp>
+(cherry picked from commit b2a279094c3b86667969cc645f7fb1087e08dd19)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/throttle-groups.c b/block/throttle-groups.c
-index 32553b39e3..4385748bbf 100644
---- a/block/throttle-groups.c
-+++ b/block/throttle-groups.c
-@@ -295,19 +295,15 @@ static bool throttle_group_schedule_timer(ThrottleGroupMember *tgm,
- /* Start the next pending I/O request for a ThrottleGroupMember. Return whether
-  * any request was actually pending.
-  *
-+ * This assumes that tg->lock is held.
-+ *
-  * @tgm:       the current ThrottleGroupMember
-  * @direction: the ThrottleDirection
-  */
- static bool coroutine_fn throttle_group_co_restart_queue(ThrottleGroupMember *tgm,
-                                                          ThrottleDirection direction)
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index b25ddc0746..362828f54e 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -52,11 +52,17 @@ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+ 
+ #if VIRGL_VERSION_MAJOR >= 1
+ struct virtio_gpu_virgl_hostmem_region {
++    Object parent_obj;
+     MemoryRegion mr;
+     struct VirtIOGPU *g;
+     bool finish_unmapping;
+ };
+ 
++#define TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION "virtio-gpu-virgl-hostmem-region"
++
++OBJECT_DECLARE_SIMPLE_TYPE(virtio_gpu_virgl_hostmem_region,
++                           VIRTIO_GPU_VIRGL_HOSTMEM_REGION)
++
+ static struct virtio_gpu_virgl_hostmem_region *
+ to_hostmem_region(MemoryRegion *mr)
  {
--    bool ret;
--
--    qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
--    ret = qemu_co_queue_next(&tgm->throttled_reqs[direction]);
--    qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
--
--    return ret;
-+    return qemu_co_queue_next(&tgm->throttled_reqs[direction]);
+@@ -70,14 +76,22 @@ static void virtio_gpu_virgl_resume_cmdq_bh(void *opaque)
+     virtio_gpu_process_cmdq(g);
  }
  
- /* Look for the next pending I/O request and schedule it.
-@@ -378,12 +374,8 @@ void coroutine_fn throttle_group_co_io_limits_intercept(ThrottleGroupMember *tgm
-     /* Wait if there's a timer set or queued requests of this type */
-     if (must_wait || tgm->pending_reqs[direction]) {
-         tgm->pending_reqs[direction]++;
--        qemu_mutex_unlock(&tg->lock);
--        qemu_co_mutex_lock(&tgm->throttled_reqs_lock);
-         qemu_co_queue_wait(&tgm->throttled_reqs[direction],
--                           &tgm->throttled_reqs_lock);
--        qemu_co_mutex_unlock(&tgm->throttled_reqs_lock);
--        qemu_mutex_lock(&tg->lock);
-+                           &tg->lock);
-         tgm->pending_reqs[direction]--;
-     }
+-static void virtio_gpu_virgl_hostmem_region_free(void *obj)
++/*
++ * MR could outlive the resource if MR's reference is held outside of
++ * virtio-gpu. In order to prevent unmapping resource while MR is alive,
++ * and thus, making the data pointer invalid, we will block virtio-gpu
++ * command processing until MR is fully unreferenced and freed.
++ */
++static void virtio_gpu_virgl_hostmem_region_finalize(Object *obj)
+ {
+-    MemoryRegion *mr = MEMORY_REGION(obj);
+-    struct virtio_gpu_virgl_hostmem_region *vmr;
++    struct virtio_gpu_virgl_hostmem_region *vmr = VIRTIO_GPU_VIRGL_HOSTMEM_REGION(obj);
+     VirtIOGPUBase *b;
+     VirtIOGPUGL *gl;
  
-@@ -410,15 +402,15 @@ static void coroutine_fn throttle_group_restart_queue_entry(void *opaque)
-     ThrottleDirection direction = data->direction;
-     bool empty_queue;
+-    vmr = to_hostmem_region(mr);
++    if (!vmr->g) {
++        return;
++    }
++
+     vmr->finish_unmapping = true;
  
-+    qemu_mutex_lock(&tg->lock);
-     empty_queue = !throttle_group_co_restart_queue(tgm, direction);
- 
-     /* If the request queue was empty then we have to take care of
-      * scheduling the next one */
-     if (empty_queue) {
--        qemu_mutex_lock(&tg->lock);
-         schedule_next_request(tgm, direction);
--        qemu_mutex_unlock(&tg->lock);
-     }
-+    qemu_mutex_unlock(&tg->lock);
- 
-     g_free(data);
- 
-@@ -569,7 +561,6 @@ void throttle_group_register_tgm(ThrottleGroupMember *tgm,
-                          read_timer_cb,
-                          write_timer_cb,
-                          tgm);
--    qemu_co_mutex_init(&tgm->throttled_reqs_lock);
+     b = VIRTIO_GPU_BASE(vmr->g);
+@@ -92,11 +106,26 @@ static void virtio_gpu_virgl_hostmem_region_free(void *obj)
+     qemu_bh_schedule(gl->cmdq_resume_bh);
  }
  
- /* Unregister a ThrottleGroupMember from its group, removing it from the list,
-diff --git a/include/block/throttle-groups.h b/include/block/throttle-groups.h
-index 2355e8d9de..7dfc81f7b5 100644
---- a/include/block/throttle-groups.h
-+++ b/include/block/throttle-groups.h
-@@ -35,8 +35,7 @@
++static const TypeInfo virtio_gpu_virgl_hostmem_region_info = {
++    .parent = TYPE_OBJECT,
++    .name = TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION,
++    .instance_size = sizeof(struct virtio_gpu_virgl_hostmem_region),
++    .instance_finalize = virtio_gpu_virgl_hostmem_region_finalize
++};
++
++static void virtio_gpu_virgl_types(void)
++{
++    type_register_static(&virtio_gpu_virgl_hostmem_region_info);
++}
++
++type_init(virtio_gpu_virgl_types)
++
+ static int
+ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+                                    struct virtio_gpu_virgl_resource *res,
+                                    uint64_t offset)
+ {
++    g_autofree char *name = NULL;
+     struct virtio_gpu_virgl_hostmem_region *vmr;
+     VirtIOGPUBase *b = VIRTIO_GPU_BASE(g);
+     MemoryRegion *mr;
+@@ -117,21 +146,16 @@ virtio_gpu_virgl_map_resource_blob(VirtIOGPU *g,
+     }
  
- typedef struct ThrottleGroupMember {
-     AioContext   *aio_context;
--    /* throttled_reqs_lock protects the CoQueues for throttled requests.  */
--    CoMutex      throttled_reqs_lock;
-+    /* Protected by ThrottleGroup.lock */
-     CoQueue      throttled_reqs[THROTTLE_MAX];
+     vmr = g_new0(struct virtio_gpu_virgl_hostmem_region, 1);
++    name = g_strdup_printf("blob[%" PRIu32 "]", res->base.resource_id);
++    object_initialize_child(OBJECT(g), name, vmr,
++                            TYPE_VIRTIO_GPU_VIRGL_HOSTMEM_REGION);
+     vmr->g = g;
  
-     /* Nonzero if the I/O limits are currently being ignored; generally
+     mr = &vmr->mr;
+-    memory_region_init_ram_ptr(mr, OBJECT(mr), NULL, size, data);
++    memory_region_init_ram_ptr(mr, OBJECT(vmr), "mr", size, data);
+     memory_region_add_subregion(&b->hostmem, offset, mr);
+     memory_region_set_enabled(mr, true);
+ 
+-    /*
+-     * MR could outlive the resource if MR's reference is held outside of
+-     * virtio-gpu. In order to prevent unmapping resource while MR is alive,
+-     * and thus, making the data pointer invalid, we will block virtio-gpu
+-     * command processing until MR is fully unreferenced and freed.
+-     */
+-    OBJECT(mr)->free = virtio_gpu_virgl_hostmem_region_free;
+-
+     res->mr = mr;
+ 
+     return 0;
+@@ -159,7 +183,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+      * 1. Begin async unmapping with memory_region_del_subregion()
+      *    and suspend/block cmd processing.
+      * 2. Wait for res->mr to be freed and cmd processing resumed
+-     *    asynchronously by virtio_gpu_virgl_hostmem_region_free().
++     *    asynchronously by virtio_gpu_virgl_hostmem_region_finalize().
+      * 3. Finish the unmapping with final virgl_renderer_resource_unmap().
+      */
+     if (vmr->finish_unmapping) {
+@@ -182,7 +206,7 @@ virtio_gpu_virgl_unmap_resource_blob(VirtIOGPU *g,
+         /* memory region owns self res->mr object and frees it by itself */
+         memory_region_set_enabled(mr, false);
+         memory_region_del_subregion(&b->hostmem, mr);
+-        object_unref(OBJECT(mr));
++        object_unparent(OBJECT(vmr));
+     }
+ 
+     return 0;
 -- 
 2.47.3
 
