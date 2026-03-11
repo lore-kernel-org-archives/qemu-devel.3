@@ -4,45 +4,44 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7A6231125842
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:04:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0504D112583E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 15:04:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0L6F-0005Gy-Ay; Wed, 11 Mar 2026 11:03:53 -0400
+	id 1w0L5i-0004lk-ML; Wed, 11 Mar 2026 11:03:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L53-0004Qj-A5; Wed, 11 Mar 2026 11:02:38 -0400
+ id 1w0L4x-0004OZ-Sz; Wed, 11 Mar 2026 11:02:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0L51-0003kZ-6E; Wed, 11 Mar 2026 11:02:36 -0400
+ id 1w0L4w-0003jQ-4I; Wed, 11 Mar 2026 11:02:31 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773241303; bh=AREQ/dFnXzezlRlc40BNW1VnJ2gwDKJL+a4jQQus1S0=;
+ t=1773241303; bh=429YLG3NRdlGovkOnUIU/0a5PXmGPJOzgH5GypK1PeM=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=vE46g8zDXDxmw+/XD2Tl9350TSKmyuKncyupGUmWQJ/8WquoAdIFLXjrvMijdt/+3
- HKDNW+vlJSdb+3zjsCUyK8IwjwIteW642cI8j+/rB6d6IX9qLPkzzwgkFPUfyOsRE4
- rW1aGvxtpW+6fpHE4401/5CmkuR108mZ5hEBKyHGAPK/RkmLT3hZjnBcCBRG8j5J55
- 1sdrmEGLaA0TxtmotHqFUyYN+TGnTP5PWVXkn0D6T0yX07Rb8ehJT10tNnkct3DSVb
- mTANHrrquIgn7llCkBUCY0b75JnFOzGpSqY7Y+UUzkarIBgomJTTtxjKT+GlyMjLkj
- 4wctYP/gb2+Cg==
+ b=GEoo3qetTptmIf2FrEx9l0AUd93FKdOcWnRo9KsvpYwZnSmvi+f/uIsaOZp4x/Zlt
+ v1nXlAisD61RHsBNuDnZLE7gUTTmaHN9kAZICiFX2ugXoiNnj9QYwlTm4XIT1knb0r
+ +ThtD5NIxNVeGFQZAbnjmKDGl9LzBCb0RtQ1H9Gc/RohHZXZ3IaGCWCtmIWQX5E3F1
+ w3/L0ae4M/C2Dro0jrBuIGQsH3doL7eImANCRNjRpIIuf9cv3m0SNmqJ2lgEaTtb1v
+ 2LpZ2fAExuMPkP15ogBFZqu3TX1b4RyHMFLnTmLQxSzPyTFnTcfgcRZdPgH+8eTFaM
+ lCVcuHHWAM6ag==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8628F191E43;
+ by isrv.corpit.ru (Postfix) with ESMTP id 40FC7191E40;
  Wed, 11 Mar 2026 18:01:43 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 70B4437C295;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 2DFD137C292;
  Wed, 11 Mar 2026 18:02:21 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Alex Bradbury <asb@igalia.com>,
- Manos Pitsidianakis <manos.pitsidianakis@linaro.org>,
+Cc: qemu-stable@nongnu.org, Mohamed Mediouni <mohamed@unpredictable.fr>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 05/44] contrib/plugins/hotblocks: Correctly free
- sorted counts list
-Date: Wed, 11 Mar 2026 18:01:37 +0300
-Message-ID: <20260311150221.1084186-5-mjt@tls.msk.ru>
+Subject: [Stable-10.0.9 02/44] plugins: fix cross-build using LLVM for Windows
+ targets
+Date: Wed, 11 Mar 2026 18:01:34 +0300
+Message-ID: <20260311150221.1084186-2-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
 References: <qemu-stable-10.0.9-20260311180113@cover.tls.msk.ru>
@@ -72,51 +71,41 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alex Bradbury <asb@igalia.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-g_list_free should be passed the head of the list.
+llvm-dlltool assumes that it's by default targeting the host architecture
+it's running on. That assumption doesn't hold true when cross-compiling.
 
-Signed-off-by: Alex Bradbury <asb@igalia.com>
-Reviewed-by: Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/cf5a00136738b981a12270b76572e8d502daf208.1753857212.git.asb@igalia.com
+Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260210040722.11375-1-mohamed@unpredictable.fr
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-(cherry picked from commit 90fabd5ddace6ffa5a62a5186201fd071b4e2b74)
+(cherry picked from commit b0353beebb0c4fa4059c88362561a8362ada8b4c)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/contrib/plugins/hotblocks.c b/contrib/plugins/hotblocks.c
-index 98404b6885..d3dd23ed9f 100644
---- a/contrib/plugins/hotblocks.c
-+++ b/contrib/plugins/hotblocks.c
-@@ -73,15 +73,16 @@ static void exec_count_free(gpointer key, gpointer value, gpointer user_data)
- static void plugin_exit(qemu_plugin_id_t id, void *p)
- {
-     g_autoptr(GString) report = g_string_new("collected ");
--    GList *counts, *it;
-+    GList *counts, *sorted_counts, *it;
-     int i;
- 
-     g_string_append_printf(report, "%d entries in the hash table\n",
-                            g_hash_table_size(hotblocks));
-     counts = g_hash_table_get_values(hotblocks);
--    it = g_list_sort_with_data(counts, cmp_exec_count, NULL);
-+    sorted_counts = g_list_sort_with_data(counts, cmp_exec_count, NULL);
- 
--    if (it) {
-+    if (sorted_counts) {
-+        it = sorted_counts;
-         g_string_append_printf(report, "pc, tcount, icount, ecount\n");
- 
-         for (i = 0; i < limit && it->next; i++, it = it->next) {
-@@ -94,7 +95,7 @@ static void plugin_exit(qemu_plugin_id_t id, void *p)
-                     qemu_plugin_scoreboard_u64(rec->exec_count)));
-         }
- 
--        g_list_free(it);
-+        g_list_free(sorted_counts);
-     }
- 
-     qemu_plugin_outs(report->str);
+diff --git a/plugins/meson.build b/plugins/meson.build
+index 3be8245a69..5f655d81f3 100644
+--- a/plugins/meson.build
++++ b/plugins/meson.build
+@@ -41,9 +41,16 @@ if host_os == 'windows'
+   # to find missing symbols in current program.
+   win32_qemu_plugin_api_link_flags = ['-Lplugins', '-lqemu_plugin_api']
+   if meson.get_compiler('c').get_id() == 'clang'
++    if host_machine.cpu() == 'x86_64'
++      dlltool_target = 'i386:x86-64'
++    elif host_machine.cpu() == 'aarch64'
++      dlltool_target = 'arm64'
++    else
++      error('Unknown machine')
++    endif
+     # With LLVM/lld, delaylib is specified at link time (-delayload)
+     dlltool = find_program('llvm-dlltool', required: true)
+-    dlltool_cmd = [dlltool, '-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
++    dlltool_cmd = [dlltool, '-m', dlltool_target,'-d', '@INPUT@', '-l', '@OUTPUT@', '-D', 'qemu.exe']
+     win32_qemu_plugin_api_link_flags += ['-Wl,-delayload=qemu.exe']
+   else
+     # With gcc/ld, delay lib is built with a specific delay parameter.
 -- 
 2.47.3
 
