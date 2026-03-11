@@ -4,42 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 243D1112588E
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:43:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 58D7B1125875
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 19:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0PPM-0002MI-0a; Wed, 11 Mar 2026 15:39:52 -0400
+	id 1w0POO-0006tS-4i; Wed, 11 Mar 2026 15:38:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PPK-0002I4-CV; Wed, 11 Mar 2026 15:39:50 -0400
+ id 1w0POK-0006cG-Lo; Wed, 11 Mar 2026 15:38:48 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w0PPI-0000sl-Fl; Wed, 11 Mar 2026 15:39:50 -0400
+ id 1w0POI-0000ac-FB; Wed, 11 Mar 2026 15:38:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773257670; bh=UhDEF+0FkvE8wwY7FcHd1IRaCkhOlhAOXEZlZtt+UPQ=;
+ t=1773257669; bh=6LBpic4XJk4OSTGcGw9K+SF8YRBKjjhnFI6eb0J15Tk=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=cP4z15DzZeFEbBZf+CClv0CjrLodn5P7tk0MNos3u8ey1rjwicfOJw6eRmUC5qf8F
- C1cdLNmTprDZMJdPEogEOptIU60W2ZDXKfU8NsjH07FkN/nmpz/n4v3s52RdINIxFD
- anRyhpRyhT0qJhpq3Ax1MezhrAB2j5dCodRHGhcfyLsx3DMv+wDekH6HBv2N+mLx3R
- Q9DjGmYQvRgQDVqAHEJNqN5vj2livOnNjNrdfVLfqT6AdfBHgPybGG4LudLuYB4g1t
- 3kTBME2bqW35GfbTmY8RdYXVzTzvidWNz693OYyFT+Z+BFEieugnY9GYI14gVG87kg
- YrhpojhA03V3A==
+ b=slmlkPyqBrugB5Zjmu+gKNFCAHL68ZaWvZ21dibGOigU7UrrOtgVFGU7FbqMQ20CG
+ j2tOgzr2u+Ar6US8Nw7MEIyL7F/41aqUV0BBY+pObOX9+6QuHvDBSH7G8UkRmZQ/UP
+ GZWUfETqQGkbIkw2J6uuCe3JiMgkNDQHSlGhyYfdTbW8DdiBRHQzV4eV6/9oIpdfOG
+ ugFaR+OnLcO8Vd5MFV78zxrJqyB620VlDrDrkjSZ7UWfCs0TEwMDJlcXs/Q721+ex0
+ nlEsLFyVLw2/hkSVLJXD2K9M0MjKwtFUWOnz/2Y3gxA8lMzQ7regOdirgEqSfdxLcG
+ 92kUGDRTNTGMg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A56C519211D;
- Wed, 11 Mar 2026 22:34:30 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 93206192111;
+ Wed, 11 Mar 2026 22:34:29 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E8CE637C482;
- Wed, 11 Mar 2026 22:35:08 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id D34B737C476;
+ Wed, 11 Mar 2026 22:35:07 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
- Kevin Wolf <kwolf@redhat.com>, Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 53/53] fuse: Copy write buffer content before polling
-Date: Wed, 11 Mar 2026 22:34:46 +0300
-Message-ID: <20260311193449.1096110-53-mjt@tls.msk.ru>
+Cc: qemu-stable@nongnu.org, Jens Axboe <axboe@kernel.dk>,
+ Kevin Wolf <kwolf@redhat.com>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [Stable-10.2.2 41/53] aio-posix: notify main loop when SQEs are queued
+Date: Wed, 11 Mar 2026 22:34:34 +0300
+Message-ID: <20260311193449.1096110-41-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
 References: <qemu-stable-10.2.2-20260311164242@cover.tls.msk.ru>
@@ -69,114 +70,119 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Hanna Czenczek <hreitz@redhat.com>
+From: Jens Axboe <axboe@kernel.dk>
 
-aio_poll() in I/O functions can lead to nested read_from_fuse_export()
-calls, overwriting the request buffer's content.  The only function
-affected by this is fuse_write(), which therefore must use a bounce
-buffer or corruption may occur.
+When a vCPU thread handles MMIO (holding BQL), aio_co_enter() runs the
+block I/O coroutine inline on the vCPU thread because
+qemu_get_current_aio_context() returns the main AioContext when BQL is
+held. The coroutine calls luring_co_submit() which queues an SQE via
+fdmon_io_uring_add_sqe(), but the actual io_uring_submit() only happens
+in gsource_prepare() on the main loop thread.
 
-Note that in addition we do not know whether libfuse-internal structures
-can cope with this nesting, and even if we did, we probably cannot rely
-on it in the future.  This is the main reason why we want to remove
-libfuse from the I/O path.
+Since the coroutine ran inline (not via aio_co_schedule()), no BH is
+scheduled and aio_notify() is never called. The main loop remains asleep
+in ppoll() with up to a 499ms timeout, leaving the SQE unsubmitted until
+the next timer fires.
 
-I do not have a good reproducer for this other than:
+Fix this by calling aio_notify() after queuing the SQE. This wakes the
+main loop via the eventfd so it can run gsource_prepare() and submit the
+pending SQE promptly.
 
-$ dd if=/dev/urandom of=image bs=1M count=4096
-$ dd if=/dev/zero of=copy bs=1M count=4096
-$ touch fuse-export
-$ qemu-storage-daemon \
-    --blockdev file,node-name=file,filename=copy \
-    --export \
-    fuse,id=exp,node-name=file,mountpoint=fuse-export,writable=true \
-    &
+This is a generic fix that benefits all devices using aio=io_uring.
+Without it, AHCI/SATA devices see MUCH worse I/O latency since they use
+MMIO (not ioeventfd like virtio) and have no other mechanism to wake the
+main loop after queuing block I/O.
 
-Other shell:
-$ qemu-img convert -p -n -f raw -O raw -t none image fuse-export
-$ killall -SIGINT qemu-storage-daemon
-$ qemu-img compare image copy
-Content mismatch at offset 0!
+This is usually a bit hard to detect, as it also relies on the ppoll
+loop not waking up for other activity, and micro benchmarks tend not to
+see it because they don't have any real processing time. With a
+synthetic test case that has a few usleep() to simulate processing of
+read data, it's very noticeable. The below example reads 128MB with
+O_DIRECT in 128KB chunks in batches of 16, and has a 1ms delay before
+each batch submit, and a 1ms delay after processing each completion.
+Running it on /dev/sda yields:
 
-(The -t none in qemu-img convert is important.)
+time sudo ./iotest /dev/sda
 
-I tried reproducing this with throttle and small aio_write requests from
-another qemu-io instance, but for some reason all requests are perfectly
-serialized then.
+________________________________________________________
+Executed in   25.76 secs	  fish           external
+   usr time    6.19 millis  783.00 micros    5.41 millis
+   sys time   12.43 millis  642.00 micros   11.79 millis
 
-I think in theory we should get parallel writes only if we set
-fi->parallel_direct_writes in fuse_open().  In fact, I can confirm that
-if we do that, that throttle-based reproducer works (i.e. does get
-parallel (nested) write requests).  I have no idea why we still get
-parallel requests with qemu-img convert anyway.
+while on a virtio-blk or NVMe device we get:
 
-Also, a later patch in this series will set fi->parallel_direct_writes
-and note that it makes basically no difference when running fio on the
-current libfuse-based version of our code.  It does make a difference
-without libfuse.  So something quite fishy is going on.
+time sudo ./iotest /dev/vdb
 
-I will try to investigate further what the root cause is, but I think
-for now let's assume that calling blk_pwrite() can invalidate the buffer
-contents through nested polling.
+________________________________________________________
+Executed in    1.25 secs      fish           external
+   usr time    1.40 millis    0.30 millis    1.10 millis
+   sys time   17.61 millis    1.43 millis   16.18 millis
 
-Cc: qemu-stable@nongnu.org
+time sudo ./iotest /dev/nvme0n1
+
+________________________________________________________
+Executed in    1.26 secs      fish           external
+   usr time    6.11 millis    0.52 millis    5.59 millis
+   sys time   13.94 millis    1.50 millis   12.43 millis
+
+where the latter are consistent. If we run the same test but keep the
+socket for the ssh connection active by having activity there, then
+the sda test looks as follows:
+
+time sudo ./iotest /dev/sda
+
+________________________________________________________
+Executed in    1.23 secs      fish           external
+   usr time    2.70 millis   39.00 micros    2.66 millis
+   sys time    4.97 millis  977.00 micros    3.99 millis
+
+as now the ppoll loop is woken all the time anyway.
+
+After this fix, on an idle system:
+
+time sudo ./iotest /dev/sda
+
+________________________________________________________
+Executed in    1.30 secs      fish           external
+   usr time    2.14 millis    0.14 millis    2.00 millis
+   sys time   16.93 millis    1.16 millis   15.76 millis
+
+Signed-off-by: Jens Axboe <axboe@kernel.dk>
+Message-Id: <07d701b9-3039-4f9b-99a2-abeae51146a5@kernel.dk>
 Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
-Message-ID: <20260309150856.26800-2-hreitz@redhat.com>
-Reviewed-by: Kevin Wolf <kwolf@redhat.com>
-Signed-off-by: Kevin Wolf <kwolf@redhat.com>
-(cherry picked from commit a3fcbca0ef643a8aecf354bdeb08b1d81e5b33e7)
+[Generalize the comment since this applies to all vCPU thread activity,
+not just coroutines, as suggested by Kevin Wolf <kwolf@redhat.com>.
+--Stefan]
+Signed-off-by: Stefan Hajnoczi <stefanha@redhat.com>
+(cherry picked from commit 2ae361ef1d7d526b07ff88d854552e2d009bfb1b)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/block/export/fuse.c b/block/export/fuse.c
-index 465cc9891d..aec4d8736d 100644
---- a/block/export/fuse.c
-+++ b/block/export/fuse.c
-@@ -301,6 +301,12 @@ static void read_from_fuse_export(void *opaque)
-         goto out;
-     }
+diff --git a/util/aio-posix.c b/util/aio-posix.c
+index e24b955fd9..488d964611 100644
+--- a/util/aio-posix.c
++++ b/util/aio-posix.c
+@@ -23,6 +23,7 @@
+ #include "qemu/rcu_queue.h"
+ #include "qemu/sockets.h"
+ #include "qemu/cutils.h"
++#include "system/iothread.h"
+ #include "trace.h"
+ #include "aio-posix.h"
  
-+    /*
-+     * Note that aio_poll() in any request-processing function can lead to a
-+     * nested read_from_fuse_export() call, which will overwrite the contents of
-+     * exp->fuse_buf.  Anything that takes a buffer needs to take care that the
-+     * content is copied before potentially polling via aio_poll().
-+     */
-     fuse_session_process_buf(exp->fuse_session, &exp->fuse_buf);
- 
- out:
-@@ -624,6 +630,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-                        size_t size, off_t offset, struct fuse_file_info *fi)
+@@ -813,5 +814,13 @@ void aio_add_sqe(void (*prep_sqe)(struct io_uring_sqe *sqe, void *opaque),
  {
-     FuseExport *exp = fuse_req_userdata(req);
-+    QEMU_AUTO_VFREE void *copied = NULL;
-     int64_t length;
-     int ret;
- 
-@@ -638,6 +645,14 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-         return;
-     }
- 
-+    /*
-+     * Heed the note on read_from_fuse_export(): If we call aio_poll() (which
-+     * any blk_*() I/O function may do), read_from_fuse_export() may be nested,
-+     * overwriting the request buffer content.  Therefore, we must copy it here.
-+     */
-+    copied = blk_blockalign(exp->common.blk, size);
-+    memcpy(copied, buf, size);
+     AioContext *ctx = qemu_get_current_aio_context();
+     ctx->fdmon_ops->add_sqe(ctx, prep_sqe, opaque, cqe_handler);
 +
-     /**
-      * Clients will expect short writes at EOF, so we have to limit
-      * offset+size to the image length.
-@@ -660,7 +675,7 @@ static void fuse_write(fuse_req_t req, fuse_ino_t inode, const char *buf,
-         }
-     }
- 
--    ret = blk_pwrite(exp->common.blk, offset, size, buf, 0);
-+    ret = blk_pwrite(exp->common.blk, offset, size, copied, 0);
-     if (ret >= 0) {
-         fuse_reply_write(req, size);
-     } else {
++    /*
++     * Wake the main loop if it is sleeping in ppoll().  When a vCPU thread
++     * queues SQEs, the actual io_uring_submit() only happens in
++     * gsource_prepare() in the main loop thread.  Without this notify, the
++     * main loop thread's ppoll() can sleep up to 499ms before submitting.
++     */
++    aio_notify(ctx);
+ }
+ #endif /* CONFIG_LINUX_IO_URING */
 -- 
 2.47.3
 
