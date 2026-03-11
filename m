@@ -4,102 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48952104C001
-	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:45:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BE805104C00E
+	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 10:48:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0H3J-0000t7-S1; Wed, 11 Mar 2026 06:44:37 -0400
+	id 1w0H6b-0001dj-9e; Wed, 11 Mar 2026 06:47:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0H2w-0000rz-PK
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:44:11 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0H2v-0000gv-8L
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 06:44:10 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-64c9a6d68e5so10407793d50.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 03:44:07 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773225847; cv=none;
- d=google.com; s=arc-20240605;
- b=Lw/XFEFqHQONl5YYSRLZGT1CZ6agz/dOoIh8yxagNfB6K0x3c3yO9dGJRJDqG4hkcT
- K5WggLOn84f1HjG5swwcojWuIVRjkYtc48+nS5O8Hnhi9mICzZ8oqGG+aD3/GbTvvYLR
- +jLRYErZbJGZzU158hlSEWLXxtG1h111rzpEjbtcT2ioGB365QO9wRfD1lpxVts6y5/B
- HT8s4J9Tt/g28q2jxUeReUTwz1l6xwswRxvnj4doGNIiFKsSpty4eqx+2nqXX2pfCbhz
- 1QJecGZUw5N8spHIYijrjlGRHIjwARhQRHWn7DQmcw7+sGI3A57b9Sp/ykXD/0E4/JtW
- tibQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=yN00jzed+EBT6llW4FBriizhAtBOKXpjd3EOPrX13cA=;
- fh=WYJLbp15PdFKX7iYzIiPNfmlkxlDiZ1oceQSBbDfTwc=;
- b=MNeN3roIRR1Z05myRUfNKVYyPQtkUH0UbwQr9TjHwEaKv2xnUej9rYO6ESywxOQA2f
- IYkqVddVFDiePJqhi2pvhnKz9g+lsqwg4iZXmRhRruNK3/s8LmLiEDZB5QhMH86KLjf/
- VNxWVN8b5HUjU46EA/gfu0zgV5C3jSJGA8K6MZ49n4Lc5gcHVhrhE7YRuQDE+pOfxcqZ
- c8y881TA67gKTtRxA2g3bKWFK2fkhDcJ1X7oV0GNezhKzfGinuV58cyFGlJ1CuZ4u8Rn
- ohZYCaw0BvI7BSaQzFjp+yyaTAhALx7pcjW8htzg5WqAzYYPrGSILKzoI3VpttC5xJ0H
- exFA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773225847; x=1773830647; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yN00jzed+EBT6llW4FBriizhAtBOKXpjd3EOPrX13cA=;
- b=aMNUTlF8mXknW7nRrG187XQ9TUC5tk7fX92OQNEMQg8rIuW/VEwx6hG8IzRt85ODfU
- vcwpkSFy3k5GWCcRF4dS6ZHc1ZmxiBcON9uc0HfauBCjB/5vJcA7VjUJfqF8/4OcBJ4u
- fPi82KGp4q710dI2QXg/uWgWY13ArVvrr0lDXjTC5ERAwYXPZugT2Dj+siO96SUJ3inH
- lrbXSQxyGurroFJ/5EjroGlekN3y8nMwOnilhLtDsLd1uUZqG3ZvAA6Ba6LOqqO4rNUs
- nOSZmLNqFo5djycTCDT4w28ROColNSI6L52eIKEHrqMFEg177R/c5neKvHMyBMFGcQ0I
- hfyg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773225847; x=1773830647;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=yN00jzed+EBT6llW4FBriizhAtBOKXpjd3EOPrX13cA=;
- b=EqnXJGi9N0fiJfy1LfEKGgdDps42SMmaS4BQB2RXWQXITjfu5NtqzStk48AbtcUiNJ
- pDsUgzoaHK3HBHbGFLblad/Sg4Y/ZJDOYyKwhkG+gu4g6dBfBSP59lzev5xs6KQdptau
- pc7u6yOqcZFdJM7NTZTJPAsI9JgxGCx0cTdAJN/xscowJs2HuTiRULOjgnZKlx/wHSik
- kzrCYPg2ZN2zeNPIYRAM3xALhEQLwKvJowBdKG8krQNoz6yIcSeqxY6OybjOPcb2Jymb
- FuVFOeN0xwFNeqr4inU/tVTPcjdGF+a5sOJxE3+cmOu8RvNkTEmiNZGgnUuPeZQgHpFa
- HR3w==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUgA8SiT/WwBl/u2Wg0nQ7TkpGWaHF3CH9moctqqmdsZg79WJxwfFxyxrZtikbsWuQZAHTh0HiE9pIk@nongnu.org
-X-Gm-Message-State: AOJu0YwetDyQccRY+sZhIvZDAy1PQvrfZs9z49NKu0Mx6b/7r2MkfN4h
- WmYj9zPFzP+ezzwBGd/uIHkEsU8d4Oo+6feol702+qN0n6XAsasJyCO0M2YzNmiV0XJjwHc2AQu
- 6pMFgWU3PdmHhc3zfFtlJh5xhL4vRt7nUGUC8Ol3pXQ==
-X-Gm-Gg: ATEYQzwsC2hw9z+dqj484wwigWlvspiDUxYJTewD98iuyXBN9zy7AKK/0WpgOzDhlyN
- CN9OYacHWJRk+w0JNZYTCc2aN10OsjJclMqe1zx0YhdY9V04lmx8r1Uhfu2/+fhaQ2WmKjFn9Ku
- ynLrvFdTdnKF5QEX9WR7+KYI7C07RcPAwW4cTQjulTLcdac8s6xXb9E66+suAVdPjFZY5fWIhgK
- 0JvbaqweXLodYwTELMVN+KukcfVwL+ZDoLgDj1Voap8/0KP6Qp1N+PNba/kdQ9PXUd9T4rMilbs
- VdmzWgozdpn/Ev8yJrYDitFWjo2D6IOL3YFhUvV2tw/MyeT7sRdD901JjZwo6+FVDyk=
-X-Received: by 2002:a53:c041:0:20b0:64d:568b:bcb9 with SMTP id
- 956f58d0204a3-64d656a4f9bmr1360289d50.16.1773225846995; Wed, 11 Mar 2026
- 03:44:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1w0H6O-0001cK-F1; Wed, 11 Mar 2026 06:47:45 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <akrowiak@linux.ibm.com>)
+ id 1w0H6M-0001Ez-7Z; Wed, 11 Mar 2026 06:47:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62B1vV4m049228; Wed, 11 Mar 2026 10:47:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=jF/Ken
+ oI3xWzufMFlxgeCnulwbQylHRPVFFbFeR7+F0=; b=tPOVJuemok0tE14mzXO3b2
+ 3EZEwBOcUzO7BpB1yNNI2RIYN3qFawbzcogzRMtEc3Hk4LATBNSAQvuuNawgwTq8
+ Y+OWkV0mqcbHTX5kMJrl07Bd6OOOZYpG/EQE/Gl25NWqTPeo/iTpfStu1W0aVEE+
+ ihD+Jfz+qTcsVEYjhsS6tb7RGAxkNqcEX+GJi30WuDVfMdQkVYAisKuxbI2GosWU
+ eKxCPmZgniUQqk6ckrdfMBp+emwTrOmobmCpSpwzg+D1Jz+0XOtr5HoGc0YhSd0e
+ RNoJ9i4EAbMFzSJls0JlLkQxHhGqYA34KQ1hlz5hXR521qxPkD/V2yDZ8L5UvNHQ
+ ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4crcvmfg21-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Mar 2026 10:47:38 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62B83s7t024660;
+ Wed, 11 Mar 2026 10:47:37 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cs0jk4wq0-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 11 Mar 2026 10:47:37 +0000
+Received: from smtpav01.dal12v.mail.ibm.com (smtpav01.dal12v.mail.ibm.com
+ [10.241.53.100])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62BAlZtS38797832
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 11 Mar 2026 10:47:35 GMT
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 25D1D58059;
+ Wed, 11 Mar 2026 10:47:35 +0000 (GMT)
+Received: from smtpav01.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1821C58057;
+ Wed, 11 Mar 2026 10:47:34 +0000 (GMT)
+Received: from [9.61.143.63] (unknown [9.61.143.63])
+ by smtpav01.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 11 Mar 2026 10:47:33 +0000 (GMT)
+Message-ID: <cc51de63-ab94-4044-89c0-c440b724a344@linux.ibm.com>
+Date: Wed, 11 Mar 2026 06:47:33 -0400
 MIME-Version: 1.0
-References: <20260310162622.333137-1-kwolf@redhat.com>
-In-Reply-To: <20260310162622.333137-1-kwolf@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 11 Mar 2026 10:43:55 +0000
-X-Gm-Features: AaiRm52oZL5sTq-ZNRKlISqvE28o_YgJilKjoPhLd9YaF1miSVzORHgmFz_VQ_E
-Message-ID: <CAFEAcA8XD4KVRQWU1BSyCkqoUWuBO5Kq-s4fnJk07gNq6BG4FQ@mail.gmail.com>
-Subject: Re: [PULL 00/28] Block layer patches
-To: Kevin Wolf <kwolf@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 3/4] util/event_notifier: fix error handling for
+ event_notifier_init callers
+To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
+Cc: "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Thomas Huth <thuth@redhat.com>, Alex Williamson <alex@shazbot.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>, qemu-s390x@nongnu.org
+References: <20260310182801.196443-1-viking4@gmail.com>
+ <20260310182801.196443-4-viking4@gmail.com>
+Content-Language: en-US
+From: Anthony Krowiak <akrowiak@linux.ibm.com>
+In-Reply-To: <20260310182801.196443-4-viking4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: m_e2cJjvG5riBDcIkUCHSvA4U9_C_zev
+X-Proofpoint-ORIG-GUID: HWVFOLtRPfE32H2hlV0lHwCpcbMPRYKB
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzExMDA4OCBTYWx0ZWRfXzzNW+Rak04dw
+ IUND1BcGA+sBhpplhpXNvScHptvjwtyptwI/2DHKGzth707BtiG/ijU55PtecWzl/AVi/l77ivd
+ 4gAgCXR0F8dt1oTZUJN2mlMPAUMLim8BniO7FbXcIDb18j4JcYIfRL7sjLe5NJrOcs3M5F2laN7
+ AJoxy8ffaeJfZ5Xee4eCwRSX0FMUmJ2RtSVldldusRRmooZxUH7FQVVUaahRsklX9ToaqOVF/Rw
+ OeOcxTA8B7kuOWwGtn8I3+B1Ab5FcYFjOpK/hHlKDOMZ2C3uT/Jbz2pmW7CQ9YcU0t33EILIKRU
+ PbZa/p7Fp6nVo2DJdlTbPQsrLBU8cFYhExq0qeBKT680j7dMMNPGleqFCh7DvOhXfjOCxZb769T
+ 4MUKjSX0AHRoxs6Gq93pcIO+ZpsmfaOsd63pYf7H/hqMK+/DDAVwcXPo7HQrD89R01yQd41wqcg
+ eB/kvADaFIHnO41M0IA==
+X-Authority-Analysis: v=2.4 cv=B5q0EetM c=1 sm=1 tr=0 ts=69b1484a cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=iQ6ETzBq9ecOQQE5vZCe:22 a=p0WdMEafAAAA:8
+ a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=EgclEWYoO7V04lid-PAA:9 a=3ZKOabzyN94A:10
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-11_01,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ malwarescore=0 phishscore=0 adultscore=0 lowpriorityscore=0 bulkscore=0
+ priorityscore=1501 spamscore=0 clxscore=1011 impostorscore=0 suspectscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2602130000 definitions=main-2603110088
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=akrowiak@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,34 +133,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Mar 2026 at 16:28, Kevin Wolf <kwolf@redhat.com> wrote:
->
-> The following changes since commit 31ee190665dd50054c39cef5ad740680aabda382:
->
->   Merge tag 'hw-misc-20260309' of https://github.com/philmd/qemu into staging (2026-03-09 17:19:26 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/kmwolf/qemu.git tags/for-upstream
->
-> for you to fetch changes up to 7b13fc97d7235006d2ccc7a132ecb70802ba258f:
->
->   block/curl: add support for S3 presigned URLs (2026-03-10 15:48:48 +0100)
->
-> ----------------------------------------------------------------
-> Block layer patches
->
-> - export/fuse: Use coroutines and multi-threading
-> - curl: Add force-range option
-> - nfs: add support for libnfs v6
->
 
 
+On 3/10/26 2:27 PM, Trieu Huynh wrote:
+> From: Trieu Huynh <vikingtc4@gmail.com>
+>
+> Check return value of event_notifier_init() and return early on
+> failure instead of continuing with invalid state.
+> - Use ret < 0 to handle negative return value.
+> - No functional changes.
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> ---
+>   hw/hyperv/hyperv.c     |  4 ++--
+>   hw/hyperv/vmbus.c      |  4 ++--
+>   hw/remote/proxy.c      | 15 +++++++++++++--
+>   hw/vfio/ap.c           |  2 +-
+>   hw/vfio/ccw.c          |  2 +-
+>   hw/vfio/pci-quirks.c   |  2 +-
+>   hw/vfio/pci.c          |  2 +-
+>   hw/virtio/vhost-vdpa.c |  4 ++--
+>   8 files changed, 23 insertions(+), 12 deletions(-)
+>
+> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+> index 27e323a819..aa278b179e 100644
+> --- a/hw/hyperv/hyperv.c
+> +++ b/hw/hyperv/hyperv.c
+> @@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
+>           sint_route->staged_msg->cb_data = cb_data;
+>   
+>           r = event_notifier_init(ack_notifier, false);
+> -        if (r) {
+> +        if (r < 0) {
+>               goto cleanup_err_sint;
+>           }
+>           event_notifier_set_handler(ack_notifier, sint_ack_handler);
+> @@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
+>   
+>       /* We need to setup a GSI for this SintRoute */
+>       r = event_notifier_init(&sint_route->sint_set_notifier, false);
+> -    if (r) {
+> +    if (r < 0) {
+>           goto cleanup_err_sint;
+>       }
+>   
+> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+> index c5bab5d245..2f0d2a03d8 100644
+> --- a/hw/hyperv/vmbus.c
+> +++ b/hw/hyperv/vmbus.c
+> @@ -1425,7 +1425,7 @@ static void open_channel(VMBusChannel *chan)
+>           goto put_gpadl;
+>       }
+>   
+> -    if (event_notifier_init(&chan->notifier, 0)) {
+> +    if (event_notifier_init(&chan->notifier, 0) < 0) {
+>           goto put_gpadl;
+>       }
+>   
+> @@ -2416,7 +2416,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
+>       }
+>   
+>       ret = event_notifier_init(&vmbus->notifier, 0);
+> -    if (ret != 0) {
+> +    if (ret < 0) {
+>           error_setg(errp, "event notifier failed to init with %d", ret);
+>           goto remove_msg_handler;
+>       }
+> diff --git a/hw/remote/proxy.c b/hw/remote/proxy.c
+> index 5081d67e7f..e91566509f 100644
+> --- a/hw/remote/proxy.c
+> +++ b/hw/remote/proxy.c
+> @@ -52,9 +52,20 @@ static void setup_irqfd(PCIProxyDev *dev)
+>       PCIDevice *pci_dev = PCI_DEVICE(dev);
+>       MPQemuMsg msg;
+>       Error *local_err = NULL;
+> +    int ret = 0;
+>   
+> -    event_notifier_init(&dev->intr, 0);
+> -    event_notifier_init(&dev->resample, 0);
+> +    ret = event_notifier_init(&dev->intr, 0);
+> +    if (ret < 0) {
+> +        error_report("Failed to init intr notifier: %s", strerror(-ret));
+> +        return;
+> +    }
+> +
+> +    ret = event_notifier_init(&dev->resample, 0);
+> +    if (ret < 0) {
+> +        error_report("Failed to init resample notifier: %s", strerror(-ret));
+> +        event_notifier_cleanup(&dev->intr);
+> +        return;
+> +    }
+>   
+>       memset(&msg, 0, sizeof(MPQemuMsg));
+>       msg.cmd = MPQEMU_CMD_SET_IRQFD;
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index e58a0169af..5c8f305653 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -180,7 +180,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>           return false;
+>       }
+>   
+> -    if (event_notifier_init(notifier, 0)) {
+> +    if (event_notifier_init(notifier, 0) < 0) {
 
-Applied, thanks.
+Acked-by:  Anthony Krowiak <akrowiak@linux.ibm.com>
 
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
+>           error_setg_errno(errp, errno,
+>                            "vfio: Unable to init event notifier for irq (%d)",
+>                            irq);
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index 2251facb35..ce9c014e6a 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -418,7 +418,7 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+>           return false;
+>       }
+>   
+> -    if (event_notifier_init(notifier, 0)) {
+> +    if (event_notifier_init(notifier, 0) < 0) {
+>           error_setg_errno(errp, errno,
+>                            "vfio: Unable to init event notifier for irq (%d)",
+>                            irq);
+> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+> index 7b907b9360..66e02b15a4 100644
+> --- a/hw/vfio/pci-quirks.c
+> +++ b/hw/vfio/pci-quirks.c
+> @@ -318,7 +318,7 @@ static VFIOIOEventFD *vfio_ioeventfd_init(VFIOPCIDevice *vdev,
+>   
+>       ioeventfd = g_malloc0(sizeof(*ioeventfd));
+>   
+> -    if (event_notifier_init(&ioeventfd->e, 0)) {
+> +    if (event_notifier_init(&ioeventfd->e, 0) < 0) {
+>           g_free(ioeventfd);
+>           return NULL;
+>       }
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index c89f3fbea3..29bf6511b3 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -70,7 +70,7 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+>       }
+>   
+>       ret = event_notifier_init(e, 0);
+> -    if (ret) {
+> +    if (ret < 0) {
+>           error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
+>           return false;
+>       }
+> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+> index 2f8f11df86..9c7634e243 100644
+> --- a/hw/virtio/vhost-vdpa.c
+> +++ b/hw/virtio/vhost-vdpa.c
+> @@ -1075,13 +1075,13 @@ static int vhost_vdpa_svq_set_fds(struct vhost_dev *dev,
+>       int r;
+>   
+>       r = event_notifier_init(&svq->hdev_kick, 0);
+> -    if (r != 0) {
+> +    if (r < 0) {
+>           error_setg_errno(errp, -r, "Couldn't create kick event notifier");
+>           goto err_init_hdev_kick;
+>       }
+>   
+>       r = event_notifier_init(&svq->hdev_call, 0);
+> -    if (r != 0) {
+> +    if (r < 0) {
+>           error_setg_errno(errp, -r, "Couldn't create call event notifier");
+>           goto err_init_hdev_call;
+>       }
 
--- PMM
 
