@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6991FD88D8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF6FCFD88D9
 	for <qemu-devel@archiver.kernel.org>; Wed, 11 Mar 2026 01:40:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w08XM-0003yt-T8; Tue, 10 Mar 2026 21:39:00 -0400
+	id 1w08XO-0003zd-PS; Tue, 10 Mar 2026 21:39:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XG-0003xL-Un
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:55 -0400
+ id 1w08XL-0003xY-33
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:59 -0400
 Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w08XF-0004oq-8Z
- for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:54 -0400
+ id 1w08XJ-0004q7-7E
+ for qemu-devel@nongnu.org; Tue, 10 Mar 2026 21:38:58 -0400
 Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2a9296b3926so105009885ad.1
- for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:38:52 -0700 (PDT)
+ d9443c01a7336-2ad4d639db3so60209365ad.0
+ for <qemu-devel@nongnu.org>; Tue, 10 Mar 2026 18:38:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773193132; x=1773797932; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773193135; x=1773797935; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=lncb1lFJfonHWeqTY58GJy7/jsyPovxRUa7lsbNPfmk=;
- b=BazHiuv93RhoF40nIjOguBcX101YpUk+3LX5VoCOQjj8SGJ+ov0wRIoSlVICKRe0po
- mvLpqw2znjwtlI0O/NWJbSUVm1sjlgKyPPSnQbtu0VAenquVMgy+qmRhON+DEszHF8hi
- UNZ9QIxjcE0Wi705EiLoBPabWcNAja1/CibFj2aA1E+YFtZiWGbA73yYhb00cdYquTEw
- dAasdGYBHxVtkCxy/cj9ksMSpk3EiAOAXb9lOZ8iXWCchgbOWMTob2JP+jGmtgl+9aO+
- /6pN5ZKuwdDAu0ykoIkM4HV6xSbcNQZLwNIBbw6lg3RL/AqKyTXr+v2nfpu/7JDEv7Dh
- 4POg==
+ bh=svowva0ABp9HYKqRY27vri3pWPCVq+NsD0KSRtTlAy0=;
+ b=L9WHQiCU1nkN/FYoD5iPvPlVUDVz0E2KC5KUQBaB+T49jZ11kO5mCjMoOvckzZ/cKS
+ 4oQ+h/FQUDmTf7J/qLR070fDhh3NupHKojYICFysqqWWiTeTl7UZ8IGrdj0aCtEeSTaM
+ R1q9/Z123GWcOzLm0E7gx3qnHEvNdb5yc6fqmM3T0OJSbqIsrXRpbrlF72nhPSIqTtCs
+ 7xC6gLNHnAF8dPBFV9MDV2f7AIdpTOYhcNpwOw6tppekMuSgZ3uAJe5WPvikrgQB2ss4
+ 5doi5xHh4qlegjYbXvGVQeypa6iO2S2F0roh9DbX0Tj79phitN6ciFyLGsnmF4cZkPSc
+ /wcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773193132; x=1773797932;
+ d=1e100.net; s=20230601; t=1773193135; x=1773797935;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=lncb1lFJfonHWeqTY58GJy7/jsyPovxRUa7lsbNPfmk=;
- b=SIdOYjUDXVB0MqqqPs6I9O9aJemD8qcRdS+8OgVc5aF+aTGYRAD82AKxHjJKjsLzoZ
- 8qz36Tveb3nhW7VFmm727LilL/h+uvSt9pNIEAS0qxOu9fjK/xtvBlZhhKGenXNAFg88
- 6VVlZx5KMRRMra7H4/RzskPLq1OZmHypmyKi0dCsMOwRV7nfP3yEYQTW0ENL8ddMWtF+
- X63zGsYR1sCzioeyCC5MWfzB52SoHG/+jZUwVMJZFPm2b66ZUNMH6uDFAV4QuWw7P6eL
- iNj3/Lt2lbsOn6+1LEI7g4b+XdBxbhsndqJr7qoi9wTMJLHyHIr43PmBrow17YsXLmct
- uGDg==
-X-Gm-Message-State: AOJu0YyeuTJCmOYmjku5YfzWXWEF50NWMobrV+2Xi4pz3+wI1DQC5Vaa
- qZ8qXICKMVNFlp0CNQfQS1dn0EFVabXFXT2zSZZbC7381K0OgxhPoHQLevhjpE2epcb1zK3/IPi
- jIFV5
-X-Gm-Gg: ATEYQzxvCJOm/IQVG+s2GrUcv25aa/PqUzREqoRy5UkIRfCmSCkeLQcopt6DjgjXB54
- nUy5Mwu0fO7hmbQMrcJ+rwDaGO8gXIjZ/fmRQhpfbPfyMKTpZb9S+05hy5VZQkaUSgoX+C6j7F0
- lNpJ2uE0m7txm7iHhTuzdwTcf24/inu/hWK3IYtkuuVpw428Z5ZBgqY35WO6osO2ccSwI/MId2L
- j1WBtUTfGl/HxuXxP00gdtrK40q9Gk8NZkCT/BHj6OdpSr3AI1tENvT42LtAA1Kg1ixcwowiR09
- wVX2rzrRiz85/6z/smlzfXIyx0YzK4LhKO5KtfumWY83PNXPeUMlTSTEYcZ4Hs6o+ETs+8yquwQ
- hh/iplTEc46cY39C7RHeoxvf9BjQjJDFGkVYqSv0OaVl0QtJGWdsCjeT+Bxkkw0bNbdsg/Hyp99
- tjsWCE7cFaVSCp2IQWLBAujao3448LLj9NRGHC12QbGnOLFnATkN6bNFGZb+kbWTVMotsYSyqCh
- cFD
-X-Received: by 2002:a17:902:f651:b0:2ae:3a77:a1f4 with SMTP id
- d9443c01a7336-2aeae7d8956mr8957775ad.24.1773193131578; 
- Tue, 10 Mar 2026 18:38:51 -0700 (PDT)
+ bh=svowva0ABp9HYKqRY27vri3pWPCVq+NsD0KSRtTlAy0=;
+ b=nAnYi2CWewxYGTMA7l0junYWzaQG9inFljV2HSGAoyQY8JMo1TRtKIzxDWCJW491MH
+ A7VK9Jw7tNcmpA4lwn51/NEBJHLhHAvvM8/yYJX6KOPzzYX7eu20d7gNChib3dwNBXNv
+ ttY9MmGSfwhVCltK/DxUUVmZpzYUHKJOtGTmjKONHbZZV4dTgci9P+gf7cA6lt5KFq9y
+ /Z/8bN+Vwy9ahqFUzZFOnLdpVNunOJKt9U744S6We0/p+Wew7jpulj25xmThCbG0D6Dq
+ 05wkdHiJ/16Q7zklx6PKmjy79EQREJyBPFbMyzrH3gMzqHJ2Fc+1YbFV8/xVaavoFYQ8
+ cJnQ==
+X-Gm-Message-State: AOJu0YyJdWK8536KGFPRk9E7JHcxFhogkaH5WzPzAftv2oK4UW3W5fpK
+ kwro5M5dO5Og9IsxQrhuFNqWM/dw5nvYmfFNspWvjb54E1CH4oBYh79WATOTegwaIdAlXkSNIdA
+ 21gat
+X-Gm-Gg: ATEYQzwjarz2Mr1jMTe1b951m/6yFCSYW/3lHmGDwc+VLY2F34k3a+oC1Np44Y7xU9S
+ FODVJBmiEMV2XoOJGxIg1o6umw4+sVPVanEPf/+SbNNfRjF/Yt1cGhIPOOV6ksRfjqLNRaeTmPp
+ acrBMlLLfVwXzo+Ks1Y81/r63ays+jpCUccxih7tUivRcvjYbSaNAoJfAjbooK2oRV1NLmeWvmF
+ MTwDAktepCT4j+vSMN0TSH8/w4HYcSu51hONtyGV6bRq+nayItlQI7v/pzthcVjFNWLaOlewjN8
+ sH+tWPe8G5q3jBOhzu49z0q1HVcsHwpI52/tPQsHgv3V1vwO+pqBzCl7CrcD1S4YzeKIXRHiKX+
+ skeNQdnMEjfbqgcAZwFOmJ6gYwtDjstT18SNr7suvWvCOEGVCp3P6VZY62mywnkl4Sl5Pkh9y8M
+ 1+xamzMyoilE5+3Le8jMh4PIF1kAWKFeI3erwxGxn+qO20dFMXOjFnOWrp5gvhgUqUERzhtSIv0
+ KAX
+X-Received: by 2002:a17:902:ecd1:b0:295:560a:e499 with SMTP id
+ d9443c01a7336-2aeae78c845mr8367615ad.5.1773193135466; 
+ Tue, 10 Mar 2026 18:38:55 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.38.50
+ d9443c01a7336-2aeae2466d3sm5390175ad.22.2026.03.10.18.38.54
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 10 Mar 2026 18:38:50 -0700 (PDT)
+ Tue, 10 Mar 2026 18:38:54 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
  richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
 Cc: pierrick.bouvier@linaro.org
-Subject: [PULL 04/16] target/i386/gdbstub: Remove stale comment
-Date: Tue, 10 Mar 2026 18:38:25 -0700
-Message-ID: <20260311013837.69945-5-pierrick.bouvier@linaro.org>
+Subject: [PULL 08/16] gdbstub: Have scripts/feature_to_c.py generate more
+ verbose output
+Date: Tue, 10 Mar 2026 18:38:29 -0700
+Message-ID: <20260311013837.69945-9-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
 References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
@@ -105,34 +106,52 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Philippe Mathieu-Daudé <philmd@linaro.org>
 
-Since commit ecd6f6a8820 ("gdbstub: Infer number of core
-registers from XML") gdb_num_core_regs is inferred for
-the x86 targets. Remove a stale comment.
+Make the structure field names explicit, so it is easier
+to figure what is what when reviewing multiple entries.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Tested-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-5-philmd@linaro.org
+Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-9-philmd@linaro.org
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- target/i386/gdbstub.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+ scripts/feature_to_c.py | 13 ++++++++-----
+ 1 file changed, 8 insertions(+), 5 deletions(-)
 
-diff --git a/target/i386/gdbstub.c b/target/i386/gdbstub.c
-index f1ce90a046e..b86520f8f9c 100644
---- a/target/i386/gdbstub.c
-+++ b/target/i386/gdbstub.c
-@@ -39,9 +39,7 @@ static const int gpr_map[CPU_NB_EREGS] = {
- static const int gpr_map32[8] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+diff --git a/scripts/feature_to_c.py b/scripts/feature_to_c.py
+index 3aa62fb895f..1329695ad04 100644
+--- a/scripts/feature_to_c.py
++++ b/scripts/feature_to_c.py
+@@ -85,13 +85,16 @@ def writeliteral(indent, bytes):
+     num_regs = max(regnums) - base_reg + 1 if len(regnums) else 0
  
- /*
-- * Keep these in sync with assignment to
-- * gdb_num_core_regs in target/i386/cpu.c
-- * and with the machine description
-+ * Keep these in sync with the machine description
-  */
+     sys.stdout.write('    {\n')
+-    writeliteral(8, bytes(os.path.basename(input), 'utf-8'))
++    sys.stdout.write('        .xmlname = ')
++    writeliteral(0, bytes(os.path.basename(input), 'utf-8'))
+     sys.stdout.write(',\n')
+-    writeliteral(8, read)
++    sys.stdout.write('        .xml = \n')
++    writeliteral(12, read)
+     sys.stdout.write(',\n')
+-    writeliteral(8, bytes(feature_name, 'utf-8'))
++    sys.stdout.write('        .name = ')
++    writeliteral(0, bytes(feature_name, 'utf-8'))
+     sys.stdout.write(',\n')
+-    sys.stdout.write(f'        (const char * const [{num_regs}]) {{\n')
++    sys.stdout.write(f'        .regs = (const char * const [{num_regs}]) {{\n')
  
- /*
+     for index, regname in enumerate(regnames):
+         sys.stdout.write(f'            [{regnums[index] - base_reg}] =\n')
+@@ -99,7 +102,7 @@ def writeliteral(indent, bytes):
+         sys.stdout.write(',\n')
+ 
+     sys.stdout.write( '        },\n')
+-    sys.stdout.write(f'        {num_regs},\n')
++    sys.stdout.write(f'        .num_regs = {num_regs},\n')
+     sys.stdout.write( '    },\n')
+ 
+ sys.stdout.write('    { NULL }\n};\n')
 -- 
 2.47.3
 
