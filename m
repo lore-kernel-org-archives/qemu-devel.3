@@ -4,164 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B534AFED2D1
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 06:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 29D0BFED2D9
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 07:07:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0ZwO-00080F-TQ; Thu, 12 Mar 2026 02:54:40 -0400
+	id 1w0a82-0003BS-4M; Thu, 12 Mar 2026 03:06:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w0ZwN-0007x7-Eh
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 02:54:39 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w0ZwK-0008KL-Uh
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 02:54:39 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773298474;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=bl4aPjMBT/LCrmxSG5XgnhFqLq9MaVfjitb8zz715wI=;
- b=OVdBiJRHj4o3aGHC9SQWF+eUcfMpDRAu0f9ei3WpmWNUsCD0PoYvP+XRtVx2r/c3asEI8m
- TKAaKg8mS50iNQcqjnqyEKJawz/HSm8evluERHXmOFATMRwQ5QdDe+RvcKArdD2Q/8RFp+
- +YwdZ6iYH+V/dc6yUdiSkajfaAuNW4E=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-626-vY1eM2ZZP0ijmIx9fnTzvA-1; Thu, 12 Mar 2026 02:54:33 -0400
-X-MC-Unique: vY1eM2ZZP0ijmIx9fnTzvA-1
-X-Mimecast-MFC-AGG-ID: vY1eM2ZZP0ijmIx9fnTzvA_1773298472
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439b484ee04so1605637f8f.1
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 23:54:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1w0a80-0003Aq-FI
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 03:06:40 -0400
+Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
+ id 1w0a7x-0003Np-Pz
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 03:06:40 -0400
+Received: by mail-ed1-x533.google.com with SMTP id
+ 4fb4d7f45d1cf-6615c766e60so1128097a12.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 00:06:34 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773299193; cv=none;
+ d=google.com; s=arc-20240605;
+ b=YUIalGX8+S08ePM96e/dCuPD1u/Ql4aReiuDbrKmlSu4bG+Izkfgdr4zbs7pCXXHKO
+ VCJjSyUbrsre1TNQxe4DNMh00tQEpLIySBJYALH+DbQAtyoJgC1o0vPt3d9rlBNmx8RD
+ fNqp6TQ3MrfeaL16b0HEAZdabr2Fh9dmi50G5wi0DTF+QPu2BAjId55qjJKk8MNDglhC
+ VmaL6TgxEDJsuz00hf5HPj6BYTb2XbhlPUXXJLbe7eAgFKajg/Lmi3lTpquGSiLb1sYk
+ /F/AMUK14tniMUB3wdHwhCd69n66Xo6u+NjH0bjyfCx/qepUwKPD3s8qdwMzgILG88d8
+ pBEg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=s49gALuOGW8NBoBbBXOrB7km8sdLJ/5DTA0PiJICUAg=;
+ fh=YY+0OZ78tipQ54hBnLc060Mh8vCSrZVvpFoPlsscYR0=;
+ b=HLG2q1UNXrlLQFHoIj/uZ6JC0aIWb2XNFxn8vrHAlPcNbw/mu/aTkhzGiMUH6ecXhH
+ L6E3UYZsfp9585f7wNYcj5jZvP0DW2go6xeHnTtjcJZ4G5kMyV3yyTkyqcja2TL8ogl0
+ nsi2v0zH9ToxPlh8OfDiifc0uvbHa2fGyayvwbKEdogMoDQdp41o3zTOqueAxyh6yHAA
+ hbbqKWohRP0bVHGN1k1zD+NawD3RR/Wmk7fhfnAB/0V57e/r9ApInmwTvncO9j6pNe/f
+ MoltwU/Kq6XAI9JR9y20LSa92AdyhBWO3hRBHHfFAfZwLXqCEsdpMP/e1Xwp7sOvIx65
+ 3LEA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773298472; x=1773903272; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=bl4aPjMBT/LCrmxSG5XgnhFqLq9MaVfjitb8zz715wI=;
- b=OLQsO6gOpmtDqu4XcxhJrjt5bERShSluLxCARBmI3DaJRJOgNHlZTIQIDAmZVN7fpq
- tvSUlRb/u5IZpxVeebaMEhYhtJNWldE48AtFGv3AUfrQUEZv6RiM9xquUgpjBrv+sNsJ
- AWIS5Bpq+q7ManZatlyC8rSJ4KPYoquT7C6G44O1IZq/3NoLqDAFWlfTlybCsvMJSz9K
- O4pWrZgX9629PLe+l/zVlO6KoWOBrJHL0iGaK+LQ+Uqmtp3x3OomvnoqvcL+NFYFrZDm
- lykIbbT0sU7Ok75daJm1co929Hf/v4ughofxn4H+9yQceL69xf2/B9qADut2hUyijz/w
- gZeg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773298472; x=1773903272;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773299193; x=1773903993; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=bl4aPjMBT/LCrmxSG5XgnhFqLq9MaVfjitb8zz715wI=;
- b=pizOZuDj6Qu88WkoZXMOMJR+DeTvR+W7guXAKOB0yuElaHcIDtKfqeoEZLwiOCAYpz
- iF3Z3R2qtEINm7pf7+GOX0GKIYcIX9rpt2sbKmpmmMj5LLVagiLZ41/NIpC7UDwfCrZT
- fEDQAHUwLojLyoY//HySbQZMtjPa7DS4YQlhIpHAYVTSy3t12zJzaqHk+86bFjDe3d0K
- L6xBPdjhd3P5238ZXMUE0ZhC6CzUV3yedZ1PBMuNPqKwMq+l61zvmY/sF2b/dF9OHGkX
- /JX2KC4wAlAcKP0dr6ziBgHw5POFOL0Uh6GLcPgQeJ4rp1L7lT9x1tSVnjTgC4px9wfG
- dkoA==
+ bh=s49gALuOGW8NBoBbBXOrB7km8sdLJ/5DTA0PiJICUAg=;
+ b=M1m7UgwnrGj4GWgpP7PvFQflvOFXHSrGHMZri/F3E+9/rPod3FPc5QXZDGIJCOPbPi
+ jn9p8kFIHJf0gy+jz6141OYcZYLPlCEvu2KBVE3tKL24rm4Py3o/FjpbY+7jdL75IowZ
+ vDqKOInxmcBe+vWmvSqrQYLS4lb/W1aRkjPuAhVLBuJczBjfAjwzT59LmjubTdbRrglc
+ zsJU0tX4uLbbnjpPQxzgE6MOiNm7GhL4Y52/Hcf4aoUenSF0ASEPyHGCp4Lz1S8AQIf4
+ svs3whXR48KrJh0FrSTTMKvUw4MxwGhryGa2rTZB5+cif7W49xN5ZUBl2L1bE/zdu1l6
+ wj0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773299193; x=1773903993;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=s49gALuOGW8NBoBbBXOrB7km8sdLJ/5DTA0PiJICUAg=;
+ b=qiZDGvDlV5+htN8fYAotrap4Pdv50uv5TOr0tw2+rHXYeLgpjrc+iVk74E+KPKQnXC
+ 1J/O/IN98cF+rjHE5MLdRifuZTr0ALgi0+00WRdTlVe/k6SM6KEvu8V5DSxeN0gLyhqQ
+ RmzN1n7e+ulP3ZRKz8Ng/0id02P0tZDCHLi8Udl1iRWCbe7Lau2g9h7RGk27wM6ylVoC
+ FJp/uLw34NsEr8drIc2UwRV8nHBGp/4+RC+FwJ7oG9DUdzprJokZAY9PdbCIkvTuSfsp
+ RzMMX55EHxuIxAzP97FQz6HdFJL36N/NzR3OREAckAl+RGguIyT3w5z3b+E4nmQo4ps+
+ cptQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVXHh2p0oSU2nDuL+W2BsyKNrdxwLFImiSk/BSiA+/HQUryI6AZ9R8kdPPGocsbCX9TukTKantt3C8x@nongnu.org
-X-Gm-Message-State: AOJu0Yx2a0+XPqeLt/IqDWHviCGGhLRyAVS73EDvFgdWhaRu9rrhkYd/
- J27CVsKlfi4PuYLmOSEtG2Iet7del1t2JB2oDKIkUqhlT7veIh7V8Z5MCfSOhkrTbWqMFOtrf4m
- 8eKGZuUcuA1LKztpza2YHuP+82EFxIn7hnY1dUQtwqmL+9EvoXOhr7xQo
-X-Gm-Gg: ATEYQzxNLT7QpNesTPH3YzWT7XTDwfOlNTeLu7LezmoqhTzCHM37OIJUwCgCAq2YNDR
- YgCEEswaP71jqaGC2j9M0FgA0ZphVRbtx9Chyb8HncMHzh5B71ncWfhZpqR5WEXdKGWI5ik99U5
- gxwTnmKkaHDeFA6mWqq9EqfB/xZIFF/k66a0kSRRBgnQOBnq8UjZ2MpXfwcSCO+T0tt2nmIP7W0
- ogD/mAAeIB06yZYnmh+7yvW8Zl9TNE2nJaTKd/jMci+wfxZmbDkVfsbUbcgAs1L4xDoEUNUjgZJ
- 2s/kGR3XK9mxz5iVuag39yYUxAay+udTTlKXeuviMviZI7BaUcSkNIMt4y/XVLNLTcnzEr4+dF+
- B5DWht2RdjEi61y/FFbUMRwZoxN9+iKX5A96XQWncG5Xmfqiqcj8OQ+w78Kko
-X-Received: by 2002:a05:6000:2403:b0:439:c1b2:e99d with SMTP id
- ffacd0b85a97d-439fdf4246emr4235385f8f.8.1773298471635; 
- Wed, 11 Mar 2026 23:54:31 -0700 (PDT)
-X-Received: by 2002:a05:6000:2403:b0:439:c1b2:e99d with SMTP id
- ffacd0b85a97d-439fdf4246emr4235350f8f.8.1773298471200; 
- Wed, 11 Mar 2026 23:54:31 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe1b22e7sm6030906f8f.16.2026.03.11.23.54.29
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 11 Mar 2026 23:54:30 -0700 (PDT)
-Message-ID: <11bcfedf-92d5-480d-975f-2ef83f9ba86b@redhat.com>
-Date: Thu, 12 Mar 2026 07:54:28 +0100
+ AJvYcCVyRaCT24m3g+SuCM1EAj3CuCgPdqJriQB4YMrDA7yyAfGQhDJ4hEZMmV0qtyF8aWzWuMA1LYkWqalZ@nongnu.org
+X-Gm-Message-State: AOJu0Yw4xE5Dz9TmqBWtChduhNKS21RdJKA3uqa8JIv+0MhSzx/FEDsS
+ /l9ZJrQ5gFhgyUf7GiHdU++opBX5J0MMNxx7F1yOhq6F8MeYtsfV/thFOfkqQtA/Cr1ajwSlOh7
+ WxQHjUCLSTMnwSnhUUrc8dDle9xV3Q9U=
+X-Gm-Gg: ATEYQzwfD9mrWBAT7otlJvrVlZeRLr2eiM9ZyyZoav3w57siCi36eEfvXRqRnzrDXYU
+ jnaJgBxGopUJm/4iNpYmh+fcU8szbwA6Q+VC8KED8xl2yLq+iloqLX66lpn1MF7oCQZMdNrMABc
+ KPb8N/YfKTw99KnLGThXFl2nOjRGG5MSNIvMNQNZg15c+IaMWWpyHisTyE+Bx7xQnIrd2pvwtd4
+ iGI9Bf6eEdzg/VRDd68DItmbVMBMn4bPL5j3s/ken/RP/ppsKMoCwms/1eacbZ+Ec8F3O3nknJm
+ EcjofljH
+X-Received: by 2002:a50:cc04:0:b0:663:4821:f9c9 with SMTP id
+ 4fb4d7f45d1cf-6634821fc13mr969955a12.13.1773299192659; Thu, 12 Mar 2026
+ 00:06:32 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] util/event_notifier: fix error handling for
- event_notifier_init callers
-To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
-Cc: Anthony Krowiak <akrowiak@linux.ibm.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Alex Williamson <alex@shazbot.org>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- "open list:vfio-ap" <qemu-s390x@nongnu.org>
-References: <20260311183432.214960-1-viking4@gmail.com>
- <20260311183432.214960-4-viking4@gmail.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260311183432.214960-4-viking4@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260305142459.52559-1-zhangckid@gmail.com>
+ <20260305142459.52559-5-zhangckid@gmail.com>
+ <20260309081502.GC39949@fedora>
+ <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
+ <20260312052422.GA116604@fedora>
+In-Reply-To: <20260312052422.GA116604@fedora>
+From: Zhang Chen <zhangckid@gmail.com>
+Date: Thu, 12 Mar 2026 15:05:55 +0800
+X-Gm-Features: AaiRm50cdQ4O8uWDTJ-u7MX9J4ZnoZQf2SbxSTctgNTenzI9y6GqZTM-430WjPQ
+Message-ID: <CAK3tnvKPvJjsNCcmuEi7OOfM5xkC_PuDEgNR9cKFpEUMioiOww@mail.gmail.com>
+Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
+ holder name
+To: Stefan Hajnoczi <stefanha@redhat.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, armbru@redhat.com,
+ qemu-devel <qemu-devel@nongnu.org>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::533;
+ envelope-from=zhangckid@gmail.com; helo=mail-ed1-x533.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -177,177 +125,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/26 19:34, Trieu Huynh wrote:
-> From: Trieu Huynh <vikingtc4@gmail.com>
-> 
-> Check return value of event_notifier_init() and return early on
-> failure instead of continuing with invalid state.
-> - Use ret < 0 to handle negative return value.
-> - No functional changes.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> Acked-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-> Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
-> ---
->   hw/hyperv/hyperv.c     |  4 ++--
->   hw/hyperv/vmbus.c      |  4 ++--
->   hw/remote/proxy.c      | 15 +++++++++++++--
->   hw/vfio/ap.c           |  2 +-
->   hw/vfio/ccw.c          |  2 +-
->   hw/vfio/pci-quirks.c   |  2 +-
->   hw/vfio/pci.c          |  2 +-
->   hw/virtio/vhost-vdpa.c |  4 ++--
->   8 files changed, 23 insertions(+), 12 deletions(-)
-> 
-> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-> index 27e323a819..aa278b179e 100644
-> --- a/hw/hyperv/hyperv.c
-> +++ b/hw/hyperv/hyperv.c
-> @@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
->           sint_route->staged_msg->cb_data = cb_data;
->   
->           r = event_notifier_init(ack_notifier, false);
-> -        if (r) {
-> +        if (r < 0) {
->               goto cleanup_err_sint;
->           }
->           event_notifier_set_handler(ack_notifier, sint_ack_handler);
-> @@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
->   
->       /* We need to setup a GSI for this SintRoute */
->       r = event_notifier_init(&sint_route->sint_set_notifier, false);
-> -    if (r) {
-> +    if (r < 0) {
->           goto cleanup_err_sint;
->       }
->   
-> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-> index 64abe4c4c1..5388f4277f 100644
-> --- a/hw/hyperv/vmbus.c
-> +++ b/hw/hyperv/vmbus.c
-> @@ -1432,7 +1432,7 @@ static void open_channel(VMBusChannel *chan)
->           goto put_gpadl;
->       }
->   
-> -    if (event_notifier_init(&chan->notifier, 0)) {
-> +    if (event_notifier_init(&chan->notifier, 0) < 0) {
->           goto put_gpadl;
->       }
->   
-> @@ -2450,7 +2450,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
->       }
->   
->       ret = event_notifier_init(&vmbus->notifier, 0);
-> -    if (ret != 0) {
-> +    if (ret < 0) {
->           error_setg(errp, "event notifier failed to init with %d", ret);
->           goto remove_msg_handler;
->       }
-> diff --git a/hw/remote/proxy.c b/hw/remote/proxy.c
-> index 5081d67e7f..e91566509f 100644
-> --- a/hw/remote/proxy.c
-> +++ b/hw/remote/proxy.c
-> @@ -52,9 +52,20 @@ static void setup_irqfd(PCIProxyDev *dev)
->       PCIDevice *pci_dev = PCI_DEVICE(dev);
->       MPQemuMsg msg;
->       Error *local_err = NULL;
-> +    int ret = 0;
->   
-> -    event_notifier_init(&dev->intr, 0);
-> -    event_notifier_init(&dev->resample, 0);
-> +    ret = event_notifier_init(&dev->intr, 0);
-> +    if (ret < 0) {
-> +        error_report("Failed to init intr notifier: %s", strerror(-ret));
-> +        return;
-> +    }
-> +
-> +    ret = event_notifier_init(&dev->resample, 0);
-> +    if (ret < 0) {
-> +        error_report("Failed to init resample notifier: %s", strerror(-ret));
-> +        event_notifier_cleanup(&dev->intr);
-> +        return;
-> +    }
->   
->       memset(&msg, 0, sizeof(MPQemuMsg));
->       msg.cmd = MPQEMU_CMD_SET_IRQFD;
-> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
-> index e58a0169af..5c8f305653 100644
-> --- a/hw/vfio/ap.c
-> +++ b/hw/vfio/ap.c
-> @@ -180,7 +180,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
->           return false;
->       }
->   
-> -    if (event_notifier_init(notifier, 0)) {
-> +    if (event_notifier_init(notifier, 0) < 0) {
->           error_setg_errno(errp, errno,
->                            "vfio: Unable to init event notifier for irq (%d)",
->                            irq);
-> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
-> index 2251facb35..ce9c014e6a 100644
-> --- a/hw/vfio/ccw.c
-> +++ b/hw/vfio/ccw.c
-> @@ -418,7 +418,7 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
->           return false;
->       }
->   
-> -    if (event_notifier_init(notifier, 0)) {
-> +    if (event_notifier_init(notifier, 0) < 0) {
->           error_setg_errno(errp, errno,
->                            "vfio: Unable to init event notifier for irq (%d)",
->                            irq);
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index 7b907b9360..66e02b15a4 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -318,7 +318,7 @@ static VFIOIOEventFD *vfio_ioeventfd_init(VFIOPCIDevice *vdev,
->   
->       ioeventfd = g_malloc0(sizeof(*ioeventfd));
->   
-> -    if (event_notifier_init(&ioeventfd->e, 0)) {
-> +    if (event_notifier_init(&ioeventfd->e, 0) < 0) {
->           g_free(ioeventfd);
->           return NULL;
->       }
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 94c174a773..1945751ffd 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -70,7 +70,7 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
->       }
->   
->       ret = event_notifier_init(e, 0);
-> -    if (ret) {
-> +    if (ret < 0) {
->           error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
->           return false;
->       }
-> diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
-> index 2f8f11df86..9c7634e243 100644
-> --- a/hw/virtio/vhost-vdpa.c
-> +++ b/hw/virtio/vhost-vdpa.c
-> @@ -1075,13 +1075,13 @@ static int vhost_vdpa_svq_set_fds(struct vhost_dev *dev,
->       int r;
->   
->       r = event_notifier_init(&svq->hdev_kick, 0);
-> -    if (r != 0) {
-> +    if (r < 0) {
->           error_setg_errno(errp, -r, "Couldn't create kick event notifier");
->           goto err_init_hdev_kick;
->       }
->   
->       r = event_notifier_init(&svq->hdev_call, 0);
-> -    if (r != 0) {
-> +    if (r < 0) {
->           error_setg_errno(errp, -r, "Couldn't create call event notifier");
->           goto err_init_hdev_call;
->       }
+On Thu, Mar 12, 2026 at 1:24=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
+m> wrote:
+>
+> On Tue, Mar 10, 2026 at 06:02:54PM +0800, Zhang Chen wrote:
+> > On Mon, Mar 9, 2026 at 4:15=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
+.com> wrote:
+> > >
+> > > On Thu, Mar 05, 2026 at 10:24:50PM +0800, Zhang Chen wrote:
+> > > > Update the usage of "iothread_get_aio_context()".
+> > > >
+> > > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > > > ---
+> > > >  blockdev.c | 9 ++++++++-
+> > > >  1 file changed, 8 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/blockdev.c b/blockdev.c
+> > > > index 6e86c6262f..01ccf64b3f 100644
+> > > > --- a/blockdev.c
+> > > > +++ b/blockdev.c
+> > > > @@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const char =
+*node_name, StrOrNull *iothread,
+> > > >              goto out;
+> > > >          }
+> > > >
+> > > > -        new_context =3D iothread_get_aio_context(obj);
+> > > > +        char *path =3D object_get_canonical_path(OBJECT(bs));
+> > >
+> > > CCing Kevin and Markus in case they have an opinion on this.
+> > >
+> > > BlockDriverState is not a QOM Object so using OBJECT(bs) is undefined
+> > > behavior and may crash.
+> > >
+> > > node_name is unique across block driver graph nodes and could be used=
+.
+> > > Unfortunately it's not connected to the QOM Object hierarchy. Maybe i=
+t's
+> > > best to build a holder name that is an invalid QOM path so there can =
+be
+> > > no collisions between QOM paths and block driver graph nodes.
+> > >
+> > >   g_autofree char *holder =3D g_strdup_printf("BlockDriverState %s", =
+node_name);
+> > >
+> > > (A cleaner long-term solution would be making BlockDriverStates QOM
+> > > Objects so they have a proper path.)
+> >
+> > If no other comments, it's OK for me. This issue like I mentioned in
+> > patch 7 and 9.
+>
+> A thought about the QAPI interface:
+>
+> QAPI expresses as much information in the schema as possible, so I think
+> the right approach would be a {'union': 'IOThreadHolder',
+> 'discriminator': 'type', ...} that supports at least "qom" and
+> "block-node". That way there are proper types to encode QOM Object paths
+> vs block node-names. Let's avoid having a single string value that takes
+> on different meaning depending on the type of holder.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
+In the iothread_get side:
+The same issue in the patch 8 (the node-name too), the point is
+qmp_xxxx_function input is a string.
+It's hard to track the QOM Object paths and the iothread. I will try
+to fill the gap.
 
-Thanks,
+In the iothread_put side:
+* It looks like a pairing function is needed:
++         * qmp_x_blockdev_del_iothread()
 
-C.
 
+Patch 8 comments:
++        /*
++         * It seems we cannot find the corresponding resources
++         * (the iothread and path) when deleting them in qmp_block_export_=
+del.
++         * The original method will be retained for the time being.
++         */
+
+# @BlockExportOptions:
+#
+# Describes a block export, i.e. how single node should be exported on
+# an external interface.
+#
+# @type: Block export type
+#
+# @id: A unique identifier for the block export (across all export
+#     types)
+#
+# @node-name: The node name of the block node to be exported
+#     (since: 5.2)
+
+Thanks
+Chen
 
