@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70A81FED2C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:33:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F44FED2CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 05:21:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Xiv-0004Vd-F5; Thu, 12 Mar 2026 00:32:37 -0400
+	id 1w0YTI-0004Br-O3; Thu, 12 Mar 2026 01:20:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xiu-0004VL-2V
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:36 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xir-00044w-SQ
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:35 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c73bbdc01b7so183571a12.2
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:32:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773289951; x=1773894751; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jQMrNml6U9cDIhsQ5mDwSAwjyDPFJNp8soUiNVdW58g=;
- b=T75gldbsIxizLC5v0/XWLQCt4hS43ktucCRos8tmp9s16sSPCXAicoxjwk7FF6dd+q
- N1L1yWp0ak5U/1j+HxdGFJD+XOZZZl4sjEG4dq9MtG4FghScpB2WXLyVAjdCT9Cky2r/
- VxhmliQP74Aj4CmwP+aKxYYpANkRGUJdEGIT7Xi2voIBSpK9dvq6pOy/PyCx92t5hetY
- 2kiqLhfNQ2hHZIdtqY+edWBwn5Xcz2d5jKFT+yjNJamnOc3PzlO/di/9SzBWPnys9hOl
- qklPAnrz+cn3EctHRYh/rHzGvAmDB9KgoAoJv5cIro9R9NDF/1qtVIXEFAlb58FUJ6d3
- X8Fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773289951; x=1773894751;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=jQMrNml6U9cDIhsQ5mDwSAwjyDPFJNp8soUiNVdW58g=;
- b=s43coq9IZNMO2BaKUn/YmquwRilq/wfI7RzRmAKcMD+EanfzUjbqJM8lBTMb2A278h
- /jaH5QJW78EdGltoSkZbKNTNb/xgaTkgmpCIxahAN1Bb7K9jvWikjD8SRC3F0UQexcd3
- FDC8okl1VQQ4kD0E6vbxW/L9OSNWpQWB50ysQI2cxD+5X8uGx6iiX6utLgf1OfOA5JB6
- 9vcnARiiON0t8sBqVUEwxJWV0sGmzD33Cwd6WA3QlR0WLQaC+Y5S4eT/GM6wkU0csMy5
- K3jVjklnFgf/pZj6M0ZLZuj+pF9dcRC5zZy+TxGhJalP3fxTbR3AKG4O3oIMjs3sFxcj
- XjgQ==
-X-Gm-Message-State: AOJu0YxUKPVHHvZIOiACXUTE5vTYyUI3rt3D+VYFlAmkpp2a1cXBiUGT
- JZZWL8fAhWKQBLDJh3Cl/SP8A8Bk7uXqOg9c3aTaJY60eUY13cwHuMvhWJkhuRWD
-X-Gm-Gg: ATEYQzyzmp1bpVopD4Fwr2NMMKn5fbVwMJUZUAMNO80AqNwE7volsvI5YQfzv/9S+3L
- WDSHGQR9NrfPwwyHNpF2l3eWK58IozY3eGVxUffpeFN9K/uUI2pvTDZmqCKzFlc0K9pe1LM7STS
- m5bQrhSClqT5acW0nybMFZEYvI2PYCYQ3XqURt/7ItWlVn4xqrNuAls1G38TAKzlTVsnPNbsicH
- pcKhztbmfAG6VFCHsUwPPDxs5IUgHhdtBC6MI2cGIDWVIan9A8O63/JMomfkUraFyBkHftQDYQ5
- o2mo9zibYSPjLxBZCrzR3eEC8n2kcX5qGUuG0kwuO2LSgSqjTGfqbt1DowjwdpNO+QHwkapsMJZ
- SqFVwALefmzjiRwbZGy+YsBM6xhNvVKyo1hunTaF5P+f/CUSbSf9P2Pq/AzWzEYySBlGTv1RJ6d
- hV9Zr81uI4zkuxbmVbFKxozUJv7XKxYluC8Kquf0chkA==
-X-Received: by 2002:a17:903:32cf:b0:2ae:50ec:fa34 with SMTP id
- d9443c01a7336-2aeae8ab700mr51887435ad.46.1773289951108; 
- Wed, 11 Mar 2026 21:32:31 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae222ab6sm54340785ad.10.2026.03.11.21.32.27
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 21:32:30 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org, armbru@redhat.com, pbonzini@redhat.com,
- berrange@redhat.com, peterx@redhat.com, philmd@linaro.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 5/7] hw/arm: fsl-imx8mp: Don't call qdev_get_machine in soc
- init
-Date: Thu, 12 Mar 2026 14:31:56 +1000
-Message-ID: <20260312043158.4191378-6-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260312043158.4191378-1-alistair.francis@wdc.com>
-References: <20260312043158.4191378-1-alistair.francis@wdc.com>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0YTG-0004BO-T7
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 01:20:30 -0400
+Received: from p-west3-cluster1-host6-snip4-3.eps.apple.com ([57.103.73.184]
+ helo=outbound.ms.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0YTE-0004PL-KX
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 01:20:30 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-1 (Postfix) with ESMTPS id
+ A84B9180010A; Thu, 12 Mar 2026 05:20:25 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1773292826; x=1775884826;
+ bh=yS6B1JcGDx10bvOoiJSRSPM5/ujtdqwQkneRnD5xcn0=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=em8z0RfgfntSNRQqdao2UDSRBk6rIVn3BjAtlFk15vYAEkWK9XNviwsbe1uUPpb5kOqWv5jHnazaW8eYemMHu+qstgM62SzF6cVuhh8C1Fvx6hmNnzb5tIzN/68RWWt8nmvjTFhpnmNjTmKvvZj5tdPxbWklyYH6Y70WZJFEyKVC2QbOnzGLVPXmB298fkmpHfoa8zJlNZ4I1uAGoQIVlwHokz0yqltSYDfk7XHB1zcjKjlPRGMrexOWtXfPVx4AU6p3+gJSyNu2vBPYYINU0QhVFBra58wOAXAdooAdD1/U0Y8bvodLptGoiGcu6cHoBUwrw0HdBFKntFip7bBfeA==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-60-percent-1 (Postfix) with ESMTPSA id
+ 05E101800107; Thu, 12 Mar 2026 05:20:22 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH 00/14] Add ARM64 support for MSHV accelerator
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260311171240.GB3612627@liuwe-devbox-debian-v2.local>
+Date: Thu, 12 Mar 2026 06:20:10 +0100
+Cc: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
+ qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
+ =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <6FE1FA7B-653C-4088-8F27-BCE249F50FEB@unpredictable.fr>
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+ <877brii9wq.fsf@draig.linaro.org>
+ <9D4583F5-0591-473F-8FFA-1EDF416AF447@unpredictable.fr>
+ <20260311171240.GB3612627@liuwe-devbox-debian-v2.local>
+To: Wei Liu <wei.liu@kernel.org>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Proofpoint-GUID: WpRlXmd8LFi4KilxbHtTlFkU-AR7_wuC
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEyMDA0MCBTYWx0ZWRfX7WO+7PVTrK4h
+ MB7/D+Y3nXMaTZWntWrq6bRYFCUAJMLySPWW9eTlOSb7w1jkyHjASCan38GhVzv8vDTrPNvAWHM
+ JiuxKZ8sTcoOHG195EMlesXZVuPBrRrcF8rNaggO8UahmKgxOoZ54mElzbe82L8695qFEKMzpT/
+ KbxhJzDxgTwIbZGH7LF4XJk5ZQxcg0EYdWNGiHymnpCZYVPDlhC5P/xFXCFZqtJl1n+gwd3Ulxo
+ 9qIvlfhjfZYUOnQxhDfxYWaoNL8ffyzDAS9zTe5cLFNvvElOOFeVPviVwpvD7cPqrlWEv+NKlJ/
+ ba/Xs5I3pdj5WS6QFVw0DDNai1tG6SAEJo5VjgHW5/YluCgZUN9L3usFYYZp54=
+X-Authority-Info-Out: v=2.4 cv=L8oQguT8 c=1 sm=1 tr=0 ts=69b24d1a
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
+ a=tFGNSmrwAAAA:8 a=-5Xdn_xT0vs44axsZl0A:9 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22 a=LpD6Tdepsyerr7eS-Jg7:22
+X-Proofpoint-ORIG-GUID: WpRlXmd8LFi4KilxbHtTlFkU-AR7_wuC
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
+ mlxscore=0 malwarescore=0 adultscore=0 spamscore=0 mlxlogscore=999
+ phishscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1030 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603120040
+X-JNJ: AAAAAAAB53zLdxb5vE+fVO9XxR3A6MurhHwySMffiad+CQoB3hw+43ikxu72ytIIeGq23V/X/HXR3BF7nH+hYaH+l5Mbwe+HpfibG64AoKtKd9ivhosB2QkBQa3jDsAYFFmHzi8oLNRmK3Ym8SfsB/H/9tGX6i8ufz3F9vzQYecPlBUWNwhPOi5NGbyrTsQpNSFIaCPHeRYY5T28nRHSTNQ8rB+ZSgni2DbkVQ1ypGTuf9tkat4/62jtCs2IzAx4VjVOyDAyl7xUpk59DlnyymnPzebfIeSaE6zGp+zATvvuBtGwAYfidx6DIz89drudSqm2j/RUQ74QW2Lqm5UMAQVr/GBgWzVImx7fkiOaIptXtIZtUBiFIiWj3nD4Mx6oYNUcbY9M4fDSPjp/u/k926skDrdvh4Fwn9yEXQIRSTCs9xyVvpWiyEQ+CfKfnlXa7tIpCtg59prCVTBYWVvxhXLBU4hjl8Yhbw/urL1ndTlKI3FcHnD8/hm6wpjKRkRbHDUf+3dEsa5z9wgR0k4OqpNoqtz9yO3BDc/b7taCKwqRYDP0FUv3lTiWeH2NVHRmgKXiFgo1YRHbxyMYrEsfUO13WoocMsmEbpTaa/pXIbt7TpXiPfoha4qXWI9Kq6oX7vHjKoSdmSVMkbWdjAMZhXxmiwkuY2b5LPOp1cD7gTfjeD9tqVKlLRn+viUXyUCcpNHjA8iSaNNHVUFMoHRi3d5VwGw8KQYeXkJMigmYoEW3QVArIj614GDUqYJYWpedZEsPXn1MO6+pCF8tpnQ57P2qSE8q
+Received-SPF: pass client-ip=57.103.73.184;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,69 +103,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
 
-Calling qdev_get_machine() in the soc_init function would result in
-the following assert
 
-    ../hw/core/qdev.c:858: qdev_get_machine: Assertion `dev' failed.
+> On 11. Mar 2026, at 18:12, Wei Liu <wei.liu@kernel.org> wrote:
+>=20
+> On Wed, Mar 11, 2026 at 06:02:26PM +0100, Mohamed Mediouni wrote:
+>>=20
+>>=20
+>>> On 11. Mar 2026, at 17:54, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
+wrote:
+>>>=20
+>>> "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com> writes:
+>>>=20
+>>>> This series adds ARM64 guest support to the MSHV (Microsoft =
+Hypervisor)
+>>>> accelerator, enabling QEMU to run aarch64 VMs on Microsoft's =
+hypervisor
+>>>> using the mshv Linux kernel module.
+>>>=20
+>>> Does GitLab (or anything we plug into it) support runners on Arm64 =
+with
+>>> HyperV and a Linux Dom0?
+>>>=20
+>>> I looks like we would need a dedicated runner to defend the
+>>> functionality on CI.
+>>=20
+>>=20
+>> The MSHV license doesn=E2=80=99t allow for any use outside of Azure =
+Kubernetes Service,
+>> despite MSHV (for x86) being public.
+>>=20
+>> And Dom0 is technically not required as there=E2=80=99s L1VH, but =
+that=E2=80=99s even less documented to
+>> the outside and not set up for more local use - but hopefully will =
+make its way to Windows=20
+>> client at some point :/
+>=20
+> Direct Virtualization (the marketing name for L1VH) will become
+> generally available on Azure at some point (hopefully within this
+> calendar year). I am not sure about Windows client though.
 
-when trying to run
+Hi,
 
-    ./qemu-system-aarch64 -S -display none -M virt -device fsl-imx8mp,help
+Could you ask if it=E2=80=99d be possible to have Windows client as an =
+L1VH host, if even just Insider builds?
 
-as the machine wasn't created yet. We call qdev_get_machine() to obtain
-the number of CPUs in the machine. So instead of initialising the CPUs in
-the SoC init let's instead do it in the realise where the machine
-will exist.
+Either as a Windows Hypervisor Platform privilege (even no save/restore =
+is okay, just being able
+to enable the privilege is good enough for testing), or through HCS for =
+WSL2 (or just Hyper-V VMs)?
 
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- hw/arm/fsl-imx8mp.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+Because at this point that=E2=80=99d solve the testability issue=E2=80=A6
 
-diff --git a/hw/arm/fsl-imx8mp.c b/hw/arm/fsl-imx8mp.c
-index 79f9142777..b36df82971 100644
---- a/hw/arm/fsl-imx8mp.c
-+++ b/hw/arm/fsl-imx8mp.c
-@@ -193,16 +193,9 @@ static const struct {
- 
- static void fsl_imx8mp_init(Object *obj)
- {
--    MachineState *ms = MACHINE(qdev_get_machine());
-     FslImx8mpState *s = FSL_IMX8MP(obj);
--    const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
-     int i;
- 
--    for (i = 0; i < MIN(ms->smp.cpus, FSL_IMX8MP_NUM_CPUS); i++) {
--        g_autofree char *name = g_strdup_printf("cpu%d", i);
--        object_initialize_child(obj, name, &s->cpu[i], cpu_type);
--    }
--
-     object_initialize_child(obj, "gic", &s->gic, gicv3_class_name());
- 
-     object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX8MP_CCM);
-@@ -265,6 +258,7 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-     MachineState *ms = MACHINE(qdev_get_machine());
-     FslImx8mpState *s = FSL_IMX8MP(dev);
-     DeviceState *gicdev = DEVICE(&s->gic);
-+    const char *cpu_type = ms->cpu_type ?: ARM_CPU_TYPE_NAME("cortex-a53");
-     int i;
- 
-     if (ms->smp.cpus > FSL_IMX8MP_NUM_CPUS) {
-@@ -273,6 +267,11 @@ static void fsl_imx8mp_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    for (i = 0; i < ms->smp.cpus; i++) {
-+        g_autofree char *name = g_strdup_printf("cpu%d", i);
-+        object_initialize_child(OBJECT(dev), name, &s->cpu[i], cpu_type);
-+    }
-+
-     /* CPUs */
-     for (i = 0; i < ms->smp.cpus; i++) {
-         /* On uniprocessor, the CBAR is set to 0 */
--- 
-2.53.0
+Thank you,
+-Mohamed
+>=20
+> Thanks,
+> Wei
 
 
