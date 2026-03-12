@@ -4,85 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E6B9FED2F1
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 08:53:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39DE6FED2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 09:14:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0bn6-0001r7-Rn; Thu, 12 Mar 2026 04:53:15 -0400
+	id 1w0c6j-0006CR-HH; Thu, 12 Mar 2026 05:13:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w0bmt-0001g0-W0
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:53:00 -0400
-Received: from mail-pf1-x430.google.com ([2607:f8b0:4864:20::430])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0c6R-0006BX-0Z
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:13:11 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w0bms-0004Xw-FP
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:52:59 -0400
-Received: by mail-pf1-x430.google.com with SMTP id
- d2e1a72fcca58-829759ca646so447040b3a.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 01:52:58 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0c6O-0003FZ-9P
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:13:09 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-649278a69c5so763726d50.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 02:13:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773306787; cv=none;
+ d=google.com; s=arc-20240605;
+ b=QgN0nepjgMkKRu3LSjc298rlbAH/XyCu1StIDIzsjvkyoxGr6b1wAILEGGmTp9R462
+ diMAS7v2voZ4ruvnls2IsBSPlTEYKpHB2PMKCmNWyz+vjtYNZXM6dXif32rUZ4qIWcun
+ 1oYio3+AYl5hVISbmbPROc+EDawoLH5tmWMnLMVY8TsaGN9oa5ZVIXOOW4M2WuXdzJWU
+ y6BYlS3Nl80Rr5eir8I1qAmkOYP00aE+wE+//v7k7MXU7wZvkT0CHe692rFPpUa157rT
+ 0pP0gACtNexb4kwxaoEcYvMCwh6zEJmFUyMlpB8A6REerWg91DZ8P89ayisPCerEKqjd
+ dhZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=gCe4XlwRhzcIv6mM5XeuDVH3HXdR7LmPtkbb/B2PBBg=;
+ fh=Req3COAPjP2YtEnamEOk+zxHiedNtWDnwOyOqw7ZC1o=;
+ b=Z3ywk9c0z/ShWeoY7GjjrQlXjIgkcZfQTawI5SSR3QnPt/s/lmgLoN/iRrOVNjtWEp
+ 09rGIFG67x4gGTtJhBDAZv/wQCy8G5yd6WoDp0x91xaetNykvEvLD5IrVfT0+NKnoGlD
+ ShU9FbtMkxr9o5cVHCqSFlXtAt2jJwBwoSP6M3Qjmvx2sJZwhUyRqOe6kQ9tYQNZ5ojf
+ Xh90wARZq5Y+GekswMJXUHjMGLr18Q8h49v1RbjUlLsGgJceTQ9TIMGUAU62cBHSnfD0
+ b61JPHYNKPC/DIs/7Y2IPemd/PhdKK+nYFNrh6Qki4drNq8KpsCAZyk5Xj7ajvoUWRYr
+ /T9Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773305577; x=1773910377; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=m6ZZoAiPWb5a1hdPgHJXKg2H3qKBxJDoJj3D7ny13Ao=;
- b=ckq/pWRPtJ1I85VF4WRmsbi0tNLqBJyyYmR1ohLYMKkfm17v18zfzeZFaEDDum8isv
- XRrdukXQcFcV5r4XUTzS/9U35IUF+MstF0IEYleUVD1B9z/ku5+Dj5tJGdv0cGANMG0l
- fqd3HUPHZTAgDzBwYuCFl1Uh5/nmr5JxTqrnue08BmuDe8eLpjYMbrA2kDWBAE0cIs34
- f6E96J7GEfhdi11ZCt5jFu/IgdsiSnSAhKjSSipnf3pJ1PRXZxYIwpA5Lvkn0CbpqQwq
- fDlqbKVxrqEEOSaZDTw19Ox3ExMft+NP9U6QRxhUS+sbHHm/+8h93bnhN04As8F08+QN
- JBzA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773305577; x=1773910377;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773306787; x=1773911587; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=m6ZZoAiPWb5a1hdPgHJXKg2H3qKBxJDoJj3D7ny13Ao=;
- b=gCdN7gQTzIZOxWG3LkhPHkN+VieqZZRfJh63lTVrtPnl7FTKAFQ2gSwEUs3oX7jdXJ
- +r1077xzdeDF6uOjJdhJqtIEsjhMJCqIfJeqav+nl3PeA6wuTLCbL64ZriP+uVvMsBK4
- GIUR6VN1yl1OMwW9rxau2o4Ap/xdzjFRiHhvL3Y/XlNkdTjp2oCrfKL99BVWYLFIRlmz
- E8EDyDDctiChw9EHPIEsJJwBhEJa1Pac9ml6j6DnS84SF2Gv8QjZYKDO3eHU432aZ8Sa
- BKQWcH3nK4pdBnH0KLuOPBDerG7yGt5c8JsjfJO3gll9gGgMQU813T8lhPa3LZMCo0HB
- 2CAg==
-X-Gm-Message-State: AOJu0YzJpP048wQhRNYrBupG1uWdeGzjc5olIasmnFgtZK2OGaUgAnxF
- U+1xM8C1/ItZ/ouDpciw6yiLlciIwnLmzHB5mGrJpXdMxrocnIkTIQe0W+Aj7ukJAs8PVg==
-X-Gm-Gg: ATEYQzx8gjNAJwA+SB/EgdssVokA3jVVN1R5BbEeiPDEDr/vJ/YVHUQy+PZSBxpaX+f
- Fh0m4fxAeYTOwQr6z8zs0QuX5+NwDsdfVxl02ktk5Kx1gevWF+fuGxNE+OwC8+TXIk/xzHwEIzx
- tbkqGB+qO1bQfDkEsJYUl0S1TAS+miUqSHK5Iv/5fav031iEgS6lkytmp6sYtBoGrcM2K+iga4B
- HmDdWaKEHAyw5g+TFutKtKUFu4bNOX3f1wF2PfML6IiD2lyfrow4nBjsp9Il2kXeIGB7wi7qFcV
- Yz2W+U3KCcAPZBDzA+ZRDY1phWxcreas9hFw6SmXqz6SYawaWp13xouj0VX9xO9G8mkKgvZXJ6C
- pi1mh9P5ZhcP/6fcZdudIR4MaFKt7cxv/mwWBSiAy8UipHXv6MgHExRROV045cG/HHOVOEb9BEW
- OxAMxx0cQgbczZ/Jg9xXXSTuUOzF9IRYOoqYJ6MxCAqq0yQexaMIyEpO8sqCE9RGKR3Bu+sxGi6
- cDTiaPmqg==
-X-Received: by 2002:a05:6a00:6d55:10b0:827:26e7:5c34 with SMTP id
- d2e1a72fcca58-829f729c2a2mr3835475b3a.61.1773305576858; 
- Thu, 12 Mar 2026 01:52:56 -0700 (PDT)
-Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local
- ([27.122.242.65]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a0734039asm2649625b3a.41.2026.03.12.01.52.53
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 01:52:56 -0700 (PDT)
-From: Trieu Huynh <vikingtc4@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: kwolf@redhat.com, hreitz@redhat.com, qemu-block@nongnu.org,
- "trieu2.huynh" <trieu2.huynh@lge.com>, Trieu Huynh <vikingtc4@gmail.com>
-Subject: [PATCH] block/curl: Fix Resource Leak in curl_header_cb
-Date: Thu, 12 Mar 2026 17:52:20 +0900
-Message-ID: <20260312085220.194207-1-vikingtc4@gmail.com>
-X-Mailer: git-send-email 2.43.0
+ bh=gCe4XlwRhzcIv6mM5XeuDVH3HXdR7LmPtkbb/B2PBBg=;
+ b=bKjzJX+oQgXFJI4UPQJkLcxd1LEcsXvXYk9cNrWx/11MjOAtbowTMFVlnKSTEfo8Cj
+ ReS5hbSi9BXF7cB+3ulMmtWpF3QeOv298ASRXI9LcMTrh1RYY5Djf12IeR3wET/LgFWi
+ PaIM5WRwi4V29NaVd6RCjyTBZgDGpim1vx8n21cTW0FMD3RXoFxkd0VMQu9jy8xhFZVy
+ iSTNgd/w16yBkIVxXGr2aRltwMhVDw+LS2OBH3ogIL6Qg8jHKg3gJfzJBRyb9bQ8Zf81
+ 6W+JGMOxTBp8Y/svGMz1oAB0QeiEa8ph9JyFXEvq0f2d2tmAa94bH6CYdnSAUyijbTA+
+ 6qoQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773306787; x=1773911587;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=gCe4XlwRhzcIv6mM5XeuDVH3HXdR7LmPtkbb/B2PBBg=;
+ b=EITyH9Qk/gwDQVKvzNUUJ53aO/ksSvOkRdShL9+dqc6rZ+WEFfqR35Z1RuJ0XP6OyF
+ rgE8hMnEEAbgM+n3HfTlrXHNyYUarG3qqU6Tenxhtqz/uvHO64shB3fADNUZ8p+/0y0l
+ hs9mOR2x0nOaclt+QQO5RJ/ciwETfltD4irBWgU7/OaZFdDGLn1OS5RFlu2k5v9raycD
+ ao5C3YnXktqneXfpungYa41yQLdMXfF1QGdX7+fEq8em9eEFfmFwX3iVj4FQ5/4UvPGv
+ PEhpPJRqNMdRnGMBhAxMd0uUmM6WpFYXWXaAlTPl0iFePo8GghqK+sT66fcIHXZ4KrVg
+ we0g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUa0ZxQ6wV9IxHYrV6tbrnaIXfY/KflnVPmu+UVjfEUy4hsXoJa8HDNXwnALwO8SL0g+mwDApbLMXC3@nongnu.org
+X-Gm-Message-State: AOJu0Yy1+l4M8Q9O914NDi8DH503V09S/ilNGNOpIUR8msCMmDcEG7Ka
+ W1fog2oxhdDPc/7qZwaNclaF7FKGjwNK/o9rfNiM10NpnFc0PwF+yy6ii5e6hTsO7faKze1AmgW
+ NLGe7qYhJCFn1QYlV0NhIwL2XAr1VLXC+sc+JUGkPeQ==
+X-Gm-Gg: ATEYQzym2p2icvekEpCjhU58DcSRA5WvrMWGELyS5+ymVUoH7pYIt3gAKmE0vTILAkl
+ 43hNGi8pQ4MuDpf1jY7yNSPEivSkXMpnIq7h3UIzBcqSqW31AbUdAJKChuF5vKqIRhcJmIW8FcE
+ vlYnrDOJYFa9RVAhtsdysbsJ8JRA0yPmluy5A45AK9ctVLvdTfJS1t8sEKAzlXZiNd9HbSlRwee
+ euHPVTvFMlSo33dZWZ67ljPgRkTbwSkJh9008f9caQS/YxF9l5c26vX382mevQI1mk9fCVT7Gap
+ bi+eDZH3WsEcD0wXE+uwaIz+MlyMOMguYof20Nve//Bbk1tIJya1oEdYamZYDnKUo+k=
+X-Received: by 2002:a05:690e:1643:b0:64c:f871:6524 with SMTP id
+ 956f58d0204a3-64d657ec44cmr3746843d50.81.1773306781921; Thu, 12 Mar 2026
+ 02:13:01 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::430;
- envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x430.google.com
-X-Spam_score_int: 15
-X-Spam_score: 1.5
-X-Spam_bar: +
-X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260223170212.441276-1-peter.maydell@linaro.org>
+ <20260223170212.441276-56-peter.maydell@linaro.org>
+ <20260311175456.00007788@huawei.com>
+In-Reply-To: <20260311175456.00007788@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Mar 2026 09:12:50 +0000
+X-Gm-Features: AaiRm53LXM9KGJ6oRdIwk4XjtNEptJj1W4c8gWw6P6EEoFF4hxT-XAWtnXCi5V8
+Message-ID: <CAFEAcA8S3JyKRBkvNBex20M2QQn04CbXMTr-1GriqQzXcQSP2g@mail.gmail.com>
+Subject: Re: [PATCH 55/65] hw/arm/virt: Update error message for bad
+ gic-version option
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,38 +120,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: "trieu2.huynh" <trieu2.huynh@lge.com>
+On Wed, 11 Mar 2026 at 17:55, Jonathan Cameron
+<jonathan.cameron@huawei.com> wrote:
+>
+> On Mon, 23 Feb 2026 17:02:02 +0000
+> Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> > As we added different valid gic-version option settings,
+> > we forgot to update the hint in the error message produced
+> > when the user specifies an invalid value:
+> >
+> > $ qemu-system-aarch64 -M virt,help | grep gic-version
+> >   gic-version=3D<string>   - Set GIC version. Valid values are 2, 3, 4,=
+ host and max
+> > $ qemu-system-aarch64 -M virt,gic-version=3Dbang
+> > qemu-system-aarch64: Invalid gic-version value
+> > Valid values are 3, 2, host, max.
+> >
+> > Update the error string to match the one we use in the help text
+> > for the option.
+> >
+> > Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+> > Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
+> > Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> Ah. I was going to say what is is this doing in here? But I see
+> you already sent a pull request with this in it.
+>
+> All good but for anyone else reading you can skip this one :)
 
-The function curl_header_cb uses g_autofree with g_strstrip(g_strndup(...)).
-However, g_strstrip may return a pointer that is an offset from the
-original allocated memory, causing g_autofree to attempt to free
-an invalid pointer or leak the original.
+Yeah, it's only in here to avoid a conflict with the next patches
+that also adjust this string.
 
-Separate the allocation and the stripping to ensure the original
-pointer is correctly tracked and freed.
-
-Resolves: CID 1645633
-
-Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
----
- block/curl.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/block/curl.c b/block/curl.c
-index 66aecfb20e..5b66c80704 100644
---- a/block/curl.c
-+++ b/block/curl.c
-@@ -208,7 +208,8 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
- {
-     BDRVCURLState *s = opaque;
-     size_t realsize = size * nmemb;
--    g_autofree char *header = g_strstrip(g_strndup(ptr, realsize));
-+    g_autofree char *header = g_strndup(ptr, realsize);
-+    g_strstrip(header);
-     char *val = strchr(header, ':');
- 
-     if (!val) {
--- 
-2.43.0
-
+-- PMM
 
