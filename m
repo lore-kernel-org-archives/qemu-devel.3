@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 47547FED2F0
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 08:52:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 847AFFED2F0
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 08:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0blu-0000g5-5V; Thu, 12 Mar 2026 04:51:58 -0400
+	id 1w0bmD-0000oO-A0; Thu, 12 Mar 2026 04:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w0bls-0000fU-FD
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:51:56 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w0bmA-0000nz-Jv
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:52:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w0blq-0003n2-5B
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:51:56 -0400
+ id 1w0bm8-00040y-M1
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:52:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773305511;
+ s=mimecast20190719; t=1773305532;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
  bh=wE9sPJoS+PvsawByzPBkkoM8UixyCC0LDr4EX6fyKOg=;
- b=MxlqV8xJVk2FvcFJsAyqKuHazmaisl9YgToLDhmbe5OTxGg78cE7hid7GCNvuOZuQ6Ccwo
- zJkDZtihLokk7rWKaN0Hx/fo18qaJyCIBgipxjIrLuEbrPFGGX3nKYm6J/7DlcbgEWUgiA
- xjXAfUnB2RzWvJWVzwnQo0Qxc2Yhvqc=
+ b=hCZwUIXFzjFxixPw63nAqwjzDg+BySLKEKusGfNqhW1lSdVwqmqvPA+MHUpoWHTtAOXHVQ
+ o6YeMZycoDjwfLL3OI1uYvKJyvqGiyH1OcUKQ7RVBXcuT+KjYaDCTCsjx2mqtgKFt4q/tr
+ S2Ir3xBlHOe4u8khpACb4VtFuqLs0SQ=
 Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
  [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-361-o5asm7CMNte5zwg6L-JjUQ-1; Thu, 12 Mar 2026 04:51:50 -0400
-X-MC-Unique: o5asm7CMNte5zwg6L-JjUQ-1
-X-Mimecast-MFC-AGG-ID: o5asm7CMNte5zwg6L-JjUQ_1773305508
+ us-mta-138-9VCAkhTEOoqCjsyOwKM0_A-1; Thu, 12 Mar 2026 04:52:10 -0400
+X-MC-Unique: 9VCAkhTEOoqCjsyOwKM0_A-1
+X-Mimecast-MFC-AGG-ID: 9VCAkhTEOoqCjsyOwKM0_A_1773305529
 Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-439c5cce2deso612769f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 01:51:49 -0700 (PDT)
+ ffacd0b85a97d-439c794ec8eso900642f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 01:52:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773305508; x=1773910308;
+ d=1e100.net; s=20230601; t=1773305529; x=1773910329;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
  bh=wE9sPJoS+PvsawByzPBkkoM8UixyCC0LDr4EX6fyKOg=;
- b=NO9mBzDuUmI/Z+BnrDuRIENeEhuNwwnzQhNCHxwqMUpoAiEYMPGbSooc0H46D2pYfw
- /l7SV7P2M9Mqxba6k4933QdUu3sYyvvuhlf4wdIPvGUn8nJCaPWq7aVPNKsyyXxNl1Wf
- /tYrj+gedFDT4v8YGYep2cn5+W0xTk4gns9VuaBjAo0Lmar+jSdbXID771LySrtt+8uD
- cUzB6HebWTgxtn31enmIjmnGdQg8Qfeo4wKIIsMqwi8iKlStURZLCQKHaYICqGCvXCHZ
- ybBGCfvgL7r5qrCL2zw6WLX9iO9eJCtJ8Oo8Ecgfrz1ntBEQJ9QcRR91ZbBAlQy8v4Ot
- d52Q==
+ b=T/E8oQ1HgfQ/UAR7eEJuVFOULmNol6OwCBGd2qhItHJuJhb+ai+SQxNfgKpF/6HEy4
+ sNxgRKRvYu+80udjMkzSy54/B136/nU0ul+zgn2NqPuJzNZuGcfj5tpu7mWHT4yPKP6/
+ dJKie32tERq4oh4b4efOK6Ypc6TzX3pO24DeqtNKZDkfL9K2qVrA2G8PvDDY4rFHdfp2
+ YxBDCZGVTtS6PgN7B8PYZTyMyMF+2qEl746vfTBim7RUdDMoiWPiltUic94aVsaf9CRk
+ 8EnmpItg61QJHWs+rC//DbzeA10sg98LLipJZqLCf7ktvxG4P/EBVU4nGZoV0xZsNY09
+ bVFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCV7n2S2X0lDvXPoQhGd+EFjCZwelEtFRXcbSYjGr/942G8x21QIWbIuYswVKshrBlcKQOWcrY/iC3YY@nongnu.org
-X-Gm-Message-State: AOJu0YwGIZ74AouZ2+i4jh9mKLuNBvm89HqXj74jQk087RE0m4MlG63S
- qAkQL3R5AAxaHruFQ6RnzaNSk/51eOCEOckI36SJP+JQDaiF5BVpL3xYHmD41ru240aKcWO2+G7
- M6UNfnbSfZ1fe+WxqqafGqdiGBaNHI8+N7d7RQcnB3Z9Hq71etzyuVs1W
-X-Gm-Gg: ATEYQzxW73z5lm1jjgSk4GFaxrWZRaQBnVyM+5suUtsuOT7toXlPp5fse8Sxr4W3SEh
- PpGVepARJ6dxt3lf+QmWo/RqYwtrGp6c1ixLPujQ5CzHeDxBTZU+Ez9Rnt8tVbPstFRXYonv8Es
- 9i6a7yR9B0RpWEB7JZIcj/hbPbpFQRvT+Q6dRTYMNAIIofRzpciAv+9T04xIdOD7a8Wxr2XRL6w
- zUdXn8/vXQJfs2M00mfbmYXCmQEpXSV/oLOgymH1Lolq4FjWQM3tvGoHd+21P+TON82nV5EVE5G
- ywprY5TFdo8rqTBm8zdJn6+3U4/eseo2eq7SPvzjzvz6QSkj4izaHggm84Qrr+XUv36ESS6HD/q
- 8WlTbBos/rRILABEVSQ1UDk6jDrwe0bsTs3YC5Qykym7pNUY53G9By5HwlBh0SFNEizizhQ==
-X-Received: by 2002:a05:6000:604:b0:439:df0b:2885 with SMTP id
- ffacd0b85a97d-439f8225415mr9836540f8f.58.1773305508149; 
- Thu, 12 Mar 2026 01:51:48 -0700 (PDT)
-X-Received: by 2002:a05:6000:604:b0:439:df0b:2885 with SMTP id
- ffacd0b85a97d-439f8225415mr9836486f8f.58.1773305507686; 
- Thu, 12 Mar 2026 01:51:47 -0700 (PDT)
+ AJvYcCULBPaIwrYf+pPSnd2VORZJD4w42sDBGrVqnTMfLR5p/u2lfwl8Ar3z2Hh7gTZiNJNGlR3UcVyzgIBP@nongnu.org
+X-Gm-Message-State: AOJu0Yxxxe85ipMHsbOGWAhlhPt/diSrpyzSP/4JzUAjFfyGoYxEmvgl
+ QQtBjzujDjLxNeROWcTYbxJLjSmvElchOzkDmYVvqwn8WSFOJ3V33iKyEfUNFGWIBQYBnIGiV6G
+ AaSfMe78+kqHY7j9xY1LsVgro6Y7e/eiN5Frxg/FIrGru1y2k+6gkmdQn
+X-Gm-Gg: ATEYQzzbX3OZUPnPFWNcT2FnY7bPXVtg7YikKLyJQgjv2OpB9Y3K/5Hlp/xC+FTSnpB
+ zeibsQ4Thp5ZOncg6ToqyKMscVcsntD+9+v2lgvpTsBNQA+CKsJZsoEK/ZmFvPe3y43kDu597ah
+ 6So7NdokPTydfUmL/J8F+UJf4Mwf9OyAEj6EfVZFe99UGSL9FqJPIjtoPoY0i4WIowPmjyhWoZr
+ AX5GD0Gn9PaMcHXDirW+HwFDQB3gXPAxStkQJO+SSZUWJkwV/ffFM5TXi1guNnHsibj470+0jrr
+ X6mEoQZuUZOLJwIzu87ZjSb63knlp/EwNkCzRVwez3bTlm4m3MEZOx2t1nzwYNPJqb3JW9lpv+C
+ 3OTPXvECmkQXvSyKqVPn0+Vh8pwI/M85wyOTALmMRv2agFb8s9ZDoUH3fDEvYHN/yfGh6Yw==
+X-Received: by 2002:a05:6000:2883:b0:439:c661:3232 with SMTP id
+ ffacd0b85a97d-439f8200e1fmr10237768f8f.20.1773305529141; 
+ Thu, 12 Mar 2026 01:52:09 -0700 (PDT)
+X-Received: by 2002:a05:6000:2883:b0:439:c661:3232 with SMTP id
+ ffacd0b85a97d-439f8200e1fmr10237535f8f.20.1773305526661; 
+ Thu, 12 Mar 2026 01:52:06 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fdf09abesm6148793f8f.0.2026.03.12.01.51.46
+ ffacd0b85a97d-439fe1aa2c3sm4965309f8f.13.2026.03.12.01.52.05
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 01:51:47 -0700 (PDT)
-Message-ID: <fbf594fe-dc8d-4747-94e7-7398749f03ef@redhat.com>
-Date: Thu, 12 Mar 2026 09:51:45 +0100
+ Thu, 12 Mar 2026 01:52:06 -0700 (PDT)
+Message-ID: <dc138268-2f96-4a64-9132-6b375fc53514@redhat.com>
+Date: Thu, 12 Mar 2026 09:52:04 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH 2/8] hw/arm/smmuv3-accel: Introduce _AUTO support for
@@ -104,14 +104,14 @@ From: Eric Auger <eric.auger@redhat.com>
 In-Reply-To: <87o6ktxwzn.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
