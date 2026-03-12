@@ -4,81 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89817FED2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 09:17:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1FC33FED2F6
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 09:21:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0cAB-0007bU-BV; Thu, 12 Mar 2026 05:17:03 -0400
+	id 1w0cED-00006X-KP; Thu, 12 Mar 2026 05:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0cA8-0007b3-CJ
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:17:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0cA4-0005ai-KK
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:16:59 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773307014;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=FR7VyA2sAiq7RsRjoYHNKcAXtHACDuAWohnJ6SR0dD8=;
- b=SXi3u8ZrxIC8ffxtjFOzR5cAvY5qwXyLuY9FhTNKq1FOqYMH8GjHiAdVdl3qoxNknksjm0
- LO3AnIw+Iw+TkFicjWuz/OAc/FY1190704EKpg+8E8UQgzWDiv/INyM31Bsx2EUi15HqOf
- UKcrq+VirwiZ8Je3euvYef2W9RX+b84=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-277-rWySKw5qM4-hOWwg80gEuw-1; Thu,
- 12 Mar 2026 05:16:53 -0400
-X-MC-Unique: rWySKw5qM4-hOWwg80gEuw-1
-X-Mimecast-MFC-AGG-ID: rWySKw5qM4-hOWwg80gEuw_1773307012
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 13AC419560B8; Thu, 12 Mar 2026 09:16:52 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 549B6180035F; Thu, 12 Mar 2026 09:16:51 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id DC96D21E681B; Thu, 12 Mar 2026 10:16:48 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: Zhang Chen <zhangckid@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>
-Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
- holder name
-In-Reply-To: <20260312052422.GA116604@fedora> (Stefan Hajnoczi's message of
- "Thu, 12 Mar 2026 13:24:22 +0800")
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-5-zhangckid@gmail.com>
- <20260309081502.GC39949@fedora>
- <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
- <20260312052422.GA116604@fedora>
-Date: Thu, 12 Mar 2026 10:16:48 +0100
-Message-ID: <87bjgtxv9b.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0cE9-0008S1-UK
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:21:10 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0cE8-0002qt-8l
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:21:09 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64c9a398bc7so886677d50.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 02:21:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773307266; cv=none;
+ d=google.com; s=arc-20240605;
+ b=iOHltJU8UQXBISAcArYQmTrv9Wkol/+Y2Om8orT2NEVRBoj7nv/6uWej5RVZdsG4+q
+ izp/0fRPgyAyLKFIWaM8XFRiEYMBPE+9uf0X+GnwigOPC/hC9/EHqiFa+s6LS1pvJiF3
+ 36gxzKHG5MibogS2IUpuC/SmTfSNMFZazk5cbNGasPARLeiSoAQADVu1drRWI66DEFwI
+ AXeXbrPfIOibLqXZhBfvSERQsheTvXJchf+HrmC3dcgD2N0OTR0XqWQ9F6vxjN5YpCxu
+ ZPNPuGNEUWVkHCcieDnUM/yqvwPrXRwOdafYAXTGnFVYtrQyCihjOolfTBTsjxZGHTR6
+ ZZ5g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=wlv8q1Wp8nYT2bBl5ajAoOja5+hnms55MUI6MkC1OCM=;
+ fh=k3ChZzPxUfJJcY6qRYCKUe7e8UpIbjQ6JU1zCmZzITs=;
+ b=UQT+Qi7GLjS4gnzxZoDrmbAxou5Cvcmhk8UhQkKIaSLW5BVBQ/E5gTF1KMdfMbZDyE
+ jExki7kDH9ZKJIndsXuGtfIL8LKSvLyUXTw0Xw1PnoH7ZPzxPF+7PLmkBNUVRZ/Ya2yj
+ 4sSUO0jiGPyxGsdQVptL7Vmy4PdhLfod+BX6ZF3+VJOy8AOOHON3za9WY8BCYy43GWD3
+ FJAgPM/E6qo5IC4PYc/r96f7u4DNBERoIZpn/wdmbr4qrxrL1LN8s+XuJHGYE6H1e5U3
+ Ln2Y2U96C9YyGYuqT+UDDqNgTirrIPur4Vf2/44qV2vwNHP7BJw8OSOIXXHHSfRq9cx1
+ Iiyg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773307266; x=1773912066; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=wlv8q1Wp8nYT2bBl5ajAoOja5+hnms55MUI6MkC1OCM=;
+ b=zud30CGHln3fwEVdN+0R1db9CWmvxOPA8B9pvTGaqdHo1D510JIUILrGoD3nPZVCEE
+ 21CziTxZ41OxUXB2zYnYwsetTckRyQKUU17ZGhJSz6RvIoVvxy2oHQayuCqXPxGE5ohy
+ fu34fIPfWlIPge8JxzspsW0we6Rwu+nFxwdDoTAgkjtowwOoGdp4M5kGkecGEdcZJsRa
+ K4fhPrOr/x1ivO1FKFkBW2yll2hQLJP5Jbps0yU+25qlJbYa0jKBqZaTmleMdkcX5Fpb
+ nLVYfMJKXeMER+woneAPvJDsih809eH0AVFPwigJu2DZ+4BjTW3GlvFUcBB1NquzS07i
+ DQJw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773307266; x=1773912066;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wlv8q1Wp8nYT2bBl5ajAoOja5+hnms55MUI6MkC1OCM=;
+ b=IjWRMzNigwSXq8VaYg4Ce9f+EvunylRAiueGLAptzAHQpSJydS+0akDfM5IeM6l6Hw
+ wv+62FaVuDTUGZ97X+ldRmhCH5rQQcXf2K2+/A9dFlgZBkOgwsxOooZL7p5lbD5KtJY5
+ /y2QuVRrVDhekuaNB/kVUNd39zQChoR11Nj8Y+dG7vaJCoBLgrg6N6FUu5V4kmJ4lF14
+ r4faSgx687avu6Irhe/G78pwES5viZnA7uLEie8CKNXUJXXg4yZpDwjB78hXR+KbF4DQ
+ VNWzrGAO5H9Q5MqHL2ool0l5mGVFklKYxLnXUFpb+8+zGOoVZyS+VpXa7l6tmgpT+icd
+ 4iNA==
+X-Gm-Message-State: AOJu0YwFM0q16TDj97lofYLURqv5rgQaODbqKEvfXTl8dTMh0lOdkn6M
+ wCZJ06d1hTUjEl7NkNt50xiKXozaLy1v2viAoUFaxvm/82o1M46uj5wWVrg0YVESo4RYoxUtvnN
+ ALnNuML0I7OcSZK9M3zVnftCteP7btH8ounFvyt1pxw==
+X-Gm-Gg: ATEYQzxd46qUjpeVPkLzwVAWfXK2ycFVx4QXJ/hjVfGN6ew+vzzh/3UJ6n+4/dYznVz
+ 7DzIM79+3/m7HFCz+qNPKSRl5kz7Iu0hBdPLwoGbSI/zXJkrmDPgNSegBRD9CRw5Lj012o/ysUs
+ I1HwsftQ/bf5Ai6WcnQKIoffKwKRbZSYm2PQqSxN3uaY1QhEkJD6yPW3REr3ZML+zZn+eM3zD6D
+ 7MopD891AnZY1Sw9jGy0/AXSFP9e+Ldk3evwFLfF2ISK7O3WePoavaQ/YMRIWOjT62cvjgVSSI6
+ OYJw4cHhcwNXZ6ZiAepWybdq4lOF5gQgIwNwrZ7klgEy8OlglAEpGDUPNrYcwgsLEp4=
+X-Received: by 2002:a05:690e:1507:b0:64d:695d:6ae3 with SMTP id
+ 956f58d0204a3-64d695d6f55mr3862861d50.67.1773307266414; Thu, 12 Mar 2026
+ 02:21:06 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260312043158.4191378-1-alistair.francis@wdc.com>
+ <20260312043158.4191378-2-alistair.francis@wdc.com>
+In-Reply-To: <20260312043158.4191378-2-alistair.francis@wdc.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Mar 2026 09:20:54 +0000
+X-Gm-Features: AaiRm50LCHPjoWMOzHXaCd7hz8Ys-zcjUqDYaPkH9_0G7_UQoYWfS5c0_AmJHYw
+Message-ID: <CAFEAcA--3xKj44aWzckmbHagZCMTED36Sz6fpHpO6kVxg+uBYw@mail.gmail.com>
+Subject: Re: [PATCH 1/7] hw/riscv: sifive_e: Don't call qdev_get_machine in
+ soc init
+To: alistair23@gmail.com
+Cc: qemu-devel@nongnu.org, armbru@redhat.com, pbonzini@redhat.com, 
+ berrange@redhat.com, peterx@redhat.com, philmd@linaro.org, 
+ Alistair Francis <alistair.francis@wdc.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -94,165 +117,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Context...  we're talking about this command:
-
-    ##
-    # @x-blockdev-set-iothread:
-    #
-    # Move @node and its children into the @iothread.  If @iothread is
-    # null then move @node and its children into the main loop.
-    #
-    # The node must not be attached to a BlockBackend.
-    #
-    # @node-name: the name of the block driver node
-    #
-    # @iothread: the name of the IOThread object or null for the main loop
-    #
-    # @force: true if the node and its children should be moved when a
-    #     BlockBackend is already attached
-    #
-    # Features:
-    #
-    # @unstable: This command is experimental and intended for test cases
-    #     that need control over IOThreads only.
-    #
-    # Since: 2.12
-    #
-    # .. qmp-example::
-    #    :title: Move a node into an IOThread
-    #
-    #     -> { "execute": "x-blockdev-set-iothread",
-    #          "arguments": { "node-name": "disk1",
-    #                         "iothread": "iothread0" } }
-    #     <- { "return": {} }
-    #
-    # .. qmp-example::
-    #    :title: Move a node into the main loop
-    #
-    #     -> { "execute": "x-blockdev-set-iothread",
-    #          "arguments": { "node-name": "disk1",
-    #                         "iothread": null } }
-    #     <- { "return": {} }
-    ##
-    { 'command': 'x-blockdev-set-iothread',
-      'data' : { 'node-name': 'str',
-                 'iothread': 'StrOrNull',
-                 '*force': 'bool' },
-      'features': [ 'unstable' ],
-      'allow-preconfig': true }
-
-
-Stefan Hajnoczi <stefanha@redhat.com> writes:
-
-> On Tue, Mar 10, 2026 at 06:02:54PM +0800, Zhang Chen wrote:
->> On Mon, Mar 9, 2026 at 4:15=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.=
-com> wrote:
->> >
->> > On Thu, Mar 05, 2026 at 10:24:50PM +0800, Zhang Chen wrote:
->> > > Update the usage of "iothread_get_aio_context()".
->> > >
->> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
->> > > ---
->> > >  blockdev.c | 9 ++++++++-
->> > >  1 file changed, 8 insertions(+), 1 deletion(-)
->> > >
->> > > diff --git a/blockdev.c b/blockdev.c
->> > > index 6e86c6262f..01ccf64b3f 100644
->> > > --- a/blockdev.c
->> > > +++ b/blockdev.c
->> > > @@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const char *=
-node_name, StrOrNull *iothread,
->> > >              goto out;
->> > >          }
->> > >
->> > > -        new_context =3D iothread_get_aio_context(obj);
->> > > +        char *path =3D object_get_canonical_path(OBJECT(bs));
->> >
->> > CCing Kevin and Markus in case they have an opinion on this.
->> >
->> > BlockDriverState is not a QOM Object so using OBJECT(bs) is undefined
->> > behavior and may crash.
-
-Yes.
-
->> > node_name is unique across block driver graph nodes and could be used.
->> > Unfortunately it's not connected to the QOM Object hierarchy.
-
-Correct.
-
->> >                                                               Maybe it=
-'s
->> > best to build a holder name that is an invalid QOM path so there can be
->> > no collisions between QOM paths and block driver graph nodes.
-
-I guess you're talking about the values that go into IOThreadInfo member
-holders.  From PATCH 13:
-
-    # @holders: The parameter is an array of QOM paths indicating how many
-    #     active devices are currently associated with this iothread
-    #     (e.g. virtio-blk).  In hotplug scenarios, users can
-    #     pre-allocate multiple iothread objects to serve as a persistent
-    #     thread pool.  When a device is hot-unplugged, the corresponding
-    #     IOThread is released but remains available, allowing subsequent
-    #     hot-plugged devices to attach to and reuse the existing thread.
-    #     Returns empty if no devices are attached.  (since 11.0)
-    #
-
-I further guess you need it to refer to both QOM objects and block
-nodes, and you worry about ambiguity.
-
-Ambiguity indeed exists: a block node name can be a valid QOM path.
-
-We could restrict QOM paths to absolute paths.  These start with '/'.
-If I remember correctly, node names cannot contain '/'.
-
-Note that canonical paths (returned object_get_canonical_path()) are
-absolute.
-
-We ran into a similar design issue in review of Vladimir's "[PATCH v10
-4/8] qapi: add blockdev-replace command" not too long ago:
-
-    Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
-    Date: Wed, 04 Feb 2026 13:26:35 +0100
-    Message-ID: <87wm0sy9s4.fsf@pond.sub.org>
-
-There, the new command needs to refer to QOM object, block node, or
-block export.
-
->> >   g_autofree char *holder =3D g_strdup_printf("BlockDriverState %s", n=
-ode_name);
->> >
->> > (A cleaner long-term solution would be making BlockDriverStates QOM
->> > Objects so they have a proper path.)
-
-Yes, but that's a beefy project, isn't it?
-
->> If no other comments, it's OK for me. This issue like I mentioned in
->> patch 7 and 9.
+On Thu, 12 Mar 2026 at 04:33, <alistair23@gmail.com> wrote:
 >
-> A thought about the QAPI interface:
+> From: Alistair Francis <alistair.francis@wdc.com>
 >
-> QAPI expresses as much information in the schema as possible, so I think
-> the right approach would be a {'union': 'IOThreadHolder',
-> 'discriminator': 'type', ...} that supports at least "qom" and
-> "block-node". That way there are proper types to encode QOM Object paths
-> vs block node-names. Let's avoid having a single string value that takes
-> on different meaning depending on the type of holder.
+> Calling qdev_get_machine() in the soc_init function would result in
+> the following assert
+>
+>     ../hw/core/qdev.c:858: qdev_get_machine: Assertion `dev' failed.
+>
+> when trying to run
+>
+>     ./qemu-system-riscv64 -S -display none -M virt -device riscv.sifive.e.soc,help
+>
+> as the machine wasn't created yet. We call qdev_get_machine() to obtain
+> the number of CPUs in the machine. So instead of setting the CPU
+> num-harts in the init function let's set it in realise where the machine
+> will exist.
+>
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 
-This shifts the complexity from semantics to syntax.
+I think our general intended pattern is:
+ * init the child in init
+ * configure and realize the child in realize
 
-Semantics: the member can have multiple meanings, and you have to
-examine its value to decide which one applies.  The member's
-documentation should specify how to decide.  Say something like "if the
-value starts with '/', it's an absolute QOM path, else it's a block node
-name".
+So unless there's a specific reason to be setting properties on
+the child in init, moving them to realize is the right thing.
 
-Syntax: meaning is syntactically obvious.  For instance, union of QOM
-path and block node name.
-
-Complex semantics tend to require more complex documentation.
-
-Which choice is better depends on the specific case.  I generally lean
-towards syntax.
-
+thanks
+-- PMM
 
