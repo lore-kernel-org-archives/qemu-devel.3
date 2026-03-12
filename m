@@ -4,123 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94C52FED2FE
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:51:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0ADD105A572
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:54:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0ddW-0000HU-BD; Thu, 12 Mar 2026 06:51:26 -0400
+	id 1w0dg7-00013m-Nj; Thu, 12 Mar 2026 06:54:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w0ddS-0000H8-NT
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:51:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0dg6-00013F-3Y
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:54:06 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
- id 1w0ddL-0003Gh-4r
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:51:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773312671;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=YGNFWrRiiH6V820U/36iXlTOyUyBhcEmNbeyo2S0rRU=;
- b=DLf9Ry32eno3NosRd7apoC7+m1uqAM7DenRZXbW8LUPDX6OjDaQpl8moaz7ckdvRHmFY08
- /XRXSGFW1V8pcNuWtooj41tysJ7WCpR/+xwTzBO6MXzH3Kg9UBR/veJmjVgMiztMpTdot4
- WyutpK0fVe8kAxjKUcB+SqCpHvux6oo=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-483-Ri7Liu8AOSejdGUNUVo-JA-1; Thu, 12 Mar 2026 06:51:10 -0400
-X-MC-Unique: Ri7Liu8AOSejdGUNUVo-JA-1
-X-Mimecast-MFC-AGG-ID: Ri7Liu8AOSejdGUNUVo-JA_1773312669
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-439a85832c0so859811f8f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 03:51:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773312669; cv=none;
- d=google.com; s=arc-20240605;
- b=TalDCIGXeNjiCi3x0a+MPdfgjzCRZOj0O1/FrHFPZkABFF9mjLolY9JENbiuyYr75C
- Jz+HiyzhOFdT9yMY0vu43PmrwJkLbkyOVXFso540js5n3ZcyfYw/kekZ2eEqJ/lzSuKv
- XNcU6DoxD39X3VWCFHW0F1jcFy4AgS9DTMtikVIHDjgOIZuNOTyUiRK4zEHLJ39e1laL
- oQh2pOay8U6IiALxDhBFvCAjaWivFWttdaDE4TGnNa1UC1+d8xjGwl2D/JdKFRF5mpWR
- eVLdNnsNxpplRg/0BpEGIS0T3Dv4A56RMzCtemxtQcyqxiuput5PDLpEXFDctfxd6JQL
- C/WA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=YGNFWrRiiH6V820U/36iXlTOyUyBhcEmNbeyo2S0rRU=;
- fh=0RnV74n38CvrzpnKyRmF2uSdp691/S7P69fJ6CBe+7g=;
- b=EtCbWI1wDnLTru8Pq5YpSYpIFBb9q6tTMSTduH/CIVlyaFwPsv029Zdppnv23Wx51G
- ClG8chClSWFvONx40K6L4HikMwisDz+R/cXo+16eijU+m6a7f396+kE/Ixgy4eVDwJE5
- so1EYrBtt6RfYoRjLjxsh45mk/8o4W1TO4S+Y4qgtx1hlC2DWV8iRKjX4JhP+txGSMDo
- VYibOZhtfdTbsEeCL871Y/Cq9FqIUdX1hXmukilpYpkJTMo01viuvVhOD/IvOh6sxoFV
- BpX4gWWb04eqgZT2h7T5/SN+Jt15rEhvB4dP079oV+KLZ+Bg29ki0CfXXNjz/YJv7W33
- gCHQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773312669; x=1773917469; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=YGNFWrRiiH6V820U/36iXlTOyUyBhcEmNbeyo2S0rRU=;
- b=gPRmRfxr5vSeaisjCb6/WQh0w4k5JHRrJLzZtnKeJLW/HRhtYlU6n7v29logiHHFwT
- PVVh/TqOJR7YALhtW4RhjCHO956KMIHkplXDjv71ty/mIE/RLTdeW2WEHt4rM4fUQqPR
- Z4KIt1dJcOE8k9Z1AxM0bbRLSF+phM4mMsMrXr+chtFBQ/qUv41HSYwMAQ37MY7f01vY
- nLq3E5l+d7D10NBfaae++HzDTbAkyqD6TiFCg6rP4vOXm/Kzj/ZP30NOhlu4MaUCV27p
- r5J+v/Z/P8kv1z3Ki5/MaTLPR+HdpSQhh7mWHHS0iKF3aYoAkxmcHweizc8LyaqibJpr
- ObRg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773312669; x=1773917469;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YGNFWrRiiH6V820U/36iXlTOyUyBhcEmNbeyo2S0rRU=;
- b=r1xWH2MpzUBj3a7Dr7qw0cy1cJZ5AqR9ua1UzpBU2h5cEi7DyypiDgXUNai0hqjdt3
- 7na/UV5jUsE3wprEj4BxDOy0xq6Vn5uqi3Gz/1tGVkXDVqUsKo6kTLb1DC/Rs5dQBOxL
- CuVCeashKCQIp78k0YD0rBr1kdhYo11O4Jv2WYn11wFaHJRH9dDEmYRiG5ZnpKiA97NG
- pfde+5H9z7r/KcOraQ7GyBtdPos2tLjM3pj7gKilPRfjJkwRDTpsoopCYr+9jIzxbXpM
- 59RYcJNV6pscz7+v9+3RnSDwYnQEuzGmzFj8Ojz3D/4wOuASD178W16uZKoJ6sOS/Jyu
- hLuQ==
-X-Gm-Message-State: AOJu0Yw3sAJykb+DKhuuJvjuReCZTBXH5aov4mZc0m0UThA511AKUgy8
- y7PltZixjkAi7MuVJo/NY6OaI9jJkP/F2vJyK4ShD7vqslVM8B3WC48w+NVoLDe46wlfjk68Nw6
- xowImWtHUIIQEgMcM2T8MtIeTKQpwn9TDE7J3QJkN6BC1SCBB51/Ga+lT45MlDhXXXYDvKYwh+Y
- r9qWDrFJVZIyVy/YzTsgVWRSz50Osu0Ns=
-X-Gm-Gg: ATEYQzwJAEgz5UaY4ucHYlplkS6BRZYfHVqrYVOzu+8uuC9e8qvanmCjLTOf1Rw2Ubu
- Oi6wbWVSlzXQsyXNy7tUV6IKg7kYk8lCm9Fb4oUZc3HnKvyKjQWHJNIDZWbTETo4RHwaAGIH/1w
- v3ibwU9dINYmhShZidveuTbPn023HAtKPNP9HAFsdB6+Wgb0Y8SXQFpsQv5bRTaOmAC/Xa2mZAo
- nwvI/1eyZ51ASXZYd7Us6Zj2QSkbARPsO3UtlC+ypuztBbDWZVvk/OqTFLfTewXPLvT
-X-Received: by 2002:a05:600c:35c2:b0:485:3f58:da1 with SMTP id
- 5b1f17b1804b1-4854b0bb3famr116161775e9.9.1773312668871; 
- Thu, 12 Mar 2026 03:51:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:35c2:b0:485:3f58:da1 with SMTP id
- 5b1f17b1804b1-4854b0bb3famr116161205e9.9.1773312668349; Thu, 12 Mar 2026
- 03:51:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0dg3-0004Yg-VM
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:54:05 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773312832; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=UWrrm5iTgEW3l8hDAvwMIcENi2q90F7C2G+FDK7ihVW3RZMo3ak2g/0Y+TwV41BliyE8hkbecFUN4gIbJ1EZWiTPLJ9HiSgbqtX7dYpq0SW6mp3OADPXQMt/rRWY7V+2gfrEmN82CcX/hIuhYw6k9Ajh0h9ZVPD8LVc3togxMFE=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773312832;
+ h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=9VDFht7oi3Vg3oqv0vYn0XBucIUZGjLyJQgSGowPKn8=; 
+ b=CR4CwiPPiWgK3ODOYmRBYOfTfyxMxRbMTjEpvcsZ59LunKy2+D8Qn8CxExYACTERn1ZDJJrLaL7YDSO2bttNamEBdZJwdjuHhwY379limgX+7efUdU9MtfkY8HpWPEFUPEiZoIrUoI9h+8FOyKaABU9yzl7ctGqb9PH3GtwbFeY=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773312832; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+ bh=9VDFht7oi3Vg3oqv0vYn0XBucIUZGjLyJQgSGowPKn8=;
+ b=cOFvpfcquYkNiRs69s4bSCTHhV42y5e/Iy6l54jdYoqou4o1ijfwTv/9PrSVWEh4
+ C7bDxZCAOdKBunsuy/hsglnqAwH1AQoqMjEeAzOeQMXWn+KvI+grclx6ZWbkgM3iFdF
+ Hbr94IbLQbU/+iOCmVEvccUF7Et9kZW6xAL9ZqLk=
+Received: by mx.zohomail.com with SMTPS id 1773312830128247.7117644744958;
+ Thu, 12 Mar 2026 03:53:50 -0700 (PDT)
+Date: Thu, 12 Mar 2026 10:53:46 +0000
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH v2 1/9] accel/mshv: use mshv_create_partition_v2 payload
+Message-ID: <20260312-tested-garnet-hippo-cb71ee@anirudhrb>
+References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
+ <20260311113505.1177878-2-magnuskulke@linux.microsoft.com>
 MIME-Version: 1.0
-References: <20260311213418.16951-1-farosas@suse.de>
- <20260311213418.16951-6-farosas@suse.de>
-In-Reply-To: <20260311213418.16951-6-farosas@suse.de>
-From: Prasad Pandit <ppandit@redhat.com>
-Date: Thu, 12 Mar 2026 16:20:51 +0530
-X-Gm-Features: AaiRm5061NwikGm3SMVsqY0viUTgECTpY_PPrc3CHuRgZVC8WSUjkURTQbh1vbw
-Message-ID: <CAE8KmOzM3Pi=AhxMGPeM7u2KzkaHXsexNNZX5k_317wzmwt5xA@mail.gmail.com>
-Subject: Re: [PATCH v2 5/5] tests/qtest/migration: Force exit-on-error=false
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311113505.1177878-2-magnuskulke@linux.microsoft.com>
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -135,311 +80,345 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
+Message-ID: <20260312105346.7IgXiLorWXUxijJrl6sgltt9l6DrSzQsL3qeuKSnLfc@z>
 
-On Thu, 12 Mar 2026 at 03:04, Fabiano Rosas <farosas@suse.de> wrote:
-> Some tests can cause QEMU to exit(1) too early while the incoming
-> coroutine has not yielded for a first time yet. This trips ASAN
-> because resources related to dispatching the incoming process will
-> still be allocated in the io/channel.c layer without a
-> straight-forward way for the migration code to clean them up.
->
-> As an example of one such issue, the UUID validation happens early
-> enough that the temporary socket from qio_net_listener_channel_func()
-> still has an elevated refcount. If it fails, the listener dispatch
-> code never gets to free the resource:
->
-> Direct leak of 400 byte(s) in 1 object(s) allocated from:
->     #0 0x55e668890a07 in malloc asan_malloc_linux.cpp:68:3
->     #1 0x7f3c7e2b6648 in g_malloc ../glib/gmem.c:130
->     #2 0x55e66a8ef05f in object_new_with_type ../qom/object.c:767:15
->     #3 0x55e66a8ef178 in object_new ../qom/object.c:789:12
->     #4 0x55e66a93bcc6 in qio_channel_socket_new ../io/channel-socket.c:70:31
->     #5 0x55e66a93f34f in qio_channel_socket_accept ../io/channel-socket.c:401:12
->     #6 0x55e66a96752a in qio_net_listener_channel_func ../io/net-listener.c:64:12
->     #7 0x55e66a94bdac in qio_channel_fd_source_dispatch ../io/channel-watch.c:84:12
->     #8 0x7f3c7e2adf4b in g_main_dispatch ../glib/gmain.c:3476
->     #9 0x7f3c7e2adf4b in g_main_context_dispatch_unlocked ../glib/gmain.c:4284
->     #10 0x7f3c7e2b00c8 in g_main_context_dispatch ../glib/gmain.c:4272
->
-> The exit(1) also requires some tests to setup qtest to expect a return
-> code of 1 from the QEMU process. Although we can check migration
-> status changes to be fairly certain where the failure happened, there
-> is always the possibility of QEMU exiting for another reason and the
-> test passing. This happens frequently with sanitizers enabled, but
-> also risks masking issues in the regular build.
->
-> Stop allowing the incoming migration to exit and instead require the
-> tests to wait for the FAILED state and end QEMU gracefully with
-> qtest_quit.
->
-> In practice this means setting exit-on-error=false for every incoming
-> migration, changing MIG_TEST_FAIL_DEST_QUIT_ERR to MIG_TEST_FAIL and
-> waiting for a change of state where necessary.
->
-> With this, the MIG_TEST_FAIL_DEST_QUIT_ERR error result is now unused,
-> remove it.
->
-> The affected tests are:
-> validate_uuid_error
-> multifd_tcp_cancel
-> dirty_limit
-> precopy_unix_tls_x509_default_host
-> precopy_tcp_tls_no_hostname
-> tcp_tls_x509_mismatch_host
-> dbus_vmstate_missing_src
-> dbus_vmstate_missing_dst
-
-* Alll of them don't seem to use/set  'MIG_TEST_FAIL_DEST_QUIT_ERR'
-OR  'MIG_TEST_FAIL': ex: dbus_vmstate_missing_*
-
-
-> Also add a comment to QEMU source explaining that the incoming
-> coroutine might block for a while until it yields as this is the
-> actual root cause of the issue.
->
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+On Wed, Mar 11, 2026 at 12:34:57PM +0100, Magnus Kulke wrote:
+> When using the extended request format we can instruct the hypervisor to
+> provision enough space for requested XSAVE features. This is required
+> for supporting QEMU models provided via the -cpu flag properly.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
 > ---
->  migration/migration.c                 |  5 +++++
->  tests/qtest/dbus-vmstate-test.c       |  5 +++--
->  tests/qtest/migration/framework.c     |  5 +----
->  tests/qtest/migration/framework.h     |  2 --
->  tests/qtest/migration/migration-qmp.c |  6 ++++++
->  tests/qtest/migration/misc-tests.c    |  4 ++--
->  tests/qtest/migration/precopy-tests.c | 12 +++++-------
->  tests/qtest/migration/tls-tests.c     | 14 ++++++++------
->  8 files changed, 30 insertions(+), 23 deletions(-)
->
-> diff --git a/migration/migration.c b/migration/migration.c
-> index f949708629..c77832f851 100644
-> --- a/migration/migration.c
-> +++ b/migration/migration.c
-> @@ -898,6 +898,11 @@ void migration_start_incoming(void)
->
->      Coroutine *co = qemu_coroutine_create(process_incoming_migration_co, NULL);
->      qemu_coroutine_enter(co);
-> +    /*
-> +     * This doesn't return right away. The coroutine will run
-> +     * unimpeded until its first yield, which may happen as late as
-> +     * the force yield at ram_load_precopy().
-> +     */
+>  accel/mshv/mshv-all.c          |  75 +++++++++++--
+>  include/hw/hyperv/hvgdk_mini.h |   2 +
+>  include/hw/hyperv/hvhdk.h      | 195 +++++++++++++++++++++++++++++++++
+>  3 files changed, 265 insertions(+), 7 deletions(-)
+> 
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index d4cc7f5371..eab967ff07 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -110,21 +110,82 @@ static int resume_vm(int vm_fd)
+>      return 0;
 >  }
->
->  int migrate_send_rp_switchover_ack(MigrationIncomingState *mis)
-> diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
-> index 6c990864e3..0a82cc9f93 100644
-> --- a/tests/qtest/dbus-vmstate-test.c
-> +++ b/tests/qtest/dbus-vmstate-test.c
-> @@ -219,8 +219,8 @@ test_dbus_vmstate(Test *test)
->
->      dstaddr = g_strsplit(g_test_dbus_get_bus_address(dstbus), ",", 2);
->      dst_qemu_args =
-> -        g_strdup_printf("-object dbus-vmstate,id=dv,addr=%s -incoming %s",
-> -                        dstaddr[0], uri);
-> +        g_strdup_printf("-object dbus-vmstate,id=dv,addr=%s -incoming defer",
-> +                        dstaddr[0]);
-
-* Here "uri" is different than "defer"  ->  uri =
-g_strdup_printf("unix:%s/migsocket", workdir);. Why are we replacing
-it with "defer" string?
-
->      src_qemu = qtest_init(src_qemu_args);
->      dst_qemu = qtest_init(dst_qemu_args);
-> @@ -229,6 +229,7 @@ test_dbus_vmstate(Test *test)
->
->      thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
->
-> +    migrate_incoming_qmp(dst_qemu, uri, NULL, "{}");
->      migrate_qmp(src_qemu, uri, "{}");
->      test->src_qemu = src_qemu;
->      if (test->migrate_fail) {
-> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
-> index b9371372de..9f71d51f1e 100644
-> --- a/tests/qtest/migration/framework.c
-> +++ b/tests/qtest/migration/framework.c
-> @@ -576,6 +576,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
->      migrate_prepare_for_dirty_mem(from);
->      qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
->                               "  'arguments': { "
-> +                             "      'exit-on-error': false,"
->                               "      'channels': [ { 'channel-type': 'main',"
->                               "      'addr': { 'transport': 'socket',"
->                               "                'type': 'inet',"
-> @@ -906,10 +907,6 @@ int test_precopy_common(MigrateCommon *args)
->      if (args->result != MIG_TEST_SUCCEED) {
->          bool allow_active = args->result == MIG_TEST_FAIL;
->          wait_for_migration_fail(from, allow_active);
-> -
-> -        if (args->result == MIG_TEST_FAIL_DEST_QUIT_ERR) {
-> -            qtest_set_expected_status(to, EXIT_FAILURE);
-> -        }
->      } else {
->          if (args->live) {
->              /*
-> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
-> index 80eef75893..79604c60f5 100644
-> --- a/tests/qtest/migration/framework.h
-> +++ b/tests/qtest/migration/framework.h
-> @@ -208,8 +208,6 @@ typedef struct {
->          MIG_TEST_SUCCEED = 0,
->          /* This test should fail, dest qemu should keep alive */
->          MIG_TEST_FAIL,
-> -        /* This test should fail, dest qemu should fail with abnormal status */
-> -        MIG_TEST_FAIL_DEST_QUIT_ERR,
->          /* The QMP command for this migration should fail with an error */
->          MIG_TEST_QMP_ERROR,
->      } result;
-> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
-> index 8279504db1..61cd7db6cc 100644
-> --- a/tests/qtest/migration/migration-qmp.c
-> +++ b/tests/qtest/migration/migration-qmp.c
-> @@ -173,6 +173,12 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
->      /* This function relies on the event to work, make sure it's enabled */
->      migrate_set_capability(to, "events", true);
->
+>  
+> +static int get_host_partition_property(int mshv_fd, uint32_t feature_bank,
+> +                                       uint64_t *value)
+> +{
+> +    int ret;
+> +    struct hv_input_get_partition_property in = {0};
+> +    struct hv_output_get_partition_property out = {0};
+> +    struct mshv_root_hvcall args = {0};
+> +
+> +    in.property_code = feature_bank;
+> +
+> +    args.code    = HVCALL_GET_PARTITION_PROPERTY;
+> +    args.in_sz   = sizeof(in);
+> +    args.in_ptr  = (uint64_t)&in;
+> +    args.out_sz  = sizeof(out);
+> +    args.out_ptr = (uint64_t)&out;
+> +
+> +    ret = ioctl(mshv_fd, MSHV_ROOT_HVCALL, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to get host partition property bank: %s",
+> +                     strerror(errno));
+> +        return -1;
+> +    }
+> +
+> +    *value = out.property_value;
+> +    return 0;
+> +}
+> +
+>  static int create_partition(int mshv_fd, int *vm_fd)
+>  {
+>      int ret;
+> -    struct mshv_create_partition args = {0};
+> +    uint64_t pt_flags, host_proc_features;
+> +    union hv_partition_processor_xsave_features disabled_xsave_features;
+> +    struct mshv_create_partition_v2 args = {0};
+> +    uint32_t feature_banks[] = {
+> +        HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
+> +        HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
+> +    };
+> +
+> +    QEMU_BUILD_BUG_ON(ARRAY_SIZE(feature_banks) > MSHV_NUM_CPU_FEATURES_BANKS);
+>  
+>      /* Initialize pt_flags with the desired features */
+> -    uint64_t pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
+> -                        (1ULL << MSHV_PT_BIT_X2APIC) |
+> -                        (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES);
+> +    pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
+> +               (1ULL << MSHV_PT_BIT_X2APIC) |
+> +               (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
+> +               (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
+> +
+> +    /* enable all */
+> +    disabled_xsave_features.as_uint64 = 0;
+> +
 > +    /*
-> +     * Set the incoming migration to never exit QEMU abruptly during
-> +     * the tests. It causes issues when running sanitizers and
-> +     * expecting a failure exit code can mask other issues.
+> +     * query host for supported processor features and disable unsupported
+> +     * features: (0 means supported, 1 means disabled, hence the negation)
 > +     */
-> +    qdict_put_bool(args, "exit-on-error", false);
->      rsp = qtest_qmp(to, "{ 'execute': 'migrate-incoming', 'arguments': %p}",
->                      args);
->
-> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
-> index 810e9e6549..196f1ca842 100644
-> --- a/tests/qtest/migration/misc-tests.c
-> +++ b/tests/qtest/migration/misc-tests.c
-> @@ -131,7 +131,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
->      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
->      QTestState *from, *to;
->
-> -    if (migrate_start(&from, &to, uri, args)) {
-> +    if (migrate_start(&from, &to, "defer", args)) {
->          return;
->      }
->
-> @@ -146,10 +146,10 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
->      /* Wait for the first serial output from the source */
->      wait_for_serial("src_serial");
->
-> +    migrate_incoming_qmp(to, uri, NULL, "{}");
->      migrate_qmp(from, to, uri, NULL, "{}");
->
->      if (should_fail) {
-> -        qtest_set_expected_status(to, EXIT_FAILURE);
->          wait_for_migration_fail(from, true);
->      } else {
->          wait_for_migration_complete(from);
-> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
-> index f17dc5176d..c6c8ae3004 100644
-> --- a/tests/qtest/migration/precopy-tests.c
-> +++ b/tests/qtest/migration/precopy-tests.c
-> @@ -545,8 +545,7 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
->      migrate_cancel(from);
->
->      /* Make sure QEMU process "to" exited */
-> -    qtest_set_expected_status(to, EXIT_FAILURE);
-> -    qtest_wait_qemu(to);
-> +    migration_event_wait(to, "failed");
->      qtest_quit(to);
->
->      /*
-> @@ -634,7 +633,7 @@ static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
->                                              const char *uri, const char *phase,
->                                              MigrateStart *args)
->  {
-> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +    migrate_incoming_qmp(to, uri, NULL, "{}");
->
->      wait_for_serial("src_serial");
->      migrate_ensure_converge(from);
-> @@ -659,7 +658,7 @@ static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
->                                             const char *uri, const char *phase,
->                                             MigrateStart *args)
->  {
-> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +    migrate_incoming_qmp(to, uri, NULL, "{}");
->
->      wait_for_serial("src_serial");
->      migrate_ensure_converge(from);
-> @@ -690,7 +689,7 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
->      wait_for_serial("src_serial");
->      migrate_cancel(from);
->
-> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +    migrate_incoming_qmp(to, uri, NULL, "{}");
->
->      migrate_ensure_converge(from);
->      migrate_qmp(from, to, uri, NULL, "{}");
-> @@ -709,7 +708,7 @@ static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
->      migrate_set_capability(from, "multifd", true);
->      migrate_set_capability(to, "multifd", true);
->
-> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
-> +    migrate_incoming_qmp(to, uri, NULL, "{}");
->
->      wait_for_serial("src_serial");
->      migrate_ensure_converge(from);
-> @@ -1101,7 +1100,6 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
->
->      /* destination always fails after cancel */
->      migration_event_wait(to, "failed");
-> -    qtest_set_expected_status(to, EXIT_FAILURE);
->      qtest_quit(to);
->
->      /* Check if dirty limit throttle switched off, set timeout 1ms */
-> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
-> index 4ce7f6c676..87898af260 100644
-> --- a/tests/qtest/migration/tls-tests.c
-> +++ b/tests/qtest/migration/tls-tests.c
-> @@ -441,10 +441,10 @@ static void test_precopy_unix_tls_x509_default_host(char *name,
->      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
->
->      args->connect_uri = uri;
-> -    args->listen_uri = uri;
-> +    args->listen_uri = "defer";
->      args->start_hook = migrate_hook_start_tls_x509_default_host;
->      args->end_hook = migrate_hook_end_tls_x509;
-> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
-> +    args->result = MIG_TEST_FAIL;
->
->      args->start.hide_stderr = true;
->
-> @@ -522,10 +522,11 @@ migrate_hook_start_tls_x509_no_host(QTestState *from, QTestState *to)
->
->  static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
->  {
-> -    args->listen_uri = "tcp:127.0.0.1:0";
-> +    args->listen_uri = "defer";
-> +    args->connect_uri = "tcp:127.0.0.1:0";
->      args->start_hook = migrate_hook_start_tls_x509_no_host;
->      args->end_hook = migrate_hook_end_tls_x509;
-> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
-> +    args->result = MIG_TEST_FAIL;
->
->      args->start.hide_stderr = true;
->
-> @@ -556,10 +557,11 @@ static void test_precopy_tcp_tls_x509_override_host(char *name,
->  static void test_precopy_tcp_tls_x509_mismatch_host(char *name,
->                                                      MigrateCommon *args)
->  {
-> -    args->listen_uri = "tcp:127.0.0.1:0";
-> +    args->listen_uri = "defer";
-> +    args->connect_uri = "tcp:127.0.0.1:0";
->      args->start_hook = migrate_hook_start_tls_x509_mismatch_host;
->      args->end_hook = migrate_hook_end_tls_x509;
-> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
-> +    args->result = MIG_TEST_FAIL;
->
->      args->start.hide_stderr = true;
->
-> --
+> +    ret = get_host_partition_property(mshv_fd,
+> +                                      HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
+> +                                      &host_proc_features);
+> +    if (ret < 0) {
+> +        error_report("Failed to get host processor feature bank 0");
+> +        return -1;
+> +    }
+> +    args.pt_cpu_fbanks[0] = ~host_proc_features;
+>  
+> -    /* Set default isolation type */
+> -    uint64_t pt_isolation = MSHV_PT_ISOLATION_NONE;
+> +    ret = get_host_partition_property(mshv_fd,
+> +                                      HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
+> +                                      &host_proc_features);
+> +    if (ret < 0) {
+> +        error_report("Failed to get host processor feature bank 1");
+> +        return -1;
+> +    }
+> +    args.pt_cpu_fbanks[1] = ~host_proc_features;
+>  
+> +    /* populate args structure */
+>      args.pt_flags = pt_flags;
+> -    args.pt_isolation = pt_isolation;
+> +    args.pt_isolation = MSHV_PT_ISOLATION_NONE;
+> +    args.pt_disabled_xsave = disabled_xsave_features.as_uint64;
+> +    args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
+>  
+>      ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
+>      if (ret < 0) {
+> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> index 7d7b2e9b36..a8d4b2b2b1 100644
+> --- a/include/hw/hyperv/hvgdk_mini.h
+> +++ b/include/hw/hyperv/hvgdk_mini.h
+> @@ -456,6 +456,8 @@ typedef struct hv_input_set_vp_registers {
+>      struct hv_register_assoc elements[];
+>  } QEMU_PACKED hv_input_set_vp_registers;
+>  
+> +#define MSHV_VP_MAX_REGISTERS   128
+> +
+>  union hv_interrupt_control {
+>      uint64_t as_uint64;
+>      struct {
+> diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+> index bf2f8cbc27..a6893f4ca3 100644
+> --- a/include/hw/hyperv/hvhdk.h
+> +++ b/include/hw/hyperv/hvhdk.h
+> @@ -13,6 +13,16 @@
+>  
+>  #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
+>  
+> +struct hv_input_get_partition_property {
+> +    uint64_t partition_id;
+> +    uint32_t property_code; /* enum hv_partition_property_code */
+> +    uint32_t padding;
+> +} QEMU_PACKED;
+> +
+> +struct hv_output_get_partition_property {
+> +    uint64_t property_value;
+> +} QEMU_PACKED;
+> +
+>  struct hv_input_set_partition_property {
+>      uint64_t partition_id;
+>      uint32_t property_code; /* enum hv_partition_property_code */
+> @@ -163,6 +173,191 @@ union hv_partition_synthetic_processor_features {
+>      };
+>  };
+>  
+> +union hv_partition_processor_xsave_features {
+> +    struct {
+> +        uint64_t xsave_support:1;
+> +        uint64_t xsaveopt_support:1;
+> +        uint64_t avx_support:1;
+> +        uint64_t avx2_support:1;
+> +        uint64_t fma_support:1;
+> +        uint64_t mpx_support:1;
+> +        uint64_t avx512_support:1;
+> +        uint64_t avx512_dq_support:1;
+> +        uint64_t avx512_cd_support:1;
+> +        uint64_t avx512_bw_support:1;
+> +        uint64_t avx512_vl_support:1;
+> +        uint64_t xsave_comp_support:1;
+> +        uint64_t xsave_supervisor_support:1;
+> +        uint64_t xcr1_support:1;
+> +        uint64_t avx512_bitalg_support:1;
+> +        uint64_t avx512_i_fma_support:1;
+> +        uint64_t avx512_v_bmi_support:1;
+> +        uint64_t avx512_v_bmi2_support:1;
+> +        uint64_t avx512_vnni_support:1;
+> +        uint64_t gfni_support:1;
+> +        uint64_t vaes_support:1;
+> +        uint64_t avx512_v_popcntdq_support:1;
+> +        uint64_t vpclmulqdq_support:1;
+> +        uint64_t avx512_bf16_support:1;
+> +        uint64_t avx512_vp2_intersect_support:1;
+> +        uint64_t avx512_fp16_support:1;
+> +        uint64_t xfd_support:1;
+> +        uint64_t amx_tile_support:1;
+> +        uint64_t amx_bf16_support:1;
+> +        uint64_t amx_int8_support:1;
+> +        uint64_t avx_vnni_support:1;
+> +        uint64_t avx_ifma_support:1;
+> +        uint64_t avx_ne_convert_support:1;
+> +        uint64_t avx_vnni_int8_support:1;
+> +        uint64_t avx_vnni_int16_support:1;
+> +        uint64_t avx10_1_256_support:1;
+> +        uint64_t avx10_1_512_support:1;
+> +        uint64_t amx_fp16_support:1;
+> +        uint64_t reserved1:26;
+> +    };
+> +    uint64_t as_uint64;
+> +};
+> +
+> +#define HV_PARTITION_PROCESSOR_FEATURES_BANKS 2
+> +#define HV_PARTITION_PROCESSOR_FEATURES_RESERVEDBANK1_BITFIELD_COUNT 4
+> +
+> +
+> +union hv_partition_processor_features {
+> +    uint64_t as_uint64[HV_PARTITION_PROCESSOR_FEATURES_BANKS];
+> +    struct {
+> +        uint64_t sse3_support:1;
 
-* Looks okay.
-Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+Do you mind adding the arm fields as well here?
 
-Thank you.
----
-  - Prasad
-
+> +        uint64_t lahf_sahf_support:1;
+> +        uint64_t ssse3_support:1;
+> +        uint64_t sse4_1_support:1;
+> +        uint64_t sse4_2_support:1;
+> +        uint64_t sse4a_support:1;
+> +        uint64_t xop_support:1;
+> +        uint64_t pop_cnt_support:1;
+> +        uint64_t cmpxchg16b_support:1;
+> +        uint64_t altmovcr8_support:1;
+> +        uint64_t lzcnt_support:1;
+> +        uint64_t mis_align_sse_support:1;
+> +        uint64_t mmx_ext_support:1;
+> +        uint64_t amd3dnow_support:1;
+> +        uint64_t extended_amd3dnow_support:1;
+> +        uint64_t page_1gb_support:1;
+> +        uint64_t aes_support:1;
+> +        uint64_t pclmulqdq_support:1;
+> +        uint64_t pcid_support:1;
+> +        uint64_t fma4_support:1;
+> +        uint64_t f16c_support:1;
+> +        uint64_t rd_rand_support:1;
+> +        uint64_t rd_wr_fs_gs_support:1;
+> +        uint64_t smep_support:1;
+> +        uint64_t enhanced_fast_string_support:1;
+> +        uint64_t bmi1_support:1;
+> +        uint64_t bmi2_support:1;
+> +        uint64_t hle_support_deprecated:1;
+> +        uint64_t rtm_support_deprecated:1;
+> +        uint64_t movbe_support:1;
+> +        uint64_t npiep1_support:1;
+> +        uint64_t dep_x87_fpu_save_support:1;
+> +        uint64_t rd_seed_support:1;
+> +        uint64_t adx_support:1;
+> +        uint64_t intel_prefetch_support:1;
+> +        uint64_t smap_support:1;
+> +        uint64_t hle_support:1;
+> +        uint64_t rtm_support:1;
+> +        uint64_t rdtscp_support:1;
+> +        uint64_t clflushopt_support:1;
+> +        uint64_t clwb_support:1;
+> +        uint64_t sha_support:1;
+> +        uint64_t x87_pointers_saved_support:1;
+> +        uint64_t invpcid_support:1;
+> +        uint64_t ibrs_support:1;
+> +        uint64_t stibp_support:1;
+> +        uint64_t ibpb_support:1;
+> +        uint64_t unrestricted_guest_support:1;
+> +        uint64_t mdd_support:1;
+> +        uint64_t fast_short_rep_mov_support:1;
+> +        uint64_t l1dcache_flush_support:1;
+> +        uint64_t rdcl_no_support:1;
+> +        uint64_t ibrs_all_support:1;
+> +        uint64_t skip_l1df_support:1;
+> +        uint64_t ssb_no_support:1;
+> +        uint64_t rsb_a_no_support:1;
+> +        uint64_t virt_spec_ctrl_support:1;
+> +        uint64_t rd_pid_support:1;
+> +        uint64_t umip_support:1;
+> +        uint64_t mbs_no_support:1;
+> +        uint64_t mb_clear_support:1;
+> +        uint64_t taa_no_support:1;
+> +        uint64_t tsx_ctrl_support:1;
+> +        uint64_t reserved_bank0:1;
+> +
+> +        /* N.B. Begin bank 1 processor features. */
+> +        uint64_t a_count_m_count_support:1;
+> +        uint64_t tsc_invariant_support:1;
+> +        uint64_t cl_zero_support:1;
+> +        uint64_t rdpru_support:1;
+> +        uint64_t la57_support:1;
+> +        uint64_t mbec_support:1;
+> +        uint64_t nested_virt_support:1;
+> +        uint64_t psfd_support:1;
+> +        uint64_t cet_ss_support:1;
+> +        uint64_t cet_ibt_support:1;
+> +        uint64_t vmx_exception_inject_support:1;
+> +        uint64_t enqcmd_support:1;
+> +        uint64_t umwait_tpause_support:1;
+> +        uint64_t movdiri_support:1;
+> +        uint64_t movdir64b_support:1;
+> +        uint64_t cldemote_support:1;
+> +        uint64_t serialize_support:1;
+> +        uint64_t tsc_deadline_tmr_support:1;
+> +        uint64_t tsc_adjust_support:1;
+> +        uint64_t fzl_rep_movsb:1;
+> +        uint64_t fs_rep_stosb:1;
+> +        uint64_t fs_rep_cmpsb:1;
+> +        uint64_t tsx_ld_trk_support:1;
+> +        uint64_t vmx_ins_outs_exit_info_support:1;
+> +        uint64_t hlat_support:1;
+> +        uint64_t sbdr_ssdp_no_support:1;
+> +        uint64_t fbsdp_no_support:1;
+> +        uint64_t psdp_no_support:1;
+> +        uint64_t fb_clear_support:1;
+> +        uint64_t btc_no_support:1;
+> +        uint64_t ibpb_rsb_flush_support:1;
+> +        uint64_t stibp_always_on_support:1;
+> +        uint64_t perf_global_ctrl_support:1;
+> +        uint64_t npt_execute_only_support:1;
+> +        uint64_t npt_ad_flags_support:1;
+> +        uint64_t npt1_gb_page_support:1;
+> +        uint64_t amd_processor_topology_node_id_support:1;
+> +        uint64_t local_machine_check_support:1;
+> +        uint64_t extended_topology_leaf_fp256_amd_support:1;
+> +        uint64_t gds_no_support:1;
+> +        uint64_t cmpccxadd_support:1;
+> +        uint64_t tsc_aux_virtualization_support:1;
+> +        uint64_t rmp_query_support:1;
+> +        uint64_t bhi_no_support:1;
+> +        uint64_t bhi_dis_support:1;
+> +        uint64_t prefetch_i_support:1;
+> +        uint64_t sha512_support:1;
+> +        uint64_t mitigation_ctrl_support:1;
+> +        uint64_t rfds_no_support:1;
+> +        uint64_t rfds_clear_support:1;
+> +        uint64_t sm3_support:1;
+> +        uint64_t sm4_support:1;
+> +        uint64_t secure_avic_support:1;
+> +        uint64_t guest_intercept_ctrl_support:1;
+> +        uint64_t sbpb_supported:1;
+> +        uint64_t ibpb_br_type_supported:1;
+> +        uint64_t srso_no_supported:1;
+> +        uint64_t srso_user_kernel_no_supported:1;
+> +        uint64_t vrew_clear_supported:1;
+> +        uint64_t tsa_l1_no_supported:1;
+> +        uint64_t tsa_sq_no_supported:1;
+> +        uint64_t lass_support:1;
+> +        uint64_t idle_hlt_intercept_support:1;
+> +        uint64_t msr_list_support:1;
+> +    };
+> +};
+> +
+>  enum hv_translate_gva_result_code {
+>      HV_TRANSLATE_GVA_SUCCESS                    = 0,
+>  
+> -- 
+> 2.34.1
+> 
+> 
 
