@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A36FED2C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:33:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 926F0FED2C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:33:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Xis-0004V0-3q; Thu, 12 Mar 2026 00:32:34 -0400
+	id 1w0Xj2-0004WN-HS; Thu, 12 Mar 2026 00:32:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xio-0004Ub-H7
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:30 -0400
-Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
+ id 1w0Xiy-0004W2-G8
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:41 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xim-00043n-Sv
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:30 -0400
-Received: by mail-pl1-x62e.google.com with SMTP id
- d9443c01a7336-2ab46931cf1so13509465ad.0
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:32:28 -0700 (PDT)
+ id 1w0Xiv-0004BH-4N
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:39 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2ae4e538abdso7286795ad.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:32:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773289947; x=1773894747; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773289955; x=1773894755; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NziXTQ1sf7fWxugAcH7uSw0+8ApDkk8bxbN24KNdpBI=;
- b=TPtvEI4eYPcNP2Ouv5ydhtnV5/C8gqw6eDwtsn+gG0ECI4rwuVFdlphF6Y3Ku6279G
- 8KFw7xdE1auu/wV+ZqLLp1j2CHF6hTsQxzpw/LUFGWBYAYf+J+eox4nO9Vlr1OPOBnyy
- XPudJlXSDDEjK8w4gTcLg0kyj9s3b0t1gVbKHMol8YMYtmkIpN/+xPZyTQRxE+R1URRc
- MbcYh8IJPOHW0YJt62SSl44ZuV7BRRdmLYYQ9MigDmBtshCodOdjbCHm9hlZwEbKt76t
- oPrUu+Q7pwpQbWYHranUtP/jLd90KmORjo0Yz03GJXVeHTtCdlKBLNKPnUo6knYf8JpL
- wEyA==
+ bh=aocj2Vj5R7UmvfH1Q0atiy67oG5ncEAshxWbQyPErH0=;
+ b=Ye1iQBumYjLqflJBok9+2h/RlBfunZpn8ZRhBakDKH6SZpu4kjihpZf0fyuukveeD0
+ tDFIuSakP4lr6c2OGnvQFX8DIsd2JjGU6GcVmusVDCVWBbGM4lRaf86qRXGdgPtMesw+
+ E9YljSw372K47U7E1kuLI0YLhKO9B7vnwwtGmXhpz7hEh/iZqUDEWDccOiOd+WxgBt9J
+ 0b3NuNnRrhVA4C/UtsTS1emluxUAr1CchrpwDej0DTtYejWj0aHStsT6Q22MYBByY6mU
+ 3JPD9QsxNPl6ZXKsHGI3+8ibqBXy7TwHBLz9rH0AJChIqvblOVFLza7j5/5+tBvB1p+l
+ M2Ew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773289947; x=1773894747;
+ d=1e100.net; s=20230601; t=1773289955; x=1773894755;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NziXTQ1sf7fWxugAcH7uSw0+8ApDkk8bxbN24KNdpBI=;
- b=N/bVvH5w1R2hEVYsruT8gQujP9jS3XAOnxg7Ag0qU+OnJdB9uaa8e8mb0Imc5fEQCp
- b88y8+mX9Adhef8qtW+y1yjG6cQQkOacDzzPQy2CIbhF2LMdU9N2KdowYvv76Hpqc2NY
- 6RE+yYRt7Fkr9MF1RT+cVygUl6ptdBgogeWCUUkWZ3HLrkUHXVsRhDkveGmKGzZWz9qW
- s7TLOHY34n88HtZz3Vi4LSywSUCpUMLnq4MCuZx7muDSQoRGdq2WPaScYIYshmjLhxxN
- DNRW9TH7rX2UiXnBIxjhq2+tPSJYAC3Bkb3zRt+MpztKOESO1L6pCKFv41VHcd3RdHeX
- ZvHQ==
-X-Gm-Message-State: AOJu0YwdH3sJ2XXgU1t/jy62yt4HG1nJfmriRroq5lym92R3FoMtanId
- KetMw/ygVs/w5RYlEkh3/pp5mIF37rvlDDOcOK0xe2/+HVkgjlTzGlH90Nx2MXVd
-X-Gm-Gg: ATEYQzxNka+LX25yXEyoBu7oeHeUFfv7qmKI7N2ueZr/r+ZnmG/NDhPoJJ+HC7OLIPn
- neh89HEpqpXImWR8WsW0SvfW2T6iKXNpSCPM6Fn3bNmAZdHj6cEUo2phm34WuYzNETz8TT+nHAm
- BY0eMMpIBbpePrVqD61TxQ/J0Oh7VN6fyFYzXObH0u/cEWG+ABF+nFMlMxu9E1ERRl2m1TAoUl4
- JxtIHH5mzm25UIdBP/KyPEj7XtyKR85aQY58FpmF2W3ahvvUVA8xUle045PsCDOH6zkn5WR50l8
- snFxNeN3IC6zMJg9gXvGZO/heNHINyPOKbZKi765HY2TM7mKiSE3pGkDk8TG2NhG3OBEYPq9tDD
- U3/sBYJS37ofzu+qKD8H2mQ39KEy3csHFP8KmGF6tmbIbn7ZVTtiFFMWkE50P3zSUVAYSdg+Zdl
- 9cabdsxpZ4H5sp125l13UWBYcw0vWwIs1vzQzdtjowvQ==
-X-Received: by 2002:a17:903:32cc:b0:2ad:b213:feba with SMTP id
- d9443c01a7336-2aeba4416d2mr18412685ad.5.1773289947113; 
- Wed, 11 Mar 2026 21:32:27 -0700 (PDT)
+ bh=aocj2Vj5R7UmvfH1Q0atiy67oG5ncEAshxWbQyPErH0=;
+ b=KRK2EXQNHjPu4YtRi/t0379GhskAMRqoSc+pmaw5iteKoU2tP4IFXwmnd5dD7UezJE
+ exC3c5yYQG9A8lWXNGVJ/2r1dZHbsJAKAMm8S3CZ59ovkwXsuIoNRNw4PxAm2cGJgrdp
+ K9Ok8SQQOHA9SkSn6J+pzrBTZki2RAR+PnCNb/lyuhwsUdW2fTaT7ou/Ve8YHj96+gC7
+ lSZaH1Ts6kUw7oUhwSsskbjUhjeDhDwij12vD1E2vdFuaLpYXh275Cr+ZeFhtbq3h7Cs
+ 1ae6WbATTpwP0q+FYqH/Ppjz5TsmZBC1RFc+kqetLuJTv84VJe9mSV98DTzKmCu2dRxT
+ 5k1g==
+X-Gm-Message-State: AOJu0YzhMkq8IESuKeN+gGNt83hwp2P5qdsdFw58GHt8puOEk1CsdY3H
+ GuM9rntZF3vvVDNUzOKWuAW5cbvqwcYq3g2lND27sQWykNtVOfl6RAsEO25w4t13
+X-Gm-Gg: ATEYQzyXV95Vtg1maHBeDxRViFqY9JmCD3rdX+uoIKWgRfIpOPbJcJzHkkU6ar3UO7x
+ JKAGL0h9kcMthbdymTpnQRjheFujgBw7VFQwWgM+wa0Y8Xrz7DzY+n/FiKBWB3hQeV8+pPRgskY
+ YxsamR+HUp/Kc4lHx6Wndk+kQWI5P/ngFl+y2nsstmtQJ+slzqZfwsg7sX0GF/AxZ54Dkuhcpu9
+ LhHQUGdtqr5MeW6wzh3wOr8xV4Y3wyWjTFd10QGpHkVPGqezEjPY2xlligu96uBE3G3k14PoAye
+ jHJ2tM01/E5SVZLqfYCbp0z/cAPeeckvXQFWP3yoB+KcqcM04QwdM2n0cTXJjasH61dJcbYDV6F
+ FNyXMba7UoOFaJZQ9M53EVAt8hYSn2lar0tn3AdRpDSXaMfTtCQyOBjI1W6fZ2c8WuMCCkyVUoH
+ wxrwKqKfvwhV1Mqq7pvfyIAo0ZXhEXZuUA5HUFUISFUQ==
+X-Received: by 2002:a17:903:32cd:b0:2ae:aa16:ad09 with SMTP id
+ d9443c01a7336-2aeae7d3ccbmr51238365ad.23.1773289955166; 
+ Wed, 11 Mar 2026 21:32:35 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae222ab6sm54340785ad.10.2026.03.11.21.32.23
+ d9443c01a7336-2aeae222ab6sm54340785ad.10.2026.03.11.21.32.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 21:32:26 -0700 (PDT)
+ Wed, 11 Mar 2026 21:32:34 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org, armbru@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com, peterx@redhat.com, philmd@linaro.org
 Cc: alistair23@gmail.com,
 	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 4/7] hw/arm: fsl-imx7: Don't call qdev_get_machine in soc init
-Date: Thu, 12 Mar 2026 14:31:55 +1000
-Message-ID: <20260312043158.4191378-5-alistair.francis@wdc.com>
+Subject: [PATCH 6/7] hw/arm: fsl-imx6: Don't call qdev_get_machine in soc init
+Date: Thu, 12 Mar 2026 14:31:57 +1000
+Message-ID: <20260312043158.4191378-7-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312043158.4191378-1-alistair.francis@wdc.com>
 References: <20260312043158.4191378-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -112,7 +112,7 @@ the following assert
 
 when trying to run
 
-    ./qemu-system-aarch64 -S -display none -M virt -device fsl-imx7,help
+    ./qemu-system-aarch64 -S -display none -M virt -device fsl-imx6,help
 
 as the machine wasn't created yet. We call qdev_get_machine() to obtain
 the number of CPUs in the machine. So instead of initialising the CPUs in
@@ -121,50 +121,52 @@ will exist.
 
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/arm/fsl-imx7.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ hw/arm/fsl-imx6.c | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
 
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index 9a230d222f..2defa498d3 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -32,20 +32,10 @@
+diff --git a/hw/arm/fsl-imx6.c b/hw/arm/fsl-imx6.c
+index 39667c4a49..f663ddbf0a 100644
+--- a/hw/arm/fsl-imx6.c
++++ b/hw/arm/fsl-imx6.c
+@@ -38,17 +38,10 @@
  
- static void fsl_imx7_init(Object *obj)
+ static void fsl_imx6_init(Object *obj)
  {
 -    MachineState *ms = MACHINE(qdev_get_machine());
-     FslIMX7State *s = FSL_IMX7(obj);
+     FslIMX6State *s = FSL_IMX6(obj);
      char name[NAME_SIZE];
      int i;
  
--    /*
--     * CPUs
--     */
--    for (i = 0; i < MIN(ms->smp.cpus, FSL_IMX7_NUM_CPUS); i++) {
+-    for (i = 0; i < MIN(ms->smp.cpus, FSL_IMX6_NUM_CPUS); i++) {
 -        snprintf(name, NAME_SIZE, "cpu%d", i);
 -        object_initialize_child(obj, name, &s->cpu[i],
--                                ARM_CPU_TYPE_NAME("cortex-a7"));
+-                                ARM_CPU_TYPE_NAME("cortex-a9"));
 -    }
 -
-     /*
-      * A7MPCORE
-      */
-@@ -179,6 +169,15 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+     object_initialize_child(obj, "a9mpcore", &s->a9mpcore, TYPE_A9MPCORE_PRIV);
+ 
+     object_initialize_child(obj, "ccm", &s->ccm, TYPE_IMX6_CCM);
+@@ -119,6 +112,7 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
+     unsigned int smp_cpus = ms->smp.cpus;
+     DeviceState *mpcore = DEVICE(&s->a9mpcore);
+     DeviceState *gic;
++    char name[NAME_SIZE];
+ 
+     if (smp_cpus > FSL_IMX6_NUM_CPUS) {
+         error_setg(errp, "%s: Only %d CPUs are supported (%d requested)",
+@@ -126,6 +120,12 @@ static void fsl_imx6_realize(DeviceState *dev, Error **errp)
          return;
      }
  
-+    /*
-+     * CPUs
-+     */
 +    for (i = 0; i < smp_cpus; i++) {
 +        snprintf(name, NAME_SIZE, "cpu%d", i);
 +        object_initialize_child(OBJECT(dev), name, &s->cpu[i],
-+                                ARM_CPU_TYPE_NAME("cortex-a7"));
++                                ARM_CPU_TYPE_NAME("cortex-a9"));
 +    }
 +
-     /*
-      * CPUs
-      */
+     for (i = 0; i < smp_cpus; i++) {
+ 
+         /* On uniprocessor, the CBAR is set to 0 */
 -- 
 2.53.0
 
