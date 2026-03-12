@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F048BFED2C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52F4DFED2CA
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:33:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Xii-0004U1-KJ; Thu, 12 Mar 2026 00:32:24 -0400
+	id 1w0Xj4-0004Wr-4b; Thu, 12 Mar 2026 00:32:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xig-0004Ta-ST
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:22 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ id 1w0Xj2-0004WY-KI
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:44 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xif-00042n-7V
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:22 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ae50a33ff8so4837515ad.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:32:20 -0700 (PDT)
+ id 1w0Xiz-0004HS-Hj
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:43 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2ab232cc803so3205205ad.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:32:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773289939; x=1773894739; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773289959; x=1773894759; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=S5bWYpDFMhGnOIHvbiRtGBp6ev0UQZkezNXRRwkOVA0=;
- b=ZTep3PSPcxvTlHjztedWKx8epejjnU2dEmSNDZXiYIn2vpQF9D4V8m11OX3OpDq88p
- /qaEHQ8/u6BxwJPw02hixlIXXb0FjUHiVW9PYJNkPiXTohVOOUUKJcQNW8GBejWIWZtK
- AXHqKv4apbW7+ahH8JkDd9+/smArWJbG3t08IvcAN5XgLm/96AZttTL+iEpqfQ0TYV2o
- gQYfIYcWM4D2EmZnZZvi5dT431HY4EYZ+rY99gj4cm29M2yH57q4N9A7jsY+s/paL0b2
- Gw7aWgnTBMaS1X+ejPR2P00iWtIoo7MHVG1CoWEMB3TgWXpykNCZh0GXdEAvHTcg3qOt
- phOA==
+ bh=cHbr4hEjoQMVlYqOZABZzmZC8L2t+s/8o2sZGPYPLgA=;
+ b=Zv0LoBpFe4D6cwTXQBISwDJWLG+AxuThf5nbn1HKRSLDf0Eile63U+CwVvRl08P5Oj
+ 22QAqZhigoMTMOXKr4DebjbYvS/ZuAb1kEgcefOBtR0Ian83YLsXZFxR1KRTGp687y2Y
+ 2vC/Wlq170ktu9r9+hGknYWS796CRHn0WH5OGZ2s8NDHud50NBPOxcGOkuGBTUKkGHi+
+ 8V5ZS4EsN+H+K6OC2YuNwE/LdhIXBXc8I9CtGFO3cK+x5PgZ0kUdzxxZswwGeNsNq5dp
+ DyBwT88W7XjC/WC2ewFurUjGQ7i+C5GEOGDy08S1qWdKfzZu3puVQh4QRJMJtY3pimU/
+ IBXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773289939; x=1773894739;
+ d=1e100.net; s=20230601; t=1773289959; x=1773894759;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=S5bWYpDFMhGnOIHvbiRtGBp6ev0UQZkezNXRRwkOVA0=;
- b=tkz9kqdttiXvdZHM1m5ZvfPR15vloTbtZkrjiztgvinDJXm4MI7bTlm5teFSTR0O8v
- 3ASBIugepSMUWhLkI0BGlxtqcwW7+/+ZKYEVq5tbXc0d5Md77qwbe15fPdqWy4FIuywU
- HTngKAVuoLB5JlQFfQ+jAAtk+M6+oZ1lRfRr3qAmFxIjgJPZiZA2M/knW7rIORGBi3Cq
- F2m/m+h/O4bm0aFQHy9k8SdNnp1vrHEyUs+ZIIOpR+pQ7Q3nHMrHQyfVk6yIeMSSDkVC
- wwyKRt+4ztXWf8Oefp/o+JvsQLGcuIPa3T/HfTExRcyEongopOOILNaEvK/MnSy1Hcsf
- 8dgA==
-X-Gm-Message-State: AOJu0YwJk984nI8fonmMSKf5xxtzn4QZfnwoC6FskC1hDsoTMXgma8kl
- xEHVEWC8JePhEfBuN0PBqdZvR6AYgId/S0HckbFnSwhy2NYzqNJhinEsVrOjVXZy
-X-Gm-Gg: ATEYQzw10Q9D0+eAnSwodzSc03HsJp6W1V2eyPA9hutH7ZJm2pOxxFLPVuInKqMJHHS
- jcslSwEn1VQxuGl721m76EspHCrcJR+IOYWpCyc/5boV+9ylpPOQrYyme33Q5LlBrII4xcSolNS
- NumMbFa23EqRpD3oNgfrtsdI+Fj8hgIEz4hKYPYgL9gZ3VLtCvLBK40kavus1yzdURuBUylpXOt
- gkNCvxmnnCRGxgpkoIIssCmzfB6ig8ic5e2j7VrRVGcYwSMTtyMTxO6SK+i6F7Ko7qdk8M9nlD4
- oiuTXKPxxO4LNy6/5OoAfXAvbuLjhzESTpHPfydsOE3w9KxQZlAx68Ckn+lpcupjTZ/EfpTqoXa
- BtnZUGPX3Dju4crkZPIzOQdiV6fmRTMbvmdN+WW2ytLW8IL3uAXllW84gNeZWYsPPgM77B1tn83
- z3TNTh0v+eF334CbWGN33WmHk25pm4O01GJmQCmrHe0w==
-X-Received: by 2002:a17:902:d541:b0:2ae:8077:b1c1 with SMTP id
- d9443c01a7336-2aeae89289dmr46255145ad.30.1773289938823; 
- Wed, 11 Mar 2026 21:32:18 -0700 (PDT)
+ bh=cHbr4hEjoQMVlYqOZABZzmZC8L2t+s/8o2sZGPYPLgA=;
+ b=SfStFUIeBOzgY2cIoUxEwUroID4rn0kpvPSDAWDFdgF9DeEnBvbVvbfS/5a0Jrz7Fy
+ MhFpVyhzido2LuHf3hLp+qhabZ/9VoeA2FS7SyQGjPzoe9Ax1MSYrWU+aDZLfj8w9hve
+ F7TrSzND7vda2ZjRtz3kCv39iJh4Ygafd4O+HeROI2LvltT43eK2Bcv/e3WlVn6BwvAq
+ 4w+n06XsXc28d17OnemMaYmj0VfSXSW5W5dx6okQn8TtptLFSxEagjQj8W+iSq55gjm4
+ cArlgBJaAsWG3fylZOdQGVaqCbPZF9EqST5URbfq2a0CiGE3h+aGY4wB86OCpDiH+SnI
+ MEbw==
+X-Gm-Message-State: AOJu0YzycFJ6PGZ7MfprColBIoSCMiNwG/m1CQIYPV4ui+z1GykoF7xV
+ OCx2YNPc1NCyhvPyBpyapAq0O+EPwuTsv4b6KEQQTzgkgnON42aWAS1xoe7s9SHh
+X-Gm-Gg: ATEYQzxoJXv7DCkMOyDlpOaPUdavmYZneBaVKEOJ3fgHnP93Eg6SpmBTrkKufmUyLU5
+ VQnWPVBnYbvQH+ILVlF090vQaLeVLCOtIJ5jlww5fj4imSCp0wZh2CvtgnTB1PAjL47wgxenRRg
+ 5FdE8fkV8M9RqIv2mFcRIT3NkiaC+1v5W/FiTDV9swMej4TR3yMQ1BNcnBsmOR528/g3K0uCab4
+ B562mtHzcdUyaLF6itubVNM9bdXcjkvrW5aJDkMQFu6buxKy7w+NxXi88D8w5xpyUMiwj+jV4HE
+ naqbxN/WkIeRkaRpH9CCZRYTPY8QM01SctLDG5NNg3HElA59A9PW6zaAqii0UKeTKeXfx/Ayt7Q
+ WYLbeZbCi+KVmn/ciZuqaQRgzfjJ9J9zleEaj5OUGl+nLPNdjWtK2ViemTP6xXuD3DMp9BK5xD8
+ SOxcgypPMIpk1Y3bd1eeKbb7hcrXwtCwIZgZLE9s4oEg==
+X-Received: by 2002:a17:903:2a88:b0:2ae:7f70:b2aa with SMTP id
+ d9443c01a7336-2aeae892fadmr55570035ad.29.1773289959242; 
+ Wed, 11 Mar 2026 21:32:39 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae222ab6sm54340785ad.10.2026.03.11.21.32.15
+ d9443c01a7336-2aeae222ab6sm54340785ad.10.2026.03.11.21.32.35
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 21:32:18 -0700 (PDT)
+ Wed, 11 Mar 2026 21:32:38 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org, armbru@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com, peterx@redhat.com, philmd@linaro.org
 Cc: alistair23@gmail.com,
 	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 2/7] hw/riscv: microchip_pfsoc: Don't call qdev_get_machine in
- soc init
-Date: Thu, 12 Mar 2026 14:31:53 +1000
-Message-ID: <20260312043158.4191378-3-alistair.francis@wdc.com>
+Subject: [PATCH 7/7] hw/acpi: generic_event_device: Don't call
+ qdev_get_machine in soc init
+Date: Thu, 12 Mar 2026 14:31:58 +1000
+Message-ID: <20260312043158.4191378-8-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312043158.4191378-1-alistair.francis@wdc.com>
 References: <20260312043158.4191378-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -113,49 +113,41 @@ the following assert
 
 when trying to run
 
-    ./qemu-system-riscv64 -S -display none -M virt -device microchip.pfsoc,help
+    ./qemu-system-aarch64 -S -display none -M virt -device acpi-ged,help
 
 as the machine wasn't created yet. We call qdev_get_machine() to obtain
-the number of CPUs in the machine. So instead of setting the CPU
-num-harts in the init function let's set it in realise where the machine
+the ram slots of the machine. So instead of initialising the GED in
+the init let's instead do it in the realise where the machine
 will exist.
 
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/riscv/microchip_pfsoc.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ hw/acpi/generic_event_device.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 4ff83e4940..73cc229c54 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -143,7 +143,6 @@ static const MemMapEntry microchip_pfsoc_memmap[] = {
- 
- static void microchip_pfsoc_soc_instance_init(Object *obj)
- {
--    MachineState *ms = MACHINE(qdev_get_machine());
-     MicrochipPFSoCState *s = MICROCHIP_PFSOC(obj);
- 
-     object_initialize_child(obj, "e-cluster", &s->e_cluster, TYPE_CPU_CLUSTER);
-@@ -162,7 +161,9 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
- 
-     object_initialize_child(OBJECT(&s->u_cluster), "u-cpus", &s->u_cpus,
-                             TYPE_RISCV_HART_ARRAY);
--    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
-+    /* Set the `num-harts` property later as the machine is potentially not
-+     * created yet.
-+     */
-     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
-     qdev_prop_set_string(DEVICE(&s->u_cpus), "cpu-type",
-                          TYPE_RISCV_CPU_SIFIVE_U54);
-@@ -204,6 +205,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
+diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+index 30dab43a00..9e9416d406 100644
+--- a/hw/acpi/generic_event_device.c
++++ b/hw/acpi/generic_event_device.c
+@@ -506,6 +506,9 @@ static void acpi_ged_realize(DeviceState *dev, Error **errp)
+     uint32_t ged_events;
      int i;
  
-     sysbus_realize(SYS_BUS_DEVICE(&s->e_cpus), &error_abort);
-+    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
-     sysbus_realize(SYS_BUS_DEVICE(&s->u_cpus), &error_abort);
-     /*
-      * The cluster must be realized after the RISC-V hart array container,
++    acpi_memory_hotplug_init(&s->container_memhp, OBJECT(dev),
++                             &s->memhp_state, 0);
++
+     if (pcihp_state->use_acpi_hotplug_bridge) {
+         s->ged_event_bitmap |= ACPI_GED_PCI_HOTPLUG_EVT;
+     }
+@@ -568,8 +571,6 @@ static void acpi_ged_initfn(Object *obj)
+     memory_region_init(&s->container_memhp, OBJECT(dev), "memhp container",
+                        MEMORY_HOTPLUG_IO_LEN);
+     sysbus_init_mmio(sbd, &s->container_memhp);
+-    acpi_memory_hotplug_init(&s->container_memhp, OBJECT(dev),
+-                             &s->memhp_state, 0);
+ 
+     memory_region_init_io(&ged_st->regs, obj, &ged_regs_ops, ged_st,
+                           TYPE_ACPI_GED "-regs", ACPI_GED_REG_COUNT);
 -- 
 2.53.0
 
