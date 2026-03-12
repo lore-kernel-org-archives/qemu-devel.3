@@ -4,110 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B9E4106ACDF
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:31:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 30D6B106ACE3
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:34:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0lkF-0001q0-0b; Thu, 12 Mar 2026 15:30:55 -0400
+	id 1w0lno-0002mR-Fv; Thu, 12 Mar 2026 15:34:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0lkC-0001pa-NP
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:30:52 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0lkA-0006wA-0C
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:30:52 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64c9a6d7f81so1616877d50.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 12:30:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773343849; cv=none;
- d=google.com; s=arc-20240605;
- b=fiVYlxoXSVfxKrRYWxZrdEL1BJA/enprOy0aoY90yrkdlswL6IsSmD5Aq96IH110Hy
- r2/IoUwTOOw2psvomU3GcIlccLH0eiwMjPfiwxwUZySQmf62VGxABRddBo8neLlRfKm5
- f6PZfGHivBiTAN+vBzWlQs1maOx+jQd5qfXqM6gx/V1YJo3FhAILRG54rad/BImSuDnL
- q1PZI0FsEm1MwCdsSeD8mJoSOk7M29nlxP4s9oX1Mq73ZBKwFhhDrsrILPRaKQ2a7pqb
- nD7OQCdtXVJxv+ruH2RwgO9HTXCdshx+yYTNeSxiS1EnBTP+Rjlfr/B8n5VqvL7Xg1tu
- belg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=TmYYtvHx1q1pG+vHoKsVAiKBnYejRoLKvgnkGpoDk28=;
- fh=QARB9vtaff4mA+bi3Z1G+dpoulBJd/+TeNqhNGHddVw=;
- b=MX6xmiOYfE3XyhD63l0QNzdPtY7XDjK8iYbc8BRjj0kBvpBbC8odyHj/9TK3g1gULR
- yX2t0ov9aYT3KSDlXioiKYDepupru9Igj9q1QpVMN960dsZCKwD3ZMeBWBeSmI/PqgyB
- 2BUEiEszArF+CIlF7zUb2QLbfHdzEjMSHkNpmdaf95pYFVHeoPVmeOrk7P3hJFi7RkTZ
- ITUwqi7CNnrpPiqYLloZb2pzamcyxa2opJd/YGMDK00LdVrBWIYuZXgjOnD+kJmLKln2
- hHz+qRIkdbl2xqm/jAODqZl0xAfbUM1R2amAZ6cdTRTfiTQMiCFfSf828NlbhCISf150
- yjVg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773343849; x=1773948649; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=TmYYtvHx1q1pG+vHoKsVAiKBnYejRoLKvgnkGpoDk28=;
- b=H1oL3PLONgL0pI6hqTNGaxeVEtdOWMyF9ZowWwUCyy5Qz9pyDAntYWb8kuFqebTR3y
- l7/ygNognUG+lpapxWe9ACKr7aIpaVnI0Lf5DHN/p4JDUTmd7YghtC1ASOGDI9zt+8Fy
- BxaiIK3wtmQjqCXaXHCPseNA5Y+ah9ap5kHRJjQYBXI0GPUWb34Uo5NbTu9fOMicfKhw
- 5F8SNtPDFqDAGIe1nR5NdU2JPWLPgCKINNSq8iCcOsufeZYeWQneCyWGAkwweEa4pmKZ
- +vNfeqTHP/RgZa8A4gsWlBCakaqyVskhcMy5xJ4Hl2BQiUdcf/FnfgX4j+J9zKS7C9Kf
- sLrg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773343849; x=1773948649;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=TmYYtvHx1q1pG+vHoKsVAiKBnYejRoLKvgnkGpoDk28=;
- b=lkkhfaepEBXZOgegwIjgWBDKb3JLlAdA6n7t6PGoyQa4xvWrqTPcXhstA5egnkM3/q
- /C73lZfjzIGnfqBhihMkpJtk4aWfeOqYmFKidjaU7LYfz13J2xh8puHuN52L6SW8LRwt
- tGkOJcqPCIC6GcIlqUYzhehVWwuA3qYT5lCfX433uJHqR0VMcOhPfo+jy6T4hYdJHYOB
- 9Y4QvpfZJwGs2JWeBErUWh2NNik3EDiRbS1ClQ9SaTP0YfEGW0nMoeTYLDmLv74SUu5N
- 6Lpe/dNPfUfiUU5d3PpiybJOOv9b5xrSOsA9XMvCCAUryrr0s7j2cqUF7kfuw432BBnG
- D3iA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWI163eVI4hnc5LeUa6GayLDHMlWja7ATxPR9vKsmWWaG2SshtmyapWB1gy4P7FcFNnmgdH889Yy45k@nongnu.org
-X-Gm-Message-State: AOJu0YwT3MED/fKKnyB4nvf5SSL8rOa5R3MNMMUifVcXde0OLPXqUajh
- eBvwvdFnlp5eYSbENB4eEtzLUTWG8QSoL0WU6FUxhHAF4x+dVJEG+m8jh3SWyNQaKICIJspHo1/
- OdkOpa/+1Tfe0DUmo2+t4Vaui1BVA285mb53jKb9Y8w==
-X-Gm-Gg: ATEYQzzuAI8hk3Yd5la+MSoQnGxjmwO4i/XhTQGf2h0/4SYkFPM7487qNJNS+fTqFsN
- /lGEUguxSzgETeDviMN0j3k2CXXfZX9GuaXetjTF6sXvRsJ7aB7n1jKpXiiY9u7+6F5ZvrehzcW
- yo7ZcM10eX7O89c9DhAUETatr9V5xNEbUg3pW2sA7EiXXopxtNbEo7duGoZv058jUE9Mr+qQK+g
- IP9HxhfXW+Nr/Hpxvzrnn5ZCQQZyJ7SDJA6QjBFusflZ0/fgHm5ASgxjdScG2qO82vg6gHv4pby
- EP7c6iB80UzOxVJqPCnnoDSr2PVrRFpJ2+DjFy6tDF4iPZt0xOIEVRC2UmOQmpiU7vojgtoLtyj
- K0g==
-X-Received: by 2002:a05:690e:23c4:b0:64a:fe95:2ba7 with SMTP id
- 956f58d0204a3-64e62fa66bfmr648295d50.31.1773343848639; Thu, 12 Mar 2026
- 12:30:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0lnm-0002lp-9U; Thu, 12 Mar 2026 15:34:34 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w0lnj-0008SQ-LJ; Thu, 12 Mar 2026 15:34:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773344020; bh=nXYseAQ0eGmv+PcwbudRi49ST/C/cx15DZCkqjSn658=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=g22kAYpXc4GIErCgM63vmivNZRdlLBTh7yBwvvIFE5znIxPo5Siuc1uwOZ8fM0RCa
+ cUWHwLK8fOLaZh+rkYEg2zMrgQcFEB2VcKj80rN2es/k93eQrXF2+zwerluFCzwP0O
+ X6zhaKZ08S2XN8dYwAqpxLTsAncRmNTI1RgtuZiQ99H7LNNvUxjLOphWzhKZo01ZOr
+ Xls8IP++4NZZOFxIqEogb3n716RUSHhB58cOtby87+I9GToGfJ+edyYn+xifv8Dml3
+ wsyDA8McINR2PB8oyyP2XMm5nOzJkFZsUUb5zcF2zqrLF/Z22pPsb/VZhvP5/AcQv1
+ vSJGEvlNm8PKg==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 98C5D1927E3;
+ Thu, 12 Mar 2026 22:33:40 +0300 (MSK)
+Message-ID: <e653dfe8-f522-4978-a4cf-953b14b8eb87@tls.msk.ru>
+Date: Thu, 12 Mar 2026 22:34:20 +0300
 MIME-Version: 1.0
-References: <20260311-semihosting-cpu-tswap-v3-0-8e239575ec08@eonerc.rwth-aachen.de>
- <20260311-semihosting-cpu-tswap-v3-2-8e239575ec08@eonerc.rwth-aachen.de>
- <bde55593-a51d-421c-bfa5-4a0c774f4b61@linaro.org>
-In-Reply-To: <bde55593-a51d-421c-bfa5-4a0c774f4b61@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 19:30:37 +0000
-X-Gm-Features: AaiRm51_ml_r9NlgX2xNipfQTV4EdFwhN3jm6qD8WLc1p5F5VS1gltPGD-WvXIc
-Message-ID: <CAFEAcA_Qvo86Ek2W7xGQqGP94400c7wx-C0=zpBUF5NoM2jhfQ@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] include/exec: Provide the cpu_internal_tswap()
- functions
-To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Cc: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>, 
- qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hyperv/syndbg: check length returned by
+ cpu_physical_memory_map() [Fixes: CVE-2026-3842]
+To: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org
+Cc: mcascell@redhat.com, security@1seal.org,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260309190155.80619-1-pbonzini@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260309190155.80619-1-pbonzini@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,27 +113,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 at 19:29, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 11/3/26 17:27, Martin Kr=C3=B6ning wrote:
-> > These functions are needed to support semihosting on CPUs that support
-> > runtime-configurable endianness. They should not be used in other conte=
-xts.
->
-> Another note is these function are not target-specific, which is great!
->
-> These can also be used outside of semihosting.
->
-> Matter of taste I'd have named them using this shorter pattern:
->
-> cpu_internal_tswap16() -> tswap16_cpu()
+On 09.03.2026 22:01, Paolo Bonzini wrote:
+> If cpu_physical_memory_map() returns a length shorter than the one
+> that was passed into the function, writing the full out_len bytes
+> causes an access beyond the memory allocated to the guest; or in
+> the case of the MMIO bounce buffer, an out-of-bounds access in a
+> heap-allocated object.
+> 
+> Add a check similar to the one already in handle_send_msg(),
+> and take the occasion to remove repeated computations of
+> recv_byte_count + UDP_PKT_HEADER_SIZE and clarify that the
+> code does not write past out_len bytes.
+> 
+> Reported-by: Oleh Konko <https://github.com/1seal>
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 
-We specifically didn't want to use a name that might tempt
-people to use them -- these are only wanted for the very
-few niche use cases that are outside the CPU but need to
-know information about the CPU's internals, which is basically
-legacy-virtio and semihosting.
+I'm picking this up for qemu stable series.
+Please let me know if I shouldn't :)
 
--- PMM
+Thanks,
+
+/mjt
 
