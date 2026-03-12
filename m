@@ -4,64 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A0F53FED2C3
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 03:32:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488AEFED2C3
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 03:32:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Wlv-000731-OB; Wed, 11 Mar 2026 23:31:39 -0400
+	id 1w0Wma-0007Fg-Sc; Wed, 11 Mar 2026 23:32:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1w0Wlm-00072l-64; Wed, 11 Mar 2026 23:31:30 -0400
-Received: from mxhk.zte.com.cn ([160.30.148.35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1w0Wlh-000635-Va; Wed, 11 Mar 2026 23:31:29 -0400
-Received: from mse-fl1.zte.com.cn (unknown [10.5.228.132])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4fWY7G14B9z7QYS7;
- Thu, 12 Mar 2026 11:31:22 +0800 (CST)
-Received: from xaxapp01.zte.com.cn ([10.88.99.176])
- by mse-fl1.zte.com.cn with SMTP id 62C3VGBa030435;
- Thu, 12 Mar 2026 11:31:16 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp01[null]) by mapi (Zmail) with MAPI id mid32;
- Thu, 12 Mar 2026 11:31:16 +0800 (CST)
-X-Zmail-TransId: 2af969b23384c35-69b27
-X-Mailer: Zmail v1.0
-Message-ID: <20260312113116862hj09dOlNxa3pdNvL3wnmm@zte.com.cn>
-In-Reply-To: <20260312112336983jY95IEDTtzVrPbyk-taP3@zte.com.cn>
-References: 20260312112336983jY95IEDTtzVrPbyk-taP3@zte.com.cn
-Date: Thu, 12 Mar 2026 11:31:16 +0800 (CST)
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <palmer@dabbelt.com>, <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
- <peterx@redhat.com>, <farosas@suse.de>, <chao.liu.zevorn@gmail.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, <liu.xuemei1@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIHYzIDMvM10gaHcvaW50Yy9pbXNpYzogQWRkIGluLWtlcm5lbCBpbXNpYyBzYXZlIGFuZCByZXN0b3JlIGZ1bmN0aW9u?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl1.zte.com.cn 62C3VGBa030435
-X-TLS: YES
-X-SPF-DOMAIN: zte.com.cn
-X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
-X-SPF: None
-X-SOURCE-IP: 10.5.228.132 unknown Thu, 12 Mar 2026 11:31:22 +0800
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 69B2338A.000/4fWY7G14B9z7QYS7
-Received-SPF: pass client-ip=160.30.148.35;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1w0WmZ-0007C8-Ca
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 23:32:19 -0400
+Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <frank.chang@sifive.com>)
+ id 1w0WmX-000662-NA
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 23:32:19 -0400
+Received: by mail-wm1-x32a.google.com with SMTP id
+ 5b1f17b1804b1-485345e1013so12290295e9.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 20:32:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=sifive.com; s=google; t=1773286334; x=1773891134; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=RMshlMcP2B9t2iIitFYTdKOtZlH5dtNUNX5rxIofpRU=;
+ b=Z4A64uAlNsH1z4IHpUpJZMlV9lR0Iu7gqx9ct6iOfXjVTT/2ZI3/hKwdjyelzWIZ8Q
+ Wu7e8KHOIHhM9p9f1DBKZZ2idjzQyycpTDDb4TdKD//jI6524ZBo/LkOvkze+G32f1ab
+ gxUlQKJB4dXjQ58PW+TzXyXkR2YIra32gtqmCxOECzQMS4PKr9j+c5o/gUw4XQKZAAck
+ 3u6Fr+5rXcMIVBtYnBkjBNbuDObXTrNHGRvQJFb23+gqvuzKZwj3j1foRYWIonNjijpm
+ je4ozE0ZtGgzHLltjhsEH2ZxHLODF3tkjCrVUrKzyMzRipo07rcLH72bmhloZrX9b3qc
+ f+dQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773286334; x=1773891134;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RMshlMcP2B9t2iIitFYTdKOtZlH5dtNUNX5rxIofpRU=;
+ b=HjeUl8w2AdgqTz6HwG/yXxa/Q+UKlT3zhZTSUGeJrSIrl1Tl3cFu/nhcbjdpB5YgfM
+ YGXVgw4rOvegr98fhMoQkMqwN+PwOtezChdZWJFsjfynkNwW03SWSz5Jf67trPfYFyKG
+ mVPXhmk68V2+Q9aWAhhVVI88/UZM3eBQnnZBvAB9bD32E6HeqiL+Vdag5DC72IoSZoG6
+ L27HCGy5Fl9xxXIEObgUifBRh+c+vAlI3QWo1Rt62/1PBKdABhtbmG4TTuJk7p8x7W2p
+ OQoYFKOXojbIgw5v+FMyr/afS1OqV2XctFd/fI6DKEVJ91sC6kZ5qwiJCJHmjlzREDj8
+ XaxQ==
+X-Gm-Message-State: AOJu0YwzQXongCdr+VlkN7ps9rn1IG/5kI0OIOMi88oXrMlyl02iQwfP
+ 3r+PDb41jCz1YlXvV/sa54cd1WhYGIuFe9YinAUfkBLlfwZJG2hq0DRtDG7z3zwTIWPIOtTesBc
+ D70j7Ds5124sKYR/abD6xGpaZ7wPaFulz3S31POW/fpH/J9HqB/W2+25TrWtRAZINXDd/JtLnxo
+ mvSAsk4fE5RuCeod1AP6amzPCh8jlUv44vDlYEQtP2eQJzQg==
+X-Gm-Gg: ATEYQzwmfJVmQHPAZAhkiFa9/rKCyqIrA/QzsbJNo9zlwGrisZvRBd02SPNNOR4R79M
+ HFt8R4gT8xANVGN6UqpffClwOh2TO7hIzor1GmvKJQpsV0dCXi4Fmzx3nLDobMZtDsvBAOqFOdK
+ iHdSAJt8mhLuFhE6usnR1Ba5uQF0kTcgXEVqmkx6XWimynudcmuUT4DQbhHawp7ESDnPual/HR8
+ WsEZ2p5lF2R7PDI/BDRSJZvjRm5uBj0v1xtj7Itky6FQ8+4nI/fsGi1nYaIhoZ0xOEtteiFJ7yZ
+ f3ygEv/UyJuU75cwD9jfbfTLNIkFDayqTyS9o+I1rHSPDQzdV5fDByEUsg2kZ0TDmw4qCti9AVt
+ SqSzICiTf34ntbSUeR1LvFBzr/b++pSkqXXQnjKocf/S8G8bUOwOJm1lEao6Lol1mlQlmID0oMs
+ zFq00Ig+uLEfSHnUb6YaKu4AiawhIjEj7/QxDguBwXWRIOPK7bdQ==
+X-Received: by 2002:a05:600c:3583:b0:47e:e59c:67c5 with SMTP id
+ 5b1f17b1804b1-4854f583c9dmr33510155e9.8.1773286333748; 
+ Wed, 11 Mar 2026 20:32:13 -0700 (PDT)
+Received: from hsinchu16.internal.sifive.com ([210.176.154.34])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4854b5f6bb4sm94807735e9.4.2026.03.11.20.32.10
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 11 Mar 2026 20:32:13 -0700 (PDT)
+From: frank.chang@sifive.com
+To: qemu-devel@nongnu.org
+Cc: Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-riscv@nongnu.org (open list:SiFive Machines),
+ Frank Chang <frank.chang@sifive.com>
+Subject: [PATCH v3 0/4] Fix SiFive UART spurious IRQ issue and misc updates
+Date: Thu, 12 Mar 2026 11:31:57 +0800
+Message-ID: <20260312033201.1619554-1-frank.chang@sifive.com>
+X-Mailer: git-send-email 2.43.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
+ envelope-from=frank.chang@sifive.com; helo=mail-wm1-x32a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,274 +103,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+From: Frank Chang <frank.chang@sifive.com>
 
-Add save and restore funtction if kvm_irqchip_in_kernel() return
-true, it is to get and set IMSIC irqchip state from KVM kernel.
+This patch series fixes the spurious IRQ issue in the SiFive UART on Linux
+introduced after commit [1], which changed character transmission from
+synchronous to asynchronous.
 
-Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
----
- hw/intc/riscv_imsic.c         | 171 +++++++++++++++++++++++++++++++---
- include/hw/intc/riscv_imsic.h |   3 +
- include/qemu/bitops.h         |   1 +
- migration/vmstate-types.c     |   1 -
- 4 files changed, 161 insertions(+), 15 deletions(-)
+Currently, the txwm interrupt pending status is only updated when the
+asynchronous transmit handler runs. This can cause the txwm interrupt
+state to become unsynchronized between the SiFive UART and the interrupt
+controller.
 
-diff --git a/hw/intc/riscv_imsic.c b/hw/intc/riscv_imsic.c
-index 7c9a012033..1c9c706b03 100644
---- a/hw/intc/riscv_imsic.c
-+++ b/hw/intc/riscv_imsic.c
-@@ -34,6 +34,7 @@
- #include "system/system.h"
- #include "system/kvm.h"
- #include "migration/vmstate.h"
-+#include "kvm/kvm_riscv.h"
+This issue has been observed on resource-constrained systems, where
+Linux reports spurious IRQ errors. In these cases, the asynchronous
+transmit handler is unable to drain the TX FIFO quickly enough to update
+the txwm pending status before software reads the IP register, which
+derives the txwm pending state directly from the actual number of
+characters in the TX FIFO.
 
- #define IMSIC_MMIO_PAGE_LE             0x00
- #define IMSIC_MMIO_PAGE_BE             0x04
-@@ -363,11 +364,16 @@ static void riscv_imsic_realize(DeviceState *dev, Error **errp)
-         qdev_init_gpio_out(dev, imsic->external_irqs, imsic->num_pages);
+The remaining patches contain miscellaneous updates, including
+implementing txctrl.txen and rxctrl.rxen, update IRQ when rxctrl is
+written and remove the unused ip variable.
 
-         imsic->num_eistate = imsic->num_pages * imsic->num_irqs;
--        imsic->eidelivery = g_new0(uint32_t, imsic->num_pages);
--        imsic->eithreshold = g_new0(uint32_t, imsic->num_pages);
-         imsic->eistate = g_new0(uint32_t, imsic->num_eistate);
-+    } else {
-+        imsic->nr_eix = 2 * BITS_TO_U64S(imsic->num_irqs);
-+        imsic->eie = g_new0(uint32_t, imsic->nr_eix);
-+        imsic->eip = g_new0(uint32_t, imsic->nr_eix);
-     }
+[1] 53c1557b230986ab6320a58e1b2c26216ecd86d5
 
-+    imsic->eidelivery = g_new0(uint32_t, imsic->num_pages);
-+    imsic->eithreshold = g_new0(uint32_t, imsic->num_pages);
-+
-     memory_region_init_io(&imsic->mmio, OBJECT(dev), &riscv_imsic_ops,
-                           imsic, TYPE_RISCV_IMSIC,
-                           IMSIC_MMIO_SIZE(imsic->num_pages));
-@@ -398,23 +404,17 @@ static const Property riscv_imsic_properties[] = {
-     DEFINE_PROP_UINT32("num-irqs", RISCVIMSICState, num_irqs, 0),
- };
+Changelog:
+  v3:
+    * Rebase to the latest master branch.
+  v2:
+    * Include txctrl.txen and rxctrl.rxen.
 
--static bool riscv_imsic_state_needed(void *opaque)
-+static bool riscv_imsic_emul_state_needed(void *opaque)
- {
-     return !kvm_irqchip_in_kernel();
- }
+Frank Chang (4):
+  hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen
+  hw/char: sifive_uart: Sync txwm interrupt pending status after TX FIFO
+    enqueue
+  hw/char: sifive_uart: Update IRQ when rxctrl is written
+  hw/char: sifive_uart: Remove ip variable
 
--static const VMStateDescription vmstate_riscv_imsic = {
--    .name = "riscv_imsic",
--    .version_id = 2,
--    .minimum_version_id = 2,
--    .needed = riscv_imsic_state_needed,
-+static const VMStateDescription vmstate_riscv_imsic_emul = {
-+    .name = "riscv_imsic_emul",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = riscv_imsic_emul_state_needed,
-     .fields = (const VMStateField[]) {
--            VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
--                                  num_pages, 0,
--                                  vmstate_info_uint32, uint32_t),
--            VMSTATE_VARRAY_UINT32(eithreshold, RISCVIMSICState,
--                                  num_pages, 0,
--                                  vmstate_info_uint32, uint32_t),
-             VMSTATE_VARRAY_UINT32(eistate, RISCVIMSICState,
-                                   num_eistate, 0,
-                                   vmstate_info_uint32, uint32_t),
-@@ -422,6 +422,149 @@ static const VMStateDescription vmstate_riscv_imsic = {
-         }
- };
+ hw/char/sifive_uart.c         | 46 ++++++++++++++++++++++++++++-------
+ include/hw/char/sifive_uart.h |  3 ++-
+ 2 files changed, 39 insertions(+), 10 deletions(-)
 
-+static bool riscv_imsic_in_kernel_state_needed(void *opaque)
-+{
-+    return kvm_irqchip_in_kernel();
-+}
-+
-+static int riscv_imsic_in_kernel_pre_save(void *opaque)
-+{
-+    RISCVIMSICState *imsic = opaque;
-+    RISCVCPU *rcpu = RISCV_CPU(cpu_by_arch_id(imsic->hartid));
-+    bool is_32bit = riscv_cpu_is_32bit(rcpu);
-+    uint32_t inc = 2;
-+    uint64_t attr;
-+
-+    if (is_32bit) {
-+        inc = 1;
-+    }
-+
-+    if (kvm_irqchip_in_kernel()) {
-+        for (uint32_t i = 0; i < imsic->nr_eix; i += inc) {
-+            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                                  ISELECT_IMSIC_EIE0 + i);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                     imsic->eie + i, false);
-+
-+            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                                  ISELECT_IMSIC_EIP0 + i);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                     imsic->eip + i, false);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static int riscv_imsic_in_kernel_post_load(void *opaque, int version_id)
-+{
-+    RISCVIMSICState *imsic = opaque;
-+    RISCVCPU *rcpu = RISCV_CPU(cpu_by_arch_id(imsic->hartid));
-+    bool is_32bit = riscv_cpu_is_32bit(rcpu);
-+    uint32_t inc = 2;
-+    uint64_t attr;
-+
-+    if (is_32bit) {
-+        inc = 1;
-+    }
-+
-+    if (kvm_irqchip_in_kernel()) {
-+        for (uint32_t i = 0; i < imsic->nr_eix; i += inc) {
-+            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                                  ISELECT_IMSIC_EIE0 + i);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                     imsic->eie + i, true);
-+
-+            attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                                  ISELECT_IMSIC_EIP0 + i);
-+            kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                     imsic->eip + i, true);
-+        }
-+    }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_riscv_imsic_in_kernel = {
-+    .name = "riscv_imsic_in_kernel",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = riscv_imsic_in_kernel_state_needed,
-+    .pre_save = riscv_imsic_in_kernel_pre_save,
-+    .post_load = riscv_imsic_in_kernel_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VARRAY_UINT32(eie, RISCVIMSICState,
-+                              nr_eix, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_VARRAY_UINT32(eip, RISCVIMSICState,
-+                              nr_eix, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static int riscv_imsic_pre_save(void *opaque)
-+{
-+    RISCVIMSICState *imsic = opaque;
-+    uint64_t attr;
-+
-+    if (kvm_irqchip_in_kernel()) {
-+        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                              ISELECT_IMSIC_EIDELIVERY);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                 imsic->eidelivery, false);
-+
-+        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                              ISELECT_IMSIC_EITHRESHOLD);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                 imsic->eithreshold, false);
-+   }
-+
-+    return 0;
-+}
-+
-+static int riscv_imsic_post_load(void *opaque, int version_id)
-+{
-+    RISCVIMSICState *imsic = opaque;
-+    uint64_t attr;
-+
-+    if (kvm_irqchip_in_kernel()) {
-+        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                              ISELECT_IMSIC_EIDELIVERY);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                 imsic->eidelivery, true);
-+
-+        attr = KVM_DEV_RISCV_AIA_IMSIC_MKATTR(imsic->hartid,
-+                                              ISELECT_IMSIC_EITHRESHOLD);
-+        kvm_riscv_aia_access_reg(KVM_DEV_RISCV_AIA_GRP_IMSIC, attr,
-+                                 imsic->eithreshold, true);
-+   }
-+
-+    return 0;
-+}
-+
-+static const VMStateDescription vmstate_riscv_imsic = {
-+    .name = "riscv_imsic",
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-+    .pre_save = riscv_imsic_pre_save,
-+    .post_load = riscv_imsic_post_load,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VARRAY_UINT32(eidelivery, RISCVIMSICState,
-+                              num_pages, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_VARRAY_UINT32(eithreshold, RISCVIMSICState,
-+                              num_pages, 0,
-+                              vmstate_info_uint32, uint32_t),
-+        VMSTATE_END_OF_LIST()
-+    },
-+    .subsections = (const VMStateDescription * const []) {
-+        &vmstate_riscv_imsic_emul,
-+        &vmstate_riscv_imsic_in_kernel,
-+        NULL
-+    }
-+};
-+
- static void riscv_imsic_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-diff --git a/include/hw/intc/riscv_imsic.h b/include/hw/intc/riscv_imsic.h
-index fae999731d..2206d82e0c 100644
---- a/include/hw/intc/riscv_imsic.h
-+++ b/include/hw/intc/riscv_imsic.h
-@@ -54,12 +54,15 @@ struct RISCVIMSICState {
-     uint32_t *eidelivery;
-     uint32_t *eithreshold;
-     uint32_t *eistate;
-+    uint32_t *eip;
-+    uint32_t *eie;
+--
+2.43.0
 
-     /* config */
-     bool mmode;
-     uint32_t hartid;
-     uint32_t num_pages;
-     uint32_t num_irqs;
-+    uint32_t nr_eix;
- };
-
- DeviceState *riscv_imsic_create(hwaddr addr, uint32_t hartid, bool mmode,
-diff --git a/include/qemu/bitops.h b/include/qemu/bitops.h
-index c7b838a628..a7f86f2ee0 100644
---- a/include/qemu/bitops.h
-+++ b/include/qemu/bitops.h
-@@ -20,6 +20,7 @@
- #define BITS_PER_LONG           (sizeof (unsigned long) * BITS_PER_BYTE)
- #define BITS_TO_LONGS(nr)       DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(long))
- #define BITS_TO_U32S(nr)        DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(uint32_t))
-+#define BITS_TO_U64S(nr)        DIV_ROUND_UP(nr, BITS_PER_BYTE * sizeof(uint64_t))
-
- #define BIT(nr)                 (1UL << (nr))
- #define BIT_ULL(nr)             (1ULL << (nr))
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index 89cb211472..368a2922aa 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -599,7 +599,6 @@ const VMStateInfo vmstate_info_tmp = {
-  * is an array of 'unsigned long', which may be either 32 or 64 bits.
-  */
- /* This is the number of 64 bit words sent over the wire */
--#define BITS_TO_U64S(nr) DIV_ROUND_UP(nr, 64)
- static int get_bitmap(QEMUFile *f, void *pv, size_t size,
-                       const VMStateField *field)
- {
--- 
-2.27.0
 
