@@ -4,97 +4,130 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D285106ACC1
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 16:06:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2F66D106ACC1
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 16:06:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0iXM-0004n8-Ta; Thu, 12 Mar 2026 12:05:26 -0400
+	id 1w0iY1-00053d-Vz; Thu, 12 Mar 2026 12:06:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1w0iWw-0004eG-TR
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 12:04:59 -0400
-Received: from fout-a3-smtp.messagingengine.com ([103.168.172.146])
+ (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
+ id 1w0iXw-00051N-Vg
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 12:06:01 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex@shazbot.org>) id 1w0iWu-0005Je-Rc
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 12:04:58 -0400
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
- by mailfout.phl.internal (Postfix) with ESMTP id 21EA9EC0B6C;
- Thu, 12 Mar 2026 12:04:54 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-12.internal (MEProxy); Thu, 12 Mar 2026 12:04:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=shazbot.org; h=
- cc:cc:content-transfer-encoding:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm3; t=1773331494;
- x=1773417894; bh=H+jruQmOxoyo/RNkEyK/wpeJdj+x/03Gqq1ur9Z8SEw=; b=
- huxWjhO9opitysF65T2b/AwgDvjcmDAnFkooYdFAS11utfNp/YbnFXMomoghCBUD
- uWp1I2FK65r16VYJpviFiESNlBC9Ri1gb6QdioXi4DqU1T1X2xp1dHFp0Ev2Zkze
- 2FJ4x0qI2TyLUFUhtRp7YZ5R1S+DxUjkBrZOYEJWVQ1xWZybe+T87VfplVAtCZBd
- eH2KlINjdxu3p4LEquBIxtxfqbw62ZMuYhuhhUzj1rOCiD7B4UrpMeEnJkC7VpYt
- +OpTzOy2BJxTPELi/r/zKm5tCpcUrML1FclSXb4LWeONPXtyetxSqzGgV1Yqdslp
- yqr2HU2PSSrPXdyGpMYItg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773331494; x=
- 1773417894; bh=H+jruQmOxoyo/RNkEyK/wpeJdj+x/03Gqq1ur9Z8SEw=; b=k
- lxrKlCxWg27PguwKv0BWBngyLvTpb1dwrBYooNWwglY+wNs9Bj31EwiNvFDV6v1N
- 8k3JJqOx+RYKFQp1Sxv+PMcFyfs20811ujmKiVgkuxnUM9er3ne3g4pkgSg/EyUP
- 4hRQ/VKPhDsqf/6vNakEgWAELGM6cj2dlI2E74dB3I27FwGAhYZjZEr5uz4FteQJ
- oPBhdEUNu1EoJOiZ9QDuEfld7U09Lv0s0s4rQDmv2daMhRMgXTdhBaF5xpJS2hDB
- X1xEbINxZ8bgVbnXoLqjqqoWy41+4fJbacsbroEGe30nVsirqu5VIY/Yvb7U/Ldq
- PYtXQOaepPfurGHP+dR8Q==
-X-ME-Sender: <xms:JeSyaQsvQATYUDuO-NGWXadwEiKm-u7UVSh3QdXwyYRHYuZ4REt46g>
- <xme:JeSyadlqTWx9AtXAg3Zzkf3CsWvMtm9v85Fu5c3e57jEJfbogmbP6Keqfx49qG0PE
- PpcAVy90MaWqCrl-Jwxchi123tkydE8MBeM-F4koYwwhZZ1qnXtKQ>
-X-ME-Received: <xmr:JeSyaTt-1MbTWquOAncJT2OJASGiBHsHe9P8c9fp0lmggTCYG-G7MW_dEoE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeejvdduucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepfffhvfevuffkjghfofggtgfgsehtjeertdertddvnecuhfhrohhmpeetlhgvgicu
- hghilhhlihgrmhhsohhnuceorghlvgigsehshhgriigsohhtrdhorhhgqeenucggtffrrg
- htthgvrhhnpeekheejieetffefueeiteejtdejffdvleelvdeuvdffvdefteeghfevkeeu
- vdefvdenucffohhmrghinhepkhgvrhhnvghlrdhorhhgnecuvehluhhsthgvrhfuihiivg
- eptdenucfrrghrrghmpehmrghilhhfrhhomheprghlvgigsehshhgriigsohhtrdhorhhg
- pdhnsggprhgtphhtthhopeegpdhmohguvgepshhmthhpohhuthdprhgtphhtthhopehkuh
- hrthesghgrrhhlohhffhdruggvpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhn
- ghhnuhdrohhrghdprhgtphhtthhopegtlhhgsehrvgguhhgrthdrtghomhdprhgtphhtth
- hopegrlhgvgiesshhhrgiisghothdrohhrgh
-X-ME-Proxy: <xmx:JeSyabeBdX1ZhfP3RoaI8yFJdv0vq24X89iaMwHyLyntmDsjKXbBzA>
- <xmx:JeSyabyyMLJvZ3T0x4mQ-PZXQh12mn1KI0QvTrWQ6UgVELGX3Zu0Dw>
- <xmx:JeSyaREQwUWybHXiokDZxfyO2Bo2oruuNtSWMWQ0i2OjHVlpAu7YIA>
- <xmx:JeSyafxSkGLbOzyxagGoEKWVAS5q8pAlB0JTTuXdbXBgdF-zAkcykg>
- <xmx:JuSyacH6O3fjIJsPvPV6VZIjEf1l6WziO9mrAPOQocrnqUm7ncyvJhQe>
-Feedback-ID: i03f14258:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
- 12 Mar 2026 12:04:53 -0400 (EDT)
-Date: Thu, 12 Mar 2026 10:04:52 -0600
-From: Alex Williamson <alex@shazbot.org>
-To: Kurt Garloff <kurt@garloff.de>
-Cc: qemu-devel@nongnu.org, =?UTF-8?B?Q8OpZHJpYw==?= Le Goater
- <clg@redhat.com>, alex@shazbot.org
-Subject: Re: [PATCH] Don't disable PCIe atomic routing for multifunction
- devices
-Message-ID: <20260312100452.7799d19a@shazbot.org>
-In-Reply-To: <20260312-enable-multifunc-atomicroute-v1-1-b7d66ca54319@garloff.de>
-References: <20260312-enable-multifunc-atomicroute-v1-1-b7d66ca54319@garloff.de>
-X-Mailer: Claws Mail 4.3.1 (GTK 3.24.51; x86_64-pc-linux-gnu)
+ (Exim 4.90_1) (envelope-from <mvaralar@redhat.com>)
+ id 1w0iXt-0006Ja-1q
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 12:06:00 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773331554;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t92hgX7rQBMb97pIHYHdjNFQmVytKSos6WWM62IRmss=;
+ b=PDwGbKd/tr/Ag/MpIEk4DuHOmOKDrprCrJE6TftE/D01wkYcUD3S/rVmbPhZnbYKaU5rdn
+ kDlvs6imW8jVx5u3OF0EGT8WhhoZYw+/W+CmetQ7jfvPitIHm7cE638N0eZM5i2PWJQ355
+ ylMbSLm2bhfQd3se/PvL0I156mnyYgc=
+Received: from mail-ej1-f69.google.com (mail-ej1-f69.google.com
+ [209.85.218.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-P2tzgoXJMaSLn_hvJfqlyA-1; Thu, 12 Mar 2026 12:04:48 -0400
+X-MC-Unique: P2tzgoXJMaSLn_hvJfqlyA-1
+X-Mimecast-MFC-AGG-ID: P2tzgoXJMaSLn_hvJfqlyA_1773331487
+Received: by mail-ej1-f69.google.com with SMTP id
+ a640c23a62f3a-b934e96af9dso108917566b.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 09:04:48 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773331487; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Rsw7hiTvue6MWDsP8gbmpElhmFMhm5aPQZ2aErEOJorg67YDePNs/XxpoX5VaOu/VU
+ K13wNQYwaMtoYNzNYsC0nJ0E2UMoLrbXtNutgcKIfxsMaolKYwIyUzrhu5oUR2D9bOmN
+ fgF39Aed6pv0XCmYulnE1TlDNpBXuvyeyoFEhzCqTjC2YSIsK//Vc0fqlUVHl3H+Encn
+ +9MpxcP9boAu5Ce7gAhHpVZOlkVQ4FI7MiFiNnfXFMuu5omJcioPLJaeTC8nRv3IpXB3
+ p+ho1MeSWedpGe2T6jOqW/3imgusdBjxwSp7Z+npNHuc6fgziUmOzYgkkPDXtfX4zSlZ
+ emxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=t92hgX7rQBMb97pIHYHdjNFQmVytKSos6WWM62IRmss=;
+ fh=6fICvFPfZMin+45bH5Av4QXeL9LcvG8yJkzpPDhFCJY=;
+ b=G2QDS5CyCobk86NCumBLBM7C6UfCujTfe86fpFKK3CST0k74rgdilOGNd6deTmwThb
+ juXOVzw6/X3/aZ8IQ2hQYhQXRY6VOVhoM1moNB0ZyE9HI4HWj9jta1IlllES2Pb1Q72Z
+ /KFe+wmGXsLSh7QNnvP/E4oSrf5iokA6OTtluUnh8Rq2bATDJQN1iYoVSlCRx0MqYeTp
+ zzFc84z1VzOlATEqUY825BIq8+Egpf09Gt7EBK8ZoF4aSFqk/XPUIgveM3qPv+HJcBqh
+ qPMyc46oUbicfZa9EHm5nR+aa4ELj4RDQufzRKyQwdObMAvJaD298IOrpHuz/+uRKMEG
+ MOGw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773331487; x=1773936287; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=t92hgX7rQBMb97pIHYHdjNFQmVytKSos6WWM62IRmss=;
+ b=K8jGmwj3xc0/wkYWo6qvn5QoRn1iWT5bHptSCg57hS41RJa/fki1N8oitllZd3M58w
+ m/pleraESDUcjyRTZGvd5NI0gA/8fd4hQCStzNJggBU/13QNoKs6Po1FvsetNrMImO0w
+ wxMFvXy7u65IgPOJ8Ibnw77974x3TqvXRWV8DX+yQs5gvUBH57fzlT7F0FxJ7Hqxiwx2
+ xKV1mng83SgQ71zQfmazzcU4e7VUs9gZOKNbONDCkB/q407KmAI57jQ0k60iQ/nwDEP5
+ spC9NtzEXx7m1o2fFxjZXAlMB3RYcfTrGHRmTJJABprYtWpwb1q+VqMa97sV0ii905eM
+ dm3w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773331487; x=1773936287;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=t92hgX7rQBMb97pIHYHdjNFQmVytKSos6WWM62IRmss=;
+ b=rkcJ0UfnOC89xuE3kkxXdaVmZ/XbF60ky8yu9zJ6RattwkiF519ig9eOXsVY4LB52j
+ vbMk2+t3QP/Cob/5xyIez3gQVLiMh6TLohDIwhfoJpMAyW1KaDF1aGigqCEmJ6KZT6QH
+ XJlsRHlswtkN4d7TKw4N4EPjUuoMCyWYt6ZlTDqXc+pPgxwm6F8zmqCsBHQjD4utc2Mb
+ HJBZjlawVQ5+L806tlXUl4X4ijdYV0rx5DFPSeVpmFQhqZHpa30WcRLIywA8JGnMl3AI
+ 0qEBL/D79Urk+b4McE4S8GZh4xqEbC548UpE3E//q+QcKUHigXyFzM/eRq1faaLWqf8D
+ 6/FA==
+X-Gm-Message-State: AOJu0Yy8oYaIf6hSRlhAPPMAccZVKyA8go2uwsZBKYTrSiG1PGjMZsCA
+ sJUjsAx41sM514cfJ+3suLkNeGNldsgq86USwG6tgqOVKdtTLhvvx9GJj07SBxSyN69hIpzl0gF
+ ibmp/HTXEdnCLZ8E/nlKjtKro7HTIUDriczTp/xkLcI52NKqNXyk2sZvNSqsy9xJ9q20PRdm1SR
+ XxAY5oyy2/U0x4WMCMMb/Gygt/hBunV0g=
+X-Gm-Gg: ATEYQzwi4HltKjLHR7Spay2lh4Jp8b/xdly/HlcJrkDoJHhiczZd2WwQxRR8I2kGOXu
+ zWADlI9H7ctF8x25Dt5tL6U0ALhQrI7a4v33CEKwv2TOZ9UWZJLDq2YDJBohf0h54iVqkRw1rzG
+ 64wwL5AHa/zZrK5OOThkhTY+HfKynxUtBQBVh2tN6SmgPIOJlGiAUUsRLX3uzG/L/Z7JHPjUutP
+ p4rwfHQosNzsWkxxRb7YI/LRcK6fmPv9YftZQ==
+X-Received: by 2002:a17:907:70c:b0:b8e:2a8a:4312 with SMTP id
+ a640c23a62f3a-b972e58e860mr386186766b.28.1773331487116; 
+ Thu, 12 Mar 2026 09:04:47 -0700 (PDT)
+X-Received: by 2002:a17:907:70c:b0:b8e:2a8a:4312 with SMTP id
+ a640c23a62f3a-b972e58e860mr386183066b.28.1773331486483; Thu, 12 Mar 2026
+ 09:04:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=103.168.172.146; envelope-from=alex@shazbot.org;
- helo=fout-a3-smtp.messagingengine.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <TYCP286MB22415F5CDD24530319DC4D4EC844A@TYCP286MB2241.JPNP286.PROD.OUTLOOK.COM>
+In-Reply-To: <TYCP286MB22415F5CDD24530319DC4D4EC844A@TYCP286MB2241.JPNP286.PROD.OUTLOOK.COM>
+From: Matias Ezequiel Vara Larsen <mvaralar@redhat.com>
+Date: Thu, 12 Mar 2026 17:04:33 +0100
+X-Gm-Features: AaiRm51J6NZrFTp9cp2wSPh6HqTG5LcKnKdSzZlr0-AjTTEkaxDphwvPVUyswuY
+Message-ID: <CAHYGQ0zdcjs8nXnyCLva7GqeRAByWRJ-myT+fEEDCmjxpx35kA@mail.gmail.com>
+Subject: Re: vhost-user implementation of virtio-rtc
+To: =?UTF-8?B?TWl0c3V5YSBJa3V5YSAo5LiJ44OE5bGLIOmDgeWTiSk=?=
+ <mitsuya.ikuya@jp.panasonic.com>
+Cc: "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
+ "rust-vmm@lists.opendev.org" <rust-vmm@lists.opendev.org>,
+ Francesco Valla <francesco@valla.it>, 
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "stefanha@redhat.com" <stefanha@redhat.com>, 
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>, 
+ =?UTF-8?B?S1VaVSBLQVpVS0kgKOiRm+eUnyDkuIDmqLkp?=
+ <kuzu.kazuki@jp.panasonic.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=mvaralar@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -110,87 +143,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 15:48:05 +0000
-Kurt Garloff <kurt@garloff.de> wrote:
+On Thu, Mar 12, 2026 at 3:03=E2=80=AFPM Mitsuya Ikuya (=E4=B8=89=E3=83=84=
+=E5=B1=8B =E9=83=81=E5=93=89)
+<mitsuya.ikuya@jp.panasonic.com> wrote:
+>
+> Hi QEMU/rust-vmm projects members,
+>
+>
+>
+> This is Mitsuya from PAS(Panasonic Automotive Systems).
+>
+>
+>
+> Form Google SoC page (Home | Google Summer of Code),
+>
+> we find the below page related with VirtIO-RTC.
+>
+> Internships/ProjectIdeas/VhostUserRTC - QEMU
+>
+>
+> For that, PAS has already implemented VirtIO-RTC components
+>
+> and plans to contribute them in Beginning of April soon.
+>
+>
 
-> As included in the comment: The PCIe atomics routing does not hurt,
-> even if some subfunctions of a PCIe device don't require it.
-> Graphics cards often have an audio device next to the GPU, so this
-> actually causes them not to have PCIe atomics support. The amdgpu
-> driver however needs atomics for fully supporting ROCm.
-> So stop excluding multifunction devices.
+Hello, we learned that two days ago. We just closed the project.
 
-NAK.  This was discussed recently:
+Matias
 
-https://lore.kernel.org/all/8b3e30e6-3c3e-49ab-b9db-8296aaf819d1@app.fastmail.com/
 
-Just map the audio function to a separate slot in the VM, the GPU and
-audio functions don't need to appear as a multi-function device in the
-guest.  Thanks,
-
-Alex
- 
-> Tested with Radeon 7900 XTX.
-> 
-> Signed-off-by: Kurt Garloff <kurt@garloff.de>
-> ---
-> The amdgpu driver requires them to fully work with ROCm.
-> 
-> The good news is that qemu already has code that detects the capability
-> of the PCI device and enables the routing of PCI atomics in the
-> pcie-bridge. This unfortunately did not work on my system, because I
-> have a RX7900XTX which is a multi-function PCI device with the GPU
-> and the audio function. I pass through both to the VM.
-> 
-> I could not find any reason to disable PCIe atomics routing even
-> if some subfunction does not require it -- it does not hurt.
-> So I took out the check.
-> 
-> With it, the amdgpu driver works nicely in the VM.
-> 
-> Sidenote: I had used patches to manually override the autodetection,
-> but prefer the automatic detection which is much simpler in both
-> code and usability.
-> ---
->  hw/vfio/pci.c | 16 +++++++++-------
->  1 file changed, 9 insertions(+), 7 deletions(-)
-> 
-> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-> index 94c174a773..077ff3a6a8 100644
-> --- a/hw/vfio/pci.c
-> +++ b/hw/vfio/pci.c
-> @@ -2112,17 +2112,19 @@ static void vfio_pci_enable_rp_atomics(VFIOPCIDevice *vdev)
->      uint8_t *pos;
->  
->      /*
-> -     * PCIe Atomic Ops completer support is only added automatically for single
-> -     * function devices downstream of a root port supporting DEVCAP2.  Support
-> -     * is added during realize and, if added, removed during device exit.  The
-> -     * single function requirement avoids conflicting requirements should a
-> -     * slot be composed of multiple devices with differing capabilities.
-> +     * PCIe Atomic Ops completer support is added automatically for devices
-> +     * downstream of a root port supporting DEVCAP2.  Support is added during
-> +     * realize and, if added, removed during device exit.
-> +     * Note that we previously only did this for multifunction devices to
-> +     * avoid conflicts; this restriction was unnecessary as routing atomics
-> +     * will not harm and won't be generated by devices not requiring it anyhow.
-> +     * The restictions hurt many discrete graphics cards which have an audio
-> +     * device next to the GPU.
->       */
->      if (pci_bus_is_root(bus) || !parent || !parent->exp.exp_cap ||
->          pcie_cap_get_type(parent) != PCI_EXP_TYPE_ROOT_PORT ||
->          pcie_cap_get_version(parent) != PCI_EXP_FLAGS_VER2 ||
-> -        pdev->devfn ||
-> -        pdev->cap_present & QEMU_PCI_CAP_MULTIFUNCTION) {
-> +        pdev->devfn) {
->          return;
->      }
->  
-> 
-> ---
-> base-commit: 769a37d8bd0c81c39128fc292352f01bad0769f4
-> change-id: 20260312-enable-multifunc-atomicroute-ca11e3a399d2
-> 
-> Best regards,
+> Thanks.
+>
+>
+> Regards,
+> Mitsuya
 
 
