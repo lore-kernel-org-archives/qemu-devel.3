@@ -4,95 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04260105A584
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 361A6105A583
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:06:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0drM-0003yo-Py; Thu, 12 Mar 2026 07:05:44 -0400
+	id 1w0drO-00041M-Na; Thu, 12 Mar 2026 07:05:46 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0dr0-0003lK-Rq
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:24 -0400
+ id 1w0dr2-0003oQ-Cs
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0dqu-0000Qq-WB
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:18 -0400
+ id 1w0dr0-0000VC-Fh
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:24 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773313515;
+ s=mimecast20190719; t=1773313521;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4XICs2ZC8HPTCpMLKqC712lAFqd8shEbTlhChEXD/Ok=;
- b=Bq/soXv9dipMqqYspbXyOpdyw5HBWM61pzrVMOt6FWxdwIkE59rHVgnf8qn0Rfmi8Zuzcu
- uB8T6eBbFZ0GpiltLeOZjzheE7DQAvMZl3o1KjaUAuwlPs9DOZ7wrzCgXDIj2LjBCdqaT6
- Udp3Mf5nrd02klbNKvvOi2uIiFeiGRo=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=w6/l3NwCL/vberP/dp8k2/b/iAR3SKecP1EdgBzid1Y=;
+ b=VWVTO6i9l6yh148bHwEerDjvJoZwUTpT8b/aqjuVniWBbcQyYiQXPNE65A8h3+6K4PdmTd
+ HZYI/IT8xFHL6ZePxlbqlsEGZ2WiCXgVKaaaFkvMDoKCxh4wRgZrs2R6SUS5FChtWJ75wm
+ 7PlzxwKc54IWfpFcci7gmOgCZP6bVU4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-82-a3YP9u0TNtaZTU7JEsdK9Q-1; Thu, 12 Mar 2026 07:05:14 -0400
-X-MC-Unique: a3YP9u0TNtaZTU7JEsdK9Q-1
-X-Mimecast-MFC-AGG-ID: a3YP9u0TNtaZTU7JEsdK9Q_1773313513
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-485397788b3so7957165e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:05:14 -0700 (PDT)
+ us-mta-536-N0RYknUiMXG5AdF3BtEoGQ-1; Thu, 12 Mar 2026 07:05:19 -0400
+X-MC-Unique: N0RYknUiMXG5AdF3BtEoGQ-1
+X-Mimecast-MFC-AGG-ID: N0RYknUiMXG5AdF3BtEoGQ_1773313518
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4853ab1cae0so8267135e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:05:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773313513; x=1773918313; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773313518; x=1773918318; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4XICs2ZC8HPTCpMLKqC712lAFqd8shEbTlhChEXD/Ok=;
- b=Gtuywx8sbJVJIqvN/V8UKoW9cYwkUuWUN2a63j768NJTHphY2QtK4cMWWuOORzMKFM
- k311rGZ+YF6Cj3G3t8t+N8iDWMOYqxM8ghkpE6IdJS0/zmIyq5UxriDNLsYBDcSW++00
- iIkQwOWka0AtDpuUKLbPmnZ4Vcl1deCW0B3RqUDulpoMLiVT7v6DP5H0eFGB/vWZUH1g
- C2NZl8ioX9sOE0v2u+B4um9ad77nsHOW4NtmTfIM7lEgY5M0pyR6FeuDFM2lpQNC0s+0
- FQGVhgFYfG4LPSWn16EnG+ZBZ/hcqmdCWvo6VRGa9kBctF09bQGwAvKOdbZ6Oz+AJpQK
- 886Q==
+ bh=w6/l3NwCL/vberP/dp8k2/b/iAR3SKecP1EdgBzid1Y=;
+ b=E3RkbIDzYW2i2TWQ6WmIAcXwip4rKb5OGiSpxg/Umk686NYPuKm/R/TnlXFlgQWKPq
+ 7HtMSkEJc4eTbT6qUXlPE846CH5OPYydOAB0XPkONgPM8qXF7uQfXcqYAnT6m2rgdum4
+ wg/H4LzWwPm44a99t9x7PKS/ExW9GRQezJQQk8P1ZWfNrt+01k60rZiz0f0qS3nmBMaR
+ WoZpCF4NCnHct7jj+Qq8OtIbByC7jGEycs+fNjgCoAADTUUiRpEmHbq3LulFf8sePpZk
+ iSN22cZ3u/MRRju5KA70NzmpXSGFObEQVvjG11yt22Eo6AsDZdxpRP3Lq9eLdCCe5AIp
+ Gpcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773313513; x=1773918313;
+ d=1e100.net; s=20230601; t=1773313518; x=1773918318;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4XICs2ZC8HPTCpMLKqC712lAFqd8shEbTlhChEXD/Ok=;
- b=YYRREPxp6TqrF27wSqfbpgm1I1Zgtmgpvg6V0CJ4Vsyv18Y8gma6Bgj2+MtgntqsEm
- NihQFQdMszl5WL9vt+U+B982W3Gvwx7T0ClgbjlZVVNXMFrZnad0+YaBKt17XnTCCxP7
- 6zRUBLHC71eFgT0t7JObvWNISUAG0DKlClKm+5wcEN9xVlsWRryqZyhyJY71pURxnuVu
- KBV34MeWWe6INQgTjfEbgKPU7OzXaEZWZUW6ikjFWnkGYhbTsEEuEz9nqJjA9Xdz42lu
- 7Va88WowmykQe/aoyhk9PDmJFbe3WstE9yZDR9BTjZiBg+1FimbKHzRQtxcKGsh2CXPh
- g+7A==
-X-Gm-Message-State: AOJu0YxIDvdy9V14yayx3uMr9Sv2F296OvEEqR46gGaP/QN6D7CEK5bR
- nZmRZVwTNebQKx/QPwR9IAndCM4Yj/+EmaFqP2vpWVOcyzO3qmFdxIS6fvxZjR6OXC9377nydV9
- oE9JG54wPROKzabLgAFcFcR+Ird1vJVUDXUp4iyvooT5bSFgxetemNQ+kU3r7u3mH/8MtGQ1URV
- NAuA57kb4zTluYb3WaaYJA5/O3DyCbjSjTHWfi7tUM
-X-Gm-Gg: ATEYQzxcp6intEeApl8jNwHLXuGUCaHZWJIwJ7UAdoVM70B9WCCkUoJr3rceCwPdkiv
- AMlwv3qckQY6qJzxGP7w9DNg+3e8TPNx+46EWkt+ltasPrwYb/8WuwzzGQ2cJcisirXoqccPlLa
- WwzGVGs0q52kjPy+37rnUBWLXIDEe8wFZ7CQY9prB3L8doy//sav0iYxoSJBKTALIMQGJGW4ZWC
- 9/d5LT8BTQmfoT2b4eDuDVgzspZEaB2RXpi0EPVpoULTPFfvLxIQPzKJpdvXqAh8YuT/1RSIxyz
- CdLMB7HX1WyBtvyEhYMbVpLt0se+eAWHqe0ys3Jz3uQ0CnEkGGL4HMRzek0l5zfhUiCQC7QdX0u
- AL/bfbvw3BcCGzWR2DABLsLrtgmuqrbtAPrUcdlTa2EHk7Ga2A3JOmBQqp6XV9iv7hoy21Nc3kc
- 1IhmCO4GXM6XLsn5StfNA8Ay7spm0=
-X-Received: by 2002:a05:600c:8b0a:b0:480:4a8f:2d5c with SMTP id
- 5b1f17b1804b1-4854b129f91mr95670315e9.29.1773313512539; 
- Thu, 12 Mar 2026 04:05:12 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b0a:b0:480:4a8f:2d5c with SMTP id
- 5b1f17b1804b1-4854b129f91mr95669665e9.29.1773313511966; 
- Thu, 12 Mar 2026 04:05:11 -0700 (PDT)
+ bh=w6/l3NwCL/vberP/dp8k2/b/iAR3SKecP1EdgBzid1Y=;
+ b=B77bTSRY8nmExLtnyAVqq0CI9DGGvdFz54wVpxxFj42hQNC2PvQdyaJorWPOkdLoLo
+ cey68/ywTSqLzk58ZZcIO5QsELDUJGRLRZLXT8/SFiuRMf4eTOSH4islOus9DHDrw+s4
+ 1xIWDiffAfkzM5FdLj4ssE3r7Vf84Xk89k0lhJMUg3IJtQMdUEY4UklgJaZwyg+3V5gw
+ tKAls2qumoMF4GUvHwELuDA1uujzxvHaM7iSLqCU2PfpAfMBmeaSP9zPc3UEaTftqJxM
+ dvCYcnENcGGajd58eE52pREeOqWRFizz1hjKIZonK/2AGz2iC3kuGzQgDKDmXlGdS+qO
+ IacA==
+X-Gm-Message-State: AOJu0YwxzBxFcESrGdBl+2mLARt3+I4OJkvLaHCjQfrsQiK4zXL4UUnl
+ 0P9N4Z/vbdakoQfrjqB/czJhMqYS31eBLnzkxe8VxmKYaN7AAvrz7BDmFhnk8HqVfq2/Xa/hate
+ keZx6JFpXfjWgkB4ZQ9uj2VB/T6hKRH/V79osqit2tMAi7KIIh8bkS74L6nVktg2l/t8dDF4dpa
+ e2yVlPe9O2zNdT8gJv3ipWCPdzZRQIDcPOv4eAY8t9
+X-Gm-Gg: ATEYQzwER0UAQzC32ql4k6wun7urxGnWF0M8dMWAeujdGzQMmqJEDT00lCwAsVrWOq6
+ APUghHdZmJaxayGdLA1s976chH+DuK0xWBuECBQQyz0jIesSuf1vK1MyXcCIrWEDErzfwtsqfGZ
+ kga5IbAx/BLbWQsPQHpihsPaUSSnTJs7dFo+pAqfdeh37tWTd7RLXH3Islg/72tx8EdYshBEbZA
+ rYSAe/XS/5nurUy7JSipaCHOD0C6KLcqsChJanqh/VkEo857D5lSvK8i0mxrrur7iyvme3JPGFv
+ nMFi2StGYLLujddJqMGx+5l1WlKwg1k0uqeZ2G/4/YAYxtfX1xrIabM/OH4HwIK+JkQufu5H3sr
+ JgeTEHGx1+4VEXzactYnJ7sPERkTBfo7TjB4hpq7F67bMZYb+62sd8YeSQWCaQ/8ayS/kbxkvsP
+ 9Lgm+T/cobmKJnjgMOM16eBBT7/9E=
+X-Received: by 2002:a05:600c:3e10:b0:483:badb:618f with SMTP id
+ 5b1f17b1804b1-4854b11694dmr86815865e9.25.1773313517568; 
+ Thu, 12 Mar 2026 04:05:17 -0700 (PDT)
+X-Received: by 2002:a05:600c:3e10:b0:483:badb:618f with SMTP id
+ 5b1f17b1804b1-4854b11694dmr86814985e9.25.1773313516826; 
+ Thu, 12 Mar 2026 04:05:16 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b65fe27sm130151345e9.9.2026.03.12.04.05.10
+ 5b1f17b1804b1-48541aac28bsm211285225e9.1.2026.03.12.04.05.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 04:05:10 -0700 (PDT)
+ Thu, 12 Mar 2026 04:05:14 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 07/14] coverity: fix coverity issues related to confidential
- guest reset
-Date: Thu, 12 Mar 2026 12:04:39 +0100
-Message-ID: <20260312110451.685161-8-pbonzini@redhat.com>
+Cc: Mohamed Mediouni <mohamed@unpredictable.fr>
+Subject: [PULL 09/14] docs: remove 64-bit only mentions for accelerators
+Date: Thu, 12 Mar 2026 12:04:41 +0100
+Message-ID: <20260312110451.685161-10-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312110451.685161-1-pbonzini@redhat.com>
 References: <20260312110451.685161-1-pbonzini@redhat.com>
@@ -123,68 +121,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Ani Sinha <anisinha@redhat.com>
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
 
-Fix issues reported by Peter.
+QEMU itself no longer supports 32-bit systems.
 
-Fixes: ec9bafd2ea9d12c ("i386/sev: add support for confidential guest reset")
-Fixes: e76c30bb13ecb9d ("hw/machine: introduce machine specific option 'x-change-vmfd-on-reset'")
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
-Link: https://lore.kernel.org/r/20260311074048.61367-1-anisinha@redhat.com
+Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+Link: https://lore.kernel.org/r/20260311102626.46546-2-mohamed@unpredictable.fr
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- system/runstate.c | 10 +++++-----
- target/i386/sev.c |  4 ----
- 2 files changed, 5 insertions(+), 9 deletions(-)
+ docs/about/build-platforms.rst | 4 ++--
+ docs/system/introduction.rst   | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/system/runstate.c b/system/runstate.c
-index eca722b43c6..77cb14ae028 100644
---- a/system/runstate.c
-+++ b/system/runstate.c
-@@ -508,13 +508,13 @@ static int qemu_debug_requested(void)
-  */
- void qemu_system_reset(ShutdownCause reason)
- {
--    MachineClass *mc;
--    ResetType type;
-+    MachineClass *mc = current_machine ? MACHINE_GET_CLASS(current_machine) : NULL;
-     AccelClass *ac = ACCEL_GET_CLASS(current_accel());
-+    bool force_vmfd_change =
-+        current_machine ? current_machine->new_accel_vmfd_on_reset : false;
-     bool guest_state_rebuilt = false;
-     int ret;
--
--    mc = current_machine ? MACHINE_GET_CLASS(current_machine) : NULL;
-+    ResetType type;
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index e95784cdb55..ae138ff0e02 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -43,7 +43,7 @@ Those hosts are officially supported, with various accelerators:
+    * - CPU Architecture
+      - Accelerators
+    * - Arm
+-     - hvf (64 bit only), kvm (64 bit only), tcg, xen
++     - hvf, kvm, tcg, xen
+    * - PPC
+      - kvm, tcg
+    * - RISC-V
+@@ -53,7 +53,7 @@ Those hosts are officially supported, with various accelerators:
+    * - SPARC
+      - tcg
+    * - x86
+-     - hvf (64 bit only), mshv (64 bit only), kvm, nvmm, tcg, whpx (64 bit only), xen
++     - hvf, mshv, kvm, nvmm, tcg, whpx, xen
  
-     cpu_synchronize_all_states();
- 
-@@ -528,7 +528,7 @@ void qemu_system_reset(ShutdownCause reason)
- 
-     if ((reason == SHUTDOWN_CAUSE_GUEST_RESET ||
-          reason == SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET) &&
--        (current_machine->new_accel_vmfd_on_reset || !cpus_are_resettable())) {
-+        (force_vmfd_change || !cpus_are_resettable())) {
-         if (ac->rebuild_guest) {
-             ret = ac->rebuild_guest(current_machine);
-             if (ret < 0) {
-diff --git a/target/i386/sev.c b/target/i386/sev.c
-index cddffe0da8d..9dde972c118 100644
---- a/target/i386/sev.c
-+++ b/target/i386/sev.c
-@@ -2011,10 +2011,6 @@ static void sev_handle_reset(Object *obj, ResetType type)
-     SevCommonState *sev_common = SEV_COMMON(MACHINE(qdev_get_machine())->cgs);
-     SevCommonStateClass *klass = SEV_COMMON_GET_CLASS(sev_common);
- 
--    if (!sev_common) {
--        return;
--    }
--
-     if (!runstate_is_running()) {
-         return;
-     }
+ Other host architectures are not supported. It is possible to build QEMU system
+ emulation on an unsupported host architecture using the configure
+diff --git a/docs/system/introduction.rst b/docs/system/introduction.rst
+index 9c57523b6c2..2dfa371e0f9 100644
+--- a/docs/system/introduction.rst
++++ b/docs/system/introduction.rst
+@@ -19,7 +19,7 @@ Tiny Code Generator (TCG) capable of emulating many CPUs.
+     - Host Architectures
+   * - KVM
+     - Linux
+-    - Arm (64 bit only), MIPS, PPC, RISC-V, s390x, x86
++    - Arm, MIPS, PPC, RISC-V, s390x, x86
+   * - Xen
+     - Linux (as dom0)
+     - Arm, x86
+@@ -28,7 +28,7 @@ Tiny Code Generator (TCG) capable of emulating many CPUs.
+     - x86
+   * - Hypervisor Framework (hvf)
+     - MacOS
+-    - x86 (64 bit only), Arm (64 bit only)
++    - x86, Arm
+   * - Windows Hypervisor Platform (whpx)
+     - Windows
+     - x86
 -- 
 2.53.0
 
