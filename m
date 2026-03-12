@@ -4,123 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C06106ACEF
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 22:36:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9C6F106ACEF
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 22:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0odV-0005aY-3o; Thu, 12 Mar 2026 18:36:09 -0400
+	id 1w0omA-0006zN-2t; Thu, 12 Mar 2026 18:45:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0odS-0005aJ-U0
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 18:36:06 -0400
-Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ id 1w0om8-0006yu-L6
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 18:45:04 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0odQ-0008Vi-6J
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 18:36:06 -0400
-Received: by mail-qt1-x82e.google.com with SMTP id
- d75a77b69052e-50917417efbso13829201cf.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 15:36:03 -0700 (PDT)
+ id 1w0om7-00030L-2J
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 18:45:04 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2aae146b604so10675765ad.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 15:45:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773354962; x=1773959762; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=7/f2XhvYKuQnuLaITTj/nhCxq4dCAMUs84kWHd2RjhM=;
- b=H5tTbho/2wx7P21OxqSFASKhnSQYqhZluEAG3miWOIP/3EHLLEGfPuQLjL9Ds3NXel
- JRvSwJLwKb23Wc4h8zHllQh2ZbP2EZEXWDYbkdNqaWry8xWlOG22WqD1pgUdwtvHDf/J
- NfrDtK6OOFGiCZew5O+kEGEID6LKOjrDzBlmwoHNDmk+LVsy/tcnronpT1vJlzhvTtaq
- fGjruvIvuSk5xQVuRAvWK5OJsWYz25Zz+xI3KdtFJMP/fnVnx8CTXKJF6EvZ/+Vs4QBH
- bzIfHQfB8g3y4TY83har+paEfbgbKpT8GwNXCweWbkCz/mZQab5so+u00GvUR5hpPhdw
- da7Q==
+ d=linaro.org; s=google; t=1773355501; x=1773960301; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=yXqO/Kn7C+46BkYp7T9YboQwLGMeOmJcv6Exfo1t6AQ=;
+ b=DKgsytKL/cI8AeWvhyAvf88L5iYgYAaZyb9XT7S4qKoaaJ3CN03yDxw689YuDYfRtd
+ XDUFvqspXoM9z0nbHxtxWw3pqh8ChWwvUdQznGf1H5L3QjWbHOoWPOeG19EcKaCKT0EO
+ vtuP/Kkwm9HI4tse40S5aQeu13FFJr6C2++8gbigqN7CdXheQPEBEg0s1tIvqUagfZ7A
+ qnLZULY4U7QgxguLT24nPGkH8I7Gh7O51mPDkgxTwc33gtwsDj9twYFKmWs2YWuQrojM
+ 9RobvDeCcYrCFUwR1zGx+XNuEF3fJC/m+qaVRENfqfOGmho8HX/JwQsf7nM1OegEjy4b
+ j8yQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773354962; x=1773959762;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1773355501; x=1773960301;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7/f2XhvYKuQnuLaITTj/nhCxq4dCAMUs84kWHd2RjhM=;
- b=CzW2nXjNfbeqWjU+bR9UpEH62j9EczR+n2hVJXDLlrfAujtdi3JqYzhvXZPHmzBrmz
- wxD5lAmNjCE2MWjGaYQ6yQ7SB8Woxh5Zx4OmWoLp1PmERIYuSX8biGIuf2WQUfFo81JM
- kBFDby2qVm1nxjbXKHiR2obzPc2mw5gR68QPcSduFZEt5Tab0KPfclXj8ov0HVRZnRvf
- 3G164MHSgU8/m02oYQUyE2g/XH7gghLo4hDrxg4HmDo5QPcvezTiTOTVTUs5Q+4gpD8y
- MIyBkw+L7Nbl3WqdrR1peajpmXb92pYvC5g8Y0044/BrDxnnFmFULxI41L2H34CA8VMk
- Z1XA==
-X-Gm-Message-State: AOJu0YxZSbnDL/yz5dYVg4Ru8UfbCcr/rAVRCkb++FoFC8Uf9YUPvFcF
- ir8YXcJHtgR4buslq6ujqtNh9/v66K6cu3NQ3SPhJqFpZ+lzRijyE4xFK5AFfrbeaJY=
-X-Gm-Gg: ATEYQzySlcC5Ypg9WSdWPA6OjUmFd8ZrAHZs5LQq8LcqDCEKqAcH0g3pjvwpWDcg+rd
- wdeaNB42DuGjhBk58JA1O9fBn6zG2Zry56juerz2hsAFaq1OOtlDLAPiKCjRJ/EjpUy89CoSNf5
- AE1brTasUfUVJPj5K5PA4yRvxm136UHdU89oWT/fheAnNq0kWfQgGmeJBGE6jb6ZUyVM4hGudI+
- iLgGCNTs0tHk9l6fj+615OHq1mQkTMtyMS5kyBEQ0MPPtIPdzSJtu628vPhHOC8+pxoeczC8ANH
- gzARFp2mv6yZTt1Gymj28c/Rm0HmmUNhuSuW1PZkITIxwkHqP+QVjErG9hwWZZBd10Z/NKNu8Z/
- 8OGm4jsjWpjWzyubROoZkhOrk9/PK5BuPwe3F6N5CSl/k9fDMcwcWPLiz1kWVZ3uxTd8/kZH0/M
- 2LNmxTBfJDUB+49F8JWBkrSw1WzBs1u7KdpX4zcqvO0Rxam9syDzTKC2aUSWfbJCp2Zpwk
-X-Received: by 2002:a05:622a:202:b0:509:1688:f8cf with SMTP id
- d75a77b69052e-50956fd88ecmr19797461cf.0.1773354962452; 
- Thu, 12 Mar 2026 15:36:02 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-5093a14d7a6sm40501051cf.33.2026.03.12.15.36.01
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 15:36:02 -0700 (PDT)
-Message-ID: <68903178-92ef-4956-b815-dc4c4533507d@linaro.org>
-Date: Thu, 12 Mar 2026 15:35:59 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] common-user: Share thunk.c between bsd-user and
- linux-user
-To: Warner Losh <imp@bsdimp.com>
-Cc: qemu-devel@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260312-share-thunk-v1-1-2f36003a1913@bsdimp.com>
- <ffc224cc-72ed-49ee-93ea-8a28d220ae55@linaro.org>
- <CANCZdfo8cEp8_078o4bEwCo63vL+W5NW9ukeQR0nMACJBQXysw@mail.gmail.com>
+ bh=yXqO/Kn7C+46BkYp7T9YboQwLGMeOmJcv6Exfo1t6AQ=;
+ b=gurdwbERzvCmENfQzOo6vp230VAZiMCGd3a8l6UP1HAOGT9tbyAZ0g33rhoBL5UX53
+ SWlTpYJ2xD7O4h3KYZVOthXs3Ajr2BEl7kNYM40cY0wkPGPBswfyzEAMEBdPaycBY8Uh
+ pd5Oy8lnakCXPWDbICavHck7L3c1Elu9DRFeIRNBI/pddUUB4pN33jsRPQMxSxLqyItJ
+ AbgHxyY6sCycDduguAQ1ig4ER1d+LYoncYTfLEcZjl0PAWdYy2mhB6BKNX/U8gKKM/jW
+ g+7Rz1rGIyEKIZEwzqZsVXUwEaaekDtj89DA3zpRYm4aFEbTV2yWXawHEneVEQUFC41S
+ qpDQ==
+X-Gm-Message-State: AOJu0YxWXsBeSOm740MuYjQMa1B9KGO03HqHSYCLCpfSNDj57/jLiqmu
+ yOTC3lSCTPghPLLzgsAS91SW9h6jfWZ99KGjckSq+3XMhRizfJsrbF0uZ/DUoJpGctRgYu7xBO2
+ aNQXE64s=
+X-Gm-Gg: ATEYQzxBwFDYdlwF1WNSolxQISCethyBmsOvdN6ugYST07kO4mStLOnrXgxpInNozsc
+ 0sz7N1bU0Dj3se5YMuvKf/QJABsLNUwvry050yThsCruW1VjojvnXv97NXIB4IDvTlMxrxRXdXh
+ mbMoNwdfj0/v1d0jRCIyqphMYNpdP8YWPIll49ay9rRsyQvbK3QIX/32O1wJshY9dHeql37Su1I
+ Ug3e/9ydqZmBDn2XPCjsAe2TrbV8ylbrZi5vbWWNejbqMBjwFTHX7IzJ4TDC7JW81ZyfFlyTZ1e
+ cme4OUvDybvsjhCurS4Q5FC2RQiwhMcf/dQWayA5SPr07++H21CjdkDSoJbvq98DUPkqajbbu4S
+ 5Rz8LsXXgdLEtVz2465p2cy2DuHDwmIBQ1gnRSlBqgf6b84kkOrl0tEWMnY3A6UStOw1W0n6EVx
+ +a7yvJ92z6mCYVCDsrAWfaIjyVVxNVxhSKPZjMN8FN70vtbdHBCFzMCE/WPG1zMCb/7zj5uQRg/
+ Ps1
+X-Received: by 2002:a17:902:d4cb:b0:2ae:87de:443b with SMTP id
+ d9443c01a7336-2aeca999769mr10295785ad.16.1773355501172; 
+ Thu, 12 Mar 2026 15:45:01 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2aece7ed9cdsm128215ad.60.2026.03.12.15.45.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Mar 2026 15:45:00 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <CANCZdfo8cEp8_078o4bEwCo63vL+W5NW9ukeQR0nMACJBQXysw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 0/8] hw/vfio: single-binary
+Date: Thu, 12 Mar 2026 15:44:41 -0700
+Message-ID: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qt1-x82e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -143,104 +103,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 1:19 PM, Warner Losh wrote:
-> 
-> 
-> On Thu, Mar 12, 2026 at 11:52 AM Pierrick Bouvier 
-> <pierrick.bouvier@linaro.org <mailto:pierrick.bouvier@linaro.org>> wrote:
-> 
->     On 3/12/26 6:10 AM, Warner Losh wrote:
->      > thunk.c is the same between linux-user and bsd-user (out of tree),
->      > so share it between the two.
->      >
->      > Signed-off-by: Warner Losh <imp@bsdimp.com <mailto:imp@bsdimp.com>>
->      > ---
->      > As part of upstream blitz bsd-user, I've discovered that bsd-user and
->      > linux-user have the same thunk.c file. Rather than copy it, put
->     it into
->      > the common-user directory and share it. It has to be compiled
->      > per-target, unlike the rest of common-user, so modify linux-user and
->      > bsd-user to grab it from there.
->      > ---
->      >   bsd-user/meson.build                | 1 +
->      >   {linux-user => common-user}/thunk.c | 0
->      >   linux-user/meson.build              | 2 +-
->      >   3 files changed, 2 insertions(+), 1 deletion(-)
->      >
-> 
->     Indeed, thunk.c seems to be highly target specific.
->     A good solution would be to move common functions to common-user/
->     thunk.c
->     and the rest in include/user/thunk.h. It may be cleaner than doing the
->     meson hack. Or leave it duplicated for now, except if you plan on
->     modifying it.
-> 
-> 
-> My concern with leaving it duplicated is the process. I create a patch 
-> to create
-> bsd-user/thunk.c that's a verbatim copy of linux-user/thunk.c. Despite 
-> putting in
-> my cover that this is copied code, if past is prologue, then I'll be 
-> asked to fix the
-> copyright and style, plus lots of suggestions to improve the code. But 
-> it's just a
-> verbatim copy, so that's a lot of hassle just to copy it.
->
+This series makes changes to hw/vfio to compile files only once.
+Changes are pretty straightforward and are mostly extraction of kvm/other config
+specific functions to proper files.
+This is the last hw/* subsystem that needs to be changed for single-binary.
 
-I understand, and it's a good intention to want to remove this 
-duplication. However, I'm not convinced a build system hack is better 
-than a duplication.
+Pierrick Bouvier (8):
+  hw/vfio/listener.c: remove CONFIG_KVM
+  hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
+  hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+  hw/vfio: eradicate CONFIG_IOMMU from sources
+  hw/vfio/pci.c: eradicate CONFIG_KVM
+  hw/vfio/ap.c: use full path for target specific header
+  hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
+    hw/vfio/kvm-spapr.c
+  hw/vfio: all vfio files can now be common files
 
-> Moving like this, though, is almost 0 friction. A small tweak to meson 
-> is all that's
-> needed. I suppose I could do the #include "../linux-user/trunk.c" trick 
-> to make it
-> less ugly in the build system, but then it's not clear it's shared, etc 
-> and more ugly
-> in the code, imho.
->
+ hw/vfio/kvm-spapr.h          |  12 +++
+ target/s390x/kvm/kvm_s390x.h |   2 +-
+ hw/vfio/ap.c                 |  11 +-
+ hw/vfio/ccw.c                |   9 --
+ hw/vfio/helpers.c            | 172 -------------------------------
+ hw/vfio/igd-stubs.c          |  20 ++++
+ hw/vfio/kvm-helpers.c        | 192 +++++++++++++++++++++++++++++++++++
+ hw/vfio/kvm-spapr.c          |  47 +++++++++
+ hw/vfio/kvm-stubs.c          |  35 +++++++
+ hw/vfio/listener.c           |   4 -
+ hw/vfio/pci-quirks.c         |   5 -
+ hw/vfio/pci.c                |  37 +++----
+ hw/vfio/spapr.c              |  30 +-----
+ hw/vfio/meson.build          |   8 +-
+ 14 files changed, 331 insertions(+), 253 deletions(-)
+ create mode 100644 hw/vfio/kvm-spapr.h
+ create mode 100644 hw/vfio/igd-stubs.c
+ create mode 100644 hw/vfio/kvm-helpers.c
+ create mode 100644 hw/vfio/kvm-spapr.c
+ create mode 100644 hw/vfio/kvm-stubs.c
 
-Yes, it's a hack, that's what it's for, "quick and that works but not a 
-proper solution".
+-- 
+2.47.3
 
-> I tried to move this stuff into thunk.h as much as possible so we could 
-> have one
-> compilation, and that didn't work. It really assumes that it can include 
-> qemu.h for
-> the tswap, etc macros. So it's impossible to just build once.
->
-
-Yes, not all functions can be compiled once because they have target 
-dependencies. That's why I invited you to simply extract common 
-functions to common-user/thunk.c and leave the target specific bits in 
-thunk.h (with static inline functions), or in a thunk-target.h header if 
-you really want to do it cleanly. That's the proper solution here.
-
-Build systems and preprocessor are not a shortcut to proper software 
-architecture, even though QEMU abused both of them to this end.
-
-> Now looking at the code, a lot of it would be a lot simpler with 
-> 'Generic', but that's
-> a battle for another day. As is the notion of just generating this data 
-> from the .h files
-> rather than hard-coding it here, but that too is a battle for another 
-> day. I'd like to
-> get this upstreamed so I'm spending my time on these sorts of battle.s
->
-
-I totally get it, and we have been dealing with a lot of things like 
-this for the single-binary topic, trying to find the good compromises 
-between refactoring APIs and doing limited changes.
-
-If extracting the common and target part looks like too much work, just 
-leave it and simply change the copyright header, it's not a big thing to 
-do, and you can modify both in the same series, no one will yell at you 
-for changing comments in one file in linux-user.
-
-As you said, pick up the right battles and ignore the rest.
-
-> Warner
-
-Regards,
-Pierrick
 
