@@ -4,85 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F3C1105A576
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:17:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0454B105A576
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:20:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0e1q-0003wC-0R; Thu, 12 Mar 2026 07:16:34 -0400
+	id 1w0e5G-0005H4-L1; Thu, 12 Mar 2026 07:20:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1w0e1k-0003uw-Rn
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:16:29 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0e51-0005F7-JF
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:19:55 -0400
+Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
- id 1w0e1e-0007lK-6H
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:16:27 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c70e27e2b74so342772a12.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:16:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0e4x-0008Gm-OB
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:19:49 -0400
+Received: by mail-yx1-xb129.google.com with SMTP id
+ 956f58d0204a3-64ae222d87dso871738d50.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:19:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773314383; cv=none;
+ d=google.com; s=arc-20240605;
+ b=GGo87wIOxJGFUhMHXqsuQ299vO2SXuqhs3h79Fl4v0/yV59m5ay2ezE7GnkP9LzxLV
+ gJlH69e7S+FVNRoQwIs/BuckiaFfTWKIIaYkIEx+aPxosyMm2X8sMtiaO1z4lhGINPzF
+ B9Ep90HhfeZC1Qj/TQPvZigSg03Ok+Uc2VCh54A/hqZTV74AIS4ttJLvFtVeK0oVaKNS
+ OP3LUBoIokHwvmmeB7v8Lc6sJ1Aut5LJuly6ccyHbq8OJSzOAYpa4L7ygclvbwvFdW8y
+ cshKu4C4YMubnnxQjnbbKrXi54CqaaBCS3n2tZWQMo+NpzsfMVf9Od7/RH+5Rv/bRdh7
+ BYZg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=y0ndm38Hfc6P244KmaANtEWaewMlw0ZHU6ItMefL2/M=;
+ fh=NEkeLBU4xrEYSilSUfi2Eubk7SfF1cYgH0xZKrW3IVE=;
+ b=X5+kfuz3bGaLMl2fqAcdMR++AP4a+IILJPq/X/OnDNOUz14mMdCmDAseLwia7Yj6YB
+ ezCG4XvP++ZSpJaa04pIMnQ3FiNpk9MQ/+Iv2UePu0S7NOaWE7DR//f/n2RHEuCZ29eH
+ 9dC7Dtq0Y40UU/h/GnhXNes1RkUkA3zub7oblrWxQ5gsbvaaMXo9qj/Wjts1Y/pL7spG
+ gTDGr5ty4QJIyvoapSVUu2FIC6SlZvYvJpieWU48TBU9HyDNu10Bzbex0xpU+U6YZEae
+ ls8GxjTjrsvKtLDzuuPYN5JIrgbd61iWsATAmlWd/Rr99F1R0TD6TAB2gWrVh2Xp9LTE
+ FdtQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1773314180; x=1773918980; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=fmwCiKOCWISEVRto2kbTtfBL6HyGBUtDCFUQrpc3qhc=;
- b=mh/1vHZMb18HjLRuubCBFaaiG65cu9CWbJBHh5XWvvKprvs2yd811A85+p1n3pcx0L
- IwcESsho5PmPlRUGk0CLXjTF+ZUDpuxN2eM1nJP9lcWmIadelF88DJ1lz5AVTpBAfDk4
- CLZ7/ORRWXdouB8PpzCGLke49nemhe8ZNnU1Y4tAJkhoEDNxT6cFY53cYR/7aIExvgrq
- ffnDUPNoQbAisxRIwN7zBF1e6BBBpJhFVpMyi+Vm7QuzqxIBAGxCbhT/TlKWdNzJPEyz
- MHnSDUq0Oym67aZrhUcSmP6pEgRnUcnbXLSbdzjno4MiuWfeqf8Cr55EMvBwRPpDjIFq
- Gb9Q==
+ d=linaro.org; s=google; t=1773314383; x=1773919183; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=y0ndm38Hfc6P244KmaANtEWaewMlw0ZHU6ItMefL2/M=;
+ b=PjNdxVz8ncilhd+K9e2/Fk/mtCSgNzlOBYVhPqkx/MrUw0BVeRvGCxkKdG/IqJGmqJ
+ nLBpiHTkpALfng7THGd5OkfGw0MwU/7yqtWZn+7QjZqWeWq2pws0dfic72kRpcOyBJEH
+ AwUaB7/ei9+e7e7wIfWhGW1nfcFIpSBa+Gy5QJIg1ok9pQ33tXsXUWmWiAVCuFf3hJqN
+ ntNDYxilErQ0D3xP7nVBjiSdbZo9uxFFja9h2zzgat2gahUrml3L5drntSxjXyMFUziK
+ J9Fs8UFmATQygqjzCgxdwgTKsAkbLjyHKWHunZcDymdDPUpJ3uLGvsGk5+LQaLjQQ5sM
+ +j5w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773314180; x=1773918980;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fmwCiKOCWISEVRto2kbTtfBL6HyGBUtDCFUQrpc3qhc=;
- b=viYccfE2GUriIdcCjovM3bwFIimZA9mXHOXreOt+gH2u+37HKB0GyEoce5B3jG7Ads
- 879Bt1h6Ihe5smCLKXrKL606Ez7kbR4ULvDL/8RMe9pMDziAH+GsNe6C5fdFMWUIYHwS
- UJbye5UfGlsJE0O7wtICPsnGkMohU7tHPFOlKktelxnpXtKfebRNFI75zGjwLKPjHB3x
- ZTZ52L0DK3cwCcE//+whJMcV2CNIfm7Dk0mmW0N1q6lRiaKN0KhgX2NeOjTx0jPcSnKk
- V/TiduSEmVPP1oRYaMp9Jax3S9N6Lsff4epU628PiNdZv3csIdd0RLkRU50DViBnN4oH
- nSwg==
-X-Gm-Message-State: AOJu0Yy6lMq2Twn6a0Azs+SzkPyg8Uq5IsXhugYuuoCij5UHrMY6sk+z
- 1ASpYcziYYqyqCru/KD2Vuk9zHGC2n29BCSM9gsDIwGqA07mxkynRgEJOZ0kvdeG4Mo=
-X-Gm-Gg: ATEYQzxABfKMQjWujEl6CkmvnQ8h9LNoCrXCKzLzROLo0dKYBsG28v68cHBaM4Bmv5P
- w1OzhXLcyjYDBq+N9Cygn3Z4WrvvvX4mWM3PciZjpn+Uvaz1z9D2376k6DXzcq/+l9VRbaQ+uRF
- NgD9FmdqFfmyHEZsnJ2PhOV+lj7JYIE2n8Q7gmf6ryhKM3OPQVZJfwUabedArgGQt5I2fOYxjR1
- C3T2ZpY0a2jiYA90/5K6rjhT9Vx9ixRGhbTovC2HDLEme5MaJ4f9B+CQI9KIMyoNwOvXvTJaHsj
- DcGHwOrpbnvq5Sz+fRMUCGCRHmgj7+gGBGaTzkFp8dCSVVZ4n/Nd/QO6JRK6i8R07TqPm7BnBOY
- 9AHX7tQ0e9uUt//T4+vJvKHZjNE54lwx/VQJPTLc26u0j6/XITDcROKVN7LQA/Nsku27bVNhHaa
- VP/S8f78CJYeXMiV3C00aCmvoT4ntp/lHr7HoBaRzqSIvguL5yG0/PUW6LS/aX19vt
-X-Received: by 2002:a05:6a21:9d84:b0:398:9ce9:6de5 with SMTP id
- adf61e73a8af0-398c60e4360mr5733880637.43.1773314180231; 
- Thu, 12 Mar 2026 04:16:20 -0700 (PDT)
-Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c73cdf204afsm5058326a12.10.2026.03.12.04.16.10
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 04:16:19 -0700 (PDT)
-Date: Thu, 12 Mar 2026 19:16:08 +0800
-From: Max Chou <max.chou@sifive.com>
-To: Alistair Francis <alistair23@gmail.com>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu.zevorn@gmail.com>
-Subject: Re: [PATCH v5 0/9] Add Zvfbfa extension support
-Message-ID: <abKfuTO7zg5d67E8@sifive.com>
-References: <20260306071105.3328365-1-max.chou@sifive.com>
- <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
+ d=1e100.net; s=20230601; t=1773314383; x=1773919183;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=y0ndm38Hfc6P244KmaANtEWaewMlw0ZHU6ItMefL2/M=;
+ b=BAh68V2Sn1+gKhoNbqBwHMNwBlAemDZhIbwCAi8HTFxTlJqSxTm9zgQOqAUzpXE5Cz
+ lVnpc8gcNf2sSC5IZH3uqJQ1PNDX2PyGgMw9eYo6SNE83k/lTdhYuuws30WN16ICbglp
+ 9yiTEPehKxjV5mWqOsnYwpbg8hZ4PhQj6NdGdQQgbxfp1f+L3cs3T9JIGomQonSMnNv+
+ Y/eLU3Cpeo0c+8OhUAcsLjZlI/8xzkdm+k6pX+eihL31TpYHsTBoyxS0m/AIJrbTPtHh
+ E2GXiGPCdYIj9ge8AwIBrqQRdkSC3CG6MhjUfGUJ4Z5ljTiYdl5zMjO6IKhGQacMrFC9
+ b72w==
+X-Gm-Message-State: AOJu0YyDiUBjlWWY0VhsdnK7u1dA5ixkiwJj45QFmXtamepOAKUticme
+ FEsgduR3AC+BCYLQXlso/SG//8scHe9TOKgoia3dc+zEF5wL6oB23MKwrpZ4htMKHa0ZSvxgHZI
+ LjHJ9P1RZvfe0zBz6uSq3bEbQpEqZbWv04oWfOp6E3A==
+X-Gm-Gg: ATEYQzxHZqbFC73O3QO28+/yzfDIEja84IFjkC+r+8IHBZW71oErAKanz6O68Eokr9j
+ tW/KCdArxL/hqZ/etGdgt0rlq1ayUdCvI/jTbA5fQC6mY+l7mcSdL7f8o7kE9zfaZss0dPiJdGh
+ 2bcmawabAE9JYIYVsSiJAog9d5xE7vpGVxYVny/EoJJKq8pbzXvgnnbCtfqBO97OH8mfG7e6x7M
+ PidCw1JqwZRK+lyBPCuTfcwgAdhhopI4aQA40B1aH+vHNMoUdfKPFOqPAFwy4R8BGVRdj6AGSGO
+ /X4v1+JCdiXigu2C1mGGmkEEstzakHBTQtdRrxDbRcnOSW9r9shSQrRUUDg6HUIegng=
+X-Received: by 2002:a05:690e:1768:b0:649:b535:46ab with SMTP id
+ 956f58d0204a3-64d657ab568mr3790633d50.49.1773314382948; Thu, 12 Mar 2026
+ 04:19:42 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=max.chou@sifive.com; helo=mail-pg1-x536.google.com
+References: <20260312102626.891359-1-dtalexundeer@yandex-team.ru>
+In-Reply-To: <20260312102626.891359-1-dtalexundeer@yandex-team.ru>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Mar 2026 11:19:30 +0000
+X-Gm-Features: AaiRm51Ud4VUVLi1mQx7Cc-pZqIZvIp7JVNFbh37q8y_uKCxwEn3LzpO97lrA3w
+Message-ID: <CAFEAcA_mzXDdz_xjPnZ9Kc4K01Aoss_OH_qEoL3G33KdsnHrLw@mail.gmail.com>
+Subject: Re: [PATCH v3] vmstate: fix subsection load name check
+To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
+ Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>, Peter Xu <peterx@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,68 +115,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 2026-03-09 14:51, Alistair Francis wrote:
-> On Fri, Mar 6, 2026 at 5:13 PM Max Chou <max.chou@sifive.com> wrote:
-> >
-> > This patch series adds support for the RISC-V Zvfbfa extension, which
-> > provides additional BF16 vector compute support.
-> >
-> > The isa spec of Zvfbfa extension is not ratified yet, so this patch
-> > series is based on the latest draft of the spec (v0.1) and make the
-> > Zvfbfa extension as an experimental extension.
-> 
-> It's not only not ratified, there isn't even a draft spec. A personal
-> GitHub repo without any tags or releases is not enough for us to take
-> this unfortunately.
-> 
-> >
-> > The Zvfbfa extension adds a 1-bit field, altfmt, to the vtype CSR in
-> > bit position 8.
-> > The Zvfbfa extension requires the Zve32f and Zfbfmin extensions.
-> >
-> > Specification:
-> > https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfbfa.adoc
-> 
-> Overall this looks ok. Once a draft spec is released we can apply it
-> 
-> Alistair
-> 
+On Thu, 12 Mar 2026 at 10:26, Alexandr Moshkov
+<dtalexundeer@yandex-team.ru> wrote:
+>
+> When loading a subset, its name is checked for the parent prefix. The
+> following bug may occur here:
+>
+> Let's say there is a vmstate named "virtio-blk", it has a subsection
+> named "virtio-blk/subsection", and it also has another vmstate named
+> "virtio" in the fields.
+> Then, during the migration, when trying to load this subsection for
+> "virtio", the prefix condition will pass for "virtio-blk/subsection" and
+> then the migration will break, because this vmstate does not have such a
+> subsection.
+>
+> In other words, if a field inside vmstate1 is set via vmstate2 with a
+> name that is a prefix of the parent vmstate, then the field can "steal"
+> a subsection belonging to the parent state.
+>
+> Looks like it happens because migration stream for "virtio-blk" looks
+> like this:
+>
+>  [virtio-blk header] [virtio-blk fields] [virtio-blk subsections]
+>
+> "virtio-blk" contains "virtio" field, so migration stream is:
+>
+>  [virtio-blk header] [virtio header] [virtio fields] [virtio
+> subsections] [virtio-blk subsections]
+>
+> And when we load the subsections of the "virtio" device,
+> vmstate_subsection_load() uses qemu_peek_byte() to try to figure out if
+> this is his subsection. This is where we encounter an error.
+>
+> Thus, the error occurs due to the fact that vmsd does not know how many
+> subsections it has when loading (this does not appear anywhere in the
+> migration stream), so it tries to load all the appropriate ones by
+> names.
+>
+> To fix this issue, we call vmstate_get_subsection() and, in case of
+> fail, ignore it, pop the VMSD stack and will try to define this
+> subsection for outer VMSD
+>
+> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
+> ---
+>  migration/vmstate.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 4d28364f7b..8f3a69c26e 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -639,9 +639,7 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
+>          sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
+>          if (sub_vmsd == NULL) {
+>              trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
+> -            error_setg(errp, "VM subsection '%s' in '%s' does not exist",
+> -                       idstr, vmsd->name);
+> -            return -ENOENT;
+> +            return 0;
+>          }
 
-Hi Alistair,
+Does this result in a less useful error message for the case
+where the source sent us a non-existent subsection ? What do
+we report once this patch is applied ?
 
-Thanks for the review. You asked for a pointer to the standalone ISA
-spec repo for Zvfbfa — I want to explain why that doesn’t exist and
-where the spec lives instead.
-
-RVIA changed the ISA development workflow: new ISA specifications are
-no longer developed in standalone repositories. Instead, they are
-developed as forked branches of the base ISA manual repo
-(riscv/riscv-isa-manual) and merged into it upon ratification [1].
-
-For Zvfbfa specifically, the official spec artifact under this new
-workflow is a PR against riscv-isa-manual [2], incorporating the spec
-text [3]. The PR notes that the spec has passed internal review and
-ARC review, as documented in the tech-unprivileged list thread [4].
-
-PR #2743 is currently open, meaning ratification is pending but not
-yet complete. Under the new workflow, merge into main of
-riscv-isa-manual is the signal that ratification is finalized. If you
-prefer to wait until that merge happens before applying this patchset,
-I completely understand. Alternatively, if you are comfortable
-accepting it as ratification-pending, I am happy to address any
-remaining technical comments.
-
-Please let me know how you would like to proceed.
-
-References:
-[1] https://lists.riscv.org/g/sig-documentation/message/275
-[2] https://github.com/riscv/riscv-isa-manual/pull/2743
-[3] https://github.com/aswaterman/riscv-misc/blob/main/isa/zvfbfa.adoc
-[4] https://lists.riscv.org/g/tech-unprivileged/message/1031
-    https://lists.riscv.org/g/tech-unprivileged/message/1085
-    https://lists.riscv.org/g/tech-unprivileged/message/1109
-
-Best regards,
-rnax
-
+-- PMM
 
