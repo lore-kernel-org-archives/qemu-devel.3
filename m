@@ -4,101 +4,117 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E7A3FED2F6
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 09:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9DDAFED2F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 09:38:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0cRN-0004AX-6H; Thu, 12 Mar 2026 05:34:49 -0400
+	id 1w0cUT-00054c-Jg; Thu, 12 Mar 2026 05:38:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0cRC-000498-Oo
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:34:41 -0400
-Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0cR7-0004ao-PL
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:34:36 -0400
-Received: by mail-yx1-xb12d.google.com with SMTP id
- 956f58d0204a3-649278a69c5so780243d50.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 02:34:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773308072; cv=none;
- d=google.com; s=arc-20240605;
- b=iiz7ph7/0s9Vn9YmuIxlsC9g8m+P767oyzmXwB4b2vthWxeJTH0KUgJlJ/etooa2T4
- vE/JQTnFQIEXnodpw+fZfdiVqT1nkchICCdGgkd1IsNxgXRQuVJbofp9HURC8kinsKQ1
- lwINrGXdrSCSQ4mg49urdowMRMtW6FCKeqcjYhv2Vc7A9zbuWzhKrumMc3STTzMEKT9Y
- 4mhNAydsODmwpAlWdjQYNejzfGMKHLcp93GTPE64dt1ISrGJ36E+RflwWlBorNHun4CH
- jnpntEdNDQN8IGkLNuaVVLaZVhUtN4n8Rj0/9w81dYXApdzX6S/+AKqgJw0sFe6ry8Yd
- op5A==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=OGz4vuz0GsQQ4ZVjL24w4ResPPv8pB+YZm4yNMsfN4E=;
- fh=SVg4ictVTYGlFVdnDFvqsGtiGFrYltina8RE8u43DkU=;
- b=lv+Mx5qfMhWfiSXWAXIzT6FjlFTD8u1ZCe8D5wjQoetfFwSSALuaSl9Mabu4hxwq7w
- ZDHuqYZw/34E3huuFENQcW+PnWLR9R/ZBdlVWRMAnQBaZ8/3YvqHf4fm7Q/jAzDDyc+C
- MjzJMtU74lhYYuLdsAi7ePrHU673sLYn2bZoCqEsNQfA2IoEOwydPVyJe/uE8uz7C31w
- y7vPjgTtjQqPmirpm5fhTUBg/wq0oaEpT9kWJC7S3+Uxe1bsio0Z0yUC2tZ8CF1ZQQAG
- qxqghkAjDHQOi6CxZXpk9iKOd809Bj/F4c8z07HkK/RJtknbPnS1Si0KzgcOKIlHa/SV
- q3Fg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773308072; x=1773912872; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OGz4vuz0GsQQ4ZVjL24w4ResPPv8pB+YZm4yNMsfN4E=;
- b=XapEu3kM+0x0Mz4IAv1WjQNkUiVvgi1paoCt3yzTSh0vZ8A61xehK74nBgx4rHo+GO
- JPZje2+n2PWMvs+2xvsd2TaAQdVytssgNUL22mih1DLV/PqcvYYUMMuZBNw7B7FU9+ME
- 72j9M7Mz+WntIQN17XWv3N0m9ygQ/tKSggfgYuIbrex3Dt52ZPLjOw/+yWCWAbi1v7z9
- fn3Y0B4k1CtvoP5fr0VA6JAWBHG1YVJN47XE7/L99LIHIWWsDVa8zdmV6mb6MjNaQGXR
- ZchRgggIDJioZDwzxtF526VMzcAXITGzsfqAFIROxTZ7X8RHKtzhiMTyqDm/h3hbSNfM
- 5WQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773308072; x=1773912872;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=OGz4vuz0GsQQ4ZVjL24w4ResPPv8pB+YZm4yNMsfN4E=;
- b=fvdAcqa3I91IZnfQdR4HW14cV6UPOEmfO8NBUR8FpoGZQJIu672j6zPK7XgPdoYjUN
- kFutKnlNUbg0dFi/bJSKK2eUEkJABCYP61qSI8pjyDoxAUOGA+dKnWs0wmZgeA1ApIEr
- BwbU87EbRpAylrXl7KYgbFAWsDqre8AMPRT3OBBYlu/gOayKodte/X9GCB43lmgvkdfI
- pbw8e68EqHFSe5D5h1ASiynh2eMmYoEgu4F3BB8la2PZ9GwHhiao55Ys+gUJV2h89Zg0
- GtCq3r5X1xlZhpdPL/0OHy2V2cD6GAI/7VkA1k2meJHiybKb9YhSOw/pEI/X/cdHEoDv
- ETpA==
-X-Gm-Message-State: AOJu0YyMKoWDZTrSmiG/XrnkC6yPbNDHcMCwHjXFTFSFueSXBEyQNzLF
- XeEJqh9Twh5/cTBwmhui4P5S41ZQ/A210H57RZTtxtgVs05Z0tgwZuyVES8V48UuhCWwfWFeVgo
- VtBrZV+N28rnBDP8EHNaNrBnnnIWRBxiK46drmqPiXw==
-X-Gm-Gg: ATEYQzzoy2PYhtGzFHN7oYn//ISYj43jmbfyYKNHDGKHdXpS7cmHbbfDpgeTzDR24uY
- dqpM3fwAxbU0doSvTu+vaP4sWHHkOOgrAQ/zM1y79BKm8rrWADNfedw3y2c6VSsCmZj87wqDYhP
- tb9JembiCh/q5+ALvi1gW+bEJFr6r9RiJ50qZIzsYubhwG4gYQQOkCkXHVoW4+E0sRS5bzmxMmp
- UhLjZN3mEchIPLxdBBpT48YhDkbGLgpemxTzTyGkkDw2oU6tZstvOsiyLSg2gsZ2G403diAznAg
- ovyqmQVmBisSdw7tlcK+PfEXe0pAUTCbhe6CHwJ2KOPCJFZnX7nD/8ehTwQH/n8uDSI=
-X-Received: by 2002:a53:ac94:0:b0:64c:b7c9:dffd with SMTP id
- 956f58d0204a3-64d657857e8mr5197406d50.58.1773308072359; Thu, 12 Mar 2026
- 02:34:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0cUR-000549-Ev
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:37:59 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0cUO-0007DT-V1
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:37:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773308275;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=QEnWMYIPOEHNRrFCMMCwgC5bTh463xHuzWWA+HStrdA=;
+ b=ajviKiR3Wsrt+Lg2NdfRfTF6ZXHCPQmHftGm6zfqUl1cewHr27sxXA8h4SCIFsDDJy/rsv
+ dblnngRpoUwUJcJxqDVVxtf/fbeXasv9yh2e64dIO0nHdqDCoBbMo0b/5BPnXNEJ0sgspe
+ ogG/LJqxGvynuCX6x2R9HcqKUEJaT50=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-zV6qxAhjPm6KucNImWSLOA-1; Thu,
+ 12 Mar 2026 05:37:53 -0400
+X-MC-Unique: zV6qxAhjPm6KucNImWSLOA-1
+X-Mimecast-MFC-AGG-ID: zV6qxAhjPm6KucNImWSLOA_1773308272
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 49EBB1977694; Thu, 12 Mar 2026 09:37:52 +0000 (UTC)
+Received: from [10.45.224.79] (unknown [10.45.224.79])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A6E7B19540C2; Thu, 12 Mar 2026 09:37:48 +0000 (UTC)
+Message-ID: <dec16c33-591c-41b7-b9c5-02d554811866@redhat.com>
+Date: Thu, 12 Mar 2026 10:37:46 +0100
 MIME-Version: 1.0
-References: <20260312085220.194207-1-vikingtc4@gmail.com>
-In-Reply-To: <20260312085220.194207-1-vikingtc4@gmail.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 09:34:21 +0000
-X-Gm-Features: AaiRm53sZiF4soqAR4t-FQ7Ffv9PJtXTQOIuaksw57zdQoBdYhjVYFHHwQIfR8c
-Message-ID: <CAFEAcA9SxRVkosA0HMfomLKAVxHki4xOR-LyLWAFEn24K56mMg@mail.gmail.com>
-Subject: Re: [PATCH] block/curl: Fix Resource Leak in curl_header_cb
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org, kwolf@redhat.com, hreitz@redhat.com, 
- qemu-block@nongnu.org, "trieu2.huynh" <trieu2.huynh@lge.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 7/7] hw/acpi: generic_event_device: Don't call
+ qdev_get_machine in soc init
+To: alistair23@gmail.com, qemu-devel@nongnu.org, armbru@redhat.com,
+ pbonzini@redhat.com, berrange@redhat.com, peterx@redhat.com,
+ philmd@linaro.org
+Cc: Alistair Francis <alistair.francis@wdc.com>
+References: <20260312043158.4191378-1-alistair.francis@wdc.com>
+ <20260312043158.4191378-8-alistair.francis@wdc.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260312043158.4191378-8-alistair.francis@wdc.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -114,54 +130,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 at 08:53, Trieu Huynh <vikingtc4@gmail.com> wrote:
->
-> From: "trieu2.huynh" <trieu2.huynh@lge.com>
->
-> The function curl_header_cb uses g_autofree with g_strstrip(g_strndup(...)).
-> However, g_strstrip may return a pointer that is an offset from the
-> original allocated memory, causing g_autofree to attempt to free
-> an invalid pointer or leak the original.
+On 12/03/2026 05.31, alistair23@gmail.com wrote:
+> From: Alistair Francis <alistair.francis@wdc.com>
+> 
+> Calling qdev_get_machine() in the soc_init function would result in
 
-I don't believe this is correct. g_strstrip() will
-always return the string argument it is passed. (The glib
-documentation for g_strstrip() doesn't say so explicitly, but
-it is a macro for g_strchomp(g_strchug(string)), and both
-those functions say that they return the input argmuent.)
+soc_init sounds wrong for this device?
 
-> Separate the allocation and the stripping to ensure the original
-> pointer is correctly tracked and freed.
->
-> Resolves: CID 1645633
->
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+Maybe replace this with:
+
+Calling qdev_get_machine() in acpi_ged_initfn() (via 
+acpi_memory_hotplug_init()) results in the following assert
+
+?
+
+With that fixed:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+
+> the following assert
+> 
+>      ../hw/core/qdev.c:858: qdev_get_machine: Assertion `dev' failed.
+> 
+> when trying to run
+> 
+>      ./qemu-system-aarch64 -S -display none -M virt -device acpi-ged,help
+> 
+> as the machine wasn't created yet. We call qdev_get_machine() to obtain
+> the ram slots of the machine. So instead of initialising the GED in
+> the init let's instead do it in the realise where the machine
+> will exist.
+> 
+> Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 > ---
->  block/curl.c | 3 ++-
->  1 file changed, 2 insertions(+), 1 deletion(-)
->
-> diff --git a/block/curl.c b/block/curl.c
-> index 66aecfb20e..5b66c80704 100644
-> --- a/block/curl.c
-> +++ b/block/curl.c
-> @@ -208,7 +208,8 @@ static size_t curl_header_cb(void *ptr, size_t size, size_t nmemb, void *opaque)
->  {
->      BDRVCURLState *s = opaque;
->      size_t realsize = size * nmemb;
-> -    g_autofree char *header = g_strstrip(g_strndup(ptr, realsize));
-> +    g_autofree char *header = g_strndup(ptr, realsize);
-> +    g_strstrip(header);
+>   hw/acpi/generic_event_device.c | 5 +++--
+>   1 file changed, 3 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/acpi/generic_event_device.c b/hw/acpi/generic_event_device.c
+> index 30dab43a00..9e9416d406 100644
+> --- a/hw/acpi/generic_event_device.c
+> +++ b/hw/acpi/generic_event_device.c
+> @@ -506,6 +506,9 @@ static void acpi_ged_realize(DeviceState *dev, Error **errp)
+>       uint32_t ged_events;
+>       int i;
+>   
+> +    acpi_memory_hotplug_init(&s->container_memhp, OBJECT(dev),
+> +                             &s->memhp_state, 0);
+> +
+>       if (pcihp_state->use_acpi_hotplug_bridge) {
+>           s->ged_event_bitmap |= ACPI_GED_PCI_HOTPLUG_EVT;
+>       }
+> @@ -568,8 +571,6 @@ static void acpi_ged_initfn(Object *obj)
+>       memory_region_init(&s->container_memhp, OBJECT(dev), "memhp container",
+>                          MEMORY_HOTPLUG_IO_LEN);
+>       sysbus_init_mmio(sbd, &s->container_memhp);
+> -    acpi_memory_hotplug_init(&s->container_memhp, OBJECT(dev),
+> -                             &s->memhp_state, 0);
+>   
+>       memory_region_init_io(&ged_st->regs, obj, &ged_regs_ops, ged_st,
+>                             TYPE_ACPI_GED "-regs", ACPI_GED_REG_COUNT);
 
-Being able to rewrite the code like this confirms that we
-don't actually have a leak -- we are still relying here on
-g_strstrip(X) == X, just in a different way.
-
->      char *val = strchr(header, ':');
->
->      if (!val) {
-
-This looks like a Coverity false positive to me, so I've marked it
-that way in the Coverity Scan UI.
-
-thanks
--- PMM
 
