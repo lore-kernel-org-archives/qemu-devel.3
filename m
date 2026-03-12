@@ -4,89 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 37D3BFED2FF
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:46:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE632FED2FF
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:48:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0dYW-0007CN-ER; Thu, 12 Mar 2026 06:46:16 -0400
+	id 1w0da4-0007wb-HJ; Thu, 12 Mar 2026 06:47:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0dYT-00079T-6R
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:46:13 -0400
-Received: from p-west3-cluster1-host12-snip4-10.eps.apple.com ([57.103.73.251]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0da2-0007wJ-LW
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:47:50 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0dYQ-0007uS-UB
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:46:12 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-3 (Postfix) with ESMTPS id
- A0FA218001EA; Thu, 12 Mar 2026 10:46:03 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773312366; x=1775904366;
- bh=vcFnGmQQ32XRb2U8FiZn0syqGe1g2Kuz8WvX+pQ86gM=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=glvWNypg0woT+UWd3FlW4zDspLj0Ml6ZjrfRgGsmWf27/iIFtX6NA1xhl8c+czRDop2ErnJNS4MB0KoAY0NxQUPuzxcO/7/au7WBJTsLfzpRJnlJ+zRWM9H2q1kGXvJKt7h+xcuPnTDIKUbioA0Pks/2C5k4sF6+z/d30Imr2GMcM21XHjcaTql9EHs0e7IWk599VXcXqAnIV+R7gtiCAeuIV2iTLjncdi3nCmMZhTFXXGVh1688Yk21KV6UpIdL0TQSz/EG5ORc8IsIuba/Qo/SXwimozwIB9FNUUucZPEdvbeduYdYv1K3RnWkb1KiXTSLCKRGvbZnqnbzCSYpAw==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-3 (Postfix) with ESMTPSA id
- 8257918001C1; Thu, 12 Mar 2026 10:46:00 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH 08/14] accel/mshv: Add access_vp_regs synthetic proc
- features
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260312-lucky-cocky-whippet-2a5f3d@anirudhrb>
-Date: Thu, 12 Mar 2026 11:45:48 +0100
-Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <AA5B0DE1-CA87-43F6-9A52-2F9F91F3514D@unpredictable.fr>
-References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
- <20260311-mshv_accel_arm64_supp-v1-8-c31699b7bc1f@anirudhrb.com>
- <199EF957-0EBD-4E14-8453-1C5FA5B14063@unpredictable.fr>
- <20260312-lucky-cocky-whippet-2a5f3d@anirudhrb>
-To: Anirudh Rayabharam <anirudh@anirudhrb.com>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Authority-Info-Out: v=2.4 cv=Xqn3+FF9 c=1 sm=1 tr=0 ts=69b2996d
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=tFGNSmrwAAAA:8 a=yMhMjlubAAAA:8
- a=UMoMHAngHAYsTGonUBsA:9 a=QEXdDO2ut3YA:10 a=LpD6Tdepsyerr7eS-Jg7:22
-X-Proofpoint-GUID: N5Ihymbqfo03xIagtwYcr34DhtEEzyTV
-X-Proofpoint-ORIG-GUID: N5Ihymbqfo03xIagtwYcr34DhtEEzyTV
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEyMDA4NCBTYWx0ZWRfX2wcDxtCEc5mC
- +iqTwVkVt6htMYT1C3Ab1dvbvuhk3HKs1fCLLgjgTa8iFfiXetBfVSqCb7jx3rKMBVlBYPBfr6K
- 90zxG4Z9QTU9cRiMsluSfw9idLuRuw7D58eg771/WuhMheGiaVOyR8Q1opMv9KlHQ/4ciFWc7na
- PR1Yepok4BUtcmthftWYFNjoVzoLIgIwAmYt6m6JI5I1HHJ8nztddA/OAD3RBq8oM3z5ngFetut
- n9Sz+ZtltvFNpuLGZeZqiWFJgrjcboBrFW2P8FkKKwz73tQbLzS1F1xh6mkLdfidQ0FFbyJiNhS
- EIk8rkoseqdRzBN/Tu3mg440BRmZPSdXwSlS6Z11ENxnXwXTBxzDctSvMDVVmA=
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0
- lowpriorityscore=0 mlxlogscore=511 mlxscore=0 bulkscore=0 phishscore=0
- adultscore=0 suspectscore=0 malwarescore=0 clxscore=1030 spamscore=0
- classifier=spam authscore=0 adjust=0 reason=mlx scancount=1
- engine=8.22.0-2601150000 definitions=main-2603120084
-X-JNJ: AAAAAAABZ3GGz0oBvECnT551WljJg2NXtyfXJ9ilp2Sph1DUqEQtGSAji6LY3r0emompb60ezmBATjgV3j9bFoT86c8k/RHTLzoZr7fT5zJxJLZADzVPlbHUfF6swl3PQhaECPs108GK6gEL6xF+Z13bftPQIJPXieajqBo0rJaEv9YoWGo4VMRtKo6TqNVrL1mECEwura9juf5yycfeDEf6D7kjKZsvNCr3dDXBoLJajhYlbJ9o5MonTUBL+rCjgwSEdS4YApWE8j0C4E8XvUYV4RYmS/6st93Jqw+H0xqurmY3j6hLDv/sYBPg2d8STEra4xvbr9+kkEH+FBnrXVH7wMbz4oWeIBbpdf7M6FCJJ7NvX0ZSXTQ9fijOSqsykEPuUsXL4une2E4v0o3elgBxMIRlHybJd6UJNec5eLb31ax1Lvo0iMuWsOHaRbQH8b5hiJduMosAB7+uLe+WF4HIjwSGsKx2NnVmN7cO0XHL5+3VGmxuPEbjogcF3ybb1/928TanqWe2uRurjl8KZU+EBkoVMyfkprMBuhaoKcpeEMPJ+vUGvboYzzvpwc768PUUvmdH7uV8hjedoOOtK5XU9bNWtnOfdFRm8a2Bw6ZV0VsYPO8vz0vFQrYvVGRbbA3/5309Vvmi++53CGBDQvgJMzDgi51LVc1DpD/9RUI0ClsrnqJCIoC6JbY+c6ZN2C4Pj5aEDL2WiMLAgT8Fpr5ojBay1DUnVs2JTgj/TyvwRYYD3RN3O2oBVDDySlTwjJJGH0187gdi47t4llasutkLOuqKlxFAUyMnLODpWriAOg==
-Received-SPF: pass client-ip=57.103.73.251;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w0dZy-0000c5-3Y
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:47:49 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773312451; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=AFPQDHPhMPwaW6M3ordlFo095wDQUibNfv35houyQJ3nD3JOWDJgM0NC87c8mFZTLuXvJPaDSbmMWh1M8Ucz1vqxA3Lg7MuConO0yxT55DdQiUIBoRn+uEZUWnpRNtIGo6A0X+kJz653+14LUA+dvgxJJL1GOkg4Ajcl08dHyXI=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773312451;
+ h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=ysxZq0DGFyyghFyGA3HZO4jAjs8nXwPTze84iuOeYwA=; 
+ b=ddMmyCOOxgtlt3iigit5U7WGxsQcBHJ2lhQCQAH3dppNDlTh/K367ZWLxA0ytczV97H63r1XhkFfDhGdOIAQZBAGnDWGPjZEgm72LdbIDbhVF+VIKpJmO2XlwhstbnEX+JDlRBQDSJiNwkbvgNecKW7mUyvgmdJTfWPcSEWEMqo=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773312451; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+ bh=ysxZq0DGFyyghFyGA3HZO4jAjs8nXwPTze84iuOeYwA=;
+ b=oNcIdqx7a4gEEp7WtgFZG79hI6Z5jWfasPnaoMZMZikKKpTH/NxgFFfbgL2SlgRb
+ Q8XMMFoyS1b2EYQXG1LCKPwWxFX2bBv0ce8JhK7gLjk6GJx2jiDYho8AYDfseZqOKgg
+ ICZeU+OdpJONv5L20wcho4BX/RCstqwbZHQx9CjM=
+Received: by mx.zohomail.com with SMTPS id 1773312448762250.92249995344366;
+ Thu, 12 Mar 2026 03:47:28 -0700 (PDT)
+Date: Thu, 12 Mar 2026 10:47:24 +0000
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+To: Magnus Kulke <magnuskulke@linux.microsoft.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Wei Liu <liuwe@microsoft.com>,
+ Magnus Kulke <magnuskulke@microsoft.com>, Wei Liu <wei.liu@kernel.org>
+Subject: Re: [PATCH v2 1/9] accel/mshv: use mshv_create_partition_v2 payload
+Message-ID: <20260312-tested-garnet-hippo-cb71ee@anirudhrb>
+References: <20260311113505.1177878-1-magnuskulke@linux.microsoft.com>
+ <20260311113505.1177878-2-magnuskulke@linux.microsoft.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311113505.1177878-2-magnuskulke@linux.microsoft.com>
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,51 +81,351 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Wed, Mar 11, 2026 at 12:34:57PM +0100, Magnus Kulke wrote:
+> When using the extended request format we can instruct the hypervisor to
+> provision enough space for requested XSAVE features. This is required
+> for supporting QEMU models provided via the -cpu flag properly.
+> 
+> Signed-off-by: Magnus Kulke <magnuskulke@linux.microsoft.com>
+> ---
+>  accel/mshv/mshv-all.c          |  75 +++++++++++--
+>  include/hw/hyperv/hvgdk_mini.h |   2 +
+>  include/hw/hyperv/hvhdk.h      | 195 +++++++++++++++++++++++++++++++++
+>  3 files changed, 265 insertions(+), 7 deletions(-)
+> 
+> diff --git a/accel/mshv/mshv-all.c b/accel/mshv/mshv-all.c
+> index d4cc7f5371..eab967ff07 100644
+> --- a/accel/mshv/mshv-all.c
+> +++ b/accel/mshv/mshv-all.c
+> @@ -110,21 +110,82 @@ static int resume_vm(int vm_fd)
+>      return 0;
+>  }
+>  
+> +static int get_host_partition_property(int mshv_fd, uint32_t feature_bank,
 
+Why not just call the param property_code instead of feature_bank? That
+way this function can be used for other properties too.
 
-> On 12. Mar 2026, at 11:32, Anirudh Rayabharam <anirudh@anirudhrb.com> =
-wrote:
->=20
-> On Wed, Mar 11, 2026 at 04:35:31PM +0100, Mohamed Mediouni wrote:
->>=20
->>=20
->>> On 11. Mar 2026, at 16:15, Anirudh Rayabharam =
-<anirudh@anirudhrb.com> wrote:
->>>=20
->>> From: Aastha Rawat <aastharawat@linux.microsoft.com>
->>>=20
->>> Enable access_vp_regs feature for regs. In arm64, this feature bit
->>> allows the guest to set VP registers using hypercall. This wasn't
->>> required for x86 because such registers are set using wrmsr instead =
-of
->>> hypercall.
->>>=20
->> Hello,
->>=20
->> Could you split this into two patches? With the hvhdk.h changes in =
-another patch.
->=20
-> Any reason why?
->=20
-> Throughout this series we're introducing hv*dk changes along with the
-> code using them. Isn't that a good idea?
->=20
-Hello,
+> +                                       uint64_t *value)
+> +{
+> +    int ret;
+> +    struct hv_input_get_partition_property in = {0};
+> +    struct hv_output_get_partition_property out = {0};
+> +    struct mshv_root_hvcall args = {0};
+> +
+> +    in.property_code = feature_bank;
+> +
+> +    args.code    = HVCALL_GET_PARTITION_PROPERTY;
+> +    args.in_sz   = sizeof(in);
+> +    args.in_ptr  = (uint64_t)&in;
+> +    args.out_sz  = sizeof(out);
+> +    args.out_ptr = (uint64_t)&out;
+> +
+> +    ret = ioctl(mshv_fd, MSHV_ROOT_HVCALL, &args);
+> +    if (ret < 0) {
+> +        error_report("Failed to get host partition property bank: %s",
+> +                     strerror(errno));
+> +        return -1;
+> +    }
+> +
+> +    *value = out.property_value;
+> +    return 0;
+> +}
+> +
+>  static int create_partition(int mshv_fd, int *vm_fd)
+>  {
+>      int ret;
+> -    struct mshv_create_partition args = {0};
+> +    uint64_t pt_flags, host_proc_features;
+> +    union hv_partition_processor_xsave_features disabled_xsave_features;
+> +    struct mshv_create_partition_v2 args = {0};
+> +    uint32_t feature_banks[] = {
+> +        HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
+> +        HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
+> +    };
+> +
+> +    QEMU_BUILD_BUG_ON(ARRAY_SIZE(feature_banks) > MSHV_NUM_CPU_FEATURES_BANKS);
 
-I think that because of some of the content of header updates aren=E2=80=99=
-t immediately related to the commits at hand, it=E2=80=99d be better to
-just have a single big commit at the beginning of the series for any =
-GDK/HDK updates.
-
-Oh also, preemptively adding some header definitions before they=E2=80=99r=
-e immediately needed could be simpler for everyone
-- especially given that WHP exists and is overlapping a lot.
-
-Also makes me think of whether it could be better to share some code =
-between WHPX and MSHV, but that=E2=80=99s a separate
-story=E2=80=A6
+Is this really useful since we're not using the feature_banks array
+anywhere?
 
 Thanks,
--Mohamed
+Anirudh.
 
+>  
+>      /* Initialize pt_flags with the desired features */
+> -    uint64_t pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
+> -                        (1ULL << MSHV_PT_BIT_X2APIC) |
+> -                        (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES);
+> +    pt_flags = (1ULL << MSHV_PT_BIT_LAPIC) |
+> +               (1ULL << MSHV_PT_BIT_X2APIC) |
+> +               (1ULL << MSHV_PT_BIT_GPA_SUPER_PAGES) |
+> +               (1ULL << MSHV_PT_BIT_CPU_AND_XSAVE_FEATURES);
+> +
+> +    /* enable all */
+> +    disabled_xsave_features.as_uint64 = 0;
+> +
+> +    /*
+> +     * query host for supported processor features and disable unsupported
+> +     * features: (0 means supported, 1 means disabled, hence the negation)
+> +     */
+> +    ret = get_host_partition_property(mshv_fd,
+> +                                      HV_PARTITION_PROPERTY_PROCESSOR_FEATURES0,
+> +                                      &host_proc_features);
+> +    if (ret < 0) {
+> +        error_report("Failed to get host processor feature bank 0");
+> +        return -1;
+> +    }
+> +    args.pt_cpu_fbanks[0] = ~host_proc_features;
+>  
+> -    /* Set default isolation type */
+> -    uint64_t pt_isolation = MSHV_PT_ISOLATION_NONE;
+> +    ret = get_host_partition_property(mshv_fd,
+> +                                      HV_PARTITION_PROPERTY_PROCESSOR_FEATURES1,
+> +                                      &host_proc_features);
+> +    if (ret < 0) {
+> +        error_report("Failed to get host processor feature bank 1");
+> +        return -1;
+> +    }
+> +    args.pt_cpu_fbanks[1] = ~host_proc_features;
+>  
+> +    /* populate args structure */
+>      args.pt_flags = pt_flags;
+> -    args.pt_isolation = pt_isolation;
+> +    args.pt_isolation = MSHV_PT_ISOLATION_NONE;
+> +    args.pt_disabled_xsave = disabled_xsave_features.as_uint64;
+> +    args.pt_num_cpu_fbanks = MSHV_NUM_CPU_FEATURES_BANKS;
+>  
+>      ret = ioctl(mshv_fd, MSHV_CREATE_PARTITION, &args);
+>      if (ret < 0) {
+> diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> index 7d7b2e9b36..a8d4b2b2b1 100644
+> --- a/include/hw/hyperv/hvgdk_mini.h
+> +++ b/include/hw/hyperv/hvgdk_mini.h
+> @@ -456,6 +456,8 @@ typedef struct hv_input_set_vp_registers {
+>      struct hv_register_assoc elements[];
+>  } QEMU_PACKED hv_input_set_vp_registers;
+>  
+> +#define MSHV_VP_MAX_REGISTERS   128
+> +
+>  union hv_interrupt_control {
+>      uint64_t as_uint64;
+>      struct {
+> diff --git a/include/hw/hyperv/hvhdk.h b/include/hw/hyperv/hvhdk.h
+> index bf2f8cbc27..a6893f4ca3 100644
+> --- a/include/hw/hyperv/hvhdk.h
+> +++ b/include/hw/hyperv/hvhdk.h
+> @@ -13,6 +13,16 @@
+>  
+>  #define HV_PARTITION_SYNTHETIC_PROCESSOR_FEATURES_BANKS 1
+>  
+> +struct hv_input_get_partition_property {
+> +    uint64_t partition_id;
+> +    uint32_t property_code; /* enum hv_partition_property_code */
+> +    uint32_t padding;
+> +} QEMU_PACKED;
+> +
+> +struct hv_output_get_partition_property {
+> +    uint64_t property_value;
+> +} QEMU_PACKED;
+> +
+>  struct hv_input_set_partition_property {
+>      uint64_t partition_id;
+>      uint32_t property_code; /* enum hv_partition_property_code */
+> @@ -163,6 +173,191 @@ union hv_partition_synthetic_processor_features {
+>      };
+>  };
+>  
+> +union hv_partition_processor_xsave_features {
+> +    struct {
+> +        uint64_t xsave_support:1;
+> +        uint64_t xsaveopt_support:1;
+> +        uint64_t avx_support:1;
+> +        uint64_t avx2_support:1;
+> +        uint64_t fma_support:1;
+> +        uint64_t mpx_support:1;
+> +        uint64_t avx512_support:1;
+> +        uint64_t avx512_dq_support:1;
+> +        uint64_t avx512_cd_support:1;
+> +        uint64_t avx512_bw_support:1;
+> +        uint64_t avx512_vl_support:1;
+> +        uint64_t xsave_comp_support:1;
+> +        uint64_t xsave_supervisor_support:1;
+> +        uint64_t xcr1_support:1;
+> +        uint64_t avx512_bitalg_support:1;
+> +        uint64_t avx512_i_fma_support:1;
+> +        uint64_t avx512_v_bmi_support:1;
+> +        uint64_t avx512_v_bmi2_support:1;
+> +        uint64_t avx512_vnni_support:1;
+> +        uint64_t gfni_support:1;
+> +        uint64_t vaes_support:1;
+> +        uint64_t avx512_v_popcntdq_support:1;
+> +        uint64_t vpclmulqdq_support:1;
+> +        uint64_t avx512_bf16_support:1;
+> +        uint64_t avx512_vp2_intersect_support:1;
+> +        uint64_t avx512_fp16_support:1;
+> +        uint64_t xfd_support:1;
+> +        uint64_t amx_tile_support:1;
+> +        uint64_t amx_bf16_support:1;
+> +        uint64_t amx_int8_support:1;
+> +        uint64_t avx_vnni_support:1;
+> +        uint64_t avx_ifma_support:1;
+> +        uint64_t avx_ne_convert_support:1;
+> +        uint64_t avx_vnni_int8_support:1;
+> +        uint64_t avx_vnni_int16_support:1;
+> +        uint64_t avx10_1_256_support:1;
+> +        uint64_t avx10_1_512_support:1;
+> +        uint64_t amx_fp16_support:1;
+> +        uint64_t reserved1:26;
+> +    };
+> +    uint64_t as_uint64;
+> +};
+> +
+> +#define HV_PARTITION_PROCESSOR_FEATURES_BANKS 2
+> +#define HV_PARTITION_PROCESSOR_FEATURES_RESERVEDBANK1_BITFIELD_COUNT 4
+> +
+> +
+> +union hv_partition_processor_features {
+> +    uint64_t as_uint64[HV_PARTITION_PROCESSOR_FEATURES_BANKS];
+> +    struct {
+> +        uint64_t sse3_support:1;
+> +        uint64_t lahf_sahf_support:1;
+> +        uint64_t ssse3_support:1;
+> +        uint64_t sse4_1_support:1;
+> +        uint64_t sse4_2_support:1;
+> +        uint64_t sse4a_support:1;
+> +        uint64_t xop_support:1;
+> +        uint64_t pop_cnt_support:1;
+> +        uint64_t cmpxchg16b_support:1;
+> +        uint64_t altmovcr8_support:1;
+> +        uint64_t lzcnt_support:1;
+> +        uint64_t mis_align_sse_support:1;
+> +        uint64_t mmx_ext_support:1;
+> +        uint64_t amd3dnow_support:1;
+> +        uint64_t extended_amd3dnow_support:1;
+> +        uint64_t page_1gb_support:1;
+> +        uint64_t aes_support:1;
+> +        uint64_t pclmulqdq_support:1;
+> +        uint64_t pcid_support:1;
+> +        uint64_t fma4_support:1;
+> +        uint64_t f16c_support:1;
+> +        uint64_t rd_rand_support:1;
+> +        uint64_t rd_wr_fs_gs_support:1;
+> +        uint64_t smep_support:1;
+> +        uint64_t enhanced_fast_string_support:1;
+> +        uint64_t bmi1_support:1;
+> +        uint64_t bmi2_support:1;
+> +        uint64_t hle_support_deprecated:1;
+> +        uint64_t rtm_support_deprecated:1;
+> +        uint64_t movbe_support:1;
+> +        uint64_t npiep1_support:1;
+> +        uint64_t dep_x87_fpu_save_support:1;
+> +        uint64_t rd_seed_support:1;
+> +        uint64_t adx_support:1;
+> +        uint64_t intel_prefetch_support:1;
+> +        uint64_t smap_support:1;
+> +        uint64_t hle_support:1;
+> +        uint64_t rtm_support:1;
+> +        uint64_t rdtscp_support:1;
+> +        uint64_t clflushopt_support:1;
+> +        uint64_t clwb_support:1;
+> +        uint64_t sha_support:1;
+> +        uint64_t x87_pointers_saved_support:1;
+> +        uint64_t invpcid_support:1;
+> +        uint64_t ibrs_support:1;
+> +        uint64_t stibp_support:1;
+> +        uint64_t ibpb_support:1;
+> +        uint64_t unrestricted_guest_support:1;
+> +        uint64_t mdd_support:1;
+> +        uint64_t fast_short_rep_mov_support:1;
+> +        uint64_t l1dcache_flush_support:1;
+> +        uint64_t rdcl_no_support:1;
+> +        uint64_t ibrs_all_support:1;
+> +        uint64_t skip_l1df_support:1;
+> +        uint64_t ssb_no_support:1;
+> +        uint64_t rsb_a_no_support:1;
+> +        uint64_t virt_spec_ctrl_support:1;
+> +        uint64_t rd_pid_support:1;
+> +        uint64_t umip_support:1;
+> +        uint64_t mbs_no_support:1;
+> +        uint64_t mb_clear_support:1;
+> +        uint64_t taa_no_support:1;
+> +        uint64_t tsx_ctrl_support:1;
+> +        uint64_t reserved_bank0:1;
+> +
+> +        /* N.B. Begin bank 1 processor features. */
+> +        uint64_t a_count_m_count_support:1;
+> +        uint64_t tsc_invariant_support:1;
+> +        uint64_t cl_zero_support:1;
+> +        uint64_t rdpru_support:1;
+> +        uint64_t la57_support:1;
+> +        uint64_t mbec_support:1;
+> +        uint64_t nested_virt_support:1;
+> +        uint64_t psfd_support:1;
+> +        uint64_t cet_ss_support:1;
+> +        uint64_t cet_ibt_support:1;
+> +        uint64_t vmx_exception_inject_support:1;
+> +        uint64_t enqcmd_support:1;
+> +        uint64_t umwait_tpause_support:1;
+> +        uint64_t movdiri_support:1;
+> +        uint64_t movdir64b_support:1;
+> +        uint64_t cldemote_support:1;
+> +        uint64_t serialize_support:1;
+> +        uint64_t tsc_deadline_tmr_support:1;
+> +        uint64_t tsc_adjust_support:1;
+> +        uint64_t fzl_rep_movsb:1;
+> +        uint64_t fs_rep_stosb:1;
+> +        uint64_t fs_rep_cmpsb:1;
+> +        uint64_t tsx_ld_trk_support:1;
+> +        uint64_t vmx_ins_outs_exit_info_support:1;
+> +        uint64_t hlat_support:1;
+> +        uint64_t sbdr_ssdp_no_support:1;
+> +        uint64_t fbsdp_no_support:1;
+> +        uint64_t psdp_no_support:1;
+> +        uint64_t fb_clear_support:1;
+> +        uint64_t btc_no_support:1;
+> +        uint64_t ibpb_rsb_flush_support:1;
+> +        uint64_t stibp_always_on_support:1;
+> +        uint64_t perf_global_ctrl_support:1;
+> +        uint64_t npt_execute_only_support:1;
+> +        uint64_t npt_ad_flags_support:1;
+> +        uint64_t npt1_gb_page_support:1;
+> +        uint64_t amd_processor_topology_node_id_support:1;
+> +        uint64_t local_machine_check_support:1;
+> +        uint64_t extended_topology_leaf_fp256_amd_support:1;
+> +        uint64_t gds_no_support:1;
+> +        uint64_t cmpccxadd_support:1;
+> +        uint64_t tsc_aux_virtualization_support:1;
+> +        uint64_t rmp_query_support:1;
+> +        uint64_t bhi_no_support:1;
+> +        uint64_t bhi_dis_support:1;
+> +        uint64_t prefetch_i_support:1;
+> +        uint64_t sha512_support:1;
+> +        uint64_t mitigation_ctrl_support:1;
+> +        uint64_t rfds_no_support:1;
+> +        uint64_t rfds_clear_support:1;
+> +        uint64_t sm3_support:1;
+> +        uint64_t sm4_support:1;
+> +        uint64_t secure_avic_support:1;
+> +        uint64_t guest_intercept_ctrl_support:1;
+> +        uint64_t sbpb_supported:1;
+> +        uint64_t ibpb_br_type_supported:1;
+> +        uint64_t srso_no_supported:1;
+> +        uint64_t srso_user_kernel_no_supported:1;
+> +        uint64_t vrew_clear_supported:1;
+> +        uint64_t tsa_l1_no_supported:1;
+> +        uint64_t tsa_sq_no_supported:1;
+> +        uint64_t lass_support:1;
+> +        uint64_t idle_hlt_intercept_support:1;
+> +        uint64_t msr_list_support:1;
+> +    };
+> +};
+> +
+>  enum hv_translate_gva_result_code {
+>      HV_TRANSLATE_GVA_SUCCESS                    = 0,
+>  
+> -- 
+> 2.34.1
+> 
+> 
 
