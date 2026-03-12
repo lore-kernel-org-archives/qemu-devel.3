@@ -4,83 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75209FED2C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:32:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54A36FED2C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:33:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Xim-0004UM-UQ; Thu, 12 Mar 2026 00:32:29 -0400
+	id 1w0Xis-0004V0-3q; Thu, 12 Mar 2026 00:32:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xik-0004U5-Ko
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:27 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ id 1w0Xio-0004Ub-H7
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:30 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Xii-00043M-Vl
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:26 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2ae5423b02aso4350595ad.1
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:32:24 -0700 (PDT)
+ id 1w0Xim-00043n-Sv
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:32:30 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2ab46931cf1so13509465ad.0
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:32:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773289943; x=1773894743; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773289947; x=1773894747; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=epzAj+B6wXCrlYB6AtGb6lNn0V0ohZ2LaB8gM7SskXE=;
- b=Fe7zACZzi3XhFBUls4/L3kNT9ruTYBM3MP98E7L8eJv3O9fIwGMtYx/JcIMCCCnMO2
- qcET7Bvdsz60Kc0BfOFNwEsHJwssMeLLxxZ8cm3YkX91QguLP5Mq37xt+IExrL1RxSoQ
- CQouYjdHUKrD+Ke9LgDYdAfu0ICKrFV8ze1P9w4sOKfTlKUQLzYxxlFDKgmsyoTjkFpT
- ES/GsH1BYJLCeqTtKMzNzeJoCDXhLFKPKqbV1mkMshEfR7tqNNDRP1lQYjF2FPJMDakC
- 3+6GT3wN3Kr5oP9MTMk1kWM2x0CIKwOcxMYmj65SWblvAyXrkdRniL/F4wNVCMeoaT76
- wr8Q==
+ bh=NziXTQ1sf7fWxugAcH7uSw0+8ApDkk8bxbN24KNdpBI=;
+ b=TPtvEI4eYPcNP2Ouv5ydhtnV5/C8gqw6eDwtsn+gG0ECI4rwuVFdlphF6Y3Ku6279G
+ 8KFw7xdE1auu/wV+ZqLLp1j2CHF6hTsQxzpw/LUFGWBYAYf+J+eox4nO9Vlr1OPOBnyy
+ XPudJlXSDDEjK8w4gTcLg0kyj9s3b0t1gVbKHMol8YMYtmkIpN/+xPZyTQRxE+R1URRc
+ MbcYh8IJPOHW0YJt62SSl44ZuV7BRRdmLYYQ9MigDmBtshCodOdjbCHm9hlZwEbKt76t
+ oPrUu+Q7pwpQbWYHranUtP/jLd90KmORjo0Yz03GJXVeHTtCdlKBLNKPnUo6knYf8JpL
+ wEyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773289943; x=1773894743;
+ d=1e100.net; s=20230601; t=1773289947; x=1773894747;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=epzAj+B6wXCrlYB6AtGb6lNn0V0ohZ2LaB8gM7SskXE=;
- b=XpR/LEqQZoINzBqVHpOFVfFnIJ79bfXdYCf7g56jjShVpen6drCwauIrzUFEuQUJ9k
- jOmNX3tXpQ2zo6lBA3hCnkVRte/LmJTX3g64XsMnv5ORz3Um/6dwe6+GrkSrAwczPnRB
- C/iSiMSVTs8ReuNaj5NoPpxz6ysYtLmh2Hs+IfbTvBoQu+FbhLYjVu8C7FB5yMDsNIkt
- 3o4l0DRbKkVZnxHn6kZFigMC7+2504KncgR74o00iGgfXA35N/S5FJdLqL0qoyN/7ctj
- lznKamX5iVAwICAM8i+WTy/dF/+bRTmwwqSUJl7o05k4+Nl/3SD+MHRyiquz+Q6g4fho
- rpXA==
-X-Gm-Message-State: AOJu0YwTKJfEoiI+eJZcJi+GrgBeeLmOtF+G2bjTx641KuHOxp1Twy5Q
- ZWe5gKoBAZi2m7OQl5TXH0dU3DreaaTC2B8pUCvgl6Obw6kEU7125MYiPt1EEYCs
-X-Gm-Gg: ATEYQzzmk6i0cCDYVOYd0ZwvSTHkUTdje+OEM11ObjXSzaqaSr7p4EG/EQ6ZomPNva1
- 5vCCjhMsX1DvVTMkKqg+x6SuVioEdEtGMT6HImL4ktEaZGrJAILO9uKg+LSx3agTzdubDEyYWWG
- N6PJQfi8xcX8kTcapul9iyJtQtZtC4IYSwJk8iezqvDpEd9chC5U5n+4mtGOdayjv09LDaRluPw
- FPlNdC1aPAD/u8csnG93PlDFDPyt+Rz3n5EDcAuLnw/4g+nY67BNwBc1hMKafU3IClfFUhoFVVx
- 86GIxRBqBuLCVrI3AILuPby/+gXgPpbCCL8NtfpplaP89vphBS0JG6WIaEUGOSESHDwx3XAU7LI
- 3ZzK1WQ7ywcAMFbS9ZsZwoY2geQvQBXancpWGoxhASwE8nbbxuJMS+h1SK6qo+Vdc+kL52Q2FId
- gdG92GNvU6v6rUAaipHeZpbV9c5Uu4fQT83zntLIi3PeXfeuuAbP3N
-X-Received: by 2002:a17:902:d50a:b0:29f:301a:f6cf with SMTP id
- d9443c01a7336-2aeae890ce6mr49181665ad.35.1773289943102; 
- Wed, 11 Mar 2026 21:32:23 -0700 (PDT)
+ bh=NziXTQ1sf7fWxugAcH7uSw0+8ApDkk8bxbN24KNdpBI=;
+ b=N/bVvH5w1R2hEVYsruT8gQujP9jS3XAOnxg7Ag0qU+OnJdB9uaa8e8mb0Imc5fEQCp
+ b88y8+mX9Adhef8qtW+y1yjG6cQQkOacDzzPQy2CIbhF2LMdU9N2KdowYvv76Hpqc2NY
+ 6RE+yYRt7Fkr9MF1RT+cVygUl6ptdBgogeWCUUkWZ3HLrkUHXVsRhDkveGmKGzZWz9qW
+ s7TLOHY34n88HtZz3Vi4LSywSUCpUMLnq4MCuZx7muDSQoRGdq2WPaScYIYshmjLhxxN
+ DNRW9TH7rX2UiXnBIxjhq2+tPSJYAC3Bkb3zRt+MpztKOESO1L6pCKFv41VHcd3RdHeX
+ ZvHQ==
+X-Gm-Message-State: AOJu0YwdH3sJ2XXgU1t/jy62yt4HG1nJfmriRroq5lym92R3FoMtanId
+ KetMw/ygVs/w5RYlEkh3/pp5mIF37rvlDDOcOK0xe2/+HVkgjlTzGlH90Nx2MXVd
+X-Gm-Gg: ATEYQzxNka+LX25yXEyoBu7oeHeUFfv7qmKI7N2ueZr/r+ZnmG/NDhPoJJ+HC7OLIPn
+ neh89HEpqpXImWR8WsW0SvfW2T6iKXNpSCPM6Fn3bNmAZdHj6cEUo2phm34WuYzNETz8TT+nHAm
+ BY0eMMpIBbpePrVqD61TxQ/J0Oh7VN6fyFYzXObH0u/cEWG+ABF+nFMlMxu9E1ERRl2m1TAoUl4
+ JxtIHH5mzm25UIdBP/KyPEj7XtyKR85aQY58FpmF2W3ahvvUVA8xUle045PsCDOH6zkn5WR50l8
+ snFxNeN3IC6zMJg9gXvGZO/heNHINyPOKbZKi765HY2TM7mKiSE3pGkDk8TG2NhG3OBEYPq9tDD
+ U3/sBYJS37ofzu+qKD8H2mQ39KEy3csHFP8KmGF6tmbIbn7ZVTtiFFMWkE50P3zSUVAYSdg+Zdl
+ 9cabdsxpZ4H5sp125l13UWBYcw0vWwIs1vzQzdtjowvQ==
+X-Received: by 2002:a17:903:32cc:b0:2ad:b213:feba with SMTP id
+ d9443c01a7336-2aeba4416d2mr18412685ad.5.1773289947113; 
+ Wed, 11 Mar 2026 21:32:27 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aeae222ab6sm54340785ad.10.2026.03.11.21.32.19
+ d9443c01a7336-2aeae222ab6sm54340785ad.10.2026.03.11.21.32.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 21:32:22 -0700 (PDT)
+ Wed, 11 Mar 2026 21:32:26 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org, armbru@redhat.com, pbonzini@redhat.com,
  berrange@redhat.com, peterx@redhat.com, philmd@linaro.org
 Cc: alistair23@gmail.com,
 	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PATCH 3/7] hw/arm: xlnx-zynqmp: Don't call qdev_get_machine in soc
- init
-Date: Thu, 12 Mar 2026 14:31:54 +1000
-Message-ID: <20260312043158.4191378-4-alistair.francis@wdc.com>
+Subject: [PATCH 4/7] hw/arm: fsl-imx7: Don't call qdev_get_machine in soc init
+Date: Thu, 12 Mar 2026 14:31:55 +1000
+Message-ID: <20260312043158.4191378-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312043158.4191378-1-alistair.francis@wdc.com>
 References: <20260312043158.4191378-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -113,7 +112,7 @@ the following assert
 
 when trying to run
 
-    ./qemu-system-aarch64 -S -display none -M virt -device xlnx-zynqmp,help
+    ./qemu-system-aarch64 -S -display none -M virt -device fsl-imx7,help
 
 as the machine wasn't created yet. We call qdev_get_machine() to obtain
 the number of CPUs in the machine. So instead of initialising the CPUs in
@@ -122,85 +121,50 @@ will exist.
 
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- hw/arm/xlnx-zynqmp.c | 42 ++++++++++++++++++------------------------
- 1 file changed, 18 insertions(+), 24 deletions(-)
+ hw/arm/fsl-imx7.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-diff --git a/hw/arm/xlnx-zynqmp.c b/hw/arm/xlnx-zynqmp.c
-index 5f0e34ccec..979e55e305 100644
---- a/hw/arm/xlnx-zynqmp.c
-+++ b/hw/arm/xlnx-zynqmp.c
-@@ -380,30 +380,15 @@ static void xlnx_zynqmp_create_unimp_mmio(XlnxZynqMPState *s)
+diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
+index 9a230d222f..2defa498d3 100644
+--- a/hw/arm/fsl-imx7.c
++++ b/hw/arm/fsl-imx7.c
+@@ -32,20 +32,10 @@
  
- static void xlnx_zynqmp_init(Object *obj)
+ static void fsl_imx7_init(Object *obj)
  {
 -    MachineState *ms = MACHINE(qdev_get_machine());
-     XlnxZynqMPState *s = XLNX_ZYNQMP(obj);
+     FslIMX7State *s = FSL_IMX7(obj);
+     char name[NAME_SIZE];
      int i;
--    int num_apus = MIN(ms->smp.cpus, XLNX_ZYNQMP_NUM_APU_CPUS);
--    int num_rpus = xlnx_zynqmp_get_rpu_number(ms);
  
-     object_initialize_child(obj, "apu-cluster", &s->apu_cluster,
-                             TYPE_CPU_CLUSTER);
-     qdev_prop_set_uint32(DEVICE(&s->apu_cluster), "cluster-id", 0);
- 
--    for (i = 0; i < num_apus; i++) {
--        object_initialize_child(OBJECT(&s->apu_cluster), "apu-cpu[*]",
--                                &s->apu_cpu[i],
--                                ARM_CPU_TYPE_NAME("cortex-a53"));
+-    /*
+-     * CPUs
+-     */
+-    for (i = 0; i < MIN(ms->smp.cpus, FSL_IMX7_NUM_CPUS); i++) {
+-        snprintf(name, NAME_SIZE, "cpu%d", i);
+-        object_initialize_child(obj, name, &s->cpu[i],
+-                                ARM_CPU_TYPE_NAME("cortex-a7"));
 -    }
 -
-     object_initialize_child(obj, "gic", &s->gic, gic_class_name());
- 
--    if (num_rpus) {
--        /* Do not create the rpu_gic if we don't have rpus */
--        object_initialize_child(obj, "rpu_gic", &s->rpu_gic,
--                                gic_class_name());
--    }
--
-     for (i = 0; i < XLNX_ZYNQMP_NUM_GEMS; i++) {
-         object_initialize_child(obj, "gem[*]", &s->gem[i], TYPE_CADENCE_GEM);
-         object_initialize_child(obj, "gem-irq-orgate[*]",
-@@ -453,15 +438,6 @@ static void xlnx_zynqmp_init(Object *obj)
-     object_initialize_child(obj, "qspi-irq-orgate",
-                             &s->qspi_irq_orgate, TYPE_OR_IRQ);
- 
--    if (num_rpus) {
--        for (i = 0; i < ARRAY_SIZE(s->splitter); i++) {
--            g_autofree char *name = g_strdup_printf("irq-splitter%d", i);
--            object_initialize_child(obj, name, &s->splitter[i], TYPE_SPLIT_IRQ);
--        }
--    }
--
--
--
-     for (i = 0; i < XLNX_ZYNQMP_NUM_USB; i++) {
-         object_initialize_child(obj, "usb[*]", &s->usb[i], TYPE_USB_DWC3);
+     /*
+      * A7MPCORE
+      */
+@@ -179,6 +169,15 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
+         return;
      }
-@@ -483,6 +459,24 @@ static void xlnx_zynqmp_realize(DeviceState *dev, Error **errp)
  
-     ram_size = memory_region_size(s->ddr_ram);
- 
-+    for (i = 0; i < num_apus; i++) {
-+        object_initialize_child(OBJECT(&s->apu_cluster), "apu-cpu[*]",
-+                                &s->apu_cpu[i],
-+                                ARM_CPU_TYPE_NAME("cortex-a53"));
++    /*
++     * CPUs
++     */
++    for (i = 0; i < smp_cpus; i++) {
++        snprintf(name, NAME_SIZE, "cpu%d", i);
++        object_initialize_child(OBJECT(dev), name, &s->cpu[i],
++                                ARM_CPU_TYPE_NAME("cortex-a7"));
 +    }
-+
-+    if (num_rpus) {
-+        /* Do not create the rpu_gic if we don't have rpus */
-+        object_initialize_child(OBJECT(dev), "rpu_gic", &s->rpu_gic,
-+                                gic_class_name());
-+
-+        for (i = 0; i < ARRAY_SIZE(s->splitter); i++) {
-+            g_autofree char *name = g_strdup_printf("irq-splitter%d", i);
-+            object_initialize_child(OBJECT(dev), name, &s->splitter[i], TYPE_SPLIT_IRQ);
-+        }
-+    }
-+
 +
      /*
-      * Create the DDR Memory Regions. User friendly checks should happen at
-      * the board level
+      * CPUs
+      */
 -- 
 2.53.0
 
