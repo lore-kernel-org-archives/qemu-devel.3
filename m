@@ -4,94 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F7EC105A583
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:06:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC181105A584
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:06:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0drQ-00042V-6P; Thu, 12 Mar 2026 07:05:48 -0400
+	id 1w0drM-0003yQ-Iy; Thu, 12 Mar 2026 07:05:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0drA-0003rx-Va
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:33 -0400
+ id 1w0dqp-0003gu-7j
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:12 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0dr7-00019n-A4
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:31 -0400
+ id 1w0dqn-0000Pu-Iv
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773313528;
+ s=mimecast20190719; t=1773313508;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=9MgY5YREgmMJYwQV2ZvLduP7xmgUOYd26sS/Y1PYJ7k=;
- b=hkZ9X5czWkQPWVQRDXytX9N5vytq78RA4IZmwkKnGylmHQo5YYqtuhlEhKpI4b1VrdKckr
- rHWeq9UrAplvyoC9moZOo+gOgs2hQrssL0ummzXrpzNRcDTghfIeqGQrlu17u2CDZivM8z
- YgUSHq0Kz8EtAfQCrPtiISfrmpWmPHw=
-Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
- [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=FkYAYywfDZZ6ND+0N5KY8clqrYgScZxhpvMlLcsPGWU=;
+ b=FVwHaVYzWWOavPyXBJImZPHrdJ8Pubac+myB0vJo3otkLqAxC8uiS6EmJksxaR/xqX3jgF
+ 05//I4AS/R1AhoRNULjszXOXrtZlLJeB6ZGxqQtkFMg9eBVJYPQpDxTMTozsZr9jZ5q1hm
+ J+EqYD0oFsmoT4zkbWRzYEPd1pmcfgE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-249-YQzRYm-wOye-TqJMoJktqw-1; Thu, 12 Mar 2026 07:05:27 -0400
-X-MC-Unique: YQzRYm-wOye-TqJMoJktqw-1
-X-Mimecast-MFC-AGG-ID: YQzRYm-wOye-TqJMoJktqw_1773313526
-Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-439cbc5fd75so561350f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:05:27 -0700 (PDT)
+ us-mta-169-uML5KVbOPqivhuhfIE5uDQ-1; Thu, 12 Mar 2026 07:05:07 -0400
+X-MC-Unique: uML5KVbOPqivhuhfIE5uDQ-1
+X-Mimecast-MFC-AGG-ID: uML5KVbOPqivhuhfIE5uDQ_1773313506
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4853ac455b2so8691065e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:05:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773313525; x=1773918325; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773313505; x=1773918305; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=9MgY5YREgmMJYwQV2ZvLduP7xmgUOYd26sS/Y1PYJ7k=;
- b=o+hdVmadxGY+fVz6KCt5IWt98TGE3ga1AUP2KFj7WWhjd5YkX91MFxC47I01E6nu2E
- wVOO3L+x1CJPRhBXBp9KF/ha7yfQyE+67rtLFd08WMIhwvZw19K+yJg9+eUJ5z6NJpgW
- JuEWgjeocV8qFHDO5HW4A6hdwYmscjIC+PJxCVNfFiGyMvAgRMTZocnl/uqWHUhzYyd0
- 9qvTBNpKIT7/FiRj5KWDjt3HcXO1871KXebfxVxoMSw/cwdTJURYgvCOZudplp8Rsxg4
- JDBXhoGXTJG+9Bav8BK3yEt2w6JSFPmKv42w1Knoo8Imhz+3fraXUjLkNK4M7u4hbzcc
- m9vg==
+ bh=FkYAYywfDZZ6ND+0N5KY8clqrYgScZxhpvMlLcsPGWU=;
+ b=AlnQOFPtnrPkQXlxSSG3Icb+IAMNAbLzrJz37Yk4fkzhICJYSDqcPFf+eUyZDaRHT2
+ jkv/kMIwJ9tLX64RcO60GJTD7kRQ4xlsPSH5WAoJzqO3l6bQeiuGyy40bypFZkRfq0IL
+ /ojQbWRA72suG7KdAkU/lHhVKUuuu5bwE/HwVe0SeEpnJK+I/CDCeBgx3Eebxy5R/2Df
+ TLNRHO2dccWFSiEr5BhTxVoEGXGO/nVw9uWzCjgJjZZQoeORt8xBrAWEY35rl9jlUdkd
+ N+HWt9n858UsKrSenB/u2j5c7Ju+FSMkqENUw6H8eO09K6QKx1fqtadY13dznrMxr+BY
+ vhBA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773313525; x=1773918325;
+ d=1e100.net; s=20230601; t=1773313505; x=1773918305;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=9MgY5YREgmMJYwQV2ZvLduP7xmgUOYd26sS/Y1PYJ7k=;
- b=Y7rlqFr2iUFxCz1cWxeelQAYZESu3Dwibb6dXtvc8nV5WS3PgcMskQbrB7TW0X1v4m
- 10/oviy2+AabOh+aXPLdT4WxkXwKcFvUyh6SQRznies248gSebItpf3d/bNuKGz4dkq+
- mwCleHa7BLIC54qxuJlrM+6+8JUF8NeqdrBhUQ7QKlywh/1fQbhYvqvfwMd+jZVz0PtM
- bNH7rfxn2kOn8e60a4I/oETiuyN23G6jnwgWArKVE9Pd0dxFeFFuPMRYT5PeSgJrDYJ6
- Du+394N5v2k0jxUorLT1JoX/H2OXOVCxXeal2lPFCkdoKiDAF0nj+w3cHnNqSUStfaFs
- 1umg==
-X-Gm-Message-State: AOJu0YwZDdMfBjwvfPAD+o5Pbs8FB2h0wkuBOhFG5rlHNIcuRwk//G2o
- NX2rwxurk/Sx1XqPhCp7Oz66tQ9fN5gg2qdF15fI1ss2PrD57NB5zdoZPd1M37zRu6VhEmfaEmb
- 9ZKN+QXwEZ92dqEB7NrtMxjG7w4vCpAwBeNxqDUshdUmhfoN/3s4TtBZDekoAQQiHI8YUxF9gxQ
- Gh/v27DbtDRQyhOCEMjztW38+ejIb0/9VRr2k8fS8K
-X-Gm-Gg: ATEYQzz3ZA5Stj/Z06NT/TsyWNLHcI1o3sxKvGrYcplXSGSPh0WKf1yVrx0RGBLpKGQ
- fZSNKvd0OWVXwZTgPTCCttWNo2lbp97K+8ytiLf99Wu/vOJMQ7AyHgEobu5tsEicOyhihGlEVrt
- 79SytmfVarJN5AzDNU4vfQiTVHg5yrn+CvQGkEDiOpZyFFRWZka/zNQWTlpCxm80iPC49HrrpwW
- GGA/it0VcTCop+wKLXO7fAzq5zUInpCdKy9Ae6/e+1ctRx61uAuFo27165igfoFZR8mLfNfhDSr
- Ke1t8W835blhoqJWaGdBepb7me3KJpM/IW5Uyj1BTXPCDblWEjWYm+NJ9ftdYEuZMohboh2PlFt
- BmOAifJ3REhSmejETfUM5vwnEEA6gXNIG00W77fginzQjO7LblfGh+5W2ULNqhgCmRlX+I2nTdu
- hGdmaqQLxcsPekyEZKFCT7QteuyDQ=
-X-Received: by 2002:a05:6000:310c:b0:439:b3bb:276b with SMTP id
- ffacd0b85a97d-439f8222f4fmr10521494f8f.43.1773313524531; 
- Thu, 12 Mar 2026 04:05:24 -0700 (PDT)
-X-Received: by 2002:a05:6000:310c:b0:439:b3bb:276b with SMTP id
- ffacd0b85a97d-439f8222f4fmr10521421f8f.43.1773313523868; 
- Thu, 12 Mar 2026 04:05:23 -0700 (PDT)
+ bh=FkYAYywfDZZ6ND+0N5KY8clqrYgScZxhpvMlLcsPGWU=;
+ b=ia/kvfjY5Nvh8jgqg7H82aMfa8liv9qIAGtJgco2VtBcXNTpxJQSoE1r7MKwD9F2CW
+ tN55ej+oR0wtHE6+84kSRShFA+Bc4d2jb5wHg2rTwuqB1yu6CYqdC1JdPU0r2suO0Ica
+ yV5YsC1PmeynMUVNbJKqqevhxWOZbrx2RZ6fPkGHgRqSQ3rzZ5wiw+Kzu66upwlTZdzu
+ /zEXaAM5B1TiuRDsOHIHzfd+G7McHcwM3U8I84ZGafpgC2+hX5zeV8CLozgUqf5eZUTc
+ WT1maPvGpJPYc7DrE2FDgMWKP+ReZugPn+jWao/JCQn4s/99W39HM5hoALAvKggrPuz2
+ m5ug==
+X-Gm-Message-State: AOJu0YyLPb0Us5L5EUWUeQo36c2qNpz4q5keMpAYPNYqCCI2rsELnnub
+ EQalMXlfvPaxB07vFCBYCzQgILgxHU5ZPAqhE4tS0QBzllRXHYx0UK8aBuuoHIyH4I4vN8llm9x
+ iKdzp3Iy8wEmKe28NkjAA2EcK6d9LaWd5rUzmSddLNwQFqMSeX0PL8ZCgXUcyZ3AK04cI2n5aJP
+ 1b67+/cNDhiIuJHLM1utZY8tiTV2ndw34iWnkLGc1G
+X-Gm-Gg: ATEYQzxiJ+FHix94AuhpN18fjXu0o5Nq2duoNUGbAjgJf9IAJ1aPJBx42LnNSO0vh+v
+ BSBtrqUdSChcmYY3ihGzLVsuSWoEKtInIaeCMsyDssSpaf7FJTmKWkHLjEnEyNuSj1ZyJXbSWTj
+ IBdsvbrrysf0ZX8MZVyCFgrphZAIN5PxcCQ6GwPCV3wMqG0zstDYoynS/S8Usk8fFYa/Ib3Nl+Y
+ caosy3Xr7E6k103F7NxtHcv40WmYzI95c4DqKZMvM2Tstltm7Toc4ZbzbGp/CosQ/JaNLRnfvFZ
+ XbSimWALjXmI+sfv3CRpXIsY5HEwDdbYLO0UuqZzS1bLY2F5NpD46zcvZoosfO8wmxW6PBu8ZOw
+ mX7ucm0PZSm0Zj7LL6RcR/riO+8TOuIKoWYOWLrD9crJop70GeDTGnsF6P405PzCXQgKZKC2f3L
+ LjvPJZ6xzZoNHqw+HShVJJ6QzCPek=
+X-Received: by 2002:a05:600c:8b72:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-4854b0d2f28mr92634105e9.15.1773313505479; 
+ Thu, 12 Mar 2026 04:05:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b72:b0:46e:4e6d:79f4 with SMTP id
+ 5b1f17b1804b1-4854b0d2f28mr92633415e9.15.1773313504950; 
+ Thu, 12 Mar 2026 04:05:04 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe21b631sm9128382f8f.27.2026.03.12.04.05.22
+ 5b1f17b1804b1-4854a2fa75dsm45042515e9.7.2026.03.12.04.05.03
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 04:05:22 -0700 (PDT)
+ Thu, 12 Mar 2026 04:05:03 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: Fiona Ebner <f.ebner@proxmox.com>, qemu-stable@nongnu.org,
- Zhao Liu <zhao1.liu@intel.com>
-Subject: [PULL 12/14] target/i386: add compat for migrating error code
-Date: Thu, 12 Mar 2026 12:04:44 +0100
-Message-ID: <20260312110451.685161-13-pbonzini@redhat.com>
+Cc: Zhao Liu <zhao1.liu@intel.com>
+Subject: [PULL 04/14] i386/cpu: Remove unnecessary cache_info fields from
+ builtin CPU model
+Date: Thu, 12 Mar 2026 12:04:36 +0100
+Message-ID: <20260312110451.685161-5-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312110451.685161-1-pbonzini@redhat.com>
 References: <20260312110451.685161-1-pbonzini@redhat.com>
@@ -122,81 +122,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Fiona Ebner <f.ebner@proxmox.com>
+From: Zhao Liu <zhao1.liu@intel.com>
 
-If cpu->env.has_error_code is true, backwards migration of a VM from
-a QEMU binary with commit 27535e9cca to a QEMU binary without commit
-27535e9cca will fail:
+In x86_cpu_get_versioned_cache_info(), higher version CPU models will
+inherit cache_info from lower versions if the cache_info field is not
+specified, so there is no need to repeatedly set the same cache_info.
 
-> kvm: error while loading state for instance 0x0 of device 'cpu'
+Therefore, remove the repeated cache models from SapphireRapids-v6
+(SapphireRapids-v4 has set the cache model), GraniteRapids-v5
+(GraniteRapids-v3 has set) and SierraForest-v5 (SierraForest-v3 has
+set).
 
-In practice, wrongly setting the error code to 0 on the target is
-often unproblematic, so additionally checking error_code != 0 in
-cpu_errcode_needed() is not enough to mitigate the issue. Instead, add
-proper machine version compat handling.
-
-Cc: qemu-stable@nongnu.org
-Fixes: 27535e9cca ("target/i386: Add support for save/load of exception error code")
-Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
-Link: https://lore.kernel.org/r/20260310154348.495332-1-f.ebner@proxmox.com
+Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+Link: https://lore.kernel.org/r/20260310140819.1563084-4-zhao1.liu@intel.com
 Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
 ---
- target/i386/cpu.h     | 1 +
- hw/i386/pc.c          | 1 +
- target/i386/cpu.c     | 1 +
- target/i386/machine.c | 2 +-
- 4 files changed, 4 insertions(+), 1 deletion(-)
+ target/i386/cpu.c | 3 ---
+ 1 file changed, 3 deletions(-)
 
-diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-index 7bd38f0c039..0b539155c40 100644
---- a/target/i386/cpu.h
-+++ b/target/i386/cpu.h
-@@ -2361,6 +2361,7 @@ struct ArchCPU {
-     bool expose_tcg;
-     bool migratable;
-     bool migrate_smi_count;
-+    bool migrate_error_code;
-     uint32_t apic_id;
- 
-     /* Enables publishing of TSC increment and Local APIC bus frequencies to
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index addf602da08..4b53b5be4a9 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -78,6 +78,7 @@ const size_t pc_compat_10_2_len = G_N_ELEMENTS(pc_compat_10_2);
- 
- GlobalProperty pc_compat_10_1[] = {
-     { "mch", "extended-tseg-mbytes", "16" },
-+    { TYPE_X86_CPU, "x-migrate-error-code", "false" },
- };
- const size_t pc_compat_10_1_len = G_N_ELEMENTS(pc_compat_10_1);
- 
 diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 1debc0c61fc..5b9ae79f165 100644
+index 08450a9142e..05121c5b324 100644
 --- a/target/i386/cpu.c
 +++ b/target/i386/cpu.c
-@@ -10651,6 +10651,7 @@ static const Property x86_cpu_properties[] = {
-     DEFINE_PROP_BOOL("tcg-cpuid", X86CPU, expose_tcg, true),
-     DEFINE_PROP_BOOL("x-migrate-smi-count", X86CPU, migrate_smi_count,
-                      true),
-+    DEFINE_PROP_BOOL("x-migrate-error-code", X86CPU, migrate_error_code, true),
-     /*
-      * lecacy_cache defaults to true unless the CPU model provides its
-      * own cache information (see x86_cpu_load_def()).
-diff --git a/target/i386/machine.c b/target/i386/machine.c
-index c9139612813..48a2a4b3190 100644
---- a/target/i386/machine.c
-+++ b/target/i386/machine.c
-@@ -466,7 +466,7 @@ static bool cpu_errcode_needed(void *opaque)
- {
-     X86CPU *cpu = opaque;
- 
--    return cpu->env.has_error_code != 0;
-+    return cpu->env.has_error_code != 0 && cpu->migrate_error_code;
- }
- 
- static const VMStateDescription vmstate_error_code = {
+@@ -5264,7 +5264,6 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             {
+                 .version = 6,
+                 .note = "with cet-ss, cet-ibt, its-no",
+-                .cache_info = &xeon_spr_cache_info,
+                 .props = (PropValue[]) {
+                     { "its-no", "on" },
+                     { /* end of list */ },
+@@ -5446,7 +5445,6 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             {
+                 .version = 5,
+                 .note = "with cet-ss, cet-ibt, its-no",
+-                .cache_info = &xeon_gnr_cache_info,
+                 .props = (PropValue[]) {
+                     { "its-no", "on" },
+                     { /* end of list */ },
+@@ -5812,7 +5810,6 @@ static const X86CPUDefinition builtin_x86_defs[] = {
+             {
+                 .version = 5,
+                 .note = "with ITS_NO",
+-                .cache_info = &xeon_srf_cache_info,
+                 .props = (PropValue[]) {
+                     { "its-no", "on" },
+                     { /* end of list */ },
 -- 
 2.53.0
 
