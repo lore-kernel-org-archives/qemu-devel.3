@@ -4,111 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1808D106ACE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:38:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6FC08106ACE3
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:45:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0lrf-0004E9-Ix; Thu, 12 Mar 2026 15:38:35 -0400
+	id 1w0ly5-0005Ta-Bv; Thu, 12 Mar 2026 15:45:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1w0lre-0004E0-BC
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:38:34 -0400
-Received: from mail-ot1-x32e.google.com ([2607:f8b0:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
- id 1w0lrc-0001AC-Pl
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:38:34 -0400
-Received: by mail-ot1-x32e.google.com with SMTP id
- 46e09a7af769-7d75371d873so1695805a34.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 12:38:32 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773344311; cv=none;
- d=google.com; s=arc-20240605;
- b=A9rhgp6vxfSKvIqNPmclWEg1vdaXB9sQyOKlsRRk/7U5cdLPQZAMElqlL7HVG9rUnz
- GSwyFvWpRvoueCB3WstRdQkoFxkugaWyzri0fivUW5/nSAMCtP6kMrNwcdXl1xUDB+2X
- ii7UMNpnLyR93rVRgnvcS2wmmrgZO4Q0uHIK4fYdaUi3GDTJXpYu/i/5o81C78p6EB48
- eLD1eieYNlu9+jX2CakIaJmXEKjdUPw6MV1kgvLrOSVdGZyPswPueABIjPXT+lk10HW3
- RFDF3rtcxFMIgoilHSpv3hSH/t/4gT8/xqqqAd5x58h7RlSOE6MAphPSX+2ZBsw5AckS
- Q2xQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=RkyJK2G+qyeFRx0aZtb9FPsN/N1pjCEIyEk831BjPBo=;
- fh=pape3/0syMcJQetntmmSiYOAfDFvMRDv5dKhfRdbkZ0=;
- b=ibj8IUqycV6BaRbf8Koc+fiID0Wg7UbdWXTu7nWGbA/hOR2uawvJ1ZC1BXzy5IsGdW
- C9vprUfIIhk6Emu5AaMa0VKHkS6e+d5OIuIXX73RMRMpZohCRiMGmt8QQ/TLpKaRaum+
- TiOhSo4CdXALoq0bVsf06oDCcH/SD4aKcAwCUR+b3kc2/XhEjg69+UsbXbRJmY1APrXb
- IkYwNhdUUoLdeLx99audEKuk4cekKj3lymd7av1/t1fw/H8s3vF3DP9x1lozXdTtY9/o
- xHA5DbdVQauH1wWNlD5hCQB6FbVD8gU0ZpLBgOXL+YDL4shSIDBGkZbIHH7V1BvM0qew
- zyEw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773344311; x=1773949111; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=RkyJK2G+qyeFRx0aZtb9FPsN/N1pjCEIyEk831BjPBo=;
- b=EbPSiV/ABGTtgz8PWrjTIPogb9vmKuadFbSchS5smpjfqb5PDsEv6MpfBqHBjc0mkY
- zkYaYnItXLSclsNw4pZzuYZHQ3+B/mlRTmWc0eitgC0G6qPFAhjMZ/9IzjjvQ+myXP/G
- 2notdieusOj4EZjcYwdXJZelKnDyVASLL3azeD5y7yM92odIzOcOrVmmUP3/OkZtYJMK
- ZgyJuL3WOyAU0J7RpWj4DuNgKY3wLjXr7+2c4DYzQdxXUxPqFfKolCu0wPAvm0bkWn/p
- uzGDgaIuT5WeYh+dG5purcQadieKyN1MjvHQzhTb2qpWRLTaWBBIGGgSMUgdQLCfFti2
- URYw==
+ (Exim 4.90_1) (envelope-from <jorge.merlino@canonical.com>)
+ id 1w0ly3-0005TG-QA
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:45:11 -0400
+Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jorge.merlino@canonical.com>)
+ id 1w0ly1-00018s-Ae
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:45:11 -0400
+Received: from mail-dy1-f199.google.com (mail-dy1-f199.google.com
+ [74.125.82.199])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id BACCD3F1CC
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 19:45:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+ s=20251003; t=1773344706;
+ bh=06I1nqkBOqM3AgiC7in7DRy/JaGWSgBaQ+zRsY8okDg=;
+ h=Message-ID:Date:MIME-Version:Subject:To:Cc:References:From:
+ In-Reply-To:Content-Type;
+ b=mHl/jz6Fst5bHI0v2MorTdW/gt+lPIv6BtApOd8yxM2ET2DmrX6YM+oGW+/IQcSiE
+ 71/wremY14rVYqLKeNVNJhRyeFXhnUcqwTeO7dyRAewIk87qlRDMNQdMJF8Of31VgN
+ KxOUryJjq4Ftv1cdojo1kpXzQPGEPte4U5H8CN4d1LvIxUyGhG0OPgQvMsD04hSTqy
+ z6BgcQPxyFiu3ZDp9+V7jRjfoCfeA2pkmjr7NNiX8fm7K/XUvxgVAYV2y4ujBicKcq
+ yd2hljR2RBF+TjiBI8rGnw0m3q5HW6eG5cHDGlNgrlhRbg9fXwsZT/9289xDQjcfHP
+ kfaCWriAn0UQZ9r/Ug2nXfZyi8nFo2Gr7RlT4yQRxRih6CKzQJJDoyjZg2SztwJuXE
+ Hs+HJ1+L7IxTlugHK48eK4uMUe/U1sckNHJpz9fIALxUycWP0BUH0Kz9c/taRuwB3v
+ 7cfXOuYDzAjWws/E4CO5dXGJCp6GvQWO3OOsEch7jkhLi67L3bh5F/Kwt9x7efIIy+
+ hvv5jOPByk8R9lES/A6AJ4bkTa+8y3bbYsDZ81KdlX0ZxmF0JENW35Q1I/6qX/UOCZ
+ Qmaocgk9oue2N/taUbEUhvFw5hvRZ4bBEM7vFGcQMd2YGIAatGPPcjJykmCJTds69s
+ lMjtehf/tmhOk18YoUBQL39A=
+Received: by mail-dy1-f199.google.com with SMTP id
+ 5a478bee46e88-2bdf75bc88fso1762779eec.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 12:45:06 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773344311; x=1773949111;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=RkyJK2G+qyeFRx0aZtb9FPsN/N1pjCEIyEk831BjPBo=;
- b=rmJS59TQ1VuKhYROIMVLkQLTPwm7V+MLck38r2Uck/UKL6mLCPjEii3xLUXxj7nAdR
- k4cEyzl0bocVlQwlKXDNZrP+U5eDVsfSIh9eGr3v4349YRWRoqpJB537EeeEbQVfY1uo
- x0FrAtipYACkoGEoE3z7m15Dg9+JYl2swZfaNzR2WUcu80bX/WifkfA3wUSPEaQoawUO
- mIes0hZcJQ58i8mtPKd4ORm1f1WA6DG2KRsgilpeWxZIAjApZuz0PPnysR+FUCQE6FB5
- z4aJC9hDil+dkP0O6aD7CpRS2pa82C911iaAkx+yA20R1CYXGcU+VX2nCbcPQUogP0Pj
- lFuw==
+ d=1e100.net; s=20230601; t=1773344705; x=1773949505;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=06I1nqkBOqM3AgiC7in7DRy/JaGWSgBaQ+zRsY8okDg=;
+ b=WD3WgzQ6afYT7MK/VG1L4fL1mgE474aoslFYZEaJThpMY13rV2MGJwDqIhytYWDRUh
+ tc8TYhCbo0wqwL1kYtnBJEJO/Qb/pLHj3AGusDgJMNPyD8wvQgAsNXQvbURTyYbSYnBp
+ 83O2Jq5h2mePH9L5bc+WkDZ+elALhF0qlvpnasQKlk+JI4s4qrcEbELWW6Pbc9jjDzoY
+ K5ZkxvPvhQcTOO5EnSLpja/IOsDCa3B83SDNYoDmadbR8wISzYwZNnQl2S7VMUe96NI2
+ vA3JUGQxmvMtxjvElF8FjDvuWi835OTS6aou+cOeZxI6aypcWiMEdq5XRRIkL4ZAgA1z
+ AisA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSUkmhFHt59pXG+lYJoNROW191r6BfZBYNzwZebXU8GIjQqUKDq9zXdKYKdYfhKJwRuwjtD1FfIg1f@nongnu.org
-X-Gm-Message-State: AOJu0YyWCuoL+6k3STbF5GPBL9ZKiIxTsbqvcizTh48a3Fr7ZaY94YtD
- 97+cGte158gWX29Hpy/pAl0edWLMgo846b/au7TydijtFz6nPgfcZ3tp0qmNA2CTVYDGwB/yMQv
- bIEm/5+q1Aop1DwxVvdKp19O0g5PLnqgbmPlWZALgyA==
-X-Gm-Gg: ATEYQzxnYbI7l/Im4H+CPo1P9/hl6KZeNGvm2MNR+jcX+3TnIr1nZ4jA9i1zVg1WSTy
- SqlHn3zlsY+ZtF0vUQ4uxebgElGg+UReX25Tm3YyVqw2v57jl6F/ldJX++nHhGeZObinuJeoFLF
- 6sZc3TwadglDuOD6iXIYiqa7zd35r2rsfs1h1SFu8pjm7YSNzgQgqp7tUQM2XGIbO8bAYYWTzbv
- PWjLp1Zg7tCmRwRUAjcb7mM91DoUAf3iHhsPcP4qAEf+cgWnDR0Pvr/9esqeq1A4xL0n2gNcBgs
- x8tPVSI=
-X-Received: by 2002:a05:6820:211:b0:67b:b22c:f79e with SMTP id
- 006d021491bc7-67bda991959mr466041eaf.2.1773344311178; Thu, 12 Mar 2026
- 12:38:31 -0700 (PDT)
+ AJvYcCW7uQdgCY6t4KzD/v8uEDJNGXuYf9cRqTTPRMEx+H6VolUqeOrkeuHlRXQWWriOdJ6jMcsjLf9ARGOv@nongnu.org
+X-Gm-Message-State: AOJu0YxKiLHwJFujxnEtwVwciCAF+unX3Uz6pmBVppwKhHPfccSPRR1L
+ oRlZ5ZjoqxE5cPTqMfZBy71MvTkpQ9aiDOT6cCKH7X29VUI4QgvTS0p/+dJ5NzLRNknOmrceFG7
+ i25Tb7ti0Mf2A6AxAwz3fXEoqY28SrV4B7HtjePhdg5UsenGh5RKbXR0dKAf3teP8wZYAJeuk
+X-Gm-Gg: ATEYQzyhW8sN3OicKKHCriPGXsolHABGkbygYUG45Bij9cRlb4Z5QueAvNOszoiBVKr
+ IdInIeCF9E7Er0FW5Sz/6xa/xLn8m/kKpcF2JAM09sPWwfS3PD3P+uMRiHHIStbomZSRcrmvpdU
+ eTZvyctmmpezx5zeAY2rPMj/v7xrBpPdpv6c4GiPRp/zavS9RIdzeo4IUcbvg93SIfiyTgccZkj
+ R6avVzcebPTdE0Y6UxaE7GiUfg+S89/8ewlDPVUQnMA7i4g90mI8CJ6QTwthHu4LFgm2BQkyx5Z
+ tb4uzlCk8hWUOEyzg3T65ezV/aXftfi9EcXLU9ulEWZr/H/vrdWtGORvuwc6HFx3Y8BHPwdg/zf
+ Trb1Zcgrrzc/bXYukxlEbEUA/k5QW5g7ibHNdqg8dQpeznv3SwayG
+X-Received: by 2002:a05:7022:628b:b0:128:ccb7:7fa3 with SMTP id
+ a92af1059eb24-128f3e06b8emr349744c88.34.1773344705248; 
+ Thu, 12 Mar 2026 12:45:05 -0700 (PDT)
+X-Received: by 2002:a05:7022:628b:b0:128:ccb7:7fa3 with SMTP id
+ a92af1059eb24-128f3e06b8emr349732c88.34.1773344704796; 
+ Thu, 12 Mar 2026 12:45:04 -0700 (PDT)
+Received: from ?IPV6:2001:67c:1562:8007::aac:4084?
+ ([2001:67c:1562:8007::aac:4084]) by smtp.gmail.com with ESMTPSA id
+ a92af1059eb24-128f462b6a4sm574875c88.14.2026.03.12.12.45.00
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Mar 2026 12:45:04 -0700 (PDT)
+Message-ID: <74b0692e-27a1-4dd1-a0cd-3a50ebd02aea@canonical.com>
+Date: Thu, 12 Mar 2026 16:44:56 -0300
 MIME-Version: 1.0
-References: <20260311-semihosting-cpu-tswap-v3-0-8e239575ec08@eonerc.rwth-aachen.de>
- <20260311-semihosting-cpu-tswap-v3-2-8e239575ec08@eonerc.rwth-aachen.de>
- <bde55593-a51d-421c-bfa5-4a0c774f4b61@linaro.org>
- <CAFEAcA_Qvo86Ek2W7xGQqGP94400c7wx-C0=zpBUF5NoM2jhfQ@mail.gmail.com>
- <80ad84b1-0c4d-45de-93d4-90a471f7f751@linaro.org>
-In-Reply-To: <80ad84b1-0c4d-45de-93d4-90a471f7f751@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Date: Thu, 12 Mar 2026 20:38:19 +0100
-X-Gm-Features: AaiRm51MtYZGAS15SUcTZ2zzh6HF2_t8sq-6Z8yp91kbcuFPYmrZ97dWQuAbCsI
-Message-ID: <CAPMQPEJVPfaPdcrWKBBMPJZ1-Y76VdvBLE2py4zX2Jn9-VsoDA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] include/exec: Provide the cpu_internal_tswap()
- functions
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>, 
- qemu-devel@nongnu.org,
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32e;
- envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-ot1-x32e.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 1/1] throttle-group: Fix race condition in
+ throttle_group_restart_queue()
+To: Alberto Garcia <berto@igalia.com>, qemu-devel@nongnu.org
+Cc: Kevin Wolf <kwolf@redhat.com>, qemu-block@nongnu.org,
+ Hanna Czenczek <hreitz@redhat.com>
+References: <cover.1773316842.git.berto@igalia.com>
+ <825598ef34ad384d936da19d634eda75598508f7.1773316842.git.berto@igalia.com>
+Content-Language: en-US, es-UY
+From: Jorge Merlino <jorge.merlino@canonical.com>
+In-Reply-To: <825598ef34ad384d936da19d634eda75598508f7.1773316842.git.berto@igalia.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=185.125.188.123;
+ envelope-from=jorge.merlino@canonical.com;
+ helo=smtp-relay-internal-1.canonical.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -125,74 +123,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 at 20:37, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
-g> wrote:
->
-> On 12/3/26 20:30, Peter Maydell wrote:
-> > On Thu, 12 Mar 2026 at 19:29, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
-> >>
-> >> On 11/3/26 17:27, Martin Kr=C3=B6ning wrote:
-> >>> These functions are needed to support semihosting on CPUs that suppor=
-t
-> >>> runtime-configurable endianness. They should not be used in other con=
-texts.
-> >>
-> >> Another note is these function are not target-specific, which is great=
-!
-> >>
-> >> These can also be used outside of semihosting.
-> >>
-> >> Matter of taste I'd have named them using this shorter pattern:
-> >>
-> >> cpu_internal_tswap16() -> tswap16_cpu()
-> >
-> > We specifically didn't want to use a name that might tempt
-> > people to use them -- these are only wanted for the very
-> > few niche use cases that are outside the CPU but need to
-> > know information about the CPU's internals, which is basically
-> > legacy-virtio and semihosting.
->
-> This was the missing piece to make qtest target-agnostic:
->
-> -- >8 --
-> diff --git a/system/qtest.c b/system/qtest.c
-> index cf90cd53adb..392c1394656 100644
-> --- a/system/qtest.c
-> +++ b/system/qtest.c
-> @@ -523,18 +523,15 @@ static void qtest_process_command(CharFrontend
-> *chr, gchar **words)
->               address_space_write(first_cpu->as, addr,
-> MEMTXATTRS_UNSPECIFIED,
->                                   &data, 1);
->           } else if (words[0][5] =3D=3D 'w') {
-> -            uint16_t data =3D value;
-> -            tswap16s(&data);
-> +            uint16_t data =3D cpu_internal_tswap16(first_cpu, value);
->               address_space_write(first_cpu->as, addr,
-> MEMTXATTRS_UNSPECIFIED,
->                                   &data, 2);
->           } else if (words[0][5] =3D=3D 'l') {
-> -            uint32_t data =3D value;
-> -            tswap32s(&data);
-> +            uint32_t data =3D cpu_internal_tswap32(first_cpu, value);
->               address_space_write(first_cpu->as, addr,
-> MEMTXATTRS_UNSPECIFIED,
->                                   &data, 4);
->           } else if (words[0][5] =3D=3D 'q') {
-> -            uint64_t data =3D value;
-> -            tswap64s(&data);
-> +            uint64_t data =3D cpu_internal_tswap64(first_cpu, value);
->               address_space_write(first_cpu->as, addr,
-> MEMTXATTRS_UNSPECIFIED,
->                                   &data, 8);
->           }
-> ---
->
-> QTest is already dubious by always accessing the first CPU AS, so
-> using the first CPU endianness is good enough for me IMO. (Ideally
-> QTest would support multiple address-spaces).
+On 12/3/26 9:12, Alberto Garcia wrote:
+> When a timer is fired a pending I/O request is restarted and
+> tg->any_timer_armed is reset so other requests can be scheduled.
+> 
+> However we're resetting any_timer_armed first in timer_cb() before
+> the request is actually restarted, and there's a window between both
+> moments in which another thread can arm the same timer, hitting an
+> assertion in throttle_group_restart_queue().
+> 
+> This can be solved by deferring the reset of tg->any_timer_armed to
+> the moment when the queue is actually restarted, which is protected by
+> tg->lock, preventing other threads from arming the timer before that.
+> 
+> In addition to that, throttle_group_restart_tgm() is also updated to
+> hold tg->lock while the timer is being inspected. Here we consider
+> three different scenarios:
+> 
+> - If the tgm has a timer set, fire it immediately
+> - If another tgm has a timer set, restart the queue anyway
+> - If there is no timer set in this group then simulate a timer that
+>    fires immediately, by setting tg->any_timer_armed in order to
+>    prevent other threads from arming a timer in the meantime.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3194
+> Signed-off-by: Alberto Garcia <berto@igalia.com>
+Just writing to confirm that this patch works fine in my reproducer for 
+the bug.
 
-And these endianness checks in QTest framework are only there to test
-legacy virtio, so we are good, this isn't even another niche use case.
+Jorge
 
