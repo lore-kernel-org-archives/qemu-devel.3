@@ -4,111 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43DAD1067039
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 14:16:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC0A91067034
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 14:17:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0gpE-0004E7-Vp; Thu, 12 Mar 2026 10:15:45 -0400
+	id 1w0gr1-00057r-4z; Thu, 12 Mar 2026 10:17:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0gov-0004Ar-Q3
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 10:15:28 -0400
-Received: from smtp-out1.suse.de ([2a07:de40:b251:101:10:150:64:1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0got-0005KL-4l
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 10:15:25 -0400
-Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
- [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
+ id 1w0gqx-00057J-89
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 10:17:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
+ id 1w0gqu-0005gU-8T
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 10:17:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773325044;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=+CcGz6pNTKWsGA2wDTrRYtn08jywOQTf+sdHFBdEH9w=;
+ b=NtlB2Pf8KYIO/sZpqJkKwx23eh6jhZWNheW/WkiGaIqlwy5TRWLT5NKiPeeBD3JniI92Qp
+ Wwi0IMJKeJd2RWj4PjVPW9WX5+xru3xw1mDlp5zvSRnngUUZBTGXdKHHwUKpNDnW7/+Pyr
+ kdH6gF7RHLet6hljM3/ICJGz3QlJ6Kk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-393-A4qPo_P4MdWw83w4uhCtBA-1; Thu,
+ 12 Mar 2026 10:17:23 -0400
+X-MC-Unique: A4qPo_P4MdWw83w4uhCtBA-1
+X-Mimecast-MFC-AGG-ID: A4qPo_P4MdWw83w4uhCtBA_1773325042
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by smtp-out1.suse.de (Postfix) with ESMTPS id 15ED14D1EF;
- Thu, 12 Mar 2026 14:15:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773324918; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=W4WwdGjH3+By8fNFreo6uZWnqbXxcU/ieOCK2CwDNo8=;
- b=Glk0O+uOsEY5Gr0I6YJWdqvcomEh6sKhIv8qAmYbPCmVQJh0NBVBPLM1hOKTTHNeAQGBq1
- ZkI40n9zKerGn5w6lxeF2TrQhdbFIUxfac4IbWlTh+vAc8ltGQMfI+jpndGdAOYCathXxk
- CK0zRsPeFgH3A2+dewo6j/WYyPxX1dM=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773324918;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=W4WwdGjH3+By8fNFreo6uZWnqbXxcU/ieOCK2CwDNo8=;
- b=L3I+Vdo2GjlJe8aiaTVXm0H3TskXIYhTG+Y442v/yND/18d6ovyEkhJa7v6J4XylZWXZbt
- Azo2grXN+griPIDg==
-Authentication-Results: smtp-out1.suse.de;
- dkim=pass header.d=suse.de header.s=susede2_rsa header.b=W4hVzXgh;
- dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=0iG1ftUi
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773324917; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=W4WwdGjH3+By8fNFreo6uZWnqbXxcU/ieOCK2CwDNo8=;
- b=W4hVzXghioNuGJNeNofwYO8VNgku/uXl49CqlBxrevn+RkAcoY0LcqtH4cFttE5s/vOqOI
- wuLE1Y1I6NpjV47pIgI68dUmnTEaLZqlkPOOvt0btXt4v+DZaD1ZzwAdbR5gY72zxyjOA1
- A3Q2NFLD8D+qr4m0GObBJ0m5Hjuvy6Q=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773324917;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=W4WwdGjH3+By8fNFreo6uZWnqbXxcU/ieOCK2CwDNo8=;
- b=0iG1ftUiwHgCt3JtzhNZJeh3mqNdwkZMHCQTinNkogmFGY/BRrpWihbykzb9qkTnMDXymj
- prqtxt617za/LWAg==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 950663FFE7;
- Thu, 12 Mar 2026 14:15:16 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id iFf6FnTKsmmAZwAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Mar 2026 14:15:16 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org
-Cc: Peter Maydell <peter.maydell@linaro.org>, Vladimir Sementsov-Ogievskiy
- <vsementsov@yandex-team.ru>, "yc-core@yandex-team.ru"
- <yc-core@yandex-team.ru>, Peter Xu <peterx@redhat.com>, Alexandr Moshkov
- <dtalexundeer@yandex-team.ru>
-Subject: Re: [PATCH v3] vmstate: fix subsection load name check
-In-Reply-To: <20260312102626.891359-1-dtalexundeer@yandex-team.ru>
-References: <20260312102626.891359-1-dtalexundeer@yandex-team.ru>
-Date: Thu, 12 Mar 2026 11:15:14 -0300
-Message-ID: <878qbxyw0d.fsf@suse.de>
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 491671945104
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 14:17:22 +0000 (UTC)
+Received: from eashurov-thinkpadx1carbongen12.raanaii.csb (unknown
+ [10.45.226.36])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 8001A19560B7; Thu, 12 Mar 2026 14:17:20 +0000 (UTC)
+From: Elizabeth Ashurov <eashurov@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: kkostiuk@redhat.com, berrange@redhat.com,
+ Elizabeth Ashurov <eashurov@redhat.com>
+Subject: [PATCH v1] qga: rework slog to support multiple severity levels
+Date: Thu, 12 Mar 2026 16:16:57 +0200
+Message-ID: <20260312141657.1701801-1-eashurov@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Rspamd-Action: no action
-X-Rspamd-Server: rspamd2.dmz-prg2.suse.org
-X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000];
- R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
- MX_GOOD(-0.01)[]; ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
- TO_DN_EQ_ADDR_SOME(0.00)[]; MISSING_XM_UA(0.00)[];
- FUZZY_RATELIMITED(0.00)[rspamd.com]; TO_DN_SOME(0.00)[];
- MIME_TRACE(0.00)[0:+]; RCVD_TLS_ALL(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[];
- SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
- FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
- RCPT_COUNT_SEVEN(0.00)[7]; RCVD_COUNT_TWO(0.00)[2];
- TO_MATCH_ENVRCPT_ALL(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[yandex-team.ru:email,suse.de:dkim,suse.de:mid,imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- DKIM_TRACE(0.00)[suse.de:+]
-X-Rspamd-Queue-Id: 15ED14D1EF
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:1;
- envelope-from=farosas@suse.de; helo=smtp-out1.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eashurov@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,89 +83,335 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alexandr Moshkov <dtalexundeer@yandex-team.ru> writes:
+ga_log() forwarded all "syslog" domain messages unconditionally,
+bypassing the log level filter. Furthermore, slog() hardcoded
+all messages to G_LOG_LEVEL_INFO, causing log spam from frequent
+guest-ping calls.
 
-Sorry, but I'll have to nitpick on the commit message, I can't parse
-this without looking at the code.
+- Split slog() into slog_error() (WARNING), slog() (MESSAGE), and slog_trace() (INFO)
+- Apply s->log_level filtering to "syslog" in ga_log()
+- Move guest-ping to slog_trace()
+- Move error messages to slog_error()
 
-> When loading a subset, its name is checked for the parent prefix. The
+Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3214
 
-What do you mean by subset?
+Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+---
+ qga/commands-linux.c   |  6 ++++--
+ qga/commands-posix.c   | 13 +++++++------
+ qga/commands-win32.c   | 34 +++++++++++++++++-----------------
+ qga/commands.c         | 30 ++++++++++++++++++++++++------
+ qga/guest-agent-core.h |  2 ++
+ qga/main.c             |  6 +++++-
+ 6 files changed, 59 insertions(+), 32 deletions(-)
 
-> following bug may occur here:
->
-> Let's say there is a vmstate named "virtio-blk", it has a subsection
-> named "virtio-blk/subsection", and it also has another vmstate named
-> "virtio" in the fields.
-> Then, during the migration, when trying to load this subsection for
+diff --git a/qga/commands-linux.c b/qga/commands-linux.c
+index 378f4d080c..b924e44517 100644
+--- a/qga/commands-linux.c
++++ b/qga/commands-linux.c
+@@ -44,7 +44,8 @@ static int dev_major_minor(const char *devpath,
+     *devminor = 0;
+ 
+     if (stat(devpath, &st) < 0) {
+-        slog("failed to stat device file '%s': %s", devpath, strerror(errno));
++        slog_error("failed to stat device file '%s': %s",
++                   devpath, strerror(errno));
+         return -1;
+     }
+     if (S_ISDIR(st.st_mode)) {
+@@ -2072,7 +2073,8 @@ GuestCpuStatsList *qmp_guest_get_cpustats(Error **errp)
+         }
+ 
+         if (i < 5) {
+-            slog("Parsing cpu stat from %s failed, see \"man proc\"", cpustats);
++            slog_error("Parsing cpu stat from %s failed, see \"man proc\"",
++                       cpustats);
+             break;
+         }
+ 
+diff --git a/qga/commands-posix.c b/qga/commands-posix.c
+index 837be51c40..e7dc92fed0 100644
+--- a/qga/commands-posix.c
++++ b/qga/commands-posix.c
+@@ -645,7 +645,7 @@ GuestFileWrite *qmp_guest_file_write(int64_t handle, const char *buf_b64,
+     write_count = fwrite(buf, 1, count, fh);
+     if (ferror(fh)) {
+         error_setg_errno(errp, errno, "failed to write to file");
+-        slog("guest-file-write failed, handle: %" PRId64, handle);
++        slog_error("guest-file-write failed, handle: %" PRId64, handle);
+     } else {
+         write_data = g_new0(GuestFileWrite, 1);
+         write_data->count = write_count;
+@@ -849,8 +849,8 @@ static void guest_fsfreeze_cleanup(void)
+     if (ga_is_frozen(ga_state) == GUEST_FSFREEZE_STATUS_FROZEN) {
+         qmp_guest_fsfreeze_thaw(&err);
+         if (err) {
+-            slog("failed to clean up frozen filesystems: %s",
+-                 error_get_pretty(err));
++            slog_error("failed to clean up frozen filesystems: %s",
++                       error_get_pretty(err));
+             error_free(err);
+         }
+     }
+@@ -1282,19 +1282,20 @@ static GKeyFile *ga_parse_osrelease(const char *fname)
+     const char *group = "[os-release]\n";
+ 
+     if (!g_file_get_contents(fname, &content, NULL, &err)) {
+-        slog("failed to read '%s', error: %s", fname, err->message);
++        slog_error("failed to read '%s', error: %s", fname, err->message);
+         goto fail;
+     }
+ 
+     if (!g_utf8_validate(content, -1, NULL)) {
+-        slog("file is not utf-8 encoded: %s", fname);
++        slog_error("file is not utf-8 encoded: %s", fname);
+         goto fail;
+     }
+     content2 = g_strdup_printf("%s%s", group, content);
+ 
+     if (!g_key_file_load_from_data(keys, content2, -1, G_KEY_FILE_NONE,
+                                    &err)) {
+-        slog("failed to parse file '%s', error: %s", fname, err->message);
++        slog_error("failed to parse file '%s', error: %s", fname,
++                   err->message);
+         goto fail;
+     }
+ 
+diff --git a/qga/commands-win32.c b/qga/commands-win32.c
+index c0bf3467bd..cada3135fc 100644
+--- a/qga/commands-win32.c
++++ b/qga/commands-win32.c
+@@ -361,7 +361,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
+ 
+     if (!ExitWindowsEx(shutdown_flag, SHTDN_REASON_FLAG_PLANNED)) {
+         g_autofree gchar *emsg = g_win32_error_message(GetLastError());
+-        slog("guest-shutdown failed: %s", emsg);
++        slog_error("guest-shutdown failed: %s", emsg);
+         error_setg_win32(errp, GetLastError(), "guest-shutdown failed");
+     }
+ }
+@@ -426,7 +426,7 @@ GuestFileWrite *qmp_guest_file_write(int64_t handle, const char *buf_b64,
+     is_ok = WriteFile(fh, buf, count, &write_count, NULL);
+     if (!is_ok) {
+         error_setg_win32(errp, GetLastError(), "failed to write to file");
+-        slog("guest-file-write-failed, handle: %" PRId64, handle);
++        slog_error("guest-file-write-failed, handle: %" PRId64, handle);
+     } else {
+         write_data = g_new0(GuestFileWrite, 1);
+         write_data->count = (size_t) write_count;
+@@ -1310,8 +1310,8 @@ static void guest_fsfreeze_cleanup(void)
+     if (ga_is_frozen(ga_state) == GUEST_FSFREEZE_STATUS_FROZEN) {
+         qmp_guest_fsfreeze_thaw(&err);
+         if (err) {
+-            slog("failed to clean up frozen filesystems: %s",
+-                 error_get_pretty(err));
++            slog_error("failed to clean up frozen filesystems: %s",
++                   error_get_pretty(err));
+             error_free(err);
+         }
+     }
+@@ -1464,7 +1464,7 @@ static DWORD WINAPI do_suspend(LPVOID opaque)
+ 
+     if (!SetSuspendState(*mode == GUEST_SUSPEND_MODE_DISK, TRUE, TRUE)) {
+         g_autofree gchar *emsg = g_win32_error_message(GetLastError());
+-        slog("failed to suspend guest: %s", emsg);
++        slog_error("failed to suspend guest: %s", emsg);
+         ret = -1;
+     }
+     g_free(mode);
+@@ -2174,8 +2174,8 @@ static char *ga_get_win_name(const OSVERSIONINFOEXW *os_version, bool id)
+         }
+         ++table;
+     }
+-    slog("failed to lookup Windows version: major=%lu, minor=%lu",
+-        major, minor);
++    slog_error("failed to lookup Windows version: major=%lu, minor=%lu",
++               major, minor);
+     return g_strdup("N/A");
+ }
+ 
+@@ -2244,8 +2244,8 @@ static char *ga_get_current_arch(void)
+         break;
+     case PROCESSOR_ARCHITECTURE_UNKNOWN:
+     default:
+-        slog("unknown processor architecture 0x%0x",
+-            info.wProcessorArchitecture);
++        slog_error("unknown processor architecture 0x%0x",
++                   info.wProcessorArchitecture);
+         result = g_strdup("unknown");
+         break;
+     }
+@@ -2308,14 +2308,14 @@ static LPBYTE cm_get_property(DEVINST devInst, const DEVPROPKEY *propName,
+         buffer, &buffer_len, 0);
+     if (cr != CR_SUCCESS && cr != CR_BUFFER_SMALL) {
+ 
+-        slog("failed to get property size, error=0x%lx", cr);
++        slog_error("failed to get property size, error=0x%lx", cr);
+         return NULL;
+     }
+     buffer = g_new0(BYTE, buffer_len + 1);
+     cr = CM_Get_DevNode_PropertyW(devInst, propName, propType,
+         buffer, &buffer_len, 0);
+     if (cr != CR_SUCCESS) {
+-        slog("failed to get device property, error=0x%lx", cr);
++        slog_error("failed to get device property, error=0x%lx", cr);
+         return NULL;
+     }
+     return g_steal_pointer(&buffer);
+@@ -2329,7 +2329,7 @@ static GStrv ga_get_hardware_ids(DEVINST devInstance)
+     g_autofree LPWSTR property = (LPWSTR)cm_get_property(devInstance,
+         &qga_DEVPKEY_Device_HardwareIds, &cm_type);
+     if (property == NULL) {
+-        slog("failed to get hardware IDs");
++        slog_error("failed to get hardware IDs");
+         return NULL;
+     }
+     if (*property == '\0') {
+@@ -2385,7 +2385,7 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
+         name = (LPWSTR)cm_get_property(dev_info_data.DevInst,
+             &qga_DEVPKEY_NAME, &cm_type);
+         if (name == NULL) {
+-            slog("failed to get device description");
++            slog_error("failed to get device description");
+             continue;
+         }
+         device->driver_name = g_utf16_to_utf8(name, -1, NULL, NULL, NULL);
+@@ -2424,7 +2424,7 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
+         version = (LPWSTR)cm_get_property(dev_info_data.DevInst,
+             &qga_DEVPKEY_Device_DriverVersion, &cm_type);
+         if (version == NULL) {
+-            slog("failed to get driver version");
++            slog_error("failed to get driver version");
+             continue;
+         }
+         device->driver_version = g_utf16_to_utf8(version, -1, NULL,
+@@ -2437,7 +2437,7 @@ GuestDeviceInfoList *qmp_guest_get_devices(Error **errp)
+         date = (LPFILETIME)cm_get_property(dev_info_data.DevInst,
+             &qga_DEVPKEY_Device_DriverDate, &cm_type);
+         if (date == NULL) {
+-            slog("failed to get driver date");
++            slog_error("failed to get driver date");
+             continue;
+         }
+         device->driver_date = filetime_to_ns(date);
+@@ -2479,8 +2479,8 @@ static VOID CALLBACK load_avg_callback(PVOID hCounter, BOOLEAN timedOut)
+         (PDH_HCOUNTER)hCounter, PDH_FMT_DOUBLE, 0, &displayValue);
+     /* Skip updating the load if we can't get the value successfully */
+     if (err != ERROR_SUCCESS) {
+-        slog("PdhGetFormattedCounterValue failed to get load value with 0x%lx",
+-             err);
++        slog_error("PdhGetFormattedCounterValue failed to get load value"
++                   " with 0x%lx", err);
+         return;
+     }
+     currentLoad = displayValue.doubleValue;
+diff --git a/qga/commands.c b/qga/commands.c
+index 5f20af25d3..ed52a7d3c2 100644
+--- a/qga/commands.c
++++ b/qga/commands.c
+@@ -38,6 +38,24 @@ void slog(const gchar *fmt, ...)
+ {
+     va_list ap;
+ 
++    va_start(ap, fmt);
++    g_logv("syslog", G_LOG_LEVEL_MESSAGE, fmt, ap);
++    va_end(ap);
++}
++
++void slog_error(const gchar *fmt, ...)
++{
++    va_list ap;
++
++    va_start(ap, fmt);
++    g_logv("syslog", G_LOG_LEVEL_WARNING, fmt, ap);
++    va_end(ap);
++}
++
++void slog_trace(const gchar *fmt, ...)
++{
++    va_list ap;
++
+     va_start(ap, fmt);
+     g_logv("syslog", G_LOG_LEVEL_INFO, fmt, ap);
+     va_end(ap);
+@@ -56,7 +74,7 @@ int64_t qmp_guest_sync(int64_t id, Error **errp)
+ 
+ void qmp_guest_ping(Error **errp)
+ {
+-    slog("guest-ping called");
++    slog_trace("guest-ping called");
+ }
+ 
+ static void qmp_command_info(const QmpCommand *cmd, void *opaque)
+@@ -285,8 +303,8 @@ static void guest_exec_task_setup(gpointer data)
+          * inside the parent, not the child.
+          */
+         if (dup2(STDOUT_FILENO, STDERR_FILENO) != 0) {
+-            slog("dup2() failed to merge stderr into stdout: %s",
+-                 strerror(errno));
++            slog_error("dup2() failed to merge stderr into stdout: %s",
++                       strerror(errno));
+         }
+     }
+ 
+@@ -295,8 +313,8 @@ static void guest_exec_task_setup(gpointer data)
+     sigact.sa_handler = SIG_DFL;
+ 
+     if (sigaction(SIGPIPE, &sigact, NULL) != 0) {
+-        slog("sigaction() failed to reset child process's SIGPIPE: %s",
+-             strerror(errno));
++        slog_error("sigaction() failed to reset child process's SIGPIPE: %s",
++                   strerror(errno));
+     }
+ #endif
+ }
+@@ -626,7 +644,7 @@ GuestFileRead *qmp_guest_file_read(int64_t handle, bool has_count,
+ 
+     read_data = guest_file_read_unsafe(gfh, count, errp);
+     if (!read_data) {
+-        slog("guest-file-write failed, handle: %" PRId64, handle);
++        slog_error("guest-file-write failed, handle: %" PRId64, handle);
+     }
+ 
+     return read_data;
+diff --git a/qga/guest-agent-core.h b/qga/guest-agent-core.h
+index d9f3922adf..7c50e43dfc 100644
+--- a/qga/guest-agent-core.h
++++ b/qga/guest-agent-core.h
+@@ -41,6 +41,8 @@ bool ga_logging_enabled(GAState *s);
+ void ga_disable_logging(GAState *s);
+ void ga_enable_logging(GAState *s);
+ void G_GNUC_PRINTF(1, 2) slog(const gchar *fmt, ...);
++void G_GNUC_PRINTF(1, 2) slog_error(const gchar *fmt, ...);
++void G_GNUC_PRINTF(1, 2) slog_trace(const gchar *fmt, ...);
+ void ga_set_response_delimited(GAState *s);
+ bool ga_is_frozen(GAState *s);
+ void ga_set_frozen(GAState *s);
+diff --git a/qga/main.c b/qga/main.c
+index fd19c7037d..bc786593fd 100644
+--- a/qga/main.c
++++ b/qga/main.c
+@@ -392,6 +392,9 @@ static void ga_log(const gchar *domain, GLogLevelFlags level,
+ 
+     level &= G_LOG_LEVEL_MASK;
+     if (g_strcmp0(domain, "syslog") == 0) {
++        if (!(level & s->log_level)) {
++            return;
++        }
+ #ifndef _WIN32
+         syslog(glib_log_level_to_system(level), "%s: %s", level_str, msg);
+ #else
+@@ -1673,7 +1676,8 @@ int main(int argc, char **argv)
+     GAConfig *config = g_new0(GAConfig, 1);
+     int socket_activation;
+ 
+-    config->log_level = G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL;
++    config->log_level = G_LOG_LEVEL_ERROR | G_LOG_LEVEL_CRITICAL
++                      | G_LOG_LEVEL_WARNING | G_LOG_LEVEL_MESSAGE;
+ 
+     qemu_init_exec_dir(argv[0]);
+     qga_qmp_init_marshal(&ga_commands);
+-- 
+2.51.0
 
-What is "this subsection" in this context? 'virtio-blk/subsection' ? Or do
-you mean the 'virtio' field.
-
-> "virtio", the prefix condition will pass for "virtio-blk/subsection" and
-
-What's "the prefix condition" exactly? Could you be more explicit?
-
-> then the migration will break, because this vmstate does not have such a
-> subsection.
->
-> In other words, if a field inside vmstate1 is set via vmstate2 with a
-> name that is a prefix of the parent vmstate, then the field can "steal"
-> a subsection belonging to the parent state.
->
-
-This is what I read from the above paragraph. Is this it?
-
-vmstate1 "abc"         vmstate2 "abcdef"
-  field -> vmstate2
-  subsection
-
-> Looks like it happens because migration stream for "virtio-blk" looks
-> like this:
->
->  [virtio-blk header] [virtio-blk fields] [virtio-blk subsections]
->
-> "virtio-blk" contains "virtio" field, so migration stream is:
->
->  [virtio-blk header] [virtio header] [virtio fields] [virtio
-> subsections] [virtio-blk subsections]
->
-
-So the code sees the [virtio-blk subsections] as a continuation of the
-preceding [virtio subsections] because the string "virtio", which is the
-parent of [virtio subsection] is matched in the string "virtio-blk"?
-
-> And when we load the subsections of the "virtio" device,
-> vmstate_subsection_load() uses qemu_peek_byte() to try to figure out if
-> this is his subsection. This is where we encounter an error.
->
-> Thus, the error occurs due to the fact that vmsd does not know how many
-> subsections it has when loading (this does not appear anywhere in the
-> migration stream), so it tries to load all the appropriate ones by
-> names.
->
-> To fix this issue, we call vmstate_get_subsection() and, in case of
-> fail, ignore it, pop the VMSD stack and will try to define this
-> subsection for outer VMSD
->
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> ---
->  migration/vmstate.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 4d28364f7b..8f3a69c26e 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -639,9 +639,7 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->          sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
->          if (sub_vmsd == NULL) {
->              trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
-> -            error_setg(errp, "VM subsection '%s' in '%s' does not exist",
-> -                       idstr, vmsd->name);
-> -            return -ENOENT;
-> +            return 0;
->          }
->          qemu_file_skip(f, 1); /* subsection */
->          qemu_file_skip(f, 1); /* len */
 
