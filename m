@@ -4,93 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EF3B2106ACE4
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 20:47:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C42E9106ACEE
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 21:04:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0mvZ-0005Xm-0w; Thu, 12 Mar 2026 16:46:50 -0400
+	id 1w0nBe-0000eV-Qi; Thu, 12 Mar 2026 17:03:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0mvM-0005WW-FB
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 16:46:35 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w0nBc-0000eC-Tu
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:03:17 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0mvK-0006FP-Ce
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 16:46:28 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id DED645C683;
- Thu, 12 Mar 2026 20:46:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773348384; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=PKXla6oLmF2UVurBf1+U5Wn1rfvIP8d/1geFoEltdpQ=;
- b=Sl+Kn7nc3fkeoswepw8gSicQJahe5On6Pc/pdp6Xkh7om+/IH7yr3ipkqlu7KsE8unxWZj
- wpLyf/cgvLzKfywY3EfidF+HOu1cbv8A+/1MjKfGkQyD9ryWiTmbpTKValtszljYSH0mFe
- jyeecJm9xgXfJeJJ9nTjQFJlz71jP7U=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773348384;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=PKXla6oLmF2UVurBf1+U5Wn1rfvIP8d/1geFoEltdpQ=;
- b=RPSOa86FnHRvNWE3DgLL44ox40q18NlX++YKMzTCeiKJRgRdyHNToPqwJ4Zf4ahd0LFiTG
- SnH8ZvcJNTBTiJDg==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773348383; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=PKXla6oLmF2UVurBf1+U5Wn1rfvIP8d/1geFoEltdpQ=;
- b=Bmwivn/AXipwPsniHRX0fKLh764neMjjtNFWUpiViMv7JgeD/88yjGpWZoitY9EkYsvxRO
- JK8JUcBgMDScAP5DybK9VkOa8jbvV/ajetWX/fNJPeGmr5X5C6F9fKqt52bvOrKDGxjyvU
- eUNrkQFVr8FJ3jWVZLpKZcHhrZBHyOQ=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773348383;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=PKXla6oLmF2UVurBf1+U5Wn1rfvIP8d/1geFoEltdpQ=;
- b=Uw/0n3LA1KOuuWuE2coG/QemDJ24MpZK6peGPEZ7k0074p4hXapVt0MKF1LRAJA0uPuMK9
- dbl1uGzTVGCX0cDQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 7E58F40170;
- Thu, 12 Mar 2026 20:46:22 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id koZBER4ms2nEfQAAD6G6ig
- (envelope-from <farosas@suse.de>); Thu, 12 Mar 2026 20:46:22 +0000
-From: Fabiano Rosas <farosas@suse.de>
-To: qemu-devel@nongnu.org
-Cc: Peter Xu <peterx@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PATCH v3] migration/options: Fix leaks in StrOrNull qdev accessors
-Date: Thu, 12 Mar 2026 17:46:19 -0300
-Message-ID: <20260312204619.1969-1-farosas@suse.de>
-X-Mailer: git-send-email 2.51.0
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w0nBb-0002Yv-C5
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:03:16 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-82985f42664so951499b3a.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 14:03:14 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773349393; cv=none;
+ d=google.com; s=arc-20240605;
+ b=bCtseVBrrdn4uvFtMc4KyW8UxB+8YcICCNBzkv4fdnqFu3RAsxpJkBznClxIfg0IWS
+ 0jjRTEAYG2LAQw7R8zF2gW5emIX7cJNtaLw+D4W9UXaDqP9oktlwZlgCkmvxYTq6HNaA
+ qx/yCpawKeEaQbbRLQEIFTRauDevhTiI4bZ3KQHdOaAxuqcLFGec0xU9t8dGKeUoUkno
+ Bym9LxXRb75pKUljYnozs7fJDBvlabJcDvAljqklLWHJRKFfYhxg3OmZUljHpQerxJgA
+ pzTOKFCB84/b8yMZvOTPDQQ2eVdAxD5EzTTTUJ740EdcK1rqkCxnZDlEOJrj1LWp0l5N
+ BRTg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=02cCxBjHOLBGeFbg+lEMlFS/0IrnF3+RyyEqM+vc5n4=;
+ fh=yiUwoBOEypY2fM3mHrz5u4mbHkIidyv/b4UPGcEpz+k=;
+ b=Km/Y0Rpv4qoEfVwDwWDBeCnZDXG65KfFuHvwJrGrFrmqgDVNUVz0xIXpjxoxnZGgVL
+ Qk0XHGFJyTGdxX2TWvOBsvKl18EAsg0rYtdAYbzEnyCDYHZ0APHmxfZ0VwcNt5Od8suK
+ Xf/vu1i9D2SygzI39cj+6XBO50VyMUr1ullelCKz80uVmYBlFxIZO/0hfWkjT436TCYJ
+ 15xNsgGbEYKYxetk4kxe9s9E0j8Gxo4cf4Coo+2oyQNWsY4Bb7AyhmELHeuy8TUKs5sk
+ s7sHt3KPvlKEa/7CLwYbNDMliAo9l8y2b2Q7X/LN9ziAx8zRInDW+4SrG+xDJ6RocHa1
+ K8jA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1773349393; x=1773954193; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=02cCxBjHOLBGeFbg+lEMlFS/0IrnF3+RyyEqM+vc5n4=;
+ b=UxUVVGVW7iGkU44X/Od8GMvWzTNEUgCGcBZ8fGan63Rkuz4d5vqDO3U8xVVhCFvH9/
+ 1xhDLoGXjW6woWJuqc7qD/LNhReMs5dCBbxc8emHhBJXuhGoCYdvB9vrXsix/gWpbNai
+ k3gCoGFD4mHVvEz+kqDojEVAp4lvjjPB3GIPp4OHjiWtDxEFRRw5S8wtiGVcvgrk6EN1
+ WRpcdoaWkVQI0QKmUWc3nMEYKL0WGK3epm1ulBmftFvS1e/xzQNX+kYSRfZewAqZv5v2
+ Qvy1a2ybMnvrtsqAr2qQ6l4kkqWL82StOvQo3+5jvrnOacYRBnAxC3YzbhuPJnk2btB4
+ orlA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773349393; x=1773954193;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=02cCxBjHOLBGeFbg+lEMlFS/0IrnF3+RyyEqM+vc5n4=;
+ b=O6/6axG6kpj8A/oLCwVmOGh0D5QTCTjeTTaBTC1nX4xnDA2Hb0egwP45i7tlYwHl6x
+ E9FTrbOAsxkWHWQrxakCmt/2Yzu750tMRT79BNuOXt2dydzygo3BZ00dfGZiqPBboRaa
+ Of1P/7wzCHpbTWTurrVYjKlGQCiWijMQWJi3h/cmmbhmygNVLeusGyTJdbfvCAWKGpCp
+ ST8O9T1bZNFMVnQRf5nUrp3AX+VHecfxzPILAOwK3DbL8cxTgO2Me7mIZOJm2W8Y4BAj
+ W0buDk99hiHxaD6WYBU97WicZCLU8u/MI8RA7JO9hgOP6TjuNe+RWLNeJDzKydcylnIE
+ +F9A==
+X-Gm-Message-State: AOJu0YyHJ1R5GMRoW/QpwZZWTTfD3fjaJwXL4LN124A7BmpowTqF4zwM
+ vV/oL3pB3d+tpwpL39P7E2OPmRFrO2wPWfFYEQFyq7u6e7EAMhK2p/UKf50oNP9giIBoEq5/yZZ
+ z+qkp/rkzBsLeyQ4kUOT6aii+9KYuCBI=
+X-Gm-Gg: ATEYQzw/RC0nrbP52jYtu4NppTxpuGw0NnX2ZW5TFbnZQINh2ZJMoAogyNKvBVdx8Mx
+ CRd8onoNUN215L8AFPjpfL+MKaxRrUvtyltjXEhXWeit03Y7ulCyFKY1Bh7ef4ZlcWi4cN8PSVc
+ 4RbyALspFgw1Bgekb9tB7GSSl52ECRbqJhVPVyPo4SuRhjn0WHpqmp5lNOrvbA9MvAUvca+NlZz
+ 0O9PHxo5wlF9iwEVhIXMNiaajhvqaSidboIOGW+otvtiuL1Hqgo+4+tgawz7ZRhDm0t3m8a7q0l
+ Y3v99IZJuc9wrn3o7/qOtjSeTxjMWanOkOTOlw==
+X-Received: by 2002:a05:6a00:7703:b0:824:a1c9:8a30 with SMTP id
+ d2e1a72fcca58-82a1971d215mr525086b3a.23.1773349393145; Thu, 12 Mar 2026
+ 14:03:13 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[100.00%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email,imap1.dmz-prg2.suse.org:helo]; 
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_THREE(0.00)[4]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+References: <20260311034923.1044737-1-brian.cain@oss.qualcomm.com>
+ <20260311034923.1044737-7-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260311034923.1044737-7-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Thu, 12 Mar 2026 15:03:01 -0600
+X-Gm-Features: AaiRm5399Bxy5r82DraAryPfpPdwB0XKmhiI8W3QHh_BM2ZsFBVWMTrnPL_zYWQ
+Message-ID: <CAATN3NqZCgqb3b9hAW_0m1Ph-mpmeZ1pCJa3O4Homt2E4zwAnA@mail.gmail.com>
+Subject: Re: [PATCH v5 06/35] target/hexagon: Suppress unused-variable
+ warnings for sysemu source regs
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng
+Content-Type: multipart/alternative; boundary="000000000000a42343064cda14fc"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,120 +118,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Fix a couple of possible leaks detected by Coverity. Both are
-currently harmless. This code is only used for the very specific
-purpose of maintaining compatibility of a few migration options which
-can be set via QEMU command line (-global migration.tls-*). The
-command line interface is not supported and only used during
-development and testing.
+--000000000000a42343064cda14fc
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-1) The setter function set_StrOrNull() is invoked whenever the -global
-migration.tls-* command line options are set. The way it could leak is
-that the temporary "StrOrNull *str_or_null" object is allocated before
-calling the visitor, which could fail and cause an early return of the
-function, leaving *ptr unset and str_or_null leaking.
+On Tue, Mar 10, 2026 at 9:49=E2=80=AFPM Brian Cain <brian.cain@oss.qualcomm=
+.com>
+wrote:
 
-2) The getter function get_StrOrNull() is unreachable code. It's only
-there to provide a complete implementation of the property. Still, the
-way it could leak is that the temporary "StrOrNull *str_or_null" might
-be allocated and is simply never returned to the caller nor freed.
+> The analyze_read() methods on GuestSource, GuestPairSource,
+> SystemSource, and SystemPairSource were no-ops because these
+> source registers do not need read-tracking in the analyze phase.
+> However, gen_analyze_funcs.py unconditionally declares the
+> register-number variable (e.g. GsN) via decl_reg_num() for all
+> registers that are read or written.  When building with
+> hexagon-softmmu, the generated analyze function bodies are
+> compiled (outside the #ifndef CONFIG_USER_ONLY guard), and the
+> declared-but-unreferenced register-number variable triggers
+> -Werror=3Dunused-variable under both gcc and clang.
+>
+> Emit a (void) cast on the register number from analyze_read() to
+> suppress the warning.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/hex_common.py | 16 ++++++++++++++++
+>  1 file changed, 16 insertions(+)
+>
 
-Fix the possible leaks:
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-1) at set_StrOrNull(): change the allocation of str_or_null to happen
-only after the visit call has returned successfully.
+--000000000000a42343064cda14fc
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-2) at get_StrOrNull(): assert that the object is non-NULL, there is no
-need for a temporary object.
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 10,=
+ 2026 at 9:49=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qu=
+alcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">The analyze_read() methods on GuestS=
+ource, GuestPairSource,<br>
+SystemSource, and SystemPairSource were no-ops because these<br>
+source registers do not need read-tracking in the analyze phase.<br>
+However, gen_analyze_funcs.py unconditionally declares the<br>
+register-number variable (e.g. GsN) via decl_reg_num() for all<br>
+registers that are read or written.=C2=A0 When building with<br>
+hexagon-softmmu, the generated analyze function bodies are<br>
+compiled (outside the #ifndef CONFIG_USER_ONLY guard), and the<br>
+declared-but-unreferenced register-number variable triggers<br>
+-Werror=3Dunused-variable under both gcc and clang.<br>
+<br>
+Emit a (void) cast on the register number from analyze_read() to<br>
+suppress the warning.<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/hex_common.py | 16 ++++++++++++++++<br>
+=C2=A01 file changed, 16 insertions(+)<br></blockquote><div><br></div><div>=
+Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com"=
+>ltaylorsimpson@gmail.com</a>&gt;=C2=A0</div></div></div>
 
-The reason it should be non-NULL is that the property is initialized
-by the default setter of the qdev property. The initialization is
-unlikely to fail because the call to the setter is setup by qdev,
-which has boilerplate ensuring the to-be-set object is allocated and
-of the correct type. Moreover, passing NULL via command line to
--global migration.tls-* is not possible.
-
-A programming error could result in an invalid call to the setter,
-which would leave the object NULL and cause a crash in the getter, but
-that's not a worthwhile scenario to protect against given the low
-probability of this code being even reached.
-
-While here, update the comment about why there's no QNULL in this
-StrOrNull property to be more clear.
-
-Fixes: CID 1643919
-Fixes: CID 1643920
-Cc: Markus Armbruster <armbru@redhat.com>
-Reported-by: Peter Maydell <peter.maydell@linaro.org>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Fabiano Rosas <farosas@suse.de>
----
-v3:
-more detailed commit message
-stopped removing the prop variable, cleaner diff
-updated the QNULL comment
----
- migration/options.c | 35 +++++++++++++++++++++--------------
- 1 file changed, 21 insertions(+), 14 deletions(-)
-
-diff --git a/migration/options.c b/migration/options.c
-index f33b297929..658c578191 100644
---- a/migration/options.c
-+++ b/migration/options.c
-@@ -220,14 +220,12 @@ static void get_StrOrNull(Object *obj, Visitor *v, const char *name,
-     StrOrNull **ptr = object_field_prop_ptr(obj, prop);
-     StrOrNull *str_or_null = *ptr;
- 
--    if (!str_or_null) {
--        str_or_null = g_new0(StrOrNull, 1);
--        str_or_null->type = QTYPE_QSTRING;
--        str_or_null->u.s = g_strdup("");
--    } else {
--        /* the setter doesn't allow QNULL */
--        assert(str_or_null->type != QTYPE_QNULL);
--    }
-+    /*
-+     * The property should never be NULL because it's part of
-+     * s->parameters and a default value is always set by qdev. It
-+     * should also never be QNULL as the setter doesn't allow it.
-+     */
-+    assert(str_or_null && str_or_null->type != QTYPE_QNULL);
-     visit_type_str(v, name, &str_or_null->u.s, errp);
- }
- 
-@@ -236,16 +234,25 @@ static void set_StrOrNull(Object *obj, Visitor *v, const char *name,
- {
-     const Property *prop = opaque;
-     StrOrNull **ptr = object_field_prop_ptr(obj, prop);
--    StrOrNull *str_or_null = g_new0(StrOrNull, 1);
-+    StrOrNull *str_or_null;
-+    char *str;
-+
-+    if (!visit_type_str(v, name, &str, errp)) {
-+        return;
-+    }
- 
-     /*
--     * Only str to keep compatibility, QNULL was never used via
--     * command line.
-+     * This property only applies to the command line usage of
-+     * migration's TLS options (-global migration.tls-*) where the
-+     * NULL value cannot be provided as input (only strings are
-+     * allowed). Therefore, this StrOrNull implementation never
-+     * produces a QNULL value to avoid ever returning values outside
-+     * the range of what was previously handled by consumers of the
-+     * TLS options.
-      */
-+    str_or_null = g_new0(StrOrNull, 1);
-     str_or_null->type = QTYPE_QSTRING;
--    if (!visit_type_str(v, name, &str_or_null->u.s, errp)) {
--        return;
--    }
-+    str_or_null->u.s = str;
- 
-     qapi_free_StrOrNull(*ptr);
-     *ptr = str_or_null;
--- 
-2.51.0
-
+--000000000000a42343064cda14fc--
 
