@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1CF5106ACCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:15:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 41D87106ACCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0kZ8-0007V0-1d; Thu, 12 Mar 2026 14:15:22 -0400
+	id 1w0kci-0008BD-1N; Thu, 12 Mar 2026 14:19:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0kZ2-0007UP-3N
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:15:16 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0kca-0008Ab-K3
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:18:57 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0kZ0-0005MJ-DQ
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:15:15 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-64c9c8f8783so1622006d50.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:15:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773339313; cv=none;
- d=google.com; s=arc-20240605;
- b=IZmv/ry3As4fPsK0uQbAdFGI3oVZyzsBRAMFXnM9PUYP/OEVpurXG5QrCjvui/aE4J
- QV30Z0/M7TeoLSGo/37VWbiFWAZqzJFD48FpHobq7KL6mCXxZ1hkvSW/BVAWXhN/vo76
- 1inGqBLRnDF7FsG/sOdbSSHdoN2Ue9kVwfu2e4BHqUWCJF6n5ULcn1UkND3SXw+3p3S4
- sdfiQGwwC9qra+5xQm9VmeIL3jUAPX/MXHd4YDTF7fYGvh5mLlpELoe1BKxyaCd2e0bi
- 2485ZRjW/+436X5UB929claScr70PQCOmNx4+JsMKWZ9JyrW5CyVkWiz3MFZus3B973g
- a76w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=rIAecA9ikb0DGqcEU2MA/bKVHbxoi6ICujU6nY02muk=;
- fh=e3Vyyr/1rc5Aw0xvprfx32OEOEsqrGxRuKyHlLy27L8=;
- b=UYCbHeB7id8cXbT+DCsI2/Eb25a3yWBR/vku7mpuiqgoOhAJEnxTFmbgBMZvTeB4tO
- 1Y2WY1sE6sI2mnfdKPYwVi0doJcQrivQrDZx0TdsqQJJopzdm0lbtnruFr/clkMJKNop
- 5CHYBwj/ImUgrBLoYOIgoXs8KDBkfrfM8tEMOkHqI+SV7WGOQjga22vj0XmfEr+8UFyh
- EEHQ0VcmsAnh/1DThUF6cNB5KFntwD5iHb6sw7VJr/KmPogBdKv4HyfnOEbgHFAol1e4
- YH/SiaDkP86w1wElZnfFyWf8z3B929oAOdU7b2liG1CyLmQrhaKv7/iGziGpwlrAGo4R
- BvlA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0kcT-00065k-Ry
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:18:51 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4852e09e23dso11413165e9.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773339313; x=1773944113; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=rIAecA9ikb0DGqcEU2MA/bKVHbxoi6ICujU6nY02muk=;
- b=fq3a7hY0w0xNJTPFYFJzNcRFDQU0GMMal0cSwYYn8Oi8Nyh+M7c/unjwiY1lHtoTrw
- E3WRJz7X3o96FT43W3QB7p3ZjmJxG2EnVmKuwngU9WiX89QJgXKb8lRzvSxhA58EGSrb
- FECknHWN7Kok3qxFkwhRODAaj9mWr3UBPi//cedZZ3GBGO6Yasf/BOq9eHPjns+2H4nX
- 3GmeQHggGRK1W+x0sOhyewXVU7Aij0YKeCI4kw6YH/EDZRFXSbwQKXLEFalpg1W2i95x
- 43Ew+WU/Bc6tx68Re9u90naVk3lSDvFpMx9SPbfKslYMmGGcn84KOYqlSJf7t9SzEvLA
- MJgA==
+ d=linaro.org; s=google; t=1773339527; x=1773944327; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=yYXudM48uZQlkTe2pswR3W6pvCIzv1XYfDWsmr17sy0=;
+ b=EIzh31vTCxjQsy1ab7BP1/BVSjHKqcYJiHM9gH6Oe0Aij/bciUa4RVQhJi6iz/xgkl
+ mxOXsdRDSZfpFNEqB5fhTFzScxHMoz/vYO5cqFiWQuAjKTTcW9u2vVAj9QLZu5qB8Fmt
+ AhkJF4wku2FVyUPWJKzNraEga82ZjLzVlFZve8dySwnduFJQhZDAxAMOCOixdFErwO+B
+ nPbAz0Q6feBWrlp857Kx2+rNxZkek6UlmIgTibQOaoDiWt6WBfVpC//7FYuHP5G7lj6N
+ IfDOSWyk92ywfViPw/Rvg38kh3UqwOh2dXhNyDmT/4M3Qt68y0z4isix2cljbp0LWXqC
+ LCbw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773339313; x=1773944113;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rIAecA9ikb0DGqcEU2MA/bKVHbxoi6ICujU6nY02muk=;
- b=ryvc20ncBg+IgSj+KBjvEH9hFkKrzs9XkI+9c+bVB8d96QPVOBmimP+lg0lgQltY6t
- Wx6flM8LqwN1WBUBbS/iDlNZ0FMdU0LUMImghZ/2sn8dSz2q7P4SfUMxX8JSOBRNPhEu
- wFI+kU228K6JJhqF/dCOtWJBrmvFW4UljhSU8JlHtLgRVW6G1r6LEP+NK7vkjZO83v4F
- cIMm1WNecvbWr1AsuEyno72wSosKn+663dkciQgJq+CYOIz/vkEL/kgJsxc/nvzzfXZ/
- vMKTBjSXirApZ1+rcp3eh//ovXsbwl15YogyNgSDNg6ilWslCpCjROt08xm/bTF6Cijy
- BviA==
+ d=1e100.net; s=20230601; t=1773339527; x=1773944327;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=yYXudM48uZQlkTe2pswR3W6pvCIzv1XYfDWsmr17sy0=;
+ b=QOkSIuhpYepk06xd+KW1d6etOVMrMn3hljbBgp7x3Gvfckg98D9ZQIEyB6RmfZOk/o
+ ln2km4rnm1DK/VjKkOWjlMJGsv1nTsA/bsZu7Lmy+fSMtBxvwhCyXylLw2l/1bYeaCdk
+ qQo/NeKt2TZBHhJ9de2lwbKToPFxtx19X+szzOMNQe12oLAYd/OBCIhpLJ+M/U/zCjRy
+ vUtnD/m2KTlvr097FnZAiGh/DuESRQuYX94pjv4nb9xC0Mob/vpG2pED8J/UO63PGHD4
+ a0R8qTwGMPxlaDBgXZ6Ip+cKmbEaRIeVndi3xPMxfH0O22H8ZH/Irdi9Y9UlM22SUlsg
+ 59Lg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWm6qUS4TvWCe/cpOxQvP2rj4NQxszOZ+tn6MjS5gN4bi5niuNZsWDYo1CVQYBIGzcva7ZGvG5EM5zg@nongnu.org
-X-Gm-Message-State: AOJu0YyB1AjvoNTsxQD/meRKw4CiNeM1Ik5AioWOry2bg6CgPbZPFw03
- qZ/ckvTUOvuPSHw+P/aNI6EL8IQWZzsG/uWx+AElkHDvhURKDRi/BSmdB4crtIbIks9ylnS5Zcv
- u25c7sQwqcu2PZ4gglLqIxQ3WCWGO7Rlz5lpiNyygfD2UqXP9I1ea
-X-Gm-Gg: ATEYQzzqeqDfz01A+qwnCBDAjn3wqRebATeczDRbHNdTqRBQPipr/ATEbb5URmGrRPc
- nH0xQkO5R5x/HDN5MEUJzfXq2WJWW84IsjJ/jG6N8hLw7dlYE36ZYCps6TZOPQvL+GhugOeRymu
- SobeSoiI49KJPiDF3mydC7n9AWj0OKcvm/pF7VUziPhGf7TQjIG/uvGsRTh4ZuDg4SdTdyNaMD7
- 0CQgZdFs7zma7IW1RgMsG1jslRHlKGnIaDEDBi47LgPX7PqcQ8XUWjxmqwZG2DB6WexomeNySd+
- ORBagb01peks4wR5IQFq7KYW3F0XBcb1W22llVIWgezkJ3jPpufGEGl8p4JDJCb9tCs=
-X-Received: by 2002:a05:690e:191c:b0:649:e440:26a8 with SMTP id
- 956f58d0204a3-64e6236a860mr695097d50.0.1773339312679; Thu, 12 Mar 2026
- 11:15:12 -0700 (PDT)
+ AJvYcCVqNYxJflBApuw/BDUpyvzQde15VhiRWjZHq1tPE/wMLpmSerAxZib5xf5u9D3djxLaK5qYRM4L/D2U@nongnu.org
+X-Gm-Message-State: AOJu0Yw+ZFMhSsbL68O7pAjZkHOUN0Ri3rAucfxQAEZE6TTQI0QJ32iw
+ YS5DVM9KcVQYqOm7TvGFtlulemAKSMjrp+Pm6AN0C7aLauOnNHr7iJ2OrcMzi33Xl1U=
+X-Gm-Gg: ATEYQzwXMlnXPawRlhgGtRPZ+GFK+WE+J21ZLo5AkNw8cPBm7VPT/prK/HoRqebE1tn
+ gy4ytA2F5fCtCu/oamd+9mNmgIkQ/aE+omQd2AOdLyx3+pbpTAnNN3BDO/s9GB5H5bvH3bIT0c3
+ QUWW9SWyz61XOpPU7dWt2TXrARdb1BanaDsrN+cVJHHZMoJU7ilCaf0C1YW6Ftjp3qEsZqppE97
+ YN4HsQkDED6BAJ+gmeS1bq+4pBupSKZo8KxDb7W3H5pfgihiEapUL0lHI7j/IMDVcAUGbamc1xt
+ cLisGfb7Xgi/dmpv+jSc4ZpoayxNYvQIkXIoxcGrUT5s9ZUg8sPWHMZz5I9OitzVKsinnoWW3eY
+ nrSpVDvC7j6cOfJJkPsInB+38SCT6MvVg6iPG4AKS7Hayj/Y47Q96ypI5vGkCOOVUVjutQ2rzhz
+ OjxdcetSKUQ4sxH+QUGvUAx3VVz7RgWBZEHO9miaDqMAq3MjnXSLnrw+0yjdFwn9/q9hekNEkfH
+ Pbs
+X-Received: by 2002:a05:600c:8b70:b0:485:39d1:b500 with SMTP id
+ 5b1f17b1804b1-485566f9445mr5981535e9.16.1773339526933; 
+ Thu, 12 Mar 2026 11:18:46 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541b7f406sm240866345e9.13.2026.03.12.11.18.45
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Mar 2026 11:18:46 -0700 (PDT)
+Message-ID: <f333a91d-df3c-4b8f-8476-1dc82d72ba39@linaro.org>
+Date: Thu, 12 Mar 2026 19:18:45 +0100
 MIME-Version: 1.0
-References: <20260312121617.228654-1-vikingtc4@gmail.com>
- <4d7c6db3-0915-411d-ac1a-f26b5b38dc28@linaro.org>
- <CAFEAcA9m_0VCWzxFACJzHKw=WUQhmuXSEgHzfJs1a9NUzWm6SQ@mail.gmail.com>
- <3e8016a4-17cd-4d87-9210-2f67a2ab243d@linaro.org>
-In-Reply-To: <3e8016a4-17cd-4d87-9210-2f67a2ab243d@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 18:15:01 +0000
-X-Gm-Features: AaiRm53Cs3COvcCKPdprbASspfdGY5VOlD_RATp5IH1c0DtWv2V_w_WzAR0Wixg
-Message-ID: <CAFEAcA_JVF49rphVFdQpBeY7O+nU3NKNqXPFgSNodx53JpfjWA@mail.gmail.com>
-Subject: Re: [PATCH] plugins/api-system: Handle migrate_add_blocker() failure
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 1/5] whpx: arm: fix -cpu host
+Content-Language: en-US
+To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org
+References: <20260311151014.55915-1-mohamed@unpredictable.fr>
+ <20260311151014.55915-2-mohamed@unpredictable.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260311151014.55915-2-mohamed@unpredictable.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,60 +105,13 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 at 18:12, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 3/12/26 11:08 AM, Peter Maydell wrote:
-> > On Thu, 12 Mar 2026 at 18:02, Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org> wrote:
-> >>
-> >> On 3/12/26 5:16 AM, Trieu Huynh wrote:
-> >>> migrate_add_blocker() can fail (e.g. if migration is already in
-> >>> progress), in which case it returns a negative value and populates
-> >>> its errp argument with the reason.
-> >>>
-> >>> The previous code ignored the return value, leaving state
-> >>> inconsistent on failure. Fix this by:
-> >>> - Passing a local Error ** so failure details can be reported.
-> >>> - Checking the return value; on failure, report the error, free the
-> >>>     migration_blocker Error object, and return NULL to the caller.
-> >>>
-> >>> Resolves: CID 1645470
-> >>>
-> >>> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> >>> ---
-> >>>    plugins/api-system.c | 8 +++++++-
-> >>>    1 file changed, 7 insertions(+), 1 deletion(-)
-> >>>
-> >>
-> >> While the description makes sense, how would it happen in real world?
-> >>
-> >> Plugins usually will request time control on startup (so no migration is
-> >> happening). In all cases, plugin who want to control time will have no
-> >> other choice than abort.
-> >> Maybe we could simply assert that migrate_add_blocker succeeded in this
-> >> context.
-> >
-> > If the user starts QEMU with the --only-migratable option then
-> > all attempts to install migration-blockers will fail. In this
-> > case we need to report to the user that the thing they tried
-> > to do (use a time-control plugin and also migrate) isn't possible,
-> > i.e. exit cleanly with an error rather than falling over.
-> >
->
-> Reporting errors is useful when there is a possibility to recover from
-> it, but in this case it seems like we can only stop when user try to
-> request time control, so I'm not sure we should return anything from
-> this function at all instead of crashing.
+On 11/3/26 16:10, Mohamed Mediouni wrote:
+> "hw/arm/virt: Register valid CPU types dynamically" went under my radar, so fix this for WHPX.
+> 
+> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> ---
+>   hw/arm/virt.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 
-When the user does something that is misguided QEMU should (as an ideal)
-never crash -- a crash indicates a bug in QEMU. User mistakes should
-cause QEMU to produce (hopefully helpful) error messages.
-
-If we want to say "there is no sensible way for the plugin to recover
-from this failure, we should just print the error message and exit QEMU"
-then that is what error_fatal is for.
-
-thanks
--- PMM
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
