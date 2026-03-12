@@ -4,99 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 582E9103E2F5
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 00:12:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7D7AC103E2F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 00:21:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Tec-0005ps-Ke; Wed, 11 Mar 2026 20:11:54 -0400
+	id 1w0Tml-0007RM-MB; Wed, 11 Mar 2026 20:20:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0Tea-0005p9-Sc
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 20:11:52 -0400
-Received: from mail-ed1-x533.google.com ([2a00:1450:4864:20::533])
+ id 1w0Tmg-0007Qq-3x
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 20:20:15 -0400
+Received: from mail-ej1-x631.google.com ([2a00:1450:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0TeY-000594-5p
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 20:11:52 -0400
-Received: by mail-ed1-x533.google.com with SMTP id
- 4fb4d7f45d1cf-662bf05f7a4so495172a12.3
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 17:11:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773274306; cv=none;
+ id 1w0Tmd-0000UK-HZ
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 20:20:13 -0400
+Received: by mail-ej1-x631.google.com with SMTP id
+ a640c23a62f3a-b941762394aso50182966b.1
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 17:20:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773274809; cv=none;
  d=google.com; s=arc-20240605;
- b=R4CKQ97HONW60wZpWP+ATBO6m+ByAHl4cXy+/DF3tIIjulQrLdSlYxkNFk2XHpRSyE
- TWDau8nlrwUY7iIj7EhlPaHrvJ+OVIlvYiFuDj5G7g4t/5DHT7KMt31wKAYJxRIAb6st
- jEJnB0CZ1pyKSmEFL/6iw1i90uCgcxh2HHMp/VR1y1rYc7WjNgYbL1EWhtBxp64zx/uL
- KGfyx0iaUDwT1Ubc5OuOvaO0V8YudelauqA65mrBkREE16dFwpqmsacC/VSP7q5qCYBb
- xnnGLf78HpFYpzhQF8xtSq81if3i4FdwINdDuDF+ypMp3krcfLjnBTHdDSWaG5s2Lv4u
- xo6g==
+ b=C82O+3taV2/nkWINNSa3eTCsA4Z+hO72lERwOZytMwB24J1xGXfXgoWzKoEmwBP2tT
+ ARgYIrw0d4JX3jc/wlP1kHwRuMAoKTwgXu6t+JDgHAeCBoawfXFxW1eMxEh31OHxWz/1
+ dXLXd/021QpMXTVmCaYBLefeVah7tckJj7MxmIAopXjQU7dTcdpOwVIYITEEjtujaFd6
+ 0154k03NmjThWNzcASGQC1JwktiMJqZxafoBj7m3gKts6VTFcv199ojk8uLAsfZmUbRK
+ sAhJwDurniSBOsMXrKlJpjK/X2RwOlDWMb45zuvfqSpNofxZnVvGlVm7arsS6g2fzhPn
+ ho2Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=j/goiLodzNfzmcmJ6Ce2k82a9wFUT572E+ipAqeVjAY=;
- fh=059fPbysrDhfLwN/t1QliMU3btEuqzcoAMHNlbFyVyc=;
- b=khU76nz9fO7Ly034kGeETwnlBdi+p+GnV5UYzfUe+/FNOMTTxnCeaehcpWF5g/mm7/
- oecVdTKS/f9+mKtwNpa7qhkYZkrupWfpQEumKjbDjH3/3rn9xQeVJKlWqKKTAb3+hMS2
- OhbV3FShWIGX8m2vrVwx4QUzkF4Zun+YqzoZm/qvx+CdmyGoIBHfW5/XuLowMz0ZFh3f
- DTYDtuDfv1/eSlccrXyeYnmr0ND2bM3zwYyRjNctKz4taPRDlvllEFcJRZHtbpCkilyx
- 7qeqbAwMdqmdZCKbiMxGQjZwyLa9IXwXr840XAaAT6JMdxddrUfMF1AwqnRE8TM7TLZT
- fk4g==; darn=nongnu.org
+ bh=2feqfLdIpF9y5N8DjIdIGdXOgxKhDuG8lfyYhFviMSo=;
+ fh=zVKTuEm8m+Ap2ul1J246dHoP+VQhiORJVgL/jAG6LaA=;
+ b=RUaLRgosjTP+xMJQTer/Pm4oWBwLYwUHrJpSQTOblPpxOPUiqyVzydvk/0b7qIiU2G
+ 9rdGUzy6JtnoC8csE0GzzcD/D6JhjvzfeI5DgM0/4KEOC41xFq0YHVq86tTcewxpX6cl
+ o60zeknN5dAx+OZLoXTcw24lMoSz/Jp5XCBVOJu4BGdKhUSJgnqIslKxLaE1E5lZdY2O
+ BkFaacUxTdUO9RkNxm7SC2Y7f/jxiQ/hCU9W6EwcRek//0vF8N3RsAEVXNaWpsY0LE6A
+ 10g94MhLzN4+ye9Vp9d1nuHp/0KZbUpZHOu2H/Z50uxTzTSeEOBQOjzTfB23lghy8lRO
+ wJoQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773274306; x=1773879106; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773274809; x=1773879609; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=j/goiLodzNfzmcmJ6Ce2k82a9wFUT572E+ipAqeVjAY=;
- b=NrbVwbrebHqKjCB81pZxsQV7EVeJJcxlghAJWuutZWxP00iBZX30Cx3cazJwVW2ySQ
- YDwuf6aUqwnTiibeuTGDM3cmGSFIio4eEqGu3kQ1fka3A10jrZm06cvkqUhJTFLujEMe
- 66c73MMvIdbNRfaWWjpW2zEg4iS9TiDDQvId+9effldwcpXyWd9bX5t6RvEcuPDXZcic
- qc+U8af7M1RV8SySqkyq+5Dchi0muHkEq5C4Zaw0BTPALWwrpxLEVSW4IybzphdrvRjx
- vSXmQUqwYmVRHr/WrW+JGpV29zU9TfTLNafg76FKmzPS85YijB7N25Cjx/ZcZmvkTox5
- Sutw==
+ bh=2feqfLdIpF9y5N8DjIdIGdXOgxKhDuG8lfyYhFviMSo=;
+ b=ZVUnwhyDJzWZMeCOUOTR/0kiCbuHM/lP2Ei24ExJPQNniggbIqffvdVT1698mzMbWB
+ Xw9iC+yLs72ovIywDLi6t72bwVU943XQly531PnXvq0bncDEpz4Kax/M+YLgd89gCm95
+ h6yMKSUcXASVnMSospmj5udbXd9GQIrJ77y1dkOhk4vr+kNbIKHLuSQechz1cQjE/60y
+ XPW6Qug8RRSJYSSPMxERgR/uxjAuN9ZHz0NO15+FSNyh8eMDgJQMjF834BB64Ok93oI5
+ ayjfd5e/saAWymA8VZU/N5JT57m5XGu8vLT77oWKoVG6pVIi39teSLaIoj6hEpNR1Wik
+ 5BQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773274306; x=1773879106;
+ d=1e100.net; s=20230601; t=1773274809; x=1773879609;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=j/goiLodzNfzmcmJ6Ce2k82a9wFUT572E+ipAqeVjAY=;
- b=hkvyKvm8nLVm83S2fZJfGNE749dKb+PnAxXheP0iwjHjo7zCElaqDNMWjV4VbmGgYE
- Vr1BSMes4C7HNjj2KxQP7Y2yr1ScpufoY30HH34jVPFintrTjRTG6w1YmJSWllOaIrrU
- S6RPwB0T/wBVqXBzvWA42ByYENnsdXf1MZasWrDXO7+Tbqax282f2Q1aDcUM4f7npzb0
- Zrck9JUjOV8ju6Ze8HlC7RelfsFP/82zTKW/bW4V1qO6RhZBpuU+WGhqV9jW7raMrpWY
- wq0kAZNi71hWugtSvGizYwr10Oe5goir5zvxxJgyGH1ZQg29C1NYTRm04xO74/It7pI6
- X9wQ==
+ bh=2feqfLdIpF9y5N8DjIdIGdXOgxKhDuG8lfyYhFviMSo=;
+ b=LEQxeck8ZIhkTUhKAHmiD3Yt9Aj46P7Q3nbkbn5Ahq25yeKMTkNqsFbGS2H6YKbCnx
+ pY26X9P6xv3TPtEkSSZZU4FtCMBjuzapV5aJZ0VdwFI1iiZYkmZEMBpfVTLxetjEtZbb
+ dIgCW4Kubr0R4KgxOqhSy610Tr7HInkyj8aCUpBeT56RgI6f5zTQeGvzCTvvGf1saDVy
+ D/M1N0slh32g2malWVEs8XYphGXXztE9myFKLdhK4Hr/1LRX895JubuPFhxNfjwpBBbo
+ ZEy/qEaNpAtuSUxUVnpzdV79+1y2AnCrtce/KrfOAN23td2S03+oBIIwSd022M4PPGXU
+ MYNQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWEkQ4qM0aaijzNPelATlQArmyoESILIm3Chui0mrUJ1d+4ZNmjtDZ8l85syP37Yf1o7g2h4vai2GiK@nongnu.org
-X-Gm-Message-State: AOJu0YxCr+EibuKkHDU8AqkdkFLnJ1Ytpb5KvZtmfZH4KXiZLDFjYmYc
- h3pN4p9qSd7m/rptnsVY1+HiWC2YEayTscljfEG2aNew86Z96PycTTHwkfpmOlKj1wWraVWNUk7
- bD0I6nNakBgjwwQhuzVIm3xKghViEpgM=
-X-Gm-Gg: ATEYQzzcsEMuMCUmBqCRLi8wFwhZyOQEH9B6u0wkdGxs1M15PpfQtUg1/CltXFvOBRD
- uXNzYEoC+KZvxdCb3yaK7b7vEYiBPwzoKfIK0T/+sHnn60lM8ElzicgF2PV+jVVoHcQL6GdAJr9
- WKPWhDsaPPREsnOVB5MD19bhRN/ddWJH2zuFM0wT2s3dQRqlCgsI+M5MQndanUKfxWU2arOa4Hi
- f2bs4LCm4YCrthmiG+bsokqwMAfwaBVJSKeuoomvjJBEVWMuFhKuNPXtih3opiR8LdE/wY9uz6w
- 6fcUXZ6GOj5JQM2F52x75bXW6TA7E4/vtH/24A==
-X-Received: by 2002:a05:6402:34d2:b0:662:e479:e883 with SMTP id
- 4fb4d7f45d1cf-66319abd31emr2325037a12.5.1773274306053; Wed, 11 Mar 2026
- 17:11:46 -0700 (PDT)
+ AJvYcCWcZovGZoXfnF57LE9Z1q/YwVQNaGSMTHmV9G1w/9+mKN5N2h1hPODIXgUGmz7Bexx80QzrvuAbQ1pL@nongnu.org
+X-Gm-Message-State: AOJu0Yx14x8Jshs2CXkn/2fnW2wJurirZGEkys5BXDpS1BMQlAdz71zq
+ 4pBAuqEmNdweCKd8TDQgsXAd5j1AThjjh/K94f8EOn/wR6lik0wd19t/7M4kHrrqtSsIkoPGB+E
+ a2ox/MFAdmZHE8oxqTp6NF66I089CM+c=
+X-Gm-Gg: ATEYQzycgR/a7JeqvQ3bAJRDzSbNSCPGssY1ndMZNhme6LekFZFnYy45tViyypn5fqs
+ q+tZXJvF8TjGoSaO1h9KvzIZQo+g10xWGzUn/9rCeweULC6ATk61eN/i+lRXEz7gtc2HA8k5SYj
+ Z1GMXS/AebIslho0BVU4vlPVnWnwhUjiYmiN0N2ax3lZ3nVX0u7o++SjpFXc8kQ+WqnWhyELYMR
+ /xHKxiIcktcTOTCY9Gnu7d84XhKFRtZ+YlmuBjcibzaH1ggeJEZcocIyj+HxFzLRL/56IxnQKju
+ jrUHWfhLJmHGnG9CAp07zFji8aOMwfpOglHi3GDWJJ7j2+7L
+X-Received: by 2002:a17:907:9302:b0:b94:3836:165f with SMTP id
+ a640c23a62f3a-b972e5a5933mr260172466b.47.1773274808503; Wed, 11 Mar 2026
+ 17:20:08 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260310151347.67263-1-james.wainwright@lowrisc.org>
- <20260310151347.67263-2-james.wainwright@lowrisc.org>
-In-Reply-To: <20260310151347.67263-2-james.wainwright@lowrisc.org>
+ <20260310151347.67263-3-james.wainwright@lowrisc.org>
+In-Reply-To: <20260310151347.67263-3-james.wainwright@lowrisc.org>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 12 Mar 2026 10:11:19 +1000
-X-Gm-Features: AaiRm50Cr7niRT09uer3ODfab67XDAfyLSdd5DvEsdMwEg4YFtzkpjy8IR4sNso
-Message-ID: <CAKmqyKNo642iM4Me0=yd6Ya2GdV6VEQiNNeU_WvGRuVCa4n9hQ@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] util: export CRC32[C] lookup tables
+Date: Thu, 12 Mar 2026 10:19:42 +1000
+X-Gm-Features: AaiRm51YFWrmYBKHpPNcZnbqvL54HuGqOJVnYWOL5ehrApcKAl2NPVa1g7tw2fM
+Message-ID: <CAKmqyKMg4MO=8BuF=svAYUsE9dUO3mZG18GQLGfz6hvg00F7tw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] target/riscv: add draft RISC-V Zbr ext as xbr0p93
 To: James Wainwright <james.wainwright@lowrisc.org>
 Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
  Emmanuel Blot <eblot@rivosinc.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::533;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x533.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -104,7 +104,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,17 +120,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 11, 2026 at 1:15=E2=80=AFAM James Wainwright
+On Wed, Mar 11, 2026 at 1:18=E2=80=AFAM James Wainwright
 <james.wainwright@lowrisc.org> wrote:
 >
 > From: Emmanuel Blot <eblot@rivosinc.com>
 >
-> These are needed for the RISC-V Zbr0p93 CRC32 instructions which pre-XOR
-> the data into the CRC state before the instruction is executed, making
-> the zlib crc32 and QEMU crc32c implementations inappropriate.
+> This extension was not ratified with the Zb[abcs] bitmanip extensions.
+> This is the latest draft version (0.93) as implemented by the Ibex core.
 >
-> https://github.com/riscv/riscv-bitmanip/releases/download/v0.93/bitmanip-=
-0.93.pdf
+> These instructions are in the reserved encoding space but have not been
+> ratified and could conflict with future ratified instructions. For this
+> reason they are added as a vendor extension to support Ibex's impl.
 >
 > Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
 
@@ -139,183 +139,354 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  include/qemu/crc32.h  | 18 +++++++++
->  include/qemu/crc32c.h |  1 +
->  util/crc32.c          | 85 +++++++++++++++++++++++++++++++++++++++++++
->  util/crc32c.c         |  4 +-
->  util/meson.build      |  1 +
->  5 files changed, 107 insertions(+), 2 deletions(-)
->  create mode 100644 include/qemu/crc32.h
->  create mode 100644 util/crc32.c
+>  MAINTAINERS                               |  3 ++
+>  target/riscv/bitmanip_helper.c            | 20 +++++++
+>  target/riscv/cpu.c                        |  4 +-
+>  target/riscv/cpu_cfg.h                    |  1 +
+>  target/riscv/cpu_cfg_fields.h.inc         |  1 +
+>  target/riscv/helper.h                     |  2 +
+>  target/riscv/insn_trans/trans_xlrbr.c.inc | 45 ++++++++++++++++
+>  target/riscv/meson.build                  |  1 +
+>  target/riscv/translate.c                  |  3 ++
+>  target/riscv/xlrbr.decode                 | 30 +++++++++++
+>  tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
+>  tests/tcg/riscv64/test-crc32.S            | 64 +++++++++++++++++++++++
+>  12 files changed, 178 insertions(+), 1 deletion(-)
+>  create mode 100644 target/riscv/insn_trans/trans_xlrbr.c.inc
+>  create mode 100644 target/riscv/xlrbr.decode
+>  create mode 100644 tests/tcg/riscv64/test-crc32.S
 >
-> diff --git a/include/qemu/crc32.h b/include/qemu/crc32.h
-> new file mode 100644
-> index 0000000000..a320151acc
-> --- /dev/null
-> +++ b/include/qemu/crc32.h
-> @@ -0,0 +1,18 @@
-> +/*
-> + * CRC32 Checksum
-> + *
-> + * Copyright (c) 2026 QEMU contributors
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms of the GNU General Public License as published by the=
- Free
-> + * Software Foundation; either version 2 of the License, or (at your opt=
-ion)
-> + * any later version.
-> + *
-> + */
-> +
-> +#ifndef QEMU_CRC32_H
-> +#define QEMU_CRC32_H
-> +
-> +extern const uint32_t crc32_table[256];
-> +
-> +#endif
-> diff --git a/include/qemu/crc32c.h b/include/qemu/crc32c.h
-> index 88b4d2b3b3..3d5ba189ef 100644
-> --- a/include/qemu/crc32c.h
-> +++ b/include/qemu/crc32c.h
-> @@ -28,6 +28,7 @@
->  #ifndef QEMU_CRC32C_H
->  #define QEMU_CRC32C_H
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 9d1614fd7e..847fd414bc 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1725,6 +1725,9 @@ F: hw/riscv/opentitan.c
+>  F: hw/*/ibex_*.c
+>  F: include/hw/riscv/opentitan.h
+>  F: include/hw/*/ibex_*.h
+> +F: target/riscv/insn_trans/trans_xthead.c.inc
+> +F: target/riscv/xlrbr.decode
+> +F: tests/tcg/riscv64/test-crc32.S
 >
-> +extern const uint32_t crc32c_table[256];
->
->  uint32_t crc32c(uint32_t crc, const uint8_t *data, unsigned int length);
->  uint32_t iov_crc32c(uint32_t crc, const struct iovec *iov, size_t iov_cn=
-t);
-> diff --git a/util/crc32.c b/util/crc32.c
-> new file mode 100644
-> index 0000000000..590dd6e3a2
-> --- /dev/null
-> +++ b/util/crc32.c
-> @@ -0,0 +1,85 @@
-> +/*
-> + * Constants for computing CRC32 checksums
-> + *
-> + * Copyright (c) 2026 QEMU contributors
-> + *
-> + * This program is free software; you can redistribute it and/or modify =
-it
-> + * under the terms of the GNU General Public License as published by the=
- Free
-> + * Software Foundation; either version 2 of the License, or (at your opt=
-ion)
-> + * any later version.
-> + *
-> + */
-> +
-> +#include "qemu/osdep.h"
+>  Microchip PolarFire SoC Icicle Kit
+>  L: qemu-riscv@nongnu.org
+> diff --git a/target/riscv/bitmanip_helper.c b/target/riscv/bitmanip_helpe=
+r.c
+> index e9c8d7f778..1156a87dd3 100644
+> --- a/target/riscv/bitmanip_helper.c
+> +++ b/target/riscv/bitmanip_helper.c
+> @@ -23,6 +23,8 @@
+>  #include "exec/target_long.h"
+>  #include "exec/helper-proto.h"
+>  #include "tcg/tcg.h"
 > +#include "qemu/crc32.h"
+> +#include "qemu/crc32c.h"
+>
+>  target_ulong HELPER(clmul)(target_ulong rs1, target_ulong rs2)
+>  {
+> @@ -129,3 +131,21 @@ target_ulong HELPER(xperm8)(target_ulong rs1, target=
+_ulong rs2)
+>  {
+>      return do_xperm(rs1, rs2, 3);
+>  }
 > +
+> +target_ulong HELPER(crc32)(target_ulong rs1, target_ulong sz)
+> +{
+> +    for (target_ulong i =3D 0; i < sz; i++) {
+> +        rs1 =3D crc32_table[rs1 & 0xFF] ^ (rs1 >> 8);
+> +    }
+> +
+> +    return rs1;
+> +}
+> +
+> +target_ulong HELPER(crc32c)(target_ulong rs1, target_ulong sz)
+> +{
+> +    for (target_ulong i =3D 0; i < sz; i++) {
+> +        rs1 =3D crc32c_table[rs1 & 0xFF] ^ (rs1 >> 8);
+> +    }
+> +
+> +    return rs1;
+> +}
+> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+> index e56470a374..22bab85288 100644
+> --- a/target/riscv/cpu.c
+> +++ b/target/riscv/cpu.c
+> @@ -1370,6 +1370,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[=
+] =3D {
+>      MULTI_EXT_CFG_BOOL("xmipscbop", ext_xmipscbop, false),
+>      MULTI_EXT_CFG_BOOL("xmipscmov", ext_xmipscmov, false),
+>      MULTI_EXT_CFG_BOOL("xmipslsp", ext_xmipslsp, false),
+> +    MULTI_EXT_CFG_BOOL("xlrbr", ext_xlrbr, false),
+>
+>      { },
+>  };
+> @@ -3056,7 +3057,8 @@ static const TypeInfo riscv_cpu_type_infos[] =3D {
+>          .cfg.ext_zba =3D true,
+>          .cfg.ext_zbb =3D true,
+>          .cfg.ext_zbc =3D true,
+> -        .cfg.ext_zbs =3D true
+> +        .cfg.ext_zbs =3D true,
+> +        .cfg.ext_xlrbr =3D true
+>      ),
+>
+>      DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
+> diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
+> index cd1cba797c..211d0708ba 100644
+> --- a/target/riscv/cpu_cfg.h
+> +++ b/target/riscv/cpu_cfg.h
+> @@ -69,5 +69,6 @@ MATERIALISE_EXT_PREDICATE(xtheadmemidx)
+>  MATERIALISE_EXT_PREDICATE(xtheadmempair)
+>  MATERIALISE_EXT_PREDICATE(xtheadsync)
+>  MATERIALISE_EXT_PREDICATE(XVentanaCondOps)
+> +MATERIALISE_EXT_PREDICATE(xlrbr);
+>
+>  #endif
+> diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fie=
+lds.h.inc
+> index 70ec650abf..7ded97534c 100644
+> --- a/target/riscv/cpu_cfg_fields.h.inc
+> +++ b/target/riscv/cpu_cfg_fields.h.inc
+> @@ -153,6 +153,7 @@ BOOL_FIELD(ext_XVentanaCondOps)
+>  BOOL_FIELD(ext_xmipscbop)
+>  BOOL_FIELD(ext_xmipscmov)
+>  BOOL_FIELD(ext_xmipslsp)
+> +BOOL_FIELD(ext_xlrbr)
+>
+>  BOOL_FIELD(mmu)
+>  BOOL_FIELD(pmp)
+> diff --git a/target/riscv/helper.h b/target/riscv/helper.h
+> index b785456ee0..7722c590bd 100644
+> --- a/target/riscv/helper.h
+> +++ b/target/riscv/helper.h
+> @@ -84,6 +84,8 @@ DEF_HELPER_FLAGS_1(unzip, TCG_CALL_NO_RWG_SE, tl, tl)
+>  DEF_HELPER_FLAGS_1(zip, TCG_CALL_NO_RWG_SE, tl, tl)
+>  DEF_HELPER_FLAGS_2(xperm4, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+>  DEF_HELPER_FLAGS_2(xperm8, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+> +DEF_HELPER_FLAGS_2(crc32, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+> +DEF_HELPER_FLAGS_2(crc32c, TCG_CALL_NO_RWG_SE, tl, tl, tl)
+>
+>  /* Floating Point - Half Precision */
+>  DEF_HELPER_FLAGS_3(fadd_h, TCG_CALL_NO_RWG, i64, env, i64, i64)
+> diff --git a/target/riscv/insn_trans/trans_xlrbr.c.inc b/target/riscv/ins=
+n_trans/trans_xlrbr.c.inc
+> new file mode 100644
+> index 0000000000..01da2b6ce1
+> --- /dev/null
+> +++ b/target/riscv/insn_trans/trans_xlrbr.c.inc
+> @@ -0,0 +1,45 @@
 > +/*
-> + * CRC-32 table (reversed; polynomial 0xEDB88320).
+> + * RISC-V translation routines for xlrbr matching the unratified Zbr CRC=
+32
+> + * bitmanip extension v0.93.
+> + *
+> + * Copyright (c) 2026 Rivos Inc.
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
 > + */
 > +
-> +const uint32_t crc32_table[256] =3D {
-> +    0x00000000u, 0x77073096u, 0xee0e612cu, 0x990951bau,
-> +    0x076dc419u, 0x706af48fu, 0xe963a535u, 0x9e6495a3u,
-> +    0x0edb8832u, 0x79dcb8a4u, 0xe0d5e91eu, 0x97d2d988u,
-> +    0x09b64c2bu, 0x7eb17cbdu, 0xe7b82d07u, 0x90bf1d91u,
-> +    0x1db71064u, 0x6ab020f2u, 0xf3b97148u, 0x84be41deu,
-> +    0x1adad47du, 0x6ddde4ebu, 0xf4d4b551u, 0x83d385c7u,
-> +    0x136c9856u, 0x646ba8c0u, 0xfd62f97au, 0x8a65c9ecu,
-> +    0x14015c4fu, 0x63066cd9u, 0xfa0f3d63u, 0x8d080df5u,
-> +    0x3b6e20c8u, 0x4c69105eu, 0xd56041e4u, 0xa2677172u,
-> +    0x3c03e4d1u, 0x4b04d447u, 0xd20d85fdu, 0xa50ab56bu,
-> +    0x35b5a8fau, 0x42b2986cu, 0xdbbbc9d6u, 0xacbcf940u,
-> +    0x32d86ce3u, 0x45df5c75u, 0xdcd60dcfu, 0xabd13d59u,
-> +    0x26d930acu, 0x51de003au, 0xc8d75180u, 0xbfd06116u,
-> +    0x21b4f4b5u, 0x56b3c423u, 0xcfba9599u, 0xb8bda50fu,
-> +    0x2802b89eu, 0x5f058808u, 0xc60cd9b2u, 0xb10be924u,
-> +    0x2f6f7c87u, 0x58684c11u, 0xc1611dabu, 0xb6662d3du,
-> +    0x76dc4190u, 0x01db7106u, 0x98d220bcu, 0xefd5102au,
-> +    0x71b18589u, 0x06b6b51fu, 0x9fbfe4a5u, 0xe8b8d433u,
-> +    0x7807c9a2u, 0x0f00f934u, 0x9609a88eu, 0xe10e9818u,
-> +    0x7f6a0dbbu, 0x086d3d2du, 0x91646c97u, 0xe6635c01u,
-> +    0x6b6b51f4u, 0x1c6c6162u, 0x856530d8u, 0xf262004eu,
-> +    0x6c0695edu, 0x1b01a57bu, 0x8208f4c1u, 0xf50fc457u,
-> +    0x65b0d9c6u, 0x12b7e950u, 0x8bbeb8eau, 0xfcb9887cu,
-> +    0x62dd1ddfu, 0x15da2d49u, 0x8cd37cf3u, 0xfbd44c65u,
-> +    0x4db26158u, 0x3ab551ceu, 0xa3bc0074u, 0xd4bb30e2u,
-> +    0x4adfa541u, 0x3dd895d7u, 0xa4d1c46du, 0xd3d6f4fbu,
-> +    0x4369e96au, 0x346ed9fcu, 0xad678846u, 0xda60b8d0u,
-> +    0x44042d73u, 0x33031de5u, 0xaa0a4c5fu, 0xdd0d7cc9u,
-> +    0x5005713cu, 0x270241aau, 0xbe0b1010u, 0xc90c2086u,
-> +    0x5768b525u, 0x206f85b3u, 0xb966d409u, 0xce61e49fu,
-> +    0x5edef90eu, 0x29d9c998u, 0xb0d09822u, 0xc7d7a8b4u,
-> +    0x59b33d17u, 0x2eb40d81u, 0xb7bd5c3bu, 0xc0ba6cadu,
-> +    0xedb88320u, 0x9abfb3b6u, 0x03b6e20cu, 0x74b1d29au,
-> +    0xead54739u, 0x9dd277afu, 0x04db2615u, 0x73dc1683u,
-> +    0xe3630b12u, 0x94643b84u, 0x0d6d6a3eu, 0x7a6a5aa8u,
-> +    0xe40ecf0bu, 0x9309ff9du, 0x0a00ae27u, 0x7d079eb1u,
-> +    0xf00f9344u, 0x8708a3d2u, 0x1e01f268u, 0x6906c2feu,
-> +    0xf762575du, 0x806567cbu, 0x196c3671u, 0x6e6b06e7u,
-> +    0xfed41b76u, 0x89d32be0u, 0x10da7a5au, 0x67dd4accu,
-> +    0xf9b9df6fu, 0x8ebeeff9u, 0x17b7be43u, 0x60b08ed5u,
-> +    0xd6d6a3e8u, 0xa1d1937eu, 0x38d8c2c4u, 0x4fdff252u,
-> +    0xd1bb67f1u, 0xa6bc5767u, 0x3fb506ddu, 0x48b2364bu,
-> +    0xd80d2bdau, 0xaf0a1b4cu, 0x36034af6u, 0x41047a60u,
-> +    0xdf60efc3u, 0xa867df55u, 0x316e8eefu, 0x4669be79u,
-> +    0xcb61b38cu, 0xbc66831au, 0x256fd2a0u, 0x5268e236u,
-> +    0xcc0c7795u, 0xbb0b4703u, 0x220216b9u, 0x5505262fu,
-> +    0xc5ba3bbeu, 0xb2bd0b28u, 0x2bb45a92u, 0x5cb36a04u,
-> +    0xc2d7ffa7u, 0xb5d0cf31u, 0x2cd99e8bu, 0x5bdeae1du,
-> +    0x9b64c2b0u, 0xec63f226u, 0x756aa39cu, 0x026d930au,
-> +    0x9c0906a9u, 0xeb0e363fu, 0x72076785u, 0x05005713u,
-> +    0x95bf4a82u, 0xe2b87a14u, 0x7bb12baeu, 0x0cb61b38u,
-> +    0x92d28e9bu, 0xe5d5be0du, 0x7cdcefb7u, 0x0bdbdf21u,
-> +    0x86d3d2d4u, 0xf1d4e242u, 0x68ddb3f8u, 0x1fda836eu,
-> +    0x81be16cdu, 0xf6b9265bu, 0x6fb077e1u, 0x18b74777u,
-> +    0x88085ae6u, 0xff0f6a70u, 0x66063bcau, 0x11010b5cu,
-> +    0x8f659effu, 0xf862ae69u, 0x616bffd3u, 0x166ccf45u,
-> +    0xa00ae278u, 0xd70dd2eeu, 0x4e048354u, 0x3903b3c2u,
-> +    0xa7672661u, 0xd06016f7u, 0x4969474du, 0x3e6e77dbu,
-> +    0xaed16a4au, 0xd9d65adcu, 0x40df0b66u, 0x37d83bf0u,
-> +    0xa9bcae53u, 0xdebb9ec5u, 0x47b2cf7fu, 0x30b5ffe9u,
-> +    0xbdbdf21cu, 0xcabac28au, 0x53b39330u, 0x24b4a3a6u,
-> +    0xbad03605u, 0xcdd70693u, 0x54de5729u, 0x23d967bfu,
-> +    0xb3667a2eu, 0xc4614ab8u, 0x5d681b02u, 0x2a6f2b94u,
-> +    0xb40bbe37u, 0xc30c8ea1u, 0x5a05df1bu, 0x2d02ef8du
-> +};
-> diff --git a/util/crc32c.c b/util/crc32c.c
-> index ea7f345de8..f40597f80d 100644
-> --- a/util/crc32c.c
-> +++ b/util/crc32c.c
-> @@ -1,7 +1,7 @@
->  /*
->   *  Castagnoli CRC32C Checksum Algorithm
->   *
-> - *  Polynomial: 0x11EDC6F41
-> + *  Polynomial: 0x1EDC6F41
->   *
->   *  Castagnoli93: Guy Castagnoli and Stefan Braeuer and Martin Herrman
->   *               "Optimization of Cyclic Redundancy-Check Codes with 24
-> @@ -37,7 +37,7 @@
->   * reflect output bytes =3D true
->   */
+> +#define REQUIRE_XLRBR(ctx) do {                    \
+> +    if (!ctx->cfg_ptr->ext_xlrbr) {                \
+> +        return false;                            \
+> +    }                                            \
+> +} while (0)
+> +
+> +static bool gen_crc(DisasContext *ctx, arg_r2 *a,
+> +                    void (*func)(TCGv, TCGv, TCGv), TCGv tsz)
+> +{
+> +    REQUIRE_XLRBR(ctx);
+> +    TCGv dest =3D dest_gpr(ctx, a->rd);
+> +    TCGv src1 =3D get_gpr(ctx, a->rs1, EXT_NONE);
+> +
+> +    func(dest, src1, tsz);
+> +    gen_set_gpr(ctx, a->rd, dest);
+> +
+> +    return true;
+> +}
+> +
+> +#define TRANS_CRC32(NAME, SIZE) \
+> +    static bool trans_crc32_##NAME(DisasContext *ctx, arg_r2 *a) \
+> +    { if (SIZE =3D=3D 8) { REQUIRE_64BIT(ctx); }; \
+> +      return gen_crc(ctx, a, gen_helper_crc32, tcg_constant_tl(SIZE)); }
+> +#define TRANS_CRC32C(NAME, SIZE) \
+> +    static bool trans_crc32c_##NAME(DisasContext *ctx, arg_r2 *a) \
+> +    { if (SIZE =3D=3D 8) { REQUIRE_64BIT(ctx); }; \
+> +      return gen_crc(ctx, a, gen_helper_crc32c, tcg_constant_tl(SIZE)); =
+}
+> +
+> +TRANS_CRC32(b, 1);
+> +TRANS_CRC32(h, 2);
+> +TRANS_CRC32(w, 4);
+> +TRANS_CRC32(d, 8);
+> +TRANS_CRC32C(b, 1);
+> +TRANS_CRC32C(h, 2);
+> +TRANS_CRC32C(w, 4);
+> +TRANS_CRC32C(d, 8);
+> diff --git a/target/riscv/meson.build b/target/riscv/meson.build
+> index 3842c7c1a8..79f36abd63 100644
+> --- a/target/riscv/meson.build
+> +++ b/target/riscv/meson.build
+> @@ -5,6 +5,7 @@ gen =3D [
+>    decodetree.process('xthead.decode', extra_args: '--static-decode=3Ddec=
+ode_xthead'),
+>    decodetree.process('XVentanaCondOps.decode', extra_args: '--static-dec=
+ode=3Ddecode_XVentanaCodeOps'),
+>    decodetree.process('xmips.decode', extra_args: '--static-decode=3Ddeco=
+de_xmips'),
+> +  decodetree.process('xlrbr.decode', extra_args: '--static-decode=3Ddeco=
+de_xlrbr'),
+>  ]
 >
-> -static const uint32_t crc32c_table[256] =3D {
-> +const uint32_t crc32c_table[256] =3D {
->      0x00000000L, 0xF26B8303L, 0xE13B70F7L, 0x1350F3F4L,
->      0xC79A971FL, 0x35F1141CL, 0x26A1E7E8L, 0xD4CA64EBL,
->      0x8AD958CFL, 0x78B2DBCCL, 0x6BE22838L, 0x9989AB3BL,
-> diff --git a/util/meson.build b/util/meson.build
-> index e7a2a2a64c..d5789b1316 100644
-> --- a/util/meson.build
-> +++ b/util/meson.build
-> @@ -44,6 +44,7 @@ util_ss.add(files('id.c'))
->  util_ss.add(files('qemu-config.c', 'notify.c'))
->  util_ss.add(files('qemu-option.c', 'qemu-progress.c'))
->  util_ss.add(files('keyval.c'))
-> +util_ss.add(files('crc32.c'))
->  util_ss.add(files('crc32c.c'))
->  util_ss.add(files('uuid.c'))
->  util_ss.add(files('getauxval.c'))
+>  riscv_ss =3D ss.source_set()
+> diff --git a/target/riscv/translate.c b/target/riscv/translate.c
+> index cb4f443601..9b05eb3695 100644
+> --- a/target/riscv/translate.c
+> +++ b/target/riscv/translate.c
+> @@ -1213,9 +1213,11 @@ static uint32_t opcode_at(DisasContextBase *dcbase=
+, target_ulong pc)
+>  #include "insn_trans/trans_rvbf16.c.inc"
+>  #include "decode-xthead.c.inc"
+>  #include "decode-xmips.c.inc"
+> +#include "decode-xlrbr.c.inc"
+>  #include "insn_trans/trans_xthead.c.inc"
+>  #include "insn_trans/trans_xventanacondops.c.inc"
+>  #include "insn_trans/trans_xmips.c.inc"
+> +#include "insn_trans/trans_xlrbr.c.inc"
+>
+>  /* Include the auto-generated decoder for 16 bit insn */
+>  #include "decode-insn16.c.inc"
+> @@ -1235,6 +1237,7 @@ const RISCVDecoder decoder_table[] =3D {
+>      { has_xmips_p, decode_xmips},
+>      { has_xthead_p, decode_xthead},
+>      { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
+> +    { has_xlrbr_p, decode_xlrbr},
+>  };
+>
+>  const size_t decoder_table_size =3D ARRAY_SIZE(decoder_table);
+> diff --git a/target/riscv/xlrbr.decode b/target/riscv/xlrbr.decode
+> new file mode 100644
+> index 0000000000..893ce6ec71
+> --- /dev/null
+> +++ b/target/riscv/xlrbr.decode
+> @@ -0,0 +1,30 @@
+> +#
+> +# Translation routines for the instructions of the xlrbr ISA extension
+> +# (matching the draft encodings in the standard reserved encoding space =
+for the
+> +# unratified Zbr CRC32 bitmanip extension version 0.93).
+> +#
+> +# Copyright (c) 2026 Rivos Inc.
+> +#
+> +# SPDX-License-Identifier: GPL-2.0-or-later
+> +
+> +# Fields:
+> +%rs1       15:5
+> +%rd        7:5
+> +
+> +# Argument sets:
+> +&r2        rd rs1                                 !extern
+> +
+> +# Formats 32:
+> +@r2        .......  ..... ..... ... ..... ....... &r2 %rs1 %rd
+> +
+> +# *** RV32 xlrbr extension ***
+> +crc32_b    0110000  10000 ..... 001 ..... 0010011 @r2
+> +crc32_h    0110000  10001 ..... 001 ..... 0010011 @r2
+> +crc32_w    0110000  10010 ..... 001 ..... 0010011 @r2
+> +crc32c_b   0110000  11000 ..... 001 ..... 0010011 @r2
+> +crc32c_h   0110000  11001 ..... 001 ..... 0010011 @r2
+> +crc32c_w   0110000  11010 ..... 001 ..... 0010011 @r2
+> +
+> +# *** RV64 xlrbr extension (in addition to RV32) ***
+> +crc32_d    0110000  10011 ..... 001 ..... 0010011 @r2
+> +crc32c_d   0110000  11011 ..... 001 ..... 0010011 @r2
+> diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv6=
+4/Makefile.softmmu-target
+> index eb1ce6504a..82be8a2c91 100644
+> --- a/tests/tcg/riscv64/Makefile.softmmu-target
+> +++ b/tests/tcg/riscv64/Makefile.softmmu-target
+> @@ -36,5 +36,10 @@ run-plugin-interruptedmemory: interruptedmemory
+>           $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $<.pout \
+>           $(QEMU_OPTS)$<)
+>
+> +EXTRA_RUNS +=3D run-test-crc32
+> +comma:=3D ,
+> +run-test-crc32: test-crc32
+> +       $(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=3Dtrue $(QEMU=
+_OPTS)$<)
+> +
+>  # We don't currently support the multiarch system tests
+>  undefine MULTIARCH_TESTS
+> diff --git a/tests/tcg/riscv64/test-crc32.S b/tests/tcg/riscv64/test-crc3=
+2.S
+> new file mode 100644
+> index 0000000000..70d70b16a9
+> --- /dev/null
+> +++ b/tests/tcg/riscv64/test-crc32.S
+> @@ -0,0 +1,64 @@
+> +/*
+> + * Copyright (c) 2026 lowRISC CIC
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#define crc32(op, rd, rs1) .insn r 19, 1, 48, rd, rs1, x##op
+> +
+> +#define crc32_b(rd, rs1) crc32(16, rd, rs1)
+> +#define crc32_h(rd, rs1) crc32(17, rd, rs1)
+> +#define crc32_w(rd, rs1) crc32(18, rd, rs1)
+> +#define crc32_d(rd, rs1) crc32(19, rd, rs1)
+> +#define crc32c_b(rd, rs1) crc32(24, rd, rs1)
+> +#define crc32c_h(rd, rs1) crc32(25, rd, rs1)
+> +#define crc32c_w(rd, rs1) crc32(26, rd, rs1)
+> +#define crc32c_d(rd, rs1) crc32(27, rd, rs1)
+> +
+> +       .option norvc
+> +
+> +       .text
+> +       .globl _start
+> +_start:
+> +       lla t0, trap
+> +       csrw mtvec, t0
+> +
+> +       li      t0, 0x34e24a2cd65650d4
+> +
+> +       crc32_b         (t0, t0)
+> +       crc32_h         (t0, t0)
+> +       crc32_w         (t0, t0)
+> +       crc32_d         (t0, t0)
+> +       crc32c_b        (t0, t0)
+> +       crc32c_h        (t0, t0)
+> +       crc32c_w        (t0, t0)
+> +       crc32c_d        (t0, t0)
+> +
+> +       li      t1, 0x68167e78
+> +
+> +       li      a0, 0
+> +       beq     t0, t1, _exit
+> +fail:
+> +       li      a0, 1
+> +_exit:
+> +       lla     a1, semiargs
+> +       li      t0, 0x20026     # ADP_Stopped_ApplicationExit
+> +       sd      t0, 0(a1)
+> +       sd      a0, 8(a1)
+> +       li      a0, 0x20        # TARGET_SYS_EXIT_EXTENDED
+> +
+> +       # Semihosting call sequence
+> +       .balign 16
+> +       slli    zero, zero, 0x1f
+> +       ebreak
+> +       srai    zero, zero, 0x7
+> +       j       .
+> +
+> +       .data
+> +       .balign 16
+> +semiargs:
+> +       .space  16
+> +
+> +trap:
+> +       csrr t0, mepc
+> +       addi t0, t0, 4
+> +       mret
 > --
 > 2.48.1
 >
