@@ -4,108 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6ECEA106ACE1
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:24:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 642BE106ACE2
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:25:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0ldC-00087e-Ii; Thu, 12 Mar 2026 15:23:40 -0400
+	id 1w0lf4-0000Ko-BR; Thu, 12 Mar 2026 15:25:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0ld6-00087I-PN
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:23:34 -0400
-Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0ld3-00046f-Pf
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:23:31 -0400
-Received: by mail-yx1-xb12b.google.com with SMTP id
- 956f58d0204a3-64c9f7576d4so1223547d50.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 12:23:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773343408; cv=none;
- d=google.com; s=arc-20240605;
- b=Zum9pl/rb2BWV6ljJhSiZGNVuDADUj3SlWlZWbIkA3goU/5/c7VmaANy+aBlMECjE5
- 5EZ7XibQPk6kXya58kaC82DxIAQvWL4WwWlsAneP1YHKzHLDMl7ody9HbCWuJzWU2KZN
- yaCZlz6TKDjFr1kKzVj1MTid21aSSY1usIVaADHD7WliREh8kOH/vOIKI6nQpaOZJMmj
- 9Rc7jV4lH8Fj9LII5qfcWFpaPEBWVEyVxGMD1CiCkCpy4rJFNEb9bYIJTP6HMOBY/OPz
- buMJgLiQSKjBEP3btGGRq73VAm1PLMa6f/EuYiVQQlQXJ1Bx5Umr8md/GE5lJHBwxlc+
- 7mjA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=guCvf9N/EXv9zX+nWdqCr2sGMnAPCZsaNwa34jA1JhM=;
- fh=YZ4+q4udaZA2X9LZgots578Fh7VXJjLlDbHusn/+Hu0=;
- b=em2Is69kMpxc4iNrmWt6aOsNOwzXLt8CL8/rDGVDQ5qlamTKBm9eMZd+Sk1fOEdDJh
- CziE7vW4eYisfJjISLhWDC/YUO1WKVckHTHgrS18hq/5vfsw6nwhDNJpQ1XcWB5ICrht
- LRF+qe7Z1ein+YiDy3MrgGqyWV2T8GZiQw/g/KYEqYGlahHKtQurp8r7Bxt8bay65mOK
- H9RjnlmcjhUMWzNKX//99WbgDrQ3M0QRkC1kTg7VYkosjmnC7m/0QnX+s/1KujYdRByp
- vtqaGIhnGq6VGt3sr25egVMZrdy6EwszKJBEkyzZ4R8uyi+zikOGdwUUrEfB1vDxiU3l
- TEyg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0lex-0000Ka-Rj
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:25:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0les-00059P-Be
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:25:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773343520;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=bU9xLHAywFGn4GyxV/Qhqyy+Qm0eKB3M3cKVNASMchA=;
+ b=KVLGmEXZD+4e9UJ2jUIlONUn4w/qjgGfveCgz8XdRZWNQdoKXKLgrisY1T+/y+OXu9oect
+ Ap7gD5pIL5Q2hF6zgyH8C+F26EDPFwa1y1oBefpupAJuJaf4pafvwtQ4EZ9N/yMsWjmJdz
+ goJ3DmGjAeCuSLdY/qkhxWsNl5P11KE=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-642-QWO6dKg6NW-1I4Pk-lJvdA-1; Thu, 12 Mar 2026 15:25:18 -0400
+X-MC-Unique: QWO6dKg6NW-1I4Pk-lJvdA-1
+X-Mimecast-MFC-AGG-ID: QWO6dKg6NW-1I4Pk-lJvdA_1773343518
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5093b19111fso9336721cf.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 12:25:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773343408; x=1773948208; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=guCvf9N/EXv9zX+nWdqCr2sGMnAPCZsaNwa34jA1JhM=;
- b=nP0yk0RYmOP4PtTvBSTx8ITaxnyXmvzqBZdFpXkR4wYML/X+7l2sjw6ddXnRbcpoLa
- CFyl3PkMaMDMFcOczqJ5NGlnZjBdE9yik/H01Q/GKizJ4d0SBwybRobEoQTCQKiJeaGD
- A+dw6poqXCC53MDMrsWwk5YMusQiWRCRlp1GKQBLUObuRhb+zQ2J4T5kfAQ0B/hRswK5
- HlysneVgw935B5ooEjJcNK3n7KSkRsvi/cZDjDUF1b+PQOWLprSJ6OKWsauIyJQYfTZd
- gAng6DsWv3cKclUWayKBtySzjup7280dsE2LCLtEZayA8VmO5f2EYmfpBDNLgahI4zSl
- diaQ==
+ d=redhat.com; s=google; t=1773343518; x=1773948318; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=bU9xLHAywFGn4GyxV/Qhqyy+Qm0eKB3M3cKVNASMchA=;
+ b=OkhCzT7Jx/Ja1jSuTD1CEvHUuMxZstF+ZHnx6aajk2Uq+qdiRoe+TZ+IoAEs4dMGoK
+ 41t0GyppOLqkeFcCXDfXGM3s1iLVZ216F3Yi4/FFm+nnsCP5FWRkQ+1LtiLoJklp1See
+ P70ZbspVm3VGawhkkqF8gfx7WlmuSre2VnRrfze6fELFlTVQ+xcwIZsM4/5JBmulCTdd
+ 6YC2fhSkKujUNss/5pOI7bricXt7HzT2/nxNy+NuCHh0kOz4+oeh/HXpNbRz//awDrU2
+ anLMnm4XYU+jctIT7+JLcy/7qGNOOS4XN47cAKKt3+Sbc4+Q2O5CdCabwJRcJAp15gKq
+ i7YQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773343408; x=1773948208;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=guCvf9N/EXv9zX+nWdqCr2sGMnAPCZsaNwa34jA1JhM=;
- b=V1MRN4I3AU1Uf5SLgAgSw8+OhA+T3ixnG/51aszHHNCe3iXDwjfaMTD7TGGqIAvsf3
- DbHSMtx47KbIKDMwS7A4Bddfs5Sky6oLudH53+CMNP8myDMWM+cu2lRNp1WLnICHBySs
- +7LtGjnxaY+GN4dyfKZ6xhg4w0xFABubg0Yo6/LtCXyvHRIjzsph26UIfe7H5nIoAXqf
- Nku4WtA7CtHXX2gh9PtYjsBaC/hSEtcnE8X4G9Mla09fWLkDfgzzFGzsQW/ay7pYP/BB
- g03P4+4oKR6/QXCf5DZbK8/f8fu3hndcRbfu77r3ZGstv3UGpOHI1mPX/r4sG18V5P/F
- OM+w==
+ d=1e100.net; s=20230601; t=1773343518; x=1773948318;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=bU9xLHAywFGn4GyxV/Qhqyy+Qm0eKB3M3cKVNASMchA=;
+ b=G9tX7elVEDwxG16eBn4fY2iNT6EdYs0OvrFv0GY807pZ/pl+nHFCQyz7d80UbNm/L4
+ lk9VpEsgZ9Y2nw8CmGiCNop1ZGGs0wohdShyGY/f4VqM5CsFQpa8du+VzUgcrjaCYl5f
+ P+xeaEBIZgW56EQFKJ8HE736XfhZ4em8V8D97KE5xJnqKgw/C3I2UtU8NACDlA9IUqFz
+ TAuCXQgdckP92rERJPHVRpXN3J/NRrRSl2YiKZ+ReA+UwRW+9opyWrfFeDuekZ2r+3W1
+ GwXtBXHkpz57c1o1ZyMvFLET/i0JtoxYys1SrNEd1jZR4NDhz0mY81L/qtznh2fcdoia
+ CObQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWJZVa4NTQkMxin8B2M+yeQgc5iXatVjuwEQhCa1MV5ufks3Zz724rgGXypRo4vV67nIZH+GmjPRzbD@nongnu.org
-X-Gm-Message-State: AOJu0YxF5cESUaNmjiYLZVn354NRibSciii7brCE0y8wJBIJn/GoOWJo
- KOqNaszMqpCmy3pfCSZoJAa2N3YTYS+MOgWHMCSFUQVTfM2kZcCHlvoh10ICBa/1MaN3M4Z2U4V
- z1f4TliPzO/gSTie6VpHkcph08TcNEtFotBuVzQwFjQ==
-X-Gm-Gg: ATEYQzx6aOHJ+UsuZcTNLBFR7kn3jFfJrWNPTeS0iqsr89qqRcTLTzE2SR13NXKSNgR
- sDoypMVE+66v/ntwwv6+Sqy1p+goHYkBIYel5fRT0kWaLhKLq0HlUuvKh/SnmVAYb50IZr54iVv
- PWLy4x8Q+dLtrJyaFptmfKo9q/m6LfQY8J7w5WM/YCFknjoHLq+NzzR7sKlOV7//oWZA8+nFwuv
- Fu9OEsmV4jchgIwDChIy9yJnQNh2/IAI2i2xk13GxMBYEVcEzcBvLAnzEvUTDt0nDdMSXikkKBD
- hlVY1M15gfEAi3poJvmqDDf3jpSzHM2HS+Fh4vb5rL8BTiFLm0E3azZzBnDIHDcmP9Y=
-X-Received: by 2002:a53:b45e:0:b0:649:412a:dd11 with SMTP id
- 956f58d0204a3-64e630ceb0bmr619428d50.74.1773343408461; Thu, 12 Mar 2026
- 12:23:28 -0700 (PDT)
+ AJvYcCVGEY80NKDgtne5td1ueZYDvRMdpUh0WqTO9JNBGdzj+PwQVel8yciH1W4jgL2e6S1vjYlrzMVS7OuQ@nongnu.org
+X-Gm-Message-State: AOJu0Yx050CX1m95xGEIAMb7Wj+Lo8wyLl5XAVPaoctBVed9lPHCGNEj
+ 2Z5z7v96bq14LAJQUZ9ttHwXGclbINIiiBAuq04HQuSuBkZKonsIgvdjbOeKULExdOxp1KMUoFZ
+ Sgn1Wa/diyLGxbP/DFW3v1Xryvu/pVdJO0N7cJzTfHQbT3WyldnqDNGuw
+X-Gm-Gg: ATEYQzxCBybJN/IxG1nenin1FmHHOKYSN1tZ95DZZso2XokWBKIej8P5EZ6IZQXzUE7
+ tMe692MRxgothEnc1TFbyTO7ZnyeiMP7IsVqSuJ9SLARD1zv88kkuaODJvNelKtsR/x9Pomf25M
+ bisBInf7nhpsyBmkgPhU7AD7cNjYNf7rH0TC685WgpXv6g+qzmjPsiPvnNvYvWodd5Jn/HJkt5n
+ ++1BzEUpWblcL08dd51AY7PfPQRHvmhAzCAmRNANYrg+wqi1vDhPMlrrfKjA7hzr15Fs5U0bzhc
+ LUjPv9igbR/SRZ7s0aMaGmq6X9sfZvGwmeuRhg2Cf8sASo3i+Tf5AcjPma3RVXZDg5lBhMiJ5mp
+ a5nqPBF84VL8frg==
+X-Received: by 2002:ac8:7d89:0:b0:506:1edb:2cf8 with SMTP id
+ d75a77b69052e-50957d5482bmr9467051cf.8.1773343518007; 
+ Thu, 12 Mar 2026 12:25:18 -0700 (PDT)
+X-Received: by 2002:ac8:7d89:0:b0:506:1edb:2cf8 with SMTP id
+ d75a77b69052e-50957d5482bmr9466761cf.8.1773343517551; 
+ Thu, 12 Mar 2026 12:25:17 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-50939e8e4cfsm39133051cf.7.2026.03.12.12.25.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Mar 2026 12:25:17 -0700 (PDT)
+Date: Thu, 12 Mar 2026 15:25:15 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>,
+ Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
+ "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
+ Fabiano Rosas <farosas@suse.de>
+Subject: Re: [PATCH v2] vmstate: fix subsection load name check
+Message-ID: <abMTG0fXgZuoWrJB@x1.local>
+References: <e81360d5-cab4-47a4-840b-7d948b51a5c0@yandex-team.ru>
+ <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
+ <abBcN2B4QNBT_Oh9@x1.local>
+ <f37dc7af-7ffd-4a7b-b4fa-552c2d2eb888@yandex-team.ru>
+ <abGEwf-AG1rZ3kam@x1.local>
+ <a6dafc1e-79d1-4380-a4da-7cbc4ff77ae4@yandex-team.ru>
+ <abLc_ppEEbKjNRUi@x1.local>
+ <022c929e-ddda-4f74-8786-d01994107415@yandex-team.ru>
+ <abMCMrRxdAWCc_hv@x1.local>
+ <CAFEAcA-LEuiqbqL=DBVrPV6FJVGfVRoDE+1VH090g-aTV46Uxg@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260311154934.1575429-1-tangtao1634@phytium.com.cn>
- <20260311154934.1575429-3-tangtao1634@phytium.com.cn>
-In-Reply-To: <20260311154934.1575429-3-tangtao1634@phytium.com.cn>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 19:23:16 +0000
-X-Gm-Features: AaiRm50JZDf5rc6NzkRv-BAqy5vqz-zq5Y5e16lDzZ_SlNusYvA_Xa3wr5UQsNw
-Message-ID: <CAFEAcA938c9iwZ9oMfd9b_X840PvWFPExmWUxArYssotosDWGg@mail.gmail.com>
-Subject: Re: [RFC v2 2/2] tests/qtest: Add qtest-attrs-test for memory access
- with attrs
-To: Tao Tang <tangtao1634@phytium.com.cn>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
- Chao Liu <chao.liu.zevorn@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAFEAcA-LEuiqbqL=DBVrPV6FJVGfVRoDE+1VH090g-aTV46Uxg@mail.gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,101 +128,97 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Mar 2026 at 15:50, Tao Tang <tangtao1634@phytium.com.cn> wrote:
->
-> Add qtest-attrs-test to exercise qtest memory commands with optional attrs
-> on aarch64 (virt, secure=on) and x86 (pc, tcg).
->
-> The test covers:
-> - ARM (virt machine): exercises all supported ARM security spaces
->   (non-secure, secure, root, realm).
-> - x86 (pc machine): exercises secure attrs accesses
->   (SMM address-space path).
->
-> The test also covers libqtest-single *_attrs shortcut wrappers and
-> verifies that space=non-secure behaves like omitting attrs.
->
-> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
-> ---
->  tests/qtest/meson.build        |   4 +-
->  tests/qtest/qtest-attrs-test.c | 234 +++++++++++++++++++++++++++++++++
->  2 files changed, 237 insertions(+), 1 deletion(-)
->  create mode 100644 tests/qtest/qtest-attrs-test.c
->
-> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> index be4fa627b5..c11759e23f 100644
-> --- a/tests/qtest/meson.build
-> +++ b/tests/qtest/meson.build
-> @@ -115,6 +115,7 @@ qtests_i386 = \
->     'drive_del-test',
->     'cpu-plug-test',
->     'migration-test',
-> +   'qtest-attrs-test',
->    ]
->
->  if dbus_display and config_all_devices.has_key('CONFIG_VGA')
-> @@ -270,7 +271,8 @@ qtests_aarch64 = \
->    ['arm-cpu-features',
->     'numa-test',
->     'boot-serial-test',
-> -   'migration-test']
-> +   'migration-test',
-> +   'qtest-attrs-test']
->
->  qtests_s390x = \
->    qtests_filter + \
-> diff --git a/tests/qtest/qtest-attrs-test.c b/tests/qtest/qtest-attrs-test.c
-> new file mode 100644
-> index 0000000000..ce204c2c95
-> --- /dev/null
-> +++ b/tests/qtest/qtest-attrs-test.c
-> @@ -0,0 +1,234 @@
-> +/*
-> + * QTest for memory access with transaction attributes
-> + *
-> + * Verify optional attrs argument support for qtest memory commands.
-> + *
-> + * Copyright (c) 2026 Phytium Technology
-> + *
-> + * Author:
-> + *  Tao Tang <tangtao1634@phytium.com.cn>
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "libqtest.h"
-> +#include "libqtest-single.h"
-> +
-> +/*
-> + * Default RAM size is 128 MiB on both machines used below.
-> + * Keep test addresses in low RAM and away from device MMIO regions.
-> + */
-> +#define TEST_ADDR_OFFSET    0x1000ULL
-> +#define TEST_ARM_BASE       0x40000000ULL
-> +#define TEST_X86_BASE       0x0ULL
-> +
-> +#define TEST_ADDR_ARM       (TEST_ARM_BASE + TEST_ADDR_OFFSET)
-> +#define TEST_ADDR_X86       (TEST_X86_BASE + TEST_ADDR_OFFSET)
-> +
-> +#define ARM_MACHINE_ARGS    "-machine virt,secure=on -cpu cortex-a57"
-> +#define X86_MACHINE_ARGS    "-machine pc -accel tcg"
+On Thu, Mar 12, 2026 at 06:27:05PM +0000, Peter Maydell wrote:
+> On Thu, 12 Mar 2026 at 18:13, Peter Xu <peterx@redhat.com> wrote:
+> >
+> > On Thu, Mar 12, 2026 at 07:34:34PM +0300, Vladimir Sementsov-Ogievskiy wrote:
+> > > Hmm. Probably, that this is the subsection, that exist only in our downstream.
+> > > I don't know, was it mentioned clearly before, sorry if not.
+> >
+> > Ah.. Looks like it was not mentioned in the latest version posted:
+> >
+> > https://lore.kernel.org/all/20260312102626.891359-1-dtalexundeer@yandex-team.ru/
+> >
+> > Let's always mention this, because it's important piece of info, e.g. to
+> > know upstream has yet no reproducer.
+> >
+> > > This subsection just not exist in master, and we are not going to upstream it.
+> > > So, for upstream it's a "theoretical" bug in a protocol, which may be triggered in
+> > > some future moment. And that's why there is not specific case in commit message
+> > > but only assumption "Let's say there is a vmstate ...".
+> >
+> > In this case, for upstream we almost only lose but yet unknown gain with
+> > this fix then, because we stop throwing useful info for unknown new
+> > subsections, as PeterM pointed out:
+> >
+> > https://lore.kernel.org/all/CAFEAcA_mzXDdz_xjPnZ9Kc4K01Aoss_OH_qEoL3G33KdsnHrLw@mail.gmail.com/
+> >
+> > But I agree it is a potential issue, if we cannot justify QEMU can never
+> > hit it.
+> >
+> > Sending "how many subsections are there" is one viable option as you said,
+> > but it only solves this small problem, and knowing that number requires src
+> > QEMU looping over the subsections twice so a bit awkward (first time we
+> > need to kickoff ".needed()" hooks to do the counting; not all will be sent).
+> >
+> > The other way is to provide level information somehow in the stream.
+> >
+> > Say, we could attach START/END markers for each VMSD to be dumped.  That
+> > may be able to help in other cases too, e.g. when we accidentally grow some
+> > VMSD fields breaking migration, then IIUC dest QEMU can provide a more
+> > accurate error message when it knows the bound of current VMSD that is
+> > being loaded.
+> 
+> Could we perhaps do something like:
+>  * mark up the vmstate sections we have that don't follow the
+>    "/ is the separator" naming rule with some new struct field
+>    that says "legacy_bad_subsection_name = true" or whatever
+>    (or rename them if there are cases where we're OK with a
+>    migration break, like "iotkit-secctl")
+>  * have the migration code enforce the "subsection name follows the
+>    / separator rule" via an assert when the vmstate is registered,
+>    with a loosening for the ones marked as legacy names
+>  * have the inbound migration code use the strong check on the
+>    separator to distinguish "subsection" from "not subsection"
+>    unless the vmstate it's doing inbound migration for is marked
+>    as needing legacy name handling
+> ?
+> 
+> I think that would keep migration compatibility, avoid the problem
+> of wrong subsection names creeping in in future, and in practice
+> mean we don't in future hit this issue upstream. (With more effort
+> it might be also possible to tie the legacy names to QEMU versioned
+> machines so that they can eventually be retired.)
 
-You start a virt machine with secure=on, but you are only
-testing the RAM, which is mapped regardless of the security
-space, so this will not notice any bugs where we don't actually
-access with the correct attributes.
+Yes this is an option.  This will cause a few other things to maintain for
+us, though..
 
-It would be more interesting to look at the secure-only
-RAM (which is at 0x0e00_0000), which should only be accessible
-via the secure or root spaces. (I'm not sure what qtest will
-do for attempted access via non-secure and realm, where the
-address will have nothing mapped there. You'll have to check.)
+- legacy_bad_subsection_name itself
 
-I don't know if the x86 PC machine has a similar bit of RAM
-or whatever that behaves differently for secure and non-secure
-accesses.
+- two different paths of parsing subsections
 
-thanks
--- PMM
+- if we want to get rid of this (i think we should..), we need the machine
+  compat property for legacy_bad_subsection_name to get rid of it after 6
+  years
+
+We'd better also make sure we don't miss something when choosing the new
+legacy_bad_subsection_name candidates, or it'll start to fail migrations
+with a more strict check.
+
+That so far just sounds slightly more work and less benefit comparing to
+introducing START/END markers for VMSDs to me.  With START/END markers for
+each VMSD (or something like it), we can actually drop the requirement on
+"sub-vmsd names to contain parents' vmsd names", because we have the level
+info, then it's clear which subsection belongs to which parent vmsd.
+
+I wished we have that already; we almost have it (QEMU_VM_SECTION_FULL,
+QEMU_VM_SECTION_FOOTER, etc.) we're very close except it's just that it
+only works for a whole section hence only top VMSD, rather than every one
+of them..
+
+Thanks,
+
+-- 
+Peter Xu
+
 
