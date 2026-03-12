@@ -4,88 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 021F5FED2E4
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 08:21:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A97EFED2EE
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 08:27:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0bHp-00007A-Kv; Thu, 12 Mar 2026 04:20:54 -0400
+	id 1w0bNc-0001S5-5J; Thu, 12 Mar 2026 04:26:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0bHk-00006V-Ak
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:20:48 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w0bHg-0000Q7-Q7
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:20:46 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773303641;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=8kBCDu2W7wtZ8iuPSNqtcrXsk1GVeUMpFB9vlhOvRLM=;
- b=eQ1QhRLTm9As45KaydTlwMddiaiN2EOsUFMV4JpriYzshz2UhRM96WZc5jcFznhcwfCkJr
- EfeaQ6kjNEDSyHSUl0F2xfWv8L9K7LfUlXtEmSO7x71VBbp24V72eyp+vkPVWv3fcwk7mu
- FT3WX3zi4WnUqGEwAOK6gLY5rhE+Olg=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-685-rGEP94UcOaKCl9UTWaX0aA-1; Thu,
- 12 Mar 2026 04:20:38 -0400
-X-MC-Unique: rGEP94UcOaKCl9UTWaX0aA-1
-X-Mimecast-MFC-AGG-ID: rGEP94UcOaKCl9UTWaX0aA_1773303636
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5084C180060D; Thu, 12 Mar 2026 08:20:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.12])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 41B7C30001A1; Thu, 12 Mar 2026 08:20:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id CC00421E681B; Thu, 12 Mar 2026 09:20:32 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Cc: Nathan Chen <nathanc@nvidia.com>,  "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>,  "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>,  Yi
- Liu <yi.l.liu@intel.com>,  Eric Auger <eric.auger@redhat.com>,  Zhenzhong
- Duan <zhenzhong.duan@intel.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Shannon Zhao <shannon.zhaosl@gmail.com>,
- "Michael S . Tsirkin" <mst@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Paolo Bonzini
- <pbonzini@redhat.com>,  Daniel =?utf-8?Q?P=2EBerrang=C3=A9?=
- <berrange@redhat.com>,  Alex
- Williamson <alex@shazbot.org>,  =?utf-8?Q?C=C3=A9dric?= Le Goater
- <clg@redhat.com>,  Eric Blake <eblake@redhat.com>
-Subject: Re: [RFC PATCH 1/8] hw/arm/smmuv3-accel: Add helper for resolving
- auto parameters
-In-Reply-To: <CH3PR12MB754899F3426FCB494EA7154FAB46A@CH3PR12MB7548.namprd12.prod.outlook.com>
- (Shameer Kolothum Thodi's message of "Tue, 10 Mar 2026 09:01:03
- +0000")
-References: <20260309192119.870186-1-nathanc@nvidia.com>
- <20260309192119.870186-2-nathanc@nvidia.com>
- <87tsuonp7r.fsf@pond.sub.org>
- <CH3PR12MB754899F3426FCB494EA7154FAB46A@CH3PR12MB7548.namprd12.prod.outlook.com>
-Date: Thu, 12 Mar 2026 09:20:32 +0100
-Message-ID: <87v7f1xxv3.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
+ id 1w0bNZ-0001RD-F9
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:26:49 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <lixianglai@loongson.cn>) id 1w0bNW-000142-Eo
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 04:26:49 -0400
+Received: from loongson.cn (unknown [10.20.42.126])
+ by gateway (Coremail) with SMTP id _____8DxAfG_eLJp0EIaAA--.11536S3;
+ Thu, 12 Mar 2026 16:26:40 +0800 (CST)
+Received: from [10.20.42.126] (unknown [10.20.42.126])
+ by front1 (Coremail) with SMTP id qMiowJDxaeC6eLJpXLtTAA--.29547S3;
+ Thu, 12 Mar 2026 16:26:36 +0800 (CST)
+Subject: Re: [PATCH V2] hw/loongarch: add rtc acpi table
+To: gaosong <gaosong@loongson.cn>, qemu-devel@nongnu.org
+Cc: Bibo Mao <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>
+References: <20260312021350.1052791-1-lixianglai@loongson.cn>
+ <b6fbcf11-6f77-4984-7768-aff024d1e06a@loongson.cn>
+From: lixianglai <lixianglai@loongson.cn>
+Message-ID: <097005eb-f027-a57a-bb36-c025e519c7f6@loongson.cn>
+Date: Thu, 12 Mar 2026 16:19:18 +0800
+User-Agent: Mozilla/5.0 (X11; Linux loongarch64; rv:68.0) Gecko/20100101
+ Thunderbird/68.7.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+In-Reply-To: <b6fbcf11-6f77-4984-7768-aff024d1e06a@loongson.cn>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-CM-TRANSID: qMiowJDxaeC6eLJpXLtTAA--.29547S3
+X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
+X-Coremail-Antispam: 1Uk129KBj93XoW3Xr1fKry7GryxurWDJr4UZFc_yoW7Aw4rpr
+ s7CryUtryUXrn3Jw17JryUWFy5Ar1UJ3Wqqr1xXF18GrWDGr1jqr1UWryqgF1UAw48JF1j
+ qF1jqr9xuF1UJrcCm3ZEXasCq-sJn29KB7ZKAUJUUUU8529EdanIXcx71UUUUU7KY7ZEXa
+ sCq-sGcSsGvfJ3Ic02F40EFcxC0VAKzVAqx4xG6I80ebIjqfuFe4nvWSU5nxnvy29KBjDU
+ 0xBIdaVrnRJUUUv2b4IE77IF4wAFF20E14v26r1j6r4UM7CY07I20VC2zVCF04k26cxKx2
+ IYs7xG6rWj6s0DM7CIcVAFz4kK6r106r15M28lY4IEw2IIxxk0rwA2F7IY1VAKz4vEj48v
+ e4kI8wA2z4x0Y4vE2Ix0cI8IcVAFwI0_Jr0_JF4l84ACjcxK6xIIjxv20xvEc7CjxVAFwI
+ 0_Gr0_Cr1l84ACjcxK6I8E87Iv67AKxVW8Jr0_Cr1UM28EF7xvwVC2z280aVCY1x0267AK
+ xVW8Jr0_Cr1UM2AIxVAIcxkEcVAq07x20xvEncxIr21l57IF6xkI12xvs2x26I8E6xACxx
+ 1l5I8CrVACY4xI64kE6c02F40Ex7xfMcIj6xIIjxv20xvE14v26r106r15McIj6I8E87Iv
+ 67AKxVWUJVW8JwAm72CE4IkC6x0Yz7v_Jr0_Gr1lF7xvr2IY64vIr41lc7I2V7IY0VAS07
+ AlzVAYIcxG8wCF04k20xvY0x0EwIxGrwCFx2IqxVCFs4IE7xkEbVWUJVW8JwC20s026c02
+ F40E14v26r1j6r18MI8I3I0E7480Y4vE14v26r106r1rMI8E67AF67kF1VAFwI0_JF0_Jw
+ 1lIxkGc2Ij64vIr41lIxAIcVC0I7IYx2IY67AKxVWUJVWUCwCI42IY6xIIjxv20xvEc7Cj
+ xVAFwI0_Jr0_Gr1lIxAIcVCF04k26cxKx2IYs7xG6r1j6r1xMIIF0xvEx4A2jsIE14v26r
+ 1j6r4UMIIF0xvEx4A2jsIEc7CjxVAFwI0_Jr0_GrUvcSsGvfC2KfnxnUUI43ZEXa7IU1Ek
+ sDUUUUU==
+Received-SPF: pass client-ip=114.242.206.163;
+ envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
+X-Spam_score_int: -22
+X-Spam_score: -2.3
+X-Spam_bar: --
+X-Spam_report: (-2.3 / 5.0 requ) BAYES_00=-1.9, NICE_REPLY_A=-2.101,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,133 +82,126 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Shameer Kolothum Thodi <skolothumtho@nvidia.com> writes:
-
->> -----Original Message-----
->> From: Markus Armbruster <armbru@redhat.com>
-
-[...]
-
->> Nathan Chen <nathanc@nvidia.com> writes:
->>=20
->> > From: Nathan Chen <nathanc@nvidia.com>
->> >
->> > Introduce smmuv3_accel_auto_finalise() to resolve properties
->> > that are set to 'auto' for accelerated SMMUv3. This helper
->> > function allows properties such as ATS, RIL, SSIDSIZE, and OAS
->> > support to be resolved from host IOMMU values, while avoiding
->> > triggering auto-resolved values for hot-plugged devices.
->> >
->> > Auto mode requires at least one cold-plugged device to retrieve
->> > and finalise these properties, and we fail boot if that is not
->> > the case.
->> >
->> > Subsequent patches will make use of this helper to set the
->> > values when we convert the values to OnOffAuto. New auto_mode
->> > and auto_finalised bool members are added to SMMUv3AccelState.
->> > smmuv3_accel_init() will set auto_mode to true when 'auto' is
->> > detected for the accel SMMUv3 properties.
->> > smmuv3_accel_auto_finalise() will set auto_finalised to true
->> > after all 'auto' properties are resolved, and subsequent
->> > calls to this function will return early if auto_finalised is
->> > set to true.
->> >
->> > Suggested-by: Shameer Kolothum <skolothumtho@nvidia.com>
->> > Signed-off-by: Nathan Chen <nathanc@nvidia.com>
->> > ---
->> >  hw/arm/smmuv3-accel.c | 38 +++++++++++++++++++++++++++++++++--
+Hi gaosong:
+> 在 2026/3/12 上午10:13, Xianglai Li 写道:
+>> Add the acpi table to the loongson rtc hardware so that the virtual 
+>> machine
+>> kernel can use the loongson RTC-related drivers.
+>>
+>> Delete the interrupt information in the rtc fdt table.
+>>
+>> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 >> ---
->> >  hw/arm/smmuv3-accel.h |  2 ++
->> >  2 files changed, 35 insertions(+), 5 deletions(-)
->> >
->> > diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
->> > index 17306cd04b..617629bacd 100644
->> > --- a/hw/arm/smmuv3-accel.c
->> > +++ b/hw/arm/smmuv3-accel.c
->> > @@ -35,11 +35,34 @@ static int smmuv3_oas_bits(uint32_t oas)
->> >      return map[oas];
->> >  }
->> >
->> > +static void smmuv3_accel_auto_finalise(SMMUv3State *s, PCIDevice *pde=
-v,
->> > +                                       struct iommu_hw_info_arm_smmuv=
-3 *info) {
->> > +    SMMUv3AccelState *accel =3D s->s_accel;
->> > +
->> > +    /* Return if no auto for any or finalised already */
->> > +    if (!accel->auto_mode || accel->auto_finalised) {
->> > +        return;
->> > +    }
->> > +
->> > +    /* We can't update if device is hotplugged */
->> > +    if (DEVICE(pdev)->hotplugged) {
->> > +        warn_report("arm-smmuv3: 'auto' feature property detected, bu=
-t host
->> "
->> > +                    "value cannot be applied for hot-plugged device; =
-using "
->> > +                    "existing value");
->>=20
->> Why is this warning useful?
->>=20
->> Does @auto's meaning depend on whether the device is cold- or
->> hot-plugged?
+>> Cc: Song Gao <gaosong@loongson.cn>
+>> Cc: Bibo Mao <maobibo@loongson.cn>
+>> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>
+>>
+>> change:
+>> V1->V2:
+>> 1.Add a comment to explain why the acpi table no longer provides 
+>> interrupt numbers
+>> 2.Delete the interrupt number from the rtc fdt table
 >
-> If SMMUv3 accel=3Don and properties are set to "auto", we require
-> at least one cold-plugged vfio-pci device to retrieve the associated
-> host SMMUv3 information and finalise the QEMU SMMUv3 properties.
+> It would be better to move point 2 to the new patch.
 >
-> In this series, "auto_mode" is set if any accel property is specified as
-> "auto". The properties are then finalised using the first cold-plugged
-> device and "auto_finalised" is set.
->
-> Since we later fail the guest boot(see below) in the reset phase if
-> auto_mode is set but auto_finalised is still false, the above hotplug
-> case should not really happen. In that case the VM would not boot.
+Ok!!!
 
-Sounds complicated.
-
-> So likely we can get rid of the hotplug check above. Need to do
-> a bit more testing to confirm we cover all corner cases.
+> Thanks.
+> Song Gao
 >
->>=20
->> > +        return;
->> > +    }
->> > +
->> > +    accel->auto_finalised =3D true;
->> > +}
-
-[...]
-
->> > @@ -867,8 +891,12 @@ bool smmuv3_accel_attach_gbpa_hwpt(SMMUv3State *s=
-, Error **errp)
->> >
->> >  void smmuv3_accel_reset(SMMUv3State *s)
->> >  {
->> > -     /* Attach a HWPT based on GBPA reset value */
->> > -     smmuv3_accel_attach_gbpa_hwpt(s, NULL);
->> > +    if (s->s_accel && s->s_accel->auto_mode && !s->s_accel->auto_fina=
-lised)
->> {
->> > +        error_report("AUTO mode specified but properties not finalise=
-d.");
->> > +        exit(1);
->>=20
->> How can we get here?
->
-> This is reached from the SMMUv3 reset handler when auto mode is
-> specified but no cold-plugged device has been attached to finalise the
-> accelerated SMMUv3 properties.
->
-> If no such device is present, "auto_finalised" remains false and we hit
-> this path during reset.
->
-> C=C3=A9dric mentioned that we should not exit during the reset phase. If =
-that
-> is the case, we likely need another way to handle the scenario where
-> auto mode is specified but no cold-plugged device is present.
-
-What exactly does the "auto" feature buy us?  Is it worth the
-complexity?
+>>   hw/loongarch/virt-acpi-build.c | 25 +++++++++++++++++++++++++
+>>   hw/loongarch/virt-fdt-build.c  | 16 ++++++++--------
+>>   2 files changed, 33 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/hw/loongarch/virt-acpi-build.c 
+>> b/hw/loongarch/virt-acpi-build.c
+>> index 3e34bedcd6..42820001d7 100644
+>> --- a/hw/loongarch/virt-acpi-build.c
+>> +++ b/hw/loongarch/virt-acpi-build.c
+>> @@ -460,6 +460,30 @@ static void acpi_dsdt_add_tpm(Aml *scope, 
+>> LoongArchVirtMachineState *vms)
+>>   }
+>>   #endif
+>>   +static void acpi_dsdt_add_rtc(Aml *scope)
+>> +{
+>> +    Aml *dev = aml_device("RTC");
+>> +
+>> +    aml_append(dev, aml_name_decl("_HID", aml_string("LOON0001")));
+>> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+>> +
+>> +    Aml *crs = aml_resource_template();
+>> +    aml_append(crs,
+>> +        aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
+>> +                         AML_NON_CACHEABLE, AML_READ_WRITE,
+>> +                         0, VIRT_RTC_REG_BASE,
+>> +                         VIRT_RTC_REG_BASE + VIRT_RTC_LEN - 1,
+>> +                         0, VIRT_RTC_LEN));
+>> +    /*
+>> +     * The virtual machine model does not support suspend and wake-up,
+>> +     * and rtc is no longer the wake-up source. Therefore, the current
+>> +     * rtc table no longer provides the rtc alarm interrupt number to
+>> +     * avoid the software initializing alarm.
+>> +     */
+>> +    aml_append(dev, aml_name_decl("_CRS", crs));
+>> +    aml_append(scope, dev);
+>> +}
+>> +
+>>   /* build DSDT */
+>>   static void
+>>   build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState 
+>> *machine)
+>> @@ -475,6 +499,7 @@ build_dsdt(GArray *table_data, BIOSLinker 
+>> *linker, MachineState *machine)
+>>       for (i = 0; i < VIRT_UART_COUNT; i++) {
+>>           build_uart_device_aml(dsdt, i);
+>>       }
+>> +    acpi_dsdt_add_rtc(dsdt);
+>>       build_pci_device_aml(dsdt, lvms);
+>>       build_la_ged_aml(dsdt, machine);
+>>       build_flash_aml(dsdt, lvms);
+>> diff --git a/hw/loongarch/virt-fdt-build.c 
+>> b/hw/loongarch/virt-fdt-build.c
+>> index 6c06b36fca..42f014a7bd 100644
+>> --- a/hw/loongarch/virt-fdt-build.c
+>> +++ b/hw/loongarch/virt-fdt-build.c
+>> @@ -458,8 +458,7 @@ static void 
+>> fdt_add_uart_node(LoongArchVirtMachineState *lvms,
+>>       g_free(nodename);
+>>   }
+>>   -static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
+>> -                             uint32_t *pch_pic_phandle)
+>> +static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms)
+>>   {
+>>       char *nodename;
+>>       hwaddr base = VIRT_RTC_REG_BASE;
+>> @@ -470,12 +469,13 @@ static void 
+>> fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
+>>       qemu_fdt_add_subnode(ms->fdt, nodename);
+>>       qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
+>>                               "loongson,ls7a-rtc");
+>> +    /*
+>> +     * The virtual machine model does not support suspend and wake-up,
+>> +     * and rtc is no longer the wake-up source. Therefore, the current
+>> +     * rtc table no longer provides the rtc alarm interrupt number to
+>> +     * avoid the software initializing alarm.
+>> +     */
+>>       qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 
+>> 2, size);
+>> -    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
+>> -                           VIRT_RTC_IRQ - VIRT_GSI_BASE ,
+>> -                           FDT_IRQ_TYPE_LEVEL_HIGH);
+>> -    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
+>> -                          *pch_pic_phandle);
+>>       g_free(nodename);
+>>   }
+>>   @@ -550,7 +550,7 @@ void virt_fdt_setup(LoongArchVirtMachineState 
+>> *lvms)
+>>           fdt_add_uart_node(lvms, &pch_pic_phandle, base, irq, i == 0);
+>>       }
+>>   -    fdt_add_rtc_node(lvms, &pch_pic_phandle);
+>> +    fdt_add_rtc_node(lvms);
+>>       fdt_add_ged_reset(lvms);
+>>       platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
+>> VIRT_PLATFORM_BUS_BASEADDRESS,
 
 
