@@ -4,51 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3697103E302
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 02:40:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73A3B103E302
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 03:00:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0VxT-00076l-Jj; Wed, 11 Mar 2026 22:39:31 -0400
+	id 1w0WH9-0000yw-1G; Wed, 11 Mar 2026 22:59:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lixianglai@loongson.cn>)
- id 1w0VxR-00076c-RO
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 22:39:29 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <lixianglai@loongson.cn>) id 1w0VxO-0002DB-LO
- for qemu-devel@nongnu.org; Wed, 11 Mar 2026 22:39:29 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8DxL6pSJ7JpKTEaAA--.17611S3;
- Thu, 12 Mar 2026 10:39:14 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJBx78JQJ7JppYhTAA--.28822S2;
- Thu, 12 Mar 2026 10:39:13 +0800 (CST)
-From: Xianglai Li <lixianglai@loongson.cn>
-To: qemu-devel@nongnu.org,
-	lixianglai@loongson.cn
-Cc: Song Gao <gaosong@loongson.cn>, Bibo Mao <maobibo@loongson.cn>,
- Jiaxun Yang <jiaxun.yang@flygoat.com>
-Subject: [PATCH V2] hw/loongarch: add rtc acpi table
-Date: Thu, 12 Mar 2026 10:13:50 +0800
-Message-Id: <20260312021350.1052791-1-lixianglai@loongson.cn>
-X-Mailer: git-send-email 2.39.1
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1w0WH4-0000yP-RX
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 22:59:47 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <jasowang@redhat.com>)
+ id 1w0WH2-0000oP-HC
+ for qemu-devel@nongnu.org; Wed, 11 Mar 2026 22:59:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773284382;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Sansw5eWhN9Qsw1wOXiRv2rrs+/lBSApzRtWcaGoGpw=;
+ b=e2EUmwUiiqKrki98xyMobmEZDiLMzHbbmSrvUug4Jv9P7bK9kRzEBkPhxz8mkPEl2BtF39
+ YO37EWNaUJtPJFl8PP0nTGSkBLnlo4UCIsqBcepMkmfYDZLVINWiIRDT5OWMd9HdCW4YPS
+ QndXVvoFXEbszQMbxV09a97pTNxi+6w=
+Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
+ [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-497-nKlDI7gpOyydVWsgI026nQ-1; Wed, 11 Mar 2026 22:59:40 -0400
+X-MC-Unique: nKlDI7gpOyydVWsgI026nQ-1
+X-Mimecast-MFC-AGG-ID: nKlDI7gpOyydVWsgI026nQ_1773284379
+Received: by mail-pj1-f71.google.com with SMTP id
+ 98e67ed59e1d1-354490889b6so2202963a91.3
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 19:59:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773284379; cv=none;
+ d=google.com; s=arc-20240605;
+ b=XIC1dv9J+5rYDALYUCwwF/eYas8YOqg+oVTpU23Kzw7T5eSmif67g3WnqecWLIlvxV
+ w8BchO3laN+B/NdybtDqQ3GIjruXn9qqku81uZAnSH9wlUMXGElZNYRyWdNByy5E0TSm
+ mTtp3CqxTbqYqRiF39fxDvLYaA96LU8vj3AstUDNW5KYFdwtT5C+iEPHvKWOxU55kQoV
+ DhYPBlbICHM0RFiAwOS95J6R2HBVUtZDMhq74NaZMyV9ppgvTz0T8+YkuDxQGOc8cTFZ
+ on0tCObwybGvXIJIndEe/PdCBSmCaqvbwViif0bCLjJWNJRy5c3iFP3sWSuhM73gv0Rk
+ OgHg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Sansw5eWhN9Qsw1wOXiRv2rrs+/lBSApzRtWcaGoGpw=;
+ fh=86GryG2tK9OpT0a2/osdZAyaZ9z2seA38PMDS0NS0sA=;
+ b=KBuBTX0WGvKUymHfFbsm7aF1nK6Xo6d1X92xpIsRTM2ZB5+eL48WMs1lqiBskdARSm
+ foixciS/fpDEk0gGqBtvR6hXWRKm/Vncu1x67TVmWyVNForbfSYYrNynZ+MS2s3CcHee
+ V0lnpcHTACPtxvk9aeKjG+SGfCtVKuY5LSV2DpIdu9xmp75oqLUawTUpzP+nOp3+1Fg8
+ yz9NKTlFIYMv1tvMfV3vlsFEcO38KYH1GpIDkTVO1HURlhDhP2kEVpYiAXhNZh3aEHTc
+ BHAVqCuWJ3JRzZJpkOwx3bklqyT0mI80xZd51BPbnG6ymodRUasmah1hV6k0kx9Ww+jH
+ Gt5A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773284379; x=1773889179; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Sansw5eWhN9Qsw1wOXiRv2rrs+/lBSApzRtWcaGoGpw=;
+ b=Zaef/AmbtoN+OzJd51qnxmT+57PzLK4AHkxp6VIQyf0ARL+ZJ3VJywBVJSVsMBMr3E
+ aPDV8gWoq3g6CeOG/TDue7nKC5CzrxvOjI09AuJHPELLhvq6Ks1UepHP6nyuiOnmKRji
+ Y+E8Ep/WTdm5fljImskVAnK+w5LK9/aeczpLvZGy3l1IX50NS0rsgSFmSKC1Bmivu/ii
+ 2LYXxlwM7blV1IcBUEG7UWfCcDFysVty0CsQJuK4C1yhVdIc88uDdPNQ7D9/3EAJ7pbi
+ /a6Zffb4v1lRaXUuWyHZIAK+HWU6wEgFFxEmCz+EnDlazf3P8C6rlCv7qS438x7axWoL
+ fEYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773284379; x=1773889179;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Sansw5eWhN9Qsw1wOXiRv2rrs+/lBSApzRtWcaGoGpw=;
+ b=oWEmJacgS1ZCsv6yevuT5HuLYU0s3PipaBDvkMSmwxUOwZqbqcB3Q2wIRIocCgrk4J
+ VgklCKseMIHcurNISKh9GB6iznzG8yzKevDYrV/wYh7j8lKv33mvJtA2DORJIdnGVcL2
+ QmJLWRpJOoh1r7UC6/wLmslwAPljcxfLWHmEh03d/Xgm+1VdVnuOLUXelvFUoTjHVejf
+ 4A/brJueIMZEh7K288j3+rPQewbm5xZSUkBic7Hf5EXCQitHKxwF0vnLFX5Q0KNzuzk5
+ CasoF/lLmPUGtZkO913Ydwi6WsU7fJpxmf8+95tjiUbmyB6QhQ+bZospSktwGEgeoEwN
+ 9wQg==
+X-Gm-Message-State: AOJu0Ywx3WGfOxNkqXWrWHZTgc0y7chbpSGqR+cfd5liFhXAL0KNc7qN
+ fGK4UGMbyQyxVcHNzwfrZfpc6rYyX/ZS6L+96qm1vxlmEbLhYi+M/Ka6XH9rk+2KIvfI6BC6cZC
+ bWHDzQ+0nJmlcXM8O9T6ViDov95vy+xVHbPmqUiorEF7RCqaPKhBZXG2Y0Bu5YkXzbATAz/nlBc
+ CeJBxXMBo9N1xyqvCFeWrXpMUWTc+wZII=
+X-Gm-Gg: ATEYQzymIWScrgX2e/P7Gx3c7xl6EoSFBRLT/+bNveI18B5oKCmPWy+wudAsLjv3ybR
+ Qf2Kb/5I7DO45tNC18S3Yarcw4maCfPdD3t3qssaF+VXrWV39GRntaGnf67sHb/f9izkk7qujBH
+ YMQdkhRbmwUzDSKldwnL7nkvbDFaN00Q4tL69VeO12oCKOCoIy5Q03NyfXGs5DMXvVbN4RXuvtn
+ vEJv+5J
+X-Received: by 2002:a17:90b:3a8c:b0:353:e91:9b38 with SMTP id
+ 98e67ed59e1d1-35a0137aa83mr4608031a91.34.1773284379421; 
+ Wed, 11 Mar 2026 19:59:39 -0700 (PDT)
+X-Received: by 2002:a17:90b:3a8c:b0:353:e91:9b38 with SMTP id
+ 98e67ed59e1d1-35a0137aa83mr4608016a91.34.1773284378998; Wed, 11 Mar 2026
+ 19:59:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJBx78JQJ7JppYhTAA--.28822S2
-X-CM-SenderInfo: 5ol0xt5qjotxo6or00hjvr0hdfq/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163;
- envelope-from=lixianglai@loongson.cn; helo=mail.loongson.cn
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+References: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
+In-Reply-To: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
+From: Jason Wang <jasowang@redhat.com>
+Date: Thu, 12 Mar 2026 10:59:28 +0800
+X-Gm-Features: AaiRm53VtAd6ytI2WwLkTqpV7KZRaj_V3GdhzsQn-lBawq6Og2bAxpAXtwGJ3HU
+Message-ID: <CACGkMEuE3LQGmSK6tTa7xhYCio1nHQcAf0Fw1uD=6ipiUGtAwg@mail.gmail.com>
+Subject: Re: [PATCH v3 00/12] net: refactoring and fixes
+To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru, 
+ d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=jasowang@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,112 +136,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add the acpi table to the loongson rtc hardware so that the virtual machine
-kernel can use the loongson RTC-related drivers.
+On Thu, Feb 19, 2026 at 4:28=E2=80=AFAM Vladimir Sementsov-Ogievskiy
+<vsementsov@yandex-team.ru> wrote:
+>
+> Hi all!
+>
+> Here are some refactoring and fixes, mostly in net/tap.c I'm making on
+> my way to implementing TAP fd migration (through UNIX domain socket).
+>
+> v3:
+>
+> 01: fix checking, switch to int type for queues
+> 08: drop MAX_TAP_QUEUES constant
+> 09,10: prefer int type for queues
+>
+>
+> Vladimir Sementsov-Ogievskiy (12):
+>   net/af-xdp: fix type overflow
+>   net/tap: net_init_tap_one(): add return value
+>   net/tap: net_init_tap(): drop extra vhostfdname variable
+>   net/tap: net_init_tap(): refactor parameter checking
+>   net/tap: net_init_tap(): common fail label
+>   net/tap: net_init_tap_one() refactor to get vhostfd param
+>   net/tap: net_init_tap_one(): drop model parameter
+>   net: introduce net_parse_fds()
+>   net/tap: move fds parameters handling to separate functions
+>   net/tap: fix vhostfds/vhostfd parameters API
+>   net/tap: net_init_tap(): merge fd=3D, fds=3D and helper=3D cases into o=
+ne
+>   net/tap: net_init_tap(): relax QEMU hubs check
+>
+>  net/af-xdp.c |  44 ++-----
+>  net/tap.c    | 319 +++++++++++++++++++++------------------------------
+>  net/util.c   |  50 ++++++++
+>  net/util.h   |  14 +++
+>  4 files changed, 201 insertions(+), 226 deletions(-)
+>
+> --
+> 2.52.0
+>
 
-Delete the interrupt information in the rtc fdt table.
+If I understand this correctly, there would be a v4 for this?
 
-Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
----
-Cc: Song Gao <gaosong@loongson.cn> 
-Cc: Bibo Mao <maobibo@loongson.cn> 
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com> 
+(https://patchew.org/QEMU/20260218202829.1322088-1-vsementsov@yandex-team.r=
+u/20260218202829.1322088-10-vsementsov@yandex-team.ru/)
 
-change:
-V1->V2:
-1.Add a comment to explain why the acpi table no longer provides interrupt numbers
-2.Delete the interrupt number from the rtc fdt table
-
- hw/loongarch/virt-acpi-build.c | 25 +++++++++++++++++++++++++
- hw/loongarch/virt-fdt-build.c  | 16 ++++++++--------
- 2 files changed, 33 insertions(+), 8 deletions(-)
-
-diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
-index 3e34bedcd6..42820001d7 100644
---- a/hw/loongarch/virt-acpi-build.c
-+++ b/hw/loongarch/virt-acpi-build.c
-@@ -460,6 +460,30 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
- }
- #endif
- 
-+static void acpi_dsdt_add_rtc(Aml *scope)
-+{
-+    Aml *dev = aml_device("RTC");
-+
-+    aml_append(dev, aml_name_decl("_HID", aml_string("LOON0001")));
-+    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
-+
-+    Aml *crs = aml_resource_template();
-+    aml_append(crs,
-+        aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
-+                         AML_NON_CACHEABLE, AML_READ_WRITE,
-+                         0, VIRT_RTC_REG_BASE,
-+                         VIRT_RTC_REG_BASE + VIRT_RTC_LEN - 1,
-+                         0, VIRT_RTC_LEN));
-+    /*
-+     * The virtual machine model does not support suspend and wake-up,
-+     * and rtc is no longer the wake-up source. Therefore, the current
-+     * rtc table no longer provides the rtc alarm interrupt number to
-+     * avoid the software initializing alarm.
-+     */
-+    aml_append(dev, aml_name_decl("_CRS", crs));
-+    aml_append(scope, dev);
-+}
-+
- /* build DSDT */
- static void
- build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-@@ -475,6 +499,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
-     for (i = 0; i < VIRT_UART_COUNT; i++) {
-         build_uart_device_aml(dsdt, i);
-     }
-+    acpi_dsdt_add_rtc(dsdt);
-     build_pci_device_aml(dsdt, lvms);
-     build_la_ged_aml(dsdt, machine);
-     build_flash_aml(dsdt, lvms);
-diff --git a/hw/loongarch/virt-fdt-build.c b/hw/loongarch/virt-fdt-build.c
-index 6c06b36fca..42f014a7bd 100644
---- a/hw/loongarch/virt-fdt-build.c
-+++ b/hw/loongarch/virt-fdt-build.c
-@@ -458,8 +458,7 @@ static void fdt_add_uart_node(LoongArchVirtMachineState *lvms,
-     g_free(nodename);
- }
- 
--static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
--                             uint32_t *pch_pic_phandle)
-+static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms)
- {
-     char *nodename;
-     hwaddr base = VIRT_RTC_REG_BASE;
-@@ -470,12 +469,13 @@ static void fdt_add_rtc_node(LoongArchVirtMachineState *lvms,
-     qemu_fdt_add_subnode(ms->fdt, nodename);
-     qemu_fdt_setprop_string(ms->fdt, nodename, "compatible",
-                             "loongson,ls7a-rtc");
-+    /*
-+     * The virtual machine model does not support suspend and wake-up,
-+     * and rtc is no longer the wake-up source. Therefore, the current
-+     * rtc table no longer provides the rtc alarm interrupt number to
-+     * avoid the software initializing alarm.
-+     */
-     qemu_fdt_setprop_sized_cells(ms->fdt, nodename, "reg", 2, base, 2, size);
--    qemu_fdt_setprop_cells(ms->fdt, nodename, "interrupts",
--                           VIRT_RTC_IRQ - VIRT_GSI_BASE ,
--                           FDT_IRQ_TYPE_LEVEL_HIGH);
--    qemu_fdt_setprop_cell(ms->fdt, nodename, "interrupt-parent",
--                          *pch_pic_phandle);
-     g_free(nodename);
- }
- 
-@@ -550,7 +550,7 @@ void virt_fdt_setup(LoongArchVirtMachineState *lvms)
-         fdt_add_uart_node(lvms, &pch_pic_phandle, base, irq, i == 0);
-     }
- 
--    fdt_add_rtc_node(lvms, &pch_pic_phandle);
-+    fdt_add_rtc_node(lvms);
-     fdt_add_ged_reset(lvms);
-     platform_bus_add_all_fdt_nodes(machine->fdt, "/platic",
-                                    VIRT_PLATFORM_BUS_BASEADDRESS,
--- 
-2.39.1
+Thanks
 
 
