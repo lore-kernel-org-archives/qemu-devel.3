@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E67F4106ACEE
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 21:38:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50DEE106ACEE
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 21:39:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0nir-00036N-8B; Thu, 12 Mar 2026 17:37:37 -0400
+	id 1w0nkd-0003aa-L9; Thu, 12 Mar 2026 17:39:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w0nip-00035u-Ly
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:37:35 -0400
-Received: from mail-pg1-x534.google.com ([2607:f8b0:4864:20::534])
+ id 1w0nkY-0003aQ-J2
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:39:23 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w0nin-0003g5-VN
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:37:35 -0400
-Received: by mail-pg1-x534.google.com with SMTP id
- 41be03b00d2f7-c738fecf349so986331a12.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 14:37:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773351452; cv=none;
+ id 1w0nkX-0005ky-5M
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:39:22 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ad617d5b80so11633365ad.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 14:39:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773351559; cv=none;
  d=google.com; s=arc-20240605;
- b=HYDLyyxbAC606nGPNGkeBedGezn17hQlfX71/9uUsJiCA05ELwq95AxiMtJi5+IRMF
- n+qZyg1JNbzmU7ulWIoqi3zUm519yIHpGlp9UBV9PXELaH8byURK8ITUaCWIf3Oek6hF
- /527o4wsADDBBvq04MG7VGwv8eIJRB/YHzrQzaieI/SEtF/ZSAqLGLGn7u+xTrnjCnvk
- L7njrcksuiNlNhNMgbizNucaKAVvNik88x3j03tlBH5IiUOvPHVbzxRATzK1v0grW5y2
- QUBc4Cp17XHyRzO0PkG1740M//zwMeHMZyxLwzumbqUZnbfUErj4NXgn4jLuk4tthYqn
- qOSQ==
+ b=cUz4NfU9BZuNG6sbuv9iJqd2utM+2bVW3xbeXlUaM0OZI7GjhZW13fvTwiqjUfvjS9
+ NZcWtNQTijzQl3MxRjjJ8cDwGbMGe0LuxwQJOb5qcOtasDxOArK/HxPeAtGws27egt1Q
+ IPXUU7yaxvFFPjZ7cBXn9cS5MwiQC1zT+Qev97j5E7dh2V4XO7H0JVQsLhSawuU93mp9
+ jsup903Nz5I4O+Ukd0H9rbwvlU4sWFkrC8rJiVAtweVh/2UOhIEk1fhvK7PGNGj4ZFLO
+ I7kRDyCXzw2fxW825GBu3ZPCPHdnA5/U32XDSsvGIEhhpJoTcXE1YOIQOSyIuk++ndub
+ 7frQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=A56dJ1XUNaMiJ02ZAD0Rtn3U3GgkBw7IEbGy90VIH9I=;
+ bh=GedSKUpVtNencDot4GjrlceiSenhLpU1OkQH6exKSnQ=;
  fh=KRCCjFQNjYXxmVm5lhBeSL8Cxa/V2Ufkjle/+cdDqO0=;
- b=aSF+d/nauL8Asu6hgiVK75GTZn/cm0W3mpMIjEOqnmGOmnAE6rjCD+WbCndWEuSyfu
- VkgeRlAE+18JF6hZRdOOGAap9uqSJzJcKfnHI9wt+bRlicidcEHTs4Nl3rhE8C5uzMBO
- /QCyM8RAXUyp1nzIZHGIzPV7NxuYIk5Qgt9LR2HmYaXQVZ6K6ktSCbUGYBaMbJHguMXb
- bQQUD2guGqrbyQRO8A7Tt9bSqFs3Pvlu7HwgAMRmT93aQAtUCXrNCHJqTwizwRLxVdBX
- WL8pb8PA2bGUAegP1LPbrjlo0DKrtO8vO4n4zto3i0EXH0rSB5ATgozXa3xBxprMIe3m
- 7nEw==; darn=nongnu.org
+ b=Qj3xc8bqpy5oWvPq4K3CnKxoPjQ3njnIFxDwvSD2Qm431VcLS2+NNrdLhejKcCHrSK
+ 6DmZBgUe8/cUEGWidnle9cg7h300WjoTg+Ce38/xvoUTzxikQ4wQPfuHjyW/qDJqZ02r
+ gRPUA6eE2fzP+Y0Zy7q9SAhFgBwoSKVtAzrnmFkvo74JzBwIrTfsrnvmSeJDm9hCGXNb
+ Kt4Au7s3Fq6iXVWT+gEx/aq4ER+mNssBVLXM3S09PHTWSFSbxd+djUTceoisWNXGYgjP
+ DxMnGW4EH0VK4iIf06OFKnx9/gfV7bTLcKTIpzh8frdIjA7DIaxehwO8nIzW1JDUClnl
+ yjDQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773351452; x=1773956252; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773351559; x=1773956359; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=A56dJ1XUNaMiJ02ZAD0Rtn3U3GgkBw7IEbGy90VIH9I=;
- b=D8/YHgECPw6Gh38dAp+z68FZjdcIrJjFe8AXa2kDALIP69Htd8DpZtuKZvsFuGtEiH
- 4jxOWIbltBBMe6UCR6UwhJAxGN8GalYfSo5npT2gqHU0VMXh9SxoqW2JnMvBfnI63hr8
- NcW5vvRUQ7qFVn2Rd3chyjm2vU0QflvYf/Z/sWy3kCs/YJi+5To8aWI/F+JlZmFcJDdE
- ST9IQBjVksmkoHHGAjbiRJR2ZFglyn68Vp7ZBZq9r/sPpVDVaWwIcf2tSnhc/A0gCWJr
- OhY21WfqiZfpIn59Xd4BsYfS6CDPeeezYUBSD0G9rmx+DKA89XpuYX+naOpCLRW41w0I
- h+Uw==
+ bh=GedSKUpVtNencDot4GjrlceiSenhLpU1OkQH6exKSnQ=;
+ b=Td/2SemuXvJpxa1Z2+r99zjyx55CQc0hvK7TfWpuflOmxoidUx/tsdpFNSRIAvTTyl
+ o+bvYw0oZcxvN2/B6KY1/uH3ovgAOO47NZtkWP40OBThhvcM6YaVcof/7D9t+QXJZ38T
+ K1cKWQIwO5Sq9E8/HisZXuacJacKbyurL+tf9J+8whY7XN+hjibMioCNpQUmm/2Wf3JH
+ BPd15FIZdDc8n0Y6ObXpgAbC3KwTic494OMjs9D3g64rC2wG0JDNORkVNAZvF58sJvBP
+ pJoCmDEryuPPf+h0YfATFIpgpJeq1iOCEyFyWcNYXKBz9YBWGIVKBhh/0+mHjdzjQR2l
+ jjfQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773351452; x=1773956252;
+ d=1e100.net; s=20230601; t=1773351559; x=1773956359;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=A56dJ1XUNaMiJ02ZAD0Rtn3U3GgkBw7IEbGy90VIH9I=;
- b=aXxWdT1syT+I66np/pHMreN2BZyGZdvRD2haJ9tQtHHAFaWcKV2rrhRhqYmHz+ve/x
- tL4zj9zXeVnkZs0zx2AsYpgdnLI07PUiAD4lblTUgCLQbZ5v8rsanEhKhzu3/7z83qxi
- QXObQUj7v5wIi4EJkXk/P93JeCQo3G2URKpU2i96jbJFbTsxjKea3+FKPF4+5zNTddDM
- m+Zs+wqknwdQLPd1pKxoHbO6YIihgpBT8UZaJqVJXLX1lm2yHSeowHWctvPhNO41bb5t
- 6VoIo2lIchu/Zc//fvN5kteiK6L8nHN7ZccTbZpdMyZriTWRYX3IF4JgzM2jOPi1AonC
- UXVQ==
-X-Gm-Message-State: AOJu0YydCrN8+il9nUBigA6Trwni3Jcb+mLYmeSTfX6uQt+/0fsK4uvs
- GvpEaLdGJ/Ti72Z32AWw5FA8am7mr9LMZ0Y2VnJM3mw4l+Qar6O2ohnNCMLzyA/JIAeRAvHTKpT
- Nih5W4giSevk8Ty8GNnLk/GlVbVMSax4fKQGo
-X-Gm-Gg: ATEYQzzJqYhDiPOtSmx8L3ACvspFiCgnDvQsBvgaEjjZOn4P70bktNUCakB9a5MWdB0
- N9uVsCWRM3DwaF1mrAfM6fDd1nglUeCyRFrJxDnGlJBenFemzh9jSODWzs9BqCDkyu07wswuvxs
- s3qSXdyHC7nPlHw3GVprAwSUXtvILtMcr32zbhr2WRjYzIAvknySKxnUMaeCewY1E7F/DsESJoY
- tvGTTJ4Jy3PiWRRQVME39nBr8F4Q/6SbM87WVYY/ue5TGom61LLlMHm0S7Y1XrHEeMmRuLtZPNF
- je1SWqZeDaCbcH/jJSAl7g7NfO9RzufKsoaiMA==
-X-Received: by 2002:a17:902:f552:b0:2ae:54e3:9299 with SMTP id
- d9443c01a7336-2aeba51229cmr39047915ad.21.1773351452357; Thu, 12 Mar 2026
- 14:37:32 -0700 (PDT)
+ bh=GedSKUpVtNencDot4GjrlceiSenhLpU1OkQH6exKSnQ=;
+ b=jnSEDqfdYfA8FbETX8Bk5Te+xepz9Z4KZcQ35Curj75u/elPQTCGSIyeG955VjZKkU
+ CWKv/pRqpJQPSyyh+tSLBYh5BklZOZi9Rchca+uLYmbqKolRSX+EtVqTMwUTLQ5rUxXE
+ kV/WmCI51BDmtLqvW8dblgKv8uADLh7EdKIl0Ayw6wkwRO06uTvMtpkJjK6t2LKQb36j
+ /wi3b5FfbVvE1CRGrfha+YOiD1YhgHrvCtzEiorni4vDbJCEGQszE03kLgKkL7Kur/Y2
+ +Jqg+yo/zXt+qyZ+gi5W1811kydUyyTTcCJMxp1Ht/elRPGQcAKL2RbfUzlnzm8gWstV
+ LbHw==
+X-Gm-Message-State: AOJu0YxemHMeKdGW76Y0Qai4UpjqAjXjvtN7YUidoiytwZAxmO3DiLbE
+ xkk2TQKc4GbRuIh0R6bJBhRa4VhLOCU/2T0lRri9Td/4Dgh9K7MXHvfTFDiY59sSc34hb8M1e3P
+ /HrIQO5M6jO5St7jB5uKZZcqPSH1/opA=
+X-Gm-Gg: ATEYQzwSJHqenMFLGshkFuf6fwU8XeS/0A/jaoIN60nvvlnoq7TWJ/oOvd5ALXgTpC8
+ 7w9KuR1LrFJjn4Tr2Mw4jBIguQfrGL6Y1B1myS8By+iyRhHPnDFuQS1WoQ3mIlvpPQaa4LmDFvF
+ 2ZAmA1KEuo8Ifw1uQ9r5PlODBKgEbWAHUEoMCx3BpTnUOs5KkxNXkz2X9yPF7rLpLmB5FIFj4bQ
+ UkkbWp8TdX20Ar9IKT9KZF8TsRbtDNZqDlzYhBvaa0h2+OBCmu69CdLvc0qFV8W3rlu8WUtvdL0
+ JslQuoNMvicHc08evypBR9pA6VXw+59NLcu3GQ==
+X-Received: by 2002:a17:903:2283:b0:2ae:c5b2:6a41 with SMTP id
+ d9443c01a7336-2aecac84adamr7981045ad.52.1773351559148; Thu, 12 Mar 2026
+ 14:39:19 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260311040758.1068731-1-brian.cain@oss.qualcomm.com>
- <20260311040758.1068731-4-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260311040758.1068731-4-brian.cain@oss.qualcomm.com>
+ <20260311040758.1068731-5-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260311040758.1068731-5-brian.cain@oss.qualcomm.com>
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Thu, 12 Mar 2026 15:37:21 -0600
-X-Gm-Features: AaiRm52t4E0ENHB0cnHmVbdcl9nLKI_GNCBIyWPUIy1IosMYGOGD9-Vk9hdOPfc
-Message-ID: <CAATN3NoSdHEuK1LsT4-uGKmFgxFxSYQoRPSfjv7EKX1bVaWSuQ@mail.gmail.com>
-Subject: Re: [PATCH v3 03/32] target/hexagon: Implement start/stop helpers,
- soft reset
+Date: Thu, 12 Mar 2026 15:39:07 -0600
+X-Gm-Features: AaiRm51919AAlgdpz_kncChA3GcZ1aA87n3_FiCMjE4EHWJL5KIP26iTWSP9750
+Message-ID: <CAATN3NocnCB3vNU9N2pQUUt-nX5aXxMvjM+gRrcd_6MgThN=YA@mail.gmail.com>
+Subject: Re: [PATCH v3 04/32] target/hexagon: Implement modify SSR
 To: Brian Cain <brian.cain@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
  matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
  anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Content-Type: multipart/alternative; boundary="00000000000061393f064cda8f47"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::534;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x534.google.com
+Content-Type: multipart/alternative; boundary="000000000000beb8af064cda959d"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,7 +117,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000061393f064cda8f47
+--000000000000beb8af064cda959d
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -128,86 +127,19 @@ wrote:
 
 > From: Brian Cain <bcain@quicinc.com>
 >
+> The per-vCPU System Status Register controls many modal behaviors of the
+> system architecture.  When the SSR is updated, we trigger the necessary
+> effects for interrupts, privilege/MMU, and HVX context mapping.
+>
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/cpu.h        |   7 +++
->  target/hexagon/cpu_helper.h |   3 ++
->  target/hexagon/cpu.c        |  26 +++++++++-
->  target/hexagon/cpu_helper.c | 100 ++++++++++++++++++++++++++++++++++++
->  target/hexagon/op_helper.c  |   4 +-
->  5 files changed, 136 insertions(+), 4 deletions(-)
->
-> diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-> index 0017be9dff7..1a3c9014455 100644
-> --- a/target/hexagon/cpu.h
-> +++ b/target/hexagon/cpu.h
-> @@ -207,6 +207,13 @@ G_NORETURN void
-> hexagon_raise_exception_err(CPUHexagonState *env,
->                                              uint32_t exception,
->                                              uintptr_t pc);
->
-> +#ifndef CONFIG_USER_ONLY
-> +uint32_t hexagon_greg_read(CPUHexagonState *env, uint32_t reg);
-> +uint32_t hexagon_sreg_read(CPUHexagonState *env, uint32_t reg);
-> +void hexagon_gdb_sreg_write(CPUHexagonState *env, uint32_t reg, uint32_t
-> val);
-> +void hexagon_cpu_soft_reset(CPUHexagonState *env);
-> +#endif
-> +
+>  target/hexagon/cpu_helper.c | 33 ++++++++++++++++++++++++++++++++-
+>  1 file changed, 32 insertions(+), 1 deletion(-)
 >
 
-The first three above belong in a different patch.
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-
-
-> diff --git a/target/hexagon/cpu_helper.c b/target/hexagon/cpu_helper.c
-> index 6fbf5fc8e2f..c251790e5a5 100644
-> +static void set_enable_mask(CPUHexagonState *env)
-> +{
-> +    g_assert(bql_locked());
-> +
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    const uint32_t modectl =3D cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_MODECTL,
-> +                               env->threadId) : 0;
-> +    uint32_t thread_enabled_mask =3D GET_FIELD(MODECTL_E, modectl);
-> +    thread_enabled_mask |=3D 0x1 << env->threadId;
-> +    SET_SYSTEM_FIELD(env, HEX_SREG_MODECTL, MODECTL_E,
-> thread_enabled_mask);
->
-
-Do you want to set modectl when cpu->globalregs is false?
-
-
-> +}
-> +
-> +static uint32_t clear_enable_mask(CPUHexagonState *env)
-> +{
-> +    g_assert(bql_locked());
-> +
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    const uint32_t modectl =3D cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_MODECTL,
-> +                               env->threadId) : 0;
-> +    uint32_t thread_enabled_mask =3D GET_FIELD(MODECTL_E, modectl);
-> +    thread_enabled_mask &=3D ~(0x1 << env->threadId);
-> +    SET_SYSTEM_FIELD(env, HEX_SREG_MODECTL, MODECTL_E,
-> thread_enabled_mask);
->
-
-Ditto
-
-
-> +    return thread_enabled_mask;
->
-
-It's strange that set_enable_mask returns void and clear_enable_mask
-returns the new mask.
-
-Thanks,
-Taylor
-
---00000000000061393f064cda8f47
+--000000000000beb8af064cda959d
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -219,87 +151,20 @@ e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
 olid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mai=
 lto:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
 <br>
+The per-vCPU System Status Register controls many modal behaviors of the<br=
+>
+system architecture.=C2=A0 When the SSR is updated, we trigger the necessar=
+y<br>
+effects for interrupts, privilege/MMU, and HVX context mapping.<br>
+<br>
 Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
 " target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
 ---<br>
-=C2=A0target/hexagon/cpu.h=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 =C2=A07 +++<b=
-r>
-=C2=A0target/hexagon/cpu_helper.h |=C2=A0 =C2=A03 ++<br>
-=C2=A0target/hexagon/cpu.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 |=C2=A0 26 +++++++++-=
-<br>
-=C2=A0target/hexagon/cpu_helper.c | 100 +++++++++++++++++++++++++++++++++++=
-+<br>
-=C2=A0target/hexagon/op_helper.c=C2=A0 |=C2=A0 =C2=A04 +-<br>
-=C2=A05 files changed, 136 insertions(+), 4 deletions(-)<br>
-<br>
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h<br>
-index 0017be9dff7..1a3c9014455 100644<br>
---- a/target/hexagon/cpu.h<br>
-+++ b/target/hexagon/cpu.h<br>
-@@ -207,6 +207,13 @@ G_NORETURN void hexagon_raise_exception_err(CPUHexagon=
-State *env,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0uint32_t exception,<br>
-=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0uintptr_t pc);<br>
-<br>
-+#ifndef CONFIG_USER_ONLY<br>
-+uint32_t hexagon_greg_read(CPUHexagonState *env, uint32_t reg);<br>
-+uint32_t hexagon_sreg_read(CPUHexagonState *env, uint32_t reg);<br>
-+void hexagon_gdb_sreg_write(CPUHexagonState *env, uint32_t reg, uint32_t v=
-al);<br>
-+void hexagon_cpu_soft_reset(CPUHexagonState *env);<br>
-+#endif<br>
-+<br></blockquote><div><br></div><div>The=C2=A0first three above belong in =
-a different patch.</div><div><br></div><div>=C2=A0</div><blockquote class=
-=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
-b(204,204,204);padding-left:1ex">diff --git a/target/hexagon/cpu_helper.c b=
-/target/hexagon/cpu_helper.c<br>
-index 6fbf5fc8e2f..c251790e5a5 100644<br>+static void set_enable_mask(CPUHe=
-xagonState *env)<br>
-+{<br>
-+=C2=A0 =C2=A0 g_assert(bql_locked());<br>
-+<br>
-+=C2=A0 =C2=A0 HexagonCPU *cpu =3D env_archcpu(env);<br>
-+=C2=A0 =C2=A0 const uint32_t modectl =3D cpu-&gt;globalregs ?<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hexagon_globalreg_read(cpu-&gt;globalregs, HEX=
-_SREG_MODECTL,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;threadId) : 0;<br>
-+=C2=A0 =C2=A0 uint32_t thread_enabled_mask =3D GET_FIELD(MODECTL_E, modect=
-l);<br>
-+=C2=A0 =C2=A0 thread_enabled_mask |=3D 0x1 &lt;&lt; env-&gt;threadId;<br>
-+=C2=A0 =C2=A0 SET_SYSTEM_FIELD(env, HEX_SREG_MODECTL, MODECTL_E, thread_en=
-abled_mask);<br></blockquote><div><br></div><div>Do you want to set modectl=
-=C2=A0when cpu-&gt;globalregs=C2=A0is false?</div><div>=C2=A0</div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex">
-+}<br>
-+<br>
-+static uint32_t clear_enable_mask(CPUHexagonState *env)<br>
-+{<br>
-+=C2=A0 =C2=A0 g_assert(bql_locked());<br>
-+<br>
-+=C2=A0 =C2=A0 HexagonCPU *cpu =3D env_archcpu(env);<br>
-+=C2=A0 =C2=A0 const uint32_t modectl =3D cpu-&gt;globalregs ?<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hexagon_globalreg_read(cpu-&gt;globalregs, HEX=
-_SREG_MODECTL,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;threadId) : 0;<br>
-+=C2=A0 =C2=A0 uint32_t thread_enabled_mask =3D GET_FIELD(MODECTL_E, modect=
-l);<br>
-+=C2=A0 =C2=A0 thread_enabled_mask &amp;=3D ~(0x1 &lt;&lt; env-&gt;threadId=
-);<br>
-+=C2=A0 =C2=A0 SET_SYSTEM_FIELD(env, HEX_SREG_MODECTL, MODECTL_E, thread_en=
-abled_mask);<br></blockquote><div><br></div><div>Ditto</div><div>=C2=A0</di=
-v><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;borde=
-r-left:1px solid rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 return thread_enabled_mask;<br></blockquote><div><br></div><=
-div>It&#39;s strange that set_enable_mask returns void and clear_enable_mas=
-k returns the new mask.</div><div>=C2=A0</div><div>Thanks,</div><div>Taylor=
-</div><div><br></div></div></div>
+=C2=A0target/hexagon/cpu_helper.c | 33 ++++++++++++++++++++++++++++++++-<br=
+>
+=C2=A01 file changed, 32 insertions(+), 1 deletion(-)<br></blockquote><div>=
+<br></div><div>Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsim=
+pson@gmail.com">ltaylorsimpson@gmail.com</a>&gt;=C2=A0</div></div></div>
 
---00000000000061393f064cda8f47--
+--000000000000beb8af064cda959d--
 
