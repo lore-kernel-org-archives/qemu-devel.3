@@ -4,108 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 693D1105A584
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2AA105A583
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:05:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0dqr-0003gc-1V; Thu, 12 Mar 2026 07:05:13 -0400
+	id 1w0dqj-0003gX-KV; Thu, 12 Mar 2026 07:05:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0dqi-0003ft-D1
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1w0dqh-0003fL-7n
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:03 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w0dqf-0000DK-MK
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:04 -0400
+ id 1w0dqe-00006E-0v
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:05:02 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773313500;
+ s=mimecast20190719; t=1773313498;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ruerrzlVnh/jDopFTG4KtbcM0C43F9HKskRHhkTWEf8=;
- b=PSdVdsXeArI5dUTtpF/HTTyyB0HTh8j5OEyp1ycAABOZ/6Uh/rvsBcu7ufnVa3s/xEQlex
- Idoxt3VbI8L7zn21rOUKpMIzptUi+09xfPIiMHcKEgUXA9/13g3kpxQr9nNcDRikWUUhCT
- KNx8+2yOIwEvCRbgiMeWGl15hpD5EpA=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=zEdrSTFe6SJKpMNegkPLR80jjGdsTb0Ah5RVfG8o2F8=;
+ b=HRhi+SfdrPUAgUctoinuBJefRnZUUgSJiNUr9xE9tUqnpXPDhABWJGrA5x18XzqcAxTJyw
+ 2C3ZiSDOReKqKq+tA6N2XSHrtt4p4TPTqbz1kvfafgXGGAH31Z99T6toV/o0jiqYWcg8JX
+ Z7Nx7ud6sU+PM4NB3O4Bnnb/GL1Itt4=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-342-XBleqGboMxKOqNuPKShTUg-1; Thu, 12 Mar 2026 07:04:59 -0400
-X-MC-Unique: XBleqGboMxKOqNuPKShTUg-1
-X-Mimecast-MFC-AGG-ID: XBleqGboMxKOqNuPKShTUg_1773313498
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48544725bdeso9959975e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:04:58 -0700 (PDT)
+ us-mta-551-RHdzOh-iPimwx2Dyy4IIiA-1; Thu, 12 Mar 2026 07:04:55 -0400
+X-MC-Unique: RHdzOh-iPimwx2Dyy4IIiA-1
+X-Mimecast-MFC-AGG-ID: RHdzOh-iPimwx2Dyy4IIiA_1773313494
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-439a85832c0so870211f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:04:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773313497; x=1773918297; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=ruerrzlVnh/jDopFTG4KtbcM0C43F9HKskRHhkTWEf8=;
- b=abKsxi705cyPzvOL7WEjUKvcPuJa1mKmpCPlywgv2LnybNCzGjV0SzKWHeiK/lIrFB
- raiLh+eW81pu1Q552SFdJxAcT4Fd1t0tG+jzC7Z5aAu7y8jgCsD5sFueLnrckDddoU9E
- zvHicaJ3zucsmsRlylv5h9qkyZdXQmTcrqrPIg5vgIHiFvKvTuatZFQeFjpfLYuIhY/+
- qTnv2OxcrbeG0dyMjEx+qgWjvAiK5kBihvAo/2HbeWhIqucK/GrNaEJrfL9QTt+wz+uh
- 8GdAVcs77VTkBjCjEB8n0pQ4wd+HMbPRG1HyViBhVq5VRxw/xXntkBD7QzHk+X1xZzb1
- CeZQ==
+ d=redhat.com; s=google; t=1773313494; x=1773918294; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=zEdrSTFe6SJKpMNegkPLR80jjGdsTb0Ah5RVfG8o2F8=;
+ b=pU/8btDSO8exsO7k6lAiv0AuURLJngQz/dfvGa/L4U2ReW9WUWfW24xOqK56HT6EV8
+ q2jzrgGubTKent+cIS/EQiZSOO2pJpIe0oxUNjVonb6qBd8Waea77tk7uKwJ0CIzqE9a
+ Zz2iAmDJ7JQVCVAYe0C5oGczpUlSiuxoKAB9aIWZOjyxJEqyFaZpsSVYpph2TLV2f+UA
+ AbwEoJJHyg+JblHatejKgacs/KmAz60HNTWjgOw8ATS4/BRJD+Zh8jV2l1loD8zEgVX5
+ UTDxgihF9oHiUHYnI9EaCbxsp2BkpSNa3I0dn80XRCeg7AwDX2421MfKThW4Yhj6dcaS
+ F4Rw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773313497; x=1773918297;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=ruerrzlVnh/jDopFTG4KtbcM0C43F9HKskRHhkTWEf8=;
- b=vkyF+zB8Q5er6Crzt7LfO9jVnGwe2tJV8EJ0MDoysOadA/JLe51lTsPeNzqcFmwzSl
- mtE+uqT3cypTXNaEPYGADYHqCyZughQuvP6Qvx+d0A8cFA83upyqRqaYvLX7A8HX53or
- TajiMclMC6MsJNH2W5REJtsUKK+SDXPswTqMuKQ7gX8oLoTI3jLheTNGBUhcXFc4dlDw
- eVX8D5rQfckjiQ+y4BVV/0rO9K3tjK/BA/k3O8Poyv13vm/iYfP6GeWI+LATk9eF4Fw3
- DpCf++CxOqxWjcI+hOCcAyICITOcY/8OCpdIKcOEGKIyKMWsutCWcsaU3VkrcppBgPOf
- xVvg==
-X-Gm-Message-State: AOJu0YyDdY4hnqFlKHibTADoTgQCyHSLfxvKSsh8R/ySq3w0rceEWDnn
- 16Q5wQHgbrQpS7zvXZpLpekPNe3SWXc7hvZHJcw8VB8UQaNNG6GvSJkuoZH3L4OcybUIvrWFdtn
- Ej1H+kvPs22bJfaIU6cUnXk0DrPzNgCtpMcGUaPyUN547G+xssY9UPGe/mJdlPf68BPtifp5ouK
- 8/fYwoJYbahuIsOqyTQ7MK8kA7CDAWcedBsLXunXMr
-X-Gm-Gg: ATEYQzy0V8QvDwjnrvWE9mE5Ze87RyPekz0wyooZv/sFU9TPx0EWu96PX/4fGmxRzL0
- cWVdoiyYurbk+Lxet1h8dI8IggSX0It0v520pZjLzmzaJ6Xsd+uxdnH6MU1zNYZNvl34J1MZAHa
- +LRBzTBcKFLrtbGIzzDd7qSENmrHl3f7JnXPlN+cCguiLIRlzEP9x87g+viMq92xT/ctWse51bC
- rlX/fHHl8Pi/7FSADBfBgcXR9tfwCu19+LhDAbgAfbTGx+IgOYX8ufOf2zR4/DEAybSPSy7yFP1
- x6xD2GkmNNBtMabwzhVN8Xre4rQR9zIrqh/0ch1KU7ACAVFUKul+MfQzHYsGTLJ3irNURH+Y9nT
- rgCoo3uUoGmLLdov1E4ljdNg4P0aXOHdps4no5TPu3IjpwpXcsj7zmgtyE7SIOTm5f6fwKGJu4f
- tgv/vqZ5BJ9a/wxxk2TUvY7Tjkbag=
-X-Received: by 2002:a05:600c:4752:b0:485:3a03:cee1 with SMTP id
- 5b1f17b1804b1-4854b15a6f4mr93490295e9.33.1773313497284; 
- Thu, 12 Mar 2026 04:04:57 -0700 (PDT)
-X-Received: by 2002:a05:600c:4752:b0:485:3a03:cee1 with SMTP id
- 5b1f17b1804b1-4854b15a6f4mr93489615e9.33.1773313496696; 
- Thu, 12 Mar 2026 04:04:56 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773313494; x=1773918294;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zEdrSTFe6SJKpMNegkPLR80jjGdsTb0Ah5RVfG8o2F8=;
+ b=noWJls5YNv8VsMUiEm13Md62TvhYnZX0yxgunhyKHHjAzmQrRRxiMWg4blcein1PyM
+ zWWZPWD2v4fvjEnM/vqjsqiBN5+H6W2FeF/MlaSwfK4gnbw/3AqFhoH0dTq4LkwEesAb
+ zWvqgM/mi9TES8ui4CtUb+7KNWjO2ANZaMz3iaXXhjheYS7qThe1YXqBMhg9qUdMsA0y
+ Zagmw3odfQiOivA2x+MUEeafQL/xzw390GwC9lGTR6FZKgwkgOlpuo/hM6/59460JVzC
+ GiE9t4vuL5vwKFGl6Kg3FTHmy5yCjJ4omINFjZp1FrGsZrWliv3F7JQq7ihp6WGrYx/Z
+ xOBw==
+X-Gm-Message-State: AOJu0YzKtOS7FnOSlqRFCJY6QTPPRZsiJVUCPKoUJa7HHy/MJGug90Fx
+ ec2FpwfQhvDpIOWKvSuJODcs6IMYQMCfHjZahV3yLoUM2msnToLHJEoOppWWSqOSSYZ6UI34m3Y
+ NIgq9CJD+YiJwZeB8RiSeUnuBE78kbBvmgZlKjPV2bme/+Id5aWzDXID+EtRDqrlIN2y8yk35Vw
+ 4WtLK0aoUpwp5jJ51NHBSdwhB+czbrGZWthm9nlHnS
+X-Gm-Gg: ATEYQzxAsIBEoZPGQCAE9/Hb07pm+qxqN1ReM38i/UP/M/etrN32XZj/rkey12XHZtW
+ GfOwuayTgu1IPB0WRyl4TtaSNFdum3BT4Bz8sToohqDo4e+azLu5vtP7P1YO63iXfdl1I3N55mQ
+ XQVfrZzTSKAr+1KDueSOzRSmDlIIDHC0/Z4ijbTtGaeDLK7MrSnptJhNF97AG9rxWZY6tex2Tm6
+ 8OMNj156ntfNzV2Q9Vkz3IQnqfPS4Jglz4G651hv273LDJ4BUMu0wwX7QzA3WSSFSD82EWnjr6D
+ /oDtemr2C+MuyzZH1mvPiVRX0QJzBvqjZh3RQhFbIAPBU93I8Tqrv40Y/MqZ5BUkqXgJAGM/606
+ J7LVcXeN7GdZZGfHPbbhsYlWk4pCOkjQPqbNBWbQjdC+T/xFv15/ss5trho8xWcHk69W8hbjpy6
+ jSLJ5YPo2c9Ecs2rGjIUUxxHAk9d8=
+X-Received: by 2002:a05:6000:604:b0:439:e334:426a with SMTP id
+ ffacd0b85a97d-439f8435927mr11385674f8f.46.1773313493601; 
+ Thu, 12 Mar 2026 04:04:53 -0700 (PDT)
+X-Received: by 2002:a05:6000:604:b0:439:e334:426a with SMTP id
+ ffacd0b85a97d-439f8435927mr11385588f8f.46.1773313492937; 
+ Thu, 12 Mar 2026 04:04:52 -0700 (PDT)
 Received: from [192.168.10.48] ([151.95.144.138])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b66dedfsm124256475e9.12.2026.03.12.04.04.55
+ ffacd0b85a97d-439fe2273d9sm8244021f8f.34.2026.03.12.04.04.52
+ for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 04:04:55 -0700 (PDT)
+ Thu, 12 Mar 2026 04:04:52 -0700 (PDT)
 From: Paolo Bonzini <pbonzini@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>
-Subject: [PULL 01/14] hyperv/syndbg: check length returned by
- cpu_physical_memory_map()
-Date: Thu, 12 Mar 2026 12:04:33 +0100
-Message-ID: <20260312110451.685161-2-pbonzini@redhat.com>
+Subject: [PULL 00/14] Misc patches for QEMU 11.0 hard freeze
+Date: Thu, 12 Mar 2026 12:04:32 +0100
+Message-ID: <20260312110451.685161-1-pbonzini@redhat.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260312110451.685161-1-pbonzini@redhat.com>
-References: <20260312110451.685161-1-pbonzini@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -123,78 +118,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-If cpu_physical_memory_map() returns a length shorter than the one
-that was passed into the function, writing the full out_len bytes
-causes an access beyond the memory allocated to the guest; or in
-the case of the MMIO bounce buffer, an out-of-bounds access in a
-heap-allocated object.
+The following changes since commit 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455:
 
-Add a check similar to the one already in handle_send_msg(),
-and take the occasion to remove repeated computations of
-recv_byte_count + UDP_PKT_HEADER_SIZE and clarify that the
-code does not write past out_len bytes.
+  Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-10 16:29:24 +0000)
 
-Reported-by: Oleh Konko <https://github.com/1seal>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Fixes: CVE-2026-3842
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- hw/hyperv/syndbg.c | 23 +++++++++++------------
- 1 file changed, 11 insertions(+), 12 deletions(-)
+are available in the Git repository at:
 
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index 1e177f9dd82..10171b19e8f 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -194,7 +194,7 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
-     uint16_t ret;
-     g_assert(MSG_BUFSZ >= qemu_target_page_size());
-     QEMU_UNINITIALIZED uint8_t data_buf[MSG_BUFSZ];
--    hwaddr out_len;
-+    hwaddr out_len, out_requested_len;
-     void *out_data;
-     ssize_t recv_byte_count;
- 
-@@ -223,29 +223,28 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
-     if (is_raw) {
-         out_len += UDP_PKT_HEADER_SIZE;
-     }
-+    out_requested_len = out_len;
-     out_data = cpu_physical_memory_map(outgpa, &out_len, 1);
--    if (!out_data) {
--        return HV_STATUS_INSUFFICIENT_MEMORY;
-+    ret = HV_STATUS_INSUFFICIENT_MEMORY;
-+    if (!out_data || out_len < out_requested_len) {
-+        goto cleanup_out_data;
-     }
- 
-     if (is_raw &&
--        !create_udp_pkt(syndbg, out_data,
--                        recv_byte_count + UDP_PKT_HEADER_SIZE,
-+        !create_udp_pkt(syndbg, out_data, out_len,
-                         data_buf, recv_byte_count)) {
--        ret = HV_STATUS_INSUFFICIENT_MEMORY;
-         goto cleanup_out_data;
-     } else if (!is_raw) {
--        memcpy(out_data, data_buf, recv_byte_count);
-+        memcpy(out_data, data_buf, out_len);
-     }
- 
--    *retrieved_count = recv_byte_count;
--    if (is_raw) {
--        *retrieved_count += UDP_PKT_HEADER_SIZE;
--    }
-+    *retrieved_count = out_len;
-     ret = HV_STATUS_SUCCESS;
- 
- cleanup_out_data:
--    cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    if (out_data) {
-+        cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    }
-     return ret;
- }
- 
+  https://gitlab.com/bonzini/qemu.git tags/for-upstream
+
+for you to fetch changes up to c725a896c6b92f733e0eeb236167cbd9b33efda8:
+
+  typedefs: move QIgvm out of typedefs.h (2026-03-12 12:02:55 +0100)
+
+----------------------------------------------------------------
+* accel/kvm: fix typo in variable name
+* system: fix coverity issues related to confidential guest reset
+* target/i386: add compat for migrating error code
+* docs fixes
+* hyperv/syndbg: check length returned by cpu_physical_memory_map()
+* typedefs: move QIgvm out of typedefs.h
+* rust: Update Cargo.lock
+* i386/cpu: cleanups for ClearwaterForest, AMX and more
+
+----------------------------------------------------------------
+Alyssa Ross (1):
+      accel/kvm: fix typo in variable name
+
+Ani Sinha (1):
+      coverity: fix coverity issues related to confidential guest reset
+
+Fiona Ebner (1):
+      target/i386: add compat for migrating error code
+
+Mohamed Mediouni (3):
+      docs: remove 64-bit only mentions for accelerators
+      qemu-options.hx: document Hyper-V enlightenments accelerator option
+      docs: mention that WHPX supports Arm too
+
+Paolo Bonzini (2):
+      hyperv/syndbg: check length returned by cpu_physical_memory_map()
+      typedefs: move QIgvm out of typedefs.h
+
+Philippe Mathieu-Daudé (1):
+      rust: Update Cargo.lock
+
+Zhao Liu (5):
+      i386/cpu: Rename AMX mirror cpuid macros with _ALIAS suffix
+      i386/cpu: Rename AMX mirror feature words with -alias suffix
+      i386/cpu: Remove unnecessary cache_info fields from builtin CPU model
+      i386/cpu: Adjust the note for CPU models with its-no
+      i386/cpu: Enable CPUID 0x1f & cache model for ClearwaterForest
+
+ docs/about/build-platforms.rst |   4 +-
+ docs/system/introduction.rst   |   6 +--
+ include/qemu/typedefs.h        |   1 -
+ include/system/igvm.h          |   3 +-
+ target/i386/cpu.h              |  17 ++++---
+ accel/kvm/kvm-all.c            |   4 +-
+ hw/hyperv/syndbg.c             |  23 ++++-----
+ hw/i386/pc.c                   |   1 +
+ system/runstate.c              |  10 ++--
+ target/i386/cpu.c              | 113 +++++++++++++++++++++++++++++++++++++----
+ target/i386/machine.c          |   2 +-
+ target/i386/sev.c              |   4 --
+ qemu-options.hx                |   5 ++
+ rust/Cargo.lock                |   3 +-
+ 14 files changed, 144 insertions(+), 52 deletions(-)
 -- 
 2.53.0
 
