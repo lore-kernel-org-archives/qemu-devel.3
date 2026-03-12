@@ -4,88 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DEBB103E2EB
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 13:43:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BB461067021
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 13:49:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0gJ9-0004A4-6Z; Thu, 12 Mar 2026 09:42:35 -0400
+	id 1w0gP6-0006tb-Cz; Thu, 12 Mar 2026 09:48:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1w0gJ0-00045M-0x
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:42:26 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0gP3-0006t4-5W
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:48:41 -0400
+Received: from smtp-out2.suse.de ([195.135.223.131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
- id 1w0gIx-0002Pm-H3
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:42:25 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439cb5af25bso1095684f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 06:42:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=lowrisc.org; s=google; t=1773322937; x=1773927737; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XrzfKTi4ckmprNI6O/80y/yP+TwjeaB+B/CXQFrAyrU=;
- b=AYbgoiL8WcP11O0Yva3PRTnFBpxLwzJRM29TMI/fBTrOmGZ668JTPCWlJrL7yQdKaW
- WGQ0jmaIF1AAv7HcUi6XyfJa2mu6XOgj6i0TFHuMOqOMqjs1hAabYWaprv5H4hNJLCQF
- GLoRTq5XpO0CoG11MST5E8ZMOp9Q8JzfS2QgwxyAH0Pfg18ZuVos/VjmlCa93BkiLhYZ
- Hs0JJcQtwAx1SYPO90WpoY5x4sPWvMyMIh7VEViXHsVVdRLWNrk/OR9Y6BdsR0ln2hnc
- pZ/S3uRiOQFueSHHCYOifAqIDRXSWOKOFj2sfWgWi3BHjpb6tORX+cOkebRrFhNe4F7/
- 5tgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773322937; x=1773927737;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XrzfKTi4ckmprNI6O/80y/yP+TwjeaB+B/CXQFrAyrU=;
- b=odu+KdlT2Tk7ETKC5br1eT2jr2vTd2wItOBs7JDCpOrKxaF6cFHDX9u3OZKOo5mqcJ
- vqgph+qhL/u+aBrHrrSFs92wSbCEWfElFGROCzlwdwarKAWAcKcvXpTmcIGMqv6S6F9M
- dwvPy44fDhRzpk83bWRhNBG1ZVWAi48DcHEbPM5BRc8CEs2q0KBQMCAVK/7NSmtkEpcF
- kjCl8CPB1DSwpBw3tOftglhofD9bvGBAemhTm9mLtf1mXSvorqGtggzOYRlvdRjzBJNh
- BcErNnJoo39xsckuAXLLJpfFwIbYQ0E1AYP2G7PXPlxxYwc8ww4cyktSJ5E2hJtoXavq
- 66gA==
-X-Gm-Message-State: AOJu0YwwCPGJ5jbd2h3CdxRp2CMtHDfqXhOOlqrDhEjZCfVC76AVqDcj
- t5/vno8obqRLWyoVBCOoDoLxxSBAXx70/1RqobQdQRNLXpYVCydPHW1AFKZ7tFvf07ZdfzdxJki
- Z5qkEfHo=
-X-Gm-Gg: ATEYQzyGuzpYdUe3ReqqTNjvwCOqqwm94wDVxyMGvarlvV51/Fz+FBaIR8A2ew+fQvf
- cy86iOuZ7nkfkEoefL4GOXAaiAcU8z2+u/gnMG6P+SJd1xEIlaCeo5XZSNPyzqeS/r1bu1JR2Ca
- v+QVJK7x09XRBsUfE6yjyziN9yXV7Lx2vt97BOxf/WB9mey0aQWnwM873NMR3If7M0jAzm+VJMS
- 6aFaftk9gR9NGeJv+A3I+ZyYIa5poE8HLfaQNmT0pmBE8JLFDy/b+GVxRJt6RzAhEANiR6dfCU5
- PU98SyVRy4x9V6CU6X9dJSvxo1kmOC3kBPh0t3Ykimc5qVw6NbXuLL7jct5TipjOVaETMhu+N4S
- Mr0CzAlEorhhKMPaR9gpdYDVuL9FOY6+Lf32rFuXGLgslib7WQNrGqbiGWsbIXGAZbJBa+TUsR8
- /91oNgk9iOEbUAiYpRv5pLliCljY/Ddshtu5tt3DBr2CzhoXMyfTeL0yw+
-X-Received: by 2002:a05:6000:24c2:b0:439:f5b2:d6b5 with SMTP id
- ffacd0b85a97d-439f81f2479mr12867660f8f.9.1773322936622; 
- Thu, 12 Mar 2026 06:42:16 -0700 (PDT)
-Received: from localhost.localdomain ([193.35.234.21])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe1a737csm7589814f8f.10.2026.03.12.06.42.16
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 06:42:16 -0700 (PDT)
-From: James Wainwright <james.wainwright@lowrisc.org>
-To: qemu-riscv@nongnu.org
-Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
- Emmanuel Blot <eblot@rivosinc.com>,
- James Wainwright <james.wainwright@lowrisc.org>
-Subject: [PATCH v4 2/3] target/riscv: add draft RISC-V Zbr ext as xbr0p93
-Date: Thu, 12 Mar 2026 13:42:08 +0000
-Message-ID: <20260312134210.5823-3-james.wainwright@lowrisc.org>
-X-Mailer: git-send-email 2.48.1
-In-Reply-To: <20260312134210.5823-1-james.wainwright@lowrisc.org>
-References: <20260312134210.5823-1-james.wainwright@lowrisc.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w0gOz-0003Ww-4D
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:48:40 -0400
+Received: from imap1.dmz-prg2.suse.org (imap1.dmz-prg2.suse.org
+ [IPv6:2a07:de40:b281:104:10:150:64:97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id CFEE05BCCA;
+ Thu, 12 Mar 2026 13:48:33 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773323314; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AdQ3nVFB/GnXjFgXI5MvdSqdH9NYJkk4mgg+z2u0JfI=;
+ b=vaBNMFE3wePbq3Uwt2WQT6C48B/s4yeFVa8KA+pG6kC/Q3bk3/pYeVzm92OvucA1w11kSA
+ 2VtimkpWw+2STlsGnK/OkEguouySws1r4T/KofC3Npbf4K+OZeENdvnDKyM8EoYiErDpiP
+ N49ekulhUL4EOvAf2cVmsg9dzedzdPM=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773323314;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AdQ3nVFB/GnXjFgXI5MvdSqdH9NYJkk4mgg+z2u0JfI=;
+ b=99BQ9dPuemG87q9e0U+HxIOf72Q/wz3DCtqiBc4kPQ0N124TuzyoZE+BC3xVjUwtZmSkzL
+ HLHSSn7WgVdePJCw==
+Authentication-Results: smtp-out2.suse.de;
+ dkim=pass header.d=suse.de header.s=susede2_rsa header.b=Bsm9YrxT;
+ dkim=pass header.d=suse.de header.s=susede2_ed25519 header.b=cSQGADSb
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773323313; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AdQ3nVFB/GnXjFgXI5MvdSqdH9NYJkk4mgg+z2u0JfI=;
+ b=Bsm9YrxTS3nt6vu0MbACwOaqqRCy4ojE5iImgi6Wk9pz31ttWHRCHsT135G7IUbtkG/5ol
+ rbnNXRzps3sl9zpFpMa8fwUUeZ0/W1i+15dXuD/kQIbgt9wlWWn0asZ/JFmpvgv8eim1Lu
+ SCbbYiW/9Sm/08lE8s0IiP83+Sgs7II=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773323313;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=AdQ3nVFB/GnXjFgXI5MvdSqdH9NYJkk4mgg+z2u0JfI=;
+ b=cSQGADSb19RZyS8oHHX1X7u3BLNH+A2bfjiBrNoT3+uKzE2hr0ENPO11Cns1SjR494PJmM
+ +72xzM+eTF1+JrAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 5ACAB3FFCE;
+ Thu, 12 Mar 2026 13:48:33 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id qvDICDHEsmncSgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Thu, 12 Mar 2026 13:48:33 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Prasad Pandit <ppandit@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>, Laurent Vivier <lvivier@redhat.com>, Paolo
+ Bonzini <pbonzini@redhat.com>
+Subject: Re: [PATCH v2 5/5] tests/qtest/migration: Force exit-on-error=false
+In-Reply-To: <CAE8KmOzM3Pi=AhxMGPeM7u2KzkaHXsexNNZX5k_317wzmwt5xA@mail.gmail.com>
+References: <20260311213418.16951-1-farosas@suse.de>
+ <20260311213418.16951-6-farosas@suse.de>
+ <CAE8KmOzM3Pi=AhxMGPeM7u2KzkaHXsexNNZX5k_317wzmwt5xA@mail.gmail.com>
+Date: Thu, 12 Mar 2026 10:48:30 -0300
+Message-ID: <87cy19yx8x.fsf@suse.de>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=james.wainwright@lowrisc.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.51 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000];
+ R_DKIM_ALLOW(-0.20)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ MIME_GOOD(-0.10)[text/plain]; MX_GOOD(-0.01)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ MISSING_XM_UA(0.00)[]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ TO_DN_SOME(0.00)[]; MIME_TRACE(0.00)[0:+];
+ RCVD_TLS_ALL(0.00)[]; MID_RHS_MATCH_FROM(0.00)[];
+ SPAMHAUS_XBL(0.00)[2a07:de40:b281:104:10:150:64:97:from];
+ FROM_EQ_ENVFROM(0.00)[]; FROM_HAS_DN(0.00)[];
+ RCPT_COUNT_SEVEN(0.00)[7]; RCVD_COUNT_TWO(0.00)[2];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,imap1.dmz-prg2.suse.org:rdns,suse.de:mid,suse.de:dkim,suse.de:email];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ DKIM_TRACE(0.00)[suse.de:+]
+X-Rspamd-Action: no action
+X-Rspamd-Server: rspamd1.dmz-prg2.suse.org
+X-Rspamd-Queue-Id: CFEE05BCCA
+Received-SPF: pass client-ip=195.135.223.131; envelope-from=farosas@suse.de;
+ helo=smtp-out2.suse.de
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -102,350 +128,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Emmanuel Blot <eblot@rivosinc.com>
+Prasad Pandit <ppandit@redhat.com> writes:
 
-This extension was not ratified with the Zb[abcs] bitmanip extensions.
-This is the latest draft version (0.93) as implemented by the Ibex core.
+> On Thu, 12 Mar 2026 at 03:04, Fabiano Rosas <farosas@suse.de> wrote:
+>> Some tests can cause QEMU to exit(1) too early while the incoming
+>> coroutine has not yielded for a first time yet. This trips ASAN
+>> because resources related to dispatching the incoming process will
+>> still be allocated in the io/channel.c layer without a
+>> straight-forward way for the migration code to clean them up.
+>>
+>> As an example of one such issue, the UUID validation happens early
+>> enough that the temporary socket from qio_net_listener_channel_func()
+>> still has an elevated refcount. If it fails, the listener dispatch
+>> code never gets to free the resource:
+>>
+>> Direct leak of 400 byte(s) in 1 object(s) allocated from:
+>>     #0 0x55e668890a07 in malloc asan_malloc_linux.cpp:68:3
+>>     #1 0x7f3c7e2b6648 in g_malloc ../glib/gmem.c:130
+>>     #2 0x55e66a8ef05f in object_new_with_type ../qom/object.c:767:15
+>>     #3 0x55e66a8ef178 in object_new ../qom/object.c:789:12
+>>     #4 0x55e66a93bcc6 in qio_channel_socket_new ../io/channel-socket.c:70:31
+>>     #5 0x55e66a93f34f in qio_channel_socket_accept ../io/channel-socket.c:401:12
+>>     #6 0x55e66a96752a in qio_net_listener_channel_func ../io/net-listener.c:64:12
+>>     #7 0x55e66a94bdac in qio_channel_fd_source_dispatch ../io/channel-watch.c:84:12
+>>     #8 0x7f3c7e2adf4b in g_main_dispatch ../glib/gmain.c:3476
+>>     #9 0x7f3c7e2adf4b in g_main_context_dispatch_unlocked ../glib/gmain.c:4284
+>>     #10 0x7f3c7e2b00c8 in g_main_context_dispatch ../glib/gmain.c:4272
+>>
+>> The exit(1) also requires some tests to setup qtest to expect a return
+>> code of 1 from the QEMU process. Although we can check migration
+>> status changes to be fairly certain where the failure happened, there
+>> is always the possibility of QEMU exiting for another reason and the
+>> test passing. This happens frequently with sanitizers enabled, but
+>> also risks masking issues in the regular build.
+>>
+>> Stop allowing the incoming migration to exit and instead require the
+>> tests to wait for the FAILED state and end QEMU gracefully with
+>> qtest_quit.
+>>
+>> In practice this means setting exit-on-error=false for every incoming
+>> migration, changing MIG_TEST_FAIL_DEST_QUIT_ERR to MIG_TEST_FAIL and
+>> waiting for a change of state where necessary.
+>>
+>> With this, the MIG_TEST_FAIL_DEST_QUIT_ERR error result is now unused,
+>> remove it.
+>>
+>> The affected tests are:
+>> validate_uuid_error
+>> multifd_tcp_cancel
+>> dirty_limit
+>> precopy_unix_tls_x509_default_host
+>> precopy_tcp_tls_no_hostname
+>> tcp_tls_x509_mismatch_host
+>> dbus_vmstate_missing_src
+>> dbus_vmstate_missing_dst
+>
+> * Alll of them don't seem to use/set  'MIG_TEST_FAIL_DEST_QUIT_ERR'
+> OR  'MIG_TEST_FAIL': ex: dbus_vmstate_missing_*
+>
 
-These instructions are in the reserved encoding space but have not been
-ratified and could conflict with future ratified instructions. For this
-reason they are added as a vendor extension to support Ibex's impl.
+Do you mean prior to the patch? The point here is to list tests that
+might break in the future due to this change (in case it's buggy). They
+don't all work similarly regarding the flags, but they all "expect
+failure" in some way.
 
-Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
----
- MAINTAINERS                               |  3 ++
- target/riscv/bitmanip_helper.c            | 20 +++++++
- target/riscv/cpu.c                        |  4 +-
- target/riscv/cpu_cfg.h                    |  1 +
- target/riscv/cpu_cfg_fields.h.inc         |  1 +
- target/riscv/helper.h                     |  2 +
- target/riscv/insn_trans/trans_xlrbr.c.inc | 45 ++++++++++++++++
- target/riscv/meson.build                  |  1 +
- target/riscv/translate.c                  |  3 ++
- target/riscv/xlrbr.decode                 | 30 +++++++++++
- tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
- tests/tcg/riscv64/test-crc32.S            | 64 +++++++++++++++++++++++
- 12 files changed, 178 insertions(+), 1 deletion(-)
- create mode 100644 target/riscv/insn_trans/trans_xlrbr.c.inc
- create mode 100644 target/riscv/xlrbr.decode
- create mode 100644 tests/tcg/riscv64/test-crc32.S
+>
+>> Also add a comment to QEMU source explaining that the incoming
+>> coroutine might block for a while until it yields as this is the
+>> actual root cause of the issue.
+>>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/migration.c                 |  5 +++++
+>>  tests/qtest/dbus-vmstate-test.c       |  5 +++--
+>>  tests/qtest/migration/framework.c     |  5 +----
+>>  tests/qtest/migration/framework.h     |  2 --
+>>  tests/qtest/migration/migration-qmp.c |  6 ++++++
+>>  tests/qtest/migration/misc-tests.c    |  4 ++--
+>>  tests/qtest/migration/precopy-tests.c | 12 +++++-------
+>>  tests/qtest/migration/tls-tests.c     | 14 ++++++++------
+>>  8 files changed, 30 insertions(+), 23 deletions(-)
+>>
+>> diff --git a/migration/migration.c b/migration/migration.c
+>> index f949708629..c77832f851 100644
+>> --- a/migration/migration.c
+>> +++ b/migration/migration.c
+>> @@ -898,6 +898,11 @@ void migration_start_incoming(void)
+>>
+>>      Coroutine *co = qemu_coroutine_create(process_incoming_migration_co, NULL);
+>>      qemu_coroutine_enter(co);
+>> +    /*
+>> +     * This doesn't return right away. The coroutine will run
+>> +     * unimpeded until its first yield, which may happen as late as
+>> +     * the force yield at ram_load_precopy().
+>> +     */
+>>  }
+>>
+>>  int migrate_send_rp_switchover_ack(MigrationIncomingState *mis)
+>> diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
+>> index 6c990864e3..0a82cc9f93 100644
+>> --- a/tests/qtest/dbus-vmstate-test.c
+>> +++ b/tests/qtest/dbus-vmstate-test.c
+>> @@ -219,8 +219,8 @@ test_dbus_vmstate(Test *test)
+>>
+>>      dstaddr = g_strsplit(g_test_dbus_get_bus_address(dstbus), ",", 2);
+>>      dst_qemu_args =
+>> -        g_strdup_printf("-object dbus-vmstate,id=dv,addr=%s -incoming %s",
+>> -                        dstaddr[0], uri);
+>> +        g_strdup_printf("-object dbus-vmstate,id=dv,addr=%s -incoming defer",
+>> +                        dstaddr[0]);
+>
+> * Here "uri" is different than "defer"  ->  uri =
+> g_strdup_printf("unix:%s/migsocket", workdir);. Why are we replacing
+> it with "defer" string?
+>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 9d1614fd7e..847fd414bc 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -1725,6 +1725,9 @@ F: hw/riscv/opentitan.c
- F: hw/*/ibex_*.c
- F: include/hw/riscv/opentitan.h
- F: include/hw/*/ibex_*.h
-+F: target/riscv/insn_trans/trans_xthead.c.inc
-+F: target/riscv/xlrbr.decode
-+F: tests/tcg/riscv64/test-crc32.S
- 
- Microchip PolarFire SoC Icicle Kit
- L: qemu-riscv@nongnu.org
-diff --git a/target/riscv/bitmanip_helper.c b/target/riscv/bitmanip_helper.c
-index e9c8d7f778..1156a87dd3 100644
---- a/target/riscv/bitmanip_helper.c
-+++ b/target/riscv/bitmanip_helper.c
-@@ -23,6 +23,8 @@
- #include "exec/target_long.h"
- #include "exec/helper-proto.h"
- #include "tcg/tcg.h"
-+#include "qemu/crc32.h"
-+#include "qemu/crc32c.h"
- 
- target_ulong HELPER(clmul)(target_ulong rs1, target_ulong rs2)
- {
-@@ -129,3 +131,21 @@ target_ulong HELPER(xperm8)(target_ulong rs1, target_ulong rs2)
- {
-     return do_xperm(rs1, rs2, 3);
- }
-+
-+target_ulong HELPER(crc32)(target_ulong rs1, target_ulong sz)
-+{
-+    for (target_ulong i = 0; i < sz; i++) {
-+        rs1 = crc32_table[rs1 & 0xFF] ^ (rs1 >> 8);
-+    }
-+
-+    return rs1;
-+}
-+
-+target_ulong HELPER(crc32c)(target_ulong rs1, target_ulong sz)
-+{
-+    for (target_ulong i = 0; i < sz; i++) {
-+        rs1 = crc32c_table[rs1 & 0xFF] ^ (rs1 >> 8);
-+    }
-+
-+    return rs1;
-+}
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index e56470a374..22bab85288 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1370,6 +1370,7 @@ const RISCVCPUMultiExtConfig riscv_cpu_vendor_exts[] = {
-     MULTI_EXT_CFG_BOOL("xmipscbop", ext_xmipscbop, false),
-     MULTI_EXT_CFG_BOOL("xmipscmov", ext_xmipscmov, false),
-     MULTI_EXT_CFG_BOOL("xmipslsp", ext_xmipslsp, false),
-+    MULTI_EXT_CFG_BOOL("xlrbr", ext_xlrbr, false),
- 
-     { },
- };
-@@ -3056,7 +3057,8 @@ static const TypeInfo riscv_cpu_type_infos[] = {
-         .cfg.ext_zba = true,
-         .cfg.ext_zbb = true,
-         .cfg.ext_zbc = true,
--        .cfg.ext_zbs = true
-+        .cfg.ext_zbs = true,
-+        .cfg.ext_xlrbr = true
-     ),
- 
-     DEFINE_RISCV_CPU(TYPE_RISCV_CPU_SIFIVE_E31, TYPE_RISCV_CPU_SIFIVE_E,
-diff --git a/target/riscv/cpu_cfg.h b/target/riscv/cpu_cfg.h
-index cd1cba797c..211d0708ba 100644
---- a/target/riscv/cpu_cfg.h
-+++ b/target/riscv/cpu_cfg.h
-@@ -69,5 +69,6 @@ MATERIALISE_EXT_PREDICATE(xtheadmemidx)
- MATERIALISE_EXT_PREDICATE(xtheadmempair)
- MATERIALISE_EXT_PREDICATE(xtheadsync)
- MATERIALISE_EXT_PREDICATE(XVentanaCondOps)
-+MATERIALISE_EXT_PREDICATE(xlrbr);
- 
- #endif
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 70ec650abf..7ded97534c 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -153,6 +153,7 @@ BOOL_FIELD(ext_XVentanaCondOps)
- BOOL_FIELD(ext_xmipscbop)
- BOOL_FIELD(ext_xmipscmov)
- BOOL_FIELD(ext_xmipslsp)
-+BOOL_FIELD(ext_xlrbr)
- 
- BOOL_FIELD(mmu)
- BOOL_FIELD(pmp)
-diff --git a/target/riscv/helper.h b/target/riscv/helper.h
-index b785456ee0..7722c590bd 100644
---- a/target/riscv/helper.h
-+++ b/target/riscv/helper.h
-@@ -84,6 +84,8 @@ DEF_HELPER_FLAGS_1(unzip, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_1(zip, TCG_CALL_NO_RWG_SE, tl, tl)
- DEF_HELPER_FLAGS_2(xperm4, TCG_CALL_NO_RWG_SE, tl, tl, tl)
- DEF_HELPER_FLAGS_2(xperm8, TCG_CALL_NO_RWG_SE, tl, tl, tl)
-+DEF_HELPER_FLAGS_2(crc32, TCG_CALL_NO_RWG_SE, tl, tl, tl)
-+DEF_HELPER_FLAGS_2(crc32c, TCG_CALL_NO_RWG_SE, tl, tl, tl)
- 
- /* Floating Point - Half Precision */
- DEF_HELPER_FLAGS_3(fadd_h, TCG_CALL_NO_RWG, i64, env, i64, i64)
-diff --git a/target/riscv/insn_trans/trans_xlrbr.c.inc b/target/riscv/insn_trans/trans_xlrbr.c.inc
-new file mode 100644
-index 0000000000..01da2b6ce1
---- /dev/null
-+++ b/target/riscv/insn_trans/trans_xlrbr.c.inc
-@@ -0,0 +1,45 @@
-+/*
-+ * RISC-V translation routines for xlrbr matching the unratified Zbr CRC32
-+ * bitmanip extension v0.93.
-+ *
-+ * Copyright (c) 2026 Rivos Inc.
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#define REQUIRE_XLRBR(ctx) do {                    \
-+    if (!ctx->cfg_ptr->ext_xlrbr) {                \
-+        return false;                            \
-+    }                                            \
-+} while (0)
-+
-+static bool gen_crc(DisasContext *ctx, arg_r2 *a,
-+                    void (*func)(TCGv, TCGv, TCGv), TCGv tsz)
-+{
-+    REQUIRE_XLRBR(ctx);
-+    TCGv dest = dest_gpr(ctx, a->rd);
-+    TCGv src1 = get_gpr(ctx, a->rs1, EXT_NONE);
-+
-+    func(dest, src1, tsz);
-+    gen_set_gpr(ctx, a->rd, dest);
-+
-+    return true;
-+}
-+
-+#define TRANS_CRC32(NAME, SIZE) \
-+    static bool trans_crc32_##NAME(DisasContext *ctx, arg_r2 *a) \
-+    { if (SIZE == 8) { REQUIRE_64BIT(ctx); }; \
-+      return gen_crc(ctx, a, gen_helper_crc32, tcg_constant_tl(SIZE)); }
-+#define TRANS_CRC32C(NAME, SIZE) \
-+    static bool trans_crc32c_##NAME(DisasContext *ctx, arg_r2 *a) \
-+    { if (SIZE == 8) { REQUIRE_64BIT(ctx); }; \
-+      return gen_crc(ctx, a, gen_helper_crc32c, tcg_constant_tl(SIZE)); }
-+
-+TRANS_CRC32(b, 1);
-+TRANS_CRC32(h, 2);
-+TRANS_CRC32(w, 4);
-+TRANS_CRC32(d, 8);
-+TRANS_CRC32C(b, 1);
-+TRANS_CRC32C(h, 2);
-+TRANS_CRC32C(w, 4);
-+TRANS_CRC32C(d, 8);
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index 3842c7c1a8..79f36abd63 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -5,6 +5,7 @@ gen = [
-   decodetree.process('xthead.decode', extra_args: '--static-decode=decode_xthead'),
-   decodetree.process('XVentanaCondOps.decode', extra_args: '--static-decode=decode_XVentanaCodeOps'),
-   decodetree.process('xmips.decode', extra_args: '--static-decode=decode_xmips'),
-+  decodetree.process('xlrbr.decode', extra_args: '--static-decode=decode_xlrbr'),
- ]
- 
- riscv_ss = ss.source_set()
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index cb4f443601..9b05eb3695 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -1213,9 +1213,11 @@ static uint32_t opcode_at(DisasContextBase *dcbase, target_ulong pc)
- #include "insn_trans/trans_rvbf16.c.inc"
- #include "decode-xthead.c.inc"
- #include "decode-xmips.c.inc"
-+#include "decode-xlrbr.c.inc"
- #include "insn_trans/trans_xthead.c.inc"
- #include "insn_trans/trans_xventanacondops.c.inc"
- #include "insn_trans/trans_xmips.c.inc"
-+#include "insn_trans/trans_xlrbr.c.inc"
- 
- /* Include the auto-generated decoder for 16 bit insn */
- #include "decode-insn16.c.inc"
-@@ -1235,6 +1237,7 @@ const RISCVDecoder decoder_table[] = {
-     { has_xmips_p, decode_xmips},
-     { has_xthead_p, decode_xthead},
-     { has_XVentanaCondOps_p, decode_XVentanaCodeOps},
-+    { has_xlrbr_p, decode_xlrbr},
- };
- 
- const size_t decoder_table_size = ARRAY_SIZE(decoder_table);
-diff --git a/target/riscv/xlrbr.decode b/target/riscv/xlrbr.decode
-new file mode 100644
-index 0000000000..893ce6ec71
---- /dev/null
-+++ b/target/riscv/xlrbr.decode
-@@ -0,0 +1,30 @@
-+#
-+# Translation routines for the instructions of the xlrbr ISA extension
-+# (matching the draft encodings in the standard reserved encoding space for the
-+# unratified Zbr CRC32 bitmanip extension version 0.93).
-+#
-+# Copyright (c) 2026 Rivos Inc.
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+# Fields:
-+%rs1       15:5
-+%rd        7:5
-+
-+# Argument sets:
-+&r2        rd rs1                                 !extern
-+
-+# Formats 32:
-+@r2        .......  ..... ..... ... ..... ....... &r2 %rs1 %rd
-+
-+# *** RV32 xlrbr extension ***
-+crc32_b    0110000  10000 ..... 001 ..... 0010011 @r2
-+crc32_h    0110000  10001 ..... 001 ..... 0010011 @r2
-+crc32_w    0110000  10010 ..... 001 ..... 0010011 @r2
-+crc32c_b   0110000  11000 ..... 001 ..... 0010011 @r2
-+crc32c_h   0110000  11001 ..... 001 ..... 0010011 @r2
-+crc32c_w   0110000  11010 ..... 001 ..... 0010011 @r2
-+
-+# *** RV64 xlrbr extension (in addition to RV32) ***
-+crc32_d    0110000  10011 ..... 001 ..... 0010011 @r2
-+crc32c_d   0110000  11011 ..... 001 ..... 0010011 @r2
-diff --git a/tests/tcg/riscv64/Makefile.softmmu-target b/tests/tcg/riscv64/Makefile.softmmu-target
-index eb1ce6504a..82be8a2c91 100644
---- a/tests/tcg/riscv64/Makefile.softmmu-target
-+++ b/tests/tcg/riscv64/Makefile.softmmu-target
-@@ -36,5 +36,10 @@ run-plugin-interruptedmemory: interruptedmemory
- 	  $(QEMU) -plugin ../plugins/libdiscons.so -d plugin -D $<.pout \
- 	  $(QEMU_OPTS)$<)
- 
-+EXTRA_RUNS += run-test-crc32
-+comma:= ,
-+run-test-crc32: test-crc32
-+	$(call run-test, $<, $(QEMU) -cpu rv64$(comma)xlrbr=true $(QEMU_OPTS)$<)
-+
- # We don't currently support the multiarch system tests
- undefine MULTIARCH_TESTS
-diff --git a/tests/tcg/riscv64/test-crc32.S b/tests/tcg/riscv64/test-crc32.S
-new file mode 100644
-index 0000000000..70d70b16a9
---- /dev/null
-+++ b/tests/tcg/riscv64/test-crc32.S
-@@ -0,0 +1,64 @@
-+/*
-+ * Copyright (c) 2026 lowRISC CIC
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#define crc32(op, rd, rs1) .insn r 19, 1, 48, rd, rs1, x##op
-+
-+#define crc32_b(rd, rs1) crc32(16, rd, rs1)
-+#define crc32_h(rd, rs1) crc32(17, rd, rs1)
-+#define crc32_w(rd, rs1) crc32(18, rd, rs1)
-+#define crc32_d(rd, rs1) crc32(19, rd, rs1)
-+#define crc32c_b(rd, rs1) crc32(24, rd, rs1)
-+#define crc32c_h(rd, rs1) crc32(25, rd, rs1)
-+#define crc32c_w(rd, rs1) crc32(26, rd, rs1)
-+#define crc32c_d(rd, rs1) crc32(27, rd, rs1)
-+
-+	.option norvc
-+
-+	.text
-+	.globl _start
-+_start:
-+	lla t0, trap
-+	csrw mtvec, t0
-+
-+	li	t0, 0x34e24a2cd65650d4
-+
-+	crc32_b 	(t0, t0)
-+	crc32_h 	(t0, t0)
-+	crc32_w 	(t0, t0)
-+	crc32_d 	(t0, t0)
-+	crc32c_b	(t0, t0)
-+	crc32c_h	(t0, t0)
-+	crc32c_w	(t0, t0)
-+	crc32c_d	(t0, t0)
-+
-+	li	t1, 0x68167e78
-+
-+	li	a0, 0
-+	beq	t0, t1, _exit
-+fail:
-+	li	a0, 1
-+_exit:
-+	lla	a1, semiargs
-+	li	t0, 0x20026	# ADP_Stopped_ApplicationExit
-+	sd	t0, 0(a1)
-+	sd	a0, 8(a1)
-+	li	a0, 0x20	# TARGET_SYS_EXIT_EXTENDED
-+
-+	# Semihosting call sequence
-+	.balign	16
-+	slli	zero, zero, 0x1f
-+	ebreak
-+	srai	zero, zero, 0x7
-+	j	.
-+
-+	.data
-+	.balign	16
-+semiargs:
-+	.space	16
-+
-+trap:
-+	csrr t0, mepc
-+	addi t0, t0, 4
-+	mret
--- 
-2.48.1
+Users of -incoming uri that also expect failure need to start using
+-incoming "defer" because the former will trigger qmp_migrate_incoming
+via QEMU itself at vl.c where we can't set exit-on-error. The test needs
+to invoke migrate_incoming_qmp with the uri in this case.
 
+Note that dbus-vmstate-test is currently disabled. It doesn't even
+compile. I'm just putting this here so I remember to effect this change
+in another series I'm working on that re-enables the test. Also to not
+tricky reviewers when grepping for "migrate_incoming_qmp".
+
+>>      src_qemu = qtest_init(src_qemu_args);
+>>      dst_qemu = qtest_init(dst_qemu_args);
+>> @@ -229,6 +229,7 @@ test_dbus_vmstate(Test *test)
+>>
+>>      thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
+>>
+>> +    migrate_incoming_qmp(dst_qemu, uri, NULL, "{}");
+>>      migrate_qmp(src_qemu, uri, "{}");
+>>      test->src_qemu = src_qemu;
+>>      if (test->migrate_fail) {
+>> diff --git a/tests/qtest/migration/framework.c b/tests/qtest/migration/framework.c
+>> index b9371372de..9f71d51f1e 100644
+>> --- a/tests/qtest/migration/framework.c
+>> +++ b/tests/qtest/migration/framework.c
+>> @@ -576,6 +576,7 @@ static int migrate_postcopy_prepare(QTestState **from_ptr,
+>>      migrate_prepare_for_dirty_mem(from);
+>>      qtest_qmp_assert_success(to, "{ 'execute': 'migrate-incoming',"
+>>                               "  'arguments': { "
+>> +                             "      'exit-on-error': false,"
+>>                               "      'channels': [ { 'channel-type': 'main',"
+>>                               "      'addr': { 'transport': 'socket',"
+>>                               "                'type': 'inet',"
+>> @@ -906,10 +907,6 @@ int test_precopy_common(MigrateCommon *args)
+>>      if (args->result != MIG_TEST_SUCCEED) {
+>>          bool allow_active = args->result == MIG_TEST_FAIL;
+>>          wait_for_migration_fail(from, allow_active);
+>> -
+>> -        if (args->result == MIG_TEST_FAIL_DEST_QUIT_ERR) {
+>> -            qtest_set_expected_status(to, EXIT_FAILURE);
+>> -        }
+>>      } else {
+>>          if (args->live) {
+>>              /*
+>> diff --git a/tests/qtest/migration/framework.h b/tests/qtest/migration/framework.h
+>> index 80eef75893..79604c60f5 100644
+>> --- a/tests/qtest/migration/framework.h
+>> +++ b/tests/qtest/migration/framework.h
+>> @@ -208,8 +208,6 @@ typedef struct {
+>>          MIG_TEST_SUCCEED = 0,
+>>          /* This test should fail, dest qemu should keep alive */
+>>          MIG_TEST_FAIL,
+>> -        /* This test should fail, dest qemu should fail with abnormal status */
+>> -        MIG_TEST_FAIL_DEST_QUIT_ERR,
+>>          /* The QMP command for this migration should fail with an error */
+>>          MIG_TEST_QMP_ERROR,
+>>      } result;
+>> diff --git a/tests/qtest/migration/migration-qmp.c b/tests/qtest/migration/migration-qmp.c
+>> index 8279504db1..61cd7db6cc 100644
+>> --- a/tests/qtest/migration/migration-qmp.c
+>> +++ b/tests/qtest/migration/migration-qmp.c
+>> @@ -173,6 +173,12 @@ void migrate_incoming_qmp(QTestState *to, const char *uri, QObject *channels,
+>>      /* This function relies on the event to work, make sure it's enabled */
+>>      migrate_set_capability(to, "events", true);
+>>
+>> +    /*
+>> +     * Set the incoming migration to never exit QEMU abruptly during
+>> +     * the tests. It causes issues when running sanitizers and
+>> +     * expecting a failure exit code can mask other issues.
+>> +     */
+>> +    qdict_put_bool(args, "exit-on-error", false);
+>>      rsp = qtest_qmp(to, "{ 'execute': 'migrate-incoming', 'arguments': %p}",
+>>                      args);
+>>
+>> diff --git a/tests/qtest/migration/misc-tests.c b/tests/qtest/migration/misc-tests.c
+>> index 810e9e6549..196f1ca842 100644
+>> --- a/tests/qtest/migration/misc-tests.c
+>> +++ b/tests/qtest/migration/misc-tests.c
+>> @@ -131,7 +131,7 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+>>      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+>>      QTestState *from, *to;
+>>
+>> -    if (migrate_start(&from, &to, uri, args)) {
+>> +    if (migrate_start(&from, &to, "defer", args)) {
+>>          return;
+>>      }
+>>
+>> @@ -146,10 +146,10 @@ static void do_test_validate_uuid(MigrateStart *args, bool should_fail)
+>>      /* Wait for the first serial output from the source */
+>>      wait_for_serial("src_serial");
+>>
+>> +    migrate_incoming_qmp(to, uri, NULL, "{}");
+>>      migrate_qmp(from, to, uri, NULL, "{}");
+>>
+>>      if (should_fail) {
+>> -        qtest_set_expected_status(to, EXIT_FAILURE);
+>>          wait_for_migration_fail(from, true);
+>>      } else {
+>>          wait_for_migration_complete(from);
+>> diff --git a/tests/qtest/migration/precopy-tests.c b/tests/qtest/migration/precopy-tests.c
+>> index f17dc5176d..c6c8ae3004 100644
+>> --- a/tests/qtest/migration/precopy-tests.c
+>> +++ b/tests/qtest/migration/precopy-tests.c
+>> @@ -545,8 +545,7 @@ static void test_multifd_tcp_cancel(MigrateCommon *args, bool postcopy_ram)
+>>      migrate_cancel(from);
+>>
+>>      /* Make sure QEMU process "to" exited */
+>> -    qtest_set_expected_status(to, EXIT_FAILURE);
+>> -    qtest_wait_qemu(to);
+>> +    migration_event_wait(to, "failed");
+>>      qtest_quit(to);
+>>
+>>      /*
+>> @@ -634,7 +633,7 @@ static void test_cancel_src_after_cancelled(QTestState *from, QTestState *to,
+>>                                              const char *uri, const char *phase,
+>>                                              MigrateStart *args)
+>>  {
+>> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +    migrate_incoming_qmp(to, uri, NULL, "{}");
+>>
+>>      wait_for_serial("src_serial");
+>>      migrate_ensure_converge(from);
+>> @@ -659,7 +658,7 @@ static void test_cancel_src_after_complete(QTestState *from, QTestState *to,
+>>                                             const char *uri, const char *phase,
+>>                                             MigrateStart *args)
+>>  {
+>> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +    migrate_incoming_qmp(to, uri, NULL, "{}");
+>>
+>>      wait_for_serial("src_serial");
+>>      migrate_ensure_converge(from);
+>> @@ -690,7 +689,7 @@ static void test_cancel_src_after_none(QTestState *from, QTestState *to,
+>>      wait_for_serial("src_serial");
+>>      migrate_cancel(from);
+>>
+>> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +    migrate_incoming_qmp(to, uri, NULL, "{}");
+>>
+>>      migrate_ensure_converge(from);
+>>      migrate_qmp(from, to, uri, NULL, "{}");
+>> @@ -709,7 +708,7 @@ static void test_cancel_src_pre_switchover(QTestState *from, QTestState *to,
+>>      migrate_set_capability(from, "multifd", true);
+>>      migrate_set_capability(to, "multifd", true);
+>>
+>> -    migrate_incoming_qmp(to, uri, NULL, "{ 'exit-on-error': false }");
+>> +    migrate_incoming_qmp(to, uri, NULL, "{}");
+>>
+>>      wait_for_serial("src_serial");
+>>      migrate_ensure_converge(from);
+>> @@ -1101,7 +1100,6 @@ static void test_dirty_limit(char *name, MigrateCommon *args)
+>>
+>>      /* destination always fails after cancel */
+>>      migration_event_wait(to, "failed");
+>> -    qtest_set_expected_status(to, EXIT_FAILURE);
+>>      qtest_quit(to);
+>>
+>>      /* Check if dirty limit throttle switched off, set timeout 1ms */
+>> diff --git a/tests/qtest/migration/tls-tests.c b/tests/qtest/migration/tls-tests.c
+>> index 4ce7f6c676..87898af260 100644
+>> --- a/tests/qtest/migration/tls-tests.c
+>> +++ b/tests/qtest/migration/tls-tests.c
+>> @@ -441,10 +441,10 @@ static void test_precopy_unix_tls_x509_default_host(char *name,
+>>      g_autofree char *uri = g_strdup_printf("unix:%s/migsocket", tmpfs);
+>>
+>>      args->connect_uri = uri;
+>> -    args->listen_uri = uri;
+>> +    args->listen_uri = "defer";
+>>      args->start_hook = migrate_hook_start_tls_x509_default_host;
+>>      args->end_hook = migrate_hook_end_tls_x509;
+>> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
+>> +    args->result = MIG_TEST_FAIL;
+>>
+>>      args->start.hide_stderr = true;
+>>
+>> @@ -522,10 +522,11 @@ migrate_hook_start_tls_x509_no_host(QTestState *from, QTestState *to)
+>>
+>>  static void test_precopy_tcp_tls_no_hostname(char *name, MigrateCommon *args)
+>>  {
+>> -    args->listen_uri = "tcp:127.0.0.1:0";
+>> +    args->listen_uri = "defer";
+>> +    args->connect_uri = "tcp:127.0.0.1:0";
+>>      args->start_hook = migrate_hook_start_tls_x509_no_host;
+>>      args->end_hook = migrate_hook_end_tls_x509;
+>> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
+>> +    args->result = MIG_TEST_FAIL;
+>>
+>>      args->start.hide_stderr = true;
+>>
+>> @@ -556,10 +557,11 @@ static void test_precopy_tcp_tls_x509_override_host(char *name,
+>>  static void test_precopy_tcp_tls_x509_mismatch_host(char *name,
+>>                                                      MigrateCommon *args)
+>>  {
+>> -    args->listen_uri = "tcp:127.0.0.1:0";
+>> +    args->listen_uri = "defer";
+>> +    args->connect_uri = "tcp:127.0.0.1:0";
+>>      args->start_hook = migrate_hook_start_tls_x509_mismatch_host;
+>>      args->end_hook = migrate_hook_end_tls_x509;
+>> -    args->result = MIG_TEST_FAIL_DEST_QUIT_ERR;
+>> +    args->result = MIG_TEST_FAIL;
+>>
+>>      args->start.hide_stderr = true;
+>>
+>> --
+>
+> * Looks okay.
+> Reviewed-by: Prasad Pandit <pjp@fedoraproject.org>
+>
+> Thank you.
+> ---
+>   - Prasad
 
