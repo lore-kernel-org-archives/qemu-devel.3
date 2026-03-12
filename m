@@ -4,93 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F924106ACD2
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:20:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 903DF106ACCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:21:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0kdi-0000Kv-Ao; Thu, 12 Mar 2026 14:20:08 -0400
+	id 1w0kez-0001IE-Jn; Thu, 12 Mar 2026 14:21:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0kdZ-0000IE-2i
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:19:57 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1w0kew-0001HA-Bc
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:21:22 -0400
+Received: from mail-oo1-xc32.google.com ([2607:f8b0:4864:20::c32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0kdX-0006PQ-Go
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:19:56 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-439fe4985efso1181479f8f.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:19:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philippe.mathieu-daude@linaro.org>)
+ id 1w0ket-0006kX-Uc
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:21:22 -0400
+Received: by mail-oo1-xc32.google.com with SMTP id
+ 006d021491bc7-67bd152d3d9so731808eaf.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:21:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773339678; cv=none;
+ d=google.com; s=arc-20240605;
+ b=M8fIdmIuQ1JL4a/3cPlIkDbWz8FmyScksidblxNI5/W7r3LYiRexAdbf19+Yzuy8t7
+ kDg59kiAv5AsdV87pqHdmlI9tIyx/PIj+bCVphqt9SB5Tcz44+aP+/89D64iyWtFxrN8
+ 3Gbg+4qLkqsajh7Ycm1VMeMHMfJUC2wEuWtrRbDTTHzmFmX0iRiZ4YVDN4RKKh/Y78bK
+ nK08R3fTr45wvyzuVz5tuVjrPgwZ2B/LuS48MSmU0tJgxgH/0kmdT6ip/yd/ABZJSmen
+ fjFqRjp50TfTQqvEhzd+4y4S9vLOMlUXI9r4jd3T8Ep3z5zQ91LBFy18yGsCuHdn6oDs
+ ZVyw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=3GUBg4/MKX2N2US5F4ShWPk7363f3mIcvS87GGNVCTE=;
+ fh=OZkx7Lnc0PH+IXADSDTOK0nknyBxzNDzQbfD/KROBVY=;
+ b=dV5EBGa3LYAjZ1/px+Oz4bBFRHmPOBDPPZ9AWYzTbjgxOQhz9cqVx1bozp1BNTbPZl
+ CRA1/ER81RaAzHcHbiJUdnwJzYTWACF9CkWDN0iswThPQCuv78wqz1HVv2+90BTZkjS+
+ uInuakAC7DR477dIBFW8NDtCs15k40OuzIE1dHuaPdwL3l1b9KcOowwBiwCr+IZDwQ+l
+ iAZbgneQCvClNuMCsfkCr3lld8nNLOxoAKe1KKL5uJj+mY61yhNd2RrAjH2fVTSSjme5
+ 47M/u2GSqHYiMkMxJYEHZT+t2wbXf7+PklCdXScT/GbxCl2ZIS0K7BvLB+FNxMn8Jr5B
+ nOWA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773339594; x=1773944394; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=8XgqQlLvNNGlBLY4COiKPeshEJmziQwaSuRL7DpVw+Q=;
- b=bU5fC3DtrVJXCqB7SPpajoApaJwIVHSWvzfCz88pb1OTz5m0Ttd4nbsfvrmbKy7YhJ
- PfFaOS+8jk+gEus/pIXB/AHoQIylRwsMp6NL24VBRJRxA2cgLYOhtVVdsaqKlnsXQNey
- 3MJOtQqgygFdmSTg/buq9l1GBjSnciHSUgoQLJU6kgwsTUmfxe6XwFqm0qVltqyqabXh
- 3PQvtjqGnyp6x98m+8yt5sPGyeYnOi4P8rH46Q32dhNV7GlYduhYRQ9+9X1K5s+aZm+K
- VesI4oFVMhOJ8IoZrPPMWk9l/gMdFQxCAvgwFxUOKHQI1qazmouMoBxzCCks0njLVCdq
- Hj2Q==
+ d=linaro.org; s=google; t=1773339678; x=1773944478; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3GUBg4/MKX2N2US5F4ShWPk7363f3mIcvS87GGNVCTE=;
+ b=PskAIHvx9BY8DtwHXaQJt6uCwJkclVkMdNy9nyucfmLoMYHia5oOF5v+5GL2juW3Sk
+ mSJD39/e98Bj/JFqKKK9QksQADw0N8U/mpkH5gkSqiGmeMo8wn8XxAbMiSakiuvsQ2wg
+ ubA+rIPzcqd9bwHIq7vhx5Wp7QepAtYztFI2cNDu125nW1FoN14N/u1CkEPwZ/juzzIo
+ iaM6wu0nzNXUh/6pOBzh5WQi75nAgK6/Dse5TSkVgR3GJroiJoH+m5KXkhYAOLWwNHXM
+ zXq2PnD5Z0xsxmTzoI1evdpKzeSB4R7aOAMyUAppRJf6gvuG2cI9gR+HwhMzCQmNXxXB
+ uKfA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773339594; x=1773944394;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=8XgqQlLvNNGlBLY4COiKPeshEJmziQwaSuRL7DpVw+Q=;
- b=DukNIkbMIQmCu4gJhhpwnWu+31ZJ04k0Hd4cmGw8NpiFEmKqf6tSht0p6SRgPoETtJ
- WPsWejBtpuuSqW4e3VSbDK2vGseGePU1SVrwI7bz04Cop2X0D6XbZ2xF8FRJCgF3esaB
- NqZfgg1SX0807vrm49T9axce575cglf26LvLSUTLwdUOlYHATbXQKMvuRm1zr+j4osPi
- x5GoWvE0phqnUifiHbb7rs+eEIyV8UQTxS+XC8Ui3ZN+etpepk6nY4NIZddQT/ctvQVU
- E4vUWrzCj0KzpPifOWvdZK5nTrpN1EKgstUc0BEKcWENIwR75p67oMJLgUkazTsy1dAy
- q7pg==
+ d=1e100.net; s=20230601; t=1773339678; x=1773944478;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3GUBg4/MKX2N2US5F4ShWPk7363f3mIcvS87GGNVCTE=;
+ b=V+/S0tym6bCUDTdNptSv16lKuBeFgM1EkLnTSMPndnynzNlHaMOg3vHnJIKtQLNeMj
+ RH9jCpQfyUVxjdO4A544VAVwKwIkkhe6owA81QTdOxouf3Y2AoQ6Jp494MF2NksDxOg0
+ xsPP9A9T411OTuzHo/Aa/9AACWhnvlv/ox1EuE2BD/lDiky9vgrVHyND8BTBWiIUcm34
+ RTc0q9UGATY3aL61k6ac0y8hNoo4jJvMdTmDnSwFz6RAlcJr46rYylU+ogfJSV3q2Zpd
+ ztlCrvyQ0t7SMc+dgVh3bt+Ggc+GiCiDg5DDU3HJQnx1HGcBZBZVO2VsJVx0kJZDhRXV
+ 5NIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX7B6SdPYt7A1Cayo8rOfEC3WHaJmcZ2BsFLvkoc7g/rSHx5V+2Un+6ULikzT4zPI01EpRQ0QslBKxl@nongnu.org
-X-Gm-Message-State: AOJu0YwLzwURgrzMal076KIs/V5QAHrYIheEpEKxSq789R93kYN81OCr
- oShWfzndVFvUabTaTZVC0p4RjUQnCJiNoQVYxANf2jeCBs+HT+iex9ZAa6T5nUllGKg=
-X-Gm-Gg: ATEYQzxxuCZ57wlgRDFvKS7LK6ijDyHdEBBAcl/Za3Cm//Btp2QideJ6VgeG1wbMxXY
- dHXzeYO+KLMgo37sHjV1RRJ9KA2eGbrpBgWwheMskyGq9sCEUoi7LBN+xHJv77DXZ0E/F9J8oj7
- npvqmQB99EeAH53cLksxvu/Q2jVwcBXtoq527F9wk3m2bRskztALq285GpNrZpdnGKAtVIxP/Kz
- /DaAygVBQ5gXZawxgW/4UWVB+QT17Hum6lLvoMN7eTWl8s7vH+Kwq94ElTR9Cl1fgMvrP6T66C1
- PGYKeejKxZRVczcWjqe7KDuCKfX1LTgEnUxdig/GPzhvZs5bFK3NYE8QMfH2CL0g4tTGJgORkQk
- CjejNNt4dNg8WMjMfQ7y+poKV1UsDBB9osf8yDrq75SanRXmnMa9V6zFZNAjYGIiujsIXcx0J1I
- 6eR0xhSKjo0h0/Ajyv2ijM7+wGlZZcDU7vZjuAriz7pokQXyO9II18FSZPzfATYIqnoORSxx2lN
- PpI
-X-Received: by 2002:a5d:5f82:0:b0:439:cb12:9e08 with SMTP id
- ffacd0b85a97d-43a04d7a1cemr1419292f8f.1.1773339593573; 
- Thu, 12 Mar 2026 11:19:53 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43a03cfd18fsm2903409f8f.36.2026.03.12.11.19.52
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 11:19:52 -0700 (PDT)
-Message-ID: <c3a46ba7-7f5b-4a4b-8d24-6d78b7c0f5ec@linaro.org>
-Date: Thu, 12 Mar 2026 19:19:52 +0100
+ AJvYcCWLDDxdyGnHBwQg0ICbf3l19R9Oo9O3ER0oqpj6zZqn/l+bjni5ReBeItgzAT+dB7hhMjLsagF9+W/R@nongnu.org
+X-Gm-Message-State: AOJu0YyyNLSvvn9F5f3gsfU6+CAI/DVX38AygdFu6M1hhlLVoTIDA05W
+ H8IEV0rXmoxU5J5K9lVDxdDANoimW1nKBV/1kQtuykvduqxk8KCCcCyBMZQ0iESF/XducUohY0o
+ hA2qPDQPcJ3waRfcRhm5eC6g/19NufUd4MaBodrBvKg==
+X-Gm-Gg: ATEYQzxvRkBeqfoJPTKcehMRIV1rDkVbrXfavvCEVSgvn6mji1TcEdhSVLGU9/JgR5F
+ vDUc7UJzChvmqTFVQKWLuB73h9EaAztglTkeABBgIqYNionDbr2JIeCto/AOwO/ck6TCjRO//MH
+ Z2hvYpCvwR6bAYKMqEPQ/K4cVrhVaswTsAfeRYYaDKEhKYOIQvk9rosNixrY0+OOYm6dViAfnmz
+ Ti0yZwfW7mMrLFKP1ib8BvS8K1YFqM29VHtEy8Hu78qYdkYIfE+zjtu3f6Pydvy98QbJfdK3nOL
+ Wo2X47U=
+X-Received: by 2002:a05:6820:e0ab:b0:67b:db41:595f with SMTP id
+ 006d021491bc7-67bdb415a91mr32098eaf.74.1773339678166; Thu, 12 Mar 2026
+ 11:21:18 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
+References: <20260311151014.55915-1-mohamed@unpredictable.fr>
+ <20260311151014.55915-6-mohamed@unpredictable.fr>
+ <c3a46ba7-7f5b-4a4b-8d24-6d78b7c0f5ec@linaro.org>
+In-Reply-To: <c3a46ba7-7f5b-4a4b-8d24-6d78b7c0f5ec@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Date: Thu, 12 Mar 2026 19:21:06 +0100
+X-Gm-Features: AaiRm53gxsJT3x_Gu04pyKeNLjfiiYP2-bB0WctywLWioSlpdS9ntOXnzGAO4U8
+Message-ID: <CAPMQPELPaVbVg6HzsUm0s_w=xMqrmKUyC1dD5rEUu_FujU_hoA@mail.gmail.com>
 Subject: Re: [PATCH v2 5/5] target/arm: cpu: alter error message for host CPU
  type
-Content-Language: en-US
 To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Pedro Barbuda <pbarbuda@microsoft.com>, qemu-arm@nongnu.org
-References: <20260311151014.55915-1-mohamed@unpredictable.fr>
- <20260311151014.55915-6-mohamed@unpredictable.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260311151014.55915-6-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::c32;
+ envelope-from=philippe.mathieu-daude@linaro.org; helo=mail-oo1-xc32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,29 +121,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/3/26 16:10, Mohamed Mediouni wrote:
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   target/arm/cpu.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/arm/cpu.c b/target/arm/cpu.c
-> index 7e3e84b4bb..e73d7eb4fc 100644
-> --- a/target/arm/cpu.c
-> +++ b/target/arm/cpu.c
-> @@ -1629,8 +1629,8 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
->        * this is the first point where we can report it.
->        */
->       if (cpu->host_cpu_probe_failed) {
-> -        if (!kvm_enabled() && !hvf_enabled()) {
-> -            error_setg(errp, "The 'host' CPU type can only be used with KVM or HVF");
-> +        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled()) {
-> +            error_setg(errp, "The 'host' CPU type can only be used with KVM, HVF or WHPX");
+On Thu, 12 Mar 2026 at 19:19, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
+>
+> On 11/3/26 16:10, Mohamed Mediouni wrote:
+> > Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+> > ---
+> >   target/arm/cpu.c | 4 ++--
+> >   1 file changed, 2 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+> > index 7e3e84b4bb..e73d7eb4fc 100644
+> > --- a/target/arm/cpu.c
+> > +++ b/target/arm/cpu.c
+> > @@ -1629,8 +1629,8 @@ static void arm_cpu_realizefn(DeviceState *dev, E=
+rror **errp)
+> >        * this is the first point where we can report it.
+> >        */
+> >       if (cpu->host_cpu_probe_failed) {
+> > -        if (!kvm_enabled() && !hvf_enabled()) {
+> > -            error_setg(errp, "The 'host' CPU type can only be used wit=
+h KVM or HVF");
+> > +        if (!kvm_enabled() && !hvf_enabled() && !whpx_enabled()) {
+> > +            error_setg(errp, "The 'host' CPU type can only be used wit=
+h KVM, HVF or WHPX");
+>
+> Squash with patch #1?
+>
+> >           } else {
+> >               error_setg(errp, "Failed to retrieve host CPU features");
+> >           }
+>
 
-Squash with patch #1?
-
->           } else {
->               error_setg(errp, "Failed to retrieve host CPU features");
->           }
-
+At any rate,
+Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
