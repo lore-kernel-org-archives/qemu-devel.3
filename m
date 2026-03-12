@@ -4,95 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2AC3FED2F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 09:48:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9272FED2F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 09:55:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0ce2-0006uM-6M; Thu, 12 Mar 2026 05:47:54 -0400
+	id 1w0ckf-00081a-EY; Thu, 12 Mar 2026 05:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0ce0-0006tv-DR
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:47:52 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0ckX-00080Q-1A
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:54:38 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0cdy-0001nH-VY
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:47:52 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64c9cabfe5dso1165492d50.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 02:47:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773308869; cv=none;
- d=google.com; s=arc-20240605;
- b=QKr5RUh5VkCmOjbZtsr7hyVeuRMLZquEKdTCh5u4VNZtEkta5quJCGbMByrmt/ln3V
- iKhtqctyk3M1+m4YDBvCIUCV4PVIXEYQUr02fTo2ihobTx+AaTVTUK1Bn9CC2Fc0Sbw2
- Co3l10R5l/GeH5cSu8e+gpk5hFh+UB8XtQG29Nh7VnnnrE9OyFahR9sHSaJBLofpUtrU
- DoB+RwxWAhT4ohi6fHtFcHHSRA8Lj4N6jpiepnhZDHDhkJzaCTDP9QYFuHy93kqCHhZ6
- 8Kmv4QMSZjIUosdTQlVjHZbXPeKMJrLLkHh05ArK0tqVsl5P0LOyMT7NCjwrtZ+0DXHx
- f52Q==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=SeiYm0hsHTBKVIxD27bpLm+Dsf8S28/DjpIEOpFWN5c=;
- fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
- b=cJOdZ5i70JotKniZv4UzmwdhHKtT4xVrMsHpeJK5uEZFvq74k/nqk9UeP7YskfOIRi
- QiWEVqwVmyjCPgpVimDe1tDKtdgTzjdmjwqLg7bxQsFkoNwiL/Dg/TgGuAvPcLp3Aef1
- SzmjrogRxwXVRAgB09/71TvBoXazS6bjOP01JTSm54R56aFh7CShZYXZdmtKyIr8fmDk
- XT0W6cbwoCebjtQv7d5ATR1WWxSuxIAXCfuxlAdWJM4VccLtYIHHPXpRAksUID0v0EC2
- Rzd70Hpb6zrxXCgoehS07sloYBso0xdLKsdsM0YZoryIcHmBHfWNtXf9xF+cTVmyXENM
- TCUw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0ckU-00075n-Gs
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 05:54:36 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-439c4a93841so591114f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 02:54:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773308869; x=1773913669; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=SeiYm0hsHTBKVIxD27bpLm+Dsf8S28/DjpIEOpFWN5c=;
- b=DoA62Fi7SOQGq38jDuDo+u6jvDJLL4kVX8bpjKZmfqwIYgJkU3EIhejuwbX7t6AgpV
- 6f427/tyZgEPltrgoIdcGVBMxOB764p0z4gW3SAkX38zz6l/WBUO52E6mZAKiGsJ59Tk
- kao9SNXYPayzRPuXpD8iSlw1IrY+omPHCNWctDsSYuOodSwfKF6b852Oe2PJWDmISb16
- Iy9SgfCH/7TrIW3znorYmMaZos1TazM9JKnSsjfISUGQlMLhVjsprWNp0JQVTzbg7XPH
- 7NxqNdUb0S/LRsOxoj5DK13zg5r/cCMs5HYeXNTwm5w6cnHxoSP/+MrLdVegYGJ90/iG
- SBVg==
+ d=linaro.org; s=google; t=1773309272; x=1773914072; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Wq/Y6V+EU1rzkkYyxFjrdXfPqNXD+NsvyBEqQ3aovvU=;
+ b=eo4wVb2L7JLkk3uoMZvsaB3ql4GDtc8aww0mbvLRhSFc/3Ancn50++5SFpm379h/9G
+ VHb161mlev/J4qFEGIYuZi0f8fpSTqOE7n5NNsbo95gcEbtwoSWfSnUvrzkg+WUylox5
+ o6nodVAJ/61GE14cl9fM9Ek4HwzuV/TzqL+dyjPFSzCK7zNoKueIX+mSyItu+hAK724R
+ 6HUkml7rE7VSu5fS8UTcMrZpC79AIJ0NLmimjVNqv/6pgu+e+PKe/ot+qtJXAPLBOcI5
+ PAzzKJLDKUa9JZuXmYu8CVD9/Qn5gBPQX6Y86rFDgJO9rdIB8m6zffodD5B3I2JtqwxU
+ JK1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773308869; x=1773913669;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SeiYm0hsHTBKVIxD27bpLm+Dsf8S28/DjpIEOpFWN5c=;
- b=jOHrpmHk7dPs2HGmROmEqkxjnVIBV0paphVCiAsWQnSiV//lIhfcddvEU1Oe1z6eN2
- 79P4336SOqUiZytU1pXqUHOzSAr9uRaxLezOFnDZ8sd2lPem51ghd+o0KwnSV4TnJP5R
- oCJ4kqqm3ilp4LvTy0xzL8oNYt+kKKqFvdg0X/a/0jStWGmfrHFGQmFXexsbH7BWaDUr
- guqNIt/BKlQWE2yzbeRIvk17pcrLB38XQvaIZYFBzNs8fWRKljt7PscSWo/dKKTlID2o
- BA5oqw5HVBniijaVTSA2PeaMtlZH/heWGXauGT73aEE9grEFUOdOisPuMAxr1+0BhuTS
- hjkw==
-X-Gm-Message-State: AOJu0YyGiswZ1R5kU0IHzcpoXLDBhadxoWP5y/gBpBJAM3jFR4dn75eB
- i3tEYHgzhZ2Roe7ywnikRNrpnzOWiuKwyYoOPWzAJshRg8dq97VSFl5/YJzsKrO5yq8/bmQOKOE
- +xuSNrnqvWjT199XbJkG+PBVVUigzmScPkBqCzFgITA==
-X-Gm-Gg: ATEYQzxFijOhjMTIc/FEe+pAUQOnb/nFit+wJRS+lT95ahDbu2jyyF6Kk0fyTnqcfas
- +vXgO2w7o38LFJ0rrK0KBWGCNQzIU6/8mjoG3ADGQOPi2zOb4y+dopexggGiM4R2z3XZKOfx8WQ
- gunK74r2Si0G+Tm2NsbFZY4URqJHFkVLg0ffeYZfXwbLyjztLgW5SDKAO9rnXKxoAb8Xe6sWMn7
- penUSr+YW1hIXD/RaRjkeb2g/jNYoZmxAlDvB426B9dtJEOoDzJIUSkALRGzmclL2/20uLrHiRC
- Haxi9ZzfRr6NWAbCDlHmV2iYSjcIl2nMIVMx3PyIOKJdNwVNX+Pg+xQxIiHToIBhQ+g=
-X-Received: by 2002:a05:690e:1a83:b0:64a:d3b2:d394 with SMTP id
- 956f58d0204a3-64dc716c5e1mr1738911d50.26.1773308869323; Thu, 12 Mar 2026
- 02:47:49 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773309272; x=1773914072;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Wq/Y6V+EU1rzkkYyxFjrdXfPqNXD+NsvyBEqQ3aovvU=;
+ b=SQ/fEol86lsB8AgieO5g/SPLgVPo8tW2i2XcglN2Y0Xg8eibmfqKFqhlZfuFryAbWN
+ a5hvED/+X6s0SalxbGFsfgGs1evZUEWvOJyhL1NVVCfCl5yGjg0k0pjt+a1FW9ivUM++
+ MezSHwzeQLkZsTaYY3iC5APt4Hb7lCMiCKm2PTxvtjWv3UH1vfnUT/CSeAXig52yrFlb
+ 9noFCrpdJhijgPH0HiXAgMB0HFKA6kdtCyXHKL0fHNCxmutej/gwPX0YbIqvHoeanST9
+ zqnlIxAv5coSqoUb0zUfD37Ivze7FmoNce6og1wWvqW122J/LRX5ned8FXbYlNgz2WQj
+ yyxQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXgNY/QsPRZKiYd+ZsvtigyRVNb4v9mcZIFsPkrst3W95YBT2MkTYM0RibC+uaIMuCmuV7KpS0TKToA@nongnu.org
+X-Gm-Message-State: AOJu0Yz3/Vihi6ugxoD03HmUKFEvZXpHRC7KB7NnZW1zoOCjoGx9OpUu
+ rW0Ev8ZDAqW/dg2aPXLQlfHeuYka+c0OH3uHcj3bETscuq8GzLP6dDL1SsqU15KsZsk=
+X-Gm-Gg: ATEYQzxlMh4796eULgRr4O3tJZ7QmS73dnJokIc9I6b1S/D8bchC5CFzo1zd5lZq7dV
+ Gz9azIyZh55NgrikKRuRYlP0KRFiiIcxsG9qFRM51Kswdldr73xBiZPu7caQGOl0O/YlKPgeoSH
+ W2y5uqsoBbECgClstkcMymXLeWt2RQn5qBddG19LA3iJd/tvL+diNdTMf6gW+vZhZ02uHOkJ89o
+ oUeX4rp/Qa7RibJVtD8E799SKwxyCyT964JLd/Wzbj0psrZ77MLNMc8mqJAMrIt2UC3VQdPVkBE
+ bI6TCFDyxNL9Qs/FTpsVwv8fivypHLJLaQLGIt9dkz2hUhcHJhlFsE/nuGIc1IudrsVqilUlJLI
+ b6ZkZqHoVJmCErWnMJKH8rGyhcJ2PXdI1wp4evSYI3qSm5tlQpCiYGbYEcWprApIGmE2equWBPW
+ 9WvG5EwCmuGz3rb4ZjyNR1sF5UDFSAydCGvpx68kfphzrFTs7VSAMMyuxBIhALrG8V0Q==
+X-Received: by 2002:a05:6000:290f:b0:439:be3e:52fe with SMTP id
+ ffacd0b85a97d-439f8209ab1mr10959390f8f.26.1773309272269; 
+ Thu, 12 Mar 2026 02:54:32 -0700 (PDT)
+Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439fe23afc5sm7612598f8f.39.2026.03.12.02.54.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Mar 2026 02:54:31 -0700 (PDT)
+Message-ID: <24455ba7-f1ca-43aa-8e38-7e507c6bc142@linaro.org>
+Date: Thu, 12 Mar 2026 10:54:30 +0100
 MIME-Version: 1.0
-References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 09:47:38 +0000
-X-Gm-Features: AaiRm50v9fjhmA3750Dz5braL4uFNgMYdB2TE_cts6yAPcHWjWNcyIql35ugHY4
-Message-ID: <CAFEAcA-FtvvZhgYJVHD+Btxjq4RXVdW88ysPhqTgOJPm7og25Q@mail.gmail.com>
+User-Agent: Mozilla Thunderbird
 Subject: Re: [PULL 00/16] gdbstub: Always infer base register index from GDB
  XML
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org,
+ peter.maydell@linaro.org, richard.henderson@linaro.org, pbonzini@redhat.com,
  stefanha@redhat.com
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
+ <6ea61ae5-0a83-4279-8a8b-897a162d54a9@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <6ea61ae5-0a83-4279-8a8b-897a162d54a9@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,33 +106,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 11 Mar 2026 at 01:38, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> The following changes since commit ae56950eac7b61b1abf42003329ee0f3ce111711:
->
->   Merge tag 'firmware-20260310-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-03-10 13:32:30 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/pbo-linaro/qemu tags/pr-gdbstub-20260310
->
-> for you to fetch changes up to 6511d4eed79a7e59f03e661f31924277e4d6e600:
->
->   gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[] (2026-03-10 17:12:18 -0700)
->
-> ----------------------------------------------------------------
-> - [PATCH v4 00/16] gdbstub: Always infer base register index from GDB (=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>)
->   Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-1-philmd@linaro.org
->
-> ----------------------------------------------------------------
+On 11/3/26 02:41, Pierrick Bouvier wrote:
+> On 3/10/26 6:38 PM, Pierrick Bouvier wrote:
+>> The following changes since commit 
+>> ae56950eac7b61b1abf42003329ee0f3ce111711:
+>>
+>>    Merge tag 'firmware-20260310-pull-request' of https://gitlab.com/ 
+>> kraxel/qemu into staging (2026-03-10 13:32:30 +0000)
+>>
+>> are available in the Git repository at:
+>>
+>>    https://gitlab.com/pbo-linaro/qemu tags/pr-gdbstub-20260310
+>>
+>> for you to fetch changes up to 6511d4eed79a7e59f03e661f31924277e4d6e600:
+>>
+>>    gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[] 
+>> (2026-03-10 17:12:18 -0700)
+>>
+>> ----------------------------------------------------------------
+>> - [PATCH v4 00/16] gdbstub: Always infer base register index from GDB 
+>> (=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>)
+>>    Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-1- 
+>> philmd@linaro.org
+>>
+>> ----------------------------------------------------------------
+>> Alex Bennée (1):
+>>        tests/docker: add gdb-multiarch to all-test-cross
+>>
+>> Philippe Mathieu-Daudé (15):
+>>        tests/tcg: Temporary disable multiarch tests for PPC targets
+>>        tests/tcg: Disable prot-none test on GitLab
+>>        target/i386/gdbstub: Remove stale comment
+>>        meson: Restrict gdbstub to user/system builds
+>>        gdbstub: Simplify gdb_init_cpu() logic
+>>        gdbstub: Add trace events for around XML parsing / generation
+>>        gdbstub: Have scripts/feature_to_c.py generate more verbose output
+>>        gdbstub: Make base register explicit in m68k GDB XML files
+>>        gdbstub: Remove @g_pos argument in gdb_register_coprocessor()
+>>        gdbstub: Emit base_register index in GDBFeature entries
+>>        gdbstub: Consider GDBFeature::base_reg in 
+>> gdb_register_coprocessor()
+>>        tests/tcg: Re-enable disabled multiarch tests for PPC targets
+>>        gdbstub: Remove 'gdb-xml/' directory prefix in TARGET_XML_FILES
+>>        gdbstub: Move gdb-xml/ within gdbstub/
+>>        gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[]
+>>
+> Send this PR for Philippe, as it's the last day for soft freeze, and 
+> that it's already the middle of the night in his timezone. We tested it 
+> together.
 
+Thanks for the help Pierrick!
 
+> 
+> This series fixes original issue reported here:
+> https://lore.kernel.org/qemu-devel/e44df309- 
+> d40d-46f0-88a8-7ac55f9a3634@fhofhammer.de/
+> 
+> As well, it enables gdbstub tests that were never ran in CI since gdb- 
+> multiarch was not installed.
+> 
+> Regards,
+> Pierrick
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
 
