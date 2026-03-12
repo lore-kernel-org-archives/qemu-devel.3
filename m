@@ -4,102 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0454B105A576
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:20:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4498105A589
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 11:43:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0e5G-0005H4-L1; Thu, 12 Mar 2026 07:20:08 -0400
+	id 1w0eQv-0001Zb-Na; Thu, 12 Mar 2026 07:42:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0e51-0005F7-JF
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:19:55 -0400
-Received: from mail-yx1-xb129.google.com ([2607:f8b0:4864:20::b129])
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1w0eQt-0001ZH-Gm
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:42:27 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0e4x-0008Gm-OB
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:19:49 -0400
-Received: by mail-yx1-xb129.google.com with SMTP id
- 956f58d0204a3-64ae222d87dso871738d50.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:19:43 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773314383; cv=none;
- d=google.com; s=arc-20240605;
- b=GGo87wIOxJGFUhMHXqsuQ299vO2SXuqhs3h79Fl4v0/yV59m5ay2ezE7GnkP9LzxLV
- gJlH69e7S+FVNRoQwIs/BuckiaFfTWKIIaYkIEx+aPxosyMm2X8sMtiaO1z4lhGINPzF
- B9Ep90HhfeZC1Qj/TQPvZigSg03Ok+Uc2VCh54A/hqZTV74AIS4ttJLvFtVeK0oVaKNS
- OP3LUBoIokHwvmmeB7v8Lc6sJ1Aut5LJuly6ccyHbq8OJSzOAYpa4L7ygclvbwvFdW8y
- cshKu4C4YMubnnxQjnbbKrXi54CqaaBCS3n2tZWQMo+NpzsfMVf9Od7/RH+5Rv/bRdh7
- BYZg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=y0ndm38Hfc6P244KmaANtEWaewMlw0ZHU6ItMefL2/M=;
- fh=NEkeLBU4xrEYSilSUfi2Eubk7SfF1cYgH0xZKrW3IVE=;
- b=X5+kfuz3bGaLMl2fqAcdMR++AP4a+IILJPq/X/OnDNOUz14mMdCmDAseLwia7Yj6YB
- ezCG4XvP++ZSpJaa04pIMnQ3FiNpk9MQ/+Iv2UePu0S7NOaWE7DR//f/n2RHEuCZ29eH
- 9dC7Dtq0Y40UU/h/GnhXNes1RkUkA3zub7oblrWxQ5gsbvaaMXo9qj/Wjts1Y/pL7spG
- gTDGr5ty4QJIyvoapSVUu2FIC6SlZvYvJpieWU48TBU9HyDNu10Bzbex0xpU+U6YZEae
- ls8GxjTjrsvKtLDzuuPYN5JIrgbd61iWsATAmlWd/Rr99F1R0TD6TAB2gWrVh2Xp9LTE
- FdtQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <max.chou@sifive.com>)
+ id 1w0eQq-00075A-KQ
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 07:42:26 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2ae5423b02aso6699115ad.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 04:42:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773314383; x=1773919183; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=y0ndm38Hfc6P244KmaANtEWaewMlw0ZHU6ItMefL2/M=;
- b=PjNdxVz8ncilhd+K9e2/Fk/mtCSgNzlOBYVhPqkx/MrUw0BVeRvGCxkKdG/IqJGmqJ
- nLBpiHTkpALfng7THGd5OkfGw0MwU/7yqtWZn+7QjZqWeWq2pws0dfic72kRpcOyBJEH
- AwUaB7/ei9+e7e7wIfWhGW1nfcFIpSBa+Gy5QJIg1ok9pQ33tXsXUWmWiAVCuFf3hJqN
- ntNDYxilErQ0D3xP7nVBjiSdbZo9uxFFja9h2zzgat2gahUrml3L5drntSxjXyMFUziK
- J9Fs8UFmATQygqjzCgxdwgTKsAkbLjyHKWHunZcDymdDPUpJ3uLGvsGk5+LQaLjQQ5sM
- +j5w==
+ d=sifive.com; s=google; t=1773315742; x=1773920542; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=NdPAw2eThtDWmGAFkrq0ybO5YP06ET3AZWSjt6khejs=;
+ b=ANrVQqbdGLg8YzOTo8z552w1uZy+VRqn0yjjpjiMcLBrD2yNbRasTbTlq9kxToiHfA
+ yUSiaUacB5pC3TDeuxVLJj0RpUCUOPfVupHl/Pz7VabfScjJzc5G1MDBZtxgOIRzFdKT
+ ZqwBXomP99aaevr/wb/9hhjP2wlYwdXcRDxo6Jw7/v5Rwkt2esTty2KXPQ1IVhN8Jgkm
+ ZcQ03SLacPWOtq67GbnsPAyRcDKzGO+1GbuPx7OT44lObW0JT2GK+fOPavPdxEvgorEk
+ xrBQ95/LNCfE7Tp/ZzsRelUqVvDp22UCFZSmdsF/KtkZ8tChZqtvzdUHbPV5SiAUNFa3
+ KCXQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773314383; x=1773919183;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=y0ndm38Hfc6P244KmaANtEWaewMlw0ZHU6ItMefL2/M=;
- b=BAh68V2Sn1+gKhoNbqBwHMNwBlAemDZhIbwCAi8HTFxTlJqSxTm9zgQOqAUzpXE5Cz
- lVnpc8gcNf2sSC5IZH3uqJQ1PNDX2PyGgMw9eYo6SNE83k/lTdhYuuws30WN16ICbglp
- 9yiTEPehKxjV5mWqOsnYwpbg8hZ4PhQj6NdGdQQgbxfp1f+L3cs3T9JIGomQonSMnNv+
- Y/eLU3Cpeo0c+8OhUAcsLjZlI/8xzkdm+k6pX+eihL31TpYHsTBoyxS0m/AIJrbTPtHh
- E2GXiGPCdYIj9ge8AwIBrqQRdkSC3CG6MhjUfGUJ4Z5ljTiYdl5zMjO6IKhGQacMrFC9
- b72w==
-X-Gm-Message-State: AOJu0YyDiUBjlWWY0VhsdnK7u1dA5ixkiwJj45QFmXtamepOAKUticme
- FEsgduR3AC+BCYLQXlso/SG//8scHe9TOKgoia3dc+zEF5wL6oB23MKwrpZ4htMKHa0ZSvxgHZI
- LjHJ9P1RZvfe0zBz6uSq3bEbQpEqZbWv04oWfOp6E3A==
-X-Gm-Gg: ATEYQzxHZqbFC73O3QO28+/yzfDIEja84IFjkC+r+8IHBZW71oErAKanz6O68Eokr9j
- tW/KCdArxL/hqZ/etGdgt0rlq1ayUdCvI/jTbA5fQC6mY+l7mcSdL7f8o7kE9zfaZss0dPiJdGh
- 2bcmawabAE9JYIYVsSiJAog9d5xE7vpGVxYVny/EoJJKq8pbzXvgnnbCtfqBO97OH8mfG7e6x7M
- PidCw1JqwZRK+lyBPCuTfcwgAdhhopI4aQA40B1aH+vHNMoUdfKPFOqPAFwy4R8BGVRdj6AGSGO
- /X4v1+JCdiXigu2C1mGGmkEEstzakHBTQtdRrxDbRcnOSW9r9shSQrRUUDg6HUIegng=
-X-Received: by 2002:a05:690e:1768:b0:649:b535:46ab with SMTP id
- 956f58d0204a3-64d657ab568mr3790633d50.49.1773314382948; Thu, 12 Mar 2026
- 04:19:42 -0700 (PDT)
+ d=1e100.net; s=20230601; t=1773315742; x=1773920542;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=NdPAw2eThtDWmGAFkrq0ybO5YP06ET3AZWSjt6khejs=;
+ b=Xlm/OUFr1/dExnUkjrDA9S8dU8V4COmovH9hoKXYxcOF8X5r6u7c1Cw6EZBR8V1HB1
+ oj6s2Pg15obpMlloWeOIIr3NQCR0qrTUpO9Max7+YKyfJP4G0jIhs4ZBYJ4ulnoxj/Si
+ y53CuMVTQgnthy90dapbu04JwHBTspjp7LH2HJPmua/L1yQegseudEz1vM09WPTZDG7Q
+ wEOKnVYPUeO/L4t5HdJvHIIMuTnoKTr0d00QuLxzH3llmT/ifMkQ5gScFrKQ6H6MxhXG
+ jnlPC+4X1uf93mlYgvqieMIaKN7wqKN7h1rKZ3CiIhlg+mDJlgP5HBo6He8fVQybWp+5
+ l6Ow==
+X-Gm-Message-State: AOJu0YwT3O14xDY/9Ce2tho87lREUUtDO4z+a9teBHXWHI4pCZabtAdR
+ 96yuVjPDatSihaScKVcMSqRLD2ycPE+7Nb0CiJd1hnysYOqFOTpscmTyK4C/r23K5OA=
+X-Gm-Gg: ATEYQzxTUS5Y6GLZYkf5abwfl59XuoOo5HxQSf4+yNlGu2b9q1cRQWg8axARzjzaAhx
+ PQeUqGeGG3Vt7Rrd3A05XxVY1Y5ESwkqRO0i6EvAF66/qsHglkLeJUH+32pDPqelMCe/Tb6mi21
+ 0dLFvhR9XXlhSjy6CvxeSMmU0O50eRTLE3OcjDR8dTK1u5M2zj/+wk6/+5IWzHnnSaw06W3vBgJ
+ 5qx4C5ZpaMuKCR0n4kZRh8/rkJjxSd+jIu3m+xBpkvq7dU2PlkT1tHxtduyUGI2fydhdDN8LOJV
+ 28anYVE3FCdKpTk3BgKuWhIR8p80pJHXehLxs0hkgZFsTMseYIAbj64fO0DdWg34BOfPMZUL3tR
+ XX/EACKE8BLd4NBqb71FPU3cItSEkGbbXb2f2yYo30rF0715EOLjqUoh+CDp+K3qhUxUWrTmpYH
+ mvlirFo+EUPc+9EhqVTMEnNA8iWVmMM8XatksZBiFwogkY66TBXw962vUCFGsDOdIYlpBa12P6L
+ yw=
+X-Received: by 2002:a17:902:e888:b0:2ae:467f:11d8 with SMTP id
+ d9443c01a7336-2aeae891e96mr56225525ad.30.1773315742011; 
+ Thu, 12 Mar 2026 04:42:22 -0700 (PDT)
+Received: from sifive.com ([136.226.240.165]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2aeae246ff0sm80015205ad.27.2026.03.12.04.42.18
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Mar 2026 04:42:21 -0700 (PDT)
+Date: Thu, 12 Mar 2026 19:42:18 +0800
+From: Max Chou <max.chou@sifive.com>
+To: Alistair Francis <alistair23@gmail.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>, 
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Chao Liu <chao.liu.zevorn@gmail.com>
+Subject: Re: [PATCH v5 5/9] target/riscv: Use the tb->cs_base as the extend
+ tb flags
+Message-ID: <abKlW3gA3qXR6bub@sifive.com>
+References: <20260306071105.3328365-1-max.chou@sifive.com>
+ <20260306071105.3328365-6-max.chou@sifive.com>
+ <CAKmqyKM-mu7+gtFRK+G94szLFUDdxGaz4zxW7-bW2L5y0Kn2hw@mail.gmail.com>
 MIME-Version: 1.0
-References: <20260312102626.891359-1-dtalexundeer@yandex-team.ru>
-In-Reply-To: <20260312102626.891359-1-dtalexundeer@yandex-team.ru>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 11:19:30 +0000
-X-Gm-Features: AaiRm51Ud4VUVLi1mQx7Cc-pZqIZvIp7JVNFbh37q8y_uKCxwEn3LzpO97lrA3w
-Message-ID: <CAFEAcA_mzXDdz_xjPnZ9Kc4K01Aoss_OH_qEoL3G33KdsnHrLw@mail.gmail.com>
-Subject: Re: [PATCH v3] vmstate: fix subsection load name check
-To: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>, Peter Xu <peterx@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb129.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAKmqyKM-mu7+gtFRK+G94szLFUDdxGaz4zxW7-bW2L5y0Kn2hw@mail.gmail.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=max.chou@sifive.com; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,69 +108,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 at 10:26, Alexandr Moshkov
-<dtalexundeer@yandex-team.ru> wrote:
+On 2026-03-09 15:01, Alistair Francis wrote:
+> On Fri, Mar 6, 2026 at 5:13 PM Max Chou <max.chou@sifive.com> wrote:
+> >
+> > We have more than 32-bits worth of state per TB, so use the
+> > tb->cs_base, which is otherwise unused for RISC-V, as the extend flag.
+> >
+> > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+> > Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> > Signed-off-by: Max Chou <max.chou@sifive.com>
+> > ---
+> >  include/exec/translation-block.h | 1 +
+> >  target/riscv/cpu.h               | 3 +++
+> >  target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
+> >  3 files changed, 10 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/include/exec/translation-block.h b/include/exec/translation-block.h
+> > index 4f83d5bec9..40cc699031 100644
+> > --- a/include/exec/translation-block.h
+> > +++ b/include/exec/translation-block.h
+> > @@ -65,6 +65,7 @@ struct TranslationBlock {
+> >       * arm: an extension of tb->flags,
+> >       * s390x: instruction data for EXECUTE,
+> >       * sparc: the next pc of the instruction queue (for delay slots).
+> > +     * riscv: an extension of tb->flags,
+> >       */
+> >      uint64_t cs_base;
+> >
 >
-> When loading a subset, its name is checked for the parent prefix. The
-> following bug may occur here:
->
-> Let's say there is a vmstate named "virtio-blk", it has a subsection
-> named "virtio-blk/subsection", and it also has another vmstate named
-> "virtio" in the fields.
-> Then, during the migration, when trying to load this subsection for
-> "virtio", the prefix condition will pass for "virtio-blk/subsection" and
-> then the migration will break, because this vmstate does not have such a
-> subsection.
->
-> In other words, if a field inside vmstate1 is set via vmstate2 with a
-> name that is a prefix of the parent vmstate, then the field can "steal"
-> a subsection belonging to the parent state.
->
-> Looks like it happens because migration stream for "virtio-blk" looks
-> like this:
->
->  [virtio-blk header] [virtio-blk fields] [virtio-blk subsections]
->
-> "virtio-blk" contains "virtio" field, so migration stream is:
->
->  [virtio-blk header] [virtio header] [virtio fields] [virtio
-> subsections] [virtio-blk subsections]
->
-> And when we load the subsections of the "virtio" device,
-> vmstate_subsection_load() uses qemu_peek_byte() to try to figure out if
-> this is his subsection. This is where we encounter an error.
->
-> Thus, the error occurs due to the fact that vmsd does not know how many
-> subsections it has when loading (this does not appear anywhere in the
-> migration stream), so it tries to load all the appropriate ones by
-> names.
->
-> To fix this issue, we call vmstate_get_subsection() and, in case of
-> fail, ignore it, pop the VMSD stack and will try to define this
-> subsection for outer VMSD
->
-> Signed-off-by: Alexandr Moshkov <dtalexundeer@yandex-team.ru>
-> ---
->  migration/vmstate.c | 4 +---
->  1 file changed, 1 insertion(+), 3 deletions(-)
->
-> diff --git a/migration/vmstate.c b/migration/vmstate.c
-> index 4d28364f7b..8f3a69c26e 100644
-> --- a/migration/vmstate.c
-> +++ b/migration/vmstate.c
-> @@ -639,9 +639,7 @@ static int vmstate_subsection_load(QEMUFile *f, const VMStateDescription *vmsd,
->          sub_vmsd = vmstate_get_subsection(vmsd->subsections, idstr);
->          if (sub_vmsd == NULL) {
->              trace_vmstate_subsection_load_bad(vmsd->name, idstr, "(lookup)");
-> -            error_setg(errp, "VM subsection '%s' in '%s' does not exist",
-> -                       idstr, vmsd->name);
-> -            return -ENOENT;
-> +            return 0;
->          }
 
-Does this result in a less useful error message for the case
-where the source sent us a non-existent subsection ? What do
-we report once this patch is applied ?
+Hi Alistair,
 
--- PMM
+I’m curious to know if you mean adding more details here, such as
+specifying the bit width for misa (e.g., 32 bits) or the bit width for
+ALTFMT (e.g., 1 bit).
+If so, I’ll include these details in the v6 version.
+
+Thanks,
+rnax
+
+> We need to update the comment in `struct TranslationBlock` for
+> `target_ulong cs_base`
+> 
+> Alistair
+> 
 
