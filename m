@@ -4,106 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6334A1125853
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 15:56:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E9571125853
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 15:58:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0iNz-0000cJ-Sp; Thu, 12 Mar 2026 11:55:43 -0400
+	id 1w0iPn-0001Dx-7v; Thu, 12 Mar 2026 11:57:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w0iNw-0000c0-Fz
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:55:40 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0iPl-0001DU-Af
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:57:33 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w0iNu-0003u0-FB
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:55:40 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso11168245e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 08:55:37 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0iPj-0004Nk-PN
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:57:33 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-64ad46a44easo1232755d50.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 08:57:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773331050; cv=none;
+ d=google.com; s=arc-20240605;
+ b=WXk9VFbpn14KdOWFFzGY4ULHeUnQ99zz7WGwwp2vhyI1rPe6tj9HWwKZGnR1unbt30
+ NI8YL4/bU08qRpjSd3DL1W/FEKeVJLXRSxEbVHOJ/4o6pfxS/SF2lPQeolwy2mvOmMkx
+ zqD/cipZmcO5CD3dP9r4BPyLoYPhaa9TrBFg2sRbmmmpt7zfSG00FyVlfIYjkrAeYmAn
+ TEWh34Az/LDj+fo3MzS8LMO6zPd7mTy27r9+duo19TBMNzLZaZM8IJE/M3M09iQTpNOg
+ X7RPnuMAnslQMN2ewCtWheYgCJixphyxsz31QIdDTT4BcP7hx6hZ39PQAGoeVKLJTSjm
+ fjtQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=CtNaMor/tKfbVXJAwDK5Fu7dHQWBxD/z9HupmauOyz8=;
+ fh=/8o03PxB7iPcx8/FNhI5x9MJpXfbdZhcXfL/JOb+9Bw=;
+ b=ElQCj72mou+v1WtiL6zfLqi8urm+Po26jeepgGrMVdRbioEyk1iMdCLUz3In7rK97X
+ 08zk5+pq1UevPQjKAVPOjrs7Giln+4RL83lqftncfdjUk4pMlA07roGBHdjBzcFjtbIn
+ 8m9z11F0XGvclwsC3w6wjYL9qdV0IBph9bNIKSq+k7LFLla80x8q1RxCsLF0MTM0cpbc
+ lqYRr87F37pvbxhonT0Kc8iBSSBKeFZYXn+dqwvaHyTy4do69hkhLF1ripOZIkw4T+9i
+ KzvWVeVxm6Xu55Sgnx9cauYf7r8M1oMDLhOkW0CCgUIAHuS/u4H3yNTZvMZaTkewI+iz
+ s1Xg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773330936; x=1773935736; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1yu2Tsft2mJAvNjMtOHPfNwzbs+QKUG6xukc3vRcW1U=;
- b=ji6l5W8HfmFyCzsDPr3sJOVjCgkeDR4LmZtfpWzi+PD+HjmNtphTYRQhgmXzevkttY
- OA7N2/vtuXCyLOyDh9r7ALrcuWrsAdr+p8MJymTPnlTLjpe2Q8M+Sy/EORF8xQp52ARU
- PItpocTPqzcJ2eTO6fS5wHJo2dpOyaNxmGUGpL+LLwhm0ZDQCcXgb708U4oYHCDXsfEZ
- in6n0+TStHRHhTbckfGhMcnHF1jTXw/za2D+s3kKumBpAodLwc1CtvKCKFexhBl0zFJC
- Rd81zJa+Zs5tndV+wiCKeqDo/iM6iGCqrjVCpR0P6oFIA9ZXUMIQAzLUId4DA6QShtFS
- WMgw==
+ d=linaro.org; s=google; t=1773331050; x=1773935850; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=CtNaMor/tKfbVXJAwDK5Fu7dHQWBxD/z9HupmauOyz8=;
+ b=ZeCO+llZcJ8tHgteX1ebJjLRx0hhhVhoE5ofOPgAQSSndfO4BTTbr0zB4AXPRvkYWQ
+ wsXxjiJpsF6SKPApJGvCpIjvgISgrz3wQHjQouTmbhrb4XrCa27n6zQmi5cHBNxHU8UD
+ Xvs5yh30XDdlnMhWliKCOamLa4xNOtJBsD1HQDgEEvizVUN3UvcsuVkJqTtkqOeWawc5
+ ogeJ7SacF70oaeSqMmYJHpdvnAR+e48v7ED7PmdK+DZWvwjy8sLJFxhlUUCcl5cjE6DL
+ 6ke+AYlJ5/hfISBPXJ9iE+EztXcdn/Vxcg5A75K1hZpCed9VYnNTkVOQ/xcYfjaZrPx0
+ yOGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773330936; x=1773935736;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=1yu2Tsft2mJAvNjMtOHPfNwzbs+QKUG6xukc3vRcW1U=;
- b=HBnTtXPRIpWUhCrEvmXVqkSior5SPKQKIOsxX3HkYFYjSGhdm3dr66DT5chONoLQwr
- EyAQHzY8PtDmW5uh74GWiUZs07ltAQkeP4Iym1J+AIkZsaxmotFkwioinPnRDtQfPUC1
- ACpYiW0pc4g+3mzw5LFtAHkVATIpU9Yh2/A8ecW05ra+IJpYBTj4HkoQFOqJ1zcB2FbC
- 8nynsTo0oJaUw3lqRk4kUThQ/dmNPQyvoxHpxhdiiY65yy6uVVdUybLjz7KqcO+5Kcac
- /7bYy0GzXs2ujVbMJTJKtJ696owjWf3h5XouVekH28dThnX3M/c8BKRvrbSntY4SZUXM
- GmpQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUDLDCvO8AHWzpnvYvpbRp8I0dAyofISIdndldE6n7+3iyKEmhgfex8xAWQ9EtdPQuhv9QbNyh3SY1X@nongnu.org
-X-Gm-Message-State: AOJu0YxnRU0DorZIZICZiUMMyab+Y8Hfbjh5CaCxHSVQ7SqsiAhjK5C/
- RC5NXvkKLABeml1NyNWJmA5mju+J4aaIWZK85e/mOIfitc4Z0l1gniCytiEqXOS+olQ=
-X-Gm-Gg: ATEYQzw7E46Jy391B8nReQiuOaSsWFgI1Kra21FacXJdKkmjfkLSaEa6hfiCTEiwzja
- W5s4gKdBT4hImBKAtapdI2YTwPHqMMQ9vIlQ+/HU5J2gmF66uxm9yh+fpUqRBB2VEzdYACx9t4H
- h/p7B0mivkErQUa1h9TyOfcSTTxQHY0wbHoYdylN9+XJu2/WqjZ4ysVjbz2tTUnpjXYRodjPjHr
- C3BXNg3p1SloGppLsX+Jc8/q6b4Mzy5ypD0fEBMzBZd/JFK1X5CguABHyu1kO8fUd2n1Qe9UIT1
- B50DHgP4sN0sHHb9XdgkXmj2yLvTvB/c7wiXFIGDTgEjv11gPlEC1GdL8P5ywBJK1dixbJ0AHJu
- yN5z59ItxlJbU9Refr47vdQ2O9wsQBAFEnPRAqVsM4SdRWNt1ngkTeeqwJmcSkIaAKJ+3G/b+4I
- LU2deCpSB5I7J/XKf36c1e6DZ1nTdx6huJBQ==
-X-Received: by 2002:a05:600c:8b02:b0:483:6a8d:b2f9 with SMTP id
- 5b1f17b1804b1-4854b0ac45dmr121084115e9.5.1773330936071; 
- Thu, 12 Mar 2026 08:55:36 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b5f6bb4sm137425225e9.4.2026.03.12.08.55.35
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 08:55:35 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 9B8AE5F7A0;
- Thu, 12 Mar 2026 15:55:34 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Ilya Leoshkevich <iii@linux.ibm.com>
-Cc: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Pierrick
- Bouvier <pierrick.bouvier@linaro.org>,  qemu-devel@nongnu.org,  Brad Smith
- <brad@comstyle.com>,  qemu-arm@nongnu.org,  Kyle Evans
- <kevans@freebsd.org>,  Paolo Bonzini <pbonzini@redhat.com>,  Peter Maydell
- <peter.maydell@linaro.org>,  Thomas Huth <thuth@redhat.com>,  Warner Losh
- <imp@bsdimp.com>,  Daniel P. =?utf-8?Q?Berrang=C3=A9?=
- <berrange@redhat.com>
-Subject: Re: [PATCH 1/7] tests/docker: add gdb-multiarch to all-test-cross
-In-Reply-To: <94e17bd5-e864-45eb-878b-2296d6188271@linux.ibm.com> (Ilya
- Leoshkevich's message of "Thu, 12 Mar 2026 16:12:04 +0100")
-References: <20260306161728.2657486-1-alex.bennee@linaro.org>
- <20260306161728.2657486-2-alex.bennee@linaro.org>
- <78c8b024-6dd5-4f1b-a19c-c7a71c7acc9f@linaro.org>
- <7e6cdb4b-4cb8-4968-acce-56db2f0ee307@linaro.org>
- <97506340-18a4-4691-8017-110ab2fc76b8@linaro.org>
- <3c2bf09d-245c-4de7-b55d-37085ef24545@linaro.org>
- <c776bbc1-6021-45d0-a5ca-74e50d906f4f@linux.ibm.com>
- <1493fdd5-5254-4398-bb69-8c83eee8bef2@linaro.org>
- <CAPMQPEKPk1iySmCt0_Vi1=bcaG_ZkNfzYknCu14zzR2N7p-6zw@mail.gmail.com>
- <871phpi22y.fsf@draig.linaro.org>
- <94e17bd5-e864-45eb-878b-2296d6188271@linux.ibm.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Thu, 12 Mar 2026 15:55:34 +0000
-Message-ID: <87v7f1ghzd.fsf@draig.linaro.org>
+ d=1e100.net; s=20230601; t=1773331050; x=1773935850;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=CtNaMor/tKfbVXJAwDK5Fu7dHQWBxD/z9HupmauOyz8=;
+ b=quSD/cyFVGXtnlkGbDIo66lkZJJt/nlN7aG8r/ZAwsPgolSX7x3ifx/mUUVnMDVPYA
+ YYN2/4gaFis3cSgjan0U2LjBaqb32GgDLw/TqFd2w8JWxxwMBiJCZL5EMNBULRnfpYKO
+ O07xUd9dFjOFgK3F/T6/j3+dlX5FMFo1ERaddZ52ot47anX/qRQbCvHFoxcnB9/XvHVs
+ UYcN+JxX3m1r/WajM35PrNcMRLF7kRiynKq300jyhwvfk1S8R8pbgG9jlyH6IIbusi/G
+ 6qUBT6IKbs13QiR59AjlH/g22TlvPJ4UeH7jPZUZkalPFvJICcUvgUMFhZarPZEUQiwa
+ 4RDQ==
+X-Gm-Message-State: AOJu0YyTri63tmIs3aESqerp8KOa+Y2KX9NKo4FNL5PDvz+pqHq+qOyZ
+ +wkw9lE/zvSlD26cfYBXKy0eMNxxrFZsVcYk0dpowahfpoRla7K8pJPOmb5Yev6VZlrHHUWEfin
+ BdFBxUfGbRXrabkB2LPGXiDMM0xR7MpFsHmbyU1un4XUyabPh+6PG
+X-Gm-Gg: ATEYQzw8seib2FFy5Jte22fzceS63MrWVkc+VqWMVBgGrQHTWPqklr60vfYevLKJSUU
+ 0HzJyhPRon23JH32rCt8ns3iRM/uI6XIVgMzzoL3b9bDrOkOTBw8jQhRLhupTG89KjscMKVFZrK
+ W3dzvFpbiVl0Ohc8alqmOBMWj5yAIF/hBSHuZzLtrgALIuOuogWj/YeIbTt0FaT1ZFeHZM7gk/o
+ 7Wbfjr1wwJtYbbJPxQO0Rqn0zjHveeQ9qM7a7e3EVCMVQ06Jc9l4E+udb5320JY8MGV/xasP58E
+ pmTeNFhxp3yMpXUm8OSmy9hmCDk0Oy3kyrnC5qAMQ1Ak40GCG5LKME7LWHF79g5h3Ss=
+X-Received: by 2002:a05:690e:e20:b0:64a:e589:ecb2 with SMTP id
+ 956f58d0204a3-64e6307a3a5mr22606d50.62.1773331050279; Thu, 12 Mar 2026
+ 08:57:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=alex.bennee@linaro.org; helo=mail-wm1-x32c.google.com
+References: <20260305140512.1330691-1-peter.maydell@linaro.org>
+In-Reply-To: <20260305140512.1330691-1-peter.maydell@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Mar 2026 15:57:18 +0000
+X-Gm-Features: AaiRm51we03x3vycDWOaL1jeZnCTyHhdixGZKkjIUz4yVOEFBel0dv4oDJ0dqm0
+Message-ID: <CAFEAcA_xHdvz+hxzSYOrmBUbHXUCZLPn0Tir1kZ+3-W1iuh6JA@mail.gmail.com>
+Subject: Re: [PATCH v2] hw/net/rtl8319: Work around GCC sanitizer /
+ -Wstringop-overflow bug
+To: qemu-devel@nongnu.org
+Cc: Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Yodel Eldar <yodel.eldar@yodel.dev>
+Content-Type: multipart/alternative; boundary="000000000000524b63064cd5cf92"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, HTML_MESSAGE=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,136 +116,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ilya Leoshkevich <iii@linux.ibm.com> writes:
+--000000000000524b63064cd5cf92
+Content-Type: text/plain; charset="UTF-8"
 
-> On 3/12/26 14:56, Alex Benn=C3=A9e wrote:
->> Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org> writes:
->>
->>> On Thu, 12 Mar 2026 at 11:39, Philippe Mathieu-Daud=C3=A9 <philmd@linar=
-o.org> wrote:
->>>> On 12/3/26 11:11, Ilya Leoshkevich wrote:
->>>>> On 3/11/26 00:28, Philippe Mathieu-Daud=C3=A9 wrote:
->>>>>> On 11/3/26 00:22, Pierrick Bouvier wrote:
->>>>>>> On 3/10/26 4:07 PM, Philippe Mathieu-Daud=C3=A9 wrote:
->>>>>>>> On 10/3/26 23:33, Philippe Mathieu-Daud=C3=A9 wrote:
->>>>>>>>> On 6/3/26 17:17, Alex Benn=C3=A9e wrote:
->>>>>>>>>> This allows the gdb integration tests to be run as well.
->>>>>>>>>>
->>>>>>>>>> Signed-off-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
->>>>>>>>>> ---
->>>>>>>>>>     tests/docker/dockerfiles/debian-all-test-cross.docker | 1 +
->>>>>>>>>>     tests/lcitool/refresh                                 | 1 +
->>>>>>>>>>     2 files changed, 2 insertions(+)
->>>>>>>>> Reviewed-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
->>>>>>>> I'm getting:
->>>>>>>>
->>>>>>>> Python Exception <class 'gdb.MemoryError'>: Cannot access memory at
->>>>>>>> address 0x45001fff
->>>>>>>> Error occurred in Python: Cannot access memory at address 0x45001f=
-ff
->>>>>>>> qemu-hppa: QEMU: Terminated via GDBstub
->>>>>>>> make[1]: ***
->>>>>>>> [/builds/philmd/qemu/tests/tcg/multiarch/Makefile.target:121:
->>>>>>>> run-gdbstub-prot-none] Error 1
->>>>>>>> make[1]: *** Waiting for unfinished jobs....
->>>>>>>> qemu-hppa: QEMU: Terminated via GDBstub
->>>>>>>> warning: Could not load shared library symbols for linux-vdso32.so=
-.1.
->>>>>>>> Do you need "set solib-search-path" or "set sysroot"?
->>>>>>>> make: *** [/builds/philmd/qemu/tests/Makefile.include:66:
->>>>>>>> run-tcg-tests-hppa-linux-user] Error 2
->>>>>>>>
->>>>>>> To add more information, we tested it on GitHub, our machines and
->>>>>>> GitLab, and for an unknown reason, it only fails on GitLab runners.
->>>>>> Also we tested on our local Linux machines, where this test pass
->>>>>> for all our targets ;)
->>>>>>
->>>>>>> Which is unfortunate since it is where QEMU run its CI.
->>>>>>>
->>>>>>> Regards,
->>>>>>> Pierrick
->>>>> FWIW it passes on my laptop as well.
->>>>>
->>>>> Does this test fail only for hppa, or for other architectures as well?
->>>> Have a look at these job failures:
->>>> https://gitlab.com/philmd/qemu/-/pipelines/2376819801
->>>>
->>>> Python Exception <class 'gdb.MemoryError'>: Cannot access memory at
->>>> address 0x7e085b4b1fff
->>>> Error occurred in Python: Cannot access memory at address 0x7e085b4b1f=
-ff
->>>> qemu-aarch64: QEMU: Terminated via GDBstub
->>>> make[1]: ***
->>>> [/builds/philmd/qemu/tests/tcg/multiarch/Makefile.target:121:
->>>> run-gdbstub-prot-none] Error 1
->>>> make: *** [/builds/philmd/qemu/tests/Makefile.include:66:
->>>> run-tcg-tests-aarch64-linux-user] Error 2
->>>>
->>>> Python Exception <class 'gdb.MemoryError'>: Cannot access memory at
->>>> address 0x40802fff
->>>> Error occurred in Python: Cannot access memory at address 0x40802fff
->>>> qemu-arm: QEMU: Terminated via GDBstub
->>>> make[1]: ***
->>>> [/builds/philmd/qemu/tests/tcg/multiarch/Makefile.target:121:
->>>> run-gdbstub-prot-none] Error 1
->>>> make[1]: *** Waiting for unfinished jobs....
->>>> make: *** [/builds/philmd/qemu/tests/Makefile.include:66:
->>>> run-tcg-tests-arm-linux-user] Error 2
->>>>
->>>> Python Exception <class 'gdb.MemoryError'>: Cannot access memory at
->>>> address 0x45001fff
->>>> Error occurred in Python: Cannot access memory at address 0x45001fff
->>>> qemu-hppa: QEMU: Terminated via GDBstub
->>>> make[1]: ***
->>>> [/builds/philmd/qemu/tests/tcg/multiarch/Makefile.target:121:
->>>> run-gdbstub-prot-none] Error 1
->>>> make[1]: *** Waiting for unfinished jobs....
->>>> qemu-hppa: QEMU: Terminated via GDBstub
->>>> make: *** [/builds/philmd/qemu/tests/Makefile.include:66:
->>>> run-tcg-tests-hppa-linux-user] Error 2
->>>>
->>>> Python Exception <class 'gdb.MemoryError'>: Cannot access memory at
->>>> address 0x7d742025efff
->>>> Error occurred in Python: Cannot access memory at address 0x7d742025ef=
-ff
->>>> qemu-alpha: QEMU: Terminated via GDBstub
->>>> make[1]: ***
->>>> [/builds/philmd/qemu/tests/tcg/multiarch/Makefile.target:121:
->>>> run-gdbstub-prot-none] Error 1
->>>> make: *** [/builds/philmd/qemu/tests/Makefile.include:66:
->>>> run-tcg-tests-alpha-linux-user] Error 2
->>>>
->>>> So at least Alpha / ARM / Aarch64 / HPPA.
->>>>
->>>> (I haven't checked whether the test is run for other targets).
->>>>
->>>> We also run these on GitHub runners where the tests pass, and apparent=
-ly
->>>> when running on k8s private runner on GitLab they also pass. The probl=
-em
->>>> is with public runner on GitLab.
->>> Also another test we ran was to pull GitLab docker image and run the sa=
-me
->>> tests locally within that GitLab-generated image and they passed. So we
->>> believe the issue is related to some container restriction with
->>> GitLab.
->> Most likely because the ptrace settings are tighter - ptrace is the
->> mechanism we use to access the memory we can't normally.
+On Thu, 5 Mar 2026 at 14:05, Peter Maydell <peter.maydell@linaro.org> wrote:
 >
->
-> I thought about this, but then probe_proc_self_mem() that guards the
-> test would fail.
->
-> I don't think cpu_memory_rw_debug() does anything in addition to what
-> we probe for.
+> If you compile QEMU with GCC with -fsanitize=address and
+> -Wstringop-overflow, this causes GCC to produce a false-positive
+> warning which it does not produce when the sanitizer is not enabled
+> (and which makes compilation fail if you're using -Werror, as we do
+> by default for builds from git):
 
-The probe only checks for read access. Could there be a difference
-between read and write?
->
->
-> [...]
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+
+Applied to target-arm.next, thanks.
+
+-- PMM
+
+--000000000000524b63064cd5cf92
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><br><br>On Thu, 5 Mar 2026 at 14:05, Peter Maydell &lt;<a =
+href=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; w=
+rote:<br>&gt;<br>&gt; If you compile QEMU with GCC with -fsanitize=3Daddres=
+s and<br>&gt; -Wstringop-overflow, this causes GCC to produce a false-posit=
+ive<br>&gt; warning which it does not produce when the sanitizer is not ena=
+bled<br>&gt; (and which makes compilation fail if you&#39;re using -Werror,=
+ as we do<br><div>&gt; by default for builds from git):</div><div><br></div=
+><div><br>
+<br>
+Applied to target-arm.next, thanks.<br>
+<br>
+-- PMM<br>
+<br></div></div>
+
+--000000000000524b63064cd5cf92--
 
