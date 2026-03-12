@@ -4,109 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD1D5106ACCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:28:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 895F0106ACCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:30:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0kkx-0002rL-Rp; Thu, 12 Mar 2026 14:27:35 -0400
+	id 1w0knc-0003SC-54; Thu, 12 Mar 2026 14:30:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0kkt-0002r5-7V
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:27:31 -0400
-Received: from mail-yw1-x1129.google.com ([2607:f8b0:4864:20::1129])
+ id 1w0knR-0003Rp-TT
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:30:10 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0kkp-0008Up-QM
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:27:30 -0400
-Received: by mail-yw1-x1129.google.com with SMTP id
- 00721157ae682-798374d0f44so37675187b3.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:27:19 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773340038; cv=none;
+ id 1w0knQ-0001Ky-50
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:30:09 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ae222d978so1676546d50.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:30:07 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773340207; cv=none;
  d=google.com; s=arc-20240605;
- b=HxAkqmbfJ4uhqa6DGVl4szq8cUgi5MntSHarYHMUN4U4Cu9ZM9sgCgm7euxktKDGM7
- eEJQxj8XIv30+5AXvABlt39GxlMowmJI19mfUTRZ0NXy2L5aaNJ3GpCwCuz8DibVTw7v
- EJZ0SA1pHnTJyMd6VaxIwAKU7n/RBPgx8QEEAt7ZmPxfkjRJBInM+V9dlZwG9UJfHbS/
- eiY5WbCIQSm3h4C0QNN9t6tuhoPFSdRN3InBoxkU/vdjlqAMjEN++a8SX53SKVmj5RH6
- E494hEc8rksyTPBv43F3UqMss+peOCEMlOA1KGKlVxIdbIy3j37qiuVsc/Z/tazkPoEa
- 4vUw==
+ b=lUT7q+rI+mFd59VbsG6BPIO3KHkPbUJqnXeqsfyyo8ZK345od4a3fdYlFk10S5AW9u
+ siB9nUiXS2S5ShBqytwMwbeF1XV3aeWxZntGitREuQc7JFBJXX+wfP2PaYICjwMkKuJ5
+ py+BW/8zScYoUl7KwAYb8aay7Teg01KTmSy7VAmA3Bkt4HtiynzZWkNmMCddOgNsnfwu
+ KCIRmnKfZAr81di2E/uBJ6+4m3RcOwdmFzEnL8B8otNzBwcN//VuyK37Ct7KLXxmsoTE
+ 8sAPKKI5R6JdqBNLddGrahFBFZXY+Tn/f2nXSCBpV9SvGLXh7Z2KRarONINIBkh7HmWf
+ J9Rw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=QhV0CR4U+2jV4p7QMnQgFHZV1iFWDiGMl00RIxoVllM=;
- fh=X/0rX4B8GQvRMr+EQ2SqfCaIVG4Y9RDFHdMOWi/3uWs=;
- b=WjmD8QxoLmUmcWi5+ybTZENqSnq+8a0cjzpSnf8pO+mRaVKk+IczrCvbTvjug5biFA
- 4BMj+l8xSFPM7/oncFYurtdtQGh3yk8kOkDep9kh9/hJ7Sy2lClVd5gs5KkDYTL5POGJ
- jBE+Q4iYnog51g+rvisWRzOQHSczP6m4b5/A+7wLx/WOIYO11bO/ARttBajWa5G05N3f
- R24U1s2tsiCzulQ9542pZ25ZLX7jL0uI7t2Ix+OXRxo9wqsaaO+oYZvsaolss2AyUmGY
- Bviwaagii23ibGHoLBUMfZrGonWJ/cuUoaRJUoJShXHOe2JRoLM0XxQ+YCpb85FelDku
- xvLg==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=Xa6SxkGJeMds5YnWB2RUBshGbVKzBqZ6yA8IvfnDPKU=;
+ fh=EzCqtT5E+bTTLv4rNAwVJ+2ChJBsIX5zYHpMVTT1IcQ=;
+ b=fEvUasWam1TYTSJt2s+4vNDeo9lYQia4gy0GLG6+3jBFrVz2OHwZoZkWbwU9BbhMwj
+ sjgmSKvcyKuXsoY7M45rVa3wbIEoHUycwyd9ahSNALBMFusrMSFlsBHJW8OInfQRF4xb
+ rSCv2WYK4OCmH2DgJzY78uaF1NrsuHF1SL4HfcqSoAdxoGghVP7sqDaypSVWJHZ1N0W7
+ OGXgVk7BclN6f52XUH/R4b1jvUGK3FXvrwHus+PrIrK8HjLyaXXmDn7B5Q8DyvzUTXL5
+ wQXLFMeHDbfFncd20lay+DYZ2RfKPw3qIgdbO29Hcmn6TRBZTJZ8WmTrQyhMEHuiRpo4
+ 5peA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773340038; x=1773944838; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=QhV0CR4U+2jV4p7QMnQgFHZV1iFWDiGMl00RIxoVllM=;
- b=erDVFHgzxZUledmJbUfZts2yEhutUchEvUCLQ33u/ZMn9a+D7oluktwhyxiO7gBG7Z
- 2GwY7HyLx+BZZs3JZa9ZlEftzKS9C/3aMJzjpkBAIdyBxRfV4Tb2go4pLjXvutzpnbZC
- 8soUHes9XOonpr+r4bZDp7GXzZ5nSTOrkrIUjrJupLhR0V9vhCQZtaep5hMUSDe9MZYU
- RwgZDPub71iOkoO01lBU9/T7tpgUki5m7hRP7TZRMizNOz+SOQKZ0l6ITENfYCPhk8CA
- f1Zd01O8l7aTuNk+EvOUdp+uQPWRE0rM/mh/bYEn3qM1OKJjKaISu1cuCCBsq7nyWKTt
- e1hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773340038; x=1773944838;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773340207; x=1773945007; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=QhV0CR4U+2jV4p7QMnQgFHZV1iFWDiGMl00RIxoVllM=;
- b=P0yN1ksvsogXL8jLizA5pnSTrAd7XkRJ4YmVi4DY9kq/xymzBX7Y3KirifA0Fj/ho9
- C0qi7e6osrCqCCpcVKDSDFSJvsix97GATJBAJHYBF/C2NnuQ/QFOa5HUDsuPbysTpCO6
- s3IK5Bi88RxzBIZxojnrQUg2ZQW9ai+rR0eiOXCYcy/ZMVoJLIRKq8H1M6PV5ESOx2Tt
- udhSV/GoOSMZAsScP14FnqqK86QJTEsLbLbmqym9Yboro4NAYH9yVp7L0Xvq3JgWZFYb
- eSlh4PyAOU65dyltjRPZfDTsmeOFe39z94l7SELg3PiUu6YEMPK7O+Doo9WKnCb6Hm2f
- ZXFQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVcxaLAYNsOWWDETaPWcVnfu4mqxdol7z0yKxNknVpvstfI95XzfaWDo91iAz7XdvCv3i+JkSGD1mB5@nongnu.org
-X-Gm-Message-State: AOJu0YwTO6jyhtJEcg7vTlUKCU8IOKwuMEF5iGAPsZC8M94slKcgj9do
- aAjyirRMTkKN7atnrJQSr8V5rEimkVtTfK8WU8pGZa3trXA0SyranI0EvNiFBFv6x0ePH7yu20t
- 7KT+USx01CpmpsRNeJcUMQQa1QR4kvHZiLX8hmVtw9w==
-X-Gm-Gg: ATEYQzw6SFAisQSS3tT61Qf0wHqu1jypKNY1neE5hlSw9gIdiNHnbqPn/z2gF3eg24d
- pY9WeAEyg3l4n0Utv8Ya+UFSE16YUIe73V9yK0bjnxQUGbRQuYDrBOiFCspnn/xaI3pS7cpQBrr
- uDiwNh1etz0JJlBZSMU9K3b8iqPQxtkLnXCbd5v4Tby8eINRe4aRo4lGzj4Nu5U0Hvo0OwANiSG
- J7cx+Y346IpR/K7E/em3qXsHPxcOnPVipYtPj5oHBicGvgyPIKKGf/eZtK8Ra3+8AQAT8VXQ4p6
- e/366xlp1pcqgArtHVJauFu6/QSVkWZq5UpTXCTIlrA8/pS9NdDj0KFimr151ILDecwmU8rPPxO
- CpA==
-X-Received: by 2002:a05:690e:1306:b0:649:cff9:de4 with SMTP id
- 956f58d0204a3-64e628a9569mr603244d50.41.1773340038390; Thu, 12 Mar 2026
- 11:27:18 -0700 (PDT)
+ bh=Xa6SxkGJeMds5YnWB2RUBshGbVKzBqZ6yA8IvfnDPKU=;
+ b=zdcaqFThBE/j2dhkYCEayyRrhUijoNles5LtvK9aoBIZOs3C7YmKjXrnRdEV88wrQj
+ NxWOXAeFfS+vTo68BuxUFtpY1uX0eBiOA5s6qxiZ6lBg6gnIitb57BwAkl08WU+pRZmp
+ HXOPs6DDFMpf6XmiozmtNeECwZ59ppue1ej7Bj8l/vdppCoT8nBgsOeIW5J4AOWB/Ezo
+ 4JquU7lEMuMQCp+rShvznJvtsommNE7/xqkL2pOoErKycV/UJ8C8S/EUAL1qA8Evry9D
+ 2llXXHb6SbvqIwzXpMB/LToE0A8Mtp5k/TW8yRRaGbFZX7GNm9gXbFoEq8JafreFKtc5
+ 0NYw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773340207; x=1773945007;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Xa6SxkGJeMds5YnWB2RUBshGbVKzBqZ6yA8IvfnDPKU=;
+ b=MgPKjOy1zgbVHNyyw/a35fJMwAvdFonbq9BgozYeJgkvNqw0NtHa5cAg4deqR+O3SJ
+ lAkYFShOIiO0qcs/M4+EnqhrdN+pRq+QYv+3VV6VNLw7Mw9R+kxJTk9AXzPD/A7ajig7
+ qScxUqrguIT0xi0J6fje5icWhK2aOHHynDJS+Sb0E3+74YqnZwWu0kyqSh9aKQxtVqJt
+ KfkeZ+tV0l1r9a9hbcNRWryn+j0ezZWLJSzNgzS77smqXSX3c+oP13BFPtM/8LBXmzv2
+ UJg5xjoTmICtB+B6boRRMoqbaopJPmUlZDk6W8Kivci4JiGJaobolckwWwh1cRjvJ1L7
+ +cBQ==
+X-Gm-Message-State: AOJu0Yy4UyVOUMqzRWPtUJ54elk1vMLGMJ57HfXfK9TdbgpWCX742qBp
+ cAKGiXDujmYTLwDZnOICCn1Ful8zRWjzgSr3x/3sww7WtkjEwHTWadWgoIWi7p2zp9BCYorOFpf
+ CLwUGxw7XgXY9NeotvOIm/xTBCpfEVjbcGHbbCN4qvg==
+X-Gm-Gg: ATEYQzz5jS9br+VxUzCwsa+WuOY7QqyQxtvGNlWZNfTlghABf1cmrRvHcv1DKi4D6Gp
+ ChyjQzJw9P8JU/BoR6M0rCqOSHC0Xw0I5q1xRhlWmJ3fDw3rrsV+v88CKT4jJaKpNxdHn1FVwNs
+ +FB9IDt+JNMG27d861vkgyiEf4V/+juC/OQR5QJjxII0tp5vUJ5VADLvOfAOxIQVwtRfK2svXl8
+ 239VxzgR5yJO4d0goF+nGcZn7hE6WW5DyIWSfrKY5Rj6DnvrcMKfbkMs3L41FlLWpSNnv1oK3U1
+ aMoXPaghidUGkKN8DrK4TMaIFE0s09oYDPBWDY0chwNEFtiYML9U4z0wXEY7R64Nduo=
+X-Received: by 2002:a05:690e:44a3:b0:64a:cf8e:47f6 with SMTP id
+ 956f58d0204a3-64e630865acmr535985d50.68.1773340206928; Thu, 12 Mar 2026
+ 11:30:06 -0700 (PDT)
 MIME-Version: 1.0
-References: <87y0k5136i.fsf@suse.de>
- <714e4329-6001-4c77-b004-ed7beb11c154@yandex-team.ru>
- <e81360d5-cab4-47a4-840b-7d948b51a5c0@yandex-team.ru>
- <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
- <abBcN2B4QNBT_Oh9@x1.local>
- <f37dc7af-7ffd-4a7b-b4fa-552c2d2eb888@yandex-team.ru>
- <abGEwf-AG1rZ3kam@x1.local>
- <a6dafc1e-79d1-4380-a4da-7cbc4ff77ae4@yandex-team.ru>
- <abLc_ppEEbKjNRUi@x1.local>
- <022c929e-ddda-4f74-8786-d01994107415@yandex-team.ru>
- <abMCMrRxdAWCc_hv@x1.local>
-In-Reply-To: <abMCMrRxdAWCc_hv@x1.local>
+References: <20260311-semihosting-cpu-tswap-v3-0-8e239575ec08@eonerc.rwth-aachen.de>
+ <20260311-semihosting-cpu-tswap-v3-2-8e239575ec08@eonerc.rwth-aachen.de>
+In-Reply-To: <20260311-semihosting-cpu-tswap-v3-2-8e239575ec08@eonerc.rwth-aachen.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 18:27:05 +0000
-X-Gm-Features: AaiRm51GCrTbG_nY8zcIYA_pVBNb0MxGI5MPFcxBF3ggPdE4Mq-qqOhs89pCgms
-Message-ID: <CAFEAcA-LEuiqbqL=DBVrPV6FJVGfVRoDE+1VH090g-aTV46Uxg@mail.gmail.com>
-Subject: Re: [PATCH v2] vmstate: fix subsection load name check
-To: Peter Xu <peterx@redhat.com>
-Cc: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>, 
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org, 
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>
+Date: Thu, 12 Mar 2026 18:29:55 +0000
+X-Gm-Features: AaiRm53wMBfnHfMkT_nFWq7K7AEHUOGQx_AefB5t5Ewv_dQrzE-ehEHhDGc0YD8
+Message-ID: <CAFEAcA-n5VJ7QfBhj_hwEErof2OXyig+O8LB_0eKSBwt--ahVw@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] include/exec: Provide the cpu_internal_tswap()
+ functions
+To: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1129;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1129.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -129,66 +119,18 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 at 18:13, Peter Xu <peterx@redhat.com> wrote:
+On Wed, 11 Mar 2026 at 16:28, Martin Kr=C3=B6ning
+<martin.kroening@eonerc.rwth-aachen.de> wrote:
 >
-> On Thu, Mar 12, 2026 at 07:34:34PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> > Hmm. Probably, that this is the subsection, that exist only in our downstream.
-> > I don't know, was it mentioned clearly before, sorry if not.
+> These functions are needed to support semihosting on CPUs that support
+> runtime-configurable endianness. They should not be used in other context=
+s.
 >
-> Ah.. Looks like it was not mentioned in the latest version posted:
+> Signed-off-by: Martin Kr=C3=B6ning <martin.kroening@eonerc.rwth-aachen.de=
 >
-> https://lore.kernel.org/all/20260312102626.891359-1-dtalexundeer@yandex-team.ru/
->
-> Let's always mention this, because it's important piece of info, e.g. to
-> know upstream has yet no reproducer.
->
-> > This subsection just not exist in master, and we are not going to upstream it.
-> > So, for upstream it's a "theoretical" bug in a protocol, which may be triggered in
-> > some future moment. And that's why there is not specific case in commit message
-> > but only assumption "Let's say there is a vmstate ...".
->
-> In this case, for upstream we almost only lose but yet unknown gain with
-> this fix then, because we stop throwing useful info for unknown new
-> subsections, as PeterM pointed out:
->
-> https://lore.kernel.org/all/CAFEAcA_mzXDdz_xjPnZ9Kc4K01Aoss_OH_qEoL3G33KdsnHrLw@mail.gmail.com/
->
-> But I agree it is a potential issue, if we cannot justify QEMU can never
-> hit it.
->
-> Sending "how many subsections are there" is one viable option as you said,
-> but it only solves this small problem, and knowing that number requires src
-> QEMU looping over the subsections twice so a bit awkward (first time we
-> need to kickoff ".needed()" hooks to do the counting; not all will be sent).
->
-> The other way is to provide level information somehow in the stream.
->
-> Say, we could attach START/END markers for each VMSD to be dumped.  That
-> may be able to help in other cases too, e.g. when we accidentally grow some
-> VMSD fields breaking migration, then IIUC dest QEMU can provide a more
-> accurate error message when it knows the bound of current VMSD that is
-> being loaded.
+> ---
 
-Could we perhaps do something like:
- * mark up the vmstate sections we have that don't follow the
-   "/ is the separator" naming rule with some new struct field
-   that says "legacy_bad_subsection_name = true" or whatever
-   (or rename them if there are cases where we're OK with a
-   migration break, like "iotkit-secctl")
- * have the migration code enforce the "subsection name follows the
-   / separator rule" via an assert when the vmstate is registered,
-   with a loosening for the ones marked as legacy names
- * have the inbound migration code use the strong check on the
-   separator to distinguish "subsection" from "not subsection"
-   unless the vmstate it's doing inbound migration for is marked
-   as needing legacy name handling
-?
-
-I think that would keep migration compatibility, avoid the problem
-of wrong subsection names creeping in in future, and in practice
-mean we don't in future hit this issue upstream. (With more effort
-it might be also possible to tie the legacy names to QEMU versioned
-machines so that they can eventually be retired.)
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
 thanks
 -- PMM
