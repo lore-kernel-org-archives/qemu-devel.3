@@ -4,68 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54054106704F
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 15:37:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 057331067045
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 15:47:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0i5R-0004Vp-VI; Thu, 12 Mar 2026 11:36:33 -0400
+	id 1w0iFg-0006oa-Q5; Thu, 12 Mar 2026 11:47:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0i5Q-0004Vb-Sl
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:36:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0iFd-0006oP-PN
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:47:05 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w0i5O-0006sz-Jn
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:36:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0iFa-0001cJ-Rv
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:47:05 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773329789;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
+ s=mimecast20190719; t=1773330421;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=F1eoVE5aK+jBUHDSJTotkCCILzNHwQpZY1aj6EQSqBs=;
- b=PHMixJ9TqZ8LdANDWnZqJUTRqdAp+mwxECxSOLI7Q1YUTlvVmLUlkD8XRVirQDpwWp1HKe
- tCAV3VyrX40VdEjXSLWEtoKvfleDu1d+Gg2Ka2xdbI65JmOiDFBandBgGd4EbAH2qmVJQI
- InNcGAwo6ySze2xDr5Lf0cTIjw94hsg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-w2DYXKW4Phawhn7x8eWpSA-1; Thu,
- 12 Mar 2026 11:36:26 -0400
-X-MC-Unique: w2DYXKW4Phawhn7x8eWpSA-1
-X-Mimecast-MFC-AGG-ID: w2DYXKW4Phawhn7x8eWpSA_1773329784
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 60D26194510D
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 15:36:24 +0000 (UTC)
-Received: from redhat.com (unknown [10.45.226.215])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E7BCA180035F; Thu, 12 Mar 2026 15:36:22 +0000 (UTC)
-Date: Thu, 12 Mar 2026 15:36:19 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Cc: Elizabeth Ashurov <eashurov@redhat.com>, qemu-devel@nongnu.org
-Subject: Re: [PATCH v1] qga: rework slog to support multiple severity levels
-Message-ID: <abLdcy6eoedHgeSV@redhat.com>
-References: <20260312141657.1701801-1-eashurov@redhat.com>
- <abLVj2eLZmKbPs9J@redhat.com>
- <CAPMcbCq4i8DhwRqPkJxywt6H==NRW=3_7NA0ZQhe8cMFtVGRCA@mail.gmail.com>
+ bh=XGPmxqYFLEJ3sfC6jnmRM89OlsjoXQLFnNB/jCG+/n0=;
+ b=CSlL+dLxSDtK4HRlv/29ox4Rxij1PwNPLUo26EHy2AKWKTMx8c4kT/f6mPdS0vMiP2Tfc4
+ U0dV3tcLffE31AvRN7NPxiQsxr+CfmpefekQm2ZgfrkHW5aPyrRK2TLN4ooLVB2AA1i4tZ
+ E4dpu1A+S2JiM4W8KsHKRQqiX+ashRc=
+Received: from mail-qk1-f200.google.com (mail-qk1-f200.google.com
+ [209.85.222.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-428-VAJR7BSHPym54seS7KyHiQ-1; Thu, 12 Mar 2026 11:46:59 -0400
+X-MC-Unique: VAJR7BSHPym54seS7KyHiQ-1
+X-Mimecast-MFC-AGG-ID: VAJR7BSHPym54seS7KyHiQ_1773330419
+Received: by mail-qk1-f200.google.com with SMTP id
+ af79cd13be357-8cd83cfb36cso813832385a.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 08:46:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773330419; x=1773935219; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=XGPmxqYFLEJ3sfC6jnmRM89OlsjoXQLFnNB/jCG+/n0=;
+ b=T6dVrXbKRkbooHC3YwqyVrH8AviNkpAmHNkSocweOuJuV1t0G2J+KAfvC4F+C1vmBl
+ 60z0Vaz+6o3rUgzCjZjK6qagL8z3S1pBK7DHI9fprV9DjbxFK3RYAvjU6OF9nW5sLimI
+ s9jeZz6BhdzDasU0g/nVza7qx6Y9V4xP5vMqB1g2POBZvcshuG4DBqLNA9mHm4S41VX/
+ J2ppAUBIPfjVl+WMfh55+oPfXoJnb3zvqa7JWPxRRutGvMp/5j1vlw8/O5b58C2kFCm6
+ rX7F8+JFV4wx1SRnUC0VeACDqv/tJ3UH+G9I2I2ozY9TVc5XaaKuuNkRSEqP7lnTOL3/
+ FCvQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773330419; x=1773935219;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=XGPmxqYFLEJ3sfC6jnmRM89OlsjoXQLFnNB/jCG+/n0=;
+ b=bC/qXadIHmpTb8SFm2hw2SdSqbYDtCrFgUkkE1MNdq36MnMYkXke5PUEWbLu2YeiA5
+ xoPMBqFF1QnnpOjBNf/amdG3ZIjym4Bx/08z02MlBVPtS01DaCuuJQ+Oli8Lhle7D4xB
+ qSCZUl8ZVb0eHZjpJMAzwm3a4fC7bzCrPetd5RDbRu1e/rv8ITOGDCxYQRe51oV6X+pl
+ WsG6hAr5c1p5R/f0TidSxihIEehovYyNh2nj29NPnXFqlrdG4wcSmb1TMGNh/sZD3dOR
+ BkJvV9W12qA5MHHuqMTyG7lW1OFdu3OL7DfK1Rpre5nQ9AwHzIKX0m8keSg7hCxM66fY
+ Wz3Q==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVXi5+QoyAzMXTCqFTAsGor8n8X4ghqTkUIt6/swGZePHThJyaylzWoVXOGKKcfW4/TIqV+mJ8EK8zm@nongnu.org
+X-Gm-Message-State: AOJu0Yyj+e3rIWM5txtW4CnMBMkwcDON2rdf7BOL6AFz1Ru58PRms4CG
+ YQPo0V0bgdnYqOxjmDo1Me0A92hq1utaBzxqSNY7JXkmf51H3vK6B5D0xOrySe23RB07ovNtlBy
+ dt0Pdz3T1nBuGQNfmDDprf6qnAhckPj2+AKhAt94eMGEtUwTq/QpRnpRY
+X-Gm-Gg: ATEYQzwaKs1a1zfJQmd7+ooteLI07LjVsr3eFzHRxph8SN/FsS27KRAguKy0FnZWVsz
+ U6iHzm5fGrI6+lnAShxo++BtYhjxba1srk9Rg9+uvr/LV48yUAIhuhqF+NuS39VIpHCk3IzRbEU
+ YHVe02MkOae9RqDhUcyLa7g5+lhN4Zk3ZqoF99LsslyCgK9oJvuiJ7vql321B0pnoCP8R+m2HJ6
+ rbPGOLLKV7b9vJ+GhkKG+KqhR1IVyJw7MPzWTI6OWgVOXsQFGoaxGhce36h2DCL1tWJeIlb05s7
+ T6UfyUQ4Uttzs+Xv+rVvd4wa21tV17xMRreZzmz7Ei9uD2yfre0LtMa/WS+nvUANX619aA9Bffl
+ 4x2Ygb8ekBbzjHQ==
+X-Received: by 2002:a05:620a:450f:b0:8c5:310d:3b3a with SMTP id
+ af79cd13be357-8cdb5bb12c9mr19783185a.70.1773330418761; 
+ Thu, 12 Mar 2026 08:46:58 -0700 (PDT)
+X-Received: by 2002:a05:620a:450f:b0:8c5:310d:3b3a with SMTP id
+ af79cd13be357-8cdb5bb12c9mr19778385a.70.1773330418184; 
+ Thu, 12 Mar 2026 08:46:58 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cda21100adsm380547185a.31.2026.03.12.08.46.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Mar 2026 08:46:57 -0700 (PDT)
+Date: Thu, 12 Mar 2026 11:46:56 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Xiaoyao Li <xiaoyao.li@intel.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, chenyi.qiang@intel.com,
+ Farrah Chen <farrah.chen@intel.com>, qemu-devel@nongnu.org
+Subject: Re: [PATCH] memory: Set mr->ram before RAM Block allocation
+Message-ID: <abLf8EW3M7XCBh2K@x1.local>
+References: <20260312063420.973637-1-xiaoyao.li@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAPMcbCq4i8DhwRqPkJxywt6H==NRW=3_7NA0ZQhe8cMFtVGRCA@mail.gmail.com>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
+In-Reply-To: <20260312063420.973637-1-xiaoyao.li@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -87,140 +116,112 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 12, 2026 at 05:15:05PM +0200, Kostiantyn Kostiuk wrote:
-> On Thu, Mar 12, 2026 at 5:02 PM Daniel P. Berrangé <berrange@redhat.com>
-> wrote:
+On Thu, Mar 12, 2026 at 02:34:20PM +0800, Xiaoyao Li wrote:
+> Commit 2fb627ef2f48 ("memory: Factor out common ram region initialization")
+> introduced a helper function memory_region_set_ram_block(), which causes
+> mr->ram to be set to true after the RAM Block allocation by
+> qemu_ram_alloc_*().
 > 
-> > On Thu, Mar 12, 2026 at 04:16:57PM +0200, Elizabeth Ashurov wrote:
-> > > ga_log() forwarded all "syslog" domain messages unconditionally,
-> > > bypassing the log level filter. Furthermore, slog() hardcoded
-> > > all messages to G_LOG_LEVEL_INFO, causing log spam from frequent
-> > > guest-ping calls.
-> > >
-> > > - Split slog() into slog_error() (WARNING), slog() (MESSAGE), and
-> > slog_trace() (INFO)
-> > > - Apply s->log_level filtering to "syslog" in ga_log()
-> > > - Move guest-ping to slog_trace()
-> > > - Move error messages to slog_error()
-> > >
-> > > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3214
-> > >
-> > > Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
-> > > ---
-> > >  qga/commands-linux.c   |  6 ++++--
-> > >  qga/commands-posix.c   | 13 +++++++------
-> > >  qga/commands-win32.c   | 34 +++++++++++++++++-----------------
-> > >  qga/commands.c         | 30 ++++++++++++++++++++++++------
-> > >  qga/guest-agent-core.h |  2 ++
-> > >  qga/main.c             |  6 +++++-
-> > >  6 files changed, 59 insertions(+), 32 deletions(-)
-> > >
-> >
-> > > diff --git a/qga/commands.c b/qga/commands.c
-> > > index 5f20af25d3..ed52a7d3c2 100644
-> > > --- a/qga/commands.c
-> > > +++ b/qga/commands.c
-> > > @@ -38,6 +38,24 @@ void slog(const gchar *fmt, ...)
-> > >  {
-> > >      va_list ap;
-> > >
-> > > +    va_start(ap, fmt);
-> > > +    g_logv("syslog", G_LOG_LEVEL_MESSAGE, fmt, ap);
-> > > +    va_end(ap);
-> > > +}
-> > > +
-> > > +void slog_error(const gchar *fmt, ...)
-> > > +{
-> > > +    va_list ap;
-> > > +
-> > > +    va_start(ap, fmt);
-> > > +    g_logv("syslog", G_LOG_LEVEL_WARNING, fmt, ap);
-> > > +    va_end(ap);
-> > > +}
-> > > +
-> > > +void slog_trace(const gchar *fmt, ...)
-> > > +{
-> > > +    va_list ap;
-> > > +
-> > >      va_start(ap, fmt);
-> > >      g_logv("syslog", G_LOG_LEVEL_INFO, fmt, ap);
-> > >      va_end(ap);
-> >
-> > This is really the wrong approach IMHO.
-> >
-> > It is bad practice for the call sites to be declaring what log
-> > output they are targetting.
-> >
-> > Also the first parameter of g_log call is supposed to be the
-> > "domain" which is a name that identicates the *source* of the
-> > error message. For code in a library it would be the library
-> > name, or a module name within the library. For applications
-> > it would usually be the application name.
-> >
-> > Passing the name of a desired log target "syslog" is really
-> > a misuse of the logging framework.
-> >
-> > IMHO the existing usage of "slog" should be replaced by
-> > calls to g_error() (for the cases which are reporting error
-> > messages) and g_info() (for the cases which are reporting the
-> > names of commands being executed).
-> >
-> > Then, we should offer better command line control over the
-> > usage of logging
-> >
-> >  "verbose" should enable g_info() or higher
-> >  "debug" should enable g_debug() or higher
-> >
-> > The log file (if configured) should receive *all* messages
-> > per the verbose/debug flag settings. (currently it misses
-> > any messages that get sent to syslog which is bad as it
-> > makes the logfile incomplete.
-> >
-> > The syslog output should also receive all messages at
-> > "info" level of higher (provided the verbose flag is
-> > set). It shouldn't get debug messages, even if 'debug'
-> > flag is set.
-> >
-> > We should not specialcase the "ping" command either IMHO,
-> > it should remain "info" like the other commands. Per that
-> > bug, users can exclude ping messages via a log filter on
-> > the systemd service config.
-> >
+> It leads to the assertion
 > 
-> What to do with Windows? We definitely want to see a freeze/thaw event in
-> Event Viewer, but ping is also redundant there.
+>   g_assert(memory_region_is_ram(mr));
+> 
+> in memory_region_set_ram_discard_manager() being triggered when creating
+> RAM Block with the RAM_GUEST_MEMFD flag.
+> 
+> Fix this by restoring the original behavior of setting mr->ram before
+> RAM Block allocation.
+> 
+> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3330
+> Reported-by: Farrah Chen <farrah.chen@intel.com>
+> Fixes: 2fb627ef2f48 ("memory: Factor out common ram region initialization")
+> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
 
-If we think of the recording of commands as more of an "audit" task,
-we could expose an "audit" argument to control this. It would take
-a list of command names, optionally with wildcards, and optionally
-with negation
+Thanks for the report.  This is fast..
 
-   audit = *
+Almost agreed with the fix, except that it duplicates the lines all over
+the places.  Would it be better to introduce memory_region_init_ram()?
 
-    => current default - all commands at "info" level
+> ---
+>  system/memory.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+> 
+> diff --git a/system/memory.c b/system/memory.c
+> index 17a7bcd9af7c..56f3225b21ad 100644
+> --- a/system/memory.c
+> +++ b/system/memory.c
+> @@ -1578,7 +1578,6 @@ void memory_region_init_io(MemoryRegion *mr, Object *owner,
+>  
+>  static bool memory_region_set_ram_block(MemoryRegion *mr, RAMBlock *rb)
+>  {
+> -    mr->ram = true;
+>      mr->terminates = true;
+>      mr->destructor = memory_region_destructor_ram;
+>      mr->ram_block = rb;
+> @@ -1597,6 +1596,7 @@ bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr, Object *owner,
+>      RAMBlock *rb;
+>  
+>      memory_region_init(mr, owner, name, size);
+> +    mr->ram = true;
+>      rb = qemu_ram_alloc(size, ram_flags, mr, errp);
+>      return memory_region_set_ram_block(mr, rb);
+>  }
+> @@ -1614,6 +1614,7 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
+>      RAMBlock *rb;
+>  
+>      memory_region_init(mr, owner, name, size);
+> +    mr->ram = true;
+>      rb = qemu_ram_alloc_resizeable(size, max_size, resized, mr, errp);
+>      return memory_region_set_ram_block(mr, rb);
+>  }
+> @@ -1628,6 +1629,7 @@ bool memory_region_init_ram_from_file(MemoryRegion *mr, Object *owner,
+>      RAMBlock *rb;
+>  
+>      memory_region_init(mr, owner, name, size);
+> +    mr->ram = true;
+>      mr->readonly = !!(ram_flags & RAM_READONLY);
+>      mr->align = align;
+>      rb = qemu_ram_alloc_from_file(size, mr, ram_flags, path, offset, errp);
+> @@ -1642,6 +1644,7 @@ bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
+>      RAMBlock *rb;
+>  
+>      memory_region_init(mr, owner, name, size);
+> +    mr->ram = true;
+>      mr->readonly = !!(ram_flags & RAM_READONLY);
+>      rb = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, offset,
+>                                  false, errp);
+> @@ -1663,6 +1666,7 @@ void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
+>                                  void *ptr)
+>  {
+>      memory_region_init(mr, owner, name, size);
+> +    mr->ram = true;
+>      memory_region_set_ram_ptr(mr, size, ptr);
+>  }
+>  
+> @@ -1671,6 +1675,7 @@ void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+>                                         void *ptr)
+>  {
+>      memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
+> +    mr->ram = true;
+>      mr->ram_device = true;
+>      memory_region_set_ram_ptr(mr, size, ptr);
+>  }
+> @@ -3699,7 +3704,6 @@ bool memory_region_init_rom_device(MemoryRegion *mr, Object *owner,
+>      memory_region_init_io(mr, owner, ops, opaque, name, size);
+>      rb = qemu_ram_alloc(size, 0, mr, errp);
+>      if (memory_region_set_ram_block(mr, rb)) {
+> -        mr->ram = false;
+>          mr->rom_device = true;
+>          memory_region_register_ram(mr, owner);
+>          return true;
+> -- 
+> 2.43.0
+> 
 
-   audit = "!guest-ping,*"
-
-    => a new default - all commands at "info" level, except ping
-
-   audit = "!guest-ssh-get*,guest-ssh*"
-
-    => a restrictive audit, only commands which modify ssh
-       setup
-
-anything not matched by the audit setting, would be logged at
-g_debug instead of g_info
-
-
-With regards,
-Daniel
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+Peter Xu
 
 
