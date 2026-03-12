@@ -4,115 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 044AF106ACD8
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00EE2106ACCD
 	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:13:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0kXD-0006j1-Au; Thu, 12 Mar 2026 14:13:23 -0400
+	id 1w0kX7-0006gt-02; Thu, 12 Mar 2026 14:13:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0kX9-0006iB-Dn
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:13:20 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0kX5-00051q-PK
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:13:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773339191;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=edNAiRfPbXPwD453S8uzDSvl80eW60e4QXb8HLWNFmk=;
- b=TFYTCYbH+9eV+av7nLt0rwvTvFwqSsLs0I28e0HpigT5HBLahmWpKhWuNacS3FaYOCAaz+
- ehPCrQLv/WhbIce1pY5zO+ysnW2uImcfBqiLENyIxreGz5fGrkn2Rsq/bgw3DwFfsx/tCI
- noLBYvFH+TrbmASkAAsZyZftFSTkqog=
-Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
- [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-467-OTiDMCF0OD2H2YT83_sIdA-1; Thu, 12 Mar 2026 14:13:09 -0400
-X-MC-Unique: OTiDMCF0OD2H2YT83_sIdA-1
-X-Mimecast-MFC-AGG-ID: OTiDMCF0OD2H2YT83_sIdA_1773339189
-Received: by mail-qk1-f199.google.com with SMTP id
- af79cd13be357-8cd80bea54dso732990385a.3
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0kX4-0006eo-H9
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:13:14 -0400
+Received: from mail-yx1-xb12b.google.com ([2607:f8b0:4864:20::b12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w0kWz-00051Q-Q6
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:13:12 -0400
+Received: by mail-yx1-xb12b.google.com with SMTP id
+ 956f58d0204a3-64ca1ba0089so1351922d50.1
  for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:13:09 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773339189; cv=none;
+ d=google.com; s=arc-20240605;
+ b=CHMDuaXOqv8aYhyasljp8Um6mrfxw9DAiE5bB3V2YAu6Sdqn1VhUj1RcbGH8M13p2d
+ 8MIgmqO+K7CusxSkwbvUVTVR+ZflvqCQ4JJbRyOxWzo82rX73uBVlHCDUyvUo08pkR+2
+ dke9cdX2aNpx+TyMG0dtIMCQux4HJWP+JLzkSbSm1kYjMTbKcZTOydkr8opkzZZ6NKSd
+ FDL+8da6UA/X+LZrjZXcrVsjikQEecRSuV7Mlo5feUZzinWOIiUVCwuIMmMQFAL9jf53
+ bpoRCJI07h5F51Tulk3pO4kkye01ef2c5VBgkR0hxj+ozNTeUcZ3fRewCDDUf++5cm5a
+ C5hw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=Bj2ux2ZKIDOgh8BWnUS91esbp9/1Bxkgcp3sKxYffs0=;
+ fh=aoMLixUL2qiim8HMY1VRDEv3jtKPzRLEfPHkJ6XdwnA=;
+ b=guH8wdz9JQtqHkm6bYc/SvPUADEStgr+zSnpy3zr9rs7IdyLDQIaIVlfWPmg+vifjl
+ 9ak4rePfRCM0z/hQXQ1JcAtuUZeUZE2LXPpRwjt0v2sBoRl93lWCcgdxGrftYLC7BAKl
+ jvnBNi8eyl1yiQ58RvLx0AewZ+7srX25mWq5BZYSfgSWit36rm0DHtLQzpZar/bhvmRf
+ E7oAaD5IRoKNTRk4pAWdupC04AGqm0iUOH6l5j14R/xTVWPJWdP/TTubuRxta68x3acs
+ mHfF/0IA6xMVZ1cWTiKhHtMLmdY/+4Kj+8l3K0mO+OhA25nbhIqlFHEhApUwZ5RWkknW
+ hHCg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773339189; x=1773943989; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=edNAiRfPbXPwD453S8uzDSvl80eW60e4QXb8HLWNFmk=;
- b=erey98NmTrFJbRIaXmcwkkxCL0wr7i/0wt8z49Yz5rCke3SfdOcplkStq8vO9M4Ez4
- QHTPyj6wjKGnP+/SebxCM81SffdJEWRlv/GsAqA7uqK4RbwaODLUhwN0l8tJS2P7CcXl
- /94ySQSRuJblAkL8PvtFJ+43EKO/zd4B9RJceHOUbSiKYn559adDhciyLVRgYoUQzO+e
- UEkjsnJKsatgcBOWZOT4rr0mcFKgt5yxHd5Oor94d0F7dKTTqMpg06r1Yip3T8xvnhh+
- MPxc1KsIRXmXoUgOaqoO8HytGTe1LNHbwPd/lADCgUS+IGi1pzlmIl/VJGldoL/4xxJ2
- Y2aw==
+ d=linaro.org; s=google; t=1773339189; x=1773943989; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=Bj2ux2ZKIDOgh8BWnUS91esbp9/1Bxkgcp3sKxYffs0=;
+ b=DaZ6evRBWVT1MTGnBVzN+ebBb+i0LSyPxKCBeuju9tHj/NQ7h/E/+5JGla0fSRxM04
+ WWVYI+0hdaMh5+KHgtB8lthiOaJI5rGx1/rRleBavyo4EUOhF4sElRp3oxcpyajT/Kek
+ JUetHvlenB2/uOK6QtXtmy9M1KNZpu+qFqQ0w01dkYwrQqC0pPmfQp+X4ZA03o6I9Jra
+ DgRj7glZrvdZC2d0f8kyOC5HKqEB4xQG2T4nYV2rtHzy7Uze+y1FemrkSS5FlMdhyUo7
+ i3gRvN98YezTCyP0xR5PI+PV/BMexrm2KccEeb5O9/j4g96v+9pBgrrz3QDVR1zj9rTu
+ TPqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
  d=1e100.net; s=20230601; t=1773339189; x=1773943989;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=edNAiRfPbXPwD453S8uzDSvl80eW60e4QXb8HLWNFmk=;
- b=OW+EjKOv0jBSCR9YO425l1wOkw043dwnK0yLL9UjkUsJRFi3nJ7IxzHyahb+EzaAT3
- MRKsKM1VoJcH0gaNmQdHgy7iH9PdEy59RyL//1NO96TpswyZ34nP7SJXp7+/ooWpfi05
- WDACwdh7IczMZaF+ZaMCwFJdBNNS+noDOM6bYi090IwIh/Wf0NQ9VLEn65i/vSAgs4h+
- SsbrOes2m2GoNyyenxynZrIEahgMy94lgXQBzgpfycvbqghXLt5EUysQp/EoHmpbG5FE
- HYS5BloFDh/Yw2TPg+CupUT2/faJtPXkIpxvWac5NzNYCe3nyKiGx6GB7/BJ5TiGEt5c
- Hplg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyB0ZSMmeoQXNiIvdJCtnrsHCwzaGo8lK2w2ywGtbk4usAAW0IQH+UBpjcymt7tsEh59CJrcRiOjcK@nongnu.org
-X-Gm-Message-State: AOJu0YyOq62NII/z3qxlQXfWnUjiTJjK+oerOzXrlN3qB9ZoQFoQuqnG
- 5/6GYJtaEXduIgUXj+UIm8fphIaUsnSYRzb8WLU9V4yiu//LBRZaVHZeiwVoj73w1LXy122c51e
- 0cpJCX+6N0NB6HaCaeHcuhCb/3jt3C0YHkFb/kuTrSgvfWwqDXT6Oc++f
-X-Gm-Gg: ATEYQzwqCxewOK5RNXO/l8ZFrivjTrsPt0Faejm+xvx+KQWT6i+1JHI2DX4MDbHB0sX
- YUUCrYVEDh82T0nZcZe8bzD2wmzbxtFA7QcVkhT2j4WaOD5ViG/lqYEgfaK0vKfBvTRIoRMwCEa
- LcKcO/jYRz4+M/B+Rmnx3xU6JOF5BFOho+epGt2cddvWreGBdV2mPfTyOgI4GVHR6ioAGdCj91+
- D7efFswIUc3Y0on8jfiiOdSfzBumvhqArEz56w64vSFsffoE9d+YskhiuLiewPbNmxh/+NqChxP
- 789CrPYz8Xjtr0TmxFSCVrgmRZcNXX1G3bAs/rc1xtzFuGi/eOmw0BB/mh3Zu//OJi1OOhHuGeZ
- M4fCTfF/iVvPJ3A==
-X-Received: by 2002:a05:620a:1993:b0:8cd:94a5:2f32 with SMTP id
- af79cd13be357-8cdb5a6f0e4mr96566085a.27.1773339189076; 
- Thu, 12 Mar 2026 11:13:09 -0700 (PDT)
-X-Received: by 2002:a05:620a:1993:b0:8cd:94a5:2f32 with SMTP id
- af79cd13be357-8cdb5a6f0e4mr96562985a.27.1773339188595; 
- Thu, 12 Mar 2026 11:13:08 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda21348e2sm386736785a.35.2026.03.12.11.13.07
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 11:13:08 -0700 (PDT)
-Date: Thu, 12 Mar 2026 14:13:06 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2] vmstate: fix subsection load name check
-Message-ID: <abMCMrRxdAWCc_hv@x1.local>
-References: <87y0k5136i.fsf@suse.de>
- <714e4329-6001-4c77-b004-ed7beb11c154@yandex-team.ru>
- <e81360d5-cab4-47a4-840b-7d948b51a5c0@yandex-team.ru>
- <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
- <abBcN2B4QNBT_Oh9@x1.local>
- <f37dc7af-7ffd-4a7b-b4fa-552c2d2eb888@yandex-team.ru>
- <abGEwf-AG1rZ3kam@x1.local>
- <a6dafc1e-79d1-4380-a4da-7cbc4ff77ae4@yandex-team.ru>
- <abLc_ppEEbKjNRUi@x1.local>
- <022c929e-ddda-4f74-8786-d01994107415@yandex-team.ru>
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Bj2ux2ZKIDOgh8BWnUS91esbp9/1Bxkgcp3sKxYffs0=;
+ b=dYJP/ONeL17AKMOch7sQUDhuSBL0Pn47DuI2bcprPgCnG06W2tTgkgmSXuNZX+heGE
+ jFUR8kOG6in9maGF4PNF/F3XMajeSYFqGAm0iIVrUw7ESU0KsbZZfykEoejwhNPMPebH
+ IiZ7gQNfPa3gjAa/PMuveRN2t0DKYRUeYAm0s0huicExgU+64+REiarYoROLEMX0bgny
+ S5nXRHpd4AOPnj5BuoF0FDHRXElXjJG7ASQd1+t5eB8vHNREZe0qysxhlwgO8XfpxFSS
+ k+u0U2weaQZpF+ALLaGkBQsyZ0dOTIVipqbs4uMT3Fl1+NWn14e0igAmGZs4nvHsbT/e
+ 7oeQ==
+X-Gm-Message-State: AOJu0YxB73UY5hWTcA1r2hvmQEJ7iBSPwcG1Ta46Phrov7jDmMqQ+czT
+ ufnSJz7R7swyEF+OlQIh/MTeOWaP6HhO+MfR0tHfDNzuY/J1yEF89SG80Odt/VTDii/ohD4gXsh
+ ynpWep4CN6XelNhJ5KjaLlLzqqKBcaSrHlDBDStj4BQ==
+X-Gm-Gg: ATEYQzx9RmaKX1wJeoaiFbWcOfHikf866KnkJT6HEUvH9zjn8J4XfaULwmSORSG73FN
+ u8Erne//n/8+taMU5zQGs4VfEK5ydpTj/rludXoMtprmdovlK1yabZYug1Xb5ndh1A51KEiieB5
+ BviWlKwa7blSF9NIUyH1Eo4gxruaMalUS5MWHfsuoKU26lGQ7sVJwLtfcH1f6Ozpb7xiCAuEro9
+ RawxO+aqkhFBTd+a2ahY86Bk2WjA9RaOJnFd5PdvXbYHJ0xMI9bQkr8EPOjCtanZQDpY8CE8GNf
+ gMmNpvuv0XKzkSlJURH+8wH5yCE+LgfVTuJP631XHkNgdXAPkq13XwYgpiuFdvSTJJs=
+X-Received: by 2002:a05:690e:2545:b0:649:6053:15da with SMTP id
+ 956f58d0204a3-64e63093f18mr384520d50.63.1773339188633; Thu, 12 Mar 2026
+ 11:13:08 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <022c929e-ddda-4f74-8786-d01994107415@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260312121617.228654-1-vikingtc4@gmail.com>
+In-Reply-To: <20260312121617.228654-1-vikingtc4@gmail.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 12 Mar 2026 18:12:56 +0000
+X-Gm-Features: AaiRm52f1EAtcDSQogpaEH7SHvCXEdQFsyEqo_zjGrBcbFg15xEaDUJ_f9AX-pM
+Message-ID: <CAFEAcA90yzGw6=GBCD99ZjsEqLNm+NbZAZjQTC1ormu_BscUSQ@mail.gmail.com>
+Subject: Re: [PATCH] plugins/api-system: Handle migrate_add_blocker() failure
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, 
+ Mahmoud Mandour <ma.mandourr@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -128,47 +117,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 12, 2026 at 07:34:34PM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> Hmm. Probably, that this is the subsection, that exist only in our downstream.
-> I don't know, was it mentioned clearly before, sorry if not.
+On Thu, 12 Mar 2026 at 12:17, Trieu Huynh <vikingtc4@gmail.com> wrote:
+>
+> migrate_add_blocker() can fail (e.g. if migration is already in
+> progress), in which case it returns a negative value and populates
+> its errp argument with the reason.
+>
+> The previous code ignored the return value, leaving state
+> inconsistent on failure. Fix this by:
+> - Passing a local Error ** so failure details can be reported.
+> - Checking the return value; on failure, report the error, free the
+>   migration_blocker Error object, and return NULL to the caller.
+>
+> Resolves: CID 1645470
+>
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> ---
+>  plugins/api-system.c | 8 +++++++-
+>  1 file changed, 7 insertions(+), 1 deletion(-)
+>
+> diff --git a/plugins/api-system.c b/plugins/api-system.c
+> index 9a70b9caa6..f0d6cefe74 100644
+> --- a/plugins/api-system.c
+> +++ b/plugins/api-system.c
+> @@ -105,10 +105,16 @@ static Error *migration_blocker;
+>  const void *qemu_plugin_request_time_control(void)
+>  {
+>      if (!has_control) {
+> +        Error *local_err = NULL;
+>          has_control = true;
+>          error_setg(&migration_blocker,
+>                     "TCG plugin time control does not support migration");
+> -        migrate_add_blocker(&migration_blocker, NULL);
+> +        if (migrate_add_blocker(&migration_blocker, &local_err) < 0) {
+> +            error_report_err(local_err);
+> +            error_free(migration_blocker);
+> +            migration_blocker = NULL;
 
-Ah.. Looks like it was not mentioned in the latest version posted:
+You don't need to free the migration_blocker Error if
+migrate_add_blocker() fails -- the function documents that it
+will do that for you and set the pointer to NULL.
 
-https://lore.kernel.org/all/20260312102626.891359-1-dtalexundeer@yandex-team.ru/
+> +            migration_blocker = NULL;
+> +            return NULL;
+> +        }
+>          return &has_control;
 
-Let's always mention this, because it's important piece of info, e.g. to
-know upstream has yet no reproducer.
-
-> This subsection just not exist in master, and we are not going to upstream it.
-> So, for upstream it's a "theoretical" bug in a protocol, which may be triggered in
-> some future moment. And that's why there is not specific case in commit message
-> but only assumption "Let's say there is a vmstate ...".
-
-In this case, for upstream we almost only lose but yet unknown gain with
-this fix then, because we stop throwing useful info for unknown new
-subsections, as PeterM pointed out:
-
-https://lore.kernel.org/all/CAFEAcA_mzXDdz_xjPnZ9Kc4K01Aoss_OH_qEoL3G33KdsnHrLw@mail.gmail.com/
-
-But I agree it is a potential issue, if we cannot justify QEMU can never
-hit it.
-
-Sending "how many subsections are there" is one viable option as you said,
-but it only solves this small problem, and knowing that number requires src
-QEMU looping over the subsections twice so a bit awkward (first time we
-need to kickoff ".needed()" hooks to do the counting; not all will be sent).
-
-The other way is to provide level information somehow in the stream.
-
-Say, we could attach START/END markers for each VMSD to be dumped.  That
-may be able to help in other cases too, e.g. when we accidentally grow some
-VMSD fields breaking migration, then IIUC dest QEMU can provide a more
-accurate error message when it knows the bound of current VMSD that is
-being loaded.
-
-But I'm also not sure if this is worth it yet to fix an imaginary problem.
-
--- 
-Peter Xu
-
+thanks
+-- PMM
 
