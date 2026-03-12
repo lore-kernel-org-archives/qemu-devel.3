@@ -4,93 +4,120 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAC2FED2F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:09:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0CAFED2FE
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:12:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0cym-0002pY-1e; Thu, 12 Mar 2026 06:09:20 -0400
+	id 1w0d1j-0004J8-A1; Thu, 12 Mar 2026 06:12:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0cyj-0002oU-99
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:09:17 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0cyh-0002or-9M
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:09:16 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439cb5af25bso862152f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 03:09:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773310153; x=1773914953; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=B+K0I9JQpvSsWfwMN5Wwpc4BJ9j/WPXcxBGnkjFOL84=;
- b=Y8fEUw59g3DeM4Rmy4ymjsO4J4peZrxQWp/IDbOKaAaWxnm5BYhzbrnnzh1E0jgS+T
- iCxKETEXjEcna6o7KidvZAXZ7nObxI/HxvSNdW9NW8lbk5wRO0IIoPzZBAQuxuZ25hoW
- u348S3JFS+l3/MDarm3pjWCyGcxQQPQaglAFn+yitRQWAF7jUiJFQtV+5JcJdFK+3qSa
- khwCvL3HDkXqHA0D+zEPzNCSvkpmp5muore29mLa2CGEGDnMMqZL5yXuTSPsuyaQkHEu
- D18l0jAwYx5ZbOipKiAI9MHQPttFGva4Cjjf95FCIINKmqLMl+bgvvdClVeTPkML5V6C
- 1JDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773310153; x=1773914953;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=B+K0I9JQpvSsWfwMN5Wwpc4BJ9j/WPXcxBGnkjFOL84=;
- b=lDBxm4RKNpEdWgIOvbOJt/+L8gyiIZ8BDtK1Jt6Qyh8EOEkiitqFKzT0u+d9wfh773
- 0drxJLqnzD1tSGltH800tLrwTa+nExaWGLlUWYt7nF6Zmc4Eq40E3cxvRz+zAOvurKgf
- F/+v1f1hKVvrxmZDpY2WT847OXRJ5qBy3pUD1wcGSaZRScesj2V+AL57DTDEVxchU+z/
- R1nXR+rTuT1xete3elz6q02+sQxPNS7+d5AVGbC5lbFSnICMkCwJ29kMqFqJrIV75/Er
- iEUVZDGYFPXIChQPBFEE5c82o81XbR4wliNvLN5BgIcfHMKHaGI4Lziw2odtL7z68Qn1
- AGhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVa/uo2CdqKlfnoKV02LGwqBtrPSoGAIiS3JgrfJVr41tBT0MbeYOwmoNq6q5h5glp9JcL0hpFLazSq@nongnu.org
-X-Gm-Message-State: AOJu0YwoP36PnTh9ISPpEHSCq7j59dS8xzu0flMcqx8T7H5G4tfKzCWx
- 9f5Fj/EV1caJGu53k6eTBQZOIGWZZwHxjHY51/HQxIqDBjzq7WveGQwzYRuKs5yOS7E=
-X-Gm-Gg: ATEYQzw9rs3Br+w4i5vIU1dLNudliBfERyzYek+7HtAooib0qKZJAqmlg/UOFC81nZ9
- 9ZsCSYkosgmmh787MsF5aQa50cYNDuYpVal42/1UAYT/OJGc7R4tDA0H5Zxo/vlprio45sb394h
- VIhZWfYqJ9ElpCaxKX2dpn07hf7h9wfcwBJpwhBsX6ybcTbGJ4Dnx0WzdNCArsSIfrHkgfAUk/b
- fGE3R9xAE+gkPJoFwHjVbQhuOrAOfrC3JP+DFQNz0wo8Brno8qvnANiOwxcs1QVRg2wZOgauJvi
- nnk2++HEFhZRLwCsdbB2CiwKesx7AUk3AwOW/UefE1Wzi0XSGmm7q/WoF5t2lnAEsmrRG7eeKQG
- EcoJ5AvgcfSc5F+aDIDUPnmZWdu9o13AM0uuTdeuY/MDImjn4oRHqdXg3id9B9OORMU54p/PUKl
- bhykU+kfy5p99AFu8DH7Yas3f54kDa4S61DEmP9rTfHBdMJ22MwuFWPo+fTwkssl8syw==
-X-Received: by 2002:a05:6000:1a8c:b0:439:eec5:e058 with SMTP id
- ffacd0b85a97d-439f843c54dmr10978600f8f.58.1773310153532; 
- Thu, 12 Mar 2026 03:09:13 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe19b936sm8343317f8f.5.2026.03.12.03.09.11
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 03:09:11 -0700 (PDT)
-Message-ID: <d0a210fa-e88b-49f2-a038-5d089ec0ae12@linaro.org>
-Date: Thu, 12 Mar 2026 11:09:10 +0100
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1w0d1d-0004I2-8U; Thu, 12 Mar 2026 06:12:17 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
+ id 1w0d1b-0003QQ-GQ; Thu, 12 Mar 2026 06:12:17 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62C3SiMN2853554; Thu, 12 Mar 2026 10:12:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=xBI8GH
+ S3yM21JLVvcbHS8HPbOhCOH+2o9uKyb3CS7c4=; b=jcPUfmLYyBJSrftcnGhnSg
+ VPVhjli7uhJPDBxHQ92tf9mRWLt3y+i7uAQru+LFQCJK7r95JmZPtAJCf+qTMA+o
+ CpRzejO5Z2NBlqPg1FCKrUaL88+tb01lAZ5VQX+vWZIFjgsczZjdvbWKwqXhz7Kh
+ 57Lw6VrXPdO2tG60jGl8Dwih/qVXkwORlQh+VgbTFgG2YQrPYPy0oOj7dYRiWv9J
+ myJQEjdSfoB5fC1y2Vn7dfhijU8u9w0y07m6A0NdVjSFoLubLFU2BVwMni+DZ8xJ
+ m7BTaIkRvGIidd1815a9ROoxqjx7f8C7bvBB2+4LBeUrrlaNidcso7YupkJ1Ou9g
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh91j3w1-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Mar 2026 10:11:59 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62C9jVSU020802;
+ Thu, 12 Mar 2026 10:11:58 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cuha9hv18-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 12 Mar 2026 10:11:58 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62CABuVD49545628
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 12 Mar 2026 10:11:56 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 75B2E2004F;
+ Thu, 12 Mar 2026 10:11:56 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D57DB2004D;
+ Thu, 12 Mar 2026 10:11:55 +0000 (GMT)
+Received: from [0.0.0.0] (unknown [9.111.88.140])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 12 Mar 2026 10:11:55 +0000 (GMT)
+Message-ID: <c776bbc1-6021-45d0-a5ca-74e50d906f4f@linux.ibm.com>
+Date: Thu, 12 Mar 2026 11:11:55 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/xtensa/cpu: Move initialization of memory region
- to realize function
+Subject: Re: [PATCH 1/7] tests/docker: add gdb-multiarch to all-test-cross
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Brad Smith <brad@comstyle.com>, qemu-arm@nongnu.org,
+ Kyle Evans <kevans@freebsd.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Thomas Huth <thuth@redhat.com>, Warner Losh <imp@bsdimp.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+References: <20260306161728.2657486-1-alex.bennee@linaro.org>
+ <20260306161728.2657486-2-alex.bennee@linaro.org>
+ <78c8b024-6dd5-4f1b-a19c-c7a71c7acc9f@linaro.org>
+ <7e6cdb4b-4cb8-4968-acce-56db2f0ee307@linaro.org>
+ <97506340-18a4-4691-8017-110ab2fc76b8@linaro.org>
+ <3c2bf09d-245c-4de7-b55d-37085ef24545@linaro.org>
 Content-Language: en-US
-To: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>
-Cc: Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20260311202503.107026-1-thuth@redhat.com>
- <87y0jxzdrk.fsf@pond.sub.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <87y0jxzdrk.fsf@pond.sub.org>
+From: Ilya Leoshkevich <iii@linux.ibm.com>
+In-Reply-To: <3c2bf09d-245c-4de7-b55d-37085ef24545@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: alHXxI1I6TJ9TjST1ukU8HYU1ekFO1b4
+X-Authority-Analysis: v=2.4 cv=E6/AZKdl c=1 sm=1 tr=0 ts=69b2916f cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=KKAkSRfTAAAA:8
+ a=3_ro50KVStqSI-_O7f4A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+ a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEyMDA3OCBTYWx0ZWRfX1VR3nCwZzwkK
+ ZBSztEiRG/2Bw4ojyzm/F6gUJne8vtwrYgcCSfOfHcbBqoH7L2OL/xi+K/wuZE7WvJcA6kn2dcv
+ 2DzN0XvQoZhIe+vYj+1JRRme78XSCSss3UTOjFGWE4uFhpRbRGlh5SNqr8Uro2yWs14E9oBvyRz
+ PjmlB5ZxMbxTvDKRWGO97C8TlICAaJsvOhjkYHKVxztwvax3lwOQw7xCA0AlZAW+3p6mBxrF/tX
+ qcbYdre8zh/8djnH3hTBYWBvHCJ8GlVnrLl+5B6zr5xmbnj9sgTlc9a/dF78pmjAKcUuRAkspII
+ oEiFheg4Ipcy9i5/jW5qgqae+YWj0IhJGOrKGlsyEZDC3J2QVS7IcyXJtnPTv26AlO9pWmMBouD
+ bB3tKy07udF1dWCLzPetHV6N60BsTPjCicMzy1ATgvD8vJ95bmq9NoCf2tD9p6Zmxx9BYWlfrp0
+ rKwgleLyhzDrz/ys/tg==
+X-Proofpoint-ORIG-GUID: alHXxI1I6TJ9TjST1ukU8HYU1ekFO1b4
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 clxscore=1011 malwarescore=0 phishscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603120078
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,112 +133,56 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/26 08:51, Markus Armbruster wrote:
-> Thomas Huth <thuth@redhat.com> writes:
-> 
->> From: Thomas Huth <thuth@redhat.com>
->>
->> When introspecting the xtensa CPUs from the command line, QEMU currently
->> crashes:
->>
->>   $ ./qemu-system-xtensa -device dc233c-xtensa-cpu,help
->>   qemu-system-xtensa: ../../devel/qemu/system/physmem.c:1401:
->>    register_multipage: Assertion `num_pages' failed.
->>   Aborted (core dumped)
->>
->> Move the initialization of the memory regions to the realize function
->> to fix this problem.
->>
->> Reported-by: Markus Armbruster <armbru@redhat.com>
->> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> 
-> Looking a bit closer at the code leading to the assertion failure:
-> TARGET_PAGE_BITS (macro expanding to target_page.bits) is still zero.
-> Hmm.  Is this a regression?  If yes, could there be more invalid uses of
-> TARGET_PAGE_BITS we haven't discovered, yet?  I guess they'd also be
-> relatively safe, as TARGET_PAGE_BITS becomes valid before things get
-> spicy, i.e. before the guest runs.
-> 
-> I tested v10.2.0, and it also crashes, but the assertion differs:
-> 
->      qemu-system-xtensa: ../system/physmem.c:1337: phys_section_add: Assertion `map->sections_nb < TARGET_PAGE_SIZE' failed.
-> 
-> So, if it's a regression, it's not a recent one.
-> 
-> Another interesting detail is how TARGET_PAGE_BITS is defined:
-> 
->      #ifdef TARGET_PAGE_BITS_VARY
->      [...]
->      # ifdef CONFIG_DEBUG_TCG
->      #  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
->                                      target_page.bits; })
-> 
-> Here, we assert it's valid.
-> 
->      [...]
->      # else
->      #  define TARGET_PAGE_BITS   target_page.bits
-> 
-> Here, we just trust it.  I guess because the assertion above is
-> too expensive.
-> 
->      [...]
->      #else
-> 
-> And here it seems to be pulled from elsewhere.  The possible elsewheres
-> seem to be target/$target/cpu-param.h, which #define it as an integer
-> literal.
-> 
->      [...]
->      #endif
-> 
-> Cc'ing Richard, who has worked in the TARGET_PAGE_BITS area.  Just fyi,
-> Richard, I'm not asking you for further input.
 
-Correct analysis, I'll have a look.
-
-> 
->> ---
->>   target/xtensa/cpu.c | 14 ++++++++------
->>   1 file changed, 8 insertions(+), 6 deletions(-)
+On 3/11/26 00:28, Philippe Mathieu-Daudé wrote:
+> On 11/3/26 00:22, Pierrick Bouvier wrote:
+>> On 3/10/26 4:07 PM, Philippe Mathieu-Daudé wrote:
+>>> On 10/3/26 23:33, Philippe Mathieu-Daudé wrote:
+>>>> On 6/3/26 17:17, Alex Bennée wrote:
+>>>>> This allows the gdb integration tests to be run as well.
+>>>>>
+>>>>> Signed-off-by: Alex Bennée <alex.bennee@linaro.org>
+>>>>> ---
+>>>>>    tests/docker/dockerfiles/debian-all-test-cross.docker | 1 +
+>>>>>    tests/lcitool/refresh                                 | 1 +
+>>>>>    2 files changed, 2 insertions(+)
+>>>>
+>>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>
+>>> I'm getting:
+>>>
+>>> Python Exception <class 'gdb.MemoryError'>: Cannot access memory at
+>>> address 0x45001fff
+>>> Error occurred in Python: Cannot access memory at address 0x45001fff
+>>> qemu-hppa: QEMU: Terminated via GDBstub
+>>> make[1]: ***
+>>> [/builds/philmd/qemu/tests/tcg/multiarch/Makefile.target:121:
+>>> run-gdbstub-prot-none] Error 1
+>>> make[1]: *** Waiting for unfinished jobs....
+>>> qemu-hppa: QEMU: Terminated via GDBstub
+>>> warning: Could not load shared library symbols for linux-vdso32.so.1.
+>>> Do you need "set solib-search-path" or "set sysroot"?
+>>> make: *** [/builds/philmd/qemu/tests/Makefile.include:66:
+>>> run-tcg-tests-hppa-linux-user] Error 2
+>>>
 >>
->> diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
->> index 86ec899a67c..eebf40559bc 100644
->> --- a/target/xtensa/cpu.c
->> +++ b/target/xtensa/cpu.c
->> @@ -244,6 +244,14 @@ static void xtensa_cpu_realizefn(DeviceState *dev, Error **errp)
->>       Error *local_err = NULL;
->>   
->>   #ifndef CONFIG_USER_ONLY
->> +    CPUXtensaState *env = &XTENSA_CPU(dev)->env;
->> +
->> +    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
->> +    env->system_er = g_malloc(sizeof(*env->system_er));
->> +    memory_region_init_io(env->system_er, OBJECT(dev), NULL, env, "er",
->> +                          UINT64_C(0x100000000));
->> +    address_space_init(env->address_space_er, env->system_er, "ER");
->> +
->>       xtensa_irq_init(&XTENSA_CPU(dev)->env);
->>   #endif
->>   
->> @@ -269,12 +277,6 @@ static void xtensa_cpu_initfn(Object *obj)
->>       env->config = xcc->config;
->>   
->>   #ifndef CONFIG_USER_ONLY
->> -    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
->> -    env->system_er = g_malloc(sizeof(*env->system_er));
->> -    memory_region_init_io(env->system_er, obj, NULL, env, "er",
->> -                          UINT64_C(0x100000000));
->> -    address_space_init(env->address_space_er, env->system_er, "ER");
->> -
->>       cpu->clock = qdev_init_clock_in(DEVICE(obj), "clk-in", NULL, cpu, 0);
->>       clock_set_hz(cpu->clock, env->config->clock_freq_khz * 1000);
->>   #endif
-> 
-> Fixes the crash for all xtensa CPUs.
-> 
-> Tested-by: Markus Armbruster <armbru@redhat.com>
-> 
-> 
+>> To add more information, we tested it on GitHub, our machines and 
+>> GitLab, and for an unknown reason, it only fails on GitLab runners.
+>
+> Also we tested on our local Linux machines, where this test pass
+> for all our targets ;)
+>
+>>
+>> Which is unfortunate since it is where QEMU run its CI.
+>>
+>> Regards,
+>> Pierrick
+>
+FWIW it passes on my laptop as well.
+
+Does this test fail only for hppa, or for other architectures as well?
+
+I'm asking because it may have something to do with /proc/self/mem or 
+with the architecture.
 
 
