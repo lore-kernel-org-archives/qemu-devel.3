@@ -4,119 +4,131 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC861106ACF0
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 22:27:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25C06106ACEF
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 22:36:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0oUc-0004S1-Iv; Thu, 12 Mar 2026 18:26:58 -0400
+	id 1w0odV-0005aY-3o; Thu, 12 Mar 2026 18:36:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kim.phillips@amd.com>)
- id 1w0nyB-0007fw-3r
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:53:27 -0400
-Received: from mail-westus3azon11012010.outbound.protection.outlook.com
- ([40.107.209.10] helo=PH8PR06CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kim.phillips@amd.com>)
- id 1w0ny5-0003VD-RJ
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 17:53:25 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=URcHVROojwuSlyglQSSxDNz31cO+or4COyBi3TeV/HfWrPyZ10D3IjNjZoOpb4Y1QtQKjrQ1BhJF8TFyhLNe1PHO/Kx2+KhpaGp5NzvS/N8oCuB0PNMCbB3pYu9ZRdOlmm4hmnw7X3E0i3ERSawi7tEDYCCTiNRlmpp+1udE+W7xfKID5fb8ugoAfJxh1UsLMpnt4xdSST2CtxRzBn4jx38YZVamFYjfXHwVGz9USN8TJkc1EdjDO7Zvo6gkGtWrLImiYWFTOZg04jVo1hQcq22YtnUgnKMLkW5CwOR/T35w8tANlHJu0Q7t1eSRG4c7PI8djrZyfPw6QCPgXFTfiw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=ULfRo/lFx9EYCPAAO+YjYVsWbqjeBoaC3L0R5vDLNJw=;
- b=PJbrnozmtKAUUoQdP5Yo4fa0wRy2bbeXUhuFDfy06GG9D2lEySiERc+a69F/KMyt8IiNfQGTQcIkp6WgokLgZlOZYeI5f0uuelFRracBX6dZQ7FSm/5qYBRa0XiazoPD9DUdJUk9GYZxuaeTn1HNVs/WcAOai0HKvXwnL6MKK1KEpQT61zHLhoTB6vbKHq39SU3BlncJsDqp7ZK6R+TbCvmaP60acPNO1BaZ5NqAi9h1T3AWjvNfmwX/TzQ/Xn2agrVQsOvuQYKq+Pk0m1Y9b8u5ExmMm9B6y87BiMI6f06BvUe4A18Zp7galGO3syOJVK8K6S9Z9DKVsWRde6vC6Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=redhat.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ULfRo/lFx9EYCPAAO+YjYVsWbqjeBoaC3L0R5vDLNJw=;
- b=0QuP/vOJHLVdpZw5zvncwa4H64LuAaWNe4A8r23NJ/l7uiwhfEdw4DIDNPzzYyPI1n0Om6Ep2sGSzFjSnLwKsGYy8y2A9aMHdkWOD2hyOWB3HBnoXFrJziIf0EId/ure+bpwsaa17CMzN6hgL7umsqSZ2vKRCBey0gvItz/rDsg=
-Received: from BY1P220CA0001.NAMP220.PROD.OUTLOOK.COM (2603:10b6:a03:59d::14)
- by MN0PR12MB6055.namprd12.prod.outlook.com (2603:10b6:208:3cd::20)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.6; Thu, 12 Mar
- 2026 21:48:12 +0000
-Received: from MWH0EPF000A6735.namprd04.prod.outlook.com
- (2603:10b6:a03:59d:cafe::86) by BY1P220CA0001.outlook.office365.com
- (2603:10b6:a03:59d::14) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.28 via Frontend Transport; Thu,
- 12 Mar 2026 21:48:31 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- MWH0EPF000A6735.mail.protection.outlook.com (10.167.249.27) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9678.18 via Frontend Transport; Thu, 12 Mar 2026 21:48:11 +0000
-Received: from [10.236.30.85] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 12 Mar
- 2026 16:48:11 -0500
-Message-ID: <df63fdf0-05ea-4de0-8009-c52703e4b052@amd.com>
-Date: Thu, 12 Mar 2026 16:48:10 -0500
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0odS-0005aJ-U0
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 18:36:06 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0odQ-0008Vi-6J
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 18:36:06 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-50917417efbso13829201cf.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 15:36:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773354962; x=1773959762; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=7/f2XhvYKuQnuLaITTj/nhCxq4dCAMUs84kWHd2RjhM=;
+ b=H5tTbho/2wx7P21OxqSFASKhnSQYqhZluEAG3miWOIP/3EHLLEGfPuQLjL9Ds3NXel
+ JRvSwJLwKb23Wc4h8zHllQh2ZbP2EZEXWDYbkdNqaWry8xWlOG22WqD1pgUdwtvHDf/J
+ NfrDtK6OOFGiCZew5O+kEGEID6LKOjrDzBlmwoHNDmk+LVsy/tcnronpT1vJlzhvTtaq
+ fGjruvIvuSk5xQVuRAvWK5OJsWYz25Zz+xI3KdtFJMP/fnVnx8CTXKJF6EvZ/+Vs4QBH
+ bzIfHQfB8g3y4TY83har+paEfbgbKpT8GwNXCweWbkCz/mZQab5so+u00GvUR5hpPhdw
+ da7Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773354962; x=1773959762;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7/f2XhvYKuQnuLaITTj/nhCxq4dCAMUs84kWHd2RjhM=;
+ b=CzW2nXjNfbeqWjU+bR9UpEH62j9EczR+n2hVJXDLlrfAujtdi3JqYzhvXZPHmzBrmz
+ wxD5lAmNjCE2MWjGaYQ6yQ7SB8Woxh5Zx4OmWoLp1PmERIYuSX8biGIuf2WQUfFo81JM
+ kBFDby2qVm1nxjbXKHiR2obzPc2mw5gR68QPcSduFZEt5Tab0KPfclXj8ov0HVRZnRvf
+ 3G164MHSgU8/m02oYQUyE2g/XH7gghLo4hDrxg4HmDo5QPcvezTiTOTVTUs5Q+4gpD8y
+ MIyBkw+L7Nbl3WqdrR1peajpmXb92pYvC5g8Y0044/BrDxnnFmFULxI41L2H34CA8VMk
+ Z1XA==
+X-Gm-Message-State: AOJu0YxZSbnDL/yz5dYVg4Ru8UfbCcr/rAVRCkb++FoFC8Uf9YUPvFcF
+ ir8YXcJHtgR4buslq6ujqtNh9/v66K6cu3NQ3SPhJqFpZ+lzRijyE4xFK5AFfrbeaJY=
+X-Gm-Gg: ATEYQzySlcC5Ypg9WSdWPA6OjUmFd8ZrAHZs5LQq8LcqDCEKqAcH0g3pjvwpWDcg+rd
+ wdeaNB42DuGjhBk58JA1O9fBn6zG2Zry56juerz2hsAFaq1OOtlDLAPiKCjRJ/EjpUy89CoSNf5
+ AE1brTasUfUVJPj5K5PA4yRvxm136UHdU89oWT/fheAnNq0kWfQgGmeJBGE6jb6ZUyVM4hGudI+
+ iLgGCNTs0tHk9l6fj+615OHq1mQkTMtyMS5kyBEQ0MPPtIPdzSJtu628vPhHOC8+pxoeczC8ANH
+ gzARFp2mv6yZTt1Gymj28c/Rm0HmmUNhuSuW1PZkITIxwkHqP+QVjErG9hwWZZBd10Z/NKNu8Z/
+ 8OGm4jsjWpjWzyubROoZkhOrk9/PK5BuPwe3F6N5CSl/k9fDMcwcWPLiz1kWVZ3uxTd8/kZH0/M
+ 2LNmxTBfJDUB+49F8JWBkrSw1WzBs1u7KdpX4zcqvO0Rxam9syDzTKC2aUSWfbJCp2Zpwk
+X-Received: by 2002:a05:622a:202:b0:509:1688:f8cf with SMTP id
+ d75a77b69052e-50956fd88ecmr19797461cf.0.1773354962452; 
+ Thu, 12 Mar 2026 15:36:02 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5093a14d7a6sm40501051cf.33.2026.03.12.15.36.01
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Mar 2026 15:36:02 -0700 (PDT)
+Message-ID: <68903178-92ef-4956-b815-dc4c4533507d@linaro.org>
+Date: Thu, 12 Mar 2026 15:35:59 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 08/18] memory: Factor out common ram region initialization
-To: Peter Xu <peterx@redhat.com>, <qemu-devel@nongnu.org>
-CC: Paolo Bonzini <pbonzini@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>, 
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, Michael Roth
- <michael.roth@amd.com>
-References: <20260309204007.1709441-1-peterx@redhat.com>
- <20260309204007.1709441-9-peterx@redhat.com>
-From: Kim Phillips <kim.phillips@amd.com>
+Subject: Re: [PATCH RFC] common-user: Share thunk.c between bsd-user and
+ linux-user
+To: Warner Losh <imp@bsdimp.com>
+Cc: qemu-devel@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>,
+ Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
+ =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260312-share-thunk-v1-1-2f36003a1913@bsdimp.com>
+ <ffc224cc-72ed-49ee-93ea-8a28d220ae55@linaro.org>
+ <CANCZdfo8cEp8_078o4bEwCo63vL+W5NW9ukeQR0nMACJBQXysw@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Language: en-US
-In-Reply-To: <20260309204007.1709441-9-peterx@redhat.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
+ eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
+ CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
+ gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
+ qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
+ 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
+ L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
+ IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
+ dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
+ AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
+ tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
+ PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
+ F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
+ HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
+ CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
+ UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
+ uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
+ vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
+ FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
+ I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
+ oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
+ TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
+ y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
+ /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
+ YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
+ DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
+ v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
+ 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
+ 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
+ dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
+ 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
+ X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <CANCZdfo8cEp8_078o4bEwCo63vL+W5NW9ukeQR0nMACJBQXysw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: MWH0EPF000A6735:EE_|MN0PR12MB6055:EE_
-X-MS-Office365-Filtering-Correlation-Id: 7252d9d5-a2a7-4637-8e9f-08de80810eba
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|1800799024|82310400026|36860700016|376014|22082099003|18002099003|56012099003|7053199007|13003099007;
-X-Microsoft-Antispam-Message-Info: cevEWsythAKcBDQQ2R6vNfPtGbBejcFkDD0AvorzWzbGmuMF12MSkL5kcz6SKS/NMGYC+oZYjJ+HpHjVJTk2/gIA/PWnILLGmsGW0+iWj1QpJhqV9BJONrI39Mw1d/wysAH7MQAweYuhFRq8uo96prKGam+6zio9yBmfy4NRjjdAhlAG4mkQA6P3LLIHaxX5CUz+Sros7O+Ikh3GCxQTuVpLek58UnlXjnqsmsVdS/vASvkTdJfd94hT1IVKHAJNhGwzFXWJGI4SvbEwbC9VOBI1s0rS3pxDtZlo4Thfn6iBxPs2ehvinI6kvfVHAvBVz6RTp9eVRXLkURCwk00IHlzPCVeS6wQokSAoUgjguzdkqSikvP+q4l7tnTGt0to35a5EmizJCetGrPsE2Fd86aljF67XugbHg8+9qn1Z8hw/C/yPlD3VbEqY41Pm1lGEraMBOBTRgbraViM1nNnknWmvXDIIyzKgnwNAhFn5wG5yPu8FtcNzelHPfGoxcIyl8ZwmGyhxL0AAfqWZE1yacNFEmbMStlSQ3BXBrZNQULlgFxWdwV+9v+nu2PIrutAtkQV/ll7CzoXNMKxirV2cNWworv0l7aekqFPMDVMsC0Gcj9AIUw2ClXKVGCl4XDewrzQR+WcXUX36d+RoPGdLokIQu610prMUeRb4aZPljLZlBVkeOJA/3I4Jpdo+SiSZ9bs/5NS5Bm5xQemC1bCErf2QCbnlgJgyPCADdmWZmLeMOcp4hr3Zi/9/YfAY5Up54oIfv0SLx8clFKP9nTaUfg==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(1800799024)(82310400026)(36860700016)(376014)(22082099003)(18002099003)(56012099003)(7053199007)(13003099007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: JonS1TSG2PCL15lnaqZbERzN4Z3Yd+1exRWTPwsMtfjt37wsljbIhLt+pDYREy3VCrB1B/LQMLcil/9hK7tHafQ+Au2BcYqJ6/ODqwLmmL6uNfp0XSy2XEtfDkx8modpXJkySFt86wkNV5OrcHg143011C42A7oRrNORlshfRE28VQ/aorNsLRAX+6s75rccs0vH4daPJdI3zOfJijqhyK3mMP80LRfr8K4PiWXb8QrusBRfTPHnDEBZxo8vvny5rSFKQMT6HIacPOOnLmpDPNTzagNTxTgerXZctIttVnm8l8ba3DFAa57A3dbNXz+fIVvpqkgqIgI+kNQ1Bd1EraRnWIVmEyHU1GXTQDoAmPlmAXQkArZNkDAe8WXsYSd2GA8r+L+WD0slbnrMYTy1Wa9tTvhvaVDO3v/lvznNVXuBQ8QX31iVkoJdOXYPGieE
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Mar 2026 21:48:11.8348 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 7252d9d5-a2a7-4637-8e9f-08de80810eba
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: MWH0EPF000A6735.namprd04.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MN0PR12MB6055
-Received-SPF: permerror client-ip=40.107.209.10;
- envelope-from=kim.phillips@amd.com;
- helo=PH8PR06CU001.outbound.protection.outlook.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 12 Mar 2026 18:26:55 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -131,313 +143,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/9/26 3:39 PM, Peter Xu wrote:
-> From: BALATON Zoltan <balaton@eik.bme.hu>
+On 3/12/26 1:19 PM, Warner Losh wrote:
+> 
+> 
+> On Thu, Mar 12, 2026 at 11:52 AM Pierrick Bouvier 
+> <pierrick.bouvier@linaro.org <mailto:pierrick.bouvier@linaro.org>> wrote:
+> 
+>     On 3/12/26 6:10 AM, Warner Losh wrote:
+>      > thunk.c is the same between linux-user and bsd-user (out of tree),
+>      > so share it between the two.
+>      >
+>      > Signed-off-by: Warner Losh <imp@bsdimp.com <mailto:imp@bsdimp.com>>
+>      > ---
+>      > As part of upstream blitz bsd-user, I've discovered that bsd-user and
+>      > linux-user have the same thunk.c file. Rather than copy it, put
+>     it into
+>      > the common-user directory and share it. It has to be compiled
+>      > per-target, unlike the rest of common-user, so modify linux-user and
+>      > bsd-user to grab it from there.
+>      > ---
+>      >   bsd-user/meson.build                | 1 +
+>      >   {linux-user => common-user}/thunk.c | 0
+>      >   linux-user/meson.build              | 2 +-
+>      >   3 files changed, 2 insertions(+), 1 deletion(-)
+>      >
+> 
+>     Indeed, thunk.c seems to be highly target specific.
+>     A good solution would be to move common functions to common-user/
+>     thunk.c
+>     and the rest in include/user/thunk.h. It may be cleaner than doing the
+>     meson hack. Or leave it duplicated for now, except if you plan on
+>     modifying it.
+> 
+> 
+> My concern with leaving it duplicated is the process. I create a patch 
+> to create
+> bsd-user/thunk.c that's a verbatim copy of linux-user/thunk.c. Despite 
+> putting in
+> my cover that this is copied code, if past is prologue, then I'll be 
+> asked to fix the
+> copyright and style, plus lots of suggestions to improve the code. But 
+> it's just a
+> verbatim copy, so that's a lot of hassle just to copy it.
 >
-> Introduce internal helper function to remove duplicated code from
-> different memory_region_init_*ram functions. Remove local err and
-> error_propagate and pass errp and check return value instead.
-> Also shorten some function prototypes while at it.
+
+I understand, and it's a good intention to want to remove this 
+duplication. However, I'm not convinced a build system hack is better 
+than a duplication.
+
+> Moving like this, though, is almost 0 friction. A small tweak to meson 
+> is all that's
+> needed. I suppose I could do the #include "../linux-user/trunk.c" trick 
+> to make it
+> less ugly in the build system, but then it's not clear it's shared, etc 
+> and more ugly
+> in the code, imho.
 >
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-> Link: https://lore.kernel.org/r/d6db01c283149b46023ffeb9c5b368c67f6acc8d.1772924151.git.balaton@eik.bme.hu
-> Signed-off-by: Peter Xu <peterx@redhat.com>
-> ---
 
-Hi, I bisected master (fff352b9b6) to this patch as the first bad commit 
-that results in this very early qemu error:
+Yes, it's a hack, that's what it's for, "quick and that works but not a 
+proper solution".
 
-ERROR:../system/memory.c:2042:memory_region_set_ram_discard_manager: 
-assertion failed: (memory_region_is_ram(mr))
-
-It's pointing to this line of code:
-
-int memory_region_set_ram_discard_manager(MemoryRegion *mr,
-                                           RamDiscardManager *rdm)
-{
-     g_assert(memory_region_is_ram(mr));   <<<<<
-
-Qemu then bails out. The command line is:
-
-sudo /usr/bin/qemu-system-x86_64 -enable-kvm \
-  -drive 
-file=/home/amd/ubuntu-22.04-server-cloudimg-amd64-kim.qcow2,if=none,id=disk0,format=qcow2 
-\
-  -device virtio-scsi-pci,id=scsi0,disable-legacy=on,iommu_platform=true \
-  -device scsi-hd,drive=disk0 \
-  -cpu EPYC-v4 \
-  -bios /home/amd/OVMF.fd \
-  -machine memory-encryption=sev0,vmport=off \
-  -object memory-backend-memfd,id=ram1,size=8G,share=true,prealloc=false \
-  -machine memory-backend=ram1  \
-  -object 
-sev-snp-guest,id=sev0,policy=0xb0000,cbitpos=51,reduced-phys-bits=1 \
-  -monitor unix:qemu-monitor-socket,server,nowait \
-  -smp 2 -m 8G -nographic -s \
-  --kernel /home/amd/git/linux/arch/x86/boot/bzImage \
-  --append "verbose debug console=ttyS0,115200n8 
-earlyprintk=ttyS0,115200 log_level=8 keep_bootcon root=/dev/sda1" \
-  --initrd /boot/initrd.img \
-  -no-reboot
-
-The host (& guest) kernel version is a vanilla v6.19, with an Ubuntu 
-based config.
-
-Let me know if there's something you'd like me to test on my AMD EPYC 
-system.
-AFAICT, it fails on all Zens that support SEV-SNP (Zen3+).
-
-Thanks,
-
-Kim
-
->   system/memory.c | 167 ++++++++++++++++++------------------------------
->   1 file changed, 61 insertions(+), 106 deletions(-)
+> I tried to move this stuff into thunk.h as much as possible so we could 
+> have one
+> compilation, and that didn't work. It really assumes that it can include 
+> qemu.h for
+> the tswap, etc macros. So it's impossible to just build once.
 >
-> diff --git a/system/memory.c b/system/memory.c
-> index 9a12224555..2cda814bd6 100644
-> --- a/system/memory.c
-> +++ b/system/memory.c
-> @@ -1568,39 +1568,39 @@ static void memory_region_set_ops(MemoryRegion *mr,
->       mr->terminates = true;
->   }
->   
-> -void memory_region_init_io(MemoryRegion *mr,
-> -                           Object *owner,
-> -                           const MemoryRegionOps *ops,
-> -                           void *opaque,
-> -                           const char *name,
-> -                           uint64_t size)
-> +void memory_region_init_io(MemoryRegion *mr, Object *owner,
-> +                           const MemoryRegionOps *ops, void *opaque,
-> +                           const char *name, uint64_t size)
->   {
->       memory_region_init(mr, owner, name, size);
->       memory_region_set_ops(mr, ops, opaque);
->   }
->   
-> -bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr,
-> -                                            Object *owner,
-> -                                            const char *name,
-> -                                            uint64_t size,
-> -                                            uint32_t ram_flags,
-> -                                            Error **errp)
-> +static bool memory_region_set_ram_block(MemoryRegion *mr, RAMBlock *rb)
->   {
-> -    Error *err = NULL;
-> -    memory_region_init(mr, owner, name, size);
->       mr->ram = true;
->       mr->terminates = true;
->       mr->destructor = memory_region_destructor_ram;
-> -    mr->ram_block = qemu_ram_alloc(size, ram_flags, mr, &err);
-> -    if (err) {
-> +    mr->ram_block = rb;
-> +    if (!rb) {
->           mr->size = int128_zero();
->           object_unparent(OBJECT(mr));
-> -        error_propagate(errp, err);
->           return false;
->       }
->       return true;
->   }
->   
-> +bool memory_region_init_ram_flags_nomigrate(MemoryRegion *mr, Object *owner,
-> +                                            const char *name, uint64_t size,
-> +                                            uint32_t ram_flags, Error **errp)
-> +{
-> +    RAMBlock *rb;
-> +
-> +    memory_region_init(mr, owner, name, size);
-> +    rb = qemu_ram_alloc(size, ram_flags, mr, errp);
-> +    return memory_region_set_ram_block(mr, rb);
-> +}
-> +
->   bool memory_region_init_resizeable_ram(MemoryRegion *mr,
->                                          Object *owner,
->                                          const char *name,
-> @@ -1611,116 +1611,74 @@ bool memory_region_init_resizeable_ram(MemoryRegion *mr,
->                                                          void *host),
->                                          Error **errp)
->   {
-> -    Error *err = NULL;
-> +    RAMBlock *rb;
-> +
->       memory_region_init(mr, owner, name, size);
-> -    mr->ram = true;
-> -    mr->terminates = true;
-> -    mr->destructor = memory_region_destructor_ram;
-> -    mr->ram_block = qemu_ram_alloc_resizeable(size, max_size, resized,
-> -                                              mr, &err);
-> -    if (err) {
-> -        mr->size = int128_zero();
-> -        object_unparent(OBJECT(mr));
-> -        error_propagate(errp, err);
-> -        return false;
-> -    }
-> -    return true;
-> +    rb = qemu_ram_alloc_resizeable(size, max_size, resized, mr, errp);
-> +    return memory_region_set_ram_block(mr, rb);
->   }
->   
->   #if defined(CONFIG_POSIX) && !defined(EMSCRIPTEN)
-> -bool memory_region_init_ram_from_file(MemoryRegion *mr,
-> -                                      Object *owner,
-> -                                      const char *name,
-> -                                      uint64_t size,
-> -                                      uint64_t align,
-> -                                      uint32_t ram_flags,
-> -                                      const char *path,
-> -                                      ram_addr_t offset,
-> +bool memory_region_init_ram_from_file(MemoryRegion *mr, Object *owner,
-> +                                      const char *name, uint64_t size,
-> +                                      uint64_t align, uint32_t ram_flags,
-> +                                      const char *path, ram_addr_t offset,
->                                         Error **errp)
->   {
-> -    Error *err = NULL;
-> +    RAMBlock *rb;
-> +
->       memory_region_init(mr, owner, name, size);
-> -    mr->ram = true;
->       mr->readonly = !!(ram_flags & RAM_READONLY);
-> -    mr->terminates = true;
-> -    mr->destructor = memory_region_destructor_ram;
->       mr->align = align;
-> -    mr->ram_block = qemu_ram_alloc_from_file(size, mr, ram_flags, path,
-> -                                             offset, &err);
-> -    if (err) {
-> -        mr->size = int128_zero();
-> -        object_unparent(OBJECT(mr));
-> -        error_propagate(errp, err);
-> -        return false;
-> -    }
-> -    return true;
-> +    rb = qemu_ram_alloc_from_file(size, mr, ram_flags, path, offset, errp);
-> +    return memory_region_set_ram_block(mr, rb);
->   }
->   
-> -bool memory_region_init_ram_from_fd(MemoryRegion *mr,
-> -                                    Object *owner,
-> -                                    const char *name,
-> -                                    uint64_t size,
-> -                                    uint32_t ram_flags,
-> -                                    int fd,
-> -                                    ram_addr_t offset,
-> -                                    Error **errp)
-> +bool memory_region_init_ram_from_fd(MemoryRegion *mr, Object *owner,
-> +                                    const char *name, uint64_t size,
-> +                                    uint32_t ram_flags, int fd,
-> +                                    ram_addr_t offset, Error **errp)
->   {
-> -    Error *err = NULL;
-> +    RAMBlock *rb;
-> +
->       memory_region_init(mr, owner, name, size);
-> -    mr->ram = true;
->       mr->readonly = !!(ram_flags & RAM_READONLY);
-> -    mr->terminates = true;
-> -    mr->destructor = memory_region_destructor_ram;
-> -    mr->ram_block = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd,
-> -                                           offset, false, &err);
-> -    if (err) {
-> -        mr->size = int128_zero();
-> -        object_unparent(OBJECT(mr));
-> -        error_propagate(errp, err);
-> -        return false;
-> -    }
-> -    return true;
-> +    rb = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, offset,
-> +                                false, errp);
-> +    return memory_region_set_ram_block(mr, rb);
->   }
->   #endif
->   
-> -void memory_region_init_ram_ptr(MemoryRegion *mr,
-> -                                Object *owner,
-> -                                const char *name,
-> -                                uint64_t size,
-> +void memory_region_init_ram_ptr(MemoryRegion *mr, Object *owner,
-> +                                const char *name, uint64_t size,
->                                   void *ptr)
->   {
-> -    memory_region_init(mr, owner, name, size);
-> -    mr->ram = true;
-> -    mr->terminates = true;
-> -    mr->destructor = memory_region_destructor_ram;
-> +    RAMBlock *rb;
->   
-> +    memory_region_init(mr, owner, name, size);
->       /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
->       assert(ptr != NULL);
-> -    mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-> +    rb = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-> +    memory_region_set_ram_block(mr, rb);
->   }
->   
-> -void memory_region_init_ram_device_ptr(MemoryRegion *mr,
-> -                                       Object *owner,
-> -                                       const char *name,
-> -                                       uint64_t size,
-> +void memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
-> +                                       const char *name, uint64_t size,
->                                          void *ptr)
->   {
-> +    RAMBlock *rb;
-> +
->       memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
-> -    mr->ram = true;
->       mr->ram_device = true;
-> -    mr->destructor = memory_region_destructor_ram;
-> -
->       /* qemu_ram_alloc_from_ptr cannot fail with ptr != NULL.  */
->       assert(ptr != NULL);
-> -    mr->ram_block = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-> +    rb = qemu_ram_alloc_from_ptr(size, ptr, mr, &error_abort);
-> +    memory_region_set_ram_block(mr, rb);
->   }
->   
-> -void memory_region_init_alias(MemoryRegion *mr,
-> -                              Object *owner,
-> -                              const char *name,
-> -                              MemoryRegion *orig,
-> -                              hwaddr offset,
-> -                              uint64_t size)
-> +void memory_region_init_alias(MemoryRegion *mr, Object *owner,
-> +                              const char *name, MemoryRegion *orig,
-> +                              hwaddr offset, uint64_t size)
->   {
->       memory_region_init(mr, owner, name, size);
->       mr->alias = orig;
-> @@ -3732,21 +3690,18 @@ bool memory_region_init_rom_device(MemoryRegion *mr, Object *owner,
->                                      const char *name, uint64_t size,
->                                      Error **errp)
->   {
-> -    Error *err = NULL;
-> +    RAMBlock *rb;
->   
->       assert(ops);
->       memory_region_init_io(mr, owner, ops, opaque, name, size);
-> -    mr->rom_device = true;
-> -    mr->destructor = memory_region_destructor_ram;
-> -    mr->ram_block = qemu_ram_alloc(size, 0, mr, &err);
-> -    if (err) {
-> -        mr->size = int128_zero();
-> -        object_unparent(OBJECT(mr));
-> -        error_propagate(errp, err);
-> -        return false;
-> +    rb = qemu_ram_alloc(size, 0, mr, errp);
-> +    if (memory_region_set_ram_block(mr, rb)) {
-> +        mr->ram = false;
-> +        mr->rom_device = true;
-> +        memory_region_register_ram(mr, owner);
-> +        return true;
->       }
-> -    memory_region_register_ram(mr, owner);
-> -    return true;
-> +    return false;
->   }
->   
->   /*
 
+Yes, not all functions can be compiled once because they have target 
+dependencies. That's why I invited you to simply extract common 
+functions to common-user/thunk.c and leave the target specific bits in 
+thunk.h (with static inline functions), or in a thunk-target.h header if 
+you really want to do it cleanly. That's the proper solution here.
+
+Build systems and preprocessor are not a shortcut to proper software 
+architecture, even though QEMU abused both of them to this end.
+
+> Now looking at the code, a lot of it would be a lot simpler with 
+> 'Generic', but that's
+> a battle for another day. As is the notion of just generating this data 
+> from the .h files
+> rather than hard-coding it here, but that too is a battle for another 
+> day. I'd like to
+> get this upstreamed so I'm spending my time on these sorts of battle.s
+>
+
+I totally get it, and we have been dealing with a lot of things like 
+this for the single-binary topic, trying to find the good compromises 
+between refactoring APIs and doing limited changes.
+
+If extracting the common and target part looks like too much work, just 
+leave it and simply change the copyright header, it's not a big thing to 
+do, and you can modify both in the same series, no one will yell at you 
+for changing comments in one file in linux-user.
+
+As you said, pick up the right battles and ignore the rest.
+
+> Warner
+
+Regards,
+Pierrick
 
