@@ -4,90 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDD12FED2F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:06:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FAC2FED2F9
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 10:09:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0cvq-0001RC-Gd; Thu, 12 Mar 2026 06:06:18 -0400
+	id 1w0cym-0002pY-1e; Thu, 12 Mar 2026 06:09:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0cvm-0001Ok-Jg
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:06:14 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0cyj-0002oU-99
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:09:17 -0400
+Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0cvk-0002U6-Nw
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:06:14 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48540d21f7dso9599615e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 03:06:12 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0cyh-0002or-9M
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 06:09:16 -0400
+Received: by mail-wr1-x430.google.com with SMTP id
+ ffacd0b85a97d-439cb5af25bso862152f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 03:09:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773309971; x=1773914771; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773310153; x=1773914953; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=iymtGmR/890I08OsjJ87tJm75o/s9OOevshp/uCw5TI=;
- b=qsIGCICO/uD4CKxnsMtdg5d5c+ZE4V4b/t3y7HTh3/GwFEGYCnOUIop5VsXOfO9Npr
- GN/4QtMHYrNldGmciMp0MS1P47gHbNRneRagPpFHz3JggY/xiZk5dIWaMJS6Gc1waZhY
- L+NJ8tyx+dZVHTJ2NTMlpuOvaWopO23Ibrqt3CMUpz+Z8sB8UNZv8DRz0+85fd9WTStg
- fK/fGynYKoPdte5oHA7bwxz1fOI4Wc+p4d8U4mbAiJrThROhLUol0wkx9Nt64zzVNGJN
- /igbDDoTg7SO0QQqDeE5qMbCyTPxFTw2Sj2zzbWfNa44ylNLTpdLjTDQ5nlfs64r0JGX
- N+Rw==
+ bh=B+K0I9JQpvSsWfwMN5Wwpc4BJ9j/WPXcxBGnkjFOL84=;
+ b=Y8fEUw59g3DeM4Rmy4ymjsO4J4peZrxQWp/IDbOKaAaWxnm5BYhzbrnnzh1E0jgS+T
+ iCxKETEXjEcna6o7KidvZAXZ7nObxI/HxvSNdW9NW8lbk5wRO0IIoPzZBAQuxuZ25hoW
+ u348S3JFS+l3/MDarm3pjWCyGcxQQPQaglAFn+yitRQWAF7jUiJFQtV+5JcJdFK+3qSa
+ khwCvL3HDkXqHA0D+zEPzNCSvkpmp5muore29mLa2CGEGDnMMqZL5yXuTSPsuyaQkHEu
+ D18l0jAwYx5ZbOipKiAI9MHQPttFGva4Cjjf95FCIINKmqLMl+bgvvdClVeTPkML5V6C
+ 1JDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773309971; x=1773914771;
+ d=1e100.net; s=20230601; t=1773310153; x=1773914953;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=iymtGmR/890I08OsjJ87tJm75o/s9OOevshp/uCw5TI=;
- b=gksWKz2KlHbmD/TdSzBbQ0vHnVIOh280uZUHCCzvLTQszA5fSV8zipjF304qBo7OLu
- SuLhvkZUL4khi0VYtK63MvSUPcjENtMTDV09AtDgXVtafrkNP7hHzz+JFHEtiNfBdVVw
- TSljvAkiiUbK5G0o4maI4wiwwimMuZpo6ZNzMyuQ2LE93mcydg0WVgPs3GrkQEHRMPkT
- LdcIIHDafi3Uo1Y7QukdsFpzgTYpCCRVzB5CsSc/pACl8cu4E4a6l9T9R94B5qqwzIDQ
- 9Aycx0vp+T36dW9etWC+AjWGsI2MVXbN3COR7ZSEnkiBF5bFF4m1Dv+hTSgkM9eybHda
- S+KA==
-X-Gm-Message-State: AOJu0Yzu/3lKGKuR1Cv79hC439YqS9eOrqtylQf3xzRC3pX/E1rNf8gA
- ajwtoMzR4RDnsCsEgpY/CfMZK9oYOG+dLFr+AkWZDEphH+dkZYgZLBL+sPKste7WiPI=
-X-Gm-Gg: ATEYQzxyMrZy855bWXvzxbU1qVjWlUzzpWP0jIehQ5jmEvQ1ieAJzx7KXWGwxR4KV/O
- yafxptZraBJqrZTdC/AeIMPPm61EZmWgSa7Ya+rpVGIgvGt9J32MMaDpVGoxDCsVopFp/SBKR76
- f4e4ZaHPt2g820J5vN4wE4UrjlNKNJlX/GhplVDP+Iwe3oH2cA+9+YgxIFGG94O4Mm1WPi0tjLb
- m6iIlLue2jvp8LUP1IBPuUpwjzO7kjQypQ93cPOZS3kkDPFujl550IykIhPrlLaPzhhhF5RZe9B
- 01YvMXu+JoU69Q9Q1XzQZh/lefUgC8L62wgS29HU0OdIcG36cl3rUlMvQZwnt8FSYPu2H0kz1Q2
- DeP6itwf5Zx2zGdVbcvA/1yMHCEmuDgLFQcgYNtpwZoCAwQ3vW/O6AWFfd9lT2o+tnXxaUHJuPb
- nSH4fqH3dHWc6gG0nK+sZhjwZA8OphN6z4kztto1wXOZSvrji/9pDWb6PUCOMpkjU8DQ==
-X-Received: by 2002:a05:6000:2304:b0:439:c5cf:fc73 with SMTP id
- ffacd0b85a97d-439f81e23cfmr11240689f8f.12.1773309970604; 
- Thu, 12 Mar 2026 03:06:10 -0700 (PDT)
+ bh=B+K0I9JQpvSsWfwMN5Wwpc4BJ9j/WPXcxBGnkjFOL84=;
+ b=lDBxm4RKNpEdWgIOvbOJt/+L8gyiIZ8BDtK1Jt6Qyh8EOEkiitqFKzT0u+d9wfh773
+ 0drxJLqnzD1tSGltH800tLrwTa+nExaWGLlUWYt7nF6Zmc4Eq40E3cxvRz+zAOvurKgf
+ F/+v1f1hKVvrxmZDpY2WT847OXRJ5qBy3pUD1wcGSaZRScesj2V+AL57DTDEVxchU+z/
+ R1nXR+rTuT1xete3elz6q02+sQxPNS7+d5AVGbC5lbFSnICMkCwJ29kMqFqJrIV75/Er
+ iEUVZDGYFPXIChQPBFEE5c82o81XbR4wliNvLN5BgIcfHMKHaGI4Lziw2odtL7z68Qn1
+ AGhQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVa/uo2CdqKlfnoKV02LGwqBtrPSoGAIiS3JgrfJVr41tBT0MbeYOwmoNq6q5h5glp9JcL0hpFLazSq@nongnu.org
+X-Gm-Message-State: AOJu0YwoP36PnTh9ISPpEHSCq7j59dS8xzu0flMcqx8T7H5G4tfKzCWx
+ 9f5Fj/EV1caJGu53k6eTBQZOIGWZZwHxjHY51/HQxIqDBjzq7WveGQwzYRuKs5yOS7E=
+X-Gm-Gg: ATEYQzw9rs3Br+w4i5vIU1dLNudliBfERyzYek+7HtAooib0qKZJAqmlg/UOFC81nZ9
+ 9ZsCSYkosgmmh787MsF5aQa50cYNDuYpVal42/1UAYT/OJGc7R4tDA0H5Zxo/vlprio45sb394h
+ VIhZWfYqJ9ElpCaxKX2dpn07hf7h9wfcwBJpwhBsX6ybcTbGJ4Dnx0WzdNCArsSIfrHkgfAUk/b
+ fGE3R9xAE+gkPJoFwHjVbQhuOrAOfrC3JP+DFQNz0wo8Brno8qvnANiOwxcs1QVRg2wZOgauJvi
+ nnk2++HEFhZRLwCsdbB2CiwKesx7AUk3AwOW/UefE1Wzi0XSGmm7q/WoF5t2lnAEsmrRG7eeKQG
+ EcoJ5AvgcfSc5F+aDIDUPnmZWdu9o13AM0uuTdeuY/MDImjn4oRHqdXg3id9B9OORMU54p/PUKl
+ bhykU+kfy5p99AFu8DH7Yas3f54kDa4S61DEmP9rTfHBdMJ22MwuFWPo+fTwkssl8syw==
+X-Received: by 2002:a05:6000:1a8c:b0:439:eec5:e058 with SMTP id
+ ffacd0b85a97d-439f843c54dmr10978600f8f.58.1773310153532; 
+ Thu, 12 Mar 2026 03:09:13 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe19acbbsm7260086f8f.2.2026.03.12.03.06.09
+ ffacd0b85a97d-439fe19b936sm8343317f8f.5.2026.03.12.03.09.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 03:06:10 -0700 (PDT)
-Message-ID: <dd99087a-58bc-41db-820c-4a37b58c56ac@linaro.org>
-Date: Thu, 12 Mar 2026 11:06:08 +0100
+ Thu, 12 Mar 2026 03:09:11 -0700 (PDT)
+Message-ID: <d0a210fa-e88b-49f2-a038-5d089ec0ae12@linaro.org>
+Date: Thu, 12 Mar 2026 11:09:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/16] gdbstub: Always infer base register index from GDB
- XML
+Subject: Re: [PATCH] target/xtensa/cpu: Move initialization of memory region
+ to realize function
 Content-Language: en-US
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Anton Johansson <anjo@rev.ng>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
- <berrange@redhat.com>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com,
- Thomas Huth <thuth@redhat.com>, Markus Armbruster <armbru@redhat.com>,
- Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Mark Burton <mburton@qti.qualcomm.com>,
- "Dr. David Alan Gilbert" <dave@treblig.org>
-References: <20260311013837.69945-1-pierrick.bouvier@linaro.org>
- <CAFEAcA-FtvvZhgYJVHD+Btxjq4RXVdW88ysPhqTgOJPm7og25Q@mail.gmail.com>
+To: Markus Armbruster <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>
+Cc: Max Filippov <jcmvbkbc@gmail.com>, qemu-devel@nongnu.org,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260311202503.107026-1-thuth@redhat.com>
+ <87y0jxzdrk.fsf@pond.sub.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <CAFEAcA-FtvvZhgYJVHD+Btxjq4RXVdW88ysPhqTgOJPm7og25Q@mail.gmail.com>
+In-Reply-To: <87y0jxzdrk.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::430;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -110,49 +106,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/26 10:47, Peter Maydell wrote:
-> On Wed, 11 Mar 2026 at 01:38, Pierrick Bouvier
-> <pierrick.bouvier@linaro.org> wrote:
+On 12/3/26 08:51, Markus Armbruster wrote:
+> Thomas Huth <thuth@redhat.com> writes:
+> 
+>> From: Thomas Huth <thuth@redhat.com>
 >>
->> The following changes since commit ae56950eac7b61b1abf42003329ee0f3ce111711:
+>> When introspecting the xtensa CPUs from the command line, QEMU currently
+>> crashes:
 >>
->>    Merge tag 'firmware-20260310-pull-request' of https://gitlab.com/kraxel/qemu into staging (2026-03-10 13:32:30 +0000)
+>>   $ ./qemu-system-xtensa -device dc233c-xtensa-cpu,help
+>>   qemu-system-xtensa: ../../devel/qemu/system/physmem.c:1401:
+>>    register_multipage: Assertion `num_pages' failed.
+>>   Aborted (core dumped)
 >>
->> are available in the Git repository at:
+>> Move the initialization of the memory regions to the realize function
+>> to fix this problem.
 >>
->>    https://gitlab.com/pbo-linaro/qemu tags/pr-gdbstub-20260310
+>> Reported-by: Markus Armbruster <armbru@redhat.com>
+>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> 
+> Looking a bit closer at the code leading to the assertion failure:
+> TARGET_PAGE_BITS (macro expanding to target_page.bits) is still zero.
+> Hmm.  Is this a regression?  If yes, could there be more invalid uses of
+> TARGET_PAGE_BITS we haven't discovered, yet?  I guess they'd also be
+> relatively safe, as TARGET_PAGE_BITS becomes valid before things get
+> spicy, i.e. before the guest runs.
+> 
+> I tested v10.2.0, and it also crashes, but the assertion differs:
+> 
+>      qemu-system-xtensa: ../system/physmem.c:1337: phys_section_add: Assertion `map->sections_nb < TARGET_PAGE_SIZE' failed.
+> 
+> So, if it's a regression, it's not a recent one.
+> 
+> Another interesting detail is how TARGET_PAGE_BITS is defined:
+> 
+>      #ifdef TARGET_PAGE_BITS_VARY
+>      [...]
+>      # ifdef CONFIG_DEBUG_TCG
+>      #  define TARGET_PAGE_BITS   ({ assert(target_page.decided); \
+>                                      target_page.bits; })
+> 
+> Here, we assert it's valid.
+> 
+>      [...]
+>      # else
+>      #  define TARGET_PAGE_BITS   target_page.bits
+> 
+> Here, we just trust it.  I guess because the assertion above is
+> too expensive.
+> 
+>      [...]
+>      #else
+> 
+> And here it seems to be pulled from elsewhere.  The possible elsewheres
+> seem to be target/$target/cpu-param.h, which #define it as an integer
+> literal.
+> 
+>      [...]
+>      #endif
+> 
+> Cc'ing Richard, who has worked in the TARGET_PAGE_BITS area.  Just fyi,
+> Richard, I'm not asking you for further input.
+
+Correct analysis, I'll have a look.
+
+> 
+>> ---
+>>   target/xtensa/cpu.c | 14 ++++++++------
+>>   1 file changed, 8 insertions(+), 6 deletions(-)
 >>
->> for you to fetch changes up to 6511d4eed79a7e59f03e661f31924277e4d6e600:
->>
->>    gdbstub: Generate a single gdbstub-xml.c / gdb_static_features[] (2026-03-10 17:12:18 -0700)
->>
->> ----------------------------------------------------------------
->> - [PATCH v4 00/16] gdbstub: Always infer base register index from GDB (=?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>)
->>    Link: https://lore.kernel.org/qemu-devel/20260310232045.58440-1-philmd@linaro.org
->>
->> ----------------------------------------------------------------
+>> diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+>> index 86ec899a67c..eebf40559bc 100644
+>> --- a/target/xtensa/cpu.c
+>> +++ b/target/xtensa/cpu.c
+>> @@ -244,6 +244,14 @@ static void xtensa_cpu_realizefn(DeviceState *dev, Error **errp)
+>>       Error *local_err = NULL;
+>>   
+>>   #ifndef CONFIG_USER_ONLY
+>> +    CPUXtensaState *env = &XTENSA_CPU(dev)->env;
+>> +
+>> +    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
+>> +    env->system_er = g_malloc(sizeof(*env->system_er));
+>> +    memory_region_init_io(env->system_er, OBJECT(dev), NULL, env, "er",
+>> +                          UINT64_C(0x100000000));
+>> +    address_space_init(env->address_space_er, env->system_er, "ER");
+>> +
+>>       xtensa_irq_init(&XTENSA_CPU(dev)->env);
+>>   #endif
+>>   
+>> @@ -269,12 +277,6 @@ static void xtensa_cpu_initfn(Object *obj)
+>>       env->config = xcc->config;
+>>   
+>>   #ifndef CONFIG_USER_ONLY
+>> -    env->address_space_er = g_malloc(sizeof(*env->address_space_er));
+>> -    env->system_er = g_malloc(sizeof(*env->system_er));
+>> -    memory_region_init_io(env->system_er, obj, NULL, env, "er",
+>> -                          UINT64_C(0x100000000));
+>> -    address_space_init(env->address_space_er, env->system_er, "ER");
+>> -
+>>       cpu->clock = qdev_init_clock_in(DEVICE(obj), "clk-in", NULL, cpu, 0);
+>>       clock_set_hz(cpu->clock, env->config->clock_freq_khz * 1000);
+>>   #endif
+> 
+> Fixes the crash for all xtensa CPUs.
+> 
+> Tested-by: Markus Armbruster <armbru@redhat.com>
 > 
 > 
-> 
-> Applied, thanks.
 
-As of this merged commit 769a37d8bd0:
-
-   v10.0: Total build units: 7797
-          (https://gitlab.com/qemu-project/qemu/-/jobs/9788294720)
-   v10.1: Total build units: 6443
-          (https://gitlab.com/qemu-project/qemu/-/jobs/11142814212)
-   v10.2: Total build units: 6367
-          (https://gitlab.com/qemu-project/qemu/-/jobs/12474666739)
-current: Total build units: 5679
-          (https://gitlab.com/qemu-project/qemu/-/jobs/11142814212)
-
-v10.2 -> v11.0 delta so far: 6367 - 5679 = 688  (-12%)
-v10.0 -> v11.0 delta so far: 7797 - 5679 = 2118 (-37%)
-
-I'd like to thanks Alex for pushing this effort forward, Pierrick
-Richard Anton and few others for the work done and reviews.
-
-(We are no down to 2 duplicated common symbols, then start the
-harder parts with duplicated target symbols...)
 
