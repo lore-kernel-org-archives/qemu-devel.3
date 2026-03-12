@@ -4,112 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3146106703C
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 15:35:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0E9E81067051
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 15:37:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0i3X-0003lN-IE; Thu, 12 Mar 2026 11:34:35 -0400
+	id 1w0i5X-0004Wb-O0; Thu, 12 Mar 2026 11:36:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0i3V-0003kx-3B
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:34:33 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0i5V-0004W9-N7
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:36:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0i3R-0006aY-Av
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:34:32 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w0i5U-0006tH-Bi
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 11:36:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773329667;
+ s=mimecast20190719; t=1773329795;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=YOl7Eqg/lJOo6LFwTaL6IFOQIb4lrXJmEBDlVjNLxQo=;
- b=KS3x3DhKnZPdvdk0VASrqCg1rSpFqp80o9yYdUxxRiZcT/p+yp7nvrUospQxAOswtd8u8r
- yr6MNd+0Q43NvnUeSvsg+YGcuC8lLdE6ZLbri31q6vnNcPWl7qW1CQ4M14jYWQ01SXgjeS
- eKgjSHGz+uov7UOsp/4ew42bulDAr50=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=bK1kXd44p/t6WsnxAF8rHKwD/VkHrlnK4L8c16hzNSI=;
+ b=MCThalEKQ9S+honXN7XNTOmgIII2ZBYBKijTNzkEBFgTsDAJxcsDAFPUcivSIxx/A/3Awl
+ oGSokNhOxMkoQw7EnJX5vhMAtxo6jt6ppuTibjtD30L/k8RKAZdom8VXKqPv4URkARUZPC
+ VCJ17fRY8V0TjcaNQLB9t9aAxLbHA68=
+Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
+ [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-295-ljYzVJ1KOa6wtk8EVvg1eA-1; Thu, 12 Mar 2026 11:34:26 -0400
-X-MC-Unique: ljYzVJ1KOa6wtk8EVvg1eA-1
-X-Mimecast-MFC-AGG-ID: ljYzVJ1KOa6wtk8EVvg1eA_1773329665
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8cd7f6ac239so731172485a.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 08:34:26 -0700 (PDT)
+ us-mta-64-x2jUwuP5NsmITwDmiqEUZA-1; Thu, 12 Mar 2026 11:36:34 -0400
+X-MC-Unique: x2jUwuP5NsmITwDmiqEUZA-1
+X-Mimecast-MFC-AGG-ID: x2jUwuP5NsmITwDmiqEUZA_1773329794
+Received: by mail-qk1-f197.google.com with SMTP id
+ af79cd13be357-8cd7ea0bb20so641772185a.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 08:36:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773329665; x=1773934465; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773329793; x=1773934593; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=YOl7Eqg/lJOo6LFwTaL6IFOQIb4lrXJmEBDlVjNLxQo=;
- b=T6SfJzZIU5KoD2B9zXzHD1Irwuhci+drKOKfDJaf1kIiSzw/dAiPaXWA9hqaHd3KjR
- FVuCSL3DMdgvvJPa3+EfXRX0+8jPKfwRH+kAKhhvDF6mzbkCorpsPsNg23mLHROrcb1b
- u27/B7WBLx1nFEPTZxQPy8ZMOdrKeAvWkN29SpbxVDkmSP9tZep71i+kBX//27vsbbS4
- BrAKEEWgxXGp2xCJtcZ/kF17wBjtidq7ywVVho2JniOwQJMgNTEkINh/MXgm2k9+4NB8
- C42NQY83MJCikcLv6UG0B2yczrMv3++iALd01GCrB5se0PCftA3mM3oNmZtoijOMxgx+
- lO6Q==
+ bh=bK1kXd44p/t6WsnxAF8rHKwD/VkHrlnK4L8c16hzNSI=;
+ b=TjXshioJF382NAKxhfXE0oJQJC1/SxJTPVtD6joLCguykKVHSZ3aSaYCDLo9hB2hKh
+ 5AhuYiwap/g7qUCRMdaDMBvXLWEynQMWd4GksjIl5TV9G133Mt88IZfeLmwO43sh1kKD
+ adnlh+OnRNo30VbFN/iayq4Ssx4v4rBqU5qrsyAfhoO08dZr7Hnl5O2NLMItW1SQAsjd
+ zozCtY8QmNVq1S8IeyRCupc09RMDOuBZmUudGC4qB1Mu3c81cWNJJQdDefFAeq+/OMMo
+ 54nkQq3Y6bTzjHlR4l1nFZm9W1pqdzpt7XL11Qa8xUv+/5kJa/h7MosOA5kpsjUE+5ZW
+ cCLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773329665; x=1773934465;
+ d=1e100.net; s=20230601; t=1773329793; x=1773934593;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=YOl7Eqg/lJOo6LFwTaL6IFOQIb4lrXJmEBDlVjNLxQo=;
- b=ovNYorNfDTwniTkyREnd5D7gTLmURg3/Ageb/IPb72YW6hmoipcIrhWE+txP58rDyV
- zrMal1zw0go1450V1fjRWbKHq6vn3NwYIkm2tOkOgcp6IsZRN9dTDZbktziF9bK+ACvT
- Iqg9Qv9tEpR7WLAtah8UrrwC+o+PAOaCn6IkbVd0ByjLUwFHFSwz4Pbe5KNLm+q+FNuZ
- edyGkJK7KTKlgOVuVgwvAarfnRfoV+g/5z8zmr/UOrCe6TdzYMQdZHTYWNme0jh+exg2
- eScMSNZgrM4RY8MRTlfGJ1QtCFHHbcZyqRdNiuS5zpCkvbmHiCyGM18I3w7r0+vWeUHj
- 7GHg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUdO56vphfdM6fR63D0abBw/DsUyVnu1LhdPnN1+i40uiYpNtnOBddow4LBvlcarnsC1/DCtzD14uBx@nongnu.org
-X-Gm-Message-State: AOJu0Yy2wo7wr+7B9QUa6VlH2Hui1CDLcqyMQhcTU2mT43gXxKiiwh3c
- mFMXxg8RAEOgkqkPO1HqwJpGokpjmTURovKT/MN0udQhEbt0vvEZajyuovu9eZnMBVHlnfKhwmI
- qDqLUZyAXdyBQ+YwKKtuKe/NFDUykYVx+kmegBNUHlBCby1NiBPpTm1Rl
-X-Gm-Gg: ATEYQzxzHXIM9Aw6fSWLySfTHnR3pxfky5T6xCCOWtWIkhK3Nkm3c25dHN/p0yY+i5P
- IqrSEfu5CMnWLJCh+nZGCAp6o+gj+V2StE8P5YhazSR4bTed8MdbPsYYDr9qzIBB9jFjM0yJqhj
- DaeiONqHfzJgaVYK4ug1MumBMPvABdnHmU/w2M/nBumjA5pGaa/8uI4GNOjPUytbSnKs7i9Su5T
- AfKj/Jcr0M0aFWDaMRvhG2dCwZ7zrCiUgRz/p/kUdvXoE7V/8b3Pbad6K5JtCRUUw5V4UDhUzOu
- q1CUEDkPqrC1dgBDWxprbC/NVC/lfXNtYK3FkPF3ybAD+yj9hsPgjthZ/FV3U0+1muBDWWlInpF
- 24Z4l+QS8rZJ0CA==
-X-Received: by 2002:a05:620a:471f:b0:8cd:8fb7:7b13 with SMTP id
- af79cd13be357-8cdb5a41872mr22021185a.10.1773329665247; 
- Thu, 12 Mar 2026 08:34:25 -0700 (PDT)
-X-Received: by 2002:a05:620a:471f:b0:8cd:8fb7:7b13 with SMTP id
- af79cd13be357-8cdb5a41872mr22015285a.10.1773329664712; 
- Thu, 12 Mar 2026 08:34:24 -0700 (PDT)
+ bh=bK1kXd44p/t6WsnxAF8rHKwD/VkHrlnK4L8c16hzNSI=;
+ b=VwX/Bz0w4U0+aySv2CM0F8DW7b0zYINOhLgJII67oxwmtkNh190Xk/2cBfcThb2PUn
+ 3lAkIla5uAmV2Z9kBbLVM5qm1zC8DK96iXKYAx7SbOzFsPxm+eocgpJ8OpNx2H+Wn794
+ WGVqExomNJ7akriuHMiCzX/n3RhF2F83Ikd2xvXoxFbdixyEBVZafh2JNSG2xi+c/oBx
+ 8mSYmydHXtjFGQof4VI68SnHXeZ+q83QyFm1Yk+Uv8rbxWyDQREYORYPzsGqE5suehsO
+ jsOtVYKTQjJAjh1N2PKJbJ3YdH273/VYe/s/0uFVLghSYYivLU8iuUxeZzu6/xDKaRw2
+ UyFQ==
+X-Gm-Message-State: AOJu0YyS8jXj7BUg8rthoR3tgWKoSzVL1SIHC3FEd5kkJPBIj4sR81W8
+ V3FeAvPRYF7eLm3cGa5PT6ijtIPJoqhHHbQ0R0R3Ney4L+xOry8zmPopJ67L2nQdWSxdO+/l2jC
+ plaZIsZg6dtlsjscJ/CURhP2NB3MWVc7Kh1dyrrVkjXz8VOagCDgxpcY8WAsJj/JU
+X-Gm-Gg: ATEYQzwua5HMV/4hWOphvGjpFPjWLkTOBMJfuVPl5qtAt/qpghs0N7VM8igXiNr+WWr
+ GYfaf5RsUHkscA43YKVLy9X7nUbLZAhUpRfnEY+acw9CwJbr38pFSHC/X6n44ghzkdmN7R4U18e
+ D7qoHqecy+YnxgFojr9e6NWHvb1vlY2XpxhabcUpoSiHe5hECfeH5JBd4+AtvPcTlO9/hdl1aN8
+ vrTZGVwaBwZUDWx3va0J1y/FRcdv+3sTByLBheqvg8T7cUvDKfGJdW7mBFAGs9cgn1y9TrAbDgH
+ 6oc4/5DXt8TfeBvgH149DgKLMcOTuchnAVDT9en+p6tRidJQKASxiP6mCAZLjimkqVIYlFeH/mM
+ R9rKTvFtY4gyV/w==
+X-Received: by 2002:a05:620a:4004:b0:8ca:2cf9:819d with SMTP id
+ af79cd13be357-8cdb5aa4320mr19329985a.26.1773329793442; 
+ Thu, 12 Mar 2026 08:36:33 -0700 (PDT)
+X-Received: by 2002:a05:620a:4004:b0:8ca:2cf9:819d with SMTP id
+ af79cd13be357-8cdb5aa4320mr19322785a.26.1773329792720; 
+ Thu, 12 Mar 2026 08:36:32 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda211518esm374431285a.27.2026.03.12.08.34.23
+ af79cd13be357-8cda1fc09e4sm365264385a.3.2026.03.12.08.36.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 12 Mar 2026 08:34:24 -0700 (PDT)
-Date: Thu, 12 Mar 2026 11:34:22 -0400
+ Thu, 12 Mar 2026 08:36:31 -0700 (PDT)
+Date: Thu, 12 Mar 2026 11:36:30 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>
-Subject: Re: [PATCH v2] vmstate: fix subsection load name check
-Message-ID: <abLc_ppEEbKjNRUi@x1.local>
-References: <20260302070626.613396-1-dtalexundeer@yandex-team.ru>
- <87y0k5136i.fsf@suse.de>
- <714e4329-6001-4c77-b004-ed7beb11c154@yandex-team.ru>
- <e81360d5-cab4-47a4-840b-7d948b51a5c0@yandex-team.ru>
- <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
- <abBcN2B4QNBT_Oh9@x1.local>
- <f37dc7af-7ffd-4a7b-b4fa-552c2d2eb888@yandex-team.ru>
- <abGEwf-AG1rZ3kam@x1.local>
- <a6dafc1e-79d1-4380-a4da-7cbc4ff77ae4@yandex-team.ru>
+To: Yanfei Xu <isyanfei.xu@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de, caixiangfeng@bytedance.com,
+ liwenbo.liwenbo@bytedance.com, yanfei.xu@bytedance.com
+Subject: Re: [PATCH] migration: check is_active for old-style vmstate
+Message-ID: <abLdfsJK4tLx6_8L@x1.local>
+References: <62d074fa-6d4a-4ec7-8c1a-63e7a05c31e4@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <a6dafc1e-79d1-4380-a4da-7cbc4ff77ae4@yandex-team.ru>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+In-Reply-To: <62d074fa-6d4a-4ec7-8c1a-63e7a05c31e4@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -127,42 +115,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 12, 2026 at 09:30:35AM +0300, Vladimir Sementsov-Ogievskiy wrote:
-> You say
+On Thu, Mar 12, 2026 at 01:25:04PM +0800, Yanfei Xu wrote:
+> > On Wed, Mar 11, 2026 at 01:16:58PM +0800, Yanfei Xu wrote:
+> > > /old-style vmstate doesn't use vmsd and instead rely on SaveStateEntry/
+> > > /ops. Check is_active for old-style vmstate to determine whether they/
+> > > /should be skipped during migration./
+> > 
+> > Would you please dscribe the use case?
+> > 
+> > We only have two users in upstream tree that provided is_active(), and
+> > neither of them provided save_state().  IOW, so far it works kind of mutual
+> > exclusively v.s. save_state(), afaict.
 > 
-> > .. always pop the VMSD stack then the upper layer may read the SUBSECTION byte anywhere.
+> Sorry for the lack of background information.
 > 
-> But it actually can be anything. Of course probability is small that some another state
-> looks like QEMU_VM_SUBSECTION + <existing subsection name>, but we don't have actual
-> guarantee for it in the protocol.
+> We follow the vfio SaveVMHandlers and add an extra vfio SaveVMHandlers
+> variant with is_active. In our internal codebase, we set it inactive
+> during migration but active in a specific scenario.
 > 
-> Probably, we may also add a protocol change (with some global state property,
-> set to true in new MT) to add a number of subsections into section state, to be
-> sure how many of them we have in the stream.
+> You are right that upstream tree works well. I sent this patch because I
+> assumed the semantics of is_active is similiar to the "needed" field in
+> vmsd.
+> 
+> I'd like to get your opinion on this. Perhaps this case we used won't
+> occur in upstream?
 
-Yes, I believe it's always possible to change the streaming protocol to
-make it even clearer.  Actually, that's what I was picturing before I read
-your previous reply.
+Thanks for explaining.  That makes sense on its own, but I think you're
+also correct since it won't occur in upstream then it means we're adding
+dead code into upstream code that has zero use.
 
-For doing that, I wonder if we should just fix "this specific problem" or
-"the bigger problem".
-
-The bigger problem here, at least to me, is migration streaming lacks level
-information - virtio can wrongly treat that piece of info as its own
-subsection only because the stream doesn't tell which level it's in..
-It's a common issue for migration stream, so I wonder if we need to break
-the streaming protocol then whether we should do even further than that.
-
-That is the part where I think what you suggested in the previous email may
-be the easy way to go (plus, removing the name check completely).
-
-But let me double check with you on one thing: before any fix, this problem
-will happen even during a migration between two latest QEMU that supports
-that new subsection of virtio-blk, am I right?
-
-I am curious why this problem is only reported until today, rather than
-when the new subsection was developed.  I wonder if I still miss something
-that I didn't notice..
+I suggest you stick your patch with your downstream, until you plan to
+upstream the whole thing.
 
 -- 
 Peter Xu
