@@ -4,86 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60CD3FED2C7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:18:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59642FED2C7
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 04:18:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0XTx-00005x-4D; Thu, 12 Mar 2026 00:17:09 -0400
+	id 1w0XTy-00006P-VS; Thu, 12 Mar 2026 00:17:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w0XTu-000056-LR
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:17:06 -0400
+ id 1w0XTx-00006E-Er
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:17:09 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
- id 1w0XTs-0008Lk-PZ
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:17:06 -0400
+ id 1w0XTw-0008ML-2F
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 00:17:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773289023;
+ s=mimecast20190719; t=1773289027;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=nh4xFu25fP4+98Q20GIy5ie54KTLY9e5JyU0jfcgH0c=;
- b=e3b0xfuYpwYK6qpXL248KTOsQ6qG7zvFeGDh8Prs5t8jRfuGnZU8D2k/xSAeyixDl1nXYg
- mmckzL4x8LTnWdGZUFw6+UJ2YpFO/mMqKGN5NqOwRWOPwYKXgpz7JMbjNuTh2YJfb1ywO8
- sLo3Ut0LukB0Yq1r31NZNXiwjNFBrsQ=
-Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
- [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=qop9iAmQn1QJUZ8RAGJLSEnZxR8JmQrzT1EQUFiNBPI=;
+ b=br3DEBhujqiN0ZDCqU7sIJgZZJQDQAhJeJBY5JX+Pf2O99pCA+kjjJHVT7XBYmTduq8UG+
+ mqRl1pG8f6U/WBBjOH2UkAYA8i9/aG1Ns4YBJ9EnFsMY813QfjoY4Qk0kAS2ek4FgYmnvH
+ NWuqccmTF3lCtBZsSX2IXQZi3xtL2t0=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-66-s7wLx-S0N46hX2I-uqxQDQ-1; Thu, 12 Mar 2026 00:17:02 -0400
-X-MC-Unique: s7wLx-S0N46hX2I-uqxQDQ-1
-X-Mimecast-MFC-AGG-ID: s7wLx-S0N46hX2I-uqxQDQ_1773289021
-Received: by mail-pg1-f199.google.com with SMTP id
- 41be03b00d2f7-c7380305a9aso974327a12.1
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:17:01 -0700 (PDT)
+ us-mta-372-6aqRynNqNTSOcb9M2aDsWA-1; Thu, 12 Mar 2026 00:17:06 -0400
+X-MC-Unique: 6aqRynNqNTSOcb9M2aDsWA-1
+X-Mimecast-MFC-AGG-ID: 6aqRynNqNTSOcb9M2aDsWA_1773289025
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c73935acff2so273510a12.2
+ for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 21:17:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773289020; x=1773893820; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773289024; x=1773893824; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nh4xFu25fP4+98Q20GIy5ie54KTLY9e5JyU0jfcgH0c=;
- b=iLD7WvHkFFT8z9tHaK15ff0sBKyT/COVacwm2DE0t1o61UX1R1eoOVvbR6FYLPyRgr
- 99h+aLLP4ivskGo+QBM4wj8wbowCYRydT+TXUq0VM9W5M5U86zqtk+w9lyP8Qt1dzI3i
- syEu+69FegdeH2l33MRltY9cx4WiyF5w6XE6FLFVWpzKRIxH7LbpD4XqxT6iDzeXf488
- vJ97DXXzXSZyE5r63O8FXbOGJMNHlbRSk+x/MTnPJnbbEQZbMR6Gbhi330A5CBE/4SnC
- ptVcCoAg4m6izl839EPyFTG0KP59xBKT7fCCadJIq96tyQXe3I0cjEvIbQ1/Acw7/po5
- tHEw==
+ bh=qop9iAmQn1QJUZ8RAGJLSEnZxR8JmQrzT1EQUFiNBPI=;
+ b=TjOfP+BPbSeJHxKQosD+1GGc0WUPo9ocTwu1nWZPNFwvNPoJ047nS1q50vxP70qHzx
+ g1pFBJ8gJ1K9VCSr8ChvdH5P5ws0sPvfyzO31Ktn3ujBi17UINK7vNexEXRATIu/B0x0
+ 7qDwkRKbEa6r3orH/1JCPYNaN759od5rVuAOYNPe6bk5IK24sqUao/ojOha7TB79aQpY
+ 3tZ/TDpUAfIxNkyk/1P83VglnFuQdekvS34AXvDpFBrhnLFgEDvEiJp+V+BuUsiKoQ4g
+ ODLOqkMceQee+6BPf4d2gIUhoJslAKzyZ7jrCfe65WGCG3yyDT6ZAFBqdyk3WD/IY5hF
+ MC6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773289020; x=1773893820;
+ d=1e100.net; s=20230601; t=1773289024; x=1773893824;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nh4xFu25fP4+98Q20GIy5ie54KTLY9e5JyU0jfcgH0c=;
- b=PqtgNoede4g5dqFWr4VR3hD00wAM8w5Q/OI3f+PcBZuHHBkalzM4WQG9rSrXk748XA
- i/nyWRf56FtjZeQfykL5FQvcGe5U8ZuPxoGt9Zs8hf0T7lhuEVQ9Qn2SWjlIFZ6d9i36
- 2KxFnHO+oos8zQNvRyEbtXfkHWr5j7TeDw4O7NeN7dGumg3IBL37JqkcNjZVF9KoVpfF
- GIKRTCgqMVV+lEgbR4EGWXVI3MB73pPAlrGMKPGUBo/WWPKuOoIwy1IujXpJKyQjLSQM
- 8d90J/5svaLh0Zmw/5I+SfR/IaLlZpy+CFBSoYCuN/wDHKTVsCrzovObhMmEaO2PN5uw
- mgOA==
-X-Gm-Message-State: AOJu0YwBHbi1khIUqJHd7GTAOyiRydYY4oKDxXkBtaCFtNl9XxYaq5L+
- bekItmevjyvGU1FpuneBi4kMpEo5SzbHfZddOm/umPTmY2+ptCql63d3XAuU5EwB2KD+SUEare0
- lduAUJQuCGPnzZo2XesvIxXGj5HSyq6wH6Y0z5KH2kUNLhuqUi2rZwFYwNiB+AsrY2P/he9dUKC
- YFA6FFTw1OCclJBh9ZmbnVDgTDIztZ6T+WTkiWSkM=
-X-Gm-Gg: ATEYQzxEVBfYcuce8YJOcKyf1Jux5rfXrsWFL0yHdJVtWtA1v/uT+dbXV1x5vGpfhln
- rPLhoP7ZqWwK6dQwprt45ZxW0OqEwiJydFUBjeuOOi6Qxn5BdP2eWiUfXXv5VA5mkmcJH40tmxn
- u+aHVekF865UJzt0nP4QQgepITugc8BHLDHajCFwYCrhfetODDuTAOV7UfyR0xUZBlwxVnwo/WB
- TrbObVFXcM/Lw5PyfBqZspyt3avT/9vP/dpItwk2fem4+vdejbiqHjyybPbki5kg1hHskNBuQX9
- fNQqNObXs/9zE2BPdw+uE3+vdBf1Q+Q9sFkmo1dMJRiSqP5ENZkDKLaBgWaN6nfkObuBdmoD3Q/
- UU94joS+LhQPS7yQ1AsioY4+FeCPUWlSiQXsQi0O+vTRTptbO/sr5CZGxK3Ryhw==
-X-Received: by 2002:a05:6a21:102:b0:398:a97a:e758 with SMTP id
- adf61e73a8af0-398d78a44f8mr1836607637.21.1773289020634; 
- Wed, 11 Mar 2026 21:17:00 -0700 (PDT)
-X-Received: by 2002:a05:6a21:102:b0:398:a97a:e758 with SMTP id
- adf61e73a8af0-398d78a44f8mr1836581637.21.1773289020212; 
- Wed, 11 Mar 2026 21:17:00 -0700 (PDT)
+ bh=qop9iAmQn1QJUZ8RAGJLSEnZxR8JmQrzT1EQUFiNBPI=;
+ b=reeoNRVP1afIZU6u1iFCL9ZwzmSs7OmcuKxMS7e2EriCCISC9vuWCuZxZhUDFo/Z1K
+ qp+VeYP36oP31WhleQExcPs5z5Yymfqt7n6+VP4R0RRVbmv+rNsSkht+ONihLJOgWEQw
+ ZrxcpvfC1FkZ70P4dcebjtUD4X3iHJi9yhSZ5xUhkYBKJ8p5KRdfXh0KHcApnRNHIgB9
+ 7BsrNZSjuhs2YCqitMJST0dohXDiU/st6XmPkfILjeQfdJ+8e9HG62OJxQUlX6VkKw4q
+ tRmvjl4z2a1q0jlrDJxLxYh0hyHsqMZFvG1PrJS/8WZC0f58cp+ZdTrlBUslnu2emdp1
+ K75w==
+X-Gm-Message-State: AOJu0YyaEDL5axCYzq0ZgkAmpVXrjSAEQFeB+W5Xju2kffqlBiXTa2To
+ vH3tf9rMqd4gC9/y112kUL4vq+x3K3GPFp+Y7g41XW55oOE3bzREkgCbnm4rPDABIX71edXfvnp
+ 2vKBi8gAH5Z500UJ6If8HqN0VBRtmXGeS189mrREBJTMFsPhOuIswuw3rIUvPWosWHoCTgzt+7E
+ B2+JCDh6RpwSqM/5fNnuLllkK1pcylr7WbTi+4TBw=
+X-Gm-Gg: ATEYQzxsfRxQbtEPkVBNsj/rzkuANl8Tfw/yTKLSfb2hBXh+mmi9QcA0713wyY3UsqV
+ Z1C4x2cnIRMrxhNRXDlKLaCNgvR7AeH0xDe6qX+B/drzbHSpwB3yXHKGytRBdt7wh44SZQfeBKf
+ R0xrINJQgWCtWA92a04/sE8wImlRszZUqHfW38QiSjO9a+1qj9l/y+RIRdfoGFdUk6gsb004KRt
+ U18LtHihhtElvxoHX97uS3VSQq49NcUq8oVY1EVUi5KcxD/WitS0UEt3MGsOFEoHIChsBr08MiB
+ V8DVNvuu1jS0HjVEwMU460quhLEGfwAnhzYPAlIt2yewVdeCFvgbWMP4xUzRonA09+60U4Ydrtg
+ HnD22N9sZexsnFFib43cilVQh3xGm3x9GHn8xvoUWAYppnpCLG5PkzLPCCm1JLA==
+X-Received: by 2002:a05:6a21:a43:b0:398:78c0:6dca with SMTP id
+ adf61e73a8af0-398c5e6dab8mr4736425637.15.1773289024383; 
+ Wed, 11 Mar 2026 21:17:04 -0700 (PDT)
+X-Received: by 2002:a05:6a21:a43:b0:398:78c0:6dca with SMTP id
+ adf61e73a8af0-398c5e6dab8mr4736395637.15.1773289023928; 
+ Wed, 11 Mar 2026 21:17:03 -0700 (PDT)
 Received: from fedora.armenon-thinkpadp16vgen1.bengluru.csb ([49.36.110.66])
  by smtp.gmail.com with ESMTPSA id
- 41be03b00d2f7-c73cdf0e498sm3634490a12.3.2026.03.11.21.16.56
+ 41be03b00d2f7-c73cdf0e498sm3634490a12.3.2026.03.11.21.17.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 11 Mar 2026 21:16:59 -0700 (PDT)
+ Wed, 11 Mar 2026 21:17:03 -0700 (PDT)
 From: Arun Menon <armenon@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
@@ -91,9 +91,9 @@ Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
  marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
  Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  Igor Mammedov <imammedo@redhat.com>, Arun Menon <armenon@redhat.com>
-Subject: [RFC 1/5] hw/tpm: Add TPM CRB chunking fields
-Date: Thu, 12 Mar 2026 09:46:46 +0530
-Message-ID: <20260312041650.181411-2-armenon@redhat.com>
+Subject: [RFC 2/5] hw/tpm: Refactor CRB_CTRL_START register access
+Date: Thu, 12 Mar 2026 09:46:47 +0530
+Message-ID: <20260312041650.181411-3-armenon@redhat.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260312041650.181411-1-armenon@redhat.com>
 References: <20260312041650.181411-1-armenon@redhat.com>
@@ -124,66 +124,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-- Add new fields to the CRB Interface Identifier and the CRB
-  Control Start registers.
-- CRB_CTRL_START now has 2 new settings, that can be toggled using the
-  nextChunk and crbRspRetry bits.
-- CapCRBChunk bit (10) was Reserved1 previously. The field is reused in
-  this revision of the specification.
-- Refer to section 6.4.2.2 of [1]
-
-[1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p07_rc1_121225.pdf
+Replace manual bitwise operations with ARRAY_FIELD_DP32 macros
+No functional changes.
 
 Signed-off-by: Arun Menon <armenon@redhat.com>
 ---
- hw/tpm/tpm_crb.c      | 3 +++
- include/hw/acpi/tpm.h | 5 ++++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
+ hw/tpm/tpm_crb.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-index 8723536f93..0a1c7ecdc6 100644
+index 0a1c7ecdc6..bc55908786 100644
 --- a/hw/tpm/tpm_crb.c
 +++ b/hw/tpm/tpm_crb.c
-@@ -59,6 +59,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
- #define CRB_INTF_CAP_FIFO_NOT_SUPPORTED 0b0
- #define CRB_INTF_CAP_CRB_SUPPORTED 0b1
- #define CRB_INTF_IF_SELECTOR_CRB 0b1
-+#define CRB_INTF_CAP_CRB_CHUNK 0b1
+@@ -145,7 +145,7 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+             tpm_crb_get_active_locty(s) == locty) {
+             void *mem = memory_region_get_ram_ptr(&s->cmdmem);
  
- #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
+-            s->regs[R_CRB_CTRL_START] |= CRB_START_INVOKE;
++            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 1);
+             s->cmd = (TPMBackendCmd) {
+                 .in = mem,
+                 .in_len = MIN(tpm_cmd_get_size(mem), s->be_buffer_size),
+@@ -194,7 +194,7 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
+ {
+     CRBState *s = CRB(ti);
  
-@@ -262,6 +263,8 @@ static void tpm_crb_reset(void *dev)
-                      CapCRB, CRB_INTF_CAP_CRB_SUPPORTED);
-     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
-                      InterfaceSelector, CRB_INTF_IF_SELECTOR_CRB);
-+    ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
-+                     CapCRBChunk, CRB_INTF_CAP_CRB_CHUNK);
-     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID,
-                      RID, 0b0000);
-     ARRAY_FIELD_DP32(s->regs, CRB_INTF_ID2,
-diff --git a/include/hw/acpi/tpm.h b/include/hw/acpi/tpm.h
-index d2bf6637c5..03d452d2b5 100644
---- a/include/hw/acpi/tpm.h
-+++ b/include/hw/acpi/tpm.h
-@@ -149,7 +149,7 @@ REG32(CRB_INTF_ID, 0x30)
-   FIELD(CRB_INTF_ID, InterfaceVersion, 4, 4)
-   FIELD(CRB_INTF_ID, CapLocality, 8, 1)
-   FIELD(CRB_INTF_ID, CapCRBIdleBypass, 9, 1)
--  FIELD(CRB_INTF_ID, Reserved1, 10, 1)
-+  FIELD(CRB_INTF_ID, CapCRBChunk, 10, 1)
-   FIELD(CRB_INTF_ID, CapDataXferSizeSupport, 11, 2)
-   FIELD(CRB_INTF_ID, CapFIFO, 13, 1)
-   FIELD(CRB_INTF_ID, CapCRB, 14, 1)
-@@ -168,6 +168,9 @@ REG32(CRB_CTRL_STS, 0x44)
-   FIELD(CRB_CTRL_STS, tpmIdle, 1, 1)
- REG32(CRB_CTRL_CANCEL, 0x48)
- REG32(CRB_CTRL_START, 0x4C)
-+  FIELD(CRB_CTRL_START, invoke, 0, 1)
-+  FIELD(CRB_CTRL_START, crbRspRetry, 1, 1)
-+  FIELD(CRB_CTRL_START, nextChunk, 2, 1)
- REG32(CRB_INT_ENABLED, 0x50)
- REG32(CRB_INT_STS, 0x54)
- REG32(CRB_CTRL_CMD_SIZE, 0x58)
+-    s->regs[R_CRB_CTRL_START] &= ~CRB_START_INVOKE;
++    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
+     if (ret != 0) {
+         ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
+                          tpmSts, 1); /* fatal error */
 -- 
 2.53.0
 
