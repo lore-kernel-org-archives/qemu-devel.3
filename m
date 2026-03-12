@@ -4,88 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3F44FED2CC
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 05:21:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22CF3FED2CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 05:24:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0YTI-0004Br-O3; Thu, 12 Mar 2026 01:20:32 -0400
+	id 1w0YXH-00058Z-3f; Thu, 12 Mar 2026 01:24:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0YTG-0004BO-T7
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 01:20:30 -0400
-Received: from p-west3-cluster1-host6-snip4-3.eps.apple.com ([57.103.73.184]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1w0YXF-00058C-Me
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 01:24:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0YTE-0004PL-KX
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 01:20:30 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-1 (Postfix) with ESMTPS id
- A84B9180010A; Thu, 12 Mar 2026 05:20:25 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773292826; x=1775884826;
- bh=yS6B1JcGDx10bvOoiJSRSPM5/ujtdqwQkneRnD5xcn0=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=em8z0RfgfntSNRQqdao2UDSRBk6rIVn3BjAtlFk15vYAEkWK9XNviwsbe1uUPpb5kOqWv5jHnazaW8eYemMHu+qstgM62SzF6cVuhh8C1Fvx6hmNnzb5tIzN/68RWWt8nmvjTFhpnmNjTmKvvZj5tdPxbWklyYH6Y70WZJFEyKVC2QbOnzGLVPXmB298fkmpHfoa8zJlNZ4I1uAGoQIVlwHokz0yqltSYDfk7XHB1zcjKjlPRGMrexOWtXfPVx4AU6p3+gJSyNu2vBPYYINU0QhVFBra58wOAXAdooAdD1/U0Y8bvodLptGoiGcu6cHoBUwrw0HdBFKntFip7bBfeA==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-60-percent-1 (Postfix) with ESMTPSA id
- 05E101800107; Thu, 12 Mar 2026 05:20:22 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH 00/14] Add ARM64 support for MSHV accelerator
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260311171240.GB3612627@liuwe-devbox-debian-v2.local>
-Date: Thu, 12 Mar 2026 06:20:10 +0100
-Cc: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com>,
- qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?utf-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- =?utf-8?B?IkRhbmllbCBQLiBCZXJyYW5nw6ki?= <berrange@redhat.com>,
- =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <6FE1FA7B-653C-4088-8F27-BCE249F50FEB@unpredictable.fr>
-References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
- <877brii9wq.fsf@draig.linaro.org>
- <9D4583F5-0591-473F-8FFA-1EDF416AF447@unpredictable.fr>
- <20260311171240.GB3612627@liuwe-devbox-debian-v2.local>
-To: Wei Liu <wei.liu@kernel.org>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-GUID: WpRlXmd8LFi4KilxbHtTlFkU-AR7_wuC
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEyMDA0MCBTYWx0ZWRfX7WO+7PVTrK4h
- MB7/D+Y3nXMaTZWntWrq6bRYFCUAJMLySPWW9eTlOSb7w1jkyHjASCan38GhVzv8vDTrPNvAWHM
- JiuxKZ8sTcoOHG195EMlesXZVuPBrRrcF8rNaggO8UahmKgxOoZ54mElzbe82L8695qFEKMzpT/
- KbxhJzDxgTwIbZGH7LF4XJk5ZQxcg0EYdWNGiHymnpCZYVPDlhC5P/xFXCFZqtJl1n+gwd3Ulxo
- 9qIvlfhjfZYUOnQxhDfxYWaoNL8ffyzDAS9zTe5cLFNvvElOOFeVPviVwpvD7cPqrlWEv+NKlJ/
- ba/Xs5I3pdj5WS6QFVw0DDNai1tG6SAEJo5VjgHW5/YluCgZUN9L3usFYYZp54=
-X-Authority-Info-Out: v=2.4 cv=L8oQguT8 c=1 sm=1 tr=0 ts=69b24d1a
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=VwQbUJbxAAAA:8 a=KKAkSRfTAAAA:8
- a=tFGNSmrwAAAA:8 a=-5Xdn_xT0vs44axsZl0A:9 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22 a=LpD6Tdepsyerr7eS-Jg7:22
-X-Proofpoint-ORIG-GUID: WpRlXmd8LFi4KilxbHtTlFkU-AR7_wuC
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-11_02,2026-03-09_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 bulkscore=0
- mlxscore=0 malwarescore=0 adultscore=0 spamscore=0 mlxlogscore=999
- phishscore=0 lowpriorityscore=0 suspectscore=0 clxscore=1030 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603120040
-X-JNJ: AAAAAAAB53zLdxb5vE+fVO9XxR3A6MurhHwySMffiad+CQoB3hw+43ikxu72ytIIeGq23V/X/HXR3BF7nH+hYaH+l5Mbwe+HpfibG64AoKtKd9ivhosB2QkBQa3jDsAYFFmHzi8oLNRmK3Ym8SfsB/H/9tGX6i8ufz3F9vzQYecPlBUWNwhPOi5NGbyrTsQpNSFIaCPHeRYY5T28nRHSTNQ8rB+ZSgni2DbkVQ1ypGTuf9tkat4/62jtCs2IzAx4VjVOyDAyl7xUpk59DlnyymnPzebfIeSaE6zGp+zATvvuBtGwAYfidx6DIz89drudSqm2j/RUQ74QW2Lqm5UMAQVr/GBgWzVImx7fkiOaIptXtIZtUBiFIiWj3nD4Mx6oYNUcbY9M4fDSPjp/u/k926skDrdvh4Fwn9yEXQIRSTCs9xyVvpWiyEQ+CfKfnlXa7tIpCtg59prCVTBYWVvxhXLBU4hjl8Yhbw/urL1ndTlKI3FcHnD8/hm6wpjKRkRbHDUf+3dEsa5z9wgR0k4OqpNoqtz9yO3BDc/b7taCKwqRYDP0FUv3lTiWeH2NVHRmgKXiFgo1YRHbxyMYrEsfUO13WoocMsmEbpTaa/pXIbt7TpXiPfoha4qXWI9Kq6oX7vHjKoSdmSVMkbWdjAMZhXxmiwkuY2b5LPOp1cD7gTfjeD9tqVKlLRn+viUXyUCcpNHjA8iSaNNHVUFMoHRi3d5VwGw8KQYeXkJMigmYoEW3QVArIj614GDUqYJYWpedZEsPXn1MO6+pCF8tpnQ57P2qSE8q
-Received-SPF: pass client-ip=57.103.73.184;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+ (Exim 4.90_1) (envelope-from <stefanha@redhat.com>)
+ id 1w0YXC-0005eh-Sl
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 01:24:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773293072;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3s4Ei7XEG4pfhS0nEUBENCvEmVE4MV5py3gy5vhQr/s=;
+ b=iXSsnhGJK55PDHmzmsD5P+Xg5zjqBjOb08a19M5khCEwIJL6a2V1d0js+fKCymHOwS+rxQ
+ O3JPDshGD8G7JMSUV0bblbYPdHCJEtPHth0gxcT0S0z74i/6c9jXaTc37GaFH9O/O36AN0
+ JWQHf4HsOgJS3YdgeY88GZC/j/LynTc=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-364-ir9t-z4MNFKkziHaUf-RQQ-1; Thu,
+ 12 Mar 2026 01:24:28 -0400
+X-MC-Unique: ir9t-z4MNFKkziHaUf-RQQ-1
+X-Mimecast-MFC-AGG-ID: ir9t-z4MNFKkziHaUf-RQQ_1773293067
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4560E1800365; Thu, 12 Mar 2026 05:24:27 +0000 (UTC)
+Received: from localhost (unknown [10.45.224.2])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id B2EF61800361; Thu, 12 Mar 2026 05:24:25 +0000 (UTC)
+Date: Thu, 12 Mar 2026 13:24:22 +0800
+From: Stefan Hajnoczi <stefanha@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: Kevin Wolf <kwolf@redhat.com>, armbru@redhat.com,
+ qemu-devel <qemu-devel@nongnu.org>,
+ "Dr . David Alan Gilbert" <dave@treblig.org>,
+ Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>
+Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
+ holder name
+Message-ID: <20260312052422.GA116604@fedora>
+References: <20260305142459.52559-1-zhangckid@gmail.com>
+ <20260305142459.52559-5-zhangckid@gmail.com>
+ <20260309081502.GC39949@fedora>
+ <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+ protocol="application/pgp-signature"; boundary="eZjPKKTMoS/syLBn"
+Content-Disposition: inline
+In-Reply-To: <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=stefanha@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -104,61 +92,78 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
+--eZjPKKTMoS/syLBn
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> On 11. Mar 2026, at 18:12, Wei Liu <wei.liu@kernel.org> wrote:
+On Tue, Mar 10, 2026 at 06:02:54PM +0800, Zhang Chen wrote:
+> On Mon, Mar 9, 2026 at 4:15=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.c=
+om> wrote:
+> >
+> > On Thu, Mar 05, 2026 at 10:24:50PM +0800, Zhang Chen wrote:
+> > > Update the usage of "iothread_get_aio_context()".
+> > >
+> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> > > ---
+> > >  blockdev.c | 9 ++++++++-
+> > >  1 file changed, 8 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/blockdev.c b/blockdev.c
+> > > index 6e86c6262f..01ccf64b3f 100644
+> > > --- a/blockdev.c
+> > > +++ b/blockdev.c
+> > > @@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const char *n=
+ode_name, StrOrNull *iothread,
+> > >              goto out;
+> > >          }
+> > >
+> > > -        new_context =3D iothread_get_aio_context(obj);
+> > > +        char *path =3D object_get_canonical_path(OBJECT(bs));
+> >
+> > CCing Kevin and Markus in case they have an opinion on this.
+> >
+> > BlockDriverState is not a QOM Object so using OBJECT(bs) is undefined
+> > behavior and may crash.
+> >
+> > node_name is unique across block driver graph nodes and could be used.
+> > Unfortunately it's not connected to the QOM Object hierarchy. Maybe it's
+> > best to build a holder name that is an invalid QOM path so there can be
+> > no collisions between QOM paths and block driver graph nodes.
+> >
+> >   g_autofree char *holder =3D g_strdup_printf("BlockDriverState %s", no=
+de_name);
+> >
+> > (A cleaner long-term solution would be making BlockDriverStates QOM
+> > Objects so they have a proper path.)
 >=20
-> On Wed, Mar 11, 2026 at 06:02:26PM +0100, Mohamed Mediouni wrote:
->>=20
->>=20
->>> On 11. Mar 2026, at 17:54, Alex Benn=C3=A9e <alex.bennee@linaro.org> =
-wrote:
->>>=20
->>> "Anirudh Rayabharam (Microsoft)" <anirudh@anirudhrb.com> writes:
->>>=20
->>>> This series adds ARM64 guest support to the MSHV (Microsoft =
-Hypervisor)
->>>> accelerator, enabling QEMU to run aarch64 VMs on Microsoft's =
-hypervisor
->>>> using the mshv Linux kernel module.
->>>=20
->>> Does GitLab (or anything we plug into it) support runners on Arm64 =
-with
->>> HyperV and a Linux Dom0?
->>>=20
->>> I looks like we would need a dedicated runner to defend the
->>> functionality on CI.
->>=20
->>=20
->> The MSHV license doesn=E2=80=99t allow for any use outside of Azure =
-Kubernetes Service,
->> despite MSHV (for x86) being public.
->>=20
->> And Dom0 is technically not required as there=E2=80=99s L1VH, but =
-that=E2=80=99s even less documented to
->> the outside and not set up for more local use - but hopefully will =
-make its way to Windows=20
->> client at some point :/
->=20
-> Direct Virtualization (the marketing name for L1VH) will become
-> generally available on Azure at some point (hopefully within this
-> calendar year). I am not sure about Windows client though.
+> If no other comments, it's OK for me. This issue like I mentioned in
+> patch 7 and 9.
 
-Hi,
+A thought about the QAPI interface:
 
-Could you ask if it=E2=80=99d be possible to have Windows client as an =
-L1VH host, if even just Insider builds?
+QAPI expresses as much information in the schema as possible, so I think
+the right approach would be a {'union': 'IOThreadHolder',
+'discriminator': 'type', ...} that supports at least "qom" and
+"block-node". That way there are proper types to encode QOM Object paths
+vs block node-names. Let's avoid having a single string value that takes
+on different meaning depending on the type of holder.
 
-Either as a Windows Hypervisor Platform privilege (even no save/restore =
-is okay, just being able
-to enable the privilege is good enough for testing), or through HCS for =
-WSL2 (or just Hyper-V VMs)?
+--eZjPKKTMoS/syLBn
+Content-Type: application/pgp-signature; name=signature.asc
 
-Because at this point that=E2=80=99d solve the testability issue=E2=80=A6
+-----BEGIN PGP SIGNATURE-----
 
-Thank you,
--Mohamed
->=20
-> Thanks,
-> Wei
+iQEzBAEBCgAdFiEEhpWov9P5fNqsNXdanKSrs4Grc8gFAmmyTgYACgkQnKSrs4Gr
+c8hEqAf/U1iG5A6KHZDrNMVBqjC6o87r4RfR82J1UQDi12N634XXuQGUcfxcEbNI
+Kdu0+kxssOStw7NK3TRTnlNvWxCNJz/5Ugx6BvByhcCLvf6c8vL+61eIkB4D3Lsa
+1jzWUW/+0e8crtFt7wqxzX7BeEgyWqiZyXRhxGCQQPKxk6mCE2IsbBo5lMKOYf2Y
+0hQyzJrA7gCuwOVuT3pprsvZbo1smurmSXjfA0ntKe7kd0r9XQhQ+U/0fxzVezGN
+2A89sRCsokUFOlm9MwkAbTR76uvtg3atA3vzaF9+azIWuBSwSKy6pRoyrJwiFlMi
+TWecfg+e/3iu1fXYHFx//uP9J0NxLA==
+=9D2v
+-----END PGP SIGNATURE-----
+
+--eZjPKKTMoS/syLBn--
 
 
