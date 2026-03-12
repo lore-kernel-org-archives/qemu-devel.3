@@ -4,87 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA1AC106ACE2
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:29:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24D6F106ACDF
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 19:30:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0lip-0000zJ-AA; Thu, 12 Mar 2026 15:29:27 -0400
+	id 1w0ljm-0001Ta-7O; Thu, 12 Mar 2026 15:30:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0lil-0000z5-La
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:29:23 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0ljj-0001S0-6U
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:30:23 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0lij-00064A-9M
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:29:22 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-439fe4985efso1234517f8f.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 12:29:20 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0ljf-0006sh-Sx
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 15:30:22 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-4852f73d0a3so12961415e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 12:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773343759; x=1773948559; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773343818; x=1773948618; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=tN7w/0zA9Fizpo5ISfBL++5Bj4QOptPGVQ5LZ0QJP8U=;
- b=ZlfTtJ/+erfBdgCLjVBQKk7gg31I8lyEwV/8bsBKWnZgcfO74JgeHSw57CU1UecCZz
- RkxBtCxRb0OTPHcnw4iVnsPtH+688qalDiSZJVvdvkvayse4ZpvB+66MEjq6dR/vc6pA
- j5oF8mjDvt/UPc2UtZreyQv+WDbyz/LICKlyQM/DtOgAxfSxSw9GGMgS0lS9ymRQt2a8
- PE4Z7Bt+7a42Kr5T8gep6l98C1BuJd8S3f3zBjlxWz0qLgDPsD9UH/kAFOrvSWifbxwE
- JM0MIvQhGL61KYcs+K3yQdnc38TrJfFN8jnxeV+n8JaoEmfwEhNjVL25WkPH2L8HxI/t
- Uijw==
+ bh=sCeWBveGp8vAJRpmp2UGiJDCWNV+FgGXnkU4c2dH/Nc=;
+ b=XNt2xvOtfUgEpEC9Acg4VWjmWRcPIACVgvAGMLIrfE+Es64AkQTTUq9Ui8DpO40HSV
+ 2qCBW03YqoQLNy/UTHEkzoXXqWyQiWuOeppMVaRxxxYhtdoFvEDSQ6Zvrdk0ZJTdAU3H
+ hEq3NqZ0I4yyFcl8QRKmVkpNptc7b+yZwc4+gvpwwcHxBIObfpmg0+IroaFLg9lLhFxT
+ VbIENqg+TEAcikTG6r8A0G6IXcNP885nc+nOD3MBrOJ+JSEkzOdSB++6pDNQHDL7yvYB
+ Ca/uK5GZleRWKnAwCAVDqVpi0+VdfhbyVuRVvzMpHBP0AHxap+5riBCT/TxysF9vOHX9
+ aRng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773343759; x=1773948559;
+ d=1e100.net; s=20230601; t=1773343818; x=1773948618;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=tN7w/0zA9Fizpo5ISfBL++5Bj4QOptPGVQ5LZ0QJP8U=;
- b=aZjWUe7bnxpJ6fhaw+BjEc4GsmOxARQ6jyXQ6mkjjW1/fkXH9+qbrq3AEYcB9oZgA5
- vAG/WVPRTFwRA57VtT0Z5WKrg5SU391VaM25hPklOhDUPfMkCQmlEirbrLjNf1xERZ6z
- ntD0jh6XNIb1lQx4Asg/e3Wk6wSZXlSqlcVCGZgqlpaYvsOicNcFEhKrChICo3ogC4i/
- UwKmMobFxFBRO6Q0AloHO7u0AnodcuZp35bYMU8qEpYc9B0sA4A700VUrWaG46hPnsAY
- IJhKS+MwFL+3gGrMLtbbeZDDJCf8hTxxuSc9gzg3ETM0eLuJvh6s799VwRsYhVMW3dME
- WcqQ==
+ bh=sCeWBveGp8vAJRpmp2UGiJDCWNV+FgGXnkU4c2dH/Nc=;
+ b=lqmrAXoUhb6Q50fxnIQTiqy/5F0jNRgHUWPohCfTtjQJrDUqPGOu3OF1HHMGWUxNKX
+ SMa+nLI0xjeOvvXsG8s2w5ZNDQbZAAaQ5GNjJ7MUndff3m1hf3lahSbYmklv+uheS2WN
+ AvPqpx2D3k1vG1mzgcS68pxfKburvaUYMmZaZEb4+ushe/Nnro0mjZoHOeMrCXbHLlAX
+ e0NG2QFOkx95nPTio4kwN69n/+GjB/TTKTqH6F/LJ8ZcmJDBAxP4QEG11uIanA99Hg1k
+ WeW1A6tBLmTfwYRmeQvXa+/qXPiV7sxVvdQDTfMavnHnZH9hXg4s1BQE3WmeRWxfyZRs
+ 1x2w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVlnGoOUs5loNahpnGgql0leHD9MUYCLbeXlJTfbjbbRq+Djf+ExQ99orCol69FSP/KIJcKklBifA2d@nongnu.org
-X-Gm-Message-State: AOJu0YwBML6IEA5sDrXYmga4X5Qb5Rj5HQFGiOJ8E44tfzXYamvZaUQl
- 6kAXlkY47FuMF4638aR4QtfpFSxQoyAtI3Tst6X/RTXVnc6B33CIkd/x0/RiXokuwvo=
-X-Gm-Gg: ATEYQzz8vTJg7fARUVIqbeZmo5GhUNgnUNXHnS3qNFmpMRDtObGnhse9Oefpz5sm+PS
- tqQTq0l57YozizjhI8buCXlNvUbtse9/LKSvef9oZu28zt/YHkAWEIBFtK8o9dm2F6KUk3o8fKN
- iY23e6EkB6igz4wH6TTcrljE8J8scijZpAua9baOIVxkbRdAtqzyA9ys3XlbG3A7MMctCUfvASy
- rSgKLiBRX5hHlVLRPyP0GGVq2W77KcqYS9DQu1+SG5jckVUbximt4xCaxBPyIZAqpv/ltVWExbc
- xiPPlq0nrBqIfDDj8FbEGuTaW9vxFGttJbyhHa/T2krB68uC5eDfwbPP/iMCRT/1FkFmGsvP+qn
- aFn+G0xAgGcO9B7pmkxrhUrd9M69VcbjvcoGgqc/+GnRdrD0+dV4GQvV1EcKl0wkAr846K0Zef7
- dhEXDOxzhg2CgOiPE0826k5FvSvXw2l4VobN3TfEzqx/cBBKnurOWKc4o1u2oYRCMC/qwPu7fCY
- s/p
-X-Received: by 2002:a05:6000:240a:b0:439:b715:6f4b with SMTP id
- ffacd0b85a97d-43a04dcbb2dmr1548223f8f.57.1773343759225; 
- Thu, 12 Mar 2026 12:29:19 -0700 (PDT)
+ AJvYcCUtaDoD2pNP3GlEq+HdqIdWhHvgv+BkYbjWhpI/oYeu5ufBG4MKvyC0N6U3Q7gj2ztooeLNY/m6sKyX@nongnu.org
+X-Gm-Message-State: AOJu0Yyo8/HNRJBLPGQwQ9xxBumDsRXOlOwvvy27Slzg1unCc1Z1FH+U
+ KKfntulzjxmYUtOKOVCDPvoCmNPAvCPu8t0nagwJ9JfqSeDYALhQ9Xo9UtWT9+RHRBU=
+X-Gm-Gg: ATEYQzxjwNg7SrfVnuHFMPgcYrGj7vhkoJDOe/kKafKtXwOjSnYrFaZlX6RGW0vZCJi
+ w1deubt9bKJzYF2klkB6SiW2GvodFm85MglVaABHig7QAwwhEfKHTVADu0qlG3sGO5hmRUkeTOz
+ jVO6mhGS48oyDFQJv6BuBxEo2vItN3VwOy0Y70ceSkwR1y3dQ4rXrA9hmDeYAGWxemZ5xliPdGe
+ 2cTPYPYOuNFpWBQwOp53ZDmQmEQMTqcjpO9oZjJQkIkNBXf7gfjgPs6W09QzIL/Lx9PrtbuU5An
+ anzua+q1X9DMVUZveeEGvMCFy7LC6Tf3k6RCDAWIdfIt2mQcZxr+NDCXCNtn1W6HYYrt/Jnge41
+ aFAEnQfwpATHpHjRyFQZVvF4dkAvw9HHMUWwRxmgIvo0whGlHAc7F3ubC3//ZxcDEI+iDklMslN
+ TymLVycIl8V6rg9SDWzAMwtI1lb2ha3kLck1D8kjTA9PEomqj0iYPrZJTtkz4R+uHpYQ==
+X-Received: by 2002:a05:600c:3489:b0:46e:32dd:1b1a with SMTP id
+ 5b1f17b1804b1-485566ca8bbmr8241825e9.7.1773343818016; 
+ Thu, 12 Mar 2026 12:30:18 -0700 (PDT)
 Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe1a737csm9448036f8f.10.2026.03.12.12.29.18
+ 5b1f17b1804b1-4854e2537c3sm140355545e9.15.2026.03.12.12.30.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 12:29:18 -0700 (PDT)
-Message-ID: <bde55593-a51d-421c-bfa5-4a0c774f4b61@linaro.org>
-Date: Thu, 12 Mar 2026 20:29:17 +0100
+ Thu, 12 Mar 2026 12:30:17 -0700 (PDT)
+Message-ID: <289033b3-99c1-4dc1-b3a8-d2afb97eb301@linaro.org>
+Date: Thu, 12 Mar 2026 20:30:15 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 2/3] include/exec: Provide the cpu_internal_tswap()
+Subject: Re: [PATCH v3 3/3] semihosting/uaccess: Use the cpu_internal_tswap()
  functions
 Content-Language: en-US
 To: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>,
  qemu-devel@nongnu.org
 Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
+ Peter Maydell <peter.maydell@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
 References: <20260311-semihosting-cpu-tswap-v3-0-8e239575ec08@eonerc.rwth-aachen.de>
- <20260311-semihosting-cpu-tswap-v3-2-8e239575ec08@eonerc.rwth-aachen.de>
+ <20260311-semihosting-cpu-tswap-v3-3-8e239575ec08@eonerc.rwth-aachen.de>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260311-semihosting-cpu-tswap-v3-2-8e239575ec08@eonerc.rwth-aachen.de>
+In-Reply-To: <20260311-semihosting-cpu-tswap-v3-3-8e239575ec08@eonerc.rwth-aachen.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,75 +108,69 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 11/3/26 17:27, Martin Kröning wrote:
-> These functions are needed to support semihosting on CPUs that support
-> runtime-configurable endianness. They should not be used in other contexts.
+> The semihosting ABI [1] states:
+>> Multi-byte values in memory must be formatted as pure little-endian or pure
+>> big-endian to match the endianness mapping configuration of the processor.
+> 
+> This commits ensures that semihosting data is properly byte-swapped if
+> the guest's CPU is currently in a different runtime-configurable
+> endianness than the host's CPU.
 
-Another note is these function are not target-specific, which is great!
+This patch also remove the target-specificity in semihosting,
+which is an excellent news for me \o/
 
-These can also be used outside of semihosting.
-
-Matter of taste I'd have named them using this shorter pattern:
-
-cpu_internal_tswap16() -> tswap16_cpu()
-
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3258
+> Buglink: https://github.com/taiki-e/semihosting/issues/18
+> 
+> [1]: https://github.com/ARM-software/abi-aa/blob/2025Q1/semihosting/semihosting.rst#the-semihosting-interface
 > 
 > Signed-off-by: Martin Kröning <martin.kroening@eonerc.rwth-aachen.de>
+> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   include/exec/tswap.h | 36 ++++++++++++++++++++++++++++++++++++
->   1 file changed, 36 insertions(+)
+>   include/semihosting/uaccess.h | 8 ++++----
+>   1 file changed, 4 insertions(+), 4 deletions(-)
 > 
-> diff --git a/include/exec/tswap.h b/include/exec/tswap.h
-> index 9e94fa0021..17ac544454 100644
-> --- a/include/exec/tswap.h
-> +++ b/include/exec/tswap.h
-> @@ -10,6 +10,7 @@
+> diff --git a/include/semihosting/uaccess.h b/include/semihosting/uaccess.h
+> index 2093a49827..0911e3b31d 100644
+> --- a/include/semihosting/uaccess.h
+> +++ b/include/semihosting/uaccess.h
+> @@ -28,7 +28,7 @@
+>       ({ uint64_t val_ = 0;                                               \
+>          int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
+>                                         &val_, sizeof(val_), 0);          \
+> -       (val) = tswap64(val_); ret_; })
+> +       (val) = cpu_internal_tswap64(cs, val_); ret_; })
 >   
->   #include "qemu/bswap.h"
->   #include "qemu/target-info.h"
-> +#include "hw/core/cpu.h"
+>   /**
+>    * get_user_u32:
+> @@ -39,7 +39,7 @@
+>       ({ uint32_t val_ = 0;                                               \
+>          int ret_ = cpu_memory_rw_debug(env_cpu(env), (addr),             \
+>                                         &val_, sizeof(val_), 0);          \
+> -       (val) = tswap32(val_); ret_; })
+> +       (val) = cpu_internal_tswap32(cs, val_); ret_; })
 >   
->   /*
->    * If we're in target-specific code, we can hard-code the swapping
-> @@ -72,4 +73,39 @@ static inline void tswap64s(uint64_t *s)
->   }
->   #endif
+>   /**
+>    * get_user_u8:
+> @@ -65,7 +65,7 @@
+>    * Returns: 0 on success, -1 on error.
+>    */
+>   #define put_user_u64(val, addr)                                         \
+> -    ({ uint64_t val_ = tswap64(val);                                    \
+> +    ({ uint64_t val_ = cpu_internal_tswap64(cs, val);                   \
+>          cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
 >   
-> +/*
-> + * If we're in semihosting code, have to swap depending on the currently
-> + * configured endianness of the CPU. These functions should not be used in
-> + * other contexts.
-> + */
-> +#define cpu_internal_needs_bswap(cpu) \
-> +    (HOST_BIG_ENDIAN != cpu_internal_is_big_endian(cpu))
-> +
-> +static inline uint16_t cpu_internal_tswap16(CPUState *cpu, uint16_t s)
-> +{
-> +    if (cpu_internal_needs_bswap(cpu)) {
-> +        return bswap16(s);
-> +    } else {
-> +        return s;
-> +    }
-> +}
-> +
-> +static inline uint32_t cpu_internal_tswap32(CPUState *cpu, uint32_t s)
-> +{
-> +    if (cpu_internal_needs_bswap(cpu)) {
-> +        return bswap32(s);
-> +    } else {
-> +        return s;
-> +    }
-> +}
-> +
-> +static inline uint64_t cpu_internal_tswap64(CPUState *cpu, uint64_t s)
-> +{
-> +    if (cpu_internal_needs_bswap(cpu)) {
-> +        return bswap64(s);
-> +    } else {
-> +        return s;
-> +    }
-> +}
-> +
->   #endif  /* TSWAP_H */
+>   /**
+> @@ -74,7 +74,7 @@
+>    * Returns: 0 on success, -1 on error.
+>    */
+>   #define put_user_u32(val, addr)                                         \
+> -    ({ uint32_t val_ = tswap32(val);                                    \
+> +    ({ uint32_t val_ = cpu_internal_tswap32(cs, val);                   \
+>          cpu_memory_rw_debug(env_cpu(env), (addr), &val_, sizeof(val_), 1); })
+>   
+>   /**
 > 
 
 
