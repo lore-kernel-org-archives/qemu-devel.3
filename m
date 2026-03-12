@@ -4,99 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3974A106ACCD
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:09:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D2223106ACD6
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:12:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0kTP-0005fq-PX; Thu, 12 Mar 2026 14:09:29 -0400
+	id 1w0kWJ-0006Le-K0; Thu, 12 Mar 2026 14:12:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0kTE-0005fX-NK
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:09:17 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0kWC-0006LD-Kd
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:12:21 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w0kTB-00045O-Ho
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:09:15 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64ad9fabd08so1773846d50.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:09:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773338952; cv=none;
- d=google.com; s=arc-20240605;
- b=CGG4z42tPRI+Iqyz2Slu0h7sm0pZ1oqIkcqlyVnzYLcwMEiM7Rresu/N5CA7OWYX9n
- 478xTrLgmoH1D88W04YIdYQzQvKtAeEHLxkwwBh9zBEwOQPKDhvX3hcYCY0WlFxbN5Fs
- OGBlzD9cureSsUmhnPFddJ3k779LDebdiCYvNBu85v2geVacKKfTNWflHSIvQ1pq0avv
- g1XnuPV8TsKiV5H2/n98Al72L0ZM4d6zgb+rzV3eE3A84B9i+/FuliLFtNSgybtIXejW
- St0TpUeqcv8T57bjkUDpgbBHdgR7iV+he0XHX/LSdWcZwz2eZApgqxgyIiLM6zoT8dUc
- CZ7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=Hn/DQbNDnb1SE7e9KWKhdpEZ81O5c1zj037552NaUI4=;
- fh=49pLzmJ/j6jAPgMhGWGU3UK0QaR2KuJR3Os1mSCfjXs=;
- b=WcHOVlLqXy++6gFFdtXhM7lX5pehP9FYnXIIlWCJ8MoR8s8Lsy6/zvkuzrYZQf3RRX
- HWb81/nLjLtbmQDckNDhXHFs0wkwVdrhXCHnGtPp9EL+5NkHBgrLRiiMNebaKWtxWrfZ
- 5DZaZCZEWLqtSpN1pAOXx4qI1EZd842AUFb3BxMhjKluGfPNIUN5Ep3tQUoepZtqWbfq
- HewZn3z5+Bq01YhRBSH0YyCCeYtJC9DaO9Szn8TpZbewNKz80XCjAtJKhMkL3Y8IPsq8
- WtCXkoHnN1BUTyxYm5vLaqyyR9IJ0d4ldd16Av+rikkAq9y52jMkm3Kq2TBj9Y/LZ1pC
- 3+pQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0kW9-0004xz-Ef
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:12:19 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2addb31945aso10217045ad.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:12:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773338952; x=1773943752; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=Hn/DQbNDnb1SE7e9KWKhdpEZ81O5c1zj037552NaUI4=;
- b=g3iUyv0fiDWNtLQl5LTS4z40ZuVK3r6EGVAnlXZ9UuIfyk8MpjPeTAcJLV42KpZRij
- +cU+LjFOdpRfUJoE2uYwhMuzPAnsCiCCrfRTlAv7x9ZKSkEN0sdER0LRmnl58S/K7gMZ
- beegmgokl7vHUAn8UfpN4/ysii/AHpriEUxHNzXp9uxbYF5AZoYsrjnSEwF8GbdORByl
- D+zewbHgCqCJvYQ8xuYPrr/dRjFw95U/ATt7ypT4Y9DlaoSiPMK/ZSBcHY2kSlykMghj
- M6KNYUk6ppNDaZ+IKuYHxuuaKF3Aue34G5fUeIoquq02FcDtpraV5h8KEL5VC9/G4mgw
- s1Ew==
+ d=linaro.org; s=google; t=1773339135; x=1773943935; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Wy6zfDC6sWH/DewEtyeLrZBYz/teOWfVpZ7dS9aolVs=;
+ b=ZBfXsqIgg16VLBuPgvkZxnyh5sY8EFl1rwyNrsvtt9uUTDIX5BBJ9Hrd/8n25ilgpi
+ n2S+VRp8mzChLL1TZUKquWhE3++twtECqSfpv8gvyd4QUsSrSCqt/oJGoobMiAtMTpKv
+ 7RnuV4uUtclYSieKFzIbpqd5zMUmfzJ9rylICKjBmhP2QU4b9CVvhR9hSqmkNCZ0KHly
+ Eh85pj1Vo2tdnVR02wNJJ0da+Tv8lL44LFMYtI7Eb8SG6ZP2yUoqRW/zGOrAciXFsn7e
+ QDbFiFjCPseiwXG0nNtNDo2GJBCkXXuUuLSpWk855HBZV09bRJdFifFeOVv6iYSC5my9
+ umPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773338952; x=1773943752;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Hn/DQbNDnb1SE7e9KWKhdpEZ81O5c1zj037552NaUI4=;
- b=CMC2onEq1TRMjThnOLC/IF0cGGgMSpyyXx0iv+y7xNXS3xeFzJQ3o+PeRr+I4rJx13
- y6T8m9AAd945nx8V7j6gFAvFkbkd16EDO6ltGL/zztwmhGsTjVwNI9GdJg88go2vMxF2
- dWrdQzxPnkJuNW779J3vw1X7DLsHqLFNqGpqud1vqNz+dMhWWjEeWO3qK5d030Niir4M
- zDWhhGwdP50SG5qLKux7m5BRp5i3uPx2IpdEUeJa+tiNOTp/vWTpgFQ65wxr4lbE3Dmh
- IjNRqc74Hxc9SEF0XJdyt4aY40UM+4QZyhsi6kgxWm69Z+7Y+wc+UO7fsngEQRCCzVSc
- 63ig==
+ d=1e100.net; s=20230601; t=1773339135; x=1773943935;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Wy6zfDC6sWH/DewEtyeLrZBYz/teOWfVpZ7dS9aolVs=;
+ b=N2g4sQcfZF+/2x4xqYDWvc/Mh5QHEO7wT+CgyC9NIO90v3IjJ0tCuld8zHMre9JZW3
+ PwMZa/QaMDX06myzwftDbgBFa9V3rMCNIQPHuO5mP7OHTXchh8lfAjz4tQtg0IBtbjBx
+ 4guNHmCqGFG7pplPuuL5stIH7jzTvidKF3dySV3VnbiKibk/W+FcAnrl5eal/MH+4LXm
+ Tw4N16X6i4EOxeGl0ECwmr0E6Yy2rRV7jduDNwafH0axupv3t5iKj0ut+b5n3shIS3+m
+ 3G9hqwXfrQ9fDfNSCZUCZ9kJu1fg/2uRwg9hmGiNjOXAVsMZbGPyzNutWFnFb8yWOufb
+ 4siA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCU3eW5wdQ+TTO5L/R7On5hDUXIljS08ayc8padtKn2ooVdWGXC++ygvIPEMXMQKFeVd/Y3l8ZPe8yrs@nongnu.org
-X-Gm-Message-State: AOJu0Yyjjqph6JsknL8qQRm4uqFnG26ix6fGG1FAi37Ehel6ooN3F9YK
- 03WQvOwYPUvaFwwcKPB3+QfTcH+mqYDiiHB2oQAaUCrt7+GV+ilkEpqAEBuPMRvSjaGBQu0UQrN
- B9ngoCSHYjIfL1xdsxzFCkqDI6JbTWlItH1ZoLxd/xw==
-X-Gm-Gg: ATEYQzzK7ogLfKgMg7WuhQxXyqiXT4f7JsK1P9XBaw4ZAXcR/4r7m7DqAEGYmwb0bWW
- I6lQHReQ6CIb686Ygpgl7DnBC4nnrRqSQhM6ZRS7lbDrbW93ojP19ECy94fx95sqvdS3mY3jl5A
- k+M/8bIqMSA2vQmFGgopokTDu/ph+6bAkszbSY1W9SpyiwMGFqEDnXZlL1aziDBvKAsl2ksIp66
- wSGwktHgXl6DJJaGfhf6MPphks0ZmJzskHVQti28eUK1Op1Twh5ZUcldICqWrYjzOtJqmMmIq29
- cyWPcOn9Q8FBjlQuTNl8M5IQzOcrZtemep4Wzwtk8gesgf5DWk08OV6LRtmOBm6S7Jr2xCS2hSI
- V3Q==
-X-Received: by 2002:a53:e23b:0:b0:64a:dd9d:e944 with SMTP id
- 956f58d0204a3-64e62f68f5bmr430741d50.25.1773338951752; Thu, 12 Mar 2026
- 11:09:11 -0700 (PDT)
+ AJvYcCW9WpVbcj2SANrNDE2by/sEKZbw583DljFESR3mlYFYFWTbTmyV3hOT/KnpL6nQAjfnnj2xnz96aWmy@nongnu.org
+X-Gm-Message-State: AOJu0YzqTs/3gBT7xIQTL76Fiie34bcg5tsml3gXP+9HjzhU9rQPgdHa
+ KN7YOHaHLsiPGkPWfoYWxBexYAKGEQezsdKk12odJtNdE8fUrZAmsr0LFx1/0qOUiwo=
+X-Gm-Gg: ATEYQzxkVz/6HtVfpnUjtJ9GIru3iYzYk+pDjKYKvvtmiGEcYQxf5F57DTApwk1iy8h
+ 1cltchDPrVb1eCTnRuWj61tPtmaJhtLviu29iLvVCISufaqSBi0ufd/H2/N/YlPLvchxEd6VHvG
+ a/eBVy5KZGjMdjxIR5yZx/faK6jknVfhXK0aKxigyRkkyhyQPQh722rys+idzakcAt3sr/Exk/U
+ 9naC+CW2pHUbY4o7OSJyZcxuTna3TbjAlbLoYZvFCGInBqmz/h/Y49HY3CUDHBnjtBtv2PyMkXM
+ 8vhjBVwF/vSzFaL+7cdXKrRXUF4z5YSwyvYXeUPh83D4h25LTaiO0KpUkx4dYcjX5mHGcDRo2MY
+ sRd7gvY7reiynl3M2CQBmwC0vgNLQTACKXB3CZdXsV4haZojh/654La3AX1PNKKgPI3yslUKrNR
+ pHJncE7F8Vxeigu3TeyKe75R7AgGBX2chLgBwO8vEA+8X1G7DKmbmN5h96BbF3acNEsmEcbg8wh
+ +DpAqM=
+X-Received: by 2002:a17:902:f60b:b0:2ae:41d1:276b with SMTP id
+ d9443c01a7336-2aecac3eed4mr4074635ad.47.1773339134439; 
+ Thu, 12 Mar 2026 11:12:14 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2aec00ed91bsm27872765ad.24.2026.03.12.11.12.13
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 12 Mar 2026 11:12:14 -0700 (PDT)
+Message-ID: <3e8016a4-17cd-4d87-9210-2f67a2ab243d@linaro.org>
+Date: Thu, 12 Mar 2026 11:12:13 -0700
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] plugins/api-system: Handle migrate_add_blocker() failure
+Content-Language: en-US
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
 References: <20260312121617.228654-1-vikingtc4@gmail.com>
  <4d7c6db3-0915-411d-ac1a-f26b5b38dc28@linaro.org>
-In-Reply-To: <4d7c6db3-0915-411d-ac1a-f26b5b38dc28@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 12 Mar 2026 18:08:59 +0000
-X-Gm-Features: AaiRm52tR3jsno1WYZKeyn6rvlnx8tvqMDI2_IaSXa4viT8XHd51j0wweYsq4aA
-Message-ID: <CAFEAcA9m_0VCWzxFACJzHKw=WUQhmuXSEgHzfJs1a9NUzWm6SQ@mail.gmail.com>
-Subject: Re: [PATCH] plugins/api-system: Handle migrate_add_blocker() failure
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>, 
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
+ <CAFEAcA9m_0VCWzxFACJzHKw=WUQhmuXSEgHzfJs1a9NUzWm6SQ@mail.gmail.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <CAFEAcA9m_0VCWzxFACJzHKw=WUQhmuXSEgHzfJs1a9NUzWm6SQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -119,42 +143,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026 at 18:02, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On 3/12/26 11:08 AM, Peter Maydell wrote:
+> On Thu, 12 Mar 2026 at 18:02, Pierrick Bouvier
+> <pierrick.bouvier@linaro.org> wrote:
+>>
+>> On 3/12/26 5:16 AM, Trieu Huynh wrote:
+>>> migrate_add_blocker() can fail (e.g. if migration is already in
+>>> progress), in which case it returns a negative value and populates
+>>> its errp argument with the reason.
+>>>
+>>> The previous code ignored the return value, leaving state
+>>> inconsistent on failure. Fix this by:
+>>> - Passing a local Error ** so failure details can be reported.
+>>> - Checking the return value; on failure, report the error, free the
+>>>     migration_blocker Error object, and return NULL to the caller.
+>>>
+>>> Resolves: CID 1645470
+>>>
+>>> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+>>> ---
+>>>    plugins/api-system.c | 8 +++++++-
+>>>    1 file changed, 7 insertions(+), 1 deletion(-)
+>>>
+>>
+>> While the description makes sense, how would it happen in real world?
+>>
+>> Plugins usually will request time control on startup (so no migration is
+>> happening). In all cases, plugin who want to control time will have no
+>> other choice than abort.
+>> Maybe we could simply assert that migrate_add_blocker succeeded in this
+>> context.
+> 
+> If the user starts QEMU with the --only-migratable option then
+> all attempts to install migration-blockers will fail. In this
+> case we need to report to the user that the thing they tried
+> to do (use a time-control plugin and also migrate) isn't possible,
+> i.e. exit cleanly with an error rather than falling over.
 >
-> On 3/12/26 5:16 AM, Trieu Huynh wrote:
-> > migrate_add_blocker() can fail (e.g. if migration is already in
-> > progress), in which case it returns a negative value and populates
-> > its errp argument with the reason.
-> >
-> > The previous code ignored the return value, leaving state
-> > inconsistent on failure. Fix this by:
-> > - Passing a local Error ** so failure details can be reported.
-> > - Checking the return value; on failure, report the error, free the
-> >    migration_blocker Error object, and return NULL to the caller.
-> >
-> > Resolves: CID 1645470
-> >
-> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> > ---
-> >   plugins/api-system.c | 8 +++++++-
-> >   1 file changed, 7 insertions(+), 1 deletion(-)
-> >
->
-> While the description makes sense, how would it happen in real world?
->
-> Plugins usually will request time control on startup (so no migration is
-> happening). In all cases, plugin who want to control time will have no
-> other choice than abort.
-> Maybe we could simply assert that migrate_add_blocker succeeded in this
-> context.
 
-If the user starts QEMU with the --only-migratable option then
-all attempts to install migration-blockers will fail. In this
-case we need to report to the user that the thing they tried
-to do (use a time-control plugin and also migrate) isn't possible,
-i.e. exit cleanly with an error rather than falling over.
+Reporting errors is useful when there is a possibility to recover from 
+it, but in this case it seems like we can only stop when user try to 
+request time control, so I'm not sure we should return anything from 
+this function at all instead of crashing.
 
-thanks
--- PMM
+> thanks
+> -- PMM
+
 
