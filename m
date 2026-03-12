@@ -4,84 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBBFC106ACD7
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 17:52:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AF74106ACCD
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 18:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0kCc-00012e-S4; Thu, 12 Mar 2026 13:52:07 -0400
+	id 1w0kLT-0002dT-Qz; Thu, 12 Mar 2026 14:01:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0kCb-00012S-5x
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 13:52:05 -0400
-Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ id 1w0kKy-0002bo-WB
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:00:46 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0kCZ-0003xz-EE
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 13:52:04 -0400
-Received: by mail-pf1-x432.google.com with SMTP id
- d2e1a72fcca58-829a568f3ccso664407b3a.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 10:52:02 -0700 (PDT)
+ id 1w0kKv-00031P-62
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 14:00:43 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2ae4e538abdso15203515ad.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 11:00:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773337922; x=1773942722; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773338439; x=1773943239; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=evQIVyJHtIR0KeUuDIOxxgjeidrn69n4aMRm81AmMPQ=;
- b=E522KuJb5lH/vr5aNxE1pP068A4acpp/xoGOf8V8tPp6pTRMMqgfSfykocEPrWQIEi
- vdOfBVInBAtNkkk+JnZxp0dY0/xalvQtUKfHj1znXTf7rK+MWbFZ+4abUQmCFH2zyOhX
- ZIU++Vr6uvI51z1bqZjt+h1K6y5woW2rxMvGiSNqOg1ayrOX03R61Cywh0vtsV+7DYgq
- BLGTqDVjLj+BuXrhuniST8oDtHqjUnwnBNmfjRS6Pvg527viKaK7Z2JR6cmD1ne5xfzk
- GZR5Bj0zOW6TLS0Qzf2Nzr/nX1vQ/44SDCo6+dc79SGuIs6RrPflzYEEziNkOwRofseb
- n1fg==
+ bh=YqX5EEJ3dFuFsiImSbdPOrKNYOeA8OHjUSX+r59ikGg=;
+ b=nE0cE0HxhLnpIZANX1CCGU2jCa0/DBUGrSUY1U90Ukf4YS0aieaFcq67/zZNISLXnm
+ z3lXQDftoqld/ZUM4ZiPVhOl3dC6XW9lqQGD/KmCbgox6lTspdaBRHYSKGxbPBLvb6dK
+ DfLz0xwFM2xWxv+9zrISHzzjSs7yjRSESepgHqzy1HoE/GG7DQzSmu+tIchZkRiJM0wz
+ ZQ6Gy7q+9afBTvPNMXzG+IF/CZppNq1sS7tp6EUj6RO1OJuXhkdu70nWCsLbL3LXh1EM
+ gmbZiPbzdO87Haflu4GjqGoLw7rHww1lHOA1CM2CASCAfuTD7s4G73K1dJJ1d+VB5oeF
+ 0JVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773337922; x=1773942722;
+ d=1e100.net; s=20230601; t=1773338439; x=1773943239;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=evQIVyJHtIR0KeUuDIOxxgjeidrn69n4aMRm81AmMPQ=;
- b=ngGgVhls0Hf66yoDllhJXf6aH7QcCbXlAVsgYbXgN7fRLdQcaGCGONxTRjVM8s39z8
- KMzNAq9AAMFSvTw4W9RC+ire1ubxRd9Ji46CQcL4fHr3w0MKkl8raS0bO6oCQZ4jlX00
- AH6BUZaG8Ml2t3d1Ih4kAZdE4LgSdQ/ridAW819MEwofhEDeQs5Kl9KsUaOnURllghx9
- heFpEN0YtP84ztOwbKoqvMtdVU9mzvYXOr9k8KareFtOpjxCd8UmrsaN+aSVO4M5Ti/2
- uBcjGZKG8tAFER/z/rkth1icGl/CeU0xZdjikHnppJT8moUI4UUFLv5Ss9jvB9npORFx
- zRLQ==
+ bh=YqX5EEJ3dFuFsiImSbdPOrKNYOeA8OHjUSX+r59ikGg=;
+ b=F4KMwH5ekx4JVCpF35xvKqsDsQChbKfZHA3myKoxtbM/FlKKalo/DHwBwKDRF10Z0E
+ CukAQJbOfjjw66G+kHvRs4jwHWJTGtE9eRQNfS+UAMFowRtIuyBVjA+rJCZ0C88GrMkB
+ VMdVEcydzHkQPr9lZdH32l0IprAAMHPCZ3JmzcvLELxTNagpyN889cPp8pfGtf1qP6bS
+ Tedyo9OxCIZxYRI7McvyzbMQXFCfFEcMX5IDwcdTN12Ik2WgnqG/ExYhE/y86owrJVqM
+ bcoBM2wIT+6sEyJ4eb5UUFDLlXy8WIsf6zldIl7801b8E0H4KFZoHH2Aj5CPJFBE+Mnp
+ m8xA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVSqKaybhczlV+M8QvYV83jQK/nuwmp45mAVlywH1ugivajlS8VsK0REISbS4GanX+zx0mtfgu96ZVy@nongnu.org
-X-Gm-Message-State: AOJu0Yw9SdNY3YmtFr+1ixEj3zadRH4SFWYSSjzfagFGcIjawixFDvZD
- D3+46sW+rqfj3OftVShP9XSobIoXTtN77NCNz7wLVj4UQBFBDPkBwa5i24YZHQHCcsg=
-X-Gm-Gg: ATEYQzySmyTS2aYvWV35L5/0EJkAvyHxdKWmiUmvm0ADPVOtJiTcvVFER4FrAokYPSG
- 9NZZckER0XKrbLzAUDEUai5+ZtufkAi2Hhzl1NDFaf02LgC2uVvCdOAuDkxbcI+uUbl8C+Yvvmm
- KRhZC2CUBDYZR/ki8aRf322ExJDKDkVF+bRINMQ5s8zLRWlPsAm7/W5zLqI2k4kNe4xwyT8Wqcw
- Xo7stL4RsPtPmT6AxxaFqDWoQggHHPCKFQc+ccj+XMVAXga9ljvVP0QnwoLneTd13LEzYpEACwR
- 6pP5qDHhGe8+e02ZbhgI4zEHOEBwbWhuVz2gp+bNp6r2OiBWruqgtHTkIQal6ajLxm2du/ROVdS
- 0kb+sg2MAd/p6DVN0i5n8m3n1HdedPqT+qxXvfhUGtM0CLdcxzh2IvniZHf3NxEdkex/e5if4bI
- or3T0qLefF8caLhv8390oi1yXIVp2oU28CFEuh5LxcjO2ZI37/ZDvgYI0CFiO7kmeTB9nbS+BCf
- Ap84Eo=
-X-Received: by 2002:a05:6a00:b908:b0:829:8e51:505a with SMTP id
- d2e1a72fcca58-82a198fcbf7mr271830b3a.45.1773337921670; 
- Thu, 12 Mar 2026 10:52:01 -0700 (PDT)
+ AJvYcCXlcSEJmakpyCIRJYTP8FDpLANdxjAJrwucMT5GBfJy06JMnZDgTYSLREweeleIl7gnvf88pSplgenL@nongnu.org
+X-Gm-Message-State: AOJu0YwlEviTbjas10VNnx7PWmEI9kceszD5xz0WveoYfK4g8iuimTao
+ n+ZvXzlsjEhBEHNZEM7C5xbnbUe1zKdRh2bmTdWD9iNzh6y9LLdY3APaEKE4u8/6gj4=
+X-Gm-Gg: ATEYQzysiTk2OzYnXWmSpo6fT9EL5rbo5w5EnXi8BIZf9Nsm5WqkvMUCMSPy2ejdY9O
+ QnkzRHVeZ12E7VSm4LGiYq02T3M2cvUJOt7QOhaliTGLSw3v4i0rA+H2hQMPu8zMzmAFoF1x39J
+ IwuRfEAN7Uclvvih5VGvBG9YylNMSCr0O/8DKZA3s/ROF3rTnotn1WRw/BWbGotJTyWBBYp+72I
+ /2rCE2O4sdVreIP2Fn8H6TQNUOCDlsUcLuVLZllQxTM2DMiDZqj52UHyJk2yYBDriwDfvdxOvKl
+ 4gHxAxlaL2S9j2bppKVJnXcltKNkeVsTjl+S6kZNZvFr9SLzV8jNECeUp3lh/Y54FoRz4aShJHK
+ a98f5H+5EcGBtdBmIYKpm7UHc057OChuCA1RYvAdivqreWUo0ymwWMadFJBcGteBDozAafafK08
+ rcrb8r2y+6p8AmzREYOzpM0wY7a8sogNO45Zi5EiHUs2QPmEGgpxz0GxofcJJLo3b2KyDG
+X-Received: by 2002:a17:903:1d1:b0:2ae:5a0b:9ce8 with SMTP id
+ d9443c01a7336-2aecab2fce6mr3316595ad.45.1773338438019; 
+ Thu, 12 Mar 2026 11:00:38 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a072603c0sm3591479b3a.22.2026.03.12.10.52.00
+ d9443c01a7336-2aeae35eec6sm62053275ad.66.2026.03.12.11.00.36
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 10:52:00 -0700 (PDT)
-Message-ID: <ffc224cc-72ed-49ee-93ea-8a28d220ae55@linaro.org>
-Date: Thu, 12 Mar 2026 10:51:59 -0700
+ Thu, 12 Mar 2026 11:00:36 -0700 (PDT)
+Message-ID: <4d7c6db3-0915-411d-ac1a-f26b5b38dc28@linaro.org>
+Date: Thu, 12 Mar 2026 11:00:36 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC] common-user: Share thunk.c between bsd-user and
- linux-user
+Subject: Re: [PATCH] plugins/api-system: Handle migrate_add_blocker() failure
 Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: "Daniel P. Berrange" <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260312-share-thunk-v1-1-2f36003a1913@bsdimp.com>
+To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour <ma.mandourr@gmail.com>
+References: <20260312121617.228654-1-vikingtc4@gmail.com>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,11 +112,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260312-share-thunk-v1-1-2f36003a1913@bsdimp.com>
+In-Reply-To: <20260312121617.228654-1-vikingtc4@gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x432.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -144,29 +139,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 6:10 AM, Warner Losh wrote:
-> thunk.c is the same between linux-user and bsd-user (out of tree),
-> so share it between the two.
+On 3/12/26 5:16 AM, Trieu Huynh wrote:
+> migrate_add_blocker() can fail (e.g. if migration is already in
+> progress), in which case it returns a negative value and populates
+> its errp argument with the reason.
 > 
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
+> The previous code ignored the return value, leaving state
+> inconsistent on failure. Fix this by:
+> - Passing a local Error ** so failure details can be reported.
+> - Checking the return value; on failure, report the error, free the
+>    migration_blocker Error object, and return NULL to the caller.
+> 
+> Resolves: CID 1645470
+> 
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 > ---
-> As part of upstream blitz bsd-user, I've discovered that bsd-user and
-> linux-user have the same thunk.c file. Rather than copy it, put it into
-> the common-user directory and share it. It has to be compiled
-> per-target, unlike the rest of common-user, so modify linux-user and
-> bsd-user to grab it from there.
-> ---
->   bsd-user/meson.build                | 1 +
->   {linux-user => common-user}/thunk.c | 0
->   linux-user/meson.build              | 2 +-
->   3 files changed, 2 insertions(+), 1 deletion(-)
+>   plugins/api-system.c | 8 +++++++-
+>   1 file changed, 7 insertions(+), 1 deletion(-)
 > 
 
-Indeed, thunk.c seems to be highly target specific.
-A good solution would be to move common functions to common-user/thunk.c 
-and the rest in include/user/thunk.h. It may be cleaner than doing the 
-meson hack. Or leave it duplicated for now, except if you plan on 
-modifying it.
+While the description makes sense, how would it happen in real world?
+
+Plugins usually will request time control on startup (so no migration is 
+happening). In all cases, plugin who want to control time will have no 
+other choice than abort.
+Maybe we could simply assert that migrate_add_blocker succeeded in this 
+context.
 
 Regards,
 Pierrick
