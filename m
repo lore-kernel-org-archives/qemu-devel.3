@@ -4,79 +4,156 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4AE8106ACCB
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 16:35:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17A1A106ACC9
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 16:36:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0izo-0000fQ-79; Thu, 12 Mar 2026 12:34:48 -0400
+	id 1w0j12-0001IP-5P; Thu, 12 Mar 2026 12:36:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w0izm-0000fG-L5
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 12:34:46 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1w0j0z-0001GP-GF; Thu, 12 Mar 2026 12:36:02 -0400
+Received: from mail-westcentralusazlp170100005.outbound.protection.outlook.com
+ ([2a01:111:f403:c112::5] helo=CY7PR03CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w0izg-00086l-Bp
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 12:34:45 -0400
-Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
- [IPv6:2a02:6b8:c0c:a189:0:640:4da6:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 31B4F80839;
- Thu, 12 Mar 2026 19:34:36 +0300 (MSK)
-Received: from [IPV6:2a02:6bf:8080:b78::1:28] (unknown
- [2a02:6bf:8080:b78::1:28])
- by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id YYKmTK0A2iE0-aUdJ1PmK; Thu, 12 Mar 2026 19:34:35 +0300
-Precedence: bulk
-X-Yandex-Fwd: 1
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1773333275;
- bh=YlOYM2pX+SaemOYfMR3/uh0HsMi3eHZWfdq+uoVG4rg=;
- h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
- b=dg6JccFuWlk82ToPUvc+PMgR1tLXUjU2ccQE/8HDU2oNnLNvv5fLDOKLWHIZ7816I
- s6kAxsEH2eFtTGNOxJ462CXeTGykDwL9IBRwYkZkSWV1sHS/asQ5uc1/+YcOThzv7i
- Gqb77ykAL05P5wpEqdl+gWQhmmM4Wkhl4mB5MV5w=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
- dkim=pass header.i=@yandex-team.ru
-Message-ID: <022c929e-ddda-4f74-8786-d01994107415@yandex-team.ru>
-Date: Thu, 12 Mar 2026 19:34:34 +0300
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1w0j0w-0008Ux-NO; Thu, 12 Mar 2026 12:36:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=X9hfpVjZdpIslyqbfRVf2Zj+t1Aq6vmoEhwFQeT1HqnJLP2qcrdOWjB/FnxqqashYpaGZ3VB4lUdVuHwt2aC5xOSpjO3ypirJpjnXUM8FQV8lRMQgDBOdCOOhqjc1z5agu+JRBudBjENRfYYDosWNjzndWrn7pFzB434k0GNr+Vu0+XFuUZxCUBhFheT9TnS6ZtjWZCikFdbB7A9W1prJh41Uc5tNFJLtpbAvLDaqYtqzWGieXxoagdoQj7Et2p+1G/sUK7gFiF1ejCAdPbEhsLyhktxF6ikzH2P1231BxNtRxQNZH1KHInkeAVsG42sjBEuID3pmIZJ8++7LG0x+w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=0WD6K82SZ5uBCopRPJvSVnOaZSCRtY3FH0ODUxpyfk8=;
+ b=PN1G1cLtTLhuDE5oMLxAt75fyWf8APDglvlfvuPFQtxRwSyqpwsU7VIAsX34xA/mprhS896uXrQH2GYD4CEhn5Wv4XMKrNJjUryMliAZ+5o7VaXSLXA2NxS1mZ3F6ymWKd+ampIc8CI1p1a10ELbimVElGF1436nlGFv9Zp1Rhuwunq75XjTyZLPWO/WfE5l6L797jGpxY4HIVK7tQk9oLQCHdDqGJFRAHB4SXyATUbeUn8a0YYSgNHITEYyzO+meSLDq5oIxsIgo+MjzRyUtMeM2CPr+Ai75AvBfANzA9j8+pu1+BAAXgw9yNEWaHEbM2gk4/b+1kQba8kOxuKskw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=0WD6K82SZ5uBCopRPJvSVnOaZSCRtY3FH0ODUxpyfk8=;
+ b=lsfcTg+nxQ4bcOIAgz+dSBrrrlinZmPz9GnDoU2WmimWMY0mtkPa7/fwgrY8XbenB4TRAJEBJqjD+co3pFkJUSolaL3LSAKQlCeVbE3cE0xfWSZtUMsPPa3Eahc5UG4P1HxnNrd0X79tx1v0L2SbW+aEd1oW+HHbPCH9neJjWdFkVt+8cRIbayrZt5qWzEqdkPxuesgb7K5dZQXg+EncYQw4kWducTKwcPNAbdnZCbwjT5bsKatZ1xYdHZsd/2cJXiaKGSiP51VP+hj66VDQeZqIxcE217FuowYokvxbFguht6b2MuQ6oTibvlmQi4x6W3bPVK80IldKHcPP5ehrkA==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com (2603:10b6:8:27c::8) by
+ SN7PR12MB6789.namprd12.prod.outlook.com (2603:10b6:806:26b::22) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.6; Thu, 12 Mar
+ 2026 16:35:48 +0000
+Received: from DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5]) by DS2PR12MB9567.namprd12.prod.outlook.com
+ ([fe80::636:1b52:24ca:d7e5%3]) with mapi id 15.20.9723.004; Thu, 12 Mar 2026
+ 16:35:48 +0000
+Message-ID: <ca5edbdf-f4f6-4280-b9f2-ae00c330c480@nvidia.com>
+Date: Thu, 12 Mar 2026 09:35:46 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2] vmstate: fix subsection load name check
-To: Peter Xu <peterx@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>,
- Alexandr Moshkov <dtalexundeer@yandex-team.ru>, qemu-devel@nongnu.org,
- "yc-core@yandex-team.ru" <yc-core@yandex-team.ru>,
- Fabiano Rosas <farosas@suse.de>
-References: <20260302070626.613396-1-dtalexundeer@yandex-team.ru>
- <87y0k5136i.fsf@suse.de>
- <714e4329-6001-4c77-b004-ed7beb11c154@yandex-team.ru>
- <e81360d5-cab4-47a4-840b-7d948b51a5c0@yandex-team.ru>
- <CAFEAcA-m+CZPUchGsh6QU4gm1dO-FP0m1w5gu6sn56wUXBbRAQ@mail.gmail.com>
- <abBcN2B4QNBT_Oh9@x1.local>
- <f37dc7af-7ffd-4a7b-b4fa-552c2d2eb888@yandex-team.ru>
- <abGEwf-AG1rZ3kam@x1.local>
- <a6dafc1e-79d1-4380-a4da-7cbc4ff77ae4@yandex-team.ru>
- <abLc_ppEEbKjNRUi@x1.local>
+Subject: Re: [RFC PATCH 2/8] hw/arm/smmuv3-accel: Introduce _AUTO support for
+ ATS
+To: eric.auger@redhat.com, Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, Yi Liu <yi.l.liu@intel.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?= <berrange@redhat.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Eric Blake <eblake@redhat.com>
+References: <20260309192119.870186-1-nathanc@nvidia.com>
+ <20260309192119.870186-3-nathanc@nvidia.com> <87pl5cnp06.fsf@pond.sub.org>
+ <98e7dd71-6669-4a82-bec8-f1dae2d861c3@redhat.com>
+ <0bdcf7d7-136e-42f4-9fa9-d31f6ae6e19f@nvidia.com>
+ <fd34b7a2-65ac-486f-bc17-23dd4f96a3df@redhat.com>
+ <87o6ktxwzn.fsf@pond.sub.org>
+ <fbf594fe-dc8d-4747-94e7-7398749f03ef@redhat.com>
+ <87y0jxwghz.fsf@pond.sub.org>
+ <eb5280cc-ea00-40c3-9235-b0330d7fc6fe@redhat.com>
 Content-Language: en-US
-From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-In-Reply-To: <abLc_ppEEbKjNRUi@x1.local>
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <eb5280cc-ea00-40c3-9235-b0330d7fc6fe@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-ClientProxiedBy: SJ0PR05CA0112.namprd05.prod.outlook.com
+ (2603:10b6:a03:334::27) To DS2PR12MB9567.namprd12.prod.outlook.com
+ (2603:10b6:8:27c::8)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DS2PR12MB9567:EE_|SN7PR12MB6789:EE_
+X-MS-Office365-Filtering-Correlation-Id: e935fb9c-c6bd-4438-b264-08de80556a92
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|7416014|18002099003|7053199007|22082099003|56012099003;
+X-Microsoft-Antispam-Message-Info: zM3EXwgoUCP3xyabrcqVKHzqzUMYtfG+XeTPIhk+CdMz3FpBntcDgwpBESMKACgwCOGaNE23gx385xnskm6NAkRKYbeVKwcnJDkTyEajuv/iUI2Ar5LKVjNdmbBkrkyKrd6PyhDIj1q+SvbXk/J/6AzFJLmdIAWvSh3TBKZNGwxaSLZ31+JTw2QhVz2yc//nZzS4hEJRsY7QZHHbUNy1q7Zeuu2fmxBBfBBUxUhzrdD6UyoYNfJPJ0drloeUpst8fH/tpdnhtgref3VOqG0w5ygA3mCersmTVqunSL5syYnJIP0hcF9kHmD+birYSiLICRdJogqr70z7TduAFV0S1wRKjBZmgDxHzf+7utHXzKqI+xBoHe/cXTuheEd3XKLdPR1cblxps1HBCX7u00JdUbMvdkMg6nG1+5J3YpVSvA1EGFDsipFHduhSPq8RaQCoLmY6YYBJYXL/QWzN0QNXuO/9NGMtnxa0lzejHDyAPu9LBEB4Y4l5Kfs8WK7AE5H+L4929jO3OyHo+8IlpWs3fC6sd/5+OZKyjYvihv/H6B+c9j5+WqXq6YEPmT2/A7MLSU61XapSAbexDeKnO7mvnY1+giqFd5IMV9lSjCvXjBobk/tsBCS6/yF/qDpLCBGWCkZ7taxu3sPkudIAVyg9wprlcOy7+DVJc0xRt9s+yePYs5hKfKxFJ/bPaGjEKrKYgAmjz+YA/V8QCSs58ffCmNAIwpg3sTRp1NKStyi90Uc=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DS2PR12MB9567.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(7416014)(18002099003)(7053199007)(22082099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YUE0a3loclM2Tmo0VEFyZmZpNDVYYU1IYUJOSDIxYU1oOUNqVEdrYzFodHF0?=
+ =?utf-8?B?cW1nQ2p5TWlpNlRDTGNLSzZiUW91RjlPdjJzZjQzYzUxTU80bXZDT2hYWmJq?=
+ =?utf-8?B?N1BZRGVNT1R6YTVneGc5QVNoRitqQ2JkTlFnbWNJYTRWRmlCZGtYQmpHV2FK?=
+ =?utf-8?B?T0FxOVVwc0VnNVNjczQ1Wm5UTlhNTU1yMmx0RE1zc2h3NDZmZEVUaXJ2aGU1?=
+ =?utf-8?B?UVZ0QmFjc0RFWEIzV1JkMVI5NVpzeHgyQzlnRFJZblRDNjJEY1Rqa0NyaTB5?=
+ =?utf-8?B?cFY2NVcwRXhCaWR0YWZtWnVzL0pRYzZUNk5pMjQzUXlqNkRJaVIyQUNsTkhF?=
+ =?utf-8?B?UU9tL3JVckhubnNDM0YyQVNPNTFydk9sdHp1L0hLc0RUcnJUR3NWVnFqRFVo?=
+ =?utf-8?B?cm04dlB1a0VDMTlvODRGcGhGVkp0N2FqNEQ5T3hmZERvdDJweklwaEFTb3U2?=
+ =?utf-8?B?ZzBsVVhCd2pGa3V4K0RoRVlUdnBTdWRsWGF5bUhaaHZOSDl0UFRoakdtcjAy?=
+ =?utf-8?B?VS9wdVBRUVRJZnVNVDdtK2xnOGJOY1krVm1GTHZ4cytDS1NyUXF3cGRvckVw?=
+ =?utf-8?B?Um5yclduSGwxQ1N2REY5T3hka1RtazhPbVQzTy83VndWRUpBT0JUQlN1T29M?=
+ =?utf-8?B?M0c2U0c5MzFQU3JHV01BL3Z1d0xGWG9KaXhlbkw3SlFIYllVaUlZTjVMSUcz?=
+ =?utf-8?B?TXU3eURCaU81NUJ4ZXRLd0lHV082Y29OTWdWdVVQU0NjcVVUZzJTY3B4WFdB?=
+ =?utf-8?B?Sk0xVlVlekhvaFFmbmh5Ylo3ZE51K08wTndVelE1UkRvZzhENEowVk03alhy?=
+ =?utf-8?B?Uk1Qbm5DVE95MmNrNEhkUXU0QisrNldzV0tvbjUwcGZDQmhFQ3EzU1FrSGMx?=
+ =?utf-8?B?N05Sb2VWeGkzWFJKUSs0ZFdpNDZSVXU3QnhHWm1VL3VncjBuOURNWnM5WUNq?=
+ =?utf-8?B?elFmQlFJSzFlOXI1KzZDei9TY1YxSmxML0dvbkVQWWpiUGJvaUl0ZSs3WFZB?=
+ =?utf-8?B?bzc2eGhGKzljSFFmME9renBab0dRQWpEQjg1cDY1WFlHVGxPV01Vcjg5Q2c0?=
+ =?utf-8?B?eFc4ZEtMSXU3QmZOSDJFQzQ0MXFGaUtqMVI4Y3FDZ01VcVFVb2gxM2pvSUQz?=
+ =?utf-8?B?QmxBTk0zWDFNMTl4R0I2b0ZsVHFBUTRQY091NEF6blY4enEvNnBRN1o0cVJR?=
+ =?utf-8?B?cU1nRDB1eWJGVFNwSWg3djlCS0VVTlJ2elJNUE04ekY1L09BOUZtTVowRzlQ?=
+ =?utf-8?B?QXJxT2NHWmk3NU9reG1pSGRQZnFrdUd5Ym1xVFEwSmN5TXNDSzd5d2pxT080?=
+ =?utf-8?B?MXRwT1o3dHBBa0JNU1F1cVJGdDkxR21ZQUF2amtaekZ5T0VUY3IraFFxWkw4?=
+ =?utf-8?B?UHRxbzlPMktKUWE4ZzVyRlFMSGhQVU8xM1BwS3E0b2w0WU5QTGw0UE56ZWNr?=
+ =?utf-8?B?WFlGaUI0SmgyMUIyYUw4NVd1S0RyMUw5d3ArVVU4QmhhbGxVb1hFZDFySHVm?=
+ =?utf-8?B?U2haZ3MvUzRWb1d0alpJR09XUUxsWWRlVHFLN21zcWludHdtREFqR01JN2Jk?=
+ =?utf-8?B?dGViRUNNZlhCN0J2Ty9zNDJEU05sTXJFekx0d2s2RTZqMEtjNWM0Y09LcDB1?=
+ =?utf-8?B?eXpCQXVpWVZnWGEyS3BHVVdRYXJ5YlkzVTNUem9ETHRJNUtLZXdlSjZNRFBY?=
+ =?utf-8?B?RmtveGdZY2F2aERhUXRFZkE4TXZiTndrQnlEcGJOZ3Fnb0Q1dVNxQ1FCaEpu?=
+ =?utf-8?B?bDdYa3VrQlZQT1NiYWE0dU14d015NmdhWHJIR3ZZdnkxVkJRbEZsQzZOTDBm?=
+ =?utf-8?B?K0taTWlFcVVQcXdBb0lmQWVsei8zcDl6QTY4cXg2ZWVWZnZWU01vbi90LzFJ?=
+ =?utf-8?B?OGl5SUtmelp2V1NaY2lHYUpyaEc4TzhubEUyWCthS1RtZnh6QUtQd3ZQNDQz?=
+ =?utf-8?B?SmJpcUJrSE53aXB5TVlDN2EyOVJZaHdxN2pkazROS0dLZ0x4Zm1SbTZ2Vml2?=
+ =?utf-8?B?RFo5SEM2MWU0TkpyU3ZQN3ZlZzVYb0VJMHVVQ2VLbkJsdXEzUVZkN2lVR0NM?=
+ =?utf-8?B?bHR2NThDWDBlQXhsV0NoOEV1MTBJQkJ1R0NTLzE5R3pLMEtJeVAwNk9kRFJE?=
+ =?utf-8?B?UnhqaVl2cUxjTVlUTXMvNzB1U3lIQ2YvZlg0cnlWUVV3dHFWeUhOWitjTFpX?=
+ =?utf-8?B?RnBvL2pqZ2NibnJCbG9zdHZVcUI1M0pLQ2NoQTlpOGxJRWVEa3hNUFJEUEdH?=
+ =?utf-8?B?WXpEOFFzSk5TRk9ReEpRZEhtYy9CeGMrbklNUnJHVjFmWW0rKzJHeDFSNnN6?=
+ =?utf-8?B?WnZqSlN1WW1OMnlTSVlnMTRVaVN2UUppU0Fralc0SWJzajQvNWZXdz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: e935fb9c-c6bd-4438-b264-08de80556a92
+X-MS-Exchange-CrossTenant-AuthSource: DS2PR12MB9567.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 12 Mar 2026 16:35:48.3082 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: ISwfp2UEPR2IrCXKaFaLk05FdB8p09OZPI7/NN1YgN6cuDV4Ic9bfSY+8Y5VrX/9WalWUA0yTZkmOfJw9Y1g/w==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR12MB6789
+Received-SPF: permerror client-ip=2a01:111:f403:c112::5;
+ envelope-from=nathanc@nvidia.com;
+ helo=CY7PR03CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
+Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -88,53 +165,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.03.26 18:34, Peter Xu wrote:
-> On Thu, Mar 12, 2026 at 09:30:35AM +0300, Vladimir Sementsov-Ogievskiy wrote:
->> You say
->>
->>> .. always pop the VMSD stack then the upper layer may read the SUBSECTION byte anywhere.
->>
->> But it actually can be anything. Of course probability is small that some another state
->> looks like QEMU_VM_SUBSECTION + <existing subsection name>, but we don't have actual
->> guarantee for it in the protocol.
->>
->> Probably, we may also add a protocol change (with some global state property,
->> set to true in new MT) to add a number of subsections into section state, to be
->> sure how many of them we have in the stream.
-> 
-> Yes, I believe it's always possible to change the streaming protocol to
-> make it even clearer.  Actually, that's what I was picturing before I read
-> your previous reply.
-> 
-> For doing that, I wonder if we should just fix "this specific problem" or
-> "the bigger problem".
-> 
-> The bigger problem here, at least to me, is migration streaming lacks level
-> information - virtio can wrongly treat that piece of info as its own
-> subsection only because the stream doesn't tell which level it's in..
-> It's a common issue for migration stream, so I wonder if we need to break
-> the streaming protocol then whether we should do even further than that.
-> 
-> That is the part where I think what you suggested in the previous email may
-> be the easy way to go (plus, removing the name check completely).
-> 
-> But let me double check with you on one thing: before any fix, this problem
-> will happen even during a migration between two latest QEMU that supports
-> that new subsection of virtio-blk, am I right?
-> 
-> I am curious why this problem is only reported until today, rather than
-> when the new subsection was developed.  I wonder if I still miss something
-> that I didn't notice..
-> 
 
-Hmm. Probably, that this is the subsection, that exist only in our downstream.
-I don't know, was it mentioned clearly before, sorry if not.
-This subsection just not exist in master, and we are not going to upstream it.
-So, for upstream it's a "theoretical" bug in a protocol, which may be triggered in
-some future moment. And that's why there is not specific case in commit message
-but only assumption "Let's say there is a vmstate ...".
 
--- 
-Best regards,
-Vladimir
+On 3/12/2026 2:25 AM, Eric Auger wrote:
+> On 3/12/26 10:20 AM, Markus Armbruster wrote:
+>> Eric Auger<eric.auger@redhat.com> writes:
+>>
+>>> On 3/12/26 9:39 AM, Markus Armbruster wrote:
+>> [...]
+>>
+>>>> We promise to follow a certain process when changing external
+>>>> interfaces: docs/about/deprecated.rst.
+>>>>
+>>>> This is why I inquired about external access.  No external access, no
+>>>> compatibility worries.
+>>>>
+>>>> I specifically asked about JSON, because going from bool to OnOffAuto is
+>>>> mostly compatible in key=value syntax: values "on" and "off" keep
+>>>> working.
+>>>>
+>>>> Mostly compatible, because qapi_bool_parse() also recognizes "yes",
+>>>> "true", "y", "no", "false", and "n" for convenience, and these stop
+>>>> working.  We have a knack for inventing convenience features that later
+>>>> bite us.
+>>>>
+>>>> JSON breaks entirely, of course: all values stop working.
+>>>>
+>>>> Even with external access, compatibility worries start only after we
+>>>> shipped the interface in a release.  Did we?
+>>> those options were introduced in qemu 11.0. Fixing them in -rc is still
+>>> an option but it is a very tight schedule
+>> If it turns out to be too tight, rever them or declare them
+>> experimental?  Then you can revise them without process hassle in the
+>> next release.
+> Maybe Nathan, in a first step, you could just respin and convert the
+> options to the auto form, keeping the current default value and not
+> implementing the auto mode yet.
+> + the ATS check fix? Shameer, Nathan, would that be sensible within the
+> qemu 11.0 -rc timeframe.
+
+Yes, we will respin with just the auto form conversion and include the 
+ATS check fix.
+
+Thanks,
+Nathan
 
