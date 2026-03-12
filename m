@@ -4,114 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3447FED2D8
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 06:32:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1015FED2CC
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 06:38:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0Zai-0002rB-8z; Thu, 12 Mar 2026 02:32:16 -0400
+	id 1w0ZgJ-000509-DO; Thu, 12 Mar 2026 02:38:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1w0Zae-0002qf-W1
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 02:32:13 -0400
-Received: from mail-ed1-x52a.google.com ([2a00:1450:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1w0Zad-0002Rz-4q
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 02:32:12 -0400
-Received: by mail-ed1-x52a.google.com with SMTP id
- 4fb4d7f45d1cf-662ac74fd85so1022851a12.0
- for <qemu-devel@nongnu.org>; Wed, 11 Mar 2026 23:32:10 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773297129; cv=none;
- d=google.com; s=arc-20240605;
- b=AzBhnycfPvxMFu9E0byWfwj0qH/B83FbVrZ2PqES7YX1Is2sElsaqzMPpvUcDgFrCT
- ACxSShquoCmZx/S7zvvHOG/9GqJJork4gjXz1YznckT+L91AN9LDrIJ8bVKoWii+evsm
- XRWBzSW4UCDJtbdVuTSfyRWRa5cbbn/oOHMYgjOsIMbZkJ/Z7Ax2eJIiuP6+rPGaXQel
- 10NtNVcmHJnCzKq98zytVcqg92F+l5VWixljHk28wIWbL0Of6mlmszvaCPdxwDg4vlxz
- gVv90ftaFdsgdeEwDWMDqHUcszno0COrTI4MoYbFWbYESMOI2RupUa1So7Z1Eh5PBe/U
- Yuzw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=nEKOI9PM0rx+3wZoWCZ1k1qSH2cpB+4dFR55YDjxTLc=;
- fh=aYT0Dte32zScO0z23mE8usKARXq3g0LPBKVr7DfkjMg=;
- b=cKDJI8sQyjLcGU7+0NjSnIoMQ3LPlB/jwHm+mrAO4VVNnw1IR5SiVVWacCvxKFlmWB
- TRSIO+L4GoVeaWTVz9tHHEvIeWllu/WwlhEeaFeJrkinok5PyLCd1FMwEOtnIzSJfGZb
- bNLUS/7kPMPaL9UC5TFT69onUtzqt65+Ry6ohntXiXoq5QRdQtopQYT8lv/kIvuHVvBD
- OmibiywYYyB3ERwaGDRJ8IDNVpzkdWgMYAmsazEVPwmezSAIaTY5QFlRLY6XSbJTV3e3
- w9/Ocwp4gUrjO5vrQOEZCDAY4cuR1XMHSNjD6uaHPFFOYiiluiY/QHwoYMYftVjKvziZ
- voSA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773297129; x=1773901929; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=nEKOI9PM0rx+3wZoWCZ1k1qSH2cpB+4dFR55YDjxTLc=;
- b=ghvxEMjRlFMIt0UZNRNLKTt6lIqOS6yu/+s5TiTG+5TQ0tZdC9oVjydD65RtP1LRW0
- kZv8DZzpmaEjDgqE1UoKr7P+epuS4mtgPJdpGiA78XFGDvdIXSaVDm+vSbPQhEXAHDMv
- 5hmVwe4BkPJZYD4VuGTJmHjVoJhhBwTHBJVVSsWbYZ7gLxvaVIlZUWI5vaitclmsISsi
- jPAATx6CqXENlWFYDHQgMWN3dyG+zsQFQ3bByGa+UrBJ64LTTtfhXpMMT9S0Z/sBVKD6
- 3KXKEzuj8ayD1NVcFwuuyT96d3X69w1beFcCSiDHZ4Lq4bzvEPSFXwbu/n9k2kBpOg2s
- q4uQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20230601; t=1773297129; x=1773901929;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=nEKOI9PM0rx+3wZoWCZ1k1qSH2cpB+4dFR55YDjxTLc=;
- b=QGzvjzt1NVsIUMd38GmTBTYgw185mhFlq4CLAFBCsamPg7jIt+gIzS+axFYfVnR8aT
- AYm2Z/vt9Z5I682sg/Dgf6UD2btyElVaYXaFRTPV6yfW3ASxszHR2o9Y1wLzzK2uxynE
- EpB+WESOOK9I0fB2aPg/xLRxeF0+BAhnxkfkGH6gW1jMNC9fy1AwMC3XnUEhDqxJVibD
- 73zTj4iTMzD64/tSEAgJ/09ZPXEEXWpsBZkyEcc38kwu2D/cZN/7qJHijUaXwdgHowLr
- pOb21Hfwun8ovHjStpO1OxRORyunEvCm2mTiVirV/XGmhAJfbAniFeLwQ4V66MO6oKsL
- XmjQ==
-X-Gm-Message-State: AOJu0Yy6E8B1k3DkmuO5uPL1seJHNY7E0rRmxnveN09cGC43nM0hFyaN
- n4pkUFZIKv06M0qhjM/553fx9RnScvYJ8lrwdvNuoFkDSflT7Hgaa4U5xLQycFmBv+J7M+wku32
- U/Fu4om92FGb8bJk5s7qge2At8LBXNOk=
-X-Gm-Gg: ATEYQzx7nYoQHDdLvfPjeE3u+l2MuqQiHa6Km/MfN+NNDlKsLqconM8u6EB5njsJpU5
- XuSnwmG0f2XkRhp6d9r68Ps9Ly4Hvf64qC0HgGSTz2qfui9tdepgVfUxZUESeKsZXCrUEtrJHlt
- pIK6wCGdkOaiMoRcxhHmCSG2NpNHGk+67gNOnfXAtR+iYCy8sZwMLoQTcH8rKhPQmaWeDFWqhM+
- g1rGbnJY52lS1QjI5yj6OS1dOtW8XfeCaiat6xUbq/v/F7MhE2aR8GizP/t5r7kOuF2WcJ4llrs
- jqgJWy0=
-X-Received: by 2002:a05:6402:13d2:b0:65f:ab99:2d4d with SMTP id
- 4fb4d7f45d1cf-66319cc24b2mr3146364a12.19.1773297128460; Wed, 11 Mar 2026
- 23:32:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w0ZgF-0004zO-C7
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 02:38:00 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w0ZgB-0004z0-C9
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 02:37:58 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 0B89F80763;
+ Thu, 12 Mar 2026 09:37:51 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:b78::1:28] (unknown
+ [2a02:6bf:8080:b78::1:28])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id nbAuLG0A3uQ0-5qbpvVFD; Thu, 12 Mar 2026 09:37:50 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1773297470;
+ bh=f9PwkDjPNfo/kroMFU40+/3Ofzjmd4ren7VSpB1mnaU=;
+ h=From:In-Reply-To:Cc:Date:References:To:Subject:Message-ID;
+ b=kKXwgIoXZcMC1iPnTulJejOkH26f0P2unwBwXxlJk3FzcCgeUyRubGFLm1QEsbRa6
+ ZpPFXgGAE6liotiqRk7pp6M3j5CuCmhG6IBKtGraXUe3gLuaga4z7cCV6nFHPYPct8
+ 6SQx1YBHG1NO16UTj4xtrj2hQfvYcli+ZLxdDeXE=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <59d0d488-c680-4c7e-a2be-25079eaa66a3@yandex-team.ru>
+Date: Thu, 12 Mar 2026 09:37:49 +0300
 MIME-Version: 1.0
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-8-zhangckid@gmail.com>
- <20260309084422.GG39949@fedora>
- <CAK3tnvJmGEdr93pDDZdFk=0jUYHYChgchR4xtP6JpDVxBv2MCA@mail.gmail.com>
- <20260312053601.GB116604@fedora>
-In-Reply-To: <20260312053601.GB116604@fedora>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Thu, 12 Mar 2026 14:31:32 +0800
-X-Gm-Features: AaiRm51izpBB3PRf3lcpY9wfMIpt7M-yAi0FB5tRHaEJwmjhgwzVehGQo7ZD4EU
-Message-ID: <CAK3tnvKfeKBxigGsS8B-PiBuq2w5i7Dp3sBfXzZKoaDFr4QBRw@mail.gmail.com>
-Subject: Re: [PATCH V5 07/13] net/colo: track IOThread references using
- path-based holder
-To: Stefan Hajnoczi <stefanha@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, 
- "Michael S . Tsirkin" <mst@redhat.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52a;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52a.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/12] net: refactoring and fixes
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru
+References: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
+ <CACGkMEuE3LQGmSK6tTa7xhYCio1nHQcAf0Fw1uD=6ipiUGtAwg@mail.gmail.com>
+Content-Language: en-US
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+In-Reply-To: <CACGkMEuE3LQGmSK6tTa7xhYCio1nHQcAf0Fw1uD=6ipiUGtAwg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -123,76 +78,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 12, 2026 at 1:36=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat.co=
-m> wrote:
->
-> On Tue, Mar 10, 2026 at 06:15:16PM +0800, Zhang Chen wrote:
-> > On Mon, Mar 9, 2026 at 4:44=E2=80=AFPM Stefan Hajnoczi <stefanha@redhat=
-.com> wrote:
-> > >
-> > > On Thu, Mar 05, 2026 at 10:24:53PM +0800, Zhang Chen wrote:
-> > > > @@ -1434,11 +1436,17 @@ static void colo_compare_finalize(Object *o=
-bj)
-> > > >
-> > > >      qemu_bh_delete(s->event_bh);
-> > > >
-> > > > -    AioContext *ctx =3D iothread_get_aio_context(s->iothread);
-> > > > +    /*
-> > > > +     * Use the device's canonical path as the holder ID to track I=
-OThread
-> > > > +     * usage and ensure the AioContext remains valid during the de=
-vice's
-> > > > +     * lifecycle.
-> > > > +     */
-> > > > +    AioContext *ctx =3D iothread_get_aio_context(s->iothread, NULL=
-);
-> > >
-> > > Should NULL be path?
-> > >
-> >
-> > Yes, here code in the finalize function need to waiting for the
-> > coroutine to complete processing
-> > Or do you have any other suggestion?
->
-> I'm not sure I understand. My question was about:
->
->   AioContext *ctx =3D iothread_get_aio_context(s->iothread, NULL);
->                                                           ^^^^
->
-> NULL is passed as the argument but this function has a 'path' local
-> variable. The path variable should be passed instead of NULL.
+On 12.03.26 05:59, Jason Wang wrote:
+> On Thu, Feb 19, 2026 at 4:28 AM Vladimir Sementsov-Ogievskiy
+> <vsementsov@yandex-team.ru> wrote:
+>>
+>> Hi all!
+>>
+>> Here are some refactoring and fixes, mostly in net/tap.c I'm making on
+>> my way to implementing TAP fd migration (through UNIX domain socket).
+>>
+>> v3:
+>>
+>> 01: fix checking, switch to int type for queues
+>> 08: drop MAX_TAP_QUEUES constant
+>> 09,10: prefer int type for queues
+>>
+>>
+>> Vladimir Sementsov-Ogievskiy (12):
+>>    net/af-xdp: fix type overflow
+>>    net/tap: net_init_tap_one(): add return value
+>>    net/tap: net_init_tap(): drop extra vhostfdname variable
+>>    net/tap: net_init_tap(): refactor parameter checking
+>>    net/tap: net_init_tap(): common fail label
+>>    net/tap: net_init_tap_one() refactor to get vhostfd param
+>>    net/tap: net_init_tap_one(): drop model parameter
+>>    net: introduce net_parse_fds()
+>>    net/tap: move fds parameters handling to separate functions
+>>    net/tap: fix vhostfds/vhostfd parameters API
+>>    net/tap: net_init_tap(): merge fd=, fds= and helper= cases into one
+>>    net/tap: net_init_tap(): relax QEMU hubs check
+>>
+>>   net/af-xdp.c |  44 ++-----
+>>   net/tap.c    | 319 +++++++++++++++++++++------------------------------
+>>   net/util.c   |  50 ++++++++
+>>   net/util.h   |  14 +++
+>>   4 files changed, 201 insertions(+), 226 deletions(-)
+>>
+>> --
+>> 2.52.0
+>>
+> 
+> If I understand this correctly, there would be a v4 for this?
+> 
+> (https://patchew.org/QEMU/20260218202829.1322088-1-vsementsov@yandex-team.ru/20260218202829.1322088-10-vsementsov@yandex-team.ru/)
+> 
+> Thanks
+> 
 
-Let me explain in detail.
-colo-compare have two real holders for the iothread,
-1. colo_compare_timer_init.
-2. worker_context for chardev handlers.
+No, 09/12 kept as is, I just added 13/12 for the check that Ben asked for. I don't think it should be merged somewhere,
+as it was preexisting (we did not check for queues==0, and for fds="").
 
-I try to make them use one pair of iothread_get/put.
+So, no changes is planned now for making a v4.
 
-The real iothread_get with "path" is here:
- static void colo_compare_iothread(CompareState *s)
- {
--    AioContext *ctx =3D iothread_get_aio_context(s->iothread);
--    object_ref(OBJECT(s->iothread));
-+    char *path =3D object_get_canonical_path(OBJECT(s));
-+    AioContext *ctx =3D iothread_get_aio_context(s->iothread, path);
-+
-
-The real pairing iothread_put with the "path" is here:
-     AIO_WAIT_WHILE(ctx, !s->out_sendco.done);
-     if (s->notify_dev) {
-         AIO_WAIT_WHILE(ctx, !s->notify_sendco.done);
-     }
-+    iothread_put_aio_context(s->iothread, path);
-
-     /* Release all unhandled packets after compare thead exited */
-     g_queue_foreach(&s->conn_list, colo_flush_packets, s);
-
-Thanks
-Chen
-
-
-
->
-> Stefan
+-- 
+Best regards,
+Vladimir
 
