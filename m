@@ -4,57 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3965D1049509
-	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 13:39:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 907FA103E2EB
+	for <qemu-devel@archiver.kernel.org>; Thu, 12 Mar 2026 13:43:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0gFs-0002tf-NK; Thu, 12 Mar 2026 09:39:12 -0400
+	id 1w0gJ9-0004Az-Bb; Thu, 12 Mar 2026 09:42:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w0gFr-0002tR-4P
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:39:11 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w0gFo-0000o5-IA
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:39:10 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 09642596D8B;
- Thu, 12 Mar 2026 14:39:06 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id sCMaUKSCRBBK; Thu, 12 Mar 2026 14:39:03 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 8655F5969EB; Thu, 12 Mar 2026 14:39:03 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 8476D5969EA;
- Thu, 12 Mar 2026 14:39:03 +0100 (CET)
-Date: Thu, 12 Mar 2026 14:39:03 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Peter Maydell <peter.maydell@linaro.org>
-cc: alistair23@gmail.com, qemu-devel@nongnu.org, armbru@redhat.com, 
- pbonzini@redhat.com, berrange@redhat.com, peterx@redhat.com, 
- philmd@linaro.org, Alistair Francis <alistair.francis@wdc.com>
-Subject: Re: [PATCH 3/7] hw/arm: xlnx-zynqmp: Don't call qdev_get_machine in
- soc init
-In-Reply-To: <CAFEAcA8PjHZN0kxKqp=8y2xG3wefmh2JioV06p0Hgw9dkg3_Ug@mail.gmail.com>
-Message-ID: <a7a425d4-f01a-d25f-31df-38af8f4802d7@eik.bme.hu>
-References: <20260312043158.4191378-1-alistair.francis@wdc.com>
- <20260312043158.4191378-4-alistair.francis@wdc.com>
- <CAFEAcA8PjHZN0kxKqp=8y2xG3wefmh2JioV06p0Hgw9dkg3_Ug@mail.gmail.com>
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1w0gJ1-00047U-8w
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:42:30 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <james.wainwright@lowrisc.org>)
+ id 1w0gIx-0002Pw-GL
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 09:42:26 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-439c6fc2910so868722f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 06:42:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=lowrisc.org; s=google; t=1773322937; x=1773927737; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=k8uF5GsAMR8qQ1wqC79LssvWzK7kAlOMQHA4mbMeZ6A=;
+ b=dBIYA1ow0y99Z/wNpri2l5btNFY3JFX9HcnSI5rv4FateX7kySsS6vqX/9lvDrSwfB
+ atniI8SpjfrjpTPlity1f9c0/dO+LsEGsg7Cc8JG4FbYR2MPfhcKNqMsv65MiEIYpHSS
+ 3SjVlpsT6NMDMtPorJGEYA0aRsKO9VG68M1DpYOG0RDRUgR5+i89kZHpjbqp/ypF7gvb
+ OWMJkhINxM+vErrA/UjxlgHi7RegnTo2rHtKOq7+aUlw/UfIlTA/qRNBS6TdyWOD6x+D
+ l/twl3UNPmO4E44g7qk1RQOpVfgVp+7eTSUhFBYJEcUdL/IJq7MnzBfI5mFTBSGo6QQQ
+ L11g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20230601; t=1773322937; x=1773927737;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k8uF5GsAMR8qQ1wqC79LssvWzK7kAlOMQHA4mbMeZ6A=;
+ b=ZFlQ0uvW/cN3FbY6crCoZW78DVNcJpl1s34bfiWcxx4yTEPelvGON9OsqUs7Ina73f
+ qNFTNpO7ODpKSLyAUEwJLOfSx6EeqeVJmi67gwYtrbSPo0gVgtcGGwd5M56Uydsei3Xj
+ SoYAGnXCsdy3MdMD/BZxgDEpr1ou17GKvVKvHa4rmoUPjSZfIaG2FOAqpdlEfdE9vXnd
+ hh0vg5kgaakISWbZJOQkvweweQTw+C0Zmon6YWHe3D8vx3DNf2Sl/3AH1KbGtmtaNIpc
+ EogVimeSe5IRVnYJJ/yuW3tgirO5zbXKuCgPE8zAMVS3iLiOygZJ/jlZQRrvlONRBfaW
+ Mryw==
+X-Gm-Message-State: AOJu0YypEpN+FWFegYl4DrMHfA4n1Cumb+1ElDFweFccY04A3mY2oM+a
+ PAZzmHHmaC9gZ3n25z3fFUmdHHtfwVjDJky/5quBlG7KP35EldNyPF2Ard1MP6nNYG22q7KoBLu
+ zAa10tSI=
+X-Gm-Gg: ATEYQzwK/Wk/Jc5rEBGVP35QIBg+4C8DdCqbxQn1/Y8FbEr/VTSEs4zKmk9LN9Qtuwk
+ P9crxIyoc2SqrcuFInR6B+XiFdbuqyIsRGrUdTs3wX8IaNyST1S9uJ67dLHb26kZfzTT7ymjyqy
+ wrch9hl97SADO4thYeCCb6xW9ZExLni0+1OBC7/z8aUWTCPYSjUnqRbB6ZGxW/ijNIKLnBMrYUD
+ /z/POcaQi7ty2nVOEV+az/k95crTwsE4czchUSgILce0ZhfJp5qDNcgQMhuEP08Eu1Escxj4gTa
+ toFOcwNbcMsb8KzM7PU6zmlVeDWKp3SFtj8QOEcxdvm26fLEORNkYQwwXQoublZvkMR1q0LEJ9+
+ GUFKbItR3ldqYOXFkyGXCbDHbul0FfGfDxsVI+OlNhnjoSUSWTgLs9TxLe3dncnC8+RVTvlNLBC
+ cDxaw6lKsKJOzbwnBVcOLSmm3711A0d5GuD4feuh1uKttLBQB68tUFp1Dv
+X-Received: by 2002:a05:6000:2681:b0:439:cbf3:4a8f with SMTP id
+ ffacd0b85a97d-439f8434f2amr12748916f8f.41.1773322937326; 
+ Thu, 12 Mar 2026 06:42:17 -0700 (PDT)
+Received: from localhost.localdomain ([193.35.234.21])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439fe1a737csm7589814f8f.10.2026.03.12.06.42.16
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Mar 2026 06:42:17 -0700 (PDT)
+From: James Wainwright <james.wainwright@lowrisc.org>
+To: qemu-riscv@nongnu.org
+Cc: qemu-devel@nongnu.org, alistair.francis@wdc.com,
+ Emmanuel Blot <eblot@rivosinc.com>,
+ James Wainwright <james.wainwright@lowrisc.org>
+Subject: [PATCH v4 3/3] disas: diassemble RISC-V xlrbr (crc32) instructions
+Date: Thu, 12 Mar 2026 13:42:09 +0000
+Message-ID: <20260312134210.5823-4-james.wainwright@lowrisc.org>
+X-Mailer: git-send-email 2.48.1
+In-Reply-To: <20260312134210.5823-1-james.wainwright@lowrisc.org>
+References: <20260312134210.5823-1-james.wainwright@lowrisc.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=james.wainwright@lowrisc.org; helo=mail-wr1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -70,47 +102,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 12 Mar 2026, Peter Maydell wrote:
-> On Thu, 12 Mar 2026 at 04:32, <alistair23@gmail.com> wrote:
->>
->> From: Alistair Francis <alistair.francis@wdc.com>
->>
->> Calling qdev_get_machine() in the soc_init function would result in
->> the following assert
->>
->>     ../hw/core/qdev.c:858: qdev_get_machine: Assertion `dev' failed.
->>
->> when trying to run
->>
->>     ./qemu-system-aarch64 -S -display none -M virt -device xlnx-zynqmp,help
->>
->> as the machine wasn't created yet. We call qdev_get_machine() to obtain
->> the number of CPUs in the machine. So instead of initialising the CPUs in
->> the SoC init let's instead do it in the realise where the machine
->> will exist.
->
-> Here I'm not sure I agree. We should init child objects in init, not in
-> realize, unless there's a strong reason we need to not do that.
-> Working around "we crash if the user does something pointless
-> on the command line" isn't a strong enough reason IMHO.
->
-> The problem here, though, is of the kind "what child objects we
-> need depends on the configuration of this device", which kind of
-> pushes "init children" into "realize". We do that in some places
-> already. But I don't like that -- it makes us inconsistent about
-> how we handle child init. If we're OK doing some child init in
-> the parent's realize method, why not do all child init in realize?
+From: Emmanuel Blot <eblot@rivosinc.com>
 
-How about saying that we do most things in realize (so simple devices 
-don't even need an init method) and do in init those that need to be done 
-before realize such as things exposing properties that can be set before 
-realize. I think that's better than always splitting init and realize for 
-all children that's most of the time would just add complexity without 
-reason.
+Placed in a separate file as a vendor extension.
 
-This is similar to what I asked about in
-https://lists.nongnu.org/archive/html/qemu-devel/2026-02/msg03945.html
+Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
+---
+ MAINTAINERS         |  2 +-
+ disas/meson.build   |  3 +-
+ disas/riscv-xlrbr.c | 79 +++++++++++++++++++++++++++++++++++++++++++++
+ disas/riscv-xlrbr.h | 19 +++++++++++
+ disas/riscv.c       |  2 ++
+ 5 files changed, 103 insertions(+), 2 deletions(-)
+ create mode 100644 disas/riscv-xlrbr.c
+ create mode 100644 disas/riscv-xlrbr.h
 
-Regards,
-BALATON Zoltan
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 847fd414bc..12f106f4c4 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -4154,7 +4154,7 @@ M: Alistair Francis <Alistair.Francis@wdc.com>
+ L: qemu-riscv@nongnu.org
+ S: Maintained
+ F: tcg/riscv64/
+-F: disas/riscv.[ch]
++F: disas/riscv*.[ch]
+ 
+ S390 TCG target
+ M: Richard Henderson <richard.henderson@linaro.org>
+diff --git a/disas/meson.build b/disas/meson.build
+index bbfa119783..42977a1f74 100644
+--- a/disas/meson.build
++++ b/disas/meson.build
+@@ -7,7 +7,8 @@ common_ss.add(when: 'CONFIG_MIPS_DIS', if_true: files('mips.c', 'nanomips.c'))
+ common_ss.add(when: 'CONFIG_RISCV_DIS', if_true: files(
+     'riscv.c',
+     'riscv-xthead.c',
+-    'riscv-xventana.c'
++    'riscv-xventana.c',
++    'riscv-xlrbr.c'
+ ))
+ common_ss.add(when: 'CONFIG_SH4_DIS', if_true: files('sh4.c'))
+ common_ss.add(when: 'CONFIG_SPARC_DIS', if_true: files('sparc.c'))
+diff --git a/disas/riscv-xlrbr.c b/disas/riscv-xlrbr.c
+new file mode 100644
+index 0000000000..57cb434523
+--- /dev/null
++++ b/disas/riscv-xlrbr.c
+@@ -0,0 +1,79 @@
++/*
++ * QEMU RISC-V Disassembler for xlrbr matching the unratified Zbr CRC32
++ * bitmanip extension v0.93.
++ *
++ * Copyright (c) 2023 Rivos Inc
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++
++#include "disas/riscv.h"
++#include "disas/riscv-xlrbr.h"
++
++typedef enum {
++    /* 0 is reserved for rv_op_illegal. */
++    rv_op_crc32_b = 1,
++    rv_op_crc32_h = 2,
++    rv_op_crc32_w = 3,
++    rv_op_crc32_d = 4,
++    rv_op_crc32c_b = 5,
++    rv_op_crc32c_h = 6,
++    rv_op_crc32c_w = 7,
++    rv_op_crc32c_d = 8,
++} rv_xlrbr_op;
++
++const rv_opcode_data rv_xlrbr_opcode_data[] = {
++    { "illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
++    { "crc32.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++    { "crc32.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++    { "crc32.w", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++    { "crc32.d", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++    { "crc32c.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++    { "crc32c.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++    { "crc32c.w", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++    { "crc32c.d", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
++};
++
++void decode_xlrbr(rv_decode *dec, rv_isa isa)
++{
++    rv_inst inst = dec->inst;
++    rv_opcode op = rv_op_illegal;
++
++    switch ((inst >> 0) & 0b1111111) {
++    case 0b0010011:
++        switch ((inst >> 12) & 0b111) {
++        case 0b001:
++            switch ((inst >> 20 & 0b111111111111)) {
++            case 0b011000010000:
++                op = rv_op_crc32_b;
++                break;
++            case 0b011000010001:
++                op = rv_op_crc32_h;
++                break;
++            case 0b011000010010:
++                op = rv_op_crc32_w;
++                break;
++            case 0b011000010011:
++                op = rv_op_crc32_d;
++                break;
++            case 0b011000011000:
++                op = rv_op_crc32c_b;
++                break;
++            case 0b011000011001:
++                op = rv_op_crc32c_h;
++                break;
++            case 0b011000011010:
++                op = rv_op_crc32c_w;
++                break;
++            case 0b011000011011:
++                op = rv_op_crc32c_d;
++                break;
++            }
++            break;
++        }
++        break;
++    }
++    dec->op = op;
++}
+diff --git a/disas/riscv-xlrbr.h b/disas/riscv-xlrbr.h
+new file mode 100644
+index 0000000000..939a69ea6d
+--- /dev/null
++++ b/disas/riscv-xlrbr.h
+@@ -0,0 +1,19 @@
++/*
++ * QEMU RISC-V Disassembler for xlrbr matching the unratified Zbr CRC32
++ * bitmanip extension v0.93.
++ *
++ * Copyright (c) 2023 Rivos Inc
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#ifndef DISAS_RISCV_XLRBR_H
++#define DISAS_RISCV_XLRBR_H
++
++#include "disas/riscv.h"
++
++extern const rv_opcode_data rv_xlrbr_opcode_data[];
++
++void decode_xlrbr(rv_decode *, rv_isa);
++
++#endif /* DISAS_RISCV_XLRBR_H */
+diff --git a/disas/riscv.c b/disas/riscv.c
+index 6f2667482d..d416a4d6b3 100644
+--- a/disas/riscv.c
++++ b/disas/riscv.c
+@@ -26,6 +26,7 @@
+ /* Vendor extensions */
+ #include "disas/riscv-xthead.h"
+ #include "disas/riscv-xventana.h"
++#include "disas/riscv-xlrbr.h"
+ 
+ typedef enum {
+     /* 0 is reserved for rv_op_illegal. */
+@@ -5434,6 +5435,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc, rv_inst inst,
+         { has_xtheadmempair_p, xthead_opcode_data, decode_xtheadmempair },
+         { has_xtheadsync_p, xthead_opcode_data, decode_xtheadsync },
+         { has_XVentanaCondOps_p, ventana_opcode_data, decode_xventanacondops },
++        { has_xlrbr_p, rv_xlrbr_opcode_data, decode_xlrbr },
+     };
+ 
+     for (size_t i = 0; i < ARRAY_SIZE(decoders); i++) {
+-- 
+2.48.1
+
 
