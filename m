@@ -4,98 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EBBA106FD9B
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 07:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8FA12106FD9B
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 07:43:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0x9K-0005Qf-UE; Fri, 13 Mar 2026 03:41:37 -0400
+	id 1w0xAp-00065H-FQ; Fri, 13 Mar 2026 03:43:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w0x9B-0005P3-VG
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 03:41:27 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w0xAm-000651-TW
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 03:43:04 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w0x98-0005oO-Lp
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 03:41:25 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w0xAk-0007Pp-N4
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 03:43:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773387678;
+ s=mimecast20190719; t=1773387781;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=jU0akz5EnGmscyMHD4mfi5dcDWGY4AU5wQ9gD0umUsU=;
- b=QEVS7rCEpxw/Ay4zVI21oiK0itclosJcz9qVXsASWHB5EFL3ahiCuEEDVtSK40iIia9zjQ
- hDZs96puyc+/fTYKp6KzdeBuLKLO0C3oM32A1FsVWYrSKo7JA2909OS39VjCl71RnHigFv
- Xh6c5DhcdPI5TNq5qUVXeKihGRPEu0c=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=Sz7qoIjBTYhWH19r+POGAqKJi+nNddIa3gyqJCdrzmo=;
+ b=Q0pPKtZ063pDMYhDZeSRag2L/cCM9iEz/Uo0Abtvok1bWTxY1iFYu9btMfMec2M9bwl3q3
+ IkOjzR6zgnXzqvFmDsFKB7RCXAF2Sr5l4g+ZmIA1oC7klnnzZU9AQbPdSBvXACM6MSVOiE
+ Umjfcovks7kT/N6a7vVbmwujo2lmBy4=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-562-ByN0CH9fNLuRRdGBSu-hWQ-1; Fri, 13 Mar 2026 03:41:17 -0400
-X-MC-Unique: ByN0CH9fNLuRRdGBSu-hWQ-1
-X-Mimecast-MFC-AGG-ID: ByN0CH9fNLuRRdGBSu-hWQ_1773387676
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-48541cac34dso17020985e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 00:41:16 -0700 (PDT)
+ us-mta-644-P_dlBnPxP2eS9012g6MSpQ-1; Fri, 13 Mar 2026 03:42:59 -0400
+X-MC-Unique: P_dlBnPxP2eS9012g6MSpQ-1
+X-Mimecast-MFC-AGG-ID: P_dlBnPxP2eS9012g6MSpQ_1773387778
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4853b0af42aso25021155e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 00:42:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773387676; x=1773992476; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773387778; x=1773992578; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=jU0akz5EnGmscyMHD4mfi5dcDWGY4AU5wQ9gD0umUsU=;
- b=MQLuT/FoqTxcQP6XGFAcBVnOCiQmIEWYgiDdH7X8cf0RNdNAzoFNf9HELswQiIgI/S
- gi5/denl5rgbXJmHy3fM+ZABSlfdktGPkFINIv5SKtt9YrtEn8G/xcq1zoLKEGMavvfa
- QIxyt+CjNFui270qpkAZC2RWxFh41FlXrlgYmQO4pgbp63AfU5wc4A31aT/Oi+/aSDsF
- 5F043YAq5woUJvCpg5+/xXI5RYMVGCbM1ggSnvHu32cV6lCj2jXTYFSES/6/slScagCd
- Y1/A1HZb6rkF07d8zGpg9EGz+cUb2BBjWu/BHy2G8xbs9WPuiZ5bYByw61ZO6s1jRV2Z
- A/wg==
+ bh=Sz7qoIjBTYhWH19r+POGAqKJi+nNddIa3gyqJCdrzmo=;
+ b=g2B2gcjrLHEwU54qmo4m8j+jEzY3riFb6dT3rwOcZeMhIbprqtsBoxwSeHrOJHqVzq
+ ckWBQ8bATJZ2CFTm2QxG2GQxKL7yPnSqbp4tkDXtSirW9Edm9/+cLLN6eVjuuLFM1nbp
+ X5/aH5BmfZ0OANuUpH1PJn5+QMe3p6Ods/mGXF8f0yX5dmNcU8XdJbIe+36m/85CD3CC
+ HS0EHq/7tIqZNY0O9HLDnLRqD2zPlKGA01/R6lAjjMhdm+8hWb3qqdCgSuFI8gXvIYZY
+ qlRS79GYx0snSW2+pGOZHk2mcQYHaX92qtpGRDBxM1w2KNwDyysLF//F2n+YvdbC3qyI
+ Gifg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773387676; x=1773992476;
+ d=1e100.net; s=20251104; t=1773387778; x=1773992578;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jU0akz5EnGmscyMHD4mfi5dcDWGY4AU5wQ9gD0umUsU=;
- b=MuDJMLlTPdBSmZY7j+MfQFv9KCToqidT1jhOIzKx1ufEaBEkQOu3y5REbhiaWcM+q6
- rRd15yLvbDRqNBflCKaOP37Ue/TYj5G7mJr08SJDGbUUh49UswrVwJ8KaBBldsVVe4IG
- JUA+zo4R9r5+bl0DpdQv8Fyn9u/6nbtS5FrOammNa4y+0UMWSXPywjMk1PbewwrqvXTP
- uG8kaiXdjbx02yeWrTLNu/1dMHvwQezzevZSH+DEUzNroa/8CT+yi05q7saZn4VGB2s8
- RE/eHUAK1T4SK/7uO9LE3dv08EQPbHirm5KUvBiomTX6/WYA2BFZn4ViIoAHbbj519he
- uAxw==
+ bh=Sz7qoIjBTYhWH19r+POGAqKJi+nNddIa3gyqJCdrzmo=;
+ b=LyNhZYecvIZAUS6/njgKUd0qJkqPicZUduMmNAr2KMuzSb23f8dwAFDVbHhFW/EnbE
+ SdzFBueLwT8fnW0Ku3SEUZth044kFNXcORTz8cnyA76lehcQ7x8ki64eYv9X3yYMEXn7
+ pVcKOjzmBiMnDvVZ8UGB02LxgGr67axnR/BWJL8Mb6bCU5C0Tm7TRU52yUQYC+pmmCPo
+ P8VrQamW+HyiQLZXdxgl5baXXdKrMU7IuoRg2vrBiQZ/DUI0fp4X+knZAHzgS8Cqcyug
+ M/HuFaEuSb4ddj09qmlSSeI/I/QeWh1btgMFnSeNcsF/gOTO947np0hqg+JdtoG1wqgi
+ iRFA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWo/2ewEeTRSNNoNR7i0w+xSX3Fe7HjDDmRmabz0FTDhVDPGP5+704PU186IHaDYNjiLipt4kMcMyVj@nongnu.org
-X-Gm-Message-State: AOJu0YwdZISV6WLqyNpYvaqHO8EkpAC9dIvxvgYlAspp6Es+mlAYWMyF
- 2XbOenb6Ks2XJ+TwROfTpROTcn8hgQgmZzOrVKzYUW2liZiV0IHw4SV08Dn4Qto2FbRfrHvMlWE
- 8U+HcDoKlN+h5wD87JeMUW/jZif4dJaElWS+WOfAavZ4uzOydiNiglIT2
-X-Gm-Gg: ATEYQzxmlu9DVAQPGTXDSBv+y96ZUWYbiYRXyBEcyywvPUDidG1PLuToeIloOjApkVV
- O0zm9RmCKALojCWlDzFxTxRvqEc5BjpO7q75B6zggy1dVyvpyKjWAqYG9X7iC35BWYrn2UFfbql
- 3AR87s3ebLfGNuJ/3eNr4MQe5kdTr2KKl1nJzywTbKFsR16KHGRfw2mOvcKwhvkJIWw5mu6fyiS
- U4bgGEqAbrhp1VyB2++2wSwtaP3hyYIKFFKtshH2tTL6U18dSKZ8jZXHhYUVDlS9TZgRSX99bhE
- 1EODE8k55V1z56MsNKw8n+HCrLo8KXFbL0Ux4rRgSIQOpp+/pBElbZepTe3JOqyW2sAQGXshTkO
- YfXmqZ2qr6WWCtgy+hYjPAIoQYqLos9jNHfiC7nYDEVdDZ8FQ31/zKJ7zSC3Q
-X-Received: by 2002:a05:600c:4583:b0:485:3983:aba8 with SMTP id
- 5b1f17b1804b1-4855670530dmr29503955e9.27.1773387675848; 
- Fri, 13 Mar 2026 00:41:15 -0700 (PDT)
-X-Received: by 2002:a05:600c:4583:b0:485:3983:aba8 with SMTP id
- 5b1f17b1804b1-4855670530dmr29503685e9.27.1773387675458; 
- Fri, 13 Mar 2026 00:41:15 -0700 (PDT)
+ AJvYcCWKB9bNUZiIvb9Ns7xi3MdpLmBsbGdFPj+oeNLxOjcZTGebQtaGY+uJ9xiRxHBR4HKvGGeVK0V1tQga@nongnu.org
+X-Gm-Message-State: AOJu0YzBHCNafBjkzPEy6dp+gt/4kvGDa5tzhNfxo1uGQrM2sK014G8M
+ P+Ea7UhWovHlddJR8jhEY++BoyQl/EtXZW3ZrfGsS9pZv3nsd4EReTjkFnMdEKSy5oc+DzI+kx1
+ eljw43dWXK3QOjmYPkpEsD03zmbmpK/8aPVxFzq78VmMw90q1xCQ5DGPX
+X-Gm-Gg: ATEYQzzxDaHFLFo4MzJ9lzUimQliZEs71Qwy2F6c9ZRxsFGZUxhC46ZTxVADty5Cp7C
+ WB69/josv0v9tNYKMJ9e/k2e+xq7cVjG7PY/9dR9F+BqUst4Z7liFujK0347nxrRQv30DKnFaRZ
+ XqEiu7lNVx86cbIVcS85FLraGr/EyMxiwOYuwMsP0dw8ih0k3muw+8/MUDpGILVPLriYxK0yJL5
+ PEOQMzeRl9IBYudSkT4K/isoTwXPRQI3H+u4X7FqOIrL/N6CcuXKxL0+d7yfgKDgBBs5s+STwRP
+ sIUc77InL3kwF2mFzimOsZDzJCX8q8ER7PZaiXC30Zh3bUBS1myLNje3GPt/8YCA/tX1bJE0ECv
+ j4kpnS+f01DDUpBehIvfdTwq2zvAHOiZunGt/zfmKvahXZsSac8vSiU8KEaS9
+X-Received: by 2002:a05:600c:1e28:b0:485:3e19:9e01 with SMTP id
+ 5b1f17b1804b1-4855670e7d2mr29011975e9.28.1773387778217; 
+ Fri, 13 Mar 2026 00:42:58 -0700 (PDT)
+X-Received: by 2002:a05:600c:1e28:b0:485:3e19:9e01 with SMTP id
+ 5b1f17b1804b1-4855670e7d2mr29011645e9.28.1773387777734; 
+ Fri, 13 Mar 2026 00:42:57 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48558fd09d8sm27998315e9.7.2026.03.13.00.41.14
+ 5b1f17b1804b1-48541aba60esm326309895e9.5.2026.03.13.00.42.56
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 00:41:14 -0700 (PDT)
-Message-ID: <ef5f20a5-a143-4ef1-b331-79c71f35218f@redhat.com>
-Date: Fri, 13 Mar 2026 08:41:13 +0100
+ Fri, 13 Mar 2026 00:42:57 -0700 (PDT)
+Message-ID: <482e9094-78ae-4387-96f8-e254a14333f4@redhat.com>
+Date: Fri, 13 Mar 2026 08:42:56 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/8] hw/vfio/listener.c: remove CONFIG_KVM
+Subject: Re: [PATCH 2/8] hw/vfio/helpers.c: extract kvm helpers in
+ kvm-helpers.c
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
  eric.auger@redhat.com
 References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
- <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
+ <20260312224449.1605071-3-pierrick.bouvier@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -141,7 +142,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260312224449.1605071-2-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260312224449.1605071-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -170,39 +171,23 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/12/26 23:44, Pierrick Bouvier wrote:
-> Code concerned is under a kvm_enabled() guard.
+> Because those functions use kvm specific types, they need to be isolated
+> in another source file.
+> This allows us to link kvm-helpers only in configurations with
+> CONFIG_KVM.
 > 
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   hw/vfio/listener.c | 4 ----
->   1 file changed, 4 deletions(-)
-> 
-> diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-> index 960da9e0a93..31c3113f8fb 100644
-> --- a/hw/vfio/listener.c
-> +++ b/hw/vfio/listener.c
-> @@ -20,9 +20,7 @@
->   
->   #include "qemu/osdep.h"
->   #include <sys/ioctl.h>
-> -#ifdef CONFIG_KVM
->   #include <linux/kvm.h>
-> -#endif
->   #include <linux/vfio.h>
->   
->   #include "exec/target_page.h"
-> @@ -303,11 +301,9 @@ static bool vfio_ram_discard_register_listener(VFIOContainer *bcontainer,
->       if (bcontainer->dma_max_mappings) {
->           unsigned int vrdl_count = 0, vrdl_mappings = 0, max_memslots = 512;
->   
-> -#ifdef CONFIG_KVM
->           if (kvm_enabled()) {
->               max_memslots = kvm_get_max_memslots();
->           }
-> -#endif
->   
->           QLIST_FOREACH(vrdl, &bcontainer->vrdl_list, next) {
->               hwaddr start, end;
+>   hw/vfio/helpers.c     | 172 -------------------------------------
+>   hw/vfio/kvm-helpers.c | 192 ++++++++++++++++++++++++++++++++++++++++++
+>   hw/vfio/kvm-stubs.c   |  27 ++++++
+>   hw/vfio/meson.build   |   2 +
+>   4 files changed, 221 insertions(+), 172 deletions(-)
+>   create mode 100644 hw/vfio/kvm-helpers.c
+>   create mode 100644 hw/vfio/kvm-stubs.c
+
+
+
 
 Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
