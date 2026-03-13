@@ -4,44 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23E32107BCD3
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 18:31:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8AD69107BCD6
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 18:31:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w17HY-0007eT-NC; Fri, 13 Mar 2026 14:30:46 -0400
+	id 1w17Hg-0007f7-AZ; Fri, 13 Mar 2026 14:30:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w17H8-0007c9-0L
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:20 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w17HA-0007cF-CH
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:23 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w17H6-0005SD-0v
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:17 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w17H7-0005SV-4y
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:19 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 0EC6760132;
- Fri, 13 Mar 2026 18:30:13 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id AE457C19421;
- Fri, 13 Mar 2026 18:30:11 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id F2B2D6183E;
+ Fri, 13 Mar 2026 18:30:15 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 9F9EBC19424;
+ Fri, 13 Mar 2026 18:30:14 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773426612;
- bh=NnxFSdCW3cxLs84ZUWqDNwDAjJ7tS5JLLCtRsYzPU+c=;
- h=From:To:Cc:Subject:Date:From;
- b=II40C/u0Oe7JxYmcJVNTY5SlnmCxw4WVpNtGdNqFcXn8WGovepgZ0tToycO0B5YOk
- jb1hOjfEKfNu/o/E5Dp1N0UNiftiBTcSqvNNwRD9XwEXInpE6ztBHvLPAS3k6FQh79
- JHsv3yU/JtLvWJzTxKm0vjXOTDqwJIJpGg6xFUseyKAGCxr4tTeIcwWI57B4g0OUG7
- 4BOSaldp89M2NUB/Ila/HRNXhIlp4LPfpYGw57pxf61jr2UWBXHEzSpmrDkQcMPOhn
- xoZH110P+NrcVc7xYPIUdcrN80ZNaPuFu69SN8OfQ2gpbJ4/tqgjiqm4Z45S/IehAZ
- 9uNgD+rlK57Pg==
+ s=k20201202; t=1773426615;
+ bh=IoVriGbsFQSGgBcb5APt3WGdcnQHDFn1QXcp46ncTuE=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+ b=kQ/5aH8q6kv8OqBqiLEIRDPaOnCn0icVyASenP9VXNaz7Qev5SGWK8ZpTt43rk6LW
+ D3WlW9oJ2qD43ymyMBmp0aIaz+8TfAMilrCVDFmU1AWF3Eowezb5rf1cC9lCCC2HJh
+ 3+aDsHliC8Zahi5uNyXLT8/Lc3CAbNMQ5xa3sSFzq00c+C6TOC6ek8ohw48ajFSxrs
+ flIWFiUIT0vKO5lN8caCWzS0MaX0f7az9vPj0GquVhHVvgVvvBkxa/yI6sj7Hu6LEo
+ 7mYdHbWS7mk1/iOzy9pgUnIjvznHa2V4KgEo9hYUtJVVTevufBdZXUBBIcwLvq2wXd
+ aUp4CQSiGpsuw==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>, Razvan Ghiorghe <razvanghiorghe16@gmail.com>,
  Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 0/2] Linux user for v11 patches
-Date: Fri, 13 Mar 2026 19:30:07 +0100
-Message-ID: <20260313183009.34221-1-deller@kernel.org>
+Subject: [PULL 2/2] linux-user: fix mremap with old_size=0 for shared mappings
+Date: Fri, 13 Mar 2026 19:30:09 +0100
+Message-ID: <20260313183009.34221-3-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
-Content-Type: text/plain; charset="utf-8"
+In-Reply-To: <20260313183009.34221-1-deller@kernel.org>
+References: <20260313183009.34221-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
@@ -68,35 +69,99 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Helge Deller <deller@gmx.de>
+From: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
 
-The following changes since commit 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455:
+When old_size is zero and old_address refers to a shareable mapping,
+mremap() should create a new mapping of the same pages according to the
+mremap(2) man page. The MREMAP_MAYMOVE flag must be specified in this case.
 
-  Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-10 16:29:24 +0000)
+Previously, QEMU's target_mremap() rejected this valid case with EFAULT
+during the initial validation, before checking for the special
+old_size == 0 behaviour.
 
-are available in the Git repository at:
+This patch adds proper handling for old_size == 0:
+- Validates that MREMAP_MAYMOVE flag is set (required by man spec)
+- Passes the call through to the host mremap()
+- Creates a new mapping without invalidating the original, with both
+  being valid and sharing the same physical memory frames.
+- Ensures the new mapping address falls within the valid guest address
+  region before returning it to the guest.
 
-  https://github.com/hdeller/qemu-hppa.git tags/linux-user-for-v11-pull-request
+Tested with the reproducer from the issue on qemu-riscv64, qemu-hppa,
+and qemu-aarch64.
 
-for you to fetch changes up to 5e5b278d2b1b81fc2b5ca09dba4848f81cd3a718:
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3105
+Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
+Tested-by: Helge Deller <deller@gmx.de>
+Reviewed-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Helge Deller <deller@gmx.de>
+---
+ linux-user/mmap.c | 52 +++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 52 insertions(+)
 
-  linux-user: fix mremap with old_size=0 for shared mappings (2026-03-12 21:03:48 +0100)
-
-----------------------------------------------------------------
-Two linux-user patches
-
-Two linux-user patches from Razvan Ghiorghe.
-
-----------------------------------------------------------------
-
-Razvan Ghiorghe (2):
-  linux-user: Fix zero_bss for RX PT_LOAD segments
-  linux-user: fix mremap with old_size=0 for shared mappings
-
- linux-user/elfload.c | 37 +++++++++++++++++++------------
- linux-user/mmap.c    | 52 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 75 insertions(+), 14 deletions(-)
-
+diff --git a/linux-user/mmap.c b/linux-user/mmap.c
+index 76978a56a8..b635b6a21c 100644
+--- a/linux-user/mmap.c
++++ b/linux-user/mmap.c
+@@ -1120,6 +1120,58 @@ abi_long target_mremap(abi_ulong old_addr, abi_ulong old_size,
+         errno = EINVAL;
+         return -1;
+     }
++
++    if (!old_size) {
++        if (!(flags & MREMAP_MAYMOVE)) {
++            errno = EINVAL;
++            return -1;
++        }
++        mmap_lock();
++        if (flags & MREMAP_FIXED) {
++            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
++                             flags, g2h_untagged(new_addr));
++        } else {
++            /*
++             * We ensure that the new mapping stands in the
++             * region of guest mappable addresses.
++             */
++            abi_ulong mmap_start;
++
++            mmap_start = mmap_find_vma(0, new_size, TARGET_PAGE_SIZE);
++
++            if (mmap_start == -1) {
++                errno = ENOMEM;
++                mmap_unlock();
++                return -1;
++            }
++
++            host_addr = mremap(g2h_untagged(old_addr), old_size, new_size,
++                             flags | MREMAP_FIXED, g2h_untagged(mmap_start));
++
++            new_addr = mmap_start;
++        }
++
++        if (host_addr == MAP_FAILED) {
++            mmap_unlock();
++            return -1;
++        }
++
++        if (flags & MREMAP_FIXED) {
++            new_addr = h2g(host_addr);
++        }
++
++        prot = page_get_flags(old_addr);
++        /*
++         * For old_size zero, there is nothing to clear at old_addr.
++         * Only set the flags for the new mapping. They both are valid.
++         */
++        page_set_flags(new_addr, new_addr + new_size - 1,
++                       prot | PAGE_VALID, PAGE_VALID);
++        shm_region_rm_complete(new_addr, new_addr + new_size - 1);
++        mmap_unlock();
++        return new_addr;
++    }
++
+     if (!guest_range_valid_untagged(old_addr, old_size)) {
+         errno = EFAULT;
+         return -1;
 -- 
 2.53.0
 
