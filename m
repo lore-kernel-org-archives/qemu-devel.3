@@ -4,141 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F3D7105F797
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 11:07:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20BFC105F79B
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 11:22:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w10M9-0008Ha-AI; Fri, 13 Mar 2026 07:07:01 -0400
+	id 1w10a0-0001ro-Nq; Fri, 13 Mar 2026 07:21:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1w10M5-0008Fx-Ja; Fri, 13 Mar 2026 07:06:57 -0400
-Received: from mail-westcentralusazlp170130007.outbound.protection.outlook.com
- ([2a01:111:f403:c112::7] helo=CY3PR05CU001.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1w10Zy-0001rP-Ty; Fri, 13 Mar 2026 07:21:19 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1w10M1-00055u-IJ; Fri, 13 Mar 2026 07:06:57 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=QOqU75B5up4rwJzvrozAQsU+6MXxgNsEACe54h8uB1y4NTGXazCKYX9IUYnV1V5vSn86ugnbp/kyD+s9R2fiTr/1fWxXxXPKEO+8H/JcOoXVxozkTzlbkQNYhnVvAjgbj0+5bZIYMViOpUktTqGRcL0zH44+pJsiwZ6bR2FSltuDndIMNo9q4DSF+tEw/sn6q0oCc6rj+MGn/kc4LUhSt0wqNJAjdwmiySw0jntwnIRCATP70m5s5UNFB4WQ0s7EhclV9MMWROa3RhCgJEGr/uQb525zerlAdcxtIQtYgaqtpyBw11S/FxfHwrYBJf408OG2D/RSp5cPQmNVXM3FKA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=J3S+TGVTBSIlKVRPMCcb3RLxt/q8MFmdTSITt3ArbI8=;
- b=Js6d58Pq1FW9u9egCKXpb2NtysxS7FeKIokt5gFmW1xz2PPp73WAaLhFGbA39zs5wZiMJ310WSKDfuQg9Njd2aOk5c4shdCe+WWchOp+FJrjl7HZYXcUF1pA4q8WvX3K8eu8zI65MXS7XXUrzFbnx81QR+B8nCa1Fb8IYYGHUeTrdGN6kltGw8291v3g5X9hcQBgOS3rDxOuKf0673atGrj4t5FQ0xy/1n6oHZVmZJoOFd3hQtDVnpBiB53NTfpIjmqD0mQuOPCCUy0k5Gl4aKP3yp4wXp4hRMxxnOS2jFBL2qEx1Sp4RNYsnO7mEfMo+x2K6g8tp1BXcOC63Zn21Q==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=J3S+TGVTBSIlKVRPMCcb3RLxt/q8MFmdTSITt3ArbI8=;
- b=MkYJ73HB4AbvnEblmUlnyUvmHZhae45RH0lJ7oKMjsXwd6o9C7CopMEz8IdjkfanridqV+wl98z9ul3x+iYvufPTTdPAdn5tAwtVBl7ApI7vZg9gHpCX+k1ZicRWApEhmwHLleuHdvAegQ9I51XWFY7yxRcDBG3Ft5bshIkOVB4xdtszEnj5k0ppcdoz0J2ZQ29I+Qp5l9BV590+NejrUcADTjifbF26OVoReRFhT7XnGS3LXNDM9cinmrJB21spmLJlTWIgP9DqPstWik4Q4dyoSvS/gIruNhN+dikyflqilfpB6mID1v6ree6vl/9/CU1lnV3Fldxbj1pQpPPBsQ==
-Received: from IA0PR12MB7555.namprd12.prod.outlook.com (2603:10b6:208:43d::5)
- by MW4PR12MB6998.namprd12.prod.outlook.com (2603:10b6:303:20a::22)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.7; Fri, 13 Mar
- 2026 11:06:44 +0000
-Received: from IA0PR12MB7555.namprd12.prod.outlook.com
- ([fe80::5a27:a8d9:43b7:3b8d]) by IA0PR12MB7555.namprd12.prod.outlook.com
- ([fe80::5a27:a8d9:43b7:3b8d%6]) with mapi id 15.20.9723.008; Fri, 13 Mar 2026
- 11:06:44 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Jason Gunthorpe <jgg@nvidia.com>
-CC: "eric.auger@redhat.com" <eric.auger@redhat.com>, "qemu-arm@nongnu.org"
- <qemu-arm@nongnu.org>, "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>,
- "peter.maydell@linaro.org" <peter.maydell@linaro.org>, "clg@redhat.com"
- <clg@redhat.com>, "alex@shazbot.org" <alex@shazbot.org>, Nicolin Chen
- <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>, Matt Ochs
- <mochs@nvidia.com>, Jiandi An <jan@nvidia.com>, "jonathan.cameron@huawei.com"
- <jonathan.cameron@huawei.com>, "zhangfei.gao@linaro.org"
- <zhangfei.gao@linaro.org>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>, Krishnakant Jaju <kjaju@nvidia.com>,
- "phrdina@redhat.com" <phrdina@redhat.com>
-Subject: RE: [PATCH v3 00/32] hw/arm/virt: Introduce Tegra241 CMDQV support
- for accelerated SMMUv3
-Thread-Topic: [PATCH v3 00/32] hw/arm/virt: Introduce Tegra241 CMDQV support
- for accelerated SMMUv3
-Thread-Index: AQHcpw3oDG8WqWxWgUa8hhn9GSra0LWpupEAgAAAwzCAABnkAIACjn6w
-Date: Fri, 13 Mar 2026 11:06:44 +0000
-Message-ID: <IA0PR12MB7555CA822FD5AB486C7512E6AB45A@IA0PR12MB7555.namprd12.prod.outlook.com>
-References: <20260226105056.897-1-skolothumtho@nvidia.com>
- <254dceca-7864-4dbc-b25c-928add5a78e3@redhat.com>
- <CH3PR12MB7548B7D18FA56E6F8EA657C0AB47A@CH3PR12MB7548.namprd12.prod.outlook.com>
- <20260311200010.GD1448102@nvidia.com>
-In-Reply-To: <20260311200010.GD1448102@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA0PR12MB7555:EE_|MW4PR12MB6998:EE_
-x-ms-office365-filtering-correlation-id: fd60986e-0074-4284-daa1-08de80f09cf1
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|7416014|376014|1800799024|366016|38070700021|56012099003|22082099003|18002099003|7053199007;
-x-microsoft-antispam-message-info: ZnvixXYkeXsZuC86mpR4T9WAKrQMM9GwuBiHqxLnzNNJRYxQXt1po+kSdHWIAJLvnPTQUZHUd/HiJodnD3vC4nslKcTEq1x9hm0NEmxKVnlT2E4ZjULIecilZpG6Lb+e5iwsUMuTR9sxghgOtx9sK860FyvlEfBLMztag22ks74Q59+N2kyX26ZbArULKeWaxXi5v/emK95PAiMphUJ32+M2A0r1OSZ+R7VVNyIuH0F1lafVcpV5IocyStep3/mpFQj467GXwF/folGnpruN6RwosYjXsK+BHbY9JjkQKJGd7YgGqdq7i5e683xFgxw1PwEjCQhwlE08uPzycGwF1QWMjaLGlP23+r33/1ZoYR8Ez8J0h6/puoxCI9DIpDVmYlORKN4Qj51IILJja8yEPe3xyJeA7SsdWnFLlVmAMxlUkVlxu0Z9jSSFYymoy+UYV/WaLHgM+tvMdxrW/iPHSrt6DngoNOWgFWXDBxYSj/+uhuVJCvJ1npx9rQ8fF8kOxhGPeQxpCvBgApWUgK2cIpVuJxgF/PMocI/SHHXt6GQrv2V3ziRBWfy5QjOfUe4y2VhauB9iIOGb0H9brwXHggnAKReraFbdknWN2vCMQCbpLL5CLbZCDCA9N3KR3H7EHRltCC/PvLScmi+tfvJsVh+77kp9TvqdWKYTyCTVRLFhQLqBPY0Pol1N3QxN3N4Y1E7qk+40ZkPEvJ6obiJhZ3TSgqWsknT765eNJTvk8lOReaczmHu9kLRbamOgUGT6I9iLXwdL4RcLWEZVDLIGgTCTRyI45v9xHzMZwSDhYuY=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA0PR12MB7555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(7416014)(376014)(1800799024)(366016)(38070700021)(56012099003)(22082099003)(18002099003)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?us-ascii?Q?7iEP6dhpajqTG4s99l2TRQlP6zN7rDTuHjtLQBrb5cKftU7K7IOs4UuH5eDX?=
- =?us-ascii?Q?aILbFFY07WS0XvVkAq4/mgGYzypbnrVN7vCOkRTeRGOZWyU1uXiOB7hDYSeF?=
- =?us-ascii?Q?B6eSVxS6l4+CsqFsIRqyju22eRHs4iaploUY6uSnOH1R6s2k/N86/e6xp4j5?=
- =?us-ascii?Q?QJz3UwKw17SNLvJwBIRjk6YXBxT+13BvdTvVC5DCJ7ZRO/V2+7s18nEfp7V0?=
- =?us-ascii?Q?PH7lkhRlx1WCI6AVjSFYT79DDqiidYvJ3U3FYv2yjT7qk+s6QTExbN0oMZw8?=
- =?us-ascii?Q?dyAEeUjwqlvolhdPtqxSdwExQ0WK0zCvo8qg0XmXptW2sYfqTclwjl7TtyEB?=
- =?us-ascii?Q?FZQJp9u0Z3CFnaAbL5zWbaLIs9BNDg9rRSmIUPGB7lHX3Cz8mwerF1a2pr+0?=
- =?us-ascii?Q?XbDk1ggFHRNmQBEZ/6VD+iXP3Ik99wEkK4AmLjUAVqSfTMnVR1wPdU8O7/Fk?=
- =?us-ascii?Q?GajodpSit6HSRlMzrfZgYslGEobWgbJYQMU47FJiCdGMrG9ohkktepV11wPk?=
- =?us-ascii?Q?MlfXs6Hlqriynjjv2SlJjRL/liygtflc7q/U+VWTH4bC+OVOzbI+iBmDoM4k?=
- =?us-ascii?Q?4859WWHdA6I4Vd7ZvDulWnSywsssycHYAaB/4Z/IbNETtI3u2l+FnZpW1pyp?=
- =?us-ascii?Q?RICgChIjdT9P0uDyO6S6vHgBhiBrlBZQQ0sEDpVjPRAkFb0msbHijn+DmMNa?=
- =?us-ascii?Q?1ujVQ8b9U/8MAohSWGul2o7I0jllOtoHhFXxmShlokkuXfJnkzTgHCs3cBhM?=
- =?us-ascii?Q?LqLbabtB4m4K/nFRaQGtMZ+5GZtDSe1YkycFDjEpewb+hMc+JkmdElavWWNK?=
- =?us-ascii?Q?5+n8qdp+ETWIIimd1C0VB1XtNCJxd1CyiZ/Om0fh1AZTG9ZgR23tvm9kzGGW?=
- =?us-ascii?Q?djfhF+8xsUw8vI4W5OvhIbN/dnmI749Z3vUl/R8D0Q7FdXK03SPVUjnK+LMt?=
- =?us-ascii?Q?XL1tt3G88G2NKfKv0FEbGd8pfjBCVY5/38KNrpMo3xqZ+xKiIDI4DExBC29V?=
- =?us-ascii?Q?hQCcHs5wFdamZmgYJS4RVJSB+gwx4WhKrCQqub74SHycUYXMtpaee9Z5ytca?=
- =?us-ascii?Q?+Jf32Ybfup6TtSEI2gJvIuNAhMjGY31GzhBt2AJbjPot18JDkBXlqrNXHcXv?=
- =?us-ascii?Q?33w2urCy1SF3TyFlTS7d3VWOhcJDg9kfyr7NXNAyjAD8OERlP15TSrT1Oii2?=
- =?us-ascii?Q?LaJ9ObluXvshcmbkAtw/52sPkgmofQepZvex3p8fixkVRbPsbprE4KANe5Ty?=
- =?us-ascii?Q?YpxFyO0WBwIyB7cQcd15ZwsrPU0t86i5mZGQKnx5lIFghqERU3IGJeFWAlxn?=
- =?us-ascii?Q?O/atZcLjWZtXyTv04jrAhf76HDTIx1tct02imPorUsH63Kj1qzz9Gte3xzPq?=
- =?us-ascii?Q?DIjRp092fsHYPOk8f+eQQg8i/W/ymOgyP0UbAhQ+nJeyVBDgNe1FsFMR0Jsi?=
- =?us-ascii?Q?wQbbvISOfNQ2g5YqjfsLlkwq3/hA6eLdK2wJZUsb0UkP/Mlzvr6dTZA8xC6F?=
- =?us-ascii?Q?DvlYXkgOTBFkxvDwvT6dvNX5te5NGT91l8IUfqo4Xdbee4pg0G6Z9tSUsgKN?=
- =?us-ascii?Q?l8jVgEnEh3EP+b0gNO/GeHcbhEWBZJoZq6zGv7v4EPBjj9fgeGxtsrpaWCY3?=
- =?us-ascii?Q?rGbEGIKT2YQyQqm/y4P1DxjkFrbxv0QGAwW7wACt4wNXzK2aLKpv4mF73H6M?=
- =?us-ascii?Q?HDLZh9sRnyZkd7F1g2nK4bSe6fQM5bxAbTnKdcxw8BKQerG5zVHhzzfgA7+o?=
- =?us-ascii?Q?mSrSu/hGwA=3D=3D?=
-Content-Type: text/plain; charset="us-ascii"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1w10Zx-0000ye-Br; Fri, 13 Mar 2026 07:21:18 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62D4VgV22278217; Fri, 13 Mar 2026 11:21:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=krC2FoZY8TVRztjOsfz0t8nQIBxHwp
+ Ck+mjR2fSXcZ0=; b=DvaEWEFEcCWvV4n0kQMX5ekhPvXAie4ewv5Z+3K988QrnX
+ V2KL4nwFqw+mSzZocKO9fVRDX1LjqBkpqIeVnGcuc4clGe3QNuPuCaFlCn+ZrvD8
+ jySxYigszEUW4kEplwTDZQ6/EeOxIsB2FKuHQkKEJ0Or/1QCIA/Uy+pINGtREMwM
+ 5Ol0MQt7e2K1AQ6XYLJYLwSxPvkGgLyY7SbH9fNIFcxECDpE+JC1ygi6qDJvbToq
+ SeNqIvSv83b3aNi9q0J8XSg7OXq3iCAiAIVt7YgTFwlx0vFiKTtAVDWcmMk99YLb
+ va4oeRY7OxdyOS1Jae7ErNu104f4UBX2jXt8ovCw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh91qfxd-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 11:21:04 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62DAZCjA006042;
+ Fri, 13 Mar 2026 11:21:03 GMT
+Received: from smtprelay06.fra02v.mail.ibm.com ([9.218.2.230])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cuha9pdk6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 11:21:03 +0000
+Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
+ [10.20.54.102])
+ by smtprelay06.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62DBL0Rn27918704
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Mar 2026 11:21:00 GMT
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id E87892004E;
+ Fri, 13 Mar 2026 11:20:59 +0000 (GMT)
+Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 47B772004B;
+ Fri, 13 Mar 2026 11:20:56 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.217.187])
+ by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 13 Mar 2026 11:20:56 +0000 (GMT)
+Date: Fri, 13 Mar 2026 16:50:53 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org
+Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
+Message-ID: <abPy6W6-_putw9Tz@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260311143549.118720-1-shivangu@linux.ibm.com>
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA0PR12MB7555.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: fd60986e-0074-4284-daa1-08de80f09cf1
-X-MS-Exchange-CrossTenant-originalarrivaltime: 13 Mar 2026 11:06:44.6588 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: iMf9oE4DsPPJJV5SfmadEKUOQ4HgSRbIPhNYD5+PB3mlN6LFCEl3DYVOQa93G4VVqyYJ2p+/tHwgZgQ2o4l3sg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: MW4PR12MB6998
-Received-SPF: permerror client-ip=2a01:111:f403:c112::7;
- envelope-from=skolothumtho@nvidia.com;
- helo=CY3PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20260311143549.118720-1-shivangu@linux.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-GUID: -g2upIhjX9cwzFsfbQfNORufH1IbGige
+X-Authority-Analysis: v=2.4 cv=E6/AZKdl c=1 sm=1 tr=0 ts=69b3f320 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=tYiP9IUGiIZ_IUM1XqsA:9
+ a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA4NiBTYWx0ZWRfX62qkc6qPKkSV
+ Otx9rNYwsqIO5SYnaUyLuTUv9BgjiHtM0HDbghKg2QkMEwfRWlpHrhiNQBMTijrZKtXzfFu/pVS
+ 0Rp2/V1XhynO69sFajdwvtcYp5L2na/F0TjK7HilUB8RNs/tRueHJd1k1GdSIN52n0brm5G38/2
+ YnxUe5biMIT562C+rBDHv7D8x6xK7azXZyFk25dvao75/YNMz6EW3sDBNq2/vWskTB68jSEMHkj
+ 2CE4Oem7IN1ACZOLaAR+JzqQrQMWGRQjrEpyhkAeeEdOCqG0cuCX3Y2RFYSLZ4tYNOgLI59rDfk
+ zsAfAgRQR5e8K7U9EWkgTjIuMUs83LSDd7EhCJgFKstQ2KXnbsBvyipRQiDV/sVfX2T66Nzke7y
+ A4Jh3bdZgayIpICooWcXYahF2Q3lo43Fob/ipYAeY7NORWtfGkqR2otlLJuXoyKeZbK/qpQl6Lp
+ Ax3qvZ5TidI8seiHOQw==
+X-Proofpoint-ORIG-GUID: iEeAFtIP9K06sR8nVY3moBeP53lA8vQF
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-13_02,2026-03-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130086
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=adityag@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -154,90 +123,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 26/03/11 08:05PM, Shivang Upadhyay wrote:
+> The '-machine dumpdtb' command line option stopped working on
+> PowerPC/pnv systems after recent design change [1].
+> 
+> Fixing this by generating fdt blob in `pnv_init`.
+> 
+> [1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
+> 
+> Cc: Aditya Gupta <adityag@linux.ibm.com>
+> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> Cc: Peter Maydell <peter.maydell@linaro.org>
+> Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
+> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
 
+Looks good to me.
 
-> -----Original Message-----
-> From: Jason Gunthorpe <jgg@nvidia.com>
-> Sent: 11 March 2026 20:00
-> To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-> Cc: eric.auger@redhat.com; qemu-arm@nongnu.org; qemu-
-> devel@nongnu.org; peter.maydell@linaro.org; clg@redhat.com;
-> alex@shazbot.org; Nicolin Chen <nicolinc@nvidia.com>; Nathan Chen
-> <nathanc@nvidia.com>; Matt Ochs <mochs@nvidia.com>; Jiandi An
-> <jan@nvidia.com>; jonathan.cameron@huawei.com;
-> zhangfei.gao@linaro.org; zhenzhong.duan@intel.com; Krishnakant Jaju
-> <kjaju@nvidia.com>; phrdina@redhat.com
-> Subject: Re: [PATCH v3 00/32] hw/arm/virt: Introduce Tegra241 CMDQV
-> support for accelerated SMMUv3
->=20
-> On Wed, Mar 11, 2026 at 06:34:38PM +0000, Shameer Kolothum Thodi wrote:
-> > I do not have a way to suppress that warning currently. It should be
-> > safe to ignore, similar to the behaviour before the dma-buf support
-> > series for vfio-pci PCI BAR mappings.
->=20
-> qemu should have the concept of memory regions that are not available
-> for DMA peer to peer operation - ie are not mapped to the iommu.
->=20
-> Now that the kernel strictly enforces this it is essential qemu itself
-> keep track if it thinks p2p should work or not.
-
-We could introduce something like the below to address this. I will
-include it in the next respin.
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
 
 Thanks,
-Shameer
+- Aditya G
 
----
- include/system/memory.h | 2 ++
- hw/arm/tegra241-cmdqv.c | 1 +
- hw/vfio/listener.c      | 5 +++++
- 3 files changed, 8 insertions(+)
-
-diff --git a/include/system/memory.h b/include/system/memory.h
-index 02b2e83fd7..fb37616503 100644
---- a/include/system/memory.h
-+++ b/include/system/memory.h
-@@ -874,6 +874,8 @@ struct MemoryRegion {
-
-     /* For devices designed to perform re-entrant IO into their own IO MRs=
- */
-     bool disable_reentrancy_guard;
-+    /* RAM device region that does not require IOMMU mapping for P2P */
-+    bool ram_device_skip_iommu_map;
- };
-
- struct IOMMUMemoryRegion {
-diff --git a/hw/arm/tegra241-cmdqv.c b/hw/arm/tegra241-cmdqv.c
-index 42d7dbfde7..4647b4db54 100644
---- a/hw/arm/tegra241-cmdqv.c
-+++ b/hw/arm/tegra241-cmdqv.c
-@@ -212,6 +212,7 @@ static void tegra241_cmdqv_guest_map_vintf_page0(Tegra2=
-41CMDQV *cmdqv)
-                                       memory_region_owner(&cmdqv->mmio_cmd=
-qv),
-                                       name, VINTF_PAGE_SIZE,
-                                       cmdqv->vintf_page0);
-+    cmdqv->mr_vintf_page0->ram_device_skip_iommu_map =3D true;
-     memory_region_add_subregion_overlap(&cmdqv->mmio_cmdqv, 0x30000,
-                                         cmdqv->mr_vintf_page0, 1);
-     g_free(name);
-diff --git a/hw/vfio/listener.c b/hw/vfio/listener.c
-index 1087fdc142..d47439befb 100644
---- a/hw/vfio/listener.c
-+++ b/hw/vfio/listener.c
-@@ -614,6 +614,11 @@ void vfio_container_region_add(VFIOContainer *bcontain=
-er,
-         }
-     }
-
-+    if (memory_region_is_ram_device(section->mr) &&
-+        section->mr->ram_device_skip_iommu_map) {
-+        return;
-+    }
-+
-     ret =3D vfio_container_dma_map(bcontainer, iova, int128_get64(llsize),
-                                  vaddr, section->readonly, section->mr);
-     if (ret) {
---
-2.43.0
 
