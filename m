@@ -4,178 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CB92106FD98
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 08:18:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CA3106FD9D
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 08:33:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0xhy-0004Nc-9h; Fri, 13 Mar 2026 04:17:22 -0400
+	id 1w0xwm-0007Iu-DV; Fri, 13 Mar 2026 04:32:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w0xhr-0004NM-8E
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:17:16 -0400
-Received: from mgamail.intel.com ([192.198.163.14])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w0xho-00007K-H9
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:17:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773389833; x=1804925833;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=CBIEL/MICSHGmI9iSs9MdGUTnz1Qbv/nBT67XV5lJ0Y=;
- b=bT6UFUC/3MnZ6YuvaT606++QpxCNvDupsHjsd8TsBYqaSU3noL6NBDKA
- 3F0L6jCpJlRKN0EgsxOSvankY99oaX0R4w/6c8EIx+l6yGjG/lmqMLusu
- k4EcG3TYXa24RBzXMNeuQ2DVBOQwLuYYI3JeF/sV3AOuPrXo3MdLjLn0u
- ZRcuWVUpAnhIm6ERxErvdflvoyYMpqgBkRfC03GfxpYY03AHQKYLCNuJE
- XWeJiHxTVuSfqaRd8bG3oLNLFOMkNfo9rjuT3+JL8KHWpge02CZ1Ncr8h
- R7fPi4583IRXpavBOfR6kH1HqZIwg5F8+GidgilJSozDyBjEqxBp5hRuy Q==;
-X-CSE-ConnectionGUID: p/bOIAeTQee6Gg09/gonsw==
-X-CSE-MsgGUID: X7CxdXLtT4ShSCId5o7/yg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11727"; a="74575790"
-X-IronPort-AV: E=Sophos;i="6.23,117,1770624000"; d="scan'208";a="74575790"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa108.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Mar 2026 01:17:07 -0700
-X-CSE-ConnectionGUID: bmVddYBXSdKLKIv2+e9i3Q==
-X-CSE-MsgGUID: sqo7pKhIRy+b6bIIWosDXQ==
-X-ExtLoop1: 1
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
- by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Mar 2026 01:17:07 -0700
-Received: from FMSMSX901.amr.corp.intel.com (10.18.126.90) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Fri, 13 Mar 2026 01:17:06 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Fri, 13 Mar 2026 01:17:06 -0700
-Received: from BN1PR04CU002.outbound.protection.outlook.com (52.101.56.42) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Fri, 13 Mar 2026 01:17:06 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Z/DjFRLjKnHZ+WQsjXy0MfjmKvYGg80On1r9Q0BiTScFwO1C0spjZ4aLOUsZzvrFkc4G9CSTPMZ1Uz6e1haG0Efat9XTXV6JVnRgraGPJjDCBXlk9B80Bla0Ad/5IVRiTS5HyK5/EJC2cM4+bS7UnJxuZ1fX/N6lRsn130nckiptdhErrgOKmIio7ycTgDOhmZTPnVWsg+Qe78V+QmbEBi4y0xaBQPClHgrtNcE55bRA6oo0kEgiSHh3hfE7V1TJEzRxW4S2tlk8v1ZGYv6T1L8T6IzLe3KxzO2Gy87biecm0y0Nh5GL3pI9h3SliyW91jeGhQkBbRkrXzIJSSfu1g==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=Jk6XOn3Kr4Ky9GxbLCySv+P8NKow1eKzt9CiFfA6SUE=;
- b=NxlvQGcJTwLrBux5LiE/DWyPsvwnEwikgwptvdyXWiCv3b7AAj0TGx1NL/ea9bWYqoVRd7i2cF3pKJ3UVAaT2CAjQGaIuJB0VauNzTwM3r6jTGOumwfg72I5db4+T+a8l/O4YvsGqSFjS+Ov8JODkEin3IawQt2p2jh/XiMRg9+gsMMSmOrTEYpGGvF8yF7igIpTuVFzFCpKBM52lvdLJon2R84FtZzDXzlDVEroQzzp3ZUfWiTlnVzubCFDEvOwBMUjcYZtJ1+HF2USLLaj0KmbMxJKYedXXfw6jMKMB3FyIS66o8dcLN3iYWYv+IIjHxCtoumrhNatfJ2Ox0bgAg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
- by SN7PR11MB6995.namprd11.prod.outlook.com (2603:10b6:806:2ae::11)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.12; Fri, 13 Mar
- 2026 08:17:01 +0000
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.20.9723.004; Fri, 13 Mar 2026
- 08:17:01 +0000
-Message-ID: <dca00276-bf80-4cea-81b4-4f81c96d9a2e@intel.com>
-Date: Fri, 13 Mar 2026 16:24:46 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] intel_iommu: Only set dirty bit when PTE exposes
- write permission
-To: CLEMENT MATHIEU--DRIF <clement.mathieu--drif@bull.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-CC: "mst@redhat.com" <mst@redhat.com>, "jasowang@redhat.com"
- <jasowang@redhat.com>, "pbonzini@redhat.com" <pbonzini@redhat.com>,
- "richard.henderson@linaro.org" <richard.henderson@linaro.org>,
- "eduardo@habkost.net" <eduardo@habkost.net>, "marcel.apfelbaum@gmail.com"
- <marcel.apfelbaum@gmail.com>, "zhenzhong.duan@intel.com"
- <zhenzhong.duan@intel.com>
-References: <20260310065644.426838-1-clement.mathieu--drif@bull.com>
- <0478ab32-cec0-4872-ad09-340a73cce7eb@intel.com>
- <ca81cba3d96c61558ff3058b6deeff3b7716b658.camel@eviden.com>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <ca81cba3d96c61558ff3058b6deeff3b7716b658.camel@eviden.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 8bit
-X-ClientProxiedBy: TPYP295CA0029.TWNP295.PROD.OUTLOOK.COM (2603:1096:7d0:a::6)
- To LV8PR11MB8509.namprd11.prod.outlook.com
- (2603:10b6:408:1e6::15)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0xwf-0007Gq-Mc
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:32:33 -0400
+Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0xwd-0003vK-OM
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:32:33 -0400
+Received: by mail-qv1-xf29.google.com with SMTP id
+ 6a1803df08f44-899fb030812so27180046d6.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 01:32:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773390750; x=1773995550; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Eh6IRUepxclXFelwPyRG7T0J4onKkZMI/jqyv3PlzJc=;
+ b=fo4iRFZy/6TM/YzwwaOb74K1f8dds2sw7KCoK1ScBHNd7MxED//rmYliT56ewdg1Uk
+ 28sKrQGTK63miyy0yRYzSxCSBY8tmmr5YxjpGdwSb/u44lTOpi+VUBDFU1C0WhtVFBgX
+ Bl35dSrEYlOSHBUUh3LLQqDpQCCRIUK40bMhATaBkIY4MjEe7rVIRMRDrA+sdHa9g+5v
+ x0tpF8kk3Xac5mYJ211RQaOVnHXUnJISi89O6wErM85kGFy1GPihFu32Gierba9+8FGU
+ SUNPbrAN2BVOfAb0ApSr7dLjuHbB0QflcADwzhndGqpsqokkQ03OnkNm96A3P3PJPSgw
+ aC/w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773390750; x=1773995550;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Eh6IRUepxclXFelwPyRG7T0J4onKkZMI/jqyv3PlzJc=;
+ b=VLta1gDbvP50dFcwAMDepSneAUL9qSN7DPiBXJoLkU2UDoJ11sICC0zgfsK9clQvnb
+ F0BLywDpl8ZQXbxV5qOjdqVCwQftfvTCl8kd2YaRt8asqvNp4tjh3mksUbaUz30wBQtM
+ S47QMetSw6nxnSCP2lOgwxSelvPqGyYo9GIasuIa1K283Pdz7udySANWg2sPgMZIoH81
+ Pmjql2Sv4tFeQFQibprtK2xcGCDiZscLsdPXcFRgKj5A4bxvBp2Kmsw4cYHfNXfHaFnJ
+ K2HBtM0WgJ9uZAFuPx+LIAhQfsCWMfYRUHBLb/N0xTrascchXgz+MonT7T2spmCKwpob
+ Woxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVlRr0AKLvHBjN0v+sQM5iBNJZhmrT7ahfmFretX+jie28po7BgNBQeOXM0e8NxfnjY9FLpemAZvlUu@nongnu.org
+X-Gm-Message-State: AOJu0YzHXN1xwdAfEMrD0cI6M7jzJETckFfUVrImoKUMjdzAF/n0VitS
+ y9r49Xnc9HtrAjC2id0S+uVYKy7P4mT78VgQy1YEtXI57PhfwIAm5UJrIeXyypILh0Y=
+X-Gm-Gg: ATEYQzwOdweTnKAftS/ukF2pkPl3bimWVtf9CJ3SAP/hwU46GceUbQbU/IyW2PR/WrD
+ 8Kq8Okwjid/siJfWQa2eiCaTujK15Puh6YeV+Q1SJEZ6CJ+J7EUTmNbJ8OLi/3826Yx1SHdYW+P
+ xRbBAotMYjq5a316Ym8u/yS3nTIirKT+VA3VtU9lwdqxZKNla1StvK+hbj59B7RF2ni+tRVE4hq
+ MIIYPhddTbrcokBtDXdCLGbU6Mo2cojBc3YcOR1W1WdY/lv27cQGbogsOnStnJitNbJQmiuXavs
+ FSC21aERqdU6DZfHkqkKy3eCOKmgHGaIwzU0inmRsEibb9fmgHCEZ6EsnHlCKazqsoNTbRSuJiq
+ aNJvsV+gPAmI+VA9ZyEwmPzuY2Oklus2qvdMcYdEiovqZ6cakzPkb8qcXE4w7lQTeDfLdRnfAIS
+ 2a9D88/VgspRRNF6n6VwViluGFoRavBEIvf7mt2ZS2E2zP6XrvUTYJEVQEQ37l2ipQ+Q8o
+X-Received: by 2002:a05:6214:411e:b0:899:f9f5:979b with SMTP id
+ 6a1803df08f44-89a81dc6e4emr37016756d6.22.1773390750232; 
+ Fri, 13 Mar 2026 01:32:30 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89a65ce34a0sm51625366d6.32.2026.03.13.01.32.28
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Mar 2026 01:32:29 -0700 (PDT)
+Message-ID: <901ee0a3-a70f-4fb3-8102-554fdd550941@linaro.org>
+Date: Fri, 13 Mar 2026 01:32:28 -0700
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|SN7PR11MB6995:EE_
-X-MS-Office365-Filtering-Correlation-Id: 1a85cda1-f2af-4d56-10b5-08de80d8e6e2
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|376014|42112799006|366016|1800799024|56012099003|22082099003|18002099003;
-X-Microsoft-Antispam-Message-Info: htPmU5b+lJGkfzy5GqGWh3Inh/qW2qO1k579l3k65qIEbPNKHaW+E0zWbfcm3SMorflk9kXf6pUHxL6fFITmdEURscMGYineUQnQj4ew2DHmVAM5HNpZJ0H6i61Nd2AmvXy6t/+N2wXdoRTSD+kNguN5C4XRBZgIPdQWowrkKXAuMm81fllj8PAH2FIhexWjq6uVwHhHd6Vg1HCI8+omL2FLoM//7mLOT7UT2/BzS/s7hhusDNEgpglxjXTVRba4Ag4AN1nLYktPr2aI/3zOC18Ro7NTzcWuIXCTqXpYYY0lMVJ0i/WdAPjSOGWz3DhAJk7bxB8EQwGUMjM8B37Ztax6rUquML0MwNVSzaOPu6UqGN3Xwzq1W6DtlPIGIpMy2cvv6j5/k8ok6GI8PkxREy5RyuO51kovlKWXxz1J9qaQxRu1IBFajzn3tSd0iJlHN8MiuMPro892rI0EB8pG5UsKUzlGr0NCudm29X5joJeeUjTX/SN/bihIZHjLj7krjgpWC9EpeZOr+DOThGdWFaOl1Mac14U2/KnuVSYru/zKqUVGFKppq9N4w0acUJ1mL0cG6YV59GKLju3svKXbCnJlum9u6mCnXhjmlDqw8kFt7n2pF8ktmdL7Ys4rfZqRn8qkUht3/kYSaZWhkWWJA2QSsrvC28rW5NcdgJ41pF8P3jN9l/1ytdsFLBkxSFS2gZumipGGbUsuxu8a4JjoEIwy1SeDOsHGPY456VclLiCcrFw7ziFurF/Up/TTpbV6
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(42112799006)(366016)(1800799024)(56012099003)(22082099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?Q3ZFNUt1bWJWSHpiNTk1dnZ4dmNCRlc0MjBzRlF0UmdHandlZ3JOa08rWVZ1?=
- =?utf-8?B?NCt6UnlDRlN3eFgzdUt2T0NLYXpZRm1WVHhUOFNMSmdRcWwrU3F6UDdFeUhn?=
- =?utf-8?B?OFZtcnRtWDh4aE80OWVrcTJUU1J1aDVoTzEwUXk3N2RGZ0xtVUc3ZTZ3VVZu?=
- =?utf-8?B?SVp5Q1c2VTJ2UmRTUEovS2JWR2pkTTJ0eE15TlhDbzhCNVNFZkJ0bjdMY05y?=
- =?utf-8?B?MUdPZzhJNGtnUDFRdk96amxTOW9TdjU2ZUdWWm85Z01laEROaHVGcFF6Nzda?=
- =?utf-8?B?eTdQendzQlZmTU9qRGxXT21vdkFKRzZUUDdIendpbzdDa0JYd1BUU1hHZkR6?=
- =?utf-8?B?Ny9qenJNTlZWQzg1dm8xelpsYWc0ckh0blVGeVBGaW81R1JYQjZvQ0NMNG9V?=
- =?utf-8?B?bjFEV1FEOHZWWXFVcG5BZDJBWmJjYUIzUm5MSHd0NFQ3dUxVbTRTb1c1bG41?=
- =?utf-8?B?K1MvYTNLZ3lSU1pibHpTZ0NtNmlucXJpY1MweUZZQThFbUNJbVFHSjloK1VG?=
- =?utf-8?B?M0Via2dzbHZvL0VEYXJPaGRBU051UlhnUDZpOXlIM2FhVnRSSFgxWFVMSHc2?=
- =?utf-8?B?T1VvNmZuMGV4eTh4VGJ1S0FsSUFVd1lVcjJBMk9IU2k3b2liZ0xDNkZ6aUVN?=
- =?utf-8?B?RWUwdnovN3MwbHdHUEZzNCtOT3VMbkREait2TTNYVlp4VlNEd3dBM1AzREFp?=
- =?utf-8?B?TDRpWm5pQVFSSVFwc2paTnpNNXc5eFovVWpIS1BjSTVoaHhnVllEUVFndHJ1?=
- =?utf-8?B?N1VlT2MxQlpiem9iSmZsZHgxa3hNZFdSNkF1bUZsT1hjMGl1d0VLU1FCS1Zv?=
- =?utf-8?B?SHoyRm1sYTRKa0hwUVBHYi80U2FnYTk5d3FLbzY5UkI2cGFINlVid0trN2lG?=
- =?utf-8?B?ck15V1lORWtMZHlQYkw0STNhRkVaZkxnTXVGT003bE9iUlkwdVBnN2JEOStv?=
- =?utf-8?B?amc5aFN0YTVlbzFLOUwvNHRONyttMHNhZFhnRXlFakZRRjN3UGRDbUlrZzUz?=
- =?utf-8?B?WGdSSmFJSGZBSnBZTlRzRWZNcjVJc05lYnVSU1crRFVPSElCN3diMVl1dW54?=
- =?utf-8?B?SnNkdnZ0NmdEdDJ0R2FUdkxMTUlocGZBb1lxRlp6WkpnQXJNWndmNFlQOVhx?=
- =?utf-8?B?M1VvOXY5QUJ0N2VuMzVlR2MwckxkelZ0RDdud2dpaEc0UW81TEdrZmR3OU5M?=
- =?utf-8?B?SHRlaUZPbEpPRzVCQlhybVlsejJsUXJ6c2JsWHpBT1ZoM08vV2hWVDFCSk5F?=
- =?utf-8?B?VGVpSUVoMGx6dWJDeU8veUJnN1htSTlLdk9XcmVUdDNQbGV3czNSdlNHVFh6?=
- =?utf-8?B?N25qRzdpZlZDNG9aNHNwWVJiM3poT09vKzNOTjN4L2crRnh4UDk5V0hZL1k2?=
- =?utf-8?B?RXN0U2s2a3YxQ2ZhK29rWE5zYTZFL0xVUnN5WXYwZExDcHk5YVBBeWFVV2Ry?=
- =?utf-8?B?enRyVVQxaU1HUE9ham8rNG1WL0VCMTFTdGRtMmpKNXVZTVBLajJrcjJDZ2Jx?=
- =?utf-8?B?MldHUzZHby9kNFJnRjZmc0h5b1BVcHVOSmlybmtOOGVVVUxLK2ttZStndzNx?=
- =?utf-8?B?aTN4eWE0aVJSMEZFUkJCcUFhSW5QdWVoblNPeUp3c1pKTjRTMFNWMkpjUXJa?=
- =?utf-8?B?VFYrekErRE93cU9JQ0pGUW0zeW52UTIxTkNTM2ZZQUNnS3RuelFPaW1TQUc3?=
- =?utf-8?B?WVNLVzBEN1J5TzhIdUE4SFliNUhMMWdsdjQ3b0tVZFVjbDlPRGc5MnJYdGp2?=
- =?utf-8?B?WHFGTE52akJGb0xqTDBob1JUemNoZDdsenZmQUJIMFZUbUNmNW9oV0lHbmFW?=
- =?utf-8?B?bHZ1a2RwTWtLWUlhd2N3YzNBVFNZQXNWU2NxVUsrMklxdU5OTjlpOWR1UVlX?=
- =?utf-8?B?bFZXUFY3N1o1S0Y1eGZIWm5DdE9xajY0L2NHdTlpVzlVclB1djhiRWFsT2Y3?=
- =?utf-8?B?Z01CT1Y5ZHhCQnh0NmhXcmxVM2xOeDFKT3lRWlZjMFhIeURCMHVpTDR4MTRM?=
- =?utf-8?B?VU0zSTF2cFRrZVREYmdmWEpucUhvbzNtY0lPUmRZeVY3OEt2Q2tSU3BqTUhB?=
- =?utf-8?B?U0JyVHMxSERZUURBUFZERWNGSkF0SnlhclRkSktQRUFoTG1JaG9YblVtNjlF?=
- =?utf-8?B?c0l2NTByMThFdy82bFdMVkFmVWtuYmhBaXAzMmhXYUhmQkluSndHUnpzZU9l?=
- =?utf-8?B?ZVorb1JZV3VwSzhLeDVWWDVIUGhCc2JrUUJYblMvMnBRdU5Eb0s0L2dSVlZY?=
- =?utf-8?B?c0VSNE9XbzVWN1FveFFCMHhKZXJXTnR5blRNZXlnMXMwcVJkcmVGL0owV0lN?=
- =?utf-8?B?M0h0VzNLZmVmK24xSS9FWmhqNSt0Y0dvODZKV3h5UzlFU1YwOGs5dz09?=
-X-Exchange-RoutingPolicyChecked: uULISQiK9EflmcA5OndQhRhHgVGQ7A1f3l9JnpNN8qatGJtiiNm/mOrdrgWFJlAkbxrZFx0FSeiggO7rGpW1UoHeLQHJfHmim0pEGM95gvLK8eXPI2Nh4Ad65uGI/o5sPYuA3Mq28wP1baM76T8W7/71d5j5+/mJWyB8hjq4XX/oQ8QdHS8X5rsVkVmugbCwLuT8fV/8ZmXKUXkOHbKahodG+YBl3j7EBypIWTeYof303LGEEkQRhS5lxz7IuprFXWKsi8jn/aYRysg1/EWxUoaEK1OA2Ng+fprsqvWBK+kn01EqMISlWT0FH6sEZLkHEb5tAd1QYkJ+vkFKIcasvw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1a85cda1-f2af-4d56-10b5-08de80d8e6e2
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2026 08:17:01.1165 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: xo2qBI7+JWmKKS/awozbyn1fLgRkBRoOqiMYjdF/5uUFbm4Knbin1dsom0Zr94pJIc7uQTEaP36LA/bXNfb1Tg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SN7PR11MB6995
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.14; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 0/8] hw/vfio: single-binary
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
+ qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
+ eric.auger@redhat.com
+References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
+ <61656692-dc0f-4e34-8b81-c2422928d017@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <61656692-dc0f-4e34-8b81-c2422928d017@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf29.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -191,116 +141,92 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 14:20, CLEMENT MATHIEU--DRIF wrote:
-> Hi Yi, Zhenzhong,
+On 3/13/26 12:50 AM, Cédric Le Goater wrote:
+> On 3/12/26 23:44, Pierrick Bouvier wrote:
+>> This series makes changes to hw/vfio to compile files only once.
+>> Changes are pretty straightforward and are mostly extraction of kvm/other config
+>> specific functions to proper files.
+>> This is the last hw/* subsystem that needs to be changed for single-binary.
+>>
+>> Pierrick Bouvier (8):
+>>     hw/vfio/listener.c: remove CONFIG_KVM
+>>     hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
+>>     hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+>>     hw/vfio: eradicate CONFIG_IOMMU from sources
+>>     hw/vfio/pci.c: eradicate CONFIG_KVM
+>>     hw/vfio/ap.c: use full path for target specific header
+>>     hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
+>>       hw/vfio/kvm-spapr.c
+>>     hw/vfio: all vfio files can now be common files
+>>
+>>    hw/vfio/kvm-spapr.h          |  12 +++
+>>    target/s390x/kvm/kvm_s390x.h |   2 +-
+>>    hw/vfio/ap.c                 |  11 +-
+>>    hw/vfio/ccw.c                |   9 --
+>>    hw/vfio/helpers.c            | 172 -------------------------------
+>>    hw/vfio/igd-stubs.c          |  20 ++++
+>>    hw/vfio/kvm-helpers.c        | 192 +++++++++++++++++++++++++++++++++++
+>>    hw/vfio/kvm-spapr.c          |  47 +++++++++
+>>    hw/vfio/kvm-stubs.c          |  35 +++++++
+>>    hw/vfio/listener.c           |   4 -
+>>    hw/vfio/pci-quirks.c         |   5 -
+>>    hw/vfio/pci.c                |  37 +++----
+>>    hw/vfio/spapr.c              |  30 +-----
+>>    hw/vfio/meson.build          |   8 +-
+>>    14 files changed, 331 insertions(+), 253 deletions(-)
+>>    create mode 100644 hw/vfio/kvm-spapr.h
+>>    create mode 100644 hw/vfio/igd-stubs.c
+>>    create mode 100644 hw/vfio/kvm-helpers.c
+>>    create mode 100644 hw/vfio/kvm-spapr.c
+>>    create mode 100644 hw/vfio/kvm-stubs.c
+>>
 > 
-> More details here: https://www.kernel.org/doc/html/next/x86/shstk.html
-> 
-> During my debugging sessions, I got the following flow:
-> 
-> - Device sends an ATS request to the IOMMU without the no-write flag (so it requests RW permissions)
-> - IOMMU walks the first stage page table, finds the last pte and notices that the W permission is not set (I know this page not really RO, I prepared it to make sure it is COW)
-> - Because of the condition I update in the patch, the IOMMU sets the dirty bit despite the absence of the R/W bit
-> - The devices gets the translation completion and decides to issue a PRI request
-> - The kernel runs the handler, schedules the work, and ends up calling iommu_sva_handle_mm (with flag FAULT_FLAG_WRITE)
-> - It then calls handle_mm_fault, __handle_mm_fault and handle_pte_fault
-> - In handle_pte_fault, it runs the following fragment:
-> 
-> ```
-> if (vmf->flags & (FAULT_FLAG_WRITE|FAULT_FLAG_UNSHARE)) { /* This is true */
-> 	if (!pte_write(entry))
-> 		return do_wp_page(vmf);
-> 	else if (likely(vmf->flags & FAULT_FLAG_WRITE))
-> 		entry = pte_mkdirty(entry);
-> }
-> ```
-> 
-> - pte_write is define as follows
-> 
-> ```
-> int pte_write(pte_t pte)
-> {
-> 	/*
-> 	 * Shadow stack pages are logically writable, but do not have
-> 	 * _PAGE_RW.  Check for them separately from _PAGE_RW itself.
-> 	 */
-> 	return (pte_flags(pte) & _PAGE_RW) || pte_shstk(pte);
-> }
-> 
-> bool pte_shstk(pte_t pte)
-> {
-> 	return cpu_feature_enabled(X86_FEATURE_SHSTK) &&
-> 	       (pte_flags(pte) & (_PAGE_RW | _PAGE_DIRTY)) == _PAGE_DIRTY;
-> }
-> ```
-> 
-> - The pte has D=1 W=0 so the first half of the pte_write condition is false
-> - As the CPU I used for testing has the shstk feature, pte_shstk is true
-> - Hence, pte_write is true, which means we will run `entry = pte_mkdirty(entry);` in handle_pte_fault
-> - After the fault handler has completed, the write permission is still not granted
-> - The PRI request returns a success completion code
-> - Device requests the translation again to the IOMMU, and goes back to the first step, trapped forever.
-> 
-> Note that the second patch you reviewed was masking this behavior as it was preventing the dirty bit from being added to the pte most of the time.
-> This is the reason why I fix them in this order o.O
+> I am glad we are getting rid of #ifdef CONFIG in the code. I wonder
+> why we stopped using stubs in the past.
+>
 
-Understood. You may want to refine the commit message slightly. In my
-opinion, regardless of any bugs, it's essential to set the dirty bit
-only when write permission is granted AND the device requests write access.
+Probably for convenience. An ifdef is quicker to add, can be more 
+readable, and the only downside is that it breaks all possibilities to 
+mix several targets in the same binary, which is a new and recent goal.
 
-If you wish to highlight the specific issue: setting the dirty bit
-without the write bit in vIOMMU creates a spoofed shadow stack PTE that
-misleads the guest OS. This results in infinite PRI requests from the
-device, as no actual write permission is ever granted - the guest OS
-treats the PTE as a legitimate shadow stack entry and considers the
-permissions already correct.
+> Anyhow, as said, what bothers me with this change (which I like OTOH)
+> is that it is exposing IOMMUFD support at the UAPI level. But,
+> 
+> 1. only i386, s390x and arm have IOMMUFD support. Not PPC for instance.
+> 2. downstream can compile support off
+> 
+> That said, support should reach all platforms one day. So we could
+> say that relying on a runtime check is preparing the future. I am
+> not against the change but it needs more thinking on the consequences.
+> IOW, a bit late for 11.0.
+>
 
-> On Thu, 2026-03-12 at 11:30 +0800, Yi Liu wrote:
->> On 3/10/26 14:57, CLEMENT MATHIEU--DRIF wrote:
->>
->>> Avoid unintentionally flagging the entry as a shadow stack entry.
->>
->>
->> hmmm. not quite get shadow stack...
->>
->>
->>> In the current implementation, the dirty bit is always set in the pte.
->>> Hence, an ATS device requesting an RW translation for a copy-on-write
->>> page is likely to trigger a PRI request for a region that has just been
->>> marked as dirty by the IOMMU. However, CPUs that support shadow stacks
->>> give special meaning to PTEs reporting W=0 and D=1. Setting these values
->>> can cause PRI requests to complete successfully without granting the
->>> expected write permission, which leads the device to enter an infinite
->>> loop of ATS/PRI requests.
->>
->>
->> appreciate a clearer explanation here.
->>
->>
->>
->>> Fixes: 65c4f0999991 ("intel_iommu: Set accessed and dirty bits during stage-1 translation")
->>> Signed-off-by: Clement Mathieu--Drif <[clement.mathieu--drif@bull.com](mailto:clement.mathieu--drif@bull.com)>
->>> ---
->>>    hw/i386/intel_iommu.c | 2 +-
->>>    1 file changed, 1 insertion(+), 1 deletion(-)
->>>
->>> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
->>> index d24ba989bf..56146aafc1 100644
->>> --- a/hw/i386/intel_iommu.c
->>> +++ b/hw/i386/intel_iommu.c
->>> @@ -2066,7 +2066,7 @@ static int vtd_iova_to_fspte(IntelIOMMUState *s, VTDContextEntry *ce,
->>>                return -VTD_FR_FS_PAGING_ENTRY_RSVD;
->>>            }
->>>    
->>> -        if (vtd_is_last_pte(fspte, *fspte_level) && is_write) {
->>> +        if (vtd_is_last_pte(fspte, *fspte_level) && *writes && is_write) {
->>>                flag_ad |= VTD_FS_D;
->>>            }
->>>   
->>
->>
->> the change looks reasonable.
+Sure, I'm posting it now but don't expect to get this merged for this 
+release.
 
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+The IOMMUFD part is indeed the one debatable in the series. My rationale 
+was that, even if it exposes iommufd properties, they won't have any 
+effect as long as kernel doesn't have support.
+Having played with it in the past, and having discovered that arm64 
+kernel defconfig does not enable CONFIG_IOMMUFD, error message is quite 
+clear.
 
+If you prefer, we could definitely try to build properties at runtime. 
+However, be aware that it's usually less readable (need to build a 
+dynamic array) and more clunky than the static const array, since it 
+requires a set_X callback instead of setting properties as a field. It's 
+usually our last solution resort if exposing things is not possible.
+
+Let me know what you would prefer for it.
+
+> The idea is great. Let's try for 11.1
+> 
+> Thanks,
+> 
+> C.
+> 
+> 
+
+Thanks,
+Pierrick
 
