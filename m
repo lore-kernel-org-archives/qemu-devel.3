@@ -4,111 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62A97105F7A6
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:19:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 570C3105F7AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:22:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w13MX-0001nO-Ho; Fri, 13 Mar 2026 10:19:38 -0400
+	id 1w13PG-0002kA-Ft; Fri, 13 Mar 2026 10:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w13MU-0001mQ-Aa
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:19:34 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w13MS-0000LU-2Y
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:19:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773411569;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Fye/QUpUoZ3jASXB6WFwGmzYIJXTGaQjADxQ5XwtCZA=;
- b=Kno8l0B97SExxUA1T1qRZzWB6io6X2T1C8c1S+Gazu+8G9pdYXpbU8WB0vQngtvvUBB8xL
- HzPAVBbso4sZvQctk6gEN7CbwjocuM9uipJUBWGTD3yksP6/1wrO1cwAYRSkQYVoi3ZQOm
- CvejIYatCxYfHlQ+mnJERdJNG9RTsiA=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-481-2G2uXHJtOza_ftt6HV4bGw-1; Fri, 13 Mar 2026 10:19:26 -0400
-X-MC-Unique: 2G2uXHJtOza_ftt6HV4bGw-1
-X-Mimecast-MFC-AGG-ID: 2G2uXHJtOza_ftt6HV4bGw_1773411565
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-89a108d17d2so164824246d6.2
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 07:19:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w13PD-0002jo-BF
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:22:23 -0400
+Received: from mail-lf1-x12b.google.com ([2a00:1450:4864:20::12b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w13PB-0001m7-MH
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:22:23 -0400
+Received: by mail-lf1-x12b.google.com with SMTP id
+ 2adb3069b0e04-5a1307438ddso2433555e87.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 07:22:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773411738; cv=none;
+ d=google.com; s=arc-20240605;
+ b=ep/rRiKpylJKXGyFHm0FYpZAe6NvyYX47Gh6fYhQFJFnm0VsfoRy8qxkQNH1vm7vGL
+ Hp8sy/ka3xQTU72uhFi1pMFTdBpXlYBpWeiYWODbtwFpUbz1h6q29QaMuoqjObVHJWOH
+ FhM+7+IXFXvi4se8pjRqPR+Cy0a7Ir0vM52RhsMmksImWnvWJ3+BdMevs4Rma3GXEtzp
+ JmKhMm4lPA85cQrdIAeOT75vqWINXedshXAZlnIt7uRI/Co6AzoAy8Z7mY+TUQzisGnz
+ U3RKesjHoFwyFmHdVKAm3l2SjCR1/u4UYmwlLtX6Z+pfHXGVCYjW2TEQvXNJsKoa1vML
+ L3iw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=eS/Tw4sqprEIn1uj2BhH+2LjMMnmPcd5VTS/K4sDW90=;
+ fh=HLSZl4wSHbARFK/QliXDFk7Jcs8wjDiYrsaiKvzt3ao=;
+ b=WojvgXBUuXw7TNFL5hgGUNnkc8nwxL0WmeFNzB21ZJENh2x9CPv129u3pMhNgmSoXj
+ 9uPZc5wz2MESMPQzNj4+wmU6U90TlXLZzW32UHSZxxYmDsRwkcE/9acYnbIUvEtHmDHI
+ 4EOFnSWFYjPRepySwYWeeXK6xxe4uMhVlmcR0sArsrzCa41U5GwawUN54f7jsaOK38rT
+ v1QfA7SOGuuly18dcN/RFdY3E9Ydz8eoNmATuhFkHbuXElrdf0RwfoUsHVfrf9hnRjUk
+ tfol33MGhzkhHg9eQeqPR8cIrP4hpaaCbPmoba7M873t2R3derINf164c0HtcqVK/ziY
+ ai2A==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773411565; x=1774016365; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Fye/QUpUoZ3jASXB6WFwGmzYIJXTGaQjADxQ5XwtCZA=;
- b=T9VZ2nJ/RZXgp4gMa/yLzYul5qSKiYLaLX/rnuMXbcZYs/ZTcHtzecs7tIbdUukIBM
- 8IiI1GgqufkJI08ge5pTCH4HDzn2AcS6Dt7Acvpg1Bf231k20MsDb0rksooZXaBQEy5i
- qvX00UVOlqRuWLb3veBiMYMPBhF8HkNfxqLY46U/IJdoVlpqqRZb8JaZ9hySbBSfd3bO
- wiA18e2j/s7KlAX/ZiHlYbtLUCBBbKrzNm8pJGq8jSSLEBR8V1huLa2l3jnoJq9zhK9R
- +lAdq7RWZTuknTte49sdVty94BVrsEhCo0ktach97EFtOczxHM7IrXzsGztlFqwL2nGj
- yIgQ==
+ d=mihalicyn.com; s=mihalicyn; t=1773411738; x=1774016538; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=eS/Tw4sqprEIn1uj2BhH+2LjMMnmPcd5VTS/K4sDW90=;
+ b=isUw/UU2K6GceN2SmzaJ9yoIdIgAQ9u42lbY6CO2YshtAgo1eYFBGZUhjKXcaPqLvv
+ dYLgNRydrH0xQrEuW/IuFkTfXFEuaR6NV4Po/kGkonSMj90Yn+81C3AdZEFlK8jJK+I3
+ natyne7lgcRPYwP90L35rc0kwZCgQuFNihQhU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773411565; x=1774016365;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Fye/QUpUoZ3jASXB6WFwGmzYIJXTGaQjADxQ5XwtCZA=;
- b=nUSd7lUKhIf6lDzf343Pq6qzpJCDUyMkYese6Pf1TMNYhP1gwAL7N5NtVmCS/xLz0N
- 8E904vC2aRWFzIEFy9W3XQcVsp6jOUjxx+uwlkFnFheEXG1nUxBJXyyRUUVLnQE4K4i0
- SpsusBAj3zajoT5N0th3aCxRfY5BJSsDP22tbLsWH5HWiDjHqHc2EUvvK57qiou1AJ07
- /MnVgYFWHklhwWO87Kf+2GHu60QPyd/KYo5z2VQXDc/shd3VtM5SB6Hw/Q1FmSLjkU9v
- +GL+fcAViieNwBBvozAtBqb2LxcUfjCFJNvEGHon+qdZFKOrI7G2ukMnhbaeRLxpKd5w
- IXtw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVLB7C7Os2bL9YhxfSBmYHxVp+oc1QbLW/2hwNoxRjA6tEQLqdg15tv1Vu6beAv7zfDai39pNaId6ZC@nongnu.org
-X-Gm-Message-State: AOJu0YwfxHrFf9hkkT8lRenOBSCwomJPjhe5+OFkPAwdlAUNMhuuy0WL
- S7rK42zSg9djHar2gs1Av34g7lARuaMsLNyTribVsGNaN0Oc8oFoBetgpaDhFKLi0An9dkoVr7d
- KcHyYt70oTAdZi1/IL5RdQY21j/p3g4HrIieoVjXo5Kk8NJDftUdLHvHI
-X-Gm-Gg: ATEYQzySXCUsCBd05QePgUEBmm1ih4js6GV4u10yDW1/T98aWQTxz0uMXH7BjfVtSsn
- uQVkl7uC44bXa8WKW/FDuUNbl/OyYfdw2Q1L4DosXiPnwttoaDA24LF9azh1M6QnQOSBuRE9MPj
- UAw3fnkYWHQfFulPWTVYLEIcZmYDtSJTEgxSrxA1SVyGjyxSw1bw9Ieal8ZYrkRInp7rq/olUbZ
- 0YFROHLdmYUPh2BgHSnXu+lTcYJ7/NWbSo+DXY+yP59NRnFYAAV58eyu/ukGenQzlq7GmO4ypdu
- VTI1RZ7awU1S376bmQ9RXiCNRXmmgpsRToTH7aTn488uOsT1vLK0bgqIboeTTKNGUgRAbsrP2aV
- 5P3yhq2CqUmS+iQ==
-X-Received: by 2002:a05:6214:412:b0:899:ad51:fb64 with SMTP id
- 6a1803df08f44-89a81f5bd66mr54782756d6.41.1773411565252; 
- Fri, 13 Mar 2026 07:19:25 -0700 (PDT)
-X-Received: by 2002:a05:6214:412:b0:899:ad51:fb64 with SMTP id
- 6a1803df08f44-89a81f5bd66mr54782236d6.41.1773411564783; 
- Fri, 13 Mar 2026 07:19:24 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a65ce34a0sm57051816d6.32.2026.03.13.07.19.23
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Mar 2026 07:19:24 -0700 (PDT)
-Date: Fri, 13 Mar 2026 10:19:23 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Xiaoyao Li <xiaoyao.li@intel.com>
-Cc: BALATON Zoltan <balaton@eik.bme.hu>, Paolo Bonzini <pbonzini@redhat.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- chenyi.qiang@intel.com, Farrah Chen <farrah.chen@intel.com>,
- qemu-devel@nongnu.org
-Subject: Re: [PATCH] memory: Set mr->ram before RAM Block allocation
-Message-ID: <abQc65156qHySK1i@x1.local>
-References: <20260312063420.973637-1-xiaoyao.li@intel.com>
- <abLf8EW3M7XCBh2K@x1.local>
- <92fcc6f0-655f-5726-1758-b2429911f0d8@eik.bme.hu>
- <abMIgThCxU1gnMqZ@x1.local>
- <9594f358-2ef9-08da-355b-69496c6abb0a@eik.bme.hu>
- <7edbc92d-095c-4cfd-b5d3-102eee092b13@intel.com>
+ d=1e100.net; s=20251104; t=1773411738; x=1774016538;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=eS/Tw4sqprEIn1uj2BhH+2LjMMnmPcd5VTS/K4sDW90=;
+ b=qHXZ3QmMKiHvvUJ3yRtcLaodySSS6+KS/MIgjJtJFgMy1zu2F4ZJanKUTO0Kct3y2f
+ UIRWS8w5fMQMJy9opYm64B3w1HanejSOKF2kQKiThjgtc37MTOIPji58FVznB40Yy1nI
+ cY7wVKfeTeY03cUVRvxXbvMVM6WBoRwFHv0IjRpzLfCMeXm+bCOazuskLSgYIMl/Lx3H
+ Z46kveMo+ceZkfcOImziDTiJqGxlVMDpIKrf0tCYBFKLAosGISq3yo6wkCFMJ486k4Zc
+ p5JxG1uv3CqM/Njcf7itqgXoHpksjo5TWBEGyJnsGDl6soINV43T4Z1vaUohuccbspeE
+ qePw==
+X-Gm-Message-State: AOJu0YwneuagdtyZAZWI42zreFZWaXJ+SPSH3puIaspYyAmZRzauLtV8
+ cQ2KJ3+S5Eth4h9mjpKJv2ZpV/Htg39/NCApK2FLmEmoh/isO9vKWX2rvAiPAScWdD8aH7BuwlR
+ v1mE2hZAYzlz92q+qhj64sMR9LS1sglAIQtdJ2H2qdg==
+X-Gm-Gg: ATEYQzy4vLaon4XF2GLf5sm8jrC0da0LyReDEjRGD7wcu7yD1nMI/6wXsYTmSVoW95S
+ Tl7gnWhKd/F3odgUiEvLdJcAdr2+6hHCkvz7pP1VuHllhMnLhOk5ZoNkglFx5FjnKeYk/jBQzbZ
+ OL8IOJPEabBHACDBRqaQN6z3Smaer3p2e+WZyUG7ftcpWdxxqIIA0gvsbLX6ybi8NJwRGUmR+UU
+ J4ttTl56ujpXWsxd+X4JN2yonrYoS1gzRounAeOQdNDyXX17NxeKcPfPUXOv/U0YIjyHO9USoJ2
+ YzDbYSJHx16QVnHPx4QLgdUu1z+F87tntUixEkxwOURS+I9VWw==
+X-Received: by 2002:ac2:5968:0:b0:5a1:3ebd:d53c with SMTP id
+ 2adb3069b0e04-5a1626ffa87mr839572e87.13.1773411738164; Fri, 13 Mar 2026
+ 07:22:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <7edbc92d-095c-4cfd-b5d3-102eee092b13@intel.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260306150342.395923-1-alexander@mihalicyn.com>
+ <20260306150342.395923-2-alexander@mihalicyn.com> <aar4-DgXbartZY4y@x1.local>
+ <CAJqdLroT8j77_0OrE+qOoj1rRsmm0rQ4EgnjtWBush9CL1MFog@mail.gmail.com>
+ <aasCIdpqEQxmYjXu@x1.local>
+In-Reply-To: <aasCIdpqEQxmYjXu@x1.local>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Fri, 13 Mar 2026 15:22:06 +0100
+X-Gm-Features: AaiRm51pniv9A50me9yBa6BVsiFiS1pJSeKaswXKW6qnuMczyuHpQaKp1gBgQhA
+Message-ID: <CAJqdLrpACkESfBOywQZjbW2nJ7OTseHG2oZdzY65dkS78JKkTA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/6] migration: add
+ VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Jesper Devantier <foss@defmacro.it>, Klaus Jensen <its@irrelevant.dk>, 
+ =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
+ Paolo Bonzini <pbonzini@redhat.com>, qemu-block@nongnu.org, 
+ Keith Busch <kbusch@kernel.org>, Fabiano Rosas <farosas@suse.de>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12b;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x12b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,19 +121,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 13, 2026 at 11:36:45AM +0800, Xiaoyao Li wrote:
-> However, the ram device is affected that is also uses
-> memory_region_init_io() which will not be covered by the helper.
-> 
-> Diff attached below. I doubt it is better/simpler than my original fix
-> because memory_region_init_ram_device_ptr() still requires the separate
-> 
-> 	mr->ram = true;
+Am Fr., 6. M=C3=A4rz 2026 um 17:34 Uhr schrieb Peter Xu <peterx@redhat.com>=
+:
+>
+> On Fri, Mar 06, 2026 at 04:57:56PM +0100, Alexander Mikhalitsyn wrote:
+> > yes, yes, I'll do this in -v4, sorry for this. I was busy adding a
+> > test for NVMe migration
+> > and decided to send -v3 with this new test.
+> >
+> > Sorry about confusing you.
 
-OK, thanks for the fixup proposal, let me queue the original version for
-now.
+Hi Peter,
 
--- 
-Peter Xu
+>
+> Ahhh, no worries.  Just to say, if you send a patchset without RFC or any
+> mark, it by default says: "please consider merging it".
 
+yeah, sorry about this again.
+
+>
+> Good to know we're still on the same page.
+
+yep, I've just sent a version 4 and it is based on your idea with new
+VMS_ARRAY_OF_POINTER_ALLOW_NULL flag. Hope that I get everything right.
+Also, it includes tests and many new asserts here and there :)
+
+Kind regards,
+Alex
+
+>
+> --
+> Peter Xu
+>
 
