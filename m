@@ -4,91 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C594C106FD65
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 01:28:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CDFB0106FD60
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 01:29:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0rKB-0008VT-It; Thu, 12 Mar 2026 21:28:23 -0400
+	id 1w0rKd-0000Hg-Fv; Thu, 12 Mar 2026 21:28:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0rKA-0008VD-9G
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 21:28:22 -0400
-Received: from mail-ed1-x534.google.com ([2a00:1450:4864:20::534])
+ id 1w0rKa-0000E1-Us
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 21:28:49 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0rK8-0000VO-Ms
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 21:28:22 -0400
-Received: by mail-ed1-x534.google.com with SMTP id
- 4fb4d7f45d1cf-663a6bb0fa1so1176201a12.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 18:28:20 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773365298; cv=none;
+ id 1w0rKZ-0000aN-EW
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 21:28:48 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-662b5bf4b10so2748466a12.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 18:28:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773365325; cv=none;
  d=google.com; s=arc-20240605;
- b=QYDnep31ZmghiK1tTToXjNCbRlLR2BPA8FbyxT+Pk4+MRf2rZfc+yC3jtbVnoMh5ou
- RosasAxVhT8pgGsasvjyjf/b0G8Jlq91n8s9W0s2Vhmm1TxXe3GBhizYeGHy+kmcUuw8
- 1efouFFmQXoODutl3fqvklA9vBbtPzsngbIzfr0PJDmbrgQ6+tDhjSvpHIef2re2Gnr2
- oCKm3uXEJ/1NCO6iFeMUMiJNCgqVfUtdgcmKeTL6cu5UstvHrVeY5O9dyWT9AuAwMEys
- GR03FYDqwgjTjDGq5pKVxJKbX28BlYcjEp+rvID9aNPpXn2whJ8XaKb8AmrjYT6IjCeX
- bFnw==
+ b=XOPHlDhJkvrpDZ9LILvz7pN3Q8i85t+hfumNrW5BbupTIjvcIdzs39SLSWAeebHjrO
+ gW5N8jT+TB74Ai9aQh8OSZgkAjSoGcEeZ6uG8Jw0wHngowsoGoezruJ1AXrTcNkh67hr
+ 0qw/FnkaZLNB5J9x6w/GVTXNHLqRGOVag8zlRiDl6Xo7UrzF8msS5S7/QtRCVucVFFBe
+ 2ywElF6hl6DDER14nEXetYdJWZ29lY6j9Ftz610Uh9gZyhkOt2RHtzczjsahF1WQ0jOI
+ 2p3n13hbK6Aj2/f7qGvrtkxLm/EyH/P94qehwsmsfYEsDI7S0izXtRKYLwNNYXQDtLGV
+ n/bQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=uvQvYaYWv851EkJoPz/haAyACBLzCoH9L1cPW1ALjJ8=;
+ bh=giQLkQ5ofNuA4Zj9Vgqxj4zW0+0DeO0WUfbGyA+ddSs=;
  fh=Yugyz5SJJub7nbOEKVoR++9O2Yndc4n+VrwAcNFbVYM=;
- b=LFyxFV9Af9T4C33h/SVSH1IjWue7HIMopR0FT2EWFGaqjLCqZBa1FsXiEHtZDF3Kmx
- 0txygfzqrO2rCjyqBgysekFOW0O2NhBU7UOKPjJYWE6o4U7tbHGZU9oPj8oMEUDGpcI8
- gmBL068tT7WL4UYXGJaMAqCLeyqcVEcxnqbwqOUXLrOT/gpGnBEGqNih2xLufULQc+e9
- p717adYiDOvDBEo6N9SBC7iPKecR3HKNqtzoWd78vKXhKZMd4rIRJZmSdoQNgmokmHeU
- mcCUB0pI9WZxgez+ME4lJLzk6d+2cg14uclpu3KEhLGNLLoM0WnofWa2fKDctRTQtNi5
- W4cA==; darn=nongnu.org
+ b=MRZmH2CGOsQekPmBpPtiD+RnUJgFGkBLbF7k+y4ZXvNQhMJbKb4K/OtKrgsLtWjoyt
+ l817N5QSY8wn4X+vWzqqquBWsI3Xb4pL9vAv24+ILzdZZZp/LUGdrvZk74ZfGeJGDUW8
+ cBTiq5BRx8xyiMkS1p4BVSwbjzh2kKC+JgBB2Jzc3So6W7HBj67NLMqaETiyLXRN/Fwm
+ 4rXZ9aWw/0hnM7Tk/YAg7ehGh3yIlb4HgGrs0D04ZRa+MknwY2xizwzgiy+4sqgKf2kh
+ SXt93syBIGqzUDt5hkAHGSBSRebkB8ciBVtYcU4/G2C/6tL/y6veEfcyKErLvRNdGzCV
+ 9S2w==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773365298; x=1773970098; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773365325; x=1773970125; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=uvQvYaYWv851EkJoPz/haAyACBLzCoH9L1cPW1ALjJ8=;
- b=dT70lD/PSCzVGJzC+C9okZJ+YriTtsuZAcL9ZVAHoEYFv+xH5cDxKA2Gzny8cIAh+E
- ZQQvFmM3mDHxvilSeQrCTCn8WoHapZtFFGdB60fSTjlBvrAmpeKFZrnWkGpH7WUHkhSl
- zAThF97voVmPIhO5EojC4mdlcampV5CH5jmmcPN7Q4WkSvZ/8PPTSvgLt4CA333vbruJ
- RrnYPxOne0YlFKkQy1eDLufqKD7DqlrVzY7KhP2gx6F1Nl/S+lKq3xqR5CQB8apa0I4I
- uf13gppW5ga/KRQNb0PwEKtsWYnGqKhFz3bYs2Z66NfgS1I2xvfd4+s5ldklMFvngVaZ
- XmMA==
+ bh=giQLkQ5ofNuA4Zj9Vgqxj4zW0+0DeO0WUfbGyA+ddSs=;
+ b=PimRm4H1GQv35yjenWbxMOF3AbTbOfvWzlARwGUwJyK2gsvTMlVUOJOFU/CRuf2H3d
+ UFEe1tk0nGmohhqGvOimqHP4XeezQBcRAEXbCwczI3JGe/3YArwsbO5xetxU3Lo/HxjY
+ 4jnOFljPkkAlRUPZTIbG4HYTFQy3UkAgnUvuFoot2+4LoUq68GUYOk0rJGeYIqj+KAAy
+ p9o7Myr/x+21LbBNQTk//GIby3dqcnSvV1tcov1WiH5EAk5qmTZR7jyZDq+TEECbqsks
+ G8KmtiRG6qzo6EKRwA9yQNaXvXOYa4V6q5IS++Scgu+sxVOKD/LruIKU1u4Z65YMhzuC
+ JcBw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773365298; x=1773970098;
+ d=1e100.net; s=20251104; t=1773365325; x=1773970125;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=uvQvYaYWv851EkJoPz/haAyACBLzCoH9L1cPW1ALjJ8=;
- b=NLrdr7RpklNO3dk4fLFzxJ3CdtkjNdQPghmDalUMwLT7b6q7r9lt0anc+dHsVW9E+j
- QhezeUR/IHU6uHt0CiVgM93mUhz46kvmxcBt8VUjY+T1fzxmFpckpC/0RRYjrq8CVXZF
- XGUkt0WUY5Kby8Ajl/QJ7Zk1BFD/AanURIsVUWew2QJhkSNO5Zc8aAYVM1FvNbOrrjSH
- b77yyK6qUVdy7I5sRxbLu02hLkhkeTYeVxirHnN/b/eXTJPT+EPysP6AQPG+8n72QoBl
- Zu3AtO/Jk+WDbG53J3XNOiUBNBFRnhawv0dVztkDYUk2vBnA83B57J7N7UKVcAqW2am7
- QNLg==
-X-Gm-Message-State: AOJu0Yx9wqlYYVoAlO3a/LOBSYf5ZShEGwTimtA1A2YkTr/taCR+2Zqr
- L4phUoxVvtzir+84uTENpTGonQyIO8neQEGWhNhRN+3uhEJl4HxR+ja7mLoS4fN0v/oNaIlASe8
- wXdpEjvpFIK6aydYUAnt/gXN3VRCn4Xs=
-X-Gm-Gg: ATEYQzwyB0eB2cSBrKvA3wJD9lGDTFI0ccRoN7ZUXiBrpx8NBXFw/VDhtXXjUyVvEY7
- L6H02z6jv750z5XUP4BYdeSSm7ArnvCDerPwoDcWEWp+3/WMJJMsTNlcoyTHZxMeq80Xvtut7l+
- /fIgVBGxzGe/RpfgGk+DKLP5/AAAUJF6WYc85MyqtFpLCKQrRgOk/qKb0WNhiQwj6yschfw6i01
- kCltecGjcWbyD4H6FVqE9yHShjl29he/cVRi5TFyF0zuGroN/KTmaIZc6EIknE+P3KHLJ1OMr88
- uzU0mwutlt7/elEoj7xvsaRgiosz+70o0fXkNg==
-X-Received: by 2002:a05:6402:13ce:b0:663:56c4:2dc6 with SMTP id
- 4fb4d7f45d1cf-663ba0e960amr861062a12.3.1773365298497; Thu, 12 Mar 2026
- 18:28:18 -0700 (PDT)
+ bh=giQLkQ5ofNuA4Zj9Vgqxj4zW0+0DeO0WUfbGyA+ddSs=;
+ b=sVH6kJpGi9B8GJdh0l/7UeTM8TLxtArzAxuAYRWu8u8sm60KOIN1CeBxom3e0ANshQ
+ nWjlvA08ocuv4SZj4rxPWFRinjzDelmpf9bFiFC9+IifP91i94Rugknr3N2k+SCv4+lK
+ 34HLnJ7pY4idvxgCrGCsO/OqilFVr/7jfPtTiYWIJ8BiWxdVipyKisrkG6lf8Sq4dv1L
+ fEN6S5pHMpR+DdbEXTDeqs8Y/QwCjviUPUOypHR7xdl00xaPFX7o8EOkrFvqOs5daS6S
+ 2XjR5dJM3K+kwWSpppkTRg2EAKsi+EuO+IQ9lg1GyTJF6dqI9e+YPATGLUR7feXPkdsU
+ puYQ==
+X-Gm-Message-State: AOJu0YxSv8Uu3PrsTirH3ZkYoykKlkqYgMDQL/dYvcJlGtjpYEf+lNZB
+ ra3LcX0yy2TBJhdiQtx2mvgqQv33m+eK2svRLExp5FSlmcs5e/s56xS2oOYyOwnfS/2n44f0iuo
+ H+BApF6LBtcLx/Eo/Skc8miQJLerLjhU=
+X-Gm-Gg: ATEYQzxsrdLy7aPd6AShaRG9UYqO0YpHYsisUA0ZptE+YfJLjfzhI7TP7KRWScYS+FB
+ SmmqXc8G3vB2HGt0W0sypiu5z89RCftLm4jchPtLWO6oNnRwuzr786grex1AItM3mpuskFWIFGH
+ ZvfWUQzRRWZm4Ogonap1j6uHOmwT0IAPGVf65xNQokSxdMBrdFkTG4VvboS5P9MoJ4YUtWAMFET
+ dD02XwGVCsVTKRM7I7OJNUNIpAzdwil04+5WIrlS9EeuEJK0DoYGH4ffOaqUgvaw3Ltx7Tr4rzK
+ s/G7zIJZM3TpBy8mUTakg/FSgGNAemTwxEWlNQ==
+X-Received: by 2002:a05:6402:35cf:b0:663:4461:ad8d with SMTP id
+ 4fb4d7f45d1cf-663ba9bb272mr826374a12.4.1773365325428; Thu, 12 Mar 2026
+ 18:28:45 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260312033201.1619554-1-frank.chang@sifive.com>
- <20260312033201.1619554-4-frank.chang@sifive.com>
-In-Reply-To: <20260312033201.1619554-4-frank.chang@sifive.com>
+ <20260312033201.1619554-5-frank.chang@sifive.com>
+In-Reply-To: <20260312033201.1619554-5-frank.chang@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 13 Mar 2026 11:27:52 +1000
-X-Gm-Features: AaiRm51cuYHXxOLcrgxffYXgdyOdy4Qy1T6Gc74lF8OZZF-bEuuCiRfwUmCcdJU
-Message-ID: <CAKmqyKM4UWfS-NhEOeu9gs1j1P6t5XgjA2F+ooZAgY=OWahHNA@mail.gmail.com>
-Subject: Re: [PATCH v3 3/4] hw/char: sifive_uart: Update IRQ when rxctrl is
- written
+Date: Fri, 13 Mar 2026 11:28:18 +1000
+X-Gm-Features: AaiRm501JilXvibjRBDnJnZgVmwTqNyPp2vM6chFwrmVx0ZIOlVSs7t5nhyEzNI
+Message-ID: <CAKmqyKMV9kzOrKzDxginbBm_5d7UbcTcMbaJdkNAz7+He8_5qQ@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] hw/char: sifive_uart: Remove ip variable
 To: frank.chang@sifive.com
 Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
  Palmer Dabbelt <palmer@dabbelt.com>,
@@ -97,8 +96,8 @@ Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
  "open list:SiFive Machines" <qemu-riscv@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::534;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x534.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x529.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -106,7 +105,7 @@ X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,9 +125,8 @@ On Thu, Mar 12, 2026 at 1:33=E2=80=AFPM <frank.chang@sifive.com> wrote:
 >
 > From: Frank Chang <frank.chang@sifive.com>
 >
-> When rxctl is updated, we also need to check whether the IRQ should be
-> raised, as the user may activate the Rx channel or change the Rx FIFO
-> watermark level.
+> The ip variable is no longer used in the code. Remove it from the
+> codebase.
 >
 > Signed-off-by: Frank Chang <frank.chang@sifive.com>
 
@@ -137,21 +135,54 @@ Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 Alistair
 
 > ---
->  hw/char/sifive_uart.c | 1 +
->  1 file changed, 1 insertion(+)
+>  hw/char/sifive_uart.c         | 6 ++----
+>  include/hw/char/sifive_uart.h | 1 -
+>  2 files changed, 2 insertions(+), 5 deletions(-)
 >
 > diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-> index ae71a15a2a4..f255cca960d 100644
+> index f255cca960d..4c30fbf5685 100644
 > --- a/hw/char/sifive_uart.c
 > +++ b/hw/char/sifive_uart.c
-> @@ -216,6 +216,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
->          return;
->      case SIFIVE_UART_RXCTRL:
->          s->rxctrl =3D val64;
-> +        sifive_uart_update_irq(s);
->          return;
->      case SIFIVE_UART_DIV:
->          s->div =3D val64;
+> @@ -285,7 +285,6 @@ static void sifive_uart_reset_enter(Object *obj, Rese=
+tType type)
+>
+>      s->txfifo =3D 0;
+>      s->ie =3D 0;
+> -    s->ip =3D 0;
+>      s->txctrl =3D 0;
+>      s->rxctrl =3D 0;
+>      s->div =3D 0;
+> @@ -343,14 +342,13 @@ static void sifive_uart_reset_hold(Object *obj, Res=
+etType type)
+>
+>  static const VMStateDescription vmstate_sifive_uart =3D {
+>      .name =3D TYPE_SIFIVE_UART,
+> -    .version_id =3D 2,
+> -    .minimum_version_id =3D 2,
+> +    .version_id =3D 3,
+> +    .minimum_version_id =3D 3,
+>      .fields =3D (const VMStateField[]) {
+>          VMSTATE_UINT8_ARRAY(rx_fifo, SiFiveUARTState,
+>                              SIFIVE_UART_RX_FIFO_SIZE),
+>          VMSTATE_UINT8(rx_fifo_len, SiFiveUARTState),
+>          VMSTATE_UINT32(ie, SiFiveUARTState),
+> -        VMSTATE_UINT32(ip, SiFiveUARTState),
+>          VMSTATE_UINT32(txctrl, SiFiveUARTState),
+>          VMSTATE_UINT32(rxctrl, SiFiveUARTState),
+>          VMSTATE_UINT32(div, SiFiveUARTState),
+> diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.=
+h
+> index c78d9bd1fc6..5f3b1327de0 100644
+> --- a/include/hw/char/sifive_uart.h
+> +++ b/include/hw/char/sifive_uart.h
+> @@ -73,7 +73,6 @@ struct SiFiveUARTState {
+>
+>      uint32_t txfifo;
+>      uint32_t ie;
+> -    uint32_t ip;
+>      uint32_t txctrl;
+>      uint32_t rxctrl;
+>      uint32_t div;
 > --
 > 2.43.0
 >
