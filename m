@@ -4,130 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4BEAE107BCCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:24:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CF244107BCCC
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:28:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w15J7-0002yp-8y; Fri, 13 Mar 2026 12:24:13 -0400
+	id 1w15Mr-0004Sg-Gz; Fri, 13 Mar 2026 12:28:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15J5-0002vT-TM
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:24:11 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15J4-0007bi-Fv
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:24:11 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-35a1c6081a5so711592a91.0
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:24:09 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w15Mo-0004SO-Px
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:28:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w15Mm-0008R5-7N
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:28:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773419279;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=5dZ4ahfEdsN1/cO7MOlfzAYWoMq5q8WbafwlUN2pZ+E=;
+ b=RF1Hqa8MYErcKvgw4dDZEqEi8SofuAdwKkowzFnbehr+46Ho7ZF1DuBMwBmZ+7KJEZtQtw
+ 0quYkiRAcRnE7M+MN+XNHIxW1JISa9d3pMELUMNseQOQhlsPoZwmZcuFM8QakAauqe11AD
+ oZgR7qwPSEfwErSJuYPGgKh9Jm1Zog8=
+Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
+ [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-609-NhsegLrFMqGPiFgDhEaHbQ-1; Fri, 13 Mar 2026 12:27:57 -0400
+X-MC-Unique: NhsegLrFMqGPiFgDhEaHbQ-1
+X-Mimecast-MFC-AGG-ID: NhsegLrFMqGPiFgDhEaHbQ_1773419277
+Received: by mail-pl1-f197.google.com with SMTP id
+ d9443c01a7336-2aece14b507so9145735ad.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:27:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773419048; x=1774023848; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=CNh6V8QYtjJtRQBHSKRWOmI4knFO8YKCvecMqNI7YL0=;
- b=e92k+4OonydOJ+y5hpYLbEuR6gdbAUh91MJAdUF4dW4BZM1HprCPO/w+d1zH0Afltt
- cbP+GJHZLSMFYGKuhL4Ba94zmMpBFnfh1MS85C6axXL/rgMm3kAeRr0aRc/8co13H4IZ
- KUJsm51aR1qsIxa/mmRBzPTUGOh438MciYftqeRCbBvuumKs4Wt4WyfkXWSHa/aElzTX
- QdOuoNqQtKD8vE+ZLKsYehAcN5S/+PyYgncQwpvcdr9t7lg6zXr6QIt1632R2CCg7Ioi
- X0KGCNR7/5JDGFnjcyFT+3vFmvzCiPaM7u3D+BBWtFtBGMqsAwD9POYqpluP5HhGtzOP
- EvHQ==
+ d=redhat.com; s=google; t=1773419276; x=1774024076; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=5dZ4ahfEdsN1/cO7MOlfzAYWoMq5q8WbafwlUN2pZ+E=;
+ b=IrURF27lL0SRC9WTEk5zAHvmJYPSxx7MOWNGzO1EFC2IMrIgS12oR/0ksl0BWKtdtI
+ bXijAb+JcspAddTehjhirU51/kR6FKHEPq8rk634bEL5HhosrPEIwVt6YYqaDZ8JI782
+ bgJVH6H4sWZOheuPnzaQe/nUsK7vTkrrvKRBONlZ4NAaxVpfy0MpLXWVzqde8JmlWoCV
+ k0xGIDKQ4F+Oq/l02A2REDCC/mlhKVD8Gr8pcXtUAsihsdtAnJA9M9lEddFR6d91D+O5
+ fqi5PdPYKg8/zoaHOlrVbdnrQ32WLcfq3LRYJ9RN31Q95PeYnQBiRi1Dk2r2VNIwTLAY
+ TTjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773419048; x=1774023848;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=CNh6V8QYtjJtRQBHSKRWOmI4knFO8YKCvecMqNI7YL0=;
- b=bfo9mw6/m9JNltgiKZdaUNVKGfClxOAVmwnrsUPMwK6SY/joSnjVV+L722ewh2jZBe
- xfYh98/vZUXlJda+JR+3dD6prkwVJwO3Hw8qg9unGevqBt/Z8FeFEF5/00gZxtl6b0c+
- vIAEOMCF987xbdfJq2SBiUIPBw/204L0sQIsHvk6HvDqTEmVVpHPIZRjPcyQ3krEMAbv
- DrPp1mNSA2RVA43XYdxJZ01BwGq14WAjWdN0xlvCtVZQTVqBYWWgTheoReZkefrqOdEW
- coP8hX9lKO5fEnjrgPXzsKLQkHSYB/AZ2ZAeIaGx00/Ic4FCMl/9ZFTwHgpRa4NnGG2n
- UOew==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV6qEDrqlrpc8zXHNATI0X2DMyetDQG2lTBmDztnwwxoCSLVqKfObgCrdEHHMT9W+JIy4e87spjPPOU@nongnu.org
-X-Gm-Message-State: AOJu0YzLp7GLTJqCRLxY8Wz6//PM/ABKJ5ssvM1zn8/YLWf/SiB/nwP6
- 6i3ADPzCCipUyXJAQZRwQrLlQIz/mNT+tK8RnWbKUTSJ0uvEkwI6XLNiuFCsg+VxVQk=
-X-Gm-Gg: ATEYQzzRZlSGJYiKzINeNlG0t50ny5pwPt3dxB3br1VnTqdT3MahFAWhZlzYzqjT2X2
- x5bDy9wksruAUGEX91+OffADbmmS8U8sRxJpjLFo9Jq0VQkJQj/zdK9iW6/GjUd428T5AvMReAe
- YzYoXy186SQhdNK+HnZ3nTSBO5XeHYVMlFJddpvj3Pic1zgwOp9FR0z5tWWETw5EeAH+TTw8KSO
- F8/6OvGWGtPNWoSI8qAR/TQaV3r6/Z8Qs9IOxj6ayqtzFgETWv+fyDc5m+94D+EbGmRRZ75b1PR
- 72WgZUhaxj8RP61izsUzp+MWDY43PnZ/KqM2VZMket8wUG6lrIEAs5RJ8piwrac24+Q2UdarBGL
- B1/WaWkqzD89q2pizNqVzlJIKoRRRSfYwFn3A2E4zOOEFxGanxMNi9GaIqA1MQmect82DVaqzzk
- 9cw+P9rHWR3+sVLDUXrQ8eqWlIGAi9PaS6XcLKMqMbVoRMjSbqB7+jkkDCPbjBTcMiWvTo
-X-Received: by 2002:a17:90b:580c:b0:359:8df1:8553 with SMTP id
- 98e67ed59e1d1-35a21fd7ac6mr3106663a91.9.1773419048482; 
- Fri, 13 Mar 2026 09:24:08 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35a23d9f29fsm3021717a91.10.2026.03.13.09.24.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 09:24:08 -0700 (PDT)
-Message-ID: <41c86b41-9a24-4859-9611-75111aa33c29@linaro.org>
-Date: Fri, 13 Mar 2026 09:24:07 -0700
+ d=1e100.net; s=20251104; t=1773419276; x=1774024076;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=5dZ4ahfEdsN1/cO7MOlfzAYWoMq5q8WbafwlUN2pZ+E=;
+ b=FyJW3dCN3tom4wxv4/0McDqcWiPGXYl4ijsRdSYkqxWnGMmUZ+2AMd/NoOsq+7YmmV
+ nlYr7F0+r6hOIdip2YwEY9usTMWkiR5sR7CsajFSj4c5+ts5el6ksy35ail1nD8yhq2I
+ 4nxeGuESC4N7TRTCxSnE1/yMoQ1kuvHHbAZ5CPQnkFJh/uhiY80uBfEt9CC5FJMrAnwT
+ /HnGqm6I5kf24PsJkH7ypK4h92wDse3W9jg9RwCrHDM9vpJ1Z0XBpIW2qp7FzlBOfFqu
+ TMujbo4LFjc3/VqCBm69343VH6qQr+nUJ3FzmMGp3+CucNpSQVDMgA1lPl0rihYYIdKJ
+ Ns9A==
+X-Gm-Message-State: AOJu0YwviCpoB2risCM5QYjpU0LEhGREEU+71J3QB30Q1EhnrKaX/eIf
+ Ory4A+0cmVdsC8ax58KTGwn+D5kYUeeGcaKyXwSeQ65ejZ51O8e/jdHsIcxzcTVPmh5cGgzscd7
+ H5b/nim5dOCqEHWdlwojkvI7aIFOje3s2eiiDJHE7Qkm92EwlrKnPh4SxIaVoWOpn
+X-Gm-Gg: ATEYQzyiTsSsPfqJ5SEfJh1AdKggRNrct8lFSv+O6PXpILps7jkVEtwk4qTtUyqXLvC
+ Y+9oBl1mqi8YcvVNM1e9iHbvnO/kJRvwGPpXqNkIli5km7z6mntVaxwpe7AkODkx+EM8Ua7BE1+
+ ovx8Vndu/b7vfd+4UCFEO/D19E/BraOlsqx6fpkogPD4d5OrMRK9GuQvL4fSiOIFp6i1JslE7XO
+ C9syTKYN0oYrEFEGNGZF7RyySm1LV6HTPCRTjicNZxOWExxmRQ7sMQ7894IaFuxbrS7ohsC4rnF
+ TstLqdTGPzNEZYZv/p7V5J54VAdFWmP1d0CvtFsg51SyHrAI94v8j4LArI376SIz3rUt3SZ0KtY
+ SC0I8t2KO5E07Zw==
+X-Received: by 2002:a17:903:174e:b0:2ad:ab2c:d258 with SMTP id
+ d9443c01a7336-2aeca927705mr35227555ad.14.1773419276509; 
+ Fri, 13 Mar 2026 09:27:56 -0700 (PDT)
+X-Received: by 2002:a17:903:174e:b0:2ad:ab2c:d258 with SMTP id
+ d9443c01a7336-2aeca927705mr35227285ad.14.1773419276032; 
+ Fri, 13 Mar 2026 09:27:56 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2aece60e6f6sm26380185ad.28.2026.03.13.09.27.53
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Mar 2026 09:27:55 -0700 (PDT)
+Date: Fri, 13 Mar 2026 12:27:52 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Cc: qemu-devel@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, qemu-block@nongnu.org,
+ =?utf-8?B?U3TDqXBoYW5l?= Graber <stgraber@stgraber.org>,
+ Keith Busch <kbusch@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Fam Zheng <fam@euphon.net>, Klaus Jensen <its@irrelevant.dk>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v4 1/8] migration/vmstate: introduce
+ vmstate_{load,save}_field helpers
+Message-ID: <abQ7CLuJsWRLwoe5@x1.local>
+References: <20260313141221.359503-1-alexander@mihalicyn.com>
+ <20260313141221.359503-2-alexander@mihalicyn.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 02/38] target/ppc: Replace TARGET_PAGE_BITS ->
- qemu_target_page_bits()
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Anton Johansson <anjo@rev.ng>
-References: <20260313062055.2188-1-philmd@linaro.org>
- <20260313062055.2188-3-philmd@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260313062055.2188-3-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260313141221.359503-2-alexander@mihalicyn.com>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,16 +125,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 11:20 PM, Philippe Mathieu-Daudé wrote:
-> Get the target page bits at runtime.
+On Fri, Mar 13, 2026 at 03:12:14PM +0100, Alexander Mikhalitsyn wrote:
+> From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 > 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Let's introduce vmstate_{load,save}_field() helpers, they will
+> be used in next patches to support fully-dynamic arrays with NULLs.
+> 
+> Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+
+Feel free to rebase to Vladimir's series here, Fabiano already queued it:
+
+https://lore.kernel.org/all/20260304212303.667141-11-vsementsov@yandex-team.ru/#t
+
+These codes weren't touched that frequent, it's interesting to see such
+coinsidence happens. :)
+
 > ---
->   target/ppc/mmu-booke.c   | 3 ++-
->   target/ppc/mmu-hash64.c  | 3 ++-
->   target/ppc/mmu-radix64.c | 3 ++-
->   3 files changed, 6 insertions(+), 3 deletions(-)
+>  include/migration/vmstate.h |  4 ++
+>  migration/vmstate.c         | 84 +++++++++++++++++++++++--------------
+>  2 files changed, 56 insertions(+), 32 deletions(-)
+> 
+> diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> index 62c2abd0c49..5d7dfe70643 100644
+> --- a/include/migration/vmstate.h
+> +++ b/include/migration/vmstate.h
+> @@ -1240,8 +1240,12 @@ extern const VMStateInfo vmstate_info_qlist;
+>          .flags = VMS_END, \
+>      }
+>  
+> +int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
+> +                       const VMStateField *field, Error **errp);
+>  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>                         void *opaque, int version_id, Error **errp);
+> +int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
+> +                       const VMStateField *field, JSONWriter *vmdesc, Error **errp);
+>  int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+>                         void *opaque, JSONWriter *vmdesc, Error **errp);
+>  int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index 4d28364f7ba..8d192bcaa27 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -131,6 +131,32 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+>      }
+>  }
+>  
+> +int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
+> +                       const VMStateField *field, Error **errp)
+> +{
+> +    int ret = 0;
+> +
+> +    if (field->flags & VMS_STRUCT) {
+> +        ret = vmstate_load_state(f, field->vmsd, pv,
+> +                                 field->vmsd->version_id,
+> +                                 errp);
+> +    } else if (field->flags & VMS_VSTRUCT) {
+> +        ret = vmstate_load_state(f, field->vmsd, pv,
+> +                                 field->struct_version_id,
+> +                                 errp);
+> +    } else {
+> +        ret = field->info->get(f, pv, size, field);
+> +        if (ret < 0) {
+> +            error_setg(errp,
+> +                       "Failed to load element of type %s for %s: "
+> +                       "%d", field->info->name,
+> +                       field->name, ret);
+> +        }
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>                         void *opaque, int version_id, Error **errp)
+>  {
+> @@ -203,24 +229,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>                      inner_field = field;
+>                  }
+>  
+> -                if (inner_field->flags & VMS_STRUCT) {
+> -                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
+> -                                             inner_field->vmsd->version_id,
+> -                                             errp);
+> -                } else if (inner_field->flags & VMS_VSTRUCT) {
+> -                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
+> -                                             inner_field->struct_version_id,
+> -                                             errp);
+> -                } else {
+> -                    ret = inner_field->info->get(f, curr_elem, size,
+> -                                                 inner_field);
+> -                    if (ret < 0) {
+> -                        error_setg(errp,
+> -                                   "Failed to load element of type %s for %s: "
+> -                                   "%d", inner_field->info->name,
+> -                                   inner_field->name, ret);
+> -                    }
+> -                }
+> +                ret = vmstate_load_field(f, curr_elem, size, inner_field, errp);
+>  
+>                  /* If we used a fake temp field.. free it now */
+>                  if (inner_field != field) {
+> @@ -427,6 +436,29 @@ int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+>      return vmstate_save_state_v(f, vmsd, opaque, vmdesc_id, vmsd->version_id, errp);
+>  }
+>  
+> +int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
+> +                       const VMStateField *field, JSONWriter *vmdesc, Error **errp)
+> +{
+> +    int ret = 0;
+> +
+> +    if (field->flags & VMS_STRUCT) {
+> +        ret = vmstate_save_state(f, field->vmsd, pv, vmdesc, errp);
+> +    } else if (field->flags & VMS_VSTRUCT) {
+> +        ret = vmstate_save_state_v(f, field->vmsd, pv, vmdesc,
+> +                                   field->struct_version_id, errp);
+> +    } else {
+> +        ret = field->info->put(f, pv, size, field, vmdesc);
+> +        if (ret < 0) {
+> +            error_setg(errp,
+> +                       "Failed to save element of type %s for %s: "
+> +                       "%d", field->info->name,
+> +                       field->name, ret);
+> +        }
+> +    }
+> +
+> +    return ret;
+> +}
+> +
+>  int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                           void *opaque, JSONWriter *vmdesc, int version_id, Error **errp)
+>  {
+> @@ -528,19 +560,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+>                                        i, max_elems);
+>  
+> -                if (inner_field->flags & VMS_STRUCT) {
+> -                    ret = vmstate_save_state(f, inner_field->vmsd,
+> -                                             curr_elem, vmdesc_loop, errp);
+> -                } else if (inner_field->flags & VMS_VSTRUCT) {
+> -                    ret = vmstate_save_state_v(f, inner_field->vmsd,
+> -                                               curr_elem, vmdesc_loop,
+> -                                               inner_field->struct_version_id,
+> -                                               errp);
+> -                } else {
+> -                    ret = inner_field->info->put(f, curr_elem, size,
+> -                                                 inner_field, vmdesc_loop);
+> -                }
+> -
+> +                ret = vmstate_save_field(f, curr_elem, size, inner_field, vmdesc_loop, errp);
+>                  written_bytes = qemu_file_transferred(f) - old_offset;
+>                  vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
+>                                      written_bytes);
+> @@ -551,7 +571,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>                  }
+>  
+>                  if (ret) {
+> -                    error_setg(errp, "Save of field %s/%s failed",
+> +                    error_prepend(errp, "Save of field %s/%s failed: ",
+>                                  vmsd->name, field->name);
+>                      if (vmsd->post_save) {
+>                          vmsd->post_save(opaque);
+> -- 
+> 2.47.3
 > 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+-- 
+Peter Xu
+
 
