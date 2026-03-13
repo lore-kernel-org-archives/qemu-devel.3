@@ -4,85 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78806106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:34:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D80DA106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:35:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0w5x-0001Zn-6b; Fri, 13 Mar 2026 02:34:01 -0400
+	id 1w0w6y-0001wB-Ez; Fri, 13 Mar 2026 02:35:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0w5r-0001ZW-VE
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:33:57 -0400
-Received: from p-east2-cluster6-host1-snip4-4.eps.apple.com ([57.103.76.175]
- helo=outbound.st.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w0w5p-0002Hv-Po
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:33:55 -0400
-Received: from outbound.st.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPS id
- 09E0C18003A5; Fri, 13 Mar 2026 06:33:48 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773383631; x=1775975631;
- bh=oqHJmVL5UO/+df9bvn++wiKAs8rYpOs4NmIqtnESgvE=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=Ha9rt60Ru9CkPAZuFOPuv3+qcol8ajvoaYcJWjZiiOxb7bhcfqfVhonHFvHbhJQ+om6H2te27fqJQisoKLvaMRaVecMxRs2/LPQNM4wqLUc/gm+BSInxaxQvTyuWcozkUnEH6AI8e0KxjdUpEb9JEEBAQnoYiOQS0LQjrduNdS66+IIf78ewDSeX+U6po6pDwOgtdZK8z90HcQukmV+lk2oCH/2XyKcBQzo6FqdXErT512LEnigZFlAp+0fCzXakaVg8ZJ22mQIxO34v1LKasGfH9jrOZBsSsFEqFQTRMtxhQ2PQ8QJim5c5mfw9yopHKvaH2kKAkPGkdJGvyYMyog==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.42.251.67])
- by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPSA id
- 5BA581800109; Fri, 13 Mar 2026 06:33:47 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH v2 1/3] target/arm: add AArch64 ISV=0 instruction
- emulation library
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <20260313021850.42379-2-lucaaamaral@gmail.com>
-Date: Fri, 13 Mar 2026 07:33:35 +0100
-Cc: qemu-devel@nongnu.org,
- qemu-arm@nongnu.org,
- agraf@csgraf.de
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <D80C2CE1-DDA8-4627-8196-252DC8BF6BB6@unpredictable.fr>
-References: <20260309214852.92545-1-lucaaamaral@gmail.com>
- <20260313021850.42379-1-lucaaamaral@gmail.com>
- <20260313021850.42379-2-lucaaamaral@gmail.com>
-To: Lucas Amaral <lucaaamaral@gmail.com>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-ORIG-GUID: 6spvLzFyk5RvZTski4mm2ncj4mH7AQQf
-X-Authority-Info-Out: v=2.4 cv=eb0wvrEH c=1 sm=1 tr=0 ts=69b3afcd
- cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
- a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=BgHGX5qg4qM5eV3fwTMA:9
- a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MSBTYWx0ZWRfXzq5OcYYF50hT
- UwYkz7p7VWADtzdtsyPi1ovY6Zg4+VaqMGw+Y4ebhroHz7SzvCGB80NOBQnRToEUbZRtenDliTy
- 92B8ZKg6vmGhbLnFw4A9O6/wPk5rvUHHOPasr2dimzbMB2CtsGhcLcqR1+EmbkWNowYusuP8aHg
- 0wtUgpEWHRovVVcN3pDZTuQAMZ3zstWlwZGyixK7zUEkFPm3ExvUM499iFA7Py7L5thTj9wu9uK
- RdedHQp7Tzd1vEgxOxwsLmh55A9jjUS6bdsAy/Wd9gbgf7oDLGh6F2Lp9HwmfIIT6qBDSp47ZmN
- tYEtG1nyDWp0MdED986DHxlWII/0yuQNXwa4Z75wSCNiZFM2nVG230OKehj2ow=
-X-Proofpoint-GUID: 6spvLzFyk5RvZTski4mm2ncj4mH7AQQf
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-12_03,2026-03-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- bulkscore=0 mlxscore=0 adultscore=0 spamscore=0
- mlxlogscore=999 phishscore=0
- lowpriorityscore=0 suspectscore=0 clxscore=1030 classifier=spam authscore=0
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603130051
-X-JNJ: AAAAAAABwK8V5vWXzu5iKcv5/ZWGF2n8+TABDBUsRIMw1x5M3Ir8WNVStxKjQJZWLhblGDNpoWEEwLFddzg9LLM0vKhQ23x7TDM0GiJL/tUFmu05WuN3wL07ZHdUAdhkfwx6KeELrj3PVXmb+GvJMKh924MlmV1YiO8GEZ/tTGPZf0fCi9c+x79d47duUjl9jNE0NDbCkvcBcWrLGr6yoik1O40mFmPAF3L19xwKjLdrGjW83LX1cwWkZlCKbxlNnpQDESZjVco26RnMazWsjHFPevhOo1Q2hNOnH6D4J7Dxc4CfWOKfjNvmFDPCzujLny9bH+DrT8BJfBkmvlrLne2GG/rvthC5/PXsyzUm9txU7HDy0m5FIdUCFb3BPGwYcpFkKkqRxSk5JOZ/Cd7y8gBT9GWFBDmIgVNiQd89UMklnBkYHcgAEMi0bEftDEavalAQMlXgmSvjqbKkTqz988BuJvvscIt5KahFEFaYcCK3EimXoUjVY8eUh60kp6KjLuR0T6L1XR8492m5DswqTuaj9XtdnN3PfV+tjvyCwA6CTeMabaWhTLFRfBk9g1rA7bf5p6njrgwFlVW0oisZpXCt3e8wULlI29bLcx9VPJy5xp9BNxfEIf345qyBobayEgJ+uX8Edp5OOEzAErsKlp6oRXfRgBGxMwUi9ZPo30ZN3t6zEvdekqg=
-Received-SPF: pass client-ip=57.103.76.175;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0w6s-0001o0-2l
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:34:59 -0400
+Received: from mail-qt1-x82e.google.com ([2607:f8b0:4864:20::82e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w0w6k-0002M5-IT
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:34:52 -0400
+Received: by mail-qt1-x82e.google.com with SMTP id
+ d75a77b69052e-506aa685d62so9198641cf.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:34:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773383689; x=1773988489; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=8OfwNP/qb3YSvAtgcTdU1bHLQ4wSkJCKR03bN89V6b8=;
+ b=op3e0XdEDgLmvfGmFGjyUjNO9OwC8+PSYfQlFsLMcHaiUqGtxL/tgZov5LZ4zuQSoL
+ qgN9ax2Zbi/nQFcXkng7eLvIPzMJFKfkAHSB2e7j09AJvyqOlc68bWgmnl/dyn/g4FDn
+ eG2wNdAopz1r1qFGlK00bBI0FXMmFY3QDSFxkn/Lgg21JrXzRGPaFg8x6gXx+Jac/BeM
+ nzo/eQGUhMfigWvhsp8ZbJq1XrmrwIcnSCBMbknvtgBsYe5DXc5wQM1eBXcXGmx8hptA
+ hm+iwMMtmJYXuoT9t0aGbP7+byKf2dY7dnwTXRIOmWrC9XnnlSAgB6ngLOTPO9NpsrNS
+ GSTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773383689; x=1773988489;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=8OfwNP/qb3YSvAtgcTdU1bHLQ4wSkJCKR03bN89V6b8=;
+ b=RYKU7dTyg6q9zHo+wtSOjXen5d61Q4U+B210XpT5keX2F83KN1Y0ABVpU8cubjGWef
+ +eSWP0oEkBZImSDxHBW0mVT0segLkQSwqtIELtsvDj+RjHEt1/k7Vv8vQ2bIJW/Was3x
+ xWW3lNu2Ygac/A3i937rKINyR7O7wfE0392IOsqz7dVQ9PjyYrUojIjTudeu1po/UydW
+ gY+dzQzrtl+D//lE7wGmzKzzfSI4kb8+ojyNoU0uja9UCDy1Lp/NPRFpy4XeU0x3NTiI
+ nmX4QCeAIp2FlCFalwZxMvl09Y5mnOp/af/WqiU29uG5hhN8kP9noiWFlpGdGIG1+Grg
+ GbSA==
+X-Gm-Message-State: AOJu0Yz0k023omqHjqwd4VfXMqAbwt9rzn90LbdIQL+SJyUfwdQplxrA
+ 42U9xQNSPiaIgWYpeBp058qwXKLAgA40edSNrNVE+ev+ci7ZHIEFAx54O9MsTfBAosaD3mu9tEX
+ qWquzvQI=
+X-Gm-Gg: ATEYQzyL+kRmSaI/C9x7LKihPOsrI7Q49mu4Q3IVSr/mC0jmvDhCPmpNn13HOhwAM7I
+ 1whTWtXPL2oLjjaReoLUdzXRVpILwyGiHy/AmhHBEyzzHRou4ldyw2XTdvM1BthiPpCXx6jvT0f
+ IaywcmvKUg7WD/7zWdBzf3ICmMVnT4r3aefGVb6s2yUWt5Kn/sII9zpbkscF5DT9eVzt4uP3kF+
+ PSYCjoDQ7GcZYTQBMfULyoPhy8v90r9UJX/9Z63/vmxiBD4+VZADucaOk84y6jYY/BxoyF+S7Zj
+ Q8L64nwMKElBOFGqrbcGBzeX5KhWjlgGGGqAZ16W95UCOv7C4kdBr2kwU3PlMZ3dvKyk1mz1ClC
+ YpmA2jBAjRWyTXDFFeKWUE8kds9WdWtfiYwFOFM1fhsFMFl/HLsCp0ZY138tagDy2ve8sZ+2BVZ
+ nw9vdowgVFbMj3TdfTuhsUopk0JNElkmbVCZFBXwL2RcV7ZyAoejdHjNIC4sGgJyy5hZHqSnTKC
+ haP
+X-Received: by 2002:a05:622a:241:b0:509:1dc8:e9e9 with SMTP id
+ d75a77b69052e-50957e29a12mr27367161cf.52.1773383688759; 
+ Thu, 12 Mar 2026 23:34:48 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89a65bed85bsm49737556d6.17.2026.03.12.23.34.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 12 Mar 2026 23:34:48 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Honggyu Kim <honggyu.kp@gmail.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>
+Subject: [PATCH] contrib/plugins/uftrace.c: fix depth for exit events
+Date: Thu, 12 Mar 2026 23:34:41 -0700
+Message-ID: <20260313063441.2048882-1-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::82e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-qt1-x82e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,125 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Uftrace plugin was recording wrong depth for exit events, resulting in
+incoherent traces, especially for partial ones.
 
+Thanks to Honggyu Kim, one of the original author of uftrace, who
+spotted the issue.
+https://github.com/namhyung/uftrace/pull/2031#issuecomment-4051762627
 
-> On 13. Mar 2026, at 03:18, Lucas Amaral <lucaaamaral@gmail.com> wrote:
->=20
-> Add a shared emulation library in target/arm/emulate/ using a
-> decodetree decoder (a64-ldst.decode) and a callback-based interface
-> (struct arm_emul_ops) that any hypervisor backend can implement.
->=20
-> The hypervisor cannot emulate ISV=3D0 data aborts without decoding the
-> faulting instruction, since the ESR syndrome does not carry the access
-> size or target register.
->=20
-> Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
-[=E2=80=A6]
-> +/**
-> + * struct arm_emul_ops - hypervisor register/memory callbacks
-> + *
-> + * GPR reg 31 =3D SP (the XZR/SP distinction is handled internally).
-> + * Memory callbacks use guest virtual addresses.
-> + */
-> +struct arm_emul_ops {
-> +    uint64_t (*read_gpr)(CPUState *cpu, int reg);
-> +    void (*write_gpr)(CPUState *cpu, int reg, uint64_t val);
-> +
-> +    /* @size: access width in bytes (4, 8, or 16) */
-> +    void (*read_fpreg)(CPUState *cpu, int reg, void *buf, int size);
-> +    void (*write_fpreg)(CPUState *cpu, int reg, const void *buf, int =
-size);
-Hello,
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/uftrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-Can be good to have, but you should have a default implementation using =
-CPUState in an arm_helpers
-to not duplicate them across each backend. and then do an =
-if(ctx->ops->read_gpr) { use override } else { default }
-with a default implementation.
-
-> +
-> +    /* Returns 0 on success, non-zero on failure */
-> +    int (*read_mem)(CPUState *cpu, uint64_t va, void *buf, int size);
-> +    int (*write_mem)(CPUState *cpu, uint64_t va, const void *buf, int =
-size);
-> +};
-
-A memory access - especially one that will be emulated - can span =
-multiple (physical) pages under
-the hood. If everything is mapped you=E2=80=99re fine, but that=E2=80=99s =
-a bit depending on precious luck, especially
-as the AArch64 glibc does unaligned accesses on memcpy.
-
-On x86 side of things, was able to run Windows (NT) and Linux but not =
-Haiku, (the Hurd needs more complexity that I don=E2=80=99t even handle =
-yet for x86), and Win9x without handling such a fault case.
-
-And there are memory to memory instructions on the way (FEAT_MOPS) where =
-that=E2=80=99s even more likely to happen.
-The downside of read_mem/write_mem is even if you return a fault code, =
-you don=E2=80=99t know which one of the two pages
-(or more potentially for memory-to-memory instructions) raised the =
-fault.
-
-Made a design change away to an mmu_gva_to_gpa callback and not having =
-read/write ops anymore like this because of that factor (see =
-target/i386/emulate/x86_mmu.c x86_write_mem_ex/x86_read_mem_ex)
-
-Maybe you could keep a read_mem/write_mem matching those two on top of =
-mmu_gva_to_gpa for your unit tests. Or run those
-in a guest context as kvm-unit-tests does.
-
-Thank you,
-> +
-> +/**
-> + * arm_emul_insn - decode and emulate one AArch64 instruction
-> + *
-> + * Caller must synchronize CPU state and fetch @insn before calling.
-> + */
-> +ArmEmulResult arm_emul_insn(CPUState *cpu, const struct arm_emul_ops =
-*ops,
-> +                            uint32_t insn);
-> +
-> +#endif /* ARM_EMULATE_H */
-> diff --git a/target/arm/emulate/meson.build =
-b/target/arm/emulate/meson.build
-> new file mode 100644
-> index 0000000..29b7879
-> --- /dev/null
-> +++ b/target/arm/emulate/meson.build
-> @@ -0,0 +1,16 @@
-> +gen_a64_ldst =3D decodetree.process('a64-ldst.decode',
-> +    extra_args: ['--static-decode=3Ddecode_a64_ldst'])
-> +
-> +arm_common_system_ss.add(when: 'TARGET_AARCH64', if_true: [
-> +    gen_a64_ldst, files('arm_emulate.c')
-> +])
-> +
-> +# Static library for unit testing (links emulation code + decodetree =
-decoder)
-> +arm_emulate_test_lib =3D static_library('arm-emulate-test',
-> +    sources: [files('arm_emulate.c'), gen_a64_ldst],
-> +    dependencies: [qemuutil],
-> +    include_directories: include_directories('.'))
-> +
-> +arm_emulate_test =3D declare_dependency(
-> +    link_with: arm_emulate_test_lib,
-> +    include_directories: include_directories('.'))
-> diff --git a/target/arm/meson.build b/target/arm/meson.build
-> index 6e0e504..a4b2291 100644
-> --- a/target/arm/meson.build
-> +++ b/target/arm/meson.build
-> @@ -57,6 +57,7 @@ arm_common_system_ss.add(files(
->   'vfp_fpscr.c',
-> ))
->=20
-> +subdir('emulate')
-> subdir('hvf')
-> subdir('whpx')
->=20
-> --=20
-> 2.52.0
->=20
->=20
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index e3c65a1c930..f974090e23e 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -817,7 +817,8 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+     if (fp == caller.frame_pointer) {
+         /* return */
+         CallstackEntry e = callstack_pop(cs);
+-        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
++        /* uftrace convention is to use same depth as entry */
++        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs) + 1);
+         return;
+     }
+ 
+-- 
+2.47.3
 
 
