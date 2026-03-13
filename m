@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F3876106FD8B
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:24:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1241106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:24:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vwa-0001I4-Oi; Fri, 13 Mar 2026 02:24:20 -0400
+	id 1w0vwX-0000ma-CM; Fri, 13 Mar 2026 02:24:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwZ-00016U-Mn
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:19 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwS-0000Ue-DH
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:14 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwX-0007HD-Lc
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:19 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439b7c2788dso1119181f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:24:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwQ-0007GT-Tq
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:12 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-439bc14dcf4so2149857f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:24:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773383056; x=1773987856; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773383049; x=1773987849; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=99ck0rNhy9Odl9YN+puJD18uHAX/TuhY16Q8is+taGc=;
- b=Bi0eqUY2CEKGW/uOE99gjkZUzWvceihIjcIYYamH8eRX4UBIGev5By8PcvCxXLfeqS
- h+TWP3yVa/27W8x2vk8acq5oc9iXUv1oau/oEDPdfPX09UCJWreZlm6Plh+BUAAb6JKD
- /7e4fwe5wOHU1F7r5YDozrQiH832kVOOcT9CuysnN7m/ID5bwi5fXk+v400yHtwkHsA7
- bpeog3glFnEG9eqT/uk1B3v3PYRDUqeC0neHoPJk1YfRONAXWuF9pvWyX88VmmDOu4rz
- qL+0VoPttc8D0WPQs1tlSQ8pDEzzIYLAaXlP1tdJJwHkULlM2qQd8hD3Vc14DphPr5KG
- UETg==
+ bh=stChrtEuYE7rK1Pgfiihe+WTLBS5Q+FZKV/MIOJrgEM=;
+ b=BBi7v1GCaIzTaxZVGbzqueJdpvsBPgzopazqNAOUukpVoNKFn24cn64n1O1oTVGV9u
+ xZlLESvJJPljqx46PEw4RZ5U4lQ0PUKECyufrBF5mMmGR5qZiAmBFReJ7y60MOgX/Aaf
+ JW1o29d7AjO5fuiH3fwdVXI8Kc8qqRAYWft7Pj0gpX4tOR5aZPhUUW2qWrMRbAkZ18Cf
+ AldMl2jacLNLyGEVbDIZ+W4K+zaFgvRIkMZ4J2yjZHsVzaHH8W/QvBZT2NmxaRk39neD
+ mOOgRsJC/hEu00wpmPMIguVCYcDrFXdna7L/V4egMxLwwmSntQr1TLUGc5VVpryMVG8P
+ uO+A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773383056; x=1773987856;
+ d=1e100.net; s=20251104; t=1773383049; x=1773987849;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=99ck0rNhy9Odl9YN+puJD18uHAX/TuhY16Q8is+taGc=;
- b=HWyPe3qLY7f7/Ok9ZHwTQpjdavbtdE2KqTMnV2fGOCXo3/1L3hRZtAt9LimWdvXLeV
- pRSZrycu0rjCpMefa2nfVjJx02HGhTkXdfuTyTSrR78W5ApEVC1uaOeBSmHk+UrjAHbD
- wlzLAmm7Qo8eHp/RiSr8bCfgaLy1YNEmeZ86pCrmJMjPl5AkblEnpabOVNtMY+/mzl2M
- 5kdVDxjZnm2zlsNOI0vc8vXsl2JhktuGcFzSvqjMoFq+gdgzXv2QYo3UoB0DoXMD3TRK
- wOD1ib1tE6zK44QJnZogZN8WH1JtwNKGLN+bDdvkcuP54vcG2EyFY1E3Ay8NMka6o/1V
- iTag==
-X-Gm-Message-State: AOJu0Yxj69cTmLMVv6cQuIQF7mp+0zsYEBs3Q3gyOgf0faYWIXxmYUnT
- jAvDbTc06Ph3IHzVASD6F+xi3IhCcDWk7qwFv9DNYSaSNM3Buvyk/Equh7Ow61YFsmxzCCL91Rh
- vUHuhAtQ=
-X-Gm-Gg: ATEYQzxoVGzFz83eaDqcL89ZKYhI2Wl1he18IZ3bH4mQ7RjXDasK/XCspdX/Xcsnl6B
- jbr7WtbLE3mEBbZIYIv67sDJ1uI5vR3QLdH9Mt+MI8nx3cg/BBFCxLkyplAEg6o3R/sxd/f9Unc
- 0N24c+XGef8qyExZLfy3t4xgIcLmwhnOCIHTdWkdyuVWbkotN8EE52eOmDB6b72lRGrQ00eOMWT
- p88IN4x1ziXY7ecwHQu1tz5kvqX+E4bydIIvFT6d8pfcAJD4AdGNhrYf1fxFtPuhOpjLGryJ0Nd
- a2RD/YGVDVbr4OweW4EttKBKDu5Go3k4cogyqKZfr9upa/lU1FuSCyUGZuI4yO7CTd3fL019csH
- /J1c4EuNutkQ4qLcA7bhbFYE1YKn/sXIjMUrKAYJgAblHeF7ThOQClV5DXVtHi5RBmJSbj0HDcU
- hdKt+9hkUcPpPTkkkFjRsAnO6gv+n5b87DF1ywUUitKWKV4bUg9NvP/FZa0Zt2S5WMNMYjc7y9a
- 9Noyg==
-X-Received: by 2002:a05:6000:2c06:b0:439:b715:6f49 with SMTP id
- ffacd0b85a97d-43a04dceabbmr4204512f8f.59.1773383055813; 
- Thu, 12 Mar 2026 23:24:15 -0700 (PDT)
+ bh=stChrtEuYE7rK1Pgfiihe+WTLBS5Q+FZKV/MIOJrgEM=;
+ b=Tf1BtaeE8IcWTx3QeOhfnQfWgCsIa29vXAJIhd1pkCl3pa2tZjzy+z3Fo5kU4B2vjA
+ P89OjRwXIgMo7hVHY2Hucuv3N3ljGkKdzvVlSSNnGFUEG3g8UF7kriLQ892RnPCSVMms
+ kW0eEg3NeyGiloInbtMmlZWdBaz9T7CsIpu5uH2ZMh3HwYdDVrlmEj1+AtwffyOj4VDg
+ EvQlCZB6MMwbAlnuyC+QsoxRQ1UawUqsZnZVfJVXVA95c8/+zgWWQlh5KLjbCfBgaZuC
+ QoxJwG3a5z45k74IMg/iolDy6XS0iUcyVPGcKIqvZqEKVthKCwRdFuloJrOB2706abRq
+ oQRA==
+X-Gm-Message-State: AOJu0YzeQzTTZ9+4jFWEQDTrsJ+j0A0jPdZg26F0EPjTo/T8JPKOZqov
+ xgNcD9NPDhAsPyurG6ka/rLV3k7c+KWW5fvrEvfIs+w8rEpuF0+EzBM7SBzPBEEU9WnAuEsQpCJ
+ x85o67s8=
+X-Gm-Gg: ATEYQzyUhGkH/kE6Wm/EHLrjI3OwaNkvTzYlLrINQF/ArGJt1jKbD0LtbDlI/IjshXa
+ EqJ8vPGU9n5ukjDAPiP6EVGiqEYHvAWl5wPHuOeEOmMmFEGf4ZKLjG0G6bSOtSR/eXt99KhbDtP
+ s6HBNfpifQxeHTxkWEQCe2oCUSe/WxfGnW1lYDBpyiXrvd4BESEayzUPaQ0BJpehBBubKrrTFsG
+ S2MtGWYb7i2vaPDmA7Yb5+fejALLSmRXeFAia8oLHx8zS0MAqgfhEW1mD9a5eLCJH7+LduntnRQ
+ Rcxt/XVGdh/vPsbZYm/6Ki8xq9tIbe++RKw9Z3J0HZZGXtAUnOTMmsKFLY6IrYtgERQ1O7g8rc/
+ Cs7KaxyidP3tKnfnVHOnrDM4h6+Sb43gCKP10J/HusyXFUCTXM6ApFyfslNUbxt0kcSDyTYXJSO
+ tQIqvpgJ5Hbz1udCbvpRsxkht2g+NwZljwCDg0djfACvpFImZsksyie2IwUrrWt6l1SEHV6L0XJ
+ N614w==
+X-Received: by 2002:a05:6000:4011:b0:439:8d39:47c7 with SMTP id
+ ffacd0b85a97d-43a04daf776mr3749644f8f.18.1773383049113; 
+ Thu, 12 Mar 2026 23:24:09 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe20c473sm15019752f8f.24.2026.03.12.23.24.14
+ ffacd0b85a97d-439fe2273d9sm16721945f8f.34.2026.03.12.23.24.08
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:24:15 -0700 (PDT)
+ Thu, 12 Mar 2026 23:24:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 29/38] hw/ppc: Include full path to target 'cpu.h' header
-Date: Fri, 13 Mar 2026 07:20:45 +0100
-Message-ID: <20260313062055.2188-30-philmd@linaro.org>
+Subject: [PATCH v2 28/38] hw/or1k: Include full path to target 'cpu.h' header
+Date: Fri, 13 Mar 2026 07:20:44 +0100
+Message-ID: <20260313062055.2188-29-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,148 +105,64 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/ppc/pnv.h          | 2 +-
- include/hw/ppc/spapr_fadump.h | 2 +-
- hw/ppc/mpc8544_guts.c         | 2 +-
- hw/ppc/mpc8544ds.c            | 2 +-
- hw/ppc/ppc440_uc.c            | 2 +-
- hw/ppc/ppc4xx_devs.c          | 2 +-
- hw/ppc/ppc_booke.c            | 2 +-
- hw/ppc/prep_systemio.c        | 2 +-
- hw/ppc/spapr_vhyp_mmu.c       | 2 +-
- hw/ppc/virtex_ml507.c         | 2 +-
- 10 files changed, 10 insertions(+), 10 deletions(-)
+ hw/or1k/boot.c     | 2 +-
+ hw/or1k/cputimer.c | 2 +-
+ hw/or1k/or1k-sim.c | 2 +-
+ hw/or1k/virt.c     | 2 +-
+ 4 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/include/hw/ppc/pnv.h b/include/hw/ppc/pnv.h
-index 24f8843a409..5581ba0f683 100644
---- a/include/hw/ppc/pnv.h
-+++ b/include/hw/ppc/pnv.h
-@@ -20,7 +20,7 @@
- #ifndef PPC_PNV_H
- #define PPC_PNV_H
- 
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
- #include "hw/core/boards.h"
- #include "hw/core/sysbus.h"
- #include "hw/ipmi/ipmi.h"
-diff --git a/include/hw/ppc/spapr_fadump.h b/include/hw/ppc/spapr_fadump.h
-index 82681fb9a6a..778981bc95e 100644
---- a/include/hw/ppc/spapr_fadump.h
-+++ b/include/hw/ppc/spapr_fadump.h
-@@ -6,7 +6,7 @@
- #ifndef PPC_SPAPR_FADUMP_H
- #define PPC_SPAPR_FADUMP_H
- 
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
- 
- /* Fadump commands */
- #define FADUMP_CMD_REGISTER            1
-diff --git a/hw/ppc/mpc8544_guts.c b/hw/ppc/mpc8544_guts.c
-index 88ae573d1e8..3f2bbc0a511 100644
---- a/hw/ppc/mpc8544_guts.c
-+++ b/hw/ppc/mpc8544_guts.c
-@@ -20,7 +20,7 @@
- #include "qemu/osdep.h"
- #include "qemu/log.h"
- #include "system/runstate.h"
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
- #include "hw/core/sysbus.h"
- #include "qom/object.h"
- 
-diff --git a/hw/ppc/mpc8544ds.c b/hw/ppc/mpc8544ds.c
-index 582698559d2..6a5d3edc490 100644
---- a/hw/ppc/mpc8544ds.c
-+++ b/hw/ppc/mpc8544ds.c
-@@ -15,7 +15,7 @@
- #include "hw/ppc/openpic.h"
- #include "qemu/error-report.h"
- #include "qemu/units.h"
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
- 
- static void mpc8544ds_fixup_devtree(void *fdt)
- {
-diff --git a/hw/ppc/ppc440_uc.c b/hw/ppc/ppc440_uc.c
-index 0f28a7937fb..634046506e8 100644
---- a/hw/ppc/ppc440_uc.c
-+++ b/hw/ppc/ppc440_uc.c
-@@ -19,7 +19,7 @@
- #include "hw/pci/pci.h"
- #include "exec/cpu-common.h"
- #include "system/reset.h"
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
- #include "ppc440.h"
- 
- /*****************************************************************************/
-diff --git a/hw/ppc/ppc4xx_devs.c b/hw/ppc/ppc4xx_devs.c
-index 1e6b6fec5da..ae1ac4f4672 100644
---- a/hw/ppc/ppc4xx_devs.c
-+++ b/hw/ppc/ppc4xx_devs.c
-@@ -23,7 +23,7 @@
+diff --git a/hw/or1k/boot.c b/hw/or1k/boot.c
+index c18f4a6a9fc..714634b5f3f 100644
+--- a/hw/or1k/boot.c
++++ b/hw/or1k/boot.c
+@@ -7,7 +7,7 @@
   */
  
  #include "qemu/osdep.h"
 -#include "cpu.h"
-+#include "target/ppc/cpu.h"
- #include "hw/ppc/ppc4xx.h"
- #include "hw/core/qdev-properties.h"
- #include "qapi/error.h"
-diff --git a/hw/ppc/ppc_booke.c b/hw/ppc/ppc_booke.c
-index 7c6e5df9fde..052c8c931ae 100644
---- a/hw/ppc/ppc_booke.c
-+++ b/hw/ppc/ppc_booke.c
-@@ -23,7 +23,7 @@
-  */
- 
- #include "qemu/osdep.h"
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
++#include "target/or1k/cpu.h"
+ #include "exec/cpu-defs.h"
  #include "exec/target_page.h"
- #include "hw/ppc/ppc.h"
- #include "qemu/timer.h"
-diff --git a/hw/ppc/prep_systemio.c b/hw/ppc/prep_systemio.c
-index bc8b0964e75..5cd18a9e123 100644
---- a/hw/ppc/prep_systemio.c
-+++ b/hw/ppc/prep_systemio.c
-@@ -33,7 +33,7 @@
- #include "qemu/error-report.h" /* for error_report() */
- #include "qemu/module.h"
- #include "system/runstate.h"
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
- #include "trace.h"
+ #include "elf.h"
+diff --git a/hw/or1k/cputimer.c b/hw/or1k/cputimer.c
+index 51da226fcde..b35411aa1e1 100644
+--- a/hw/or1k/cputimer.c
++++ b/hw/or1k/cputimer.c
+@@ -19,7 +19,7 @@
+  */
  
- #define TYPE_PREP_SYSTEMIO "prep-systemio"
-diff --git a/hw/ppc/spapr_vhyp_mmu.c b/hw/ppc/spapr_vhyp_mmu.c
-index 2d41d7f77b7..9cc3aeb2a29 100644
---- a/hw/ppc/spapr_vhyp_mmu.c
-+++ b/hw/ppc/spapr_vhyp_mmu.c
-@@ -11,7 +11,7 @@
- #include "qemu/cutils.h"
- #include "qemu/memalign.h"
+ #include "qemu/osdep.h"
+-#include "cpu.h"
++#include "target/or1k/cpu.h"
+ #include "migration/vmstate.h"
+ #include "qemu/timer.h"
+ #include "system/reset.h"
+diff --git a/hw/or1k/or1k-sim.c b/hw/or1k/or1k-sim.c
+index f1b1f63274b..b55105cd148 100644
+--- a/hw/or1k/or1k-sim.c
++++ b/hw/or1k/or1k-sim.c
+@@ -21,7 +21,7 @@
+ #include "qemu/osdep.h"
  #include "qemu/error-report.h"
+ #include "qapi/error.h"
 -#include "cpu.h"
-+#include "target/ppc/cpu.h"
- #include "helper_regs.h"
- #include "hw/ppc/spapr.h"
- #include "mmu-hash64.h"
-diff --git a/hw/ppc/virtex_ml507.c b/hw/ppc/virtex_ml507.c
-index 51b3d7d7121..d10d9135890 100644
---- a/hw/ppc/virtex_ml507.c
-+++ b/hw/ppc/virtex_ml507.c
-@@ -26,7 +26,7 @@
- #include "qemu/datadir.h"
- #include "qemu/units.h"
- #include "exec/page-protection.h"
--#include "cpu.h"
-+#include "target/ppc/cpu.h"
- #include "hw/core/sysbus.h"
++#include "target/or1k/cpu.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/boards.h"
  #include "hw/char/serial-mm.h"
- #include "hw/block/flash.h"
+diff --git a/hw/or1k/virt.c b/hw/or1k/virt.c
+index 39f54058ab3..2ff5c084a2b 100644
+--- a/hw/or1k/virt.c
++++ b/hw/or1k/virt.c
+@@ -10,7 +10,7 @@
+ #include "qemu/error-report.h"
+ #include "qemu/guest-random.h"
+ #include "qapi/error.h"
+-#include "cpu.h"
++#include "target/or1k/cpu.h"
+ #include "system/address-spaces.h"
+ #include "hw/core/irq.h"
+ #include "hw/core/boards.h"
 -- 
 2.53.0
 
