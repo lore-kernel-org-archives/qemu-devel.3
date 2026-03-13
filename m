@@ -4,84 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73216106FD89
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:24:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 630A1106FD89
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vwM-0000R5-QM; Fri, 13 Mar 2026 02:24:10 -0400
+	id 1w0vwI-0000Jp-3q; Fri, 13 Mar 2026 02:24:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwD-0000HI-TZ
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:01 -0400
-Received: from mail-wr1-x430.google.com ([2a00:1450:4864:20::430])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vw7-00005n-J0
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:23:51 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwC-0007FD-68
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:23:57 -0400
-Received: by mail-wr1-x430.google.com with SMTP id
- ffacd0b85a97d-439d8df7620so1319799f8f.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:23:55 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vw0-0007Dz-Cw
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:23:51 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48541edecf9so18700515e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:23:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773383034; x=1773987834; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773383021; x=1773987821; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P+qQtMF7p2qJQOP6KNVbyTbfqwpnIfur08mXAwzwoRw=;
- b=RoegTEEWrhdjWEjsp+D9hZRDmceWwl8w5mZ958gJTcjSLsvEVh5PhClJAiB01bHb4L
- fu9oYrt9NrT0NPjHOhVdGi594SNV54pOUt2wdb4P6GdD9L9DN+OsaX0tNNIVqsVjgzD7
- kRF35+4s1TVCZSUU19Ronb4m/pR1wTKAPlCHpoGdVXYWreNvK+8j/sov33DSG5G/yhxZ
- ZPCEGnKi461+800du+wCXoMncPjpEzngYXTNapsA62x0kYs1tctMxHTtSvCBV7bLwmZn
- oW6Q2ZzH7xP8tW+U2d4o33AGNwdLAoPsRTGoo7mrM+UPujM++5tQ3Th0jJw9pkwpcGoX
- xPiQ==
+ bh=8Ujva1C4esbGqaWwr4Zai0iO4SD/zstCnPI43jRsjM8=;
+ b=xwxuJPH9quNH8T4naofcDfgo1A7uA/+BADxGE56EwYffX+0z5g6TtaW9UCxVlgTJxA
+ ziOjtBlwNRPbBAHzjXHWRH3aLbKwHdh5yqHowSC3V7EswQflAJPX4hYvsqhufu6hW4cA
+ XNmKBDO+GjKnZV5vNeThh1gyyC7ygKtvN5UoYhtEgKwh9kh6IsdIS0x+rBHO9/fed2uy
+ He+SzA+/yQqzN0f7QshXEofQKWsg39E6GsiWP7suzuMC3HY8fdwp9bra+OAcFT38U8+P
+ cOPtrvN+qOOmP9HepD4ia9bUEGn1CwOu/q1v6K2Q4OiNNycBGqnQWi99IJ8PegfHOZnF
+ M47A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773383034; x=1773987834;
+ d=1e100.net; s=20251104; t=1773383021; x=1773987821;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P+qQtMF7p2qJQOP6KNVbyTbfqwpnIfur08mXAwzwoRw=;
- b=KxzqXP2G19aV53Ux9zTjw4bkVrkpOMmeiTUj578ToVGwcbqq9950LJXNrgX66PhIgf
- 7SH9ptZ2tx4Ald2EnICINT5C6+F6jAYtCU36b+DsAi270oRKZoT57/6e4iUbbtW+E63t
- onenQ4RbM2EClscz6g5FrqhhD9Fj973IrjeTnjjaMaDvXrJxo8kL+mpEcx5Mnr55a4Nk
- seCAMg3zenU0FWOedKDGWxGM2epn8F0AFKT99cz1im5c00E0aH4JGSflzlit/gwNbdWc
- TxC9PJK7jgjg2OG1Z7s9/ZymQf38BpN/aLzX0LsCJCBrtLw45Uvwd/rP/SfHLfaVdxka
- yBhg==
-X-Gm-Message-State: AOJu0Yyn5AQf0bCKWk5dhmVY4rbvr7RcNuUoBaT3O+pY+DnlmnNnBmN9
- uE3IjYpVCimak5UnwmfiwyJgVMCLwOHEla+vvNQ36oVi0a+Z3w4tn8BXDTPVhrIopL7m8TBZPtP
- n45eMgEM=
-X-Gm-Gg: ATEYQzz41GdGsH96dPstDqA/PiMR7+tUJDWlzleN6BTJVb7t5XSoNCT+ZRkDe6wijh6
- 4NNOzk72B7mada0UqIp9oc00t9NT6edZn8JgQIbXIjlOwpT2ZKPaWpdgdX/SU/NrcUUV/Jp9ehb
- yJ14OcfyaOAE4sUez1qQAOWOuo78rGzwF2rNU30fCUFkVLCV0qRUWp4FqhNb//AQZQHMx+Dyi6c
- SDmo/RH6X9HTd7u2LRUGHihqSXxba9+w0WvWxDsuwyDAfXjmy9P5SWclp65hcZjYExRljjpA+oQ
- npzer9/RpaMH0TV21S//cuCHC3pZ5SCb7pDXbQ+JNPmh478XRX7glgtXa6QyuKwMveSfEP0XfuG
- aQG7rYoGtVbIF5xX2wEQNY9yc9mD1E7tkT+c6JsSh4+gnx0mNAJD3NEGjIa/g7ELssWGEYhVgDr
- 1MlYZ8t/M3EQAh/lekGdlgwwRaC3hwVw/nlYmO2iEqFcCv+Iu9rfmT5N2wyuFEefjYk94lWHJhs
- fs7tWAMjE4e48NR
-X-Received: by 2002:a05:6000:4205:b0:439:be04:13c4 with SMTP id
- ffacd0b85a97d-43a04d8679cmr3844766f8f.4.1773383034331; 
- Thu, 12 Mar 2026 23:23:54 -0700 (PDT)
+ bh=8Ujva1C4esbGqaWwr4Zai0iO4SD/zstCnPI43jRsjM8=;
+ b=BXl8FOJtuuP+fbg1eUAMmTxnwPnBJ1BbVN8HhWVJ+IWAJNIIzktOQi3nNG+VTcXf8V
+ RTGMdQCTerum7T7DrU8mx7Lr6B/9wfBMVJH1VpxVK0JBwn2vR20L3BJLloSF5GZa4tAp
+ V8kkBjpsIFvwNMaQaJOyhV30sktNstcvlVKGCt2TLrguTzMUCXA4gZbleYE0zxQJBA5T
+ 5B7nhIyBQ6qPL0jygytsnWUzUWnT0JtcImCAdRv65ogfYYwQwRPDwtBbGkz16wZAyTWn
+ 4kTthrRXPrK+UW26k/xzXzFkw8HDradOSjY3f29gOH/jvn2AxKoqQZHFh425rf6XqAUf
+ dcvg==
+X-Gm-Message-State: AOJu0Ywz8pPJBuGYQjXq/caRgDPYvMKlInci6Fr+cM/pyM76Plpxgpo7
+ gxoCUaDg6jDybtbR6RDVBfjaznB3yjnnEHIbrPjCYGN9Uz8+b4ByC19AX11xDOMRaAvQX+OYkS5
+ kM9WzdB0=
+X-Gm-Gg: ATEYQzw6Awe59f2lQ48Qm0eyIod057NDcMQ85UDiXmCRCjIcaNqLBN54+Z7rl9KRBVk
+ aUSp2dVj3ODVzkePhMjt/187Ng/aWluRxOwMWWxZhnHrA/5/T5t6zdwaKYyfYKCmb/CUsa05EBu
+ 6+Mt6axbvWBxbzVY63grs3tYBWCJSV+6jXnnvpBJHW3LXUuN2UdaDsO/D3yxUuv1TuVKS7dQRVg
+ gc37II1i7I0o3juuQQ+bnOgfUmrE7/k3jTM6pDBG97ANMw68C8DQzXsGgFDyeIE0oazJ7BoRHYE
+ 1LoEyVWfMsgXajhCqz8ABMw+HREUDzgxcbYdEmDSUsxbd1jDJ/azm4y8Mp4JUSnrcGmRB4pXnpX
+ usuQ3x6XoJILMFb91mQn7dCnKobbRZTCK+GMKzvBRSfgwV4FkcDuNl5lx2p91FmyliqTS5UgxoM
+ AqZwopmE5DkUnv2vRZrMWOaX3dg0lVqc/E22iEwIgSJ6vzTEQZDDGUB2R4DkNCn4BOq0fvpq7AC
+ oxrS+KM7x4d9tt+
+X-Received: by 2002:a05:600c:3552:b0:485:46fd:100a with SMTP id
+ 5b1f17b1804b1-4855670299dmr27922075e9.25.1773383020726; 
+ Thu, 12 Mar 2026 23:23:40 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe1abf84sm14054176f8f.14.2026.03.12.23.23.53
+ 5b1f17b1804b1-4854b5f6bb4sm180544445e9.4.2026.03.12.23.23.39
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:23:53 -0700 (PDT)
+ Thu, 12 Mar 2026 23:23:40 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 26/38] hw/microblaze: Include full path to target 'cpu.h'
- header
-Date: Fri, 13 Mar 2026 07:20:42 +0100
-Message-ID: <20260313062055.2188-27-philmd@linaro.org>
+Subject: [PATCH v2 24/38] hw/i386: Include full path to target 'cpu.h' header
+Date: Fri, 13 Mar 2026 07:20:40 +0100
+Message-ID: <20260313062055.2188-25-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::430;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x430.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,64 +105,78 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/microblaze/boot.c                     | 2 +-
- hw/microblaze/petalogix_ml605_mmu.c      | 2 +-
- hw/microblaze/petalogix_s3adsp1800_mmu.c | 2 +-
- hw/microblaze/xlnx-zynqmp-pmu.c          | 2 +-
- 4 files changed, 4 insertions(+), 4 deletions(-)
+ include/hw/i386/apic_internal.h | 2 +-
+ hw/i386/multiboot.c             | 2 +-
+ hw/i386/pc_sysfw_ovmf.c         | 2 +-
+ hw/i386/vmmouse.c               | 2 +-
+ hw/isa/lpc_ich9.c               | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
-index a6f9ebab90c..b4a80b042b8 100644
---- a/hw/microblaze/boot.c
-+++ b/hw/microblaze/boot.c
-@@ -26,7 +26,7 @@
+diff --git a/include/hw/i386/apic_internal.h b/include/hw/i386/apic_internal.h
+index 0cb06bbc76c..a26d53bb9d9 100644
+--- a/include/hw/i386/apic_internal.h
++++ b/include/hw/i386/apic_internal.h
+@@ -21,7 +21,7 @@
+ #ifndef QEMU_APIC_INTERNAL_H
+ #define QEMU_APIC_INTERNAL_H
+ 
+-#include "cpu.h"
++#include "target/i386/cpu.h"
+ #include "hw/i386/apic.h"
+ #include "system/memory.h"
+ #include "qemu/timer.h"
+diff --git a/hw/i386/multiboot.c b/hw/i386/multiboot.c
+index 0e960a15dda..d544b62afbd 100644
+--- a/hw/i386/multiboot.c
++++ b/hw/i386/multiboot.c
+@@ -24,7 +24,7 @@
  
  #include "qemu/osdep.h"
- #include "qemu/datadir.h"
--#include "cpu.h"
-+#include "target/microblaze/cpu.h"
  #include "qemu/option.h"
- #include "qemu/config-file.h"
- #include "qemu/error-report.h"
-diff --git a/hw/microblaze/petalogix_ml605_mmu.c b/hw/microblaze/petalogix_ml605_mmu.c
-index b3bdc4d65f2..8f9f54ff1e2 100644
---- a/hw/microblaze/petalogix_ml605_mmu.c
-+++ b/hw/microblaze/petalogix_ml605_mmu.c
-@@ -28,7 +28,7 @@
- #include "qemu/osdep.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
 -#include "cpu.h"
-+#include "target/microblaze/cpu.h"
- #include "hw/core/sysbus.h"
- #include "net/net.h"
- #include "hw/block/flash.h"
-diff --git a/hw/microblaze/petalogix_s3adsp1800_mmu.c b/hw/microblaze/petalogix_s3adsp1800_mmu.c
-index 0c9a6bf2529..c5f64319009 100644
---- a/hw/microblaze/petalogix_s3adsp1800_mmu.c
-+++ b/hw/microblaze/petalogix_s3adsp1800_mmu.c
++#include "target/i386/cpu.h"
+ #include "hw/nvram/fw_cfg.h"
+ #include "multiboot.h"
+ #include "hw/core/loader.h"
+diff --git a/hw/i386/pc_sysfw_ovmf.c b/hw/i386/pc_sysfw_ovmf.c
+index da947c3ca41..196eb0c83ed 100644
+--- a/hw/i386/pc_sysfw_ovmf.c
++++ b/hw/i386/pc_sysfw_ovmf.c
 @@ -27,7 +27,7 @@
- #include "qemu/target-info.h"
- #include "qemu/units.h"
- #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "hw/i386/pc.h"
+ #include "exec/target_page.h"
 -#include "cpu.h"
-+#include "target/microblaze/cpu.h"
- #include "hw/core/sysbus.h"
- #include "net/net.h"
- #include "hw/block/flash.h"
-diff --git a/hw/microblaze/xlnx-zynqmp-pmu.c b/hw/microblaze/xlnx-zynqmp-pmu.c
-index f4c55589b7f..00154236bf8 100644
---- a/hw/microblaze/xlnx-zynqmp-pmu.c
-+++ b/hw/microblaze/xlnx-zynqmp-pmu.c
-@@ -19,7 +19,7 @@
- #include "qapi/error.h"
- #include "system/address-spaces.h"
- #include "hw/core/boards.h"
--#include "cpu.h"
-+#include "target/microblaze/cpu.h"
- #include "boot.h"
++#include "target/i386/cpu.h"
  
- #include "hw/intc/xlnx-zynqmp-ipi.h"
+ #define OVMF_TABLE_FOOTER_GUID "96b582de-1fb2-45f7-baea-a366c55a082d"
+ 
+diff --git a/hw/i386/vmmouse.c b/hw/i386/vmmouse.c
+index c1aeeca0c9a..20ebb0dbbf6 100644
+--- a/hw/i386/vmmouse.c
++++ b/hw/i386/vmmouse.c
+@@ -29,7 +29,7 @@
+ #include "hw/input/i8042.h"
+ #include "hw/core/qdev-properties.h"
+ #include "migration/vmstate.h"
+-#include "cpu.h"
++#include "target/i386/cpu.h"
+ #include "qom/object.h"
+ 
+ #include "trace.h"
+diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
+index 51dc680029d..9cec18a378c 100644
+--- a/hw/isa/lpc_ich9.c
++++ b/hw/isa/lpc_ich9.c
+@@ -30,7 +30,7 @@
+ 
+ #include "qemu/osdep.h"
+ #include "qemu/log.h"
+-#include "cpu.h"
++#include "target/i386/cpu.h"
+ #include "qapi/error.h"
+ #include "qapi/visitor.h"
+ #include "qemu/range.h"
 -- 
 2.53.0
 
