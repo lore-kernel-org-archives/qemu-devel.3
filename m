@@ -4,128 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4CA3106FD9D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 08:33:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D98B4106FD9A
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 08:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0xwm-0007Iu-DV; Fri, 13 Mar 2026 04:32:42 -0400
+	id 1w0xzx-00089Z-Oj; Fri, 13 Mar 2026 04:35:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0xwf-0007Gq-Mc
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:32:33 -0400
-Received: from mail-qv1-xf29.google.com ([2607:f8b0:4864:20::f29])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0xwd-0003vK-OM
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:32:33 -0400
-Received: by mail-qv1-xf29.google.com with SMTP id
- 6a1803df08f44-899fb030812so27180046d6.2
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 01:32:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773390750; x=1773995550; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=Eh6IRUepxclXFelwPyRG7T0J4onKkZMI/jqyv3PlzJc=;
- b=fo4iRFZy/6TM/YzwwaOb74K1f8dds2sw7KCoK1ScBHNd7MxED//rmYliT56ewdg1Uk
- 28sKrQGTK63miyy0yRYzSxCSBY8tmmr5YxjpGdwSb/u44lTOpi+VUBDFU1C0WhtVFBgX
- Bl35dSrEYlOSHBUUh3LLQqDpQCCRIUK40bMhATaBkIY4MjEe7rVIRMRDrA+sdHa9g+5v
- x0tpF8kk3Xac5mYJ211RQaOVnHXUnJISi89O6wErM85kGFy1GPihFu32Gierba9+8FGU
- SUNPbrAN2BVOfAb0ApSr7dLjuHbB0QflcADwzhndGqpsqokkQ03OnkNm96A3P3PJPSgw
- aC/w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773390750; x=1773995550;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=Eh6IRUepxclXFelwPyRG7T0J4onKkZMI/jqyv3PlzJc=;
- b=VLta1gDbvP50dFcwAMDepSneAUL9qSN7DPiBXJoLkU2UDoJ11sICC0zgfsK9clQvnb
- F0BLywDpl8ZQXbxV5qOjdqVCwQftfvTCl8kd2YaRt8asqvNp4tjh3mksUbaUz30wBQtM
- S47QMetSw6nxnSCP2lOgwxSelvPqGyYo9GIasuIa1K283Pdz7udySANWg2sPgMZIoH81
- Pmjql2Sv4tFeQFQibprtK2xcGCDiZscLsdPXcFRgKj5A4bxvBp2Kmsw4cYHfNXfHaFnJ
- K2HBtM0WgJ9uZAFuPx+LIAhQfsCWMfYRUHBLb/N0xTrascchXgz+MonT7T2spmCKwpob
- Woxg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVlRr0AKLvHBjN0v+sQM5iBNJZhmrT7ahfmFretX+jie28po7BgNBQeOXM0e8NxfnjY9FLpemAZvlUu@nongnu.org
-X-Gm-Message-State: AOJu0YzHXN1xwdAfEMrD0cI6M7jzJETckFfUVrImoKUMjdzAF/n0VitS
- y9r49Xnc9HtrAjC2id0S+uVYKy7P4mT78VgQy1YEtXI57PhfwIAm5UJrIeXyypILh0Y=
-X-Gm-Gg: ATEYQzwOdweTnKAftS/ukF2pkPl3bimWVtf9CJ3SAP/hwU46GceUbQbU/IyW2PR/WrD
- 8Kq8Okwjid/siJfWQa2eiCaTujK15Puh6YeV+Q1SJEZ6CJ+J7EUTmNbJ8OLi/3826Yx1SHdYW+P
- xRbBAotMYjq5a316Ym8u/yS3nTIirKT+VA3VtU9lwdqxZKNla1StvK+hbj59B7RF2ni+tRVE4hq
- MIIYPhddTbrcokBtDXdCLGbU6Mo2cojBc3YcOR1W1WdY/lv27cQGbogsOnStnJitNbJQmiuXavs
- FSC21aERqdU6DZfHkqkKy3eCOKmgHGaIwzU0inmRsEibb9fmgHCEZ6EsnHlCKazqsoNTbRSuJiq
- aNJvsV+gPAmI+VA9ZyEwmPzuY2Oklus2qvdMcYdEiovqZ6cakzPkb8qcXE4w7lQTeDfLdRnfAIS
- 2a9D88/VgspRRNF6n6VwViluGFoRavBEIvf7mt2ZS2E2zP6XrvUTYJEVQEQ37l2ipQ+Q8o
-X-Received: by 2002:a05:6214:411e:b0:899:f9f5:979b with SMTP id
- 6a1803df08f44-89a81dc6e4emr37016756d6.22.1773390750232; 
- Fri, 13 Mar 2026 01:32:30 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a65ce34a0sm51625366d6.32.2026.03.13.01.32.28
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 01:32:29 -0700 (PDT)
-Message-ID: <901ee0a3-a70f-4fb3-8102-554fdd550941@linaro.org>
-Date: Fri, 13 Mar 2026 01:32:28 -0700
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1w0xzu-00086Q-J3
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:35:54 -0400
+Received: from mail-northcentralusazon11013066.outbound.protection.outlook.com
+ ([40.107.201.66] helo=CH4PR04CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <FangSheng.Huang@amd.com>)
+ id 1w0xzs-0004Vt-9S
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 04:35:54 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=B+GUuFf3zj2+XQGZtc56BVw5XMen+2lheU6h1R4TzbxeC74TShJ5xQ84FL3IfyuIrBieYtFZWIJGLcWmd5id6N9A3CyPJxv8Eov+LKlgx6xF4cqKawwlliGjps/vEJpDMAznkidolsh3e79MvAt863IlmjJIt44HpwNEMs2bVKy+H6lQIWdCBcsazoAMBlj7tsE8zFeJ/EL29dWiYEKewW8raCRUhIEwoOciSH0lrwOY75y5+6vFiER6XAGQvF5EkdcVOoyRuzdygEMpqRnzwpjgJUcyJUQyRgodXBX8H1GzeXWDnoJiYH1laPOUWUKWYs9M/01XY3YeQdVo0HAs/g==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nQA4QJOW6fX64TweTzJMwBR9suOdIx6nNvjnPTXBjLQ=;
+ b=lMhsfAyNLP+eTDLz5LbZvOnDfNc1YTSErzE5tPMncES3mVKlx+PdX3CCWimeUxpNcJxQG05h4OkzJLwmPIjhRdlB8wYHsbTSa5w/dv3ql7m9EiQ/rhoqsLPDvJ0H2RHO5/1A8s8dlpufRn7eGR3kS+fNNdeGSLoiLV3eItU70asKoO5MUykIwlYLT+slgf4NB/5tUU2QheeeEQ4lnkKiZFcfiQ5j9K4jLj9Sd1sTo2xvGfK/tC3QHKss0TELgawPjdIyIg+PFLydJIwPy2QHiD/LbA3a8r7SxqXGXwn4xr5/RGeBxPm9Ru0oYVyazqY3fh+nJ6XTW9p8ltl7uhJjgg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
+ 165.204.84.17) smtp.rcpttodomain=nongnu.org smtp.mailfrom=amd.com; dmarc=pass
+ (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
+ dkim=none (message not signed); arc=none (0)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nQA4QJOW6fX64TweTzJMwBR9suOdIx6nNvjnPTXBjLQ=;
+ b=0nOqh+uj6HPmSXuJ+i2AbHowyrK0qDTJq+WmffKEXb4DoGIiKu7xRBQl/ZBDHencBCAk9cziL3eMuuvTMXpi/doS1R4/4UNy5p+q+BkdhOH64P9NAorwMFuXkvKm/R1OzfDnl5uTfor69hfEym6keZuHoa8N6mRWU/KLZb6B5hQ=
+Received: from BYAPR07CA0054.namprd07.prod.outlook.com (2603:10b6:a03:60::31)
+ by CY3PR12MB9608.namprd12.prod.outlook.com (2603:10b6:930:102::7)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.6; Fri, 13 Mar
+ 2026 08:30:44 +0000
+Received: from SJ1PEPF00002327.namprd03.prod.outlook.com
+ (2603:10b6:a03:60:cafe::b1) by BYAPR07CA0054.outlook.office365.com
+ (2603:10b6:a03:60::31) with Microsoft SMTP Server (version=TLS1_3,
+ cipher=TLS_AES_256_GCM_SHA384) id 15.20.9678.27 via Frontend Transport; Fri,
+ 13 Mar 2026 08:30:43 +0000
+X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
+ smtp.mailfrom=amd.com; dkim=none (message not signed)
+ header.d=none;dmarc=pass action=none header.from=amd.com;
+Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
+ 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
+ client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
+Received: from satlexmb07.amd.com (165.204.84.17) by
+ SJ1PEPF00002327.mail.protection.outlook.com (10.167.242.90) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.9700.17 via Frontend Transport; Fri, 13 Mar 2026 08:30:43 +0000
+Received: from satlexmb08.amd.com (10.181.42.217) by satlexmb07.amd.com
+ (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Fri, 13 Mar
+ 2026 03:30:42 -0500
+Received: from [10.65.97.79] (10.180.168.240) by satlexmb08.amd.com
+ (10.181.42.217) with Microsoft SMTP Server id 15.2.2562.17 via Frontend
+ Transport; Fri, 13 Mar 2026 03:30:40 -0500
+Message-ID: <4609b0dc-4510-48c7-8190-e8fd5c53b658@amd.com>
+Date: Fri, 13 Mar 2026 16:30:20 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/8] hw/vfio: single-binary
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: philmd@linaro.org, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-ppc@nongnu.org, Richard Henderson <richard.henderson@linaro.org>,
- eric.auger@redhat.com
-References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
- <61656692-dc0f-4e34-8b81-c2422928d017@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <61656692-dc0f-4e34-8b81-c2422928d017@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Subject: Re: [PATCH v7 0/1] numa: add 'memmap-type' option for memory type
+ configuration
+To: <qemu-devel@nongnu.org>, <gourry@gourry.net>
+CC: <apopple@nvidia.com>, <dan.j.williams@intel.com>, <Zhigang.Luo@amd.com>,
+ <Lianjie.Shi@amd.com>, <david@redhat.com>, <imammedo@redhat.com>,
+ <jonathan.cameron@huawei.com>
+References: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+From: "Huang, FangSheng (Jerry)" <FangSheng.Huang@amd.com>
+In-Reply-To: <20260306082735.1106690-1-FangSheng.Huang@amd.com>
+Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f29;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf29.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-EOPAttributedMessage: 0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: SJ1PEPF00002327:EE_|CY3PR12MB9608:EE_
+X-MS-Office365-Filtering-Correlation-Id: dee7555e-d614-4e9f-6d00-08de80dad16f
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|82310400026|376014|36860700016|1800799024|56012099003|22082099003|18002099003;
+X-Microsoft-Antispam-Message-Info: KpRfi7ywsyvN5MWpVYNoxd/enKf/4hw6abR10s8Acx+vEu5mh7CQdES9ceB+yA3Hpczy5LZBsIVj3+vCfIcyNvZMN8NDO3tJKlndTR1tU1lCRyxHn1/d34mBsJJXGQsG+5PhoDvywZXLtLCDpMlWXqeqUL+GMYlVtx835UVykWWnsYlJviRfRaGV3hi4+TijhpHhTmSMCmFz0YmQ1Ne63+kbeQwEZ8dwlTkzui0RclS98/Z0SzXqNpMPSe/rPlP89d9qZOAZl27ocYokyL5rhaS1RIXLqrftFEhEStD4TuhV65cpemhI7wFPaPUaJq1FMj8kexZw/rdb7zz7I9fzvDJgTntKZZTPt3aTnFff/wM1+5z+XywAJNw7KcQ35UHR+zupMFPGbty4xoElvyLE9RV1jx2hMC4ryfFP/ZtK5Ymmb4510ox1p5O5Wn13L1xhCNKrLv+vbFDLgLKnRxRE6Fn/Nbm99MtkRqqcijO+Y3LyGDrkN/Cuzhb24cWyvtgIL/pd8PgyYmsYrMQhbsqyK+qYs43DqiGDBr3u1J5E8Dx/kqT1zqANx2GZMKUpoCj+0+roFmd8aEWxlGJt2+f9zVLtA8udtDLdyWEvFQQGO9U24EnsCQlcDk34I6uRoZi2IffHDBZozxH79QNKRxhYbFhcLRdr8X/OSeJnvBeu/cO+tygHcUnbiFYK7yEovrHLGnf1FYegnQvPHqfH6lBWgq0GJt7UMHp5IIB+4tIyiboRGV/MJEhkVnx8wBkjIL48/U54X2KFOfVZIxUWwZ3R+Q==
+X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
+ SFS:(13230040)(82310400026)(376014)(36860700016)(1800799024)(56012099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: 3euWrVRlJf5PXVkaZJor7X2EU0BI3Vs5bhnbMTUv1TZKcRmVFw4sRxwLvBj1nGv95JKxKZMJrogqw9GORvn+winwHXL+w9wEk2r1vp+tfFWSgorAKtv9FNFqDo0LzC7ONxj2iBWZFGFp7Geqfk7puL3XoGdaHN51iIJTIvrePN1aKnDXSExlRmleJ6n1g2y427VZpvgqSzkDsmLbapYhYYsjv/xFuVQ7rbpdMVRPNazJSZd6HO9C2RG3sV/cnVwHAftNXHJ8mQqGH7MNh/TwycTLZ8k8SrP4Obn06hgyd2jf23h8t4chl7TnPSABlVLsoirTf/dseoXIdHOaWzNxejN6bRnRR7RW1C2kzvwK0WoCYKilgL/sb0hZ6mPuDcetp2FU5sPEcFiGE90M6ejbhHL56XoXJVFPj3aSngqnXj212AiZHtkbWicS/w/tzcte
+X-OriginatorOrg: amd.com
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2026 08:30:43.6803 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: dee7555e-d614-4e9f-6d00-08de80dad16f
+X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
+X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
+ Helo=[satlexmb07.amd.com]
+X-MS-Exchange-CrossTenant-AuthSource: SJ1PEPF00002327.namprd03.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Anonymous
+X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY3PR12MB9608
+Received-SPF: permerror client-ip=40.107.201.66;
+ envelope-from=FangSheng.Huang@amd.com;
+ helo=CH4PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,92 +129,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/26 12:50 AM, Cédric Le Goater wrote:
-> On 3/12/26 23:44, Pierrick Bouvier wrote:
->> This series makes changes to hw/vfio to compile files only once.
->> Changes are pretty straightforward and are mostly extraction of kvm/other config
->> specific functions to proper files.
->> This is the last hw/* subsystem that needs to be changed for single-binary.
->>
->> Pierrick Bouvier (8):
->>     hw/vfio/listener.c: remove CONFIG_KVM
->>     hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
->>     hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
->>     hw/vfio: eradicate CONFIG_IOMMU from sources
->>     hw/vfio/pci.c: eradicate CONFIG_KVM
->>     hw/vfio/ap.c: use full path for target specific header
->>     hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
->>       hw/vfio/kvm-spapr.c
->>     hw/vfio: all vfio files can now be common files
->>
->>    hw/vfio/kvm-spapr.h          |  12 +++
->>    target/s390x/kvm/kvm_s390x.h |   2 +-
->>    hw/vfio/ap.c                 |  11 +-
->>    hw/vfio/ccw.c                |   9 --
->>    hw/vfio/helpers.c            | 172 -------------------------------
->>    hw/vfio/igd-stubs.c          |  20 ++++
->>    hw/vfio/kvm-helpers.c        | 192 +++++++++++++++++++++++++++++++++++
->>    hw/vfio/kvm-spapr.c          |  47 +++++++++
->>    hw/vfio/kvm-stubs.c          |  35 +++++++
->>    hw/vfio/listener.c           |   4 -
->>    hw/vfio/pci-quirks.c         |   5 -
->>    hw/vfio/pci.c                |  37 +++----
->>    hw/vfio/spapr.c              |  30 +-----
->>    hw/vfio/meson.build          |   8 +-
->>    14 files changed, 331 insertions(+), 253 deletions(-)
->>    create mode 100644 hw/vfio/kvm-spapr.h
->>    create mode 100644 hw/vfio/igd-stubs.c
->>    create mode 100644 hw/vfio/kvm-helpers.c
->>    create mode 100644 hw/vfio/kvm-spapr.c
->>    create mode 100644 hw/vfio/kvm-stubs.c
->>
-> 
-> I am glad we are getting rid of #ifdef CONFIG in the code. I wonder
-> why we stopped using stubs in the past.
->
 
-Probably for convenience. An ifdef is quicker to add, can be more 
-readable, and the only downside is that it breaks all possibilities to 
-mix several targets in the same binary, which is a new and recent goal.
-
-> Anyhow, as said, what bothers me with this change (which I like OTOH)
-> is that it is exposing IOMMUFD support at the UAPI level. But,
+On 3/6/2026 4:27 PM, fanhuang wrote:
+> Hi all,
 > 
-> 1. only i386, s390x and arm have IOMMUFD support. Not PPC for instance.
-> 2. downstream can compile support off
+> This is v7 of the SPM (Specific Purpose Memory) patch. Thank you
+> David for the Acked-by, and Gregory for the Reviewed-by and for
+> catching the hardcoded address bug.
 > 
-> That said, support should reach all platforms one day. So we could
-> say that relying on a runtime check is preparing the future. I am
-> not against the change but it needs more thinking on the consequences.
-> IOW, a bit late for 11.0.
->
-
-Sure, I'm posting it now but don't expect to get this merged for this 
-release.
-
-The IOMMUFD part is indeed the one debatable in the series. My rationale 
-was that, even if it exposes iommufd properties, they won't have any 
-effect as long as kernel doesn't have support.
-Having played with it in the past, and having discovered that arm64 
-kernel defconfig does not enable CONFIG_IOMMUFD, error message is quite 
-clear.
-
-If you prefer, we could definitely try to build properties at runtime. 
-However, be aware that it's usually less readable (need to build a 
-dynamic array) and more clunky than the static const array, since it 
-requires a set_X callback instead of setting properties as a field. It's 
-usually our last solution resort if exposing things is not possible.
-
-Let me know what you would prefer for it.
-
-> The idea is great. Let's try for 11.1
+> Changes in v7:
+> - Fixed pc_update_numa_memory_types() to use x86ms->above_4g_mem_start
+>    instead of hardcoded 0x100000000ULL (4 GiB). On AMD hosts with IOMMU,
+>    above_4g_mem_start is relocated to above 1 TB, so the hardcode would
+>    produce wrong guest physical addresses. (spotted by Gregory Price)
 > 
-> Thanks,
+> Changes in v6:
+> - Added validation: memmap-type now requires memdev to be specified,
+>    to avoid misconfiguration on memory-less NUMA nodes
+> - Simplified pc_update_numa_memory_types() by replacing switch/goto
+>    with a direct conditional expression
+> - Reserved memory nodes are now excluded from SRAT memory affinity
+>    entries, since E820 already marks them as reserved and SRAT should
+>    not report them as enabled memory affinity
 > 
-> C.
+> Use case:
+> This feature allows marking NUMA node memory as Specific Purpose Memory
+> (SPM) or reserved in the E820 table. SPM serves as a hint to the guest
+> that this memory might be managed by device drivers based on guest policy
 > 
+> Example usage:
+>    -object memory-backend-ram,size=8G,id=m0
+>    -object memory-backend-memfd,size=8G,id=m1
+>    -numa node,nodeid=0,memdev=m0
+>    -numa node,nodeid=1,memdev=m1,memmap-type=spm
 > 
+> Supported memmap-type values:
+>    - normal:   Regular system RAM (E820 type 1, default)
+>    - spm:      Specific Purpose Memory (E820 type 0xEFFFFFFF), a hint
+>                that this memory might be managed by device drivers
+>    - reserved: Reserved memory (E820 type 2), not usable as RAM
+> 
+> Please review. Thanks!
+> 
+> Best regards,
+> Jerry Huang
+> 
+> fanhuang (1):
+>    numa: add 'memmap-type' option for memory type configuration
+> 
+>   hw/core/numa.c               | 24 ++++++++++++
+>   hw/i386/acpi-build.c         |  8 ++++
+>   hw/i386/e820_memory_layout.c | 72 ++++++++++++++++++++++++++++++++++++
+>   hw/i386/e820_memory_layout.h | 12 +++---
+>   hw/i386/pc.c                 | 48 ++++++++++++++++++++++++
+>   include/system/numa.h        |  7 ++++
+>   qapi/machine.json            | 24 ++++++++++++
+>   qemu-options.hx              | 14 ++++++-
+>   8 files changed, 202 insertions(+), 7 deletions(-)
+> 
+Hi Gregory,
+
+Thanks again for the thorough review on v6 and for catching the hardcoded
+address issue — v7 has that fixed, now using x86ms->above_4g_mem_start as
+you suggested.
+
+Just wanted to follow up and check if your Reviewed-by still applies to v7,
+since it's a minimal change from v6 (only the one-line fix you identified).
+
+On a related note, the corresponding OVMF patch for E820 Soft Reserved
+support has been merged upstream (edk2 PR #11964), so the firmware side is
+now in place. The QEMU patch is the remaining piece to complete the 
+pipeline.
+
+Could you also advise on the next steps for getting this merged?
+is there a target merge window? Happy to provide anything else that's 
+needed.
 
 Thanks,
-Pierrick
+Jerry Huang
 
