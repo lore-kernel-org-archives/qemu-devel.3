@@ -4,116 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42E2105F795
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:34:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 583F9105F794
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:36:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0zqt-0003D1-M7; Fri, 13 Mar 2026 06:34:43 -0400
+	id 1w0zsO-0003ls-L2; Fri, 13 Mar 2026 06:36:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zqr-0003Cm-D1
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:34:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0zsL-0003la-8z
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:36:14 -0400
+Received: from p-west3-cluster1-host3-snip4-7.eps.apple.com ([57.103.73.158]
+ helo=outbound.ms.icloud.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zqp-0003QB-WE
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:34:41 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773398078;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=90IPebXDgL3t4Xxbpo4+dxrzV9JKxmpZBLYjUipdooA=;
- b=Izz7SRqZ8kIFyw/FvobMUVNnAzuO1X8+2gbc4Al0iuXlKTzhYCeVAVtoK0zmCBqH5b9G8k
- ucOrEyZ//+4LxfEUEsoL1wncySnAnZezgznZzb7ywzFj+Obzl0IQtTNiSEvZPi7AHKDCvi
- shZg2fZGKnu7pdGOvc2LuQqpmYkSSKY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-IBrteufsMwSao9p-3M_IdA-1; Fri,
- 13 Mar 2026 06:34:35 -0400
-X-MC-Unique: IBrteufsMwSao9p-3M_IdA-1
-X-Mimecast-MFC-AGG-ID: IBrteufsMwSao9p-3M_IdA_1773398074
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BA9B31953996; Fri, 13 Mar 2026 10:34:33 +0000 (UTC)
-Received: from [10.45.225.234] (unknown [10.45.225.234])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A2C831955D6E; Fri, 13 Mar 2026 10:34:30 +0000 (UTC)
-Message-ID: <b7f04779-21df-4304-9f1d-0d2db3c2fea6@redhat.com>
-Date: Fri, 13 Mar 2026 11:34:29 +0100
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 16/38] hw/misc/cpc: Include missing 'hw/core/cpu.h'
- header
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
-References: <20260313062055.2188-1-philmd@linaro.org>
- <20260313062055.2188-17-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <20260313062055.2188-17-philmd@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0zsG-00042b-AM
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:36:11 -0400
+Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-west-3a-10-percent-1 (Postfix) with ESMTPS id
+ 5A09E18000F1; Fri, 13 Mar 2026 10:36:04 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1773398166; x=1775990166;
+ bh=fxgfRdILvlzByfz3jxmGyrXitphNOUrqyYZui95nFSY=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Z+miYyKwMP4uzkVofuzOdUxxcpC6Dh/DpromUjH5tfzCe9e5k5fXd8fms7kuQxUlyk6KoUcTactPEnvSvbXaS/u8vrKfN4ExlQtbhCBMbRYE5sXTTHNECaLCPQqQm1ZhJUlB5yprO7bHvMEKYgGDjSRTTqrN1rU2/gATVlK9mZCcgtZZEvPLBSf9JiAJJ62/kuS1Zfsw7e8wXWgTHI0YbsGtfpzrcJD96cPNV1waQoDzdSZfhtTgVTdKV+AUXxjeNg3lQVA7wcOARdU10EP5e6xrNmErAdVly3s7jMGUbXHkjRVuBR8+d/h6IhjkUeCDVzJdigCEa0VQTWabD3fKBw==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.57.154.37])
+ by p00-icloudmta-asmtp-us-west-3a-10-percent-1 (Postfix) with ESMTPSA id
+ 91BCC18000B5; Fri, 13 Mar 2026 10:36:02 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v2] hvf: arm: fix Windows boot with kernel-irqchip=on
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA9GctVQo_Xc7EyfhinXza-8Kw0SOxwrwpyB1=Br+XjHpQ@mail.gmail.com>
+Date: Fri, 13 Mar 2026 11:35:50 +0100
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Alexander Graf <agraf@csgraf.de>
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <4511C71E-EC35-450F-887F-6339EEBBD96E@unpredictable.fr>
+References: <20260309114651.18825-1-mohamed@unpredictable.fr>
+ <CAFEAcA9GctVQo_Xc7EyfhinXza-8Kw0SOxwrwpyB1=Br+XjHpQ@mail.gmail.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA4MyBTYWx0ZWRfX04zaEZTcq/gK
+ qaMoRdAOVc3BC8mmbb3myNwSrInY8EGsv++K0E3fiUlx0LTyPmqZW+hUU0/ZpPr0MFg9WwW9c+I
+ rTB8+2IrIi+2uJvzg7uY1zrgB4Sc4rYXJkb3f0NCb6XX5V+94KrXV6voiU4Q87p2nSJAvwuyzQG
+ +Z4/AfDWm8wVoplrmwuTeh6tJLXFUa0OGuiiRyGwVRfksvQ3ypF1w34lSTaqjD9tOqS1ZrnYjvA
+ ZGAY/d2Zl49O+uNWdOzAm9GQfFc+3mqCv4A0j+sRle3tvGfPvPuJQDv6GQBBAwGIH7YzsfyCjyY
+ /oFAn5e3imX86kUp1D69ee63A7Y+NCp612vQbKWun4b5rdOfNxCDjmdRZxTPFk=
+X-Proofpoint-GUID: NqeylhQGrrDB4-Ig_H7wwz8tl3D8oQRy
+X-Authority-Info-Out: v=2.4 cv=Yb+wJgRf c=1 sm=1 tr=0 ts=69b3e894
+ cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
+ a=de_huAmjUc65hNcE37IA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
+X-Proofpoint-ORIG-GUID: NqeylhQGrrDB4-Ig_H7wwz8tl3D8oQRy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-13_02,2026-03-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 phishscore=0
+ malwarescore=0 bulkscore=0 lowpriorityscore=0 spamscore=0 suspectscore=0
+ mlxscore=0 mlxlogscore=946 clxscore=1030 adultscore=0 classifier=spam
+ authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603130083
+X-JNJ: AAAAAAABD1JtkGhuTAlkVwr2VsUq13b49J5pdFmGNQLg132pCH77Ulq9ZMklC4/8yeHFrvydSduqVEgvxtlzN5HU1pdzcQhN3a9ZbF1uPAC0nxT+xnj3QBgzaY3eE34FV+laqpVc10tQ0S+OA2859FEdj1SomwB2GJtJk/0aUq7s0Be86DNUYaiL7GDu6LhY3FKUeYCr/97bqYvJdz/kk0xU8344lHU2/OTx6H5MeRGfImOaBsHSideYbnsD44RZBNKeinTR4+ZHVx4iqhwECyoT0IFZJkx+hqO14vI/Mz2DJcSX8b2XPU7VfroShL81bl6FSqUNDGfz7uzsxY/nJnDLvBbAOB+WcQlbNcg+Ejq0PLyXlSCW8f+7xfhZXI52jaodmUfPYy8rR3q3SUvMdDmcO2XfAtSt7pMNi+1ScCOtghsgcHUVoe6kvHJaFMgBfqL9Kve/fbLU/yTpSYDTfgvITNF1rsDR2RbBKYVctouHLJOPDY5cwgyUZn1dWs3JPEw6MNcyyQP2KYwkSlhHsO2Oj/bh2VnpHcawdzle2NAx46aXDSE0hTFKUGboAwZaCtOJit5hBIssWtl5JCNeqGOEPG9Y6gO6rD35/MDmxt3jfCaSQnBDgkxkj/iqAYbbtQ==
+Received-SPF: pass client-ip=57.103.73.158;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -131,54 +93,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/03/2026 07.20, Philippe Mathieu-Daudé wrote:
-> The "hw/core/cpu.h" header is indirectly included. Include it
-> explicitly otherwise we get when refactoring unrelated headers:
-> 
->    ../hw/misc/mips_cpc.c:36:53: error: unknown type name 'run_on_cpu_data'
->       36 | static void mips_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
->          |                                                     ^
->    ../hw/misc/mips_cpc.c:40:5: error: call to undeclared function 'cpu_reset'
->         40 |     cpu_reset(cs);
->            |     ^
->    ../hw/misc/riscv_cpc.c:34:54: error: unknown type name 'run_on_cpu_data'
->       34 | static void riscv_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
->          |                                                      ^
->    ../hw/misc/riscv_cpc.c:39:5: error: call to undeclared function 'cpu_reset'
->       39 |     cpu_reset(cs);
->          |     ^
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/misc/mips_cpc.c  | 1 +
->   hw/misc/riscv_cpc.c | 1 +
->   2 files changed, 2 insertions(+)
-> 
-> diff --git a/hw/misc/mips_cpc.c b/hw/misc/mips_cpc.c
-> index 924de855ee2..d092f76f44d 100644
-> --- a/hw/misc/mips_cpc.c
-> +++ b/hw/misc/mips_cpc.c
-> @@ -22,6 +22,7 @@
->   #include "cpu.h"
->   #include "qemu/log.h"
->   #include "qemu/module.h"
-> +#include "hw/core/cpu.h"
->   #include "hw/core/sysbus.h"
->   #include "migration/vmstate.h"
->   
-> diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
-> index 4bf2fd8db16..e04ccdf54fa 100644
-> --- a/hw/misc/riscv_cpc.c
-> +++ b/hw/misc/riscv_cpc.c
-> @@ -18,6 +18,7 @@
->   #include "qemu/module.h"
->   #include "qemu/timer.h"
->   #include "qemu/bitops.h"
-> +#include "hw/core/cpu.h"
->   #include "hw/core/sysbus.h"
->   #include "migration/vmstate.h"
->   
 
-Reviewed-by: Thomas Huth <thuth@redhat.com>
+
+> On 13. Mar 2026, at 11:00, Peter Maydell <peter.maydell@linaro.org> =
+wrote:
+>=20
+> On Mon, 9 Mar 2026 at 11:46, Mohamed Mediouni =
+<mohamed@unpredictable.fr> wrote:
+>>=20
+>> Apple headers say:
+>>=20
+>>> When EL2 is disabled, PMU register accesses trigger "Trapped MSR, =
+MRS, or
+>>> System Instruction" exceptions. When this happens, =
+hv_vcpu_run()=E2=80=AFreturns, and the
+>>> =E2=80=AFhv_vcpu_exit_t=E2=80=AFobject contains the information =
+about this exception.
+>>=20
+>>> When EL2 is enabled, the handling of PMU register accesses is =
+determined by the PMUVer
+>>> field of ID_AA64DFR0_EL1=E2=80=AFregister.
+>>> If the PMUVer=E2=80=AFfield value is zero or is invalid, PMU =
+register accesses generate "Undefined"
+>>> exceptions, which are sent to the guest.
+>>> If the PMUVer=E2=80=AFfield value is non-zero and valid, PMU =
+register accesses are emulated by the framework.
+>>> The ID_AA64DFR0_EL1=E2=80=AFregister can be modified via =
+hv_vcpu_set_sys_reg=E2=80=AFAPI.
+>>=20
+>> That documentation turns out to not be so accurate, with the =
+determining factor being whether the vGIC
+>> is enabled instead of nested virtualisation. If =
+ID_AA64DFR0_EL1.PMUVer =3D 0, Hypervisor.framework doesn't
+>> give us the luxury of having PMU sysreg accesses trapped to the VMM =
+when the vGIC is enabled.
+>>=20
+>> As Windows really wants at least a single counter PMU, give it even =
+when
+>> using the kernel-irqchip with nested virt off.
+>>=20
+>> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
+>> ---
+>> target/arm/hvf/hvf.c | 10 +++++++---
+>> 1 file changed, 7 insertions(+), 3 deletions(-)
+>>=20
+>> diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+>> index 8aa59a1f77..136761b429 100644
+>> --- a/target/arm/hvf/hvf.c
+>> +++ b/target/arm/hvf/hvf.c
+>> @@ -1187,8 +1187,12 @@ static bool =
+hvf_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
+>>=20
+>>     clamp_id_aa64mmfr0_parange_to_ipa_size(&host_isar);
+>>=20
+>> -    if (hvf_nested_virt_enabled()) {
+>> +    /* Windows really wants at least a single counter PMU... */
+>> +    if (hvf_irqchip_in_kernel()) {
+>>         FIELD_DP64_IDREG(&host_isar, ID_AA64DFR0, PMUVER, 0x1);
+>> +    }
+>=20
+> This comment and the code don't line up. We say "Windows wants a PMU"
+> but then we only conditionally enable the PMU. If the irqchip isn't
+> in the kernel then presumably the PMU is still disabled (or at least
+> not advertised to the guest) and Windows still falls over ?
+>=20
+Hello,
+
+If there=E2=80=99s no Apple vGIC enabled, accesses to PMU registers are =
+routed to the VMM. Windows tries to access to the PMU registers anyway =
+in that case. And that allows to get away with (very) stub-like handling =
+that does =E2=80=9C=E2=80=9Demulate=E2=80=9D=E2=80=9D the cycle counter =
+just to boot Windows: And as that has exactly zero accuracy we don=E2=80=99=
+t want to expose it for anything else.
+
+If the Apple vGIC is enabled and there wasn=E2=80=99t an ID register =
+write made to enable the Apple vPMU, then instead of PMU writes=20
+being trappable to the VMM, what happens is that an undefined =
+instruction exception is injected to the guest. And that makes Windows =
+crash early.
+
 
 
