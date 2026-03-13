@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C390105F790
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:31:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06B7105F792
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:32:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0zn7-0001qr-A4; Fri, 13 Mar 2026 06:30:49 -0400
+	id 1w0zof-0002Lj-Rv; Fri, 13 Mar 2026 06:32:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zn3-0001qD-V3
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:30:47 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zod-0002Lb-9S
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:32:23 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zn0-0002YO-O0
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:30:44 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zob-00037z-Cl
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:32:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773397842;
+ s=mimecast20190719; t=1773397940;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=75AAdjAm2IVmOmEHQWym+gODin+QUmon8EUCuYxvqss=;
- b=HIzwdLfpiMYDQPaWq/SCcmd4KE47irz1PwmIVg7fPCatQY3jkcmoPpnFcxh1Y4A/ZYWA1Q
- e8hE1qJXTfs7L/KFpoJp1dGzmJlt+BgfWF98AtGsWfC8yJUbgsAWBm9lM7Jx+vFPVMLDqi
- mpcezmTWPunm5RwQmmPBvT+j6YbC8S8=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=HW0cESA0PcGZgKeCDpxHoIy3dNj5fNe7Ko9Qxr3yApg=;
+ b=WbAh58sYxPTUVtikT4UUIZtAZx4aoJaBTt/ZlDd+z04VFWo3zuLy8XJ9CoLxbcus+26j4j
+ lYOREOWFN7oF2zC5o/Nqm4uwVkdg68e5bdjvENG50GoUS7+ohqYJIFSGS6UDuw2SBwpiSe
+ SwlZq/KohcHAPmOnSjFkLOLMtI5Kl7k=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-639-NtGs0SAKNtOLbn5Q7dcNnA-1; Fri,
- 13 Mar 2026 06:30:36 -0400
-X-MC-Unique: NtGs0SAKNtOLbn5Q7dcNnA-1
-X-Mimecast-MFC-AGG-ID: NtGs0SAKNtOLbn5Q7dcNnA_1773397835
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-281--UhAfBTrO6Kzc5paZWJzkA-1; Fri,
+ 13 Mar 2026 06:32:17 -0400
+X-MC-Unique: -UhAfBTrO6Kzc5paZWJzkA-1
+X-Mimecast-MFC-AGG-ID: -UhAfBTrO6Kzc5paZWJzkA_1773397935
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 68EF119776B8; Fri, 13 Mar 2026 10:30:35 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 460FE19560AD; Fri, 13 Mar 2026 10:32:15 +0000 (UTC)
 Received: from [10.45.225.234] (unknown [10.45.225.234])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 510D919540C5; Fri, 13 Mar 2026 10:30:31 +0000 (UTC)
-Message-ID: <4b221e1f-9737-41f1-8bda-a9888e5f9e40@redhat.com>
-Date: Fri, 13 Mar 2026 11:30:30 +0100
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 6261A1955D6E; Fri, 13 Mar 2026 10:32:10 +0000 (UTC)
+Message-ID: <79905bfe-10ff-451a-8b1b-1f87abd513ca@redhat.com>
+Date: Fri, 13 Mar 2026 11:32:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 31/38] hw/s390x: Include full path to target 'cpu.h'
- header
+Subject: Re: [PATCH v2 38/38] hw/misc: Build 'mac_via' as common unit file
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 References: <20260313062055.2188-1-philmd@linaro.org>
- <20260313062055.2188-32-philmd@linaro.org>
+ <20260313062055.2188-39-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -102,10 +102,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260313062055.2188-32-philmd@linaro.org>
+In-Reply-To: <20260313062055.2188-39-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -132,15 +132,26 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/03/2026 07.20, Philippe Mathieu-Daudé wrote:
+> Nothing there is target-specific anymore.
+> 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/s390x/ipl.h            | 2 +-
->   hw/s390x/s390-hypercall.h | 2 +-
->   hw/s390x/ap-bridge.c      | 2 +-
->   hw/s390x/s390-hypercall.c | 2 +-
->   hw/s390x/s390-stattrib.c  | 2 +-
->   hw/s390x/tod-tcg.c        | 2 +-
->   6 files changed, 6 insertions(+), 6 deletions(-)
+>   hw/misc/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/hw/misc/meson.build b/hw/misc/meson.build
+> index a2601e1c433..cd084a19363 100644
+> --- a/hw/misc/meson.build
+> +++ b/hw/misc/meson.build
+> @@ -154,7 +154,7 @@ system_ss.add(when: 'CONFIG_I2C_ECHO', if_true: files('i2c-echo.c'))
+>   
+>   system_ss.add(when: 'CONFIG_AVR_POWER', if_true: files('avr_power.c'))
+>   
+> -specific_ss.add(when: 'CONFIG_MAC_VIA', if_true: files('mac_via.c'))
+> +system_ss.add(when: 'CONFIG_MAC_VIA', if_true: files('mac_via.c'))
+>   
+>   specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_cmgcr.c', 'mips_cpc.c'))
+>   specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
