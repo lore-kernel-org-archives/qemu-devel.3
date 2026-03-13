@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57574106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:21:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BA0D106FD89
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:22:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vto-0000oH-Rc; Fri, 13 Mar 2026 02:21:30 -0400
+	id 1w0vuP-0002cb-4T; Fri, 13 Mar 2026 02:22:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vth-0000hm-AK
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:21 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuN-0002TU-40
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:03 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vtf-0006tM-U9
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:21 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-439b611274bso1144438f8f.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:21:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuL-0006z1-H7
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:02 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-485345e1013so21299635e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382878; x=1773987678; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773382919; x=1773987719; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fIOm7tmuk8Unr+dWjypmj0K3jr2IzeJYxwNcrzDjXPA=;
- b=DMMW+CgiEmUd04TSVlVPes67pCjVVt17oMmK+MvngToitCp+dTlXlTJNVn6c6aTd9D
- C8zF7wkz7XK0TiphicPnRK+C09QkWfH9RDPQi2MWOK+1YcrtWVGZVrYPESbgHwrPu0Nw
- MInSh24iSNdlqHMRuF6Kd+5Jl/e9CmXxbrBKtVc1FcrrdhvD7AFjAx4cSdY2ujFYSZE4
- Wm6piGo8kgVHpGGpRH+hMoBjoZyV8AAuJoljSd2xsI5RMHWi2dvy1QAh5+TEV7J063M/
- nTT3d3QBosB6983B7mYriretEGNvtak1C979Nk/TYcaYWd7OtOqAQJlD0MxU4IpxFGV5
- 66kg==
+ bh=Ezuwi07fI8HqHQESlVfz3nJooOZfHLxiMHTs2rhW0mo=;
+ b=s3ie7l9YPtX5K3OBjzJaZ22kJsFV56nOtQJtfJb5oMFMox3f0QSdwn1IIug5q7E07q
+ fYTXPhBtqoDAX6DRhMq6SxVLTaPItKqJYBwKt5qQFNNhin+lbWXyeSQ/D1oQq1pn9irt
+ n+78rDph3PNxjWsxECBtmRIRfDW/DCdiRhkXtUmkBP+oq50cBRxyG/pkDFaz0o/Ao7wd
+ NJri2Dun0lfDn+aN3o2RlJmCMnoz4Sm/KI6pvZT7c2r60a2XKgpXdO8/IA5miYkWG/Wt
+ IKNmBOFwv7ERNf0ZY0TYq3SZLW7Zuaqv41njijA3wWG1LWtHjwnsTKxq6N7Lmas42d01
+ ZCwA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382878; x=1773987678;
+ d=1e100.net; s=20251104; t=1773382919; x=1773987719;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=fIOm7tmuk8Unr+dWjypmj0K3jr2IzeJYxwNcrzDjXPA=;
- b=E3r7XtYmV0qK59c17/CFNHnSg5AH+KIPUThEHe4ck8+hpkKzCMQOH01MXGPBfKECW6
- AxeDiH3ZFmtMGghrKgyWMY+TwlGwOAMxQlZZsSnJP6tRDWLUa1+B37oioWG53fG0HgDh
- r5w2CyqY4RBSMbwyCGfqdVpGGBH2Prq+jjARPLfh0GWBa8yvNeZruUTqehwWVAdV0PF4
- grUwT929eqQfehqDQ14qzjX569ivbHo9jR1Hr1zFh9r8tcCMKJlb5mRLYyumPqgrtIM7
- jZX2q3WQ+sRXrsPGnVGqsOcP0cHpP50zltDBTdlDr2LjZVmq2dqVNN7esNATTEJrSFxT
- 1Wrw==
-X-Gm-Message-State: AOJu0Ywd0dW0hDE99IOuq74j6RemQ7sEoqAWlrALKevuTMeaW8W7EB3d
- cE3P9+bLmpLU6pxyh+2A5Fm0UUZ+UvSJ+/0qALIEr02fonn0M1Ifszq3LTCyzwTjVR2tRx767fT
- s6bPw03E=
-X-Gm-Gg: ATEYQzywJlbUaayX56DJ9hFC04IQ6Sa2UNcyOsMxXakprLkM+dRNQ67gG3HTsUuOHwt
- FtYfydLm2DsfRZiDIQiO+0MbxTxQWMnKoMtUq8qwt2e+E0l4u1OiPNIOowx+Z1sTeCloUOtPsWx
- c+wuNCLb4ZQAyrwQozrVT6A08fG01tjJB1Po7JdysRlD25dWXYNw+30CkUs1nvHjpl/0KfVUs6h
- DDDlXoRIQllAE4GaEQ5nPrwDGRn/OueIlQMQi070abDz4rcMqfA+jXlGDHk81vUNqgp/IbC2hTA
- nRro6B4tdQ+1YnnL76fujpmzlONjjWKnY96ACxLb3qwtwr2QylJ2AmD51DkO1rTeern+NOIAEKF
- svpSh0fDIJou6a3MXNp1FDJmh2vT28T2hpTdhJgdt6yaLrTMJlGFlnDGuLU9urXZOiHbNT03hVh
- Bkm0z6XIALrkz2jJu2llL+16RJ6QvqzgG1mgd0WdGTiWdqiBRRxa8qXpPYNLsiESqKxwfK7zI6m
- EXd6X8CTux7nRKt
-X-Received: by 2002:a05:6000:230c:b0:439:bf2f:123e with SMTP id
- ffacd0b85a97d-43a04d868d9mr3769280f8f.11.1773382877999; 
- Thu, 12 Mar 2026 23:21:17 -0700 (PDT)
+ bh=Ezuwi07fI8HqHQESlVfz3nJooOZfHLxiMHTs2rhW0mo=;
+ b=O1VKtk0twRMMVI1KdYIXS2vlNHmA1J1P7KuH3AlnTdNfXC3owosvgrXKo8O/l67Uql
+ 9CaTRlGncOXO5LutpDDoL3BJJ/r5r9bzvDlcz0rzw0b8vn9NAFQLh2l3u5GLNtq5YOfB
+ fd6tKhFIW3EVv7Bd61dJCySzkghbBLbGmRd/xOIiD3SY0QiDq8ciM/pPCWrubOcRZfOo
+ +MCcL9lOwMS7g2N1b1OfOPzMCVPWgWoLMcyl4L+FuxdQKCUt4xmqh8vCitdtFR8+dPY6
+ R8EPeXFghcVXmDuUMs8Vp5JDBJHIIlPhUdMDvYI6oC3zOOh78k4LVjLXip7xTaMbEAV3
+ 7PVw==
+X-Gm-Message-State: AOJu0YxBZIv+I2BnY7L0C3i1UrBJ8pLzafsmeQ0BxQnYjsofE/dFl2mM
+ UGd648ErwwRYCmGgIJCCNBeFUZg6QuWzWpqHzTZjRun8t33/RC0+5Qrv4Ok6DxvWay9XC5gIdMX
+ Mvk2RXl4=
+X-Gm-Gg: ATEYQzye7ULYFGguUtMiRgtxOD9bXGvsuqdGIFo+frjeeoYnetsl0axsBct2AIc/brD
+ CKJavrkALeUTMH0OHOdIpfRQ1tw/xjfJ+4mOL4O9X0c6pC/IGbRjnoQuPXBbKltHsIvXGFgW3JH
+ EfUAqYvgnEXIOwcFkzes4U9rdduMmO5oR/TyPHyzwATYz/ynygTKAm/3mNBKF+pJQLC4ej89TfH
+ A0sjaYlj98PkzNTEkfIcxQTOD30h1nURab3fFjcf0ypFNJOCKuIOAUxHmUeq1JvcJGy3Z1Mx1E6
+ kyskdpkYH59b6HH3rZrs39wpnFvA2Wy7U1M4rbpK51QrhoUpWUBwUm2h7zuoN8ZXI1F37IHHO5d
+ g9hW65ySlJ/tPp8MJxry25aCwuVkXCRSedJ0KcN5BnrAfhzUIiJsVV65olH5vF7bKQygqUTCpE/
+ dE0bYMueo9MCJDz2u2LSseWYzVR7bZ9w+id5MGnjnehQrQ3L9af72BZga2ndVx4kQYpn6JP1ElR
+ rndmA==
+X-Received: by 2002:a05:600c:a016:b0:47e:e981:78b4 with SMTP id
+ 5b1f17b1804b1-48555b2c949mr33629505e9.12.1773382919181; 
+ Thu, 12 Mar 2026 23:21:59 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe19acc6sm14756756f8f.8.2026.03.12.23.21.17
+ 5b1f17b1804b1-48541aac28bsm268269005e9.1.2026.03.12.23.21.58
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:21:17 -0700 (PDT)
+ Thu, 12 Mar 2026 23:21:58 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 03/38] hw/s390x/vfio: Replace TARGET_PAGE_BITS ->
- qemu_target_page_bits()
-Date: Fri, 13 Mar 2026 07:20:19 +0100
-Message-ID: <20260313062055.2188-4-philmd@linaro.org>
+Subject: [PATCH v2 09/38] target/i386: Include missing 'exec/target_long.h'
+ header
+Date: Fri, 13 Mar 2026 07:20:25 +0100
+Message-ID: <20260313062055.2188-10-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,34 +104,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Get the target page bits at runtime.
+The "exec/target_long.h" header is indirectly included, pulled
+via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
+when removing the latter:
+
+  ../target/i386/cpu.h:2777:43: error: unknown type name 'target_ulong'
+   2777 | void cpu_x86_update_cr3(CPUX86State *env, target_ulong new_cr3);
+        |                                           ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/s390x/s390-pci-vfio.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ target/i386/cpu.h | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-index 8ce44dbecce..7c754b656da 100644
---- a/hw/s390x/s390-pci-vfio.c
-+++ b/hw/s390x/s390-pci-vfio.c
-@@ -22,6 +22,7 @@
- #include "hw/vfio/pci.h"
- #include "hw/vfio/vfio-container-legacy.h"
- #include "hw/vfio/vfio-helpers.h"
-+#include "exec/target_page.h"
- 
- /*
-  * Get the current DMA available count from vfio.  Returns true if vfio is
-@@ -150,7 +151,7 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
-      * to request that the guest free DMA mappings as necessary.
-      */
-     if (!pbdev->rtr_avail) {
--        vfio_size = pbdev->iommu->max_dma_limit << TARGET_PAGE_BITS;
-+        vfio_size = pbdev->iommu->max_dma_limit << qemu_target_page_bits();
-         if (vfio_size > 0 && vfio_size < cap->end_dma - cap->start_dma + 1) {
-             pbdev->zpci_fn.edma = cap->start_dma + vfio_size - 1;
-         }
+diff --git a/target/i386/cpu.h b/target/i386/cpu.h
+index 0b539155c40..6fad9571e25 100644
+--- a/target/i386/cpu.h
++++ b/target/i386/cpu.h
+@@ -26,6 +26,7 @@
+ #include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
++#include "exec/target_long.h"
+ #include "exec/memop.h"
+ #include "hw/i386/apic.h"
+ #include "hw/i386/topology.h"
 -- 
 2.53.0
 
