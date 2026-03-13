@@ -4,87 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE18107BCCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 17:10:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 891B9107BCD5
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 17:56:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w161B-000800-9A; Fri, 13 Mar 2026 13:09:45 -0400
+	id 1w16k2-0007p3-Cr; Fri, 13 Mar 2026 13:56:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w1619-0007zl-R5
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:09:43 -0400
-Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w1617-0003xU-OU
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:09:43 -0400
-Received: by mail-wm1-x334.google.com with SMTP id
- 5b1f17b1804b1-4852e09e23dso21568475e9.0
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 10:09:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773421780; x=1774026580; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=wpuHOt+VwLuV3dKU2qsN6d5hcq4YhdYzxqEHrdDM6DY=;
- b=G0m7YdHltkOAnAfUVhGfYkqple9Cqmz51ucPAAi1VJuHgsGzOuwC+3BFkNsLVTTpHk
- pPFusuJ9gO33tamJErkk5whvIN6GY81OUU0P3E2CnnaUFRMGcrEdp7qNGnC3rxppYkSZ
- FRI7HLLPCJ8GrIPWBIKVnP8eAT5QILhlL/uYZ6KoMwUmbta4fPSsf07W4Q28L/Rx6LDf
- ARhKZotP3MPpcMdVKVqQkulNsIUMufobVEh5u9eN8YfNUr1yxL1dKbO0IJ3KzOfZNcmw
- /aOTglEuI7zZ0BAH56bt3HW73HsONSfB0+TBIrkwAHjmHLKBULe1sqFMSqMscJXW61kP
- W3OA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773421780; x=1774026580;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wpuHOt+VwLuV3dKU2qsN6d5hcq4YhdYzxqEHrdDM6DY=;
- b=EmFyeJ4QHjZK3juXU1ETbGw6oaQoA+QjyrqlLDelg3PaEdIjj2Q9dNJnH9T3vOdpLH
- mkc+xK6W3+mT4bXD5H8zyJUma9UMsZaGA9vcoybhNdPLkrPuKvIoSlJVFCm+JrGKRdpL
- GN6V78uEw7PicEGfYdYXTbXnyA/7v+wIqzVCo48hNWeB8bkNlaDKw6YDNBp6LPnaD21S
- XSC99g17QW8p+gk2oF6UtrJqX60T9GUoB01WLDHf6Uez8cr6QLXzpoi8bkYcshjkrt0Q
- M1Nql/JyHgS54BQpbi4pkOrEFABITuRlCX+4csk+MWcRn0e06riLmqK1zLGLPw6k3HA4
- ySzQ==
-X-Gm-Message-State: AOJu0Ywib74KxPzLdf+1VqREKucBu0OW/s7fMNsGxQ3JuwwC5FNr6jRK
- QWY714KMKoBkSYNQ0MCGEFFYOn2UHrfCV/W+Qtgb64+WA945QcVdymbSCdTX2rMtRqsdv0PIi+C
- Ksdry
-X-Gm-Gg: ATEYQzzLY3ANU9TC+7YdoSpgcNDeawpNJ50vQq1Elu6G3LpJ901UeEXy3oGi17QrQAe
- shh2hlqipghvGmzEyN/ZRefnmn4YQvJ4duYZpgzwM3gWKYoANlDYBNAMKB6hiXFZkL6Dbl6cfER
- FnXb2T6GjtzDVWTlm4drngR/kJq92xbEEuRDbGNDq1E0buoKnHdzgxR/8js7/20Q2lGngc0T61z
- yWm4o3Y7v6E/XRj8Q9mzWjJDf0yQn8EzDVxKcegQJA44Z0MmqjDvmoCaO1pwOxvlkZWS1EkHDvd
- B83Am7B2I0PZEStQ/eDTbyf96t1XNT8VIrfP2DdPIqNFCalq1/6EX3MtpNYy2ICjpZOuXgGmjVr
- C19gYiNioUVlAM2xIqBeifkhc2N1rGV4YCR2FIx0I7gb+9I1OKg8pfD27xkW/ndeEQh78GTfxx3
- +fT4nSpuiCwMh+OGDKgIFgtPuHZcTO2wZzlNYlvlCsDpED14zjjZdC+SgyTRQh63f1ceC3VDshf
- MPDDuPIYrEnZruQ15EiYM4xTP8emvv4cEo5bbZTNA==
-X-Received: by 2002:a05:600c:4e08:b0:485:3193:6ddb with SMTP id
- 5b1f17b1804b1-485566ca5e3mr62089925e9.3.1773421779889; 
- Fri, 13 Mar 2026 10:09:39 -0700 (PDT)
-Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541ac17f2sm288825835e9.6.2026.03.13.10.09.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Mar 2026 10:09:39 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Artyom Tarasenko <atar4qemu@gmail.com>, qemu-stable@nongnu.org
-Subject: [PATCH] target/sparc: Set reg window data structures currently after
- vmstate load
-Date: Fri, 13 Mar 2026 17:09:38 +0000
-Message-ID: <20260313170938.449538-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w16jz-0007oX-TO
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:56:03 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w16jv-0004K8-Qx
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:56:02 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62DFshcr1279244; Fri, 13 Mar 2026 17:55:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=rPmFLc
+ 2+zATj6qZ4BbEWUTE1Kd5LUm0aFQhOI0NXIq0=; b=YRxdQe65HCONx49w/ENYo5
+ ZNPfIi5flDlu7k9rXnuNik7McVboPT0ak5E/EZPTUIzBvAFh/XNLXOr/YV4dBOHJ
+ k5iklPivoCO/1AsMP/lqEQlpOJWLrSzpOAGpg6ToEPTGFYGwbx7Qo0Tce6CIYm+B
+ TcPWxiWpsUL8lVbhq02n6GtBRyfhiw8j0CIaLE4m5MxH6pOlFViuw/Yo4jz/PZ2X
+ Fbita7eTxg4wjfuMGlL0gXOKxMfUJR1XiPP8Irvao/bsU3omKwmRRAbEfywkeCMg
+ VTqmNtRUmfmvSw4fLj9RwVpF2KbIZRoLw1CYZLk+i4snX68Ltb5oyHP5fYzlnyYw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh92h35g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 17:55:45 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62DFUZAP006042;
+ Fri, 13 Mar 2026 17:55:44 GMT
+Received: from smtprelay03.wdc07v.mail.ibm.com ([172.16.1.70])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cuha9qqbr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 17:55:44 +0000
+Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
+ [10.39.53.233])
+ by smtprelay03.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62DHtLd920841046
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Mar 2026 17:55:21 GMT
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 09F415803F;
+ Fri, 13 Mar 2026 17:55:44 +0000 (GMT)
+Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D2D335804E;
+ Fri, 13 Mar 2026 17:55:42 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 13 Mar 2026 17:55:42 +0000 (GMT)
+Message-ID: <13d34783-8255-44f9-8f49-005f18a60c2e@linux.ibm.com>
+Date: Fri, 13 Mar 2026 13:55:42 -0400
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::334;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 4/5] hw/tpm: Implement TPM CRB chunking logic
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20260312041650.181411-1-armenon@redhat.com>
+ <20260312041650.181411-5-armenon@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260312041650.181411-5-armenon@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: rIv2MM2SC4bZfSeVtEszbIj7eDT_safO
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDE0MCBTYWx0ZWRfX6IjyeGKDBuSi
+ gZygGpeecRmuPMvSLV1piBetiesHi4ajGBlyC+g7kO1AghItsAEgASY8NFVi+AbcJ8Q6ctJ4OjW
+ zLQh2n/hXaz3tQAbP3uXKe6KbnpmkxQwwiIj27mk9Ybvf46VIGXM1s04MlfM0z2aPW09UnVm6Xk
+ zXQc/qCTZ/mc/huEmY9QEMtsswgEP+n0NjG00zxnXHsAL5XOpUB2iO3QIL5erxHEloirAE4kO66
+ IwZN4vDCI5SyLovDzcXlozZ7Wq+CKCqdJmKAEfPt+2yJrr/XB/rzzAF/r09yGv3y0aBNskWsq2R
+ jJp96cOxtsmWs+Ubp78+UTOq9Wuyf4Nh5HFjVc+a+dzR6aNVPWLJiUHAv9oLw5/MYt9OtpTKCS4
+ ejs+PJi2G8IFoDkeV6flU8lhINRxkgxqj7+9PKgWZ1Ke5bTnzBjiyRBEJtHpPcn4M1SWQew9hCa
+ zhfR8rZYfK9cS7V6SDQ==
+X-Proofpoint-GUID: rIv2MM2SC4bZfSeVtEszbIj7eDT_safO
+X-Authority-Analysis: v=2.4 cv=XNk9iAhE c=1 sm=1 tr=0 ts=69b44fa1 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=xt6ew7UTAAAA:8
+ a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=cY52DLsLcFSHDffHsoUA:9 a=QEXdDO2ut3YA:10
+ a=tn93DeGZTgJ6DdWMtdD4:22
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-13_03,2026-03-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 spamscore=0 clxscore=1015 lowpriorityscore=0 adultscore=0
+ bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130140
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,121 +128,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In the SPARC CPU state, env->regwptr points into the env->regbase
-array at wherever the architectural CWP (current window pointer) says
-we are in the register windows.  We don't migrate this directly,
-since it's a host pointer, so we must ensure it is set up again
-after migration load.
 
-We also have to deal with a special case when CWP is (nwindows - 1).
-In this case, while running we keep the "in" register data for this
-window in a temporary location at the end of the regbase[] array, so
-that generated code doesn't have to special case this "wrap around"
-case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
-wrapped data from its temporary location into the architectural
-location in window 0's "out" registers.  We then migrate only
-(nwindows * 16) entries in the regbase[] array.  So on the
-destination we need to copy the "in" register data back to its
-temporary location again.
 
-For 32-bit SPARC we get this right, because the CWP is in the PSR.
-The get_psr() function does:
-    env->cwp = 0;
-    cpu_put_psr_raw(env, val);
-which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
-sets up both regwptr and the wrapped-register data.
+On 3/12/26 12:16 AM, Arun Menon wrote:
+> - Add logic to populate internal TPM command request and response
+>    buffers and to toggle the control registers after each operation.
+> - The chunk size is limited to CRB_CTRL_CMD_SIZE which is
+>    (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER). This comes out as 3968 bytes
+>    (4096 - 128 or 0x1000 - 0x80), because 128 bytes are reserved for
+>    control and status registers. In other words, only 3968 bytes are
+>    available for the TPM data.
+> - With this feature, guests can send commands larger than 3968 bytes.
+> - Refer section 6.5.3.9 of [1] for implementation details.
+> 
+> [1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p07_rc1_121225.pdf
+> 
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>   hw/tpm/tpm_crb.c | 138 +++++++++++++++++++++++++++++++++++++++++------
+>   1 file changed, 122 insertions(+), 16 deletions(-)
+> 
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index 5ea1a4a970..845f9c6c9f 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -17,6 +17,7 @@
+>   #include "qemu/osdep.h"
+>   
+>   #include "qemu/module.h"
+> +#include "qemu/error-report.h"
+>   #include "qapi/error.h"
+>   #include "system/address-spaces.h"
+>   #include "hw/core/qdev-properties.h"
+> @@ -65,6 +66,7 @@ DECLARE_INSTANCE_CHECKER(CRBState, CRB,
+>   #define CRB_INTF_CAP_CRB_CHUNK 0b1
+>   
+>   #define CRB_CTRL_CMD_SIZE (TPM_CRB_ADDR_SIZE - A_CRB_DATA_BUFFER)
+> +#define TPM_HEADER_SIZE 10
+>   
+>   enum crb_loc_ctrl {
+>       CRB_LOC_CTRL_REQUEST_ACCESS = BIT(0),
+> @@ -80,6 +82,8 @@ enum crb_ctrl_req {
+>   
+>   enum crb_start {
+>       CRB_START_INVOKE = BIT(0),
+> +    CRB_START_RESP_RETRY = BIT(1),
+> +    CRB_START_NEXT_CHUNK = BIT(2),
+>   };
+>   
+>   enum crb_cancel {
+> @@ -122,6 +126,58 @@ static uint8_t tpm_crb_get_active_locty(CRBState *s)
+>       return ARRAY_FIELD_EX32(s->regs, CRB_LOC_STATE, activeLocality);
+>   }
+>   
+> +static bool tpm_crb_append_command_request(CRBState *s)
 
-However, for 64-bit SPARC the CWP is not in the PSR, and
-cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
-register state in a corrupted state, and the guest will likely crash
-on the destination if it didn't happen to be executing with CWP == 0.
+A short description of what is being appended from where would be helpful.
 
-Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
-for the 64-bit case, and enough commentary to explain what is going
-on.
+> +{
+> +    void *mem = memory_region_get_ram_ptr(&s->cmdmem);
+> +    uint32_t to_copy = 0;
+> +    uint32_t total_request_size = 0;
+> +
+> +    /*
+> +     * The initial call extracts the total TPM command size
+> +     * from its header. For the subsequent calls, the data already
+> +     * appended in the command_buffer is used to calculate the total
+> +     * size, as its header stays the same.
+> +     */
+> +    if (s->command_buffer->len == 0) {
+> +        total_request_size = tpm_cmd_get_size(mem);
+> +        if (total_request_size < TPM_HEADER_SIZE) {
+> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS, tpmSts, 1);
+> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
+> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
+> +            tpm_crb_clear_internal_buffers(s);
+> +            error_report("Command size '%d' less than TPM header size '%d'",
+> +                         total_request_size, TPM_HEADER_SIZE);
+> +            return false;
+> +        }
+> +    } else {
+> +        total_request_size = tpm_cmd_get_size(s->command_buffer->data);
+> +    }
+> +    total_request_size = MIN(total_request_size, s->be_buffer_size);
+> +
+> +    if (total_request_size > s->command_buffer->len) {
+> +        uint32_t remaining = total_request_size - s->command_buffer->len;
+> +        to_copy = MIN(remaining, CRB_CTRL_CMD_SIZE);
+> +        g_byte_array_append(s->command_buffer, (guint8 *)mem, to_copy);
+> +    }
+> +    return true;
+> +}
+> +
+> +static void tpm_crb_fill_command_response(CRBState *s)
 
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
----
-I ran into this because the "sparc64-migration" functional test seems
-to hit this reliably when built with the address sanitizer.  This is
-probably a timing thing, because it doesn't trip any ASAN failures,
-the guest just crashes on the destination side most of the time
-because it returns from a subroutine to a corrupt %o7 return address.
 
-As far as I can tell this is what the problem is, but I'm a bit
-surprised that we have never hit this, given how likely you are to
-hit it on a vmsave/vmload or migration.  So am I missing something?
----
- target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
- 1 file changed, 39 insertions(+), 2 deletions(-)
+Also a short description for this function would be helpful.
 
-diff --git a/target/sparc/machine.c b/target/sparc/machine.c
-index 4dd75aff74..b935c31630 100644
---- a/target/sparc/machine.c
-+++ b/target/sparc/machine.c
-@@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
-     SPARCCPU *cpu = opaque;
-     CPUSPARCState *env = &cpu->env;
- 
--    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
--     * window as the outs of the first window
-+    /*
-+     * If env->cwp == env->nwindows - 1, this will set the ins of the last
-+     * window as the outs of the first window. We do this because we only
-+     * transfer the (nwindows * 16) entries of regbase[] that correspond
-+     * to the "proper" locations of the registers; this call has the
-+     * effect of copying the wrap register values from their temporary
-+     * location down to their proper location ready for migration.
-      */
-     cpu_set_cwp(env, env->cwp);
- 
-     return 0;
- }
- 
-+static int cpu_post_load(void *opaque, int version_id)
-+{
-+    /*
-+     * For 32-bit SPARC we set the register window data structures
-+     * up again correctly when get_psr() called cpu_put_psr_raw(),
-+     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
-+     * part of the PSR, so we need to handle it here.
-+     *
-+     * There are two things we need to have happen:
-+     * 1. regwptr points into regbase[] at the location determined by CWP.
-+     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
-+     *    in a copy at a temporary location at the end of the regbase[]
-+     *    array. For migration we only transferred the (nwindows * 16)
-+     *    entries of regbase[] that correspond to the "proper" locations
-+     *    of the registers, so now we must copy the wrap registers back to
-+     *    their temporary location.
-+     *
-+     * We achieve both of these by setting env->cwp to 0 and then calling
-+     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
-+     */
-+#if defined(TARGET_SPARC64)
-+    SPARCCPU *cpu = opaque;
-+    CPUSPARCState *env = &cpu->env;
-+    uint32_t cwp = env->cwp;
-+
-+    env->cwp = 0;
-+    cpu_set_cwp(env, cwp);
-+#endif
-+    return 0;
-+}
-+
- /* 32-bit SPARC retains migration compatibility with older versions
-  * of QEMU; 64-bit SPARC has had a migration break since then, so the
-  * versions are different.
-@@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
-     .version_id = SPARC_VMSTATE_VER,
-     .minimum_version_id = SPARC_VMSTATE_VER,
-     .pre_save = cpu_pre_save,
-+    .post_load = cpu_post_load,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
-         VMSTATE_UINT32(env.nwindows, SPARCCPU),
--- 
-2.43.0
+> +{
+> +    void *mem = memory_region_get_ram_ptr(&s->cmdmem);
+> +    uint32_t remaining = s->response_buffer->len - s->response_offset;
+> +    uint32_t to_copy = MIN(CRB_CTRL_CMD_SIZE, remaining);
+> +
+> +    memcpy(mem, s->response_buffer->data + s->response_offset, to_copy);
+> +
+> +    if (to_copy < CRB_CTRL_CMD_SIZE) {
+> +        memset((guint8 *)mem + to_copy, 0, CRB_CTRL_CMD_SIZE - to_copy);
+> +    }
+> +
+> +    s->response_offset += to_copy;
+> +    memory_region_set_dirty(&s->cmdmem, 0, CRB_CTRL_CMD_SIZE);
+> +}
+> +
+>   static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+>                                  uint64_t val, unsigned size)
+>   {
+> @@ -152,20 +208,48 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+>           }
+>           break;
+>       case A_CRB_CTRL_START:
+> -        if (val == CRB_START_INVOKE &&
+> -            !(s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE) &&
+> -            tpm_crb_get_active_locty(s) == locty) {
+> -            void *mem = memory_region_get_ram_ptr(&s->cmdmem);
+> -
+> -            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 1);
+> -            s->cmd = (TPMBackendCmd) {
+> -                .in = mem,
+> -                .in_len = MIN(tpm_cmd_get_size(mem), s->be_buffer_size),
+> -                .out = mem,
+> -                .out_len = s->be_buffer_size,
+> -            };
+> -
+> -            tpm_backend_deliver_request(s->tpmbe, &s->cmd);
+> +        if (tpm_crb_get_active_locty(s) != locty) {
+> +            break;
+> +        }
+> +        if (val & CRB_START_INVOKE) {
+> +            if (!(s->regs[R_CRB_CTRL_START] & CRB_START_INVOKE)) {
+> +                if (!tpm_crb_append_command_request(s)) {
+> +                    break;
+> +                }
+> +                ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 1);
+> +                g_byte_array_set_size(s->response_buffer, s->be_buffer_size);
+> +                s->cmd = (TPMBackendCmd) {
+> +                    .in = s->command_buffer->data,
+> +                    .in_len = s->command_buffer->len,
+> +                    .out = s->response_buffer->data,
+> +                    .out_len = s->response_buffer->len,
+> +                };
+> +                tpm_backend_deliver_request(s->tpmbe, &s->cmd);
+> +            }
+> +        } else if (val & CRB_START_NEXT_CHUNK) {
+> +            /*
+> +             * nextChunk is used both while sending and receiving data.
+> +             * To distinguish between the two, response_buffer is checked
+> +             * If it does not have data, then that means we have not yet
+> +             * sent the command to the tpm backend, and therefore call
+> +             * tpm_crb_append_command_request()
+> +             */
+> +            if (s->response_buffer->len > 0 &&
+> +                s->response_offset < s->response_buffer->len) {
+> +                    tpm_crb_fill_command_response(s);
+> +            } else {
+> +                if (!tpm_crb_append_command_request(s)) {
+> +                    break;
+> +                }
+> +            }
+> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
+> +        } else if (val & CRB_START_RESP_RETRY) {
+> +            if (s->response_buffer->len > 0) {
+> +                s->response_offset = 0;
+> +                tpm_crb_fill_command_response(s);
+> +            }
+> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, crbRspRetry, 0);
+> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
+>           }
+>           break;
+>       case A_CRB_LOC_CTRL:
+> @@ -205,13 +289,36 @@ static const MemoryRegionOps tpm_crb_memory_ops = {
+>   static void tpm_crb_request_completed(TPMIf *ti, int ret)
+>   {
+>       CRBState *s = CRB(ti);
+> +    void *mem = memory_region_get_ram_ptr(&s->cmdmem);
+>   
+>       ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
+>       if (ret != 0) {
+>           ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
+>                            tpmSts, 1); /* fatal error */
+> +        tpm_crb_clear_internal_buffers(s);
+> +    } else {
+> +        uint32_t actual_resp_size = tpm_cmd_get_size(s->response_buffer->data);
+> +        uint32_t total_resp_size = MIN(actual_resp_size, s->be_buffer_size);
+> +        g_byte_array_set_size(s->response_buffer, total_resp_size);
+> +        s->response_offset = 0;
+> +
+> +        /*
+> +         * Send the first chunk. Subsequent chunks will be sent using
+> +         * tpm_crb_fill_command_response()
+> +         */
+> +        uint32_t to_copy = MIN(CRB_CTRL_CMD_SIZE, s->response_buffer->len);
+> +        memcpy(mem, s->response_buffer->data, to_copy);
+ > +> +        if (to_copy < CRB_CTRL_CMD_SIZE) {
+> +            memset((guint8 *)mem + to_copy, 0, CRB_CTRL_CMD_SIZE - to_copy);
+> +        }
+> +        s->response_offset += to_copy;
+>       }
+>       memory_region_set_dirty(&s->cmdmem, 0, CRB_CTRL_CMD_SIZE);
+> +    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
+> +    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, nextChunk, 0);
+> +    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, crbRspRetry, 0);
+> +    g_byte_array_set_size(s->command_buffer, 0);
+>   }
+>   
+>   static enum TPMVersion tpm_crb_get_version(TPMIf *ti)
+> @@ -288,8 +395,7 @@ static void tpm_crb_reset(void *dev)
+>       s->regs[R_CRB_CTRL_RSP_SIZE] = CRB_CTRL_CMD_SIZE;
+>       s->regs[R_CRB_CTRL_RSP_ADDR] = TPM_CRB_ADDR_BASE + A_CRB_DATA_BUFFER;
+>   
+> -    s->be_buffer_size = MIN(tpm_backend_get_buffer_size(s->tpmbe),
+> -                            CRB_CTRL_CMD_SIZE);
+> +    s->be_buffer_size = tpm_backend_get_buffer_size(s->tpmbe);
+>   
+>       if (tpm_backend_startup_tpm(s->tpmbe, s->be_buffer_size) < 0) {
+>           exit(1);
+
+With the two short description added:
+
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 
 
