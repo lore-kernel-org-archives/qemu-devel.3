@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3E64E107BCCF
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83AC6107BCD0
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 17:04:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w15v9-0005is-SP; Fri, 13 Mar 2026 13:03:31 -0400
+	id 1w15vD-0005jG-Kn; Fri, 13 Mar 2026 13:03:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69b43f90.v1-ed71907461274294b9ba13ad43a5e4b1@bounce.vates.tech>)
- id 1w15v3-0005i5-SD
+ <bounce-md_30504962.69b43f94.v1-69a179cf209f4f279f3821309798888a@bounce.vates.tech>)
+ id 1w15v3-0005i4-RI
  for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:03:26 -0400
 Received: from mail179-36.suw41.mandrillapp.com ([198.2.179.36])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69b43f90.v1-ed71907461274294b9ba13ad43a5e4b1@bounce.vates.tech>)
- id 1w15uz-0000hK-NG
+ <bounce-md_30504962.69b43f94.v1-69a179cf209f4f279f3821309798888a@bounce.vates.tech>)
+ id 1w15uu-0000hI-E4
  for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:03:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
- s=mte1; t=1773420432; x=1773690432;
- bh=DC1CKIcFBppLbjt/OuTdGZjS7i/aioQOlGzfj9vAJWw=;
+ s=mte1; t=1773420436; x=1773690436;
+ bh=tBqT15VgX6aHPkE4gLQnkO0oJx1PmUhyS6eAmAg6IcA=;
  h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
  Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
  Subject:From;
- b=k0ku2VIwGEqAExijDTrZ9hMU+1/XDFglQ3JZw9qL0IHjYV1uIdTst9VmNVUV60qLb
- AFOzH7WTNXgiNLyrQ/ic5nW4f23NFEiBkHfu95pynk24AUHI9NOPw7yJ/+z8jbnPLs
- YJksnZcE7ZlQno6P7MRbTRgYdPP8PkkXlmDNlkeGEgdir98yJlmgXRf5ayGOsiPXDB
- BIujej5YzxWqGg+muz5zhbKBTK+iSIKOSsK8Qe2FiFE5naAC8znscZRmfYa4VLDZbv
- O1W+9VBd5I2GH+qAkKPBnx+43p3lEWMPhdKbrOempUQY8dQY8oIG72CYBbDf/gLnTT
- acAJFsyLLttBQ==
+ b=GX5lVS29RUTKr/vbIVOLwFzgCUUFqxSTOIUfJoV4hu8dmQbu4bIFWZvsVBzTHy705
+ c7CbqOt5zCXc+RADwUEFKsp7IhgxU4LszeIRGWb04GkkMdzeMtWgY3BUhlKenWhGU+
+ ckx68gKYyJvt/kvLkjh7u432Br5QvCD1DnZAM8zIYYHVDaAtoccCow8c1w24rTJEc+
+ L1GTcfQu567K9NAIDHe1cuC14Sn2Zsx0fQIQuEIgE0X+1ME6n5Y6Hwni4cg6qzidNe
+ MCD3mW3jj4q8jnINAFrR1TE/7MYUmQNDgZvyairJ0wY4g0Vj460xeC+m9cktaHeHGM
+ KlvQMXMDfLcHg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
- t=1773420432; x=1773680932; i=thierry.escande@vates.tech;
- bh=DC1CKIcFBppLbjt/OuTdGZjS7i/aioQOlGzfj9vAJWw=;
+ t=1773420436; x=1773680936; i=thierry.escande@vates.tech;
+ bh=tBqT15VgX6aHPkE4gLQnkO0oJx1PmUhyS6eAmAg6IcA=;
  h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
  Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
  Subject:From;
- b=YYiIzZWBwRFt9nQVfeIo3jEFJTcILCpxtyKehmzwiy23zLD+qLAtF6lFf7FrVprBf
- w9bHX0A/g7sThOj+e6yxdQaDHEVfCjYzXuWrX+U33SV5kPDsKPS7YEvqo3MWyaQjkV
- NqZHPwTdwwRu96eHi9VDl3tNvmJnqgYDYuW0RFiM9gDM6RA6PoU6XjTc6UShiiccyx
- tBPKVb5qHSCk2qwnDpfmZ6K/iE6QARvc/ZdbkzaCN/PluZeb5LdUFlsWqnMpBx3/1E
- Ul0mwyhZpZHUIzL4mPPMSisZbfkbU0OQR1JHN9FHDPweIBEOhakUiptEHwPf1EhSgL
- aKWt1y9d/Ejuw==
+ b=IKvtfnlQuiiJnkVOazyhGMevNQOw1IbmwXhVJ+rkVMRg8YN18RLN3qm6mN6H5FJzo
+ GVjDkvZRx8JWrq2jL4IiuPKUTWsrmYgO8WeaAV+6wt9Gm5paIBDh9X6u/Pjo5TVVeQ
+ FnHiM6+siNRiJgZ3bC+N4RYkY2aWkPXBt0FWc0woKXD4IlMuE2iJICHJtMM5jnDor7
+ 9xaMX12kSskk4dQyohROhI5GC4IIbnWIDsk3fMl8ConzdyjBI9hgOBpjXYOkFsm++L
+ e6febQyGMYropNNEGkfGa5XnPI261xljXJ+gg8hoxgEDX/hyYIi/qVOvBu0QH5zYBY
+ kv62fwCxdzYOA==
 Received: from pmta12.mandrill.prod.suw01.rsglab.com (localhost [127.0.0.1])
- by mail179-36.suw41.mandrillapp.com (Mailchimp) with ESMTP id 4fXVl41Gjbzlfk15
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 16:47:12 +0000 (GMT)
+ by mail179-36.suw41.mandrillapp.com (Mailchimp) with ESMTP id 4fXVl85nHrzlfcWR
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 16:47:16 +0000 (GMT)
 From: "Thierry Escande" <thierry.escande@vates.tech>
-Subject: =?utf-8?Q?[PATCH=202/4]=20q35/xen:=20Add=20Xen=20support=20for=20Q35?=
+Subject: =?utf-8?Q?[PATCH=203/4]=20q35:=20Fix=20incorrect=20values=20for=20PCIEXBAR=20masks?=
 Received: from [37.26.189.201] by mandrillapp.com id
- ed71907461274294b9ba13ad43a5e4b1; Fri, 13 Mar 2026 16:47:12 +0000
+ 69a179cf209f4f279f3821309798888a; Fri, 13 Mar 2026 16:47:16 +0000
 X-Mailer: git-send-email 2.51.0
 X-Bm-Disclaimer: Yes
 X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1773420431033
+X-Bm-Transport-Timestamp: 1773420435540
 To: qemu-devel@nongnu.org
-Cc: "Thierry Escande" <thierry.escande@vates.tech>,
+Cc: "Alexey Gerasimenko" <x1917x@gmail.com>,
  "Paolo Bonzini" <pbonzini@redhat.com>,
  "Richard Henderson" <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, "Eduardo Habkost" <eduardo@habkost.net>,
- "Anthony PERARD" <anthony@xenproject.org>, xen-devel@lists.xenproject.org
-Message-Id: <20260313164649.794591-3-thierry.escande@vates.tech>
+ "Anthony PERARD" <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
+ "Thierry Escande" <thierry.escande@vates.tech>
+Message-Id: <20260313164649.794591-4-thierry.escande@vates.tech>
 In-Reply-To: <20260313164649.794591-1-thierry.escande@vates.tech>
 References: <20260313164649.794591-1-thierry.escande@vates.tech>
 X-Native-Encoded: 1
 X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
  =20including=20all=20headers,
- =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.ed71907461274294b9ba13ad43a5e4b1?=
+ =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.69a179cf209f4f279f3821309798888a?=
 X-Mandrill-User: md_30504962
 Feedback-ID: 30504962:30504962.20260313:md
-Date: Fri, 13 Mar 2026 16:47:12 +0000
+Date: Fri, 13 Mar 2026 16:47:16 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
 Received-SPF: pass client-ip=198.2.179.36;
- envelope-from=bounce-md_30504962.69b43f90.v1-ed71907461274294b9ba13ad43a5e4b1@bounce.vates.tech;
+ envelope-from=bounce-md_30504962.69b43f94.v1-69a179cf209f4f279f3821309798888a@bounce.vates.tech;
  helo=mail179-36.suw41.mandrillapp.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -102,56 +103,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch intializes HVM pc machine in pc_q35_init() if Xen support is
-enabled.
+From: Alexey Gerasimenko <x1917x@gmail.com>
 
-As done for i440 machine, this also cleanups unrealized flash devices.
-See commit dd29b5c30c (xen: cleanup unrealized flash devices).
+There are two small issues in PCIEXBAR address mask handling:
+- wrong bit positions for address mask bits (see PCIEXBAR description
+  in Q35 datasheet)
+- incorrect usage of 64ADR_MASK
 
+Due to this, attempting to write a valid PCIEXBAR address may cause it
+to shift to another address, causing memory layout corruption where
+emulated MMIO regions may overlap real (passed through) MMIO ranges. Fix
+this by providing correct values.
+
+Signed-off-by: Alexey Gerasimenko <x1917x@gmail.com>
 Signed-off-by: Thierry Escande <thierry.escande@vates.tech>
 ---
- hw/i386/pc_q35.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+ hw/pci-host/q35.c         | 6 +++---
+ include/hw/pci-host/q35.h | 4 ++--
+ 2 files changed, 5 insertions(+), 5 deletions(-)
 
-diff --git a/hw/i386/pc_q35.c b/hw/i386/pc_q35.c
-index cb23322f5a..89dd736d95 100644
---- a/hw/i386/pc_q35.c
-+++ b/hw/i386/pc_q35.c
-@@ -35,8 +35,10 @@
- #include "hw/core/loader.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/rtc/mc146818rtc.h"
-+#include "hw/xen/xen-x86.h"
- #include "system/tcg.h"
- #include "system/kvm.h"
-+#include "system/xen.h"
- #include "hw/i386/kvm/clock.h"
- #include "hw/pci-host/q35.h"
- #include "hw/pci/pcie_port.h"
-@@ -190,6 +192,10 @@ static void pc_q35_init(MachineState *machine)
-         x86ms->below_4g_mem_size = machine->ram_size;
-     }
- 
-+    if (xen_enabled()) {
-+        xen_hvm_init_pc(pcms, &machine->ram);
-+    }
-+
-     pc_machine_init_sgx_epc(pcms);
-     x86_cpus_init(x86ms, pcmc->default_cpu_version);
- 
-@@ -206,7 +212,11 @@ static void pc_q35_init(MachineState *machine)
- 
-     /* allocate ram and load rom/bios */
-     memory_region_init(pci_memory, NULL, "pci", UINT64_MAX);
--    pc_memory_init(pcms, system_memory, pci_memory, pci_hole64_size);
-+    if (!xen_enabled()) {
-+        pc_memory_init(pcms, system_memory, pci_memory, pci_hole64_size);
-+    } else {
-+        pc_system_flash_cleanup_unused(pcms);
-+    }
- 
-     object_property_add_child(OBJECT(machine), "q35", phb);
-     object_property_set_link(phb, PCI_HOST_PROP_RAM_MEM,
+diff --git a/hw/pci-host/q35.c b/hw/pci-host/q35.c
+index e85e4227b3..7368e3c598 100644
+--- a/hw/pci-host/q35.c
++++ b/hw/pci-host/q35.c
+@@ -306,12 +306,12 @@ static void mch_update_pciexbar(MCHPCIState *mch)
+         break;
+     case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M:
+         length = 128 * 1024 * 1024;
+-        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK |
+-            MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
++        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
+         break;
+     case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_64M:
+         length = 64 * 1024 * 1024;
+-        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK;
++        addr_mask |= MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK |
++            MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK;
+         break;
+     case MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_RVD:
+         qemu_log_mask(LOG_GUEST_ERROR, "Q35: Reserved PCIEXBAR LENGTH\n");
+diff --git a/include/hw/pci-host/q35.h b/include/hw/pci-host/q35.h
+index ddafc3f2e3..f31a71010b 100644
+--- a/include/hw/pci-host/q35.h
++++ b/include/hw/pci-host/q35.h
+@@ -100,8 +100,8 @@ struct Q35PCIHost {
+ #define MCH_HOST_BRIDGE_PCIEXBAR_DEFAULT       0xb0000000
+ #define MCH_HOST_BRIDGE_PCIEXBAR_MAX           (0x10000000) /* 256M */
+ #define MCH_HOST_BRIDGE_PCIEXBAR_ADMSK         Q35_MASK(64, 35, 28)
+-#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 26))
+-#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 25))
++#define MCH_HOST_BRIDGE_PCIEXBAR_128ADMSK      ((uint64_t)(1 << 27))
++#define MCH_HOST_BRIDGE_PCIEXBAR_64ADMSK       ((uint64_t)(1 << 26))
+ #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_MASK   ((uint64_t)(0x3 << 1))
+ #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_256M   ((uint64_t)(0x0 << 1))
+ #define MCH_HOST_BRIDGE_PCIEXBAR_LENGTH_128M   ((uint64_t)(0x1 << 1))
 -- 
 2.51.0
 
