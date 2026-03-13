@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B174105F7B0
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:14:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 11985105F7AF
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:14:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w13GM-0005Vv-5k; Fri, 13 Mar 2026 10:13:14 -0400
+	id 1w13GF-0005Tk-9t; Fri, 13 Mar 2026 10:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w13Fs-0005QN-Ir
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:51 -0400
-Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
+ id 1w13Fq-0005QA-RX
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:44 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w13Fl-0006MP-RD
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:44 -0400
-Received: by mail-wr1-x42c.google.com with SMTP id
- ffacd0b85a97d-439ac15f35fso1985423f8f.0
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 07:12:27 -0700 (PDT)
+ id 1w13Fl-0006KP-Q1
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:40 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-439c4a93841so1603616f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 07:12:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1773411147; x=1774015947; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=kQ4LV65YsJl6GdSC63rqTaRoMXCCx30M/dn/ZkgCAiU=;
- b=Rj9ElFrACVLec2VikyrT21BE4noCIJQuYj0sZqd7lSmQrmVGkeEP1cOT0GAyWXf8qP
- t/uQO2INgP3lDEDDyefxp9NOfDTpZjMAB7VssaTl1AyjET+RB/DYVnp7QtZTujXGHT0z
- yXPkW0olH5p/TjCsAmnS1pnW8kG67RzEpaS7c=
+ d=mihalicyn.com; s=mihalicyn; t=1773411144; x=1774015944; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pqEgCTohdCQ4MG+mvo4UTLutrABkzWrvkS61KwtZXxA=;
+ b=j50mq47njJEY+5KRn0tM0FkPBch2Resg2LlfD1TkPLH6yakcvbZO1mvOXlaGVIkkDH
+ 8Eu5HOd0IyA3ZtCsOzeV0aFWQX/b4f88mwISrv/EccinuU26BWpEcUghOTKEGmgr3zLr
+ ZJpxe6xtinEPUxOTmvRNMpt/lwDnTjTOmh96I=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773411147; x=1774015947;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=kQ4LV65YsJl6GdSC63rqTaRoMXCCx30M/dn/ZkgCAiU=;
- b=V833W9mfyolOYOfYwX172zAZtVYkZRvfee8aK1VDtM/314jilcwubZl0hE17sFI3M1
- ihoF/+xErqcUNv3Tla19dTWjSnWNn10agbvpTImkfaXHpKw+dD9BCyvV6gaGLY2ZuNOg
- zTKUELQoVjf/9sCVbg5KVB9UyFVWRIwMYEKWxFnPYIwOb1z78LyPkdxVw04q6gz65G9j
- f2rPR+6eYjj3hBDV4J/w+gonXsGkriG0aMvWVT3MQAoZGsMADjQljpKgQfrarEYPCcMb
- yZG1x+Z4Eu3s6WqJoW8GvyNqGkTaIj2DDiVWWVz4mFoSQAEEUxhgLbn3Oqb6rqiVeSiz
- Ch6Q==
-X-Gm-Message-State: AOJu0Yy+2rC4gD6gYLihDtFz+/poljpDs+r8U8jewa7xtP6w6C5T7FGZ
- ntQ93i9igoKXM5XvjHvcCahocBnx5OQaOHdEjSrhPeSzeTNV0526j1U4XRHoOou+zC2bi0j9g7r
- OKgSVp/Q=
-X-Gm-Gg: ATEYQzxe85crOKXIqk5bbJw0ovLO5beVF8a0yCcpOx5Unvqj62YBLOVSxthhHCvD/A0
- din6RFGP6blw7u1O39980kklVMjN1nJ6tuaTx6EFdRl1d4qadn75Mw/eFxFO0ZB+12JrZIVj88H
- LF+f17adfq/CLismPfVCIZPg8KjzwKDIEakEJD5H2XM9AfNUkeJD72uMTR5TuvFqNxxRanM2pzD
- /XczNMwhkY3mwHoQJWTI3u1Lg7IHVjitOLZderDEkaX8JaFLQug2YqUZ1J1TSDyPBi0TjzLJuTx
- vJS8i/VhCLn9Uh7I3vOyK4PfgHAwAC3150mKuGvBfJYsrBDS8+T84/yoFqzDvlyMkKyP8DTZRs6
- h2TP8XOTl3L3ywqC13BmHsMUBGHNIyH8HzYLq+AftkTmi1ZgqJqUpyvOF7Sh0eTVfJCClu5OPm8
- 7PxY5lUQJ/puAjQLVCCz4c62VRNrSgE4VaAgH7YVqur0UrwaHUFA2FcpxjlBYW0RXJZqTIT3ast
- fT5XKzaLZ3voOsFUkJ1ZL0=
-X-Received: by 2002:a05:6000:4305:b0:439:afea:aff2 with SMTP id
- ffacd0b85a97d-43a04d81d37mr6812192f8f.23.1773411146429; 
- Fri, 13 Mar 2026 07:12:26 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773411144; x=1774015944;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pqEgCTohdCQ4MG+mvo4UTLutrABkzWrvkS61KwtZXxA=;
+ b=LCk/HWG/7SgzaUJOJ0ooPds7z7llYBSAmkSTrsTFV9YyflE6VDyFQc4G7TlrVc2nZa
+ vBPR03pQrRJqBkJle9WqTse8aJw0YPiFMz09F/lOZKpYDtEm+IZtqYxWN8BGpNDBOf/v
+ 0E1UT2DeSihz2pv/ZwiyC/6x8eMH7txZPQq9Jcznm48yKnlmzZfuO3o2zr7CskyS9xiO
+ 1kKexOeSaJ8wQ5DbfoWngl4OFAHF8OKuXWVW+DiAj/UG3KNzpt08Zc/Xk25NbuGVyyyW
+ lnm7dQ6WtfFmpTr7nSGISiF0sX82GetDAGsAHOJOYI7IYaL9JXaSpjYAXXngjIngZw5K
+ uEIQ==
+X-Gm-Message-State: AOJu0YxrQheRDCwSmWt1FcLFkz05L+vWCziV4PGsBh0kWaTvEZH6ZPQt
+ pW85918qqkL2BIE6MmBWctxYveFMLBu3x36hsRYUmYsGfV4v/l335u5b6CpNvgCWs/ekdapHF94
+ sm0z4jkY=
+X-Gm-Gg: ATEYQzySrCzYSLdEfPQihOdo2H2V0gQusyVn/RYzpPObhhimD4eWMoe4fMxKjelkrRy
+ ypvcuYFG9S/0+Iu1v5e0OlGZOsdggVms9E9gJcZ6Cl+ssuCFTYq/wwqUOFQis8rCnG0TMqg4V+m
+ epl02q/H94VhXeXbZ8XZqQiVpB/m2ggjW5nuzkxNYiXF0QjQoDFYFq7hL/1Mk7H1KV6+BgG0708
+ oG3Ce+CiE+WGcjwnkKCRhnKA/SCGXzDF7LDWQrV89ZSjZod3ik+i+GtsDdkUeSbFcLsIelWyhVW
+ INQv+t1W3PM1D5OrGXuXRxp0uVwYUeC5SGykKYtHTOoedv3akOyhaow6gR10ohLM6VhHjSlURH6
+ WHZLUiwp4sXUtvGFLtkrjgFN+UG335X/JPXCeInPaEfQ2voukTIPsy5mr6P8lEXCbf2Z6PmxnUA
+ GEFe2nGp49WpT7XVs7iMYw+rCSjkGIe2eraUxjx8dE2oTWevbZ+2uLo9xfMukElnrTZo5/D644A
+ HQAajQmol2RUPHJ0wRbT9Q=
+X-Received: by 2002:a5d:5e01:0:b0:439:bc2b:cb50 with SMTP id
+ ffacd0b85a97d-43a04d70f87mr6523852f8f.4.1773411143759; 
+ Fri, 13 Mar 2026 07:12:23 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c00321ddb23f48fbb73.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:321d:db23:f48f:bb73])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe19ad9asm18580939f8f.7.2026.03.13.07.12.25
+ ffacd0b85a97d-439fe19ad9asm18580939f8f.7.2026.03.13.07.12.22
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Mar 2026 07:12:25 -0700 (PDT)
+ Fri, 13 Mar 2026 07:12:23 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Jesper Devantier <foss@defmacro.it>,
@@ -78,17 +77,15 @@ Cc: Peter Xu <peterx@redhat.com>, Jesper Devantier <foss@defmacro.it>,
  Fam Zheng <fam@euphon.net>, Klaus Jensen <its@irrelevant.dk>,
  Zhao Liu <zhao1.liu@intel.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v4 2/8] migration: add
- VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
-Date: Fri, 13 Mar 2026 15:12:15 +0100
-Message-ID: <20260313141221.359503-3-alexander@mihalicyn.com>
+Subject: [PATCH v4 0/8] hw/nvme: add basic live migration support
+Date: Fri, 13 Mar 2026 15:12:13 +0100
+Message-ID: <20260313141221.359503-1-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260313141221.359503-1-alexander@mihalicyn.com>
-References: <20260313141221.359503-1-alexander@mihalicyn.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,397 +110,91 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC, which
-helps to save/restore a dynamic array of pointers to
-structures.
+Dear friends,
 
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-v2:
-- added VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC
-v4:
-- almost completely reworked, new flag VMS_ARRAY_OF_POINTER_ALLOW_NULL
-  was introduced as suggested by Peter
----
- include/migration/vmstate.h |  77 ++++++++++++++++++++++++++-
- migration/savevm.c          |  26 +++++++++
- migration/vmstate-types.c   | 102 ++++++++++++++++++++++++++++++++++++
- migration/vmstate.c         |  54 +++++++++++++++----
- 4 files changed, 247 insertions(+), 12 deletions(-)
+This patchset adds basic live migration support for
+QEMU emulated NVMe device.
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 5d7dfe70643..70588ed86d7 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -151,7 +151,19 @@ enum VMStateFlags {
-     VMS_VSTRUCT           = 0x8000,
- 
-     /* Marker for end of list */
--    VMS_END = 0x10000
-+    VMS_END                         = 0x10000,
-+
-+    /* The field is a (fixed-size or variable-size) array of pointers
-+     * (e.g. struct a { uint8_t **b; }) that can contain NULL values.
-+     * This instructs vmstate engine to:
-+     * - Dereference each array entry before using it.
-+     * - Assume that array is initialized with NULLs on load phase
-+     * - Automatically allocate memory for array entries (with size
-+     *   specified in (VMStateField).start) on load phase
-+     * - Produce NULL/not-NULL markers in migration stream
-+     *
-+     * Note: Does not imply VMS_ARRAY_OF_POINTER; it needs to be set explicitly. */
-+    VMS_ARRAY_OF_POINTER_ALLOW_NULL = 0x20000,
- };
- 
- typedef enum {
-@@ -184,6 +196,7 @@ struct VMStateField {
-     int version_id;
-     int struct_version_id;
-     bool (*field_exists)(void *opaque, int version_id);
-+    const struct VMStateField *real_field;
- };
- 
- struct VMStateDescription {
-@@ -252,8 +265,10 @@ extern const VMStateInfo vmstate_info_uint64;
- extern const VMStateInfo vmstate_info_fd;
- 
- /** Put this in the stream when migrating a null pointer.*/
--#define VMS_NULLPTR_MARKER (0x30U) /* '0' */
-+#define VMS_NULLPTR_MARKER    (0x30U) /* '0' */
-+#define VMS_NOTNULLPTR_MARKER (0x31U) /* '1' */
- extern const VMStateInfo vmstate_info_nullptr;
-+extern const VMStateInfo vmstate_info_maybeptr;
- 
- extern const VMStateInfo vmstate_info_cpudouble;
- 
-@@ -265,6 +280,7 @@ extern const VMStateInfo vmstate_info_bitmap;
- extern const VMStateInfo vmstate_info_qtailq;
- extern const VMStateInfo vmstate_info_gtree;
- extern const VMStateInfo vmstate_info_qlist;
-+extern const VMStateInfo vmstate_info_ptrs_array_entry;
- 
- #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
- /*
-@@ -547,6 +563,63 @@ extern const VMStateInfo vmstate_info_qlist;
-     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
- }
- 
-+/*
-+ * For migrating a dynamically allocated uint{8,32}-indexed array
-+ * of pointers to structures (with NULL entries and with auto memory allocation).
-+ *
-+ * _type: type of structure pointed to
-+ * _vmsd: VMSD for structure _type (when VMS_STRUCT is set)
-+ * _info: VMStateInfo for _type (when VMS_STRUCT is not set)
-+ * start: size of (_type) pointed to (for auto memory allocation)
-+ */
-+#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
-+    .name       = (stringify(_field)),                               \
-+    .version_id = (_version),                                        \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
-+    .vmsd       = &(_vmsd),                                          \
-+    .start      = sizeof(_type),                                     \
-+    .size       = sizeof(_type *),                                   \
-+    .flags      = VMS_POINTER|VMS_VARRAY_UINT8|VMS_ARRAY_OF_POINTER| \
-+                  VMS_ARRAY_OF_POINTER_ALLOW_NULL|VMS_STRUCT,        \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type *),   \
-+}
-+
-+#define VMSTATE_VARRAY_OF_POINTER_UINT8_ALLOC(_field, _state, _field_num, _version, _info, _type) { \
-+    .name       = (stringify(_field)),                               \
-+    .version_id = (_version),                                        \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
-+    .info       = &(_info),                                          \
-+    .start      = sizeof(_type),                                     \
-+    .size       = sizeof(_type *),                                   \
-+    .flags      = VMS_POINTER|VMS_VARRAY_UINT8|VMS_ARRAY_OF_POINTER| \
-+                  VMS_ARRAY_OF_POINTER_ALLOW_NULL,                   \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type *),   \
-+}
-+
-+#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(_field, _state, _field_num, _version, _vmsd, _type) { \
-+    .name       = (stringify(_field)),                                \
-+    .version_id = (_version),                                         \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
-+    .vmsd       = &(_vmsd),                                           \
-+    .start      = sizeof(_type),                                      \
-+    .size       = sizeof(_type *),                                    \
-+    .flags      = VMS_POINTER|VMS_VARRAY_UINT32|VMS_ARRAY_OF_POINTER| \
-+                  VMS_ARRAY_OF_POINTER_ALLOW_NULL|VMS_STRUCT,         \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
-+}
-+
-+#define VMSTATE_VARRAY_OF_POINTER_UINT32_ALLOC(_field, _state, _field_num, _version, _info, _type) { \
-+    .name       = (stringify(_field)),                                \
-+    .version_id = (_version),                                         \
-+    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
-+    .info       = &(_info),                                           \
-+    .start      = sizeof(_type),                                      \
-+    .size       = sizeof(_type *),                                    \
-+    .flags      = VMS_POINTER|VMS_VARRAY_UINT32|VMS_ARRAY_OF_POINTER| \
-+                  VMS_ARRAY_OF_POINTER_ALLOW_NULL,                    \
-+    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
-+}
-+
- #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
-     .name       = (stringify(_field)),                                    \
-     .version_id = (_version),                                             \
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 197c89e0e65..1ce618d2e66 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -863,6 +863,32 @@ static void vmstate_check(const VMStateDescription *vmsd)
- 
-     if (field) {
-         while (field->name) {
-+            /*
-+             * VMS_ARRAY_OF_POINTER must be used only together
-+             * with one of VMS_(V)ARRAY* flags.
-+             */
-+            assert(!(field->flags & VMS_ARRAY_OF_POINTER) ||
-+                   ((field->flags & (VMS_ARRAY | VMS_VARRAY_INT32 |
-+                     VMS_VARRAY_UINT16 | VMS_VARRAY_UINT8 | VMS_VARRAY_UINT32))));
-+
-+            /*
-+             * When VMS_ARRAY_OF_POINTER_ALLOW_NULL is used, we must:
-+             * 1. have VMS_ARRAY_OF_POINTER set too;
-+             * 2. have ->start field set and it should tell us a size
-+             *    of memory chunk we should allocate for every array member.
-+             */
-+            assert(!(field->flags & VMS_ARRAY_OF_POINTER_ALLOW_NULL) ||
-+                   (field->flags & VMS_ARRAY_OF_POINTER));
-+            assert(!(field->flags & VMS_ARRAY_OF_POINTER_ALLOW_NULL) ||
-+                   field->start);
-+
-+            /*
-+             * (VMStateField).real_field is only for internal purposes
-+             * and should never be used by any user-defined VMStateField.
-+             * Currently, it is only used by vmsd_create_fake_nullptr_field().
-+             */
-+            assert(!field->real_field);
-+
-             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
-                 /* Recurse to sub structures */
-                 vmstate_check(field->vmsd);
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index 89cb2114721..8e5431057db 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -377,6 +377,108 @@ const VMStateInfo vmstate_info_nullptr = {
-     .put  = put_nullptr,
- };
- 
-+static int get_maybeptr(QEMUFile *f, void *ppv, size_t unused_size,
-+                        const VMStateField *field)
-+{
-+    Error *local_err = NULL;
-+    Error **errp = &local_err;
-+    int ret = 0;
-+    const VMStateField *real_field = field->real_field;
-+    /* size of structure pointed to by elements of array */
-+    size_t size = real_field->start;
-+    int marker;
-+
-+    assert(size);
-+
-+    if (ppv == NULL) {
-+        error_report("vmstate: get_maybeptr must be called with ppv != NULL");
-+        return -EINVAL;
-+    }
-+
-+    /*
-+     * We start from a clean array, all elements must be NULL, unless
-+     * something we haven't prepared for has changed in vmstate_save_state_v().
-+     * Let's check for this just in case.
-+     */
-+    if (*(void **)ppv != NULL) {
-+        error_report("vmstate: get_maybeptr must be called with *ppv == NULL");
-+        return -EINVAL;
-+    }
-+
-+    marker = qemu_get_byte(f);
-+    assert(marker == VMS_NULLPTR_MARKER || marker == VMS_NOTNULLPTR_MARKER);
-+
-+    if (marker == VMS_NOTNULLPTR_MARKER) {
-+        void *pv;
-+
-+        /* allocate memory for structure */
-+        pv = g_malloc0(size);
-+
-+        ret = vmstate_load_field(f, pv, size, real_field, errp);
-+        if (ret) {
-+            error_report_err(local_err);
-+            g_free(pv);
-+            return ret;
-+        }
-+
-+        *(void **)ppv = pv;
-+    }
-+
-+    return ret;
-+}
-+
-+static int put_maybeptr(QEMUFile *f, void *ppv, size_t unused_size,
-+                        const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    const VMStateField *real_field = field->real_field;
-+    int ret = 0;
-+    Error *local_err = NULL;
-+    Error **errp = &local_err;
-+    /* size of structure pointed to by elements of array */
-+    size_t size = real_field->start;
-+    void *pv;
-+
-+    assert(size);
-+
-+    /*
-+     * (ppv) is an address of an i-th element of a dynamic array.
-+     *
-+     * (ppv) can not be NULL unless we have some regression/bug in
-+     * vmstate_save_state_v(), because it is result of pointer arithemic like:
-+     * first_elem + size * i.
-+     */
-+    if (ppv == NULL) {
-+        error_report("vmstate: put_maybeptr must be called with ppv != NULL");
-+        return -EINVAL;
-+    }
-+
-+    /* get a pointer to a structure */
-+    pv = *(void **)ppv;
-+
-+    if (pv == NULL) {
-+        /* write a mark telling that there was a NULL pointer */
-+        qemu_put_byte(f, VMS_NULLPTR_MARKER);
-+        return 0;
-+    }
-+
-+    /* if pv is not NULL, write a marker and save field using vmstate_save_field() */
-+    qemu_put_byte(f, VMS_NOTNULLPTR_MARKER);
-+
-+    ret = vmstate_save_field(f, pv, size, real_field, vmdesc, errp);
-+    if (ret) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-+    return 0;
-+}
-+
-+const VMStateInfo vmstate_info_maybeptr = {
-+    .name = "maybeptr",
-+    .get  = get_maybeptr,
-+    .put  = put_maybeptr,
-+};
-+
- /* 64 bit unsigned int. See that the received value is the same than the one
-    in the field */
- 
-diff --git a/migration/vmstate.c b/migration/vmstate.c
-index 8d192bcaa27..e52046f069d 100644
---- a/migration/vmstate.c
-+++ b/migration/vmstate.c
-@@ -71,10 +71,15 @@ vmsd_create_fake_nullptr_field(const VMStateField *field)
-     /* Do not need "field_exists" check as it always exists (which is null) */
-     fake->field_exists = NULL;
- 
--    /* See vmstate_info_nullptr - use 1 byte to represent nullptr */
--    fake->size = 1;
--    fake->info = &vmstate_info_nullptr;
--    fake->flags = VMS_SINGLE;
-+    if (!(field->flags & VMS_ARRAY_OF_POINTER_ALLOW_NULL)) {
-+        /* See vmstate_info_nullptr - use 1 byte to represent nullptr */
-+        fake->size = 1;
-+        fake->info = &vmstate_info_nullptr;
-+        fake->flags = VMS_SINGLE;
-+    } else {
-+        fake->real_field = field;
-+        fake->info = &vmstate_info_maybeptr;
-+    }
- 
-     /* All the rest fields shouldn't matter.. */
- 
-@@ -212,13 +217,28 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-             }
-             for (i = 0; i < n_elems; i++) {
-                 void *curr_elem = first_elem + size * i;
-+                bool need_fake_field = false;
-                 const VMStateField *inner_field;
- 
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
--                    curr_elem = *(void **)curr_elem;
-+                    if (!(field->flags & VMS_ARRAY_OF_POINTER_ALLOW_NULL)) {
-+                        assert(curr_elem);
-+                        curr_elem = *(void **)curr_elem;
-+                        need_fake_field = !curr_elem;
-+                    } else {
-+                        /*
-+                         * We expect array of pointers to be initialized.
-+                         * We don't want to overwrite curr_elem with it's
-+                         * dereferenced value, because we may need to
-+                         * allocate memory (depending on what is in the migration
-+                         * stream) and write to it later.
-+                         */
-+                        assert(!*(void **)curr_elem);
-+                        need_fake_field = true;
-+                    }
-                 }
- 
--                if (!curr_elem && size) {
-+                if (need_fake_field && size) {
-                     /*
-                      * If null pointer found (which should only happen in
-                      * an array of pointers), use null placeholder and do
-@@ -226,6 +246,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
-                      */
-                     inner_field = vmsd_create_fake_nullptr_field(field);
-                 } else {
-+                    assert(curr_elem || !size);
-                     inner_field = field;
-                 }
- 
-@@ -507,25 +528,38 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
- 
-             for (i = 0; i < n_elems; i++) {
-                 void *curr_elem = first_elem + size * i;
-+                bool need_fake_field = false;
-                 const VMStateField *inner_field;
-                 bool is_null;
-                 int max_elems = n_elems - i;
- 
-                 old_offset = qemu_file_transferred(f);
-                 if (field->flags & VMS_ARRAY_OF_POINTER) {
--                    assert(curr_elem);
--                    curr_elem = *(void **)curr_elem;
-+                    if (!(field->flags & VMS_ARRAY_OF_POINTER_ALLOW_NULL)) {
-+                        assert(curr_elem);
-+                        curr_elem = *(void **)curr_elem;
-+                        need_fake_field = !curr_elem;
-+                    } else {
-+                        /*
-+                         * We always need a fake field to properly handle
-+                         * VMS_ARRAY_OF_POINTER_ALLOW_NULL case, because
-+                         * even if pointer is not NULL, we still want to
-+                         * write a marker in the migration stream.
-+                         */
-+                        need_fake_field = true;
-+                    }
-                 }
- 
--                if (!curr_elem && size) {
-+                if (need_fake_field && size) {
-                     /*
-                      * If null pointer found (which should only happen in
-                      * an array of pointers), use null placeholder and do
-                      * not follow.
-                      */
-                     inner_field = vmsd_create_fake_nullptr_field(field);
--                    is_null = true;
-+                    is_null = !curr_elem;
-                 } else {
-+                    assert(curr_elem || !size);
-                     inner_field = field;
-                     is_null = false;
-                 }
+Implementation has some limitations:
+- only one NVMe namespace is supported
+- SMART counters are not preserved
+- CMB is not supported
+- PMR is not supported
+- SPDM is not supported
+- SR-IOV is not supported
+
+I believe this is something I can support in next patchset versions or
+separately on-demand (when usecase appears).
+
+Testing.
+
+This patch series was manually tested on:
+- Debian 13.3 VM (kernel 6.12.69+deb13-amd64) using fio on *non-root* NVMe disk
+  (root disk was virtio-scsi):
+
+time fio --name=nvme-verify \
+    --filename=/dev/nvme0n1 \
+    --size=5G \
+    --rw=randwrite \
+    --bs=4k \
+    --iodepth=16 \
+    --numjobs=1 \
+    --direct=0 \
+    --ioengine=io_uring \
+    --verify=crc32c \
+    --verify_fatal=1
+
+- Windows Server 2022 VM (NVMe drive was a *root* disk) with opened browser
+  playing video.
+
+No defects were found.
+
+Changelog for version 4:
+- vmstate dynamic array support reworked as suggested by Peter Xu
+  VMS_ARRAY_OF_POINTER_ALLOW_NULL flag was introduced
+  qtests were added
+- NVMe migration blockers were reworked as Klaus has requested earlier
+  Now, instead of having "deny list" approach, we have more strict pattern
+  of NVMe features filtering and it should be harded to break migration when
+  adding new NVMe features.
+
+Changelog for version 3:
+- rebased
+- simple functional test was added (in accordance with Klaus Jensen's review comment)
+  $ meson test 'func-x86_64-nvme_migration' --setup thorough -C build
+
+Changelog for version 2:
+- full support for AERs (in-flight requests and queued events too)
+
+Kind regards,
+Alex
+
+Alexander Mikhalitsyn (8):
+  migration/vmstate: introduce vmstate_{load,save}_field helpers
+  migration: add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
+  tests/unit/test-vmstate: add tests for VMS_ARRAY_OF_POINTER_ALLOW_NULL
+  tests/functional/migration: add VM launch/configure hooks
+  hw/nvme: add migration blockers for non-supported cases
+  hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
+  hw/nvme: add basic live migration support
+  tests/functional/x86_64: add migration test for NVMe device
+
+ hw/nvme/ctrl.c                                | 874 +++++++++++++++++-
+ hw/nvme/ns.c                                  | 160 ++++
+ hw/nvme/nvme.h                                |   8 +
+ hw/nvme/trace-events                          |  11 +
+ include/block/nvme.h                          |  12 +
+ include/migration/vmstate.h                   |  81 +-
+ migration/savevm.c                            |  26 +
+ migration/vmstate-types.c                     | 102 ++
+ migration/vmstate.c                           | 138 ++-
+ tests/functional/migration.py                 |  22 +-
+ tests/functional/x86_64/meson.build           |   1 +
+ .../functional/x86_64/test_nvme_migration.py  | 159 ++++
+ tests/unit/test-vmstate.c                     | 157 ++++
+ 13 files changed, 1674 insertions(+), 77 deletions(-)
+ create mode 100755 tests/functional/x86_64/test_nvme_migration.py
+
 -- 
 2.47.3
 
