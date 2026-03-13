@@ -4,114 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D428105F78C
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 11:22:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12B78105F79B
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 11:23:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w10bD-0002LA-H9; Fri, 13 Mar 2026 07:22:35 -0400
+	id 1w10cJ-0003HL-Tg; Fri, 13 Mar 2026 07:23:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w10bB-0002Kp-8P
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:22:33 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w10b8-00013d-PS
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:22:32 -0400
-Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62D6dh862205911; Fri, 13 Mar 2026 11:22:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=gSDtxP
- zRvdjTFAk4GlbKKn+ScGKJnaf8FIGCHZB0JP4=; b=l2Hqrml2Bl5YAThx1DcDqx
- cCf2a0pXMm7Ml559KkrWYLNh5dF78Z6xODxXx3YHl4a6Jw7yZRyeQ0A3EzBkr3yq
- bAambrCYg5nPzCXY2RkKC+B+PnMSWQbPBnUN9xA+Ox325TT1dzIdmRQ5k3hzLNbr
- fPX0DQNJfwjuixs/GDBmhGDkmsTqv3z+5cnqEwT+qUO/qUBgj2ZgLpqKBFxpqRDO
- EGOhCOzT3tGgGTEoXQcJGPHeYG9YWE9ayvuKMiYptf2kxnFZ/n/Mdl0Sv25dR1TX
- iERXrdn4ajYv3PLYUQPxT5zTg8JopKnYe6vgXtEsh9YTN9i5IHnHTxCx8A/+bLKg
- ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh98f715-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 11:22:28 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62DAL9fV018371;
- Fri, 13 Mar 2026 11:22:28 GMT
-Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cuha86e72-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 11:22:28 +0000
-Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
- [10.20.54.106])
- by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62DBMOFm56623440
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Mar 2026 11:22:24 GMT
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 82E4820040;
- Fri, 13 Mar 2026 11:22:24 +0000 (GMT)
-Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1394920043;
- Fri, 13 Mar 2026 11:22:23 +0000 (GMT)
-Received: from [9.124.217.187] (unknown [9.124.217.187])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Mar 2026 11:22:22 +0000 (GMT)
-Message-ID: <84652150-2af1-451a-8dc1-11f2718dd253@linux.ibm.com>
-Date: Fri, 13 Mar 2026 16:52:21 +0530
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w10cG-0003H1-Gv
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:23:40 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w10cE-0001Np-Ee
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:23:40 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64ad79df972so2402468d50.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 04:23:38 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773401017; cv=none;
+ d=google.com; s=arc-20240605;
+ b=guPl63g264+IO+yfaC1IElZuGzvojvsLfHx2OvtKj5Vu2fhYw28k+52h154p2CGR0X
+ 4Y5GEAxz2oFamEUP/S6w9841fATy3uU2kHcRIheo6ahYRMNUrizFN1Safx2VIBuMliSj
+ jR0i5REBehgaeOJPbjhv4n53ndE2u906gDkNeFTuMTy1Op4n2KJW7q8OUY+6PlMXUbxe
+ p2xnVTBiJM2ssj5Tt7DPZyJdFOJnOgdzebg6OPIfC+Lh+ojc7uLnhzA+SU8eQMhJ5L2F
+ V4cUO0weR+tYJUf7CKr9y51UEoLNaEbmYoWBCrzEm3bQtxu9s4p4LWoA1X1nSjm+C45y
+ 2qog==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=jIIbFzv9+nlk5uUqecp4x0ZPZ8Bzd4r0xHj2cV6GfAA=;
+ fh=TI5KUJ7nZ5i/oZzH/JVeDu8repzAGZFnBS9WrD4PI+g=;
+ b=Hgm37IPkcZCUk6R5cWhpZM0EIqsfn98k78dmJFVo03BdoQUi38wWalX7OByDfTzFBr
+ Efv07xVdr7RI5BHLB5fiwp0k+6bwXF3MmjXjrGbjtKEgv9nyCYcXUk+u++AvNW7rWibd
+ 8DvW56Puc3Nbox6UVaeKxS3WjQLmI2wYFfiCLNavoAwOElas/DUPbnlfSqQPCAo35TIC
+ d/w02mWvHJ9TYaiBg0q/RkJf2EE2CXCE7Zz62OG2FVx5uxHG+UdEo/lpb9vy/vpcvE52
+ wLI7CZqDSTbYoKoxXvSRICgaYfVgQFWktxCl9ERGwL6b+8iZ5ESxui+8ycmH6mpUyXcX
+ XO4g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773401017; x=1774005817; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=jIIbFzv9+nlk5uUqecp4x0ZPZ8Bzd4r0xHj2cV6GfAA=;
+ b=Lro75AjNjSoUUe1a7ph9EQDTD2un/MKtRVUSNmOOa77Mc+G7lfnul0+qdmt0WLUvD6
+ k5DqOentpjawXDBkTHf+ZOOnLXX6wkEXpkeT+jaa+SUnh4mX9eceq6SMfGRRNf8hLbHg
+ a5d1igVGQOcQxh5ygv3NXbdZVikrYFDvI3SQs6nqU1nHkRfv7CmR7hu0Z5gPPCYM1rfH
+ 3Ovql9OCt0in5bfeAArDeJ00BPRdMwAQpdS81VgGGyd2UrJ+F9kIMB/Atoh8LFJwUmxT
+ EH2z+3qFXIcLhsTW6wqYl+s6DnCiPuvf3PagVISz68ZHGDzk/+4GWXd+wkmYJqIer/RG
+ /ZEw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773401017; x=1774005817;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=jIIbFzv9+nlk5uUqecp4x0ZPZ8Bzd4r0xHj2cV6GfAA=;
+ b=TvDKj7vm6iGXDc9xoEqTqzcesADZGyNBAMhCzZxc/Hx/E3PF9qM7/gDkNrW88uH4SM
+ iTnwNz7v+wIWqkYjHchrNuXxm4lxSX7RVNXzolnDdZA0Yan5uK8BUiblLQdFnM9jGZnc
+ b0z2/LAFDCk8o6+KpRt8ZwlK6lz1cXuylqo+Af0OBQg6ZONgSFQh1xrx7xNTzHw7EY3Y
+ gee1HwrBzj5SEGQUbj03T5wcej+2xzfZir285K+i6iB8PU7VwDVlLQ/Y01tTMLlCxJwO
+ ORiEBxnopd5dqi4hxU+lsegveua5PlUjIJeBnnyqhQo25uVO91tcawEbirQjPjB6pzNT
+ 9CYQ==
+X-Gm-Message-State: AOJu0YzhHivqm7i/y3jldX9+3aq8YQwxKqmLPVyC4mR1pNKpmN1tnYBE
+ Sn2Syuk7Kk63DJy8yjLUKOADFG6ubkmJLy5RNiw9VGiu5QOGrAlJ2BLGpEgSAqDyXMq+H7ddNSF
+ MDEMH1hcTTD+JLE4cA8plPI03eEmIPm1b/17E9Xl5vw==
+X-Gm-Gg: ATEYQzzFRki+PA8o+EujVdPK+48Fopiqy8bm07Dx7yCDJuHz16tug/pwa9aaCCQZK+F
+ JMidsWL0lYsxfpgcnHdDjeXA0Hu2AsutMYBE+1JRzCrFWFik8vN2dJPsjh0MX/vMN45Wt0V/xJD
+ Xq22G/cZozaHrkHIuanVhEf9VS4xYs0Q00DsT2mhv0KsDIfFmLpvQORtIqtXQc8XI4kOflA62tZ
+ zYTuUKKrkHIxqQUtm7GGRAgdS343mOx55eHu3V4Wwvatcs6pRAqVj20V/GvTmb0KQQDD1hKIeR5
+ MYay20beVhWCXY/j28BfnPod1+6Ec+EAhEiFsNFzw9MHjc3pMFMOVybV7sMrHVAp75c=
+X-Received: by 2002:a05:690e:4190:b0:64c:9a66:9a13 with SMTP id
+ 956f58d0204a3-64e62cf446dmr2859163d50.0.1773401017097; Fri, 13 Mar 2026
+ 04:23:37 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 00/10] PPC PR for 11.0 soft-freeze
-To: Thomas Huth <thuth@redhat.com>, Peter Maydell <peter.maydell@linaro.org>
-Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>, qemu-devel@nongnu.org
-References: <20260310151432.92531-1-harshpb@linux.ibm.com>
- <CAFEAcA9FjtvJanmbvpAXMjY0zURZch9PruHUsXEXOtPiVJgarg@mail.gmail.com>
- <1389084e-3ed8-4a5c-aac5-bfee420b0916@linux.ibm.com>
- <abEDACgG6T4N9F0P@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
- <a2db11f6-9183-442a-952e-faaec9f97313@redhat.com>
-Content-Language: en-US
-From: Aditya Gupta <adityag@linux.ibm.com>
-In-Reply-To: <a2db11f6-9183-442a-952e-faaec9f97313@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=M+pA6iws c=1 sm=1 tr=0 ts=69b3f375 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=p0WdMEafAAAA:8
- a=YMn2DTr_xqvraGRWJu0A:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
-X-Proofpoint-GUID: SsROQXg_iRuWyeGE_d6Il5a5eoKHCNbM
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA4NiBTYWx0ZWRfXwIyAevOUMHIm
- pQZKOG7OeBA6yL6xkfi+Xg11Av/QTGNzd/cm9lk7tc/5G1icWdy/p+OUyCJW52x1eBNax2/5tkB
- lcFUtt1oSRvDXH8PROZ+Wo//cs0evkGR5EqdM0ZuYOZp1ffDLTM01TfAMuNFWeGDShSFZw8DVcy
- FRtnA/2bQBJot7SE94RIoHlF8q0ojRkwS3nNYSxuuh3KbGFo5VluPu9sqroKwvnNLll1ZQri4ZP
- sDtHm0NdlDpETBdKqrmmPYFzny2j9mjhNlQU6Mov+E0n+vkj37zcY3uqIT8Jtj+zIkb7LheVafk
- 9Nzj3KN7dDiCJVrF7qrVsAj5ICGVel5jw16QG9uFmss90zRU3Jb4oxibFqYMsaETFhuRmzKi+K1
- y1tZGdLenY+4AqDydjtq4iTrbwV2ku4N5GOArXHJo65xhNVKvRImls+yjR5wKmPt49zESLgCkyi
- KF63+IFiWlD7LnWClAw==
-X-Proofpoint-ORIG-GUID: SsROQXg_iRuWyeGE_d6Il5a5eoKHCNbM
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_02,2026-03-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
- impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0 adultscore=0
- malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603130086
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <cover.1773236195.git.1774596582@qq.com>
+ <tencent_7A1227883216A4103DA25F5A585E86DFE307@qq.com>
+In-Reply-To: <tencent_7A1227883216A4103DA25F5A585E86DFE307@qq.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Mar 2026 11:23:25 +0000
+X-Gm-Features: AaiRm52x3JsfREpaiTVY6zqSpcaFIngynQl7BNdRnWD9XJScplkfnpho7tEUjJM
+Message-ID: <CAFEAcA8wbcSdkn0dje0-sq4xM=2Bgf1DqPmG7iNLNQ8R1ao7ZA@mail.gmail.com>
+Subject: Re: [PATCH v1 1/3] An interrupt is generated after the DMA transfer
+ complete.
+To: 1774596582@qq.com
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,48 +115,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11/03/26 13:23, Thomas Huth wrote:
+On Wed, 11 Mar 2026 at 14:25, <1774596582@qq.com> wrote:
+>
+> From: TaoDing <1774596582@qq.com>
+>
+> PL080 cannot trigger interrupt correctly. Reproduce this problem in a simple way.
+>
+> In the versatilpb board, the interrupt output of pl080 is connected to the 17th interrupt input of pl190.
+> By reading the status register of pl190, determined whether there is an interrupt generated for the corresponding input.
+>
+> The basic address of pl080 is 0x10130000, and the basic address of pl190 is 0x10140000.
+> Read the value of the address through the qemu monitor.
+>
+> Configuration
+>     ../configure --target-list=arm-softmmu --enable-debug
+> Reproducer
+>     ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
+>     -device loader,addr=0x00000000,data=0x11223344,data-len=4 \
+>     -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
+>     -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
+>     -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
+>     -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
+>     -device loader,addr=0x10130108,data=0x00000000,data-len=4 \
+>     -device loader,addr=0x1013010C,data=0x9e4bf001,data-len=4 \
+>     -device loader,addr=0x10130110,data=0x0000c001,data-len=4
+>
+> Qemu monitor
+>     (qemu) xp /1wx 0x10140008
+>     10140008: 0x00000000
+>
+> The result correctly after fixed
+>     (qemu) xp /1wx 0x10140008
+>     10140008: 0x00020000
+>
+>
+> ---
+>  hw/dma/pl080.c | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+> index 3f8acb03de..1a39954f04 100644
+> --- a/hw/dma/pl080.c
+> +++ b/hw/dma/pl080.c
+> @@ -309,6 +309,7 @@ static void pl080_write(void *opaque, hwaddr offset,
+>          case 4: /* Configuration */
+>              s->chan[i].conf = value;
+>              pl080_run(s);
+> +            pl080_update(s);
+>              break;
+>          }
+>          return;
 
-> On 11/03/2026 07.03, Aditya Gupta wrote:
->> Hello Peter,
->>
->> I run the pipeline everytime before sending, curious about the tests I
->> missed.
->>
->> 1. How can I get the console log of the failed centos test ? Or how to
->> (or if I can) run that test on my system ?
->>
->> I did not find the log in the gitlab test's artifacts.
->> Surprised with the failure on the particular centos distro.
->
-> The console log can be found here:
->
-> https://gitlab.com/qemu-project/qemu/-/jobs/13431423958/artifacts/browse/build/tests/functional/ppc64/test_fadump.QEMUFadump.test_fadump_powernv/ 
->
->
-> See docs/devel/testing/functional.rst for information on how to run 
-> functional tests locally.
->
->> 2. Is there a way to enable these tests, or to get access to these
->> tests: aarch64-macos-build & x64-freebsd-14-build
->>
->> I read these are run using cirrus ci, can these be run on our systems,
->> if not on gitlab ?
->
-> See .gitlab-ci.d/cirrus/README.rst for information on how to set up 
-> the Cirrus-CI for your own cloned repository on gitlab.
+I just noticed that you used a slightly different fix here
+from your other version of this patch:
 
-Thank you Thomas !
+https://patchew.org/QEMU/cover.1773301927.git.dingtao0430@163.com/7584486ba62bc6d767c0d132dc843067f8c5efff.1773301927.git.dingtao0430@163.com/
 
-Will read it.
+where you put the pl080_update() call into pl080_run().
+I think I prefer this one.
 
+For future patches, please if you're sending a different
+version can you make sure you mark it as "v2" etc, so
+reviewers can see that it's different, and note any
+interesting changes from previous versions in either
+the cover letter or below the '---' line in the relevant
+patch?
 
-Thanks,
-
-- Aditya G
-
->
->  HTH,
->   Thomas
->
+thanks
+-- PMM
 
