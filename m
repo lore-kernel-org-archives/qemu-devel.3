@@ -4,82 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A3913107BCCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 17:04:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D5CD107BCCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 17:05:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w15v7-0005iH-NW; Fri, 13 Mar 2026 13:03:30 -0400
+	id 1w15wy-0006uk-NW; Fri, 13 Mar 2026 13:05:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69b43f98.v1-79041865b121492dbb1dcf5cc39c7459@bounce.vates.tech>)
- id 1w15ur-0005hJ-Nj
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:03:20 -0400
-Received: from mail136-12.atl41.mandrillapp.com ([198.2.136.12])
+ <bounce-md_30504962.69b43f80.v1-3d41f353656f42f1b44bd5db9d5811ec@bounce.vates.tech>)
+ id 1w15wu-0006ta-60
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:05:20 -0400
+Received: from mail134-15.atl141.mandrillapp.com ([198.2.134.15])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69b43f98.v1-79041865b121492dbb1dcf5cc39c7459@bounce.vates.tech>)
- id 1w15uo-0000gh-Tj
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:03:12 -0400
+ <bounce-md_30504962.69b43f80.v1-3d41f353656f42f1b44bd5db9d5811ec@bounce.vates.tech>)
+ id 1w15wq-0001Ly-4f
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:05:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
- s=mte1; t=1773420440; x=1773690440;
- bh=BfeVwu07GpLrZnkbH1KHTfsb175OP+VcYPCDwc2bXBA=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=VAcI6tTSK5w/V8dPnfOqMa21UdpOI2JaiSrxCu7eQ3wFafekWG+SxYK52H/Zf8rg7
- CnBLKL1u4vBT73Y9Zjo8O7IOLmwhPQfyBAGPNesgcdAQ0GvnB7AUAHU/rEWx6VwHEz
- o6kQBZWIlxdHh984pS7XBkknLRGEqLxfaXaCWFHIS/7tCMS506geVhNUTSBJXYSy3X
- LzbMDHMmczBaHo12e2PU2W9ZsvLq4MuMjjhVvbSajt6I1kcKAc1MiFyT9M5rlWzMav
- qxy7PWELKEeBlkegmYNDuh+AL9Ri+xpETxFrrO5uDQPux5oeXIGaKhjelyCP+zcm4M
- aSSPm9ElW77cA==
+ s=mte1; t=1773420416; x=1773690416;
+ bh=YVESgmaHRMpbf7+5tHUgQMMGFPJarDui+ShzAbAzOzM=;
+ h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
+ Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
+ b=BRC6lsby6gFZ4a8xXvpuYAQHzKvFgNyR/cjJzmjMCocAY17z7n/pqkzpbWmzeY7iT
+ JQKEhIjHDRGLwYUMnVSHlk7Gm9Nu8GE8T7i3M7iRr/1Y2y9jPteuYJizawLBvsvIy2
+ 94sMvbB47GELxFL4nGVBpn4KP8gi8lISSlYVIq1JmSr9nYbXVL3RaeY68HR0D5SUH0
+ OPM9Kz74oU4FPAtNlpIlt/zmeGZ/b7FoJ2XmwKAYs3YqJcOPLTfiHHBkMoVM06r953
+ K67YUEG6ACoDpWQ3NhWX8yTgmDIFOEpZ6YkZscJQxyNf9kRko4STGTmKUZy6juUkOo
+ eaWZuGbJcY3rQ==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
- t=1773420440; x=1773680940; i=thierry.escande@vates.tech;
- bh=BfeVwu07GpLrZnkbH1KHTfsb175OP+VcYPCDwc2bXBA=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=0C1+M/hNJ/PXKbzmhP1sAXXgIql9jwyvWMNpfI2vxpF9AD/AA962uysI/jC+VQebX
- FqcPSQxXBxiolMmCKxkr3ND4x06E/zhBZvHsi5VqNokF/7pEKffJpHw4XaPIYAaDWE
- JRnDIyKTJABlUXIHGt693E8Wa0eJl4vI4vkje7nKCq0W/ktlyLg26NwDT97WkYGFFW
- /7RtJa+oW30dsQVLERRKtuj+dKeFSGjer2aCwiMliuwvyj6st6++9el9x8C/sKGwOU
- 3JMRjBvvmZxghq174rWYGjRvEI7fQeab9FgTU4z4aneVMcHuJ16Tb/0OvAtiRvJyVi
- NuHtUhAUnzJFA==
-Received: from pmta11.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
- by mail136-12.atl41.mandrillapp.com (Mailchimp) with ESMTP id
- 4fXVlD3bsCz5QtNbF
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 16:47:20 +0000 (GMT)
+ t=1773420416; x=1773680916; i=thierry.escande@vates.tech;
+ bh=YVESgmaHRMpbf7+5tHUgQMMGFPJarDui+ShzAbAzOzM=;
+ h=From:Subject:To:Cc:Message-Id:Feedback-ID:Date:MIME-Version:
+ Content-Type:Content-Transfer-Encoding:CC:Date:Subject:From;
+ b=IujO/Oye3h8RZR2kw8gwBbwpAYTcodSvj/J5aHf1R0naDYFbLmt+VMbYd+yCen+Nm
+ Xq5QSQwlX9N5U/ubQi+weCDmXgjxBuBHTUv1XE3WsmOe1p8K//Kh+D2Nj0bmuI8LDm
+ zaTIfaqNoKp3GoH+/lW0huJ4x41G4ZeuHDr/2YViOlhIxM0VfOC8goH6BKrgtFtlsA
+ z1tFxMXWTTgYsLQlTNxOaRmxs5nuA9hGxkv5u16HIgLg6dF4MDpKfyzwU5mjP2a1zl
+ DXeXJYX9dDswCum7OJWDn2zw/nk3YsI9BiKudTYoi7YvMu9Vf2JJeiPL9mzgHFaS5O
+ xP4Sjruv0JKWQ==
+Received: from pmta10.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
+ by mail134-15.atl141.mandrillapp.com (Mailchimp) with ESMTP id
+ 4fXVkm36YNzPm0PqZ
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 16:46:56 +0000 (GMT)
 From: "Thierry Escande" <thierry.escande@vates.tech>
-Subject: =?utf-8?Q?[PATCH=204/4]=20xen:=20Handle=20PCIe=20config=20space=20size=20in=20cpu=5Fioreq=5Fconfig()?=
+Subject: =?utf-8?Q?[PATCH=200/4]=20Xen:=20Add=20Q35=20initial=20support=20for=20HVM=20guests?=
 Received: from [37.26.189.201] by mandrillapp.com id
- 79041865b121492dbb1dcf5cc39c7459; Fri, 13 Mar 2026 16:47:20 +0000
+ 3d41f353656f42f1b44bd5db9d5811ec; Fri, 13 Mar 2026 16:46:56 +0000
 X-Mailer: git-send-email 2.51.0
 X-Bm-Disclaimer: Yes
 X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1773420439492
+X-Bm-Transport-Timestamp: 1773420415146
 To: qemu-devel@nongnu.org
 Cc: "Thierry Escande" <thierry.escande@vates.tech>,
  "Paolo Bonzini" <pbonzini@redhat.com>,
  "Richard Henderson" <richard.henderson@linaro.org>,
  "Michael S. Tsirkin" <mst@redhat.com>, "Eduardo Habkost" <eduardo@habkost.net>,
  "Anthony PERARD" <anthony@xenproject.org>, xen-devel@lists.xenproject.org
-Message-Id: <20260313164649.794591-5-thierry.escande@vates.tech>
-In-Reply-To: <20260313164649.794591-1-thierry.escande@vates.tech>
-References: <20260313164649.794591-1-thierry.escande@vates.tech>
+Message-Id: <20260313164649.794591-1-thierry.escande@vates.tech>
 X-Native-Encoded: 1
 X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
  =20including=20all=20headers,
- =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.79041865b121492dbb1dcf5cc39c7459?=
+ =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.3d41f353656f42f1b44bd5db9d5811ec?=
 X-Mandrill-User: md_30504962
 Feedback-ID: 30504962:30504962.20260313:md
-Date: Fri, 13 Mar 2026 16:47:20 +0000
+Date: Fri, 13 Mar 2026 16:46:56 +0000
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.2.136.12;
- envelope-from=bounce-md_30504962.69b43f98.v1-79041865b121492dbb1dcf5cc39c7459@bounce.vates.tech;
- helo=mail136-12.atl41.mandrillapp.com
+Received-SPF: pass client-ip=198.2.134.15;
+ envelope-from=bounce-md_30504962.69b43f80.v1-3d41f353656f42f1b44bd5db9d5811ec@bounce.vates.tech;
+ helo=mail134-15.atl141.mandrillapp.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -103,68 +99,45 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This change allows to read and write to the extended config space of PCI
-Express devices by setting the size limit to 4096 bytes. The size limit
-remains 256 bytes for non PCIe devices.
+This patch series introduces Q35 chipset support for Xen HVM guests. This is
+based on the work from Alexey Gerasimenko (See patchset [1] for reference).
 
-Signed-off-by: Thierry Escande <thierry.escande@vates.tech>
----
- hw/xen/xen-hvm-common.c | 11 +++++++----
- 1 file changed, 7 insertions(+), 4 deletions(-)
+This series does not implement device passthrough as this will need more work
+on the Xen side to support multiple PCI buses. Since Q35 chipset does not
+support device hotplugging and with current Xen mechanism for device
+passthrough, they have to be plugged to a new PCIe root port, i.e. not the PCI
+bus 0.
 
-diff --git a/hw/xen/xen-hvm-common.c b/hw/xen/xen-hvm-common.c
-index 62d88804c4..15090d77cf 100644
---- a/hw/xen/xen-hvm-common.c
-+++ b/hw/xen/xen-hvm-common.c
-@@ -396,6 +396,7 @@ static void cpu_ioreq_config(XenIOState *state, ioreq_t *req)
- {
-     uint32_t sbdf = req->addr >> 32;
-     uint32_t reg = req->addr;
-+    uint32_t limit;
-     XenPciDevice *xendev;
- 
-     if (req->size != sizeof(uint8_t) && req->size != sizeof(uint16_t) &&
-@@ -412,10 +413,12 @@ static void cpu_ioreq_config(XenIOState *state, ioreq_t *req)
-             continue;
-         }
- 
-+        limit = pci_is_express(xendev->pci_dev) ?
-+                    PCIE_CONFIG_SPACE_SIZE : PCI_CONFIG_SPACE_SIZE;
-         if (!req->data_is_ptr) {
-             if (req->dir == IOREQ_READ) {
-                 req->data = pci_host_config_read_common(
--                    xendev->pci_dev, reg, PCI_CONFIG_SPACE_SIZE,
-+                    xendev->pci_dev, reg, limit,
-                     req->size);
-                 trace_cpu_ioreq_config_read(req, xendev->sbdf, reg,
-                                             req->size, req->data);
-@@ -423,7 +426,7 @@ static void cpu_ioreq_config(XenIOState *state, ioreq_t *req)
-                 trace_cpu_ioreq_config_write(req, xendev->sbdf, reg,
-                                              req->size, req->data);
-                 pci_host_config_write_common(
--                    xendev->pci_dev, reg, PCI_CONFIG_SPACE_SIZE,
-+                    xendev->pci_dev, reg, limit,
-                     req->data, req->size);
-             }
-         } else {
-@@ -431,7 +434,7 @@ static void cpu_ioreq_config(XenIOState *state, ioreq_t *req)
- 
-             if (req->dir == IOREQ_READ) {
-                 tmp = pci_host_config_read_common(
--                    xendev->pci_dev, reg, PCI_CONFIG_SPACE_SIZE,
-+                    xendev->pci_dev, reg, limit,
-                     req->size);
-                 trace_cpu_ioreq_config_read(req, xendev->sbdf, reg,
-                                             req->size, tmp);
-@@ -441,7 +444,7 @@ static void cpu_ioreq_config(XenIOState *state, ioreq_t *req)
-                 trace_cpu_ioreq_config_write(req, xendev->sbdf, reg,
-                                              req->size, tmp);
-                 pci_host_config_write_common(
--                    xendev->pci_dev, reg, PCI_CONFIG_SPACE_SIZE,
-+                    xendev->pci_dev, reg, limit,
-                     tmp, req->size);
-             }
-         }
+As a first step for Q35 guests support, this series implements:
+- Legacy interrupt routing for the ICH9 LPC bridge (i.e. not IOAPIC)
+- Xen HVM machine initialization in pc_q35_init()
+- Access to PCIe Extended Config Space
+- Fix for incorrect values and usage for PCIEXBAR masks
+
+The corresponding patchset for the Xen Project has been posted at [2].
+
+[1] https://lore.kernel.org/xen-devel/cover.1520867740.git.x1917x@gmail.com/
+[2] https://lore.kernel.org/xen-devel/20260313163455.790692-1-thierry.escande@vates.tech/
+
+Alexey Gerasimenko (2):
+  pc/xen: Xen Q35 support: provide IRQ handling for PCI devices
+  q35: Fix incorrect values for PCIEXBAR masks
+
+Thierry Escande (2):
+  q35/xen: Add Xen support for Q35
+  xen: Handle PCIe config space size in cpu_ioreq_config()
+
+ hw/i386/pc_piix.c         |  2 --
+ hw/i386/pc_q35.c          | 12 +++++++++++-
+ hw/i386/xen/xen-hvm.c     | 38 ++++++++++++++++++++++++++++++++++++++
+ hw/isa/lpc_ich9.c         | 16 +++++++++++++---
+ hw/pci-host/q35.c         |  6 +++---
+ hw/xen/xen-hvm-common.c   | 11 +++++++----
+ include/hw/pci-host/q35.h |  4 ++--
+ include/hw/xen/xen.h      |  5 +++++
+ stubs/xen-hw-stub.c       |  4 ++++
+ 9 files changed, 83 insertions(+), 15 deletions(-)
+
 -- 
 2.51.0
 
