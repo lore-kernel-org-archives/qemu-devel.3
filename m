@@ -4,114 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2C5105F7A2
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 12:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD45105F78C
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 12:35:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w11hd-0002Jo-4W; Fri, 13 Mar 2026 08:33:17 -0400
+	id 1w11jc-0003J9-Dk; Fri, 13 Mar 2026 08:35:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w11hc-0002Jb-6l
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:33:16 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w11ha-00032U-L2
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:33:15 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62D4GBlh2278339; Fri, 13 Mar 2026 12:33:13 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=pZ0CkT
- pT4iJjLwNiuUBW7qD+8TM6i5Mqhy8FRQgm7Vc=; b=pA9cRzSRl/vn/O3ZQI3yuU
- Qh9692oXRVoNWhSGKX7OyNjief6BgoUWZu99QWJc4jHH0GdZ+4MGKCyyp4HwLD/k
- 21FvlyfU3OVPw8gndSOQS9lztU6YpYSUeV1Gp7tzwOuUbSwvUYGVa+M1NSi7ByA+
- JpKix0kfi9MJsurS/vXFaobUX/5l8IZdcWOzow7Hunr6UHOC149DnkhRDub+qdAF
- fwPOmF/p5s5GyKRtiGuYpz/f6ih6pPVpt4AhJxsjihgIvEcDhnwe06Uk9X6BxO4n
- /Ws57PQ4MLtjSfX1mNQAw4OETMYJKsnK7RMdjDDmBrQnzdojtgf4dewa/RDIhmdw
- ==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh91qra5-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 12:33:13 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62DAHvi4006563;
- Fri, 13 Mar 2026 12:33:12 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cuha9pm3v-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 12:33:12 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62DCXBWo5636708
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Mar 2026 12:33:11 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 5C41E58045;
- Fri, 13 Mar 2026 12:33:11 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69E9858050;
- Fri, 13 Mar 2026 12:33:10 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Mar 2026 12:33:10 +0000 (GMT)
-Message-ID: <3aa7c0b1-a6c2-4037-b0e4-20279204b503@linux.ibm.com>
-Date: Fri, 13 Mar 2026 08:33:09 -0400
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w11ja-0003IX-4K
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:35:18 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w11jY-0003Wy-IR
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:35:17 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-64c9a6d7f81so2270089d50.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 05:35:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773405315; cv=none;
+ d=google.com; s=arc-20240605;
+ b=FrmhatUjq2mwzwU432autCtTtv7e3Bq3byJLrWhiZQ8CuLIYELiKhAg+yW4OvdNmJu
+ AGY1MLROOJSjCrtPWM6OlpLhWPsvJfLTpRI568xJFmhFF61Tt3MUFJF2VNc0JKFTHzoa
+ /w8o64jl1+mAF16kPSxqftnUtuYqf0PCxcIykQV9chCMq6lrajfxLlyWNSmQCneRTy4G
+ YJIUiCEO2RF03F8sEAGMbJYyJEbahCoGoKPW0S+UC5J/t86dEZU130kbBcGSjkcpTiCm
+ nsdBDxS/aYbvshCTo0YEotBLrK0hQS9RTKs2aWPgIcavGkxXFq+dy+X96galQvAAZD3p
+ YbQg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=AlNspcE07UEWTn6y9KFkJ3h/Khw4tpNT9mIFukVluNU=;
+ fh=gS8oh9EHdcTDcglskGyIv3/M5LtfI+jKdwGYJC227W4=;
+ b=Odz8VKYFNDREEGeSWIz2dBHmD0T9RMgvI0/VqfX7Bx8MwnxWCutF9d6gsC0dkGpVNW
+ TIQbLr41xx43QblGBsimwO1eSQZ50I5Z9YYxwSj9v3Ial3TxwseR0ZXmv0ZxFQsdAr9D
+ yQz6rS/on+2EYZVPcAMm8qJpjVrcG3PapLzWGQuwbhZfFj/vbz1Fu2xM7zM7QJ4zQ8O1
+ 33gM8UheB92NuKLFiTGd75IWhSZyiJrUSWYcodMb6EGeAMmtrS+mNLTt7qzZNGaGK+LZ
+ d5IHG4PPFUUU0i9xshIVImH1H23qLo4iGTboS+eEdGN1X0G25Y9V3ClvOQ+V18g8HEFn
+ TZwQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773405315; x=1774010115; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=AlNspcE07UEWTn6y9KFkJ3h/Khw4tpNT9mIFukVluNU=;
+ b=fCD4/Vn66ZLVGgVvKLaUH1SHQEzfxmlTA9nfP2CVJK6kMb9nIMRtgLW2djj2gE8Cf7
+ 8wB6vyg6nhJYiPQnkHNhl2wxwBPPFmmQ5iw6C4joOMKh1kuTxN1cnOve+biRiSE8hO4S
+ +0+aczk0FhUTByfD4uPnLZHV8nGZsKH5AvWhaY8hO1Qakcl325CD5qiww2QonrDYv6D0
+ SoxsqNwkUok2tj6GLhCnClJBy4Tr3ppd+uPUcZUEqkBrnJOzXwTE/zPSt6dPfJi1yvFG
+ YpuZwmlQITcdH0FCTIDBEnESL4+LYjIfTy1q46awIpvh6R39gsnSM6SxAkNjDy2RkQ5J
+ XMmA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773405315; x=1774010115;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=AlNspcE07UEWTn6y9KFkJ3h/Khw4tpNT9mIFukVluNU=;
+ b=XhcacFDD6BNCzoPZjeY9+dv7yk/OhJpmzhUoc7/IDEeeyT/hqTTvL1dv4VIsQy61Wx
+ E9okKcyGNac/abZ+ZRIn+AsYY90KiWRrbgVz1wea4OPuBN5LZSLbYI6jJPBQCI+Cbn6A
+ jwWoYsJGItKQjqoB/i8q9JbFemj/CDMG6iR6s/A8Rm+OCUfBDQnpowCJZPUCFMaTp7dx
+ Q6lGGgaATeomZbhhJwNXs0dE7VXh+qUV72EvfBeZHN15dGOjboj6zVfUuAWxH9UHy7rP
+ AKLt/s1kFPLZnFHIG1SlwDzgFkcjJUuaTaeuaFeatUOC3VKcKpCMptP22KDHEiuLY+Le
+ saww==
+X-Gm-Message-State: AOJu0YwBpy2D92xJpN86VLz938AW4ue7tILix+N2bq5dqmDmdYlTA5vI
+ MfbNBE+kTQy1BYx4rbkSwHOaWE72PaNV3Z5TJTpLOMe5ze8QCkuzN//uXYRpEx2Vf8GUiMmMjrN
+ MKFSQWrE2uBIpy/O/1HjnulNELGB7le1ysjElexdAdw==
+X-Gm-Gg: ATEYQzyGqCHQMY8jPc9lJkR8T+PdjHs/wejMxcLPvH81ESO0Wobrw+8rV2Z8jNWBzfX
+ FEp4grsqYWPYMInDTlgwb8E1oFC8ZD/lqq4Bu6+qsDYP5cw5Li8EXgXOe5TmVkL5Fc94MfsDesg
+ qprbFqjwidWwlCjzX2HIYdHKQMwgvffm0HL92drJru9+tsAl2IU7OGTBDemGnGX1x57+dwVPcOx
+ BOfKfsINcPoPInBS749htqYk3jI3LjEwpPMTd1mXsuvMlV4JsLxO+46muSBs+7BNz3w2hL939AV
+ ++cXW5Bkdgz64igoHhnTx1K3AbYFrsSvwfcXMbksdrzRJPqEiWW6If8m8e+CnKZD2ko=
+X-Received: by 2002:a53:a492:0:b0:64c:a2f7:b49f with SMTP id
+ 956f58d0204a3-64e62fb509fmr2118771d50.35.1773405315045; Fri, 13 Mar 2026
+ 05:35:15 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC 2/5] hw/tpm: Refactor CRB_CTRL_START register access
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
- Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>
-References: <20260312041650.181411-1-armenon@redhat.com>
- <20260312041650.181411-3-armenon@redhat.com>
-Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20260312041650.181411-3-armenon@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: fXfRP77EFe8zk3wy8YXWmjR1kQYRyH6L
-X-Authority-Analysis: v=2.4 cv=E6/AZKdl c=1 sm=1 tr=0 ts=69b40409 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=KPsyjuvybIxOXCdSSHAA:9 a=QEXdDO2ut3YA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA5OSBTYWx0ZWRfX6TJ+vPNzGv2B
- LUTXxJf4qFJqgLnrOGghmRtwQ8FQMyqmlU+1o4Y0KfHrCC852mtAsocESKRwcHfv/TIIKCs3whQ
- OSVOo97YY+sjCyHd0TwOs12p4ZWKxciwJroEYYDpuBs9NsMlINJhItVq2D1tyANYCDkS5IvG15L
- nkpOm6mRyuQk40xpq08/jtYETxwhafU+AKT4M9WfChjXqmBE3TrJNoX0RqUv6J2VC+ZKr5zlJkb
- Pttepx4Alv2aiBSBqQ832Z9cqcGUKDDkapGGxNvCenPS6APW79TdIIWcb14nKhLqkz2Smm7DB5Y
- x1qF0cn2icyQIpar8J1NCqxTfzgwOeAHT3kIUxgWI86W23NN4/VWJO6z0PALabC06pQhdkQ3qhC
- MPHy44oOwqE2rUX2ghl/FbE43kS5gRSOqQ7H9Mwq7VeD6wLhMUTeWygVL0ZqgCrKkbCy9z661Kk
- hvPo8iJe5Q82WmWLi1w==
-X-Proofpoint-ORIG-GUID: fXfRP77EFe8zk3wy8YXWmjR1kQYRyH6L
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_02,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 phishscore=0
- suspectscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130099
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <cover.1773301927.git.dingtao0430@163.com>
+In-Reply-To: <cover.1773301927.git.dingtao0430@163.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Mar 2026 12:35:03 +0000
+X-Gm-Features: AaiRm5292AN2DxUSFlfZi0wXZ1_PsPsdIlpigTs_NmIFQVTv6buv1wqkUrcjcbA
+Message-ID: <CAFEAcA_qvAzHS6xDG5jErRxakhVD32otVgcHL4oLbK3P=NTBAQ@mail.gmail.com>
+Subject: Re: [PATCH v1 0/3] Fixed bugs in pl080
+To: Tao Ding <dingtao0430@163.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,39 +113,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 12 Mar 2026 at 08:02, Tao Ding <dingtao0430@163.com> wrote:
+>
+> Hi all,
+> When I tested pl080 using the existing dmatest tool in Linux,
+> I found that pl080 could not output the results correctly.
+> The main issues involved are inconsistent source and destination bit widths,
+> misalignment of LLI, which can lead to incorrect data and even cause qemu crashes.
+>
+> Tao Ding (3):
+>   An interrupt is generated after the DMA transfer complete.
+>   The swidth and dwidth of pl080 are not equal.
+>   The LLI of pl080 should be aligned with 4 bytes.
 
+Hi; I've taken patches 1 and 3 into target-arm.next (with
+some adjustments to the commit messages). I had some
+review comments on patch 2.
 
-On 3/12/26 12:16 AM, Arun Menon wrote:
-> Replace manual bitwise operations with ARRAY_FIELD_DP32 macros
-> No functional changes.
-> 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->   hw/tpm/tpm_crb.c | 4 ++--
->   1 file changed, 2 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
-> index 0a1c7ecdc6..bc55908786 100644
-> --- a/hw/tpm/tpm_crb.c
-> +++ b/hw/tpm/tpm_crb.c
-> @@ -145,7 +145,7 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
->               tpm_crb_get_active_locty(s) == locty) {
->               void *mem = memory_region_get_ram_ptr(&s->cmdmem);
-> 
-> -            s->regs[R_CRB_CTRL_START] |= CRB_START_INVOKE;
-> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 1);
->               s->cmd = (TPMBackendCmd) {
->                   .in = mem,
->                   .in_len = MIN(tpm_cmd_get_size(mem), s->be_buffer_size),
-> @@ -194,7 +194,7 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
->   {
->       CRBState *s = CRB(ti);
-> 
-> -    s->regs[R_CRB_CTRL_START] &= ~CRB_START_INVOKE;
-> +    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
->       if (ret != 0) {
->           ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
->                            tpmSts, 1); /* fatal error */
-
-Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
+thanks
+-- PMM
 
