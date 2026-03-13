@@ -4,81 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD2B7106FD6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B990F106FD6C
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 03:10:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0suE-0000w1-Vv; Thu, 12 Mar 2026 23:09:43 -0400
+	id 1w0suB-0000vB-QZ; Thu, 12 Mar 2026 23:09:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w0suC-0000vT-Qd
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:09:40 -0400
-Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
+ id 1w0suA-0000uu-EB
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:09:38 -0400
+Received: from mail-dl1-x1234.google.com ([2607:f8b0:4864:20::1234])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w0suB-00017u-5J
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:09:40 -0400
-Received: by mail-dy1-x1336.google.com with SMTP id
- 5a478bee46e88-2bea8a1c040so302013eec.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 20:09:38 -0700 (PDT)
+ id 1w0su8-00017i-BK
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:09:38 -0400
+Received: by mail-dl1-x1234.google.com with SMTP id
+ a92af1059eb24-12732e6a123so1571407c88.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 20:09:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773371377; x=1773976177; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773371374; x=1773976174; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yzfjk3WBN6i3CkQe1TmyF3J36CtVBQdyaJf9bxHnuwE=;
- b=hgR9Zsd7Gss83E3hTeJDdCYF26V8bFI98bh1oRsJ3FnNZEFLOdgrOwdHX3zvFPYs7B
- YMmltrqSJ34328shCLqUWOriJ8BxBoH3JdZPpveN8xuxkIIxjlJgDT4by5xY11vSEDn9
- YQ3dAUAvvJ9fcSwEb7pO4p86s++QluYipW9/ReuS/LRTsKh/X6aAi93OjzaaGuXQ5vk5
- Bb/GAZUoeOoNrofExlKLT4xYpU+LBL+0vUsgQTltzEko/L617pGKjeGjp3/tV+MEYU95
- GVRZoVlo3DM5QwKs95xgHeam3deI3HrV6Yt7O2TKZwKN1hYXPkyWxVHBX38mGc2DxS7D
- GIJQ==
+ bh=ZKSlRl0lx/YLN+KVvYwpjhdZ0FCwz6Or6UxEaCvL87w=;
+ b=ZP26BynJVL49JNPFIrVXMq/7MKq7ammLYCfFKrEwHiRkArpDNlfWH2xH5tf+s6HR8i
+ xz6bwNSwFCan+iKUFLCTqXv/EtswocnDW743dgbg1lGdOcagufpVUMcxyltVCqAxYHBV
+ +9fweKAE6qRpyuIihDWilFaeMltBA3EUqQRpgw1mQdiM8KCiM6DOEAA4HCJVRPkpFAtd
+ mOwjHoUHf5uV3Hk0pb7NQqTVV4l0oKg/5pizVZ9J8wa5/541RTLZypMRLUL14Hveo6pi
+ XAExwm0h53+JKO3AbgTF2SifhGTORm25cl+HX3Wvxwmn90iTitcOSLitad1WUdDl/3Dv
+ VipA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773371377; x=1773976177;
+ d=1e100.net; s=20251104; t=1773371374; x=1773976174;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=yzfjk3WBN6i3CkQe1TmyF3J36CtVBQdyaJf9bxHnuwE=;
- b=kYULqZg0hckPZxwo2nfIdpwXjvWtyiHBW1UKGPIpfGeY6kzgjA12WZwCLQ1T760B0L
- jnJO2kekv8giT6JNzKrd+hi8kXmDWRJMcXkPQ1+30guf0BpXmNHQYCoadWaJG7hDrJoM
- Z3GNF6aNfPBGnD2ogrJRdhl3BiU8suyfP6lgAKZbHxkJQHR5cJ/F3Q1UA8wltJ4ZPGoz
- o3iRzph11ttY/DUzy+PSBn0WeB0P9B84K2CA5UTtLJs68qslOenczI1mr/LlQygV6bRK
- D5RrmTvYA/wwpYRwtf28ITpzerLws6rQkrayhBHvTqKJbjqL2bSXeEwn953eALf2sdRv
- WusA==
-X-Gm-Message-State: AOJu0Yzwa0VsEDq4PaWqf0EWSBRWo9jRwxInZPPZ0wqvMWl0V1+Sosin
- 906yvApVG3Cq1pEIJi7zKtRdmAoB/5igWNgglB2j5L8Vb7tb/5DfkJSrh18JurhL
-X-Gm-Gg: ATEYQzxqrsqzut0uaqDVtfe0m9PKhsgoRTn59unChCyYYGRwAYGFxQjLYIKcxyBXhE4
- aYivz0JlSpHZcmsqObEmlPHTDPoTR4B/d19wrH7uniu0v75xVVj0WSHXcdSYJiYSdyquiqgCWMq
- BnRbHaZhco1C0LErTnFt2TLjGeIBjipe6hu/OLfToFgFeuJmtu4AhYT+QD9rar9MXohgqfCd3Sl
- mad8dnyGOZj2Z7N7b79lf+bJBn/vRuQRAUQMt2+7JB4UUFeC2PZY/xHj2IPxGhDXrns/YCEWwVU
- 8RtJqePx8beN3t/EfMMhtbzqq8YrQHq7LxiiiqS7DY1WJOV/JhfGxMGaUPvUN5IHBEtVFQeir0R
- sqMQgyYfXwKZqGXNEcAdov/4TI//G7DEI8td47Np7914p2+rMeUfYT8JJowugLKGY0hs0Ip7SVQ
- YRNQ6ePUnbXMyP31H3c7iZAiahK5R75X4t70TNsdrU8na6o+ORROw=
-X-Received: by 2002:a05:7301:10c4:b0:2be:9e34:fd24 with SMTP id
- 5a478bee46e88-2bea5537045mr813515eec.34.1773371377309; 
- Thu, 12 Mar 2026 20:09:37 -0700 (PDT)
+ bh=ZKSlRl0lx/YLN+KVvYwpjhdZ0FCwz6Or6UxEaCvL87w=;
+ b=On7p95+bf1fLdoPz8DRw4y5PutnMTK6dMMKekAHaZUaUHhyln1jtkBZU0h/KPEU4Gg
+ f/87tNjx3bGxCCX5AxXcPf+ZGe6LAY/CjxxJ7DW9TJH2IYYdWjTBWkPEQvEkW5D8kkaL
+ tvLNfDlsA5rZzYJPsJIf4ZfBLsqDuNlFyOqfJk9XGaxqNv76Sy47QYMSOmcC2S2f0G4K
+ u6lI8v2xfZOG253E6OOhJX3e+vUfOitd0fjaWNVLjnRoomf6iTSdeG4RwWznJOVvN4i+
+ 5b+YgUZg6/Vp4e5ABj0hCUQNWtF8optBLBCPYL8ELD2cqYth/n8DwerCO50CiR2rmrAm
+ Bzow==
+X-Gm-Message-State: AOJu0Yzuq82VpfjfPZTCqZAk05db9wxrOFTtB3dZa6MC5cuxBOuo9P9O
+ Hv2a2kJWQKGGCadj34v+72mtENgnXFqqAHlOsSFrQ/4tyW07XVr2vrCSVlz53fD/
+X-Gm-Gg: ATEYQzxdlnErmSetzHtDWCTjw8aeZT5FctK5yeNK0oK5qGaadP4GfzoGXJ0Cx2tTF1/
+ EPxs7tIYWLdMCyGyb2F5t4kmNUtFO6QSEQgDJQAzl8nuRl0u4G4ECt0VxvPNQZn2kB75E85LNWT
+ L6XNs7AqlsxFGn5YRjf2NpYSG02RgyIqZneve+jDFNUe+Onwzgvhat9OPq7HupXhuhUPtyLvhVg
+ J/RTqU20JqE+TYxFwP9T8qo2tG9urGt2zJLU8DnGJdi8y3jNTiXOGA72Oe07CH2IUZbiLFWI4ol
+ o4tIsRc/EMC9f1rtMIDP2R7CEKaQ04D5aMnuG/oZTvahYyjAVns38UTCKqYKDhZiGabOiqgEtbK
+ x5nPmz4zVs5rZjE6g//sTFa+SM/0DsGZs9ZbVO86Ddl58pDyRj5Plz8jZkO9u+9iS+tH8RcdEyu
+ QH8qApvnrYTwwQSWtq79cTeMAyjrx7eSn+7g8hQsGVMGI0mkYYwgM=
+X-Received: by 2002:a05:7300:2389:b0:2be:617:2dec with SMTP id
+ 5a478bee46e88-2bea54973f3mr949447eec.17.1773371374440; 
+ Thu, 12 Mar 2026 20:09:34 -0700 (PDT)
 Received: from 192.168.0.29 ([2804:14d:4c71:86dd:588a:39d7:d008:37c2])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2beab52702asm902472eec.16.2026.03.12.20.09.34
+ 5a478bee46e88-2beab52702asm902472eec.16.2026.03.12.20.09.32
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 20:09:36 -0700 (PDT)
+ Thu, 12 Mar 2026 20:09:34 -0700 (PDT)
 From: Lucas Amaral <lucaaamaral@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: alex.bennee@linaro.org, dmitry.osipenko@collabora.com,
  marcandre.lureau@redhat.com, Lucas Amaral <lucaaamaral@gmail.com>
-Subject: [PATCH v3 3/3] virtio-gpu: advertise VIRTIO_GPU_F_BLOB_ALIGNMENT
-Date: Fri, 13 Mar 2026 00:09:24 -0300
-Message-ID: <20260313030924.45299-4-lucaaamaral@gmail.com>
+Subject: [PATCH v3 2/3] virtio-gpu: decouple Venus from CONFIG_OPENGL
+Date: Fri, 13 Mar 2026 00:09:23 -0300
+Message-ID: <20260313030924.45299-3-lucaaamaral@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260313030924.45299-1-lucaaamaral@gmail.com>
 References: <20260311022752.64192-1-lucaaamaral@gmail.com>
  <20260313030924.45299-1-lucaaamaral@gmail.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1336.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1234;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dl1-x1234.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,67 +102,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define VIRTIO_GPU_F_BLOB_ALIGNMENT (feature bit 5) per the OASIS
-virtio specification.  This allows the host to communicate its
-memory alignment requirement to the guest via the blob_alignment
-field in virtio_gpu_config.
+Venus (virtio-gpu Vulkan context) currently requires an OpenGL
+display backend due to build-time and runtime coupling.  On macOS,
+no OpenGL display backend exists.
 
-Set blob_alignment to the host page size so the guest kernel can
-align blob BAR offsets accordingly, avoiding alignment mismatches
-with the VMM's memory mapping API (e.g., hv_vm_map on macOS).
+Remove the opengl.found() build requirement for the virtio-gpu-gl
+module; virglrenderer provides Venus independently of OpenGL.
 
-Guest-side kernel support (drm_mm alignment) is pending upstream
-Linux merge.
+Gate GL-specific code paths behind CONFIG_OPENGL and display_opengl:
+- Only advertise VIRGL/VIRGL2 capsets when display_opengl is set
+- Only pass VIRGL_RENDERER_NO_VIRGL when !display_opengl with Venus
+- Null out GL context callbacks when no GL display is available
+- Route 2D display commands to the software renderer (pixman) when
+  Venus runs without GL (venus no-GL mode)
+- Allow Venus to bypass the OpenGL display check at device realize
 
 Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
 ---
- hw/display/virtio-gpu.c                     | 8 ++++++++
- include/standard-headers/linux/virtio_gpu.h | 6 ++++++
- 2 files changed, 14 insertions(+)
+ hw/display/meson.build        |  8 ++--
+ hw/display/virtio-gpu-base.c  | 15 ++++++-
+ hw/display/virtio-gpu-gl.c    |  6 ++-
+ hw/display/virtio-gpu-virgl.c | 85 ++++++++++++++++++++++++++++++-----
+ 4 files changed, 98 insertions(+), 16 deletions(-)
 
-diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
-index de7a86a7..44ae5034 100644
---- a/hw/display/virtio-gpu.c
-+++ b/hw/display/virtio-gpu.c
-@@ -1532,6 +1532,14 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
- #endif
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index 90e6c041..509479e7 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -76,9 +76,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
+   virtio_gpu_ss.add(when: 'CONFIG_VHOST_USER_GPU', if_true: files('vhost-user-gpu.c'))
+   hw_display_modules += {'virtio-gpu': virtio_gpu_ss}
+ 
+-  if virgl.found() and opengl.found()
++  if virgl.found()
+     virtio_gpu_gl_ss = ss.source_set()
+-    virtio_gpu_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', virgl, opengl],
++    virtio_gpu_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', virgl],
+                          if_true: [files('virtio-gpu-gl.c', 'virtio-gpu-virgl.c'), pixman, virgl])
+     hw_display_modules += {'virtio-gpu-gl': virtio_gpu_gl_ss}
+   endif
+@@ -99,9 +99,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_PCI')
+                         if_true: files('vhost-user-gpu-pci.c'))
+   hw_display_modules += {'virtio-gpu-pci': virtio_gpu_pci_ss}
+ 
+-  if virgl.found() and opengl.found()
++  if virgl.found()
+     virtio_gpu_pci_gl_ss = ss.source_set()
+-    virtio_gpu_pci_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', 'CONFIG_VIRTIO_PCI', virgl, opengl],
++    virtio_gpu_pci_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', 'CONFIG_VIRTIO_PCI', virgl],
+                              if_true: [files('virtio-gpu-pci-gl.c'), pixman])
+     hw_display_modules += {'virtio-gpu-pci-gl': virtio_gpu_pci_gl_ss}
+   endif
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index cb76302e..cc9704cd 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -18,6 +18,7 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "hw/display/edid.h"
++#include "system/system.h"
+ #include "trace.h"
+ #include "qapi/qapi-types-virtio.h"
+ 
+@@ -157,7 +158,18 @@ virtio_gpu_get_flags(void *opaque)
+     VirtIOGPUBase *g = opaque;
+     int flags = GRAPHIC_FLAGS_NONE;
+ 
+-    if (virtio_gpu_virgl_enabled(g->conf)) {
++    if (virtio_gpu_venus_enabled(g->conf)) {
++        /* TODO: set GRAPHIC_FLAGS_VK for direct Vulkan scanout */
++    }
++
++    /*
++     * TODO: virtio_gpu_virgl_enabled() checks VIRTIO_GPU_FLAG_VIRGL_ENABLED
++     * which is set for both OpenGL (VIRGL) and Vulkan (Venus) backends.
++     * This condition should ideally use a dedicated OpenGL-only flag. For
++     * now, display_opengl correctly gates GL scanout since Venus leaves it
++     * at 0.
++     */
++    if (virtio_gpu_virgl_enabled(g->conf) && display_opengl) {
+         flags |= GRAPHIC_FLAGS_GL;
      }
  
-+    /*
-+     * TODO: guest-side F_BLOB_ALIGNMENT support pending upstream Linux merge
-+     * (Sergio Lopez's patches, Nov 2025). Until merged, the guest won't
-+     * negotiate this feature. The host advertises it per OASIS virtio spec.
-+     */
-+    g->parent_obj.virtio_config.blob_alignment =
-+        cpu_to_le32(qemu_real_host_page_size());
-+
-     if (!virtio_gpu_base_device_realize(qdev,
-                                         virtio_gpu_handle_ctrl_cb,
-                                         virtio_gpu_handle_cursor_cb,
-diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standard-headers/linux/virtio_gpu.h
-index 00cd3f04..252704e7 100644
---- a/include/standard-headers/linux/virtio_gpu.h
-+++ b/include/standard-headers/linux/virtio_gpu.h
-@@ -64,6 +64,11 @@
-  * context_init and multiple timelines
-  */
- #define VIRTIO_GPU_F_CONTEXT_INIT        4
-+/*
-+ * VIRTIO_GPU_F_BLOB_ALIGNMENT: device advertises blob_alignment
-+ * in virtio_gpu_config (OASIS virtio-spec feature bit 5)
-+ */
-+#define VIRTIO_GPU_F_BLOB_ALIGNMENT      5
+@@ -273,6 +285,7 @@ virtio_gpu_base_get_features(VirtIODevice *vdev, uint64_t features,
+     }
+     if (virtio_gpu_blob_enabled(g->conf)) {
+         features |= (1 << VIRTIO_GPU_F_RESOURCE_BLOB);
++        features |= (1 << VIRTIO_GPU_F_BLOB_ALIGNMENT);
+     }
+     if (virtio_gpu_context_init_enabled(g->conf)) {
+         features |= (1 << VIRTIO_GPU_F_CONTEXT_INIT);
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index 2b7a41c4..67d88e32 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -124,7 +124,9 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+         return;
+     }
  
- enum virtio_gpu_ctrl_type {
- 	VIRTIO_GPU_UNDEFINED = 0,
-@@ -365,6 +370,7 @@ struct virtio_gpu_config {
- 	uint32_t events_clear;
- 	uint32_t num_scanouts;
- 	uint32_t num_capsets;
-+	uint32_t blob_alignment;
+-    if (!display_opengl) {
++    if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
++        /* Venus renders via Vulkan in the render server */
++    } else if (!display_opengl) {
+         error_setg(errp,
+                    "The display backend does not have OpenGL support enabled");
+         error_append_hint(errp,
+@@ -245,4 +247,6 @@ static void virtio_register_types(void)
+ type_init(virtio_register_types)
+ 
+ module_dep("hw-display-virtio-gpu");
++#ifdef CONFIG_OPENGL
+ module_dep("ui-opengl");
++#endif
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index b7a2d160..2f9700e0 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -19,8 +19,10 @@
+ #include "hw/virtio/virtio-gpu.h"
+ #include "hw/virtio/virtio-gpu-bswap.h"
+ #include "hw/virtio/virtio-gpu-pixman.h"
+-
++#include "system/system.h"
++#ifdef CONFIG_OPENGL
+ #include "ui/egl-helpers.h"
++#endif
+ 
+ #include <virglrenderer.h>
+ 
+@@ -50,6 +52,16 @@ struct virtio_gpu_virgl_resource {
+     void *map_fixed;
  };
  
- /* simple formats for fbcon/X use */
++/*
++ * Venus no-GL mode: Venus is enabled but no OpenGL display is available.
++ * Display commands use software (pixman) rendering; Venus/3D commands
++ * go through the virglrenderer render server.
++ */
++static bool virtio_gpu_venus_nogl(VirtIOGPU *g)
++{
++    return virtio_gpu_venus_enabled(g->parent_obj.conf) && !display_opengl;
++}
++
+ static struct virtio_gpu_virgl_resource *
+ virtio_gpu_virgl_find_resource(VirtIOGPU *g, uint32_t resource_id)
+ {
+@@ -63,7 +75,7 @@ virtio_gpu_virgl_find_resource(VirtIOGPU *g, uint32_t resource_id)
+     return container_of(res, struct virtio_gpu_virgl_resource, base);
+ }
+ 
+-#if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
++#if VIRGL_RENDERER_CALLBACKS_VERSION >= 4 && defined(CONFIG_OPENGL)
+ static void *
+ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+ {
+@@ -1032,6 +1044,45 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+ 
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+ 
++    /*
++     * Venus no-GL mode: route 2D display commands to the base software
++     * renderer (pixman). The guest kernel always uses 2D commands for
++     * display framebuffers even with VIRGL enabled; Venus/3D commands
++     * go through the virglrenderer render server as usual.
++     */
++    if (virtio_gpu_venus_nogl(g)) {
++        switch (cmd->cmd_hdr.type) {
++        case VIRTIO_GPU_CMD_RESOURCE_CREATE_2D:
++        case VIRTIO_GPU_CMD_SET_SCANOUT:
++        case VIRTIO_GPU_CMD_RESOURCE_FLUSH:
++        case VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D:
++        case VIRTIO_GPU_CMD_GET_DISPLAY_INFO:
++        case VIRTIO_GPU_CMD_GET_EDID:
++            virtio_gpu_simple_process_cmd(g, cmd);
++            return;
++        case VIRTIO_GPU_CMD_RESOURCE_UNREF:
++        case VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING:
++        case VIRTIO_GPU_CMD_RESOURCE_DETACH_BACKING: {
++            /*
++             * Both 2D (simple) and blob (virgl) resources share g->reslist.
++             * Check if virglrenderer owns the resource to pick
++             * the right handler.
++             */
++            struct virtio_gpu_resource_unref hdr;
++            struct virgl_renderer_resource_info info;
++            VIRTIO_GPU_FILL_CMD(hdr);
++            if (virgl_renderer_resource_get_info(hdr.resource_id, &info)) {
++                /* Not in virglrenderer — it's a 2D software resource */
++                virtio_gpu_simple_process_cmd(g, cmd);
++                return;
++            }
++            break; /* virglrenderer owns it — fall through */
++        }
++        default:
++            break;
++        }
++    }
++
+     virgl_renderer_force_ctx_0();
+     switch (cmd->cmd_hdr.type) {
+     case VIRTIO_GPU_CMD_CTX_CREATE:
+@@ -1433,6 +1484,7 @@ static int virtio_gpu_virgl_init(VirtIOGPU *g)
+     uint32_t flags = 0;
+     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
+ 
++#ifdef CONFIG_OPENGL
+ #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
+     if (qemu_egl_display) {
+         virtio_gpu_3d_cbs.version = 4;
+@@ -1450,9 +1502,14 @@ static int virtio_gpu_virgl_init(VirtIOGPU *g)
+         flags |= VIRGL_RENDERER_D3D11_SHARE_TEXTURE;
+     }
+ #endif
++#endif /* CONFIG_OPENGL */
+ #if VIRGL_VERSION_MAJOR >= 1
+     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
+-        flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
++        flags |= VIRGL_RENDERER_VENUS
++               | VIRGL_RENDERER_RENDER_SERVER;
++        if (!display_opengl) {
++            flags |= VIRGL_RENDERER_NO_VIRGL;
++        }
+     }
+     if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+         flags |= VIRGL_RENDERER_DRM;
+@@ -1475,6 +1532,12 @@ static int virtio_gpu_virgl_init(VirtIOGPU *g)
+     }
+ #endif
+ 
++    if (!display_opengl) {
++        virtio_gpu_3d_cbs.create_gl_context = NULL;
++        virtio_gpu_3d_cbs.destroy_gl_context = NULL;
++        virtio_gpu_3d_cbs.make_current = NULL;
++    }
++
+     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+     if (ret != 0) {
+         error_report("virgl could not be initialized: %d", ret);
+@@ -1546,14 +1609,16 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
+ 
+     capset_ids = g_array_new(false, false, sizeof(uint32_t));
+ 
+-    /* VIRGL is always supported. */
+-    virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
++    /* OpenGL: VIRGL/VIRGL2 require a GL display backend */
++    if (display_opengl) {
++        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
+ 
+-    virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
+-                               &capset_max_ver,
+-                               &capset_max_size);
+-    if (capset_max_ver) {
+-        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
++        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
++                                   &capset_max_ver,
++                                   &capset_max_size);
++        if (capset_max_ver) {
++            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
++        }
+     }
+ 
+     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
 -- 
 2.52.0
 
