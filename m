@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D03FF106FD89
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:22:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CC2106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:22:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vuI-0002EU-EG; Fri, 13 Mar 2026 02:21:58 -0400
+	id 1w0vug-0003C0-Em; Fri, 13 Mar 2026 02:22:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuG-000262-1v
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:56 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vua-0002xm-9C
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:16 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuE-0006yX-IR
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:55 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4852afd42ceso15126305e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:21:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuY-00070V-Me
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:15 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439cb5af25bso1906396f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382912; x=1773987712; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773382933; x=1773987733; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=+bxVDDXu/eQkvYvur3z9ZbH8fD224/ZN/Wmu1so0dKE=;
- b=EX1K1+4omUvb/ZcRSI+fx4wdZyIpea+Oty0v41iFi9/iMct5hikTd6LCS952bmXERd
- nbHoPfR3Wqc2oTImPZBywc5sQxEC/v6n4uV7Zs9/ZZ34/mtYt+TEccSBmNhvmCP1Jb5n
- w8KZI5ZL6LN49jAplOPfaOZdbguYMyXEfK80Ci8FMogOJ8D+iF7EDJPbo+49+Oef4LsM
- SlhHvm2lXKO2ebz1acxLpdkr8X9EfdsWWKIme/jSCdbkDK2gIM6/2ia3nhHu/a6tYT2K
- NOINYhNdAOlF0bUhjFNI4aWCRUCt408pYfaSyzoNhaAnEZ4WbpuikSdKmmeRkiT2OvDy
- TH7g==
+ bh=vCSOosEIJPG4aT2xgCbEr4D9kq3QjgY7q5qLLnvfw8w=;
+ b=QV37+SZXtmsHSqBW8kwsy3ZMcMyXVqQhSXM5iTdoX5JfWTWeYtSD2/L5VynEW2bpm3
+ +ZSCYPiqcyHLctGVGg5jBlNNGT8l6lCFehyEpNz9ETtFAgbyrbJXOuBwI+eJh/1FRW+/
+ CzGscbdtwMLYgTaNOMnSvC+wiV1mRaUzooP5OuZ0XcvdhCo7HrH29kW5kgkSEYO6PCao
+ nwOXfe1mAJcCo/gWHm9CIoYtuBd0YjNicDf+Whsp/LOjLMDq82EEWPCJ4ouB6SKQBIkZ
+ UpOgvAatEaiLdVsafPVNHEUGcbPg/u4WzoMNoeDhiKbi23eGyqK5/mQtIDka32BrUiAw
+ piTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382912; x=1773987712;
+ d=1e100.net; s=20251104; t=1773382933; x=1773987733;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=+bxVDDXu/eQkvYvur3z9ZbH8fD224/ZN/Wmu1so0dKE=;
- b=RwrvY3K3LySE/uUcntaslpSVF7BD0JSkTEgORiGaQZCewuMsTsMr2jquvMiGYh6w53
- PT6MRju6DsCyMzbNZ9gBXBY8lWKN9L3fL+kmsPkSuXlFKZ/fHYInETs+YAWs8tugJEYw
- c0jUjUzR8wIkpTgRKo921l119DX46ucn/X6lExvkjcsQwvPq1zT21BaNO23Fwkae4mpI
- qgw1xCTBnwO5LJ8kd30Cv6Cv4yhq9GpYlvS6HRQb8L3/qa+37QYpTH5Q5NG2d2PlK2xu
- dl/ZLXzQDNJPi5+SHpHEk3PTpXQIcVGukZouainCf+X+S8y/EeuEQyJzae9y5lxEfTpI
- tK2g==
-X-Gm-Message-State: AOJu0YxEDOZbFCJyJ91vAjwIFfc/F26OMYRK/ovE1bpg+WbeoMS1ccfm
- dgzlY3dZ/8tM9FU+JaJOjIi1e6PZRQYhrN4IiVyggbAu+8PEtoAKqoSUXXtvLdf8KOyYaP5H36w
- 5GMUfRRg=
-X-Gm-Gg: ATEYQzwOAmTVGIOmHr+NjfiIHiGcv2q+8dIyi/wPbJ647TvEFaKg/TcUEbN3tierTjI
- cJTzeuXFw2oH3P2VF1lMJfYXWutjZd0s/5hiEPDu+K3nielhSBWwu1RRuEUXRw/PvbAP4CZSptM
- eefTQ+HIOOOSENSh90pwXPYmZBWxJ+du/zbu8Ncq4BYmTXKomgP24b8p7j5c8fyaY5lUHiU8Xlm
- ZLcRbTgXJcSRkt5oxLMZdWs8NEszX0ScZ+Fvh7wDnT6PJdUtYF67A0zjOsbe+E9Pba/FU4WsKXc
- TIfylg0U535QIyZ8I7gktDGarxB4JJ5i2XZAVZPwbti11dZOzLjPN3ktOKab2RttIHwvv3I1DHw
- an2jt9OHzzzNHzfkfbe2r/2hvMAUbMaI0PPs+aW6lOx+WIsnDGiQBgiB/CITahRSbR5fzI/uwI0
- bvdlZDURhXhDdjOuSA+pj5pX+rUMC6YcL5SvA9QHI+DPYnsVKkc7goUYTo/+3VidepB/aX/7T1s
- kW0QiPjnXoRHS9h
-X-Received: by 2002:a05:600c:3552:b0:485:4438:6ef6 with SMTP id
- 5b1f17b1804b1-485566f79bcmr29149315e9.18.1773382912450; 
- Thu, 12 Mar 2026 23:21:52 -0700 (PDT)
+ bh=vCSOosEIJPG4aT2xgCbEr4D9kq3QjgY7q5qLLnvfw8w=;
+ b=QlvScpSNPBdtjC8+oY0c0LRObtJ4ebhpGxVUtTB3NaPBHTIScFIBTFOiu4wIefCRjO
+ DU4S8yzVaO4H2GGiCuAp06urS8r0t6s0b1OhIb042f9j1MZEtEosibh0tnuby5JGOHDP
+ qAg2S4F4o45cQQ9a9HHFp1caWFiAyit0tpHMHqBLAjJ74JTfwDb/yPP1B40rHp+B/rnh
+ cPCU74wcjcDbBbgBsy9nOJh8hgithIhFZZ/wciYN8IlMuFOAv2r/Okf2L6RdaP1JWj20
+ 9HesSxdoZ0FSVcUGnpA+ikf3DZr0aBL4ER5KTaapQD3AwqS9ZhOEMVVV9d1QJRhVOACY
+ WRGQ==
+X-Gm-Message-State: AOJu0Yy8JH+6H/LM6sBO641LuMxBsek43g8pJ204lGJseDspirPg2v75
+ qVUX8yXrp/zfmR9AepCwtl3XLrCgPZRjHQ9d52Vh9Qq7DnUsnkrKZgi+SG0UfEoaPTdh+cweFTd
+ stMzYft8=
+X-Gm-Gg: ATEYQzzcLap0trkoxdNXnPzJzoAZgqJ2U9UijnSaoAxBvVz4OyFzaq7LWGj27/WmPf2
+ +mU/zlnByY0/v/WjOpqevdFaf37DafcPjmi0Ar63f1K2A9aPLEvft0MU7Ie45ZWImzk5lu7KaSc
+ nvjxo0LBE4foEQpfGKPM494nGWrkKrBlnxly7mp3SQHykZszS6duDs0XckHl9CgG4+i1WLkaxtU
+ ZGaLN7w8Odu+SOaaF+bsptCAfAsRod6U4rzo0xwpDK5oLbX5ki2lzIoIguemtEJd8mSL3fqdLPE
+ 3Jj0ca1GophUDgG+8b9KhDQCx8K8apMzq42d7a5i+nolbfsl+TvFGEOzd9LjVSbAgEUMmC3flnC
+ 9BFo/Ohsoixc82JzeNyTgNUYsjMgKtQVMaTXeje/iRvQeGaqy3U3aBPG3q9lzx6HEvmNHUghLYb
+ FO2DET1W35rVhEaosIhqatWFtmMigQvVn38GX95BBTk4G+hyorjoBLhUL4cyr6lxWTf8ITRFahJ
+ Wyesgv+cMMGaIej
+X-Received: by 2002:a05:6000:4008:b0:439:c1b7:890d with SMTP id
+ ffacd0b85a97d-43a04d8d8f9mr4248837f8f.26.1773382932724; 
+ Thu, 12 Mar 2026 23:22:12 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b65fe27sm191617675e9.9.2026.03.12.23.21.50
+ ffacd0b85a97d-439fe1affe9sm14442080f8f.15.2026.03.12.23.22.11
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:21:51 -0700 (PDT)
+ Thu, 12 Mar 2026 23:22:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 08/38] target/hppa: Include missing 'exec/target_long.h'
+Subject: [PATCH v2 11/38] target/mips: Include missing 'exec/target_long.h'
  header
-Date: Fri, 13 Mar 2026 07:20:24 +0100
-Message-ID: <20260313062055.2188-9-philmd@linaro.org>
+Date: Fri, 13 Mar 2026 07:20:27 +0100
+Message-ID: <20260313062055.2188-12-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -108,27 +108,27 @@ The "exec/target_long.h" header is indirectly included, pulled
 via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
 when removing the latter:
 
-  target/hppa/cpu.h:375:1: error: unknown type name 'target_ulong'
-    375 | target_ulong cpu_hppa_get_psw(CPUHPPAState *env);
-        | ^
+  target/mips/cpu.h:462:5: error: unknown type name 'target_ulong'
+    462 |     target_ulong gpr[32];
+        |     ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/hppa/cpu.h | 1 +
+ target/mips/cpu.h | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/target/hppa/cpu.h b/target/hppa/cpu.h
-index 7d47afe8efa..6ea4c9b6826 100644
---- a/target/hppa/cpu.h
-+++ b/target/hppa/cpu.h
-@@ -24,6 +24,7 @@
+diff --git a/target/mips/cpu.h b/target/mips/cpu.h
+index ed662135cb0..3517d2d42cf 100644
+--- a/target/mips/cpu.h
++++ b/target/mips/cpu.h
+@@ -5,6 +5,7 @@
  #include "exec/cpu-common.h"
  #include "exec/cpu-defs.h"
  #include "exec/cpu-interrupt.h"
 +#include "exec/target_long.h"
+ #ifndef CONFIG_USER_ONLY
  #include "system/memory.h"
- #include "qemu/cpu-float.h"
- #include "qemu/interval-tree.h"
+ #endif
 -- 
 2.53.0
 
