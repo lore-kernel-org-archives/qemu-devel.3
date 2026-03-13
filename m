@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EC2B1106FD85
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:21:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B7B1106FD89
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:21:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vtv-0000uq-1T; Fri, 13 Mar 2026 02:21:35 -0400
+	id 1w0vu3-0001VR-9V; Fri, 13 Mar 2026 02:21:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vto-0000oG-2g
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:28 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vu1-0001R6-Kc
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:41 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vtm-0006ta-I1
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:27 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4852f8ac7e9so20199505e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:21:26 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vu0-0006un-1P
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:41 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-4853aec185aso15455115e9.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:21:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382885; x=1773987685; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773382898; x=1773987698; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=P/R6d1uBZPwjzpP/2K0o6+0+0LivzvR0k5Sb2Q2xFMc=;
- b=B3xs2LDABo+bzbMqstntzrOAk+q05GQ1oonig5xR3XuOnauc43cwc/y4/un2zKr/bM
- BDk/oXBS+ubS779NJj8ZjklkHd/FKKu5pnMi0+10id9rg1w7us4bWldzjT/AFOwvyZvS
- +VRR/jEai4On87NZ0pfBz7vxorALU0Ko3HzgekrlSwVPwFNndcXlkRa5Mz9Y5dP706J5
- JIs8GkwTIUjLsxdPnr0feVlide7yD7H2tPOGkhLV6Ylji3rxNf9ewUXkTNld+pWoJNKa
- /XEV+8px1YT0qov5b+NnQ4+PANLW0SZJ8jX6OpvUnqccUg4BCGXRIrEPB1oKBBvEDFfa
- 2hiA==
+ bh=GHLXdrC7lRbUfVA8DRaY1znxZ2SnoyILAISU5P0bD5A=;
+ b=VTj5S8OeKi02LZvhvkUR3Z9CIPqThXddNWO3rfwSYH5ayCy13lxhThPhbihKElCzp6
+ 4FUW70i1qaRQogaUWSBuooRVjpn01+OLQe0Lzi8dkBSsDUq9hdEwbilmPGrK2EsgI0E2
+ J81dfTGP9k4WmnnAWWy34TlLzxqxspPXB/BKSajuvTWOBGRsXKWF80jvM29T6EIX++JN
+ z6AQUvXaGi1VY6M0YrceEDabkCqYrZoxzew/GNM169DZyJZtaqwKCQPDGgPuyORulMNf
+ erktnvZ8VZwXOvVzIrFt/ddHJg4RRvmCaFRR4PIweVXDAvpmBg5/kdr9Wz671QGpD4Qv
+ 20Bw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382885; x=1773987685;
+ d=1e100.net; s=20251104; t=1773382898; x=1773987698;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=P/R6d1uBZPwjzpP/2K0o6+0+0LivzvR0k5Sb2Q2xFMc=;
- b=b0Yd3NHTpruPbudZlyyg+FPULjVfkaFfmQi7kd5mgGnAxppMtewsXm6f0cjlDNUPh/
- Q/lhy3ivrz5UtDDPkCqtLJ8/ogjHH8eP/5/cDKn6VV95rpLOYRXqeU+ySxIW24esF0C4
- pdqn8UdY84BKTtkgEZHjOhh8lNm75YWO8joh1Vsu0zVdY2PA4kvuQSDkZOzbLUH4f0mj
- F6ZcXzY40vwXTWSgCQ+5ZqCj2NUBbs0AyQUrbViCfKLdqG0xM9zXDDBLGXZ/nDQf9RS7
- bEzbeqVXX/733JtZI9oqUSSD3YFP78n4mnKWErdb1UW2cp4NUeM0GQu6ZaKlS46Ya+RB
- jT5g==
-X-Gm-Message-State: AOJu0Yw4tJMiCSpUAjjtVYweG52OGIVGdco2NSYw1VkZolXVvnXYG9x+
- p9OLBUp7xOarPjGuTSHwqeFQirZRAx8BxyzEdJlsrC5hucACG9ZD0LfIcEgwoIbCcwiatEjNEn2
- pOaGX2tY=
-X-Gm-Gg: ATEYQzwHWBwk8D8yogB9x3g3Yp+JFVEutaYCe8Q7hXkUMG37Devluxr0lkFLncd01X+
- Ra7qDOwHVlhxoeaTntiBLS9LLFi9uujIn0YeF1HfztPLUcG70WcDIHp/egsmcDx6PhIJ5ualRho
- COiakKLO3zBjDcMLFY0SH6FHKNFoyZMMoLaDtUh6MPsFyWCndGdwydWSWhfKnsOT0SxebhIHYI4
- CpsEOW46uN+zwJNgxS/R+0uRViDO7vIXZqoNe3VK3RUtPY9qb1mY4RQ0cPKokQ88InTLsakBTmh
- bNMwA/0zfnpZLZC66JW6pSphpoQ4Z7HtBHhJMGJKwnem3uPYp/pImO4o1QTJ0i2ok0ZKQ8ygc+8
- 5ql+o1XKPqFfJiEPaKaH35dWI4fbezGblgnFN1XFYanCJsDUBu+pUcqGGpifgg4m2yCeeMQq81H
- D2Iw84U1HhXUqzJ2QGDHSL1b9PF6d3XsodilarT/MesCqYNUkptZths28EZzQIBEfzaaFvPPGF3
- AaK6A==
-X-Received: by 2002:a05:600c:3106:b0:485:3ae3:b394 with SMTP id
- 5b1f17b1804b1-48556711ec9mr35994205e9.31.1773382884690; 
- Thu, 12 Mar 2026 23:21:24 -0700 (PDT)
+ bh=GHLXdrC7lRbUfVA8DRaY1znxZ2SnoyILAISU5P0bD5A=;
+ b=aXmWSf+DOPJYINsQUrkxunUVY3MK9mEUIn5Qn40yaRrH4u5Xrt4hY2EO/XeEyn9re2
+ CHWt+R+a1jraQjv7H/YkjQ8La+DGjBhUVnd5KcvqYrj/ENE1DqYXLu016ncuOZ2Gh3mP
+ jOIBldL2oQa+GTFom0DfsXZox8k499pxzGDMFt/+ldLHtwxihxFW9tYLDuWJXiH5vjiG
+ Dut69EyPEf0+Q5uKHMgpOsiXD3s7gRDV5Uq0+y5coIZrim4WHBbEftJn0+ptvwdWnhmw
+ 27Vkj3fFZ5eCx0WryRtK7kQuIB5NzFDTWxH3v4cqmOVBSHpKuvlEwnNUzCxYmdHksE0W
+ fZeQ==
+X-Gm-Message-State: AOJu0Yx6aiITWYgpWmdxGtHVZzziQZwgeOt0DS0v73V4+lbNCKqNeJQS
+ 6vidRYP6m9Huptn3fNiPw9iHIkN6rRCNdYz4KEIOqYGtNEisIXy+FbH0upeM9fIpZlRyTsJoVVH
+ x/FcLCxU=
+X-Gm-Gg: ATEYQzxljvDnRjUCmvew9CNUD/6LcvTLrtwutkFaXa98mTO0kVkTnS3h9NuruPLwtZ+
+ fljYAH4qQ7hv8UTieb7KRxIZYjfyDWM8doY7Y64TWOsYSpNyhGsnwE8eJVFR2Bo+fMkISvIkihO
+ WeHEvMg22cHJzKk3I2ycWMUbnrWPoscfIxcnKHJYMHNHFKZKb1TT72dXrCrLmZIZ4F9tOzLGGxF
+ h078rycoTy8WmvQy+QRXMyq6yTB0xGJt6ibT/SX6HCe1Vs8xx87q/01d15u1JR/X1C3t/luk6Sm
+ v/SIb3DGtsPjbiSlFEojhYEfg/9PBb5T0PnvHHWLY8GofzuakG4Xnjs6HiXcRVk7fH9oz8+7m/M
+ FLeS9cvsuwgHZNZ7VTl9+gpZ34mKiaeWJCQjzpmV8/ic92DW8/B3fSM//cs6fVXwyi9HFaUFRRy
+ lWvj6a+mtLGi+RU5x6BJ3g4rGS+EjOGnCFGr5rvcp6a0Ja1ajIGMP9nKsXBP25S53XdsoAs7zK4
+ ohkhQ==
+X-Received: by 2002:a05:600c:4f8f:b0:485:345b:ccb7 with SMTP id
+ 5b1f17b1804b1-4855671028emr29944005e9.34.1773382898236; 
+ Thu, 12 Mar 2026 23:21:38 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541b7f255sm290560615e9.12.2026.03.12.23.21.23
+ 5b1f17b1804b1-4854b5f6b95sm180856455e9.6.2026.03.12.23.21.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:21:24 -0700 (PDT)
+ Thu, 12 Mar 2026 23:21:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 04/38] monitor/hmp: : Include missing 'exec/target_long.h'
- header
-Date: Fri, 13 Mar 2026 07:20:20 +0100
-Message-ID: <20260313062055.2188-5-philmd@linaro.org>
+Subject: [PATCH v2 06/38] target/xtensa: Restrict inclusion of
+ 'exec/cpu-defs.h' header
+Date: Fri, 13 Mar 2026 07:20:22 +0100
+Message-ID: <20260313062055.2188-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,32 +104,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "exec/target_long.h" header is indirectly included, pulled
-via "cpu.h" -> "exec/cpu-defs.h". Include it explicitly otherwise
-we'd get when removing the latter:
-
-  monitor/hmp-target.h:35:5: error: type name requires a specifier or qualifier
-     35 |     target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
-        |     ^
+Not all files including "target/xtensa/cpu.h" require the
+"exec/cpu-defs.h": only 'cpu.c'. Restrict to it.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/monitor/hmp-target.h | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ target/xtensa/cpu.h | 1 -
+ target/xtensa/cpu.c | 1 +
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-index 5167d17d41d..898473b3ed0 100644
---- a/include/monitor/hmp-target.h
-+++ b/include/monitor/hmp-target.h
-@@ -28,7 +28,7 @@
- typedef struct MonitorDef MonitorDef;
+diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
+index 22192924841..dfd2ceab7cf 100644
+--- a/target/xtensa/cpu.h
++++ b/target/xtensa/cpu.h
+@@ -31,7 +31,6 @@
+ #include "cpu-qom.h"
+ #include "qemu/cpu-float.h"
+ #include "exec/cpu-common.h"
+-#include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
+ #include "hw/core/clock.h"
+ #include "xtensa-isa.h"
+diff --git a/target/xtensa/cpu.c b/target/xtensa/cpu.c
+index 86ec899a67c..dcf3cd84c84 100644
+--- a/target/xtensa/cpu.c
++++ b/target/xtensa/cpu.c
+@@ -30,6 +30,7 @@
  
- #ifdef COMPILING_PER_TARGET
--#include "cpu.h"
-+#include "exec/target_long.h"
- struct MonitorDef {
-     const char *name;
-     int offset;
+ #include "qemu/osdep.h"
+ #include "qapi/error.h"
++#include "exec/cpu-defs.h"
+ #include "cpu.h"
+ #include "fpu/softfloat.h"
+ #include "qemu/module.h"
 -- 
 2.53.0
 
