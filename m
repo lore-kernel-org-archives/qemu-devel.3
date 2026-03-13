@@ -4,82 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA0AC105F7B4
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:00:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7753B105F7AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:07:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w133U-0002eV-Q5; Fri, 13 Mar 2026 09:59:56 -0400
+	id 1w13AS-0004Hk-Gu; Fri, 13 Mar 2026 10:07:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w133T-0002eD-8I
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 09:59:55 -0400
-Received: from p-west3-cluster1-host1-snip4-3.eps.apple.com ([57.103.73.134]
- helo=outbound.ms.icloud.com)
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1w13AQ-0004HH-N1
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:07:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w133R-0004Gk-5H
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 09:59:55 -0400
-Received: from outbound.ms.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-5 (Postfix) with ESMTPS id
- CCC361800E28; Fri, 13 Mar 2026 13:59:49 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773410391; x=1776002391;
- bh=DHZFEJBviYqWw4jkkZ1Y72fV6fgSDFNyfm/jDvEMzUY=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=cKcQELfPnFyADHjbD5fcOMk9h0hSDp3Tenner9uDcva+Mq3Fs26Hq4AQ8jXOA3QBmmVSWeZcCPz/7wj/qUjRHIuEdXk6G5g7JVouiVWfLDJlrDSBM9kQeDG16Z5c+HSWa94/ZehHteJlC9KH+mbM7MgRKidp3ofj6Ugbc+SFEDnaAdEDCuIyZbpNbo5avpjYgeEc7aV8F4/rGnFdFVorVhx4BymD28Ul3kpNK8/01yQnKK/gDG/NV8TjGXtBjGIzInhfYmVcQz2BSKZNJHfYe+2NPRRueVvOKMWQ9EtIb8o91eDTMM9s/DFPFZtepxRbAWk38KxQ5djwo8U/IWoQkQ==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.154.37])
- by p00-icloudmta-asmtp-us-west-3a-100-percent-5 (Postfix) with ESMTPSA id
- E3EEB1800E2F; Fri, 13 Mar 2026 13:59:47 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH] target/arm/kvm: fall back if nested unsupported
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <CAFEAcA98aTmU0cKSbddQnLFwrmifNfXYaDeNsdvJR9XuB--6ew@mail.gmail.com>
-Date: Fri, 13 Mar 2026 14:59:35 +0100
-Cc: Alyssa Ross <hi@alyssa.is>, Paolo Bonzini <pbonzini@redhat.com>,
- qemu-arm@nongnu.org, qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Eric Auger <eric.auger@redhat.com>, Miguel Luis <miguel.luis@oracle.com>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <03B77364-61CE-4709-BDAE-20A0F8E49972@unpredictable.fr>
-References: <20260311095405.26297-1-hi@alyssa.is>
- <CAFEAcA8ycT250JaECAYTKF+U2a4m6jauLPLbD8PVx2atd70A7g@mail.gmail.com>
- <87fr64vtms.fsf@alyssa.is>
- <CAFEAcA98aTmU0cKSbddQnLFwrmifNfXYaDeNsdvJR9XuB--6ew@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDExMSBTYWx0ZWRfX9U9/VwciLL1N
- /A6cgiuOsi2GIFOrjZmrXS1u14t2frHrhceNcAR/QLe1ILNPEUOPyfq2r7jhxx/ofo4Gos/ahPG
- 2RXUO4QEr9bDhz64Z08dSLY1lxS2SrYfuiHclSbxov3uQQzCghS7SDRk4l7VRRJBw9lp06RNboS
- YcwW0DfNE48njnTaH/MDnkGzsYn8P/ti6wF2RC1AqZHzQj6KX6Shb6qTttY6mhbNhlMEqiNYIRp
- ztqqH9ssdBPsXybTyC6bYz/hCbJYzOc0VLQ6NcT17bsoEEZ2EOCL676wBkTFMJjGguDwtEHQwle
- kdeHhR7VyOsYoT9B4FH1Oydy9+QwNOm4k0YlxZuzuGxmORPUZOYZLWlk9Ry7O8=
-X-Proofpoint-ORIG-GUID: GkPl7-w7ZnSYq9G5wbqAzd24QH5DZLzK
-X-Authority-Info-Out: v=2.4 cv=b72/I9Gx c=1 sm=1 tr=0 ts=69b41856
- cx=c_apl:c_pps:t_out a=qkKslKyYc0ctBTeLUVfTFg==:117 a=IkcTkHD0fZMA:10
- a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8
- a=Y4FzxyyIIySzoEe9l7IA:9 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-GUID: GkPl7-w7ZnSYq9G5wbqAzd24QH5DZLzK
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_02,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
- spamscore=0 suspectscore=0 mlxscore=0 clxscore=1030
- mlxlogscore=960
- lowpriorityscore=0 phishscore=0 bulkscore=0 adultscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603130111
-X-JNJ: AAAAAAABLaURqRjtpxUGBkBX3DjTjdKf6MikbuFqW3iue15NZG4HW+y6UHOCJB4KMDKyBWqJjTztose/jVA07X0p+UOtOZ9gKqhvVz5rx3jrQYxVS4oaKTxmatu8EiFuHmha1sScJ0s0jk/g7L1kIRqscNVJTP03Lg5VLHxxX3t6Dnm/TP0KghCUhLNqj435OsBxuw3EwZ6/98e9MD8+uYJlzhHvS6Xk48n+HggTSUD0TDc6b5ruKsdAq3MUZhUjawWbNZjdPQ5b55dnABZfiKSTfpFKWjgUY2pw6dqM7edvlU9fOFurhGe29EuPc9RiAOQpsvcjjknbgGqr1t0MMOcXgye4ExmReBNMaY2EILtOGt5F4SVxFb+uxjthCCU7dGvYX9l4k2VPYflvQKcAWrBUs6PtUjME78S1uNcXvnOy2fvxvGoEWzyBBwhEgwBMt9la//X6ekgWYBdxQzsd05nXer210w4PqnYCMUnZlRmXxAGmtvSla+C7NVueoDnqPOLthIAhOdxZzdoRXLndgsq07lzkRmrmhZM8p/EfpyDcRjKd4de/GRQQffiHMuG6XHryLBssVc4vrd9p5ORnobi3IKzs+3SbuKV2GdTpOni/x0dOWEiex0D97SFuNTsfM8piMRmq23hqoUTCSs1KVNhkd1wRTngGsh66gfdASpaJNGOhFFzW22F/NBq5rb7BSM56z+S1rBJZkQ==
-Received-SPF: pass client-ip=57.103.73.134;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.ms.icloud.com
+ (Exim 4.90_1) (envelope-from <clegoate@redhat.com>)
+ id 1w13AO-0005TC-0v
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:07:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773410822;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=hjEo/YyWrrr4yEVw+DijuGGKmJk2iE7iLXRfESxbDwU=;
+ b=M1LJ6a4zr9u5b0BCw75eKsWuwTARvC1VNxLm2r7r8ipjGDr3VaGz5diTGzIo/IwmvUOvdn
+ Tkgrm5OnA/UIhzE9yDFn/ZvKANM+HIIw+VI6kRJ91YuUAPpe7E1D2PL3s8aOZ42yAusKo0
+ kfmT4t9KGjssOt9mwnfrX3gZRlZDYxg=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-624-WxBwvWnkMtqF2cePELhH1w-1; Fri, 13 Mar 2026 10:05:21 -0400
+X-MC-Unique: WxBwvWnkMtqF2cePELhH1w-1
+X-Mimecast-MFC-AGG-ID: WxBwvWnkMtqF2cePELhH1w_1773410720
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-439da07c5bfso1665205f8f.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 07:05:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773410720; x=1774015520; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=hjEo/YyWrrr4yEVw+DijuGGKmJk2iE7iLXRfESxbDwU=;
+ b=J89pZjGPhAp36qvsRMSd9kyeEN6h+UFk2eH8Uwk39086C6s/+uUgv5jZ53X61+5UPo
+ zsZQ4T8wqvmV+V8hGOtXOX8mIZWBe78k9TuTVuwZLCDR0Gr0PIoxikY+rmECo/KZlre/
+ nViVrsmZv97wgz+h3rKJMoelfNHZh+tq4CT0FNJ2BlhR9xM2LXT/7ZJz2JLQiptmabFX
+ 1igvF2teeqGkD9Zu0jtHtWTstFfzDv1yFHuLeiZAdEtUUUAhyaDOfgofrTPe+gpZHyv1
+ D287z1+q0Av7zjgk+xuVQJYsk4ueo6SsAUE16PqkQgBvwKbMOnSGhkI8z+sl66GVllZg
+ HdXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773410720; x=1774015520;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=hjEo/YyWrrr4yEVw+DijuGGKmJk2iE7iLXRfESxbDwU=;
+ b=IQIcmFrWU9+K1u/Hcfmq3VczRVsrD/uZX3dsDvP9tzbcji2SZCYKuh74sx0copKZrD
+ 9bOpPOujzvczMRST7ByCknegip0Q3kvHvW2Zbp9wY6GORUmE3nWw2J7mV363XGhsn9Ba
+ IGIZFpz7gzkRCb/gPAOVKFeh3z9loZlcycMl1voGhPbLhCnFIwX6qtQ8mnv32ucfIB1W
+ uYw8r7mCEMSp1jqrtlD5bj1pRXxidEWK939fjBiHCAoikSU3ZROUAtBTPj5rQTB7zNfJ
+ pGhmlUUXKfivHF6ZCnuOHi6K56rAAvsuq5BAzXu39KGXhoz2hpblrwBmh7H0kJCUXFuy
+ Y50w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVdX0+5BqR9aIwL2ckBePBkGl5eqAhDF05jFQtzwiiUe40U8yafzYr2PQ/PJyHVGZ1ZVsrNfSdpqdHd@nongnu.org
+X-Gm-Message-State: AOJu0YyOtb/o6I6ILzC0H4Yb/k7YP/ssFCnNX3QEC352wPB/IBNMkGo4
+ Ph1wx36TmDbwSbXSv7dImkU0iwI3jWIihxkewe8S4bIpwuikaDgaN2SYUHUdGRtCelQkD19Yxs/
+ cxzVSwv+IpN5UvnORtp1vWSSa/m4I9dT624gj37ML1ed5EaDc6H0yGrP0
+X-Gm-Gg: ATEYQzyAFxeeED/TcYkI8mQuWXlVSwZFFJyfQ0LMZ5J9mKt6Tb2KT0RKvy4FMCYOPXE
+ DE/C3GqRa4OCIDztF9yE7kobKbtXOoCV/Fyu9LcN9ajUZg+uLo31O7gqoVKraxvxu8aJu7WiuHY
+ vCXLt4vG8A/F0JxU3mm/htaRadMTzcAv5zwVS4pqj4NcTn1J8CKQo5yzMpYRcalR4neVS+2v4Kw
+ C9yrASDRugbUlS9rlSy+D9RQmqKwSVForRMm7nrTtbYt2rBaDu3LJ31xahs4QBSLryzyp9KQwI8
+ 1tEqCEQPIca86gP2omF+gHxVko1wnszRS3MZrFT10xgE+zYDixfrbpAUyatIUFvNMo4Kh4XaBLZ
+ zDWFM3Af9dZbxbWhpHCjyCgWn6kQCVxwEJUkHw1js7/mOsVzI7yYbHeEBkjQ/JDIE5Gk=
+X-Received: by 2002:a05:6000:4011:b0:439:b1d8:6084 with SMTP id
+ ffacd0b85a97d-43a04dc30b9mr5908623f8f.44.1773410719882; 
+ Fri, 13 Mar 2026 07:05:19 -0700 (PDT)
+X-Received: by 2002:a05:6000:4011:b0:439:b1d8:6084 with SMTP id
+ ffacd0b85a97d-43a04dc30b9mr5908550f8f.44.1773410719397; 
+ Fri, 13 Mar 2026 07:05:19 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439fe1a76e5sm17137371f8f.12.2026.03.13.07.05.17
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 13 Mar 2026 07:05:18 -0700 (PDT)
+Message-ID: <daa35e89-f407-45e7-a37a-72299ac6b2c9@redhat.com>
+Date: Fri, 13 Mar 2026 15:05:17 +0100
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 03/38] hw/s390x/vfio: Replace TARGET_PAGE_BITS ->
+ qemu_target_page_bits()
+To: Thomas Huth <thuth@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
+References: <20260313062055.2188-1-philmd@linaro.org>
+ <20260313062055.2188-4-philmd@linaro.org>
+ <1ab35d61-a06b-4e89-8ce8-e857470fdc86@redhat.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clegoate@redhat.com>
+In-Reply-To: <1ab35d61-a06b-4e89-8ce8-e857470fdc86@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clegoate@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -97,81 +131,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 3/13/26 11:25, Thomas Huth wrote:
+> On 13/03/2026 07.20, Philippe Mathieu-Daudé wrote:
+>> Get the target page bits at runtime.
+>>
+>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> ---
+>>   hw/s390x/s390-pci-vfio.c | 3 ++-
+>>   1 file changed, 2 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+>> index 8ce44dbecce..7c754b656da 100644
+>> --- a/hw/s390x/s390-pci-vfio.c
+>> +++ b/hw/s390x/s390-pci-vfio.c
+>> @@ -22,6 +22,7 @@
+>>   #include "hw/vfio/pci.h"
+>>   #include "hw/vfio/vfio-container-legacy.h"
+>>   #include "hw/vfio/vfio-helpers.h"
+>> +#include "exec/target_page.h"
+>>   /*
+>>    * Get the current DMA available count from vfio.  Returns true if vfio is
+>> @@ -150,7 +151,7 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+>>        * to request that the guest free DMA mappings as necessary.
+>>        */
+>>       if (!pbdev->rtr_avail) {
+>> -        vfio_size = pbdev->iommu->max_dma_limit << TARGET_PAGE_BITS;
+>> +        vfio_size = pbdev->iommu->max_dma_limit << qemu_target_page_bits();
+>>           if (vfio_size > 0 && vfio_size < cap->end_dma - cap->start_dma + 1) {
+>>               pbdev->zpci_fn.edma = cap->start_dma + vfio_size - 1;
+>>           }
+> 
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
+> 
 
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-> On 13. Mar 2026, at 13:33, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> On Fri, 13 Mar 2026 at 11:47, Alyssa Ross <hi@alyssa.is> wrote:
->>=20
->> Peter Maydell <peter.maydell@linaro.org> writes:
->>> Looking a bit closer at this, it's a bit awkward that we're
->>> looking at a machine property in generic target/arm code.
->>=20
->> Isn't SMP a machine property that we're looking at just above?
->=20
-> It's one of the ones in the base MachineState that exist for
-> all boards.
->=20
->>> There is no guarantee that the machine is "virt" or that every
->>> KVM-supporting machine has a "virtualization" property, and
->>> the target/ code isn't really supposed to do board-specific stuff.
->>=20
->> FWIW: there's another arm board with the same property, which I think
->> would have the same requirements.  That's why I chose to just check =
-the
->> property rather than checking machine type =E2=80=94 the idea being =
-to establish
->> the convention that machines /do/ have a virtualization property =
-where
->> it makes sense.
->>=20
->>> The board-independent way to say "are we trying to enable EL2" is
->>> to look at the CPU property has_el2. But the CPU isn't created at
->>> this point, so it's too early to do that here.
->>=20
->> I spent a day or so trying to make something involving has_el2 work, =
-but
->> ultimately couldn't get anywhere with it.
->>=20
->>> Similar things where the early accelerator code wants information
->>> from the board we have handled with a method in MachineClass,
->>> like get_physical_address_range. We could do that here, but
->>> maybe it's a bit over-engineered? IDK.
->>=20
->> I'll give it a go and see if I can make it work.
->>=20
->>> There are other cases also where the virt board will error
->>> out for "KVM and some config we could do with TCG":
->>> * KVM + EL2 + GICv2
->>> * KVM + EL2 + kernel-irqchip=3Doff
->>> * KVM + GICv2 but host hardware doesn't support GICv2 emulation
->>> * KVM + GICv3 but host hardware doesn't support GICv3 emulation
->>> * KVM + MTE but host hardware/kernel doesn't support MTE
->>>=20
->>> The first two are "always fails", but if we're going to have
->>> a mechanism for "figure out in kvm_arch_init what KVM features
->>> the board is going to want to enable" then it might be nice
->>> to also be able to use it for the last 3.
->>=20
->> I can try that.
->=20
-> Thanks, that would be helpful. I don't really have any
-> specific ideas about what kind of API might be best here.
->=20
-> There are probably similar issues with the other accelerators,
-> e.g. -accel hvf,tcg -machine virtualization=3Don
-> also ought to fall back to TCG, and similarly with "picked
-> a GIC version we can't handle with this accelerator=E2=80=9D.
-Hello,
+Thanks,
 
-Something to note about that (with HVF and KVM) is that there=E2=80=99s
-also kernel-irqchip=3Doff/on to take into mind. For example on a =
-vGICv3-only
-system you can still run GICv2 VMs with kernel-irqchip=3Doff on KVM.
-
-And for HVF once the hardware irqchip is merged kernel-irqchip=3Doff
-will remain there for (primarily) GICv2 usage.
-
+C.
 
 
