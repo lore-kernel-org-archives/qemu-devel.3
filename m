@@ -4,86 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7DBE4106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:22:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11EB106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:22:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vue-0003AC-EI; Fri, 13 Mar 2026 02:22:20 -0400
+	id 1w0vuj-0003SL-TG; Fri, 13 Mar 2026 02:22:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuX-0002vT-3z
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:16 -0400
-Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuh-0003G2-GF
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:23 -0400
+Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuV-000701-8d
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:12 -0400
-Received: by mail-wm1-x32c.google.com with SMTP id
- 5b1f17b1804b1-4853aec185aso15457545e9.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:10 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuf-00071F-V1
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:23 -0400
+Received: by mail-wr1-x42e.google.com with SMTP id
+ ffacd0b85a97d-439b8a3f2bcso1345162f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382930; x=1773987730; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=wpiPIh949j7rh0EKU/SScuFwcnqyZb3HhjpDykwaXbU=;
- b=yojqZX9myF43eZbTiTfEigLx2CCQScEKwsNY01leEMixz73EXA8Kn6n20/Tq9hFl4Y
- KyrADUgXX2tYSranE5Svlwj+YNjl91OSVlTzsI35SRNAzD7tiCp9F1D4OQKU+ur1tR44
- B1G6fnXt6cHhutvO+J7eAN0IEVf4DopIKaQO01JtJKSzIWWhyTAQ8fxiMqg+1z00kfdF
- 8a7DqxtH5iNWm8DVSWz+UP1aL99+7p04+s1y7CfEiEhVUStAWleehqrhpRdmzj00TLuZ
- pvs0aahVAGgNkIywu+oOz7dlvV4cpDw0N/QwG8khRhdwO6vuFIRcxiy+jf8Tqsn4NbSP
- tDLA==
+ d=linaro.org; s=google; t=1773382939; x=1773987739; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=cq5cTPfeh3Pg0d95v0IReDt8464LYRGbtL2o+1/LtEI=;
+ b=gpNRWEjvVte8cuEpcZqV9KB1JgknxCl0r1fcCNdOyR8ptXm67FQYUcezyTywMQmmP1
+ 0JJybUNe2Wx5b1cvnEtNgdZVBNhgHTF7Q4g1tuNvNEqVxapbD9tf8J6RUhoKaI/CBgkU
+ vQnReBokcGiyNrn2xpH40i9+lQHUFVS5S1jrRnM3akoxderSCn2dkCKQlmltSzmQVJ0N
+ 3rLP2LgO7sDROFT30Ldes2klWYWkDA/peweRwemCtSv8gzeUkRm1lhGZFLKV7Yp79wMV
+ X2RzRQkPU08EMBq1XVStHHJRs1XWUo6BLabZkE5TU9o/jTyDDjU7QHelwBkoFNiMJw8x
+ 7djw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382930; x=1773987730;
- h=content-transfer-encoding:in-reply-to:references:cc:to:from
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=wpiPIh949j7rh0EKU/SScuFwcnqyZb3HhjpDykwaXbU=;
- b=T5FtLwy39G6b43++Iq3FtVhQCYCahCIeRFcRysqmQBtw6NxsmOnYY4Wq+vWV/+rmwH
- PkyOLsGBlCoW54NTf0qGpzcauF4AQ8L3DdguJeTuTen+k8nId8CX3hhfCyseIz5MmdeX
- Czq1xQ0QVcmnEpvqGktMUgrIEvMmJQ/HQ+4cqc9TFGZ+TpA8+0yBn1fhyiKwOwgjGCMr
- T/18CPof6heRuDMsvvZ/N6zdtm+MwycIIjkY6+P6dDQE8emAD2ZG6uim/N0eQdI3hxjX
- mWIE4u6Q4If8pI8AaJkcCyq3tutR2lJQm8zPi/bHXm18EaN36sasicZGNAcGJ2VLKJcP
- hZuQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV2Kn7ZuOs8+X3bnWUMLYvSqBlechQZr8legkqYTc1UqKNC24JuRxcE8UeQQKtsBVdTkTBR4hx4Jkba@nongnu.org
-X-Gm-Message-State: AOJu0YzjMeAWqXZM8Czse/HfZLzQXN0oWvyFTVUgP7nNVr/DWkTDDSaQ
- sk9bVBTJzid8N2cFu2CsAS6rVFzvukvbox+1wSz3cIzogwxbO2yn6MpZE2/eUe9582I=
-X-Gm-Gg: ATEYQzw1lVOwRHh/Vb54olt8hOfBrMTszhB5OgkuPjVN34fNi8vtmgIxNrnkcsfTEVt
- ML0v+DvTfK4tmRlz9mzrP6jmxdyzEfzvuIRKo3uNjH9YjdMnQFfRYeb+Mu4H0o6ell6XlgBT4bW
- zb7Cgq4N4FYESgE6fINxQSZDoCEo63rgXwSEIdDn9Aqu43nH+hVYS9NhL0RPdnI0fI8MJiAjfI9
- uWUrYK0rTQdxxpd+IZlVO7yh9XobGNY5pSsGMxXRpBTfy5DnBNkRVcoXDTtwvJIjA5N/iVgEjwG
- F2ujvMboV41KRfCS8YlMbkjc6ng2SN7ApyLnPJaVxB10nO32+/6ZrJyar95XFwN+ilpTgeSipmS
- G/hLSPDrD9EwHYZuSr4znJ/bcx7ZCT3ie91k+hfniccVDrCXzM0oOiyrD5Qih+d6y/4fjB3nCAn
- GV9/E8kIz6iu0LkxAVt6uJJ31rAtSC9QQ7gAZmiguXExvLHi0ih2Wsoeh5hr6aLaqSyLJnvDU=
-X-Received: by 2002:a05:600c:4f8f:b0:485:345b:ccb7 with SMTP id
- 5b1f17b1804b1-4855671028emr29959475e9.34.1773382929781; 
- Thu, 12 Mar 2026 23:22:09 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1773382939; x=1773987739;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cq5cTPfeh3Pg0d95v0IReDt8464LYRGbtL2o+1/LtEI=;
+ b=gUscVFNWYiuAqi44cHg6UYSlzxW0ynOShld3DBGRk3o8xElhdu4gQdPNZ3M4ZMsiUt
+ Wvm2eQ0wwB6J/Jg9WUAgutlz6gp99nzanM2cw6uJg/KuxSL2b7iRneTur90L27uRd8j2
+ 6ZpvJ7CHE0V3wIlxHjrh8TL/CxnYvK68dW0esJ4ThJk/QeElfewE9tWk90n48xOVUeuI
+ bzolin6tnliZ88K8syDJIMbZZLpLsMCX83wRz1JXmGZU+zXV0GJWxUbu4d64aNMuR+Pi
+ fqjvV6Cb7GTcNfFFqf5ZRb/fpp2yFdrfqowMeMpjQLL3+bZfmWio3W4czYJf+5T3zJXQ
+ N5/A==
+X-Gm-Message-State: AOJu0Yyli4DwFq+C3Bu7F5gYQk0aV1+PbKxdPJeUSoMfmvGm0zMYGcTY
+ LR70iy1RkMLncwOldTihOmRcUsietGNSwW8ummh7lGBs4LdoQ/YKmP/Ggr7DiS7CM7uZIaHoVss
+ DEj1rHik=
+X-Gm-Gg: ATEYQzyaNozBf8hJ/BkFGe4lehkjdCu/o6z8oNPtWC98OaMYTWzNg0fOHqgvOSfTrlN
+ aj27HLZr2GHYvmnWN5HHYGilJpBYC5jq8bnrE+oCvzdEXDk18+7+MOvglMR2sxWg+0k3m8vQB8H
+ gVtrjuk6BQxpRCQxzhs2Zf9rO0ueXbGU8r2+7ptWry84UHqN4ngZAAyBx7tH+xnyyuwvgdtvf60
+ 3m9iun15qnx/Zk++K6QjTAJLOmPPUseFmbnxqbEF3ayY4UU2My3bi8375oeW/q3TUbxshQQAmUL
+ Apyr/TkNMejylHHRsjEm2Fa7gl1p+SDjBVEwZw3FZ+DkB2zLcbflciVkOnN4dlMoEinVaBuvqGr
+ u/XI8nqFy4AEs3ye6QZJKrZDBiaceqapP47vCzlG8hVqo7zbILQeEgAe23Y7IPmczUEhPlVioCc
+ 9c7JE5dYywKld2TxI4Au5Z8hrPLN6esEYJknwNhxRxsDzMMIguGpr5Tx3yaRY1rGashiyVYsh55
+ puStg==
+X-Received: by 2002:a05:6000:1866:b0:439:fcd5:c9be with SMTP id
+ ffacd0b85a97d-43a04db127bmr3882898f8f.33.1773382939560; 
+ Thu, 12 Mar 2026 23:22:19 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48557a74228sm12666225e9.18.2026.03.12.23.22.08
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 23:22:09 -0700 (PDT)
-Message-ID: <e3901066-2a82-4419-af77-528a05a7c5d1@linaro.org>
-Date: Fri, 13 Mar 2026 07:22:08 +0100
+ ffacd0b85a97d-439fe21b631sm17153314f8f.27.2026.03.12.23.22.18
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 12 Mar 2026 23:22:19 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [PATCH v2 12/38] target/ppc: Include missing 'exec/target_long.h'
+ header
+Date: Fri, 13 Mar 2026 07:20:28 +0100
+Message-ID: <20260313062055.2188-13-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
+References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] target/arm/cpu.h: restrict cpu-defs.h to target
- specific code
-Content-Language: en-US
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
-References: <20260312224702.1608408-1-pierrick.bouvier@linaro.org>
- <20260312224702.1608408-2-pierrick.bouvier@linaro.org>
- <719ac842-22be-4617-8b87-02424f2b9ea5@linaro.org>
- <a0b3440a-6fde-44d6-95fd-88a04038cd41@linaro.org>
-In-Reply-To: <a0b3440a-6fde-44d6-95fd-88a04038cd41@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,62 +104,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/3/26 04:58, Philippe Mathieu-Daudé wrote:
-> On 13/3/26 04:48, Philippe Mathieu-Daudé wrote:
->> On 12/3/26 23:47, Pierrick Bouvier wrote:
->>> Allow to use this header from common code, which we do in next commit.
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>> ---
->>>   target/arm/cpu.h | 2 ++
->>>   1 file changed, 2 insertions(+)
->>>
->>> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->>> index 657ff4ab20b..b8042f65bb4 100644
->>> --- a/target/arm/cpu.h
->>> +++ b/target/arm/cpu.h
->>> @@ -25,7 +25,9 @@
->>>   #include "hw/core/registerfields.h"
->>>   #include "cpu-qom.h"
->>>   #include "exec/cpu-common.h"
->>> +#ifdef COMPILING_PER_TARGET
->>>   #include "exec/cpu-defs.h"
->>> +#endif
->>
->> Since there are no other uses of COMPILING_PER_TARGET in this
->> header, this clearly mean "exec/cpu-defs.h" isn't required here
->> at all but elsewhere:
->>
->> -- >8 --
->> diff --git a/target/arm/cpu.h b/target/arm/cpu.h
->> index 657ff4ab20b..445d5a8a31d 100644
->> --- a/target/arm/cpu.h
->> +++ b/target/arm/cpu.h
->> @@ -25,7 +25,6 @@
->>   #include "hw/core/registerfields.h"
->>   #include "cpu-qom.h"
->>   #include "exec/cpu-common.h"
->> -#include "exec/cpu-defs.h"
->>   #include "exec/cpu-interrupt.h"
->>   #include "exec/gdbstub.h"
->>   #include "exec/page-protection.h"
->> diff --git a/include/exec/helper-head.h.inc b/include/exec/helper- 
->> head.h.inc
->> index 5b248fd7138..5603c9941a7 100644
->> --- a/include/exec/helper-head.h.inc
->> +++ b/include/exec/helper-head.h.inc
->> @@ -46,6 +46,7 @@
->>   #define dh_ctype(t) dh_ctype_##t
->>
->>   #ifdef COMPILING_PER_TARGET
->> +# include "exec/cpu-defs.h"
->>   # ifdef TARGET_LONG_BITS
->>   #  if TARGET_LONG_BITS == 32
->>   #   define dh_alias_tl i32
->> ---
-> 
-> I'll post patches for this.
+The "exec/target_long.h" header is indirectly included, pulled
+via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
+when removing the latter:
 
-Posted as series v2:
-https://lore.kernel.org/qemu-devel/20260313062055.2188-1-philmd@linaro.org/
+  target/ppc/cpu.h:1281:5: error: unknown type name 'target_ulong'
+   1281 |     target_ulong gpr[32];  /* general purpose registers */
+        |     ^
+  hw/ppc/spapr_ovec.h:76:44: error: unknown type name 'target_ulong'
+         76 | SpaprOptionVector *spapr_ovec_parse_vector(target_ulong table_addr, int vector);
+            |                                            ^
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/hw/ppc/spapr_ovec.h | 2 +-
+ target/ppc/cpu.h            | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/include/hw/ppc/spapr_ovec.h b/include/hw/ppc/spapr_ovec.h
+index c3e8b98e7e2..8d67f492d02 100644
+--- a/include/hw/ppc/spapr_ovec.h
++++ b/include/hw/ppc/spapr_ovec.h
+@@ -37,7 +37,7 @@
+ #ifndef SPAPR_OVEC_H
+ #define SPAPR_OVEC_H
+ 
+-#include "cpu.h"
++#include "exec/target_long.h"
+ 
+ typedef struct SpaprOptionVector SpaprOptionVector;
+ 
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index d637a50798f..a0df7a467ed 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -25,6 +25,7 @@
+ #include "exec/cpu-common.h"
+ #include "exec/cpu-defs.h"
+ #include "exec/cpu-interrupt.h"
++#include "exec/target_long.h"
+ #include "cpu-qom.h"
+ #include "qom/object.h"
+ #include "hw/core/registerfields.h"
+-- 
+2.53.0
+
 
