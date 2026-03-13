@@ -4,84 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B62107BCC6
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:18:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F322107BCC6
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:18:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w15D1-0007Wm-4A; Fri, 13 Mar 2026 12:17:55 -0400
+	id 1w15Cs-0007VP-Vs; Fri, 13 Mar 2026 12:17:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15Cx-0007WL-UW
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:17:51 -0400
-Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
+ id 1w15Cd-0007Ue-Hu
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:17:32 -0400
+Received: from mail-pf1-x42e.google.com ([2607:f8b0:4864:20::42e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15Cw-0006Eb-ES
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:17:51 -0400
-Received: by mail-pj1-x102a.google.com with SMTP id
- 98e67ed59e1d1-359f35dfef6so1332011a91.2
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:17:50 -0700 (PDT)
+ id 1w15Cc-0006Ce-0T
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:17:31 -0400
+Received: by mail-pf1-x42e.google.com with SMTP id
+ d2e1a72fcca58-829b2018c94so1448211b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:17:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773418669; x=1774023469; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=kXjMv/TqhfYh0WblpgOzdU1hY1cA19DKhUAMMrZHey0=;
- b=JdUUdN8QbAHOb1pW4UZVHkFpS6kxAsBe8qc2xf7UZfghTwTrfs5Bm34FWlTaCLths+
- ceJIV65l4EiB/7EAatzJ38qaNsPa5MlHCvxK+2xBa1Zj0wen42iZmc2SjDQ14GrsYzAm
- dIcRcfdcCDfzu3S+kEJcmMuD8XeNImaK2MFqvw0kDkk+CDcyXSiNv5UXGpIGjNvJdkg1
- S0rfqaS/ghOlDlO0akKmrpnIHE3kKVi9SQcsXhn0/5rWQw8iyt/s/znCRCjjBdTebZcY
- Bb0TVMR+kgVWvCOM3us1UFJL8/k7bzgDUpU8iGSjTBlpJRtCzaAymCCYK38mTLii8L/9
- RdkQ==
+ d=linaro.org; s=google; t=1773418648; x=1774023448; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=7DO5MoWRHHEFyAZwfWtYNfTk+gxpUay4exK4xOe88JY=;
+ b=dh/rNQWusHQaSxMII+VxMXmYVPQ2/IOfYTTQJAppyimR2GgCRzd5sXXVWJ+b/Em1eb
+ wdAmS1UNJtAGESjWrDWPWLoaifys68XWuomIyzdvsYbNXIajzZpBWwncihnfVJV9YFLp
+ 6f8DwVrHB3zTyvlfds941nMrRHF4AmoVaKDRneqc+XGrWnKM5gwKFp2eFdDs++mw8vYm
+ rVkNMqjDblTXuBqQ4tPOBeWX+25uf44FsDan0kOhn/D549kMsEWN/SiBDXwms2VdJbQi
+ 6TZuAESKHEpbzlVjxtBw5IvUHdMI6u3op4c1AzNiRCnMY3q8xhjAupq30qh7DrdIzc3l
+ oh1A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773418669; x=1774023469;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=kXjMv/TqhfYh0WblpgOzdU1hY1cA19DKhUAMMrZHey0=;
- b=J7dGnRWmxeC5NtsgQ8ndpv79h+3P6qZsJDTgNpeBPW1JIMddsxkIbbV8otKZrCraTf
- nfa27gfirAt+EQqVpYqT9SpYmyFH81lxjI9rMKzl3a5HYVeg2OiA7exnx/v9FBnaPKfj
- YSY6tc6ThEux1NPDH1Pv1NqYeHQ12afffiVzhFVZUvUpMOHwZ9WD/ROsDytBvEs0jELm
- 2SA31jHD3Xby9Zu3LgzFZbFFt1XxuAB8YgHMgN2N1U2NfKx7qUGieSebzBFNYvJX0IyI
- ZJ/AndFwkGnwh8p3FG7xz7l+NpKDM0HNoZWDeRmNb4qYtVqoLmP9q4C5nXMDfc8C13tC
- CR0A==
+ d=1e100.net; s=20251104; t=1773418648; x=1774023448;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :from:references:cc:to:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7DO5MoWRHHEFyAZwfWtYNfTk+gxpUay4exK4xOe88JY=;
+ b=a7b4OEU2BWcJ0sVXthAA5O3hUMHeAfDREATivhdgJfmskKZVHXzjvG/X8UwSLMGvy5
+ jIZR86g13rJSGdRsOQL3OcrGVuEzNOzGFboeNin1pUGmSGbTE0az+y2tgvLyrfU9REfM
+ 52MCDXhhEauInKvEo//kkfB1YjqT/E/P/tca61iDQyDlNCrEmeC5dSEiT1aFzsEcj/WZ
+ 2V4fle2Kyi0yE+7oyGyyWFjYp6oFeoF1Hr4p1l2WvuPTjPMxSUWrxtMozwBgvniUSsVt
+ rS++rcRJNZLTD0IYZi+z9TZzfNnM9LaVLJNEMCSUIQN8Ftc8KFBAMc3EToIAxmhQFoix
+ GaRQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVaxKuU/gnHOSJulLNo1R0lWt/epS/aPWxkRVU/D47b8pPWcsmnT1tokAhhu7n7dFG9r7ryWcNmuC2X@nongnu.org
-X-Gm-Message-State: AOJu0Yz6mcKlpNSM70HZ6FGHgpiO1JQ4qbLwUpQAhZIrggpQ7waGTs4A
- 215p/tjvgoGm1lOr7feLiGvUpboLuiX5ybVsyp401LCcLcBXSNj9R1bzEfVbBy/qp8Y=
-X-Gm-Gg: ATEYQzxHzcJ+iGoTyM0BlJQ7T/8Jr1JOwD0+wv4z4QerpDZXY2pQS3u6FII2O/rbKxx
- lcRWLpfub0PxgsObHFFT7ZikqE3tgBY3xVRze3c6hcEZYctUxyvrSNRLHZoM/4/q/ke5OXU2pbY
- Wpe597VVCsEQMYM1kGSLGOEU+btf1s7V8RWUDvW5HGEbVf4YPzAgV+GwOxW8uNcfIcTGIXFScxu
- yWhS0I7PGPFkkzivdzIjnn60BEEiXklG86/u/nHVOt9aknD1BfxmgBfncL/ZZQQneIDYfcNETqd
- gFPNF7d8QT9SU+LQYOVWX6ugk6KthHUOJExvvFc0sKlph9FJdAHo2eolWRyxY6qqNLsgf5ofNOW
- Ix8Y8t0t6wO1+zgf5mVYuCNrY1VZTM9Y2MNjty/lP1gSSHMr+97KVjWjXv+75OXFX9IVPBt/NhV
- JCNz/lGaCXiflENodkWDE5vRCn/fWTC9abz7DwqSktPk+JQyyJ93bqLi29ESXx+Bueribs
-X-Received: by 2002:a17:90a:e7d1:b0:359:fecd:1cd3 with SMTP id
- 98e67ed59e1d1-35a2205551fmr3261902a91.23.1773418668808; 
- Fri, 13 Mar 2026 09:17:48 -0700 (PDT)
+ AJvYcCWWxQX9HX7oFA0ZeECVBTsuyYUfoP2whpib+ZAFVljCQarZO1EBEEeXLWfB1HMUPnse8dgwWkTfBr8H@nongnu.org
+X-Gm-Message-State: AOJu0Yzn+UFeDyZmq1NCXPaNUHOVupBLImkqyVxEzV9G3iXIb+sm9+nW
+ enYRIfYn22UJE6hBbjRe3f6KBOEMkJ9maEjaLyWGLhkHN46zTfagf8CIaiexzwMgWuY=
+X-Gm-Gg: ATEYQzyGRRK5APIMx5EazMqNbp/hHuZ/xS88BieHbTL7A5otAAFNEDiLU/nS2iRpZ8J
+ 6TupDOuZ8qgb/5RV2PcPH5vFbGnTP7EjVa31ygfweI4DuR7Td/4pURBsNsJ7sMEPWNAAFXY6X69
+ JR5GLAxI0vA61zpksSC+rRwsXfvQBZqvmEO0mKEKso3tgGD9jlBkohfD+/vhtaBkBaa7jmZBMmi
+ 523vC8V1i2oxzjhnjhwRMwbsJhftexahCSzmJfBiaNOzQgY67lCPPbwJcfsq6E49cv8DI9UCCHk
+ cHZRTV80sNPEgLroh8gN2XtJ6sRJYpY262qJRFXdcox+FTcNrgnoyoAHBAtXDJfV+L4h0XFt6CL
+ QEjG77Bwut7+umEBQPb+WG8aySBXxuFzOp/UaOasjJDaE5izOsBn+gk03ULpyUIHVVlDaZdu1BK
+ dzjw8ZUpLZjcuvqlbj78eGL26CszCdVlmYiZtoHWe7/OD27g+oCEvrygtAZq5S9qbSCFTg
+X-Received: by 2002:a05:6a00:2482:b0:82a:110b:e223 with SMTP id
+ d2e1a72fcca58-82a1956cda1mr2654308b3a.0.1773418647962; 
+ Fri, 13 Mar 2026 09:17:27 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35a02e18e46sm9292913a91.4.2026.03.13.09.17.48
+ d2e1a72fcca58-82a07366123sm6569384b3a.47.2026.03.13.09.17.27
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 09:17:48 -0700 (PDT)
-Message-ID: <67a6cd68-34c2-4dc9-9e44-ca3f66f0e103@linaro.org>
-Date: Fri, 13 Mar 2026 09:17:47 -0700
+ Fri, 13 Mar 2026 09:17:27 -0700 (PDT)
+Message-ID: <7533789c-a01e-40f2-b935-b587e36ee6cb@linaro.org>
+Date: Fri, 13 Mar 2026 09:17:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
-Content-Language: en-US
+Subject: Re: [PATCH 2/8] hw/vfio/helpers.c: extract kvm helpers in
+ kvm-helpers.c
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com
 References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
- <20260312224449.1605071-4-pierrick.bouvier@linaro.org>
- <6492850c-12b6-4687-a07a-99530e2553ae@linaro.org>
+ <20260312224449.1605071-3-pierrick.bouvier@linaro.org>
+ <0d62dfd9-30c4-4389-8d0d-2655ba28cb73@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
  eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
@@ -116,18 +117,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <6492850c-12b6-4687-a07a-99530e2553ae@linaro.org>
+In-Reply-To: <0d62dfd9-30c4-4389-8d0d-2655ba28cb73@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -143,34 +144,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 8:20 PM, Philippe Mathieu-Daudé wrote:
+On 3/12/26 8:18 PM, Philippe Mathieu-Daudé wrote:
 > On 12/3/26 23:44, Pierrick Bouvier wrote:
->> Add stubs for needed functions.
+>> Because those functions use kvm specific types, they need to be isolated
+>> in another source file.
+>> This allows us to link kvm-helpers only in configurations with
+>> CONFIG_KVM.
 >>
 >> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 >> ---
->>    hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
->>    hw/vfio/pci-quirks.c |  5 -----
->>    hw/vfio/meson.build  |  3 ++-
->>    3 files changed, 22 insertions(+), 6 deletions(-)
->>    create mode 100644 hw/vfio/igd-stubs.c
+>>    hw/vfio/helpers.c     | 172 -------------------------------------
+>>    hw/vfio/kvm-helpers.c | 192 ++++++++++++++++++++++++++++++++++++++++++
+>>    hw/vfio/kvm-stubs.c   |  27 ++++++
+>>    hw/vfio/meson.build   |   2 +
+>>    4 files changed, 221 insertions(+), 172 deletions(-)
+>>    create mode 100644 hw/vfio/kvm-helpers.c
+>>    create mode 100644 hw/vfio/kvm-stubs.c
 > 
 > 
 >> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
->> index f32d8573600..562ba79d1c0 100644
+>> index 82f68698fb8..f32d8573600 100644
 >> --- a/hw/vfio/meson.build
 >> +++ b/hw/vfio/meson.build
->> @@ -16,7 +16,8 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+>> @@ -7,6 +7,8 @@ vfio_ss.add(files(
+>>      'container-legacy.c',
+>>      'helpers.c',
 >>    ))
->>    vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
->>    vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
->> -vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
->> +vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'),
->> +                                     if_false: files('igd-stubs.c'))
+>> +vfio_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-helpers.c'),
+>> +                                if_false: files('kvm-stubs.c'))
 > 
-> Directly add to global stubs source set, otherwise:
+> Directly add to global stubs source set:
 > 
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>     stub_ss.addfiles('kvm-stubs.c'))
+> 
+>>    vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
+>>    vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+>>      'pci-quirks.c',
+> 
 
-Will do it too, thanks.
+Good idea, will do that!
 
