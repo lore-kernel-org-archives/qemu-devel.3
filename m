@@ -4,55 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F65A107BCD3
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 18:31:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B405F107BCD6
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 18:31:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w17IJ-0008LQ-TP; Fri, 13 Mar 2026 14:31:31 -0400
+	id 1w17IK-0008W4-U1; Fri, 13 Mar 2026 14:31:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w17H8-0007c8-0W
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:22 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w17H6-0005SK-27
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:17 -0400
-Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id 7F2CE6013C;
- Fri, 13 Mar 2026 18:30:14 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 2D6B4C19421;
- Fri, 13 Mar 2026 18:30:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773426614;
- bh=V3pKuIKReYWC1E9/VW0Lj3lZ20wq73KCxdtWeUT2TXQ=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=Wq4wXKdGRhDQTMTFGly+hNSpnw6IhfNl3dtkIGnOeCd48rXE0yvd3cKuqkD1MQ5in
- Vcbj/gH/rfLSQVYDnfsyowPp8dQChL7BI2kNPu1cWHjdUXvG/bM0XP8nXAM6nKp129
- dB9ETJIVzA7oLebRY7bU/8qiwDELDr8HJQpQUQCexg00DefUMionUw+nCejsBhhQvM
- FHuJsIOiU1hBf2w/MmWG1KKiU4oHl3wF8QUP5bqc0N6YwsRLRw07lmhYmDiAW4ShVB
- hMtcWQsHVQD6FP3x2JjxavZlnHV2eXus8seGi3WZA5+7prT4vgyNPULeIfjB/F+8rT
- p0Vvs5g0qMRJg==
-From: Helge Deller <deller@kernel.org>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w17HA-0007cG-Ca
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:23 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w17H8-0005Sb-9F
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 14:30:19 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id CF5665BFA0;
+ Fri, 13 Mar 2026 18:30:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773426607; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MncAG3t5Y1v2exCQafgl4tCgcp9DxaNWVxRhlbJmQpw=;
+ b=Fa10+IZ1j/w1gE6SABzqugP72VohqyvT/WIc07vWtHjR1shyE6X0a1czBBlpmZPQNArS2r
+ pFXlWmZ3Prs/w9325UYQTkh6w6fGn7d45sAgz59Y/tiGf3TEldIu20w2DeNoNSs5mbqbjT
+ lOqDfu579I7MOfIoKp4UHZeIHEgHCjU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773426607;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MncAG3t5Y1v2exCQafgl4tCgcp9DxaNWVxRhlbJmQpw=;
+ b=U2tM/DK23GIpSz06EEy+aZVwe0jNbppmOY7D5Lhnjb9O29gT3nVGv+mc5d/RjB8Cp1kPkw
+ iXE4wdAon+vPtwCw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773426607; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MncAG3t5Y1v2exCQafgl4tCgcp9DxaNWVxRhlbJmQpw=;
+ b=Fa10+IZ1j/w1gE6SABzqugP72VohqyvT/WIc07vWtHjR1shyE6X0a1czBBlpmZPQNArS2r
+ pFXlWmZ3Prs/w9325UYQTkh6w6fGn7d45sAgz59Y/tiGf3TEldIu20w2DeNoNSs5mbqbjT
+ lOqDfu579I7MOfIoKp4UHZeIHEgHCjU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773426607;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=MncAG3t5Y1v2exCQafgl4tCgcp9DxaNWVxRhlbJmQpw=;
+ b=U2tM/DK23GIpSz06EEy+aZVwe0jNbppmOY7D5Lhnjb9O29gT3nVGv+mc5d/RjB8Cp1kPkw
+ iXE4wdAon+vPtwCw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id BE9A340678;
+ Fri, 13 Mar 2026 18:30:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id QCj0IK1XtGn9MwAAD6G6ig
+ (envelope-from <farosas@suse.de>); Fri, 13 Mar 2026 18:30:05 +0000
+From: Fabiano Rosas <farosas@suse.de>
 To: qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>, Razvan Ghiorghe <razvanghiorghe16@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>
-Subject: [PULL 1/2] linux-user: Fix zero_bss for RX PT_LOAD segments
-Date: Fri, 13 Mar 2026 19:30:08 +0100
-Message-ID: <20260313183009.34221-2-deller@kernel.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260313183009.34221-1-deller@kernel.org>
-References: <20260313183009.34221-1-deller@kernel.org>
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+Subject: [PATCH v1 3/4] target/riscv: Don't leak general_user_opts
+Date: Fri, 13 Mar 2026 15:29:55 -0300
+Message-ID: <20260313182957.28432-4-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
+In-Reply-To: <20260313182957.28432-1-farosas@suse.de>
+References: <20260313182957.28432-1-farosas@suse.de>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
+X-Spamd-Result: default: False [-2.79 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.19)[-0.951];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_VIA_SMTP_AUTH(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; ARC_NA(0.00)[];
+ MIME_TRACE(0.00)[0:+];
+ FREEMAIL_CC(0.00)[linaro.org,dabbelt.com,wdc.com,gmail.com,ventanamicro.com,linux.alibaba.com];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ FROM_HAS_DN(0.00)[]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_COUNT_TWO(0.00)[2]; RCVD_TLS_ALL(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_DN_SOME(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FREEMAIL_ENVRCPT(0.00)[gmail.com]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,86 +124,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
+The global variable general_user_opts is being assigned twice, losing
+the reference to the previously allocated g_hash_table.
 
-zero_bss() incorrectly assumed that any PT_LOAD containing .bss must be
-writable, rejecting valid ELF binaries where .bss overlaps the tail of
-an RX file-backed page.
-
-Instead of failing, temporarily enable write access on the overlapping
-page to zero the fractional bss range, then restore the original page
-permissions once initialization is complete.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3179
-Signed-off-by: Razvan Ghiorghe <razvanghiorghe16@gmail.com>
-Reviewed-by: Helge Deller <deller@gmx.de>
-Signed-off-by: Helge Deller <deller@gmx.de>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
 ---
- linux-user/elfload.c | 37 +++++++++++++++++++++++--------------
- 1 file changed, 23 insertions(+), 14 deletions(-)
+ target/riscv/cpu.c | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
 
-diff --git a/linux-user/elfload.c b/linux-user/elfload.c
-index 35471c0c9a..59b543f740 100644
---- a/linux-user/elfload.c
-+++ b/linux-user/elfload.c
-@@ -449,12 +449,6 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
- {
-     abi_ulong align_bss;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index e56470a374..afccfc2935 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1099,8 +1099,6 @@ static void riscv_cpu_init(Object *obj)
+                             "riscv.cpu.rnmi", RNMI_MAX);
+ #endif /* CONFIG_USER_ONLY */
  
--    /* We only expect writable bss; the code segment shouldn't need this. */
--    if (!(prot & PROT_WRITE)) {
--        error_setg(errp, "PT_LOAD with non-writable bss");
--        return false;
--    }
+-    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
 -
-     align_bss = TARGET_PAGE_ALIGN(start_bss);
-     end_bss = TARGET_PAGE_ALIGN(end_bss);
+     /*
+      * The timer and performance counters extensions were supported
+      * in QEMU before they were added as discrete extensions in the
+@@ -2751,6 +2749,7 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
+     cc->tcg_ops = &riscv_tcg_ops;
+ #endif /* CONFIG_TCG */
  
-@@ -472,20 +466,35 @@ static bool zero_bss(abi_ulong start_bss, abi_ulong end_bss,
-              */
-             align_bss -= TARGET_PAGE_SIZE;
-         } else {
-+            abi_ulong start_page_aligned = start_bss & TARGET_PAGE_MASK;
-             /*
--             * The start of the bss shares a page with something.
--             * The only thing that we expect is the data section,
--             * which would already be marked writable.
--             * Overlapping the RX code segment seems malformed.
-+             * The logical OR between flags and PAGE_WRITE works because
-+             * in include/exec/page-protection.h they are defined as PROT_*
-+             * values, matching mprotect().
-+             * Temporarily enable write access to zero the fractional bss.
-+             * target_mprotect() handles TB invalidation if needed.
-              */
-             if (!(flags & PAGE_WRITE)) {
--                error_setg(errp, "PT_LOAD with bss overlapping "
--                           "non-writable page");
--                return false;
-+                if (target_mprotect(start_page_aligned,
-+                                    TARGET_PAGE_SIZE,
-+                                    prot | PAGE_WRITE) == -1) {
-+                    error_setg_errno(errp, errno,
-+                                    "Error enabling write access for bss");
-+                    return false;
-+                }
-             }
- 
--            /* The page is already mapped and writable. */
-+            /* The page is already mapped and now guaranteed writable. */
-             memset(g2h_untagged(start_bss), 0, align_bss - start_bss);
-+
-+            if (!(flags & PAGE_WRITE)) {
-+                if (target_mprotect(start_page_aligned,
-+                                    TARGET_PAGE_SIZE, prot) == -1) {
-+                    error_setg_errno(errp, errno,
-+                                    "Error restoring bss first permissions");
-+                    return false;
-+                }
-+            }
-         }
-     }
++    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
+     device_class_set_props(dc, riscv_cpu_properties);
+ }
  
 -- 
-2.53.0
+2.51.0
 
 
