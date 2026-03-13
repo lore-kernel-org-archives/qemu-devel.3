@@ -4,110 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E4A45105F78C
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 12:33:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF2C5105F7A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 12:33:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w11hf-0002Kc-GW; Fri, 13 Mar 2026 08:33:19 -0400
+	id 1w11hd-0002Jo-4W; Fri, 13 Mar 2026 08:33:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w11hd-0002Jp-Iv
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:33:17 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w11hb-00032a-Vn
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:33:17 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64c9a398bc7so2440173d50.2
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 05:33:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773405195; cv=none;
- d=google.com; s=arc-20240605;
- b=cVTkn9VYRKTvFOTHFxaoFqHtVQI2qokWCh0fey77VCiLS+UI+3EC7RpLP8IMzqsbBm
- Ne4mgbScqe1dPFmQ6h3ZAqWF55JYROGGssDevqXxtoiGRj+Vpisp+KRtH2CE1yuR2sHR
- 2o+KxJ0CkGPcsBZliat/q12MkDFO7wjmT/u7v01eqk3P3twE8vkIOkLVz4WygVa1do0u
- bk23DzIj03EhEKwv8/BY/dbaOn2ZqtI9pO8xliXk7Q70xK9KDscqPlP5Gdfb78pGEgKB
- 2fKHjTxF16Gl/lT1H1rMZNkJ40BJ06zBqwpVUXcaFQZwOLKnPmNAfjgHsXT40fp5XSU2
- mAeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=8qpkgKKZi4M0dKGmoIqvJ6FewWUr3N/GbWr7jXlFiMc=;
- fh=kNIogqq3vuwisK2itGMBAsxxrTxhp1uBN4cTU4uTg6A=;
- b=XFgdd2TmJsAbhqUrmAHTcF7sHc7Hw/vaovnXuA7WfWBjGh2RWtS0wQ5Tgq4ekcz6bj
- nqIEulJcVWrxTO+DEQWFVh5dZqTKHrwdwdjoUGaDv2rvQoYfbvJ05SgQRRsmpHMHPGe3
- 5MONa5QG6f8znouD4yINH5kho/uirv3ItEncorQiCFWqqx1MOHlhewRwZUrHhRpQRIaV
- IgaK1UCs+WUhYWwL0JcHgciJoTaZgDyP3AiGdAg0jrq4my0jXDugzVeYgMKBn9aC2mey
- 6iIpxGu1eSATPQGPk/SX6bjPa0y58SdXDWxOEBRXGJmHxam4TJSTz8mr7RIld6waGTzW
- ly9Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773405195; x=1774009995; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8qpkgKKZi4M0dKGmoIqvJ6FewWUr3N/GbWr7jXlFiMc=;
- b=hb1HyqOu1Q0roaNzlPRBtQbuBjk71j5ChA4L2W2ipAasR87n0QRM1OBfHKmWu5FJmg
- tl7qyZZTx+wYfWLBaiIEOx107dTbQ2D3MkoXI7xW8f6zcfRI/TnGOq+XWu3HQ/d907p/
- sxhkEEk25Bzl6USZpjtacmKvYXamkGzq5+m6vlkOOtuKSLGSCJRxFNEpW0rqjOPb1hMY
- yJz997hcCyfdPvo+GO41bt0S/c7Gz24ei9WhdqYQ7vg7eZwsjhWnOk/AKdBlAORGOfJY
- qCX8ysmybW2SgbSdiNdPArOs9BSQ/KFFXMRbYwj0WvDCIAoXTulb4YwQN2C4O2qyOFET
- a7gA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773405195; x=1774009995;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8qpkgKKZi4M0dKGmoIqvJ6FewWUr3N/GbWr7jXlFiMc=;
- b=VSHdRooXAQNoD0PEJHkHXcAhYv5xJjIa/beKQVzA0MAyFs2wHlrZB57P0ytVyX2uN3
- 2LM/gyjnbtQMONcR8mcaZnomy2nSWJUyK+kDltCgj1DzX1Q9E5tQGxk6Aa9mXw4P5zYq
- 3lmDbX4lNV+9RaoGRW+c8hkvvMP4kVUABVjzmqm76E+wrAiGV6O6V4kGLRkA2JSiDavJ
- VHOFBwnVsJqZDgfs3dZukFAU7uRBr8naku3AKuT1LvLsY5r37bWY6MmULtffeup8TMZZ
- n7kSkX9VUNi3qHqYNCqMCiKTOnyjPYOrrNje6VxCqTyZZnLTn+eORveqt5gftV02JoHc
- QwqA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUChelIqExeglw2ItmuhnLydc6ocHYwu/6gDERmcjAa/Ull84XkE8jdrLhO+ZBL333jhtQ7YVbQNXmY@nongnu.org
-X-Gm-Message-State: AOJu0Yy4AVaZG848xE6SJUZxz7qNZp27xerTCRDKCJEt9SozaJwWcl8O
- FxpbLIOzfOdC3kIek6oFZllmw/ejE3U3gMMcA6boG7sKNy0p7cQuA7e8J4mdWJ9Ez9tIagGJFF3
- 6cLxp65YXznNqQtEuf8NBSjeAxgvzQB1Z/z+W9pvNwg==
-X-Gm-Gg: ATEYQzzvvJkrgdSKLN3CCKgak0d3eS76aajaa+Qv7fA4VBOv1p+XRJ4e2rQk9zcjFJv
- l+pg33Z+szefAMP9+uzHEnOrSrHxkMO1NACXkAQLze67ng0+snDdk/DiJ3nDhfvMLrCmCjW/5ZC
- pl058MjMcNt1+mfLAmHUpsRy1JWLSQC+4e/kwJhhTWnOWLnDZwr9QbkUmboH3mGcH0zl7gT196p
- pvdCjtLyrkPlS0qm9pbF5odT5Zud+0kwIgnmaRgwZB1vxWoAc7GyOCdzDFsdG0fm9QE0OQjg4ww
- /40GkeIgwcp5kLSe4rUdeUFYw/3y0kBExvHlv2crWd6Owu3pnDNye2SkKNdlhnFJjEE35RwTZc3
- WuA==
-X-Received: by 2002:a53:ee60:0:b0:64d:29b6:3853 with SMTP id
- 956f58d0204a3-64e63084523mr2294434d50.62.1773405194653; Fri, 13 Mar 2026
- 05:33:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w11hc-0002Jb-6l
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:33:16 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
+ id 1w11ha-00032U-L2
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:33:15 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62D4GBlh2278339; Fri, 13 Mar 2026 12:33:13 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=pZ0CkT
+ pT4iJjLwNiuUBW7qD+8TM6i5Mqhy8FRQgm7Vc=; b=pA9cRzSRl/vn/O3ZQI3yuU
+ Qh9692oXRVoNWhSGKX7OyNjief6BgoUWZu99QWJc4jHH0GdZ+4MGKCyyp4HwLD/k
+ 21FvlyfU3OVPw8gndSOQS9lztU6YpYSUeV1Gp7tzwOuUbSwvUYGVa+M1NSi7ByA+
+ JpKix0kfi9MJsurS/vXFaobUX/5l8IZdcWOzow7Hunr6UHOC149DnkhRDub+qdAF
+ fwPOmF/p5s5GyKRtiGuYpz/f6ih6pPVpt4AhJxsjihgIvEcDhnwe06Uk9X6BxO4n
+ /Ws57PQ4MLtjSfX1mNQAw4OETMYJKsnK7RMdjDDmBrQnzdojtgf4dewa/RDIhmdw
+ ==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh91qra5-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 12:33:13 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62DAHvi4006563;
+ Fri, 13 Mar 2026 12:33:12 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cuha9pm3v-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 12:33:12 +0000
+Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
+ [10.39.53.231])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62DCXBWo5636708
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Mar 2026 12:33:11 GMT
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5C41E58045;
+ Fri, 13 Mar 2026 12:33:11 +0000 (GMT)
+Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 69E9858050;
+ Fri, 13 Mar 2026 12:33:10 +0000 (GMT)
+Received: from [9.47.158.152] (unknown [9.47.158.152])
+ by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 13 Mar 2026 12:33:10 +0000 (GMT)
+Message-ID: <3aa7c0b1-a6c2-4037-b0e4-20279204b503@linux.ibm.com>
+Date: Fri, 13 Mar 2026 08:33:09 -0400
 MIME-Version: 1.0
-References: <20260311095405.26297-1-hi@alyssa.is>
- <CAFEAcA8ycT250JaECAYTKF+U2a4m6jauLPLbD8PVx2atd70A7g@mail.gmail.com>
- <87fr64vtms.fsf@alyssa.is>
-In-Reply-To: <87fr64vtms.fsf@alyssa.is>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 13 Mar 2026 12:33:02 +0000
-X-Gm-Features: AaiRm524LdjNgHnlTdSFCUVAmKkaUkrny2G6lg3rMMTHEglnrcDvbVKjUJvoiPM
-Message-ID: <CAFEAcA98aTmU0cKSbddQnLFwrmifNfXYaDeNsdvJR9XuB--6ew@mail.gmail.com>
-Subject: Re: [PATCH] target/arm/kvm: fall back if nested unsupported
-To: Alyssa Ross <hi@alyssa.is>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, 
- kvm@vger.kernel.org, Eric Auger <eric.auger@redhat.com>, 
- Miguel Luis <miguel.luis@oracle.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC 2/5] hw/tpm: Refactor CRB_CTRL_START register access
+To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
+Cc: Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
+ Laurent Vivier <lvivier@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>
+References: <20260312041650.181411-1-armenon@redhat.com>
+ <20260312041650.181411-3-armenon@redhat.com>
+Content-Language: en-US
+From: Stefan Berger <stefanb@linux.ibm.com>
+In-Reply-To: <20260312041650.181411-3-armenon@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: fXfRP77EFe8zk3wy8YXWmjR1kQYRyH6L
+X-Authority-Analysis: v=2.4 cv=E6/AZKdl c=1 sm=1 tr=0 ts=69b40409 cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=KPsyjuvybIxOXCdSSHAA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA5OSBTYWx0ZWRfX6TJ+vPNzGv2B
+ LUTXxJf4qFJqgLnrOGghmRtwQ8FQMyqmlU+1o4Y0KfHrCC852mtAsocESKRwcHfv/TIIKCs3whQ
+ OSVOo97YY+sjCyHd0TwOs12p4ZWKxciwJroEYYDpuBs9NsMlINJhItVq2D1tyANYCDkS5IvG15L
+ nkpOm6mRyuQk40xpq08/jtYETxwhafU+AKT4M9WfChjXqmBE3TrJNoX0RqUv6J2VC+ZKr5zlJkb
+ Pttepx4Alv2aiBSBqQ832Z9cqcGUKDDkapGGxNvCenPS6APW79TdIIWcb14nKhLqkz2Smm7DB5Y
+ x1qF0cn2icyQIpar8J1NCqxTfzgwOeAHT3kIUxgWI86W23NN4/VWJO6z0PALabC06pQhdkQ3qhC
+ MPHy44oOwqE2rUX2ghl/FbE43kS5gRSOqQ7H9Mwq7VeD6wLhMUTeWygVL0ZqgCrKkbCy9z661Kk
+ hvPo8iJe5Q82WmWLi1w==
+X-Proofpoint-ORIG-GUID: fXfRP77EFe8zk3wy8YXWmjR1kQYRyH6L
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-13_02,2026-03-13_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ adultscore=0 impostorscore=0 clxscore=1015 malwarescore=0 phishscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 lowpriorityscore=0 bulkscore=0
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130099
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=stefanb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,64 +127,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Mar 2026 at 11:47, Alyssa Ross <hi@alyssa.is> wrote:
->
-> Peter Maydell <peter.maydell@linaro.org> writes:
-> > Looking a bit closer at this, it's a bit awkward that we're
-> > looking at a machine property in generic target/arm code.
->
-> Isn't SMP a machine property that we're looking at just above?
 
-It's one of the ones in the base MachineState that exist for
-all boards.
 
-> > There is no guarantee that the machine is "virt" or that every
-> > KVM-supporting machine has a "virtualization" property, and
-> > the target/ code isn't really supposed to do board-specific stuff.
->
-> FWIW: there's another arm board with the same property, which I think
-> would have the same requirements.  That's why I chose to just check the
-> property rather than checking machine type =E2=80=94 the idea being to es=
-tablish
-> the convention that machines /do/ have a virtualization property where
-> it makes sense.
->
-> > The board-independent way to say "are we trying to enable EL2" is
-> > to look at the CPU property has_el2. But the CPU isn't created at
-> > this point, so it's too early to do that here.
->
-> I spent a day or so trying to make something involving has_el2 work, but
-> ultimately couldn't get anywhere with it.
->
-> > Similar things where the early accelerator code wants information
-> > from the board we have handled with a method in MachineClass,
-> > like get_physical_address_range. We could do that here, but
-> > maybe it's a bit over-engineered? IDK.
->
-> I'll give it a go and see if I can make it work.
->
-> > There are other cases also where the virt board will error
-> > out for "KVM and some config we could do with TCG":
-> >  * KVM + EL2 + GICv2
-> >  * KVM + EL2 + kernel-irqchip=3Doff
-> >  * KVM + GICv2 but host hardware doesn't support GICv2 emulation
-> >  * KVM + GICv3 but host hardware doesn't support GICv3 emulation
-> >  * KVM + MTE but host hardware/kernel doesn't support MTE
-> >
-> > The first two are "always fails", but if we're going to have
-> > a mechanism for "figure out in kvm_arch_init what KVM features
-> > the board is going to want to enable" then it might be nice
-> > to also be able to use it for the last 3.
->
-> I can try that.
+On 3/12/26 12:16 AM, Arun Menon wrote:
+> Replace manual bitwise operations with ARRAY_FIELD_DP32 macros
+> No functional changes.
+> 
+> Signed-off-by: Arun Menon <armenon@redhat.com>
+> ---
+>   hw/tpm/tpm_crb.c | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/hw/tpm/tpm_crb.c b/hw/tpm/tpm_crb.c
+> index 0a1c7ecdc6..bc55908786 100644
+> --- a/hw/tpm/tpm_crb.c
+> +++ b/hw/tpm/tpm_crb.c
+> @@ -145,7 +145,7 @@ static void tpm_crb_mmio_write(void *opaque, hwaddr addr,
+>               tpm_crb_get_active_locty(s) == locty) {
+>               void *mem = memory_region_get_ram_ptr(&s->cmdmem);
+> 
+> -            s->regs[R_CRB_CTRL_START] |= CRB_START_INVOKE;
+> +            ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 1);
+>               s->cmd = (TPMBackendCmd) {
+>                   .in = mem,
+>                   .in_len = MIN(tpm_cmd_get_size(mem), s->be_buffer_size),
+> @@ -194,7 +194,7 @@ static void tpm_crb_request_completed(TPMIf *ti, int ret)
+>   {
+>       CRBState *s = CRB(ti);
+> 
+> -    s->regs[R_CRB_CTRL_START] &= ~CRB_START_INVOKE;
+> +    ARRAY_FIELD_DP32(s->regs, CRB_CTRL_START, invoke, 0);
+>       if (ret != 0) {
+>           ARRAY_FIELD_DP32(s->regs, CRB_CTRL_STS,
+>                            tpmSts, 1); /* fatal error */
 
-Thanks, that would be helpful. I don't really have any
-specific ideas about what kind of API might be best here.
-
-There are probably similar issues with the other accelerators,
-e.g. -accel hvf,tcg -machine virtualization=3Don
-also ought to fall back to TCG, and similarly with "picked
-a GIC version we can't handle with this accelerator".
-
--- PMM
+Reviewed-by: Stefan Berger <stefanb@linux.ibm.com>
 
