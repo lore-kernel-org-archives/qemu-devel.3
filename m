@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF058107BCCE
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 17:05:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EE18107BCCE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 17:10:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w15wy-0006ue-H2; Fri, 13 Mar 2026 13:05:24 -0400
+	id 1w161B-000800-9A; Fri, 13 Mar 2026 13:09:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69b43f8b.v1-de75e993a1e84d34b8ab7d36c95fdf39@bounce.vates.tech>)
- id 1w15wu-0006tb-6X
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:05:20 -0400
-Received: from mail134-15.atl141.mandrillapp.com ([198.2.134.15])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <bounce-md_30504962.69b43f8b.v1-de75e993a1e84d34b8ab7d36c95fdf39@bounce.vates.tech>)
- id 1w15wq-0001Lz-4j
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:05:19 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=mandrillapp.com;
- s=mte1; t=1773420427; x=1773690427;
- bh=B1fZqJL36gLjyygjzjPY/WHbUmBzonK71fAY1TCjXcI=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=Nzp0JDE45Zx44s8jrK143spt1uvUCtMqqhBlIK+aG/9duFiB23hhggAZ4W+uCWKo9
- QfP7uzBQo0PiQAcW+7dkILIaaRHj1y/1esxc7t2EgnPWSh1c7OpYBygvWL9vzIPVAw
- imY+B6mecylxmM1UMutwFHYwK7pTwtEhPdz3QCH9QjUfH4w5P6CTCn5ZN7BXD36bni
- 1TTayukUzKA3fjIaa3pDsmpvBgi0rTMrWv4bvZnpisWWPTJBVEBqCFivyfI+UdXYkp
- hz8Ga8kFrL1ftzV9iewE51HA3YxVRG2DorZYhJwH2IOG7HbN5gl06lQq00884mbe+h
- NGMrDS+jfpz7Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vates.tech; s=mte1;
- t=1773420427; x=1773680927; i=thierry.escande@vates.tech;
- bh=B1fZqJL36gLjyygjzjPY/WHbUmBzonK71fAY1TCjXcI=;
- h=From:Subject:To:Cc:Message-Id:In-Reply-To:References:Feedback-ID:
- Date:MIME-Version:Content-Type:Content-Transfer-Encoding:CC:Date:
- Subject:From;
- b=zDYb8qxoF4KjqvLStQ+Or7YsG/BV3GDd/z35iPo/DBevuXqsYBg2Wle4sU+mmxgAb
- WB0IrzGAEwtboUxZi4wXzLgqnWel1bYYr8i5IWqREwDmzQBeZxTyN/3ZgLjw/09W5T
- tat8cjKPdk3QS00WAS8GS9sbItFhb9Jq3dh3/w9Tvi2FdPg+ydtFPNgJQ8ubkMmCmO
- vgUQ6OKJMGZ4BgRtJR2iK/4RbHOp10m/fUjZzWc2svLr/AM98mmsttPxzqf3Mdo1my
- OLc6x1DbIt3ku9SepM872qup7kJePcEHxC/tJj7cojMs+CAjYTVQY8fbLyQlAFOSUP
- wsGIRfvlP0tKQ==
-Received: from pmta10.mandrill.prod.atl01.rsglab.com (localhost [127.0.0.1])
- by mail134-15.atl141.mandrillapp.com (Mailchimp) with ESMTP id
- 4fXVkz30LZzPm0Pr6
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 16:47:07 +0000 (GMT)
-From: "Thierry Escande" <thierry.escande@vates.tech>
-Subject: =?utf-8?Q?[PATCH=201/4]=20pc/xen:=20Xen=20Q35=20support:=20provide=20IRQ=20handling=20for=20PCI=20devices?=
-Received: from [37.26.189.201] by mandrillapp.com id
- de75e993a1e84d34b8ab7d36c95fdf39; Fri, 13 Mar 2026 16:47:07 +0000
-X-Mailer: git-send-email 2.51.0
-X-Bm-Disclaimer: Yes
-X-Bm-Milter-Handled: 4ffbd6c1-ee69-4e1b-aabd-f977039bd3e2
-X-Bm-Transport-Timestamp: 1773420425990
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w1619-0007zl-R5
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:09:43 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w1617-0003xU-OU
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 13:09:43 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-4852e09e23dso21568475e9.0
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 10:09:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773421780; x=1774026580; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wpuHOt+VwLuV3dKU2qsN6d5hcq4YhdYzxqEHrdDM6DY=;
+ b=G0m7YdHltkOAnAfUVhGfYkqple9Cqmz51ucPAAi1VJuHgsGzOuwC+3BFkNsLVTTpHk
+ pPFusuJ9gO33tamJErkk5whvIN6GY81OUU0P3E2CnnaUFRMGcrEdp7qNGnC3rxppYkSZ
+ FRI7HLLPCJ8GrIPWBIKVnP8eAT5QILhlL/uYZ6KoMwUmbta4fPSsf07W4Q28L/Rx6LDf
+ ARhKZotP3MPpcMdVKVqQkulNsIUMufobVEh5u9eN8YfNUr1yxL1dKbO0IJ3KzOfZNcmw
+ /aOTglEuI7zZ0BAH56bt3HW73HsONSfB0+TBIrkwAHjmHLKBULe1sqFMSqMscJXW61kP
+ W3OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773421780; x=1774026580;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wpuHOt+VwLuV3dKU2qsN6d5hcq4YhdYzxqEHrdDM6DY=;
+ b=EmFyeJ4QHjZK3juXU1ETbGw6oaQoA+QjyrqlLDelg3PaEdIjj2Q9dNJnH9T3vOdpLH
+ mkc+xK6W3+mT4bXD5H8zyJUma9UMsZaGA9vcoybhNdPLkrPuKvIoSlJVFCm+JrGKRdpL
+ GN6V78uEw7PicEGfYdYXTbXnyA/7v+wIqzVCo48hNWeB8bkNlaDKw6YDNBp6LPnaD21S
+ XSC99g17QW8p+gk2oF6UtrJqX60T9GUoB01WLDHf6Uez8cr6QLXzpoi8bkYcshjkrt0Q
+ M1Nql/JyHgS54BQpbi4pkOrEFABITuRlCX+4csk+MWcRn0e06riLmqK1zLGLPw6k3HA4
+ ySzQ==
+X-Gm-Message-State: AOJu0Ywib74KxPzLdf+1VqREKucBu0OW/s7fMNsGxQ3JuwwC5FNr6jRK
+ QWY714KMKoBkSYNQ0MCGEFFYOn2UHrfCV/W+Qtgb64+WA945QcVdymbSCdTX2rMtRqsdv0PIi+C
+ Ksdry
+X-Gm-Gg: ATEYQzzLY3ANU9TC+7YdoSpgcNDeawpNJ50vQq1Elu6G3LpJ901UeEXy3oGi17QrQAe
+ shh2hlqipghvGmzEyN/ZRefnmn4YQvJ4duYZpgzwM3gWKYoANlDYBNAMKB6hiXFZkL6Dbl6cfER
+ FnXb2T6GjtzDVWTlm4drngR/kJq92xbEEuRDbGNDq1E0buoKnHdzgxR/8js7/20Q2lGngc0T61z
+ yWm4o3Y7v6E/XRj8Q9mzWjJDf0yQn8EzDVxKcegQJA44Z0MmqjDvmoCaO1pwOxvlkZWS1EkHDvd
+ B83Am7B2I0PZEStQ/eDTbyf96t1XNT8VIrfP2DdPIqNFCalq1/6EX3MtpNYy2ICjpZOuXgGmjVr
+ C19gYiNioUVlAM2xIqBeifkhc2N1rGV4YCR2FIx0I7gb+9I1OKg8pfD27xkW/ndeEQh78GTfxx3
+ +fT4nSpuiCwMh+OGDKgIFgtPuHZcTO2wZzlNYlvlCsDpED14zjjZdC+SgyTRQh63f1ceC3VDshf
+ MPDDuPIYrEnZruQ15EiYM4xTP8emvv4cEo5bbZTNA==
+X-Received: by 2002:a05:600c:4e08:b0:485:3193:6ddb with SMTP id
+ 5b1f17b1804b1-485566ca5e3mr62089925e9.3.1773421779889; 
+ Fri, 13 Mar 2026 10:09:39 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48541ac17f2sm288825835e9.6.2026.03.13.10.09.38
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Mar 2026 10:09:39 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: "Alexey Gerasimenko" <x1917x@gmail.com>,
- "Paolo Bonzini" <pbonzini@redhat.com>,
- "Richard Henderson" <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>, "Eduardo Habkost" <eduardo@habkost.net>,
- "Anthony PERARD" <anthony@xenproject.org>, xen-devel@lists.xenproject.org,
- "Thierry Escande" <thierry.escande@vates.tech>
-Message-Id: <20260313164649.794591-2-thierry.escande@vates.tech>
-In-Reply-To: <20260313164649.794591-1-thierry.escande@vates.tech>
-References: <20260313164649.794591-1-thierry.escande@vates.tech>
-X-Native-Encoded: 1
-X-Report-Abuse: =?UTF-8?Q?Please=20forward=20a=20copy=20of=20this=20message,
- =20including=20all=20headers,
- =20to=20abuse@mandrill.com.=20You=20can=20also=20report=20abuse=20here:=20https://mandrillapp.com/contact/abuse=3Fid=3D30504962.de75e993a1e84d34b8ab7d36c95fdf39?=
-X-Mandrill-User: md_30504962
-Feedback-ID: 30504962:30504962.20260313:md
-Date: Fri, 13 Mar 2026 16:47:07 +0000
+Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Artyom Tarasenko <atar4qemu@gmail.com>, qemu-stable@nongnu.org
+Subject: [PATCH] target/sparc: Set reg window data structures currently after
+ vmstate load
+Date: Fri, 13 Mar 2026 17:09:38 +0000
+Message-ID: <20260313170938.449538-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.2.134.15;
- envelope-from=bounce-md_30504962.69b43f8b.v1-de75e993a1e84d34b8ab7d36c95fdf39@bounce.vates.tech;
- helo=mail134-15.atl141.mandrillapp.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,201 +100,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexey Gerasimenko <x1917x@gmail.com>
+In the SPARC CPU state, env->regwptr points into the env->regbase
+array at wherever the architectural CWP (current window pointer) says
+we are in the register windows.  We don't migrate this directly,
+since it's a host pointer, so we must ensure it is set up again
+after migration load.
 
-This patch introduces support for ICH9 LPC PCI interrupt routing when
-running under Xen. This intercepts writes to the PIRQA-D routing
-registers and propagates routing changes to the Xen device model via
-xen_set_pci_link_route().
+We also have to deal with a special case when CWP is (nwindows - 1).
+In this case, while running we keep the "in" register data for this
+window in a temporary location at the end of the regbase[] array, so
+that generated code doesn't have to special case this "wrap around"
+case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
+wrapped data from its temporary location into the architectural
+location in window 0's "out" registers.  We then migrate only
+(nwindows * 16) entries in the regbase[] array.  So on the
+destination we need to copy the "in" register data back to its
+temporary location again.
 
-A major difference between i440 and Q35 is the number of PIRQ inputs and
-PIRQ routers (PCI IRQ links in terms of ACPI) available. i440 has 4 PCI
-interrupt links, while Q35 has 8 (PIRQA...PIRQH). Currently Xen has
-support for only 4 PCI links, so we describe only 4 of 8 PCI links in
-ACPI tables. Also, hvmloader disables PIRQ routing for PIRQE..PIRQH by
-writing 80h into corresponding PIRQ[n]_ROUT registers.
+For 32-bit SPARC we get this right, because the CWP is in the PSR.
+The get_psr() function does:
+    env->cwp = 0;
+    cpu_put_psr_raw(env, val);
+which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
+sets up both regwptr and the wrapped-register data.
 
-All this PCI interrupt routing stuff largely concerns legacy mechanism
-from PIC era. It's hardly worth to extend number of PCI links supported
-as we normally deal with APIC mode and/or MSI interrupts.
+However, for 64-bit SPARC the CWP is not in the PSR, and
+cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
+register state in a corrupted state, and the guest will likely crash
+on the destination if it didn't happen to be executing with CWP == 0.
 
-The only useful thing to do with PIRQE..PIRQH routing currently is to
-check if guest actually attempts to use it for some reason (despite ACPI
-PCI routing information provided). In this case, a warning is reported.
+Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
+for the 64-bit case, and enough commentary to explain what is going
+on.
 
-This has been tested on Linux guests with noapic and pci=nomsi kernel
-parameters set.
-
-Signed-off-by: Alexey Gerasimenko <x1917x@gmail.com>
-Signed-off-by: Thierry Escande <thierry.escande@vates.tech>
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 ---
- hw/i386/pc_piix.c     |  2 --
- hw/i386/xen/xen-hvm.c | 38 ++++++++++++++++++++++++++++++++++++++
- hw/isa/lpc_ich9.c     | 16 +++++++++++++---
- include/hw/xen/xen.h  |  5 +++++
- stubs/xen-hw-stub.c   |  4 ++++
- 5 files changed, 60 insertions(+), 5 deletions(-)
+I ran into this because the "sparc64-migration" functional test seems
+to hit this reliably when built with the address sanitizer.  This is
+probably a timing thing, because it doesn't trip any ASAN failures,
+the guest just crashes on the destination side most of the time
+because it returns from a subroutine to a corrupt %o7 return address.
 
-diff --git a/hw/i386/pc_piix.c b/hw/i386/pc_piix.c
-index 4d71e0d51a..a65e09e46c 100644
---- a/hw/i386/pc_piix.c
-+++ b/hw/i386/pc_piix.c
-@@ -66,8 +66,6 @@
- #include "hw/i386/acpi-build.h"
- #include "target/i386/cpu.h"
+As far as I can tell this is what the problem is, but I'm a bit
+surprised that we have never hit this, given how likely you are to
+hit it on a vmsave/vmload or migration.  So am I missing something?
+---
+ target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
+ 1 file changed, 39 insertions(+), 2 deletions(-)
+
+diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+index 4dd75aff74..b935c31630 100644
+--- a/target/sparc/machine.c
++++ b/target/sparc/machine.c
+@@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
+     SPARCCPU *cpu = opaque;
+     CPUSPARCState *env = &cpu->env;
  
--#define XEN_IOAPIC_NUM_PIRQS 128ULL
--
- static GlobalProperty pc_piix_compat_defaults[] = {
-     { TYPE_RAMFB_DEVICE, "use-legacy-x86-rom", "true" },
-     { TYPE_VFIO_PCI_NOHOTPLUG, "use-legacy-x86-rom", "true" },
-diff --git a/hw/i386/xen/xen-hvm.c b/hw/i386/xen/xen-hvm.c
-index 67d3e836eb..2dba289e09 100644
---- a/hw/i386/xen/xen-hvm.c
-+++ b/hw/i386/xen/xen-hvm.c
-@@ -18,6 +18,7 @@
- #include "hw/core/hw-error.h"
- #include "hw/i386/pc.h"
- #include "hw/core/irq.h"
-+#include "hw/southbridge/ich9.h"
- #include "hw/i386/apic-msidef.h"
- #include "hw/xen/xen-x86.h"
- #include "qemu/range.h"
-@@ -87,6 +88,43 @@ int xen_set_pci_link_route(uint8_t link, uint8_t irq)
-     return xendevicemodel_set_pci_link_route(xen_dmod, xen_domid, link, irq);
- }
+-    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
+-     * window as the outs of the first window
++    /*
++     * If env->cwp == env->nwindows - 1, this will set the ins of the last
++     * window as the outs of the first window. We do this because we only
++     * transfer the (nwindows * 16) entries of regbase[] that correspond
++     * to the "proper" locations of the registers; this call has the
++     * effect of copying the wrap register values from their temporary
++     * location down to their proper location ready for migration.
+      */
+     cpu_set_cwp(env, env->cwp);
  
-+void xen_ich9_pci_write_config_client(PCIDevice *pci_dev, uint32_t address, uint32_t val, int len)
-+{
-+    static bool pirqe_f_warned = false;
-+    int i;
-+
-+    if (ranges_overlap(address, len, ICH9_LPC_PIRQA_ROUT, 4)) {
-+        /* handle PIRQA..PIRQD routing */
-+        /* Scan for updates to PCI link routes (0x60-0x63). */
-+        for (i = 0; i < len; i++) {
-+            uint8_t v = (val >> (8 * i)) & 0xff;
-+            if (v & 0x80) {
-+                v = 0;
-+            }
-+            v &= 0xf;
-+            if (((address + i) >= ICH9_LPC_PIRQA_ROUT) &&
-+                ((address + i) <= ICH9_LPC_PIRQD_ROUT)) {
-+                xen_set_pci_link_route(address + i - ICH9_LPC_PIRQA_ROUT, v);
-+            }
-+        }
-+    } else if (ranges_overlap(address, len, ICH9_LPC_PIRQE_ROUT, 4)) {
-+        while (len--) {
-+            if (range_covers_byte(ICH9_LPC_PIRQE_ROUT, 4, address) &&
-+                (val & 0x80) == 0) {
-+                /* print warning only once */
-+                if (!pirqe_f_warned) {
-+                    pirqe_f_warned = true;
-+                    warn_report("WARNING: guest domain attempted to use PIRQ%c "
-+                                "routing which is not supported for Xen/Q35 currently\n",
-+                                (char)(address - ICH9_LPC_PIRQE_ROUT + 'E'));
-+                    break;
-+                }
-+            }
-+            address++, val >>= 8;
-+        }
-+    }
-+}
-+
- int xen_is_pirq_msi(uint32_t msi_data)
- {
-     /* If vector is 0, the msi is remapped into a pirq, passed as
-diff --git a/hw/isa/lpc_ich9.c b/hw/isa/lpc_ich9.c
-index 51dc680029..8c627f0734 100644
---- a/hw/isa/lpc_ich9.c
-+++ b/hw/isa/lpc_ich9.c
-@@ -46,8 +46,10 @@
- #include "hw/acpi/ich9_timer.h"
- #include "hw/pci/pci_bus.h"
- #include "hw/core/qdev-properties.h"
-+#include "hw/xen/xen.h"
- #include "system/runstate.h"
- #include "system/system.h"
-+#include "system/xen.h"
- #include "hw/core/cpu.h"
- #include "hw/nvram/fw_cfg.h"
- #include "qemu/cutils.h"
-@@ -569,6 +571,9 @@ static void ich9_lpc_config_write(PCIDevice *d,
-     ICH9LPCState *lpc = ICH9_LPC_DEVICE(d);
-     uint32_t rcba_old = pci_get_long(d->config + ICH9_LPC_RCBA);
- 
-+    if (xen_enabled()){
-+        xen_ich9_pci_write_config_client(d, addr, val, len);
-+    }
-     pci_default_write_config(d, addr, val, len);
-     if (ranges_overlap(addr, len, ICH9_LPC_PMBASE, 4) ||
-         ranges_overlap(addr, len, ICH9_LPC_ACPI_CTRL, 1)) {
-@@ -762,9 +767,14 @@ static void ich9_lpc_realize(PCIDevice *d, Error **errp)
-     irq = object_property_get_uint(OBJECT(&lpc->rtc), "irq", &error_fatal);
-     isa_connect_gpio_out(ISA_DEVICE(&lpc->rtc), 0, irq);
- 
--    pci_bus_irqs(pci_bus, ich9_lpc_set_irq, d, ICH9_LPC_NB_PIRQS);
--    pci_bus_map_irqs(pci_bus, ich9_lpc_map_irq);
--    pci_bus_set_route_irq_fn(pci_bus, ich9_route_intx_pin_to_irq);
-+    if (xen_enabled()) {
-+        pci_bus_irqs(pci_bus, xen_intx_set_irq, d, XEN_IOAPIC_NUM_PIRQS);
-+        pci_bus_map_irqs(pci_bus, xen_pci_slot_get_pirq);
-+    } else {
-+        pci_bus_irqs(pci_bus, ich9_lpc_set_irq, d, ICH9_LPC_NB_PIRQS);
-+        pci_bus_map_irqs(pci_bus, ich9_lpc_map_irq);
-+        pci_bus_set_route_irq_fn(pci_bus, ich9_route_intx_pin_to_irq);
-+    }
- 
-     ich9_lpc_pm_init(lpc);
- }
-diff --git a/include/hw/xen/xen.h b/include/hw/xen/xen.h
-index e94c6e5a31..910289b54d 100644
---- a/include/hw/xen/xen.h
-+++ b/include/hw/xen/xen.h
-@@ -24,6 +24,8 @@
- #define __XEN_INTERFACE_VERSION__ 0x00040e00
- #endif
- 
-+#define XEN_IOAPIC_NUM_PIRQS 128ULL
-+
- /* xen-machine.c */
- enum xen_mode {
-     XEN_DISABLED = 0, /* xen support disabled (default) */
-@@ -39,6 +41,9 @@ extern bool xen_is_stubdomain;
- int xen_pci_slot_get_pirq(PCIDevice *pci_dev, int irq_num);
- int xen_set_pci_link_route(uint8_t link, uint8_t irq);
- void xen_intx_set_irq(void *opaque, int irq_num, int level);
-+void xen_ich9_pci_write_config_client(PCIDevice *pci_dev,
-+                                      uint32_t address, uint32_t val,
-+                                      int len);
- void xen_hvm_inject_msi(uint64_t addr, uint32_t data);
- int xen_is_pirq_msi(uint32_t msi_data);
- 
-diff --git a/stubs/xen-hw-stub.c b/stubs/xen-hw-stub.c
-index 6cf0e9a4c1..a74209d01e 100644
---- a/stubs/xen-hw-stub.c
-+++ b/stubs/xen-hw-stub.c
-@@ -24,6 +24,10 @@ int xen_set_pci_link_route(uint8_t link, uint8_t irq)
-     return -1;
- }
- 
-+void xen_ich9_pci_write_config_client(PCIDevice *pci_dev, uint32_t address, uint32_t val, int len)
-+{
-+}
-+
- int xen_is_pirq_msi(uint32_t msi_data)
- {
      return 0;
+ }
+ 
++static int cpu_post_load(void *opaque, int version_id)
++{
++    /*
++     * For 32-bit SPARC we set the register window data structures
++     * up again correctly when get_psr() called cpu_put_psr_raw(),
++     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
++     * part of the PSR, so we need to handle it here.
++     *
++     * There are two things we need to have happen:
++     * 1. regwptr points into regbase[] at the location determined by CWP.
++     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
++     *    in a copy at a temporary location at the end of the regbase[]
++     *    array. For migration we only transferred the (nwindows * 16)
++     *    entries of regbase[] that correspond to the "proper" locations
++     *    of the registers, so now we must copy the wrap registers back to
++     *    their temporary location.
++     *
++     * We achieve both of these by setting env->cwp to 0 and then calling
++     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
++     */
++#if defined(TARGET_SPARC64)
++    SPARCCPU *cpu = opaque;
++    CPUSPARCState *env = &cpu->env;
++    uint32_t cwp = env->cwp;
++
++    env->cwp = 0;
++    cpu_set_cwp(env, cwp);
++#endif
++    return 0;
++}
++
+ /* 32-bit SPARC retains migration compatibility with older versions
+  * of QEMU; 64-bit SPARC has had a migration break since then, so the
+  * versions are different.
+@@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
+     .version_id = SPARC_VMSTATE_VER,
+     .minimum_version_id = SPARC_VMSTATE_VER,
+     .pre_save = cpu_pre_save,
++    .post_load = cpu_post_load,
+     .fields = (const VMStateField[]) {
+         VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
+         VMSTATE_UINT32(env.nwindows, SPARCCPU),
 -- 
-2.51.0
-
-
-
---
-Thierry Escande | Vates XCP-ng Developer
-
-XCP-ng & Xen Orchestra - Vates solutions
-
-web: https://vates.tech
+2.43.0
 
 
