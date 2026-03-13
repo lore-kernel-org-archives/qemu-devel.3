@@ -4,110 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44673106FD83
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:16:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78947106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:21:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0voE-0006Yd-Gv; Fri, 13 Mar 2026 02:15:42 -0400
+	id 1w0vtQ-0000Za-Jl; Fri, 13 Mar 2026 02:21:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w0vo7-0006Uu-3U; Fri, 13 Mar 2026 02:15:36 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
- id 1w0vo4-0005v3-Ng; Fri, 13 Mar 2026 02:15:34 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62D5mGn72308220; Fri, 13 Mar 2026 06:15:20 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-type:date:from:in-reply-to:message-id:mime-version
- :references:subject:to; s=pp1; bh=EfQ22NVSfSvoEz8TCogYE1pdJ3xCbc
- pyvW2lotww6E0=; b=smmNJ84Enoc7K8gXQbXZJFIA2J7aIcVSMxG7i3MUmp5lUM
- TD5PvBNg9cpMJUqYvRpSoGDeCx45FbJSfLFgaAYrJC8i9XqwE2wSuWUoefZmW27S
- NWOr6u9QbJyb7XyurraiJrhRWNPYjZyzbIQNXX/4zVzn6Z+gWhnWMjEn5RBL8jKT
- hYYn5mLodkoczO49tOlklJ4zWgsFJYd0FnH0Pu/NF4q8o3R2UqEflJcq859+1kkJ
- naoH+RgfeZrSUYS3DhjLSrWOOb4zqjC7xU2V52zbzbc4IMWT5UveJ8f3FYvA+wfR
- WVJi0wjTA2nUuxWV3yWAoZ+zRfSg+e/jeqSI75UA==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh96e61t-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 06:15:19 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62D5Nuam018371;
- Fri, 13 Mar 2026 06:15:18 GMT
-Received: from smtprelay07.fra02v.mail.ibm.com ([9.218.2.229])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cuha85fus-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 06:15:18 +0000
-Received: from smtpav03.fra02v.mail.ibm.com (smtpav03.fra02v.mail.ibm.com
- [10.20.54.102])
- by smtprelay07.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62D6FEqt42729946
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Mar 2026 06:15:14 GMT
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 38B232004D;
- Fri, 13 Mar 2026 06:15:14 +0000 (GMT)
-Received: from smtpav03.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 2E94220043;
- Fri, 13 Mar 2026 06:15:12 +0000 (GMT)
-Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
- [9.124.217.239])
- by smtpav03.fra02v.mail.ibm.com (Postfix) with ESMTPS;
- Fri, 13 Mar 2026 06:15:12 +0000 (GMT)
-Date: Fri, 13 Mar 2026 11:45:10 +0530
-From: Aditya Gupta <adityag@linux.ibm.com>
-To: Shivang Upadhyay <shivangu@linux.ibm.com>
-Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
- milesg@linux.ibm.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org
-Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
-Message-ID: <abOq6LFmRLmQOZGE@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
-References: <20260311143549.118720-1-shivangu@linux.ibm.com>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vtO-0000ZL-PI
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:02 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vtM-0006ii-Ix
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:02 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48534b59cf3so15972705e9.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:20:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773382857; x=1773987657; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=As2C1Q7IiAGYRvOu9fH4LK4fE+KRniODuiUqW5R4EqQ=;
+ b=rT8SZXk8C3JADrc+I79bvOgQpJI0b2dx1znfkW9gSUJ/MLmtkQtpjuBY945M1+bIhT
+ ouShJYHMM2NMU3USFBPOFcd9b7xrBWmSCUMNvkBNx4Wq5z+VBrxhXLAnk6cr8H0WLO+r
+ FsXruLfenGwff+ND10ucQsYocQlKA7T751eabKllyn3kraX46ep3vdDiv9KKlVbZcGVD
+ T3V6ILSh0X9Zmz3bP2nL4tTATZNgyx0CzbuASWnuiv0qpfSBQMb7pri3yNAAfJRTs4Tm
+ WM/cJ7SHkRrW6wii0sJwWTnuYpLaBPyLUZkBC1W81x+aF8Bd7qLd8bcKoInLbE3LB7Y3
+ SPcQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773382857; x=1773987657;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=As2C1Q7IiAGYRvOu9fH4LK4fE+KRniODuiUqW5R4EqQ=;
+ b=JKjWKENFX5H5EbC0F1HGbISnofEFW8gK7e4fzmDWxXGec5Ux9a/DdrrBryVfScWtSz
+ cUlAResDMbZ+ABbcWvkCyhrwA+hmotPJJ7TKSOT19Ash4VrRg/jcGSBwoGDUSL1xtGwE
+ D1VotCxEG5dmYHiNx8UuQC2PqiN7N+5lEsVY8/InRCjPEkVlWy5DOhtWtk6rv9vzk/sC
+ 79bM76oXefMDTXdbZEgQeRXpte2cL37QmOwPCzqLwZHo+VteUAaP2R9StL5TzOqEFJ43
+ insN1zqs4NAKUdGl7Numi0xsB6mGwe5R01wfSzkKTZER72SHNP7mg7PlzfxmA9t9e1WP
+ STkQ==
+X-Gm-Message-State: AOJu0YzcL1jBsb/3nhSYxYVi1mmu3wBxrMgsKeq89Q0LBW0WFgWqvCsc
+ NLisBV12hG/luEzJEWLsp6/rthmy4nELXsfX5J1WQJ8lSmhgfZmrrpWoiOUTWg54VhcNAZl1Zue
+ U5s5Wdtw=
+X-Gm-Gg: ATEYQzyxLAM4mK1CKRubgeeLoXZl5tT/dOF4so/P2As5ttlKGNVhnqndt+kTPQD2YDX
+ VRZ9ihmgUYig5SEPnxfYBmc/nZKZ1/O8mu3dhH9/SiWgGABazWtBLf7x/5FzhEnabWpYzsY7/6h
+ TnwGpKqwfAeDLB9CZXvru6mgqOR1pvZFMkm6Vpxig7AGXZ7pL8U2YFA/1YFVnfsCwWkoZ0IpZBw
+ VH/pi305bYSOgJcVKj3ffmeJIIhhFl0bc2BvoSN9GVdAdfreGiDNujhvTyN5Frzu0K7eCxelysO
+ kXVUJ+1DtpnUZlH9XCAa6i0IeDRSyLtJaacj0we+cFjctPSgJucyXodcZktX/duHGnlhKql/jG7
+ /jo4HeOrqchn8/6zhy0uCFUZo5E5Ng+YBKn97KQzI4/mzQi3k0crUKxxiAb9+xPwCjkWe/FPJi1
+ CGCb7eOAbv/w7LI8XMxIYHsV2Fkba/dn/NEUF3SfISEJu3HIkNUx7BScAP3dZwkqVpx0jx7aXTt
+ 1FJOg==
+X-Received: by 2002:a05:600c:4f8f:b0:485:3423:727d with SMTP id
+ 5b1f17b1804b1-4855670c095mr30380965e9.26.1773382857405; 
+ Thu, 12 Mar 2026 23:20:57 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4854b5e9179sm180651835e9.3.2026.03.12.23.20.56
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 12 Mar 2026 23:20:56 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
+ Anton Johansson <anjo@rev.ng>
+Subject: [PATCH v2 00/38] target/cpu: Do not include 'exec/cpu-defs.h' anymore
+Date: Fri, 13 Mar 2026 07:20:16 +0100
+Message-ID: <20260313062055.2188-1-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20260311143549.118720-1-shivangu@linux.ibm.com>
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA0NiBTYWx0ZWRfXwlj1jo/+0jrd
- OkJ2bStGds4jLD7ovonEyavsSk8EDwKvwK12KTHiyjWWCcSLd/OgxnrftbTNeUPmJOs5aHEpxWi
- BFs0db7VPuYnOcT9qwNXf451Hs6qfeXPh0SLEOGqBE3q99l8z9qP1/d0eTXtF/5v30WF3xlfYb7
- WDxEryWtzRJO/1Zphhwxy1LzoZ70N6vZhTPDyz0iMk0ttKt3JmzVMlUCwEdp+SuSo5VdrxSBNqt
- CE6xDcmaTPF1zazignUSuxWSumLfiVa7jpOmMgQnYdQVq+xzP+pM49WtxeiISAmxr/Cc2SAguo3
- OB5fRTlUr7AwwEn4LY2O0S+lt5fH/G5GXVmqrXRWFuvH/yWV0AWnyQz91snhqR5zjeSFjiznHgg
- 2jsoUTZ7v6fIW5PpEmT8INmuU9LTbWKVUM/ewTq8Sj+3APjf6EEbRyQH4yd9Wuogy+L/WKn28qD
- zGs+ukOvjXK3kjstEgg==
-X-Proofpoint-ORIG-GUID: QfYx2pdbSFYQfcbREM_k2hhfEe_9sVB4
-X-Authority-Analysis: v=2.4 cv=RLO+3oi+ c=1 sm=1 tr=0 ts=69b3ab77 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VwQbUJbxAAAA:8
- a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=Uaa_Ldjkp140y4n9bqsA:9
- a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-GUID: ZS7KFiHAOWNnJEoIsdOQScVgmCL7fBoH
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-12_03,2026-03-12_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 lowpriorityscore=0 priorityscore=1501 phishscore=0 suspectscore=0
- clxscore=1011 impostorscore=0 bulkscore=0 adultscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130046
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,42 +100,174 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 26/03/11 08:05PM, Shivang Upadhyay wrote:
-> The '-machine dumpdtb' command line option stopped working on
-> PowerPC/pnv systems after recent design change [1].
-> 
-> Fixing this by generating fdt blob in `pnv_init`.
-> 
-> [1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
-> 
-> Cc: Aditya Gupta <adityag@linux.ibm.com>
-> Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
-> Cc: Peter Maydell <peter.maydell@linaro.org>
-> Cc: BALATON Zoltan <balaton@eik.bme.hu>
-> Cc: qemu-stable@nongnu.org
-> Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
-> Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
-> 
-> <...snip...>
-> 
->  static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
-> @@ -1261,6 +1243,11 @@ static void pnv_init(MachineState *machine)
->      if (pmc->i2c_init) {
->          pmc->i2c_init(pnv);
->      }
-> +
-> +    if (!machine->fdt) {
-> +        machine->fdt = pnv_dt_create(machine);
-> +        _FDT((fdt_pack(machine->fdt)));
-> +    }
+Pierrick noticed [*] "exec/cpu-defs.h" isn't really used by
+each target "cpu.h". However various source files rely on it
+(or actually a small subset of it: "exec/target_long.h").
 
-This if check is not needed, pnv_init is only called once during start,
-and machine->fdt will always be NULL, so we can just assign machine->fdt
-directly.
+This series first includes the missing headers that were
+indirectly pulled via "cpu.h" -> "exec/cpu-defs.h", then
+remove it for each target "cpu.h".
 
-Rest all looks fine to me.
+As another cleanup we use the full path to target "cpu.h".
 
-Thanks,
-- Aditya G
+[*] v1: https://lore.kernel.org/qemu-devel/20260312224702.1608408-2-pierrick.bouvier@linaro.org/
+
+Philippe Mathieu-Daudé (37):
+  target/arm: Remove target_ulong use in hvf_handle_psci_call()
+  target/ppc: Replace TARGET_PAGE_BITS -> qemu_target_page_bits()
+  hw/s390x/vfio: Replace TARGET_PAGE_BITS -> qemu_target_page_bits()
+  monitor/hmp: : Include missing 'exec/target_long.h' header
+  target-info: Include 'exec/cpu-defs.h' explicitly
+  target/xtensa: Restrict inclusion of 'exec/cpu-defs.h' header
+  target/hexagon: Include missing 'exec/target_long.h' header
+  target/hppa: Include missing 'exec/target_long.h' header
+  target/i386: Include missing 'exec/target_long.h' header
+  target/m68k: Include missing 'exec/target_long.h' header
+  target/mips: Include missing 'exec/target_long.h' header
+  target/ppc: Include missing 'exec/target_long.h' header
+  target/riscv: Include missing 'exec/target_long.h' header
+  target/sparc: Include missing 'exec/target_long.h' header
+  system/kvm_xen: Include missing 'exec/target_page.h' header
+  hw/misc/cpc: Include missing 'hw/core/cpu.h' header
+  target/s390x/tcg: Include missing '*cpu.h' headers
+  exec/helper-head: Include missing 'exec/target_long.h' header
+  target/cpu: Do not include 'exec/cpu-defs.h' anymore
+  hw/alpha: Include full path to target 'cpu.h' header
+  hw/arm: Include full path to target 'cpu.h' header
+  hw/avr: Include full path to target 'cpu.h' header
+  hw/hppa: Include full path to target 'cpu.h' header
+  hw/i386: Include full path to target 'cpu.h' header
+  hw/m68k: Include full path to target 'cpu.h' header
+  hw/microblaze: Include full path to target 'cpu.h' header
+  hw/mips: Include full path to target 'cpu.h' header
+  hw/or1k: Include full path to target 'cpu.h' header
+  hw/ppc: Include full path to target 'cpu.h' header
+  hw/riscv: Include full path to target 'cpu.h' header
+  hw/s390x: Include full path to target 'cpu.h' header
+  hw/sh4: Include full path to target 'cpu.h' header
+  hw/sparc: Include full path to target 'cpu.h' header
+  hw/tricore: Include full path to target 'cpu.h' header
+  hw/xtensa: Include full path to target 'cpu.h' header
+  hw/avr: Build as common unit files
+  hw/misc: Build 'mac_via' as common unit file
+
+Pierrick Bouvier (1):
+  hw/misc/allwinner-cpucfg.c: make compilation unit common
+
+ hw/avr/boot.h                            |  2 +-
+ hw/s390x/ipl.h                           |  2 +-
+ hw/s390x/s390-hypercall.h                |  2 +-
+ hw/xtensa/xtensa_memory.h                |  2 +-
+ include/hw/arm/digic.h                   |  2 +-
+ include/hw/arm/fsl-imx6.h                |  2 +-
+ include/hw/arm/fsl-imx6ul.h              |  2 +-
+ include/hw/arm/fsl-imx7.h                |  2 +-
+ include/hw/arm/fsl-imx8mp.h              |  2 +-
+ include/hw/i386/apic_internal.h          |  2 +-
+ include/hw/intc/mips_gic.h               |  2 +-
+ include/hw/ppc/pnv.h                     |  2 +-
+ include/hw/ppc/spapr_fadump.h            |  2 +-
+ include/hw/ppc/spapr_ovec.h              |  2 +-
+ include/monitor/hmp-target.h             |  2 +-
+ include/system/kvm_xen.h                 |  2 ++
+ target/alpha/cpu.h                       |  1 -
+ target/arm/cpu.h                         |  1 -
+ target/avr/cpu.h                         |  1 -
+ target/hexagon/cpu.h                     |  3 ++-
+ target/hexagon/mmvec/mmvec.h             |  3 +++
+ target/hppa/cpu.h                        |  2 +-
+ target/i386/cpu.h                        |  2 +-
+ target/loongarch/cpu.h                   |  1 -
+ target/m68k/cpu.h                        |  1 -
+ target/microblaze/cpu.h                  |  1 -
+ target/mips/cpu.h                        |  2 +-
+ target/or1k/cpu.h                        |  1 -
+ target/ppc/cpu.h                         |  2 +-
+ target/riscv/cpu.h                       |  2 +-
+ target/riscv/debug.h                     |  1 +
+ target/riscv/pmp.h                       |  1 +
+ target/rx/cpu.h                          |  1 -
+ target/s390x/cpu.h                       |  1 -
+ target/s390x/tcg/tcg_s390x.h             |  3 +++
+ target/sh4/cpu.h                         |  1 -
+ target/sparc/cpu.h                       |  2 +-
+ target/tricore/cpu.h                     |  1 -
+ target/xtensa/cpu.h                      |  1 -
+ include/exec/helper-head.h.inc           | 15 +++++++--------
+ hw/alpha/dp264.c                         |  2 +-
+ hw/alpha/typhoon.c                       |  2 +-
+ hw/arm/boot.c                            |  2 +-
+ hw/arm/exynos4210.c                      |  2 +-
+ hw/arm/mps3r.c                           |  2 +-
+ hw/arm/omap1.c                           |  2 +-
+ hw/arm/realview.c                        |  2 +-
+ hw/arm/smmuv3.c                          |  2 +-
+ hw/hppa/machine.c                        |  2 +-
+ hw/i386/multiboot.c                      |  2 +-
+ hw/i386/pc_sysfw_ovmf.c                  |  2 +-
+ hw/i386/vmmouse.c                        |  2 +-
+ hw/intc/arm_gicv3_cpuif.c                |  2 +-
+ hw/intc/arm_gicv3_cpuif_common.c         |  2 +-
+ hw/intc/m68k_irqc.c                      |  2 +-
+ hw/intc/sh_intc.c                        |  2 +-
+ hw/isa/lpc_ich9.c                        |  2 +-
+ hw/m68k/an5206.c                         |  2 +-
+ hw/m68k/mcf5206.c                        |  2 +-
+ hw/m68k/mcf5208.c                        |  2 +-
+ hw/m68k/mcf_intc.c                       |  2 +-
+ hw/m68k/q800-glue.c                      |  2 +-
+ hw/m68k/q800.c                           |  2 +-
+ hw/m68k/virt.c                           |  2 +-
+ hw/microblaze/boot.c                     |  2 +-
+ hw/microblaze/petalogix_ml605_mmu.c      |  2 +-
+ hw/microblaze/petalogix_s3adsp1800_mmu.c |  2 +-
+ hw/microblaze/xlnx-zynqmp-pmu.c          |  2 +-
+ hw/mips/bootloader.c                     |  2 +-
+ hw/mips/fuloong2e.c                      |  2 +-
+ hw/mips/jazz.c                           |  2 +-
+ hw/mips/malta.c                          |  2 +-
+ hw/misc/mips_cpc.c                       |  3 ++-
+ hw/misc/riscv_cmgcr.c                    |  3 ++-
+ hw/misc/riscv_cpc.c                      |  3 ++-
+ hw/or1k/boot.c                           |  2 +-
+ hw/or1k/cputimer.c                       |  2 +-
+ hw/or1k/or1k-sim.c                       |  2 +-
+ hw/or1k/virt.c                           |  2 +-
+ hw/ppc/mpc8544_guts.c                    |  2 +-
+ hw/ppc/mpc8544ds.c                       |  2 +-
+ hw/ppc/ppc440_uc.c                       |  2 +-
+ hw/ppc/ppc4xx_devs.c                     |  2 +-
+ hw/ppc/ppc_booke.c                       |  2 +-
+ hw/ppc/prep_systemio.c                   |  2 +-
+ hw/ppc/spapr_vhyp_mmu.c                  |  2 +-
+ hw/ppc/virtex_ml507.c                    |  2 +-
+ hw/riscv/microblaze-v-generic.c          |  2 +-
+ hw/s390x/ap-bridge.c                     |  2 +-
+ hw/s390x/s390-hypercall.c                |  2 +-
+ hw/s390x/s390-pci-vfio.c                 |  3 ++-
+ hw/s390x/s390-stattrib.c                 |  2 +-
+ hw/s390x/tod-tcg.c                       |  2 +-
+ hw/sh4/r2d.c                             |  2 +-
+ hw/sparc/leon3.c                         |  2 +-
+ hw/sparc/sun4m.c                         |  2 +-
+ hw/sparc64/niagara.c                     |  2 +-
+ hw/sparc64/sparc64.c                     |  2 +-
+ hw/sparc64/sun4u.c                       |  2 +-
+ hw/tricore/tricore_testboard.c           |  2 +-
+ hw/xtensa/pic_cpu.c                      |  2 +-
+ hw/xtensa/xtfpga.c                       |  2 +-
+ target-info-stub.c                       |  1 +
+ target/arm/hvf/hvf.c                     |  2 +-
+ target/m68k/m68k-semi.c                  |  2 +-
+ target/ppc/mmu-booke.c                   |  3 ++-
+ target/ppc/mmu-hash64.c                  |  3 ++-
+ target/ppc/mmu-radix64.c                 |  3 ++-
+ target/xtensa/cpu.c                      |  1 +
+ hw/misc/meson.build                      |  6 +++---
+ hw/timer/meson.build                     |  2 +-
+ 111 files changed, 120 insertions(+), 113 deletions(-)
+
+-- 
+2.53.0
 
 
