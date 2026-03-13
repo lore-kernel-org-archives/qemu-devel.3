@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B0AF106FD89
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:23:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 563A7106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:23:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vvA-0005Fi-OV; Fri, 13 Mar 2026 02:22:52 -0400
+	id 1w0vvN-0006Qw-QV; Fri, 13 Mar 2026 02:23:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vv9-00053g-A6
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:51 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vvL-0006JF-O8
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:23:03 -0400
+Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vv7-00073d-KD
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:50 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-48374014a77so19219225e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vvJ-00074i-Ri
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:23:03 -0400
+Received: by mail-wr1-x42a.google.com with SMTP id
+ ffacd0b85a97d-439b9cf8cb5so2023369f8f.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:23:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382968; x=1773987768; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773382980; x=1773987780; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=nG5UcRDHpna29G8bHjCIPwu1H4SH1pR2IRh/gZ+5V3s=;
- b=k+DZhZ4ky5rBfdu4XWjRLyj/RU6qOg9yZPXdBqGfZScP8zs1stPAdapjOkgJWbvIZS
- LcbFr4/rJCei8jWDzaFLh+1RdBdlV7XX35D7G7nycy14xG8TU7Go/uPFnRS1MyC1Kqo4
- TWl/GEj8SncCHupu2LIrmzDxib3i4LG37Nup7x4tl89SXPrLlpRe8Dd+MWnx8IO9CRX1
- no1Qh7fJvzQhAm7saWRe9x7qvnsJ5PTk3+beFvgfqECrm1QgRYYdUQ/+c/HcwIUje49o
- 4glvsQrl0gF0cecFFvOuk600ng02YHpJRegomXQP03Rr14ZaD/jERGuPrilUIhVRWBe6
- toSg==
+ bh=ZRmXTsWwF92i38CWzyioQ3gYSkR93NF6ooKugCOGYcw=;
+ b=k7L7eJPeG9onAby4pXzH7rBbsXFNBLHh5z2/8OGnaraNLEWrn6ZyJ/bKmROe7ObQMt
+ iXnbQ9D+JZqCd5tg6T4/IGMuwEqmx28g4BPOS2EJJm5rrdiGkvJyFApGviVCOvACF5PA
+ 3fvPldV8e3r98heJjCnSy4iNPXKzNiPmenOiXAdHY+Ht5PIehkpUAMF6kS7cL0wkTIfv
+ BWOvoUEDMSrQjd76cvsa/vXJgEgLcV4K6hUmfFQvoL5b5VFRutshmiv4pjbwzGNmO89m
+ jgeVUQnjcXQ/USL5lpH2OybUnDSY2oKV4+HMmleiyNAXYn6SF1J2HXg/3gkCftevp/8o
+ E/GA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382968; x=1773987768;
+ d=1e100.net; s=20251104; t=1773382980; x=1773987780;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=nG5UcRDHpna29G8bHjCIPwu1H4SH1pR2IRh/gZ+5V3s=;
- b=YD1ALnIZVYQ7QNrsK/g9AMgLfUigbzPLmx4QVN/qnYM2JQr7A68IOQ1quiXmFdkNxN
- AYsew6SrZaOnfT4bUKt8mMp0a4fFGsq+G3/4w2vKx1irM0aINUmBWugfgae6nk1lD3aF
- VbvDYyEOnNSlI0DarECmmoAuRpBTfHwdES1nYei5G39Esik30uB9GxCIUCJ39+mxUYU4
- tXaIGG1s5/7MiDI+vWROemFVmBxHmHwJOOjzYni1k74GWG7gDqGXaav7Hzl82TqHQA6Z
- p4yrHaqZchLzWv/vyirN8Vz2ZYh5S6ijsssSSSORTFPlpL6NL8tRkGUR07Gh28ZTt2+m
- JyeA==
-X-Gm-Message-State: AOJu0YxWvcAk+u+7k7KpZEuYVx1W2DIGBVSeiOyE2YDwOCMviaXB4/Bs
- /acaiDfWRKrHO8lBoFIkJxIZQS//XZwBYn550Cq44rY54yH1MmaLUlNt17hSNTVTQMKXfG1T6R1
- zjJyFs0U=
-X-Gm-Gg: ATEYQzyL8H7Nyn3UKMmZds6WReQA95gjqiE0iQbQbazkwpPqEBWnlbL1jBHGabw+omj
- Vi+899Q/e2OuzA3IewsgN8b2dKtSGecUuvigX9kQpWr5Pa32Gu3b/CNytSr/WeD8BUNGr3A0zjd
- CoL/zxchgsZUm0C/WeChDjdlfII3HtuNUnMYqm0HYCl6ZIZo7XDCaXSfuBnuN+LkqrFdKSq8ORP
- X6J6haFxs1NeC37l3+0Crz6x68IRRC/21gq8SB6/Xad7pKMxwqlYNiyVuiZdRNkTK3RU3+zI4ya
- sSgM9LdxPcMEiiQ/3SBCoAnLlKPQqPCkZclhRcX/9llrpHhJE5DDe8Nk0SSP8c36MH9G5RxeOhx
- CeBJlj53wgYtT/nmHZptA+FZVgxHAOErnYyJ/yISq/jSa0euFRJNtzu1GAAQ2U2WaQYIZDaKlQw
- gZuMhlcz4auwDZZkQUfCORSlcRqMClnBwkD71lTP/cNnuuTym2WUTzxjxr1Bh9/cHTKvqMlui+9
- 6k26g==
-X-Received: by 2002:a05:600c:1988:b0:485:3f58:d84 with SMTP id
- 5b1f17b1804b1-4855a8d6fd7mr8127055e9.32.1773382966631; 
- Thu, 12 Mar 2026 23:22:46 -0700 (PDT)
+ bh=ZRmXTsWwF92i38CWzyioQ3gYSkR93NF6ooKugCOGYcw=;
+ b=JxLLy+OoavfbC+E/d8vINLsoPPn6O+7Zu4pmK59cPTA31yt1+mnlyL0JSqUwa1PrcT
+ OE+eGTW+i/nw1Ysbh7K8+0arDtzzLVYU+dBaqkFeuEvjS1luZWmvhoZw5OqizpdN/svC
+ T8XcUxvc+shMUz/VZIm8IuzsPLPiAE2OhfLHwxUy02a/fUhPH3hOxDG8qy1VEVR/uGFB
+ LjquYmn2QBacEpKJ7CDLDFnAHLhgh5mojolojqXSvcgnmlDFcxk/6QeawONm4wbHLK26
+ YFK4W9C9rH1yUy59yGxinBihl3fflkzMjV1hp8dWTApt9QfOEe4XGX5cVB2MmZyr88RB
+ QnAQ==
+X-Gm-Message-State: AOJu0Yxl8Qwin11IOjCo53lzp01KonvhA0qEkQV71tGJRrOOdxMlwiTw
+ DNVDnz6cvd3tVAMWr+XCl30QOTmj+mhmnJRovrURO0/TJJmcUuL43mqj3b/2LSnhJ2UUqlaf982
+ nPfLyB/c=
+X-Gm-Gg: ATEYQzzK4GqtI8rv6GM/ry+G0Soy4xgUDrbonS5Hr6FVxxRxGp01n0xDh560hb3S4y0
+ 5Ia3sQJaz7YaOrnhPaQhVDma++15ug/sBBL+CFc0DTgtxG7HeXIlVLF7A7DoY15qEt10pWECTRX
+ KqXDJ0RaH7uJF86Ean0scYQy1Hadv+n03CYrlQf+PUZbQQryq9RNp/gteylDpgXyViOwqGSa2uu
+ o38D5kXmcBIaHdutz0JTLLj+MZDy6wT1UgS5okPKaGyb7KPCJs8fSadmc62/yGJ0QhBqomhM303
+ CT4JC9uwXk+T424Id9yEpvUNCp5K524+DnDorAPpBMV2tBtbPDfCY7huJUP8/JRjNM9EA+j03CI
+ 6TnjDqK6xcM9hXHf5YB7Z3rV/Qr/ccCpMJ9RmDoGo1eUmcpA2rX2XIw5+y5syKyyL9EO74a9A0N
+ Mb6/Xsl2uMX2+mDQ5CAQsUZSLtvYBENQnZB0pV2ttaBsykh8NS+ui18rGV5mj9Lg8xkP5aqAG6K
+ AnJcg==
+X-Received: by 2002:a5d:5e01:0:b0:439:be67:a034 with SMTP id
+ ffacd0b85a97d-43a04dc0c3fmr3882963f8f.47.1773382979938; 
+ Thu, 12 Mar 2026 23:22:59 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854e2537c3sm177342905e9.15.2026.03.12.23.22.45
+ ffacd0b85a97d-439fe2187aasm13080229f8f.30.2026.03.12.23.22.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:22:46 -0700 (PDT)
+ Thu, 12 Mar 2026 23:22:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 16/38] hw/misc/cpc: Include missing 'hw/core/cpu.h' header
-Date: Fri, 13 Mar 2026 07:20:32 +0100
-Message-ID: <20260313062055.2188-17-philmd@linaro.org>
+Subject: [PATCH v2 18/38] exec/helper-head: Include missing
+ 'exec/target_long.h' header
+Date: Fri, 13 Mar 2026 07:20:34 +0100
+Message-ID: <20260313062055.2188-19-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +104,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "hw/core/cpu.h" header is indirectly included. Include it
-explicitly otherwise we get when refactoring unrelated headers:
-
-  ../hw/misc/mips_cpc.c:36:53: error: unknown type name 'run_on_cpu_data'
-     36 | static void mips_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
-        |                                                     ^
-  ../hw/misc/mips_cpc.c:40:5: error: call to undeclared function 'cpu_reset'
-       40 |     cpu_reset(cs);
-          |     ^
-  ../hw/misc/riscv_cpc.c:34:54: error: unknown type name 'run_on_cpu_data'
-     34 | static void riscv_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
-        |                                                      ^
-  ../hw/misc/riscv_cpc.c:39:5: error: call to undeclared function 'cpu_reset'
-     39 |     cpu_reset(cs);
-        |     ^
+TARGET_LONG_BITS is defined in "exec/target_long.h" (which
+is currently included implicitly by various headers).
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/misc/mips_cpc.c  | 1 +
- hw/misc/riscv_cpc.c | 1 +
- 2 files changed, 2 insertions(+)
+ include/exec/helper-head.h.inc | 15 +++++++--------
+ 1 file changed, 7 insertions(+), 8 deletions(-)
 
-diff --git a/hw/misc/mips_cpc.c b/hw/misc/mips_cpc.c
-index 924de855ee2..d092f76f44d 100644
---- a/hw/misc/mips_cpc.c
-+++ b/hw/misc/mips_cpc.c
-@@ -22,6 +22,7 @@
- #include "cpu.h"
- #include "qemu/log.h"
- #include "qemu/module.h"
-+#include "hw/core/cpu.h"
- #include "hw/core/sysbus.h"
- #include "migration/vmstate.h"
+diff --git a/include/exec/helper-head.h.inc b/include/exec/helper-head.h.inc
+index 5b248fd7138..7dec5f5b067 100644
+--- a/include/exec/helper-head.h.inc
++++ b/include/exec/helper-head.h.inc
+@@ -46,14 +46,13 @@
+ #define dh_ctype(t) dh_ctype_##t
  
-diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
-index 4bf2fd8db16..e04ccdf54fa 100644
---- a/hw/misc/riscv_cpc.c
-+++ b/hw/misc/riscv_cpc.c
-@@ -18,6 +18,7 @@
- #include "qemu/module.h"
- #include "qemu/timer.h"
- #include "qemu/bitops.h"
-+#include "hw/core/cpu.h"
- #include "hw/core/sysbus.h"
- #include "migration/vmstate.h"
- 
+ #ifdef COMPILING_PER_TARGET
+-# ifdef TARGET_LONG_BITS
+-#  if TARGET_LONG_BITS == 32
+-#   define dh_alias_tl i32
+-#   define dh_typecode_tl dh_typecode_i32
+-#  else
+-#   define dh_alias_tl i64
+-#   define dh_typecode_tl dh_typecode_i64
+-#  endif
++# include "exec/target_long.h"
++# if TARGET_LONG_BITS == 32
++#  define dh_alias_tl i32
++#  define dh_typecode_tl dh_typecode_i32
++# else
++#  define dh_alias_tl i64
++#  define dh_typecode_tl dh_typecode_i64
+ # endif
+ # define dh_ctype_tl target_ulong
+ #endif /* COMPILING_PER_TARGET */
 -- 
 2.53.0
 
