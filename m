@@ -4,88 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EEF6107BCD0
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 19:22:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50F02107BCD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 19:23:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w185c-00039Z-BZ; Fri, 13 Mar 2026 15:22:28 -0400
+	id 1w185t-0003B7-0C; Fri, 13 Mar 2026 15:22:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1w185a-00039N-B5
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:22:26 -0400
-Received: from mail-qk1-x732.google.com ([2607:f8b0:4864:20::732])
+ id 1w185r-0003Ao-Ir
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:22:43 -0400
+Received: from mail-qv1-xf31.google.com ([2607:f8b0:4864:20::f31])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
- id 1w185Y-0002U3-S7
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:22:26 -0400
-Received: by mail-qk1-x732.google.com with SMTP id
- af79cd13be357-8cd80f56b27so233027485a.1
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 12:22:23 -0700 (PDT)
+ id 1w185q-0002Up-6G
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:22:43 -0400
+Received: by mail-qv1-xf31.google.com with SMTP id
+ 6a1803df08f44-899f27df3d1so24840946d6.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 12:22:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=ventanamicro.com; s=google; t=1773429742; x=1774034542; darn=nongnu.org;
+ d=ventanamicro.com; s=google; t=1773429761; x=1774034561; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=nhjjC+vXD/L5Ip5nP5IyUb9dpnzxMQdtkBGgPmX0uXI=;
- b=ddm065YCeoAxeTtItCjEUn5YspMi2BMpSVDvdkOsBiiyW+WFyuua7tWX0ad/eNQ6CU
- GsBZqTJ22vTn0NvA5xeJfUjoXX2daQR5FCYBi/4GKREp8TZYSxER4AOZ1XVbYCxnG4ga
- Nb6gFwJgAtO4JwNovLitL1CoK4497UNYgcXuuOZn65QMqs0XAvG39vu8bPG2+GnZ9oMs
- OYae45lZaKTsaow1ZL/g4GzHF/EIwpui+FnJ1jPSDU3lf2BsyDidsL8XpsgLW9r2+bdz
- fenR7qQQtZ0xLZe57yPeSIADKXrV13kMgTjYVRm9h0RQSNz8/eCHp8YK3rrIE8Wyj8YR
- wDkQ==
+ bh=UsP2ccNpDKs+021Yg5+OHqyUhLDRr6Zfap6mI09W524=;
+ b=TTYrJ27xhfmvTinoYtOpPL8XIDBCCW+bmBfnw+o0oBLlFDFfNWTS3+euVItp0LeEqT
+ OfK4s2gnhOD1jd+Fplhedop75cpeaCe1Z3iMynZ33VloeSae3Nm/adyIsNzm9UV8Yg31
+ iRldBXlLtiFOG2pV31jHSUTiDFSCjcvfmZoKDQoDvHmf9C3o0Wb4Lc7oGxD1btXC6dVd
+ aI38Ok73Ge64QPfTlyCxh0mdD0fN6QnK94A0egsq0UAaCCmzhb7xaxBfui0BZdwsvGpk
+ 2Oa0gOXkuveIJoyLYez85BHr6CjB/OdSf6Tc9HaMUmQOAyEapBDs8UttO0GckmKYmGfC
+ zq6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773429742; x=1774034542;
+ d=1e100.net; s=20251104; t=1773429761; x=1774034561;
  h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=nhjjC+vXD/L5Ip5nP5IyUb9dpnzxMQdtkBGgPmX0uXI=;
- b=FtyZYZ87kfKjgt7hgpkaTiq6Q8MPDvdD6bCeBdF+Sn6ySRqsQMg61Oe9UewhzzDV4y
- 3IZzNuTLf4h9sRWNtxYamborYXXcu1o6gKOLABAQ1QW2L3l13h+aW3czghrek2Tqjwrh
- cSozRsUF4awjLnVf6NKmOmov13zuoNGAqzLSErQiQ5BVfKuz3tL1AtFpccfLH17s4+wF
- zqzfOkIBexaUhzAuyOcxgh+yUCQjqZMij2xBbNEOb9SlPB4mpTX4xYzCcicb1IbPy9KT
- BzT/70PgY+OYRHJoIhMZZ9SZ+bg+Of/G/HAXlN1PPteKqHAjYsonaMJxY+djMVdcJzQj
- lAdw==
+ bh=UsP2ccNpDKs+021Yg5+OHqyUhLDRr6Zfap6mI09W524=;
+ b=b/UF/R5vjh9lEDRNgQoh9yOFFl35Zpopg1hoKNXoPBt0Sa+Vjm/C0d+fyGuRFnOex4
+ I4V2nLDODKqpuP8bcV/gejFn+6h7lgTJIlhl82uxMNc9bG9JTYR8NV2xxhTR13/21QRE
+ h4LPMujlze0GSw5np1Uxz7ldx8zoKW0eDDjX7kvw5oElOn3SDNE5xQuHBQRu3PiAJKEp
+ aFa0f6RXtDATaojZIM4uxE7HZzCa3o9bxmwX+Y53+Dn6/9lzNl+3jHZapKRVGbnlIGAP
+ uwBJvealL8Qo8jrcWwa6mcfh0rOhK1JSPPS2tAaawMK79c36V9zpLMa49Hm5JZfVvbct
+ 6/IA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW+4K/OapEPOX/yxryegbCAVQoTfntvKSL0fQSGbLYTuRkiR4qzamUSbHvCqZ8dcmHFxCAZ109f/+3q@nongnu.org
-X-Gm-Message-State: AOJu0Yzm3Vhr4y6TUwuw0CdScR7MG+N9wacS00mLsEtCRQvNaJqt5au9
- TkfDIYts1RbSqDOXz4JMkrlK5otSuYDcPFmQsUPYtclTJOCvU0naD/kg6s2XnNB25CI=
-X-Gm-Gg: ATEYQzwSysomk82B/msIBqdHP7b/EyZodDeZK0nq0YxZPd68mdyCuDl9C03c39gmJhS
- badidmYFjm+q07QBg1FEmi9AuAPJSR3ksKV95/1r/Jzz9ZbESFaS6ydVI0dnd50WO4LuDw+3Ran
- C0gMOdb9H7LGyreidnXyybNjF7fYadehw1cmg0UnC84ki0XRlAauBijUpje8jylHfw2jOhjs95Q
- wYxn8748tiHPTGJ+OLVZReCNV2r6GelrSsrrVYO9YoWOgMor2lzcFBc08KYGAuc/B0L2lXWgHrm
- kClDoEZT4UCle+5qo9WB9MRc/Bac5x4kUjc9dlwvnANlTE/Y2uwMIgvpnkm35Q1aU68NLcRcAjj
- oRTNmYbCnQPzgCvp43XthImYHiA3dqpsiQ3NPyQyxLnFN+5OVl5z9vvHGP60enoUmK37StzxCyT
- iKN+fWkagUe22asQN3u8FhwC4xZqZStotZQ2p/oHTPLltToJikfx8t
-X-Received: by 2002:a05:620a:2981:b0:8ca:2e36:18b0 with SMTP id
- af79cd13be357-8cdb5b1b145mr608565085a.39.1773429742364; 
- Fri, 13 Mar 2026 12:22:22 -0700 (PDT)
+ AJvYcCW4RbaZxVzaSoXvXUvlzRDwUFGVn4jkwQuXMLKo9ml56r3wqayFfoRNEp0vR7Db1oPm2e3TaA4SzZEm@nongnu.org
+X-Gm-Message-State: AOJu0YzK3bWnBip8G26ymV4S9Dh97XRqUTizMe+VA94mNkSKPvSUOMik
+ 6s6tn/qWNdLpEfXomEC7fm1BvEBfN8bQGvtjquLcSkjn90JlXOVpYfijynwGmAw0/f4=
+X-Gm-Gg: ATEYQzzLYf1m787APlCBKKez+V5UtYpN/bXmpoXf5GOx7/TMgfOyagV72mCY2QIHBkh
+ BylKy9UgmWjIcuVLESLaqhE2/6ijBm2275Ruq/hu1b07EohjVTLT30hGZCUcw/vfaLmRcaF5ae2
+ 4Lxu9l4qfOPMD3kXYwNANYMexTxoArbm1nybdydAcbyOXBoV+cazUcwbjLUJMlb9Zc/SzJKqPPo
+ YwC/g1LofP3/GqP+hTWEa1Us7qtQuiCXRnovRxYy6mzfhhj5Aoh/OC9i0O/pjnAFI1cPXvG3LPy
+ ENK7NxY+hlf4aE9HRREKUY+NL8BqbJfAAQEwYpzmdHHnJrJUYu0k+7T3GM88VRXo98xTnR58+9S
+ SYpI5EZpYDy6ejMK6l3GVig9YWRnxt7fhW4htujJE+6An7+wGrcqCBFs08pmRkaz9ozg1nXI69C
+ tPEWhlpbXHgsOxpsgN/FRdEBhMA80AhNRfjQLV5wkg7uxVRuN2vmPcwV1ZQrEeq/8=
+X-Received: by 2002:a05:6214:2a4e:b0:89a:aeb:11 with SMTP id
+ 6a1803df08f44-89a81d32194mr70527536d6.23.1773429760974; 
+ Fri, 13 Mar 2026 12:22:40 -0700 (PDT)
 Received: from [192.168.68.100] ([152.250.131.163])
  by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda2152a41sm620733285a.43.2026.03.13.12.22.20
+ 6a1803df08f44-89a65cfcd3asm73957356d6.38.2026.03.13.12.22.39
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 12:22:21 -0700 (PDT)
-Message-ID: <63c51bee-cd54-4a92-b0f0-f227aa7274c4@ventanamicro.com>
-Date: Fri, 13 Mar 2026 16:22:18 -0300
+ Fri, 13 Mar 2026 12:22:40 -0700 (PDT)
+Message-ID: <2ab330b3-6bca-45bd-bb1d-6e5a91ea5099@ventanamicro.com>
+Date: Fri, 13 Mar 2026 16:22:38 -0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 3/4] target/riscv: Don't leak general_user_opts
+Subject: Re: [PATCH v1 4/4] hw/riscv: Free resources allocated at
+ riscv_iommu_instance_init
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
  <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
 References: <20260313182957.28432-1-farosas@suse.de>
- <20260313182957.28432-4-farosas@suse.de>
+ <20260313182957.28432-5-farosas@suse.de>
 From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
 Content-Language: en-US
-In-Reply-To: <20260313182957.28432-4-farosas@suse.de>
+In-Reply-To: <20260313182957.28432-5-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::732;
- envelope-from=dbarboza@ventanamicro.com; helo=mail-qk1-x732.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::f31;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qv1-xf31.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,37 +112,60 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 On 3/13/2026 3:29 PM, Fabiano Rosas wrote:
-> The global variable general_user_opts is being assigned twice, losing
-> the reference to the previously allocated g_hash_table.
+> Add a riscv_iommu_instance_finalize() routine and move there the unref
+> of the iot_cache and ctx_cache hash tables from riscv_iommu_unrealize.
+> 
+> Also start freeing the register state masks, also allocated at the
+> _init function.
 > 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
 
 Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
 
->   target/riscv/cpu.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
+>   hw/riscv/riscv-iommu.c | 16 +++++++++++++---
+>   1 file changed, 13 insertions(+), 3 deletions(-)
 > 
-> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-> index e56470a374..afccfc2935 100644
-> --- a/target/riscv/cpu.c
-> +++ b/target/riscv/cpu.c
-> @@ -1099,8 +1099,6 @@ static void riscv_cpu_init(Object *obj)
->                               "riscv.cpu.rnmi", RNMI_MAX);
->   #endif /* CONFIG_USER_ONLY */
->   
-> -    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
-> -
->       /*
->        * The timer and performance counters extensions were supported
->        * in QEMU before they were added as discrete extensions in the
-> @@ -2751,6 +2749,7 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
->       cc->tcg_ops = &riscv_tcg_ops;
->   #endif /* CONFIG_TCG */
->   
-> +    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
->       device_class_set_props(dc, riscv_cpu_properties);
+> diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+> index 98345b1280..a9cd891039 100644
+> --- a/hw/riscv/riscv-iommu.c
+> +++ b/hw/riscv/riscv-iommu.c
+> @@ -2446,6 +2446,18 @@ void riscv_iommu_set_cap_igs(RISCVIOMMUState *s, riscv_iommu_igs_mode mode)
+>       s->cap = set_field(s->cap, RISCV_IOMMU_CAP_IGS, mode);
 >   }
+>   
+> +static void riscv_iommu_instance_finalize(Object *obj)
+> +{
+> +    RISCVIOMMUState *s = RISCV_IOMMU(obj);
+> +
+> +    g_hash_table_unref(s->iot_cache);
+> +    g_hash_table_unref(s->ctx_cache);
+> +
+> +    g_free(s->regs_rw);
+> +    g_free(s->regs_ro);
+> +    g_free(s->regs_wc);
+> +}
+> +
+>   static void riscv_iommu_instance_init(Object *obj)
+>   {
+>       RISCVIOMMUState *s = RISCV_IOMMU(obj);
+> @@ -2597,9 +2609,6 @@ static void riscv_iommu_unrealize(DeviceState *dev)
+>   {
+>       RISCVIOMMUState *s = RISCV_IOMMU(dev);
+>   
+> -    g_hash_table_unref(s->iot_cache);
+> -    g_hash_table_unref(s->ctx_cache);
+> -
+>       if (s->cap & RISCV_IOMMU_CAP_HPM) {
+>           g_hash_table_unref(s->hpm_event_ctr_map);
+>           timer_free(s->hpm_timer);
+> @@ -2675,6 +2684,7 @@ static const TypeInfo riscv_iommu_info = {
+>       .parent = TYPE_DEVICE,
+>       .instance_size = sizeof(RISCVIOMMUState),
+>       .instance_init = riscv_iommu_instance_init,
+> +    .instance_finalize = riscv_iommu_instance_finalize,
+>       .class_init = riscv_iommu_class_init,
+>   };
 >   
 
 
