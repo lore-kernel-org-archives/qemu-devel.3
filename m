@@ -4,128 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A91D4106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:37:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CD217106FD91
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:42:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0w9E-0003eU-1A; Fri, 13 Mar 2026 02:37:24 -0400
+	id 1w0wDU-0004Ye-Pk; Fri, 13 Mar 2026 02:41:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0w96-0003dQ-PV
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:37:16 -0400
-Received: from mail-qv1-xf35.google.com ([2607:f8b0:4864:20::f35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w0w95-0004a2-81
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:37:16 -0400
-Received: by mail-qv1-xf35.google.com with SMTP id
- 6a1803df08f44-899ed41208fso15399816d6.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:37:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773383833; x=1773988633; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=U+zGbVUbYb+KgnV8UDUP34UIuyZOMtozyi88KAmOy3s=;
- b=ZpFV6dU7dWspCl3cwq8YL9Q578LlRXmlzuTaTNa7an9eAxmGgAsU4j8ZHKMDceAMs/
- oHgOFddq2O1lkK5WxYESAAdU1MFTfXuG0HgbPfSc2aZUw8pR04oJ0yq2yY9Q/vxMDn8y
- knuS/jhqIuCuBLgzSrEr1pdcgdDjwbqB4QpktM9x9osi5dxMi+t32kJ/GVFkzDSy4H2L
- lhKxa6tywnERfvncCxb02Quwnj3yJHEa+WGojkxuYSZqxYewRMWNjRu246G18m3K2Qv/
- PzDP8SdWUzDd23qkMc1RqYWshdt5HMWRFzy4VnCMEnJviNaV0ONGx8p5Gw71BwTvk2Y3
- D1Aw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773383833; x=1773988633;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=U+zGbVUbYb+KgnV8UDUP34UIuyZOMtozyi88KAmOy3s=;
- b=U55hHaCojvf0/lR9xKlMq7VxOMTu2Mwl1ZFzoVxF5h1VXNc/GPJKWnpkOhuhH677cR
- RFTmgBX5Q9gAxIrEaylkKgm5aguBxLtcKRuuOmMLrTFDlHG1JXICHa2ePoI+BuoaEuej
- KoJSUOI2RRzmkqpk+HtplnoxwwPU9I/w5YXrmZTwVWUOCcaZWZFlZLWE7GIaFVByw92D
- uUD95M1JDBvZ1LpwNiTX3ghag2XE3+aOCsGcmGAAYcYVAip0cEaROtwZquI0k0dq7hvL
- KTZVVJKAfmLc5mKoUKO0JzHrbwtLV7NYOXgM2ukgYueM+Wfz/fExtSD3jlK8NasRqdsi
- mhGA==
-X-Gm-Message-State: AOJu0YwhZ/eN4Dyab6+nwUBcY8yiptqTzDBuX9IhGOzM+iIWkpbV7HzL
- CFshYkTBLYDKOkQP+s4WDCjdZe0z6k+4WhlWJExUt2QVbssJvDMDzp1IJOcs6xdGdYq7GL725cx
- zW1QiB1s=
-X-Gm-Gg: ATEYQzzWv/5v8NsYEyL2G+WFXCpCJUCrTRFm3JToTRopZosWOFgHMAgoKQ1gw68FBhB
- DSVUTp6gtYFwv4Kco2Teu+bbU3aEj8+Ih0pxMKxve4NsiKw5ElyuYJfyr/k222fmNM8rtsQbTt8
- meTd82wEYCLeIpAq1Z/5rOhQaxQj7aRPt2Vkm9PfSweV0hrMHrjUsecbnQEdBcbqllSkbi3h25o
- J6CMmVzSeWvl9M0AbPzQW9jo3IsedQdPx/z+IAv3QlSHzXZnOn0adkQ2B3bLqtCZltqjW6Lvp0Y
- AUV7yyfQB7uBDWHiuwhWQATJgNwFIaXYMRAxGa01jRd9qIUfHGgx4rwuZfjQ0OMAPvto8HclrgT
- kEIun5V0NDoCagbugOc23AVWLCHtsdEF4MZZDaYTmX+vUe6L5U7OJT/CYL4OCLj9JD0G9L1txZ0
- W4dRd3YYUdYcRUz4lqcsz1/cbW8JWaLthZo1ZQMFnxgUJW7/4u1r6ITbCY3FnvwsLhwite
-X-Received: by 2002:ac8:5d51:0:b0:509:1ffc:c538 with SMTP id
- d75a77b69052e-50957c9fe1bmr25706771cf.19.1773383833441; 
- Thu, 12 Mar 2026 23:37:13 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50939ec56d0sm54261711cf.11.2026.03.12.23.37.12
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 23:37:13 -0700 (PDT)
-Message-ID: <e7f90dee-6450-4247-9352-1cd8f8cfaced@linaro.org>
-Date: Thu, 12 Mar 2026 23:37:11 -0700
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1w0wDR-0004Xw-Ou; Fri, 13 Mar 2026 02:41:45 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <adityag@linux.ibm.com>)
+ id 1w0wDO-0006cL-Vj; Fri, 13 Mar 2026 02:41:45 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62CGUUfL2664770; Fri, 13 Mar 2026 06:41:38 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-type:date:from:in-reply-to:message-id:mime-version
+ :references:subject:to; s=pp1; bh=pYfM7peJZA5YZXZPUGEQlep25bs2mD
+ 9iM9JBovXRtBA=; b=WKp85uy9aCenLCqyFVdxLkqXAs+DC4BAjxfRwEwNbNMoZ4
+ e51QkKsaZRsSSinCHy5ZFU1tjxm5YBjK6046xuQsaXMhX+7ksMycIJvkws2A7E77
+ r0CdyZR/87Q2TCTFP6xWT9yoY/CFDVTihkn/tF179nCvcB+8MWf1oHB49Pv8stK1
+ aY6Q/i8O+dcKTcLkmwlWsA6P5NgiIyMQBLnBis+a/u5jys4NlQZ0rtzLmDotWPO1
+ jiSoRox8MOq1W68OHbSoVFggy1XK1Y3DLKEzWuqk8oNOetPgCmbVE+ERNOLSzA9E
+ 3MDZ12Sw4IKlraYOoWrprlvfBcKWJBL2erpXNqew==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh98e71f-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 06:41:38 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62D5DmM4008835;
+ Fri, 13 Mar 2026 06:41:37 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cuha75k8y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Fri, 13 Mar 2026 06:41:37 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62D6fXs149545616
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Fri, 13 Mar 2026 06:41:33 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 7254320043;
+ Fri, 13 Mar 2026 06:41:33 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 0ADD520040;
+ Fri, 13 Mar 2026 06:41:31 +0000 (GMT)
+Received: from li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com (unknown
+ [9.124.217.239])
+ by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTPS;
+ Fri, 13 Mar 2026 06:41:30 +0000 (GMT)
+Date: Fri, 13 Mar 2026 12:11:29 +0530
+From: Aditya Gupta <adityag@linux.ibm.com>
+To: Shivang Upadhyay <shivangu@linux.ibm.com>
+Cc: qemu-ppc@nongnu.org, qemu-devel@nongnu.org, npiggin@gmail.com,
+ milesg@linux.ibm.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org
+Subject: Re: [PATCH v2] ppc/pnv: fix dumpdtb option
+Message-ID: <abOxbwS8nGIC6aT3@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+References: <20260311143549.118720-1-shivangu@linux.ibm.com>
+ <abOq6LFmRLmQOZGE@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/uftrace.c: fix depth for exit events
-To: qemu-devel@nongnu.org, qemu-stable <qemu-stable@nongnu.org>,
- Michael Tokarev <mjt@tls.msk.ru>
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Honggyu Kim <honggyu.kp@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260313063441.2048882-1-pierrick.bouvier@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260313063441.2048882-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::f35;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-qv1-xf35.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <abOq6LFmRLmQOZGE@li-3c92a0cc-27cf-11b2-a85c-b804d9ca68fa.ibm.com>
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=M+pA6iws c=1 sm=1 tr=0 ts=69b3b1a2 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VwQbUJbxAAAA:8
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=5aa4pgdBarSE5MfEfWwA:9
+ a=CjuIK1q_8ugA:10 a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-GUID: A00iJTfzTEbSjKJQzt9MzG88YoZ3lOJx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MSBTYWx0ZWRfX00FMOORTXJ98
+ ijqqoiYv7Al8/dBph8dMdbuPojd3RW8jcv1ccILFJmSrwkkRgL7K6gexpPkvINH1SGudbuV8Ymn
+ oayOoG03Ry+G6Q5doJxdNP/JgZ+4LaC541ueipwXPQJb8iWf3wTmbFM8k0TR53Cb3RexjK6berm
+ TIeGos2NDUKuF0Q0je9p70YwMbwiPwGZPeaom5jAejfLFWDld8hkRmQHA+9n5TDyUu6ZK7vTWr7
+ fmoeXGPh1kkyBZXGhMWf8yOjVVk6owuBNFAqbcdIUsSJNUSm7lvwBXJ/1Wr2RoD037hh3BLWEbQ
+ NMsDbSpIU/y5sOBys9GaczMp/pO+BN47ZSc0CeEbK3Sp1HeM3p1WFWwFciWXuPXuRxqFYOAbPhJ
+ wBtuHeq2gRZLjKKDzhziFLeWCYpEYFRCjrYe1CdItThdC0uYZyl8jRxWdX1NIhu6DQAtYy33yBs
+ z4Du1UC0FKDts8qJ7kg==
+X-Proofpoint-ORIG-GUID: FKe_ptJYoCp_X8bEUawubugOhD9UU5Ps
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-12_03,2026-03-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ lowpriorityscore=0 spamscore=0 suspectscore=0 priorityscore=1501
+ impostorscore=0 phishscore=0 clxscore=1015 bulkscore=0 adultscore=0
+ malwarescore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603130051
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=adityag@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,37 +125,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 11:34 PM, Pierrick Bouvier wrote:
-> Uftrace plugin was recording wrong depth for exit events, resulting in
-> incoherent traces, especially for partial ones.
+On 26/03/13 11:45AM, Aditya Gupta wrote:
+> On 26/03/11 08:05PM, Shivang Upadhyay wrote:
+> > The '-machine dumpdtb' command line option stopped working on
+> > PowerPC/pnv systems after recent design change [1].
+> > 
+> > Fixing this by generating fdt blob in `pnv_init`.
+> > 
+> > [1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
+> > 
+> > Cc: Aditya Gupta <adityag@linux.ibm.com>
+> > Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+> > Cc: Peter Maydell <peter.maydell@linaro.org>
+> > Cc: BALATON Zoltan <balaton@eik.bme.hu>
+> > Cc: qemu-stable@nongnu.org
+> > Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
+> > Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+> > 
+> > <...snip...>
+> > 
+> >  static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
+> > @@ -1261,6 +1243,11 @@ static void pnv_init(MachineState *machine)
+> >      if (pmc->i2c_init) {
+> >          pmc->i2c_init(pnv);
+> >      }
+> > +
+> > +    if (!machine->fdt) {
+> > +        machine->fdt = pnv_dt_create(machine);
+> > +        _FDT((fdt_pack(machine->fdt)));
+> > +    }
 > 
-> Thanks to Honggyu Kim, one of the original author of uftrace, who
-> spotted the issue.
-> https://github.com/namhyung/uftrace/pull/2031#issuecomment-4051762627
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   contrib/plugins/uftrace.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
-> index e3c65a1c930..f974090e23e 100644
-> --- a/contrib/plugins/uftrace.c
-> +++ b/contrib/plugins/uftrace.c
-> @@ -817,7 +817,8 @@ static void track_callstack(unsigned int cpu_index, void *udata)
->       if (fp == caller.frame_pointer) {
->           /* return */
->           CallstackEntry e = callstack_pop(cs);
-> -        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
-> +        /* uftrace convention is to use same depth as entry */
-> +        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs) + 1);
->           return;
->       }
->   
+> This if check is not needed, pnv_init is only called once during start,
+> and machine->fdt will always be NULL, so we can just assign machine->fdt
+> directly.
 
-This is good candidate for stable releases also.
+Just noticed this can happen if dtb is passed, please ignore this
+comment.
+
+The patch looks good to me, will test and give rb.
 
 Thanks,
-Pierrick
+- Aditya G
 
+> 
+> Rest all looks fine to me.
+> 
+> Thanks,
+> - Aditya G
+> 
+> 
 
