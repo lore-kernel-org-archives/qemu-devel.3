@@ -4,99 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 715A4105F78C
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 11:47:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FF7F105F7A2
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 12:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w10zF-00018C-J6; Fri, 13 Mar 2026 07:47:25 -0400
+	id 1w11VJ-0006LI-Fs; Fri, 13 Mar 2026 08:20:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>)
- id 1w10zD-00017C-3l; Fri, 13 Mar 2026 07:47:23 -0400
-Received: from fhigh-a1-smtp.messagingengine.com ([103.168.172.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>)
- id 1w10zA-0006YJ-4V; Fri, 13 Mar 2026 07:47:22 -0400
-Received: from phl-compute-03.internal (phl-compute-03.internal [10.202.2.43])
- by mailfhigh.phl.internal (Postfix) with ESMTP id E2E86140015D;
- Fri, 13 Mar 2026 07:47:12 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-03.internal (MEProxy); Fri, 13 Mar 2026 07:47:12 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm3; t=1773402432; x=1773488832; bh=YHTDFZmCdj
- pGgzTpFT8DScN1F9TlA0VrzlJKBZT3ZK8=; b=b54KzddjuOLH10y0aoAH3Phv/q
- HRs1adZi/4gwHVM+y7rAqrT5R8QRTpFITcJX8IqbdkMgeQSX3jGxqigsK8efgSbD
- LrLUQnWvpWWLUsqTskqULHelQFZ9fAYf0RkoDHJTN81bAO6DyredHX22ugMKGvVP
- gIYM2H6arVtKPVqaxjnsy+rP/5oYTlG19t3xK8217YavXdw7OCnd+JTG71thFSPy
- 7O5YflWxrwqrBE5O4L+yku/RFlKtCN5n7w+msqNUPcPOvMSfyGpDuwdCsOEjyXkk
- czvg7yE/EnQjVuz6AOOBpdUz/880J967Sbt3is9vnZaOZgZvLxV1e9bYtIMg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1773402432; x=1773488832; bh=YHTDFZmCdjpGgzTpFT8DScN1F9TlA0VrzlJ
- KBZT3ZK8=; b=eOc/KqtsHeOw57hEAMyv6B0M771lF3tpCZUMS1yjT0SIsvZV3Dp
- od+wIcz5rZqQFRbaeG5HM3uPbSaWKfWIZJGUj8NUb9qP8LdU9kMOaWglTmi/F2CF
- 60uWWrEud3VY7eVi+KGugKGkSVVXHRddCHgjYZ55pwGTEl/9X5ittu/9cu3ss1Jw
- 7QXWyhJhH+c4P5oKv17zKRX/beI8HGURF/dLU2gIXyroBJLSAG4aalUA0PYKdso3
- 5DCSEsh2viDCs9MtbTFtzpzWoZyUjk3mRYdaQZN5lXupOmrYq5xQivpbFi7/uTvu
- nGrKFM3JEMZs10KxmC8di3P5eH6JzzAGGYg==
-X-ME-Sender: <xms:QPmzadDGmVAyezpDNvRIxE0XgqOpKbYWAK1Uc0sv6QTT9lF4YiTf3w>
- <xme:QPmzadyKpiD4qJJgxQDtVuRUoYMi3f4dn3sjFrPbGtqDb-peyVWx2xyKJfxEZVKER
- LcFc2Kk_q8pTHFSt_JMwHNw-bDb_cRhWrE5E4b2c58OkziYf0_Svw>
-X-ME-Received: <xmr:QPmzaa2jvj1KKhhOUf8KldvPIVsLw6h8NObrEIpthNg3O3B6iwIDMj2RtKl-UPrKeA>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvkeelheekucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefujghffffkgggtsehgtderredttdejnecuhfhrohhmpeetlhihshhsrgcu
- tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeetheevud
- fgjefghefhieejudelkeeljeegvdekueeuhffhgedvveefteevgeetieenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
- hishdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
- phgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmh
- huqdgrrhhmsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhes
- nhhonhhgnhhurdhorhhgpdhrtghpthhtohepmhhighhuvghlrdhluhhishesohhrrggtlh
- gvrdgtohhmpdhrtghpthhtohepvghrihgtrdgruhhgvghrsehrvgguhhgrthdrtghomhdp
- rhgtphhtthhopehpsghonhiiihhnihesrhgvughhrghtrdgtohhmpdhrtghpthhtohepkh
- hvmhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:QPmzadyMZAmPefrWy1wC9wJsNW8XPC5uym53hJkhO180z3KB15G92Q>
- <xmx:QPmzaRF24kAW0718LFeaYbjmcY6A8M5W3f4Vgg90XHZsP6sFzxqASg>
- <xmx:QPmzaQbreP7vDmhypbZW6-PLWWDKWFZSPLaZIzIgE2W1kQGvm5tbJQ>
- <xmx:QPmzaTDRBU4LHSM9UJkpZ4tGno8bd-SwRO_gIVMdDbHsRu7mudxk_Q>
- <xmx:QPmzaSaycT3A_Az_75S-oyA_x3O20NXKs8t3-5ayamwIhhAXQZp_jHdf>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 13 Mar 2026 07:47:12 -0400 (EDT)
-Received: by fw12.qyliss.net (Postfix, from userid 1000)
- id D4F93888E2EA; Fri, 13 Mar 2026 12:47:08 +0100 (CET)
-From: Alyssa Ross <hi@alyssa.is>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, Eric Auger
- <eric.auger@redhat.com>, Miguel Luis <miguel.luis@oracle.com>
-Subject: Re: [PATCH] target/arm/kvm: fall back if nested unsupported
-In-Reply-To: <CAFEAcA8ycT250JaECAYTKF+U2a4m6jauLPLbD8PVx2atd70A7g@mail.gmail.com>
-References: <20260311095405.26297-1-hi@alyssa.is>
- <CAFEAcA8ycT250JaECAYTKF+U2a4m6jauLPLbD8PVx2atd70A7g@mail.gmail.com>
-Date: Fri, 13 Mar 2026 12:47:07 +0100
-Message-ID: <87fr64vtms.fsf@alyssa.is>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w11VD-0006Kp-Vm
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:20:28 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w11VB-0000vO-RO
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 08:20:27 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so2471054d50.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 05:20:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773404423; cv=none;
+ d=google.com; s=arc-20240605;
+ b=lKx106pVDISs0TjcBLRPSlTE2YgePaA3DvcAuyekTglkNBMi4Q+PxSSGKyOYyJOzNW
+ zV3xrg3Vs9OUA6thQujkk0IOhcPSXY6+tCAewx5EZTSRCWis23QqpTOFO8ifjSm/uT8d
+ 5zHzkBsbTQqJCmC8BsN/LShOmqM3arAdfSnMUSlVi547TRdUHJBfgJdYbqyD2peDKS9W
+ 0Y2f3sjVXMNFDzGb6TydHarByLYzyFu5wMmywdnXOrKrKZEAfseuCixK24uylOVXWDTt
+ XPWtLrjnz0mih56wh3fKjxrmkP/FpA/IKmMepwOOlm2TlBsFLScQGlI3R+rcIAVJxRBR
+ MfGw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=PgRWUtsedyaNPnBlBSFG0BGptSwHAXFB3vUXIJ8SexU=;
+ fh=gS8oh9EHdcTDcglskGyIv3/M5LtfI+jKdwGYJC227W4=;
+ b=f9+6vkHTK6jVOH2My9hRyRV7UyOi9Z3FKhgDQW7HLuGf5OwcAwzyC/wOxD1qZETzsm
+ QlgSnT4eU+PnDXQsPLHuPh/EXybJmZwNsqYhYlAP8GgGVdV/XfjanUXa8URN3X6KBncy
+ F9XXDZAnNNg6JTHuiOsUTl06MT+jO0oaI1DD6h1NjYKMc4weBQCfQ6GNQBR7yD8xjhUd
+ JC+qv353m6r/f1uI5g1L52vPHfFczw6aY/Q8ssfPFYr6jePvEuWMupebyMHikoZs+WC7
+ vnEt+fUKvgWFcHaXDWf9y/9V1uJO2x2dMF5BYhbZRcbYVgQozAAS03K7OmbJP7UPeIwc
+ cl0g==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773404423; x=1774009223; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=PgRWUtsedyaNPnBlBSFG0BGptSwHAXFB3vUXIJ8SexU=;
+ b=JhSI+jt87Ayl4GW0ni2wI7+SzPnmaTkfeT9AXHSy7FH+T6Sm57PUfrhyc4t8PxOrXD
+ BHldYYZWAHxsxG6AdWKtuFYuCtbvb7opmZUQhua6FtbjkCPVauzsbDk4I+jkCtwqrbUZ
+ YBaoX9vxokO5Wo7r+rx2gpZ6YPly/BRDZ0alqmqw+/UQBGbl1Reyzk1bm4i+nDPyqF1o
+ QEVi8AHYzfT0cBRVMx7+XcJb+6bqIh/W5lPDnjP7QKmtW0BBRr/h3fkBaTmtsSftxqea
+ pszO5jclYbU9OPpsrxY46NY3w2XmDe0F1k4M1Lj+CBj/G1I3yzVGIbu2jZire+kV9zrS
+ xmUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773404423; x=1774009223;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=PgRWUtsedyaNPnBlBSFG0BGptSwHAXFB3vUXIJ8SexU=;
+ b=Ige1mq7Z8UV7lYuQbq6T+BggrvafbHI2DKa7uP2GZMvC4CabnKn64HuGmSXB6h4CDH
+ /8TL9GIKrLk+Hc3GzecZGxVWKZ9JGdAf5l4tU0q46Ne/LR/96ewPhZ4yohMVpDSOOL+4
+ BitsZGTnZC9EQwscKJVQHhrkaU83feyjKDS5NeAlG1Ko0pfXy7n2SjlydEwwER410QR9
+ wETt02eKvVe1C8HYlui9LSM0CZZxjpt3FpRweRa0Ooh8GoXmwk9WJdyciCKVaieChVnE
+ 2u9kJnRtUa4Hj3tgkb6npri5FbNFR9fkVfXG73ZyF7KBngZJeJNdH67uRDiiMut8oWqM
+ wfRQ==
+X-Gm-Message-State: AOJu0YyZqrsOAjK8Dv0neEydWoX88kJFlsGsQgqKVtu7BOmSNVvYowbs
+ /wjudCBtOoML0PZ526AHaUgZYdhntG224m0yNuJEcxqhn+3GemzRRzkQkEVQftIofVJumMM9iZG
+ gQHIa1ginVFjUfhqfsd0sPpahEravl5BWJU9YtiU5zw==
+X-Gm-Gg: ATEYQzxxHp7J2hMRns8+1CQVlGNIRI67dxEdWhBezCrvlA66lnN+v6dvdCU4JhJf9d7
+ QrfbLgCz0pt7NnDtqVcHiHVrdTjH1ymueBIFjPSSJ92UMh/0/RqWpSngMhmHI/aqfPgzO5JCpC1
+ jU4B6BKLCH69Z1ytvpbQ7uDilqXqXfQzv4j9wLsaDoIjJsN6orLac+Z6v8r/V1VMpt7OXcows4d
+ pNpvLlpCaA/ma/LK8SCsnL/p+phRUgKK8Tm/bjkFdJjhYJjhrXIRn9AwUpqE+FdJUo5LGcdliuX
+ AxRc5mvBZxjsHhoRMMxDgXmgwzLbDAENpU3dRXkxjwWtQ6fSvKQ2ZortsQSCHLoJ9fM=
+X-Received: by 2002:a05:690e:42c1:b0:64c:bfd0:ad6f with SMTP id
+ 956f58d0204a3-64e62fa057dmr2433119d50.33.1773404422795; Fri, 13 Mar 2026
+ 05:20:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=103.168.172.152; envelope-from=hi@alyssa.is;
- helo=fhigh-a1-smtp.messagingengine.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <cover.1773301927.git.dingtao0430@163.com>
+ <97c01f634c255f3787ab8a71bfe8ccc03e8d353c.1773301927.git.dingtao0430@163.com>
+In-Reply-To: <97c01f634c255f3787ab8a71bfe8ccc03e8d353c.1773301927.git.dingtao0430@163.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 13 Mar 2026 12:20:10 +0000
+X-Gm-Features: AaiRm507PHi0Q49DBYNuHfYHkoy2xSdRcjE4eanSYety7J-Z_SJWAe1nJU7ivNQ
+Message-ID: <CAFEAcA-kBmfYzpx5WKwhy5M+zAztoMsP6NAhnoJ5S6KdxnWArQ@mail.gmail.com>
+Subject: Re: [PATCH v1 2/3] The swidth and dwidth of pl080 are not equal.
+To: Tao Ding <dingtao0430@163.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,127 +114,148 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-
-Peter Maydell <peter.maydell@linaro.org> writes:
-
-> On Wed, 11 Mar 2026 at 09:54, Alyssa Ross <hi@alyssa.is> wrote:
->>
->> If I create a machine with more CPUs than KVM supports, but specify
->> multiple accelerator options, QEMU will fall back to the next
->> accelerator.  This is great, because if I've explicitly specified
->> multiple accelerators, I've told QEMU I'm fine with any of them being
->> used to provide the machine I want.
->>
->> When I create a machine with nested virtualization enabled, though,
->> this doesn't happen.  KVM often doesn't support it, but TCG always
->> does.  The nice thing to do would be for QEMU to fall back to TCG if
->> KVM can't provide, like it does when too many CPUs are requested.
->> This patch adjusts the behaviour to do that.
->>
->> This is very helpful for OS development scripts that run an OS in QEMU
->> =E2=80=94 I want everybody to be able to run the script, always with
->> virtualization enabled because the OS requires it, but for it to take
->> advantage of KVM acceleration when available.
->>
->> Signed-off-by: Alyssa Ross <hi@alyssa.is>
->> ---
->>  hw/arm/virt.c    | 6 ------
->>  target/arm/kvm.c | 8 ++++++++
->>  2 files changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 7456614d05..0b63b2eac3 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -2372,12 +2372,6 @@ static void machvirt_init(MachineState *machine)
->>          exit(1);
->>      }
->>
->> -    if (vms->virt && kvm_enabled() && !kvm_arm_el2_supported()) {
->> -        error_report("mach-virt: host kernel KVM does not support provi=
-ding "
->> -                     "Virtualization extensions to the guest CPU");
->> -        exit(1);
->> -    }
->> -
->>      if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled=
-()) {
->>          error_report("mach-virt: %s does not support providing "
->>                       "Virtualization extensions to the guest CPU",
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index d4a68874b8..20dcc6a820 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -615,6 +615,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->>          ret =3D -EINVAL;
->>      }
->>
->> +    if (object_property_find(OBJECT(ms), "virtualization") &&
->> +        object_property_get_bool(OBJECT(ms), "virtualization", NULL) &&
->> +        !kvm_arm_el2_supported()) {
->> +        error_report("Using ARM nested virtualization with KVM requires=
- "
->> +                     "a host kernel with KVM_CAP_ARM_EL2");
->> +        ret =3D -EINVAL;
->> +    }
+On Thu, 12 Mar 2026 at 08:02, Tao Ding <dingtao0430@163.com> wrote:
 >
-> Looking a bit closer at this, it's a bit awkward that we're
-> looking at a machine property in generic target/arm code.
-
-Isn't SMP a machine property that we're looking at just above?
-
-> There is no guarantee that the machine is "virt" or that every
-> KVM-supporting machine has a "virtualization" property, and
-> the target/ code isn't really supposed to do board-specific stuff.
-
-FWIW: there's another arm board with the same property, which I think
-would have the same requirements.  That's why I chose to just check the
-property rather than checking machine type =E2=80=94 the idea being to esta=
-blish
-the convention that machines /do/ have a virtualization property where
-it makes sense.
-
-> The board-independent way to say "are we trying to enable EL2" is
-> to look at the CPU property has_el2. But the CPU isn't created at
-> this point, so it's too early to do that here.
-
-I spent a day or so trying to make something involving has_el2 work, but
-ultimately couldn't get anywhere with it.
-
-> Similar things where the early accelerator code wants information
-> from the board we have handled with a method in MachineClass,
-> like get_physical_address_range. We could do that here, but
-> maybe it's a bit over-engineered? IDK.
-
-I'll give it a go and see if I can make it work.
-
-> There are other cases also where the virt board will error
-> out for "KVM and some config we could do with TCG":
->  * KVM + EL2 + GICv2
->  * KVM + EL2 + kernel-irqchip=3Doff
->  * KVM + GICv2 but host hardware doesn't support GICv2 emulation
->  * KVM + GICv3 but host hardware doesn't support GICv3 emulation
->  * KVM + MTE but host hardware/kernel doesn't support MTE
+> The amount of data transmitted each time is the maximum value between s and w,
+> but it should be noted that the remaining transmission amount is less than the width.
 >
-> The first two are "always fails", but if we're going to have
-> a mechanism for "figure out in kvm_arch_init what KVM features
-> the board is going to want to enable" then it might be nice
-> to also be able to use it for the last 3.
+> Configure swidth to 1 byte, width to 4 bytes, and transfer size to 4.
+>
+> Configuration
+>     ../configure --target-list=arm-softmmu --enable-debug
+> Reproducer
+>     ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
+>     -device loader,addr=0x00000000,data=0x44332211,data-len=4 \
+>     -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
+>     -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
+>     -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
+>     -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
+>     -device loader,addr=0x10130108,data=0x00000000,data-len=4 \
+>     -device loader,addr=0x1013010C,data=0x9e47f004,data-len=4 \
+>     -device loader,addr=0x10130110,data=0x0000c001,data-len=4
+>
+> Qemu monitor
+>     (qemu) xp /1wx 0x00001000
+>     00001000: 0x00002211
+>
+> The result correctly after fixed
+>     (qemu) xp /1wx 0x00001000
+>     00001000: 0x44332211
+>
+> Signed-off-by: Tao Ding <dingtao0430@163.com>
+> ---
+>  hw/dma/pl080.c | 32 ++++++++++++++++++++------------
+>  1 file changed, 20 insertions(+), 12 deletions(-)
+>
+> diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+> index 0979a687aa..4f97943b28 100644
+> --- a/hw/dma/pl080.c
+> +++ b/hw/dma/pl080.c
+> @@ -160,26 +160,34 @@ again:
+>
+>              /* Transfer one element.  */
+>              /* ??? Should transfer multiple elements for a burst request.  */
+> -            /* ??? Unclear what the proper behavior is when source and
+> -               destination widths are different.  */
+>              swidth = 1 << ((ch->ctrl >> 18) & 7);
+>              dwidth = 1 << ((ch->ctrl >> 21) & 7);
+> -            for (n = 0; n < dwidth; n+= swidth) {
+> +            xsize = (dwidth < swidth) ? swidth : dwidth;
 
-I can try that.
+I think this can be more clearly written as
+     xsize = MAX(swidth, dwidth);
+since we're editing the line anyway.
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+> +            xsize = (xsize < size * swidth) ? xsize : (size * swidth);
 
------BEGIN PGP SIGNATURE-----
+   xsize = MIN(xsize, size * swidth);
 
-iHUEARYKAB0WIQQGoGac7QfI+H5ZtFCZddwkt31pFQUCabP5OwAKCRCZddwkt31p
-FUe+AP4wXHU1v9+cv/Z4Eg7x6u42pMaZVgpHbFLUGsvhpnpJWgEAoRK2++2ZN1AS
-f8gMqGYDRuW9K56fU0SALQXUVmii2wo=
-=UeI1
------END PGP SIGNATURE-----
---=-=-=--
+So this is handling the case where our destination width is larger
+than the remaining amount the transfer size says we should be reading
+from the source, which is cases like
+"source width = 1, dest width = 4, transfer count not a multiple of 4".
+The TRM is unfortunately very vague about what the hardware does here.
+I think the hardware designers considered this to be a programming error:
+in the "Software considerations" section of the TRM one of the items is:
+
+ * If the source width is less than the destination width, the
+   TransferSize value multiplied by the source width must be an
+   integral multiple of the destination width.
+
+> +            for (n = 0; n < xsize; n += swidth) {
+>                  address_space_read(&s->downstream_as, ch->src,
+>                                     MEMTXATTRS_UNSPECIFIED, buff + n, swidth);
+> -                if (ch->ctrl & PL080_CCTRL_SI)
+> +                if (ch->ctrl & PL080_CCTRL_SI) {
+>                      ch->src += swidth;
+> +                }
+>              }
+> -            xsize = (dwidth < swidth) ? swidth : dwidth;
+> -            /* ??? This may pad the value incorrectly for dwidth < 32.  */
+> -            for (n = 0; n < xsize; n += dwidth) {
+> -                address_space_write(&s->downstream_as, ch->dest + n,
+> -                                    MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
+> -                if (ch->ctrl & PL080_CCTRL_DI)
+> -                    ch->dest += swidth;
+> +            if (xsize < dwidth) {
+> +                address_space_write(&s->downstream_as, ch->dest,
+> +                                    MEMTXATTRS_UNSPECIFIED, buff, xsize);
+> +                if (ch->ctrl & PL080_CCTRL_DI) {
+> +                    ch->dest += dwidth;
+> +                }
+
+Here we choose to handle the "swidth and tsize say we should
+read e.g. 2 bytes from the source but dwidth is e.g. 4" case
+by performing a 2 byte write to the destination. I don't think this
+is what the hardware would do.
+
+There is this interesting bit in the "software considerations" section:
+
+ * While writing, the TransferSize bit-field is like a control register
+   because it determines how many transfers the DMAC performs. However,
+   during read-back, TransferSize behaves like a status register because
+   it returns the number of remaining transfers in terms of source width.
+   So when TransferSize is read back, it returns the number of
+   destination-transfer-completed stored in a separate counter called
+   TrfSizeDst multiplied by a factor.
+
+My best guess from stuff like this is that the way the PL080 works
+internally is that for each dest-write it needs to do for the transfer
+it does the appropriate number of source-reads. If the guest
+misprograms it such that that means it reads more than
+(transferwidth * swidth) that will result in reading more data
+from the source than intended, but that would be a software bug.
+
+I would suggest doing something like that, but at any rate
+commenting and doing a LOG_GUEST_ERROR if there's a mismatch in
+swidth/dwidth/tsize such that we wouldn't have enough bytes to
+do a full destination-write.
+
+> +            } else {
+> +                for (n = 0; n < xsize; n += dwidth) {
+> +                    address_space_write(&s->downstream_as, ch->dest,
+> +                                        MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
+> +                    if (ch->ctrl & PL080_CCTRL_DI) {
+> +                        ch->dest += dwidth;
+> +                    }
+> +                }
+>              }
+>
+> -            size--;
+> +            size -= xsize / swidth;
+
+This change is correct (the transfer size field in the control register
+is supposed to count down by 1 for each swidth-sized data unit we
+transfer, and our loop can do more than one swidth read), and probably
+the most important bugfix in this patch, because it's the one that
+matters for normal correct use of the PL080.
+
+>              ch->ctrl = (ch->ctrl & 0xfffff000) | size;
+>              if (size == 0) {
+>                  /* Transfer complete.  */
+> --
+> 2.43.0
+
+thanks
+-- PMM
 
