@@ -4,119 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3460106FD7E
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 04:56:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C946106FD7F
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 05:01:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0uYd-0001hc-48; Fri, 13 Mar 2026 00:55:31 -0400
+	id 1w0ueQ-0002YO-Ci; Fri, 13 Mar 2026 01:01:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1w0uYb-0001hA-90
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 00:55:29 -0400
-Received: from mail-eastusazon11012029.outbound.protection.outlook.com
- ([52.101.53.29] helo=BL0PR03CU003.outbound.protection.outlook.com)
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w0ueN-0002YB-LI
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 01:01:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <Sairaj.ArunKodilkar@amd.com>)
- id 1w0uYZ-0005hk-5g
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 00:55:29 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=s42hWUY0GREfC4hdNJIAmlkiGIQ/JKB5e4CH7asHxD3ElYqoj71vmEQKcQXHczFInrxmmZU8PYhWkJr3VKafeKr70d8CGVCeEzrZshlHWUHiwVmjGko8U2aJpJVUoy0uV9bAgX6SL8VNifhCKp0OLkPSaYw+6y8oxTta4aE19NZ/N7vHrYZprnIVWX3pGOqxkKbVaenAjtGUml2U27y+cLmKFKHpV3y8Kbdxs4ALYaDC57KO0octcuKefBuYbDq6TILgcSYHyUKHAnEqYADJfm9KBLBEHnQJCz4A8kD5RlTRaeAppR5Hwi9TkqEgQLRj4XC6yWijJfrsbcDDAa+Hqw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=jARUJeGAkcwkiqBy6QjTLyhWBP9CRWgqGm/AsOrMdT4=;
- b=dSfcEOpEhKBicMEhAEWUMBIRNQuzlgVgAPIcHgBZ0OpQGfQZUazt77XTcA9cneOuQzpI1vMC3EiGqhQBuUtJztvU6y1vcz/LVb91c1ScFSlJjx/WD0GgyvhHnCbVWMB/mQ1nSsvI3BZa91oTD+Kznxk0DKSTF8kieWL8+4u9qK5Np2HF687YagyBG090VMQBvyLgtAjYUoAumj1qFQ+pLHyMXXD0x8W0BYULFZcjLMMOMNtV7QFiUyH2Tx34uVyUOpYNZ3gTlRWYu1Xw8wqvExHH6fKyvmmiHbQq7wD4sJxk/u+GIlbbqEYCGoKCgtIAoEl/UqACdNeyrkg/F5sDKQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 165.204.84.17) smtp.rcpttodomain=oracle.com smtp.mailfrom=amd.com; dmarc=pass
- (p=quarantine sp=quarantine pct=100) action=none header.from=amd.com;
- dkim=none (message not signed); arc=none (0)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=amd.com; s=selector1; 
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=jARUJeGAkcwkiqBy6QjTLyhWBP9CRWgqGm/AsOrMdT4=;
- b=MJnyp9fUVT6Ezs1gl/wOCu09KAc2nOap0FpiVBQKaW2zG0T2T4rC7GagKcdrRCbxWmd7un88aiLR7Vn0wlxsHG39IScidGAUqekgf2c6iy5mSW8pfJU4gT4LuY6fOh6lIPie0THeBF6KgB6qvV+Ne9Id4QDsv8teLhzfurQaNnA=
-Received: from PH7PR13CA0011.namprd13.prod.outlook.com (2603:10b6:510:174::26)
- by CYYPR12MB8870.namprd12.prod.outlook.com (2603:10b6:930:bb::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.6; Fri, 13 Mar
- 2026 04:50:17 +0000
-Received: from CY4PEPF0000EE32.namprd05.prod.outlook.com
- (2603:10b6:510:174:cafe::30) by PH7PR13CA0011.outlook.office365.com
- (2603:10b6:510:174::26) with Microsoft SMTP Server (version=TLS1_3,
- cipher=TLS_AES_256_GCM_SHA384) id 15.20.9700.15 via Frontend Transport; Fri,
- 13 Mar 2026 04:50:15 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 165.204.84.17)
- smtp.mailfrom=amd.com; dkim=none (message not signed)
- header.d=none;dmarc=pass action=none header.from=amd.com;
-Received-SPF: Pass (protection.outlook.com: domain of amd.com designates
- 165.204.84.17 as permitted sender) receiver=protection.outlook.com;
- client-ip=165.204.84.17; helo=satlexmb07.amd.com; pr=C
-Received: from satlexmb07.amd.com (165.204.84.17) by
- CY4PEPF0000EE32.mail.protection.outlook.com (10.167.242.38) with Microsoft
- SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.20.9700.17 via Frontend Transport; Fri, 13 Mar 2026 04:50:16 +0000
-Received: from [10.143.201.178] (10.180.168.240) by satlexmb07.amd.com
- (10.181.42.216) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.2562.17; Thu, 12 Mar
- 2026 23:50:13 -0500
-Message-ID: <11d3f547-34a6-4ccb-91e4-7dbe55b8ad29@amd.com>
-Date: Fri, 13 Mar 2026 10:19:55 +0530
+ (Exim 4.90_1) (envelope-from <ppandit@redhat.com>)
+ id 1w0ueK-0006sK-TW
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 01:01:27 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773378082;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=oTS9gyqw1P/Y7Jy0eWO30dzXkPhi7gAB8XI4qDo8y9g=;
+ b=NtvWHIjZYcMZ0Q61erAKLwysGSoZW20S5WPhzPwZliAhmM47uiyduHP+e4pneJLKtsVJP8
+ 4w9z7DvKGU9R0RgQ80GC+QggyuSrGU4OPmsqmes0KsECFV7KZLZLWm3/oYtwphv01RNVme
+ mVds2GoJOANXEKbF4BcjPVEqcINlGe4=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-589-6FVTrJvHMgq-RUYD8pW38A-1; Fri, 13 Mar 2026 01:01:21 -0400
+X-MC-Unique: 6FVTrJvHMgq-RUYD8pW38A-1
+X-Mimecast-MFC-AGG-ID: 6FVTrJvHMgq-RUYD8pW38A_1773378080
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4853efceaddso13248665e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 22:01:20 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773378080; cv=none;
+ d=google.com; s=arc-20240605;
+ b=INmzpH+0svgBQqejg2yC8fnhSsWOUDksVip1fbu+Qds1SA4Nw27OFqwUqgA1dBTRyy
+ CozHobC2S2PXpCj0/oIPBiZyeOdGIxwdbeIFJ+FsY9MljqQuqlaA+0LAiqPi9z36ThxP
+ FyCtQMILBu3oiLI2gMVCPJ6ztCxnyv97B69EAKR5I8XpySw1zUnGZLAyh0EHXkSgH6OO
+ fzkVc97Wiv8Ih2PS1qYLBzviPHZTmnmy1gX+uCHI7W3zAOjJFm7S2SeJxhCr95DWVnJz
+ Nhvpz1DZGlBafaLInF0LjITETCKUQC60+eXZFbGgDaAVpOpe5PKjqqsiB8CZqeDGzduH
+ RW/A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=oTS9gyqw1P/Y7Jy0eWO30dzXkPhi7gAB8XI4qDo8y9g=;
+ fh=0RnV74n38CvrzpnKyRmF2uSdp691/S7P69fJ6CBe+7g=;
+ b=liCWQda261QaXmTntEoupb7PdnbiOjwaPTpfMtLyC+d5zDqvCnGr1kLQeW1hU3Z4+J
+ NN8321tx4TwfzkMXqp4i/O3X/GHGv2fK4qBFBHMlsHUolXFUZA5bv9r/GSs9wy/6aWPc
+ Ftsc/58FwqDxW3uweQ9ryOD7h+DE3LUvqnNF+oNpgC4y4L9CmldA43GoOkqmcFtmNe00
+ gZDqyiK+q0T1/lTVLO5hSD7oVjNqkZ2PdY3a3Lt7k5KTQrZ+DMz6cChaQ0KLZTj0kvxZ
+ uCqtWKGU16UK/eCEoKt0TcLEkta6bk1oAN2TnUHbj7Rr2rE4CwjOaBus1InuOrzyooKS
+ bulw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773378080; x=1773982880; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=oTS9gyqw1P/Y7Jy0eWO30dzXkPhi7gAB8XI4qDo8y9g=;
+ b=T+jFIlHfChNX1rKp+U9OAaV1X5XcMX43apx0xL6eH4MKHp0DNnOvJCI03MlD7McsJB
+ 2dx/ei6la1QchACJYntgh8VJCIxvEBg3F6lRDglILjzFVPgR7E6RhkhtQqkDPr0jTVIh
+ FJ3jJLx4e8QrDYvI2KZ8am4ZSRXNgVxtpHcTrVQqtJug220Nh5HGm7IKhxpwyPl9f99M
+ UfC+v/nBpSBFfB7PWgW/emhWvZnlYYnidpGksMWbAvkeGoL9KNmfKbeLKqDW3b6rGTV/
+ F9prxuAjThTE84bMe2SmtZ6MjjBMjdH6uv6mQ+RqFcLB0gPCwvlGk81Ly+2jeAmqZduO
+ 4shA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773378080; x=1773982880;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=oTS9gyqw1P/Y7Jy0eWO30dzXkPhi7gAB8XI4qDo8y9g=;
+ b=b/QxnFeppNR9jnEeqj7ZMkcVA6parqFrt2zMNUHiiaGNhNWqvGrYYofrSgpjOHV9sZ
+ q4Ol/s88jg42GLjrrcpoqgq0WN3+tEbdFGFdJP1X7FvN5s/s7gjoLArV8KXQIGFbHRv/
+ 1LAdMTwieJFrq4AIltrEiA277rNmkmYz2bCDOuH8thXT0SE4IlmboZzsT/5XPvS2HbWx
+ gjSb25aYXOLFCwhkB+YnLgm0hP3Cgu0yDeIsFKZmth7bki8MidES4iK5pp3nbkmbmU44
+ GDgnKwmPW4DyvBtHrinhxEU609hW1fj7eW01chQ6QJGgCRGITNF03iE/uBvdSQlscKxV
+ NrEw==
+X-Gm-Message-State: AOJu0YweMTvEHv57RrDzj79U8XvL90Tb+naNE3xcuDeoHm9RVozOpWWo
+ ZZooxH5usnqp8bszWwGHCgeF8tWG36fw9i0Xw5gmXgq9lPBCP6vMwFEJ9hBFy7C8KE2F60nAFSn
+ KbjsM5RvWdBt9DmkLe3HVtiW3E8FJW/+gUNyVwjhi7B+Qvdt6a9EQHW1kzJdrTCuRIMlGr2fRvT
+ 51VqJUGB0ipV3qLiUh+8bVQlNMA8um7RU=
+X-Gm-Gg: ATEYQzyXikE0YuHj7OBcV1/Z3fXhpmMxBa/T5lQWNgu6d32mWlJ8MfpY82t5VAeisHP
+ I0vcWrrJF+Ndlvms1VH/XjH+z5vmU92VKpZx0o31i8gD/iC8ACXsT1DnvRxnEdeFYMvMfSZjb0F
+ RncrKqKOZ0EHbp1eQT/OFd9CVkQ8ScrwWg6aXh+75hjEzMSpd1A5sbEu3PrnLkexUBC7AHpMUcm
+ idCM4X4FVu8Rk/Ls3WUxZWU4Fn5BxHAstCSQhgP916l4v2KVZvgus+sCV+bvH3dhqHd
+X-Received: by 2002:a05:600c:1f8b:b0:485:3d3e:1675 with SMTP id
+ 5b1f17b1804b1-485566d2fb9mr29700465e9.8.1773378079537; 
+ Thu, 12 Mar 2026 22:01:19 -0700 (PDT)
+X-Received: by 2002:a05:600c:1f8b:b0:485:3d3e:1675 with SMTP id
+ 5b1f17b1804b1-485566d2fb9mr29700115e9.8.1773378079142; Thu, 12 Mar 2026
+ 22:01:19 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-CC: <sarunkod@amd.com>, <pbonzini@redhat.com>, <richard.henderson@linaro.org>, 
- <eduardo@habkost.net>, <mst@redhat.com>, <marcel.apfelbaum@gmail.com>,
- <vasant.hegde@amd.com>, <clement.mathieu--drif@eviden.com>
-Subject: Re: [PATCH v3 1/3] amd_iommu: Use switch case to determine mmio
- register name
-Content-Language: en-US
-To: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>, <qemu-devel@nongnu.org>
-References: <20260302115130.5903-1-sarunkod@amd.com>
- <20260302115130.5903-2-sarunkod@amd.com>
- <913090df-f03b-4b56-837e-cff31c617a58@oracle.com>
-From: Sairaj Kodilkar <sarunkod@amd.com>
-In-Reply-To: <913090df-f03b-4b56-837e-cff31c617a58@oracle.com>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.180.168.240]
-X-ClientProxiedBy: satlexmb07.amd.com (10.181.42.216) To satlexmb07.amd.com
- (10.181.42.216)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: CY4PEPF0000EE32:EE_|CYYPR12MB8870:EE_
-X-MS-Office365-Filtering-Correlation-Id: 8170a72a-8f13-4cf9-5809-08de80bc05aa
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|82310400026|36860700016|376014|1800799024|7053199007|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: XnRo0WufHBSKwZ2SSE2FzIGfkewPEFa2jyctCRPNOpA+ZhY4qIuZuomXY6FjnQKS0//tGbyGnjlY1fxZZmoOsdYodMKvwCE9yYqy28wChpFShT3k4c6ubTZfRIdkPgKQQzD4nQffuNUFrQPTB5YYqxWCjTuqvW1YS0l/3b83n9NQ4ErEYCIog18h29rhFxgprmBGaBW3Pc922sV4FeTb77zRuYa8Z6MzpCExVqKSXLFLEjlnjL50KHFG5Z+/Cx7nuyZdiA3rDVrCmaZA4Q3QowSbRWCtbNbccS2R2fT4gl9vvPsz00sUhzBiZLvzX63bxHxqXJAIRtPvnWBUONYRPtk4ZWOYW4X4RENvJuz60ox6eFz64znNx158/4i534jea+BDavaOlKWklv/2QVe/WUQ9wWEmR05I0goz6JdAz13Sg7VXvraHXartpj4BZiB81wCM/sO+bhMuyLMmwR+C5xCCsQc91MraWhAgSpUmFpf7+iPJ+YMdyhVbZUKzOOARIMbDmhp+IFjVZEvhndD9ZI3yECncuRtlkQ02zSkHfkzqNKED3WKQUHTaAGCVfSEIHLz5NVSfSj43GfJ5goVJg2eFHHnT8pTwVMA1WCE+d9TPn2c+b6D+kJzUODpf4LCV79j8k7i+/gp528tx4ZWGX6fpq/9bfXQOcaFfOPvSbvziRqNXs2PvLo8LxnpKpQCrYf/GPLTRo1/lGwawSR79vatjc9JpZy58so9rzhkBdWXdA7JitOi8I8rmn4f+ixwL3sbrrhCk46dF+51JKn4Iaw==
-X-Forefront-Antispam-Report: CIP:165.204.84.17; CTRY:US; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:satlexmb07.amd.com; PTR:InfoDomainNonexistent; CAT:NONE;
- SFS:(13230040)(82310400026)(36860700016)(376014)(1800799024)(7053199007)(22082099003)(56012099003)(18002099003);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: qQ/VVtICXK3aW8BEcvvdMMJpCWUft/J6XFr2gg7LyWeSZ6sTlEgq9y6moIiCgHeDZNI+Csv7sTfbofNHK6sxR0pfqSWYoB1Qw3vYM44qB4LbTNesBrIZnwevID63JYsDthSSMzI9j1mG15Ye6OP+ajc/DVVPlvMkiXSoxPVQRoEvCw0JcYVQHXOSGKushjL8WJLGfn2OEnhV11cIue4lNE2YuLCHIKN5lyjOZwfbzR7I0iSA79epk60jFPV/BA/XABAvG9kIDJr9czUMARoDKF1tgdHiY4S+JHiviGz7A1e5nRYcj2ELRgwrappohUcWKMPhxzV5UyxW53z0G+5q6ntpZKj9k5EzfB7kN0xqmw1TzznRWyDI13V7ER1c9UcFKvgiF5aHUjqFwOFDVFuH/54x4qz8Sx0JIwZfS+/BDZxQ8wCajujRZuwQOqHmTRTm
-X-OriginatorOrg: amd.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 13 Mar 2026 04:50:16.9570 (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8170a72a-8f13-4cf9-5809-08de80bc05aa
-X-MS-Exchange-CrossTenant-Id: 3dd8961f-e488-4e60-8e11-a82d994e183d
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=3dd8961f-e488-4e60-8e11-a82d994e183d; Ip=[165.204.84.17];
- Helo=[satlexmb07.amd.com]
-X-MS-Exchange-CrossTenant-AuthSource: CY4PEPF0000EE32.namprd05.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CYYPR12MB8870
-Received-SPF: permerror client-ip=52.101.53.29;
- envelope-from=Sairaj.ArunKodilkar@amd.com;
- helo=BL0PR03CU003.outbound.protection.outlook.com
+References: <20260311213418.16951-1-farosas@suse.de>
+ <20260311213418.16951-6-farosas@suse.de>
+ <CAE8KmOzM3Pi=AhxMGPeM7u2KzkaHXsexNNZX5k_317wzmwt5xA@mail.gmail.com>
+ <87cy19yx8x.fsf@suse.de>
+In-Reply-To: <87cy19yx8x.fsf@suse.de>
+From: Prasad Pandit <ppandit@redhat.com>
+Date: Fri, 13 Mar 2026 10:31:01 +0530
+X-Gm-Features: AaiRm53VABqSpDwpbHu8y9L1DKO6lrVCXkBSZVS3z92Z7T6N9ZlQXIWU9fCbrFM
+Message-ID: <CAE8KmOx4wUVLQcg-UezGa-+aFJ+nXx12Q_hY1+8cSimGjR40jA@mail.gmail.com>
+Subject: Re: [PATCH v2 5/5] tests/qtest/migration: Force exit-on-error=false
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=ppandit@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -132,119 +138,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, 12 Mar 2026 at 19:18, Fabiano Rosas <farosas@suse.de> wrote:
+> Do you mean prior to the patch? The point here is to list tests that
+> might break in the future due to this change (in case it's buggy). They
+> don't all work similarly regarding the flags, but they all "expect
+> failure" in some way.
 
+* Yes, I was looking at the current upstream source, without this
+patch. Earlier we said that 'MIG_TEST_FAIL_DEST_QUIT_ERR' was used in
+2-3 qtests, of which we changed 2 in the last version, so it made
+sense to remove it and use 'MIG_TEST_FAIL' instead.  This commit
+message lists quite a few qtests as affected, which is not readily
+clear. The thinking sounds reasonable nonetheless.
 
-On 3/13/2026 3:29 AM, Alejandro Jimenez wrote:
-> Hi Sairaj,
+> Users of -incoming uri that also expect failure need to start using
+> -incoming "defer" because the former will trigger qmp_migrate_incoming
+> via QEMU itself at vl.c where we can't set exit-on-error. The test needs
+> to invoke migrate_incoming_qmp with the uri in this case.
 >
-> On 3/2/26 6:51 AM, Sairaj Kodilkar wrote:
->> This makes it easier to add new MMIO registers for tracing and removes
->> the unnecessary complexity introduced by amdvi_mmio_(low/high) array.
->>
->> Signed-off-by: Sairaj Kodilkar <sarunkod@amd.com>
->> Reviewed-by: Vasant Hegde <vasant.hegde@amd.com>
->> Reviewed-by: Alejandro Jimenez <alejandro.j.jimenez@oracle.com>
->> ---
->>   hw/i386/amd_iommu.c | 76 ++++++++++++++++-----------------------------
->>   hw/i386/amd_iommu.h |  4 ---
->>   2 files changed, 27 insertions(+), 53 deletions(-)
->>
->> diff --git a/hw/i386/amd_iommu.c b/hw/i386/amd_iommu.c
->> index 789e09d6f2bc..f5aa9c763d02 100644
-> [...]
->
->> -
->> -static void amdvi_mmio_trace_read(hwaddr addr, unsigned size)
->> -{
->> -    uint8_t index = amdvi_mmio_get_index(addr);
->> -    trace_amdvi_mmio_read(amdvi_mmio_low[index], addr, size, addr & ~0x07);
->> -}
->> -
->> -static void amdvi_mmio_trace_write(hwaddr addr, unsigned size, uint64_t val)
->> -{
->> -    uint8_t index = amdvi_mmio_get_index(addr);
->> -    trace_amdvi_mmio_write(amdvi_mmio_low[index], addr, size, val,
->> -                           addr & ~0x07);
->>   }
->>   
->>   static uint64_t amdvi_mmio_read(void *opaque, hwaddr addr, unsigned size)
->> @@ -1528,7 +1505,7 @@ static uint64_t amdvi_mmio_read(void *opaque, hwaddr addr, unsigned size)
->>       } else if (size == 8) {
->>           val = amdvi_readq(s, addr);
->>       }
->> -    amdvi_mmio_trace_read(addr, size);
->> +    trace_amdvi_mmio_read(amdvi_mmio_get_name(addr), addr, size, addr & ~0x07);
->>   
->>       return val;
->>   }
->> @@ -1684,7 +1661,8 @@ static void amdvi_mmio_write(void *opaque, hwaddr addr, uint64_t val,
->>           return;
->>       }
->>   
->> -    amdvi_mmio_trace_write(addr, size, val);
->> +    trace_amdvi_mmio_write(amdvi_mmio_get_name(addr), addr, size, val, offset);
->> +
-> There is a small change in the trace output here from the previous patches,
-> and it is because the use of offset in the last argument vs the previous
-> patches which still use (addr & ~0x07).
-> My understanding is that the offset the trace uses is the MMIO offset
-> (which gives a mapping between the name of the register we print and its
-> offset in the MMIO space).
->
-> The offset variable that amdvi_mmio_write() calculates earlier is the byte
-> offset within the MMIO register, and it is needed for those special cases
-> (i.e. hacks) where a guest driver does not write with a full 64-bit write
-> to the register, so that we need to delay the side effect until the MMIO
-> register has been fully updated. That is my understanding of the code that
-> does:
->
-> 1709         if (offset || (size == 8)) {
->
-> 1710             amdvi_handle_devtab_write(s);
->
-> 1711         }
->
->
-> i.e. don't apply the architectural side effects unless we write to the full
-> 64-bit register at once, or offset is not zero. This last condition meaning
-> we do word writes, and write to the high word last i.e. offset !=0.
->
-> So in short, I will fix the call to trace_amdvi_mmio_write() to continue to
-> use (addr & ~0x07), and will also change the switch condition in
-> amdvi_mmio_get_name() to use the same.
-> No need to send another revision, but I just wanted to highlight the
-> difference so you are aware of the change.
->
-> Thank you,
-> Alejandro
+> Note that dbus-vmstate-test is currently disabled. It doesn't even
+> compile. I'm just putting this here so I remember to effect this change
+> in another series I'm working on that re-enables the test. Also to not
+> tricky reviewers when grepping for "migrate_incoming_qmp".
 >
 
-Hey Alejandro,
+I see, okay.
 
-Thanks, for pointing this out. I got confused because of the same naming
-i.e. offset in both the cases and missed '~'.
-I should have used addr & ~0x07 directly.
 
-Thanks
-Sairaj
-
->>       switch (addr & ~0x07) {
->>       case AMDVI_MMIO_CONTROL:
->>           amdvi_mmio_reg_write(s, size, val, addr);
->> diff --git a/hw/i386/amd_iommu.h b/hw/i386/amd_iommu.h
->> index 302ccca5121f..ca4ff9fffee3 100644
->> --- a/hw/i386/amd_iommu.h
->> +++ b/hw/i386/amd_iommu.h
->> @@ -45,10 +45,6 @@
->>   #define AMDVI_CAPAB_FLAG_IOTLBSUP     (1 << 24)
->>   #define AMDVI_CAPAB_INIT_TYPE         (3 << 16)
->>   
->> -/* No. of used MMIO registers */
->> -#define AMDVI_MMIO_REGS_HIGH  7
->> -#define AMDVI_MMIO_REGS_LOW   8
->> -
->>   /* MMIO registers */
->>   #define AMDVI_MMIO_DEVICE_TABLE       0x0000
->>   #define AMDVI_MMIO_COMMAND_BASE       0x0008
+Thank you.
+---
+  - Prasad
 
 
