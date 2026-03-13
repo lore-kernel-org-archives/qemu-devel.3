@@ -4,75 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 45E3F107BCCB
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:20:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72A2E107BCC6
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:21:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w15Eo-0000Ux-24; Fri, 13 Mar 2026 12:19:46 -0400
+	id 1w15GL-00025K-P7; Fri, 13 Mar 2026 12:21:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15Eg-0000Rf-Tw
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:19:41 -0400
-Received: from mail-pj1-x1031.google.com ([2607:f8b0:4864:20::1031])
+ id 1w15GI-00024k-NI
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:21:18 -0400
+Received: from mail-pg1-x535.google.com ([2607:f8b0:4864:20::535])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15Ef-0006bb-B6
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:19:38 -0400
-Received: by mail-pj1-x1031.google.com with SMTP id
- 98e67ed59e1d1-35a03da7bd6so1501571a91.1
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:19:36 -0700 (PDT)
+ id 1w15GD-0007Eu-Ok
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:21:17 -0400
+Received: by mail-pg1-x535.google.com with SMTP id
+ 41be03b00d2f7-c70fb6aa323so1008308a12.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:21:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773418776; x=1774023576; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773418871; x=1774023671; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=V0imgWP62OQ54qaV45iQePrfF43/q71sq8lKGVv4DA8=;
- b=t4prLzcJu1bpqPINPE3Qcn4u6w++LDwhmfAULZFCQAj/3VeYRs/69NqgW7CRSfURka
- 6vOddOGlVz5V4Rq+opTjprG8ZjLuS6DhIshqR/fFt7B8vKZBgPOOezV8hW79N6Mhg1u1
- A8cSyRNOGaJtzhL6l4duTnDkFlh4yaLfdButug25jU3VH7zlZT2LMHr7SSqLEbDGjQtk
- LTbyhhUt0+2fMecKk7I40ZkgKduPyeSylWHG9WAevyVxQ6blOwCgnbJ/6+NKsSVh6EVU
- tcB07Cf+cqpmK5XqyktcFV6wpN4TkdPHUJVPoppzLeVEQQcM2O2t1aodfCxKayKal0gY
- WG6A==
+ bh=wJQLXV0/kls6KGSs1w/JPbtWs+9dcazzYd8dqaI4eDk=;
+ b=PNOBOTY/oDBUj+AXUYAuRanEsHYQa69PjPBaQOvRquNwpOoySgy5XUGlPRtcqYxpca
+ qZwz9wyX+D2xL0oSP+WExl4x0gy2lIDsQYqqfcfmf3/7nt0kz0Jss2J8pP9xbbuIXAoy
+ /AUAYBs0YNXp1cHospggtwZ9dLVFUHYP4+KqKCCBeTw+u6mzE8RI2/qw/jca/FmMsG9j
+ opLnmY+/RtfUcU4WWwtsVnbM6vQcriESIr+oabVQxP/lS/Xz50CHusIw23OozAFuh4R+
+ VTepDfTF1034NNS3cVS4uLDipJ0XaUmr10CH9vmk92vEV4nify+8j1joq1NKmS/F930w
+ edLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773418776; x=1774023576;
+ d=1e100.net; s=20251104; t=1773418871; x=1774023671;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=V0imgWP62OQ54qaV45iQePrfF43/q71sq8lKGVv4DA8=;
- b=Hvjgg1l8vNeGURa3TYVwCUGd3roXqJafet3yqVL+pEJxETN7YLlLkBsz152G/4rHbO
- w2JL+a28px+zW0/D4/1GG68tO8qlF0H2S5tDbUpOwPbGq8MQqb70WW5yT5qOzyzKm2lL
- tRt7ABj8eGzjpx9COfqguFmXZL5YdEO5nhd5UfypJD0DOZtrnoWudis9K00E8jUlLLb7
- GTyh0tYxfvyqigqoo3udmf6DYZ9tF3uWmZYJPJ8G1iFcPTnyuck8JrThQQ8iYq1RTi9r
- ap8e8ZYZWC8ddPJlUhtp2gn5En42iZvVAUAS5yElESi+2iHLnLkW8kptsttTuJAPTRXT
- dUnQ==
+ bh=wJQLXV0/kls6KGSs1w/JPbtWs+9dcazzYd8dqaI4eDk=;
+ b=HklT9AEVYuX9ts+ybsZJ9dnS9aBM12puuwTSFqQ+19F6aTvQl3AoRwyRxaE0bUAQFn
+ K6nXqY7bUVAr2f9IgO3ppUUKqRELQobgZeBMB6s6Wqja3ueOxI+7B528jekLOs8qMwvJ
+ FJQ4EgyrGiaRykuT0b3TIYtCnfAHS/B4J5xq4oxmZCSOCWUgwCicTC9xtITOcX/Y3CPJ
+ zh1uj3btjZbAIJ8s3BJlvOwyVsfJYPMcmG8YsMQFmZ3zThbP2y8XnwpGiLRCZv8SfxpF
+ deXbDGvDuaAwbLsU8oxbMWpJm/ly2YRXi7lMoUGqFySBdFK7FBUEatct6U/rq68YRAuQ
+ cwFQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVd91XBiElz3PeohXr3qx+Hf+15pAN1IVKoM6vI4w7v7eZPw2fw24wyAZyBqMz2mAjvDPhNSOe1SXNp@nongnu.org
-X-Gm-Message-State: AOJu0YwDtTAkf1o511yy1bpd7COHqHHfz1+/UGo5krvh0KarSMM2YekO
- SukNdWy5AaS1rWcC6esrNnXdMylYRw4TN1fzowPp9j3E6e6zvJpUd12qFxFMVM5vjxY=
-X-Gm-Gg: ATEYQzw86TDxYLfLCN836buwTwn/5QAT0kPMk+NUk5aHr3E0Z9uKgKGZ9qpZFEGjrK5
- ltHblE0+BmCyIpEo4Mt654mSMGIxntvIqloYh/LA+awIF3PO/CpIkJTvF3jMuRZ3F73ydE48Kn5
- JDGsGhctyfJZ3YZQrhA5FwnCsCMnNpGNhbGr2EAN4FNxlwf48obnaAdB7HOFW2AD1hGZ9vSCSyN
- +XbnyFcxII7Me1IX1noUcbZaaOCF3y74LJ72KC8k8RskH/k4J1PEtVL37dz9R+d1uykfmfuvhQF
- rb083vNCrxlqfm6Cf2stEkO2P5+Ez74g5wIs2e/P0xxN/gUaNQTUoEaUPlvPF6/71KtU6Wb5Jxu
- JaJqS/UAXghTsDeIMWOxxmsPLsp734DZSe41yzs1tFOwJccjOPaQ8+Vk+CORQWga9CfF+bAGil8
- vTldHJqm8FzdjTBATfsNsxQCAd7jOZdmlCvvPe3SUPyCPvM5iNfDumOIcc0ugkBzoGRGx5
-X-Received: by 2002:a17:90a:e7d0:b0:359:b7a5:21a8 with SMTP id
- 98e67ed59e1d1-35a21e1b7a7mr3845727a91.5.1773418775564; 
- Fri, 13 Mar 2026 09:19:35 -0700 (PDT)
+ AJvYcCUVdkq/SDFdh2vTN8cyrjWPVjG2iqaFDGY98A7Y8FqjiNLU9+EHTNRRVTEbI5+U43YtETGhbLFQwurB@nongnu.org
+X-Gm-Message-State: AOJu0YwORCR5vuXWC8qKzBve/8uArAUiIfQeGMYJZRDQF04rjdkCuuEa
+ jdFq3ZxeNfev6QC1bzqzoEfuHcTs6GD98zqzGAANzKKaax1bTmNNleVErqJMRcIBYklMoO0jF42
+ 35LYh13A=
+X-Gm-Gg: ATEYQzwO2nTH0C2s7feRFPmN7Yi9FvTQjdV08zG8qsn+twOBnVVIJ+XhQM5trCgep6X
+ EChNSNt8PAsnMGGr/2D9HGH0Wfz8HK70t+fgCkbcPTulgAoz2gxDWU7P5AlQQqCHYVS7rCnQE/Q
+ xSPuozXu9OlBnjyjybq8QTSnUUBm3VkNRydOy0rHRmXVc3sjtjXXCFiAEgG7rLaSrmSwNqKP1Hj
+ nF/DQWO8Vifa0z1ymUKGOrAXYxXafjcHtdiyDdCMbO9aEkEHAV0vUXyjAc4EYqnZASSrwZwt4v2
+ HP93RCf1Bf4x4XLfINohlADKsaYC816jdAYgeGiImUIjPO6NWTptNuls/Qg5PHP8qxd+1+VgYqm
+ snoVqIv+XkiXCDVSO2AiWrYGxK28YKkN4GHJMGIBuQOfeqXgY0Mu8Y8lYYv6AIjZq1H3yuNctmG
+ HD8YG7N7x2ztN4HdRySdFlRxoeIclThEhFOUhH94sWLO0cfrPExSAz2xe2hfA7lgzFDU98
+X-Received: by 2002:a17:90b:1b0d:b0:359:8ef8:7a77 with SMTP id
+ 98e67ed59e1d1-35a21e9856fmr3731369a91.9.1773418870625; 
+ Fri, 13 Mar 2026 09:21:10 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35a02fca40bsm12065746a91.10.2026.03.13.09.19.34
+ 98e67ed59e1d1-35a24406a1asm2879767a91.0.2026.03.13.09.21.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 09:19:35 -0700 (PDT)
-Message-ID: <199e5462-12a3-4bb0-ba37-f977e18c3ed1@linaro.org>
-Date: Fri, 13 Mar 2026 09:19:34 -0700
+ Fri, 13 Mar 2026 09:21:10 -0700 (PDT)
+Message-ID: <ca606d67-5cc5-4811-bf69-567a16d0b391@linaro.org>
+Date: Fri, 13 Mar 2026 09:21:09 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 7/8] hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
- hw/vfio/kvm-spapr.c
+Subject: Re: [PATCH 0/8] hw/vfio: single-binary
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -80,8 +80,7 @@ Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
  =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com
 References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
- <20260312224449.1605071-8-pierrick.bouvier@linaro.org>
- <8904904b-5e91-45dc-aae9-bdb0d2f21349@linaro.org>
+ <c3e743e7-94da-4395-a757-396aa5d334e5@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -117,18 +116,18 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <8904904b-5e91-45dc-aae9-bdb0d2f21349@linaro.org>
+In-Reply-To: <c3e743e7-94da-4395-a757-396aa5d334e5@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1031;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1031.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::535;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x535.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,39 +143,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 8:29 PM, Philippe Mathieu-Daudé wrote:
+On 3/12/26 10:32 PM, Philippe Mathieu-Daudé wrote:
 > On 12/3/26 23:44, Pierrick Bouvier wrote:
->> Since this function needs kvm specific types, we need to extract in
->> another file and link it only for KVM builds.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->>    hw/vfio/kvm-spapr.h | 12 ++++++++++++
->>    hw/vfio/kvm-spapr.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
->>    hw/vfio/kvm-stubs.c |  8 ++++++++
->>    hw/vfio/spapr.c     | 30 ++++-------------------------
->>    hw/vfio/meson.build |  1 +
->>    5 files changed, 72 insertions(+), 26 deletions(-)
->>    create mode 100644 hw/vfio/kvm-spapr.h
->>    create mode 100644 hw/vfio/kvm-spapr.c
->>
->> diff --git a/hw/vfio/kvm-spapr.h b/hw/vfio/kvm-spapr.h
->> new file mode 100644
->> index 00000000000..1a7697a07a8
->> --- /dev/null
->> +++ b/hw/vfio/kvm-spapr.h
->> @@ -0,0 +1,12 @@
->> +/*
->> + * Vfio spapr kvm specific functions
+>> This series makes changes to hw/vfio to compile files only once.
+>> Changes are pretty straightforward and are mostly extraction of kvm/other config
+>> specific functions to proper files.
+>> This is the last hw/* subsystem that needs to be changed for single-binary.
 > 
->        "VFIO sPAPR KVM specific functions"
->
-
-I'll update it, thanks.
-
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
+> There is another file in hw/s390x:
+> 
+> ../../hw/s390x/s390-pci-vfio.c: In function ‘s390_pci_read_base’:
+> ../../hw/s390x/s390-pci-vfio.c:153:52: error: ‘TARGET_PAGE_BITS’
+> undeclared (first use in this function); did you mean ‘TARGET_LONG_BITS’?
+>     153 |         vfio_size = pbdev->iommu->max_dma_limit <<
+> TARGET_PAGE_BITS;
+>         |                                                    ^~~~~~~~~~~~~~~~
+>         |                                                    TARGET_LONG_BITS
 > 
 
+Thanks for changing it in your series.
 
