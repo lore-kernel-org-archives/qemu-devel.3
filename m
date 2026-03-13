@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C11EB106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:22:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2592D106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:22:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vuj-0003SL-TG; Fri, 13 Mar 2026 02:22:26 -0400
+	id 1w0vtd-0000hb-FH; Fri, 13 Mar 2026 02:21:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuh-0003G2-GF
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:23 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vta-0000h9-Ng
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:14 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vuf-00071F-V1
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:23 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-439b8a3f2bcso1345162f8f.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vtZ-0006sL-6O
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:14 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-439bc14dcf4so2148810f8f.1
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:21:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382939; x=1773987739; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773382871; x=1773987671; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=cq5cTPfeh3Pg0d95v0IReDt8464LYRGbtL2o+1/LtEI=;
- b=gpNRWEjvVte8cuEpcZqV9KB1JgknxCl0r1fcCNdOyR8ptXm67FQYUcezyTywMQmmP1
- 0JJybUNe2Wx5b1cvnEtNgdZVBNhgHTF7Q4g1tuNvNEqVxapbD9tf8J6RUhoKaI/CBgkU
- vQnReBokcGiyNrn2xpH40i9+lQHUFVS5S1jrRnM3akoxderSCn2dkCKQlmltSzmQVJ0N
- 3rLP2LgO7sDROFT30Ldes2klWYWkDA/peweRwemCtSv8gzeUkRm1lhGZFLKV7Yp79wMV
- X2RzRQkPU08EMBq1XVStHHJRs1XWUo6BLabZkE5TU9o/jTyDDjU7QHelwBkoFNiMJw8x
- 7djw==
+ bh=OTAi1FenfZMeGsCLz6pitX6jAfUO4AK+im1zqFEeNiE=;
+ b=gAV7hdChzts2GLJ01RIvUhyS+Ll9V2tAfjOLDI2qdg9D23mO6DD+h0f31fzfxHKo7n
+ CaOyV6GKGEytKWldFmVpnM/nZzcqmywbQQHSvLttB17NSIdp3KUOFwKJmatKpaamARnN
+ VzRl1mvqv6v4b/cQpu5Ai42btntD1OPjGCE2+Ni9HnZo4yWtEcu1pK6bxtmcNntF4ndW
+ kDzMw+WSecY8Q3JCoXt9P/8fGpF8LMMh2dv7boc1VHC9z4ypJfoUaHmdKhlhNlEqWjZ4
+ NEIpyYT2JM1SUBS+uVka9OLErmjApkVF6nPFhtSvP2ssPouQlNGELJyL1joBITstRG0O
+ lDtw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382939; x=1773987739;
+ d=1e100.net; s=20251104; t=1773382871; x=1773987671;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=cq5cTPfeh3Pg0d95v0IReDt8464LYRGbtL2o+1/LtEI=;
- b=gUscVFNWYiuAqi44cHg6UYSlzxW0ynOShld3DBGRk3o8xElhdu4gQdPNZ3M4ZMsiUt
- Wvm2eQ0wwB6J/Jg9WUAgutlz6gp99nzanM2cw6uJg/KuxSL2b7iRneTur90L27uRd8j2
- 6ZpvJ7CHE0V3wIlxHjrh8TL/CxnYvK68dW0esJ4ThJk/QeElfewE9tWk90n48xOVUeuI
- bzolin6tnliZ88K8syDJIMbZZLpLsMCX83wRz1JXmGZU+zXV0GJWxUbu4d64aNMuR+Pi
- fqjvV6Cb7GTcNfFFqf5ZRb/fpp2yFdrfqowMeMpjQLL3+bZfmWio3W4czYJf+5T3zJXQ
- N5/A==
-X-Gm-Message-State: AOJu0Yyli4DwFq+C3Bu7F5gYQk0aV1+PbKxdPJeUSoMfmvGm0zMYGcTY
- LR70iy1RkMLncwOldTihOmRcUsietGNSwW8ummh7lGBs4LdoQ/YKmP/Ggr7DiS7CM7uZIaHoVss
- DEj1rHik=
-X-Gm-Gg: ATEYQzyaNozBf8hJ/BkFGe4lehkjdCu/o6z8oNPtWC98OaMYTWzNg0fOHqgvOSfTrlN
- aj27HLZr2GHYvmnWN5HHYGilJpBYC5jq8bnrE+oCvzdEXDk18+7+MOvglMR2sxWg+0k3m8vQB8H
- gVtrjuk6BQxpRCQxzhs2Zf9rO0ueXbGU8r2+7ptWry84UHqN4ngZAAyBx7tH+xnyyuwvgdtvf60
- 3m9iun15qnx/Zk++K6QjTAJLOmPPUseFmbnxqbEF3ayY4UU2My3bi8375oeW/q3TUbxshQQAmUL
- Apyr/TkNMejylHHRsjEm2Fa7gl1p+SDjBVEwZw3FZ+DkB2zLcbflciVkOnN4dlMoEinVaBuvqGr
- u/XI8nqFy4AEs3ye6QZJKrZDBiaceqapP47vCzlG8hVqo7zbILQeEgAe23Y7IPmczUEhPlVioCc
- 9c7JE5dYywKld2TxI4Au5Z8hrPLN6esEYJknwNhxRxsDzMMIguGpr5Tx3yaRY1rGashiyVYsh55
- puStg==
-X-Received: by 2002:a05:6000:1866:b0:439:fcd5:c9be with SMTP id
- ffacd0b85a97d-43a04db127bmr3882898f8f.33.1773382939560; 
- Thu, 12 Mar 2026 23:22:19 -0700 (PDT)
+ bh=OTAi1FenfZMeGsCLz6pitX6jAfUO4AK+im1zqFEeNiE=;
+ b=I/BxLEUcASbK8gLS5x5Xa9Fzm8G28RpTj5ibGIMXuG2Oy9A4LA19GAgNS1ilz3aT87
+ Nj/AK/+RmSd4R4TaMd28C44j5tUE21zyK6GNw0IX8fC46Epsce6PzeMrDaVv4VDyYJ2X
+ BY6BxabzTU+WcBF3UoepxKwm8nDFNOW7N0pA/v7vjVZxjwaEN56kOSjmvRfUMvdd200I
+ 0UGiEl78owbllNGn7mUL/twmLW/9cZJZ1/Eo+Cf7YurRes8si09tflUCgd8SSJ28cwwA
+ OwFtwV/EShDeRbr3IV+BSiKthT7+71rpfs4hxbIUefBSF3LtzyS9YoXrnSP6Aalecfn4
+ 5acg==
+X-Gm-Message-State: AOJu0YzQgqdoDcDHxjfB+B8y+28lZ4agYMBb1AtVwxTT2Adr/Z9WSIBG
+ KdPUmHObsu17+HqZkcKpD6Cyy/l2FlgXMo1t4/C2AxefJrL3WDsKym8Pw9OrCGbSM5m0uCYcO3P
+ bX8ezcvg=
+X-Gm-Gg: ATEYQzxpmftQpKmhGmllKEkJPuubDzGzS7vXzaWUVKrcPKz1N2pFp2I4v1S+7SK3h/S
+ FZ1bswqu+RhDyeTqvUht+eFpOOzBN0auUOyNhsvLikdbST3jOck6ltIg6VqaWL2umK+xUyUuVLN
+ kXsiLGhWVYjCq/4zjrKeN9CaQOU9MtTrrvVOKRcsJ9ezGLACXvKPIWhVG/uKb6A0fQdHQlvIiE4
+ JiIhKTnqsJahP50ejAWJVBeM+M2WoiRH5vt5+iChYJ92EDZPMZJtiTmBf3fuFKEMdU7i2Q2/uCp
+ RC2bHupQSolwJYBwmwPSwXvKniVPZOyXpRmN8miLSQ0VLaw7JpAVuzM6T78RdwwqOU3EYGfxYhy
+ ZpcWwtwPtJaasWBLE+wLaiilYaQEhu8O0aA1bytvLe9cedGt4sp2YV37nv5oTI587ZJGtCWGLIs
+ 4+mHO1DS6ujd+gXfhqdQJy5B9hBvDqZiXddl3z5jQ+QMZxBLtGCw2qadhRIyBSR4aETD3pmHmBj
+ gzvCw==
+X-Received: by 2002:a05:6000:200d:b0:436:3761:583b with SMTP id
+ ffacd0b85a97d-439fe1ae114mr11181066f8f.27.1773382871379; 
+ Thu, 12 Mar 2026 23:21:11 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe21b631sm17153314f8f.27.2026.03.12.23.22.18
+ ffacd0b85a97d-439fe20b544sm15695195f8f.20.2026.03.12.23.21.10
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:22:19 -0700 (PDT)
+ Thu, 12 Mar 2026 23:21:10 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 12/38] target/ppc: Include missing 'exec/target_long.h'
- header
-Date: Fri, 13 Mar 2026 07:20:28 +0100
-Message-ID: <20260313062055.2188-13-philmd@linaro.org>
+Subject: [PATCH v2 02/38] target/ppc: Replace TARGET_PAGE_BITS ->
+ qemu_target_page_bits()
+Date: Fri, 13 Mar 2026 07:20:18 +0100
+Message-ID: <20260313062055.2188-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,48 +104,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "exec/target_long.h" header is indirectly included, pulled
-via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
-when removing the latter:
-
-  target/ppc/cpu.h:1281:5: error: unknown type name 'target_ulong'
-   1281 |     target_ulong gpr[32];  /* general purpose registers */
-        |     ^
-  hw/ppc/spapr_ovec.h:76:44: error: unknown type name 'target_ulong'
-         76 | SpaprOptionVector *spapr_ovec_parse_vector(target_ulong table_addr, int vector);
-            |                                            ^
+Get the target page bits at runtime.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/hw/ppc/spapr_ovec.h | 2 +-
- target/ppc/cpu.h            | 1 +
- 2 files changed, 2 insertions(+), 1 deletion(-)
+ target/ppc/mmu-booke.c   | 3 ++-
+ target/ppc/mmu-hash64.c  | 3 ++-
+ target/ppc/mmu-radix64.c | 3 ++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/include/hw/ppc/spapr_ovec.h b/include/hw/ppc/spapr_ovec.h
-index c3e8b98e7e2..8d67f492d02 100644
---- a/include/hw/ppc/spapr_ovec.h
-+++ b/include/hw/ppc/spapr_ovec.h
-@@ -37,7 +37,7 @@
- #ifndef SPAPR_OVEC_H
- #define SPAPR_OVEC_H
+diff --git a/target/ppc/mmu-booke.c b/target/ppc/mmu-booke.c
+index 55e5dd7c6b0..9cc66c613b7 100644
+--- a/target/ppc/mmu-booke.c
++++ b/target/ppc/mmu-booke.c
+@@ -19,6 +19,7 @@
  
--#include "cpu.h"
-+#include "exec/target_long.h"
+ #include "qemu/osdep.h"
+ #include "exec/page-protection.h"
++#include "exec/target_page.h"
+ #include "exec/log.h"
+ #include "cpu.h"
+ #include "internal.h"
+@@ -492,7 +493,7 @@ bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     if (ret == 0) {
+         *raddrp = raddr;
+         *protp = prot;
+-        *psizep = TARGET_PAGE_BITS;
++        *psizep = qemu_target_page_bits();
+         return true;
+     } else if (!guest_visible) {
+         return false;
+diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+index d026abadd11..2c33d98001d 100644
+--- a/target/ppc/mmu-hash64.c
++++ b/target/ppc/mmu-hash64.c
+@@ -21,6 +21,7 @@
+ #include "qemu/units.h"
+ #include "cpu.h"
+ #include "exec/page-protection.h"
++#include "exec/target_page.h"
+ #include "qemu/error-report.h"
+ #include "qemu/qemu-print.h"
+ #include "system/hw_accel.h"
+@@ -1065,7 +1066,7 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
  
- typedef struct SpaprOptionVector SpaprOptionVector;
+         *raddrp = raddr;
+         *protp = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+-        *psizep = TARGET_PAGE_BITS;
++        *psizep = qemu_target_page_bits();
+         return true;
+     }
  
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index d637a50798f..a0df7a467ed 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -25,6 +25,7 @@
- #include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
- #include "exec/cpu-interrupt.h"
-+#include "exec/target_long.h"
- #include "cpu-qom.h"
- #include "qom/object.h"
- #include "hw/core/registerfields.h"
+diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+index 33ac3412901..a09ba2b8d1a 100644
+--- a/target/ppc/mmu-radix64.c
++++ b/target/ppc/mmu-radix64.c
+@@ -20,6 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "exec/page-protection.h"
++#include "exec/target_page.h"
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
+ #include "system/memory.h"
+@@ -717,7 +718,7 @@ static bool ppc_radix64_xlate_impl(PowerPCCPU *cpu, vaddr eaddr,
+            }
+         }
+         *protp = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+-        *psizep = TARGET_PAGE_BITS;
++        *psizep = qemu_target_page_bits();
+         return true;
+     }
+ 
 -- 
 2.53.0
 
