@@ -4,97 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA943106FD60
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 00:59:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DCB54106FD61
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 01:00:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0qre-000394-Cx; Thu, 12 Mar 2026 20:58:54 -0400
+	id 1w0qtD-0003yW-Jg; Thu, 12 Mar 2026 21:00:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0qrd-00038h-EV
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 20:58:53 -0400
-Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ id 1w0qsu-0003uv-H0
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 21:00:12 -0400
+Received: from mail-ej1-x632.google.com ([2a00:1450:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w0qrb-0008AG-Uw
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 20:58:53 -0400
-Received: by mail-ed1-x530.google.com with SMTP id
- 4fb4d7f45d1cf-662dc987dfdso2545448a12.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 17:58:51 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773363530; cv=none;
+ id 1w0qsp-0008R2-92
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 21:00:12 -0400
+Received: by mail-ej1-x632.google.com with SMTP id
+ a640c23a62f3a-b96f02b4329so279094366b.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 18:00:06 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773363605; cv=none;
  d=google.com; s=arc-20240605;
- b=AsO3w3iW8YqZ5StcnqostzTgEDJC+p0rNJ5e5RQSYccA+iOLHQRT4Sz5CXbHFVqup+
- mk6wI72lwn2RRoTbNG6A2Lg1bMlguSoSRFE9u7d0VgC4LIdazBzzF0Pziyp/xo90VsCw
- 503IcKUGH9Iq/SkTM/o1cE5yeBL5doCwHsOw29F46VvF5emWaVdkPxlQNxhrTPZU1ohK
- a53XJHHdqSIBRxL6v3Wssm8VGosSk1WKmoGKFugAEf7vSMkmOWcaH3nCF+9IxVvFJTGQ
- lMCVq08QIG8mAb5q9ZrTrI67xcJ/q7lr05kkEQQgC3Nli9H6fPJEG1r4/kSDVDJ/6uky
- hWxQ==
+ b=bM3wMyWZzQg9TebwIGJOwfQL8/TSiZ/CVR8dx1O5h2BiOQ25QZOF3sYvenckmjQViX
+ L+EI/KPz1Rzrd8JWdwvIptImZDOOhREhM8JwZc9J5t1dH99R164kqmHVwD7LeoT3ASPc
+ 7hKyBdFxOtP4TSkHB6dFG7dtAnG2xuFWnVXjXqr7gGlXH7fwJXOL/VDddgS7/rSFPgtb
+ anjxQ/W7IsXaM1QyRnrZBNa3YOuaYLGoXPidPmO0zyEG774sMINmT6F0kSYS0gpj2Kx4
+ spYFeUk4aM0WXTiocZJ4xM89v6YQO0Y73XyzzmtpMlRmN/BTg6UXpmWjYRJveMAaOnJW
+ UjXg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=/g4pajeCzlHjQqlg/fCbwj5HeWgld8QQUGVjkzVuvUM=;
- fh=/gTf2YcF5eQ7UndRzpboPIWZmJCIUbaHpaDcxwxf9bk=;
- b=dvkjuHsUGVII4jrKwk0Xo3cISbHh59j+lu3rkbKoO350VCjcnPNn+3yGfwdpqC0cN5
- ccsZ0HTFJStJ9hnOe2LeErhRV0BbPa9oAXFcIrV59kynnuH9Tdo/ho2h8qKrBRX3b8zG
- v77gkoeKBl2/wZRLTUy3OvfWWQE5VgvVuMSKa6Qh13sDuRdL/XM/vzS3US1LEaHr/mm8
- b8zOMT5Ri/4TWYKMoMqvdVjmVt7Bu01HmglQhCK8y+VJK04YVhEeZwGLE+H+pGRv1Fck
- 4+KlCwIlyAIbCgEdq8b9kolLc+fb/GWprbdk+XDShKWUa/rZiwtYeeZ1xCucAg8gB/Ok
- evBQ==; darn=nongnu.org
+ bh=5ZgR8BSiF+84MD4HwyGPhFVK3y2KFoC/suNg6YBagvU=;
+ fh=XErS4XjkAQDBkClscxjQUC7TY1MVaIkgq5whaEGujtU=;
+ b=cz8xgiGmFxIfyLphPf/HpaO1mVOtZnOerJSBUQoN6nf9lEH3Y9QQTuYJ5axyB/N+lR
+ Bq2JaGqcLj116u0zGEVUgmYrvtOXPmm2mVC5DDmOozaQpVbu1DOaUEnV4OLaKWPjHYXS
+ VEfZ2LKo9+C442x3yNnuuz+EiwpNFS8cDNBH3IBIgUxhj9fwK9/iR6UmPhC8lCXOPAmY
+ Dm/qw1dt0pW2jPiw2ZUzC1z6c9kBFlBE42lGlxer1cGbiutwxoTVgGwciX6QyGsks3ih
+ W7qOSEMwPBcjuNQ7UqGUsopiEwjHSy436ERl9CXoprC6gib6a0dMOhZH4zXX/BOzLiAi
+ dXjg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773363530; x=1773968330; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773363605; x=1773968405; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/g4pajeCzlHjQqlg/fCbwj5HeWgld8QQUGVjkzVuvUM=;
- b=kzAuwhIvGcI29AF+wCiyuKD2ZBNNxct2ZoYpDB0hBqjFjTyj+LFJawyQ4cEhEieqWy
- fRIESN6fOGXn87NpSxoVzQgzjIaRhe211TfSKwJmWmL4X/Ge6q6YXxvUmTKFKHrEyx22
- GIEwiGACNoBPTV+PSrfej1tq2coROH4mveP5EduMQlZNKOli0mUpmNCoPiQZekxwSafj
- QaYvC8+wm0GiA2LfkC9gKLWaMtb70TuaIOMMJpaL9/9vwmpKrlSn8rtbtgNrRzaFLQn7
- 08D62SXgbLQCSLBShBkwpaeCZa6/wEXy5Xtl+0LgYH3q8H13XZQ+6yI/+Rg24Uxux4f5
- GkWg==
+ bh=5ZgR8BSiF+84MD4HwyGPhFVK3y2KFoC/suNg6YBagvU=;
+ b=PFT56y3KHfqE7C2RY8eS5H8CVGZW/yWm41wuw76LOUQhgvUEDesNdSZqqinUEw7M32
+ ellFz0Z1WLrLblZ9EJB82omMlSAQH6qQJ5nDBykLoGHvdZuUAHXcUFz9bKfOPbMRpGrf
+ jDgcI0JVuv42fCNuY79PnI8Db+kUtaw6KIlk8erOVX30VSj3mRMntn/TTb2qY1WO5lBz
+ CbMZc4H1lS59dYmgP/aIpB/7t6RjRKllP7vnnkbPL/B6pvd1vzEsMCCXOAhxCkSlaWPU
+ HHkGhB86VNpnGlo8deZ0fWFYhXmITMxUxLLx7nxnamAFwY2HRqVEPhPCZemVdhzo+uZR
+ juyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773363530; x=1773968330;
+ d=1e100.net; s=20251104; t=1773363605; x=1773968405;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=/g4pajeCzlHjQqlg/fCbwj5HeWgld8QQUGVjkzVuvUM=;
- b=syNvRcwLS59aq5Dqp//X3oyhmG/mh7/KpWkxja6S6dx4aX+Kru5nakhu/s2oc0CIoL
- 6RRcBu6VkSqUu8MaPoeRRwSa2opkZPzQUYC+w/SDf9/CfO76erQZiv5GNmOPAEEKr6RG
- h1ZuoEaowYX2EJ+jyfJjrQfP33q7ikvT3wrXPO/e+2NMAMEZhhr1pyn2hpdgnIQQASRl
- kgw2IB6Bw5Gq1qbOchTjqSur+sthJoeTQ3Gv5C87cUzl9FYrQXaXXSSnTz1C5bEb7/G0
- 2vm74D8bRUr1mf4CRcODMhuKoBaQf70aelgnyW+tWJfE99kC3D7ClE9/ouuTqQY9cdjw
- o5LA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUK4iW3TVZ22jxNE+R5r7jtSQ/cjCpKE8q/sZHMC9A9KdYorDrD8E4JZ0L94WFWvcAlW4PjeEB0+2m6@nongnu.org
-X-Gm-Message-State: AOJu0Yz9CMmklnvgbWZXN++ztxcE4x0cuA3khfbM4Rz+sCD0q6zzA0pc
- eIeEzRxygF0f5Iz/MFSaEBYkYX+fTGA0l1p2ZEtoCfndUv0RMPslQj9+/s5IHxCKtfRtgfpGXAe
- TATE0NSZ04GP4v2/9gmgVF7so5CqSMzw=
-X-Gm-Gg: ATEYQzwYx9W3QRhvG2b0w65BPRCFdEqyz/T3f+TT7gzatA2/ds/H/yE3/4sUncc/8T1
- li6T2ndgQRVJ0yGlGno2Wq20bB4TmZVaxDvX/gxg+W5CoB96IHiC666m3Ch5y5usnM5ERUUllZz
- 8hrdAHn2D0zYS9+zHBMMMyjRRGaDm+BN4GWNXJK7q/rVcsP3CphkJEj0+deZeCadlvm/EQaIuh3
- /L+gOL9y15TDshFNaEb+j+rqvm45Y28QHstdeR+ARTYIPXTC4RuK0JgI9uKhlebXunLI99S0MoP
- Vx52K9gDTUsLKx5OVg5CW7m0XhbiGaoudxaoQw==
-X-Received: by 2002:a05:6402:f0b:b0:65f:b7c4:d4ae with SMTP id
- 4fb4d7f45d1cf-663babae253mr533798a12.2.1773363530191; Thu, 12 Mar 2026
- 17:58:50 -0700 (PDT)
+ bh=5ZgR8BSiF+84MD4HwyGPhFVK3y2KFoC/suNg6YBagvU=;
+ b=Rjktl+e1oLMG2IiQPwPpQQqbdW4ZRu//OkgGeeWNqK9DymclJ+BrqqCZxHvFG2VRRA
+ rTd0dClM5YiUClvfpGlqDROK3y3bJFg1xv4wkTHAzynbF+7aaxsvDHJ2B+qbUDbr4lhZ
+ XC1Q+5sTsiCZHTcAh6o1yJ+UPkckStlbjuFfd95YvroPckTa6mfudzCuAy9qbgjysxJJ
+ SoY4BJOslQQL9/Omb5K2iXBUoz1BxxZYk0gJsrPlFPjSWf57iaTh7G9NPIzuHaEpnJSN
+ qELgyREWiNatbVyLBAD6RdKxJtM/bk3oD7MP3Xlvepr5wgVFRch4H2JewMihZTv3+7Sq
+ HAaw==
+X-Gm-Message-State: AOJu0YzonSa913TtB1Xe+7l/kcS8itH9IknohXYLYwvqIOylqG9NM4nN
+ YL8krw75Fg9E7QXdg03YXO3JlK4eHlBpuXZI9n4OQxE6y6vDmxghWOpyRQBj0esoQG2U+fd0Ijk
+ sKJbzERQM+1UTHBNJBsqEQgfOM05Lzz0nbDWl
+X-Gm-Gg: ATEYQzx8im9oYWHzv5nNgwZIFQ3pQDh72qRGV1RXkSZvqCMaS1be5uR7j3L8xDXJQDY
+ Bft6206vZ6mWy954Z3Zv9o07pCTfsMYSrFTYDwO5gGQeXINXmnxozAZFyXA+Syj9WMeqs5s0ZTJ
+ p4b1k0P4J+BdSnRkDp6/Q/eW9C0ts+wgmhjuJNaGR78RyCrW+Tz4ZW2vo0nSbWHaIQEaGSV6HOu
+ H/8Q6yF4aQuVlK1knh7VUhWmt/LSStiujq+8Snbm8igZZXsErcJfdjs1BNzLS4GQEV720d6NKJB
+ y9XxuWiSmYRp3sVgqk/fhGrLm2J0oMxOMPdxmQ==
+X-Received: by 2002:a17:906:e94e:b0:b94:2b6c:aed3 with SMTP id
+ a640c23a62f3a-b9764f78040mr51836766b.3.1773363604891; Thu, 12 Mar 2026
+ 18:00:04 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260312134210.5823-1-james.wainwright@lowrisc.org>
-In-Reply-To: <20260312134210.5823-1-james.wainwright@lowrisc.org>
+References: <20260306071105.3328365-1-max.chou@sifive.com>
+ <20260306071105.3328365-6-max.chou@sifive.com>
+ <CAKmqyKM-mu7+gtFRK+G94szLFUDdxGaz4zxW7-bW2L5y0Kn2hw@mail.gmail.com>
+ <abKlW3gA3qXR6bub@sifive.com>
+In-Reply-To: <abKlW3gA3qXR6bub@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Fri, 13 Mar 2026 10:58:23 +1000
-X-Gm-Features: AaiRm52oEjIfNcwSGfSGm0YfBHb4PG0qp3qf4kxoABuuMlK2IrEwUMVwwHpiC7E
-Message-ID: <CAKmqyKOJSsvGRZY=_-MWh3yuUS2Ur2Gb+Ng8+eY9q-8o2QsNdA@mail.gmail.com>
-Subject: Re: [PATCH v4 0/3] target/riscv: add unratified RISC-V Zbr0p93 ext
-To: James Wainwright <james.wainwright@lowrisc.org>
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com
+Date: Fri, 13 Mar 2026 10:59:38 +1000
+X-Gm-Features: AaiRm53k81TF3oabmpcFRgs75qTCoudd7HXGEGgS3bbEyDyLVyY9LaSlzMzTNnQ
+Message-ID: <CAKmqyKNVZmweVava8LyzEy+tu+UFDDgj+VX6Y-waYQEp8YbGbQ@mail.gmail.com>
+Subject: Re: [PATCH v5 5/9] target/riscv: Use the tb->cs_base as the extend tb
+ flags
+To: Max Chou <max.chou@sifive.com>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, 
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::530;
- envelope-from=alistair23@gmail.com; helo=mail-ed1-x530.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -118,60 +126,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 12, 2026 at 11:43=E2=80=AFPM James Wainwright
-<james.wainwright@lowrisc.org> wrote:
+On Thu, Mar 12, 2026 at 9:42=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
 >
-> > Looks good but you didn't change the names in the commit titles,
-> probably worth updating those as well
+> On 2026-03-09 15:01, Alistair Francis wrote:
+> > On Fri, Mar 6, 2026 at 5:13=E2=80=AFPM Max Chou <max.chou@sifive.com> w=
+rote:
+> > >
+> > > We have more than 32-bits worth of state per TB, so use the
+> > > tb->cs_base, which is otherwise unused for RISC-V, as the extend flag=
+.
+> > >
+> > > Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com=
 >
-> Good catch, I missed those messages. Updated.
+> > > Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+> > > Signed-off-by: Max Chou <max.chou@sifive.com>
+> > > ---
+> > >  include/exec/translation-block.h | 1 +
+> > >  target/riscv/cpu.h               | 3 +++
+> > >  target/riscv/tcg/tcg-cpu.c       | 7 ++++++-
+> > >  3 files changed, 10 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/include/exec/translation-block.h b/include/exec/translat=
+ion-block.h
+> > > index 4f83d5bec9..40cc699031 100644
+> > > --- a/include/exec/translation-block.h
+> > > +++ b/include/exec/translation-block.h
+> > > @@ -65,6 +65,7 @@ struct TranslationBlock {
+> > >       * arm: an extension of tb->flags,
+> > >       * s390x: instruction data for EXECUTE,
+> > >       * sparc: the next pc of the instruction queue (for delay slots)=
+.
+> > > +     * riscv: an extension of tb->flags,
+> > >       */
+> > >      uint64_t cs_base;
+> > >
+> >
 >
-> Thanks for the reviews!
+> Hi Alistair,
 >
-> James Wainwright (3):
->   util: export CRC32[C] lookup tables
->   target/riscv: add draft RISC-V Zbr ext as xbr0p93
->   disas: diassemble RISC-V xlrbr (crc32) instructions
+> I=E2=80=99m curious to know if you mean adding more details here, such as
+> specifying the bit width for misa (e.g., 32 bits) or the bit width for
+> ALTFMT (e.g., 1 bit).
+> If so, I=E2=80=99ll include these details in the v6 version.
 
-Thanks!
+Oh! You did update the comment. Sorry I missed that.
 
-Applied to riscv-to-apply.next
+No action required!
 
 Alistair
 
 >
->  MAINTAINERS                               |  5 +-
->  disas/meson.build                         |  3 +-
->  disas/riscv-xlrbr.c                       | 79 +++++++++++++++++++++
->  disas/riscv-xlrbr.h                       | 19 +++++
->  disas/riscv.c                             |  2 +
->  include/qemu/crc32.h                      | 18 +++++
->  include/qemu/crc32c.h                     |  1 +
->  target/riscv/bitmanip_helper.c            | 20 ++++++
->  target/riscv/cpu.c                        |  4 +-
->  target/riscv/cpu_cfg.h                    |  1 +
->  target/riscv/cpu_cfg_fields.h.inc         |  1 +
->  target/riscv/helper.h                     |  2 +
->  target/riscv/insn_trans/trans_xlrbr.c.inc | 45 ++++++++++++
->  target/riscv/meson.build                  |  1 +
->  target/riscv/translate.c                  |  3 +
->  target/riscv/xlrbr.decode                 | 30 ++++++++
->  tests/tcg/riscv64/Makefile.softmmu-target |  5 ++
->  tests/tcg/riscv64/test-crc32.S            | 64 +++++++++++++++++
->  util/crc32.c                              | 85 +++++++++++++++++++++++
->  util/crc32c.c                             |  4 +-
->  util/meson.build                          |  1 +
->  21 files changed, 388 insertions(+), 5 deletions(-)
->  create mode 100644 disas/riscv-xlrbr.c
->  create mode 100644 disas/riscv-xlrbr.h
->  create mode 100644 include/qemu/crc32.h
->  create mode 100644 target/riscv/insn_trans/trans_xlrbr.c.inc
->  create mode 100644 target/riscv/xlrbr.decode
->  create mode 100644 tests/tcg/riscv64/test-crc32.S
->  create mode 100644 util/crc32.c
+> Thanks,
+> rnax
 >
-> --
-> 2.48.1
->
->
+> > We need to update the comment in `struct TranslationBlock` for
+> > `target_ulong cs_base`
+> >
+> > Alistair
+> >
 
