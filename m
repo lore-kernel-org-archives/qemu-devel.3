@@ -4,115 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C36AA107BCE3
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 20:05:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 584C2107BCD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 20:19:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w18l0-0002ob-2h; Fri, 13 Mar 2026 16:05:14 -0400
+	id 1w18xv-0006r2-4Q; Fri, 13 Mar 2026 16:18:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1w18kx-0002oE-8V; Fri, 13 Mar 2026 16:05:11 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jjherne@linux.ibm.com>)
- id 1w18kt-0002Zt-ED; Fri, 13 Mar 2026 16:05:09 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62DFshmT1279244; Fri, 13 Mar 2026 20:05:03 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=FVnUu7
- xSaUqVD/5THCzjX481mqu68HmgHyppCZqSUDk=; b=J9MGvL9wPjHspBW8r7D2ER
- THLmVzAjvb62yS5ouWh4IdpMixMyirOZHovr0w2j4X72Bdlq0t3a90gut4LdQTns
- D2kjxHaQOvF5K6OL8asU1W8X4bqshhi5LQJqUrLh2l5k5Ss8ZYFszada4ZUR6R2G
- R9ZJ+MqYDS50aR86v7121zDLFBgq9T8ZCcsj3yFnF29k0yRPZTNpXmorXjgkztWC
- 8CHGFMzBZE3x3g7Fs0tbthLWCt1QCfiQoLT/VARP/gZ56WnqgWONYiwfy2+dBNvV
- +TUNY77soUdlLVos41LNGf1ubexf+iVzmCeioOs+fxYlBtDnk2mSsTT/cMFRaEXg
- ==
-Received: from ppma23.wdc07v.mail.ibm.com
- (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cuh92hhqy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 20:05:03 +0000 (GMT)
-Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62DJA4ST020801;
- Fri, 13 Mar 2026 20:05:02 GMT
-Received: from smtprelay05.dal12v.mail.ibm.com ([172.16.1.7])
- by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cuha9r4nv-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 13 Mar 2026 20:05:02 +0000
-Received: from smtpav06.wdc07v.mail.ibm.com (smtpav06.wdc07v.mail.ibm.com
- [10.39.53.233])
- by smtprelay05.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62DK50qp24773340
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 13 Mar 2026 20:05:01 GMT
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A7A8758064;
- Fri, 13 Mar 2026 20:05:00 +0000 (GMT)
-Received: from smtpav06.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id AAF5D5803F;
- Fri, 13 Mar 2026 20:04:59 +0000 (GMT)
-Received: from [9.61.175.196] (unknown [9.61.175.196])
- by smtpav06.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 13 Mar 2026 20:04:59 +0000 (GMT)
-Message-ID: <2bfc2a4e-be82-4bc6-951c-add92ce53b8f@linux.ibm.com>
-Date: Fri, 13 Mar 2026 16:04:59 -0400
+ (Exim 4.90_1) (envelope-from <matheus.ferst@eldorado.org.br>)
+ id 1w18mD-0003Tn-VI
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 16:06:30 -0400
+Received: from [200.168.210.66] (helo=outlook.eldorado.org.br)
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <matheus.ferst@eldorado.org.br>) id 1w18mB-000405-Rd
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 16:06:29 -0400
+Received: from p9ibm ([10.10.71.235]) by outlook.eldorado.org.br with
+ Microsoft SMTPSVC(10.0.20348.1); Fri, 13 Mar 2026 16:49:13 -0300
+Received: from eldorado.org.br (unknown [10.10.70.45])
+ by p9ibm (Postfix) with ESMTP id D6FB48007CD;
+ Fri, 13 Mar 2026 16:49:12 -0300 (-03)
+To: qemu-devel@nongnu.org
+Cc: jasowang@redhat.com,
+	sw@weilnetz.de,
+	matheus.ferst@eldorado.org.br
+Subject: [RFC PATCH] net/tap-win32.c: fix segmentation faults when multiple
+ -netdev tap are used
+Date: Fri, 13 Mar 2026 16:48:49 -0300
+Message-ID: <20260313194849.859579-1-matheus.ferst@eldorado.org.br>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] MAINTAINERS: Add another reviewer to s390x boot
-To: Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Cornelia Huck <cohuck@redhat.com>, Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Jared Rossi <jrossi@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-References: <20260313113424.15583-2-thuth@redhat.com>
- <20260313194810.1844241-1-farman@linux.ibm.com>
- <20260313194810.1844241-2-farman@linux.ibm.com>
-Content-Language: en-US
-From: "Jason J. Herne" <jjherne@linux.ibm.com>
-In-Reply-To: <20260313194810.1844241-2-farman@linux.ibm.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-ORIG-GUID: UNvMBzmV_MnqKBRLSZTfNnRuHF-L8J8d
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDE1OSBTYWx0ZWRfX6QwiDehkGpcT
- Kv6h8fHv97Kp96Fk/D14M2EkO1eyog85n7guFbksPF/s37iROVy4J3JWSsPokc8u5IjfQVZ+uu0
- uIbBozIHsRB2eakZD/cT0H5NeinXSxhmCYrfrsYm12QxD209zqguctYM/S/yUSreImneOGJU2Gl
- 8KEKAUD3BXdBoZPWRsfJaOXWua8tKWL1Q7iC8/sHfrbRl6fRYiAS/8bXdYfAxHVXr8i4CX81Wu8
- s7AX72ncrcTEkfGJxx+uXsOYYeWjHSKkNwWjgwIH/VDCZOtSqgcpxb14TXPkXFGZecfg/Ey7qov
- zM4lbyBQxnKObgeTwnXxYECOfv4yypJ4OBtZYsmjhqM+Vs3UMWIZMDCYGOF/1CxbaGHHtgWq5u/
- 0jylbrpsZ/kpNpyKP1bTkdHOypuJ+CZJ0hyFnt6roj9YXOm25fPwNpbiXQVraB/JYaBXSc7Itp+
- j54tHzDcQTex+JUFfeg==
-X-Proofpoint-GUID: UNvMBzmV_MnqKBRLSZTfNnRuHF-L8J8d
-X-Authority-Analysis: v=2.4 cv=XNk9iAhE c=1 sm=1 tr=0 ts=69b46def cx=c_pps
- a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=K3oJJphijqaC0nxcXBEA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-13_04,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 spamscore=0 clxscore=1011 lowpriorityscore=0 adultscore=0
- bulkscore=0 phishscore=0 priorityscore=1501 impostorscore=0 malwarescore=0
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603130159
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=jjherne@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Transfer-Encoding: 8bit
+X-OriginalArrivalTime: 13 Mar 2026 19:49:13.0295 (UTC)
+ FILETIME=[77B605F0:01DCB322]
+X-Host-Lookup-Failed: Reverse DNS lookup failed for 200.168.210.66 (failed)
+Received-SPF: pass client-ip=200.168.210.66;
+ envelope-from=matheus.ferst@eldorado.org.br; helo=outlook.eldorado.org.br
+X-Spam_score_int: 6
+X-Spam_score: 0.6
+X-Spam_bar: /
+X-Spam_report: (0.6 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RDNS_NONE=0.793, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Fri, 13 Mar 2026 16:18:29 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -124,30 +60,183 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Matheus Ferst <matheus.ferst@eldorado.org.br>
+From:  Matheus Ferst via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/26 3:48 PM, Eric Farman wrote:
-> Jason offered to help review this area of code;
-> let's make sure he's notified of changes.
-> 
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
-> 
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 23562aaac2..e83ff3826b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1866,6 +1866,7 @@ S390-ccw boot
->   M: Jared Rossi <jrossi@linux.ibm.com>
->   R: Zhuoying Cai <zycai@linux.ibm.com>
->   R: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Jason Herne <jjherne@linux.ibm.com>
->   S: Supported
->   F: hw/s390x/ipl.*
->   F: pc-bios/s390-ccw/
+The static declaration of tap_overlapped does not work when multiple
+"-netdev tap" are used, tap_win32_overlapped_init will be called with
+the same struct but a different handler, and the already running thread
+with tap_win32_thread_entry will have the semaphores and free lists
+changed under its feet.
 
-Acked-by: Jason J. Herne <jjherne@linux.ibm.com>
+Make tap_win32_overlapped_t a member of TAPState to be allocated with
+qemu_new_net_client, and move out the tap_win32_overlapped_init and
+CreateThread calls from tap_win32_open to tap_win32_init.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3314
+Signed-off-by: Matheus Ferst <matheus.ferst@eldorado.org.br>
+---
+I'm no longer seeing the segfaults with this patch, but I only have
+connectivity when using the e1000 or virtio-net-pci devices. With
+virtio-net-device (as shown in the issue with aarch64) I cannot ping
+anything when two interfaces are used. I'm not sure if it's a problem
+with this patch or a different problem, since it works with the other
+devices.
+---
+ net/tap-win32.c | 47 +++++++++++++++++++++--------------------------
+ 1 file changed, 21 insertions(+), 26 deletions(-)
+
+diff --git a/net/tap-win32.c b/net/tap-win32.c
+index 38baf90e0b..af20c62868 100644
+--- a/net/tap-win32.c
++++ b/net/tap-win32.c
+@@ -114,8 +114,6 @@ typedef struct tap_win32_overlapped {
+     tun_buffer_t* output_queue_back;
+ } tap_win32_overlapped_t;
+ 
+-static tap_win32_overlapped_t tap_overlapped;
+-
+ static tun_buffer_t* get_buffer_from_free_list(tap_win32_overlapped_t* const overlapped)
+ {
+     tun_buffer_t* buffer = NULL;
+@@ -589,8 +587,7 @@ static void tap_win32_free_buffer(tap_win32_overlapped_t *overlapped,
+     put_buffer_on_free_list(overlapped, buffer);
+ }
+ 
+-static int tap_win32_open(tap_win32_overlapped_t **phandle,
+-                          const char *preferred_name)
++static HANDLE tap_win32_open(const char *preferred_name)
+ {
+     g_autofree char *device_path = NULL;
+     char device_guid[0x100];
+@@ -604,7 +601,6 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+         unsigned long debug;
+     } version;
+     DWORD version_len;
+-    DWORD idThread;
+ 
+     if (preferred_name != NULL) {
+         snprintf(name_buffer, sizeof(name_buffer), "%s", preferred_name);
+@@ -612,7 +608,7 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+ 
+     rc = get_device_guid(device_guid, sizeof(device_guid), name_buffer, sizeof(name_buffer));
+     if (rc)
+-        return -1;
++        return INVALID_HANDLE_VALUE;
+ 
+     device_path = g_strdup_printf("%s%s%s",
+               USERMODEDEVICEDIR,
+@@ -629,7 +625,7 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+         0 );
+ 
+     if (handle == INVALID_HANDLE_VALUE) {
+-        return -1;
++        return INVALID_HANDLE_VALUE;
+     }
+ 
+     bret = DeviceIoControl(handle, TAP_IOCTL_GET_VERSION,
+@@ -638,34 +634,28 @@ static int tap_win32_open(tap_win32_overlapped_t **phandle,
+ 
+     if (bret == FALSE) {
+         CloseHandle(handle);
+-        return -1;
++        return INVALID_HANDLE_VALUE;
+     }
+ 
+     if (!tap_win32_set_status(handle, TRUE)) {
+-        return -1;
++        return INVALID_HANDLE_VALUE;
+     }
+ 
+-    tap_win32_overlapped_init(&tap_overlapped, handle);
+-
+-    *phandle = &tap_overlapped;
+-
+-    CreateThread(NULL, 0, tap_win32_thread_entry,
+-                 (LPVOID)&tap_overlapped, 0, &idThread);
+-    return 0;
++    return handle;
+ }
+ 
+ /********************************************/
+ 
+  typedef struct TAPState {
+      NetClientState nc;
+-     tap_win32_overlapped_t *handle;
++     tap_win32_overlapped_t tap_overlapped;
+  } TAPState;
+ 
+ static void tap_cleanup(NetClientState *nc)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+ 
+-    qemu_del_wait_object(s->handle->tap_semaphore, NULL, NULL);
++    qemu_del_wait_object(s->tap_overlapped.tap_semaphore, NULL, NULL);
+ 
+     /* FIXME: need to kill thread and close file handle:
+        tap_win32_close(s);
+@@ -676,7 +666,7 @@ static ssize_t tap_receive(NetClientState *nc, const uint8_t *buf, size_t size)
+ {
+     TAPState *s = DO_UPCAST(TAPState, nc, nc);
+ 
+-    return tap_win32_write(s->handle, buf, size);
++    return tap_win32_write(&s->tap_overlapped, buf, size);
+ }
+ 
+ static void tap_win32_send(void *opaque)
+@@ -688,7 +678,7 @@ static void tap_win32_send(void *opaque)
+     uint8_t min_pkt[ETH_ZLEN];
+     size_t min_pktsz = sizeof(min_pkt);
+ 
+-    size = tap_win32_read(s->handle, &buf, max_size);
++    size = tap_win32_read(&s->tap_overlapped, &buf, max_size);
+     if (size > 0) {
+         orig_buf = buf;
+ 
+@@ -700,7 +690,7 @@ static void tap_win32_send(void *opaque)
+         }
+ 
+         qemu_send_packet(&s->nc, buf, size);
+-        tap_win32_free_buffer(s->handle, orig_buf);
++        tap_win32_free_buffer(&s->tap_overlapped, orig_buf);
+     }
+ }
+ 
+@@ -716,9 +706,11 @@ static int tap_win32_init(NetClientState *peer, const char *model,
+ {
+     NetClientState *nc;
+     TAPState *s;
+-    tap_win32_overlapped_t *handle;
++    HANDLE handle;
++    DWORD idThread;
+ 
+-    if (tap_win32_open(&handle, ifname) < 0) {
++    handle = tap_win32_open(ifname);
++    if (handle == INVALID_HANDLE_VALUE) {
+         printf("tap: Could not open '%s'\n", ifname);
+         return -1;
+     }
+@@ -727,11 +719,14 @@ static int tap_win32_init(NetClientState *peer, const char *model,
+ 
+     s = DO_UPCAST(TAPState, nc, nc);
+ 
++    tap_win32_overlapped_init(&s->tap_overlapped, handle);
++
++    CreateThread(NULL, 0, tap_win32_thread_entry,
++                 (LPVOID)&s->tap_overlapped, 0, &idThread);
++
+     qemu_set_info_str(&s->nc, "tap: ifname=%s", ifname);
+ 
+-    s->handle = handle;
+-
+-    qemu_add_wait_object(s->handle->tap_semaphore, tap_win32_send, s);
++    qemu_add_wait_object(s->tap_overlapped.tap_semaphore, tap_win32_send, s);
+ 
+     return 0;
+ }
+-- 
+2.43.0
+
 
