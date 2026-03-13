@@ -4,85 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3FF1E107BCE6
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 22:36:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77E32107BCEA
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 23:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1B7O-00058h-5Y; Fri, 13 Mar 2026 18:36:30 -0400
+	id 1w1C1a-00007J-8w; Fri, 13 Mar 2026 19:34:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1w1B7B-00053E-AI
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 18:36:18 -0400
-Received: from mgamail.intel.com ([198.175.65.10])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zide.chen@intel.com>)
- id 1w1B78-0008DQ-Dw
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 18:36:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773441375; x=1804977375;
- h=message-id:date:mime-version:subject:to:cc:references:
- from:in-reply-to:content-transfer-encoding;
- bh=1P94Ih71Rc6BxBWCR/FMoKb3vqEnmdLR7+m2OUz9M/I=;
- b=Wr2IxwT+gX/CHrP70HNRo+k8Qe8x804WmX1RVUqFds+wSr1WPXMBuxHC
- YVbXV7zbT9xaM54yPzi1Edj1Xb5/fk8mg6HaGCRxscqz242Sm5Y0c+V33
- kUvyZDMU0g4lrdn8Tzxcrxbh9AGIZ8CXsm+duRolflDFgEezs1YL4fHBG
- AvzYiwIExA7E9N0rLn2VsiCIbCbjS/3XyrMLImEirH6SkDcGn1PwkIHu3
- dSf3U06GPWocRVrOokW0v85tAHn7MbStgmmhC6EWGtmLdjplavx8AlWXq
- wVglwLMmbe2WMNTIolaeffA5BlFKcMpNw1Kp14z5g5KuMEWiBRv3bkL/N w==;
-X-CSE-ConnectionGUID: rrt8i9mWSkelQhUBcK811Q==
-X-CSE-MsgGUID: H9SZZoX4T/CcCpzAD2FLVQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11728"; a="91936087"
-X-IronPort-AV: E=Sophos;i="6.23,118,1770624000"; d="scan'208";a="91936087"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Mar 2026 15:36:14 -0700
-X-CSE-ConnectionGUID: Addf1a0aTmOL+cSSTKBNkA==
-X-CSE-MsgGUID: mGTZL7c6TPSgEinmOmqp/A==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,118,1770624000"; d="scan'208";a="221375422"
-Received: from soc-cp83kr3.clients.intel.com (HELO [10.241.240.205])
- ([10.241.240.205])
- by orviesa008-auth.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 13 Mar 2026 15:36:12 -0700
-Message-ID: <a4df97c1-ca68-490c-8576-dc83a1908da9@intel.com>
-Date: Fri, 13 Mar 2026 15:36:12 -0700
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1w1C1Y-000077-Jx
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 19:34:32 -0400
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <rkir@google.com>) id 1w1C1W-0002cD-4U
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 19:34:32 -0400
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-5091ed02c54so116981cf.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 16:34:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773444868; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VjVXvsRWCnZ1/Atf6L23rUNrj0be9W4oq7H8Ty0vRgeiZSxA5+dF1AiYwdVrCVhYKE
+ bjLehsHVi6LoGi2X9FtHy946tZwEPbVsLzga/Bnu1Ex+H7HWDKhAvpuwgpL7fLgzmdwG
+ X6lRA5VQ79Ud9ZZ6etDSfz1HhObtCdU2u4qYElutSSUZQ+HGc8d4mrPfbf20YjXe7BJc
+ R+bdn52xRKuoME6iM317jaSIYUSouTtWMAY0A1ar/SfBNMP8+y2hqdPYEBgC12664vrV
+ ocfeV8Ub8VeF1DlGnBhQMUeh1G2wjz73HmfotnRNbrFAsvxWJFW52+vhhncVLhqx8sBM
+ DzSg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=d9cQs8WgF6gZAb3RC5fyumrq0nQGRHzYPfg+8EBqx70=;
+ fh=ba1FszRwf7JaNB8e6fStBnVfFGHIJjBrMa4jV8yWqr8=;
+ b=HQHS9yWa3BMQaMoAWaGbyXHIbWXG9Sz2gZGo5e1LToJkz1svxaTEgEgiEIWcZyxCVq
+ ILyoBcl69vVaH8DMr4jXBWSedWJc3/kXWfamTs4LgK6ZKp16WwcLfDsCMi0qIIu9xtpn
+ LvXgywYBjy0GHsNkpw8U78BX5pKpC4BZt4SlIFMEaiKiAz3iFA3fmseA40Xm7C0ryk1s
+ 5N2ZGXFeEXiYcRTBwHAiyMF+b7FMq/JxAAe3dTW54mmCQ++ah8tugPG8geXYXhB3ekkH
+ 9xOL07fiLxW4eMsNL/FymdUjy6w0eDQgPxlRNTpW3kUHtT1qfz8XUvbuTGAzl91QT/aQ
+ 3kOQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=google.com; s=20251104; t=1773444868; x=1774049668; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=d9cQs8WgF6gZAb3RC5fyumrq0nQGRHzYPfg+8EBqx70=;
+ b=Yts3dSYSsfSLldKYKQ41UFvplY1hgA2tKz0KWQkjdIc2kR/OFHmvAnEhLWaU9ru4rF
+ 33oYL757rV99rDscu2vwF98xKC27gLeMXCnb2iW6otGfU9Rjut2oXFbkZk5YeOcaSvYf
+ sBFy6zLEi9ZD2MnCmZTbxZ4wkVEmqfWw8rYvm9nnklLNbJ/THaAUEqRBH0KtvTTGm2c5
+ NePUWgPrAUvYRbQfcMBEu9hYPM3o56BPNx2lica+npKHkjOp/S9IQ2n+zZMcKJ/BZ5WY
+ qRPOA9CIgDtOJ+4+G/38Egeg0Fy7X05n/x4YM4leHhSCJeE3CxkxNXQgnmLzCk+gjSqF
+ S35w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773444868; x=1774049668;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=d9cQs8WgF6gZAb3RC5fyumrq0nQGRHzYPfg+8EBqx70=;
+ b=fOQ4qcc7s8u6d8uipg53bmoGSouhb/F0LctjQYUF7PH+zuuh2KnV0ZaC3B5Ug9q3xl
+ 9+JY4aS2xzCM9vyEZhZKo+UOBi0T8rmeSA/TLKBYAT+7dsVHg3xMn0yFYj4U18ftzukx
+ XmZ82ZxwSK5FlEX+IDVclXHnBho8FwXUJDIcVlEo0MT+4fL6FRl1B7x9yEZGAL4SVMvJ
+ q23ZHjnvN8LrAlBL8yLAs32QsP1dkaSc3UUNeaQr8vqI2dVA1cj06qVFHo1Sw5cc9EQT
+ Lr1tuOFILqb2JzoJthqFbzCBNqhgupcf1joV+HfIl44163XQfHX1818mHV6cff30dwkD
+ yt5g==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUjyWdferi1V5a0sgS/chD9OanE2fbzjVEtNKkooDZS/dxVbkQcxec8OdR8Ru9wQiwR3ATgExl9vUmj@nongnu.org
+X-Gm-Message-State: AOJu0YwfsQ3A9uyg6LvvsH4ScTQjo+XujVtqcu+DXuuQCTH+o+gzUMMF
+ MHTzbjlP20iPuwwGvNEW5RgkQo2nCkBv3RZwqkYZwtMuqg+1R/53uTsTmYYEkppN54jLJKEHdMV
+ 77szEZ+EhlO/LwDZsbTGpxCDCrbgemiifcus6aPKB
+X-Gm-Gg: ATEYQzzPW7AVMaWGRjfSdLBzkN7doaaDwusvdZKcZxHwLwjsooVpe1of0VkJDlERnwE
+ yaqa0Llty2fRtgCfN5lqbppIRRfL5SmI2/SvY+VSNqKRpwHa3wi4ip+/OF1Mv60jE5T4S0Hb76B
+ RCrpWorsLwKPaIzi+YTCH/r9qeErQICj8XWXxTjftj1nUq17YUoSmmTm0Yog9C7PNT0mwN62gNK
+ cYg1X9NeE9U8VfvIAmCU7eJBPsMyAWVRPQXnYlhOEi1ovW/wojGN+2FbbcZTfM86e6jT88NJu+c
+ GTSRRHA=
+X-Received: by 2002:ac8:5893:0:b0:509:45f:fdd2 with SMTP id
+ d75a77b69052e-5096aa4fd4dmr3253801cf.15.1773444867797; Fri, 13 Mar 2026
+ 16:34:27 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 21/21] hw/core/qdev-properties: support valid default
- value for DEFINE_PROP_UINT64_CHECKMASK
-To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster
- <armbru@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- Mark Cave-Ayland <mark.caveayland@nutanix.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Dapeng Mi <dapeng1.mi@linux.intel.com>, qemu-devel@nongnu.org,
- devel@lists.libvirt.org
-References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <20260210032348.987549-22-zhao1.liu@intel.com>
-Content-Language: en-US
-From: "Chen, Zide" <zide.chen@intel.com>
-In-Reply-To: <20260210032348.987549-22-zhao1.liu@intel.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=198.175.65.10; envelope-from=zide.chen@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20260312210802.899803-1-rkir@google.com>
+ <abQflF_Ju2VI7pBa@x1.local>
+In-Reply-To: <abQflF_Ju2VI7pBa@x1.local>
+From: Roman Kiryanov <rkir@google.com>
+Date: Fri, 13 Mar 2026 16:34:16 -0700
+X-Gm-Features: AaiRm52iPwwCaP0KHAg5eJO63ju_os_Z1_wWmlMrmk26LmnDfqsJX-8VBoQnM74
+Message-ID: <CAOGAQerTmr8ShvRq1P0o2f0yG=DYkBjNx7gu_XDO4oFy5by+9A@mail.gmail.com>
+Subject: Re: [PATCH v2] vmstate: validate VMStateDescription::fields upon
+ registration
+To: Peter Xu <peterx@redhat.com>
+Cc: farosas@suse.de, qemu-devel@nongnu.org, whollins@google.com, 
+ jansene@google.com, jpcottin@google.com
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=rkir@google.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -175
+X-Spam_score: -17.6
+X-Spam_bar: -----------------
+X-Spam_report: (-17.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ ENV_AND_HDR_SPF_MATCH=-0.5, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001, USER_IN_DEF_DKIM_WL=-7.5,
+ USER_IN_DEF_SPF_WL=-7.5 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,103 +119,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Fri, Mar 13, 2026 at 7:30=E2=80=AFAM Peter Xu <peterx@redhat.com> wrote:
+>
+> Thanks for the generosity, all kudos to Fabiano.  Let's replace this line
+> with:
+>
+> Reviewed-by: Peter Xu <peterx@redhat.com>
 
-
-On 2/9/2026 7:23 PM, Zhao Liu wrote:
-> DEFINE_PROP_UINT64_CHECKMASK is designed to detect and check user's
-> property setting:
->  * checking: check property value against a bitmask.
->  * detection: ask caller to provide an invalid value as the initial
->      "sentinel" value, which is impossible to be set by users. However,
->      this detection is not strict, since the property could be also
->      set internally.
-> 
-> The entire mechanism is not easy to use.
-> 
-> Now there's USER_SET flag in place (and the current unique use case
-> "lbr-fmt" has been converted to checking USER_SET way), manual setting
-> of invalid initial values is no longer required.
-> 
-> Thus, extend DEFINE_PROP_UINT64_CHECKMASK to support *valid* default
-> value, and for "lbr-fmt" case, replace the invalid initialization value
-> `~PERF_CAP_LBR_FMT` with a valid value `0`.
-> 
-> In addition, considering DEFINE_PROP_UINT64_CHECKMASK itself actually
-> doesn't identify whether the property is set by the user or not, remove
-> "user-supplied" related description in its document.
-> 
-> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
-> ---
-
-Nice to see "cpu->lbr_fmt = ~PERF_CAP_LBR_FMT" is gone.
-
-Reviewed-by: Zide Chen <zide.chen@intel.com>
-
->  hw/core/qdev-properties.c         |  1 +
->  include/hw/core/qdev-properties.h | 14 +++++++-------
->  target/i386/cpu.c                 |  4 +---
->  3 files changed, 9 insertions(+), 10 deletions(-)
-> 
-> diff --git a/hw/core/qdev-properties.c b/hw/core/qdev-properties.c
-> index 91c4010e7dc9..b84214e60f19 100644
-> --- a/hw/core/qdev-properties.c
-> +++ b/hw/core/qdev-properties.c
-> @@ -507,6 +507,7 @@ const PropertyInfo qdev_prop_uint64_checkmask = {
->      .type  = "uint64",
->      .get   = get_uint64,
->      .set   = set_uint64_checkmask,
-> +    .set_default_value = qdev_propinfo_set_default_value_uint,
->  };
->  
->  /* --- pointer-size integer --- */
-> diff --git a/include/hw/core/qdev-properties.h b/include/hw/core/qdev-properties.h
-> index c06de37b1e9d..2ac784bb5e9c 100644
-> --- a/include/hw/core/qdev-properties.h
-> +++ b/include/hw/core/qdev-properties.h
-> @@ -128,14 +128,14 @@ extern const PropertyInfo qdev_prop_link;
->                  ##__VA_ARGS__)
->  
->  /**
-> - * The DEFINE_PROP_UINT64_CHECKMASK macro checks a user-supplied value
-> - * against corresponding bitmask, rejects the value if it violates.
-> - * The default value is set in instance_init().
-> + * The DEFINE_PROP_UINT64_CHECKMASK macro checks a value against corresponding
-> + * bitmask, rejects the value if it violates.
->   */
-> -#define DEFINE_PROP_UINT64_CHECKMASK(_name, _state, _field, _bitmask)   \
-> -    DEFINE_PROP(_name, _state, _field, qdev_prop_uint64_checkmask, uint64_t, \
-> -                .bitmask    = (_bitmask),                     \
-> -                .set_default = false)
-> +#define DEFINE_PROP_UINT64_CHECKMASK(_name, _state, _field, _bitmask, _defval) \
-> +    DEFINE_PROP(_name, _state, _field, qdev_prop_uint64_checkmask, uint64_t,   \
-> +                .bitmask    = (_bitmask),                                      \
-> +                .set_default = true,                                           \
-> +                .defval.u    = (_defval))
->  
->  /**
->   * DEFINE_PROP_ARRAY:
-> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-> index a6d943c53a3f..56735570d66c 100644
-> --- a/target/i386/cpu.c
-> +++ b/target/i386/cpu.c
-> @@ -10265,9 +10265,7 @@ static void x86_cpu_initfn(Object *obj)
->      object_property_add_alias(obj, "pause_filter", obj, "pause-filter");
->      object_property_add_alias(obj, "sse4_1", obj, "sse4.1");
->      object_property_add_alias(obj, "sse4_2", obj, "sse4.2");
-> -
->      object_property_add_alias(obj, "hv-apicv", obj, "hv-avic");
-> -    cpu->lbr_fmt = ~PERF_CAP_LBR_FMT;
->      object_property_add_alias(obj, "lbr_fmt", obj, "lbr-fmt");
->  
->      if (xcc->model) {
-> @@ -10439,7 +10437,7 @@ static const Property x86_cpu_properties[] = {
->  #endif
->      DEFINE_PROP_INT32("node-id", X86CPU, node_id, CPU_UNSET_NUMA_NODE_ID),
->      DEFINE_PROP_BOOL("pmu", X86CPU, enable_pmu, false),
-> -    DEFINE_PROP_UINT64_CHECKMASK("lbr-fmt", X86CPU, lbr_fmt, PERF_CAP_LBR_FMT),
-> +    DEFINE_PROP_UINT64_CHECKMASK("lbr-fmt", X86CPU, lbr_fmt, PERF_CAP_LBR_FMT, 0),
->  
->      DEFINE_PROP_UINT32("hv-spinlocks", X86CPU, hyperv_spinlock_attempts,
->                         HYPERV_SPINLOCK_NEVER_NOTIFY),
-
+Sure, I will update the patch. I also noticed VirtioDeviceClass is not
+covered by v2, so I added another assert into virtio_device_realize.
+Now virtio-snd hits the assert if I remove unmigratable =3D 1.
 
