@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E2D0F105F7AE
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:14:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 036E2105F7AE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 14:14:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w13GA-0005TD-EF; Fri, 13 Mar 2026 10:13:03 -0400
+	id 1w13GF-0005Tr-CL; Fri, 13 Mar 2026 10:13:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w13Fw-0005QX-C6
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:51 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
+ id 1w13Fq-0005Q8-QY
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:44 -0400
+Received: from mail-wr1-x42c.google.com ([2a00:1450:4864:20::42c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w13Fl-0006Mx-Tj
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:45 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-439bcec8613so1806668f8f.3
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 07:12:31 -0700 (PDT)
+ id 1w13Fl-0006M2-RI
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 10:12:42 -0400
+Received: by mail-wr1-x42c.google.com with SMTP id
+ ffacd0b85a97d-4327790c4e9so1757461f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 07:12:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1773411150; x=1774015950; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1773411145; x=1774015945; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=SEO6/lrYdm4dOs+1aF7CdwIzHMn2tXQZYpY2v/1+t2k=;
- b=IyrcrCu8qOoA/cORk1FlyMFdX6dOxxhtyA3cI/iIcPxnJYKmvqLqqWuzgYLjU4n1Uc
- VgDEYnOSd2cviuJgO2KSXtM08P1H3xNk1ajq4iiv9FX/Bcde/tEQVeh4KbpwvpFf8RtK
- Sj/Y8QxYFz7ZPaWLD1V2823PrDdtVgD0cbFy4=
+ bh=vO92Zi9/ERTEc9krJOx/gmUGwLnlw9NS0k8O07O6ydg=;
+ b=j23QRBDSOP1tAuaXE0Xjbjei2KVgV08lDtZhmsLbvvThgKoVbfsujUGmnMGkuDpMsC
+ Bqm3mHwo8gVQZJdTdaJgHaGfOcjPm0bDb6TfPJnmTrLm6wVf5QVVkjpZc8lCVl1IhgDW
+ ar/7RkEzLjNhMQujDUAHgEoZXVFSmPlbKCTBs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773411150; x=1774015950;
+ d=1e100.net; s=20251104; t=1773411145; x=1774015945;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=SEO6/lrYdm4dOs+1aF7CdwIzHMn2tXQZYpY2v/1+t2k=;
- b=VlmCIh8VoQ0uwMRmTzfo37aC0QKdeAUjdo9DLZPsqvY3ntASpvmeA/bJCUrRA6h/34
- b4sPOtN48oqhi2a914LWvxG1nBzFJ6cfoNHnJJ6LbwB/YSjLsz2FaqPZwu8i1jo8KO2+
- u98NBlqoNK6sxsir9K/+Shx+f/VBfoy4YofKcjXIC3ZClthQe7bv4XBntfblosqL9gFO
- POvwq9ZIM1Ctn1vuG3eMAqSwuuMQZPKte7cHrXQCd0LiKdJiz/sOuFgLf7ozvEsdf1bK
- bKfMyie75Fg/RPoU79ogElJ6QUQsmYT4c4Nr/XsotcQ5+GgKbiXE8r5Ee30/LpEEisUM
- qoBg==
-X-Gm-Message-State: AOJu0YyJDQyBn0DvjRWpEcviNYykEgGIkCjmV0VluRCkXOdGZhcU0xLD
- bcycEmPL2l2qSrmWgLXM+XOolKZ/7AHpLTrp7fGk1GPfUgmkmT6nJk2n3LRfW9x2FUBXrE9wdx9
- EHeWkUl0=
-X-Gm-Gg: ATEYQzxxAoXvzNCKxLUGXGN8ROUaBg8LI0LumZ+J4x5H80Xb6jwiPHwbRuZJJEyVfPs
- xM8SfyXuJVDQwf+Q6wmUN4zSP9YwEhhFRDtkkMyn57xHS1aAthobATSQwokoMwxOQ/AE9WPWmaZ
- AVAl3KeW+hYyWgMVe/iHhniS6ugQxUSpf9PAV96ePPCOLiaq8O5QJwyh+QFrAPnohU1V1qhryFd
- PZSxeWtwKJfByczwtco+KklQVCUAGOawNxyGQrs28SnuNzHELQxM1jbqMkG/OZfCt37K7plhCUj
- KAZmm2anEYl40H0wrvZCk+DQBGwRGeLO7rJJsTf+eeVtg4PhwBkoNVYTX1bpQiG9IgJnqP6NZJZ
- 7aMejlw7Po0uePumZNp6qEjM9EwExdGksoHJSsL5caqag7zKJuMYU1gshXiRA5Pgthc5B7U7VhB
- kG3d31iyyUkdyS5hBGgIbA4Z4MXWoLB6AGwBNbmCT2iLPlkBvc8ooTbip5yLgOJTCcOhgqnRpbt
- RGXC5IwSTs4/mfFwoIety/ZbE/jUGmQbw==
-X-Received: by 2002:adf:f20e:0:b0:439:fbbc:d593 with SMTP id
- ffacd0b85a97d-43a04db7d5amr4936542f8f.27.1773411150091; 
- Fri, 13 Mar 2026 07:12:30 -0700 (PDT)
+ bh=vO92Zi9/ERTEc9krJOx/gmUGwLnlw9NS0k8O07O6ydg=;
+ b=ezlYE1x3LZpzOwolvaDXAgqfO1GwSZDr4+YzUsDtEV0GjCnuGN7t7pltrfdiNrgFoH
+ vRFtw8jC215r1qvusHRS1vQkpqKVveCeXbe8TkPrN1lc7PnHAV3BdgisbxxBIeazzktG
+ k1D5ssMXB/x4Xemf8qBzdQSgin11U4YS2vqNuwMQ0iTPLZPypqHT3WdoSL63AHPQ/lNf
+ iBrYHBdAJy1EoHpmyT0j5AJgs+DJjs9vifnd9fA09qzpuPDv8Wz4hOuxZjdMcoKulQDz
+ UN1athn59BKGS/qbRWtamQ6J+Khqbk22As4M6GCSaPQ1+rJNv/tmrDb3gQCg1XZm0rDk
+ ehiA==
+X-Gm-Message-State: AOJu0YzDik6qxyKlDLLU+sW+95wpobIcUXNbbZgCqOe0XyCi77IxAT7b
+ bWUx/4Ico3u3JZDQ5Y9xMXRLGCpN/wwAURjkt2o15r2sAnlHCFDMKrJw35jDZUFU3ow1NcFJOLa
+ vqYf9uuQ=
+X-Gm-Gg: ATEYQzwbCexE+nGZUqR16C1o6m+IVGviD3A9RAUKnMuSmDt8NXGv/S0ta2DfbOpxN03
+ KtQI+VnthIKvM+kwCP/puQrV5/mqikuObBYK5HiLebiCk0JnQOub4c8X3hlDGMaKS/nBRpubKvM
+ 8uzAOGHawNN/fLse8AoAneCCDGnxWHQRf/R69jnfq+QvhjBvOe2AFPovgx7i5DABIUvi5nTeGe3
+ /fMNvbLRVYpZfF0+l6E+g/7ePr0RszprkGYAIzDTrtmUZJqQjcvO3/WO6F4Fgl0ArdIbRFQwZWv
+ 0gBJwBk3UBWG6iqvGEioZpdNurqxztG0riBb7AmyVfroCJZwN18yHHsTDIQ7F5ObEtx2a8P0tH1
+ NUO/QBDuijV0FPS+s4SEAWEXZExRtJyznPRL2HHjDAljtjW9Up3vPuovOLQMIzABUOyKtqVlG82
+ yfmutt1rukWOBXAD+5WnoxqkQRtmfIKI+pjAot/aBpj2aORnOA4VNkKqQBDPilcOmbPP/ClB/2h
+ 80iYuWM3OGyiAzHNT6ovd0=
+X-Received: by 2002:a05:6000:40de:b0:439:ca7b:f4b with SMTP id
+ ffacd0b85a97d-43a04dcbebbmr6326109f8f.50.1773411145217; 
+ Fri, 13 Mar 2026 07:12:25 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c00321ddb23f48fbb73.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:321d:db23:f48f:bb73])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe19ad9asm18580939f8f.7.2026.03.13.07.12.28
+ ffacd0b85a97d-439fe19ad9asm18580939f8f.7.2026.03.13.07.12.23
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 13 Mar 2026 07:12:29 -0700 (PDT)
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+ Fri, 13 Mar 2026 07:12:24 -0700 (PDT)
 To: qemu-devel@nongnu.org
 Cc: Peter Xu <peterx@redhat.com>, Jesper Devantier <foss@defmacro.it>,
  Kevin Wolf <kwolf@redhat.com>, Fabiano Rosas <farosas@suse.de>,
@@ -78,23 +77,24 @@ Cc: Peter Xu <peterx@redhat.com>, Jesper Devantier <foss@defmacro.it>,
  Fam Zheng <fam@euphon.net>, Klaus Jensen <its@irrelevant.dk>,
  Zhao Liu <zhao1.liu@intel.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v4 5/8] hw/nvme: add migration blockers for non-supported cases
-Date: Fri, 13 Mar 2026 15:12:18 +0100
-Message-ID: <20260313141221.359503-6-alexander@mihalicyn.com>
+Subject: [PATCH v4 1/8] migration/vmstate: introduce vmstate_{load,
+ save}_field helpers
+Date: Fri, 13 Mar 2026 15:12:14 +0100
+Message-ID: <20260313141221.359503-2-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260313141221.359503-1-alexander@mihalicyn.com>
 References: <20260313141221.359503-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42c;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wr1-x42c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,323 +107,162 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alexander Mikhalitsyn <alexander@mihalicyn.com>
+From:  Alexander Mikhalitsyn via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Let's block migration for cases we don't support:
-- SR-IOV
-- CMB
-- PMR
-- SPDM
-
-No functional changes here, because NVMe migration is
-not supported at all as of this commit.
+Let's introduce vmstate_{load,save}_field() helpers, they will
+be used in next patches to support fully-dynamic arrays with NULLs.
 
 Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 ---
- hw/nvme/ctrl.c       | 206 +++++++++++++++++++++++++++++++++++++++++++
- hw/nvme/nvme.h       |   3 +
- include/block/nvme.h |  12 +++
- 3 files changed, 221 insertions(+)
+ include/migration/vmstate.h |  4 ++
+ migration/vmstate.c         | 84 +++++++++++++++++++++++--------------
+ 2 files changed, 56 insertions(+), 32 deletions(-)
 
-diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-index cc4593cd427..9f9c9bcbead 100644
---- a/hw/nvme/ctrl.c
-+++ b/hw/nvme/ctrl.c
-@@ -207,6 +207,7 @@
- #include "hw/pci/msix.h"
- #include "hw/pci/pcie_sriov.h"
- #include "system/spdm-socket.h"
-+#include "migration/blocker.h"
- #include "migration/vmstate.h"
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 62c2abd0c49..5d7dfe70643 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -1240,8 +1240,12 @@ extern const VMStateInfo vmstate_info_qlist;
+         .flags = VMS_END, \
+     }
  
- #include "nvme.h"
-@@ -250,6 +251,7 @@ static const bool nvme_feature_support[NVME_FID_MAX] = {
-     [NVME_COMMAND_SET_PROFILE]      = true,
-     [NVME_FDP_MODE]                 = true,
-     [NVME_FDP_EVENTS]               = true,
-+    /* if you add something here, please update nvme_set_migration_blockers() */
- };
- 
- static const uint32_t nvme_feature_cap[NVME_FID_MAX] = {
-@@ -4601,6 +4603,7 @@ static uint16_t nvme_io_mgmt_send(NvmeCtrl *n, NvmeRequest *req)
-         return 0;
-     case NVME_IOMS_MO_RUH_UPDATE:
-         return nvme_io_mgmt_send_ruh_update(n, req);
-+    /* if you add something here, please update nvme_set_migration_blockers() */
-     default:
-         return NVME_INVALID_FIELD | NVME_DNR;
-     };
-@@ -7518,6 +7521,10 @@ static uint16_t nvme_security_receive(NvmeCtrl *n, NvmeRequest *req)
- 
- static uint16_t nvme_directive_send(NvmeCtrl *n, NvmeRequest *req)
- {
-+    /*
-+     * When adding a new dtype handling here,
-+     * please also update nvme_set_migration_blockers().
-+     */
-     return NVME_INVALID_FIELD | NVME_DNR;
- }
- 
-@@ -9208,6 +9215,199 @@ static void nvme_init_ctrl(NvmeCtrl *n, PCIDevice *pci_dev)
++int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
++                       const VMStateField *field, Error **errp);
+ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp);
++int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
++                       const VMStateField *field, JSONWriter *vmdesc, Error **errp);
+ int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, JSONWriter *vmdesc, Error **errp);
+ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index 4d28364f7ba..8d192bcaa27 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -131,6 +131,32 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
      }
  }
  
-+#define BLOCKER_FEATURES_MAX_LEN 256
-+
-+static inline void nvme_add_blocker_feature(char *blocker_features, const char *feature)
++int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
++                       const VMStateField *field, Error **errp)
 +{
-+    if (strlen(blocker_features) > 0) {
-+        g_strlcat(blocker_features, ", ", BLOCKER_FEATURES_MAX_LEN);
++    int ret = 0;
++
++    if (field->flags & VMS_STRUCT) {
++        ret = vmstate_load_state(f, field->vmsd, pv,
++                                 field->vmsd->version_id,
++                                 errp);
++    } else if (field->flags & VMS_VSTRUCT) {
++        ret = vmstate_load_state(f, field->vmsd, pv,
++                                 field->struct_version_id,
++                                 errp);
++    } else {
++        ret = field->info->get(f, pv, size, field);
++        if (ret < 0) {
++            error_setg(errp,
++                       "Failed to load element of type %s for %s: "
++                       "%d", field->info->name,
++                       field->name, ret);
++        }
 +    }
-+    g_strlcat(blocker_features, feature, BLOCKER_FEATURES_MAX_LEN);
++
++    return ret;
 +}
 +
-+static bool nvme_set_migration_blockers(NvmeCtrl *n, PCIDevice *pci_dev, Error **errp)
+ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp)
+ {
+@@ -203,24 +229,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+                     inner_field = field;
+                 }
+ 
+-                if (inner_field->flags & VMS_STRUCT) {
+-                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
+-                                             inner_field->vmsd->version_id,
+-                                             errp);
+-                } else if (inner_field->flags & VMS_VSTRUCT) {
+-                    ret = vmstate_load_state(f, inner_field->vmsd, curr_elem,
+-                                             inner_field->struct_version_id,
+-                                             errp);
+-                } else {
+-                    ret = inner_field->info->get(f, curr_elem, size,
+-                                                 inner_field);
+-                    if (ret < 0) {
+-                        error_setg(errp,
+-                                   "Failed to load element of type %s for %s: "
+-                                   "%d", inner_field->info->name,
+-                                   inner_field->name, ret);
+-                    }
+-                }
++                ret = vmstate_load_field(f, curr_elem, size, inner_field, errp);
+ 
+                 /* If we used a fake temp field.. free it now */
+                 if (inner_field != field) {
+@@ -427,6 +436,29 @@ int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+     return vmstate_save_state_v(f, vmsd, opaque, vmdesc_id, vmsd->version_id, errp);
+ }
+ 
++int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
++                       const VMStateField *field, JSONWriter *vmdesc, Error **errp)
 +{
-+    uint64_t unsupported_cap, cap = ldq_le_p(&n->bar.cap);
-+    char blocker_features[BLOCKER_FEATURES_MAX_LEN] = "";
-+    bool adm_cmd_security_checked = false;
-+    bool cmd_io_mgmt_checked = false;
-+    bool cmd_zone_checked = false;
++    int ret = 0;
 +
-+    /*
-+     * Idea of this function is simple, we iterate over all Command Sets and
-+     * for each supported command we provide a special handling logic to
-+     * determine if we should block migration or not.
-+     *
-+     * For instance, we have NVME_ADM_CMD_NS_ATTACHMENT and it is always
-+     * available to the guest, but if there is only 1 namespace, then it is
-+     * safe to allow migration, but if there are more, then we need to block
-+     * migration because we don't handle this in migration code yet.
-+     */
-+    for (int opcode = 0; opcode < sizeof(n->cse.acs) / sizeof(n->cse.acs[0]); opcode++) {
-+        /* Is command supported? */
-+        if (!n->cse.acs[opcode]) {
-+            continue;
-+        }
-+
-+        switch (opcode) {
-+        case NVME_ADM_CMD_DELETE_SQ:
-+        case NVME_ADM_CMD_CREATE_SQ:
-+        case NVME_ADM_CMD_GET_LOG_PAGE:
-+        case NVME_ADM_CMD_DELETE_CQ:
-+        case NVME_ADM_CMD_CREATE_CQ:
-+        case NVME_ADM_CMD_IDENTIFY:
-+        case NVME_ADM_CMD_ABORT:
-+        case NVME_ADM_CMD_SET_FEATURES:
-+        case NVME_ADM_CMD_GET_FEATURES:
-+        case NVME_ADM_CMD_ASYNC_EV_REQ:
-+        case NVME_ADM_CMD_DBBUF_CONFIG:
-+        case NVME_ADM_CMD_FORMAT_NVM:
-+        case NVME_ADM_CMD_DIRECTIVE_SEND:
-+        case NVME_ADM_CMD_DIRECTIVE_RECV:
-+            break;
-+        case NVME_ADM_CMD_NS_ATTACHMENT:
-+            int namespaces_num = 0;
-+            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
-+                if (!ns) {
-+                    continue;
-+                }
-+
-+                namespaces_num++;
-+            }
-+
-+            if (namespaces_num > 1) {
-+                nvme_add_blocker_feature(blocker_features, "Namespace Attachment");
-+            }
-+
-+            break;
-+        case NVME_ADM_CMD_VIRT_MNGMT:
-+            if (n->params.sriov_max_vfs) {
-+                nvme_add_blocker_feature(blocker_features, "SR-IOV");
-+            }
-+
-+            break;
-+        case NVME_ADM_CMD_SECURITY_SEND:
-+        case NVME_ADM_CMD_SECURITY_RECV:
-+            if (adm_cmd_security_checked) {
-+                break;
-+            }
-+
-+            if (pci_dev->spdm_port) {
-+                nvme_add_blocker_feature(blocker_features, "SPDM");
-+            }
-+
-+            adm_cmd_security_checked = true;
-+
-+            break;
-+        default:
-+            g_assert_not_reached();
++    if (field->flags & VMS_STRUCT) {
++        ret = vmstate_save_state(f, field->vmsd, pv, vmdesc, errp);
++    } else if (field->flags & VMS_VSTRUCT) {
++        ret = vmstate_save_state_v(f, field->vmsd, pv, vmdesc,
++                                   field->struct_version_id, errp);
++    } else {
++        ret = field->info->put(f, pv, size, field, vmdesc);
++        if (ret < 0) {
++            error_setg(errp,
++                       "Failed to save element of type %s for %s: "
++                       "%d", field->info->name,
++                       field->name, ret);
 +        }
 +    }
 +
-+    for (int opcode = 0; opcode < sizeof(n->cse.iocs.nvm) / sizeof(n->cse.iocs.nvm[0]); opcode++) {
-+        if (!n->cse.iocs.nvm[opcode]) {
-+            continue;
-+        }
-+
-+        switch (opcode) {
-+        case NVME_CMD_FLUSH:
-+        case NVME_CMD_WRITE:
-+        case NVME_CMD_READ:
-+        case NVME_CMD_COMPARE:
-+        case NVME_CMD_WRITE_ZEROES:
-+        case NVME_CMD_DSM:
-+        case NVME_CMD_VERIFY:
-+        case NVME_CMD_COPY:
-+            break;
-+        case NVME_CMD_IO_MGMT_RECV:
-+        case NVME_CMD_IO_MGMT_SEND:
-+            if (cmd_io_mgmt_checked) {
-+                break;
-+            }
-+
-+            /* check for NVME_IOMS_MO_RUH_UPDATE */
-+            if (n->subsys->params.fdp.enabled) {
-+                nvme_add_blocker_feature(blocker_features, "FDP");
-+            }
-+
-+            cmd_io_mgmt_checked = true;
-+
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+
-+    for (int opcode = 0; opcode < sizeof(n->cse.iocs.zoned) / sizeof(n->cse.iocs.zoned[0]); opcode++) {
-+        /*
-+         * If command isn't supported or we have the same command
-+         * in n->cse.iocs.nvm, then we can skip it here.
-+         */
-+        if (!n->cse.iocs.zoned[opcode] || n->cse.iocs.nvm[opcode]) {
-+            continue;
-+        }
-+
-+        switch (opcode) {
-+        case NVME_CMD_ZONE_APPEND:
-+        case NVME_CMD_ZONE_MGMT_SEND:
-+        case NVME_CMD_ZONE_MGMT_RECV:
-+            if (cmd_zone_checked) {
-+                break;
-+            }
-+
-+            for (int i = 1; i <= NVME_MAX_NAMESPACES; i++) {
-+                NvmeNamespace *ns = nvme_subsys_ns(n->subsys, i);
-+                if (!ns) {
-+                    continue;
-+                }
-+
-+                if (ns->params.zoned) {
-+                    nvme_add_blocker_feature(blocker_features, "Zoned Namespace");
-+                    break;
-+                }
-+            }
-+
-+            cmd_zone_checked = true;
-+
-+            break;
-+        default:
-+            g_assert_not_reached();
-+        }
-+    }
-+
-+    /*
-+     * Try our best to explicitly detect all not supported caps,
-+     * to let users know what features cause migration to be blocked,
-+     * but in case we miss handling here, everything else will be
-+     * covered by unsupported_cap check.
-+     */
-+    if (NVME_CAP_CMBS(cap)) {
-+        nvme_add_blocker_feature(blocker_features, "CMB");
-+        cap &= ~((uint64_t)CAP_CMBS_MASK << CAP_CMBS_SHIFT);
-+    }
-+
-+    if (NVME_CAP_PMRS(cap)) {
-+        nvme_add_blocker_feature(blocker_features, "PMR");
-+        cap &= ~((uint64_t)CAP_PMRS_MASK << CAP_PMRS_SHIFT);
-+    }
-+
-+    unsupported_cap = cap & ~NVME_MIGRATION_SUPPORTED_CAP_BITS;
-+    if (unsupported_cap) {
-+        nvme_add_blocker_feature(blocker_features, "unknown capability");
-+    }
-+
-+    assert(n->migration_blocker == NULL);
-+    if (strlen(blocker_features) > 0) {
-+        error_setg(&n->migration_blocker, "Migration is not supported for %s", blocker_features);
-+        if (migrate_add_blocker(&n->migration_blocker, errp) < 0) {
-+            return false;
-+        }
-+    }
-+
-+    return true;
++    return ret;
 +}
 +
- static int nvme_init_subsys(NvmeCtrl *n, Error **errp)
+ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                          void *opaque, JSONWriter *vmdesc, int version_id, Error **errp)
  {
-     int cntlid;
-@@ -9313,6 +9513,10 @@ static void nvme_realize(PCIDevice *pci_dev, Error **errp)
+@@ -528,19 +560,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+                                       i, max_elems);
  
-         n->subsys->namespaces[ns->params.nsid] = ns;
-     }
-+
-+    if (!nvme_set_migration_blockers(n, pci_dev, errp)) {
-+        return;
-+    }
- }
+-                if (inner_field->flags & VMS_STRUCT) {
+-                    ret = vmstate_save_state(f, inner_field->vmsd,
+-                                             curr_elem, vmdesc_loop, errp);
+-                } else if (inner_field->flags & VMS_VSTRUCT) {
+-                    ret = vmstate_save_state_v(f, inner_field->vmsd,
+-                                               curr_elem, vmdesc_loop,
+-                                               inner_field->struct_version_id,
+-                                               errp);
+-                } else {
+-                    ret = inner_field->info->put(f, curr_elem, size,
+-                                                 inner_field, vmdesc_loop);
+-                }
+-
++                ret = vmstate_save_field(f, curr_elem, size, inner_field, vmdesc_loop, errp);
+                 written_bytes = qemu_file_transferred(f) - old_offset;
+                 vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
+                                     written_bytes);
+@@ -551,7 +571,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 }
  
- static void nvme_exit(PCIDevice *pci_dev)
-@@ -9365,6 +9569,8 @@ static void nvme_exit(PCIDevice *pci_dev)
-     }
- 
-     memory_region_del_subregion(&n->bar0, &n->iomem);
-+
-+    migrate_del_blocker(&n->migration_blocker);
- }
- 
- static const Property nvme_props[] = {
-diff --git a/hw/nvme/nvme.h b/hw/nvme/nvme.h
-index d66f7dc82d5..457b6637249 100644
---- a/hw/nvme/nvme.h
-+++ b/hw/nvme/nvme.h
-@@ -666,6 +666,9 @@ typedef struct NvmeCtrl {
- 
-     /* Socket mapping to SPDM over NVMe Security In/Out commands */
-     int spdm_socket;
-+
-+    /* Migration-related stuff */
-+    Error *migration_blocker;
- } NvmeCtrl;
- 
- typedef enum NvmeResetType {
-diff --git a/include/block/nvme.h b/include/block/nvme.h
-index 9d7159ed7a7..a7f586fc801 100644
---- a/include/block/nvme.h
-+++ b/include/block/nvme.h
-@@ -141,6 +141,18 @@ enum NvmeCapMask {
- #define NVME_CAP_SET_CMBS(cap, val)   \
-     ((cap) |= (uint64_t)((val) & CAP_CMBS_MASK)   << CAP_CMBS_SHIFT)
- 
-+#define NVME_MIGRATION_SUPPORTED_CAP_BITS ( \
-+      ((uint64_t)CAP_MQES_MASK   << CAP_MQES_SHIFT)   \
-+    | ((uint64_t)CAP_CQR_MASK    << CAP_CQR_SHIFT)    \
-+    | ((uint64_t)CAP_AMS_MASK    << CAP_AMS_SHIFT)    \
-+    | ((uint64_t)CAP_TO_MASK     << CAP_TO_SHIFT)     \
-+    | ((uint64_t)CAP_DSTRD_MASK  << CAP_DSTRD_SHIFT)  \
-+    | ((uint64_t)CAP_NSSRS_MASK  << CAP_NSSRS_SHIFT)  \
-+    | ((uint64_t)CAP_CSS_MASK    << CAP_CSS_SHIFT)    \
-+    | ((uint64_t)CAP_MPSMIN_MASK << CAP_MPSMIN_SHIFT) \
-+    | ((uint64_t)CAP_MPSMAX_MASK << CAP_MPSMAX_SHIFT) \
-+)
-+
- enum NvmeCapCss {
-     NVME_CAP_CSS_NCSS    = 1 << 0,
-     NVME_CAP_CSS_IOCSS   = 1 << 6,
+                 if (ret) {
+-                    error_setg(errp, "Save of field %s/%s failed",
++                    error_prepend(errp, "Save of field %s/%s failed: ",
+                                 vmsd->name, field->name);
+                     if (vmsd->post_save) {
+                         vmsd->post_save(opaque);
 -- 
 2.47.3
 
