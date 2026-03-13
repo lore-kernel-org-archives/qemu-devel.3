@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 881D8106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:23:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B0AF106FD89
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:23:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vvG-0005sS-JK; Fri, 13 Mar 2026 02:22:58 -0400
+	id 1w0vvA-0005Fi-OV; Fri, 13 Mar 2026 02:22:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vvE-0005i0-PE
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:56 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vv9-00053g-A6
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:51 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vvD-000746-1S
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:56 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-48540355459so15374775e9.3
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vv7-00073d-KD
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:22:50 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so19219225e9.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:22:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382973; x=1773987773; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773382968; x=1773987768; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5zwU8w/hWK7Lb+IdUfMpbVArjX56CliNBlAvM1YjgaM=;
- b=KuP27mm6ksHFf13xc6YgY+ki2gOB+O2a4q3vT+lLzgU8trOol9C/H7LWJidg8LWwM/
- Nu9VKtfp9Jg9KLb9z0KduMxoqCmTfD/UvXJu/U0WaB2Q0N7r0d19TkS5Ul7Aa4YQA5VA
- xIsujXhr7bCihvmzs6/RY3AdgRXistl9gcje+CkcrzTLij4+emoqGiHvU2aOgKlsqBpu
- 96whgmNWoF9T/Ch7GRYLjQX2jv/IdnCtqn6r3dFE1lnfLpC3rxU7cCsic3izjRZNXPIU
- zBLCQAgbavd/RlrLxVNY+pQF2I71/yW55kXV5kj25WiY+0lXnozkykiraF25MMoZo6C0
- LKdA==
+ bh=nG5UcRDHpna29G8bHjCIPwu1H4SH1pR2IRh/gZ+5V3s=;
+ b=k+DZhZ4ky5rBfdu4XWjRLyj/RU6qOg9yZPXdBqGfZScP8zs1stPAdapjOkgJWbvIZS
+ LcbFr4/rJCei8jWDzaFLh+1RdBdlV7XX35D7G7nycy14xG8TU7Go/uPFnRS1MyC1Kqo4
+ TWl/GEj8SncCHupu2LIrmzDxib3i4LG37Nup7x4tl89SXPrLlpRe8Dd+MWnx8IO9CRX1
+ no1Qh7fJvzQhAm7saWRe9x7qvnsJ5PTk3+beFvgfqECrm1QgRYYdUQ/+c/HcwIUje49o
+ 4glvsQrl0gF0cecFFvOuk600ng02YHpJRegomXQP03Rr14ZaD/jERGuPrilUIhVRWBe6
+ toSg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382973; x=1773987773;
+ d=1e100.net; s=20251104; t=1773382968; x=1773987768;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5zwU8w/hWK7Lb+IdUfMpbVArjX56CliNBlAvM1YjgaM=;
- b=rU4U7zLTU6ZvDVwZ8WRtc0XtaIHo4RkxVWaPyD6z4qZ25B+H1aBFZ/Br2njaBC0OBw
- eAfuYvyPWM2DG+7l/h0k4coJ4HycfQsESfd+Qp2W8o4C4Ny103UqmhFTpMTQc2J1PMDB
- jP8iKYATqNWlZrqdUlGtagKnBY0svRjEoX8G388JZQ6GIkJvAzF+wV4DQyYQmr7ywXFm
- xRvBDNIE3QQzCpwKO5d1ktGL8SBWLsvaBcdfklDB9LD921kFnOUWd9f6zsbPneohxloZ
- IUKQ5SLnNJclRrnun5k9ie+fva0ezlZiaXQ2M/q62G9C74SaKMlypSgeALe1MB7gTY/s
- MhYQ==
-X-Gm-Message-State: AOJu0YwdUhCp19z7nDSKTkgOjv+TFEkKYVIkkU/OsGM0LdJ+QtK5WRpd
- Nda67MeqjWVWbU0EpTaEcN9W+lsXmdJICmYFRgS3wTFJbBjFzKsvvkamxYFTAOPzRx2hnuQWYO+
- mcmt/7/Q=
-X-Gm-Gg: ATEYQzwR7TW2sITPrDfLkv8y2LaOOJZaebVdXy0ZyKHGwHz5qWY1cYPPyEOWOG5KMqq
- V9M7XW0jJVTSgfFvvwSq4eUCLZCuhWIgKGQFmj7p2AjTxiMaT+HTZIsKWyjiwFA/jW6e6gcD/Nm
- mDJKBbvevOJrvyTX/KPxfSh3otgfpfVlCoO9ExyiTv0gEekfgPYknCaQmvpEYWGAI9Kd5XGTM4m
- VNyIW7hcejlwLvlosPmHlG6BH3STsaGCPaFsJaV9GJsYAv84N1EOOEbnQX2MjFS7npAxMFq1ZpT
- SDm84fIHfhDfv3L+Z8P1KDI0G9bi0HIQbpDZMTjLuyBEW7jW4FRXOoiS1uM3Ocg4EV8PERIVN7T
- dE6E8jhMhMsgVpbjq59XvhRNun9OIrV1ivbdwt4cXQhxfHu9lVYjZuyA91AC5IWv/tyXX6LnMAT
- UrAJrpfsmUfzC9MA/zO8auQTYyM+nKZ2RU7ZpQWuZLytgSRG51Fh4HpGcishsSieNkLQmB7UsBG
- eVDEQ==
-X-Received: by 2002:a05:600c:1f16:b0:485:3471:cffb with SMTP id
- 5b1f17b1804b1-485566e2401mr30819125e9.15.1773382973210; 
- Thu, 12 Mar 2026 23:22:53 -0700 (PDT)
+ bh=nG5UcRDHpna29G8bHjCIPwu1H4SH1pR2IRh/gZ+5V3s=;
+ b=YD1ALnIZVYQ7QNrsK/g9AMgLfUigbzPLmx4QVN/qnYM2JQr7A68IOQ1quiXmFdkNxN
+ AYsew6SrZaOnfT4bUKt8mMp0a4fFGsq+G3/4w2vKx1irM0aINUmBWugfgae6nk1lD3aF
+ VbvDYyEOnNSlI0DarECmmoAuRpBTfHwdES1nYei5G39Esik30uB9GxCIUCJ39+mxUYU4
+ tXaIGG1s5/7MiDI+vWROemFVmBxHmHwJOOjzYni1k74GWG7gDqGXaav7Hzl82TqHQA6Z
+ p4yrHaqZchLzWv/vyirN8Vz2ZYh5S6ijsssSSSORTFPlpL6NL8tRkGUR07Gh28ZTt2+m
+ JyeA==
+X-Gm-Message-State: AOJu0YxWvcAk+u+7k7KpZEuYVx1W2DIGBVSeiOyE2YDwOCMviaXB4/Bs
+ /acaiDfWRKrHO8lBoFIkJxIZQS//XZwBYn550Cq44rY54yH1MmaLUlNt17hSNTVTQMKXfG1T6R1
+ zjJyFs0U=
+X-Gm-Gg: ATEYQzyL8H7Nyn3UKMmZds6WReQA95gjqiE0iQbQbazkwpPqEBWnlbL1jBHGabw+omj
+ Vi+899Q/e2OuzA3IewsgN8b2dKtSGecUuvigX9kQpWr5Pa32Gu3b/CNytSr/WeD8BUNGr3A0zjd
+ CoL/zxchgsZUm0C/WeChDjdlfII3HtuNUnMYqm0HYCl6ZIZo7XDCaXSfuBnuN+LkqrFdKSq8ORP
+ X6J6haFxs1NeC37l3+0Crz6x68IRRC/21gq8SB6/Xad7pKMxwqlYNiyVuiZdRNkTK3RU3+zI4ya
+ sSgM9LdxPcMEiiQ/3SBCoAnLlKPQqPCkZclhRcX/9llrpHhJE5DDe8Nk0SSP8c36MH9G5RxeOhx
+ CeBJlj53wgYtT/nmHZptA+FZVgxHAOErnYyJ/yISq/jSa0euFRJNtzu1GAAQ2U2WaQYIZDaKlQw
+ gZuMhlcz4auwDZZkQUfCORSlcRqMClnBwkD71lTP/cNnuuTym2WUTzxjxr1Bh9/cHTKvqMlui+9
+ 6k26g==
+X-Received: by 2002:a05:600c:1988:b0:485:3f58:d84 with SMTP id
+ 5b1f17b1804b1-4855a8d6fd7mr8127055e9.32.1773382966631; 
+ Thu, 12 Mar 2026 23:22:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe19b936sm17061880f8f.5.2026.03.12.23.22.52
+ 5b1f17b1804b1-4854e2537c3sm177342905e9.15.2026.03.12.23.22.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:22:52 -0700 (PDT)
+ Thu, 12 Mar 2026 23:22:46 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 17/38] target/s390x/tcg: Include missing '*cpu.h' headers
-Date: Fri, 13 Mar 2026 07:20:33 +0100
-Message-ID: <20260313062055.2188-18-philmd@linaro.org>
+Subject: [PATCH v2 16/38] hw/misc/cpc: Include missing 'hw/core/cpu.h' header
+Date: Fri, 13 Mar 2026 07:20:32 +0100
+Message-ID: <20260313062055.2188-17-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,34 +103,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "hw/core/cpu.h" header (declaring run_on_cpu_data) and
-"target/s390x/cpu.h" are indirectly included. Include them
+The "hw/core/cpu.h" header is indirectly included. Include it
 explicitly otherwise we get when refactoring unrelated headers:
 
-  ../target/s390x/tcg/tcg_s390x.h:17:44: error: unknown type name 'CPUS390XState'; did you mean 'CPUSH4State'?
-     17 | G_NORETURN void tcg_s390_program_interrupt(CPUS390XState *env,
-        |                                            ^~~~~~~~~~~~~
-        |                                            CPUSH4State
+  ../hw/misc/mips_cpc.c:36:53: error: unknown type name 'run_on_cpu_data'
+     36 | static void mips_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
+        |                                                     ^
+  ../hw/misc/mips_cpc.c:40:5: error: call to undeclared function 'cpu_reset'
+       40 |     cpu_reset(cs);
+          |     ^
+  ../hw/misc/riscv_cpc.c:34:54: error: unknown type name 'run_on_cpu_data'
+     34 | static void riscv_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
+        |                                                      ^
+  ../hw/misc/riscv_cpc.c:39:5: error: call to undeclared function 'cpu_reset'
+     39 |     cpu_reset(cs);
+        |     ^
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/s390x/tcg/tcg_s390x.h | 3 +++
- 1 file changed, 3 insertions(+)
+ hw/misc/mips_cpc.c  | 1 +
+ hw/misc/riscv_cpc.c | 1 +
+ 2 files changed, 2 insertions(+)
 
-diff --git a/target/s390x/tcg/tcg_s390x.h b/target/s390x/tcg/tcg_s390x.h
-index 7c8aede80d2..975f60085ac 100644
---- a/target/s390x/tcg/tcg_s390x.h
-+++ b/target/s390x/tcg/tcg_s390x.h
-@@ -13,6 +13,9 @@
- #ifndef TCG_S390X_H
- #define TCG_S390X_H
- 
-+#include "target/s390x/cpu.h"
+diff --git a/hw/misc/mips_cpc.c b/hw/misc/mips_cpc.c
+index 924de855ee2..d092f76f44d 100644
+--- a/hw/misc/mips_cpc.c
++++ b/hw/misc/mips_cpc.c
+@@ -22,6 +22,7 @@
+ #include "cpu.h"
+ #include "qemu/log.h"
+ #include "qemu/module.h"
 +#include "hw/core/cpu.h"
-+
- void tcg_s390_tod_updated(CPUState *cs, run_on_cpu_data opaque);
- G_NORETURN void tcg_s390_program_interrupt(CPUS390XState *env,
-                                            uint32_t code, uintptr_t ra);
+ #include "hw/core/sysbus.h"
+ #include "migration/vmstate.h"
+ 
+diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
+index 4bf2fd8db16..e04ccdf54fa 100644
+--- a/hw/misc/riscv_cpc.c
++++ b/hw/misc/riscv_cpc.c
+@@ -18,6 +18,7 @@
+ #include "qemu/module.h"
+ #include "qemu/timer.h"
+ #include "qemu/bitops.h"
++#include "hw/core/cpu.h"
+ #include "hw/core/sysbus.h"
+ #include "migration/vmstate.h"
+ 
 -- 
 2.53.0
 
