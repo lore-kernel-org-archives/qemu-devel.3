@@ -4,62 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A038F105F791
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:28:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D77EF105F791
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:29:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0zkk-0000ZV-8P; Fri, 13 Mar 2026 06:28:22 -0400
+	id 1w0zlY-0000x0-Tt; Fri, 13 Mar 2026 06:29:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zkh-0000ZK-Sz
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:28:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zlX-0000wW-1k
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:29:11 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zkg-0001bk-2m
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:28:19 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zlV-0001m2-OI
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:29:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773397697;
+ s=mimecast20190719; t=1773397749;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0YXvrYm4KXHUA4RTDTXtc5nH/WkPk01hZoMltRPmVEU=;
- b=PUbhBKnqglJQ4n1JYLsCJAsOhzdxR8jwZTg0oIxToc99ET3FHKPmFDxzFeWukAPUOUeBhB
- /o1WpakzwHjYYpimnnxdHlPOsMu6vELbGgz5gq1TK4nO2veXbY8V6fPUnI9uNSBItTGLfR
- vJ51jsKHFgf2yHvaUbpdN48tbzeNURM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=Jm/Es1+rRMy0TV7Z9lX2HUVqe+hgSbHa+X0fwG5f/gA=;
+ b=Jd4csyZWhnagTZqDVHCkIPHhBGdTtFJtJPrxRh7G/nW6f31t6ABqCD6CrVLAjsn2ty+N9B
+ 2PopzYYD6D1VU1miPtOWmlxbbEWEeM9nXAgijCeF1CdDr/e6TKDrqE3pOHAdC9NSOxAdc/
+ CSdQGTrMLSOAWj+J9CB1ob4dM/m6I/o=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-GYNOqyJyOm2cy4t9xWf-yQ-1; Fri,
- 13 Mar 2026 06:28:13 -0400
-X-MC-Unique: GYNOqyJyOm2cy4t9xWf-yQ-1
-X-Mimecast-MFC-AGG-ID: GYNOqyJyOm2cy4t9xWf-yQ_1773397692
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-128-aQ0EWm9IOa6wxDZ1i_WINA-1; Fri,
+ 13 Mar 2026 06:29:07 -0400
+X-MC-Unique: aQ0EWm9IOa6wxDZ1i_WINA-1
+X-Mimecast-MFC-AGG-ID: aQ0EWm9IOa6wxDZ1i_WINA_1773397746
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 4B0801956095; Fri, 13 Mar 2026 10:28:12 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 15972180035D; Fri, 13 Mar 2026 10:29:06 +0000 (UTC)
 Received: from [10.45.225.234] (unknown [10.45.225.234])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 75AAB30002DC; Fri, 13 Mar 2026 10:28:08 +0000 (UTC)
-Message-ID: <cb17a21c-b5ea-47ea-af53-09aea681bdd3@redhat.com>
-Date: Fri, 13 Mar 2026 11:28:07 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id ED7B61800361; Fri, 13 Mar 2026 10:29:02 +0000 (UTC)
+Message-ID: <b99bb12b-aa39-494d-93cc-f85b41ffd8a1@redhat.com>
+Date: Fri, 13 Mar 2026 11:29:01 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 04/38] monitor/hmp: : Include missing
- 'exec/target_long.h' header
+Subject: Re: [PATCH v2 17/38] target/s390x/tcg: Include missing '*cpu.h'
+ headers
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
 References: <20260313062055.2188-1-philmd@linaro.org>
- <20260313062055.2188-5-philmd@linaro.org>
-Content-Language: en-US
+ <20260313062055.2188-18-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -102,10 +102,10 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260313062055.2188-5-philmd@linaro.org>
+In-Reply-To: <20260313062055.2188-18-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -132,32 +132,34 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/03/2026 07.20, Philippe Mathieu-Daudé wrote:
-> The "exec/target_long.h" header is indirectly included, pulled
-> via "cpu.h" -> "exec/cpu-defs.h". Include it explicitly otherwise
-> we'd get when removing the latter:
+> The "hw/core/cpu.h" header (declaring run_on_cpu_data) and
+> "target/s390x/cpu.h" are indirectly included. Include them
+> explicitly otherwise we get when refactoring unrelated headers:
 > 
->    monitor/hmp-target.h:35:5: error: type name requires a specifier or qualifier
->       35 |     target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
->          |     ^
+>    ../target/s390x/tcg/tcg_s390x.h:17:44: error: unknown type name 'CPUS390XState'; did you mean 'CPUSH4State'?
+>       17 | G_NORETURN void tcg_s390_program_interrupt(CPUS390XState *env,
+>          |                                            ^~~~~~~~~~~~~
+>          |                                            CPUSH4State
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   include/monitor/hmp-target.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   target/s390x/tcg/tcg_s390x.h | 3 +++
+>   1 file changed, 3 insertions(+)
 > 
-> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
-> index 5167d17d41d..898473b3ed0 100644
-> --- a/include/monitor/hmp-target.h
-> +++ b/include/monitor/hmp-target.h
-> @@ -28,7 +28,7 @@
->   typedef struct MonitorDef MonitorDef;
+> diff --git a/target/s390x/tcg/tcg_s390x.h b/target/s390x/tcg/tcg_s390x.h
+> index 7c8aede80d2..975f60085ac 100644
+> --- a/target/s390x/tcg/tcg_s390x.h
+> +++ b/target/s390x/tcg/tcg_s390x.h
+> @@ -13,6 +13,9 @@
+>   #ifndef TCG_S390X_H
+>   #define TCG_S390X_H
 >   
->   #ifdef COMPILING_PER_TARGET
-> -#include "cpu.h"
-> +#include "exec/target_long.h"
->   struct MonitorDef {
->       const char *name;
->       int offset;
+> +#include "target/s390x/cpu.h"
+> +#include "hw/core/cpu.h"
+> +
+>   void tcg_s390_tod_updated(CPUState *cs, run_on_cpu_data opaque);
+>   G_NORETURN void tcg_s390_program_interrupt(CPUS390XState *env,
+>                                              uint32_t code, uintptr_t ra);
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
