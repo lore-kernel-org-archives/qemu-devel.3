@@ -4,93 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AAAFE106FD6D
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 03:30:36 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C10EF106FD66
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 03:37:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0tE0-0007iV-Ol; Thu, 12 Mar 2026 23:30:08 -0400
+	id 1w0tKb-0000YQ-Tz; Thu, 12 Mar 2026 23:36:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0tDy-0007h6-JQ
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:30:06 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0tDw-0005Gt-Sn
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:30:06 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-48534b59cf3so15144225e9.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 20:30:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773372603; x=1773977403; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=uILkvwObm2UG4BpSSPgUi+Ar6Tw4FxgxPpSYUomHeQs=;
- b=oy4U/yzqFrmgbALJUU87ud2DoKRtCj4V4p/iUApMDnHF9tvy0Rug6/zEF6w7+Op5yu
- iWbqj89GJ2UFGSLvt5s1jJ2q2t8qvSm4HTnZwYhtn8uzNZPfkiIHfa/ZNkm4irH6FLNI
- D4xm9ujCNv0jNieAUuCGe9ueQugDa6znqQoFUQ0GFj1fUO49gHD/7y+7MXRe2Kz8I/F3
- GftLBsHGR/Nrq0FX9LeNSwNMinO5NIDxrHFc/2xzNNLXKrTlO9qjQs7bTt52QWgsCiVq
- ubXcE/rjq7JHGc8Ygjdq/oC58Y10kI/HmV9OY0CqhU0BgNKwx4JZ9x1CPuNvQG+pOhkb
- CetA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773372603; x=1773977403;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=uILkvwObm2UG4BpSSPgUi+Ar6Tw4FxgxPpSYUomHeQs=;
- b=O1Elcus9msPSovzY4HnIcs3LLi9yxTSuekCmwvIEF4YlMmHg+n3EBL/LImb41xpIPB
- pJOKEnXUcoepbZENH7qVCzbDQpooF/5RIFFcR0iC35Dpd4fg7Rr+bjBhQiaaHtp6BYbu
- uGakHvoM2HkY8ByxqeI9V/GmUuQl0wqV9qYrxtd0kUNx6MVRZoOFXiiHN8Js6VNQF+ll
- esZ1dpSShS6mhzFDBC4rHFjFJWLOIBYH/IK9Q/4/zQ+RDRwot/WhpjSj1YoDINE5eYEC
- Ko/sCDp/SnhUT3PpsCcgQvG4Br2ZC3cZKCM9L6thAwpo5Pk9UMPeZR8FYTZx9w7oTybg
- xEUA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXJbusYrE0X4flys613ikq6cPU/yxsw44u/bGOeYly4lBcL1HDkSXQBCnc5Wj/+oxVFNSEnEubYuqH7@nongnu.org
-X-Gm-Message-State: AOJu0YzLmhz1u/RD2f0OIWf0656ctAH/v7EofgNYOcktvUMokyJ2CE/G
- BEw35wmdNxgK9DNidk63ElNig/p/91utmTH09KuWocLIKa4aIYOakzx55TTEpMbum2w=
-X-Gm-Gg: ATEYQzwQMaa+zW7wwYEDWjN6Y9N5nV9GZNY4qlYlODso+I/0kZ3mhayQtkdT3aknNn5
- kclyudpvO5SuGOXfWmvk/nZEvSo8Y78zvnU+kTpjyDMqlQ1OTC0zHmFTfIZ+eXuW3ESWNvyxG3/
- O/gxM8dUJ6HqYZ9+H8gQOd98JRWwE4+fkZ8x3S9Q+6CLPULEiis7ikqbHoeM/FzgVF8BUXp28WN
- 7XW2SGPpQB3GOsn1ZLW/gZI/g2Fu+pEjUH/XBeWyYn+4kxkUmJqRVMvPcXBDFm4WS7Z0iGXgLo5
- GsSRlAHKEdjD5ko49qCnAG6DPnp/RESI1WIiB1VA80XM2yCt1Jec25Pel3BODmcPX09CzIcfw+5
- Mhkukmnyn0XFBmV9kY4MDpXa58lKcL/lIDOQCt0vxIvj7Q6Sb54Zc8GXTsYRq/uVpIxd4XBSHE1
- TMUctq8NXxeAOwfq33I6RfmEhi2oz91g/CWlh8BVp8Cj90nagli+vu6UcBL4ZwfVpLfnh4/3iZT
- IUA
-X-Received: by 2002:a05:600c:a09:b0:485:3f72:324d with SMTP id
- 5b1f17b1804b1-485566ddac0mr26777885e9.14.1773372603045; 
- Thu, 12 Mar 2026 20:30:03 -0700 (PDT)
-Received: from [192.168.69.201] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b65fd3dsm180089255e9.10.2026.03.12.20.30.02
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 12 Mar 2026 20:30:02 -0700 (PDT)
-Message-ID: <b884f2d1-51a4-4d41-8892-d5311e09b219@linaro.org>
-Date: Fri, 13 Mar 2026 04:30:01 +0100
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1w0tKa-0000YF-8D
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:36:56 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <xiaoyao.li@intel.com>)
+ id 1w0tKX-0007Fr-Ie
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 23:36:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773373014; x=1804909014;
+ h=message-id:date:mime-version:subject:to:cc:references:
+ from:in-reply-to:content-transfer-encoding;
+ bh=z+NS8UdiPGQMOY4j+7jUUcnnFzucf28XlBuMEsPh0ZU=;
+ b=OYFtgXMjwhFZzfh6JaiEZGff2xnGCppW4l7jQPailwzMxMaHmN0o6/ak
+ pDAPLEU3sGnTvT1fsD883AgpwdPzOMRvJHwlZC9dys5UmOrL8mFTTlY+4
+ 4r01LuAPvdLH29yKg6GHUqtDazlCBFhgJsZ0MDQwWZWCsAYL2XTscPZqS
+ AMade1uCwnpfgGxD8b5zCnRKE1BIIakAM/dhlHP9tFCu3Qwi0ylJY9wXV
+ tzXcWJThenkCiANkgZ9hUxcMELA8d0sR8FjsALXojB6d82ZEFndoMoujq
+ RdLWCy8NyJDkQwolPk6jYuSrzPI9fsmQU7zcocd2F6Cb7jAOsj4ntgybh Q==;
+X-CSE-ConnectionGUID: r7dFz7YESI2cACBsGJb/lQ==
+X-CSE-MsgGUID: D/ziWcdUQl68ZRZL1FJnQA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11727"; a="74374394"
+X-IronPort-AV: E=Sophos;i="6.23,117,1770624000"; d="scan'208";a="74374394"
+Received: from orviesa001.jf.intel.com ([10.64.159.141])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2026 20:36:51 -0700
+X-CSE-ConnectionGUID: U1a/0BGvRoGSYghP7za7+g==
+X-CSE-MsgGUID: T3ki7pdIQFWTat0fcUWRfA==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,117,1770624000"; d="scan'208";a="258943664"
+Received: from xiaoyaol-hp-g830.ccr.corp.intel.com (HELO [10.124.240.178])
+ ([10.124.240.178])
+ by smtpauth.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 12 Mar 2026 20:36:49 -0700
+Message-ID: <7edbc92d-095c-4cfd-b5d3-102eee092b13@intel.com>
+Date: Fri, 13 Mar 2026 11:36:45 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 8/8] hw/vfio: all vfio files can now be common files
+Subject: Re: [PATCH] memory: Set mr->ram before RAM Block allocation
+To: BALATON Zoltan <balaton@eik.bme.hu>, Peter Xu <peterx@redhat.com>
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ chenyi.qiang@intel.com, Farrah Chen <farrah.chen@intel.com>,
+ qemu-devel@nongnu.org
+References: <20260312063420.973637-1-xiaoyao.li@intel.com>
+ <abLf8EW3M7XCBh2K@x1.local> <92fcc6f0-655f-5726-1758-b2429911f0d8@eik.bme.hu>
+ <abMIgThCxU1gnMqZ@x1.local> <9594f358-2ef9-08da-355b-69496c6abb0a@eik.bme.hu>
 Content-Language: en-US
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-ppc@nongnu.org,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com
-References: <20260312224449.1605071-1-pierrick.bouvier@linaro.org>
- <20260312224449.1605071-9-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260312224449.1605071-9-pierrick.bouvier@linaro.org>
+From: Xiaoyao Li <xiaoyao.li@intel.com>
+In-Reply-To: <9594f358-2ef9-08da-355b-69496c6abb0a@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=198.175.65.19; envelope-from=xiaoyao.li@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -6
+X-Spam_score: -0.7
+X-Spam_bar: /
+X-Spam_report: (-0.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ HK_RANDOM_ENVFROM=0.999, HK_RANDOM_FROM=0.999, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,25 +90,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/3/26 23:44, Pierrick Bouvier wrote:
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/vfio/meson.build | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+On 3/13/2026 2:50 AM, BALATON Zoltan wrote:
+> On Thu, 12 Mar 2026, Peter Xu wrote:
+>> On Thu, Mar 12, 2026 at 07:04:06PM +0100, BALATON Zoltan wrote:
+>>> On Thu, 12 Mar 2026, Peter Xu wrote:
+>>>> On Thu, Mar 12, 2026 at 02:34:20PM +0800, Xiaoyao Li wrote:
+>>>>> Commit 2fb627ef2f48 ("memory: Factor out common ram region 
+>>>>> initialization")
+>>>>> introduced a helper function memory_region_set_ram_block(), which 
+>>>>> causes
+>>>>> mr->ram to be set to true after the RAM Block allocation by
+>>>>> qemu_ram_alloc_*().
+>>>>>
+>>>>> It leads to the assertion
+>>>>>
+>>>>>   g_assert(memory_region_is_ram(mr));
+>>>>>
+>>>>> in memory_region_set_ram_discard_manager() being triggered when 
+>>>>> creating
+>>>>> RAM Block with the RAM_GUEST_MEMFD flag.
+>>>>>
+>>>>> Fix this by restoring the original behavior of setting mr->ram before
+>>>>> RAM Block allocation.
+>>>>>
+>>>>> Closes: https://gitlab.com/qemu-project/qemu/-/work_items/3330
+>>>>> Reported-by: Farrah Chen <farrah.chen@intel.com>
+>>>>> Fixes: 2fb627ef2f48 ("memory: Factor out common ram region 
+>>>>> initialization")
+>>>>> Signed-off-by: Xiaoyao Li <xiaoyao.li@intel.com>
+>>>>
+>>>> Thanks for the report.  This is fast..
+>>>>
+>>>> Almost agreed with the fix, except that it duplicates the lines all 
+>>>> over
+>>>> the places.  Would it be better to introduce memory_region_init_ram()?
+>>>
+>>> First sorry for breaking this, I checked that qemu_alloc_ram did not 
+>>> refer
+>>> to these fields but missed this use much deeper in the call stack. The
+>>> memory_region_init_ram name is already taken so can't call it like that.
+>>> Since all the different memory_region_init variants call different
+>>> qemu_ram_alloc variants there does not seem to be a way to set this 
+>>> without
+>>> addining an additional line. Previous versions of the series had
+>>> memory_region_setup_ram() that set these mr fields then 
+>>> qemu_alloc_ram and
+>>> then error_propagate was called last. We could bring back
+>>> memory_region_setup_ram but it's the same additional line everywhere 
+>>> so this
+>>> seems to be a simpler fix. I don't see a way to avoid this 
+>>> duplication other
+>>> than maybe changing qemu_ram_alloc to put it somehow within that but 
+>>> that
+>>> does not seem to be simple. I can try to think about it some more but 
+>>> so far
+>>> I could not find a simpler fix.
+>>
+>> We can call it memory_region_init_ram_internal(), or something else.
+>>
+>> The point is to avoid duplicating the same line all over again.. with 
+>> these
+>> call sites s/memory_region_init/$NEW_NAME/ where $NEW_NAME set ram=true.
 > 
-> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index 06e24122c5c..4553aed6a6f 100644
-> --- a/hw/vfio/meson.build
-> +++ b/hw/vfio/meson.build
-> @@ -20,7 +20,7 @@ vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
->   vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'),
->                                        if_false: files('igd-stubs.c'))
->   
-> -specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
-> +system_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+> The point of refactoring was to make memory_region_init on it's own line 
+> so it can be replaced with memory_region_new in the follow up series. 
+> You can introduce a new function that does init+setup some fields and do 
+> the same for new+setup some fields but not sure that's worth it.
+> 
+> I don't think it would save much lines in the end. This patch adds 6 
+> lines. Your proposed function would take at least 5 (or 6 with empty 
+> line after) 
 
-Yay \o/
+> and bring back the mr->ram=false in the romd case 
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+For romd case, it's not affected since it uses memory_region_init_io().
+
+However, the ram device is affected that is also uses 
+memory_region_init_io() which will not be covered by the helper.
+
+Diff attached below. I doubt it is better/simpler than my original fix 
+because memory_region_init_ram_device_ptr() still requires the separate
+
+	mr->ram = true;
+
+
+diff --git a/system/memory.c b/system/memory.c
+index 17a7bcd9af7c..1878d4aa843a 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -1576,9 +1576,15 @@ void memory_region_init_io(MemoryRegion *mr, 
+Object *owner,
+      memory_region_set_ops(mr, ops, opaque);
+  }
+
++static void memory_region_init_ram_internal(MemoryRegion *mr, Object 
+*owner,
++                                            const char *name, uint64_t 
+size)
++{
++    memory_region_init(mr, owner, name, size);
++    mr->ram = true;
++}
++
+  static bool memory_region_set_ram_block(MemoryRegion *mr, RAMBlock *rb)
+  {
+-    mr->ram = true;
+      mr->terminates = true;
+      mr->destructor = memory_region_destructor_ram;
+      mr->ram_block = rb;
+@@ -1596,7 +1602,7 @@ bool 
+memory_region_init_ram_flags_nomigrate(MemoryRegion *mr, Object *owner,
+  {
+      RAMBlock *rb;
+
+-    memory_region_init(mr, owner, name, size);
++    memory_region_init_ram_internal(mr, owner, name, size);
+      rb = qemu_ram_alloc(size, ram_flags, mr, errp);
+      return memory_region_set_ram_block(mr, rb);
+  }
+@@ -1613,7 +1619,7 @@ bool 
+memory_region_init_resizeable_ram(MemoryRegion *mr,
+  {
+      RAMBlock *rb;
+
+-    memory_region_init(mr, owner, name, size);
++    memory_region_init_ram_internal(mr, owner, name, size);
+      rb = qemu_ram_alloc_resizeable(size, max_size, resized, mr, errp);
+      return memory_region_set_ram_block(mr, rb);
+  }
+@@ -1627,7 +1633,7 @@ bool memory_region_init_ram_from_file(MemoryRegion 
+*mr, Object *owner,
+  {
+      RAMBlock *rb;
+
+-    memory_region_init(mr, owner, name, size);
++    memory_region_init_ram_internal(mr, owner, name, size);
+      mr->readonly = !!(ram_flags & RAM_READONLY);
+      mr->align = align;
+      rb = qemu_ram_alloc_from_file(size, mr, ram_flags, path, offset, 
+errp);
+@@ -1641,7 +1647,7 @@ bool memory_region_init_ram_from_fd(MemoryRegion 
+*mr, Object *owner,
+  {
+      RAMBlock *rb;
+
+-    memory_region_init(mr, owner, name, size);
++    memory_region_init_ram_internal(mr, owner, name, size);
+      mr->readonly = !!(ram_flags & RAM_READONLY);
+      rb = qemu_ram_alloc_from_fd(size, size, NULL, mr, ram_flags, fd, 
+offset,
+                                  false, errp);
+@@ -1662,7 +1668,7 @@ void memory_region_init_ram_ptr(MemoryRegion *mr, 
+Object *owner,
+                                  const char *name, uint64_t size,
+                                  void *ptr)
+  {
+-    memory_region_init(mr, owner, name, size);
++    memory_region_init_ram_internal(mr, owner, name, size);
+      memory_region_set_ram_ptr(mr, size, ptr);
+  }
+
+@@ -1671,6 +1677,7 @@ void 
+memory_region_init_ram_device_ptr(MemoryRegion *mr, Object *owner,
+                                         void *ptr)
+  {
+      memory_region_init_io(mr, owner, &ram_device_mem_ops, mr, name, size);
++    mr->ram = true;
+      mr->ram_device = true;
+      memory_region_set_ram_ptr(mr, size, ptr);
+  }
+@@ -3699,7 +3706,6 @@ bool memory_region_init_rom_device(MemoryRegion 
+*mr, Object *owner,
+      memory_region_init_io(mr, owner, ops, opaque, name, size);
+      rb = qemu_ram_alloc(size, 0, mr, errp);
+      if (memory_region_set_ram_block(mr, rb)) {
+-        mr->ram = false;
+          mr->rom_device = true;
+          memory_region_register_ram(mr, owner);
+          return true;
+
+> so at the 
+> end it's about 1 line difference and may even be longer that way. I 
+> don't like the duplication either but the alternatives don't seem to be 
+> less lines or simpler either.
+> 
+> But at the end it's your decision so do what you think is better.
+> 
+> Regards,
+> BALATON Zoltan
 
 
