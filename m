@@ -4,75 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1CF76107BCCC
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:28:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18D88107BCCC
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 16:29:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w15NU-0004bd-5t; Fri, 13 Mar 2026 12:28:44 -0400
+	id 1w15Nd-0004jZ-Tk; Fri, 13 Mar 2026 12:28:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15NL-0004b0-Qg
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:28:38 -0400
+ id 1w15NY-0004da-6d
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:28:50 -0400
 Received: from mail-pf1-x42f.google.com ([2607:f8b0:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w15NK-0008Uy-9Y
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:28:35 -0400
+ id 1w15NU-00006F-QA
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 12:28:46 -0400
 Received: by mail-pf1-x42f.google.com with SMTP id
- d2e1a72fcca58-82748257f5fso2003990b3a.1
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:28:33 -0700 (PDT)
+ d2e1a72fcca58-829865a8471so2237582b3a.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 09:28:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773419312; x=1774024112; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773419323; x=1774024123; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=gfzv7y2YD6B6YYRqCKy5u2Nm+PabUkwIpLH+sQ7lQcE=;
- b=KwdGw7agZcxzUrgWjKMUOvuBs5OPTHfrl2dcdtXEgyh0q3fyDwO7cQlt4yW4C9IdM5
- /6Lj5KT2RkqIl0zpjWY/2j86pdKv+/dINGjLw4FZS3qG4Mc0FOZ44tHMKHH4EC2MpAVe
- kg/Gq9IZ3SHdNODggo/4FCG2EBKei5D+G2SPTHT1+fbAkjbk6hQca1cktcllpDHcV27H
- AaGgDuooQrP5JX3cLnJokYiLHbhOz6kY5ZnYQBqzJpx7NHii4QqLOdvuc1aJNELv6Ds4
- QsE0nyFjsDzQG4Fr8jUcvD6Gs+3zkkB+bC9aaOard8Hx6j5MSsUt0xCGMUgGAZQDEpZr
- bFdQ==
+ bh=EjOJP61uyaomqMV9S0msdESK/0R8pV+yOL/cOKPBZ04=;
+ b=UxDfgFxycIwayAIYnsDWVk4GNbO+99H2+sio3swqagqfXM/ZNSjiqW9FW4DMXkMoya
+ oYwuKJeZnjTRhDrRcIpNnPUj34yGHLG2DUt7G9ckv0Vq9hD9JZPRHw8WtJwqxXGLvFEg
+ ykZqjNyDJNO8fhH5ZVRz8sHAeALWZFvcPMgmQOMok9n+atTf4JRXXfcb9mPEtWPL2B8i
+ N8m42xTItr//cvIv8F91Ifr2f56XCDCTwEWG4S5/Xd+J3GNHv6x37BcOhDa3A+a7nRem
+ LrLQPMz5KIjkxUKlxyNLFJWQO61NVMgSV9rzLsqZEjrUniZ2A3ZbS3KdcxKyFz7hltad
+ Aefg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773419312; x=1774024112;
+ d=1e100.net; s=20251104; t=1773419323; x=1774024123;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=gfzv7y2YD6B6YYRqCKy5u2Nm+PabUkwIpLH+sQ7lQcE=;
- b=m0mnE894jyBn5uxoHM28YONMXxtnr8lrXEKB4H4Fs2TYobvhcxPuzjydRSXNNicAE5
- pP624zWoQACXtmUPQBsJTDdGD0NmYWPSmXX0bkS+Z7/F9Fxg7QCeHXevR2Su2aMUGsp8
- vyddiPw5loQ9f8dprZE2xHsRkAS4VnexywM//2WuI4vdcdYFpdSM16e8tZHcxBGwMEMj
- 4bTZYr77f/kiikkSr34CBw1FVhDE9ogJ+pyUT+g1AeJXSe4pFC0jw/TSs5Eg4kZkUUW7
- luBNIKqUx0+6GlZnqjqNqxCbIEsEyuCFhKPLZlDJG3ejaZVv94ZjSODMyJGQHg82HVXJ
- EUwg==
+ bh=EjOJP61uyaomqMV9S0msdESK/0R8pV+yOL/cOKPBZ04=;
+ b=LCLFcLb6xe+0Ckqbn2BmJ0lGXbYmNXKa24/UxZdjMHCxBWDyiR62lT1c4lcLn3mBv2
+ j6a4S8UB4mLKgFgv3A7MwIKad79gTrPIhChzg9wu+XIFo006ai69+Bea4gvAh8SHFSdp
+ zczGFqhZhOZi8PBRdzREGVEwUGXIhGxdKlyZ+uwpItCLqe0I3Mj0NhByPniKcWmBVtwT
+ ikn2wNhYiYRVrDUr/IKez3n8LIfrTrL2qMeFtANJ1Fklhh7esNb+FfBuG5SMRq0cWa08
+ esw6nnszbOczyrUxkcxi0IFgL/gN7MYrYAMMasazfL/pjcryhLeV90CXAA+tWXSP5543
+ W3HQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXY/8owhkHabCWJsIJUJJw+u8S6jDnEzdbeZPCKb8/DCrIUumuTmxu3ORAjM4rcxJSVMTjeRdqX8utA@nongnu.org
-X-Gm-Message-State: AOJu0YyHuyxa9gh0c2BKd+2mSI8NcyQcbLM8QMK0B20VYU85tmNWC7ml
- z9zRMUkZqVMIjGoAFtA3HpRkcwrlD/Zy7O9uLM8DNKW+9RqRVGxTldKMA5WoqQnOH/Q=
-X-Gm-Gg: ATEYQzzXt3wQlUjqxo+YOIaRGQQooj6a0L8WLDPS+jq6MmBvEqCcekvJM5WvLQrSWvG
- Q1Ub5HMQKzmXS6/GKI1LJQ0NbvjNWmHNUccZVkkI5Swvt2k/lluF+E6fwh59jBQfpw8xhQKzlmX
- 31h0wGfREejatMDKBqS0nNYPD/DrNccwYZlfr4hUNaMxSjPt3oH1vUFwGQCwpad0l51kkGZ/nz9
- lEsAZm1q5Mt5xQ8WAdhB0TGEXQGTo8zNjnOQdLoLCWGhu7GuhdD6OlKM7XPJa0in4pJ62HaTeyr
- ny4Sya66MjrAo5dW2SHceMiHPMQpcd1/26lZxAwAYGQuNlVJjVUzEfWVY/UMXiDh3HZLh9zKF+c
- OyDn5DXBQyUzKpqi+CKjqVa+ujdA6SjN+MF6+9mW4JTiSZtwqkAbeMvStH7/iZ7UMQphCaTREMY
- D6WPfWLhidPpdPjZ2FFkx24SWUV4m6gRZjNTOnNnZr8oFF86NpKR489KcipJt7sBm+nZYW
-X-Received: by 2002:a05:6a00:7594:b0:7a9:d8a8:992a with SMTP id
- d2e1a72fcca58-82a071dff21mr4835601b3a.13.1773419312365; 
- Fri, 13 Mar 2026 09:28:32 -0700 (PDT)
+ AJvYcCVNJ27HxhBru6FbNypBSHZJ3YGARmw+JNXNLiEc7IdWFw+KvA7UC4GVp7NWNJ4iaEAlMsExvMptG4l3@nongnu.org
+X-Gm-Message-State: AOJu0YyoVntO+CzyZKmHgWjLiE+vegjgYOzG1j13VuNIwybqLnJobcHs
+ vLMN0iGfhEXKmVW1qXJc+Ae5OxxbTPK0PHpxFK6VcMEJCqPdmpV+kxoMFX4Cn7b1CdQ=
+X-Gm-Gg: ATEYQzyG+dZbtRYwD6B6Il4vS72bOnPlT4OWnc9ooG9vcUzvwEfL6x4Ys/3KQOdehvS
+ qBK2LC6muZVIKtdqxxYdtdMHipu5nQxXw4PONHweTuDLzrmTctgqIknlVlWzJcdaUE7nDe4aD+j
+ zxaWISbw5ZiIpoI9iOhI8dYneIhtCWiBl0Xijs/bstdkDiFG/mO/gdF548w6/Z4CNbdOnhu/IqO
+ /NuJu3dzeIiW/ERaokpsUimR6+mA5pO183LuP5ECC800U21JE8bOVEqbVymQ2JJ6hIhM5O6vzan
+ 78KLVdNEwZpQL2tXv4o5Cc9nX7s4ZZPrHDoWtIsAAMETezAtZ0gQQRw9roJe5BHf6eDHSLIxXAX
+ MPEDE/34Xssz5fT8qf7kj9KzhloE9JLvSfr1PvdAfortGoMmRyd1Uzz9JuaiQnC+ed20Kg+8qiE
+ 0Lyl/3Dhj3mD/Rb+BbnXq6bQsnW2/2Oe5Oo0PtMelVv9Ktbiiac9gxBRQNwlkPJXNtXp3T9dspI
+ m1gmxs=
+X-Received: by 2002:a05:6a00:23d4:b0:829:7e2a:2d9d with SMTP id
+ d2e1a72fcca58-82a196f3e8emr3630385b3a.5.1773419323174; 
+ Fri, 13 Mar 2026 09:28:43 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a0725ca0asm7934860b3a.17.2026.03.13.09.28.31
+ d2e1a72fcca58-82a07365b22sm6236232b3a.45.2026.03.13.09.28.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 09:28:31 -0700 (PDT)
-Message-ID: <50b59f2d-b3c9-4c81-b505-62d0c08c814f@linaro.org>
-Date: Fri, 13 Mar 2026 09:28:31 -0700
+ Fri, 13 Mar 2026 09:28:42 -0700 (PDT)
+Message-ID: <3fc30ba1-ea04-4fc3-9275-835449a7b0f8@linaro.org>
+Date: Fri, 13 Mar 2026 09:28:41 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/38] hw/s390x/vfio: Replace TARGET_PAGE_BITS ->
- qemu_target_page_bits()
+Subject: Re: [PATCH v2 04/38] monitor/hmp: : Include missing
+ 'exec/target_long.h' header
 Content-Language: en-US
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
@@ -80,7 +81,7 @@ Cc: Richard Henderson <richard.henderson@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
 References: <20260313062055.2188-1-philmd@linaro.org>
- <20260313062055.2188-4-philmd@linaro.org>
+ <20260313062055.2188-5-philmd@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -116,7 +117,7 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260313062055.2188-4-philmd@linaro.org>
+In-Reply-To: <20260313062055.2188-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2607:f8b0:4864:20::42f;
@@ -144,12 +145,18 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/12/26 11:20 PM, Philippe Mathieu-Daudé wrote:
-> Get the target page bits at runtime.
+> The "exec/target_long.h" header is indirectly included, pulled
+> via "cpu.h" -> "exec/cpu-defs.h". Include it explicitly otherwise
+> we'd get when removing the latter:
+> 
+>    monitor/hmp-target.h:35:5: error: type name requires a specifier or qualifier
+>       35 |     target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
+>          |     ^
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/s390x/s390-pci-vfio.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   include/monitor/hmp-target.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
