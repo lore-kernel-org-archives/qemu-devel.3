@@ -4,87 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22329106FD69
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 02:19:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60263106FD68
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 02:20:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0s7J-0000T7-94; Thu, 12 Mar 2026 22:19:09 -0400
+	id 1w0s7A-0000PK-6o; Thu, 12 Mar 2026 22:19:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w0s7G-0000Rd-Rq
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 22:19:06 -0400
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
+ id 1w0s79-0000Ok-7B
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 22:18:59 -0400
+Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w0s7E-00080i-Tx
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 22:19:06 -0400
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-2b6b0500e06so2024442eec.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 19:19:04 -0700 (PDT)
+ id 1w0s77-0007za-L6
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 22:18:58 -0400
+Received: by mail-dy1-x132f.google.com with SMTP id
+ 5a478bee46e88-2be1ab1fa7dso1465053eec.0
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 19:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773368343; x=1773973143; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773368335; x=1773973135; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=NEo0bmu07ao6NQM9T5TABIQ6ozlil21ERYceiCcmYxE=;
- b=Fs6PD1kx7/LvqGOy3XUhrzN7Ve2ZexHs3pUx4uTF/tQh7MkixnjlRjv62T+LEXUFOz
- sqQxLepdHhtHXT8aODFB4TJHUS8k+uQE+2AJYfmg7OTwXF6NVwOe9nujsaAL1j3I+ZcI
- 6UhnGr27Jc1bPeIkGXkzAp2IB+Ij745VmU/0iKa6mAZm4atuMMosNzdrnB2BIJMgR38v
- yIWMLnTzj1mU68muLu7MTGZE5HEsVImJunMuTp6SzJ/ORcZCE03Jxt/dNAWiXqEV/QgF
- m2RG+YTKEcoO4gC/GOGi5uBs+3c6o3xDdkYrgaux9NyaWNUhMvIq6JprtW2I5bEFSnPx
- zjnw==
+ bh=Fn6jVa1MBzK2KXY3md3B2vjjf0P88Mb8DUoKgdguAD8=;
+ b=lzHLliwv1vs1N+ZULXJU6HlAmWCKwioW97jwrFCwpqpcgcZsvyas2qFkPIN6YkydHX
+ XeNAg4gLRN2XK5qc0P8VemYZx57CXAjIuXmYfzu7lynlmqpk9BJqH1EYm/wD/zQof9FJ
+ 1cFEWQaXZj5ZNTN+lC1Y7Haqga2BR6rx2kisUZrsol+ry3yjtVeKYAec+y63Zj0dW9jW
+ FFFS5ktAi/EqX5vAIH4ASLNii4eWuy6w6v0Au9z45fVv6AvIdj01+QrQTvoCVgiv2/g8
+ tLD3g+X1aA5vVxr+MsxnHQ6HE/mnvJdZzAb4A6rHuOtCgUsBcPkWiO98HvrslrVt/OPx
+ C9hQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773368343; x=1773973143;
+ d=1e100.net; s=20251104; t=1773368335; x=1773973135;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=NEo0bmu07ao6NQM9T5TABIQ6ozlil21ERYceiCcmYxE=;
- b=tDPcG215Y+7gRrFauW81q92nH0ftxZhdkibiN2/zDsHi0WwPQjwvRGaBAilJvmNUK5
- SO+oazzNwIDqWHGaa2BEkwMHF3ri2aYtuP+mz3wfFenWU6xYhG58E54Ath3XMvlZtkaH
- m+V8MlzR8pdKgSzR++YehY8Ld9fYdLhpToNVsTvOU3vErM04ZGHyzYqlfG/t7VllqWX0
- O7L0EiUNzkmUYlToWHMSiqIWq4UPAWrmMGjglNOpqaRFX4BE3N/mX41DAW1OI0j95SCY
- UTccz3UXvDV8wVO7snxURHZYrvzl5s7+FxffxX+iqHj+GVVEmA/HZkvpmcpiThZbaWXO
- GA0w==
-X-Gm-Message-State: AOJu0YyLQaBVDYnev5FshChfC5k1qAvMfZPuUyB4JqnxpH8MZ7GFEfwq
- WOwrpzGtWeYIiUdtfyB938skWSteF62fdM+W4Nys5MwnIHlahNvbF0NaPpdsG87A
-X-Gm-Gg: ATEYQzx/w7owlNWLrgWCr6a97zaUUkNziV6XqOExQ84+yLm/pFPQXHgGCN2wDpiB6g3
- KIRn+sNmeiO0U/f0kw4C3wcLbDpdjBeQ5wt+1L1YOcicz9kK4gJPaNnAELnGsYXln1vQU8123Fl
- acgsCxuqEKDuTOSJnkL+sVt7hxijpmF0v/wk5aD2S1jx6HfqLO4fFCr6/0hoxRqaxOpqBhF2Djm
- eopHOIq2Gv8TncBcIMbHCuBwhFqfxQn9uo/uTXkCLXQErCBOl2PPXzPmNtNSUJs/Kswl21+7ibP
- iY82D8T2b+MrxZt1mtXfzoGbNwVSG6TCn6kjeBdad9cJurADta90HpPkfMsZfv/ntVdgbOxMptW
- yGLKom9POBCARUMpQ0AjFYbl6jXVr4YK8g2HRK3pbCsFdIvrNP3QNvZL/jXt1pQGUomojK5caYg
- fQ4VUYlaWQnyquZabcOkcfdG9Q3bIJ9wIlgTzFaDzSK1N4ghToMcQ=
-X-Received: by 2002:a05:7300:a987:b0:2be:2645:af00 with SMTP id
- 5a478bee46e88-2bea5508c4cmr827278eec.32.1773368343165; 
- Thu, 12 Mar 2026 19:19:03 -0700 (PDT)
+ bh=Fn6jVa1MBzK2KXY3md3B2vjjf0P88Mb8DUoKgdguAD8=;
+ b=gCaCIuWfiSzvtj1K7jEtHGiihdItSzk+yF+DJepIlDNlOHwDr3BkdhzYonaDDiV0no
+ sjCyPjswUZcjtT90g9E7V4+ilvG6eNjyPZLtpB0pWkso0mic2ViT2bG42RNoFaxXHsOD
+ bifv3SmD5EqlVbmWIzmIhGF6yzNQ6rVjhgOhoEWKegMZawAh7GIPIiwmtRgj7jKucn1C
+ l/Phm5YlIM8ckVsnsYZMw4dFubGysrR4zeJ6g4kBPcc3mPCHQw7TYZhsszdpFwAT1iZR
+ ZCHJTbfFBG5/JHs/EsOXOzsY+hME9fyevc52CKx9eDPepXWV36U8yTFF4TVvE793skTx
+ GAQw==
+X-Gm-Message-State: AOJu0YxGPmvSNtdnEke3uUAz6gnxkYw0VqfpJILPN7jZb4Za8VeurcbC
+ Y95cXs2NFsjuzjES/CdEu8IRFi7pu++3rgOrnFLvQACuePCRylFSVq6xy0kV4NwN
+X-Gm-Gg: ATEYQzztZqsLP2Cz52GAo9SKw8J9SDH/fpy0BqmxcssXp5qV/gcBf9Ix0RY2/GuSjuh
+ W/jaogstN+HvnaPkgh61+8k7ajpefLV3fUT1WzzO1olVnLgOGHIw/BWfDrmWE6hgeq7nY9ntdy4
+ JCxTLvXR1PiCjTgTGFdZ0kjQdXOwy6fRbvsHJkk2OdQgJ8H3TocjTI1qR3BzmrqvV9HEBPfZd6n
+ YUlNe2BNv4auwkXEtog1tacjof+rYVJqTIVZnz5WAts4/uS03VYRLGF/4ChdugPYZeog1/0nsC9
+ YkYkr99FSMYs3aSZtStfF+trwNZu9YDv2WvoBXe7/aLt1dSKyOv4oafv50bY7JTuC+M6VMkIyeJ
+ DuUvFlbexDXEjazKP3xIhKfrHKrkAmflRv3csfTOrek9v3sFsV3h22LbOVkaFZJCSglMSghAnw9
+ foCGLEY2kBcgmsYpKcF4j7bAZf0GRNrXNc6O1+cYVE+i6/ECrjXrU=
+X-Received: by 2002:a05:7301:10c4:b0:2b8:c1b4:9cb7 with SMTP id
+ 5a478bee46e88-2bea5523f59mr911958eec.22.1773368335242; 
+ Thu, 12 Mar 2026 19:18:55 -0700 (PDT)
 Received: from 192.168.0.29 ([2804:14d:4c71:86dd:588a:39d7:d008:37c2])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2beab3eec52sm796218eec.14.2026.03.12.19.19.01
+ 5a478bee46e88-2beab3eec52sm796218eec.14.2026.03.12.19.18.52
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 19:19:02 -0700 (PDT)
+ Thu, 12 Mar 2026 19:18:54 -0700 (PDT)
 From: Lucas Amaral <lucaaamaral@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, agraf@csgraf.de, Lucas Amaral <lucaaamaral@gmail.com>
-Subject: [PATCH v2 3/3] target/arm: wire ISV=0 emulation into HVF and WHPX
-Date: Thu, 12 Mar 2026 23:18:50 -0300
-Message-ID: <20260313021850.42379-4-lucaaamaral@gmail.com>
+Subject: [PATCH v2 0/3] target/arm: ISV=0 data abort emulation library
+Date: Thu, 12 Mar 2026 23:18:47 -0300
+Message-ID: <20260313021850.42379-1-lucaaamaral@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260313021850.42379-1-lucaaamaral@gmail.com>
+In-Reply-To: <20260309214852.92545-1-lucaaamaral@gmail.com>
 References: <20260309214852.92545-1-lucaaamaral@gmail.com>
- <20260313021850.42379-1-lucaaamaral@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x132f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  FSL_HELO_BARE_IP_2=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,248 +99,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Connect the ISV=0 emulation library to the HVF and WHPX backends.
-Each implements arm_emul_ops callbacks over CPUARMState and
-cpu_memory_rw_debug().  Replaces the assert(isv) with instruction
-fetch, decode, and emulation via arm_emul_insn().
+When a guest triggers a data abort with ISV=0 (e.g. STP, LDP, SIMD/FP
+load/store, writeback addressing, atomics, exclusives), the ESR syndrome
+does not carry the access size or target register, so the hypervisor
+cannot emulate MMIO without decoding the faulting instruction.
 
-Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
----
- target/arm/hvf/hvf.c       | 94 ++++++++++++++++++++++++++++++++++++--
- target/arm/whpx/whpx-all.c | 86 +++++++++++++++++++++++++++++++++-
- 2 files changed, 176 insertions(+), 4 deletions(-)
+v1 handled this inside HVF with a hand-written decoder.  Based on review
+feedback from Mohamed Mediouni and Peter Maydell, v2 restructures the
+implementation as:
 
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index d79469c..2a57b97 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -30,6 +30,7 @@
- #include "qemu/main-loop.h"
- #include "system/cpus.h"
- #include "arm-powerctl.h"
-+#include "emulate/arm_emulate.h"
- #include "target/arm/cpu.h"
- #include "target/arm/internals.h"
- #include "target/arm/multiprocessing.h"
-@@ -797,6 +798,59 @@ static uint64_t hvf_get_reg(CPUState *cpu, int rt)
-     return val;
- }
- 
-+/*
-+ * arm_emul_ops callbacks for HVF
-+ *
-+ * State must already be synchronized (cpu_synchronize_state) before
-+ * calling arm_emul_insn().  Reads/writes env->xregs[] directly to
-+ * correctly handle register 31 as SP and avoid redundant HVF API calls.
-+ */
-+
-+static uint64_t hvf_emul_read_gpr(CPUState *cpu, int reg)
-+{
-+    return ARM_CPU(cpu)->env.xregs[reg];
-+}
-+
-+static void hvf_emul_write_gpr(CPUState *cpu, int reg, uint64_t val)
-+{
-+    ARM_CPU(cpu)->env.xregs[reg] = val;
-+    cpu->vcpu_dirty = true;
-+}
-+
-+static void hvf_emul_read_fpreg(CPUState *cpu, int reg, void *buf, int size)
-+{
-+    memcpy(buf, &ARM_CPU(cpu)->env.vfp.zregs[reg], size);
-+}
-+
-+static void hvf_emul_write_fpreg(CPUState *cpu, int reg,
-+                                 const void *buf, int size)
-+{
-+    CPUARMState *env = &ARM_CPU(cpu)->env;
-+    memset(&env->vfp.zregs[reg], 0, sizeof(env->vfp.zregs[reg]));
-+    memcpy(&env->vfp.zregs[reg], buf, size);
-+    cpu->vcpu_dirty = true;
-+}
-+
-+static int hvf_emul_read_mem(CPUState *cpu, uint64_t va, void *buf, int size)
-+{
-+    return cpu_memory_rw_debug(cpu, va, buf, size, false);
-+}
-+
-+static int hvf_emul_write_mem(CPUState *cpu, uint64_t va,
-+                              const void *buf, int size)
-+{
-+    return cpu_memory_rw_debug(cpu, va, (void *)buf, size, true);
-+}
-+
-+static const struct arm_emul_ops hvf_arm_emul_ops = {
-+    .read_gpr    = hvf_emul_read_gpr,
-+    .write_gpr   = hvf_emul_write_gpr,
-+    .read_fpreg  = hvf_emul_read_fpreg,
-+    .write_fpreg = hvf_emul_write_fpreg,
-+    .read_mem    = hvf_emul_read_mem,
-+    .write_mem   = hvf_emul_write_mem,
-+};
-+
- static void clamp_id_aa64mmfr0_parange_to_ipa_size(ARMISARegisters *isar)
- {
-     uint32_t ipa_size = chosen_ipa_bit_size ?
-@@ -1871,10 +1925,44 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         assert(!s1ptw);
- 
-         /*
--         * TODO: ISV will be 0 for SIMD or SVE accesses.
--         * Inject the exception into the guest.
-+         * ISV=0: syndrome doesn't carry access size/register info.
-+         * Fetch and emulate via target/arm/emulate/.
-+         * Unhandled instructions log an error and advance PC.
-          */
--        assert(isv);
-+        if (!isv) {
-+            ARMCPU *arm_cpu = ARM_CPU(cpu);
-+            CPUARMState *env = &arm_cpu->env;
-+            uint32_t insn;
-+            ArmEmulResult r;
-+
-+            cpu_synchronize_state(cpu);
-+
-+            if (cpu_memory_rw_debug(cpu, env->pc,
-+                                    (uint8_t *)&insn, 4, false) != 0) {
-+                error_report("HVF: cannot read insn at pc=0x%" PRIx64,
-+                             (uint64_t)env->pc);
-+                advance_pc = true;
-+                break;
-+            }
-+
-+            r = arm_emul_insn(cpu, &hvf_arm_emul_ops, insn);
-+            if (r == ARM_EMUL_UNHANDLED) {
-+                /*
-+                 * TODO: Inject data abort into guest instead of
-+                 * advancing PC.  Requires setting ESR_EL1/FAR_EL1/
-+                 * ELR_EL1/SPSR_EL1 and redirecting to VBAR_EL1.
-+                 */
-+                error_report("HVF: ISV=0 unhandled insn 0x%08x at "
-+                             "pc=0x%" PRIx64, insn, (uint64_t)env->pc);
-+            } else if (r == ARM_EMUL_ERR_MEM) {
-+                error_report("HVF: ISV=0 memory error emulating "
-+                             "insn 0x%08x at pc=0x%" PRIx64,
-+                             insn, (uint64_t)env->pc);
-+            }
-+
-+            advance_pc = true;
-+            break;
-+        }
- 
-         /*
-          * Emulate MMIO.
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 40ada2d..c57abef 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -37,6 +37,7 @@
- #include "whpx_arm.h"
- #include "hw/arm/bsa.h"
- #include "arm-powerctl.h"
-+#include "emulate/arm_emulate.h"
- 
- #include <winhvplatform.h>
- #include <winhvplatformdefs.h>
-@@ -377,6 +378,53 @@ static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
-     whpx_set_reg(cpu, reg, reg_val);
- }
- 
-+/* arm_emul_ops callbacks for WHPX */
-+
-+static uint64_t whpx_emul_read_gpr(CPUState *cpu, int reg)
-+{
-+    return ARM_CPU(cpu)->env.xregs[reg];
-+}
-+
-+static void whpx_emul_write_gpr(CPUState *cpu, int reg, uint64_t val)
-+{
-+    ARM_CPU(cpu)->env.xregs[reg] = val;
-+    cpu->vcpu_dirty = true;
-+}
-+
-+static void whpx_emul_read_fpreg(CPUState *cpu, int reg, void *buf, int size)
-+{
-+    memcpy(buf, &ARM_CPU(cpu)->env.vfp.zregs[reg], size);
-+}
-+
-+static void whpx_emul_write_fpreg(CPUState *cpu, int reg,
-+                                  const void *buf, int size)
-+{
-+    CPUARMState *env = &ARM_CPU(cpu)->env;
-+    memset(&env->vfp.zregs[reg], 0, sizeof(env->vfp.zregs[reg]));
-+    memcpy(&env->vfp.zregs[reg], buf, size);
-+    cpu->vcpu_dirty = true;
-+}
-+
-+static int whpx_emul_read_mem(CPUState *cpu, uint64_t va, void *buf, int size)
-+{
-+    return cpu_memory_rw_debug(cpu, va, buf, size, false);
-+}
-+
-+static int whpx_emul_write_mem(CPUState *cpu, uint64_t va,
-+                               const void *buf, int size)
-+{
-+    return cpu_memory_rw_debug(cpu, va, (void *)buf, size, true);
-+}
-+
-+static const struct arm_emul_ops whpx_arm_emul_ops = {
-+    .read_gpr    = whpx_emul_read_gpr,
-+    .write_gpr   = whpx_emul_write_gpr,
-+    .read_fpreg  = whpx_emul_read_fpreg,
-+    .write_fpreg = whpx_emul_write_fpreg,
-+    .read_mem    = whpx_emul_read_mem,
-+    .write_mem   = whpx_emul_write_mem,
-+};
-+
- static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
- {
-     uint64_t syndrome = ctx->Syndrome;
-@@ -391,7 +439,43 @@ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
-     uint64_t val = 0;
- 
-     assert(!cm);
--    assert(isv);
-+
-+    /*
-+     * ISV=0: syndrome doesn't carry access size/register info.
-+     * Fetch and decode the faulting instruction via the emulation library.
-+     */
-+    if (!isv) {
-+        ARMCPU *arm_cpu = ARM_CPU(cpu);
-+        CPUARMState *env = &arm_cpu->env;
-+        uint32_t insn;
-+        ArmEmulResult r;
-+
-+        cpu_synchronize_state(cpu);
-+
-+        if (cpu_memory_rw_debug(cpu, env->pc,
-+                                (uint8_t *)&insn, 4, false) != 0) {
-+            error_report("WHPX: cannot read insn at pc=0x%" PRIx64,
-+                         (uint64_t)env->pc);
-+            return 0;
-+        }
-+
-+        r = arm_emul_insn(cpu, &whpx_arm_emul_ops, insn);
-+        if (r == ARM_EMUL_UNHANDLED) {
-+            /*
-+             * TODO: Inject data abort into guest instead of
-+             * advancing PC.  Requires setting ESR_EL1/FAR_EL1/
-+             * ELR_EL1/SPSR_EL1 and redirecting to VBAR_EL1.
-+             */
-+            error_report("WHPX: ISV=0 unhandled insn 0x%08x at "
-+                         "pc=0x%" PRIx64, insn, (uint64_t)env->pc);
-+        } else if (r == ARM_EMUL_ERR_MEM) {
-+            error_report("WHPX: ISV=0 memory error emulating "
-+                         "insn 0x%08x at pc=0x%" PRIx64,
-+                         insn, (uint64_t)env->pc);
-+        }
-+
-+        return 0;
-+    }
- 
-     if (iswrite) {
-         val = whpx_get_gp_reg(cpu, srt);
+  - A shared emulation library in target/arm/emulate/ with a decodetree
+    decoder (a64-ldst.decode), usable by any hypervisor backend.
+
+  - A callback-based interface (struct arm_emul_ops) that abstracts
+    register and memory access, keeping the library hypervisor-agnostic.
+
+  - HVF and WHPX backends wired as the first two consumers.
+
+Instruction classes handled (DDI 0487):
+  - Load/store pair: STP, LDP, STNP, LDNP, STGP, LDPSW (C3.3.14-16)
+  - SIMD/FP load/store pair and single (C3.3.10, C3.3.14-16)
+  - All immediate addressing: unscaled, post/pre-index, unsigned offset
+  - Register offset addressing with extend (C3.3.9)
+  - Exclusives: STXR, LDXR, STXP, LDXP (C3.3.6)
+  - Atomics: LDADD, LDCLR, LDEOR, LDSET, LDSMAX/MIN, LDUMAX/MIN, SWP
+  - Compare-and-swap: CAS, CASP (C3.3.1)
+  - LDRAA/LDRAB with FEAT_PAuth (C6.2.121)
+  - PRFM, DC maintenance (as NOPs)
+
+Intentionally omitted (not observed in ISV=0 MMIO traps during testing):
+  - AdvSIMD structure loads/stores (LD1/ST1 etc.)
+  - MTE load/stores (FEAT_MTE)
+  - 128-bit atomics (FEAT_LSE128)
+  - MOPS (FEAT_MOPS)
+
+KVM NISV handling is a natural follow-up -- it requires similar
+arm_emul_ops callbacks using KVM vcpu ioctls.
+
+v1 -> v2:
+  - Moved from HVF-specific inline decoder to shared library
+    in target/arm/emulate/ (Mohamed Mediouni)
+  - Added decodetree decoder for structured instruction parsing
+    (Peter Maydell)
+  - Made hypervisor-agnostic; wired HVF and WHPX (Peter Maydell)
+  - Added CASP register-pair validation (odd/r31 -> UNHANDLED)
+  - Added unit tests (19 test cases)
+  - Split into 3 patches for reviewability
+
+Lucas Amaral (3):
+  target/arm: add AArch64 ISV=0 instruction emulation library
+  tests: add unit tests for ISV=0 emulation library
+  target/arm: wire ISV=0 emulation into HVF and WHPX
+
+ target/arm/emulate/a64-ldst.decode | 293 ++++++++++++
+ target/arm/emulate/arm_emulate.c   | 738 +++++++++++++++++++++++++++++
+ target/arm/emulate/arm_emulate.h   |  55 +++
+ target/arm/emulate/meson.build     |  16 +
+ target/arm/hvf/hvf.c               |  94 +++-
+ target/arm/meson.build             |   1 +
+ target/arm/whpx/whpx-all.c         |  86 +++-
+ tests/unit/meson.build             |   1 +
+ tests/unit/test-arm-emulate.c      | 540 +++++++++++++++++++++
+ 9 files changed, 1820 insertions(+), 4 deletions(-)
+ create mode 100644 target/arm/emulate/a64-ldst.decode
+ create mode 100644 target/arm/emulate/arm_emulate.c
+ create mode 100644 target/arm/emulate/arm_emulate.h
+ create mode 100644 target/arm/emulate/meson.build
+ create mode 100644 tests/unit/test-arm-emulate.c
+
 -- 
 2.52.0
 
