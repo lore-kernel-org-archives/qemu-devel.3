@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA72F106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:24:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9BC33106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:25:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vx0-0002s6-O0; Fri, 13 Mar 2026 02:24:46 -0400
+	id 1w0vx7-00038a-Cy; Fri, 13 Mar 2026 02:24:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwo-0002Oi-3X
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:35 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwt-0002br-TR
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:44 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vwm-0007Io-CZ
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:33 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-439b2965d4bso1325559f8f.2
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:24:31 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vws-0007Jq-Eq
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:24:39 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-439aa2f8ebaso1149615f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:24:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773383070; x=1773987870; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773383076; x=1773987876; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sxfs9J3zv/viMZHXgXVONHohwb6PyhZF7Pg/vNqVUTE=;
- b=nFKdgHq1dca8QXOoSji8WYJGg1j8sUKhf8B0vl3kTzfqP3cwj7+uozhbEBhdA8OSde
- RphdGEy4UWFeh2r2THdWZriM+35rhxlN49h9NAwNitEV44B+z5yHJKWdPlRevVuq6jUS
- Hbjh2KQH8Jrqqyyvim6XVp5xjfjefbLFw5anm+MZG40m9deqNY438PUKS3SaBbt0oiXX
- pUtDCbNdVTd3koDvS2Rzif2pf7d5eJROaFa/9OvPOL9Ljw8+2x4BpxS9yo2dShOVK4zI
- uWLmK210IYLOKOsk77J9B+Y1xhZsfbvibZW2p7vVATw5Ag+4wuU6NAMSn4ppaubvP69k
- CHng==
+ bh=UjwXG3HD3XpvP9/7oovhxigtc1Qpbauxdo4lRyshqBs=;
+ b=GAQlD7xhqq4oFnu67iHqeiZrAzPmeCT/6s+tb3F+Rmn+L50CC7AJWPJYbYmYM4U1Go
+ e3TJiUBUXar+yESCaYal2ycZIlk9JO+05cHVjJSbniwUy5RlufjX8uU6ZxmA3V5r7zWi
+ 9nyXoxZIZYbDceoce8QkGbQR5RexDyyQD9Ed15a3pV/e65UatIgFYV3FZplcHLNDu9MP
+ 3nbqTUWNrhAfxMuf3xntupJwu4iCsJu7Mx1aWThM3lEt10pZEEgWscgzaU/VQRp3ekPh
+ ZVTzJeOokmo4wSjU0aV+bybFrvAoTJ4XxUfJ8bFzkVHbb0Vee3NyNGF/eTIzkDSMhENw
+ Mt5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773383070; x=1773987870;
+ d=1e100.net; s=20251104; t=1773383076; x=1773987876;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=sxfs9J3zv/viMZHXgXVONHohwb6PyhZF7Pg/vNqVUTE=;
- b=Z/SJtelj6wDbLl3ftGLNTcmzo5D9yfm0tHwf/EAKlCud0p6VViKPIIzjNDBDqGVSG1
- mvn8TUVxjUxcJBnmBrTGIFXqFeLp6CHUcAsrCZgjMRZUbBZGSiuthysSJQ0BPX66875H
- i5VnzhiGy4wF7Ehhzleq3d9IvBK3DDW4fglAo/YGgy8d0WdTeEsSZt1MWHMKGV+pgO3j
- n5DhEy+G0G4BuuWjLSQcjwmjaOlwYIxF/VBNEBQZlRPyS/R/0pxVPKnO9oLBx66N3VpM
- fqf+XFSYONMTKW00XpEz+g5po3jhfHkWvTZRnWHaht9QBu1/uQQhF8KvCReDtD6VxYBe
- Bskg==
-X-Gm-Message-State: AOJu0Ywt7TPpPpJ8Z+NLaQnpYhBz8QdVEOiFWgyBs04RF2kfmLhGdpSI
- 5rkc5/uUqHFsAeSWOZrak9cDHLjNBq/aSSkeXCpZ5Srw03OS/BJWhAcNMMOdecwr+qfVqLqAADV
- WWYblX44=
-X-Gm-Gg: ATEYQzxYdM+xswlOUmDD9hxeR2oE7CoOrE2BmcBD1KhVY9jilA0S9pJ52zj7NevS7EL
- H/i78o+MGRp+K9CXwXG9Q3akYa4l6w2jrDToHnAnmC6D7M26aOhGA07eRU71twEzVnyidmU0V5t
- ebk3L1H7rVHvM2frFWQPBgp9o41u93JUUH0InwfDgtCp998NRAhnRvPNvfz7dcX/JcNUapmMbQN
- 0FjG2WP+396o19WHGuI4bJVc/T6Mw//vhvy59TPzBEX5fIi57i9aelaXC68Q/cFMgfBJciz+Esg
- MBWFsB1KScAVjFpmx6uLLYsxbPZI/GIAeXZFN2AF+6cCTdMXatNmi6VtikAD3JzZAqjSX6kU91x
- MpAbxpGYEO5NBzsD+sKUhr3nPu4YE6xi1I+IOU9IEGSoyy9eooPseNaffBWGm/1gLZF2ve25Rug
- 94Txpa0e2BtGTw3OU5QX0MpvnHEAweD5QryGHxy8pfcKwhuKVIF22mQiV+zJ0U6XuKBNgr65SBO
- Fzu2w==
-X-Received: by 2002:a5d:5d02:0:b0:439:d769:ec56 with SMTP id
- ffacd0b85a97d-43a04d15665mr4355357f8f.0.1773383069819; 
- Thu, 12 Mar 2026 23:24:29 -0700 (PDT)
+ bh=UjwXG3HD3XpvP9/7oovhxigtc1Qpbauxdo4lRyshqBs=;
+ b=BSxS2cg3GdtZ09jR5MklG3+4G5+OBcVFkBUrxxdjd+MVPXhiMYRohPWH8J638TeEFN
+ 0y6OvQj5ToeAl1eFu6WRqfvRnsvK0nf59Dxdh8zOvJpQxQLW14YnecQmXet2SRJS2WtR
+ MbMw7R48d+ta9IndLO5QP6hiLF9068N8SQbBoRGrv2F+1V4pOI7fOLBq7M5FfL8k+4yt
+ kpqwyOU8onBa+PM7C6ngjdBsE9IAJ4tS3yB9uqinEPtzpZdPa000bdOAxnSJLYXzDMcK
+ 6nMhjyVxt4NDkYJ2Ef8xkD2UEteLhFQnHLOF56Pgqk5BznHx3EX8Ol7Pk3RmOUHAKDJj
+ DdPQ==
+X-Gm-Message-State: AOJu0Yz7M98/NFpSaxQiZdWj4GIMSJ7gp+w4IyoxPE1ClEssYrCbfxg7
+ VxcqmMG7QSvo9wSvm909N++yak61Hgxu5+ZmkSGy5QFx+upnl/du7uG1htVhEmOtYNfoIyA2lxp
+ U6tNXScI=
+X-Gm-Gg: ATEYQzz3xGzSVw7JTBAJN/CmqHb0WOURhWJ3pqrxqB17ODeIF2PhXUx4IbhTG40haKN
+ cwT0drBTRNMRJ2bWkgEXdpRkTMIeN8n5IowIlJiNXAUMMWymXMIkVsKG4wUlvEm1RBbYBhPKVfl
+ NH7H2z8dbdKAU9VBO8yrBaMvPhzi7MRRoZq6y0k1LyLRKt9rE3fQLsIHfnyDUUCh42MsBYIqI/e
+ 1u0WwZz/p1TVVzEK3sRc3w3uNJtelMjMv7/yNOslTFhsT/+fGrCYN6Y1qJHpT7pTdhFuFrAyLGP
+ Sp9DNw5/E7Pn/nAshss71i2hzdk2rfDLAGELm1sUfXiGESk/6IV2ZuyBXgXjNiZT3+8ZcDaMgKB
+ 41BHrg1hES8vpB8K8GMTDkXU+V7WuVkJIyhfgxsrpYotbP2ySCogwzPHiegZsJjJyHSSoKadW9Q
+ rQijouj2YjgPk9stAl9wLE0WmEFu/ELVFqC0fmFG+P3SqPJvQRKejg0wdM4NPZ3BL0iSrNqRlc6
+ aZclrMXCsTW9hTX
+X-Received: by 2002:a05:6000:2583:b0:439:c1ca:82be with SMTP id
+ ffacd0b85a97d-43a04db18cfmr4041002f8f.28.1773383076471; 
+ Thu, 12 Mar 2026 23:24:36 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe20b544sm15717098f8f.20.2026.03.12.23.24.29
+ ffacd0b85a97d-439fe1b22e7sm15158142f8f.16.2026.03.12.23.24.35
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:24:29 -0700 (PDT)
+ Thu, 12 Mar 2026 23:24:36 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 31/38] hw/s390x: Include full path to target 'cpu.h' header
-Date: Fri, 13 Mar 2026 07:20:47 +0100
-Message-ID: <20260313062055.2188-32-philmd@linaro.org>
+Subject: [PATCH v2 32/38] hw/sh4: Include full path to target 'cpu.h' header
+Date: Fri, 13 Mar 2026 07:20:48 +0100
+Message-ID: <20260313062055.2188-33-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -105,92 +105,36 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/s390x/ipl.h            | 2 +-
- hw/s390x/s390-hypercall.h | 2 +-
- hw/s390x/ap-bridge.c      | 2 +-
- hw/s390x/s390-hypercall.c | 2 +-
- hw/s390x/s390-stattrib.c  | 2 +-
- hw/s390x/tod-tcg.c        | 2 +-
- 6 files changed, 6 insertions(+), 6 deletions(-)
+ hw/intc/sh_intc.c | 2 +-
+ hw/sh4/r2d.c      | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/s390x/ipl.h b/hw/s390x/ipl.h
-index 403cd08450d..fac30763df2 100644
---- a/hw/s390x/ipl.h
-+++ b/hw/s390x/ipl.h
-@@ -13,7 +13,7 @@
- #ifndef HW_S390_IPL_H
- #define HW_S390_IPL_H
- 
--#include "cpu.h"
-+#include "target/s390x/cpu.h"
- #include "exec/target_page.h"
- #include "system/address-spaces.h"
- #include "system/memory.h"
-diff --git a/hw/s390x/s390-hypercall.h b/hw/s390x/s390-hypercall.h
-index 4f07209128c..c5a2b17e858 100644
---- a/hw/s390x/s390-hypercall.h
-+++ b/hw/s390x/s390-hypercall.h
-@@ -12,7 +12,7 @@
- #ifndef HW_S390_HYPERCALL_H
- #define HW_S390_HYPERCALL_H
- 
--#include "cpu.h"
-+#include "target/s390x/cpu.h"
- 
- #define DIAG500_VIRTIO_NOTIFY           0 /* legacy, implemented as a NOP */
- #define DIAG500_VIRTIO_RESET            1 /* legacy */
-diff --git a/hw/s390x/ap-bridge.c b/hw/s390x/ap-bridge.c
-index 5cdbf098074..c7e49d966ba 100644
---- a/hw/s390x/ap-bridge.c
-+++ b/hw/s390x/ap-bridge.c
-@@ -14,7 +14,7 @@
- #include "qemu/bitops.h"
- #include "qemu/module.h"
- #include "hw/s390x/ap-bridge.h"
--#include "cpu.h"
-+#include "target/s390x/cpu.h"
- 
- static char *ap_bus_get_dev_path(DeviceState *dev)
- {
-diff --git a/hw/s390x/s390-hypercall.c b/hw/s390x/s390-hypercall.c
-index 508dd97ca0d..71dc717d08a 100644
---- a/hw/s390x/s390-hypercall.c
-+++ b/hw/s390x/s390-hypercall.c
-@@ -11,7 +11,7 @@
+diff --git a/hw/intc/sh_intc.c b/hw/intc/sh_intc.c
+index 16e4b619d6d..0da82f9d5e0 100644
+--- a/hw/intc/sh_intc.c
++++ b/hw/intc/sh_intc.c
+@@ -10,7 +10,7 @@
  
  #include "qemu/osdep.h"
- #include "qemu/error-report.h"
+ #include "qemu/log.h"
 -#include "cpu.h"
-+#include "target/s390x/cpu.h"
- #include "hw/s390x/s390-virtio-ccw.h"
- #include "hw/s390x/s390-hypercall.h"
- #include "hw/s390x/ioinst.h"
-diff --git a/hw/s390x/s390-stattrib.c b/hw/s390x/s390-stattrib.c
-index d808ece3b92..2e83aa211cd 100644
---- a/hw/s390x/s390-stattrib.c
-+++ b/hw/s390x/s390-stattrib.c
-@@ -20,7 +20,7 @@
- #include "qemu/error-report.h"
++#include "target/sh4/cpu.h"
+ #include "hw/sh4/sh_intc.h"
+ #include "hw/core/irq.h"
+ #include "hw/sh4/sh.h"
+diff --git a/hw/sh4/r2d.c b/hw/sh4/r2d.c
+index acb3fe75a8b..99afe3618e8 100644
+--- a/hw/sh4/r2d.c
++++ b/hw/sh4/r2d.c
+@@ -27,7 +27,7 @@
+ #include "qemu/units.h"
  #include "qapi/error.h"
- #include "qobject/qdict.h"
+ #include "qemu/error-report.h"
 -#include "cpu.h"
-+#include "target/s390x/cpu.h"
- 
- /* 512KiB cover 2GB of guest memory */
- #define CMMA_BLOCK_SIZE  (512 * KiB)
-diff --git a/hw/s390x/tod-tcg.c b/hw/s390x/tod-tcg.c
-index 0cc96624e1b..448b531b2ea 100644
---- a/hw/s390x/tod-tcg.c
-+++ b/hw/s390x/tod-tcg.c
-@@ -14,7 +14,7 @@
- #include "qemu/timer.h"
- #include "qemu/cutils.h"
- #include "qemu/module.h"
--#include "cpu.h"
-+#include "target/s390x/cpu.h"
- #include "tcg/tcg_s390x.h"
- #include "system/rtc.h"
- 
++#include "target/sh4/cpu.h"
+ #include "hw/core/sysbus.h"
+ #include "hw/sh4/sh.h"
+ #include "system/reset.h"
 -- 
 2.53.0
 
