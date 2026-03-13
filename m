@@ -4,108 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B257103E302
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 00:12:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D9CD106ACFE
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 00:12:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0q8r-0002p3-Kn; Thu, 12 Mar 2026 20:12:38 -0400
+	id 1w0q8f-0002aZ-S1; Thu, 12 Mar 2026 20:12:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1w0q8p-0002jH-1D
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 20:12:35 -0400
-Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1w0q8c-0002aE-3H
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 20:12:22 -0400
+Received: from mail-ed1-x531.google.com ([2a00:1450:4864:20::531])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <wlosh@bsdimp.com>) id 1w0q8l-0007Vk-NZ
- for qemu-devel@nongnu.org; Thu, 12 Mar 2026 20:12:34 -0400
-Received: by mail-pl1-x635.google.com with SMTP id
- d9443c01a7336-2ab39b111b9so7371625ad.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 17:12:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773360749; cv=none;
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1w0q8Z-0007QN-MB
+ for qemu-devel@nongnu.org; Thu, 12 Mar 2026 20:12:21 -0400
+Received: by mail-ed1-x531.google.com with SMTP id
+ 4fb4d7f45d1cf-661be3380adso2731347a12.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 17:12:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773360738; cv=none;
  d=google.com; s=arc-20240605;
- b=j7QoaTymKZuv//mI7W2K0KFRof+cgEhcRTdQGq7tgzVnDuo6zT7TtaCIopCBlJTmYy
- wCvyhSlbfOVqq1fNUCLkMFf+vG6mbwdShOL/wI17OCOZkG68jMQFJUPrgSJk8WrjvqKC
- 7HfTZiuukbAwiFPbOyaE86usWnXzPYRkCZQtpkyTJVOxYKVxMZ0yUfc0RIGc0B5rKqjT
- 39AUlPL1AC0Hpof5/gVOx7S7/SsKac9pKwVzWq6HiRAx+pX0qWfkv6jEiQ+vvZ1l0Isv
- 9Eru07X56ng7LgqZRYR3BEnX7mFrsx/WI48BvkHSNbUVp3Z6KMveoEV6IvvorC2RXwgD
- /GiA==
+ b=XhSjcRugds7mXz88XmVJDZ09mHVthW9Est+4F/V6tj1Ru19cnHnXso01+MmSYunjUk
+ bc3EafTRIkOk3dyT8l/o5WmzvbP8zTf/+MHYFBJcKwk2gxj828q0xvFWAGvLtVnIMA67
+ LRwowaVb6cVh6ExJoYr71FjV7Qz78pTEwad9GXFAnWsncLoxgoTMiKHrTr1Nl2uZSpk3
+ qqrH6mORRb5zVI6oxGbOQ6Tyq+e79MolOF/45s2crw0VOSrw7vW2GHDphnbX9GOwevh2
+ t8m9NP8/chAm1aDbYGlXn06PF2QdjtAFoHwDIKNZcosCK25vgQfrHNVKmG9QbsbcVRBg
+ jN6A==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=OjBm+2G6HffmDMl10bimeRJI9K+fHlO2xib3SH/tjIY=;
- fh=uZjA6eME2UYXWQGU+EK8sRcWyZEOpV51D9lL83dayHw=;
- b=hH8aJHoZqtBWIFoQUeJb+zPODlfq8D3xkuwTVd870BSlrAlDN3AqwAmWyUHy+iEARh
- HYWQTtES701pSJDiFeN83cZdyiGRS+CXzEj6+UuYoVx1nvU1VT+4cGepDdO+AhxS6xoT
- iD2H1Qz7E2MuBDqA0FTa5++02fA8jivYgkG48PXi6q3CwE+gmKIz1cgO15H8VRXbZfBN
- C9l+aMPjIoIebNJBxLGOkt5HOwNfLCTs02O3mU6rze4HdE9FA57m13IxaF3mMDFOpwok
- TiEfcEs84DMq3x3M3x/DMgdUlWMUGEESBcYe5kC3AU1VGs5GsvCkFtwduyJfvA4roUmW
- CpjQ==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=ZnpovbmNhh3FM7r5W61xe75pTPWS8KphWs7RN9AitRc=;
+ fh=m6H9ss9c/eD6DjmG5r02IS7MGClkMxag8NOABzOAE8g=;
+ b=Yzo9+N99roF1l7KFrKHXRrKea1ujnkzSGPYEUHrngtoCtkCl5wZcQ3DYj8qmHLIPGG
+ 6NSV999rbxIDybpV0Lufc9/XsH0Coi50bMpelKdqbqhGgW42c3prcoXiBgc+0hL3qW13
+ PNoHIBMODX22T12P4F9VWfblVPJOfk0j/r9KVxMUY5v2/yZAUmtsOUF6y7kVosCV70uV
+ 66auy9RZZp9w0M5mg3bpROGbwDSjt3KYPQ5yFVdZbgRVW9VVVDI3dHihP4Ue3A26tIy5
+ vU0agqMxzoBzxzi4WEv9u5HXLfjowV1vcRn+V161jT/MUJkVaxppPfejf937GKu475jK
+ NMNQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=bsdimp-com.20230601.gappssmtp.com; s=20230601; t=1773360749; x=1773965549;
- darn=nongnu.org; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=OjBm+2G6HffmDMl10bimeRJI9K+fHlO2xib3SH/tjIY=;
- b=lv6wMw8Lzh2wPKcaCwRTiL6AuQujEFH3xHlmn5ZJTKsYveZhdQLAnhYiO4B/8UA3vx
- 87/FesovHM+gxAect64XVlgxU9ykkPklfLDIDl0RmEc0aHUVNMYj8vNGxPjQQ0t5AGJR
- TLdqFrBzFtDw0nL6ov7rNy/SLHeWE3amW0hXWfNswaCkmKrtYto4VN9PwYmratsPVEPN
- RYSPtI+AQ3tsJZTWg/WdY3tZXezljq5Cvu0tQze1o19WYZXgrD2qWovoP4B8s2pWO0fk
- hynj1eojISBMV+HuxMvJKIIKw4yWSTGnrmz0oc8+KNxKhtsVu7nH4ycxuuRJKD9ptaPs
- 4M0Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773360749; x=1773965549;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773360738; x=1773965538; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=OjBm+2G6HffmDMl10bimeRJI9K+fHlO2xib3SH/tjIY=;
- b=g41TWkwFdOjzZY664r9GxPxqVnbNAWMcsmUeDtVR51k6Q7E/dNkyHm4d3yA3KlyOVq
- 1/snOouzgC0uQhnYaxnvrd6MpvCcEqJwW7h7huk7lFvU3s3wIv6XRt4vOUdlvKPRkd0G
- uve715Y4CCOTNZWKv5JiumH0kwVAHoKfW2XCH2IpbE2jA/75mf0qDIBT34lx7zf45TOp
- h7ZxZdMEwsDNaIqC9j9jWecSKmcaA1VxS5KkBIWQvWtrKRG8IQxukEeiZ6WTplH75iyf
- 2Wr2vdnzHWbAxCXYONZbbEj8dfGFIxa29tgT1sFgrUm6pzo7QuC1wlRT6o3lJisb8RqJ
- Ktrg==
-X-Gm-Message-State: AOJu0YxfTFg4TDE9KMBz7cnbj0uJl3K3au2if1UcUuDplp5wfQfp6NK+
- +h6zUvr4WRnHtRGIb5huseSHF4bet3765Hg8kFVoESJj2enBBUzizbDBnuYBAgo9T5dFLX2Cr6B
- VgRjZJHwZHQNRlH3/U5O9f7xhiSaJiimDiFh5HzZReg==
-X-Gm-Gg: ATEYQzyFC4XlT5PsP4uOw3EDuTt19n/E4VMKHWOMcmG/pEEzjn4tG+LtJyIeCwih5S8
- vuAv49SiJnkTEI4ccium3Lrkl6A20rLdmtdYayABJ3AF41+KxQrbksWVtYi071THRdS/IQosyk3
- 9+EHZfFvfaMsrfgPe3DDOsNVmp2zG01fgn9NXVsu/1gHZt83O2ARubDarTIfHuA3TVlJgi0PNcU
- 5wdIZBGd8RZItZn5LNAI0X89prh/CopsPPg72Yt5venqyyU6jBYb27lmsRQnhfpeI8x4ReG4WxX
- jC+Q7eY=
-X-Received: by 2002:a17:903:2b06:b0:2ae:c001:834b with SMTP id
- d9443c01a7336-2aecac3e7bdmr11482945ad.39.1773360749054; Thu, 12 Mar 2026
- 17:12:29 -0700 (PDT)
+ bh=ZnpovbmNhh3FM7r5W61xe75pTPWS8KphWs7RN9AitRc=;
+ b=K3P3D55DyJClBcgkaBC8xS3PqsyRWlXnYyDvdmPMzFtctEgHEhDwndPCWeKNL0rfpN
+ F65MXqurQH4+LioXdkCjVjcbtP0ptV5AtWs9nZz0kaC6TxN67YH1XNNOxyqIet0qyNEb
+ cPoIuDNQskQsinymtEWWjSh1p7GIEf3pMchgFXQJVmpO3TieQRpRG3GxY0J0CCQ1oinB
+ RNc0afwJsyO+5xgNxU0hGhs4dT1RSp2MZjT4ZTraaJMOww0gy8/ushUv+w6GFgUwcyyP
+ MQRwl96dm0LGLtcFBB9tSAaJricczPIPmeHSrNErkJf6WfkokGQoErVKdlj8foDmNR6G
+ Bhkg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773360738; x=1773965538;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ZnpovbmNhh3FM7r5W61xe75pTPWS8KphWs7RN9AitRc=;
+ b=Lisy/VbzKD9ufBig6/4Vs7+7arGH9bUHOhfr5Y5b4Z28468xJsRrbUqMp72NaozORk
+ v176+OWr4UHxmv5POStdYsUzCA33anzvORCFuJMENv6vqWFSXaUw7k8IdyfwPcmBOGhI
+ XlC4XN4b8nIXjIUKJrdbgGmc+yP5bo1LDdItonaZp0T5/1v8ph2v+zNLD9/CBUXfcwe0
+ f+RO3yJ/cWp3DlcVD1Zmx/iDE9tgSTXJKLEUYQKtbmP4Y0+tpXMSjpdqeOxf2iMd0GPA
+ bJpCUBmcYsJ7rGrs+dBpN24vNJQEVqgWH3Nk8ZctqjR5c/ZVCkZu7f6qoowurHIyFXh9
+ xJzw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUrEAoAwbYhzujSGlAMv3sDB7gJmJKcMCtA0MXAROh47S+5jT+dGMCknZhsagbmk3jzSkm1ckQRneg1@nongnu.org
+X-Gm-Message-State: AOJu0YzY/55vDMQfLag5xvFtiD6SmCbBU6C8AQJdYMrXyEx0MlRvGjE9
+ QNUx+Jx819MC8iV1yp1SIWE5eshjEQsvuMID03Uqrf8Fua3b0VqBoVJUtuiSTwtGWQAa0CGnVOI
+ L8jqBjq0VPLHmcqunOX5xeqRl6jhSWVw=
+X-Gm-Gg: ATEYQzysdRtGoL5vR24TVehu/WWdMZzr/C2GJHBmbrFVYLcmJW780EsxcgHPXT7fOtE
+ h64iET/YTnuRLLWovwG0Gq5Oih/cheIetZW+qzlTCCAqHc1MJWR8QG4XL9D4tfoYtQf/VhH1jbW
+ 0XokDMhyD2NFnctRXJuVsuPq2JrgzzUFWvM46RnS/PQCoO/tDOep3uTzaVNJPpf120EwXogPt4b
+ FPC29uB2PnQ05eLHWHBWg/CyeWyC5Kd+H7KW/3vp1mDGSgCtDA5JyWkvrLY32iu2oo7ilyWU7b0
+ H5yQqDOt3uBtWlb8AWbpXZQMTeiZhqyDLnrhag==
+X-Received: by 2002:a05:6402:348f:b0:662:9f1c:8023 with SMTP id
+ 4fb4d7f45d1cf-663babf0c2emr725913a12.21.1773360737758; Thu, 12 Mar 2026
+ 17:12:17 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260312-share-thunk-v1-1-2f36003a1913@bsdimp.com>
- <ffc224cc-72ed-49ee-93ea-8a28d220ae55@linaro.org>
- <CANCZdfo8cEp8_078o4bEwCo63vL+W5NW9ukeQR0nMACJBQXysw@mail.gmail.com>
- <68903178-92ef-4956-b815-dc4c4533507d@linaro.org>
- <CANCZdfqCu13nJysw3Rwhe7GJWzdSkstKCKkQAR7u0cJFOJaY-g@mail.gmail.com>
- <8dae5368-4584-40d6-a460-51b90b2491eb@linaro.org>
-In-Reply-To: <8dae5368-4584-40d6-a460-51b90b2491eb@linaro.org>
-From: Warner Losh <imp@bsdimp.com>
-Date: Thu, 12 Mar 2026 18:12:18 -0600
-X-Gm-Features: AaiRm50Jw_vwfhez6obYw4qz7lZUayonPOFwV8uRyk3_YtXiujrMybWwHXcJf_I
-Message-ID: <CANCZdfoAXX6mkgU+TR8gmNg1uBn33SfMdYs97dkHHg3b6-w-Nw@mail.gmail.com>
-Subject: Re: [PATCH RFC] common-user: Share thunk.c between bsd-user and
- linux-user
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, "Daniel P. Berrange" <berrange@redhat.com>, 
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: multipart/alternative; boundary="000000000000819d65064cdcb91b"
-Received-SPF: none client-ip=2607:f8b0:4864:20::635;
- envelope-from=wlosh@bsdimp.com; helo=mail-pl1-x635.google.com
-X-Spam_score_int: -18
-X-Spam_score: -1.9
+References: <20260312134210.5823-1-james.wainwright@lowrisc.org>
+ <20260312134210.5823-4-james.wainwright@lowrisc.org>
+In-Reply-To: <20260312134210.5823-4-james.wainwright@lowrisc.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Fri, 13 Mar 2026 10:11:51 +1000
+X-Gm-Features: AaiRm53B0s102-FQ4994a7k2fuKqRDm4IJNFXtRp4OCum1kVU85ZMGNHXM2ekgM
+Message-ID: <CAKmqyKP=LUaWgfPFLHJ7NYKiruBP6CE+ac4JhtyW5LFkG_ecAw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/3] disas: diassemble RISC-V xlrbr (crc32) instructions
+To: James Wainwright <james.wainwright@lowrisc.org>
+Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org, alistair.francis@wdc.com, 
+ Emmanuel Blot <eblot@rivosinc.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::531;
+ envelope-from=alistair23@gmail.com; helo=mail-ed1-x531.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
- SPF_HELO_NONE=0.001, SPF_NONE=0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,592 +120,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000819d65064cdcb91b
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On Thu, Mar 12, 2026 at 11:44=E2=80=AFPM James Wainwright
+<james.wainwright@lowrisc.org> wrote:
+>
+> From: Emmanuel Blot <eblot@rivosinc.com>
+>
+> Placed in a separate file as a vendor extension.
+>
+> Signed-off-by: James Wainwright <james.wainwright@lowrisc.org>
 
-On Thu, Mar 12, 2026 at 5:50=E2=80=AFPM Pierrick Bouvier <
-pierrick.bouvier@linaro.org> wrote:
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-> On 3/12/26 4:17 PM, Warner Losh wrote:
-> >
-> >
-> > On Thu, Mar 12, 2026 at 4:36=E2=80=AFPM Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org <mailto:pierrick.bouvier@linaro.org>>
-> wrote:
-> >
-> >     On 3/12/26 1:19 PM, Warner Losh wrote:
-> >      >
-> >      >
-> >      > On Thu, Mar 12, 2026 at 11:52=E2=80=AFAM Pierrick Bouvier
-> >      > <pierrick.bouvier@linaro.org <mailto:pierrick.bouvier@linaro.org=
->
-> >     <mailto:pierrick.bouvier@linaro.org
-> >     <mailto:pierrick.bouvier@linaro.org>>> wrote:
-> >      >
-> >      >     On 3/12/26 6:10 AM, Warner Losh wrote:
-> >      >      > thunk.c is the same between linux-user and bsd-user (out
-> >     of tree),
-> >      >      > so share it between the two.
-> >      >      >
-> >      >      > Signed-off-by: Warner Losh <imp@bsdimp.com
-> >     <mailto:imp@bsdimp.com> <mailto:imp@bsdimp.com <mailto:
-> imp@bsdimp.com>>>
-> >      >      > ---
-> >      >      > As part of upstream blitz bsd-user, I've discovered that
-> >     bsd-user and
-> >      >      > linux-user have the same thunk.c file. Rather than copy
-> >     it, put
-> >      >     it into
-> >      >      > the common-user directory and share it. It has to be
-> compiled
-> >      >      > per-target, unlike the rest of common-user, so modify
-> >     linux-user and
-> >      >      > bsd-user to grab it from there.
-> >      >      > ---
-> >      >      >   bsd-user/meson.build                | 1 +
-> >      >      >   {linux-user =3D> common-user}/thunk.c | 0
-> >      >      >   linux-user/meson.build              | 2 +-
-> >      >      >   3 files changed, 2 insertions(+), 1 deletion(-)
-> >      >      >
-> >      >
-> >      >     Indeed, thunk.c seems to be highly target specific.
-> >      >     A good solution would be to move common functions to
-> common-user/
-> >      >     thunk.c
-> >      >     and the rest in include/user/thunk.h. It may be cleaner than
-> >     doing the
-> >      >     meson hack. Or leave it duplicated for now, except if you
-> plan on
-> >      >     modifying it.
-> >      >
-> >      >
-> >      > My concern with leaving it duplicated is the process. I create a
-> >     patch
-> >      > to create
-> >      > bsd-user/thunk.c that's a verbatim copy of linux-user/thunk.c.
-> >     Despite
-> >      > putting in
-> >      > my cover that this is copied code, if past is prologue, then I'l=
-l
-> be
-> >      > asked to fix the
-> >      > copyright and style, plus lots of suggestions to improve the
-> >     code. But
-> >      > it's just a
-> >      > verbatim copy, so that's a lot of hassle just to copy it.
-> >      >
-> >
-> >     I understand, and it's a good intention to want to remove this
-> >     duplication. However, I'm not convinced a build system hack is bett=
-er
-> >     than a duplication.
-> >
-> >
-> > Yup, if it were frictionless to duplicated, I'd just do that. But
-> > there's always
-> > some hassle or another that comes from it. And it's a dependency on doi=
-ng
-> > the ioctl round of upstreaming.
-> >
-> >      > Moving like this, though, is almost 0 friction. A small tweak to
-> >     meson
-> >      > is all that's
-> >      > needed. I suppose I could do the #include "../linux-user/trunk.c=
-"
-> >     trick
-> >      > to make it
-> >      > less ugly in the build system, but then it's not clear it's
-> >     shared, etc
-> >      > and more ugly
-> >      > in the code, imho.
-> >      >
-> >
-> >     Yes, it's a hack, that's what it's for, "quick and that works but
-> not a
-> >     proper solution".
-> >
-> >      > I tried to move this stuff into thunk.h as much as possible so w=
-e
-> >     could
-> >      > have one
-> >      > compilation, and that didn't work. It really assumes that it can
-> >     include
-> >      > qemu.h for
-> >      > the tswap, etc macros. So it's impossible to just build once.
-> >      >
-> >
-> >     Yes, not all functions can be compiled once because they have targe=
-t
-> >     dependencies. That's why I invited you to simply extract common
-> >     functions to common-user/thunk.c and leave the target specific bits
-> in
-> >     thunk.h (with static inline functions), or in a thunk-target.h
-> >     header if
-> >     you really want to do it cleanly. That's the proper solution here.
-> >
-> >     Build systems and preprocessor are not a shortcut to proper softwar=
-e
-> >     architecture, even though QEMU abused both of them to this end.
-> >
-> >
-> > Yea. I'm looking for a reasonable tradeoff. I'm open to suggestions, an=
-d
-> am
-> > even willing to split things up: "now the hack, I'll remove it within a
-> > year" sort
-> > of thing just to get this years-long process of upstreaming done.
-> >
->
-> As mentioned, I think that extracting common part in a file and put the
-> rest in thunk-target.h is the best approach here.
->
-> If creating a new file creates too much frustration, I would be happy to
-> give you a reviewed-by on simply moving all functions as static inline
-> ones in thunk-target.h.
->
-> And if even this is still too complicated, I would be happy to give a
-> reviewed-by on any copyright change for this file.
->
-> You have now 3 solutions without any hack :)
->
+Alistair
 
-Great! I'll give it another run. My earlier attempts were in the inbetween
-spaces of my day.
-
-Moving to a new file isn't so bad. That seems to be fine to regularize the
-copyright stuff. I'll give that a try and see if I can find the right way
-to refactor that's not obnoxious.... and doesn't break anything...
-
-
-> >      > Now looking at the code, a lot of it would be a lot simpler with
-> >      > 'Generic', but that's
-> >      > a battle for another day. As is the notion of just generating
-> >     this data
-> >      > from the .h files
-> >      > rather than hard-coding it here, but that too is a battle for
-> >     another
-> >      > day. I'd like to
-> >      > get this upstreamed so I'm spending my time on these sorts of
-> >     battle.s
-> >      >
-> >
-> >     I totally get it, and we have been dealing with a lot of things lik=
-e
-> >     this for the single-binary topic, trying to find the good compromis=
-es
-> >     between refactoring APIs and doing limited changes.
-> >
-> >     If extracting the common and target part looks like too much work,
-> just
-> >     leave it and simply change the copyright header, it's not a big
-> >     thing to
-> >     do, and you can modify both in the same series, no one will yell at
-> you
-> >     for changing comments in one file in linux-user.
-> >
-> >
-> > Yea. You should have seen the pushback I got from changing the copyrigh=
-t
-> > header when I had the permissions to do it....  If I copy the file, it'=
-s
-> > a full copy, verbatim, no changes. It's not my code, so I can't change
-> > things.  I have a similar issue from some code I plan on copying from
-> > FreeBSD to avoid having to chase the strace.list stuff. Since I can
-> > easily hack upstream FreeBSD to be what I need for qemu, I'll evolve
-> > things there (ideally, just making it a private library I can hook into
-> > the bsd-user build for tracing so qemu gets whatever FreeBSD does in
-> > truss for free...
-> >
+> ---
+>  MAINTAINERS         |  2 +-
+>  disas/meson.build   |  3 +-
+>  disas/riscv-xlrbr.c | 79 +++++++++++++++++++++++++++++++++++++++++++++
+>  disas/riscv-xlrbr.h | 19 +++++++++++
+>  disas/riscv.c       |  2 ++
+>  5 files changed, 103 insertions(+), 2 deletions(-)
+>  create mode 100644 disas/riscv-xlrbr.c
+>  create mode 100644 disas/riscv-xlrbr.h
 >
-> I indeed read this thread, which was pointed to me by other people who
-> read it also. Our general opinion was that it's totally unfair to push
-> all this on you, and that idealism on license comments is absolutely not
-> worth all the hassle, especially for someone trying to help on his free
-> time. Even for someone paid to do it, it would not be worth.
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 847fd414bc..12f106f4c4 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -4154,7 +4154,7 @@ M: Alistair Francis <Alistair.Francis@wdc.com>
+>  L: qemu-riscv@nongnu.org
+>  S: Maintained
+>  F: tcg/riscv64/
+> -F: disas/riscv.[ch]
+> +F: disas/riscv*.[ch]
 >
-
-Yea. I'm mostly happy to follow the rules, if I know what they are and they
-don't cause too much extra work that sidetrack me. I think I have them now,
-and pre-did all the copyright header fuzziness that I had permission to do
-in bsd-user so the next round shouldn't be so weird.
-
-
-> I ran as well into issues of pragmatism vs idealism with the concerned
-> person on this thread, and there is alas no proper solution to end this
-> behavior. The simplest way to deal with it is to stick to rationale
-> arguments, not let it go and don't apologize for saying "No, it's
-> unreasonable to ask for this".
-> If enough people do this, it might end up triggering a positive change
-> in the community, instead of implicitely validating this behavior
-> blocking contributions.
+>  S390 TCG target
+>  M: Richard Henderson <richard.henderson@linaro.org>
+> diff --git a/disas/meson.build b/disas/meson.build
+> index bbfa119783..42977a1f74 100644
+> --- a/disas/meson.build
+> +++ b/disas/meson.build
+> @@ -7,7 +7,8 @@ common_ss.add(when: 'CONFIG_MIPS_DIS', if_true: files('mi=
+ps.c', 'nanomips.c'))
+>  common_ss.add(when: 'CONFIG_RISCV_DIS', if_true: files(
+>      'riscv.c',
+>      'riscv-xthead.c',
+> -    'riscv-xventana.c'
+> +    'riscv-xventana.c',
+> +    'riscv-xlrbr.c'
+>  ))
+>  common_ss.add(when: 'CONFIG_SH4_DIS', if_true: files('sh4.c'))
+>  common_ss.add(when: 'CONFIG_SPARC_DIS', if_true: files('sparc.c'))
+> diff --git a/disas/riscv-xlrbr.c b/disas/riscv-xlrbr.c
+> new file mode 100644
+> index 0000000000..57cb434523
+> --- /dev/null
+> +++ b/disas/riscv-xlrbr.c
+> @@ -0,0 +1,79 @@
+> +/*
+> + * QEMU RISC-V Disassembler for xlrbr matching the unratified Zbr CRC32
+> + * bitmanip extension v0.93.
+> + *
+> + * Copyright (c) 2023 Rivos Inc
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +
+> +#include "disas/riscv.h"
+> +#include "disas/riscv-xlrbr.h"
+> +
+> +typedef enum {
+> +    /* 0 is reserved for rv_op_illegal. */
+> +    rv_op_crc32_b =3D 1,
+> +    rv_op_crc32_h =3D 2,
+> +    rv_op_crc32_w =3D 3,
+> +    rv_op_crc32_d =3D 4,
+> +    rv_op_crc32c_b =3D 5,
+> +    rv_op_crc32c_h =3D 6,
+> +    rv_op_crc32c_w =3D 7,
+> +    rv_op_crc32c_d =3D 8,
+> +} rv_xlrbr_op;
+> +
+> +const rv_opcode_data rv_xlrbr_opcode_data[] =3D {
+> +    { "illegal", rv_codec_illegal, rv_fmt_none, NULL, 0, 0, 0 },
+> +    { "crc32.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +    { "crc32.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +    { "crc32.w", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +    { "crc32.d", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +    { "crc32c.b", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +    { "crc32c.h", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +    { "crc32c.w", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +    { "crc32c.d", rv_codec_r, rv_fmt_rd_rs1, NULL, 0, 0, 0 },
+> +};
+> +
+> +void decode_xlrbr(rv_decode *dec, rv_isa isa)
+> +{
+> +    rv_inst inst =3D dec->inst;
+> +    rv_opcode op =3D rv_op_illegal;
+> +
+> +    switch ((inst >> 0) & 0b1111111) {
+> +    case 0b0010011:
+> +        switch ((inst >> 12) & 0b111) {
+> +        case 0b001:
+> +            switch ((inst >> 20 & 0b111111111111)) {
+> +            case 0b011000010000:
+> +                op =3D rv_op_crc32_b;
+> +                break;
+> +            case 0b011000010001:
+> +                op =3D rv_op_crc32_h;
+> +                break;
+> +            case 0b011000010010:
+> +                op =3D rv_op_crc32_w;
+> +                break;
+> +            case 0b011000010011:
+> +                op =3D rv_op_crc32_d;
+> +                break;
+> +            case 0b011000011000:
+> +                op =3D rv_op_crc32c_b;
+> +                break;
+> +            case 0b011000011001:
+> +                op =3D rv_op_crc32c_h;
+> +                break;
+> +            case 0b011000011010:
+> +                op =3D rv_op_crc32c_w;
+> +                break;
+> +            case 0b011000011011:
+> +                op =3D rv_op_crc32c_d;
+> +                break;
+> +            }
+> +            break;
+> +        }
+> +        break;
+> +    }
+> +    dec->op =3D op;
+> +}
+> diff --git a/disas/riscv-xlrbr.h b/disas/riscv-xlrbr.h
+> new file mode 100644
+> index 0000000000..939a69ea6d
+> --- /dev/null
+> +++ b/disas/riscv-xlrbr.h
+> @@ -0,0 +1,19 @@
+> +/*
+> + * QEMU RISC-V Disassembler for xlrbr matching the unratified Zbr CRC32
+> + * bitmanip extension v0.93.
+> + *
+> + * Copyright (c) 2023 Rivos Inc
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef DISAS_RISCV_XLRBR_H
+> +#define DISAS_RISCV_XLRBR_H
+> +
+> +#include "disas/riscv.h"
+> +
+> +extern const rv_opcode_data rv_xlrbr_opcode_data[];
+> +
+> +void decode_xlrbr(rv_decode *, rv_isa);
+> +
+> +#endif /* DISAS_RISCV_XLRBR_H */
+> diff --git a/disas/riscv.c b/disas/riscv.c
+> index 6f2667482d..d416a4d6b3 100644
+> --- a/disas/riscv.c
+> +++ b/disas/riscv.c
+> @@ -26,6 +26,7 @@
+>  /* Vendor extensions */
+>  #include "disas/riscv-xthead.h"
+>  #include "disas/riscv-xventana.h"
+> +#include "disas/riscv-xlrbr.h"
 >
-> For concerned bsd-user files, and using a rationale approach, I would
-> simply suggest to contact past contributors of those files to collect a
-> OK, or ideally ask them to answer on this thread and mention "I'm ok".
-> If they don't answer after one week, consider it's an implicit ok. Then
-> move on, and pull the changes. No one will come sue you or QEMU for a
-> copyright comment.
+>  typedef enum {
+>      /* 0 is reserved for rv_op_illegal. */
+> @@ -5434,6 +5435,7 @@ static GString *disasm_inst(rv_isa isa, uint64_t pc=
+, rv_inst inst,
+>          { has_xtheadmempair_p, xthead_opcode_data, decode_xtheadmempair =
+},
+>          { has_xtheadsync_p, xthead_opcode_data, decode_xtheadsync },
+>          { has_XVentanaCondOps_p, ventana_opcode_data, decode_xventanacon=
+dops },
+> +        { has_xlrbr_p, rv_xlrbr_opcode_data, decode_xlrbr },
+>      };
 >
-
-Yea. Sounds fair. I'll have another blast of about 100 patches, and that
-should get us down to ioctls and truss needing to be merged, which I hope
-to find a novel solution for... Better to merge the stuff w/o known hassles
-then do the hassle-ful stuff.  Once I get it all in, my time can go to
-making things better again...
-
-Thanks for the help and listening to my concerns.
-
-Warner
-
-
-> > But maybe the next round is all but the ioclts and see if some other
-> > solution can be found in the interim.
-> >
-> > Or maybe I'll find the right people that can sign off on 'just copy it'
-> > so I can get on with things :)
-> >
-> >     As you said, pick up the right battles and ignore the rest.
-> >
-> >
-> > Yea. Maybe the next round will just be the simple stuff w/o battles....
-> >
-> >      > Warner
-> >
-> >     Regards,
-> >     Pierrick
-> >
+>      for (size_t i =3D 0; i < ARRAY_SIZE(decoders); i++) {
+> --
+> 2.48.1
 >
-> Thanks for all the work you're doing on bsd side, this part really needs
-> some love, and it's really good to see someone giving it.
 >
-> Regards,
-> Pierrick
->
-
---000000000000819d65064cdcb91b
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Thu, Mar 12,=
- 2026 at 5:50=E2=80=AFPM Pierrick Bouvier &lt;<a href=3D"mailto:pierrick.bo=
-uvier@linaro.org">pierrick.bouvier@linaro.org</a>&gt; wrote:<br></div><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex">On 3/12/26 4:17 PM, Warner Los=
-h wrote:<br>
-&gt; <br>
-&gt; <br>
-&gt; On Thu, Mar 12, 2026 at 4:36=E2=80=AFPM Pierrick Bouvier <br>
-&gt; &lt;<a href=3D"mailto:pierrick.bouvier@linaro.org" target=3D"_blank">p=
-ierrick.bouvier@linaro.org</a> &lt;mailto:<a href=3D"mailto:pierrick.bouvie=
-r@linaro.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;&gt; wro=
-te:<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0On 3/12/26 1:19 PM, Warner Losh wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; On Thu, Mar 12, 2026 at 11:52=E2=80=AFAM Pier=
-rick Bouvier<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; &lt;<a href=3D"mailto:pierrick.bouvier@linaro=
-.org" target=3D"_blank">pierrick.bouvier@linaro.org</a> &lt;mailto:<a href=
-=3D"mailto:pierrick.bouvier@linaro.org" target=3D"_blank">pierrick.bouvier@=
-linaro.org</a>&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:pierrick.bouvier@linar=
-o.org" target=3D"_blank">pierrick.bouvier@linaro.org</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:pierrick.bouvier@linar=
-o.org" target=3D"_blank">pierrick.bouvier@linaro.org</a>&gt;&gt;&gt; wrote:=
-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0On 3/12/26 6:10 AM, Warner=
- Losh wrote:<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; thunk.c is the same =
-between linux-user and bsd-user (out<br>
-&gt;=C2=A0 =C2=A0 =C2=A0of tree),<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; so share it between =
-the two.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; Signed-off-by: Warne=
-r Losh &lt;<a href=3D"mailto:imp@bsdimp.com" target=3D"_blank">imp@bsdimp.c=
-om</a><br>
-&gt;=C2=A0 =C2=A0 =C2=A0&lt;mailto:<a href=3D"mailto:imp@bsdimp.com" target=
-=3D"_blank">imp@bsdimp.com</a>&gt; &lt;mailto:<a href=3D"mailto:imp@bsdimp.=
-com" target=3D"_blank">imp@bsdimp.com</a> &lt;mailto:<a href=3D"mailto:imp@=
-bsdimp.com" target=3D"_blank">imp@bsdimp.com</a>&gt;&gt;&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; ---<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; As part of upstream =
-blitz bsd-user, I&#39;ve discovered that<br>
-&gt;=C2=A0 =C2=A0 =C2=A0bsd-user and<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; linux-user have the =
-same thunk.c file. Rather than copy<br>
-&gt;=C2=A0 =C2=A0 =C2=A0it, put<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0it into<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; the common-user dire=
-ctory and share it. It has to be compiled<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; per-target, unlike t=
-he rest of common-user, so modify<br>
-&gt;=C2=A0 =C2=A0 =C2=A0linux-user and<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; bsd-user to grab it =
-from there.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt; ---<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0bsd-user=
-/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 1 +<b=
-r>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0{linux-u=
-ser =3D&gt; common-user}/thunk.c | 0<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0linux-us=
-er/meson.build=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 | 2 +-<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A03 files =
-changed, 2 insertions(+), 1 deletion(-)<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0Indeed, thunk.c seems to b=
-e highly target specific.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0A good solution would be t=
-o move common functions to common-user/<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0thunk.c<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0and the rest in include/us=
-er/thunk.h. It may be cleaner than<br>
-&gt;=C2=A0 =C2=A0 =C2=A0doing the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0meson hack. Or leave it du=
-plicated for now, except if you plan on<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;=C2=A0 =C2=A0 =C2=A0modifying it.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; My concern with leaving it duplicated is the =
-process. I create a<br>
-&gt;=C2=A0 =C2=A0 =C2=A0patch<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; to create<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; bsd-user/thunk.c that&#39;s a verbatim copy o=
-f linux-user/thunk.c.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Despite<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; putting in<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; my cover that this is copied code, if past is=
- prologue, then I&#39;ll be<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; asked to fix the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; copyright and style, plus lots of suggestions=
- to improve the<br>
-&gt;=C2=A0 =C2=A0 =C2=A0code. But<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; it&#39;s just a<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; verbatim copy, so that&#39;s a lot of hassle =
-just to copy it.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0I understand, and it&#39;s a good intention to want=
- to remove this<br>
-&gt;=C2=A0 =C2=A0 =C2=A0duplication. However, I&#39;m not convinced a build=
- system hack is better<br>
-&gt;=C2=A0 =C2=A0 =C2=A0than a duplication.<br>
-&gt; <br>
-&gt; <br>
-&gt; Yup, if it were frictionless to duplicated, I&#39;d just do that. But =
-<br>
-&gt; there&#39;s always<br>
-&gt; some hassle or another that comes from it. And it&#39;s a dependency o=
-n doing<br>
-&gt; the ioctl round of upstreaming.<br>
-&gt;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Moving like this, though, is almost 0 frictio=
-n. A small tweak to<br>
-&gt;=C2=A0 =C2=A0 =C2=A0meson<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; is all that&#39;s<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; needed.=C2=A0I suppose I could do the #includ=
-e &quot;../linux-user/trunk.c&quot;<br>
-&gt;=C2=A0 =C2=A0 =C2=A0trick<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; to make it<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; less ugly in the build system, but=C2=A0then =
-it&#39;s not clear it&#39;s<br>
-&gt;=C2=A0 =C2=A0 =C2=A0shared, etc<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; and more ugly<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; in the code, imho.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Yes, it&#39;s a hack, that&#39;s what it&#39;s for,=
- &quot;quick and that works but not a<br>
-&gt;=C2=A0 =C2=A0 =C2=A0proper solution&quot;.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; I tried to move this stuff into thunk.h as mu=
-ch as possible so we<br>
-&gt;=C2=A0 =C2=A0 =C2=A0could<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; have one<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; compilation, and that didn&#39;t work. It rea=
-lly assumes that it can<br>
-&gt;=C2=A0 =C2=A0 =C2=A0include<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; qemu.h for<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; the tswap, etc macros. So it&#39;s impossible=
- to just build once.<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Yes, not all functions can be compiled once because=
- they have target<br>
-&gt;=C2=A0 =C2=A0 =C2=A0dependencies. That&#39;s why I invited you to simpl=
-y extract common<br>
-&gt;=C2=A0 =C2=A0 =C2=A0functions to common-user/thunk.c and leave the targ=
-et specific bits in<br>
-&gt;=C2=A0 =C2=A0 =C2=A0thunk.h (with static inline functions), or in a thu=
-nk-target.h<br>
-&gt;=C2=A0 =C2=A0 =C2=A0header if<br>
-&gt;=C2=A0 =C2=A0 =C2=A0you really want to do it cleanly. That&#39;s the pr=
-oper solution here.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Build systems and preprocessor are not a shortcut t=
-o proper software<br>
-&gt;=C2=A0 =C2=A0 =C2=A0architecture, even though QEMU abused both of them =
-to this end.<br>
-&gt; <br>
-&gt; <br>
-&gt; Yea. I&#39;m looking for a reasonable tradeoff. I&#39;m open to sugges=
-tions, and am<br>
-&gt; even willing to split things up: &quot;now the hack, I&#39;ll remove i=
-t within a <br>
-&gt; year&quot; sort<br>
-&gt; of thing just to get this years-long process of upstreaming done.<br>
-&gt;<br>
-<br>
-As mentioned, I think that extracting common part in a file and put the <br=
->
-rest in thunk-target.h is the best approach here.<br>
-<br>
-If creating a new file creates too much frustration, I would be happy to <b=
-r>
-give you a reviewed-by on simply moving all functions as static inline <br>
-ones in thunk-target.h.<br>
-<br>
-And if even this is still too complicated, I would be happy to give a <br>
-reviewed-by on any copyright change for this file.<br>
-<br>
-You have now 3 solutions without any hack :)<br></blockquote><div><br></div=
-><div>Great! I&#39;ll give it another run. My earlier attempts were in the =
-inbetween spaces of my day.</div><div><br></div><div>Moving to a new file i=
-sn&#39;t so bad. That seems to be fine to regularize the copyright stuff. I=
-&#39;ll give that a try and see if I can find the right way to refactor tha=
-t&#39;s not obnoxious.... and doesn&#39;t break anything...</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Now looking at the code, a lot of it would be=
- a lot simpler with<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; &#39;Generic&#39;, but that&#39;s<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; a battle for another day. As is the notion of=
- just generating<br>
-&gt;=C2=A0 =C2=A0 =C2=A0this data<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; from the .h files<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; rather than hard-coding it here, but that too=
- is a battle for<br>
-&gt;=C2=A0 =C2=A0 =C2=A0another<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; day. I&#39;d like to<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; get this upstreamed so I&#39;m spending my ti=
-me on these sorts of<br>
-&gt;=C2=A0 =C2=A0 =C2=A0battle.s<br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt;<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0I totally get it, and we have been dealing with a l=
-ot of things like<br>
-&gt;=C2=A0 =C2=A0 =C2=A0this for the single-binary topic, trying to find th=
-e good compromises<br>
-&gt;=C2=A0 =C2=A0 =C2=A0between refactoring APIs and doing limited changes.=
-<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0If extracting the common and target part looks like=
- too much work, just<br>
-&gt;=C2=A0 =C2=A0 =C2=A0leave it and simply change the copyright header, it=
-&#39;s not a big<br>
-&gt;=C2=A0 =C2=A0 =C2=A0thing to<br>
-&gt;=C2=A0 =C2=A0 =C2=A0do, and you can modify both in the same series, no =
-one will yell at you<br>
-&gt;=C2=A0 =C2=A0 =C2=A0for changing comments in one file in linux-user.<br=
->
-&gt; <br>
-&gt; <br>
-&gt; Yea. You should have seen the pushback I got from changing the copyrig=
-ht <br>
-&gt; header when I had the permissions to do it....=C2=A0 If I copy the fil=
-e, it&#39;s <br>
-&gt; a full copy, verbatim, no changes. It&#39;s not my code, so I can&#39;=
-t change <br>
-&gt; things.=C2=A0 I have a similar issue from some code I plan on copying =
-from <br>
-&gt; FreeBSD to avoid having to chase the strace.list stuff.=C2=A0Since I c=
-an <br>
-&gt; easily hack upstream FreeBSD to be what I need for qemu, I&#39;ll evol=
-ve <br>
-&gt; things there (ideally, just making it a private library I can hook int=
-o <br>
-&gt; the bsd-user build for tracing so qemu gets whatever FreeBSD does in <=
-br>
-&gt; truss for free...<br>
-&gt;<br>
-<br>
-I indeed read this thread, which was pointed to me by other people who <br>
-read it also. Our general opinion was that it&#39;s totally unfair to push =
-<br>
-all this on you, and that idealism on license comments is absolutely not <b=
-r>
-worth all the hassle, especially for someone trying to help on his free <br=
->
-time. Even for someone paid to do it, it would not be worth.<br></blockquot=
-e><div><br></div><div>Yea. I&#39;m mostly happy to follow the rules, if I k=
-now what they are and they don&#39;t cause too much extra work that sidetra=
-ck me. I think I have them now, and pre-did all the copyright header fuzzin=
-ess that I had permission to do in bsd-user so the next round shouldn&#39;t=
- be so weird.=C2=A0</div><div>=C2=A0</div><blockquote class=3D"gmail_quote"=
- style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
-adding-left:1ex">
-I ran as well into issues of pragmatism vs idealism with the concerned <br>
-person on this thread, and there is alas no proper solution to end this <br=
->
-behavior. The simplest way to deal with it is to stick to rationale <br>
-arguments, not let it go and don&#39;t apologize for saying &quot;No, it&#3=
-9;s <br>
-unreasonable to ask for this&quot;.<br>
-If enough people do this, it might end up triggering a positive change <br>
-in the community, instead of implicitely validating this behavior <br>
-blocking contributions.<br>
-<br>
-For concerned bsd-user files, and using a rationale approach, I would <br>
-simply suggest to contact past contributors of those files to collect a <br=
->
-OK, or ideally ask them to answer on this thread and mention &quot;I&#39;m =
-ok&quot;. <br>
-If they don&#39;t answer after one week, consider it&#39;s an implicit ok. =
-Then <br>
-move on, and pull the changes. No one will come sue you or QEMU for a <br>
-copyright comment.<br></blockquote><div><br></div><div>Yea. Sounds fair. I&=
-#39;ll have another blast of about 100 patches, and that should get us down=
- to ioctls and truss needing to be merged, which I hope to find a novel sol=
-ution for... Better to merge the stuff w/o known hassles then do the hassle=
--ful stuff.=C2=A0 Once I get it all in, my time can go to making things bet=
-ter again...</div><div><br></div><div>Thanks for the help and listening to =
-my concerns.</div><div><br></div><div>Warner</div><div>=C2=A0</div><blockqu=
-ote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px=
- solid rgb(204,204,204);padding-left:1ex">
-&gt; But maybe the next round is all but the ioclts and see if some other <=
-br>
-&gt; solution can be found in the interim.<br>
-&gt; <br>
-&gt; Or maybe I&#39;ll find the right people that can sign off on &#39;just=
- copy it&#39; <br>
-&gt; so I can get on with things :)<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0As you said, pick up the right battles and ignore t=
-he rest.<br>
-&gt; <br>
-&gt; <br>
-&gt; Yea. Maybe the next round will just be the simple stuff w/o battles...=
-.<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0 &gt; Warner<br>
-&gt; <br>
-&gt;=C2=A0 =C2=A0 =C2=A0Regards,<br>
-&gt;=C2=A0 =C2=A0 =C2=A0Pierrick<br>
-&gt; <br>
-<br>
-Thanks for all the work you&#39;re doing on bsd side, this part really need=
-s <br>
-some love, and it&#39;s really good to see someone giving it.<br>
-<br>
-Regards,<br>
-Pierrick<br>
-</blockquote></div></div>
-
---000000000000819d65064cdcb91b--
 
