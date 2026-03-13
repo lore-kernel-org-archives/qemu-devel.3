@@ -4,60 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48B16105F794
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:33:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D42E2105F795
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:34:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0zpp-0002ot-MO; Fri, 13 Mar 2026 06:33:37 -0400
+	id 1w0zqt-0003D1-M7; Fri, 13 Mar 2026 06:34:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zpo-0002nT-8O
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:33:36 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zqr-0003Cm-D1
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:34:41 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zpm-0003Ji-G8
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:33:36 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zqp-0003QB-WE
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:34:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773398012;
+ s=mimecast20190719; t=1773398078;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=rvz8PSHdhnQM4h9A9rQxb/OvB8xYFsvi20c6/MHFfQg=;
- b=YIFt0NAe9J4IbqahN1v/on6x9zGzzeVeiH25c8wuuPeCdaxGMlWT4sxDrclXyoBxeQqt7s
- LKwLQ9WegBXc9+MAkHXIKHHNyQOBARsnrsXU1FJ/uilC/V6DM/4a0kdMCFvG9XtlRr6npj
- g0J8JGFyAfJ17ASRKffvOW5eguU8jfo=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=90IPebXDgL3t4Xxbpo4+dxrzV9JKxmpZBLYjUipdooA=;
+ b=Izz7SRqZ8kIFyw/FvobMUVNnAzuO1X8+2gbc4Al0iuXlKTzhYCeVAVtoK0zmCBqH5b9G8k
+ ucOrEyZ//+4LxfEUEsoL1wncySnAnZezgznZzb7ywzFj+Obzl0IQtTNiSEvZPi7AHKDCvi
+ shZg2fZGKnu7pdGOvc2LuQqpmYkSSKY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-694-RFW2ZeX5NqSirtCN2wo8UQ-1; Fri,
- 13 Mar 2026 06:33:29 -0400
-X-MC-Unique: RFW2ZeX5NqSirtCN2wo8UQ-1
-X-Mimecast-MFC-AGG-ID: RFW2ZeX5NqSirtCN2wo8UQ_1773398008
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-311-IBrteufsMwSao9p-3M_IdA-1; Fri,
+ 13 Mar 2026 06:34:35 -0400
+X-MC-Unique: IBrteufsMwSao9p-3M_IdA-1
+X-Mimecast-MFC-AGG-ID: IBrteufsMwSao9p-3M_IdA_1773398074
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id ED66018005B3; Fri, 13 Mar 2026 10:33:27 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BA9B31953996; Fri, 13 Mar 2026 10:34:33 +0000 (UTC)
 Received: from [10.45.225.234] (unknown [10.45.225.234])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1DDD31955D6E; Fri, 13 Mar 2026 10:33:24 +0000 (UTC)
-Message-ID: <376b4372-51cb-4be3-be20-7b221df000ae@redhat.com>
-Date: Fri, 13 Mar 2026 11:33:23 +0100
+ id A2C831955D6E; Fri, 13 Mar 2026 10:34:30 +0000 (UTC)
+Message-ID: <b7f04779-21df-4304-9f1d-0d2db3c2fea6@redhat.com>
+Date: Fri, 13 Mar 2026 11:34:29 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 10/38] target/m68k: Include missing
- 'exec/target_long.h' header
+Subject: Re: [PATCH v2 16/38] hw/misc/cpc: Include missing 'hw/core/cpu.h'
+ header
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
 References: <20260313062055.2188-1-philmd@linaro.org>
- <20260313062055.2188-11-philmd@linaro.org>
+ <20260313062055.2188-17-philmd@linaro.org>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -102,18 +102,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260313062055.2188-11-philmd@linaro.org>
+In-Reply-To: <20260313062055.2188-17-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -132,32 +132,52 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/03/2026 07.20, Philippe Mathieu-Daudé wrote:
-> The "exec/target_long.h" header is indirectly included, pulled
-> via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
-> when removing the latter:
+> The "hw/core/cpu.h" header is indirectly included. Include it
+> explicitly otherwise we get when refactoring unrelated headers:
 > 
->    ../target/m68k/m68k-semi.c:53:5: error: use of undeclared identifier 'target_ulong'
->       53 |     target_ulong args = env->dregs[1];
+>    ../hw/misc/mips_cpc.c:36:53: error: unknown type name 'run_on_cpu_data'
+>       36 | static void mips_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
+>          |                                                     ^
+>    ../hw/misc/mips_cpc.c:40:5: error: call to undeclared function 'cpu_reset'
+>         40 |     cpu_reset(cs);
+>            |     ^
+>    ../hw/misc/riscv_cpc.c:34:54: error: unknown type name 'run_on_cpu_data'
+>       34 | static void riscv_cpu_reset_async_work(CPUState *cs, run_on_cpu_data data)
+>          |                                                      ^
+>    ../hw/misc/riscv_cpc.c:39:5: error: call to undeclared function 'cpu_reset'
+>       39 |     cpu_reset(cs);
 >          |     ^
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   target/m68k/m68k-semi.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   hw/misc/mips_cpc.c  | 1 +
+>   hw/misc/riscv_cpc.c | 1 +
+>   2 files changed, 2 insertions(+)
 > 
-> diff --git a/target/m68k/m68k-semi.c b/target/m68k/m68k-semi.c
-> index bdc798a28cb..d2a071ea677 100644
-> --- a/target/m68k/m68k-semi.c
-> +++ b/target/m68k/m68k-semi.c
-> @@ -22,7 +22,7 @@
->    */
->   
->   #include "qemu/osdep.h"
-> -
-> +#include "exec/target_long.h"
+> diff --git a/hw/misc/mips_cpc.c b/hw/misc/mips_cpc.c
+> index 924de855ee2..d092f76f44d 100644
+> --- a/hw/misc/mips_cpc.c
+> +++ b/hw/misc/mips_cpc.c
+> @@ -22,6 +22,7 @@
 >   #include "cpu.h"
->   #include "gdbstub/syscalls.h"
->   #include "gdbstub/helpers.h"
+>   #include "qemu/log.h"
+>   #include "qemu/module.h"
+> +#include "hw/core/cpu.h"
+>   #include "hw/core/sysbus.h"
+>   #include "migration/vmstate.h"
+>   
+> diff --git a/hw/misc/riscv_cpc.c b/hw/misc/riscv_cpc.c
+> index 4bf2fd8db16..e04ccdf54fa 100644
+> --- a/hw/misc/riscv_cpc.c
+> +++ b/hw/misc/riscv_cpc.c
+> @@ -18,6 +18,7 @@
+>   #include "qemu/module.h"
+>   #include "qemu/timer.h"
+>   #include "qemu/bitops.h"
+> +#include "hw/core/cpu.h"
+>   #include "hw/core/sysbus.h"
+>   #include "migration/vmstate.h"
+>   
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
