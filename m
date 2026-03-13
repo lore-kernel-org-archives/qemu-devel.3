@@ -4,63 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D1B9105F793
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:26:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A038F105F791
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 10:28:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0zib-0008SF-Nf; Fri, 13 Mar 2026 06:26:10 -0400
+	id 1w0zkk-0000ZV-8P; Fri, 13 Mar 2026 06:28:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0ziZ-0008Rp-31
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:26:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zkh-0000ZK-Sz
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:28:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0ziW-0001A4-Gi
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:26:06 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w0zkg-0001bk-2m
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 06:28:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773397562;
+ s=mimecast20190719; t=1773397697;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=c3Kuww9h7YwNk3Z03HkNydPW2x5UpUJosviEpgBf0Fw=;
- b=HTD2nImKz5gl7Gj6mUIdKOZOPz5Hreb3G0OmMcmrohRX2UEfOuMfrH+i8+AzWMpka97AyG
- IujRBdz9ZUMZUlWHcF6EYIRU8qR2ZlRRMhHGlwHZ7FYPoG+uAz2Zmn2HTiDptF1NPQvLcE
- Q0oms/hOjeIEOj5DtudRHXiHSqw6flI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=0YXvrYm4KXHUA4RTDTXtc5nH/WkPk01hZoMltRPmVEU=;
+ b=PUbhBKnqglJQ4n1JYLsCJAsOhzdxR8jwZTg0oIxToc99ET3FHKPmFDxzFeWukAPUOUeBhB
+ /o1WpakzwHjYYpimnnxdHlPOsMu6vELbGgz5gq1TK4nO2veXbY8V6fPUnI9uNSBItTGLfR
+ vJ51jsKHFgf2yHvaUbpdN48tbzeNURM=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-629-30hmyOLxNayjwSr1vGNF3w-1; Fri,
- 13 Mar 2026 06:26:00 -0400
-X-MC-Unique: 30hmyOLxNayjwSr1vGNF3w-1
-X-Mimecast-MFC-AGG-ID: 30hmyOLxNayjwSr1vGNF3w_1773397559
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-564-GYNOqyJyOm2cy4t9xWf-yQ-1; Fri,
+ 13 Mar 2026 06:28:13 -0400
+X-MC-Unique: GYNOqyJyOm2cy4t9xWf-yQ-1
+X-Mimecast-MFC-AGG-ID: GYNOqyJyOm2cy4t9xWf-yQ_1773397692
 Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 324B61956096; Fri, 13 Mar 2026 10:25:59 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4B0801956095; Fri, 13 Mar 2026 10:28:12 +0000 (UTC)
 Received: from [10.45.225.234] (unknown [10.45.225.234])
  by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 1DABC30002DA; Fri, 13 Mar 2026 10:25:54 +0000 (UTC)
-Message-ID: <1ab35d61-a06b-4e89-8ce8-e857470fdc86@redhat.com>
-Date: Fri, 13 Mar 2026 11:25:52 +0100
+ id 75AAB30002DC; Fri, 13 Mar 2026 10:28:08 +0000 (UTC)
+Message-ID: <cb17a21c-b5ea-47ea-af53-09aea681bdd3@redhat.com>
+Date: Fri, 13 Mar 2026 11:28:07 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 03/38] hw/s390x/vfio: Replace TARGET_PAGE_BITS ->
- qemu_target_page_bits()
+Subject: Re: [PATCH v2 04/38] monitor/hmp: : Include missing
+ 'exec/target_long.h' header
 To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>,
- Cedric Le Goater <clegoate@redhat.com>
+ Paolo Bonzini <pbonzini@redhat.com>, Anton Johansson <anjo@rev.ng>
 References: <20260313062055.2188-1-philmd@linaro.org>
- <20260313062055.2188-4-philmd@linaro.org>
-From: Thomas Huth <thuth@redhat.com>
+ <20260313062055.2188-5-philmd@linaro.org>
 Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
  yYkTm9+7zBUc0sW5AuPGR/dp3pSLX/yFWsA/UB4nJsHqgDvDU7BImSeiTrnpMOTXb7Arw2a2
@@ -103,18 +102,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <20260313062055.2188-4-philmd@linaro.org>
+In-Reply-To: <20260313062055.2188-5-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -133,34 +132,32 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/03/2026 07.20, Philippe Mathieu-Daudé wrote:
-> Get the target page bits at runtime.
+> The "exec/target_long.h" header is indirectly included, pulled
+> via "cpu.h" -> "exec/cpu-defs.h". Include it explicitly otherwise
+> we'd get when removing the latter:
+> 
+>    monitor/hmp-target.h:35:5: error: type name requires a specifier or qualifier
+>       35 |     target_long (*get_value)(Monitor *mon, const struct MonitorDef *md,
+>          |     ^
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->   hw/s390x/s390-pci-vfio.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   include/monitor/hmp-target.h | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
-> index 8ce44dbecce..7c754b656da 100644
-> --- a/hw/s390x/s390-pci-vfio.c
-> +++ b/hw/s390x/s390-pci-vfio.c
-> @@ -22,6 +22,7 @@
->   #include "hw/vfio/pci.h"
->   #include "hw/vfio/vfio-container-legacy.h"
->   #include "hw/vfio/vfio-helpers.h"
-> +#include "exec/target_page.h"
+> diff --git a/include/monitor/hmp-target.h b/include/monitor/hmp-target.h
+> index 5167d17d41d..898473b3ed0 100644
+> --- a/include/monitor/hmp-target.h
+> +++ b/include/monitor/hmp-target.h
+> @@ -28,7 +28,7 @@
+>   typedef struct MonitorDef MonitorDef;
 >   
->   /*
->    * Get the current DMA available count from vfio.  Returns true if vfio is
-> @@ -150,7 +151,7 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
->        * to request that the guest free DMA mappings as necessary.
->        */
->       if (!pbdev->rtr_avail) {
-> -        vfio_size = pbdev->iommu->max_dma_limit << TARGET_PAGE_BITS;
-> +        vfio_size = pbdev->iommu->max_dma_limit << qemu_target_page_bits();
->           if (vfio_size > 0 && vfio_size < cap->end_dma - cap->start_dma + 1) {
->               pbdev->zpci_fn.edma = cap->start_dma + vfio_size - 1;
->           }
+>   #ifdef COMPILING_PER_TARGET
+> -#include "cpu.h"
+> +#include "exec/target_long.h"
+>   struct MonitorDef {
+>       const char *name;
+>       int offset;
 
 Reviewed-by: Thomas Huth <thuth@redhat.com>
 
