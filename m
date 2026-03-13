@@ -4,129 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 883A2107BCE1
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 19:31:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BD64A107BCD9
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 19:36:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w18EE-0004oB-NN; Fri, 13 Mar 2026 15:31:22 -0400
+	id 1w18Iz-0005ZW-Rb; Fri, 13 Mar 2026 15:36:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w18E5-0004lr-FY
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:31:13 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w18E2-0003WV-T3
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:31:12 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2ab077e3f32so12307225ad.3
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 12:31:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1w18Ix-0005YH-IK
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:36:15 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armenon@redhat.com>)
+ id 1w18Iu-00049m-MK
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 15:36:15 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773430570;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=3YlH0iaEreZfsWxDaIXEgHaR8sifG26Rf1QgBaAdMfg=;
+ b=Z75pgTcVvNucrA9m8g2iVzQlrGX1qHRgJAhz8k0TlPyBzfQcWjZ97+SYwoYQ6H4J20UGa9
+ jFN9riNGlUpwAljJkKd1AgBrewz+3u69Tv8fns6Q5Gv1quCrd5YdCwmdGyY+H8286e/Nnr
+ JOjWeZ0PzkpQIT9C/flcqKtEqlKkd10=
+Received: from mail-pg1-f199.google.com (mail-pg1-f199.google.com
+ [209.85.215.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-544-wrRaD_NqPK28LlsTHpKsWg-1; Fri, 13 Mar 2026 15:36:06 -0400
+X-MC-Unique: wrRaD_NqPK28LlsTHpKsWg-1
+X-Mimecast-MFC-AGG-ID: wrRaD_NqPK28LlsTHpKsWg_1773430565
+Received: by mail-pg1-f199.google.com with SMTP id
+ 41be03b00d2f7-c739120475fso1355681a12.3
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 12:36:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773430265; x=1774035065; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=63c0lPgLcS+hDqpkxxffQeA3FYm6eO1SrTaXuTxrM7E=;
- b=kHY+NBT4g1IT5Wx62JL63spCybDU/vWAvZf3Ih3o60/94IXYGHvxbpGm81AdLSZpd5
- rk+SIIX3NarxcBkhr3KGb23rv0+UIQup0S0kZ/Ip4q6wPzt8H3uhTI2EX5rnJ0f0XnTa
- OCrmmAq01nD2K/P4XrJj9y3q/PhdLtEOzWmNEGQ3RJxr9OR07ngHs2HK8DmjyEiNA2A/
- Nf6M66p/k1KB4sewd9yjuzNZm6WREZdCf7/79vXRxA3RCXOjJAbiGRRA/cszEP5BuJoB
- osVlqHaLgua5FI17XDtDW27+zTmPcWdtmqbl/WiqDTeKA+DG+NCd39PJlBf6jicmgN+n
- hUPQ==
+ d=redhat.com; s=google; t=1773430565; x=1774035365; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=3YlH0iaEreZfsWxDaIXEgHaR8sifG26Rf1QgBaAdMfg=;
+ b=oVPq1L9HD4JBXh21T9ewK7l8pT4BF/sRocusdc529D78EH2SFAkmkVkhWn8RFMAsJJ
+ 7Ym0YrnOBn37n71xPgGj1Le6Ptknkqo8cRhplZ8VUJeHUeYYjIhgzeDsSZy3jsGP1oGH
+ wQ1YTVdcoGA+ITqM7zts1geioQeQdssy2lNChb+FD87s2lHCR4QT3aYsWGiYqYGlzgz8
+ FwV54mmfQbDHokU4ZEUCadD1BtoTXED1kPj7p2G0hxxsfaMH50ygB/XRK3LDRPkRhbr1
+ QDI/GJ4EzBakWuqwJ4Qxh64qnChxvv/Bq5l1hirojQJIk1WB3jhE3W5EkhYloRcvYUil
+ ERDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773430265; x=1774035065;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=63c0lPgLcS+hDqpkxxffQeA3FYm6eO1SrTaXuTxrM7E=;
- b=XM7DxCNvndzAaEOhvgvhpvmsXUdP+Zpu7f8hYmFYCqZCJiCJGuNBzL+mVY1ZB4HC20
- R6qJ/X2bT8jFqrEZiqFblhmB0bNdZ7gXGpnYGhsU0H7uAwlCbtceJNBTw52GTDxi4nFn
- f4SdDtxBYNLU0PsZoBZykZyFKnMNCQ0nLsz4l3/ZJejnaeOkg3b5TvlFqKI9uQmVUreN
- gfNixqMMBbC55tI8sesWORPndzKhRpLXcWB1uBfxiZIG6GqeATffJl99fkG1mxgSRGxg
- lA4px7fGUkbcrb9BkQmNLjWNRoFLNBBgAzbbJqcXAQEc2EatNZY4xXHSqXRQS5kTAXU5
- KTZw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX4fQKjn5E5idGBJgOZil7Nf9zejoxe2TsJbjclOW+ITUStmTMns/i9vCFK4nBWmuSPktFQnb9yglUD@nongnu.org
-X-Gm-Message-State: AOJu0YwlOk+m+23SGJzN/PYOVcyruq0uIs4fvAmywADh2zhCKkn5NHGd
- 9Jz+j0x84sYy88CzL5Rx9hMhBssgyYSrlGRpMPdPLz0BxzLSBCGpAD700iDGPeyq96s=
-X-Gm-Gg: ATEYQzwumZmhe4zT/nhrM7aTt2/xUZycjGp/0YLAqV7Z7GtoBPacEJsjF2YUOxY8IIl
- ztgJtBUzjj90alJdi6xH1LcxuB07OzX6U6+3B0cu7DkStHfSRT56jxKNLlxbrTJAZJKBu06XDtv
- zAV7/VzhbSlATwmZG5Ay1VZruM/xSXa717Byf0Ih9kPgs4wT9lKJ3tZh99zoM3xxFQyU630GRc3
- 8ScT6PFEDkLJC+gjQp+sxgZ8FOewewd800/5Nt/tuWy9mHqOzOwWQWs7fFNwGEhIdW8OpBkroJi
- T1VBciaUr+0fpROCVs66YMv2albnF/e5q0/BlAKbkboZcI5mZxlX2Rdzh3d12iNXgztafo6O572
- lfXZPFx/9zhBj/kmfKtcSyiZ3hcIiPWwpiMVplyqXaKdRuC3oLCa68fL1mlA3BGjgoZ792sUa2g
- EapwUJ2v074JCTWj9mkrbjYPtiqLUZ8ZbAxVgxNQYQpqYNGNG/DBsSLkxUeft74uqM0nmu
-X-Received: by 2002:a17:902:f70a:b0:2ae:3bb2:a8cb with SMTP id
- d9443c01a7336-2aecac49127mr43644545ad.40.1773430265035; 
- Fri, 13 Mar 2026 12:31:05 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2aece62c581sm40520395ad.33.2026.03.13.12.31.04
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 13 Mar 2026 12:31:04 -0700 (PDT)
-Message-ID: <1d34077f-4a6b-4394-b640-4126c53d0aef@linaro.org>
-Date: Fri, 13 Mar 2026 12:31:03 -0700
+ d=1e100.net; s=20251104; t=1773430565; x=1774035365;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=3YlH0iaEreZfsWxDaIXEgHaR8sifG26Rf1QgBaAdMfg=;
+ b=M80iYGj/0lZuF7PCgPqePQnx5XNtsGl1MVjU9yCMRN82Jx5KYtU+Uu9qsM/NConR/l
+ 9C4OuVVM2LyCWQPuXMf+QXmOv/FWLQXGdcYbNVAh1ZNzUnIo6OU3UcFfC+fbrHXOOS/J
+ qqQ9PGNRmBluAgRv9scfSiTphkkpfSPgj7cDmjyH4/5qtcUVVgs/HbBYX6gOhWTVoJTE
+ 4LVh9RU05JW0WixC6B6q0n5VTgi/TcyVVNb51TzJ1+gbsedH6ijwmZkfRFwplRN6RWcV
+ lMbQFVZF9AqARHtbLs1O8zouWVD4532FYnLu6+8BuclXcopXi60YkA2VNy1tldzAOnRO
+ RwvA==
+X-Gm-Message-State: AOJu0Yzz1s1l4wNw4xIa5y115AotpsPe+DqrjY/vfAQLPj3E/FRl+/1I
+ nE8ZNk8U6SA//LhtqVpUJBNHiCJSVpKhXCbiHl8ZXM+t1drCeA9zdg0o2QxvkNsuSVCy4By2wqI
+ 7VYm9Bj6WxaH/Qvmfs/5moJz4pp4DWteaSa01xURIR5iyoXFNv4fyosTV
+X-Gm-Gg: ATEYQzwFSzEBsvZTDsupIIsdwBCi37D0S6JdLegM1JMzR3RVcKKtQsC2HDOBUZA3mVY
+ pEZdHAtKGR5tbDVQI8agefiM0fJ80s0Et7OgSpXiK+7JP2yY0ng3AE1tzqPdJqka46gz5b3e/au
+ 2iITeQqC5fm8iWRBJSCLQClypJwrWIJcx31+0dmH5BcrjxTXjNCQ8R792EU9FdN8pm+AqYMSGjm
+ qQ9jkRF22KajTHCvaWu17bS2MlQM28jVW7q/o0H+69qso9wvUDOU0HiRInj5krYZQcPlHwV2DCl
+ 1W6SHKJXf3AzBtXTWq6hEGcFn23GhXgTaoke0jGg6rFI/koM/8ZuTVh4I5wHSCWpDb0DK150alp
+ sjJWEHH2KlkE=
+X-Received: by 2002:a05:6a00:3c8a:b0:829:822e:cdce with SMTP id
+ d2e1a72fcca58-82a197041damr4151382b3a.6.1773430565447; 
+ Fri, 13 Mar 2026 12:36:05 -0700 (PDT)
+X-Received: by 2002:a05:6a00:3c8a:b0:829:822e:cdce with SMTP id
+ d2e1a72fcca58-82a197041damr4151355b3a.6.1773430564963; 
+ Fri, 13 Mar 2026 12:36:04 -0700 (PDT)
+Received: from fedora ([49.36.104.12]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82a072419efsm7010765b3a.11.2026.03.13.12.36.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Mar 2026 12:36:04 -0700 (PDT)
+Date: Sat, 14 Mar 2026 01:05:58 +0530
+From: Arun Menon <armenon@redhat.com>
+To: Stefan Berger <stefanb@linux.ibm.com>
+Cc: qemu-devel@nongnu.org, Stefan Berger <stefanb@linux.vnet.ibm.com>,
+ Ani Sinha <anisinha@redhat.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, marcandre.lureau@redhat.com,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>
+Subject: Re: [RFC 0/5] hw/tpm: CRB chunking capability to handle PQC
+Message-ID: <abRnHkaXQT-o8y3d@fedora>
+References: <20260312041650.181411-1-armenon@redhat.com>
+ <c4ccc082-2c52-4698-9538-cbf4fffa9318@linux.ibm.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC v2] bsd-user: Copy linux-user/think.c to bsd-user
-Content-Language: en-US
-To: Warner Losh <imp@bsdimp.com>, qemu-devel@nongnu.org
-Cc: "Daniel P. Berrange" <berrange@redhat.com>,
- Kyle Evans <kevans@freebsd.org>, Laurent Vivier <laurent@vivier.eu>,
- =?UTF-8?Q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260313-share-thunk-v2-1-5b52cfe6cddd@bsdimp.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260313-share-thunk-v2-1-5b52cfe6cddd@bsdimp.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c4ccc082-2c52-4698-9538-cbf4fffa9318@linux.ibm.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armenon@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,48 +121,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/26 12:15 PM, Warner Losh wrote:
-> bsd-user's blitz branch has used this file verbatim for a while. Copy it
-> verbatim, but update to the new QEMU standards.
+Hi Stefan,
+Thank you for taking a look into this.
+
+On Thu, Mar 12, 2026 at 10:36:29AM -0400, Stefan Berger wrote:
 > 
-> Signed-off-by: Warner Losh <imp@bsdimp.com>
-> ---
-> As suggested in the v1 thread, just copy this file.  Refactoring was
-> difficult due to the inter-relatedness of all its bits with
-> *-user/qemu.h file. We couldn't move it to common-user and putting it in
-> that directory because (a) qemu.h dependencies and (b) common-user is
-> built only once. It may be possible to refactor this into a .h file, but
-> the interdependencies have so far restisted my efforts to do that, so
-> I gave up after a couple of hours of different attempts.
 > 
-> ● 6e7455de310b: bsd-user: Copy linux-user/think.c to bsd-user
->    ● checkpatch.pl: 66: ERROR: do not use C99 // comments
->    ● checkpatch.pl: 78: ERROR: space required before the open parenthesis '('
->    ● checkpatch.pl: 136: ERROR: space required after that ';' (ctx:VxV)
->    ● checkpatch.pl: 136: ERROR: space required before the open parenthesis '('
->    ● checkpatch.pl: 142: ERROR: braces {} are necessary for all arms of this statement
->    ● checkpatch.pl: 175: ERROR: space required before the open parenthesis '('
->    ● checkpatch.pl: 272: ERROR: space required after that ';' (ctx:VxV)
->    ● checkpatch.pl: 272: ERROR: space required before the open parenthesis '('
->    ● checkpatch.pl: 301: ERROR: space required after that ';' (ctx:VxV)
->    ● checkpatch.pl: 301: ERROR: space required before the open parenthesis '('
->    ● checkpatch.pl: 477: WARNING: Block comments use a leading /* on a separate line
->    ● checkpatch.pl: 531: WARNING: added, moved or deleted file(s), does MAINTAINERS need updating?
+> On 3/12/26 12:16 AM, Arun Menon wrote:
+> > The move to Post Quantum Cryptography (PQC) changes how we manage
+> > memory buffers. Unlike classic crypto algorithms like RSA or ECC which
+> > used small keys and signatures, PQC algorithms require larger buffers.
+> > 
+> > The new version of TCG TPM v185 (currently under review [1]) supports
+> > sending data/commands in chunks for the CRB (Command Response Buffer)
+> > interface. This is in line with the initiative to support PQC algorithms.
+> > 
+> > This series implements the logic to send and receive data from the
+> > linux guest to the TPM backend in chunks, thereby allowing the
+> > guest to send larger data buffers. We introduce 2 new control registers
+> > called nextChunk and crbRspRetry that will control the START. We also
+> > add the CRB Interface Identifier called CapCRBChunk that is set to 1
+> > indicating that the device supports chunking. The default maximum
+> > chunk/buffer size is 3968 (4096 - 128) bytes.
+> > 
+> > During a send operation, the guest driver places data in the CRB buffer
+> > and signals nextChunk for each segment until the final chunk is reached.
+> > Upon receiving the START signal, QEMU appends the final chunk to its
+> > internal buffer and dispatches the complete command to the TPM backend.
+> > 
+> > For responses, the backend's output is buffered. The guest consumes the
+> > first chunk once the START bit is cleared. Subsequent chunks are
+> > retrieved by the guest toggling the nextChunk bit, which advances the
+> > internal buffer offset and populates the CRB data window.
+> > 
+> > For this to work, the linux guest tpm driver will also have to
+> > a) probe if CRB chunking is supported
+> > b) send data in chunks if the command length exceeds the chunk size.
+> > c) receive data in chunks by sending a nextChunk signal and accumulate.
+> > > At present, VM live migration during a tpm command execution in chunks
+> > is not supported. We intend to add support for TIS interface in
 > 
-> I'm not fixing style issues in copied files. These files need to be
-> identical. Style issues have historically wasted my time tracking
-> upstream changes so are more harm than good. I had a simpler solution
-> w/o this issue, but this issue already exists in thunk.c.
-> ---
-> Changes in v2:
-> - Just copy it
-> - Link to v1: https://lore.kernel.org/qemu-devel/20260312-share-thunk-v1-1-2f36003a1913@bsdimp.com
-> ---
->   bsd-user/meson.build |   1 +
->   bsd-user/thunk.c     | 470 +++++++++++++++++++++++++++++++++++++++++++++++++++
->   2 files changed, 471 insertions(+)
+> .. and also VM suspend/resume. Do you intend to support these? The problem
+> will be state incompatibility with previous QEMU versions then since we now
+> need to save the additional (bytes in the new) byte buffer(s) and possibly
+> the new control registers' contents.
+
+Yes I would like to support suspend/resume along with migration. 
+And yes, I will start by saving those buffer information in the VMstate
+subsection.
+
+Also, I am working on the linux driver part. The logic is more
+or less the same; 2 buffers, accumulating data, and send/receive based
+on the new register bit.
+
+> 
+> Thanks for also thinking of the TIS support. I guess we will have the same
+> issue there then with state incompatibilities even though with the TIS it
+> should just be a matter of just using a bigger buffer. Theoretically we
+> could write a 4096 byte buffer to the state if up to 4kb are held there and
+> switch to a .version_id = 1 state for bigger buffer size, but then we could
+> migrate to an older version of QEMU and find that it cannot do PQC
+> transactions (anymore) due to older version of TIS there (I guess migration
+> between major versions of QEMU is supported with all kinds of machines).
+> Also, nothing will prevent one from running a PQC-enabled swtpm+libtpms with
+> an older version of QEMU but one will find out if transactions don't succeed
+> (assuming Linux TPM driver can handle it) because the QEMU TIS buffer is too
+> small.
+
+Yes the same issue will come with TIS. Although changing the buffer size
+TPM_TIS_BUFFER_MAX to 8192 (for now) would be a one liner change, but
+handling the state, for migration and other cases will be tricky like
+you mentioned for both crb and tis. If I understand correctly,
+We need to know whether 
+    a) swtpm OR the TPM backend supports chunking
+    b) does the underlying machine type of qemu suport chunking.
+
+I am not sure if swtpm can set a capability bit if chunking is
+supported. If we can do that, then QEMU can probe the backend and get
+that information. But that will not be sufficient. To decide whether
+chunking is actually allowed based on the underlying machine type we
+might have to add a prop bool for the specific machine type.
+
+If both of them (a and b) are true, only the linux probing will return
+true for chunking. Thus linux will not send the huge buffers in the
+first place, or even try to copy data in the subsections during
+migration with the .needed function.
+
+Please correct me if I am wrong.
+
+
+> 
+> > the future.
+> > 
+> > The included test demonstrates functional correctness for standard
+> > buffer sizes. However, validation of PQC-sized payloads was performed
+> > via manual buffer-size overrides.
+> > > [1] https://trustedcomputinggroup.org/wp-content/uploads/PC-Client-Specific-Platform-TPM-Profile-for-TPM-2p0-v1p07_rc1_121225.pdf
+> > 
+> > Arun Menon (5):
+> >    hw/tpm: Add TPM CRB chunking fields
+> >    hw/tpm: Refactor CRB_CTRL_START register access
+> >    hw/tpm: Add internal buffer state for chunking
+> >    hw/tpm: Implement TPM CRB chunking logic
+> >    test/qtest: Add test for tpm crb chunking
+> > 
+> >   hw/tpm/tpm_crb.c                 | 167 +++++++++++++++++++++++++++----
+> >   include/hw/acpi/tpm.h            |   5 +-
+> >   tests/qtest/tpm-crb-swtpm-test.c |  10 ++
+> >   tests/qtest/tpm-util.c           | 106 +++++++++++++++++---
+> >   tests/qtest/tpm-util.h           |   5 +
+> >   5 files changed, 256 insertions(+), 37 deletions(-)
+> > 
+> 
 > 
 
-Good for me,
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Regards,
+Arun Menon
+
 
