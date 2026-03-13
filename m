@@ -4,76 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5EB38106FD8B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 57574106FD87
 	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:21:59 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vu9-0001wo-Tv; Fri, 13 Mar 2026 02:21:49 -0400
+	id 1w0vto-0000oH-Rc; Fri, 13 Mar 2026 02:21:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vu8-0001u5-L9
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:48 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vth-0000hm-AK
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:21 -0400
 Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vu6-0006vP-Uy
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:48 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vtf-0006tM-U9
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:21:21 -0400
 Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-439cb5af25bso1906040f8f.1
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:21:46 -0700 (PDT)
+ ffacd0b85a97d-439b611274bso1144438f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:21:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773382905; x=1773987705; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773382878; x=1773987678; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DL4KDNiZWKz37LUPD5n71bwyFUxo90hkjC+vZWlN9+4=;
- b=jXwU8MODwjBIOgcGOBR6Im7HCbQKKCY22KTj2hvFgoaMcDA1Cz2L30yWd9vPA/05ap
- D0lF8vU9L9BazuXaOJVekEYXqzqe2zBR5bBf+FjgMZZOAdj/n5HWWZbFwrTglwA4xzbe
- 9HrJy3mqIHkiV6ydqj0cC5fy95tvbpjzL5fCjZWsm0I81xv9G7nwxkxMnSuScu5GZ1GA
- gBTfuIeB4AolhA5RNBOigjIt8qHYitrJPCZT+YymnIi9FRviSqA3VGvToeo2OQaJNoL6
- qB0pY8ixD+7icZolm2swVToaEGuz/O2AaZaMTqGB0HBvzbaGVudTQoDlDyYMg98BqFtt
- wQaQ==
+ bh=fIOm7tmuk8Unr+dWjypmj0K3jr2IzeJYxwNcrzDjXPA=;
+ b=DMMW+CgiEmUd04TSVlVPes67pCjVVt17oMmK+MvngToitCp+dTlXlTJNVn6c6aTd9D
+ C8zF7wkz7XK0TiphicPnRK+C09QkWfH9RDPQi2MWOK+1YcrtWVGZVrYPESbgHwrPu0Nw
+ MInSh24iSNdlqHMRuF6Kd+5Jl/e9CmXxbrBKtVc1FcrrdhvD7AFjAx4cSdY2ujFYSZE4
+ Wm6piGo8kgVHpGGpRH+hMoBjoZyV8AAuJoljSd2xsI5RMHWi2dvy1QAh5+TEV7J063M/
+ nTT3d3QBosB6983B7mYriretEGNvtak1C979Nk/TYcaYWd7OtOqAQJlD0MxU4IpxFGV5
+ 66kg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773382905; x=1773987705;
+ d=1e100.net; s=20251104; t=1773382878; x=1773987678;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DL4KDNiZWKz37LUPD5n71bwyFUxo90hkjC+vZWlN9+4=;
- b=N0SNBMZ0wOwwBsePBk5nJbQ01RwHI13AanIkN7nwdZXR6q7ReWwYCM2RwDsQLwsNTv
- IEMM5Ek05/A3jPDz3H36iCltRl9L3K8ofo0Sr4k6DMSBOHZr0rQv8w8ulyt0uLcIeLZy
- V/4WqCeOl4bIK4yu4jlakvxzpCUBTKZ48pmvPvGKDi68LzM2sJ5ex/qFzYZJDIkFWtUD
- wy9zOzKRbhp0GYc2RHGGWq7C4c/Ly41nHTpPu0yC+TXFzK6u7V7F3YkPhUQqwHBKnqEj
- ZJqqnQWNdeDrv8dCqyJAfX1xOvq/NN9+WOK+rO6ANaINTHSfgxb1P/bYxFdGFF9foaBO
- 37Cw==
-X-Gm-Message-State: AOJu0YxmH9aQ1DjuG0jrdV8aKCDwEkOBKe3jiKX7YrR/feGdYWrxRLEB
- 99sbGXEGV6IxLXUHOghN9zobCQFUPfe79/I4ZvfViBtAwuZa1NIx4t9l9BUJq5Fsu3VJDLEYIll
- Kb6qAVxs=
-X-Gm-Gg: ATEYQzz1wwEg1rw0c7viGm8WiHyatIz9YGBg23VAXo6H/u52yB8AM9zvFbBeAgoY4WA
- Ux7lkmsTCsd9EVNriym0aPT1bapJsXAbJrCr5H0X1lXNQUQRmD6LjGKIsLsUAsOPObsVYWd9Qs/
- 9UMte5m6kNdxocy6bkmFtmV6r/k5YCBjrRv2AeOy6a97efHHt58Lbd0eBCO1HCqHNVHwbj7swjr
- IfNBomfI//Pb3pDw+PWpOlbweO09bWOt13vxs5Gvs+0jwBKuOceOZlSEVp3hTBSnymY9aZcFr1t
- g4K94Abpm/xlp6qxTwCAcsGlRSNeiVa/Z6gJ+vbXKflrMdOJ0J0+BhC+LsS3o/WnJeCGYIgfT0l
- 15PPIY8VpdXEtwfV1SJWyuIjXzgW5Ed1hoVAYSiTvVnylq//jTxtXit3mJ89fE+fhse1rex3aYC
- oGN5j4M2T07v6psgn8FPAl8SvJgqOlV/3kwqeYzcXi+yxNTBBWkxyjPCGP+8TLkdxiogZsWIxzR
- D6zsQ==
-X-Received: by 2002:a05:600c:1e8c:b0:485:3e00:9440 with SMTP id
- 5b1f17b1804b1-4855670c296mr27215285e9.24.1773382905024; 
- Thu, 12 Mar 2026 23:21:45 -0700 (PDT)
+ bh=fIOm7tmuk8Unr+dWjypmj0K3jr2IzeJYxwNcrzDjXPA=;
+ b=E3r7XtYmV0qK59c17/CFNHnSg5AH+KIPUThEHe4ck8+hpkKzCMQOH01MXGPBfKECW6
+ AxeDiH3ZFmtMGghrKgyWMY+TwlGwOAMxQlZZsSnJP6tRDWLUa1+B37oioWG53fG0HgDh
+ r5w2CyqY4RBSMbwyCGfqdVpGGBH2Prq+jjARPLfh0GWBa8yvNeZruUTqehwWVAdV0PF4
+ grUwT929eqQfehqDQ14qzjX569ivbHo9jR1Hr1zFh9r8tcCMKJlb5mRLYyumPqgrtIM7
+ jZX2q3WQ+sRXrsPGnVGqsOcP0cHpP50zltDBTdlDr2LjZVmq2dqVNN7esNATTEJrSFxT
+ 1Wrw==
+X-Gm-Message-State: AOJu0Ywd0dW0hDE99IOuq74j6RemQ7sEoqAWlrALKevuTMeaW8W7EB3d
+ cE3P9+bLmpLU6pxyh+2A5Fm0UUZ+UvSJ+/0qALIEr02fonn0M1Ifszq3LTCyzwTjVR2tRx767fT
+ s6bPw03E=
+X-Gm-Gg: ATEYQzywJlbUaayX56DJ9hFC04IQ6Sa2UNcyOsMxXakprLkM+dRNQ67gG3HTsUuOHwt
+ FtYfydLm2DsfRZiDIQiO+0MbxTxQWMnKoMtUq8qwt2e+E0l4u1OiPNIOowx+Z1sTeCloUOtPsWx
+ c+wuNCLb4ZQAyrwQozrVT6A08fG01tjJB1Po7JdysRlD25dWXYNw+30CkUs1nvHjpl/0KfVUs6h
+ DDDlXoRIQllAE4GaEQ5nPrwDGRn/OueIlQMQi070abDz4rcMqfA+jXlGDHk81vUNqgp/IbC2hTA
+ nRro6B4tdQ+1YnnL76fujpmzlONjjWKnY96ACxLb3qwtwr2QylJ2AmD51DkO1rTeern+NOIAEKF
+ svpSh0fDIJou6a3MXNp1FDJmh2vT28T2hpTdhJgdt6yaLrTMJlGFlnDGuLU9urXZOiHbNT03hVh
+ Bkm0z6XIALrkz2jJu2llL+16RJ6QvqzgG1mgd0WdGTiWdqiBRRxa8qXpPYNLsiESqKxwfK7zI6m
+ EXd6X8CTux7nRKt
+X-Received: by 2002:a05:6000:230c:b0:439:bf2f:123e with SMTP id
+ ffacd0b85a97d-43a04d868d9mr3769280f8f.11.1773382877999; 
+ Thu, 12 Mar 2026 23:21:17 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b66dedfsm187292095e9.12.2026.03.12.23.21.44
+ ffacd0b85a97d-439fe19acc6sm14756756f8f.8.2026.03.12.23.21.17
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:21:44 -0700 (PDT)
+ Thu, 12 Mar 2026 23:21:17 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 07/38] target/hexagon: Include missing 'exec/target_long.h'
- header
-Date: Fri, 13 Mar 2026 07:20:23 +0100
-Message-ID: <20260313062055.2188-8-philmd@linaro.org>
+Subject: [PATCH v2 03/38] hw/s390x/vfio: Replace TARGET_PAGE_BITS ->
+ qemu_target_page_bits()
+Date: Fri, 13 Mar 2026 07:20:19 +0100
+Message-ID: <20260313062055.2188-4-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
 References: <20260313062055.2188-1-philmd@linaro.org>
@@ -104,53 +104,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The "exec/target_long.h" header is indirectly included, pulled
-via "exec/cpu-defs.h". Include it explicitly otherwise we'd get
-when removing the latter:
-
-  ../target/hexagon/cpu.h:76:5: error: unknown type name ‘target_ulong’
-     76 |     target_ulong gpr[TOTAL_PER_THREAD_REGS];
-        |     ^~~~~~~~~~~~
-  ../target/hexagon/mmvec/mmvec.h:69:5: error: unknown type name ‘target_ulong’
-     69 |     target_ulong va[MAX_VEC_SIZE_BYTES];
-        |     ^~~~~~~~~~~~
+Get the target page bits at runtime.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/hexagon/cpu.h         | 2 ++
- target/hexagon/mmvec/mmvec.h | 3 +++
- 2 files changed, 5 insertions(+)
+ hw/s390x/s390-pci-vfio.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/hexagon/cpu.h b/target/hexagon/cpu.h
-index 85afd592778..7a91399fe02 100644
---- a/target/hexagon/cpu.h
-+++ b/target/hexagon/cpu.h
-@@ -23,9 +23,11 @@
- #include "cpu-qom.h"
- #include "exec/cpu-common.h"
- #include "exec/cpu-defs.h"
-+#include "exec/target_long.h"
- #include "hex_regs.h"
- #include "mmvec/mmvec.h"
- #include "hw/core/registerfields.h"
-+#include "qemu/bitmap.h"
+diff --git a/hw/s390x/s390-pci-vfio.c b/hw/s390x/s390-pci-vfio.c
+index 8ce44dbecce..7c754b656da 100644
+--- a/hw/s390x/s390-pci-vfio.c
++++ b/hw/s390x/s390-pci-vfio.c
+@@ -22,6 +22,7 @@
+ #include "hw/vfio/pci.h"
+ #include "hw/vfio/vfio-container-legacy.h"
+ #include "hw/vfio/vfio-helpers.h"
++#include "exec/target_page.h"
  
- #ifndef CONFIG_USER_ONLY
- #error "Hexagon does not support system emulation"
-diff --git a/target/hexagon/mmvec/mmvec.h b/target/hexagon/mmvec/mmvec.h
-index 52d470709c0..4a4f6cc9805 100644
---- a/target/hexagon/mmvec/mmvec.h
-+++ b/target/hexagon/mmvec/mmvec.h
-@@ -18,6 +18,9 @@
- #ifndef HEXAGON_MMVEC_H
- #define HEXAGON_MMVEC_H
- 
-+#include "exec/target_long.h"
-+#include "qemu/bitmap.h"
-+
- #define MAX_VEC_SIZE_LOGBYTES 7
- #define MAX_VEC_SIZE_BYTES  (1 << MAX_VEC_SIZE_LOGBYTES)
- 
+ /*
+  * Get the current DMA available count from vfio.  Returns true if vfio is
+@@ -150,7 +151,7 @@ static void s390_pci_read_base(S390PCIBusDevice *pbdev,
+      * to request that the guest free DMA mappings as necessary.
+      */
+     if (!pbdev->rtr_avail) {
+-        vfio_size = pbdev->iommu->max_dma_limit << TARGET_PAGE_BITS;
++        vfio_size = pbdev->iommu->max_dma_limit << qemu_target_page_bits();
+         if (vfio_size > 0 && vfio_size < cap->end_dma - cap->start_dma + 1) {
+             pbdev->zpci_fn.edma = cap->start_dma + vfio_size - 1;
+         }
 -- 
 2.53.0
 
