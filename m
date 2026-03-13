@@ -4,55 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E1FA105F79B
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 11:35:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E81105F79C
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 11:35:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w10mu-0005wa-8F; Fri, 13 Mar 2026 07:34:40 -0400
+	id 1w10mu-0005wo-ME; Fri, 13 Mar 2026 07:34:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w10ms-0005vr-U0
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:34:38 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w10mu-0005wb-4L
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:34:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w10mr-0003Sl-5e
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:34:38 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w10ms-0003Sw-44
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 07:34:39 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773401675;
+ s=mimecast20190719; t=1773401677;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=dXkSH5CFZ4sfyj1w+ftV0lieDxpcwXk81PqKYAG4iJI=;
- b=DFja1lfmgvygTIZTApp/wYTwicmOwuGUYzU4UcnghQo2PHoeF7NOi2bUGeapU4408egB/q
- kMoMSfzT4Rnn7ZRBqrHDXwTUxQNu4DK7roPUZmJ1/zlsmBDrdzwbX9fm0pC68WDRX0IzNH
- WAukTw7muzT+iUQulVEIfeqRNfaHkx0=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=AbQfgYXuT3a4tTa7GwLazoUjnB9NPOy0mvAoA5NyNNs=;
+ b=Ux/Ll6/WVd+uoyWo10IbUtYJmLaCJAv+pOIguw6pXZL7DNkQQJwN/tJui13hXPIg0fjLO2
+ L+kisDTYeU+0ZslA8Q3LlaW2jyoPKy+kFTIcoK+AZZBiuzRIFfkWw+T3/mwZYvWigHAGOl
+ F1PibQ9xB++mJYUWkAGgjFNd/3oDV+E=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-196-nSDvbO6_MBqSj0YS_LT10g-1; Fri,
- 13 Mar 2026 07:34:32 -0400
-X-MC-Unique: nSDvbO6_MBqSj0YS_LT10g-1
-X-Mimecast-MFC-AGG-ID: nSDvbO6_MBqSj0YS_LT10g_1773401671
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-572-eEFXRuvqNSeFz3inWLJLoA-1; Fri,
+ 13 Mar 2026 07:34:36 -0400
+X-MC-Unique: eEFXRuvqNSeFz3inWLJLoA-1
+X-Mimecast-MFC-AGG-ID: eEFXRuvqNSeFz3inWLJLoA_1773401675
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CC61D18002D0; Fri, 13 Mar 2026 11:34:30 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 303FB18005B6; Fri, 13 Mar 2026 11:34:35 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.45.225.234])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 5161A1955D6F; Fri, 13 Mar 2026 11:34:26 +0000 (UTC)
+ id 8C50619560B7; Fri, 13 Mar 2026 11:34:31 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org, Cornelia Huck <cohuck@redhat.com>,
  Eric Farman <farman@linux.ibm.com>,
  Matthew Rosato <mjrosato@linux.ibm.com>,
  =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>
 Cc: qemu-s390x@nongnu.org
-Subject: [PATCH 0/4] Various update to MAINTAINERS
-Date: Fri, 13 Mar 2026 12:34:18 +0100
-Message-ID: <20260313113424.15583-1-thuth@redhat.com>
+Subject: [PATCH 1/4] MAINTAINERS: Update S390-ccw boot maintainers/reviewers
+Date: Fri, 13 Mar 2026 12:34:19 +0100
+Message-ID: <20260313113424.15583-2-thuth@redhat.com>
+In-Reply-To: <20260313113424.15583-1-thuth@redhat.com>
+References: <20260313113424.15583-1-thuth@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
@@ -81,19 +84,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Updates for the sections in MAINTAINERS where I have been involved.
+From: Jared Rossi <jrossi@linux.ibm.com>
 
-Jared Rossi (1):
-  MAINTAINERS: Update S390-ccw boot maintainers/reviewers
+Christian Borntraeger is no longer active in this space.  Promote myself to
+maintainer and demote Christian to reviewer.
 
-Thomas Huth (3):
-  MAINTAINERS: Update the s390x maintainers
-  MAINTAINERS: Remove myself from various sections
-  MAINTAINERS: Downgrade the functional testing section to "Odd Fixes"
+Signed-off-by: Jared Rossi <jrossi@linux.ibm.com>
+Acked-by: Eric Farman <farman@linux.ibm.com>
+Acked-by: Christian Borntraeger <borntraeger@linux.ibm.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Message-ID: <20260310142118.1120291-1-jrossi@linux.ibm.com>
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ MAINTAINERS | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
- MAINTAINERS | 16 +++++++---------
- 1 file changed, 7 insertions(+), 9 deletions(-)
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 9d1614fd7e9..49e9b7dccbb 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1862,10 +1862,10 @@ T: git https://github.com/borntraeger/qemu.git s390-next
+ L: qemu-s390x@nongnu.org
+ 
+ S390-ccw boot
+-M: Christian Borntraeger <borntraeger@linux.ibm.com>
+ M: Thomas Huth <thuth@redhat.com>
+-R: Jared Rossi <jrossi@linux.ibm.com>
++M: Jared Rossi <jrossi@linux.ibm.com>
+ R: Zhuoying Cai <zycai@linux.ibm.com>
++R: Christian Borntraeger <borntraeger@linux.ibm.com>
+ S: Supported
+ F: hw/s390x/ipl.*
+ F: pc-bios/s390-ccw/
 -- 
 2.53.0
 
