@@ -4,90 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77311106FD87
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:25:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 78806106FD87
+	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 06:34:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w0vxn-0004yL-Cm; Fri, 13 Mar 2026 02:25:35 -0400
+	id 1w0w5x-0001Zn-6b; Fri, 13 Mar 2026 02:34:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vxY-0004fW-LH
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:25:22 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w0vxW-0007Ym-3b
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:25:19 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso17141155e9.0
- for <qemu-devel@nongnu.org>; Thu, 12 Mar 2026 23:25:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773383116; x=1773987916; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=awjWB7o8/7gqjyQUYwoGFAJKD7rlAN4iC2SP0ovtwBw=;
- b=BBuTngOMsn506jsSP09r1x5u9Nl2mOjaBRpPzIjC9oGz0yLI28rbgEiIgmQz/SfKDR
- 9AjgMDCmmT2Rx+U8xWJqSEEDmvy+O0aBfHsuugbBhtP5mA7HDidV6d8EXPvsre7pj6+i
- sEoQ4F+As4J0jw4RDy9ytMmSAMlSOK3c/T+skECNYP0K9xu21h+aG42IAl91WQaRcOD1
- 7uXwiuJ1r9vvcpUhf4pdFHIUDVGySKjt+Ftt0fPeM7XE1ueGsmdh3VPvrvIoNGFjLGYT
- BffBvnop6WA2T/h69uuf9tckbuYVEmA/Ip/x8Q1wsThw+m3rGpeSbl4o5opQL92NHnmI
- 0dpg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773383116; x=1773987916;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=awjWB7o8/7gqjyQUYwoGFAJKD7rlAN4iC2SP0ovtwBw=;
- b=f9xSJ8B3NywbLg1d4rddS9f378c3bQpXkkWwiQcuP5UHRbZqvVoPQc61sJfU72Z99T
- HEluLhahcvNwG7KteEpILFNuBL9RL8ICqfalBhSrebcHeW6XbEsDa4XRMf8ODCeT0Swr
- YTpTgcMtXgkUWpDdU/ZF9tzx1PypQbUcggt1hF0z0CfEZGx2DhpJ/DeABOrtoad0s+yw
- ALYuWWbazBHfY4sam49KtWYEIVSosE9EVh90plQDxJXyk2DJpCvjcFc1HGS/nY5n8+H2
- ulhZs8RqBuW2NNW0jw5J9Z+a+/e8+8sNinNNQ6hmjfuJDu3QNyDzSu+Y2LssX+VYxv1f
- k0Tg==
-X-Gm-Message-State: AOJu0Yxnq7F4Ja2Zs4qtDecvQEVJITBTkT4MObBA/4+Vppuff2mpCGL/
- 9hF7AuJxYnh71MYdjyaeEGCv6oIgbNz59nY1ilIiKOuZizccWFbYHu+eLfh9Tp7XZ5vpg+xniDI
- 3ytzRIXk=
-X-Gm-Gg: ATEYQzxglqgfPFUllStUuHAUlGK/9ZFntcFBYVyy7IHUwws8itiAKVVmJvx6t2jpLG0
- MNOSgo9/uIiQRLPyDFc1+UKpu6HhPIKmzIpQ0VkqfjCJI4zzY+Q41QfBu5soouGbGUYKR+LMm6B
- 9TJL7YOOCpOvJZO+z135hb7VYxMM7H4LHHeI/S7FCwvrKbA+3Oic0DBPvWcGpQQfpqpZC1XkHrv
- USEjbQyJHjVn7rG6OT5yy7STtoXo8Vz/9jEHUILAsWtqBkXzH8PjF9+OieEHaHJ34xTbn1cRbaQ
- 5EIN8QVOYj9NgXci2zMqdIw36w5bMH5y0Dyk31k76pwVOt4BUYxOeLYwH+JC6kuP7xzF4Nbbhf6
- BfogBBD4JOlo1VEOgbxdPGebbELGUDcIHOC2Txsq2kXxhP/VXNHwfsVKbGoIZ4GjSBJP6zAiYNb
- Dk1/B6LytCSDeVFFAgPJCnbV7Pk4TgXPiMI6Rrrb5RlzjJ6U/ZkOPPvf1WQbDmS54JE5GhvpjJf
- sTTYQ==
-X-Received: by 2002:a05:600c:3e05:b0:485:3428:774c with SMTP id
- 5b1f17b1804b1-48555ab09e1mr34187585e9.4.1773383116224; 
- Thu, 12 Mar 2026 23:25:16 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b5e912fsm496075545e9.2.2026.03.12.23.25.15
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 12 Mar 2026 23:25:15 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Thomas Huth <thuth@redhat.com>,
- Anton Johansson <anjo@rev.ng>
-Subject: [PATCH v2 38/38] hw/misc: Build 'mac_via' as common unit file
-Date: Fri, 13 Mar 2026 07:20:54 +0100
-Message-ID: <20260313062055.2188-39-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260313062055.2188-1-philmd@linaro.org>
-References: <20260313062055.2188-1-philmd@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0w5r-0001ZW-VE
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:33:57 -0400
+Received: from p-east2-cluster6-host1-snip4-4.eps.apple.com ([57.103.76.175]
+ helo=outbound.st.icloud.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
+ id 1w0w5p-0002Hv-Po
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 02:33:55 -0400
+Received: from outbound.st.icloud.com (unknown [127.0.0.2])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPS id
+ 09E0C18003A5; Fri, 13 Mar 2026 06:33:48 +0000 (UTC)
+Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
+ s=sig1; t=1773383631; x=1775975631;
+ bh=oqHJmVL5UO/+df9bvn++wiKAs8rYpOs4NmIqtnESgvE=;
+ h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
+ b=Ha9rt60Ru9CkPAZuFOPuv3+qcol8ajvoaYcJWjZiiOxb7bhcfqfVhonHFvHbhJQ+om6H2te27fqJQisoKLvaMRaVecMxRs2/LPQNM4wqLUc/gm+BSInxaxQvTyuWcozkUnEH6AI8e0KxjdUpEb9JEEBAQnoYiOQS0LQjrduNdS66+IIf78ewDSeX+U6po6pDwOgtdZK8z90HcQukmV+lk2oCH/2XyKcBQzo6FqdXErT512LEnigZFlAp+0fCzXakaVg8ZJ22mQIxO34v1LKasGfH9jrOZBsSsFEqFQTRMtxhQ2PQ8QJim5c5mfw9yopHKvaH2kKAkPGkdJGvyYMyog==
+mail-alias-created-date: 1752046281608
+Received: from smtpclient.apple (unknown [17.42.251.67])
+ by p00-icloudmta-asmtp-us-east-1a-60-percent-2 (Postfix) with ESMTPSA id
+ 5BA581800109; Fri, 13 Mar 2026 06:33:47 +0000 (UTC)
+Content-Type: text/plain;
+	charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
+Subject: Re: [PATCH v2 1/3] target/arm: add AArch64 ISV=0 instruction
+ emulation library
+From: Mohamed Mediouni <mohamed@unpredictable.fr>
+In-Reply-To: <20260313021850.42379-2-lucaaamaral@gmail.com>
+Date: Fri, 13 Mar 2026 07:33:35 +0100
+Cc: qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org,
+ agraf@csgraf.de
+Content-Transfer-Encoding: quoted-printable
+Message-Id: <D80C2CE1-DDA8-4627-8196-252DC8BF6BB6@unpredictable.fr>
+References: <20260309214852.92545-1-lucaaamaral@gmail.com>
+ <20260313021850.42379-1-lucaaamaral@gmail.com>
+ <20260313021850.42379-2-lucaaamaral@gmail.com>
+To: Lucas Amaral <lucaaamaral@gmail.com>
+X-Mailer: Apple Mail (2.3864.400.21)
+X-Proofpoint-ORIG-GUID: 6spvLzFyk5RvZTski4mm2ncj4mH7AQQf
+X-Authority-Info-Out: v=2.4 cv=eb0wvrEH c=1 sm=1 tr=0 ts=69b3afcd
+ cx=c_apl:c_pps:t_out a=YrL12D//S6tul8v/L+6tKg==:117
+ a=YrL12D//S6tul8v/L+6tKg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
+ a=VkNPw1HP01LnGYTKEx00:22 a=pGLkceISAAAA:8 a=BgHGX5qg4qM5eV3fwTMA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzEzMDA1MSBTYWx0ZWRfXzq5OcYYF50hT
+ UwYkz7p7VWADtzdtsyPi1ovY6Zg4+VaqMGw+Y4ebhroHz7SzvCGB80NOBQnRToEUbZRtenDliTy
+ 92B8ZKg6vmGhbLnFw4A9O6/wPk5rvUHHOPasr2dimzbMB2CtsGhcLcqR1+EmbkWNowYusuP8aHg
+ 0wtUgpEWHRovVVcN3pDZTuQAMZ3zstWlwZGyixK7zUEkFPm3ExvUM499iFA7Py7L5thTj9wu9uK
+ RdedHQp7Tzd1vEgxOxwsLmh55A9jjUS6bdsAy/Wd9gbgf7oDLGh6F2Lp9HwmfIIT6qBDSp47ZmN
+ tYEtG1nyDWp0MdED986DHxlWII/0yuQNXwa4Z75wSCNiZFM2nVG230OKehj2ow=
+X-Proofpoint-GUID: 6spvLzFyk5RvZTski4mm2ncj4mH7AQQf
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-12_03,2026-03-12_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 malwarescore=0
+ bulkscore=0 mlxscore=0 adultscore=0 spamscore=0
+ mlxlogscore=999 phishscore=0
+ lowpriorityscore=0 suspectscore=0 clxscore=1030 classifier=spam authscore=0
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
+ definitions=main-2603130051
+X-JNJ: AAAAAAABwK8V5vWXzu5iKcv5/ZWGF2n8+TABDBUsRIMw1x5M3Ir8WNVStxKjQJZWLhblGDNpoWEEwLFddzg9LLM0vKhQ23x7TDM0GiJL/tUFmu05WuN3wL07ZHdUAdhkfwx6KeELrj3PVXmb+GvJMKh924MlmV1YiO8GEZ/tTGPZf0fCi9c+x79d47duUjl9jNE0NDbCkvcBcWrLGr6yoik1O40mFmPAF3L19xwKjLdrGjW83LX1cwWkZlCKbxlNnpQDESZjVco26RnMazWsjHFPevhOo1Q2hNOnH6D4J7Dxc4CfWOKfjNvmFDPCzujLny9bH+DrT8BJfBkmvlrLne2GG/rvthC5/PXsyzUm9txU7HDy0m5FIdUCFb3BPGwYcpFkKkqRxSk5JOZ/Cd7y8gBT9GWFBDmIgVNiQd89UMklnBkYHcgAEMi0bEftDEavalAQMlXgmSvjqbKkTqz988BuJvvscIt5KahFEFaYcCK3EimXoUjVY8eUh60kp6KjLuR0T6L1XR8492m5DswqTuaj9XtdnN3PfV+tjvyCwA6CTeMabaWhTLFRfBk9g1rA7bf5p6njrgwFlVW0oisZpXCt3e8wULlI29bLcx9VPJy5xp9BNxfEIf345qyBobayEgJ+uX8Edp5OOEzAErsKlp6oRXfRgBGxMwUi9ZPo30ZN3t6zEvdekqg=
+Received-SPF: pass client-ip=57.103.76.175;
+ envelope-from=mohamed@unpredictable.fr; helo=outbound.st.icloud.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,27 +98,125 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nothing there is target-specific anymore.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/misc/meson.build | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/hw/misc/meson.build b/hw/misc/meson.build
-index a2601e1c433..cd084a19363 100644
---- a/hw/misc/meson.build
-+++ b/hw/misc/meson.build
-@@ -154,7 +154,7 @@ system_ss.add(when: 'CONFIG_I2C_ECHO', if_true: files('i2c-echo.c'))
- 
- system_ss.add(when: 'CONFIG_AVR_POWER', if_true: files('avr_power.c'))
- 
--specific_ss.add(when: 'CONFIG_MAC_VIA', if_true: files('mac_via.c'))
-+system_ss.add(when: 'CONFIG_MAC_VIA', if_true: files('mac_via.c'))
- 
- specific_ss.add(when: 'CONFIG_MIPS_CPS', if_true: files('mips_cmgcr.c', 'mips_cpc.c'))
- specific_ss.add(when: 'CONFIG_MIPS_ITU', if_true: files('mips_itu.c'))
--- 
-2.53.0
+> On 13. Mar 2026, at 03:18, Lucas Amaral <lucaaamaral@gmail.com> wrote:
+>=20
+> Add a shared emulation library in target/arm/emulate/ using a
+> decodetree decoder (a64-ldst.decode) and a callback-based interface
+> (struct arm_emul_ops) that any hypervisor backend can implement.
+>=20
+> The hypervisor cannot emulate ISV=3D0 data aborts without decoding the
+> faulting instruction, since the ESR syndrome does not carry the access
+> size or target register.
+>=20
+> Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
+[=E2=80=A6]
+> +/**
+> + * struct arm_emul_ops - hypervisor register/memory callbacks
+> + *
+> + * GPR reg 31 =3D SP (the XZR/SP distinction is handled internally).
+> + * Memory callbacks use guest virtual addresses.
+> + */
+> +struct arm_emul_ops {
+> +    uint64_t (*read_gpr)(CPUState *cpu, int reg);
+> +    void (*write_gpr)(CPUState *cpu, int reg, uint64_t val);
+> +
+> +    /* @size: access width in bytes (4, 8, or 16) */
+> +    void (*read_fpreg)(CPUState *cpu, int reg, void *buf, int size);
+> +    void (*write_fpreg)(CPUState *cpu, int reg, const void *buf, int =
+size);
+Hello,
+
+Can be good to have, but you should have a default implementation using =
+CPUState in an arm_helpers
+to not duplicate them across each backend. and then do an =
+if(ctx->ops->read_gpr) { use override } else { default }
+with a default implementation.
+
+> +
+> +    /* Returns 0 on success, non-zero on failure */
+> +    int (*read_mem)(CPUState *cpu, uint64_t va, void *buf, int size);
+> +    int (*write_mem)(CPUState *cpu, uint64_t va, const void *buf, int =
+size);
+> +};
+
+A memory access - especially one that will be emulated - can span =
+multiple (physical) pages under
+the hood. If everything is mapped you=E2=80=99re fine, but that=E2=80=99s =
+a bit depending on precious luck, especially
+as the AArch64 glibc does unaligned accesses on memcpy.
+
+On x86 side of things, was able to run Windows (NT) and Linux but not =
+Haiku, (the Hurd needs more complexity that I don=E2=80=99t even handle =
+yet for x86), and Win9x without handling such a fault case.
+
+And there are memory to memory instructions on the way (FEAT_MOPS) where =
+that=E2=80=99s even more likely to happen.
+The downside of read_mem/write_mem is even if you return a fault code, =
+you don=E2=80=99t know which one of the two pages
+(or more potentially for memory-to-memory instructions) raised the =
+fault.
+
+Made a design change away to an mmu_gva_to_gpa callback and not having =
+read/write ops anymore like this because of that factor (see =
+target/i386/emulate/x86_mmu.c x86_write_mem_ex/x86_read_mem_ex)
+
+Maybe you could keep a read_mem/write_mem matching those two on top of =
+mmu_gva_to_gpa for your unit tests. Or run those
+in a guest context as kvm-unit-tests does.
+
+Thank you,
+> +
+> +/**
+> + * arm_emul_insn - decode and emulate one AArch64 instruction
+> + *
+> + * Caller must synchronize CPU state and fetch @insn before calling.
+> + */
+> +ArmEmulResult arm_emul_insn(CPUState *cpu, const struct arm_emul_ops =
+*ops,
+> +                            uint32_t insn);
+> +
+> +#endif /* ARM_EMULATE_H */
+> diff --git a/target/arm/emulate/meson.build =
+b/target/arm/emulate/meson.build
+> new file mode 100644
+> index 0000000..29b7879
+> --- /dev/null
+> +++ b/target/arm/emulate/meson.build
+> @@ -0,0 +1,16 @@
+> +gen_a64_ldst =3D decodetree.process('a64-ldst.decode',
+> +    extra_args: ['--static-decode=3Ddecode_a64_ldst'])
+> +
+> +arm_common_system_ss.add(when: 'TARGET_AARCH64', if_true: [
+> +    gen_a64_ldst, files('arm_emulate.c')
+> +])
+> +
+> +# Static library for unit testing (links emulation code + decodetree =
+decoder)
+> +arm_emulate_test_lib =3D static_library('arm-emulate-test',
+> +    sources: [files('arm_emulate.c'), gen_a64_ldst],
+> +    dependencies: [qemuutil],
+> +    include_directories: include_directories('.'))
+> +
+> +arm_emulate_test =3D declare_dependency(
+> +    link_with: arm_emulate_test_lib,
+> +    include_directories: include_directories('.'))
+> diff --git a/target/arm/meson.build b/target/arm/meson.build
+> index 6e0e504..a4b2291 100644
+> --- a/target/arm/meson.build
+> +++ b/target/arm/meson.build
+> @@ -57,6 +57,7 @@ arm_common_system_ss.add(files(
+>   'vfp_fpscr.c',
+> ))
+>=20
+> +subdir('emulate')
+> subdir('hvf')
+> subdir('whpx')
+>=20
+> --=20
+> 2.52.0
+>=20
+>=20
 
 
