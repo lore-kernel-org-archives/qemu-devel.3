@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B48F610706C6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A121810706C1
 	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 09:54:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1LhE-0004Y7-RK; Sat, 14 Mar 2026 05:54:12 -0400
+	id 1w1Lh5-0004WF-Hk; Sat, 14 Mar 2026 05:54:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1LhC-0004XZ-13
- for qemu-devel@nongnu.org; Sat, 14 Mar 2026 05:54:10 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1Lh2-0004W4-12
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 05:54:00 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1LhA-0005CS-MR
- for qemu-devel@nongnu.org; Sat, 14 Mar 2026 05:54:09 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-4855dbfc129so7505425e9.0
- for <qemu-devel@nongnu.org>; Sat, 14 Mar 2026 02:54:08 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1Lh0-00057u-IA
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 05:53:59 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-48374014a77so29064305e9.3
+ for <qemu-devel@nongnu.org>; Sat, 14 Mar 2026 02:53:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773482046; x=1774086846; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=linaro.org; s=google; t=1773482035; x=1774086835; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=4NFJ8giPnzpQWQq6Dea49B3MOudpApzM2bssX4iiQPs=;
- b=jbZIe1hJcPPWAenl4wjG1ZvaPo2xr9aWauttZfmfj52quf+muzzNFaTrv0PfEUQHsF
- FX1WRYhLPSB9LhsxsCOCwBDVKQ1clNG5HPu1uX5pl4i1zaIBr4khyTOJc7k4ETYkc305
- 8UNIkLSrFCLF5OOZRytBQxVJLA+RrysjPGBgo3eCmQy6ZSEXPR5sYOZb95OFnvKX8Aak
- t3YPd6ChwCAzAHL8w9xOmsN074B3DsqF6eVUf4f+nJwkZXQp0d7szudM+rJuIvZMcVqR
- djGdr432Cy9Gre6IZcFJ4kZFSI2CCPlRNZ16JGY/ugbVtt/duLU+N2KFVk3xwC1N8S8a
- jtEQ==
+ bh=jtG+fUElE2P2S+fzsGIfdaDn0vJVjqmw6NSGMQWVeos=;
+ b=r8zXjif7QlHN76vBwM7E8kjQk8ZNFXwqF07AqaB4Uxd1or6JybOS++mWWYtTYRCLSZ
+ KREoZE2u98IxE0iOgRiKnytLBoO91H44eFKryit0TfNhNQEjjBoKgfsJ484BG7RoLhoW
+ RE/nJrTI3ZY5NmGQNonXF1iDo2GmHjQQZbBhBszExtu76+f1p8d7yhhNolBq2r/xgXB+
+ SliFLGmsHhQ5xd6so5bVdCGNwY1+m6/Jw4vq+E6f374SwmFdeDXWx3jGrAm+blH9liVU
+ tEYc2MPFKECqkS3xfgRXCz+fMEPZcgtI7k0HUKVGkHFsqXKA1Jn0iQkYmUlGedVqEqy6
+ Jpzw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773482046; x=1774086846;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
+ d=1e100.net; s=20251104; t=1773482035; x=1774086835;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=4NFJ8giPnzpQWQq6Dea49B3MOudpApzM2bssX4iiQPs=;
- b=NTqkfP/whw51kV2Tx5vLgcx+36WzukiBUdzUSlNNVXrPzPcZyKVhhZiutffmm3Ybgb
- r4dzDfmLkbuv3V5GwOEI0nESN1q+HIGytwb9VtfxBDRExY5N8Vel0Tor85yRZaAYbarQ
- fhmuGVyJ6Ip9xPBMWc1p+l55j/OTlfL6/kvV+llPNYlhJxXV0vkju2RVjH+x6WokSteW
- Cf0vWafRib2q1lEEaQhufUnNWd9lYe3H/7lL8lf+/hm3ydnt47M4zBcVKs4/Dr/XazjQ
- tPo3h5t+9n3IKiBkGCrTIvlGQrSnP0Dt9tpkmf+OccHROl378aE08P+oIKrg/bf/uXHU
- l0BQ==
+ bh=jtG+fUElE2P2S+fzsGIfdaDn0vJVjqmw6NSGMQWVeos=;
+ b=gk4HqcZde1PLoHykzBM7PbAmbIls01nOSSrfhe8b5kAVv0L3xZYd0FuZTBnfzxWn3W
+ Fyz7eg/09SsObUWYl9fNeaX6Ay+g82VOlMVMhllwII62H4huXYHZGP92dZoyA9G/woCU
+ wJXLY7V3hUJEsvd4xbqpsoACgEla33QHqy4no1Pm2xgadc/z9M994jVeKjaizGWtK+8n
+ Tdok5TKz/FSV2ecIJOjgAE/d2AO7NfQIVEIL+U1OVRSvrExLdUsmdZh8ReTLmO1vCxmp
+ Qe3Amp5XvXn/5Jr8NOWCNnEDlyjSBBYzZs6T43b8pOEH9ZrGrwM7g3DQzotyXYrOnCRp
+ d3tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXOm3ue4fkzGMhuUDssCKDDLWgJvm/H4t6sxKuI04ah2j7kDso/QZQDq+WbzHZMZ6gEuTB327EPZgO8@nongnu.org
-X-Gm-Message-State: AOJu0YxRNW+XwoUoMFPH872fMsmv/4kdBINAw1kHCqBScpGmvW14lKx5
- jBWY/55PTPqIkZsiorn9tmbEXES0sw6yw/2b4lMp2JfpAAIjU4Cl327xDKx0QF3zKVo=
-X-Gm-Gg: ATEYQzwoMsF5iz3zkQboCgeQZK1cs5LkKQhbSgZ4ccb6oVjxIyR+UHYGVc5SrZ41/Y1
- F/YzBGd8WeJA81+mFMITbNtOJDCMoxe9VJHCtMZt3tVND+sDFcy871NhPk0Xs00x6wSpUP1B1j7
- +AtiZTlQnRx8puP16x9HY33hAAJf+6HVfyUXFGGoFCXDRt7AnPzZs9rlF1bO0XXdvwRfi9YguUj
- 1nNghyhVsnwOEg2hiIv20ri82RORw762rtGsOtVTIPm0oUKQXzXue/cH4h4pbBFdgCmYSv/ZNt4
- IiHkrVHDABkbdc7sMBaR05ReESmLG7LaXlwsh2oNEfVx1EtsSe8WaRIDriA8WxpUV2CaAwrvWIn
- EsR+P6+wEKws/O4PaIHGNkvk/W9uH7VYgOEK8nC9SqqpjfyLwPyYDcNnqcm4KCdiqx8lj5kk5um
- o3e6lrDTHcO6gya8zVPPepw9OZwv1W5Ue49SrDQMRbBpU7l/HcKENii9iIYTVujXrXWw==
-X-Received: by 2002:a05:600c:6289:b0:485:419c:4eba with SMTP id
- 5b1f17b1804b1-485566cdc22mr94515585e9.1.1773482046123; 
- Sat, 14 Mar 2026 02:54:06 -0700 (PDT)
+ AJvYcCWHvDjqLex6bVTvxKrANPcnYG98wTC7pzehKj280OmzWedxm9x0JSCQJDDBAAtKphnoTZOXw6mmIIg0@nongnu.org
+X-Gm-Message-State: AOJu0YxxPTPvrp8CKO1l6okXB3CGtP/3fp35ToEUkYTSQSG4qWxajtXy
+ ljx4lAGMjzktBQwtQqoB4dowtxnKJ8VdIs7LWSXEXFi/QB9647tEjvL+nQsKAX2uxl4=
+X-Gm-Gg: ATEYQzyLIjvfBqDekiaO+05vFKjMq53KzE0cHiKPZ9v/0SnnoXetr6qQGafA4uiyDQC
+ gCqT4lOz3KY/8+82zBBNSd3753K/roacZP8U9xYgkNOiig1PQrzZHKGaKgDaW9+qtltdE7i4MwU
+ XNTnpyLCJneiRaMmQ0C7r8aDTfBPLpR6bbtDqGeLEprvdsHtGxd5ndV+x1DL4c0WC3C2/LXeY2D
+ DdPAUy52aRFrE77FJ5qduoKveERrVmdPgzTnKR3h30E4i4I50znuL0uvayRlnCTNxExUQ8B93c6
+ dIq0j+AfsfH/8idXT0E/7tWVWTk0KLfbMU48rUG7anrmiksHjYwiYzXgu6CB90EnRcuS/Jj0B4O
+ GDM6rfeoh4+LPDcZoxEqOP/xffHwG5nT08xrxwsWpQNh/mzkovTArFd7E5HWkGmMXr3JD/YsKXj
+ ia8uXrznR5OTguoR6JpGMYYFsqDRIbspF6awKma1uQHdEvjgMsMB9bVtnQDG82N6aylg==
+X-Received: by 2002:a05:600c:3550:b0:483:709e:f238 with SMTP id
+ 5b1f17b1804b1-4855670c971mr110405175e9.29.1773482035301; 
+ Sat, 14 Mar 2026 02:53:55 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48556433b94sm40941045e9.11.2026.03.14.02.54.05
+ 5b1f17b1804b1-4854b5e9179sm264520115e9.3.2026.03.14.02.53.54
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sat, 14 Mar 2026 02:54:05 -0700 (PDT)
-Message-ID: <bc3c1a0d-e79a-453d-a4eb-5ade4d314a15@linaro.org>
-Date: Sat, 14 Mar 2026 10:54:04 +0100
+ Sat, 14 Mar 2026 02:53:54 -0700 (PDT)
+Message-ID: <5950bda3-585a-49c1-a1ef-c7b7653d89aa@linaro.org>
+Date: Sat, 14 Mar 2026 10:53:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 2/4] tests/qtest/test-hmp: Free machine options
-Content-Language: en-US
+Subject: Re: [PATCH v1 1/4] tests/qtest: Don't dup machine name in
+ qtest_cb_for_every_machine callbacks
 To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
 Cc: Peter Maydell <peter.maydell@linaro.org>,
- "Dr. David Alan Gilbert" <dave@treblig.org>,
- Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>
+ Laurent Vivier <lvivier@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>
 References: <20260313182957.28432-1-farosas@suse.de>
- <20260313182957.28432-3-farosas@suse.de>
+ <20260313182957.28432-2-farosas@suse.de>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260313182957.28432-3-farosas@suse.de>
+Content-Language: en-US
+In-Reply-To: <20260313182957.28432-2-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,10 +109,16 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 13/3/26 19:29, Fabiano Rosas wrote:
+> The qtest_get_machines function caches the list of machines in a
+> static variable. Dup'ing the machine->name string only serves to leak
+> that memory when a single test is executed.
+> 
 > Signed-off-by: Fabiano Rosas <farosas@suse.de>
 > ---
->   tests/qtest/test-hmp.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
+>   tests/qtest/cpu-plug-test.c | 11 +++++------
+>   tests/qtest/qom-test.c      |  3 +--
+>   tests/qtest/test-hmp.c      |  3 +--
+>   3 files changed, 7 insertions(+), 10 deletions(-)
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
