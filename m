@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0979410706E4
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 16:19:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D16EB10706E4
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 16:19:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1Rh3-0002ex-Fw; Sat, 14 Mar 2026 12:18:25 -0400
+	id 1w1Rhy-0003DE-Hn; Sat, 14 Mar 2026 12:19:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w1Rgz-0002eG-IY
- for qemu-devel@nongnu.org; Sat, 14 Mar 2026 12:18:22 -0400
-Received: from mail-dl1-x1243.google.com ([2607:f8b0:4864:20::1243])
+ id 1w1Rhw-00036H-M6
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 12:19:20 -0400
+Received: from mail-dl1-x1242.google.com ([2607:f8b0:4864:20::1242])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
- id 1w1Rgy-0007Mi-11
- for qemu-devel@nongnu.org; Sat, 14 Mar 2026 12:18:21 -0400
-Received: by mail-dl1-x1243.google.com with SMTP id
- a92af1059eb24-128d2e3074fso4318647c88.0
- for <qemu-devel@nongnu.org>; Sat, 14 Mar 2026 09:18:19 -0700 (PDT)
+ id 1w1Rhu-0007Ow-RG
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 12:19:20 -0400
+Received: by mail-dl1-x1242.google.com with SMTP id
+ a92af1059eb24-127380532eeso2711840c88.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Mar 2026 09:19:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773505098; x=1774109898; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773505155; x=1774109955; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=NegWRXHaTY4H+PVwmiHKuThO5ICqz2enr0lbL5cn+DI=;
- b=TkZcxafuQhNk0hEiPxLvpcV+m4TVYvwE0zhG02nTpXYPFfulMVlZdxlMonUD0BAKh+
- E6ygoMF3LsoQW3OocMLk14m52PFsxjWcKPq7et6uWsl3yjXWX6Zx4sJo7Td9qBxGA9kA
- kGh3xpIlz8qhs8WE6/30O5aJIRK6sFcpl+Af9jmyInw73C5O//pCmkcKZgnZwTSX9RNy
- P1z3u8znLCORdDRMi0cng4kPqYLTc5dG910TR5CCkXslpa3+1MgFYZ8r/nPfnvKuDoU0
- miG2F44qUbWUczcUJCI8vLRyzjX9+JXpO6+1WWpwy4QKUl+D8aqCI6W6rP6pN/1QJs+/
- GP+g==
+ bh=xbN9T7w+GivOSAMEgAE4PSRkBF7p72D6sxxSIX5wQZ4=;
+ b=LmyPWq3Ftn4BzqBXx6u66h4qGFrNmlScYwUnB/Zy2F9EoTpYVRJqZNEssP/3B0kZKh
+ BGo9AU5jM3xdjVo0LXYnG0gzbsh5KX2lu1v+txyVj/AxbdCfcM0WbwWmMuuAZNg6c7lD
+ lVuO/rPj4a17/poXHw946T9jwWReS9jJZPYyC/EECdblNwShDeAciVL4v4XXxm3CXoIF
+ g4BAPmIQLzv9Np03/peTc6a5gzCzev7taT8EkHiLsk+HfVD9GhvfnyTz1da+OVxCAgMK
+ E6ebS7EifIIIUnUWenNDeEmuOmOxoMUWJrBX07ylD36YRXEnA6UYNSW/1nHVrfLVtg1E
+ Fydg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773505098; x=1774109898;
+ d=1e100.net; s=20251104; t=1773505155; x=1774109955;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=NegWRXHaTY4H+PVwmiHKuThO5ICqz2enr0lbL5cn+DI=;
- b=pV3ixQhnZO4xJKnKiVt1GpS7w5zDnl3dyxEZeTgwoheZqP2MH9RKQaghnhDVoNllla
- Syc+mjbz3CCvOH6smLiKtaaIdb8Jcp3FeXDZjnuP8TaKZ7GVBTSYGgd5s/hIHXJUU8Wd
- 78mldXdEVUOjnHO/FrddMNkvEFxybtQyoci1AHmUrIprBmHvUWYcEeDmpvAVqyiXSTMo
- WO8H5RkHmITM19d7oTUC8vWsZWSg0Tikx5pZTx5CHMfQoPEZBnR5CbA67nAWK94mRXmr
- 5eUmYlN/psrsUz3jTvku403NBWVEGAeZJD3BnlyoPEviVKcmQ3l8fG7N5uBqDgMZ6ens
- wsiQ==
-X-Gm-Message-State: AOJu0YwACCl7Xpaey8EjAL3QDOWq42+5ru1jKWNvheYnMF5IqFsCEe6x
- uVa3teWj3DEFL0NmI5zS1a/0sdJqj64Y1XUrgi5f4TWCh+NCYHjARTa1
-X-Gm-Gg: ATEYQzzDP/+QvPbmH/v9JJe9lwOED3Tj160qmPFYDmbSDvwrPHahlyYyYTjzSDUQIgh
- Z/49OZw0VPHTOdN7fBcbmXQPuNFz3FDmLLbVnvuOri5OFQ0IQQCMp/ucAdRbV7vJD9VvOg7D2HK
- q5WPMaq9j3vRsyRlInqkok/AXJjjSdksma1RwGxXeEAfYXbThB0Orun64VCOI9fIo+oIrSstRGN
- gM9hml8YX/iSC0OaegtNW1DLp0tcK303nmoaKFwA30z2qHwMAPIUiAXHf8ANrIiv8sQxH+2Wf6M
- oxH+TWJSyQvBvw0kgK/+kWXNxgDVapty9nfeUO436eUKSr0TdQXHsAgI0zXFUsjZUwdfG7wbVPY
- 7kl++Ql1wcUXZ/DL/FIozj3U9qTLv1voP7auLBGk4Fxb7hbOUhHOFV7w/RMuWtKp7/ln7t2Ih9z
- bc9mUeAKMXP2yxmgxRK/S1ve7g/f5dfzJpOzkMjLtLq0Qnh0X5zgdOAsPQch/DGLpwwyw+GlO1q
- oTdoPr184m2QZaY4f1IeWwQpnwip6A=
-X-Received: by 2002:a05:7022:10c:b0:127:3f2a:af21 with SMTP id
- a92af1059eb24-128f3d35440mr3032430c88.15.1773505098203; 
- Sat, 14 Mar 2026 09:18:18 -0700 (PDT)
+ bh=xbN9T7w+GivOSAMEgAE4PSRkBF7p72D6sxxSIX5wQZ4=;
+ b=qRUbXuzJxtYp+TJxeUkUNL7IPhZa/pOxCKDux91/wTdgRsB8ILVgG+GXXgp6WMMxew
+ oGoCfeExrDmq5oTVwmY2QATjq0ow+ef+5ZZguuhHfUzjqfAcK1HB2Eq+kOY/FKGhPm+v
+ rFCLMZeEqDXo7kY+u7fY1SEWTnHne2gsATpPcbb8XiYKfkKa+Hd2jNSX9eL5HgqEPAgF
+ JoueWkIVK1LecxaLKDDXD/2xkOMOR3ziJYhmJL+qwVxe+7r22dVo61tmfYeSq4GzXvOI
+ My3WUIOjtQZDnwvYaA3Snn5GzeB4mQNPequH519LoYXlFQKNGG1Au5msBQ0ltjQHc9Mx
+ gvRg==
+X-Gm-Message-State: AOJu0YydizA0x6VF3arA81SAJrKx9bg3zkEExk/nPw9PjNCmngC2RGXO
+ XX+YTYMOJeo1aGwNVM1JITf/SzBIN73vWC4AohfroI5BpVYaEI3jr6oq
+X-Gm-Gg: ATEYQzy7o83zN8+K2stKPUEYcqbAIu8/lIOWkHDNwgEu2FqAya558A1xzs03Fds/pAy
+ tPjkrB9xbH9lYGDIcrM+Luuxo97OJS/RxdLTRXS2ijSp84HHycH60fzXGW5Zy4WT9i+JjcG0Ju4
+ f0qJiAUOt9XSSs5Oc9pY7h/EzAM04VWPvF1jQPsxJ0xb378T4pDUJoTzkTnY4akwMazWJsGUTK0
+ vHl4O6CNLHmtYKGzRwUznnkjEO1ldIsT72kr6mG6u+mJinI3tYahwGAtnErUQAEZL3c2V/MaRbm
+ ig7FP21agg9SdgG+4lbZwCST10Fgha7jsL8bLpC273f7eYFjMZvnLXudlYoZBq/o6D0ZirKxksn
+ PO9Ui6Dqgp/+LDHEbw/+7I0ou4yLSzdDvYOlILHNtoaox8K7MjLNG2W+OA+4HeL3Ltyc9ZcSqtd
+ 2XzVZgtWxu4oN9Otx42Z57XGHzjCImpxDn34Qe0UCJSD6VzrJe1eIVvMCfFVeJH0/3peDM5uDBF
+ jyG1dtuiKw/mdgHE4TPRvweLCs/YQA=
+X-Received: by 2002:a05:7300:6d05:b0:2be:171c:5047 with SMTP id
+ 5a478bee46e88-2bea54a4dccmr3467118eec.14.1773505154844; 
+ Sat, 14 Mar 2026 09:19:14 -0700 (PDT)
 Received: from ZEVORN-PC.localdomain ([38.95.120.198])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-128f6384e7asm5919005c88.11.2026.03.14.09.18.14
+ 5a478bee46e88-2beab3cd473sm6977582eec.8.2026.03.14.09.19.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sat, 14 Mar 2026 09:18:17 -0700 (PDT)
-Date: Sun, 15 Mar 2026 00:18:12 +0800
+ Sat, 14 Mar 2026 09:19:14 -0700 (PDT)
+Date: Sun, 15 Mar 2026 00:19:09 +0800
 From: Chao Liu <chao.liu.zevorn@gmail.com>
 To: frank.chang@sifive.com
 Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
@@ -72,24 +72,24 @@ Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>,
  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
  Paolo Bonzini <pbonzini@redhat.com>,
  "open list:SiFive Machines" <qemu-riscv@nongnu.org>
-Subject: Re: [PATCH v3 2/4] hw/char: sifive_uart: Sync txwm interrupt pending
- status after TX FIFO enqueue
-Message-ID: <abWKCQ3GJ86VlHri@ZEVORN-PC.localdomain>
+Subject: Re: [PATCH v3 3/4] hw/char: sifive_uart: Update IRQ when rxctrl is
+ written
+Message-ID: <abWKWF9X5gLHMgAd@ZEVORN-PC.localdomain>
 References: <20260312033201.1619554-1-frank.chang@sifive.com>
- <20260312033201.1619554-3-frank.chang@sifive.com>
+ <20260312033201.1619554-4-frank.chang@sifive.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260312033201.1619554-3-frank.chang@sifive.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1243;
- envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1243.google.com
+In-Reply-To: <20260312033201.1619554-4-frank.chang@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1242;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dl1-x1242.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,84 +105,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 12, 2026 at 11:31:59AM +0800, frank.chang@sifive.com wrote:
+On Thu, Mar 12, 2026 at 11:32:00AM +0800, frank.chang@sifive.com wrote:
 > From: Frank Chang <frank.chang@sifive.com>
 > 
-> Currently, the txwm interrupt pending status is only updated when the
-> asynchronous transmit handler runs. This can cause the txwm interrupt
-> state to become unsynchronized between the SiFive UART and the
-> interrupt controller.
-> 
-> For example, when a txwm interrupt is raised, the corresponding APLIC
-> pending bit is also set. However, if software later enqueues additional
-> characters into the TX FIFO exceeding the transmit watermark, the
-> APLIC pending bit may remain set because the txwm interrupt pending
-> status is not updated at enqueue time.
-> 
-> This issue has been observed on resource-constrained machines, where
-> Linux reports spurious IRQ errors. In these cases, the asynchronous
-> transmit handler is unable to drain the TX FIFO quickly enough to update
-> the txwm pending status before software reads the ip register, which
-> derives the txwm pending state directly from the actual number of
-> characters in the TX FIFO.
-> 
-> This commit fixes the issue by updating the txwm interrupt pending
-> status immediately after enqueuing data into the TX FIFO, ensuring that
-> the interrupt pending status between the SiFive UART and the interrupt
-> controller remains synchronized.
+> When rxctl is updated, we also need to check whether the IRQ should be
+> raised, as the user may activate the Rx channel or change the Rx FIFO
+> watermark level.
 > 
 > Signed-off-by: Frank Chang <frank.chang@sifive.com>
 > ---
->  hw/char/sifive_uart.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
+>  hw/char/sifive_uart.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 > diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-> index 3ce6a4ee76a..ae71a15a2a4 100644
+> index ae71a15a2a4..f255cca960d 100644
 > --- a/hw/char/sifive_uart.c
 > +++ b/hw/char/sifive_uart.c
-> @@ -124,12 +124,20 @@ static void sifive_uart_trigger_tx_fifo(SiFiveUARTState *s)
->  static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
->                                        int size)
->  {
-> +    uint32_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
-> +    bool update_irq = false;
-> +
->      if (size > fifo8_num_free(&s->tx_fifo)) {
->          size = fifo8_num_free(&s->tx_fifo);
->          qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow.\n");
->      }
->  
->      if (size > 0) {
-> +        if (fifo8_num_used(&s->tx_fifo) < txcnt &&
-> +            (fifo8_num_used(&s->tx_fifo) + size) >= txcnt) {
-> +            update_irq = true;
-> +        }
-> +
->          fifo8_push_all(&s->tx_fifo, buf, size);
->      }
->  
-> @@ -137,6 +145,14 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
->          s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
->      }
->  
-> +    /*
-> +     * Update txwm interrupt pending status when the number of entries
-> +     * in the transmit FIFO crosses or reaches the watermark.
-> +     */
-> +    if (update_irq) {
+> @@ -216,6 +216,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
+>          return;
+>      case SIFIVE_UART_RXCTRL:
+>          s->rxctrl = val64;
 > +        sifive_uart_update_irq(s);
-> +    }
-The watermark crossing detection logic looks correct, and commit message
-is clear and well-written.
+This is correct. As noted in the 1/4 review, the same treatment
+should be applied to the SIFIVE_UART_TXCTRL case for consistency
+-- the user may also change the Tx watermark level or toggle txen,
+which affects the txwm pending state.
 
 Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
 Thanks,
 Chao
-> +
->      sifive_uart_trigger_tx_fifo(s);
->  }
->  
+>          return;
+>      case SIFIVE_UART_DIV:
+>          s->div = val64;
 > -- 
 > 2.43.0
 > 
