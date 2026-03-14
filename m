@@ -4,113 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D047510706EA
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 16:39:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5E04B10706EA
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 17:16:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1S0v-0007ml-VH; Sat, 14 Mar 2026 12:38:57 -0400
+	id 1w1SZx-00083J-7E; Sat, 14 Mar 2026 13:15:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1w1S0m-0007lZ-IB; Sat, 14 Mar 2026 12:38:49 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1w1SZr-00082t-2u; Sat, 14 Mar 2026 13:15:03 -0400
+Received: from m16.mail.163.com ([117.135.210.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <iii@linux.ibm.com>)
- id 1w1S0k-0001Yw-BN; Sat, 14 Mar 2026 12:38:47 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62EDF5G81391237; Sat, 14 Mar 2026 16:38:42 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=SfdDlz
- m7pOBq56cNHM7kUhJUhZGcBAECDMq2WjVjXhk=; b=JIMgOtk2BrgtEiMOYBFAil
- 1r2ZXlEOetI2O/FeYfFQUR3zO17P4iTVV5VUCGUdsiqTkBJuFJ6LC6crOozjMqk/
- 8cA18DqejYSxGC7OfdVXBf6LRPjZXC++J0aKGoZ09zgsvLmCDa/WD1ZZhrSKOUNT
- Dzaxzc0eqalqTRKkKLy12aILsj0XONMy1lb1lOKzfpU5tRV9mYHqgZJTduTRK1x9
- bsD9QrrS4eJjWd7gGw8uVPsuuk23ktkmZWWP1HdnP5nXOwr01dcu95SJaYKtvU4Y
- eXYrBb+K0cQrKhv/SRSgVMwshh54kp3sSTG2qqW++JrrJgCsMzvJjvSwI2RrHK4A
- ==
-Received: from ppma13.dal12v.mail.ibm.com
- (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvybrsq5m-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 14 Mar 2026 16:38:42 +0000 (GMT)
-Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
- by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62EFnEvR025686;
- Sat, 14 Mar 2026 16:38:41 GMT
-Received: from smtprelay04.fra02v.mail.ibm.com ([9.218.2.228])
- by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cuha8ju85-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Sat, 14 Mar 2026 16:38:41 +0000
-Received: from smtpav05.fra02v.mail.ibm.com (smtpav05.fra02v.mail.ibm.com
- [10.20.54.104])
- by smtprelay04.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62EGcbBk29360840
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Sat, 14 Mar 2026 16:38:37 GMT
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id BCAB620043;
- Sat, 14 Mar 2026 16:38:37 +0000 (GMT)
-Received: from smtpav05.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 4CE8320040;
- Sat, 14 Mar 2026 16:38:37 +0000 (GMT)
-Received: from [0.0.0.0] (unknown [9.111.88.140])
- by smtpav05.fra02v.mail.ibm.com (Postfix) with ESMTP;
- Sat, 14 Mar 2026 16:38:37 +0000 (GMT)
-Message-ID: <0a1a66b6-eaf9-4b31-b65a-4489d3f8db0f@linux.ibm.com>
-Date: Sat, 14 Mar 2026 17:38:36 +0100
+ (Exim 4.90_1) (envelope-from <dingtao0430@163.com>)
+ id 1w1SZj-0006EA-Ri; Sat, 14 Mar 2026 13:15:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=163.com;
+ s=s110527; h=Content-Type:Message-ID:Date:MIME-Version:Subject:
+ To:From; bh=mKGW4turYlHs3+9fWnsVOo23mn0unnFX6VSdIGSUW6w=; b=RP02
+ ag985PsB9SUufMJVuVHb09UXUHKRW5K3L8bY8n1puESWXj5y2XBNiRqLUnUnVf35
+ DZ3i5/jseMFkK4/EamLfZkjPCU1EtwbFWdgNiYXxn3hPYIVY/fljwzFLx9nQzty5
+ uFcLArGKmewnCkQlvqaHC66aapTWgdRupuP2XlU=
+Received: from [IPV6:2408:8266:ba01:23a1:15e5:5eca:524a:ee8b] (unknown [])
+ by gzga-smtp-mtada-g0-4 (Coremail) with SMTP id
+ _____wBXmxpfl7VpYF4OBA--.59565S2; 
+ Sun, 15 Mar 2026 01:14:07 +0800 (CST)
+Content-Type: multipart/alternative;
+ boundary="------------kGAZiZkhmy1U003gKxLaqcCS"
+Message-ID: <7e7677f4-9cd9-4d33-995e-f7645786e1ce@163.com>
+Date: Sun, 15 Mar 2026 01:14:09 +0800
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/4] MAINTAINERS: Update the s390x maintainers
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
- Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: qemu-s390x@nongnu.org
-References: <20260313113424.15583-1-thuth@redhat.com>
- <20260313113424.15583-3-thuth@redhat.com>
-Content-Language: en-US
-From: Ilya Leoshkevich <iii@linux.ibm.com>
-In-Reply-To: <20260313113424.15583-3-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=MMttWcZl c=1 sm=1 tr=0 ts=69b58f12 cx=c_pps
- a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=NEAV23lmAAAA:8
- a=20KFwNOVAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=GV4ZO7Bm3-sm36HQjc0A:9
- a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10 a=Fg1AiH1G6rFz08G2ETeA:22
-X-Proofpoint-ORIG-GUID: IiiMMwFFJuHHLWeWx-_m0vsBkaaACKoS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE0MDEyNyBTYWx0ZWRfX0qvKVFV8wBF4
- t5jxr59rtN5Y6dn/sE6kSwQWfawrGgxtpRT7H7Z/lfOlMS+1yXXorEDIbHbSomdeAZMglrnX4p2
- vXskABMswK5QCes8fYpyv0+uq2PLRK2/V89cCUMZLp4rBrRQFqpl8eNUoQx/QWARpo3GrF+grhP
- RK894k1FpjUys3LvJsedXeCo2INqPy0+3LeJ8rbN3HJstEVA5B5j9YSjqsDbsMJyYGn5BH/8cuC
- pAXrLr1ZE0t29eWTj7EBNpphj/wHIPU0k/UUCwBw5gWgP5QeUCuyL471joPLgpEldfKp3aqO18g
- OnX+hwGGNII8KTE7cQZRra/BxuoObyJQyAAu0gbPZaIXVnEmmBB32isP/CO0FS9W4AUqy1tCzmY
- kKOPn8nHcKCdqbhX6wuzIl1sMJQNJh9anieS3Npf6l2CztX2KIHhIOUNTzkz0kVpI5flH/SCke6
- a8CCh3YdqYIA/2STVhw==
-X-Proofpoint-GUID: IiiMMwFFJuHHLWeWx-_m0vsBkaaACKoS
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-14_05,2026-03-13_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0 clxscore=1011
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603140127
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=iii@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Subject: Re: [PATCH v1 2/3] The swidth and dwidth of pl080 are not equal.
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org
+References: <cover.1773301927.git.dingtao0430@163.com>
+ <97c01f634c255f3787ab8a71bfe8ccc03e8d353c.1773301927.git.dingtao0430@163.com>
+ <CAFEAcA-kBmfYzpx5WKwhy5M+zAztoMsP6NAhnoJ5S6KdxnWArQ@mail.gmail.com>
+From: Tao Ding <dingtao0430@163.com>
+In-Reply-To: <CAFEAcA-kBmfYzpx5WKwhy5M+zAztoMsP6NAhnoJ5S6KdxnWArQ@mail.gmail.com>
+X-CM-TRANSID: _____wBXmxpfl7VpYF4OBA--.59565S2
+X-Coremail-Antispam: 1Uf129KBjvJXoWxWw4kJF15CFyxtrW8Gr43trb_yoWruw48pF
+ 95Kr1Skr4DtryIy3saqw40qFyDuF4rWa45Wry3Krn8Aws8Jry2qr1xKFWFkFW5uws3Zw4F
+ kw1kurW5uw1qvrJanT9S1TB71UUUUU7qnTZGkaVYY2UrUUUUjbIjqfuFe4nvWSU5nxnvy2
+ 9KBjDUYxBIdaVFxhVjvjDU0xZFpf9x07UQNVgUUUUU=
+X-Originating-IP: [2408:8266:ba01:23a1:15e5:5eca:524a:ee8b]
+X-CM-SenderInfo: pglqw3tdrqkjqq6rljoofrz/xtbC4R-EA2m1l18-SQAA3b
+Received-SPF: pass client-ip=117.135.210.5; envelope-from=dingtao0430@163.com;
+ helo=m16.mail.163.com
+X-Spam_score_int: 0
+X-Spam_score: -0.1
+X-Spam_bar: /
+X-Spam_report: (-0.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,57 +75,291 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+This is a multi-part message in MIME format.
+--------------kGAZiZkhmy1U003gKxLaqcCS
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
 
-On 3/13/26 12:34, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
+Thank you for your valuable review.
+﻿
+I agree with your suggestion, it is necessary to satisfy that transfersize * swidth is
+an integer multiple of dwidth. So, some of the code is actually redundant in this patch.
+Before that, swidth,dwidth and transfersize will be checked, and if the conditions are not met,
+there will be qemu_log_mask(LOG_GUEST_ERROR).
+﻿
+Can I modify this patch and submit it as patch v2.
+
+>> ---
+>>   hw/dma/pl080.c | 32 ++++++++++++++++++++------------
+>>   1 file changed, 20 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+>> index 0979a687aa..4f97943b28 100644
+>> --- a/hw/dma/pl080.c
+>> +++ b/hw/dma/pl080.c
+>> @@ -160,26 +160,34 @@ again:
+>>
+>>               /* Transfer one element.  */
+>>               /* ??? Should transfer multiple elements for a burst request.  */
+>> -            /* ??? Unclear what the proper behavior is when source and
+>> -               destination widths are different.  */
+>>               swidth = 1 << ((ch->ctrl >> 18) & 7);
+>>               dwidth = 1 << ((ch->ctrl >> 21) & 7);
+>> -            for (n = 0; n < dwidth; n+= swidth) {
+>> +            xsize = (dwidth < swidth) ? swidth : dwidth;
+> I think this can be more clearly written as
+>       xsize = MAX(swidth, dwidth);
+> since we're editing the line anyway.
 >
-> I'm going to move to another project next month, so I will not have
-> enough time to take care of s390x patches anymore. Fortunately,
-> Cornelia volunteered to take over the job of collecting s390x patches,
-> and Eric and Matthew offered help to back her up, so we can keep
-> the "S390 general architecture support" section in the "supported"
-> state. Thanks for your help, Cornelia, Eric and Matthew!
+>> +            xsize = (xsize < size * swidth) ? xsize : (size * swidth);
+>     xsize = MIN(xsize, size * swidth);
 >
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   MAINTAINERS | 5 +++--
->   1 file changed, 3 insertions(+), 2 deletions(-)
+> So this is handling the case where our destination width is larger
+> than the remaining amount the transfer size says we should be reading
+> from the source, which is cases like
+> "source width = 1, dest width = 4, transfer count not a multiple of 4".
+> The TRM is unfortunately very vague about what the hardware does here.
+> I think the hardware designers considered this to be a programming error:
+> in the "Software considerations" section of the TRM one of the items is:
 >
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 49e9b7dccbb..9a859e4133a 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -102,7 +102,9 @@ T: git https://github.com/vivier/qemu.git trivial-patches
->   Architecture support
->   --------------------
->   S390 general architecture support
-> -M: Thomas Huth <thuth@redhat.com>
-> +M: Cornelia Huck <cohuck@redhat.com>
-> +M: Eric Farman <farman@linux.ibm.com>
-> +M: Matthew Rosato <mjrosato@linux.ibm.com>
->   S: Supported
->   F: configs/devices/s390x-softmmu/default.mak
->   F: configs/targets/s390x-softmmu.mak
-> @@ -1862,7 +1864,6 @@ T: git https://github.com/borntraeger/qemu.git s390-next
->   L: qemu-s390x@nongnu.org
->   
->   S390-ccw boot
-> -M: Thomas Huth <thuth@redhat.com>
->   M: Jared Rossi <jrossi@linux.ibm.com>
->   R: Zhuoying Cai <zycai@linux.ibm.com>
->   R: Christian Borntraeger <borntraeger@linux.ibm.com>
+>   * If the source width is less than the destination width, the
+>     TransferSize value multiplied by the source width must be an
+>     integral multiple of the destination width.
+>
+>> +            for (n = 0; n < xsize; n += swidth) {
+>>                   address_space_read(&s->downstream_as, ch->src,
+>>                                      MEMTXATTRS_UNSPECIFIED, buff + n, swidth);
+>> -                if (ch->ctrl & PL080_CCTRL_SI)
+>> +                if (ch->ctrl & PL080_CCTRL_SI) {
+>>                       ch->src += swidth;
+>> +                }
+>>               }
+>> -            xsize = (dwidth < swidth) ? swidth : dwidth;
+>> -            /* ??? This may pad the value incorrectly for dwidth < 32.  */
+>> -            for (n = 0; n < xsize; n += dwidth) {
+>> -                address_space_write(&s->downstream_as, ch->dest + n,
+>> -                                    MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
+>> -                if (ch->ctrl & PL080_CCTRL_DI)
+>> -                    ch->dest += swidth;
+>> +            if (xsize < dwidth) {
+>> +                address_space_write(&s->downstream_as, ch->dest,
+>> +                                    MEMTXATTRS_UNSPECIFIED, buff, xsize);
+>> +                if (ch->ctrl & PL080_CCTRL_DI) {
+>> +                    ch->dest += dwidth;
+>> +                }
+> Here we choose to handle the "swidth and tsize say we should
+> read e.g. 2 bytes from the source but dwidth is e.g. 4" case
+> by performing a 2 byte write to the destination. I don't think this
+> is what the hardware would do.
+>
+> There is this interesting bit in the "software considerations" section:
+>
+>   * While writing, the TransferSize bit-field is like a control register
+>     because it determines how many transfers the DMAC performs. However,
+>     during read-back, TransferSize behaves like a status register because
+>     it returns the number of remaining transfers in terms of source width.
+>     So when TransferSize is read back, it returns the number of
+>     destination-transfer-completed stored in a separate counter called
+>     TrfSizeDst multiplied by a factor.
+>
+> My best guess from stuff like this is that the way the PL080 works
+> internally is that for each dest-write it needs to do for the transfer
+> it does the appropriate number of source-reads. If the guest
+> misprograms it such that that means it reads more than
+> (transferwidth * swidth) that will result in reading more data
+> from the source than intended, but that would be a software bug.
+>
+> I would suggest doing something like that, but at any rate
+> commenting and doing a LOG_GUEST_ERROR if there's a mismatch in
+> swidth/dwidth/tsize such that we wouldn't have enough bytes to
+> do a full destination-write.
+>
+>> +            } else {
+>> +                for (n = 0; n < xsize; n += dwidth) {
+>> +                    address_space_write(&s->downstream_as, ch->dest,
+>> +                                        MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
+>> +                    if (ch->ctrl & PL080_CCTRL_DI) {
+>> +                        ch->dest += dwidth;
+>> +                    }
+>> +                }
+>>               }
+>>
+>> -            size--;
+>> +            size -= xsize / swidth;
+> This change is correct (the transfer size field in the control register
+> is supposed to count down by 1 for each swidth-sized data unit we
+> transfer, and our loop can do more than one swidth read), and probably
+> the most important bugfix in this patch, because it's the one that
+> matters for normal correct use of the PL080.
+>
+>>               ch->ctrl = (ch->ctrl & 0xfffff000) | size;
+>>               if (size == 0) {
+>>                   /* Transfer complete.  */
+>> --
+>> 2.43.0
+> thanks
+> -- PMM
+--------------kGAZiZkhmy1U003gKxLaqcCS
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 
-Hi Thomas,
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  </head>
+  <body>
+    <pre>Thank you for your valuable review.
+﻿
+I agree with your suggestion, it is necessary to satisfy that transfersize * swidth is 
+an integer multiple of dwidth. So, some of the code is actually redundant in this patch.
+Before that, swidth,dwidth and transfersize will be checked, and if the conditions are not met, 
+there will be qemu_log_mask(LOG_GUEST_ERROR).
+﻿
+Can I modify this patch and submit it as patch v2.</pre>
+    <div class="moz-cite-prefix"><span style="white-space: pre-wrap">
+</span></div>
+    <blockquote type="cite"
+cite="mid:CAFEAcA-kBmfYzpx5WKwhy5M+zAztoMsP6NAhnoJ5S6KdxnWArQ@mail.gmail.com">
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">---
+ hw/dma/pl080.c | 32 ++++++++++++++++++++------------
+ 1 file changed, 20 insertions(+), 12 deletions(-)
 
+diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+index 0979a687aa..4f97943b28 100644
+--- a/hw/dma/pl080.c
++++ b/hw/dma/pl080.c
+@@ -160,26 +160,34 @@ again:
 
-It was a pleasure collaborating with you on the mailing list.
+             /* Transfer one element.  */
+             /* ??? Should transfer multiple elements for a burst request.  */
+-            /* ??? Unclear what the proper behavior is when source and
+-               destination widths are different.  */
+             swidth = 1 &lt;&lt; ((ch-&gt;ctrl &gt;&gt; 18) &amp; 7);
+             dwidth = 1 &lt;&lt; ((ch-&gt;ctrl &gt;&gt; 21) &amp; 7);
+-            for (n = 0; n &lt; dwidth; n+= swidth) {
++            xsize = (dwidth &lt; swidth) ? swidth : dwidth;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+I think this can be more clearly written as
+     xsize = MAX(swidth, dwidth);
+since we're editing the line anyway.
 
-Thank you for all the work you've done and all the best with your next 
-project!
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+            xsize = (xsize &lt; size * swidth) ? xsize : (size * swidth);
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+   xsize = MIN(xsize, size * swidth);
 
+So this is handling the case where our destination width is larger
+than the remaining amount the transfer size says we should be reading
+from the source, which is cases like
+"source width = 1, dest width = 4, transfer count not a multiple of 4".
+The TRM is unfortunately very vague about what the hardware does here.
+I think the hardware designers considered this to be a programming error:
+in the "Software considerations" section of the TRM one of the items is:
 
-Best regards,
+ * If the source width is less than the destination width, the
+   TransferSize value multiplied by the source width must be an
+   integral multiple of the destination width.
 
-Ilya
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+            for (n = 0; n &lt; xsize; n += swidth) {
+                 address_space_read(&amp;s-&gt;downstream_as, ch-&gt;src,
+                                    MEMTXATTRS_UNSPECIFIED, buff + n, swidth);
+-                if (ch-&gt;ctrl &amp; PL080_CCTRL_SI)
++                if (ch-&gt;ctrl &amp; PL080_CCTRL_SI) {
+                     ch-&gt;src += swidth;
++                }
+             }
+-            xsize = (dwidth &lt; swidth) ? swidth : dwidth;
+-            /* ??? This may pad the value incorrectly for dwidth &lt; 32.  */
+-            for (n = 0; n &lt; xsize; n += dwidth) {
+-                address_space_write(&amp;s-&gt;downstream_as, ch-&gt;dest + n,
+-                                    MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
+-                if (ch-&gt;ctrl &amp; PL080_CCTRL_DI)
+-                    ch-&gt;dest += swidth;
++            if (xsize &lt; dwidth) {
++                address_space_write(&amp;s-&gt;downstream_as, ch-&gt;dest,
++                                    MEMTXATTRS_UNSPECIFIED, buff, xsize);
++                if (ch-&gt;ctrl &amp; PL080_CCTRL_DI) {
++                    ch-&gt;dest += dwidth;
++                }
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+Here we choose to handle the "swidth and tsize say we should
+read e.g. 2 bytes from the source but dwidth is e.g. 4" case
+by performing a 2 byte write to the destination. I don't think this
+is what the hardware would do.
+
+There is this interesting bit in the "software considerations" section:
+
+ * While writing, the TransferSize bit-field is like a control register
+   because it determines how many transfers the DMAC performs. However,
+   during read-back, TransferSize behaves like a status register because
+   it returns the number of remaining transfers in terms of source width.
+   So when TransferSize is read back, it returns the number of
+   destination-transfer-completed stored in a separate counter called
+   TrfSizeDst multiplied by a factor.
+
+My best guess from stuff like this is that the way the PL080 works
+internally is that for each dest-write it needs to do for the transfer
+it does the appropriate number of source-reads. If the guest
+misprograms it such that that means it reads more than
+(transferwidth * swidth) that will result in reading more data
+from the source than intended, but that would be a software bug.
+
+I would suggest doing something like that, but at any rate
+commenting and doing a LOG_GUEST_ERROR if there's a mismatch in
+swidth/dwidth/tsize such that we wouldn't have enough bytes to
+do a full destination-write.
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">+            } else {
++                for (n = 0; n &lt; xsize; n += dwidth) {
++                    address_space_write(&amp;s-&gt;downstream_as, ch-&gt;dest,
++                                        MEMTXATTRS_UNSPECIFIED, buff + n, dwidth);
++                    if (ch-&gt;ctrl &amp; PL080_CCTRL_DI) {
++                        ch-&gt;dest += dwidth;
++                    }
++                }
+             }
+
+-            size--;
++            size -= xsize / swidth;
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+This change is correct (the transfer size field in the control register
+is supposed to count down by 1 for each swidth-sized data unit we
+transfer, and our loop can do more than one swidth read), and probably
+the most important bugfix in this patch, because it's the one that
+matters for normal correct use of the PL080.
+
+</pre>
+      <blockquote type="cite">
+        <pre wrap="" class="moz-quote-pre">             ch-&gt;ctrl = (ch-&gt;ctrl &amp; 0xfffff000) | size;
+             if (size == 0) {
+                 /* Transfer complete.  */
+--
+2.43.0
+</pre>
+      </blockquote>
+      <pre wrap="" class="moz-quote-pre">
+thanks
+-- PMM
+</pre>
+    </blockquote>
+  </body>
+</html>
+
+--------------kGAZiZkhmy1U003gKxLaqcCS--
 
 
