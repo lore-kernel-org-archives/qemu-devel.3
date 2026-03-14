@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2097510706DB
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 14:17:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E37CA10706E7
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 16:17:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1Pn9-0007BC-MB; Sat, 14 Mar 2026 10:16:37 -0400
+	id 1w1Rfg-0002AK-L4; Sat, 14 Mar 2026 12:17:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1w1Pn1-00079x-Pj
- for qemu-devel@nongnu.org; Sat, 14 Mar 2026 10:16:29 -0400
-Received: from fhigh-b1-smtp.messagingengine.com ([202.12.124.152])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marmarek@invisiblethingslab.com>)
- id 1w1Pn0-000774-8G
- for qemu-devel@nongnu.org; Sat, 14 Mar 2026 10:16:27 -0400
-Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
- by mailfhigh.stl.internal (Postfix) with ESMTP id 6F1397A00FB;
- Sat, 14 Mar 2026 10:16:20 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-04.internal (MEProxy); Sat, 14 Mar 2026 10:16:20 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- invisiblethingslab.com; h=cc:cc:content-type:content-type:date
- :date:from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to; s=fm1; t=1773497780;
- x=1773584180; bh=sf82I9ielwEQ0Cw5LxIK/iZzAvwMluuaFrzpBg1ujW8=; b=
- SIMgl6ZamTaJFLnMhsuKOaGKcJMfke20yvnUT/853q6cT1LYsowvoPrKNrhLiaix
- FJLEc0xBsSsRa1/LPTINDzr4nRaK5kX3tItkA4scP79n9X3U3GGi7e1q+oXT1Kq4
- Cjp5VhvjcmCXB9pgR+JtSiSDDn/oYz7TFV28+HRaqrxibxf3Cm3XaCV0QEt4s2BV
- ELkuslLt/gpYWrr3+kaf2t+92SrU/HKP7IFvYCgk2Zjcg4X5rGyboaSJRXIQpDXT
- nqKc2MIhvZiyC7UmwSKn2IX9AbFiBedamIxTDzN3Rk3fGJwErt25ZrkQVkQKYdo4
- g8OEOpU89xiuUs6vyU4cCw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1773497780; x=1773584180; bh=sf82I9ielwEQ0Cw5LxIK/iZzAvwMluuaFrz
- pBg1ujW8=; b=fpnPT6+FKWjtB2euxb+1DikzfGuq1CQ0TJu9zQlKwU+XEj0Nayf
- ESzqL2s1I4Fdc6O91qEMvA+seBJLEnKw7yx9xjF8Vyiqfab2JqiJP3t22QDZTjv1
- 3o4BttjzK/HdnZSHfcxoO5MhboUk1m+lcOEzmMMzPEtpMqscFoIkXj3KxhfYGyIb
- DgdgiUUpNerl03pq9w/W7X8D0yRlXKwbT0gOkHx0tidmIWZAA/pQ+EEeGi2as+nU
- Z3BlTxXoNNSkcXYJvT6Ck3VjAi1xSU7U2IJQaG+w8+pc0XZZEOJYiJidBmodKabb
- PBNnzHuT+u5G8izleFGzjUWAzZHbQIzCbfg==
-X-ME-Sender: <xms:s221aQBORmXAnBVn-EvHn5-Nlxi-Qcc8TGN_NTRN5slJQG-tiuGOpQ>
- <xme:s221aRkxbL_VHGGl89NeHfdY4KUb2BTDtYvWfuiNaVjkpeui7aPQGOygomGqVpoar
- p30nKTcjthYhXfqzTGYxuK5s_lHs5icv5wKSMYSSiVhERbD>
-X-ME-Received: <xmr:s221aZwbxjk1HbsLXmsFpzQ1pmTk2DQ7N3ZUuRlwowE6nafWvL-gvDqAOs26bSThWmTT4Sqmz3nLOZRh-JthpHb-HyCU6pgm_gc>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvledvjeelucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhepfffhvfevuffkfhggtggujgesghdtreertddtjeenucfhrhhomhepofgrrhgvkhcu
- ofgrrhgtiiihkhhofihskhhiqdfikphrvggtkhhiuceomhgrrhhmrghrvghksehinhhvih
- hsihgslhgvthhhihhnghhslhgrsgdrtghomheqnecuggftrfgrthhtvghrnhepgfduleet
- feevhfefheeiteeliefhjefhleduveetteekveettddvgeeuteefjedunecuvehluhhsth
- gvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmhgrrhhmrghrvghksehi
- nhhvihhsihgslhgvthhhihhnghhslhgrsgdrtghomhdpnhgspghrtghpthhtohepkedpmh
- houggvpehsmhhtphhouhhtpdhrtghpthhtohepthhhihgvrhhrhidrvghstggrnhguvges
- vhgrthgvshdrthgvtghhpdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuh
- drohhrghdprhgtphhtthhopehpsghonhiiihhnihesrhgvughhrghtrdgtohhmpdhrtghp
- thhtoheprhhitghhrghrugdrhhgvnhguvghrshhonheslhhinhgrrhhordhorhhgpdhrtg
- hpthhtohepmhhsthesrhgvughhrghtrdgtohhmpdhrtghpthhtohepvgguuhgrrhguohes
- hhgrsghkohhsthdrnhgvthdprhgtphhtthhopegrnhhthhhonhihseigvghnphhrohhjvg
- gtthdrohhrghdprhgtphhtthhopeigvghnqdguvghvvghlsehlihhsthhsrdigvghnphhr
- ohhjvggtthdrohhrgh
-X-ME-Proxy: <xmx:s221aTQH4caK-AprXHR6iWk8O4weVQwfgBpBW6OiYekiVP68OgqUaw>
- <xmx:s221aZ9Xd76PM23kW1Z6hJgPahas9FYoirEtwoVfENzW-ZOlKwIrTg>
- <xmx:s221aZsm1dpfASGjSqKXAhyjd6lDREe4hzK-5vJDEsx1V7SR8K9TCw>
- <xmx:s221aZMCGDFK6MeIh4mTG6QYpdrg1a7mRc0vaH7c2QkNGXeLPy8fbg>
- <xmx:tG21aeU4IT2zjpz3VkMPduk5qbmR3Z5VZpXiURfBJF08MnsCCVoBKELo>
-Feedback-ID: i1568416f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 14 Mar 2026 10:16:18 -0400 (EDT)
-Date: Sat, 14 Mar 2026 15:16:15 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?=
- <marmarek@invisiblethingslab.com>
-To: Thierry Escande <thierry.escande@vates.tech>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,
- Anthony PERARD <anthony@xenproject.org>, xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 0/4] Xen: Add Q35 initial support for HVM guests
-Message-ID: <abVtsK31t9tWgsaY@mail-itl>
-References: <20260313164649.794591-1-thierry.escande@vates.tech>
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w1Rfd-00029k-SH
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 12:16:57 -0400
+Received: from mail-dy1-x1344.google.com ([2607:f8b0:4864:20::1344])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <chao.liu.zevorn@gmail.com>)
+ id 1w1Rfc-0007Hr-7J
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 12:16:57 -0400
+Received: by mail-dy1-x1344.google.com with SMTP id
+ 5a478bee46e88-2be19f05d7dso419253eec.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Mar 2026 09:16:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1773505014; x=1774109814; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=vuU6BXhwTF08MbxU6wD2TWkgVd1F1wsD/sQmeAgy0s0=;
+ b=YiaVY1Z4DYQejqgD58hVXg+HfXg8RlM4ne8D2lHlFvtRONNMQsXg2AOyuA3ogQM5aR
+ o5kM7HJoBD0Pfty9pCfNiD72WheBNLd1C67WtnV9o2sRPEV99FBBoV0J55aqQfoVban2
+ AXDegDyyfg/+ehrJG1+92o16QO6kNG2/1PK/bcjeMs3lLwlZFpUXMN6OF+S/HGxGTi6M
+ Q4wafNtQowkQUOGiumIZqS/Fica5dUp0QxSY0dK8ZScyLLv8qOMKS+MDTHbK8yE9K/Wm
+ 039YlrFjIz6aHcMzz52kYKyvpABYEh0jX6PFEITaBBWnwQue+GkTDF/qnsPFLfs8QLq4
+ m3OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773505014; x=1774109814;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=vuU6BXhwTF08MbxU6wD2TWkgVd1F1wsD/sQmeAgy0s0=;
+ b=pw5wg0RCM08BKh1paxo+nY5x0e7vgcHCxjJ6FKZYB590AjunXTlX9xIIs4I6RGygwi
+ f7wz9qbFhe2VZBw96NlRbT47ulvwrY2vqlixjtCq9a1tLBOXFa3c0BUpYdtuGKv+zVZA
+ I9iy+QuuY4RrlAMu0D2/tLkdh7YV8uP1MhbrKZhwSGeoKpU836kbOgSI75iE1ez+EklE
+ 8g6G1jnaUODIPrQ5pg4EVLJxMIwOq6KjoN7piNTdZlaRGihzQN6Ud0wHGJDcp7rE1aX5
+ 2sNTWsRxNoNn+BmGWjzIsxiUtvaJ2dP7BwRPM3W+EfxaSXJlFZSGa3FdXJdio11thhE8
+ UaUg==
+X-Gm-Message-State: AOJu0YzmzTxKiZ9qM4BrPQvfqfCrL/LWgv4ktqmsbASD3IFs5NHoii+T
+ iNeKXK+o/gWwaoMZz/uA4tos7hMlNZBUHT9zJ2R2vH8BuxMeOatZvUVV
+X-Gm-Gg: ATEYQzw4tdf++zZaYrVjlD/Vc0K7i9FNYSEAs7HrMJp2AlT78SkIJBW3/g/v+efzRZt
+ Rc9fl8lxHchmamS8R5mQX3tS/mAYTywWDeCs/VdyscZzZ0lAOmCarlh/LKNZqsnEDKdv9hY0rsa
+ rA6SxSQCulyJQ21wO3Ojbo6hg84w9mTF4tU0YgUpyoKxwsuRREaIFGezRi0KstAOKQrI5G6IRif
+ GUgIvt9fxFHm09jKZplcDx3FebjnRpnkch4fE6HXoiAN24yPVUi28Uw1y5440/IARfl81N9U5z/
+ OE12LBLKTHQAvR5EAXtyUNywDf9Esl1biKBVU+W3HgJ+cBsS757uNtvOKktZ5wDorcGi+RLxwvt
+ KmOe7DBnLCuVYBNzFMhRekNef0hvTtNAw6sUsyeBEF0wqHgwAlpIgYJKMs4aQj/yHg0xyOI9n2B
+ 602ZhU4JjnjARaN87w/4oFwp420PrJLbREEsd2Uh2tdh/IyCG2R/rrqsCl+LHfFX60J6s3oLoXu
+ GMGR3Yt+uCrtjugo50g2VSNvNnMKQvMY61JFReCSg==
+X-Received: by 2002:a05:693c:608d:b0:2be:2e4c:209c with SMTP id
+ 5a478bee46e88-2bea5523f83mr2854218eec.20.1773505013788; 
+ Sat, 14 Mar 2026 09:16:53 -0700 (PDT)
+Received: from ZEVORN-PC.localdomain ([38.95.120.198])
+ by smtp.gmail.com with ESMTPSA id
+ 5a478bee46e88-2c0b1fc876csm1692905eec.29.2026.03.14.09.16.49
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 14 Mar 2026 09:16:53 -0700 (PDT)
+Date: Sun, 15 Mar 2026 00:16:48 +0800
+From: Chao Liu <chao.liu.zevorn@gmail.com>
+To: frank.chang@sifive.com
+Cc: qemu-devel@nongnu.org, Alistair Francis <Alistair.Francis@wdc.com>, 
+ Palmer Dabbelt <palmer@dabbelt.com>,
+ =?utf-8?Q?Marc-Andr=C3=A9?= Lureau <marcandre.lureau@redhat.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ "open list:SiFive Machines" <qemu-riscv@nongnu.org>
+Subject: Re: [PATCH v3 1/4] hw/char: sifive_uart: Implement txctrl.txen and
+ rxctrl.rxen
+Message-ID: <abWElLTcZWjYRZ9J@ZEVORN-PC.localdomain>
+References: <20260312033201.1619554-1-frank.chang@sifive.com>
+ <20260312033201.1619554-2-frank.chang@sifive.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature"; boundary="82oef0c++DDw9SXs"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20260313164649.794591-1-thierry.escande@vates.tech>
-Received-SPF: pass client-ip=202.12.124.152;
- envelope-from=marmarek@invisiblethingslab.com;
- helo=fhigh-b1-smtp.messagingengine.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+In-Reply-To: <20260312033201.1619554-2-frank.chang@sifive.com>
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1344;
+ envelope-from=chao.liu.zevorn@gmail.com; helo=mail-dy1-x1344.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,64 +105,146 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Thu, Mar 12, 2026 at 11:31:58AM +0800, frank.chang@sifive.com wrote:
+> From: Frank Chang <frank.chang@sifive.com>
+> 
+> Implement txctrl.txen and rxctrl.rxen as follows:
+> 
+> * txctrl.txen
+>   The txen bit controls whether the Tx channel is active. When cleared,
+>   transmission of Tx FIFO contents is suppressed, and the txd pin is
+>   driven high.
+> 
+> * rxctrl.rxen:
+>   The rxen bit controls whether the Rx channel is active. When cleared,
+>   the state of the rxd pin is ignored, and no characters will be
+>   enqueued into the Rx FIFO.
+> 
+> Therefore, the Tx FIFO should not be dequeued when txctrl.txen is
+> cleared, and the Rx FIFO should not be enqueued when rxctrl.rxen is
+> cleared.
+> 
+> Signed-off-by: Frank Chang <frank.chang@sifive.com>
+> ---
+>  hw/char/sifive_uart.c         | 27 ++++++++++++++++++++-------
+>  include/hw/char/sifive_uart.h |  2 ++
+>  2 files changed, 22 insertions(+), 7 deletions(-)
+> 
+> diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
+> index af17cf9a6ce..3ce6a4ee76a 100644
+> --- a/hw/char/sifive_uart.c
+> +++ b/hw/char/sifive_uart.c
+> @@ -78,6 +78,11 @@ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
+>          return G_SOURCE_REMOVE;
+>      }
+>  
+> +    /* Don't pop the FIFO if transmit is disabled. */
+> +    if (!SIFIVE_UART_TXEN(s->txctrl)) {
+> +        return G_SOURCE_REMOVE;
+> +    }
+> +
+>      /* Don't pop the FIFO in case the write fails */
+>      characters = fifo8_peek_bufptr(&s->tx_fifo,
+>                                     fifo8_num_used(&s->tx_fifo), &numptr);
+> @@ -106,11 +111,19 @@ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
+>      return G_SOURCE_REMOVE;
+>  }
+>  
+> -static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+> -                                      int size)
+> +static void sifive_uart_trigger_tx_fifo(SiFiveUARTState *s)
+>  {
+>      uint64_t current_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+>  
+> +    if (!timer_pending(s->fifo_trigger_handle)) {
+> +        timer_mod(s->fifo_trigger_handle, current_time +
+> +            TX_INTERRUPT_TRIGGER_DELAY_NS);
+> +    }
+> +}
+> +
+> +static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+> +                                      int size)
+> +{
+>      if (size > fifo8_num_free(&s->tx_fifo)) {
+>          size = fifo8_num_free(&s->tx_fifo);
+>          qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow.\n");
+> @@ -124,10 +137,7 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
+>          s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
+>      }
+>  
+> -    if (!timer_pending(s->fifo_trigger_handle)) {
+> -        timer_mod(s->fifo_trigger_handle, current_time +
+> -                      TX_INTERRUPT_TRIGGER_DELAY_NS);
+> -    }
+> +    sifive_uart_trigger_tx_fifo(s);
+>  }
+>  
+>  static uint64_t
+> @@ -184,6 +194,9 @@ sifive_uart_write(void *opaque, hwaddr addr,
+>          return;
+>      case SIFIVE_UART_TXCTRL:
+>          s->txctrl = val64;
+A sifive_uart_update_irq() call is also needed here.
+When txctrl is written, the watermark (txcnt) may
+change, or txen may toggle(you can see SiFive FE310-G002
+datasheet), both of which can alter the txwm pending state.
 
---82oef0c++DDw9SXs
-Content-Type: text/plain; protected-headers=v1; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-Date: Sat, 14 Mar 2026 15:16:15 +0100
-From: Marek =?utf-8?Q?Marczykowski-G=C3=B3recki?= <marmarek@invisiblethingslab.com>
-To: Thierry Escande <thierry.escande@vates.tech>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
-	Richard Henderson <richard.henderson@linaro.org>,
-	"Michael S. Tsirkin" <mst@redhat.com>,
-	Eduardo Habkost <eduardo@habkost.net>,
-	Anthony PERARD <anthony@xenproject.org>,
-	xen-devel@lists.xenproject.org
-Subject: Re: [PATCH 0/4] Xen: Add Q35 initial support for HVM guests
+Patch 3/4 adds this call for RXCTRL with the rationale "the
+user may activate the Rx channel or change the Rx FIFO
+watermark level" -- the same reasoning applies to TXCTRL.
 
-On Fri, Mar 13, 2026 at 04:46:56PM +0000, Thierry Escande wrote:
-> This patch series introduces Q35 chipset support for Xen HVM guests. This=
- is
-> based on the work from Alexey Gerasimenko (See patchset [1] for reference=
-).
->=20
-> This series does not implement device passthrough as this will need more =
-work
-> on the Xen side to support multiple PCI buses. Since Q35 chipset does not
-> support device hotplugging and with current Xen mechanism for device
-> passthrough, they have to be plugged to a new PCIe root port, i.e. not th=
-e PCI
-> bus 0.
+Without this, there's a window where the IRQ line
+doesn't reflect the actual pending state after a
+txctrl write that changes the watermark.
 
-I always found it weird that Xen does hot-plugging of PCI passthrough
-devices... Wouldn't it be easier to change this (connect them from the
-very start, via QEMU cmdline) and declare hotplug as unsupported (at
-least at this time)? I realize it's more complex change at the toolstack
-side, but overall may simplify things and maybe even improve
-reliability.
+Everything else looks good to me.
 
-In any case, it's probably not worth blocking initial support on this.
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
 
---=20
-Best Regards,
-Marek Marczykowski-G=C3=B3recki
-Invisible Things Lab
+Thanks,
+Chao
 
---82oef0c++DDw9SXs
-Content-Type: application/pgp-signature; name=signature.asc
+> +        if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo)) {
+> +            sifive_uart_trigger_tx_fifo(s);
+> +        }
+>          return;
+>      case SIFIVE_UART_RXCTRL:
+>          s->rxctrl = val64;
+> @@ -231,7 +244,7 @@ static int sifive_uart_can_rx(void *opaque)
+>  {
+>      SiFiveUARTState *s = opaque;
+>  
+> -    return s->rx_fifo_len < sizeof(s->rx_fifo);
+> +    return SIFIVE_UART_RXEN(s->rxctrl) && (s->rx_fifo_len < sizeof(s->rx_fifo));
+>  }
+>  
+>  static void sifive_uart_event(void *opaque, QEMUChrEvent event)
+> diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.h
+> index 414564b0266..c78d9bd1fc6 100644
+> --- a/include/hw/char/sifive_uart.h
+> +++ b/include/hw/char/sifive_uart.h
+> @@ -51,6 +51,8 @@ enum {
+>  
+>  #define SIFIVE_UART_TXFIFO_FULL    0x80000000
+>  
+> +#define SIFIVE_UART_TXEN(txctrl)        (txctrl & 0x1)
+> +#define SIFIVE_UART_RXEN(rxctrl)        (rxctrl & 0x1)
+macro arguments should be parenthesized to avoid precedence surprises.
 
------BEGIN PGP SIGNATURE-----
+e.g. if the argument is ever an expression like (a | b), & binds tighter
+than |. I suggest:
 
-iQEzBAEBCAAdFiEEhrpukzGPukRmQqkK24/THMrX1ywFAmm1bbAACgkQ24/THMrX
-1ywG2Qf9HeEIoighs7imZKLP80u2BXOmsxS5olpQKk2WNfonDrnzngS/WalGuUoA
-2/oVsk8aQFNGL5YXl7VKSLnwT4IZCstMtK+XhuqDVHoEdx+rUnrOoTzbNs55V9nT
-LjQzPWgL02G6RwhZ2F5XK03S4jGNNI07Un1G2pFAQTM4uTobQAJb0mC67sxE8En+
-GP73r7svgXwFGvZ1Gtm/50jPvyUUIzJ5MNaaT1p+OorQ9EKeSvj15C77ceEXEqxb
-M5jGaoCde5GhtKz5SOj8UQaGqgSyXh4LcLEcLdfXmnTwtF08aIbMKdio9B0VOaO/
-xvVBzhNeVJjp43BbOcazmDEk2dQU7Q==
-=NocA
------END PGP SIGNATURE-----
+  #define SIFIVE_UART_TXEN(txctrl)   ((txctrl) & 0x1)
+  #define SIFIVE_UART_RXEN(rxctrl)   ((rxctrl) & 0x1)
 
---82oef0c++DDw9SXs--
+The existing GET_TXCNT / GET_RXCNT macros have the
+same issue, so this could be a follow-up cleanup.
+
+>  #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
+>  #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
+>  
+> -- 
+> 2.43.0
+> 
+> 
 
