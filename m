@@ -4,78 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25FBF107BCD1
-	for <qemu-devel@archiver.kernel.org>; Fri, 13 Mar 2026 23:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AF800107BCEE
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 01:12:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1C2y-0000cX-Ql; Fri, 13 Mar 2026 19:36:00 -0400
+	id 1w1DXn-00010C-KP; Fri, 13 Mar 2026 21:11:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from
- <3W5-0aQQKCsAxqoxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--rkir.bounces.google.com>)
- id 1w1C2x-0000cI-Jm
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 19:35:59 -0400
-Received: from mail-pg1-x54a.google.com ([2607:f8b0:4864:20::54a])
+ (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
+ id 1w1DXm-000100-IJ
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 21:11:54 -0400
+Received: from mail-pj1-x1029.google.com ([2607:f8b0:4864:20::1029])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from
- <3W5-0aQQKCsAxqoxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--rkir.bounces.google.com>)
- id 1w1C2w-0002sS-5e
- for qemu-devel@nongnu.org; Fri, 13 Mar 2026 19:35:59 -0400
-Received: by mail-pg1-x54a.google.com with SMTP id
- 41be03b00d2f7-c739120475fso1449286a12.3
- for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 16:35:57 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <15fengyuan@gmail.com>)
+ id 1w1DXk-00059H-Vb
+ for qemu-devel@nongnu.org; Fri, 13 Mar 2026 21:11:54 -0400
+Received: by mail-pj1-x1029.google.com with SMTP id
+ 98e67ed59e1d1-35b85613f3fso454879a91.1
+ for <qemu-devel@nongnu.org>; Fri, 13 Mar 2026 18:11:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=google.com; s=20251104; t=1773444956; x=1774049756; darn=nongnu.org;
- h=cc:to:from:subject:message-id:mime-version:date:from:to:cc:subject
- :date:message-id:reply-to;
- bh=SAPEylkIV0nBuTHJQyf+c/OAybfX0uEC9xGFY7/Ve7M=;
- b=wBXZTpIMivpHbPLAc+6Rgk2J1GyM6n5sMPRZ7pUxpLVJFXQWnDmQTw3U+it2+1dyAD
- 1k3ymn6svkm3qOQCWvNfJz0m0C6xJ5ZDSU3g40z+ViLSS3s3XFluejQCdyS/V4A7zIZ/
- Kuw7HlJGbtlmev7Kn5eh9S+FOIfYNwc0BiF135VsLBftf6Nh7VL3nP5xQM6wAl9uBDm5
- D/+h8jW4EmEMh9SFV6v7WkkOnBx9qLybSzA6ptYq2sMr9jpny1rUZm9YZf4UmCKsJEFc
- BbG5NjD7ELtB7UGntjYZNn0iRWf8DvCxMg4JQDeS8o2vxxfn0UBwaPc9k5BVQuYqZzfn
- 2TfQ==
+ d=gmail.com; s=20230601; t=1773450711; x=1774055511; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=NFPoBFJkK5i3DJKfu4yDGSGfVFxkXleFqejv/cpH+vU=;
+ b=EjW1TCmBCdCZv6umI5H3yitzNw3LYhuu1etrgaI6BhxgG3VtT/k31OdH8yk8/AKpjf
+ CzaoGHSu0TvgcBTcD45kdGgu/kyeDhsDB3ts5/RaA+gexukt1kPMUJbLBonjAOMLeLLP
+ cszjdUxxubZ6lIwhqQMrG+Z0Bg73Xx2/ZeuLEddiDpmxx3T1qq3zSmP+uPZLZnjCgstM
+ 8jY/r8Ab5cDg4b2FjKdc5TR4H/NqqpJObQKgr6H6eXO8WKcP2ofNXPnU31hraocwQbKq
+ kv3C0dv7BSt+dnUoaUrUWSsvgWz8Sq+ZNQBy6dikPIBCrGH7QOIHOB5T+CCYFwPrzK34
+ GmEA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773444956; x=1774049756;
- h=cc:to:from:subject:message-id:mime-version:date:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SAPEylkIV0nBuTHJQyf+c/OAybfX0uEC9xGFY7/Ve7M=;
- b=MOcZu0hvBJkO5QmK8aNUzopnn0f9aD11/D54uO/SQt0A+3ByFAP3VqXkHHz0Rj+0wh
- qKU/VQLlHLV9GaHxPH5WErS3yndjDsxQ+ybdGN56hVsdnhGx9sfcqF+YrOdLQ3x2yTtT
- I+ojt4QShNNAJPLKl+ELHDCM0ern47FIJEerFKZRIWThjgApUFXEuFR/OUSoMLu5Lv2P
- VxU/QSHWQoQ+iwf/nKjPkaFEZMXFugBoZLtYsSAs2wcnWeyuJWWqZ2VJr5JtQN/Gzada
- Xq7FH7O+VuhYheffOt2NRmeMpN1xqZTK00Ic+YQlzUwSaOkXKK5/P0j+hAKf3tH8ZLo7
- k0cQ==
-X-Gm-Message-State: AOJu0YwpSpCfBespipibSEjsgH87asaeHKNlpxQvE9/Qm9hhIGqbZK9V
- cg0XfT/AwXNV9dZFUJeXC36NYXIGZqAmQgQkrpEfnC0PaejSK4terCunr7zzpbXSWtqfvIHWXA=
- =
-X-Received: from pgar3.prod.google.com ([2002:a05:6a02:2e83:b0:c73:cc95:c0be])
- (user=rkir job=prod-delivery.src-stubby-dispatcher) by
- 2002:a05:6a21:1805:b0:398:9794:3309
- with SMTP id adf61e73a8af0-398eca10f57mr4527080637.10.1773444955733; Fri, 13
- Mar 2026 16:35:55 -0700 (PDT)
-Date: Fri, 13 Mar 2026 23:35:38 +0000
-Mime-Version: 1.0
-X-Mailer: git-send-email 2.53.0.851.ga537e3e6e9-goog
-Message-ID: <20260313233538.1519319-1-rkir@google.com>
-Subject: [PATCH v3] vmstate: validate VMStateDescription::fields upon
- registration
-From: Roman Kiryanov <rkir@google.com>
-To: peterx@redhat.com, farosas@suse.de
-Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com, 
- jpcottin@google.com, Roman Kiryanov <rkir@google.com>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::54a;
- envelope-from=3W5-0aQQKCsAxqoxmuumrk.iuswks0-jk1krtutmt0.uxm@flex--rkir.bounces.google.com;
- helo=mail-pg1-x54a.google.com
-X-Spam_score_int: -95
-X-Spam_score: -9.6
-X-Spam_bar: ---------
-X-Spam_report: (-9.6 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_MED=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- USER_IN_DEF_DKIM_WL=-7.5 autolearn=ham autolearn_force=no
+ d=1e100.net; s=20251104; t=1773450711; x=1774055511;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=NFPoBFJkK5i3DJKfu4yDGSGfVFxkXleFqejv/cpH+vU=;
+ b=qvgHKK5CP35LD25IbVqkkJAmKmdYZxmgdRMq5s54nhMbHtttIDTojN7FnFo/iRu38B
+ hL/nSn9Vxr/vSzITfgYw+Yxov4ioMBpGPO8Wmq7pRTZsyaE8HWIIAysH4MRNEOFBw8j/
+ f8N6A28A57nyyzZ3f3/9FyFgXbUGLxHmRJVS37w1tEDp6MDjlOGtEwdC/8yF5/TYjuW7
+ rcOXGIJmvm4UT4hjwH/5yVRN72Q/wEOrzi7dLhlHdaUCGjHvD/FQ/ATtr/Zlj24ZKrhk
+ WILWPcl3rYrJlvj4A7tUuF6fWnOvKrQ8uMsHAyHtGsaXCOgupbLOzYdLDcCWhhWWJIMz
+ zxhw==
+X-Gm-Message-State: AOJu0Yxpyrhi/E/Pp7C/vRi91y4a5HRLInIMr0DdBhopKeo7mZj1m+KT
+ bWOtwsDBycwuOGb2qOyhz5suEYlNSgbYtvaLtdwShHBlAehxKU3oizC0
+X-Gm-Gg: ATEYQzySD1b3tX0P5oSvv56hifJxxQ49zKo/34tj8aatrxuJ6cO2QAIWtBFIg6FploI
+ JBt0r+loY3IBdwz1r2K2O+l6TzFoNHtTwGAGg5pFT1xWHJGx/Wco0LyeKiVevdoXCWCbbjlqucR
+ kGe3TRl4BMPyxs/dPmort3r57/XeGNWI5rMJReoKMu3RiiSEI7B3IylaBatCbvmCm6Rp0iBboFC
+ gTDXASwCO0HaFBWdtEQtMQE5qTwWcdOvOep43fICWiJpuz9zQLlr6Z4JwmxUBzklUF1VtIZLTp/
+ cAzWOLweKa8vQeXIdYGCnsLkyuaqcSuMe+ePmSVYkTYxr6UcSOqj7fpeGJPQmduWXq8Gtkxs7KL
+ Il4kw9pjUsFfsZ7J0d3r0JEEKly8Bw7HVBLBadU2Ifmx7bh7hF/C8vWvw+tMjYB1OyHQxwlHELa
+ Lqx/l6YL93HDMoQswSnu072EbxqfE=
+X-Received: by 2002:a17:90b:28ce:b0:359:8190:eede with SMTP id
+ 98e67ed59e1d1-35a21e795e2mr4814748a91.9.1773450711122; 
+ Fri, 13 Mar 2026 18:11:51 -0700 (PDT)
+Received: from orion-o6.tail020997.ts.net ([2408:8352:441:f661::1008])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35a2454a7bdsm1248545a91.8.2026.03.13.18.11.47
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Fri, 13 Mar 2026 18:11:50 -0700 (PDT)
+From: Fengyuan Yu <15fengyuan@gmail.com>
+To: Tao Tang <tangtao1634@phytium.com.cn>,
+ "Michael S. Tsirkin" <mst@redhat.com>, Jason Wang <jasowang@redhat.com>,
+ Yi Liu <yi.l.liu@intel.com>,
+ =?UTF-8?q?Cl=C3=A9ment=20Mathieu--Drif?= <clement.mathieu--drif@bull.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>
+Cc: qemu-devel@nongnu.org, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Fengyuan Yu <15fengyuan@gmail.com>
+Subject: [PATCH v2 0/2] tests/qtest: Add Intel IOMMU bare-metal test using
+ iommu-testdev
+Date: Sat, 14 Mar 2026 09:11:35 +0800
+Message-Id: <cover.1773450180.git.15fengyuan@gmail.com>
+X-Mailer: git-send-email 2.39.5
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1029;
+ envelope-from=15fengyuan@gmail.com; helo=mail-pj1-x1029.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -91,72 +103,67 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The vmstate_save_state_v() function does not support
-NULL in VMStateDescription::fields and will crash if
-one is provided.
+Hi,
 
-This change prevents this situation from happening
-by explicitly crashing earlier.
+This patch series adds a bare-metal qtest for the Intel IOMMU (VT-d) using
+the iommu-testdev framework. The test exercises address translation paths
+without requiring a full guest OS boot.
 
-Suggested-by: Fabiano Rosas <farosas@suse.de>
-Reviewed-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Roman Kiryanov <rkir@google.com>
----
-v3:
- - Also added assert to virtio.c to validate
-   VirtioDeviceClass instances which bypass
-   vmstate_register_with_alias_id.
- - Updated the commit message to "Reviewed-by".
-v2:
- - Moved the assert from vmstate_save_state_v to the registration
-   path (vmstate_register_with_alias_id) and the qtest validation path
-   (vmstate_check) to catch missing fields earlier.
----
- hw/virtio/virtio.c | 6 ++++++
- migration/savevm.c | 5 +++++
- 2 files changed, 11 insertions(+)
+Motivation
+----------
 
-diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-index 0ba734d0bc..e4543de335 100644
---- a/hw/virtio/virtio.c
-+++ b/hw/virtio/virtio.c
-@@ -4054,6 +4054,12 @@ static void virtio_device_realize(DeviceState *dev, Error **errp)
-     /* Devices should either use vmsd or the load/save methods */
-     assert(!vdc->vmsd || !vdc->load);
- 
-+    /*
-+     * If a device has vmsd, it either MUST have valid fields
-+     * or marked unmigratable.
-+     */
-+    assert(!vdc->vmsd || (vdc->vmsd->unmigratable || vdc->vmsd->fields));
-+
-     if (vdc->realize != NULL) {
-         vdc->realize(dev, &err);
-         if (err != NULL) {
-diff --git a/migration/savevm.c b/migration/savevm.c
-index 197c89e0e6..20c2b99231 100644
---- a/migration/savevm.c
-+++ b/migration/savevm.c
-@@ -861,6 +861,8 @@ static void vmstate_check(const VMStateDescription *vmsd)
-     const VMStateField *field = vmsd->fields;
-     const VMStateDescription * const *subsection = vmsd->subsections;
- 
-+    assert(field || vmsd->unmigratable);
-+
-     if (field) {
-         while (field->name) {
-             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
-@@ -900,6 +902,9 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
-     /* If this triggers, alias support can be dropped for the vmsd. */
-     assert(alias_id == -1 || required_for_version >= vmsd->minimum_version_id);
- 
-+    /* If vmsd is migratable it MUST have valid fields. */
-+    assert(vmsd->fields || vmsd->unmigratable);
-+
-     se = g_new0(SaveStateEntry, 1);
-     se->version_id = vmsd->version_id;
-     se->section_id = savevm_state.global_section_id++;
+The Intel IOMMU implementation in QEMU supports various translation 
+modes. Currently, comprehensive testing of these translation paths 
+requires booting a full guest OS with appropriate drivers, which is 
+time-consuming and makes regression testing difficult.
+
+This new test fills that gap by using iommu-testdev to trigger DMA
+transactions and validate the IOMMU's translation logic directly.
+
+Test Coverage
+-------------
+
+The new test provides:
+- Legacy pass-through mode (identity mapping)
+- Legacy translated mode with 4-level second-level page table walks
+- Scalable pass-through mode (PGTT=100b)
+- Scalable second-level translation mode (PGTT=010b)
+- Scalable first-level translation mode (PGTT=001b)
+- Root/Context Entry, PASID Directory/Table Entry configuration
+- Complete 48-bit address space translation
+- End-to-end DMA verification with memory validation
+
+Testing
+-------
+
+QTEST_QEMU_BINARY=./build/qemu-system-x86_64 \
+  ./build/tests/qtest/iommu-intel-test --tap -k
+
+Changes v1 -> v2
+----------------
+- Rebase onto latest upstream to resolve compilation errors
+- Add scalable translation mode tests (SLT, FLT, PassThrough)
+- Add spec-aligned register field comments for improved readability
+
+Thanks,
+Fengyuan
+
+Fengyuan Yu (2):
+  tests/qtest/libqos: Add Intel IOMMU helper library
+  tests/qtest: Add Intel IOMMU bare-metal test
+
+ MAINTAINERS                          |   6 +
+ tests/qtest/iommu-intel-test.c       | 215 +++++++++++++
+ tests/qtest/libqos/meson.build       |   3 +
+ tests/qtest/libqos/qos-intel-iommu.c | 454 +++++++++++++++++++++++++++
+ tests/qtest/libqos/qos-intel-iommu.h | 191 +++++++++++
+ tests/qtest/meson.build              |   2 +
+ 6 files changed, 871 insertions(+)
+ create mode 100644 tests/qtest/iommu-intel-test.c
+ create mode 100644 tests/qtest/libqos/qos-intel-iommu.c
+ create mode 100644 tests/qtest/libqos/qos-intel-iommu.h
+
 -- 
-2.53.0.851.ga537e3e6e9-goog
+2.39.5
 
 
