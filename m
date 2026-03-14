@@ -4,63 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E516107BCFC
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 07:35:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 53585107BCFE
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 07:55:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1JWX-0004M1-HK; Sat, 14 Mar 2026 03:35:02 -0400
+	id 1w1Jq5-0007rm-Fa; Sat, 14 Mar 2026 03:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w1JWT-0004Lb-6d; Sat, 14 Mar 2026 03:34:58 -0400
-Received: from sgoci-sdnproxy-4.icoremail.net ([129.150.39.64])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w1JWN-0003wo-IK; Sat, 14 Mar 2026 03:34:56 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwBnb9OPD7VpNsbVAA--.55244S2;
- Sat, 14 Mar 2026 15:34:39 +0800 (CST)
-Received: from [172.16.105.53] (unknown [113.247.196.231])
- by mail (Coremail) with SMTP id AQAAf8DwF5KID7VpjWUBAA--.704S2;
- Sat, 14 Mar 2026 15:34:33 +0800 (CST)
-Message-ID: <ae3befa9-3559-4e9c-aa5f-46c14a9440a7@phytium.com.cn>
-Date: Sat, 14 Mar 2026 15:34:31 +0800
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w1Jq3-0007rP-N9
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 03:55:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w1Jq0-00070Y-D6
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 03:55:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773474906;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=TqTVzb498TkVnC9aLaQQjICK5+qBmbLPUoLpPxKrTlA=;
+ b=eYSvixzJjy+awr9bWMsq7IL6D9RWD0JmcoA2KMNNxuKrXjNiiodNF3tH/NztDxJp2c6bbi
+ BNG/Pl83Xr1Re/laZ6rDbYGwX4Re9Txm1TZDvFq/G7/zMpkFZljLMP8ydzfxKWe8tZPkPl
+ oANsQ44ewDpQkJPMQpk2W60tlqY2jss=
+Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
+ [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-488-eURO-aI6O02a9YCiMTMiUQ-1; Sat, 14 Mar 2026 03:55:04 -0400
+X-MC-Unique: eURO-aI6O02a9YCiMTMiUQ-1
+X-Mimecast-MFC-AGG-ID: eURO-aI6O02a9YCiMTMiUQ_1773474903
+Received: by mail-wr1-f72.google.com with SMTP id
+ ffacd0b85a97d-439c112b1a4so1971435f8f.3
+ for <qemu-devel@nongnu.org>; Sat, 14 Mar 2026 00:55:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773474902; x=1774079702; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=TqTVzb498TkVnC9aLaQQjICK5+qBmbLPUoLpPxKrTlA=;
+ b=VPme5Op4aCX0tG/1HvmJj8mWdtsHoKLMGT5QJKctiialDh4+IuX0T7BU1RuFTnoB68
+ tGlXBwGoNqfaqbWtRjNGvcRmitS2N5lFFHe+YsWYT5WuXBsOewNoEHYLQu5Xmz5TT2vu
+ N9qHuzNEx+m26EHpko1qpgkSSH6DyyHjMQK85T87jupOREb+ptCdu6dff6l6fPv7aZnO
+ G1nGEKtf0QrvZdxF4Gwd3X9UMn7+4G96a4ad10Oal5/xu6chzOGkVtpoUVK02JWZ9z7R
+ 5vYH+iLwuFrPs4uf6yY2GPsrH2ne6OZNWLIyvsdaTvGjJ/qv2arZHMzeSXdofzMuhz6e
+ 8xYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773474902; x=1774079702;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=TqTVzb498TkVnC9aLaQQjICK5+qBmbLPUoLpPxKrTlA=;
+ b=hDTVBQtFzYozqv5Ng3WF8n/fV63iX6MVfFRUNi59tIg+pUt/Au7Ae4oGo8w6xqx2OX
+ xkABfmV5Lf7DfLRlc1jo5wkzYYddMdzmEGkM9v3Qrizk73fL+tCt4CUJfUiN8ugJot3h
+ gDamRYTZl9QeE2cGesBkO6zN/S6Lc1ORvVKg0Kn635AokdNTj6QI2p5JzRzWlBFG4AU6
+ WgYtjY1nULVW7u3HLKw36wfVD7bCwCsSFwSwCfbqz356qyqBZVemkpT9mEvHbfuHBdKM
+ /vm2ZmHqDTG5c+lz4na34DsnplhvwdjNUpWK0/A/nvJBipQNwLoGckwO1doa1koNYgYr
+ nNDQ==
+X-Gm-Message-State: AOJu0YwWd80d7yJsYYvtWE83Pm8zrpbphbDD8WjVDP5PIb+b2CfIw3Fp
+ /hzb1agr2HGGGldoEaHcyuLMOPG9deP0tqwv/F5BHfKNk9z6esLRD+nSFrAXDorZY4+iLVdRfoc
+ kLhCK3o9JfPBCUE9bxebqIAAuK/sK/usFtyix0M0ZcB5z9OOqUH7DuYTxvFFQPULKVFrWvYP4XE
+ v0a8RkmLtIaRWsw+d9CbnY7D0Wayt/v04wVhX3IOdr
+X-Gm-Gg: ATEYQzzhb4/qr5cJ4MdrPPYVUIfVhnBCs1bqtKeibWIjuINZRz0eO2VOHHEP5udZ8vR
+ ZtEgLtYdrVjeIDhsECT4FiJBP7mLFM06zu9u7+l8I7rg6jYtpSltbW8RTlV8slHb/yc0nnPLdG+
+ bTOXWtlQjfJqbWzvXhjluL1t4wDCXnniW1DIjSKEZPoAdDWkFDfAtXaq2Mf4IsU2cc1KRybl044
+ 82UJkl5XVMg0sZ7G9h2kNrWE3xnV680iVkqQ0Q9otOJpO3AQPd6vqtVSjrd1vviKAcWKC3QJ9Ls
+ UAuyrRbV1IshLzFIjajBNJ5kE8/AFvswFMvYvH/Xamk3pfarDur59ZpavB1XSIUUMSP0qunj4F+
+ EeEWI7dzkcuCG8PccV/Vh+d3JUoJL9Ief0DsQeuNjQ2BpaYhZxIExAf2kEySb6nvkCeS1C9jpYS
+ 549zWY0G6Nu/swP5XBlFPFlxB5lGs=
+X-Received: by 2002:a05:600c:4f54:b0:485:3b5b:eb8 with SMTP id
+ 5b1f17b1804b1-485567052b8mr96359345e9.26.1773474901958; 
+ Sat, 14 Mar 2026 00:55:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f54:b0:485:3b5b:eb8 with SMTP id
+ 5b1f17b1804b1-485567052b8mr96358965e9.26.1773474901403; 
+ Sat, 14 Mar 2026 00:55:01 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.144.138])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439fe19abbasm22765168f8f.6.2026.03.14.00.55.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Sat, 14 Mar 2026 00:55:00 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>
+Subject: [PATCH v2] rust: fix build when --disable-rust and meson < 1.9
+Date: Sat, 14 Mar 2026 08:55:00 +0100
+Message-ID: <20260314075500.215628-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 1/2] tests/qtest: Add attrs argument support to memory
- access commands
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260311154934.1575429-1-tangtao1634@phytium.com.cn>
- <20260311154934.1575429-2-tangtao1634@phytium.com.cn>
- <CAFEAcA8_ymW_5ZRYfJNdrajATYbNCsnD8xbV3-6t7fpecrhAdw@mail.gmail.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <CAFEAcA8_ymW_5ZRYfJNdrajATYbNCsnD8xbV3-6t7fpecrhAdw@mail.gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwF5KID7VpjWUBAA--.704S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWm0ZHkAQwADsK
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3uFWrXr4xuw4UCF45GrWrGrg_yoWDZr45pF
- Z8AFn0gF48tF1fXrnxXF4DW3WrKr4fKr1Yy3yDtr1jyrZ8Aw1IkFyqkw4Y9rnrZrZ7Wr4j
- va15Xrn3GFnIvFJanT9S1TB71UUUUUJqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=129.150.39.64;
- envelope-from=tangtao1634@phytium.com.cn; helo=sgoci-sdnproxy-4.icoremail.net
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_MSPIKE_H3=0.001,
- RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- WEIRD_QUOTING=0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -76,356 +118,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+Commit e65030ed50ee moved rust_std and build.rust_std from per-target
+override_options into the project's default_options, in order to avoid
+repetition.  However, default_options are validated unconditionally at
+project initialization, even when Rust is disabled.  This breaks builds
+with meson < 1.9.0 which does not know about "build.rust_std":
 
-On 2026/3/13 03:15, Peter Maydell wrote:
-> On Wed, 11 Mar 2026 at 15:50, Tao Tang <tangtao1634@phytium.com.cn> wrote:
->> Extend qtest memory access commands to accept an optional attrs argument.
->>
->> Supported attrs:
->> - secure (ARM/x86-only, lowercase)
->> - space=non-secure|secure|root|realm (ARM-only, lowercase)
->>
->> For memory commands, parse attrs and select AddressSpace via
->> cpu_asidx_from_attrs(), then issue accesses with the corresponding
->> MemTxAttrs.
->>
->> Expose matching libqtest APIs:
->> - qtest_{read,write}{b,w,l,q}_attrs()
->> - qtest_mem{read,write,set}_attrs()
->>
->> Also add libqtest-single wrappers for the *_attrs helpers.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   system/qtest.c                | 266 ++++++++++++++++++++++++++++------
->>   tests/qtest/libqtest-single.h |  61 ++++++++
->>   tests/qtest/libqtest.c        | 148 +++++++++++++++++++
->>   tests/qtest/libqtest.h        |  25 ++++
->>   4 files changed, 453 insertions(+), 47 deletions(-)
-> This is a pretty large patch. Please could you split it in two?
->   (1) add support for the new commands to system/qtest.c
->   (2) add support to libqtest for sending the new commands
+  meson.build:1:0: ERROR: Unknown option: "build.rust_std".
 
-Thanks for your suggestion.
+Make the options conditional on the meson version, since Rust only
+supports new versions of Meson anyway.
 
+Fixes: e65030ed50ee ("rust: remove unnecessary repetitive options")
+Reported-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ meson.build | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-Sure. I'll split it in V3.
-
-
->
->> diff --git a/system/qtest.c b/system/qtest.c
->> index cf90cd53ad..dbf3a63c57 100644
->> --- a/system/qtest.c
->> +++ b/system/qtest.c
->> @@ -22,6 +22,7 @@
->>   #include "hw/core/qdev.h"
->>   #include "hw/core/irq.h"
->>   #include "hw/core/cpu.h"
->> +#include "hw/arm/arm-security.h"
->>   #include "qemu/accel.h"
->>   #include "system/cpu-timers.h"
->>   #include "qemu/config-file.h"
->> @@ -218,6 +219,39 @@ static void *qtest_server_send_opaque;
->>    * B64_DATA is an arbitrarily long base64 encoded string.
->>    * If the sizes do not match, the data will be truncated.
->>    *
->> + * Memory access with MemTxAttrs:
->> + * """"""""""""""""""""""""""""""
->> + *
->> + * The following commands allow specifying memory transaction attributes,
->> + * which is useful for testing devices that behave differently based on
->> + * security state (e.g., ARM TrustZone/CCA or System Management Mode in x86).
-> A small nit, but "Arm" is not all-caps these days.
-
-
-Good catch. I hadn't paid enough attention to this before, including in 
-some of my earlier series. I'll use the preferred "Arm" 
-capitalization going forward.
-
-
->
->> + *
->> + * The memory access commands above support one optional ATTRS argument:
->> + *
->> + * .. code-block:: none
->> + *
->> + *  > writeb ADDR VALUE
->> + *  < OK
->> + *  > writeb ADDR VALUE secure
->> + *  < OK
->> + *  > writeb ADDR VALUE space=realm
->> + *  < OK
->> + *  > readb ADDR secure
->> + *  < OK VALUE
->> + *  > readb ADDR space=root
->> + *  < OK VALUE
->> + *  > read ADDR SIZE space=secure
->> + *  < OK DATA
->> + *  > write ADDR SIZE DATA secure
->> + *  < OK
->> + *  > memset ADDR SIZE VALUE space=non-secure
->> + *  < OK
->> + *
->> + * ``secure`` sets MemTxAttrs.secure=1 (x86/ARM).
->> + * ``space=...`` is ARM-specific and accepts:
->> + * non-secure, secure, root, realm.
->> + * ``space=non-secure`` is equivalent to omitting ATTRS.
-> If the test specifically asks for the non-secure space, this is
-> not the same as "doesn't specify attributes".
-
-
-....
-
-
->
->> + *
->>    * IRQ management:
->>    * """""""""""""""
->>    *
->> @@ -353,6 +387,135 @@ static void qtest_install_gpio_out_intercept(DeviceState *dev, const char *name,
->>       *disconnected = qdev_intercept_gpio_out(dev, icpt, name, n);
->>   }
->>
->> +static bool qtest_parse_mem_attrs(CharFrontend *chr, const char *arg,
->> +                                  MemTxAttrs *attrs)
->> +{
->> +    if (!arg) {
->> +        *attrs = MEMTXATTRS_UNSPECIFIED;
->> +        return true;
->> +    }
->> +
->> +    if (strcmp(arg, "secure") == 0) {
->> +        *attrs = (MemTxAttrs){ .secure = 1 };
->> +        return true;
->> +    }
->> +
->> +    if (strncmp(arg, "space=", 6) == 0) {
->> +        const char *space = arg + 6;
->> +        ARMSecuritySpace sec_space;
->> +
->> +        if (!target_arm() && !target_aarch64()) {
->> +            qtest_send(chr, "ERR space=<...> is ARM-specific\n");
->> +            return false;
->> +        }
->> +
->> +        if (strcmp(space, "non-secure") == 0) {
->> +            *attrs = MEMTXATTRS_UNSPECIFIED;
->> +            return true;
-> Here we should set sec_space = ARMSS_NonSecure and determine
-> the attributes the same way as for the other spaces.
-
-
-I'll fix it so it is handled as an explicit Arm non-secure space.
-
-
->
->> +        } else if (strcmp(space, "secure") == 0) {
->> +            sec_space = ARMSS_Secure;
->> +        } else if (strcmp(space, "root") == 0) {
->> +            sec_space = ARMSS_Root;
->> +        } else if (strcmp(space, "realm") == 0) {
->> +            sec_space = ARMSS_Realm;
->> +        } else {
->> +            qtest_send(chr, "ERR invalid space value. Valid space: "
->> +                            "secure/non-secure/root/realm\n");
->> +            return false;
->> +        }
->> +
->> +        *attrs = (MemTxAttrs){
->> +            .space = sec_space,
->> +            .secure = arm_space_is_secure(sec_space),
->> +        };
->> +        return true;
->> +    }
->> +
->> +    qtest_send(chr, "ERR invalid attrs argument\n");
->> +    return false;
->> +}
-> Other than that the system/qtest.c changes look good to me.
->
->> diff --git a/tests/qtest/libqtest-single.h b/tests/qtest/libqtest-single.h
->> index 851724cbcb..38d05ee61e 100644
->> --- a/tests/qtest/libqtest-single.h
->> +++ b/tests/qtest/libqtest-single.h
->> @@ -291,6 +291,67 @@ static inline void memwrite(uint64_t addr, const void *data, size_t size)
->>       qtest_memwrite(global_qtest, addr, data, size);
->>   }
->>
->> +/*
->> + * Memory commands with optional attrs argument.
->> + */
->> +static inline void writeb_attrs(uint64_t addr, uint8_t value, const char *attrs)
->> +{
->> +    qtest_writeb_attrs(global_qtest, addr, value, attrs);
->> +}
->> +
->> +static inline void writew_attrs(uint64_t addr, uint16_t value, const char *attrs)
->> +{
->> +    qtest_writew_attrs(global_qtest, addr, value, attrs);
->> +}
-> All the other functions in this file have their own individual
-> documentation comments describing them. Your new ones should too.
-
-
-I'll add docs in v5.
-
-
->
-> I wonder if we should have these functions take the attrs
-> as a MemTxAttrs rather than a string? Not sure.
-
-
-Just to make sure I understood your suggestion correctly: do you mean 
-that the qtest wire protocol would remain text-based, but the libqtest C 
-APIs would take a MemTxAttrs rather than a string, with libqtest doing 
-the conversion internally?
-
-If so, that makes sense to me as an API-shape question, even if the wire 
-protocol itself still uses the textual attrs form.
-
-
->
->> diff --git a/tests/qtest/libqtest.c b/tests/qtest/libqtest.c
->> index 051faf31e1..a548331f7c 100644
->> --- a/tests/qtest/libqtest.c
->> +++ b/tests/qtest/libqtest.c
->> @@ -1447,6 +1447,154 @@ void qtest_memset(QTestState *s, uint64_t addr, uint8_t pattern, size_t size)
->>       qtest_rsp(s);
->>   }
->>
->> +static bool qtest_has_attrs(const char *attrs)
->> +{
->> +    return attrs && attrs[0];
->> +}
->> +
->> +static void qtest_write_attrs(QTestState *s, const char *cmd,
->> +                              uint64_t addr, uint64_t value,
->> +                              const char *attrs)
->> +{
->> +    if (qtest_has_attrs(attrs)) {
->> +        qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 " %s\n",
->> +                    cmd, addr, value, attrs);
->> +    } else {
->> +        qtest_sendf(s, "%s 0x%" PRIx64 " 0x%" PRIx64 "\n", cmd, addr, value);
->> +    }
->> +    qtest_rsp(s);
->> +}
->> +
->> +static uint64_t qtest_read_attrs(QTestState *s, const char *cmd,
->> +                                 uint64_t addr, const char *attrs)
->> +{
->> +    gchar **args;
->> +    int ret;
->> +    uint64_t value;
->> +
->> +    if (qtest_has_attrs(attrs)) {
->> +        qtest_sendf(s, "%s 0x%" PRIx64 " %s\n", cmd, addr, attrs);
->> +    } else {
->> +        qtest_sendf(s, "%s 0x%" PRIx64 "\n", cmd, addr);
->> +    }
->> +    args = qtest_rsp_args(s, 2);
->> +    ret = qemu_strtou64(args[1], NULL, 0, &value);
->> +    g_assert(!ret);
->> +    g_strfreev(args);
->> +
->> +    return value;
->> +}
->> +
->> +void qtest_writeb_attrs(QTestState *s, uint64_t addr, uint8_t value,
->> +                        const char *attrs)
->> +{
->> +    qtest_write_attrs(s, "writeb", addr, value, attrs);
->> +}
-> You should also make the existing qtest_write(), qtest_writeb(), etc
-> go through the new code path, by:
->    qtest_writeb() calls qtest_writeb_attrs(s, addr, value, NULL)
->    similarly qtest_writew etc etc
->    qtest_write() can be deleted as it will have no callers
-
-.....
-
->
->> +void qtest_memread_attrs(QTestState *s, uint64_t addr, void *data,
->> +                         size_t size, const char *attrs)
->> +{
->> +    uint8_t *ptr = data;
->> +    gchar **args;
->> +    size_t i;
->> +
->> +    if (!size) {
->> +        return;
->> +    }
->> +
->> +    if (qtest_has_attrs(attrs)) {
->> +        qtest_sendf(s, "read 0x%" PRIx64 " 0x%zx %s\n", addr, size, attrs);
->> +    } else {
->> +        qtest_sendf(s, "read 0x%" PRIx64 " 0x%zx\n", addr, size);
->> +    }
->> +    args = qtest_rsp_args(s, 2);
->> +
->> +    for (i = 0; i < size; i++) {
->> +        ptr[i] = hex2nib(args[1][2 + (i * 2)]) << 4;
->> +        ptr[i] |= hex2nib(args[1][2 + (i * 2) + 1]);
->> +    }
->> +
->> +    g_strfreev(args);
->> +}
-> Similarly, the qtest_memread(), qtest_memwrite(), qtest_memset()
-> functions should all become wrappers that pass NULL to the
-> _attrs version of the functions.
-
-
-Makes sense. I'll route the existing 
-qtest_write*()/qtest_read*()/qtest_mem* helpers through the new 
-*_attrs(..., NULL) path.
-
-
->
->> +/*
->> + * Memory commands with optional attrs argument.
->> + */
->> +
->> +void qtest_writeb_attrs(QTestState *s, uint64_t addr, uint8_t value,
->> +                        const char *attrs);
->> +void qtest_writew_attrs(QTestState *s, uint64_t addr, uint16_t value,
->> +                        const char *attrs);
->> +void qtest_writel_attrs(QTestState *s, uint64_t addr, uint32_t value,
->> +                        const char *attrs);
->> +void qtest_writeq_attrs(QTestState *s, uint64_t addr, uint64_t value,
->> +                        const char *attrs);
->> +
->> +uint8_t qtest_readb_attrs(QTestState *s, uint64_t addr, const char *attrs);
->> +uint16_t qtest_readw_attrs(QTestState *s, uint64_t addr, const char *attrs);
->> +uint32_t qtest_readl_attrs(QTestState *s, uint64_t addr, const char *attrs);
->> +uint64_t qtest_readq_attrs(QTestState *s, uint64_t addr, const char *attrs);
->> +
->> +void qtest_memread_attrs(QTestState *s, uint64_t addr, void *data, size_t size,
->> +                         const char *attrs);
->> +void qtest_memwrite_attrs(QTestState *s, uint64_t addr, const void *data,
->> +                          size_t size, const char *attrs);
->> +void qtest_memset_attrs(QTestState *s, uint64_t addr, uint8_t patt, size_t size,
->> +                        const char *attrs);
-> Here also you should give each function its own doc comment,
-> to match the way the existing functions in this header do it.
-
-
-OK.
-
-
->
->> +
->>   /**
->>    * qtest_clock_step_next:
->>    * @s: #QTestState instance to operate on.
->> --
->> 2.34.1
-> thanks
-> -- PMM
-
-
-Thanks for the review!
-
-Tao
+diff --git a/meson.build b/meson.build
+index 11139f540b0..00f482d3fa6 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1,7 +1,11 @@
+ project('qemu', ['c'], meson_version: '>=1.5.0',
+         default_options: ['warning_level=1', 'c_std=gnu11', 'cpp_std=gnu++23', 'b_colorout=auto',
+-                          'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true',
+-                          'rust_std=2021', 'build.rust_std=2021'],
++                          'b_staticpic=false', 'stdsplit=false', 'optimization=2', 'b_pie=true'] +
++
++                          # build.rust_std breaks with older meson, but Rust does not
++                          # support old meson anyway
++                          (meson.version().version_compare('>= 1.9') ? ['rust_std=2021', 'build.rust_std=2021'] : ''),
++
+         version: files('VERSION'))
+ 
+ add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default: true,
+-- 
+2.53.0
 
 
