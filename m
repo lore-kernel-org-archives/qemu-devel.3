@@ -4,64 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9C1EC10706DC
-	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 13:44:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AFC0E10706DD
+	for <qemu-devel@archiver.kernel.org>; Sat, 14 Mar 2026 13:58:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1PHY-00053X-LZ; Sat, 14 Mar 2026 09:43:56 -0400
+	id 1w1PVP-0008T2-3W; Sat, 14 Mar 2026 09:58:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w1PHU-00053J-7Z; Sat, 14 Mar 2026 09:43:52 -0400
-Received: from zg8tmtyylji0my4xnjqumte4.icoremail.net ([162.243.164.118])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <tangtao1634@phytium.com.cn>)
- id 1w1PHQ-0002kb-2u; Sat, 14 Mar 2026 09:43:51 -0400
-Received: from prodtpl.icoremail.net (unknown [10.12.1.20])
- by hzbj-icmmx-6 (Coremail) with SMTP id AQAAfwAXbdAMZrVpHXbWAA--.58520S2;
- Sat, 14 Mar 2026 21:43:40 +0800 (CST)
-Received: from [192.168.31.181] (unknown [113.246.119.146])
- by mail (Coremail) with SMTP id AQAAf8DwJpQKZrVpIG8BAA--.5684S2;
- Sat, 14 Mar 2026 21:43:39 +0800 (CST)
-Message-ID: <f0307563-237c-45b1-8563-4a783e304d9b@phytium.com.cn>
-Date: Sat, 14 Mar 2026 21:43:36 +0800
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1PVC-0008S0-Iz
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 09:58:02 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1PV9-0004er-MI
+ for qemu-devel@nongnu.org; Sat, 14 Mar 2026 09:58:01 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-485409ab264so21681915e9.1
+ for <qemu-devel@nongnu.org>; Sat, 14 Mar 2026 06:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773496675; x=1774101475; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=Jl29xvqHWJTHkR8QHnpfp6ngumDCjFfO8E2q7RnzpYg=;
+ b=AX4tSsuXrMvENj3X0mFEJBT3eFyr0d0TB8n6qt6x0ZYgChnVJQJoCvS4SCU0hSShFW
+ VJP2no3nIfCatfewQdxhAVRyRlfD7M4/V/ICRXwWD7Lx//UvnM1l7DyqyzVaS0Iq2zGv
+ /VkLrcVEHoXGwn+vWTPqNmtcP7Vgr0jANx3zpEY/GLeGf1n9n9E7RqS+ydkcCnD8X+Wt
+ W39rEkVGJ1OwLqDIFOEO4zBUGN6niXRAbPrnnqaapbr5/p1F6lFnTQtOzSBs8eWUYXuT
+ s2713gNRokkHBBy3eYwIDu+y+eCBVJKGadYAVMmW7Zgy0ePXpc+e7Pn9dFL4oJRfEAy9
+ 3SRA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773496675; x=1774101475;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=Jl29xvqHWJTHkR8QHnpfp6ngumDCjFfO8E2q7RnzpYg=;
+ b=c4HX9NxKl3w63ascTO1pwPRvoRxFjqx8q7jeIvXRWslC/6Z6pWC4f3R5hx9cwV03gV
+ nTs8bqkoz8Y8dsI6JVoYpCz8X7qgvicBUYGsJGYct70lvEEZ5uUI6q8C7nG5Em08C1m5
+ gnkwHrggUAeT5z4bE4QiymELmH3fEk3EBNO53PLQ/tdPL/N9JCzfP6V687NLjvp/A7uH
+ khF/0ONkxzL6oDvuOCI6kXAoa6qpo//ZfhewedxegOs4eXsh7Qqi97hEu/aj6/OSULn5
+ hp/1zHeUSy9DCNrxp1Y3g/Qv5YO7ohZ9kqY7nzWvp+mXPoC8JwJmR6BntZWC4G42/vDN
+ SIGw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVRUTPQYOCJ0RToe9F0O+KIxSCIACn7MtC+BBKntLbVDdn3H3Qw439T0OKQehfWz9zmWWOv3lwl5bwW@nongnu.org
+X-Gm-Message-State: AOJu0Yyyb/vldJh1VahJiD8ekm+PXmnhljVbjgQzablI4InD1xhCsspj
+ 73jkxpKsEcUoqNIboOJWGfDd1GBCGTkf9BvKY99kF2ip2b0YnlvlYJP+KyjGFEZC5AA=
+X-Gm-Gg: ATEYQzzBBugq8VbRj+tCB70BJuNFOanVKWjc09X38BLRCK9MA2MHhjk4qM5cYnNeYQn
+ La1tBwjv5s9hSwwgp/mfdHzR4QoU4rBY1mEeu3v0aB9yj3lNBYXLIAFctfl6BmePgjCQSR3feMs
+ 9UYWVJxRhahZrQ6m59Rmz4PvO62u3Oer0cck8FFxOlZcd8VQMZpfpgSU3eyzBrqvf1fkCH9YeOo
+ Ga4Hyze/ujQ4aYFs2y/2LdQAzYoFeTDnKrv4DumCOAOmKMW1uD1BgcEGqZm0fg51bn1T67TgTH0
+ dJRt4YBx4PkFwvCHY4Nq+j0AwBxxFlyRSIzdYtel2VpSQTcSebBT3BPdmAlZMwRyGty0HowqnVE
+ UexNoLQIVtRlB2NUm+gFxk5hFWxTRi/huMae9gYeRkd/XkGkVa1J0DpnQ3dh1Kl1pV+kWIhtmrI
+ aIuo1w6qrB5gtjwNMxtQw4Ljh8qdBvY2LFFhjWF1Y3BvyvZciAUO7z9rwg8uiNhB+mWw==
+X-Received: by 2002:a05:600c:1907:b0:485:50ac:b8cf with SMTP id
+ 5b1f17b1804b1-48555a5689amr108057675e9.0.1773496674823; 
+ Sat, 14 Mar 2026 06:57:54 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48557a74228sm45450045e9.18.2026.03.14.06.57.53
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sat, 14 Mar 2026 06:57:53 -0700 (PDT)
+Message-ID: <b2e8e2e7-1d87-497f-a631-d78a4f6065ab@linaro.org>
+Date: Sat, 14 Mar 2026 14:57:52 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 2/2] tests/qtest: Add qtest-attrs-test for memory access
- with attrs
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Fabiano Rosas <farosas@suse.de>, Laurent Vivier <lvivier@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, qemu-devel@nongnu.org,
- qemu-arm@nongnu.org, Chen Baozi <chenbaozi@phytium.com.cn>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>
-References: <20260311154934.1575429-1-tangtao1634@phytium.com.cn>
- <20260311154934.1575429-3-tangtao1634@phytium.com.cn>
- <CAFEAcA938c9iwZ9oMfd9b_X840PvWFPExmWUxArYssotosDWGg@mail.gmail.com>
-From: Tao Tang <tangtao1634@phytium.com.cn>
-In-Reply-To: <CAFEAcA938c9iwZ9oMfd9b_X840PvWFPExmWUxArYssotosDWGg@mail.gmail.com>
+Subject: Re: [PATCH 4/4] MAINTAINERS: Downgrade the functional testing section
+ to "Odd Fixes"
+Content-Language: en-US
+To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: qemu-s390x@nongnu.org
+References: <20260313113424.15583-1-thuth@redhat.com>
+ <20260313113424.15583-5-thuth@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260313113424.15583-5-thuth@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: AQAAf8DwJpQKZrVpIG8BAA--.5684S2
-X-CM-SenderInfo: pwdqw3tdrrljuu6sx5pwlxzhxfrphubq/1tbiAQAOBWm0ZHkAQwAEsN
-Authentication-Results: hzbj-icmmx-6; spf=neutral smtp.mail=tangtao163
- 4@phytium.com.cn;
-X-Coremail-Antispam: 1Uk129KBjvJXoW3XrWDKF4rZF17uF1fJr15twb_yoW7XFykpa
- yrAFn0kr48tF1xJ34fXa1UWF1SyrZ7C3WUGr9aqr1xCFs8CrnrKF12kr1YgrnxXr4vqr18
- u3Wqvr9xWrn5taDanT9S1TB71UUUUUDqnTZGkaVYY2UrUUUUj1kv1TuYvTs0mT0YCTnIWj
- DUYxn0WfASr-VFAU7a7-sFnT9fnUUIcSsGvfJ3UbIYCTnIWIevJa73UjIFyTuYvj4RJUUU
- UUUUU
-Received-SPF: pass client-ip=162.243.164.118;
- envelope-from=tangtao1634@phytium.com.cn;
- helo=zg8tmtyylji0my4xnjqumte4.icoremail.net
-X-Spam_score_int: -8
-X-Spam_score: -0.9
-X-Spam_bar: /
-X-Spam_report: (-0.9 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -77,153 +107,19 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Peter,
+On 13/3/26 12:34, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
+> 
+> I won't have that much time for QEMU anymore in the future, so downgrade
+> the status of the "functional testing framework" section to "Odd Fixes"
+> to avoid wrong expectations. While we're at it, also switch to my other
+> e-mail address here that I'm already using for the other sections where
+> I am still listed as maintainer / reviewer.
+> 
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> ---
+>   MAINTAINERS | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
 
-On 3/13/2026 3:23 AM, Peter Maydell wrote:
-> On Wed, 11 Mar 2026 at 15:50, Tao Tang <tangtao1634@phytium.com.cn> wrote:
->> Add qtest-attrs-test to exercise qtest memory commands with optional attrs
->> on aarch64 (virt, secure=on) and x86 (pc, tcg).
->>
->> The test covers:
->> - ARM (virt machine): exercises all supported ARM security spaces
->>    (non-secure, secure, root, realm).
->> - x86 (pc machine): exercises secure attrs accesses
->>    (SMM address-space path).
->>
->> The test also covers libqtest-single *_attrs shortcut wrappers and
->> verifies that space=non-secure behaves like omitting attrs.
->>
->> Signed-off-by: Tao Tang <tangtao1634@phytium.com.cn>
->> ---
->>   tests/qtest/meson.build        |   4 +-
->>   tests/qtest/qtest-attrs-test.c | 234 +++++++++++++++++++++++++++++++++
->>   2 files changed, 237 insertions(+), 1 deletion(-)
->>   create mode 100644 tests/qtest/qtest-attrs-test.c
->>
->> diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
->> index be4fa627b5..c11759e23f 100644
->> --- a/tests/qtest/meson.build
->> +++ b/tests/qtest/meson.build
->> @@ -115,6 +115,7 @@ qtests_i386 = \
->>      'drive_del-test',
->>      'cpu-plug-test',
->>      'migration-test',
->> +   'qtest-attrs-test',
->>     ]
->>
->>   if dbus_display and config_all_devices.has_key('CONFIG_VGA')
->> @@ -270,7 +271,8 @@ qtests_aarch64 = \
->>     ['arm-cpu-features',
->>      'numa-test',
->>      'boot-serial-test',
->> -   'migration-test']
->> +   'migration-test',
->> +   'qtest-attrs-test']
->>
->>   qtests_s390x = \
->>     qtests_filter + \
->> diff --git a/tests/qtest/qtest-attrs-test.c b/tests/qtest/qtest-attrs-test.c
->> new file mode 100644
->> index 0000000000..ce204c2c95
->> --- /dev/null
->> +++ b/tests/qtest/qtest-attrs-test.c
->> @@ -0,0 +1,234 @@
->> +/*
->> + * QTest for memory access with transaction attributes
->> + *
->> + * Verify optional attrs argument support for qtest memory commands.
->> + *
->> + * Copyright (c) 2026 Phytium Technology
->> + *
->> + * Author:
->> + *  Tao Tang <tangtao1634@phytium.com.cn>
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "libqtest.h"
->> +#include "libqtest-single.h"
->> +
->> +/*
->> + * Default RAM size is 128 MiB on both machines used below.
->> + * Keep test addresses in low RAM and away from device MMIO regions.
->> + */
->> +#define TEST_ADDR_OFFSET    0x1000ULL
->> +#define TEST_ARM_BASE       0x40000000ULL
->> +#define TEST_X86_BASE       0x0ULL
->> +
->> +#define TEST_ADDR_ARM       (TEST_ARM_BASE + TEST_ADDR_OFFSET)
->> +#define TEST_ADDR_X86       (TEST_X86_BASE + TEST_ADDR_OFFSET)
->> +
->> +#define ARM_MACHINE_ARGS    "-machine virt,secure=on -cpu cortex-a57"
->> +#define X86_MACHINE_ARGS    "-machine pc -accel tcg"
-> You start a virt machine with secure=on, but you are only
-> testing the RAM, which is mapped regardless of the security
-> space, so this will not notice any bugs where we don't actually
-> access with the correct attributes.
->
-> It would be more interesting to look at the secure-only
-> RAM (which is at 0x0e00_0000), which should only be accessible
-> via the secure or root spaces. (I'm not sure what qtest will
-> do for attempted access via non-secure and realm, where the
-> address will have nothing mapped there. You'll have to check.)
-
-
-
-I just tested the secure-only RAM path as you suggested. For accesses 
-from the non-secure side, I now see:
-
-   "Invalid read/write at addr 0xE000000, size 1, region '(null)', 
-reason: rejected"
-
-which is consistent with the secure-only RAM not being mapped in the 
-non-secure address space. So I agree that this is a much better target 
-for validating whether the requested attrs are actually being used.
-
-
-While testing this, I also found another bug in the qtest implementation:
-qtest_read/write_sized() currently ignore the MemTxResult returned by 
-address_space_read/write, so access failures are effectively handled 
-silently. That is not correct. For failed reads/writes, qtest should 
-return a non-OK response so the failure can be asserted properly in 
-qtest_rsp_args() instead of being treated as success.
-
-I'll fix this in v3 as well.
-
-
->
-> I don't know if the x86 PC machine has a similar bit of RAM
-> or whatever that behaves differently for secure and non-secure
-> accesses.
-
-
-Unlike the Arm virt case, where secure=on gives a very clear secure-only 
-RAM target, the x86 side seems less straightforward to me too.
-
- From the current x86 code, it looks like the normal and SMM address 
-spaces are both created ( tcg_cpu_realizefn in 
-target/i386/tcg/system/tcg-cpu.c ), with the SMM view built by 
-overlaying /machine/smram on top of the normal memory 
-view(tcg_cpu_machine_done in target/i386/tcg/system/tcg-cpu.c).
-
-I also looked into the x86 code to see whether there is an obvious 
-SMM-specific MemoryRegion that would make a good test target, and I 
-found some SMM-related logic in hw/pci-host/q35.c ( such as function 
-mch_* ), but that path is complex enough that I am not confident I fully 
-understand the intended testing model.
-
-Would it make sense to ask x86 experts what the best way is to test this 
-on the PC machine?
-
-
->
-> thanks
-> -- PMM
-
-
-Thanks for the review,
-
-Tao
-
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
