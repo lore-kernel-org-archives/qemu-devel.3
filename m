@@ -4,93 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0081AF3026E
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 19:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697DCF30282
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 20:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1ql8-0002Su-Uj; Sun, 15 Mar 2026 15:04:19 -0400
+	id 1w1ruF-0006N8-14; Sun, 15 Mar 2026 16:17:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w1ql6-0002SW-P8
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 15:04:16 -0400
-Received: from mail-ed1-x532.google.com ([2a00:1450:4864:20::532])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w1ql2-00025q-Gk
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 15:04:16 -0400
-Received: by mail-ed1-x532.google.com with SMTP id
- 4fb4d7f45d1cf-664f8bef4e7so887678a12.3
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 12:04:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773601446; x=1774206246; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=lwV19h00vdzeJjzm0o6XW8dCysIrmtIE3gx61x9k82w=;
- b=DzQ9WNcH8szT7X45JyudojLuSetEVeU0sP2pqKlkPTKdm6ikMJ8Kydir3KgIjRRF1V
- FnXXPP6MNmqSlzMvi1PEpFnCXK6XyyN4y/rLvTJSx0FqV44ptWHzloFsBAilorVMsrZT
- 5y+tqKFhHZQUX4OSGYPy4PKjmLCTyMeuH/LBfLPKE2esYoCFaPukcam6R7hZdfVotsS0
- MbphcsOY6CWvRpca53vT2nrSKzYEyl3Ben7iJER+dyPf+AatYEbB7fcWDyhG+Pe/lJAX
- uGddUKFJ5PQq83UPvJ7vtSw+IPMzUf7Z1CwJ5bCmWqJttai0y1Rat3E8z/n7I27fTqTz
- JbrA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773601446; x=1774206246;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=lwV19h00vdzeJjzm0o6XW8dCysIrmtIE3gx61x9k82w=;
- b=T8G8d9XfCJKI+tOfaXXS1U5sZ+618CGdw5NpeWg5rj6xXo51UUh4wQj7qQ7grLHvn2
- iVPtMTmO8g2/n8mLCgu9NTG6msFEYOcdkROMPp7D4jo33YtwiMydbN8RM9aVNQpGHjR8
- eZA6flu7WoBMekTZo36al2fdCK3/z9UPqJoxPz6phP+BmY9lFjOOTC6GZr1E60Ph8zWM
- SWxOqU9wIWJtKmMlnT5F0w744TFihtx3XzBW/fWVJRWdSTKN1skePOAujLbzUooTTV3z
- 7Z780/2Zo32yIt6z5VVh8jCtqWIHQwjDW22U2ssDF7k7MiSyj7UfsiiWMSlLIkj1JvV1
- MW6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXq2Mj4hFMQ1NGw+cBmelQ80X3Y0gtLCcxHgioSCYMJUCa0pv7DcPhke+aNQcif0q3aehWiONIuwxCi@nongnu.org
-X-Gm-Message-State: AOJu0YzOrNqkpCzUshJxjQOQvJIycf9a4byJ1ykpTej2MyALzhwyzPOq
- V/AQfbRBY5QkICH14O5BwHN+F229CLejlgTvW3UY5VNQD948llVpz9cmDzi6Nf4bFraaOrUvPfR
- rIp/UbzM=
-X-Gm-Gg: ATEYQzxUqeS0jold0v/OJ2pJd4CSoPEyzbwSmvRWty3kWF9Khe4h8FvWm+c4WTcZd0x
- yHSTgCiYkPJKS7fffH4uu6ADnqaaWdnJQx9SfP7Hz7r3W0fQ/CjcThfjpGUm/7IMmgp+OvHimZX
- 2U0sGPEnB5N5TG/5rJvYyokOhpaESRAH5uDbvTpuBZ6FfzYAFti9ShZKiPxEIIoTH0JygjwpE06
- t9GXV0scDO9UNNEGmNXeXQZEreQBG0XCQgouQRzIMJaGOyefVeO3c4bkPHdvrf8Po4fVJOPlqdC
- dGMsMtXavntwXrH+bLLisvk3tfF/5jvojSq1o38xNBhPsBbRvNXg6MM7rXh4YPt2cPDzVBuBN7b
- oA7pKqGLZY6owh4QZ5RBrxg/Rq4a8Os5QBlirXE1ESK9J31WvApqKggA1nhGxWOIgImA2oO07ZN
- e37fsSaeGJm8G/ZwmIWDyzkJA=
-X-Received: by 2002:a05:6402:254c:b0:664:38f1:8ba0 with SMTP id
- 4fb4d7f45d1cf-66438f1905emr5193547a12.4.1773601445822; 
- Sun, 15 Mar 2026 12:04:05 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- 4fb4d7f45d1cf-6634fbb9bedsm4021627a12.3.2026.03.15.12.04.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Mar 2026 12:04:03 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id AC5165F814;
- Sun, 15 Mar 2026 19:04:01 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: AADHYA R <aadhyar.cs24@rvce.edu.in>
-Cc: kraxel@redhat.com,  qemu-trivial@nongnu.org,  qemu-devel@nongnu.org
-Subject: Re: [PATCH] hw/audio/fmopl: Convert malloc/free to g_malloc/g_free
-In-Reply-To: <CABHAK8Nuabpy412TgdEqtNJ0tucrqqVupwnZCYrZGmfHFtH5tw@mail.gmail.com>
- (AADHYA R.'s message of "Sun, 15 Mar 2026 00:59:29 +0530")
-References: <CABHAK8Nuabpy412TgdEqtNJ0tucrqqVupwnZCYrZGmfHFtH5tw@mail.gmail.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Sun, 15 Mar 2026 19:04:01 +0000
-Message-ID: <87qzpkkj8e.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1w1rtz-0006Kj-M0
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:31 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
+ id 1w1rtT-0002LX-Jt
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:29 -0400
+Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 173CAC015D;
+ Sun, 15 Mar 2026 23:16:58 +0300 (MSK)
+Received: from localhost (unknown [2a02:6bf:8080:b49::1:d])
+ by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id uGRM4I1ATSw0-x7KRZieK; Sun, 15 Mar 2026 23:16:57 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
+ s=default; t=1773605817;
+ bh=xju9CfSPT1DfYBW2oFrwhc0C2Ax+iiriDHMYm76fAYo=;
+ h=Cc:Message-Id:References:Date:In-Reply-To:Subject:To:From;
+ b=fXMM/MQjWlcqP17HrrmPTqqPMvhyyZs9gQigs6Elz8sT7Z9ZyTQUFPDeEzaQ5tOT/
+ KP5t5EYGYfNT0AJeodvkAj6XCYiChEvIOA2PWryuHUy43U6MEu1e98UdcJPR9Nhwn/
+ LWIh7UNclqLU025maLwyc/LSdqyi/XQggZqRRrks=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.com
+From: Sergei Heifetz <heifetz@yandex-team.com>
+To: qemu-devel@nongnu.org
+Cc: Eric Blake <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
+ =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Markus Armbruster <armbru@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ =?UTF-8?q?Marc-Andr=C3=A9=20Lureau?= <marcandre.lureau@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Yanan Wang <wangyanan55@huawei.com>,
+ Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Thomas Huth <thuth@redhat.com>,
+ =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
+ Sergei Heifetz <heifetz@yandex-team.com>
+Subject: [PATCH v3 04/11] hw/audio/pcspk: change PCSPK behaviour with
+ --disable-audio
+Date: Mon, 16 Mar 2026 01:16:39 +0500
+Message-Id: <20260315201646.96862-5-heifetz@yandex-team.com>
+X-Mailer: git-send-email 2.34.1
+In-Reply-To: <20260315201646.96862-1-heifetz@yandex-team.com>
+References: <20260315201646.96862-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::532;
- envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x532.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=178.154.239.72;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,123 +89,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-AADHYA R <aadhyar.cs24@rvce.edu.in> writes:
+PCSPK (PC Speaker) is an embedded audio device. We don't want it to use audio
+when QEMU is configured with `--disable-audio`. This is achieved with minimal,
+non-invasive changes to the code.
 
-> As per the QEMU coding style guide, replace standard C malloc()
-> and free() with GLib's g_malloc() and g_free().
->
-> Since g_malloc() safely aborts on out-of-memory errors, the
-> redundant NULL checks and their associated error-handling paths
-> have been removed.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1798
->
-> Signed-off-by: Aadhya-R <aadhyar.cs24@rvce.edu.in>
+In essence, the changes ensure that PCSPK does not have a corresponding
+audio backend, while functioning the same way in non-audio aspects.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
+Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/audio/pcspk.c | 12 +++++++++++-
+ hw/i386/pc.c     |  2 ++
+ 2 files changed, 13 insertions(+), 1 deletion(-)
 
-Although the whole file is fairly out of sync with modern QEMU
-standards. Other things to consider:
+diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
+index 6b826507ce3..54e18822651 100644
+--- a/hw/audio/pcspk.c
++++ b/hw/audio/pcspk.c
+@@ -48,17 +48,20 @@ struct PCSpkState {
+ 
+     MemoryRegion ioport;
+     uint32_t iobase;
++    PITCommonState *pit;
++#ifdef CONFIG_AUDIO
+     uint8_t sample_buf[PCSPK_BUF_LEN];
+     AudioBackend *audio_be;
+     SWVoiceOut *voice;
+-    PITCommonState *pit;
+     unsigned int pit_count;
+     unsigned int samples;
+     unsigned int play_pos;
++#endif
+     uint8_t data_on;
+     uint8_t dummy_refresh_clock;
+ };
+ 
++#ifdef CONFIG_AUDIO
+ static const char *s_spk = "pcspk";
+ 
+ static inline void generate_samples(PCSpkState *s)
+@@ -130,6 +133,7 @@ static int pcspk_audio_init(PCSpkState *s)
+ 
+     return 0;
+ }
++#endif
+ 
+ static uint64_t pcspk_io_read(void *opaque, hwaddr addr,
+                               unsigned size)
+@@ -160,11 +164,13 @@ static void pcspk_io_write(void *opaque, hwaddr addr, uint64_t val,
+ 
+     s->data_on = (val >> 1) & 1;
+     pit_set_gate(s->pit, 2, gate);
++#ifdef CONFIG_AUDIO
+     if (s->voice) {
+         if (gate) /* restart */
+             s->play_pos = 0;
+         audio_be_set_active_out(s->audio_be, s->voice, gate & s->data_on);
+     }
++#endif
+ }
+ 
+ static const MemoryRegionOps pcspk_io_ops = {
+@@ -195,10 +201,12 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
+ 
+     isa_register_ioport(isadev, &s->ioport, s->iobase);
+ 
++#ifdef CONFIG_AUDIO
+     if (s->audio_be && audio_be_check(&s->audio_be, errp)) {
+         pcspk_audio_init(s);
+         return;
+     }
++#endif
+ }
+ 
+ static const VMStateDescription vmstate_spk = {
+@@ -213,7 +221,9 @@ static const VMStateDescription vmstate_spk = {
+ };
+ 
+ static const Property pcspk_properties[] = {
++#ifdef CONFIG_AUDIO
+     DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
++#endif
+     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
+     DEFINE_PROP_LINK("pit", PCSpkState, pit, TYPE_PIT_COMMON, PITCommonState *),
+ };
+diff --git a/hw/i386/pc.c b/hw/i386/pc.c
+index addf602da08..8a4adee78e9 100644
+--- a/hw/i386/pc.c
++++ b/hw/i386/pc.c
+@@ -1599,8 +1599,10 @@ static void pc_machine_initfn(Object *obj)
+ 
+     pc_system_flash_create(pcms);
+     pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
++#ifdef CONFIG_AUDIO
+     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
+                               OBJECT(pcms->pcspk), "audiodev");
++#endif
+     if (pcmc->pci_enabled) {
+         cxl_machine_init(obj, &pcms->cxl_devices_state);
+     }
+-- 
+2.34.1
 
-  - #if 0 sections
-  - replace hand-written logs in favour of tracepoints where appropriate
-  - coding style clean-ups (mostly mandatory {}'s)
-
-Unfortunately the whole file is tabbed. Usually we keep cosmetic commits
-separate from logic changes.=20
-
-It would be nice to find something that exercised the YM emulation of
-the adlib card. Are you running anything in particular?
-
-> ---
->  hw/audio/fmopl.c | 41 ++++++++++++-----------------------------
->  1 file changed, 12 insertions(+), 29 deletions(-)
->
-> diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c
-> index a63ad0f04d..79e43d5410 100644
-> --- a/hw/audio/fmopl.c
-> +++ b/hw/audio/fmopl.c
-> @@ -50,7 +50,6 @@ static int opl_dbg_maxchip,opl_dbg_chip;
->  /* attack/decay rate time rate */
->  #define OPL_ARRATE     141280  /* RATE 4 =3D  2826.24ms @ 3.6MHz */
->  #define OPL_DRRATE    1956000  /* RATE 4 =3D 39280.64ms @ 3.6MHz */
-> -
->  #define DELTAT_MIXING_LEVEL (1) /* DELTA-T ADPCM MIXING LEVEL */
->
->  #define FREQ_BITS 24                   /* frequency turn          */
-> @@ -607,26 +606,10 @@ static int OPLOpenTable( void )
->          double pom;
->
->          /* allocate dynamic tables */
-> -       if( (TL_TABLE =3D malloc(TL_MAX*2*sizeof(int32_t))) =3D=3D NULL)
-> -               return 0;
-> -       if( (SIN_TABLE =3D malloc(SIN_ENT*4 *sizeof(int32_t *))) =3D=3D N=
-ULL)
-> -       {
-> -               free(TL_TABLE);
-> -               return 0;
-> -       }
-> -       if( (AMS_TABLE =3D malloc(AMS_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
-L)
-> -       {
-> -               free(TL_TABLE);
-> -               free(SIN_TABLE);
-> -               return 0;
-> -       }
-> -       if( (VIB_TABLE =3D malloc(VIB_ENT*2 *sizeof(int32_t))) =3D=3D NUL=
-L)
-> -       {
-> -               free(TL_TABLE);
-> -               free(SIN_TABLE);
-> -               free(AMS_TABLE);
-> -               return 0;
-> -       }
-> +    TL_TABLE =3D g_malloc(TL_MAX * 2 * sizeof(int32_t));
-> +    SIN_TABLE =3D g_malloc(SIN_ENT * 4 * sizeof(int32_t *));
-> +    AMS_TABLE =3D g_malloc(AMS_ENT * 2 * sizeof(int32_t));
-> +    VIB_TABLE =3D g_malloc(VIB_ENT * 2 * sizeof(int32_t));
->       ENV_CURVE =3D g_new(int32_t, 2 * EG_ENT + 1);
->          /* make total level table */
->          for (t =3D 0;t < EG_ENT-1 ;t++){
-> @@ -696,10 +679,10 @@ static int OPLOpenTable( void )
->  static void OPLCloseTable( void )
->  {
->       g_free(ENV_CURVE);
-> -       free(TL_TABLE);
-> -       free(SIN_TABLE);
-> -       free(AMS_TABLE);
-> -       free(VIB_TABLE);
-> +    g_free(TL_TABLE);
-> +    g_free(SIN_TABLE);
-> +    g_free(AMS_TABLE);
-> +    g_free(VIB_TABLE);
->  }
->
->  /* CSM Key Control */
-> @@ -1082,9 +1065,9 @@ FM_OPL *OPLCreate(int clock, int rate)
->          state_size  =3D sizeof(FM_OPL);
->          state_size +=3D sizeof(OPL_CH)*max_ch;
->          /* allocate memory block */
-> -       ptr =3D malloc(state_size);
-> -       if(ptr=3D=3DNULL) return NULL;
-> -       /* clear */
-> +    ptr =3D g_malloc(state_size);
-> +
-> +    /* clear */
->          memset(ptr,0,state_size);
->          OPL        =3D (FM_OPL *)ptr; ptr+=3Dsizeof(FM_OPL);
->          OPL->P_CH  =3D (OPL_CH *)ptr; ptr+=3Dsizeof(OPL_CH)*max_ch;
-> @@ -1128,7 +1111,7 @@ void OPLDestroy(FM_OPL *OPL)
->          }
->  #endif
->          OPL_UnLockTable();
-> -       free(OPL);
-> +    g_free(OPL);
->  }
->
->  /* ----------  Option handlers ----------       */
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
 
