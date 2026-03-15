@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DCACD58B08
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 07:10:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A887D58B08
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 07:10:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1fao-0001kn-2m; Sun, 15 Mar 2026 03:08:54 -0400
+	id 1w1faq-0001mO-56; Sun, 15 Mar 2026 03:08:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w1fal-0001jN-29
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:51 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1w1fao-0001lS-Cq
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:54 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w1faj-0000d1-CX
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:50 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-359f35dfef6so1879021a91.2
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 00:08:48 -0700 (PDT)
+ id 1w1fam-0000dt-K2
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:54 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-35b905e9dc0so367847a91.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 00:08:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773558528; x=1774163328; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773558531; x=1774163331; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WdPki2OUDvv7GbdAB4TVVTocQqYHi/i0OX7XXacQtPQ=;
- b=pjIyScWprMV9V3SyefwdoZk1u+dMQPMD+LW6o6U9tBLBPcNmKtRTx1Re/2KEiPQB6k
- RqTftvhhc0yVxOyD9Pk1EeQoKUP62Eau2rFk3n3DnXYDCsktGlBiKNLmU2G5+jFVjZtN
- S3jLP/aULnLdmVM8GwMoSXZXbCv/2FYoEfL8R6M6oHEDrpAifr1CuVGv+6QU/TjenJlY
- 8sCbuOvZJ2a4ZGD+vQog9Db3G+2Iu3MiCMB7dgk1Pczif/OwVwCn8qccgCJsh3ElJqIh
- e4bFJmLHLSbfXbdY1sCe5Zss9Vhbun+KMSoKSHxXPHe4A0DVHD+wUZF4YKVbwzrQ7w7e
- NY5w==
+ bh=U6HBDS69l4fbTlZmSQgqfg1BjiYPNjySjY8DwVgdsMo=;
+ b=lTHHhYOD4Xpjjkgmy70EQoTXQun3nSau9SXVUe6cUR65svfJ3f+KqUMj4zkMTMxBPP
+ +48/YtHzOcq9gv00/i85589KRGW/TPRrrvR5rPp2kUfYfB9LTYOoFOugAtlClksF9qxv
+ yKVTkJoAGFsG7cfVwbveFNS6mKczLnEHo+hH+89gFSdM47++Nm9K4owvwM4vwPGhtRuf
+ YMTjahWRp3uHZDlepUw+8LBAR9UWtbGEl3X6wlgkDVZqrHP5qQ4RXuXyfbEJoc2yld1s
+ aXZEo5au78eg8oOsOUcj7LbRxUJ75i+ec7D3iL5ucoqlLYPRVPmmS5422AVqha96hmcv
+ ElQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773558528; x=1774163328;
+ d=1e100.net; s=20251104; t=1773558531; x=1774163331;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WdPki2OUDvv7GbdAB4TVVTocQqYHi/i0OX7XXacQtPQ=;
- b=Vrb8bLGFHPQTpUCcp+c5EqeaGR7btYd0gbWhizEGACh9YEv5ooRBp9QOOBSw/hSQFm
- 6lWGlUrOp7Vi7BitbWQ0gXCNMmqZhGwAtXyfw+ZD4iUG1cav2XeD+7mWaOSPc0epbQ+L
- 3C5oJ/mNsiRSzw/R2KCNiPHCvuqtlxJ32KEjAgYgID2TYNJW486578fWUVoFjdT9sgM4
- 6VFXx8a9wJ+XpxpO6k2WFq3f34BEOLuMwT8/GS/uor0OEhQ6ZIYBanYl3wK8qMExU+Um
- OkZsstggUWhcC0Hpx3nzNbNNUhPq/jAboawJsZjLTieC3+kAR3+E63VpXEnz2C+4jmoZ
- 1tiw==
-X-Gm-Message-State: AOJu0YxyLoJzL6alro1iNxoKbYUjljPUGGWOQNkKKhhCKxvobFKCyksE
- EtvO9YpuMvzo4gGfqzcGAi5XVu2Z5AdL2MZclBK094RSpT5EjJCjob2RaA1pAke9g02buPQgDjT
- 5XSxLB4c=
-X-Gm-Gg: ATEYQzzdFduSqwehAoOIcrzUaasR+9PNad4WD/yxjXtgq85RR1memkEhiMjADWiJkai
- 3bl1NV0erNm58SdtlhD3TTkLNlb+TuQbZP5mBTzSJzkl4inO/UoLL4FAvvPGg6wQtUyQXdNAsWJ
- ZhKukTcrOjpYK7ZHVPXci2yQ4J2V+QLwV6dnsOtlOWmSRBuvo8g4x1GFeMpszv/BjLGhTnViIUq
- W6fa2I24O7rkC8FepMDHE1LaCIx9+tXdPGzEsAkzxV4ywalXbXIcsVq7Wsahtzt4jLUjI0793WL
- IDOhYhZ0XiRyBtAWPXnjM+Y/ONjku0u6/eUvDs9hxVX4FU4FlGv7rrYqgqAeYCef8cZr3GP08hF
- upJjo9+lGK4Ymi9NkDsFMccfePmnzuUskKgX14BH2Zzoi/IvzcFn0z0OWBghIKVoqylZDlm07rz
- k/+QdYxtgUHDvF6uS01I1CMC5pFqSestyyGgUZLoxOeVuHscs9biLcAX1PHY6VPkyB3cNbXrO75
- 64=
-X-Received: by 2002:a17:90a:e7d1:b0:359:fecd:1cd3 with SMTP id
- 98e67ed59e1d1-35a2205551fmr7546004a91.23.1773558527895; 
- Sun, 15 Mar 2026 00:08:47 -0700 (PDT)
+ bh=U6HBDS69l4fbTlZmSQgqfg1BjiYPNjySjY8DwVgdsMo=;
+ b=YOQ4RSF6gHB6kQA81GPyLr2MIsE/o9F9bCq64RS59aIRVwsgZJjJAaneLNPzbMp+Hi
+ NVGXLA16s9NaTAxLEkjER+APcF9JAoLHz2ailcPj0t8th1OcSrRjhp+hiCn3TnBdAyxX
+ n98txgmOOObZktpH4uUeqKqVh8iUsa8QyLxhrA6pRezOzOxcvdrkSWbS5S3LHFstTX3f
+ 47srsV0+Y9atWkAYKGXCqrJ5kfVKgd/QXdN1oOGU5hi6B0mCmMGZhfOfXn4Fay2ugwnP
+ O/TZow5KH2XhDo2wI5NowJhpDJZgunCllCrWdBG+IIbVgqc902hbXQXYLmwrbWi/BR8l
+ u+7g==
+X-Gm-Message-State: AOJu0Yy8yE/u16761yvlbLV0r/IhKsP6a7f7EmOPo+AqepRNGkaBKNAE
+ Lc+k3/e/Lj8rxOuEUYR5jbDpAOEVoxEiJBNhp0wn6nKxY/lWLrEryaGBRNTfhH47qCW+cyHRYKE
+ /CAKiQls=
+X-Gm-Gg: ATEYQzwAp6fvalv7lSqRKSIBLWRz5tUTl5SvElQUM2pi1xfihKerlQSwtrGw0s6wiaJ
+ YkDaFb8WCbrAUj6Ogaope4a0Sn2gAr9q7f5MY1jdGt8Nv6wSALRFnxe5U/BovLPR/jnQhJGj0gR
+ DJxydpoGfcVx00CzuSvzHJR5Ya16+rMVfBJ2QNNYuyx1hl/yino7K3KESgOWBmd1KBh0Juva0qc
+ BoAyCRczK1tnqBlufRulZC5sXPbKmdOT3ZvnFKl35ZgGoB68gTKbpSK+gWPm16bbkQqWgpCn7bD
+ 32IJ4Dm66nNNm2UrH2/OL/s54mkJ/65u8Ea/qs6cbx24uW4rhmg9W7fS+6KY6ZIW7RByQ0kSr3g
+ wRvtm1qv9Fyc3oPg3mzndzYG33S2djW6iG4Uq4twV0+F3C3GDDXig0kUONImMHwkPj7orwTx76e
+ SibgXuaUajZI8Yi+2asoZusjc3WIKOCU7+hjPUPc7kYo1gxXHh+6KjPvvt9P1QpVIReS2yutxMd
+ UY=
+X-Received: by 2002:a17:90a:d407:b0:359:1130:1047 with SMTP id
+ 98e67ed59e1d1-35a21fdd3acmr7857183a91.17.1773558531025; 
+ Sun, 15 Mar 2026 00:08:51 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35a24acecadsm3468233a91.2.2026.03.15.00.08.46
+ 98e67ed59e1d1-35a24acecadsm3468233a91.2.2026.03.15.00.08.49
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Mar 2026 00:08:47 -0700 (PDT)
+ Sun, 15 Mar 2026 00:08:50 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -73,17 +73,18 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  qemu-ppc@nongnu.org, eric.auger@redhat.com
-Subject: [PATCH v3 5/8] hw/vfio/pci.c: eradicate CONFIG_KVM
-Date: Sun, 15 Mar 2026 00:08:31 -0700
-Message-ID: <20260315070834.198331-6-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 7/8] hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
+ hw/vfio/kvm-spapr.c
+Date: Sun, 15 Mar 2026 00:08:33 -0700
+Message-ID: <20260315070834.198331-8-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
 References: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,134 +107,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We just need to add kvm_enabled() guard when calling concerned
-functions, but no need to extract those kvm functions since they are not
-using any kvm specific types that would not be visible at compilation
-time.
+Since this function needs kvm specific types, we need to extract in
+another file and link it only for KVM builds.
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/vfio/pci.c | 28 ++++++++++------------------
- 1 file changed, 10 insertions(+), 18 deletions(-)
+ hw/vfio/kvm-spapr.h | 12 ++++++++++++
+ hw/vfio/kvm-spapr.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/kvm-stubs.c |  8 ++++++++
+ hw/vfio/spapr.c     | 30 ++++-------------------------
+ hw/vfio/meson.build |  1 +
+ 5 files changed, 72 insertions(+), 26 deletions(-)
+ create mode 100644 hw/vfio/kvm-spapr.h
+ create mode 100644 hw/vfio/kvm-spapr.c
 
-diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
-index df617f1fe46..811e5001de5 100644
---- a/hw/vfio/pci.c
-+++ b/hw/vfio/pci.c
-@@ -152,7 +152,6 @@ void vfio_pci_intx_eoi(VFIODevice *vbasedev)
+diff --git a/hw/vfio/kvm-spapr.h b/hw/vfio/kvm-spapr.h
+new file mode 100644
+index 00000000000..b1f68c686a7
+--- /dev/null
++++ b/hw/vfio/kvm-spapr.h
+@@ -0,0 +1,12 @@
++/*
++ * VFIO sPAPR KVM specific functions
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "hw/vfio/vfio-container.h"
++#include "qapi/error.h"
++
++bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
++                               MemoryRegionSection *section,
++                               Error **errp);
+diff --git a/hw/vfio/kvm-spapr.c b/hw/vfio/kvm-spapr.c
+new file mode 100644
+index 00000000000..ad71c5a85e2
+--- /dev/null
++++ b/hw/vfio/kvm-spapr.c
+@@ -0,0 +1,47 @@
++/*
++ * VFIO sPAPR KVM specific functions
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include <sys/ioctl.h>
++#include <linux/vfio.h>
++#include <linux/kvm.h>
++
++#include "hw/vfio/vfio-container-legacy.h"
++#include "hw/vfio/kvm-spapr.h"
++#include "qapi/error.h"
++#include "trace.h"
++#include "vfio-helpers.h"
++
++bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
++                               MemoryRegionSection *section,
++                               Error **errp)
++{
++    VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
++    VFIOGroup *group;
++    IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
++    struct kvm_vfio_spapr_tce param;
++    struct kvm_device_attr attr = {
++        .group = KVM_DEV_VFIO_GROUP,
++        .attr = KVM_DEV_VFIO_GROUP_SET_SPAPR_TCE,
++        .addr = (uint64_t)(unsigned long)&param,
++    };
++
++    if (!memory_region_iommu_get_attr(iommu_mr, IOMMU_ATTR_SPAPR_TCE_FD,
++                &param.tablefd)) {
++        QLIST_FOREACH(group, &container->group_list, container_next) {
++            param.groupfd = group->fd;
++            if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
++                error_setg_errno(errp, errno,
++                        "vfio: failed GROUP_SET_SPAPR_TCE for "
++                        "KVM VFIO device %d and group fd %d",
++                        param.tablefd, param.groupfd);
++                return false;
++            }
++            trace_vfio_spapr_group_attach(param.groupfd, param.tablefd);
++        }
++    }
++    return true;
++}
+diff --git a/hw/vfio/kvm-stubs.c b/hw/vfio/kvm-stubs.c
+index 5a489d1b711..78c51b99155 100644
+--- a/hw/vfio/kvm-stubs.c
++++ b/hw/vfio/kvm-stubs.c
+@@ -6,6 +6,7 @@
  
- static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+ #include "qemu/osdep.h"
+ 
++#include "hw/vfio/kvm-spapr.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "qapi/error.h"
+ #include "vfio-helpers.h"
+@@ -24,3 +25,10 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
  {
--#ifdef CONFIG_KVM
-     PCIDevice *pdev = PCI_DEVICE(vdev);
-     int irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
- 
-@@ -206,14 +205,10 @@ fail:
-     qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
-     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
-     return false;
--#else
--    return true;
--#endif
+     return 0;
  }
++
++bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
++                               MemoryRegionSection *section,
++                               Error **errp)
++{
++    g_assert_not_reached();
++}
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index a9f093c3570..42690e4323d 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -16,6 +16,7 @@
+ #include "system/address-spaces.h"
  
- static bool vfio_cpr_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
- {
+ #include "hw/vfio/vfio-container-legacy.h"
++#include "hw/vfio/kvm-spapr.h"
+ #include "hw/core/hw-error.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+@@ -406,33 +407,10 @@ vfio_spapr_container_add_section_window(VFIOContainer *bcontainer,
+     vfio_host_win_add(scontainer, section->offset_within_address_space,
+                       section->offset_within_address_space +
+                       int128_get64(section->size) - 1, pgsize);
 -#ifdef CONFIG_KVM
-     if (vdev->no_kvm_intx || !kvm_irqfds_enabled() ||
-         vdev->intx.route.mode != PCI_INTX_ENABLED ||
-         !kvm_resamplefds_enabled()) {
-@@ -236,14 +231,10 @@ static bool vfio_cpr_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
-     vdev->intx.kvm_accel = true;
-     trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
+-    if (kvm_enabled()) {
+-        VFIOGroup *group;
+-        IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+-        struct kvm_vfio_spapr_tce param;
+-        struct kvm_device_attr attr = {
+-            .group = KVM_DEV_VFIO_GROUP,
+-            .attr = KVM_DEV_VFIO_GROUP_SET_SPAPR_TCE,
+-            .addr = (uint64_t)(unsigned long)&param,
+-        };
+-
+-        if (!memory_region_iommu_get_attr(iommu_mr, IOMMU_ATTR_SPAPR_TCE_FD,
+-                                          &param.tablefd)) {
+-            QLIST_FOREACH(group, &container->group_list, container_next) {
+-                param.groupfd = group->fd;
+-                if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
+-                    error_setg_errno(errp, errno,
+-                                     "vfio: failed GROUP_SET_SPAPR_TCE for "
+-                                     "KVM VFIO device %d and group fd %d",
+-                                     param.tablefd, param.groupfd);
+-                    return false;
+-                }
+-                trace_vfio_spapr_group_attach(param.groupfd, param.tablefd);
+-            }
+-        }
++    if (kvm_enabled() && !vfio_spapr_kvm_attach_tce(bcontainer, section, errp)) {
++        return false;
+     }
+-#endif
++
      return true;
--#else
--    return true;
--#endif
  }
  
- static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
- {
--#ifdef CONFIG_KVM
-     PCIDevice *pdev = PCI_DEVICE(vdev);
- 
-     if (!vdev->intx.kvm_accel) {
-@@ -277,7 +268,6 @@ static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
-     vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
- 
-     trace_vfio_intx_disable_kvm(vdev->vbasedev.name);
--#endif
- }
- 
- static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
-@@ -287,7 +277,9 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
-     trace_vfio_intx_update(vdev->vbasedev.name,
-                            vdev->intx.route.irq, route->irq);
- 
--    vfio_intx_disable_kvm(vdev);
-+    if (kvm_enabled()) {
-+        vfio_intx_disable_kvm(vdev);
-+    }
- 
-     vdev->intx.route = *route;
- 
-@@ -295,7 +287,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
-         return;
-     }
- 
--    if (!vfio_intx_enable_kvm(vdev, &err)) {
-+    if (kvm_enabled() && !vfio_intx_enable_kvm(vdev, &err)) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
- 
-@@ -350,16 +342,14 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-     vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
-     pci_config_set_interrupt_pin(pdev->config, pin);
- 
--#ifdef CONFIG_KVM
-     /*
-      * Only conditional to avoid generating error messages on platforms
-      * where we won't actually use the result anyway.
-      */
--    if (kvm_irqfds_enabled() && kvm_resamplefds_enabled()) {
-+    if (kvm_enabled() && kvm_irqfds_enabled() && kvm_resamplefds_enabled()) {
-         vdev->intx.route = pci_device_route_intx_to_irq(pdev,
-                                                         vdev->intx.pin);
-     }
--#endif
- 
-     if (!vfio_notifier_init(vdev, &vdev->intx.interrupt, "intx-interrupt", 0,
-                             errp)) {
-@@ -370,7 +360,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
- 
- 
-     if (cpr_is_incoming()) {
--        if (!vfio_cpr_intx_enable_kvm(vdev, &err)) {
-+        if (kvm_enabled() && !vfio_cpr_intx_enable_kvm(vdev, &err)) {
-             warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-         }
-         goto skip_signaling;
-@@ -383,7 +373,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
-         return false;
-     }
- 
--    if (!vfio_intx_enable_kvm(vdev, &err)) {
-+    if (kvm_enabled() && !vfio_intx_enable_kvm(vdev, &err)) {
-         warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
-     }
- 
-@@ -400,7 +390,9 @@ static void vfio_intx_disable(VFIOPCIDevice *vdev)
-     int fd;
- 
-     timer_del(vdev->intx.mmap_timer);
--    vfio_intx_disable_kvm(vdev);
-+    if (kvm_enabled()) {
-+        vfio_intx_disable_kvm(vdev);
-+    }
-     vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
-     vdev->intx.pending = false;
-     pci_irq_deassert(pdev);
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index 6c00a7f51bb..bab5f2b7f15 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -10,6 +10,7 @@ vfio_ss.add(files(
+ vfio_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-helpers.c'))
+ stub_ss.add(files('kvm-stubs.c'))
+ vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
++vfio_ss.add(when: ['CONFIG_KVM', 'CONFIG_PSERIES'], if_true: files('kvm-spapr.c'))
+ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+   'pci-quirks.c',
+   'pci.c',
 -- 
 2.47.3
 
