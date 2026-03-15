@@ -4,54 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8CD18F3026D
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 15:15:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7D0F3026D
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 16:39:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1nB5-0003St-3f; Sun, 15 Mar 2026 11:14:52 -0400
+	id 1w1oUl-0006EY-Gy; Sun, 15 Mar 2026 12:39:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1w1nB0-0003SI-2a
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 11:14:47 -0400
-Received: from out-178.mta0.migadu.com ([91.218.175.178])
+ id 1w1oUh-0006EE-Jg
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:39:12 -0400
+Received: from out-182.mta1.migadu.com ([95.215.58.182])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1w1nAx-0002bA-Ut
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 11:14:45 -0400
-Message-ID: <d99e9f3d-509f-4531-b45a-db33902778f0@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1773587670;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=H/k0GPNFOX4+5q78bq+x3cMF5fIp0tLc6Mz6a3IPfJE=;
- b=ZgRmwAnIruydIJCQMlqEWT8chSA9LWp4+gX8GNClJQzoG+N7dYTO4T/GM+a+0EXfiNqyPW
- NRtjH5x8GJW/cjjxC0enRpUvSiOiPyIZL+fRv46ehx8h8kmywr9Go6AirYhTSKb0B7k1tZ
- fVji9i03PfLkDMsVRMci/PUrvpEqKAk=
-Date: Sun, 15 Mar 2026 23:14:22 +0800
-MIME-Version: 1.0
-Subject: Re: [PATCH v4 08/84] target/arm: Skip AF and DB updates for
- AccessType_AT
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>
-References: <20250830054128.448363-1-richard.henderson@linaro.org>
- <20250830054128.448363-9-richard.henderson@linaro.org>
- <c805cd6f-e69c-4cf1-8773-0a45bfb677f8@linux.dev>
- <a865e4fc-04a9-42d3-9793-f1d7242565b0@linaro.org>
-Content-Language: en-US
+ id 1w1oUe-0003kR-BC
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:39:11 -0400
 X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
  include these headers.
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1773592744;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=qG1cFCLchytQdDL6JPUlWv/uaHhSzGiIiaOFboPuR0w=;
+ b=eTEy4Er1Y6j2jkiqvy6A1bpHihvRT0yp2DIgTFNwRHAVRIBgzuw9EcZsA7QXYDiZ7+ORQ7
+ tdDqn/yJaKxijKj/pe7BtudtbcC2zgnaFO3HHuhEJfi22+7cOpP8ZJ7apck6PwAE1SJldY
+ GQJkNK3J7yJbhsxeq5T+CGBu1Q48VE0=
 From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <a865e4fc-04a9-42d3-9793-f1d7242565b0@linaro.org>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: agraf@csgraf.de, peter.maydell@linaro.org,
+ Zenghui Yu <zenghui.yu@linux.dev>
+Subject: [PATCH rfc] hvf: arm: Inject SEA when executing insn in invalid
+ memory range
+Date: Mon, 16 Mar 2026 00:38:40 +0800
+Message-ID: <20260315163840.30741-1-zenghui.yu@linux.dev>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=91.218.175.178; envelope-from=zenghui.yu@linux.dev;
- helo=out-178.mta0.migadu.com
+Received-SPF: pass client-ip=95.215.58.182; envelope-from=zenghui.yu@linux.dev;
+ helo=out-182.mta1.migadu.com
 X-Spam_score_int: -10
 X-Spam_score: -1.1
 X-Spam_bar: -
@@ -75,43 +68,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Richard,
+It seems that hvf doesn't deal with the abort generated when guest tries to
+execute instructions outside of the valid physical memory range, for
+unknown reason. The abort is forwarded to userspace and QEMU doesn't handle
+it either, which ends up with faulting on the same instruction infinitely.
 
-On 2/27/26 11:01 AM, Richard Henderson wrote:
-> On 2/27/26 04:12, Zenghui Yu wrote:
-> > > +    /*
-> > > +     * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
-> > > +     * and it is IMPLEMENTATION DEFINED whether AF is updated
-> > > +     * (AArch64.SetAccessFlag; qemu chooses to not update).
-> > > +     */
-> > > +    if (likely(!ptw->in_at)) {
-> > >           /*
-> > >            * Access flag.
-> > >            * If HA is enabled, prepare to update the descriptor below.
-> >
-> > |            * Otherwise, pass the access fault on to software.
-> > |            */
-> > |           if (!(descriptor & (1 << 10))) {
-> > |               if (param.ha) {
-> > |                   new_descriptor |= 1 << 10; /* AF */
-> > |               } else {
-> > |                   fi->type = ARMFault_AccessFlag;
-> > |                   goto do_fault;
-> >
-> > This also skips the access flag fault which could be generated by an AT
-> > instruction. Is this an expected change?
-> 
-> Yes.  As mentioned right there in the comment, the access flag fault is
-> IMPLEMENTATION DEFINED.
+This was noticed by the kvm-unit-tests/selftest-vectors-kernel failure:
 
-The comment says that "it is IMPLEMENTATION DEFINED whether AF is
-updated" which matches R_XQSMX. I'm fine with it.
+  timeout -k 1s --foreground 90s /opt/homebrew/bin/qemu-system-aarch64 \
+    -nodefaults -machine virt -accel hvf -cpu host \
+    -device virtio-serial-device -device virtconsole,chardev=ctd \
+    -chardev testdev,id=ctd -device pci-testdev -display none \
+    -serial stdio -kernel arm/selftest.flat -smp 1 -append vectors-kernel
 
-I was concerning about whether an access flag fault should be generated
-by the AT instruction, if !param.ha. Could you please point out the
-description in the specification regarding "the access flag fault is
-IMPLEMENTATION DEFINED"?
+  PASS: selftest: vectors-kernel: und
+  PASS: selftest: vectors-kernel: svc
+  qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
+  qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
+  qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
+  [...]
 
-Thanks,
-Zenghui
+It's apparent that the guest is braindead and it's unsure what prevents hvf
+from injecting an abort directly in that case. Try to deal with the insane
+guest in QEMU by injecting an SEA back into it in the EC_INSNABORT
+emulation path.
+
+Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+---
+ target/arm/hvf/hvf.c | 23 +++++++++++++++++++++++
+ 1 file changed, 23 insertions(+)
+
+diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+index aabc7d32c1..54d6ea469c 100644
+--- a/target/arm/hvf/hvf.c
++++ b/target/arm/hvf/hvf.c
+@@ -2332,9 +2332,32 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+         bool ea = (syndrome >> 9) & 1;
+         bool s1ptw = (syndrome >> 7) & 1;
+         uint32_t ifsc = (syndrome >> 0) & 0x3f;
++        uint64_t ipa = excp->physical_address;
++        AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
++        hwaddr xlat;
++        MemoryRegion *mr;
++
++        cpu_synchronize_state(cpu);
+ 
+         trace_hvf_insn_abort(env->pc, set, fnv, ea, s1ptw, ifsc);
+ 
++        /*
++         * TODO: If s1ptw, this is an error in the guest os page tables.
++         * Inject the exception into the guest.
++         */
++        assert(!s1ptw);
++
++        mr = address_space_translate(as, ipa, &xlat, NULL, false,
++                                     MEMTXATTRS_UNSPECIFIED);
++        if (unlikely(!memory_region_is_ram(mr))) {
++            uint32_t syn;
++
++            /* inject an SEA back into the guest */
++            syn = syn_insn_abort(arm_current_el(env) == 1, ea, false, 0x10);
++            hvf_raise_exception(cpu, EXCP_PREFETCH_ABORT, syn, 1);
++            break;
++        }
++
+         /* fall through */
+     }
+     default:
+-- 
+2.53.0
+
 
