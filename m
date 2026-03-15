@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 697DCF30282
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 93043F3026E
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 20:18:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1ruF-0006N8-14; Sun, 15 Mar 2026 16:17:49 -0400
+	id 1w1ru5-0006LV-HU; Sun, 15 Mar 2026 16:17:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w1rtz-0006Kj-M0
+ id 1w1rty-0006Ka-2j
  for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:31 -0400
 Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w1rtT-0002LX-Jt
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:29 -0400
-Received: from mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net
- [IPv6:2a02:6b8:c2d:3530:0:640:eca4:0])
- by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 173CAC015D;
- Sun, 15 Mar 2026 23:16:58 +0300 (MSK)
+ id 1w1rtT-0002LC-9t
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:02 -0400
+Received: from mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net
+ [IPv6:2a02:6b8:c1f:3a87:0:640:845c:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 03869C015B;
+ Sun, 15 Mar 2026 23:16:51 +0300 (MSK)
 Received: from localhost (unknown [2a02:6bf:8080:b49::1:d])
- by mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id uGRM4I1ATSw0-x7KRZieK; Sun, 15 Mar 2026 23:16:57 +0300
+ by mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id nGRDD91AWKo0-yIvAEkCP; Sun, 15 Mar 2026 23:16:50 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1773605817;
- bh=xju9CfSPT1DfYBW2oFrwhc0C2Ax+iiriDHMYm76fAYo=;
+ s=default; t=1773605810;
+ bh=Yjyr/X5WOlNMkf+3wNCMMXzktFwXFLTQOlDO4YuexnY=;
  h=Cc:Message-Id:References:Date:In-Reply-To:Subject:To:From;
- b=fXMM/MQjWlcqP17HrrmPTqqPMvhyyZs9gQigs6Elz8sT7Z9ZyTQUFPDeEzaQ5tOT/
- KP5t5EYGYfNT0AJeodvkAj6XCYiChEvIOA2PWryuHUy43U6MEu1e98UdcJPR9Nhwn/
- LWIh7UNclqLU025maLwyc/LSdqyi/XQggZqRRrks=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-83.vla.yp-c.yandex.net;
+ b=KcYI4m9gqAc6dsoofsrU9JwunEFAbHN9OL4Y4V9/EnlkL07s/6HUl0aKqesXBmzw0
+ GnTZzoZjw9xPcifl1T4E42hOIXUm/vX87w1ZxyG6X7HY04uHwjfPN0zi944coPGlHS
+ 6L3McF1N1mz08/aMEz6GBloSIPf3Vg2Y8a6im6BQ=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-69.vla.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
 To: qemu-devel@nongnu.org
@@ -55,10 +55,9 @@ Cc: Eric Blake <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Sergei Heifetz <heifetz@yandex-team.com>
-Subject: [PATCH v3 04/11] hw/audio/pcspk: change PCSPK behaviour with
- --disable-audio
-Date: Mon, 16 Mar 2026 01:16:39 +0500
-Message-Id: <20260315201646.96862-5-heifetz@yandex-team.com>
+Subject: [PATCH v3 01/11] audio: add `audio` build option for meson and Kconfig
+Date: Mon, 16 Mar 2026 01:16:36 +0500
+Message-Id: <20260315201646.96862-2-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260315201646.96862-1-heifetz@yandex-team.com>
 References: <20260315201646.96862-1-heifetz@yandex-team.com>
@@ -89,106 +88,96 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-PCSPK (PC Speaker) is an embedded audio device. We don't want it to use audio
-when QEMU is configured with `--disable-audio`. This is achieved with minimal,
-non-invasive changes to the code.
+This patch adds the `audio` option to meson_options.txt. It is
+propagated into Kconfig as AUDIO. It is enabled by default.
+The corresponding `--disable-audio` and `--enable-audio` options
+for `configure` are also added.
 
-In essence, the changes ensure that PCSPK does not have a corresponding
-audio backend, while functioning the same way in non-audio aspects.
+For now, this option does nothing. In subsequent patches, it will
+gradually disable audio in different places. The final goal is to stop
+building sources from `audio/` and `hw/audio/` and other audio-related
+files (except for some stubs). Note that this intent is different from
+`-audio none`, which mutes audio but still compiles the audio subsystem.
 
 Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/audio/pcspk.c | 12 +++++++++++-
- hw/i386/pc.c     |  2 ++
- 2 files changed, 13 insertions(+), 1 deletion(-)
+ Kconfig.host                  | 3 +++
+ meson.build                   | 3 +++
+ meson_options.txt             | 3 +++
+ scripts/meson-buildoptions.sh | 3 +++
+ 4 files changed, 12 insertions(+)
 
-diff --git a/hw/audio/pcspk.c b/hw/audio/pcspk.c
-index 6b826507ce3..54e18822651 100644
---- a/hw/audio/pcspk.c
-+++ b/hw/audio/pcspk.c
-@@ -48,17 +48,20 @@ struct PCSpkState {
+diff --git a/Kconfig.host b/Kconfig.host
+index 933425c74b4..ec129aa4fc0 100644
+--- a/Kconfig.host
++++ b/Kconfig.host
+@@ -29,6 +29,9 @@ config IVSHMEM
+ config TPM
+     bool
  
-     MemoryRegion ioport;
-     uint32_t iobase;
-+    PITCommonState *pit;
-+#ifdef CONFIG_AUDIO
-     uint8_t sample_buf[PCSPK_BUF_LEN];
-     AudioBackend *audio_be;
-     SWVoiceOut *voice;
--    PITCommonState *pit;
-     unsigned int pit_count;
-     unsigned int samples;
-     unsigned int play_pos;
-+#endif
-     uint8_t data_on;
-     uint8_t dummy_refresh_clock;
- };
++config AUDIO
++    bool
++
+ config FDT
+     bool
  
-+#ifdef CONFIG_AUDIO
- static const char *s_spk = "pcspk";
+diff --git a/meson.build b/meson.build
+index ed82247111e..d05533488f9 100644
+--- a/meson.build
++++ b/meson.build
+@@ -68,6 +68,8 @@ foreach target : target_dirs
+ endforeach
+ have_user = have_linux_user or have_bsd_user
  
- static inline void generate_samples(PCSpkState *s)
-@@ -130,6 +133,7 @@ static int pcspk_audio_init(PCSpkState *s)
++have_audio = get_option('audio').disable_auto_if(not have_system).allowed()
++
+ ############
+ # Programs #
+ ############
+@@ -3277,6 +3279,7 @@ disassemblers = {
+ have_ivshmem = config_host_data.get('CONFIG_EVENTFD')
+ host_kconfig = \
+   (get_option('fuzzing') ? ['CONFIG_FUZZ=y'] : []) + \
++  (have_audio ? ['CONFIG_AUDIO=y'] : []) + \
+   (have_tpm ? ['CONFIG_TPM=y'] : []) + \
+   (pixman.found() ? ['CONFIG_PIXMAN=y'] : []) + \
+   (spice.found() ? ['CONFIG_SPICE=y'] : []) + \
+diff --git a/meson_options.txt b/meson_options.txt
+index 31d5916cfce..d22386b4c15 100644
+--- a/meson_options.txt
++++ b/meson_options.txt
+@@ -71,6 +71,9 @@ option('malloc_trim', type : 'feature', value : 'auto',
+ option('malloc', type : 'combo', choices : ['system', 'tcmalloc', 'jemalloc'],
+        value: 'system', description: 'choose memory allocator to use')
  
-     return 0;
- }
-+#endif
- 
- static uint64_t pcspk_io_read(void *opaque, hwaddr addr,
-                               unsigned size)
-@@ -160,11 +164,13 @@ static void pcspk_io_write(void *opaque, hwaddr addr, uint64_t val,
- 
-     s->data_on = (val >> 1) & 1;
-     pit_set_gate(s->pit, 2, gate);
-+#ifdef CONFIG_AUDIO
-     if (s->voice) {
-         if (gate) /* restart */
-             s->play_pos = 0;
-         audio_be_set_active_out(s->audio_be, s->voice, gate & s->data_on);
-     }
-+#endif
- }
- 
- static const MemoryRegionOps pcspk_io_ops = {
-@@ -195,10 +201,12 @@ static void pcspk_realizefn(DeviceState *dev, Error **errp)
- 
-     isa_register_ioport(isadev, &s->ioport, s->iobase);
- 
-+#ifdef CONFIG_AUDIO
-     if (s->audio_be && audio_be_check(&s->audio_be, errp)) {
-         pcspk_audio_init(s);
-         return;
-     }
-+#endif
- }
- 
- static const VMStateDescription vmstate_spk = {
-@@ -213,7 +221,9 @@ static const VMStateDescription vmstate_spk = {
- };
- 
- static const Property pcspk_properties[] = {
-+#ifdef CONFIG_AUDIO
-     DEFINE_AUDIO_PROPERTIES(PCSpkState, audio_be),
-+#endif
-     DEFINE_PROP_UINT32("iobase", PCSpkState, iobase,  0x61),
-     DEFINE_PROP_LINK("pit", PCSpkState, pit, TYPE_PIT_COMMON, PITCommonState *),
- };
-diff --git a/hw/i386/pc.c b/hw/i386/pc.c
-index addf602da08..8a4adee78e9 100644
---- a/hw/i386/pc.c
-+++ b/hw/i386/pc.c
-@@ -1599,8 +1599,10 @@ static void pc_machine_initfn(Object *obj)
- 
-     pc_system_flash_create(pcms);
-     pcms->pcspk = isa_new(TYPE_PC_SPEAKER);
-+#ifdef CONFIG_AUDIO
-     object_property_add_alias(OBJECT(pcms), "pcspk-audiodev",
-                               OBJECT(pcms->pcspk), "audiodev");
-+#endif
-     if (pcmc->pci_enabled) {
-         cxl_machine_init(obj, &pcms->cxl_devices_state);
-     }
++option('audio', type: 'feature', value: 'auto',
++       description: 'Audio support')
++
+ option('kvm', type: 'feature', value: 'auto',
+        description: 'KVM acceleration support')
+ option('mshv', type: 'feature', value: 'auto',
+diff --git a/scripts/meson-buildoptions.sh b/scripts/meson-buildoptions.sh
+index ca5b113119a..05c55d2e70f 100644
+--- a/scripts/meson-buildoptions.sh
++++ b/scripts/meson-buildoptions.sh
+@@ -96,6 +96,7 @@ meson_options_help() {
+   printf "%s\n" '  af-xdp          AF_XDP network backend support'
+   printf "%s\n" '  alsa            ALSA sound support'
+   printf "%s\n" '  attr            attr/xattr support'
++  printf "%s\n" '  audio           Audio support'
+   printf "%s\n" '  auth-pam        PAM access control'
+   printf "%s\n" '  blkio           libblkio block device driver'
+   printf "%s\n" '  bochs           bochs image format support'
+@@ -243,6 +244,8 @@ _meson_option_parse() {
+     --disable-asan) printf "%s" -Dasan=false ;;
+     --enable-attr) printf "%s" -Dattr=enabled ;;
+     --disable-attr) printf "%s" -Dattr=disabled ;;
++    --enable-audio) printf "%s" -Daudio=enabled ;;
++    --disable-audio) printf "%s" -Daudio=disabled ;;
+     --audio-drv-list=*) quote_sh "-Daudio_drv_list=$2" ;;
+     --enable-auth-pam) printf "%s" -Dauth_pam=enabled ;;
+     --disable-auth-pam) printf "%s" -Dauth_pam=disabled ;;
 -- 
 2.34.1
 
