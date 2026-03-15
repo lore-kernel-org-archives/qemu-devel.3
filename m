@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0941DF30282
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 20:20:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AE3CF30282
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 20:20:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1ruN-0006Oh-JQ; Sun, 15 Mar 2026 16:17:55 -0400
+	id 1w1ruN-0006OZ-1J; Sun, 15 Mar 2026 16:17:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w1ru8-0006Lr-BJ
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:41 -0400
-Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
+ id 1w1ru8-0006Lq-B9
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:43 -0400
+Received: from forwardcorp1d.mail.yandex.net ([178.154.239.200])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <heifetz@yandex-team.com>)
- id 1w1ru1-0002M9-Bk
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:37 -0400
-Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
- [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id C286F80637;
- Sun, 15 Mar 2026 23:17:05 +0300 (MSK)
+ id 1w1ru1-0002Lp-B4
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 16:17:36 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:a189:0:640:4da6:0])
+ by forwardcorp1d.mail.yandex.net (Yandex) with ESMTPS id 4B6FA8079D;
+ Sun, 15 Mar 2026 23:17:01 +0300 (MSK)
 Received: from localhost (unknown [2a02:6bf:8080:b49::1:d])
- by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id 2HRSIO1AAGk0-IkLxsxvz; Sun, 15 Mar 2026 23:17:05 +0300
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id wGRvdA1ABOs0-gpYltWPR; Sun, 15 Mar 2026 23:17:00 +0300
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.com;
- s=default; t=1773605825;
- bh=aeH+/uECi/aL57+2Bx/cCwTgTppVnXy/AcoFFTVljyA=;
+ s=default; t=1773605820;
+ bh=5nEpBPf/MP5gIN6vJYDPRg5uxeJQt+2s1OvZINfU+Yc=;
  h=Cc:Message-Id:References:Date:In-Reply-To:Subject:To:From;
- b=FUB0MARdzqqvW3hsh+WrXEy0YRLlyZ8tW/KCX9eXJDuWqvylhAIQWatZojn55FEhs
- nrU1wNwsB6Jlwd/iMR9jGM2JeCOWNE7+LBk9pzz30ujx1aVvMofGWO8DDT8wEpOn9+
- ccF5qXX2GRB0sKnJ+L4zQYP0C8HTDHueeDpzgudA=
-Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ b=niOuSb8E8LIfHls6EP0TJ/wKiPZvgJGS5SPDnrhiIThSF7ltzU5gfzRNaAqytxAwC
+ H1WBQ/V9FW/pYZfKRfrXF7XJxqTCMalSz89UZXbNvarSDmS6lgoV+5h6J/iy7nCr3c
+ TU7LhiJiT2Tcqa/4PzzAtgfZaW1fty5eocbcutrI=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.com
 From: Sergei Heifetz <heifetz@yandex-team.com>
 To: qemu-devel@nongnu.org
@@ -55,18 +55,18 @@ Cc: Eric Blake <eblake@redhat.com>, "Michael S. Tsirkin" <mst@redhat.com>,
  =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
  Laurent Vivier <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>,
  Sergei Heifetz <heifetz@yandex-team.com>
-Subject: [PATCH v3 07/11] ui/dbus: run without Audio interface when audio is
- disabled
-Date: Mon, 16 Mar 2026 01:16:42 +0500
-Message-Id: <20260315201646.96862-8-heifetz@yandex-team.com>
+Subject: [PATCH v3 05/11] Kconfig: add AUDIO dependency to audio-related
+ devices
+Date: Mon, 16 Mar 2026 01:16:40 +0500
+Message-Id: <20260315201646.96862-6-heifetz@yandex-team.com>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260315201646.96862-1-heifetz@yandex-team.com>
 References: <20260315201646.96862-1-heifetz@yandex-team.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=178.154.239.136;
- envelope-from=heifetz@yandex-team.com; helo=forwardcorp1b.mail.yandex.net
+Received-SPF: pass client-ip=178.154.239.200;
+ envelope-from=heifetz@yandex-team.com; helo=forwardcorp1d.mail.yandex.net
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -89,105 +89,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-D-Bus display can be used even when QEMU is configured with
-`--disable-audio`. In that case, audio interface will not be available
-on `/org/qemu/Display1/Audio`.
+The idea of the `--disable-audio` option is to stop building audio-related
+source files. Although this is not yet implemented, we can already make
+the existing AUDIO Kconfig option a dependency for a number of devices so
+that the build does not break when we remove `audio/` and other sources.
 
-(The current handling of the situation when audio is enabled but
-no D-Bus-compatible audio backend is available is different and
-hasn’t been changed.)
+Note that some machines have embedded audio devices and therefore cannot
+be used with `--disable-audio` at all. `-audio none` should be used for
+such machines if audio needs to be muted.
+
+The only device that is purposefully not included in this patch is PCSPK
+(PC speaker), because its code has already been modified to work with
+`--disable-audio`.
 
 Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+Reviewed-by: Thomas Huth <thuth@redhat.com>
+Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- qapi/ui.json    | 2 +-
- qemu-options.hx | 4 ++++
- ui/dbus.c       | 8 ++++++++
- 3 files changed, 13 insertions(+), 1 deletion(-)
+ hw/audio/Kconfig | 21 ++++++++++++---------
+ hw/usb/Kconfig   |  2 +-
+ 2 files changed, 13 insertions(+), 10 deletions(-)
 
-diff --git a/qapi/ui.json b/qapi/ui.json
-index e3da77632a8..62eb05c6091 100644
---- a/qapi/ui.json
-+++ b/qapi/ui.json
-@@ -1385,7 +1385,7 @@
-   'data'    : { '*rendernode' : 'str',
-                 '*addr': 'str',
-                 '*p2p': 'bool',
--                '*audiodev': 'str' } }
-+                '*audiodev': { 'type': 'str', 'if': 'CONFIG_AUDIO' } } }
+diff --git a/hw/audio/Kconfig b/hw/audio/Kconfig
+index daf060e1be0..0479818e3f5 100644
+--- a/hw/audio/Kconfig
++++ b/hw/audio/Kconfig
+@@ -1,37 +1,37 @@
+ config SB16
+     bool
+     default y
+-    depends on ISA_BUS
++    depends on ISA_BUS && AUDIO
  
- ##
- # @DisplayGLMode:
-diff --git a/qemu-options.hx b/qemu-options.hx
-index 29dc865820a..20d15c0004f 100644
---- a/qemu-options.hx
-+++ b/qemu-options.hx
-@@ -2232,6 +2232,10 @@ SRST
-         If no audio backend is specified and the dbus display backend is
-         specified, the dbus audio backend is used by default.
+ config ES1370
+     bool
+     default y if PCI_DEVICES
+-    depends on PCI
++    depends on PCI && AUDIO
  
-+        (If audio is disabled at compile time via the ``--disable-audio`` option,
-+        no audio backend is used, and none of the audio-related D-Bus interfaces
-+        are exported.)
-+
-         The connection is registered with the "org.qemu" name (and queued when
-         already owned).
+ config AC97
+     bool
+     default y if PCI_DEVICES
+-    depends on PCI
++    depends on PCI && AUDIO
  
-diff --git a/ui/dbus.c b/ui/dbus.c
-index 4f24215555a..99dac3e7feb 100644
---- a/ui/dbus.c
-+++ b/ui/dbus.c
-@@ -217,6 +217,7 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
-         return;
-     }
+ config ADLIB
+     bool
+     default y
+-    depends on ISA_BUS
++    depends on ISA_BUS && AUDIO
  
-+#ifdef CONFIG_AUDIO
-     {
-         AudioBackend *audio_be = audio_get_default_audio_be(NULL);
-         if (audio_be && !audio_be_can_set_dbus_server(audio_be)) {
-@@ -232,6 +233,7 @@ dbus_display_complete(UserCreatable *uc, Error **errp)
-             return;
-         }
-     }
-+#endif
+ config GUS
+     bool
+     default y
+-    depends on ISA_BUS
++    depends on ISA_BUS && AUDIO
  
-     consoles = g_array_new(FALSE, FALSE, sizeof(guint32));
-     for (idx = 0;; idx++) {
-@@ -370,6 +372,7 @@ set_dbus_addr(Object *o, const char *str, Error **errp)
-     dd->dbus_addr = g_strdup(str);
- }
+ config CS4231A
+     bool
+     default y
+-    depends on ISA_BUS
++    depends on ISA_BUS && AUDIO
  
-+#ifdef CONFIG_AUDIO
- static char *
- get_audiodev(Object *o, Error **errp)
- {
-@@ -386,6 +389,7 @@ set_audiodev(Object *o, const char *str, Error **errp)
-     g_free(dd->audiodev);
-     dd->audiodev = g_strdup(str);
- }
-+#endif
+ config HDA
+     bool
+     default y if PCI_DEVICES
+-    depends on PCI
++    depends on PCI && AUDIO
  
+ config PCSPK
+     bool
+@@ -40,18 +40,21 @@ config PCSPK
  
- static int
-@@ -412,7 +416,9 @@ dbus_display_class_init(ObjectClass *oc, const void *data)
-     ucc->complete = dbus_display_complete;
-     object_class_property_add_bool(oc, "p2p", get_dbus_p2p, set_dbus_p2p);
-     object_class_property_add_str(oc, "addr", get_dbus_addr, set_dbus_addr);
-+#ifdef CONFIG_AUDIO
-     object_class_property_add_str(oc, "audiodev", get_audiodev, set_audiodev);
-+#endif
-     object_class_property_add_enum(oc, "gl-mode",
-                                    "DisplayGLMode", &DisplayGLMode_lookup,
-                                    get_gl_mode, set_gl_mode);
-@@ -502,7 +508,9 @@ dbus_init(DisplayState *ds, DisplayOptions *opts)
-                           object_get_objects_root(),
-                           "dbus-display", &error_fatal,
-                           "addr", opts->u.dbus.addr ?: "",
-+#ifdef CONFIG_AUDIO
-                           "audiodev", opts->u.dbus.audiodev ?: "",
-+#endif
-                           "gl-mode", DisplayGLMode_str(mode),
-                           "p2p", yes_no(opts->u.dbus.p2p),
-                           NULL);
+ config WM8750
+     bool
+-    depends on I2C
++    depends on I2C && AUDIO
+ 
+ config PL041
+     bool
++    depends on AUDIO
+ 
+ config CS4231
+     bool
++    depends on AUDIO
+ 
+ config ASC
+     bool
++    depends on AUDIO
+ 
+ config VIRTIO_SND
+     bool
+     default y
+-    depends on VIRTIO
++    depends on VIRTIO && AUDIO
+diff --git a/hw/usb/Kconfig b/hw/usb/Kconfig
+index de95686720c..e3705858926 100644
+--- a/hw/usb/Kconfig
++++ b/hw/usb/Kconfig
+@@ -98,7 +98,7 @@ config USB_STORAGE_UAS
+ config USB_AUDIO
+     bool
+     default y
+-    depends on USB
++    depends on USB && AUDIO
+ 
+ config USB_SERIAL
+     bool
 -- 
 2.34.1
 
