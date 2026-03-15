@@ -4,91 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C132F30271
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 17:00:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C097DF30271
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 17:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1oop-0004cc-PR; Sun, 15 Mar 2026 12:59:59 -0400
+	id 1w1oxH-00061v-18; Sun, 15 Mar 2026 13:08:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1oon-0004cC-HF
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:59:58 -0400
-Received: from mail-wr1-x42e.google.com ([2a00:1450:4864:20::42e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1oxC-00061I-5j
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 13:08:38 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1ook-0005zW-Le
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:59:57 -0400
-Received: by mail-wr1-x42e.google.com with SMTP id
- ffacd0b85a97d-439bcec8613so2832436f8f.3
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 09:59:54 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1oxA-0007Cn-Qm
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 13:08:37 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-483487335c2so36301905e9.2
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 10:08:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773593993; x=1774198793; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773594515; x=1774199315; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=iAYXQuGl7la4rUsyf/j4rVQROY7zxOgwODH53Z21Nd0=;
- b=MWLs6cI7dht7VEAtQ9sv5dF/CoodKP3wNtHolQ8QX2iyj7DhB53i6TCb2oGtaVZZE9
- f8OyCFv74Meq4qF5jberdyvWNN8YN0r7SqEe874pCWcHSMozw32kc6zNYRvI08ryfZ5R
- 1x35SfKq5bpga2AKBW2NqGs46Q1qbDPJXUl+WzpVsJCC88bHUEt0MTkq7TjIYbSPsPC0
- ynwsv1lxWEDO6Urjj++/3LytbQpBIEGIQ0Wk67Y2IdNV+wLEKtuxNUOaxlALOTvaoWqK
- WNBXJJEJCyOk4t8xEHXiOK5SJ69v108BoEFH94jHttiLIR+mbwoZDWVGyFW74PjVLMwf
- Ggig==
+ bh=KqnHJ7APlA/JTeEHW2xVuKwRc5n/Bg3jhEZFOK5PiDM=;
+ b=JXkTSmPixEAsZKgTcLwB0bvSc83R74q5JUBkg8t1xk5SqVgMIa+qSMTynxxFRy1hPK
+ 94ES5Aq9nW2g/1IIt83kgtVu6Pxj8ConaqcSqwQli3Xar/9KhK7ZgEejuJw/1Ra/5jx9
+ 03/PzYJOSQzKPVGIDfCBKO4EfgL9m1C66CU6pw4HUIauYmb3dsAJ1qQEf0+CP2gKgP6b
+ OuGmyAUsfKqYT/FxRwxhNeeexwI6bTzIJXDqfGBCXFvjGSZNZpraED45mo364iAsXYMu
+ fMM8lFCLMLuZQyaFBDZnOIV9KhEDIFx9Qt3f7moQMJhT7t9W+2jQK52RojQXbBj8BTpP
+ XSXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773593993; x=1774198793;
+ d=1e100.net; s=20251104; t=1773594515; x=1774199315;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iAYXQuGl7la4rUsyf/j4rVQROY7zxOgwODH53Z21Nd0=;
- b=jCgKoxgAlZ1KB1pT3t7exgktYfOeB5O/sqOpIebJHfe7V40qSNXmwb8GZkn/ZaX+Zs
- EFIbv1ICiXssik1yjWHc9pMcNp/3yaRMLa7bhbEecMuT+/MRc3PjczpqzH73pyySfhmn
- cRwvv+RnZktdM+ZD3MYl3B3ynrw/a76MUP/rR8tPhTlU4A3qMpIIkQEPAVWkgGK6/LJT
- IsMwL9UdGOBT5OHe+u7IoyUZUH2mvvIP6hctMMkfHdTURwP8m3eeKoHb4tRNDkvNxPnY
- dpka26YZjZptZUMQNgIIE+8jpWMXJp5KFxWqtbml2UnL0hSoVJZqOs+miApv0SAcj4rG
- 2hVQ==
-X-Gm-Message-State: AOJu0YyHttJNFaOu7V8J4lSC1ENqaTMAHrXSn/M2YTVX1+XjMO7PmQ+U
- HJjW3GJuS2tN+zvokZW79SIj+hcdA6UO9mxszqnhxKDW3rrtohSOoMiG4IfXuVaJCIIRpAPPSOV
- YmnSelyo=
-X-Gm-Gg: ATEYQzxIQZrFMu1daFiqnYoe0EQ5VdPMPxtIKSXUgLvi5DJOPKfZlKgUKl6ZIsRUOtc
- 5Hf3PJ2dAgHYm1ht0+bRQwBfeXloTT23ApObjxEDwZJVMdoxucZ3jnuIzQ2E2q+logrlA0VGZTD
- VU+5K8yfaypJY9ud79p0VTmsKGJ1WxgaVWRK5AfyQ6c6yWH9Ho+zCfXOaxt21SqJr8QwTNUbbXJ
- hhsKqMYdF80QW75B/mSIWvO0KfencCVMHi7zfwOYI1q5SN4wfVjHXKWS2SdkWD6Xote158WLS1/
- BliKSTs+c/qK76WU8/Dq6NGYgeDVilfuj5XyNZixIFNMsKbZRJ54pyVl/lIoMsq5QgkoZt/Os0a
- Y+9FVClEmsTTWOpQgp53CNj1vXCnLpR1jsX04XTPLJ7wav4/4w7xie0dJHVLt0wazxu2DLjfsbR
- KkCvcdsOWeqSp/TWKaSoNSpZe//S/gi6UushgY1UJMJm2dkh2EtS5jF2uMb+GbrUaWab4rjegan
- crtu2B7CsM=
-X-Received: by 2002:a05:600c:1388:b0:483:badb:618f with SMTP id
- 5b1f17b1804b1-485567050dcmr168466035e9.25.1773593992522; 
- Sun, 15 Mar 2026 09:59:52 -0700 (PDT)
+ bh=KqnHJ7APlA/JTeEHW2xVuKwRc5n/Bg3jhEZFOK5PiDM=;
+ b=By6Blqi08fcxsINFizhxKd+eL7c3yURyeV+C4FHtHDYLVP9o0coznPJRij+sSH2OFj
+ gbpyTrDEET0rLcUuHSVpsF+vQ9sSPrZuQB3PNiRoq3Am9Dm3amg5+9IP3OqUPIjX6msP
+ I2usLJ8Dm7mqab090Slsfwc9ytezpjPI1B/D0+iuVOY9Uu5bsLK6ZUX3/nQwcno1U0L5
+ 9TB+3IiUB7llCTdwZPagqC2wd9mBbJ8ad3IyzyWYvKqXaZxRMxO8Ye9hx+y/+r/kzBZA
+ xD8WexE+7kE2MCphX/vcROfPqM3NeRYccBa4xPuhAua1s00Oh1nqOuV0YJJw+meewEHl
+ uFMQ==
+X-Gm-Message-State: AOJu0Yzit2dyZeqQX2NBzdVL4kd4c4lTE5zX7+cMPjEd6dNzeqtGjLcp
+ OF7V9ju9RuJnJmWhVazEeKtZVe+FM9cAL9AQvnTJ2lGq1vws+xM8KRMIca/kWZ14IDCUXNI9eRK
+ YBaQH868=
+X-Gm-Gg: ATEYQzys8PIav3uaKmfqfXJxcKJ1CVT+2/1k8YAMWhkL1iaParGv7zBS5BqlEUiDoAP
+ 8U4alb5TzR+5u7H6fta5+d1tBQv354+yiWt+PgqBU84WcEZqscr8HU5Q0YWj0bnB3bxwDmbuadj
+ FqfTk3wXXM6YlgPtxciWrQIqSr2r3EV0KCKVtXfOrt3JI54Wsk1CsH8xZ5xRkq0+yAX3DvFZUoA
+ SKy3HrM/bICcRY8GSyD6drZkaQBxLKvYv+TlyV/Sm565aOJuFseUWY/3nc8lXBAIFvNkH5bcppL
+ QduZG4JO7p1K2sDFRNdIy6da6vP90zM1UTJychmBELHm4DLBZ/4BKHE+a6sf7We9dmtIcwulU5W
+ z1lYWgLnuHoRo4AZxKV0L2AMe9jeIMMkcnx1A+5KLXIRx95G0Nebzu70XMwVFE17isowj3jHae3
+ GKMMY+x+XKOz0rBqPpMNZ2+5dWfGb8lWgtLMLmnOxd8PRHBU4jEkMpErBZ2bGSyAhp5U9OaP4D
+X-Received: by 2002:a05:600c:8488:b0:485:3f1c:d897 with SMTP id
+ 5b1f17b1804b1-485566d2fdcmr157852875e9.9.1773594514830; 
+ Sun, 15 Mar 2026 10:08:34 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485563f8c23sm125552305e9.1.2026.03.15.09.59.49
+ 5b1f17b1804b1-485563903bbsm117030235e9.0.2026.03.15.10.08.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 15 Mar 2026 09:59:51 -0700 (PDT)
+ Sun, 15 Mar 2026 10:08:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?q?Fr=C3=A9d=C3=A9ric=20P=C3=A9trot?=
- <frederic.petrot@univ-grenoble-alpes.fr>, 
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>,
+Cc: qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, Anton Johansson <anjo@rev.ng>,
+ Glenn Miles <milesg@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [RFC PATCH] target/riscv: Restrict access to RV128 registers on RV32
-Date: Sun, 15 Mar 2026 17:59:48 +0100
-Message-ID: <20260315165949.40027-1-philmd@linaro.org>
+Subject: [PATCH 0/3] target/ppc: Replace target_ulong -> uint64_t for
+ TARGET_PPC64
+Date: Sun, 15 Mar 2026 18:08:28 +0100
+Message-ID: <20260315170832.40331-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42e;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,228 +100,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-One half of 128-bit registers code is not reachable for CPUs
-running in 32-bit mode, while the other half is completely
-broken (handled as a pair of 32-bit registers).
-Better restrict this code on 32-bit builds until RV128 is
-properly implemented.
+The 'target_ulong' should only be used for fields when have
+different size on 32 / 64-bit builds. For fields whicn are
+only available on 64-bit builds, directly use the 'uint64_t'
+type.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
-More than 1y having issue with the 128-bit code path and
-the single binary effort. Fortunately while I dunno how to
-test 128-bit I could with 32/64 bits.
----
- target/riscv/cpu.h                          |  2 ++
- target/riscv/machine.c                      |  4 +++
- target/riscv/monitor.c                      |  4 +++
- target/riscv/translate.c                    | 31 +++++++++++++++++++--
- target/riscv/insn_trans/trans_rvzacas.c.inc |  2 ++
- 5 files changed, 41 insertions(+), 2 deletions(-)
+Philippe Mathieu-Daudé (3):
+  target/ppc: Explicitly declare CFAR register as 64-bit
+  target/ppc: Explicitly declare 'cpu_reserve_val2' register as 64-bit
+  target/ppc: Explicitly declare BHRB related register as 64-bit
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 633d5301f30..94f4daa06e7 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -214,7 +214,9 @@ typedef struct PMUFixedCtrState {
- 
- struct CPUArchState {
-     target_ulong gpr[32];
-+#if defined(TARGET_RISCV64)
-     target_ulong gprh[32]; /* 64 top bits of the 128-bit registers */
-+#endif
- 
-     /* vector coprocessor state. */
-     uint64_t vreg[32 * RV_VLEN_MAX / 64] QEMU_ALIGNED(16);
-diff --git a/target/riscv/machine.c b/target/riscv/machine.c
-index 09c032a8791..e220e562ff4 100644
---- a/target/riscv/machine.c
-+++ b/target/riscv/machine.c
-@@ -168,6 +168,7 @@ static const VMStateDescription vmstate_pointermasking = {
-     }
- };
- 
-+#ifdef TARGET_RISCV64
- static bool rv128_needed(void *opaque)
- {
-     RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(opaque);
-@@ -187,6 +188,7 @@ static const VMStateDescription vmstate_rv128 = {
-         VMSTATE_END_OF_LIST()
-     }
- };
-+#endif
- 
- #ifdef CONFIG_KVM
- static bool kvmtimer_needed(void *opaque)
-@@ -487,7 +489,9 @@ const VMStateDescription vmstate_riscv_cpu = {
-         &vmstate_hyper,
-         &vmstate_vector,
-         &vmstate_pointermasking,
-+#ifdef TARGET_RISCV64
-         &vmstate_rv128,
-+#endif
- #ifdef CONFIG_KVM
-         &vmstate_kvmtimer,
- #endif
-diff --git a/target/riscv/monitor.c b/target/riscv/monitor.c
-index a9d31114442..b99a4e6ec18 100644
---- a/target/riscv/monitor.c
-+++ b/target/riscv/monitor.c
-@@ -251,8 +251,12 @@ static bool reg_is_ulong_integer(CPURISCVState *env, const char *name,
-     target_ulong *vals;
- 
-     if (is_gprh) {
-+#ifdef TARGET_RISCV64
-         reg_names = riscv_int_regnamesh;
-         vals = env->gprh;
-+#else
-+        g_assert_not_reached();
-+#endif
-     } else {
-         reg_names = riscv_int_regnames;
-         vals = env->gpr;
-diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 6d0f316ef1e..5b4a9934e83 100644
---- a/target/riscv/translate.c
-+++ b/target/riscv/translate.c
-@@ -38,7 +38,10 @@
- #include "tcg/tcg-cpu.h"
- 
- /* global register indices */
--static TCGv cpu_gpr[32], cpu_gprh[32], cpu_pc, cpu_vl, cpu_vstart;
-+static TCGv cpu_gpr[32], cpu_pc, cpu_vl, cpu_vstart;
-+#ifdef TARGET_RISCV64
-+static TCGv cpu_gprh[32];
-+#endif
- static TCGv_i64 cpu_fpr[32]; /* assume F and D extensions */
- static TCGv load_res;
- static TCGv load_val;
-@@ -374,11 +377,15 @@ static TCGv get_gpr(DisasContext *ctx, int reg_num, DisasExtend ext)
- 
- static TCGv get_gprh(DisasContext *ctx, int reg_num)
- {
-+#ifdef TARGET_RISCV64
-     assert(get_xl(ctx) == MXL_RV128);
-     if (reg_num == 0) {
-         return ctx->zero;
-     }
-     return cpu_gprh[reg_num];
-+#else
-+    g_assert_not_reached();
-+#endif
- }
- 
- static TCGv dest_gpr(DisasContext *ctx, int reg_num)
-@@ -391,10 +398,14 @@ static TCGv dest_gpr(DisasContext *ctx, int reg_num)
- 
- static TCGv dest_gprh(DisasContext *ctx, int reg_num)
- {
-+#ifdef TARGET_RISCV64
-     if (reg_num == 0) {
-         return tcg_temp_new();
-     }
-     return cpu_gprh[reg_num];
-+#else
-+    g_assert_not_reached();
-+#endif
- }
- 
- static void gen_set_gpr(DisasContext *ctx, int reg_num, TCGv t)
-@@ -404,17 +415,21 @@ static void gen_set_gpr(DisasContext *ctx, int reg_num, TCGv t)
-         case MXL_RV32:
-             tcg_gen_ext32s_tl(cpu_gpr[reg_num], t);
-             break;
-+#ifdef TARGET_RISCV64
-         case MXL_RV64:
-         case MXL_RV128:
-             tcg_gen_mov_tl(cpu_gpr[reg_num], t);
-             break;
-+#endif
-         default:
-             g_assert_not_reached();
-         }
- 
-+#ifdef TARGET_RISCV64
-         if (get_xl_max(ctx) == MXL_RV128) {
-             tcg_gen_sari_tl(cpu_gprh[reg_num], cpu_gpr[reg_num], 63);
-         }
-+#endif
-     }
- }
- 
-@@ -425,27 +440,35 @@ static void gen_set_gpri(DisasContext *ctx, int reg_num, target_long imm)
-         case MXL_RV32:
-             tcg_gen_movi_tl(cpu_gpr[reg_num], (int32_t)imm);
-             break;
-+#ifdef TARGET_RISCV64
-         case MXL_RV64:
-         case MXL_RV128:
-             tcg_gen_movi_tl(cpu_gpr[reg_num], imm);
-             break;
-+#endif
-         default:
-             g_assert_not_reached();
-         }
- 
-+#ifdef TARGET_RISCV64
-         if (get_xl_max(ctx) == MXL_RV128) {
-             tcg_gen_movi_tl(cpu_gprh[reg_num], -(imm < 0));
-         }
-+#endif
-     }
- }
- 
- static void gen_set_gpr128(DisasContext *ctx, int reg_num, TCGv rl, TCGv rh)
- {
-+#ifdef TARGET_RISCV64
-     assert(get_ol(ctx) == MXL_RV128);
-     if (reg_num != 0) {
-         tcg_gen_mov_tl(cpu_gpr[reg_num], rl);
-         tcg_gen_mov_tl(cpu_gprh[reg_num], rh);
-     }
-+#else
-+    g_assert_not_reached();
-+#endif
- }
- 
- static TCGv_i64 get_fpr_hs(DisasContext *ctx, int reg_num)
-@@ -1453,14 +1476,18 @@ void riscv_translate_init(void)
-      * unless you specifically block reads/writes to reg 0.
-      */
-     cpu_gpr[0] = NULL;
--    cpu_gprh[0] = NULL;
- 
-     for (i = 1; i < 32; i++) {
-         cpu_gpr[i] = tcg_global_mem_new(tcg_env,
-             offsetof(CPURISCVState, gpr[i]), riscv_int_regnames[i]);
-+    }
-+#ifdef TARGET_RISCV64
-+    cpu_gprh[0] = NULL;
-+    for (i = 1; i < 32; i++) {
-         cpu_gprh[i] = tcg_global_mem_new(tcg_env,
-             offsetof(CPURISCVState, gprh[i]), riscv_int_regnamesh[i]);
-     }
-+#endif
- 
-     for (i = 0; i < 32; i++) {
-         cpu_fpr[i] = tcg_global_mem_new_i64(tcg_env,
-diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc b/target/riscv/insn_trans/trans_rvzacas.c.inc
-index 8d94b83ce94..8cf7cbd4599 100644
---- a/target/riscv/insn_trans/trans_rvzacas.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
-@@ -55,10 +55,12 @@ static void gen_set_gpr_pair(DisasContext *ctx, int reg_num, TCGv_i64 t)
-         tcg_gen_sari_i64(cpu_gpr[reg_num + 1], t, 32);
- #endif
- 
-+#ifdef TARGET_RISCV64
-         if (get_xl_max(ctx) == MXL_RV128) {
-             tcg_gen_sari_tl(cpu_gprh[reg_num], cpu_gpr[reg_num], 63);
-             tcg_gen_sari_tl(cpu_gprh[reg_num + 1], cpu_gpr[reg_num + 1], 63);
-         }
-+#endif
-     }
- }
- 
+ target/ppc/cpu.h       | 14 ++++++-------
+ target/ppc/machine.c   |  4 ++--
+ target/ppc/translate.c | 47 +++++++++++++++++++++---------------------
+ 3 files changed, 33 insertions(+), 32 deletions(-)
+
 -- 
 2.53.0
 
