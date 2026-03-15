@@ -4,99 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2449ED58B0C
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 09:26:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D214AD58B1A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 12:40:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1hjL-000489-J0; Sun, 15 Mar 2026 05:25:51 -0400
+	id 1w1kkf-0007IU-5B; Sun, 15 Mar 2026 08:39:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>)
- id 1w1hjI-00047V-9y; Sun, 15 Mar 2026 05:25:48 -0400
-Received: from fout-b8-smtp.messagingengine.com ([202.12.124.151])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hi@alyssa.is>)
- id 1w1hjG-00008m-A3; Sun, 15 Mar 2026 05:25:48 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.stl.internal (Postfix) with ESMTP id 590541D00163;
- Sun, 15 Mar 2026 05:25:42 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-02.internal (MEProxy); Sun, 15 Mar 2026 05:25:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alyssa.is; h=cc
- :cc:content-type:content-type:date:date:from:from:in-reply-to
- :in-reply-to:message-id:mime-version:references:reply-to:subject
- :subject:to:to; s=fm3; t=1773566742; x=1773653142; bh=AI9EBvIhSJ
- L51T3pR3nWRZei9IvwjbCjAavH2TVzADk=; b=pBFheLjMVwgcQdyziVr5Nh09Y3
- 21DF2kCcsd0zz6lc7n5TccvaHpzDVABJPJoiHe2NHekqEBxQidmmm9ym9b1J08W3
- 2oDBJEKFBZP0Np/MpbfPHDzN/wmsCC/2XWTQjgvE9asVsH7ORrSE3Js6LFHChk/M
- We5Kk8BooRYX4Ys4tRzbmqhhGjPUz6DfaGWc0lexCH79rMIGmgn7zRBuft1+HdLx
- 2Q9pT7rS/rb+f1aagLmIUEzUTTBxW7D+Fvt9WDbPsZHQM2GCe2AcgN/R4IVpdGdy
- z5+byA9kCpHZo+RC885vrnsqpnR3LVg6w5EZJGcmN+hbwBJHFdfFGCxOt7ig==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-type:content-type:date:date
- :feedback-id:feedback-id:from:from:in-reply-to:in-reply-to
- :message-id:mime-version:references:reply-to:subject:subject:to
- :to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=
- 1773566742; x=1773653142; bh=AI9EBvIhSJL51T3pR3nWRZei9IvwjbCjAav
- H2TVzADk=; b=GdUgJJix8oL5JsMLSBDAG51AP3bWyQbN2bV59aYa5v++Z7hSFDe
- 5xlPNxUUr1fhU2ThNEBVzEIkpLKYsflaNdyx/IRshEGiTBZJb78+6CpkiXgk/Ctt
- tt8y0eP3glEzP18TmSRSicaLAbDhxHNcHxEO1AWO8Zpq5rpYGCSo/ZxFqWTLzQLq
- ZdXf/8uu6dj//s4LuBQwYdip/HF1GuB4It8Q2tl+VZ+EcGu3Hqf6XxevpUV+//Uc
- p1TDG2EAYBfA8shAJ6FBywS5CqS0ZewdeBnBvPejbBxWaOiTuQVDXg+7vXfambly
- xW1qCKQkwDDcEXxXDOBw2t4cPK4IAwFJMGw==
-X-ME-Sender: <xms:FXu2aUHZrge03tE5x-V2AQzVNc7TA8FU4GTyWse2jJdj3j4HYwMK3g>
- <xme:FXu2afnqXAG24VD26ZA7OupOC1l8fakuR-Yux4ByN7qkgmi-X5aU4A6E5BGgP7G0b
- p6VzU6I3VwuSeRjrpOwVjIoknkwKUf6toCHPnP4rBzxRDB0VVfjHg>
-X-ME-Received: <xmr:FXu2aQaee4ZxAdQVPQSP0_GsdJG85Aq89CEIYnXrzAzfrTCC1u-g4NESfjPDFnwXVe_290ITAdRR7HxpslQ5fmxbXEPzt0PwKN6lQIIS>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgddvleehudduucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffvvefujghffffkgggtsehgtderredttdejnecuhfhrohhmpeetlhihshhsrgcu
- tfhoshhsuceohhhisegrlhihshhsrgdrihhsqeenucggtffrrghtthgvrhhnpeetheevud
- fgjefghefhieejudelkeeljeegvdekueeuhffhgedvveefteevgeetieenucevlhhushht
- vghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehhihesrghlhihsshgrrd
- hishdpnhgspghrtghpthhtohepjedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohep
- phgvthgvrhdrmhgrhiguvghllheslhhinhgrrhhordhorhhgpdhrtghpthhtohepqhgvmh
- huqdgrrhhmsehnohhnghhnuhdrohhrghdprhgtphhtthhopehqvghmuhdquggvvhgvlhes
- nhhonhhgnhhurdhorhhgpdhrtghpthhtohepmhhighhuvghlrdhluhhishesohhrrggtlh
- gvrdgtohhmpdhrtghpthhtohepvghrihgtrdgruhhgvghrsehrvgguhhgrthdrtghomhdp
- rhgtphhtthhopehpsghonhiiihhnihesrhgvughhrghtrdgtohhmpdhrtghpthhtohepkh
- hvmhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-ME-Proxy: <xmx:FXu2acEa08JgitFyhwjU2EfVunDTRI-_MCECqOw9lMAO-pW5q-eRxw>
- <xmx:FXu2aZKejO3gbFDDYO8PxTJrWdSRNPTfJKKVJwJQYXRIOhQUHDj-ow>
- <xmx:FXu2afMPPJgKe5TjRnAihXEf1hv2kj_Rep5EPuMz3R0wZQmPs1NJxA>
- <xmx:FXu2aRl4xanJ5ZNc9oDLTpBa9EfeTwkCT5j9ArCrsoItKsZkUrj3qg>
- <xmx:Fnu2aXvWUiz3HJ_2jlXtbex9BSVY1bbfMsdeBkkDC5SRLIGxLylikkTK>
-Feedback-ID: i12284293:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sun,
- 15 Mar 2026 05:25:41 -0400 (EDT)
-Received: by mbp.qyliss.net (Postfix, from userid 1000)
- id 4D1B678E34F9; Sun, 15 Mar 2026 10:25:35 +0100 (CET)
-From: Alyssa Ross <hi@alyssa.is>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org, kvm@vger.kernel.org, Eric Auger
- <eric.auger@redhat.com>, Miguel Luis <miguel.luis@oracle.com>
-Subject: Re: [PATCH] target/arm/kvm: fall back if nested unsupported
-In-Reply-To: <CAFEAcA8ycT250JaECAYTKF+U2a4m6jauLPLbD8PVx2atd70A7g@mail.gmail.com>
-References: <20260311095405.26297-1-hi@alyssa.is>
- <CAFEAcA8ycT250JaECAYTKF+U2a4m6jauLPLbD8PVx2atd70A7g@mail.gmail.com>
-Date: Sun, 15 Mar 2026 10:25:33 +0100
-Message-ID: <87ms09v3zm.fsf@alyssa.is>
+ (Exim 4.90_1) (envelope-from <aadhyar.cs24@rvce.edu.in>)
+ id 1w1kkd-0007Hf-7R
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 08:39:23 -0400
+Received: from mail-wr1-x431.google.com ([2a00:1450:4864:20::431])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <aadhyar.cs24@rvce.edu.in>)
+ id 1w1kka-0000hi-Tz
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 08:39:22 -0400
+Received: by mail-wr1-x431.google.com with SMTP id
+ ffacd0b85a97d-439ce3605ecso2768941f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 05:39:19 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773578359; cv=none;
+ d=google.com; s=arc-20240605;
+ b=gtvzAUTUnEK2RySGHJ9zeO9a8CUbzpNxyfrB+O45zkrgRVGJgB4vXjOv+4seIN2PHe
+ dQ0OuuPdRQlaaWDSzz2Q4eLyzM7amkjkn4+rKq6EsGGw/5BARTCeoBnxY3rVtUl9aCVw
+ fKqNaZwO1lJOaNplwqDRIF7cmQrZ8NrsrfNefD/xAicTQt+MGxO2YBM95wFk/YUDeDCn
+ Ziw4ya5oLZeEdmjiFfZvufjOuhZfWBV7gIpuzRTfTN+amTFX9hj8nT50OqlY7N3tkT+H
+ Iy3s/txrOHXcb1Qo6aN2fmtfR+/tfxWNxOSmH1iu8nAF1WnKV5T2KEXF242wmxYBlR4t
+ wwJQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
+ bh=o6dVPY0fm5feSjniFIblEldNRrFM2DTaMlabxhT+BAs=;
+ fh=VcWFz3STry9n9eUFM60hyxVS6bVcv395IvuDN7aAypU=;
+ b=HqpafVL6IuJo+PSGO8xtwE2UHgjkTwNBB78IGadOpwkBzGDQxhjx0T5o9lEz6cAnk5
+ itMg2wXzGWSvwTgkQwWcs64NyphMI66zBnzP/J/dURp6rJPMuTmaeZedOBkaPBehx9Jz
+ N0o7mbPypcjdkP7sqLXzXKK1xOiB1S6vZQGVuemFoRGCtRbNcG64k50Y4qP5EoHtcMlJ
+ 2jriKIfbjX80OlItz2Ueul9BauQk38eb9v2opK+8fjiv4Xnx31CcDguGle1aZQTBh5E0
+ LeQzHqjmB6uVlFmPz6lgNHXqlifqq6ZvV6BbNz5MIdPQG8cyo+5xRbguZ7dcvsiGeuka
+ H5bw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=rvce-edu-in.20230601.gappssmtp.com; s=20230601; t=1773578359; x=1774183159;
+ darn=nongnu.org; 
+ h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
+ :date:message-id:reply-to;
+ bh=o6dVPY0fm5feSjniFIblEldNRrFM2DTaMlabxhT+BAs=;
+ b=GpRH3l5I44oZo+7KzsleQ+jlUtEsofc0kaaXP9yFtgFpK8hgB/C9ku6giv1UVR3+Nh
+ AAW+Uy68Mj30qSsPfOggVO2d36/H/GSgs7IVRyy3xnZX05pk7Ylc81en/rgxJeDlaWsu
+ B4OYYNHsEhnjO1Dzb2l3STQklSSzqPut5frb4e4+cEmxJLKo3kv0NHoxs7JqQNzkNh9T
+ GotBeul/sOsSg3tVJlXAKSO0dxRfDSBwFpoU7k1vsM9Dphl9NXnDLA1Cnw2px0WZcA6v
+ sJibYLz+W361Vkpx24Vp5/StRhf4NYDNWaHQ5oMuXGbAHY3Xw44jGCi0hKpV97h5XDuE
+ tQow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773578359; x=1774183159;
+ h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=o6dVPY0fm5feSjniFIblEldNRrFM2DTaMlabxhT+BAs=;
+ b=SZ/uLnVCo49r9FX+4Niq3eLMwFU6EP7mjDnYYdgSVmgxJYjRog+rlvOT3N0nqTB83K
+ UEOM8zgA9TZFmqrQTDsRHl7+ZMCcNvu6i0CMV7C8iQtRChBlRNdspa9SzTYaDEs0spzh
+ /UFfXuc6qbo9h8Nus1SYwnSzlrJXopPJpJyEeHwiJXMZ8U0rvCihe1J+8pSMy5V8Thyi
+ N3Mio22KTvpfAPQItAFsQwK4U5LXCoKjb48ZQnqxTNTbKROvKbGF6aS4S7WcKsrQjb8v
+ /kC8LhEuyC+XOuRJYQuaLVxXRvkv2Fdhb263QnZUwlWKlnaQsKgp2m3GDUu3Pf/DUj7X
+ Mgqw==
+X-Gm-Message-State: AOJu0YzXVJp+ESEdM+5Rq+9nEFl7Mgciqbz2A9tRqHsIKOW6Y4IC7oyX
+ ftx/AoFNnwtgmgd2TEduvRHlelKyPs2k/uYkv7EokIqm5b8Nakq4mFvfHhr+ZKzxksm5l9Kwh42
+ XJ15BuSA5K3L9MV6E+mnCMXtb1jvnMOkObi0I8b6mFw==
+X-Gm-Gg: ATEYQzxSpo2EVceALULMw4/IiD5OlmIxHkMmO/GRJfQluMNKd26AbB4FRZ/rtDtRDfc
+ CfsMIYbX++auklRhYL3sgLjqdyk7cQQAPGpW7Db5va8FhPRrgdW8QsP9Gjn3yCPCiqIvgMMc6iq
+ BxNEv52Cd28iK5d8stuuWLn1giEJrREqrwgnzdeSmQB7zmMAGyn5MBHOlf+b+jaXYQcjopEEI1v
+ u9L90B2utPaSebZoVnPgrV8eLEHfv7y9otNjEZeSD/ryQKCdWuwT5wEL4VZOz1cp5SIEIcZD4yW
+ g/OrcldUsKpb7JzAkNLeMG5aV94yc1RFsaiDVv6oq3q3ASPIRo0wljhCL0lu1/lwNo6MPUaQ6qh
+ kRcuPr5yoLTBhL6EdkO81pWY+8g==
+X-Received: by 2002:a05:6000:2583:b0:439:c1ca:82be with SMTP id
+ ffacd0b85a97d-43a04db18cfmr18236267f8f.28.1773578358639; Sun, 15 Mar 2026
+ 05:39:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
- micalg=pgp-sha512; protocol="application/pgp-signature"
-Received-SPF: pass client-ip=202.12.124.151; envelope-from=hi@alyssa.is;
- helo=fout-b8-smtp.messagingengine.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+From: AADHYA R <aadhyar.cs24@rvce.edu.in>
+Date: Sun, 15 Mar 2026 18:09:06 +0530
+X-Gm-Features: AaiRm50bLnSJmL_Z9YhtuFVKJ7GuwtPnimNAUXwFMlMI0A_rTFLg85OTzmYkdpI
+Message-ID: <CABHAK8PF1U9LKO-7uem36N1Zw+H73ECLDhfHHrciN+4RvYMV_w@mail.gmail.com>
+Subject: [PATCH v2] disas/sparc: Fix integer overflow and convert to g_malloc
+To: mark.cave-ayland@ilande.co.uk
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2a00:1450:4864:20::431;
+ envelope-from=aadhyar.cs24@rvce.edu.in; helo=mail-wr1-x431.google.com
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,103 +110,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---=-=-=
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+From 41436452357983a35d2280d04be3fad269928a72 Mon Sep 17 00:00:00 2001
+From: Aadhya R <aadhyar.cs24@rvce.edu.in>
+Date: Sun, 15 Mar 2026 12:27:39 +0000
+Subject: [PATCH v2] disas/sparc: Fix integer overflow and convert to g_malloc
+To: mark.cave-ayland@ilande.co.uk
+Cc: qemu-devel@nongnu.org,
+    qemu-trivial@nongnu.org
 
-Peter Maydell <peter.maydell@linaro.org> writes:
+Replace standard C allocators with GLib functions to safely handle
+out-of-memory aborts. Also change '1 << i' to '1ul << i' to prevent
+undefined behavior when shifting into the sign bit. Resolves SVACE
+warning and GitLab issue #1798.
 
-> On Wed, 11 Mar 2026 at 09:54, Alyssa Ross <hi@alyssa.is> wrote:
->>
->> If I create a machine with more CPUs than KVM supports, but specify
->> multiple accelerator options, QEMU will fall back to the next
->> accelerator.  This is great, because if I've explicitly specified
->> multiple accelerators, I've told QEMU I'm fine with any of them being
->> used to provide the machine I want.
->>
->> When I create a machine with nested virtualization enabled, though,
->> this doesn't happen.  KVM often doesn't support it, but TCG always
->> does.  The nice thing to do would be for QEMU to fall back to TCG if
->> KVM can't provide, like it does when too many CPUs are requested.
->> This patch adjusts the behaviour to do that.
->>
->> This is very helpful for OS development scripts that run an OS in QEMU
->> =E2=80=94 I want everybody to be able to run the script, always with
->> virtualization enabled because the OS requires it, but for it to take
->> advantage of KVM acceleration when available.
->>
->> Signed-off-by: Alyssa Ross <hi@alyssa.is>
->> ---
->>  hw/arm/virt.c    | 6 ------
->>  target/arm/kvm.c | 8 ++++++++
->>  2 files changed, 8 insertions(+), 6 deletions(-)
->>
->> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
->> index 7456614d05..0b63b2eac3 100644
->> --- a/hw/arm/virt.c
->> +++ b/hw/arm/virt.c
->> @@ -2372,12 +2372,6 @@ static void machvirt_init(MachineState *machine)
->>          exit(1);
->>      }
->>
->> -    if (vms->virt && kvm_enabled() && !kvm_arm_el2_supported()) {
->> -        error_report("mach-virt: host kernel KVM does not support provi=
-ding "
->> -                     "Virtualization extensions to the guest CPU");
->> -        exit(1);
->> -    }
->> -
->>      if (vms->virt && !kvm_enabled() && !tcg_enabled() && !qtest_enabled=
-()) {
->>          error_report("mach-virt: %s does not support providing "
->>                       "Virtualization extensions to the guest CPU",
->> diff --git a/target/arm/kvm.c b/target/arm/kvm.c
->> index d4a68874b8..20dcc6a820 100644
->> --- a/target/arm/kvm.c
->> +++ b/target/arm/kvm.c
->> @@ -615,6 +615,14 @@ int kvm_arch_init(MachineState *ms, KVMState *s)
->>          ret =3D -EINVAL;
->>      }
->>
->> +    if (object_property_find(OBJECT(ms), "virtualization") &&
->> +        object_property_get_bool(OBJECT(ms), "virtualization", NULL) &&
->> +        !kvm_arm_el2_supported()) {
->> +        error_report("Using ARM nested virtualization with KVM requires=
- "
->> +                     "a host kernel with KVM_CAP_ARM_EL2");
->> +        ret =3D -EINVAL;
->> +    }
->
-> Looking a bit closer at this, it's a bit awkward that we're
-> looking at a machine property in generic target/arm code.
-> There is no guarantee that the machine is "virt" or that every
-> KVM-supporting machine has a "virtualization" property, and
-> the target/ code isn't really supposed to do board-specific stuff.
->
-> The board-independent way to say "are we trying to enable EL2" is
-> to look at the CPU property has_el2. But the CPU isn't created at
-> this point, so it's too early to do that here.
->
-> Similar things where the early accelerator code wants information
-> from the board we have handled with a method in MachineClass,
-> like get_physical_address_range. We could do that here, but
-> maybe it's a bit over-engineered? IDK.
+Signed-off-by: Aadhya R <aadhyar.cs24@rvce.edu.in>
+---
+ disas/sparc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-What do you envisage this looking like for other platforms?  Something I
-considered when working on this patch was moving "virtualization" from a
-machine to an accelerator property, but I ran into the problem that such
-a property isn't exposed on e.g. x86_64 as far as I can tell.  This
-MachineState method would have the same problem.
+diff --git a/disas/sparc.c b/disas/sparc.c
+index 40c1164554..702409a118 100644
+--- a/disas/sparc.c
++++ b/disas/sparc.c
+@@ -2623,7 +2623,7 @@ build_hash_table (const sparc_opcode **opcode_table,
+   memset (hash_table, 0, HASH_SIZE * sizeof (hash_table[0]));
+   memset (hash_count, 0, HASH_SIZE * sizeof (hash_count[0]));
+   free(hash_buf);
+-  hash_buf = malloc (sizeof (* hash_buf) * num_opcodes);
++  hash_buf = g_malloc(sizeof(*hash_buf) * num_opcodes);
+   for (i = num_opcodes - 1; i >= 0; --i)
+     {
+       int hash = HASH_INSN (opcode_table[i]->match);
+@@ -2685,7 +2685,7 @@ print_insn_sparc (bfd_vma memaddr, disassemble_info *info)
 
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEARYKAB0WIQRV/neXydHjZma5XLJbRZGEIw/wogUCabZ7DgAKCRBbRZGEIw/w
-oshiAQCuquVQl2VMEHIiIi8ybSl1FvstII7T8HrpbHj5MWjF6wD9H0djKqy20VXH
-12EGrrib9qD/m78eJcPNupmzxGYzBQ4=
-=Vey7
------END PGP SIGNATURE-----
---=-=-=--
+       if (!opcodes_initialized)
+         sorted_opcodes =
+-          malloc (sparc_num_opcodes * sizeof (sparc_opcode *));
++          g_malloc(sparc_num_opcodes * sizeof(sparc_opcode *));
+       /* Reset the sorted table so we can resort it.  */
+       for (i = 0; i < sparc_num_opcodes; ++i)
+         sorted_opcodes[i] = &sparc_opcodes[i];
+-- 
+2.43.0
 
