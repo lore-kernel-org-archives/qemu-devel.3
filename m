@@ -4,83 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 12130D58B21
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 12:50:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ECB2FD58B2A
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 13:02:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1kuj-0002qT-VG; Sun, 15 Mar 2026 08:49:49 -0400
+	id 1w1l6v-0007Tv-GU; Sun, 15 Mar 2026 09:02:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <raghavendraaadhya@gmail.com>)
- id 1w1hN7-0008Q1-47
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 05:02:53 -0400
-Received: from mail-pf1-x434.google.com ([2607:f8b0:4864:20::434])
+ id 1w1l6t-0007TI-Eu
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:02:23 -0400
+Received: from mail-pl1-x634.google.com ([2607:f8b0:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <raghavendraaadhya@gmail.com>)
- id 1w1hN5-0006Si-FI
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 05:02:52 -0400
-Received: by mail-pf1-x434.google.com with SMTP id
- d2e1a72fcca58-823c56765fdso1987433b3a.1
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 02:02:50 -0700 (PDT)
+ id 1w1l6s-0003c4-4I
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:02:23 -0400
+Received: by mail-pl1-x634.google.com with SMTP id
+ d9443c01a7336-2aaf59c4f7cso17845655ad.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 06:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773565369; x=1774170169; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773579737; x=1774184537; darn=nongnu.org;
  h=cc:to:subject:date:from:message-id:from:to:cc:subject:date
  :message-id:reply-to;
- bh=xLi4fHtc94ZOaV2+k4cXgPZo2Q77amdrgeIWUHhmgh4=;
- b=K2oz8BZHde+7gDR9CN+HvSca7rLpRqT0m4cpxoCDuBtQV/8PFMQQ4V+mwz362wEXb5
- Cmuf8grOLI2jNxpPM6YDzo/KSYwXNHyNUeHqp3l2D0zxURs65HF9HicT/2Qdf0uD/xvr
- PVgZk33/SZjp6yndGyxHanpjyx6zx9GL6JzQzHQ2D4+bsjuY515J+l71Nm9/xtQOV2XK
- Jhj5VIUvVK4WlKVxc3dvIJsZ5+ksVnEXpN+He7WHj8ozPdAJ5lJ2oMYWeO+90BzgtTco
- vYXUVhe1m1IPHShZz2bZ7YelTri/oisyJeQUlF/e2JWzNZROm7YgIAjw8+6k1Ub3HMID
- POAA==
+ bh=GNIfAmKm5ApCc+B0mFDnttKVftHd6ynLG4xrxceTwoc=;
+ b=PPSFCg5DL6KGPJsbWS2Qm1lGG4gfopzRT6X3lhjbyoavWZJaH9V8gbH0BV4xZwq1ub
+ Gzb2T5BVjBzM74V8yG0eREwGkvOz2fDUMXdZa4NP5WgxtKqH27+emlWYY6znBRBXzIRw
+ fGpK79aXN4Aqd+mUAFaHLHGOaeWAaZGc64tarRoT1PTMYjFHGmtPOLwtqkeYnRAt9WXz
+ zN2U8SxmShhxb5xr0DhqXp865BZ2kAHn98Ehoi8329Eb0l+FN1qz+h8AanXP4iVervNi
+ BG8gfcsSSYWHOXfZr26eueY2LHzAomn3HUSAjJL25J6nPCRv7ryhEwT2ZvzRTMqtghsm
+ HYNg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773565369; x=1774170169;
+ d=1e100.net; s=20251104; t=1773579737; x=1774184537;
  h=cc:to:subject:date:from:message-id:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=xLi4fHtc94ZOaV2+k4cXgPZo2Q77amdrgeIWUHhmgh4=;
- b=aJilIa7auRoKs48C0a+aV3CFlSdPFSaYXBEc5aX1OmaootHcDBR37f5o23t6ww+zG7
- qD7uPgNJHjtdisUXOLzGKOrLAvNhModyf0QNd+lLP+rDpWZ409A1+Q/zjy9GVUUe0EAk
- tyRiweHL62u+7/qgLgSjfA5E2jLSqd5s917/UvYLo9OcK3e0CfuzBmMek5e071RtDpR2
- LlI7fKnurz2diWxH6I66IiIIHkOEvKidfACTFjVP6r06BuYjH+mbEp/T/BRt4YYwhp4/
- XaH6flBvZR8HGgnfWiAGib7Kth3sOvaCPr1FYhPuVVfuWLA3P8KZOsoawPm25S5PrOPp
- jbgg==
-X-Gm-Message-State: AOJu0Yx78H7bskIhwz/SWfroNLsIYawht4FMX9W7NeMZz58HmJtECUUg
- 4/MdId6sVfR6DYgSDu8/5gKpTrmQhn511QZHvWG8WRDSGf92rljtvbwn
-X-Gm-Gg: ATEYQzzZ7ZD7WAjpB6Urbmq1f+rQRBUilg9TK2L5Q9yCLHKeU6ZvNtovNINinig8Wl5
- 1FIvFhQdRgNFc0oKPQbPl2+4seGT7mj+aCSjbFfmZsptv8FreR0lT616IyevlYv2a2uspGxBrZi
- 8rVWyhytQvOwCvXpxX9n71yG9tj8bVvnjOCYrSoisQV082Wf46Ie7NLv9DA+f5xIjhQX+Z6X8iD
- mY9KxLANDmh6gigN3M7prSJDVO+/ll8yBcKol2IdZAzPRLrfYpBBHKZnweIq2mzPaja88Q5sDwy
- rvUf5ZOJwg+zPozvZqxIXOQ0GHgwH329Q9aNaAJU3pC5uEP3Xlsuox1FridWQJY55HjD0RoA6vR
- kP73k09y2XQqjJNhWdVKxpM92pH/acuikhPC9abvMHtbQ5/AbinOrjlUP4+YmviFiKvW9YOZC6H
- WE1MAKJqntp0sAoTqwrSPbLGdZRQc1zGZfg68sGgqYARmhe8kwi6ehC1wuCL6HVowoqEYjlEovm
- CLsVqdBz/fWdO9RpNO0rEPhsw==
-X-Received: by 2002:a05:6a00:3c92:b0:82a:13ef:5abf with SMTP id
- d2e1a72fcca58-82a1993a1f2mr8807276b3a.57.1773565369359; 
- Sun, 15 Mar 2026 02:02:49 -0700 (PDT)
+ bh=GNIfAmKm5ApCc+B0mFDnttKVftHd6ynLG4xrxceTwoc=;
+ b=ks3rP5egltXoHZcqR3LBPu9E76XcPRoDvELk8Jr6hhvhmL74eDIroKPUczF+qWrd9Z
+ GZlt4ySUpx4W5JMQhUfA7wbf7YvbJAzM+1zobsdXQTJFW5cYI5ytlEU/ZdQT50fM0un5
+ /W7urNKddUloYFtfbQw/JTSJgHsgDAZF4WHEeSzyPrU5N4+/ZNMyotmPz/FqBQ0Hw46h
+ wPKZS0Pd38Cr/zbhrpGR9TtNGm+uYU8/Bdq3EcSizW9Mhowk2bFWpnDC/OeDUote4gcu
+ tiqLSriJ3oRI56vG2LV4QCIi9hBPmXPXTDEet42quOzVUH8sldcNzL/vChTYL7e43h7I
+ U5Pg==
+X-Gm-Message-State: AOJu0YzYNukLn+9LQNWdKfIHbIHsUhAZbyoAPMM89ziUaqsL0pomcI1F
+ Bh0I/4pSlk4kj4nNdwP/TPoiHvsGR7wUCbhkzopu8nxOS6OKSzhT+pdr
+X-Gm-Gg: ATEYQzyrE1z1WcpV6gNxUAodZi7Z5b0vEv5OPic9GarSS9qKwmPmHR1oMGcWs6eAG0G
+ iaU3FXLNFci2D5HKXUSXIHWfFtbnHqjoNIy29rjZb8ZZEQTcL5nA45OP3HYeGwZ3BhpwYMn4SrG
+ 9LtlUVtkQ6es3CIisQqlB/mLy93MT04PP7j5MbNd6tc/11976hD6VhpkIosiUGG7iw9AcVaIe15
+ repZ5l3QCBAuX43mHW95llQXhjf+44+z4qH99wognR9TBDgQ8Df0HlTaFjN4wHPD1zOL44zIzIs
+ YPzaJUk9TplyIdWvKdq709U/qarbnFa8Ha7K0pvJZ4OWckF5DkqouotaKq1TY/0lR0WfQHhZDNX
+ xQcrLHUcuC6h1PZ0IJfKqGXpiTuZevyrsqG2XDtD97axftbNaCzcrN6iIVXiDWXgvFLPggVaLsd
+ D2y9+rnTnxx650u3mWLu2CxOtkL24yDBB5qhuBmEwxDgF967pTl1XVbdaZlpmbhhStK6UybXiCi
+ THiY8Kfha5UB8pSJYDXuIIhQw==
+X-Received: by 2002:a17:903:2ec7:b0:2ae:7f84:79e3 with SMTP id
+ d9443c01a7336-2aeca9c64eamr91020695ad.16.1773579736856; 
+ Sun, 15 Mar 2026 06:02:16 -0700 (PDT)
 Received: from Obsi.localdomain ([49.43.240.32])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a0725bfd0sm12594101b3a.14.2026.03.15.02.02.47
+ d9443c01a7336-2aece56c2c4sm97450845ad.2.2026.03.15.06.02.14
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Mar 2026 02:02:48 -0700 (PDT)
-Message-ID: <69b675b8.050a0220.3c467f.19ff@mx.google.com>
+ Sun, 15 Mar 2026 06:02:16 -0700 (PDT)
+Message-ID: <69b6add8.170a0220.2bbc48.6528@mx.google.com>
 From: Aadhya-R <raghavendraaadhya@gmail.com>
 X-Google-Original-From: Aadhya-R <aadhyar.cs24@rvce.edu.in>
-Date: Sat, 14 Mar 2026 08:22:51 +0000
-Subject: [PATCH v3] hw/audio/fmopl: Convert malloc/free to g_malloc/g_free
-To: kraxel@redhat.com
-Cc: qemu-devel@nongnu.org
-Received-SPF: pass client-ip=2607:f8b0:4864:20::434;
- envelope-from=raghavendraaadhya@gmail.com; helo=mail-pf1-x434.google.com
-X-Spam_score_int: -7
-X-Spam_score: -0.8
+Date: Sun, 15 Mar 2026 04:28:32 +0000
+Subject: [PATCH v3 1/2] disas/sparc: Fix integer overflow in compare_opcodes
+To: mark.cave-ayland@ilande.co.uk
+Cc: qemu-devel@nongnu.org,
+    qemu-trivial@nongnu.org
+Received-SPF: pass client-ip=2607:f8b0:4864:20::634;
+ envelope-from=raghavendraaadhya@gmail.com; helo=mail-pl1-x634.google.com
+X-Spam_score_int: -5
+X-Spam_score: -0.6
 X-Spam_bar: /
-X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_24_48=1.34,
+X-Spam_report: (-0.6 / 5.0 requ) BAYES_00=-1.9, DATE_IN_PAST_06_12=1.543,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Sun, 15 Mar 2026 08:49:47 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,100 +95,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-As per the QEMU coding style guide, replace standard C malloc()
-and free() with GLib's g_malloc() and g_free().
-
-Since g_malloc() safely aborts on out-of-memory errors, the
-redundant NULL checks and their associated error-handling paths
-have been removed.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/1798
-
-Signed-off-by: Aadhya-R <aadhyar.cs24@rvce.edu.in>
+Change '1 << i' to '1ul << i' to prevent undefined behavior when shifting into the sign bit on the 31st iteration. Resolves SVACE static analyzer warning.
 ---
- hw/audio/fmopl.c | 41 ++++++++++++-----------------------------
- 1 file changed, 12 insertions(+), 29 deletions(-)
+ disas/sparc.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/audio/fmopl.c b/hw/audio/fmopl.c
-index a63ad0f04d..79e43d5410 100644
---- a/hw/audio/fmopl.c
-+++ b/hw/audio/fmopl.c
-@@ -50,7 +50,6 @@ static int opl_dbg_maxchip,opl_dbg_chip;
- /* attack/decay rate time rate */
- #define OPL_ARRATE     141280  /* RATE 4 =  2826.24ms @ 3.6MHz */
- #define OPL_DRRATE    1956000  /* RATE 4 = 39280.64ms @ 3.6MHz */
--
- #define DELTAT_MIXING_LEVEL (1) /* DELTA-T ADPCM MIXING LEVEL */
+diff --git a/disas/sparc.c b/disas/sparc.c
+index 5689533ce1..40c1164554 100644
+--- a/disas/sparc.c
++++ b/disas/sparc.c
+@@ -2515,7 +2515,7 @@ compare_opcodes (const void * a, const void * b)
+      another, it is important to order the opcodes in the right order.  */
+   for (i = 0; i < 32; ++i)
+     {
+-      unsigned long int x = 1 << i;
++      unsigned long int x = 1ul << i;
+       int x0 = (match0 & x) != 0;
+       int x1 = (match1 & x) != 0;
  
- #define FREQ_BITS 24			/* frequency turn          */
-@@ -607,26 +606,10 @@ static int OPLOpenTable( void )
- 	double pom;
+@@ -2525,7 +2525,7 @@ compare_opcodes (const void * a, const void * b)
  
- 	/* allocate dynamic tables */
--	if( (TL_TABLE = malloc(TL_MAX*2*sizeof(int32_t))) == NULL)
--		return 0;
--	if( (SIN_TABLE = malloc(SIN_ENT*4 *sizeof(int32_t *))) == NULL)
--	{
--		free(TL_TABLE);
--		return 0;
--	}
--	if( (AMS_TABLE = malloc(AMS_ENT*2 *sizeof(int32_t))) == NULL)
--	{
--		free(TL_TABLE);
--		free(SIN_TABLE);
--		return 0;
--	}
--	if( (VIB_TABLE = malloc(VIB_ENT*2 *sizeof(int32_t))) == NULL)
--	{
--		free(TL_TABLE);
--		free(SIN_TABLE);
--		free(AMS_TABLE);
--		return 0;
--	}
-+    TL_TABLE = g_malloc(TL_MAX * 2 * sizeof(int32_t));
-+    SIN_TABLE = g_malloc(SIN_ENT * 4 * sizeof(int32_t *));
-+    AMS_TABLE = g_malloc(AMS_ENT * 2 * sizeof(int32_t));
-+    VIB_TABLE = g_malloc(VIB_ENT * 2 * sizeof(int32_t));
-     ENV_CURVE = g_new(int32_t, 2 * EG_ENT + 1);
- 	/* make total level table */
- 	for (t = 0;t < EG_ENT-1 ;t++){
-@@ -696,10 +679,10 @@ static int OPLOpenTable( void )
- static void OPLCloseTable( void )
- {
-     g_free(ENV_CURVE);
--	free(TL_TABLE);
--	free(SIN_TABLE);
--	free(AMS_TABLE);
--	free(VIB_TABLE);
-+    g_free(TL_TABLE);
-+    g_free(SIN_TABLE);
-+    g_free(AMS_TABLE);
-+    g_free(VIB_TABLE);
- }
+   for (i = 0; i < 32; ++i)
+     {
+-      unsigned long int x = 1 << i;
++      unsigned long int x = 1ul << i;
+       int x0 = (lose0 & x) != 0;
+       int x1 = (lose1 & x) != 0;
  
- /* CSM Key Control */
-@@ -1082,9 +1065,9 @@ FM_OPL *OPLCreate(int clock, int rate)
- 	state_size  = sizeof(FM_OPL);
- 	state_size += sizeof(OPL_CH)*max_ch;
- 	/* allocate memory block */
--	ptr = malloc(state_size);
--	if(ptr==NULL) return NULL;
--	/* clear */
-+    ptr = g_malloc(state_size);
-+
-+    /* clear */
- 	memset(ptr,0,state_size);
- 	OPL        = (FM_OPL *)ptr; ptr+=sizeof(FM_OPL);
- 	OPL->P_CH  = (OPL_CH *)ptr; ptr+=sizeof(OPL_CH)*max_ch;
-@@ -1128,7 +1111,7 @@ void OPLDestroy(FM_OPL *OPL)
- 	}
- #endif
- 	OPL_UnLockTable();
--	free(OPL);
-+    g_free(OPL);
- }
- 
- /* ----------  Option handlers ----------       */
 -- 
 2.43.0
 
