@@ -4,69 +4,69 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8175F30262
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08253F30266
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 13:45:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1llV-0005wZ-DH; Sun, 15 Mar 2026 09:44:21 -0400
+	id 1w1lln-0005yE-5v; Sun, 15 Mar 2026 09:44:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1llU-0005vx-17
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:44:20 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1llf-0005xl-1T
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:44:31 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1llS-0000Av-El
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:44:19 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-485409ab264so25517035e9.1
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 06:44:16 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1lld-0000Cb-7j
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:44:30 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-48334ee0aeaso32289425e9.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 06:44:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773582255; x=1774187055; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773582267; x=1774187067; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Uw6TSFyoxLDSmiJlSd/IKQxj5BBuaxKSp706RK0L3hY=;
- b=Phl9hvMr3QSooYJY/cHtv2ew5webcJ9wZyfMFGpP3h6JWtupFutL1IxtmQqhUoAxUI
- 6NmS6SarFiA4en+RvQW3vJVhuiX2u/2M5hwfVMnK3IKn0ImXWt6Z1K6dBxRus6g5MqK0
- X1rmHnHJy4LVL6WdfKESckl6YAX3lmZGzt2H+vVggLLViWiHC6D1g5zLGG1QBagf0E0X
- tAGWWU4/xyFoWJl8nmfJZQ3eKsi3PLzgJcL1tldGXa76twfESxZifQIt5zhY3rdKeZLc
- GgOnTq82oduL5HfddmjyX2zob1MnDxCsP4HqdVQC0bBVhnBeXFX2HdQqIawcg71dsX8h
- ioWQ==
+ bh=qQEuHLcaKmHbNeWnL/cyH3hFkJm2m7Bba1DmXkayB1A=;
+ b=qafB9vz9Vc+HU0C6e//FYzNk+zw8ZULImMxvZ1J5zKi1CRmM3oXHIt7vcua4tiMUJK
+ BEqXi+33HB2+RQ0nYoqa9EDYPc7XDG9cBe0qOFM1we/8NNUYLhEJWLn1rA5kuqDnVmMC
+ u3fNlauqKAiFbvDzjx30rGeNOGg58/BlmAPH16qSYC/tmI2xPjN9eF3OfB+kxfvAIh14
+ QKo0qwwcdyzWdZxAKJbCv1GCCFqXVyUy3O4IAp3KkDi1YdskCnBiBzazZJVGQZJgSb2E
+ C5wbWYaBs/dzO9Rg5hVU3aJlFtWqQ/rT2ikNjdQJaANPWgYaTDQYDxUPtmHl9QDWPDC0
+ 9cGw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773582255; x=1774187055;
+ d=1e100.net; s=20251104; t=1773582267; x=1774187067;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Uw6TSFyoxLDSmiJlSd/IKQxj5BBuaxKSp706RK0L3hY=;
- b=OwPCH2bwtbdytp898vyZiucQA/WCZ6O0ZcKb1POujJLhJ9tgdwckWyz7kl9Mcz3HGp
- +jxLdtfEQSNLKYGJtYI0es8ixF3BopqlGQ9yNuTIFrO9VmaPS4iserR2Nj1zXHEMIro0
- AjWsXGh+5432I7FzEfm+3Und55dCRtG188RqtsajOos1hU3JfgJ3ykq5wBTy8lmg5w7K
- nrGlOZRbTgr6N6jTejn00xysBcrip0Z84QReH4WKtmJ0J8yGD3x6/RMzSG3zcxzkRRWt
- JMckQBenUZiu6+5xZYZJEpTQmsmoeAXi/nKBetcpujCnvxn5q1zVID+Jc30WTolluOgO
- mb8w==
+ bh=qQEuHLcaKmHbNeWnL/cyH3hFkJm2m7Bba1DmXkayB1A=;
+ b=QSU/1yArc0BeyMTd6hMMNebQgxTk7ZugDg8Vz0SsHKL6zWi+tW5G0Te+bqRl7tytQy
+ 8O0dN14weaxDPoMSSgvjBa+L8JbsXsO1lqLP0sSpf83WZxa78z/GmEpndu+mXIa2JARU
+ W9AQ78fcaWxrFcnKySA8xstFu+VcdzyD5x7kLnk5GcoDixA0dzSuBxnwtSYUgjlsiDAL
+ ZpqXKJkRUnG9r46x9UnZglpHz2dE1mDJQRDCGYWGuDOzIH4RnZ+D4xbEvmga+clBZrJQ
+ ZbvJtXTqA6bxo9u8RKxmI0kMUhvhO0leCE4Y5roWHnl0nT+qKlRLQMDBodL8HSHRj3M4
+ JLXw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCW8A8a9R5acl4vSruXOufAf7w2F63dZx+yrYuojs7eKuZ4ZSwxifaiMuYE2qL4l17CORAfhrqJzOICe@nongnu.org
-X-Gm-Message-State: AOJu0YyrzT3PDc2H2prSVFeJ7GiBFyBYJbiSaFoJzWhIUt3E+xfbPfN/
- 664CTq7DFhiGVqhb1G8dKdTvlVAOen9+RInUxPIxBpErfvhpj2dRNjv12uHA07uH7Iw=
-X-Gm-Gg: ATEYQzwFdOItTCGtefoB1rGgBTxIywHHGVfH7FM/PRQ4oLtoRCqNflmnQIFlbbevFgu
- Gkfb5FHrGSGdBBV0R1G9H2iHhbaFxsM6yPY0KP1wQ6BnZ2GKdWArq3RdWOc9t9u78KIYdvfl+6L
- QsYSm3MOgOydPlUQXfOM4wDQtdAbFzg97PaWvuE1XUJP3A1bHyvr6vY+DQp6JixaJSlsKGfa0Bt
- aUvwQs+fbcGGxVwyB0d1yBmwrPwIGd7/jnHaInzQWo3hID+GWaW+UgtUVWYzkVBgBfeZcfHu+XA
- vMo0zJjW3IhaSzfRPRCGgYkh/3HbeJwMHQpdL2cpL2o+RKZ6Jo8x3tY4xMdk5TjFYb1eREBGn50
- /42hWC8xCmg8qsi1rysiB24yvIle4BulqGsz6Dgl76H6Kkq3TiaqC5ONbrk76wEy1i8XLKZoj6h
- tLDfS3dQEHgDhQ54Kd1YHTBms7u0P7AbfqnENyXb6U8EyQJS6NsvV42DX7LQQcucEMhA==
-X-Received: by 2002:a05:600c:3b07:b0:485:3989:b3e4 with SMTP id
- 5b1f17b1804b1-48555ac5e34mr156143115e9.6.1773582254549; 
- Sun, 15 Mar 2026 06:44:14 -0700 (PDT)
+ AJvYcCXzUfdCzu7TdR4YlzJicNfCtBoGVQgdQN398DboWnyUqHd9fo6NnMB7F+QzAFP6gX8NNfNCDqASC5w1@nongnu.org
+X-Gm-Message-State: AOJu0YwGjih1fqRtJrv2lZHJQqhWofg3CInOU6zanjaFpwplVN20uyOJ
+ LKo7K5QJBMWt9D2x1wAlJKJWRo2iOw1YuLnYIEFz3MegthYE2H57aideRE/ZShALUH0=
+X-Gm-Gg: ATEYQzzfyNz76A86hG44sWIBlTeKsNvbXryIKudW6sH8JLZlwtvyBNbx6AjiAjwDY9Z
+ 2n/aMpW9ae+gg+NjlqhXoodpbLrXMg3B8cxPZbWGqpVKOcCbya1hXQu9VAAdFH+k6l2Yo+S2xwO
+ yjQjQvdVPTiQzbs4URmXojbLm2I8XGB+TnkNG6X0YJkFEkpwcP1k7ebhBINTRbwJdtn4DnoBVhE
+ 3Cm8lpkuH82kUMzNmCNAZrXQm5+sYGiOb6H9bJqLoouCjPaD2UDRjtTKYOCgGOkGyMBAVAKtL7T
+ /CZn3JLnmYgyCmpDAma/LzgjDlGbzSzfa5OC26yxFXAdDeWF5fZyCfDVG7zyFa/WK9kh7BwWXhA
+ m41suxVvuJolRoad8pvbJ0JYIq3fpS5B8cPiMe9byYXAdezpoVqE9pqTUZXr1TQyxiN1OUe38qm
+ 7JWOGrr6I4kdL/PB8C3mstZoZAfvSjhPHw9LcGsS3SYzYSnwxj43bkovedFBSwX7sSFA==
+X-Received: by 2002:a05:600c:3b90:b0:485:345b:ccb1 with SMTP id
+ 5b1f17b1804b1-48556720f86mr148634945e9.27.1773582267326; 
+ Sun, 15 Mar 2026 06:44:27 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b3b0e9b99sm11313344f8f.18.2026.03.15.06.44.13
+ 5b1f17b1804b1-48541b6f708sm756964175e9.11.2026.03.15.06.44.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Mar 2026 06:44:14 -0700 (PDT)
-Message-ID: <4b6823e3-4af6-4434-9982-4c47ef62ab32@linaro.org>
-Date: Sun, 15 Mar 2026 14:44:13 +0100
+ Sun, 15 Mar 2026 06:44:26 -0700 (PDT)
+Message-ID: <bc1cb04a-8e3a-471e-8fed-1c53799ebef0@linaro.org>
+Date: Sun, 15 Mar 2026 14:44:25 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v3 6/6] whpx: arm: fix ID_AA64MMFR3_EL1 host feature
@@ -81,9 +81,9 @@ References: <20260314221529.47841-1-mohamed@unpredictable.fr>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 In-Reply-To: <20260314221529.47841-7-mohamed@unpredictable.fr>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32a.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,24 +113,14 @@ On 14/3/26 23:15, Mohamed Mediouni wrote:
 > MMFR2 and leaving MMFR3 never set. Use ID_AA64MMFR3_EL1_IDX so the host
 > MMFR3 value is stored in the correct slot.
 > 
+
+Fixes: f7fa2b88084 ("whpx: arm64: implement -cpu host")
+
 > Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
 > Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
 > ---
 >   target/arm/whpx/whpx-all.c | 2 +-
 >   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-> index 8aa24f2adc..bbf0f6be96 100644
-> --- a/target/arm/whpx/whpx-all.c
-> +++ b/target/arm/whpx/whpx-all.c
-> @@ -684,7 +684,7 @@ static bool whpx_arm_get_host_cpu_features(ARMHostCPUFeatures *ahcf)
->           { WHvArm64RegisterIdAa64Mmfr0El1, &ahcf->isar.idregs[ID_AA64MMFR0_EL1_IDX] },
->           { WHvArm64RegisterIdAa64Mmfr1El1, &ahcf->isar.idregs[ID_AA64MMFR1_EL1_IDX] },
->           { WHvArm64RegisterIdAa64Mmfr2El1, &ahcf->isar.idregs[ID_AA64MMFR2_EL1_IDX] },
-> -        { WHvArm64RegisterIdAa64Mmfr3El1, &ahcf->isar.idregs[ID_AA64MMFR2_EL1_IDX] }
-> +        { WHvArm64RegisterIdAa64Mmfr3El1, &ahcf->isar.idregs[ID_AA64MMFR3_EL1_IDX] }
->       };
->   
->       int i;
 
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
