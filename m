@@ -4,93 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08253F30266
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 13:45:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA7DEF30268
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 14:08:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1lln-0005yE-5v; Sun, 15 Mar 2026 09:44:40 -0400
+	id 1w1m7q-0005ES-F9; Sun, 15 Mar 2026 10:07:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1llf-0005xl-1T
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:44:31 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1m7o-0005EG-JQ
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 10:07:24 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1lld-0000Cb-7j
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 09:44:30 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48334ee0aeaso32289425e9.1
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 06:44:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1m7m-0003Je-OA
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 10:07:24 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439afc58ac7so4373796f8f.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 07:07:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773582267; x=1774187067; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773583641; x=1774188441; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=qQEuHLcaKmHbNeWnL/cyH3hFkJm2m7Bba1DmXkayB1A=;
- b=qafB9vz9Vc+HU0C6e//FYzNk+zw8ZULImMxvZ1J5zKi1CRmM3oXHIt7vcua4tiMUJK
- BEqXi+33HB2+RQ0nYoqa9EDYPc7XDG9cBe0qOFM1we/8NNUYLhEJWLn1rA5kuqDnVmMC
- u3fNlauqKAiFbvDzjx30rGeNOGg58/BlmAPH16qSYC/tmI2xPjN9eF3OfB+kxfvAIh14
- QKo0qwwcdyzWdZxAKJbCv1GCCFqXVyUy3O4IAp3KkDi1YdskCnBiBzazZJVGQZJgSb2E
- C5wbWYaBs/dzO9Rg5hVU3aJlFtWqQ/rT2ikNjdQJaANPWgYaTDQYDxUPtmHl9QDWPDC0
- 9cGw==
+ bh=fzXrcZCZLa6rv7xNb8zvCjjAyXnPUjUcbCGw+z58hvA=;
+ b=RNfpuZCIZD0/lmDvpzi4IS0yEmbPrurSnQAVmXhzRvsTazPbEn/OxHhktJjUfppvuZ
+ MpZkvrHEe9uBtk+2AvxN08mHo3P9/KlqHUPXqgTkb1HCBjvfOMHFsX77/Tnq2bO3xfBr
+ QEe0EdJ7c1TlrXnrFpfiPMG7H0pC9fTNC5HmC3GjXMsp9iU0nyInZeswy6gYIK798mEX
+ ABI8N453nndNog9qIAqBFHb5+EQdjolNCg8ccEaMNldi8W0jkLCxrqZnyrxnICkoiXi4
+ NV+J80kscRcBam67ovM2OVHjJX+OqsUoYXFRWVug2+ncziiJjrUlxlhaXHbY3sUfgf60
+ emQA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773582267; x=1774187067;
+ d=1e100.net; s=20251104; t=1773583641; x=1774188441;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=qQEuHLcaKmHbNeWnL/cyH3hFkJm2m7Bba1DmXkayB1A=;
- b=QSU/1yArc0BeyMTd6hMMNebQgxTk7ZugDg8Vz0SsHKL6zWi+tW5G0Te+bqRl7tytQy
- 8O0dN14weaxDPoMSSgvjBa+L8JbsXsO1lqLP0sSpf83WZxa78z/GmEpndu+mXIa2JARU
- W9AQ78fcaWxrFcnKySA8xstFu+VcdzyD5x7kLnk5GcoDixA0dzSuBxnwtSYUgjlsiDAL
- ZpqXKJkRUnG9r46x9UnZglpHz2dE1mDJQRDCGYWGuDOzIH4RnZ+D4xbEvmga+clBZrJQ
- ZbvJtXTqA6bxo9u8RKxmI0kMUhvhO0leCE4Y5roWHnl0nT+qKlRLQMDBodL8HSHRj3M4
- JLXw==
+ bh=fzXrcZCZLa6rv7xNb8zvCjjAyXnPUjUcbCGw+z58hvA=;
+ b=gztg/pvQNdEwH4S6hYxGuqWN9NLym6nWAWMbC62eK+yXWLhi1BuCyjMU4YeFEPX6dX
+ rQjG0CA2zM2c9phADhqP5gAPkLn2PU9PaGCbm4rX/h4x/TdHZibhtDBSTJ/XNVHez5yg
+ VtZ0WkmagZo4hdkt1ptf0Nie659aVddYOoNM5Rhchx9lo73hnvRcRt+XtfbSNNUYrzrF
+ cIsQ4wLQPMma7ncF/ceiNQNGwzv64eC+lKeabUA7StiCnf4vl70Vk7MZJz7nDxndpqBQ
+ MSjXzAGutr79QXzgj2sNf81JXTw8xAO97RGWTF+rcX1xDlFCeqHqU5xXYN8EmT6UvMDS
+ lnkg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXzUfdCzu7TdR4YlzJicNfCtBoGVQgdQN398DboWnyUqHd9fo6NnMB7F+QzAFP6gX8NNfNCDqASC5w1@nongnu.org
-X-Gm-Message-State: AOJu0YwGjih1fqRtJrv2lZHJQqhWofg3CInOU6zanjaFpwplVN20uyOJ
- LKo7K5QJBMWt9D2x1wAlJKJWRo2iOw1YuLnYIEFz3MegthYE2H57aideRE/ZShALUH0=
-X-Gm-Gg: ATEYQzzfyNz76A86hG44sWIBlTeKsNvbXryIKudW6sH8JLZlwtvyBNbx6AjiAjwDY9Z
- 2n/aMpW9ae+gg+NjlqhXoodpbLrXMg3B8cxPZbWGqpVKOcCbya1hXQu9VAAdFH+k6l2Yo+S2xwO
- yjQjQvdVPTiQzbs4URmXojbLm2I8XGB+TnkNG6X0YJkFEkpwcP1k7ebhBINTRbwJdtn4DnoBVhE
- 3Cm8lpkuH82kUMzNmCNAZrXQm5+sYGiOb6H9bJqLoouCjPaD2UDRjtTKYOCgGOkGyMBAVAKtL7T
- /CZn3JLnmYgyCmpDAma/LzgjDlGbzSzfa5OC26yxFXAdDeWF5fZyCfDVG7zyFa/WK9kh7BwWXhA
- m41suxVvuJolRoad8pvbJ0JYIq3fpS5B8cPiMe9byYXAdezpoVqE9pqTUZXr1TQyxiN1OUe38qm
- 7JWOGrr6I4kdL/PB8C3mstZoZAfvSjhPHw9LcGsS3SYzYSnwxj43bkovedFBSwX7sSFA==
-X-Received: by 2002:a05:600c:3b90:b0:485:345b:ccb1 with SMTP id
- 5b1f17b1804b1-48556720f86mr148634945e9.27.1773582267326; 
- Sun, 15 Mar 2026 06:44:27 -0700 (PDT)
+ AJvYcCVjQpjtuNcQWILQi/n9Loql9EDSDzdpj3gyNWT2k0OyJsbFwHmeHePbu9GfTquw/wHSg+mql7MjF6rd@nongnu.org
+X-Gm-Message-State: AOJu0YxvcR/TXz+jZzOSpyyNqqodNzo5Zw4qVaUfplRWnhGd7qLtht3/
+ ECQT1lbIrX4Ca09JHSNAeezFcSJBZTYooVApjrP+kppd+cRfPSM4/KvGYzfYCi8ifhM=
+X-Gm-Gg: ATEYQzyjgfnLz3GZ3UhbTuKYXiRIwa22bH86pQe6w48JoBGTZfrmeq0l9Z9aL2Cp2mA
+ 4TivR9m0BnGGTBfvL2JGt97AOOcRhwKyWlNdxmhwHVpl0L6YHcEINwZumlFPfP7PlEAMN292lmk
+ IpcFYNvtsa2zNxKZ91qd7M1xwAj1blxEbBSpkcOFvmKYzmhAEAEcxrmqFkIkCd6vgwDKShWgxrl
+ 8WYHOcPlsPmuh/ALGzXgPqwMrp0+91G3WBPY3y/9/JNDmfaLhgzJxBxy3R8KG5LlvfVBH1k5Fy2
+ NTEbJibBpm+jYwyZZpfV8HaIpiXc9RE/UTiy3/BluU8v68Jvu/ourN69rHTz/MyBjf1qaaHoDf2
+ /L7tTQWNmiZZOBR1vnUxDecOc8nKH9DUf2dNnC1p4wlBBsoryHvv/5sEa3n5fg4BJVc8gfEtFo3
+ 2tjld7s5fZvCk8L7w89jnciYtVLmzWAvVuWkUlE35zgJZgLK6F0kZdSDodT4YoFAmVFQ==
+X-Received: by 2002:a05:6000:184f:b0:439:b6d6:71a with SMTP id
+ ffacd0b85a97d-43a04dd4c37mr19769354f8f.51.1773583640836; 
+ Sun, 15 Mar 2026 07:07:20 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48541b6f708sm756964175e9.11.2026.03.15.06.44.26
+ ffacd0b85a97d-439fe20c0b4sm36569450f8f.25.2026.03.15.07.07.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Mar 2026 06:44:26 -0700 (PDT)
-Message-ID: <bc1cb04a-8e3a-471e-8fed-1c53799ebef0@linaro.org>
-Date: Sun, 15 Mar 2026 14:44:25 +0100
+ Sun, 15 Mar 2026 07:07:19 -0700 (PDT)
+Message-ID: <241781d8-667e-486d-bc01-b01c0620e6cd@linaro.org>
+Date: Sun, 15 Mar 2026 15:07:19 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 6/6] whpx: arm: fix ID_AA64MMFR3_EL1 host feature
- register index
+Subject: Re: [PATCH v3 2/3] include/exec: Provide the cpu_internal_tswap()
+ functions
 Content-Language: en-US
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- Osama Abdelkader <osama.abdelkader@gmail.com>
-References: <20260314221529.47841-1-mohamed@unpredictable.fr>
- <20260314221529.47841-7-mohamed@unpredictable.fr>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: =?UTF-8?Q?Martin_Kr=C3=B6ning?= <martin.kroening@eonerc.rwth-aachen.de>,
+ qemu-devel@nongnu.org, =?UTF-8?Q?Alex_Benn=C3=A9e?=
+ <alex.bennee@linaro.org>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260311-semihosting-cpu-tswap-v3-0-8e239575ec08@eonerc.rwth-aachen.de>
+ <20260311-semihosting-cpu-tswap-v3-2-8e239575ec08@eonerc.rwth-aachen.de>
+ <bde55593-a51d-421c-bfa5-4a0c774f4b61@linaro.org>
+ <CAFEAcA_Qvo86Ek2W7xGQqGP94400c7wx-C0=zpBUF5NoM2jhfQ@mail.gmail.com>
+ <80ad84b1-0c4d-45de-93d4-90a471f7f751@linaro.org>
+ <CAFEAcA9-umnREmEpWLV5hhXkfXZWqmMqpt3DAL2kUe1spttyKg@mail.gmail.com>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260314221529.47841-7-mohamed@unpredictable.fr>
+In-Reply-To: <CAFEAcA9-umnREmEpWLV5hhXkfXZWqmMqpt3DAL2kUe1spttyKg@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,21 +110,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 14/3/26 23:15, Mohamed Mediouni wrote:
-> From: Osama Abdelkader <osama.abdelkader@gmail.com>
+On 13/3/26 09:51, Peter Maydell wrote:
+> On Thu, 12 Mar 2026 at 19:37, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>
+>> On 12/3/26 20:30, Peter Maydell wrote:
+>>> On Thu, 12 Mar 2026 at 19:29, Philippe Mathieu-Daudé <philmd@linaro.org> wrote:
+>>>>
+>>>> On 11/3/26 17:27, Martin Kröning wrote:
+>>>>> These functions are needed to support semihosting on CPUs that support
+>>>>> runtime-configurable endianness. They should not be used in other contexts.
+>>>>
+>>>> Another note is these function are not target-specific, which is great!
+>>>>
+>>>> These can also be used outside of semihosting.
+>>>>
+>>>> Matter of taste I'd have named them using this shorter pattern:
+>>>>
+>>>> cpu_internal_tswap16() -> tswap16_cpu()
+>>>
+>>> We specifically didn't want to use a name that might tempt
+>>> people to use them -- these are only wanted for the very
+>>> few niche use cases that are outside the CPU but need to
+>>> know information about the CPU's internals, which is basically
+>>> legacy-virtio and semihosting.
+>>
+>> This was the missing piece to make qtest target-agnostic:
+>>
+>> -- >8 --
+>> diff --git a/system/qtest.c b/system/qtest.c
+>> index cf90cd53adb..392c1394656 100644
+>> --- a/system/qtest.c
+>> +++ b/system/qtest.c
+>> @@ -523,18 +523,15 @@ static void qtest_process_command(CharFrontend
+>> *chr, gchar **words)
+>>                address_space_write(first_cpu->as, addr,
+>> MEMTXATTRS_UNSPECIFIED,
+>>                                    &data, 1);
+>>            } else if (words[0][5] == 'w') {
+>> -            uint16_t data = value;
+>> -            tswap16s(&data);
+>> +            uint16_t data = cpu_internal_tswap16(first_cpu, value);
 > 
-> IdAa64Mmfr3El1 was stored in idregs[ID_AA64MMFR2_EL1_IDX], overwriting
-> MMFR2 and leaving MMFR3 never set. Use ID_AA64MMFR3_EL1_IDX so the host
-> MMFR3 value is stored in the correct slot.
+> This is a behaviour change, and I don't think we want it.
+> tswap16s() swaps per the system endianness. cpu_internal_tswap16()
+> swaps based on the CPU's current configuration. With qtest
+> that's a bit of a weird thing, because we can never run the
+> CPU in a way that will make it switch endianness.
 > 
+> This is why we gave these functions the _internal_ bit in
+> the name -- they really are a very very specific piece
+> of functionality that you almost never want.
+> 
+>> And these endianness checks in QTest framework are only there to test
+>> legacy virtio, so we are good, this isn't even another niche use case.
+> 
+> No, these ones are here so that when when a test does a read
+> or write of non-byte width data (e.g. via "writel 0x8000 0x12345678")
+> we send it into the memory system in the endianness that it
+> expects, so that it arrives at the device as "write of width 4
+> with value 0x12345678". That is, we want to match it to the
+> system endianness, because that's what we want to cancel out
+> the swapping done in adjust_endianness() in system/memory.c.
 
-Fixes: f7fa2b88084 ("whpx: arm64: implement -cpu host")
-
-> Signed-off-by: Osama Abdelkader <osama.abdelkader@gmail.com>
-> Reviewed-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> ---
->   target/arm/whpx/whpx-all.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+What do you mean by "system endianness"? The default endianness picked
+for a particular qemu-system-foo binary?
 
