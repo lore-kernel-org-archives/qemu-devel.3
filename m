@@ -4,55 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F7D0F3026D
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 16:39:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48DC0F30271
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 16:46:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1oUl-0006EY-Gy; Sun, 15 Mar 2026 12:39:15 -0400
+	id 1w1obU-0008VF-Jp; Sun, 15 Mar 2026 12:46:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1w1oUh-0006EE-Jg
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:39:12 -0400
-Received: from out-182.mta1.migadu.com ([95.215.58.182])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1w1oUe-0003kR-BC
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:39:11 -0400
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1773592744;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=qG1cFCLchytQdDL6JPUlWv/uaHhSzGiIiaOFboPuR0w=;
- b=eTEy4Er1Y6j2jkiqvy6A1bpHihvRT0yp2DIgTFNwRHAVRIBgzuw9EcZsA7QXYDiZ7+ORQ7
- tdDqn/yJaKxijKj/pe7BtudtbcC2zgnaFO3HHuhEJfi22+7cOpP8ZJ7apck6PwAE1SJldY
- GQJkNK3J7yJbhsxeq5T+CGBu1Q48VE0=
-From: Zenghui Yu <zenghui.yu@linux.dev>
-To: qemu-arm@nongnu.org,
-	qemu-devel@nongnu.org
-Cc: agraf@csgraf.de, peter.maydell@linaro.org,
- Zenghui Yu <zenghui.yu@linux.dev>
-Subject: [PATCH rfc] hvf: arm: Inject SEA when executing insn in invalid
- memory range
-Date: Mon, 16 Mar 2026 00:38:40 +0800
-Message-ID: <20260315163840.30741-1-zenghui.yu@linux.dev>
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1obR-0008Uh-6Z
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:46:09 -0400
+Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1obO-0004SM-WF
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 12:46:08 -0400
+Received: by mail-wm1-x335.google.com with SMTP id
+ 5b1f17b1804b1-48539cbb7b1so21213705e9.3
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 09:46:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773593165; x=1774197965; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=9bbCeOdp0iVw7lo4i2MP8IF3prP2bMoxmuvhqQV1tTY=;
+ b=EBVpa8VhxPA8IdxeaWS6KicsNpQdEvV4J59A+5TXPBUyMxxDeu75ng9Xp0IIAtuTGN
+ INaQ0UYjGDEu6jksFhMZaUKCmmwwJYoMSvkrbX1gINXQ0U1Pzl3uD2HS38AHPgwIst0A
+ 4+X9qp54CSAi7yQa83uUFMRVVDpHIFTXnYcz1XodiWNtjROQQwDPZ0t6AlRHe7glB4Tp
+ fmUBZKMHaaFYkYXP3wqctcxDahvHPxYb+/BYt3Mo+UsLTlQH773/VG4iK4Ca6iHlG7o5
+ JeMdSGmtkHNtMJBT0rZ93uojoPGUUMrqqKBKEvp56ay0HM2JBjpi99R8VTwUthzfUwUm
+ S8ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773593165; x=1774197965;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=9bbCeOdp0iVw7lo4i2MP8IF3prP2bMoxmuvhqQV1tTY=;
+ b=ZkQLiapxU7+jv9BYKKZkG8bqjzg58iU0RIQUR943P2m3sqigFYQqVe8vPUt7SfBcRE
+ plm2A/7Q7z9NMOybLIQTQTMhhzdBzvbjja8geAZs+eMITfsbDHARG+YJmbkjLhvaebek
+ Tu1ReVt5fIRgN0MtOJU9y7dUCZoBDwWcniEG9U+3lyAmxgROVISEuCwUBPXZhA5UGScN
+ l7JTx7S9p1DmXPpS/Um/fgSP18S28PmVhbtXfdd8afcV78aNq9iC0788m/uWzJA3ZNMM
+ Vr/MD2v2DJmrZu2oEK5BG08a7CHr4imkHW+iYB/AsoUt3KDdakSIKJrQsAljxsQXnaMn
+ Lctg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUcicCCGzSd4W3md67SWqeqbKXmfEqr4VytXqNuXyaMlMNnek5IPOETGYJCbSxz7qJFALlj03fLyWfN@nongnu.org
+X-Gm-Message-State: AOJu0YyVtM76kmRHc+GSnE5mQbNO8wgmaZtX6U5pUn1qJnoDA+hDMLqq
+ 55ikBp7qdm4j60Z0wGEg6Q1Fes56PJJD7v9ITfStZDgGXNqlpO8RjN8qzjF+Tb1TvBE=
+X-Gm-Gg: ATEYQzwiTE/0U+vKVQsEW360jtx4ML9jx6L3SNiTR6xih46/0XnQBtMKBUzw0R8v0LE
+ Ap++jJZsTp0JdoXvRU4316GlBEho7veZlKndvCImRs35Z7TClkdVbAuGewCBD4Rv26j41NlUA2p
+ UfUtQ8SfJJjuvS+LjgbQJ09yRmCX4dgyKrV1JBzf9azMZWyDOdoImBLw3fyNmHXbJO+RxvwNdb1
+ M+sdmH4n3MZExk03kGnFWbKrUDjbYlp/ZE0k6gmK9BGC0tv3jRwkKFp4yjsxfEi1UT3XxPBiPdE
+ ynPijpPmraFW+3bdSN5WbyKH3PVrKGc/IhkcoY6CWJoIRjbrt1JKGVlOOBHADAtUiVpaeZ5QXCs
+ 438z5XPqssbj7jx7UgWOS3J+u7wFPxSwn/wRcaR7k4P6ZdkcRCswU/hq8sfY6ilz1EOFdLAdT8q
+ /oof91/8891+Z9QU8P18WelOsRrYwd/GH+iBY+LEh4G/nGZ3V/NIJIV+CtjpKJaUsquw==
+X-Received: by 2002:a05:600c:8b8a:b0:485:2a4b:7bc3 with SMTP id
+ 5b1f17b1804b1-485566e1a57mr171971175e9.4.1773593164581; 
+ Sun, 15 Mar 2026 09:46:04 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48557c66583sm75098765e9.21.2026.03.15.09.46.02
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Sun, 15 Mar 2026 09:46:03 -0700 (PDT)
+Message-ID: <14d43537-aa9d-4454-b959-28d88589e7be@linaro.org>
+Date: Sun, 15 Mar 2026 17:46:02 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 0/8] hw/vfio: single-binary
+Content-Language: en-US
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Paolo Bonzini <pbonzini@redhat.com>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, qemu-ppc@nongnu.org, eric.auger@redhat.com
+References: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=95.215.58.182; envelope-from=zenghui.yu@linux.dev;
- helo=out-182.mta1.migadu.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+Received-SPF: pass client-ip=2a00:1450:4864:20::335;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,74 +104,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It seems that hvf doesn't deal with the abort generated when guest tries to
-execute instructions outside of the valid physical memory range, for
-unknown reason. The abort is forwarded to userspace and QEMU doesn't handle
-it either, which ends up with faulting on the same instruction infinitely.
+On 15/3/26 08:08, Pierrick Bouvier wrote:
 
-This was noticed by the kvm-unit-tests/selftest-vectors-kernel failure:
+> Pierrick Bouvier (8):
+>    hw/vfio/listener.c: remove CONFIG_KVM
+>    hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
+>    hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+>    hw/vfio: eradicate CONFIG_IOMMU from sources
+>    hw/vfio/pci.c: eradicate CONFIG_KVM
+>    hw/vfio/ap.c: use full path for target specific header
+>    hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
+>      hw/vfio/kvm-spapr.c
+>    hw/vfio: all vfio files can now be common files
 
-  timeout -k 1s --foreground 90s /opt/homebrew/bin/qemu-system-aarch64 \
-    -nodefaults -machine virt -accel hvf -cpu host \
-    -device virtio-serial-device -device virtconsole,chardev=ctd \
-    -chardev testdev,id=ctd -device pci-testdev -display none \
-    -serial stdio -kernel arm/selftest.flat -smp 1 -append vectors-kernel
-
-  PASS: selftest: vectors-kernel: und
-  PASS: selftest: vectors-kernel: svc
-  qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
-  qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
-  qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
-  [...]
-
-It's apparent that the guest is braindead and it's unsure what prevents hvf
-from injecting an abort directly in that case. Try to deal with the insane
-guest in QEMU by injecting an SEA back into it in the EC_INSNABORT
-emulation path.
-
-Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
----
- target/arm/hvf/hvf.c | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
-
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index aabc7d32c1..54d6ea469c 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -2332,9 +2332,32 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         bool ea = (syndrome >> 9) & 1;
-         bool s1ptw = (syndrome >> 7) & 1;
-         uint32_t ifsc = (syndrome >> 0) & 0x3f;
-+        uint64_t ipa = excp->physical_address;
-+        AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
-+        hwaddr xlat;
-+        MemoryRegion *mr;
-+
-+        cpu_synchronize_state(cpu);
- 
-         trace_hvf_insn_abort(env->pc, set, fnv, ea, s1ptw, ifsc);
- 
-+        /*
-+         * TODO: If s1ptw, this is an error in the guest os page tables.
-+         * Inject the exception into the guest.
-+         */
-+        assert(!s1ptw);
-+
-+        mr = address_space_translate(as, ipa, &xlat, NULL, false,
-+                                     MEMTXATTRS_UNSPECIFIED);
-+        if (unlikely(!memory_region_is_ram(mr))) {
-+            uint32_t syn;
-+
-+            /* inject an SEA back into the guest */
-+            syn = syn_insn_abort(arm_current_el(env) == 1, ea, false, 0x10);
-+            hvf_raise_exception(cpu, EXCP_PREFETCH_ABORT, syn, 1);
-+            break;
-+        }
-+
-         /* fall through */
-     }
-     default:
--- 
-2.53.0
+Series:
+Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 
 
