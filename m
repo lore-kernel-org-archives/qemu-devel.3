@@ -4,67 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8DFCFD58B13
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8BB75D58B11
 	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 07:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1fag-0001gS-S0; Sun, 15 Mar 2026 03:08:46 -0400
+	id 1w1fak-0001jE-UH; Sun, 15 Mar 2026 03:08:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w1faf-0001fa-5G
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:45 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1w1fai-0001hY-Nt
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:48 -0400
+Received: from mail-pj1-x102a.google.com ([2607:f8b0:4864:20::102a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w1fad-0000bS-GO
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:44 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-358d80f60ccso2126432a91.3
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 00:08:43 -0700 (PDT)
+ id 1w1fah-0000cD-10
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 03:08:48 -0400
+Received: by mail-pj1-x102a.google.com with SMTP id
+ 98e67ed59e1d1-35a1cc6e478so1719931a91.0
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 00:08:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773558522; x=1774163322; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CHsQx5x1i32qhAN1gWugxMcojWZeVm1RagkCSpjZNqY=;
- b=rF7AeUwSBJCbsVrEq3Kf/TXs/YPqfKrJGJdgsD+pzyrHgI7+78c3nGpyEA/gxhcx5z
- JKlTb5HJYp+reUo4T6ZlT4RgPS7tZyBNaOsRbM4JLRTqpomx8yGoYh7D+xPleJevjWbF
- vAFe3bd1IFOiT3dYySSZOFxvmjTmFwy835z/3rkyVdwe2ATKh/quFvOPFMgNQlzNzlwa
- sxxYinDXubZd3KRE7jsMjc4GX2DLunNRbZAz/GGkQJal8pcpp5jyE1wBULk29cYQGw3n
- PKcGI0+eMv7X0JWxgwN+qtKKxdFxmXdYvQVaIyl1s/UhYSUt/SkdJpELO0bAulvVzCxe
- zOCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773558522; x=1774163322;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773558525; x=1774163325; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CHsQx5x1i32qhAN1gWugxMcojWZeVm1RagkCSpjZNqY=;
- b=peN4y5n+SsZ/3kumIPwIBkS3m9VAM48CDNu5JH1qDFpjwYwhhK2D8W3XxV1J+eLNEJ
- S7Ki5HWYHpqQhA35ygNUxrmyRpWgaYEY2VeO8R+JDt3H0UHED481Ivde0JDq9PGZYyUE
- TFoOCxGil9FDt8rKMIMtAm+JynHvgxxD8TRLfiW7EX1osh4RAeU7ftv0zm44akaxdCn6
- HoZ4wuagDrfJVdtb94wL1QJhK8tWqXkbeHUQQihrLqOcui5JMG+P4DKwtwQHl+N1W2k9
- 9JAiXsWudHm4FuuhbRsGfCIxqDIVLt81CiSXUPYJMdFbiT+fk2oB0Nafsjq/YNxXXK6E
- yERQ==
-X-Gm-Message-State: AOJu0YxeBWNMrGvaTe0TyIJRMWC5kAnsbpRt3Prm5ETA+5gSqPmcis5C
- NjbEvE9h0tE7pC2fab1knXuh2Uzk7CZsfFN6zkPxcrHFoXCNI8iJz0s+Mvzkfd/7DLn9XW7lTHb
- uIftJ0uM=
-X-Gm-Gg: ATEYQzy+BpzdoBhCF//iDiBs7/J/sOQOgUpMEl5ecbwhUKGomWIVVNOtYSDKTCcqQVA
- m28oaj1ymHvERAtg7whOfBBKM/HVT311NGLvSTf5SlH2mtOS/rcOFThTfeMRJjiH6IYy8gkyPBp
- d0q8MEziM42suEZsirxIJJvJQ8fnaBWn+AUi6T+vMWicZrrZvMZD/kdyrkHvTBKEVI7UfzFEvPd
- rLwrzcuWMYQn1G0KFUfnQDjm211mP1a9SSNZlhvz3SUlxy9GVfP+Fz6c7Wq3uYzJj043kFswZlJ
- /hTWYoF4DgGDdW0QpSxvVAvzvygBdjaWfsRDA1tP/F4DXBvBwm+ieyUwb4gSgd8p99xAbYbL1tA
- 6IxnY7Rk1kz7Wi9WfVCs00qPl6nAD1F8DYTrJL+ehQ3u6hD6G99SyLASUgEaYKxoHb94BWdVJoa
- saYpWRF1em70gDZk4DrDw6nlXE/EjpWhvTlGUOWFUU5UQISbfOwwVmcFvTZDAga7vnOZ7wNDQ77
- jY=
-X-Received: by 2002:a17:90b:2f85:b0:35b:94db:fd97 with SMTP id
- 98e67ed59e1d1-35b94dc0487mr1553405a91.21.1773558521756; 
- Sun, 15 Mar 2026 00:08:41 -0700 (PDT)
+ bh=k06r4+VvkL2G3ql4sYSuFl4jS3d8PMWI1522EBSoENc=;
+ b=TrIGkMTzKeIjxvmxB1Ixt7UawiCgTX+k6PiZmnGVus2WakHzMfjTVHQTLq3AO+47Qz
+ 22Lopaq3mMcoTU+PdXOjjqqWJKCHM+z8BqrAgCMyLyb9QK5/f5ZdqdlPvpYE4YpAsnlH
+ Mu8eYMBzzlxkpr4Wmm3UQgtoHYUWej7tmSthP/6sSiDPeI6zav/MqktgJZlzzEqjre2J
+ YO4TiC/4ZZ9iEdtV20CyhwIJx6HOtcqVENTgauycVoJX9b0sAKhBImlp0sZXtIqpgnOc
+ MkCzwMD1IBp2ihz+FWPVohpJNIlxmOVHa2wWljNChTHWHa4YIqU7SfDzyAjw7j9HB2Jw
+ oEYg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773558525; x=1774163325;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=k06r4+VvkL2G3ql4sYSuFl4jS3d8PMWI1522EBSoENc=;
+ b=py5FEUawWZgGl7RIUz8UUSviqCcPNm9xvwnuGH62RNhQGCo6r8FQvfcbv/eEURwLge
+ gIMzXWvxMv6wC5qR0UC7a5jIAIHVsznAKSgGx/rs1Nle7o8YkCJp4wuKHiwXzU9dbKHK
+ rIGE+1SFdS2+cS7LpcnDVcsyJueYydriGfX/ZcDumRAHBT8ak0HcHel1zpiHfmV5jKR8
+ 5SBVKzrZDJPTZ0oKfttIGSn406rOXBM/czFdO1IpWOHF/0eWmDkXEPZRXkHBh87Lw42Y
+ MmVvx/7da0M7QdN0Ef8Ub0LPWrUvv5qPMgNp6bo+9NPvPYy5xD8KO3JEaFAZJGtiUGQl
+ 1Hig==
+X-Gm-Message-State: AOJu0YyIx9naenMVbsSHKlXMueJfUV9DEGxq9yaI53vVlU+/FABvWGpS
+ VSfIPVXIOzdYrzTanCy1DXzrjiBkn6gGVKVghRT01toKg4qM1w6c493Ht8JkNSq1AyMZfjWwhNP
+ BZA9JL8o=
+X-Gm-Gg: ATEYQzxrqTmcpA4DSmrGgIopZsxD35uuQY8IMXZIqAv+FH5NWTC91ipOZTtLYv2F/Zd
+ C9a+YsWNg0bNamoUH/WNMv6nbX7uzAZhOFrYQpL0ZKHjK7+SViCfLdm2a3+PXNTTvNa2EPCj+96
+ 93yJFvzild96pqlkYv5sPpI746/+VnavJOk+qluLEz+KgisZMibDqjLBizxYeGwC1/pE6W9URgm
+ sjaiKmw1w0wDsActqmAbGD37GYUzw738n8PZzbYDbm3VW6GLN+u7Pf02KmEiIDBow813BZAS6kg
+ +ztJLw8xsfOAXOjzENu5QXol3aAwJKNxBd/2rumm//KwZBvgstpCQIB80hwu9AuTYTZk6a5iXJb
+ QLCfglQFPtslSX31TchX4qrZhYf1Guh9etF6StGu8kwD0zhZsyiy3ASxhp/fMKbXg+9Qi+Dp9TL
+ TNl85///xOy00NuVHfqXSvDI46lp/Zo4M6rEitVcQ3zA6mWloMf2qfBp2hp18d0FF+e5FFNuQaH
+ 3o=
+X-Received: by 2002:a17:90b:38c1:b0:359:fecd:1cb6 with SMTP id
+ 98e67ed59e1d1-35a21cb4b21mr7987793a91.0.1773558525286; 
+ Sun, 15 Mar 2026 00:08:45 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35a24acecadsm3468233a91.2.2026.03.15.00.08.40
+ 98e67ed59e1d1-35a24acecadsm3468233a91.2.2026.03.15.00.08.44
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Sun, 15 Mar 2026 00:08:41 -0700 (PDT)
+ Sun, 15 Mar 2026 00:08:44 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
@@ -72,15 +73,17 @@ Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  qemu-ppc@nongnu.org, eric.auger@redhat.com
-Subject: [PATCH v3 0/8] hw/vfio: single-binary
-Date: Sun, 15 Mar 2026 00:08:26 -0700
-Message-ID: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+Date: Sun, 15 Mar 2026 00:08:29 -0700
+Message-ID: <20260315070834.198331-4-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
+References: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102a;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,52 +106,143 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This series makes changes to hw/vfio to compile files only once.
-Changes are pretty straightforward and are mostly extraction of kvm/other config
-specific functions to proper files.
-This is the last hw/* subsystem that needs to be changed for single-binary.
+Add stubs for needed functions.
 
-v2
---
+As well, we need to add pixman to qemuutil library dependencies since
+pixman is transitively included from pci.h header, which is needed to be
+able to include prototypes for stubs we declared.
+In file included from include/ui/console.h:4,
+                 from ../hw/vfio/vfio-display.h:12,
+                 from ../hw/vfio/pci.h:25,
+                 from ../hw/vfio/igd-stubs.c:9:
+include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or directory
+   10 | #include <pixman.h>
+      |          ^~~~~~~~~~
 
-- use global stub_ss (fix some missing dependencies in this case)
-- move kvm_enabled() guard check on function calls
-- s/Vfio spapr kvm/VFIO sPAPR KVM/
+On OpenBSD, opengl headers are not available in default include path,
+and thus we need to add opengl to list of qemuutil dependencies.
+In file included from /home/root/qemu/include/ui/console.h:9:
+/home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h' file not found
 
-Pierrick Bouvier (8):
-  hw/vfio/listener.c: remove CONFIG_KVM
-  hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
-  hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
-  hw/vfio: eradicate CONFIG_IOMMU from sources
-  hw/vfio/pci.c: eradicate CONFIG_KVM
-  hw/vfio/ap.c: use full path for target specific header
-  hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
-    hw/vfio/kvm-spapr.c
-  hw/vfio: all vfio files can now be common files
+Finally, vfio_pci_hot_reset_info must be forwarded declared on non linux
+platforms:
+In file included from ../hw/vfio/igd-stubs.c:9:
+../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info' declared inside parameter list will not be visible outside of this definition or declaration [-Werror]
+  265 |                                     struct vfio_pci_hot_reset_info **info_p);
+      |
 
- meson.build                  |   2 +-
- hw/vfio/kvm-spapr.h          |  12 +++
- hw/vfio/pci.h                |   2 +
- target/s390x/kvm/kvm_s390x.h |   2 +-
- hw/vfio/ap.c                 |  11 +-
- hw/vfio/ccw.c                |   9 --
- hw/vfio/helpers.c            | 172 -------------------------------
- hw/vfio/igd-stubs.c          |  20 ++++
- hw/vfio/kvm-helpers.c        | 192 +++++++++++++++++++++++++++++++++++
- hw/vfio/kvm-spapr.c          |  47 +++++++++
- hw/vfio/kvm-stubs.c          |  34 +++++++
- hw/vfio/listener.c           |   4 -
- hw/vfio/pci-quirks.c         |   5 -
- hw/vfio/pci.c                |  39 ++-----
- hw/vfio/spapr.c              |  30 +-----
- hw/vfio/meson.build          |   6 +-
- 16 files changed, 329 insertions(+), 258 deletions(-)
- create mode 100644 hw/vfio/kvm-spapr.h
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ meson.build          |  2 +-
+ hw/vfio/pci.h        |  2 ++
+ hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
+ hw/vfio/pci-quirks.c |  5 -----
+ hw/vfio/meson.build  |  1 +
+ 5 files changed, 24 insertions(+), 6 deletions(-)
  create mode 100644 hw/vfio/igd-stubs.c
- create mode 100644 hw/vfio/kvm-helpers.c
- create mode 100644 hw/vfio/kvm-spapr.c
- create mode 100644 hw/vfio/kvm-stubs.c
 
+diff --git a/meson.build b/meson.build
+index 11139f540b0..5abfc8ef190 100644
+--- a/meson.build
++++ b/meson.build
+@@ -3794,7 +3794,7 @@ util_ss = util_ss.apply({})
+ libqemuutil = static_library('qemuutil',
+                              build_by_default: false,
+                              sources: util_ss.sources() + stub_ss.sources() + genh,
+-                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc, rt])
++                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc, rt, pixman, opengl])
+ qemuutil = declare_dependency(link_with: libqemuutil,
+                               sources: genh + version_res,
+                               dependencies: [event_loop_base])
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index d6495d7f297..c3a1f53d350 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -258,6 +258,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp);
+ 
+ extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
+ 
++struct vfio_pci_hot_reset_info;
++
+ void vfio_pci_pre_reset(VFIOPCIDevice *vdev);
+ void vfio_pci_post_reset(VFIOPCIDevice *vdev);
+ bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
+diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
+new file mode 100644
+index 00000000000..f7687d90912
+--- /dev/null
++++ b/hw/vfio/igd-stubs.c
+@@ -0,0 +1,20 @@
++/*
++ * IGD device quirks stubs
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/qmp/qerror.h"
++#include "pci.h"
++#include "pci-quirks.h"
++
++void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
++{
++    return;
++}
++
++bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
++{
++    return true;
++}
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 7b907b9360d..ab864048943 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -11,7 +11,6 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include CONFIG_DEVICES
+ #include "exec/memop.h"
+ #include "qemu/units.h"
+ #include "qemu/log.h"
+@@ -1128,11 +1127,9 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
+  */
+ bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
+ {
+-#ifdef CONFIG_VFIO_IGD
+     if (!vfio_probe_igd_config_quirk(vdev, errp)) {
+         return false;
+     }
+-#endif
+     return true;
+ }
+ 
+@@ -1179,9 +1176,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr)
+     vfio_probe_nvidia_bar5_quirk(vdev, nr);
+     vfio_probe_nvidia_bar0_quirk(vdev, nr);
+     vfio_probe_rtl8168_bar2_quirk(vdev, nr);
+-#ifdef CONFIG_VFIO_IGD
+     vfio_probe_igd_bar0_quirk(vdev, nr);
+-#endif
+ }
+ 
+ void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr)
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index f2a7728d3d0..6c00a7f51bb 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -17,6 +17,7 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+ vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
+ vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
+ vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
++stub_ss.add(files('igd-stubs.c'))
+ 
+ specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+ 
 -- 
 2.47.3
 
