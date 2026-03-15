@@ -4,95 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1DAE4F3026E
-	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 17:14:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D996F30280
+	for <qemu-devel@archiver.kernel.org>; Sun, 15 Mar 2026 18:57:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1p2n-0008UG-L8; Sun, 15 Mar 2026 13:14:25 -0400
+	id 1w1qdH-0001FW-IH; Sun, 15 Mar 2026 14:56:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1p2m-0008Tu-BZ
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 13:14:24 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w1p2i-0007jh-QR
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 13:14:23 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43b44c0bcdbso51298f8f.1
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 10:14:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773594859; x=1774199659; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=X9l8ptDXXRaC2pJzuAa9rhP/bA0KLx+pXcT+7LqyR/Y=;
- b=DxyKHCNvawc2BVbgmJKR+70N+3SOzz7Nfnf9FtgmRddlQh7/aTqBefbUbIA9mLPZL7
- XR2HXrUrsbIQ2gm45IfBsCtFeVX8bu1sT4jv5crAaamN936L/2U4lA4iPNKD3GjHJWUo
- QWSHpLJcakKODde41Oyj6uKFohnhZ9M4/JQ3zOFmWDnRKqthauPAAzdTtwxJe13gXsIn
- Kcl71bIb1qznCkcqadoH2x2K8+pHdjU3PFd+VfJQUMJUxmpQj+euxvBJVJl/ypuKdByq
- RPKCQJVF/It9fdZsrgrgbBOr8BeXV18t0wRQcunCC8i6z2lxlcexBFMchhcRUHivkqqE
- HTgA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773594859; x=1774199659;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=X9l8ptDXXRaC2pJzuAa9rhP/bA0KLx+pXcT+7LqyR/Y=;
- b=DtmgAEvbskTeCY5EIfdjuJiOdWGNNvofejenmMyYLVDiX6X7hrRWzGC/ts96o+ylDf
- dDTka31DRz9FUg/t2/YV/GWcbTpC2GTgYRcRASxcmkMtShYGsfgbP0u8+ihlJgUvHID7
- XHCHvUIAEUuo6C11RHavH4rkbxre2uQstuCngeO2tD0B9XrB5CM9Rx8OtKPsAaJkV/08
- OvTeIdKZ8Kz50OIhyfJsV7x4soMgnOZbPvjOviFbh7lnOff4jUfm6A26V1I+lLsWM33m
- nGPXMLwyl0MJjME6rIyjGYvSQLtpV75T4dMB0H8wY3QOZTXe3l2xbRqgbZo1WlMKZ7w2
- G5xA==
-X-Gm-Message-State: AOJu0YyNPydfdYurx3Zi8g9T/IGezLTbTle2UMrGTKMhZ6bELo3gufbq
- lum8OhJn2cbsk+J5cCoEEeksbZQbIOsnva16zsHbmJU5Hh6VQ/QKLVR61yss/vZ8u3xW8BeeX3A
- 6w2hvK9M=
-X-Gm-Gg: ATEYQzyNfOxEHpOJ6EPvST9ttgmSuiSu++ZEbffxc1ElNcIeq5a98ZXxnC7hubN/Bhx
- Z+IHpFmE+pWOIBgDdGha13IBaiI2Ebu/gmjBcJ7f8Cls7pqIR4sEeY4XJS6Fb3YNpYbfxaiXurj
- EkHzYUSVRfKTCFcV3Q4jn4WYAiJnp9SH2txMKv+CcGnX3bZzS4axfjxdQqwKB5pC91g88IrmvdC
- 3DR59DPtdoRTAaUw918EC2/Qm844DjqjrrXWWPMie5drva/DZuhaGrwbhEan6C465tkk8VcS/aY
- 8oUX+VRCV/tLKUCULmutf3IkZqjXZUxsxVXuI1fpueyYFIVWlkvwb3fojAD+kAvJkzpv9yZc3Pz
- /a2VmUCVvCeBNc3OtnaviPF7TA9WE+f2yz4tkKL4a2A4T6ejjc0zlL1VVN+FROUl57VgI7y0oBv
- PVMlh5GzoRSZ5eyXDnNL78O5r9aCXOdwKbCp2WuYIdYkZgjQcN5cX4A8P+e8fPEp9GEg==
-X-Received: by 2002:a05:6000:a85:b0:43b:3cd9:aa61 with SMTP id
- ffacd0b85a97d-43b3cd9aca9mr4594859f8f.25.1773594858791; 
- Sun, 15 Mar 2026 10:14:18 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b3d87b1fbsm10034725f8f.7.2026.03.15.10.14.17
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Sun, 15 Mar 2026 10:14:18 -0700 (PDT)
-Message-ID: <509bd103-9535-4822-a62d-b959bf3f8044@linaro.org>
-Date: Sun, 15 Mar 2026 18:14:17 +0100
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1w1qdF-0001FI-Pg; Sun, 15 Mar 2026 14:56:10 -0400
+Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1)
+ (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
+ id 1w1qdD-0001TV-5i; Sun, 15 Mar 2026 14:56:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=univ-grenoble-alpes.fr; s=2020; t=1773600962;
+ bh=o40dCX0CGQpKDWzfJhlJU21wbdrPQlfmHhVESnLhdG8=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+ b=QdGtSX+4N5HY5q+5tu4cp/NTfwpj8xPNia5y1OqcMey/Ygdm9O5lBwGn4k9HQPkgM
+ /aen1XBEt+azPkNdVAGwjIZFWlclaMc95ccGTf2oEbRFoBFAQNtwk+Tyqfd/8fcsUv
+ AXnc/g9iahYVKw4KJf/GfuNXEkemFYnxa+iuv8Xeq8Tw0DgLhSMoWHwkxughL+IQGP
+ VNeGD3TPGz10j5z9nd4w4uDsS8oUPyPRrpN+tYiVPHlhBdFggQ+fbKeNK0wyqb1I0S
+ u8fk7E8rbsCVfHdlTvnXrwcCj4fgnIF+rhCnB92SU3PVbK7DLBaR+6jc+ssJIiE11t
+ dGinDOaJW0bjA==
+Received: from mailhub-1.u-ga.fr (mailhub-1.u-ga.fr [129.88.178.98])
+ by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 32B3640232;
+ Sun, 15 Mar 2026 19:56:02 +0100 (CET)
+Received: from smtps.univ-grenoble-alpes.fr (smtps3.u-ga.fr [195.83.24.62])
+ by mailhub-1.u-ga.fr (Postfix) with ESMTP id 2E01EFF859;
+ Sun, 15 Mar 2026 19:56:02 +0100 (CET)
+Received: from [192.168.1.62] (35.201.90.79.rev.sfr.net [79.90.201.35])
+ (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
+ by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 4C778400D4;
+ Sun, 15 Mar 2026 19:56:01 +0100 (CET)
+Message-ID: <35544128-3c7f-48b2-a67f-9253cf8f5df0@univ-grenoble-alpes.fr>
+Date: Sun, 15 Mar 2026 19:55:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [RFC PATCH] target/riscv: Restrict access to RV128 registers on
  RV32
-Content-Language: en-US
-To: qemu-devel@nongnu.org
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
  Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
- <frederic.petrot@univ-grenoble-alpes.fr>,
  Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Palmer Dabbelt <palmer@dabbelt.com>
 References: <20260315165949.40027-1-philmd@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
+ <frederic.petrot@univ-grenoble-alpes.fr>
 In-Reply-To: <20260315165949.40027-1-philmd@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
+ via submission-587 ACL (41)
+Received-SPF: pass client-ip=152.77.200.56;
+ envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
+ helo=zm-mta-out-3.u-ga.fr
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -108,7 +91,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 15/3/26 17:59, Philippe Mathieu-Daudé wrote:
+Hi Phil,
+
+   my understanding is that rv128 makes no sense with rv32, and
+   the user is not expected to run qemu-system-riscv32 with
+   the -cpu=x-rv128 (it triggers an "unable to find CPU model
+   'x-rv128'" error).
+   The rv128 code just relies on XLEN being 128, and assumes
+   (implicitely I admit) running on a 64-bit host machine, so
+   with tl = 64.
+   The code is absolutely erroneous when tl = 32, agreed.
+   The thing is that, as we want to get rid of the
+   TARGET_RISCV64/TARGET_RISCV32 defines, the rv128 specific
+   code still must compile whatever tl, so that qemu can be built.
+   However, it should never be executed if tl = 32.
+   Typically, the patches I sent earlier this year to deal
+   with lq/sq endianness fit into that 'compile only' category
+   for rv32.
+
+   Thanks,
+   Frédéric
+
+On 3/15/26 17:59, Philippe Mathieu-Daudé wrote:
 > One half of 128-bit registers code is not reachable for CPUs
 > running in 32-bit mode, while the other half is completely
 > broken (handled as a pair of 32-bit registers).
@@ -330,28 +334,13 @@ On 15/3/26 17:59, Philippe Mathieu-Daudé wrote:
 > +#endif
 >       }
 >   }
+>   
 
-Doesn't matter much, but I forgot to commit this hunk:
-
--- >8 --
-diff --git a/target/riscv/insn_trans/trans_rvzacas.c.inc 
-b/target/riscv/insn_trans/trans_rvzacas.c.inc
-index 8cf7cbd4599..dc67a027f86 100644
---- a/target/riscv/insn_trans/trans_rvzacas.c.inc
-+++ b/target/riscv/insn_trans/trans_rvzacas.c.inc
-@@ -92,9 +92,11 @@ static bool trans_amocas_d(DisasContext *ctx, 
-arg_amocas_d *a)
-      switch (get_ol(ctx)) {
-      case MXL_RV32:
-          return gen_cmpxchg64(ctx, a, MO_ALIGN | MO_UQ);
-+#ifdef TARGET_RISCV64
-      case MXL_RV64:
-      case MXL_RV128:
-          return gen_cmpxchg(ctx, a, MO_ALIGN | MO_UQ);
-+#endif
-      default:
-          g_assert_not_reached();
-      }
----
+-- 
++---------------------------------------------------------------------------+
+| Frédéric Pétrot,                        Pr. Grenoble INP-UGA@Ensimag/TIMA |
+| Mob/Pho: +33 6 74 57 99 65/+33 4 76 57 48 70      Ad augusta  per angusta |
+| http://tima.univ-grenoble-alpes.fr frederic.petrot@univ-grenoble-alpes.fr |
++---------------------------------------------------------------------------+
 
 
