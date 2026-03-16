@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E33C8EFCBD7
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:14:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDC6EEFCBD4
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:14:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w226R-0007qD-AZ; Mon, 16 Mar 2026 03:11:03 -0400
+	id 1w226Q-0007o3-6O; Mon, 16 Mar 2026 03:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w225c-0007Tq-2q; Mon, 16 Mar 2026 03:10:12 -0400
+ id 1w225z-0007Xd-HN; Mon, 16 Mar 2026 03:10:36 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w225Y-0007jc-V1; Mon, 16 Mar 2026 03:10:11 -0400
+ id 1w225w-0007mQ-Jo; Mon, 16 Mar 2026 03:10:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773645002; bh=1vJ3glu4hYTQGumw1VmumcQjcBoRBkkjsNqx/2fzMLY=;
+ t=1773645003; bh=3oPGCPWf4oBSqpr1NBJFg+oiDZJOMIoxaB0KK+BxLqQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=muMKQrcgAu5/OlUGi0v3VDos9Z+2mp3ZRyT//aXdspDUKH1y0RsjIJoEXKTKzgp00
- IeR7QlCScCga8zP3AlzeP7BMR2c6sOp1Ij8yapAiF75CblIrJM7BKM2VfRu6OVY08Y
- mbjYT2YHoeS63PFcWGTKinxag5+nS74kYpMuZ/xdtdlvAJ0p4AXaUU4pP48dZBzRXA
- CNzjxpAS+Z0wT9irDIxdswXPfN3pWAcOqZuHorZc80SsmatBJ3KvDa3MBJ95pSvqDu
- TDupA16WtYVW3114vWdmBla0CK6bkFFcTrSSS7VBsLdNjVGX6Ruxe6oVaepwaFYt9i
- xYm5shWiSMHxQ==
+ b=KNcydI6F6JRfwhRMa76hcJXxKBCjpGqAZTkN9va1QVYwpR84z2LO4crHyRYkSlx2q
+ mab3JehOEG0jIqph8eBobPLJpITs0yPFlK7cwAC7FT3XnfMHbCWXes+CBP4QwLpmPw
+ PQKlb56h11c+YdVXQPKc7NQaaTDQHav4fzn6sctNvgw3Yda8CQ0ASLoeoYIThqAfEX
+ 4trUvKI9VIvS3gLKxUeY6ZSExX4gtrjnbN/C7WR28EVeQUpuCSVJr0Mbr5CvLkLGbT
+ uaNQFlsM6g57JPv9pe1fWN1XkFAv4ABHeGFuxH22+IjM2kZR8Tq9NUaAM1zVTr2awr
+ pZKrGDOvMZXYQ==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 6B497193C23;
- Mon, 16 Mar 2026 10:10:02 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id 037BE193C2B;
+ Mon, 16 Mar 2026 10:10:03 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 738D038004B;
- Mon, 16 Mar 2026 10:10:05 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 04542380053;
+ Mon, 16 Mar 2026 10:10:06 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Christopher Palmer-Richez <crichez@pm.me>, qemu-trivial@nongnu.org,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 01/14] net/slirp: allow hostfwd socket paths with dashes
-Date: Mon, 16 Mar 2026 10:09:49 +0300
-Message-ID: <20260316071005.91624-2-mjt@tls.msk.ru>
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
+	qemu-trivial@nongnu.org
+Subject: [PULL 09/14] meson.build: stop checking for splice()
+Date: Mon, 16 Mar 2026 10:09:57 +0300
+Message-ID: <20260316071005.91624-10-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260316071005.91624-1-mjt@tls.msk.ru>
 References: <20260316071005.91624-1-mjt@tls.msk.ru>
@@ -69,60 +69,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Christopher Palmer-Richez <crichez@pm.me>
+CONFIG_SPLICE was only needed for linux-user/, where it is not
+used anymore (assuming splice &Co is always present)
 
-Adds get_last_str_sep, a variant of get_str_sep that checks for the last
-occurence of a separator. Updates slirp_hostfwd to parse unix domain
-socket paths with dashes.
-
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/347
-Signed-off-by: Christopher Palmer-Richez <crichez@pm.me>
-Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- net/slirp.c | 22 +++++++++++++++++++++-
- 1 file changed, 21 insertions(+), 1 deletion(-)
+ meson.build | 8 --------
+ 1 file changed, 8 deletions(-)
 
-diff --git a/net/slirp.c b/net/slirp.c
-index 04925f3318..968be9cc99 100644
---- a/net/slirp.c
-+++ b/net/slirp.c
-@@ -69,6 +69,26 @@ static int get_str_sep(char *buf, int buf_size, const char **pp, int sep)
-     return 0;
- }
+diff --git a/meson.build b/meson.build
+index 11139f540b..59ed1a527a 100644
+--- a/meson.build
++++ b/meson.build
+@@ -2908,14 +2908,6 @@ config_host_data.set('CONFIG_PTHREAD_AFFINITY_NP', cc.links(osdep_prefix + '''
+ config_host_data.set('CONFIG_SIGNALFD', cc.links(osdep_prefix + '''
+   #include <sys/signalfd.h>
+   int main(void) { return signalfd(-1, NULL, SFD_CLOEXEC); }'''))
+-config_host_data.set('CONFIG_SPLICE', cc.links(osdep_prefix + '''
+-  int main(void)
+-  {
+-    int len, fd = 0;
+-    len = tee(STDIN_FILENO, STDOUT_FILENO, INT_MAX, SPLICE_F_NONBLOCK);
+-    splice(STDIN_FILENO, NULL, fd, NULL, len, SPLICE_F_MOVE);
+-    return 0;
+-  }'''))
  
-+static int get_last_str_sep(char *buf, int buf_size, const char **pp, int sep)
-+{
-+    const char *p, *p1;
-+    int len;
-+    p = *pp;
-+    p1 = strrchr(p, sep);
-+    if (!p1)
-+        return -1;
-+    len = p1 - p;
-+    p1++;
-+    if (buf_size > 0) {
-+        if (len > buf_size - 1)
-+            len = buf_size - 1;
-+        memcpy(buf, p, len);
-+        buf[len] = '\0';
-+    }
-+    *pp = p1;
-+    return 0;
-+}
-+
- /* slirp network adapter */
- 
- #define SLIRP_CFG_HOSTFWD 1
-@@ -848,7 +868,7 @@ static int slirp_hostfwd(SlirpState *s, const char *redir_str, Error **errp)
- 
- #if !defined(WIN32) && SLIRP_CHECK_VERSION(4, 7, 0)
-     if (is_unix) {
--        if (get_str_sep(buf, sizeof(buf), &p, '-') < 0) {
-+        if (get_last_str_sep(buf, sizeof(buf), &p, '-') < 0) {
-             fail_reason = "Missing - separator";
-             goto fail_syntax;
-         }
+ config_host_data.set('HAVE_MLOCKALL', cc.links(osdep_prefix + '''
+   #include <sys/mman.h>
 -- 
 2.47.3
 
