@@ -4,116 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59E50F53D6F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:02:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F80CF53D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:06:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2ANU-00088B-OH; Mon, 16 Mar 2026 12:01:12 -0400
+	id 1w2ARn-0002bK-3z; Mon, 16 Mar 2026 12:05:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w2AN2-0007tX-IF
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:00:49 -0400
-Received: from mail-ej1-x636.google.com ([2a00:1450:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w2AMz-0000ak-KR
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:00:43 -0400
-Received: by mail-ej1-x636.google.com with SMTP id
- a640c23a62f3a-b79f8f7ea43so788233466b.2
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:00:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773676840; x=1774281640; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=6KccXD007nWyT95+vv0257vweqCs6krCr3cYinVI5h8=;
- b=w2g1Lpmad2vTMKIIvLUc8ztgn21fHTYlq2qoAH6cQgy8SrgE/Eb7c3xgYSIeVpwbx8
- VxWidi6YmqjGknXC4yn1zbGlcWmXzWoBo/VhkriSUt705ovK+K0lcQKe6HXNxUJmFq90
- Fym4Qo+uSAlTriR0UbpngE31ZhbFCPsNyWV9s0lHBFfcTQB0ZVW/7iwXMiQxkv2VOtyy
- RXnGLoZGUqjqRScU2thYPPf9C45nvcg8V9McnBbqfwmRuCqCFBV+JKSJwJHsLvg7tp9h
- i+vIqxSAUecVGV+RdPkvdPwGKpeA7Jn8CLxGAIxWRNy391QZsJiC8czVVL74EuwfnQ2a
- p6oQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773676840; x=1774281640;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :subject:to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=6KccXD007nWyT95+vv0257vweqCs6krCr3cYinVI5h8=;
- b=FpxZilVvHzi5W+XNJ9j3MVvR3EPHDtBCrIpeOME6ZiA28civJhpVh/WFR7ez7Hbhg2
- UXmiWrAiXT9D7Nmx5MGCorwHBMx9+ZZqNWm+srAbD76apQZgX5IvY2j41B1ux4KoIZs8
- uDlWRzHvJAcOCi1TANTRT0h/juAvtCRhdWSbIrmsBKaiso+ECUUr8YSjZnfxQE0hLxr4
- qLdtRFqHOgRawRjd/ZA7OLFrKIeezp8xlEG3nhLQs1wN7dWKW+sNGwG9S9QKRrxj1KwT
- 10ApAtR/53iuyRfH2kJ7TJcWvUes4Fs4n2XB882r1YI3nfJxXZRc3CxZM3vo/VOhzCAf
- RLSw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWLBHMWIBjjP2Ace5ivghuMF5clBwfwSJEWmTrbe+Gtf0dsqVraHFf5cQblghPj7SbdFpqWP82RfMJR@nongnu.org
-X-Gm-Message-State: AOJu0Ywh2M2JIbyx5KIa1pbDrVBHIsHWILLy3HVk9Vfzo+mbzztwHXFv
- 7c9o+O+iLOJSQ3fFR6Hccgh9fhufE7oxqWncsjfocLdUfkfCQUWg9r+oSAcCMz27bYhonw0WADa
- zSD2gTqI=
-X-Gm-Gg: ATEYQzyVtPFINGjaqgjpJvbpwQrL32QBRCuz8hwqwSf5yYmJMJEYgx+4znKt/9T6mRI
- nsgAuK1UfY8kA3VRUPHjN71ms7B00aVyJ1j7nVPvzAyF7FL9KryjkKc+MAxukprJZB+ij5jAzdi
- vVYDjeEmDJjLWfWxSfezQcyBuLfmdu2pRraLprz6FK/gTmhLt4Zms7MeTB8LRhO1qZY62w/trMm
- KXLSG01c9a9KLtzR8UOoTU0+rvLC65kkbCOY06tuNJbAlv30G7/L4wcw3Hl2q4T3qfnXPv8AW+q
- MvWFVTuuAb8TMkuHVOR3B7jDcAIuGo4e7h25+KEdcxAHF8vTxGq+FNVk4miXKQRZ+rxe1WR0LAK
- 2e6s0QNMUL6fO0EiWlIKrCT6/21HCrpU5EeTszDv19IJv67WOUgHHf4rX+eLtUjpgcy3tQU2R91
- 76gMG/PFkW1A6xmqB3/Cq1jPs=
-X-Received: by 2002:a17:907:94d4:b0:b87:2abc:4a32 with SMTP id
- a640c23a62f3a-b97650e428fmr932759766b.18.1773676839610; 
- Mon, 16 Mar 2026 09:00:39 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b97bd3281a5sm198595066b.30.2026.03.16.09.00.38
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 09:00:38 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 21CB45FA31;
- Mon, 16 Mar 2026 16:00:37 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Albert Esteve <aesteve@redhat.com>, Alberto Faria <afaria@redhat.com>,
- Alessandro Di Federico <ale@rev.ng>, Alistair Francis
- <alistair.francis@wdc.com>, Anton Johansson <anjo@rev.ng>, Markus
- Armbruster <armbru@redhat.com>, Brian Cain <bcain@quicinc.com>, "Daniel P.
- Berrange" <berrange@redhat.com>, Chao Peng <chao.p.peng@linux.intel.com>,
- cjia@nvidia.com, =?utf-8?Q?C=C3=A9dric?= Le Goater <clg@kaod.org>,
- cw@f00f.org, Demi Marie
- Obenour <demiobenour@gmail.com>, dhedde@kalrayinc.com, Eric Blake
- <eblake@redhat.com>, eblot@rivosinc.com, "Edgar E. Iglesias"
- <edgar.iglesias@gmail.com>, Eduardo Habkost <eduardo@habkost.net>, Elena
- Ufimtseva <elena.ufimtseva@oracle.com>, Auger Eric
- <eric.auger@redhat.com>, felipe@nutanix.com, Alyssa Ross <hi@alyssa.is>,
- iggy@theiggy.com, Warner Losh <imp@bsdimp.com>, Jan Kiszka
- <jan.kiszka@web.de>, Jason Gunthorpe <jgg@nvidia.com>,
- jidong.xiao@gmail.com, Jim Shu <jim.shu@sifive.com>, Joao Martins
- <joao.m.martins@oracle.com>, Konrad Rzeszutek Wilk
- <konrad.wilk@oracle.com>, Luc Michel <luc@lmichel.fr>, Manos Pitsidianakis
- <manos.pitsidianakis@linaro.org>, =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
- <marcandre.lureau@gmail.com>, Max Chou <max.chou@sifive.com>, Mark Burton
- <mburton@qti.qualcomm.com>, mdean@redhat.com, "Ho, Nelson"
- <nelson.ho@windriver.com>, Paul Walmsley <paul.walmsley@sifive.com>, Paolo
- Bonzini <pbonzini@redhat.com>, Peter Maydell <peter.maydell@linaro.org>,
- Phil =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, QEMU Developers
- <qemu-devel@nongnu.org>, Roberto Campesato <rbc@meta.com>, Richard
- Henderson <richard.henderson@linaro.org>, Shameerali Kolothum Thodi
- <shameerali.kolothum.thodi@huawei.com>, Bernhard Beschow
- <shentey@gmail.com>, Stefan Hajnoczi <stefanha@gmail.com>, Thomas Huth
- <thuth@redhat.com>, Wei Wang <wei.w.wang@intel.com>, z.huo@139.com, LIU
- Zhiwei <zhiwei_liu@linux.alibaba.com>, zwu.kernel@gmail.com
-Subject: KVM/QEMU community call 17/3/2026
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Mon, 16 Mar 2026 16:00:37 +0000
-Message-ID: <87ms07n4re.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w2ARk-0002ae-42
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:05:36 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w2ARb-000188-SC
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:05:33 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id E96D9596A46;
+ Mon, 16 Mar 2026 17:05:17 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id t2CAgGi-cJqp; Mon, 16 Mar 2026 17:05:15 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id D5379596A41; Mon, 16 Mar 2026 17:05:15 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id D332B5969F9;
+ Mon, 16 Mar 2026 17:05:15 +0100 (CET)
+Date: Mon, 16 Mar 2026 17:05:15 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Markus Armbruster <armbru@redhat.com>
+cc: =?ISO-8859-15?Q?Daniel_P=2E_Berrang=E9?= <berrange@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>, 
+ Eduardo Habkost <eduardo@habkost.net>, Thomas Huth <thuth@redhat.com>, 
+ Igor Mammedov <imammedo@redhat.com>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, 
+ Richard Henderson <richard.henderson@linaro.org>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, 
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
+ Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>, 
+ qemu-devel@nongnu.org, devel@lists.libvirt.org, 
+ Kevin Wolf <kwolf@redhat.com>
+Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track external
+ user input
+In-Reply-To: <87tsufpyo5.fsf@pond.sub.org>
+Message-ID: <96b88815-b01a-8d9c-0400-5d881bc9e6c0@eik.bme.hu>
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <877bricy97.fsf@pond.sub.org> <abFqwbCCf7rNDEWs@redhat.com>
+ <87tsufpyo5.fsf@pond.sub.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::636;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x636.google.com
-X-Spam_score_int: 4
-X-Spam_score: 0.4
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -1
+X-Spam_score: -0.2
 X-Spam_bar: /
-X-Spam_report: (0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- SORTED_RECIPS=2.499, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -129,18 +80,21 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On Mon, 16 Mar 2026, Markus Armbruster wrote:
+>> More generally anything we can do to bring qdev & qom closer together
+>> feels desirable. I dream of a future where -device/device_add are
+>> obsolete....
+>
+> That would be lovely.
 
-Hi,
+How would normal people add devices from the command line then? Do you 
+expect us to use -object or something like that with JSON instead? That's 
+very impractical so some command line UI should remain. Also is it 
+practical to force people to learn some QEMU specific language to be able 
+to write device models? Otherwise what advantage this gives over doing it 
+in C? I think these are questions to answer before getting into the 
+design.
 
-The KVM/QEMU community call is at:
-
-https://meet.jit.si/kvmcallmeeting
-@
-17/03/2026 14:00 UTC
-
-Are there any agenda items for the sync-up?
-
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+Regards,
+BALATON Zoltan
 
