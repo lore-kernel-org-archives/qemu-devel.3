@@ -4,82 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71954F53D8B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 938BDF53D8C
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 18:47:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Cyg-0000G1-VP; Mon, 16 Mar 2026 14:47:48 -0400
+	id 1w2CyV-0000F8-AG; Mon, 16 Mar 2026 14:47:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w2Cyb-0000Fh-CL
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:47:43 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1w2CyU-0000Ek-6R
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:47:34 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w2CyZ-0006F4-Iy
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:47:41 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2b04d051664so17538175ad.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 11:47:39 -0700 (PDT)
+ id 1w2CyS-0006EI-Cp
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:47:33 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ad21f437eeso241395ad.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 11:47:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773686858; x=1774291658; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773686851; x=1774291651; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=rcq98p8TBMj9rp8LW0tSIRQYuIxm2SJ2Ri6ycH/WQ9o=;
- b=mTJX1hKr+M44gpD5dnzpCu8yHgkz2aAX63foBxMne8iT/ozq0K3eHtesinooFWugP5
- qtqH8TrDxw8mib5hwuv+vhlFjQqhOujH6/wcBSQIAUzhUz4e+SM4z06uHhu4Rb0WiibH
- TXPWr+VzcyY3UWH/aYh7+DE6ab3dtK8PnJLw9OMD/Nn6XGZUFplYpk21RIKTwvoZ8JtQ
- fAystrXb8/Wdrz5Sb6eTEZvNEQmU3PXDyaCruuNezMQppRPJe1jlZfDzk/7/TMcN02l1
- iSWSQoZymyhOsMlU6YGYx+qBrdgVUhjGu8ziaICwrvmtovwmrM95EQnDeG+DrPUoFJdL
- 80xA==
+ bh=9AsPYgj95PXD3MBcJoJu/VQSlxFjkWCj9VT48jKP+PA=;
+ b=JBWwA4SS63psi908GzZEtZUp4I0BC61XPYavdJeGt1es64ShJNxMHLbL5QyR4t+3OQ
+ MW5r1yBS1KfZl3HbvJmVfY7oeKRZEz2q9Ena2hQDRtos2o+5VF8ZTT6ukv+MvRP3i3SS
+ yVbaGS157FdpPs9gZh2Jd8LIRislieoKitccChM/Q83yohhh0OBAYErAch2ANkqDQEV3
+ sv4c9ybwGx7fSRMdv7c711ekd/DY8L4ynH3AfJ6/6z1e1jQRttan2ryHN6rGDhIAXrzt
+ Na2sfAyPdmLESFXhMo8p3GRsYyAjNn79QzQ3CvT/2VGYm1EjFHrdkc51mkkiBwKjMv/T
+ JivA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773686858; x=1774291658;
+ d=1e100.net; s=20251104; t=1773686851; x=1774291651;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=rcq98p8TBMj9rp8LW0tSIRQYuIxm2SJ2Ri6ycH/WQ9o=;
- b=MrtofNJE7S3zBe9h9nHLhWxZFppnihq7RjYAOzedRzOasmErP9oqNhVjKKfAIasF9/
- IsyE0wINWyyzqTzc4dNXPhwkthrghsslsHZhmEwuPMJek0C3IBfF9I2PZpvVCD6B/CwD
- I+vMP2uxCrq+fnvo98nTO4NGvNjYiynee9bm1L8m/KUWgN01a86e1kB7GRYoihWYqbaB
- p0cJx+yczssWgCGHbTuk87+B5zt/UHUcXPPU8VYUfi8IgT7HG2szNviGRv3bewRzCPTF
- nZSPLaQ2sLDIPvSOCvLRIAwpqrprd7wkQbgdc4TqmCwhZFl4XSMb3kB1Nei7IIHcVKzv
- LdWg==
-X-Gm-Message-State: AOJu0Yy5LF8X3U+9+3XKai2o890QU6plZ9uTuwwFlxeR4mjKlxfy+KPy
- EQnCyolpMFhq0iocOTUkoESAtpdl7cXONpYM2DWUg0ngM3/7X8jAqm65mJ5aD7mw
-X-Gm-Gg: ATEYQzyQ0y2jjoXeMCG5C/RG/hdyJ2awW240rvIqnsOuJh0ieMHsDxqhLeLCObxqoHu
- JHPL6lWaIRpwZuiFHg45JKEm1hSxlERb40pmxsGbM6rFnsup7HWMf/RLvHdpOJnKfBEJ6mHTyyQ
- OhYGWnOxoVs4jCdC/cT4bhz8AV2al1gJxeOYeV9JgDgCUQmdzJeyeOQXNmlJ5/NdORQCpp2dLwT
- XN1U8Rn8+TEf9GvtR9MczI/BmkvIp7HLLUkXGVoPFWGbdev/WiMhqJ+hUYe10gD+yKYVm4tIGsZ
- Z3iCzsUNAl5fw2x9tpuNzVQymm9zcZnjii9gAusJAK4gGQcuqn6ObZScqOvt+vzMjPY/TXglg69
- T6MCMPtac6THhabMFNX4fzScsrRf4PWOtPeQHALQqWJ6lCWcCf5IFDGcPI1uCMn1wPjOQzZn59F
- 2bS+/gyfiXyjPyzrVPV/kmChrwZoC3TqDpsVtneSELkKhN6UbUkjjrNTa+VKlJ2+bZmeOFEAcMl
- qQL/yy03480sf32XaAa
-X-Received: by 2002:a17:903:3c6e:b0:2ae:80f9:d8ad with SMTP id
- d9443c01a7336-2aeca9412c6mr153357785ad.5.1773686857845; 
- Mon, 16 Mar 2026 11:47:37 -0700 (PDT)
+ bh=9AsPYgj95PXD3MBcJoJu/VQSlxFjkWCj9VT48jKP+PA=;
+ b=gDAHaWH3geRXewtF2LbY/IRPfGeUOkfN7S1r0a2t5Ki+F5lXrM4FYjcUGbPvFk0cy9
+ t6/1QNYe1EigxO6E0qTESNsUYbR4RVpTwIU/wj8EVxa6YzLNT3txCnm+aR2rzhf4H2/r
+ SuVDAF6OApX27qPpi4GKs8uJYfqa6NLugQGtnPzu2+1+jadcPEoCK/HwubedY2eHadKT
+ 3C0g3cH9VYA/cuxSW8yvsXipVgdLUQoW9ipCNcchR+WcX/m+LDO8LG0AeimQoU5lLCP2
+ /lgJO0twrph6W3gAbsk//12HMZj99l+5sklzuHvGcGIOpjYVyeM/8BSpPTnOtmPxXEN8
+ nkpA==
+X-Gm-Message-State: AOJu0YwskDZH3nQcmwGvZTdqyvaWgjZxSSi7IG5MHHP7kRYF2H6/HgQY
+ Lm9X8mCmh1jppkam/QtZHJq3OBbs9Ssu2z1UtogngieGev0ywJ5B4kr0VynipfrP3gQ=
+X-Gm-Gg: ATEYQzwP+jJamD85FOQgKv3vNXVxgyd0xCo53zmj+k85mMfx95v83lvEWTEbz+DUBLq
+ Qp/YLZ1XWJ5rKc07aXJpcVMiZlJ2tJRSVBTsKW+4l3nPD3KX7qyvxC5D7g6deZDnOO9VD41rMaq
+ 8xkwYNCBqVb1deQjI70srcXoEAj81lxZMZP6Ej4pxoRR5jE7u1SrxnF0rkFcB1ft5VX4Ki5vwy4
+ 5Oz6PIdUzFugZkHFQj2AgxAYAwQ75sG8PzZhrKfH/h7PoqfhHgF/hASj1r3a6ym3blAlxlhe/Q8
+ qkbNPnBTxF9FQ5XGUBVFobp3YFY3dnSbUipXYjASCBDyFxgrq3hS8sw0dl0VY3f65jUWOrc80P3
+ HWu7fCBzc018lLpZFH37V97azaVWSA4sDmb/zOte/aPhVVusAsevqj5xLLfJuRaGp+gwLcU05UH
+ u/WpQ1uK+STyJWZJQ5QyYhGU29zkdvYKGhq9uAO9j/xpSHgzpn2j+MSvzjh5agnzgIK5tOo6wvm
+ nUMOJhWsY6nVrtUTnjP
+X-Received: by 2002:a17:902:e802:b0:2ae:46f9:a115 with SMTP id
+ d9443c01a7336-2b0636844bdmr5135175ad.22.1773686850836; 
+ Mon, 16 Mar 2026 11:47:30 -0700 (PDT)
 Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local
  ([27.122.242.65]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b04f40f515sm77284145ad.74.2026.03.16.11.47.36
+ d9443c01a7336-2b04f40f515sm77284145ad.74.2026.03.16.11.47.29
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 11:47:37 -0700 (PDT)
+ Mon, 16 Mar 2026 11:47:30 -0700 (PDT)
 From: Trieu Huynh <vikingtc4@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>
-Subject: [PATCH v3 v3 4/4] hw/pci/msix: fix error handling for msix_init
- callers
-Date: Tue, 17 Mar 2026 03:46:40 +0900
-Message-ID: <20260316184644.68116-5-vikingtc4@gmail.com>
+Cc: Trieu Huynh <vikingtc4@gmail.com>,
+ Anthony Krowiak <akrowiak@linux.ibm.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: [PATCH v3 v3 3/4] util/event_notifier: fix error handling for
+ event_notifier_init callers
+Date: Tue, 17 Mar 2026 03:46:39 +0900
+Message-ID: <20260316184644.68116-4-vikingtc4@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260316184644.68116-1-vikingtc4@gmail.com>
 References: <20260311183432.214960-1-viking4@gmail.com>
  <20260316184644.68116-1-vikingtc4@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -102,115 +106,171 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Check return value of msix_init() and return early on
+Check return value of event_notifier_init() and return early on
 failure instead of continuing with invalid state.
 - Use ret < 0 to handle negative return value.
-- Use errp parameter to handle failure instead of NULL.
 - No functional changes.
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
 Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+Acked-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+Reviewed-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for the Hyper-V part
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 ---
- hw/net/igbvf.c         |  2 +-
- hw/net/rocker/rocker.c |  2 +-
- hw/pci/msix.c          |  2 +-
- hw/scsi/megasas.c      | 16 +++++++++++-----
- hw/usb/hcd-xhci-pci.c  | 16 +++++++++++-----
- 5 files changed, 25 insertions(+), 13 deletions(-)
+ hw/hyperv/hyperv.c     |  4 ++--
+ hw/hyperv/vmbus.c      |  4 ++--
+ hw/remote/proxy.c      | 15 +++++++++++++--
+ hw/vfio/ap.c           |  2 +-
+ hw/vfio/ccw.c          |  2 +-
+ hw/vfio/pci-quirks.c   |  2 +-
+ hw/vfio/pci.c          |  2 +-
+ hw/virtio/vhost-vdpa.c |  4 ++--
+ 8 files changed, 23 insertions(+), 12 deletions(-)
 
-diff --git a/hw/net/igbvf.c b/hw/net/igbvf.c
-index 48d56e43ac..9a165c7063 100644
---- a/hw/net/igbvf.c
-+++ b/hw/net/igbvf.c
-@@ -260,7 +260,7 @@ static void igbvf_pci_realize(PCIDevice *dev, Error **errp)
+diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+index 27e323a819..aa278b179e 100644
+--- a/hw/hyperv/hyperv.c
++++ b/hw/hyperv/hyperv.c
+@@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
+         sint_route->staged_msg->cb_data = cb_data;
  
-     ret = msix_init(dev, IGBVF_MSIX_VEC_NUM, &s->msix, IGBVF_MSIX_BAR_IDX, 0,
-         &s->msix, IGBVF_MSIX_BAR_IDX, 0x2000, 0x70, errp);
+         r = event_notifier_init(ack_notifier, false);
+-        if (r) {
++        if (r < 0) {
+             goto cleanup_err_sint;
+         }
+         event_notifier_set_handler(ack_notifier, sint_ack_handler);
+@@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
+ 
+     /* We need to setup a GSI for this SintRoute */
+     r = event_notifier_init(&sint_route->sint_set_notifier, false);
+-    if (r) {
++    if (r < 0) {
+         goto cleanup_err_sint;
+     }
+ 
+diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+index 64abe4c4c1..5388f4277f 100644
+--- a/hw/hyperv/vmbus.c
++++ b/hw/hyperv/vmbus.c
+@@ -1432,7 +1432,7 @@ static void open_channel(VMBusChannel *chan)
+         goto put_gpadl;
+     }
+ 
+-    if (event_notifier_init(&chan->notifier, 0)) {
++    if (event_notifier_init(&chan->notifier, 0) < 0) {
+         goto put_gpadl;
+     }
+ 
+@@ -2450,7 +2450,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
+     }
+ 
+     ret = event_notifier_init(&vmbus->notifier, 0);
+-    if (ret != 0) {
++    if (ret < 0) {
+         error_setg(errp, "event notifier failed to init with %d", ret);
+         goto remove_msg_handler;
+     }
+diff --git a/hw/remote/proxy.c b/hw/remote/proxy.c
+index 5081d67e7f..e91566509f 100644
+--- a/hw/remote/proxy.c
++++ b/hw/remote/proxy.c
+@@ -52,9 +52,20 @@ static void setup_irqfd(PCIProxyDev *dev)
+     PCIDevice *pci_dev = PCI_DEVICE(dev);
+     MPQemuMsg msg;
+     Error *local_err = NULL;
++    int ret = 0;
+ 
+-    event_notifier_init(&dev->intr, 0);
+-    event_notifier_init(&dev->resample, 0);
++    ret = event_notifier_init(&dev->intr, 0);
++    if (ret < 0) {
++        error_report("Failed to init intr notifier: %s", strerror(-ret));
++        return;
++    }
++
++    ret = event_notifier_init(&dev->resample, 0);
++    if (ret < 0) {
++        error_report("Failed to init resample notifier: %s", strerror(-ret));
++        event_notifier_cleanup(&dev->intr);
++        return;
++    }
+ 
+     memset(&msg, 0, sizeof(MPQemuMsg));
+     msg.cmd = MPQEMU_CMD_SET_IRQFD;
+diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+index e58a0169af..5c8f305653 100644
+--- a/hw/vfio/ap.c
++++ b/hw/vfio/ap.c
+@@ -180,7 +180,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+         return false;
+     }
+ 
+-    if (event_notifier_init(notifier, 0)) {
++    if (event_notifier_init(notifier, 0) < 0) {
+         error_setg_errno(errp, errno,
+                          "vfio: Unable to init event notifier for irq (%d)",
+                          irq);
+diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+index 2251facb35..ce9c014e6a 100644
+--- a/hw/vfio/ccw.c
++++ b/hw/vfio/ccw.c
+@@ -418,7 +418,7 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+         return false;
+     }
+ 
+-    if (event_notifier_init(notifier, 0)) {
++    if (event_notifier_init(notifier, 0) < 0) {
+         error_setg_errno(errp, errno,
+                          "vfio: Unable to init event notifier for irq (%d)",
+                          irq);
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 7b907b9360..66e02b15a4 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -318,7 +318,7 @@ static VFIOIOEventFD *vfio_ioeventfd_init(VFIOPCIDevice *vdev,
+ 
+     ioeventfd = g_malloc0(sizeof(*ioeventfd));
+ 
+-    if (event_notifier_init(&ioeventfd->e, 0)) {
++    if (event_notifier_init(&ioeventfd->e, 0) < 0) {
+         g_free(ioeventfd);
+         return NULL;
+     }
+diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+index 94c174a773..1945751ffd 100644
+--- a/hw/vfio/pci.c
++++ b/hw/vfio/pci.c
+@@ -70,7 +70,7 @@ static bool vfio_notifier_init(VFIOPCIDevice *vdev, EventNotifier *e,
+     }
+ 
+     ret = event_notifier_init(e, 0);
 -    if (ret) {
 +    if (ret < 0) {
-         return;
+         error_setg_errno(errp, -ret, "vfio_notifier_init %s failed", name);
+         return false;
+     }
+diff --git a/hw/virtio/vhost-vdpa.c b/hw/virtio/vhost-vdpa.c
+index 2f8f11df86..9c7634e243 100644
+--- a/hw/virtio/vhost-vdpa.c
++++ b/hw/virtio/vhost-vdpa.c
+@@ -1075,13 +1075,13 @@ static int vhost_vdpa_svq_set_fds(struct vhost_dev *dev,
+     int r;
+ 
+     r = event_notifier_init(&svq->hdev_kick, 0);
+-    if (r != 0) {
++    if (r < 0) {
+         error_setg_errno(errp, -r, "Couldn't create kick event notifier");
+         goto err_init_hdev_kick;
      }
  
-diff --git a/hw/net/rocker/rocker.c b/hw/net/rocker/rocker.c
-index 4a7056bd45..910dce901b 100644
---- a/hw/net/rocker/rocker.c
-+++ b/hw/net/rocker/rocker.c
-@@ -1228,7 +1228,7 @@ static int rocker_msix_init(Rocker *r, Error **errp)
-                     &r->msix_bar,
-                     ROCKER_PCI_MSIX_BAR_IDX, ROCKER_PCI_MSIX_PBA_OFFSET,
-                     0, errp);
--    if (err) {
-+    if (err < 0) {
-         return err;
+     r = event_notifier_init(&svq->hdev_call, 0);
+-    if (r != 0) {
++    if (r < 0) {
+         error_setg_errno(errp, -r, "Couldn't create call event notifier");
+         goto err_init_hdev_call;
      }
- 
-diff --git a/hw/pci/msix.c b/hw/pci/msix.c
-index b35476d057..1b23eaf100 100644
---- a/hw/pci/msix.c
-+++ b/hw/pci/msix.c
-@@ -432,7 +432,7 @@ int msix_init_exclusive_bar(PCIDevice *dev, uint32_t nentries,
-                     0, &dev->msix_exclusive_bar,
-                     bar_nr, bar_pba_offset,
-                     0, errp);
--    if (ret) {
-+    if (ret < 0) {
-         return ret;
-     }
- 
-diff --git a/hw/scsi/megasas.c b/hw/scsi/megasas.c
-index f62e420a91..a29742d449 100644
---- a/hw/scsi/megasas.c
-+++ b/hw/scsi/megasas.c
-@@ -2380,11 +2380,17 @@ static void megasas_scsi_realize(PCIDevice *dev, Error **errp)
-     memory_region_init_io(&s->queue_io, OBJECT(s), &megasas_queue_ops, s,
-                           "megasas-queue", 0x40000);
- 
--    if (megasas_use_msix(s) &&
--        msix_init(dev, 15, &s->mmio_io, b->mmio_bar, 0x2000,
--                  &s->mmio_io, b->mmio_bar, 0x3800, 0x68, NULL)) {
--        /* TODO: check msix_init's error, and should fail on msix=on */
--        s->msix = ON_OFF_AUTO_OFF;
-+    if (megasas_use_msix(s)) {
-+        ret = msix_init(dev, 15, &s->mmio_io, b->mmio_bar, 0x2000,
-+                        &s->mmio_io, b->mmio_bar, 0x3800, 0x68,
-+                        s->msix == ON_OFF_AUTO_ON ? errp : NULL);
-+
-+        if (ret < 0) {
-+            if (s->msix == ON_OFF_AUTO_ON) {
-+                return;
-+            }
-+            s->msix = ON_OFF_AUTO_OFF;
-+        }
-     }
- 
-     if (pci_is_express(dev)) {
-diff --git a/hw/usb/hcd-xhci-pci.c b/hw/usb/hcd-xhci-pci.c
-index aa570506fc..c5446a4a5e 100644
---- a/hw/usb/hcd-xhci-pci.c
-+++ b/hw/usb/hcd-xhci-pci.c
-@@ -173,11 +173,17 @@ static void usb_xhci_pci_realize(struct PCIDevice *dev, Error **errp)
-     }
- 
-     if (s->msix != ON_OFF_AUTO_OFF) {
--        /* TODO check for errors, and should fail when msix=on */
--        msix_init(dev, s->xhci.numintrs,
--                  &s->xhci.mem, 0, OFF_MSIX_TABLE,
--                  &s->xhci.mem, 0, OFF_MSIX_PBA,
--                  0x90, NULL);
-+        ret = msix_init(dev, s->xhci.numintrs,
-+                        &s->xhci.mem, 0, OFF_MSIX_TABLE,
-+                        &s->xhci.mem, 0, OFF_MSIX_PBA,
-+                        0x90, s->msix == ON_OFF_AUTO_ON ? errp : NULL);
-+
-+        if (ret < 0) {
-+            if (s->msix == ON_OFF_AUTO_ON) {
-+                return;
-+            }
-+            s->msix = ON_OFF_AUTO_OFF;
-+        }
-     }
-     s->xhci.as = pci_get_address_space(dev);
- }
 -- 
 2.43.0
 
