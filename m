@@ -4,43 +4,46 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEA6AEFCBBB
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:10:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E7EEFCBD4
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:11:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2260-0007Wk-3P; Mon, 16 Mar 2026 03:10:36 -0400
+	id 1w226M-0007eC-89; Mon, 16 Mar 2026 03:10:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w225b-0007Tp-V9; Mon, 16 Mar 2026 03:10:12 -0400
+ id 1w225t-0007Vz-EJ; Mon, 16 Mar 2026 03:10:32 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w225Y-0007jZ-Uk; Mon, 16 Mar 2026 03:10:11 -0400
+ id 1w225p-0007lz-D3; Mon, 16 Mar 2026 03:10:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773645002; bh=Ga251vbiKWrA7Hd7HVtX+mnCqKM/WEW52Q906Skn3QU=;
- h=From:To:Cc:Subject:Date;
- b=XGZV+sD8fOWrWCRwdIlB0wMwj/tvVt9mpyZ2aIpZvF2xF/ozB61bex9WqfGy58E9D
- z3hjdnKeOOa5L0jONAoYwFUXv0wNZuIE+1bbKXxD88Arwhz4adishp3KmTKKOZgtw9
- 826bj5MvWA3kG/YMROWErSmfApX/WmRevf2N8r9okg0sNUHjNLSCgJekIr2/ZTpF4G
- 6oRVs56msIhz6kat4lUg2iLrk/L7ZIKENpzcnwnB61mRCAbeo/9PY027Tc+XvjRtGz
- lYNAHSBq5mmYs1GQHkP0XzrTv+6dAcS4Pvzbusz8b/eQh/jmX4nOw5NY9FWZNvLSc9
- zq7dnu13HiV9g==
+ t=1773645002; bh=9IpVhPyCFj+eYKjRuj7uW3sNmKuxLubWVST1vOIbdUk=;
+ h=From:To:Cc:Subject:Date:In-Reply-To:References;
+ b=fMsEcutiZotXTh9GWnw4RQjQSGld7l6kgYvRm9uNmyZhAX+akkWOCm7tCAK4RIQAw
+ AbWwmAP4+W24xynqbdithhWhU4guJ26ynvzd1kDDmYTMLY74/bmror6jptPuNhC1t4
+ 8TZRnSWkT9hebA5FOKA0Cxpy7NZf87XPxtO6axZH8rNKootiajP3aNeMTmW+7oI+jc
+ 6IwjlDVXygEw+HiWKCx5B685nRfMQyUKdIjnu0clkm2+GLhsVfQWYE7F88oNGtlHtb
+ vVRod/cJmEkXhsdZz+ztp1V1FTCW9tamJthUvXfWwSzQRaWOw/Spb6nndWcpqoP6f6
+ vgcraOx8UTDmA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 5FBB6193C22;
+ by isrv.corpit.ru (Postfix) with ESMTP id CB50C193C28;
  Mon, 16 Mar 2026 10:10:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 685F9380046;
+ by tsrv.corpit.ru (Postfix) with ESMTP id D3D14380050;
  Mon, 16 Mar 2026 10:10:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL 00/14] Trivial patches for 2026-03-16
-Date: Mon, 16 Mar 2026 10:09:48 +0300
-Message-ID: <20260316071005.91624-1-mjt@tls.msk.ru>
+Cc: Sergei Heifetz <heifetz@yandex-team.com>, qemu-trivial@nongnu.org,
+ Michael Tokarev <mjt@tls.msk.ru>
+Subject: [PULL 06/14] target/i386: fix NULL pointer dereference in
+ legacy-cache=off handling
+Date: Mon, 16 Mar 2026 10:09:54 +0300
+Message-ID: <20260316071005.91624-7-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260316071005.91624-1-mjt@tls.msk.ru>
+References: <20260316071005.91624-1-mjt@tls.msk.ru>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
@@ -67,62 +70,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
+From: Sergei Heifetz <heifetz@yandex-team.com>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
+The check that xcc->model is not NULL occurs after it is dereferenced
+inside x86_cpu_get_versioned_cache_info(), so something like
+`-cpu host,legacy-cache=off` leads to a segfault rather than an error.
+This patch fixes that.
 
-are available in the Git repository at:
+Fixes: cca0a000d06f897411a8a ("target/i386: allow versioned CPUs to specify new cache_info")
+Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
+[Mjt: simplify the following condition too]
+Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
+---
+ target/i386/cpu.c | 7 ++++---
+ 1 file changed, 4 insertions(+), 3 deletions(-)
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 5b9ae79f16..b5e483e8cd 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -10107,10 +10107,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+ 
+     /* Cache information initialization */
+     if (!cpu->legacy_cache) {
+-        const CPUCaches *cache_info =
+-            x86_cpu_get_versioned_cache_info(cpu, xcc->model);
++        const CPUCaches *cache_info = xcc->model
++            ? x86_cpu_get_versioned_cache_info(cpu, xcc->model)
++            : NULL;
+ 
+-        if (!xcc->model || !cache_info) {
++        if (!cache_info) {
+             g_autofree char *name = x86_cpu_class_get_model_name(xcc);
+             error_setg(errp,
+                        "CPU model '%s' doesn't support legacy-cache=off", name);
+-- 
+2.47.3
 
-for you to fetch changes up to 4ba98cfd263ba3e657b9d18c90bc5a4f2dcb0c63:
-
-  rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL, and stop checking for epoll in meson.build (2026-03-16 10:05:25 +0300)
-
-----------------------------------------------------------------
-trivial patches for 2026-03-16
-
-a few patches accumulated in trivial-patches tree to date.
-A larger part of it is my linux-user cleanup series.
-
-----------------------------------------------------------------
-Christopher Palmer-Richez (1):
-      net/slirp: allow hostfwd socket paths with dashes
-
-Michael Tokarev (7):
-      linux-user/syscall.c: assume splice is always present
-      meson.build: stop checking for splice()
-      linux-user: assume inotify sycalls are always present
-      meson.build: stop checking for inotify_init()
-      linux-user: assume epoll is always present
-      meson.build: do not check for epoll.h (CONFIG_EPOLL)
-      rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL, and stop checking for epoll in meson.build
-
-Sergei Heifetz (5):
-      migration/savevm.c: reorder usage and assertion of mis->from_src_file
-      dump/dump.c: reorder usage and assertion of block
-      system/physmem.c: remove useless assertion of block
-      hw/usb/core.c: reorder usage and assertion of p->ep
-      target/i386: fix NULL pointer dereference in legacy-cache=off handling
-
-Thomas Huth (1):
-      docs: Move xbzrle.txt into the migration folder and convert to rst
-
- docs/devel/migration/features.rst               |   1 +
- docs/{xbzrle.txt => devel/migration/xbzrle.rst} | 106 ++++++++++++++----------
- dump/dump.c                                     |   2 +-
- hw/usb/core.c                                   |   2 +-
- linux-user/fd-trans.c                           |   5 --
- linux-user/fd-trans.h                           |   4 -
- linux-user/syscall.c                            |  44 ++--------
- linux-user/syscall_defs.h                       |   3 -
- meson.build                                     |  19 +----
- migration/savevm.c                              |   3 +-
- net/slirp.c                                     |  22 ++++-
- system/physmem.c                                |   2 -
- target/i386/cpu.c                               |   7 +-
- util/aio-posix.h                                |   4 +-
- util/meson.build                                |   2 +-
- 15 files changed, 107 insertions(+), 119 deletions(-)
- rename docs/{xbzrle.txt => devel/migration/xbzrle.rst} (74%)
 
