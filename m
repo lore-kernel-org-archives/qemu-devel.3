@@ -4,108 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4A324F53D7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 17:50:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5FE48F53D7E
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 17:59:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2C54-0001su-EO; Mon, 16 Mar 2026 13:50:19 -0400
+	id 1w2CDC-0003Sm-5k; Mon, 16 Mar 2026 13:58:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2C4u-0001sG-9i
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:50:08 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2C4q-0001iw-NT
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:50:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773683403;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=xdlz51YN6TNwHGw88PoC3oph3GvtnB30YwofysQALE0=;
- b=IiwgkhI4cBA9qvKRT3k0DTraMGWbLwhqRBaHhsqPXRygkXwvAVVkK+5jLtDvqXWSmaAvHf
- WjPjFnUhAk7XWNT0atNElsxldrZ127DXcDzgkhoyN87Ma9j8HSE68UB+V2slxcW3D1LGXl
- Ezy6jC+frFy2+WazuH/uddNLO2eoAY4=
-Received: from mail-qk1-f198.google.com (mail-qk1-f198.google.com
- [209.85.222.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-572-i25B7uPxMXasPxpZ3l0edg-1; Mon, 16 Mar 2026 13:50:01 -0400
-X-MC-Unique: i25B7uPxMXasPxpZ3l0edg-1
-X-Mimecast-MFC-AGG-ID: i25B7uPxMXasPxpZ3l0edg_1773683401
-Received: by mail-qk1-f198.google.com with SMTP id
- af79cd13be357-8cd80bea54dso3032963285a.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 10:50:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w2CD3-0003SV-MY
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:58:33 -0400
+Received: from mail-pf1-x432.google.com ([2607:f8b0:4864:20::432])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w2CD1-0005wN-EE
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:58:33 -0400
+Received: by mail-pf1-x432.google.com with SMTP id
+ d2e1a72fcca58-82418b0178cso2892660b3a.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 10:58:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773683910; cv=none;
+ d=google.com; s=arc-20240605;
+ b=UGEt3VwBWVypcQTvAQ01/qa3poLOf9rl2UDcz13Yn3gI+Mt+axPPM/agbCjQJUsmD7
+ W0fCTcArRyxNuXNm6GaTaUjZB2Yz7iRaGWJdmwnof8h0U7uYdrSxTB3VHKUGxEQHD/zK
+ zWENddf+uNqfmjTYUBqikB28WYnja8h9LhqC+4xL/liKsPYlb/KHlXQPf1euTamwLuIX
+ 1DIC8kNzKnudtP/wKMOwrklPGIX8ORlB7ZVPFcwuMP6we3EPO6xEoIGnPaNE8IPch7Ux
+ 2HfajXHO3DLsH/kAb8pSQlPWpAAb0yc6ewp4fzVcUDQmJN2qNlY9TAOjUcvwb1KASBZ+
+ 0G0w==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=b7avKvJDlDpO7eQa9sY5KuAE8ae6oeJlCYUfrw9D7dM=;
+ fh=yiUwoBOEypY2fM3mHrz5u4mbHkIidyv/b4UPGcEpz+k=;
+ b=EJaJb43n8HsBv9VJ4mqgjQx4TnycljI3E6NCrmruPb6L1T5UTJtxc+A+b3jm8D4Lnj
+ LsU95EBxYzZVO/nPX632LrtpdstLMtnJ6/7BxJ7ueYF1JT3E5fKpLEPQAVioVxeH75LM
+ IOrDWDaf5hi2p7ZcEnwZSwznnIyDaJczwV6LUmnG+YDWhTG/9nkYVddlojI39cgZPAJ+
+ lSknfCHOZ4eHlzf70MGQdRB/WEWSRRbkgxgypos03o3fYn3cxixdDYYFdISUkAlnDxaq
+ J2xTAFdC45Cm++ElObbcDEdw+8d46E57Ux1mX3SS+xYRyUiBssOMdrNz81KIRiHO5np8
+ 3pQQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773683401; x=1774288201; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=xdlz51YN6TNwHGw88PoC3oph3GvtnB30YwofysQALE0=;
- b=rpsSfO6TP12qw6uzAFcMm+rYcief8tVwkrKM864YDQ0cCsawcY7zIKFVACjw4sn0jO
- fpm0+ma9fWHiylRvartW4UPKuhP1cCff+tooJL1cxnygnxfme5X1eM56SbnE/GOPBw3n
- G5IefcPDWLF2Y+PIQw5WLhUWcH9BePYDEEIjhpG07MH1ffXoZiQfd8Qx9RATedQaetNZ
- MBbo+0IZHHAZKhtWjncDgNmVhmlF8HGnfBMWUcvN27VmsoNl8qwZJltvd9EMjsXt1ZkT
- UgMasFSYspemdurXbUg9pXiddBL1G4MJLOkix5iQwggsU4ubZ8k5niBVxnIvqLdkcjdh
- oRnQ==
+ d=gmail.com; s=20230601; t=1773683910; x=1774288710; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=b7avKvJDlDpO7eQa9sY5KuAE8ae6oeJlCYUfrw9D7dM=;
+ b=C8ClZf2DRIWQqwyL/7we/LCOAmjhFfkol0TLzDTraVnqUz8f0wcX3xNUHz0NjAPMT/
+ wSK+bdkJK2gffXS2/FOo2fAtVOLI9BeAvEetoBcbDaMGBMNWSRjUwh/dqMjPG6k7rSBr
+ 7JN7cufT7teRQB3SCjmRLFR0n+B+MW+M2O+mLY1c6mgiRsoQZhu2VRTwUpcSdOQQVVPN
+ AHIBbIUVh6sJU9km/k//sl5C5pwMFWTdGFbvfK2cwbxNZcnUAdGj/PdlKWh7Cbd9fKxS
+ W9ppHPhqkeWy8AhXl1Azfx49BIxkkGAEx3npWfcxiHi2WNj+m2JKU3RLR7hPMlE6TMPW
+ uSXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773683401; x=1774288201;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=xdlz51YN6TNwHGw88PoC3oph3GvtnB30YwofysQALE0=;
- b=p9uyqaY6xmp3L0SKuFJlW3QLieH2th3wtxRocu0kMnwovBdkQoUV7B3N0GiaLKkxqZ
- yVzEykhMRR1jhnWSbvmF1g1COjkjQpYlidyaKZT+awoOJ7ih4/7eC1WBpS7ijUnCs/Ke
- 9BImgUYljNrwl166kynYtPV0Xf8LZZ8R8R3X5AP1eMK7JL2FvpeJkeNBs9Q912WUcHBu
- NWS5TWC0Fa/q1ytGjfbAdzqmgXaAmN7MP8Ski6xBxsw6FJmmY7WPw+nVZ0NyopjielO8
- GlmKuFok7Sq9PNFeNyR/LyxJ569U4VFPTsXjl+6BlrZ9gGtWTyvCqGE3Smsjk/QalgRN
- lA/A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVAMqufoUuiKvrFiv/CXI1HpzNFYNzvO8+AWvblyeXfbugWs/rTz905BJKIs0IszVFU+ppzDjMRkLRA@nongnu.org
-X-Gm-Message-State: AOJu0Yzay65tPu7rDb3nfRX2RMcgrh2vf6oyKFtFCzdSOPndOo6m+KG5
- JtkVhyfrTduo6w/PffG/TUF56uSJbOX4zahPz5QXHFQ4l9QHf/AVBqjKTegwEkobvy1TF9ipnot
- +WDfmYkwH9M6qLwg2DitkghYrRswqsUmICCioF9OXMo7yAa68NFg5zqFr
-X-Gm-Gg: ATEYQzz6he2GeX6QwCkJZTrKS2le9/HT7ANqEpC6LzcrIqQDv6HIE4deOc4q0Hli7pL
- RDZdvk4/dPltDNA+moysnxbJfqaSRtGub8IzdHAFpP0I0ND7i35nG/VND83KzIisKZyZK+taG4i
- 3DYKul9Bn8I6lMJRfZ3OSYYPkGcZ3xivvGi8l0XLspK8LxgDn9j9JB71kyNArOrxBa+OmBEQ4kJ
- Jc4VrzvTfGZh2jmchW/PGawuoPmgVFFXNN3JzxqSDfZbKxK4ABhydoQPPGJDZ/Cx1Gblrw7D9rB
- OOLdvhnwBR34yXoFFgiUP6TyEoJ/FtP+wt3uJbiuPmQXRhpYFEfCbfjex9g18sWd7fvh5JGKM/W
- /BFmgcd5KAZP3vg==
-X-Received: by 2002:a05:620a:414a:b0:8cd:9baa:fad7 with SMTP id
- af79cd13be357-8cdb5a6da5dmr1740119585a.26.1773683400924; 
- Mon, 16 Mar 2026 10:50:00 -0700 (PDT)
-X-Received: by 2002:a05:620a:414a:b0:8cd:9baa:fad7 with SMTP id
- af79cd13be357-8cdb5a6da5dmr1740112585a.26.1773683400224; 
- Mon, 16 Mar 2026 10:50:00 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda719a513sm1244109385a.15.2026.03.16.10.49.59
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 10:49:59 -0700 (PDT)
-Date: Mon, 16 Mar 2026 13:49:58 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Thomas Huth <thuth@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
- qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
-Message-ID: <abhCxgOL0Rdra8hI@x1.local>
-References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
- <abgqjKVFHKxuKupP@x1.local>
- <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
- <CAFEAcA-n2EW=deU=jVcLd=6PysNZd5m7WTYrHLtQkxMo=KWBPw@mail.gmail.com>
+ d=1e100.net; s=20251104; t=1773683910; x=1774288710;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=b7avKvJDlDpO7eQa9sY5KuAE8ae6oeJlCYUfrw9D7dM=;
+ b=oVVZsasRI0iG0zyggF8IaivMeELGqgq+oxDwtrTd7XfpkBUVtJV8tjDPsBpwZprqCJ
+ 1IJ+i1iPvPPBKoaki9poj8sMsZPOw3aJmVAxy2oL+YCHGB9cpJFX7ebakUU8IJP3/TCj
+ qKdnozScVZfWcHWtg7+J9YYQpw3F7QgnjzCqZ3S5yi0n9Q4dQWSWKjE5Y6OjOdo44Mdk
+ lufSpmfxFia5eLADBbkTyitaozsR+1wM0TqumiV8frSpiR3nCjfkqV7QTwBFRL6UPbp5
+ UcAaTFH6cXymwfHHkrGV7ru/7EVYu2MRZCixc/5An7x3x8AmlmgoXi1sEcDe/m+WbpQV
+ iECA==
+X-Gm-Message-State: AOJu0YzYetsYR0Gvm4r/fcGIOCoNp5v0QlSxZzMH9ldQcK2Cn7GtkFK6
+ Pq/aApO4ovQtsQIrvWiZSxb4hm3ywVtUr9ys9JQ7BGOUg1OzpgMi/usvYoNScGp6x1WNbs8C6tA
+ JU6tkLd3vyBmwK0SLScF4sDAGseilMG4=
+X-Gm-Gg: ATEYQzwnDkgq+EeCmN/g/kKnBssqAhqzva8Ow9tbJPd2hsRouB2fkqgIimsZd2NcMex
+ EdyhAwOqW/pclLTbbQKqI84rz7KMbpGGyMEqq5hK549TxposFieObJRiJDlatMTgmDrcGCUBi/h
+ VBIFmTpt6vD9+LQJdcij//adDZFw7mj6JX/+0nzbWW5g+pDjphT+8fMhAwLp+LBWXM0wJNmTLgu
+ Y4WzmFn/QGIaWpxj+8wUPXu6FMQpxYNAqWT6Q4yAj4kmqbjxevGkgQCOCl2MxPkchX51el9Inu3
+ rKPYfHDz6p9qnrT/cdM9dGWL9GYkGJ0+U6ssvg==
+X-Received: by 2002:a05:6a21:6001:b0:398:ae03:722f with SMTP id
+ adf61e73a8af0-398eccb81abmr13055195637.45.1773683909813; Mon, 16 Mar 2026
+ 10:58:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA-n2EW=deU=jVcLd=6PysNZd5m7WTYrHLtQkxMo=KWBPw@mail.gmail.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260311042019.1085030-1-brian.cain@oss.qualcomm.com>
+ <20260311042019.1085030-2-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260311042019.1085030-2-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 16 Mar 2026 11:58:17 -0600
+X-Gm-Features: AaiRm51rMd5I_Yv9-a5zCf95r-KvPYHCWlRkoNKcnd7VcHguL-29E2-zliPDMss
+Message-ID: <CAATN3Nq0Z0KKMGiryVg-hXJY7ogaVA+kvSrcMNt-qyC6iCFjng@mail.gmail.com>
+Subject: Re: [PATCH v3 1/9] hw/hexagon: Add globalreg model
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng
+Content-Type: multipart/alternative; boundary="000000000000636842064d27f76f"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::432;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pf1-x432.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,51 +117,258 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 16, 2026 at 04:36:23PM +0000, Peter Maydell wrote:
-> On Mon, 16 Mar 2026 at 16:23, Thomas Huth <thuth@redhat.com> wrote:
-> >
-> > On 16/03/2026 17.06, Peter Xu wrote:
-> > > On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
-> > >> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
-> > >> current_machine which is not set during init when inspecting the
-> > >> device. This causes the qtest/device-introspect-test to fail since a
-> > >
-> > > Does it has anything to do with aux-ram-share?  I thought it's because the
-> > > qom introspect test will create yet another sun-tcx device, causing double
-> > > registration?
-> >
-> > I think it happens because the test starts QEMU with the sun4m machine (or
-> > whichever machine uses this device by default), and then creates another
-> > instance of the device for introspection (without realizing it). You can
-> > easily recreate the bug manually like this:
-> >
-> >   $ ./qemu-system-sparc -M SS-20 -display none -monitor stdio
-> >   QEMU 10.2.50 monitor - type 'help' for more information
-> >   (qemu) device_add sun-tcx,help
-> >   RAMBlock "tcx.prom" already registered, abort!
-> >   Aborted (core dumped)
-> >
-> > An instance_init() function should not change the global state of QEMU, so
-> > registering memory regions this way is a no-go. This has to be done in
-> > realize() instead.
-> 
-> Ah, and previously we created the MR in instance_init but did
-> the vmstate_register_ram_global() in realize, so we didn't see this.
-> 
-> I'm a little surprised that this causes a problem, though -- I
-> thought that we constructed the RAM idstr not just from the
-> provided string but also including the qdev path, so that
-> you could have multiple devices of the same type. I guess that
-> we don't get that happening correctly because the device isn't
-> sufficiently created to have a qdev path yet when we haven't
-> even finished instance_init ?
+--000000000000636842064d27f76f
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Device sun-tcx's parent bus is TYPE_SYSTEM_BUS, which doesn't provide
-->get_dev_path().. so IIUC it'll generate the same name.
+On Tue, Mar 10, 2026 at 10:20=E2=80=AFPM Brian Cain <brian.cain@oss.qualcom=
+m.com>
+wrote:
 
-Thanks,
+> Some of the system registers are shared among all threads
+> in the core.  This object contains the representation and
+> interface to the system registers.
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  include/hw/hexagon/hexagon_globalreg.h |  56 ++++++
+>  hw/hexagon/hexagon_globalreg.c         | 240 +++++++++++++++++++++++++
+>  2 files changed, 296 insertions(+)
+>  create mode 100644 include/hw/hexagon/hexagon_globalreg.h
+>  create mode 100644 hw/hexagon/hexagon_globalreg.c
+>
+> diff --git a/include/hw/hexagon/hexagon_globalreg.h
+> b/include/hw/hexagon/hexagon_globalreg.h
+> new file mode 100644
+> index 00000000000..c9e72f30b0a
+> --- /dev/null
+> +++ b/include/hw/hexagon/hexagon_globalreg.h
+> @@ -0,0 +1,56 @@
+> +/*
+> + * Hexagon Global Registers QOM Object
+> + *
+> + * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#ifndef HEXAGON_GLOBALREG_H
+> +#define HEXAGON_GLOBALREG_H
+> +
+> +#include "hw/core/qdev.h"
+> +#include "hw/core/sysbus.h"
+> +#include "qom/object.h"
+> +#include "target/hexagon/cpu.h"
+> +
+> +#define TYPE_HEXAGON_GLOBALREG "hexagon-globalreg"
+> +OBJECT_DECLARE_SIMPLE_TYPE(HexagonGlobalRegState, HEXAGON_GLOBALREG)
+> +
+> +struct HexagonGlobalRegState {
+> +    SysBusDevice parent_obj;
+> +
+> +    /* Array of system registers */
+> +    uint32_t regs[NUM_SREGS];
+> +
+> +    /* Global performance cycle counter base */
+> +    uint64_t g_pcycle_base;
+> +
+> +    /* Properties for global register reset values */
+> +    uint32_t boot_evb;           /* Boot Exception Vector Base
+> (HEX_SREG_EVB) */
+> +    uint64_t config_table_addr;  /* Configuration table base */
+> +    uint32_t dsp_rev;           /* DSP revision register (HEX_SREG_REV) =
+*/
+> +
+> +    /* ISDB properties */
+> +    bool isdben_etm_enable;     /* ISDB ETM enable bit */
+> +    bool isdben_dfd_enable;     /* ISDB DFD enable bit */
+> +    bool isdben_trusted;        /* ISDB trusted mode bit */
+> +    bool isdben_secure;         /* ISDB secure mode bit */
+>
 
--- 
-Peter Xu
+Should the TLB entries go in here also?
 
+
+> +};
+> +
+> +/* Public interface functions */
+> +uint32_t hexagon_globalreg_read(HexagonGlobalRegState *s, uint32_t reg,
+> +                                uint32_t htid);
+>
+
+Why is htid needed?
+
+
+> +void hexagon_globalreg_write(HexagonGlobalRegState *s, uint32_t reg,
+> +                             uint32_t value, uint32_t htid);
+>
+
+Ditto
+
+
+> +uint32_t hexagon_globalreg_masked_value(HexagonGlobalRegState *s,
+> uint32_t reg,
+> +                                        uint32_t value);
+> +void hexagon_globalreg_write_masked(HexagonGlobalRegState *s, uint32_t
+> reg,
+> +                                    uint32_t value);
+> +void hexagon_globalreg_reset(HexagonGlobalRegState *s);
+> +
+> +/* Global performance cycle counter access */
+> +uint64_t hexagon_globalreg_get_pcycle_base(HexagonGlobalRegState *s);
+> +void hexagon_globalreg_set_pcycle_base(HexagonGlobalRegState *s,
+> +                                       uint64_t value);
+> +
+> +#endif /* HEXAGON_GLOBALREG_H */
+> diff --git a/hw/hexagon/hexagon_globalreg.c
+> b/hw/hexagon/hexagon_globalreg.c
+> new file mode 100644
+> index 00000000000..5187b91dcae
+> --- /dev/null
+> +++ b/hw/hexagon/hexagon_globalreg.c
+> @@ -0,0 +1,240 @@
+> +static void hexagon_globalreg_init(Object *obj)
+> +{
+> +    HexagonGlobalRegState *s =3D HEXAGON_GLOBALREG(obj);
+> +
+> +    memset(s->regs, 0, sizeof(uint32_t) * NUM_SREGS);
+>
+
+Should we memset the whole thing?
+
+
+> +}
+>
+>
+
+--000000000000636842064d27f76f
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 10,=
+ 2026 at 10:20=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.q=
+ualcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">Some of the system registers are sh=
+ared among all threads<br>
+in the core.=C2=A0 This object contains the representation and<br>
+interface to the system registers.<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0include/hw/hexagon/hexagon_globalreg.h |=C2=A0 56 ++++++<br>
+=C2=A0hw/hexagon/hexagon_globalreg.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 240=
+ +++++++++++++++++++++++++<br>
+=C2=A02 files changed, 296 insertions(+)<br>
+=C2=A0create mode 100644 include/hw/hexagon/hexagon_globalreg.h<br>
+=C2=A0create mode 100644 hw/hexagon/hexagon_globalreg.c<br>
+<br>
+diff --git a/include/hw/hexagon/hexagon_globalreg.h b/include/hw/hexagon/he=
+xagon_globalreg.h<br>
+new file mode 100644<br>
+index 00000000000..c9e72f30b0a<br>
+--- /dev/null<br>
++++ b/include/hw/hexagon/hexagon_globalreg.h<br>
+@@ -0,0 +1,56 @@<br>
++/*<br>
++ * Hexagon Global Registers QOM Object<br>
++ *<br>
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.<br>
++ * SPDX-License-Identifier: GPL-2.0-or-later<br>
++ */<br>
++<br>
++#ifndef HEXAGON_GLOBALREG_H<br>
++#define HEXAGON_GLOBALREG_H<br>
++<br>
++#include &quot;hw/core/qdev.h&quot;<br>
++#include &quot;hw/core/sysbus.h&quot;<br>
++#include &quot;qom/object.h&quot;<br>
++#include &quot;target/hexagon/cpu.h&quot;<br>
++<br>
++#define TYPE_HEXAGON_GLOBALREG &quot;hexagon-globalreg&quot;<br>
++OBJECT_DECLARE_SIMPLE_TYPE(HexagonGlobalRegState, HEXAGON_GLOBALREG)<br>
++<br>
++struct HexagonGlobalRegState {<br>
++=C2=A0 =C2=A0 SysBusDevice parent_obj;<br>
++<br>
++=C2=A0 =C2=A0 /* Array of system registers */<br>
++=C2=A0 =C2=A0 uint32_t regs[NUM_SREGS];<br>
++<br>
++=C2=A0 =C2=A0 /* Global performance cycle counter base */<br>
++=C2=A0 =C2=A0 uint64_t g_pcycle_base;<br>
++<br>
++=C2=A0 =C2=A0 /* Properties for global register reset values */<br>
++=C2=A0 =C2=A0 uint32_t boot_evb;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/=
+* Boot Exception Vector Base (HEX_SREG_EVB) */<br>
++=C2=A0 =C2=A0 uint64_t config_table_addr;=C2=A0 /* Configuration table bas=
+e */<br>
++=C2=A0 =C2=A0 uint32_t dsp_rev;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/*=
+ DSP revision register (HEX_SREG_REV) */<br>
++<br>
++=C2=A0 =C2=A0 /* ISDB properties */<br>
++=C2=A0 =C2=A0 bool isdben_etm_enable;=C2=A0 =C2=A0 =C2=A0/* ISDB ETM enabl=
+e bit */<br>
++=C2=A0 =C2=A0 bool isdben_dfd_enable;=C2=A0 =C2=A0 =C2=A0/* ISDB DFD enabl=
+e bit */<br>
++=C2=A0 =C2=A0 bool isdben_trusted;=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* ISDB trus=
+ted mode bit */<br>
++=C2=A0 =C2=A0 bool isdben_secure;=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0/* ISDB=
+ secure mode bit */<br></blockquote><div><br></div><div>Should the TLB entr=
+ies go in here also?</div><div>=C2=A0</div><blockquote class=3D"gmail_quote=
+" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);=
+padding-left:1ex">
++};<br>
++<br>
++/* Public interface functions */<br>
++uint32_t hexagon_globalreg_read(HexagonGlobalRegState *s, uint32_t reg,<br=
+>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t htid);<br></blockquote><div=
+><br></div><div>Why is htid needed?</div><div>=C2=A0</div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rg=
+b(204,204,204);padding-left:1ex">
++void hexagon_globalreg_write(HexagonGlobalRegState *s, uint32_t reg,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint32_t value, uint32_t htid);<br></blockqu=
+ote><div><br></div><div>Ditto</div><div>=C2=A0</div><blockquote class=3D"gm=
+ail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,=
+204,204);padding-left:1ex">
++uint32_t hexagon_globalreg_masked_value(HexagonGlobalRegState *s, uint32_t=
+ reg,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t=
+ value);<br>
++void hexagon_globalreg_write_masked(HexagonGlobalRegState *s, uint32_t reg=
+,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t value);<br>
++void hexagon_globalreg_reset(HexagonGlobalRegState *s);<br>
++<br>
++/* Global performance cycle counter access */<br>
++uint64_t hexagon_globalreg_get_pcycle_base(HexagonGlobalRegState *s);<br>
++void hexagon_globalreg_set_pcycle_base(HexagonGlobalRegState *s,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0uint64_t =
+value);<br>
++<br>
++#endif /* HEXAGON_GLOBALREG_H */<br>
+diff --git a/hw/hexagon/hexagon_globalreg.c b/hw/hexagon/hexagon_globalreg.=
+c<br>
+new file mode 100644<br>
+index 00000000000..5187b91dcae<br>
+--- /dev/null<br>
++++ b/hw/hexagon/hexagon_globalreg.c<br>
+@@ -0,0 +1,240 @@<br>+static void hexagon_globalreg_init(Object *obj)<br>
++{<br>
++=C2=A0 =C2=A0 HexagonGlobalRegState *s =3D HEXAGON_GLOBALREG(obj);<br>
++<br>
++=C2=A0 =C2=A0 memset(s-&gt;regs, 0, sizeof(uint32_t) * NUM_SREGS);<br></bl=
+ockquote><div><br></div><div>Should we memset the whole thing?</div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++}<br><br>
+</blockquote></div></div>
+
+--000000000000636842064d27f76f--
 
