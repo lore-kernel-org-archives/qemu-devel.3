@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9521DF013C4
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:39:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AE018F013C4
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:41:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w22XE-0001cE-IB; Mon, 16 Mar 2026 03:38:44 -0400
+	id 1w22Ys-0002Ax-QM; Mon, 16 Mar 2026 03:40:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w22XD-0001bi-0g
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:38:43 -0400
+ id 1w22Yo-0002AG-IO
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:40:22 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w22XA-00038W-If
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:38:42 -0400
+ id 1w22Ym-0003Sj-Ok
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:40:22 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773646719;
+ s=mimecast20190719; t=1773646819;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=ShzI3cCB9Q9Hx/QBVoUzeWtJLlufzDo93XBXZ1v0NHI=;
- b=Afb2CY+TQL0TJQ08TQbGEk4bidx2uAPnQg/GUhNV/DkALdpkXvgNWFGRyLWFmFzVL577aB
- lVWG27anvkgIbTl1emgsBtmU84TEs66QRG1RJqB07qe3wNC7ZdSz1NlkUxNYsEKgYpxUG4
- mbtVsOGHKI05NcfIDASJSeV66mag5jE=
-Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
- [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=O0nknwIIgp3WhkwtMArgsdeAW+EuIkDU5MMa1k4JsJ0=;
+ b=cSffM23O2zb6tMuD93vlcQapHjJZkH8BGS1wLzG+COvhg2OvqaN8EswkNs/THB2tXTzj0j
+ 4jaQmouXk/EgcYUgPoqblt5ZCx3Fd/QAoz+zVO5YYvg8lBWst5Pzfq1bwTqXqm4PHDYvyW
+ bIRRaW24olJe5bYkFZYhWjIe3BTp2MI=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-142-AtXp_Zd9MQOGmVoHSyut4Q-1; Mon, 16 Mar 2026 03:38:38 -0400
-X-MC-Unique: AtXp_Zd9MQOGmVoHSyut4Q-1
-X-Mimecast-MFC-AGG-ID: AtXp_Zd9MQOGmVoHSyut4Q_1773646717
-Received: by mail-wr1-f69.google.com with SMTP id
- ffacd0b85a97d-43b42eee946so499744f8f.1
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 00:38:38 -0700 (PDT)
+ us-mta-34-JzSyq5p2Ma-JFespgnKu2A-1; Mon, 16 Mar 2026 03:40:17 -0400
+X-MC-Unique: JzSyq5p2Ma-JFespgnKu2A-1
+X-Mimecast-MFC-AGG-ID: JzSyq5p2Ma-JFespgnKu2A_1773646817
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-48539bda3dcso47346045e9.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 00:40:17 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773646717; x=1774251517;
+ d=1e100.net; s=20251104; t=1773646816; x=1774251616;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ShzI3cCB9Q9Hx/QBVoUzeWtJLlufzDo93XBXZ1v0NHI=;
- b=Z9zKquU0+ka1oj9ZFHAbpduq1WVADHiysOSokev3Cb2YGIscYHucRKX0IZk2baoI7p
- KC0ZBFJ95/dtN9WdWJK92HOP3zwTCncdZ7UbYTFEN6FHW6+PfzTvBiU/iR7RjTydNDbT
- cjjydIRVTGy7y7sxOzPLjVNzreZZtYgXb1MlW+KDENfL7OWVb0zrPfahrsLbAAauHqqd
- 3WdulTX7WT92yhMvM8War/Mx6lZskyG5RGqKmbbmdDehgioxdUqEN4Lix7Zd3yis1iR1
- BJMUnC/K2GbGkQZl6MnlOKoWBGaaqasfZnCzUrNGVJzLHJP1kVWnXAIl4wXGu8FuNDJg
- zWLw==
+ bh=O0nknwIIgp3WhkwtMArgsdeAW+EuIkDU5MMa1k4JsJ0=;
+ b=qQ38fA2WzRNWnmQ4UPTp+bUrzR2I4pH7pyygbxniUqmy81Lx5IkCd+1abHEcUhGTFC
+ bPsBqAxb6uKaA+Cp7fl1lG5D04UFFKkdDaGRWLdU2OeOBXed02tltjfzPbs+5u9sBqPK
+ 4DopPOk9UH9CijmJBvU6YgO9ZGn8/DttwIZg3GNA/2fBoB5MyDAiZoYSNVrNDWiigo+w
+ 3XD4M+8woWxXQy6G8Mkg+YqVCksHem7oBPqGurXE+hwVhWeORxsN9J7Fj9uvOMUtG0tH
+ MJEogq0nLu21M0yjNxbnSJqivk337uKODyzKtuLb+kcnAnjemRlBVi7hRx2ONN5c7Y8Y
+ qS1Q==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUFGQlVLwMUJREB5oyUwmm4HXVdUdubRvndIRPxgD0wQekfjSO6FivCbQBD2al6B7Q2qCO3rEQPza/Z@nongnu.org
-X-Gm-Message-State: AOJu0Yy0q8RDnBErL6MK4QpvwtF58+4DJG03smIeYlX26w1Zr3kUi/c6
- zKMAmQRo9/YaLLeuXyT5UJoRenkec6/XjLzEf3KHkGyInUSrkodQU/irQ9R35v3exBHUjfzcVng
- ovXrw6a8EoOanUiO3yAH2K5lyWMK6t9GilAnBptjUcskgt/bN+mUZNh6erKmYz/WV
-X-Gm-Gg: ATEYQzx2oNGnBhiTyfCyc+dxpl6hwGu45VIn4FKYmoqrWH/geavvwo48q4tZNrrfCM7
- QvgpSRCfsKoimHI2GNd9Rr8frOCGlVk/3uMU6Du3i0UXjHYRyguMx7fuIop+lU3CYVKu8B1DMMk
- by5SobzxXKte9wnvtuM7QfoiV86p0eqNtPMs2QuLsUni1dsLEoO9q+G5rPkWiHyuu5l+J4LqmCS
- XB4sBc0cMqfatLC3aSyIy+lCcn9G/D90HlAgUBPbBvUzV9lgvgplfM7GLheFcg5HF4ejSmE7uZQ
- +/In45yMSgSvkRU08N1po3XuqTpBCmTboidwQe+wbsjjuZAOFEXUCg0J6dBWbxKW7UeNzUxgWP3
- Jrtl+j0xDl3cjunq4oPKY5E06WTs96ODiw0ZMx5F2df/A9YbpQ21gumjyS9h8AqyZKPhhFA==
-X-Received: by 2002:a05:6000:1a8e:b0:437:7300:eb1c with SMTP id
- ffacd0b85a97d-439fe1addc8mr27618891f8f.26.1773646716796; 
- Mon, 16 Mar 2026 00:38:36 -0700 (PDT)
-X-Received: by 2002:a05:6000:1a8e:b0:437:7300:eb1c with SMTP id
- ffacd0b85a97d-439fe1addc8mr27618832f8f.26.1773646716332; 
- Mon, 16 Mar 2026 00:38:36 -0700 (PDT)
+ AJvYcCXOu9k2RuEYVFUVgQaQLcK7Olg9Gb+9ZYu0sAEaNQstosdH0fIlTLzE+L9fEVt5fkla7xuFmy/naXGz@nongnu.org
+X-Gm-Message-State: AOJu0YxmPe9DSUYdj8jpdF6Y7Hs8nlhJAiKym2PHRa4EDJbgLnRltY2f
+ +o/K0JYO99qyNPKIxqXTAoBH6uNj+Hdr/jjLey6P1sue63RnyXVUPqmWmKxxzT8CyITJjhKPjQ9
+ JzqDanuo65UjIlzDyS3hCs3B5CPupyLNi+QZtb2yfPf86IhaSP7U6Lrir
+X-Gm-Gg: ATEYQzw6mCCkmERvHEYoRtyy853Z+8uYk9q53i0v8mIAHOpL26Xrww2ChswjVwxWrpV
+ IBVNzxRdUaR0IeMtReLwzrk47DSpsRcGZSax5XeiUpLlix7V7ivXii2l4YCQsW0g+U7wN9ULPSU
+ jMlWd+M0W2pXFI6hpkQ0Ge5j6Qypy53asW3WmG79g3K9t2jFz9fzpjRzKVt4Fuh5UAwh0ofP4PK
+ 4PpPJqjn3vTUn0qze9+9fijdSqJvNaSKCh6+9U3YJytB8D4RZh3OjINI/tvl5tn+HL0ihIC16AZ
+ ke4lbax5tuTFgLycocr1OrBXHSJJ1InAN7BvplaT8KZmcfO4QUuj5LAtkLPC1WAycgU4fZzOCvo
+ eOpU5KDwwX4lgbcSoaBCf9iAy7u3ET1hjaPrMAAQS3vJZBMvMvmaC9s5JxE5HvUbxUd33wQ==
+X-Received: by 2002:a05:600c:8b56:b0:483:3380:ca11 with SMTP id
+ 5b1f17b1804b1-4855672ad40mr195371555e9.33.1773646816367; 
+ Mon, 16 Mar 2026 00:40:16 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b56:b0:483:3380:ca11 with SMTP id
+ 5b1f17b1804b1-4855672ad40mr195371125e9.33.1773646815862; 
+ Mon, 16 Mar 2026 00:40:15 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b419270efsm9524780f8f.16.2026.03.16.00.38.34
+ 5b1f17b1804b1-48541b6f6e6sm862366095e9.10.2026.03.16.00.40.14
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 00:38:35 -0700 (PDT)
-Message-ID: <8b7b4803-81fe-4c30-a36f-7141df641964@redhat.com>
-Date: Mon, 16 Mar 2026 08:38:34 +0100
+ Mon, 16 Mar 2026 00:40:15 -0700 (PDT)
+Message-ID: <ac158235-e36d-4ac6-9182-80f252efc2d3@redhat.com>
+Date: Mon, 16 Mar 2026 08:40:13 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v2 2/8] hw/arm/smmuv3-accel: Change ATS property to
@@ -126,7 +126,7 @@ Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Nathan,
+
 
 On 3/12/26 10:03 PM, Nathan Chen wrote:
 > From: Nathan Chen <nathanc@nvidia.com>
@@ -136,14 +136,9 @@ On 3/12/26 10:03 PM, Nathan Chen wrote:
 > translates to 'off'. A future patch will implement resolution of 'auto'
 > value to match the host SMMUv3 ATS support.
 
- i.e. 0 in IDR0 which translates to 'off': this is unclear to me what you want to say.
-
-I would clearly state here that at the moment the auto value is not implemented. This is just to get the property right and do not break JSON/QMP when getting the auto mode introduced. Also I think you want to enforce that in the code, ie. the end user is not trying to set to AUTO.
-
-Thanks
+You may also add a Fixes tag
 
 Eric
-
 >
 > Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 > ---
