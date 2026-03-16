@@ -4,86 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E221CF53D6E
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 15:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD23F53D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 15:58:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2A6x-0004iW-P4; Mon, 16 Mar 2026 11:44:07 -0400
+	id 1w2AJs-0007D2-KH; Mon, 16 Mar 2026 11:57:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2A6w-0004iC-Rm
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:44:06 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2A6v-0002lt-2M
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:44:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773675844;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=0iWTyw6wvE3sDgiwGkCcIOYdTHac/Kwhv7oUWsOrlKU=;
- b=ECaDFp/GfjChq3BH3+wLrBDDDNJaxUwAd6T/h1jBf6D4YwUJHgGkHru5qaqlvIW5ulLdHJ
- eDHALReGAp2/Xm3Afi9a5F/Pv3K83UQS+ZrhsNfyF1oOFNmSYAYZHh77TjWb88vKlLbisd
- Yr+21NVnfCx/scCdAfVYrMgOpHn8tog=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-245-mFYgUmWNPYeGaonHlqpoMA-1; Mon,
- 16 Mar 2026 11:44:00 -0400
-X-MC-Unique: mFYgUmWNPYeGaonHlqpoMA-1
-X-Mimecast-MFC-AGG-ID: mFYgUmWNPYeGaonHlqpoMA_1773675839
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7550F18005BD; Mon, 16 Mar 2026 15:43:58 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6DD63180075B; Mon, 16 Mar 2026 15:43:57 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E5F0421E6937; Mon, 16 Mar 2026 16:43:54 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Daniel P. =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Zhao Liu <zhao1.liu@intel.com>,  Paolo Bonzini <pbonzini@redhat.com>,
- Eduardo Habkost <eduardo@habkost.net>,  Thomas Huth <thuth@redhat.com>,
- Igor Mammedov <imammedo@redhat.com>,  Philippe =?utf-8?Q?Mathieu-Daud?=
- =?utf-8?Q?=C3=A9?=
- <philmd@linaro.org>,  Richard Henderson <richard.henderson@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>,  "Michael S . Tsirkin"
- <mst@redhat.com>,  BALATON Zoltan <balaton@eik.bme.hu>,  Mark Cave-Ayland
- <mark.caveayland@nutanix.com>,  Pierrick Bouvier
- <pierrick.bouvier@linaro.org>,  Zide Chen <zide.chen@intel.com>,  Dapeng
- Mi <dapeng1.mi@linux.intel.com>,  qemu-devel@nongnu.org,
- devel@lists.libvirt.org, Kevin Wolf <kwolf@redhat.com>
-Subject: Re: [PATCH v2 00/21] qom: introduce property flags to track
- external user input
-In-Reply-To: <abFqwbCCf7rNDEWs@redhat.com> ("Daniel P. =?utf-8?Q?Berrang?=
- =?utf-8?Q?=C3=A9=22's?= message of
- "Wed, 11 Mar 2026 13:14:41 +0000")
-References: <20260210032348.987549-1-zhao1.liu@intel.com>
- <877bricy97.fsf@pond.sub.org> <abFqwbCCf7rNDEWs@redhat.com>
-Date: Mon, 16 Mar 2026 16:43:54 +0100
-Message-ID: <87tsufpyo5.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2AJq-0007Ci-FS
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:57:26 -0400
+Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2AJo-0008Uv-VK
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:57:26 -0400
+Received: by mail-yx1-xb12e.google.com with SMTP id
+ 956f58d0204a3-64ad8435f46so4918679d50.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 08:57:24 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773676643; cv=none;
+ d=google.com; s=arc-20240605;
+ b=hB1h+hgH5dWLUUzDR3Qm3Or+HWMBO1MLHdjbhHBaS0GrCZ97a0SNfABdJ21XtfwMf+
+ dFMouEHpykhL++YJ6DMRQ62Ng94C8PCYL7973rXvFj7FGSwqioNNi7HIuhzMvA5LLjxc
+ aj4Hi/Fs5SH6weGyCrjqlw9Yisg6ezdnggmjQfxWp/e59iUgh4bN/1KxRlF4v0AM+N7E
+ pcXN4WSPa/Yd26010iT9HSXwWLbWGk3BYIjmjs0DYPt1/jfeFfBYnzRoOV6uk6v/0gh8
+ SpR9XwYYLl9FaWfkFxjBHG4z78hgNXYEFnHjfySsBDEewvmftIuliVpitVhtq/MvJn5f
+ It8Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=R1RAxLHuisOEg23Ie34CPIJ5KCkNU9xqAHyp/gYUa+g=;
+ fh=Y6kxCTiPZ5b/w2E0dv4AaCuHxR6xokTpt/HocB1Rvxk=;
+ b=SMz4d1x5ysqkfg48Pz3RYiuTYSvLMau5k7L3NGGQLRcWPWNVazjJoxqxXfrvuBu4ph
+ OwXvLbsNmrONSu8hxCVS0JbVqN4lUBt3v3agGy1dg91ljNivnlnTp9hNwZJdyrvgH+R5
+ OYH5cQgapsuWPDqsXIpBPBdenFt7rIKhgZsmQFIz2XQAdpVupW87X/e2rOEsa5sgXTJP
+ phI0ZVeNnlwD3RfIbcopPuy5Dmdxod7lnd6Ov0i7fCJngVMoELrfneEg8SMt/A6ZJdql
+ 8DqTRvtFIMtI/pBN2OflJA4LYp3k8lZme1lOkTZwjhp2inbaiX2lo6qp2Cze1WDu/K+Z
+ 7KFQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773676643; x=1774281443; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=R1RAxLHuisOEg23Ie34CPIJ5KCkNU9xqAHyp/gYUa+g=;
+ b=GnSvXmlUyNb+xYhJs8tDrqHlOLzN9YkfP2I3NCmcwWd1L6qZTgqxuytUBVZUEF/1U+
+ OQGaNeAlZ2J7+mcK6ntz59Um9VE3WDWbN4wKTvzJRw1lxm1FFPxfTibNeahtUrMXHBon
+ PsRZ1deG2iED64PIIGYEkfAxDrDGFYMENlbUqUfoJ2b3G46c8TrLOPt2k26YkcNCMx8T
+ FDrZF2l7E/3np3/LKCdqu/tBQtGwP0h/IIROMRACUNW3EjP1pz7fki/XMCWaSt4Xha+m
+ 8+m/Z7kJ0HyGEHcZiCEUQW+Vr8A67kFxRUZ76E4ZbW3vBhLijBQl2akG0i9Fe1pgRHUh
+ IEvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773676643; x=1774281443;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=R1RAxLHuisOEg23Ie34CPIJ5KCkNU9xqAHyp/gYUa+g=;
+ b=aTSKxy5ITZsP6sokvIrr8LBPQqtPVPyZ6FGTUbv3Mq166MlBgWssh72G+EkofXjXZe
+ 1hJizGI3igc1goICvJAOPkosumYR0/W4Iie7lG+UEVZ5MhOw2xr+kEM7hNlunj7pb/cB
+ SiL8V85NK5StOO7CyzRG4j+qeTMMvn9h32fJ0oehb3i1b7HWtCtTAMp3EkS8aruMvhkw
+ sXOcVtm6fj4vmz9RRNDipbAQOm/x3AqrylDZt+cwIA0nRKZmsCNDaNFPuN8dpZYqnm7j
+ ZRnHbZO7dIf48U+zfcEejn6zWuiJzCYzCijY83VT4lgLI+WrmglS1czzoa+ljRe3OJRC
+ ZjDw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCX/syrJ6dk1jSaR1ud9YmleQqEWaX/k9xC1vN8CZoNcnYtZi9K/1u/sc0iu7eF5+4nMVcCEBpHrea2c@nongnu.org
+X-Gm-Message-State: AOJu0YxNDurc7EqGVUZc3AlldWl5BxjfzMWp5OzHFbHrpkeWQFGDG/8b
+ gIKeXQxInFllLa4OeJ2KbYfWiQZtyU0S6d4xOFwHALDQ0EF1ZHoHvKdhh7PVKxoWFlyjeWH+NeT
+ Xi+Aj6b+bg+JaNuiTEsIPiDXyOISSoeYNxak41NTbzXYySrvkejAL1lk=
+X-Gm-Gg: ATEYQzy9dEq2KbV6ew2pdDlmjp9bV49Hf1/EwQRfJtIl7aKuc25/OwDQKwYXdsA6ReP
+ 7y23+5eKOL87NA/4pseotT6lTiUGIdNk+okDAm2wezdiQ5bos41slJeGcqxsbp2TOJvohLo5tGI
+ BiEj8u7ZriTDv2yRFR7nP9sI4qrcl9yXOtjinGC+Mh54C/2Mfhc2fH0Vgj9V6Dp8fUWUvm56vv+
+ gGLuziiqkz5LaJ8y2/Qf0dfjBOUPKU3CWkC5cMEqjlp9ESwpVCM9X0421n4hh22887JryNPD7O+
+ 2w3ysGWsAGpWHt7XXo8H0b078PIjLYIdxI1S1ElKZWUX/905uFgwcH12IP2LzlybAd8=
+X-Received: by 2002:a53:ba4b:0:b0:649:443f:ab2a with SMTP id
+ 956f58d0204a3-64e62fb58efmr8679674d50.37.1773676642796; Mon, 16 Mar 2026
+ 08:57:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260313233538.1519319-1-rkir@google.com> <87341zsvmc.fsf@suse.de>
+In-Reply-To: <87341zsvmc.fsf@suse.de>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 16 Mar 2026 15:57:11 +0000
+X-Gm-Features: AaiRm51DhNjVmPQM15KKYcid7ez71cLqy2ZJI3g7h23oIV8ybPQdOmP2ymXBxPc
+Message-ID: <CAFEAcA9BzSp9F8yv4eZv5eeUM4JXSy9T-QnRr_UbJZpNmhtHyw@mail.gmail.com>
+Subject: Re: [PATCH v3] vmstate: validate VMStateDescription::fields upon
+ registration
+To: Fabiano Rosas <farosas@suse.de>
+Cc: Roman Kiryanov <rkir@google.com>, peterx@redhat.com, qemu-devel@nongnu.org,
+ whollins@google.com, jansene@google.com, jpcottin@google.com
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -99,102 +117,95 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Daniel P. Berrang=C3=A9 <berrange@redhat.com> writes:
-
-> On Wed, Mar 11, 2026 at 02:05:24PM +0100, Markus Armbruster wrote:
->> I can't find a good spot in the existing discussion where the following
->> would fit neatly as a reply, so I'm starting at the top again.
->>=20
->> Fact: a huge part of our external interface is *accidental* and
->> virtually undocumented.
->>=20
->> The sane way to do an external interface is to layer it on top of more
->> powerful internal interfaces.  The external interface exposes just the
->> functionality that's wanted there.  The internal interfaces can evolve
->> without affecting the external one.
->>=20
->> QMP works that way.  QEMU code uses internal C interfaces.  QEMU doesn't
->> send QMP commands to itself.  If we need something internally, we add it
->> to a suitable internal interface.  There's no need to add it to the
->> external interface just for that.
->>=20
->> QOM does not work that way.  The internal and the external object
->> configuration interface is one and the same.  So, if we add a property
->> for internal use, we can't *not* add it to the external interface.
->>=20
->> This has led to an external interface that is frickin' huge: I count
->> ~1000 device types with ~16000 properties in qemu-system-aarch64 alone.
->> The vast majority is undocumented.
->>=20
->> Time and again we've found ourselves unsure whether certain properties
->> have external uses, or are even meant for external use.
->>=20
->> We have been unable / unwilling to isolate the external interface from
->> internal detail.  This is madness.
->>=20
->> As long as we persist in this madness, a sane, properly documented
->> external interface will remain impossible.
->>=20
->> Do we care?  If yes, we should discuss how to isolate external and
->> internal interfaces.
->>=20
->> This series attempts to create a bit of infrastructure for such
->> isolation: means to mark properties as internal.  Is it the right
->> infrastructure?  Is it enough to be a useful step?  Maybe not, but then
->> I'd like to hear better ideas.
+On Mon, 16 Mar 2026 at 14:22, Fabiano Rosas <farosas@suse.de> wrote:
 >
-> For -object / object_add  we introduced formal QAPI modelling of
-> all Object subclasses which implement the UserCreatable interface.
-> IIUC, that gives us the desired separation between internal and
-> external views, as only properties declared in qapi/qom.json are
-> publically settable.
-
-Correct.  Kevin Wolf's work.
-
-> This work did not apply to the Device classes because the historical
-> baggage with qdev being grafted onto qom, means we don't have that
-> working via the UserCreatable inteface or -object/object_add.
+> Roman Kiryanov <rkir@google.com> writes:
 >
-> Can we bring Device into the same world though ?
+> > The vmstate_save_state_v() function does not support
+> > NULL in VMStateDescription::fields and will crash if
+> > one is provided.
+> >
+> > This change prevents this situation from happening
+> > by explicitly crashing earlier.
+> >
+> > Suggested-by: Fabiano Rosas <farosas@suse.de>
+> > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > Signed-off-by: Roman Kiryanov <rkir@google.com>
+> > ---
+> > v3:
+> >  - Also added assert to virtio.c to validate
+> >    VirtioDeviceClass instances which bypass
+> >    vmstate_register_with_alias_id.
+> >  - Updated the commit message to "Reviewed-by".
+> > v2:
+> >  - Moved the assert from vmstate_save_state_v to the registration
+> >    path (vmstate_register_with_alias_id) and the qtest validation path
+> >    (vmstate_check) to catch missing fields earlier.
+> > ---
+> >  hw/virtio/virtio.c | 6 ++++++
+> >  migration/savevm.c | 5 +++++
+> >  2 files changed, 11 insertions(+)
+> >
+> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
+> > index 0ba734d0bc..e4543de335 100644
+> > --- a/hw/virtio/virtio.c
+> > +++ b/hw/virtio/virtio.c
+> > @@ -4054,6 +4054,12 @@ static void virtio_device_realize(DeviceState *dev, Error **errp)
+> >      /* Devices should either use vmsd or the load/save methods */
+> >      assert(!vdc->vmsd || !vdc->load);
+> >
+> > +    /*
+> > +     * If a device has vmsd, it either MUST have valid fields
+> > +     * or marked unmigratable.
+> > +     */
+> > +    assert(!vdc->vmsd || (vdc->vmsd->unmigratable || vdc->vmsd->fields));
+> > +
+> >      if (vdc->realize != NULL) {
+> >          vdc->realize(dev, &err);
+> >          if (err != NULL) {
+> > diff --git a/migration/savevm.c b/migration/savevm.c
+> > index 197c89e0e6..20c2b99231 100644
+> > --- a/migration/savevm.c
+> > +++ b/migration/savevm.c
+> > @@ -861,6 +861,8 @@ static void vmstate_check(const VMStateDescription *vmsd)
+> >      const VMStateField *field = vmsd->fields;
+> >      const VMStateDescription * const *subsection = vmsd->subsections;
+> >
+> > +    assert(field || vmsd->unmigratable);
+> > +
+> >      if (field) {
+> >          while (field->name) {
+> >              if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
+> > @@ -900,6 +902,9 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
+> >      /* If this triggers, alias support can be dropped for the vmsd. */
+> >      assert(alias_id == -1 || required_for_version >= vmsd->minimum_version_id);
+> >
+> > +    /* If vmsd is migratable it MUST have valid fields. */
+> > +    assert(vmsd->fields || vmsd->unmigratable);
+> > +
+> >      se = g_new0(SaveStateEntry, 1);
+> >      se->version_id = vmsd->version_id;
+> >      se->section_id = savevm_state.global_section_id++;
+>
+> Looks like we'll also need to fix some stubs that define empty vmsds:
+>
+> qemu-system-mips64: ../migration/savevm.c:864: void vmstate_check(const
+> VMStateDescription *): Assertion `field || vmsd->unmigratable' failed.
+>
+> Maybe something like the following. Peter, what do you think?
 
-Kevin Wolf took a stab at it.  I had a hard time understanding it back
-then.  Various pennies finally dropped when he patiently explained it to
-me in person.  I disliked certain aspects of its design, and wanted to
-explore a bit more.  Never found the time.  Perhaps we should just take
-it despite my design misgivings.
+Ah, I was about to report this -- commit 7aa563630b6b0 ("pc: Start
+with modern CPU hotplug interface by default") broke the MIPS Malta
+board migration, which now segfaults when you "savevm" because
+the stub vmstate_cpu_hotplug struct has a NULL fields pointer.
 
-> Adding 1000 device types to QAPI is a huge job, so it would need to
-> be a long incremental job, unless perhaps we auto-generate QAPI
-> descriptions for everything that already exists ?
+This used to work because the relevant vmstate had a "needed"
+function that meant we never used the stub vmstate structs, but
+that commit dropped the "needed" functions.
 
-Interesting idea.
+If the change you suggest is the right way to fix this then it
+ought to be its own patch with a Fixes: tag pointing at 7aa563630b6b0.
 
-QAPI is declarative: types and their properties are declared in a
-schema.
-
-QOM is imperative: we execute C code to create types and their
-properties.
-
-Extracting a QAPI schema from the C code is impossible in the completely
-general case (halting problem), and merely impractical (I believe) in
-the special cases we have.
-
-We could start with QOM introspection instead: qom-list-types and
-qom-list-properties.  These are only mostly complete, but should be good
-enough.
-
-Mapping QOM types to QAPI types would involve guesswork, because QOM
-doesn't have a type system, it has strings and bailing wire.
-
-Schema documentation would be placeholders at best.  We could try to
-extract documentation from -device T,help.  Most properties have nothing
-there, and the remainder likely needs to be rewritten completely to be
-fit for purpose.
-
-> More generally anything we can do to bring qdev & qom closer together
-> feels desirable. I dream of a future where -device/device_add are
-> obsolete....
-
-That would be lovely.
-
+thanks
+-- PMM
 
