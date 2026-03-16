@@ -4,93 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6EC37F506E0
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 14:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7CAF506D9
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 14:56:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w29B5-0000gf-5L; Mon, 16 Mar 2026 10:44:19 -0400
+	id 1w29MM-0002lT-Do; Mon, 16 Mar 2026 10:55:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w29Au-0000fN-8c
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:44:08 -0400
-Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
- id 1w29Ar-0000EJ-GU
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:44:08 -0400
-Received: by mail-ej1-x634.google.com with SMTP id
- a640c23a62f3a-b93698bb57aso872656966b.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 07:44:04 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773672243; x=1774277043; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=fcyS4c0ZFzXBzY8/awrHzLx1zlBHC2pXS4g0m2w2ceA=;
- b=TKrgVE/2D6I3umS64Wo5XcjWT7t10+gZs1hykV5qXaPjYY+oIRlS2KJEdKP8vPWvl3
- IWloJouTslH6V4qEp0/lSQg66PNyE+VmOoWNjDyhe3H0jK0qcQ8uRMzubBTvXsHtaF/E
- N8T1mFtMTZm/2P1fCFviqrM+W8PK8ady4Ol9Bx+0yGrhmX3z+CopbLXlYkb0j3Itm1er
- NwOi9zaty7Mq1WUKaa64qMQN8UsXELPkfxLwMlwDNFZhVMCmV/CFk9Djo9LWWmAc995v
- 9v6U9DbV58itT4T7Dft2G2WzId1WfvLGMXEpKx20KVeN8z/AihYig7GcqiXM3aeV8kk6
- 5ZSw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773672243; x=1774277043;
- h=content-transfer-encoding:mime-version:message-id:date:user-agent
- :references:in-reply-to:subject:cc:to:from:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=fcyS4c0ZFzXBzY8/awrHzLx1zlBHC2pXS4g0m2w2ceA=;
- b=bPvO4a1gFnMEHngpo8+1Ty9FhelcAOrZg7s7icoxMGWvplOgRaozUXB2sbZWz4RMGD
- 2rfMvwrnMpJ1gqZS+/SN+Gj7tb6NlbGUTKiH5m+rq9zTFjIcvefxieaIfbTNM6PTCkrL
- VLbcjqGnA3KnK7qr+gdgKqRZTL0Q3U4fa0IIEbz32Xw1ax+IUDU8/JPUQG3A1rplCIxM
- 6wIsySUWeZ/cDEsi/a/qV9i4I4TkAqxf8kC3rKN5OC3lRygaULD6pp7rbOCWWerAvgnQ
- l3v4/td8Of526w82pJvPwdGxGZJ/cuwGeyhLYJt8/kxwQuVfy5v7M5PZEH2ND6knv34y
- AFHA==
-X-Gm-Message-State: AOJu0Yz4M0UaykuhAfFQIAOtsYB25MEsDiQyKMECubEbW+VU8JYlq1YN
- TmpExvFd7AM7wDtVDBuasdf3vEsuy+1OeIzHOeihWmjdukjiXkm4UtFBUSG8xrrY01Q=
-X-Gm-Gg: ATEYQzyB72WnALpJan85yJqIhUjdl7M8Dw5yyEoweY+3bCuaEUMo/WrpIhfMpQW3L9Y
- H4KWnS24f9NeuAHv/U2m1ZnOtc7OrqpFJKYMknxhVJTN0eEIH95fLh6wWihp+LrhPpnlxSnX+8D
- 2as+QZlCKW959TyKxYxBXTrLpwRNXqL7RR6ehYkBWUJo0a3zOBeYX7Z0o00RW9N+AJFneuK87Uo
- wVx6YliSB+VQSQ6HRER4jy27CBGh+x/XONtLVK/YRj2sb4OrD0IzlwXoJiPskM283T3DITL/CmN
- idF80fBIsctODz1+0DOsF8KJW2qmQ+IzhjMnwCeb410qGUJdMSd0D/4DJ2RIP7DtxUzA8g+ytET
- YnwmMyjqCBNPwfzXLzzCQJu2vFQnzhNp2MmTVzDTBjAfNdzEcZOHsPrd988iu+5YsVhQ4PIomSc
- 29q8P/t7LACmwTa+Mf9tQGiAg=
-X-Received: by 2002:a17:907:9808:b0:b97:9a7a:9d21 with SMTP id
- a640c23a62f3a-b979a7ab081mr480380366b.4.1773672242958; 
- Mon, 16 Mar 2026 07:44:02 -0700 (PDT)
-Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
- a640c23a62f3a-b97cb0d2e1esm82789166b.55.2026.03.16.07.44.02
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 07:44:02 -0700 (PDT)
-Received: from draig (localhost [IPv6:::1])
- by draig.lan (Postfix) with ESMTP id 978C95FA31;
- Mon, 16 Mar 2026 14:44:01 +0000 (GMT)
-From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>,
- Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
-Subject: Re: [PATCH 3/3] tests/docker: Update the opensuse-leap container
- file to version 16
-In-Reply-To: <20260316135407.209072-4-thuth@redhat.com> (Thomas Huth's message
- of "Mon, 16 Mar 2026 14:54:07 +0100")
-References: <20260316135407.209072-1-thuth@redhat.com>
- <20260316135407.209072-4-thuth@redhat.com>
-User-Agent: mu4e 1.14.0-pre2; emacs 30.1
-Date: Mon, 16 Mar 2026 14:44:01 +0000
-Message-ID: <871phjomvi.fsf@draig.linaro.org>
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1w29MK-0002jY-7e; Mon, 16 Mar 2026 10:55:56 -0400
+Received: from mgamail.intel.com ([198.175.65.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
+ id 1w29MG-0005Bg-Ho; Mon, 16 Mar 2026 10:55:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773672952; x=1805208952;
+ h=date:from:to:cc:subject:message-id:references:
+ mime-version:content-transfer-encoding:in-reply-to;
+ bh=BJZoEpMwSTo1UvAo3RoonQbfkW8gnYuTOP+deW7gfZ0=;
+ b=ORPvhH+Z1Q3YklD3kIuWemy6BhGcez/fxVTuG4Y+hxML0HC111VNeIXK
+ NSJMEBLNrkH0wbeeX1h9bd0ZnNHpucIuX/AUpIDnTw4Aa9CrcLOI8AyDE
+ YPM462z55rorsnvZlO7MZ/iUVCB7Mwckepdpq9mFNS2uYNfGDiskzKNUB
+ 3BDvwUy1klEXKHwXChMHLaV19pR/gYSbO44hsFjNPsU0H8VBo1RDvd+pi
+ aa4oJMNgZ9Ch59/lK/6oqbvDAcyGWIXWOg/e8D4SvkZUBxn2Ynkq+kOmt
+ 1U5ttNlKK8Pi6ZRbmNta2nwBFnWX4rCc4PKwmtaiipVvzbudGsTVxQNuO g==;
+X-CSE-ConnectionGUID: KePQHjO4QjaUTvCKCAR+oQ==
+X-CSE-MsgGUID: Y4NIsYgnRQmfl8NzrhnR1Q==
+X-IronPort-AV: E=McAfee;i="6800,10657,11731"; a="86167182"
+X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; d="scan'208";a="86167182"
+Received: from orviesa005.jf.intel.com ([10.64.159.145])
+ by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 16 Mar 2026 07:55:47 -0700
+X-CSE-ConnectionGUID: UBx9dT/tRIGJY+RgTkBTRg==
+X-CSE-MsgGUID: MkiUdba8TtGqoh9pacEsVw==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; d="scan'208";a="226921208"
+Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
+ ([10.239.160.39])
+ by orviesa005.jf.intel.com with ESMTP; 16 Mar 2026 07:55:46 -0700
+Date: Mon, 16 Mar 2026 23:21:59 +0800
+From: Zhao Liu <zhao1.liu@intel.com>
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
+Subject: Re: [PATCH 0/5] rust/hpet: complete moving state out of HPETTimer
+Message-ID: <abggFzbWA2Dfkuvm@intel.com>
+References: <20251117084752.203219-1-pbonzini@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::634;
- envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x634.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain; charset=gb2312
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20251117084752.203219-1-pbonzini@redhat.com>
+Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
+ helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -107,116 +81,175 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Hi,
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> Run "make lcitool-refresh" to update the container file to the latest
-> version of openSUSE.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> I'm leaving out the conversion to Mutex because, as Zhao noticed, it
+> has a deadlock - the timer callback tries to grab the HPET mutex inside
+> the BQL, where as the vCPU tries to grab the BQL inside the HPET mutex.
+> This is not present in the C code only because... it doesn't take the
+> lock at all in places where it should.  In particular hpet_timer() reads
+> and writes t->cmp and t->cmp64 outside the lock, while hpet_ram_write()
+> does so within the lock via hpet_set_timer().
 
-Personally I'd merge this with the refresh update in the previous
-commit. Anyway:
+About this issue, I'd like to continue previous discussion and share
+some my thoughts.
 
-Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-> ---
->  tests/docker/dockerfiles/opensuse-leap.docker | 35 +++++++++----------
->  1 file changed, 17 insertions(+), 18 deletions(-)
->
-> diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker=
-/dockerfiles/opensuse-leap.docker
-> index d693f2c6f85..66e90fa3634 100644
-> --- a/tests/docker/dockerfiles/opensuse-leap.docker
-> +++ b/tests/docker/dockerfiles/opensuse-leap.docker
-> @@ -1,13 +1,12 @@
->  # THIS FILE WAS AUTO-GENERATED
->  #
-> -#  $ lcitool dockerfile --layers all opensuse-leap-15 qemu
-> +#  $ lcitool dockerfile --layers all opensuse-leap-16 qemu
->  #
->  # https://gitlab.com/libvirt/libvirt-ci
->=20=20
-> -FROM registry.opensuse.org/opensuse/leap:15.6
-> +FROM registry.opensuse.org/opensuse/leap:16.0
->=20=20
->  RUN zypper update -y && \
-> -    zypper addrepo -fc https://download.opensuse.org/update/leap/15.6/ba=
-ckports/openSUSE:Backports:SLE-15-SP6:Update.repo && \
->      zypper install -y \
->             Mesa-devel \
->             alsa-lib-devel \
-> @@ -80,13 +79,14 @@ RUN zypper update -y && \
->             libudev-devel \
->             liburing-devel \
->             libusb-1_0-devel \
-> +           libxdp-devel \
->             libzstd-devel \
->             llvm \
->             lttng-ust-devel \
->             lzo-devel \
->             make \
-> +           meson \
->             mtools \
-> -           ncat \
->             ncurses-devel \
->             ninja \
->             openssh \
-> @@ -94,11 +94,17 @@ RUN zypper update -y && \
->             pcre2-devel-static \
->             pipewire-devel \
->             pkgconfig \
-> -           python311 \
-> -           python311-base \
-> -           python311-pip \
-> -           python311-setuptools \
-> -           python311-wheel \
-> +           python3-Pillow \
-> +           python3-PyYAML \
-> +           python3-Sphinx \
-> +           python3-base \
-> +           python3-numpy \
-> +           python3-opencv \
-> +           python3-pip \
-> +           python3-setuptools \
-> +           python3-sphinx_rtd_theme \
-> +           python3-tomli \
-> +           python3-wheel \
->             rdma-core-devel \
->             rust \
->             rust-bindgen \
-> @@ -110,7 +116,7 @@ RUN zypper update -y && \
->             spice-protocol-devel \
->             swtpm \
->             systemd-devel \
-> -           systemtap-sdt-devel \
-> +           systemtap-dtrace \
->             tar \
->             tesseract-ocr \
->             tesseract-ocr-traineddata-english \
-> @@ -133,18 +139,11 @@ RUN zypper update -y && \
->      ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
->      ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
->=20=20
-> -RUN /usr/bin/pip3.11 install \
-> -                     PyYAML \
-> -                     meson=3D=3D1.8.1 \
-> -                     pillow \
-> -                     sphinx \
-> -                     sphinx-rtd-theme
-> -
->  ENV CCACHE_WRAPPERSDIR=3D"/usr/libexec/ccache-wrappers"
->  ENV LANG=3D"en_US.UTF-8"
->  ENV MAKE=3D"/usr/bin/make"
->  ENV NINJA=3D"/usr/bin/ninja"
-> -ENV PYTHON=3D"/usr/bin/python3.11"
-> +ENV PYTHON=3D"/usr/bin/python3"
->  # As a final step configure the user (if env is defined)
->  ARG USER
->  ARG UID
+Review the Current Issue
+========================
 
---=20
-Alex Benn=C3=A9e
-Virtualisation Tech Lead @ Linaro
+To better explain the scope of locks and compare different options later,
+let me go over the previous issue in more detail.
+
+HPET's timer callback hpet_timer() currently does NOT hold s->lock (the
+device mutex). This is a data race bug: it modifies t->cmp64, t->cmp,
+t->wrap_flag, and calls update_irq() -- all of which race with
+hpet_ram_write().
+
+However, fixing this by adding QEMU_LOCK_GUARD(&s->lock) to hpet_timer()
+creates an AB-BA deadlock:
+
+  Path A (timer callback):  BQL ¡ú mutex
+    main_loop_wait() holds BQL
+    ¡ú qemu_clock_run_all_timers()
+      ¡ú timerlist_run_timers() 
+        ¡ú hpet_timer()
+          ¡ú QEMU_LOCK_GUARD(&s->lock)    // mutex under BQL
+
+  Path B (MMIO write):      mutex ¡ú BQL
+    lockless_io = true, so no BQL on entry
+    ¡ú hpet_ram_write()
+      ¡ú QEMU_LOCK_GUARD(&s->lock)      // mutex first
+        ¡ú update_irq()
+          ¡ú BQL_LOCK_GUARD()            // BQL under mutex
+            ¡ú qemu_set_irq()
+
+I think we could have these 3 options in hand:
+ * lockless timer: unlock bql for HPET timer handler - like lockless MMIO did
+ * lockless irq: implement lockless ioapic/gic/...
+ * defer call: defer BQL related call outside of mutex context.
+
+Since the Rust implementations are currently mirrors of the C code, I'll use
+C-side pseudocode as the main examples.
+
+
+Option 1: Lockless timer attribute
+==================================
+
+Add a QEMU_TIMER_ATTR_LOCKLESS flag. In timerlist_run_timers(), release
+BQL before invoking a timer callback marked with this attribute, and
+re-acquire it afterward:
+
+    /* in timerlist_run_timers(), around cb(opaque) call: */
+    bool release_bql = (ts->attributes & QEMU_TIMER_ATTR_LOCKLESS)
+                       && bql_locked();
+    if (release_bql) {
+        bql_unlock();
+    }
+    cb(opaque);
+    if (release_bql) {
+        bql_lock();
+    }
+
+With this, HPET's timer callback runs without BQL, and can do:
+
+    hpet_timer() {
+        QEMU_LOCK_GUARD(&s->lock);   // mutex first, no BQL held
+        ...
+        update_irq(t, 1);            // takes BQL inside ¡ú mutex¡úBQL
+    }
+
+Both paths become mutex¡úBQL. Deadlock eliminated.
+
+This option has minimal change, and it also aligns well with the concept
+of lockless devices - its approach is consistent with lockless MMIO, i.e,
+transferring the lock-protected implementation and responsibility to the
+device itself.
+
+But I'm not sure if modifying the timer is a sufficiently general and
+thorough approach: if other types of devices also implement lockless,
+would we need to convert more callbacks to bql-free? More bql-free
+callbacks sounds a bit messy?
+
+
+Option 2: Lockless interrupt controllers (IOAPIC/PIC/GSI)
+---------------------------------------------------------
+
+Make the entire GSI¡úIOAPIC/PIC path BQL-free by converting interrupt
+controller state to atomic operations or fine-grained locks. Then
+update_irq() would never need BQL, eliminating the mutex¡úBQL nesting
+in the MMIO path entirely.
+
+This refers Paolo's previous idea:
+
+https://lore.kernel.org/qemu-devel/ac058be3-274a-4896-b01d-f433d036b5d0@redhat.com/
+
+This is the most thorough solution: IRQ path becomes fully BQL-free and
+all lockless_io devices benefit automatically.
+
+I find the first blocking issue is gsi_handler() under CONFIG_XEN_EMU
+calls xen_evtchn_set_gsi() which has assert(bql_locked()). The Xen
+event channel's callback_gsi logic uses a synchronous recursive flag
+(setting_callback_gsi) that deeply depends on BQL's mutual exclusion
+semantics. This looks like it needs refactoring?
+
+I think PIC and IOAPIC also need device locks or atomic operations for
+protection, but their lockless implementations all have complexity.
+
+
+Option 3: defer_call to reorder lock acquisition in MMIO path
+=============================================================
+
+Previously, I had a POC (in Rust) to defer IRQ injection after Mutex
+context:
+https://gitlab.com/zhao.liu/qemu/-/tree/rust-hpet-lockless-v0-01-04-2026
+
+I hold it in hand and didn't post it since I thought it's not easy to
+make C side apply this method. Until I realized that QEMU actually
+already has defer call! Although what I need is still somewhat different
+(like allowing repeated calls, BQL context), the thread-local handling
+is more concise and elegant than my POC.
+
+So it's possible to use QEMU's defer_call mechanism (with some
+additional minor enhancements: allowing repeated calls, BQL context) to
+defer qemu_set_irq() calls to after the device mutex is released in the
+MMIO write path:
+
+    hpet_ram_write() {
+        defer_call_begin();
+        QEMU_LOCK_GUARD(&s->lock);
+        // state updates under mutex, record pending IRQ actions
+        defer_call(hpet_flush_irqs, s);
+        // mutex released here
+        defer_call_end();
+        // hpet_flush_irqs runs here: BQL_LOCK_GUARD() + qemu_set_irq()
+        // mutex and BQL are never nested
+    }
+
+A problem is, then the MMIO is not atomic: With lockless_io, multiple
+vCPUs can concurrently enter MMIO handlers. Between mutex release and
+defer_call_end(), another vCPU could modify state, causing the deferred
+IRQ action to operate on stale decisions.
+
+This situation is relatively rare, and I think the delayed updates in a
+few cases of state are also acceptable?
+
+This option is more complex than option 1, since for Rust side, we will
+need a defer call binding. But this option doesn't need to justify
+whether other callbacks (like timer) could or should support BQL-free.
+
+
+Discussion
+==========
+
+Overall, I think option 1 or 3 are general lockless infrastructure
+enhancements, while option 2 is an i386-specific lockless feature. So
+maybe we could choose one from options 1 and 3, decouple it from option
+2, meaning both could proceed in parallel? What do you think?
+
+Thanks and Best Regards,
+Zhao
+
+
+
 
