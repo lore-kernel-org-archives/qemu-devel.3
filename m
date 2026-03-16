@@ -4,93 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00D10F506D5
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 14:24:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66D00F506DA
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 14:41:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w28rY-0003uS-RR; Mon, 16 Mar 2026 10:24:08 -0400
+	id 1w2981-0007wc-9f; Mon, 16 Mar 2026 10:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w28rX-0003ts-2F
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:24:07 -0400
-Received: from mail-yw1-x1135.google.com ([2607:f8b0:4864:20::1135])
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w297z-0007wL-Aw
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:41:07 -0400
+Received: from mail-ej1-x635.google.com ([2a00:1450:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w28rU-0000jQ-Io
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:24:06 -0400
-Received: by mail-yw1-x1135.google.com with SMTP id
- 00721157ae682-79a51edef1fso11741637b3.1
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 07:24:03 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773671043; cv=none;
- d=google.com; s=arc-20240605;
- b=JeGGlTwJ8PWg2oTNfB0aQ823J6o9ehvLFcxDbeTTF5J7wr/eDkdKpdJWZMP8CnYszB
- lJ0xtSCL07aaguoE63EFwegBk0kE37A0/mBqxdEsOhIakwSp9qge7LloInVSA4jJnyPA
- +9nrAqjDe6O7kgLGk6W61AggvvxQWkYlDaaKOBg3ZmlB4hGq+1ccCxsbe1dlfYOEgUAd
- 3MhWFULpR2VLduE37OZLo27eZxfrccfWal837S/B82Xd1gYaAO/Y3QeHgWdCJlfhmnE8
- BERRzum4Yo1e1ab6sDTY/1n0yuCkVQbQW4zqhOBwkRD42nzelM5JVlIjLoSmCbnJ1JR4
- 8MRA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :dkim-signature;
- bh=/HN/wjCxiK4/24f8DZiXfMoiv8URbM3hPtbpytOkDaI=;
- fh=PnYt+qEB9tAfMKoqBm2xjKOFpYyFFGPudh5cVIoieJM=;
- b=Odt3tRVdwoWnO3Mp9nIp/ykxP7oQnt7Pk7Cmd+H89tDjnm/jRwfnzUPrHpCW1IXU0z
- fi5JCHh+qEp0c0dxUqBSDRESCKb6zb7U9Q+DgymNYO91hxQKlvAvjiF07VO3KqJqVtiN
- HztNUwWxDx/oJ0PSBV/3pVHLDLs+3WQvx/UdYeo3OeZ6derhZJkZb7eD2pYcpEXd7a7Z
- aZA+h+IHlYDUff5qfDoYLeFQLyHygIgxncS+/EgBO161Wm+jI7BlBxf2hlx0EWMNMxiH
- uHZpIIYEXcdKdPCRJ8cSXKghAOOsuluzVz1xHwATJnR9JiB28PuO8EcS8VNR2AlBmVqW
- 1UdQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w297v-0007Ls-95
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:41:06 -0400
+Received: by mail-ej1-x635.google.com with SMTP id
+ a640c23a62f3a-b9795ca4e6dso348707966b.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 07:41:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773671043; x=1774275843; darn=nongnu.org;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :from:to:cc:subject:date:message-id:reply-to;
- bh=/HN/wjCxiK4/24f8DZiXfMoiv8URbM3hPtbpytOkDaI=;
- b=H13o4fYBw2jC8pggubJrvrGpKyE+1A4NuW6cZ2khwVENHgfVy1HIbx7ClFAL6QMO3f
- dlkc9ePgyK6y63XIjnXrrtPvU4hEdejUB6J0X4GRdSnXI3wSdNp6i33h9e9JGFO/+Asq
- 64xi62r6H3SX++9S4r7ANwlPOnAcRs5S2YHlyQFGGrybtRIJ/7wHFcUXWTZcnYD9wQZz
- NTA5iT3Sq+j1MU2bDKyEbcj3oIJ4XJ+sCXNQ0YHWOMVI2tyN8RlsbdzEm0ktqnaEJauO
- g9OJMWu3NfkZmO+Hf8rIRENtJeEkOiqmriH6RC+etJ5c3vdWPDGD6mopJ6bf57v7RXtH
- kjJQ==
+ d=linaro.org; s=google; t=1773672061; x=1774276861; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=ndWjCftNxBZJUr55k01r4llF+9GiE6BRB/ssV67Av+0=;
+ b=nHpPoHSbPrIXqMusQfgg88TJzcregLyoQ5G0Y7rIn8Y1I+9C87c9ab2JFqPNPli/QJ
+ CMJHSk+Dyn0BnGP4apXZkGtbrW2Rs9Em93pIvI2uHD1knTzGu40tyvjMSRhpT68oaJCv
+ zULSHOLm/5z4jf152Gw9mBNc5SSvMi37X8p3IUJVGdpC7HlTm1O+fcLIecWNyfJDoqLL
+ kb3psYMZe4QFYsMbhO1XtPEzaQgRTeQT0K14hVUBIBzhGy9desGn9K93ZtfsQc7GQGpG
+ eHKQD70ZIaWtr1wWUsKmb2Pcx0gIxWOi7Ibf45+CNNwVqr20qF4PACoTKY8qL0Mn0Eq/
+ SPlQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773671043; x=1774275843;
- h=to:subject:message-id:date:from:in-reply-to:references:mime-version
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=/HN/wjCxiK4/24f8DZiXfMoiv8URbM3hPtbpytOkDaI=;
- b=eyOxWTIQSdlT089sm4sXvq0JdOt2LKNeYILtMxYped0hYgwNoQ1GqIwA25PdkUR18j
- jbjmnmHkprXY4/Kv2mHojff6kxyk7SzXwwnlAIpazAUqNXYyo0FwpIyab442qcJvEJwD
- ceEY3diZ5VLN2nmZciCbjQd8yW4ui207NzZBVkIN3TLEsBPEnjA0FgdMFzuaaONPH01T
- iss1cFjM6zUaxK2/iGKIYwR0LXiBw7y1p67LfLzSGQ+KkX07+CbfbYvsLZ2Ui3OjrjdE
- bdme+U0/9WcBQlbkYl1B8rGGQQOPLbjq79Cn07l9BIp541OzCIItajCdkicyvtiZFYmI
- tbyg==
-X-Gm-Message-State: AOJu0YyqkM827W8aAL+XRu5JakQA55eleP+J9bWY307zi7VIJA5bqtko
- +8DlS4oMgSpm3O6sTEFI53GD9LvjMeJlwXRnDtY36s0RILsoItuzP68RvHpmnz4sjzwTpgZuKzy
- OEbFkwAzH4FCjIIEyj1SoPknKc+DVZf9RoEv0li/JQMkclPt4yix9
-X-Gm-Gg: ATEYQzwQwJFdLvFaS4Gfa6PDWOYa1v1xGQUwIIVux7oZ1LId05MR6h7IeyHVDESh+5U
- s86zT5zPm4me1lkcMQsBbOD5kg+3TZjtVjGkq1d2jl9IRGTxs3k1Vf7n8Tzfe5fh4c1bky5hPa7
- DHP6A7AoVxFmJs6SHdSBPBdp+tX7/st6u2P7imKF12V5Q0ND4rMYfVlWfM/GHCimky5WiNssnxC
- jCP810orE2s3yOQgBfajq6ynduYpTmQW+AfCA0IUTV/q88KSs3ZM64N2e+kxnjH+zGEgw76fK/x
- xSfwIuWYavUu+fA/Jo9fjlhhFtK7vy6ooxaWst6ylu013jQjNgvBfamge9rFBe193vga/Eh19pn
- 4qQ==
-X-Received: by 2002:a53:ac8c:0:b0:649:4f58:5cd2 with SMTP id
- 956f58d0204a3-64dbcb5e3eemr13940344d50.0.1773671042547; Mon, 16 Mar 2026
- 07:24:02 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773672061; x=1774276861;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=ndWjCftNxBZJUr55k01r4llF+9GiE6BRB/ssV67Av+0=;
+ b=RwxX/3WJ+Yfy29KtdB9depYtKgakEZoFvRV9DblT53QiO/UNc8IDLIhyY5RGMvJOoM
+ e9oWlfSTb3IXfIbadIVYaLaqtNWkyQlJJ0ZfyUpKFBUpgBd7w1w8/P2QyzIhrJKL8OFf
+ ZnbNMEgKBOkZ7CzZgsJHsU0QCFspD32ea4c5ysP1/UcmdLFeSnsA95ojvtg2/ckENywP
+ d8sgzg1ogFi9s9D1/6B5hZqchR1o9ZHIENU2Z+av8uLFBy3ly9e3igLU9b7ijSbghBt0
+ cAPNTd641G+xbbcHJT3uE1qb5sx6newyOABOVApettx3e6w7lKmsSmiPavFaH3f5NOIp
+ z+PA==
+X-Gm-Message-State: AOJu0Yxbn2phe+3RANMRLsodhyhL+QRj5PwUEar0DIcrZNu/AYM6OntD
+ crMGiQXTxh5Ul5WMeyhHv1xMWQNszlIviZhw4L2PMT9pa/xeb9+x8iW2o+YNvJJE1qI=
+X-Gm-Gg: ATEYQzxgnf3DbtzpQU+Rp6TqusX78hl8Zf/FjyXSKvytjdr2xN3SE9OtLUn1W+4PQSz
+ nfZSYWYhalfHm75laLKlCZGyni28QUHED3iA+InAjHPuwGfRIWbPh8G9GDUl2xJG+FU0uAOw8w5
+ LXv1hj0ZzsVjDGoybux0eZ3+ZEcHDPEULoCkmIpU8tvu5MriJX4QJgRzWbox1xrFTpr03t8DxkL
+ GSAxkJaNi4B8MQI6cV5DkSlgiAwmRenltwA7xchdK7hNWew57qDjU3S3Dvg4ZEqKsDgcWFoBwUm
+ LpDIvwDBPohk2YolyxYx1YMNKc8MCjrLYv1j9OUgKFXeNEPg1ZGDQgNGF/ok9nAnEd2VyxAw6PO
+ OwXSjaCZ8gCW6+QT4pdi1PQ4AY9E8xL+rBzZoBTjfGxtNH4fVJSn2N3mNVhbFDAAxodwfZFOYdI
+ dEOapSJi6PH6NZ7FTyPI96ZRz9UKm57gBXiA==
+X-Received: by 2002:a17:907:6e86:b0:b97:cebd:8273 with SMTP id
+ a640c23a62f3a-b97cebd8c4bmr110587366b.24.1773672061016; 
+ Mon, 16 Mar 2026 07:41:01 -0700 (PDT)
+Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
+ a640c23a62f3a-b97ae89ebc4sm276169066b.34.2026.03.16.07.41.00
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Mar 2026 07:41:00 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id 8643B5FA31;
+ Mon, 16 Mar 2026 14:40:59 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Daniel P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 1/3] tests/lcitool: Remove python3-sqlite3 from the list
+ of needed packages
+In-Reply-To: <20260316135407.209072-2-thuth@redhat.com> (Thomas Huth's message
+ of "Mon, 16 Mar 2026 14:54:05 +0100")
+References: <20260316135407.209072-1-thuth@redhat.com>
+ <20260316135407.209072-2-thuth@redhat.com>
+User-Agent: mu4e 1.14.0-pre2; emacs 30.1
+Date: Mon, 16 Mar 2026 14:40:59 +0000
+Message-ID: <87cy13on0k.fsf@draig.linaro.org>
 MIME-Version: 1.0
-References: <20260316104230.836962-1-peter.maydell@linaro.org>
-In-Reply-To: <20260316104230.836962-1-peter.maydell@linaro.org>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Mar 2026 14:23:50 +0000
-X-Gm-Features: AaiRm52Q2IX45wL0_2qyLJnDIKZzyUhkGch-Zu-qHZi-CWts-6UXZDecBBkcgTg
-Message-ID: <CAFEAcA-ut5Md3cEjxogHEuPx_yxR0tN7G7EVoJMx5WJn5GX=qg@mail.gmail.com>
-Subject: Re: [PULL 00/17] target-arm queue
-To: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1135.google.com
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::635;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ej1-x635.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -113,39 +107,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Mar 2026 at 10:42, Peter Maydell <peter.maydell@linaro.org> wrote:
->
-> Some arm changes for rc0, all fairly minor bugfixes.
->
-> -- PMM
->
-> The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
->
->   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
->
-> are available in the Git repository at:
->
->   https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260316
->
-> for you to fetch changes up to ed44618b8e6cb394c6b9d3642d9d130b46b8457a:
->
->   tests/qtest/aspeed_gpio-test: Use g_strdup_printf() instead of char arrays (2026-03-13 13:27:57 +0000)
->
-> ----------------------------------------------------------------
-> target-arm queue:
->  * hw/net/rtl8319: Work around GCC sanitizer / -Wstringop-overflow bug
->  * semihosting: Correctly byteswap data when CPU is in big-endian mode
->  * hw/dma/pl080: Fix various minor bugs
->  * MAINTAINERS: Remove some no-longer active maintainers
->  * tests/qtest: Use g_strdup_printf() in various arm tests
->
+Thomas Huth <thuth@redhat.com> writes:
 
+> From: Thomas Huth <thuth@redhat.com>
+>
+> According to commit 7485508341f4 ("tests/docker: Add sqlite3 module to
+> openSUSE Leap container") that introduced this line, the sqlite3 package
+> was only required for Avocado. We don't use Avocado in QEMU anymore since
+> a while, so we can drop this package now from our list again.
+>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
+Reviewed-by: Alex Benn=C3=A9e <alex.bennee@linaro.org>
 
-Applied, thanks.
-
-Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
-for any user-visible changes.
-
--- PMM
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
