@@ -4,49 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB132F506D2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:52:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B259F506D0
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:52:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w28Lu-0001mR-Ug; Mon, 16 Mar 2026 09:51:27 -0400
+	id 1w28Mq-0002UM-De; Mon, 16 Mar 2026 09:52:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w28Lp-0001lW-8G; Mon, 16 Mar 2026 09:51:22 -0400
+ id 1w28Ml-0002Np-0o; Mon, 16 Mar 2026 09:52:19 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w28Ln-00005G-K7; Mon, 16 Mar 2026 09:51:21 -0400
+ id 1w28Mi-0000AC-4x; Mon, 16 Mar 2026 09:52:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773669070; bh=3CZEGJQOw2lzaKPVqbp1IGIRjHtE07Pi/JNnAkDdkhU=;
+ t=1773669130; bh=Rr6o3kzQcy1yW+Kgjwf6ZJohUlY45RcTEQUVpUb3T4k=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=JSYTLvzcde+wWeKzyz/TqPamZfRNuQBmR1F3t6z5OIORjW2eGDLGm27oedu2GsnSR
- pLJRvhmdh+QL9KDqL0WmUUDHb3GzoEgyLLSiwXmquTxw0EhyUtG6D1NVR81860Whwy
- 4kElMA8YqJ9D569GmGXB+VJFK7U7cNxiNnUMdszmPjc8ZKJ21yr2Lp42JblZosZzSQ
- wProdgO7wP3zn3lwyitc8aKYkM88nh5l48VIZ6FjDaUHAS0hL/q+VuZnAamNPeydvt
- sv3EdPW5vSzRkwBNEGzzI69N4FgUfEyfINfSKmjIbVnhrajf7IQm2nimCyWOX9JPyw
- Fa4ilI5MYBojg==
+ b=NLMkp2Lfep8kC0FKAGJysaxk00l77QTfvybR7aEO6SnkJRGXnu+dAx/v1my0/cXAo
+ tTbh7eMUKDNMvGF5a3cZyouh7BHF+5jhAiKcxtO4lVNveQj3JIDStwWZ/jQYIv6lEK
+ gujyuICo/MQCdBUrrC91oDWM9KOukvj4xAg51x99Zv43HSddiVJhcdxG4DiUbLmViC
+ PWBrIn5Ue+kQllnKokxZk/nUVzzqzCRTMPXDfQ6L96RBn1u4EHGtIfvOWsdOx31x26
+ Et2F9YR84mBYwS1e707PS6tdFbdIXYjECkyFJvxecPTmanuOYY+mMpjQ8wMKKei7HF
+ aD4YCw7jydNJg==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 8EDDE193EEF;
- Mon, 16 Mar 2026 16:51:10 +0300 (MSK)
+ by isrv.corpit.ru (Postfix) with ESMTP id C99D3193EF3;
+ Mon, 16 Mar 2026 16:52:10 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 222F4380939;
- Mon, 16 Mar 2026 16:51:14 +0300 (MSK)
+ by tsrv.corpit.ru (Postfix) with ESMTP id 5D08A38093C;
+ Mon, 16 Mar 2026 16:52:14 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+Cc: qemu-stable@nongnu.org, rail5 <andrew@rail5.org>,
+ Bibo Mao <maobibo@loongson.cn>, Song Gao <gaosong@loongson.cn>,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.0.9 46/46] hyperv/syndbg: check length returned by
- cpu_physical_memory_map()
-Date: Mon, 16 Mar 2026 16:50:44 +0300
-Message-ID: <20260316135104.119985-2-mjt@tls.msk.ru>
+Subject: [Stable-10.1.5 46/48] target/loongarch: Avoid recursive PNX exception
+ on CSR_BADI fetch
+Date: Mon, 16 Mar 2026 16:52:03 +0300
+Message-ID: <20260316135214.120044-1-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.0.9-20260316164926@cover.tls.msk.ru>
-References: <qemu-stable-10.0.9-20260316164926@cover.tls.msk.ru>
+In-Reply-To: <qemu-stable-10.1.5-20260316164929@cover.tls.msk.ru>
+References: <qemu-stable-10.1.5-20260316164929@cover.tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
@@ -72,80 +71,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: rail5 <andrew@rail5.org>
 
-If cpu_physical_memory_map() returns a length shorter than the one
-that was passed into the function, writing the full out_len bytes
-causes an access beyond the memory allocated to the guest; or in
-the case of the MMIO bounce buffer, an out-of-bounds access in a
-heap-allocated object.
+loongarch_cpu_do_interrupt() updates CSR_BADI by fetching the faulting
+instruction with cpu_ldl_code_mmu().
 
-Add a check similar to the one already in handle_send_msg(),
-and take the occasion to remove repeated computations of
-recv_byte_count + UDP_PKT_HEADER_SIZE and clarify that the
-code does not write past out_len bytes.
+For a PNX exception (instruction fetch prohibited by NX), fetching the
+instruction at env->pc will fault with PNX again. This can lead to an
+infinite exception loop.
 
-Reported-by: Oleh Konko <https://github.com/1seal>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Fixes: CVE-2026-3842
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4f28b87fdd24df2049626106b7c24d0180952115)
-(Mjt: context fixup for 10.0.x)
+Treat PNX like other instruction-fetch exceptions (PIF/ADEF) and do not
+update CSR_BADI for it.
+
+-Fixes: 410dfbf620a ("target/loongarch: Move TCG specified functions to tcg_cpu.c")
+Fixes: d2cba6f7cea9 ("target/loongarch: Add other core instructions support")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: rail5 (Andrew S. Rightenburg) <andrew@rail5.org>
+Reviewed-by: Bibo Mao <maobibo@loongson.cn>
+Reviewed-by: Song Gao <gaosong@loongson.cn>
+Signed-off-by: Song Gao <gaosong@loongson.cn>
+(cherry picked from commit db2325f79481fab87211e5a287580d753f582cb8)
+(Mjt: back-port to 10.1.x across v10.1.0-1187-g410dfbf620
+ "target/loongarch: Move TCG specified functions to tcg_cpu.c")
+(fixing the Fixes: tag)
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index d3e3917077..7137a6d0dc 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -189,7 +189,7 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
- {
-     uint16_t ret;
-     uint8_t data_buf[TARGET_PAGE_SIZE - UDP_PKT_HEADER_SIZE];
--    hwaddr out_len;
-+    hwaddr out_len, out_requested_len;
-     void *out_data;
-     ssize_t recv_byte_count;
- 
-@@ -218,29 +218,28 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
-     if (is_raw) {
-         out_len += UDP_PKT_HEADER_SIZE;
-     }
-+    out_requested_len = out_len;
-     out_data = cpu_physical_memory_map(outgpa, &out_len, 1);
--    if (!out_data) {
--        return HV_STATUS_INSUFFICIENT_MEMORY;
-+    ret = HV_STATUS_INSUFFICIENT_MEMORY;
-+    if (!out_data || out_len < out_requested_len) {
-+        goto cleanup_out_data;
-     }
- 
-     if (is_raw &&
--        !create_udp_pkt(syndbg, out_data,
--                        recv_byte_count + UDP_PKT_HEADER_SIZE,
-+        !create_udp_pkt(syndbg, out_data, out_len,
-                         data_buf, recv_byte_count)) {
--        ret = HV_STATUS_INSUFFICIENT_MEMORY;
-         goto cleanup_out_data;
-     } else if (!is_raw) {
--        memcpy(out_data, data_buf, recv_byte_count);
-+        memcpy(out_data, data_buf, out_len);
-     }
- 
--    *retrieved_count = recv_byte_count;
--    if (is_raw) {
--        *retrieved_count += UDP_PKT_HEADER_SIZE;
--    }
-+    *retrieved_count = out_len;
-     ret = HV_STATUS_SUCCESS;
- 
- cleanup_out_data:
--    cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    if (out_data) {
-+        cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    }
-     return ret;
- }
- 
+diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
+index 266b0b97d0..b62d720258 100644
+--- a/target/loongarch/cpu.c
++++ b/target/loongarch/cpu.c
+@@ -198,6 +198,7 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+         }
+         QEMU_FALLTHROUGH;
+     case EXCCODE_PIF:
++    case EXCCODE_PNX:
+     case EXCCODE_ADEF:
+         cause = cs->exception_index;
+         update_badinstr = 0;
+@@ -218,7 +219,6 @@ static void loongarch_cpu_do_interrupt(CPUState *cs)
+     case EXCCODE_PIS:
+     case EXCCODE_PME:
+     case EXCCODE_PNR:
+-    case EXCCODE_PNX:
+     case EXCCODE_PPI:
+         cause = cs->exception_index;
+         break;
 -- 
 2.47.3
 
