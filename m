@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84E7EEFCBD4
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:11:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A659DEFCBBB
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w226M-0007eC-89; Mon, 16 Mar 2026 03:10:58 -0400
+	id 1w226O-0007f6-AV; Mon, 16 Mar 2026 03:11:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w225t-0007Vz-EJ; Mon, 16 Mar 2026 03:10:32 -0400
+ id 1w225k-0007VM-II; Mon, 16 Mar 2026 03:10:25 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w225p-0007lz-D3; Mon, 16 Mar 2026 03:10:26 -0400
+ id 1w225d-0007kb-MY; Mon, 16 Mar 2026 03:10:15 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773645002; bh=9IpVhPyCFj+eYKjRuj7uW3sNmKuxLubWVST1vOIbdUk=;
+ t=1773645002; bh=vvOQEhgJE84u8KF7BBEN5DfHHC1YU/ts6vzHN7FBIOE=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=fMsEcutiZotXTh9GWnw4RQjQSGld7l6kgYvRm9uNmyZhAX+akkWOCm7tCAK4RIQAw
- AbWwmAP4+W24xynqbdithhWhU4guJ26ynvzd1kDDmYTMLY74/bmror6jptPuNhC1t4
- 8TZRnSWkT9hebA5FOKA0Cxpy7NZf87XPxtO6axZH8rNKootiajP3aNeMTmW+7oI+jc
- 6IwjlDVXygEw+HiWKCx5B685nRfMQyUKdIjnu0clkm2+GLhsVfQWYE7F88oNGtlHtb
- vVRod/cJmEkXhsdZz+ztp1V1FTCW9tamJthUvXfWwSzQRaWOw/Spb6nndWcpqoP6f6
- vgcraOx8UTDmA==
+ b=k7Wk2BptcJYQlSYs9TDogLNS830u3pF/NREVR1szee1fWWAbEWMPu0xLwIdFcBQKp
+ o3wgEsPY0slFxdNSfudw+zWIMoqzlk7ycRc64/m0LWdjrgx6vtvPoF3MIwB5Cxiji4
+ cjxb/XmRnwKQ2B4v2xuS493wonEcVV3uxMg6CyJrI6SbFxfSK9YzlOaGLZjLUg0WDu
+ RVyNHUM3OUFglvJhqaZRYMcwHLNDa3SIWvpU8bC7CwarwKWgK7e++thgrTonQdczby
+ hrR40u/Y70/VA9t+ouAogy0k3c/FYcCppERYSXVOeLF/0SeExOK9LMJ9DmLvRducqa
+ 9Kz7wtAcKcFoA==
 Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id CB50C193C28;
+ by isrv.corpit.ru (Postfix) with ESMTP id 82759193C24;
  Mon, 16 Mar 2026 10:10:02 +0300 (MSK)
 Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id D3D14380050;
+ by tsrv.corpit.ru (Postfix) with ESMTP id 806E038004C;
  Mon, 16 Mar 2026 10:10:05 +0300 (MSK)
 From: Michael Tokarev <mjt@tls.msk.ru>
 To: qemu-devel@nongnu.org
 Cc: Sergei Heifetz <heifetz@yandex-team.com>, qemu-trivial@nongnu.org,
  Michael Tokarev <mjt@tls.msk.ru>
-Subject: [PULL 06/14] target/i386: fix NULL pointer dereference in
- legacy-cache=off handling
-Date: Mon, 16 Mar 2026 10:09:54 +0300
-Message-ID: <20260316071005.91624-7-mjt@tls.msk.ru>
+Subject: [PULL 02/14] migration/savevm.c: reorder usage and assertion of
+ mis->from_src_file
+Date: Mon, 16 Mar 2026 10:09:50 +0300
+Message-ID: <20260316071005.91624-3-mjt@tls.msk.ru>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260316071005.91624-1-mjt@tls.msk.ru>
 References: <20260316071005.91624-1-mjt@tls.msk.ru>
@@ -72,41 +72,40 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Sergei Heifetz <heifetz@yandex-team.com>
 
-The check that xcc->model is not NULL occurs after it is dereferenced
-inside x86_cpu_get_versioned_cache_info(), so something like
-`-cpu host,legacy-cache=off` leads to a segfault rather than an error.
-This patch fixes that.
+Reorder the code so the assertion of mis->from_src_file occurs before
+the call to migration_ioc_unregister_yank_from_file, which dereferences
+it in qemu_file_get_ioc.
 
-Fixes: cca0a000d06f897411a8a ("target/i386: allow versioned CPUs to specify new cache_info")
+Fixes: 39675ffffb3394 ("migration: Move the yank unregister of channel_close out")
 Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
-Reviewed-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
-Reviewed-by: Zhao Liu <zhao1.liu@intel.com>
+Reviewed-by: Laurent Vivier <laurent@vivier.eu>
+Reviewed-by: Peter Xu <peterx@redhat.com>
 Reviewed-by: Michael Tokarev <mjt@tls.msk.ru>
-[Mjt: simplify the following condition too]
 Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
 ---
- target/i386/cpu.c | 7 ++++---
- 1 file changed, 4 insertions(+), 3 deletions(-)
+ migration/savevm.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/target/i386/cpu.c b/target/i386/cpu.c
-index 5b9ae79f16..b5e483e8cd 100644
---- a/target/i386/cpu.c
-+++ b/target/i386/cpu.c
-@@ -10107,10 +10107,11 @@ static void x86_cpu_realizefn(DeviceState *dev, Error **errp)
+diff --git a/migration/savevm.c b/migration/savevm.c
+index 197c89e0e6..dd58f2a705 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -2875,13 +2875,14 @@ static bool postcopy_pause_incoming(MigrationIncomingState *mis)
  
-     /* Cache information initialization */
-     if (!cpu->legacy_cache) {
--        const CPUCaches *cache_info =
--            x86_cpu_get_versioned_cache_info(cpu, xcc->model);
-+        const CPUCaches *cache_info = xcc->model
-+            ? x86_cpu_get_versioned_cache_info(cpu, xcc->model)
-+            : NULL;
+     assert(migrate_postcopy_ram());
  
--        if (!xcc->model || !cache_info) {
-+        if (!cache_info) {
-             g_autofree char *name = x86_cpu_class_get_model_name(xcc);
-             error_setg(errp,
-                        "CPU model '%s' doesn't support legacy-cache=off", name);
++    assert(mis->from_src_file);
++
+     /*
+      * Unregister yank with either from/to src would work, since ioc behind it
+      * is the same
+      */
+     migration_ioc_unregister_yank_from_file(mis->from_src_file);
+ 
+-    assert(mis->from_src_file);
+     qemu_file_shutdown(mis->from_src_file);
+     qemu_fclose(mis->from_src_file);
+     mis->from_src_file = NULL;
 -- 
 2.47.3
 
