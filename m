@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B2CF53D98
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 20:42:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6DDE6F53D9A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 20:46:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Ekq-0007al-2U; Mon, 16 Mar 2026 16:41:36 -0400
+	id 1w2Eoo-0008Kt-UD; Mon, 16 Mar 2026 16:45:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Eko-0007ad-7r
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 16:41:34 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Eom-0008KX-DI
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 16:45:40 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Ekl-0005Ss-5Z
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 16:41:33 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Eoi-00068B-H6
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 16:45:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773693689;
+ s=mimecast20190719; t=1773693934;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=uZereZFaxS7XaTwmccY7iiNx82L4k73eZVyFSXSV/Bw=;
- b=iekaxjlRqCKqLJX6oLKByYOwvsv55JutGXE5U55sa7D7DOrGGtodGxAauRentfHqFOVw+w
- rAagdCd9OcyTG+ytjp59vZ8J66hOUrbJ4iSmXz1sYZozKmxjB7uYCtI7n3sw85tqctxsYj
- t/Oqidsd1aPjcQw7aT2Q4c1HB3nQCHc=
-Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
- [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=xGQk+HC2OgrIr7p9GyqgMZZ+97qt7Pi9DmBMDBI/ryA=;
+ b=KYBaRVuFCoBV3qOh1ah5U1+k+SDnd42a5Jt/D3MElzql2DX8H+QIVKcmIdaX7WECpwli0j
+ 5TAkXoMrmMSPE+61sQfL/UWVsaheucfIVqvbj0SFnR11iQ9s3CUUSi9ZAu5MaG/ybAipdZ
+ xYLONOqvtUgnpVF9VOO8lg+7teERfMU=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-672-8Co3tsYxNYKwsRU4cHy36A-1; Mon, 16 Mar 2026 16:41:27 -0400
-X-MC-Unique: 8Co3tsYxNYKwsRU4cHy36A-1
-X-Mimecast-MFC-AGG-ID: 8Co3tsYxNYKwsRU4cHy36A_1773693687
-Received: by mail-qv1-f71.google.com with SMTP id
- 6a1803df08f44-89c53a0264cso88664446d6.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 13:41:27 -0700 (PDT)
+ us-mta-686-KrcLM474NnuHK9MoVFIvgw-1; Mon, 16 Mar 2026 16:45:33 -0400
+X-MC-Unique: KrcLM474NnuHK9MoVFIvgw-1
+X-Mimecast-MFC-AGG-ID: KrcLM474NnuHK9MoVFIvgw_1773693933
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-50917afa521so6506661cf.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 13:45:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773693687; x=1774298487; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773693932; x=1774298732; darn=nongnu.org;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=uZereZFaxS7XaTwmccY7iiNx82L4k73eZVyFSXSV/Bw=;
- b=TcG/O/n99vXIunkF7OtHi3TXF+zBJgR6Ou/05Ep57X+n9Np2c03awWZkhJduo365Ky
- /RcsmUktuYxjV+VbyyLVBAbqQlBeX9OYhqzuJyxlwWRfa6Frk3V0716SJHEnYEssxT2j
- Pu3OMSuj3oS/iXsfprkuXid8gRXYempu1bZhLvLR++MZKsknIqmTaAOoEKrScGi9OC16
- 6vWfDsh/FoDJCiKK1dRq1ClGtzb2tj0DRVvVr4wuQ7LHHPECtzVz+kh0fINzas27iky8
- bJ4mUsyicIJ+h8KdGDBa54mR88e4tkWV1Dpc8nptqEzl38XTXE6KN7qVC+omghLxTNQU
- CDIQ==
+ bh=xGQk+HC2OgrIr7p9GyqgMZZ+97qt7Pi9DmBMDBI/ryA=;
+ b=TtAuiQmWhqVL4ZgAyY96u4Z/23kX5EJ7x20pKgx0fGYW4gvMBWRHeIzgPv/e/i7Svb
+ Ajln/u4iwLMM03fGlkihkV7oeu1GOgTxKvHuLAWH71FYYgeIeIavdTjU4AGWTSufoJRg
+ hlgvOFL7U1C3ch6uJgzZxePimYK8jlN0BJoniPEodSGl17C7ynG2HUmIaFCaY26vMUii
+ XBVeCOvRY6MCDkG2VtDaWysg8wi5NulLiRBp+hjG3uiKGBd6YCY2z+59kX0TBXz8F9zx
+ 0bFHB0n4g+HcEK8h1bvxWTcepBGiN+eLAR/qrS85Yc6QiragCa22VhRCSEZ8ivnKh0KY
+ /O4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773693687; x=1774298487;
+ d=1e100.net; s=20251104; t=1773693932; x=1774298732;
  h=in-reply-to:content-disposition:mime-version:references:message-id
  :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
  :subject:date:message-id:reply-to;
- bh=uZereZFaxS7XaTwmccY7iiNx82L4k73eZVyFSXSV/Bw=;
- b=bXXgMbtp+gxzFQ9LRwph/vwm6Zd/GKehJe4f+alDS7ZuMEKhsD08XXw+0byEZdVP5/
- /gTpvhnHNMK28+yZCfJ/3TiO8Q8NFIlZ7ll1F9kj+XfHkGWisp3BtNpIKxzMefgydhte
- T9Q1O+gF/sDOZLLAZ8GQpdPsBY+tFcLR5X4WDJHcxfvXXdgh9XWDMHcBiPrzLNSSIe32
- A5A80uNffFXLXjEbRANpB2lKJDuAMCZA8M6qA+4vtCaRxVB95l6ydyllX8yrX61P3gCR
- EU1QR/Ez6rNJy/MGWuqRLbfLvOPr3nXLd1AyOJOECbrSD9OVEZl+/Sz8+DyId4syU/yk
- 8mpQ==
-X-Gm-Message-State: AOJu0YzJY9zNxD8DXvNc7LUTlmcXE+XEZHsVK7SsurX636d3IejdSw7g
- 891fPzHeH/1IcC0CYz4a9FLpIA7sltdm4sOCFiA04q765Orgr2fh5Egt4U8RqttL7+tsgvDCAYm
- 7V35zkWQb97wvIVdNdWrk7hSGquJrwhbg/EeBuo/OSRQwZNZgucy6E+9T
-X-Gm-Gg: ATEYQzyc1zUhKr3kcXvLxurhhwSvhNu78/DG/odLO4kEnuISZact0onhjSz7U80bnog
- Y5MKzEYZtyf1rmOFmkeVfBkkfpdcteAGw8TZQwG7qBkHwKY9aZ0CyuTjP9S1UbzcmOMvDH6Ij+N
- iiq/AXkIUcRxS4obdJwowIX7OCKZwaR7XKJHXrWKmeOpBaTINYOoqUxJvAyW9RJAzHP9MZQ/JN4
- CxzX97FYiJ6axBnPmqBYRg2P1KJ39Wp2W7oXl+wMHkOwXor+BM2ErLsZg3UPVPpV0SDIwAOtY5f
- LYV5+e0yGyaXUaArh6SNKVIJQBXQPfRzU6AF8DYDrpSbKt59gvFdObXVleY5IHBbrFAJrH09JGE
- whW08ZaigVQptXQ==
-X-Received: by 2002:a05:6214:2525:b0:89c:53a0:1c97 with SMTP id
- 6a1803df08f44-89c53a026f8mr65639466d6.11.1773693686786; 
- Mon, 16 Mar 2026 13:41:26 -0700 (PDT)
-X-Received: by 2002:a05:6214:2525:b0:89c:53a0:1c97 with SMTP id
- 6a1803df08f44-89c53a026f8mr65639096d6.11.1773693686266; 
- Mon, 16 Mar 2026 13:41:26 -0700 (PDT)
+ bh=xGQk+HC2OgrIr7p9GyqgMZZ+97qt7Pi9DmBMDBI/ryA=;
+ b=Rswxnh5SOMjBwDUu2j3nayWLfgR/FgqRiKnYN8vGc0GS7EgDX8Ut+1kKWi4D+/M0iQ
+ vySzFwbLlNLWTaerc3La5KY0A2yN/0DQXKK8r27Vy8Hf6vVg4Wuhyd9n+LFCNmUyVjGB
+ tDn2bfTcPXtbPHJhxMzK2qnnGS33r3mVyCF1ltswoNq2RercA3SZNclFGud7NysCJYT2
+ BwlMANW1BfOh6ac24xlpsiRL7WgEHwJ9itm+xx3rINxlq9ox2bRGK9f9GcZcxumngiOE
+ 9U+dPbctufjNNCTY2MSE7rbGozxlI4OMVp6/h5l91OHC9xOcPjCA0GgXTkcsXqmA/hmP
+ Of2Q==
+X-Gm-Message-State: AOJu0Yx/Z6axvxYzTdHZkbImADOM/UblgBi2Mgp0lwZUt88/B12Y3EI7
+ tnpLt+pNmiYsAmli4ff7aS/aZzmmkcAAUqGDq2guWiPRvMN706b9qte0qMzpFCDuH+5iZenIT1E
+ XNeHQdZTGs8M1y3F0eQVFoStKbhk7Zwi5zGmeOpLsFEZoIn0iNYw9vRk/
+X-Gm-Gg: ATEYQzyaY9hD/d3SXgB8PTMcWTn5+/Pq4zcH+eeN8+ksW4ZFhxtzeQHRDifbYgGihUI
+ ElC+wU+jUdKjEQtCoGMWBPVMru6xekdyA86wgAkXKlTUMDh5C3cjC4WKHr8swUcj9ed39N0/K24
+ kHQttPRcWzMO5sSdi3qJtNgNvYSYxEG5H/FXdts7uwpbq+OVD98+3pC8gH6hHZPb59G7WwF4era
+ YEpD4HgVrqOfOxAOED4YPEdoK/TNeopWdEg1R6pK3196J13G2cgbimeS4lHpIGmTkXDiq5ZrLt7
+ K+HVSDma9bDPWcW/CcyHac8LLZsvqER/Bj3HMuseiaIP0AM9SN0Gr73oQsrlTaX75aKt3iGoiv4
+ FewigWO8Dl9PEbA==
+X-Received: by 2002:a05:622a:248:b0:509:1dc8:e9e4 with SMTP id
+ d75a77b69052e-509980cfc1bmr13557861cf.22.1773693932275; 
+ Mon, 16 Mar 2026 13:45:32 -0700 (PDT)
+X-Received: by 2002:a05:622a:248:b0:509:1dc8:e9e4 with SMTP id
+ d75a77b69052e-509980cfc1bmr13557221cf.22.1773693931464; 
+ Mon, 16 Mar 2026 13:45:31 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a6e736043sm112836246d6.10.2026.03.16.13.41.25
+ d75a77b69052e-50939e8e0ecsm127608271cf.5.2026.03.16.13.45.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 13:41:25 -0700 (PDT)
-Date: Mon, 16 Mar 2026 16:41:24 -0400
+ Mon, 16 Mar 2026 13:45:31 -0700 (PDT)
+Date: Mon, 16 Mar 2026 16:45:30 -0400
 From: Peter Xu <peterx@redhat.com>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: qemu-devel@nongnu.org, farosas@suse.de,
- Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-Subject: Re: [PATCH] migration/file: fix type mismatch and NULL deref in
- multifd_file_recv_data
-Message-ID: <abhq9BzuP2bZPLBg@x1.local>
-References: <20260316084618.52-1-junjie.cao@intel.com>
+To: Aadeshveer Singh <aadeshveer07@gmail.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de
+Subject: Re: [PATCH] migration: fix implicit integer division in
+ migration_update_counters
+Message-ID: <abhr6oISW2oAcq2q@x1.local>
+References: <20260316134509.157964-1-aadeshveer07@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260316084618.52-1-junjie.cao@intel.com>
+In-Reply-To: <20260316134509.157964-1-aadeshveer07@gmail.com>
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -116,71 +115,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 16, 2026 at 04:46:18PM +0800, Junjie Cao wrote:
-> multifd_file_recv_data() stores the return value of qio_channel_pread()
-> (ssize_t) in a size_t variable.  On I/O error the -1 return value wraps
-> to SIZE_MAX, producing a nonsensical read size in the error message.
+On Mon, Mar 16, 2026 at 07:15:09PM +0530, Aadeshveer Singh wrote:
+> switchover_bw is a uint64_t, so switchover_bw / 1000 results in an
+> integer division. This value is then assigned to expected_bw_per_ms
+> which is of type double. This results in losing precision and is type
+> unsafe. Adding explicit cast ensures floating-point division.
 > 
-> More critically, a short read (0 <= ret < data->size) is possible when
-> the migration file is truncated.  In that case qio_channel_pread()
-> returns a non-negative value without setting *errp.  The function then
-> calls error_prepend(errp, ...) which dereferences *errp -- a NULL
-> pointer -- crashing QEMU.
-> 
-> Fix both issues by changing ret to ssize_t and splitting the error
-> handling: use error_prepend() only when qio_channel_pread() itself
-> has populated *errp (ret < 0), and error_setg() for the short-read
-> case where *errp has not been set.  Add ERRP_GUARD() so that
-> error_prepend() works correctly even when errp is &error_fatal or
-> NULL.
+> Signed-off-by: Aadeshveer Singh <aadeshveer07@gmail.com>
 
-Indeed, this seems problematic.
-
-But is it possible to get partial reads?  I don't see why it won't happen..
-do we need to fix it too (e.g. introduce qio_channel_pread_all_eof())?
-
-CC Dan.
+Reviewed-by: Peter Xu <peterx@redhat.com>
 
 Thanks,
 
-> 
-> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
 > ---
->  migration/file.c | 14 ++++++++++----
->  1 file changed, 10 insertions(+), 4 deletions(-)
+>  migration/migration.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/migration/file.c b/migration/file.c
-> index 5618aced49..78b274dc32 100644
-> --- a/migration/file.c
-> +++ b/migration/file.c
-> @@ -254,15 +254,21 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
->  
->  int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp)
->  {
-> +    ERRP_GUARD();
->      MultiFDRecvData *data = p->data;
-> -    size_t ret;
-> +    ssize_t ret;
->  
->      ret = qio_channel_pread(p->c, (char *) data->opaque,
->                              data->size, data->file_offset, errp);
-> +    if (ret < 0) {
-> +        error_prepend(errp, "multifd recv (%u): ", p->id);
-> +        return -1;
-> +    }
-> +
->      if (ret != data->size) {
-> -        error_prepend(errp,
-> -                      "multifd recv (%u): read 0x%zx, expected 0x%zx",
-> -                      p->id, ret, data->size);
-> +        error_setg(errp,
-> +                   "multifd recv (%u): read 0x%zx, expected 0x%zx",
-> +                   p->id, (size_t)ret, data->size);
->          return -1;
->      }
->  
+> diff --git a/migration/migration.c b/migration/migration.c
+> index f949708629..7094080285 100644
+> --- a/migration/migration.c
+> +++ b/migration/migration.c
+> @@ -3134,7 +3134,7 @@ static void migration_update_counters(MigrationState *s,
+>           * If the user specified a switchover bandwidth, let's trust the
+>           * user so that can be more accurate than what we estimated.
+>           */
+> -        expected_bw_per_ms = switchover_bw / 1000;
+> +        expected_bw_per_ms = (double)switchover_bw / 1000;
+>      } else {
+>          /* If the user doesn't specify bandwidth, we use the estimated */
+>          expected_bw_per_ms = bandwidth;
 > -- 
-> 2.43.0
+> 2.53.0
 > 
 
 -- 
