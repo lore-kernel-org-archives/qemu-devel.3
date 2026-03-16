@@ -4,46 +4,51 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB345F013FA
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:43:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DA3F013FA
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:46:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Fi9-00050s-Nt; Mon, 16 Mar 2026 17:42:53 -0400
+	id 1w2Fkv-000678-DS; Mon, 16 Mar 2026 17:45:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1w2Fi6-0004zK-3v; Mon, 16 Mar 2026 17:42:50 -0400
+ id 1w2Fkh-00065v-Hr
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:45:40 -0400
 Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1w2Fi3-0000qo-Ev; Mon, 16 Mar 2026 17:42:49 -0400
+ id 1w2Fke-0001M9-7x
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:45:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
  d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
  In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
  Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
  :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=XkhjjJIn8U15IzwcTLSzaqOrsFVk+OUsh7z49bkZtKc=; b=q2dK4H8igOYb0n8KaG15Dsz02g
- mT+m9l/cNh4sp4NdVWZdtXBScHJc/C1fru+jHVXP7k/WZ1oEVUrgjYY1ZZfkaetm7HMV3Y2CBKBjU
- fVrZwiOP+ATH612/7pnXCJ9eSQYkdyYbJWNs94a73AQSeN2s2hDkkqcGbsEvbx3BO9J2EqHn324CS
- FXwBSDvJ2Pi508RygcaRVcR8HSVBdAhrx2T6afr+U9Nunm/kt17FlX+cHNDfxh86kO6mQ3Q31vhtR
- ZYx75OjoC9uo8qDZ9p+WkvzMsIlFJJXR9zANpnpO6FFvL7Yyz3OzXWrVIPatlcP1hZUfBfgPPMcCX
- bKyfYw31sx+D7EeYqTIfNjdgYaCzMDEe30dbSBLe3RjJrjRB+GnohqrLhXsTiPqS/EYhg5l5S9+vs
- JFB0uITX5HzrccfMZEO9goGG1GjDrr890etcdR20/Fb0bw2dfoUtYGdsGc/K27hBSBwPgFaUcnLct
- qlcpEeFcsDgYyANXzf+rhGtdbLN7UIUua5Xj1LE5EMHb7xz6upaZA8SpbAfZ7Ohr63eUceazA1/GE
- 9myRO6/vs0BV9lTy5EpP9x0DoRGkU+RsxPcv4wU6BeG0fh98VFkvTrcC66BODsz1xIGSVcSZ5Kx1F
- Vtkqip710GDSXY/mCQZj65SEGINWOjCjlefLtfl78=;
+ bh=1BEkOPf5/tMokctuJRdssUe/TqAVcjlVpD4T4hYDOCU=; b=bBI92yTl7/P8XP8MkBkA0PqkhT
+ vav6VPJyV2HeFHR2dy3R563qUD67hSH4XWYZlAmiEMXlf/S6f1Li6mRnwshBf5pB4QeTyu7DUPgZU
+ KzW9woPiRnQ03nHDrVSQo0DghBr1gwPCaMWL3FrqzIUr+zBOh9jqFRhwJYtR81klKLiUDbX004pc8
+ FV6Uox1fdgiGs93Je0lY18GRdGCczbmqs+Qt/aMT6mZmT2RMX+1OZBHRAStQWO9zzF8A6wzMv3spu
+ kasHXjfHchRuhwcIaPexSe5bk9C9CTbBKQ7dNbxhNeBTTGRxB8CYldmznK/LU/hj7vmYFDmerPbOp
+ 8+7iW7S6W+z2D+miSSh1UNchHO0PfYmdyJyV0+uLGhF6GXVWS5qhp47TpWMYfwBP7orXgGDIqW2BJ
+ zmykShMubVRLZoFYTqb6KD6/dcEMS9g6QS51n9TnPki+HpfYHSNHSy1gos6Ocsrp71OxJk7nGENOE
+ V3AAJbOLUKmlDRu8V2yXk/JNTMoRnh/n84H6xqg9WCgCJni+PIqj5Uu+Sk505QUqoQwCIlihxyCqG
+ kfVSnaBdcqhbI5tD4xqC2BZ1HTvwN76cvC6jvcJD19GEz2tY6tw2kggWpGGgpyyTmSJb+grpOzrQT
+ Ms/mg+L3XpK6Ck7Da0Yme7AgnW/DIUL1Ag3nQ8us8=;
 Received: from [2a02:8012:2f01:0:2257:6c08:3a5:8e25]
  by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1w2Ff2-00046z-0H; Mon, 16 Mar 2026 21:39:40 +0000
-Message-ID: <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
-Date: Mon, 16 Mar 2026 21:42:37 +0000
+ id 1w2Fhf-000496-Ef; Mon, 16 Mar 2026 21:42:23 +0000
+Message-ID: <d0aa8081-30df-4696-9281-b35c2b775a57@ilande.co.uk>
+Date: Mon, 16 Mar 2026 21:45:23 +0000
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Artyom Tarasenko <atar4qemu@gmail.com>, qemu-stable@nongnu.org
-References: <20260313170938.449538-1-peter.maydell@linaro.org>
+To: Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
+ <abgqjKVFHKxuKupP@x1.local> <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
 Content-Language: en-US
 From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
 Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
@@ -70,13 +75,12 @@ Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
  Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
  KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
  imgcU9TTGC5qd9g=
-In-Reply-To: <20260313170938.449538-1-peter.maydell@linaro.org>
+In-Reply-To: <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:2257:6c08:3a5:8e25
 X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
- after vmstate load
+Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
 X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
 X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
 Received-SPF: pass client-ip=2001:41c9:1:41f::167;
@@ -102,129 +106,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 13/03/2026 17:09, Peter Maydell wrote:
+On 16/03/2026 16:23, Thomas Huth wrote:
 
-> In the SPARC CPU state, env->regwptr points into the env->regbase
-> array at wherever the architectural CWP (current window pointer) says
-> we are in the register windows.  We don't migrate this directly,
-> since it's a host pointer, so we must ensure it is set up again
-> after migration load.
+> On 16/03/2026 17.06, Peter Xu wrote:
+>> On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
+>>> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
+>>> current_machine which is not set during init when inspecting the
+>>> device. This causes the qtest/device-introspect-test to fail since a
+>>
+>> Does it has anything to do with aux-ram-share?  I thought it's because the
+>> qom introspect test will create yet another sun-tcx device, causing double
+>> registration?
 > 
-> We also have to deal with a special case when CWP is (nwindows - 1).
-> In this case, while running we keep the "in" register data for this
-> window in a temporary location at the end of the regbase[] array, so
-> that generated code doesn't have to special case this "wrap around"
-> case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
-> wrapped data from its temporary location into the architectural
-> location in window 0's "out" registers.  We then migrate only
-> (nwindows * 16) entries in the regbase[] array.  So on the
-> destination we need to copy the "in" register data back to its
-> temporary location again.
+> I think it happens because the test starts QEMU with the sun4m machine (or whichever 
+> machine uses this device by default), and then creates another instance of the device 
+> for introspection (without realizing it). You can easily recreate the bug manually 
+> like this:
 > 
-> For 32-bit SPARC we get this right, because the CWP is in the PSR.
-> The get_psr() function does:
->      env->cwp = 0;
->      cpu_put_psr_raw(env, val);
-> which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
-> sets up both regwptr and the wrapped-register data.
+>   $ ./qemu-system-sparc -M SS-20 -display none -monitor stdio
+>   QEMU 10.2.50 monitor - type 'help' for more information
+>   (qemu) device_add sun-tcx,help
+>   RAMBlock "tcx.prom" already registered, abort!
+>   Aborted (core dumped)
 > 
-> However, for 64-bit SPARC the CWP is not in the PSR, and
-> cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
-> register state in a corrupted state, and the guest will likely crash
-> on the destination if it didn't happen to be executing with CWP == 0.
-> 
-> Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
-> for the 64-bit case, and enough commentary to explain what is going
-> on.
-> 
-> Cc: qemu-stable@nongnu.org
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
-> I ran into this because the "sparc64-migration" functional test seems
-> to hit this reliably when built with the address sanitizer.  This is
-> probably a timing thing, because it doesn't trip any ASAN failures,
-> the guest just crashes on the destination side most of the time
-> because it returns from a subroutine to a corrupt %o7 return address.
-> 
-> As far as I can tell this is what the problem is, but I'm a bit
-> surprised that we have never hit this, given how likely you are to
-> hit it on a vmsave/vmload or migration.  So am I missing something?
-> ---
->   target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
->   1 file changed, 39 insertions(+), 2 deletions(-)
-> 
-> diff --git a/target/sparc/machine.c b/target/sparc/machine.c
-> index 4dd75aff74..b935c31630 100644
-> --- a/target/sparc/machine.c
-> +++ b/target/sparc/machine.c
-> @@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
->       SPARCCPU *cpu = opaque;
->       CPUSPARCState *env = &cpu->env;
->   
-> -    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
-> -     * window as the outs of the first window
-> +    /*
-> +     * If env->cwp == env->nwindows - 1, this will set the ins of the last
-> +     * window as the outs of the first window. We do this because we only
-> +     * transfer the (nwindows * 16) entries of regbase[] that correspond
-> +     * to the "proper" locations of the registers; this call has the
-> +     * effect of copying the wrap register values from their temporary
-> +     * location down to their proper location ready for migration.
->        */
->       cpu_set_cwp(env, env->cwp);
->   
->       return 0;
->   }
->   
-> +static int cpu_post_load(void *opaque, int version_id)
-> +{
-> +    /*
-> +     * For 32-bit SPARC we set the register window data structures
-> +     * up again correctly when get_psr() called cpu_put_psr_raw(),
-> +     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
-> +     * part of the PSR, so we need to handle it here.
-> +     *
-> +     * There are two things we need to have happen:
-> +     * 1. regwptr points into regbase[] at the location determined by CWP.
-> +     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
-> +     *    in a copy at a temporary location at the end of the regbase[]
-> +     *    array. For migration we only transferred the (nwindows * 16)
-> +     *    entries of regbase[] that correspond to the "proper" locations
-> +     *    of the registers, so now we must copy the wrap registers back to
-> +     *    their temporary location.
-> +     *
-> +     * We achieve both of these by setting env->cwp to 0 and then calling
-> +     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
-> +     */
-> +#if defined(TARGET_SPARC64)
-> +    SPARCCPU *cpu = opaque;
-> +    CPUSPARCState *env = &cpu->env;
-> +    uint32_t cwp = env->cwp;
-> +
-> +    env->cwp = 0;
-> +    cpu_set_cwp(env, cwp);
-> +#endif
-> +    return 0;
-> +}
-> +
->   /* 32-bit SPARC retains migration compatibility with older versions
->    * of QEMU; 64-bit SPARC has had a migration break since then, so the
->    * versions are different.
-> @@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
->       .version_id = SPARC_VMSTATE_VER,
->       .minimum_version_id = SPARC_VMSTATE_VER,
->       .pre_save = cpu_pre_save,
-> +    .post_load = cpu_post_load,
->       .fields = (const VMStateField[]) {
->           VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
->           VMSTATE_UINT32(env.nwindows, SPARCCPU),
+> An instance_init() function should not change the global state of QEMU, so 
+> registering memory regions this way is a no-go. This has to be done in realize() 
+> instead.
 
-Nice analysis! I suspect the reason this doesn't always show up is because any 
-context switch (e.g. OpenBIOS, kernel to user, 32-bit to 64-bit etc.) will flush the 
-entire register window set to the stack, and hence reset env->cwp back to 0.
+Just to confirm that when you mention global state, you're talking about registering 
+the ROM in this particular case?
 
-It does instinctively feel odd that 32-bit and 64-bit aren't handled in the same way 
-- I wonder if this implicit behaviour on 32-bit somehow needs to be more explicit?
+> So for this patch here:
+> Reviewed-by: Thomas Huth <thuth@redhat.com>
 
 
 ATB,
