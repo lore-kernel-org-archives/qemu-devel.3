@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DEA9AFB5E85
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 23:07:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92658FB5E88
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 23:13:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2H15-0008Ra-LI; Mon, 16 Mar 2026 19:06:32 -0400
+	id 1w2H6u-0000v3-I1; Mon, 16 Mar 2026 19:12:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2H0x-0008R3-FJ
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:06:23 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
+ id 1w2H6t-0000uZ-3W
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:12:31 -0400
+Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2H0v-0008I0-EH
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:06:23 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-8299f1ca894so2625623b3a.2
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 16:06:20 -0700 (PDT)
+ id 1w2H6r-0001Sr-CT
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:12:30 -0400
+Received: by mail-pj1-x1033.google.com with SMTP id
+ 98e67ed59e1d1-358e3cc5e7eso2729260a91.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 16:12:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773702379; x=1774307179; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773702748; x=1774307548; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=btz2JYvbC6JN1k6MPf5yxfbruXKsFdJiLAv+M85O1QA=;
- b=D4j/KMa8JieveezouqPA18kuJjOmaBy61Y9pSQ0dJRHa3S7nrxk8tuVuj1/H26r1bU
- QB4ax8mg3AIKpJfqafAnxvRFVZEy4XQ6De3q7Nf+outu5nqB2Cl7h/K5kS8y1+lbJ93z
- cSdxXyqBfbU1ZjyEs1tuQssKVLlz+0GkZuO6w8BUYBWb0VYCueJvbRXGKCUUzdpyrE14
- A+vHyoVtRf6vtkC2CyDyuHRdRrtrrFgC/YILnC6rO4RRTcjPckRu6oHYXLihi0kIfRCI
- SVtiRlgFfK3V9x2kVp9DAmdB+LiNNxxRkAbzRZ8DX4gg412KLNYpWLFM6Bv3dCDNGeUZ
- 6FCQ==
+ bh=l8Ibq64nwCu6z73FszhoA/0pJMUfY9Lti1VEYYHLDng=;
+ b=gcZNXg7ZnOhiq5ym+cUkDBrcJiVOSnWkqARYbsRJIvI/2kR9sVfw8VcBukLABNmj6p
+ km29O0eNNAm8dWfOgIjk+/PP0pnX/7vdSLmxQTytHV02xXz0dROQLUlnrIz3KhWPAa73
+ hMxwNb0QMjaUYoGE2KhZA3TS095KN3eccMIhAjXd4A8p4pAQ/IcUDMYpZWqe0I6W+hSo
+ U+N8VgNMUu35CLWlYUnmC7qmBinn+WL3aW/9QlHwhQNmMHu9+r7Aiduzoe+lNnj1wpbT
+ 0keMWT+GFIpg6tHvt/InFXeJBADc8JnkXdOEGbYwSUcaKrd8pQe4iAOPNSd254aKjMlk
+ Ojhg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773702379; x=1774307179;
+ d=1e100.net; s=20251104; t=1773702748; x=1774307548;
  h=content-transfer-encoding:in-reply-to:autocrypt:content-language
  :from:references:cc:to:subject:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=btz2JYvbC6JN1k6MPf5yxfbruXKsFdJiLAv+M85O1QA=;
- b=CRPBZBA9fGnvqFm1pOfCHu4pTUGo+buqEG5NgM7YMuPM3uhzfTo/KXDde825EMcL8n
- KrV2Hmwcvr9mIacrfSBVQS+pEqtA1OJGnMza/0AYGkdNx5sheMUzpQ2QmXN2QJML8IF1
- ObYRPbJHglkI6jmSTxcaC/Wty2ai1gfjzhAynDoNAiPFcmYSfxjpkWyMmS10VksOSKsB
- 6XGpFY1A0/3xsBmXZnOcd7pPz9NR1mFSqAIRffxdka13h7kC1sd2TZwsWR5IFBXrF2XO
- myBIkaeSlTsKQyFx3mIzYVXz9zsbbRG0OG5okr0oB8LmQGjNamCYEK034Cf34kytQZBe
- lKhQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXcKDVgkA1jSA1nF3062e7feGsCc5NNU0ucdDcR6S/4r38halAh/4lg+j/R+Oy+029/nmegErvHoqhV@nongnu.org
-X-Gm-Message-State: AOJu0YyieOUrG2YmDIm3ajhG43w4OiR+0UYtwxAY6eWnj2mI5dTDa/AY
- /lVON9wZOZ2+IEd8wfSD1ApAeEIN/OEP1+DMtmHgncJNEHD1gUJGn6SwV3XI/TtMstY=
-X-Gm-Gg: ATEYQzztFXnm66zTaKleREsmPJ6EOOCM5VvL3gTYyDqu5JkXR226onNfD1SOao3JSHe
- ZJj1+QhcQxBSnRrcI4OUSlzfsl1mKOTwZxabPs9LzGQfDbUHiiJD/SNby+wDV3xvoY/JXjRxqvM
- 4ZPoDRooCXuyX8957dGGNYwGdcZtqDv+4IClDGKvwcDmAi9FKj1CR8iDLJRr+mutlHU0Ki0owD4
- NFVhdlqkmLedJL34rVA3TCaOaEr4jYh6+BI0WxUgLQGRzCf3K6dTs/AnmRK/O6wQ/UwkoB6ZOlJ
- NUQVBeKonz2A19OeAQO6gIA47cPonnTmU9GTPunzWlRa5gUamw0zbA+iQ10Sj96iNHaTjpfZfom
- xDFyOJZwhaVXnmGZBIpFc/IoTf0OsF8agkFDpS2paRf+XvkKQqZ6N8hKthnZv2EIbPmxu6e1AmM
- coB7MrkRA0IqtpHJd8LvJP3nJuTdyhXfrVcdLGDPdFLTSN1xjv6DzFXXCno0b3vJ6VL4Ah
-X-Received: by 2002:a05:6a00:1c83:b0:827:3976:3232 with SMTP id
- d2e1a72fcca58-82a19704357mr11895432b3a.5.1773702378936; 
- Mon, 16 Mar 2026 16:06:18 -0700 (PDT)
+ bh=l8Ibq64nwCu6z73FszhoA/0pJMUfY9Lti1VEYYHLDng=;
+ b=RdV5nXY8IxnR9H0DnNzi2Mzr2ymNgKVL/Ki+dPjXzRhxSMbAtBZeoOjzCFto678aeP
+ WJXUoFNAyKS6XCf+M0+EDnuihzK2Q8MRbnoRnMjbBQoHGWWdU/Fp1mZizKuwXb6JBy/P
+ FhAbOpZWoLt7h4gK3/F+cTwy94HvRXZ69IBv7uYC9M3rw18C7YBXqlyobWNc7kYXliPh
+ p/0IbWyyvXixoTkvdWPAyGrZu0ZWmJgLBO4+dODBfpN58HvHzsp/C/+80hl/UxKRUwLe
+ Pj5N4X7CawbZmBQnI4sPq+xiXIxYhsBBTWcxyOmqsqVpmB7F4ynogoCY4Fj6tnGf2ad4
+ cZDQ==
+X-Gm-Message-State: AOJu0YwXsz/VBnDqmRx6PlkAe7oJNKDdNZlgQg11rw4knkRuJl+nNmSJ
+ dg2arf1n8xGz1IUANG9gZFTgPtNz34QFfQb8dH0laxceO9BMqSt0fEMChfOwF3YRiUh7A9rb+A5
+ 9IAiLPiA=
+X-Gm-Gg: ATEYQzwR9NIko8TxQg3Y31oCNzFT82wbXdc4SciMAttMnuaxK4kPxyOV3UN9me5v+/X
+ w06YsdlxpEK8Vh5TkcZoZY175m0gYtEOw/FZpmNlnpYDQUXDXgBFWP3hGqixEjPNztanMPBj3G6
+ 5gTwfWmUJWNRvXRzIPYzrKRPBCCL8opOkG02wgQsT/4ZhdB5w2hwmU6jM0k/cnkH82SQnx8Tbqn
+ QcRPoriZNszrgq7Gd+3ekzKd/ZYEnpRl98/c9TMKOAfFOr3/OyqnMH57LX19yCW3dPX3IG+5NlL
+ lKWYnvCm7/Hi3h/MeofCcUigpuUYC2vrZRKP0xrafvxQi7NeqFuTKjgjaiLp2YzVcYM/fNjVZr7
+ Ns09j4IBGz0VGhyXHJMd1chwTnS4EEzncGNDr74+L+tszClHKYmUJecbUSOZCDczS2SVu9d3Xsu
+ CErHtIRkOrOxGNrUgENFq96eOohta6tMXVk99KjFOV8IMtNkTTQjp8XRGU/qHkacNopqMZ
+X-Received: by 2002:a17:90b:3a45:b0:35b:96bb:47ba with SMTP id
+ 98e67ed59e1d1-35b96bb498amr6057791a91.26.1773702747492; 
+ Mon, 16 Mar 2026 16:12:27 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a0736edd2sm14623327b3a.52.2026.03.16.16.06.18
+ 98e67ed59e1d1-35b93d07292sm2749756a91.0.2026.03.16.16.12.26
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 16:06:18 -0700 (PDT)
-Message-ID: <0cc139d6-9289-44a0-9122-d701426dae0c@linaro.org>
-Date: Mon, 16 Mar 2026 16:06:17 -0700
+ Mon, 16 Mar 2026 16:12:27 -0700 (PDT)
+Message-ID: <c803bdaa-3473-41af-b2b1-4a41359956ff@linaro.org>
+Date: Mon, 16 Mar 2026 16:12:26 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/8] hw/vfio: eradicate CONFIG_IOMMU from sources
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-ppc@nongnu.org,
- eric.auger@redhat.com
-References: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
- <20260315070834.198331-5-pierrick.bouvier@linaro.org>
- <8bcc2cb9-6562-4ba2-be95-04f8b23e40f2@redhat.com>
+Subject: Re: [PATCH] contrib/plugins/uftrace.c: fix depth for exit events
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
+ <ma.mandourr@gmail.com>, Honggyu Kim <honggyu.kp@gmail.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+References: <20260313063441.2048882-1-pierrick.bouvier@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Content-Language: en-US
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
@@ -115,11 +113,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <8bcc2cb9-6562-4ba2-be95-04f8b23e40f2@redhat.com>
+In-Reply-To: <20260313063441.2048882-1-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x42b.google.com
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -142,128 +140,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/16/26 3:04 AM, Cédric Le Goater wrote:
-> Hello Pierrick,
+On 3/12/26 11:34 PM, Pierrick Bouvier wrote:
+> Uftrace plugin was recording wrong depth for exit events, resulting in
+> incoherent traces, especially for partial ones.
 > 
+> Thanks to Honggyu Kim, one of the original author of uftrace, who
+> spotted the issue.
+> https://github.com/namhyung/uftrace/pull/2031#issuecomment-4051762627
 > 
-> On 3/15/26 08:08, Pierrick Bouvier wrote:
->> As pointed in c1139fa4 "vfio/iommufd: Remove CONFIG_IOMMUFD usage",
->> iommufd presence can be detected at runtime (through /dev/iommufd)
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   contrib/plugins/uftrace.c | 3 ++-
+>   1 file changed, 2 insertions(+), 1 deletion(-)
 > 
-> Note that the device name is "/dev/iommu/".
->
 
-Oops, you're right, I'll fix the name.
-
-> The overall flow is a slightly more complex. If IOMMUFD is not
-> supported by the kernel, QEMU will fail when attemting to attach
-> to the device. This failure occurs before the device is connected
-> to the IOMMUFD host backend and QEMU will report an error such as :
-> 
->     qemu-XYZ: -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0: vfio 0000:01:00.0: vfio/sys/bus/pci/devices/0000:01:00.0/vfio-dev: failed to load "/sys/bus/pci/devices/0000:01:00.0/vfio-dev/vfio0/dev
-> 
-> But this is a kernel-side issue.
->
-
-Ok, details are a bit blurry in my head to be honest, as it was 9 months 
-ago. After checking again, both CONFIG_IOMMUFD and 
-CONFIG_VFIO_DEVICE_CDEV are needed and absence of one of them will 
-produce the message above.
-https://docs.kernel.org/driver-api/vfio.html#vfio-device-cdev
-
-I had other iommu error messages but it was related to iommu groups 
-issue, which is a different topic.
-
->> and
->> we don't need to isolate this at build time.
->>
->> It's much (much) more simple to expose this inconditionally
-> 
-> we should better explain the motivation behind this approach.
->
->> compared to
->> build dynamically properties arrays.
-> and that would be an alternative that we don't want to explore.
-> 
-> 
-> Let's come back to the proposal. Currently, when the QEMU platform
-> doesn't support IOMMUFD (i.e no support for the backend), QEMU reports
-> at runtime :
-> 
->     qemu-XYZ...: invalid object type: iommufd
-> 
-> As a consequence, the vfio-pci device doesn't expose the "iommufd"
-> property when the backend IOMMUFD is not available.
-> 
-> However, the additional filtering on the vfio-pci properties based
-> on CONFIG_IOMMUFD seems unnecessary. Instead the "iommufd" property
-> could always be exposed, whether or not the QEMU build includes IOMMUFD
-> support (kernel support is another topic). If the property is used
-> in an environment where IOMMUFD is unsupported, QEMU will simply
-> fail to create the IOMMUFD object.
-> 
-> Could you please rephrase the commit log with some of this information ?
->
-
-Sure, how about:
-
-{{{
-hw/vfio: eradicate CONFIG_IOMMU from sources
-
-This commit removes usage of CONFIG_IOMMU in hw/vfio sources, exposing 
-inconditionally iommufd related properties, which are declared 
-statically (in const arrays). The alternative to expose them dynamically 
-is more complex and requires boilerplate to set properties at runtime, 
-with set_* callbacks and added logic to check if iommufd backend is 
-available, with no obvious benefit.
-
-One difference is that user will have a different error message when 
-trying to attach a vfio device on a platform not supporting iommufd.
-
-Instead of:
-```
-$ qemu-system-* -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0
-invalid object type: iommufd
-```
-
-QEMU will try to attach device and error will be reported as:
-```
--device vfio-pci,host=0000:01:00.0,iommufd=iommufd0:
-vfio 0000:01:00.0: vfio/sys/bus/pci/devices/0000:01:00.0/vfio-dev: 
-failed to load "/sys/bus/pci/devices/0000:01:00.0/vfio-dev/vfio0/dev
-```
-
-Note: This second error can already happen if user's kernel does not 
-have CONFIG_IOMMUFD or CONFIG_VFIO_DEVICE_CDEV support, but QEMU has it.
-}}}
-
-Anything you would like to add?
-
-> Thanks,
-> 
-> C.
->
-Writing my answer and seeing current behavior, I wonder if we could not 
-have better error messages simply by checking if /dev/iommu exists when 
-setting the iommufd property of vfio-pci device or when realizing the 
-iommufd object (-object iommufd,id=iommufd0). For the latter, I need to 
-double check order or initialization/realization as it might be tricky 
-to catch before setting accessing vfio-dev/vfio0/dev.
-
-$ qemu-system-* -object iommufd,id=iommufd0
-can't create iommufd object: /dev/iommu not found
-Is your kernel config missing CONFIG_IOMMUFD?
-
-As well, we could report "Is your kernel config missing 
-CONFIG_VFIO_DEVICE_CDEV?" on the error mentioned in commit message.
-
-And while we're at it, in case we report one of those errors, we could 
-check target_arch(), and if it's not one supporting actively support 
-iommufd, say to the user "Linux does not support iommufd on this 
-platform" instead of "Is your kernel missing X or Y?".
-
-What do you think?
-
-Regards,
-Pierrick
+Auto review to send this for hard freeze.
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 
