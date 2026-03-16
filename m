@@ -4,104 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5307DF53D7F
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 17:25:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9875FF53D7F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 17:29:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Bgd-00044V-IO; Mon, 16 Mar 2026 13:25:04 -0400
+	id 1w2BkA-0004xx-Un; Mon, 16 Mar 2026 13:28:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2BgV-000444-Ut
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:24:56 -0400
-Received: from mail-pj1-x1035.google.com ([2607:f8b0:4864:20::1035])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2BgU-0003Sq-CH
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:24:55 -0400
-Received: by mail-pj1-x1035.google.com with SMTP id
- 98e67ed59e1d1-35a1f3f07ebso1922901a91.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 10:24:54 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773681893; cv=none;
- d=google.com; s=arc-20240605;
- b=V5OG6utrl6nB3tUJy+UB3NI/eqoEoAWYDMAlsLA1L9g3ZYYqcZzPxEF+qknsywYuWI
- troiq5gAFgvfBA6+kQ25mGypmKdgQfN1RsMRqjec/gtXbLmG9ohNFduP4S1Kc+9g7/3l
- to1wemrYzKB+zBQNYyPj4zYhmR3NWvkISvtXyrNyM2yq8oPlWhgu4bgcywtdZz8clRSS
- 4GFAB+gMDyqttOwRJTA3xqcY69ATWF6THrXvwKaTNGDFuitNcUDq3lpt69ORl2wxhaLv
- yR25MLTILCWM6qE0lBMIyEXDeMlgME8zboaN8uT/fvPX8bChitVtFY4h/zqSVt8x3Zjx
- nSoA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=X4foYIlGwPcV/frYrr8gyeWxWPiNykcrtIixRJI3Kgk=;
- fh=KRCCjFQNjYXxmVm5lhBeSL8Cxa/V2Ufkjle/+cdDqO0=;
- b=lsLj7O/dOdo8EPOqD0KALO+54FtaC0O2/nGOK1Q5/b3WkD26AQ5iYeE/+zUEL3ihin
- kTjRS2a3IO1maVSUO7KWFY+NoAXikoivF0na+/SXEc6L8ZGztbljFT9k3t2ERQnp+B+N
- kPkY8WL5VK9VF7GOylPRG8ljt2hEkXLXE4bGYh/xJRUYMps0MBzvTMzkOG7qGfskqJuc
- 2dHtHjGHNzjGABCAphkznsvroKGAijo3P4BBW5B8uTrd79nrBLwfr9L4iwj2DVJUDxHM
- sJ3kjAvjWAekB68ETeOUYZPlESdMgVJhOXEwDqMYkufO3arEXcPA+r9l5doWVnS6B9eD
- ZSxw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2Bk7-0004vx-Q5
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:28:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2Bk5-0003zf-Pz
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:28:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773682116;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=2Leq06PUdI16r8lHD6HgtmosRlvNObtj1nIAw7jOBWw=;
+ b=RySc0BzygCu9liAC0ZsIumUJWlyHspqTjZwTQve7nr3fUMhg01wpw6HZuvVBJfV/WWS9Ep
+ BpaZ65D4MMWcM8O1Xw9PoRJ6UhuarqVsOZAbkYP64CmcCzPuijz992N7O+y8jH0i3Ok00N
+ zF5CE7wwlW5s36YbJPF7Cnfr4E5/uNk=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-665-3XEQ4Qn0NcKh54A-WbouEA-1; Mon, 16 Mar 2026 13:28:35 -0400
+X-MC-Unique: 3XEQ4Qn0NcKh54A-WbouEA-1
+X-Mimecast-MFC-AGG-ID: 3XEQ4Qn0NcKh54A-WbouEA_1773682114
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4853a9467c5so27756975e9.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 10:28:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773681893; x=1774286693; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=X4foYIlGwPcV/frYrr8gyeWxWPiNykcrtIixRJI3Kgk=;
- b=UZ36lewSOLuiBi+1yrN2gsRCPgKviopt/DA06rJPONKbf2IG9nryutCbdOUjOlFdzx
- VJRcKu0Rs3kGeZwbVjbDHRJo5q8T8FuksuBU5DkH5X3E0BSgAaj0iUIBwG7u0QiQiRtv
- anUyAJPYxXwVdaHNJ3/d14VPSZmT8cWiYWhTPMdl2JmZC8nfKxUUBmHV/AOnKLfg/BEM
- lGjef526k1se3jxPEaHeGcNIinCLFPEQ4Kno+6gSHi6rxLtCBk81WVPCa7w3nE/8hFoq
- T6wl5PVm9gSjaDXIoD4an7T/LC3+voB46ddPEE2KmfaDNmbfaCI7RyJMo/TMSL3uhjkL
- MN8Q==
+ d=redhat.com; s=google; t=1773682113; x=1774286913; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=2Leq06PUdI16r8lHD6HgtmosRlvNObtj1nIAw7jOBWw=;
+ b=I8AiQSnYKk+0hREmU7FeG9AXAVBycpLorxMcE7uTL7Jb+yOY7oEJCQSyDEhJR8AsY9
+ rFODfLdUe8mInsizZ7zfXi6PbAWKgKNpLYbsHBr/JgwU4lPZ3klvwizx6w00s+wBB8U3
+ VEAHSiWgsS58zUOWUw+G2/nhujYm1E/pxGnqHvtYE3Fbm8dPQJwHZka44GxsEmhglTFa
+ NB7HlrdfMK8t6v3A8X1TvNlR0fH8EjirdgnlH7G7GxndMKlhsWdY/8ogymEzQcvnWYdv
+ 7HgLeWFCJ5vB81yCZUPNGnYdSzUROW6wjii+97xcSPG1WgUfSrOigaP4qhQTSu6DUrrw
+ DVPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773681893; x=1774286693;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=X4foYIlGwPcV/frYrr8gyeWxWPiNykcrtIixRJI3Kgk=;
- b=Q+xY4N7lQfM/6aVFG5lweL/p6SOf1jiW4owMVVGmRJCvE1Ak6N++BbE4PddWrAbJc0
- PoWYcbUe6VdE13FIeA4rzmBjIc78YsrPl344879YVGwwRwIYxArbeCchgsxAPQJy137r
- uNfkY0ufVhjjuI9W0LUDfNXvHboAb4w8fZ9Z7ECiduxL7xCjp3gcHXpGOkiAY5aP7ka/
- Dc7GJm16AVSloho9lAdIH8nmI0NVejl4bhYQw0i/5RY6PY8wQ+0k+P0hUtBG3UQ1EZ+c
- Kvum+U6VtAeXldUIBiaY1w0aUlXc1+H5D5d/591xFNLbwHKzuteJ6prEUz54EBVyJKxn
- yDBA==
-X-Gm-Message-State: AOJu0YxfY5R3mVcdxdoisNb00HCR+Z6SuydnPPbSbDVRcgWtK7kRY2OR
- 0xULog7JuNohKbXaG2u9PkuHPpenOlnHM9w4OJ9+rtttMDIJzCwxtbioiq12opqilI2Qv9DqAOd
- bH2tdZYRALXDuyZYLcmgOuu4+XmqXZFA=
-X-Gm-Gg: ATEYQzyN7Vy9el3eyuVpw5jBRnbKxO/dHPPxZOXZ1NDTI5c2miwExyvzaDPs/8Oh/Gt
- cpvHXLeSod+R3jyIv3r326tXLtyCTgiiIdMacr3Z38aIwehMBb95Mzf01aOu1qvsezC86LG4Hiq
- DSsnI4fzdPLCjK72HdB7oSiPB4M0pUFkAkXngVRpBQEcrB2I6XYBF5dxXW8I3fXg9uue77I8Aha
- RDO64flSMUSa7FlKmlgdRrixuJcTh4YFT+ey0No7P98o6V5Dtj/xf2FtDYxeSk3KCkdxebaNAXx
- nt23miQ+EHwATktqyqc91k39kWiZu66g0SY1Cw==
-X-Received: by 2002:a17:90b:4a47:b0:359:ff8a:ee55 with SMTP id
- 98e67ed59e1d1-35a21ec0e5fmr11706466a91.14.1773681892719; Mon, 16 Mar 2026
- 10:24:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773682113; x=1774286913;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=2Leq06PUdI16r8lHD6HgtmosRlvNObtj1nIAw7jOBWw=;
+ b=hkNquwP+pqQVeK4m4R4jLd2FL5xEV7HQ1rHYuBD+5/GN8als8uENTzC6+P288ElV7G
+ j2m9wUnaGek6ORSMAZBYS3fnnw3KHSun1UURLZaGbq71dGpCgMl5jJVddGwOWMw4PN2n
+ Rs89Jqgyq083yXpJ7sUH8WUHuZGrvkaZGpj2vgJPShpOF3sIfj/VIA3HbhJGLV6MKFt3
+ WR0funHi85naECXauDTHT8R6OLhYjRAZUtkojGZ81fKgM1PoOPCk+7nqq3ctq5Bs8+J2
+ t53lSYtNgqUW0m3ymo08VmBB/0QKmgLTUq2Ri/T10qQLkoroSlo8HQ/HGxpJioVdKP9w
+ SzMA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUyDWrcIGxIVmP2CahUIKgbxeHk8TfW6Jz2mmsQ1ix6F/Kzlr04TsI4eCtL2Lw0U+whdAlsgcctEzNo@nongnu.org
+X-Gm-Message-State: AOJu0Yxkb24yB4jXybUbnS78e8wPdk1FolQ80SXcXMr/AhWO0AKAotbv
+ Xt2grXQmQWhJMbL8apwFl2cRgTTrpDSdk2NF533+J5T73w+2CKQRg2WPDbNpq3pHblQbgxC6G9B
+ 8KDkR1UCyiKUvXgzd50P9IC8gZgcs856LUgHlRhjq1Y6r3d8SHLvKnl/+pxwLigGY
+X-Gm-Gg: ATEYQzw96JWfHy4I1SPOauL8q7RfJZadzpiwuExFNGf4HegIJli93t/DZrep+IFQBY3
+ qLHIzjTKniUaqcvQJaQPm1g1wTJyimGa0mTfptqQAe+gTkW7oczoS8NjQ22dirKK/hFVVvLABaI
+ S2sHGPbKnmd7lFzN7CytfoFRhM7/ykQ4gurHw3QwrwmPubSmdke32Pjht5GY/LGBpaEc4anJ8Xw
+ tYoA34/GBonRWbTQmGjNpmPdjRiWaQBYitN4svbWdoCJKN/2bqqou6dwp1HwbsvwYvaz1oD8Hjy
+ KQBU+lDmNApSci1RIJGuYrWPNVgm6JjREfiWiGWYPOUHhex0ukIOUiNiA/tuoeTWgLHFxwCL/6v
+ 5N9f2DUdGpYofjbrdn+IhlZbkPb5aDyipoaSo/fvGuog5Kujo289Jcl0e1h4QG7m8VUnZFLchOB
+ CY2fsUPC4i2rrLsq/zPupDUxsOXkHBi87C6BqC7GQi4RKv5Toogbw=
+X-Received: by 2002:a05:600c:8b75:b0:485:3fe6:21f5 with SMTP id
+ 5b1f17b1804b1-485566d2ffdmr233063725e9.10.1773682113304; 
+ Mon, 16 Mar 2026 10:28:33 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b75:b0:485:3fe6:21f5 with SMTP id
+ 5b1f17b1804b1-485566d2ffdmr233063245e9.10.1773682112837; 
+ Mon, 16 Mar 2026 10:28:32 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d737:d02c:3210:ed4b:e671:ceb9?
+ (p200300cfd737d02c3210ed4be671ceb9.dip0.t-ipconnect.de.
+ [2003:cf:d737:d02c:3210:ed4b:e671:ceb9])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-485563953dbsm179665205e9.0.2026.03.16.10.28.31
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Mar 2026 10:28:32 -0700 (PDT)
+Message-ID: <ad6a2467-3763-4590-8a86-097ab916a4c1@redhat.com>
+Date: Mon, 16 Mar 2026 18:28:30 +0100
 MIME-Version: 1.0
-References: <20260311040758.1068731-1-brian.cain@oss.qualcomm.com>
- <20260311040758.1068731-28-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260311040758.1068731-28-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 16 Mar 2026 11:24:41 -0600
-X-Gm-Features: AaiRm511TF2Dplncp4F7a9i58DlSVa9XDGavQerm4OpwinsnYSaXSWghpOs8Z_s
-Message-ID: <CAATN3Npcybx3x2e6V+8nKHCfOrRXo54ndqKTBQz_2ZBGWtjxBQ@mail.gmail.com>
-Subject: Re: [PATCH v3 27/32] target/hexagon: Add TLB, k0 {un,}lock
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
- anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Content-Type: multipart/alternative; boundary="00000000000029014b064d277fc2"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1035;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pj1-x1035.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 2/3] iotests/041: add test for mirror with throttled NBD
+ export as target
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, kwolf@redhat.com, vsementsov@yandex-team.ru,
+ jsnow@redhat.com, qemu-stable@nongnu.org
+References: <20260311145717.668492-1-f.ebner@proxmox.com>
+ <20260311145717.668492-3-f.ebner@proxmox.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20260311145717.668492-3-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,91 +128,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000029014b064d277fc2
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Mar 10, 2026 at 10:08=E2=80=AFPM Brian Cain <brian.cain@oss.qualcom=
-m.com>
-wrote:
-
-> From: Brian Cain <bcain@quicinc.com>
+On 11.03.26 15:54, Fiona Ebner wrote:
+> Mostly in preparation for commit "iotests/041: add test for duplicate
+> job-complete with throttled target".
 >
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 > ---
->  target/hexagon/sys_macros.h |   3 +
->  target/hexagon/op_helper.c  | 117 ++++++++++++++++++++++++++++++++++++
->  2 files changed, 120 insertions(+)
+>   tests/qemu-iotests/041     | 112 ++++++++++++++++++++++++++++++++++++-
+>   tests/qemu-iotests/041.out |   4 +-
+>   2 files changed, 113 insertions(+), 3 deletions(-)
 >
-> --- a/target/hexagon/op_helper.c
-> +++ b/target/hexagon/op_helper.c
-> @@ -1232,6 +1235,120 @@ void HELPER(modify_ssr)(CPUHexagonState *env,
-> uint32_t new, uint32_t old)
-> +            qemu_log_mask(LOG_GUEST_ERROR,
-> +                          "Double k0lock at PC: 0x%x, thread may hang\n"=
-,
->
+> diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
+> index 8452845f44..a7e1980f13 100755
+> --- a/tests/qemu-iotests/041
+> +++ b/tests/qemu-iotests/041
 
-Don't use %x
+[...]
 
 
-> +        qemu_log_mask(LOG_GUEST_ERROR,
-> +                      "thread %d attempted to unlock k0 without having
-> the "
-> +                      "lock, k0_lock state =3D %d, syscfg:k0 =3D %d\n",
-> +                      env->threadId, env->k0_lock_state,
-> +                      GET_SYSCFG_FIELD(SYSCFG_K0LOCK, syscfg));
->
+> +    def tearDown(self):
+> +        os.remove(test_img)
+> +        os.remove(target_img)
+> +        os.remove(backing_img)
+> +        os.remove(target_backing_img)
 
-Don't use %d
+It would be good if tearDown() could still contain the VM/QSD shutdown/stop.
 
-The patch description mentions TLB, but this patch only implements k0
+> +
+> +    def test_throttled(self):
+> +        self.vm.cmd('blockdev-mirror',
+> +                    job_id='mirror',
+> +                    device='source',
+> +                    target='target',
+> +                    sync='full')
+> +
+> +        time.sleep(1)
+> +        result = self.vm.qmp('query-block-jobs')
+> +        self.assert_qmp(result, 'return[0]/ready', False)
+> +        self.vm.qtest(f'clock_step {4 * 1000 * 1000 * 1000}')
+> +        time.sleep(1) # in real time, the rest should now comlpete fast
 
-Otherwise
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
+I think the clock_step belongs on the export side, the QSD.  On the 
+other hand, QSD has no way to enable qtest, I believe, so it won’t work 
+well as an export here.  I think it works accidentally because throttle 
+allows a burst, and can allow to write 3 MB in 2 seconds.
 
---00000000000029014b064d277fc2
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+This whole test is also a bit fiddly. It needs to write 3 MB in one 
+second, I believe, which seems prone to being flakey.  I’d be happy with 
+a null export on the target side, if that still did the job (pun intended).
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 10,=
- 2026 at 10:08=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.q=
-ualcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mai=
-lto:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/sys_macros.h |=C2=A0 =C2=A03 +<br>
-=C2=A0target/hexagon/op_helper.c=C2=A0 | 117 ++++++++++++++++++++++++++++++=
-++++++<br>
-=C2=A02 files changed, 120 insertions(+)<br>
-<br>--- a/target/hexagon/op_helper.c<br>
-+++ b/target/hexagon/op_helper.c<br>@@ -1232,6 +1235,120 @@ void HELPER(mod=
-ify_ssr)(CPUHexagonState *env, uint32_t new, uint32_t old)<br>+=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_log_mask(LOG_GUEST_ERROR,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 &quot;Double k0lock at PC: 0x%x, thread may hang\n&quot;,=
-<br></blockquote><div><br></div><div>Don&#39;t use %x</div><div>=C2=A0</div=
-><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border=
--left:1px solid rgb(204,204,204);padding-left:1ex">+=C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 qemu_log_mask(LOG_GUEST_ERROR,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot;thread %d attempted to unlock k0 without having the &quot;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 &quot;lock, k0_lock state =3D %d, syscfg:k0 =3D %d\n&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 env-&gt;threadId, env-&gt;k0_lock_state,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 GET_SYSCFG_FIELD(SYSCFG_K0LOCK, syscfg));<br></blockquote><div><br></di=
-v><div>Don&#39;t use %d</div><div><br></div><div>The patch description ment=
-ions TLB, but this patch only implements k0</div><div><br></div><div>Otherw=
-ise</div><div>Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimp=
-son@gmail.com">ltaylorsimpson@gmail.com</a>&gt;</div><div><br></div><div><b=
-r></div></div></div>
+(Also *complete)
 
---00000000000029014b064d277fc2--
+Hanna
+
+> +        result = self.vm.qmp('query-block-jobs')
+> +        self.assert_qmp(result, 'return[0]/ready', True)
+> +
+> +        self.complete_and_wait('mirror')
+> +        self.vm.shutdown()
+> +        self.qsd.stop()
+> +        self.assertTrue(iotests.compare_images(test_img, target_img),
+> +                        'target image does not match source after mirroring')
+> +
+>   
+>   if __name__ == '__main__':
+>       iotests.main(supported_fmts=['qcow2', 'qed'],
+> diff --git a/tests/qemu-iotests/041.out b/tests/qemu-iotests/041.out
+> index 46651953e8..5273ce86c3 100644
+> --- a/tests/qemu-iotests/041.out
+> +++ b/tests/qemu-iotests/041.out
+> @@ -1,5 +1,5 @@
+> -...........................................................................................................
+> +............................................................................................................
+>   ----------------------------------------------------------------------
+> -Ran 107 tests
+> +Ran 108 tests
+>   
+>   OK
+
 
