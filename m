@@ -4,58 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B0BF4644B
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:55:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDA42F4644B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:55:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25ay-0003XH-GJ; Mon, 16 Mar 2026 06:54:48 -0400
+	id 1w25bT-0003qb-30; Mon, 16 Mar 2026 06:55:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1w25at-0003We-5z
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:54:43 -0400
-Received: from out-188.mta0.migadu.com ([2001:41d0:1004:224b::bc])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w25bF-0003fW-35; Mon, 16 Mar 2026 06:55:05 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
- id 1w25aq-0008Nz-6s
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:54:42 -0400
-Message-ID: <588a9b07-72d7-4222-851a-f174b1949839@linux.dev>
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
- t=1773658477;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=M8JbMHGnwWRxCCU8ruAi7a09uWr6H7vzF0Xd2uPfYpc=;
- b=DinX83dpT+by+KFknbJDDVGycBBX+7AEIuE2dtdaQWTU2yQJU+ojzuVP1RKR+gu9cTgmhm
- 0K4W/owoiTMdvuMKIpbkJ3rX0hwgI1rvmVp2R6zvtI4PRPJBA9vlLtuddP+OWBCSNP7QIB
- YfS0jFZ15LYUsRD30NEvSVCjwSWDWRs=
-Date: Mon, 16 Mar 2026 18:54:28 +0800
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w25bA-0008PN-79; Mon, 16 Mar 2026 06:55:02 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773658493; bh=le+NvA5mnpYLh6Sym7+lfRqHZ3+6Hp1vwK4s6MAavEs=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=r1y8e+s6xo0ruH7FYXAxXIZG6lfrW6GH4zrCp9CxQaqXM8RNV3mmrjyzm8xOnCPga
+ wLYk9HmlPXdtN0QToggPoXAk/h2U4AIy+IDaJKc0urt0rDOMH5j+m4unytqo5lPyr5
+ Ts78wSQxmjF99xO569t9382XBXhaM2Ci9+pwRyAcje66WP20bl6YuGl3rW3N9qRCfp
+ YerFPwZcLmdRQC9FUdFhvcRb1NletmSDV3lhKcjL2yuLlNtZgi+oe+uNjoX9qtfOpy
+ xCisnPld89b7YigpLvG2spn6d+oNxcfdsDqsoO2Ct33m5ljygXXMJ/WD2DEKl+vRtH
+ iyNfC/rcSylvA==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id BFA15193DC4;
+ Mon, 16 Mar 2026 13:54:53 +0300 (MSK)
+Message-ID: <45d1f3f2-5f92-4b6a-b8fc-df0d638e6b87@tls.msk.ru>
+Date: Mon, 16 Mar 2026 13:54:56 +0300
 MIME-Version: 1.0
-Subject: Re: [PATCH rfc] hvf: arm: Inject SEA when executing insn in invalid
- memory range
-To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, agraf@csgraf.de,
- peter.maydell@linaro.org
-References: <20260315163840.30741-1-zenghui.yu@linux.dev>
- <87ikawnmcq.fsf@draig.linaro.org>
-Content-Language: en-US
-X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
- include these headers.
-From: Zenghui Yu <zenghui.yu@linux.dev>
-In-Reply-To: <87ikawnmcq.fsf@draig.linaro.org>
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 00/14] Trivial patches for 2026-03-16
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org
+References: <20260316071005.91624-1-mjt@tls.msk.ru>
+ <CAFEAcA8+9Cxs7k2TyzxEx31GzWoAP8TN90=DEtVLUpvdevYdtw@mail.gmail.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <CAFEAcA8+9Cxs7k2TyzxEx31GzWoAP8TN90=DEtVLUpvdevYdtw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Migadu-Flow: FLOW_OUT
-Received-SPF: pass client-ip=2001:41d0:1004:224b::bc;
- envelope-from=zenghui.yu@linux.dev; helo=out-188.mta0.migadu.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -71,128 +111,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Alex,
-
-On 3/16/26 5:40 PM, Alex Bennée wrote:
-> Zenghui Yu <zenghui.yu@linux.dev> writes:
+On 16.03.2026 13:15, Peter Maydell wrote:
+[]
+> Hi; this fails to build on some configs, eg:
 > 
-> > It seems that hvf doesn't deal with the abort generated when guest tries to
-> > execute instructions outside of the valid physical memory range, for
-> > unknown reason. The abort is forwarded to userspace and QEMU doesn't handle
-> > it either, which ends up with faulting on the same instruction infinitely.
-> >
-> > This was noticed by the kvm-unit-tests/selftest-vectors-kernel failure:
-> >
-> >   timeout -k 1s --foreground 90s /opt/homebrew/bin/qemu-system-aarch64 \
-> >     -nodefaults -machine virt -accel hvf -cpu host \
-> >     -device virtio-serial-device -device virtconsole,chardev=ctd \
-> >     -chardev testdev,id=ctd -device pci-testdev -display none \
-> >     -serial stdio -kernel arm/selftest.flat -smp 1 -append vectors-kernel
+> https://gitlab.com/qemu-project/qemu/-/jobs/13506360670
 > 
-> Have you got patches for teaching kvm-unit-tests about hvf or are you
-> running these all manually? I tried building on the Mac we have but it
-> failed the build and the docs only mention x86.
-
-No more patches. This is how I build and test it on my M1:
-
-./configure --arch=aarch64 --page-size=16k --cross-prefix=aarch64-elf-
-make && make standalone
-QEMU=qemu-system-aarch64 ACCEL=hvf ./run_tests.sh
-
-The command line above is copied from logs/selftest-vectors-kernel.log.
-
-> >   PASS: selftest: vectors-kernel: und
-> >   PASS: selftest: vectors-kernel: svc
-> >   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
-> >   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
-> >   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
+> ../net/slirp.c:72:12: error: ‘get_last_str_sep’ defined but not used
+> [-Werror=unused-function]
+>     72 | static int get_last_str_sep(char *buf, int buf_size, const
+> char **pp, int sep)
+>        |            ^~~~~~~~~~~~~~~~
 > 
-> I think this is running:
-> 
->   static bool check_pabt(void)
->   {
->           enum vector v = check_vector_prep();
-> 
->           install_exception_handler(v, ESR_EL1_EC_IABT_EL1, pabt_handler);
-> 
->           test_exception("adrp	x9, check_pabt_invalid_paddr\n"
->                          "add	x9, x9, :lo12:check_pabt_invalid_paddr\n"
->                          "ldr	x9, [x9]\n",
->                          "blr	x9\n",
->                          "", "x9", "x30");
-> 
->           install_exception_handler(v, ESR_EL1_EC_IABT_EL1, NULL);
-> 
->           return pabt_works;
->   }
-> 
-> which is expecting 0x21 - instruction abort at the same exception level.
-> I wonder why there is the difference.
+> Looks like one of the patches defines the function unconditionally
+> but puts the only callsite inside an ifdef, so if the config
+> means we don't compile the code that calls it then the compiler
+> complains about the unused function.
 
-It's the guest that executes an instruction outside of the valid memory
-range. From hypervisor's perspective, it's an instruction abort from a
-lower EL, so we get the syndrome saying that EC=0x20. We then decide
-that we should emulate the hardware behavior by injecting an SEA into
-the insane guest.
+Yeah, -- I wondered about that too for a moment but didn't think about
+it at the time.  I re-sent this pullreq with the problematic patch
+dropped, the rest is the same.
 
-And from guest's perspective, it's an instruction abort caused by itself
-(thus EC=0x21 - instruction abort taken without a change in EL).
+Thanks, and sorry for the trouble.
 
-> >   [...]
-> >
-> > It's apparent that the guest is braindead and it's unsure what prevents hvf
-> > from injecting an abort directly in that case. Try to deal with the insane
-> > guest in QEMU by injecting an SEA back into it in the EC_INSNABORT
-> > emulation path.
-> >
-> > Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-> > ---
-> >  target/arm/hvf/hvf.c | 23 +++++++++++++++++++++++
-> >  1 file changed, 23 insertions(+)
-> >
-> > diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-> > index aabc7d32c1..54d6ea469c 100644
-> > --- a/target/arm/hvf/hvf.c
-> > +++ b/target/arm/hvf/hvf.c
-> > @@ -2332,9 +2332,32 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-> >          bool ea = (syndrome >> 9) & 1;
-> >          bool s1ptw = (syndrome >> 7) & 1;
-> >          uint32_t ifsc = (syndrome >> 0) & 0x3f;
-> > +        uint64_t ipa = excp->physical_address;
-> > +        AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
-> > +        hwaddr xlat;
-> > +        MemoryRegion *mr;
-> > +
-> > +        cpu_synchronize_state(cpu);
-> >  
-> >          trace_hvf_insn_abort(env->pc, set, fnv, ea, s1ptw, ifsc);
-> >  
-> > +        /*
-> > +         * TODO: If s1ptw, this is an error in the guest os page tables.
-> > +         * Inject the exception into the guest.
-> > +         */
-> > +        assert(!s1ptw);
-> > +
-> > +        mr = address_space_translate(as, ipa, &xlat, NULL, false,
-> > +                                     MEMTXATTRS_UNSPECIFIED);
-> > +        if (unlikely(!memory_region_is_ram(mr))) {
-> > +            uint32_t syn;
-> > +
-> > +            /* inject an SEA back into the guest */
-> > +            syn = syn_insn_abort(arm_current_el(env) == 1, ea, false, 0x10);
-> > +            hvf_raise_exception(cpu, EXCP_PREFETCH_ABORT, syn, 1);
-> > +            break;
-> > +        }
-> > +
-> >          /* fall through */
-> >      }
-> >      default:
-> 
-> I need the check the exception paths for KVM and TCG. I guess for the
-> KVM case it is all in the kernel?
-
-Yup, in kvm_handle_guest_abort().
-
-Thanks,
-Zenghui
+/mjt
 
