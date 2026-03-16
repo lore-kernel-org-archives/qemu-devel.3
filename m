@@ -4,78 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A530F4644C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:42:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28284F46445
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:42:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25PC-000108-UJ; Mon, 16 Mar 2026 06:42:39 -0400
+	id 1w25Oz-0007PG-Iw; Mon, 16 Mar 2026 06:42:25 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25PB-0000pd-8L
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:37 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1w25Ou-000779-Uf
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:21 -0400
+Received: from mail-qt1-x834.google.com ([2607:f8b0:4864:20::834])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25P9-0003dP-Ck
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:36 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-485392de558so26620035e9.1
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:34 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <dbarboza@ventanamicro.com>)
+ id 1w25Or-0003bw-IT
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:18 -0400
+Received: by mail-qt1-x834.google.com with SMTP id
+ d75a77b69052e-50902b1006cso39676541cf.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773657754; x=1774262554; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:from:to:cc:subject:date:message-id:reply-to;
- bh=WqkMK6wJVsQjjMY99xhzWh6knXs0ZtiR5+rPWH6b2vg=;
- b=Kw11tcGCmxmQpOZUG2qTh7HkKlSnEVMdbt0jHeDz7oi4xFGateUEZErwyOokWK8E1+
- 3DQGQ+IKIw4Knl/Nd9OHgN27gLo9wgSlc0npO4VqIkaMGmtoVSEqWpHFetl9VCoCSvVy
- 2mhnp4nOCJmZMympvsMAzvNtLBD9gDF0fHogK9D1RWOfFzCLZ3PZxGH1hGyieA0so2qg
- AI8w7zPILfC2bRO3VQwzVZXs+CsKcYi956S80177fJtgqeJT8yQTtfs+XoaWHuHGIxKh
- i0/jRC26cDdiSwzNBDitpmh8M0gvErAPdR4uYesR0TABhCba7vkqys39OmRPijwjPRhR
- yKJA==
+ d=ventanamicro.com; s=google; t=1773657736; x=1774262536; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=0GbtDccudGM5TUUMHUNfrU2i5E4foPGykGBDUGJMv7I=;
+ b=EgtLkP9iZ/LrvjEOYr1ega5ZIfyVgwYXBooVCa0aqsaGqyBcvP8VwiKLd/Lng5o8P6
+ UBOerL99XjlJ4ZoO2enksna33eK2GAzU3oN4jWmROV0dru/2ELzUZqWd2vo1Yc+3oNk0
+ gjd0IodR+Mwt7zh5B5hpd5W0Z9ZPPIO/VCLotr9uMidZgUSa28/amU2T+mEWoOKJj8cA
+ 0Ez/reE8XMsjhVBaO3BMEpaD8aiA1M8N7pipddnN0N17jbCBhTFWQ3Nex/MI08ONEu/b
+ xSYs6DCR5tcj0nOmAd2gDknuL9Ry9Jn2M34HwniqEHxmeZxhpgN07Goy01cv1XnxHbx4
+ Maxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773657754; x=1774262554;
- h=content-transfer-encoding:mime-version:message-id:date:subject:to
- :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ d=1e100.net; s=20251104; t=1773657736; x=1774262536;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=WqkMK6wJVsQjjMY99xhzWh6knXs0ZtiR5+rPWH6b2vg=;
- b=VutVxmcidyWNC8X/6QQNPdozSNmYxuoLjBngtbC/b65Rh7qzVqdNVNwKK6sAqZhKxY
- IyExSHmbbfEc76eaaKF2aelMnOqOs8HKF0MkGPQ7tlkf5a53bbbw5gwGG/CGhWUiQIy7
- A3mST28IoOOhPP5vN+phqQ1gaJf6JnviO7k2BBFOK7pzHdfm0JJw8yzw45mxJI/IEVOv
- xJyHIvbCNomDknuRP3xtKyaCbLuopwYAk1ORs7pCdKBZ92qJ2Biny/WpxDcE2bXlP3aD
- 2eOXETLQfNMqeyoWWVd87btVu8Mu5DhER3LCTAwyJDBKCLipJNdQ4ktk7paj1WS78AGJ
- yq+A==
-X-Gm-Message-State: AOJu0YyTBsHI9rZKL4prFLUuoYMLCrKc/s6fVAIra+jWmV/NHX234u6N
- 2lAWHQ7SmU05dbLi/B5qKorpjgR8KTgvf+dF+tb2X+ojBHeC1GBfstX1UoUNCK+gpAMgeErvM4n
- CQfmn
-X-Gm-Gg: ATEYQzxpQeKemmypTGhLukBfARoGe5BoErp4otA+ZQVUfuTNheWeXCW3dDteOYvER2G
- QHPJkBP9Na+6FbdGDf1pjAp7pI3Hhgn74lwb8vdYrrzmN+UJcOL4Lb7/54lL7YA1WumDvDyyZNC
- SbqeAqc5OHx4F24QRVAD3218TnbV7XYqqOzMqC5EytTloE8Rm9aiq7/h6GeGrU+O79M6BGxYD8v
- DdsnkKNVr2wh4lJ3bAAK39wSWLhvW1rZRRq+OYKVGVfNWaIW2aTpHRxffDujEddsPGL4x/9KPNS
- QBhlr3QPh3c3+Wm0v3osP/My1GRFUY82H5Dj7UTEhwCEQUNFlxZC5GP09mDRg3O+kDRcoQMIbQO
- DHqPIBUZ3suYrHGUe3KdgsDXb5rmlzXSgKlkH61Nn9h+OwH4RUI2acp2ecTpTaHEyzeb8HxKUFh
- 5azPCFlQWZmQIacFx4AwtfpV0vnfsxWFHqYmYuDST+7MMHaioYiOvfq8U9GfvwvWm4c11DN0pqW
- YhyZpK47fM=
-X-Received: by 2002:a05:600c:4e08:b0:485:3eba:ab96 with SMTP id
- 5b1f17b1804b1-485566ca967mr201917065e9.3.1773657753644; 
- Mon, 16 Mar 2026 03:42:33 -0700 (PDT)
-Received: from lanath.. ([81.2.115.145]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48557a74266sm85519135e9.17.2026.03.16.03.42.32
- for <qemu-devel@nongnu.org>
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 03:42:32 -0700 (PDT)
-From: Peter Maydell <peter.maydell@linaro.org>
-To: qemu-devel@nongnu.org
-Subject: [PULL 00/17] target-arm queue
-Date: Mon, 16 Mar 2026 10:42:13 +0000
-Message-ID: <20260316104230.836962-1-peter.maydell@linaro.org>
-X-Mailer: git-send-email 2.43.0
+ bh=0GbtDccudGM5TUUMHUNfrU2i5E4foPGykGBDUGJMv7I=;
+ b=sgahzCG6jlWqN5EcWNcdXPq2BhZwpEoM7n/59oCJg92tuQq6xjIFdq+1Cm0p0YtBly
+ SbKxmzzz7DsANxjlQmQZ3NvWCWwrlDcRdCFRCI8aZexP/dOZqgKfe8gQV27t8wQXBBms
+ 2Ka2zA1w8xNLn/X2qKkT7LEqehf9ZskRWZvVqGCkR7thi5T1ATo1fb5rAd9Z4bg6v48o
+ gB74f4IFXYDFL/D54tvI8XyfJunOV057hCre1+HDfEvJ3IeFGuKw0g17sTxQNLMrsDTq
+ ZXVhmfSjuqEUEj9eSnqOx039f2QRaD8xJOKvnQa/mcAfPUXt17R4Yo/l8/ZfWchALYkS
+ sbFg==
+X-Gm-Message-State: AOJu0YwzB5BMv0l5UYfl884VCOi8LrO/MvwLILXYwCJ97iHl6lUpuzVc
+ w+ye4cayMiDDnYMFTV6AIGXogQqKK1qkfAfyHiB/TII2r+UKqJ6YpB6q9EANjev+Klg=
+X-Gm-Gg: ATEYQzwf6aESyqwATIFdtQOCKRQoVtbz/956AuJlwJ1FlgV0kcQFt9yOGDNchYUY4yM
+ EbVJKaAGpPu/WKz9ucqCWNGThnBVPaveqWe1/bTRtrENFRD8DRTCqIyZzAFMm20H02CbgHZB9dg
+ OuKegXbfgXjoju7GrnHTsXzfcEjaZwJi4+QOf5OHoTR2BGt5UPReJ5mo1U0Br4H3siB06Oy+c2t
+ Wp5VSNie/tWh1o+b7otMol5IftZibYUVyOX1YTgBwSw8s03++Gz8N8RhN2P8obZfthXOVgTF1fe
+ TjuD+cCQUQETt9nKOp4yI0vgxWCXDAGnE9hxjk9lxt3FpC4b83Cn2/Z/TKpTtk5rrtCkSV9wyJ/
+ KgbaMr7NcJDjFXOAcn0UKXG6QNgnTyFKduGdE0Q7kz58TF0r9BMRbQEVC9IN+oyemve4aZeBwf/
+ V1VKTGYX1sznnhE3qOFOaxXg32YEJnhKhUHE8vJrCHM815VMmiBaPu
+X-Received: by 2002:a05:622a:244:b0:509:3141:312c with SMTP id
+ d75a77b69052e-50957e11044mr162452971cf.40.1773657736240; 
+ Mon, 16 Mar 2026 03:42:16 -0700 (PDT)
+Received: from [192.168.68.100] ([152.250.131.163])
+ by smtp.gmail.com with ESMTPSA id
+ d75a77b69052e-5093a14d7a6sm113575091cf.33.2026.03.16.03.42.14
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Mar 2026 03:42:15 -0700 (PDT)
+Message-ID: <8e124f96-b6c7-4e9b-b11e-f0f3e387eaf4@ventanamicro.com>
+Date: Mon, 16 Mar 2026 07:42:12 -0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1 3/4] target/riscv: Don't leak general_user_opts
+To: Peter Maydell <peter.maydell@linaro.org>, Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>, Weiwei Li
+ <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
+References: <20260313182957.28432-1-farosas@suse.de>
+ <20260313182957.28432-4-farosas@suse.de>
+ <CAFEAcA-2mcfjsngURah2jGvz0kib+-JYCGWjUPGWF8W262HJYg@mail.gmail.com>
+From: Daniel Henrique Barboza <dbarboza@ventanamicro.com>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA-2mcfjsngURah2jGvz0kib+-JYCGWjUPGWF8W262HJYg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::834;
+ envelope-from=dbarboza@ventanamicro.com; helo=mail-qt1-x834.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,68 +106,93 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Some arm changes for rc0, all fairly minor bugfixes.
 
--- PMM
 
-The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
+On 3/16/2026 6:56 AM, Peter Maydell wrote:
+> On Fri, 13 Mar 2026 at 18:30, Fabiano Rosas <farosas@suse.de> wrote:
+>>
+>> The global variable general_user_opts is being assigned twice, losing
+>> the reference to the previously allocated g_hash_table.
+>>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>   target/riscv/cpu.c | 3 +--
+>>   1 file changed, 1 insertion(+), 2 deletions(-)
+>>
+>> diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+>> index e56470a374..afccfc2935 100644
+>> --- a/target/riscv/cpu.c
+>> +++ b/target/riscv/cpu.c
+>> @@ -1099,8 +1099,6 @@ static void riscv_cpu_init(Object *obj)
+>>                               "riscv.cpu.rnmi", RNMI_MAX);
+>>   #endif /* CONFIG_USER_ONLY */
+>>
+>> -    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
+>> -
+>>       /*
+>>        * The timer and performance counters extensions were supported
+>>        * in QEMU before they were added as discrete extensions in the
+>> @@ -2751,6 +2749,7 @@ static void riscv_cpu_common_class_init(ObjectClass *c, const void *data)
+>>       cc->tcg_ops = &riscv_tcg_ops;
+>>   #endif /* CONFIG_TCG */
+>>
+>> +    general_user_opts = g_hash_table_new(g_str_hash, g_str_equal);
+>>       device_class_set_props(dc, riscv_cpu_properties);
+>>   }
+>>
+> 
+> This doesn't look to me like it's sufficient. These hash
+> tables are used to store the values of CPU properties.
+> Those are per-object, not per-class, so surely the hash
+> table needs to be in the object, not a global ?
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
 
-are available in the Git repository at:
+This hash is used as a hack to determine if a QEMU command line option was
+user set or not (i.e. a global setting).  Back when this was introduced
+(and I assume this is still the case today, need to double check) the command
+line support in QEMU didn't provide this information.
 
-  https://gitlab.com/pm215/qemu.git tags/pull-target-arm-20260316
+Most QEMU targets don't care whether a given CPU property was user set or not,
+but the RISC-V target has a lot of code that automagically disables stuff given
+certain conditions (e.g. riscv_cpu_disable_priv_spec_isa_exts()).  The result is
+that we were reaching situations, Gitlab bugs being opened and what have you,
+where the user was doing things like this:
 
-for you to fetch changes up to ed44618b8e6cb394c6b9d3642d9d130b46b8457a:
+qemu-system..... -cpu X,extensionA=on (...)
 
-  tests/qtest/aspeed_gpio-test: Use g_strdup_printf() instead of char arrays (2026-03-13 13:27:57 +0000)
 
-----------------------------------------------------------------
-target-arm queue:
- * hw/net/rtl8319: Work around GCC sanitizer / -Wstringop-overflow bug
- * semihosting: Correctly byteswap data when CPU is in big-endian mode
- * hw/dma/pl080: Fix various minor bugs
- * MAINTAINERS: Remove some no-longer active maintainers
- * tests/qtest: Use g_strdup_printf() in various arm tests
+But so it happens that extensionA isn't compatible with the existing extension set
+in X.  The behavior back then was to disable extensionA during realize() and be
+done with it, leaving users baffled and frustrated with their cmd line settings
+being ignored.  Now we're able to error out in these cases.
 
-----------------------------------------------------------------
-Martin Kröning (3):
-      include/hw/core: Rename virtio_is_big_endian to internal_is_big_endian
-      include/exec: Provide the cpu_internal_tswap() functions
-      semihosting/uaccess: Use the cpu_internal_tswap() functions
+All this said, most likely there's a better/cleaner way of storing this command
+line information that has global effect.  Just point me in the right direction and
+we can make it happen for the next release.
 
-Peter Maydell (12):
-      hw/net/rtl8319: Work around GCC sanitizer / -Wstringop-overflow bug
-      hw/dma/pl080: Handle bogus swidth and dwidth in transfers
-      MAINTAINERS: Remove Hannes Reinecke
-      MAINTAINERS: Remove Cameron Esfahani
-      MAINTAINERS: Remove Eduardo Habkost
-      MAINTAINERS: Remove Radoslaw Biernacki
-      MAINTAINERS: Remove Andrey Smirnov
-      MAINTAINERS: Remove Chris Browy
-      tests/qtest/ast2700-sgpio-test: Use g_strdup_printf() instead of char arrays
-      tests/qtest/arm-cpu-features: Use g_strdup_printf() instead of char arrays
-      tests/qtest/ast2700-gpio-test: Use g_strdup_printf() instead of char arrays
-      tests/qtest/aspeed_gpio-test: Use g_strdup_printf() instead of char arrays
 
-Tao Ding (2):
-      hw/dma/pl080: Update interrupts after pl080_run()
-      hw/dma/pl080: Ignore bottom 2 bits of LLI register
+> 
+> There are also other hash tables in the TCG riscv code
+> with the same problem (using a global variable to store
+> property info that is per-CPU, not global).
 
- MAINTAINERS                      | 18 ++----------------
- hw/core/cpu-system.c             |  6 +++---
- hw/dma/pl080.c                   | 28 +++++++++++++++++++++++-----
- hw/net/rtl8139.c                 | 23 +++++++++++++++++++++++
- hw/virtio/virtio.c               |  2 +-
- include/exec/tswap.h             | 36 ++++++++++++++++++++++++++++++++++++
- include/hw/core/cpu.h            |  4 ++--
- include/hw/core/sysemu-cpu-ops.h |  6 +++---
- include/semihosting/uaccess.h    |  8 ++++----
- target/arm/cpu.c                 |  4 ++--
- target/ppc/cpu_init.c            |  2 +-
- tests/qtest/arm-cpu-features.c   | 24 +++++++++++++++---------
- tests/qtest/aspeed_gpio-test.c   |  4 ++--
- tests/qtest/ast2700-gpio-test.c  |  3 +--
- tests/qtest/ast2700-sgpio-test.c | 24 ++++++++++++------------
- 15 files changed, 130 insertions(+), 62 deletions(-)
+
+Not sure which hashes are you talking about but there's a high chance that they
+have to do with tracking QEMU command line options that were set or not and we
+want to know the difference.
+
+In hindsight I should've sent a RFC detailing this situation we have in RISC-V
+and maybe we could have discussed changes in the QEMU cmd line handling to provide
+this info.  I'm willing to do that route if that means less hash table stuff to
+deal with in RISC-V code.
+
+
+Thanks,
+Daniel
+
+
+> 
+> thanks
+> -- PMM
+
 
