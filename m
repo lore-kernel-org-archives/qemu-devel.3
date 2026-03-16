@@ -4,90 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 22F7BF53D9B
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:38:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB345F013FA
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:43:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Fdi-0003zZ-9f; Mon, 16 Mar 2026 17:38:18 -0400
+	id 1w2Fi9-00050s-Nt; Mon, 16 Mar 2026 17:42:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <serapheimd@gmail.com>)
- id 1w2F8e-0003Id-DM
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:06:14 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <serapheimd@gmail.com>)
- id 1w2F8c-0006wZ-2V
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:06:11 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-8cd8576a512so17013785a.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 14:06:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773695165; x=1774299965; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vrJxf7H35iYwWw2Wng/CRj+1Il5hCE+51xScTp1cgAI=;
- b=nl5ZCaRVftuv4n8XeKMEJgOvj5fVWySbG+FEUeLZlrqf/QBykDZJBJPxgW0ic6GTtB
- J2XDcFDGVR1JFW0siHYj2x1hVOOwWe4Y3YpGULo8eAHDjvQe5Cl+5RZk1aDy4tYPFqwi
- EoifUQCH37yRhh8MDL/tbfpUlpkaTJQt1HATmq+m5wqdh3tPzlym+rilk+1FHLXLcnvk
- 2vlYKk2JpfsIooi/TSli7J1IzhlwsbAZ94jJKkitycFenpMMJugUn4AmyhDOWWe9e9lw
- 0IfuV607B6V8AcABM7BRdxUITMIZQQT8tBqQl3ZxyGIQ7eiJqzA2fD3ktPWR2srBK2hI
- PLqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773695165; x=1774299965;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vrJxf7H35iYwWw2Wng/CRj+1Il5hCE+51xScTp1cgAI=;
- b=j/Fw0/Re12t7JIfJc2vwngpfeahMQ3HvsVT+suGU+dSTQoWtiBoCcy9zygS0AFjZrF
- tXc7zxHv+Q3DCNxgA6VwuLuLhIib4JcfCq9eoXWbflm6Riz/j/6LM5eXpPTHyfMm2APz
- dYvhDpK517+V78iJrt/XzDsW4J/VuH1mUY9J2aLLG9cNUfo0hWutx1TjQH4CquxMv5vX
- SqoxRm6QmsRdO6gehGNBz5hWi93dT+MfJ+PiW41Ti31dDesh4xuPRSu21D7NOwjdHFmq
- 5G1NHqLbZq98DgZ0LvnMdGK5fMtXq/mEQbUgxmRqLWhiZKiMeEHZ2lm/PlarnJcy3W7n
- SlBw==
-X-Gm-Message-State: AOJu0YwlIul6c5ZQ1ZdKBAZp/19neEGUCXghZP5b8bfE7tFLUt8XTpcj
- eW5Gl47qo1jYaTodGsuJMMB3OjFTwYrEwGdr8PPSnjqOTilVHFaPcXdP7EDueTrE
-X-Gm-Gg: ATEYQzzWyIbsHTCESK+n8AEpbqwK9w42QfDRzYjXDnvj6XQPahz3Ua+pPftOXClRQ6W
- rvU7h7fDRcjZ4JMXxML4+XVs2qcoFZEgFQO2HEEG6qjUqjXe+Eh2GY3QTOEohsfwjVM9mZzv6LR
- 07euEnAdV+xzoVr8CGdTMvYSWqKElLmQN+MA6y7mwvVerr9hQg42MplUbpLGuVeUVTzo+SVekPP
- mzMvXQT1DOvrwvXpu98P2LLqkFiM3WrWoGfHOSRjZwZcYl+2dqtFMgqLfZOF3BxsjyCWtOsxgmX
- Kbt8PKQVewCsHjo4nfhBDHiVb+tl4mNyhW+QwxRjPvu1KJaEk49hq6XPJPchAVVYP5YUkSdNP+o
- Pvb5Tk6w2RJCGO9npiFJVSU29bpNNJCHkNlvkNQknD/BgBtuzYbNw8UlzgsHpN9RA90NMJOr4Cu
- gj5GqC0XlpEjSdUle2VqJIz/ie2X897JaMmLKQsQub1OfoR2FlSI9YPAPGZ0/N+XKgbKUVS8585
- 2UIYNwpkcAu2u8g
-X-Received: by 2002:a05:620a:2893:b0:8cd:8945:bcf4 with SMTP id
- af79cd13be357-8cde12248femr174507785a.0.1773695165147; 
- Mon, 16 Mar 2026 14:06:05 -0700 (PDT)
-Received: from CW-FL20TJCW03-L.tailb3cd1a.ts.net
- ([2600:4040:9138:9600:881:9edf:ce7b:f39e])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda21100b8sm1304691685a.29.2026.03.16.14.06.04
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Mon, 16 Mar 2026 14:06:04 -0700 (PDT)
-From: Serapheim Dimitropoulos <serapheimd@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: mst@redhat.com, pbonzini@redhat.com, stefanha@redhat.com,
- sgarzare@redhat.com, xieyongji@bytedance.com, weijunji@bytedance.com,
- xiongweimin@kylinos.cn, Serapheim Dimitropoulos <serapheimd@gmail.com>
-Subject: [RFC DISCUSSION] virtio-rdma: RDMA device emulation for QEMU
-Date: Mon, 16 Mar 2026 17:05:59 -0400
-Message-ID: <20260316210600.62415-1-serapheimd@gmail.com>
-X-Mailer: git-send-email 2.52.0
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1w2Fi6-0004zK-3v; Mon, 16 Mar 2026 17:42:50 -0400
+Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1w2Fi3-0000qo-Ev; Mon, 16 Mar 2026 17:42:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
+ In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
+ Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
+ :Resent-To:Resent-Cc:Resent-Message-ID;
+ bh=XkhjjJIn8U15IzwcTLSzaqOrsFVk+OUsh7z49bkZtKc=; b=q2dK4H8igOYb0n8KaG15Dsz02g
+ mT+m9l/cNh4sp4NdVWZdtXBScHJc/C1fru+jHVXP7k/WZ1oEVUrgjYY1ZZfkaetm7HMV3Y2CBKBjU
+ fVrZwiOP+ATH612/7pnXCJ9eSQYkdyYbJWNs94a73AQSeN2s2hDkkqcGbsEvbx3BO9J2EqHn324CS
+ FXwBSDvJ2Pi508RygcaRVcR8HSVBdAhrx2T6afr+U9Nunm/kt17FlX+cHNDfxh86kO6mQ3Q31vhtR
+ ZYx75OjoC9uo8qDZ9p+WkvzMsIlFJJXR9zANpnpO6FFvL7Yyz3OzXWrVIPatlcP1hZUfBfgPPMcCX
+ bKyfYw31sx+D7EeYqTIfNjdgYaCzMDEe30dbSBLe3RjJrjRB+GnohqrLhXsTiPqS/EYhg5l5S9+vs
+ JFB0uITX5HzrccfMZEO9goGG1GjDrr890etcdR20/Fb0bw2dfoUtYGdsGc/K27hBSBwPgFaUcnLct
+ qlcpEeFcsDgYyANXzf+rhGtdbLN7UIUua5Xj1LE5EMHb7xz6upaZA8SpbAfZ7Ohr63eUceazA1/GE
+ 9myRO6/vs0BV9lTy5EpP9x0DoRGkU+RsxPcv4wU6BeG0fh98VFkvTrcC66BODsz1xIGSVcSZ5Kx1F
+ Vtkqip710GDSXY/mCQZj65SEGINWOjCjlefLtfl78=;
+Received: from [2a02:8012:2f01:0:2257:6c08:3a5:8e25]
+ by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
+ id 1w2Ff2-00046z-0H; Mon, 16 Mar 2026 21:39:40 +0000
+Message-ID: <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
+Date: Mon, 16 Mar 2026 21:42:37 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=serapheimd@gmail.com; helo=mail-qk1-x734.google.com
+User-Agent: Mozilla Thunderbird
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: Artyom Tarasenko <atar4qemu@gmail.com>, qemu-stable@nongnu.org
+References: <20260313170938.449538-1-peter.maydell@linaro.org>
+Content-Language: en-US
+From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
+ xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
+ 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
+ E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
+ PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
+ PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
+ AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
+ eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
+ NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
+ mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
+ z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
+ T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
+ DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
+ y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
+ 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
+ 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
+ YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
+ Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
+ BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
+ opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
+ NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
+ Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
+ KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
+ imgcU9TTGC5qd9g=
+In-Reply-To: <20260313170938.449538-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:2257:6c08:3a5:8e25
+X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
+Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
+ after vmstate load
+X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
+X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
+Received-SPF: pass client-ip=2001:41c9:1:41f::167;
+ envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 16 Mar 2026 17:38:12 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -102,200 +102,133 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi all,
+On 13/03/2026 17:09, Peter Maydell wrote:
 
-Apologies if this is not the right place but I'm looking to propose
-the addition of a new virtio device type to QEMU for RDMA emulation.
-Before sending patches, I wanted to introduce the idea and get early
-feedback on the design before I go too far with my implementation.
+> In the SPARC CPU state, env->regwptr points into the env->regbase
+> array at wherever the architectural CWP (current window pointer) says
+> we are in the register windows.  We don't migrate this directly,
+> since it's a host pointer, so we must ensure it is set up again
+> after migration load.
+> 
+> We also have to deal with a special case when CWP is (nwindows - 1).
+> In this case, while running we keep the "in" register data for this
+> window in a temporary location at the end of the regbase[] array, so
+> that generated code doesn't have to special case this "wrap around"
+> case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
+> wrapped data from its temporary location into the architectural
+> location in window 0's "out" registers.  We then migrate only
+> (nwindows * 16) entries in the regbase[] array.  So on the
+> destination we need to copy the "in" register data back to its
+> temporary location again.
+> 
+> For 32-bit SPARC we get this right, because the CWP is in the PSR.
+> The get_psr() function does:
+>      env->cwp = 0;
+>      cpu_put_psr_raw(env, val);
+> which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
+> sets up both regwptr and the wrapped-register data.
+> 
+> However, for 64-bit SPARC the CWP is not in the PSR, and
+> cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
+> register state in a corrupted state, and the guest will likely crash
+> on the destination if it didn't happen to be executing with CWP == 0.
+> 
+> Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
+> for the 64-bit case, and enough commentary to explain what is going
+> on.
+> 
+> Cc: qemu-stable@nongnu.org
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+> I ran into this because the "sparc64-migration" functional test seems
+> to hit this reliably when built with the address sanitizer.  This is
+> probably a timing thing, because it doesn't trip any ASAN failures,
+> the guest just crashes on the destination side most of the time
+> because it returns from a subroutine to a corrupt %o7 return address.
+> 
+> As far as I can tell this is what the problem is, but I'm a bit
+> surprised that we have never hit this, given how likely you are to
+> hit it on a vmsave/vmload or migration.  So am I missing something?
+> ---
+>   target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
+>   1 file changed, 39 insertions(+), 2 deletions(-)
+> 
+> diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+> index 4dd75aff74..b935c31630 100644
+> --- a/target/sparc/machine.c
+> +++ b/target/sparc/machine.c
+> @@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
+>       SPARCCPU *cpu = opaque;
+>       CPUSPARCState *env = &cpu->env;
+>   
+> -    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
+> -     * window as the outs of the first window
+> +    /*
+> +     * If env->cwp == env->nwindows - 1, this will set the ins of the last
+> +     * window as the outs of the first window. We do this because we only
+> +     * transfer the (nwindows * 16) entries of regbase[] that correspond
+> +     * to the "proper" locations of the registers; this call has the
+> +     * effect of copying the wrap register values from their temporary
+> +     * location down to their proper location ready for migration.
+>        */
+>       cpu_set_cwp(env, env->cwp);
+>   
+>       return 0;
+>   }
+>   
+> +static int cpu_post_load(void *opaque, int version_id)
+> +{
+> +    /*
+> +     * For 32-bit SPARC we set the register window data structures
+> +     * up again correctly when get_psr() called cpu_put_psr_raw(),
+> +     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
+> +     * part of the PSR, so we need to handle it here.
+> +     *
+> +     * There are two things we need to have happen:
+> +     * 1. regwptr points into regbase[] at the location determined by CWP.
+> +     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
+> +     *    in a copy at a temporary location at the end of the regbase[]
+> +     *    array. For migration we only transferred the (nwindows * 16)
+> +     *    entries of regbase[] that correspond to the "proper" locations
+> +     *    of the registers, so now we must copy the wrap registers back to
+> +     *    their temporary location.
+> +     *
+> +     * We achieve both of these by setting env->cwp to 0 and then calling
+> +     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
+> +     */
+> +#if defined(TARGET_SPARC64)
+> +    SPARCCPU *cpu = opaque;
+> +    CPUSPARCState *env = &cpu->env;
+> +    uint32_t cwp = env->cwp;
+> +
+> +    env->cwp = 0;
+> +    cpu_set_cwp(env, cwp);
+> +#endif
+> +    return 0;
+> +}
+> +
+>   /* 32-bit SPARC retains migration compatibility with older versions
+>    * of QEMU; 64-bit SPARC has had a migration break since then, so the
+>    * versions are different.
+> @@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
+>       .version_id = SPARC_VMSTATE_VER,
+>       .minimum_version_id = SPARC_VMSTATE_VER,
+>       .pre_save = cpu_pre_save,
+> +    .post_load = cpu_post_load,
+>       .fields = (const VMStateField[]) {
+>           VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
+>           VMSTATE_UINT32(env.nwindows, SPARCCPU),
 
-= Motivation =
+Nice analysis! I suspect the reason this doesn't always show up is because any 
+context switch (e.g. OpenBIOS, kernel to user, 32-bit to 64-bit etc.) will flush the 
+entire register window set to the stack, and hence reset env->cwp back to 0.
 
-QEMU removed pvrdma in v9.1 (deprecated in v8.2). There is currently
-zero RDMA emulation in QEMU. Anyone wanting to learn, develop, or
-test RDMA software needs Mellanox/NVIDIA hardware which at times is
-hard to come by.
+It does instinctively feel odd that 32-bit and 64-bit aren't handled in the same way 
+- I wonder if this implicit behaviour on 32-bit somehow needs to be more explicit?
 
-Software RDMA stacks (rxe, siw) exist in the kernel but they run
-entirely on the guest CPU. One-sided operations (RDMA WRITE/READ)
-still involve the remote CPU (it receives a UDP packet, then
-decapsulates it, copies data in software). My point is that they
-give you the RDMA API but not the hardware behavior.
 
-Meanwhile, the vDPA framework has matured significantly (VDUSE in
-5.15+, generic vhost-vdpa-device-pci in QEMU 8.0+), creating a
-natural abstraction layer for virtio devices that can span software
-emulation and hardware offload. No one has applied this to RDMA yet.
+ATB,
 
-= My Proposal =
+Mark.
 
-A new virtio-rdma device type (one guest driver + multiple backends):
-
- 1. QEMU device model (in-process, C): The reference implementation.
-    Software emulation for development, CI tests, and learning. No
-    host RDMA stack or hardware needed. The idea: two QEMU instances
-    on a dev laptop doing RDMA to each other.
-
- 2. VDUSE backend (userspace daemon): The same virtio-rdma protocol
-    implemented as a standalone process via /dev/vduse. Could be
-    written in Rust (or not no preference here). It's crash-isolated
-    from the host kernel and the goal is to make it a natural fit
-    for DPU control planes (i.e. the DPU runs a VDUSE daemon that
-    presents virtio-rdma to the host VM).
-
- 3. Hardware vDPA (potential long-term goal): when/if DPU/SmartNIC
-    vendors ever implement the virtio-rdma data path in silicon, the
-    guest driver would work unchanged via vhost-vdpa-device-pci (no
-    QEMU device code needed).
-
-The guest driver is the same in all three cases. It submits verbs
-through virtqueues, completely unaware of the backend.
-
-The main idea is that this is basically self-contained (no host RDMA
-stack or hardware needed for [1]), it uses standard virtio-pci
-transport making it hypervisor-agnostic, and provides RDMA "hardware"
-behavior without the actual hardware (compared to rxe/siw which is
-RDMA "API" behavior without hardware). Again this is complementary
-to rxe/siw and not a replacement.
-
-The follow-up on that is that I hope it could fit naturally into the
-vDPA ecosystem alongside virtio-net and virtio-blk as a first-class
-offloadable device.
-
-= Design Overview =
-
-Four virtqueues:
-
-  VQ 0 (command)    - resource management: create/destroy PD, MR,
-                      CQ, QP, AH. Synchronous request/response.
-  VQ 1 (completion) - device returns CQEs to pre-posted driver
-                      buffers when operations complete.
-  VQ 2 (data-tx)    - driver posts SEND/RDMA WRITE/READ work
-                      requests with scatter/gather data.
-  VQ 3 (data-rx)    - driver pre-posts receive buffers; device
-                      fills them on incoming SEND.
-
-The device maintains full resource state: protection domains, memory
-regions with page tables and access keys, QPs with the standard IB
-state machine (RESET -> INIT -> RTR -> RTS), and completion queues.
-
-The QEMU device model uses a socket backend for SEND/RECV currently.
-A shared-memory backend (ivshmem) would be needed for truly one-sided
-RDMA WRITE/READ where the remote CPU is not involved (matches real HCA
-DMA behavior). The same shared-memory transport would also be reused
-by the VDUSE daemon backend.
-
-QEMU device model currently looks something like this in terms of
-structure:
-
-  include/hw/virtio/virtio-rdma.h     - device structs, wire protocol
-  hw/virtio/virtio-rdma.c             - resource manager, command VQ,
-                                        datapath, completions
-  hw/virtio/virtio-rdma-pci.c         - PCI wrapper (boilerplate)
-  hw/virtio/virtio-rdma-backend.c     - socket backend
-
-I have a minimally working kernel driver (modeled after
-drivers/infiniband/hw/efa/) and a very early draft virtio spec.  I'll
-gladly open RFC patches for all three given the general direction of
-this make sense to you.
-
-= The vDPA/VDUSE case =
-
-I want to highlight why I believe this matters beyond pure emulation.
-The vDPA framework already handles virtio-net and virtio-blk offload to
-hardware. virtio-rdma would be the first vDPA-compatible RDMA device
-type.
-
-The specific use case for my employer would be DPU-based RDMA. A DPU
-(think NVIDIA BlueField) runs a VDUSE daemon that presents a
-virtio-rdma device to the host VM. The daemon handles the RDMA control
-plane (connection setup, memory registration, key exchange) in
-userspace, then programs the DPU's physical NIC for the data plane.
-The host VM sees a standard virtio device and uses the standard
-virtio-rdma driver (no vendor-specific drivers needed).
-
-If I understand correctly, the vhost-vdpa-device-pci architecture
-was designed for exactly that, so RDMA could fit naturally as a device
-type after net and block.
-
-VDUSE currently only supports virtio-block (security scoping in
-drivers/vdpa/vduse/). Extending it to virtio-rdma would require
-kernel patches to whitelist the device type, with appropriate
-validation in the virtio-rdma driver to handle untrusted device
-input safely.
-
-= Prior work =
-
-I was able to find a few explorations of virtio-RDMA but no prior
-effort produced upstream-viable code. Yuval Shaia (Oracle) posted
-an RFC in April 2019 with a QEMU device model and kernel driver,
-but it only implemented probing and basic ibverbs (no data path nor
-progress past RFC v1). The MIKELANGELO/Huawei vRDMA project
-(2016-2017) targeted QEMU 2.3 and the OSv unikernel as part of an EU
-Horizon 2020 research effort it seems now obsolete.
-
-The most relevant prior work I could find is from Xie Yongji and Wei
-Junji at ByteDance, who posted an [RFC v2] to virtio-comment in May
-2022 [1] proposing to add RoCE as a VIRTIO_NET_F_ROCE feature extension
-to virtio-net (rather than a standalone device type). Their v1 was a
-standalone device; the v2 reworked it as a virtio-net extension. They
-had working code (kernel driver, QEMU, rdma-core, vhost-user-rdma
-backend) but the effort seems to have gone quiet after 2022 with no
-v3. Notably, Yongji is also the author of VDUSE itself so I'd really
-value his input. I'm proposing a standalone device type rather than a
-virtio-net extension because RDMA isn't inherently tied to Ethernet
-(InfiniBand exists), it maps more cleanly onto the vDPA offload model
-as a separate device, and it avoids burdening virtio-net with RDMA
-complexity. But I could be wrong — happy to hear arguments either way.
-
-In addition, very recently, Xiong Weimin posted a vhost-user-rdma/DPDK
-concept to netdev (Dec 2025) [2] which takes a different architectural
-approach (DPDK-based vhost-user backend); that work seems
-complementary but has not produced formal patches.
-
-I CC'd both Yongji and Xiong on this email in case they have opinions.
-
-This series builds on the same virtio-RDMA concept with a complete
-data path, modern QEMU/kernel APIs (virtio-1.0, QIOChannel, kernel
-6.x ib_device_ops), and a vDPA-native architecture that none of the
-prior efforts had.
-
-[1] https://groups.oasis-open.org/communities/community-home/digestviewer/viewthread?MessageKey=20912da6-db56-441c-9117-0148b9c86ea5&CommunityKey=2f26be99-3aa1-48f6-93a5-018dce262226
-[2] https://lists.openwall.net/netdev/2025/12/19/13
-
-= Questions for the community =
-
- 1. Does a virtio-rdma device make sense as a direction? I've studied
-    virtio-sound and virtio-can as precedents for new device types.
-
- 2. The device is written in C to match existing virtio devices. I saw
-    the Rust PCI+DMA bindings are still in progress — should I wait,
-    or is C the right choice today?
-
- 3. For the shared-memory backend, I'm planning to use ivshmem. Is
-    there a preferred mechanism for zero-copy inter-VM memory sharing
-    in QEMU today, or is ivshmem still the way to go?
-
- 4. Any concerns about the virtqueue layout? I split command and
-    completion into separate VQs (rather than putting responses
-    inline) to allow async completions — similar to how real HCAs
-    separate CQ from QP.
-
- 5. For the VDUSE backend path: should the QEMU integration rely on
-    the existing generic vhost-vdpa-device-pci, or would a dedicated
-    vhost-vdpa-rdma device (like vhost-vdpa-net) be preferred for
-    control-plane visibility?
-
- 6. I'm planning to extend VDUSE to support virtio-rdma as a device
-    type. Is there ongoing work or discussion about expanding VDUSE
-    beyond virtio-block that I should coordinate with?
-
- 7. Would it be ok to use the experimental device ID 0x1045 until
-    the OASIS TC assignment?
-
-I'm happy to send the RFC patch series, kernel driver, and spec draft
-whenever you'd like to see code.
-
-Thanks,
-Serapheim
 
