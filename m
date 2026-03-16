@@ -4,104 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F1C5F53D9E
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:14:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B1F8DF013FA
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:29:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2FG8-0004fG-5Z; Mon, 16 Mar 2026 17:13:56 -0400
+	id 1w2FUR-0001i1-MU; Mon, 16 Mar 2026 17:28:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2FG3-0004eu-VL
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:13:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2FFy-0001yo-FO
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:13:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773695624;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=CDnjLXiSfCsawK6xlGGH7II18vV+sWm4qRMciFU4+K0=;
- b=Yt5a4E4xtAQ6uRHg/hwd+9zKa2JWsFXBI88HEXBPGeaZPZl26/Hew7Cx39T0dGh9rTMc5x
- qGBdWZqodLnwz/TWXAhRtQhbA6+VQTvDka5YKVm57uOlLNipLy5M1JV5eKLWO4MvCTNGfF
- oC5vtnLf9Kuz4LgPYOS2H6fYogAnC68=
-Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
- [209.85.219.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-324-SzejT2NkOP-fD5COHnQOGw-1; Mon, 16 Mar 2026 17:13:42 -0400
-X-MC-Unique: SzejT2NkOP-fD5COHnQOGw-1
-X-Mimecast-MFC-AGG-ID: SzejT2NkOP-fD5COHnQOGw_1773695622
-Received: by mail-qv1-f69.google.com with SMTP id
- 6a1803df08f44-89a0a2afc55so28346106d6.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 14:13:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2FUQ-0001hs-RB
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:28:42 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2FUP-0005Ok-B1
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:28:42 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-64ad79dfb6eso5613802d50.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 14:28:39 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773696518; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Ui9640FN091Q2kaMyIld6GGVr+NIPF3mVG0Jj5VaCSSPmh9xubummQGIHLxIjcHDhX
+ Iv50qA+h9Bx/01oHY/oyPclMPoK6je9irRsM0WF9UYF9F6FA9cBdBBe2ltGjMa4yTUFL
+ a4BWcytmMX2Awaytv1wm2X9gFcchAQJ2dG35UDR0txqyGFxqHkjxoigOwaAyy6bd++ff
+ t3diZRGumD0UzGnyprCdjgaouUNu1ALl4Nv/3A/ZHw5qXyV+nd+smrV5JwFzIWJ6Tu/t
+ Ztqc+H+q1auwInWsDPyRdrmNzCJakDovuIpJQ87zeawxP2hwkW/Ipdrv/lc98QajznUQ
+ gI4Q==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=6Sm9LqDp35rGBurR5xaPNf93k67YYzCE/D9w0dDsZ/E=;
+ fh=cPQQFOZbGq8SgC48/D36D5YkSg2dsZyJyzZ3lZfFLlQ=;
+ b=OWjaXF6dhb1SzAqtri2sA24/tIeqOv7P7CpNuVzQzcb5FMQ+OK91ss6lrJywGNPlOj
+ I99yPBGlQS2bu8cQY6vYRCnmJaHMHwUOmTJiFpnHtcyZvbcVpy48fiRvM5smDlzEqbc8
+ r4WdpB3Yza3yJCOR8hVlE816I25qF2xchgEJUClTMexhcGT0ToSblJyMtTGAwlKLiyMH
+ iu4PyRYUd+pXDf2IOcpxDIVvM1ZaApfhPdLJHkI3XRMMo4seJCGqkZgJ2P/PcA9Lx6x7
+ m4vCKinRkNNauE76QRVSxdOG7AUJKYBjbuDrErMCsWy+HHDVBfg4VE2mwHRwWGZGm7BY
+ 58Qw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773695622; x=1774300422; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=CDnjLXiSfCsawK6xlGGH7II18vV+sWm4qRMciFU4+K0=;
- b=CuFvXiVULx0pc+jZxfGB/E5w08S3rZM1OG7KZ+mMBlikjZJQhhtT2cn5OxMMbuLHIg
- YefNaNNMSwImO+IklFgcX2v2Oq2rNngvpIdQGFndcS5Tx3rnSLf7HemI7XiUGO4a7V5u
- 96Sy4xtBzL8IAXhlO2NPphFMIYKru5eIb9KB7lGKlnGNjm9j0iIr5JiynH+t3u+A4F7M
- OlSuxSF2hgqyiujn7zW4MRQWpfLIOW2ulsKsk66KIST2wBwY7reJ/lJXsdcCIQ9gAq09
- rnivYBhvgG704jFzrWyflIZMCLM0ZGNSC+vWJaiydte3s2/W/13tMlf2rH5ibH+6Ej1Z
- sNiA==
+ d=linaro.org; s=google; t=1773696518; x=1774301318; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=6Sm9LqDp35rGBurR5xaPNf93k67YYzCE/D9w0dDsZ/E=;
+ b=ydvzX6oFf0MzIfpy/ZGefUjLIzeD/cn7k1LUyJYhZllMy9j/uAC3cLKV4Z1xRtLi9+
+ 19NWLzOkktDl2pRaMJ7x86x6XNvGxjCcmv6X9I9xMPdCtaNjwYisyGJFntCLB540n6gv
+ 8Xj/qG6D9WycQkr+pyhZYlf7XNXDglPsH2rn7SfhulXgq/PccC+4TYKN5CeV0k7cKfTs
+ zzD04NfG8xZHzS2HhkBBYvzwh8pn9wfzsE1RKpAF8tKlYe6xueyxzEGP6u3MEF0EY96S
+ VxPcbneidpUFhyx09zT8sXGjYItBiMJLYlMmCkCmP+vIVFbL/Ppzr6tU1JUtO/FtxiE7
+ y9hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773695622; x=1774300422;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=CDnjLXiSfCsawK6xlGGH7II18vV+sWm4qRMciFU4+K0=;
- b=NNjWzlngkntn6mq9RYutshPR9op0u9UyRdK8NLsdfBvAyQ82lBttZ2+u3+JfKDmv7u
- vXdUqjUVwPl7LhbXQgvBuQasOmUW+dtlJy1y4iO2lmT40Kdy9PkaiiNX1UqhOx98SzHu
- Pp9Ji9GcURR8Fx0BCMAoKToOlP25VMpj3ybAUunErIP3lHYMuTkRlIh3fFklrAmaoVQr
- nuCgIBLVDynYCnBmSo3bHrSyzZSNyazsxIeoWPpg03685lnnym2E6/NeWTbSheeiz8PW
- L2STH6A+rUfhioXgQ1zSubBkBKkFNBZI4eq/etYeueMDtgTq5VzYU6VE2c4WMsrgZwYI
- kBBA==
-X-Gm-Message-State: AOJu0YymI1joWdfhBQb6vFQipY0wLbRIdqGgl+6HBQ9YeOZJxIvVba5q
- Brlv8q5km99ENJQLHenLwMlhQdnlMIw6zeTzzzMP4kWFMAwbLb4EkP0PXIDLLCMxLJVPdwLCJvD
- hs1XnJqgF75Gi1sIdSdPBjXTlCP6pq72pmoK0fdgJ1Ij0+QZsUatBY6uqE5FoSpFe
-X-Gm-Gg: ATEYQzxRsLr2DgFEsWYW0nhkcHrO2O8lQs+cpwthLBfig5a99SXgf1RR9g8lvZhSrpf
- 2wEoWoMWGn+IXeTGN6ABCsHuGHNmnKb3l6LXwy/xlPpM0QsLuTU2Uxcn7kpeNC9n9snOO2glN4+
- WwMvxPkHZBbWw5c/IMhvNC289+Bxg3547txlwHOfYjM3B3Tc2QlvXmBJGsxxxxuw19taA0qG/k1
- xADULeXTRD91IK71F6VE/lzXDESNlYXNHoYrbZEVf/MMcoX0avHLE0ssrn9e+SalRkpZSkmbICb
- 5oly13h3ffKO+id1mZVOIBxuGMoXi1M0JhLReFZXpwwArn6dmTrJ/PIxwUrQolsJFa2BOTSOI6c
- /o8ZY6Y6zUbs0Tg==
-X-Received: by 2002:a05:6214:48f:b0:896:f5b1:87b2 with SMTP id
- 6a1803df08f44-89a81f5285cmr221197546d6.40.1773695621948; 
- Mon, 16 Mar 2026 14:13:41 -0700 (PDT)
-X-Received: by 2002:a05:6214:48f:b0:896:f5b1:87b2 with SMTP id
- 6a1803df08f44-89a81f5285cmr221197186d6.40.1773695621463; 
- Mon, 16 Mar 2026 14:13:41 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a65bd5842sm123789116d6.11.2026.03.16.14.13.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 14:13:41 -0700 (PDT)
-Date: Mon, 16 Mar 2026 17:13:39 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>,
- Paolo Bonzini <pbonzini@redhat.com>, Roman Kiryanov <rkir@google.com>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: Re: [PATCH v1] migration/savevm: Allow stub VMSDs
-Message-ID: <abhyg_wRK4_RmqdO@x1.local>
-References: <20260316194759.22672-1-farosas@suse.de>
+ d=1e100.net; s=20251104; t=1773696518; x=1774301318;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=6Sm9LqDp35rGBurR5xaPNf93k67YYzCE/D9w0dDsZ/E=;
+ b=U1iSHmxvr4PJjFQ6YKOFw+7jHAadjHI64tWxKVqgnDCFD5IofPGA10iadT9bP8xmf9
+ qOrczRc/z/irjsZ2/9dDlcJ2avI+9Pm0Lx6XOiie/RBTH7nmJJzI7eVAqnfc0YG+L2J7
+ Bnej5iquwc4DCCoCCIFQFatvoh/ykNpCGLeCNTexROIpD9OH7h99GuLMizsUeQslW0+q
+ cn+Smy6+RiQ953WK0iXJ83+K7mxLnXe4bMCnDF7zMU2pR9CtXgpSRQH1gBqV8HA063f3
+ t8R1EInQUVGB1ag41+GHvEOUnCZw2zBKwamBSX1J9stgmvqJa0bzUmVzAsSiEABTuYQJ
+ QBhg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW68+AQAAiCUfElUHpcRdg91sL1BN23yw8/2pGVvm+ZBf/cEL2DWkMZbRRuBv3eYxDO5g++L0DmmQnM@nongnu.org
+X-Gm-Message-State: AOJu0YzW+EYAXffjAw/FcrEk2ZP9rheA21iW+sbMrjeQn8IqUjOqk6RV
+ Jia/EnmUSF/BPujmhDPJNbeA89OqtyUGK6eXb8K+jjv4KomskXYnJf4XEy8+IpxnaaNNM8KMHPM
+ z4zsqHI6OrTj/1tspGCOJQpEQqCUU7UxAjxvRvuTq8g==
+X-Gm-Gg: ATEYQzzP2t55HnwPpJ3wZ6Xpul9yZ3a6md5+/NVa3bUFXm3QLAHm8WjK0QeIb64JClu
+ +vNWcAAc28IhL5wrx+g5Uxp8oDDWZFXTGhn1gZj7MDN1B8DbkNs+QBIpC+mkN9Gx3JjUIsowW3u
+ gyFmKMh/KhW4M7jA7Z3XuJut+M6EOwk/U8S2s0jOI3ELHGhr4NoxmSXjo+96K+dNqznHjFf90rd
+ 29NDJGFIOp/86Y12oilsnaqiqC6hrrKg0Euo8s5/qQSrO4wv60qwib/YgHawRPguUt3g9gJVuK2
+ iY3BSW31UG0yRLzZhEpXMeFKmJQH69KJMjA3Hs39hqehqPfSNzsyUnD5RjUI1mcqD8s=
+X-Received: by 2002:a53:ee5e:0:b0:64c:9a9f:8803 with SMTP id
+ 956f58d0204a3-64e62f28a79mr10449219d50.14.1773696518527; Mon, 16 Mar 2026
+ 14:28:38 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260316194759.22672-1-farosas@suse.de>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260316194759.22672-1-farosas@suse.de>
+ <abhyg_wRK4_RmqdO@x1.local>
+In-Reply-To: <abhyg_wRK4_RmqdO@x1.local>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 16 Mar 2026 21:28:27 +0000
+X-Gm-Features: AaiRm53ClOWYhfJooADSpLMeBSapJqt_0Gc8DdNrjpJjDJv0v5_Om8wqp2tINb8
+Message-ID: <CAFEAcA-OJJ7aqbWp04unQ3JG0x017wS4kfN2mxMhCnDpK29gbg@mail.gmail.com>
+Subject: Re: [PATCH v1] migration/savevm: Allow stub VMSDs
+To: Peter Xu <peterx@redhat.com>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Kiryanov <rkir@google.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,110 +119,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 16, 2026 at 04:47:59PM -0300, Fabiano Rosas wrote:
-> After the referenced commit, empty VMStateDescription objects declared
-> as part of stubs have started reaching the vmstate code.
-> 
-> A valid VMStateDescription must at minimum have a name and either the
-> .fields or .unmigratable fields set. Stubs, being empty, have
-> none. Code that assumes a non-NULL name field will now cause a
-> crash. E.g.
-> 
-> $ ./build/mips/qemu-system-mipsel -nographic -drive if=none,format=qcow2,file=dummy.qcow2
->     [Type "C-a c" to get the "(qemu)" monitor prompt)]
->     (qemu) savevm foo
-> 
->     Backtrace from doing this under gdb:
-> 
->       #0  0x0000555555df7d4d in vmsd_can_compress (field=0x5555564f78a0
->       <__compound_literal.3>) at ../../migration/vmstate.c:339
->       #1  0x0000555555df7dbb in vmsd_desc_field_start
->           (vmsd=0x555556431ba0 <vmstate_cpuhp_state>, vmdesc=0x555556918690,
->       field=0x5555564f78a0 <__compound_literal.3>, i=0, max=1) at
->       ../../migration/vmstate.c:362
->       #2  0x0000555555df85a7 in vmstate_save_state_v
->           (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
->       opaque=0x555556c9aac0, vmdesc=0x555556918690, version_id=1,
->       errp=0x7fffffffc948) at ../../migration/vmstate.c:528
->       #3  0x0000555555df8032 in vmstate_save_state
->           (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
->       opaque=0x555556c9aac0, vmdesc_id=0x555556918690, errp=0x7fffffffc948)
->       at ../../migration/vmstate.c:427
->       #4  0x0000555555df8f83 in vmstate_subsection_save
->           (f=0x555556b5a0c0, vmsd=0x555556431c40 <vmstate_acpi>,
->       opaque=0x555556c9aac0, vmdesc=0x555556918690, errp=0x7fffffffc948)
->           at ../../migration/vmstate.c:695
-> 
-> Due to their very nature, it's better to allow stubs to be
-> completely empty instead of forcing any rules. Teach the code to skip
-> them.
-> 
-> Fixes: 7aa563630b ("pc: Start with modern CPU hotplug interface by default")
-> Reported-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Fabiano Rosas <farosas@suse.de>
-> ---
->  migration/savevm.c | 9 +++++++++
->  1 file changed, 9 insertions(+)
-> 
-> diff --git a/migration/savevm.c b/migration/savevm.c
-> index dd58f2a705..e8d3360877 100644
-> --- a/migration/savevm.c
-> +++ b/migration/savevm.c
-> @@ -861,6 +861,10 @@ static void vmstate_check(const VMStateDescription *vmsd)
->      const VMStateField *field = vmsd->fields;
->      const VMStateDescription * const *subsection = vmsd->subsections;
->  
-> +    if (!vmsd->name) {
-> +        return;
-> +    }
+On Mon, 16 Mar 2026 at 21:13, Peter Xu <peterx@redhat.com> wrote:
+> Is that MIPS board the only one that is broken?
 
-IIUC this is fine but isn't needed for stubs' use case, because "field" is
-checked right below..
+I believe that the MIPS malta and the i440fx PC machines are
+the only ones that do "select PIIX" in their Kconfig, so
+on the assumption that x86 was tested, the malta is likely
+the only problem here.
 
-> +
->      if (field) {
+(For the PC machines, I440FX, which is what does "select PIIX",
+also does "select PC_ACPI", which does "select  ACPI_CPU_HOTPLUG".
+But MIPS doesn't use ACPI, so no ACPI_CPU_HOTPLUG.)
 
-.. here.
-
->          while (field->name) {
->              if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
-> @@ -897,6 +901,11 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
->  {
->      SaveStateEntry *se;
->  
-> +    if (!vmsd->name) {
-> +        /* assume it's a stub and ignore */
-> +        return 0;
-> +    }
-
-Two questions on this one..
-
-(1) when someone adds some new VMSD to device and forgot to attach a name,
-    it'll silently ignore that new VMSD.. of course anyone testing this
-    will find something strange, but silently ignoring an VMSD when not
-    having name does sound like unexpected..
-
-(2) would this fix the above crash?  The problem is the commit got fixed
-    used VMSTATE_CPU_HOTPLUG which is an internal vmsd, this one only
-    checks the top VMSD (which should have a name here..).  So I'm not sure
-    if it'll work..
-
-Is that MIPS board the only one that is broken?  Do we want to make sure
-nothing is missed? We can definitely decide to break the migration, but we
-can also choose to just revert the needed() back to normal.  It just that
-it looks like we don't strongly need to break it.. as I don't see what we
-get from breaking it yet.. (say, it's not like we can get rid of some weird
-API or legacy function, we need to support needed() anyway..)
-
-> +
->      /* If this triggers, alias support can be dropped for the vmsd. */
->      assert(alias_id == -1 || required_for_version >= vmsd->minimum_version_id);
->  
-> -- 
-> 2.51.0
-> 
-
--- 
-Peter Xu
-
+-- PMM
 
