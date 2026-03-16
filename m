@@ -4,101 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2EF80F53D99
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 20:35:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8B2CF53D98
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 20:42:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Edx-0005qM-0i; Mon, 16 Mar 2026 16:34:29 -0400
+	id 1w2Ekq-0007al-2U; Mon, 16 Mar 2026 16:41:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <prestwoj@gmail.com>)
- id 1w29PO-0003uD-VR
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:59:07 -0400
-Received: from mail-qk1-x729.google.com ([2607:f8b0:4864:20::729])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <prestwoj@gmail.com>)
- id 1w29PM-0005Qy-Px
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:59:06 -0400
-Received: by mail-qk1-x729.google.com with SMTP id
- af79cd13be357-8cd8576a512so596916385a.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 07:59:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Eko-0007ad-7r
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 16:41:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Ekl-0005Ss-5Z
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 16:41:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773693689;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=uZereZFaxS7XaTwmccY7iiNx82L4k73eZVyFSXSV/Bw=;
+ b=iekaxjlRqCKqLJX6oLKByYOwvsv55JutGXE5U55sa7D7DOrGGtodGxAauRentfHqFOVw+w
+ rAagdCd9OcyTG+ytjp59vZ8J66hOUrbJ4iSmXz1sYZozKmxjB7uYCtI7n3sw85tqctxsYj
+ t/Oqidsd1aPjcQw7aT2Q4c1HB3nQCHc=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-672-8Co3tsYxNYKwsRU4cHy36A-1; Mon, 16 Mar 2026 16:41:27 -0400
+X-MC-Unique: 8Co3tsYxNYKwsRU4cHy36A-1
+X-Mimecast-MFC-AGG-ID: 8Co3tsYxNYKwsRU4cHy36A_1773693687
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-89c53a0264cso88664446d6.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 13:41:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773673141; x=1774277941; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=TlEzqxK2YEl3SXEgkPbUbfs0P9bQP+Yj8HFphhFYGSg=;
- b=gji4NHxOX9gzLsu3+YiDmk01xlzWBGcH1RgX+AsmQayRnriFsJ82U69EsVwNeHEjkG
- K7MzLD4RiUVeEYTbBzBjHkwdiHve5Llcj8+Y8xMLLDz6SuIQ1KWqAI5Mp32/nkIG2w4O
- 3wMQuG1Hk+cMuix88FFa8wQkmlLlbQltNE0zcAEgqMC+W9ySzuTEHwdTlPojOJAn/PR4
- zbhfta6zHjV4PBFVD1QMs0/qjF+kcxiomvOz3C5PODVasvstq+SMQTdyNnNxhC2fWBvX
- 9Yksx3d7aRwpn1YVLA/Sy2QxuK4wPga37QTif92w3LM1M+Ed7WCKZadoJCfY8ehJSILf
- 2y9w==
+ d=redhat.com; s=google; t=1773693687; x=1774298487; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=uZereZFaxS7XaTwmccY7iiNx82L4k73eZVyFSXSV/Bw=;
+ b=TcG/O/n99vXIunkF7OtHi3TXF+zBJgR6Ou/05Ep57X+n9Np2c03awWZkhJduo365Ky
+ /RcsmUktuYxjV+VbyyLVBAbqQlBeX9OYhqzuJyxlwWRfa6Frk3V0716SJHEnYEssxT2j
+ Pu3OMSuj3oS/iXsfprkuXid8gRXYempu1bZhLvLR++MZKsknIqmTaAOoEKrScGi9OC16
+ 6vWfDsh/FoDJCiKK1dRq1ClGtzb2tj0DRVvVr4wuQ7LHHPECtzVz+kh0fINzas27iky8
+ bJ4mUsyicIJ+h8KdGDBa54mR88e4tkWV1Dpc8nptqEzl38XTXE6KN7qVC+omghLxTNQU
+ CDIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773673141; x=1774277941;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=TlEzqxK2YEl3SXEgkPbUbfs0P9bQP+Yj8HFphhFYGSg=;
- b=fW1TRNopeQ0eYvfBz2etZPfW7WoUMxyb+Dc1XkqHGVVoZnMeDNrwCRUh+TnTOcK1db
- sU9PQ9wMf7/T6Kk08YwDLOgZtUYWjohB49Y1YtzUri40u6UNxYv285DhWxCVmdHEtdJE
- 1eFP33dPrrt0T7KL+sZo1W3vbRG4x1zEgi/k1kbjdaat5711bH9bpwEazSqLs5uGPoX8
- 1Rm1p2GQRxbqyGVPca/sINVmqm0o/fFgL2vDasEld5uy8BxjCFdBFyIqXRwaCcyZK5Ky
- vJyDjxk6ZJJblROb8bjfehI7gq3a3/C5Ab0MXNFnw55DwmYbPgtAQN0tlTyUpr48J1FL
- sSqA==
-X-Gm-Message-State: AOJu0Yzv3+KabkWTNusv9q71BJaR/xRs8qvCEoW+11es/JPHVtZeV4pM
- pScm97Loi6mmX05qUsvvr0wOFs5gmXATJUJ2VnXMDjbIIrPs7tZrm4Ua
-X-Gm-Gg: ATEYQzxRgrucDWNJg2SGGhEPN6T9J7uE092JeKsskj9K7uMiyuF6kxlOJ7qBDkfX7Lm
- F7SrGQ7QX1b5B4YaDtCjjCMA00tUq8QhZbNkAXf8AGBBdYXz+flGI+R0DDO8oenv0qVBkE/TDet
- TS/ta6h11cA3PXV0Tax4rHGcTWjmZCXeW/8drjbL8FuRfPmC/TPCp5NIqc2y4T0bEvtEoYP+6rj
- thRTvL14JPI8qA+pMHnh49bOHWvM6VfqfV02uNLhtV7wB2nbeBeP0BQjADHIrjwcpchS0LjYF0t
- HOYG/b6A44pxyxVDSemLQxg7tE7mv3rYTGo8ggrYRU8QV3CJMr6ZqqOWsNn1vYs7Tdyxc51EduX
- M/TYGu3M71V8o49MrD/cGnlfNRZ4FsjiLPtyEww+5YhtJi08DErCLak9wvZr4PbU6iglWakWD0Z
- O8B4Cavk1HBbIItBSP5yempo7YuA1Fq9wxTldfz6yFIbDdOlGBK61bO4YdpQ==
-X-Received: by 2002:a05:620a:2913:b0:8cd:94f9:1bbb with SMTP id
- af79cd13be357-8cdaa870dcamr2022355085a.29.1773673141041; 
- Mon, 16 Mar 2026 07:59:01 -0700 (PDT)
-Received: from [10.100.120.215] ([152.193.78.90])
- by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cda21100b8sm1232308185a.29.2026.03.16.07.58.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 07:58:59 -0700 (PDT)
-Message-ID: <fb53b8fd-5d36-4df3-a9e6-fba7c0457e55@gmail.com>
-Date: Mon, 16 Mar 2026 07:58:56 -0700
+ d=1e100.net; s=20251104; t=1773693687; x=1774298487;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=uZereZFaxS7XaTwmccY7iiNx82L4k73eZVyFSXSV/Bw=;
+ b=bXXgMbtp+gxzFQ9LRwph/vwm6Zd/GKehJe4f+alDS7ZuMEKhsD08XXw+0byEZdVP5/
+ /gTpvhnHNMK28+yZCfJ/3TiO8Q8NFIlZ7ll1F9kj+XfHkGWisp3BtNpIKxzMefgydhte
+ T9Q1O+gF/sDOZLLAZ8GQpdPsBY+tFcLR5X4WDJHcxfvXXdgh9XWDMHcBiPrzLNSSIe32
+ A5A80uNffFXLXjEbRANpB2lKJDuAMCZA8M6qA+4vtCaRxVB95l6ydyllX8yrX61P3gCR
+ EU1QR/Ez6rNJy/MGWuqRLbfLvOPr3nXLd1AyOJOECbrSD9OVEZl+/Sz8+DyId4syU/yk
+ 8mpQ==
+X-Gm-Message-State: AOJu0YzJY9zNxD8DXvNc7LUTlmcXE+XEZHsVK7SsurX636d3IejdSw7g
+ 891fPzHeH/1IcC0CYz4a9FLpIA7sltdm4sOCFiA04q765Orgr2fh5Egt4U8RqttL7+tsgvDCAYm
+ 7V35zkWQb97wvIVdNdWrk7hSGquJrwhbg/EeBuo/OSRQwZNZgucy6E+9T
+X-Gm-Gg: ATEYQzyc1zUhKr3kcXvLxurhhwSvhNu78/DG/odLO4kEnuISZact0onhjSz7U80bnog
+ Y5MKzEYZtyf1rmOFmkeVfBkkfpdcteAGw8TZQwG7qBkHwKY9aZ0CyuTjP9S1UbzcmOMvDH6Ij+N
+ iiq/AXkIUcRxS4obdJwowIX7OCKZwaR7XKJHXrWKmeOpBaTINYOoqUxJvAyW9RJAzHP9MZQ/JN4
+ CxzX97FYiJ6axBnPmqBYRg2P1KJ39Wp2W7oXl+wMHkOwXor+BM2ErLsZg3UPVPpV0SDIwAOtY5f
+ LYV5+e0yGyaXUaArh6SNKVIJQBXQPfRzU6AF8DYDrpSbKt59gvFdObXVleY5IHBbrFAJrH09JGE
+ whW08ZaigVQptXQ==
+X-Received: by 2002:a05:6214:2525:b0:89c:53a0:1c97 with SMTP id
+ 6a1803df08f44-89c53a026f8mr65639466d6.11.1773693686786; 
+ Mon, 16 Mar 2026 13:41:26 -0700 (PDT)
+X-Received: by 2002:a05:6214:2525:b0:89c:53a0:1c97 with SMTP id
+ 6a1803df08f44-89c53a026f8mr65639096d6.11.1773693686266; 
+ Mon, 16 Mar 2026 13:41:26 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89a6e736043sm112836246d6.10.2026.03.16.13.41.25
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Mar 2026 13:41:25 -0700 (PDT)
+Date: Mon, 16 Mar 2026 16:41:24 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Junjie Cao <junjie.cao@intel.com>
+Cc: qemu-devel@nongnu.org, farosas@suse.de,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH] migration/file: fix type mismatch and NULL deref in
+ multifd_file_recv_data
+Message-ID: <abhq9BzuP2bZPLBg@x1.local>
+References: <20260316084618.52-1-junjie.cao@intel.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH RFC/RFT] vfio/pci-quirks: Quirk for ath wireless
-To: Jason Gunthorpe <jgg@ziepe.ca>,
- Alex Williamson <alex.williamson@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, quic_bqiang@quicinc.com,
- kvalo@kernel.org, linux-wireless@vger.kernel.org,
- ath11k@lists.infradead.org, dwmw2@infradead.org, iommu@lists.linux.dev,
- kernel@quicinc.com, johannes@sipsolutions.net, jtornosm@redhat.com
-References: <adcb785e-4dc7-4c4a-b341-d53b72e13467@gmail.com>
- <20240812170045.1584000-1-alex.williamson@redhat.com>
- <20240813164341.GL1985367@ziepe.ca>
- <20240813150320.73df43d7.alex.williamson@redhat.com>
- <20240813233724.GS1985367@ziepe.ca>
- <20240815105905.19d69576.alex.williamson@redhat.com>
- <20240815171935.GO3468552@ziepe.ca>
-Content-Language: en-US
-From: James Prestwood <prestwoj@gmail.com>
-In-Reply-To: <20240815171935.GO3468552@ziepe.ca>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::729;
- envelope-from=prestwoj@gmail.com; helo=mail-qk1-x729.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260316084618.52-1-junjie.cao@intel.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Mon, 16 Mar 2026 16:34:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,75 +116,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 8/15/24 10:19 AM, Jason Gunthorpe wrote:
-> On Thu, Aug 15, 2024 at 10:59:05AM -0600, Alex Williamson wrote:
->
->>> This is probably the only way to approach this, trap and emulate the
->>> places in the device that program additional interrupt sources and do
->>> a full MSI-like flow to set them up in the kernel.
->> Your last sentence here seems to agree with this approach, but
->> everything else suggests disapproval, so I don't know where you're
->> going here.
-> Trapping and emulating is fine.
->
-> My concern is really only about skipping SET_IRQ.
->
-> That works because of the assumption that the IMS sources are going to
-> re-use addr/data pairs setup in the MSI CAP.
->
-> That assumption is frail, and won't work at all under the proper IMS
-> support Linux now has.
->
-> I really don't want to go down the road and have someone tell Thomas
-> he can't convert the Linux driver to use irq_domain IMS because it
-> will break this stuff here.
->
->> I have no specs for this device, nor any involvement from the device
->> vendor, so the idea of creating a vfio-pci variant driver to setup an
->> irq_domain and augment a device specific SET_IRQs ioctls not only sounds
->> tremendously more complicated (host and VMM), it's simply not possible
->> with the knowledge we have at hand.
-> It seems like you have reverse engineered alot of the necessary
-> information though??
->
-> Maybe there is a more generic approach than a variant driver. If you
-> wanted to use IMS from userspace generically you could imagine some
-> kind of IMS focused "SET_IRQ" in generic VFIO. Where we'd create the
-> needed irq_domains and pass the addr/data pair back to userspace?
->
->> I observe that the device configures MSI vectors and then writes that
->> same vector address/data elsewhere into the device.  Whether the device
->> can trigger those vectors based only on the MSI capability programming
->> and a secondary source piggybacks on those vectors or if this is just a
->> hack by Qualcomm to use an MSI capability to acquire some vectors which
->> are exclusively used by the secondary hardware, I have no idea.
-> Well at least that should be testable - but it seems crazy if the
-> device has registers for an addr/data pair and then somehow doesn't
-> use the values that get put in them??
->
-> Copying from the MSI is almost certainly a SW hack because IMS support
-> has never really existed in an OS until now. I think your guess for
-> why it is like this is pretty good.
->
->> I do not believe that introducing a vfio device feature that disables
->> virtualization of the MSI address/data _only_ at the vfio interface
->> (not to a QEMU VM) provides some implicit support of this device
->> behavior.  These values are already available to a privileged user in
->> the host and the same is available for an MSI-X use case by directly
->> reading the MSI-X vector table.
-> To be clear, I'm not really worried about showing the data to
-> userspace.
->
-> Userspace just shouldn't be using it to implement an IMS technique!
->
-> Jason
+On Mon, Mar 16, 2026 at 04:46:18PM +0800, Junjie Cao wrote:
+> multifd_file_recv_data() stores the return value of qio_channel_pread()
+> (ssize_t) in a size_t variable.  On I/O error the -1 return value wraps
+> to SIZE_MAX, producing a nonsensical read size in the error message.
+> 
+> More critically, a short read (0 <= ret < data->size) is possible when
+> the migration file is truncated.  In that case qio_channel_pread()
+> returns a non-negative value without setting *errp.  The function then
+> calls error_prepend(errp, ...) which dereferences *errp -- a NULL
+> pointer -- crashing QEMU.
+> 
+> Fix both issues by changing ret to ssize_t and splitting the error
+> handling: use error_prepend() only when qio_channel_pread() itself
+> has populated *errp (ret < 0), and error_setg() for the short-read
+> case where *errp has not been set.  Add ERRP_GUARD() so that
+> error_prepend() works correctly even when errp is &error_fatal or
+> NULL.
 
-I see this thread went stale. Wondering if there was ever a final 
-conclusion if this could get fixed for ath11k or not. I tried again on a 
-recent kernel, 6.17, and see the same behavior.
+Indeed, this seems problematic.
+
+But is it possible to get partial reads?  I don't see why it won't happen..
+do we need to fix it too (e.g. introduce qio_channel_pread_all_eof())?
+
+CC Dan.
 
 Thanks,
 
-James
+> 
+> Signed-off-by: Junjie Cao <junjie.cao@intel.com>
+> ---
+>  migration/file.c | 14 ++++++++++----
+>  1 file changed, 10 insertions(+), 4 deletions(-)
+> 
+> diff --git a/migration/file.c b/migration/file.c
+> index 5618aced49..78b274dc32 100644
+> --- a/migration/file.c
+> +++ b/migration/file.c
+> @@ -254,15 +254,21 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
+>  
+>  int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp)
+>  {
+> +    ERRP_GUARD();
+>      MultiFDRecvData *data = p->data;
+> -    size_t ret;
+> +    ssize_t ret;
+>  
+>      ret = qio_channel_pread(p->c, (char *) data->opaque,
+>                              data->size, data->file_offset, errp);
+> +    if (ret < 0) {
+> +        error_prepend(errp, "multifd recv (%u): ", p->id);
+> +        return -1;
+> +    }
+> +
+>      if (ret != data->size) {
+> -        error_prepend(errp,
+> -                      "multifd recv (%u): read 0x%zx, expected 0x%zx",
+> -                      p->id, ret, data->size);
+> +        error_setg(errp,
+> +                   "multifd recv (%u): read 0x%zx, expected 0x%zx",
+> +                   p->id, (size_t)ret, data->size);
+>          return -1;
+>      }
+>  
+> -- 
+> 2.43.0
+> 
+
+-- 
+Peter Xu
 
 
