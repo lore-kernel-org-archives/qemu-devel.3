@@ -4,106 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3161CF53D71
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:24:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5F417F53D6D
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:24:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2AjN-0006Jh-As; Mon, 16 Mar 2026 12:23:49 -0400
+	id 1w2Ajb-0006Lz-NB; Mon, 16 Mar 2026 12:24:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2AjE-0006Il-UV
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:23:41 -0400
-Received: from mail-pf1-x42b.google.com ([2607:f8b0:4864:20::42b])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2AjC-00048U-BG
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:23:40 -0400
-Received: by mail-pf1-x42b.google.com with SMTP id
- d2e1a72fcca58-829abaaa92bso3109543b3a.1
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:23:34 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773678213; cv=none;
- d=google.com; s=arc-20240605;
- b=CPFu0N1lO4daLSlK/klUJ758Ijww4xDb/mj3wySUy4f5pEP5SyFzK0YEfBbdVqXYDB
- ytMEEPLzwaHXFP7KfqTSZJ81fnF2LIdgVNhAEtRDEBgLjPMXlNRlgAp4mROouMciO0Gz
- ZCdecI3zFFjiG1OlxGG65vDaIzviJpdydHCvWBC5hd3DLVd55d3ne6IPPv5iHCq0iIex
- pI91x13c5XVGiJZAyof9hu5C90/AgM0SyZAJHyp1myNARX+JbX2HE69p+VxPZ0GCBaz4
- 7l2vjZTDJF7D4Kq8PO72hx/asmCkGv3sacn/cp4481Rq1OVdcwxpx9LhJGcDs86fIvOJ
- pSDw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=E1ZgZl+8hbVx13v6jsbNIy5UFzdyqa17491D93l1AXU=;
- fh=yiUwoBOEypY2fM3mHrz5u4mbHkIidyv/b4UPGcEpz+k=;
- b=EpCV7g1vQMK1TY99BHvBFsWI2UMqFQybJ1uHANXkMwXsY0yUvtD95RKuwCLcmkF++6
- 4Ufpv0ut9L/F+xo9RFhi1EmtfOJk2o9EBDORGHn0No2jOzf+j9+De5dLiCc0v/Kh9w0w
- cP9//N5bPmn/ojN3p5+ZKGo44oiLQjH2idckAuvdl4r6lrN0oZFqmEpNn5z/WiCoDx8X
- s4iudxUxms+32QTWOLwFsdA7DXzh8gvm02Y43SyDXnsXVHbvcNPLzvA1U/CiuthG0zrE
- I8B2P4hxXn9nbDJwc1GTXKjK4Wvbh3paLdb1kX2T0pVSVrqJKejWUMKKELnwwMuFvnCj
- vcLA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773678213; x=1774283013; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=E1ZgZl+8hbVx13v6jsbNIy5UFzdyqa17491D93l1AXU=;
- b=O5W9UrsfRWau+yAkQjsx4DN895jYKpC3lt3X8nMj8d+Q2sWwK5+aayE45jzgUcp012
- H0bqSSZ/zFjcm92+u6J65M894PvA/2rce6+OuLk2nyzDjiCEw5orgSJICvDErVbf/6tN
- Pe/WhdbtFSqgZzuddV8DE4r9vRSk2KDGn+8L/FEdJ6YGiky8oxmClW1o+mp0bp4mh6bU
- QPohxwBJxZbQosa4LCF7v5seiJ9gPHDkZistLAX7uaEKhoBALfwXhPB4S9E4dUcGmJJn
- l88AudbyonZ6YBgskfn0EqffJdu/GSt6Zq/vnVSM4YChofY3h4z92tF+RtKfT8b7sTXg
- +Geg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773678213; x=1774283013;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=E1ZgZl+8hbVx13v6jsbNIy5UFzdyqa17491D93l1AXU=;
- b=SZgt88yxRNSGVevYTr31ig0P784hTeishsYu9eiaSryU7fLp91jYlRyRHSh6Xzd2y+
- TeZeaNreHdLq4WdNi4axIV6Mz48+n6wGYL+/qAlAE9GbUj7OO0iQNNeKK3RvOaA3QjqB
- iCm2LKAEdo8kgcMJ7EeXzW/8iYOdpez2jkCCYVKxfDgDcfPynPADQmVsMP4ukogsMArB
- F5kY1E5FHkt5kBPJRhyvM5H+WAHAHvt0SBQHjPM/RwgrefomAEtqKPBd4HpBVvoTkcl+
- MfLojxqBbWRYWtnM1P2nkoNxClVsL3792Zy0VWSVkecEaxjLs3KOM3EUEiTujokBxrU9
- 6AWQ==
-X-Gm-Message-State: AOJu0YyYL2ZrLtE/emmbsX6t880YAM9eHhJfVLutA/M2Zhzr0hP8ltXL
- 5fJaqCeEOwN0/e1i93I1sqL6Bb+QZYQHpDVhBGOrfon5YD1MdMS97GmAc+pRraKX1/TrQO9EDbn
- 9Hf88nUNv6caT/NWwNmVHle+UjUUfj9c=
-X-Gm-Gg: ATEYQzyWxJEQ4tVgqXSFRlDjuzkZl78TwiNrCUP0gl0R4b9qDhbO+aEFMHIAkny42mu
- XOicfD+eMFYrZPSBjPvRSxFFaYLlrC8bqYvW5sEMhAya6Li7hf/IgrigU5pksO7BJSenXIUeyJj
- XKfLuIv3RZeetzCK3OzvQnvdHz3glMEx3ti5Roh0Im9aSZbp3j5UbIgkvO5SJ67QqCOys1UoBuZ
- 2+9ZDfKylThPDLpxCds300qIf5OxF6+wcvpKOI6WHuXnBxgfXSIm+zBAGYcKqRIzlaOwxhbcNhi
- vVpnh/D11QQLbczhIOiqok5Mf9eqonFNifdOoXOwe9h4N4ho
-X-Received: by 2002:a05:6a00:3c92:b0:824:9451:c1e2 with SMTP id
- d2e1a72fcca58-82a19937ad3mr12881730b3a.59.1773678213347; Mon, 16 Mar 2026
- 09:23:33 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2Aja-0006Lj-1A
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:24:02 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2AjX-0004Fw-G0
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:24:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773678237;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=Od69BSy7CGan/g+QCnVLoCnt3Tu+4mHW3Y7vJUiQEZA=;
+ b=Dq19+B/dZXAWBhJLhfzpU2fVNnq4svthnBoF76llicK0TaRQLfPZDc4TYY/1zGlM6b0qE9
+ AlmikKi/v1JKC1Hu9j7IYCynVXDBfV333wgjYNGqLbrmIFsFrC3V+o3/3Pc2hp3MD6iV2S
+ eLsw207wFK1k4Avm91cH1SzKq15urwo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-375-6JoZ8xbiNfev05vuL1Wegg-1; Mon,
+ 16 Mar 2026 12:23:53 -0400
+X-MC-Unique: 6JoZ8xbiNfev05vuL1Wegg-1
+X-Mimecast-MFC-AGG-ID: 6JoZ8xbiNfev05vuL1Wegg_1773678232
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BB9CF19560AA; Mon, 16 Mar 2026 16:23:51 +0000 (UTC)
+Received: from [10.44.33.101] (unknown [10.44.33.101])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 2BC6A18002A6; Mon, 16 Mar 2026 16:23:48 +0000 (UTC)
+Message-ID: <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
+Date: Mon, 16 Mar 2026 17:23:47 +0100
 MIME-Version: 1.0
-References: <20260311040758.1068731-1-brian.cain@oss.qualcomm.com>
- <20260311040758.1068731-13-brian.cain@oss.qualcomm.com>
- <CAATN3NoaPgo6gKHfnFgs71QgZgZK7j+fsPKRWd4a=dSesZJmbw@mail.gmail.com>
-In-Reply-To: <CAATN3NoaPgo6gKHfnFgs71QgZgZK7j+fsPKRWd4a=dSesZJmbw@mail.gmail.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 16 Mar 2026 10:23:21 -0600
-X-Gm-Features: AaiRm50Z9TUGvF7ViIRlFWCbHYRCH4QrPYEVvxjzUjX_bZ8ZXEOr96NBPIz7-KM
-Message-ID: <CAATN3NrDs0TOshuD+ZEL4Y9D9qRDsT9mKyNaPvTpOB2KTTcpHA@mail.gmail.com>
-Subject: Re: [PATCH v3 12/32] target/hexagon: Implement stack overflow
- exception
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
- anjo@rev.ng
-Content-Type: multipart/alternative; boundary="000000000000da3de8064d26a332"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::42b;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pf1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
+To: Peter Xu <peterx@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
+ <abgqjKVFHKxuKupP@x1.local>
+From: Thomas Huth <thuth@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <abgqjKVFHKxuKupP@x1.local>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -119,83 +129,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000da3de8064d26a332
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+On 16/03/2026 17.06, Peter Xu wrote:
+> On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
+>> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
+>> current_machine which is not set during init when inspecting the
+>> device. This causes the qtest/device-introspect-test to fail since a
+> 
+> Does it has anything to do with aux-ram-share?  I thought it's because the
+> qom introspect test will create yet another sun-tcx device, causing double
+> registration?
 
-On Sat, Mar 14, 2026 at 6:02=E2=80=AFPM Taylor Simpson <ltaylorsimpson@gmai=
-l.com>
-wrote:
+I think it happens because the test starts QEMU with the sun4m machine (or 
+whichever machine uses this device by default), and then creates another 
+instance of the device for introspection (without realizing it). You can 
+easily recreate the bug manually like this:
 
->
->
-> On Tue, Mar 10, 2026 at 10:08=E2=80=AFPM Brian Cain <brian.cain@oss.qualc=
-omm.com>
-> wrote:
->
->> Implement the frame limit check for system emulation mode.  When
->> allocframe computes a new stack pointer below FRAMELIMIT, raise a
->> precise exception (HEX_CAUSE_STACK_LIMIT).  The check is skipped in
->> monitor mode.
->>
->> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
->> ---
->>  target/hexagon/helper.h     |  1 +
->>  target/hexagon/macros.h     |  3 ---
->>  target/hexagon/sys_macros.h |  4 ++++
->>  target/hexagon/translate.h  |  2 ++
->>  target/hexagon/genptr.c     | 18 +++++++++++-------
->>  target/hexagon/op_helper.c  | 34 ++++++++++++++++++++++++++++++++++
->>  6 files changed, 52 insertions(+), 10 deletions(-)
->>
->
-> Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
->
+  $ ./qemu-system-sparc -M SS-20 -display none -monitor stdio
+  QEMU 10.2.50 monitor - type 'help' for more information
+  (qemu) device_add sun-tcx,help
+  RAMBlock "tcx.prom" already registered, abort!
+  Aborted (core dumped)
 
-Looked at this again and wondering where is the implementation when
-idef-parser is enabled.
+An instance_init() function should not change the global state of QEMU, so 
+registering memory regions this way is a no-go. This has to be done in 
+realize() instead.
 
-Thanks,
-Taylor
+So for this patch here:
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
---000000000000da3de8064d26a332
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Sat, Mar 14,=
- 2026 at 6:02=E2=80=AFPM Taylor Simpson &lt;<a href=3D"mailto:ltaylorsimpso=
-n@gmail.com">ltaylorsimpson@gmail.com</a>&gt; wrote:<br></div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex"><div dir=3D"ltr"><div dir=3D"ltr"><br>=
-</div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_attr">=
-On Tue, Mar 10, 2026 at 10:08=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:b=
-rian.cain@oss.qualcomm.com" target=3D"_blank">brian.cain@oss.qualcomm.com</=
-a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
-x 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">Im=
-plement the frame limit check for system emulation mode.=C2=A0 When<br>
-allocframe computes a new stack pointer below FRAMELIMIT, raise a<br>
-precise exception (HEX_CAUSE_STACK_LIMIT).=C2=A0 The check is skipped in<br=
->
-monitor mode.<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/helper.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 1 +<br>
-=C2=A0target/hexagon/macros.h=C2=A0 =C2=A0 =C2=A0|=C2=A0 3 ---<br>
-=C2=A0target/hexagon/sys_macros.h |=C2=A0 4 ++++<br>
-=C2=A0target/hexagon/translate.h=C2=A0 |=C2=A0 2 ++<br>
-=C2=A0target/hexagon/genptr.c=C2=A0 =C2=A0 =C2=A0| 18 +++++++++++-------<br=
->
-=C2=A0target/hexagon/op_helper.c=C2=A0 | 34 +++++++++++++++++++++++++++++++=
-+++<br>
-=C2=A06 files changed, 52 insertions(+), 10 deletions(-)<br></blockquote><d=
-iv><br></div><div>Reviewed-by: Taylor Simpson &lt;<a href=3D"mailto:ltaylor=
-simpson@gmail.com" target=3D"_blank">ltaylorsimpson@gmail.com</a>&gt;</div>=
-</div></div></blockquote><div><br></div><div>Looked at this again and wonde=
-ring where is the implementation when idef-parser is enabled.</div><div><br=
-></div><div>Thanks,</div><div>Taylor</div><div>=C2=A0</div></div></div>
-
---000000000000da3de8064d26a332--
 
