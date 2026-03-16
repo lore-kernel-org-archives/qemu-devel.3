@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C7F6F53D77
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:50:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32D4F53D76
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:56:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2B8e-0005Xh-Gz; Mon, 16 Mar 2026 12:49:56 -0400
+	id 1w2BED-0006XV-Go; Mon, 16 Mar 2026 12:55:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2B8b-0005Ww-DQ
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:49:55 -0400
-Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
+ id 1w2BE2-0006X5-QE
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:55:30 -0400
+Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2B8Z-00087G-4j
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:49:53 -0400
-Received: by mail-pl1-x62b.google.com with SMTP id
- d9443c01a7336-2b0484a6de4so8726885ad.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:49:49 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773679789; cv=none;
+ id 1w2BDx-0000n7-UM
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:55:29 -0400
+Received: by mail-pl1-x62a.google.com with SMTP id
+ d9443c01a7336-2aecefc7503so20987505ad.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:55:25 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773680124; cv=none;
  d=google.com; s=arc-20240605;
- b=LASz9IP1JY9aM7oq9Pnu5UXgBZvg45elT3TthnmMDhmzLXw3yiD29ZiOh2xrsRrWmt
- FRxIgZCz5nScng1C17upwQEUVqt8YM00dmvmCDgDA0RiIbULb3F1H41/Bb98oqa20qOk
- 54HSaJ5h3WA1/CnLF+5ZXI5rGztQ2qtltEsTF72I+UC6dYRhX+bEr9PlQWqO+x/khm5s
- ifqxVoHybygyvovgfsUzBpHNZWt/d2D90cXrdYQTfE4UvcTEvtQpopyBq/I6nczjOd/0
- pDKfpb4dCpkZ0PkRfPnGjNrsM/JHj89IKhR+th1fAfFLWd/oc44e0gRmrsOCr3D3i1H9
- BAHQ==
+ b=VhjvTzS+PQlooelD7PLFx+YMCoz4mzw85YWaGDVZmzlS1kHTUcy8IBahLZOi300qXh
+ f0M6IWa5rscrkBpzopI7GvOQQwJytuU8ufZhvqH0z6erNO+Q+tfTtUYsVVEasmcUqco2
+ mZU9PCJkjuDzqgreI32tr4L8uqKr7Dvbb9rukR208I2hqQ/0qKkMQ0HeRCQ/K/Uq7fkc
+ gVK43Xj/u+3HVEtPGu/YN5wJfajtheZhg7VzYJ/uffFlAyNXFaP47jAKX5/fDRKCfKDK
+ AXYNsURDHIxNOh6IFEQgvoZGZewultbzySN9FzJPqlPnHygYwz1BCsbQ9E+2ksmAkg/V
+ hYZA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=mX2IEpchplLWianILBZdZOhRZQYHCjBimYepcm84tQI=;
+ bh=FkzDjEXghZmNw0jZFhY0tNGm1mxtVCG8CbGzX1vUCFg=;
  fh=KRCCjFQNjYXxmVm5lhBeSL8Cxa/V2Ufkjle/+cdDqO0=;
- b=fbIaEsbHD+FVrQ0MrtvCSVN8PRjMZ1hCs6bdwsdvRE5evRjtucF3dP+ZPnrb2He0ls
- ADTX2gB9ylZiRrWtlcclbVa3frEcnW8TDWhB3a9CA8u79lnGk93l970E0vO7wRROakOm
- 0Lf5euP5FyrF1GDXzm4GsUpYAB1A8xYvbYAovHmiOKxCFWYDcPpOVhOaZjuXBMtfhKM5
- 1rQSfOtmgqElZs/Z3e/z0k9fXNjRu/dj7MAc2kprhXCqMFo0dVZb2jurlVbtZcdtmKiq
- Q7IAVDEU8cDABrq907+DyR51vEb2JN+eLKylOOnsA81X9Yoa7IOp16ZCjRhilw1CJWqd
- GVWA==; darn=nongnu.org
+ b=ggghcV6TDoyA8qsK0Hqk6P+nIBdeUzVLJdKdZoOIcOTAPMjhwjoM//4o9xBLtVUSvN
+ l+1F/xa33RrFuvDnn81SR1uf+blU68aoyYGB/UanvC3PaOBiOBGfN7tiYzFD448oDAag
+ bYHMf37c4pn2tsS1F6NNuhT2rFw5k7+vG9RIsG0lcbOOCjqMNzhS3ebgNkqPj1jES1MT
+ DjaCkP0SpR50M3nGWGLpMQRHP7pS1DD6BeXFsDAgsNmxTsPdwRny92Se0b2+FLKqZWag
+ 2I8qZYO8DQxNxv4be+Z2YbF1leDP9dJz+drcnDzQgU17k+eP5TUN83gL9APhB9UWQUcH
+ 4+0A==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773679789; x=1774284589; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773680124; x=1774284924; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=mX2IEpchplLWianILBZdZOhRZQYHCjBimYepcm84tQI=;
- b=CD8wXCaF4nPZfpnqzYq/x6p/ny+9ZLpvK0dIwXBqIvHk7rDyPQxl5skf70Ez51ChGj
- BQxeaoYbWOthwyiW2mjGGx4GfWIXWKOo70ywsjY1CuRQkrHdL8GHErKGgEbsoKNv53xx
- uzQLBoX0M1rDX2S5oueXt2yPQivjFqv8j4HRYvurmfvAKdFAgQnRxPiQXBeltDg77fpV
- vj3ZUEj1aJ9pE0siuZRIUdtWvU4xAp1SmQYfvsCUE6zaJha4hmOvMhw98MOk+VIRvR24
- bAnQ5+aJB6H2W+2Wj1voLU/PiXjRn0YOqpqrjb8Ee1ET2JTxNpveFvHUiXuwLf6BbMtK
- FrPA==
+ bh=FkzDjEXghZmNw0jZFhY0tNGm1mxtVCG8CbGzX1vUCFg=;
+ b=g4Xj2RFBbmYFsuJIBy0nWBvuoegQ1E4YWdCJqvGPq4UDnDOWfibCbgWZMhvTiyldf4
+ K38gIdNxkA/Wi708W0TMuRptR+Tg9YLpyVIquCSSg4SvROs4r/rsBbA8avPMCuwdNWoW
+ wZ8NBuPBetIjnFtmuvjSPC18BRCWNfFw14Blkuk1JT077LXAkL8iyPpLcQRqGFIGPQcT
+ 7NCD4WmcL4bJVSRKik/b7HHIboi8Zf0IFuQ5UBG07G36MYqINTpXEsP9xoE1QeybD3vc
+ 1PEC3LBsskw+MnvvPv/znFIVxWJG5oECDv9jE1m5SFHSlxw6Qt89P/pwqX11WXRgVL+B
+ 4fcg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773679789; x=1774284589;
+ d=1e100.net; s=20251104; t=1773680124; x=1774284924;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=mX2IEpchplLWianILBZdZOhRZQYHCjBimYepcm84tQI=;
- b=Cm+qIL1GO7UEICrq3AVanwTHfDQkkXKavLuszFoTnQNG9G0u4z1ot0LdfIoK289Pe2
- LwtSCi1cX3WJuuWA3cEKoM2z6ggt8/m14bC0aRCLvFy64d1GkoRLLKno5dsrZ3DIi7+n
- gyr9cy+S7VXKm9W0txcETsRe7ZKOvBsFBIYETfgteu1XbducZafIdBYVDyXk5XKuXyuL
- HgM4hpb07hq9BHwBnY3iaF61BTwXAoD1QiU4bkGfD6FSbDw1F7JdsTSwwnh2q5wTGH5G
- /nUCCHIVmF+JS/f/Bi9kUv4cn3ovmGv1dPpELA/JUgIlEi+UVailxTqiyykk6RW2Lz0C
- eASw==
-X-Gm-Message-State: AOJu0Yw4eLDHoYpDnF0Tsq5fcS3HCNErrRyNMPCwqce7KFY/efk0SvOn
- t0U+53k+vySgA0Pg0xMgpxgECmCcIX5h800M2nbbP0JXASdsQC/im5wTAv2sOtrZH7lXcOucXoL
- vNjIDAjmqlodEF9eM3mdPKIrOwWZeRRQ=
-X-Gm-Gg: ATEYQzx44tGThyc+hh5ryKDtVV1PrWnA9Cd7C66AWnpyn6q9UKUAFQBlal1Ize3p2Oz
- jQIvgnDVhziyperAy9jQqJOTFTw9Dvgqr6Ev61q7zIbacNk7e/ZBPlLvioBH69Yv44bVG/u5gy4
- t8eTwNGsh15uJMx52k59fqReAJregoKIXqbboexFFNU8YY8d5x79L5KQ4WhZnfSI3cVH+7QH1Bp
- nC8BJXxddlI7LMW7i2VwFn7J3C/0MctN8i0gH2bdvxPhqAc3l/olIIhKt8x4wfnVZS+9sO4AvEz
- jG5arrCZBxdec7f9e+bvwRQLvK+VCj/h36eDCA==
-X-Received: by 2002:a17:902:f551:b0:2b0:5075:96d1 with SMTP id
- d9443c01a7336-2b05075974amr57324415ad.24.1773679788619; Mon, 16 Mar 2026
- 09:49:48 -0700 (PDT)
+ bh=FkzDjEXghZmNw0jZFhY0tNGm1mxtVCG8CbGzX1vUCFg=;
+ b=eROFP7QsjeMdAJpFKxgz0gXM4+yJ9qFHXD6zfwajyqw4rvcFpNr2Um9qv8EWzs3xXz
+ RJ5DY4C2wyytYrXr4U9twkpdIZ/pQJyvCa8qF9ptLWrJNmV0Lv3EXDUXzuD1uf4kqv4w
+ m4vS80TOnVpiAj/vj3E8rku17sVRfVwukkY2fbtuxB0Br+TIG2qvggHulLHwfRaAs930
+ bwesSuZW/AyLRQYBuXF5pXX9odBjFT80g+NoWV+OP8EfGuFko3Zg+VDMzv27fpiBdmWZ
+ kWl7kfxEuMs5vTdT/uvqursCms0NsPy56Lrw2M7Yi5uxUUjxTAOuX8/wO/3rl0NWVH7/
+ IFYw==
+X-Gm-Message-State: AOJu0YwgW8LkPohZ3QuiLk7wx0hN4tS+bATWfZKUwh6nMv3ZLkkZFoVQ
+ 5+BZlH6IyWRJvw9V1JNK2e0hrtUIACtrvPvNesDhutzhKwFolZsY3bJt7GlGJCbqOFjy+nQijPR
+ 4z7Z+KiZwZKnEDidsoEHsHA2FEcHTZ+A=
+X-Gm-Gg: ATEYQzxtQXLbDW3wBCGjnLzDiahavTPbYvmGZN6bubzcQwYIBmf8vHTUf5jUSWVY0SK
+ ZL31NExxgOe3VtshcR7xJn6mM14B7pD1eDAxp0D5x/X9WCnmQl3dOWebViu7aJm1ZPPJOfXFz0H
+ xbihEE5VLu4VkfreCzyER3DbPUf8mIbFCY6lQvU/v/eXzxgL+4vpFDRYPEAk0mkuotVaIF7hq/8
+ iRhB1KzSysn1bA17uidaVHPmwVOCBAaiSm81xETsDDeePuckfM0w3FQni45XI0SIgqyiCWoSpKR
+ JezkWrTYuXR628ivFR00wepoWKo+rpLVADb1zuNU901OErnD
+X-Received: by 2002:a17:903:8c3:b0:2ae:c7e6:a13b with SMTP id
+ d9443c01a7336-2aeca92b90emr129180995ad.4.1773680124047; Mon, 16 Mar 2026
+ 09:55:24 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260311040758.1068731-1-brian.cain@oss.qualcomm.com>
- <20260311040758.1068731-19-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260311040758.1068731-19-brian.cain@oss.qualcomm.com>
+ <20260311040758.1068731-24-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260311040758.1068731-24-brian.cain@oss.qualcomm.com>
 From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 16 Mar 2026 10:49:36 -0600
-X-Gm-Features: AaiRm53H2Ho4MwOtyqmGsUdNDuxnZhnUIZ7m-4-UzApjNy_1PyynyYUWmTmoEf8
-Message-ID: <CAATN3Nod_fUbmdgXJefj160D7vW3HbMF-J0P3aG5NqK7kJpsjw@mail.gmail.com>
-Subject: Re: [PATCH v3 18/32] target/hexagon: Implement setprio, resched
+Date: Mon, 16 Mar 2026 10:55:12 -0600
+X-Gm-Features: AaiRm50kcCiKXiGOPEcEvbMuQ7poR752ZG9YeJX630P5PtHVuMIW20O9QjeU1YQ
+Message-ID: <CAATN3NroFnCQvOdQ0LT5C4DES_79oxkRpymq2uqvKUJaC6k-WA@mail.gmail.com>
+Subject: Re: [PATCH v3 23/32] target/hexagon: Add pkt_ends_tb to translation
 To: Brian Cain <brian.cain@oss.qualcomm.com>
 Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
  matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
  quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
  anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Content-Type: multipart/alternative; boundary="000000000000befc71064d2701ef"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x62b.google.com
+Content-Type: multipart/alternative; boundary="000000000000bd3628064d27151a"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x62a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,7 +117,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000befc71064d2701ef
+--000000000000bd3628064d27151a
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -127,152 +127,41 @@ wrote:
 
 > From: Brian Cain <bcain@quicinc.com>
 >
-> The hardware-assisted scheduler helps manage tasks on the run queue
-> and interrupt steering.
->
-> This instruction is defined in the Qualcomm Hexagon V71 Programmer's
-> Reference
-> Manual -
->
-> https://docs.qualcomm.com/bundle/publicresource/80-N2040-51_REV_AB_Hexago=
-n_V71_ProgrammerS_Reference_Manual.pdf
-> See =C2=A711.9.2 SYSTEM MONITOR.
->
-
-This document doesn't have a section 11.9.2.
-
-
->
 > Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
 > ---
->  target/hexagon/op_helper.c | 75 ++++++++++++++++++++++++++++++++++++++
->  1 file changed, 75 insertions(+)
+>  target/hexagon/translate.h |   1 +
+>  target/hexagon/translate.c | 102 ++++++++++++++++++++++++++++++++++++-
+>  2 files changed, 101 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c
-> index 9090a5c20ab..36822219b4b 100644
-> --- a/target/hexagon/op_helper.c
-> +++ b/target/hexagon/op_helper.c
-> @@ -1575,6 +1575,62 @@ static void hexagon_wait_thread(CPUHexagonState
-> *env, uint32_t PC)
->      cpu_interrupt(cs, CPU_INTERRUPT_HALT);
->  }
->
-> +static inline QEMU_ALWAYS_INLINE void resched(CPUHexagonState *env)
-> +{
-> +    uint32_t schedcfg;
-> +    uint32_t schedcfg_en;
-> +    int int_number;
-> +    CPUState *cs;
-> +    uint32_t lowest_th_prio =3D 0; /* 0 is highest prio */
-> +    uint32_t bestwait_reg;
-> +    uint32_t best_prio;
-> +
-> +    BQL_LOCK_GUARD();
-> +    qemu_log_mask(CPU_LOG_INT, "%s: check resched\n", __func__);
-> +    HexagonCPU *cpu =3D env_archcpu(env);
-> +    schedcfg =3D cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_SCHEDCFG,
-> +                               env->threadId) : 0;
-> +    schedcfg_en =3D GET_FIELD(SCHEDCFG_EN, schedcfg);
-> +    int_number =3D GET_FIELD(SCHEDCFG_INTNO, schedcfg);
-> +
-> +    if (!schedcfg_en) {
-> +        return;
-> +    }
-> +
-> +    CPU_FOREACH(cs) {
-> +        HexagonCPU *thread =3D HEXAGON_CPU(cs);
-> +        CPUHexagonState *thread_env =3D &(thread->env);
-> +        uint32_t th_prio =3D GET_FIELD(
-> +            STID_PRIO, thread_env->t_sreg[HEX_SREG_STID]);
-> +        if (!hexagon_thread_is_enabled(thread_env)) {
-> +            continue;
-> +        }
-> +
-> +        lowest_th_prio =3D (lowest_th_prio > th_prio)
-> +            ? lowest_th_prio
-> +            : th_prio;
-> +    }
-> +
-> +    bestwait_reg =3D cpu->globalregs ?
-> +        hexagon_globalreg_read(cpu->globalregs, HEX_SREG_BESTWAIT,
-> +                               env->threadId) : 0;
-> +    best_prio =3D GET_FIELD(BESTWAIT_PRIO, bestwait_reg);
-> +
-> +    /*
-> +     * If the lowest priority thread is lower priority than the
-> +     * value in the BESTWAIT register, we must raise the reschedule
-> +     * interrupt on the lowest priority thread.
-> +     */
-> +    if (lowest_th_prio > best_prio) {
-> +        qemu_log_mask(CPU_LOG_INT,
-> +                "%s: raising resched int %d, cur PC 0x" TARGET_FMT_lx
-> "\n",
+> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
+> index 82b327312ec..4e090565aac 100644
+> --- a/target/hexagon/translate.h
+> +++ b/target/hexagon/translate.h
+> @@ -85,6 +85,7 @@ typedef struct DisasContext {
+>      TCGv branch_taken;
+>      TCGv dczero_addr;
+>      bool pcycle_enabled;
+> +    bool pkt_ends_tb;
 >
 
-Don't use %d
+You don't need this as part of DisasContext
 
 
-> +                __func__, int_number, env->gpr[HEX_REG_PC]);
-> +        SET_SYSTEM_FIELD(env, HEX_SREG_BESTWAIT, BESTWAIT_PRIO, ~0);
+>      uint32_t num_cycles;
+>  } DisasContext;
+>
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+>
+> -    if (pkt->pkt_has_cof) {
+> +    if (ctx->pkt_ends_tb || ctx->base.is_jmp =3D=3D DISAS_NORETURN) {
 >
 
-Is ~0 the correct value here?  Seems like it should be best_prio.
+Just call pkt_ends_tb() here
 
+Otherwise
+Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
 
-> +        hex_raise_interrupts(env, 1 << int_number, CPU_INTERRUPT_SWI);
-> +    }
-> +}
-> +
->  void HELPER(wait)(CPUHexagonState *env, uint32_t PC)
->  {
->      BQL_LOCK_GUARD();
-> @@ -1680,8 +1736,27 @@ uint64_t HELPER(greg_read_pair)(CPUHexagonState
-> *env, uint32_t reg)
->      g_assert_not_reached();
->  }
->
-> +/*
-> + * setprio/resched - See the Hexagon V73 Programmer's Reference Manual,
-> + * Section 6.4 "Interrupt and Thread Scheduling"
->
-
-Neither the V71 (mentioned above) or V73 PRM contain section 6.4.
-
-
-> + */
->  void HELPER(setprio)(CPUHexagonState *env, uint32_t thread, uint32_t pri=
-o)
->  {
-> +    CPUState *cs;
-> +
-> +    BQL_LOCK_GUARD();
-> +    CPU_FOREACH(cs) {
-> +        HexagonCPU *found_cpu =3D HEXAGON_CPU(cs);
-> +        CPUHexagonState *found_env =3D &found_cpu->env;
-> +        if (thread =3D=3D found_env->threadId) {
-> +            SET_SYSTEM_FIELD(found_env, HEX_SREG_STID, STID_PRIO, prio);
-> +            qemu_log_mask(CPU_LOG_INT,
-> +                          "%s: tid " TARGET_FMT_lx " prio =3D 0x%x\n",
->
-
-Don't use %x
-
-
-> +                          __func__, found_env->threadId, prio);
-> +            resched(env);
-> +            return;
-> +        }
-> +    }
->      g_assert_not_reached();
->  }
->
-> --
-> 2.34.1
->
->
-
---000000000000befc71064d2701ef
+--000000000000bd3628064d27151a
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
@@ -284,164 +173,37 @@ e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
 olid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mai=
 lto:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
 <br>
-The hardware-assisted scheduler helps manage tasks on the run queue<br>
-and interrupt steering.<br>
-<br>
-This instruction is defined in the Qualcomm Hexagon V71 Programmer&#39;s Re=
-ference<br>
-Manual -<br>
-<a href=3D"https://docs.qualcomm.com/bundle/publicresource/80-N2040-51_REV_=
-AB_Hexagon_V71_ProgrammerS_Reference_Manual.pdf" rel=3D"noreferrer" target=
-=3D"_blank">https://docs.qualcomm.com/bundle/publicresource/80-N2040-51_REV=
-_AB_Hexagon_V71_ProgrammerS_Reference_Manual.pdf</a><br>
-See =C2=A711.9.2 SYSTEM MONITOR.<br></blockquote><div><br></div><div>This d=
-ocument doesn&#39;t have a section 11.9.2.</div><div>=C2=A0</div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">
-<br>
 Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
 " target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
 ---<br>
-=C2=A0target/hexagon/op_helper.c | 75 +++++++++++++++++++++++++++++++++++++=
-+<br>
-=C2=A01 file changed, 75 insertions(+)<br>
+=C2=A0target/hexagon/translate.h |=C2=A0 =C2=A01 +<br>
+=C2=A0target/hexagon/translate.c | 102 ++++++++++++++++++++++++++++++++++++=
+-<br>
+=C2=A02 files changed, 101 insertions(+), 2 deletions(-)<br>
 <br>
-diff --git a/target/hexagon/op_helper.c b/target/hexagon/op_helper.c<br>
-index 9090a5c20ab..36822219b4b 100644<br>
---- a/target/hexagon/op_helper.c<br>
-+++ b/target/hexagon/op_helper.c<br>
-@@ -1575,6 +1575,62 @@ static void hexagon_wait_thread(CPUHexagonState *env=
-, uint32_t PC)<br>
-=C2=A0 =C2=A0 =C2=A0cpu_interrupt(cs, CPU_INTERRUPT_HALT);<br>
-=C2=A0}<br>
+diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h<br>
+index 82b327312ec..4e090565aac 100644<br>
+--- a/target/hexagon/translate.h<br>
++++ b/target/hexagon/translate.h<br>
+@@ -85,6 +85,7 @@ typedef struct DisasContext {<br>
+=C2=A0 =C2=A0 =C2=A0TCGv branch_taken;<br>
+=C2=A0 =C2=A0 =C2=A0TCGv dczero_addr;<br>
+=C2=A0 =C2=A0 =C2=A0bool pcycle_enabled;<br>
++=C2=A0 =C2=A0 bool pkt_ends_tb;<br></blockquote><div><br></div><div>You do=
+n&#39;t need this as part of DisasContext</div><div>=C2=A0</div><blockquote=
+ class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
+lid rgb(204,204,204);padding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0uint32_t num_cycles;<br>
+=C2=A0} DisasContext;<br>
 <br>
-+static inline QEMU_ALWAYS_INLINE void resched(CPUHexagonState *env)<br>
-+{<br>
-+=C2=A0 =C2=A0 uint32_t schedcfg;<br>
-+=C2=A0 =C2=A0 uint32_t schedcfg_en;<br>
-+=C2=A0 =C2=A0 int int_number;<br>
-+=C2=A0 =C2=A0 CPUState *cs;<br>
-+=C2=A0 =C2=A0 uint32_t lowest_th_prio =3D 0; /* 0 is highest prio */<br>
-+=C2=A0 =C2=A0 uint32_t bestwait_reg;<br>
-+=C2=A0 =C2=A0 uint32_t best_prio;<br>
-+<br>
-+=C2=A0 =C2=A0 BQL_LOCK_GUARD();<br>
-+=C2=A0 =C2=A0 qemu_log_mask(CPU_LOG_INT, &quot;%s: check resched\n&quot;, =
-__func__);<br>
-+=C2=A0 =C2=A0 HexagonCPU *cpu =3D env_archcpu(env);<br>
-+=C2=A0 =C2=A0 schedcfg =3D cpu-&gt;globalregs ?<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hexagon_globalreg_read(cpu-&gt;globalregs, HEX=
-_SREG_SCHEDCFG,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;threadId) : 0;<br>
-+=C2=A0 =C2=A0 schedcfg_en =3D GET_FIELD(SCHEDCFG_EN, schedcfg);<br>
-+=C2=A0 =C2=A0 int_number =3D GET_FIELD(SCHEDCFG_INTNO, schedcfg);<br>
-+<br>
-+=C2=A0 =C2=A0 if (!schedcfg_en) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 CPU_FOREACH(cs) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 HexagonCPU *thread =3D HEXAGON_CPU(cs);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 CPUHexagonState *thread_env =3D &amp;(thread-&=
-gt;env);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 uint32_t th_prio =3D GET_FIELD(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 STID_PRIO, thread_env-&gt;t_sreg=
-[HEX_SREG_STID]);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (!hexagon_thread_is_enabled(thread_env)) {<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 lowest_th_prio =3D (lowest_th_prio &gt; th_pri=
-o)<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ? lowest_th_prio<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 : th_prio;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 bestwait_reg =3D cpu-&gt;globalregs ?<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hexagon_globalreg_read(cpu-&gt;globalregs, HEX=
-_SREG_BESTWAIT,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0env-&gt;threadId) : 0;<br>
-+=C2=A0 =C2=A0 best_prio =3D GET_FIELD(BESTWAIT_PRIO, bestwait_reg);<br>
-+<br>
-+=C2=A0 =C2=A0 /*<br>
-+=C2=A0 =C2=A0 =C2=A0* If the lowest priority thread is lower priority than=
- the<br>
-+=C2=A0 =C2=A0 =C2=A0* value in the BESTWAIT register, we must raise the re=
-schedule<br>
-+=C2=A0 =C2=A0 =C2=A0* interrupt on the lowest priority thread.<br>
-+=C2=A0 =C2=A0 =C2=A0*/<br>
-+=C2=A0 =C2=A0 if (lowest_th_prio &gt; best_prio) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_log_mask(CPU_LOG_INT,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;%s: raising =
-resched int %d, cur PC 0x&quot; TARGET_FMT_lx &quot;\n&quot;,<br></blockquo=
-te><div><br></div><div>Don&#39;t use %d</div><div>=C2=A0</div><blockquote c=
-lass=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px soli=
-d rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 __func__, int_numb=
-er, env-&gt;gpr[HEX_REG_PC]);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 SET_SYSTEM_FIELD(env, HEX_SREG_BESTWAIT, BESTW=
-AIT_PRIO, ~0);<br></blockquote><div><br></div><div>Is ~0 the correct value =
-here?=C2=A0 Seems like it should be best_prio.</div><div>=C2=A0</div><block=
-quote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1=
-px solid rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hex_raise_interrupts(env, 1 &lt;&lt; int_numbe=
-r, CPU_INTERRUPT_SWI);<br>
-+=C2=A0 =C2=A0 }<br>
-+}<br>
-+<br>
-=C2=A0void HELPER(wait)(CPUHexagonState *env, uint32_t PC)<br>
-=C2=A0{<br>
-=C2=A0 =C2=A0 =C2=A0BQL_LOCK_GUARD();<br>
-@@ -1680,8 +1736,27 @@ uint64_t HELPER(greg_read_pair)(CPUHexagonState *env=
-, uint32_t reg)<br>
-=C2=A0 =C2=A0 =C2=A0g_assert_not_reached();<br>
-=C2=A0}<br>
-<br>
-+/*<br>
-+ * setprio/resched - See the Hexagon V73 Programmer&#39;s Reference Manual=
-,<br>
-+ * Section 6.4 &quot;Interrupt and Thread Scheduling&quot;<br></blockquote=
-><div><br></div><div>Neither the V71 (mentioned above) or V73 PRM contain s=
-ection 6.4.</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=
-=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding=
--left:1ex">
-+ */<br>
-=C2=A0void HELPER(setprio)(CPUHexagonState *env, uint32_t thread, uint32_t =
-prio)<br>
-=C2=A0{<br>
-+=C2=A0 =C2=A0 CPUState *cs;<br>
-+<br>
-+=C2=A0 =C2=A0 BQL_LOCK_GUARD();<br>
-+=C2=A0 =C2=A0 CPU_FOREACH(cs) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 HexagonCPU *found_cpu =3D HEXAGON_CPU(cs);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 CPUHexagonState *found_env =3D &amp;found_cpu-=
-&gt;env;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (thread =3D=3D found_env-&gt;threadId) {<br=
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c<br><br=
 >
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 SET_SYSTEM_FIELD(found_env, HEX_=
-SREG_STID, STID_PRIO, prio);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 qemu_log_mask(CPU_LOG_INT,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 &quot;%s: tid &quot; TARGET_FMT_lx &quot; prio =3D 0x%x\n=
-&quot;,<br></blockquote><div><br></div><div>Don&#39;t use %x</div><div>=C2=
-=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8e=
-x;border-left:1px solid rgb(204,204,204);padding-left:1ex">
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 __func__, found_env-&gt;threadId, prio);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 resched(env);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-=C2=A0 =C2=A0 =C2=A0g_assert_not_reached();<br>
-=C2=A0}<br>
-<br>
--- <br>
-2.34.1<br>
-<br>
-</blockquote></div></div>
+-=C2=A0 =C2=A0 if (pkt-&gt;pkt_has_cof) {<br>
++=C2=A0 =C2=A0 if (ctx-&gt;pkt_ends_tb || ctx-&gt;base.is_jmp =3D=3D DISAS_=
+NORETURN) {<br></blockquote><div><br></div><div>Just call pkt_ends_tb() her=
+e</div><div>=C2=A0</div><div>Otherwise</div><div>Reviewed-by: Taylor Simpso=
+n &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com">ltaylorsimpson@gmail.com<=
+/a>&gt;</div></div></div>
 
---000000000000befc71064d2701ef--
+--000000000000bd3628064d27151a--
 
