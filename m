@@ -4,104 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E32D4F53D76
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:56:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2865F53D78
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 17:00:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2BED-0006XV-Go; Mon, 16 Mar 2026 12:55:41 -0400
+	id 1w2BHl-0007sU-89; Mon, 16 Mar 2026 12:59:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2BE2-0006X5-QE
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:55:30 -0400
-Received: from mail-pl1-x62a.google.com ([2607:f8b0:4864:20::62a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
- id 1w2BDx-0000n7-UM
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:55:29 -0400
-Received: by mail-pl1-x62a.google.com with SMTP id
- d9443c01a7336-2aecefc7503so20987505ad.1
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:55:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773680124; cv=none;
- d=google.com; s=arc-20240605;
- b=VhjvTzS+PQlooelD7PLFx+YMCoz4mzw85YWaGDVZmzlS1kHTUcy8IBahLZOi300qXh
- f0M6IWa5rscrkBpzopI7GvOQQwJytuU8ufZhvqH0z6erNO+Q+tfTtUYsVVEasmcUqco2
- mZU9PCJkjuDzqgreI32tr4L8uqKr7Dvbb9rukR208I2hqQ/0qKkMQ0HeRCQ/K/Uq7fkc
- gVK43Xj/u+3HVEtPGu/YN5wJfajtheZhg7VzYJ/uffFlAyNXFaP47jAKX5/fDRKCfKDK
- AXYNsURDHIxNOh6IFEQgvoZGZewultbzySN9FzJPqlPnHygYwz1BCsbQ9E+2ksmAkg/V
- hYZA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=FkzDjEXghZmNw0jZFhY0tNGm1mxtVCG8CbGzX1vUCFg=;
- fh=KRCCjFQNjYXxmVm5lhBeSL8Cxa/V2Ufkjle/+cdDqO0=;
- b=ggghcV6TDoyA8qsK0Hqk6P+nIBdeUzVLJdKdZoOIcOTAPMjhwjoM//4o9xBLtVUSvN
- l+1F/xa33RrFuvDnn81SR1uf+blU68aoyYGB/UanvC3PaOBiOBGfN7tiYzFD448oDAag
- bYHMf37c4pn2tsS1F6NNuhT2rFw5k7+vG9RIsG0lcbOOCjqMNzhS3ebgNkqPj1jES1MT
- DjaCkP0SpR50M3nGWGLpMQRHP7pS1DD6BeXFsDAgsNmxTsPdwRny92Se0b2+FLKqZWag
- 2I8qZYO8DQxNxv4be+Z2YbF1leDP9dJz+drcnDzQgU17k+eP5TUN83gL9APhB9UWQUcH
- 4+0A==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2BHh-0007rY-1H
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:59:17 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2BHb-0001kv-K5
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:59:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773680349;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=jJwE8FcpWd862qoa3YE4LKMayWc9IAG7l/gQK0A/y0k=;
+ b=SPCOd/y7t6ZzptBsmTy+8ydFARK/lw+6h+ybhBnPyfVtk6c/sdNAOI55lAdSxeNLcF38/Y
+ iSg/PGXITQ8oJCvK2RJrVXm6MhSJyUGcDfxtu7klcIf7dJZuvDMgyeGqje1LqhjoU5EpbJ
+ JoeOxiu8aUqMEkTHQU0blWoqMJ33PcQ=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-306-lhxgc3eUNMGqj6C3cOmJuw-1; Mon, 16 Mar 2026 12:59:07 -0400
+X-MC-Unique: lhxgc3eUNMGqj6C3cOmJuw-1
+X-Mimecast-MFC-AGG-ID: lhxgc3eUNMGqj6C3cOmJuw_1773680346
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-485345e2fdfso26241235e9.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:59:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773680124; x=1774284924; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=FkzDjEXghZmNw0jZFhY0tNGm1mxtVCG8CbGzX1vUCFg=;
- b=g4Xj2RFBbmYFsuJIBy0nWBvuoegQ1E4YWdCJqvGPq4UDnDOWfibCbgWZMhvTiyldf4
- K38gIdNxkA/Wi708W0TMuRptR+Tg9YLpyVIquCSSg4SvROs4r/rsBbA8avPMCuwdNWoW
- wZ8NBuPBetIjnFtmuvjSPC18BRCWNfFw14Blkuk1JT077LXAkL8iyPpLcQRqGFIGPQcT
- 7NCD4WmcL4bJVSRKik/b7HHIboi8Zf0IFuQ5UBG07G36MYqINTpXEsP9xoE1QeybD3vc
- 1PEC3LBsskw+MnvvPv/znFIVxWJG5oECDv9jE1m5SFHSlxw6Qt89P/pwqX11WXRgVL+B
- 4fcg==
+ d=redhat.com; s=google; t=1773680346; x=1774285146; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=jJwE8FcpWd862qoa3YE4LKMayWc9IAG7l/gQK0A/y0k=;
+ b=jEcWA5ViEKr3Y/PSwj4iZGjBT+d9lwWuoNSNCSL4r5YTSn55ITi8YqJbEX8ZvVl1oC
+ yROJ+SsVw2m6nw2xcdbT+tsxzkHQt7Sd6+TRbr0GUDKyhxC74XR/9+coKVOTduo8d/BR
+ PZ0HKIhEY3bXojiDp6U3Bo13FkB+MI5SxOV4zBjHEKHFGl9GJ/ypsyByXYQ1MEb9mBGu
+ eGejHoaNBj2u2ZApynhOKNCZW4aEBW+9N+BNHWfjh48t/HJEiCjpy3BpO8plyswmhGqs
+ urkbNHkpOPTulYQMXXQCGu/u6fq4SAUYWg95H0WSODm+1QyjzKxVePSutDnr+irbnL17
+ pPAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773680124; x=1774284924;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=FkzDjEXghZmNw0jZFhY0tNGm1mxtVCG8CbGzX1vUCFg=;
- b=eROFP7QsjeMdAJpFKxgz0gXM4+yJ9qFHXD6zfwajyqw4rvcFpNr2Um9qv8EWzs3xXz
- RJ5DY4C2wyytYrXr4U9twkpdIZ/pQJyvCa8qF9ptLWrJNmV0Lv3EXDUXzuD1uf4kqv4w
- m4vS80TOnVpiAj/vj3E8rku17sVRfVwukkY2fbtuxB0Br+TIG2qvggHulLHwfRaAs930
- bwesSuZW/AyLRQYBuXF5pXX9odBjFT80g+NoWV+OP8EfGuFko3Zg+VDMzv27fpiBdmWZ
- kWl7kfxEuMs5vTdT/uvqursCms0NsPy56Lrw2M7Yi5uxUUjxTAOuX8/wO/3rl0NWVH7/
- IFYw==
-X-Gm-Message-State: AOJu0YwgW8LkPohZ3QuiLk7wx0hN4tS+bATWfZKUwh6nMv3ZLkkZFoVQ
- 5+BZlH6IyWRJvw9V1JNK2e0hrtUIACtrvPvNesDhutzhKwFolZsY3bJt7GlGJCbqOFjy+nQijPR
- 4z7Z+KiZwZKnEDidsoEHsHA2FEcHTZ+A=
-X-Gm-Gg: ATEYQzxtQXLbDW3wBCGjnLzDiahavTPbYvmGZN6bubzcQwYIBmf8vHTUf5jUSWVY0SK
- ZL31NExxgOe3VtshcR7xJn6mM14B7pD1eDAxp0D5x/X9WCnmQl3dOWebViu7aJm1ZPPJOfXFz0H
- xbihEE5VLu4VkfreCzyER3DbPUf8mIbFCY6lQvU/v/eXzxgL+4vpFDRYPEAk0mkuotVaIF7hq/8
- iRhB1KzSysn1bA17uidaVHPmwVOCBAaiSm81xETsDDeePuckfM0w3FQni45XI0SIgqyiCWoSpKR
- JezkWrTYuXR628ivFR00wepoWKo+rpLVADb1zuNU901OErnD
-X-Received: by 2002:a17:903:8c3:b0:2ae:c7e6:a13b with SMTP id
- d9443c01a7336-2aeca92b90emr129180995ad.4.1773680124047; Mon, 16 Mar 2026
- 09:55:24 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773680346; x=1774285146;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=jJwE8FcpWd862qoa3YE4LKMayWc9IAG7l/gQK0A/y0k=;
+ b=DR4sSVespJ1F+s3RJRr2ItuXLuJNVCM9F1mO5DFIdFQdZADBw0Tx0qStGvQU4/x+rk
+ FJDUdbq8DevCkmamnh5xnpGmMMgKSBeYLs1OOn7FHiuOyqcre21qXPhwldmfVHAb7ZYN
+ 8LPkjx16v+5T8zKfUZVcSo23nuXUzquuMWRLh8w3SRD79fph5b8xCdw2lZ20Um7NE3Lz
+ krBe/CLkVB7Giko6rtIn4z+QAMgF5AxSLPL3Yz68aenut88O4eEqW82c9bYa6EfzPu3L
+ DRjnIsUJ2gGn/GtH3T1UzuMtZwo5JYHcEPM5LAiIXQZ90p0h+0C7NJmO5LaixC+TBWp7
+ h7Lw==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXsCOc+ibvMBdN7l9Nld+S0ZJwQMSVKbcce/52r89nROuRjTZQU0OZouDCwPeNR5XQp3po+0lefS9yA@nongnu.org
+X-Gm-Message-State: AOJu0YxIAUm+nOJlvgsq/iE7zEMMICxsOhEIfeEi7+/lVeq+4VdWWuJ+
+ eZp7KLICWC0MlyJtvlMfe70RfeAaM12+NbvfYyLXkk2VYCN1wmae0Ati4e8qGoGndYK+RNiBLQ5
+ K5JovhQYeWut3iRcC/4277v8bqFyBqbac7XTW0VnWA3IBPEXq2/MyNzS7
+X-Gm-Gg: ATEYQzxwRyC3BwzwlaQ2hSFQexASDhkhwSKoQvGH00oZJrjcsbhf2vQsKcyqKj9gTNf
+ 38Ky2mtwe3qN3qk7d3Oe6gVS1me8X6GDcC+0TpQn7ynMx1+Qjhv2xRtwFY59VXUY7UsEHHTV6mZ
+ Qd7x8OofBGc29Utg6uZx4C+81REuLgEkYs8MDJCdMqdej/jE/1bqE27dXz201x4TnrtyTcgtAaQ
+ hshoLCvnNvtNiPdJzuYoobX4riXi0T6OD+o60ELuaF6aqzEnUtpnNNtht2jGVDhqO0JACQ366sf
+ TbwuSQeFbmawwbHEABlDj1IeeH2jBX41b0rnlNtEr4hqPIuWqlpDh0hKSEiVffh0c5witC0THxJ
+ eb7AdM8jNri7Umz5g8LZAYMBwbc5hSkO0aGwpIPLde5mmMs+SWCdYSZg9UG7SkD0QgV6kAyxaB4
+ TYQAL2uEPj6ETYTxwxX7ZZLYuK5eiwXOKhWHLXCr72utVms5opFSA=
+X-Received: by 2002:a05:600c:4514:b0:485:2f6a:6ed with SMTP id
+ 5b1f17b1804b1-4855670b701mr223333535e9.28.1773680345925; 
+ Mon, 16 Mar 2026 09:59:05 -0700 (PDT)
+X-Received: by 2002:a05:600c:4514:b0:485:2f6a:6ed with SMTP id
+ 5b1f17b1804b1-4855670b701mr223333135e9.28.1773680345537; 
+ Mon, 16 Mar 2026 09:59:05 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d737:d02c:3210:ed4b:e671:ceb9?
+ (p200300cfd737d02c3210ed4be671ceb9.dip0.t-ipconnect.de.
+ [2003:cf:d737:d02c:3210:ed4b:e671:ceb9])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4856ea9c387sm5792585e9.8.2026.03.16.09.59.04
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Mar 2026 09:59:04 -0700 (PDT)
+Message-ID: <a09d7754-78d9-4239-a3f1-749646a12180@redhat.com>
+Date: Mon, 16 Mar 2026 17:59:03 +0100
 MIME-Version: 1.0
-References: <20260311040758.1068731-1-brian.cain@oss.qualcomm.com>
- <20260311040758.1068731-24-brian.cain@oss.qualcomm.com>
-In-Reply-To: <20260311040758.1068731-24-brian.cain@oss.qualcomm.com>
-From: Taylor Simpson <ltaylorsimpson@gmail.com>
-Date: Mon, 16 Mar 2026 10:55:12 -0600
-X-Gm-Features: AaiRm50kcCiKXiGOPEcEvbMuQ7poR752ZG9YeJX630P5PtHVuMIW20O9QjeU1YQ
-Message-ID: <CAATN3NroFnCQvOdQ0LT5C4DES_79oxkRpymq2uqvKUJaC6k-WA@mail.gmail.com>
-Subject: Re: [PATCH v3 23/32] target/hexagon: Add pkt_ends_tb to translation
-To: Brian Cain <brian.cain@oss.qualcomm.com>
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
- matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
- quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
- anjo@rev.ng, Brian Cain <bcain@quicinc.com>
-Content-Type: multipart/alternative; boundary="000000000000bd3628064d27151a"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62a;
- envelope-from=ltaylorsimpson@gmail.com; helo=mail-pl1-x62a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH 1/3] block/mirror: fix assertion failure upon duplicate
+ complete for job using 'replaces'
+To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org, kwolf@redhat.com, vsementsov@yandex-team.ru,
+ jsnow@redhat.com, qemu-stable@nongnu.org
+References: <20260311145717.668492-1-f.ebner@proxmox.com>
+ <20260311145717.668492-2-f.ebner@proxmox.com>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <20260311145717.668492-2-f.ebner@proxmox.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,93 +128,17 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---000000000000bd3628064d27151a
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-On Tue, Mar 10, 2026 at 10:08=E2=80=AFPM Brian Cain <brian.cain@oss.qualcom=
-m.com>
-wrote:
-
-> From: Brian Cain <bcain@quicinc.com>
+On 11.03.26 15:54, Fiona Ebner wrote:
+> If s->replace_blocker was already set by an earlier invocation of
+> mirror_complete(), then there will be an assertion failure when
+> error_setg() is called for it a second time. The bdrv_op_block_all()
+> and bdrv_ref() operations should only be done a single time too.
 >
-> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 > ---
->  target/hexagon/translate.h |   1 +
->  target/hexagon/translate.c | 102 ++++++++++++++++++++++++++++++++++++-
->  2 files changed, 101 insertions(+), 2 deletions(-)
->
-> diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h
-> index 82b327312ec..4e090565aac 100644
-> --- a/target/hexagon/translate.h
-> +++ b/target/hexagon/translate.h
-> @@ -85,6 +85,7 @@ typedef struct DisasContext {
->      TCGv branch_taken;
->      TCGv dczero_addr;
->      bool pcycle_enabled;
-> +    bool pkt_ends_tb;
->
+>   block/mirror.c | 28 +++++++++++++++-------------
+>   1 file changed, 15 insertions(+), 13 deletions(-)
 
-You don't need this as part of DisasContext
+Reviewed-by: Hanna Czenczek <hreitz@redhat.com>
 
-
->      uint32_t num_cycles;
->  } DisasContext;
->
-> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
->
-> -    if (pkt->pkt_has_cof) {
-> +    if (ctx->pkt_ends_tb || ctx->base.is_jmp =3D=3D DISAS_NORETURN) {
->
-
-Just call pkt_ends_tb() here
-
-Otherwise
-Reviewed-by: Taylor Simpson <ltaylorsimpson@gmail.com>
-
---000000000000bd3628064d27151a
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 10,=
- 2026 at 10:08=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.q=
-ualcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquot=
-e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
-olid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mai=
-lto:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
-<br>
-Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
-" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
----<br>
-=C2=A0target/hexagon/translate.h |=C2=A0 =C2=A01 +<br>
-=C2=A0target/hexagon/translate.c | 102 ++++++++++++++++++++++++++++++++++++=
--<br>
-=C2=A02 files changed, 101 insertions(+), 2 deletions(-)<br>
-<br>
-diff --git a/target/hexagon/translate.h b/target/hexagon/translate.h<br>
-index 82b327312ec..4e090565aac 100644<br>
---- a/target/hexagon/translate.h<br>
-+++ b/target/hexagon/translate.h<br>
-@@ -85,6 +85,7 @@ typedef struct DisasContext {<br>
-=C2=A0 =C2=A0 =C2=A0TCGv branch_taken;<br>
-=C2=A0 =C2=A0 =C2=A0TCGv dczero_addr;<br>
-=C2=A0 =C2=A0 =C2=A0bool pcycle_enabled;<br>
-+=C2=A0 =C2=A0 bool pkt_ends_tb;<br></blockquote><div><br></div><div>You do=
-n&#39;t need this as part of DisasContext</div><div>=C2=A0</div><blockquote=
- class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px so=
-lid rgb(204,204,204);padding-left:1ex">
-=C2=A0 =C2=A0 =C2=A0uint32_t num_cycles;<br>
-=C2=A0} DisasContext;<br>
-<br>
-diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c<br><br=
->
--=C2=A0 =C2=A0 if (pkt-&gt;pkt_has_cof) {<br>
-+=C2=A0 =C2=A0 if (ctx-&gt;pkt_ends_tb || ctx-&gt;base.is_jmp =3D=3D DISAS_=
-NORETURN) {<br></blockquote><div><br></div><div>Just call pkt_ends_tb() her=
-e</div><div>=C2=A0</div><div>Otherwise</div><div>Reviewed-by: Taylor Simpso=
-n &lt;<a href=3D"mailto:ltaylorsimpson@gmail.com">ltaylorsimpson@gmail.com<=
-/a>&gt;</div></div></div>
-
---000000000000bd3628064d27151a--
 
