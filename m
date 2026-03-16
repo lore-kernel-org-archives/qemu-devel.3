@@ -4,76 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A071FF4644A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:43:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AC88F46445
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:43:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25PJ-0001Jg-RM; Mon, 16 Mar 2026 06:42:45 -0400
+	id 1w25PU-00021n-TF; Mon, 16 Mar 2026 06:42:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25PH-0001D7-Jx
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:43 -0400
+ id 1w25PS-0001uw-9c
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:54 -0400
 Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25PG-0003ey-2O
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:43 -0400
+ id 1w25PQ-0003hF-JG
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:54 -0400
 Received: by mail-wm1-x329.google.com with SMTP id
- 5b1f17b1804b1-4853e1ce427so50330935e9.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:41 -0700 (PDT)
+ 5b1f17b1804b1-48557c8ad47so24408765e9.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773657760; x=1774262560; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773657771; x=1774262571; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=QivXNglU3D5z845k4K3akybnT7x3kG0DcKlXXbcSIQU=;
- b=mmZl5ZU+Ba4BTveLi2Np/V3PcorntvD2Zj9CkBWi8QED6UZ+fFYfUea0tRgnO2GkHM
- OASJ/Ec1E0mH7niMh9qdwrQ4e/QF0thqmqJSmMDB+HmPSi4CimWl7Ms1fICfd5m28G/O
- 41sLEz0g+Odd8ltr1fQL7yUJYk9dL5UrejI8r9CIzRl/m2E8ue0M34964Twhx9Esa6JT
- v/w4nU1Dw6wrjJeYXjhbsUG7JkeYNu+G999cAFVEKhuMavn952/mIgHn8q82j+DQNPh8
- pKoMEb6JbwTLt0xH7b+zDYm5h1u1yu66ravQI37dlNogRbLWvgZCoRFRdH9mnrLYx5bT
- Q4RQ==
+ :reply-to; bh=VoeBwvNz/P8suv3FOeBbsNj8VpBrzg4rCNwkaJZHuV8=;
+ b=X18ywJWOFPFCTbt67f9n2+pMnPmIkXR4Nx4M5/BKumRN70vGvg++D1z3apC5yI8FXp
+ XMiZMiDO4pBdJXKIKSNwT+hP0Lx4ZroW7bm9GK/k1PvWXg6cHF+uYlmT/bstemSOIGhP
+ cfkL2/E+kg5qDGMrZfgC4ycFJTuHRdr7MZYwfjDWLYumHGXMsh2J1lPKwtpewS2uTanp
+ lfq52VSXF5NBXxMp7ND8RjJpxbAQGScYGa8Q+thHlxT3lmwIjiMuukRoARJGJ+WYqKv/
+ 23yL8OhHnVY/OkWsKDoPpdj4bpi5gg32eKfRoW58PPmEj2eY95irgZoT0MrD0akwdVna
+ S4YA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773657760; x=1774262560;
+ d=1e100.net; s=20251104; t=1773657771; x=1774262571;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=QivXNglU3D5z845k4K3akybnT7x3kG0DcKlXXbcSIQU=;
- b=kJmgeO4a2H2siOKjTwvWcjx/uxpjkT4q/a4/SWmco+Gf2gReBcNTLkw7NxqYlIxLs5
- aGWM+x1ziBR++G+AUex7mIEcNWRkuoWJOBXZY/ELMhrmjCBXbH79Eh1mXuY+w00P6yIf
- kQJcChJug74iDapWvWDcYNYqf2xxyolKjwi5In1xn4a+5YlN8bYTfgq0zITRbveb1iTe
- sKeB97wwUhNJ3LITkh1+2Q86cdEpQCxk6iUn9GoMHOSZD6+fbm66pN+iH74eAWYqfL7t
- 0NySteTp9R9UyWy2MkLnD3QRIPDG8jPmH73pffP7//epVmnwtpL1EKVMj0IM1qaJYp/L
- fiPQ==
-X-Gm-Message-State: AOJu0YxKLE4sPZV2xU1NDOvReLyxoo1CpSMTMjkFfn1005QpBBdB9Gnz
- VkzavVwVOmol7jMrXX/79KS85BPqfL2no2Cgn1wG+5droIeDaxBewNAcIgko4hRw3qDxvdwpr/Z
- TACGY
-X-Gm-Gg: ATEYQzyzMHIVg39diffgbngMeRgYnMUiv975gl8gNFjOxxQYSu7aZdG1rXyNNpC1U6q
- iIo8X6bvrQaPNoVZ1vjQwYqcdXtZmRks0zFePu4e9cATS+VmfZBuIUOAU8P1A6eK7IXSOU0k4/L
- Hro6xYthTJNu1/J9/BJ/YtWr0krZ2DLG2h0h7qpawunnR9YMHNgoIHK6oa6ri2Q1MbZ/nRcsPV1
- vLVmXXptGlhRxGjsIK5FwYdMCRakA2IqQhE4MCkC+FiSLOutLJrax5QUVf1ytTXbuq9Uv3+oRcd
- 8svUEpkzn1X1I8OhrYYRpZuMeal+w+HpT3cGPshV5RuCg7PK+YPxst0ixJlB876H2YYmsxDvtmv
- nYNbXzHIw6WunpmEKM+CcoJ3z+kRl9BvHIOOMQShTKuVODL69IgU0Gy5gnc0qVJ3P+5xrjYKlls
- x2iY0P5oOW3Ikk12IvXdNlAie4A3WraySJwRPG+vFdVKsJ7vVubUXejAdu4hND5N2O1Z7IkxZTG
- tON6og=
-X-Received: by 2002:a05:600d:6445:10b0:485:35a4:939c with SMTP id
- 5b1f17b1804b1-4855670c0f4mr148884485e9.29.1773657760414; 
- Mon, 16 Mar 2026 03:42:40 -0700 (PDT)
+ bh=VoeBwvNz/P8suv3FOeBbsNj8VpBrzg4rCNwkaJZHuV8=;
+ b=C6XtPcVfCpLB87wLYROGPZuhL2nTBeHeXNEOrWduyPrmMxlgfKGp6d6lCmMB4/9ibW
+ jI+W+5bU8nqXMh+Cdz6P5VdUaEYD0sMxw+uuoDaHYvXMtLO/+f9mGl7DnJ8Rn9LTpMQh
+ 6XxAiBOU6K47sU4xNtalk5mA70ME8/Z8iK0gNUxtO+d6fVEn3ogLcguAR6kjJQyfhrPh
+ Oh3+EnVrGfoQxWY4ypACzBnmG/O1HQzbFEkkv0SlDNM8fgEU1AcLnBic63tAerwbeOdJ
+ hdQ+EhQwLkcEB8D9muF3LdQ/PVanhFlZHT9dPWeH3g6gT49O4xD7IHqMcHhapI8CdbhD
+ JNgg==
+X-Gm-Message-State: AOJu0YyZOq8aDHkbTW3lgItqaulIQpI7l+/M066lmqGeQfLPtGYS8nKP
+ opZYwZ3quGKYirb2wYQMObjx3vA26I1i2g60yp66IcMIBImbrgU+uvQsnuIrIUxBt3DIN2K2Jeb
+ ih9Uw
+X-Gm-Gg: ATEYQzxbK9oIK+plrHulANRmziD8pieTLq40hycq0+wTZ0rPGuNZl3VjlozbXzrQhnW
+ QZFdnfcdE9n+i9a9ufpjVr/lPBOYzAZnx+XwjfewxjeQod1I1gnWDHyJJ15Ty8f7BS0UfELRbk2
+ lzBXDivEYWpNSvj1JoRH3yB563P1NuPUGZWuz8FPvbLNRWDiaXZBVgvo1UvruWQbwLJE4z3xnTQ
+ sxDF99qgis3KISxxw7ZhGCrhhAMR5/c6v1+soo+9dIJfBNhbv79GV8bvTaQr3wb4Kyiq4D+mfNq
+ 5IReBVxQedBE8K/CFSW539wRJxrrQ5NgQYMWwoq3rU0vqzvKVErXnSyzyKJVQPWzlEf0L1VDct0
+ 7dJm6BrfSbcujIgAzzBafhAjm4u0OiE2YwX+9resMJovP396pHlo8ev86mUfrfIvMlINKFy1KHr
+ XomFIu4oK5FoieObhz8u1ErPagF2T5XF4O0EAwSO+4fHB6QddptPWlWEYy4SkGaDjW6cLejYe1P
+ 8ts8DG8zPM=
+X-Received: by 2002:a05:600c:1c21:b0:485:5ba3:37d8 with SMTP id
+ 5b1f17b1804b1-4855ba33bf2mr171648935e9.5.1773657771056; 
+ Mon, 16 Mar 2026 03:42:51 -0700 (PDT)
 Received: from lanath.. ([81.2.115.145]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48557a74266sm85519135e9.17.2026.03.16.03.42.39
+ 5b1f17b1804b1-48557a74266sm85519135e9.17.2026.03.16.03.42.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 03:42:39 -0700 (PDT)
+ Mon, 16 Mar 2026 03:42:50 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 06/17] hw/dma/pl080: Update interrupts after pl080_run()
-Date: Mon, 16 Mar 2026 10:42:19 +0000
-Message-ID: <20260316104230.836962-7-peter.maydell@linaro.org>
+Subject: [PULL 17/17] tests/qtest/aspeed_gpio-test: Use g_strdup_printf()
+ instead of char arrays
+Date: Mon, 16 Mar 2026 10:42:30 +0000
+Message-ID: <20260316104230.836962-18-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260316104230.836962-1-peter.maydell@linaro.org>
 References: <20260316104230.836962-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=2a00:1450:4864:20::329;
  envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
@@ -99,60 +101,51 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Ding <dingtao0430@163.com>
+Older versions of gcc with -Wformat-overflow=2 don't like the usage of
+fixed size char arrays in this test; gcc 7.5.0 (SUSE Linux) says:
 
-In the codepath in pl080_write() where we run the DMA engine
-after a change in the channel configuration register, we were
-missing a pl080_update() call, which meant that we weren't
-raising any interrupts generated by that DMA transfer.
+../tests/qtest/aspeed_gpio-test.c: In function ‘test_set_input_pins’:
+../tests/qtest/aspeed_gpio-test.c:149:36: error: ‘sprintf’ may write a terminating nul past the end of the destination [-Werror=format-overflow=]
+             sprintf(name, "gpio%c%d", c, i);
+                                    ^
+../tests/qtest/aspeed_gpio-test.c:149:13: note: ‘sprintf’ output between 7 and 17 bytes into a destination of size 16
+             sprintf(name, "gpio%c%d", c, i);
+             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-A repro case for this is to program the PL080 and then
-check the interrupt status by looking at the PL190 status
-register, since the PL080 interrupt output is connected
-to input 17 of the PL190. We look at the register value via
-the QEMU monitor:
+This can't actually happen because of the limited size of the values
+being substituted in.  However rather than require readers to check
+whether the arrays really have been declared large enough, we prefer
+to use g_strdup_printf() for this kind of string work.
 
-Reproducer
-    ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
-    -device loader,addr=0x00000000,data=0x11223344,data-len=4 \
-    -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
-    -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
-    -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
-    -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
-    -device loader,addr=0x10130108,data=0x00000000,data-len=4 \
-    -device loader,addr=0x1013010C,data=0x9e4bf001,data-len=4 \
-    -device loader,addr=0x10130110,data=0x0000c001,data-len=4
-
-Qemu monitor
-    (qemu) xp /1wx 0x10140008
-    10140008: 0x00000000
-
-The correct result after this fix:
-    (qemu) xp /1wx 0x10140008
-    10140008: 0x00020000
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Tao Ding <dingtao0430@163.com>
-Message-id: 7584486ba62bc6d767c0d132dc843067f8c5efff.1773301927.git.dingtao0430@163.com
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-[PMM: Adjusted commit message]
+Reported-by: Fabiano Rosas <farosas@suse.de>
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Fabiano Rosas <farosas@suse.de>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-id: 20260310153334.3063224-3-peter.maydell@linaro.org
 ---
- hw/dma/pl080.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/qtest/aspeed_gpio-test.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index 6262c3f3df..c6dc5c8efa 100644
---- a/hw/dma/pl080.c
-+++ b/hw/dma/pl080.c
-@@ -227,6 +227,7 @@ again:
-         if (--s->running)
-             s->running = 1;
-     }
-+    pl080_update(s);
- }
+diff --git a/tests/qtest/aspeed_gpio-test.c b/tests/qtest/aspeed_gpio-test.c
+index decbba23c8..029b3731d1 100644
+--- a/tests/qtest/aspeed_gpio-test.c
++++ b/tests/qtest/aspeed_gpio-test.c
+@@ -140,13 +140,13 @@ static void test_set_colocated_pins(const void *data)
+ static void test_set_input_pins(const void *data)
+ {
+     QTestState *s = (QTestState *)data;
+-    char name[16];
+     uint32_t value;
  
- static uint64_t pl080_read(void *opaque, hwaddr offset,
+     qtest_writel(s, AST2600_GPIO_BASE + GPIO_ABCD_DIRECTION, 0x00000000);
+     for (char c = 'A'; c <= 'D'; c++) {
+         for (int i = 0; i < 8; i++) {
+-            sprintf(name, "gpio%c%d", c, i);
++            g_autofree const char *name = g_strdup_printf("gpio%c%d", c, i);
++
+             qtest_qom_set_bool(s, "/machine/soc/gpio", name, true);
+         }
+     }
 -- 
 2.43.0
 
