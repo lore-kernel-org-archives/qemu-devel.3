@@ -4,92 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0640BF53D7E
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 18:38:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02382F53D8A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 18:47:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2CpM-0007EL-K8; Mon, 16 Mar 2026 14:38:09 -0400
+	id 1w2Cy0-0000CW-1S; Mon, 16 Mar 2026 14:47:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2CpJ-0007E5-Le
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:38:06 -0400
-Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w2Cxy-0000Bo-7c
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:47:02 -0400
+Received: from mail-pl1-x62b.google.com ([2607:f8b0:4864:20::62b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2CpG-0002fS-LP
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:38:05 -0400
-Received: by mail-wr1-x42b.google.com with SMTP id
- ffacd0b85a97d-439c56e822eso5167281f8f.2
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 11:38:01 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
+ id 1w2Cxw-0006Bz-MA
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 14:47:01 -0400
+Received: by mail-pl1-x62b.google.com with SMTP id
+ d9443c01a7336-2aae4816912so32416385ad.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 11:47:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773686279; x=1774291079; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=RXHxMs/SQsDXk+/8NCO2b9D8flVjifuoDuI5upUjPOU=;
- b=shpjwVi6YnF2hTqGC38qMND3YxHcJUmj4HaQm68pbAqCl8RTYb+Rsdf4Vj2uqImmkw
- 9CGiCmYTYpbAqJgbgSjJKtlPaQM7JLiJOKHqI+KxyPg7u6F6sch6z1ChN65f3uLHf1kY
- fQtyUNWFofSBEpSDtvu91vqW3OtdTD/KiZ9T7LeQ45040z6b61Z8Otp72uB39U5/JvCT
- 25+wjW09qmpU9Od1GoG0dPMWTbqzEwQqnJWJ0DsoLXz4obaEoVaZtAADjxCrTisoBPyW
- F0YF5gmp5xPQnuINQbdvfqsFqdw61P1ACr5IBpUYz5pgPnFSpFSFLsvALUQYxNw3WfUj
- KHZw==
+ d=gmail.com; s=20230601; t=1773686819; x=1774291619; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=RAF+Ctc/n8rztxL19g6KwtSiXS2fa1crOXpQVEMXVww=;
+ b=LbOJWHAzGEzRIxeV7qZzZCKf1A/Fg/hKb1QieHZ6OMUZQGkcPPdZ38OmW0OZVvbIep
+ xwdTonHZLwUNN8s9B2lw0yra8ux7QdG9RF/sKOs+EN9+gqkofhsrSvz9353ku3hzf/Uk
+ rdc9NfPq3ID2WRiZBgSlwNNQvYMY4UOebmCVQYMjzb36Fu+gHYNAgdETB514nsDDU8+x
+ RdpEqhJwDasQPAspOFwoVGaPJYJ/1l9+DAnUUtU2r5cjQjgcfkrN1raYCH2WdZmeA79e
+ 2MwMBTs5dhy/2+OOa0qDNg3KKjaoV4VWqQ3pQntS1r+BeUXoEtc8K/4XGLcfJfhpZTlx
+ qktw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773686279; x=1774291079;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=RXHxMs/SQsDXk+/8NCO2b9D8flVjifuoDuI5upUjPOU=;
- b=MEUJv8szuLpRadDD5CkEJn8/819Fx9uvNvyNUCDEdXCNC8VDXfI4jEelEcPkCb3380
- 5fz7zxWU9jDL5dXxbonJLlKZ5wGFMfhF+4umAJbKluRRiI1Qvu/jqcCft+jK4P3Ykm81
- xQ3ij/NGvG3Pi4p87RX/UcrdrP3NnCVvkTKcE0EQ34p+SZ+IpeMQHAKdCgQGD3CtHgJ1
- BuQXkFXCmiWZO0IgR8mBl3ZZEz1Kne1j3kqn744QS+IZDv66AGMMQ0krProL2FqlOyPP
- DY7i1F34f4Re4rSVvgkAZz2q/6ycv+JjKtY1p8ULJ7gYy4W9v0Z0MBaRk+AelL1Exmm2
- vgow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCV25dpZMtmbwG0xb8usCVIh8vvC0l0r1DuU5flfHBXUo3fGEgzTcpOETBe338Wwqz3pivnOzJ8VyT1s@nongnu.org
-X-Gm-Message-State: AOJu0YwtIKnW1JHzqxS1x/mrob44x65QawR0mXQK4too3dIl0tiJ7CTt
- hZCfMKia0veV4AaGp9TE8u7W6Wf82sbYMN3ScVfGIVYp+IorsEdojpYEBQjYsp3UTkQ=
-X-Gm-Gg: ATEYQzwLUYDmMcyphPeK/p9anN+alE3Iy3u3YBJF2T+ztRUjG36jx5l8RhGsZI1TTxM
- 189Tn6PNB7Tc1BoHdrHAYvSQmACI8uH3kgVsDf53gD83xWRu+HZdV7jGEEtk4nSmzsKrLwbF52K
- lTrpiqE710mg5DyynxAveG3hp1rin0IMvrckBP/90ERgYzKfiXHwux9M1RR4egwmCcfWKw/tkl8
- MkElvNXYnOJNop4a4sKY9Re1Zc8/oRHiuYhDVW6dF5EYFXJOjB3gxs9JrT7HFoBAV2OQqoOCinp
- 1M5g3NU5oO5/AIIrnKMpgafprJu5PzJCt4h0l9dqjDgYZvTRJKDsBLK7Joy9vKhfke3OG0tOdCp
- 6PLm5VlH/L33xFaj+vuXPp0pVk8Uy/mFYUQMp1Cnf5ULRjv1q1uxUenoIErbG83elreSiMOKCwg
- oKl11r6jBpMxRr9wlT+vCyA4CdAkCp93czegQ=
-X-Received: by 2002:a05:6000:1863:b0:439:bce5:6519 with SMTP id
- ffacd0b85a97d-43a04dc0849mr25734710f8f.39.1773686278691; 
- Mon, 16 Mar 2026 11:37:58 -0700 (PDT)
-Received: from [192.168.69.206] ([88.187.86.199])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b41065f8csm17572226f8f.30.2026.03.16.11.37.57
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 11:37:58 -0700 (PDT)
-Message-ID: <20fb8c5b-c673-40af-b7c5-a9e5f175df8d@linaro.org>
-Date: Mon, 16 Mar 2026 19:37:55 +0100
+ d=1e100.net; s=20251104; t=1773686819; x=1774291619;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=RAF+Ctc/n8rztxL19g6KwtSiXS2fa1crOXpQVEMXVww=;
+ b=B2QKLx+Tj8mrRvHBFGI5FqzrGFRGt/bR+ON8fTWRvyV0U7dMDf3BNu+16Sg4s/fu4R
+ IFvzdEz93bX7nbBQEweD+41FaNyUpH2OzxgrBMIE8HNok6TfDeyaA2xqbmvgemeogkwj
+ gguMAjJuKjLDb3VwmiX4iCOmtvz5I2xYb2lLZTbmwtzUrvXu4Q4ICv4KlDfdc28SJrpg
+ 3GKFBJ7MIycPHhG+5y96O8DgDRTGA6u+QuoJnYagLomp4odOYU6kooyZWcLjM5oNM3yL
+ Y8K8Mr6mefQpvk0xywDU701vUhrAanM3kPzM6ENdKRKr4eMZHBE5jtS08mQTec3Pq+Of
+ omNA==
+X-Gm-Message-State: AOJu0YwbToaNY/nrjrCczKO6jr++yjBOHsCr43CSxmr3b0xKVhTstImp
+ dvf+PBrMw3Lje+5Lt7udTsqWeiUUt6LJEe/8IJa61SfDQ/DOvaGTZ09KBiVMc9Ic
+X-Gm-Gg: ATEYQzxkrAypFmFCMg9eHwbgN2lEHU2jHRK2/ruH7WNP609jC92AXNXg23+KijOE6m0
+ g5iO5doxCmEEkvhTJoZiM9p4n+gMxNb+8ykIp9vi7S2dOe49p0bRXXMciCQ4rj2kRYZOToLVsyv
+ sanRBZuGmvmk3vn5AsXRa5vrd1QUD74WdN2yStp5cUaokhIR+HzKrkqhD/HNGPCpi6iE9q+dNOf
+ m+BbIL5Qb1naLD4+IFnIdPwoIFAvbQ/FqSv+HCpMPbENqqXyT/+MWyTGzmMVNQbcaIFcSixvkMR
+ h1ozm9oU1xpuXAra8v5geISafUsDIcyIuKQgUeJXWVsR0+dgsfklhBpxwq4MMDbw2vQnXsJ2cMN
+ mJbvsgKqWUUFdxBvNeGwOlMt30l/FoBRevKtd4buixkbqJOPzYLRoa7TRJh8BjJQl3KIgVWDQDc
+ l8WnD/fx725J872tamvDjn3nNBazmekVbjwwf7TWAi8WLdJ0OrGP9SA32Rj8X13T373opokbYVt
+ rLumYvpfQ==
+X-Received: by 2002:a17:903:907:b0:2ad:bd4c:a5 with SMTP id
+ d9443c01a7336-2aeca9b90bemr134492195ad.1.1773686818827; 
+ Mon, 16 Mar 2026 11:46:58 -0700 (PDT)
+Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local
+ ([27.122.242.65]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b04f40f515sm77284145ad.74.2026.03.16.11.46.57
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Mar 2026 11:46:58 -0700 (PDT)
+From: Trieu Huynh <vikingtc4@gmail.com>
+To: qemu-devel@nongnu.org
+Cc: Trieu Huynh <vikingtc4@gmail.com>
+Subject: [PATCH v3 v3 2/4] hw/core/loader: fix error handling for
+ get_image_size callers
+Date: Tue, 17 Mar 2026 03:46:38 +0900
+Message-ID: <20260316184644.68116-3-vikingtc4@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260316184644.68116-1-vikingtc4@gmail.com>
+References: <20260311183432.214960-1-viking4@gmail.com>
+ <20260316184644.68116-1-vikingtc4@gmail.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests: Replace ncat with socat in migration test and drop
- ncat from containers
-Content-Language: en-US
-To: Thomas Huth <thuth@redhat.com>, qemu-devel@nongnu.org
-Cc: Fabiano Rosas <farosas@suse.de>, Peter Xu <peterx@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-References: <20260316183016.239526-1-thuth@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260316183016.239526-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62b;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pl1-x62b.google.com
+X-Spam_score_int: 15
+X-Spam_score: 1.5
+X-Spam_bar: +
+X-Spam_report: (1.5 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
+ DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_ENVFROM_END_DIGIT=0.25,
+ FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_SBL_CSS=3.335,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,54 +102,32 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/3/26 19:30, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> nmap / ncat has a somewhat problematic license (e.g. saying claiming
-> that derived work is also considered for software that "is designed
-> specifically to execute Covered Software and parse the results", e.g.
-> by executing ncat from your own program, you might already fall into
-> this category) - so for example in openSUSE 16, you can only find it
-> in the "non-OSS" repository.
-> 
-> We are currently only using it in the migration functional test, and
-> that likely does not fall into this "derived work" category yet (since
-> it is also doing some other stuff), but still, to be safe, we should
-> move away from using it now.
-> 
-> Unfortunately, switching to one of the other flavors of netcat is
-> also not a real option (see commit f700abbbeb6ab68a3446d1fb168a934d),
-> but socat should be a solid replacement here instead.
-> 
-> To avoid that someone else easily uses ncat again, let's also remove
-> it from our container files now.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> ---
->   scripts/ci/setup/debian/debian-13-ppc64le.yaml        | 1 -
->   scripts/ci/setup/ubuntu/ubuntu-2404-aarch64.yaml      | 1 -
->   scripts/ci/setup/ubuntu/ubuntu-2404-s390x.yaml        | 1 -
->   tests/docker/dockerfiles/alpine.docker                | 1 -
->   tests/docker/dockerfiles/centos9.docker               | 1 -
->   tests/docker/dockerfiles/debian-amd64-cross.docker    | 1 -
->   tests/docker/dockerfiles/debian-arm64-cross.docker    | 1 -
->   tests/docker/dockerfiles/debian-armhf-cross.docker    | 1 -
->   tests/docker/dockerfiles/debian-i686-cross.docker     | 1 -
->   tests/docker/dockerfiles/debian-mips64el-cross.docker | 1 -
->   tests/docker/dockerfiles/debian-mipsel-cross.docker   | 1 -
->   tests/docker/dockerfiles/debian-ppc64el-cross.docker  | 1 -
->   tests/docker/dockerfiles/debian-riscv64-cross.docker  | 1 -
->   tests/docker/dockerfiles/debian-s390x-cross.docker    | 1 -
->   tests/docker/dockerfiles/debian.docker                | 1 -
->   tests/docker/dockerfiles/fedora-rust-nightly.docker   | 1 -
->   tests/docker/dockerfiles/fedora-win64-cross.docker    | 1 -
->   tests/docker/dockerfiles/fedora.docker                | 1 -
->   tests/docker/dockerfiles/opensuse-leap.docker         | 1 -
->   tests/docker/dockerfiles/ubuntu2204.docker            | 1 -
->   tests/functional/migration.py                         | 4 ++--
->   tests/lcitool/projects/qemu.yml                       | 1 -
->   22 files changed, 2 insertions(+), 23 deletions(-)
+Check the return value of get_image_size() and report failures
+for non-mandatory file such as FRU image.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+- Use ret < 0 to detect failures in getting image size.
+- No functional changes.
+
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+---
+ hw/ipmi/ipmi_bmc_sim.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
+index 012e2ee4fe..fd875491f5 100644
+--- a/hw/ipmi/ipmi_bmc_sim.c
++++ b/hw/ipmi/ipmi_bmc_sim.c
+@@ -2561,6 +2561,8 @@ static void ipmi_fru_init(IPMIFru *fru)
+             g_free(fru->data);
+             fru->data = NULL;
+         }
++    } else {
++        error_report("Could not get file size '%s'", fru->filename);
+     }
+ 
+ out:
+-- 
+2.43.0
+
 
