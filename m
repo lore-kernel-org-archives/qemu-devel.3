@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EECB9F3029A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 02:51:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1F9B0F30295
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 02:52:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1y2h-00028E-Ms; Sun, 15 Mar 2026 22:50:55 -0400
+	id 1w1y2d-00026t-IR; Sun, 15 Mar 2026 22:50:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w1y2f-00027f-Ok
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 22:50:53 -0400
-Received: from mail-dy1-x1333.google.com ([2607:f8b0:4864:20::1333])
+ id 1w1y2c-000265-8E
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 22:50:50 -0400
+Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w1y2d-0000WR-Ab
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 22:50:53 -0400
-Received: by mail-dy1-x1333.google.com with SMTP id
- 5a478bee46e88-2c0b7eda342so729303eec.1
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 19:50:50 -0700 (PDT)
+ id 1w1y2a-0000VK-ER
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 22:50:49 -0400
+Received: by mail-dy1-x1330.google.com with SMTP id
+ 5a478bee46e88-2ba9c484e5eso4807428eec.1
+ for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 19:50:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773629449; x=1774234249; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773629447; x=1774234247; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GAsSc2doTgfK1k7+3MuUQJhqHA5GPQ1JX8r2cpgADWY=;
- b=V721awQX/aGgNZQ/eAFqcykcXfAbD+cbSGkvlSNTJf+Z9nTWAGdLuj7IP/ubrI9YmC
- yDBAhk8miRAx2qvKUCFf0Yr2gZzKi0fyyLaXYlgtV5b86O9EO7RCiU6s3MAfLy7wSOlQ
- 6biahBeyaIit5Ockw9VgPI02YQ6ED/6yBG94uDKOqZlzbhk88jC+ztM1+QASa4UR2efB
- u37iXvTKyVqFgzc7DA/rPzkgukMZiirzMG5z3soclsgP/BHa/xa+/Ddq9qZj+KqxO1KG
- l/29Zo6YLJm+Fhxc8sa9N4NayYp4pOjdPwklyNl8kAc9ACK/NRgB04wveeXProq5pq6s
- UrsA==
+ bh=sMIe4BH1dC23aKjJXdUIHsVXt5i12Nl20FH16xA6kBU=;
+ b=cSLUTL2Lq+XMApG3xJ9Kd1NNVdyQ2Dd94yl524bJqAw5S9pc4kUa2G3HaHklYwo1bw
+ 7NiX0BBGX5zoZqnA1TcbeyqR2b+AYENzM3NcMf9T16ut5A/wvtkYfjiLtuc300i6ceY6
+ RTne/yCupjwCC3um8gKroVeiuFXpW4yLFGulFZ4jvl3H01Vj/tEmOwyjGFVWLXYf2d4j
+ XOBsp2pSBBrxmUOT5QsDFeJZzrTuWbADkit3Ed5kgTsKIxG06SJIHHmdBHPfM5TSpFrC
+ 1d0AsvSTzrbLTiWkI8ON23v7Br5XvDgyDuxoD8yesJ6IJZ/X3UkUK6alBpULKQAiKeFh
+ 6K7g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773629450; x=1774234250;
+ d=1e100.net; s=20251104; t=1773629447; x=1774234247;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GAsSc2doTgfK1k7+3MuUQJhqHA5GPQ1JX8r2cpgADWY=;
- b=Lwyatprh9tdP9OZ5faNfvNuEEsd+H1fnOxGGrkuo7xAZD4Mm4CXLHZbNVNWx4dm8U2
- gHrQGjeSQjMmB7dQh/BTVgVBIxSCFRU4AMyBQXYnpZzAnmoE9DhM6FZKs6MbmICDEdzN
- nUUm0C0uq0TbUrc43rMHYro54DVM1b9e09L9OeFZ7iEnv6HJo6qcqpy1e3CZD9OuI4hM
- 1cLLOWM2PHtRXyd9Ei3yU2ZzKwAPCu4Z9BuLdXzkH7nxw0UWlyRaxnFBfGiuLhNRzPX1
- lZiSZz9m6jyGYbvLEWt0pb/WGQaBSMubAbnAricnnxuRWgQQEdKKJrBGmusM1Swgy7u9
- 482Q==
-X-Gm-Message-State: AOJu0Yy1LYFd0Ea19pVz4yK5S4I5gjc3iN9QpgAHo9gvUG460cq7u4sa
- xPtzYvnpXPtjzPAn9wjxD01XlTyluyWuxklAl/O/5bWqOeROapp9hoh0fmUSZzth
-X-Gm-Gg: ATEYQzwv+51IsMPvfndoy76GCC/ZRc1uV25M03iLN7rJI+4i0bQ5FtWzOeVipOAduHO
- CXzVMGScFOvNnxtPvhcVhBoH2KawPpQtX1qMIW21b8HMzcXJlYHV5KBuSpnWiJ08rZ++sL0LPww
- h1A3h6N1IOGvoGdQzeWB/8zwYPKLOgcnlU8eu97WDnQJcdZB7LDqP3beRGDwJjop70YQm/i7Ewv
- cjqTrcDO4Pwg3o9xAu4/uxmQSpMaJMeBPqHh0z6BCl16HNNVHl6qMXrgrBGmWbJmEICnddUA0+g
- IUnyCY21z8YwW2JkIJDwbzFmEwZc8kubLglKewVAKy1rbX3gpnxDb+oOA1EQLBEvcQKDyH2NGlb
- czHZTbqxgdgFT+8FS9VxjDUSAAEt+kJC4StH81sJwVyipRTYKf+RmPjhEiXEy356VUxXf19dL1C
- DkmvhQjimMtcyCn/ecS8CJyXCKrP+7525AzDX4fr8=
-X-Received: by 2002:a05:7300:6c27:b0:2be:aa:9a4a with SMTP id
- 5a478bee46e88-2bea51e50d3mr4119697eec.0.1773629449458; 
- Sun, 15 Mar 2026 19:50:49 -0700 (PDT)
+ bh=sMIe4BH1dC23aKjJXdUIHsVXt5i12Nl20FH16xA6kBU=;
+ b=bZ7zBYnHDOhgYFRIdo8mHLrDln1fTjG+S1fdwd7lEWAPmI6dgxVL2RYypI+jmqgBRO
+ ck+cL1omMWit/wzmt8QESQQD5nHwE8BErpyRpD91dU0W5YdOYb6IZMKOe6WzFVxW3wsn
+ W9dN1XULA5n10IUk/d31sTEV5pVcmyg082/9t3rXVCb15PFlXL29pktO8l4hGWsrON8u
+ D5Pro49ZlNmo3V/waVLYtU6ZdUmIPs3oPLXuzFT8BqPFflAW5Uuvf+aM07k7sqw7f4So
+ J1Ml6OvWcD5VZa5gV97ss76MxDUSkr2DbF9fJfzVhvVNeEi6fVC1HbvwrNXB2R/ZNfNA
+ jWCg==
+X-Gm-Message-State: AOJu0Yw0xSfsr/zr08mYIZQMQU3SMGg5oHuMVDJ7oaH5GnR7DMPPzUQw
+ rhr0cgO0v+ga6sCWCPb3e3dRHLEQKmKs4c1xm2+gHKR3eR1V6L/xaEGWarMTIQMW
+X-Gm-Gg: ATEYQzyNTL4Y09GaUWtm7L7ecx0HQJ6bHdgnBog2r6jNkpEAOcAuAT7VCZCXsyRy2LI
+ MpIaLIqvaJOHZupMkYErRbgBEU80/UdxVIAiSTlC+6jIO3rRd/g6zT0dgKgOW3ro4lRDqtHMtdk
+ DcB2kUJFmHmTwRPyQ359fEmzDBAh1gCZm1cQ4yXU+XFwV+Qw5GBQtVU9re2/TPn8+YRUO+v0S5c
+ jXOAiWnjUPdNWSShVltio6uIFOiQTN+o7shmkoJjBVVcJSvTIC+DiTQJK5TkIqq3FJv8FqbY43B
+ Vgv3Ff4J5dPe4P0InXCcO6JZk05eWy+D3L9IKDoVqJ72/SMYLB/i4fxaHmb9Mkb10pDHKuHl5ZL
+ kJHU9jCixkPE8tLO1Vho7jLlJUWiXUch2kYjzBWU5Zfq6o12vNpUDeYA7e0ejpuNqBL2IZqHUsJ
+ 7+RlIGjGID/2OC5IQvAbsHk2B97pVsKnxsvL7JHE8=
+X-Received: by 2002:a05:7301:d0f:b0:2be:ca4:e10b with SMTP id
+ 5a478bee46e88-2bea55915eemr5065970eec.35.1773629446448; 
+ Sun, 15 Mar 2026 19:50:46 -0700 (PDT)
 Received: from 192.168.7.2 ([189.6.247.75]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2beab3a12e2sm13138973eec.2.2026.03.15.19.50.46
+ 5a478bee46e88-2beab3a12e2sm13138973eec.2.2026.03.15.19.50.43
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 15 Mar 2026 19:50:49 -0700 (PDT)
+ Sun, 15 Mar 2026 19:50:46 -0700 (PDT)
 From: Lucas Amaral <lucaaamaral@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
  mohamed@unpredictable.fr, Lucas Amaral <lucaaamaral@gmail.com>
-Subject: [PATCH v4 3/6] target/arm/emulate: add load/store pair
-Date: Sun, 15 Mar 2026 23:50:31 -0300
-Message-ID: <20260316025034.85611-4-lucaaamaral@gmail.com>
+Subject: [PATCH v4 2/6] target/arm/emulate: add load/store register offset
+Date: Sun, 15 Mar 2026 23:50:30 -0300
+Message-ID: <20260316025034.85611-3-lucaaamaral@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260316025034.85611-1-lucaaamaral@gmail.com>
 References: <20260315034123.41921-1-lucaaamaral@gmail.com>
@@ -77,8 +77,8 @@ References: <20260315034123.41921-1-lucaaamaral@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1333;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1333.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1330.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,237 +101,190 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add emulation for load/store pair instructions (DDI 0487 C3.3.14 --
-C3.3.16).  All addressing modes are covered: non-temporal (STNP/LDNP),
-post-indexed, signed offset, and pre-indexed.
+Add emulation for load/store register offset addressing mode
+(DDI 0487 C3.3.9).  The offset register value is extended via
+UXTB/UXTH/UXTW/UXTX/SXTB/SXTH/SXTW/SXTX and optionally
+shifted by the element size.
 
 Instruction coverage:
-  - STP/LDP (GPR): 32/64-bit pairs, all addressing modes
-  - STP/LDP (SIMD/FP): 32/64/128-bit pairs, all addressing modes
-  - LDPSW: sign-extending 32-bit pair load
-  - STGP: store allocation tag pair (tag operation is NOP for MMIO)
+  - STR/LDR (GPR): register offset with extend, all sizes
+  - STR/LDR (SIMD/FP): register offset with extend, 8-128 bit
+  - PRFM register offset: NOP
 
 Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
 ---
- target/arm/emulate/a64-ldst.decode |  68 ++++++++++++++++++
- target/arm/emulate/arm_emulate.c   | 111 +++++++++++++++++++++++++++++
- 2 files changed, 179 insertions(+)
+ target/arm/emulate/a64-ldst.decode |  29 ++++++++
+ target/arm/emulate/arm_emulate.c   | 103 +++++++++++++++++++++++++++++
+ 2 files changed, 132 insertions(+)
 
 diff --git a/target/arm/emulate/a64-ldst.decode b/target/arm/emulate/a64-ldst.decode
-index af6babe1..f3de3f86 100644
+index c887dcba..af6babe1 100644
 --- a/target/arm/emulate/a64-ldst.decode
 +++ b/target/arm/emulate/a64-ldst.decode
 @@ -10,6 +10,9 @@
  # 'u' flag: 0 = 9-bit signed immediate (byte offset), 1 = 12-bit unsigned (needs << sz)
  &ldst_imm       rt rn imm sz sign w p unpriv ext u
  
-+# Load/store pair (GPR and SIMD/FP)
-+&ldstpair       rt2 rt rn imm sz sign w p
++# Load/store register offset
++&ldst           rm rn rt sign ext sz opt s
 +
- # Load/store register offset
- &ldst           rm rn rt sign ext sz opt s
+ ### Format templates
  
-@@ -24,6 +27,9 @@
+ # Load/store immediate (9-bit signed)
+@@ -21,6 +24,9 @@
  # Load/store unsigned offset (12-bit, handler scales by << sz)
  @ldst_uimm      .. ... . .. .. imm:12 rn:5 rt:5        &ldst_imm u=1 unpriv=0 p=0 w=0
  
-+# Load/store pair: imm7 is signed, scaled by element size in handler
-+@ldstpair       .. ... . ... . imm:s7 rt2:5 rn:5 rt:5          &ldstpair
++# Load/store register offset
++@ldst           .. ... . .. .. . rm:5 opt:3 s:1 .. rn:5 rt:5   &ldst
 +
- # Load/store register offset
- @ldst           .. ... . .. .. . rm:5 opt:3 s:1 .. rn:5 rt:5   &ldst
+ ### Load/store register — unscaled immediate (LDUR/STUR)
  
-@@ -128,6 +134,68 @@ STR_v_i         00 111 1 01 10 ............ ..... .....         @ldst_uimm sign=
+ # GPR
+@@ -122,6 +128,29 @@ STR_v_i         00 111 1 01 10 ............ ..... .....         @ldst_uimm sign=
  LDR_v_i         sz:2 111 1 01 01 ............ ..... .....       @ldst_uimm sign=0 ext=0
  LDR_v_i         00 111 1 01 11 ............ ..... .....         @ldst_uimm sign=0 ext=0 sz=4
  
-+### Load/store pair — non-temporal (STNP/LDNP)
++### Load/store register — register offset
 +
-+# STNP/LDNP: offset only, no writeback.  Non-temporal hint ignored.
-+STP             00 101 0 000 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+LDP             00 101 0 000 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+STP             10 101 0 000 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+LDP             10 101 0 000 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+STP_v           00 101 1 000 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+LDP_v           00 101 1 000 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+STP_v           01 101 1 000 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+LDP_v           01 101 1 000 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+STP_v           10 101 1 000 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
-+LDP_v           10 101 1 000 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
++# GPR
++STR             sz:2 111 0 00 00 1 ..... ... . 10 ..... .....  @ldst sign=0 ext=0
++LDR             00 111 0 00 01 1 ..... ... . 10 ..... .....    @ldst sign=0 ext=1 sz=0
++LDR             01 111 0 00 01 1 ..... ... . 10 ..... .....    @ldst sign=0 ext=1 sz=1
++LDR             10 111 0 00 01 1 ..... ... . 10 ..... .....    @ldst sign=0 ext=1 sz=2
++LDR             11 111 0 00 01 1 ..... ... . 10 ..... .....    @ldst sign=0 ext=0 sz=3
++LDR             00 111 0 00 10 1 ..... ... . 10 ..... .....    @ldst sign=1 ext=0 sz=0
++LDR             01 111 0 00 10 1 ..... ... . 10 ..... .....    @ldst sign=1 ext=0 sz=1
++LDR             10 111 0 00 10 1 ..... ... . 10 ..... .....    @ldst sign=1 ext=0 sz=2
++LDR             00 111 0 00 11 1 ..... ... . 10 ..... .....    @ldst sign=1 ext=1 sz=0
++LDR             01 111 0 00 11 1 ..... ... . 10 ..... .....    @ldst sign=1 ext=1 sz=1
 +
-+### Load/store pair — post-indexed
++# PRFM — register offset
++NOP             11 111 0 00 10 1 ----- -1- - 10 ----- -----
 +
-+STP             00 101 0 001 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-+LDP             00 101 0 001 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-+LDP             01 101 0 001 1 ....... ..... ..... .....        @ldstpair sz=2 sign=1 p=1 w=1
-+STP             10 101 0 001 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-+LDP             10 101 0 001 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-+STP_v           00 101 1 001 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-+LDP_v           00 101 1 001 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=1 w=1
-+STP_v           01 101 1 001 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-+LDP_v           01 101 1 001 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-+STP_v           10 101 1 001 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=1 w=1
-+LDP_v           10 101 1 001 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=1 w=1
++# SIMD/FP
++STR_v           sz:2 111 1 00 00 1 ..... ... . 10 ..... .....  @ldst sign=0 ext=0
++STR_v           00 111 1 00 10 1 ..... ... . 10 ..... .....    @ldst sign=0 ext=0 sz=4
++LDR_v           sz:2 111 1 00 01 1 ..... ... . 10 ..... .....  @ldst sign=0 ext=0
++LDR_v           00 111 1 00 11 1 ..... ... . 10 ..... .....    @ldst sign=0 ext=0 sz=4
 +
-+### Load/store pair — signed offset
-+
-+STP             00 101 0 010 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+LDP             00 101 0 010 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+LDP             01 101 0 010 1 ....... ..... ..... .....        @ldstpair sz=2 sign=1 p=0 w=0
-+STP             10 101 0 010 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+LDP             10 101 0 010 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+STP_v           00 101 1 010 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+LDP_v           00 101 1 010 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=0
-+STP_v           01 101 1 010 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+LDP_v           01 101 1 010 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+STP_v           10 101 1 010 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
-+LDP_v           10 101 1 010 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=0
-+
-+### Load/store pair — pre-indexed
-+
-+STP             00 101 0 011 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-+LDP             00 101 0 011 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-+LDP             01 101 0 011 1 ....... ..... ..... .....        @ldstpair sz=2 sign=1 p=0 w=1
-+STP             10 101 0 011 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-+LDP             10 101 0 011 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-+STP_v           00 101 1 011 0 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-+LDP_v           00 101 1 011 1 ....... ..... ..... .....        @ldstpair sz=2 sign=0 p=0 w=1
-+STP_v           01 101 1 011 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-+LDP_v           01 101 1 011 1 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-+STP_v           10 101 1 011 0 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=1
-+LDP_v           10 101 1 011 1 ....... ..... ..... .....        @ldstpair sz=4 sign=0 p=0 w=1
-+
-+### Load/store pair — STGP (store allocation tag + pair)
-+
-+STGP            01 101 0 001 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=1 w=1
-+STGP            01 101 0 010 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=0
-+STGP            01 101 0 011 0 ....... ..... ..... .....        @ldstpair sz=3 sign=0 p=0 w=1
-+
- ### Load/store register — register offset
+ ### System instructions — DC cache maintenance
  
- # GPR
+ # SYS with CRn=C7 covers all data cache operations (DC CIVAC, CVAC, etc.).
 diff --git a/target/arm/emulate/arm_emulate.c b/target/arm/emulate/arm_emulate.c
-index bf09e2a6..6c63a0d0 100644
+index 02fefc30..bf09e2a6 100644
 --- a/target/arm/emulate/arm_emulate.c
 +++ b/target/arm/emulate/arm_emulate.c
-@@ -122,6 +122,117 @@ static uint64_t load_extend(uint64_t val, int sz, int sign, int ext)
-     return val;
+@@ -211,6 +211,109 @@ static bool trans_LDR_v_i(DisasContext *ctx, arg_ldst_imm *a)
+     return true;
  }
  
++/* Register offset extension (DDI 0487 C6.2.131) */
++
++static uint64_t extend_reg(uint64_t val, int option, int shift)
++{
++    switch (option) {
++    case 0: /* UXTB */
++        val = (uint8_t)val;
++        break;
++    case 1: /* UXTH */
++        val = (uint16_t)val;
++        break;
++    case 2: /* UXTW */
++        val = (uint32_t)val;
++        break;
++    case 3: /* UXTX / LSL */
++        break;
++    case 4: /* SXTB */
++        val = (int64_t)(int8_t)val;
++        break;
++    case 5: /* SXTH */
++        val = (int64_t)(int16_t)val;
++        break;
++    case 6: /* SXTW */
++        val = (int64_t)(int32_t)val;
++        break;
++    case 7: /* SXTX */
++        break;
++    }
++    return val << shift;
++}
++
 +/*
-+ * Load/store pair: STP, LDP, STNP, LDNP, STGP, LDPSW
-+ * (DDI 0487 C3.3.14 -- C3.3.16)
++ * Load/store single -- register offset (GPR)
++ * STR / LDR (DDI 0487 C3.3.9)
 + */
 +
-+static bool trans_STP(DisasContext *ctx, arg_ldstpair *a)
++static bool trans_STR(DisasContext *ctx, arg_ldst *a)
 +{
-+    int esize = 1 << a->sz;                   /* 4 or 8 bytes */
-+    int64_t offset = (int64_t)a->imm << a->sz;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset; /* post-index: unmodified base */
-+    uint8_t buf[16];                           /* max 2 x 8 bytes */
++    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
++    int shift = a->s ? a->sz : 0;
++    uint64_t rm_val = gpr_read(ctx, a->rm);
++    uint64_t offset = extend_reg(rm_val, a->opt, shift);
++    uint64_t va = base_read(ctx, a->rn) + offset;
 +
-+    uint64_t v1 = gpr_read(ctx, a->rt);
-+    uint64_t v2 = gpr_read(ctx, a->rt2);
-+    memcpy(buf, &v1, esize);
-+    memcpy(buf + esize, &v2, esize);
-+
-+    if (mem_write(ctx, va, buf, 2 * esize) != 0) {
-+        return true;
-+    }
-+
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
++    uint64_t val = gpr_read(ctx, a->rt);
++    mem_write(ctx, va, &val, esize);
 +    return true;
 +}
 +
-+static bool trans_LDP(DisasContext *ctx, arg_ldstpair *a)
++static bool trans_LDR(DisasContext *ctx, arg_ldst *a)
 +{
-+    int esize = 1 << a->sz;
-+    int64_t offset = (int64_t)a->imm << a->sz;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset;
++    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
++    int shift = a->s ? a->sz : 0;
++    uint64_t rm_val = gpr_read(ctx, a->rm);
++    uint64_t offset = extend_reg(rm_val, a->opt, shift);
++    uint64_t va = base_read(ctx, a->rn) + offset;
++    uint64_t val = 0;
++
++    if (mem_read(ctx, va, &val, esize) != 0) {
++        return true;
++    }
++
++    val = load_extend(val, a->sz, a->sign, a->ext);
++    gpr_write(ctx, a->rt, val);
++    return true;
++}
++
++/*
++ * Load/store single -- register offset (SIMD/FP)
++ * STR_v / LDR_v (DDI 0487 C3.3.10)
++ */
++
++static bool trans_STR_v(DisasContext *ctx, arg_ldst *a)
++{
++    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
++    int shift = a->s ? a->sz : 0;
++    uint64_t rm_val = gpr_read(ctx, a->rm);
++    uint64_t offset = extend_reg(rm_val, a->opt, shift);
++    uint64_t va = base_read(ctx, a->rn) + offset;
 +    uint8_t buf[16];
-+    uint64_t v1 = 0, v2 = 0;
-+
-+    if (mem_read(ctx, va, buf, 2 * esize) != 0) {
-+        return true;
-+    }
-+    memcpy(&v1, buf, esize);
-+    memcpy(&v2, buf + esize, esize);
-+
-+    /* LDPSW: sign-extend 32-bit values to 64-bit (sign=1, sz=2) */
-+    if (a->sign) {
-+        v1 = sign_extend(v1, 8 * esize);
-+        v2 = sign_extend(v2, 8 * esize);
-+    }
-+
-+    gpr_write(ctx, a->rt, v1);
-+    gpr_write(ctx, a->rt2, v2);
-+
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
-+    return true;
-+}
-+
-+/* STGP: tag operation is a NOP for emulation; data stored via STP */
-+static bool trans_STGP(DisasContext *ctx, arg_ldstpair *a)
-+{
-+    return trans_STP(ctx, a);
-+}
-+
-+/*
-+ * SIMD/FP load/store pair: STP_v, LDP_v
-+ * (DDI 0487 C3.3.14 -- C3.3.16)
-+ */
-+
-+static bool trans_STP_v(DisasContext *ctx, arg_ldstpair *a)
-+{
-+    int esize = 1 << a->sz;                   /* 4, 8, or 16 bytes */
-+    int64_t offset = (int64_t)a->imm << a->sz;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset;
-+    uint8_t buf[32];                           /* max 2 x 16 bytes */
 +
 +    fpreg_read(ctx, a->rt, buf, esize);
-+    fpreg_read(ctx, a->rt2, buf + esize, esize);
-+
-+    if (mem_write(ctx, va, buf, 2 * esize) != 0) {
-+        return true;
-+    }
-+
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
++    mem_write(ctx, va, buf, esize);
 +    return true;
 +}
 +
-+static bool trans_LDP_v(DisasContext *ctx, arg_ldstpair *a)
++static bool trans_LDR_v(DisasContext *ctx, arg_ldst *a)
 +{
-+    int esize = 1 << a->sz;
-+    int64_t offset = (int64_t)a->imm << a->sz;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset;
-+    uint8_t buf[32];
++    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
++    int shift = a->s ? a->sz : 0;
++    uint64_t rm_val = gpr_read(ctx, a->rm);
++    uint64_t offset = extend_reg(rm_val, a->opt, shift);
++    uint64_t va = base_read(ctx, a->rn) + offset;
++    uint8_t buf[16];
 +
-+    if (mem_read(ctx, va, buf, 2 * esize) != 0) {
++    if (mem_read(ctx, va, buf, esize) != 0) {
 +        return true;
 +    }
 +
 +    fpreg_write(ctx, a->rt, buf, esize);
-+    fpreg_write(ctx, a->rt2, buf + esize, esize);
-+
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
 +    return true;
 +}
 +
- /* Load/store single -- immediate (GPR) (DDI 0487 C3.3.8 -- C3.3.13) */
- 
- static bool trans_STR_i(DisasContext *ctx, arg_ldst_imm *a)
+ /* PRFM, DC cache maintenance -- treated as NOP */
+ static bool trans_NOP(DisasContext *ctx, arg_NOP *a)
+ {
 -- 
 2.52.0
 
