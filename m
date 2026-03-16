@@ -4,85 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64EA7F506CF
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:13:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35520F506D2
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:40:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w27fT-0000pt-Ac; Mon, 16 Mar 2026 09:07:35 -0400
+	id 1w28AI-0006YK-28; Mon, 16 Mar 2026 09:39:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w27fR-0000oe-A8
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:07:33 -0400
-Received: from p-west1-cluster3-host8-snip4-7.eps.apple.com ([57.103.66.60]
- helo=outbound.pv.icloud.com)
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1w28A6-0006Wm-ME; Mon, 16 Mar 2026 09:39:16 -0400
+Received: from vps-ovh.mhejs.net ([145.239.82.108])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w27fO-0003a5-6o
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:07:32 -0400
-Received: from outbound.pv.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-3 (Postfix) with ESMTPS id
- DF97F180365A; Mon, 16 Mar 2026 13:07:27 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773666449; x=1776258449;
- bh=1RV2oa9C2DaRGIF3rfTp8Tdv8xxfIYsPZWi/MFo/wCM=;
- h=From:To:Subject:Date:Message-ID:MIME-Version:Content-Type:x-icloud-hme;
- b=LEinhWjjXfVWSIPiYqByW5A1edx4+vY7+1dk6kAmZWnWJGDcSEnVpFW7LR1hE90s3R8hsUKnolrBAOlkn2N0ntY7Mr/60oz7xjbP5xAMo+cpqOSZgoOiPdPeHReHqXje3ReqYxeK809Kzwyn+0GIHG8m8MCLOxDO8pvgeKQmXkflH4ToBawVleNtj0ffOR30+YFxsm3c1Uei0Ij5pQrBXZVPCKOoakqHRUk7CvlLtWjAxgDsVaQLQ/uhqlXF2rBISo3ZkU7p1BhqOjZpdkFg5JvBhYnlfL4LL5rJCMm6OgT1OfT4a0R6oeCbdC3u6VktPhswoBFhuH85dU4FQfk1/A==
-mail-alias-created-date: 1752046281608
-Received: from localhost.localdomain (unknown [17.56.9.36])
- by p00-icloudmta-asmtp-us-west-1a-100-percent-3 (Postfix) with ESMTPSA id
- 687A9180504E; Mon, 16 Mar 2026 13:06:51 +0000 (UTC)
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-To: qemu-devel@nongnu.org
-Cc: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Yanan Wang <wangyanan55@huawei.com>, Zhao Liu <zhao1.liu@intel.com>,
- qemu-arm@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- Roman Bolshakov <rbolshakov@ddn.com>, Alexander Graf <agraf@csgraf.de>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, Eduardo Habkost <eduardo@habkost.net>,
- Phil Dennis-Jordan <phil@philjordan.eu>,
- Mohamed Mediouni <mohamed@unpredictable.fr>
-Subject: [PATCH v20 02/15] hw/intc: arm_gicv3_hvf: save/restore Apple GIC state
-Date: Mon, 16 Mar 2026 14:06:29 +0100
-Message-ID: <20260316130642.13246-3-mohamed@unpredictable.fr>
-X-Mailer: git-send-email 2.50.1
-In-Reply-To: <20260316130642.13246-1-mohamed@unpredictable.fr>
-References: <20260316130642.13246-1-mohamed@unpredictable.fr>
+ (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1w28A1-0004Yh-Vl; Mon, 16 Mar 2026 09:39:12 -0400
+Received: from MUA
+ by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
+ (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
+ id 1w289j-0000000F9RP-3Kvh; Mon, 16 Mar 2026 14:38:51 +0100
+Message-ID: <70cdc8ed-af61-4baa-8c67-2f8027bc3354@maciej.szmigiero.name>
+Date: Mon, 16 Mar 2026 14:38:46 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-X-Proofpoint-GUID: jLrL9cioCccjUDW17zh7zObuTHQywFeF
-X-Authority-Info-Out: v=2.4 cv=B620EetM c=1 sm=1 tr=0 ts=69b80090
- cx=c_apl:c_pps:t_out a=azHRBMxVc17uSn+fyuI/eg==:117
- a=azHRBMxVc17uSn+fyuI/eg==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=kNOF8fv34t_zTB2Y_VIA:9
- a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDA5NyBTYWx0ZWRfX37XtG8o3wnNt
- 4Wgkc3wL5HYacSO1oRlPjQrsTtZRqUZTJAtweTg3wnI6BHPsDiBIOA2QNrZ1ch5l8/lMBz1BC5h
- XDLm+kwKKqcBKiGMoiDFW44EdnOTDSKR6/zt6y+qq0rWqwgq6FOh2I5xVhFMTMUnXealIlNPNOV
- YD/jELMfo/P1yFNL+YmkEzNLgTqhvJibTqxoVu+6XI5vuJxHxtPyuZ/H7Sfh4QrlQB6Kl5Bfw8p
- mSrUvTE73KiOqc/JHqHF16MOnAQAHBSezsi0pFQAiZfCpU4cm51ZLnqVCW2Z5LPyZpyYGtSRIr2
- epecH3pk/XvUNcxELwp34dHpo28tNUxG7Rthp53yUjXifOixhpHFgZbyhGL87M=
-X-Proofpoint-ORIG-GUID: jLrL9cioCccjUDW17zh7zObuTHQywFeF
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-16_04,2026-03-16_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=999
- phishscore=0 lowpriorityscore=0 mlxscore=0
- malwarescore=0 suspectscore=0
- spamscore=0 adultscore=0 clxscore=1030 bulkscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603160097
-Received-SPF: pass client-ip=57.103.66.60;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.pv.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] util/event_notifier: fix error handling for
+ event_notifier_init callers
+To: Trieu Huynh <vikingtc4@gmail.com>
+Cc: Anthony Krowiak <akrowiak@linux.ibm.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
+ Matthew Rosato <mjrosato@linux.ibm.com>, "Michael S. Tsirkin"
+ <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
+ "open list:vfio-ap" <qemu-s390x@nongnu.org>
+References: <20260311183432.214960-1-viking4@gmail.com>
+ <20260311183432.214960-4-viking4@gmail.com>
+From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
+Content-Language: en-US, pl-PL
+Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
+ xsFNBFpGusUBEADXUMM2t7y9sHhI79+2QUnDdpauIBjZDukPZArwD+sDlx5P+jxaZ13XjUQc
+ 6oJdk+jpvKiyzlbKqlDtw/Y2Ob24tg1g/zvkHn8AVUwX+ZWWewSZ0vcwp7u/LvA+w2nJbIL1
+ N0/QUUdmxfkWTHhNqgkNX5hEmYqhwUPozFR0zblfD/6+XFR7VM9yT0fZPLqYLNOmGfqAXlxY
+ m8nWmi+lxkd/PYqQQwOq6GQwxjRFEvSc09m/YPYo9hxh7a6s8hAP88YOf2PD8oBB1r5E7KGb
+ Fv10Qss4CU/3zaiyRTExWwOJnTQdzSbtnM3S8/ZO/sL0FY/b4VLtlZzERAraxHdnPn8GgxYk
+ oPtAqoyf52RkCabL9dsXPWYQjkwG8WEUPScHDy8Uoo6imQujshG23A99iPuXcWc/5ld9mIo/
+ Ee7kN50MOXwS4vCJSv0cMkVhh77CmGUv5++E/rPcbXPLTPeRVy6SHgdDhIj7elmx2Lgo0cyh
+ uyxyBKSuzPvb61nh5EKAGL7kPqflNw7LJkInzHqKHDNu57rVuCHEx4yxcKNB4pdE2SgyPxs9
+ 9W7Cz0q2Hd7Yu8GOXvMfQfrBiEV4q4PzidUtV6sLqVq0RMK7LEi0RiZpthwxz0IUFwRw2KS/
+ 9Kgs9LmOXYimodrV0pMxpVqcyTepmDSoWzyXNP2NL1+GuQtaTQARAQABzTBNYWNpZWogUy4g
+ U3ptaWdpZXJvIDxtYWlsQG1hY2llai5zem1pZ2llcm8ubmFtZT7CwZQEEwEIAD4CGwMFCwkI
+ BwIGFQoJCAsCBBYCAwECHgECF4AWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5QgUJESzD
+ fQAKCRCEf143kM4JdxkAEAC9cPa1ONCizZerNCJR9fI1ezsYWjNYpTWoYWT2vWug8repG8EJ
+ E6/l300/TRf0kYy9vNC0PUe+uJeJig2HxfwuCAHECobvvANSEq+KTUXq1sE3tJ7ZKCZwDiR/
+ zs4axmFlZVzFUHkzCqH/y7xBBHHQJrtSD0W/Gs1DbCb1xCblyE4uzQ9DytlxkZdVgXt3Fmm8
+ Xa6JAxoDnUktl6LWpQ4tW6IRXN4gOQeRQKzREIIbk1gEvba/60JvuS1GX2KK2/SRODspF9TV
+ 5IKHmnepKOSpwLhkR3U4uV1D/4aqcJaDsH1krdAse5nkyXXQ7aBMvGLx2KADaoq6uhBFswyZ
+ L7/AuhKEq4+YTuvE+EBYJS1YXFCisqQgG2zDGQc2I5AVpQlF6isKa+kcQBT7V27XuSrcsYdH
+ Op7nJynlyBg7nYkgAdy+zLgQ+0fgCmtWha5qJUP6oVWcMfA6btSiN+rNkMylqgXbkeHgdDkr
+ 1+VshxGvQSMm/4DStFJwZ7zEln9qxr4AQbfdugNZmMb3F/haKvUuNh2TJHICgbwjEDryZipf
+ 2iUjqBVVzW4ut7fgHkBq9yw2Vy5ryr+R/N/1Pja6gvtvU53dfDIGXxBRGTQFD92xXVd/Ml8/
+ G0QvpiUCuUBvVGJb8k0Xlx9CYWlyFqoNUevPW8e8CCw+j3i+H9tMPuvJjs7AzQRaRrwiAQwA
+ xnVmJqeP9VUTISps+WbyYFYlMFfIurl7tzK74bc67KUBp+PHuDP9p4ZcJUGC3UZJP85/GlUV
+ dE1NairYWEJQUB7bpogTuzMI825QXIB9z842HwWfP2RW5eDtJMeujzJeFaUpmeTG9snzaYxY
+ N3r0TDKj5dZwSIThIMQpsmhH2zylkT0jH7kBPxb8IkCQ1c6wgKITwoHFjTIO0B75U7bBNSDp
+ XUaUDvd6T3xd1Fz57ujAvKHrZfWtaNSGwLmUYQAcFvrKDGPB5Z3ggkiTtkmW3OCQbnIxGJJw
+ /+HefYhB5/kCcpKUQ2RYcYgCZ0/WcES1xU5dnNe4i0a5gsOFSOYCpNCfTHttVxKxZZTQ/rxj
+ XwTuToXmTI4Nehn96t25DHZ0t9L9UEJ0yxH2y8Av4rtf75K2yAXFZa8dHnQgCkyjA/gs0ujG
+ wD+Gs7dYQxP4i+rLhwBWD3mawJxLxY0vGwkG7k7npqanlsWlATHpOdqBMUiAR22hs02FikAo
+ iXNgWTy7ABEBAAHCwXwEGAEIACYCGwwWIQRyeg1N257Z9gOb7O+Ef143kM4JdwUCaZD5YwUJ
+ ESzCOAAKCRCEf143kM4Jd4+KEADEBLxVKXGqinMD1nb/QPA0Rj35WluRdPIB2dcDcyTOtiyN
+ ErIQQMhr0W4sxZOd741a2nv89VZKjzBNjihOZgbEuHfG/0lhIZ5t6aF7k4gbMctzQT7utzmD
+ y5OoV+/VFHguLThwxRvCMkGEieE8Cb4muYdQgaq1s5ipV1IqF3cDYg2iGupnsYSgOfw7ZyvG
+ 9c7Fxn7jiD/wI9eL3AesCkVFbF0r/9yLbuW6vh3kd/+bORO1GK4snSjrZLi04bnihnDfa33N
+ Pik3cmUZZANzo+HkADZjJ1pl3DZn1Qj8STk6YhaTtJhLKH4lteAlSS4xRIeoiw/2hbzbRr4j
+ hnu96hf6ukM7E7oC89SfWGXZHbUds77MFyKvBTCMJnkQq+PbmYp1vgTnOl3JO7ARZ3rNPkHE
+ IpOWDjHRyDiKVVxt2bKaELZrFGcYYTVXt9pUfY1xFt76G0piVr50+jTezgMmZYr7aZOrqlUi
+ WHQjcZZbROLql/+ngphSgdthGIhVWrIMHJu1UxnRiwKc/fzDFUZ9hFL+W4ZLm+52TzMatpta
+ oNdcP9rtsQjdYMNLuwysP4keDX8yBXADwJD7eQ+ryIIKh6X1lBMIWxeZG5W0DQ6/4BCUEbCe
+ 1DqkYRtZyUEzgAbaHliaa5t3dfCtSMz5cAbGqxarXc7bKOjA6P8hCwgP0tEypA==
+In-Reply-To: <20260311183432.214960-4-viking4@gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=145.239.82.108;
+ envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
+X-Spam_score_int: 1
+X-Spam_score: 0.1
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9,
+ HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,223 +111,77 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On HVF, some of the GIC state is in an opaque Apple-provided structure.
+On 11.03.2026 19:34, Trieu Huynh wrote:
+> From: Trieu Huynh <vikingtc4@gmail.com>
+> 
+> Check return value of event_notifier_init() and return early on
+> failure instead of continuing with invalid state.
+> - Use ret < 0 to handle negative return value.
+> - No functional changes.
+> 
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> Acked-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+> ---
+>   hw/hyperv/hyperv.c     |  4 ++--
+>   hw/hyperv/vmbus.c      |  4 ++--
+>   hw/remote/proxy.c      | 15 +++++++++++++--
+>   hw/vfio/ap.c           |  2 +-
+>   hw/vfio/ccw.c          |  2 +-
+>   hw/vfio/pci-quirks.c   |  2 +-
+>   hw/vfio/pci.c          |  2 +-
+>   hw/virtio/vhost-vdpa.c |  4 ++--
+>   8 files changed, 23 insertions(+), 12 deletions(-)
+> 
+> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
+> index 27e323a819..aa278b179e 100644
+> --- a/hw/hyperv/hyperv.c
+> +++ b/hw/hyperv/hyperv.c
+> @@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
+>           sint_route->staged_msg->cb_data = cb_data;
+>   
+>           r = event_notifier_init(ack_notifier, false);
+> -        if (r) {
+> +        if (r < 0) {
+>               goto cleanup_err_sint;
+>           }
+>           event_notifier_set_handler(ack_notifier, sint_ack_handler);
+> @@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
+>   
+>       /* We need to setup a GSI for this SintRoute */
+>       r = event_notifier_init(&sint_route->sint_set_notifier, false);
+> -    if (r) {
+> +    if (r < 0) {
+>           goto cleanup_err_sint;
+>       }
+>   
+> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
+> index 64abe4c4c1..5388f4277f 100644
+> --- a/hw/hyperv/vmbus.c
+> +++ b/hw/hyperv/vmbus.c
+> @@ -1432,7 +1432,7 @@ static void open_channel(VMBusChannel *chan)
+>           goto put_gpadl;
+>       }
+>   
+> -    if (event_notifier_init(&chan->notifier, 0)) {
+> +    if (event_notifier_init(&chan->notifier, 0) < 0) {
+>           goto put_gpadl;
+>       }
+>   
+> @@ -2450,7 +2450,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
+>       }
+>   
+>       ret = event_notifier_init(&vmbus->notifier, 0);
+> -    if (ret != 0) {
+> +    if (ret < 0) {
+>           error_setg(errp, "event notifier failed to init with %d", ret);
+>           goto remove_msg_handler;
+>       }
 
-Save/restore that state to be able to save/restore VMs that use the hardware GIC.
+Reviewed-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for the Hyper-V part
 
-Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/intc/arm_gicv3_common.c         |  1 +
- hw/intc/arm_gicv3_hvf.c            | 95 ++++++++++++++++++++++++++++--
- hw/intc/arm_gicv3_hvf_stub.c       | 25 ++++++++
- hw/intc/meson.build                |  1 +
- include/hw/intc/arm_gicv3_common.h |  3 +
- 5 files changed, 121 insertions(+), 4 deletions(-)
- create mode 100644 hw/intc/arm_gicv3_hvf_stub.c
-
-diff --git a/hw/intc/arm_gicv3_common.c b/hw/intc/arm_gicv3_common.c
-index 9200671c7a..9c3fb2f4bf 100644
---- a/hw/intc/arm_gicv3_common.c
-+++ b/hw/intc/arm_gicv3_common.c
-@@ -305,6 +305,7 @@ static const VMStateDescription vmstate_gicv3 = {
-     .subsections = (const VMStateDescription * const []) {
-         &vmstate_gicv3_gicd_no_migration_shift_bug,
-         &vmstate_gicv3_gicd_nmi,
-+        &vmstate_gicv3_hvf,
-         NULL
-     }
- };
-diff --git a/hw/intc/arm_gicv3_hvf.c b/hw/intc/arm_gicv3_hvf.c
-index 55171a796b..18e5b3fe68 100644
---- a/hw/intc/arm_gicv3_hvf.c
-+++ b/hw/intc/arm_gicv3_hvf.c
-@@ -13,6 +13,7 @@
- #include "qemu/error-report.h"
- #include "qemu/module.h"
- #include "system/runstate.h"
-+#include "migration/vmstate.h"
- #include "system/hvf.h"
- #include "system/hvf_int.h"
- #include "hvf_arm.h"
-@@ -34,8 +35,13 @@ struct HVFARMGICv3Class {
- 
- typedef struct HVFARMGICv3Class HVFARMGICv3Class;
- 
--/* This is reusing the GICv3State typedef from ARM_GICV3_ITS_COMMON */
--DECLARE_OBJ_CHECKERS(GICv3State, HVFARMGICv3Class,
-+typedef struct HVFGICv3State {
-+    GICv3State gicv3_state;
-+    uint32_t size;
-+    void *state;
-+} HVFGICv3State;
-+
-+DECLARE_OBJ_CHECKERS(HVFGICv3State, HVFARMGICv3Class,
-                      HVF_GICV3, TYPE_HVF_GICV3);
- 
- /*
-@@ -660,7 +666,7 @@ static const ARMCPRegInfo gicv3_cpuif_reginfo[] = {
- static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
- {
-     ERRP_GUARD();
--    GICv3State *s = HVF_GICV3(dev);
-+    GICv3State *s = (GICv3State *)HVF_GICV3(dev);
-     HVFARMGICv3Class *kgc = HVF_GICV3_GET_CLASS(s);
-     int i;
- 
-@@ -707,6 +713,87 @@ static void hvf_gicv3_realize(DeviceState *dev, Error **errp)
-     }
- }
- 
-+/*
-+ * HVF doesn't have a way to save the RDIST pending tables
-+ * to guest memory, only to an opaque data structure.
-+ */
-+static bool gicv3_is_hvf(void *opaque)
-+{
-+    return hvf_enabled() && hvf_irqchip_in_kernel();
-+}
-+
-+static int hvf_gic_opaque_state_save(void *opaque)
-+{
-+    HVFGICv3State *gic = opaque;
-+    hv_gic_state_t gic_state;
-+    hv_return_t err;
-+    size_t size;
-+
-+    gic_state = hv_gic_state_create();
-+    if (gic_state == NULL) {
-+        error_report("hvf: vgic: failed to create hv_gic_state_create.");
-+        return 1;
-+    }
-+    err = hv_gic_state_get_size(gic_state, &size);
-+    gic->size = size;
-+    if (err != HV_SUCCESS) {
-+        error_report("hvf: vgic: failed to get GIC state size.");
-+        os_release(gic_state);
-+        return 1;
-+    }
-+    gic->state = g_malloc(gic->size);
-+    err = hv_gic_state_get_data(gic_state, gic->state);
-+    if (err != HV_SUCCESS) {
-+        error_report("hvf: vgic: failed to get GIC state.");
-+        os_release(gic_state);
-+        return 1;
-+    }
-+
-+    os_release(gic_state);
-+    return 0;
-+}
-+
-+static int hvf_gic_opaque_state_free(void *opaque)
-+{
-+    HVFGICv3State *gic = opaque;
-+    free(gic->state);
-+    return 0;
-+}
-+
-+static int hvf_gic_opaque_state_restore(void *opaque, int version_id)
-+{
-+    HVFGICv3State *gic = opaque;
-+    hv_return_t err;
-+    if (!gic->size) {
-+        return 0;
-+    }
-+    err = hv_gic_set_state(gic->state, gic->size);
-+    if (err != HV_SUCCESS) {
-+        error_report("hvf: vgic: failed to restore GIC state.");
-+        return 1;
-+    }
-+    return 0;
-+}
-+
-+const VMStateDescription vmstate_gicv3_hvf = {
-+    .name = "arm_gicv3/hvf_gic_state",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = gicv3_is_hvf,
-+    .pre_save = hvf_gic_opaque_state_save,
-+    .post_save = hvf_gic_opaque_state_free,
-+    .post_load = hvf_gic_opaque_state_restore,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_UINT32(size, HVFGICv3State),
-+        VMSTATE_VBUFFER_ALLOC_UINT32(state,
-+                                     HVFGICv3State, 0, 0,
-+                                     size),
-+        VMSTATE_END_OF_LIST()
-+    },
-+};
-+
- static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
- {
-     DeviceClass *dc = DEVICE_CLASS(klass);
-@@ -726,7 +813,7 @@ static void hvf_gicv3_class_init(ObjectClass *klass, const void *data)
- static const TypeInfo hvf_arm_gicv3_info = {
-     .name = TYPE_HVF_GICV3,
-     .parent = TYPE_ARM_GICV3_COMMON,
--    .instance_size = sizeof(GICv3State),
-+    .instance_size = sizeof(HVFGICv3State),
-     .class_init = hvf_gicv3_class_init,
-     .class_size = sizeof(HVFARMGICv3Class),
- };
-diff --git a/hw/intc/arm_gicv3_hvf_stub.c b/hw/intc/arm_gicv3_hvf_stub.c
-new file mode 100644
-index 0000000000..a587332c7c
---- /dev/null
-+++ b/hw/intc/arm_gicv3_hvf_stub.c
-@@ -0,0 +1,25 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * ARM Generic Interrupt Controller using HVF platform support stub
-+ *
-+ * Copyright (c) 2026 Mohamed Mediouni
-+ *
-+ */
-+#include "qemu/osdep.h"
-+#include "hw/intc/arm_gicv3_common.h"
-+#include "migration/vmstate.h"
-+#include "qemu/typedefs.h"
-+
-+static bool needed_never(void *opaque)
-+{
-+    return false;
-+}
-+
-+const VMStateDescription vmstate_gicv3_hvf = {
-+    .name = "arm_gicv3/hvf_gic_state",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .needed = needed_never,
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+};
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index b7baf8a0f6..c6de2d9d00 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -43,6 +43,7 @@ arm_common_ss.add(when: 'CONFIG_ARM_GICV3', if_true: files('arm_gicv3_cpuif.c'))
- specific_ss.add(when: 'CONFIG_ARM_GIC_KVM', if_true: files('arm_gic_kvm.c'))
- specific_ss.add(when: ['CONFIG_WHPX', 'TARGET_AARCH64'], if_true: files('arm_gicv3_whpx.c'))
- specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_true: files('arm_gicv3_hvf.c'))
-+specific_ss.add(when: ['CONFIG_HVF', 'CONFIG_ARM_GICV3'], if_false: files('arm_gicv3_hvf_stub.c'))
- specific_ss.add(when: ['CONFIG_ARM_GIC_KVM', 'TARGET_AARCH64'], if_true: files('arm_gicv3_kvm.c', 'arm_gicv3_its_kvm.c'))
- arm_common_ss.add(when: 'CONFIG_ARM_V7M', if_true: files('armv7m_nvic.c'))
- specific_ss.add(when: 'CONFIG_GRLIB', if_true: files('grlib_irqmp.c'))
-diff --git a/include/hw/intc/arm_gicv3_common.h b/include/hw/intc/arm_gicv3_common.h
-index 9adcab0a0c..03ab3e8f2f 100644
---- a/include/hw/intc/arm_gicv3_common.h
-+++ b/include/hw/intc/arm_gicv3_common.h
-@@ -339,4 +339,7 @@ void gicv3_init_irqs_and_mmio(GICv3State *s, qemu_irq_handler handler,
-  */
- const char *gicv3_class_name(void);
- 
-+/* HVF vGIC-specific state: stubbed out on a build with HVF disabled */
-+extern const VMStateDescription vmstate_gicv3_hvf;
-+
- #endif
--- 
-2.50.1 (Apple Git-155)
+Thanks,
+Maciej
 
 
