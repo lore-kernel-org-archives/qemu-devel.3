@@ -4,185 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E8D6F53D78
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 17:01:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 667F3F53D76
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 17:15:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2BJa-0000Am-Hx; Mon, 16 Mar 2026 13:01:14 -0400
+	id 1w2BWp-0002aU-QD; Mon, 16 Mar 2026 13:14:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1w2BJI-00009t-A1; Mon, 16 Mar 2026 13:00:57 -0400
-Received: from mout.gmx.net ([212.227.15.18])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@gmx.de>)
- id 1w2BJD-00028R-K5; Mon, 16 Mar 2026 13:00:56 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=gmx.de;
- s=s31663417; t=1773680443; x=1774285243; i=deller@gmx.de;
- bh=weXdtGXuX3l7zQhleAu59wO6y0QsDKw9JUGSNDNjYyk=;
- h=X-UI-Sender-Class:Message-ID:Date:MIME-Version:Subject:To:Cc:
- References:From:In-Reply-To:Content-Type:
- Content-Transfer-Encoding:cc:content-transfer-encoding:
- content-type:date:from:message-id:mime-version:reply-to:subject:
- to;
- b=o0Ce/oNQ0r8qpfmHntXsgt4DpbqPDJDK6tw7XYcee4sMnPAN4co6vlWTOb4qkYN1
- 5YgmM+G2PAnZE5JjkOpCHXjdAWPMlpURPEcMXAseGh4U8MCERWSNL9Z6vNKMDdQem
- j43iZmDxWKrEReCvq+YGTI7cvpVRO+ZNv+2kV9BMDU6Ad7BhsjPw6dxRg5bkMelTu
- U2mha3WC04YdAcrQSk6pYpnx4dMTxbJyKPKpTOil9rzb1OPJpjNuPPRtL3jd+P5x8
- Xu5j7WLkwfkyCeIVVYeLaajh9yZBwL6Nf3Yw2MbcWcf36zc17ZvveXOmLBhYc2nRc
- dai4n3aOpbaW79TmSA==
-X-UI-Sender-Class: 724b4f7f-cbec-4199-ad4e-598c01a50d3a
-Received: from client.hidden.invalid by mail.gmx.net (mrgmx005
- [212.227.17.190]) with ESMTPSA (Nemesis) id 1McpNo-1vTfZJ2qW2-00iYDG; Mon, 16
- Mar 2026 18:00:43 +0100
-Message-ID: <0864102b-f32d-41a1-b19a-7eb9b237b368@gmx.de>
-Date: Mon, 16 Mar 2026 18:00:42 +0100
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w2BWm-0002Y6-Hj
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:14:52 -0400
+Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <ltaylorsimpson@gmail.com>)
+ id 1w2BWk-0007k6-1p
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 13:14:52 -0400
+Received: by mail-pg1-x52a.google.com with SMTP id
+ 41be03b00d2f7-c739d32b72cso3362912a12.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 10:14:47 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773681287; cv=none;
+ d=google.com; s=arc-20240605;
+ b=JZtrB6Kun6lcNxV7j9NHUyDEwI+3DJoHGtiUYs2ESKCF/U1V4IKKruxl9XqSpNZzEL
+ rilMqcaL1C3+aypR4RdH5kECG/4Id548H4fnFiapGx2KRpHEpQGFcz5n0DFHnFby86k2
+ 4Cmk+Utt0YlmnWKgAF0Kb4+LnOuwU3XMTSNFiahgeiM7nMylYsZSOwBeMpYNrJLADiNF
+ LXAsIXRjI0DOtmhrhRvbm9Ri7JngLjdVlTDiM8AydiJY27r9y/6Wcl0w0jGqyOHsfwO4
+ UGVWcMsXP4suGoi+EtjFXpB/bYriZbEGQlrrLoOxYCYal3DdTi1YxGFgcqVEYFaRcGQe
+ T4jQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=z1qZPtyrEjUlssrZdgg6itmaQ9RSxaBW49XVYfbw72s=;
+ fh=KRCCjFQNjYXxmVm5lhBeSL8Cxa/V2Ufkjle/+cdDqO0=;
+ b=i+vOb/wRN3yWTCZEZkOVUp5AR8HXCAFjOM2AQ0YMiTFlS2qFnr/2obSR4SpjmCiV6f
+ Oa5uVcD9HZZCATl281sRMX0gsAfcNj9tMTPAMI298U01JYQKJbExaRwtCq8wEkus4HX6
+ 9hOaUGX/ybMVHmRjAog0ZMdETBtbZxGUnuA0Yi9XL9/KkiKbrvrz1w9fpJ/CqRz2uPGh
+ Euv5Kv3zTmJzw8US4UyhOuMHsfbLrh/fsGpssMmzuPgE9Ta3qmOZnyreBOQnHVe6IbXZ
+ /LEFcK3/f7bkksUm1GjozanrVxK04MOMXeS3Gr6C0BlTMncEc3JvL5xx39tU4zOcpdvP
+ Z6gQ==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1773681287; x=1774286087; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=z1qZPtyrEjUlssrZdgg6itmaQ9RSxaBW49XVYfbw72s=;
+ b=nqHR9edbEgHRG7Q8SNO1n0wZMgbYG0eoyNm/OcrzGQ3Id7143oGU6OPV6y9y2ENFoU
+ InQBsk9DCpAci5xRdTzXmbtktn1nl/6fkyA9wxitB1k+RMGGIcmuCyi5G0QQ1Czwzyqc
+ gvaFbvP0U8MAvn8XxP8siddKihoQh3CapfUdh0lR5+gubFxrISMmt0BG5vnw3Y9aMjAj
+ SY7JZfO7ZypTRGcDOdL9o83pyIBUh8apy9xvsx2N1LoTFM3OFqBK3mGRpb4zDekuecTz
+ stQocxR/SvVpXWWIo7Yl6ca7y4T7Do80ztGytnrFcozKhinkb8SY7Y9pc1Bxq9svR/5R
+ pmNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773681287; x=1774286087;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=z1qZPtyrEjUlssrZdgg6itmaQ9RSxaBW49XVYfbw72s=;
+ b=tCqyvI6Drc3Dq7AquI+UC3rR7u+8GPm0YWqjgrMDfxJ1w0csbKuSKDEueuUZ5Q/t/J
+ 7n+YbtxK3y4zfCMV68p0MJbiFB05vD0vJVe8aBWFer6wkuHwUYsLVOLHa5tsgu38lFoN
+ knzcVX6LEhTehi8nol03OuCsCratvbhw/MhjC0AzZpZE1IOVmXQeuq0GainxrWSFyNDZ
+ VN9nNszJ+SWkUtpJYMR5w+qZxdpLMvO1SHwxgM/URq4Dyl/XH+KsyAGP6Eu7r3aA/Ezy
+ YDKwy7RnKeGSQVzSOFrerw0Oc37pX+i+aL4xilMNuJM2QS9OtCDnRpaoytVFHGxlFO13
+ tHxg==
+X-Gm-Message-State: AOJu0Ywcxmrn5+uWZBuZ8AR8Sz3CoiaXvt3J7B1Zwy1Aryqy9ZmJ5pC2
+ +m5CngmAZk0svycPeRcFgnP79cBlKSKNZwj/3CLTCV+s3rKjPCPp6jVKpfc9t3fdaeamxntRBx9
+ FCB/Mwy/wuptVdKJ/ft+F4P9VApElw0JPgags
+X-Gm-Gg: ATEYQzzq9GIE/5WwsEEWzkCT/Qmne2zL0xR3QuWZfWWG4XgMPgrUd9ONEsU7xX2GvCQ
+ o7M9WXWpxqGfgyZTjyr5IGd1y7WkLxwVdzMv16CdbWWx0ALJU3QgiPAIOtBT2ELPWB2nr0LcBcO
+ 4UEWZcPIgNjL4f7Pw7RNAhp6ZjiAwtB7WRpzcH3BoMdpykVBjbpHef+fK8/sbXlkIS0bYNLHXq5
+ F8JLbgPAocEOGWGrO0U/bMJwJaEfiCNaTNsP0RrfbpCONFSqCBPwXg9ZGpsbaOtfbhZC8gzmxvT
+ tsYey2JdBBk1y78CuqN/quEWdMJ9feJalxL0mw==
+X-Received: by 2002:a05:6a21:7106:b0:398:7946:b70d with SMTP id
+ adf61e73a8af0-398ecd617a1mr11996658637.51.1773681286650; Mon, 16 Mar 2026
+ 10:14:46 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Linux user for v11 patches
-To: Michael Tokarev <mjt@tls.msk.ru>, Helge Deller <deller@kernel.org>,
- qemu-devel@nongnu.org
-Cc: Razvan Ghiorghe <razvanghiorghe16@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>, qemu-stable <qemu-stable@nongnu.org>
-References: <20260313183009.34221-1-deller@kernel.org>
- <66022765-b7b8-4f46-a90a-43dc473a16fd@tls.msk.ru>
-Content-Language: en-US
-From: Helge Deller <deller@gmx.de>
-Autocrypt: addr=deller@gmx.de; keydata=
- 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
-In-Reply-To: <66022765-b7b8-4f46-a90a-43dc473a16fd@tls.msk.ru>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: quoted-printable
-X-Provags-ID: V03:K1:aMQKpHqPUT8wdzSjPa5+aA7s+6kfYl6Ja/HwO7B4G3C4b30Y4PN
- LfuDlUuDYmjB3O20TeHBSMIe7KLn/9HuRerXkzCjQAxl7HVcB0rkS88m5oD+FwyprmfFZ9Y
- d9F4mKKNl7Bg7BWRweeQBJAQcOpZhBGLYvtprL1zs74VVoOW144u+8X+fS9G1Uf/wuPVfTU
- uzrk2vq6oanATAmsKHiwg==
-UI-OutboundReport: notjunk:1;M01:P0:WxcL+Hfzm+U=;CA7K2pIwERpeIjmiK5nmpKuCQvV
- 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
-Received-SPF: pass client-ip=212.227.15.18; envelope-from=deller@gmx.de;
- helo=mout.gmx.net
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+References: <20260311040758.1068731-1-brian.cain@oss.qualcomm.com>
+ <20260311040758.1068731-25-brian.cain@oss.qualcomm.com>
+In-Reply-To: <20260311040758.1068731-25-brian.cain@oss.qualcomm.com>
+From: Taylor Simpson <ltaylorsimpson@gmail.com>
+Date: Mon, 16 Mar 2026 11:14:34 -0600
+X-Gm-Features: AaiRm501x8nR_g1zaPk9Z9vOLaggefKfqGMTwFPMzvr-oJLQAOBve3HIv3pY-J0
+Message-ID: <CAATN3NrZZ0biDFZ3QE94d+ro44bXZp0F+qbFCBpLds2Uv+CkCA@mail.gmail.com>
+Subject: Re: [PATCH v3 24/32] target/hexagon: Add next_PC, {s,g}reg writes
+To: Brian Cain <brian.cain@oss.qualcomm.com>
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, 
+ matheus.bernardino@oss.qualcomm.com, marco.liebel@oss.qualcomm.com, 
+ quic_mburton@quicinc.com, sid.manning@oss.qualcomm.com, ale@rev.ng, 
+ anjo@rev.ng, Brian Cain <bcain@quicinc.com>
+Content-Type: multipart/alternative; boundary="000000000000092047064d275bbb"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
+ envelope-from=ltaylorsimpson@gmail.com; helo=mail-pg1-x52a.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -198,18 +117,422 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/16/26 14:43, Michael Tokarev wrote:
-> On 13.03.2026 21:30, Helge Deller wrote:
->=20
->> Razvan Ghiorghe (2):
->> =C2=A0=C2=A0 linux-user: Fix zero_bss for RX PT_LOAD segments
->> =C2=A0=C2=A0 linux-user: fix mremap with old_size=3D0 for shared mappin=
-gs
->=20
-> This looks like qemu-stable material, is it not?
+--000000000000092047064d275bbb
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Yes.
+On Tue, Mar 10, 2026 at 10:08=E2=80=AFPM Brian Cain <brian.cain@oss.qualcom=
+m.com>
+wrote:
 
-Thanks!
-Helge
+> From: Brian Cain <bcain@quicinc.com>
+>
+> Signed-off-by: Brian Cain <brian.cain@oss.qualcomm.com>
+> ---
+>  target/hexagon/translate.c | 89 ++++++++++++++++++++++++++++++++++++--
+>  1 file changed, 85 insertions(+), 4 deletions(-)
+>
+> diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c
+> index 953b34b7891..79027e8a327 100644
+> --- a/target/hexagon/translate.c
+> +++ b/target/hexagon/translate.c
+> @@ -552,6 +552,10 @@ static void gen_start_packet(DisasContext *ctx)
+>      ctx->reg_log_idx =3D 0;
+>      bitmap_zero(ctx->regs_written, TOTAL_PER_THREAD_REGS);
+>      bitmap_zero(ctx->predicated_regs, TOTAL_PER_THREAD_REGS);
+> +#ifndef CONFIG_USER_ONLY
+> +    ctx->greg_log_idx =3D 0;
+> +    ctx->sreg_log_idx =3D 0;
+> +#endif
+>      ctx->preg_log_idx =3D 0;
+>      bitmap_zero(ctx->pregs_written, NUM_PREGS);
+>      ctx->future_vregs_idx =3D 0;
+> @@ -584,6 +588,25 @@ static void gen_start_packet(DisasContext *ctx)
+>       * gen phase, so clear it again.
+>       */
+>      bitmap_zero(ctx->pregs_written, NUM_PREGS);
+> +#ifndef CONFIG_USER_ONLY
+> +    for (i =3D 0; i < NUM_SREGS; i++) {
+>
+
+Use HEX_SREG_GLB_START instead of NUM_SREGS.
+Also, size the t_sreg_new_value array with HEX_SREG_GLB_START.
+
+
+> +        ctx->t_sreg_new_value[i] =3D NULL;
+> +    }
+> +    for (i =3D 0; i < ctx->sreg_log_idx; i++) {
+> +        int reg_num =3D ctx->sreg_log[i];
+> +        if (reg_num < HEX_SREG_GLB_START) {
+> +            ctx->t_sreg_new_value[reg_num] =3D tcg_temp_new();
+> +            tcg_gen_mov_tl(ctx->t_sreg_new_value[reg_num],
+> hex_t_sreg[reg_num]);
+>
+
+You only need this assignment if the writes can be predicated.
+
+
+> +        }
+> +    }
+> +    for (i =3D 0; i < NUM_GREGS; i++) {
+> +        ctx->greg_new_value[i] =3D NULL;
+> +    }
+> +    for (i =3D 0; i < ctx->greg_log_idx; i++) {
+> +        int reg_num =3D ctx->greg_log[i];
+> +        ctx->greg_new_value[reg_num] =3D tcg_temp_new();
+> +    }
+> +#endif
+>
+>      /* Initialize the runtime state for packet semantics */
+>      if (need_slot_cancelled(pkt)) {
+> @@ -744,6 +767,60 @@ static void gen_reg_writes(DisasContext *ctx)
+>      }
+>  }
+>
+> +#ifndef CONFIG_USER_ONLY
+> +static void gen_greg_writes(DisasContext *ctx)
+> +{
+> +    int i;
+> +
+> +    for (i =3D 0; i < ctx->greg_log_idx; i++) {
+> +        int reg_num =3D ctx->greg_log[i];
+> +
+> +        tcg_gen_mov_tl(hex_greg[reg_num], ctx->greg_new_value[reg_num]);
+> +    }
+> +}
+> +
+> +
+> +static void gen_sreg_writes(DisasContext *ctx)
+> +{
+> +    int i;
+> +
+> +    TCGv_i32 old_reg =3D tcg_temp_new_i32();
+> +    for (i =3D 0; i < ctx->sreg_log_idx; i++) {
+> +        int reg_num =3D ctx->sreg_log[i];
+> +
+> +        if (reg_num =3D=3D HEX_SREG_SSR) {
+> +            tcg_gen_mov_tl(old_reg, hex_t_sreg[reg_num]);
+> +            tcg_gen_mov_tl(hex_t_sreg[reg_num],
+> ctx->t_sreg_new_value[reg_num]);
+> +            gen_helper_modify_ssr(tcg_env, ctx->t_sreg_new_value[reg_num=
+],
+> +                                  old_reg);
+> +            /* This can change processor state, so end the TB */
+> +            ctx->base.is_jmp =3D DISAS_NORETURN;
+>
+
+Isn't this taken care of in pkt_ends_tb from earlier patch?
+
+
+> +            continue;
+> +        } else if ((reg_num =3D=3D HEX_SREG_STID) ||
+> +                   (reg_num =3D=3D HEX_SREG_IMASK) ||
+> +                   (reg_num =3D=3D HEX_SREG_IPENDAD)) {
+> +            if (reg_num < HEX_SREG_GLB_START) {
+> +                tcg_gen_mov_tl(old_reg, hex_t_sreg[reg_num]);
+>
+
+Don't need to set old_reg here
+
+
+> +                tcg_gen_mov_tl(hex_t_sreg[reg_num],
+> +                               ctx->t_sreg_new_value[reg_num]);
+> +            }
+> +            /* This can change the interrupt state, so end the TB */
+> +            gen_helper_pending_interrupt(tcg_env);
+> +            ctx->base.is_jmp =3D DISAS_NORETURN;
+>
+
+Already taken care of.
+
+
+> +        } else if ((reg_num =3D=3D HEX_SREG_BESTWAIT) ||
+> +                   (reg_num =3D=3D HEX_SREG_SCHEDCFG)) {
+> +            /* This can trigger resched interrupt, so end the TB */
+> +            gen_helper_resched(tcg_env);
+> +            ctx->base.is_jmp =3D DISAS_NORETURN;
+>
+
+Already taken care of.
+
+
+> +        }
+> +
+> +        if (reg_num < HEX_SREG_GLB_START) {
+> +            tcg_gen_mov_tl(hex_t_sreg[reg_num],
+> ctx->t_sreg_new_value[reg_num]);
+> +        }
+>
+
+Put this under an else as we've already done the assignment for specific
+cases above
+
+
+> +    }
+> +}
+> +#endif
+> +
+>  static void gen_pred_writes(DisasContext *ctx)
+>  {
+>      /* Early exit if not needed or the log is empty */
+> @@ -1044,6 +1121,10 @@ static void gen_commit_packet(DisasContext *ctx)
+>      process_store_log(ctx);
+>
+>      gen_reg_writes(ctx);
+> +#if !defined(CONFIG_USER_ONLY)
+> +    gen_greg_writes(ctx);
+> +    gen_sreg_writes(ctx);
+> +#endif
+>      gen_pred_writes(ctx);
+>      if (pkt->pkt_has_hvx) {
+>          gen_commit_hvx(ctx);
+> @@ -1255,6 +1336,10 @@ void hexagon_translate_init(void)
+>          offsetof(CPUHexagonState, llsc_val_i64), "llsc_val_i64");
+>      hex_cycle_count =3D tcg_global_mem_new_i64(tcg_env,
+>              offsetof(CPUHexagonState, t_cycle_count), "t_cycle_count");
+> +#ifndef CONFIG_USER_ONLY
+> +    hex_cause_code =3D tcg_global_mem_new_i32(tcg_env,
+> +        offsetof(CPUHexagonState, cause_code), "cause_code");
+> +#endif
+>
+
+Seems strange to add this here and remove it below
+
+
+>      for (i =3D 0; i < STORES_MAX; i++) {
+>          snprintf(store_addr_names[i], NAME_LEN, "store_addr_%d", i);
+>          hex_store_addr[i] =3D tcg_global_mem_new(tcg_env,
+> @@ -1292,8 +1377,4 @@ void hexagon_translate_init(void)
+>              offsetof(CPUHexagonState, vstore_pending[i]),
+>              vstore_pending_names[i]);
+>      }
+> -#ifndef CONFIG_USER_ONLY
+> -    hex_cause_code =3D tcg_global_mem_new(tcg_env,
+> -        offsetof(CPUHexagonState, cause_code), "cause_code");
+> -#endif
+>  }
+> --
+> 2.34.1
+>
+>
+
+--000000000000092047064d275bbb
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 10,=
+ 2026 at 10:08=E2=80=AFPM Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.q=
+ualcomm.com">brian.cain@oss.qualcomm.com</a>&gt; wrote:<br></div><blockquot=
+e class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px s=
+olid rgb(204,204,204);padding-left:1ex">From: Brian Cain &lt;<a href=3D"mai=
+lto:bcain@quicinc.com" target=3D"_blank">bcain@quicinc.com</a>&gt;<br>
+<br>
+Signed-off-by: Brian Cain &lt;<a href=3D"mailto:brian.cain@oss.qualcomm.com=
+" target=3D"_blank">brian.cain@oss.qualcomm.com</a>&gt;<br>
+---<br>
+=C2=A0target/hexagon/translate.c | 89 ++++++++++++++++++++++++++++++++++++-=
+-<br>
+=C2=A01 file changed, 85 insertions(+), 4 deletions(-)<br>
+<br>
+diff --git a/target/hexagon/translate.c b/target/hexagon/translate.c<br>
+index 953b34b7891..79027e8a327 100644<br>
+--- a/target/hexagon/translate.c<br>
++++ b/target/hexagon/translate.c<br>
+@@ -552,6 +552,10 @@ static void gen_start_packet(DisasContext *ctx)<br>
+=C2=A0 =C2=A0 =C2=A0ctx-&gt;reg_log_idx =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0bitmap_zero(ctx-&gt;regs_written, TOTAL_PER_THREAD_REGS=
+);<br>
+=C2=A0 =C2=A0 =C2=A0bitmap_zero(ctx-&gt;predicated_regs, TOTAL_PER_THREAD_R=
+EGS);<br>
++#ifndef CONFIG_USER_ONLY<br>
++=C2=A0 =C2=A0 ctx-&gt;greg_log_idx =3D 0;<br>
++=C2=A0 =C2=A0 ctx-&gt;sreg_log_idx =3D 0;<br>
++#endif<br>
+=C2=A0 =C2=A0 =C2=A0ctx-&gt;preg_log_idx =3D 0;<br>
+=C2=A0 =C2=A0 =C2=A0bitmap_zero(ctx-&gt;pregs_written, NUM_PREGS);<br>
+=C2=A0 =C2=A0 =C2=A0ctx-&gt;future_vregs_idx =3D 0;<br>
+@@ -584,6 +588,25 @@ static void gen_start_packet(DisasContext *ctx)<br>
+=C2=A0 =C2=A0 =C2=A0 * gen phase, so clear it again.<br>
+=C2=A0 =C2=A0 =C2=A0 */<br>
+=C2=A0 =C2=A0 =C2=A0bitmap_zero(ctx-&gt;pregs_written, NUM_PREGS);<br>
++#ifndef CONFIG_USER_ONLY<br>
++=C2=A0 =C2=A0 for (i =3D 0; i &lt; NUM_SREGS; i++) {<br></blockquote><div>=
+<br></div><div>Use HEX_SREG_GLB_START instead of NUM_SREGS.</div><div>Also,=
+ size the t_sreg_new_value array with HEX_SREG_GLB_START.</div><div>=C2=A0<=
+/div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;bo=
+rder-left:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;t_sreg_new_value[i] =3D NULL;<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 for (i =3D 0; i &lt; ctx-&gt;sreg_log_idx; i++) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 int reg_num =3D ctx-&gt;sreg_log[i];<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (reg_num &lt; HEX_SREG_GLB_START) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;t_sreg_new_value[reg_num=
+] =3D tcg_temp_new();<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(ctx-&gt;t_sreg_ne=
+w_value[reg_num], hex_t_sreg[reg_num]);<br></blockquote><div><br></div><div=
+>You only need this assignment if the writes can be predicated.</div><div>=
+=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0=
+.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 for (i =3D 0; i &lt; NUM_GREGS; i++) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;greg_new_value[i] =3D NULL;<br>
++=C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 for (i =3D 0; i &lt; ctx-&gt;greg_log_idx; i++) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 int reg_num =3D ctx-&gt;greg_log[i];<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;greg_new_value[reg_num] =3D tcg_temp_n=
+ew();<br>
++=C2=A0 =C2=A0 }<br>
++#endif<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0/* Initialize the runtime state for packet semantics */=
+<br>
+=C2=A0 =C2=A0 =C2=A0if (need_slot_cancelled(pkt)) {<br>
+@@ -744,6 +767,60 @@ static void gen_reg_writes(DisasContext *ctx)<br>
+=C2=A0 =C2=A0 =C2=A0}<br>
+=C2=A0}<br>
+<br>
++#ifndef CONFIG_USER_ONLY<br>
++static void gen_greg_writes(DisasContext *ctx)<br>
++{<br>
++=C2=A0 =C2=A0 int i;<br>
++<br>
++=C2=A0 =C2=A0 for (i =3D 0; i &lt; ctx-&gt;greg_log_idx; i++) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 int reg_num =3D ctx-&gt;greg_log[i];<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(hex_greg[reg_num], ctx-&gt;greg=
+_new_value[reg_num]);<br>
++=C2=A0 =C2=A0 }<br>
++}<br>
++<br>
++<br>
++static void gen_sreg_writes(DisasContext *ctx)<br>
++{<br>
++=C2=A0 =C2=A0 int i;<br>
++<br>
++=C2=A0 =C2=A0 TCGv_i32 old_reg =3D tcg_temp_new_i32();<br>
++=C2=A0 =C2=A0 for (i =3D 0; i &lt; ctx-&gt;sreg_log_idx; i++) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 int reg_num =3D ctx-&gt;sreg_log[i];<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (reg_num =3D=3D HEX_SREG_SSR) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(old_reg, hex_t_sr=
+eg[reg_num]);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(hex_t_sreg[reg_nu=
+m], ctx-&gt;t_sreg_new_value[reg_num]);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_helper_modify_ssr(tcg_env, c=
+tx-&gt;t_sreg_new_value[reg_num],<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 old_reg);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* This can change processor sta=
+te, so end the TB */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;base.is_jmp =3D DISAS_NO=
+RETURN;<br></blockquote><div><br></div><div>Isn&#39;t this taken care of in=
+ pkt_ends_tb from earlier patch?</div><div>=C2=A0</div><blockquote class=3D=
+"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
+04,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 continue;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if ((reg_num =3D=3D HEX_SREG_STID) ||<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(reg_=
+num =3D=3D HEX_SREG_IMASK) ||<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(reg_=
+num =3D=3D HEX_SREG_IPENDAD)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (reg_num &lt; HEX_SREG_GLB_ST=
+ART) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(old=
+_reg, hex_t_sreg[reg_num]);<br></blockquote><div><br></div><div>Don&#39;t n=
+eed to set old_reg here</div><div>=C2=A0</div><blockquote class=3D"gmail_qu=
+ote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,20=
+4);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(hex=
+_t_sreg[reg_num],<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0ctx-&gt;t_sreg_new_value[reg_num]);<b=
+r>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* This can change the interrupt=
+ state, so end the TB */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_helper_pending_interrupt(tcg=
+_env);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;base.is_jmp =3D DISAS_NO=
+RETURN;<br></blockquote><div><br></div><div>Already taken care of.</div><di=
+v>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if ((reg_num =3D=3D HEX_SREG_BESTWAIT) =
+||<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0(reg_=
+num =3D=3D HEX_SREG_SCHEDCFG)) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* This can trigger resched inte=
+rrupt, so end the TB */<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 gen_helper_resched(tcg_env);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ctx-&gt;base.is_jmp =3D DISAS_NO=
+RETURN;<br></blockquote><div><br></div><div>Already taken care of.</div><di=
+v>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px=
+ 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
++<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (reg_num &lt; HEX_SREG_GLB_START) {<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 tcg_gen_mov_tl(hex_t_sreg[reg_nu=
+m], ctx-&gt;t_sreg_new_value[reg_num]);<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br></blockquote><div><br></div><div>Put this=
+ under an else as we&#39;ve already done the assignment for specific cases =
+above</div><div>=C2=A0</div><blockquote class=3D"gmail_quote" style=3D"marg=
+in:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1e=
+x">
++=C2=A0 =C2=A0 }<br>
++}<br>
++#endif<br>
++<br>
+=C2=A0static void gen_pred_writes(DisasContext *ctx)<br>
+=C2=A0{<br>
+=C2=A0 =C2=A0 =C2=A0/* Early exit if not needed or the log is empty */<br>
+@@ -1044,6 +1121,10 @@ static void gen_commit_packet(DisasContext *ctx)<br>
+=C2=A0 =C2=A0 =C2=A0process_store_log(ctx);<br>
+<br>
+=C2=A0 =C2=A0 =C2=A0gen_reg_writes(ctx);<br>
++#if !defined(CONFIG_USER_ONLY)<br>
++=C2=A0 =C2=A0 gen_greg_writes(ctx);<br>
++=C2=A0 =C2=A0 gen_sreg_writes(ctx);<br>
++#endif<br>
+=C2=A0 =C2=A0 =C2=A0gen_pred_writes(ctx);<br>
+=C2=A0 =C2=A0 =C2=A0if (pkt-&gt;pkt_has_hvx) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0gen_commit_hvx(ctx);<br>
+@@ -1255,6 +1336,10 @@ void hexagon_translate_init(void)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0offsetof(CPUHexagonState, llsc_val_i64), =
+&quot;llsc_val_i64&quot;);<br>
+=C2=A0 =C2=A0 =C2=A0hex_cycle_count =3D tcg_global_mem_new_i64(tcg_env,<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0offsetof(CPUHexagonState, t=
+_cycle_count), &quot;t_cycle_count&quot;);<br>
++#ifndef CONFIG_USER_ONLY<br>
++=C2=A0 =C2=A0 hex_cause_code =3D tcg_global_mem_new_i32(tcg_env,<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 offsetof(CPUHexagonState, cause_code), &quot;c=
+ause_code&quot;);<br>
++#endif<br></blockquote><div><br></div><div>Seems strange to add this here =
+and remove it below</div><div>=C2=A0</div><blockquote class=3D"gmail_quote"=
+ style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);p=
+adding-left:1ex">
+=C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; STORES_MAX; i++) {<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0snprintf(store_addr_names[i], NAME_LEN, &=
+quot;store_addr_%d&quot;, i);<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0hex_store_addr[i] =3D tcg_global_mem_new(=
+tcg_env,<br>
+@@ -1292,8 +1377,4 @@ void hexagon_translate_init(void)<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0offsetof(CPUHexagonState, v=
+store_pending[i]),<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0vstore_pending_names[i]);<b=
+r>
+=C2=A0 =C2=A0 =C2=A0}<br>
+-#ifndef CONFIG_USER_ONLY<br>
+-=C2=A0 =C2=A0 hex_cause_code =3D tcg_global_mem_new(tcg_env,<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 offsetof(CPUHexagonState, cause_code), &quot;c=
+ause_code&quot;);<br>
+-#endif<br>
+=C2=A0}<br>
+-- <br>
+2.34.1<br>
+<br>
+</blockquote></div></div>
+
+--000000000000092047064d275bbb--
 
