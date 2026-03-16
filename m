@@ -4,108 +4,96 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 488A4F53D91
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 19:30:57 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5083CF53D90
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 19:48:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Ddo-0000en-Ui; Mon, 16 Mar 2026 15:30:17 -0400
+	id 1w2Dv9-0005wP-EZ; Mon, 16 Mar 2026 15:48:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Ddn-0000eX-9j
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 15:30:15 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2Ddk-0004sJ-CF
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 15:30:15 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773689410;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=Ucl4ERDdJi180VcAjKMWTJ0PvkPjwBZSpzVsQQqJKew=;
- b=cl1CgNPIEgxGZxoWHyfyqdIVYgGIhYm27FLVMf59UP0F28tkN7qBLKjmOJTQqa7uGOe3LP
- S7VCbffQzQoOXOT1Cc9MjS0p/NSAUu2fqKlMyLoJov7+8NH5dhpQ8eT9cwb2rz9CE5mK4U
- yYPdZVR3qn8AwqZ1l96NAEIYjmZvnG4=
-Received: from mail-qk1-f197.google.com (mail-qk1-f197.google.com
- [209.85.222.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-533-8XWsGzb9PUK8w4ut9TaHzA-1; Mon, 16 Mar 2026 15:30:08 -0400
-X-MC-Unique: 8XWsGzb9PUK8w4ut9TaHzA-1
-X-Mimecast-MFC-AGG-ID: 8XWsGzb9PUK8w4ut9TaHzA_1773689408
-Received: by mail-qk1-f197.google.com with SMTP id
- af79cd13be357-8cb52a9c0eeso5170263185a.2
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 12:30:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773689408; x=1774294208; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=Ucl4ERDdJi180VcAjKMWTJ0PvkPjwBZSpzVsQQqJKew=;
- b=SwGlrnWXMlFPXjlHUVw+rbQ3JFi1XoRIcFMf5TiqwbR1+h1bKu6fbfueiG0inf1TZh
- RjBbkej+l3j2OVATmqBR+fHIBcbfV7mBt8Gxfj8bHyVorR97aGm2RtqKt8+vQEWBThIG
- 7KL/1svE3aiE2MyWNhv9qIWvaZlq0uwZFeGisG1GZp8U7l5zhv2BzoZbzh0bJxtdPHN6
- ltVTCTTqfWwQ3kmi2Hwd77D1dCoQRJjJE1Gys1CJruDCl2a5ouFpUC5WabNjeMLQkwvv
- tRo/Sfj4trqrn5PKADqt1aaCvwqykcfDNwuWdINBuOSgYgawBzk8bEaY83/kRwNegEXy
- 1ecg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773689408; x=1774294208;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=Ucl4ERDdJi180VcAjKMWTJ0PvkPjwBZSpzVsQQqJKew=;
- b=ZjeXj1egAk8d+Bi33JBj1hOS+c9IsYGHmg1pyilk0DUym3ssd+uc+vIu/BblA7nBOP
- 3ZD/DnYyUj5JyWKtybbGKJ7QTRO9BrWbSZbnvsdQrd66p4pof5RHsFaaxRGt4wOgeAyv
- 6WKENwAeju0Ki7p9pK0R1Ue4/PaUjR1QYfNfY5kyuLJm9l8m8ACk2r/3W2d2LaGzaIw/
- oGxb/9RzLaHyIU2XBQVf2cQLedcjB6K0dvPAzp4/9oGNC8xwGRjx4fZgApesm7iv1Rfv
- V5lSkK5hqD2GBRxdjDlxSjVwpXWUOep+87AJek1XKesf6ibDcsuXJwhwjdykn6dwNyUt
- i28Q==
-X-Gm-Message-State: AOJu0YyHf+VLfcsX+l+D71s8WOAZMxr4HJ/vIYyGIX+c2TRIbsCuBvyR
- PAXg3ROJZ+VOnGL93F+Rjg3ZOzmHVmZsmrHgxV4SX7j1ZMXfLipnNVKsSRgZ1sUHoN5AY7IjyBF
- MdNwKi3xA3Zp+Cq9G3C4yCiKE70YH4FC5DFN0E+wXgKFFHcxySIwfIlo3
-X-Gm-Gg: ATEYQzxmp38vXO7oJu+ftLDpw8btWBQvXa4ynSr4Ce4TesoEgfLeFqo8WVp2HGU6DCA
- 83MzZwMXEHmazcsBlI5GNrgQ7q93m3nbTzmznqVFb2w1GE86X8m7Jj7sV10B327O667KKVJkz0D
- qEzKs1bHUr6isu6fI57Synm0boDR2TGcA6s/XEv/kfwJwMVuFsF8JDsyS8Mfjc2/NurQd5RQVx0
- ggIUa+pMTO1x5sGYzHjjuXOF+Li+usvSQOxZofRtHh2661ArVXblLQuC5WLb0x2blR2Zpy7gU7P
- v4Vv6+YvKCr6mIhPN25tQTLO5WaWW9MFW2m18I2IP5f+OhT4+4Rxo0cwnG86vNYOMngCv2vnC9V
- G9fWpFbYPwmmj0g==
-X-Received: by 2002:a05:620a:1724:b0:8cd:8e7a:980 with SMTP id
- af79cd13be357-8cdb5b5f2e4mr1759958685a.40.1773689407990; 
- Mon, 16 Mar 2026 12:30:07 -0700 (PDT)
-X-Received: by 2002:a05:620a:1724:b0:8cd:8e7a:980 with SMTP id
- af79cd13be357-8cdb5b5f2e4mr1759948585a.40.1773689407215; 
- Mon, 16 Mar 2026 12:30:07 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- af79cd13be357-8cddee16b15sm105054485a.20.2026.03.16.12.30.06
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 12:30:06 -0700 (PDT)
-Date: Mon, 16 Mar 2026 15:30:05 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
- Alex =?utf-8?Q?Benn=C3=A9e?= <alex.bennee@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Daniel P =?utf-8?B?LiBCZXJyYW5nw6k=?= <berrange@redhat.com>
-Subject: Re: [PATCH] tests: Replace ncat with socat in migration test and
- drop ncat from containers
-Message-ID: <abhaPbLFHo5Dodxm@x1.local>
-References: <20260316183016.239526-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w2Dv8-0005wC-1z
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 15:48:10 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w2Dv6-0003NH-Da
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 15:48:09 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 93D535BDA1;
+ Mon, 16 Mar 2026 19:48:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773690484; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=HZnBOeFGVZQcm4BscBgc1OFT4EXInuKSpyT4vCMq6Hk=;
+ b=cQzbYHLRyVJpZUc7HgX2jfghcHo6y4RglJZGI8qjgtz6Da+inypuCg5XNDab++I0pzakh5
+ Q7jTVeA+S1gG+VrCESCKwt2l4L0/vmlB/uKty/sNBEssR7CCYuHnj/XY5Z1TjWjQztfr5F
+ 5eVBTt/GQssH0rltz+VMGiPZy9mMXV0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773690484;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=HZnBOeFGVZQcm4BscBgc1OFT4EXInuKSpyT4vCMq6Hk=;
+ b=6A/x/RbjFU8+yM1Ph5aMLz7LP0AWvVXvw+q9rAO5d9TIZZFwEM5lfLVjaEhu3AwRITW3+o
+ V38P0sGonnCk5PBA==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773690484; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=HZnBOeFGVZQcm4BscBgc1OFT4EXInuKSpyT4vCMq6Hk=;
+ b=cQzbYHLRyVJpZUc7HgX2jfghcHo6y4RglJZGI8qjgtz6Da+inypuCg5XNDab++I0pzakh5
+ Q7jTVeA+S1gG+VrCESCKwt2l4L0/vmlB/uKty/sNBEssR7CCYuHnj/XY5Z1TjWjQztfr5F
+ 5eVBTt/GQssH0rltz+VMGiPZy9mMXV0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773690484;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=HZnBOeFGVZQcm4BscBgc1OFT4EXInuKSpyT4vCMq6Hk=;
+ b=6A/x/RbjFU8+yM1Ph5aMLz7LP0AWvVXvw+q9rAO5d9TIZZFwEM5lfLVjaEhu3AwRITW3+o
+ V38P0sGonnCk5PBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 82A114273B;
+ Mon, 16 Mar 2026 19:48:02 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id miE/EnJeuGmeZgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 16 Mar 2026 19:48:02 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, Roman Kiryanov <rkir@google.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH v1] migration/savevm: Allow stub VMSDs
+Date: Mon, 16 Mar 2026 16:47:59 -0300
+Message-ID: <20260316194759.22672-1-farosas@suse.de>
+X-Mailer: git-send-email 2.51.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260316183016.239526-1-thuth@redhat.com>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ ARC_NA(0.00)[]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ FROM_HAS_DN(0.00)[]; MIME_TRACE(0.00)[0:+];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[imap1.dmz-prg2.suse.org:helo,linaro.org:email,suse.de:mid,suse.de:email];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; RCPT_COUNT_SEVEN(0.00)[7];
+ RCVD_COUNT_TWO(0.00)[2]; FROM_EQ_ENVFROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ TO_DN_SOME(0.00)[]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,34 +109,78 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 16, 2026 at 07:30:16PM +0100, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> nmap / ncat has a somewhat problematic license (e.g. saying claiming
-> that derived work is also considered for software that "is designed
-> specifically to execute Covered Software and parse the results", e.g.
-> by executing ncat from your own program, you might already fall into
-> this category) - so for example in openSUSE 16, you can only find it
-> in the "non-OSS" repository.
-> 
-> We are currently only using it in the migration functional test, and
-> that likely does not fall into this "derived work" category yet (since
-> it is also doing some other stuff), but still, to be safe, we should
-> move away from using it now.
-> 
-> Unfortunately, switching to one of the other flavors of netcat is
-> also not a real option (see commit f700abbbeb6ab68a3446d1fb168a934d),
-> but socat should be a solid replacement here instead.
-> 
-> To avoid that someone else easily uses ncat again, let's also remove
-> it from our container files now.
-> 
-> Suggested-by: Daniel P. Berrangé <berrange@redhat.com>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+After the referenced commit, empty VMStateDescription objects declared
+as part of stubs have started reaching the vmstate code.
 
-Acked-by: Peter Xu <peterx@redhat.com>
+A valid VMStateDescription must at minimum have a name and either the
+.fields or .unmigratable fields set. Stubs, being empty, have
+none. Code that assumes a non-NULL name field will now cause a
+crash. E.g.
 
+$ ./build/mips/qemu-system-mipsel -nographic -drive if=none,format=qcow2,file=dummy.qcow2
+    [Type "C-a c" to get the "(qemu)" monitor prompt)]
+    (qemu) savevm foo
+
+    Backtrace from doing this under gdb:
+
+      #0  0x0000555555df7d4d in vmsd_can_compress (field=0x5555564f78a0
+      <__compound_literal.3>) at ../../migration/vmstate.c:339
+      #1  0x0000555555df7dbb in vmsd_desc_field_start
+          (vmsd=0x555556431ba0 <vmstate_cpuhp_state>, vmdesc=0x555556918690,
+      field=0x5555564f78a0 <__compound_literal.3>, i=0, max=1) at
+      ../../migration/vmstate.c:362
+      #2  0x0000555555df85a7 in vmstate_save_state_v
+          (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
+      opaque=0x555556c9aac0, vmdesc=0x555556918690, version_id=1,
+      errp=0x7fffffffc948) at ../../migration/vmstate.c:528
+      #3  0x0000555555df8032 in vmstate_save_state
+          (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
+      opaque=0x555556c9aac0, vmdesc_id=0x555556918690, errp=0x7fffffffc948)
+      at ../../migration/vmstate.c:427
+      #4  0x0000555555df8f83 in vmstate_subsection_save
+          (f=0x555556b5a0c0, vmsd=0x555556431c40 <vmstate_acpi>,
+      opaque=0x555556c9aac0, vmdesc=0x555556918690, errp=0x7fffffffc948)
+          at ../../migration/vmstate.c:695
+
+Due to their very nature, it's better to allow stubs to be
+completely empty instead of forcing any rules. Teach the code to skip
+them.
+
+Fixes: 7aa563630b ("pc: Start with modern CPU hotplug interface by default")
+Reported-by: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Fabiano Rosas <farosas@suse.de>
+---
+ migration/savevm.c | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/migration/savevm.c b/migration/savevm.c
+index dd58f2a705..e8d3360877 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -861,6 +861,10 @@ static void vmstate_check(const VMStateDescription *vmsd)
+     const VMStateField *field = vmsd->fields;
+     const VMStateDescription * const *subsection = vmsd->subsections;
+ 
++    if (!vmsd->name) {
++        return;
++    }
++
+     if (field) {
+         while (field->name) {
+             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
+@@ -897,6 +901,11 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
+ {
+     SaveStateEntry *se;
+ 
++    if (!vmsd->name) {
++        /* assume it's a stub and ignore */
++        return 0;
++    }
++
+     /* If this triggers, alias support can be dropped for the vmsd. */
+     assert(alias_id == -1 || required_for_version >= vmsd->minimum_version_id);
+ 
 -- 
-Peter Xu
+2.51.0
 
 
