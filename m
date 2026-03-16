@@ -4,68 +4,119 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B7CAF506D9
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 14:56:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EDA0FF506E1
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 14:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w29MM-0002lT-Do; Mon, 16 Mar 2026 10:55:58 -0400
+	id 1w29NY-0003Bv-70; Mon, 16 Mar 2026 10:57:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w29MK-0002jY-7e; Mon, 16 Mar 2026 10:55:56 -0400
-Received: from mgamail.intel.com ([198.175.65.12])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhao1.liu@intel.com>)
- id 1w29MG-0005Bg-Ho; Mon, 16 Mar 2026 10:55:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773672952; x=1805208952;
- h=date:from:to:cc:subject:message-id:references:
- mime-version:content-transfer-encoding:in-reply-to;
- bh=BJZoEpMwSTo1UvAo3RoonQbfkW8gnYuTOP+deW7gfZ0=;
- b=ORPvhH+Z1Q3YklD3kIuWemy6BhGcez/fxVTuG4Y+hxML0HC111VNeIXK
- NSJMEBLNrkH0wbeeX1h9bd0ZnNHpucIuX/AUpIDnTw4Aa9CrcLOI8AyDE
- YPM462z55rorsnvZlO7MZ/iUVCB7Mwckepdpq9mFNS2uYNfGDiskzKNUB
- 3BDvwUy1klEXKHwXChMHLaV19pR/gYSbO44hsFjNPsU0H8VBo1RDvd+pi
- aa4oJMNgZ9Ch59/lK/6oqbvDAcyGWIXWOg/e8D4SvkZUBxn2Ynkq+kOmt
- 1U5ttNlKK8Pi6ZRbmNta2nwBFnWX4rCc4PKwmtaiipVvzbudGsTVxQNuO g==;
-X-CSE-ConnectionGUID: KePQHjO4QjaUTvCKCAR+oQ==
-X-CSE-MsgGUID: Y4NIsYgnRQmfl8NzrhnR1Q==
-X-IronPort-AV: E=McAfee;i="6800,10657,11731"; a="86167182"
-X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; d="scan'208";a="86167182"
-Received: from orviesa005.jf.intel.com ([10.64.159.145])
- by orvoesa104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 16 Mar 2026 07:55:47 -0700
-X-CSE-ConnectionGUID: UBx9dT/tRIGJY+RgTkBTRg==
-X-CSE-MsgGUID: MkiUdba8TtGqoh9pacEsVw==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,124,1770624000"; d="scan'208";a="226921208"
-Received: from liuzhao-optiplex-7080.sh.intel.com (HELO localhost)
- ([10.239.160.39])
- by orviesa005.jf.intel.com with ESMTP; 16 Mar 2026 07:55:46 -0700
-Date: Mon, 16 Mar 2026 23:21:59 +0800
-From: Zhao Liu <zhao1.liu@intel.com>
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org, qemu-rust@nongnu.org, Zhao Liu <zhao1.liu@intel.com>
-Subject: Re: [PATCH 0/5] rust/hpet: complete moving state out of HPETTimer
-Message-ID: <abggFzbWA2Dfkuvm@intel.com>
-References: <20251117084752.203219-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w29NW-00036P-3t
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:57:10 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w29NT-0005Hb-Uq
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 10:57:09 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 33F2F5BD41;
+ Mon, 16 Mar 2026 14:57:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773673024; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=05FfWVYmBEKycZMGgL5RCuJ5zDDyFBJbMZC88y6bEzw=;
+ b=d95gtq10MdM6k2nGOQeMuvRcALvyq0G8p/OJZbn5JHRDhOTcZvM/AzFBPhjH4m7dQEI9IR
+ 2mWR/yzKUzOhvEHyRZnNUCTuhHeHlwOqAq+3lEomR0J1JwpN4mbGyxGF9oav4+ScS50OCU
+ udapDHKeuXjBHGEp2teUMt5ht4xezVI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773673024;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=05FfWVYmBEKycZMGgL5RCuJ5zDDyFBJbMZC88y6bEzw=;
+ b=xVYlQ0ZhVC8Jqs2rAhPUtZheva4RNUGc5SvXbwdpOtxxoe0YFJs60cbIzA29t7NSyHbK2t
+ jAgIvhWkUegSQHAw==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773673024; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=05FfWVYmBEKycZMGgL5RCuJ5zDDyFBJbMZC88y6bEzw=;
+ b=d95gtq10MdM6k2nGOQeMuvRcALvyq0G8p/OJZbn5JHRDhOTcZvM/AzFBPhjH4m7dQEI9IR
+ 2mWR/yzKUzOhvEHyRZnNUCTuhHeHlwOqAq+3lEomR0J1JwpN4mbGyxGF9oav4+ScS50OCU
+ udapDHKeuXjBHGEp2teUMt5ht4xezVI=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773673024;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=05FfWVYmBEKycZMGgL5RCuJ5zDDyFBJbMZC88y6bEzw=;
+ b=xVYlQ0ZhVC8Jqs2rAhPUtZheva4RNUGc5SvXbwdpOtxxoe0YFJs60cbIzA29t7NSyHbK2t
+ jAgIvhWkUegSQHAw==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id A98694273B;
+ Mon, 16 Mar 2026 14:57:03 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 7l4GHD8auGlJOgAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 16 Mar 2026 14:57:03 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Alexander Mikhalitsyn <alexander@mihalicyn.com>, Peter Xu
+ <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Jesper Devantier <foss@defmacro.it>, Kevin Wolf
+ <kwolf@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>, Hanna Reitz
+ <hreitz@redhat.com>, qemu-block@nongnu.org, =?utf-8?Q?St=C3=A9phane?=
+ Graber
+ <stgraber@stgraber.org>, Keith Busch <kbusch@kernel.org>, Stefan Hajnoczi
+ <stefanha@redhat.com>, Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>, Fam
+ Zheng <fam@euphon.net>, Klaus Jensen <its@irrelevant.dk>, Zhao Liu
+ <zhao1.liu@intel.com>, Alexander Mikhalitsyn
+ <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: Re: [PATCH v4 1/8] migration/vmstate: introduce vmstate_{load,
+ save}_field helpers
+In-Reply-To: <CAJqdLroNDwNk4N4Kszyptu7vgOwQfERM8AtAxQhjqfRhCt_W3w@mail.gmail.com>
+References: <20260313141221.359503-1-alexander@mihalicyn.com>
+ <20260313141221.359503-2-alexander@mihalicyn.com>
+ <abQ7CLuJsWRLwoe5@x1.local>
+ <CAJqdLroNDwNk4N4Kszyptu7vgOwQfERM8AtAxQhjqfRhCt_W3w@mail.gmail.com>
+Date: Mon, 16 Mar 2026 11:57:01 -0300
+Message-ID: <87y0jrrfeq.fsf@suse.de>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=gb2312
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20251117084752.203219-1-pbonzini@redhat.com>
-Received-SPF: pass client-ip=198.175.65.12; envelope-from=zhao1.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-1.000]; MIME_GOOD(-0.10)[text/plain];
+ ARC_NA(0.00)[]; MISSING_XM_UA(0.00)[]; RCVD_TLS_ALL(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCVD_VIA_SMTP_AUTH(0.00)[];
+ RCPT_COUNT_TWELVE(0.00)[16];
+ FUZZY_RATELIMITED(0.00)[rspamd.com];
+ MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=farosas@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -81,175 +132,233 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi,
+Alexander Mikhalitsyn via qemu development <qemu-devel@nongnu.org>
+writes:
 
-> I'm leaving out the conversion to Mutex because, as Zhao noticed, it
-> has a deadlock - the timer callback tries to grab the HPET mutex inside
-> the BQL, where as the vCPU tries to grab the BQL inside the HPET mutex.
-> This is not present in the C code only because... it doesn't take the
-> lock at all in places where it should.  In particular hpet_timer() reads
-> and writes t->cmp and t->cmp64 outside the lock, while hpet_ram_write()
-> does so within the lock via hpet_set_timer().
+> Am Fr., 13. M=C3=A4rz 2026 um 17:27 Uhr schrieb Peter Xu <peterx@redhat.c=
+om>:
+>>
+>> On Fri, Mar 13, 2026 at 03:12:14PM +0100, Alexander Mikhalitsyn wrote:
+>> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+>> >
+>> > Let's introduce vmstate_{load,save}_field() helpers, they will
+>> > be used in next patches to support fully-dynamic arrays with NULLs.
+>> >
+>> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusio=
+n.io>
+>>
+>
+> Hi Peter,
+>
+>> Feel free to rebase to Vladimir's series here, Fabiano already queued it:
+>>
+>> https://lore.kernel.org/all/20260304212303.667141-11-vsementsov@yandex-t=
+eam.ru/#t
+>
+> I've tried, but I can't see it anywhere
+> https://gitlab.com/farosas/qemu/-/commits/migration-next
+> doesn't contain it. As of now, last commit is
+> 472f455cfbb0c5f84a7d48228d5226eaf6c7a61b.
+>
 
-About this issue, I'd like to continue previous discussion and share
-some my thoughts.
+I think we usually just take the patches from the list and apply
+directly instead of taking any branch*. I don't keep migration-next
+stable.
 
+I pushed migration-staging which you can use. It'll collect the patches
+that will be merged at the start of the next development cycle, after
+the release.
 
-Review the Current Issue
-========================
+* I use:
+b4 am -3 -c -o <patches/dir> <lore.kernel.org link>
+(you'd need to solve any conflicts with the base branch yourself)
 
-To better explain the scope of locks and compare different options later,
-let me go over the previous issue in more detail.
-
-HPET's timer callback hpet_timer() currently does NOT hold s->lock (the
-device mutex). This is a data race bug: it modifies t->cmp64, t->cmp,
-t->wrap_flag, and calls update_irq() -- all of which race with
-hpet_ram_write().
-
-However, fixing this by adding QEMU_LOCK_GUARD(&s->lock) to hpet_timer()
-creates an AB-BA deadlock:
-
-  Path A (timer callback):  BQL ¡ú mutex
-    main_loop_wait() holds BQL
-    ¡ú qemu_clock_run_all_timers()
-      ¡ú timerlist_run_timers() 
-        ¡ú hpet_timer()
-          ¡ú QEMU_LOCK_GUARD(&s->lock)    // mutex under BQL
-
-  Path B (MMIO write):      mutex ¡ú BQL
-    lockless_io = true, so no BQL on entry
-    ¡ú hpet_ram_write()
-      ¡ú QEMU_LOCK_GUARD(&s->lock)      // mutex first
-        ¡ú update_irq()
-          ¡ú BQL_LOCK_GUARD()            // BQL under mutex
-            ¡ú qemu_set_irq()
-
-I think we could have these 3 options in hand:
- * lockless timer: unlock bql for HPET timer handler - like lockless MMIO did
- * lockless irq: implement lockless ioapic/gic/...
- * defer call: defer BQL related call outside of mutex context.
-
-Since the Rust implementations are currently mirrors of the C code, I'll use
-C-side pseudocode as the main examples.
-
-
-Option 1: Lockless timer attribute
-==================================
-
-Add a QEMU_TIMER_ATTR_LOCKLESS flag. In timerlist_run_timers(), release
-BQL before invoking a timer callback marked with this attribute, and
-re-acquire it afterward:
-
-    /* in timerlist_run_timers(), around cb(opaque) call: */
-    bool release_bql = (ts->attributes & QEMU_TIMER_ATTR_LOCKLESS)
-                       && bql_locked();
-    if (release_bql) {
-        bql_unlock();
-    }
-    cb(opaque);
-    if (release_bql) {
-        bql_lock();
-    }
-
-With this, HPET's timer callback runs without BQL, and can do:
-
-    hpet_timer() {
-        QEMU_LOCK_GUARD(&s->lock);   // mutex first, no BQL held
-        ...
-        update_irq(t, 1);            // takes BQL inside ¡ú mutex¡úBQL
-    }
-
-Both paths become mutex¡úBQL. Deadlock eliminated.
-
-This option has minimal change, and it also aligns well with the concept
-of lockless devices - its approach is consistent with lockless MMIO, i.e,
-transferring the lock-protected implementation and responsibility to the
-device itself.
-
-But I'm not sure if modifying the timer is a sufficiently general and
-thorough approach: if other types of devices also implement lockless,
-would we need to convert more callbacks to bql-free? More bql-free
-callbacks sounds a bit messy?
-
-
-Option 2: Lockless interrupt controllers (IOAPIC/PIC/GSI)
----------------------------------------------------------
-
-Make the entire GSI¡úIOAPIC/PIC path BQL-free by converting interrupt
-controller state to atomic operations or fine-grained locks. Then
-update_irq() would never need BQL, eliminating the mutex¡úBQL nesting
-in the MMIO path entirely.
-
-This refers Paolo's previous idea:
-
-https://lore.kernel.org/qemu-devel/ac058be3-274a-4896-b01d-f433d036b5d0@redhat.com/
-
-This is the most thorough solution: IRQ path becomes fully BQL-free and
-all lockless_io devices benefit automatically.
-
-I find the first blocking issue is gsi_handler() under CONFIG_XEN_EMU
-calls xen_evtchn_set_gsi() which has assert(bql_locked()). The Xen
-event channel's callback_gsi logic uses a synchronous recursive flag
-(setting_callback_gsi) that deeply depends on BQL's mutual exclusion
-semantics. This looks like it needs refactoring?
-
-I think PIC and IOAPIC also need device locks or atomic operations for
-protection, but their lockless implementations all have complexity.
-
-
-Option 3: defer_call to reorder lock acquisition in MMIO path
-=============================================================
-
-Previously, I had a POC (in Rust) to defer IRQ injection after Mutex
-context:
-https://gitlab.com/zhao.liu/qemu/-/tree/rust-hpet-lockless-v0-01-04-2026
-
-I hold it in hand and didn't post it since I thought it's not easy to
-make C side apply this method. Until I realized that QEMU actually
-already has defer call! Although what I need is still somewhat different
-(like allowing repeated calls, BQL context), the thread-local handling
-is more concise and elegant than my POC.
-
-So it's possible to use QEMU's defer_call mechanism (with some
-additional minor enhancements: allowing repeated calls, BQL context) to
-defer qemu_set_irq() calls to after the device mutex is released in the
-MMIO write path:
-
-    hpet_ram_write() {
-        defer_call_begin();
-        QEMU_LOCK_GUARD(&s->lock);
-        // state updates under mutex, record pending IRQ actions
-        defer_call(hpet_flush_irqs, s);
-        // mutex released here
-        defer_call_end();
-        // hpet_flush_irqs runs here: BQL_LOCK_GUARD() + qemu_set_irq()
-        // mutex and BQL are never nested
-    }
-
-A problem is, then the MMIO is not atomic: With lockless_io, multiple
-vCPUs can concurrently enter MMIO handlers. Between mutex release and
-defer_call_end(), another vCPU could modify state, causing the deferred
-IRQ action to operate on stale decisions.
-
-This situation is relatively rare, and I think the delayed updates in a
-few cases of state are also acceptable?
-
-This option is more complex than option 1, since for Rust side, we will
-need a defer call binding. But this option doesn't need to justify
-whether other callbacks (like timer) could or should support BQL-free.
-
-
-Discussion
-==========
-
-Overall, I think option 1 or 3 are general lockless infrastructure
-enhancements, while option 2 is an i386-specific lockless feature. So
-maybe we could choose one from options 1 and 3, decouple it from option
-2, meaning both could proceed in parallel? What do you think?
-
-Thanks and Best Regards,
-Zhao
-
-
-
+> Also, patchew tells that that series has conflicts with master:
+> https://patchew.org/QEMU/20260304212303.667141-1-vsementsov@yandex-team.r=
+u/
+>
+> Should I manually download mbox, apply/resolve conflicts with master,
+> then rebase my stuff and resend?
+>
+> Kind regards,
+> Alex
+>
+>>
+>> These codes weren't touched that frequent, it's interesting to see such
+>> coinsidence happens. :)
+>>
+>> > ---
+>> >  include/migration/vmstate.h |  4 ++
+>> >  migration/vmstate.c         | 84 +++++++++++++++++++++++--------------
+>> >  2 files changed, 56 insertions(+), 32 deletions(-)
+>> >
+>> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+>> > index 62c2abd0c49..5d7dfe70643 100644
+>> > --- a/include/migration/vmstate.h
+>> > +++ b/include/migration/vmstate.h
+>> > @@ -1240,8 +1240,12 @@ extern const VMStateInfo vmstate_info_qlist;
+>> >          .flags =3D VMS_END, \
+>> >      }
+>> >
+>> > +int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
+>> > +                       const VMStateField *field, Error **errp);
+>> >  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>> >                         void *opaque, int version_id, Error **errp);
+>> > +int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
+>> > +                       const VMStateField *field, JSONWriter *vmdesc,=
+ Error **errp);
+>> >  int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+>> >                         void *opaque, JSONWriter *vmdesc, Error **errp=
+);
+>> >  int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>> > diff --git a/migration/vmstate.c b/migration/vmstate.c
+>> > index 4d28364f7ba..8d192bcaa27 100644
+>> > --- a/migration/vmstate.c
+>> > +++ b/migration/vmstate.c
+>> > @@ -131,6 +131,32 @@ static void vmstate_handle_alloc(void *ptr, const=
+ VMStateField *field,
+>> >      }
+>> >  }
+>> >
+>> > +int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
+>> > +                       const VMStateField *field, Error **errp)
+>> > +{
+>> > +    int ret =3D 0;
+>> > +
+>> > +    if (field->flags & VMS_STRUCT) {
+>> > +        ret =3D vmstate_load_state(f, field->vmsd, pv,
+>> > +                                 field->vmsd->version_id,
+>> > +                                 errp);
+>> > +    } else if (field->flags & VMS_VSTRUCT) {
+>> > +        ret =3D vmstate_load_state(f, field->vmsd, pv,
+>> > +                                 field->struct_version_id,
+>> > +                                 errp);
+>> > +    } else {
+>> > +        ret =3D field->info->get(f, pv, size, field);
+>> > +        if (ret < 0) {
+>> > +            error_setg(errp,
+>> > +                       "Failed to load element of type %s for %s: "
+>> > +                       "%d", field->info->name,
+>> > +                       field->name, ret);
+>> > +        }
+>> > +    }
+>> > +
+>> > +    return ret;
+>> > +}
+>> > +
+>> >  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+>> >                         void *opaque, int version_id, Error **errp)
+>> >  {
+>> > @@ -203,24 +229,7 @@ int vmstate_load_state(QEMUFile *f, const VMState=
+Description *vmsd,
+>> >                      inner_field =3D field;
+>> >                  }
+>> >
+>> > -                if (inner_field->flags & VMS_STRUCT) {
+>> > -                    ret =3D vmstate_load_state(f, inner_field->vmsd, =
+curr_elem,
+>> > -                                             inner_field->vmsd->versi=
+on_id,
+>> > -                                             errp);
+>> > -                } else if (inner_field->flags & VMS_VSTRUCT) {
+>> > -                    ret =3D vmstate_load_state(f, inner_field->vmsd, =
+curr_elem,
+>> > -                                             inner_field->struct_vers=
+ion_id,
+>> > -                                             errp);
+>> > -                } else {
+>> > -                    ret =3D inner_field->info->get(f, curr_elem, size,
+>> > -                                                 inner_field);
+>> > -                    if (ret < 0) {
+>> > -                        error_setg(errp,
+>> > -                                   "Failed to load element of type %s=
+ for %s: "
+>> > -                                   "%d", inner_field->info->name,
+>> > -                                   inner_field->name, ret);
+>> > -                    }
+>> > -                }
+>> > +                ret =3D vmstate_load_field(f, curr_elem, size, inner_=
+field, errp);
+>> >
+>> >                  /* If we used a fake temp field.. free it now */
+>> >                  if (inner_field !=3D field) {
+>> > @@ -427,6 +436,29 @@ int vmstate_save_state(QEMUFile *f, const VMState=
+Description *vmsd,
+>> >      return vmstate_save_state_v(f, vmsd, opaque, vmdesc_id, vmsd->ver=
+sion_id, errp);
+>> >  }
+>> >
+>> > +int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
+>> > +                       const VMStateField *field, JSONWriter *vmdesc,=
+ Error **errp)
+>> > +{
+>> > +    int ret =3D 0;
+>> > +
+>> > +    if (field->flags & VMS_STRUCT) {
+>> > +        ret =3D vmstate_save_state(f, field->vmsd, pv, vmdesc, errp);
+>> > +    } else if (field->flags & VMS_VSTRUCT) {
+>> > +        ret =3D vmstate_save_state_v(f, field->vmsd, pv, vmdesc,
+>> > +                                   field->struct_version_id, errp);
+>> > +    } else {
+>> > +        ret =3D field->info->put(f, pv, size, field, vmdesc);
+>> > +        if (ret < 0) {
+>> > +            error_setg(errp,
+>> > +                       "Failed to save element of type %s for %s: "
+>> > +                       "%d", field->info->name,
+>> > +                       field->name, ret);
+>> > +        }
+>> > +    }
+>> > +
+>> > +    return ret;
+>> > +}
+>> > +
+>> >  int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+>> >                           void *opaque, JSONWriter *vmdesc, int versio=
+n_id, Error **errp)
+>> >  {
+>> > @@ -528,19 +560,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMSta=
+teDescription *vmsd,
+>> >                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+>> >                                        i, max_elems);
+>> >
+>> > -                if (inner_field->flags & VMS_STRUCT) {
+>> > -                    ret =3D vmstate_save_state(f, inner_field->vmsd,
+>> > -                                             curr_elem, vmdesc_loop, =
+errp);
+>> > -                } else if (inner_field->flags & VMS_VSTRUCT) {
+>> > -                    ret =3D vmstate_save_state_v(f, inner_field->vmsd,
+>> > -                                               curr_elem, vmdesc_loop,
+>> > -                                               inner_field->struct_ve=
+rsion_id,
+>> > -                                               errp);
+>> > -                } else {
+>> > -                    ret =3D inner_field->info->put(f, curr_elem, size,
+>> > -                                                 inner_field, vmdesc_=
+loop);
+>> > -                }
+>> > -
+>> > +                ret =3D vmstate_save_field(f, curr_elem, size, inner_=
+field, vmdesc_loop, errp);
+>> >                  written_bytes =3D qemu_file_transferred(f) - old_offs=
+et;
+>> >                  vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
+>> >                                      written_bytes);
+>> > @@ -551,7 +571,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStat=
+eDescription *vmsd,
+>> >                  }
+>> >
+>> >                  if (ret) {
+>> > -                    error_setg(errp, "Save of field %s/%s failed",
+>> > +                    error_prepend(errp, "Save of field %s/%s failed: =
+",
+>> >                                  vmsd->name, field->name);
+>> >                      if (vmsd->post_save) {
+>> >                          vmsd->post_save(opaque);
+>> > --
+>> > 2.47.3
+>> >
+>>
+>> --
+>> Peter Xu
+>>
 
