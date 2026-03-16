@@ -4,92 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34DA3F013FA
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:46:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD5FDF30275
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 21:54:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Fkv-000678-DS; Mon, 16 Mar 2026 17:45:45 -0400
+	id 1w2Fsp-0007Lo-0b; Mon, 16 Mar 2026 17:53:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1w2Fkh-00065v-Hr
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:45:40 -0400
-Received: from mail.ilande.co.uk ([2001:41c9:1:41f::167])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1w2Fke-0001M9-7x
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:45:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- d=ilande.co.uk; s=20220518; h=Subject:Content-Transfer-Encoding:Content-Type:
- In-Reply-To:From:References:Cc:To:MIME-Version:Date:Message-ID:Sender:
- Reply-To:Content-ID:Content-Description:Resent-Date:Resent-From:Resent-Sender
- :Resent-To:Resent-Cc:Resent-Message-ID;
- bh=1BEkOPf5/tMokctuJRdssUe/TqAVcjlVpD4T4hYDOCU=; b=bBI92yTl7/P8XP8MkBkA0PqkhT
- vav6VPJyV2HeFHR2dy3R563qUD67hSH4XWYZlAmiEMXlf/S6f1Li6mRnwshBf5pB4QeTyu7DUPgZU
- KzW9woPiRnQ03nHDrVSQo0DghBr1gwPCaMWL3FrqzIUr+zBOh9jqFRhwJYtR81klKLiUDbX004pc8
- FV6Uox1fdgiGs93Je0lY18GRdGCczbmqs+Qt/aMT6mZmT2RMX+1OZBHRAStQWO9zzF8A6wzMv3spu
- kasHXjfHchRuhwcIaPexSe5bk9C9CTbBKQ7dNbxhNeBTTGRxB8CYldmznK/LU/hj7vmYFDmerPbOp
- 8+7iW7S6W+z2D+miSSh1UNchHO0PfYmdyJyV0+uLGhF6GXVWS5qhp47TpWMYfwBP7orXgGDIqW2BJ
- zmykShMubVRLZoFYTqb6KD6/dcEMS9g6QS51n9TnPki+HpfYHSNHSy1gos6Ocsrp71OxJk7nGENOE
- V3AAJbOLUKmlDRu8V2yXk/JNTMoRnh/n84H6xqg9WCgCJni+PIqj5Uu+Sk505QUqoQwCIlihxyCqG
- kfVSnaBdcqhbI5tD4xqC2BZ1HTvwN76cvC6jvcJD19GEz2tY6tw2kggWpGGgpyyTmSJb+grpOzrQT
- Ms/mg+L3XpK6Ck7Da0Yme7AgnW/DIUL1Ag3nQ8us8=;
-Received: from [2a02:8012:2f01:0:2257:6c08:3a5:8e25]
- by mail.ilande.co.uk with esmtpsa (TLS1.3:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.92) (envelope-from <mark.cave-ayland@ilande.co.uk>)
- id 1w2Fhf-000496-Ef; Mon, 16 Mar 2026 21:42:23 +0000
-Message-ID: <d0aa8081-30df-4696-9281-b35c2b775a57@ilande.co.uk>
-Date: Mon, 16 Mar 2026 21:45:23 +0000
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w2Fsm-0007Kg-09
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:53:52 -0400
+Received: from smtp-out1.suse.de ([195.135.223.130])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <farosas@suse.de>) id 1w2Fsj-0005OO-Jm
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 17:53:51 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out1.suse.de (Postfix) with ESMTPS id D5A354D318;
+ Mon, 16 Mar 2026 21:53:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773698027; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FmCchWQoERSSMnkd5Yn9phNf3O6FBZGjNLNYb7fZ0Tw=;
+ b=DqdaOwu2D9Q7MYZfj9cxB3FhyXsrPY3LJ4t4kG8e2rWfoS6HQJmbYa2GNtLKpaFK2RdfK3
+ hTNI9Mno7KhmKDFrvByMUX9R7aTesthdAyfoTdQ4ElvLsYte+nm5raQb2XU1zYx9YrEnvk
+ iiuR8kYohShfX6aqkZdvkUOrr2wsKv0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773698027;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FmCchWQoERSSMnkd5Yn9phNf3O6FBZGjNLNYb7fZ0Tw=;
+ b=2g0rHSBNQ7umz9dqZQZoMi7NzoeIwJPyLmYthpA3lSifwPPqVmdaNp3ToTzzmUjRXCV5Y7
+ GuwemQiQ7u4L+UBA==
+Authentication-Results: smtp-out1.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773698026; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FmCchWQoERSSMnkd5Yn9phNf3O6FBZGjNLNYb7fZ0Tw=;
+ b=UI8cB0Xg7Ude3UoOAgSx5vAOW9tFZXVqO/dtdsMqXSel6+b3MKu+x8e9JLC5yhNtIiFlgQ
+ DoFxrBL7qPesLkeREqCBlilXKOLDMjYOA3ovUHxtwPc9g3+E9LptjYY70I2nRfnf/zoS4D
+ fFENgYnIz7lwmEir4rEsl/+I8+mKFA8=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773698026;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=FmCchWQoERSSMnkd5Yn9phNf3O6FBZGjNLNYb7fZ0Tw=;
+ b=iv/EbDLUmKM4/JSJ5Q95/7V5IEKlKkhaJJibbdKvzwsNIvX+ggkVyHeCpEZbnN55lI4yxy
+ MV/clECR558xCbBA==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 60DD74273B;
+ Mon, 16 Mar 2026 21:53:46 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id 9w87Cup7uGlJaAAAD6G6ig
+ (envelope-from <farosas@suse.de>); Mon, 16 Mar 2026 21:53:46 +0000
+From: Fabiano Rosas <farosas@suse.de>
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, Roman Kiryanov <rkir@google.com>, Philippe
+ =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>, Peter Maydell
+ <peter.maydell@linaro.org>
+Subject: Re: [PATCH v1] migration/savevm: Allow stub VMSDs
+In-Reply-To: <abhyg_wRK4_RmqdO@x1.local>
+References: <20260316194759.22672-1-farosas@suse.de>
+ <abhyg_wRK4_RmqdO@x1.local>
+Date: Mon, 16 Mar 2026 18:53:43 -0300
+Message-ID: <87pl53qw48.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-To: Thomas Huth <thuth@redhat.com>, Peter Xu <peterx@redhat.com>,
- BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
- <abgqjKVFHKxuKupP@x1.local> <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
-Content-Language: en-US
-From: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
-Autocrypt: addr=mark.cave-ayland@ilande.co.uk; keydata=
- xsBNBFQJuzwBCADAYvxrwUh1p/PvUlNFwKosVtVHHplgWi5p29t58QlOUkceZG0DBYSNqk93
- 3JzBTbtd4JfFcSupo6MNNOrCzdCbCjZ64ik8ycaUOSzK2tKbeQLEXzXoaDL1Y7vuVO7nL9bG
- E5Ru3wkhCFc7SkoypIoAUqz8EtiB6T89/D9TDEyjdXUacc53R5gu8wEWiMg5MQQuGwzbQy9n
- PFI+mXC7AaEUqBVc2lBQVpAYXkN0EyqNNT12UfDLdxaxaFpUAE2pCa2LTyo5vn5hEW+i3VdN
- PkmjyPvL6DdY03fvC01PyY8zaw+UI94QqjlrDisHpUH40IUPpC/NB0LwzL2aQOMkzT2NABEB
- AAHNME1hcmsgQ2F2ZS1BeWxhbmQgPG1hcmsuY2F2ZS1heWxhbmRAaWxhbmRlLmNvLnVrPsLA
- eAQTAQIAIgUCVAm7PAIbAwYLCQgHAwIGFQgCCQoLBBYCAwECHgECF4AACgkQW8LFb64PMh9f
- NAgAuc3ObOEY8NbZko72AGrg2tWKdybcMVITxmcor4hb9155o/OWcA4IDbeATR6cfiDL/oxU
- mcmtXVgPqOwtW3NYAKr5g/FrZZ3uluQ2mtNYAyTFeALy8YF7N3yhs7LOcpbFP7tEbkSzoXNG
- z8iYMiYtKwttt40WaheWuRs0ZOLbs6yoczZBDhna3Nj0LA3GpeJKlaV03O4umjKJgACP1c/q
- T2Pkg+FCBHHFP454+waqojHp4OCBo6HyK+8I4wJRa9Z0EFqXIu8lTDYoggeX0Xd6bWeCFHK3
- DhD0/Xi/kegSW33unsp8oVcM4kcFxTkpBgj39dB4KwAUznhTJR0zUHf63M7ATQRUCbs8AQgA
- y7kyevA4bpetM/EjtuqQX4U05MBhEz/2SFkX6IaGtTG2NNw5wbcAfhOIuNNBYbw6ExuaJ3um
- 2uLseHnudmvN4VSJ5Hfbd8rhqoMmmO71szgT/ZD9MEe2KHzBdmhmhxJdp+zQNivy215j6H27
- 14mbC2dia7ktwP1rxPIX1OOfQwPuqlkmYPuVwZP19S4EYnCELOrnJ0m56tZLn5Zj+1jZX9Co
- YbNLMa28qsktYJ4oU4jtn6V79H+/zpERZAHmH40IRXdR3hA+Ye7iC/ZpWzT2VSDlPbGY9Yja
- Sp7w2347L5G+LLbAfaVoejHlfy/msPeehUcuKjAdBLoEhSPYzzdvEQARAQABwsBfBBgBAgAJ
- BQJUCbs8AhsMAAoJEFvCxW+uDzIfabYIAJXmBepHJpvCPiMNEQJNJ2ZSzSjhic84LTMWMbJ+
- opQgr5cb8SPQyyb508fc8b4uD8ejlF/cdbbBNktp3BXsHlO5BrmcABgxSP8HYYNsX0n9kERv
- NMToU0oiBuAaX7O/0K9+BW+3+PGMwiu5ml0cwDqljxfVN0dUBZnQ8kZpLsY+WDrIHmQWjtH+
- Ir6VauZs5Gp25XLrL6bh/SL8aK0BX6y79m5nhfKI1/6qtzHAjtMAjqy8ChPvOqVVVqmGUzFg
- KPsrrIoklWcYHXPyMLj9afispPVR8e0tMKvxzFBWzrWX1mzljbBlnV2n8BIwVXWNbgwpHSsj
- imgcU9TTGC5qd9g=
-In-Reply-To: <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-SA-Exim-Connect-IP: 2a02:8012:2f01:0:2257:6c08:3a5:8e25
-X-SA-Exim-Mail-From: mark.cave-ayland@ilande.co.uk
-Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
-X-SA-Exim-Version: 4.2.1 (built Wed, 08 May 2019 21:11:16 +0000)
-X-SA-Exim-Scanned: Yes (on mail.ilande.co.uk)
-Received-SPF: pass client-ip=2001:41c9:1:41f::167;
- envelope-from=mark.cave-ayland@ilande.co.uk; helo=mail.ilande.co.uk
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Type: text/plain
+X-Spamd-Result: default: False [-4.30 / 50.00]; BAYES_HAM(-3.00)[100.00%];
+ NEURAL_HAM_LONG(-1.00)[-1.000];
+ NEURAL_HAM_SHORT(-0.20)[-0.997]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; ARC_NA(0.00)[];
+ RCVD_TLS_ALL(0.00)[]; MISSING_XM_UA(0.00)[];
+ FUZZY_RATELIMITED(0.00)[rspamd.com]; MIME_TRACE(0.00)[0:+];
+ RCPT_COUNT_SEVEN(0.00)[7]; MID_RHS_MATCH_FROM(0.00)[];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ FROM_HAS_DN(0.00)[]; TO_DN_SOME(0.00)[];
+ FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[linaro.org:email, suse.de:mid, suse.de:email,
+ imap1.dmz-prg2.suse.org:helo]
+Received-SPF: pass client-ip=195.135.223.130; envelope-from=farosas@suse.de;
+ helo=smtp-out1.suse.de
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -106,42 +119,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/03/2026 16:23, Thomas Huth wrote:
+Peter Xu <peterx@redhat.com> writes:
 
-> On 16/03/2026 17.06, Peter Xu wrote:
->> On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
->>> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
->>> current_machine which is not set during init when inspecting the
->>> device. This causes the qtest/device-introspect-test to fail since a
->>
->> Does it has anything to do with aux-ram-share?  I thought it's because the
->> qom introspect test will create yet another sun-tcx device, causing double
->> registration?
-> 
-> I think it happens because the test starts QEMU with the sun4m machine (or whichever 
-> machine uses this device by default), and then creates another instance of the device 
-> for introspection (without realizing it). You can easily recreate the bug manually 
-> like this:
-> 
->   $ ./qemu-system-sparc -M SS-20 -display none -monitor stdio
->   QEMU 10.2.50 monitor - type 'help' for more information
->   (qemu) device_add sun-tcx,help
->   RAMBlock "tcx.prom" already registered, abort!
->   Aborted (core dumped)
-> 
-> An instance_init() function should not change the global state of QEMU, so 
-> registering memory regions this way is a no-go. This has to be done in realize() 
-> instead.
+> On Mon, Mar 16, 2026 at 04:47:59PM -0300, Fabiano Rosas wrote:
+>> After the referenced commit, empty VMStateDescription objects declared
+>> as part of stubs have started reaching the vmstate code.
+>> 
+>> A valid VMStateDescription must at minimum have a name and either the
+>> .fields or .unmigratable fields set. Stubs, being empty, have
+>> none. Code that assumes a non-NULL name field will now cause a
+>> crash. E.g.
+>> 
+>> $ ./build/mips/qemu-system-mipsel -nographic -drive if=none,format=qcow2,file=dummy.qcow2
+>>     [Type "C-a c" to get the "(qemu)" monitor prompt)]
+>>     (qemu) savevm foo
+>> 
+>>     Backtrace from doing this under gdb:
+>> 
+>>       #0  0x0000555555df7d4d in vmsd_can_compress (field=0x5555564f78a0
+>>       <__compound_literal.3>) at ../../migration/vmstate.c:339
+>>       #1  0x0000555555df7dbb in vmsd_desc_field_start
+>>           (vmsd=0x555556431ba0 <vmstate_cpuhp_state>, vmdesc=0x555556918690,
+>>       field=0x5555564f78a0 <__compound_literal.3>, i=0, max=1) at
+>>       ../../migration/vmstate.c:362
+>>       #2  0x0000555555df85a7 in vmstate_save_state_v
+>>           (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
+>>       opaque=0x555556c9aac0, vmdesc=0x555556918690, version_id=1,
+>>       errp=0x7fffffffc948) at ../../migration/vmstate.c:528
+>>       #3  0x0000555555df8032 in vmstate_save_state
+>>           (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
+>>       opaque=0x555556c9aac0, vmdesc_id=0x555556918690, errp=0x7fffffffc948)
+>>       at ../../migration/vmstate.c:427
+>>       #4  0x0000555555df8f83 in vmstate_subsection_save
+>>           (f=0x555556b5a0c0, vmsd=0x555556431c40 <vmstate_acpi>,
+>>       opaque=0x555556c9aac0, vmdesc=0x555556918690, errp=0x7fffffffc948)
+>>           at ../../migration/vmstate.c:695
+>> 
+>> Due to their very nature, it's better to allow stubs to be
+>> completely empty instead of forcing any rules. Teach the code to skip
+>> them.
+>> 
+>> Fixes: 7aa563630b ("pc: Start with modern CPU hotplug interface by default")
+>> Reported-by: Peter Maydell <peter.maydell@linaro.org>
+>> Signed-off-by: Fabiano Rosas <farosas@suse.de>
+>> ---
+>>  migration/savevm.c | 9 +++++++++
+>>  1 file changed, 9 insertions(+)
+>> 
+>> diff --git a/migration/savevm.c b/migration/savevm.c
+>> index dd58f2a705..e8d3360877 100644
+>> --- a/migration/savevm.c
+>> +++ b/migration/savevm.c
+>> @@ -861,6 +861,10 @@ static void vmstate_check(const VMStateDescription *vmsd)
+>>      const VMStateField *field = vmsd->fields;
+>>      const VMStateDescription * const *subsection = vmsd->subsections;
+>>  
+>> +    if (!vmsd->name) {
+>> +        return;
+>> +    }
+>
+> IIUC this is fine but isn't needed for stubs' use case, because "field" is
+> checked right below..
+>
+>> +
+>>      if (field) {
+>
+> .. here.
+>
+>>          while (field->name) {
+>>              if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
+>> @@ -897,6 +901,11 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
+>>  {
+>>      SaveStateEntry *se;
+>>  
+>> +    if (!vmsd->name) {
+>> +        /* assume it's a stub and ignore */
+>> +        return 0;
+>> +    }
+>
+> Two questions on this one..
+>
+> (1) when someone adds some new VMSD to device and forgot to attach a name,
+>     it'll silently ignore that new VMSD.. of course anyone testing this
+>     will find something strange, but silently ignoring an VMSD when not
+>     having name does sound like unexpected..
+>
+> (2) would this fix the above crash?  The problem is the commit got fixed
+>     used VMSTATE_CPU_HOTPLUG which is an internal vmsd, this one only
+>     checks the top VMSD (which should have a name here..).  So I'm not sure
+>     if it'll work..
+>
 
-Just to confirm that when you mention global state, you're talking about registering 
-the ROM in this particular case?
+Ouch, you're right. I checked the CI, but the issue caught by the CI was
+the other one. My brain is fried, I'll get back to you guys
+tomorrow. Sorry for the noise.
 
-> So for this patch here:
-> Reviewed-by: Thomas Huth <thuth@redhat.com>
-
-
-ATB,
-
-Mark.
-
+> Is that MIPS board the only one that is broken?  Do we want to make sure
+> nothing is missed? We can definitely decide to break the migration, but we
+> can also choose to just revert the needed() back to normal.  It just that
+> it looks like we don't strongly need to break it.. as I don't see what we
+> get from breaking it yet.. (say, it's not like we can get rid of some weird
+> API or legacy function, we need to support needed() anyway..)
+>
+>> +
+>>      /* If this triggers, alias support can be dropped for the vmsd. */
+>>      assert(alias_id == -1 || required_for_version >= vmsd->minimum_version_id);
+>>  
+>> -- 
+>> 2.51.0
+>> 
 
