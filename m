@@ -4,103 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 011A7F53D69
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 15:18:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61931F53D69
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 15:20:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w29hd-0007op-K2; Mon, 16 Mar 2026 11:17:57 -0400
+	id 1w29jx-0008Jz-HG; Mon, 16 Mar 2026 11:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w29ha-0007og-CJ
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:17:54 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1w29jj-0008Ia-5N; Mon, 16 Mar 2026 11:20:07 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w29hX-0000f6-C4
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:17:54 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773674268;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=BxNr7H2mX+Kdhxq70Cxxn8oUkDSwQnLmR5gHrgzGPpE=;
- b=OTxLSF00qtY/Sr5aesUSpBL9vWbZ7x/kn44STbvtZO6FRxnKpda6YTaWGNpcFNh4E/0fPR
- atlHfoQOb1a/oCPob+LxfdRX/EzP1t+utfTFjqEuRkTmIvIKcZVRcNeFfQgk3nkuv4i98x
- Mk/xby7KfiTI0RtKapgnPf6ENZK8vL8=
-Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
- [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-608-_IPfEnwtMIOBav3X2wKUYw-1; Mon, 16 Mar 2026 11:17:47 -0400
-X-MC-Unique: _IPfEnwtMIOBav3X2wKUYw-1
-X-Mimecast-MFC-AGG-ID: _IPfEnwtMIOBav3X2wKUYw_1773674267
-Received: by mail-qt1-f199.google.com with SMTP id
- d75a77b69052e-5091f12ed3bso370294481cf.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 08:17:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773674267; x=1774279067; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=BxNr7H2mX+Kdhxq70Cxxn8oUkDSwQnLmR5gHrgzGPpE=;
- b=QUAV1FGhJEkRFS8DflsVYzSBZ6Ih1DXSysisSxqpBkA3vqfO2N363JET3rVh9kLnha
- yNpHV7gcAXpsXc0iv+t5bmGs6DRfy/kEuercnE9HB4ErFQg5r4hBTVWRC+frPZ3Hvy8O
- Dtv1w1TPYXNBReINtO2r9k41jzqasHOMftj0NvaL9r229/dcBVMt0fwGECVAdGOxHaqb
- n7z/ZFBTMUgAzbYPMrgzyLyfDzrqKRyuO3mNmKpdfbWXFs0x0JgL/qS/fi1jTIdYx1/b
- 5zCd5SyXs+3TEMRdfG6RWaNJzPcUK+ZiFJ4SOcWCus/BHchi54PVPpSfaBT1orHRkBGj
- Bk9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773674267; x=1774279067;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=BxNr7H2mX+Kdhxq70Cxxn8oUkDSwQnLmR5gHrgzGPpE=;
- b=FAOHV5Jp14LRJeKGQxSWw+wHrK7K9bSDMpAMV+vwHC+jjzlhs+TiYAUmhn8UHwOb1Q
- i1sfEZqvbcs2u+x66+3D/9IvL2NQyF3yGUXTKAumRhVRgCMDBrs2O1SnFjJlx7zlnJVk
- 78BPZCheyhvYdNAIHcQMfL6JaKNoetzUprmHYD/vMwYVKRdRg/gaOVjvhOPV449Yrsm/
- /nLok1y95zeRALUKLq0wVEP/qNmP1ZGLQLJ+44NdH5GLruQbMLP72cr0DoIirW1oRwmK
- ad+CYyD0HvAUpzO8o7DtE3BIdNoPVrhJ+4ArlhWQtC7xRsKkKkPNUO2omKUjm4HVxpcy
- eOaQ==
-X-Gm-Message-State: AOJu0YxVE0CiopJhtzGxXS+bOj1zBBmqFWlkoipfKruhZjmV7RpieJc6
- bh5TpRiamg6MsnWjoNXI6VXmo6xQlAe9ixz6yg4rVCpSS7azhVeaBc9FpL+ZKnjAxXoWJx1dX/B
- jrb23UbRr+ZEHi6DSXBsKWk5/4SLAiIbXcjqc9n/4xaC5pUw3Y6p2d57T
-X-Gm-Gg: ATEYQzx/4FGzmHUBdjNK/4krqj37SSxCgdNzmr8kpgO81IHk9M5guHWErYbP4h63pb4
- qqALakbxEjgJKVJqyuw233Yk9y9yUScsTCGN+aPWlqL29Bb034dbTozVO8GvnZ9EZOjs4coF15l
- 3qSTqbY4u5hnb06eQ0CqWD3YxOOyyO1HJjLdqpEXkQHMK2xbQmhiy7HQ+g20YeCYbvlXrrQ0RvE
- sFTWkNjm0FzlkuZCILteMrREO2IDGIB3lU2vHa/5ZkAV/8H8iMRKQtl2LJpclKDTq6kN8/8FK1Z
- HqqfretzskcodYtdz6uT8W1YJ/sh2u5AvRaJUN+o0Hvi+rBUT7q/xypTB56UG/AZsSWC9x5rmI0
- r7FTPwB27uxm/5Q==
-X-Received: by 2002:ac8:5fc9:0:b0:509:27e7:a067 with SMTP id
- d75a77b69052e-50957b89146mr176348931cf.6.1773674266720; 
- Mon, 16 Mar 2026 08:17:46 -0700 (PDT)
-X-Received: by 2002:ac8:5fc9:0:b0:509:27e7:a067 with SMTP id
- d75a77b69052e-50957b89146mr176348371cf.6.1773674266042; 
- Mon, 16 Mar 2026 08:17:46 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50939ec6326sm117332581cf.13.2026.03.16.08.17.44
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 08:17:45 -0700 (PDT)
-Date: Mon, 16 Mar 2026 11:17:43 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Junjie Cao <junjie.cao@intel.com>
-Cc: qemu-devel@nongnu.org, stefanha@gmail.com, marco.cavenati@music.ethz.ch
-Subject: Re: Call for GSoC internship project ideas
-Message-ID: <abgfF1HP3LX8rSkh@x1.local>
-References: <CAJSP0QVXXX7GV5W4nj7kP35x_4gbF2nG1G1jdh9Q=XgSx=nX3A@mail.gmail.com>
- <aWZk7udMufaXPw-E@x1.local>
- <20260314194706.637-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1w29jh-0000yy-00; Mon, 16 Mar 2026 11:20:06 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62G7tEmq3113932; Mon, 16 Mar 2026 15:20:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=6JdU6x
+ tkY9nITSHQsJ/KCJBw8gz6IeYGP5k4UMXbC9w=; b=I0/J06BlvLKb7ziH72vypG
+ TGMWwURIHukQVHEF69a4BBpUeSN+2R6yTxjsCD022SC773VIVqWKhooyB0heuDmP
+ Z7Q/NAlxRLwdLlYRwx3eSbx5NNi7vV8byDxbGru4guATYRsg66T0As5A+Wv5IzTk
+ LUsDBVD2Jtx52rYYCP0stGF6Ztd9Vjukj8cNJJExB4Asq4EFGI/K4055ebFigtOs
+ jAVZ4DaOmR4mF6a6HM+oHmdwsGJRecFX8pblka961p7XoBHCGLBq8MLvcnUXZbq7
+ iQdQ/tROSSwGvpbFflA+wuSzBBxBhgnKG2ZgE0mc3kWjJ8mGS8rzK3aZLstxaApg
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvybs0g4e-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Mar 2026 15:20:00 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62GAWmes028720;
+ Mon, 16 Mar 2026 15:19:59 GMT
+Received: from smtprelay04.wdc07v.mail.ibm.com ([172.16.1.71])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cwkgk58ug-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Mar 2026 15:19:59 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay04.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62GFJvKY37356240
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Mar 2026 15:19:57 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6706958056;
+ Mon, 16 Mar 2026 15:19:57 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6FC235805E;
+ Mon, 16 Mar 2026 15:19:56 +0000 (GMT)
+Received: from [9.61.145.197] (unknown [9.61.145.197])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Mon, 16 Mar 2026 15:19:56 +0000 (GMT)
+Message-ID: <7d9cd1af-dceb-4cae-bddf-c4c48d5aeacc@linux.ibm.com>
+Date: Mon, 16 Mar 2026 11:19:55 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260314194706.637-1-junjie.cao@intel.com>
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 3/4] util/event_notifier: fix error handling for
+ event_notifier_init callers
+To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
+Cc: Anthony Krowiak <akrowiak@linux.ibm.com>,
+ Jagannathan Raman <jag.raman@oracle.com>,
+ "Maciej S. Szmigiero" <maciej.szmigiero@oracle.com>,
+ Elena Ufimtseva <elena.ufimtseva@oracle.com>,
+ Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
+ <clg@redhat.com>,
+ Halil Pasic <pasic@linux.ibm.com>, Jason Herne <jjherne@linux.ibm.com>,
+ Thomas Huth <thuth@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ "Michael S. Tsirkin" <mst@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ "open list:vfio-ap" <qemu-s390x@nongnu.org>
+References: <20260311183432.214960-1-viking4@gmail.com>
+ <20260311183432.214960-4-viking4@gmail.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260311183432.214960-4-viking4@gmail.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Authority-Analysis: v=2.4 cv=MMttWcZl c=1 sm=1 tr=0 ts=69b81fa0 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
+ a=pGLkceISAAAA:8 a=VnNF1IyMAAAA:8 a=yPCof4ZbAAAA:8 a=vFS0-BjGtX1mcMrYKmcA:9
+ a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: s5uf-4WCMYcaC91Fs3RaXJLUwV6yTgnW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDExNCBTYWx0ZWRfX1npwnocY3peg
+ vvBmWPSiUhOi1rN4aSpMF03609qBvpWzvv2MOl1uWRQrA29LxSBHgQVnKyoqebd3WGD/9b9dKh/
+ Woz9PXs/p6QcKE9RAVdzt5otn1ETtWWuVMMm6O2WodHDxIAAXbaVu9sLdCZ8lelix7KkssE8oJE
+ ocnD/Sdi1za89eBWDhOGJCbxORNMj2e/KiwbGlfWgg880DXWZImupltSyqdyQ0DBC3HWu9FzW8a
+ z8r3/bvEakk45zfZX+ZwUnCglK1QHTCTcPBHN/WDbmYtjuitLayFAbbsatrnxmNtGDxYcqRA3ab
+ nOkjoJP2A4Sw6fEsAROQ3wntVd5RQxNbDBHkAtCSSH82j98O1vLa4uFg6NE+ZjKbc6qNoA2dRGq
+ vplgNVD1Nul47Hkj9gn1cjThLctwrb3Y+2F+JW2edB5Eg1BNrCRP/MGRyxYRiq/xsUPEjAHTH30
+ WQBMvWFevnGQGhR/K3A==
+X-Proofpoint-GUID: 54c_ZAH88pvGg0hRd5KuKOqoiEBYgg0Q
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-16_04,2026-03-16_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0 clxscore=1011
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603160114
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,120 +135,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Sun, Mar 15, 2026 at 03:47:06AM +0800, Junjie Cao wrote:
-> Hi Peter, Marco, and QEMU community,
-
-Hi, Junjie,
-
+On 3/11/26 2:34 PM, Trieu Huynh wrote:
+> From: Trieu Huynh <vikingtc4@gmail.com>
 > 
-> I'm Junjie Cao -- I graduated from the National University of Singapore
-> last year and am currently working at Intel. I'd like to express my
-> interest in the GSoC 2026 Fast Snapshot Load project.
+> Check return value of event_notifier_init() and return early on
+> failure instead of continuing with invalid state.
+> - Use ret < 0 to handle negative return value.
+> - No functional changes.
 > 
-> Much of my background is in network device virtualization -- specifically
-> the QEMU/DPDK/Virtio-net/VHost stack (emulation and tuning). This has
-> given me hands-on experience with QEMU's guest memory management and
-> device state serialization, and helps me appreciate how practical the
-> problem this project aims to solve really is -- Marco's fuzzing use case
-> of loading snapshots frequently is a great example.
-> 
-> == Preparation so far ==
-> 
-> - Built QEMU from latest master; will be sending a small fix patch soon to
-> get familiar with the QEMU community workflow.
-> 
-> - Read Peter's original proposal and the follow-up discussion with Marco;
-> read mapped-ram.rst -- the fixed-offset format allows pread() of any page
-> by RAMBlock+offset directly from the snapshot file, which is the
-> prerequisite for demand paging to work.
-> 
-> - On the source level, focused on two paths: the uffd infrastructure in
-> migration/postcopy-ram.c (postcopy_ram_fault_thread,
-> postcopy_ram_incoming_setup, ram_block_enable_notify) to understand how
-> postcopy registers and handles page faults; and ram_load() in
-> migration/ram.c to understand RAM section deserialization during loadvm.
-> The intersection of these two paths is where the core changes for this
-> project would go.
-> 
-> == Implementation path as I understand it ==
-> 
-> The core idea: split loadvm into "device state loading" and "RAM
-> loading", bridged by uffd. Based on file: migration + mapped-ram:
-> 
-> - Modify the ram_load() path: parse_ramblock_mapped_ram() reads the
-> MappedRamHeader and bitmap but skips read_ramblock_mapped_ram(), building
-> an offset table for on-demand pread() instead. Other device states load
-> normally.
-> 
-> - Register userfaultfd (MISSING mode) on all migratable RAMBlocks.
-> postcopy-ram.c has similar infrastructure; the difference is we don't
-> need discard logic or the source-side page request protocol.
-> 
-> - Start vCPUs with two threads populating RAM in parallel: a background
-> loader doing sequential pread() + UFFDIO_COPY for bulk prefetch, and a
-> fault handler resolving vCPU-triggered page faults on demand. A
-> per-RAMBlock atomic bitmap with test_and_set coordinates the two to
-> avoid double-copy. Once all pages are loaded, unregister uffd. Loadvm is
-> complete.
-> 
-> Peter mentioned that the MVP could start with no multifd and anonymous
-> memory only -- I think that would be a great approach. Since mapped-ram
-> and postcopy are currently mutually exclusive in migrate_caps_check(), 
-> a new capability will likely be needed for this feature.
-
-Thanks for your interest.  Yes above all look sane.  We may also consider
-reusing postcopy-ram + mapped-ram only on incoming side, so as to avoid a
-new feature bit.
-
-> 
-> == A thought and a question ==
-> 
-> Some devices' load_state handlers access guest RAM during restore.
-> Postcopy handles this by registering uffd before device state loading
-> (inside the POSTCOPY_LISTEN handler, before device sections in the
-> CMD_PACKAGED blob). The same ordering applies here: register uffd, start
-> the fault handler, then load device states -- any RAM touch is
-> intercepted and resolved via pread().
-
-Note that we can't resolve page faults using pread(). One thing is because
-it is not atomic, hence vCPU can see partially copied pages.  The other
-thing is pread*() won't kick blocked threads properly.  We need to use
-something like postcopy_place_page() through the userfaultfd facilities.
-
-> 
-> This relies on the kernel queuing faults between UFFDIO_REGISTER and the
-> first poll(). I noticed postcopy_ram_incoming_setup() has a similar
-> window (fault thread created before blocks registered) -- is this the
-> same guarantee we'd rely on here?
-
-The kernel must be able to queue requests right after REGISTER, OTOH poll()
-can happen whenever late it is.  From kernel's POV, REGISTER enables this
-feature already.  Whether someone will be polling or reading the fd (for
-further fault resolution) will not stop the kernel from trapping memory
-faults.
-
-So yes, this should work similarly like original postcopy.
-
-> 
-> == Next steps ==
-> 
-> Besides attempting a QEMU patch submission and working on my proposal,
-> is there anything else you'd suggest I prepare?
-
-Feel free to apply via GSoC official website, it should open shortly today
-and the deadline is March 31th.
-
-Thanks,
-
-> 
-> Any feedback or guidance would be very much appreciated!
-> 
-> Best regards,
-> Junjie Cao
-> junjie.cao@intel.com
+> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
+> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+> Acked-by: Anthony Krowiak <akrowiak@linux.ibm.com>
+> Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+> ---
+>  hw/hyperv/hyperv.c     |  4 ++--
+>  hw/hyperv/vmbus.c      |  4 ++--
+>  hw/remote/proxy.c      | 15 +++++++++++++--
+>  hw/vfio/ap.c           |  2 +-
+>  hw/vfio/ccw.c          |  2 +-
+>  hw/vfio/pci-quirks.c   |  2 +-
+>  hw/vfio/pci.c          |  2 +-
+>  hw/virtio/vhost-vdpa.c |  4 ++--
+>  8 files changed, 23 insertions(+), 12 deletions(-)
 > 
 
--- 
-Peter Xu
+[...]
+
+>      memset(&msg, 0, sizeof(MPQemuMsg));
+>      msg.cmd = MPQEMU_CMD_SET_IRQFD;
+> diff --git a/hw/vfio/ap.c b/hw/vfio/ap.c
+> index e58a0169af..5c8f305653 100644
+> --- a/hw/vfio/ap.c
+> +++ b/hw/vfio/ap.c
+> @@ -180,7 +180,7 @@ static bool vfio_ap_register_irq_notifier(VFIOAPDevice *vapdev,
+>          return false;
+>      }
+>  
+> -    if (event_notifier_init(notifier, 0)) {
+> +    if (event_notifier_init(notifier, 0) < 0) {
+>          error_setg_errno(errp, errno,
+>                           "vfio: Unable to init event notifier for irq (%d)",
+>                           irq);
+> diff --git a/hw/vfio/ccw.c b/hw/vfio/ccw.c
+> index 2251facb35..ce9c014e6a 100644
+> --- a/hw/vfio/ccw.c
+> +++ b/hw/vfio/ccw.c
+> @@ -418,7 +418,7 @@ static bool vfio_ccw_register_irq_notifier(VFIOCCWDevice *vcdev,
+>          return false;
+>      }
+>  
+> -    if (event_notifier_init(notifier, 0)) {
+> +    if (event_notifier_init(notifier, 0) < 0) {
+>          error_setg_errno(errp, errno,
+>                           "vfio: Unable to init event notifier for irq (%d)",
+>                           irq);
+
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+
 
 
