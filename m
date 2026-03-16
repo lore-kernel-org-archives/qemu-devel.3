@@ -4,98 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35520F506D2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:40:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AEEF506CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:41:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w28AI-0006YK-28; Mon, 16 Mar 2026 09:39:26 -0400
+	id 1w28Bd-000737-5f; Mon, 16 Mar 2026 09:40:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1w28A6-0006Wm-ME; Mon, 16 Mar 2026 09:39:16 -0400
-Received: from vps-ovh.mhejs.net ([145.239.82.108])
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1w28BQ-0006wI-GT; Mon, 16 Mar 2026 09:40:37 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1w28A1-0004Yh-Vl; Mon, 16 Mar 2026 09:39:12 -0400
-Received: from MUA
- by vps-ovh.mhejs.net with esmtpsa  (TLS1.3) tls TLS_AES_128_GCM_SHA256
- (Exim 4.98.2) (envelope-from <mhej@vps-ovh.mhejs.net>)
- id 1w289j-0000000F9RP-3Kvh; Mon, 16 Mar 2026 14:38:51 +0100
-Message-ID: <70cdc8ed-af61-4baa-8c67-2f8027bc3354@maciej.szmigiero.name>
-Date: Mon, 16 Mar 2026 14:38:46 +0100
+ (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
+ id 1w28BN-0004vX-6g; Mon, 16 Mar 2026 09:40:34 -0400
+Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62G1Tx591290637; Mon, 16 Mar 2026 13:40:30 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=oytOZP
+ ylOAhqcuDPdLjT3g3LqvUXB64MAkUtNvFz6iU=; b=S7gVa75+7WOUG8tXPzdbgz
+ 9S7NFRWZqFLiDhDKZ315j+5cQURwx2vn2ZraJGNejTGz+v1p5tM1PsNVrbC5f/FI
+ KwtjpZviZXFZRzdBOYJbyGcA5GYC/T6887f78H3+W3RZWslzj8DGjfYczUG8gXvk
+ nknzVuHqYtvuwfd3rkFWuIJMs6OudFhcEW3xNv7NtWzi+pkfKMpGXYVg3L2p7Er8
+ 9aptndQwZZi7i+d+Bf8COqLcZggrSxmCizjJ8JwvO/ileBO3/k2cvNEqweNo7obp
+ QS1PTqmlRIg02u1FNM1oL11HpUQtTpyfr09w8evuJWW/ukg1TTBeQfcDppyitvyA
+ ==
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvyau7p1h-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Mar 2026 13:40:30 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62GALs2Y015644;
+ Mon, 16 Mar 2026 13:40:29 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cwk0n50ba-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Mon, 16 Mar 2026 13:40:29 +0000
+Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
+ [10.39.53.229])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62GDeSsa30933638
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Mon, 16 Mar 2026 13:40:28 GMT
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6EE925805E;
+ Mon, 16 Mar 2026 13:40:28 +0000 (GMT)
+Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 657005805D;
+ Mon, 16 Mar 2026 13:40:27 +0000 (GMT)
+Received: from [9.61.9.100] (unknown [9.61.9.100])
+ by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
+ Mon, 16 Mar 2026 13:40:27 +0000 (GMT)
+Message-ID: <cb54fc3b-5d8f-490f-aaed-f8cb9e0bbe8f@linux.ibm.com>
+Date: Mon, 16 Mar 2026 09:40:26 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 3/4] util/event_notifier: fix error handling for
- event_notifier_init callers
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: Anthony Krowiak <akrowiak@linux.ibm.com>,
- Jagannathan Raman <jag.raman@oracle.com>,
- Elena Ufimtseva <elena.ufimtseva@oracle.com>,
- Alex Williamson <alex@shazbot.org>, =?UTF-8?Q?C=C3=A9dric_Le_Goater?=
- <clg@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Jason Herne <jjherne@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Eric Farman <farman@linux.ibm.com>, qemu-devel@nongnu.org,
- Matthew Rosato <mjrosato@linux.ibm.com>, "Michael S. Tsirkin"
- <mst@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
- "open list:vfio-ap" <qemu-s390x@nongnu.org>
-References: <20260311183432.214960-1-viking4@gmail.com>
- <20260311183432.214960-4-viking4@gmail.com>
-From: "Maciej S. Szmigiero" <mail@maciej.szmigiero.name>
-Content-Language: en-US, pl-PL
-Autocrypt: addr=mail@maciej.szmigiero.name; keydata=
- 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
-In-Reply-To: <20260311183432.214960-4-viking4@gmail.com>
+Subject: Re: [PATCH 1/1] MAINTAINERS: Add another reviewer to s390x boot
+To: Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
+ Jason Herne <jjherne@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+References: <20260313113424.15583-2-thuth@redhat.com>
+ <20260313194810.1844241-1-farman@linux.ibm.com>
+ <20260313194810.1844241-2-farman@linux.ibm.com>
+Content-Language: en-US
+From: Jared Rossi <jrossi@linux.ibm.com>
+In-Reply-To: <20260313194810.1844241-2-farman@linux.ibm.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=145.239.82.108;
- envelope-from=mhej@vps-ovh.mhejs.net; helo=vps-ovh.mhejs.net
-X-Spam_score_int: 1
-X-Spam_score: 0.1
-X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9,
- HEADER_FROM_DIFFERENT_DOMAINS=0.25, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-TM-AS-GCONF: 00
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDEwMSBTYWx0ZWRfX5QXJWld2/ome
+ j3tDBFimEmCPlkB+wAn3zpLkhCy5hKssP9sr73UsVLU7UnxY8sBXXCn5w6ZIKnOuXxaZEq7s4AG
+ NNv3j1I66/BGTXRixS2srxjwsFK3qIimdHMLJ7IWhveUXDE7TVUJbiTnSiLjufRseEEOGKH6gxC
+ fDgY3g4sivj4xDfa+GUf02IpNAFd4yHaJVuTH3l/jM3tAIhySwNoIXL2gSYxBy8a2AdEIP2ELn/
+ 0Y+0Lnn/IqUEyYxEsM4cYzSA1P7DrhCNj9orJ4YoQk6PiPKTRt9bdBBBzkp9+zLTel+wfqQ13gg
+ nSkK+Cd9zI/P1Sy76Gc1qgLBIeid3TmpJZPCAeaTJ1kTMi7ZnN4JQy8DdCD8K6YmWQRZrUocrgu
+ F9ZN+tVI73ZRNWrO8x3BCPlz4DspEtfSSOYQTgSOSmyzjVvnMaOVXYsB0rEP2BSEPmDMHQL8V2/
+ UjhcCIgEvTuO3qA8XVQ==
+X-Authority-Analysis: v=2.4 cv=GIQF0+NK c=1 sm=1 tr=0 ts=69b8084e cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
+ a=Pl9V7em4pPg2a3i_iyQA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
+X-Proofpoint-ORIG-GUID: 9Hxb80HTxWV9-HDb_qQI6Z2PkXoHMA5A
+X-Proofpoint-GUID: 9Hxb80HTxWV9-HDb_qQI6Z2PkXoHMA5A
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-16_04,2026-03-16_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ spamscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0 malwarescore=0
+ phishscore=0 impostorscore=0 suspectscore=0 adultscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603160101
+Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
+ helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,77 +127,26 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.03.2026 19:34, Trieu Huynh wrote:
-> From: Trieu Huynh <vikingtc4@gmail.com>
-> 
-> Check return value of event_notifier_init() and return early on
-> failure instead of continuing with invalid state.
-> - Use ret < 0 to handle negative return value.
-> - No functional changes.
-> 
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> Acked-by: Anthony Krowiak <akrowiak@linux.ibm.com>
-> Reviewed-by: Jagannathan Raman <jag.raman@oracle.com>
+On 3/13/26 3:48 PM, Eric Farman wrote:
+> Jason offered to help review this area of code;
+> let's make sure he's notified of changes.
+>
+> Signed-off-by: Eric Farman <farman@linux.ibm.com>
 > ---
->   hw/hyperv/hyperv.c     |  4 ++--
->   hw/hyperv/vmbus.c      |  4 ++--
->   hw/remote/proxy.c      | 15 +++++++++++++--
->   hw/vfio/ap.c           |  2 +-
->   hw/vfio/ccw.c          |  2 +-
->   hw/vfio/pci-quirks.c   |  2 +-
->   hw/vfio/pci.c          |  2 +-
->   hw/virtio/vhost-vdpa.c |  4 ++--
->   8 files changed, 23 insertions(+), 12 deletions(-)
-> 
-> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-> index 27e323a819..aa278b179e 100644
-> --- a/hw/hyperv/hyperv.c
-> +++ b/hw/hyperv/hyperv.c
-> @@ -439,7 +439,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
->           sint_route->staged_msg->cb_data = cb_data;
->   
->           r = event_notifier_init(ack_notifier, false);
-> -        if (r) {
-> +        if (r < 0) {
->               goto cleanup_err_sint;
->           }
->           event_notifier_set_handler(ack_notifier, sint_ack_handler);
-> @@ -453,7 +453,7 @@ HvSintRoute *hyperv_sint_route_new(uint32_t vp_index, uint32_t sint,
->   
->       /* We need to setup a GSI for this SintRoute */
->       r = event_notifier_init(&sint_route->sint_set_notifier, false);
-> -    if (r) {
-> +    if (r < 0) {
->           goto cleanup_err_sint;
->       }
->   
-> diff --git a/hw/hyperv/vmbus.c b/hw/hyperv/vmbus.c
-> index 64abe4c4c1..5388f4277f 100644
-> --- a/hw/hyperv/vmbus.c
-> +++ b/hw/hyperv/vmbus.c
-> @@ -1432,7 +1432,7 @@ static void open_channel(VMBusChannel *chan)
->           goto put_gpadl;
->       }
->   
-> -    if (event_notifier_init(&chan->notifier, 0)) {
-> +    if (event_notifier_init(&chan->notifier, 0) < 0) {
->           goto put_gpadl;
->       }
->   
-> @@ -2450,7 +2450,7 @@ static void vmbus_realize(BusState *bus, Error **errp)
->       }
->   
->       ret = event_notifier_init(&vmbus->notifier, 0);
-> -    if (ret != 0) {
-> +    if (ret < 0) {
->           error_setg(errp, "event notifier failed to init with %d", ret);
->           goto remove_msg_handler;
->       }
-
-Reviewed-by: Maciej S. Szmigiero <maciej.szmigiero@oracle.com> # for the Hyper-V part
-
-Thanks,
-Maciej
-
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
+>
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 23562aaac2..e83ff3826b 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1866,6 +1866,7 @@ S390-ccw boot
+>   M: Jared Rossi <jrossi@linux.ibm.com>
+>   R: Zhuoying Cai <zycai@linux.ibm.com>
+>   R: Christian Borntraeger <borntraeger@linux.ibm.com>
+> +R: Jason Herne <jjherne@linux.ibm.com>
+>   S: Supported
+>   F: hw/s390x/ipl.*
+>   F: pc-bios/s390-ccw/
+Acked-by: Jared Rossi <jrossi@linux.ibm.com>
 
