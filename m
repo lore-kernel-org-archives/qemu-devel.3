@@ -4,83 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A8BAAF013C6
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:55:59 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A312EFCBD4
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 08:02:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w22nj-0006pl-9B; Mon, 16 Mar 2026 03:55:47 -0400
+	id 1w22tO-0001dI-72; Mon, 16 Mar 2026 04:01:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w22ng-0006oS-2f
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:55:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1w22sh-00015k-8Q
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 04:00:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w22ne-0006Jd-FW
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:55:43 -0400
+ id 1w22sT-00083u-Ar
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 04:00:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773647741;
+ s=mimecast20190719; t=1773648035;
  h=from:from:reply-to:reply-to:subject:subject:date:date:
  message-id:message-id:to:to:cc:cc:mime-version:mime-version:
  content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=PeeLSUTnAoO6YAoVbJz/XwOBZH+v7FeEB0QnOJ5V9Sw=;
- b=Lj7sB1jcSckR+KqhzMIisvreRcb/zPSI4Yw/pk1VPo698ly6D45TsMgnTdvGaE7iSytbR4
- daPyuimhDpGu8AH2hCVInQirA/xsihizX2JvNZoV7wCHPd6c1F16eMNuBbfEr6xNe1tCRp
- hBalToHRWgbS/CvCWE4iHsEAPULe8uU=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=VU+AVgjPf8924LiZz6NH5O1/3ktuuTWlwWqJRlY+znM=;
+ b=hBXBO1GMdIW7SifCh7X/AEz4Em2wcpvhFRaUIFnp6QrunxG2OEnGxpdk8H39BWyN1m0NPn
+ N3FymIfzBe2EhSDnaUTPjOVIGl1yslq80U48pYmk4QESrbfBkHAYwTJGMF3fYYL/y/1rtt
+ i+x0qcBFoHqMLyaazG8Ca9Yfni+TTXg=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-58-9QzRAhX7NJOCwF_1jYN2cg-1; Mon, 16 Mar 2026 03:55:39 -0400
-X-MC-Unique: 9QzRAhX7NJOCwF_1jYN2cg-1
-X-Mimecast-MFC-AGG-ID: 9QzRAhX7NJOCwF_1jYN2cg_1773647739
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4837b6f6b93so31467545e9.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 00:55:39 -0700 (PDT)
+ us-mta-191-BfBa5LVsNT-GfWZ2EMUXmA-1; Mon, 16 Mar 2026 04:00:33 -0400
+X-MC-Unique: BfBa5LVsNT-GfWZ2EMUXmA-1
+X-Mimecast-MFC-AGG-ID: BfBa5LVsNT-GfWZ2EMUXmA_1773648032
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-48542d5aa9eso35038215e9.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 01:00:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773647738; x=1774252538;
+ d=1e100.net; s=20251104; t=1773648032; x=1774252832;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:reply-to:user-agent:mime-version:date
  :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=PeeLSUTnAoO6YAoVbJz/XwOBZH+v7FeEB0QnOJ5V9Sw=;
- b=Jx1cuy7xwAcaeeWF2oStLAOJwtbe/FSBWwZEbtMMHMbi5cnnSysTlZ1W5rkG3ZHzhG
- cObwOT/YzVRAJ0Fs+vYzwtZZGcdssX9pAVbJdmgTu0tMkLRhsp7FKDZMVbklgIRNyy1T
- XkU8secpMvs7S/OywbZg4+1/9e5Rjs5wgTdd4hASx5UvYZRhSGpmAwyF/adc5kLGKuir
- 0RGJfr/fHQc2ZvxtbPvrfMZPoJdi4lzbJedznsnJULkyS6y0lwjFEjC5te108qzCWJbp
- F6waqnjQTTFvfiMlSc8VusduhL3pYuckMB8lJPjja0W/6qm8LuZ4+YRZdht+75W5P+0Q
- 98ZQ==
+ bh=VU+AVgjPf8924LiZz6NH5O1/3ktuuTWlwWqJRlY+znM=;
+ b=NBr83neaKJKWP6CiHvPur3xOM3pjE7L7LXdr8PQt4gFW1qR0x/Y21yNmyU4YBO3jYt
+ gtp2nj4dT0flW1aNEbtqb37GpYFXadnuSLqpslxKhCmH+rad7UqfghilmUpWvKptvPL3
+ jrlv+nHOjaoOd1KBemNDyE0TIR5Sba1dIU/2nmufylv+P+/9S+2AEB+ft1xWCJIV8ANq
+ JfqZvEZPRnHRM5612Jk+QThW9NC5CmdhvAFloV51/qZcLdS+CogkBtXmnkinl5hiRqUv
+ pDCtPBZ+OP4g1eHxHlTZD3s/sxKY5b8lKGkx9aHrss5BV5ELpFjd/tVbFTjhxtqqlXwj
+ LTIw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUq4q6EEoTDk8eH6XAJw1b/nJ5k/jMriaSfnjeloU9CcJlWFxno4tlKMAjb8vYBjQAc7Pk1YcHEJ6c5@nongnu.org
-X-Gm-Message-State: AOJu0YyCkJHcqLPmGT23zypxfM2OJ/dJ3hv0/3I7O+njm6yb4x2FiCVA
- Y0WohXQ1W2cZHrlLdPgj8oq/NtrpgbUxfJkAuPJ5gnlakbeoAj0DH/HvU14EzuDdW1usv+xl3ej
- FN+pyworzYB8mLDqpOoYBYNycVK4dI+XjvQLAV2u0kwiY1/wHMNG3x5tW
-X-Gm-Gg: ATEYQzxGmfjJcdi9Lkxd2bEn6UUqHWt9wpdQ0LkP4n6GExYfA4LprX4f/6mWa5uTdjF
- IN6nyu2vNtqWPbdOFsy5FGJMEEC8DiANJ0eBdDh0IzmjceFnudNWkHfNeeEzU1IF0IeOqI0wBhc
- t/UnsfWXNTpQIsT1BbHtlHCIYE4i8BukD7VUp9V1ttC0vh9IskRdRu4ZW5KNLIBSAJS7DdMJ86y
- 7PhKyjwVUjX7lMq808OyOPs+Ib3F7Ni08i8/HFVXwfF4PNEJ4ZIgxCHerNT5ahrwhd41Fm4Xy9q
- 5GvIzLUHL1+kfOWGYEJk5/DbZ/1xz1qhqYmkBVp+TtNGL9s7GwgryrnW/ma9dzX5YpmGFiIKfOa
- 5zBZIIMHxt+/mdQAQSgbeqJlP8UU7fK4ywxzct9b3bTVr22Efc0fmgUF89NaqGoKDKnO2Vw==
-X-Received: by 2002:a05:600c:1d0f:b0:485:309c:2984 with SMTP id
- 5b1f17b1804b1-485566d2dfbmr198824315e9.13.1773647738528; 
- Mon, 16 Mar 2026 00:55:38 -0700 (PDT)
-X-Received: by 2002:a05:600c:1d0f:b0:485:309c:2984 with SMTP id
- 5b1f17b1804b1-485566d2dfbmr198823975e9.13.1773647738009; 
- Mon, 16 Mar 2026 00:55:38 -0700 (PDT)
+ AJvYcCXVjMC8BqwdH2SVkEY3p9ly9n/Th/BKZSUer+bhvDeeJujt0lofeE8JCqnMhcS9H+R7hSbhn3SxUd34@nongnu.org
+X-Gm-Message-State: AOJu0Yx7KZLtjek0dycMmJTxklucVVjPg294ydTypRseFMrrsaPG6A2T
+ um5EybyDz9deS+agwHiI/Xsjjh0cfTbfTxKiLYdL0cNCb8slr7Vb6hfodGkEr+lHE9ysd9KFs+M
+ dLIzu0BFqO+rR6QRnV8i0m0gh5A+nfZ/6LLKO5OWQ4nGNpfKm1G6QNEre
+X-Gm-Gg: ATEYQzxzXOcZ1SRX0yCnI6PIGwZHo16TN/tpawRRRv2i1Q+3q1nEL3VOBIkNkBS+TPW
+ WMFzRgNHHAdj6lJHpT473iY9qOPcGu5pI11et5qwAVTRVlaLgrp6xCDOHb3gXs/oVU0YlxDU8JX
+ oUowC5VLlWK0s0zmgyxt/OcA92meDLKu8WUSy91Jrsng1ejo9kvMK8b4GVua+GZuxs1+rLa5DZN
+ pBtYbbHa8pME894UnglN840rDivDC9qWDMLhuwVCksLCvHsq0p+mejILMGzQJsFkCioLm8c3Vav
+ U1boD2XNKXOYyufKykZdmeODgLqB6DSyyDXlgC4ia1pJGJzqSDmCAUsIIjNV+Svl3POjLjilhl/
+ 0oI+6RULo36KI7d50eBUf1xNCEtrB0zH9PqrbADJ6SAYgk0XNX1Kbg+sADx6w3KgdpnCDug==
+X-Received: by 2002:a05:600c:8289:b0:485:3a93:3a9e with SMTP id
+ 5b1f17b1804b1-485566d671cmr198381675e9.10.1773648031947; 
+ Mon, 16 Mar 2026 01:00:31 -0700 (PDT)
+X-Received: by 2002:a05:600c:8289:b0:485:3a93:3a9e with SMTP id
+ 5b1f17b1804b1-485566d671cmr198380975e9.10.1773648031371; 
+ Mon, 16 Mar 2026 01:00:31 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
  ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b66e3f8sm403329515e9.14.2026.03.16.00.55.36
+ 5b1f17b1804b1-48557a7473fsm84071995e9.14.2026.03.16.01.00.23
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 00:55:37 -0700 (PDT)
-Message-ID: <2a807700-f887-4abb-b6cf-fa122e65b98d@redhat.com>
-Date: Mon, 16 Mar 2026 08:55:35 +0100
+ Mon, 16 Mar 2026 01:00:24 -0700 (PDT)
+Message-ID: <6c12bb86-6004-4ba6-b46e-e66da41f2e9c@redhat.com>
+Date: Mon, 16 Mar 2026 09:00:21 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 7/8] hw/arm/smmuv3-accel: Change OAS property to OasMode
+Subject: Re: [PATCH v2 8/8] qemu-options.hx: Document arm-smmuv3 device's
+ accel properties
 Content-Language: en-US
 To: Nathan Chen <nathanc@nvidia.com>, qemu-devel@nongnu.org,
  qemu-arm@nongnu.org
@@ -94,19 +95,19 @@ Cc: Peter Maydell <peter.maydell@linaro.org>,
  Shameer Kolothum <skolothumtho@nvidia.com>,
  Nicolin Chen <nicolinc@nvidia.com>, Matt Ochs <mochs@nvidia.com>
 References: <20260312210328.2016191-1-nathanc@nvidia.com>
- <20260312210328.2016191-8-nathanc@nvidia.com>
+ <20260312210328.2016191-9-nathanc@nvidia.com>
 From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <20260312210328.2016191-8-nathanc@nvidia.com>
+In-Reply-To: <20260312210328.2016191-9-nathanc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.133.124;
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -130,82 +131,70 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 3/12/26 10:03 PM, Nathan Chen wrote:
 > From: Nathan Chen <nathanc@nvidia.com>
 >
-> Change accel SMMUv3 OAS property from uint8_t to OasMode. Setting
-> 'auto' will use the default value of 44 set in smmuv3_init_id_regs().
-> A future patch will implement resolution of 'auto' value to match
-> the host SMMUv3 OAS value.
-Same I think we don't want auto mode to be selectable at the moment.
-Because then you will change the semantic of the auto mode, returning
-the host value and not 44 anymore.
-
-Eric
+> Document arm-smmuv3 properties for setting HW-acceleration,
+> Range Invalidation, and Address Translation Services support, as
+> well as setting Output Address size and Substream ID size.
 >
 > Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 > ---
->  hw/arm/smmuv3-accel.c   | 2 +-
->  hw/arm/smmuv3.c         | 9 +++++----
->  include/hw/arm/smmuv3.h | 2 +-
->  3 files changed, 7 insertions(+), 6 deletions(-)
+>  qemu-options.hx | 29 ++++++++++++++++++++++++++++-
+>  1 file changed, 28 insertions(+), 1 deletion(-)
 >
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index ab037df7ac..5073f74b8b 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -849,7 +849,7 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->      }
+> diff --git a/qemu-options.hx b/qemu-options.hx
+> index 890c4f1d23..836de4532c 100644
+> --- a/qemu-options.hx
+> +++ b/qemu-options.hx
+> @@ -1274,13 +1274,40 @@ SRST
+>      ``aw-bits=val`` (val between 32 and 64, default depends on machine)
+>          This decides the address width of the IOVA address space.
 >  
->      /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
-> -    if (s->oas == SMMU_OAS_48BIT) {
-> +    if (s->oas == OAS_MODE_48) {
->          s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
->      }
+> -``-device arm-smmuv3,primary-bus=id``
+> +``-device arm-smmuv3,primary-bus=id[,option=...]``
+>      This is only supported by ``-machine virt`` (ARM).
 >  
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 8b0121c0ed..9faa9c8dfb 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -1981,7 +1981,7 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->              error_setg(errp, "ats can only be enabled if accel=on");
->              return false;
->          }
-> -        if (s->oas != SMMU_OAS_44BIT) {
-> +        if (s->oas > OAS_MODE_44) {
->              error_setg(errp, "OAS must be 44 bits when accel=off");
->              return false;
->          }
-> @@ -1999,8 +1999,9 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
->          return false;
->      }
+>      ``primary-bus=id``
+>          Accepts either the default root complex (pcie.0) or a
+>          pxb-pcie based root complex.
 >  
-> -    if (s->oas != SMMU_OAS_44BIT && s->oas != SMMU_OAS_48BIT) {
-> -        error_setg(errp, "OAS can only be set to 44 or 48 bits");
-> +    if (s->oas != OAS_MODE_AUTO && s->oas != OAS_MODE_44 &&
-> +        s->oas != OAS_MODE_48) {
-> +        error_setg(errp, "OAS can only be set to auto, 44 bits, or 48 bits");
->          return false;
->      }
->  
-> @@ -2130,7 +2131,7 @@ static const Property smmuv3_properties[] = {
->      /* RIL can be turned off for accel cases */
->      DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril, ON_OFF_AUTO_ON),
->      DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats, ON_OFF_AUTO_OFF),
-> -    DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
-> +    DEFINE_PROP_OAS_MODE("oas", SMMUv3State, oas, OAS_MODE_44),
->      DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
->                                SSID_SIZE_MODE_0),
->  };
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index ddf472493d..82f18eb090 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -72,7 +72,7 @@ struct SMMUv3State {
->      Error *migration_blocker;
->      OnOffAuto ril;
->      OnOffAuto ats;
-> -    uint8_t oas;
-> +    OasMode oas;
->      SsidSizeMode ssidsize;
->  };
->  
+> +    ``accel=on|off`` (default: off)
+> +        Enables guest to try to leverage host SMMUv3 features for acceleration.
+Enables guest to leverage
+> +        By default, enabling accel configures the host SMMUv3 in nested mode to
+I would remove "By default, "
+> +        support vfio-pci pass-through.
+passthrough
+> +
+> +    ``ril=on|off`` (default: on)
+> +        Support for Range Invalidation, which allows the SMMUv3 driver to
+> +        invalidate TLB entries for a range of IOVAs at once instead of issuing
+> +        separate commands to invalidate each page. Must match with host SMMUv3
+> +        Range Invalidation support.
+> +
+> +    ``ats=on|off`` (default: off)
+> +        Support for Address Translation Services, which enables PCIe devices to
+> +        cache address translations in their local TLB and reduce latency. Host
+> +        SMMUv3 must support ATS in order to enable this feature for the vIOMMU.
+> +
+> +    ``oas=val`` (supported values are 44 and 48. default: 44)
+> +        Sets the Output Address Size in bits. The value set here must be less
+> +        than or equal to the host SMMUv3's supported OAS, so that the
+> +        intermediate physical addresses (IPA) consumed by host SMMU for stage-2
+> +        translation do not exceed the host's max supported IPA size.
+> +
+> +    ``ssidsize=val`` (val between 0 and 20. default: 0)
+> +        Sets the Substream ID size in bits. When set to a non-zero value,
+> +        PASID capability is advertised to the vIOMMU and accelerated use cases
+> +        such as Shared Virtual Addressing (SVA) are supported.
+> +
+>  ``-device amd-iommu[,option=...]``
+>      Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
+>      Only available with ``-machine q35``, it supports the following options:
+Besides,
+
+Reviewed-by: Eric Auger <eric.auger@redhat.com>
+
+
+Eric
+
 
 
