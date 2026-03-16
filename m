@@ -4,120 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 92658FB5E88
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 23:13:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BC974FB5E87
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 23:21:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2H6u-0000v3-I1; Mon, 16 Mar 2026 19:12:32 -0400
+	id 1w2HEj-0002MM-J8; Mon, 16 Mar 2026 19:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2H6t-0000uZ-3W
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:12:31 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1w2HEd-0002LC-AU
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:20:31 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2H6r-0001Sr-CT
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:12:30 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-358e3cc5e7eso2729260a91.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 16:12:28 -0700 (PDT)
+ id 1w2HEb-0004MV-FY
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 19:20:31 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2adbfab4501so23070885ad.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 16:20:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773702748; x=1774307548; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=l8Ibq64nwCu6z73FszhoA/0pJMUfY9Lti1VEYYHLDng=;
- b=gcZNXg7ZnOhiq5ym+cUkDBrcJiVOSnWkqARYbsRJIvI/2kR9sVfw8VcBukLABNmj6p
- km29O0eNNAm8dWfOgIjk+/PP0pnX/7vdSLmxQTytHV02xXz0dROQLUlnrIz3KhWPAa73
- hMxwNb0QMjaUYoGE2KhZA3TS095KN3eccMIhAjXd4A8p4pAQ/IcUDMYpZWqe0I6W+hSo
- U+N8VgNMUu35CLWlYUnmC7qmBinn+WL3aW/9QlHwhQNmMHu9+r7Aiduzoe+lNnj1wpbT
- 0keMWT+GFIpg6tHvt/InFXeJBADc8JnkXdOEGbYwSUcaKrd8pQe4iAOPNSd254aKjMlk
- Ojhg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773702748; x=1774307548;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773703228; x=1774308028; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l8Ibq64nwCu6z73FszhoA/0pJMUfY9Lti1VEYYHLDng=;
- b=RdV5nXY8IxnR9H0DnNzi2Mzr2ymNgKVL/Ki+dPjXzRhxSMbAtBZeoOjzCFto678aeP
- WJXUoFNAyKS6XCf+M0+EDnuihzK2Q8MRbnoRnMjbBQoHGWWdU/Fp1mZizKuwXb6JBy/P
- FhAbOpZWoLt7h4gK3/F+cTwy94HvRXZ69IBv7uYC9M3rw18C7YBXqlyobWNc7kYXliPh
- p/0IbWyyvXixoTkvdWPAyGrZu0ZWmJgLBO4+dODBfpN58HvHzsp/C/+80hl/UxKRUwLe
- Pj5N4X7CawbZmBQnI4sPq+xiXIxYhsBBTWcxyOmqsqVpmB7F4ynogoCY4Fj6tnGf2ad4
- cZDQ==
-X-Gm-Message-State: AOJu0YwXsz/VBnDqmRx6PlkAe7oJNKDdNZlgQg11rw4knkRuJl+nNmSJ
- dg2arf1n8xGz1IUANG9gZFTgPtNz34QFfQb8dH0laxceO9BMqSt0fEMChfOwF3YRiUh7A9rb+A5
- 9IAiLPiA=
-X-Gm-Gg: ATEYQzwR9NIko8TxQg3Y31oCNzFT82wbXdc4SciMAttMnuaxK4kPxyOV3UN9me5v+/X
- w06YsdlxpEK8Vh5TkcZoZY175m0gYtEOw/FZpmNlnpYDQUXDXgBFWP3hGqixEjPNztanMPBj3G6
- 5gTwfWmUJWNRvXRzIPYzrKRPBCCL8opOkG02wgQsT/4ZhdB5w2hwmU6jM0k/cnkH82SQnx8Tbqn
- QcRPoriZNszrgq7Gd+3ekzKd/ZYEnpRl98/c9TMKOAfFOr3/OyqnMH57LX19yCW3dPX3IG+5NlL
- lKWYnvCm7/Hi3h/MeofCcUigpuUYC2vrZRKP0xrafvxQi7NeqFuTKjgjaiLp2YzVcYM/fNjVZr7
- Ns09j4IBGz0VGhyXHJMd1chwTnS4EEzncGNDr74+L+tszClHKYmUJecbUSOZCDczS2SVu9d3Xsu
- CErHtIRkOrOxGNrUgENFq96eOohta6tMXVk99KjFOV8IMtNkTTQjp8XRGU/qHkacNopqMZ
-X-Received: by 2002:a17:90b:3a45:b0:35b:96bb:47ba with SMTP id
- 98e67ed59e1d1-35b96bb498amr6057791a91.26.1773702747492; 
- Mon, 16 Mar 2026 16:12:27 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35b93d07292sm2749756a91.0.2026.03.16.16.12.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 16:12:27 -0700 (PDT)
-Message-ID: <c803bdaa-3473-41af-b2b1-4a41359956ff@linaro.org>
-Date: Mon, 16 Mar 2026 16:12:26 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] contrib/plugins/uftrace.c: fix depth for exit events
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Alexandre Iooss <erdnaxe@crans.org>, Mahmoud Mandour
- <ma.mandourr@gmail.com>, Honggyu Kim <honggyu.kp@gmail.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260313063441.2048882-1-pierrick.bouvier@linaro.org>
+ bh=cl6zc1RuyhUawW2SgjFV9v/Iau5QGc0h4lMl15PruTA=;
+ b=m967S3sec8sFLlypGQs8EM252tZEIIpa4cscu5dDanhpGUf91KHK4BzdicSl/ziWb2
+ n8R/QUhvZMttCZCUTiEo20yrxxIVbWAKwG94rrULpnrnmhKSMlCDaG8ieGvpQy/sLfTu
+ Aa+L/U89OGxqf0bchyvvDur8VK/L2F49EWOBYCLlHHpnIJPnYuqrnSu/+risxHRDzoaS
+ 20XtTMEhCUqMMyAllauCCrmeEsTgaB1fWSMSjSjZ0QP5YfwQqQda9a9N7xqsjLbB7uiP
+ fmVhvn4i4CwNYGEJVvD2di5EmltXKHHSrRzl7fV35874nNVYuofJP0xztuqll0U471aq
+ /s6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773703228; x=1774308028;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cl6zc1RuyhUawW2SgjFV9v/Iau5QGc0h4lMl15PruTA=;
+ b=rjA+Gs7BJ+qA0n+A9sfOnS2H0g2m0t1qd40fsxlugkX4hCetLbXvmL7Z0Sh8YtLXfm
+ HcCEJqZyeCOgX3odxpqW9JvfDuAHBnJmh03WYzLgUugzXMB+z7AcquyNaqxCV1H8W5C7
+ nXWx2CzaDkI4U5OvUet4hfMhh7UyIF1X7kGvWMM9qCFLMjU7t5xpdwjzswAnBTgAWgI/
+ goNY/UjJfJ/68Mx21jPWxPpl2dZheC3Durz0z9MImfLq0+aH7duohBSS9bLmcgq1s53m
+ BJ0Z3rCxz1B0CdU/BcHSVUxcALBtKcePOFx2d7qeeSJcKBl+8tjki4CgzuQja/8XrIuo
+ gNtg==
+X-Gm-Message-State: AOJu0YzixTZaRJLIoDaUPcPenBrRewcZXYluQQEq3xknbCGdMHsRxqli
+ mOvmM8YLe29EspvOAnOzStid8QcSiwsiTBsf0EyZSl1tZJpDXc6zdLqpkoYGzId9q4peNuF0AGZ
+ IaJIxQUs=
+X-Gm-Gg: ATEYQzzjcPZzpDGnLYTNmcFqiXfM/RbwRlWvQpk1eazTcDZclHadlcxyFGztiTSiuHh
+ C4n1EAefI0QWzhNh+8dfgdEnUe/ch7ld5dKKGeXtq7XfjjvrNArX7BqKbhELoo5+mI07fC2vPKn
+ OU+2EeP+zsdJQhuEzQJTzGgguPiykAshNf3rVSgTbbrbQUizQ5CQgCDHOsigeWzMi0I5Rfp085K
+ d/p163mkTJ0pgNfhHz39lAOE8M35lv5L0VZV35CdTy8mWYJbbLnj3ZaFlITp7fCigI+UvzPHvIE
+ akJqrIdd2hbY1pG8dJjx0XuPJtIhzOrsFd+QzUAGYwZED1n7+3tQpQVTB7Ci0K7C5KQ3Do0PVmn
+ 6xPC6Q6NaJfvu6ZmuDNRAMC6+5mpHvktFyLCvqvwns5ipk4VUgQdvlBy5VeHcpNAipIFYlwI+Ww
+ 55qo/iz6cU1V4uE0Ig1eOGtAsU4CBRHHSOdA45b8m9B64fFcIMxv5FUrxLjTbl+eQwujswmLFXM
+ se1Wthpy8PxzCY=
+X-Received: by 2002:a17:902:ea09:b0:2b0:4ec8:fb92 with SMTP id
+ d9443c01a7336-2b04ec9004emr78715035ad.39.1773703227728; 
+ Mon, 16 Mar 2026 16:20:27 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2aece7ee1d8sm125247995ad.55.2026.03.16.16.20.27
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Mar 2026 16:20:27 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260313063441.2048882-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+To: qemu-devel@nongnu.org, peter.maydell@linaro.org,
+ richard.henderson@linaro.org, pbonzini@redhat.com, stefanha@redhat.com
+Cc: pierrick.bouvier@linaro.org
+Subject: [PULL 1/1] contrib/plugins/uftrace.c: fix depth for exit events
+Date: Mon, 16 Mar 2026 16:20:16 -0700
+Message-ID: <20260316232016.455394-2-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260316232016.455394-1-pierrick.bouvier@linaro.org>
+References: <20260316232016.455394-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -140,20 +102,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/12/26 11:34 PM, Pierrick Bouvier wrote:
-> Uftrace plugin was recording wrong depth for exit events, resulting in
-> incoherent traces, especially for partial ones.
-> 
-> Thanks to Honggyu Kim, one of the original author of uftrace, who
-> spotted the issue.
-> https://github.com/namhyung/uftrace/pull/2031#issuecomment-4051762627
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   contrib/plugins/uftrace.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
+Uftrace plugin was recording wrong depth for exit events, resulting in
+incoherent traces, especially for partial ones.
 
-Auto review to send this for hard freeze.
+Thanks to Honggyu Kim, one of the original author of uftrace, who
+spotted the issue.
+https://github.com/namhyung/uftrace/pull/2031#issuecomment-4051762627
+
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Link: https://lore.kernel.org/qemu-devel/20260313063441.2048882-1-pierrick.bouvier@linaro.org
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ contrib/plugins/uftrace.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/contrib/plugins/uftrace.c b/contrib/plugins/uftrace.c
+index e3c65a1c930..f974090e23e 100644
+--- a/contrib/plugins/uftrace.c
++++ b/contrib/plugins/uftrace.c
+@@ -817,7 +817,8 @@ static void track_callstack(unsigned int cpu_index, void *udata)
+     if (fp == caller.frame_pointer) {
+         /* return */
+         CallstackEntry e = callstack_pop(cs);
+-        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs));
++        /* uftrace convention is to use same depth as entry */
++        trace_exit_function(t, timestamp, e.pc, callstack_depth(cs) + 1);
+         return;
+     }
+ 
+-- 
+2.47.3
+
 
