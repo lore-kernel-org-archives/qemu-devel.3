@@ -4,70 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB140F4644A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:44:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C2AA4F46445
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:44:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25Ng-0006B7-Hc; Mon, 16 Mar 2026 06:41:04 -0400
+	id 1w25PS-0001vm-Pa; Mon, 16 Mar 2026 06:42:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25Nc-0006AL-Bi
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:41:00 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25Nb-0003PK-09
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:41:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773657658;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=l0YG7IMsFrTBvRsWwNyhx32ATgEM7ENGPd8cRv9PZXE=;
- b=BAc/TkgqGV1hGPSpqEwBbxdab6LswcLQB1JrDMj2UZo+NnHXYdxsG0i/Gtf19BwrYU8xC/
- nA5Y8IqQYl8G9nqswWifTOp3nZ8EWwYQHB1TYV65VmcZ/kfFzXGcEVpFuplb+k28n09GLW
- I0A8sSg2Q9LNLkvB4HSIZiU2i5gSfYI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-465-_ljphtOEMay3NAhH1mC13Q-1; Mon,
- 16 Mar 2026 06:40:55 -0400
-X-MC-Unique: _ljphtOEMay3NAhH1mC13Q-1
-X-Mimecast-MFC-AGG-ID: _ljphtOEMay3NAhH1mC13Q_1773657654
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1A9EB19560B1; Mon, 16 Mar 2026 10:40:54 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.33.101])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0919519560AB; Mon, 16 Mar 2026 10:40:51 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 04/14] hw/riscv: microchip_pfsoc: Don't call qdev_get_machine
- in soc init
-Date: Mon, 16 Mar 2026 11:40:29 +0100
-Message-ID: <20260316104039.195960-5-thuth@redhat.com>
-In-Reply-To: <20260316104039.195960-1-thuth@redhat.com>
-References: <20260316104039.195960-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w25PO-0001aS-IP
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:50 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w25PM-0003gV-QY
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:50 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-4853e1ce427so50332695e9.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773657767; x=1774262567; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=E8/4CMtNXRZ2X1/ftYSmtEFaBPOReSBwxJEUSTFqB8Q=;
+ b=arP1WSN996OIJDPiWp2dZoZX6E+PHlHtczd5BLYB+E/3U+B1TDTpmhg/0jWwDT8yWI
+ 4PAwZMPUsI6K+LHcyjXWWUL89ozRJ88vheMOatANtq7KMPq+7HMRBpQrKDYHQhfEhP8x
+ ClFUWGl6FiZiLtHPwTyCg9wZ4ldGgHIBSCReentdeuqjE81Gm3ecyy764uQkNNeOqsNQ
+ bwpJlb6ngHJPmokn8O9cxX9kSxeV5nL6Z06mhudBy5zjqIPQ2YfrqnZUQorJEmaFnLxB
+ +p0kN0eWLNleBZkyFXNYGhwCCcGPEDI6GTG8h0FzSQBCOvIjq03L50gPahfbF7RhNoZp
+ KhRg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773657767; x=1774262567;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=E8/4CMtNXRZ2X1/ftYSmtEFaBPOReSBwxJEUSTFqB8Q=;
+ b=EB0oMHxvY2jqmVPylYr4bpXRP2dRe8NICy3c60MdSN72NX4ivaxiUDF/EslyFFlgWb
+ Q112ADub7+Jr/ic8f4N9N5LNgYjlBsBwg79qGqCOpAbibfAj5z903BCm/cztD1b+zfs/
+ 3r9UoJgf/MZGq5RYmPooDV9a/KdtAp2dT3lz90lMjX4oT4h/7aIqRla54hZH3xmD6SSS
+ ILppSCHpTMvhiJ20vZdGjWzkVkyWU2LOwK3wC7SR29O9UXpjJE5p+EKoo7tKEcniSxYf
+ XPVNgzLz7JyqkZvT0fLbQDm2yvSqWQDFjs2OAZfONt58vQzZq8c6ZxyykRa0QmQ08f2f
+ fngw==
+X-Gm-Message-State: AOJu0YyG1Tr/eJD5wgXDN5oqOf3OuoGYiMcZ7FR2qQbuBPtK9e2YB06R
+ 5ayO8nOElBk8/ifHgp4HOz3No6vRDTXRYLUUkhLIM+AHjwo6sUEGNBLvi7lQL7JQ8jpdsQCPrzS
+ YgBxP
+X-Gm-Gg: ATEYQzxpQH9boC/Zapm7QrmPfGWV1V8dXwG8/VEZAllnSpxSLbzYg9ZCl068eB4MFeI
+ eBV385yt2t3AHiZuf1UnQr7ereN64F+LIThHjEkRU05bH/G6tCS3TroVCxZTkCnz1TsZfvAF8c3
+ OvqeP+I03rrMgnia4jjPg3oIwcz6J6z4QNnG7VL5rZyPQFVNrOCKW7toUawZz/47X9rQZlYvoz7
+ V8falp3v43HsrRcC7HbPe7ro6uPYUyxj2ul3YOrCgE+LT1mVGyIKbUhvbuqToY7ACHLcfUIGNks
+ syrRJjjKN9OC5pUCqrc05g1ImMlYenD2iOvlmAI6hzYv6he8GAaTF4m4wOeLJeYAWne8FFc0fAe
+ 4fl+VK0Uw/jbzeCfAKJR6Z9H0lJkgUQxm/15yAUmsYswP7hN9uOCN5cv7/R/Ooajr21uuiPIQu7
+ G2CTxDEXsdHu8DDghBQjWHgpnCfXp/P3eZAtNR7iREeRfCxqQr5U6msv6kFSCIlmEQi01dGrB9i
+ +43EcdMI8Q=
+X-Received: by 2002:a05:600c:8208:b0:485:34b3:8589 with SMTP id
+ 5b1f17b1804b1-4855a8d7004mr189315425e9.31.1773657767315; 
+ Mon, 16 Mar 2026 03:42:47 -0700 (PDT)
+Received: from lanath.. ([81.2.115.145]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48557a74266sm85519135e9.17.2026.03.16.03.42.46
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Mar 2026 03:42:46 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 13/17] MAINTAINERS: Remove Chris Browy
+Date: Mon, 16 Mar 2026 10:42:26 +0000
+Message-ID: <20260316104230.836962-14-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260316104230.836962-1-peter.maydell@linaro.org>
+References: <20260316104230.836962-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -83,64 +99,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+Chris Browy's listed email address is undeliverable:
 
-Calling qdev_get_machine() in the soc_init function would result in
-the following assert
+The recipient server did not accept our requests to connect; it
+times out on attempts to connect by my sending mail server (gmail):
+  [avery-design.com 99.83.249.127: timed out]
+  [avery-design.com 75.2.78.167: timed out]
 
-    ../hw/core/qdev.c:858: qdev_get_machine: Assertion `dev' failed.
+Remove his name from the file.
 
-when trying to run
-
-    ./qemu-system-riscv64 -S -display none -M virt -device microchip.pfsoc,help
-
-as the machine wasn't created yet. We call qdev_get_machine() to obtain
-the number of CPUs in the machine. So instead of setting the CPU
-num-harts in the init function let's set it in realise where the machine
-will exist.
-
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Tested-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260312043158.4191378-3-alistair.francis@wdc.com>
-[thuth: Fix a complaint from checkpatch.pl with regards to multi-line comment]
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260306120555.2035421-7-peter.maydell@linaro.org
 ---
- hw/riscv/microchip_pfsoc.c | 7 +++++--
- 1 file changed, 5 insertions(+), 2 deletions(-)
+ MAINTAINERS | 1 -
+ 1 file changed, 1 deletion(-)
 
-diff --git a/hw/riscv/microchip_pfsoc.c b/hw/riscv/microchip_pfsoc.c
-index 4ff83e49403..743f31f0057 100644
---- a/hw/riscv/microchip_pfsoc.c
-+++ b/hw/riscv/microchip_pfsoc.c
-@@ -143,7 +143,6 @@ static const MemMapEntry microchip_pfsoc_memmap[] = {
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 06a0bd0383..7a0c71e12c 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -2160,7 +2160,6 @@ F: docs/system/sriov.rst
  
- static void microchip_pfsoc_soc_instance_init(Object *obj)
- {
--    MachineState *ms = MACHINE(qdev_get_machine());
-     MicrochipPFSoCState *s = MICROCHIP_PFSOC(obj);
- 
-     object_initialize_child(obj, "e-cluster", &s->e_cluster, TYPE_CPU_CLUSTER);
-@@ -162,7 +161,10 @@ static void microchip_pfsoc_soc_instance_init(Object *obj)
- 
-     object_initialize_child(OBJECT(&s->u_cluster), "u-cpus", &s->u_cpus,
-                             TYPE_RISCV_HART_ARRAY);
--    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
-+    /*
-+     * Set the `num-harts` property later as the machine is potentially not
-+     * created yet.
-+     */
-     qdev_prop_set_uint32(DEVICE(&s->u_cpus), "hartid-base", 1);
-     qdev_prop_set_string(DEVICE(&s->u_cpus), "cpu-type",
-                          TYPE_RISCV_CPU_SIFIVE_U54);
-@@ -204,6 +206,7 @@ static void microchip_pfsoc_soc_realize(DeviceState *dev, Error **errp)
-     int i;
- 
-     sysbus_realize(SYS_BUS_DEVICE(&s->e_cpus), &error_abort);
-+    qdev_prop_set_uint32(DEVICE(&s->u_cpus), "num-harts", ms->smp.cpus - 1);
-     sysbus_realize(SYS_BUS_DEVICE(&s->u_cpus), &error_abort);
-     /*
-      * The cluster must be realized after the RISC-V hart array container,
+ PCIE DOE
+ M: Huai-Cheng Kuo <hchkuo@avery-design.com.tw>
+-M: Chris Browy <cbrowy@avery-design.com>
+ S: Supported
+ F: include/hw/pci/pcie_doe.h
+ F: hw/pci/pcie_doe.c
 -- 
-2.53.0
+2.43.0
 
 
