@@ -4,123 +4,135 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38943EFCBD2
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:08:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1815BEFCBBB
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 07:09:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2230-0006Iz-SB; Mon, 16 Mar 2026 03:07:31 -0400
+	id 1w224U-0006kb-Pr; Mon, 16 Mar 2026 03:09:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w222v-0006Iq-BU
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:07:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1w224S-0006jW-Gv
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:09:00 -0400
+Received: from mail-japaneastazon11023072.outbound.protection.outlook.com
+ ([52.101.127.72] helo=TYDPR03CU002.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mlureau@redhat.com>)
- id 1w222r-0007OR-5D
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:07:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773644835;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9OtybMyFGIYixpZeQU07B9I2C107D4J5PeYDYzHR+HU=;
- b=TWTwy1CQQu6dUiwCN/UiRuXzjdOtutuFXnkgib3mHnBnnCV/MiHnayL2scYdDXlSq+HMj7
- YsG11U5KwTUwfbedLmCMVbi4eU3sWxgUadASuzRkANHla2/NXkz0ZsG0RJrYw0qvQrwYEL
- mGBUr8h6NsYm5s38YGyiNkEHy4yc/+8=
-Received: from mail-pf1-f199.google.com (mail-pf1-f199.google.com
- [209.85.210.199]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-604-juhUTYSGNjus3I1GnNKSvQ-1; Mon, 16 Mar 2026 03:07:13 -0400
-X-MC-Unique: juhUTYSGNjus3I1GnNKSvQ-1
-X-Mimecast-MFC-AGG-ID: juhUTYSGNjus3I1GnNKSvQ_1773644832
-Received: by mail-pf1-f199.google.com with SMTP id
- d2e1a72fcca58-829fd367abfso2002633b3a.2
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 00:07:12 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773644831; cv=none;
- d=google.com; s=arc-20240605;
- b=ZnNNnOflBDwTdR1IFiCff+gRoat3Caw0//hVcfuoeprAq1IhpyiXAVCoX69vu3ghoX
- XFoPI1wX1i2yUuVM9EiOzcM8MwcMtIvucKFXOcWMNtA5+XCsCl4CfpVArP6iChtziDqW
- 5yBJO03xXGFy5c5akQBUsY7iqLQInnwrRkmXTaDC2aP/GhaA1MKOQ3g8MTY+tP6vtXxj
- GKrLG4bR0ptWrLbunElYHCiKVnjpzCNaHlgJ5YVLxeQbDca5YfH+g45tmoW3ovJcnDRW
- if4+MtW8DDYtBeRRQ1ka8rF2I/QxGRDWbfKdNzyhia10tUnQ/hVcUvoMRGczMxrVCA7h
- UWeQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=9OtybMyFGIYixpZeQU07B9I2C107D4J5PeYDYzHR+HU=;
- fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
- b=JfbNaurLUwqihvOs0x1AMfNU3AZZnf2dbEKLtC2p4OYm7NWNWjtAdMPnM/4A1gtZrM
- UWSwSAd4TCsKQKmDBH28p2Scp89zgiJxYn/mbfDbGthzZxT+tUhWqMgWsRctERpwNXZx
- JilIyBJIzaX2RQECXTHBPz9k4J45uxhxlHqlhBHoRzP0RYFHxfg338gBISg4wmKpoZc7
- eFWFKh2CKqH1ldsR6Otl9smEY6fLxjNXRZ1Frf7DLspqpKeAHzKoB6NtNVDOXC0zaDHT
- UTeAIxKqoIOZnad3xldWLbSv7nwabefIR/05vq48WFgtlHc74rko0e6+8bRYglopeDvl
- IFwA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773644831; x=1774249631; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9OtybMyFGIYixpZeQU07B9I2C107D4J5PeYDYzHR+HU=;
- b=o5yK1M7PvK6qfkAfpMJuf4sBARDxxyiMnl6w4c7mWUIPOGHk1XnrX5hutab5t6XhV3
- yWC7ikf6TegAGaNmVxSSCB1/L4gnXcPVwOfh0SOdbD/g4pVwyRo7Q7kHO88PYs9PUXDN
- ReQnI4SPMM76wRslVTeTDiFVFOIoJJA4e5aWEv3rbb7QffmlDNd04wW1U0VAR++OV+f5
- QV8OEtZaUCkI8NGEk5+xBiQfDwo+twh9lXl9T85HcidMPvxEj0sg+vQWWZq7nm7P67Vk
- /7cOfgaIFrV/9uIhCsAZIS3P7fMMZ9moaV19qL+esw7prRByt2aPiTZiYBXgpabsbngC
- nbaA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773644831; x=1774249631;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=9OtybMyFGIYixpZeQU07B9I2C107D4J5PeYDYzHR+HU=;
- b=kMbxJpY/PufVAV6YrKfyXe3wyyBRgLKUV9G5Zailgvdz5SlTImqq5fnaAD0WO5JB+g
- Kk3Bv6NxljX0R2qHB03mW6koaFscfonM2NSvS7zgqGvzPowIzgNrfn4vYP7gnujLQTPR
- frhOxuNo06VkATptb7qFL5e79woHh8C5pBymX9ySleWRQ9Hz57Pb3l+ACDSHtQoSW/v1
- TId50RsEBVcNAFQOzc1nd7xGN83wPoOHXyE2YTtaIV34lQAOVXMfNbON6VeLGTM2Jnel
- D+Sz8o33QQiJoijU4Rwi2sM6vRp4i54rzw7HqB9z5VY6hjfOi9slPUZ7ar4/1DFPb+DB
- einA==
-X-Gm-Message-State: AOJu0Yy1RlYmW0lKLPqADIAwYplMDkN64HNcTjk3phxpCQ+EhrZvZOBq
- C+ixHHHlSnJCx4ot+rhN0FGBal0CeNYgcR2FYQJoaAK4mp3lY0eZZ/iz3nNDT/DEn/KpkLtS/xZ
- qdlF/D6m0GLoqpo+hrUg8BCH3+B6KLELZv51PZIr+gu3iYcn2Ikit1ov6svroj2jPMmA0L8tXtm
- YGDbXHi2lywSTsW+bP+yzpuMCVEcykjSyFTkGeaQpS4Q==
-X-Gm-Gg: ATEYQzwXmC6d30FSq1obWFKZ4lWHm0jwlE9PVhRtCbr8a3DsRPxE1rq2xZpxp8Xw53y
- lERQllB8Fl3JpB+EhDeJ+Cn2NSNcenio1gD73fKMKmvgRMQ4AnC/UoGux1J2l9I2IFTSAIu8Qwe
- LzCypQ/J0BHjlocugFzmdMMkwfSxD6L8iCcJy81RPT4p6wQuOuJnP/SgmvP0nnaE/ROQXZo4WcR
- kjlPh8f+OrrS+DNjkLVy1AFZocM7ArkVAWFioKpaXR2QhRM64ROCOMKrtyXMLhokpFmWdpRZMuU
- fnKLFVZ/AUTFuHtV9XWRrxg=
-X-Received: by 2002:a05:6a00:2986:b0:827:4343:4c1 with SMTP id
- d2e1a72fcca58-82a19875917mr10937927b3a.29.1773644831257; 
- Mon, 16 Mar 2026 00:07:11 -0700 (PDT)
-X-Received: by 2002:a05:6a00:2986:b0:827:4343:4c1 with SMTP id
- d2e1a72fcca58-82a19875917mr10937895b3a.29.1773644830798; Mon, 16 Mar 2026
- 00:07:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20260314075500.215628-1-pbonzini@redhat.com>
-In-Reply-To: <20260314075500.215628-1-pbonzini@redhat.com>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
-Date: Mon, 16 Mar 2026 11:06:59 +0400
-X-Gm-Features: AaiRm50yrVj7l-W7HqQfWJhZB8i8Wtvk142yKSeikuU84SPE1z-lm23LrnWknw8
-Message-ID: <CAMxuvaxa3Gc7hePpo9k62gUqcCTSUtx-6kDZm-B3FRAMbzzU8A@mail.gmail.com>
-Subject: Re: [PATCH v2] rust: fix build when --disable-rust and meson < 1.9
-To: Paolo Bonzini <pbonzini@redhat.com>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
+ (Exim 4.90_1) (envelope-from <jamin_lin@aspeedtech.com>)
+ id 1w224Q-0007UK-0u
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 03:09:00 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=J4+WP/hcXY6hcBFK4M75L3wHVjKLRRrq4ULIkNfahLIKqQCMg2XkScSg9W9a6ZmOu3O1ttkc6Jccbya6Ek0SLf45zMAJkuIcsHsuTJ25HSeODY0hOge3MmodlpJZzCxXN/2IJJ2MPA2bxa5y2jE9i85hcvzSv1vPF2FlFy2fqT9pLEWKPcW0WPr2n3q3lmsVrVsm8Pm3Sv9lsDQEoNkjK+TyzxGS2g+sPxq1Vy9P2hmNmma0ZtMbUxS4At6JtDDL8h2asF4hV3YmrV16vPD5KoxwP9hXH57PNpQQPXVFRw1s605X1W/Wci/f1AcQNq36bWTzirEEp02zH30o1y1bvA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=zRg0M1oLHjgNNHjJ+MpvsQ+OBCvlsNkUfbKEkoUVCzU=;
+ b=H1IKHD/b4+CNsX0mkb8OQTbSbvng4Z2pSJ+AdgBag/zGoeXrP8GC78/b3tGVIeggej3wAuQ+hcKIUoOLV3yzgdpla0pRdm9xtGEABsC8xSypaV1eSsz74TKrpb+y+hHADuOvAVJfmVTIz54FeKXuzvlG/xzQ663vvWKAnU9oxTf8D3+px12EB9q+9r8KSD+hJzTp6g9Cj4aWt8WKg4Ij620QXENuzs2VEVLbAfxlSNAEDo/J/McniPFGhxhkSb6uSPqxqLjyaswy8TtO01tF1lDgl4CR/fAr5/5ipFLf5JN2WftsSuBsbh08EqTAo2zEqW3ScvoSQuQ+l4Iq44VmIA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=aspeedtech.com; dmarc=pass action=none
+ header.from=aspeedtech.com; dkim=pass header.d=aspeedtech.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=aspeedtech.com;
+ s=selector1;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=zRg0M1oLHjgNNHjJ+MpvsQ+OBCvlsNkUfbKEkoUVCzU=;
+ b=D7PoWD3eX8e2wWOgAf3X5vC1ylEFgCv8gXdgbYMNqswUkKLq9mEAJPNPyfcL+M934K4soH0bzzuSD++jq8UQYBXKMXlRhsreFyzmoAnhWW2D68WRFhEg7u46B7Fi3n/huxsd+BZmjunSVeQs95TzcTgzDID/ppfPuDFn/5BSnKFrVi1hVCaPmpwIqFgqh+eYHYNZn2kJNX5Va8EOUHl5PN91uow4WQvtw3ISKi57GTX5KXJJ61yegu63kdyOmsCi6Z8Yv3K7roT8zyJe/3SMeJhBZW9r9ATFOV0opGqcBbE+A7ui0QzQG4JeIJdRGAAXP6ImYCYUV0WS8o7UBCc2/A==
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com (2603:1096:405:383::19)
+ by TYZPR06MB6859.apcprd06.prod.outlook.com (2603:1096:405:1c::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9700.22; Mon, 16 Mar
+ 2026 07:03:49 +0000
+Received: from TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3]) by TYPPR06MB8206.apcprd06.prod.outlook.com
+ ([fe80::e659:1ead:77cb:f6d3%3]) with mapi id 15.20.9700.022; Mon, 16 Mar 2026
+ 07:03:48 +0000
+From: Jamin Lin <jamin_lin@aspeedtech.com>
+To: =?iso-8859-1?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>, Thomas Huth
+ <thuth@redhat.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>, Richard
+ Henderson <richard.henderson@linaro.org>,
+ =?iso-8859-1?Q?C=E9dric_Le_Goater?=
+ <clg@redhat.com>, "open list:All patches CC here" <qemu-devel@nongnu.org>
+CC: Jamin Lin <jamin_lin@aspeedtech.com>, Troy Lee <troy_lee@aspeedtech.com>, 
+ Kane Chen <kane_chen@aspeedtech.com>
+Subject: [PATCH v1] MAINTAINERS: Add Kane Chen as reviewer for Aspeed machines
+Thread-Topic: [PATCH v1] MAINTAINERS: Add Kane Chen as reviewer for Aspeed
+ machines
+Thread-Index: AQHctRMJQ+qkQ9z86EWYNRzFWd2IXg==
+Date: Mon, 16 Mar 2026 07:03:48 +0000
+Message-ID: <20260316070347.3079299-1-jamin_lin@aspeedtech.com>
+Accept-Language: zh-TW, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=aspeedtech.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: TYPPR06MB8206:EE_|TYZPR06MB6859:EE_
+x-ms-office365-filtering-correlation-id: ece178e6-f7a1-46f3-c8c5-08de832a2c47
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|1800799024|376014|18002099003|56012099003|38070700021; 
+x-microsoft-antispam-message-info: 4WxOWXAQDiyYBYFzoUolEq/a+IvjqZAH3uXx9eLsYFocD19WfSt4e0Qj0/DUoj4eCQoq9CMCLc8oWkk/LAPLXK0Wq7vuThgebmfasbL3nlRywrVY16dUe+EQ1A51BaTXpl0Mnx3RBf57vvKFisOz7UWm9Muwuht1+3cbG6uGtQbKJpvQxFx9rJOdYNCUDnuBWfBcUXyAOJWkuLKLn+6Pgu//gMvzGcrXyuj5l2WcdcHIknmhB5AZOLPmC7NLHCQdoOdQSbNmPLiWfqP5G2xi8W8Q4M3Vcycs1MkKfTbiYKQWE0TMujIHIFwhEB35qyehjB4ohp+nN0ET9DQLi+wGv665zRIkVteYxA11UOsOQnRuJr9lDKHyzaJTAIqQBBEuPRLgp43kU217Hhwfym5kQ7HM75FVdE6P/ULyEOgMIgYifkItYoD393saHk5TS5QfcWsR15M+oBHb6ResTs46/e+/+ffKHAVlXK+eL4T4Y08TZvLUSkD5zVQIT4pZvKQRk/o4h+PLUDWhEpnx8HiG7sprv8jaExyiZTcbYkmUKp+Z991hM2AaQxxruNtQs41iR75Tj0NROuW3n27BDdubYGX7B7lXTUIexhfGJjmrMN0DH4BOBfeaEvBj0mkArsUGm2bWuUf3nzddFEUpiDLPgXD7DU9k+6+xxDGJuymkIWszPjFaXTSJ3AVbeM8G9eQlwbrEmjxqQbiELizkBCFLMLILGI+WyqZFQcAMtkoyiQJIRBTIriw+en9OSJzXSrcpJ1RZS01EvovI9wujiVVlInUjlqJ6Qh00LP6XoYKGp0s=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:TYPPR06MB8206.apcprd06.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(1800799024)(376014)(18002099003)(56012099003)(38070700021);
+ DIR:OUT; SFP:1102; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?+wNmRKkNb86ag1pz0QQW16fJPOVm3QiJEgxrF8ksqM6VxzdQMm0EKuFpPf?=
+ =?iso-8859-1?Q?zlkuRHVp5hV4swPl4zMFaBDkMCCHC7mcjVIo5/RRtCQzNpJVCVqDyWS/mz?=
+ =?iso-8859-1?Q?UMNGetfAxCIfvEZXn8Vpy8gxJ8OJCGiCjksjepAxp+8iGvCkRQTv6f3qfV?=
+ =?iso-8859-1?Q?FKpAQeN0buxFz9R1jG0deAruyeDK3t6Lh/4lWkOn8/pscmXVKxnrCvOck/?=
+ =?iso-8859-1?Q?qcn0q4C9k7dKyYgK7qnI+V8R949NJ6BlPncvhghb5cPJzC+hDAlEghUpnj?=
+ =?iso-8859-1?Q?debYmucNW9DrYwKn4p+W50Mlwy4v1hRawHrtXTGpXU1pQIfcS7Y03WcwVf?=
+ =?iso-8859-1?Q?exPxECaxQdBFhYKi2taUUrSkJ0MW9bvpCTYXaoPo1Uq4cvFRljoXXjC3Ot?=
+ =?iso-8859-1?Q?gJeAcWPuBis6V8RKKxGHb7GYy2g0WbtwL4kEzvWxlZUt+oU26truFjS4YD?=
+ =?iso-8859-1?Q?ihg/8zIud9EXKqIxx7AJvCXJYsnevAViRnuxix0k72YzESamxNRqCaTJKW?=
+ =?iso-8859-1?Q?azvioRq9pHaLpdH/WOMXji4KDza0idu6IihdTKU/al+99LC/0pc4WiiGXe?=
+ =?iso-8859-1?Q?FyrOB+cMTu4UZKFpiu+o/hBM0iwOIq+0x3CaUckCSNqeOb0ePOKKpYDSFi?=
+ =?iso-8859-1?Q?U8CDZjfAoqIP9sEqC0W3cfxBOS/LW4gNe6ZEleMd222uUwVTcrkgVIyS1X?=
+ =?iso-8859-1?Q?20nR88jcAa24N7IKfk69p2DwOq81WcGq37FDi6xEtG3x+8VC87/1gFX3Y9?=
+ =?iso-8859-1?Q?Md4RuIt+oB6bfYBpAxu3J/Kt1Qszus+pENKQu+OFinUnX2GMYR8MjpRYTu?=
+ =?iso-8859-1?Q?ZKyxBXhV25RikLAJ10mKcyThlBm23dmBIuDWIxC7TNPs9TG8rJ/cpdYni3?=
+ =?iso-8859-1?Q?BHdAkUPoVAvUUTmZemo8cycKic6UAWnBkWZFZD0H2VZn5/i1/4Vgj5phuG?=
+ =?iso-8859-1?Q?vPGKJFDJQmO/4OyL/pneoycP4P4WlaeIYCS6UfbvqM+81+svpB/Tf5yQM7?=
+ =?iso-8859-1?Q?eUjz/UCcWmNod4DskCi7TrlkMaWOarqkqVbvTyYnKn/OA07VMgr/ihfWn5?=
+ =?iso-8859-1?Q?idfIG51MUyanavo9wIMJItZJa5Cm7gJLN0LtnTOyWJN6y2jEyV2SIYt/cx?=
+ =?iso-8859-1?Q?GVaANXbKKfnsx447zjknRH8IiZ5Cs5CuH6tyHYQjtyaA0PpU3r6umE6WoA?=
+ =?iso-8859-1?Q?OcJ/dzg6WgPM6O6UO3gQ+T4IYQgBi4eKHe4RkTNk0yXOP9+TfoPsj/wsYP?=
+ =?iso-8859-1?Q?wvO2WSxPmLJIIcT9ysiJbt74npbNb2Akh3e+HsSxTYpzC/dIwM41nn2ge+?=
+ =?iso-8859-1?Q?s4rVlvFPjwCoM8nqoNrzB8HGOrxKcZRnJuWkrFqt9WvEC1hlr5DU2ACD0l?=
+ =?iso-8859-1?Q?7hd9Ts+Bq+R92WaZ/NGUTyFzCCrE8ql2He0ugoI4lkXIMWMlWLYf1T6dcg?=
+ =?iso-8859-1?Q?AvtNDWMAtfxL25JBUzBwNWRtWmnEaTcco4ESxM7T1J9RIQqj+vJh6vvb+T?=
+ =?iso-8859-1?Q?HA5VlqSMlh5gOcRrCeNlCezEs7V7eoeTH9TAkl9RW4XIJpq697y5gUczcz?=
+ =?iso-8859-1?Q?/OxZi3LkSnz3U6/yVlyZMVJtuez04odxhh1nc2Z5A0nLQg4Xm6mDELi00L?=
+ =?iso-8859-1?Q?heJirGBCRt2lI8s/czuUtjXOXimAsCYLtRo01P7ta25ncKOP+1fzvUl8r1?=
+ =?iso-8859-1?Q?ZB6/vKjeZ4uEEfaKC37ffgFOGzayiiW+nOMYa2t/VOkTiQhWtSJ5Y0WA2s?=
+ =?iso-8859-1?Q?hgqOZNjqpZSLPNvJHMRFTs6H/MQwmeNCZz7aKjD1DUZW0wJavhy7p0INTq?=
+ =?iso-8859-1?Q?oottv7Ye5A=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=mlureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+MIME-Version: 1.0
+X-OriginatorOrg: aspeedtech.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: TYPPR06MB8206.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: ece178e6-f7a1-46f3-c8c5-08de832a2c47
+X-MS-Exchange-CrossTenant-originalarrivaltime: 16 Mar 2026 07:03:48.7795 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43d4aa98-e35b-4575-8939-080e90d5a249
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: XvJgB/a9+wNJysSX8zXIOVGtZIwPfK2oWbeu4tAHZLtu7jgZYS/9Zvjx5wsMeKgI0NWNEq5Bx6zeJ2iF/PzuM86BkesPF3vAPElDiwcqMB0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: TYZPR06MB6859
+Received-SPF: pass client-ip=52.101.127.72;
+ envelope-from=jamin_lin@aspeedtech.com;
+ helo=TYDPR03CU002.outbound.protection.outlook.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H2=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,62 +148,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
-
-On Sat, Mar 14, 2026 at 11:55=E2=80=AFAM Paolo Bonzini <pbonzini@redhat.com=
-> wrote:
->
-> Commit e65030ed50ee moved rust_std and build.rust_std from per-target
-> override_options into the project's default_options, in order to avoid
-> repetition.  However, default_options are validated unconditionally at
-> project initialization, even when Rust is disabled.  This breaks builds
-> with meson < 1.9.0 which does not know about "build.rust_std":
->
->   meson.build:1:0: ERROR: Unknown option: "build.rust_std".
->
-> Make the options conditional on the meson version, since Rust only
-> supports new versions of Meson anyway.
->
-> Fixes: e65030ed50ee ("rust: remove unnecessary repetitive options")
-> Reported-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-> ---
->  meson.build | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/meson.build b/meson.build
-> index 11139f540b0..00f482d3fa6 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -1,7 +1,11 @@
->  project('qemu', ['c'], meson_version: '>=3D1.5.0',
->          default_options: ['warning_level=3D1', 'c_std=3Dgnu11', 'cpp_std=
-=3Dgnu++23', 'b_colorout=3Dauto',
-> -                          'b_staticpic=3Dfalse', 'stdsplit=3Dfalse', 'op=
-timization=3D2', 'b_pie=3Dtrue',
-> -                          'rust_std=3D2021', 'build.rust_std=3D2021'],
-> +                          'b_staticpic=3Dfalse', 'stdsplit=3Dfalse', 'op=
-timization=3D2', 'b_pie=3Dtrue'] +
-> +
-> +                          # build.rust_std breaks with older meson, but =
-Rust does not
-> +                          # support old meson anyway
-> +                          (meson.version().version_compare('>=3D 1.9') ?=
- ['rust_std=3D2021', 'build.rust_std=3D2021'] : ''),
-
-Fix the falsy expression to be [], then
-
-Reviewed-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-
-thanks
-
-> +
->          version: files('VERSION'))
->
->  add_test_setup('quick', exclude_suites: ['slow', 'thorough'], is_default=
-: true,
-> --
-> 2.53.0
->
-
+Signed-off-by: Kane Chen <kane_chen@aspeedtech.com>=0A=
+Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
+---=0A=
+ MAINTAINERS | 1 +=0A=
+ 1 file changed, 1 insertion(+)=0A=
+=0A=
+diff --git a/MAINTAINERS b/MAINTAINERS=0A=
+index 6730cee490..7c2bbbec54 100644=0A=
+--- a/MAINTAINERS=0A=
++++ b/MAINTAINERS=0A=
+@@ -1252,6 +1252,7 @@ M: Peter Maydell <peter.maydell@linaro.org>=0A=
+ R: Steven Lee <steven_lee@aspeedtech.com>=0A=
+ R: Troy Lee <leetroy@gmail.com>=0A=
+ R: Jamin Lin <jamin_lin@aspeedtech.com>=0A=
++R: Kane Chen <kane_chen@aspeedtech.com>=0A=
+ R: Andrew Jeffery <andrew@codeconstruct.com.au>=0A=
+ R: Joel Stanley <joel@jms.id.au>=0A=
+ L: qemu-arm@nongnu.org=0A=
+-- =0A=
+2.43.0=0A=
 
