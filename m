@@ -4,104 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 71655F53D6E
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:07:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0203F53D6F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:24:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2AT9-0003C4-Ux; Mon, 16 Mar 2026 12:07:04 -0400
+	id 1w2AjV-0006LD-Jo; Mon, 16 Mar 2026 12:23:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2AT0-0003AF-Uv
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:06:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2ASq-0001jo-Jv
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:06:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773677200;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Awtpk1QgiNykjBrqze3l6ppEYY2FlI6uf//qFwjg7WQ=;
- b=AFmQzuDJK9fXKrCiMtA484jgAOaAO+XWI7wgBvBDVX+FuOQTwbDlMaEqYn6pVA1UrfcP23
- hRveqRguFll9S52Q+Bzk+wkwu9NqsYkNJArrJduxAJ8HFEU6Y0PJPz1tdn6KunIgvB+G76
- /sQc6cDbwMRTO2g+J7/kplLXdSfIQao=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-55-CzqS2FPKNqWO9GfnduMDvg-1; Mon, 16 Mar 2026 12:06:39 -0400
-X-MC-Unique: CzqS2FPKNqWO9GfnduMDvg-1
-X-Mimecast-MFC-AGG-ID: CzqS2FPKNqWO9GfnduMDvg_1773677199
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5091f12ed3bso372876691cf.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:06:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2AjT-0006Kb-Uz
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:23:55 -0400
+Received: from mail-wm1-x334.google.com ([2a00:1450:4864:20::334])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2AjS-0004FF-AL
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:23:55 -0400
+Received: by mail-wm1-x334.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso54299935e9.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:23:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773677199; x=1774281999; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
- bh=Awtpk1QgiNykjBrqze3l6ppEYY2FlI6uf//qFwjg7WQ=;
- b=IyO1M59782RgO+9lWCsMeilftgpZlERtfS7HD7NIZ+hMVC42kPI2fza/9vhs4VKbGO
- 47PYMlQf90TvKKu0lDa2EmtaZd1j/5HZY9IVUDjsoYoUUx1eKzPJXcfsXE4MioZX9CJI
- lLtLyk32Wdgk8UEVtCFrLYNqfTaC+2m+qhTKi0tl0O4DyTFWv4cDoScItiUQfOwJrhZw
- u/fGBhokPcDb6zAURg7T4UqisNFhN9mbeQtm1CnGpAZfv5q5XXMTCuu6MRy9tp2THvBH
- 8X7J8D0qjH7OpQKkijotT81RYZOAZHDyjClxDk++usx23tSPHwM0z8Ty5VslQqZ2mYN7
- IRww==
+ d=linaro.org; s=google; t=1773678232; x=1774283032; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+pakwbs8OavC8hzHEyQmhubZtlAHXD7me3nOdqARsjk=;
+ b=GSErdulu9XtZ2sNfbTjcU0U9w4HS+/umfMlFV4fa7AhuwIKbub35heE2Dhte+ZPugr
+ faCxZQH+iUWq9OLEI8M5mxFL0j0LlkNGuefoXeVNvcRFp8da8sJbUnFv35+KDShEyU7k
+ uZ7pchEsK4NnF1T/CzKkAPXBJgNYqu5CAg3UjXCc4E50kNQJo9JIGQ+kEnSlX8JpegEn
+ WHt2pEpJGc9ciu54Z7nJNfUYZNUuF24NdrI1EfteQWefpRVvqZd6fG8B+wRRAS5xTvTx
+ 30xJKIlUGxKiSQVFH1VsOeZAx/e6p7l0X3WGiBTD16u5q37DKHDe5FvOHWEHcaV90BRA
+ egOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773677199; x=1774281999;
- h=in-reply-to:content-disposition:mime-version:references:message-id
- :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
- :subject:date:message-id:reply-to;
- bh=Awtpk1QgiNykjBrqze3l6ppEYY2FlI6uf//qFwjg7WQ=;
- b=sPLa/PoBmV6pm88P0FXhH6TtGcCLYfCxHSaUj3Kd7nRtNkxu+iNbrK0H3NeIakDVZw
- pKTalRLowxXq9t3Bm2xGp+OOjoRRfZZ6PxaiHQMFQblvMjmOZPi3dmpH/umGjBUGarxh
- PFdGIWWAeeNSG85UfEdc0gxlZ1zpev6Rsm3abmmT4ekuCDl9SUYfbBUDgYlUwEtzHvhq
- urJpFW75QK7e0Vh7YHjXZ2qoo4yUMCGcXKqwGEERY4Ovlq2dntG56YSj8GoPWSjb4c8Z
- yjvNI9U9abQ2suJJTF/IjIsPY7JO6uc0LyZYjKCf/61sLRdUTBmisDzAEiQ659rLED+D
- ga4A==
-X-Gm-Message-State: AOJu0YynHU9bCDRCrjQe92t7PD2oa+DjF/Og+3qg6yG6SrO1eQh39qnX
- CzvL+NICsLxa5dt0ROX5/OwMsMPIg9nu7zsjogYQJhOz2frZdrm6X6ysAeh0L+HuqsuDWuuJB29
- sjE4q8luoIrav/ESN5VSrkmAPf9kdNctZ5oAJaT+gFAf+PpiqKGXhDGHC
-X-Gm-Gg: ATEYQzx5zW8khHD0jNyP1HI5X3pA2Xzky4g/9/vd1/N0mfVdS0ZFLZlbWLo4w7Go1rq
- 2UW4n8tSn79dHr3HZPikA8Dn9XOfmUDdIy4iGLl7qMufmTZlHTdP6sF0EDq/q7/LScKvoHavRIt
- xOyCnyoxACQJKCxDxcjJOwtRw4HWbtFaTStgNPBmDQqP4QuK2o0UQo2HvEbiHIggz+BS8oYa95r
- 1eJ3bwpCOMYhS4H5Eu9BRdevDBtAO4g+DTLVxz+3aHOIUTvm2J+Z+B40T/YBJj30rO0lZNw0zvW
- tEXbrb+Uuk7LP4m3u9JKElgaTBNuW3EfxjX22eyUKOgrFmbAEOmbpjnZDDXMjln9yzhllplT+Ed
- lnnJPrzb3s9zgbw==
-X-Received: by 2002:ac8:5703:0:b0:509:39b5:a97c with SMTP id
- d75a77b69052e-50957cd9ef5mr175534111cf.27.1773677198737; 
- Mon, 16 Mar 2026 09:06:38 -0700 (PDT)
-X-Received: by 2002:ac8:5703:0:b0:509:39b5:a97c with SMTP id
- d75a77b69052e-50957cd9ef5mr175533371cf.27.1773677198175; 
- Mon, 16 Mar 2026 09:06:38 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89a65cd7f49sm124122036d6.34.2026.03.16.09.06.36
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 09:06:37 -0700 (PDT)
-Date: Mon, 16 Mar 2026 12:06:36 -0400
-From: Peter Xu <peterx@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>,
- Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Thomas Huth <thuth@redhat.com>
-Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
-Message-ID: <abgqjKVFHKxuKupP@x1.local>
-References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
+ d=1e100.net; s=20251104; t=1773678232; x=1774283032;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+pakwbs8OavC8hzHEyQmhubZtlAHXD7me3nOdqARsjk=;
+ b=BVyTje8wv8feJddwM3xNPEGYur+yt5PgRi3cC4zxFr/VyA3m9qY1oLAsgMnxeQus+G
+ iWG/jqPI2pl8fIUFVbzVLIVcEB6u3mfGQTf13nwOQbzBhddNiz8zrY45ghPmj0y7Tk/P
+ Zc2KwuQhL8l5Qi/MG+9Kvz8Rc+FuWOfuo4IZ/0PFfZl+bSp/izenaedFccwsHEGZAwMS
+ 7BnCLhoAbtYQCA3Egj4OwZuxNGb3sn+riT5a9bBVIp7XlmDmJil44m9cjpl2QVL4E+OH
+ 9FLX7UyCsz2P4EA2uIfMXqtnEoZIna3i/m/C19ohD4ysKCUyQ8cIsNS1YdttzsAOI3ut
+ fC7A==
+X-Gm-Message-State: AOJu0Yw3/Rj9Eit7Ml7l65iDHdXNZcui+ZexUsYYqJgyIub5rsm/TUcl
+ cgD2m0hZ31NUN/AtKeSRNak1Rt2of3g+mRon8UmJSg1k2dU6VMQOQ0UPlm0Z1SG26PA=
+X-Gm-Gg: ATEYQzwHUmNOozmzMAOwWyZs5PRuPykmhFqN35P0dyCTdwUGiRoLoPjqHa8dFCf1wGt
+ RxBSPLPuXNUvXhIyGpqIZv2CO0KpdSPLxO1lBiGfWy/FvwaYzNXavf3PJ0F+Y9XvxITLvGTfXwf
+ HBXc1bE6UdtFutt2wDSjPZKPTNFEUh0zDPx13aIptu5Ufimqerz7Wg4jaNVtzXfwmoaxZTHcncJ
+ URfJmqDTSAAcYTgYQDTS58GOJ9c0pH41jMVYOVjCyKmHidVZjLYDXBTeZdi/hK83F4T1oWNMIkB
+ SvORL0BYbwugOomcz9ULiuch+TR8Pq05NetbRkAI36VTJXQBOrnlipyUfmjQ/ZACLkVwTDQDjxE
+ Y9a7ddH1ir6aNVHBHqX6SnoZ/+20ZkXlxgvZXmUCZqs5XvR2UqiiMwModHiwccZClaTSyOKpbf8
+ Ut7ITz4DZs9QU1ycvf9cU3Q5L8+1eJD3xP6eiErWTjertio34H4Nj+V+rFqi+1Gk7qv4wcQujQa
+ y4O
+X-Received: by 2002:a05:600c:3541:b0:485:3c11:de84 with SMTP id
+ 5b1f17b1804b1-4856eadbac7mr3345965e9.14.1773678232274; 
+ Mon, 16 Mar 2026 09:23:52 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4856ea9d7e1sm2834275e9.7.2026.03.16.09.23.51
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Mon, 16 Mar 2026 09:23:51 -0700 (PDT)
+Message-ID: <60fc2590-6c94-45df-a4ad-9d1a1edec504@linaro.org>
+Date: Mon, 16 Mar 2026 17:23:50 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20260316130651.5C8735968DE@zero.eik.bme.hu>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3] vmstate: validate VMStateDescription::fields upon
+ registration
+To: Fabiano Rosas <farosas@suse.de>, Roman Kiryanov <rkir@google.com>,
+ peterx@redhat.com
+Cc: qemu-devel@nongnu.org, whollins@google.com, jansene@google.com,
+ jpcottin@google.com
+References: <20260313233538.1519319-1-rkir@google.com> <87341zsvmc.fsf@suse.de>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <87341zsvmc.fsf@suse.de>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::334;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x334.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -117,97 +104,87 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
-> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
-> current_machine which is not set during init when inspecting the
-> device. This causes the qtest/device-introspect-test to fail since a
+On 16/3/26 15:21, Fabiano Rosas wrote:
 
-Does it has anything to do with aux-ram-share?  I thought it's because the
-qom introspect test will create yet another sun-tcx device, causing double
-registration?
-
-> recent change to use memory_region_init_rom instead of global vmstate.
-> Fix it by removing the init method and move memory region creation in
-> realize.
+> -- >8 --
+>  From 9bd63109e970ff231eb321e627f622910f9977ca Mon Sep 17 00:00:00 2001
+> From: Fabiano Rosas <farosas@suse.de>
+> Date: Mon, 16 Mar 2026 11:16:22 -0300
+> Subject: [PATCH] fixup! vmstate: validate VMStateDescription::fields upon
+>   registration
 > 
-> Fixes: 653c4fa5b0 hw/display/{cg3.tcx}: Do not use memory_region_init_rom_nomigrate
-> Reported by: Thomas Huth <thuth@redhat.com>
-
-Missing "-" in the tag.
-
-I can queue it for rc1 with above fixed, BALATON please help confirm.
-
-PS: Mark, please feel free to comment or if you want to take it.
-
-Thanks,
-
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 > ---
->  hw/display/tcx.c | 24 +++++++++---------------
->  1 file changed, 9 insertions(+), 15 deletions(-)
+>   hw/acpi/acpi-cpu-hotplug-stub.c | 4 +++-
+>   hw/acpi/acpi-mem-hotplug-stub.c | 4 +++-
+>   hw/acpi/acpi-pci-hotplug-stub.c | 4 +++-
+>   3 files changed, 9 insertions(+), 3 deletions(-)
 > 
-> diff --git a/hw/display/tcx.c b/hw/display/tcx.c
-> index c8a4ac21ca..ea92a48400 100644
-> --- a/hw/display/tcx.c
-> +++ b/hw/display/tcx.c
-> @@ -751,10 +751,15 @@ static const GraphicHwOps tcx24_ops = {
->      .gfx_update = tcx24_update_display,
->  };
->  
-> -static void tcx_initfn(Object *obj)
-> +static void tcx_realize(DeviceState *dev, Error **errp)
->  {
-> -    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-> -    TCXState *s = TCX(obj);
-> +    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> +    TCXState *s = TCX(dev);
-> +    Object *obj = OBJECT(dev);
-> +    ram_addr_t vram_offset = 0;
-> +    int size, ret;
-> +    uint8_t *vram_base;
-> +    char *fcode_filename;
->  
->      memory_region_init_rom(&s->rom, obj, "tcx.prom", FCODE_MAX_ROM_SIZE,
->                             &error_fatal);
-> @@ -804,16 +809,6 @@ static void tcx_initfn(Object *obj)
->      memory_region_init_io(&s->alt, obj, &tcx_dummy_ops, s, "tcx.alt",
->                            TCX_ALT_NREGS);
->      sysbus_init_mmio(sbd, &s->alt);
-> -}
-> -
-> -static void tcx_realizefn(DeviceState *dev, Error **errp)
-> -{
-> -    SysBusDevice *sbd = SYS_BUS_DEVICE(dev);
-> -    TCXState *s = TCX(dev);
-> -    ram_addr_t vram_offset = 0;
-> -    int size, ret;
-> -    uint8_t *vram_base;
-> -    char *fcode_filename;
->  
->      memory_region_init_ram(&s->vram_mem, OBJECT(s), "tcx.vram",
->                             s->vram_size * (1 + 4 + 4), &error_fatal);
-> @@ -887,7 +882,7 @@ static void tcx_class_init(ObjectClass *klass, const void *data)
->  {
->      DeviceClass *dc = DEVICE_CLASS(klass);
->  
-> -    dc->realize = tcx_realizefn;
-> +    dc->realize = tcx_realize;
->      device_class_set_legacy_reset(dc, tcx_reset);
->      dc->vmsd = &vmstate_tcx;
->      device_class_set_props(dc, tcx_properties);
-> @@ -897,7 +892,6 @@ static const TypeInfo tcx_info = {
->      .name          = TYPE_TCX,
->      .parent        = TYPE_SYS_BUS_DEVICE,
->      .instance_size = sizeof(TCXState),
-> -    .instance_init = tcx_initfn,
->      .class_init    = tcx_class_init,
->  };
->  
-> -- 
-> 2.41.3
-> 
+> diff --git a/hw/acpi/acpi-cpu-hotplug-stub.c b/hw/acpi/acpi-cpu-hotplug-stub.c
+> index 72c5f05f5c..4332f3fb7d 100644
+> --- a/hw/acpi/acpi-cpu-hotplug-stub.c
+> +++ b/hw/acpi/acpi-cpu-hotplug-stub.c
+> @@ -3,7 +3,9 @@
+>   #include "hw/acpi/cpu.h"
+>   
+>   /* Following stubs are all related to ACPI cpu hotplug */
+> -const VMStateDescription vmstate_cpu_hotplug;
+> +const VMStateDescription vmstate_cpu_hotplug = {
+> +    .fields = (const VMStateField[]) { VMSTATE_END_OF_LIST() },
+> +};
+>   
+>   void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
+>                            CPUHotplugState *state, hwaddr base_addr)
+> diff --git a/hw/acpi/acpi-mem-hotplug-stub.c b/hw/acpi/acpi-mem-hotplug-stub.c
+> index 7ad0fdcdf2..36c12a4e5f 100644
+> --- a/hw/acpi/acpi-mem-hotplug-stub.c
+> +++ b/hw/acpi/acpi-mem-hotplug-stub.c
+> @@ -2,7 +2,9 @@
+>   #include "hw/acpi/memory_hotplug.h"
+>   #include "migration/vmstate.h"
+>   
+> -const VMStateDescription vmstate_memory_hotplug;
+> +const VMStateDescription vmstate_memory_hotplug = {
+> +    .fields = (const VMStateField[]) { VMSTATE_END_OF_LIST() },
+> +};
+>   
+>   void acpi_memory_hotplug_init(MemoryRegion *as, Object *owner,
+>                                 MemHotplugState *state, hwaddr io_base)
+> diff --git a/hw/acpi/acpi-pci-hotplug-stub.c b/hw/acpi/acpi-pci-hotplug-stub.c
+> index d58ea726a8..3e3a484d3e 100644
+> --- a/hw/acpi/acpi-pci-hotplug-stub.c
+> +++ b/hw/acpi/acpi-pci-hotplug-stub.c
+> @@ -2,7 +2,9 @@
+>   #include "hw/acpi/pcihp.h"
+>   #include "migration/vmstate.h"
+>   
+> -const VMStateDescription vmstate_acpi_pcihp_pci_status;
+> +const VMStateDescription vmstate_acpi_pcihp_pci_status = {
+> +    .fields = (const VMStateField[]) { VMSTATE_END_OF_LIST() },
+> +};
+>   
+>   void acpi_pcihp_init(Object *owner, AcpiPciHpState *s,
+>                        MemoryRegion *address_space_io, uint16_t io_base)
 
--- 
-Peter Xu
+Missing:
 
+-- >8 --
+diff --git a/hw/display/ramfb-stubs.c b/hw/display/ramfb-stubs.c
+index b83551357bb..283af44ecec 100644
+--- a/hw/display/ramfb-stubs.c
++++ b/hw/display/ramfb-stubs.c
+@@ -2,7 +2,9 @@
+  #include "qapi/error.h"
+  #include "hw/display/ramfb.h"
+
+-const VMStateDescription ramfb_vmstate = {};
++const VMStateDescription ramfb_vmstate = {
++    .fields = (const VMStateField[]) { VMSTATE_END_OF_LIST() },
++};
+
+  void ramfb_display_update(QemuConsole *con, RAMFBState *s)
+  {
+---
+
+Otherwise LGTM (agreeing with Peter to post separately as
+a preliminary Fixes patch).
 
