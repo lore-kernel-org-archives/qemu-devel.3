@@ -4,114 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E473F53D6E
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 790B9F53D71
 	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:37:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Aw9-0002fE-Ad; Mon, 16 Mar 2026 12:37:01 -0400
+	id 1w2Aw6-0002eT-B1; Mon, 16 Mar 2026 12:36:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2Aw0-0002eM-1i
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:36:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2Avq-0001Fr-5g
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:36:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773679000;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=EqOimejTM9mvEizXqbCOw+9aAkMsBtv0nDU+WYZYDto=;
- b=cpLzSa7MeZk+Km5umJTReSmdWN62WmgW8s4ZEVOJ0qjEUZUXg7f7s6gdWO63NzaO7Pi7YD
- WDYiXgIKynLa6xufApyXJ1RjeYuwDsHKUuUtPAMxmXORCNFMuWPjjbmrEK+86zjS+PIvh2
- rzrMrrZ0UCofndnrDtUz/v44v1NuQI4=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-493-tbFmlm1ROcmuhzU0TLZ2Ew-1; Mon, 16 Mar 2026 12:36:38 -0400
-X-MC-Unique: tbFmlm1ROcmuhzU0TLZ2Ew-1
-X-Mimecast-MFC-AGG-ID: tbFmlm1ROcmuhzU0TLZ2Ew_1773678997
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-439a85832c0so4164998f8f.2
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:36:38 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2Avl-0002dm-DK
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:36:38 -0400
+Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2Avj-0001FZ-Ta
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:36:37 -0400
+Received: by mail-yx1-xb12f.google.com with SMTP id
+ 956f58d0204a3-649278a69c5so4183410d50.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:36:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773678994; cv=none;
+ d=google.com; s=arc-20240605;
+ b=UJba6nZV8fWNYp2yVH7n7lK7VYDmOuutkgJapel2K3Ux0phUtlaV3OKTiuae+gHsf3
+ xwY0SkZb5zo+AbfSBR+sUryeQJ2rzIwHzBm3LEL+ASVCv8wVjxP0ywll4gtwe2zCTPWz
+ zZUxue8gdkLQ8ycg6mWECKY8MTw2khS1qePTwXMrjh2sWTLeqV8DgBMLt75pituV7kOX
+ JSgRdcrepuQOiHzl7Ln5JenLPub9d9LL+G2AwnK+ONZBqCNe9RIcxU5cHBOyUp0F4tuH
+ dn0GUTIAVSLK6pPwcda+f0mfcmG/8K8mV+b+ljyRafAKxCEjJxNwNnKClPhaD4QRqaVE
+ DEDg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=vJu9SwOO2jHdPl6Xx7CnxryV1/3wmQfZZZ78aCAQYIM=;
+ fh=T50mxbVhr5ng+ZFVLAdwfr7XwGM1gjA3hOqQQhVdADc=;
+ b=de0d7X4YAQz06Iswm/ryegn/7cHQ1slmc50Fu98st9+QzyJwCaGgY1bO2uSViLFmSZ
+ gWY5bJ3sBNVt2SPdlBsGfEiOW7H1HZu7nY/maSjbtf4desNOfICW8gn0rhtIqYQZlXuC
+ TlKcJ7HKueU7sWzOwFS94xm664abw0lP9psDv5bf7ejsJyQop2sDc6f8ulri7ONLbp9H
+ 2nkCkzK6oeL+YR+t/RL1KS+spvt6F5AFJC27LxiMb+bf2/xd7jdPemNcUvT7Qtifj1Sh
+ 3EdmAOaQvkhgN6My9rNVhHTc9R7c1Z2ZY47QYtDT5X6x42qUoaU0kJaSb3VJ1+bIzdqd
+ fehA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773678997; x=1774283797; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=EqOimejTM9mvEizXqbCOw+9aAkMsBtv0nDU+WYZYDto=;
- b=eFqaOSz9es7th3NLyw3Y+qmqod5D8G74XtO9Zzl44UYcV/c/WxAM5zlu4K8OhInaph
- sjXPhol4AjtA5OIrpuUVzTrvtlm2CgCfwLuKi5yYJVxP7xb28rWniV1sMjZFbi5QXhuw
- azMbu3ZOcnoHYZ8RRu61ER/SQN1bAVwZCcogVOKrUZ/MpyhRn3R4pWTiH9iHQkVDXqS1
- gJNmODKhNK+Saz6jqbj9YGEM10ICOP6FAUYwsNsSKKyau/Bbrpsz+r9Wl9mUL8ohCAF2
- qwaIgiHcXsQUJ1q8jDG1AvdQFLVc3GK24t6hY8sA2N1tNH8whtMKzt8dNNzjukkd2Wtm
- XGWg==
+ d=linaro.org; s=google; t=1773678994; x=1774283794; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=vJu9SwOO2jHdPl6Xx7CnxryV1/3wmQfZZZ78aCAQYIM=;
+ b=Hnb9DAtuLWXaPugG9uwvReVOi9DUjGBC9JPRzgtFt899oVd13c3oyRQ1CNBTPBrQww
+ iM4qHVn4W5qd1rOKTpIDJ7qOff2JgApNMOFCOu+Jg3dEriTLRN53coBB8j+QM7i8oeNW
+ 6o6U5nVcLJTC7nYOkNfe76XYb0f/7SRV7krArkMoCADLW09S3zC1hiZph3HPhKNeCQRQ
+ ZLTazrjR70Zb0FDo8h+xHZrgdv0QJp4GT7HgH4QDIjPcYnhqLl93kgiqRAdn61ZHHd6N
+ SpqAfJNXNMxPH/uWYbCMACV32J9ZiJpyGCSPkw6y/nYOVdK2MeANKrtPdRJVewOL8j8U
+ 9+KA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773678997; x=1774283797;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=EqOimejTM9mvEizXqbCOw+9aAkMsBtv0nDU+WYZYDto=;
- b=hMG5ZY7d+fNVlzqgP3ise3aJoPa3i7xD8y7e2m2DjenbntlRrZOXW1DAECeB6m5L/R
- 2uzUaDaS6jxC0BTpnUS4EcBtODyBKf016qjOsmenDB603L4PNMq1m15sC/7I74KlPFSo
- AD7kRYXkHmPT87S/9VRn5ij8Vg6ntHKGKdaE6r+yXk/QAa7Yyh3u3lPhSI4mnW/lgoqR
- X8/1zM2X9+HndMuXqb/OsxgjHzv0CAIOD746uAq8uPv98stUGsC0/EiBzA5qQC/jLGgN
- w4CfsgvzAcg7B6BO9ybkPMGZ+QehP3Zkhvf/skhi6WiPqx1mB+96MvkrkyBtFECmb5v4
- vX9g==
+ d=1e100.net; s=20251104; t=1773678994; x=1774283794;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=vJu9SwOO2jHdPl6Xx7CnxryV1/3wmQfZZZ78aCAQYIM=;
+ b=WHgh9RWhilzNeXk2zWDUmaTgtHq+/V6XbOOoIgFyEKhGz1JmrQmP8hc891qZ6pA9G+
+ GyFAm3Jlz0OJ6PLN/4zMQEeFTArD4iY2uM2uT/m3Arcr7sacYmpkHJz+k139gBedh/Ap
+ Wkrc2ph8gxB+dFPhBkJGFqmZ4kgXPPjK6D2gPwf0ZqIO0Of88ImJwrhyksuNc+q/4lvF
+ jETAq399J5EBz10VbYnc+I4HdQpi+XQMQauC0y4MzZ3oI9G7B6AwrwKTRgFbpM3qIECn
+ M9YIzs2uqztITxEpLQLjsF1tvM/iFaRoi1yaKMGVYKd+RMp+ZIsa7z9jYPtOVbFp1nvA
+ O2JA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXnE0HJGUJvzW+arebfsbutuJNApnTt081z7slK7ZlDyD9grsY0mMG68ESiTt8jMj7NWPHw/mkMzEXM@nongnu.org
-X-Gm-Message-State: AOJu0YwWK9nwhfGaUEyXlMmF161GyDnhPi8getYtussdxoyKXgMWH2Ql
- XGra6CUJYH/iprmWUB1Czq56Ef+9cj1wovUDjbzfTV7xbD+W+xtqHgKM9XM9LCvEv2eWlBHosii
- qcZQweM2ITX9+KUIN7zNFdTZsIAdlIk5XA9WoimDxBBBq4M2Ov/dOTs28
-X-Gm-Gg: ATEYQzzvDxC2TR4ql/QiwhFCFkJckNSr7yM/pw9jTVejbsXvLZLrTHF0D6uKT3u246p
- 8OTVO06u92VB7Pcj0EQzF/1B/dmtQtbFM4v1FN2mwe4rrCWsfcII8H80T3yq9H7yiwNKYMsWFsU
- zZhdopAbPvXYGfeub/p/Enx97cu6LD0eqZiMg6IC0fO5SF+DvOnn5QFA9JKU4yA2QmsStu55SRT
- Un83tMwKZcfJOVtNUWA66NUSIx1JQAtC42uaNBhsSMm7u/IT1nj1tVnMPX79jXIpRdElYp25Oe+
- PMrBuEPpvl8iMkhgxBg7wjI2UBdIKVLPDA9btAhRTYsC2Cax0VbX+PNmScamHq6DefCjsGq1Obb
- rgTyex8jji7seyHCkVYm68wseu5JZMCod2c76OteFFghf51frMMT+tMcVMLy2bC2goOf8HlEois
- +JjOv6j7KwmAXYO7V9Xmgng5La/W8tPfqDle9xzcOINtp24Zxx/Rw=
-X-Received: by 2002:a05:6000:288c:b0:439:ac8f:5db1 with SMTP id
- ffacd0b85a97d-43a04d79bdbmr25500987f8f.15.1773678997117; 
- Mon, 16 Mar 2026 09:36:37 -0700 (PDT)
-X-Received: by 2002:a05:6000:288c:b0:439:ac8f:5db1 with SMTP id
- ffacd0b85a97d-43a04d79bdbmr25500914f8f.15.1773678996573; 
- Mon, 16 Mar 2026 09:36:36 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d737:d02c:3210:ed4b:e671:ceb9?
- (p200300cfd737d02c3210ed4be671ceb9.dip0.t-ipconnect.de.
- [2003:cf:d737:d02c:3210:ed4b:e671:ceb9])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-439fe226473sm43387206f8f.32.2026.03.16.09.36.35
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 09:36:35 -0700 (PDT)
-Message-ID: <27535351-955f-4aed-b335-2b2832c4b89f@redhat.com>
-Date: Mon, 16 Mar 2026 17:36:34 +0100
+ AJvYcCWPPpkp5NcmtXxO68jQMnSFzQin7se9YivzAjPRsWxJgwJp2uBeDQhGH+rfqpKhlWSZfZHPh+dqJTzY@nongnu.org
+X-Gm-Message-State: AOJu0YwqM7R3qQoyOTA9SVnFWF670Uv+Hdm2Kh1uoCNllLB21k+9yShR
+ Jj7kwPIcXaRWIEEQCLHWXJK7bPh98+725m37vHUZ9pjNOcv4/KnrZytRJSYAfc/u7QyS1Fz+tNI
+ 2qsFAe3NTxTCwEtX0Kor13mGMDeJvw07QH38DLZGpQA==
+X-Gm-Gg: ATEYQzwKo8Qtxq5difdKWN4oYj+MmyPMlFfLREDweyDe4WA4+oE2KXYeeN5mzUH6qSg
+ gtNA7rYxhg6wJreKP2g3IfbXNgUv03L8w9o6DODrZS3yXv4GUa4tvIIlbFgr9u71zFpgSU4Bv2L
+ PfzYYeaZ2l/fmSnWEfxB12CJSi8CR5cEFIEDTjkQtTHAmiqTC3zgp6WTuEG4fN5hpIo4Eh0pLlQ
+ nrQwIsydkOQNKG9hjd0084eforjniZ+fLEP3K4PD4o5lzTVrTUe1OUgyA1pgYUx5jnWNEfcQEMM
+ /jGhImS44+F1nFpdQdMZV+aHltrttHhSe5zqew3l2cK1aL1ZRh0DbKSOKQME/alqX9I9s5OaEFx
+ uRQ==
+X-Received: by 2002:a53:d60a:0:b0:64c:561a:1dff with SMTP id
+ 956f58d0204a3-64e630887e3mr10667266d50.65.1773678994497; Mon, 16 Mar 2026
+ 09:36:34 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 0/1] Fix race condition in
- throttle_group_restart_queue()
-To: Alberto Garcia <berto@igalia.com>, qemu-devel@nongnu.org
-Cc: Jorge Merlino <jorge.merlino@canonical.com>, Kevin Wolf
- <kwolf@redhat.com>, qemu-block@nongnu.org
-References: <cover.1773316842.git.berto@igalia.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <cover.1773316842.git.berto@igalia.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
+ <abgqjKVFHKxuKupP@x1.local>
+ <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
+In-Reply-To: <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Mon, 16 Mar 2026 16:36:23 +0000
+X-Gm-Features: AaiRm52gi2e5L5tor2gOGn3ja1IMSkFqOindBUlzTYmnG7swKY4iBYn4x1Bm1RQ
+Message-ID: <CAFEAcA-n2EW=deU=jVcLd=6PysNZd5m7WTYrHLtQkxMo=KWBPw@mail.gmail.com>
+Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
+To: Thomas Huth <thuth@redhat.com>
+Cc: Peter Xu <peterx@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,35 +120,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12.03.26 13:11, Alberto Garcia wrote:
-> Hi,
+On Mon, 16 Mar 2026 at 16:23, Thomas Huth <thuth@redhat.com> wrote:
 >
-> In the previous patch I forgot to relax the assertion for case 2.
+> On 16/03/2026 17.06, Peter Xu wrote:
+> > On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
+> >> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
+> >> current_machine which is not set during init when inspecting the
+> >> device. This causes the qtest/device-introspect-test to fail since a
+> >
+> > Does it has anything to do with aux-ram-share?  I thought it's because the
+> > qom introspect test will create yet another sun-tcx device, causing double
+> > registration?
 >
-> If we're restarting the queue when another tgm has a timer armed I
-> don't think we can guarantee that when the timer fires it won't set a
-> new timer on our own tgm before we reach the assertion.
+> I think it happens because the test starts QEMU with the sun4m machine (or
+> whichever machine uses this device by default), and then creates another
+> instance of the device for introspection (without realizing it). You can
+> easily recreate the bug manually like this:
 >
-> I think that the assertion should depend on reset_timer_armed:
+>   $ ./qemu-system-sparc -M SS-20 -display none -monitor stdio
+>   QEMU 10.2.50 monitor - type 'help' for more information
+>   (qemu) device_add sun-tcx,help
+>   RAMBlock "tcx.prom" already registered, abort!
+>   Aborted (core dumped)
 >
-> - If it's true, no one else can arm a timer so the assertion holds.
-> - If it's false, it is possible for the other tgm to arm our timer.
->    The assertion would fail in this case, but I think it's harmless
->    because even if it would fire at the same time the logic in
->    throttle_group_restart_queue_entry() is protected by the lock.
->
-> Berto
->
-> Alberto Garcia (1):
->    throttle-group: Fix race condition in throttle_group_restart_queue()
->
->   block/throttle-groups.c | 79 +++++++++++++++++++++++++++++++----------
->   1 file changed, 60 insertions(+), 19 deletions(-)
+> An instance_init() function should not change the global state of QEMU, so
+> registering memory regions this way is a no-go. This has to be done in
+> realize() instead.
 
-Thanks, applied to my block branch:
+Ah, and previously we created the MR in instance_init but did
+the vmstate_register_ram_global() in realize, so we didn't see this.
 
-https://gitlab.com/hreitz/qemu/-/commits/block
+I'm a little surprised that this causes a problem, though -- I
+thought that we constructed the RAM idstr not just from the
+provided string but also including the qdev path, so that
+you could have multiple devices of the same type. I guess that
+we don't get that happening correctly because the device isn't
+sufficiently created to have a qdev path yet when we haven't
+even finished instance_init ?
 
-Hanna
-
+thanks
+-- PMM
 
