@@ -4,88 +4,177 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A328EF30298
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 02:52:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CFD6AF30295
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 03:22:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1y33-0002Ci-PL; Sun, 15 Mar 2026 22:51:17 -0400
+	id 1w1yWJ-0000P7-OP; Sun, 15 Mar 2026 23:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w1y2o-00029S-Oo
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 22:51:07 -0400
-Received: from mail-dy1-x1336.google.com ([2607:f8b0:4864:20::1336])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w1y2m-0000Xq-W9
- for qemu-devel@nongnu.org; Sun, 15 Mar 2026 22:51:02 -0400
-Received: by mail-dy1-x1336.google.com with SMTP id
- 5a478bee46e88-2c0bcd8f194so1134815eec.1
- for <qemu-devel@nongnu.org>; Sun, 15 Mar 2026 19:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773629459; x=1774234259; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=VoJVdciZFaewroq0cySKl+vu/S+aD/kerrA4/hB7jSw=;
- b=m8zq+Rx1Lv5r07qV6BcwN8l9DHgPlK/CLE8L2eaU1sYF5QCkCyCPfOMF9krQVdO8QH
- UkyAsOMuwrwV0zGs+VdJUW8Tf+Z/Y6D8Oi2uuOks9god0Prd6GfPpf0W+ZjpspxVJlZM
- s4WwPIER2Q79B4RYUbDlv4rObq6AWeu9k5YvHS5awEwj/fSBPdKnV9wbx7iwIRDB15W0
- YLW3l4uNrEBPauP6S3FCSE4DtHO5HpsZkerB9cN6Pc/A+VG0z2sAtUmESe9DLji05xgQ
- eaS9eVi1DDENbdcrMiBWDfGnxwbDtijBYhupOuEnIWOHo+ie4VyYcHRJaTsnbla5Ut+h
- L2lw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773629459; x=1774234259;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=VoJVdciZFaewroq0cySKl+vu/S+aD/kerrA4/hB7jSw=;
- b=hw0wIdvA8nMNGBFkwxwjBhuI6SG1ATVMM17W/9T9mDU/ta7rbB2GrQcQDMQRCCdzxo
- zsPqUYySVjPjkl9JNUctxmN+jvINyFjzvlq5080sxslvU+DT0T0Lt/OeOnruEPqeeRNv
- dxtMqni4t1a1JlMpbYdFD0/PicFhM2zWT73JAqO1BP8VQIXLBBJ1raqj1I09UQTGWeJc
- LHWpf1K7J5fXt/IiNW6KlcXYoAM+uaBgP5Gfpxvb3NMzaFQL2eQI8capBTf2tEpVllv3
- oMCbPpOM2Z/4/a29ZhFgp8bDhqUX6BpGNnqRWDx11hqBuAnWl8I2tXBw+x2VCFTw20wo
- uHCQ==
-X-Gm-Message-State: AOJu0YyzT62uByxnJsSnzrOwZ8yQ9ihhw1oVyqyk7cVJq+Cr7vvuljzx
- Xw6pBzrgxjwMp6NyIiozq+DwkR0Zb1fdulxNxL4+IveBHqdv0AfqMX/b+xpCHoX3
-X-Gm-Gg: ATEYQzwInNR+0odYkSUNc/kRJazWunefejeKTFecWB3e688NMYZZis9YCqy2NOpJGiH
- wuYH1tJ7DzQvqurr8PFCTvs4CLZz+0foro8CRfHoSu+L17GLnV/XYFXHGwYk97CWk66d5DmeoEk
- gXP3E2vQHPz4r44tCKYnqTfqucUkA6v0BQAmnZ4SS3e5F3GC9hTm6pt9lhUDp/aPNeYIXJD8tSX
- GJ7JOPuLvWn4RL0WoYlZQshYw2sPQbw8n4CeINbgdOhyn9tD7PCIYGf+901a2iBU3jS7+afF52z
- O1HXNBC8Xos+OIdZfxzLlsy9IwAtEq2dJmxp5+Jr1eikx8Swv6SMKd6SXLfgtkR7B22GoL9morv
- neyue0ZCAQcdCXCHSSl1lNX49lORJlrnibas4mGsC6sZRp3SM0Tg+R02Fey8nKvSJFKdu1rCzCG
- Q3YvdvShDaC/TsmhnFOjes+HtlZ/G/60vWHpGe5BXpLvrTTWqABg==
-X-Received: by 2002:a05:693c:3113:b0:2b7:fdb6:ccf6 with SMTP id
- 5a478bee46e88-2bea547ecd8mr4693975eec.14.1773629458994; 
- Sun, 15 Mar 2026 19:50:58 -0700 (PDT)
-Received: from 192.168.7.2 ([189.6.247.75]) by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2beab3a12e2sm13138973eec.2.2026.03.15.19.50.56
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Sun, 15 Mar 2026 19:50:58 -0700 (PDT)
-From: Lucas Amaral <lucaaamaral@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
- mohamed@unpredictable.fr, Lucas Amaral <lucaaamaral@gmail.com>
-Subject: [PATCH v4 6/6] target/arm/hvf,
- whpx: wire ISV=0 emulation for data aborts
-Date: Sun, 15 Mar 2026 23:50:34 -0300
-Message-ID: <20260316025034.85611-7-lucaaamaral@gmail.com>
-X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260316025034.85611-1-lucaaamaral@gmail.com>
-References: <20260315034123.41921-1-lucaaamaral@gmail.com>
- <20260316025034.85611-1-lucaaamaral@gmail.com>
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1w1yWH-0000Nv-7g
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 23:21:29 -0400
+Received: from mgamail.intel.com ([198.175.65.19])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <chenyi.qiang@intel.com>)
+ id 1w1yWC-0004YG-VO
+ for qemu-devel@nongnu.org; Sun, 15 Mar 2026 23:21:28 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773631285; x=1805167285;
+ h=message-id:date:subject:to:cc:references:from:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=KxnEqgrK8irVSDX7PGESc8wixroVCHiCBq6GZzT/l2I=;
+ b=M3/eYeDqQgBKsEZZoGM6Rkdx7t+Z+FrXk1h3QxcyP8imde8wEvXSPZyW
+ Ah4qoMmexy0LzIY3+S/8ovdLGfpnArMazPJEvmFxKeRonnUQVIrGOBpxy
+ Z/Byhp5byJe4rvMNQMtlYJuE8cFHpYH472Cgh3UFa9+JIihRkrZCFO0Of
+ /WyvINU4/6dDLQoWEv2/pyUKMPPO7bvmEFW4yAV7nOPStECohqtjDYDKI
+ SXsw5ntDmdzoqRW7iz3kO3zU6UrdsH2ypQaPtMHTCEJOoU3J2kcXDLx42
+ tsu8M5ozr18y026mSiojIuDtbq0uhKE6Cyn2GP7PrbUPm2dVxL3h8BZ2w A==;
+X-CSE-ConnectionGUID: 4S4AXap8Q22nGhMrPb6KTA==
+X-CSE-MsgGUID: sioz3/UKQ7CeTmllHRMUig==
+X-IronPort-AV: E=McAfee;i="6800,10657,11730"; a="74536354"
+X-IronPort-AV: E=Sophos;i="6.23,123,1770624000"; d="scan'208";a="74536354"
+Received: from fmviesa004.fm.intel.com ([10.60.135.144])
+ by orvoesa111.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Mar 2026 20:21:21 -0700
+X-CSE-ConnectionGUID: hFLXV72USXebwOx7ZX8OgA==
+X-CSE-MsgGUID: 0q1i7TkQSEKukOodgxvT7Q==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,123,1770624000"; d="scan'208";a="224032159"
+Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
+ by fmviesa004.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 15 Mar 2026 20:21:20 -0700
+Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
+ fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Sun, 15 Mar 2026 20:21:19 -0700
+Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
+ FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Sun, 15 Mar 2026 20:21:19 -0700
+Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.20) by
+ edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Sun, 15 Mar 2026 20:21:19 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=fBAUWr1ssuG96t5MIk6m1JttAGFGTwA8EeFm0L6biU9d8LR4i9MPBlSjZA6k7CEvFfi4qfnhBdOPPcocmN7+ezLCYlNxPo4iNmWl6N++/wIeXzYmTKQ0vrKgkyYulaS2bnzWuQruXIYPA7wqXw2SeTx9/61z/TK/O64ismauufRJkTwXr1owYosknllWg61FqcHLuwo+wJhjZ4brW1Nq4m9VPc86GowxRmexXvXkhau0rbxsSE+Lb0vxYxTd0ZoxT8g1chpg+1/Lu03xPV/DLyIoeqoZQl/BymiLnhvfBAu9aBUynzpyQGafHFoIxeqqxA6cecvduSQxrtSv7h46sg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=oIJp8tkBh9iUI1oYWSPofuyiZs/ayXf6g4muGJJFmgM=;
+ b=VzCIAtoa8GYczZlYoBYLs6kN4bbSw+bhSnqU1mIA/wkw9oXDuuVuLxo4YB+qoHmOGuqONA6ILB4+u5jXRWglD/9z9mPX+u9dQ7tuxd+E7M4LZi8wCMr6bteNrKqFsJaM5G51Q43anLHKeuMbJwk2jBtBDeD4VoeThqMb/zal7DiSlCBx+klAZ4ZMqtYOjxwAT65qZB2DGZX+7hjkETWSRNidfhQLC8Jndxrp2LaWSHWClfBjo6M++w+gQ8oYvKZrCQVxXoBCFizQbS0KjKrYU6l8yBJ6Y1TgebqiIfaY5oqUqCVdNBbovkXgJ/Yb/+IUcqL7yG3GUZHJUp0sBTaCsA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com (2603:10b6:0:4b::20) by
+ IA1PR11MB7943.namprd11.prod.outlook.com (2603:10b6:208:3fc::19) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.16; Mon, 16 Mar
+ 2026 03:21:17 +0000
+Received: from DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::8f1e:49f4:122c:c675]) by DM3PR11MB8735.namprd11.prod.outlook.com
+ ([fe80::8f1e:49f4:122c:c675%7]) with mapi id 15.20.9723.014; Mon, 16 Mar 2026
+ 03:21:16 +0000
+Message-ID: <9122d003-1e96-4790-ab32-3e06b0aa1148@intel.com>
+Date: Mon, 16 Mar 2026 11:21:08 +0800
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH V3 12/13] target/i386: Clean up Intel Debug Store feature
+ dependencies
+To: Zide Chen <zide.chen@intel.com>, <qemu-devel@nongnu.org>,
+ <kvm@vger.kernel.org>, Paolo Bonzini <pbonzini@redhat.com>, Zhao Liu
+ <zhao1.liu@intel.com>, Peter Xu <peterx@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, Sandipan Das <sandipan.das@amd.com>, Xiaoyao Li
+ <xiaoyao.li@intel.com>
+CC: Dongli Zhang <dongli.zhang@oracle.com>, Dapeng Mi
+ <dapeng1.mi@linux.intel.com>
+References: <20260304180713.360471-1-zide.chen@intel.com>
+ <20260304180713.360471-13-zide.chen@intel.com>
+Content-Language: en-US
+From: Chenyi Qiang <chenyi.qiang@intel.com>
+In-Reply-To: <20260304180713.360471-13-zide.chen@intel.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 7bit
+X-ClientProxiedBy: SI2PR02CA0019.apcprd02.prod.outlook.com
+ (2603:1096:4:195::13) To DM3PR11MB8735.namprd11.prod.outlook.com
+ (2603:10b6:0:4b::20)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1336;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1336.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: DM3PR11MB8735:EE_|IA1PR11MB7943:EE_
+X-MS-Office365-Filtering-Correlation-Id: 7b0b6ff8-915b-4358-0ca7-08de830b15b4
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|56012099003|22082099003|18002099003; 
+X-Microsoft-Antispam-Message-Info: aMBfYS36mEQP2IPHoe4oJcTxrMFCJYX2gyJcSzFDi9H0Xshdisxuc9TrrJz1mKTRSDotjBwaKkCAttwDoNYqvh019o3MWWS0Mpls7bC+uiv3mjP4+d9+puz5TWeAdObeLmxu07Uso1CaB9eYxexfainqIZt3n/f4A3RzhIkga9z0zhNfjRSKTh7moexhCjtOBMLZzSuxCzm1nfY/yzLEd5MlnLxdELd7AM/m5sAXqDC6tDuO8kIUuKaXRFc8GMsPYQWIu6+g94vKXHDgeMvtewoMYaHx0ZCHX3eD4PqIFQdx1blxhqzFVQD0wlnBxHS6cPkVrXPexaPJ6m10ZudKB4v52NTMc5Ng3xaVdxGm6Wq0E+lrEBItM3gv9VxeSh6J4XmRPL4V3ldpgbnFU9ywI9u1qWyi1GEKw1nhzqDJVO0YwJpBZyLUS1S4xrzrXEqVA0r4mqonFylP5CaS5c7I3dbLGMGo9240Z4KKePCRi1hna7Gs/nazXlBvF3630O2h7Em3x8J7+/dJ9eI60XEunf1gjxlzaHdusJ5Zx8ElEXQexf2TsfjOmIuinJ9mmyysacCpA5a8Sl7TC1EySVUv4QJR88G7xwh9ICsB2zqfg8y6rmn9Odn1u4K9Ny9ASpBTUO+4JcHF4hJsBVc7yd2eT6Y0l+dlo2TfH74t/whv+p/R4bsG8aIKKkmMMcT/Az3/c+ke6NZZ9QE9DhcrGYmMdyi4goxgIZLQeTAMbAY2Vcw=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:DM3PR11MB8735.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(56012099003)(22082099003)(18002099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?aGcrYmhweWthbW1IakZIUUUxTld3T0Jya295ek9rbExpaHFyVm0yeG5CMDRo?=
+ =?utf-8?B?NUhQZnQ0Q3FKamxPVUZBNmlLVTFQZHhkMmg3d1pMZUVZQU5GYnJkZ3VwdG13?=
+ =?utf-8?B?RXplbzI0aWRDeTFZTU9wbHp5TDB4U3ZWUkNuakdqdnQxVDB4Qmx1ODRrdmts?=
+ =?utf-8?B?MUs3S016bGdQb3RGZnhHakFjR0dtV2VZaWRkeGcxU2RUL2h0RFJ6STZ1dXky?=
+ =?utf-8?B?TU9OVElESUZFbFdYQUpsWE9VZGxUMmN5WW5nU0EzK3grUUNKUEM1S0NvYTBM?=
+ =?utf-8?B?MzZ6S0Z1N2ViZVlTdlpMUlJ6TGRCcTlnVCtLUjg5a29qSzN3ZUx3SGVSeFRh?=
+ =?utf-8?B?dExDWUxQK3Q0T1o4eWhCRlVBTXpzQzMzRW41S3kvZU9hT01ZWXJHZzNST1BE?=
+ =?utf-8?B?RGI2Qi9GZ3BONnBWcS83NUtrVEFCTkhwcWs2YldHWXBwK3psRDZ5Uzg1T1ZE?=
+ =?utf-8?B?dVFDVnlSV2hrVXgvZSt0SUxaV2Y2ODkrdmpBN2pXNFFKQlptYjU4YmEzakU4?=
+ =?utf-8?B?eXQxUS85blNQWmhuNU1DK1N4SEFjNzRGVFFoWVliN0pUNmhzL0RYN1FZK0xa?=
+ =?utf-8?B?bTR3Yyt2OXUzWXJYRGovUHhRZm1KU0hjZGQ3VTl5Q0VtSGRDWGEvdlJiYzZx?=
+ =?utf-8?B?a3dleXRTckxqL0J6NXBueDVpSFI2N0ZZZFJMU244OHQvZ2pLbnJXZXFhQlcx?=
+ =?utf-8?B?T3haZ3MxZTlmeFlIWUs2ZGxoNjdkdHpGbUROWnd4aVRxYWRVbjJPMzRoVGRu?=
+ =?utf-8?B?U0k3cG1ScHd5bjhxNTdOWDlkVGhtcTVnd3ZQNjJkWDc2ajFRazlxb3hTbG81?=
+ =?utf-8?B?MkpUbmtzVEwyRENzRE4wY1k4RTByamE0VXprMTZnbUxBMlN0T3ZQNFBQR2Va?=
+ =?utf-8?B?RnpETWxrcFNBaHRFc0FSRk92WGlMTDd5RkFjWVZETlkyOVlnZUVWajZGeG1y?=
+ =?utf-8?B?VGwxczVPcDVvMk9hSjRZUzhwbjNZMlJFSHlwRG4rSlhPdk0yZmhMMGQ2cDNG?=
+ =?utf-8?B?blhzVWJUVTlzRitvRXIxbEQ0Wk1uTzR2Y292a3FwUUxqR05wRmJaMDlkTklG?=
+ =?utf-8?B?NGFJM1ZQMWMxN3BLQUJGSmdLUDNuSFBoTGpmQTRFQWJtZmw3NlBKNFpqTEVK?=
+ =?utf-8?B?NGpCOVM2MDZPN0ZTcS9QeVFZVnlnZ1RJMDg5dElXa2ZVSjNPVURmQzRyQXZr?=
+ =?utf-8?B?TGpuL1JkN1JBai90SjJiUVBDRzBwUi9CdllCVUJzMXNwZFZQa1JVd3VYcUZ0?=
+ =?utf-8?B?WEgzT1dQTytMYkJnRWdoK2JwUElGRWdad2tIbDdTbG5pLzNoUFFtMnJDNHR3?=
+ =?utf-8?B?dG9ObnZJREpFQXg5SVZubWJHZE9OYzJDaWI5Sk9aRlBTQ3VqcjMxcXpvTlhq?=
+ =?utf-8?B?QjdYQlYwVkFqcDdPdzY3TVlZUnNOU2hYQ08rVE12bjlvSGRkNThIWjB2czZO?=
+ =?utf-8?B?TzdwR2JYL0RGVjJ4MFlGN3Q1M280cTY3dXFUQ1dzV1dQT1hBUDU0VXlQNXdM?=
+ =?utf-8?B?NzJGU21hcElvNEtlWEFNYU5FMVd3N0l2RnNhMHA1SFNBYjJPUmQ5VTVVYjdw?=
+ =?utf-8?B?c0NNeEVOQ3NCZG1iNEVyUCt2ZDQ5L1JmUmtMWjVwc2ZjTnMyM0VPZmhtZ2U1?=
+ =?utf-8?B?bVpJQ213Z1poRGllQllUZi9qQklLblBtTFNJSVVsalhxYVQ4RmVhRU9XcVVo?=
+ =?utf-8?B?aCthT3BXTjdsYjh5ZDZXLytJVkljdXBjTXl3N2xWaSs1RjM5ZjdyYnZkeHN3?=
+ =?utf-8?B?a0E0ZG5YZHNZcVJ4N1NMdDdqVHNLL2wvd0FsTzVIbUpJN3N0ZytXRHUwYlQr?=
+ =?utf-8?B?UXE4cTBBbnMyVHh4bTVHbW9kRWFsYk04OTRaQUdCaXVaTGFCR1VYMHhFK1ZF?=
+ =?utf-8?B?aU1TaUMrRTBMcE1CdG8waEd6aFVoU09MUTFNUkxhOUtneHcrWVd3bGU5bVZ0?=
+ =?utf-8?B?SzR3NGljb1V1MHljYkZ6aW5pVWMydWZ5a2g4REliaFNqZmFLUFZFK1g0WlBa?=
+ =?utf-8?B?K2xxOHpHd0N4T21IVlVvUGxXbG9DYXEvMW92M3dlS0tpcmhZaHZSNHdSTVJR?=
+ =?utf-8?B?NHFaOUp4Z1dPbHRYUW0vdFJBNnpuSEMzbWxXR3g0ZW5teHRzaUlVVFJyQUFm?=
+ =?utf-8?B?SWNLOG1OWUszZnc3VU9ueEtKMU5aRC83dldTS1V3a0dyVXlaZ3EvbmNUS3pO?=
+ =?utf-8?B?ZVYyaUpKVk1qVFljakI0OGp0cjI4NEV1UDN3dy9YYkp0bHlPdVJoemQydC9q?=
+ =?utf-8?B?UUloZHIwSzdQUmtPUHZ4VUtlTFF2ZUd4L29naElVdDFqZHo3WVBxMGpoOWdL?=
+ =?utf-8?B?UllTQ1Y1b2FudGxFcHB6WlY2K3R1NUdob0o4Q0Q5QVR2YmhGUTlVZz09?=
+X-Exchange-RoutingPolicyChecked: d4gicEmsr7K9x7R4ZrKVhMeGxX9F5QPv2vqiNdv7tJKLz4xtJxEjyc1ieWkS2EJtqBPWaET7jEfsmoR+ujKEmrA4xg8yl75T+UB44Iiy39BP1ABHt9GlAKFuJT6M6e3Y6ymxdfF0MUt7EQQ+qGXyJKsoLvDGDm/9xt6+ihbuG/8W7SQgqpqaqJpkg85QKQ1tFzSoOfnCqbSrYmzN7I5hAXR1ekXKZGQtW6rAAVi44z0IEP73NApwx01Axq4ATDL5DgYye0iuEP5xyjnVOkvp5+48J2cyFiiF9q6AKWj78hL+IgXESV1R+10jp7adZPMvoaKP5USZecwwxlOXJvJFcw==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 7b0b6ff8-915b-4358-0ca7-08de830b15b4
+X-MS-Exchange-CrossTenant-AuthSource: DM3PR11MB8735.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 16 Mar 2026 03:21:16.8360 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: vjZQx8Ba/B4neRs9LOmaAAoKGDMf4IevHCEfIaxAo+M8IK65w2uzOoUeLvvv0ZUlZrq02AqtaetdbdTWBZauEQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB7943
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=198.175.65.19;
+ envelope-from=chenyi.qiang@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- FSL_HELO_BARE_IP_2=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -101,196 +190,73 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a data abort with ISV=0 occurs during MMIO emulation, the
-syndrome register does not carry the access size or target register.
-Previously this hit an assert(isv) and killed the VM.
 
-Replace the assert with instruction fetch + decode + emulate using the
-shared library in target/arm/emulate/.  The faulting instruction is read
-from guest memory via cpu_memory_rw_debug(), decoded by the decodetree-
-generated decoder, and emulated against the vCPU register file.
 
-Both HVF (macOS) and WHPX (Windows Hyper-V) use the same pattern:
-  1. cpu_synchronize_state() to flush hypervisor registers
-  2. Fetch 4-byte instruction at env->pc
-  3. arm_emul_insn(env, insn)
-  4. On success, advance PC past the emulated instruction
+On 3/5/2026 2:07 AM, Zide Chen wrote:
+> - 64-bit DS Area (CPUID.01H:ECX[2]) depends on DS (CPUID.01H:EDX[21]).
+> - When PMU is disabled, Debug Store must not be exposed to the guest,
+>   which implicitly disables legacy DS-based PEBS.
+> 
+> Signed-off-by: Zide Chen <zide.chen@intel.com>
+> ---
+> V3:
+> - Update title to be more accurate.
+> - Make DTES64 depend on DS.
+> - Mark MSR_IA32_MISC_ENABLE_PEBS_UNAVAIL in previous patch.
+> - Clean up the commit message.
+> 
+> V2: New patch.
+> ---
+>  target/i386/cpu.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+> index 2e1dea65d708..3ff9f76cf7da 100644
+> --- a/target/i386/cpu.c
+> +++ b/target/i386/cpu.c
+> @@ -1899,6 +1899,10 @@ static FeatureDep feature_dependencies[] = {
+>          .from = { FEAT_1_ECX,             CPUID_EXT_PDCM },
+>          .to = { FEAT_PERF_CAPABILITIES,       ~0ull },
+>      },
+> +    {
+> +        .from = { FEAT_1_EDX,               CPUID_DTS},
+> +        .to = { FEAT_1_ECX,                 CPUID_EXT_DTES64},
+> +    },
+>      {
+>          .from = { FEAT_1_ECX,               CPUID_EXT_VMX },
+>          .to = { FEAT_VMX_PROCBASED_CTLS,    ~0ull },
+> @@ -9471,6 +9475,7 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+>              env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
+>          }
+>  
+> +        env->features[FEAT_1_EDX] &= ~CPUID_DTS;
+>          env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
 
-If the instruction is unhandled or a memory error occurs, a synchronous
-external abort is injected into the guest via syn_data_abort_no_iss()
-with fnv=1 and fsc=0x10, matching the syndrome that KVM uses in
-kvm_inject_arm_sea().  The guest kernel's fault handler then reports
-the error through its normal data abort path.
+This change, along with the original CPUID_7_0_EDX_ARCH_LBR clear, will also affect the configuration for TD VMs. 
+For a TD VM, enable_pmu controls TDX_TD_ATTRIBUTES_PERFMON, CPUID_DTS is fixed to 1, and arch_lbr is controlled by XFAM[15].
+These features' configuration do not have dependencies on each other. So how about skipping the TD VM case like:
 
-WHPX adds a whpx_inject_data_abort() helper and adjusts the
-whpx_handle_mmio() return convention so the caller skips PC advancement
-when an exception has been injected.
+diff --git a/target/i386/cpu.c b/target/i386/cpu.c
+index 98e95d0842..458bfb07b9 100644
+--- a/target/i386/cpu.c
++++ b/target/i386/cpu.c
+@@ -9736,8 +9736,10 @@ void x86_cpu_expand_features(X86CPU *cpu, Error **errp)
+             env->features[FEAT_1_ECX] &= ~CPUID_EXT_PDCM;
+         }
 
-Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
----
- target/arm/hvf/hvf.c       | 46 ++++++++++++++++++++++++++--
- target/arm/whpx/whpx-all.c | 61 +++++++++++++++++++++++++++++++++++++-
- 2 files changed, 103 insertions(+), 4 deletions(-)
-
-diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
-index 5fc8f6bb..000e54bd 100644
---- a/target/arm/hvf/hvf.c
-+++ b/target/arm/hvf/hvf.c
-@@ -32,6 +32,7 @@
- #include "arm-powerctl.h"
- #include "target/arm/cpu.h"
- #include "target/arm/internals.h"
-+#include "emulate/arm_emulate.h"
- #include "target/arm/multiprocessing.h"
- #include "target/arm/gtimer.h"
- #include "target/arm/trace.h"
-@@ -2175,10 +2176,49 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
-         assert(!s1ptw);
- 
-         /*
--         * TODO: ISV will be 0 for SIMD or SVE accesses.
--         * Inject the exception into the guest.
-+         * ISV=0: syndrome doesn't carry access size/register info.
-+         * Fetch and emulate via target/arm/emulate/.
-          */
--        assert(isv);
-+        if (!isv) {
-+            ARMCPU *arm_cpu = ARM_CPU(cpu);
-+            CPUARMState *env = &arm_cpu->env;
-+            uint32_t insn;
-+            ArmEmulResult r;
-+
-+            cpu_synchronize_state(cpu);
-+
-+            if (cpu_memory_rw_debug(cpu, env->pc,
-+                                    (uint8_t *)&insn, 4, false) != 0) {
-+                bool same_el = arm_current_el(env) == 1;
-+                uint32_t esr = syn_data_abort_no_iss(same_el,
-+                    1, 0, 0, 0, iswrite, 0x10);
-+
-+                error_report("HVF: cannot read insn at pc=0x%" PRIx64,
-+                             (uint64_t)env->pc);
-+                env->exception.vaddress = excp->virtual_address;
-+                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
-+                break;
-+            }
-+
-+            r = arm_emul_insn(env, insn);
-+            if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
-+                bool same_el = arm_current_el(env) == 1;
-+                uint32_t esr = syn_data_abort_no_iss(same_el,
-+                    1, 0, 0, 0, iswrite, 0x10);
-+
-+                error_report("HVF: ISV=0 %s insn 0x%08x at "
-+                             "pc=0x%" PRIx64 ", injecting data abort",
-+                             r == ARM_EMUL_UNHANDLED ? "unhandled"
-+                                                     : "memory error",
-+                             insn, (uint64_t)env->pc);
-+                env->exception.vaddress = excp->virtual_address;
-+                hvf_raise_exception(cpu, EXCP_DATA_ABORT, esr, 1);
-+                break;
-+            }
-+
-+            advance_pc = true;
-+            break;
+-        env->features[FEAT_1_EDX] &= ~CPUID_DTS;
+-        env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
++        if (!is_tdx_vm()) {
++            env->features[FEAT_1_EDX] &= ~CPUID_DTS;
++            env->features[FEAT_7_0_EDX] &= ~CPUID_7_0_EDX_ARCH_LBR;
 +        }
- 
-         /*
-          * Emulate MMIO.
-diff --git a/target/arm/whpx/whpx-all.c b/target/arm/whpx/whpx-all.c
-index 513551be..0c04073e 100644
---- a/target/arm/whpx/whpx-all.c
-+++ b/target/arm/whpx/whpx-all.c
-@@ -29,6 +29,7 @@
- #include "syndrome.h"
- #include "target/arm/cpregs.h"
- #include "internals.h"
-+#include "emulate/arm_emulate.h"
- 
- #include "system/whpx-internal.h"
- #include "system/whpx-accel-ops.h"
-@@ -352,6 +353,27 @@ static void whpx_set_gp_reg(CPUState *cpu, int rt, uint64_t val)
-     whpx_set_reg(cpu, reg, reg_val);
- }
- 
-+/*
-+ * Inject a synchronous external abort (data abort) into the guest.
-+ * Used when ISV=0 instruction emulation fails.  Matches the syndrome
-+ * that KVM uses in kvm_inject_arm_sea().
-+ */
-+static void whpx_inject_data_abort(CPUState *cpu, bool iswrite)
-+{
-+    ARMCPU *arm_cpu = ARM_CPU(cpu);
-+    CPUARMState *env = &arm_cpu->env;
-+    bool same_el = arm_current_el(env) == 1;
-+    uint32_t esr = syn_data_abort_no_iss(same_el, 1, 0, 0, 0, iswrite, 0x10);
-+
-+    cpu->exception_index = EXCP_DATA_ABORT;
-+    env->exception.target_el = 1;
-+    env->exception.syndrome = esr;
-+
-+    bql_lock();
-+    arm_cpu_do_interrupt(cpu);
-+    bql_unlock();
-+}
-+
- static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
- {
-     uint64_t syndrome = ctx->Syndrome;
-@@ -366,7 +388,40 @@ static int whpx_handle_mmio(CPUState *cpu, WHV_MEMORY_ACCESS_CONTEXT *ctx)
-     uint64_t val = 0;
- 
-     assert(!cm);
--    assert(isv);
-+
-+    /*
-+     * ISV=0: syndrome doesn't carry access size/register info.
-+     * Fetch and decode the faulting instruction via the emulation library.
-+     */
-+    if (!isv) {
-+        ARMCPU *arm_cpu = ARM_CPU(cpu);
-+        CPUARMState *env = &arm_cpu->env;
-+        uint32_t insn;
-+        ArmEmulResult r;
-+
-+        cpu_synchronize_state(cpu);
-+
-+        if (cpu_memory_rw_debug(cpu, env->pc,
-+                                (uint8_t *)&insn, 4, false) != 0) {
-+            error_report("WHPX: cannot read insn at pc=0x%" PRIx64,
-+                         (uint64_t)env->pc);
-+            whpx_inject_data_abort(cpu, iswrite);
-+            return 1;
-+        }
-+
-+        r = arm_emul_insn(env, insn);
-+        if (r == ARM_EMUL_UNHANDLED || r == ARM_EMUL_ERR_MEM) {
-+            error_report("WHPX: ISV=0 %s insn 0x%08x at "
-+                         "pc=0x%" PRIx64 ", injecting data abort",
-+                         r == ARM_EMUL_UNHANDLED ? "unhandled"
-+                                                 : "memory error",
-+                         insn, (uint64_t)env->pc);
-+            whpx_inject_data_abort(cpu, iswrite);
-+            return 1;
-+        }
-+
-+        return 0;
-+    }
- 
-     if (iswrite) {
-         val = whpx_get_gp_reg(cpu, srt);
-@@ -451,6 +506,10 @@ int whpx_vcpu_run(CPUState *cpu)
-             }
- 
-             ret = whpx_handle_mmio(cpu, &vcpu->exit_ctx.MemoryAccess);
-+            if (ret > 0) {
-+                advance_pc = false;
-+                ret = 0;
-+            }
-             break;
-         case WHvRunVpExitReasonCanceled:
-             cpu->exception_index = EXCP_INTERRUPT;
--- 
-2.52.0
+     }
+
+     for (i = 0; i < ARRAY_SIZE(feature_dependencies); i++) {
+
+
+
+>      }
+>  
 
 
