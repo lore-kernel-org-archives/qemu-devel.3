@@ -4,79 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA54CF4644C
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83E14F46449
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:45:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25PK-0001Nk-UV; Mon, 16 Mar 2026 06:42:46 -0400
+	id 1w25PO-0001Zs-8T; Mon, 16 Mar 2026 06:42:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25PJ-0001IO-9k
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:45 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ id 1w25PL-0001RM-W1
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:48 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25PH-0003fH-Mz
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:45 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-4852e9ca034so40189735e9.2
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:43 -0700 (PDT)
+ id 1w25PK-0003fz-A5
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:47 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-485345e1013so38696385e9.1
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773657761; x=1774262561; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773657765; x=1774262565; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=kelPWOF6pmkgPgzJacHMTl6GsWcX8RKLhqs0Nt6o2AY=;
- b=gtN49BIUzGpBU48ZbpOeNZja+1T6hlzcxMt+OzJWsknktcQlYnMjaCaV6vSATYoLzw
- e3Ig3YEmrTyP2UYtASzA0TY4qNBwYKMuolll6AQ5rHKr597v3n1gJO16RPhNANGLYwaX
- NT5ib5iBtfeBy1iiNXutxDFJQD5/oLp4MhrjO+kM/Xr9BA3P6+OUO6KWjVFTTGPyi3nN
- ilYKBF1PJ3xL0U3yU/gbW218RaKUyNt7Y4psJ1PI6T4Q2qwOpIX5YCGg8R6ZIUYhL1C0
- w9T4eMgMFwTqhYhzJMivgDDzzhdl749xQIuz837i8fIhrYT0uDMyWRIIyfkEKqmiiLFb
- FpHw==
+ :reply-to; bh=TLMANJaYtmakghraNfyv62mr3wE3UT5K9PY5HJhOBc8=;
+ b=UF5FNWY4jGPkdW6gLUcGi1qULE66gs9NgxjL65lkDFPpA5I48qr0JWscXQJKVehjb8
+ c6m5hqaADDtIUWFnU6dQ565F0/xXAEmo/U+9cOKGgDNObdSQvOb3hC4OPjpPdrPoWR75
+ 9ztIb80xFRM9NgCXTCLFhXedEWFtnTzpfUJoEsPb8ctdcopvAQSBlTJYVnoAxxulLNTc
+ BaSs7GeibgvpxpeR7ec4ALBjF2mzB6UbAZLB3TIM9dJ9S+3gyRUMCgfAcUNc+SRAn9Xd
+ HraV1eyHi4VvvpQ3ZuYBSLd2Xklxg88AAs7RvcMRpUOkeEG9Nxiz6adTJ8nLsBhQJw2S
+ EZiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773657761; x=1774262561;
+ d=1e100.net; s=20251104; t=1773657765; x=1774262565;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=kelPWOF6pmkgPgzJacHMTl6GsWcX8RKLhqs0Nt6o2AY=;
- b=pOLacuaKkMUyq2T8aq2XYBhV3vWel0solLCqw5lRfYZBhOc2hy9fhBC/Uc+7BkMvxO
- Xqs8GTIx4oVTkNq7ADAHc2i6XYezwZqEYFooVzud8wTVuIG3ob36F++ZR8RvFQdL3IHD
- q1VH8x3Z2cvAZ8xwP4rMkNZ9JG28MlW8tdjKCRlWfqCfsi28FAfRSAbAESniOyrusSqr
- wgtwlp/UhNJbAY+bk+eHGryTwnraZ1agn5I4ScdnnCuOkFKj97pJmerq8MhVD6SSo47i
- dKXY+aKVEIt21UfwkzWBddiYvg43lg48EqKo3vL1uTFFVZHD6qaFwGbKyTKwwNFVPnPl
- TuCw==
-X-Gm-Message-State: AOJu0YyEicUxeFZR8WK39YACN3bUbmsjSJksSyeo8Trn3Bav7tpsdr4S
- 2E3jbFFt6mO6wKvIcIBummQp0LKJquh1PmVkLPFqKVR68LfINp5ZmwHVcflBZ/Uoz13ZZF8bw05
- /OsBw
-X-Gm-Gg: ATEYQzwujHKSciGQPAud8G9pfW6Sbld1vofHDuFJugMzZJdEBjNSX/Q1HKTCody4Hv/
- QDUgq69sDWH9kofG4e3c7wb5dNFn2alKPFT1S1bb1wMktHkSGdpOiu/1cPhzLKRsYGggXujUTxE
- /8smekpb6qGpvI7PmoDlHtl010MkycnF8Q6uGv5N9OXkCqhrFu92tD+35EA8gtkb7FNVRYrOoMC
- byi2ZlvinUVa4EdOgSgRnJrz9H+GVdlB/AJAR7JJKPOzGK4BVWEF7J40oqb18pgMyQu7qpa8euX
- 20t+E0nQQ4Oyw/2XDq6OjNKd0WaZUD2EUCfHRE7VUxcDXeD671mnqeEELnZ+7wHjMgxVjEetJ/p
- nZixBhIFoxraii0nJOpi4KJsjVL2BUV9SFdPVQDq6zwZ0ZlS7mMr7uxAQvrwgaOhPHbMMPR+qxd
- r0VVxqQS71FT0n7hkteRK6zDYynC5QwBVpSdAzmsfSo21CwdZsniTyZlr0Swev8hQQ8hRmZotiT
- zvGuNn0X4I=
-X-Received: by 2002:a05:600c:3b04:b0:485:3c7f:527e with SMTP id
- 5b1f17b1804b1-485566dd02emr189177655e9.15.1773657761308; 
- Mon, 16 Mar 2026 03:42:41 -0700 (PDT)
+ bh=TLMANJaYtmakghraNfyv62mr3wE3UT5K9PY5HJhOBc8=;
+ b=nlcbj5ESecgYGj7LIovSUVc8j0SA/JPxBRnGGr/TTumrwOniuSRBaGhibiuqtLcTdr
+ 7/X5fZ1+ZCAwQsCL0pmsHWm/HIS2fcTlvoSNUZ1pXuTIrB8wqn2ZOZcL7pq5x5gwldAw
+ SAO7jqSRtG7g+sRBHjF+bllAIQX1blRO+r0QHJ4Z4VAM2GxrpJzkg0sTGLEsk1iDCOXx
+ 1suvkir828yVhRym0FN/GKXOvUTIChjzt8rZmRB00eDbB1Abg9HHppf81S8ndBR0Vd0D
+ vga8Ug+j0FdfFW8u3vDJo9dUUJgznu5iKYstXnCaydOmGoI40pCOTPbAyVQQhGrFAD1j
+ gF+A==
+X-Gm-Message-State: AOJu0YxrBUf+MaLd+X66PAO5qfgawJ0mFOEUmLX3ZNzspPFacOrE0H9Z
+ XHL1I2QAu8vPP9xOMJvNXDQeGSRSO7fGlbB7jEzXwZdqyAC7j6DeQECFsanKBn8mBzgscBagNS2
+ XiuEL
+X-Gm-Gg: ATEYQzydNOikyV4wyZUWLWPhG1nrkbJSaHoqy6zKt+HVTB9dn52R4akp3x/06m81hMJ
+ apgEJvlkBboVCNrU4spfoB8AQBCFo1yn38GrsqcEGvyMfTAfoVZL7o4b0zSKrnCVNUVB9rT4yAN
+ 3ACnW4EzlbEtuSHeFmnE6tllsO7QkJWLBybKJVhe+ZeKWEDayKMIMnVgynb+A2zO0f0Ygh691xz
+ faubdYFHhJI0X/fVs8WqM06nAzFnvL8DNYqiXOWH3akFiwQDwCQ42m+sdis/Ee0nygiBQlhe63q
+ PQZIp+Pk4jWTVG/GJ2kJOcLCs4yujdGSM/q2rKNJU5fEhue4MkEG/vD2gk/nKqDlx4t62ACbnwD
+ 7mrkDWjzQtF098MsUldjqTzBatdZCbVwPbbjoRI8RYnLFveqvfkt1AaZAcM+EeaovxXXAnsBrV8
+ fexaPHbgxEYjSdd/3rgpiJllxr6nMG8l/BCHWabNOvQAKLVMIzQMgdhqKm3MmehGzWcmrLsX7vg
+ wz3800OMFU=
+X-Received: by 2002:a05:600c:1907:b0:485:50ac:b8cf with SMTP id
+ 5b1f17b1804b1-48555a5689amr203121575e9.0.1773657764722; 
+ Mon, 16 Mar 2026 03:42:44 -0700 (PDT)
 Received: from lanath.. ([81.2.115.145]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48557a74266sm85519135e9.17.2026.03.16.03.42.40
+ 5b1f17b1804b1-48557a74266sm85519135e9.17.2026.03.16.03.42.43
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Mon, 16 Mar 2026 03:42:40 -0700 (PDT)
+ Mon, 16 Mar 2026 03:42:44 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 07/17] hw/dma/pl080: Ignore bottom 2 bits of LLI register
-Date: Mon, 16 Mar 2026 10:42:20 +0000
-Message-ID: <20260316104230.836962-8-peter.maydell@linaro.org>
+Subject: [PULL 10/17] MAINTAINERS: Remove Eduardo Habkost
+Date: Mon, 16 Mar 2026 10:42:23 +0000
+Message-ID: <20260316104230.836962-11-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260316104230.836962-1-peter.maydell@linaro.org>
 References: <20260316104230.836962-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,93 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Tao Ding <dingtao0430@163.com>
+Eduardo Habkost doesn't wish to be listed in MAINTAINERS any more;
+remove his email, and also the git trees he used to use.
 
-The PL080 channel LLI (linked list item) register has bits [31:2] of
-the address of the next LLI in bits [31:2], with bit [1] reserved
-and bits [0] the AHB master select. We were incorrectly using the
-whole register value as the address, which meant that if the guest
-programmed something into the AHB master select bit we would use
-an incorrect address, and read incorrect data from memory.
+Move the QOM boilerplate conversion script scripts/codeconverter
+to "Orphan" status, as it no longer has any listed maintainers.
 
-The following reproducer creates a setup which has bit 0 set in
-an LLI value:
-
-Configuration
-    ../configure --target-list=arm-softmmu --enable-debug
-Reproducer
-    ./qemu-system-arm -M versatilepb -m 128M -nographic -S \
-     -device loader,addr=0x00002000,data=0x00000004,data-len=4 \
-     -device loader,addr=0x00002004,data=0x00001004,data-len=4 \
-     -device loader,addr=0x00002008,data=0x00000000,data-len=4 \
-     -device loader,addr=0x0000200c,data=0x9e4bf001,data-len=4 \
-     -device loader,addr=0x00000000,data=0x44332211,data-len=4 \
-     -device loader,addr=0x00000004,data=0x88776655,data-len=4 \
-     -device loader,addr=0x00001000,data=0x00000000,data-len=4 \
-     -device loader,addr=0x00001004,data=0x00000000,data-len=4 \
-     -device loader,addr=0x10130030,data=0x00000001,data-len=4 \
-     -device loader,addr=0x10130100,data=0x00000000,data-len=4 \
-     -device loader,addr=0x10130104,data=0x00001000,data-len=4 \
-     -device loader,addr=0x10130108,data=0x00002001,data-len=4 \
-     -device loader,addr=0x1013010C,data=0x1e4bf001,data-len=4 \
-     -device loader,addr=0x10130110,data=0x0000c001,data-len=4
-
-The correct result with this bug fix:
-    (qemu) xp /1wx 0x00001000
-     00001000: 0x44332211
-    (qemu) xp /1wx 0x00001004
-     00001004: 0x88776655
-
-Cc: qemu-stable@nongnu.org
-Signed-off-by: Tao Ding <dingtao0430@163.com>
-[PMM: Adjusted commit message]
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-Message-id: cb35c1b622674da7a2b70691402132f691933f2c.1773301927.git.dingtao0430@163.com
 Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260306120555.2035421-4-peter.maydell@linaro.org
 ---
- hw/dma/pl080.c | 12 +++++++-----
- 1 file changed, 7 insertions(+), 5 deletions(-)
+ MAINTAINERS | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
 
-diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
-index c6dc5c8efa..627ccbbd81 100644
---- a/hw/dma/pl080.c
-+++ b/hw/dma/pl080.c
-@@ -102,6 +102,7 @@ static void pl080_run(PL080State *s)
-     int size;
-     uint8_t buff[4];
-     uint32_t req;
-+    uint32_t next_lli;
+diff --git a/MAINTAINERS b/MAINTAINERS
+index f2ee7988ed..71cd07acf1 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -422,7 +422,6 @@ F: tests/tcg/sparc64/
+ X86 TCG CPUs
+ M: Paolo Bonzini <pbonzini@redhat.com>
+ M: Richard Henderson <richard.henderson@linaro.org>
+-M: Eduardo Habkost <eduardo@habkost.net>
+ S: Maintained
+ F: target/i386/tcg/
+ F: tests/tcg/i386/
+@@ -430,7 +429,6 @@ F: tests/tcg/x86_64/
+ F: hw/i386/
+ F: docs/system/i386/cpu.rst
+ F: docs/system/cpu-models-x86*
+-T: git https://gitlab.com/ehabkost/qemu.git x86-next
  
-     s->tc_mask = 0;
-     for (c = 0; c < s->nchannels; c++) {
-@@ -198,21 +199,22 @@ again:
-             ch->ctrl = (ch->ctrl & 0xfffff000) | size;
-             if (size == 0) {
-                 /* Transfer complete.  */
--                if (ch->lli) {
-+                next_lli = (ch->lli & ~3);
-+                if (next_lli) {
-                     ch->src = address_space_ldl_le(&s->downstream_as,
--                                                   ch->lli,
-+                                                   next_lli,
-                                                    MEMTXATTRS_UNSPECIFIED,
-                                                    NULL);
-                     ch->dest = address_space_ldl_le(&s->downstream_as,
--                                                    ch->lli + 4,
-+                                                    next_lli + 4,
-                                                     MEMTXATTRS_UNSPECIFIED,
-                                                     NULL);
-                     ch->ctrl = address_space_ldl_le(&s->downstream_as,
--                                                    ch->lli + 12,
-+                                                    next_lli + 12,
-                                                     MEMTXATTRS_UNSPECIFIED,
-                                                     NULL);
-                     ch->lli = address_space_ldl_le(&s->downstream_as,
--                                                   ch->lli + 8,
-+                                                   next_lli + 8,
-                                                    MEMTXATTRS_UNSPECIFIED,
-                                                    NULL);
-                 } else {
+ Xtensa TCG CPUs
+ M: Max Filippov <jcmvbkbc@gmail.com>
+@@ -2015,7 +2013,6 @@ F: include/hw/i386/nitro_enclave.h
+ F: docs/system/i386/nitro-enclave.rst
+ 
+ Machine core
+-M: Eduardo Habkost <eduardo@habkost.net>
+ M: Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
+ R: Philippe Mathieu-Daudé <philmd@linaro.org>
+ R: Yanan Wang <wangyanan55@huawei.com>
+@@ -2038,7 +2035,6 @@ F: include/system/numa.h
+ F: tests/functional/x86_64/test_cpu_queries.py
+ F: tests/functional/generic/test_empty_cpu_model.py
+ F: tests/unit/test-smp-parse.c
+-T: git https://gitlab.com/ehabkost/qemu.git machine-next
+ 
+ TargetInfo API
+ M: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+@@ -3446,7 +3442,6 @@ S: Maintained
+ F: backends/hostmem*.c
+ F: include/system/hostmem.h
+ F: docs/system/vm-templating.rst
+-T: git https://gitlab.com/ehabkost/qemu.git machine-next
+ 
+ Cryptodev Backends
+ M: Gonglei <arei.gonglei@huawei.com>
+@@ -3549,7 +3544,6 @@ T: git https://github.com/kostyanf14/qemu.git qga-win32
+ QOM
+ M: Paolo Bonzini <pbonzini@redhat.com>
+ R: Daniel P. Berrange <berrange@redhat.com>
+-R: Eduardo Habkost <eduardo@habkost.net>
+ S: Supported
+ F: docs/devel/qom.rst
+ F: docs/qdev-device-use.txt
+@@ -3572,8 +3566,7 @@ F: tests/unit/test-qdev-global-props.c
+ F: tests/qtest/qom-test.c
+ 
+ QOM boilerplate conversion script
+-M: Eduardo Habkost <eduardo@habkost.net>
+-S: Maintained
++S: Orphan
+ F: scripts/codeconverter/
+ 
+ QMP
 -- 
 2.43.0
 
