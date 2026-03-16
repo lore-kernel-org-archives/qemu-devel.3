@@ -4,43 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 20664F46455
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 12:02:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A7AAAF4645B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 12:11:11 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w26dg-0006v2-BR; Mon, 16 Mar 2026 08:01:42 -0400
+	id 1w26m1-0000eM-LP; Mon, 16 Mar 2026 08:10:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w26dF-0006tL-68
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 08:01:13 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1w26lt-0000dZ-C1; Mon, 16 Mar 2026 08:10:13 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w26dD-0008ND-Id
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 08:01:12 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>)
+ id 1w26lr-0002Lw-FO; Mon, 16 Mar 2026 08:10:09 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=uFW1yqhSx996CG9f28N1De52ChQx1tF52wN5LNvVih8=; b=t/6SpZ/MYExX6X1
- KQUM7gzM3HER2rQR8dk7BoVj2vR+NOexOWNFxOFBi0SqHvCTM9iuZz0wxmXoEFekAksBy6hXYAIel
- uY/+kAbYMHlVB2u92BUhhA9HEvie3mTLj67nxlqB8Cb4jpKyA5jsh/mGvFhl666vVJBHIW5zk3hDa
- og=;
-Date: Mon, 16 Mar 2026 13:04:51 +0100
+ List-Help; bh=rI2uUmihn7ZE4MWFbgjlsv4HIfNn8wbsw19hwO0Y1NE=; b=bX3MYyEtrMPF93u
+ jUAWWuIN6SEx1CC/dS0Rh+570WqgcoiN/KYARh0n+45X5wlgjDGb3zYPfztf0RZWpddrfGkdRXo+S
+ BbtR7lGqfFbYO/Dmv9YAt2OtRAI/zlMmE1M7mK+9xq34mvJihfqALCEa0a2+ysMyD8ARUvFI+BTEk
+ 5I=;
+Date: Mon, 16 Mar 2026 13:13:53 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Zhao Liu <zhao1.liu@intel.com>, Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: Re: [PATCH] target/i386: Replace target_ulong -> uint64_t for
- TARGET_X86_64
-Message-ID: <abfxxDu_phL5-bfN@hive.localdomain>
-References: <20260315165319.39727-1-philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-ppc@nongnu.org, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>, 
+ Glenn Miles <milesg@linux.ibm.com>, Nicholas Piggin <npiggin@gmail.com>
+Subject: Re: [PATCH 1/3] target/ppc: Explicitly declare CFAR register as 64-bit
+Message-ID: <abfzbfghwmumGsvN@hive.localdomain>
+References: <20260315170832.40331-1-philmd@linaro.org>
+ <20260315170832.40331-2-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260315165319.39727-1-philmd@linaro.org>
+In-Reply-To: <20260315170832.40331-2-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -3
@@ -68,38 +70,82 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 15/03/26, Philippe Mathieu-Daudé wrote:
-> These registers are only available on 64-bit builds, thus
-> always handled as 64-bit. This isn't even a migration break
-> because they are migrated as 64-bit since the beginning
-> (see commit 02536f8b1f9 "x86_64 save/restore").
+> The Come-From Address Register (CFAR) register is only available
+> on 64-bit CPUs, and is 64-bit wide. Prefer the 64-bit APIs over
+> the 'target-long' one. No logical change intended.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/i386/cpu.h | 8 ++++----
->  1 file changed, 4 insertions(+), 4 deletions(-)
+>  target/ppc/cpu.h       |  2 +-
+>  target/ppc/translate.c | 10 +++++-----
+>  2 files changed, 6 insertions(+), 6 deletions(-)
 > 
-> diff --git a/target/i386/cpu.h b/target/i386/cpu.h
-> index e5ae29f8af1..b0c730b3390 100644
-> --- a/target/i386/cpu.h
-> +++ b/target/i386/cpu.h
-> @@ -2058,10 +2058,10 @@ typedef struct CPUArchState {
->      uint64_t vm_hsave;
+> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+> index aba8109bbba..63c8fa25acc 100644
+> --- a/target/ppc/cpu.h
+> +++ b/target/ppc/cpu.h
+> @@ -1285,7 +1285,7 @@ struct CPUArchState {
+>      target_ulong ctr;
+>      uint32_t crf[8];       /* condition register */
+>  #if defined(TARGET_PPC64)
+> -    target_ulong cfar;
+> +    uint64_t cfar;
+>  #endif
+>      target_ulong xer;      /* XER (with SO, OV, CA split out) */
+>      target_ulong so;
+> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
+> index f26b0281737..0fc81570a8b 100644
+> --- a/target/ppc/translate.c
+> +++ b/target/ppc/translate.c
+> @@ -69,7 +69,7 @@ static TCGv cpu_msr;
+>  static TCGv cpu_ctr;
+>  static TCGv cpu_lr;
+>  #if defined(TARGET_PPC64)
+> -static TCGv cpu_cfar;
+> +static TCGv_i64 cpu_cfar;
+>  #endif
+>  static TCGv cpu_xer, cpu_so, cpu_ov, cpu_ca, cpu_ov32, cpu_ca32;
+>  static TCGv cpu_reserve;
+> @@ -124,8 +124,8 @@ void ppc_translate_init(void)
+>                                  offsetof(CPUPPCState, lr), "lr");
 >  
->  #ifdef TARGET_X86_64
-> -    target_ulong lstar;
-> -    target_ulong cstar;
-> -    target_ulong fmask;
-> -    target_ulong kernelgsbase;
-> +    uint64_t lstar;
-> +    uint64_t cstar;
-> +    uint64_t fmask;
-> +    uint64_t kernelgsbase;
+>  #if defined(TARGET_PPC64)
+> -    cpu_cfar = tcg_global_mem_new(tcg_env,
+> -                                  offsetof(CPUPPCState, cfar), "cfar");
+> +    cpu_cfar = tcg_global_mem_new_i64(tcg_env,
+> +                                    offsetof(CPUPPCState, cfar), "cfar");
+>  #endif
 >  
->      /* FRED MSRs */
->      uint64_t fred_rsp0;
+>      cpu_xer = tcg_global_mem_new(tcg_env,
+> @@ -626,12 +626,12 @@ void spr_write_lr(DisasContext *ctx, int sprn, int gprn)
+>  /* CFAR */
+>  void spr_read_cfar(DisasContext *ctx, int gprn, int sprn)
+>  {
+> -    tcg_gen_mov_tl(cpu_gpr[gprn], cpu_cfar);
+> +    tcg_gen_mov_i64(cpu_gpr[gprn], cpu_cfar);
+>  }
+>  
+>  void spr_write_cfar(DisasContext *ctx, int sprn, int gprn)
+>  {
+> -    tcg_gen_mov_tl(cpu_cfar, cpu_gpr[gprn]);
+> +    tcg_gen_mov_i64(cpu_cfar, cpu_gpr[gprn]);
+>  }
+>  
+>  /* Breakpoint */
 > -- 
 > 2.53.0
 > 
+> 
+
+Change of 
+
+  - tcg_gen_movi_tl(cpu_cfar, nip);
+  + tcg_gen_movi_i64(cpu_cfar, nip);
+
+in gen_update_branch_history() should be in this patch and not the last
+one, I'm guessing you just missed it when splitting.
+
+Other than that
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
