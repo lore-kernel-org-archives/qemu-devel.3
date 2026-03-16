@@ -4,95 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A1F33F506CC
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:08:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A6C51F506CC
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:08:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w27fH-0000lv-RV; Mon, 16 Mar 2026 09:07:23 -0400
+	id 1w27fH-0000lz-Sr; Mon, 16 Mar 2026 09:07:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w27ey-0000ig-21
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:07:09 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1w27fE-0000kv-Cy
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:07:21 -0400
+Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w27ew-0003WS-2N
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:07:03 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64ad46a44easo4272650d50.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 06:07:00 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773666420; cv=none;
+ id 1w27fC-0003Y6-4o
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:07:20 -0400
+Received: by mail-yx1-xb135.google.com with SMTP id
+ 956f58d0204a3-64c97997b0fso3302922d50.3
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 06:07:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773666435; cv=none;
  d=google.com; s=arc-20240605;
- b=cknIdyYdgKrYknUmcbHiYc4FTCp/Uu+cqeBL1HXypJJJuQJ+FhViNy+/lYLCUAeFhU
- ArnvJyNJ4IEaETlecwPW4xjfhn7HfO9NrEBhkf5ME3jSuj9mSIcpmF0e+QHoKVXvcNe8
- kOeDfpWDFCVKe1itwdPg9e5hE0ycBQzOLg3v+NbXiUE37lwxoGaNrCSYw1Z8agZmUfiU
- 5162Hz+ECoNCWXYs7m59BDKlIONNFiGZ/+5FFetJZx/QxX4wRvHB32ULaPIAhoYPk9bG
- AdzyD0kUFe82g6oteCYd+RjJbHfnUGqb6nUH7O/8TaSU3YfcHLqhDmFmx6H/BEV2qSfs
- dl7Q==
+ b=Eq+bNsUMGFGPUawRCy7Qx/uqDGXzwfmZk+Or0EJLB789R7wKojXoR7zehk9+InDXaD
+ znCqvCJ4oI4zUxOet+axJtYAnsaGeSEUpBQcIzMbpcfWEhsj5nxYK31PXT/G4UJH8hqT
+ kOtosL6s4MTjH85rYQc0gLKqCFxVFp0kI1lqXHvD/iMbRuPI6JdLJbhTYoYaQQ5QBiMa
+ H7QpXIOCPOxunqWruAsrx7I7mFZ6cO/G8c2LDM44ZZdHdHpJAN4Xcp6nkrWaoKd60Pn7
+ zrVVWrw6qMWeg9tMMwimeYMZSHeE7XgAEK6vXAVwm0SdcQJU/6wFhRPw5fDC1+QMMDhn
+ rLZw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=yMsomZp6n37JSvHKSmE3PKLqlvI8hkK4PKskYilwpNg=;
- fh=RPNY6OfUikqkdeWdw9bVW8FaPMjmiURiIMAUrJaD8OY=;
- b=hPZNHSkXFVZV8sxUci/FsC5nGcLR82u744aV2OY2D6kJl42mtnLgy8eB4BVg6qyFlu
- HMmihXjYRBFqBWg0+ObIOSgGOngfpsa8jtLRC06+2F2qdyu/NZ9hdpSVKIypN8/YTcd1
- e1wgpibjI29pRYAldC6Cdjv8iByYlhIvK34+Sswuub+q7rlcLGNHej1LwzTMVlhcC5Yw
- gjAr/0UPpmKWT13mnCJ5i2Aeq86uhSoFDwPI3Yqcie7hiNVMyhbYKpKie9Qc4ct+Fxvf
- VQGBvbxUQ/pn9xcPrt5HPw7KvFuDzaHHSZeielthSBa43ZDV4OVwtuqYR5fex8jF1O8K
- kvgA==; darn=nongnu.org
+ bh=1qO0lYTzcd+TEHehS2Ce954Qcv7RIwobbt2jryIdeH8=;
+ fh=gffcMCOUXtBOrrjZQMiDLavK++hmBvO7zO0yh09tQqI=;
+ b=e9zOy0jDG6w6rODG+oXuAn38/Crbjorwdl6nCZTOeNstmbbDRhewFUzoA0Gfv5+pJR
+ RtJvbB20xfX6OzqlOvZe6Yhi0+QVR2of4aNEMsWM8d9FIaZ5HzELbUsYxqzndNClLAvE
+ Qqunmo736G+WQyN1qK1aOZzl0R/oYAqGOkrBA4ykN8JbNeXgo66Fz2hhlKcuAZsYSomp
+ 92cLvmAmjAsAPVFdhjPNCtZByJ87LZM0FVGWVEmbOzPWGuWXPM9rXwwaMmo0DGcxT3+w
+ 2nBELvpO/x9AabVv22rhEMwBsHfIBSgZrgzstC09KWdIiuCHCEySk8Hdh5AN/GDp2K3S
+ u/mQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773666420; x=1774271220; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773666435; x=1774271235; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=yMsomZp6n37JSvHKSmE3PKLqlvI8hkK4PKskYilwpNg=;
- b=QcYUvHnwwa91BvdZHahi3KPHd3QLNDHZez53nP2EUqt7sy3byDyrqf8hWvK9Foh6hH
- 1ave9FfI9OUTE1HsOeBjQL1LY0BSvw4Gx8/gej2Jr3aDH2TG1UCWm+ilAWjlyM8xpoVF
- iR3BRBV78YL7UMpfm1dNKjSv8IunudFdjIb/wwgI0JGblVwK5tWkz1XJGgQZQGzLvtbh
- hSGpepsUwhXFW69kTl8kZ0v8WnID53WWit0I7K/BI4Nixnau7pXFl+EUP19N/s/ESrIE
- 8LYoyfOYUEXxbDjkYPhdoF1cHTx2KKWXKnaNokREcHte4+UEPqQWlWWjUCXSofPdXinA
- dntg==
+ bh=1qO0lYTzcd+TEHehS2Ce954Qcv7RIwobbt2jryIdeH8=;
+ b=iaWaWCDmr27VWPjiBEyv9/3pxiExvy4bKTjdsM0qj/1uE+LI0f6gSZi82VJRdLRIgT
+ Ws6OxR8tkbfesUGUP/4Y94AwI+WtF53DkiszO25qSwegGuZ4CiJiLzEtvvdNj/tAqmx4
+ /7Wypbg9wFxzFRWhgSnQzqHLeddQwuRo5+FnFWSMuXczOSBy6d7zNkQyd2pSWNsV3+xg
+ i+6jiME8E+RirdCdN5+2ZffpvGlHc9xF9Nx0jliG1OCUh84yu3tMimxJDORp8f3lb+LU
+ 5+Ug6wA6C2QEzcXms/F2hGDT1L1Zki1oxeVQ9jFhTUvZwnN5xXBzxS8I2QkwBGU10yvr
+ z6ww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773666420; x=1774271220;
+ d=1e100.net; s=20251104; t=1773666435; x=1774271235;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=yMsomZp6n37JSvHKSmE3PKLqlvI8hkK4PKskYilwpNg=;
- b=mKiecjr9/JpAKPkmoSOV3D5v00370JCA8ICbcTzsQcOxC1Ij/mLXM4JijjNIK5ra35
- BYsNzKDuKFE26Wn68R6ZCd7Q24E535ZMNMQ4KsgWUt6ySuB885XrwImlxe5Estw9Rzab
- cMKfHdjxzXZ61zB72jvmzatfAl2xwzWVMue5XvB1YSWnQUzZL0h13PGsM1iBlG4AAT5e
- PaEq7X7OoyJHESfiKngNcp5WHs3NaM0k1otcHvNb1/TlcRbHtMky3q0I3/wyump0Ce1w
- YPaIfMEyZfLMBF8vV3w+t59MsgH6xzDBVNoOZW9lV8cza8ZOBpf51hhYU+gPEjnfPD5Y
- nxxA==
-X-Gm-Message-State: AOJu0YzHQS2sUliIw/C8YGcNBQpECcPh1rEQkMsetOaAH+Ah9eorYfXJ
- i2ZNSGnABSllXwGIcTd1nfeQJL19iakwWqJVL8OuJLuKL3CkwWRsI1uay50r28Gw5cwld4K6xkM
- /33m7KDdgyAH3GlzzELa0EYKMTAvEWUZevkWStnmjtQ==
-X-Gm-Gg: ATEYQzxRMF3NcrtVwAnojCs4ofwWF42M4aafAGkCeM8Q2OsvjYurquk9rx39R5gUXoE
- hd4O6+lueBAurxdftmkaf7D6mFpVD0YYY5yvKecAfDFVVrxGGRHRdaxJxi/XijeG0ci+A5VjHoF
- AiEHJqETjzYuDAqf9e2lAmUzxADYIZ0jTITrj+ZaqEQLgtfigAQxxoJtW/Siqd4rXtCmRcG1yws
- 6A7JbhFKS+aPykWr0o436ykg4oPzC02qRa4S7iqQfx+lPlFGc9HEGraVhXLfWXDlfEoLv7t5+ae
- /+UBWOmjuvBGTpIdSUcKDBH2d+xU0+w50XXs8TYgRANpX/3zQC3J5n4IneYIEhNIq1w=
-X-Received: by 2002:a53:c285:0:b0:64c:9f87:ffc8 with SMTP id
- 956f58d0204a3-64e62f6af51mr9623429d50.27.1773666419550; Mon, 16 Mar 2026
- 06:06:59 -0700 (PDT)
+ bh=1qO0lYTzcd+TEHehS2Ce954Qcv7RIwobbt2jryIdeH8=;
+ b=js2LNme+DCnrJQILusFtBoBbOKrRgO8ZBrGzslDOU1XumB/3SJkED/T5SsxeDprCgc
+ QoiQr2gmnaDZRmoC3hcCJpq6NVshm+rdNGC7Qp46UXy4bwM7LTtd5kVYeUuJFhIiOVEV
+ SBMeEGEtPqZAWKi6KdoKop7R1uEPJA515mWrUdG8NxvEEzRi6Eh4+Ug3ki43v71pr6tE
+ VjwEkwMuDNQf4RMWR8K1EIGE1BjFOUr4hYXGkyNN0V52oOQWCoMD6TKMrlyB1w21XGg9
+ QmZC+h3mTrpEEsnV9HbE0opbofaVsN+w/J/9T7vy/4/27x93cQZkCsuQcjS0G6rMpaCt
+ xriA==
+X-Gm-Message-State: AOJu0Yy5d6UAy5Ds0QOjOMVtY5U+KtLwDB7VlYzQ2kTBYPglaruAjFd5
+ 1f44VAxPgOWkdShHcR9mT1Q49HX7+XKDWeLcpG6ru1Ah0qt5LHtz/kZ7nvKyhr+ZJYHPmNpng+Q
+ iM0BQ7oPMuAhHUqhOwDrM2zhB67fDZ/xk/SozMlCOzN/liLn9jy+1
+X-Gm-Gg: ATEYQzxY1VkwmN0pteoiUcG8zP1JLWoRP+ydqF9pk546wxwWgbi7nuoM6jC4hU6M+A/
+ PZ3GWTm2m7ZSFlZsQ1IEW1/ZxszciRNRTuUh02NvO/aDjN7M7l4lZEoOJ6HPXtOeoY42paa6eNX
+ O7Ozupdv6aRCn+riCDRc2GFYgRnualH/8uFb9WR/9mf1+TgIh8aQxe7KWEr0L7nbpYSac++c4sQ
+ 0QDJIPmQAFaAuTkahjWABIMFK5+Nvf8eC1BgLjJ1mZELpWRfzM35mAccEJ0IMCXGElKg8qcFGsR
+ IbLF/Zoyp4rsbNxHEDnC5Cic4WPG2PFyM4b0/4acP+HYzdFmSlSIKHxBRT/xdJQRFZg=
+X-Received: by 2002:a05:690e:1306:b0:64e:86c5:8da9 with SMTP id
+ 956f58d0204a3-64e86c5946amr335044d50.6.1773666435300; Mon, 16 Mar 2026
+ 06:07:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260313183009.34221-1-deller@kernel.org>
-In-Reply-To: <20260313183009.34221-1-deller@kernel.org>
+References: <20260316104039.195960-1-thuth@redhat.com>
+In-Reply-To: <20260316104039.195960-1-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Mar 2026 13:06:47 +0000
-X-Gm-Features: AaiRm52hfrVh7J5JAkHvZcBJt3KNspRLRUDK9Fq6dzuBd-NF3pyB9OPetNvKc7g
-Message-ID: <CAFEAcA9TshuDuHf-39-hbygmWjjdPprJOXJGUuA-yF1ydwtyKw@mail.gmail.com>
-Subject: Re: [PULL 0/2] Linux user for v11 patches
-To: Helge Deller <deller@kernel.org>
-Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
- Razvan Ghiorghe <razvanghiorghe16@gmail.com>,
- Laurent Vivier <laurent@vivier.eu>
+Date: Mon, 16 Mar 2026 13:07:03 +0000
+X-Gm-Features: AaiRm52ZI7TIvf7Xp7bXeZrOBR4p1ffkDfr1oJxK05e_TQfuRZxLsxUiVBZajHc
+Message-ID: <CAFEAcA-MWUzt9GXQbdp1bov2UfZghFcWaPO9QNqWEBxjTPK+3w@mail.gmail.com>
+Subject: Re: [PULL 00/14] Fixes for "-device xyz,
+ help" and updates to MAINTAINERS
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,27 +114,23 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 13 Mar 2026 at 18:31, Helge Deller <deller@kernel.org> wrote:
+On Mon, 16 Mar 2026 at 10:40, Thomas Huth <thuth@redhat.com> wrote:
 >
-> From: Helge Deller <deller@gmx.de>
+> The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
 >
-> The following changes since commit 1fd5ff9d76d23ab23a68419cbc76d5ee33e8b455:
->
->   Merge tag 'for-upstream' of https://gitlab.com/kmwolf/qemu into staging (2026-03-10 16:29:24 +0000)
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
 >
 > are available in the Git repository at:
 >
->   https://github.com/hdeller/qemu-hppa.git tags/linux-user-for-v11-pull-request
+>   https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-16
 >
-> for you to fetch changes up to 5e5b278d2b1b81fc2b5ca09dba4848f81cd3a718:
+> for you to fetch changes up to bc4ee6025a71290eb47d86c2c77eb1f40fbb6305:
 >
->   linux-user: fix mremap with old_size=0 for shared mappings (2026-03-12 21:03:48 +0100)
+>   MAINTAINERS: Add another reviewer to s390x boot (2026-03-16 11:36:32 +0100)
 >
 > ----------------------------------------------------------------
-> Two linux-user patches
->
-> Two linux-user patches from Razvan Ghiorghe.
->
+> * Fix various crashes that can occur when starting QEMU with -device xyz,help
+> * Update various sections in the MAINTAINERS file
 
 
 
