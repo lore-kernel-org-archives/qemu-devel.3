@@ -4,114 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 33AEEF506CD
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:41:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38AB8F506CD
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:43:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w28Bd-000737-5f; Mon, 16 Mar 2026 09:40:49 -0400
+	id 1w28EP-0007uM-HI; Mon, 16 Mar 2026 09:43:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1w28BQ-0006wI-GT; Mon, 16 Mar 2026 09:40:37 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w28EN-0007tz-FZ; Mon, 16 Mar 2026 09:43:39 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jrossi@linux.ibm.com>)
- id 1w28BN-0004vX-6g; Mon, 16 Mar 2026 09:40:34 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62G1Tx591290637; Mon, 16 Mar 2026 13:40:30 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=oytOZP
- ylOAhqcuDPdLjT3g3LqvUXB64MAkUtNvFz6iU=; b=S7gVa75+7WOUG8tXPzdbgz
- 9S7NFRWZqFLiDhDKZ315j+5cQURwx2vn2ZraJGNejTGz+v1p5tM1PsNVrbC5f/FI
- KwtjpZviZXFZRzdBOYJbyGcA5GYC/T6887f78H3+W3RZWslzj8DGjfYczUG8gXvk
- nknzVuHqYtvuwfd3rkFWuIJMs6OudFhcEW3xNv7NtWzi+pkfKMpGXYVg3L2p7Er8
- 9aptndQwZZi7i+d+Bf8COqLcZggrSxmCizjJ8JwvO/ileBO3/k2cvNEqweNo7obp
- QS1PTqmlRIg02u1FNM1oL11HpUQtTpyfr09w8evuJWW/ukg1TTBeQfcDppyitvyA
- ==
-Received: from ppma21.wdc07v.mail.ibm.com
- (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvyau7p1h-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Mar 2026 13:40:30 +0000 (GMT)
-Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62GALs2Y015644;
- Mon, 16 Mar 2026 13:40:29 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cwk0n50ba-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Mon, 16 Mar 2026 13:40:29 +0000
-Received: from smtpav02.wdc07v.mail.ibm.com (smtpav02.wdc07v.mail.ibm.com
- [10.39.53.229])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62GDeSsa30933638
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Mon, 16 Mar 2026 13:40:28 GMT
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6EE925805E;
- Mon, 16 Mar 2026 13:40:28 +0000 (GMT)
-Received: from smtpav02.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 657005805D;
- Mon, 16 Mar 2026 13:40:27 +0000 (GMT)
-Received: from [9.61.9.100] (unknown [9.61.9.100])
- by smtpav02.wdc07v.mail.ibm.com (Postfix) with ESMTPS;
- Mon, 16 Mar 2026 13:40:27 +0000 (GMT)
-Message-ID: <cb54fc3b-5d8f-490f-aaed-f8cb9e0bbe8f@linux.ibm.com>
-Date: Mon, 16 Mar 2026 09:40:26 -0400
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w28EK-0006Ib-Tj; Mon, 16 Mar 2026 09:43:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773668608; bh=TDpBLbR/B6X6KGYMqaYbq6fchDVaysZRS3CHphPmgyw=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=GA2oe0PoFggasejmyJZHgH2nzdVQtNpe3q2iMgL8ppIKTX7siSzsc40d1N0DgUtfe
+ ufuJRWybfVR7XLASz52HWCjKjvr5b8fsLlhcujzlc2ciyC3lWs/su1AtdSVf1VxtNF
+ lF8jaPBsHBhh5mJbWnzYyFZiUgfiTtjCS/iQFPs5keZzM+C3oSxtYr40K6AMr9B6PV
+ 1cupe0cT1BevMMNO1LxFa9U8xM+U4OonDn9vu7kjTzhqioFT+bBltUiXf+zJfyuEuR
+ fjBqnGUp+h7viLIvxM6THaSJcmclpN8JrSFMR/1s6iRAAaXVT7QP/dghevcLr6zb+x
+ R1x+EYICKRHhQ==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id A6273193EE1;
+ Mon, 16 Mar 2026 16:43:28 +0300 (MSK)
+Message-ID: <66022765-b7b8-4f46-a90a-43dc473a16fd@tls.msk.ru>
+Date: Mon, 16 Mar 2026 16:43:32 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/1] MAINTAINERS: Add another reviewer to s390x boot
-To: Eric Farman <farman@linux.ibm.com>, Thomas Huth <thuth@redhat.com>,
- Jason Herne <jjherne@linux.ibm.com>, Cornelia Huck <cohuck@redhat.com>,
- Matthew Rosato <mjrosato@linux.ibm.com>,
- =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>
-Cc: Christian Borntraeger <borntraeger@linux.ibm.com>,
- Zhuoying Cai <zycai@linux.ibm.com>, qemu-devel@nongnu.org,
- qemu-s390x@nongnu.org
-References: <20260313113424.15583-2-thuth@redhat.com>
- <20260313194810.1844241-1-farman@linux.ibm.com>
- <20260313194810.1844241-2-farman@linux.ibm.com>
-Content-Language: en-US
-From: Jared Rossi <jrossi@linux.ibm.com>
-In-Reply-To: <20260313194810.1844241-2-farman@linux.ibm.com>
+Subject: Re: [PULL 0/2] Linux user for v11 patches
+To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
+Cc: Helge Deller <deller@gmx.de>, Razvan Ghiorghe
+ <razvanghiorghe16@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260313183009.34221-1-deller@kernel.org>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+In-Reply-To: <20260313183009.34221-1-deller@kernel.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE2MDEwMSBTYWx0ZWRfX5QXJWld2/ome
- j3tDBFimEmCPlkB+wAn3zpLkhCy5hKssP9sr73UsVLU7UnxY8sBXXCn5w6ZIKnOuXxaZEq7s4AG
- NNv3j1I66/BGTXRixS2srxjwsFK3qIimdHMLJ7IWhveUXDE7TVUJbiTnSiLjufRseEEOGKH6gxC
- fDgY3g4sivj4xDfa+GUf02IpNAFd4yHaJVuTH3l/jM3tAIhySwNoIXL2gSYxBy8a2AdEIP2ELn/
- 0Y+0Lnn/IqUEyYxEsM4cYzSA1P7DrhCNj9orJ4YoQk6PiPKTRt9bdBBBzkp9+zLTel+wfqQ13gg
- nSkK+Cd9zI/P1Sy76Gc1qgLBIeid3TmpJZPCAeaTJ1kTMi7ZnN4JQy8DdCD8K6YmWQRZrUocrgu
- F9ZN+tVI73ZRNWrO8x3BCPlz4DspEtfSSOYQTgSOSmyzjVvnMaOVXYsB0rEP2BSEPmDMHQL8V2/
- UjhcCIgEvTuO3qA8XVQ==
-X-Authority-Analysis: v=2.4 cv=GIQF0+NK c=1 sm=1 tr=0 ts=69b8084e cx=c_pps
- a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=VnNF1IyMAAAA:8
- a=Pl9V7em4pPg2a3i_iyQA:9 a=NqO74GWdXPXpGKcKHaDJD/ajO6k=:19 a=QEXdDO2ut3YA:10
-X-Proofpoint-ORIG-GUID: 9Hxb80HTxWV9-HDb_qQI6Z2PkXoHMA5A
-X-Proofpoint-GUID: 9Hxb80HTxWV9-HDb_qQI6Z2PkXoHMA5A
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-16_04,2026-03-16_03,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0 malwarescore=0
- phishscore=0 impostorscore=0 suspectscore=0 adultscore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603160101
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=jrossi@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,26 +112,15 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/13/26 3:48 PM, Eric Farman wrote:
-> Jason offered to help review this area of code;
-> let's make sure he's notified of changes.
->
-> Signed-off-by: Eric Farman <farman@linux.ibm.com>
-> ---
->   MAINTAINERS | 1 +
->   1 file changed, 1 insertion(+)
->
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index 23562aaac2..e83ff3826b 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -1866,6 +1866,7 @@ S390-ccw boot
->   M: Jared Rossi <jrossi@linux.ibm.com>
->   R: Zhuoying Cai <zycai@linux.ibm.com>
->   R: Christian Borntraeger <borntraeger@linux.ibm.com>
-> +R: Jason Herne <jjherne@linux.ibm.com>
->   S: Supported
->   F: hw/s390x/ipl.*
->   F: pc-bios/s390-ccw/
-Acked-by: Jared Rossi <jrossi@linux.ibm.com>
+On 13.03.2026 21:30, Helge Deller wrote:
+
+> Razvan Ghiorghe (2):
+>    linux-user: Fix zero_bss for RX PT_LOAD segments
+>    linux-user: fix mremap with old_size=0 for shared mappings
+
+This looks like qemu-stable material, is it not?
+
+Thanks,
+
+/mjt
 
