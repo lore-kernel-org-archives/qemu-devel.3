@@ -4,59 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 99B88F506D4
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:53:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0B46BF506D5
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 13:54:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w28NR-0003RL-RN; Mon, 16 Mar 2026 09:53:02 -0400
+	id 1w28Oy-0005mL-GX; Mon, 16 Mar 2026 09:54:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w28Mw-0002h8-OY; Mon, 16 Mar 2026 09:52:32 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w28Ov-0005le-Nf
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:54:34 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w28Ms-0000C6-Qm; Mon, 16 Mar 2026 09:52:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773669141; bh=RrVPzh7rUh4qrx15NQ3Lut3i91tsnq8KLYKY2VIS4oo=;
- h=From:To:Cc:Subject:Date:In-Reply-To:References;
- b=BQm/tc5mcpsYBPnXWRaQS78idPYGVFXYrZ4ZmpN95JUzw7nhWW1MAj91890yc23Qz
- NmaE8ycGZbnhkKuCtQh/gPPQILV/psBp8g3YyIzKKqt6nmH0VN1nkEEhQ/2ZyF8+iG
- oqp1mkTnJq5RHLMWKVtEYoypVHaTjpKASAuzoM+cxUgYViMhhiCWerLzNQcEkKKIXr
- WjdNoH6PzFc4OeahqMFuO9EOVN+L41e/MYCd89wDn7u9Fd65tfjyXnRB5dgIgJGm4n
- 1OFgp7lQfkAuxwrliyH8lJw4w+CI05g7fbrygatrd1YuGkzG6ZqK2dZ4WJEQxB8DWS
- /QDsGznhF8TAg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id 7A959193EF7;
- Mon, 16 Mar 2026 16:52:21 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id 1037738093F;
- Mon, 16 Mar 2026 16:52:25 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w28Ot-0000fo-DI
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 09:54:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773669270;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=Y+1wQ/GC3T4S+DPdmODcBLbo4gmpDsF6aAnUpau0w70=;
+ b=NDB4arFWp6DyFXnzqFWqYtUdM5ogruVdqzrnVRKkWjzhg9j8xH0vjyyBoELkotg/7a/l7j
+ BizFcNkfoFwfrPSi1Yb+rNdqeCSqUr+8fHofWdcUT3/h112ehQQKsk6hTBJY/+h5xs+0r/
+ zsWdyK8Gr7ml4R7HQzRReQWhvvQ+GZU=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-408-3AfIRGLXMlmNPgvM061gHQ-1; Mon,
+ 16 Mar 2026 09:54:28 -0400
+X-MC-Unique: 3AfIRGLXMlmNPgvM061gHQ-1
+X-Mimecast-MFC-AGG-ID: 3AfIRGLXMlmNPgvM061gHQ_1773669267
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 992A418002CA; Mon, 16 Mar 2026 13:54:27 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.101])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 717D619560AB; Mon, 16 Mar 2026 13:54:25 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-stable@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Michael Tokarev <mjt@tls.msk.ru>
-Subject: [Stable-10.2.2 54/55] hyperv/syndbg: check length returned by
- cpu_physical_memory_map()
-Date: Mon, 16 Mar 2026 16:52:21 +0300
-Message-ID: <20260316135225.120094-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
-In-Reply-To: <qemu-stable-10.2.2-20260316164931@cover.tls.msk.ru>
-References: <qemu-stable-10.2.2-20260316164931@cover.tls.msk.ru>
+Cc: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?q?Daniel=20P=20=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Thomas Huth <thuth@redhat.com>
+Subject: [PATCH 3/3] tests/docker: Update the opensuse-leap container file to
+ version 16
+Date: Mon, 16 Mar 2026 14:54:07 +0100
+Message-ID: <20260316135407.209072-4-thuth@redhat.com>
+In-Reply-To: <20260316135407.209072-1-thuth@redhat.com>
+References: <20260316135407.209072-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,80 +85,105 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Paolo Bonzini <pbonzini@redhat.com>
+From: Thomas Huth <thuth@redhat.com>
 
-If cpu_physical_memory_map() returns a length shorter than the one
-that was passed into the function, writing the full out_len bytes
-causes an access beyond the memory allocated to the guest; or in
-the case of the MMIO bounce buffer, an out-of-bounds access in a
-heap-allocated object.
+Run "make lcitool-refresh" to update the container file to the latest
+version of openSUSE.
 
-Add a check similar to the one already in handle_send_msg(),
-and take the occasion to remove repeated computations of
-recv_byte_count + UDP_PKT_HEADER_SIZE and clarify that the
-code does not write past out_len bytes.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ tests/docker/dockerfiles/opensuse-leap.docker | 35 +++++++++----------
+ 1 file changed, 17 insertions(+), 18 deletions(-)
 
-Reported-by: Oleh Konko <https://github.com/1seal>
-Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
-Fixes: CVE-2026-3842
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
-(cherry picked from commit 4f28b87fdd24df2049626106b7c24d0180952115)
-Signed-off-by: Michael Tokarev <mjt@tls.msk.ru>
-
-diff --git a/hw/hyperv/syndbg.c b/hw/hyperv/syndbg.c
-index bcdfdf6af7..134dadb89e 100644
---- a/hw/hyperv/syndbg.c
-+++ b/hw/hyperv/syndbg.c
-@@ -193,7 +193,7 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
-     uint16_t ret;
-     g_assert(MSG_BUFSZ >= qemu_target_page_size());
-     QEMU_UNINITIALIZED uint8_t data_buf[MSG_BUFSZ];
--    hwaddr out_len;
-+    hwaddr out_len, out_requested_len;
-     void *out_data;
-     ssize_t recv_byte_count;
+diff --git a/tests/docker/dockerfiles/opensuse-leap.docker b/tests/docker/dockerfiles/opensuse-leap.docker
+index d693f2c6f85..66e90fa3634 100644
+--- a/tests/docker/dockerfiles/opensuse-leap.docker
++++ b/tests/docker/dockerfiles/opensuse-leap.docker
+@@ -1,13 +1,12 @@
+ # THIS FILE WAS AUTO-GENERATED
+ #
+-#  $ lcitool dockerfile --layers all opensuse-leap-15 qemu
++#  $ lcitool dockerfile --layers all opensuse-leap-16 qemu
+ #
+ # https://gitlab.com/libvirt/libvirt-ci
  
-@@ -222,29 +222,28 @@ static uint16_t handle_recv_msg(HvSynDbg *syndbg, uint64_t outgpa,
-     if (is_raw) {
-         out_len += UDP_PKT_HEADER_SIZE;
-     }
-+    out_requested_len = out_len;
-     out_data = cpu_physical_memory_map(outgpa, &out_len, 1);
--    if (!out_data) {
--        return HV_STATUS_INSUFFICIENT_MEMORY;
-+    ret = HV_STATUS_INSUFFICIENT_MEMORY;
-+    if (!out_data || out_len < out_requested_len) {
-+        goto cleanup_out_data;
-     }
+-FROM registry.opensuse.org/opensuse/leap:15.6
++FROM registry.opensuse.org/opensuse/leap:16.0
  
-     if (is_raw &&
--        !create_udp_pkt(syndbg, out_data,
--                        recv_byte_count + UDP_PKT_HEADER_SIZE,
-+        !create_udp_pkt(syndbg, out_data, out_len,
-                         data_buf, recv_byte_count)) {
--        ret = HV_STATUS_INSUFFICIENT_MEMORY;
-         goto cleanup_out_data;
-     } else if (!is_raw) {
--        memcpy(out_data, data_buf, recv_byte_count);
-+        memcpy(out_data, data_buf, out_len);
-     }
+ RUN zypper update -y && \
+-    zypper addrepo -fc https://download.opensuse.org/update/leap/15.6/backports/openSUSE:Backports:SLE-15-SP6:Update.repo && \
+     zypper install -y \
+            Mesa-devel \
+            alsa-lib-devel \
+@@ -80,13 +79,14 @@ RUN zypper update -y && \
+            libudev-devel \
+            liburing-devel \
+            libusb-1_0-devel \
++           libxdp-devel \
+            libzstd-devel \
+            llvm \
+            lttng-ust-devel \
+            lzo-devel \
+            make \
++           meson \
+            mtools \
+-           ncat \
+            ncurses-devel \
+            ninja \
+            openssh \
+@@ -94,11 +94,17 @@ RUN zypper update -y && \
+            pcre2-devel-static \
+            pipewire-devel \
+            pkgconfig \
+-           python311 \
+-           python311-base \
+-           python311-pip \
+-           python311-setuptools \
+-           python311-wheel \
++           python3-Pillow \
++           python3-PyYAML \
++           python3-Sphinx \
++           python3-base \
++           python3-numpy \
++           python3-opencv \
++           python3-pip \
++           python3-setuptools \
++           python3-sphinx_rtd_theme \
++           python3-tomli \
++           python3-wheel \
+            rdma-core-devel \
+            rust \
+            rust-bindgen \
+@@ -110,7 +116,7 @@ RUN zypper update -y && \
+            spice-protocol-devel \
+            swtpm \
+            systemd-devel \
+-           systemtap-sdt-devel \
++           systemtap-dtrace \
+            tar \
+            tesseract-ocr \
+            tesseract-ocr-traineddata-english \
+@@ -133,18 +139,11 @@ RUN zypper update -y && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/clang && \
+     ln -s /usr/bin/ccache /usr/libexec/ccache-wrappers/gcc
  
--    *retrieved_count = recv_byte_count;
--    if (is_raw) {
--        *retrieved_count += UDP_PKT_HEADER_SIZE;
--    }
-+    *retrieved_count = out_len;
-     ret = HV_STATUS_SUCCESS;
- 
- cleanup_out_data:
--    cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    if (out_data) {
-+        cpu_physical_memory_unmap(out_data, out_len, 1, out_len);
-+    }
-     return ret;
- }
- 
+-RUN /usr/bin/pip3.11 install \
+-                     PyYAML \
+-                     meson==1.8.1 \
+-                     pillow \
+-                     sphinx \
+-                     sphinx-rtd-theme
+-
+ ENV CCACHE_WRAPPERSDIR="/usr/libexec/ccache-wrappers"
+ ENV LANG="en_US.UTF-8"
+ ENV MAKE="/usr/bin/make"
+ ENV NINJA="/usr/bin/ninja"
+-ENV PYTHON="/usr/bin/python3.11"
++ENV PYTHON="/usr/bin/python3"
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
 -- 
-2.47.3
+2.53.0
 
 
