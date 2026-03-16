@@ -4,54 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A27C2F4644A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:53:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60B0BF4644B
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:55:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25Z6-00030A-Vp; Mon, 16 Mar 2026 06:52:53 -0400
+	id 1w25ay-0003XH-GJ; Mon, 16 Mar 2026 06:54:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w25Z5-0002zp-L3; Mon, 16 Mar 2026 06:52:51 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1w25at-0003We-5z
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:54:43 -0400
+Received: from out-188.mta0.migadu.com ([2001:41d0:1004:224b::bc])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w25Z2-0006NW-Ry; Mon, 16 Mar 2026 06:52:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773658361; bh=03xVM0hbVtqeiosEJ5qJ8pm4oxqCd4yCopbs96MwAt4=;
- h=From:To:Cc:Subject:Date;
- b=q1UxAibjx0KauMgC6mLcRIQodSOi1FvUrOnmYXNWwCKYHPXvhSEqSp/QMf1r8NvP+
- TBsuUMrT3Zj+TGTlv7DRm1mY7QLXlaPrUpdaC2TGSfekapAt20laATCWmXtMAXsrJy
- b7RmDUC0Sk9AAfAe8w4TDDsVGB0cscxxBM3UlgBzSHGlk+g29g5izzS0tpZS9KqeP6
- 2oHqnDNfhKj50kUBm3GGx1UMZ0ro6EQcDwXi70pdjxX87n97R3JDpgTBtT5x15jAFz
- BZcG7ZfBS6xYWkwMnj1rsXFp2gMvx8Napj5gxhwWLrsCpH9XgwcbCvTN/hEXfG5+iz
- JmPM3F6w2cjHg==
-Received: from tsrv.corpit.ru (tsrv.tls.msk.ru [192.168.177.2])
- by isrv.corpit.ru (Postfix) with ESMTP id A848F193DC1;
- Mon, 16 Mar 2026 13:52:41 +0300 (MSK)
-Received: from think4mjt.tls.msk.ru (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by tsrv.corpit.ru (Postfix) with ESMTP id E996A380682;
- Mon, 16 Mar 2026 13:52:44 +0300 (MSK)
-From: Michael Tokarev <mjt@tls.msk.ru>
-To: qemu-devel@nongnu.org
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
-	qemu-trivial@nongnu.org
-Subject: [PULL v2 00/13] Trivial patches for 2026-03-16
-Date: Mon, 16 Mar 2026 13:52:38 +0300
-Message-ID: <20260316105244.107822-1-mjt@tls.msk.ru>
-X-Mailer: git-send-email 2.47.3
+ (Exim 4.90_1) (envelope-from <zenghui.yu@linux.dev>)
+ id 1w25aq-0008Nz-6s
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:54:42 -0400
+Message-ID: <588a9b07-72d7-4222-851a-f174b1949839@linux.dev>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=linux.dev; s=key1;
+ t=1773658477;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=M8JbMHGnwWRxCCU8ruAi7a09uWr6H7vzF0Xd2uPfYpc=;
+ b=DinX83dpT+by+KFknbJDDVGycBBX+7AEIuE2dtdaQWTU2yQJU+ojzuVP1RKR+gu9cTgmhm
+ 0K4W/owoiTMdvuMKIpbkJ3rX0hwgI1rvmVp2R6zvtI4PRPJBA9vlLtuddP+OWBCSNP7QIB
+ YfS0jFZ15LYUsRD30NEvSVCjwSWDWRs=
+Date: Mon, 16 Mar 2026 18:54:28 +0800
 MIME-Version: 1.0
+Subject: Re: [PATCH rfc] hvf: arm: Inject SEA when executing insn in invalid
+ memory range
+To: =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, agraf@csgraf.de,
+ peter.maydell@linaro.org
+References: <20260315163840.30741-1-zenghui.yu@linux.dev>
+ <87ikawnmcq.fsf@draig.linaro.org>
+Content-Language: en-US
+X-Report-Abuse: Please report any abuse attempt to abuse@migadu.com and
+ include these headers.
+From: Zenghui Yu <zenghui.yu@linux.dev>
+In-Reply-To: <87ikawnmcq.fsf@draig.linaro.org>
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Migadu-Flow: FLOW_OUT
+Received-SPF: pass client-ip=2001:41d0:1004:224b::bc;
+ envelope-from=zenghui.yu@linux.dev; helo=out-188.mta0.migadu.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -67,62 +71,128 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
+Hi Alex,
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
+On 3/16/26 5:40 PM, Alex Bennée wrote:
+> Zenghui Yu <zenghui.yu@linux.dev> writes:
+> 
+> > It seems that hvf doesn't deal with the abort generated when guest tries to
+> > execute instructions outside of the valid physical memory range, for
+> > unknown reason. The abort is forwarded to userspace and QEMU doesn't handle
+> > it either, which ends up with faulting on the same instruction infinitely.
+> >
+> > This was noticed by the kvm-unit-tests/selftest-vectors-kernel failure:
+> >
+> >   timeout -k 1s --foreground 90s /opt/homebrew/bin/qemu-system-aarch64 \
+> >     -nodefaults -machine virt -accel hvf -cpu host \
+> >     -device virtio-serial-device -device virtconsole,chardev=ctd \
+> >     -chardev testdev,id=ctd -device pci-testdev -display none \
+> >     -serial stdio -kernel arm/selftest.flat -smp 1 -append vectors-kernel
+> 
+> Have you got patches for teaching kvm-unit-tests about hvf or are you
+> running these all manually? I tried building on the Mac we have but it
+> failed the build and the docs only mention x86.
 
-are available in the Git repository at:
+No more patches. This is how I build and test it on my M1:
 
-  https://gitlab.com/mjt0k/qemu.git tags/pull-trivial-patches
+./configure --arch=aarch64 --page-size=16k --cross-prefix=aarch64-elf-
+make && make standalone
+QEMU=qemu-system-aarch64 ACCEL=hvf ./run_tests.sh
 
-for you to fetch changes up to 7cc61f922f4b5db006e8f03d61208a3d652ed2df:
+The command line above is copied from logs/selftest-vectors-kernel.log.
 
-  rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL, and stop checking for epoll in meson.build (2026-03-16 13:50:18 +0300)
+> >   PASS: selftest: vectors-kernel: und
+> >   PASS: selftest: vectors-kernel: svc
+> >   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
+> >   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
+> >   qemu-system-aarch64: 0xffffc000: unhandled exception ec=0x20
+> 
+> I think this is running:
+> 
+>   static bool check_pabt(void)
+>   {
+>           enum vector v = check_vector_prep();
+> 
+>           install_exception_handler(v, ESR_EL1_EC_IABT_EL1, pabt_handler);
+> 
+>           test_exception("adrp	x9, check_pabt_invalid_paddr\n"
+>                          "add	x9, x9, :lo12:check_pabt_invalid_paddr\n"
+>                          "ldr	x9, [x9]\n",
+>                          "blr	x9\n",
+>                          "", "x9", "x30");
+> 
+>           install_exception_handler(v, ESR_EL1_EC_IABT_EL1, NULL);
+> 
+>           return pabt_works;
+>   }
+> 
+> which is expecting 0x21 - instruction abort at the same exception level.
+> I wonder why there is the difference.
 
-----------------------------------------------------------------
-trivial patches for 2026-03-16
+It's the guest that executes an instruction outside of the valid memory
+range. From hypervisor's perspective, it's an instruction abort from a
+lower EL, so we get the syndrome saying that EC=0x20. We then decide
+that we should emulate the hardware behavior by injecting an SEA into
+the insane guest.
 
-a few patches accumulated in trivial-patches tree to date.
-A larger part of it is my linux-user cleanup series.
+And from guest's perspective, it's an instruction abort caused by itself
+(thus EC=0x21 - instruction abort taken without a change in EL).
 
-v2: drop the slirp socket change (net/slirp: allow hostfwd socket
-paths with dashes).  Not resending anything, just the cover letter,
-since the patchset is the same except of this single patch.
+> >   [...]
+> >
+> > It's apparent that the guest is braindead and it's unsure what prevents hvf
+> > from injecting an abort directly in that case. Try to deal with the insane
+> > guest in QEMU by injecting an SEA back into it in the EC_INSNABORT
+> > emulation path.
+> >
+> > Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
+> > ---
+> >  target/arm/hvf/hvf.c | 23 +++++++++++++++++++++++
+> >  1 file changed, 23 insertions(+)
+> >
+> > diff --git a/target/arm/hvf/hvf.c b/target/arm/hvf/hvf.c
+> > index aabc7d32c1..54d6ea469c 100644
+> > --- a/target/arm/hvf/hvf.c
+> > +++ b/target/arm/hvf/hvf.c
+> > @@ -2332,9 +2332,32 @@ static int hvf_handle_exception(CPUState *cpu, hv_vcpu_exit_exception_t *excp)
+> >          bool ea = (syndrome >> 9) & 1;
+> >          bool s1ptw = (syndrome >> 7) & 1;
+> >          uint32_t ifsc = (syndrome >> 0) & 0x3f;
+> > +        uint64_t ipa = excp->physical_address;
+> > +        AddressSpace *as = cpu_get_address_space(cpu, ARMASIdx_NS);
+> > +        hwaddr xlat;
+> > +        MemoryRegion *mr;
+> > +
+> > +        cpu_synchronize_state(cpu);
+> >  
+> >          trace_hvf_insn_abort(env->pc, set, fnv, ea, s1ptw, ifsc);
+> >  
+> > +        /*
+> > +         * TODO: If s1ptw, this is an error in the guest os page tables.
+> > +         * Inject the exception into the guest.
+> > +         */
+> > +        assert(!s1ptw);
+> > +
+> > +        mr = address_space_translate(as, ipa, &xlat, NULL, false,
+> > +                                     MEMTXATTRS_UNSPECIFIED);
+> > +        if (unlikely(!memory_region_is_ram(mr))) {
+> > +            uint32_t syn;
+> > +
+> > +            /* inject an SEA back into the guest */
+> > +            syn = syn_insn_abort(arm_current_el(env) == 1, ea, false, 0x10);
+> > +            hvf_raise_exception(cpu, EXCP_PREFETCH_ABORT, syn, 1);
+> > +            break;
+> > +        }
+> > +
+> >          /* fall through */
+> >      }
+> >      default:
+> 
+> I need the check the exception paths for KVM and TCG. I guess for the
+> KVM case it is all in the kernel?
 
-----------------------------------------------------------------
-Michael Tokarev (7):
-      linux-user/syscall.c: assume splice is always present
-      meson.build: stop checking for splice()
-      linux-user: assume inotify sycalls are always present
-      meson.build: stop checking for inotify_init()
-      linux-user: assume epoll is always present
-      meson.build: do not check for epoll.h (CONFIG_EPOLL)
-      rename CONFIG_EPOLL_CREATE1 to CONFIG_EPOLL, and stop checking for epoll in meson.build
+Yup, in kvm_handle_guest_abort().
 
-Sergei Heifetz (5):
-      migration/savevm.c: reorder usage and assertion of mis->from_src_file
-      dump/dump.c: reorder usage and assertion of block
-      system/physmem.c: remove useless assertion of block
-      hw/usb/core.c: reorder usage and assertion of p->ep
-      target/i386: fix NULL pointer dereference in legacy-cache=off handling
-
-Thomas Huth (1):
-      docs: Move xbzrle.txt into the migration folder and convert to rst
-
- docs/devel/migration/features.rst               |   1 +
- docs/{xbzrle.txt => devel/migration/xbzrle.rst} | 106 ++++++++++++++----------
- dump/dump.c                                     |   2 +-
- hw/usb/core.c                                   |   2 +-
- linux-user/fd-trans.c                           |   5 --
- linux-user/fd-trans.h                           |   4 -
- linux-user/syscall.c                            |  44 ++--------
- linux-user/syscall_defs.h                       |   3 -
- meson.build                                     |  19 +----
- migration/savevm.c                              |   3 +-
- system/physmem.c                                |   2 -
- target/i386/cpu.c                               |   7 +-
- util/aio-posix.h                                |   4 +-
- util/meson.build                                |   2 +-
- 14 files changed, 86 insertions(+), 118 deletions(-)
- rename docs/{xbzrle.txt => devel/migration/xbzrle.rst} (74%)
+Thanks,
+Zenghui
 
