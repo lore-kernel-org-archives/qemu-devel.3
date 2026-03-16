@@ -4,105 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 110E5F46445
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:37:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C6FF46445
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:41:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25J7-0005OV-BH; Mon, 16 Mar 2026 06:36:21 -0400
+	id 1w25NX-00068L-Te; Mon, 16 Mar 2026 06:40:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w25J3-0005O6-IR
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:36:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25NT-00067x-R0
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:40:51 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
- id 1w25Iz-0002VS-EG
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:36:16 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25NQ-0003O5-NV
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:40:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773657369;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=jrczenpk/Ie2q/bnJVGvTsZe3qMz3FFdtOL/x3thFNQ=;
- b=cYy1vA7yJTEKV127usz1tC3MuJMuwsD9TiszYqrgrqQ5QwIjTh7L578GD6Pf4zifL+5m9D
- hEwJpyZtDL8/b4MCGFniZWGncjmd0Hh4qwyBxkN6vEkJGeqDRQ/dSIrmTGF/d9SD2wlfMw
- cICzJx3jV1EFEAjc4vh4Hr688l7Euvg=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-256-98WK9--2MnebsUo1hRJeAw-1; Mon, 16 Mar 2026 06:36:08 -0400
-X-MC-Unique: 98WK9--2MnebsUo1hRJeAw-1
-X-Mimecast-MFC-AGG-ID: 98WK9--2MnebsUo1hRJeAw_1773657367
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-4853f33b7dbso38411115e9.3
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:36:08 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773657367; x=1774262167;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:reply-to:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=jrczenpk/Ie2q/bnJVGvTsZe3qMz3FFdtOL/x3thFNQ=;
- b=a0tXeL9vGdkLDSxDC391pHVwpnN4G04OdaEoJFquFOVILU07rlqQjdZJgyt4jVpBV+
- d7fVB2oNwIu/NSuSdh8dU7T+pl51WKI7HIDYPjuETmoEgFOEkppzPZ9nuTH6rRnvpHOg
- 5M+jbklLYrXTAtn4k2gFPQHkduAhFuzsfacN2YFOX0ZmC5cN+Fbt2kyw1iZliIRjF5Xh
- 5Ndoh6WDxFHkYQu0tTJoeDNMDgpFyu2Zeurju/OcOtIwKmmxz7sbVWrXMUrO2sYQJmaW
- epTrPZY7gpbD2KiK9ww3foWm/IEhCbPL6mSkOXygnGWxZ6M4JHS0A791UQ154IZeJT31
- DEJw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUEIIz9LmWF5eqBCgPtPOOZPbCuS99DGb9/al55AIKl/l8hKGNKqqN/OA3LJEQnLY/XigJHPUh+Cfll@nongnu.org
-X-Gm-Message-State: AOJu0Ywc6CJtjh3HT5fre9Sitm6XzshzX4riun0cNBSaYdlIU8/kA2+7
- JdPaUkqvAxbnjbNdjEJETfLqRN3j2BgPo2JWweB9zyTDsG1aID06g9bDry5rTbqVIhgGqtuQlBT
- oXoey5ZXqhmG9c0zTR5GOhmiLEgRs07xBpq6+8M29Z8I6SG9A1nbmN1yV
-X-Gm-Gg: ATEYQzzgw2GRfJRHR7RsoMEidjA6jeK31QLSjeUJ5AmustrwT5HLxY5GXSc7IGDSQ0q
- HiAVO6/NEG6xi7PfinLOrocqo/8uv7OCNp7f/jL7K0YnwagVKoSKQCWevGd/5ythFEvxBJnU/UX
- cJhUcTo5otiYP/tNzf6qr0RUCemzwG93tAn2ShvsOlaxP/oOwG1Ak20EQElVZ/QNqal+sauCPqa
- 0SxPDfsvMIn0E//v3cOimUMgQ2X6Hi1x+E7DhL4SiaIkWb1iIwQqmTd8EqUTBkBzGCw6KzYqIPL
- wOU4q7ZktayPLf88F+b2RLx+azoMRssvZw50i1+hQbIWMfo38wgLWFn8m88g0DicEkFqmhgkRWR
- ilLkwkGl9gtGu7wU+pa/Si3NNgDq6X4dab8yHNQupjybftaEkSfbBlJt3tufGht8JcDMSbA==
-X-Received: by 2002:a05:600c:4689:b0:482:e5d4:b7ca with SMTP id
- 5b1f17b1804b1-485566d6e49mr203071265e9.8.1773657366820; 
- Mon, 16 Mar 2026 03:36:06 -0700 (PDT)
-X-Received: by 2002:a05:600c:4689:b0:482:e5d4:b7ca with SMTP id
- 5b1f17b1804b1-485566d6e49mr203070655e9.8.1773657366234; 
- Mon, 16 Mar 2026 03:36:06 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
- ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4854b5e912fsm1066948015e9.2.2026.03.16.03.36.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Mon, 16 Mar 2026 03:36:05 -0700 (PDT)
-Message-ID: <671d4604-9656-4f74-961c-88f447058858@redhat.com>
-Date: Mon, 16 Mar 2026 11:36:04 +0100
+ s=mimecast20190719; t=1773657647;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=4rDGMOd7CYN61Ozt/m2b4vzeiVOzhAz9GiFTaB0LBjc=;
+ b=FGYSx++75w3lOHxtPnMNvtb0uOxh0OeRd5OZC9on8AvM9u2NqoXz1ueIGM1R9gZOQ5jCFp
+ 8RrtKwR7RzY/z0wNKL2n78DSHAzT3hr0RGaXTDzempSqGl1BqKQU46EldIdvYfk3ZXhLOe
+ NfedB47gP1rolg3+ops4YZYoap+kkzA=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-rd_XLaXeMc-Dan3EiOHfFQ-1; Mon,
+ 16 Mar 2026 06:40:44 -0400
+X-MC-Unique: rd_XLaXeMc-Dan3EiOHfFQ-1
+X-Mimecast-MFC-AGG-ID: rd_XLaXeMc-Dan3EiOHfFQ_1773657643
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 174E4180035C; Mon, 16 Mar 2026 10:40:43 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.33.101])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 4E9D119560AB; Mon, 16 Mar 2026 10:40:40 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org
+Subject: [PULL 00/14] Fixes for "-device xyz,help" and updates to MAINTAINERS
+Date: Mon, 16 Mar 2026 11:40:25 +0100
+Message-ID: <20260316104039.195960-1-thuth@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 14/43] hw/arm/smmuv3-accel: Add nested vSTE
- install/uninstall support
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org,
- Nicolin Chen <nicolinc@nvidia.com>,
- Shameer Kolothum <skolothumtho@nvidia.com>
-Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-References: <20260129160917.1415092-1-peter.maydell@linaro.org>
- <20260129160917.1415092-15-peter.maydell@linaro.org>
- <CAFEAcA-AoJmHpcAydqk9x_Y6M8_7N=7-izYFPxerLuTdYUKsNg@mail.gmail.com>
- <CAFEAcA99c+-qQX+wfVTZ5bKeYozm+WrFHsb=GEQriu_SuWjhWQ@mail.gmail.com>
-From: Eric Auger <eric.auger@redhat.com>
-In-Reply-To: <CAFEAcA99c+-qQX+wfVTZ5bKeYozm+WrFHsb=GEQriu_SuWjhWQ@mail.gmail.com>
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124;
- envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -117,104 +76,58 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
 
+  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
 
-On 3/13/26 3:06 PM, Peter Maydell wrote:
-> Ping for opinions on whether Coverity is right about a leak here...
->
-> thanks
-> -- PMM
->
->
-> On Tue, 17 Feb 2026 at 14:24, Peter Maydell <peter.maydell@linaro.org> wrote:
->> On Thu, 29 Jan 2026 at 16:09, Peter Maydell <peter.maydell@linaro.org> wrote:
->>> From: Nicolin Chen <nicolinc@nvidia.com>
->>>
->>> A device placed behind a vSMMU instance must have corresponding vSTEs
->>> (bypass, abort, or translate) installed. The bypass and abort proxy nested
->>> HWPTs are pre-allocated.
->>>
->>> For translat HWPT, a vDEVICE object is allocated and associated with the
->>> vIOMMU for each guest device. This allows the host kernel to establish a
->>> virtual SID to physical SID mapping, which is required for handling
->>> invalidations and event reporting.
->>>
->>> An translate HWPT is allocated based on the guest STE configuration and
->>> attached to the device when the guest issues SMMU_CMD_CFGI_STE or
->>> SMMU_CMD_CFGI_STE_RANGE, provided the STE enables S1 translation.
->>>
->>> If the guest STE is invalid or S1 translation is disabled, the device is
->>> attached to one of the pre-allocated ABORT or BYPASS HWPTs instead.
->>>
->>> While at it, export smmu_find_ste() for use here.
->> Hi; Coverity points out what looks like a missing
->> deallocation on an error-exit path in this function (CID 1644832):
->>
->>> +bool smmuv3_accel_install_ste(SMMUv3State *s, SMMUDevice *sdev, int sid,
->>> +                              Error **errp)
->>> +{
->> [...]
->>
->>> +    /*
->>> +     * Install the STE based on SMMU enabled/config:
->>> +     * - attach a pre-allocated HWPT for abort/bypass
->>> +     * - or a new HWPT for translate STE
->>> +     *
->>> +     * Note: The vdev remains associated with accel_dev even if HWPT
->>> +     * attach/alloc fails, since the Guest–Host SID mapping stays
->>> +     * valid as long as the device is behind the accelerated SMMUv3.
->>> +     */
->>> +    if (!smmu_enabled(s)) {
->>> +        hwpt_id = smmuv3_accel_gbpa_hwpt(s, accel);
->>> +    } else {
->>> +        config = STE_CONFIG(&ste);
->>> +
->>> +        if (!STE_VALID(&ste) || STE_CFG_ABORT(config)) {
->>> +            hwpt_id = accel->abort_hwpt_id;
->>> +        } else if (STE_CFG_BYPASS(config)) {
->>> +            hwpt_id = accel->bypass_hwpt_id;
->>> +        } else if (STE_CFG_S1_TRANSLATE(config)) {
->>> +            s1_hwpt = smmuv3_accel_dev_alloc_translate(accel_dev, &ste, errp);
->> In this function we allocate memory and return it, assigning
->> it to s1_hwpt...
->>
->>
->>> +            if (!s1_hwpt) {
->>> +                return false;
->>> +            }
->>> +            hwpt_id = s1_hwpt->hwpt_id;
->>> +       }
->>> +    }
->>> +
->>> +    if (!hwpt_id) {
->>> +        error_setg(errp, "Invalid STE config for sid 0x%x",
->>> +                   smmu_get_sid(&accel_dev->sdev));
->>> +        return false;
->> ...but in this error-exit code path we don't free it.
-s1_hwpt is allocated if iommufd_backend_alloc_hwpt() succeeded and if it
-did hwpt_id cannot be NULL I think.
-Shameer, Nicolin, please could you confirm
+are available in the Git repository at:
 
-Adding Shameer in TO
+  https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-16
 
-Eric 
->>
->>> +    }
->>> +
->>> +    if (!host_iommu_device_iommufd_attach_hwpt(idev, hwpt_id, errp)) {
->>> +        if (s1_hwpt) {
->>> +            iommufd_backend_free_id(idev->iommufd, s1_hwpt->hwpt_id);
->>> +            g_free(s1_hwpt);
->>> +        }
->> Compare the error-handling here which does tidy up s1_hwpt.
->>
->>> +        return false;
->>> +    }
->> thanks
->> -- PMM
+for you to fetch changes up to bc4ee6025a71290eb47d86c2c77eb1f40fbb6305:
+
+  MAINTAINERS: Add another reviewer to s390x boot (2026-03-16 11:36:32 +0100)
+
+----------------------------------------------------------------
+* Fix various crashes that can occur when starting QEMU with -device xyz,help
+* Update various sections in the MAINTAINERS file
+
+----------------------------------------------------------------
+Alistair Francis (7):
+      hw/riscv: sifive_e: Don't call qdev_get_machine in soc init
+      hw/riscv: microchip_pfsoc: Don't call qdev_get_machine in soc init
+      hw/arm: xlnx-zynqmp: Don't call qdev_get_machine in soc init
+      hw/arm: fsl-imx7: Don't call qdev_get_machine in soc init
+      hw/arm: fsl-imx8mp: Don't call qdev_get_machine in soc init
+      hw/arm: fsl-imx6: Don't call qdev_get_machine in soc init
+      hw/acpi: generic_event_device: Don't call qdev_get_machine in initfn
+
+Eric Farman (1):
+      MAINTAINERS: Add another reviewer to s390x boot
+
+Jared Rossi (1):
+      MAINTAINERS: Update S390-ccw boot maintainers/reviewers
+
+Thomas Huth (5):
+      target/xtensa/cpu: Move initialization of memory region to realize function
+      target/mips/cpu: Move initialization of memory region to realize function
+      MAINTAINERS: Update the s390x maintainers
+      MAINTAINERS: Remove myself from various sections
+      MAINTAINERS: Downgrade the functional testing section to "Odd Fixes"
+
+ MAINTAINERS                    | 17 ++++++++---------
+ hw/acpi/generic_event_device.c |  5 +++--
+ hw/arm/fsl-imx6.c              | 14 +++++++-------
+ hw/arm/fsl-imx7.c              | 19 +++++++++----------
+ hw/arm/fsl-imx8mp.c            | 13 ++++++-------
+ hw/arm/xlnx-zynqmp.c           | 42 ++++++++++++++++++------------------------
+ hw/riscv/microchip_pfsoc.c     |  7 +++++--
+ hw/riscv/sifive_e.c            |  9 ++++++---
+ target/mips/cpu.c              | 16 ++++++++--------
+ target/xtensa/cpu.c            | 14 ++++++++------
+ 10 files changed, 78 insertions(+), 78 deletions(-)
 
 
