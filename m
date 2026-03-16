@@ -4,97 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD23F53D69
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 15:58:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3615FF53D6E
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 16:02:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2AJs-0007D2-KH; Mon, 16 Mar 2026 11:57:28 -0400
+	id 1w2AOJ-0000Oa-V6; Mon, 16 Mar 2026 12:02:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2AJq-0007Ci-FS
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:57:26 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ id 1w2AOI-0000Nd-EZ
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:02:02 -0400
+Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2AJo-0008Uv-VK
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 11:57:26 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64ad8435f46so4918679d50.1
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 08:57:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773676643; cv=none;
+ id 1w2AOG-0000h8-7S
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 12:02:02 -0400
+Received: by mail-yx1-xb132.google.com with SMTP id
+ 956f58d0204a3-64ad019bbd4so4827303d50.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 09:01:59 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773676919; cv=none;
  d=google.com; s=arc-20240605;
- b=hB1h+hgH5dWLUUzDR3Qm3Or+HWMBO1MLHdjbhHBaS0GrCZ97a0SNfABdJ21XtfwMf+
- dFMouEHpykhL++YJ6DMRQ62Ng94C8PCYL7973rXvFj7FGSwqioNNi7HIuhzMvA5LLjxc
- aj4Hi/Fs5SH6weGyCrjqlw9Yisg6ezdnggmjQfxWp/e59iUgh4bN/1KxRlF4v0AM+N7E
- pcXN4WSPa/Yd26010iT9HSXwWLbWGk3BYIjmjs0DYPt1/jfeFfBYnzRoOV6uk6v/0gh8
- SpR9XwYYLl9FaWfkFxjBHG4z78hgNXYEFnHjfySsBDEewvmftIuliVpitVhtq/MvJn5f
- It8Q==
+ b=dCUrjl2O2L91wFeaJIRWQa0MT/ZsQUpmt5IAgYMq4GJ8XMC53TGB8Lkkk8/rp0ZlNW
+ cPlIk7xWMx0OPdBe46innPbQh8MiaqHOoD65PJ1W5ZYP7yQQqkG1SnsbM+jPtuhv8Ybx
+ t4NwzcK9TP3F/xKL6lwhS6O7Z+Fok8zOHNhB8tpUWWXCmOcosnx7hTUUUyIX9WTZ4HBm
+ S283dDhXI1pz4Er7LCkO74fMqDtnaoY7i37McElvfeUC9yy2sGnIEng3M/1RvDJSy7sT
+ 30yi0T/mwQ8w/K9bqij8T5HM7Vbn1x9y5JnX1DfJxBOIcHCIGnOBweAgc3smSHNlAx1T
+ SY8w==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=R1RAxLHuisOEg23Ie34CPIJ5KCkNU9xqAHyp/gYUa+g=;
- fh=Y6kxCTiPZ5b/w2E0dv4AaCuHxR6xokTpt/HocB1Rvxk=;
- b=SMz4d1x5ysqkfg48Pz3RYiuTYSvLMau5k7L3NGGQLRcWPWNVazjJoxqxXfrvuBu4ph
- OwXvLbsNmrONSu8hxCVS0JbVqN4lUBt3v3agGy1dg91ljNivnlnTp9hNwZJdyrvgH+R5
- OYH5cQgapsuWPDqsXIpBPBdenFt7rIKhgZsmQFIz2XQAdpVupW87X/e2rOEsa5sgXTJP
- phI0ZVeNnlwD3RfIbcopPuy5Dmdxod7lnd6Ov0i7fCJngVMoELrfneEg8SMt/A6ZJdql
- 8DqTRvtFIMtI/pBN2OflJA4LYp3k8lZme1lOkTZwjhp2inbaiX2lo6qp2Cze1WDu/K+Z
- 7KFQ==; darn=nongnu.org
+ bh=GN4ErEzsX70Hn1AmxS7IMIG2FMGVna6MRmkHvyQZ9Hw=;
+ fh=e7KFnIxW3CrgInXi6CJ+oK9Px3SvDPamNMp8OesOSuY=;
+ b=Vxm9G7drX33++Pgknz2BzMU7gaB3APBL/dOYpTQWHiRG8Ddi2xnfFA4HeNRHLlelTE
+ KNMljZ1LLFQhNFUc1ov1Ge0elrgMo6e1G6cEOrgJYgQ0899zIYqhkKSDBEWxEA6KCwm7
+ sf4aJ9Ma/SE/4YQlRJnOo2eYe+n0UPQxCw8qKQjGY2L/Y1XfykTRDv0j/TaOdPRfeNEQ
+ 88WxDJSSrPctbY0jcOKlEJYB+9ONbzhLHbpPFQOkfhh42n5Lca5AHOeOPBUW7NdaalR7
+ nGdvLGQ4aZGvzpiwVF0lwdyOLfz0y85ceORRF25AqgTxFNekFDhhUanoBomOeTsG6g+G
+ vdlQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773676643; x=1774281443; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773676919; x=1774281719; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=R1RAxLHuisOEg23Ie34CPIJ5KCkNU9xqAHyp/gYUa+g=;
- b=GnSvXmlUyNb+xYhJs8tDrqHlOLzN9YkfP2I3NCmcwWd1L6qZTgqxuytUBVZUEF/1U+
- OQGaNeAlZ2J7+mcK6ntz59Um9VE3WDWbN4wKTvzJRw1lxm1FFPxfTibNeahtUrMXHBon
- PsRZ1deG2iED64PIIGYEkfAxDrDGFYMENlbUqUfoJ2b3G46c8TrLOPt2k26YkcNCMx8T
- FDrZF2l7E/3np3/LKCdqu/tBQtGwP0h/IIROMRACUNW3EjP1pz7fki/XMCWaSt4Xha+m
- 8+m/Z7kJ0HyGEHcZiCEUQW+Vr8A67kFxRUZ76E4ZbW3vBhLijBQl2akG0i9Fe1pgRHUh
- IEvA==
+ bh=GN4ErEzsX70Hn1AmxS7IMIG2FMGVna6MRmkHvyQZ9Hw=;
+ b=I3RpazTRKdCP+FSqJhMSwnRv1Ls8wGDPtr+gtRYdpjn+zMWoMXfXW8ZI613CiMhiYT
+ alBmGXxRrx8IeHoqIO76NdgODAcpWirLEPyIsI52Uur8uEV/5SZKtS4U0cAnijamrh9S
+ ljWCL32EKaWX0w8kVCLBwbgZJUi6sAUpGzYiAbpgcktQOMDgq0SY77T0YTO1tQseRt+k
+ buOyYHXBTZznpWvISQbULw7XL9ubYUuvuDhCO3A6l2UsxrkiXMncJIzANAPQ7GIdTgGB
+ rL96ocS5NIdtVkf7kYSd6pk3G0HZfXK+ZolZOHRohL/PHcQhKGcSfcGy1aMEAviW2NNs
+ rxHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773676643; x=1774281443;
+ d=1e100.net; s=20251104; t=1773676919; x=1774281719;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=R1RAxLHuisOEg23Ie34CPIJ5KCkNU9xqAHyp/gYUa+g=;
- b=aTSKxy5ITZsP6sokvIrr8LBPQqtPVPyZ6FGTUbv3Mq166MlBgWssh72G+EkofXjXZe
- 1hJizGI3igc1goICvJAOPkosumYR0/W4Iie7lG+UEVZ5MhOw2xr+kEM7hNlunj7pb/cB
- SiL8V85NK5StOO7CyzRG4j+qeTMMvn9h32fJ0oehb3i1b7HWtCtTAMp3EkS8aruMvhkw
- sXOcVtm6fj4vmz9RRNDipbAQOm/x3AqrylDZt+cwIA0nRKZmsCNDaNFPuN8dpZYqnm7j
- ZRnHbZO7dIf48U+zfcEejn6zWuiJzCYzCijY83VT4lgLI+WrmglS1czzoa+ljRe3OJRC
- ZjDw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCX/syrJ6dk1jSaR1ud9YmleQqEWaX/k9xC1vN8CZoNcnYtZi9K/1u/sc0iu7eF5+4nMVcCEBpHrea2c@nongnu.org
-X-Gm-Message-State: AOJu0YxNDurc7EqGVUZc3AlldWl5BxjfzMWp5OzHFbHrpkeWQFGDG/8b
- gIKeXQxInFllLa4OeJ2KbYfWiQZtyU0S6d4xOFwHALDQ0EF1ZHoHvKdhh7PVKxoWFlyjeWH+NeT
- Xi+Aj6b+bg+JaNuiTEsIPiDXyOISSoeYNxak41NTbzXYySrvkejAL1lk=
-X-Gm-Gg: ATEYQzy9dEq2KbV6ew2pdDlmjp9bV49Hf1/EwQRfJtIl7aKuc25/OwDQKwYXdsA6ReP
- 7y23+5eKOL87NA/4pseotT6lTiUGIdNk+okDAm2wezdiQ5bos41slJeGcqxsbp2TOJvohLo5tGI
- BiEj8u7ZriTDv2yRFR7nP9sI4qrcl9yXOtjinGC+Mh54C/2Mfhc2fH0Vgj9V6Dp8fUWUvm56vv+
- gGLuziiqkz5LaJ8y2/Qf0dfjBOUPKU3CWkC5cMEqjlp9ESwpVCM9X0421n4hh22887JryNPD7O+
- 2w3ysGWsAGpWHt7XXo8H0b078PIjLYIdxI1S1ElKZWUX/905uFgwcH12IP2LzlybAd8=
-X-Received: by 2002:a53:ba4b:0:b0:649:443f:ab2a with SMTP id
- 956f58d0204a3-64e62fb58efmr8679674d50.37.1773676642796; Mon, 16 Mar 2026
- 08:57:22 -0700 (PDT)
+ bh=GN4ErEzsX70Hn1AmxS7IMIG2FMGVna6MRmkHvyQZ9Hw=;
+ b=f7uL0CX4lI0Ld9TlP4iSU51jqaf0WjYIY5Jsh6RLj3mhxbkhwK9W2gQczy3ABRHZYQ
+ EwJI1yPffelgLKwLY5QftSb/ce6lrivcki5NsudN/aU/CPnEGXfsKUn/ealrLMuqUuRz
+ q0CzA+9x4qlN7ZpojjjuFECas+Iix6N/8+jkYLqjPF02rOiOE/DmRsjhVvzlJvI6fZJM
+ B+5b9QJY1AtTYMfFjE8h7u+UrjHS3ThJGsUKKipULfa3tCwJQyLa1OMU8/y4YMytRHZ/
+ R7S8/EAj0QOztn/6eGHfA8umGN+dQ7OI2/pzZ7d+mXcymCoxnokN2MxJ7rV8+q/UyvAf
+ t/Qw==
+X-Gm-Message-State: AOJu0YxvpJETDnwzT+wLQxhq8HFSWZo+Ocern+f1mtbp8ikd8iQWOa+L
+ ztRTE0WYNK7DGKocDd+3mX7Ei1Feko+5sSJ1h3fe9bC4cWbGskbFELwXOQRNIEUHql5pOM4Hhuu
+ 6MeJSUKSEdm5RCwbB3sN9hT4W8s+2IfpZP2skFZzabg==
+X-Gm-Gg: ATEYQzzR6nt7CktY/ztBw7U/FzpscOHGASi6BQ6IreHaLGQnOfxXgWrj+XYvLCcU30+
+ vnzA9cWuzwtLHpQXX0aul+SMBg/fe4Er/1qYvrszOA2TBwlD7Vzsem0pRLOaoFSpHFpPvGzMeek
+ 6z665b+fV0LB8CBamhooujRHi57XnrdYbH7jzA3n7tubGydxGns7qocd5J4y23vL+QpvmDFNga6
+ f21A5iOLKQo4xZhjZamf5va1UkNgaAhio9QhSnPQBLBn8NvEL+mpz3A7M/x+mCZNfw0q4EszABj
+ h2Wjs6QorLIpZsbxa+KoPvp4qdXw96fDSM5dEs0RDlvAzzxg53BKEsnTHhA2odZztec=
+X-Received: by 2002:a53:b3c3:0:b0:64d:29a2:6933 with SMTP id
+ 956f58d0204a3-64e62f32bc2mr10599564d50.17.1773676918685; Mon, 16 Mar 2026
+ 09:01:58 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260313233538.1519319-1-rkir@google.com> <87341zsvmc.fsf@suse.de>
-In-Reply-To: <87341zsvmc.fsf@suse.de>
+References: <20260212144244.22579-1-pbonzini@redhat.com>
+ <20260212144244.22579-5-pbonzini@redhat.com>
+In-Reply-To: <20260212144244.22579-5-pbonzini@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Mar 2026 15:57:11 +0000
-X-Gm-Features: AaiRm51DhNjVmPQM15KKYcid7ez71cLqy2ZJI3g7h23oIV8ybPQdOmP2ymXBxPc
-Message-ID: <CAFEAcA9BzSp9F8yv4eZv5eeUM4JXSy9T-QnRr_UbJZpNmhtHyw@mail.gmail.com>
-Subject: Re: [PATCH v3] vmstate: validate VMStateDescription::fields upon
- registration
-To: Fabiano Rosas <farosas@suse.de>
-Cc: Roman Kiryanov <rkir@google.com>, peterx@redhat.com, qemu-devel@nongnu.org,
- whollins@google.com, jansene@google.com, jpcottin@google.com
+Date: Mon, 16 Mar 2026 16:01:45 +0000
+X-Gm-Features: AaiRm51KN8IVbYs2MEvQdiFu_SzMzr8EOnfhdZenTF3dcZEUIubIqjvZ5avcUr8
+Message-ID: <CAFEAcA-O4g5ZrRdK1s5kBjMfRbWhPnD0hLZwhpVHVHVbE7LKdQ@mail.gmail.com>
+Subject: Re: [PULL 04/41] pc: Start with modern CPU hotplug interface by
+ default
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org, Zhao Liu <zhao1.liu@intel.com>, 
+ Igor Mammedov <imammedo@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Peter Xu <peterx@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,94 +117,277 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Mar 2026 at 14:22, Fabiano Rosas <farosas@suse.de> wrote:
+On Thu, 12 Feb 2026 at 14:44, Paolo Bonzini <pbonzini@redhat.com> wrote:
 >
-> Roman Kiryanov <rkir@google.com> writes:
+> From: Zhao Liu <zhao1.liu@intel.com>
 >
-> > The vmstate_save_state_v() function does not support
-> > NULL in VMStateDescription::fields and will crash if
-> > one is provided.
-> >
-> > This change prevents this situation from happening
-> > by explicitly crashing earlier.
-> >
-> > Suggested-by: Fabiano Rosas <farosas@suse.de>
-> > Reviewed-by: Peter Xu <peterx@redhat.com>
-> > Signed-off-by: Roman Kiryanov <rkir@google.com>
-> > ---
-> > v3:
-> >  - Also added assert to virtio.c to validate
-> >    VirtioDeviceClass instances which bypass
-> >    vmstate_register_with_alias_id.
-> >  - Updated the commit message to "Reviewed-by".
-> > v2:
-> >  - Moved the assert from vmstate_save_state_v to the registration
-> >    path (vmstate_register_with_alias_id) and the qtest validation path
-> >    (vmstate_check) to catch missing fields earlier.
-> > ---
-> >  hw/virtio/virtio.c | 6 ++++++
-> >  migration/savevm.c | 5 +++++
-> >  2 files changed, 11 insertions(+)
-> >
-> > diff --git a/hw/virtio/virtio.c b/hw/virtio/virtio.c
-> > index 0ba734d0bc..e4543de335 100644
-> > --- a/hw/virtio/virtio.c
-> > +++ b/hw/virtio/virtio.c
-> > @@ -4054,6 +4054,12 @@ static void virtio_device_realize(DeviceState *dev, Error **errp)
-> >      /* Devices should either use vmsd or the load/save methods */
-> >      assert(!vdc->vmsd || !vdc->load);
-> >
-> > +    /*
-> > +     * If a device has vmsd, it either MUST have valid fields
-> > +     * or marked unmigratable.
-> > +     */
-> > +    assert(!vdc->vmsd || (vdc->vmsd->unmigratable || vdc->vmsd->fields));
-> > +
-> >      if (vdc->realize != NULL) {
-> >          vdc->realize(dev, &err);
-> >          if (err != NULL) {
-> > diff --git a/migration/savevm.c b/migration/savevm.c
-> > index 197c89e0e6..20c2b99231 100644
-> > --- a/migration/savevm.c
-> > +++ b/migration/savevm.c
-> > @@ -861,6 +861,8 @@ static void vmstate_check(const VMStateDescription *vmsd)
-> >      const VMStateField *field = vmsd->fields;
-> >      const VMStateDescription * const *subsection = vmsd->subsections;
-> >
-> > +    assert(field || vmsd->unmigratable);
-> > +
-> >      if (field) {
-> >          while (field->name) {
-> >              if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
-> > @@ -900,6 +902,9 @@ int vmstate_register_with_alias_id(VMStateIf *obj, uint32_t instance_id,
-> >      /* If this triggers, alias support can be dropped for the vmsd. */
-> >      assert(alias_id == -1 || required_for_version >= vmsd->minimum_version_id);
-> >
-> > +    /* If vmsd is migratable it MUST have valid fields. */
-> > +    assert(vmsd->fields || vmsd->unmigratable);
-> > +
-> >      se = g_new0(SaveStateEntry, 1);
-> >      se->version_id = vmsd->version_id;
-> >      se->section_id = savevm_state.global_section_id++;
+> For compatibility reasons PC/Q35 will start with legacy CPU hotplug
+> interface by default but with new CPU hotplug AML code since 2.7
+> machine type (in commit 679dd1a957df ("pc: use new CPU hotplug interface
+> since 2.7 machine type")). In that way, legacy firmware that doesn't use
+> QEMU generated ACPI tables was able to continue using legacy CPU hotplug
+> interface.
 >
-> Looks like we'll also need to fix some stubs that define empty vmsds:
+> While later machine types, with firmware supporting QEMU provided ACPI
+> tables, generate new CPU hotplug AML, which will switch to new CPU
+> hotplug interface when guest OS executes its _INI method on ACPI tables
+> loading.
 >
-> qemu-system-mips64: ../migration/savevm.c:864: void vmstate_check(const
-> VMStateDescription *): Assertion `field || vmsd->unmigratable' failed.
+> Since 2.6 machine type is now gone, and consider that the legacy BIOS
+> (based on QEMU ACPI prior to v2.7) should be no longer in use, previous
+> compatibility requirements are no longer necessary. So initialize
+> 'modern' hotplug directly from the very beginning for PC/Q35 machines
+> with cpu_hotplug_hw_init(), and drop _INIT method.
 >
-> Maybe something like the following. Peter, what do you think?
+> Additionally, remove the checks and settings around cpu_hotplug_legacy
+> in cpuhp VMState (for piix4 & ich9), to eliminate the risk of
+> segmentation faults, as gpe_cpu no longer has the opportunity to be
+> initialized. This is safe because all hotplug now start with the modern
+> way, and it's impossible to switch to legacy way at runtime (even the
+> "cpu-hotplug-legacy" properties does not allow it either).
 
-Ah, I was about to report this -- commit 7aa563630b6b0 ("pc: Start
-with modern CPU hotplug interface by default") broke the MIPS Malta
-board migration, which now segfaults when you "savevm" because
-the stub vmstate_cpu_hotplug struct has a NULL fields pointer.
+Hi. This commit seems (according to git bisect) to have broken
+"savevm" for the MIPS malta board (which uses piix4): it now
+segfaults when you run the command from the monitor. Repro:
 
-This used to work because the relevant vmstate had a "needed"
-function that meant we never used the stub vmstate structs, but
-that commit dropped the "needed" functions.
+$ qemu-img create -f qcow2 dummy.qcow2 32M
 
-If the change you suggest is the right way to fix this then it
-ought to be its own patch with a Fixes: tag pointing at 7aa563630b6b0.
+Build QEMU with
+'--target-list=mips-linux-user,mips64-linux-user,mipsel-linux-user,mipsn32-linux-user,mipsn32el-linux-user,mips-softmmu,mipsel-softmmu,mips64-softmmu,mips64el-softmmu'.
+
+$ ./build/mips/qemu-system-mipsel -nographic -drive
+if=none,format=qcow2,file=dummy.qcow2
+[Type "C-a c" to get the "(qemu)" monitor prompt)]
+(qemu) savevm foo
+
+Backtrace from doing this under gdb:
+
+#0  0x0000555555df7d4d in vmsd_can_compress (field=0x5555564f78a0
+<__compound_literal.3>) at ../../migration/vmstate.c:339
+#1  0x0000555555df7dbb in vmsd_desc_field_start
+    (vmsd=0x555556431ba0 <vmstate_cpuhp_state>, vmdesc=0x555556918690,
+field=0x5555564f78a0 <__compound_literal.3>, i=0, max=1) at
+../../migration/vmstate.c:362
+#2  0x0000555555df85a7 in vmstate_save_state_v
+    (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
+opaque=0x555556c9aac0, vmdesc=0x555556918690, version_id=1,
+errp=0x7fffffffc948) at ../../migration/vmstate.c:528
+#3  0x0000555555df8032 in vmstate_save_state
+    (f=0x555556b5a0c0, vmsd=0x555556431ba0 <vmstate_cpuhp_state>,
+opaque=0x555556c9aac0, vmdesc_id=0x555556918690, errp=0x7fffffffc948)
+at ../../migration/vmstate.c:427
+#4  0x0000555555df8f83 in vmstate_subsection_save
+    (f=0x555556b5a0c0, vmsd=0x555556431c40 <vmstate_acpi>,
+opaque=0x555556c9aac0, vmdesc=0x555556918690, errp=0x7fffffffc948)
+    at ../../migration/vmstate.c:695
+#5  0x0000555555df88a0 in vmstate_save_state_v
+    (f=0x555556b5a0c0, vmsd=0x555556431c40 <vmstate_acpi>,
+opaque=0x555556c9aac0, vmdesc=0x555556918690, version_id=3,
+errp=0x7fffffffc948) at ../../migration/vmstate.c:582
+#6  0x0000555555df8032 in vmstate_save_state
+    (f=0x555556b5a0c0, vmsd=0x555556431c40 <vmstate_acpi>,
+opaque=0x555556c9aac0, vmdesc_id=0x555556918690, errp=0x7fffffffc948)
+at ../../migration/vmstate.c:427
+#7  0x0000555555bd379e in vmstate_save (f=0x555556b5a0c0,
+se=0x555557090ff0, vmdesc=0x555556918690, errp=0x7fffffffc948)
+    at ../../migration/savevm.c:1054
+#8  0x0000555555bd5133 in qemu_savevm_state_non_iterable
+(f=0x555556b5a0c0, errp=0x7fffffffc948)
+    at ../../migration/savevm.c:1726
+#9  0x0000555555bd5226 in qemu_savevm_state_complete_precopy
+(s=0x5555567a1d00) at ../../migration/savevm.c:1753
+#10 0x0000555555bd5615 in qemu_savevm_state (f=0x555556b5a0c0,
+errp=0x7fffffffcbf0) at ../../migration/savevm.c:1855
+#11 0x0000555555bd8b83 in save_snapshot
+    (name=0x555557497150 "foo", overwrite=true, vmstate=0x0,
+has_devices=false, devices=0x0, errp=0x7fffffffcbf0)
+    at ../../migration/savevm.c:3267
+#12 0x0000555555ba9a62 in hmp_savevm (mon=0x55555691d950,
+qdict=0x5555574973a0) at ../../migration/migration-hmp-cmds.c:481
+
+The problem is that the vmstate_cpu_hotplug VMStateDescription
+that is being used has a NULL "fields" (it is the "stub" one).
+This used to be OK because the "piix4_pm/cpuhp" vmstate had
+a "needed" function that would return false for Malta, so we
+never tried to use the stub code.
+
+What's the intention here ? Shouldn't we still have a "needed"
+function that returns "false" for the cases where we would be
+using the stub version of vmstate_cpu_hotplug ? Otherwise we
+would be changing the migration data. We can permit a compat
+break for MIPS boards, but the commit message suggests that
+this wasn't intended to be a compat break.
+
+In this thread Fabiano suggests a fix which is probably OK
+if we want to take the "break migration compat" route:
+https://lore.kernel.org/qemu-devel/CAFEAcA9BzSp9F8yv4eZv5eeUM4JXSy9T-QnRr_UbJZpNmhtHyw@mail.gmail.com/T/#m6f4a672ddfa8a0a34dfdf9b57bb04e529ab5c9a4
+
+
+>  include/hw/acpi/cpu.h          |  1 -
+>  hw/acpi/cpu.c                  | 10 ----------
+>  hw/acpi/ich9.c                 | 22 +++-------------------
+>  hw/acpi/piix4.c                | 21 +++------------------
+>  hw/i386/acpi-build.c           |  2 +-
+>  hw/loongarch/virt-acpi-build.c |  1 -
+>  6 files changed, 7 insertions(+), 50 deletions(-)
+>
+> diff --git a/include/hw/acpi/cpu.h b/include/hw/acpi/cpu.h
+> index 557219d2c63..2809dd8a911 100644
+> --- a/include/hw/acpi/cpu.h
+> +++ b/include/hw/acpi/cpu.h
+> @@ -54,7 +54,6 @@ void cpu_hotplug_hw_init(MemoryRegion *as, Object *owner,
+>
+>  typedef struct CPUHotplugFeatures {
+>      bool acpi_1_compatible;
+> -    bool has_legacy_cphp;
+>      bool fw_unplugs_cpu;
+>      const char *smi_path;
+>  } CPUHotplugFeatures;
+> diff --git a/hw/acpi/cpu.c b/hw/acpi/cpu.c
+> index 6f1ae79edbf..d63ca83c1bc 100644
+> --- a/hw/acpi/cpu.c
+> +++ b/hw/acpi/cpu.c
+> @@ -408,16 +408,6 @@ void build_cpus_aml(Aml *table, MachineState *machine, CPUHotplugFeatures opts,
+>          aml_append(field, aml_reserved_field(4 * 8));
+>          aml_append(field, aml_named_field(CPU_DATA, 32));
+>          aml_append(cpu_ctrl_dev, field);
+> -
+> -        if (opts.has_legacy_cphp) {
+> -            method = aml_method("_INI", 0, AML_SERIALIZED);
+> -            /* switch off legacy CPU hotplug HW and use new one,
+> -             * on reboot system is in new mode and writing 0
+> -             * in CPU_SELECTOR selects BSP, which is NOP at
+> -             * the time _INI is called */
+> -            aml_append(method, aml_store(zero, aml_name(CPU_SELECTOR)));
+> -            aml_append(cpu_ctrl_dev, method);
+> -        }
+>      }
+>      aml_append(sb_scope, cpu_ctrl_dev);
+>
+> diff --git a/hw/acpi/ich9.c b/hw/acpi/ich9.c
+> index 2b3b493c014..54590129c69 100644
+> --- a/hw/acpi/ich9.c
+> +++ b/hw/acpi/ich9.c
+> @@ -183,26 +183,10 @@ static const VMStateDescription vmstate_tco_io_state = {
+>      }
+>  };
+>
+> -static bool vmstate_test_use_cpuhp(void *opaque)
+> -{
+> -    ICH9LPCPMRegs *s = opaque;
+> -    return !s->cpu_hotplug_legacy;
+> -}
+> -
+> -static int vmstate_cpuhp_pre_load(void *opaque)
+> -{
+> -    ICH9LPCPMRegs *s = opaque;
+> -    Object *obj = OBJECT(s->gpe_cpu.device);
+> -    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
+> -    return 0;
+> -}
+> -
+>  static const VMStateDescription vmstate_cpuhp_state = {
+>      .name = "ich9_pm/cpuhp",
+>      .version_id = 1,
+>      .minimum_version_id = 1,
+> -    .needed = vmstate_test_use_cpuhp,
+> -    .pre_load = vmstate_cpuhp_pre_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_CPU_HOTPLUG(cpuhp_state, ICH9LPCPMRegs),
+>          VMSTATE_END_OF_LIST()
+> @@ -338,8 +322,8 @@ void ich9_pm_init(PCIDevice *lpc_pci, ICH9LPCPMRegs *pm, qemu_irq sci_irq)
+>      pm->powerdown_notifier.notify = pm_powerdown_req;
+>      qemu_register_powerdown_notifier(&pm->powerdown_notifier);
+>
+> -    legacy_acpi_cpu_hotplug_init(pci_address_space_io(lpc_pci),
+> -        OBJECT(lpc_pci), &pm->gpe_cpu, ICH9_CPU_HOTPLUG_IO_BASE);
+> +    cpu_hotplug_hw_init(pci_address_space_io(lpc_pci),
+> +        OBJECT(lpc_pci), &pm->cpuhp_state, ICH9_CPU_HOTPLUG_IO_BASE);
+>
+>      acpi_memory_hotplug_init(pci_address_space_io(lpc_pci), OBJECT(lpc_pci),
+>                               &pm->acpi_memory_hotplug,
+> @@ -419,7 +403,7 @@ void ich9_pm_add_properties(Object *obj, ICH9LPCPMRegs *pm)
+>  {
+>      static const uint32_t gpe0_len = ICH9_PMIO_GPE0_LEN;
+>      pm->acpi_memory_hotplug.is_enabled = true;
+> -    pm->cpu_hotplug_legacy = true;
+> +    pm->cpu_hotplug_legacy = false;
+>      pm->disable_s3 = 0;
+>      pm->disable_s4 = 0;
+>      pm->s4_val = 2;
+> diff --git a/hw/acpi/piix4.c b/hw/acpi/piix4.c
+> index 19d4d4be932..0eda692084d 100644
+> --- a/hw/acpi/piix4.c
+> +++ b/hw/acpi/piix4.c
+> @@ -195,25 +195,10 @@ static const VMStateDescription vmstate_memhp_state = {
+>      }
+>  };
+>
+> -static bool vmstate_test_use_cpuhp(void *opaque)
+> -{
+> -    PIIX4PMState *s = opaque;
+> -    return !s->cpu_hotplug_legacy;
+> -}
+> -
+> -static int vmstate_cpuhp_pre_load(void *opaque)
+> -{
+> -    Object *obj = OBJECT(opaque);
+> -    object_property_set_bool(obj, "cpu-hotplug-legacy", false, &error_abort);
+> -    return 0;
+> -}
+> -
+>  static const VMStateDescription vmstate_cpuhp_state = {
+>      .name = "piix4_pm/cpuhp",
+>      .version_id = 1,
+>      .minimum_version_id = 1,
+> -    .needed = vmstate_test_use_cpuhp,
+> -    .pre_load = vmstate_cpuhp_pre_load,
+>      .fields = (const VMStateField[]) {
+>          VMSTATE_CPU_HOTPLUG(cpuhp_state, PIIX4PMState),
+>          VMSTATE_END_OF_LIST()
+> @@ -573,12 +558,12 @@ static void piix4_acpi_system_hot_add_init(MemoryRegion *parent,
+>          qbus_set_hotplug_handler(BUS(pci_get_bus(PCI_DEVICE(s))), OBJECT(s));
+>      }
+>
+> -    s->cpu_hotplug_legacy = true;
+> +    s->cpu_hotplug_legacy = false;
+>      object_property_add_bool(OBJECT(s), "cpu-hotplug-legacy",
+>                               piix4_get_cpu_hotplug_legacy,
+>                               piix4_set_cpu_hotplug_legacy);
+> -    legacy_acpi_cpu_hotplug_init(parent, OBJECT(s), &s->gpe_cpu,
+> -                                 PIIX4_CPU_HOTPLUG_IO_BASE);
+> +    cpu_hotplug_hw_init(parent, OBJECT(s), &s->cpuhp_state,
+> +                        PIIX4_CPU_HOTPLUG_IO_BASE);
+>
+>      if (s->acpi_memory_hotplug.is_enabled) {
+>          acpi_memory_hotplug_init(parent, OBJECT(s), &s->acpi_memory_hotplug,
+> diff --git a/hw/i386/acpi-build.c b/hw/i386/acpi-build.c
+> index 19c62362e31..cdd72cbcaa0 100644
+> --- a/hw/i386/acpi-build.c
+> +++ b/hw/i386/acpi-build.c
+> @@ -964,7 +964,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker,
+>          build_legacy_cpu_hotplug_aml(dsdt, machine, pm->cpu_hp_io_base);
+>      } else {
+>          CPUHotplugFeatures opts = {
+> -            .acpi_1_compatible = true, .has_legacy_cphp = true,
+> +            .acpi_1_compatible = true,
+>              .smi_path = pm->smi_on_cpuhp ? "\\_SB.PCI0.SMI0.SMIC" : NULL,
+>              .fw_unplugs_cpu = pm->smi_on_cpu_unplug,
+>          };
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+> index 54ac94e17d3..3e34bedcd6f 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -369,7 +369,6 @@ build_la_ged_aml(Aml *dsdt, MachineState *machine)
+>
+>      if (event & ACPI_GED_CPU_HOTPLUG_EVT) {
+>          opts.acpi_1_compatible = false;
+> -        opts.has_legacy_cphp = false;
+>          opts.fw_unplugs_cpu = false;
+>          opts.smi_path = NULL;
+>
+> --
+> 2.52.0
 
 thanks
 -- PMM
