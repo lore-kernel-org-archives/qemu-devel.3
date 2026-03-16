@@ -4,69 +4,86 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E103F4644A
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:43:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DFC3F46445
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:44:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25No-0006Gi-0n; Mon, 16 Mar 2026 06:41:12 -0400
+	id 1w25PI-0001Gs-Li; Mon, 16 Mar 2026 06:42:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25Nm-0006Cn-Ci
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:41:10 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25Nk-0003Vm-1y
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:41:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773657667;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=u4W4qeaP2X0EzpJZ8hX+fOD64HVkp+XOO4VlC2trcGo=;
- b=Cn+L2NihdqrnWjVvQCl/lTmfcG3Wd6WAbt1o3b/wKmmsExN6JEa06ayhmTiMfK6T20IvXe
- 4jfxQ8D+reaU92Yaz14CZCqnc6dgCBVLCcf1fB89eatTHjUu/QawYmph2ABKTSj1JGiW0P
- F9+oc6wxtRG8K8O3dsAsAzv83oKlWCI=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-x91s8YehPau7HpKfUxKDlw-1; Mon,
- 16 Mar 2026 06:41:04 -0400
-X-MC-Unique: x91s8YehPau7HpKfUxKDlw-1
-X-Mimecast-MFC-AGG-ID: x91s8YehPau7HpKfUxKDlw_1773657663
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0FF4919560BE; Mon, 16 Mar 2026 10:41:03 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.33.101])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0A46819560AB; Mon, 16 Mar 2026 10:40:58 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
- Markus Armbruster <armbru@redhat.com>
-Subject: [PULL 06/14] hw/arm: fsl-imx7: Don't call qdev_get_machine in soc init
-Date: Mon, 16 Mar 2026 11:40:31 +0100
-Message-ID: <20260316104039.195960-7-thuth@redhat.com>
-In-Reply-To: <20260316104039.195960-1-thuth@redhat.com>
-References: <20260316104039.195960-1-thuth@redhat.com>
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w25PG-0001CI-Hl
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:42 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w25PE-0003en-Vx
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:42:42 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-48557c8ad47so24407235e9.0
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 03:42:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773657759; x=1774262559; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=t2VAKlcXigTm+BUWZzwd5O/HUANdAEJt8p49Wmv76Ww=;
+ b=jdkEqeW9aj8n/R5aycTfCQxmSGcTLXdYSL5JwB9QRTW/XS+EzWypCW+37M0pIZa+t+
+ teYr7D5HAThKYErDj3F5a4nzV94L56k4bKalMnynWUN4P9rH5W7ZQGyw6s/apXWmOyw2
+ J/o1ScjkFVTjImlfJ10BqrfkDPh/tCePG9f6UAJhc41/5HwrYdB8+I/JUlHm7aNTmDGp
+ INBkKJrCqLpAl8/1mC2lN1zBM2FmMmgi0RnkR8Lo+/04730rToUdCjJKffEGS6oqYrmt
+ h86wY21pZ8ZRMnlLs7ef6KsZE0m5BJX66g8uaugkPQLmYg7eQb07ulw0oUg3dUkeXkUx
+ FbXQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773657759; x=1774262559;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=t2VAKlcXigTm+BUWZzwd5O/HUANdAEJt8p49Wmv76Ww=;
+ b=R4VfzzHahGoEs6RwESuDaxm6KFMQyDaBvcn4MSakm3vmYNwTtAtMV2LXjMocb7/F2p
+ Wfg3gd+NkIAQmfeqXlQHOwhw0JiqupT/9FgLr3ky2gcn/aqz5M5pg1VLg4x64d+fyzXZ
+ FBHTV5nEqFJWNRz5ztx10P+/ur9y5FFjbYY8RxUuLZleD4edjp+OMjq4ybSoWZhaxmAm
+ IGYo1ZvhY37sM8Ein6g306TascKu7NUYov2JqWPQeS0ODkDqu/juKCLy+eiBh84z45K7
+ BnPl3+nQK8ZAzGWTteiiEEvLE1C3SinlkBmpjDmpYsyT6e2mL5sZoXowknpnqOhGpLD4
+ Cmmw==
+X-Gm-Message-State: AOJu0Yy/T1rFWHVvvADyBs0i2vcO6SuGNG71JWDxuL5Ayvih9HbtR3mp
+ u7pVYaYKKGQhZqIZBNlhEPbvdVVRxSoCjuQlpMTSS8uHXq1EAg2eWGT1C1/GCPJe6hzR+caYYiq
+ Ui+lD
+X-Gm-Gg: ATEYQzzcS8D1VsPsx4V4v32hskZoywAkXdnW5Nzm3PirJU2oEJ+Cofe89etWrGCWrPG
+ NizwQi46IeNdRWeDx8RRpGEuwMlyTWh6+bc1H0O/lReemasb6G1c8gR9QIEbK+RlXEi3skzCxjG
+ 6YDkkgQnQz0LeIYrA5K/JtD1Wuv9th5troOBwl+wdybWvJdL+QRJGt3nIFbj51KfsOVWOPR26pT
+ ejSykR/hB3VjqhvKSqG7LXJluBWyD6Zuk1/xEnSZ0tetsfBfjwsI/Nn+rXu46g/B3lsSnKV0/CL
+ NooplVVHdpbpjR9/5l+b84tUR/4vI7bCIZx7SID2KkvK96xefh9byzcuQlXOSPb79Xdkww1DLKB
+ Ey5Ncr/9b6BcRKHzaTVc+u/6boeJBOVc0Waq31/wMaQLaSx3VCKkveIJOcNU70hXXU1OwaK2u70
+ x/pN/noicda2ezRFtsG+2foMmU0NettbDz1lz5Iz2DDg5zp9JrSczm54aKDX6JcMuuW3Kpa/P45
+ w2lTIWxEJA=
+X-Received: by 2002:a05:600c:1f8b:b0:485:3c66:e21d with SMTP id
+ 5b1f17b1804b1-485566d2fa1mr217252905e9.2.1773657759513; 
+ Mon, 16 Mar 2026 03:42:39 -0700 (PDT)
+Received: from lanath.. ([81.2.115.145]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48557a74266sm85519135e9.17.2026.03.16.03.42.38
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Mon, 16 Mar 2026 03:42:38 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 05/17] hw/dma/pl080: Handle bogus swidth and dwidth in transfers
+Date: Mon, 16 Mar 2026 10:42:18 +0000
+Message-ID: <20260316104230.836962-6-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260316104230.836962-1-peter.maydell@linaro.org>
+References: <20260316104230.836962-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,72 +99,54 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+The PL080 TRM states that the DWidth and SWidth fields of the channel
+control registers can only validly specify widths up to 32 bits (i.e.
+values from 0 to 2) and all other values are reserved.
 
-Calling qdev_get_machine() in the soc_init function would result in
-the following assert
+Currently we don't check this, so if the guest specifies an invalid
+value we will transfer more data into our local 'buff[]' array than
+it can hold.
 
-    ../hw/core/qdev.c:858: qdev_get_machine: Assertion `dev' failed.
+Check the widths; since the TRM doesn't clearly specify any behaviour
+for what to do on invalid values, we choose to log them and then
+ignore the channel for transfers.
 
-when trying to run
-
-    ./qemu-system-aarch64 -S -display none -M virt -device fsl-imx7,help
-
-as the machine wasn't created yet. We call qdev_get_machine() to obtain
-the number of CPUs in the machine. So instead of initialising the CPUs in
-the SoC init let's instead do it in the realise where the machine
-will exist.
-
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
-Tested-by: Markus Armbruster <armbru@redhat.com>
-Message-ID: <20260312043158.4191378-5-alistair.francis@wdc.com>
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Cc: qemu-stable@nongnu.org
+Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3203
+Reviewed-by: Jim MacArthur <jim.macarthur@linaro.org>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Message-id: 20260306152140.2191653-1-peter.maydell@linaro.org
 ---
- hw/arm/fsl-imx7.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ hw/dma/pl080.c | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/hw/arm/fsl-imx7.c b/hw/arm/fsl-imx7.c
-index 9a230d222fd..2defa498d38 100644
---- a/hw/arm/fsl-imx7.c
-+++ b/hw/arm/fsl-imx7.c
-@@ -32,20 +32,10 @@
- 
- static void fsl_imx7_init(Object *obj)
- {
--    MachineState *ms = MACHINE(qdev_get_machine());
-     FslIMX7State *s = FSL_IMX7(obj);
-     char name[NAME_SIZE];
-     int i;
- 
--    /*
--     * CPUs
--     */
--    for (i = 0; i < MIN(ms->smp.cpus, FSL_IMX7_NUM_CPUS); i++) {
--        snprintf(name, NAME_SIZE, "cpu%d", i);
--        object_initialize_child(obj, name, &s->cpu[i],
--                                ARM_CPU_TYPE_NAME("cortex-a7"));
--    }
--
-     /*
-      * A7MPCORE
-      */
-@@ -179,6 +169,15 @@ static void fsl_imx7_realize(DeviceState *dev, Error **errp)
-         return;
-     }
- 
-+    /*
-+     * CPUs
-+     */
-+    for (i = 0; i < smp_cpus; i++) {
-+        snprintf(name, NAME_SIZE, "cpu%d", i);
-+        object_initialize_child(OBJECT(dev), name, &s->cpu[i],
-+                                ARM_CPU_TYPE_NAME("cortex-a7"));
-+    }
+diff --git a/hw/dma/pl080.c b/hw/dma/pl080.c
+index 3f8acb03de..6262c3f3df 100644
+--- a/hw/dma/pl080.c
++++ b/hw/dma/pl080.c
+@@ -164,6 +164,21 @@ again:
+                destination widths are different.  */
+             swidth = 1 << ((ch->ctrl >> 18) & 7);
+             dwidth = 1 << ((ch->ctrl >> 21) & 7);
 +
-     /*
-      * CPUs
-      */
++            /* Only widths of 1, 2 or 4 are valid */
++            if (swidth > 4) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "pl080: channel %d: invalid SWidth %d\n",
++                              c, extract32(ch->ctrl, 18, 3));
++                continue;
++            }
++            if (dwidth > 4) {
++                qemu_log_mask(LOG_GUEST_ERROR,
++                              "pl080: channel %d: invalid DWidth %d\n",
++                              c, extract32(ch->ctrl, 21, 3));
++                continue;
++            }
++
+             for (n = 0; n < dwidth; n+= swidth) {
+                 address_space_read(&s->downstream_as, ch->src,
+                                    MEMTXATTRS_UNSPECIFIED, buff + n, swidth);
 -- 
-2.53.0
+2.43.0
 
 
