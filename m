@@ -4,104 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 35EAEF46445
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 11:01:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3CEA4F4644E
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 11:10:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25hY-0005kX-Nf; Mon, 16 Mar 2026 07:01:36 -0400
+	id 1w25p4-0007VK-OU; Mon, 16 Mar 2026 07:09:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25hX-0005iH-Hy
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 07:01:35 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w25p2-0007V5-QQ
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 07:09:20 -0400
+Received: from mail-lf1-x12c.google.com ([2a00:1450:4864:20::12c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w25hV-0000ne-Rp
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 07:01:35 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64ca423ad53so4481115d50.0
- for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 04:01:33 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773658892; cv=none;
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w25p0-0001tr-Im
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 07:09:20 -0400
+Received: by mail-lf1-x12c.google.com with SMTP id
+ 2adb3069b0e04-59e4a04f059so4564311e87.2
+ for <qemu-devel@nongnu.org>; Mon, 16 Mar 2026 04:09:17 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773659355; cv=none;
  d=google.com; s=arc-20240605;
- b=k4PQKLt6mWC1XrI2fM4kKXE5Zv1zxOCX4povbyRsvdxvOLhwUD3wQ30/o23kx+elnr
- /nVAFMF2ivaB7rw73M7iiFcAISjY3B2eW53J5PuVAnXAjeUqgJGVAT+TTJKvyNtDN4uk
- 6XaqKjNxz2iNytj3Tx5wWVvVaKN4IjgTtbOPrQr3GUegQdMnDXyzvatIhkzC7/bbKZ/T
- 3ntBei3yWwlL10ycVQ7L0ZoJnUUKXFwsVennZCzm8SfaQMhPgwJ0q3Cl2TwViLQsLYfr
- f5L1DN4Tg60qREf/pZrDTDqxLkHnhuKtHfeBezc4d3UW7Qrl5X60fJ/RUjNn5+D4gGI/
- YdIg==
+ b=Jd41OseLmdlv85zF47eUnyLWKrFfD3TAmefAiu8kzOCcC8kYmjAux5DDoAICSFf7C7
+ 6YpG7f1bIQnm3UwB8o7wx1fHD6HVOwE+hqY5VRun5jNCEgc2+RtQGMJh3npBdT/vNNOm
+ rEZ6HVZpwzYvwZO6sY4dRkTt7Z5Nk6YSlnQdO0WxVLmGUCvQxzg/k4TPSBqcSMdUVzyj
+ B6hVFogiqOU4iFMx0ES/fjFZZ5mcXrIda4lLRxK8ozwmZaRQVK4LvtdONyhVv53YjZKA
+ KMXCgUUogWShuwVtC8GLehnDt1tGQ0bM5wUnWQzHvtSTidVO8jLdH4pKCQKJdnaxgm+l
+ rMmA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=iajE5yb9GWAPq9zdhgQ9m62U7u6cK9RHCWPActK+nZc=;
- fh=lowJsqLkqJLhwPwA7LhiYfSfWEsxUTjr7bjtXmC+vzQ=;
- b=RRO2mzrBATvm5mZ10vFfyTZdUte+WtDVIx0EDqzJXCIp+9s1pWltvoVSbSFxmB3EOZ
- 68UEerzY43ppKMo8MrFhupS90efCBuSN5CtKTkes5okMcLvxzrSCEXYyGHaEHdSUjTts
- TIyysPWYZjyPnOky0LdXISvGczkBWFt5FeNNUD6/lRYH7RVxG7udcw/lqZyShf39EfDE
- Vi266iAItMOrrQORFG/UT2n+XFNDOT5mVXBOe84dl0WiMR31XeZOZ2hNtUoio2R2CU/0
- a90hr4+KbWqq8z9SQsdQSbW6PDhIBrENi7ezaV/YJsVAvs8b9ZtnYakOd5pq/cQf5e3f
- wLcw==; darn=nongnu.org
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=LdUKL2hVaK4TRo4kHF/N/TfBIcC3I4w845SArJX+L0w=;
+ fh=NgU5lpwVD1237EuNqEC+9p/BIw/311s+sXyIBxL4FcY=;
+ b=it5iiOo/rEbmJ8xHoUt/kLkUFUsnvN5gSv/QQeNKFRZs1Fgl1DgLuQks0Z6xrbVw7l
+ DngEC0UrXdeOji6TTjOjyVFPbyTkCNFGkeAK0fHBUuHY0U8ues3UKm0T5cX3uFH7ZLuB
+ LaHMwx54twjjndxb5uSXgkV+bdCe12RJvC4LP5o3qaOYegH0DcL9j7L/Z/iZWLb4EtEd
+ Fj+k6flRytSP30V1dYXp/4FXhi/pFRUZTho/yTHE+fKnQ2W4kwU96Z4F70DgVBb97+9y
+ NE9cEsQvZPPj8GmwhXtxg1FBshR71l+R5um42HQRGmxzEGABK9P2znMWlZ8IA6H+tzXL
+ F4FQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773658892; x=1774263692; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=iajE5yb9GWAPq9zdhgQ9m62U7u6cK9RHCWPActK+nZc=;
- b=fkejRN2mGlXyHNV+JJ00HrYJwVqesRJNzEWJVnIFL8nYbYN5eLG+KGvynSqDyrNv6n
- 1FbRZ15JEIHgcx4f1+R3Q7Qi5SGJVphR/dAYppTuX6rDA5J+ugr5qguKr0h/0fzZfG4Q
- CXQrzgIGRaOq5j9zTuoUC2Al/6xb21RyGclx+D5w5opZp+/eBXZy/ihyuxTreA66300b
- Ary8IirQ4d4mJQWL3U2VPJh15Fjk6CyT6sT9st7bt7P65GncX+ZfF0stwcIjfSvwUJVW
- BX0ckEMi4cYQIefMF4gk8F6dev/dQW2rGtnaG5rZkFlfr1nLmeRp/2QK9xJGeo9N4K+1
- RPxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773658892; x=1774263692;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=mihalicyn.com; s=mihalicyn; t=1773659355; x=1774264155; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=iajE5yb9GWAPq9zdhgQ9m62U7u6cK9RHCWPActK+nZc=;
- b=k/+tVTU91c2C+QJ7KGWIFZ6LWgfI7xc+W+BTnrg67TDtobUOII72qUJAr1x4W37uA5
- iEi6FoL6RHKe+DNHHXvbgalNGFpnU0LMZ+DeYtk4c5iOExZ86NZ9go1b9yjnMfJ/+1tE
- SqB3YTjsHuedy3DoSL67VvcXwR1BdkramEHC7L/fabTNjp3RQWJXiIPX2vYeICaUPc9V
- 4zVEIGlIxhHk1V1D4pmDVPT30bSG7WVzX1WRQJqr/tq1M4m0ZBDG49CPV11HIDgJm9i0
- M36ulyCFTz8HcvaSNZ9TL42m4BWGp2mo2nOVulBC0xmTRZT4O/7PV988wqKJm8kBnUz8
- s2YA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUQc4wmPWNXgf+rOIHRO0t0XUInGnw/Z8LmoIlD4AFnKkpuAha91lCtZD49Of6GdswTDreOVr6gidPm@nongnu.org
-X-Gm-Message-State: AOJu0YzfSv4GATJdMUxIJ/JnxNTfQVNseJJxLjZiRJEwqRyI9D8QYJlI
- 13Ho2kn1wEQLH4x12Dxbojd3N6vXjGCNKAh/HGO8hRd/E4zknRQhoEDlxfqWG3XugbgfrF0w1bb
- 5bUhEWQ35hY/VGMCn8Abn+q8NNhGNAOXF/DxryVO4bnMVZmgcwevQ
-X-Gm-Gg: ATEYQzwr7CSD5DdvEWyHD88B5cWzBXKgx9LFipDKXAT122UR4HuUgYN4jBjT3AsgGl7
- dVJd9vc2azrMkTSm0kJkc0Y+Kuixsgw5ZoZxIebg/K9DlI/zMpFSHzg/V3N8gBIqqO3lpquo0J+
- nqSS7Knw4tbS+IIRTDy9unoi1nEu+IoJ0ATUQCitzX8jxEHbVvtwPMnBtXTtkDE06T5nTZQEO6y
- ooUk2DZ7xZdSbGdK/C5K/UDmyNF4pD62XFc4xkOyLGnhE3XywoRKq21O9cQmG8ZATqAvq/8EqCL
- DQCtDUmFK3104PipcyqD5u1hbWwxLPEDaxA7nHQnRo7TaaLdV4UY/nbEZc6dm9SRXXQ=
-X-Received: by 2002:a53:d056:0:10b0:64c:ae15:5677 with SMTP id
- 956f58d0204a3-64e62f3d106mr9534966d50.26.1773658892145; Mon, 16 Mar 2026
- 04:01:32 -0700 (PDT)
+ bh=LdUKL2hVaK4TRo4kHF/N/TfBIcC3I4w845SArJX+L0w=;
+ b=jd3jrhu/UELXbGLz8BjNlu3NZemjfOp7JlXech8I077tKv45x8VWxGfaEa9azj6/Sw
+ mnf/ro7n1Qjqx1JsXLkowPvTB/5JUad03iaqVJfKoosBcQlWn5ednrF4Y3VC2qO78INB
+ r6qTSEbybJNLOLwIigXpv/MdCIpEFeDtVvySY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773659355; x=1774264155;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=LdUKL2hVaK4TRo4kHF/N/TfBIcC3I4w845SArJX+L0w=;
+ b=bJpGC5LTqhVdVoQq2ja5XdGZDobQjf8aSDC55p0qLxChVNmzcgwjeTRqmgJn1bLkUc
+ AHpIjuNsWxxxLLjgLJcZVrlND+BpriQhbDzirezzECo9h3QqH1LY9SydneYnF9KCQuYS
+ h/QE4nKY/df5CAfybhTvvUNRx3ejmFbrZXSLN9E+DnkoxQaHIAn/FrarCi0wgrAMWRK4
+ qE6fQt/rHiiEuJ42TmFxccDyJgzMgo0s5QPQ0qEl2CsT6oxylbQukByTYdv0HJ1S+F81
+ wUDGGulMR7rEX4620iYEefOYB2RXfZd61XYiWIgT+E0qbLIK2Yh/XRE+Uv68YzP6Y2HC
+ Q96A==
+X-Gm-Message-State: AOJu0YzAEMby5t8XLOwrpBn/GPLo4GNgNUj/t23vQM795eK50/rw+clA
+ 0tYVI59NOEn5DE6hqKQP1ufoVer9/eb4398zcsnHjDvu2tD4uc/eq0VZt6QhHDHtJ4phd949JHj
+ XCd6LZ6bRt91z2GU+LdBh5Ng/rIdyWnVr1l2/q9AJeA==
+X-Gm-Gg: ATEYQzyhcXuI/G0qlQ95/p78/nkctP61crCYoGQ+fEHa5VjYn9vvNr/9m2Qs9OJJpix
+ mBYgloYdMwyIfHr8HjFznnZQzcobaHoZmtPbH492Irtd68T6nY5lKdT2+Szq7wNr9KpI5x9oyi2
+ +8je/6IORGoWX+ryKOg7kxhbd4zMyHWAz/ac+ZUSOaZnOVYe4Br+3KIk5bhS6IE6KJJxY5jkakK
+ rNEYQqgu+c9EromG4nYSjLHUjxTy5YmbLxSp5zuTGzwjrSD0gEztxs353fKFGEeqrNkP0OyXCEC
+ IRIkxXn4NqJWlGFNPorNKQUgN5NlrhSQe4/LZ5g=
+X-Received: by 2002:a05:6512:208e:b0:5a1:34d2:b6da with SMTP id
+ 2adb3069b0e04-5a162b0a440mr2542944e87.31.1773659355179; Mon, 16 Mar 2026
+ 04:09:15 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260129160917.1415092-1-peter.maydell@linaro.org>
- <20260129160917.1415092-15-peter.maydell@linaro.org>
- <CAFEAcA-AoJmHpcAydqk9x_Y6M8_7N=7-izYFPxerLuTdYUKsNg@mail.gmail.com>
- <CAFEAcA99c+-qQX+wfVTZ5bKeYozm+WrFHsb=GEQriu_SuWjhWQ@mail.gmail.com>
- <671d4604-9656-4f74-961c-88f447058858@redhat.com>
- <CH3PR12MB75485C08E7F94A214998914CAB40A@CH3PR12MB7548.namprd12.prod.outlook.com>
-In-Reply-To: <CH3PR12MB75485C08E7F94A214998914CAB40A@CH3PR12MB7548.namprd12.prod.outlook.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Mon, 16 Mar 2026 11:01:20 +0000
-X-Gm-Features: AaiRm52wv2FCKJnx6QQd2PYMbLHLMiWkhc5igPJA64ONKHf5HErO2_ZE6awwg2Q
-Message-ID: <CAFEAcA_EeyJW=uhV5KEhoH+v32KG0UskmNAOW1kA-6hAB1S_yQ@mail.gmail.com>
-Subject: Re: [PULL 14/43] hw/arm/smmuv3-accel: Add nested vSTE
- install/uninstall support
-To: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-Cc: "eric.auger@redhat.com" <eric.auger@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, 
- Nicolin Chen <nicolinc@nvidia.com>,
- Jonathan Cameron <jonathan.cameron@huawei.com>
+References: <20260313141221.359503-1-alexander@mihalicyn.com>
+ <20260313141221.359503-2-alexander@mihalicyn.com> <abQ7CLuJsWRLwoe5@x1.local>
+In-Reply-To: <abQ7CLuJsWRLwoe5@x1.local>
+Date: Mon, 16 Mar 2026 12:09:04 +0100
+X-Gm-Features: AaiRm519tjU2KrMNHeD_S92xszcGAoQ9XEzsdsQhxdO9vpAjkeGmcG0V87Fn8AQ
+Message-ID: <CAJqdLroNDwNk4N4Kszyptu7vgOwQfERM8AtAxQhjqfRhCt_W3w@mail.gmail.com>
+Subject: Re: [PATCH v4 1/8] migration/vmstate: introduce vmstate_{load,
+ save}_field helpers
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Jesper Devantier <foss@defmacro.it>,
+ Kevin Wolf <kwolf@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>, Paolo Bonzini <pbonzini@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, 
+ qemu-block@nongnu.org, =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>,
+ Keith Busch <kbusch@kernel.org>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Fam Zheng <fam@euphon.net>, Klaus Jensen <its@irrelevant.dk>,
+ Zhao Liu <zhao1.liu@intel.com>, 
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::12c;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x12c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -121,79 +119,221 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alexander Mikhalitsyn <alexander@mihalicyn.com>
+From:  Alexander Mikhalitsyn via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Mar 2026 at 10:50, Shameer Kolothum Thodi
-<skolothumtho@nvidia.com> wrote:
+Am Fr., 13. M=C3=A4rz 2026 um 17:27 Uhr schrieb Peter Xu <peterx@redhat.com=
+>:
 >
->
->
-> > -----Original Message-----
-> > From: Eric Auger <eric.auger@redhat.com>
-> > Sent: 16 March 2026 10:36
-> > To: Peter Maydell <peter.maydell@linaro.org>; qemu-devel@nongnu.org;
-> > Nicolin Chen <nicolinc@nvidia.com>; Shameer Kolothum Thodi
-> > <skolothumtho@nvidia.com>
-> > Cc: Jonathan Cameron <jonathan.cameron@huawei.com>
-> > Subject: Re: [PULL 14/43] hw/arm/smmuv3-accel: Add nested vSTE
-> > install/uninstall support
+> On Fri, Mar 13, 2026 at 03:12:14PM +0100, Alexander Mikhalitsyn wrote:
+> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 > >
-> > External email: Use caution opening links or attachments
+> > Let's introduce vmstate_{load,save}_field() helpers, they will
+> > be used in next patches to support fully-dynamic arrays with NULLs.
 > >
-> >
-> > On 3/13/26 3:06 PM, Peter Maydell wrote:
-> > > Ping for opinions on whether Coverity is right about a leak here...
-> > >
-> > > thanks
-> > > -- PMM
-> > >
-> > >
-> > > On Tue, 17 Feb 2026 at 14:24, Peter Maydell <peter.maydell@linaro.org>
-> > wrote:
-> > >> On Thu, 29 Jan 2026 at 16:09, Peter Maydell <peter.maydell@linaro.org>
-> > wrote:
-> > >>> From: Nicolin Chen <nicolinc@nvidia.com>
-> > >>>
-> > >>> +    } else {
-> > >>> +        config = STE_CONFIG(&ste);
-> > >>> +
-> > >>> +        if (!STE_VALID(&ste) || STE_CFG_ABORT(config)) {
-> > >>> +            hwpt_id = accel->abort_hwpt_id;
-> > >>> +        } else if (STE_CFG_BYPASS(config)) {
-> > >>> +            hwpt_id = accel->bypass_hwpt_id;
-> > >>> +        } else if (STE_CFG_S1_TRANSLATE(config)) {
-> > >>> +            s1_hwpt = smmuv3_accel_dev_alloc_translate(accel_dev,
-> > >>> + &ste, errp);
-> > >> In this function we allocate memory and return it, assigning it to
-> > >> s1_hwpt...
-> > >>
-> > >>
-> > >>> +            if (!s1_hwpt) {
-> > >>> +                return false;
-> > >>> +            }
-> > >>> +            hwpt_id = s1_hwpt->hwpt_id;
-> > >>> +       }
-> > >>> +    }
-> > >>> +
-> > >>> +    if (!hwpt_id) {
-> > >>> +        error_setg(errp, "Invalid STE config for sid 0x%x",
-> > >>> +                   smmu_get_sid(&accel_dev->sdev));
-> > >>> +        return false;
-> > >> ...but in this error-exit code path we don't free it.
-> > s1_hwpt is allocated if iommufd_backend_alloc_hwpt() succeeded and if it did
-> > hwpt_id cannot be NULL I think.
-> > Shameer, Nicolin, please could you confirm
-> >
-> > Adding Shameer in TO
+> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion=
+.io>
 >
-> Yes. If s1_hwpt is allocated, hwpt_id cannot be 0.
->
-> s1_hwpt is only returned after iommufd_backend_alloc_hwpt() succeeds
-> and provides a valid hwpt_id, which we assign to hwpt_id immediately
-> after. So the later "!hwpt_id" error path cannot be hit in that case.
 
-Thanks for confirming. I'll mark the coverity issue as a false positive.
+Hi Peter,
 
--- PMM
+> Feel free to rebase to Vladimir's series here, Fabiano already queued it:
+>
+> https://lore.kernel.org/all/20260304212303.667141-11-vsementsov@yandex-te=
+am.ru/#t
+
+I've tried, but I can't see it anywhere
+https://gitlab.com/farosas/qemu/-/commits/migration-next
+doesn't contain it. As of now, last commit is
+472f455cfbb0c5f84a7d48228d5226eaf6c7a61b.
+
+Also, patchew tells that that series has conflicts with master:
+https://patchew.org/QEMU/20260304212303.667141-1-vsementsov@yandex-team.ru/
+
+Should I manually download mbox, apply/resolve conflicts with master,
+then rebase my stuff and resend?
+
+Kind regards,
+Alex
+
+>
+> These codes weren't touched that frequent, it's interesting to see such
+> coinsidence happens. :)
+>
+> > ---
+> >  include/migration/vmstate.h |  4 ++
+> >  migration/vmstate.c         | 84 +++++++++++++++++++++++--------------
+> >  2 files changed, 56 insertions(+), 32 deletions(-)
+> >
+> > diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+> > index 62c2abd0c49..5d7dfe70643 100644
+> > --- a/include/migration/vmstate.h
+> > +++ b/include/migration/vmstate.h
+> > @@ -1240,8 +1240,12 @@ extern const VMStateInfo vmstate_info_qlist;
+> >          .flags =3D VMS_END, \
+> >      }
+> >
+> > +int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
+> > +                       const VMStateField *field, Error **errp);
+> >  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+> >                         void *opaque, int version_id, Error **errp);
+> > +int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
+> > +                       const VMStateField *field, JSONWriter *vmdesc, =
+Error **errp);
+> >  int vmstate_save_state(QEMUFile *f, const VMStateDescription *vmsd,
+> >                         void *opaque, JSONWriter *vmdesc, Error **errp)=
+;
+> >  int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> > diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > index 4d28364f7ba..8d192bcaa27 100644
+> > --- a/migration/vmstate.c
+> > +++ b/migration/vmstate.c
+> > @@ -131,6 +131,32 @@ static void vmstate_handle_alloc(void *ptr, const =
+VMStateField *field,
+> >      }
+> >  }
+> >
+> > +int vmstate_load_field(QEMUFile *f, void *pv, size_t size,
+> > +                       const VMStateField *field, Error **errp)
+> > +{
+> > +    int ret =3D 0;
+> > +
+> > +    if (field->flags & VMS_STRUCT) {
+> > +        ret =3D vmstate_load_state(f, field->vmsd, pv,
+> > +                                 field->vmsd->version_id,
+> > +                                 errp);
+> > +    } else if (field->flags & VMS_VSTRUCT) {
+> > +        ret =3D vmstate_load_state(f, field->vmsd, pv,
+> > +                                 field->struct_version_id,
+> > +                                 errp);
+> > +    } else {
+> > +        ret =3D field->info->get(f, pv, size, field);
+> > +        if (ret < 0) {
+> > +            error_setg(errp,
+> > +                       "Failed to load element of type %s for %s: "
+> > +                       "%d", field->info->name,
+> > +                       field->name, ret);
+> > +        }
+> > +    }
+> > +
+> > +    return ret;
+> > +}
+> > +
+> >  int vmstate_load_state(QEMUFile *f, const VMStateDescription *vmsd,
+> >                         void *opaque, int version_id, Error **errp)
+> >  {
+> > @@ -203,24 +229,7 @@ int vmstate_load_state(QEMUFile *f, const VMStateD=
+escription *vmsd,
+> >                      inner_field =3D field;
+> >                  }
+> >
+> > -                if (inner_field->flags & VMS_STRUCT) {
+> > -                    ret =3D vmstate_load_state(f, inner_field->vmsd, c=
+urr_elem,
+> > -                                             inner_field->vmsd->versio=
+n_id,
+> > -                                             errp);
+> > -                } else if (inner_field->flags & VMS_VSTRUCT) {
+> > -                    ret =3D vmstate_load_state(f, inner_field->vmsd, c=
+urr_elem,
+> > -                                             inner_field->struct_versi=
+on_id,
+> > -                                             errp);
+> > -                } else {
+> > -                    ret =3D inner_field->info->get(f, curr_elem, size,
+> > -                                                 inner_field);
+> > -                    if (ret < 0) {
+> > -                        error_setg(errp,
+> > -                                   "Failed to load element of type %s =
+for %s: "
+> > -                                   "%d", inner_field->info->name,
+> > -                                   inner_field->name, ret);
+> > -                    }
+> > -                }
+> > +                ret =3D vmstate_load_field(f, curr_elem, size, inner_f=
+ield, errp);
+> >
+> >                  /* If we used a fake temp field.. free it now */
+> >                  if (inner_field !=3D field) {
+> > @@ -427,6 +436,29 @@ int vmstate_save_state(QEMUFile *f, const VMStateD=
+escription *vmsd,
+> >      return vmstate_save_state_v(f, vmsd, opaque, vmdesc_id, vmsd->vers=
+ion_id, errp);
+> >  }
+> >
+> > +int vmstate_save_field(QEMUFile *f, void *pv, size_t size,
+> > +                       const VMStateField *field, JSONWriter *vmdesc, =
+Error **errp)
+> > +{
+> > +    int ret =3D 0;
+> > +
+> > +    if (field->flags & VMS_STRUCT) {
+> > +        ret =3D vmstate_save_state(f, field->vmsd, pv, vmdesc, errp);
+> > +    } else if (field->flags & VMS_VSTRUCT) {
+> > +        ret =3D vmstate_save_state_v(f, field->vmsd, pv, vmdesc,
+> > +                                   field->struct_version_id, errp);
+> > +    } else {
+> > +        ret =3D field->info->put(f, pv, size, field, vmdesc);
+> > +        if (ret < 0) {
+> > +            error_setg(errp,
+> > +                       "Failed to save element of type %s for %s: "
+> > +                       "%d", field->info->name,
+> > +                       field->name, ret);
+> > +        }
+> > +    }
+> > +
+> > +    return ret;
+> > +}
+> > +
+> >  int vmstate_save_state_v(QEMUFile *f, const VMStateDescription *vmsd,
+> >                           void *opaque, JSONWriter *vmdesc, int version=
+_id, Error **errp)
+> >  {
+> > @@ -528,19 +560,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMStat=
+eDescription *vmsd,
+> >                  vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+> >                                        i, max_elems);
+> >
+> > -                if (inner_field->flags & VMS_STRUCT) {
+> > -                    ret =3D vmstate_save_state(f, inner_field->vmsd,
+> > -                                             curr_elem, vmdesc_loop, e=
+rrp);
+> > -                } else if (inner_field->flags & VMS_VSTRUCT) {
+> > -                    ret =3D vmstate_save_state_v(f, inner_field->vmsd,
+> > -                                               curr_elem, vmdesc_loop,
+> > -                                               inner_field->struct_ver=
+sion_id,
+> > -                                               errp);
+> > -                } else {
+> > -                    ret =3D inner_field->info->put(f, curr_elem, size,
+> > -                                                 inner_field, vmdesc_l=
+oop);
+> > -                }
+> > -
+> > +                ret =3D vmstate_save_field(f, curr_elem, size, inner_f=
+ield, vmdesc_loop, errp);
+> >                  written_bytes =3D qemu_file_transferred(f) - old_offse=
+t;
+> >                  vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
+> >                                      written_bytes);
+> > @@ -551,7 +571,7 @@ int vmstate_save_state_v(QEMUFile *f, const VMState=
+Description *vmsd,
+> >                  }
+> >
+> >                  if (ret) {
+> > -                    error_setg(errp, "Save of field %s/%s failed",
+> > +                    error_prepend(errp, "Save of field %s/%s failed: "=
+,
+> >                                  vmsd->name, field->name);
+> >                      if (vmsd->post_save) {
+> >                          vmsd->post_save(opaque);
+> > --
+> > 2.47.3
+> >
+>
+> --
+> Peter Xu
+>
 
