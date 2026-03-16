@@ -4,54 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73C6FF46445
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:41:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C24CDF4644A
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 10:41:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w25NX-00068L-Te; Mon, 16 Mar 2026 06:40:56 -0400
+	id 1w25Ne-0006Al-QX; Mon, 16 Mar 2026 06:41:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25NT-00067x-R0
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:40:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25Nb-00069x-Q6
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:40:59 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25NQ-0003O5-NV
- for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:40:51 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w25NZ-0003Ou-M5
+ for qemu-devel@nongnu.org; Mon, 16 Mar 2026 06:40:59 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773657647;
+ s=mimecast20190719; t=1773657655;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=4rDGMOd7CYN61Ozt/m2b4vzeiVOzhAz9GiFTaB0LBjc=;
- b=FGYSx++75w3lOHxtPnMNvtb0uOxh0OeRd5OZC9on8AvM9u2NqoXz1ueIGM1R9gZOQ5jCFp
- 8RrtKwR7RzY/z0wNKL2n78DSHAzT3hr0RGaXTDzempSqGl1BqKQU46EldIdvYfk3ZXhLOe
- NfedB47gP1rolg3+ops4YZYoap+kkzA=
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=1U0px/8h2K2yke+1GtbBZtkfyxTjEycjbAMv+vfuGSQ=;
+ b=c1sd8etr0Pcl4NhoDyPtsooNVbL2mAwIz2vFixqb5pW645cEXkJmNBRZNvVAULdxPiHkUH
+ KiWfkPJS+IL3Sy0qVYnZRmg10giSig53AeuTJNn6hb8E7+v1ttyjLwZWEOcRDPBkR5bBsc
+ taZGkiLRveCQz01hJFd9ysy0CO9RT/k=
 Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-587-rd_XLaXeMc-Dan3EiOHfFQ-1; Mon,
- 16 Mar 2026 06:40:44 -0400
-X-MC-Unique: rd_XLaXeMc-Dan3EiOHfFQ-1
-X-Mimecast-MFC-AGG-ID: rd_XLaXeMc-Dan3EiOHfFQ_1773657643
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-381-cmiKthu8O56WRfQ9hTxPxg-1; Mon,
+ 16 Mar 2026 06:40:52 -0400
+X-MC-Unique: cmiKthu8O56WRfQ9hTxPxg-1
+X-Mimecast-MFC-AGG-ID: cmiKthu8O56WRfQ9hTxPxg_1773657651
 Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 174E4180035C; Mon, 16 Mar 2026 10:40:43 +0000 (UTC)
+ id 831B318005B2; Mon, 16 Mar 2026 10:40:51 +0000 (UTC)
 Received: from thuth-p1g4.redhat.com (unknown [10.44.33.101])
  by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 4E9D119560AB; Mon, 16 Mar 2026 10:40:40 +0000 (UTC)
+ id 3828619560AB; Mon, 16 Mar 2026 10:40:48 +0000 (UTC)
 From: Thomas Huth <thuth@redhat.com>
 To: Peter Maydell <peter.maydell@linaro.org>
-Cc: qemu-devel@nongnu.org
-Subject: [PULL 00/14] Fixes for "-device xyz,help" and updates to MAINTAINERS
-Date: Mon, 16 Mar 2026 11:40:25 +0100
-Message-ID: <20260316104039.195960-1-thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Alistair Francis <alistair.francis@wdc.com>,
+ Markus Armbruster <armbru@redhat.com>
+Subject: [PULL 03/14] hw/riscv: sifive_e: Don't call qdev_get_machine in soc
+ init
+Date: Mon, 16 Mar 2026 11:40:28 +0100
+Message-ID: <20260316104039.195960-4-thuth@redhat.com>
+In-Reply-To: <20260316104039.195960-1-thuth@redhat.com>
+References: <20260316104039.195960-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
@@ -79,55 +83,62 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
+From: Alistair Francis <alistair.francis@wdc.com>
 
-  Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
+Calling qdev_get_machine() in the soc_init function would result in
+the following assert
 
-are available in the Git repository at:
+    ../hw/core/qdev.c:858: qdev_get_machine: Assertion `dev' failed.
 
-  https://gitlab.com/thuth/qemu.git tags/pull-request-2026-03-16
+when trying to run
 
-for you to fetch changes up to bc4ee6025a71290eb47d86c2c77eb1f40fbb6305:
+    ./qemu-system-riscv64 -S -display none -M virt -device riscv.sifive.e.soc,help
 
-  MAINTAINERS: Add another reviewer to s390x boot (2026-03-16 11:36:32 +0100)
+as the machine wasn't created yet. We call qdev_get_machine() to obtain
+the number of CPUs in the machine. So instead of setting the CPU
+num-harts in the init function let's set it in realise where the machine
+will exist.
 
-----------------------------------------------------------------
-* Fix various crashes that can occur when starting QEMU with -device xyz,help
-* Update various sections in the MAINTAINERS file
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+Tested-by: Markus Armbruster <armbru@redhat.com>
+Message-ID: <20260312043158.4191378-2-alistair.francis@wdc.com>
+[thuth: Fix a complaint from checkpatch.pl with regards to multi-line comment]
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/riscv/sifive_e.c | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
 
-----------------------------------------------------------------
-Alistair Francis (7):
-      hw/riscv: sifive_e: Don't call qdev_get_machine in soc init
-      hw/riscv: microchip_pfsoc: Don't call qdev_get_machine in soc init
-      hw/arm: xlnx-zynqmp: Don't call qdev_get_machine in soc init
-      hw/arm: fsl-imx7: Don't call qdev_get_machine in soc init
-      hw/arm: fsl-imx8mp: Don't call qdev_get_machine in soc init
-      hw/arm: fsl-imx6: Don't call qdev_get_machine in soc init
-      hw/acpi: generic_event_device: Don't call qdev_get_machine in initfn
-
-Eric Farman (1):
-      MAINTAINERS: Add another reviewer to s390x boot
-
-Jared Rossi (1):
-      MAINTAINERS: Update S390-ccw boot maintainers/reviewers
-
-Thomas Huth (5):
-      target/xtensa/cpu: Move initialization of memory region to realize function
-      target/mips/cpu: Move initialization of memory region to realize function
-      MAINTAINERS: Update the s390x maintainers
-      MAINTAINERS: Remove myself from various sections
-      MAINTAINERS: Downgrade the functional testing section to "Odd Fixes"
-
- MAINTAINERS                    | 17 ++++++++---------
- hw/acpi/generic_event_device.c |  5 +++--
- hw/arm/fsl-imx6.c              | 14 +++++++-------
- hw/arm/fsl-imx7.c              | 19 +++++++++----------
- hw/arm/fsl-imx8mp.c            | 13 ++++++-------
- hw/arm/xlnx-zynqmp.c           | 42 ++++++++++++++++++------------------------
- hw/riscv/microchip_pfsoc.c     |  7 +++++--
- hw/riscv/sifive_e.c            |  9 ++++++---
- target/mips/cpu.c              | 16 ++++++++--------
- target/xtensa/cpu.c            | 14 ++++++++------
- 10 files changed, 78 insertions(+), 78 deletions(-)
+diff --git a/hw/riscv/sifive_e.c b/hw/riscv/sifive_e.c
+index 4cb9c07ffbf..1acfea49668 100644
+--- a/hw/riscv/sifive_e.c
++++ b/hw/riscv/sifive_e.c
+@@ -178,12 +178,13 @@ type_init(sifive_e_machine_init_register_types)
+ 
+ static void sifive_e_soc_init(Object *obj)
+ {
+-    MachineState *ms = MACHINE(qdev_get_machine());
+     SiFiveESoCState *s = RISCV_E_SOC(obj);
+ 
+     object_initialize_child(obj, "cpus", &s->cpus, TYPE_RISCV_HART_ARRAY);
+-    object_property_set_int(OBJECT(&s->cpus), "num-harts", ms->smp.cpus,
+-                            &error_abort);
++    /*
++     * Set the `num-harts` property later as the machine is potentially not
++     * created yet.
++     */
+     object_property_set_int(OBJECT(&s->cpus), "resetvec", 0x1004, &error_abort);
+     object_initialize_child(obj, "riscv.sifive.e.gpio0", &s->gpio,
+                             TYPE_SIFIVE_GPIO);
+@@ -200,6 +201,8 @@ static void sifive_e_soc_realize(DeviceState *dev, Error **errp)
+ 
+     object_property_set_str(OBJECT(&s->cpus), "cpu-type", ms->cpu_type,
+                             &error_abort);
++    object_property_set_int(OBJECT(&s->cpus), "num-harts", ms->smp.cpus,
++                            &error_abort);
+     sysbus_realize(SYS_BUS_DEVICE(&s->cpus), &error_fatal);
+ 
+     /* Mask ROM */
+-- 
+2.53.0
 
 
