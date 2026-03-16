@@ -4,37 +4,36 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5CE71F30283
-	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 00:06:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96333F3027F
+	for <qemu-devel@archiver.kernel.org>; Mon, 16 Mar 2026 00:06:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w1vSv-0004vL-RS; Sun, 15 Mar 2026 20:05:49 -0400
+	id 1w1vSv-0004uP-2C; Sun, 15 Mar 2026 20:05:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w1vSf-0004tl-Vr
+ id 1w1vSg-0004tm-0I
  for qemu-devel@nongnu.org; Sun, 15 Mar 2026 20:05:35 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w1vSc-0004Y8-49
+ id 1w1vSc-0004YS-7g
  for qemu-devel@nongnu.org; Sun, 15 Mar 2026 20:05:32 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 63F1B596A4D;
- Mon, 16 Mar 2026 01:05:22 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id AB18D596E02;
+ Mon, 16 Mar 2026 01:05:24 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id 13KbOQz99Al5; Mon, 16 Mar 2026 01:05:20 +0100 (CET)
+ id NChb6Xhf98x6; Mon, 16 Mar 2026 01:05:21 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 53D32596A44; Mon, 16 Mar 2026 01:05:20 +0100 (CET)
-Message-ID: <5837ddb9d354004465216a39b6b6189c2ee5c8f4.1773618848.git.balaton@eik.bme.hu>
+ id 64B33596A47; Mon, 16 Mar 2026 01:05:21 +0100 (CET)
+Message-ID: <c4edeb5a19ad62b6bb14240dbbce8a54de08321a.1773618848.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1773618848.git.balaton@eik.bme.hu>
 References: <cover.1773618848.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH 1/4] ati-vga: Fix colors when frame buffer endianness does not
- match host
+Subject: [PATCH 2/4] ati-vga: Also switch mode on HW cursor enable bit change
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -42,15 +41,14 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Mon, 16 Mar 2026 01:05:20 +0100 (CET)
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Date: Mon, 16 Mar 2026 01:05:21 +0100 (CET)
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,96 +64,27 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When writing pixels we have to take into account if the frame buffer
-endianness matches the host endianness or we need to swap to correct
-endianness. This caused wrong colors e.g. with PPC Linux guest that
-uses big endian frame buffer when running on little endian host.
+This does nothing for most drivers but works around issue and fixes
+output with the Solaris R128 driver that only sets display parameters
+after enabling CRT controller which we would miss otherwise.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
 ---
- hw/display/ati_2d.c | 27 +++++++++++++++++----------
- 1 file changed, 17 insertions(+), 10 deletions(-)
+ hw/display/ati.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/display/ati_2d.c b/hw/display/ati_2d.c
-index 37fe6c17ee..accc7b12b4 100644
---- a/hw/display/ati_2d.c
-+++ b/hw/display/ati_2d.c
-@@ -50,6 +50,7 @@ typedef struct {
-     bool host_data_active;
-     bool left_to_right;
-     bool top_to_bottom;
-+    bool need_swap;
-     uint32_t frgd_clr;
-     const uint8_t *palette;
-     const uint8_t *vram_end;
-@@ -89,6 +90,7 @@ static void setup_2d_blt_ctx(const ATIVGAState *s, ATI2DCtx *ctx)
-     ctx->host_data_active = s->host_data.active;
-     ctx->left_to_right = s->regs.dp_cntl & DST_X_LEFT_TO_RIGHT;
-     ctx->top_to_bottom = s->regs.dp_cntl & DST_Y_TOP_TO_BOTTOM;
-+    ctx->need_swap = HOST_BIG_ENDIAN != s->vga.big_endian_fb ? true : false;
-     ctx->frgd_clr = s->regs.dp_brush_frgd_clr;
-     ctx->palette = s->vga.palette;
-     ctx->dst_offset = s->regs.dst_offset;
-@@ -268,10 +270,12 @@ static bool ati_2d_do_blt(ATI2DCtx *ctx, uint8_t use_pixman)
-                                                    ctx->palette[5]);
-             break;
-         }
--
-         DPRINTF("pixman_fill(%p, %ld, %d, %d, %d, %d, %d, %x)\n",
-                 ctx->dst_bits, ctx->dst_stride / sizeof(uint32_t), ctx->bpp,
-                 vis_dst.x, vis_dst.y, vis_dst.width, vis_dst.height, filler);
-+        if (ctx->need_swap) {
-+            bswap32s(&filler);
-+        }
- #ifdef CONFIG_PIXMAN
-         if (!(use_pixman & BIT(0)) ||
-             !pixman_fill((uint32_t *)ctx->dst_bits,
-@@ -325,11 +329,8 @@ void ati_2d_blt(ATIVGAState *s)
- bool ati_host_data_flush(ATIVGAState *s)
- {
-     ATI2DCtx ctx, chunk;
--    uint32_t fg = s->regs.dp_src_frgd_clr;
--    uint32_t bg = s->regs.dp_src_bkgd_clr;
-     unsigned bypp, pix_count, row, col, idx;
-     uint8_t pix_buf[ATI_HOST_DATA_ACC_BITS * sizeof(uint32_t)];
--    uint32_t byte_pix_order = s->regs.dp_datatype & DP_BYTE_PIX_ORDER;
-     uint32_t src_source = s->regs.dp_mix & DP_SRC_SOURCE;
-     uint32_t src_datatype = s->regs.dp_datatype & DP_SRC_DATATYPE;
- 
-@@ -360,21 +361,27 @@ bool ati_host_data_flush(ATIVGAState *s)
-     }
- 
-     bypp = ctx.bpp / 8;
--
-+    pix_count = ATI_HOST_DATA_ACC_BITS;
-     if (src_datatype == SRC_COLOR) {
--        pix_count = ATI_HOST_DATA_ACC_BITS / ctx.bpp;
--        memcpy(pix_buf, &s->host_data.acc[0], sizeof(s->host_data.acc));
-+        pix_count /= ctx.bpp;
-+        memcpy(pix_buf, s->host_data.acc, sizeof(s->host_data.acc));
-     } else {
--        pix_count = ATI_HOST_DATA_ACC_BITS;
-         /* Expand monochrome bits to color pixels */
-+        uint32_t byte_pix_order = s->regs.dp_datatype & DP_BYTE_PIX_ORDER;
-+        uint32_t fg = s->regs.dp_src_frgd_clr;
-+        uint32_t bg = s->regs.dp_src_bkgd_clr;
-+
-+        if (ctx.need_swap) {
-+            bswap32s(&fg);
-+            bswap32s(&bg);
-+        }
-         idx = 0;
-         for (int word = 0; word < 4; word++) {
-             for (int byte = 0; byte < 4; byte++) {
-                 uint8_t byte_val = s->host_data.acc[word] >> (byte * 8);
-                 for (int i = 0; i < 8; i++) {
-                     bool is_fg = byte_val & BIT(byte_pix_order ? i : 7 - i);
--                    uint32_t color = is_fg ? fg : bg;
--                    stn_he_p(&pix_buf[idx], bypp, color);
-+                    stn_he_p(&pix_buf[idx], bypp, is_fg ? fg : bg);
-                     idx += bypp;
-                 }
-             }
+diff --git a/hw/display/ati.c b/hw/display/ati.c
+index 05cf507bd4..1a6a5ad4fd 100644
+--- a/hw/display/ati.c
++++ b/hw/display/ati.c
+@@ -617,6 +617,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         ati_reg_write_offs(&s->regs.crtc_gen_cntl,
+                            addr - CRTC_GEN_CNTL, data, size);
+         if ((val & CRTC2_CUR_EN) != (s->regs.crtc_gen_cntl & CRTC2_CUR_EN)) {
++            ati_vga_switch_mode(s);
+             if (s->cursor_guest_mode) {
+                 s->vga.force_shadow = !!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN);
+             } else {
 -- 
 2.41.3
 
