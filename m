@@ -4,64 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CEB76F3381B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA26BF3381F
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:58:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QGF-0006oU-Vb; Tue, 17 Mar 2026 04:58:48 -0400
+	id 1w2QEE-0006HF-57; Tue, 17 Mar 2026 04:56:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w2QFx-0006VI-0z
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:58:29 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1w2QDx-0004qV-Qi
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:26 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
- id 1w2QFv-0007zO-4M
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:58:28 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1w2QDw-0007dx-BZ
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737905;
- h=from:from:reply-to:reply-to:subject:subject:date:date:
- message-id:message-id:to:to:cc:cc:mime-version:mime-version:
- content-type:content-type:in-reply-to:in-reply-to:  references:references;
- bh=fbkddmCJ6j6UpG7Gm4YZeU2ZLwOO0/XjzuWz6Ta0IiU=;
- b=e0y770ykX0HFe37ndzthGnA/nYB0rdBdaz+mIraiEhkl0qrC39rQkyg3GRkp+9W6IarM/Y
- dun1uFDscVQJPSDalIf4gblHRUwR73QpYYUdVbatW638TA7HdpD5JhA8HJgO7u5bpPnwTf
- 9ZYnKwHswGL1c8PVfz1PpQNkvC7OYL8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ s=mimecast20190719; t=1773737783;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=yZha2cobxbnJSN26XX9Uh5E5JAqwHkCKFFu6Rh83jWM=;
+ b=c7XN2L2J8teHVhYd/yY7urwiJrWfXaCpQxhLmWNTCLW0t2zte/U9fiAXlLM6bm5OX6t7mM
+ PktsXugZfRiUOEBLPX1HMyW0jfY8fvkRoSBOYCAzSTo74PjSqIMLhhjVlm6pF0ejYKJ5Fu
+ VOXxWvGHogZbOzmmjXIHEQP0PrM1JwU=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-571-XeyHh2S0OB65guQ8TNfLaw-1; Tue,
- 17 Mar 2026 04:58:22 -0400
-X-MC-Unique: XeyHh2S0OB65guQ8TNfLaw-1
-X-Mimecast-MFC-AGG-ID: XeyHh2S0OB65guQ8TNfLaw_1773737901
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-171-8i6CQ7clNNWTVGACC_LNzg-1; Tue,
+ 17 Mar 2026 04:56:22 -0400
+X-MC-Unique: 8i6CQ7clNNWTVGACC_LNzg-1
+X-Mimecast-MFC-AGG-ID: 8i6CQ7clNNWTVGACC_LNzg_1773737781
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 27FCF180034E; Tue, 17 Mar 2026 08:58:21 +0000 (UTC)
-Received: from redhat.com (unknown [10.44.33.252])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 747AD19560B1; Tue, 17 Mar 2026 08:58:18 +0000 (UTC)
-Date: Tue, 17 Mar 2026 08:58:15 +0000
-From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
-To: Peter Xu <peterx@redhat.com>
-Cc: Junjie Cao <junjie.cao@intel.com>, qemu-devel@nongnu.org, farosas@suse.de
-Subject: Re: [PATCH] migration/file: fix type mismatch and NULL deref in
- multifd_file_recv_data
-Message-ID: <abkXhC1OJF21RZTL@redhat.com>
-References: <20260316084618.52-1-junjie.cao@intel.com>
- <abhq9BzuP2bZPLBg@x1.local>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 692B118005BB
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:56:21 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 54CFF1800361
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:56:19 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 17 Mar 2026 12:51:13 +0400
+Subject: [PATCH 59/60] tests/qtest: drop DBUS_VMSTATE_TEST_TMPDIR
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <abhq9BzuP2bZPLBg@x1.local>
-User-Agent: Mutt/2.2.14 (2025-02-20)
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260317-qemu-vnc-v1-59-48eb1dcf7b76@redhat.com>
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+To: qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1247;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=pWmLiM6H0bHXqtHHxabbCrpUXS9tin4BcNjH23gfJYw=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXdAg7c/RLYBUK3z0g47M6R2utqpTFCb7/jQ
+ abK0wJMGPCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3QAKCRDa6OEJdZac
+ 5XgJD/9IPxVOipz6vo+zhWTYiXPhvYiM1Brz6mHfwzg0Bt4ZOwG/cuanxcr+d9Q7X99nvudYI7P
+ qxHKgLoSQeD05Ng3TEgFyMAgcMSgOeEhFhLi9ENuTttOfF5zSOz2S4wsi2eP9xq78Kibu51KGJF
+ fIpl0H1RxU4HH3yvhclnfasmEj058LFxcMAvVMP+f/JnByAxNboT5N2uufVJg7mHfJXpAFWLJtr
+ Z24ngQwxlBhs0eAvLpVq5IP0+HEUYA3MSOp9n07yTDpb1Pt/4y0FvlWcTinVNfr4vBlg/2fs0E+
+ 6SnicWFEVTpxS3g5pRBcu+pirTVlppZWAMZdumBQIwLMTuuYsctR0bGmaiOnmX/dGds8JJpMnA1
+ Ou0TXaSWAiRnj+PCzuZ5DYV2etI6GNZq/JrRYIZFI3XhOP1BR3e088MjWwCfsBsSoHHiCHgjFXj
+ NA7uzy1GDb+Ycc7oFC9k08Ms5ce33j7+WA6JIIlcw6gfu//LbqtKH8nVR/MUMUyyKwI3ZljEl1Q
+ MoMydJxucaR6Alm89/yT8DfEuxMCk6eXcWUSBR11r8fgq+JnAqQBvyi6vy40aC+uTT2pc/IK/Rl
+ raWKlGKkvCCFkgaq4NmCqhN5Ya3tv69uP1YEqVTvwnh3rtu/GS7mFYfMLCFzI2JLolo2adRTgUk
+ Px8x1A/LCxQGUCA==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -83,43 +100,45 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, Mar 16, 2026 at 04:41:24PM -0400, Peter Xu wrote:
-> On Mon, Mar 16, 2026 at 04:46:18PM +0800, Junjie Cao wrote:
-> > multifd_file_recv_data() stores the return value of qio_channel_pread()
-> > (ssize_t) in a size_t variable.  On I/O error the -1 return value wraps
-> > to SIZE_MAX, producing a nonsensical read size in the error message.
-> > 
-> > More critically, a short read (0 <= ret < data->size) is possible when
-> > the migration file is truncated.  In that case qio_channel_pread()
-> > returns a non-negative value without setting *errp.  The function then
-> > calls error_prepend(errp, ...) which dereferences *errp -- a NULL
-> > pointer -- crashing QEMU.
-> > 
-> > Fix both issues by changing ret to ssize_t and splitting the error
-> > handling: use error_prepend() only when qio_channel_pread() itself
-> > has populated *errp (ret < 0), and error_setg() for the short-read
-> > case where *errp has not been set.  Add ERRP_GUARD() so that
-> > error_prepend() works correctly even when errp is &error_fatal or
-> > NULL.
-> 
-> Indeed, this seems problematic.
-> 
-> But is it possible to get partial reads?  I don't see why it won't happen..
-> do we need to fix it too (e.g. introduce qio_channel_pread_all_eof())?
+It can rely on the location of the temporary configuration instead.
 
-It is wise to assume a short read is possible. Even if it might be
-safe today, based on assumptions of the callers, future refactoring
-may change things.
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ tests/qtest/dbus-vmstate-test.c | 2 --
+ tests/dbus-daemon.sh            | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
 
-With regards,
-Daniel
+diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
+index ed4a52d0255..23d1c872f71 100644
+--- a/tests/qtest/dbus-vmstate-test.c
++++ b/tests/qtest/dbus-vmstate-test.c
+@@ -352,8 +352,6 @@ main(int argc, char **argv)
+         exit(1);
+     }
+ 
+-    g_setenv("DBUS_VMSTATE_TEST_TMPDIR", workdir, true);
+-
+     qtest_add_func("/dbus-vmstate/without-list",
+                    test_dbus_vmstate_without_list);
+     qtest_add_func("/dbus-vmstate/with-list",
+diff --git a/tests/dbus-daemon.sh b/tests/dbus-daemon.sh
+index 474e2501548..c4a50c73774 100755
+--- a/tests/dbus-daemon.sh
++++ b/tests/dbus-daemon.sh
+@@ -26,7 +26,7 @@ write_config()
+     cat > "$CONF" <<EOF
+ <busconfig>
+   <type>session</type>
+-  <listen>unix:tmpdir=$DBUS_VMSTATE_TEST_TMPDIR</listen>
++  <listen>unix:tmpdir=$(dirname "$CONF")</listen>
+ 
+   <policy context="default">
+      <!-- Holes must be punched in service configuration files for
+
 -- 
-|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
-|: https://libvirt.org          ~~          https://entangle-photo.org :|
-|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+2.53.0
 
 
