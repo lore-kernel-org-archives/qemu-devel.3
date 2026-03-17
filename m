@@ -4,105 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4F36FF6E9D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:25:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A4034FF6E9E
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:25:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2dlR-0003yj-9U; Tue, 17 Mar 2026 19:23:53 -0400
+	id 1w2dlT-0003zE-OW; Tue, 17 Mar 2026 19:23:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlP-0003yG-KC
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:51 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlS-0003yr-4N
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:54 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlO-0006TD-3C
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:51 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlP-0006TP-Us
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:53 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773789829;
+ s=mimecast20190719; t=1773789831;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=4VIfJwVvQOqSfZotFMcnTmIgI+32r03PnWffChaegzo=;
- b=HjR4qz2WF4LHnee9t+E0fnux/CL2K83CK+OgOU8b45a0B1iUhvlHvyi9eMmLG+XqjWXgbK
- ajXpahQa+koN3bp4vBaLLNL8isKIFyXgYv5pAif/qFeIlxsETsaFCefv4d4zKUYEVDDul7
- j9ZF1uoLRJW2yMHcBVZRFcNUiUt82PU=
-Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
- [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=5vkvO/aSwVfWwyf4C8OnQy+aocu9TdzvUh0BD1i35+o=;
+ b=XykeSZvZjYqLI1eoVzSUbSiGuOqPMqkMZWRp8lQ3MZq2BTBbIiesWLPE1UG2Zqeq5IsBso
+ DYpYkDi1GKw/nZvfA7BRN9qspA8BsE4fj/8BRJRdSUnqasVnWWg8FZWY4D7wAcn0XM40//
+ jLxwSrHAbPjpblVF3dwia7vwkO/FNW4=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-18-ZMTcE3RUPkWeuGF17uVYbw-1; Tue, 17 Mar 2026 19:23:48 -0400
-X-MC-Unique: ZMTcE3RUPkWeuGF17uVYbw-1
-X-Mimecast-MFC-AGG-ID: ZMTcE3RUPkWeuGF17uVYbw_1773789828
-Received: by mail-qt1-f197.google.com with SMTP id
- d75a77b69052e-5092033798eso237515481cf.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 16:23:48 -0700 (PDT)
+ us-mta-263-OtvGoDePMH6E8_Sdz7hP6w-1; Tue, 17 Mar 2026 19:23:50 -0400
+X-MC-Unique: OtvGoDePMH6E8_Sdz7hP6w-1
+X-Mimecast-MFC-AGG-ID: OtvGoDePMH6E8_Sdz7hP6w_1773789829
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8950562d351so536728406d6.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 16:23:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773789827; x=1774394627; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773789829; x=1774394629; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=4VIfJwVvQOqSfZotFMcnTmIgI+32r03PnWffChaegzo=;
- b=rPkuunHKf6dN8l1BlGe/TXzcqPbJ5IPv4FCsLcYigjgcqLURvxbNres6BbrkfCBYMH
- 20ea774Tek0mpiGZIJ6+O/PpRkJiB+oDzBZdjqZiTgwBIs8X42ecihds+F49SOWSb4Wk
- Bg8GK+nYgo0sSpGbFvt5fXSIPsY77QwaQZU7FrdlDoXTQAQdYfpgY7qELUmqeVzHv+nv
- GbxX7R3sZPrfcDFJCrIV5Zjgc/EeO6iFT20/evkRxS3Wfw1cnwk9c60hS6hV2a10mxb3
- uv1IGQmKEcIlOeVrbL5T8l5Kjqdu+Z3HWYv4T377sQl4UMwdsLWd1+SDcuFmrtIpMKvR
- MCCA==
+ bh=5vkvO/aSwVfWwyf4C8OnQy+aocu9TdzvUh0BD1i35+o=;
+ b=GORS2I3m8WYytfXy6yEvnVaZuc2d4GFmXNTnzdbf0G4nChL3VseQp8xCplLJToSyb1
+ 3Z1sStnEdlocg8F2LXH3cnTOFu4rijiSrHHNQaGinAHNCdKcyeZbKYqnwf5lyfQvMhMC
+ 8r4S9ywk+OVqeg14TNSOYSo5LZXb9ipqaMNbrosQ8yaDwzfY7TSFcUVMEftSnOOnkexf
+ 4j8wdOMcWvKpjP7j0PrFTaj8F0yEfjKN9X2Awi+USbKBlBRJ64c1kR91vMz3Ozb16kNO
+ JGKodo3NzcvyJZIFelcTfqBglxAmhfTYdjDKNtsGEsTR7cN38dDKJIFZ0LeSHtbqU8kh
+ AqTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773789827; x=1774394627;
+ d=1e100.net; s=20251104; t=1773789829; x=1774394629;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=4VIfJwVvQOqSfZotFMcnTmIgI+32r03PnWffChaegzo=;
- b=rGJwkTdbVRfIaFKokhmRe2OafW6mPmaCcT0R/Jm+eeX20T1hrfuT6ivPc1kRkWu013
- LIuIn9lJ0wSrvCxEX6d5ehfBeNQXacEDLMlXgK5pzpjNIgwS3oAxsongvLmjuD7kOxeR
- Eqpew7pV2ZzMvy3TBhQXOc7qHac2bnOs71Yl/hmg4Fq8FezU5HpLdre1cRjI5EhHf97t
- ZuID6C6O8VZeXvThhSf3rfcA5n82UAX8BJYNGpS/i+9zDxDf69zAH1wJvx3kEwsbjmYN
- zpTUuSTQ1rmMHNYi3Mx+pKO4D8plv42ignttKYHC4sJpjMTtphemD9LIlGlawxT+yKTZ
- IpnQ==
-X-Gm-Message-State: AOJu0Yz160zvRLZZ1EJhM1k5sMEyaBxZLCCCtEkMGMdvyGuWcorEiiZz
- nY7UGzU3Z+O+0RHtCqykit4z5IrUkh0sdS/nIFyta5igYVzIlgr/9hNvKYbAIQvHWxeLAoCGwmb
- WQelUBcu2JueBwqL4Tn0rycvZViwCJpx0/ab+7NjpDHH7gAdM3Rlu45Te96w5XrPOLKsEVmZ306
- ZJUHMArVpxrIEDhLrMKoh5QaUD9Eh0l/FI0o0MaQ==
-X-Gm-Gg: ATEYQzwuRYWZDd9STulXPOJ6/Q+iYErNV63Jww5T4RXefb1ehmnYUkQjLtaLMRTpw+X
- 3tJy2hg0CM9WyLElbSmWSGyElCtsEo4lKY+K+Yvg9GyOc1WfUNERO/hkJ5hIbv+Ws+C+0srV4Pi
- E0IIq1O7QHlCbEvI0rFIlfW2StekCcZ/Qr2kpOl4P3UPwtXFu0W3dUbvDgnS9Yz19BbDPOckPHJ
- rJvj7vwFfiRu31d3LcqRXwMrwXojyHkVQ6x1xMrXFTT/CcL+lak5ky8g8jQT9tGXXFz3wfTBMbL
- wuzOkbHuLZ/BALG0BhBL7U07cZtY57TSC3zyYEDS1PJD85R9nv5+Q/kGqS2x1B/lt+rTl0dRDsp
- hvVSkpTAiYc+Zqw==
-X-Received: by 2002:a05:620a:4081:b0:8cd:98c1:762e with SMTP id
- af79cd13be357-8cfad38a797mr207316985a.63.1773789827233; 
- Tue, 17 Mar 2026 16:23:47 -0700 (PDT)
-X-Received: by 2002:a05:620a:4081:b0:8cd:98c1:762e with SMTP id
- af79cd13be357-8cfad38a797mr207314385a.63.1773789826783; 
- Tue, 17 Mar 2026 16:23:46 -0700 (PDT)
+ bh=5vkvO/aSwVfWwyf4C8OnQy+aocu9TdzvUh0BD1i35+o=;
+ b=eqjHu4fZnDS/k2647WoclEV+OeaI+oY/nN8IMn6Ln9dRgDOUPBcL7zFuIQ1XiJ365l
+ YkRtv1+8uj81j+0j+2Wt5w38t3KS9KJNUPGYCYhK9u1js0/7w8AfZMY1OAeDBCzW99LL
+ UOlwy7qt2LH/BeEYEkRzEXe3Ede6nSzo+WK2Xq5YAfFyuCI/auFN3GzXgmKwsZU/Vlc6
+ zGWHYUA7BiaVFGxmNfkYb9jSVNddzgI4VD6GMaxOfor0AQsMKpy+dShA18YLovEklbZX
+ yCxbY1UdalDZER4NAyLfIPmJTc7nr8DlF4AVh6a0m8g2UJZZ24QVxoW5QLs6y9TDSZvZ
+ PuHQ==
+X-Gm-Message-State: AOJu0YwZsh6AeeIgLqnymeEgyhpana640J8NdUbvQrGa0o8tsaghuq+m
+ tnJ8/xQHxC5sWUfLg+RNKFXLgy33BFdYSuwmt5NL5oDbvzeLjDroc+Sjvy53ik0T90fuaIDU912
+ Gg7wiZxcZ5ihYbyA/ZIilGfqBd6YV3ClcFlHojY55X9v9VBLYoE1nrg6Z6EAloxEHrKMJ7UtIjT
+ 9hLyW54fBosjeKfnJ413und+RxCIoiV7nEjETvdQ==
+X-Gm-Gg: ATEYQzxg7c/evdvle6DDgptBTxhgwlI2kyjghNqZHbgPVhQ5XDrM9eyndo08jmfjBm6
+ vcMrXOVjPpF32eTFLxuHGBZQ2v2MnXDy+1C6kAZ2FrzJtvdCASe1/STtL4y3MHW5Aa5H4w0EG2E
+ pZxQJ8Tk10Baz/D78ntn/m962O4ihD0ojyLjCMWwxf3tQwKfBH9bbJzg/RlSNzzmkPPBTWvfAPF
+ 7y3Y1Syk/osbYWGYjMUNH6MdqiOPkE+RPhOUbkQc/CtoYPDTmYyi0W8NCJUjfU3GRXKDZYnbxtD
+ NdKuhIVDcqqlFS2o3/p56u0vFHbLkLSe1RsHAKQf0sfDCPpsiErOKAmdKZxOOPx3wkUZg+vq+t3
+ ftsBtzuaB72rSSg==
+X-Received: by 2002:a05:6214:6115:b0:89c:488b:bd37 with SMTP id
+ 6a1803df08f44-89c6b50c95amr20820986d6.21.1773789828990; 
+ Tue, 17 Mar 2026 16:23:48 -0700 (PDT)
+X-Received: by 2002:a05:6214:6115:b0:89c:488b:bd37 with SMTP id
+ 6a1803df08f44-89c6b50c95amr20820596d6.21.1773789828333; 
+ Tue, 17 Mar 2026 16:23:48 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89c6b9ea39asm8203806d6.37.2026.03.17.16.23.45
+ 6a1803df08f44-89c6b9ea39asm8203806d6.37.2026.03.17.16.23.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 16:23:46 -0700 (PDT)
+ Tue, 17 Mar 2026 16:23:47 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH RFC 08/10] vmstate: Implement load of ptr marker in vmstate
- core
-Date: Tue, 17 Mar 2026 19:23:30 -0400
-Message-ID: <20260317232332.15209-9-peterx@redhat.com>
+Subject: [PATCH RFC 09/10] vmstate: Implement VMS_ARRAY_OF_POINTER_AUTO_ALLOC
+Date: Tue, 17 Mar 2026 19:23:31 -0400
+Message-ID: <20260317232332.15209-10-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260317232332.15209-1-peterx@redhat.com>
 References: <20260317232332.15209-1-peterx@redhat.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=peterx@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -120,112 +119,329 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The loader side of ptr marker is pretty straightforward, instead of playing
-the inner_field trick, just do the load manually assuming the marker layout
-is a stable ABI (which it is true already).
+Introduce a new flag, VMS_ARRAY_OF_POINTER_AUTO_ALLOC, for VMSD field.  It
+must be used together with VMS_ARRAY_OF_POINTER.
 
-This will remove some logic while loading VMSD, and hopefully it makes it
-slightly easier to read.  Unfortunately, we still need to keep the sender
-side because of the JSON blob we're maintaining..
+It can be used to allow migration of an array of pointers where the
+pointers may point to NULLs.
 
-This paves way for future processing of non-NULL markers as well.
+Note that we used to allow migration of a NULL pointer within an array that
+is being migrated. That corresponds to the code around vmstate_info_nullptr
+where we may get/put one byte showing that the element of an array is NULL.
+
+That usage is fine but very limited, it's because even if it will migrate a
+NULL pointer with a marker, it still works in a way that both src and dest
+QEMUs must know exactly which elements of the array are non-NULL, so
+instead of dynamically loading an array (which can have NULL pointers), it
+actually only verifies the known NULL pointers are still NULL pointers
+after migration.
+
+Also, in that case since dest QEMU knows exactly which element is NULL,
+which is not NULL, dest QEMU's device code will manage all allocations for
+the elements before invoking vmstate_load_vmsd().
+
+That's not enough per evolving needs of new device states that may want to
+provide real dynamic array of pointers, like what Alexander proposed here
+with the NVMe device migration:
+
+https://lore.kernel.org/r/20260317102708.126725-1-alexander@mihalicyn.com
+
+This patch is an alternative approach to address the problem.
+
+Along with the flag, introduce two new macros:
+
+  VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8|32}_ALLOC()
+
+Which will be used very soon in the NVMe series.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/vmstate-types.c | 12 ++++--------
- migration/vmstate.c       | 40 ++++++++++++++++++++++++---------------
- 2 files changed, 29 insertions(+), 23 deletions(-)
+ include/migration/vmstate.h |  49 ++++++++++++++++-
+ migration/savevm.c          |  31 ++++++++++-
+ migration/vmstate.c         | 101 ++++++++++++++++++++++++++++++++----
+ 3 files changed, 169 insertions(+), 12 deletions(-)
 
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index b31689fc3c..ae465c5c2c 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -363,14 +363,10 @@ static bool load_ptr_marker(QEMUFile *f, void *pv, size_t size,
-                             const VMStateField *field, Error **errp)
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 2e51b5ea04..70bebc60ed 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -161,8 +161,19 @@ enum VMStateFlags {
+      * structure we are referencing to use. */
+     VMS_VSTRUCT           = 0x8000,
  
- {
--    int byte = qemu_get_byte(f);
--
--    if (byte == VMS_MARKER_PTR_NULL || byte == VMS_MARKER_PTR_VALID) {
--        /* TODO: process PTR_VALID case */
--        return true;
--    }
--
--    error_setg(errp, "%s: unexpected ptr marker: %d", __func__, byte);
 +    /*
-+     * Load is done in vmstate core, see vmstate_ptr_marker_load().
++     * This is a sub-flag for VMS_ARRAY_OF_POINTER, so VMS_ARRAY_OF_POINTER
++     * must be set altogether.  When set, it means array elements can
++     * contain either valid or NULL pointers, vmstate core will sync it
++     * between the two QEMU instances via the stream protocol.  When it's a
++     * valid pointer, the vmstate core will be responsible to do the proper
++     * memory allocations.  It also means user of this flag must prepare
++     * the array to be all NULLs otherwise memory may leak.
 +     */
-+    g_assert_not_reached();
-     return false;
++    VMS_ARRAY_OF_POINTER_AUTO_ALLOC = 0x10000,
++
+     /* Marker for end of list */
+-    VMS_END = 0x10000
++    VMS_END                         = 0x20000,
+ };
+ 
+ typedef enum {
+@@ -580,6 +591,42 @@ extern const VMStateInfo vmstate_info_qlist;
+     .offset     = vmstate_offset_array(_s, _f, _type*, _n),          \
  }
  
++/*
++ * For migrating a dynamically allocated uint{8,32}-indexed array of
++ * pointers to structures (with NULL entries and with auto memory
++ * allocation).
++ *
++ * _type: type of structure pointed to
++ * _vmsd: VMSD for structure _type (when VMS_STRUCT is set)
++ * _info: VMStateInfo for _type (when VMS_STRUCT is not set)
++ * start: size of (_type) pointed to (for auto memory allocation)
++ */
++#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC(\
++    _field, _state, _field_num, _version, _vmsd, _type) {            \
++    .name       = (stringify(_field)),                               \
++    .version_id = (_version),                                        \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint8_t), \
++    .vmsd       = &(_vmsd),                                          \
++    .size       = sizeof(_type),                                     \
++    .flags      = VMS_POINTER | VMS_VARRAY_UINT8 |                   \
++                  VMS_ARRAY_OF_POINTER | VMS_STRUCT |                \
++                  VMS_ARRAY_OF_POINTER_AUTO_ALLOC,                   \
++    .offset     = vmstate_offset_pointer(_state, _field, _type *),   \
++}
++
++#define VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(\
++    _field, _state, _field_num, _version, _vmsd, _type) {             \
++    .name       = (stringify(_field)),                                \
++    .version_id = (_version),                                         \
++    .num_offset = vmstate_offset_value(_state, _field_num, uint32_t), \
++    .vmsd       = &(_vmsd),                                           \
++    .size       = sizeof(_type),                                      \
++    .flags      = VMS_POINTER | VMS_VARRAY_UINT32 |                   \
++                  VMS_ARRAY_OF_POINTER | VMS_STRUCT |                 \
++                  VMS_ARRAY_OF_POINTER_AUTO_ALLOC,                    \
++    .offset     = vmstate_offset_pointer(_state, _field, _type *),    \
++}
++
+ #define VMSTATE_VARRAY_OF_POINTER_UINT32(_field, _state, _field_num, _version, _info, _type) { \
+     .name       = (stringify(_field)),                                    \
+     .version_id = (_version),                                             \
+diff --git a/migration/savevm.c b/migration/savevm.c
+index f5a6fd0c66..34223de818 100644
+--- a/migration/savevm.c
++++ b/migration/savevm.c
+@@ -869,8 +869,37 @@ static void vmstate_check(const VMStateDescription *vmsd)
+     if (field) {
+         while (field->name) {
+             if (field->flags & VMS_ARRAY_OF_POINTER) {
+-                assert(field->size == 0);
++                if (VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
++                    /*
++                     * Size must be provided because dest QEMU needs that
++                     * info to know what to allocate
++                     */
++                    assert(field->size || field->size_offset);
++                } else {
++                    /*
++                     * Otherwise size info isn't useful (because it's
++                     * always the size of host pointer), enforce accidental
++                     * setup of sizes in this case.
++                     */
++                    assert(field->size == 0 && field->size_offset == 0);
++                }
++                /*
++                 * VMS_ARRAY_OF_POINTER must be used only together with one
++                 * of VMS_(V)ARRAY* flags.
++                 */
++                assert(field->flags & (VMS_ARRAY | VMS_VARRAY_INT32 |
++                                       VMS_VARRAY_UINT16 | VMS_VARRAY_UINT8 |
++                                       VMS_VARRAY_UINT32));
+             }
++
++            /*
++             * When VMS_ARRAY_OF_POINTER_ALLOW_NULL is used, we must have
++             * VMS_ARRAY_OF_POINTER set too.
++             */
++            if (field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
++                assert(field->flags & VMS_ARRAY_OF_POINTER);
++            }
++
+             if (field->flags & (VMS_STRUCT | VMS_VSTRUCT)) {
+                 /* Recurse to sub structures */
+                 vmstate_check(field->vmsd);
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index a3a5f25946..d65fc84dfa 100644
+index d65fc84dfa..7d7d9c7e18 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -142,6 +142,21 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+@@ -153,6 +153,12 @@ static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
+         return true;
      }
- }
  
-+static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
-+                                    Error **errp)
-+{
-+    int byte = qemu_get_byte(f);
-+
-+    if (byte == VMS_MARKER_PTR_NULL) {
-+        /* When it's a null ptr marker, do not continue the load */
-+        *load_field = false;
++    if (byte == VMS_MARKER_PTR_VALID) {
++        /* We need to load this field right after the marker */
++        *load_field = true;
 +        return true;
 +    }
 +
-+    error_setg(errp, "Unexpected ptr marker: %d", byte);
-+    return false;
+     error_setg(errp, "Unexpected ptr marker: %d", byte);
+     return false;
+ }
+@@ -234,6 +240,22 @@ static bool vmstate_post_load(const VMStateDescription *vmsd,
+     return true;
+ }
+ 
++
++/*
++ * If we will use a ptr marker in the stream for a field?  Two use cases:
++ *
++ * (1) When used with VMS_ARRAY_OF_POINTER_ALLOW_NULL, it must always be
++ *     present to imply the population status of the pointer.
++ *
++ * (2) When used with normal VMSD array fields, only emit a null ptr marker
++ *     if the pointer is NULL.
++ */
++static inline bool
++vmstate_use_marker_field(void *ptr, int size, bool dynamic_array)
++{
++    return (!ptr && size) || dynamic_array;
 +}
 +
- static bool vmstate_pre_load(const VMStateDescription *vmsd, void *opaque,
-                              Error **errp)
+ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+                        void *opaque, int version_id, Error **errp)
  {
-@@ -264,30 +279,25 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
-             }
+@@ -271,6 +293,12 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+             void *first_elem = opaque + field->offset;
+             int i, n_elems = vmstate_n_elems(opaque, field);
+             int size = vmstate_size(opaque, field);
++            /*
++             * When this is enabled, it means we will always push a ptr
++             * marker first for each element saying if it's populated.
++             */
++            bool use_dynamic_array =
++                field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
  
-             for (i = 0; i < n_elems; i++) {
--                bool ok;
-+                /* If we will process the load of field? */
-+                bool load_field = true;
-+                bool ok = true;
-                 void *curr_elem = first_elem + size * i;
--                const VMStateField *inner_field;
+             vmstate_handle_alloc(first_elem, field, opaque);
+             if (field->flags & VMS_POINTER) {
+@@ -282,18 +310,37 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+                 /* If we will process the load of field? */
+                 bool load_field = true;
+                 bool ok = true;
+-                void *curr_elem = first_elem + size * i;
++                bool use_marker_field;
++                void *curr_elem_p = first_elem + size * i;
++                void *curr_elem = curr_elem_p;
  
                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+-                    curr_elem = *(void **)curr_elem;
++                    curr_elem = *(void **)curr_elem_p;
+                 }
+ 
+-                if (!curr_elem && size) {
+-                    /* Read the marker instead of VMSD itself */
++                use_marker_field = vmstate_use_marker_field(curr_elem, size,
++                                                            use_dynamic_array);
++                if (use_marker_field) {
++                    /* Read the marker instead of VMSD first */
+                     if (!vmstate_ptr_marker_load(f, &load_field, errp)) {
+                         trace_vmstate_load_field_error(field->name, -EINVAL);
+                         return false;
+                     }
++
++                    if (load_field) {
++                        /*
++                         * When reaching here, it means we received a
++                         * non-NULL ptr marker, so we need to populate the
++                         * field before loading it.
++                         *
++                         * NOTE: do not use vmstate_size() here, because we
++                         * need the object size, not entry size of the
++                         * array.
++                         */
++                        curr_elem = g_malloc0(field->size);
++                        /* Remember to update the root pointer! */
++                        *(void **)curr_elem_p = curr_elem;
++                    }
+                 }
+ 
+                 if (load_field) {
+@@ -397,6 +444,16 @@ static bool vmsd_can_compress(const VMStateField *field)
+         return false;
+     }
+ 
++    if (field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC) {
++        /*
++         * This may involve two VMSD fields to be dumped, one for the
++         * marker to show if the pointer is NULL, followed by the real
++         * vmstate object.  To make it simple at least for now, skip
++         * compression for this one.
++         */
++        return false;
++    }
++
+     if (field->flags & VMS_STRUCT) {
+         const VMStateField *sfield = field->vmsd->fields;
+         while (sfield->name) {
+@@ -578,6 +635,12 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             int size = vmstate_size(opaque, field);
+             JSONWriter *vmdesc_loop = vmdesc;
+             bool use_marker_field_prev = false;
++            /*
++             * When this is enabled, it means we will always push a ptr
++             * marker first for each element saying if it's populated.
++             */
++            bool use_dynamic_array =
++                field->flags & VMS_ARRAY_OF_POINTER_AUTO_ALLOC;
+ 
+             trace_vmstate_save_state_loop(vmsd->name, field->name, n_elems);
+             if (field->flags & VMS_POINTER) {
+@@ -596,13 +659,10 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
                      curr_elem = *(void **)curr_elem;
                  }
  
-                 if (!curr_elem && size) {
+-                use_marker_field = !curr_elem && size;
++                use_marker_field = vmstate_use_marker_field(curr_elem, size,
++                                                            use_dynamic_array);
++
+                 if (use_marker_field) {
 -                    /*
 -                     * If null pointer found (which should only happen in
 -                     * an array of pointers), use null placeholder and do
 -                     * not follow.
 -                     */
--                    inner_field = vmsd_create_ptr_marker_field(field);
--                } else {
--                    inner_field = field;
-+                    /* Read the marker instead of VMSD itself */
-+                    if (!vmstate_ptr_marker_load(f, &load_field, errp)) {
-+                        trace_vmstate_load_field_error(field->name, -EINVAL);
-+                        return false;
+                     inner_field = vmsd_create_ptr_marker_field(field);
+                 } else {
+                     inner_field = field;
+@@ -652,6 +712,27 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     goto out;
+                 }
+ 
++                /*
++                 * If we're using dynamic array and the element is
++                 * populated, dump the real object right after the marker.
++                 */
++                if (use_dynamic_array && curr_elem) {
++                    /*
++                     * NOTE: do not use vmstate_size() here because we want
++                     * to dump the real VMSD object now.
++                     */
++                    ok = vmstate_save_field_with_vmdesc(f, curr_elem,
++                                                        field->size, vmsd,
++                                                        field, vmdesc_loop,
++                                                        i, max_elems, errp);
++
++                    if (!ok) {
++                        error_prepend(errp, "Save of field %s/%s failed: ",
++                                      vmsd->name, field->name);
++                        goto out;
 +                    }
-                 }
- 
--                ok = vmstate_load_field(f, curr_elem, size, inner_field, errp);
--
--                /* If we used a fake temp field.. free it now */
--                if (inner_field != field) {
--                    g_clear_pointer((gpointer *)&inner_field, g_free);
-+                if (load_field) {
-+                    ok = vmstate_load_field(f, curr_elem, size, field, errp);
-                 }
- 
-                 if (ok) {
++                }
++
+                 /* Compressed arrays only care about the first element */
+                 if (vmdesc_loop && vmsd_can_compress(field)) {
+                     vmdesc_loop = NULL;
 -- 
 2.50.1
 
