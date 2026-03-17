@@ -4,91 +4,118 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09540F33817
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1C66AF3381C
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:57:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QE7-0005N6-VU; Tue, 17 Mar 2026 04:56:36 -0400
+	id 1w2QDs-0004Y4-QT; Tue, 17 Mar 2026 04:56:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QCy-0003V5-5G
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:24 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1w2QCG-0001V9-7h; Tue, 17 Mar 2026 04:54:40 -0400
+Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QCu-00074G-Sm
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737720;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=yCXR2+AcR/DGDwWpZSm9RScE/rcFlXwHiIjwQncmniw=;
- b=iSU24QGx+LBSgAeyCAkOJ1rw+7ENmC00IRdh3ppCy/B0sJom18spZONg6+8pRzYGrdg8I9
- rAx6NIRfmUjPYxcMmleAlj+6B97S866yrwK/7fsFlNZg+e8p9VYsyzInypwRY8ASeE+scy
- osBgogIiUapQrwp9ztLvSgAzTtdCnIw=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-325-la9ebm_5P7is5p_8Mnf3cA-1; Tue,
- 17 Mar 2026 04:55:18 -0400
-X-MC-Unique: la9ebm_5P7is5p_8Mnf3cA-1
-X-Mimecast-MFC-AGG-ID: la9ebm_5P7is5p_8Mnf3cA_1773737717
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DF95195609D
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:17 +0000 (UTC)
-Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id A03001800576
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:16 +0000 (UTC)
-From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:51:02 +0400
-Subject: [PATCH 48/60] ui/vnc: defer listener registration until the
- console is known
+ (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
+ id 1w2QCC-0006mv-1Y; Tue, 17 Mar 2026 04:54:38 -0400
+Received: from phl-compute-04.internal (phl-compute-04.internal [10.202.2.44])
+ by mailfout.phl.internal (Postfix) with ESMTP id 2931BEC018A;
+ Tue, 17 Mar 2026 04:54:35 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-04.internal (MEProxy); Tue, 17 Mar 2026 04:54:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
+ h=cc:cc:content-transfer-encoding:content-type:content-type
+ :date:date:from:from:in-reply-to:in-reply-to:message-id
+ :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
+ t=1773737675; x=1773824075; bh=Uk9MA9tCfcMmewYjnYM+atZAq2o5WV3m
+ ZNIROPc+VbU=; b=dLAvuKIKXsp5E5QYLQZLEHrA4l+XXzYIs+ee48HpVGpuel3c
+ Z9reL2sJn1gEA1r5bOUrwas1tF72sYdm1rlA+3xtLacQ0IeZc11FSuuuDGlRlQRF
+ hEHIQd13Xq2DsJFTXrGfY6VQcZco/UEtcLRYRWFl+QEkCrjCTOPtiFUhE37qpn5w
+ ap7gKf3xe2BFDH+hoA2hOJhAeEbpw/gLUTmx/nPQPHtS8d2AOX6alKi1AtmL9sJ3
+ TvrFO+qdsRfP4Vmt6CWrl4WmZGA/pPW/fhInOsjigoQfrZZfqZMg6xmHnVuEvwol
+ vR194irhAstUmlTLEtvZ0sRPSQuSPwnUB2ejFQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+ messagingengine.com; h=cc:cc:content-transfer-encoding
+ :content-type:content-type:date:date:feedback-id:feedback-id
+ :from:from:in-reply-to:in-reply-to:message-id:mime-version
+ :references:reply-to:subject:subject:to:to:x-me-proxy
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773737675; x=
+ 1773824075; bh=Uk9MA9tCfcMmewYjnYM+atZAq2o5WV3mZNIROPc+VbU=; b=P
+ 05gHrRk50boF7LyQTqfnAHpslNZsdIfwDihpqgX5/8qcNanT/1uA6/U2uLNpge4G
+ TuagWj1kxB9IiMXAumUtY9rcCUs4DxtOHjoRuIPViYkIiQD+VU7Nua4rTc40QZnO
+ L7M/jjtwxIGDGSpjQl2/9AaWej0hWS2V2SZiXQqx01LhMY0peUZZOb/EJ0TFdy8p
+ nTVmMkEo0CFY+zBuwojqvnhlti6if+vpaZ+aZW8GaAylhx6ZpFxOGcsASYcqGeKG
+ uQ+qUC61HxBBXYGoeXay5ILQ05epf5ic3a1eHQWAHDaz77qMi6rddEwuhiy5WZZQ
+ epHqveJGtbIgmKcLTFWfg==
+X-ME-Sender: <xms:yha5aQwu_Gguvc4xiaLMYckAPOK3_Wq66JcjjdrxbQvGXsZtTMRt5A>
+ <xme:yha5aQRhhgCSel3Dae95Pcrpk_y0elxZs7H1rv8x5jlyKSZoZl4GCjDtCQ7jKMnY4
+ UHnHKmOliL4DPH-a_7hFyS0CF9vKjTMxBWV5J8w_x17i_rjed_i5bk>
+X-ME-Received: <xmr:yha5aUg31F4itluJRlBsy1BaLU0ttTi5n6OzN4f4YOt5Gpuuzv8Se6eBtyuMypfSyYEmTA9yFgeARXXlUMxubQi4-_vvInRKNDs8jDJfxUPP3FmJSreurneouHxP2Wk3F43ZWwk>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddtkedvucetufdoteggodetrf
+ dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
+ rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
+ gurhephfffufggtgfgkfhfjgfvvefosehtjeertdertdejnecuhfhrohhmpefmlhgruhhs
+ ucflvghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtth
+ gvrhhnpeekiedvtdeuhefffedutdelfeekhfeitddtudevgefgffeiteevfffhhefggefh
+ ffenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehith
+ hssehirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeelpdhmohguvgepshhm
+ thhpohhuthdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpth
+ htohepphgvthgvrhigsehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggv
+ vhgvlhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghroh
+ drihhtpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthho
+ pehithhssehirhhrvghlvghvrghnthdrughkpdhrtghpthhtohepqhgvmhhuqdgslhhotg
+ hksehnohhnghhnuhdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhn
+ ghdrtghomhdprhgtphhtthhopehpsghonhiiihhnihesrhgvughhrghtrdgtohhm
+X-ME-Proxy: <xmx:yha5afkZGqPeDVAGAwi3ZmrM5GZywPQLF_Shr9yZ40lffvB2jrEoUA>
+ <xmx:yha5afuZHEwxJwMAP91RG6P4agfPO0arQ7bq7MpIrrWvv8HI2iMDiw>
+ <xmx:yha5aVbHdcVpbmB0ckEALa7A4hyVXLq2eLbanRGqMNfdB5xP7URMjA>
+ <xmx:yha5aXBTBb14b2YLSKMd95rkNnPdo6sFXHAAWIlB8lEhLjQsGZk23Q>
+ <xmx:yxa5aeJ5hHgQHOqHN3fmg5pL_-U_Ukv_YL-_USYgLBHlIiUwZNfb2cd7>
+Feedback-ID: idc91472f:Fastmail
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
+ 17 Mar 2026 04:54:33 -0400 (EDT)
+From: Klaus Jensen <its@irrelevant.dk>
+Date: Tue, 17 Mar 2026 09:48:58 +0100
+Subject: [PATCH RFC 2/2] hw/nvme: allow MDTS above 9
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-48-48eb1dcf7b76@redhat.com>
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
-In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
-To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1705;
- i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=lSKR0ylzg5pfugxCI27NznzkCqR45WH+pLi9aJ4ssU0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXcK+tgrGcTdVAArYW/wTmxvNGRZtZMbONzV
- vf3w1rQLdiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3AAKCRDa6OEJdZac
- 5X2tEACOzFM72rR5QAfjvaBeOxPWMKgDOYVsn7ZnqSNy3xKoOb761OABusm1TGz75QxtwKx3/iu
- F0pD5pv5kNsND95TemYd4uNUM8lRRvBxMFxmKhTjYQVQoVjYXZo7Noc2M+wY5/1H+jEks9WDFMZ
- gNrGWsaxZSN7SFr24PxroSb3Z0AFI6u6TpAZdR0xVpX0Y9L4wP9HSggzAaEIzgAdNcZdJuIfDIT
- bWqe4b1MR+K/QM4IkydzUV0Ad1tT1hhq4KMIfrzQbRr5kcEDFeVWUapNA+h/Fsoufn4da9owL5w
- +ZoH7mV9IVGpprAZK5s0i2lgKw/ob0RhBRveY99WL+iaRiAdOW4iMwJkZVnE6HV32qRSsLgJZCj
- qhJWVLUWZipEploJumo9bHDkIP2cIPiQQGQujxVs/ICytw5SiYpSHzPyRgNadAk8LGKyVSS0Z4j
- As0MPVbHbiQjD/iuKaa/46y2NUsmDxoLkMSd5t5AGaGJTYotqosJiaPPUsUMzRzFRiOmRAXjIhP
- 9iC27oaxitGB//o46xG+7StETpMdf2pVOu4zlu79AnSFbU6yzsfK6OiGGYublc8CbAWQEuHUCYw
- krMwKG3hugZ6rOAPAcOSiBcuvqWHV6GD9BiAB5xTKdgPL691KnrCrZ49DZZxpMKEZrcu3Zuof7J
- eINzzD73LdYVB8g==
-X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
- fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124;
- envelope-from=marcandre.lureau@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 7bit
+Message-Id: <20260317-lift-iovmax-dma-limit-v1-2-38729170683f@samsung.com>
+References: <20260317-lift-iovmax-dma-limit-v1-0-38729170683f@samsung.com>
+In-Reply-To: <20260317-lift-iovmax-dma-limit-v1-0-38729170683f@samsung.com>
+To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
+ Peter Xu <peterx@redhat.com>, 
+ =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
+ Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
+ Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
+Cc: Klaus Jensen <k.jensen@samsung.com>
+X-Mailer: b4 0.14.3
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1862; i=k.jensen@samsung.com; 
+ h=from:subject:message-id;
+ bh=AVY0YDCoRdcQyYMsgFxQ2C/TR9/zyEgfbkciAqZdxHc=; 
+ b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
+ zFQRGVrQnl5WmlBR201RnNYbCtTWjNBeGpvQnNOc1kvK1JHcFgzCmN2a3BySHRYbnNNNlh6ZURY
+ UE1LeVlrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKcHVSYkZ
+ BQW9KRUUzaHJ6RnRUdzNwc09BSUFLaWhJajVuSTdwd3BsWUlXREtZeWI0aTBVZ0o5S2NKRVFzMQ
+ pJaGZqUFRhWjJTVU00bDRNWDNhQStuazlKd2NGK1FhZm80K0JKeG1YenFCUFZPSjdGeXBVaTV4e
+ mQvdjAxNEVUCmFCNzFWaE40bVE5c2FjQ0FRdm5TeEpjZUVXTjhkVHRJdnFzTHEwa1lXdkFZRXE2
+ bFoxaTh0RktiUFkwTmhDelQKSng2SWNNenQ1dG5ZV1ZYUFNkUFV3Wk52bHIvcWZ0QUhmVUUwZUV
+ jTm5sMkhRUm9NbW41di9QRGJQcHJJRnBDNwpkV2lwT2VSakpuckwxWVpsVmQ3YnE0YThjOGJrNE
+ k5YUcyVXNkeUUwa2x0UkF4T2U1Uko0NHA5RmtCVVcraEw5CmlkWmdkSDN2WlRncXZXUG1hYjM3Z
+ 2oxZ1paeXFwKzVQV3hoWGFEbEJJbXN4c29DVHluNWRXNk1VCj0vMVh6Ci0tLS0tRU5EIFBHUCBN
+ RVNTQUdFLS0tLS0K
+X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
+ fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
+Received-SPF: pass client-ip=103.168.172.149; envelope-from=its@irrelevant.dk;
+ helo=fout-a6-smtp.messagingengine.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,51 +131,66 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Previously, the display change listener was registered early in
-vnc_display_new() without a console, requiring vnc_display_open() to
-conditionally unregister and re-register it when the actual console was
-resolved. Since vnc_display_new() and vnc_display_open() were merged in
-the previous commit, simply delay the registration and keyboard state
-initialization to vnc_display_open(), after the console has been looked
-up. This removes the conditional re-registration and simplifies the code.
+From: Klaus Jensen <k.jensen@samsung.com>
 
-Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+With the IOV_MAX restriction lifted at the dma-helpers level, remove the
+restriction on MDTS.
+
+Still require mdts to be set (i.e., non-zero) since it has a direct
+impact on how much many may be used internally.
+
+Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
 ---
- ui/vnc.c | 12 +++---------
- 1 file changed, 3 insertions(+), 9 deletions(-)
+ hw/nvme/ctrl.c | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 2c53c92914b..c38be7113f1 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3458,8 +3458,6 @@ VncDisplay *vnc_display_new(const char *id, Error **errp)
+diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
+index cc4593cd427a..480694cc2e14 100644
+--- a/hw/nvme/ctrl.c
++++ b/hw/nvme/ctrl.c
+@@ -851,10 +851,6 @@ static uint16_t nvme_map_addr(NvmeCtrl *n, NvmeSg *sg, hwaddr addr, size_t len)
+             return NVME_INVALID_USE_OF_CMB | NVME_DNR;
+         }
  
-     vnc_start_worker_thread();
- 
--    register_displaychangelistener(&vd->dcl);
--    vd->kbd = qkbd_state_init(vd->dcl.con);
-     vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
-         &vmstate_change_handler, vd);
- 
-@@ -4263,13 +4261,9 @@ static bool vnc_display_open(VncDisplay *vd, Error **errp)
-         con = qemu_console_lookup_default();
+-        if (sg->iov.niov + 1 > IOV_MAX) {
+-            goto max_mappings_exceeded;
+-        }
+-
+         if (cmb) {
+             return nvme_map_addr_cmb(n, &sg->iov, addr, len);
+         } else {
+@@ -866,18 +862,9 @@ static uint16_t nvme_map_addr(NvmeCtrl *n, NvmeSg *sg, hwaddr addr, size_t len)
+         return NVME_INVALID_USE_OF_CMB | NVME_DNR;
      }
  
--    if (con != vd->dcl.con) {
--        qkbd_state_free(vd->kbd);
--        unregister_displaychangelistener(&vd->dcl);
--        vd->dcl.con = con;
--        register_displaychangelistener(&vd->dcl);
--        vd->kbd = qkbd_state_init(vd->dcl.con);
+-    if (sg->qsg.nsg + 1 > IOV_MAX) {
+-        goto max_mappings_exceeded;
 -    }
-+    vd->dcl.con = con;
-+    register_displaychangelistener(&vd->dcl);
-+    vd->kbd = qkbd_state_init(vd->dcl.con);
-     qkbd_state_set_delay(vd->kbd, key_delay_ms);
+-
+     qemu_sglist_add(&sg->qsg, addr, len);
  
-     if (saddr_list == NULL) {
+     return NVME_SUCCESS;
+-
+-max_mappings_exceeded:
+-    NVME_GUEST_ERR(pci_nvme_ub_too_many_mappings,
+-                   "number of mappings exceed 1024");
+-    return NVME_INTERNAL_DEV_ERROR | NVME_DNR;
+ }
+ 
+ static inline bool nvme_addr_is_dma(NvmeCtrl *n, hwaddr addr)
+@@ -8626,8 +8613,8 @@ static bool nvme_check_params(NvmeCtrl *n, Error **errp)
+         host_memory_backend_set_mapped(n->pmr.dev, true);
+     }
+ 
+-    if (!n->params.mdts || ((1 << n->params.mdts) + 1) > IOV_MAX) {
+-        error_setg(errp, "mdts exceeds IOV_MAX");
++    if (!n->params.mdts) {
++        error_setg(errp, "mdts must be set");
+         return false;
+     }
+ 
 
 -- 
-2.53.0
+2.51.0
 
 
