@@ -4,118 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0BA65F3381B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:58:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C616F3381B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:58:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QFH-0001Wj-DM; Tue, 17 Mar 2026 04:57:49 -0400
+	id 1w2QEM-0006y2-RP; Tue, 17 Mar 2026 04:56:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1w2QCE-0001UC-Pr; Tue, 17 Mar 2026 04:54:39 -0400
-Received: from fhigh-a2-smtp.messagingengine.com ([103.168.172.153])
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1w2QDu-0004d5-1N
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:23 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <its@irrelevant.dk>)
- id 1w2QCA-0006mU-SR; Tue, 17 Mar 2026 04:54:37 -0400
-Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
- by mailfhigh.phl.internal (Postfix) with ESMTP id DAA9B14001B4;
- Tue, 17 Mar 2026 04:54:31 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-05.internal (MEProxy); Tue, 17 Mar 2026 04:54:31 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=irrelevant.dk;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:message-id:mime-version
- :reply-to:subject:subject:to:to; s=fm3; t=1773737671; x=
- 1773824071; bh=VsonbPCUmPMX4YdI5QxB8sbKyIsqHAI6PJ3cY5GKOig=; b=O
- 794Zi/GO/P4WVe/Sj0ctCecjcdLg1ARRScFda0rRfibVmZobvUZeV73jGL0fNxhh
- jNy0W7v3U7K62Es7v9yjE6EdlvkEW5vyoRA+QzHv8ktIE8NQkyYVv0IMmiBxCBGe
- 2wt9B1jPaqmOt2q3FRVrHaQ52eaIXXmBAa5TfSHvy/B5oCCNTRAa1WVB2oSFAsWZ
- /P5Qa2fheOII1dtfS1pLl4NuhOk3KsOqYKY4MGWl+mbigp20GxBEBobSMBeoMpFP
- LMifjDfCln+DpWOOx5Sg7vr50WSD1nImRAsaFGzR8LopbQOF++ziBXnzu895uyUY
- VKFOAoHWyf58kvc00+L2g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:message-id:mime-version:reply-to:subject
- :subject:to:to:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
- fm1; t=1773737671; x=1773824071; bh=VsonbPCUmPMX4YdI5QxB8sbKyIsq
- HAI6PJ3cY5GKOig=; b=hy4pQHy2vX8UILEC4//pXeBX20inu3UrbsYzo9y2Wgz3
- TunU7zq86hQHlqmdcuo3CCtEGdDa+Z4V/1aXaUSxUDJclHAmXzRxQSpa6c6h19ZT
- R/Z1setZPHul4pFGoPDPuyonTbRbU/c2ID/pmMZ5ttau+mJMsT8bPW36kHUbllZZ
- nxxqbGsBFKEo/uhi1ASilUDSU0z9cgxaZR27WCHFzkezJslmIWmGyiwq3ZABCI4v
- HhqyKYdyvxZa3f/2ttNfQcMh+q5r4FeNHvluZyp+CqwOiRst7NHdjStQUA2GR5qa
- p+vBZcRwgPtK9GKSC/SfT2ElDqp76Rqhv4MtmiddQQ==
-X-ME-Sender: <xms:xha5aaonm1Epx3thX1xpz5QwGD1fcvWVpC9Rz0Il-ivW9lRMq1ueVw>
- <xme:xha5aUqdIgL3WTxJz5YCuZoaC1dZnLLn9YpTvetDsP_gIp0Roy_hvTeWXIMyrMyUG
- niuJ0dDCoNlGS9X_pi4TKj1rACKyUduZNAaNGQdTHvWiMTk7JcC8JI>
-X-ME-Received: <xmr:xha5aRbFCLGsVHuNWXILKaBfV6y3n5ZrvKuWN5QuZH2_QjewpNASisZ6wmJcatcvNQHcXS2aAQuA2gZlNOdS3FWkCCS9Smg1iRQqRq_TfcfZwFfn1Ze4LDyD31d1fuQA8zhnEuE>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddtkedvucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujf
- gurhephffufffkgggtgffvvefosehtjeertdertdejnecuhfhrohhmpefmlhgruhhsucfl
- vghnshgvnhcuoehithhssehirhhrvghlvghvrghnthdrughkqeenucggtffrrghtthgvrh
- hnpedvfffhheeffeeugfehheduleelieejueduffdtudevtdfghefhtdffgfevkeeufeen
- ucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehithhsse
- hirhhrvghlvghvrghnthdrughkpdhnsggprhgtphhtthhopeelpdhmohguvgepshhmthhp
- ohhuthdprhgtphhtthhopehksghushgthheskhgvrhhnvghlrdhorhhgpdhrtghpthhtoh
- epphgvthgvrhigsehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgv
- lhesnhhonhhgnhhurdhorhhgpdhrtghpthhtohepfhhoshhsseguvghfmhgrtghrohdrih
- htpdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehi
- thhssehirhhrvghlvghvrghnthdrughkpdhrtghpthhtohepqhgvmhhuqdgslhhotghkse
- hnohhnghhnuhdrohhrghdprhgtphhtthhopehkrdhjvghnshgvnhesshgrmhhsuhhnghdr
- tghomhdprhgtphhtthhopehpsghonhiiihhnihesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:xha5aa-OyTiVmJBBQijAXdraZueIEsS5IvAGIcAvqMxXRe1CGtjRzA>
- <xmx:xha5aXnPdBY4Wj46fjVqm34xUwbDbMJK1_gTOOMbmiisiNyFAUN4MQ>
- <xmx:xha5afzBO8HmlWOaKBXtRCW9xUEsoGQ0OwV5QSMZcb_pXtSsO0KTRQ>
- <xmx:xha5aR4witSyx6DJ2BpLVp3pCp_0pQqCErljgTWNO2g31SzeoZqYDA>
- <xmx:xxa5acjJbIk5137PTPfRDFmm8MBuvXwVtml8kbb5pD7nKqnTqdgAiyQ2>
-Feedback-ID: idc91472f:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 04:54:29 -0400 (EDT)
-From: Klaus Jensen <its@irrelevant.dk>
-Subject: [PATCH RFC 0/2] hw/nvme: support mdts above 9
-Date: Tue, 17 Mar 2026 09:48:56 +0100
-Message-Id: <20260317-lift-iovmax-dma-limit-v1-0-38729170683f@samsung.com>
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1w2QDq-0007Ye-Oe
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:21 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773737778;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=8f/MrTFsI13Xy/4oaaD45EfqL69PEH6L1W1Oztn73fU=;
+ b=WJ49ILi5iEsLpW52vhf6JhgQGLG4uNDgQPkeBzcXQX+LlAH2cqtE8LQNkDlauasfCscuj3
+ Ijxxbyn1lEjbhsgwxpG8RCvDEM2lZCwb7OjgdzI1T7CbJpyzyPQrI9mzK4tS1MRaV7IkEl
+ JKvTnFOo3gEdxlfvrN0q/W//s9TuRuQ=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-302-klZk8HIPPqez1vwMeebwDw-1; Tue,
+ 17 Mar 2026 04:56:16 -0400
+X-MC-Unique: klZk8HIPPqez1vwMeebwDw-1
+X-Mimecast-MFC-AGG-ID: klZk8HIPPqez1vwMeebwDw_1773737775
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AEBC71954B23
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:56:15 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 95D151955F19
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:56:14 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 17 Mar 2026 12:51:12 +0400
+Subject: [PATCH 58/60] tests/qtest: fix dbus-vmstate-test compilation
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-X-B4-Tracking: v=1; b=H4sIAHgVuWkC/x3MQQqAIBBA0avErBswI4u2QQdoGy0kxxrICo0Ip
- LsnLd/i/wiBPFOANovg6ebAx55Q5BnMq94XQjbJIIVUoixq3NheyMft9IPG6WTHF1ZSKdOURjR
- SQGpPT5af/zvC0Hcwve8HiAfBtGwAAAA=
-X-Change-ID: 20260317-lift-iovmax-dma-limit-5266d83d0820
-To: qemu-devel@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, 
- Peter Xu <peterx@redhat.com>, 
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>, 
- Keith Busch <kbusch@kernel.org>, Klaus Jensen <its@irrelevant.dk>, 
- Jesper Devantier <foss@defmacro.it>, qemu-block@nongnu.org
-Cc: Klaus Jensen <k.jensen@samsung.com>
-X-Mailer: b4 0.14.3
-X-Developer-Signature: v=1; a=openpgp-sha256; l=799; i=k.jensen@samsung.com;
- h=from:subject:message-id; bh=shDRF/TUWKq3aNLiE8zAQ9iYzgYBD44SykUhMPEX04A=;
- b=LS0tLS1CRUdJTiBQR1AgTUVTU0FHRS0tLS0tCgpvd0o0bkFGdEFaTCtrQTBEQUFvQlRlR3ZNV
- zFQRGVrQnl5WmlBR201RnNUSkFsdkFMMUdXMmJNWEJGQWJNUXJrCnhBam9ocHdFT1puci9ISmFo
- Y25HNjRrQk13UUFBUW9BSFJZaEJGSW9NNnAxNHR6bW9rZG13RTNocnpGdFR3M3AKQlFKcHVSYkV
- BQW9KRUUzaHJ6RnRUdzNwaXFNSC9Ba3kvM1FOODkrOWo4OGFQN3hYOVBIR1hXR056K3pFQVVHdQ
- ppOEhvNG1BV05xb083bFptSkh3TEloa1VjeUk0WXg2eWNrNFJUaEJRK21Waklkc1luTUsxNVR5V
- UZrOFdVaFlKCjJYUURqV2U1L3ltaFFzUHZOQWdNOFRSV3EzYmpXbG5mcDlwcTVDTDIyTnVIR2p6
- dS9VSnQzcmlwR0lMYTdBaDMKaU9peDQxdklHbWhSWmNLWm5rQWNkSVNnTzM4K2M5UFJybTZmZmx
- FckJzTVQzM3F0K0JPVzcxUS95TUVQS0lxVwpCTXQwby9jTFR6aWFSOU4wZDlTc3poc0liZTNtMk
- VENTB4dTVURDNtcXhuRFBpQjcyQ3FEei80NktVRXhyOFBECmhyS2czTzNHeHE5OU1hMFI1d0RLQ
- UdzT2V3WWlOWG5aNlhRcUIyUUhaVk0zRWZ1WnRLYzBZYWU5Cj1pWnhyCi0tLS0tRU5EIFBHUCBN
- RVNTQUdFLS0tLS0K
-X-Developer-Key: i=k.jensen@samsung.com; a=openpgp;
- fpr=DDCA4D9C9EF931CC3468427263D56FC5E55DA838
-Received-SPF: pass client-ip=103.168.172.153; envelope-from=its@irrelevant.dk;
- helo=fhigh-a2-smtp.messagingengine.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_LOW=-0.7, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Message-Id: <20260317-qemu-vnc-v1-58-48eb1dcf7b76@redhat.com>
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+To: qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2482;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=hF96GHtpSZxgrTbAMaUASqNvy0ihSke9RgQRhVtrfxg=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXdEL3VPPjPSo9piF4jMfMs1vziZyGhgV3pl
+ wNlZRuguYCJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3QAKCRDa6OEJdZac
+ 5cU0D/0dh24YwfI7HXCIB0OIylQjF3domL+edU1UGzUBXigq3SmNHS0TiVcE/a3r9VKQHYE/Zpl
+ BHytx7fM4atFEiEKPCvz1ItZnt5WZ1rI9cGFMqdvFONbTTAV8S4Wq8vDHjowIAtrLkGhJ0yzYws
+ 7YwsXCTA4qUjG0HjUirHTYMx3CvCdOL96UgZS1ZBJr7l29XSg9LM8vjg0KF9v2+0Voh+sRDGwuS
+ 7ZHaiIU/JodCLxBiyrlVHg9BrX7UI08pz4IucRkGlGX8mvhswHq9UDFgLtw3KZaYK4zIO8R5QzB
+ Cx3hg/1Y99qHcmxSohpILjYOTRbh1zkwEYaiaipNcT+KbTeDuoU1xjZPmAAWoC+OAJHA4Qm+uI1
+ bJc0A7bOtskcP39a3DukZQz3TMPfC5SyZCZKK/x5QwatfhCfXqLnjc/x1V/j/xuk61w1oZNsC2f
+ DQsx7VLQK2+ujpktObILdzQHqw3fqVwufzbv5sJ13ktWUs60G0hwrZQZKCqzpdifPSMBfXSh/xR
+ xXiBLCdzaTt+XkZrPZFo8nPSCCOXIGLZ9tzzZ2jiZAlxMvSB3GtrlDtUCBsnx5I4jWL1f0ZnQqt
+ x+cpNxC8qM87KgHQX3yPVMCA1FucvtWJ1AFnVVXANquAJd+1gTzjcy7lduhhn0ZpEnfV6p7ueiK
+ J1//ptbSyerLs8Q==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124;
+ envelope-from=marcandre.lureau@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -131,29 +103,71 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-In commit 53493c1f836f ("hw/nvme: cap MDTS value for internal
-limitation"), the max value of MDTS was restricted to ensure that the
-device will not report internal device errors when hitting the internal
-IOV_MAX limit of the block layer.
+The test is still disabled, and trying to compile it will fail now.
 
-This series attempts to lift the IOV_MAX restrictions, by splitting I/O
-in the dma helpers.
+Fix it, and remove the G_TEST_DBUS_DAEMON setting, since it is passed by
+meson test. Fwiw, the test passes here.
 
-Signed-off-by: Klaus Jensen <k.jensen@samsung.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
-Klaus Jensen (2):
-      dma-helpers: lift IOV_MAX limit
-      hw/nvme: allow MDTS above 9
+ tests/qtest/dbus-vmstate-test.c | 11 ++---------
+ tests/qtest/meson.build         |  3 ++-
+ 2 files changed, 4 insertions(+), 10 deletions(-)
 
- hw/nvme/ctrl.c       | 17 ++---------------
- system/dma-helpers.c |  5 ++++-
- 2 files changed, 6 insertions(+), 16 deletions(-)
----
-base-commit: 559919ce54927d59b215a4665eda7ab6118a48aa
-change-id: 20260317-lift-iovmax-dma-limit-5266d83d0820
+diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate-test.c
+index 6c990864e3e..ed4a52d0255 100644
+--- a/tests/qtest/dbus-vmstate-test.c
++++ b/tests/qtest/dbus-vmstate-test.c
+@@ -3,7 +3,7 @@
+ #include <gio/gio.h>
+ #include "libqtest.h"
+ #include "dbus-vmstate1.h"
+-#include "migration-helpers.h"
++#include "migration/migration-qmp.h"
+ 
+ static char *workdir;
+ 
+@@ -229,7 +229,7 @@ test_dbus_vmstate(Test *test)
+ 
+     thread = g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread, loop);
+ 
+-    migrate_qmp(src_qemu, uri, "{}");
++    migrate_qmp(src_qemu, dst_qemu, uri, NULL, "{}");
+     test->src_qemu = src_qemu;
+     if (test->migrate_fail) {
+         wait_for_migration_fail(src_qemu, true);
+@@ -342,15 +342,8 @@ int
+ main(int argc, char **argv)
+ {
+     GError *err = NULL;
+-    g_autofree char *dbus_daemon = NULL;
+     int ret;
+ 
+-    dbus_daemon = g_build_filename(G_STRINGIFY(SRCDIR),
+-                                   "tests",
+-                                   "dbus-vmstate-daemon.sh",
+-                                   NULL);
+-    g_setenv("G_TEST_DBUS_DAEMON", dbus_daemon, true);
+-
+     g_test_init(&argc, &argv, NULL);
+ 
+     workdir = g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index b735f55fc40..5f8cff172c8 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -130,7 +130,8 @@ if dbus_daemon.found() and gdbus_codegen.found()
+                                 input: meson.project_source_root() / 'backends/dbus-vmstate1.xml',
+                                 command: [gdbus_codegen, '@INPUT@',
+                                           '--interface-prefix', 'org.qemu',
+-                                          '--generate-c-code', '@BASENAME@']).to_list()
++                                          '--generate-c-code', '@BASENAME@',
++                                          '--output-directory', meson.current_build_dir()]).to_list()
+ else
+   dbus_vmstate1 = []
+ endif
 
-Best regards,
 -- 
-Klaus Jensen <k.jensen@samsung.com>
+2.53.0
 
 
