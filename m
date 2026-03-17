@@ -4,61 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80A9EF506CF
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 06:16:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6A8F33802
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 06:25:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Nis-0001kb-Sm; Tue, 17 Mar 2026 02:16:10 -0400
+	id 1w2NrK-0005ID-EN; Tue, 17 Mar 2026 02:24:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2Nin-0001it-IV
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:16:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2NrH-0005I5-QQ
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:24:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2Nik-0006Vy-1f
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:16:05 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2NrF-0002ld-KJ
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:24:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773728159;
+ s=mimecast20190719; t=1773728688;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=nGDhvY99FZqAajyWuLhztx+GI6hDqOmreA4jMyHC2mU=;
- b=anbt3En1+4Uk7g6kfzU9lFHdj0L+iPkQ8Dt65c0gvMf9BmiU06XgC+6TWXpHI2uph7gG33
- MsqPr+oqwY28FzJoEb9ra3IHD2E4Mh/04Da5fMvK7FgT3L6XMytx16auAY4KJh0ovERa6b
- cgiThT8od0AgxizbkH8KJ/9IRpHOg30=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=qOilMFnKwPk4JZ1kbuAAO3oY/kEae6P2L8wIIQrvGxk=;
+ b=XCbaNqBK7hvkhNInWYXFU6Cy39KhqXwDNV89HmHqRaDON083Uk5tmQjJa0VTnx0XL9yN7E
+ uGVAVKTuRnGyb7SCJtymb+DIrMVCDfDrC6FPJ884OCkQrYpD4dHiUwPsfpNszT/ARs8oXV
+ InawadfkSQNYxq2Oi/nQFgkljVn8FrE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-26-HdtTkvfcN9C2HEYqhM0HEw-1; Tue,
- 17 Mar 2026 02:15:55 -0400
-X-MC-Unique: HdtTkvfcN9C2HEYqhM0HEw-1
-X-Mimecast-MFC-AGG-ID: HdtTkvfcN9C2HEYqhM0HEw_1773728153
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-BhDXwFkfNJ-uoCKGXE0MXg-1; Tue,
+ 17 Mar 2026 02:24:46 -0400
+X-MC-Unique: BhDXwFkfNJ-uoCKGXE0MXg-1
+X-Mimecast-MFC-AGG-ID: BhDXwFkfNJ-uoCKGXE0MXg_1773728685
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 970E019560A1; Tue, 17 Mar 2026 06:15:53 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 11DAE1800464; Tue, 17 Mar 2026 06:24:45 +0000 (UTC)
 Received: from [10.44.32.37] (unknown [10.44.32.37])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0788A180035F; Tue, 17 Mar 2026 06:15:50 +0000 (UTC)
-Message-ID: <035415da-97a1-4929-8e7f-f982acd8d044@redhat.com>
-Date: Tue, 17 Mar 2026 07:15:49 +0100
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DD47C1955F19; Tue, 17 Mar 2026 06:24:41 +0000 (UTC)
+Message-ID: <bd616907-9265-4ca2-83d3-d157d717c916@redhat.com>
+Date: Tue, 17 Mar 2026 07:24:40 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
+Subject: Re: -device T,help crashes
+To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>
+References: <87pl5abgpl.fsf@pond.sub.org> <87bjgtzcoa.fsf@pond.sub.org>
 From: Thomas Huth <thuth@redhat.com>
-To: BALATON Zoltan <balaton@eik.bme.hu>, Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
- <abgqjKVFHKxuKupP@x1.local> <812f2a8d-f6bb-f127-a3f9-4629de5a03e5@eik.bme.hu>
- <abh2ZdpzQNepUTIy@x1.local> <ebd251c9-a1d1-4956-af11-ae9858e76254@eik.bme.hu>
- <afa7d52b-7087-4256-996a-b8ca7b2bfb95@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
  xsFNBFH7eUwBEACzyOXKU+5Pcs6wNpKzrlJwzRl3VGZt95VCdb+FgoU9g11m7FWcOafrVRwU
@@ -102,18 +100,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <afa7d52b-7087-4256-996a-b8ca7b2bfb95@redhat.com>
+In-Reply-To: <87bjgtzcoa.fsf@pond.sub.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+Content-Transfer-Encoding: 7bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -131,38 +129,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/03/2026 06.41, Thomas Huth wrote:
-> On 16/03/2026 23.30, BALATON Zoltan wrote:
->> On Mon, 16 Mar 2026, Peter Xu wrote:
->>> On Mon, Mar 16, 2026 at 07:10:05PM +0100, BALATON Zoltan wrote:
->>>> On Mon, 16 Mar 2026, Peter Xu wrote:
->>>>> On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
->>>>>> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
->>>>>> current_machine which is not set during init when inspecting the
->>>>>> device. This causes the qtest/device-introspect-test to fail since a
->>>>>
->>>>> Does it has anything to do with aux-ram-share?  I thought it's because the
->>>>> qom introspect test will create yet another sun-tcx device, causing double
->>>>> registration?
->>>>
->>>> I could reproduce it like this:
->>>
->>> I would treat this one a separate bug, because it doesn't look special to
->>> sparc systems.
->>
->> I thought this is the issue Thomas has reported. I found this command by 
->> looking at what the test does but looks like this gets a different error 
->> but the fix is the same.
+On 12/03/2026 09.15, Markus Armbruster wrote:
+> Markus Armbruster <armbru@redhat.com> writes:
+...
+>> These crashes escape tests/qtest/device-introspect-test, because it
+>> covers only HMP "device_add T,help", not CLI "-device T,help".
 > 
-> It's slightly different. The bug that I found via the device introspection 
-> test is using "-M SS-20" and then it's crashing when a second sun-tcx device 
-> is instantiated.
-> The bug that you found is crashing because using "-device sun-tcx,help" 
-> instantiates the device for introspection before the machine has been 
-> created, so code that dereferences current_machine is running into a NULL 
-> pointer related segmentation fault.
+> Anyone wants to cook up a patch to cover -device?
 
-By the way, "qemu-system-sparc -device cgthree,help" crashes in the same way.
+Quick'n'dirty patch:
+
+diff --git a/tests/qtest/device-introspect-test.c 
+b/tests/qtest/device-introspect-test.c
+--- a/tests/qtest/device-introspect-test.c
++++ b/tests/qtest/device-introspect-test.c
+@@ -105,6 +105,7 @@ static void test_one_device(QTestState *qts, const char 
+*type)
+      QDict *resp;
+      char *help, *escaped;
+      GRegex *comma;
++    int ret;
+
+      g_test_message("Testing device '%s'", type);
+
+@@ -119,6 +120,17 @@ static void test_one_device(QTestState *qts, const char 
+*type)
+
+      help = qtest_hmp(qts, "device_add \"%s,help\"", escaped);
+      g_free(help);
++
++    if (!g_str_equal(type, "nonexistent") && !g_str_equal(type, "device")) {
++        help = g_strdup_printf("%s -device \"%s,help\" > /dev/null", 
+qtest_qemu_binary(NULL), escaped);
++        ret = system(help);
++        g_free(help);
++        if (ret) {
++            fprintf(stderr, "Running qemu with -device %s,help failed!\n", 
+escaped);
++            abort();
++        }
++    }
++
+      g_free(escaped);
+  }
+
+But I think it needs some more work - we likely don't want to run this for 
+each test run since it slows down the test quite a bit. And the 
+g_test_quick() switch is already used for something else here.
+
+Anyway, found these additional issues so far:
+
+  ./qemu-system-ppc -device raven-pcihost,help
+  Segmentation fault (core dumped)
+  ./qemu-system-sparc -device cgthree,help
+  Segmentation fault (core dumped)
 
   Thomas
 
