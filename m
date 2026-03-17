@@ -4,85 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B093CFED9EF
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:51:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 294C3FED9FE
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:52:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2YXm-0004kC-0Q; Tue, 17 Mar 2026 13:49:26 -0400
+	id 1w2YZ9-0006Hg-FY; Tue, 17 Mar 2026 13:50:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w2YXk-0004ee-1h
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:49:24 -0400
-Received: from mail-dy1-x132c.google.com ([2607:f8b0:4864:20::132c])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2YYv-00063s-PL
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:50:39 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w2YXi-000789-Ii
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:49:23 -0400
-Received: by mail-dy1-x132c.google.com with SMTP id
- 5a478bee46e88-2ba895adfeaso5931970eec.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 10:49:22 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2YYt-0007R5-Oz
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:50:37 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48532925a4bso32258865e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 10:50:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773769761; x=1774374561; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773769834; x=1774374634; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=CVb13IlLEU7TKn2JosjxQ7mvXY+2jkay+xSWdWBH5Zk=;
- b=CD5syXUmjgfY3nZw627NU+SfoYPFDi0sZQ34rioV5HYU6dBBVdwLIiKtpn59uup5YB
- wewmGa3cXeJ/tvBT9cxzSx7RBT0Vt/JDZ7Wkk2ICfQQUVvtrKhaRuK0fKTh+aA1ESmSa
- 5m8NLKe5l3fGa9hJrdImXRYPSKndnfwljS+aSch+WJHytRpSn2Cfi8TiJgw3G7YL705C
- G/h8ZS28ga4dZInbRMoht4bVneGJNej3f7FWA4rkGqbGQhjytxalhUZrAc04AATkbC5n
- y3z0PuROMBY4qZHEJr41vrmg7VAaXXUjG2DU19weVtLHUKWj3451MXJFzfuHdVm/OC+q
- f+8w==
+ bh=OHKiRihP6xzDVsYNkmy0rWSbvzrnBAR3sh6/MMsLTxM=;
+ b=z68GJVrL3CBxhl1Gn3+hWSlLDj9Oe1beS5zqV0LcPziLVMXvKUMs1dmPN3+raLo4Zd
+ lAXZiwtQbnFEfohY45R3kCrykUTcIqN8DrH51Pz5JzUr4TIv6qwBK5tRSc8kJ+hkMEcn
+ SE9bfKbZHtFl9l7KnIW0+tUStNrDXJqmQQkw+pujAcx00ZC1z5jeJOmvild8KtLAbBZy
+ t6zyHmw6i6iIKQN1K/Sfr0s1+jn0JB11ACy4HhW+YlM43hh6urvMfXRnNphQTORuhsbY
+ GhZbTJCiFQbBT8oHTzDsxq7OqwwOsW3xyUSyj5aTXatjFDaLJ8lLgc9F2G7J161MhMRN
+ dlqA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773769761; x=1774374561;
+ d=1e100.net; s=20251104; t=1773769834; x=1774374634;
  h=content-transfer-encoding:mime-version:message-id:date:subject:cc
  :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CVb13IlLEU7TKn2JosjxQ7mvXY+2jkay+xSWdWBH5Zk=;
- b=dyt9wd6lfKd8W1BUJTAr10CxGjkTk7wqY0ZIpCqvHA617q1VyFSPJ4SHk4FZy35b0s
- trnLREnWOaGABoZrSK1okMTa71+nSpOLNtlTlVTIdJ91vLZ84l0l+jBUhiPZXL+lVSZt
- 2hOe43O4yt2bZYaenUFy2vQjLuleUJMBaF2748rEihxgF2DXAtYx9Dfcq1Z/6SD+74GI
- FdN4F4UhhAjzPY9NO29tfEnPnlI/SXPIq5Ix+zrczWxJxgG4JfDII2L8AKuK4mG7E4xO
- D1SKpHiPaHt0yiArIoEN0ld+kwXORI/IZ1o12uuXwO+irtcAHP1HQhyK9iDvIDONKUYV
- 2T/A==
-X-Gm-Message-State: AOJu0YzACh/5mqHAw2tka71vFzvJL4kXhRpQrB2hRpMydOif/NKt+UHW
- 3G8GL/93FaRPNyb9WMDtF76lrI0QcUxTvgn+TWVT3A6YdiTuPOy4eTdVoWqdOhqF
-X-Gm-Gg: ATEYQzzR7lbwt1WKHE1/H2iL5dWuGcghGmy4K94BtsuCZ7QXEaZdW7ggtPwAXgRnDob
- ftzNHVv3cqSCWp6yZJSdRJiBKiXGKBrXJT8IBb6EW6590xovxu0U2iEdbEceShl++v3RHSkfVrp
- lsPFPE0O4esKEcnSONtaRzJb+y50vyjIFriN2tRFnKUdgSZJNa+xknf4tudkVNuzrcQ00daWCnk
- hKD5aCBTKztfrwceX5kVSs2/61drFdtRnQ7CNFk3sAOeb6bNbiVrNeMQckr8mkDY8i1BQ+bWrDk
- hJtRJ+Y/lQuykvtYErsVRzWQ5cHxhg8YuDD5VQfu4yTHfL62MqayFLlY5sglzGpKedwsW5kzr8G
- D0VZsttdAkm3MKbtBOpFEtrNXiGn+316kY65DXt6q85es2h2xcXitnXfr7emmkphgQIZdtknDZY
- WlzNGbVr1A+IHzykpsdZ8K0GIHnsxnpiJPyy9jVP3RjLv0I1go8x0JDy476d2SO7c=
-X-Received: by 2002:a05:7301:168f:b0:2be:aa:9a4a with SMTP id
- 5a478bee46e88-2c0e4e5c708mr167357eec.0.1773769760576; 
- Tue, 17 Mar 2026 10:49:20 -0700 (PDT)
-Received: from localhost.localdomain ([143.54.78.51])
+ bh=OHKiRihP6xzDVsYNkmy0rWSbvzrnBAR3sh6/MMsLTxM=;
+ b=MtEn0E/vCf3p3S57AU77Cmc96Mq8LDcbk0Mdlku25vIDKKRorzZvOGrhOPw7CtXaZf
+ w80qq6wiGRZZFTdBGIZvcjFHlUJGSZ/4OT0PgoBPduaAAAeDVbvF5FBnHRzJZz2Ln1iU
+ 19KgSG6Rvs5jPWTAyAFOemRnjSugBXFM5RZGTWQ6YSg8+WU+PWmoG8Gjg/cF6K/8eqn7
+ 8/QFuW8+DVzW3nxLAbViTgMEco5zEmx/+9XGUcD7y9XXcOJmbAIGY6XAMku+e0ek8lty
+ nTTR1bs2RZUIHUQF5FAQV5w3NQ5SFxgdSxrpb+QW5b7xOnASBOFj4Xj73Pud0U9hjEoK
+ 7WBA==
+X-Gm-Message-State: AOJu0Yx0kyr7ru6sLJemLYze3ZB7DmrkksL5L3ZNnL+p+bCoFat3H3Dg
+ b/Qu6SjcidxWE0ZuTGi9oLX4NOzdoav58N26Ykje2KOC/ygfqx/m1PGp5JTFGNB0UdGOKne9VNJ
+ fjKb+
+X-Gm-Gg: ATEYQzzMwGPRquQDgSF+srBbzxgLQSzdm7uqyiZcGq/pzYF9s+tZ/pVI9rooUZg3JZ8
+ oaNNGlAQ3VAKp3OJDEA892WDmuGIv8ZL42LsIX0k348lD1LGIYcPROvq1Z0glfoEucq2M+y8pTa
+ o3ua0KVAzxYnv78aC0nBSGfpzZwHxD/KPOc7EZb9ekgeZTcLUnhdL+nHExznkE6yOSI4nyHTcdd
+ 0fNnt2eNHCTb0xY4C3rEPU1KHGn0ZPHJDzro7FMSjDnD7/vAVSpd+c0FPsEuZrUEuOqa3U+u/VO
+ fkuK599FaaFqzbe8j58Y5xhAShe4C3LutML9gsfqn1W0G2p4jcWurKGooLmJKLJWaQhTiFXF576
+ CLK8xDBnpg88uBb5eeTinXkHXZfwz4AaB7DTWFq83TKEg6Lqq15dO79aOlmOCE06jB4JT9NhHTr
+ XJ3Aw52Elwtnr7o1+pmpmQ1GBn2UO9R1l/LxKkbFP1DE1HoB0q8Jtm4eGkrvSqpqG4xS8Edz05o
+ lg3BT8fLLiKr6+2A4jz2z8Rodp6bmo=
+X-Received: by 2002:a05:600c:c491:b0:485:2fc5:39e with SMTP id
+ 5b1f17b1804b1-486f44635e2mr7742185e9.27.1773769833421; 
+ Tue, 17 Mar 2026 10:50:33 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2c0e536896csm282115eec.3.2026.03.17.10.49.18
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Mar 2026 10:49:20 -0700 (PDT)
-From: Lucas Amaral <lucaaamaral@gmail.com>
+ 5b1f17b1804b1-48557c7220dsm118786995e9.30.2026.03.17.10.50.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Mar 2026 10:50:31 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, dmitry.osipenko@collabora.com,
- marcandre.lureau@redhat.com, Lucas Amaral <lucaaamaral@gmail.com>
-Subject: [PATCH v4 0/4] virtio-gpu: enable Venus/Vulkan without OpenGL display
-Date: Tue, 17 Mar 2026 14:49:11 -0300
-Message-ID: <20260317174915.31829-1-lucaaamaral@gmail.com>
-X-Mailer: git-send-email 2.52.0
+Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>,
+ Aleksandar Rikalo <arikalo@gmail.com>
+Subject: [PATCH 0/3] target/mips: Move non-shallow-copy fields out of env to
+ fix leaks
+Date: Tue, 17 Mar 2026 17:50:27 +0000
+Message-ID: <20260317175031.3035740-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::132c;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x132c.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -98,43 +101,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Decouple Venus from CONFIG_OPENGL so it works on hosts with no GL
-display (e.g. macOS with MoltenVK). 2D display commands fall back to
-pixman; 3D/Vulkan goes through the render server as usual.
+At the moment the linux-user cpu_copy() implementation assumes that it
+can clone a CPU object for a new guest thread by first creating and
+resetting a fresh CPU object and then doing a shallow copy with
+memcpy() of the CPU's env struct.  This is obviously a very dubious
+assumption, but for the most part it works.
 
-v3 -> v4:
-  - Rebased onto current master (conflict resolved in virtio-gpu.c
-    with new upstream drm feature check)
-  - Split Linux header changes into dedicated patch (checkpatch)
-  - Fix line-over-80 warnings
-  - Resent as new top-level thread (Alex Bennée)
+One place where it doesn't currently work is MIPS, where we have a few
+pointer fields at the end of the CPU struct.  Currently we don't ever
+try to free the objects we point to when the CPU is destroyed, so this
+is a leak but not incorrect behaviour. However, we can't fix the leak
+by freeing memory in CPU unrealize, because then we would get a
+double-free because both old and new thread point to the same memory.
 
-v2 -> v3:
-  - Rebased onto current master
-  - Fixed line-over-80 warnings
+In the long term we should really reimplement cpu_copy by having CPU
+objects have a method for doing this, rather than accumulating
+architecture-specific hacks. But since in practice I only see leaks in
+'make check-tcg' for MIPS, this series takes the simpler approach of
+moving the fields of CPUMIPSState that cannot be shallow-copied and
+that are used in user-only mode out to the MIPSCPU struct.  There are
+only two to move: mvp_init and count_clock.
 
-v1 -> v2:
-  - Remove hvf_get_map_granule() safety check (moved to hvf-map-granule)
-  - Extract GRAPHIC_FLAGS_VK into its own patch
-  - Fold standard-headers addition into blob_alignment patch
+The remaining pointer fields in CPUMIPSState are:
+ * several fields inside the !defined(CONFIG_USER_ONLY) block
+ * cpu_model, which is always equal to MIPSCPUClass::cpu_def
+   and so can be shallow-copied
+ * timer, which is only set in system-emulation and is
+   NULL in user-only mode
 
-Lucas Amaral (4):
-  ui: introduce GRAPHIC_FLAGS_VK for Vulkan scanout
-  virtio-gpu: decouple Venus from CONFIG_OPENGL
-  virtio-gpu: add VIRTIO_GPU_F_BLOB_ALIGNMENT header definitions
-  virtio-gpu: advertise VIRTIO_GPU_F_BLOB_ALIGNMENT
+This patchset does the two moves of fields out of the env
+struct, and adds an unrealize method where we can free the
+mvp struct that we would otherwise leak.
 
- hw/display/meson.build                      |  8 +-
- hw/display/virtio-gpu-base.c                | 15 +++-
- hw/display/virtio-gpu-gl.c                  |  6 +-
- hw/display/virtio-gpu-virgl.c               | 85 ++++++++++++++++++---
- hw/display/virtio-gpu.c                     |  8 ++
- include/standard-headers/linux/virtio_gpu.h |  6 ++
- include/ui/console.h                        |  2 +
- ui/console.c                                |  7 ++
- 8 files changed, 121 insertions(+), 16 deletions(-)
+thanks
+-- PMM
+
+Peter Maydell (3):
+  target/mips: Move 'mvp' field from CPUMIPSState to MIPSCPU
+  target/mips: Free mvp in unrealize
+  target/mips: Move count_clock to MIPSCPU struct
+
+ hw/mips/malta.c                     |  4 ++--
+ target/mips/cpu-defs.c.inc          | 10 +++++----
+ target/mips/cpu.c                   | 18 ++++++++++++---
+ target/mips/cpu.h                   |  6 +++--
+ target/mips/internal.h              |  3 ++-
+ target/mips/system/cp0_timer.c      | 12 ++++++----
+ target/mips/system/machine.c        |  2 +-
+ target/mips/tcg/system/cp0_helper.c | 35 ++++++++++++++++++-----------
+ target/mips/tcg/translate.c         |  6 +++--
+ 9 files changed, 64 insertions(+), 32 deletions(-)
 
 -- 
-2.52.0
+2.43.0
 
 
