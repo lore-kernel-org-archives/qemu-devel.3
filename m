@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 73CF7F3381C
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F156F3381D
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:57:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QB8-0007w1-2v; Tue, 17 Mar 2026 04:53:31 -0400
+	id 1w2QBB-00084W-Tj; Tue, 17 Mar 2026 04:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QA5-0006XY-Cw
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:52:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1w2QAe-0007BY-Qx
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:53:05 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QA2-00037S-3t
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:52:23 -0400
+ id 1w2QAc-0003AL-SV
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:53:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737541;
+ s=mimecast20190719; t=1773737574;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=JunWrlOjUaBqWEYWaxVNRGfLgE6IGyNbEZUn9hvzWBE=;
- b=HPCoJUBDqMW3S06sb6hqzZdW/u6xSucZ8l/QwVSPd+hK+d9BoNjIUSEmqW/73ucJJ+wEpc
- FXvWHYOxetnmJyDTdP5rUy+uhrKhZuXs482WYgVhBY7fhgQ/pUelGohh3q7sNejiIb1Fug
- 3pwuDOW3p/lQMlDQX9zmMla6PQ8eB8c=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=dc1IVpsqrJifoQWhJGaW7gKSSJjmAOhBW8BJtA1dpsY=;
+ b=NJ9yERYUeq/0ZyQijVcgxnQxipy5rc1TiWkiMuoIirJaeBongymxUfRGjlNbmYu4kh7Hr7
+ B1YhMGEEEF5BM5IC8euj5C4WxsR9bsIcHvJY+fmZaADx3Z/MoNSFkibr3gEmBzqmbeicKl
+ dVCkgnJmY50HQvPFxVppDd/STcbfZP4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-270-MB51PgVvPMyeJtSZ9E28QQ-1; Tue,
- 17 Mar 2026 04:52:19 -0400
-X-MC-Unique: MB51PgVvPMyeJtSZ9E28QQ-1
-X-Mimecast-MFC-AGG-ID: MB51PgVvPMyeJtSZ9E28QQ_1773737539
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-315-3yLBCL3pPU6yv5UPrdSTag-1; Tue,
+ 17 Mar 2026 04:52:52 -0400
+X-MC-Unique: 3yLBCL3pPU6yv5UPrdSTag-1
+X-Mimecast-MFC-AGG-ID: 3yLBCL3pPU6yv5UPrdSTag_1773737571
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 28ABE19560BA
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:19 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C7C7619560BB
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:51 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 115D918002A6
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:17 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id CE8BF3000223
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:50 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:50:31 +0400
-Subject: [PATCH 17/60] ui/console-vc: vga_putcharxy()->vt100_putcharxy()
+Date: Tue, 17 Mar 2026 12:50:37 +0400
+Subject: [PATCH 23/60] ui/console-vc: console_scroll() -> vt100_scroll()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-17-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-23-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3083;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2751;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Q7H7Ck2laPDFYqsQ0lbaAjfNMqA0Xc1//VoNWqqey40=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXahKLWF1Bk4yqKMUkw4vrztcmdigtgahq3a
- ZZTQhHhq5qJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2gAKCRDa6OEJdZac
- 5X1WEACOQfjBmgbLGEh6GbI1Yddv8ow/dlLTygkqVh3lPV1tfs5Z75+aEZQMPkWtnFEDUG7aCL/
- sKKoOTp6bGHSB00BOMZWFBnwyXG+bqNBUAjcev4+yjpdVyTsrJEdoH+Ui6Th9eGF+6oC6/79y7+
- nPVZVy9agqDoiS3M//KrO1Z7beZxg4VyrSKo1SsjiHewO4CTv+hi1bMJekrcFCnnE0mG11xL936
- W2lzMe51rxmp6McHOcdI0OkJHBVmsmi2IXF/favZ4IPvBQBDxZNWQ5bgyltfJLwpn1VUtOIVHtR
- 7ULdVbZwWvCJwaRz3dc0QQ3g6LI/1gHNA4xbGwCS2RlbF8ecBzj3JLqiRACa/v/Qv+DNUO/+0/V
- hX+fcVW7r/TGRZpJsdQ1CRcimzHULz3vIMO2eASS2QianRf9GUYIxJkzMfU1LHAW0pXBKqhDnk7
- aplxIiwL/Cy/cRfj7Y8TO2kYh05DoXXeXkWnBK32rHWtm2FzIZRP/Aj1iZgcTlN8KTe8RH1jkJ4
- HBo3l1Jn0zOGGOlRX8bRWR/2yWA6blLwwaOR7F1V6tLs8f9s8cUto87HG1PMNSrY/oLxT2iIEov
- 07yfb8IwdmlXza/c17rLPEyhuUoprGboBHrTokIFARHilxlEqM+v/RAEte6kFCWOvOZgpxoia3C
- ch7b4OCP0BH0eGA==
+ bh=p3/XhfZKxdc3Os8Qglmy6MKxOK7bn/ETt0Qao+PV3qU=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXbKVIN5Akuec++M3Vt7inAzF6aURp3zE3pv
+ sPwYzD78VOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2wAKCRDa6OEJdZac
+ 5cpsD/4j2V+x9z2gAOU7v8wOPe8nZFVcTp8z9L3Jh0Rj60wmPUdL2JlWGCdbhjfvvkiN4lhRTiR
+ kdMsGs3ZQktpcLisKxooLaf2ZQmskuTJH/PJT0lpiPOPxMz77KNwQ2bIo6J9hJb0dnXVbgkY2Ft
+ LreBLIizlv8bo/oSYfmHEYP7t5K4VZ8btPZ81Pih9WyLD6KXotzKuY7PXReM7OPyIS/bC6/7JW+
+ iqiAmIv6Lqj2wov8KOb/yrJ/JYab9NEfcUidOCzk2klOUcijexGyNvZlZQVIkhIDkfz/rxpi08n
+ JcQaejp+9eKRd+WfOtbGqX/0JEORvg0zPIl8hNs3Z5jSosokCaCSTt1M+bizD1j8KOROS03FTCE
+ 7pB9/MVYU0aXYuUlkT4pTlv7KSIs6k1fa11YlqevZ8hEcvvBJdjrVUYnfmPyDQxd55rZyX9CgHq
+ zg7swNwIIppGqAYgAw6Kuq2p4hbecU5WUGQgTrZj6/5I9VQ6k0uCxlyZ0A1be+JLV7nxmrFWc0d
+ FQiAq4Uij/g2qApdq/fclRjiUeRWJ43x7xLgIctDuvzdRlyf/4aZ7Ea/MkeP3hgZbgocguAuvYT
+ yJkWiooFeQht2Zc8ukUOsUF7Ro2bMQfqXWs+En8dhEFXxmXh+LBee9D+wPXGRyeSRK0YncOXqwh
+ QUWq9zujQkFIiNQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -85,7 +85,7 @@ X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,77 +103,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Have the character rendering function operate on QemuVT100 directly
-instead of taking a QemuConsole and extracting the VT100 state
-internally. This decouples glyph rendering from the console object,
-continuing the QemuVT100 abstraction introduced in the previous commits.
+This decouples glyph rendering from the console object, continuing the
+QemuVT100 abstraction introduced in the previous commits.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+ ui/console-vc.c | 34 +++++++++++++++++-----------------
+ 1 file changed, 17 insertions(+), 17 deletions(-)
 
 diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 0e0a9ad245d..c730a8a52b8 100644
+index 22d1128ee6b..a45f4bc875b 100644
 --- a/ui/console-vc.c
 +++ b/ui/console-vc.c
-@@ -157,14 +157,13 @@ static void image_bitblt(pixman_image_t *image,
-                            xs, ys, 0, 0, xd, yd, w, h);
+@@ -269,33 +269,33 @@ static void vt100_refresh(QemuVT100 *vt)
+     vt100_image_update(vt, 0, 0, w, h);
  }
  
--static void vga_putcharxy(QemuConsole *s, int x, int y, int ch,
--                          TextAttributes *t_attrib)
-+static void vt100_putcharxy(QemuVT100 *vt, int x, int y, int ch,
-+                            TextAttributes *t_attrib)
+-static void console_scroll(QemuTextConsole *s, int ydelta)
++static void vt100_scroll(QemuVT100 *vt, int ydelta)
  {
-     static pixman_image_t *glyphs[256];
--    pixman_image_t *image = QEMU_TEXT_CONSOLE(s)->vt.image;
-     pixman_color_t fgcol, bgcol;
+     int i, y1;
  
--    assert(image);
-+    assert(vt->image);
-     if (t_attrib->invers) {
-         bgcol = color_table_rgb[t_attrib->bold][t_attrib->fgcol];
-         fgcol = color_table_rgb[t_attrib->bold][t_attrib->bgcol];
-@@ -176,7 +175,7 @@ static void vga_putcharxy(QemuConsole *s, int x, int y, int ch,
-     if (!glyphs[ch]) {
-         glyphs[ch] = qemu_pixman_glyph_from_vgafont(FONT_HEIGHT, vgafont16, ch);
+     if (ydelta > 0) {
+         for(i = 0; i < ydelta; i++) {
+-            if (s->vt.y_displayed == s->vt.y_base)
++            if (vt->y_displayed == vt->y_base)
+                 break;
+-            if (++s->vt.y_displayed == s->vt.total_height)
+-                s->vt.y_displayed = 0;
++            if (++vt->y_displayed == vt->total_height)
++                vt->y_displayed = 0;
+         }
+     } else {
+         ydelta = -ydelta;
+-        i = s->vt.backscroll_height;
+-        if (i > s->vt.total_height - s->vt.height)
+-            i = s->vt.total_height - s->vt.height;
+-        y1 = s->vt.y_base - i;
++        i = vt->backscroll_height;
++        if (i > vt->total_height - vt->height)
++            i = vt->total_height - vt->height;
++        y1 = vt->y_base - i;
+         if (y1 < 0)
+-            y1 += s->vt.total_height;
++            y1 += vt->total_height;
+         for(i = 0; i < ydelta; i++) {
+-            if (s->vt.y_displayed == y1)
++            if (vt->y_displayed == y1)
+                 break;
+-            if (--s->vt.y_displayed < 0)
+-                s->vt.y_displayed = s->vt.total_height - 1;
++            if (--vt->y_displayed < 0)
++                vt->y_displayed = vt->total_height - 1;
+         }
      }
--    qemu_pixman_glyph_render(glyphs[ch], image,
-+    qemu_pixman_glyph_render(glyphs[ch], vt->image,
-                              &fgcol, &bgcol, x, y, FONT_WIDTH, FONT_HEIGHT);
+-    vt100_refresh(&s->vt);
++    vt100_refresh(vt);
  }
  
-@@ -216,9 +215,9 @@ static void console_show_cursor(QemuTextConsole *s, int show)
-         if (show && cursor_visible_phase) {
-             TextAttributes t_attrib = TEXT_ATTRIBUTES_DEFAULT;
-             t_attrib.invers = !(t_attrib.invers); /* invert fg and bg */
--            vga_putcharxy(QEMU_CONSOLE(s), x, y, c->ch, &t_attrib);
-+            vt100_putcharxy(&s->vt, x, y, c->ch, &t_attrib);
-         } else {
--            vga_putcharxy(QEMU_CONSOLE(s), x, y, c->ch, &(c->t_attrib));
-+            vt100_putcharxy(&s->vt, x, y, c->ch, &(c->t_attrib));
-         }
-         invalidate_xy(s, x, y);
-     }
-@@ -243,7 +242,7 @@ static void console_refresh(QemuTextConsole *s)
-     for (y = 0; y < s->vt.height; y++) {
-         c = s->vt.cells + y1 * s->vt.width;
-         for (x = 0; x < s->vt.width; x++) {
--            vga_putcharxy(QEMU_CONSOLE(s), x, y, c->ch,
-+            vt100_putcharxy(&s->vt, x, y, c->ch,
-                           &(c->t_attrib));
-             c++;
-         }
-@@ -584,7 +583,7 @@ static void vc_update_xy(VCChardev *vc, int x, int y)
-             x = s->vt.width - 1;
-         }
-         c = &s->vt.cells[y1 * s->vt.width + x];
--        vga_putcharxy(QEMU_CONSOLE(s), x, y2, c->ch,
-+        vt100_putcharxy(&s->vt, x, y2, c->ch,
-                       &(c->t_attrib));
-         invalidate_xy(s, x, y2);
-     }
+ static void kbd_send_chars(QemuTextConsole *s)
+@@ -324,16 +324,16 @@ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
+ 
+     switch(keysym) {
+     case QEMU_KEY_CTRL_UP:
+-        console_scroll(s, -1);
++        vt100_scroll(&s->vt, -1);
+         break;
+     case QEMU_KEY_CTRL_DOWN:
+-        console_scroll(s, 1);
++        vt100_scroll(&s->vt, 1);
+         break;
+     case QEMU_KEY_CTRL_PAGEUP:
+-        console_scroll(s, -10);
++        vt100_scroll(&s->vt, -10);
+         break;
+     case QEMU_KEY_CTRL_PAGEDOWN:
+-        console_scroll(s, 10);
++        vt100_scroll(&s->vt, 10);
+         break;
+     default:
+         /* convert the QEMU keysym to VT100 key string */
 
 -- 
 2.53.0
