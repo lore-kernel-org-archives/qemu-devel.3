@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E5B17F33824
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:48:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 384AAF3382D
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:48:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2R25-0001nv-Fp; Tue, 17 Mar 2026 05:48:13 -0400
+	id 1w2R27-0001o7-7P; Tue, 17 Mar 2026 05:48:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2R22-0001nD-Q9
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:48:10 -0400
-Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
+ id 1w2R23-0001nO-Mb
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:48:12 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2R21-00043b-7t
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:48:10 -0400
-Received: by mail-wm1-x331.google.com with SMTP id
- 5b1f17b1804b1-4853e1ce427so63085455e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 02:48:08 -0700 (PDT)
+ id 1w2R22-00043i-6c
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:48:11 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48532925a4bso28776845e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 02:48:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773740887; x=1774345687; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=ph1pNO84S1EpHEhKclsWE7wWKRIyWhcQ/3QlynRy1nU=;
- b=rOkHv3PuXR0zxh4nx9JcMxYn1XIDJyuoFPFvJdRVkeWlUuzHTt/etmajaLO4POS/Pk
- 8PMsPWsvD7rFLiKjyahN0KLOUUTXXJP0g9naz8SSbKzL9H5P5Izrbt1dX7AMmFIRtGjq
- IuAgetRyTIs7Cyn0Hgt93euQo8DkRABANWE1lRuH9Q9OvKfquwnONWvD4iOclE4bJGp1
- hzL9J1yjuguJRaBJINJIpR4PiusfFCI1w3nOMdb+KOkUyNjuMMBl28UTxzDUsL2nICg3
- 0n9RFH+tMpToLm9Tm6rnkDDFONm8lwPp5ZPXh+XhT49kVNX8v+JaVbMskLpBi0ugQqfy
- XYZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773740887; x=1774345687;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773740889; x=1774345689; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ph1pNO84S1EpHEhKclsWE7wWKRIyWhcQ/3QlynRy1nU=;
- b=nZl8kgrsfWJb+raO7h4NRyLk3CQHrXCJXZHxwFFEtGKq0sV5lhWDdi19XvK1V0SRPw
- qjwkEkr5k3ZqrQ5IUv9VKXUkTP3gx7W2tc6pBF49sQFnIdv1iBLScZY3MrJvPrtOQy4I
- eTR5D5q+9UiIDuiyb9o8LAPsL8vybtRqgHFO55EEwEtGqiBz8g+hhkfP59bf+b4lvfCA
- dAFyzndV+c0wB12srtWLGYCpUL3CJWyFbrmIisZ9KTuno2CG4E21byQG9EnTq6A7MIiS
- pcnclKqzmL6O6jQmOYK2xe1FUXp5RAc/fEkfKGkkGS++UH2WUGuYxS228g3Ppbh/T5cs
- qdKA==
-X-Gm-Message-State: AOJu0YxTdLG+3rJJpURU1ZGKhPi2M5ObLoC19JuAXmSjWBV5nSeulH1t
- 8a4i4uVLjyXRuqwxl0mkjBGEIhF0hTpMeUBdVF4zVCdCawhbweZ6gzyLcY2255/R0bvyi67g+Gb
- qoeUu
-X-Gm-Gg: ATEYQzwJXurjg6ZZxOb+9ZG5is2/wOFJHgwgd9Lqh7RDWnP/oZqTRSruA6SP9hp4JBP
- BEmH27gftZqxlLZgmMnryWtTya4cy7C2Yx24COPlzqna5Tly2OwYUGaNaMNq3bTHtQk2bCjjuNW
- WsKG6NjiyuCLug5wpfKyNvJfeAr6zX/dmXnz6nGVeYfPbrg3CAR0HWnM3V2avXx0hD6PWRJTYga
- 9rbb6+SIEIwrS7S1D6bFO8wyFfrpU1RG/Si8c+zT3zue7QDSbqk61Qi7P9k3ylrn2XrF9rNIpIp
- W+l0NQxd512wqDB2iMi3N3UFKfCZgLidhAOrNVa0d0SPu8bcUckdwnn1gQ4rv0zWMtL2OAuUCmR
- bhpEK3e+Ev0whksgZPTLx8yukpcAQPs5SVs7bJtpLLeLqHBzVWv4FN7iuhjmi8c5eBU9jP/Ubtx
- 3Jyb67iJQ0rFbRoyhqmQhcK5KAllZtpJIKWz3KGk0aWAkknCQ8/XZ8M3P1rHYtgQWxKOrHUWP2V
- QcbXWs2lK9f//0T9NBu+h68eK9ZkrA=
-X-Received: by 2002:a05:600c:8208:b0:485:34b3:8589 with SMTP id
- 5b1f17b1804b1-4855a8d7004mr247072475e9.31.1773740887508; 
- Tue, 17 Mar 2026 02:48:07 -0700 (PDT)
+ bh=IVwcDllVF+PIsQQDJxzoY8CPdJKMLwF1VpkJA51D9D0=;
+ b=I4kC1jFW6yHN0b6FQOgu8Ab0yfYTc/ybfbg9DznE2nEZRnkAVkVANE20tVNAeKjW2J
+ lZQLOMSREpVgJNE3mxKddkr2mDXQtVljGQvGm65ISCWT1AvyBpn4qYQlODzxTB0gBdTN
+ Jt6xf1BpcqgOBxynQDqoQGR5NZ7rk0NBV35XQ3CGup715p8b3wtz/XW2oQatLreh8wau
+ pk6Z0e903x2Qu9eEVzGFlrlIG6CB0GJ1jh/pr6isUEuapAuRMyQlibUw+VI+QX+xglri
+ 4IFrlCWLY7Y6kM196LHI8L3rWzuZO4OFaBlaA7XV+F1hX6/1Ay7OQJDs+n2fClEQ4Ecd
+ dAtQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773740889; x=1774345689;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=IVwcDllVF+PIsQQDJxzoY8CPdJKMLwF1VpkJA51D9D0=;
+ b=T59gCujUMJcsgfkJAvAZlxaMWftUj2gjuFNJRsi1y35ur8XdHyFQCklBjdJtt2Yhmv
+ USFlEypsiKoZvzFOeMBYqoHNumHQtT8MJ2GsP94v9lbeL/1KRXAp5rCD6aQZvwfb0zx7
+ YML0Z6Q6kpTD7exw58bwVSN6a0zun+FWoiASjUCeuIu27dP+sqbALaSH4No6RXWKY6Q2
+ pWNp/ixrtTSQQpNxlpW1fpXAe++x+tjC72FYDt+/JdVAtJYOZjlNcoNWpN/S4FGB2ppR
+ qp+ggUtgjyVro/pvINxcTHHVFNQx7X9iY62YwuJ7Jb50hZ5Ti1CM55x8QFs+phmehbRC
+ lq9w==
+X-Gm-Message-State: AOJu0YxmSHBgUOCvfdoWAX+2zHhpsgDEy/2CadkX1upf7pG8kuecQpYS
+ OfXHLxlf5qeWu9yb3UimuosmCE24LLQ0QWrdGJZtaxDrof3ZzHbS1f0ePo+N6H8ZjNbb5dgIQo2
+ Jf7ek
+X-Gm-Gg: ATEYQzydEsZxDl+CH7CFvTTs5WrvpR5DeCV41WJ10W0qP2Bb8JIoCYVK+Dkm2gFIpVs
+ rajHygrWlvfbigcFEwCJSjdl2GnbeHTg8B/n9Ht+m2p4HoMuglaetnR+r+cQmPuzlTUyx2I1x4Z
+ XVGrJUdmMJQ3urbuZkrou/FzEmc6pebCv40up7tPg4vGU/u5v+1yPbpb724NXV2x/dLR+LqbtKp
+ 5xBxS286UTiw8jom8kXYqahSQnQTrhncgSk2P2Zh7XyNEvjv7oX5eo6787q8q4i+dLsZgo3rsZ6
+ wXgh53zdYu5ddn4Mfk6amJ0riojHfGxfrasU7Fhu2mEjZUIm52d22h2oV0i5KWbKQJydArOdlqG
+ ZcWvGCfyqmv8jE1W5+sEM2jwBSrBu74Sm3tZQR7ih/pvziVEDASELQqIIUrYMEXBWi06b/CL5lZ
+ T72fpOnVufFLhYMFxNaBpupRjORMxJ2qauB3ZG0zQsUdwCqHu6NduIGJSbFH6ErjLNSqBM5Tc8m
+ KK4FKRKs3JFT0JJmSH8fks7byr4lAw=
+X-Received: by 2002:a05:600c:1395:b0:485:3026:2b8b with SMTP id
+ 5b1f17b1804b1-4855670607emr263158695e9.29.1773740888501; 
+ Tue, 17 Mar 2026 02:48:08 -0700 (PDT)
 Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4856ea98070sm54329075e9.6.2026.03.17.02.48.06
+ 5b1f17b1804b1-4856ea98070sm54329075e9.6.2026.03.17.02.48.07
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 02:48:06 -0700 (PDT)
+ Tue, 17 Mar 2026 02:48:07 -0700 (PDT)
 From: Peter Maydell <peter.maydell@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Michael Roth <michael.roth@amd.com>,
  Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Subject: [PATCH 0/3] fsfreeze-hook: fix bashisms, syslog fallback logic
-Date: Tue, 17 Mar 2026 09:48:03 +0000
-Message-ID: <20260317094806.1944053-1-peter.maydell@linaro.org>
+Subject: [PATCH 1/3] scripts/qemu-guest-agent/fsfreeze-hook: Avoid bash-isms
+Date: Tue, 17 Mar 2026 09:48:04 +0000
+Message-ID: <20260317094806.1944053-2-peter.maydell@linaro.org>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260317094806.1944053-1-peter.maydell@linaro.org>
+References: <20260317094806.1944053-1-peter.maydell@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::331;
- envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x331.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +102,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patchset fixes some issues with the fsfreeze-hook guest-agent
-script reported in https://gitlab.com/qemu-project/qemu/-/work_items/3339
+The fsfreeze-hook script starts with #!/bin/sh, but it uses
+several bash-specific constructs, resulting in misbehaviour
+on guest systems where /bin/sh is some other POSIX shell.
 
- * the script is a #!/bin/sh one, but it uses various bash-isms.
-   Most are easy fixes, but getting rid of the PIPESTATUS usage
-   is a little less obvious, so that gets its own patch
- * a bug in the logic determining whether to log to file or syslog
-   means that if the logfile doesn't exist on first run, the script
-   will create the logfile but log to syslog (and then log to file
-   on second and subsequent runs)
+Fix the simple ones reported by shellcheck:
 
-NB: I have tested this by setting up the script and running it
-manually in a temp directory, but not as a "real world" fsfreeze.
+In scripts/qemu-guest-agent/fsfreeze-hook line 27:
+touch "$LOGFILE" &>/dev/null || USE_SYSLOG=1
+                 ^---------^ SC3020 (warning): In POSIX sh, &> is undefined.
 
-thanks
--- PMM
+In scripts/qemu-guest-agent/fsfreeze-hook line 31:
+    local message="$1"
+    ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
 
-Peter Maydell (3):
-  scripts/qemu-guest-agent/fsfreeze-hook: Avoid bash-isms
-  scripts/qemu-guest-agent/fsfreeze-hook: Avoid use of PIPESTATUS
-  scripts/qemu-guest-agent/fsfreeze-hook: Fix syslog-fallback logic
+In scripts/qemu-guest-agent/fsfreeze-hook line 46:
+    log_message "Executing $file $@"
+                                 ^-- SC2145 (error): Argument mixes string and array. Use * or separate argument.
 
- scripts/qemu-guest-agent/fsfreeze-hook | 34 ++++++++++++++++++--------
- 1 file changed, 24 insertions(+), 10 deletions(-)
+In scripts/qemu-guest-agent/fsfreeze-hook line 55:
+    if [ $STATUS -ne 0 ]; then
+         ^-----^ SC2086 (info): Double quote to prevent globbing and word splitting.
 
+There is also a use of PIPESTATUS that is more complex to fix;
+that will be dealt with in a separate commit.
+
+Cc: qemu-stable@nongnu.org
+Fixes: 85978dfb6b1c133 ("qemu-ga: Optimize freeze-hook script logic of logging error")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ scripts/qemu-guest-agent/fsfreeze-hook | 11 +++++------
+ 1 file changed, 5 insertions(+), 6 deletions(-)
+
+diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-agent/fsfreeze-hook
+index 5b915af017..6e2d7588af 100755
+--- a/scripts/qemu-guest-agent/fsfreeze-hook
++++ b/scripts/qemu-guest-agent/fsfreeze-hook
+@@ -24,15 +24,14 @@ USE_SYSLOG=0
+ # if log file is not writable, fallback to syslog
+ [ ! -w "$LOGFILE" ] && USE_SYSLOG=1
+ # try to update log file and fallback to syslog if it fails
+-touch "$LOGFILE" &>/dev/null || USE_SYSLOG=1
++touch "$LOGFILE" >/dev/null 2>&1 || USE_SYSLOG=1
+ 
+ # Ensure the log file is writable, fallback to syslog if not
+ log_message() {
+-    local message="$1"
+     if [ "$USE_SYSLOG" -eq 0 ]; then
+-        printf "%s: %s\n" "$(date)" "$message" >>"$LOGFILE"
++        printf "%s: %s\n" "$(date)" "$1" >>"$LOGFILE"
+     else
+-        logger -t qemu-ga-freeze-hook "$message"
++        logger -t qemu-ga-freeze-hook "$1"
+     fi
+ }
+ 
+@@ -43,7 +42,7 @@ for file in "$FSFREEZE_D"/* ; do
+     is_ignored_file "$file" && continue
+     [ -x "$file" ] || continue
+ 
+-    log_message "Executing $file $@"
++    log_message "Executing $file $*"
+     if [ "$USE_SYSLOG" -eq 0 ]; then
+         "$file" "$@" >>"$LOGFILE" 2>&1
+         STATUS=$?
+@@ -52,7 +51,7 @@ for file in "$FSFREEZE_D"/* ; do
+         STATUS=${PIPESTATUS[0]}
+     fi
+ 
+-    if [ $STATUS -ne 0 ]; then
++    if [ "$STATUS" -ne 0 ]; then
+         log_message "Error: $file finished with status=$STATUS"
+     else
+         log_message "$file finished successfully"
 -- 
 2.43.0
 
