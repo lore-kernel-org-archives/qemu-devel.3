@@ -4,103 +4,155 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B98FD875F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 12:39:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA43FFD8765
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 12:46:36 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Ti1-0004NK-NF; Tue, 17 Mar 2026 08:39:41 -0400
+	id 1w2ToI-0005vf-8L; Tue, 17 Mar 2026 08:46:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1w2Thz-0004Lk-NC
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:39:40 -0400
-Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
- id 1w2Thy-0005SF-1L
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:39:39 -0400
-Received: by mail-qk1-x734.google.com with SMTP id
- af79cd13be357-8cb40149037so643994385a.2
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 05:39:37 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773751176; cv=none;
- d=google.com; s=arc-20240605;
- b=j3kZqqm243Gs1n6GdQZAwlJZ8TPWq51L0cHtLwfZ5M++5RyEpO6EfawZz6d1iN6Fzl
- Vcnv07VVPihhJWycWCetNSU0KFOV1DgY8wVjjv5hhWwgH1h4e324SVMEcW+UtX1ykpP4
- u/bfvRLtoRRFE79Y8kJuDZOTIDzPbAj7BC6+GHQyjzoIXAZ57+1rlP4vX22H/2bAE4/l
- Ogy4G5Q8csS6wKq+0ZkU6ARb5ukn/Cjyq1plngrZU3orXgqtUpOA4qyhfWGTDx1N6wU9
- eSYFoA3P60PAVQ48pN6ocBKhKUj9BNHt83bJO5xIKd4mF6JBUS8wuMbT3VEHf+h97gF4
- Wxjg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=K/nIzC6V3cbsm1fDJPTt2AfQeUSz1mO0iIiCWf+u0Qs=;
- fh=QwYyyUxj49fE3r2/5S05Hg3zHNtF3HBjcsjpjamgaAA=;
- b=ALEhWRkWNwNhM1FlNgPy8MEjAzXLANBinMN/3o35tPi+VAD36XAZztdVhP7W0uXX0G
- 2mF7DfLML/5XZy76mODvaK4w0Px5Bh08Dw/VlhFVBYg6Z/BvopKH84ROiiVw1i3Kiqf1
- KpDpI2aLkL76oFQ7nc70fEVfOBxMvEl73JOC8rZy4UZGMj7xwdyU/kJlPiqXXrzPxV1F
- w2hMLpIx/PI5IYJV32OTlhoSgRoByiGBQ3g0WduUeLYUQrgr4CoTG6ahajkGA8jfV76R
- kPbtxNqztdVB+YBh0cj9gF1gN09T6vYAdzly8GOAoVQM+CTu5AJYyxgfg2pm4OWJuSuS
- k4Kg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2ToG-0005v4-E2
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:46:08 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2ToD-00062Y-F5
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:46:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773751564;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=iezUfwNVEg/KZbzVwYaQ/w38ks3iYzMrqRROPv4CKKI=;
+ b=h54D4efnVYj9Y9qxvL7lQvwX74dU4+klHRVH53VQLTFakMvwPSdpsUZPwXJkbefrf7d3rL
+ 19KtyYPcWRlfvfkPoGysHroBNxA2s5NxOqD72XToN5jQA16vYEr3JRFCA4QIwX2RHuDzPE
+ ZBeiAPvNTMqoGv+L21ALxN/z024uiro=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-505-lZzmg_-MM3iSj3xq43RYLw-1; Tue, 17 Mar 2026 08:46:03 -0400
+X-MC-Unique: lZzmg_-MM3iSj3xq43RYLw-1
+X-Mimecast-MFC-AGG-ID: lZzmg_-MM3iSj3xq43RYLw_1773751562
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-485fb873e57so5362295e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 05:46:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773751176; x=1774355976; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=K/nIzC6V3cbsm1fDJPTt2AfQeUSz1mO0iIiCWf+u0Qs=;
- b=Wx0oua7rZl1+Mqh3Ad7o163TrcVOwJIJUJUU6k+rXVgkbPiQGlR2THh68Rwv8dlNdj
- MiJjhkgAxmL9FNUUhC3tLlY+hdgnS4u6cP/OvgFm7yP7Yx9Hws1FWNqSHBtzhqom9Im8
- mC0C0xzUYbtoF4DWp31Iqxhq9kJh0Yn8mGiNDhI2PaFcsv9zce0mV412mk/4+rLWDl0T
- YzhQj/6+0U9lguHjMgIAtJRYeQE6nnLLgJWxwgyDnsWuZ1gYqYt1cULspOiYeVuWr2iD
- bspM+TsUKaGXdfKAwtTF9XMkOr+W2zlY8RoVidpHM7YkkMm3sJWYT5Tw4L5AdA1/swXa
- Tllg==
+ d=redhat.com; s=google; t=1773751561; x=1774356361; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=iezUfwNVEg/KZbzVwYaQ/w38ks3iYzMrqRROPv4CKKI=;
+ b=EEpCg3S9WyF4h18kyFSOTLwI1dSj7ISBcO/kaSUvzpY6Un4gI7RSbNHYwPApwKt930
+ RVwYYaa5qvNewS98RYv2NIs+0qsu8rlNyj3+FdnG9ph60/vKGIg0IJv2P6mMO2ex/OMJ
+ YYXJlFiUqSDIL7EXtRWF4WWaamEqm9gehR7Wttmx48XRk3KURHLqxd/Hc19q92KJwwAT
+ QO9MOXSV2GCNSe8q2c0qD9pxV0+sgwTG2t+HODiSX2Ij9h4K0+5ruRT1b0BJ6S04cl34
+ tODMO2xAuPlqBE7DauzT/7km/G1Lc31lp38ZtNZmzhcf3F/ELVwnFW93tanIeqEv+RBD
+ XJog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773751176; x=1774355976;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=K/nIzC6V3cbsm1fDJPTt2AfQeUSz1mO0iIiCWf+u0Qs=;
- b=QnHXpuGfxkn+CgK0utU8D8D7TGYcA70pqAcwHL58Ja5fN7oI/4styJBf4/m/4ahtCk
- JhfkcoJCunkfVt1m3l5CIJrtYU/4HJchGrzvLMM775fN79Q1ExdRkb9N4Et8LCpQxFeu
- QPxbhjDbZLYWt5xAQjbklv8rBiK/xabCKjT4idzSVa5wtbwPUd9f8+cbG3QAml01qIaf
- DCScVOEfMSf6pwBLMQADQvYO8lDnNFDMGTM1bIpGrR8ijIE2tJKfDbHYO5zM/b7MtMMC
- bH3O9l9+xuMr71FlsA1fgFHI2BmqAlOnYBLRZPHD1Jg9Qg/Ki7QcL9GoInAZLwKi1mEa
- VKnQ==
-X-Gm-Message-State: AOJu0YyLbmyMmmPGSqFr7E7AQBQNyeCtdG0raUo0JxxnqzMmI5oWNZkJ
- WlUhkcPGJSAUp5SjNcQZiWTMVJ2qUpbBavnd5+Hq2DocigtCnYGlDBKR40Oa1Lr7dwV3V5fERqq
- tRFnMaPla0hvco4J5TQ69YIpAz+I+j24=
-X-Gm-Gg: ATEYQzzD3dfddvVBoduEIf2n37zYRwcOfbM9cL/40j9FNqHRvP0olC5rmM2cX/M2HSi
- n4OnYCAkBq1qYLjV6fW/b8SgmVDwF9jCLykREcY+yVL2p7YZgmL0dYj7n5I6mV8tl+YvaoB2x3U
- O3GqyveG1Tpom5O1XJ0xDI5cacpXu0B/hh24tmRsR8fnb7Y49w3W1pqIsFJoAPj03xato5HmdyX
- csnb3rvq9jf4RDcpO3zZ3T1PW6qIgBT3gc/5i2JLm3Y8bToVuRoOsYOGONHFmZe44RwzHLqNNap
- 7AO8tg6o
-X-Received: by 2002:a05:620a:710c:b0:8cb:3a1d:79f2 with SMTP id
- af79cd13be357-8cdb5b71480mr2154367685a.71.1773751176264; Tue, 17 Mar 2026
- 05:39:36 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773751561; x=1774356361;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iezUfwNVEg/KZbzVwYaQ/w38ks3iYzMrqRROPv4CKKI=;
+ b=d3gwns+YfMo5ss4Q8b7lfz/8PgySIDx5CJqqUWDTgPHTdb/nz/TaHmUqqB9Txa7ykB
+ UUggapEFvJlxmiNDn5LJs639GTC8cq+vCOGbQFJCZsyaJMGPwrwTq0vRgUHMZbdzky1V
+ sRy6dwtnhzN8yCb5MgOoZO61ZlW6RJD2pA6Co0JRzm3CTC4po7z7ucAsZbyxHxenbFgi
+ Mwq6BstSlm6aQpDbVrkHssgXSZJNKn/QWW1if7XwZlSaB35hf1sfBVzo74K079hdIwyb
+ QVak2LBS+gmFGpCaNlqZVnyiL+oijQy8VZKD0tfPtQfWL71uL1sY0xG+wc5w8UlOBxGU
+ 86LA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW7rbsI5wlG+hkTYHxUy1GshmNZWc8ooyaEUpOzJ452m9cW632aKiAVHr8bhg540ar2STxquVAwVKZL@nongnu.org
+X-Gm-Message-State: AOJu0Yz4IkoBTQbLee1IQSDBC/076/Wuv/njk9/v60+rjpDoN0HgVS92
+ 9URtzsVeXcL8sKTq+UPvJyxFLTsufI/uLm19o6uROplofjcoSl7tDlyiddHunSKoAK0him+GC3m
+ KPEGOmJpFZENYz3OItnPmEp6kFuKkS7omzD0ET7ze5DwA83s7XXlphpzp5GPY5qUC
+X-Gm-Gg: ATEYQzxuxxJ6GByCQ2jo0ypTNxRkrFil2wBckVgYrqUqOO95FAmy7rAon+U/UGHZAyC
+ r3dGwzWC5o85Jbi5flM5Koi1WraoAW6HfYB/az1mBy+X+Sh+calFbP7mjQNAgosO9s1Ylg0WfR+
+ hV144XZVFk/YUddGE3MoRZVxeexVDCLzppqhaH2jWtWgMzwJpyjLXE5DQslbC1P8JFT0e8QeT43
+ px2wxKnx+r3pLmtH6kf+N5U0ZmbmHNio0KW72IIb2i7qY9DozhHezq3f1MJWpmLbF5OAztOOXmq
+ XR60PCYkQU16BzL2y5DTvamzq7f0o0ZQ02jHxQRow+Pti5SsIjHMxuiuk974lcd5EBoRWdsrhYw
+ 737sT7w4ovNe2ndeM8YB+/+JToIBxzjB2CZGj+Cg09hJfxzgPta0ebgizQP9q
+X-Received: by 2002:a05:600c:1d1a:b0:485:3d00:efd with SMTP id
+ 5b1f17b1804b1-485566cfacbmr297717345e9.7.1773751561220; 
+ Tue, 17 Mar 2026 05:46:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:1d1a:b0:485:3d00:efd with SMTP id
+ 5b1f17b1804b1-485566cfacbmr297716555e9.7.1773751560664; 
+ Tue, 17 Mar 2026 05:46:00 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b46b41e93sm13425959f8f.2.2026.03.17.05.45.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Mar 2026 05:46:00 -0700 (PDT)
+Message-ID: <09aad32b-baf8-41b9-863f-acbc3a16581d@redhat.com>
+Date: Tue, 17 Mar 2026 13:45:59 +0100
 MIME-Version: 1.0
-References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
- <20260317-qemu-vnc-v1-58-48eb1dcf7b76@redhat.com> <87ms06r668.fsf@suse.de>
-In-Reply-To: <87ms06r668.fsf@suse.de>
-From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
-Date: Tue, 17 Mar 2026 16:39:24 +0400
-X-Gm-Features: AaiRm51hsCEk12FCKx3AEXkc9lo8YtfUAkLko2lf63Dj-6IE5jzeibMLu00Yb3w
-Message-ID: <CAJ+F1CKwizBkU7TRXGWcDj9d7qEOaxjD5=13Jp-+y7M+50tQSQ@mail.gmail.com>
-Subject: Re: [PATCH 58/60] tests/qtest: fix dbus-vmstate-test compilation
-To: Fabiano Rosas <farosas@suse.de>
-Cc: qemu-devel@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
- envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x734.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] tests/qtest/arm-cpu-features: Fix thinko in
+ g_strdup_printf() call
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
+ qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+References: <20260317111121.2062455-1-peter.maydell@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260317111121.2062455-1-peter.maydell@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -116,113 +168,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi
+On 3/17/26 12:11, Peter Maydell wrote:
+> In commit 62272f9f8891 we changed some uses of fixed char arrays
+> to call g_strdup_printf() instead. In one place I made a silly
+> error where in changing
+>    sprintf(name, "fmt string", ...)
+> to
+>    name = g_strdup_printf("fmt string", ...)
+> I forgot to delete "name" from the argument list.
+> 
+> Luckily Coverity spotted this (as CID 1645771) because at this
+> point "name" is NULL and passing g_strdup_printf() a NULL first
+> argument is not valid.
+> 
+> We didn't notice the mistake in testing or CI because this bit of
+> code is only run if on an AArch64 host with KVM and SVE available.
+> 
+> Correct the error by removing the stray function argument.
+> 
+> Fixes: 62272f9f8891 ("tests/qtest/arm-cpu-features: Use g_strdup_printf() instead of char arrays")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> ---
+>   tests/qtest/arm-cpu-features.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/tests/qtest/arm-cpu-features.c b/tests/qtest/arm-cpu-features.c
+> index 5444e4d40b..bbdd89a81d 100644
+> --- a/tests/qtest/arm-cpu-features.c
+> +++ b/tests/qtest/arm-cpu-features.c
+> @@ -612,7 +612,7 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
+>                * we need at least one vector length enabled.
+>                */
+>               vq = __builtin_ffsll(vls);
+> -            name = g_strdup_printf(name, "sve%u", vq * 128);
+> +            name = g_strdup_printf("sve%u", vq * 128);
+>               error = g_strdup_printf("cannot disable %s", name);
+>               assert_error(qts, "host", error, "{ %s: false }", name);
+>               g_free(error);
 
-On Tue, Mar 17, 2026 at 4:29=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
-te:
->
-> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
->
-> > The test is still disabled, and trying to compile it will fail now.
-> >
-> > Fix it, and remove the G_TEST_DBUS_DAEMON setting, since it is passed b=
-y
-> > meson test. Fwiw, the test passes here.
-> >
->
-> Hi, I have a series re-enabling this test and doing a few fixes, take a
-> look whether it helps you. I'm a bit short on time right now, but I
-> could rebase and post it after the freeze.
->
-> https://gitlab.com/farosas/qemu/-/commits/migration-test-dbus-vmstate?ref=
-_type=3Dheads
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Ok, let's get your series merged first. This can indeed wait for the
-freeze period, but feel free to send it and ping me!
+Thanks,
 
-thanks
+C.
 
->
-> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
-> > ---
-> >  tests/qtest/dbus-vmstate-test.c | 11 ++---------
-> >  tests/qtest/meson.build         |  3 ++-
-> >  2 files changed, 4 insertions(+), 10 deletions(-)
-> >
-> > diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate=
--test.c
-> > index 6c990864e3e..ed4a52d0255 100644
-> > --- a/tests/qtest/dbus-vmstate-test.c
-> > +++ b/tests/qtest/dbus-vmstate-test.c
-> > @@ -3,7 +3,7 @@
-> >  #include <gio/gio.h>
->
-> I remember some CI job failed due to the test not declaring this
-> dependency.
->
-> >  #include "libqtest.h"
-> >  #include "dbus-vmstate1.h"
-> > -#include "migration-helpers.h"
-> > +#include "migration/migration-qmp.h"
-> >
-> >  static char *workdir;
-> >
-> > @@ -229,7 +229,7 @@ test_dbus_vmstate(Test *test)
-> >
-> >      thread =3D g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread=
-, loop);
-> >
-> > -    migrate_qmp(src_qemu, uri, "{}");
-> > +    migrate_qmp(src_qemu, dst_qemu, uri, NULL, "{}");
->
-> This works, however I have patches queued for the hardfreeze that change
-> some details in the migration tests infra:
->
-> - dst cmdline should use -incoming defer
-> - migrate_incoming_qmp needs to be called
-> - no more setting: qtest_set_expected_status(dst_qemu, EXIT_FAILURE);
->
-> >      test->src_qemu =3D src_qemu;
-> >      if (test->migrate_fail) {
-> >          wait_for_migration_fail(src_qemu, true);
-> > @@ -342,15 +342,8 @@ int
-> >  main(int argc, char **argv)
-> >  {
-> >      GError *err =3D NULL;
-> > -    g_autofree char *dbus_daemon =3D NULL;
-> >      int ret;
-> >
-> > -    dbus_daemon =3D g_build_filename(G_STRINGIFY(SRCDIR),
-> > -                                   "tests",
-> > -                                   "dbus-vmstate-daemon.sh",
-> > -                                   NULL);
-> > -    g_setenv("G_TEST_DBUS_DAEMON", dbus_daemon, true);
-> > -
-> >      g_test_init(&argc, &argv, NULL);
-> >
-> >      workdir =3D g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
-> > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
-> > index b735f55fc40..5f8cff172c8 100644
-> > --- a/tests/qtest/meson.build
-> > +++ b/tests/qtest/meson.build
-> > @@ -130,7 +130,8 @@ if dbus_daemon.found() and gdbus_codegen.found()
-> >                                  input: meson.project_source_root() / '=
-backends/dbus-vmstate1.xml',
-> >                                  command: [gdbus_codegen, '@INPUT@',
-> >                                            '--interface-prefix', 'org.q=
-emu',
-> > -                                          '--generate-c-code', '@BASEN=
-AME@']).to_list()
-> > +                                          '--generate-c-code', '@BASEN=
-AME@',
-> > +                                          '--output-directory', meson.=
-current_build_dir()]).to_list()
-> >  else
-> >    dbus_vmstate1 =3D []
-> >  endif
->
-
-
---=20
-Marc-Andr=C3=A9 Lureau
 
