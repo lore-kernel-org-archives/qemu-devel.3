@@ -4,78 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E652FED9EE
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 16:57:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1EA7AFED9EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 16:57:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2XiZ-0005qk-Da; Tue, 17 Mar 2026 12:56:31 -0400
+	id 1w2XjG-0005y0-FW; Tue, 17 Mar 2026 12:57:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1w2XiX-0005qY-63; Tue, 17 Mar 2026 12:56:29 -0400
-Received: from zm-mta-out-3.u-ga.fr ([152.77.200.56])
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1w2XjE-0005xc-Mf
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 12:57:12 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1)
- (envelope-from <frederic.petrot@univ-grenoble-alpes.fr>)
- id 1w2XiU-0008C6-81; Tue, 17 Mar 2026 12:56:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=univ-grenoble-alpes.fr; s=2020; t=1773766127;
- bh=s0PFxc3yTdW5WkBM38OcskusrUUjKRZjQoqM1P8mMmo=;
- h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
- b=AbcQHAnXU52+shjczZxkl7tUTr+BFRVfEBJ+S2BIiY+oEXRWqNSYAu+nQFEUrZydf
- 5PJKwNPJkzNWDhG5eDnKiPaymjXa8TG2MDc+drRaC6/OBEQeiJWe+M+11q0DQWbNW1
- EL7HgQznCuwY6dY9zqsdrambYJjFihPQ4a0UEa6/l+SVXmpHtqjLcgeE4hiRvuTRpd
- t+RsAKi3T0cNrpGRaNy7KmHx8f87cCEvxHsbeqjJm3JCH7TAhw1ndrEOHnEaZ74Y9M
- aYittP5YEvZ+XJ3MG8gWqEPbNE5v9RxK0alR9/JIMzdk5Oen+ppte8ZpfNTgSk2/79
- XdzTdDQc0Dovg==
-Received: from mailhub-2.u-ga.fr (mailhub-2.u-ga.fr [129.88.178.102])
- by zm-mta-out-3.u-ga.fr (Postfix) with ESMTP id 1CE70402BE;
- Tue, 17 Mar 2026 17:48:47 +0100 (CET)
-Received: from smtps.univ-grenoble-alpes.fr (smtps2.u-ga.fr [152.77.18.2])
- by mailhub-2.u-ga.fr (Postfix) with ESMTP id 18C25FF853;
- Tue, 17 Mar 2026 17:48:47 +0100 (CET)
-Received: from [147.171.165.115] (pers-165-115.vpn.u-ga.fr [147.171.165.115])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- (Authenticated sender: petrotf@univ-grenoble-alpes.fr)
- by smtps.univ-grenoble-alpes.fr (Postfix) with ESMTPSA id 77BC21400DB;
- Tue, 17 Mar 2026 17:48:46 +0100 (CET)
-Message-ID: <27b3c263-45eb-4adc-9fc6-5693bed31345@univ-grenoble-alpes.fr>
-Date: Tue, 17 Mar 2026 17:48:46 +0100
+ (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
+ id 1w2XjC-0008HO-3A
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 12:57:12 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.107])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fZymG6TDrzHnGcW;
+ Wed, 18 Mar 2026 00:56:46 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id C67F640587;
+ Wed, 18 Mar 2026 00:57:06 +0800 (CST)
+Received: from localhost (10.48.149.62) by dubpeml500005.china.huawei.com
+ (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Tue, 17 Mar
+ 2026 16:57:06 +0000
+Date: Tue, 17 Mar 2026 16:57:02 +0000
+To: Li Chen <me@linux.beauty>
+CC: Fan Ni <fan.ni@samsung.com>, <qemu-devel@nongnu.org>,
+ <alireza.sanaee@huawei.com>, <linux-cxl@vger.kernel.org>
+Subject: Re: [PATCH 0/3] cxl: avoid KVM internal error for fixed memory windows
+Message-ID: <20260317165702.00003c98@huawei.com>
+In-Reply-To: <20260317033304.3185291-1-me@linux.beauty>
+References: <20260317033304.3185291-1-me@linux.beauty>
+X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/riscv: Restrict access to RV128 registers on
- RV32
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260315165949.40027-1-philmd@linaro.org>
- <35544128-3c7f-48b2-a67f-9253cf8f5df0@univ-grenoble-alpes.fr>
- <abfb425a-50b3-4807-b600-6977b8d1f2fe@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
- <frederic.petrot@univ-grenoble-alpes.fr>
-In-Reply-To: <abfb425a-50b3-4807-b600-6977b8d1f2fe@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Greylist: Whitelist-UGA SMTP Authentifie (petrotf@univ-grenoble-alpes.fr)
- via submission-587 ACL (41)
-Received-SPF: pass client-ip=152.77.200.56;
- envelope-from=frederic.petrot@univ-grenoble-alpes.fr;
- helo=zm-mta-out-3.u-ga.fr
-X-Spam_score_int: -26
-X-Spam_score: -2.7
+Content-Type: text/plain; charset="US-ASCII"
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.48.149.62]
+X-ClientProxiedBy: lhrpeml100009.china.huawei.com (7.191.174.83) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -90,97 +66,107 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
+From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thanks Phil,
+On Tue, 17 Mar 2026 11:33:00 +0800
+Li Chen <me@linux.beauty> wrote:
 
-On 3/17/26 11:05, Philippe Mathieu-Daudé wrote:
-> Hi Frédéric,
+> CXL fixed memory windows are currently modeled as an I/O MemoryRegion.
+> When running under KVM, this makes the entire window look like MMIO.
+> If Linux onlines the window as system RAM (e.g. for a CXL Type-3
+> volatile memdev), normal CPU stores into the window trigger KVM
+> instruction emulation. Instructions like XSAVEC are not supported by
+> the emulator and abort the VM with a KVM internal error.
 > 
-> On 15/3/26 19:55, Frédéric Pétrot wrote:
->> Hi Phil,
->>
->>    my understanding is that rv128 makes no sense with rv32, and
->>    the user is not expected to run qemu-system-riscv32 with
->>    the -cpu=x-rv128 (it triggers an "unable to find CPU model
->>    'x-rv128'" error).
->>    The rv128 code just relies on XLEN being 128, and assumes
->>    (implicitely I admit) running on a 64-bit host machine, so
->>    with tl = 64.
->>    The code is absolutely erroneous when tl = 32, agreed.
->>    The thing is that, as we want to get rid of the
->>    TARGET_RISCV64/TARGET_RISCV32 defines, the rv128 specific
->>    code still must compile whatever tl, so that qemu can be built.
->>    However, it should never be executed if tl = 32.
->>    Typically, the patches I sent earlier this year to deal
->>    with lq/sq endianness fit into that 'compile only' category
->>    for rv32.
-> 
-> I'd really like to include your patch which fixes the endianness
-> issue I reported, but unfortunately as reported it doesn't even
-> build for rv32 builds:
-> 
-> https://lore.kernel.org/qemu-devel/ad717d8c-a6b9-4dd8-a4bd-fdd6d1d756a5@linaro.org/
+> Repro:
+>   - Boot a guest with a CXL Type-3 volatile memdev and a fixed memory window.
+>   - In the guest, create a RAM region and online it as system RAM:
+>       cxl create-region -m -t ram -d decoder0.0 -w 1 -g 4096 mem0
+>   - QEMU exits with a KVM internal error.
 
-   Very sorry for that.
-   I took care of the errors in a later patch you might have
-   missed :
-  
-https://lore.kernel.org/qemu-devel/20260101181442.2489496-1-frederic.petrot@univ-grenoble-alpes.fr/
+Hi Li Chen,
 
-   This compiles fine on Alister current riscv-to-apply.next
-   branch for both 32 and 64 bit versions (known that the
-   32 bit version does nothing useful, but is never used
-   anyway).
+At least at first look this looks very like:
+
+https://lore.kernel.org/qemu-devel/20260306121151.883-1-alireza.sanaee@huawei.com/
+
+Which was ready for merge as far as I was concerned, but missed getting queued for
+11.0 (as last PCI pull request had gone) and is currently ready to go in next cycle.
+
+Please see if that works for your case. If there are improvements I'd prefer
+to see them applied on top of that series than reinventing what I think
+is the same thing.
+
+It's not KVM specific as linear mappings (when valid) bring huge performance
+benefits on TCG as well as correctness for KVM.
+
+Jonathan
+
++CC linux-cxl which is where CXL folk tend to hang out in larger numbers
+than on the qemu list.
+
+
 
 > 
-> Which is why I'm trying to restrict RV128 on rv32 binary so
-> we can apply your other patch.
+> Serial output excerpt:
+>   KVM internal error. Suberror: 1
+>   extra data[0]: 0x0000000000000001
+>   extra data[1]: 0xc0314061c70f480f
+>   extra data[2]: 0x024080f610478b48
+>   extra data[3]: 0x0000000000000400
+>   extra data[4]: 0x000000010000000f
+>   extra data[5]: 0x00000004a0003140
+>   extra data[6]: 0x0000000000000000
+>   extra data[7]: 0x0000000000000000
+>   emulation failure
+>   RAX=0000000000000007 RBX=ffff8eace0001a40 RCX=ffff8eace0003100 RDX=0000000000000000
+>   RSI=0000000000000007 RDI=ffff8eace00030c0 RBP=ffffd48ac1747c08 RSP=ffffd48ac1747bc8
+>   R8 =0000000000000007 R9 =0000000000000007 R10=000000000000000d R11=0000000000000000
+>   R12=ffff8ea945b51a40 R13=ffffd48ac166c000 R14=0000000000000000 R15=0000000001200000
+>   RIP=ffffffffaf77a14d RFL=00000256 [---ZAP-] CPL=0 II=0 A20=1 SMM=0 HLT=0
+>   ES =0000 0000000000000000 00000000 00000000
+>   CS =0010 0000000000000000 ffffffff 00a09b00 DPL=0 CS64 [-RA]
+>   SS =0018 0000000000000000 ffffffff 00c09300 DPL=0 DS   [-WA]
+>   DS =0000 0000000000000000 00000000 00000000
+>   FS =0000 00007f997da3fec0 00000000 00000000
+>   GS =0000 ffff8eab0535d000 00000000 00000000
+>   LDT=0000 fffffe7600000000 00000000 00000000
+>   TR =0040 fffffe767cf8f000 00004087 00008b00 DPL=0 TSS64-busy
+>   GDT=     fffffe767cf8d000 0000007f
+>   IDT=     fffffe0000000000 00000fff
+>   CR0=80050033 CR2=000055fd193a6468 CR3=000000010930c000 CR4=00350ef0
+>   DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
+>   DR6=00000000ffff0ff0 DR7=0000000000000400
+>   EFER=0000000000001d01
+>   Code=0f 1f 44 00 00 48 8b 4f 10 48 8b 41 08 48 89 c2 48 c1 ea 20 <48> 0f c7 61 40 31 c0 48 8b 47 10 f6 80 40 02 00 00 c0 74 1e 48 8b 05 98 f8 e8 01 48 89 47
 > 
-> Anyway, Daniel suggestions to use 'get_xl(ctx) == MXL_RV32'
-> instead of this ugly TARGET_RISCV32 #ifdef'ry is certainly
-> the way to go (which is why I posted this as RFC).
-
-   It might, indeed.
-   Thanks again for your time,
-   Frédéric
-
+> This series keeps the existing MMIO dispatcher, but turns the fixed
+> window into a container and (when the window maps linearly to a Type-3
+> volatile memdev) overlays a RAM alias so KVM can create a memslot for
+> the range. The mapping is updated when HDM decoders are
+> committed/uncommitted by the guest.
 > 
->>
->>    Thanks,
->>    Frédéric
->>
->> On 3/15/26 17:59, Philippe Mathieu-Daudé wrote:
->>> One half of 128-bit registers code is not reachable for CPUs
->>> running in 32-bit mode, while the other half is completely
->>> broken (handled as a pair of 32-bit registers).
->>> Better restrict this code on 32-bit builds until RV128 is
->>> properly implemented.
->>>
->>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> ---
->>> More than 1y having issue with the 128-bit code path and
->>> the single binary effort. Fortunately while I dunno how to
->>> test 128-bit I could with 32/64 bits.
->>> ---
->>>   target/riscv/cpu.h                          |  2 ++
->>>   target/riscv/machine.c                      |  4 +++
->>>   target/riscv/monitor.c                      |  4 +++
->>>   target/riscv/translate.c                    | 31 +++++++++++++++++++--
->>>   target/riscv/insn_trans/trans_rvzacas.c.inc |  2 ++
->>>   5 files changed, 41 insertions(+), 2 deletions(-)
+> This patchset is based on master branch 559919ce54927d59b215a4665eda7ab6118a48aa
 > 
+> Local validation on this base confirmed that the issue reproduces
+> without the series and is fixed with the 3 patches below.
 > 
+> Li Chen (3):
+>   cxl/type3: expose vmem mapping for fixed windows
+>   cxl: alias fixed memory windows to RAM under KVM
+>   cxl: update fixed window mappings on decoder programming
 > 
+>  hw/cxl/cxl-component-utils.c |   2 +
+>  hw/cxl/cxl-host-stubs.c      |   1 +
+>  hw/cxl/cxl-host.c            | 189 ++++++++++++++++++++++++++++++++++-
+>  hw/mem/cxl_type3.c           |  59 +++++++++++
+>  include/hw/cxl/cxl.h         |   5 +
+>  include/hw/cxl/cxl_device.h  |   3 +
+>  include/hw/cxl/cxl_host.h    |   1 +
+>  7 files changed, 258 insertions(+), 2 deletions(-)
 > 
-> 
-
--- 
-+---------------------------------------------------------------------------+
-| Frédéric Pétrot,                        Pr. Grenoble INP-UGA@Ensimag/TIMA |
-| Mob/Pho: +33 6 74 57 99 65/+33 4 76 57 48 70      Ad augusta  per angusta |
-| http://tima.univ-grenoble-alpes.fr frederic.petrot@univ-grenoble-alpes.fr |
-+---------------------------------------------------------------------------+
 
 
