@@ -4,78 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 265A9FEDA0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:03:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BAA00FEDA0A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:03:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Zh9-0005QM-A7; Tue, 17 Mar 2026 15:03:11 -0400
+	id 1w2ZhU-0005qI-Ne; Tue, 17 Mar 2026 15:03:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zh7-0005Px-8S
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:09 -0400
-Received: from mail-wm1-x335.google.com ([2a00:1450:4864:20::335])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2ZhT-0005k2-Bb
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:31 -0400
+Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zh5-000600-9a
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:09 -0400
-Received: by mail-wm1-x335.google.com with SMTP id
- 5b1f17b1804b1-4852a9c6309so50531105e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 12:03:06 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2ZhR-0006Zb-O5
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:31 -0400
+Received: by mail-wm1-x32d.google.com with SMTP id
+ 5b1f17b1804b1-485409ab264so1475185e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 12:03:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773774185; x=1774378985; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773774208; x=1774379008; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=IN3mmd8Urjjjp+liaxE/z6bIhAV5QP0h8A82qKPCmjg=;
- b=SlN0qITY4vsVX4uCoEzXiRpQCDnPi5mXxB2j163454wvq32kVxlJcV7sK2xaj9ASc6
- a6XoE1d2ck97mSuiKvXrFAWeIghJbkCEX4j9Kgj6ggg5kpvQ/q6ihIQ0b9UTm2CZqg6i
- 8z4sY6ARmCaEySjIiw+ISmXU60bNz8qD5P80jYDlRb1vfvXIgf6Jxt4a5H4f++uYXlWT
- B10VpOw6RCBVmepQsGmkaDlMcWBmZ/b96sJPcC4Nhc0ZAmAct2IX8ODAWSo1IIAF97ep
- 61b8J096x/u1cJ30jzI4qKi1yxr8uoipT/2cRae9OAZ/8yzeeh++M8b0xeafBICssiRo
- 9ECw==
+ :reply-to; bh=ysQHAl7anKuv2NxlFYNUxI/74Xn6F2ooA9p5oUbI8tM=;
+ b=DjIv+DCntsqIHi8FpDyVDXLjVLfFQHRnIdWWKZSQje0wjWYijx7BY0AuEzzHi86o+k
+ 1VoZVBzf+0B9YebCAEXAeKmqNUosuEcoiteBi1x87YcKH0JGPhi/2r9VwiqDVOB2vI4g
+ kXSJ5z/rq0+0EddHQgXcnL+GeHfyC4brIZUTsZsHgfNGb3WftADRjySfOivOFIzLutSL
+ YSazQKkdPcK9slAfX0oi49kE77nNoUK53ffzYA+bJC3ShynZiXZMwlBhDMQeche9VtwT
+ ysCfBlklOzMhrMnoGlBH9u+3wj8XW/UkhROLDUpqC04XSGaJV4++Xg/UmzD0uaos63f5
+ 7tog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773774185; x=1774378985;
+ d=1e100.net; s=20251104; t=1773774208; x=1774379008;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
  :cc:subject:date:message-id:reply-to;
- bh=IN3mmd8Urjjjp+liaxE/z6bIhAV5QP0h8A82qKPCmjg=;
- b=BxNA1cWFlXWWJv6RJzupozgkkp+Tq+HG1+zLp3QDJBWX0JLRPHz9z5Zz9vmMNBs48s
- HK2DfLsRQhBdnK4yYnu5GKpzI0ruO1dGBLSjflWRo8jD6JjXjR4i/i10C1KwOX7yfsSX
- 4oJETFLtvQDw/2OqMhSPs3ygunbgZDmGOvE2lxUFjZlQa9NL7QL7lYAff8cs6qJ5aOsm
- odjQPhTm3H2n9zWHE+IMoFyb/vdVIuAaR5p6DrlmOYzYlHxUrs/6qloGYYCjxW9986gp
- CaIF7kQIJwrymxDzKqQk35YwkuxHuxAvymAvb+eom3qUOTTuT5uwkqGUt1337uq89sYZ
- NuKw==
-X-Gm-Message-State: AOJu0YzAY9A+UJ+ozEXTncb2rv8lC/Pa1RY8gMtV5XAgen+KQxFWbU8w
- 3tQG0QKyFSCq3aWe9ncV+i76M2tUitBL2dVX4+gwAIaj7oFETlxLpWqcTMPdPPLSo4B3Wkky6pL
- JRvd8mOs=
-X-Gm-Gg: ATEYQzyLfN+MRR7nFCp5kKQqJkb3UU/Sdf6LlkypQuavzxipilzM5B24PnKmDWxu+cZ
- lZL8Uj5EMUXdiO5t1aR9dd98fCqDCm/65EhK5kCIoDhH4H7pePztr5ozcV5DclkPeRXBwEx0vED
- OP7rdzlyXxWJHiIfwJ9SYA3i9zbVn1VW6WJTFBBMeXxFyJwfGbbYsJqVO1xCUChI6JAGAVv4V9G
- lq6AyCMKLN+noNAhQJhJ4DPv6ynyx5IcXz37Kyc3dZdu7uHGjCgJwTiQYqC10WCUi4eH1VXmNSi
- S5MH6ii8NijMGs1sOBXGXat1JI32vH6cTFdQBtudlIpzJX0rZrGc99znw3XxY1f4OZWpsZ5qaWu
- cUN1TDzPmoGwz5bYxwPEbYkrY7ng0trRIrDt/aqmrS4/auNBdldXHrWztF3jFWXsHMhJL7mAUqj
- FWPRfcYsNuBHCGcGor3LoHEet8r4UvSvQrW5X3Er1xN+ikpD444TR2RsZ54Ivo4RpCy0vZd3uR
-X-Received: by 2002:a05:600c:5392:b0:485:40c6:f526 with SMTP id
- 5b1f17b1804b1-486f4451109mr12140925e9.26.1773774185114; 
- Tue, 17 Mar 2026 12:03:05 -0700 (PDT)
+ bh=ysQHAl7anKuv2NxlFYNUxI/74Xn6F2ooA9p5oUbI8tM=;
+ b=gfi38kyd6FjZlONe5St1RozSaglqlN2Lo8Pysfk4kjSUbWLJGfGNKntuLyH8858X/7
+ UvYnC8FAHu3hBT/XlWhLSmAgtgGnnzjzDVABtIVBZ1k481eFZ9wnoDJ6QdjkoB8d8uqm
+ +UYtVWzMJTAqwgdxp+sk6H/rspHqzplR6bTb7XuCLlUTPwQeqrzFM8E+ZpkXayW7EnpA
+ 2vqRWE1SpH+qOnUrO+5DPHGOjYwLLVunegDjagII/TtHVuafcHxrGepLz6eVW0Xw1N1C
+ /MHA0pN0DD8K+RyxIvKhcCgFdUBwdfYeFu6oLWqfD5IvuToe+Gsl/8WLJICddU2Q+WnK
+ T2zQ==
+X-Gm-Message-State: AOJu0YwD/eKg4EcGdewv/kdm4fj64YzggjnUIat8TLie0+l0pVunSzty
+ wSiYmPEeNs8Y1vMtrWYBGE3amtOu1KDTHy6YWIG5sQ6AnMj77ZXpPkI2IJFu7W1x/EVN3CJP1IN
+ AAELxA40=
+X-Gm-Gg: ATEYQzwK0txCgC70dCvtNLsOQ7JQGGPR0irxUM9Fw2qdnQix2q4Lc8D+IVMFvbcdXbP
+ i1oW0Qlg9I8QVKZJEfLYXyVSgjf9QfNYU6bkXIm/ufmISHmXgP9KOEzMstmN/6e9nL93tMAkn59
+ yfLgbhjWEse0scg9RvAVSJlLbp7uGAto32rMmB7tXMd480W7XOKtObgM6qfS6DOU2x6nXu8dAup
+ TYzVdiFiQndDMJw0b0UAlVcASw6wsqnAmkSdz6hefliDakBiHy4LDx3FXb7dznp8guNZvLfadYm
+ hrtSSAYnJUt/4dcu81PYNTZ5JEaRlfRST0a7c5zXDZSD0Oe3QuyjitILJJAgQ64XgPe+/Zgy5QW
+ keU5DqVau0iE3hkYe97caIQUSdTkBEj/N4/EKTT0ty+1+aCwNlHPYjBgov8wkqcTYJUaHxGQz4M
+ cQy2sKZJbbmKLx423+kVlc3j3oEKXSoq12TwGXPXzb/jfPfkPztdlsNN1szO3oQdK+kOcZ5iMX6
+ XvRasiFKMM=
+X-Received: by 2002:a05:600c:a00e:b0:485:3428:774c with SMTP id
+ 5b1f17b1804b1-486f40a604bmr16308875e9.4.1773774207609; 
+ Tue, 17 Mar 2026 12:03:27 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f4b9892esm348185e9.19.2026.03.17.12.03.04
+ 5b1f17b1804b1-4856eaeca12sm153177035e9.12.2026.03.17.12.03.26
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Mar 2026 12:03:04 -0700 (PDT)
+ Tue, 17 Mar 2026 12:03:27 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 2/5] hw/display: Build stubs once
-Date: Tue, 17 Mar 2026 20:02:47 +0100
-Message-ID: <20260317190250.70506-3-philmd@linaro.org>
+Subject: [PULL 5/5] target/ppc: Replace TARGET_PAGE_BITS ->
+ qemu_target_page_bits()
+Date: Tue, 17 Mar 2026 20:02:50 +0100
+Message-ID: <20260317190250.70506-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317190250.70506-1-philmd@linaro.org>
 References: <20260317190250.70506-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::335;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x335.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,132 +100,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move stubs to the global stub_ss[] source set. These files
-are now built once for all binaries, instead of one time
-per system binary.
-
-Add pixman to qemuutil library dependencies since pixman is
-transitively included, which is needed to be able to include
-prototypes for stubs we declared:
-
-  In file included from include/ui/console.h:4,
-  include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or directory
-     10 | #include <pixman.h>
-        |          ^~~~~~~~~~
-
-On OpenBSD, opengl headers are not available in default
-include path, and thus we need to add opengl to list of
-qemuutil dependencies, otherwise we get:
-
-  In file included from ../hw/display/acpi-vga-stub.c:4:
-  In file included from ../hw/display/vga_int.h:28:
-  In file included from include/ui/console.h:9:
-  include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h' file not found
-  # include <epoxy/gl.h>
-            ^~~~~~~~~~~~
-  1 error generated.
+Get the target page bits at runtime.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260225035739.42848-8-philmd@linaro.org>
+Message-Id: <20260313062055.2188-3-philmd@linaro.org>
 ---
- meson.build                |  2 +-
- hw/display/acpi-vga-stub.c |  1 +
- hw/display/meson.build     | 19 ++++++++-----------
- 3 files changed, 10 insertions(+), 12 deletions(-)
+ target/ppc/mmu-booke.c   | 3 ++-
+ target/ppc/mmu-hash64.c  | 3 ++-
+ target/ppc/mmu-radix64.c | 3 ++-
+ 3 files changed, 6 insertions(+), 3 deletions(-)
 
-diff --git a/meson.build b/meson.build
-index b2154bb9287..ab726ea1152 100644
---- a/meson.build
-+++ b/meson.build
-@@ -3781,7 +3781,7 @@ util_ss = util_ss.apply({})
- libqemuutil = static_library('qemuutil',
-                              build_by_default: false,
-                              sources: util_ss.sources() + stub_ss.sources() + genh,
--                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc, rt])
-+                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc, rt, pixman, opengl])
- qemuutil = declare_dependency(link_with: libqemuutil,
-                               sources: genh + version_res,
-                               dependencies: [event_loop_base])
-diff --git a/hw/display/acpi-vga-stub.c b/hw/display/acpi-vga-stub.c
-index a9b0ecf76d0..ee0fbf8175d 100644
---- a/hw/display/acpi-vga-stub.c
-+++ b/hw/display/acpi-vga-stub.c
-@@ -1,4 +1,5 @@
+diff --git a/target/ppc/mmu-booke.c b/target/ppc/mmu-booke.c
+index 55e5dd7c6b0..9cc66c613b7 100644
+--- a/target/ppc/mmu-booke.c
++++ b/target/ppc/mmu-booke.c
+@@ -19,6 +19,7 @@
+ 
  #include "qemu/osdep.h"
-+#undef CONFIG_PIXMAN
- #include "hw/acpi/acpi_aml_interface.h"
- #include "vga_int.h"
+ #include "exec/page-protection.h"
++#include "exec/target_page.h"
+ #include "exec/log.h"
+ #include "cpu.h"
+ #include "internal.h"
+@@ -492,7 +493,7 @@ bool ppc_booke_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
+     if (ret == 0) {
+         *raddrp = raddr;
+         *protp = prot;
+-        *psizep = TARGET_PAGE_BITS;
++        *psizep = qemu_target_page_bits();
+         return true;
+     } else if (!guest_visible) {
+         return false;
+diff --git a/target/ppc/mmu-hash64.c b/target/ppc/mmu-hash64.c
+index d026abadd11..2c33d98001d 100644
+--- a/target/ppc/mmu-hash64.c
++++ b/target/ppc/mmu-hash64.c
+@@ -21,6 +21,7 @@
+ #include "qemu/units.h"
+ #include "cpu.h"
+ #include "exec/page-protection.h"
++#include "exec/target_page.h"
+ #include "qemu/error-report.h"
+ #include "qemu/qemu-print.h"
+ #include "system/hw_accel.h"
+@@ -1065,7 +1066,7 @@ bool ppc_hash64_xlate(PowerPCCPU *cpu, vaddr eaddr, MMUAccessType access_type,
  
-diff --git a/hw/display/meson.build b/hw/display/meson.build
-index 90e6c041bdb..e730c289b15 100644
---- a/hw/display/meson.build
-+++ b/hw/display/meson.build
-@@ -3,7 +3,8 @@ hw_display_modules = {}
- system_ss.add(when: 'CONFIG_DDC', if_true: files('i2c-ddc.c'))
- system_ss.add(when: 'CONFIG_EDID', if_true: files('edid-generate.c', 'edid-region.c'))
+         *raddrp = raddr;
+         *protp = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+-        *psizep = TARGET_PAGE_BITS;
++        *psizep = qemu_target_page_bits();
+         return true;
+     }
  
--system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'), if_false: files('ramfb-stubs.c'))
-+system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb.c'))
-+stub_ss.add(files('ramfb-stubs.c'))
- system_ss.add(when: 'CONFIG_FW_CFG_DMA', if_true: files('ramfb-standalone.c'))
+diff --git a/target/ppc/mmu-radix64.c b/target/ppc/mmu-radix64.c
+index 33ac3412901..a09ba2b8d1a 100644
+--- a/target/ppc/mmu-radix64.c
++++ b/target/ppc/mmu-radix64.c
+@@ -20,6 +20,7 @@
+ #include "qemu/osdep.h"
+ #include "cpu.h"
+ #include "exec/page-protection.h"
++#include "exec/target_page.h"
+ #include "qemu/error-report.h"
+ #include "system/kvm.h"
+ #include "system/memory.h"
+@@ -717,7 +718,7 @@ static bool ppc_radix64_xlate_impl(PowerPCCPU *cpu, vaddr eaddr,
+            }
+         }
+         *protp = PAGE_READ | PAGE_WRITE | PAGE_EXEC;
+-        *psizep = TARGET_PAGE_BITS;
++        *psizep = qemu_target_page_bits();
+         return true;
+     }
  
- system_ss.add(when: 'CONFIG_VGA_CIRRUS', if_true: files('cirrus_vga.c'))
-@@ -36,21 +37,20 @@ system_ss.add(when: 'CONFIG_VGA', if_true: files('vga.c'))
- system_ss.add(when: 'CONFIG_VIRTIO', if_true: files('virtio-dmabuf.c'))
- system_ss.add(when: 'CONFIG_DM163', if_true: files('dm163.c'))
- 
-+stub_ss.add([files('acpi-vga-stub.c'), pixman])
- if (config_all_devices.has_key('CONFIG_VGA_CIRRUS') or
-     config_all_devices.has_key('CONFIG_VGA_PCI') or
-     config_all_devices.has_key('CONFIG_VMWARE_VGA') or
-     config_all_devices.has_key('CONFIG_ATI_VGA')
-    )
--  system_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                      if_false: files('acpi-vga-stub.c'))
-+  system_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
- endif
- 
- if config_all_devices.has_key('CONFIG_QXL')
-   qxl_ss = ss.source_set()
-   qxl_ss.add(when: 'CONFIG_QXL', if_true: [files('qxl.c', 'qxl-logger.c', 'qxl-render.c'),
-                                            pixman, spice])
--  qxl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                  if_false: files('acpi-vga-stub.c'))
-+  qxl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-   hw_display_modules += {'qxl': qxl_ss}
- endif
- 
-@@ -119,16 +119,14 @@ if config_all_devices.has_key('CONFIG_VIRTIO_VGA')
-                     if_true: [files('virtio-vga.c'), pixman])
-   virtio_vga_ss.add(when: 'CONFIG_VHOST_USER_VGA',
-                     if_true: files('vhost-user-vga.c'))
--  virtio_vga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                         if_false: files('acpi-vga-stub.c'))
-+  virtio_vga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-   hw_display_modules += {'virtio-vga': virtio_vga_ss}
- 
-   if virgl.found() and opengl.found()
-     virtio_vga_gl_ss = ss.source_set()
-     virtio_vga_gl_ss.add(when: ['CONFIG_VIRTIO_VGA', virgl, opengl],
-                          if_true: [files('virtio-vga-gl.c'), pixman])
--    virtio_vga_gl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                              if_false: files('acpi-vga-stub.c'))
-+    virtio_vga_gl_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-     hw_display_modules += {'virtio-vga-gl': virtio_vga_gl_ss}
-   endif
- 
-@@ -136,8 +134,7 @@ if config_all_devices.has_key('CONFIG_VIRTIO_VGA')
-     virtio_vga_rutabaga_ss = ss.source_set()
-     virtio_vga_rutabaga_ss.add(when: ['CONFIG_VIRTIO_VGA', rutabaga],
-                                if_true: [files('virtio-vga-rutabaga.c'), pixman])
--    virtio_vga_rutabaga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'),
--                                                    if_false: files('acpi-vga-stub.c'))
-+    virtio_vga_rutabaga_ss.add(when: 'CONFIG_ACPI', if_true: files('acpi-vga.c'))
-     hw_display_modules += {'virtio-vga-rutabaga': virtio_vga_rutabaga_ss}
-   endif
- endif
 -- 
 2.53.0
 
