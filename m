@@ -4,82 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 38F58FEDA04
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 18:21:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E530CFEDA03
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 18:21:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Z2U-00013o-3y; Tue, 17 Mar 2026 14:21:10 -0400
+	id 1w2Z2Y-0001BA-LX; Tue, 17 Mar 2026 14:21:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w2Z2R-00012p-FC
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 14:21:07 -0400
-Received: from mail-dy1-x1330.google.com ([2607:f8b0:4864:20::1330])
+ id 1w2Z2W-000198-Fz
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 14:21:13 -0400
+Received: from mail-dy1-x132f.google.com ([2607:f8b0:4864:20::132f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w2Z2P-0002sT-2d
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 14:21:06 -0400
-Received: by mail-dy1-x1330.google.com with SMTP id
- 5a478bee46e88-2bdd40d3c61so5479869eec.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 11:21:04 -0700 (PDT)
+ id 1w2Z2V-0002tB-5G
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 14:21:12 -0400
+Received: by mail-dy1-x132f.google.com with SMTP id
+ 5a478bee46e88-2bd9a485bd6so595105eec.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 11:21:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773771662; x=1774376462; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773771669; x=1774376469; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=GQQWpfCkfhdY6LwJcgzOBI0ARhYIsLB8CNzLDt0g+Qg=;
- b=hTnvDrt7W2yilqo7pHolCWe7iUkgobSNgHpJ1Qb0VJjd3COGH/pxJMyx8hIRhUM7Hg
- ueOO5ksklyF4kHYyr02uRFhhKoRCWFIeWALdXB4a72bAY5Djapi+0rW/NItKTKBvooFc
- kVXSVmgXYDCuLLq2b4PzDkZkVWqqGHOhXNzkQKfLPG3uyGqJg3OYpeNni+dXI978Oy1j
- ar0ChjACt0G8/BXC1290pf3zawPsrp1vxUDzITpuT0Ln0f7yMwaIsZ1MCoVgTZ0cPC2z
- Td0wy0m7lGzpYmcv8v7tP96pntGepJE84PtW+t5JVgNTAqjA4Buzxo8Rc1ZBtvmaioww
- 9KPw==
+ bh=5MzRVprj61Gyv11VqdvdVphNrBFaUcy37KCZX6QpUas=;
+ b=hq+XcBb2uLGD8fOVHzmgy1ly4FD1TwlBaf2WA7Z7WE8F/NUYyWv4LqHfpJR4SNwkuA
+ bFmD7jbmoEiHsyHwrgZNr5NApohTEC3Pd0s10vEAtkNmTvLiuHTTwFgEvxLTHcBQ/45Z
+ 1O6mTOsgDhcl7FfSHTUHj1fOzqP5ZrDz3CRbn2d+UdKyM3OkK/e4375++9oeyJWIu7bN
+ I38WaUmL1jEOvhHqIcEqsVYFRzg7dWjuFnZKdYHCedznvlH8OIF9jZFcC5xpA26DylPF
+ evaS0t29kCr4Ma1a4yqEo+SlY81I2K34flnfBmkwq2PTFnsXxqh5qUMf6+HkwBOiUHIx
+ 6E2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773771662; x=1774376462;
+ d=1e100.net; s=20251104; t=1773771669; x=1774376469;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=GQQWpfCkfhdY6LwJcgzOBI0ARhYIsLB8CNzLDt0g+Qg=;
- b=pXGI8oTYXDVMZEtswFTm29MBClhvf1NZizcLfvHVOo3oI6a4fJUAQQZmF+Lx4IUUL7
- lANJkJQTF+JWJVPxGXTwWcZsyJJZkNY0fmpqOptIFZ4KdZHSicRjVSPYwSxUa5a8qcQP
- L2Ub2MRjdWymZOxA4OopidT+2vv1/EfxCjnEQhZvhecc/YV2bwiqlUzIR8UB9vzhrEUW
- ZzXrIWuit+XlpJVawKZJb8lxsszp95Om3adtZqL3R0Gb2iLLd2ZIPtXow/TjcIZGgGvc
- p30sALvr7I1p6GqK3vTuoFAHDmcrv0yC8DUvWR3tGl3WFYFJWIDzC75PbfdAOFMUXuOD
- DCAA==
-X-Gm-Message-State: AOJu0YyveRPV4yiSxsjVsDjPmaWjRAvTqLivTeG5bVQo6+JhXjVCbMzf
- 1iL1vpSl0/STl0YaQZ6LnUoQaLCjtR+FyhRUKfSLVAOQk6BBSajPpxOLt1hDt08V
-X-Gm-Gg: ATEYQzxskr0fpd7EyZAdfJbBv8SQayYjX51kajpM9oQ+et0QqxtGkHhTGMn14TI1DPC
- Z/yN3rjvgg/TLLEDYkzHlwefhO7chrgz5hvluiJPHDUK5tzP0hhsZSs6u7Zn3TQW+ybRAeWXl7a
- DFHVXgBaqDVWanRwiC+x0A9thAsCy4QOYnxj7eiwZj8/k2wsIMzQXJU+Oi+XRTEVTSW66Gt6ndG
- 6+XviFpEAwjJ5V0rFx9E/z7Mg8W2a1adwH1BTn3crppGNca6lHWsqqSgS0iSh5c5jMcZgq5kahi
- /9vhcDBJf+q4OPKlz2VS6mCyCJtpgRrFU8TxPbzVE4mahAhWQDkBYiV63jikjX8TFkXjdQGxe+a
- 7DzASyBcGueBgP7E6o/nFlbqNRYWrWCaaMk6LpE4cLgSLvcowtUa+rLpCDDIA6FPH1Rjq6ea8kA
- J2no3pkH3BAbAac6+vpcXEbINPv/aK8GtRUMHx1VV/3B2pzM7GaIUI+7vtNgk5mXE=
-X-Received: by 2002:a05:693c:2801:b0:2be:1f56:ed21 with SMTP id
- 5a478bee46e88-2c0e4f9a462mr112365eec.7.1773771662491; 
- Tue, 17 Mar 2026 11:21:02 -0700 (PDT)
+ bh=5MzRVprj61Gyv11VqdvdVphNrBFaUcy37KCZX6QpUas=;
+ b=IefCCkoWvm5u2tT/nZAZqxlMUfPIoi0EucL1ewV8oHe2TT+lfBrpVC2qvSpucwpEM5
+ IOF77Zma6Mj9fYyP97iIH3jga1283ZyWmmillDn3Db3WfwjhBgrDzAJ3Nmxerrc3NV6U
+ rT7zorurAQxfxpm6G0xe5xH6Qz1N8Dtswcs7cxgXiwiwVuW1IuORV9LvfpDlcDVkqxOh
+ yEDWRgrsAe5k2UJ0ofIq7TM1iYc8svADMJREBqWpXaG9wz1Y+ymy1fG0+HYCN7HyP8IM
+ LR1nQWVuP9hImV1YJqXwVPWMSiqtYrabx0BIOCDUYjczN+4r/1WyK5gMVWtMQXOblhoY
+ r6nw==
+X-Gm-Message-State: AOJu0Yy5ERzCW2d5essNGgawRmqbDucZ4IZhvxVq3ZaAQA+87brupXwn
+ OahBTHhjTpnTCyvYgDZws7liY9P9yua8Z5iFZEHrnpzIExboe9jk6IDC8ZEJoL+S
+X-Gm-Gg: ATEYQzw9i+jDzfXxAUmoiFFz1A0pp7N3ZM6n7nUAx5Fu9tEJXzPSXGQqX0b0R0tzOrz
+ U35PZMdiieRKKeo0igTWNSX2zhDr3tOlGXI0sl/Az130B4MAtgnj6HZQPTwguymzcL0bdC9t2+1
+ bM2nGTrGONSetOzbsvc2Yn1usGb6uRp3Ln3Eguv980ruYaiYtGsT1z1Xzk2Ard0X/9wdoPYtx+6
+ htuZ12+ZhsZ9kC7CGgSqnOoIpRC/ajFHyumHPGsZyJEmy+xIxA743AvNLS0ahyHGaZ+xaflsF32
+ pAs49NtsydTPq38Ey244R5mjxUZSDO54Otlwc5balsG63iqYR3EZF+q/6FBP3idQMMroDQkU8L8
+ wl/oxHI7E9JhBNgugs6YEg7ZKKrtFQg6V2O1zBgTaAnH6hBg4lBMkeo8yr926QgHBXiOMt8r4aE
+ 7w5zL0EwDAq/bstwSWRAVhBSzYJbXw0DkCkM2NwRT9yRi3kOQD5pmf
+X-Received: by 2002:a05:7300:1496:b0:2be:142f:d499 with SMTP id
+ 5a478bee46e88-2c0e50206damr253935eec.16.1773771668840; 
+ Tue, 17 Mar 2026 11:21:08 -0700 (PDT)
 Received: from localhost.localdomain ([143.54.78.51])
  by smtp.gmail.com with ESMTPSA id
- 5a478bee46e88-2c0e55a53fcsm457367eec.24.2026.03.17.11.20.59
+ 5a478bee46e88-2c0e55a53fcsm457367eec.24.2026.03.17.11.21.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Mar 2026 11:21:02 -0700 (PDT)
+ Tue, 17 Mar 2026 11:21:08 -0700 (PDT)
 From: Lucas Amaral <lucaaamaral@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, dmitry.osipenko@collabora.com,
  marcandre.lureau@redhat.com, visitorckw@gmail.com,
  Lucas Amaral <lucaaamaral@gmail.com>
-Subject: [PATCH v5 2/4] virtio-gpu: add VIRTIO_GPU_F_BLOB_ALIGNMENT header
- definitions
-Date: Tue, 17 Mar 2026 15:20:47 -0300
-Message-ID: <20260317182049.33848-3-lucaaamaral@gmail.com>
+Subject: [PATCH v5 4/4] virtio-gpu: advertise VIRTIO_GPU_F_BLOB_ALIGNMENT
+Date: Tue, 17 Mar 2026 15:20:49 -0300
+Message-ID: <20260317182049.33848-5-lucaaamaral@gmail.com>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260317182049.33848-1-lucaaamaral@gmail.com>
 References: <20260317182049.33848-1-lucaaamaral@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1330;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1330.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::132f;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x132f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -102,39 +101,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Define VIRTIO_GPU_F_BLOB_ALIGNMENT (feature bit 5) and the
-blob_alignment field in virtio_gpu_config per the OASIS virtio
-specification.
+Set blob_alignment to the host page size so the guest kernel can
+align blob BAR offsets accordingly, avoiding alignment mismatches
+with the VMM's memory mapping API (e.g., hv_vm_map on macOS).
+
+Guest-side kernel support (drm_mm alignment) is pending upstream
+Linux merge.
 
 Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
 ---
- include/standard-headers/linux/virtio_gpu.h | 6 ++++++
- 1 file changed, 6 insertions(+)
+ hw/display/virtio-gpu.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
 
-diff --git a/include/standard-headers/linux/virtio_gpu.h b/include/standard-headers/linux/virtio_gpu.h
-index 00cd3f04..252704e7 100644
---- a/include/standard-headers/linux/virtio_gpu.h
-+++ b/include/standard-headers/linux/virtio_gpu.h
-@@ -64,6 +64,11 @@
-  * context_init and multiple timelines
-  */
- #define VIRTIO_GPU_F_CONTEXT_INIT        4
-+/*
-+ * VIRTIO_GPU_F_BLOB_ALIGNMENT: device advertises blob_alignment
-+ * in virtio_gpu_config (OASIS virtio-spec feature bit 5)
-+ */
-+#define VIRTIO_GPU_F_BLOB_ALIGNMENT      5
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index de7a86a7..44ae5034 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -1532,6 +1532,14 @@ void virtio_gpu_device_realize(DeviceState *qdev, Error **errp)
+ #endif
+     }
  
- enum virtio_gpu_ctrl_type {
- 	VIRTIO_GPU_UNDEFINED = 0,
-@@ -365,6 +370,7 @@ struct virtio_gpu_config {
- 	uint32_t events_clear;
- 	uint32_t num_scanouts;
- 	uint32_t num_capsets;
-+	uint32_t blob_alignment;
- };
- 
- /* simple formats for fbcon/X use */
++    /*
++     * TODO: guest-side F_BLOB_ALIGNMENT support pending upstream Linux merge
++     * (Sergio Lopez's patches, Nov 2025). Until merged, the guest won't
++     * negotiate this feature. The host advertises it per OASIS virtio spec.
++     */
++    g->parent_obj.virtio_config.blob_alignment =
++        cpu_to_le32(qemu_real_host_page_size());
++
+     if (!virtio_gpu_base_device_realize(qdev,
+                                         virtio_gpu_handle_ctrl_cb,
+                                         virtio_gpu_handle_cursor_cb,
 -- 
 2.52.0
 
