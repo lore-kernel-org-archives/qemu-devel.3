@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25AC5F3381B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:52:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70425F33817
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:52:52 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QA8-0006Ve-Rd; Tue, 17 Mar 2026 04:52:31 -0400
+	id 1w2Q9o-000624-7x; Tue, 17 Mar 2026 04:52:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q9w-0006MO-SA
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:52:17 -0400
+ id 1w2Q97-0005jW-Ku
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:27 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q9u-00036c-JU
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:52:16 -0400
+ id 1w2Q96-0002jC-4D
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737533;
+ s=mimecast20190719; t=1773737483;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=v84VBpSQgz2PPhXB8Ma6dazp9VnMQEVtuOehucqBMT4=;
- b=Yi8E3zVoKMWPiLDXFZknodOPkY2pvuDlitgox6tb4xrbicNPrSB6jhB6bk3HrIYoujCon7
- RsNd6183LRjOrriJhU59Jor1j6/OxTymHueil0n5BiTgToTthvz7nlXl9D/ByTQbRiwPre
- tXPJeldz5i1Xq/8g967oNQR1epiPkBM=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=FmSu/mBBvG8RYBpITrfSgIbnurHMURYY1Gp/CJZrAO0=;
+ b=AMwBUq29jpivTrrrLz6ouB0BpBvcxEgqyI5IZ0IuvFqSUDNTsSzppUChITtXzX2IjCH1n8
+ oEKVyK8l4KoAz2QtK1uqSD8TOwKnL/o1uOgZwFp3VLhJSLDk8uIliruaUAZOC6rk84EEVN
+ wOH72725mfNYWvc2Z2pZoPCDKomNCiU=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-631-XQubV-tqPiaFLNgCpTxx6g-1; Tue,
- 17 Mar 2026 04:52:12 -0400
-X-MC-Unique: XQubV-tqPiaFLNgCpTxx6g-1
-X-Mimecast-MFC-AGG-ID: XQubV-tqPiaFLNgCpTxx6g_1773737531
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-147-96YkNTr-OAKp16NqyT2V8w-1; Tue,
+ 17 Mar 2026 04:51:22 -0400
+X-MC-Unique: 96YkNTr-OAKp16NqyT2V8w-1
+X-Mimecast-MFC-AGG-ID: 96YkNTr-OAKp16NqyT2V8w_1773737481
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C127A195609D
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:11 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 333D119560A2
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:51:21 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C7CD61800107
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:10 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 242A21955F19
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:51:19 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:50:30 +0400
-Subject: [PATCH 16/60] ui/console-vc: set vt100 associated pixman image
+Date: Tue, 17 Mar 2026 12:50:21 +0400
+Subject: [PATCH 07/60] ui/vnc-jobs: remove vnc_queue_clear()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-16-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-7-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=6201;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1199;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=dllytJgn8BKfG5SylgaGTl1vNecfGPX/OUJOPjb45E0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXaArWNiEtVi6lekkhc2CEcWwxRhZXRmSb2M
- LAKXbtObqyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2gAKCRDa6OEJdZac
- 5fuHD/oDCDqWf82576YCPgvVbrpf6mh4XwEGXOVSBPhv6c4Y1iz/pAAP/OOy5xUnjdwL4P5HBGF
- AkJn1+suljEw5Eu5RV1ZnP8VOcuK86odDC/vfriHIsZOYt1Z/3C67sbBY5yTN8dACaOF5QWZ4B6
- oAQkQ4gzKyuxR/SWLwXVOs8wMxV90xZzUkMUB0gwUYJz0A+pka8n7RtBppDGcVMbE2JuYNqpBwr
- E9qi+/1ZVq3xcM2uk1WrGHpBwdFDOVXfD8os6TuxTg5vVNHI1Nrt12/SeR6+UmRk3+y5m3a1NDR
- ipvwYDYOwxKMaAeGxF5d8VU8+fUYuedUG8KYulzHtIVCOYaHi8wrSaKPwEkmR1zVwbjmvqp5eYm
- oHNseQAMx6BEIOpW29BuVV60ZqozFbVbOHtyjTXsDO7HfDCDbmaF8+Af1axUb8QfVGI566ExEBL
- aA2mHxl9ugQ9f1/cZaVrXccDfG+lUAbdgguluSdnCDXf12W+GSzPnTBX2tj9E7C9jSiwgJGgN5k
- +Yr2VxAF+YqMtVAhcZliS6HaXbeg6J770GlJjlpKKWWFIPomeGdDPgdLOqoKApc1Xrjxx2F20Xc
- qJpT1rZk4fOjA9rSZClx6zrNyUqeGxiJF5avD3Tc7J2sVVJyjH3rdnGQoPwo7fCFrF9QR8dtF7N
- iDvjyydN6LawFFg==
+ bh=o1X6AJPHMwJoGa7BBbTMNCzMXVWGkhZyR/VMSqHsBhc=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXaerZkxCJW6LjD55trFjwGYXvvo279rmrrb
+ n7B51Frf72JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2gAKCRDa6OEJdZac
+ 5XvvEACTqdg9mVgyBlqZFb5xqnNQ8GboXo60xA01MYneWP9OoBJ33XHCbaJQebJXfwvPOd82rHS
+ dTlL7hiONRShZQTzgoB1gbFAwwg29k8ewWjgPS6DRgHlXAY8t7S6jl8C4Xg6+UhZZoHO0/d+XAv
+ 8ptd1v6TUTL7yr/4+QUI9nPRNqvxZiAgNfCf6k5oFJ25a6DtTr/mXL0wZT6GLe7+uvACT81KNoT
+ WSsEv8zhVd16Ot4RhJh9yobM032jGB4THpWix3lI0mnHNZqf81Q2GLLqOfX6M6RaXfXPaeb5q+5
+ /HsGrjYoVwGD1lV6DFn9LQ7aulMpo7g78hXDwrIiKUK8UkItLmyJ/7M+pwSjKHLLg4GQAt9s2AL
+ uGWNCbK/58mY3asswzk9WVa8V6kYWygW7q7eO4u9lKHWuDo6qlgKdcOFFuUb8TynajFWaGKKDLJ
+ veMwqhJZ0SLKBr0TRL5WlkVyXp8XUtOemQk8lviCxUgbk1JMYD7RBtsSXcGAx8/07TNxDZ1Kzh2
+ zCHkoXBHICiFZ0kCQ20RttEZ6OoMKi990YuL7TM7FqxrnKDdppnv5BqztJwVDbGn5nW7chTyWKO
+ RhdE3kx9/ikmvg0Z+HYJpm8k710E6dNr2OTfAjh57dfrpYZWupLFM5zS/qs17L7uz/Lc6t00FMM
+ r3mPBwncVZ+uKgQ==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,153 +103,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Start removing dependency on DisplaySurface for vt100 handling.
+The function was never called, since the worker thread was never
+exiting. Also it was incomplete (not clearing pending job list) and
+mixing global queue and argument. Let's remove it.
 
-Note that before, the rendering is done on the current DisplaySurface.
-It's not obvious the QemuTextConsole associated surface isn't changed
-over time, in particular if it was doing resize. But
-qemu_console_resize() is only implemented for QemuGraphicConsole.
+Note: maybe the worker thread could be torn down when vnc_jobs_join()
+realizes there is no job left.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 54 +++++++++++++++++++++++++-----------------------------
- 1 file changed, 25 insertions(+), 29 deletions(-)
+ ui/vnc-jobs.c | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 41436a38eb5..0e0a9ad245d 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -49,6 +49,8 @@ enum TTYState {
- };
- 
- typedef struct QemuVT100 {
-+    pixman_image_t *image;
-+
-     int width;
-     int height;
-     int total_height;
-@@ -136,28 +138,22 @@ qemu_text_console_get_label(QemuConsole *c)
-     return tc->chr ? g_strdup(tc->chr->label) : NULL;
+diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
+index 9e536b07b90..28a4738f1ec 100644
+--- a/ui/vnc-jobs.c
++++ b/ui/vnc-jobs.c
+@@ -345,14 +345,6 @@ static VncJobQueue *vnc_queue_init(void)
+     return queue;
  }
  
--static void qemu_console_fill_rect(QemuConsole *con, int posx, int posy,
--                                   int width, int height, pixman_color_t color)
-+static void image_fill_rect(pixman_image_t *image, int posx, int posy,
-+                            int width, int height, pixman_color_t color)
- {
--    DisplaySurface *surface = qemu_console_surface(con);
-     pixman_rectangle16_t rect = {
-         .x = posx, .y = posy, .width = width, .height = height
-     };
- 
--    assert(surface);
--    pixman_image_fill_rectangles(PIXMAN_OP_SRC, surface->image,
--                                 &color, 1, &rect);
-+    pixman_image_fill_rectangles(PIXMAN_OP_SRC, image, &color, 1, &rect);
- }
- 
- /* copy from (xs, ys) to (xd, yd) a rectangle of size (w, h) */
--static void qemu_console_bitblt(QemuConsole *con,
--                                int xs, int ys, int xd, int yd, int w, int h)
-+static void image_bitblt(pixman_image_t *image,
-+                         int xs, int ys, int xd, int yd, int w, int h)
- {
--    DisplaySurface *surface = qemu_console_surface(con);
+-static void vnc_queue_clear(VncJobQueue *q)
+-{
+-    qemu_cond_destroy(&queue->cond);
+-    qemu_mutex_destroy(&queue->mutex);
+-    g_free(q);
+-    queue = NULL; /* Unset global queue */
+-}
 -
--    assert(surface);
-     pixman_image_composite(PIXMAN_OP_SRC,
--                           surface->image, NULL, surface->image,
-+                           image, NULL, image,
-                            xs, ys, 0, 0, xd, yd, w, h);
- }
- 
-@@ -165,10 +161,10 @@ static void vga_putcharxy(QemuConsole *s, int x, int y, int ch,
-                           TextAttributes *t_attrib)
+ static void *vnc_worker_thread(void *arg)
  {
-     static pixman_image_t *glyphs[256];
--    DisplaySurface *surface = qemu_console_surface(s);
-+    pixman_image_t *image = QEMU_TEXT_CONSOLE(s)->vt.image;
-     pixman_color_t fgcol, bgcol;
+     VncJobQueue *queue = arg;
+@@ -360,7 +352,7 @@ static void *vnc_worker_thread(void *arg)
+     qemu_thread_get_self(&queue->thread);
  
--    assert(surface);
-+    assert(image);
-     if (t_attrib->invers) {
-         bgcol = color_table_rgb[t_attrib->bold][t_attrib->fgcol];
-         fgcol = color_table_rgb[t_attrib->bold][t_attrib->bgcol];
-@@ -180,7 +176,7 @@ static void vga_putcharxy(QemuConsole *s, int x, int y, int ch,
-     if (!glyphs[ch]) {
-         glyphs[ch] = qemu_pixman_glyph_from_vgafont(FONT_HEIGHT, vgafont16, ch);
-     }
--    qemu_pixman_glyph_render(glyphs[ch], surface->image,
-+    qemu_pixman_glyph_render(glyphs[ch], image,
-                              &fgcol, &bgcol, x, y, FONT_WIDTH, FONT_HEIGHT);
+     while (!vnc_worker_thread_loop(queue)) ;
+-    vnc_queue_clear(queue);
++    g_assert_not_reached();
+     return NULL;
  }
  
-@@ -230,19 +226,19 @@ static void console_show_cursor(QemuTextConsole *s, int show)
- 
- static void console_refresh(QemuTextConsole *s)
- {
--    DisplaySurface *surface = qemu_console_surface(QEMU_CONSOLE(s));
-     TextCell *c;
-     int x, y, y1;
-+    int w = pixman_image_get_width(s->vt.image);
-+    int h = pixman_image_get_height(s->vt.image);
- 
--    assert(surface);
-     s->vt.text_x[0] = 0;
-     s->vt.text_y[0] = 0;
-     s->vt.text_x[1] = s->vt.width - 1;
-     s->vt.text_y[1] = s->vt.height - 1;
-     s->vt.cursor_invalidate = 1;
- 
--    qemu_console_fill_rect(QEMU_CONSOLE(s), 0, 0, surface_width(surface), surface_height(surface),
--                           color_table_rgb[0][QEMU_COLOR_BLACK]);
-+    image_fill_rect(s->vt.image, 0, 0, w, h,
-+                    color_table_rgb[0][QEMU_COLOR_BLACK]);
-     y1 = s->vt.y_displayed;
-     for (y = 0; y < s->vt.height; y++) {
-         c = s->vt.cells + y1 * s->vt.width;
-@@ -256,8 +252,7 @@ static void console_refresh(QemuTextConsole *s)
-         }
-     }
-     console_show_cursor(s, 1);
--    dpy_gfx_update(QEMU_CONSOLE(s), 0, 0,
--                   surface_width(surface), surface_height(surface));
-+    dpy_gfx_update(QEMU_CONSOLE(s), 0, 0, w, h);
- }
- 
- static void console_scroll(QemuTextConsole *s, int ydelta)
-@@ -394,8 +389,9 @@ static void text_console_resize(QemuTextConsole *t)
- 
-     assert(s->scanout.kind == SCANOUT_SURFACE);
- 
--    w = surface_width(s->surface) / FONT_WIDTH;
--    h = surface_height(s->surface) / FONT_HEIGHT;
-+    t->vt.image = s->surface->image;
-+    w = pixman_image_get_width(t->vt.image) / FONT_WIDTH;
-+    h = pixman_image_get_height(t->vt.image) / FONT_HEIGHT;
-     if (w == t->vt.width && h == t->vt.height) {
-         return;
-     }
-@@ -456,12 +452,12 @@ static void vc_put_lf(VCChardev *vc)
-             s->vt.text_x[1] = s->vt.width - 1;
-             s->vt.text_y[1] = s->vt.height - 1;
- 
--            qemu_console_bitblt(QEMU_CONSOLE(s), 0, FONT_HEIGHT, 0, 0,
--                                s->vt.width * FONT_WIDTH,
--                                (s->vt.height - 1) * FONT_HEIGHT);
--            qemu_console_fill_rect(QEMU_CONSOLE(s), 0, (s->vt.height - 1) * FONT_HEIGHT,
--                                   s->vt.width * FONT_WIDTH, FONT_HEIGHT,
--                                   color_table_rgb[0][TEXT_ATTRIBUTES_DEFAULT.bgcol]);
-+            image_bitblt(s->vt.image, 0, FONT_HEIGHT, 0, 0,
-+                         s->vt.width * FONT_WIDTH,
-+                         (s->vt.height - 1) * FONT_HEIGHT);
-+            image_fill_rect(s->vt.image, 0, (s->vt.height - 1) * FONT_HEIGHT,
-+                            s->vt.width * FONT_WIDTH, FONT_HEIGHT,
-+                            color_table_rgb[0][TEXT_ATTRIBUTES_DEFAULT.bgcol]);
-             s->vt.update_x0 = 0;
-             s->vt.update_y0 = 0;
-             s->vt.update_x1 = s->vt.width * FONT_WIDTH;
 
 -- 
 2.53.0
