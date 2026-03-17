@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C81CFED9F1
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:20:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B5533FED9F0
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:20:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Y5F-0001yY-Vo; Tue, 17 Mar 2026 13:19:59 -0400
+	id 1w2Y5i-00026z-GI; Tue, 17 Mar 2026 13:20:26 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y53-0001wd-03
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:45 -0400
+ id 1w2Y5Y-00026X-Pb
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y51-0005KL-DN
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:44 -0400
+ id 1w2Y5T-0005OX-4Q
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:12 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773767982;
+ s=mimecast20190719; t=1773768010;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=QsMnLGi/PISBgtSi+2udu6nlOMSdXWd4W1sADkglRYo=;
- b=QVnmkz2xJ0B13Z1cuXMb/EBYXzm6yd3RV+mYA/8NzQwi0eu21yATbQoP2jvIzgfFN+v0w/
- Px+74nrHHWnjlCz+bUDRSPr5M0SDDk2UvSgBhr1PZ7k4sX7r17Ei7iu6xtSXxtQqctc0Ly
- kmnouXjKbGd0qxM/ahfeDG7RkEy9AhY=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=t8u602C9Q/wNZVt3luVyi3m3X/+imtMU6KMp7n4fBEI=;
+ b=I5+roBM+8Iy6Izau8uToMh8BMxLf9ZOpnBxPBv3fKltIix/BmHf/dexb5m3M3FP8yd1mqS
+ 9TdKW+VYMHejKGGDfd7eMMknxj9BF3VGVmis1il7esLfr4UPe2HEs25IR8kQoO2KmqoNNM
+ fi3wikhh2J3BTAxgwZdwqrkdfcYm9KY=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-_bpdVQ03PSiFgY2hUR5mAA-1; Tue,
- 17 Mar 2026 13:19:39 -0400
-X-MC-Unique: _bpdVQ03PSiFgY2hUR5mAA-1
-X-Mimecast-MFC-AGG-ID: _bpdVQ03PSiFgY2hUR5mAA_1773767977
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-EaFiaUvRMEik3He9zj8DYg-1; Tue,
+ 17 Mar 2026 13:20:06 -0400
+X-MC-Unique: EaFiaUvRMEik3He9zj8DYg-1
+X-Mimecast-MFC-AGG-ID: EaFiaUvRMEik3He9zj8DYg_1773768005
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0E4FB19560B4; Tue, 17 Mar 2026 17:19:37 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E4582195608E; Tue, 17 Mar 2026 17:20:04 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id C8829180075B; Tue, 17 Mar 2026 17:19:34 +0000 (UTC)
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 16DC11955F19; Tue, 17 Mar 2026 17:20:01 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
@@ -60,16 +60,15 @@ Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 02/16] rutabaga: improve error handling,
- fix potential crash during init
-Date: Tue, 17 Mar 2026 21:19:02 +0400
-Message-ID: <20260317171916.438575-3-marcandre.lureau@redhat.com>
+Subject: [PULL 06/16] ui/dbus-listener: Fix FBO leak in dbus_cursor_dmabuf
+Date: Tue, 17 Mar 2026 21:19:06 +0400
+Message-ID: <20260317171916.438575-7-marcandre.lureau@redhat.com>
 In-Reply-To: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 References: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -98,76 +97,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-When virtio_gpu_rutabaga_get_num_capsets() returns 0, virtio_init()
-isn't called and the device later crashes during realize.
-==72545==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x556ad6f7ba9e bp 0x7ffe6958f810 sp 0x7ffe6958f7e0 T0)
-==72545==The signal is caused by a READ memory access.
-==72545==Hint: address points to the zero page.
-#0 0x556ad6f7ba9e in virtio_memory_listener_commit ../hw/virtio/virtio.c:4034
-#1 0x556ad6a24c96 in listener_add_address_space ../system/memory.c:3128
-#2 0x556ad6a25d15 in memory_listener_register ../system/memory.c:3216
-#3 0x556ad6f7bf11 in virtio_device_realize ../hw/virtio/virtio.c:4075
+cursor_fb is a local egl_fb that gets an FBO allocated via
+egl_fb_setup_for_tex but is never destroyed, leaking the
+framebuffer object on every cursor update.
 
-Rework error handling of the function to set Error appropriately. 0
-capset may be ok now.
+Add egl_fb_destroy() after the cursor data has been read.
 
-Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Fixes: commit 142ca628a7 ("ui: add a D-Bus display backend")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/display/virtio-gpu-rutabaga.c | 19 +++++++++----------
- 1 file changed, 9 insertions(+), 10 deletions(-)
+ ui/dbus-listener.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
-index ed5ae52acbe..ebb6c783fb0 100644
---- a/hw/display/virtio-gpu-rutabaga.c
-+++ b/hw/display/virtio-gpu-rutabaga.c
-@@ -1032,19 +1032,19 @@ static bool virtio_gpu_rutabaga_init(VirtIOGPU *g, Error **errp)
-     return true;
- }
+diff --git a/ui/dbus-listener.c b/ui/dbus-listener.c
+index 3e2b4adf41f..fff7cf83274 100644
+--- a/ui/dbus-listener.c
++++ b/ui/dbus-listener.c
+@@ -660,6 +660,7 @@ static void dbus_cursor_dmabuf(DisplayChangeListener *dcl,
+     egl_fb_setup_for_tex(&cursor_fb, width, height, texture, false);
+     ds = qemu_create_displaysurface(width, height);
+     egl_fb_read(ds, &cursor_fb);
++    egl_fb_destroy(&cursor_fb);
  
--static int virtio_gpu_rutabaga_get_num_capsets(VirtIOGPU *g)
-+static bool
-+virtio_gpu_rutabaga_get_num_capsets(VirtIOGPU *g, uint32_t *num_capsets, Error **errp)
- {
-     int result;
--    uint32_t num_capsets;
-     VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
- 
--    result = rutabaga_get_num_capsets(vr->rutabaga, &num_capsets);
-+    result = rutabaga_get_num_capsets(vr->rutabaga, num_capsets);
-     if (result) {
--        error_report("Failed to get capsets");
--        return 0;
-+        error_setg_errno(errp, -result, "Failed to get num_capsets");
-+        return false;
-     }
--    vr->num_capsets = num_capsets;
--    return num_capsets;
-+    vr->num_capsets = *num_capsets;
-+    return true;
- }
- 
- static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
-@@ -1070,7 +1070,7 @@ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
- 
- static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
- {
--    int num_capsets;
-+    uint32_t num_capsets;
-     VirtIOGPUBase *bdev = VIRTIO_GPU_BASE(qdev);
-     VirtIOGPU *gpudev = VIRTIO_GPU(qdev);
- 
-@@ -1083,8 +1083,7 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
-         return;
-     }
- 
--    num_capsets = virtio_gpu_rutabaga_get_num_capsets(gpudev);
--    if (!num_capsets) {
-+    if (!virtio_gpu_rutabaga_get_num_capsets(gpudev, &num_capsets, errp)) {
-         return;
-     }
- 
+     v_data = g_variant_new_from_data(
+         G_VARIANT_TYPE("ay"),
 -- 
 2.53.0
 
