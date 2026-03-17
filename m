@@ -4,50 +4,54 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC06BF33820
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:31:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD770F33827
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:31:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Qlm-0004QO-U2; Tue, 17 Mar 2026 05:31:22 -0400
+	id 1w2QlZ-00048g-NW; Tue, 17 Mar 2026 05:31:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2Qll-0004OE-27
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:21 -0400
-Received: from 11.mo533.mail-out.ovh.net ([87.98.181.139])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2QlV-00045q-Uf
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:06 -0400
+Received: from 10.mo534.mail-out.ovh.net ([46.105.32.219])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2Qlj-0008CY-Fd
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:20 -0400
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4fZmtF41nXz5w1b;
- Tue, 17 Mar 2026 09:31:17 +0000 (UTC)
-Received: from director4.derp.mail-out.ovh.net
- (director4.derp.mail-out.ovh.net. [127.0.0.1])
- by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 17 Mar 2026 09:31:17 +0000 (UTC)
-Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.211])
- by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4fZmtF39T2z1xs1; Tue, 17 Mar 2026 09:31:17 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.0])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2QlT-0006aw-P9
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:05 -0400
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net [79.137.60.36])
+ by mo534.mail-out.ovh.net (Postfix) with ESMTPS id 4fZmsw08LNz68f8;
+ Tue, 17 Mar 2026 09:30:59 +0000 (UTC)
+Received: from director2.derp.mail-out.ovh.net
+ (director2.derp.mail-out.ovh.net. [127.0.0.1])
+ by director2.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 17 Mar 2026 09:30:59 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.16])
+ by director2.derp.mail-out.ovh.net (Postfix) with ESMTPS id 4fZmsv1mwtz1xsZ;
+ Tue, 17 Mar 2026 09:30:59 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
  (Authenticated sender: clg@kaod.org)
- by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id BA9D6203923; 
- Tue, 17 Mar 2026 09:31:16 +0000 (UTC)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id 4F69B12E3914;
+ Tue, 17 Mar 2026 09:30:58 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-98R0023fe23b45-5052-4a07-b173-b2d05d416bc1,
+ (GARM-109S0035e322c54-2b07-4a07-b5a0-59b1d1f418a1,
  4AC1E9A3EE45423C0527B61D87123FAFA3CB088F) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <24deb7c1-36ae-47b4-99f3-033862ae75b1@kaod.org>
-Date: Tue, 17 Mar 2026 10:31:16 +0100
+Message-ID: <1286ee9d-9998-4694-a795-df21973feeb9@kaod.org>
+Date: Tue, 17 Mar 2026 10:30:58 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] hw/i3c/dw-i3c: Fix uninitialized data use in short
- transfer
-To: Jamin Lin <jamin_lin@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
- Nabih Estefan <nabihestefan@google.com>,
+Subject: Re: [PATCH v1] MAINTAINERS: Add Kane Chen as reviewer for Aspeed
+ machines
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Thomas Huth <thuth@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <20260311021319.1053774-1-jamin_lin@aspeedtech.com>
+References: <20260316070347.3079299-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -92,23 +96,23 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260311021319.1053774-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260316070347.3079299-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 2262214389712923659
+x-ovh-tracer-id: 2257147840029109393
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTEsPG6b8BiDarHoP6qWBHusY+iF8bO1iAsASG+iTDKvpc5nimFdVzIvcLulKhZweEaQ/yqzOwxoqm7XG4zshxjCvB3aHtQWD1gVzUZ+koM6BeDuuzv/r1ssw03hCAOCK2fvN40nje0V89eoZvr1chxeBoJ2vPxIZeEBeeQoXH4plm90/sF6v6mSxYjk5zp4WXgNEd76ECZiIB/YRPfx1DGMLVxwHMryPkC8MnhFIiQUXSxPbnKSNAOEkem3fIqAzIqitwY415VgS0w28P/p+5OIf5LeToRvunpFdop1Rczp2Vg2482ifstAI+wT+GvkwdW3x9rkUX6cDElg8F0vpuz2FQAZvnWwr63l+9g4o059LsiUxxOGJJdnOKpnYlKkqkU0lhk4Mg5Lk48xJxvtKazLD0pk+LX08SksW985661kQxb+261DdhF/fQ8VsACD7VWjjGRM2FQNYmlw+2+8rlgjH9D6jMHf1tyynqAkg732h8s74pNR5JIICM1ZIc1H22YUpb9hgCvRrYRCbw7Sw0QD1G6R3I0Mr2V7TgUDqfvbrQBVhPKxPprPxymEOTiCvXbiDI5x5tOaVFAPL8EJc1QIRm0v1ZzW9/LEBo8Ond2f4Uz7+Oa5oJ1QvBWmQSTWU8PeX/jzqf0ErHdWxjCUC/z2hgCUQw37s1TE4sEr1pgDFg
-DKIM-Signature: a=rsa-sha256; bh=MiUMYYQtSdL57dsf1dJqcarS4JqpqHytCRZ5gXv1U5Y=; 
+X-VR-SPAMCAUSE: dmFkZTGO/nMPAFTBjLYJ+tK/iG4GrCQOC09Y/IfJdQO9W3lZE6BVSJTPD2plMvZnlCm4k+S5G5U2nNa/1H+EBDdJ8SuAy3uD4TmBAC8s69iipVzzvs+yPWJKgu2Jn8jdu5sUWDdP00F/aG9Q0T7u38RmdMYmKjyfgdTLphfWY6wU8Ino8SBAfQhRedzlA0fsyx+ydDJT0XzUVVzg6nfLpa/fvLOq+VTHD5lumtHkx+DgQhPzG8MLenQdcvhD0tSLrF42wQ/OJfRp+zQnziW8Cd21n3NUtNvaxpDE23357jhPrTZM63FKbpPMJ+xjAgM9lti2NjWVFAO0bl4d1m1+CV/pR9FOGifseRtZm8D/uMaFP21FcNPi/kR7QgaiWCojRObbyjTOsoCfBAudS8xHaO7w+0sb5aAR5QzkInSR97j/yMm8pWA1oLEmkI2cb/Ir9sKmFLtvR6o5NQzTAURJTtoOih30r7X9LDVJpp+FaGXtYFtd4JMsIZ9gP29OmJJN2ArbmqS9u6DdVpCKrL3r5tsp0f0+TNlwEeknafwNzOIdVaz6gH8i1xt8f0Hj7opiC0ndt8qLu0vi+zghzNvjC0rXWcIV0pc5Y01inntF3tNh4B2UkCoafjsde5F97MLM4UiVSQOBNYzTtU0p2GEsYKYUrD+kfrC3QBhOivt1YcFKnMws6g
+DKIM-Signature: a=rsa-sha256; bh=mX1RRT8j6JciKfw5jFLtcjZEFfpig7QnQggwMQDU+jI=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1773739877; v=1;
- b=MAd3uwhnGPH1l27yqCgdhR+3zT8OryDtX8MgeF/qeejelB3c5TnmYqfjYG6BR3Qjudc2Y6r9
- yepZ2X3YxgObUUVPtcZ6lMtANRsGP+nPHmEmQS455EiVJYUBo7c+UidNxT9z2iX08fnBNH6zsmb
- jy/KfmaKbG0i9qL7Q575PSdsxTJQI7D+OUuMUaYy1rkFf6gghUZNmHaZUA/DQ4Ve7I38jbH0vhz
- FuBXXDCGqof787FmWVQa56s0nixEMgDPBAluvz8GJ/zwSMs/sHML9D4u+F/Psw4N5EvnyxvByE4
- zgzUbWxlrUP3p7+jAd9W9rVFBl4q1Vd4q/Ni9IfYPYFCg==
-Received-SPF: pass client-ip=87.98.181.139; envelope-from=clg@kaod.org;
- helo=11.mo533.mail-out.ovh.net
+ t=1773739860; v=1;
+ b=PyZFB3JEYqgqQ4DraSybI8+pogyrMXNimDLSKpAfuMOuu38SAnRaSS8PrVfV9jTICq4U6R0x
+ NRoNNu3IO/+ysbM2jY+qy1ki4YHMI5dDYOeOZPRxbBLTlTQJyWfB71HFZ520t8UXfhtZP3zaP3N
+ WZaRV/tev++bm0B0O49z+ZgRg7tT+6aFOCu7pawIl2DeYy+gqH7iH3CkIGBn5aC1QWFDFLkWSX5
+ P0vW/Nqz8ZmFE8kmZhppsMC/GOul+C5VvS/nZTd6bpGKHGPoRPLyABR36HlQjuPxjy+BkVpTkJ8
+ KEgvCUXW27vTSmZm2Gdm4Emi4eOPeq7AgNeF7K24m2zsQ==
+Received-SPF: pass client-ip=46.105.32.219; envelope-from=clg@kaod.org;
+ helo=10.mo534.mail-out.ovh.net
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -132,60 +136,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/11/26 03:13, Jamin Lin wrote:
-> Coverity reports that dw_i3c_short_transfer() may pass an
-> uninitialized buffer to dw_i3c_send().
-> 
-> The immediate cause is the use of `data[len] += arg.byte0`, which
-> reads from an uninitialized element of the buffer. Replace this with
-> a simple assignment.
-> 
-> Additionally, avoid calling dw_i3c_send() when the constructed payload
-> length is zero. In that case the transfer has no data phase, so the
-> controller can transition to the idle state directly.
-> 
-> This resolves the Coverity UNINIT warning and clarifies the handling
-> of zero-length short transfers.
-> 
-> Resolves: Coverity CID 1645555
+On 3/16/26 08:03, Jamin Lin wrote:
+> Signed-off-by: Kane Chen <kane_chen@aspeedtech.com>
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   hw/i3c/dw-i3c.c | 14 ++++++++++----
->   1 file changed, 10 insertions(+), 4 deletions(-)
+>   MAINTAINERS | 1 +
+>   1 file changed, 1 insertion(+)
 > 
-> diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
-> index 3d8b95a14c..aa6c27c8de 100644
-> --- a/hw/i3c/dw-i3c.c
-> +++ b/hw/i3c/dw-i3c.c
-> @@ -1211,7 +1211,7 @@ static void dw_i3c_short_transfer(DWI3C *s, DWI3CTransferCmd cmd,
->            * ignored.
->            */
->           if (cmd.dbp) {
-> -            data[len] += arg.byte0;
-> +            data[len] = arg.byte0;
->               len++;
->           }
->       }
-> @@ -1226,10 +1226,16 @@ static void dw_i3c_short_transfer(DWI3C *s, DWI3CTransferCmd cmd,
->           len++;
->       }
->   
-> -    if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {
-> -        err = DW_I3C_RESP_QUEUE_ERR_I2C_NACK;
-> +    if (len > 0) {
-> +        if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {
-> +            err = DW_I3C_RESP_QUEUE_ERR_I2C_NACK;
-> +        } else {
-> +            /* Only go to an idle state on a successful transfer. */
-> +            ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
-> +                             DW_I3C_TRANSFER_STATE_IDLE);
-> +        }
->       } else {
-> -        /* Only go to an idle state on a successful transfer. */
-> +        /* No payload bytes for this short transfer. */
->           ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
->                            DW_I3C_TRANSFER_STATE_IDLE);
->       }
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 6730cee490..7c2bbbec54 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1252,6 +1252,7 @@ M: Peter Maydell <peter.maydell@linaro.org>
+>   R: Steven Lee <steven_lee@aspeedtech.com>
+>   R: Troy Lee <leetroy@gmail.com>
+>   R: Jamin Lin <jamin_lin@aspeedtech.com>
+> +R: Kane Chen <kane_chen@aspeedtech.com>
+>   R: Andrew Jeffery <andrew@codeconstruct.com.au>
+>   R: Joel Stanley <joel@jms.id.au>
+>   L: qemu-arm@nongnu.org
 
 Applied to aspeed-next.
 
