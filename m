@@ -4,99 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 08D09FED9E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:01:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44E51FED9E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:01:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2VuX-0006Zv-LP; Tue, 17 Mar 2026 11:00:45 -0400
+	id 1w2VvH-0006yY-6B; Tue, 17 Mar 2026 11:01:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2VuV-0006Zm-Uf
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:00:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2VvD-0006xd-Dv
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:01:27 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2VuR-0005Mb-F0
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:00:41 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2Vv8-0005PR-DB
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:01:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773759638;
+ s=mimecast20190719; t=1773759681;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1EqLAlRpKGxif3BxRLDrOY+m1VtDqUS62mA+EOYlt4c=;
- b=ZdQbuSJJhgrLLgU9cuJxXIcYy2ybM7vQ8MYH+Io04PJ12XZsxOP5k2Uxw86XLtIXhDGBFI
- Rs0hEdCUUdedVl1BPlkK8OXjFi1HFAj8/VnSZt3Z0Yp75KpjAMWggfySMH7vWza3uv2IOY
- FlZ+7w8izSnK9yKqo6OjlBR21oKnwGE=
+ bh=mypNcJpK+yPgPi6JYqT8PlLuNL+S7EbCcb3HMjQEwYE=;
+ b=enFd6I1N+arr1klRB4Xe/n/nhn/NHO1hqLL/o124YeUSP1rIHm4YzhcEfRqE2R/If9tImY
+ TQFKNj9FofGYkuwhZ9wqfdETPf+MkB05Mrw+fsDJAejFzOqq80zy1Y0Nx7bYdeh988D678
+ C4oOCMPhPfe6mpXv3extKS+NM81GPA8=
 Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
  [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-52-JbQ9t0tUPwaGvGl8m8m8EA-1; Tue, 17 Mar 2026 11:00:36 -0400
-X-MC-Unique: JbQ9t0tUPwaGvGl8m8m8EA-1
-X-Mimecast-MFC-AGG-ID: JbQ9t0tUPwaGvGl8m8m8EA_1773759635
+ us-mta-453-xqLBaB5fOkiWNpT8d1fX5Q-1; Tue, 17 Mar 2026 11:01:20 -0400
+X-MC-Unique: xqLBaB5fOkiWNpT8d1fX5Q-1
+X-Mimecast-MFC-AGG-ID: xqLBaB5fOkiWNpT8d1fX5Q_1773759679
 Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-4853b5b0fafso72114495e9.3
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:00:36 -0700 (PDT)
+ 5b1f17b1804b1-485375aa56eso42411725e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:01:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773759635; x=1774364435; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=1EqLAlRpKGxif3BxRLDrOY+m1VtDqUS62mA+EOYlt4c=;
- b=s4ezl/I+0iEIKNfIi7lbAktRDi79bFOTsqkV1ieoHPAFofC/imlsgcZ0kRfWDgaRPs
- 2xHNLmkILE7drO0st03kkUFooEG1PgMaSG/ap7czZ3WbGR0FQn1r977CajHtj0u/7te1
- RXCO6qC4JO3QH7a7PFnyZHA4eJec0GO0UuSkW8dmdohSWk+L7j6b+iGFrKt7T4JCrvof
- AIr3fivMgM5UHhMDqe5G0CckvPvXy1wVAjhcD76Ya+x/JAmve1QcozmoErI3OTuS+I/I
- duqu7HV48ksr2pCbth28tz1fdUqn5Xb13X8Ra7dTOjI0TNL9BMPK29Uxs/k6cgXoes1/
- lAJA==
+ d=redhat.com; s=google; t=1773759678; x=1774364478; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=mypNcJpK+yPgPi6JYqT8PlLuNL+S7EbCcb3HMjQEwYE=;
+ b=brAGH1zd9X/fdKO/9GXQgUMHTZrTMar03C2iHn8tUt5TZUP6/8dqWTvgBEt1t8GnI7
+ G2ZLcLX8IjMKCn8kcxIRvOv0KeajMaxO2HdkDhEw0pvnr1mNtgZgb0hQB/JUvbEv9dsS
+ p90TTfIR/BeDmFDZbg8jhS0COgnUdzPSQKgRvgiDVN3oIY+IyuMjGoAj1mfjjCW3S7wS
+ RJnYpenX3gxVCOcgK2PwNQOF5IRbY9UwYYTxIBCQZ7HOS+4KHn/o8lzfarH+RPCigyf/
+ JHUrAgZn1pP7v9MPKD5hBHIn9eva82LMn1HWQxVGDl8IPqnWIh1yAMkBU+f2EAtgSw+E
+ Pthg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773759635; x=1774364435;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=1e100.net; s=20251104; t=1773759678; x=1774364478;
+ h=content-transfer-encoding:in-reply-to:autocrypt:content-language
+ :references:cc:to:from:subject:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1EqLAlRpKGxif3BxRLDrOY+m1VtDqUS62mA+EOYlt4c=;
- b=m4V7MYbO29F6/8GpCmkuMswUxjubW0LsqxC+G5Z+VkdcFPmqeQZodadyxvqlOsk9ck
- zl54VHz5qOOjWenHccNHgOV8n3VrfzINSkOiQqOCInbxCRN6k+dSsem67tPinBF8zr41
- XiQ+9LrUwfz+T/646C30FzZ1x5Q4DmOtCtTcbwznzLp/nDszb4wgy0Njzy7RsStvOpYW
- nievvz8tSte7aD5ND5lC4CPVyqSCnzBvxMWrXppnkxuxAVEa0vKqAojguh/O4Dmtlqx6
- l4rr9hmkBzt36xMWd0n0GLGZtxkj1GEIe5nYqk2ZotbzTy4z4tqjeULIrNSeiMShROi5
- +Lzg==
+ bh=mypNcJpK+yPgPi6JYqT8PlLuNL+S7EbCcb3HMjQEwYE=;
+ b=HhqyyUxOC14GlsbLzI+yDi+W9NIuyd+10on9cyUV186vVsatyZCjnC3dORSWYmauYw
+ bKU8olkZ7BJXKhag3dSz7RbMyGOTAPJMeddoXgg0xFKZJKDCqwCBDxb7O4OyHMBVkDGG
+ xauFBxSDyHA/fJBRz6ee8m2pffNR0OSI6+it4A5l8QLngC6ORvn8bzU2piRllx/I9mDc
+ SrvyxayGww96IookNsHaQIBCnIXioRZUuXj2/OpFLvCL6CKIwlPIH+IR0v1G5wIrOrEs
+ Li4zGqmFpozB8TBYNrmub2ad//P5Du181JaKngohvaVxLc32v2JLcfp7tuWjLYIOsllH
+ iATQ==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXdHPin0iz4zcCfSVvhRK8JOjMYFOWQOecrNB/VDp2FUbxr6QpMrdswSYBXyu6sT3Z7kP++DVkArV9i@nongnu.org
-X-Gm-Message-State: AOJu0Yx5a8ZHnDyGbm4aIwJ2V1VgNH+v8cjNrV+D7SaWh+6YGZbmSAA+
- iCuH8CoYkIAIKUzqVP8UP2iHMexx33wU0jt5v42V+l6IUPepWZ93x8ThNNGeHdeOudJ5g2sZxK3
- YxidqeQUyXuqswxNelIZWKjIf5ArBZzQDQcXxD3g1LFK7Lg3VrP2MnigmW8ryfS8S
-X-Gm-Gg: ATEYQzygqqHs7YHSzJpH0S+230C4xcIOkXGW6ArmIyq5KcoXasnbEG4CuDNQtzUlX65
- L1SnfA4czBNR+a6zuCNDlHlvXYzfWhfpUntCvfSCywwRCLvtVJV+cQi+yXIchByx29VFHBwTNd2
- brwQoXYn3MK/R7fpUEkVZXQzsyA/0pO6a+ASrpvImzyHbZhJVpSefj6ujqF0xBGT7YNGEUhUGJ7
- HSA4RADXTq8E8pcGODMHF7MTeFLMePkEQTxJt5+q4X1FseEcvJbeu25N1DuJG6DdmZC7AX+EYQ2
- wKY3DR3Bqw89XfWbuuKMt7HvALthN5F9DWJDhfSC4Ur2hljMSqAyhfRk5g2AysDxZOnrI0VTSu9
- 2dF8Q4kTCWjBvRwE6c16lotIyEhU0FhATORpL3uirCt3otXlKKyeXlrkosZnQ
-X-Received: by 2002:a05:600c:354b:b0:483:2c98:4368 with SMTP id
- 5b1f17b1804b1-48556703401mr294122755e9.18.1773759634486; 
- Tue, 17 Mar 2026 08:00:34 -0700 (PDT)
-X-Received: by 2002:a05:600c:354b:b0:483:2c98:4368 with SMTP id
- 5b1f17b1804b1-48556703401mr294121625e9.18.1773759633770; 
- Tue, 17 Mar 2026 08:00:33 -0700 (PDT)
+ AJvYcCWB+keK5Iu+7rjVk4s3myUibWIB8jzU1KP4pMYpg86wRsSz1GBT1LNOCxGZVnDhtwz1KaOZfeux4l6v@nongnu.org
+X-Gm-Message-State: AOJu0YxrA+orLzPrFkF4EPwC5mmQvZosFw0Ktwd4jx6K1kaVqtiEL6Bo
+ nIpiCEJaP6hLOoG0p9eodXJZlL6sQzcoS3cykdNi6TBDXH15fo8YEFEwAWOz0c7TIzIRc88NmzS
+ Xt8b/Tuj79+jpdLlyI+t2Qg/7OczA9ISAH8WtaWwoJ2kYABajZ8JzC+EJQi6qUpkg
+X-Gm-Gg: ATEYQzySdJwml9MaOZEkefSHeE+lBdwwkHkVd1pLL3t8AwpoC7HuJ7dGp9FhBE4cexi
+ 96jiVLT2XR40i53AsdbEd4MKzYyBwtbQoU7zf2G7AHrXnqaKTf4Y9O3eiNV9BylRVI0T0yhI5Fz
+ lDRqHsC8hToKgnI2YSPdSNieA2bxb+keMd5J7UE+em2e3zO9wZ9ot80MCnbUGYQqdVEeoTrg2ng
+ 9fpfmu5ftnvQ+vCliL7LY6kiADl8jqORr2QAAmOoYO6f9/WkhTlFubH12IzfH4e96gkAz7R+MB0
+ VM3FSTY2mbm0dbhl29RvOIsNhM6S/Ik55wxXvj1GYX14flD7m5jMKMZg2owEh0WhlY6PTWoME/k
+ PsMgVKfziiqrPlf9HibXhjv/6i7Y08mnd3NEJjr2rcTcIKT6Xqnhz3DT2//HX
+X-Received: by 2002:a05:600c:8b72:b0:485:f1d1:8f29 with SMTP id
+ 5b1f17b1804b1-485f1d19fffmr39277345e9.2.1773759678293; 
+ Tue, 17 Mar 2026 08:01:18 -0700 (PDT)
+X-Received: by 2002:a05:600c:8b72:b0:485:f1d1:8f29 with SMTP id
+ 5b1f17b1804b1-485f1d19fffmr39276565e9.2.1773759677674; 
+ Tue, 17 Mar 2026 08:01:17 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48557777105sm203628805e9.4.2026.03.17.08.00.32
+ 5b1f17b1804b1-4856eab15f4sm75106315e9.14.2026.03.17.08.01.16
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 08:00:33 -0700 (PDT)
-Message-ID: <d313433e-e601-4ebc-baee-ae5baef45b29@redhat.com>
-Date: Tue, 17 Mar 2026 16:00:31 +0100
+ Tue, 17 Mar 2026 08:01:17 -0700 (PDT)
+Message-ID: <fd123458-7468-4987-917a-1b04d8f690d2@redhat.com>
+Date: Tue, 17 Mar 2026 16:01:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 07/10] vfio/device: Add support for creating dmabuf
- from multiple ranges
+Subject: Re: [PATCH v11 06/10] vfio/region: Add a helper to get region index
+ from memory region
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
 Cc: Alex Williamson <alex@shazbot.org>
 References: <20260311025340.1335673-1-vivek.kasireddy@intel.com>
- <20260311025340.1335673-8-vivek.kasireddy@intel.com>
+ <20260311025340.1335673-7-vivek.kasireddy@intel.com>
+ <2f048542-173e-4b93-ba4e-f7ce75788f73@redhat.com>
 Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
  xsFNBFu8o3UBEADP+oJVJaWm5vzZa/iLgpBAuzxSmNYhURZH+guITvSySk30YWfLYGBWQgeo
  8NzNXBY3cH7JX3/a0jzmhDc0U61qFxVgrPqs1PQOjp7yRSFuDAnjtRqNvWkvlnRWLFq4+U5t
@@ -140,17 +141,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260311025340.1335673-8-vivek.kasireddy@intel.com>
+In-Reply-To: <2f048542-173e-4b93-ba4e-f7ce75788f73@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -168,239 +169,81 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-HEllo,
-
-On 3/11/26 03:50, Vivek Kasireddy wrote:
-> In order to create a dmabuf associated with a buffer that spans
-> multiple ranges, we first need to identify the VFIO region and
-> index the buffer (represented by iovec) belongs to and then
-> translate its addresses to offsets within that region.
+On 3/17/26 15:41, Cédric Le Goater wrote:
+> On 3/11/26 03:50, Vivek Kasireddy wrote:
+>> Having a way to figure out the region index (or bar) associated
+>> with a memory region is helpful in various scenarios. For example,
+>> this capability can be useful in retrieving the region info needed
+>> for mapping a part of a VFIO region or creating a dmabuf.
+>>
+>> Cc: Alex Williamson <alex@shazbot.org>
+>> Cc: Cédric Le Goater <clg@redhat.com>
+>> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+>> ---
+>>   hw/vfio/region.c              | 14 ++++++++++++++
+>>   include/hw/vfio/vfio-device.h | 10 ++++++++++
+>>   2 files changed, 24 insertions(+)
+>>
+>> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
+>> index 47fdc2df34..4cb92216ef 100644
+>> --- a/hw/vfio/region.c
+>> +++ b/hw/vfio/region.c
+>> @@ -539,3 +539,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
+>>       trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
+>>                                           enabled);
+>>   }
+>> +
+>> +int vfio_get_region_index_from_mr(MemoryRegion *mr)
 > 
-> The qemu_ram_block_from_host() API gives us both the region and
-> the offset info we need to populate the dma ranges so that we can
-> invoke the VFIO_DEVICE_FEATURE_DMA_BUF feature to create the dmabuf.
 > 
-> Also, instead of iterating over all QOM devices to find the
-> VFIODevice associated with a memory region, introduce a helper to
-> just use the vfio_device_list to lookup the VFIODevice.
+> I think you can move this routine as a static in device.c now. No need
+> to export a service.
+
+you can't because of vfio_region_ops.
+
+Returning a VFIORegion seems cleaner though.
+
+Thanks,
+
+C.
+
+
 > 
-> Lastly, introduce an enum to return the type of error encountered
-> while creating the dmabuf fd.
+> Thanks,
 > 
-> Cc: Alex Williamson <alex@shazbot.org>
-> Cc: Cédric Le Goater <clg@redhat.com>
-> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> ---
->   hw/vfio/device.c              | 81 +++++++++++++++++++++++++++++++++++
->   hw/vfio/dmabuf-stubs.c        | 17 ++++++++
->   hw/vfio/meson.build           |  1 +
->   include/hw/vfio/vfio-device.h | 22 ++++++++++
-
-Please add to your .git/config
-
-[diff]
-	orderFile = /path/to/qemu/scripts/git.orderfile
-
-
-
->   4 files changed, 121 insertions(+)
->   create mode 100644 hw/vfio/dmabuf-stubs.c
+> C.
 > 
-> diff --git a/hw/vfio/device.c b/hw/vfio/device.c
-> index 973fc35b59..2d01059be0 100644
-> --- a/hw/vfio/device.c
-> +++ b/hw/vfio/device.c
-> @@ -21,6 +21,7 @@
->   #include "qemu/osdep.h"
->   #include <sys/ioctl.h>
->   
-> +#include "system/ramblock.h"
->   #include "hw/vfio/vfio-device.h"
->   #include "hw/vfio/pci.h"
->   #include "hw/core/iommu.h"
-> @@ -644,3 +645,83 @@ static VFIODeviceIOOps vfio_device_io_ops_ioctl = {
->       .region_read = vfio_device_io_region_read,
->       .region_write = vfio_device_io_region_write,
->   };
-> +
-
-Please add a comment
-
-   /*
-    * For virtio-gpu, < explain the context >
-    */
-
-
-> +static bool vfio_device_lookup(struct iovec *iov, VFIODevice **vbasedevp,
-> +                               Error **errp)
-> +{
-> +    VFIODevice *vbasedev;
-> +    RAMBlock *first_rb;
-> +    ram_addr_t offset;
-> +
-> +    first_rb = qemu_ram_block_from_host(iov[0].iov_base, false, &offset);
-> +    if (!first_rb) {
-> +        error_setg(errp, "Could not find first ramblock\n");
-> +        return false;
-> +    }
-> +
-> +    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
-> +        if (vbasedev->dev == first_rb->mr->dev) {
-> +            *vbasedevp = vbasedev;
-> +            return true;
-> +        }
-> +    }
-> +    error_setg(errp, "No VFIO device found to create dmabuf from\n");
-> +    return false;
-> +}
-> +
-> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-> +                                 Error **errp)
-> +{
-> +    g_autofree struct vfio_device_feature *feature = NULL;
-> +    struct vfio_device_feature_dma_buf *dma_buf;
-> +    RAMBlock *rb, *first_rb;
-> +    VFIODevice *vbasedev;
-> +    ram_addr_t offset;
-> +    int i, index, ret;
-> +    size_t argsz;
-
-Shouldn't we check iov and iov_cnt values ?
-
-> +    argsz = sizeof(*feature) + sizeof (*dma_buf) +
-> +            sizeof(struct vfio_region_dma_range) * iov_cnt;
-> +    feature = g_malloc0(argsz);
-> +    *feature = (struct vfio_device_feature) {
-> +        .argsz = argsz,
-> +        .flags = VFIO_DEVICE_FEATURE_GET | VFIO_DEVICE_FEATURE_DMA_BUF,
-> +    };
-> +    dma_buf = (struct vfio_device_feature_dma_buf *)feature->data;
-> +
-> +    if (!vfio_device_lookup(iov, &vbasedev, errp)) {
-> +        return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-> +    }
-> +
-> +    for (i = 0; i < iov_cnt; i++) {
-> +        rb = qemu_ram_block_from_host(iov[i].iov_base, false, &offset);
-> +        if (i == 0) {
-> +            first_rb = rb;
-> +        }
-> +        if (!rb || rb != first_rb) {
-> +            error_setg(errp, "Cannot create dmabuf with different regions\n");
-> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-> +        }
-> +
-> +        index = vfio_get_region_index_from_mr(rb->mr);
-
-returning a VFIORegion seems cleaner.
-
-> +        if (index < 0) {
-> +            error_setg(errp, "Cannot find region index for dmabuf segment\n");
-> +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
-> +        }
-
-
-Could you please introduce a common helper for the code above that
-could be shared with vfio_device_mmap_dmabuf() ? The same sequence
-is duplicated.
-
-
-> +        dma_buf->region_index = index;
-> +        dma_buf->dma_ranges[i].offset = offset;
-> +        dma_buf->dma_ranges[i].length = iov[i].iov_len;
-> +    }
-> +
-> +    dma_buf->nr_ranges = iov_cnt;
-> +    dma_buf->open_flags = O_RDONLY | O_CLOEXEC;
-> +
-> +    ret = vfio_device_get_feature(vbasedev, feature);
-> +    if (ret < 0) {
-> +        error_setg_errno(errp, -ret,
-> +                         "Could not create dmabuf fd via VFIO device");
-> +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
-
-See vfio_region_create_dma_buf() for possible errors. You might want
-to introduce a helper.
-
-
-> +    }
-> +    return ret;
-> +}
-> diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
-> new file mode 100644
-> index 0000000000..e71e2b68dd
-> --- /dev/null
-> +++ b/hw/vfio/dmabuf-stubs.c
-> @@ -0,0 +1,17 @@
-> +/*
-> + * Copyright (c) 2026 Intel and/or its affiliates.
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qemu/error-report.h"
-> +#include "qemu/iov.h"
-> +#include "hw/vfio/vfio-device.h"
-> +
-> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-> +                                 Error **errp)
-> +{
-> +    error_setg(errp, "VFIO dmabuf support is not enabled");
-> +    return VFIO_DMABUF_CREATE_HOST_ERROR;
-> +}
-> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index 82f68698fb..ac899d30a8 100644
-> --- a/hw/vfio/meson.build
-> +++ b/hw/vfio/meson.build
-> @@ -34,3 +34,4 @@ system_ss.add(when: 'CONFIG_IOMMUFD', if_false: files('iommufd-stubs.c'))
->   system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
->     'display.c',
->   ))
-> +system_ss.add(when: 'CONFIG_VFIO', if_false: files('dmabuf-stubs.c'))
-> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
-> index 596c7f5a10..566e5d8bc0 100644
-> --- a/include/hw/vfio/vfio-device.h
-> +++ b/include/hw/vfio/vfio-device.h
-> @@ -41,6 +41,13 @@ enum {
->       VFIO_DEVICE_TYPE_AP = 3,
->   };
->   
-> +enum {
-> +    /* The Guest passed addresses stored in IOV are invalid */
-> +    VFIO_DMABUF_CREATE_ERR_INVALID_IOV = -1,
-> +    /* Guest or Host may be at fault for this type of error */
-> +    VFIO_DMABUF_CREATE_ERR_UNSPEC = -2,
-> +};
-
-This is overkill. Please return a bool value and ensure the errp
-argument is correctly filled.
-
-> +
->   typedef struct VFIODeviceOps VFIODeviceOps;
->   typedef struct VFIODeviceIOOps VFIODeviceIOOps;
->   typedef struct VFIOMigration VFIOMigration;
-> @@ -318,6 +325,21 @@ int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
->    * Returns the region index or -1 on error.
->    */
->   int vfio_get_region_index_from_mr(MemoryRegion *mr);
-> +
-> +/**
-> + * Create a dmabuf fd by first translating the addresses in the
-> + * iovec array into VFIO region offsets and then invoking the
-> + * VFIO_DEVICE_FEATURE_DMA_BUF feature.
-> + *
-> + * @iov: array of iovec entries associated with a buffer
-> + * @iov_cnt: number of entries in the iovec array
-> + * @errp: pointer to Error*, to store an error if it happens.
-> + *
-> + * Returns the created dmabuf fd or either VFIO_DMABUF_CREATE_ERR_UNSPEC
-> + * or VFIO_DMABUF_CREATE_ERR_INVALID_IOV on error.
-> + */
-> +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int iov_cnt,
-> +                                 Error **errp);
->   #endif
->   
->   /* Returns 0 on success, or a negative errno. */
+>> +{
+>> +    VFIORegion *region;
+>> +
+>> +    while (mr->container) {
+>> +        if (mr->ops == &vfio_region_ops) {
+>> +            region = mr->opaque;
+>> +            return region->nr;
+>> +        }
+>> +        mr = mr->container;
+>> +    }
+>> +    return -1;
+>> +}
+>> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
+>> index 828a31c006..596c7f5a10 100644
+>> --- a/include/hw/vfio/vfio-device.h
+>> +++ b/include/hw/vfio/vfio-device.h
+>> @@ -308,6 +308,16 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
+>>   int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
+>>                                   struct vfio_irq_info *info);
+>> +
+>> +/**
+>> + * Return the region index associated with a given MemoryRegion. The index
+>> + * can be useful in retrieving region info.
+>> + *
+>> + * @mr: MemoryRegion to use
+>> + *
+>> + * Returns the region index or -1 on error.
+>> + */
+>> +int vfio_get_region_index_from_mr(MemoryRegion *mr);
+>>   #endif
+>>   /* Returns 0 on success, or a negative errno. */
+> 
 
 
