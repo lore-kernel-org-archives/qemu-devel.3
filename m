@@ -4,92 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B4CD2FF6E9B
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C4F36FF6E9D
 	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:25:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2dlL-0003ws-IT; Tue, 17 Mar 2026 19:23:47 -0400
+	id 1w2dlR-0003yj-9U; Tue, 17 Mar 2026 19:23:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlK-0003wh-7T
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:46 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlP-0003yG-KC
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:51 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlI-0006SA-7B
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:45 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlO-0006TD-3C
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773789823;
+ s=mimecast20190719; t=1773789829;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=TjG79rNrziyooP9oARcvWCdnLH3yo6F+TaDuNY6Nuzk=;
- b=UrPUDCSEB3owIw+jzKYYLg1tjVtgOKFqo9+lAnXM0DhkIKjFxDm+Z5lDP44xI0IYEVgE/c
- bTg0THVqKlVxmfGA/gBqUF6pdQ2dtNOImSAtPclL31gfk0p0ze9KgulGf1+ixtnrqD0mXF
- gEtDnd03nxWcyIcjXQ3rDigLGaw4BMU=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=4VIfJwVvQOqSfZotFMcnTmIgI+32r03PnWffChaegzo=;
+ b=HjR4qz2WF4LHnee9t+E0fnux/CL2K83CK+OgOU8b45a0B1iUhvlHvyi9eMmLG+XqjWXgbK
+ ajXpahQa+koN3bp4vBaLLNL8isKIFyXgYv5pAif/qFeIlxsETsaFCefv4d4zKUYEVDDul7
+ j9ZF1uoLRJW2yMHcBVZRFcNUiUt82PU=
+Received: from mail-qt1-f197.google.com (mail-qt1-f197.google.com
+ [209.85.160.197]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-414-j_jJGZdQPeajA7uJw0OBpQ-1; Tue, 17 Mar 2026 19:23:42 -0400
-X-MC-Unique: j_jJGZdQPeajA7uJw0OBpQ-1
-X-Mimecast-MFC-AGG-ID: j_jJGZdQPeajA7uJw0OBpQ_1773789822
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-89c3deb4185so208135976d6.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 16:23:42 -0700 (PDT)
+ us-mta-18-ZMTcE3RUPkWeuGF17uVYbw-1; Tue, 17 Mar 2026 19:23:48 -0400
+X-MC-Unique: ZMTcE3RUPkWeuGF17uVYbw-1
+X-Mimecast-MFC-AGG-ID: ZMTcE3RUPkWeuGF17uVYbw_1773789828
+Received: by mail-qt1-f197.google.com with SMTP id
+ d75a77b69052e-5092033798eso237515481cf.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 16:23:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773789821; x=1774394621; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773789827; x=1774394627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=TjG79rNrziyooP9oARcvWCdnLH3yo6F+TaDuNY6Nuzk=;
- b=kiklyJyJi7lp/JjFxo93vRX9ovMxF0k4imljcYR9Q7M6BZzs1tj8EbIa6VmOFK+qIP
- 6Tw1fV1zcDXVYTueXrkZivNukTDk6k2Pz2VTfrTvwU/GDCBcTF9IN4DpoxSc5k5BRj9F
- F4Te7hFixheGSWuWId6RWF99/e6syfJlBElhX/D2FevA8gibTIDYORH4AoVylsgxxhNC
- 1AYo6LWeDY77Mkdh/2Xg2PRc543gjNE5Ce2skWyOSONPI1ZSzR/gKXPgzMUz24iuxdz8
- w3xGOWnpWKewdl+NwGox7d298F4MCErW5Mh3VMhl+O1/PIvEOyG/cs06KJ6EZRXbhZxu
- rzoA==
+ bh=4VIfJwVvQOqSfZotFMcnTmIgI+32r03PnWffChaegzo=;
+ b=rPkuunHKf6dN8l1BlGe/TXzcqPbJ5IPv4FCsLcYigjgcqLURvxbNres6BbrkfCBYMH
+ 20ea774Tek0mpiGZIJ6+O/PpRkJiB+oDzBZdjqZiTgwBIs8X42ecihds+F49SOWSb4Wk
+ Bg8GK+nYgo0sSpGbFvt5fXSIPsY77QwaQZU7FrdlDoXTQAQdYfpgY7qELUmqeVzHv+nv
+ GbxX7R3sZPrfcDFJCrIV5Zjgc/EeO6iFT20/evkRxS3Wfw1cnwk9c60hS6hV2a10mxb3
+ uv1IGQmKEcIlOeVrbL5T8l5Kjqdu+Z3HWYv4T377sQl4UMwdsLWd1+SDcuFmrtIpMKvR
+ MCCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773789821; x=1774394621;
+ d=1e100.net; s=20251104; t=1773789827; x=1774394627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=TjG79rNrziyooP9oARcvWCdnLH3yo6F+TaDuNY6Nuzk=;
- b=Up6K/vNYySfjOnKfdKtbLPFg8Q8hD4QpSDRee2B+21tGH5YZfzllDh1YQchYJdQm5A
- llcnRX746GBFU5Ik09nZiEglM5ElBn8Hz8xynihsfwoBmY97AN6bAy4wGoK2BpDHw/pg
- vH57uDUO+2DqN2XzGAifPk+Tqqy1+zOBVv8rmwj4NHDAbtuZM/k/X0vGN9NztYLliUKZ
- jZGx6dLCA8jPPA1/s12ebQwS/qmW5IbZiOKdfNsGMud91G89rhmp97OqWMfMNsxxnu9B
- EbVFSQgXrxIXWsy8JPesj5D1HCPsfCkrYS8lkxyvM1d1vyhIOdU1+9UGUtKe00Ton9ka
- KlSA==
-X-Gm-Message-State: AOJu0YzZRTR/9nv4KwgCGXfrRohm2qoffUnXtUPSfEsCtJ6cjRS3RuOH
- yQyvkBFufZ5BWc1y10nXr1b1bAjyTHEF+QBUkZ+glZVDEY71IqbXawXszt0q7JbMtEc4m4m8CrS
- U21MFDKI+Jp0zn3sKfh0u7GPegiGRoznpF2UObZJMhY2oMjdZWsADZCmsEaJByLNVTBmex+cLYK
- 23bE6qJNU19NtAHhYUwXiOhpGyA3TfYslE2zMOXw==
-X-Gm-Gg: ATEYQzx+8awXeoZ0mcef6i5YAvIYiFri5xT/1aAFmL+fB+6X44GIcVRHDenJ6Tey7iq
- ChXGg+Lbp22+wTzP2YuC+Jkbxssl08wk3XSv+dDj2k4Iso5KYDogU5480CnD2Ii8xq49vjXRMaP
- 4Plm0vIbiD2cMaB3GYYcUHs+ipwUhVMvCfPtqoNvnNHTIaIYOO2n6zR6pbEMuPpjM32ce1V88/r
- X29/hO5RdKfK5Vm71l2hmQOZyM+1n2VVa8c9S4w+5/2XFHWF+iPeSOGuo7DG+yfJowbBjaaB2H9
- Pn05WUwYMgt9lKKyut/pRZMbuBxB4UaK6k5drtsH0tiwdvGXydhLQBibieU6UAJx9Y3MjaUuWi8
- 9XGIrhP+oITo6Aw==
-X-Received: by 2002:a05:6214:d6a:b0:89c:44f9:e87b with SMTP id
- 6a1803df08f44-89c6b5af971mr24014106d6.49.1773789821590; 
- Tue, 17 Mar 2026 16:23:41 -0700 (PDT)
-X-Received: by 2002:a05:6214:d6a:b0:89c:44f9:e87b with SMTP id
- 6a1803df08f44-89c6b5af971mr24013746d6.49.1773789820984; 
- Tue, 17 Mar 2026 16:23:40 -0700 (PDT)
+ bh=4VIfJwVvQOqSfZotFMcnTmIgI+32r03PnWffChaegzo=;
+ b=rGJwkTdbVRfIaFKokhmRe2OafW6mPmaCcT0R/Jm+eeX20T1hrfuT6ivPc1kRkWu013
+ LIuIn9lJ0wSrvCxEX6d5ehfBeNQXacEDLMlXgK5pzpjNIgwS3oAxsongvLmjuD7kOxeR
+ Eqpew7pV2ZzMvy3TBhQXOc7qHac2bnOs71Yl/hmg4Fq8FezU5HpLdre1cRjI5EhHf97t
+ ZuID6C6O8VZeXvThhSf3rfcA5n82UAX8BJYNGpS/i+9zDxDf69zAH1wJvx3kEwsbjmYN
+ zpTUuSTQ1rmMHNYi3Mx+pKO4D8plv42ignttKYHC4sJpjMTtphemD9LIlGlawxT+yKTZ
+ IpnQ==
+X-Gm-Message-State: AOJu0Yz160zvRLZZ1EJhM1k5sMEyaBxZLCCCtEkMGMdvyGuWcorEiiZz
+ nY7UGzU3Z+O+0RHtCqykit4z5IrUkh0sdS/nIFyta5igYVzIlgr/9hNvKYbAIQvHWxeLAoCGwmb
+ WQelUBcu2JueBwqL4Tn0rycvZViwCJpx0/ab+7NjpDHH7gAdM3Rlu45Te96w5XrPOLKsEVmZ306
+ ZJUHMArVpxrIEDhLrMKoh5QaUD9Eh0l/FI0o0MaQ==
+X-Gm-Gg: ATEYQzwuRYWZDd9STulXPOJ6/Q+iYErNV63Jww5T4RXefb1ehmnYUkQjLtaLMRTpw+X
+ 3tJy2hg0CM9WyLElbSmWSGyElCtsEo4lKY+K+Yvg9GyOc1WfUNERO/hkJ5hIbv+Ws+C+0srV4Pi
+ E0IIq1O7QHlCbEvI0rFIlfW2StekCcZ/Qr2kpOl4P3UPwtXFu0W3dUbvDgnS9Yz19BbDPOckPHJ
+ rJvj7vwFfiRu31d3LcqRXwMrwXojyHkVQ6x1xMrXFTT/CcL+lak5ky8g8jQT9tGXXFz3wfTBMbL
+ wuzOkbHuLZ/BALG0BhBL7U07cZtY57TSC3zyYEDS1PJD85R9nv5+Q/kGqS2x1B/lt+rTl0dRDsp
+ hvVSkpTAiYc+Zqw==
+X-Received: by 2002:a05:620a:4081:b0:8cd:98c1:762e with SMTP id
+ af79cd13be357-8cfad38a797mr207316985a.63.1773789827233; 
+ Tue, 17 Mar 2026 16:23:47 -0700 (PDT)
+X-Received: by 2002:a05:620a:4081:b0:8cd:98c1:762e with SMTP id
+ af79cd13be357-8cfad38a797mr207314385a.63.1773789826783; 
+ Tue, 17 Mar 2026 16:23:46 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89c6b9ea39asm8203806d6.37.2026.03.17.16.23.39
+ 6a1803df08f44-89c6b9ea39asm8203806d6.37.2026.03.17.16.23.45
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 16:23:40 -0700 (PDT)
+ Tue, 17 Mar 2026 16:23:46 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
  Fabiano Rosas <farosas@suse.de>
-Subject: [PATCH RFC 04/10] vmstate: Limit the vmdesc_loop dedup trick to
- compressable field
-Date: Tue, 17 Mar 2026 19:23:26 -0400
-Message-ID: <20260317232332.15209-5-peterx@redhat.com>
+Subject: [PATCH RFC 08/10] vmstate: Implement load of ptr marker in vmstate
+ core
+Date: Tue, 17 Mar 2026 19:23:30 -0400
+Message-ID: <20260317232332.15209-9-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260317232332.15209-1-peterx@redhat.com>
 References: <20260317232332.15209-1-peterx@redhat.com>
@@ -120,49 +120,112 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-We have a trick in vmstate_save_vmsd_v() where we will try to compress
-multiple JSON vmstate field dumps into one line with a count to avoid
-duplicated entries.
+The loader side of ptr marker is pretty straightforward, instead of playing
+the inner_field trick, just do the load manually assuming the marker layout
+is a stable ABI (which it is true already).
 
-That only applies to the cases where vmsd_can_compress() should return
-true.  For example, vmsd_desc_field_start() later (who will take the
-updated max_elems as the last parameter) will ignore the value passed in
-when vmsd_can_compress() returns false.
+This will remove some logic while loading VMSD, and hopefully it makes it
+slightly easier to read.  Unfortunately, we still need to keep the sender
+side because of the JSON blob we're maintaining..
 
-Add that check to the trick too, it will be used later to bypass this logic
-to some special new VMSD fields.
-
-No functional change intended in this patch alone.
+This paves way for future processing of non-NULL markers as well.
 
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- migration/vmstate.c | 6 ++++--
- 1 file changed, 4 insertions(+), 2 deletions(-)
+ migration/vmstate-types.c | 12 ++++--------
+ migration/vmstate.c       | 40 ++++++++++++++++++++++++---------------
+ 2 files changed, 29 insertions(+), 23 deletions(-)
 
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index b31689fc3c..ae465c5c2c 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -363,14 +363,10 @@ static bool load_ptr_marker(QEMUFile *f, void *pv, size_t size,
+                             const VMStateField *field, Error **errp)
+ 
+ {
+-    int byte = qemu_get_byte(f);
+-
+-    if (byte == VMS_MARKER_PTR_NULL || byte == VMS_MARKER_PTR_VALID) {
+-        /* TODO: process PTR_VALID case */
+-        return true;
+-    }
+-
+-    error_setg(errp, "%s: unexpected ptr marker: %d", __func__, byte);
++    /*
++     * Load is done in vmstate core, see vmstate_ptr_marker_load().
++     */
++    g_assert_not_reached();
+     return false;
+ }
+ 
 diff --git a/migration/vmstate.c b/migration/vmstate.c
-index e29a8c3f49..caa7b50bce 100644
+index a3a5f25946..d65fc84dfa 100644
 --- a/migration/vmstate.c
 +++ b/migration/vmstate.c
-@@ -578,7 +578,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+@@ -142,6 +142,21 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+     }
+ }
+ 
++static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
++                                    Error **errp)
++{
++    int byte = qemu_get_byte(f);
++
++    if (byte == VMS_MARKER_PTR_NULL) {
++        /* When it's a null ptr marker, do not continue the load */
++        *load_field = false;
++        return true;
++    }
++
++    error_setg(errp, "Unexpected ptr marker: %d", byte);
++    return false;
++}
++
+ static bool vmstate_pre_load(const VMStateDescription *vmsd, void *opaque,
+                              Error **errp)
+ {
+@@ -264,30 +279,25 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+             }
+ 
+             for (i = 0; i < n_elems; i++) {
+-                bool ok;
++                /* If we will process the load of field? */
++                bool load_field = true;
++                bool ok = true;
+                 void *curr_elem = first_elem + size * i;
+-                const VMStateField *inner_field;
+ 
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+                     curr_elem = *(void **)curr_elem;
                  }
  
-                 /*
--                 * This logic only matters when dumping VM Desc.
-+                 * This logic only matters when dumping VM Desc, and only
-+                 * when the VMSD field can be compressed.
-                  *
-                  * Due to the fake nullptr handling above, if there's mixed
-                  * null/non-null data, it doesn't make sense to emit a
-@@ -587,7 +588,8 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
-                  * vs. nullptr). Search ahead for the next null/non-null element
-                  * and start a new compressed array if found.
-                  */
--                if (vmdesc && (field->flags & VMS_ARRAY_OF_POINTER) &&
-+                if (vmdesc && vmsd_can_compress(field) &&
-+                    (field->flags & VMS_ARRAY_OF_POINTER) &&
-                     is_null != is_prev_null) {
+                 if (!curr_elem && size) {
+-                    /*
+-                     * If null pointer found (which should only happen in
+-                     * an array of pointers), use null placeholder and do
+-                     * not follow.
+-                     */
+-                    inner_field = vmsd_create_ptr_marker_field(field);
+-                } else {
+-                    inner_field = field;
++                    /* Read the marker instead of VMSD itself */
++                    if (!vmstate_ptr_marker_load(f, &load_field, errp)) {
++                        trace_vmstate_load_field_error(field->name, -EINVAL);
++                        return false;
++                    }
+                 }
  
-                     is_prev_null = is_null;
+-                ok = vmstate_load_field(f, curr_elem, size, inner_field, errp);
+-
+-                /* If we used a fake temp field.. free it now */
+-                if (inner_field != field) {
+-                    g_clear_pointer((gpointer *)&inner_field, g_free);
++                if (load_field) {
++                    ok = vmstate_load_field(f, curr_elem, size, field, errp);
+                 }
+ 
+                 if (ok) {
 -- 
 2.50.1
 
