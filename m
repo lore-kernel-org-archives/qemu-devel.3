@@ -4,59 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62AFEF3381D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:01:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 088A1F3381E
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:01:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QGi-0007jy-8G; Tue, 17 Mar 2026 04:59:16 -0400
+	id 1w2QEK-0006cb-HT; Tue, 17 Mar 2026 04:56:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2QGL-0007bb-70
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:58:55 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1w2QDC-0003Xu-QU
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:43 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2QGJ-00081r-IJ
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:58:52 -0400
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
+ id 1w2QDB-00075w-6p
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:38 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737930;
+ s=mimecast20190719; t=1773737736;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding;
- bh=Nvo8ZxYpvNESWwYgT308QCI89GUADvG+DHcdOxlYT34=;
- b=H3jYmGZvBK1a+TbAODUe5CxcaOnl/bL8GkVj9XIH5z06tQotKVjivYKHCt1N/Rtcl2ziYa
- 4Kd9Tk9MYaO+B1qordYGdZN3BnYV9cx32YdrDRd8/SKTmNDeNha/zDmwBdUHay0wp4vqjo
- F7vA96AkANerngBeWaneLQfOZVx5qqs=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=zaTStWYBUGR86O3Vlvs/c5wzHrDQ5EGJBZS4Xsnja34=;
+ b=SoL9EICAOTuzWghd8G2V14VRbvj9efDmi2Tqua2q8V36YbZceO5kjz1oU4MUvXB4uPa2r5
+ N3G7Ob8jc/NzJWrM0LNbWz/JhD9FsWShSXIiJJ1pXzEO84zlc7o+nMQzR57NZeA9OdJzv1
+ ICIl+NJ14c07Cbnoiovyo6R76uWcIRI=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-21-_BfSUI-tNSmIhO-_mbupAQ-1; Tue,
- 17 Mar 2026 04:58:46 -0400
-X-MC-Unique: _BfSUI-tNSmIhO-_mbupAQ-1
-X-Mimecast-MFC-AGG-ID: _BfSUI-tNSmIhO-_mbupAQ_1773737925
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-327-k4m5m8dAM4260xls094A2w-1; Tue,
+ 17 Mar 2026 04:55:34 -0400
+X-MC-Unique: k4m5m8dAM4260xls094A2w-1
+X-Mimecast-MFC-AGG-ID: k4m5m8dAM4260xls094A2w_1773737734
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 705BC1956056; Tue, 17 Mar 2026 08:58:45 +0000 (UTC)
-Received: from thuth-p1g4.redhat.com (unknown [10.44.32.37])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id E07453000223; Tue, 17 Mar 2026 08:58:42 +0000 (UTC)
-From: Thomas Huth <thuth@redhat.com>
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
-	qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Markus Armbruster <armbru@redhat.com>,
- Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: [PATCH] hw/sparc64/sun4u_iommu: Fix crash when introspecting
- sun4u-iommu from the CLI
-Date: Tue, 17 Mar 2026 09:58:39 +0100
-Message-ID: <20260317085839.445178-1-thuth@redhat.com>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 022D618005B0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:34 +0000 (UTC)
+Received: from localhost (unknown [10.44.22.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id DB5AD1800361
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:32 +0000 (UTC)
+From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
+Date: Tue, 17 Mar 2026 12:51:05 +0400
+Subject: [PATCH 51/60] ui/console: remove qemu_console_is_visible()
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Message-Id: <20260317-qemu-vnc-v1-51-48eb1dcf7b76@redhat.com>
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+To: qemu-devel@nongnu.org
+X-Developer-Signature: v=1; a=openpgp-sha256; l=4732;
+ i=marcandre.lureau@redhat.com; h=from:subject:message-id;
+ bh=CBB4c2mSRdNUcLuCSl4VRna1qSTaNHj3bnixxtfMgBk=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXcCIhwqZrsOAwey3hvujRbM7mRmjxUG5ZRl
+ /2myyG2VuyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3AAKCRDa6OEJdZac
+ 5R3bD/92PY6KzhKerX+oZjlCB3pJQ1QgNvlE+WrWyk1X1Ra8OvGPHuYmFw3Lo4BOPST6G1FJPMW
+ 1tgrosPaJq/ELtaSHXd+wQYz8jD/1uToJABB08MVM0qNpfeOrrlaHOpqRwcoZYJA7FO+bylkEZ/
+ l4eivz9lc3DVag7+s63N3vk7VTIaXBu8OSXozpIJpD2/BlAhOvobEo7qej2f6hRSMBcTmgWE3Uw
+ A4fwFgUyy28uPCyy+8fLmLTyKL2qBU85xT5soahUmGSD0sLsX/QRDyQ+GSHAzhmeKdsb0iT83gz
+ 67gKMet0s+UmEpfrgRCCtcmUCo2DP1x7Iw0R65pqKkNC4F/A4cY03X/ky6rxtUkXgQei2YFpxqr
+ PaNWgRnPg8fu+b1RLs0s3ImPtjJG4Vw4Ba1NBMVky4rZ1zTnKQxnIH9ukZvnxX9STxx5pBm8VQv
+ ntcr22xLSB8fgvLm3++g/Ko2bKi3Vo9QRwNHNSKnA3Cm8Uc1rzdGF6EPwu4R5XllF6oTAMZRaEq
+ LRqtTqcwtRwxRo4pVnodYpSjNzOCGw3Xs/2RueZewP5f7DbZDajERfls0/vfSIfnINy1YgSDkmW
+ UqqhSZHXD54HC7I84JAYBOhlJPEnZmRpTo1lh/cRBf8HygzY1HNYNCrfLW5PRoXW931+Y8PSqL8
+ 0qYFP25qOZLEm2Q==
+X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
+ fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -81,63 +103,140 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Thomas Huth <thuth@redhat.com>
+Drop the bookkeeping, we can simply afford an empty "foreach".
 
-QEMU currently crashes when introspecting the sun4u-iommu device from the
-command line interface:
+Notice that dpy_gfx_update_texture() is now called even when there are
+no listeners. This is more correct, as the texture is not fully
+refreshed when a listener connects, so it may be outdated/garbaged.
 
- $ ./qemu-system-sparc64 -display none -device sun4u-iommu,help
- qemu-system-sparc64: ../../devel/qemu/system/physmem.c:1401:
-  register_multipage: Assertion `num_pages' failed.
- Aborted (core dumped)
-
-There does not seem to be a compelling reason for initializing the
-memory regions from the instance_init function, so let's simply move
-the code into a realize() function instead to fix this issue.
-
-Signed-off-by: Thomas Huth <thuth@redhat.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- hw/sparc64/sun4u_iommu.c | 11 ++++++-----
- 1 file changed, 6 insertions(+), 5 deletions(-)
+ include/ui/console.h |  1 -
+ ui/console-priv.h    |  1 -
+ ui/console.c         | 29 -----------------------------
+ 3 files changed, 31 deletions(-)
 
-diff --git a/hw/sparc64/sun4u_iommu.c b/hw/sparc64/sun4u_iommu.c
-index 0188ce35d29..fe9d47b822f 100644
---- a/hw/sparc64/sun4u_iommu.c
-+++ b/hw/sparc64/sun4u_iommu.c
-@@ -290,13 +290,14 @@ static void iommu_reset(DeviceState *d)
-     memset(s->regs, 0, IOMMU_NREGS * sizeof(uint64_t));
+diff --git a/include/ui/console.h b/include/ui/console.h
+index 737ceba3890..3189788fb5f 100644
+--- a/include/ui/console.h
++++ b/include/ui/console.h
+@@ -392,7 +392,6 @@ QemuConsole *qemu_console_lookup_by_device(DeviceState *dev, uint32_t head);
+ QemuConsole *qemu_console_lookup_by_device_name(const char *device_id,
+                                                 uint32_t head, Error **errp);
+ QEMUCursor *qemu_console_get_cursor(QemuConsole *con);
+-bool qemu_console_is_visible(QemuConsole *con);
+ bool qemu_console_is_graphic(QemuConsole *con);
+ bool qemu_console_is_fixedsize(QemuConsole *con);
+ bool qemu_console_is_gl_blocked(QemuConsole *con);
+diff --git a/ui/console-priv.h b/ui/console-priv.h
+index f8855753e30..4f731b4f9ce 100644
+--- a/ui/console-priv.h
++++ b/ui/console-priv.h
+@@ -16,7 +16,6 @@ struct QemuConsole {
+     DisplayState *ds;
+     DisplaySurface *surface;
+     DisplayScanout scanout;
+-    int dcls;
+     DisplayGLCtx *gl;
+     int gl_block;
+     QEMUTimer *gl_unblock_timer;
+diff --git a/ui/console.c b/ui/console.c
+index a9132e09eac..baffdeb22b1 100644
+--- a/ui/console.c
++++ b/ui/console.c
+@@ -650,9 +650,6 @@ void register_displaychangelistener(DisplayChangeListener *dcl)
+     dcl->ds = get_alloc_displaystate();
+     QLIST_INSERT_HEAD(&dcl->ds->listeners, dcl, next);
+     gui_setup_refresh(dcl->ds);
+-    if (dcl->con) {
+-        dcl->con->dcls++;
+-    }
+     displaychangelistener_display_console(dcl, &error_fatal);
+     if (QEMU_IS_GRAPHIC_CONSOLE(dcl->con)) {
+         dcl_set_graphic_cursor(dcl, QEMU_GRAPHIC_CONSOLE(dcl->con));
+@@ -680,9 +677,6 @@ void unregister_displaychangelistener(DisplayChangeListener *dcl)
+     if (!ds) {
+         return;
+     }
+-    if (dcl->con) {
+-        dcl->con->dcls--;
+-    }
+     QLIST_REMOVE(dcl, next);
+     dcl->ds = NULL;
+     gui_setup_refresh(ds);
+@@ -747,9 +741,6 @@ void dpy_gfx_update(QemuConsole *con, int x, int y, int w, int h)
+     w = MIN(w, width - x);
+     h = MIN(h, height - y);
+ 
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     dpy_gfx_update_texture(con, con->surface, x, y, w, h);
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+@@ -848,9 +839,6 @@ void dpy_text_cursor(QemuConsole *con, int x, int y)
+     DisplayState *s = con->ds;
+     DisplayChangeListener *dcl;
+ 
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+             continue;
+@@ -866,9 +854,6 @@ void dpy_text_update(QemuConsole *con, int x, int y, int w, int h)
+     DisplayState *s = con->ds;
+     DisplayChangeListener *dcl;
+ 
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+             continue;
+@@ -884,9 +869,6 @@ void dpy_text_resize(QemuConsole *con, int w, int h)
+     DisplayState *s = con->ds;
+     DisplayChangeListener *dcl;
+ 
+-    if (!qemu_console_is_visible(con)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (con != dcl->con) {
+             continue;
+@@ -906,9 +888,6 @@ void dpy_mouse_set(QemuConsole *c, int x, int y, bool on)
+     con->cursor_x = x;
+     con->cursor_y = y;
+     con->cursor_on = on;
+-    if (!qemu_console_is_visible(c)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (c != dcl->con) {
+             continue;
+@@ -927,9 +906,6 @@ void dpy_cursor_define(QemuConsole *c, QEMUCursor *cursor)
+ 
+     cursor_unref(con->cursor);
+     con->cursor = cursor_ref(cursor);
+-    if (!qemu_console_is_visible(c)) {
+-        return;
+-    }
+     QLIST_FOREACH(dcl, &s->listeners, next) {
+         if (c != dcl->con) {
+             continue;
+@@ -1287,11 +1263,6 @@ QEMUCursor *qemu_console_get_cursor(QemuConsole *con)
+     return QEMU_IS_GRAPHIC_CONSOLE(con) ? QEMU_GRAPHIC_CONSOLE(con)->cursor : NULL;
  }
  
--static void iommu_init(Object *obj)
-+static void iommu_realize(DeviceState *ds, Error **errp)
+-bool qemu_console_is_visible(QemuConsole *con)
+-{
+-    return con->dcls > 0;
+-}
+-
+ bool qemu_console_is_graphic(QemuConsole *con)
  {
--    IOMMUState *s = SUN4U_IOMMU(obj);
--    SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
-+    IOMMUState *s = SUN4U_IOMMU(ds);
-+    SysBusDevice *sbd = SYS_BUS_DEVICE(ds);
-+    Object *obj = OBJECT(ds);
- 
-     memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
--                             TYPE_SUN4U_IOMMU_MEMORY_REGION, OBJECT(s),
-+                             TYPE_SUN4U_IOMMU_MEMORY_REGION, obj,
-                              "iommu-sun4u", UINT64_MAX);
-     address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
- 
-@@ -310,13 +311,13 @@ static void iommu_class_init(ObjectClass *klass, const void *data)
-     DeviceClass *dc = DEVICE_CLASS(klass);
- 
-     device_class_set_legacy_reset(dc, iommu_reset);
-+    dc->realize = iommu_realize;
- }
- 
- static const TypeInfo iommu_info = {
-     .name          = TYPE_SUN4U_IOMMU,
-     .parent        = TYPE_SYS_BUS_DEVICE,
-     .instance_size = sizeof(IOMMUState),
--    .instance_init = iommu_init,
-     .class_init    = iommu_class_init,
- };
- 
+     return con && QEMU_IS_GRAPHIC_CONSOLE(con);
+
 -- 
 2.53.0
 
