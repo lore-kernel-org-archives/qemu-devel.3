@@ -4,101 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C380BFED9E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:07:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA3CCFED9E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:08:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Vzz-00085u-2q; Tue, 17 Mar 2026 11:06:23 -0400
+	id 1w2W1n-0000KS-TL; Tue, 17 Mar 2026 11:08:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1w2Vzw-00085L-QL; Tue, 17 Mar 2026 11:06:20 -0400
-Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1w2W1l-0000KH-CK
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:08:13 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
- id 1w2Vzv-0005vT-1s; Tue, 17 Mar 2026 11:06:20 -0400
-Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
+ id 1w2W1j-00071w-Nc
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:08:13 -0400
+Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62H71IXq969073; Tue, 17 Mar 2026 15:06:17 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=0r+qPD
- GAdZAhMB4CnRDUS1s8w8qU34q2o094SYJlETk=; b=YNqYnUH3mLRkue70iEiCZR
- vRQ7r+jY/79QGDbXcL8TYVuqB+qPpxuRZLU+zVIkmm5G9kvaawxyJUPMxizHJNLC
- hK20/elyWa/aNjZnYPGcsO8en3HWTe5btHBcmMe+oq8D5hc2YrXmEec1vhNyRrwx
- AxFl0J3h5BBszE7LYfLLWF2vRccdhohPy65ZnZxQkl4QGvWZT4W5q/Swel0pboSJ
- 4Y13O/3g0vfiraliTn9ZX1N78ujRF7PYNFbU6NAMEO4cMr7Jp8jMfOsc99QSQKp/
- qb3tS4gyjNAtsN538SNaNyIECe53eu/A/my1Pel8SCcgAXg43pbrgEmahHJ3TOnw
- ==
+ 62HEOHuO3853770
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:08 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
+ content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=axND4xlA8p4NKRQW/G47Au9QYklXnG+K/JzgiSwu+
+ HQ=; b=qYLnWENJ1OIiyuPhKPtoZcr+2g738YT0Wra7+3KHqA+BZHOgpJJ+OK4d6
+ b4YLwthzyzCA5esvqdts+TCvmlbZY0Furk2lkJdTEnp5GncvSduP+obeBwoHU2xl
+ Bfe7IoqkPMuvT20ntoLva3NQ181fuIlOkoM/eMThM0Kbd4Nn5UUhc6pdBChsia55
+ 3A5CcFJtf1DpTV1NGwSsVs3AUxU2+3oP5PxZEA1GqwxDuC0Vl9wrN1QetXQfCVHe
+ fMR+3wpbTPVCtsRdREkZhwcNR4aSS8ENaxWUtPaGTxiY/IRbAHg5BbF3RdSEsI4a
+ efi1OnZQfrULvNsXSgUdh5dOmQQig==
 Received: from ppma11.dal12v.mail.ibm.com
  (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvw3hw1r8-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Mar 2026 15:06:17 +0000 (GMT)
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvybs5cn6-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:08 +0000 (GMT)
 Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62HCN7sj028510;
- Tue, 17 Mar 2026 15:06:16 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwmq19ffy-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Mar 2026 15:06:16 +0000
-Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
- [10.241.53.103])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62HF6E3957475346
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Mar 2026 15:06:14 GMT
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 69AB25805E;
- Tue, 17 Mar 2026 15:06:14 +0000 (GMT)
-Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D819658052;
- Tue, 17 Mar 2026 15:06:13 +0000 (GMT)
-Received: from [9.61.145.197] (unknown [9.61.145.197])
- by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Mar 2026 15:06:13 +0000 (GMT)
-Message-ID: <cf9ea919-882a-449d-9ec2-1c6acfd23fb0@linux.ibm.com>
-Date: Tue, 17 Mar 2026 11:06:13 -0400
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62HCUN0b028501
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:07 GMT
+Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwmq19fqf-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:07 +0000
+Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
+ [10.20.54.106])
+ by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62HF86w661080008
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:06 GMT
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 1664C20043
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:06 +0000 (GMT)
+Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6ED0E20040
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:05 +0000 (GMT)
+Received: from Mac.com (unknown [9.39.22.133])
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:05 +0000 (GMT)
+From: Harsh Prateek Bora <harshpb@linux.ibm.com>
+To: qemu-devel@nongnu.org
+Subject: [PULL 0/1] ppc-for-11.0-hardfreeze queue
+Date: Tue, 17 Mar 2026 20:37:57 +0530
+Message-ID: <20260317150758.53781-1-harshpb@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] target/s390x/kvm: Simplify the async pfault handling code
-To: Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
- Christian Borntraeger <borntraeger@linux.ibm.com>,
- Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org
-Cc: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org
-References: <20260317134531.460141-1-thuth@redhat.com>
-Content-Language: en-US
-From: Matthew Rosato <mjrosato@linux.ibm.com>
-In-Reply-To: <20260317134531.460141-1-thuth@redhat.com>
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-GUID: IU0gcKDJ_VGD61FULnAXCDdu0Xk-F5oN
-X-Proofpoint-ORIG-GUID: IU0gcKDJ_VGD61FULnAXCDdu0Xk-F5oN
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDEzMCBTYWx0ZWRfX3TnhJ2XiI2Mc
- C4nBHg86pnou7s4JB/UbMDaGhMGhfm/PMYzC9AFw85qxqT/kRcu3GqaM1ZGo2noQpzep+ttV/pB
- Q3dHjyurAlFMbhBNxXEuTrmEEZT2pZMB/0SUtC7V2v6nl8rLEoaCpTi7OYpfrZv1HxM9boKxsOW
- BtN2TN0EJYiGTHPLW56EtY17vfCOGK5tsWwfpvtxPhzcxBwRLJMuCC7z76g+TuzTGRc1CmqD8pa
- Ip7rsm8g8vMKNNgKsz3YbnZn9fHNX+q9r7X7nu+WV5iBU0fdCuX/+ydDvbwVbNTLtv9YeIvwVN3
- 21rSW6iFnXWwPFiyk34EZ6M+7Ug3aSVWWsaB+jKOYzwQvVuAaKXbLe4TTyTpuX3V2OwEsH1l4W/
- eFuez9TbS6GFafniL0y7kMlpsLToe4RbYLXQhfYtSb1rFTdegurvervW3sBM5qljRTjAPwURm72
- P5lhrvL+2AMNJpW367A==
-X-Authority-Analysis: v=2.4 cv=Hf8ZjyE8 c=1 sm=1 tr=0 ts=69b96de9 cx=c_pps
+X-Authority-Analysis: v=2.4 cv=MMttWcZl c=1 sm=1 tr=0 ts=69b96e58 cx=c_pps
  a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=20KFwNOVAAAA:8
- a=VnNF1IyMAAAA:8 a=1PiBuSbX7Db_E7daJGwA:9 a=QEXdDO2ut3YA:10
+ a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
+ a=lvJexoOC8j4WlqM8shQA:9
+X-Proofpoint-ORIG-GUID: -CJyjX7KCbixzgpa03oCwTfQmfmMNmWx
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDEzMCBTYWx0ZWRfXxeuadiJU/e+G
+ KojMiphjQaIplQS0eKgV45GcsHaEPcT8zitye2Z+wtqAjiDONxIpRqfiE79bl6WqeUOv2JNoLVu
+ Uqcwt2xYl3+O+vZpzh86FAayoaY2DwrW+EY4ekF0y35hrhTQ7pOhLyHELXUx6g+ncRgvLVvXy8L
+ A5kw7tCNYU2H57g0sb/9kLkqcofEwGx7jqBKJzUIUSX82NzrUgepLMrMrSyzaHmuFVkU16dIX3W
+ nfJBmxjo6hCUhemuypKjh4Kyjsoze99F+NDOuM701ZMg1O/k8b+iR2yHgjAyONCxVxLoVuC/JWe
+ LcTU/LYpHQxmQE1nO4J5OBX7ExWvfyOxdIGUtGZf3mVqs5bwhY8Zz39gNOhA2SaPwAKY4S31KaL
+ ABXfVCRZAMeBUDU5gHFvoURnJ6bkaEzkFbAov9iogPgZrLRW3oe7lLj7Ls3tCs47yMrfKi12nRo
+ cud2HDACpg9E6eyb8Tw==
+X-Proofpoint-GUID: -CJyjX7KCbixzgpa03oCwTfQmfmMNmWx
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-17_01,2026-03-17_01,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- phishscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
- suspectscore=0 priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603170130
-Received-SPF: pass client-ip=148.163.158.5;
- envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+ suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
+ priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0 clxscore=1015
+ bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
+ adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603170130
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=harshpb@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
@@ -122,22 +118,44 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/26 9:45 AM, Thomas Huth wrote:
-> From: Thomas Huth <thuth@redhat.com>
-> 
-> Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
-> KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel v4.4 to
-> be able to use KVM. KVM_CAP_ASYNC_PF is available in the kernel
-> since v3.15 and KVM_SYNC_PFAULT is available since kernel v3.18,
-> so we can assume now that they are available in all supported
-> kernels. Thus simplify the code a little bit by removing the
-> checks for these features.
-> 
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+The following changes since commit 6667668e0cf369e47aa9dd0bae40989896e9ed9f:
 
-LGTM, thanks Thomas!
+  Merge tag 'pr-plugins-20260316' of https://gitlab.com/pbo-linaro/qemu into staging (2026-03-17 10:20:30 +0000)
 
-Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+are available in the Git repository at:
 
+  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.0-hardfreeze-20260317
 
+for you to fetch changes up to a16d4c2f162a86db1f84ef0836d42eabaf57fe69:
+
+  ppc/pnv: fix dumpdtb option (2026-03-17 20:31:42 +0530)
+
+----------------------------------------------------------------
+ppc queue for 11.0
+
+* ppc/powernv: fix dumpdtb option
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCAAdFiEEa4EM1tK+EPOIPSFCRUTplPnWj7sFAmm5bZ4ACgkQRUTplPnW
+j7vZvQ/9HlYrlHQD3eQSEyUlVoEkR4piSh/D8sdigOOOdYhPEQZ6spluHg3OLEml
+MvDv2Uz1t8GVKzGuZ19Y18H8wOW0zbjsOa9bfbtO7Mral7LIMbBFLej391czQVQC
+NQ64Wms2B2TwjKDam8msekMkME646m5SanzgT1hGkKmIAKKSCBLwA9Na1HfxdcwQ
+1TcDpjHBLg0x3OOmkh7V1PYyb7RSIAFRcYEkPnvgEWvIOaGubTVpB7/syb2n+cdq
+ToPy0MvoIdlPID0wFd0t7t3tRPah/ubXD4ubrOEvWLDZ40BtLiB3p1Ou+MUU6lj1
+GfPx7gjW4QG4o5aV4MmsAKxEP6K3RfJcRVjJUa3tl8oJvggS9uwvewEqHT07XBWc
+NmxdEGzgkLCUXAVZLkKjqInz5VJlHROUWpsS8bq1edK09wju1o1CR0B0WDK//Cek
+oqfZtb/6XHvmFrNnJprJvPNOWuhash1XRbL+iyfYxJJwuqIZPkQWjABeD7Fu8/aZ
+Gpw3/2V+CiWJvThe9Z/vIEw/ksl1qigdNCtdVMeO9S8pQAtORZnUvNzWN5QKaVvL
+VjxsFXhiEEn6bdoycJE0V6mfuPGaKcvE/APTDA4dT1b4du8IaUiiqGvGvVY+F1vg
+p7ZpDlJmKd48jbkXnim8YiyXZO3sUUk7tw0N/xwPvCj+56nTv64=
+=OUEg
+-----END PGP SIGNATURE-----
+
+----------------------------------------------------------------
+Shivang Upadhyay (1):
+      ppc/pnv: fix dumpdtb option
+
+ hw/ppc/pnv.c | 25 ++++++-------------------
+ 1 file changed, 6 insertions(+), 19 deletions(-)
 
