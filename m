@@ -4,78 +4,76 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 863C1FEDA0A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:03:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 756E2FEDA0A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:03:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Zh2-0005PI-J0; Tue, 17 Mar 2026 15:03:04 -0400
+	id 1w2Zgu-0005Oe-LK; Tue, 17 Mar 2026 15:02:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zh1-0005P3-4H
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:03 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zgt-0005OH-L9
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:02:55 -0400
+Received: from mail-wr1-x42b.google.com ([2a00:1450:4864:20::42b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zgz-0005oQ-7d
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:02 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4852f8ac7e9so72302315e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 12:03:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zgs-0005nI-0q
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:02:55 -0400
+Received: by mail-wr1-x42b.google.com with SMTP id
+ ffacd0b85a97d-439c9bdc1eeso6048672f8f.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 12:02:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773774179; x=1774378979; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
- :reply-to; bh=vTQ62ilT2m/rzys2ifT5XG6JmBUDkEBylAkRPmKwKFU=;
- b=ARI87cz201XWzGdHcUSp5TQu4dzzqaiI5H6vtoH6Vi0syIfGepg5s0l1yc+kp4oMyq
- AJhPeHzm6VrX0to+XZSFSQmDpPnvxra0s5r2aK3BQnRdZTk5Lo4m/spfNVl36R7TcAQw
- dKgFNPe2AugvPTEJPuvkO+rJLwTuUsWA1/kKmtLfMltY0pp727e9uj1CZ6TzHnXWaaY+
- R9lcDl9XUC3GjC+DVXBOzr75BSASZtlFSeOvKAiY2N/5m7y43LBaq8C864ha+QwPMdR8
- vTxQzZhYFxrzhVBK+x3sL/SBLQr+tMSKIVJXpbwA5FbKnJHO4bW4nE0Gl/ePo4V1qbAd
- 2FCQ==
+ d=linaro.org; s=google; t=1773774172; x=1774378972; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:from:to:cc:subject:date:message-id:reply-to;
+ bh=bTvHq5x3X3J/a6AIggEozOSOP9q+sJbqrYJJTTmKIBU=;
+ b=R6fSpK9zkyaQ2GbAuTq/Q49P9pyU23+kW/CQjsjAkrsIfO8RpOXJC+bdos4h4uoG+q
+ nJNtL8wIqfHhozGMSRxcRIe3sVyMqRBO/YKkgwndX9VKmkK3BVQYoLFwPUxjIkCDuXGN
+ k0fuK0Tj6RU4sUTOmX9Qqv/Ufqd7MY9gMB+dliY3r3EHLQ0955lDLuhmHcHpgU/Q2piQ
+ 30nTBycVt/HCiajMnfhAcUkna5SaHIC8ACDCpZZNbIExU3bAVWq4UFXCHrd4Feyj/W6u
+ ab/GOvWxfGncWyQmMFmpYcAMd88J4i1ItMFMOg0v/dFeN5kzjOW6svXcBFtftIwXu1Tf
+ 3cwg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773774179; x=1774378979;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
- :cc:subject:date:message-id:reply-to;
- bh=vTQ62ilT2m/rzys2ifT5XG6JmBUDkEBylAkRPmKwKFU=;
- b=rsb+/jjbRw8DlSM2wdmTGueLXSQ5eTQQjkfa+Dn3GI2NaviFpohrPQN/xc2zueZ4d3
- LlP4vOTAj9nDOupae+aGkegneEmzg1GcVXfvVsKhDddouuk2LlwMi1q6K1RXLYb0Ll+s
- ZAwcWF7sNlhXOKIrPMHvO2KSr3jaHSQWUcSKMHu3cSTJDSZkQ3WLLS1KWdyL2RtKi5XK
- /wK54WpFHmLBv7AsY7JD+ze42ayv4fKxlfhVoR+ykP0Qv9Gg2dxHEt/S1pTuX6aUmIn6
- mM6Op140a1qZT1z+lWYU//Mj2Dht4iuHXNccG05hzTgQQ6b2LpVi1juCg3ZuVqkVyC8A
- jnOw==
-X-Gm-Message-State: AOJu0YxE7S1ZNnofTob16YSMRR338fd95bYczWiH1/bLPK5qer+CNO8S
- EFmJYl2e5eHBKsPAea6mC2FkqkPNUd/Y458cBxEGHyztJGLq5/a/1QCcXqQqj3t0CfuYWkv1Mzh
- 5uKb9k78=
-X-Gm-Gg: ATEYQzxDRcT7BmV/oB0zXIuPvbaoc0Wm/NJOSoRq59zfHXhgDcD3dskczvb7EKmQVMj
- G09aV4RZZYOBDXH8y4zbEk/kss3m3lcThdLOwVp7AzUMa13BAZD/keHeiEnb05O7z4qJ8srB1Y9
- l+ACQziRZXePvJ3YcRvgrvih/l3wMyTjFiD5D7+K1KR2HSR8lcKwO+1yaQeHJ8esUhmWg5d8adN
- 3yp/QKDeyzMNBODQpPrtv6b9Nx47cFZ4JAn/baufhdmdEh73OJm5mHk77LL7SpCUPhXMDO41XQK
- 5YZQqAORJxjZ2Wr8mfZoBPlNkZJnxKlGp5tnHSe0gjFqFzdD3YGpOjiivpjzNRHw8ht426lRYAe
- 91oV7StDP7rJRxsk0KzwdogiQt3RouI1ywXj0Hvj3YPhgQYKLb9NVDWaLcSkjnmt6uEPpiVnSH9
- hcmYsoVq8OYJhEh0MLSoM65kAzesnFTgNLvhgOmG+mvcGqbk9eJJTeUNcYk/ZOEyh+ECXmJYaz
-X-Received: by 2002:a05:600c:4e4a:b0:485:ae14:8192 with SMTP id
- 5b1f17b1804b1-486f442d3d1mr11797025e9.7.1773774178422; 
- Tue, 17 Mar 2026 12:02:58 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773774172; x=1774378972;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:to
+ :from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=bTvHq5x3X3J/a6AIggEozOSOP9q+sJbqrYJJTTmKIBU=;
+ b=joCNKp05ZGijG7FOx/pNSkZw4NTqo2i/3cCKNL+wxIdd/2RQVJpHbfn1+VksdAmef1
+ DB39jHIq+5MnV6XMkt6AJbP2ppxd4zWo+b2IPSueZTiIcx4UwBPNuKheEKOzyANZUiKd
+ GQqR+6p1X6lRDk7nAKiiDIDg4rdsrv89Yc/Zaqotgm3OdK7/wmZmqvPgJDCHWyKEJdrj
+ ac3xpOzIIfukfqYRrzvFtXW5Yd+5EyheEqIJuWvtJ2m03Ig6wtoJ9IEX9ls6cFsn2T87
+ UWk3Tjja8Z+L5jKDqT0S+2WzlahG+8rEZFy1v+WcEmXH5RH8xpx2hP1pwSTdGwDEiTPR
+ syyw==
+X-Gm-Message-State: AOJu0YzkHWrPBNa0KbFgtxzZnThu+LRJ/stsm7vh43AIvaGkx7Jg3wTb
+ +0/9ub7xe2XqqAc1UEgNEidpVImvgQRM5Fa88Y2qa7ucR48dSPs741RB4CT5ucLZhs8Y6Pk2VGL
+ mjMh/LwQ=
+X-Gm-Gg: ATEYQzxy1eMduND6Tx2ayW1cTz2JqlnNiiZ8j1KBXRe55GnIyCEPJ62avYQxKxj+y8+
+ 3zEdtZ5PIXRJZvOHsyojb9Jt4NRIuncWRqABsxYi2N9P43Vi489nwhDh/7xWONfMNOkwDfaGuSI
+ 6xoKv4yCMLSIaYBIyMA1T2u7rcv66inXNPVa7y3cOzzJPDmMmqGMYiDBHvuoZ70N6E6X7X6MJxb
+ CLB6AYeeDGsYmL+wc3XAhdOYPBeE1X9btTpwzznG9zVPlT5cVfD/sIQ9BWdtGEHl3evnhd9Hkaw
+ PVqtWe0C0sq21Ly2JTigWCryJod0tmZBjIOdum6ae9CQN81BWEQvZsoqtnV5JAiRyCJbFeUH00s
+ 99TAAgHA2uvyDMUfA+y9d2tCQvnz9rGJd5qU1ZiKTKH56HjLLsZkcg5xleo/2ul3Z9qYtA0wCEb
+ O+W0I5Runnf+oAYyVhA4Worb1i3ce1/Sbcmf2/uADcMYGoTxkDKifV7OWcpOgpMBwqJ7NtTWtA
+X-Received: by 2002:a05:600c:198f:b0:485:5981:1411 with SMTP id
+ 5b1f17b1804b1-486f4472ee8mr12204445e9.23.1773774171656; 
+ Tue, 17 Mar 2026 12:02:51 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b518a3dfasm1232868f8f.33.2026.03.17.12.02.57
+ 5b1f17b1804b1-486f420d7b5sm19506745e9.2.2026.03.17.12.02.50
  for <qemu-devel@nongnu.org>
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Mar 2026 12:02:57 -0700 (PDT)
+ Tue, 17 Mar 2026 12:02:51 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Subject: [PULL 1/5] fsdev: Build stubs once
-Date: Tue, 17 Mar 2026 20:02:46 +0100
-Message-ID: <20260317190250.70506-2-philmd@linaro.org>
+Subject: [PULL 0/5] Single binary patches for 2026-03-17
+Date: Tue, 17 Mar 2026 20:02:45 +0100
+Message-ID: <20260317190250.70506-1-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260317190250.70506-1-philmd@linaro.org>
-References: <20260317190250.70506-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42b;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -98,32 +96,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move stubs to the global stub_ss[] source set. These files
-are now built once for all binaries, instead of one time
-per system binary.
+The following changes since commit 6667668e0cf369e47aa9dd0bae40989896e9ed9f:
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Message-Id: <20260225035739.42848-11-philmd@linaro.org>
----
- fsdev/meson.build | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+  Merge tag 'pr-plugins-20260316' of https://gitlab.com/pbo-linaro/qemu into staging (2026-03-17 10:20:30 +0000)
 
-diff --git a/fsdev/meson.build b/fsdev/meson.build
-index 95fe816604f..61bc8830be8 100644
---- a/fsdev/meson.build
-+++ b/fsdev/meson.build
-@@ -4,7 +4,8 @@ fsdev_ss.add(when: ['CONFIG_FSDEV_9P'], if_true: files(
-   '9p-iov-marshal.c',
-   '9p-marshal.c',
-   'qemu-fsdev.c',
--), if_false: files('qemu-fsdev-dummy.c'))
-+))
- if host_os in ['linux', 'darwin', 'freebsd']
-   system_ss.add_all(fsdev_ss)
-+  stub_ss.add(files('qemu-fsdev-dummy.c'))
- endif
+are available in the Git repository at:
+
+  https://github.com/philmd/qemu.git tags/single-binary-20260317
+
+for you to fetch changes up to eda09ccd3e00648bed8b13df465ef15c3c6a7a5d:
+
+  target/ppc: Replace TARGET_PAGE_BITS -> qemu_target_page_bits() (2026-03-17 19:53:17 +0100)
+
+----------------------------------------------------------------
+Few patches related to single binary effort:
+
+- Build some stub files once
+- Replace TARGET_PAGE_BITS by qemu_target_page_bits()
+----------------------------------------------------------------
+
+Philippe Mathieu-Daudé (5):
+  fsdev: Build stubs once
+  hw/display: Build stubs once
+  hw/misc: Build 'mac_via' as common unit file
+  hw/s390x/vfio: Replace TARGET_PAGE_BITS -> qemu_target_page_bits()
+  target/ppc: Replace TARGET_PAGE_BITS -> qemu_target_page_bits()
+
+ meson.build                |  2 +-
+ hw/display/acpi-vga-stub.c |  1 +
+ hw/s390x/s390-pci-vfio.c   |  3 ++-
+ target/ppc/mmu-booke.c     |  3 ++-
+ target/ppc/mmu-hash64.c    |  3 ++-
+ target/ppc/mmu-radix64.c   |  3 ++-
+ fsdev/meson.build          |  3 ++-
+ hw/display/meson.build     | 19 ++++++++-----------
+ hw/misc/meson.build        |  2 +-
+ 9 files changed, 21 insertions(+), 18 deletions(-)
+
 -- 
 2.53.0
 
