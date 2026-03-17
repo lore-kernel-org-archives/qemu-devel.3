@@ -4,73 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D075DF3380C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 07:36:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14D49F3380B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 07:41:40 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2OxU-00086E-LU; Tue, 17 Mar 2026 03:35:20 -0400
+	id 1w2P37-0000s3-38; Tue, 17 Mar 2026 03:41:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2OxR-000860-Ee
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:35:17 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2P35-0000rd-KP
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:41:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2OxP-0005ln-A6
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:35:17 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2P33-0006tC-DM
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:41:07 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773732912;
+ s=mimecast20190719; t=1773733264;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DPTqDaqt1TG31j4dbwwT8v5ORZJQ4ugI41iRVLRAn/c=;
- b=ggbLqnL4W+1dnynGh7If+sXDDeSeYCD7YU/mUGy04aheoHy+cGuJ96riMzYPf/n2ePe3Ac
- hGf0dt3Ns3HCMF1FKlyCtQYr5Dy+vyMyd8SEnsVW43FZFb+nbGSW4CHTRqr4Jk2BGsyIrf
- rhjs2sMD6Tb18m8PDrwzY4A1JyB8RpM=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=/+k0eCiPPaE3SrKUP9/n0lGLkwnj+VjFsiElr4uWvaw=;
+ b=FU6WQskS6lMqbTplkRzEO2pMqIAZQnoFs2+FUCvwH5/sV/6eQQowDUq0YaPYxcUzR8tpyj
+ e2GmniyRAMDVQyQDw9zxfgZ3syGUfu7IUHuWc4y5aWeIsSEKGClS/oYdAmxH1yPdbtnLQR
+ 8y1WPdXtS/cajMnVrWRaeBriopEv9vw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-360-ryYPvEC1M-iDvxvobaBafw-1; Tue,
- 17 Mar 2026 03:35:10 -0400
-X-MC-Unique: ryYPvEC1M-iDvxvobaBafw-1
-X-Mimecast-MFC-AGG-ID: ryYPvEC1M-iDvxvobaBafw_1773732909
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-365-yKhq5bITPOeSAvQuxCiRbw-1; Tue,
+ 17 Mar 2026 03:41:00 -0400
+X-MC-Unique: yKhq5bITPOeSAvQuxCiRbw-1
+X-Mimecast-MFC-AGG-ID: yKhq5bITPOeSAvQuxCiRbw_1773733257
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A6FF11944EB6; Tue, 17 Mar 2026 07:35:09 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 38FC7180075C; Tue, 17 Mar 2026 07:35:09 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D654E21E6937; Tue, 17 Mar 2026 08:35:06 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: -device T,help crashes
-In-Reply-To: <bd616907-9265-4ca2-83d3-d157d717c916@redhat.com> (Thomas Huth's
- message of "Tue, 17 Mar 2026 07:24:40 +0100")
-References: <87pl5abgpl.fsf@pond.sub.org> <87bjgtzcoa.fsf@pond.sub.org>
- <bd616907-9265-4ca2-83d3-d157d717c916@redhat.com>
-Date: Tue, 17 Mar 2026 08:35:06 +0100
-Message-ID: <87y0jqlxhx.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 012C51954238; Tue, 17 Mar 2026 07:40:55 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.37])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 465021955F19; Tue, 17 Mar 2026 07:40:50 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: =?UTF-8?q?Herv=C3=A9=20Poussineau?= <hpoussin@reactos.org>,
+ qemu-devel@nongnu.org
+Cc: qemu-ppc@nongnu.org, qemu-trivial@nongnu.org,
+ BALATON Zoltan <balaton@eik.bme.hu>, Markus Armbruster <armbru@redhat.com>
+Subject: [PATCH] hw/pci-host/raven: Fix crash when introspecting raven-pcihost
+ from the CLI
+Date: Tue, 17 Mar 2026 08:40:49 +0100
+Message-ID: <20260317074049.436460-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -88,67 +81,122 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+From: Thomas Huth <thuth@redhat.com>
 
-> On 12/03/2026 09.15, Markus Armbruster wrote:
->> Markus Armbruster <armbru@redhat.com> writes:
-> ...
->>> These crashes escape tests/qtest/device-introspect-test, because it
->>> covers only HMP "device_add T,help", not CLI "-device T,help".
->>
->> Anyone wants to cook up a patch to cover -device?
->
-> Quick'n'dirty patch:
->
-> diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
-> --- a/tests/qtest/device-introspect-test.c
-> +++ b/tests/qtest/device-introspect-test.c
-> @@ -105,6 +105,7 @@ static void test_one_device(QTestState *qts, const char *type)
->      QDict *resp;
->      char *help, *escaped;
->      GRegex *comma;
-> +    int ret;
->
->      g_test_message("Testing device '%s'", type);
->
-> @@ -119,6 +120,17 @@ static void test_one_device(QTestState *qts, const char *type)
->
->      help = qtest_hmp(qts, "device_add \"%s,help\"", escaped);
->      g_free(help);
-> +
-> +    if (!g_str_equal(type, "nonexistent") && !g_str_equal(type, "device")) {
-> +        help = g_strdup_printf("%s -device \"%s,help\" > /dev/null", qtest_qemu_binary(NULL), escaped);
-> +        ret = system(help);
+QEMU currently crashes when introspecting raven-pcihost from the command
+line interface:
 
-Not using qtest_init() or similar.  Hmm.
+ $ ./qemu-system-ppc -device raven-pcihost,help
+ Segmentation fault (core dumped)
 
-> +        g_free(help);
-> +        if (ret) {
-> +            fprintf(stderr, "Running qemu with -device %s,help failed!\n", escaped);
-> +            abort();
-> +        }
-> +    }
-> +
->      g_free(escaped);
->  }
->
-> But I think it needs some more work - we likely don't want to run this for each test run since it slows down the test quite a bit. And the g_test_quick() switch is already used for something else here.
+This happens because the raven_pcihost_initfn instance init function
+calls get_system_memory(), but that is not available here yet.
 
-It's used to test with every machine type, not just with "none".
+There does not seem to be a compelling reason for initializing the
+memory regions from the instance init function, so let's simply move
+the code into the realize() function instead to fix this issue.
 
-I think we could also use it to additionally test -device just with
-"none".  Testing it with every machine type would be even slower, and I
-doubt it's worthwhile.
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/pci-host/raven.c | 68 +++++++++++++++++++++------------------------
+ 1 file changed, 31 insertions(+), 37 deletions(-)
 
-Another idea to conserve cycles: use a unit test instead.
-
-> Anyway, found these additional issues so far:
->
->  ./qemu-system-ppc -device raven-pcihost,help
->  Segmentation fault (core dumped)
->  ./qemu-system-sparc -device cgthree,help
->  Segmentation fault (core dumped)
-
-One more: sparc sun-tcx
+diff --git a/hw/pci-host/raven.c b/hw/pci-host/raven.c
+index b3c2678667a..b3836dc9a28 100644
+--- a/hw/pci-host/raven.c
++++ b/hw/pci-host/raven.c
+@@ -212,8 +212,39 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+     PCIHostState *h = PCI_HOST_BRIDGE(dev);
+     PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(dev);
+     MemoryRegion *address_space_mem = get_system_memory();
++    Object *obj = OBJECT(d);
+     int i;
+ 
++    memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
++    memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
++                          "pci-io-non-contiguous", 0x00800000);
++    memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
++    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
++
++    /*
++     * Raven's raven_io_ops use the address-space API to access pci-conf-idx
++     * (which is also owned by the raven device). As such, mark the
++     * pci_io_non_contiguous as re-entrancy safe.
++     */
++    s->pci_io_non_contiguous.disable_reentrancy_guard = true;
++
++    /* CPU address space */
++    memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
++                                &s->pci_io);
++    memory_region_add_subregion_overlap(address_space_mem, PCI_IO_BASE_ADDR,
++                                        &s->pci_io_non_contiguous, 1);
++    memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
++
++    /* Bus master address space */
++    memory_region_init(&s->bm, obj, "bm-raven", 4 * GiB);
++    memory_region_init_alias(&s->bm_pci_memory_alias, obj, "bm-pci-memory",
++                             &s->pci_memory, 0,
++                             memory_region_size(&s->pci_memory));
++    memory_region_init_alias(&s->bm_ram_alias, obj, "bm-system",
++                             address_space_mem, 0, 0x80000000);
++    memory_region_add_subregion(&s->bm, 0         , &s->bm_pci_memory_alias);
++    memory_region_add_subregion(&s->bm, 0x80000000, &s->bm_ram_alias);
++
+     /*
+      * According to PReP specification section 6.1.6 "System Interrupt
+      * Assignments", all PCI interrupts are routed via IRQ 15
+@@ -256,42 +287,6 @@ static void raven_pcihost_realizefn(DeviceState *d, Error **errp)
+     pci_setup_iommu(h->bus, &raven_iommu_ops, s);
+ }
+ 
+-static void raven_pcihost_initfn(Object *obj)
+-{
+-    PREPPCIState *s = RAVEN_PCI_HOST_BRIDGE(obj);
+-    MemoryRegion *address_space_mem = get_system_memory();
+-
+-    memory_region_init(&s->pci_io, obj, "pci-io", 0x3f800000);
+-    memory_region_init_io(&s->pci_io_non_contiguous, obj, &raven_io_ops, s,
+-                          "pci-io-non-contiguous", 0x00800000);
+-    memory_region_init(&s->pci_memory, obj, "pci-memory", 0x3f000000);
+-    address_space_init(&s->pci_io_as, &s->pci_io, "raven-io");
+-
+-    /*
+-     * Raven's raven_io_ops use the address-space API to access pci-conf-idx
+-     * (which is also owned by the raven device). As such, mark the
+-     * pci_io_non_contiguous as re-entrancy safe.
+-     */
+-    s->pci_io_non_contiguous.disable_reentrancy_guard = true;
+-
+-    /* CPU address space */
+-    memory_region_add_subregion(address_space_mem, PCI_IO_BASE_ADDR,
+-                                &s->pci_io);
+-    memory_region_add_subregion_overlap(address_space_mem, PCI_IO_BASE_ADDR,
+-                                        &s->pci_io_non_contiguous, 1);
+-    memory_region_add_subregion(address_space_mem, 0xc0000000, &s->pci_memory);
+-
+-    /* Bus master address space */
+-    memory_region_init(&s->bm, obj, "bm-raven", 4 * GiB);
+-    memory_region_init_alias(&s->bm_pci_memory_alias, obj, "bm-pci-memory",
+-                             &s->pci_memory, 0,
+-                             memory_region_size(&s->pci_memory));
+-    memory_region_init_alias(&s->bm_ram_alias, obj, "bm-system",
+-                             get_system_memory(), 0, 0x80000000);
+-    memory_region_add_subregion(&s->bm, 0         , &s->bm_pci_memory_alias);
+-    memory_region_add_subregion(&s->bm, 0x80000000, &s->bm_ram_alias);
+-}
+-
+ static void raven_pcihost_class_init(ObjectClass *klass, const void *data)
+ {
+     DeviceClass *dc = DEVICE_CLASS(klass);
+@@ -330,7 +325,6 @@ static const TypeInfo raven_types[] = {
+         .name = TYPE_RAVEN_PCI_HOST_BRIDGE,
+         .parent = TYPE_PCI_HOST_BRIDGE,
+         .instance_size = sizeof(PREPPCIState),
+-        .instance_init = raven_pcihost_initfn,
+         .class_init = raven_pcihost_class_init,
+     },
+     {
+-- 
+2.53.0
 
 
