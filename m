@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8048F3381A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:51:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8660F3381A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:51:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Q8v-0005cS-Rd; Tue, 17 Mar 2026 04:51:13 -0400
+	id 1w2Q99-0005hT-G5; Tue, 17 Mar 2026 04:51:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q8g-0005WP-Pc
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:01 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w2Q8o-0005Xa-GR
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q8f-0002ec-6x
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:50:58 -0400
+ id 1w2Q8l-0002fn-KO
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737456;
+ s=mimecast20190719; t=1773737462;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=lCfogonzVWuqUsCZibtn9CrGck935VlJnTOvoIoLaI4=;
- b=Gy2KfrI1MUoU/8yMicdbXBvnQD7hKBsNJ3GGZedgqbhEpeFQrmH4Z6BUQExh7XAp0/ABUZ
- YoWfnY79i9h3+H4PYp3SVjiszuvG+19Fa5TKB3LIQIJIa+OG8EpgqrGw30CXlbtlsM8qOx
- DNWdrTkIpCuCwMyZ1i3GN9bUpGyFxPk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=VyWuFR66FdcxTDSAYxstFIq6Xs0/vGMx54Hcusmh2ak=;
+ b=YCWZlKljThvTETemHN3+BRFfVojQ3zm2hbqDZ11BHnc+D6hAbaURRRSXw5kd0X5FQcUn+V
+ dZHjv3huruHUVw7KwEnP9ZY2CU+0sCZJwgxtjjDVocOjW/fNIPAxDLO0E4b7nTXn78dyP5
+ wnVwyOY6p2wDOk2RPT2PMwz/YQ2w7Co=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-aZgkQtFAOyWwTKRetsuWqw-1; Tue,
- 17 Mar 2026 04:50:54 -0400
-X-MC-Unique: aZgkQtFAOyWwTKRetsuWqw-1
-X-Mimecast-MFC-AGG-ID: aZgkQtFAOyWwTKRetsuWqw_1773737453
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-680-ncDgKbgcO86X6wrLXs9ZFg-1; Tue,
+ 17 Mar 2026 04:51:00 -0400
+X-MC-Unique: ncDgKbgcO86X6wrLXs9ZFg-1
+X-Mimecast-MFC-AGG-ID: ncDgKbgcO86X6wrLXs9ZFg_1773737459
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C55EF19560B4
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:53 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 918A6195609E
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:59 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 8CCA63000223
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:51 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 847F2180075E
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:58 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:50:16 +0400
-Subject: [PATCH 02/60] ui/vnc-jobs: clear source tag
+Date: Tue, 17 Mar 2026 12:50:17 +0400
+Subject: [PATCH 03/60] ui/vnc-jobs: remove needless buffer_reset() before end
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-2-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-3-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=3974;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=592;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=z9xlIu2VqM0UcsaG7dgBxxV0J2Tcq9TvqcBIeQ44UFo=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXZAN5pfJZfFFS5gMN9Nym9pzLS5zVhnklRL
- 3qCQ0NyA4iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2QAKCRDa6OEJdZac
- 5Q3ID/99oAAR2K8vkDXe05VGhj1D6Lfz4UzWmjKZT3QDTEny6b9WRn+e+w6eQhYIxK3Q9iAO3oN
- 188IoHdt9QhEIe7klMy/YhjJLfwJq6g10QSlj2YBS8GfAt7ZrbBzBabbdPCeHssC+ZVjZxR08H7
- UD+YSiZRmgIQKsRdeuj0KmvYa/GHFGCi7sUSLevCzq5oOLwPbFpLCTVnUpUyATUoVpG0fnMDi5l
- o4yUq2UMLe1tDZXSehiAoP3qiht7NY+jEEWdzR3SBiLlgNmKn6JbwrqwcYBUjKAV3yKlLWlfpNO
- c1FN15rWGVmDasAeU9k2TFpVv4CkPLP6ErnL6SQE5DsMxcO5a8cG3IOid41VJY1Nb+b2W149wzv
- W7lvECDg7uHy5bcXJsq0gEf/RlqaNkBCHDwrHwKS0FBXYgUsv8GVQqXcOD9IMhr1Z5dXMCiDY46
- OruWFgF2klzKfW0aVGL081/zkt2M3qC+3vFIEIPdZXbAGoijFAFvRVqrHIozAsMx79YA0kb8Qtr
- NN511fKwL9SH+GznIud+hgA5J1drMCE04jLI/Hy7ydRqZoW9owCqRJ5uDAo4/x8gNkvus+2XyMW
- jq5n5Sx6ko/RMrmWRZZHA3KI6Qa0/DtN5bvxar6iSsCrdlc4mLmgKPfYX2i2jyUWDUWbEI5inYV
- E40Dz4IFuZ0WpnA==
+ bh=xRixSj8RZS1G5LmAMuX1LV8L9/rZyOWsE0ndlrOHExo=;
+ b=kA0DAAoB2ujhCXWWnOUByyZiAGm5FdqjGseOH+Td505SITToILfsXUjYQAN/EIv/Afr4Hj0xH
+ okCMwQAAQoAHRYhBIepvZM/h8YG0nb2Ldro4Ql1lpzlBQJpuRXaAAoJENro4Ql1lpzljGIP/0me
+ 5PVNlKXeS5VuVDpbTMQtBxe3N+VbmAGRTZJo7x3LsEEIn4ZbtuRpP2wnoAOJyTjDnYjsVX4lkz2
+ D3Pa2veMc5UpSW293jaImmdULHwWGGu8rjfoFvH6RNeG2wspt0pfPEaQsDA35ufx+XgMHaqksYu
+ knG7J6izgW+99383bv0Ty1wI560GyUXt67W99cZGy1jZeegiY4mymH3Yj4AA6a0aocBF+/5RYJ4
+ UZAUNhBAobcnpFJrw/rikgHhvNmP5mSP3ZP37YGw97NinmtgCKQD7oqv1/uxwFcXlqwISn5XAG0
+ p5E8rokEJ8NoYofDiS3B3VbY4zWGT0ap/+3AyoOhRVFy9ySfxPe24JYj7AzCO5KUUctYQ1lynI1
+ vdp+LXdxCmaxGDXHXBb3OpBPb8An2No5L6xoqq22J6z5BGDZ5hv1Fp7jgc5PqTJOlz7o9cShap2
+ 8Qjfi4uahkow73vTXNsIO3Fko+x6Q4dDMs078r8pLeuvvZmN14yJ84d+Csb9X/LvRqKw+MfAg6j
+ hh7wMX3nmo+Z0jp30riFYaN58NxYlr0QMsVkobgBa8vK6DZOGu19FDO5/gqwhyevFiaPECjJGsW
+ hletzcxOei4h52Y9uFuVMKoWOlb9eP02pebDhgmrrjlROVyOwceRqi/euGH1umgSOSgEi/bKM1Y
+ bRaBx
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.129.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -85,7 +85,7 @@ X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,113 +103,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Avoid potentially removing a dangling source & simplify code.
+vnc_async_encoding_end() does buffer_free() next.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc-jobs.c |  4 +---
- ui/vnc.c      | 31 +++++++------------------------
- 2 files changed, 8 insertions(+), 27 deletions(-)
+ ui/vnc-jobs.c | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index ca625da6d05..ec90ae6d5fc 100644
+index ec90ae6d5fc..a6ab733faa1 100644
 --- a/ui/vnc-jobs.c
 +++ b/ui/vnc-jobs.c
-@@ -162,9 +162,7 @@ void vnc_jobs_consume_buffer(VncState *vs)
-     vnc_lock_output(vs);
-     if (vs->jobs_buffer.offset) {
-         if (vs->ioc != NULL && buffer_empty(&vs->output)) {
--            if (vs->ioc_tag) {
--                g_source_remove(vs->ioc_tag);
--            }
-+            g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-             if (vs->disconnecting == FALSE) {
-                 vs->ioc_tag = qio_channel_add_watch(
-                     vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_OUT,
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 952976e9649..ccc73bd7aa4 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -1301,10 +1301,7 @@ static void vnc_disconnect_start(VncState *vs)
-     }
-     trace_vnc_client_disconnect_start(vs, vs->ioc);
-     vnc_set_share_mode(vs, VNC_SHARE_MODE_DISCONNECTED);
--    if (vs->ioc_tag) {
--        g_source_remove(vs->ioc_tag);
--        vs->ioc_tag = 0;
--    }
-+    g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-     qio_channel_close(vs->ioc, NULL);
-     vs->disconnecting = TRUE;
- }
-@@ -1462,9 +1459,7 @@ static size_t vnc_client_write_plain(VncState *vs)
-     }
+@@ -326,7 +326,6 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
  
-     if (vs->output.offset == 0) {
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-         vs->ioc_tag = qio_channel_add_watch(
-             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR,
-             vnc_client_io, vs, NULL);
-@@ -1500,9 +1495,7 @@ static void vnc_client_write(VncState *vs)
-     if (vs->output.offset) {
-         vnc_client_write_locked(vs);
-     } else if (vs->ioc != NULL) {
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-         vs->ioc_tag = qio_channel_add_watch(
-             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR,
-             vnc_client_io, vs, NULL);
-@@ -1638,10 +1631,7 @@ gboolean vnc_client_io(QIOChannel *ioc G_GNUC_UNUSED,
+         qemu_bh_schedule(job->vs->bh);
+     }  else {
+-        buffer_reset(&vs.output);
+         /* Copy persistent encoding data */
+         vnc_async_encoding_end(job->vs, &vs);
      }
- 
-     if (vs->disconnecting) {
--        if (vs->ioc_tag != 0) {
--            g_source_remove(vs->ioc_tag);
--        }
--        vs->ioc_tag = 0;
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-     }
-     return TRUE;
- }
-@@ -1684,9 +1674,7 @@ void vnc_write(VncState *vs, const void *data, size_t len)
-     buffer_reserve(&vs->output, len);
- 
-     if (vs->ioc != NULL && buffer_empty(&vs->output)) {
--        if (vs->ioc_tag) {
--            g_source_remove(vs->ioc_tag);
--        }
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-         vs->ioc_tag = qio_channel_add_watch(
-             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_OUT,
-             vnc_client_io, vs, NULL);
-@@ -1734,10 +1722,7 @@ void vnc_flush(VncState *vs)
-         vnc_client_write_locked(vs);
-     }
-     if (vs->disconnecting) {
--        if (vs->ioc_tag != 0) {
--            g_source_remove(vs->ioc_tag);
--        }
--        vs->ioc_tag = 0;
-+        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-     }
-     vnc_unlock_output(vs);
- }
-@@ -3342,9 +3327,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
-     VNC_DEBUG("New client on socket %p\n", vs->sioc);
-     update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
-     qio_channel_set_blocking(vs->ioc, false, &error_abort);
--    if (vs->ioc_tag) {
--        g_source_remove(vs->ioc_tag);
--    }
-+    g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-     if (websocket) {
-         vs->websocket = 1;
-         if (vd->tlscreds) {
 
 -- 
 2.53.0
