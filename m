@@ -4,51 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DAA77FED9E3
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:18:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CE9D6FED9E0
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:19:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2WBO-0003WT-N1; Tue, 17 Mar 2026 11:18:11 -0400
+	id 1w2WBw-0003vE-Hc; Tue, 17 Mar 2026 11:18:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2WBM-0003WL-FF
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:18:08 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2WBK-00052y-5m
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:18:08 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id E3AE7596A48;
- Tue, 17 Mar 2026 16:18:01 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id UoA3AfWiwQ7J; Tue, 17 Mar 2026 16:17:59 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id E909E5969F3; Tue, 17 Mar 2026 16:17:59 +0100 (CET)
-Message-ID: <b5fe0e79fa342ffe995c767c8a8b081630cf6100.1773760410.git.balaton@eik.bme.hu>
-In-Reply-To: <cover.1773618848.git.balaton@eik.bme.hu>
-References: <cover.1773618848.git.balaton@eik.bme.hu>
-From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v2 4/4] ati-vga: Avoid warnings about sign extension
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w2WBu-0003uh-Jy
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:18:42 -0400
+Received: from mail-ed1-x529.google.com ([2a00:1450:4864:20::529])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alex.bennee@linaro.org>)
+ id 1w2WBs-00056s-A5
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:18:42 -0400
+Received: by mail-ed1-x529.google.com with SMTP id
+ 4fb4d7f45d1cf-660dcafc85aso11373607a12.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:18:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773760718; x=1774365518; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=0g+qhOMUjotKFejKSNzeRvUunOhKK5R6v66N7rslz4Q=;
+ b=lKfrdWaRnEiPtDapX1KwNTI8sF7X2jS2CKC0xK6X8sAhE941SCo93+u0XXO+4Pb7dv
+ 6ZHoyYwv1KtKcKu3T2Y51wH42Bfz9GBuZeMibprGdzoiaAjHuxqGN/aPrNCX21CdVSHE
+ Xgoh6/+5ED5IB8TLxpu5BPqcu7QwKqw6OHc8XNTSKjKXki7q0ZQik5ONST8wnlHqRRn/
+ Fuac97mlFKKkoeE/Obg1+rb2nr2s7F3QmLPRbTWPU8wcI8WpA7AaNTGF3eEst6gsGKSb
+ 7uGIv84+mYT/N/5UvVVktX2S1RoGZZ05LaGEtjF7pyHsa44iUwl2RoEGT/ZeO/rz2xJY
+ STcA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773760718; x=1774365518;
+ h=content-transfer-encoding:mime-version:message-id:date:user-agent
+ :references:in-reply-to:subject:cc:to:from:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=0g+qhOMUjotKFejKSNzeRvUunOhKK5R6v66N7rslz4Q=;
+ b=OTjTbtbliPfNexitwPBNLvAxFOqkQSB6qONW4BfAtpLE15x0kDvrYTOB9UkzANZzM4
+ sR/Ez1KPoZo1jvlwnzjThD+gCKdZ6zWAjoYd5mBcVBwRZYzD2pVTEDXXTZlDtDILAnxA
+ eCJyv7WEexmEQ5Kruw/2EtHtcwfzOm0IEYYOxfKfBZX1z48YPI3L7PiWD+p4GXfuXPt/
+ mgYtMDKPz7Dt75xCtHRQq+Xv/75ZCtAIvIZerXM6H9WS0o8h4+zHfxAS+EMrSlRJiSI1
+ FVQ57q7kPlkjLUl2nKtGzEpWvbZPFXBvCnu6UJ8r6mUOpp9sQwOontPHKRYqesW8KxdU
+ ZMUA==
+X-Gm-Message-State: AOJu0Yy5F8sJm7TRqKea04VOX9QLJWE2TiiE6yqSqr9bwir7H+q2OkqN
+ o2gnytsrElzF3rTg82psK1As8TigmR0GwRM6tR3pZ7ckqeybve5ymvfTFw9u3Vp3bXs=
+X-Gm-Gg: ATEYQzxIdsyay0DP77srqjiVqUWC+/ux16NOw50UYO1BFujaHEd+RYUN2J8Ua1WfXdq
+ 1uFsq+g/At4IEXv1fO5yWLwoI3T4I/osHC66orwaQWB64rF5mCmoqrXCVk0djS793KO9roi5WPm
+ ZRz3o966A8Ca7XyXbbFAuaq7jzK3F4b2mW/+waTj6Rw11T1rL+APMV1L9uwviWqFi0hIgwTjov+
+ ou47ACdQVyasnKG2RZER1DDAxu91SrPUdfu/HR44KH7r7xsb4o8RIDsoA3PwWRVnSJeHMHTBHJQ
+ 2/S9JHjnhJNTPGoSs5a/1W3z4/OoLmxHBHGddedhIG2Dg+cm7DltzIVC9FxJPd0p4gsJvSZxim4
+ pTvBqtpdv7uANdMQBYTunpBto/GLxZOANiekms7Y02cXZ4w76CnINxVWLM6X5dGPOHDXTYNmFh6
+ nlqz4Hmx+UATV1KedaxtffDQY=
+X-Received: by 2002:a05:6402:2744:b0:64b:5562:c8f4 with SMTP id
+ 4fb4d7f45d1cf-667b2342406mr22968a12.7.1773760718234; 
+ Tue, 17 Mar 2026 08:18:38 -0700 (PDT)
+Received: from draig.lan ([185.124.0.237]) by smtp.gmail.com with ESMTPSA id
+ 4fb4d7f45d1cf-667b12a0693sm34190a12.25.2026.03.17.08.18.37
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Mar 2026 08:18:37 -0700 (PDT)
+Received: from draig (localhost [IPv6:::1])
+ by draig.lan (Postfix) with ESMTP id BBDDE5F806;
+ Tue, 17 Mar 2026 15:18:36 +0000 (GMT)
+From: =?utf-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org,  Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?=
+ <philmd@linaro.org>,
+ Daniel =?utf-8?Q?P=2EBerrang=C3=A9?= <berrange@redhat.com>
+Subject: Re: [PATCH 2/3] tests/lcitool: Update openSUSE to version 16
+In-Reply-To: <b4db6dcf-a55c-4c11-bae7-c19f8f03d755@redhat.com> (Thomas Huth's
+ message of "Tue, 17 Mar 2026 15:51:08 +0100")
+References: <20260316135407.209072-1-thuth@redhat.com>
+ <20260316135407.209072-3-thuth@redhat.com>
+ <877brbomx1.fsf@draig.linaro.org>
+ <b4db6dcf-a55c-4c11-bae7-c19f8f03d755@redhat.com>
+User-Agent: mu4e 1.14.0-pre2; emacs 30.1
+Date: Tue, 17 Mar 2026 15:18:36 +0000
+Message-ID: <87jyvacwmr.fsf@draig.linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-To: qemu-devel@nongnu.org
-Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
- Chad Jablonski <chad@jablonski.xyz>,
- Peter Maydell <peter.maydell@linaro.org>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Tue, 17 Mar 2026 16:17:59 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::529;
+ envelope-from=alex.bennee@linaro.org; helo=mail-ed1-x529.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -65,53 +108,139 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reports several possible sign extension errors (latest is CID
-1645615). These cannot happen because the values are limited when
-writing the registers and only 32 bits of the return value matter but
-change type of the variable storing the return value to uint32_t to
-avoid these warnings. Also change DEFAULT_SC_BOTTOM_RIGHT register
-read to match what other similar registers do for consistency.
+Thomas Huth <thuth@redhat.com> writes:
 
-Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
----
-Rest of series unchanged so only sending this patch.
- hw/display/ati.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+> On 16/03/2026 15.43, Alex Benn=C3=A9e wrote:
+>> Thomas Huth <thuth@redhat.com> writes:
+>>=20
+>>> From: Thomas Huth <thuth@redhat.com>
+>>>
+>>> The first version of openSUSE 15 has been released in 2018, and
+>>> according to our support policy, we "support the most recent major
+>>> version at all times for up to five years after its initial release."
+>>>
+>>> Since openSUSE 16 has been released a while ago, and openSUSE is
+>>> clearly older than 5 years already, it's time to update to version 16
+>>> now.
+>>>
+>>> Signed-off-by: Thomas Huth <thuth@redhat.com>
+>>> ---
+>>>   configure                  |  1 -
+>>>   tests/lcitool/mappings.yml | 58 --------------------------------------
+>>>   tests/lcitool/refresh      |  2 +-
+>>>   3 files changed, 1 insertion(+), 60 deletions(-)
+>>>
+>>> diff --git a/configure b/configure
+>>> index cd1dadd8bb2..f3603fd9160 100755
+>>> --- a/configure
+>>> +++ b/configure
+>>> @@ -929,7 +929,6 @@ if ! check_py_version "$python"; then
+>>>     error_exit "Cannot use '$python', Python >=3D 3.9 is required." \
+>>>                "Use --python=3D/path/to/python to specify a supported P=
+ython." \
+>>>                "Maybe try:" \
+>>> -             "  openSUSE Leap 15.3+: zypper install python39" \
+>>>                "  CentOS: dnf install python3.12"
+>>>   fi
+>>>   diff --git a/tests/lcitool/mappings.yml
+>>> b/tests/lcitool/mappings.yml
+>>> index 60618971584..62fe60d047f 100644
+>>> --- a/tests/lcitool/mappings.yml
+>>> +++ b/tests/lcitool/mappings.yml
+>>> @@ -3,70 +3,17 @@ mappings:
+>>>     bindgen:
+>>>       Ubuntu2204:
+>>>   -  flake8:
+>>> -    OpenSUSELeap15:
+>>> -
+>>>     meson:
+>>> -    OpenSUSELeap15:
+>>>       # Use Meson from PyPI wherever Rust is enabled
+>>>       Debian:
+>>>       Fedora:
+>>>       Ubuntu:
+>>>   -  python3:
+>>> -    OpenSUSELeap15: python311-base
+>>> -
+>>> -  python3-PyYAML:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-devel:
+>>> -    OpenSUSELeap15: python311-devel
+>>> -
+>>> -  python3-docutils:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-numpy:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-opencv:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-pillow:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-pip:
+>>> -    OpenSUSELeap15: python311-pip
+>>> -
+>>> -  python3-pillow:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-selinux:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-setuptools:
+>>> -    OpenSUSELeap15: python311-setuptools
+>>> -
+>>> -  python3-sphinx:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-sphinx-rtd-theme:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-sqlite3:
+>>> -    OpenSUSELeap15: python311
+>>> -
+>>>     python3-tomli:
+>>>       # test using tomllib
+>>>       apk:
+>>>       Fedora:
+>>>       Debian12:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  python3-venv:
+>>> -    OpenSUSELeap15: python311-base
+>>> -
+>>> -  python3-wheel:
+>>> -    OpenSUSELeap15: python311-wheel
+>>>       rust:
+>>>       Debian12: rustc-web
+>>> @@ -79,12 +26,7 @@ pypi_mappings:
+>>>       default: meson=3D=3D1.8.1
+>>>       # Drop packages that need devel headers
+>>> -  python3-numpy:
+>>> -    OpenSUSELeap15:
+>>> -
+>>> -  # see above
+>>>     python3-tomli:
+>>>       apk:
+>>>       Fedora:
+>>>       Debian12:
+>>> -    OpenSUSELeap15:
+>> I'm unsure about the mappings stuff just because I'm not sure what
+>> it is
+>> for. Does it supplement the mappings in libvirt-ci itself?
+>
+> Yes, that's how I understood it. Since this is just an extension to
+> the mappings from libvirt-ci, I think we can safely remove those
+> mappings on the QEMU side now.
 
-diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 8286f67c1c..705e4db6e4 100644
---- a/hw/display/ati.c
-+++ b/hw/display/ati.c
-@@ -266,7 +266,7 @@ static void ati_vga_vblank_irq(void *opaque)
-     ati_vga_update_irq(s);
- }
- 
--static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
-+static inline uint32_t ati_reg_read_offs(uint32_t reg, int offs,
-                                          unsigned int size)
- {
-     if (offs == 0 && size == 4) {
-@@ -279,7 +279,7 @@ static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
- static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
- {
-     ATIVGAState *s = opaque;
--    uint64_t val = 0;
-+    uint32_t val = 0;
- 
-     switch (addr) {
-     case MM_INDEX:
-@@ -514,8 +514,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-         val |= s->regs.default_tile << 16;
-         break;
-     case DEFAULT_SC_BOTTOM_RIGHT:
--        val = (s->regs.default_sc_bottom << 16) |
--              s->regs.default_sc_right;
-+        val = s->regs.default_sc_right;
-+        val |= s->regs.default_sc_bottom << 16;
-         break;
-     case SC_TOP:
-         val = s->regs.sc_top;
--- 
-2.41.3
+Ahh ok - I've always been waiting for the libvirt-ci MRs to go through.
 
+>
+>  Thomas
+
+--=20
+Alex Benn=C3=A9e
+Virtualisation Tech Lead @ Linaro
 
