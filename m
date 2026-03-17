@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6BFFFED9F1
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:21:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 63513FED9F0
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:21:19 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Y6F-0002d2-5N; Tue, 17 Mar 2026 13:21:00 -0400
+	id 1w2Y6S-0003Y8-UE; Tue, 17 Mar 2026 13:21:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y5z-0002RP-UN
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:46 -0400
+ id 1w2Y6O-000386-98
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:21:10 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y5y-0005cM-4a
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:43 -0400
+ id 1w2Y6M-0005gm-Ku
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:21:08 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773768033;
+ s=mimecast20190719; t=1773768065;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7QOJFna4uS6y0l2Y//8zT9IKmV+9rc6k0M7hg1PiLWI=;
- b=CNJbTVQMeDxh5Q7WC7tGnKdu/1uRXSdSwVPg6sBWFKnZUqz9Y3gorE7lCsCUINSEpuoxMn
- b7h0RLTh0h8wXVdE9vUbRvPOyTcAysDMYG5xVBd8+hK+RpGfb42s2NGeOojBGyiml44dwo
- VWkHaJLWMMe/tzyW29XK8qLCTiFVcyM=
+ bh=Y2PTYZWW6vbjY5W/qWBPJmkO1oYa5RgHvvZ9XEiRBXM=;
+ b=XSFtwpgux2OBTvKSXsh+rmHcqo8sn+/USRXcC3CH7hsFx9A+ps3PO9eLG4I9FvJfroKbkJ
+ plcLoe07mTJyOoZKj/kf1pJywXWEfs00w+FEAqK46Uu3EeG//0QflFeDWIiFrvYi2e1jwm
+ h0VTVihQo56zPWiz8i/jL2IAVz+SBiI=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-377-uXL8NLHVNOaj0PsClM_3kA-1; Tue,
- 17 Mar 2026 13:20:30 -0400
-X-MC-Unique: uXL8NLHVNOaj0PsClM_3kA-1
-X-Mimecast-MFC-AGG-ID: uXL8NLHVNOaj0PsClM_3kA_1773768028
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-481-2CIyk4whO2KuXuKp7B1djg-1; Tue,
+ 17 Mar 2026 13:21:02 -0400
+X-MC-Unique: 2CIyk4whO2KuXuKp7B1djg-1
+X-Mimecast-MFC-AGG-ID: 2CIyk4whO2KuXuKp7B1djg_1773768061
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9456B19560B5; Tue, 17 Mar 2026 17:20:28 +0000 (UTC)
+ id DB24D19560B9; Tue, 17 Mar 2026 17:21:00 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 922F430001A1; Tue, 17 Mar 2026 17:20:27 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 5366E18001FE; Tue, 17 Mar 2026 17:20:58 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
@@ -60,15 +60,15 @@ Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 10/16] ui/console: Unify pixman-OpenGL format mapping
-Date: Tue, 17 Mar 2026 21:19:10 +0400
-Message-ID: <20260317171916.438575-11-marcandre.lureau@redhat.com>
+Subject: [PULL 15/16] audio: Add functions to initialize buffers
+Date: Tue, 17 Mar 2026 21:19:15 +0400
+Message-ID: <20260317171916.438575-16-marcandre.lureau@redhat.com>
 In-Reply-To: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 References: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -97,93 +97,89 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
 
-console_gl_check_format() was supposed to check if the pixman format is
-supported by surface_gl_create_texture(), but it missed
-PIXMAN_BE_x8r8g8b8 and PIXMAN_BE_a8r8g8b8, which are properly mapped to
-OpenGL formats by surface_gl_create_texture().
-
-Fix the discrepancy of the two functions by sharing the code to map
-pixman formats to OpenGL ones.
+These functions can be used to re-initialize buffers when hardware
+parameters change due to device hotplug, for example.
 
 Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
+Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
 Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260303-gl-v1-1-d90f0a237a52@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260304-coreaudio-v8-5-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
 ---
- ui/console-gl.c | 43 ++++++++++++++++++++++---------------------
- 1 file changed, 22 insertions(+), 21 deletions(-)
+ audio/audio_int.h       |  2 ++
+ audio/audio-mixeng-be.c | 24 ++++++++++++++++++------
+ 2 files changed, 20 insertions(+), 6 deletions(-)
 
-diff --git a/ui/console-gl.c b/ui/console-gl.c
-index 403fc36fbdf..22e9787c415 100644
---- a/ui/console-gl.c
-+++ b/ui/console-gl.c
-@@ -31,19 +31,38 @@
+diff --git a/audio/audio_int.h b/audio/audio_int.h
+index 06f79ade6b0..290cf373b49 100644
+--- a/audio/audio_int.h
++++ b/audio/audio_int.h
+@@ -141,9 +141,11 @@ static inline void *advance(void *p, size_t incr)
+ int wav_start_capture(AudioBackend *state, CaptureState *s, const char *path,
+                       int freq, int bits, int nchannels);
  
- /* ---------------------------------------------------------------------- */
- 
--bool console_gl_check_format(DisplayChangeListener *dcl,
--                             pixman_format_code_t format)
-+static bool map_format(pixman_format_code_t format,
-+                       GLenum *glformat, GLenum *gltype)
- {
-     switch (format) {
-     case PIXMAN_BE_b8g8r8x8:
-     case PIXMAN_BE_b8g8r8a8:
-+        *glformat = GL_BGRA_EXT;
-+        *gltype = GL_UNSIGNED_BYTE;
-+        return true;
-+    case PIXMAN_BE_x8r8g8b8:
-+    case PIXMAN_BE_a8r8g8b8:
-+        *glformat = GL_RGBA;
-+        *gltype = GL_UNSIGNED_BYTE;
-+        return true;
-     case PIXMAN_r5g6b5:
-+        *glformat = GL_RGB;
-+        *gltype = GL_UNSIGNED_SHORT_5_6_5;
-         return true;
-     default:
-         return false;
++void audio_generic_initialize_buffer_in(HWVoiceIn *hw);
+ void audio_generic_run_buffer_in(HWVoiceIn *hw);
+ void *audio_generic_get_buffer_in(HWVoiceIn *hw, size_t *size);
+ void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size);
++void audio_generic_initialize_buffer_out(HWVoiceOut *hw);
+ void audio_generic_run_buffer_out(HWVoiceOut *hw);
+ size_t audio_generic_buffer_get_free(HWVoiceOut *hw);
+ void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size);
+diff --git a/audio/audio-mixeng-be.c b/audio/audio-mixeng-be.c
+index 5878b23e04e..f7d73d85608 100644
+--- a/audio/audio-mixeng-be.c
++++ b/audio/audio-mixeng-be.c
+@@ -1187,14 +1187,20 @@ void audio_run(AudioMixengBackend *s, const char *msg)
      }
  }
  
-+bool console_gl_check_format(DisplayChangeListener *dcl,
-+                             pixman_format_code_t format)
++void audio_generic_initialize_buffer_in(HWVoiceIn *hw)
 +{
-+    GLenum glformat;
-+    GLenum gltype;
-+
-+    return map_format(format, &glformat, &gltype);
++    g_free(hw->buf_emul);
++    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
++    hw->buf_emul = g_malloc(hw->size_emul);
++    hw->pos_emul = hw->pending_emul = 0;
 +}
 +
- void surface_gl_create_texture(QemuGLShader *gls,
-                                DisplaySurface *surface)
+ void audio_generic_run_buffer_in(HWVoiceIn *hw)
  {
-@@ -54,25 +73,7 @@ void surface_gl_create_texture(QemuGLShader *gls,
-         return;
+     AudioMixengBackendClass *k = AUDIO_MIXENG_BACKEND_GET_CLASS(hw->s);
+ 
+     if (unlikely(!hw->buf_emul)) {
+-        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+-        hw->buf_emul = g_malloc(hw->size_emul);
+-        hw->pos_emul = hw->pending_emul = 0;
++        audio_generic_initialize_buffer_in(hw);
      }
  
--    switch (surface_format(surface)) {
--    case PIXMAN_BE_b8g8r8x8:
--    case PIXMAN_BE_b8g8r8a8:
--        surface->glformat = GL_BGRA_EXT;
--        surface->gltype = GL_UNSIGNED_BYTE;
--        break;
--    case PIXMAN_BE_x8r8g8b8:
--    case PIXMAN_BE_a8r8g8b8:
--        surface->glformat = GL_RGBA;
--        surface->gltype = GL_UNSIGNED_BYTE;
--        break;
--    case PIXMAN_r5g6b5:
--        surface->glformat = GL_RGB;
--        surface->gltype = GL_UNSIGNED_SHORT_5_6_5;
--        break;
--    default:
--        g_assert_not_reached();
--    }
--
-+    assert(map_format(surface_format(surface), &surface->glformat, &surface->gltype));
-     glGenTextures(1, &surface->texture);
-     glEnable(GL_TEXTURE_2D);
-     glBindTexture(GL_TEXTURE_2D, surface->texture);
+     while (hw->pending_emul < hw->size_emul) {
+@@ -1227,6 +1233,14 @@ void audio_generic_put_buffer_in(HWVoiceIn *hw, void *buf, size_t size)
+     hw->pending_emul -= size;
+ }
+ 
++void audio_generic_initialize_buffer_out(HWVoiceOut *hw)
++{
++    g_free(hw->buf_emul);
++    hw->size_emul = hw->samples * hw->info.bytes_per_frame;
++    hw->buf_emul = g_malloc(hw->size_emul);
++    hw->pos_emul = hw->pending_emul = 0;
++}
++
+ size_t audio_generic_buffer_get_free(HWVoiceOut *hw)
+ {
+     if (hw->buf_emul) {
+@@ -1260,9 +1274,7 @@ void audio_generic_run_buffer_out(HWVoiceOut *hw)
+ void *audio_generic_get_buffer_out(HWVoiceOut *hw, size_t *size)
+ {
+     if (unlikely(!hw->buf_emul)) {
+-        hw->size_emul = hw->samples * hw->info.bytes_per_frame;
+-        hw->buf_emul = g_malloc(hw->size_emul);
+-        hw->pos_emul = hw->pending_emul = 0;
++        audio_generic_initialize_buffer_out(hw);
+     }
+ 
+     *size = MIN(hw->size_emul - hw->pending_emul,
 -- 
 2.53.0
 
