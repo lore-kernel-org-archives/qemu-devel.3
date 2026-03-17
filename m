@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5488F3381B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:57:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 89A15F33817
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:57:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QEA-0005mj-6v; Tue, 17 Mar 2026 04:56:38 -0400
+	id 1w2QBZ-0000Na-NB; Tue, 17 Mar 2026 04:53:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QCp-0003SY-Eb
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:19 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w2QAg-0007CX-5o
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:53:06 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QCk-00072K-IG
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:14 -0400
+ id 1w2QAe-0003B1-Gt
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:53:01 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737709;
+ s=mimecast20190719; t=1773737579;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=pm9z/KLmnvqjHU65Y307HLafFM7uqzQ++FqrxJANaLc=;
- b=jPg85Fblc/Jc+ldh149QX0u4hybbnmNDZr+kczI9HbXeBJyi7j1/ALtzbXfBfBA/P6ZsGB
- n7fRurEpPKiiVku6DY1M5fTLFlx5sVmCvAR1VZ/FJYrYHswcG82pA4xzFwXMbKR3WkDx3E
- 4hA38Me+n/7JClR61eAThjTj9z1FYno=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ bh=MuszwlzFazS/xLxRKGLnEKlT1TF42DEZ+anEnziEuy4=;
+ b=YNwSm+mtB9LCan1PfPK9F74MCe2tltY/x9rnvMuZCwChcYSXzW3Lnk2R5Eu402jJdn3BP4
+ /5mKlIOPf+StYCSTnRfz1DCRefK1WQ362Z85CWnYmR0K/a5VPxFQJr929wo00rujc5EfPg
+ ZBm2YmyY+Sq74r/dXw1TUfWl1q5OdUg=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-591-b5zhYZSgOCK8yJ68t5R74A-1; Tue,
- 17 Mar 2026 04:55:07 -0400
-X-MC-Unique: b5zhYZSgOCK8yJ68t5R74A-1
-X-Mimecast-MFC-AGG-ID: b5zhYZSgOCK8yJ68t5R74A_1773737706
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-VrYtU60POQ6buo5kWj3TmA-1; Tue,
+ 17 Mar 2026 04:52:58 -0400
+X-MC-Unique: VrYtU60POQ6buo5kWj3TmA-1
+X-Mimecast-MFC-AGG-ID: VrYtU60POQ6buo5kWj3TmA_1773737577
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C310F19560BB
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:06 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6655619560BF
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:57 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id AB30B180075B
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:05 +0000 (UTC)
+ id 0EA01180075B
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:52:55 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:51:00 +0400
-Subject: [PATCH 46/60] ui/vnc: merge vnc_display_init() and vnc_display_open()
+Date: Tue, 17 Mar 2026 12:50:38 +0400
+Subject: [PATCH 24/60] ui/console-vc: refactor text_console_resize() into
+ vt100_set_image()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-46-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-24-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=10263;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3400;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=y0rdJ4i09dkViDqaBY5p5uE+zFyhrsF9I6NHbnFZ5sQ=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXcbpKG45PNdNRwk32ltBSJEaCWloyYK1GQc
- jYxMEF3s1iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3AAKCRDa6OEJdZac
- 5V1hD/96bG+PWZoNbOZ4LGob0HWnp9ZyHYtqMS9f1yXrtggXfi7WnzbPu13zKi700oNV6Y9O/ik
- 27VJkawx1KWpKKisCS1Qv9n005RhF83193+6cjq9j8mI3znTguvHXQMCt1SHIkg7RIZgmTUP/w3
- yG5j17ofeRKTcTFYVG7oioTqePGKNqgF2AxciMEvROC1gpvdHRdOVkb0i7JRaaHkJAsIHJW8NqK
- kYQJvReD9FhG83PH6FQcdPI2oP1v3G+XUWDwPO9zlKe6iRQP/NTqa3KdsPuLXsf1J+k0LWiAiJa
- huYrkzmbMZO0Oj5yTwlpLgDTFXaqnOgDVAbltCo9aNmiyhA14nTGrjuTaX7mQWse6XabfCZCB93
- wNttTj2bSM9LB9hvnF+HIpGAWfV5TvoqWc9kk0pB/VIRFxZ2RmNvjMCdfBEoV3WHgiqfpIAcE+B
- SatOvRflDThqZicTh5R85w4G5g8FZ0fQXB92Rcf9btpRDIWlAZQ3sx/l7+T7R31bGxfZqhPedB8
- nP5poJ0Erzs4Bb7zgGp/Eb5DqsXJcQMNyFYub/IoJK6SP26F3JpEsHf0kxfhAXUx8KKPedr9fFQ
- WNaSdwqTuZUmUgnYHgaig11t0vx0fuIUBOctkktLvIsOPk3xwvFec9CjPe5C8Z0ZVZHkk3PtfmH
- mh4ga3tK/2sPRxg==
+ bh=numOHj5C41+ncaC5yXhTFVXg90F23EL7KvI8XaI8wcQ=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXbhYblaSb3rHi4/xDsDktjkt9T+En3gYY3d
+ ukewfSe4RiJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2wAKCRDa6OEJdZac
+ 5b0nD/oCQTjIhs377kmurH4+h5kF2sdWJ/x1tLvBMaoeYcrOLGEVsPTUkswZTYi0cIj8NwEwmOH
+ KTVXH/zX3k9W1hW26zVeS6izp6V9h5HZ9Um72xpTN7DGkWhTqSpwrmZjwvoCrJHWXWdLNzoTZY2
+ 0fw0ns8LN3ShChN6b2uM/kipO3414uDxVJu5pVWm9hJkscVHKw1a2NlSZ6gBSLa36QqYT1hQI7D
+ s0wScpZQ605SixULZRsOqQ1Ab2Sp9WFqEY78dE2DVtVY3nNp2qIO3+e2oXUTzfg5H2stgR+ZsEr
+ +NDGIoK8wExOQSC6uOBnAh43MLT1rsa/9+eFNTO9Feg9Feg9KKRTeAGM1wOtZoRlUHgMT6rUxRl
+ UCQJJhz/vrDCDHaehmssXfcQ5vTovz4nIOLct0WdTR4OKkklsnBN/B6V5ZZqnYMNelk5M1Kx1R1
+ o6fKMVeK5VHi6uN6MEUirDxRivdny7gyTyrSHWTQg25QXJ08aUbgED4/gKdK6eujSzZspUikK6Q
+ Npxc4+WlO7kJUIYtcfBaSUpoFRda97JCP11vjII87xx/yLaHX3UIjIVpT+ZfRVz9Zd4GujeBAWn
+ Qieh+MXuHhcyijuXN0Q9FAx3RqMNLxiICRNQp0yjITCfZDZfp2/Jdg4JmFhcElXn7N9XBaSouLf
+ cit7i2LpJMMHu7g==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124;
+Received-SPF: pass client-ip=170.10.133.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -85,7 +86,7 @@ X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,312 +104,108 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Combine the two-step vnc_display_init()/vnc_display_open() sequence
-into a single vnc_display_new() function that returns VncDisplay*.
-This simplifies the API by making vnc_display_open() an
-internal detail and will allow further code simplification.
-
-vnc_display_new() is moved to vnc.h, since it returns VncDisplay* now.
-Add vnc_display_free() for consistency, and it will be later used.
+Decouple the resize logic from QemuTextConsole by operating on
+QemuVT100 and taking a pixman_image_t directly, instead of reaching
+into the console's scanout surface. The callers now pass the image
+explicitly, which makes the VT100 layer independent of the console
+object hierarchy.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h |  2 --
- ui/vnc.h             |  3 ++
- ui/vnc.c             | 79 ++++++++++++++++++++++------------------------------
- 3 files changed, 37 insertions(+), 47 deletions(-)
+ ui/console-vc.c | 40 +++++++++++++++++++---------------------
+ 1 file changed, 19 insertions(+), 21 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 152333d60fc..737ceba3890 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -448,8 +448,6 @@ const char *qemu_display_get_vc(DisplayOptions *opts);
- void qemu_display_help(void);
+diff --git a/ui/console-vc.c b/ui/console-vc.c
+index a45f4bc875b..efb10c2f8f7 100644
+--- a/ui/console-vc.c
++++ b/ui/console-vc.c
+@@ -12,6 +12,7 @@
+ #include "ui/console.h"
+ #include "ui/cp437.h"
  
- /* vnc.c */
--void vnc_display_init(const char *id, Error **errp);
--void vnc_display_open(const char *id, Error **errp);
- void vnc_display_add_client(const char *id, int csock, bool skipauth);
- int vnc_display_password(const char *id, const char *password, Error **errp);
- int vnc_display_pw_expire(const char *id, time_t expires);
-diff --git a/ui/vnc.h b/ui/vnc.h
-index c5d678ac31e..6afe0f16d12 100644
---- a/ui/vnc.h
-+++ b/ui/vnc.h
-@@ -548,6 +548,9 @@ enum VncFeatures {
- #define VNC_CLIPBOARD_NOTIFY   (1 << 27)
- #define VNC_CLIPBOARD_PROVIDE  (1 << 28)
++#include "pixman.h"
+ #include "trace.h"
+ #include "console-priv.h"
  
-+VncDisplay *vnc_display_new(const char *id, Error **errp);
-+void vnc_display_free(VncDisplay *vd);
-+
- /*****************************************************************************
-  *
-  * Internal APIs
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 115ff8a988e..03b99c9e590 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3421,14 +3421,14 @@ static void vmstate_change_handler(void *opaque, bool running, RunState state)
-     update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
- }
- 
--static void vnc_display_free(VncDisplay *vd);
-+static bool vnc_display_open(VncDisplay *vd, Error **errp);
- 
--void vnc_display_init(const char *id, Error **errp)
-+VncDisplay *vnc_display_new(const char *id, Error **errp)
- {
-     VncDisplay *vd;
- 
-     if (vnc_display_find(id) != NULL) {
--        return;
-+        return NULL;
+@@ -395,44 +396,41 @@ static void text_console_update(void *opaque, console_ch_t *chardata)
      }
-     vd = g_malloc0(sizeof(*vd));
- 
-@@ -3449,7 +3449,7 @@ void vnc_display_init(const char *id, Error **errp)
- 
-     if (!vd->kbd_layout) {
-         vnc_display_free(vd);
--        return;
-+        return NULL;
-     }
- 
-     vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
-@@ -3462,7 +3462,13 @@ void vnc_display_init(const char *id, Error **errp)
-     vd->vmstate_handler_entry = qemu_add_vm_change_state_handler(
-         &vmstate_change_handler, vd);
- 
-+    if (!vnc_display_open(vd, errp)) {
-+        vnc_display_free(vd);
-+        return NULL;
-+    }
-+
-     QTAILQ_INSERT_TAIL(&vnc_displays, vd, next);
-+    return vd;
  }
  
- static void vnc_display_close(VncDisplay *vd)
-@@ -3507,7 +3513,7 @@ static void vnc_display_close(VncDisplay *vd)
- #endif
- }
- 
--static void vnc_display_free(VncDisplay *vd)
-+void vnc_display_free(VncDisplay *vd)
+-static void text_console_resize(QemuTextConsole *t)
++static void vt100_set_image(QemuVT100 *vt, pixman_image_t *image)
  {
-     if (!vd) {
+-    QemuConsole *s = QEMU_CONSOLE(t);
+     TextCell *cells, *c, *c1;
+     int w1, x, y, last_width, w, h;
+ 
+-    assert(s->scanout.kind == SCANOUT_SURFACE);
+-
+-    t->vt.image = s->surface->image;
+-    w = pixman_image_get_width(t->vt.image) / FONT_WIDTH;
+-    h = pixman_image_get_height(t->vt.image) / FONT_HEIGHT;
+-    if (w == t->vt.width && h == t->vt.height) {
++    vt->image = image;
++    w = pixman_image_get_width(image) / FONT_WIDTH;
++    h = pixman_image_get_height(image) / FONT_HEIGHT;
++    if (w == vt->width && h == vt->height) {
          return;
-@@ -3525,7 +3531,6 @@ static void vnc_display_free(VncDisplay *vd)
-     g_free(vd);
+     }
+ 
+-    last_width = t->vt.width;
+-    t->vt.width = w;
+-    t->vt.height = h;
++    last_width = vt->width;
++    vt->width = w;
++    vt->height = h;
+ 
+-    w1 = MIN(t->vt.width, last_width);
++    w1 = MIN(vt->width, last_width);
+ 
+-    cells = g_new(TextCell, t->vt.width * t->vt.total_height + 1);
+-    for (y = 0; y < t->vt.total_height; y++) {
+-        c = &cells[y * t->vt.width];
++    cells = g_new(TextCell, vt->width * vt->total_height + 1);
++    for (y = 0; y < vt->total_height; y++) {
++        c = &cells[y * vt->width];
+         if (w1 > 0) {
+-            c1 = &t->vt.cells[y * last_width];
++            c1 = &vt->cells[y * last_width];
+             for (x = 0; x < w1; x++) {
+                 *c++ = *c1++;
+             }
+         }
+-        for (x = w1; x < t->vt.width; x++) {
++        for (x = w1; x < vt->width; x++) {
+             c->ch = ' ';
+             c->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+             c++;
+         }
+     }
+-    g_free(t->vt.cells);
+-    t->vt.cells = cells;
++    g_free(vt->cells);
++    vt->cells = cells;
  }
  
--
- int vnc_display_password(const char *id, const char *password, Error **errp)
- {
-     VncDisplay *vd = vnc_display_find(id);
-@@ -4068,10 +4073,9 @@ bool vnc_display_update(DisplayUpdateOptionsVNC *arg, Error **errp)
-     return true;
+ static void vc_put_lf(VCChardev *vc)
+@@ -1125,7 +1123,7 @@ static void text_console_invalidate(void *opaque)
+     QemuTextConsole *s = QEMU_TEXT_CONSOLE(opaque);
+ 
+     if (!QEMU_IS_FIXED_TEXT_CONSOLE(s)) {
+-        text_console_resize(QEMU_TEXT_CONSOLE(s));
++        vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
+     }
+     vt100_refresh(&s->vt);
  }
+@@ -1245,7 +1243,7 @@ static bool vc_chr_open(Chardev *chr, ChardevBackend *backend, Error **errp)
  
--void vnc_display_open(const char *id, Error **errp)
-+static bool vnc_display_open(VncDisplay *vd, Error **errp)
- {
--    VncDisplay *vd = vnc_display_find(id);
--    QemuOpts *opts = qemu_opts_find(&qemu_vnc_opts, id);
-+    QemuOpts *opts = qemu_opts_find(&qemu_vnc_opts, vd->id);
-     g_autoptr(SocketAddressList) saddr_list = NULL;
-     g_autoptr(SocketAddressList) wsaddr_list = NULL;
-     const char *share, *device_id;
-@@ -4090,26 +4094,23 @@ void vnc_display_open(const char *id, Error **errp)
-     assert(vd);
-     assert(opts);
+     /* set current text attributes to default */
+     drv->t_attrib = TEXT_ATTRIBUTES_DEFAULT;
+-    text_console_resize(s);
++    vt100_set_image(&s->vt, QEMU_CONSOLE(s)->surface->image);
  
--    vnc_display_close(vd);
--
-     reverse = qemu_opt_get_bool(opts, "reverse", false);
-     if (vnc_display_get_addresses(opts, reverse, &saddr_list, &wsaddr_list,
-                                   errp) < 0) {
--        goto fail;
-+        return false;
-     }
- 
--
-     passwordSecret = qemu_opt_get(opts, "password-secret");
-     if (passwordSecret) {
-         if (qemu_opt_get(opts, "password")) {
-             error_setg(errp,
-                        "'password' flag is redundant with 'password-secret'");
--            goto fail;
-+            return false;
-         }
-         vd->password = qcrypto_secret_lookup_as_utf8(passwordSecret,
-                                                      errp);
-         if (!vd->password) {
--            goto fail;
-+            return false;
-         }
-         password = true;
-     } else {
-@@ -4120,7 +4121,7 @@ void vnc_display_open(const char *id, Error **errp)
-                 QCRYPTO_CIPHER_ALGO_DES, QCRYPTO_CIPHER_MODE_ECB)) {
-             error_setg(errp,
-                        "Cipher backend does not support DES algorithm");
--            goto fail;
-+            return false;
-         }
-     }
- 
-@@ -4130,7 +4131,7 @@ void vnc_display_open(const char *id, Error **errp)
- #ifndef CONFIG_VNC_SASL
-     if (sasl) {
-         error_setg(errp, "VNC SASL auth requires cyrus-sasl support");
--        goto fail;
-+        return false;
-     }
- #endif /* CONFIG_VNC_SASL */
-     credid = qemu_opt_get(opts, "tls-creds");
-@@ -4141,7 +4142,7 @@ void vnc_display_open(const char *id, Error **errp)
-         if (!creds) {
-             error_setg(errp, "No TLS credentials with id '%s'",
-                        credid);
--            goto fail;
-+            return false;
-         }
-         vd->tlscreds = (QCryptoTLSCreds *)
-             object_dynamic_cast(creds,
-@@ -4149,26 +4150,26 @@ void vnc_display_open(const char *id, Error **errp)
-         if (!vd->tlscreds) {
-             error_setg(errp, "Object with id '%s' is not TLS credentials",
-                        credid);
--            goto fail;
-+            return false;
-         }
-         object_ref(OBJECT(vd->tlscreds));
- 
-         if (!qcrypto_tls_creds_check_endpoint(vd->tlscreds,
-                                               QCRYPTO_TLS_CREDS_ENDPOINT_SERVER,
-                                               errp)) {
--            goto fail;
-+            return false;
-         }
-     }
-     tlsauthz = qemu_opt_get(opts, "tls-authz");
-     if (tlsauthz && !vd->tlscreds) {
-         error_setg(errp, "'tls-authz' provided but TLS is not enabled");
--        goto fail;
-+        return false;
-     }
- 
-     saslauthz = qemu_opt_get(opts, "sasl-authz");
-     if (saslauthz && !sasl) {
-         error_setg(errp, "'sasl-authz' provided but SASL auth is not enabled");
--        goto fail;
-+        return false;
-     }
- 
-     share = qemu_opt_get(opts, "share");
-@@ -4181,7 +4182,7 @@ void vnc_display_open(const char *id, Error **errp)
-             vd->share_policy = VNC_SHARE_POLICY_FORCE_SHARED;
-         } else {
-             error_setg(errp, "unknown vnc share= option");
--            goto fail;
-+            return false;
-         }
-     } else {
-         vd->share_policy = VNC_SHARE_POLICY_ALLOW_EXCLUSIVE;
-@@ -4215,20 +4216,20 @@ void vnc_display_open(const char *id, Error **errp)
-     if (vnc_display_setup_auth(&vd->auth, &vd->subauth,
-                                vd->tlscreds, password,
-                                sasl, false, errp) < 0) {
--        goto fail;
-+        return false;
-     }
-     trace_vnc_auth_init(vd, 0, vd->auth, vd->subauth);
- 
-     if (vnc_display_setup_auth(&vd->ws_auth, &vd->ws_subauth,
-                                vd->tlscreds, password,
-                                sasl, true, errp) < 0) {
--        goto fail;
-+        return false;
-     }
-     trace_vnc_auth_init(vd, 1, vd->ws_auth, vd->ws_subauth);
- 
- #ifdef CONFIG_VNC_SASL
-     if (sasl && !vnc_sasl_server_init(errp)) {
--        goto fail;
-+        return false;
-     }
- #endif
-     vd->lock_key_sync = lock_key_sync;
-@@ -4241,7 +4242,7 @@ void vnc_display_open(const char *id, Error **errp)
-     if (audiodev) {
-         vd->audio_be = audio_be_by_name(audiodev, errp);
-         if (!vd->audio_be) {
--            goto fail;
-+            return false;
-         }
-     } else {
-         vd->audio_be = audio_get_default_audio_be(NULL);
-@@ -4255,7 +4256,7 @@ void vnc_display_open(const char *id, Error **errp)
-         con = qemu_console_lookup_by_device_name(device_id, head, &err);
-         if (err) {
-             error_propagate(errp, err);
--            goto fail;
-+            return false;
-         }
-     } else {
-         con = qemu_console_lookup_default();
-@@ -4271,16 +4272,16 @@ void vnc_display_open(const char *id, Error **errp)
-     qkbd_state_set_delay(vd->kbd, key_delay_ms);
- 
-     if (saddr_list == NULL) {
--        return;
-+        return true;
-     }
- 
-     if (reverse) {
-         if (vnc_display_connect(vd, saddr_list, wsaddr_list, errp) < 0) {
--            goto fail;
-+            return false;
-         }
-     } else {
-         if (vnc_display_listen(vd, saddr_list, wsaddr_list, errp) < 0) {
--            goto fail;
-+            return false;
-         }
-     }
- 
-@@ -4288,11 +4289,7 @@ void vnc_display_open(const char *id, Error **errp)
-         vnc_display_print_local_addr(vd);
-     }
- 
--    /* Success */
--    return;
--
--fail:
--    vnc_display_close(vd);
-+    return true;
- }
- 
- void vnc_display_add_client(const char *id, int csock, bool skipauth)
-@@ -4348,15 +4345,7 @@ int vnc_init_func(void *opaque, QemuOpts *opts, Error **errp)
-         id = vnc_auto_assign_id(opts);
-     }
- 
--    vnc_display_init(id, errp);
--    if (*errp) {
--        return -1;
--    }
--    vnc_display_open(id, errp);
--    if (*errp) {
--        return -1;
--    }
--    return 0;
-+    return vnc_display_new(id, errp) != NULL ? 0 : -1;
- }
- 
- static void vnc_register_config(void)
+     if (chr->label) {
+         char *msg;
 
 -- 
 2.53.0
