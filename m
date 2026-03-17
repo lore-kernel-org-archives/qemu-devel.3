@@ -4,111 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B23BFED9EB
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 16:32:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75D6BFED9EB
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 16:35:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2XKF-0007Zx-DD; Tue, 17 Mar 2026 12:31:23 -0400
+	id 1w2XNa-00087G-0S; Tue, 17 Mar 2026 12:34:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w2XK9-0007ZK-A4
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 12:31:22 -0400
-Received: from fhigh-b7-smtp.messagingengine.com ([202.12.124.158])
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w2XNY-000877-C4
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 12:34:48 -0400
+Received: from forwardcorp1b.mail.yandex.net
+ ([2a02:6b8:c02:900:1:45:d181:df01])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w2XK7-0003Mo-JW
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 12:31:17 -0400
-Received: from phl-compute-06.internal (phl-compute-06.internal [10.202.2.46])
- by mailfhigh.stl.internal (Postfix) with ESMTP id DC89B7A01B1;
- Tue, 17 Mar 2026 12:31:12 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-06.internal (MEProxy); Tue, 17 Mar 2026 12:31:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1773765072; x=1773851472; bh=AIO1LzrlbhyJISzLPxbp6eJsfmHEXX5X
- K5UDBVyTKJU=; b=hXJy1rleclxlDmtiCYy1CQEmo0OI5chIe5ThMdGEZXNngjTf
- FzPm+4Emjhtfk3353OVC2ZIrIsuHc7+axr2c3OGb4njh6pr5/PsdhkGIO9TzSvnz
- gHb8gMebDvTSCE0rCPWJwi8P16sJ8mVIOOj/3ow9wzwOEtUS7HHbFVkbQiN6bOcH
- Joi2t4djS2O/HX4DgjERApIJ93J21eYaii1e5onR/UrQBCmnJjaLSQ5T0WtdQOl0
- ffk8q8lg5H/uqYcizonDxwibXZnU2IlFmcVWk6EvD/m4o8v3DOrnIyACAaCSDYiY
- v3uOqo66c28LoyHCboYMpK7VjvZg+M4vpwTIfQ==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773765072; x=
- 1773851472; bh=AIO1LzrlbhyJISzLPxbp6eJsfmHEXX5XK5UDBVyTKJU=; b=Z
- n8dXTi1lT/FK9Qi7i8EBQ3Nt3kslgdRhVP8eIOXGNrDeB4yIUlbl7aPsIa0RZ/ZY
- UxzPdjni9FbChUUEI2JAh1qI2cdH7PJigbkoE0unL4EFyoKWzx26q8sof74gX/0n
- 8NhdmrlST6mjUruRc/3yEYXHx9hHdy8/lD55ITyToxeLNhNzoK7VtwCpNGnNdaoq
- 3qHbpRzdAEeplmFi5UO+2O1QKOCXsxG2SJbuqdoVd9p20ofSDQKHhjJLfVjHvTzU
- mqw28sOGEOfP7Th44jsT/W3v/JPDWADNJU7EfAQv/jPGWmaWI9bh78OFbCp+lZto
- YcEPGXB3uIX5qXxmjksUA==
-X-ME-Sender: <xms:0IG5aYUXX3pXhc8rLspodWp4SXeSrBA7OPV2U-_8yfyw4-K9ZK25tg>
- <xme:0IG5aQTDq4Uh3eB6ivAP1RHt1fiNYAKL6JIOVnVZngMil3rX_K-6WVTJx-yP279II
- xVJnYhokLl0r_gdUC3kAkqwjzPpcdMOc7IuJD4OZKN3ZHlpmZQ6Psg>
-X-ME-Received: <xmr:0IG5aWP7ysPnqTbEoo1vKEpo8wPJjhOspHiQp6Mxb4oEM3iwv9ln_-7UFPe_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddujeegucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
- tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepqhgvmh
- huqdguvghvvghlsehnohhnghhnuhdrohhrghdprhgtphhtthhopehphhhilhhmugeslhhi
- nhgrrhhordhorhhgpdhrtghpthhtoheptghhrggusehjrggslhhonhhskhhirdighiiipd
- hrtghpthhtohepkhhrrgigvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopegsrghl
- rghtohhnsegvihhkrdgsmhgvrdhhuhdprhgtphhtthhopehmrghrtggrnhgurhgvrdhluh
- hrvggruhesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:0IG5aeRqeThKBO4TKIhFJMfmyK-huYUn5QUEWkMgBrls3T3UClb7jw>
- <xmx:0IG5aUgqYcp78tergSwOFPLv7BRoOjwqdPfzMzkBcK5AEE0XNhFaRA>
- <xmx:0IG5aX_P63DYqPs8WbZYyPoH8Cjq9vkc-F2_TeKEqvk2uMXYDcoa6A>
- <xmx:0IG5abHp72kBvEqGtLLkHK2LqLraxBq9ClloVIqzVwAy87d633Tu8g>
- <xmx:0IG5aXWjJXDlgO0pFmRT-0Gagq6o-ir_kEnkkI61Ac89ng4bMCHe_PbX>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 12:31:11 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 9d894004;
- Tue, 17 Mar 2026 16:31:11 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 17 Mar 2026 12:31:11 -0400
-Message-Id: <DH578OG8RPS8.PFREUK5BRSF5@jablonski.xyz>
-Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
- "Chad Jablonski" <chad@jablonski.xyz>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 1/4] ati-vga: Fix colors when frame buffer endianness
- does not match host
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <cover.1773618848.git.balaton@eik.bme.hu>
- <5837ddb9d354004465216a39b6b6189c2ee5c8f4.1773618848.git.balaton@eik.bme.hu>
-In-Reply-To: <5837ddb9d354004465216a39b6b6189c2ee5c8f4.1773618848.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=202.12.124.158; envelope-from=chad@jablonski.xyz;
- helo=fhigh-b7-smtp.messagingengine.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.5,
- PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
+ id 1w2XNU-0006Br-Iv
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 12:34:48 -0400
+Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
+ [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id EEC7B8074A;
+ Tue, 17 Mar 2026 19:34:38 +0300 (MSK)
+Received: from [IPV6:2a02:6bf:8080:558::1:22] (unknown
+ [2a02:6bf:8080:558::1:22])
+ by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id bYPaNu1AqmI0-Ek3QmPwS; Tue, 17 Mar 2026 19:34:38 +0300
+Precedence: bulk
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1773765278;
+ bh=JwI4yDCfBwHXLdocJEYz9uDsKigLp6KoLfnh8nYJAC8=;
+ h=In-Reply-To:Cc:Date:References:To:From:Subject:Message-ID;
+ b=NJaMMaq2KIbY7M8dHNdK3znWO2Eukg7YZhjE4P8gGd9cfeUXH/WKrzPBL9SuBFAD9
+ D7kZ8pi68kuUFNfnX+aTEbaARV2fWB5pXBUaHnyQ5bCLIne3uq/s2vO+qh2BF3lXVe
+ DH687cDRy3RK6knbehk3dhLdIc09WYgdPC8sYtgU=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+Message-ID: <f62970ba-ba0f-4495-8dc2-f11b554ee628@yandex-team.ru>
+Date: Tue, 17 Mar 2026 19:34:37 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v3 00/12] net: refactoring and fixes
+From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
+To: Jason Wang <jasowang@redhat.com>
+Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
+ d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru
+References: <20260218202829.1322088-1-vsementsov@yandex-team.ru>
+ <CACGkMEuE3LQGmSK6tTa7xhYCio1nHQcAf0Fw1uD=6ipiUGtAwg@mail.gmail.com>
+ <59d0d488-c680-4c7e-a2be-25079eaa66a3@yandex-team.ru>
+Content-Language: en-US
+In-Reply-To: <59d0d488-c680-4c7e-a2be-25079eaa66a3@yandex-team.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a02:6b8:c02:900:1:45:d181:df01;
+ envelope-from=vsementsov@yandex-team.ru; helo=forwardcorp1b.mail.yandex.net
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
-Precedence: list
 List-Id: qemu development <qemu-devel.nongnu.org>
 List-Unsubscribe: <https://lists.nongnu.org/mailman/options/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=unsubscribe>
@@ -120,21 +79,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This works in the 24/32bpp case. Before this I see a yellow background in
-fluxbox, after I see gray.
+On 12.03.26 09:37, Vladimir Sementsov-Ogievskiy wrote:
+> On 12.03.26 05:59, Jason Wang wrote:
+>> On Thu, Feb 19, 2026 at 4:28 AM Vladimir Sementsov-Ogievskiy
+>> <vsementsov@yandex-team.ru> wrote:
+>>>
+>>> Hi all!
+>>>
+>>> Here are some refactoring and fixes, mostly in net/tap.c I'm making on
+>>> my way to implementing TAP fd migration (through UNIX domain socket).
+>>>
+>>> v3:
+>>>
+>>> 01: fix checking, switch to int type for queues
+>>> 08: drop MAX_TAP_QUEUES constant
+>>> 09,10: prefer int type for queues
+>>>
+>>>
+>>> Vladimir Sementsov-Ogievskiy (12):
+>>>    net/af-xdp: fix type overflow
+>>>    net/tap: net_init_tap_one(): add return value
+>>>    net/tap: net_init_tap(): drop extra vhostfdname variable
+>>>    net/tap: net_init_tap(): refactor parameter checking
+>>>    net/tap: net_init_tap(): common fail label
+>>>    net/tap: net_init_tap_one() refactor to get vhostfd param
+>>>    net/tap: net_init_tap_one(): drop model parameter
+>>>    net: introduce net_parse_fds()
+>>>    net/tap: move fds parameters handling to separate functions
+>>>    net/tap: fix vhostfds/vhostfd parameters API
+>>>    net/tap: net_init_tap(): merge fd=, fds= and helper= cases into one
+>>>    net/tap: net_init_tap(): relax QEMU hubs check
+>>>
+>>>   net/af-xdp.c |  44 ++-----
+>>>   net/tap.c    | 319 +++++++++++++++++++++------------------------------
+>>>   net/util.c   |  50 ++++++++
+>>>   net/util.h   |  14 +++
+>>>   4 files changed, 201 insertions(+), 226 deletions(-)
+>>>
+>>> -- 
+>>> 2.52.0
+>>>
+>>
+>> If I understand this correctly, there would be a v4 for this?
+>>
+>> (https://patchew.org/QEMU/20260218202829.1322088-1-vsementsov@yandex-team.ru/20260218202829.1322088-10-vsementsov@yandex-team.ru/)
+>>
+>> Thanks
+>>
+> 
+> No, 09/12 kept as is, I just added 13/12 for the check that Ben asked for. I don't think it should be merged somewhere,
+> as it was preexisting (we did not check for queues==0, and for fds="").
+> 
+> So, no changes is planned now for making a v4.
+> 
 
-I did notice that the existing big_endian_fb boolean in ati_vga_switch_mode
-doesn't distinguish between big endian 32-bit and 16-bit swapping. In the 1=
-6bpp
-case I see a black background in fluxbox. I did a quick and dirty test and
-replaced the bswap32s with a 16-bit byte swap and then 16bpp displays the g=
-ray
-background correctly.
+Still no problem to resend, let me know if it's preferable.
 
-This is a pre-existing issue but I thought it was worth pointing out. That =
-said
-this fixes things for 24/32bpp and is an improvement.
-
-Tested-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+-- 
+Best regards,
+Vladimir
 
