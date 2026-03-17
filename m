@@ -4,65 +4,60 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7CBECF33812
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:46:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7640FF3381A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:46:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Q3X-0003yd-NQ; Tue, 17 Mar 2026 04:45:39 -0400
+	id 1w2Q3N-0003u2-9Q; Tue, 17 Mar 2026 04:45:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1w2Q3V-0003wP-Lj
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:45:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2Q3I-0003tO-5Z
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:45:25 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kraxel@redhat.com>) id 1w2Q3T-0006ww-No
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:45:37 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2Q3F-0006vd-Mt
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:45:23 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737135;
+ s=mimecast20190719; t=1773737120;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=tlieGdi6ZOkCHyp2ldI/32JlToohy+mEtd9XgegbTkM=;
- b=CVAkVnMOOUqARLQQMVDCvqWlxWHonbuwNMBC0kU5y5B4HAU+EyjW9aEFIFTozvhnRWaK4e
- D9r5YHsE+EJlYhsqpl2Oa4VQvlgwl/jTfmQ8rL79Mh2mgIFKufmI8QWSiRr4X1fqvA+RoP
- fxdktmYQqcouQs2OFaciZttw99gEwXg=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=dEq4X9T6yCRaKmIFJPq0DhelAUM9JLiKworzCLmRo54=;
+ b=HYjTfLWbjGQOeKgWqoVhdXwPpDptUDZ0ginpxnEZ9fV1T6bWU4+ZpEN1fsw54ldLaKtIhx
+ P8+VRBDzas1vPjllqrLe02tVMv9Zkfhwp3aC64LYBsxUqlhWAVQqxRbY0uueIO3oHr38AU
+ ypekDVmgvtHBp4wSr7nSA59DeaGmGGE=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-490-WLTBxXUEOqeMYuenHkm9lg-1; Tue,
- 17 Mar 2026 04:45:29 -0400
-X-MC-Unique: WLTBxXUEOqeMYuenHkm9lg-1
-X-Mimecast-MFC-AGG-ID: WLTBxXUEOqeMYuenHkm9lg_1773737128
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-86-mPKiyZb9O66XwYf7g77PbQ-1; Tue,
+ 17 Mar 2026 04:45:16 -0400
+X-MC-Unique: mPKiyZb9O66XwYf7g77PbQ-1
+X-Mimecast-MFC-AGG-ID: mPKiyZb9O66XwYf7g77PbQ_1773737115
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 719E919560B9; Tue, 17 Mar 2026 08:45:28 +0000 (UTC)
-Received: from sirius.home.kraxel.org (unknown [10.45.224.114])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id BC4481800361; Tue, 17 Mar 2026 08:45:27 +0000 (UTC)
-Received: by sirius.home.kraxel.org (Postfix, from userid 1000)
- id 924181800634; Tue, 17 Mar 2026 09:45:25 +0100 (CET)
-Date: Tue, 17 Mar 2026 09:45:25 +0100
-From: Gerd Hoffmann <kraxel@redhat.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: Luigi Leonardi <leonardi@redhat.com>, qemu-devel@nongnu.org, 
- Peter Maydell <peter.maydell@linaro.org>, Oliver Steffen <osteffen@redhat.com>,
- qemu-arm@nongnu.org
-Subject: Re: [PATCH] hw/arm/virt: add serial-debug-level property for EDK2
- firmware
-Message-ID: <abkPy4Xzf6YT6g5Y@sirius.home.kraxel.org>
-References: <20260311-edk2_arm_serial-v1-1-c25e237116f3@redhat.com>
- <0b4976f9-cf83-47b4-8f00-cc68c9cf47fd@linaro.org>
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E98831800620; Tue, 17 Mar 2026 08:45:14 +0000 (UTC)
+Received: from thuth-p1g4.redhat.com (unknown [10.44.32.37])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id E1D941955E84; Tue, 17 Mar 2026 08:45:11 +0000 (UTC)
+From: Thomas Huth <thuth@redhat.com>
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+	qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, BALATON Zoltan <balaton@eik.bme.hu>,
+ Markus Armbruster <armbru@redhat.com>,
+ Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: [PATCH] hw/sparc/sun4m_iommu: Fix crash when introspecting
+ sun4m-iommu from the CLI
+Date: Tue, 17 Mar 2026 09:44:50 +0100
+Message-ID: <20260317084450.442071-1-thuth@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <0b4976f9-cf83-47b4-8f00-cc68c9cf47fd@linaro.org>
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=kraxel@redhat.com;
+Content-Transfer-Encoding: 8bit
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -87,65 +82,65 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 11, 2026 at 03:24:04PM -0700, Pierrick Bouvier wrote:
-> Hi Luigi,
-> 
-> On 3/11/26 6:43 AM, Luigi Leonardi wrote:
-> > Add a machine property to pass a debug level to EDK2 firmware via the
-> > device tree. The value is set as an "edk2,debug-level" property on all
-> > pl011 UART nodes.
-> > 
-> > This is to create a runtime parameter to set the verbosity of the debug
-> > log on the serial ports in edk2. Currently, the only way to set the
-> > verbosity is a compile-time option.
-> > 
-> > DT is used because the fw_cfg interface is not yet initialized in early
-> > boot phases.
-> > 
-> > Corresponding edk2 PR: https://github.com/tianocore/edk2/pull/12277
-> > 
-> > Suggested-by: Gerd Hoffmann <kraxel@redhat.com>
-> > Signed-off-by: Luigi Leonardi <leonardi@redhat.com>
-> > ---
-> >   docs/system/arm/virt.rst |  6 ++++++
-> >   hw/arm/virt.c            | 38 ++++++++++++++++++++++++++++++++++++++
-> >   include/hw/arm/virt.h    |  2 ++
-> >   3 files changed, 46 insertions(+)
-> > 
-> 
-> I am not sure if maintainer want to have bootloader specific options in
-> machine code.
+From: Thomas Huth <thuth@redhat.com>
 
-Does that mean "yes" or "no" or "maybe" ?
+QEMU currently crashes when introspecting the sun4m-iommu device from the
+command line interface:
 
-Some background:  Traditionally firmware logging in edk2/ArmVirtPkg is a
-compile time option, so typically distributions ship two builds, one
-with logging turned on and one with logging turned off.
+ $ ./qemu-system-sparc -display none -device sun4m-iommu,help
+ qemu-system-sparc: ../../devel/qemu/system/physmem.c:1401:
+  register_multipage: Assertion `num_pages' failed.
+ Aborted (core dumped)
 
-Last year edk2 got support for logging to a memory buffer which can be
-accessed from the booted OS or via qemu monitor.  Ideally we have this
-always enabled, but without also spamming the serial console with the
-firmware log (by default).  While working on that it would be nice to
-also get rid of the two builds by moving from a compile time to a
-runtime switch for the serial debug log.
+There does not seem to be a compelling reason for initializing the
+memory regions from the instance_init function, so let's simply move
+the code into a realize() function instead to fix this issue.
 
-> Alternatively, it's possible to dump virt dtb, modify it, and pass it.
-> $ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
-> $ ... modify dt ...
-> $ ./build/qemu-system-aarch64 -M virt,dtb=file.dtb
+Signed-off-by: Thomas Huth <thuth@redhat.com>
+---
+ hw/sparc/sun4m_iommu.c | 11 ++++++-----
+ 1 file changed, 6 insertions(+), 5 deletions(-)
 
-I'd like to have something more convenient than that to turn on firmware
-debug logging.
-
-On x86 we have a dedicated device for firmware logging (isa-debugcon),
-so logging can be easily enabled on the qemu command line by adding that
-device.
-
-So the idea here is to have a dt property added to serial port to
-setup firmware logging, so we have something roughly comparable to the
-x86 functionality ...
-
-take care,
-  Gerd
+diff --git a/hw/sparc/sun4m_iommu.c b/hw/sparc/sun4m_iommu.c
+index ab5eb67072a..1534445992b 100644
+--- a/hw/sparc/sun4m_iommu.c
++++ b/hw/sparc/sun4m_iommu.c
+@@ -351,13 +351,14 @@ static void iommu_reset(DeviceState *d)
+     s->regs[IOMMU_MASK_ID] = IOMMU_TS_MASK;
+ }
+ 
+-static void iommu_init(Object *obj)
++static void iommu_realize(DeviceState *ds, Error **errp)
+ {
+-    IOMMUState *s = SUN4M_IOMMU(obj);
+-    SysBusDevice *dev = SYS_BUS_DEVICE(obj);
++    IOMMUState *s = SUN4M_IOMMU(ds);
++    SysBusDevice *dev = SYS_BUS_DEVICE(ds);
++    Object *obj = OBJECT(ds);
+ 
+     memory_region_init_iommu(&s->iommu, sizeof(s->iommu),
+-                             TYPE_SUN4M_IOMMU_MEMORY_REGION, OBJECT(dev),
++                             TYPE_SUN4M_IOMMU_MEMORY_REGION, obj,
+                              "iommu-sun4m", UINT64_MAX);
+     address_space_init(&s->iommu_as, MEMORY_REGION(&s->iommu), "iommu-as");
+ 
+@@ -377,6 +378,7 @@ static void iommu_class_init(ObjectClass *klass, const void *data)
+     DeviceClass *dc = DEVICE_CLASS(klass);
+ 
+     device_class_set_legacy_reset(dc, iommu_reset);
++    dc->realize = iommu_realize;
+     dc->vmsd = &vmstate_iommu;
+     device_class_set_props(dc, iommu_properties);
+ }
+@@ -385,7 +387,6 @@ static const TypeInfo iommu_info = {
+     .name          = TYPE_SUN4M_IOMMU,
+     .parent        = TYPE_SYS_BUS_DEVICE,
+     .instance_size = sizeof(IOMMUState),
+-    .instance_init = iommu_init,
+     .class_init    = iommu_class_init,
+ };
+ 
+-- 
+2.53.0
 
 
