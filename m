@@ -4,84 +4,78 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9FCFBFEDA0E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 18:58:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 863C1FEDA0A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:03:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2ZcF-0004L5-I6; Tue, 17 Mar 2026 14:58:08 -0400
+	id 1w2Zh2-0005PI-J0; Tue, 17 Mar 2026 15:03:04 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2ZcB-0004KO-6y
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 14:58:03 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zh1-0005P3-4H
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:03 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zc9-00050v-Hm
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 14:58:02 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-4852fdb36a8so71322655e9.2
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 11:58:00 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2Zgz-0005oQ-7d
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:03:02 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4852f8ac7e9so72302315e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 12:03:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773773879; x=1774378679; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=yJkWYiLIGqVioNfAcL6Y1XAMAyuB4FLuRT5rWj8lJOU=;
- b=Gx1Jw8jxFDXLq9gxojpHwOxLvT7NZQVsTmyiLs7igDF/4olJ0YljO+/frwW4dIEAXL
- XFwc/hP7ub2u9qthA4A/w5nZRTXUjjDioEUBY4MnKH9K70wV9+R15NSTFV+KHHJXvxw3
- v12wouSur1bLp906GqcadQiybCx+gmkufnd4dKhFpnaU0YeY7DWVNRWGIXRblgYTHNaD
- YqZ95O3dkVNAo9nHl3z3Azfb8sXltYyUfQ1ncQPuEbeHLFNtFWeAE5qyQctyJnCthH6V
- dlP59sZV/uyoWXFTBtOKZ7KUdjiIppm3sv6erJXNZHJv684qUmpJEAz41zXxosflXS16
- YIJw==
+ d=linaro.org; s=google; t=1773774179; x=1774378979; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:from:to:cc:subject:date:message-id
+ :reply-to; bh=vTQ62ilT2m/rzys2ifT5XG6JmBUDkEBylAkRPmKwKFU=;
+ b=ARI87cz201XWzGdHcUSp5TQu4dzzqaiI5H6vtoH6Vi0syIfGepg5s0l1yc+kp4oMyq
+ AJhPeHzm6VrX0to+XZSFSQmDpPnvxra0s5r2aK3BQnRdZTk5Lo4m/spfNVl36R7TcAQw
+ dKgFNPe2AugvPTEJPuvkO+rJLwTuUsWA1/kKmtLfMltY0pp727e9uj1CZ6TzHnXWaaY+
+ R9lcDl9XUC3GjC+DVXBOzr75BSASZtlFSeOvKAiY2N/5m7y43LBaq8C864ha+QwPMdR8
+ vTxQzZhYFxrzhVBK+x3sL/SBLQr+tMSKIVJXpbwA5FbKnJHO4bW4nE0Gl/ePo4V1qbAd
+ 2FCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773773879; x=1774378679;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=yJkWYiLIGqVioNfAcL6Y1XAMAyuB4FLuRT5rWj8lJOU=;
- b=rzZooC6Ik7lr+d5JD25cRJXYm3EKQIri7xCdM5gLjv2zVSlIu+IzV43Ihxs3V5x/Vq
- YYpnRnM7OO5QQtLzPENWiMgpMSGCZUouTXF9G0AFxs++FqbOV/LTU978HebZdQZQmfpf
- SyQrUgsnjYaoo2Qz4F7YivAFqah6oZmIeSHJw3Ydmcip0GkUzSsNO417kCVgOWviYXt0
- 8FM9QyDEQhR4st3RThpzAdXYekE6xGkLKNKa4Dv17cD/A1wYSxDEBc0IB5koiTLx3Oy+
- ANX1HpbtbxYqdrKRbLjs1owtF9HL6os+p5itcjcPVs7jEejL2+SpBKT2EixtPJn8kbNy
- POYQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWnZwdC6b4Yw5Ps5NlENpUCGZcodEEyrLLXxJy5svhFnzUXAjp2hfYpi0TXIgQN6hIEs6Dmu/M29a6E@nongnu.org
-X-Gm-Message-State: AOJu0Yw+CkUZx3RgqkY3mLBKFqRs7S3xHmBzd0M+UH+OQotXK7WAJYU+
- dibfN2voH4QYoM02dvxW4rY6pGh/or1pIBAkpoSXTifxDxhVTH4M6tJkA50IMM7Oo3k=
-X-Gm-Gg: ATEYQzwcNLnVmxFYGqSkrgv6SoojJIUFzkiQ72PTsnF7mFqp2EkjzLd4t2EcmBqFDsC
- lSCqVmmO9wKD/0Mgh6cEmM/CgldrHWls9GJ5h1eOcUmI7fEXxJV8Vps0wOlMqoerDk5R7QeCovq
- 8jaCItiEoZsKgGP5x7HwCxCOh1VhsRxq1quoWGI9nm2LbbI/bQmV2t23yiLom8V8lgNdWHVLKi7
- Yge7AOY2GQL0XYobxduseF0R2HbsXoPvTmTzhzkz5rBo+I7m5mAb7nBZFz3rn5StEaspeEilNAL
- 7puNiFB423FpWVozbyXwcK6SDbwSun8UuXqJ53gbuRw52PD+oHxyXxamgc2Ge3Oy+rhHPWcrmh7
- sKaGm0ur0GvMdbGZAqSfR7cNGErWxWlk9dgjKijP/f1Q5YHSHiLg6PGgRY+WtAMCrwcQu7vmJSJ
- r9QEY5+SWLJUKKy8PJ0bX8CAUrudtHkXKxh3+ProGIcPqbJZ/wExyw07arTYE/cbqCAQ==
-X-Received: by 2002:a05:600c:1d0c:b0:485:3cf3:1010 with SMTP id
- 5b1f17b1804b1-486f442e5d6mr12095395e9.2.1773773879088; 
- Tue, 17 Mar 2026 11:57:59 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ d=1e100.net; s=20251104; t=1773774179; x=1774378979;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:to:from:x-gm-gg:x-gm-message-state:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=vTQ62ilT2m/rzys2ifT5XG6JmBUDkEBylAkRPmKwKFU=;
+ b=rsb+/jjbRw8DlSM2wdmTGueLXSQ5eTQQjkfa+Dn3GI2NaviFpohrPQN/xc2zueZ4d3
+ LlP4vOTAj9nDOupae+aGkegneEmzg1GcVXfvVsKhDddouuk2LlwMi1q6K1RXLYb0Ll+s
+ ZAwcWF7sNlhXOKIrPMHvO2KSr3jaHSQWUcSKMHu3cSTJDSZkQ3WLLS1KWdyL2RtKi5XK
+ /wK54WpFHmLBv7AsY7JD+ze42ayv4fKxlfhVoR+ykP0Qv9Gg2dxHEt/S1pTuX6aUmIn6
+ mM6Op140a1qZT1z+lWYU//Mj2Dht4iuHXNccG05hzTgQQ6b2LpVi1juCg3ZuVqkVyC8A
+ jnOw==
+X-Gm-Message-State: AOJu0YxE7S1ZNnofTob16YSMRR338fd95bYczWiH1/bLPK5qer+CNO8S
+ EFmJYl2e5eHBKsPAea6mC2FkqkPNUd/Y458cBxEGHyztJGLq5/a/1QCcXqQqj3t0CfuYWkv1Mzh
+ 5uKb9k78=
+X-Gm-Gg: ATEYQzxDRcT7BmV/oB0zXIuPvbaoc0Wm/NJOSoRq59zfHXhgDcD3dskczvb7EKmQVMj
+ G09aV4RZZYOBDXH8y4zbEk/kss3m3lcThdLOwVp7AzUMa13BAZD/keHeiEnb05O7z4qJ8srB1Y9
+ l+ACQziRZXePvJ3YcRvgrvih/l3wMyTjFiD5D7+K1KR2HSR8lcKwO+1yaQeHJ8esUhmWg5d8adN
+ 3yp/QKDeyzMNBODQpPrtv6b9Nx47cFZ4JAn/baufhdmdEh73OJm5mHk77LL7SpCUPhXMDO41XQK
+ 5YZQqAORJxjZ2Wr8mfZoBPlNkZJnxKlGp5tnHSe0gjFqFzdD3YGpOjiivpjzNRHw8ht426lRYAe
+ 91oV7StDP7rJRxsk0KzwdogiQt3RouI1ywXj0Hvj3YPhgQYKLb9NVDWaLcSkjnmt6uEPpiVnSH9
+ hcmYsoVq8OYJhEh0MLSoM65kAzesnFTgNLvhgOmG+mvcGqbk9eJJTeUNcYk/ZOEyh+ECXmJYaz
+X-Received: by 2002:a05:600c:4e4a:b0:485:ae14:8192 with SMTP id
+ 5b1f17b1804b1-486f442d3d1mr11797025e9.7.1773774178422; 
+ Tue, 17 Mar 2026 12:02:58 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f443ae26sm9341145e9.14.2026.03.17.11.57.58
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 11:57:58 -0700 (PDT)
-Message-ID: <bd5b5f1c-db87-49f0-b880-70a26ca9fbc3@linaro.org>
-Date: Tue, 17 Mar 2026 19:57:57 +0100
+ ffacd0b85a97d-43b518a3dfasm1232868f8f.33.2026.03.17.12.02.57
+ for <qemu-devel@nongnu.org>
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Tue, 17 Mar 2026 12:02:57 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Subject: [PULL 1/5] fsdev: Build stubs once
+Date: Tue, 17 Mar 2026 20:02:46 +0100
+Message-ID: <20260317190250.70506-2-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260317190250.70506-1-philmd@linaro.org>
+References: <20260317190250.70506-1-philmd@linaro.org>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 3/3] target/mips: Move count_clock to MIPSCPU struct
-Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: Jiaxun Yang <jiaxun.yang@flygoat.com>,
- Aleksandar Rikalo <arikalo@gmail.com>
-References: <20260317175031.3035740-1-peter.maydell@linaro.org>
- <20260317175031.3035740-4-peter.maydell@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317175031.3035740-4-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,26 +98,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 18:50, Peter Maydell wrote:
-> The count_clock pointer is not something we can do a shallow copy of,
-> as linux-user cpu_copy() does, and although it is a system-mode piece
-> of state we unconditionally create it, so it is present also in
-> user-mode.
-> 
-> There isn't any need to keep this in the env struct rather than the
-> CPU struct, so move it to avoid possible memory leaks or
-> double-usage. This also puts it next to the other Clocks that this
-> CPU has.
-> 
-> I haven't seen any sanitizer reports about this field, so this is
-> averting a possible problem rather than correcting an observed one.
-> 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   target/mips/cpu.c              |  4 ++--
->   target/mips/cpu.h              |  2 +-
->   target/mips/system/cp0_timer.c | 12 ++++++++----
->   3 files changed, 11 insertions(+), 7 deletions(-)
+Move stubs to the global stub_ss[] source set. These files
+are now built once for all binaries, instead of one time
+per system binary.
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Message-Id: <20260225035739.42848-11-philmd@linaro.org>
+---
+ fsdev/meson.build | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/fsdev/meson.build b/fsdev/meson.build
+index 95fe816604f..61bc8830be8 100644
+--- a/fsdev/meson.build
++++ b/fsdev/meson.build
+@@ -4,7 +4,8 @@ fsdev_ss.add(when: ['CONFIG_FSDEV_9P'], if_true: files(
+   '9p-iov-marshal.c',
+   '9p-marshal.c',
+   'qemu-fsdev.c',
+-), if_false: files('qemu-fsdev-dummy.c'))
++))
+ if host_os in ['linux', 'darwin', 'freebsd']
+   system_ss.add_all(fsdev_ss)
++  stub_ss.add(files('qemu-fsdev-dummy.c'))
+ endif
+-- 
+2.53.0
+
 
