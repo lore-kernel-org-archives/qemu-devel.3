@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16E55FED9F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:21:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4F0A9FED9F0
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:21:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Y6Y-00044W-Qf; Tue, 17 Mar 2026 13:21:18 -0400
+	id 1w2Y5u-0002E1-1A; Tue, 17 Mar 2026 13:20:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y6U-0003pK-OK
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:21:14 -0400
+ id 1w2Y5k-0002Ac-CS
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:30 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y6S-0005hP-VT
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:21:14 -0400
+ id 1w2Y5g-0005bO-1O
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:25 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773768072;
+ s=mimecast20190719; t=1773768023;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=tZ8XkIZKn+y0sRr98M6JWJEgOF4WgogAPRot0lLNwpo=;
- b=h6NmwbtF6IXab/dQovW/lNUQlawE1uErKSPHKc0ihk238//AA9nEReZx4FoLCz7Ww2PWGo
- 5Pw8gW9/zkSvla/G6oYqquPMHaFvl70VlbEidijk0TQPT3R+mMAnMk5RUw2Hngku+g9RoQ
- OA5ym+l0Kzd0Iw3E7JRJSKcUnuJiNn8=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=CsXxg8re8FW5F+2kVJ5NcmGqhrD7GcwxsyzUaPHGSsI=;
+ b=IXdO6NlWJ7RvfmJgQ2xfheHeYWC/HA4jOZmTtDp8rlnaHsm7Qu40gCDWN7/yiWk8iPzXX7
+ CJTbVlUcQ6eW2R4io4deYz1nzeo3rS11t53UcCeGEMxHo1NXEDh0OJpyeoLrjjYsz8BHOs
+ McpSRXHIv4dCJsDfanwy/ufndJhLtI4=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-613-V3sX_Vp3N8KTS687o0A8Lw-1; Tue,
- 17 Mar 2026 13:21:08 -0400
-X-MC-Unique: V3sX_Vp3N8KTS687o0A8Lw-1
-X-Mimecast-MFC-AGG-ID: V3sX_Vp3N8KTS687o0A8Lw_1773768067
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-589-nG3ESCm4M7yA8SUYnQNjIQ-1; Tue,
+ 17 Mar 2026 13:20:18 -0400
+X-MC-Unique: nG3ESCm4M7yA8SUYnQNjIQ-1
+X-Mimecast-MFC-AGG-ID: nG3ESCm4M7yA8SUYnQNjIQ_1773768016
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0AFAF18002E9; Tue, 17 Mar 2026 17:21:07 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C27EC195607B; Tue, 17 Mar 2026 17:20:16 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id D1CDA19560AB; Tue, 17 Mar 2026 17:21:05 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 40123180035F; Tue, 17 Mar 2026 17:20:14 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
@@ -59,16 +59,19 @@ Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Gerd Hoffmann <kraxel@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
- Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 16/16] coreaudio: Initialize the buffer for device change
-Date: Tue, 17 Mar 2026 21:19:16 +0400
-Message-ID: <20260317171916.438575-17-marcandre.lureau@redhat.com>
+ Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>,
+ Dongwon Kim <dongwon.kim@intel.com>,
+ Vivek Kasireddy <vivek.kasireddy@intel.com>
+Subject: [PULL 08/16] ui/gtk-egl: Ensure EGL surface is available before
+ drawing
+Date: Tue, 17 Mar 2026 21:19:08 +0400
+Message-ID: <20260317171916.438575-9-marcandre.lureau@redhat.com>
 In-Reply-To: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 References: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -95,33 +98,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Dongwon Kim <dongwon.kim@intel.com>
 
-Reallocate buffers when the active device change as the required buffer
-size may differ.
+The EGL surface and context are destroyed when a new GTK window is
+created. We must ensure these are recreated and initialized before
+any rendering happens in gd_egl_refresh.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Phil Dennis-Jordan <phil@philjordan.eu>
-Acked-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Christian Schoenebeck <qemu_oss@crudebyte.com>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260304-coreaudio-v8-6-bf1d40731e73@rsg.ci.i.u-tokyo.ac.jp>
+Currently, the check for a pending draw is performed before the
+surface initialization block. This can result in an attempt to
+draw when the EGL surface (vc->gfx.esurface) is not yet available.
+
+This patch moves the drawing check after the surface initialization
+to ensure a valid surface exists before rendering in gd_egl_refresh.
+
+Cc: Gerd Hoffmann <kraxel@redhat.com>
+Cc: Marc-André Lureau <marcandre.lureau@redhat.com>
+Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+Signed-off-by: Dongwon Kim <dongwon.kim@intel.com>
+Acked-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Message-Id: <20260303011151.1925827-1-dongwon.kim@intel.com>
 ---
- audio/coreaudio.m | 1 +
- 1 file changed, 1 insertion(+)
+ ui/gtk-egl.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-diff --git a/audio/coreaudio.m b/audio/coreaudio.m
-index 23c3d1f80ac..e4ec1df971c 100644
---- a/audio/coreaudio.m
-+++ b/audio/coreaudio.m
-@@ -471,6 +471,7 @@ static OSStatus init_out_device(CoreaudioVoiceOut *core)
-     core->device_id = device_id;
-     core->device_frame_size = device_frame_size;
-     core->hw.samples = core->buffer_count * core->device_frame_size;
-+    audio_generic_initialize_buffer_out(&core->hw);
-     core->ioprocid = ioprocid;
+diff --git a/ui/gtk-egl.c b/ui/gtk-egl.c
+index 1b5c1d4533c..fa8fe8970c1 100644
+--- a/ui/gtk-egl.c
++++ b/ui/gtk-egl.c
+@@ -152,12 +152,6 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+     gd_update_monitor_refresh_rate(
+             vc, vc->window ? vc->window : vc->gfx.drawing_area);
  
-     return 0;
+-    if (vc->gfx.guest_fb.dmabuf &&
+-        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
+-        gd_egl_draw(vc);
+-        return;
+-    }
+-
+     if (!vc->gfx.esurface) {
+         gd_egl_init(vc);
+         if (!vc->gfx.esurface) {
+@@ -176,6 +170,12 @@ void gd_egl_refresh(DisplayChangeListener *dcl)
+ #endif
+     }
+ 
++    if (vc->gfx.guest_fb.dmabuf &&
++        qemu_dmabuf_get_draw_submitted(vc->gfx.guest_fb.dmabuf)) {
++        gd_egl_draw(vc);
++        return;
++    }
++
+     graphic_hw_update(dcl->con);
+ 
+     if (vc->gfx.glupdates) {
 -- 
 2.53.0
 
