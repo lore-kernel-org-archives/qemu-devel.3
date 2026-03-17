@@ -4,97 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E0AF1FD7074
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 10:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C19FD7072
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 10:28:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2ReS-00024B-GE; Tue, 17 Mar 2026 06:27:52 -0400
+	id 1w2ReS-00023J-50; Tue, 17 Mar 2026 06:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2Re8-0001yH-HM
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:27:35 -0400
-Received: from mail-yx1-xb12e.google.com ([2607:f8b0:4864:20::b12e])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w2Rdx-0001va-B8
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:27:22 -0400
+Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2Re6-0006Z3-F8
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:27:31 -0400
-Received: by mail-yx1-xb12e.google.com with SMTP id
- 956f58d0204a3-64ca6595c8aso5315580d50.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 03:27:27 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773743246; cv=none;
- d=google.com; s=arc-20240605;
- b=FWw+he2co8YI6MrlFwz+fsQTxQLtq7oey0/ad5BsqzbTfgQz6StnpghI9vOP62gEif
- 0IlgQUALFiLcqlUvH/FSPmkRmptRT5JKReZm+EmksnQCMQXs/kD1vRBlZbdSMHiv7NFo
- /b0Z78Iq8V7GTMs/G6Ye1Nm7Wm4Z3WxI5bblvZ7BuGcjbaQ2xSOeq1UbhI8qhqCWSnu9
- ZFKMh8ykLxJ92q1gLNuaFc4l2AgJp56YZhETsyDHOSzYmj2qNKTc6OXUk5ievu2UPsZm
- BJRBaNc9wlK6Qheepn1Wh9jkIK3IQgb2N1lv+YonliWCzorgIYE+Jfk6gLUab1Cf6C8f
- sCxg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=1JRJOsnQUQ/JjCHYNsn4QysP7v0/gRWr+MC6OtyqLV4=;
- fh=lSj/1hQsilLqqrIQB6s4Q1wh6081l/JyVKvt7e1AODI=;
- b=aPeSvj5FYE5UP/8bHDLZOrVJr8Tf+bTQgSOG2fAgX8r7//nKfd40T27pvB73LDQzQP
- JfF1nh+kMtXS1AztZ/QLwaPj1AWAPjue+Q7hZULemxzCzozBMIG4I1MVHQ54diDSxl5X
- Mlq3wJaBWViO/unYmU6yMAUGEDcT//1KBW4koWdVdETEU5hQJCaJ/hkMNC+6QAOMgIug
- 7nPTgjZ+iIOMJTiVJKoP5Ymk6ODZqsmDo+9K1kT2sGK3rsk4EzF3MiyU4dp3M6ZIopWb
- PZn8Neh8AxS4BD7A9HDonOWP+ice7DsnTNfE2TeqcfwxCGWk7lAG/G1CkdDavSHYNa5D
- dSjg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w2Rds-0006W2-2z
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:27:19 -0400
+Received: by mail-wm1-x333.google.com with SMTP id
+ 5b1f17b1804b1-4853c3c2fe7so32668925e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 03:27:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773743246; x=1774348046; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1JRJOsnQUQ/JjCHYNsn4QysP7v0/gRWr+MC6OtyqLV4=;
- b=R6Ea7+wrHpPlj8bg3fi9ZsKR9joG+zEN4kmvi3awVOA1URJVSvbhEuS1u/my2Mz+Wx
- 4Aj7Dkz+G9wugVe6Hzgk0hBAFR5ROsfBRAydJOoHl19AiS7VDlaZn5R3d2Ig8898Acek
- nrMVN2BrkT/Naw7IBkjuErjzRt47h0PB8NatnClQggdCyN5mf63o1QZSFNGGjxFaBntQ
- l5fNIRrkTELP5pBBDTbW2lqixar9zikUS03YE+EbrdgpIHmrNnerOi480ai36TYHDK5G
- xUsH2SVrxPkktxZgoDmFoBtnDckHxGvG46x16VEbGNbswzlBcT2Zg6P8QOguVuXbr0Nx
- F/kw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773743246; x=1774348046;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=mihalicyn.com; s=mihalicyn; t=1773743235; x=1774348035; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1JRJOsnQUQ/JjCHYNsn4QysP7v0/gRWr+MC6OtyqLV4=;
- b=s+zjA6Mrf2gKhopDVCGzlSOd9bJVPuKLbhb8KCwABGCeN4ljy3rEEJMfr20lWoOMMf
- xkjyJ85J1fvVahDT8zNK5BPyWPkeni27mGcYhF0NPq+ypEon4/9sBU++kLwmHgcyHDC2
- nLREPaks/6ImDnrXIh51DkosrcOYC3nyr1i+DV7QtPxPJ5Qf4W8wH4mQbgc6yTocD+hE
- XprPBT5oLQQ1URP4OCxECN+nKNebw2Hp3uScU7LP4irYU94ecDU4MGNI5go5AWauMLLQ
- 2m0NebeUGjhUIi33KH4lip5j1yaheVqiNQNIK0iOQuYuHJqBsD/esQ3ouTeJjIjz8aim
- AumA==
-X-Gm-Message-State: AOJu0Yy+/9xD9MWwe4hHHRFG0yV/8fPVaemiRfM2W+mY1PvGI4ukMf02
- 8zEnHQZkwUdHJmiI9offO1JNam3ayTtat7//WzM9olyaeyHd5aGR6oWavrhY7FPEIv6bAtK93t8
- s8t3jGafx++sp31jqISpD/FedC40LckFsqxD3VeVA0A==
-X-Gm-Gg: ATEYQzwFa0Lw3pcBNRGuRwtotSI5O/BTYWEXSl7HJtWSFWn3ZMVQJ8QrjJpEOrdN2Dv
- rojXKuYxV4pHJjW8VFjWt5b8haKdUITRbfyKTI+kQBH5k4lXrdtnjfWsOnVxEv4h9XeCG+uAzC/
- vpzo56pilOAF5DZ7jrmyJcEbVDe20ohnNhsy3nsCGlh0NSzxWD4igvznmfsdShn7LxMbSd3ZkhC
- 3fc6oASd76UR1xPfLmCVrvUFwp1fRCkrYYTSh2CF0kqDLptBKlC8JEPzFBUXdUjXX4ncUILkOs8
- nPs7MO3brMzrlaA9/N70dLUYJY8RG6zDQ4NJ18D8Z8R8wmF7tJ6mE5ueaVuF4vegmBATb/5aK8T
- /UA==
-X-Received: by 2002:a53:eccf:0:b0:64c:c34c:60ea with SMTP id
- 956f58d0204a3-64e6306fceamr13426200d50.54.1773743246313; Tue, 17 Mar 2026
- 03:27:26 -0700 (PDT)
+ bh=2mdV95Xn1uRZNv+wMaqt5uMFd58yUD2RuxYvZm/pTuU=;
+ b=BT4WZMfRk2VhKDke9wpMnwkiEAhVQjrvX673zFan8dCTyGOic7FpJ+2lXVbEa+mxqL
+ D1g7JRPQM9LP261LM0SaGmTp+pWjiqoEzOt4HPr6Tei8UjsTiW2b/6SA+gvFqvn1Fo6p
+ olnxGzhofadI3j7E1KwfIcNU5PaKBJjNre2bw=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773743235; x=1774348035;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=2mdV95Xn1uRZNv+wMaqt5uMFd58yUD2RuxYvZm/pTuU=;
+ b=FYBvKLTa1vMNv93MMiZ/lZt5iJWxpQTMnNq0OTcQqQkA8L8Z3GLBcDeS1sS2DEbWes
+ YGxY7kl7sw08askjuMu6HH/gmLGNEiUEIcPVk2ERbrpDRzIFAZYcCrU/oMPNhQ1mkU9j
+ x1DSvZxuk+6pvSP65x+UB77AF4lvxeVjjmj/fmiRwCqPL+mz+HKefOoSa1GkgNJ+aVx2
+ FjZYsAGrnakzF4vnQ1eACe+FiNLu5RWVpaSemys0ODV/2Y8WxFpVPdHDNIxFTH2vel+P
+ jolKkiYtO1fBI3F6flrC03iJ9L77uuHiExELSeNjk3zz6ORzgohwHCzq2EDoh3QnDRqD
+ aq6g==
+X-Gm-Message-State: AOJu0YyrZldsZ87jBaXlX3S3gSd5movGkQc9OYcZWhlL6WhZjRwOS2e5
+ e7uIBVBNrPf2zZaDGJ2aAZg0w4ihFhkQ2U2LHIPAOZas2J0HB/7jk959/njTDFwn+EYN0e5WueT
+ c56Rxefk=
+X-Gm-Gg: ATEYQzyGeBjg+McFgFaRKt6q+O4InedLnoYZ2YeF3lZNxn9k9EmnwxEvpB7DLM0pQql
+ 5ni7IW4qKkwUdlqMs3cn4s8qcaF9YqYmrxJO8Yot6M8oyGqfwIRcc1Mxm3a8DFqyi7Ahf0IkiSR
+ Fd9fyRTFdBtg5M6ZUSRjh/+esjibCoafI+z8ErtJwhrSq71dfGhIxpwyaasBAaZbWjTje9gjR7c
+ IihCZ/fttTwXG52eDNq9yZkp0Lt/d0juFyxXIH3X4Fmrb857a6QJ0WzI70jXGTh9gwj1aasW49d
+ OsuOx7FJ8Pe/1rpHhfxMSfUV5IvlJSfP8wkyzG7Sf1dQPCw1TOMQHU2o+gGlYMWdSQyWvu/yv6n
+ D5pKDSvdbxexX2Xf1YWH+EHtoxX871lfpBZwwrvk82rfykUtGHULC0GElN2YcAyJV6dHn6q/7fG
+ h4JQ7IVdjqQCAgAKJpAFP5qK3TUBl1yuw/k+U3tTY4zUACjcGIYzLxzQKKA06G3cgPmzi/GDiq/
+ UBXj+VkNVvkTOYKxO8kXE0=
+X-Received: by 2002:a05:600d:8488:10b0:480:3ad0:93bf with SMTP id
+ 5b1f17b1804b1-485567060a1mr198689335e9.24.1773743234402; 
+ Tue, 17 Mar 2026 03:27:14 -0700 (PDT)
+Received: from alex-laptop.lan
+ (p200300cf57228c0051af80c54da1a9bc.dip0.t-ipconnect.de.
+ [2003:cf:5722:8c00:51af:80c5:4da1:a9bc])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4856ea9c36bsm61977665e9.9.2026.03.17.03.27.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Mar 2026 03:27:13 -0700 (PDT)
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+To: qemu-devel@nongnu.org
+Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Peter Xu <peterx@redhat.com>, Fabiano Rosas <farosas@suse.de>,
+ Jesper Devantier <foss@defmacro.it>, Klaus Jensen <its@irrelevant.dk>,
+ =?UTF-8?q?St=C3=A9phane=20Graber?= <stgraber@stgraber.org>,
+ qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
+ Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Subject: [PATCH v5 4/8] tests/functional/migration: add VM launch/configure
+ hooks
+Date: Tue, 17 Mar 2026 11:27:04 +0100
+Message-ID: <20260317102708.126725-5-alexander@mihalicyn.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260317102708.126725-1-alexander@mihalicyn.com>
+References: <20260317102708.126725-1-alexander@mihalicyn.com>
 MIME-Version: 1.0
-References: <cover.1773618848.git.balaton@eik.bme.hu>
- <0cc6620e1d15af6ef465e2322dce6d4c79ad0793.1773618848.git.balaton@eik.bme.hu>
-In-Reply-To: <0cc6620e1d15af6ef465e2322dce6d4c79ad0793.1773618848.git.balaton@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Mar 2026 10:27:14 +0000
-X-Gm-Features: AaiRm539sAoO2_cRCpbh821ddRuafLsBxwi0PVrbsU18H90JxW_hdumlNVwScco
-Message-ID: <CAFEAcA99ZqUsaW+NWMHAWz88tuDx8-hj=u-k9mBpEQFLw=QJdw@mail.gmail.com>
-Subject: Re: [PATCH 4/4] ati-vga: Avoid warning about sign extension
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12e;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12e.google.com
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::333;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x333.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -117,47 +110,61 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 16 Mar 2026 at 00:06, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> Coverity reports possible sign extension error (CID 1645615) when
-> reading DEFAULT_SC_BOTTOM_RIGHT register. It cannot happen because the
-> values are limited when writing the register but change the code to
-> match other similar registers and to avoid this warning.
->
-> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> ---
->  hw/display/ati.c | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> index 1a6a5ad4fd..d194f15002 100644
-> --- a/hw/display/ati.c
-> +++ b/hw/display/ati.c
-> @@ -513,8 +513,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
->          val |= s->regs.default_tile << 16;
->          break;
->      case DEFAULT_SC_BOTTOM_RIGHT:
-> -        val = (s->regs.default_sc_bottom << 16) |
-> -              s->regs.default_sc_right;
-> +        val = s->regs.default_sc_right;
-> +        val |= s->regs.default_sc_bottom << 16;
+From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-I don't think this is going to make Coverity any happier, because
-we're still doing:
- * take a value in a 16-bit unsigned type
- * shift it without a cast, giving a 'signed int' (32-bit)
- * promote that to 64-bits to do the |=, because 'val' is
-   64 bits, causing a potential sign extension
-The rephrasing of the code doesn't avoid the sign-extension.
+Introduce configure_machine, launch_source_vm and assert_dest_vm
+methods to allow child classes to override some pieces of
+source/dest VMs creation, start and check logic.
 
-Indeed there are other (previously dismissed as false positives
-years ago) issues in the coverity DB for the other cases in this
-switch where we put together values like this without a cast.
+Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+---
+ tests/functional/migration.py | 22 +++++++++++++++++++---
+ 1 file changed, 19 insertions(+), 3 deletions(-)
 
-But as you say this is a "can't happen" case for this register,
-so I've already marked CID 1645615 as a false positive.
-We should do whatever we think is reasonable and readable for
-this code.
+diff --git a/tests/functional/migration.py b/tests/functional/migration.py
+index e995328e833..40e9c094c46 100644
+--- a/tests/functional/migration.py
++++ b/tests/functional/migration.py
+@@ -40,19 +40,35 @@ def assert_migration(self, src_vm, dst_vm):
+         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
+         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
+ 
++    # Can be overridden by subclasses to configure both source/dest VMs.
++    def configure_machine(self, vm):
++        vm.add_args('-nodefaults')
++
++    # Can be overridden by subclasses to prepare the source VM before migration,
++    # e.g. by running some workload inside the source VM to see if it continues
++    # to run properly after migration.
++    def launch_source_vm(self, vm):
++        vm.launch()
++
++    # Can be overridden by subclasses to check the destination VM after migration,
++    # e.g. by checking if the workload is still running after migration.
++    def assert_dest_vm(self, vm):
++        pass
++
+     def migrate_vms(self, dst_uri, src_uri, dst_vm, src_vm):
+         dst_vm.qmp('migrate-incoming', uri=dst_uri)
+         src_vm.qmp('migrate', uri=src_uri)
+         self.assert_migration(src_vm, dst_vm)
++        self.assert_dest_vm(dst_vm)
+ 
+     def migrate(self, dst_uri, src_uri=None):
+         dst_vm = self.get_vm('-incoming', 'defer', name="dst-qemu")
+-        dst_vm.add_args('-nodefaults')
++        self.configure_machine(dst_vm)
+         dst_vm.launch()
+ 
+         src_vm = self.get_vm(name="src-qemu")
+-        src_vm.add_args('-nodefaults')
+-        src_vm.launch()
++        self.configure_machine(src_vm)
++        self.launch_source_vm(src_vm)
+ 
+         if src_uri is None:
+             src_uri = dst_uri
+-- 
+2.47.3
 
--- PMM
 
