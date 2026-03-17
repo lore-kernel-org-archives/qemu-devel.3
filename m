@@ -4,108 +4,89 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A6EFD707A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 11:04:55 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D19AFD707B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 11:12:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2SDb-0004qw-LS; Tue, 17 Mar 2026 07:04:13 -0400
+	id 1w2SKg-0006pe-Mr; Tue, 17 Mar 2026 07:11:30 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w2SDY-0004pV-H4
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:04:09 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w2SDW-0000Zm-3O
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:04:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773745443;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=PQJIrAfFeOULAWlFqB99x5fCwLc8IbZeA65L/b01W/XzCqh9oTzThMqIGGwZFh6e/yHk+b
- 1W6qdtOJt1XHDScfuYZcj54R9bfw9ZwOwINJTT3hQXGdzatA8hzQ9USfPE1Q6HBqy798J3
- aYiDIL9SvbCBy8hfiHH8VbQ9WKedkvs=
-Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
- [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-426-oWRJ6gfIOLiTuEwp-k8EUg-1; Tue, 17 Mar 2026 07:04:02 -0400
-X-MC-Unique: oWRJ6gfIOLiTuEwp-k8EUg-1
-X-Mimecast-MFC-AGG-ID: oWRJ6gfIOLiTuEwp-k8EUg_1773745441
-Received: by mail-wm1-f72.google.com with SMTP id
- 5b1f17b1804b1-4865f728934so3638745e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 04:04:02 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2SKe-0006p0-IH
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:11:28 -0400
+Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2SKc-00012b-PN
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:11:28 -0400
+Received: by mail-wm1-x32f.google.com with SMTP id
+ 5b1f17b1804b1-48540d21f7dso64703555e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 04:11:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773745441; x=1774350241; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=R0g+XdkjmYaHvk7Li8S7a8out+LVlO5N46PfXj4HCtDaoRntXjLDnXFoyM6UpIJTS4
- yMdlUttouFPVSA7wwS7gtNkqFNCnzYgyqLzMmbF5Xo0gphDOytjBluV42oO4F9cbaImX
- Uz9UnAHRDJDL+HnjS/nusnhNLgJctFdFR5idr+lIjwpl56dKDh/1zqS5TWsq8JBHnkO/
- ZxNcw4vm4eoXPgHYOGSfr8pDuQQh7jx5GFoaWNsYB2j3m25V/CpUhBnlpx4KGoaw+JZm
- 1DlqrLB2fIntj0bbeSPxn1jYghsectdDw4Xq4RcBzp1APfSUxMsCjwF+eBfUoIpLlVPR
- QvuA==
+ d=linaro.org; s=google; t=1773745883; x=1774350683; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=GZF9kn1GifXuriiiuFYGF1LFBi6if1Y7iHvqUJJdTkM=;
+ b=pUzAeKrbWP/KXa8rMO4k36n/VrlGfBBBXhA6unSGWH8hegF/oJFyAM8H2bS1Xlolks
+ JmAwWFE8g+xEdJ1jRaCrKV246jLEL/zmkjIrQ0dayeXPl92H+UEVJ3gkvx5NSVh2wsLU
+ 9qUvsQdQsoK2zvXheXdv6oXYy11ojO83KVEalY5bPkauC4pfDJjCoKJdauF5guUswNZm
+ 0VZt1oG1pRE+52U/ZBMPyxn31sEn0IqxdNxuNwukkBwLJHdaiRQIDT5Ki/l8MvAl0zWB
+ lOa6kvaF3jAoe5MdS2q5LiweDzdWVT281nnkAVfdXCPhnFbbYEfK3CKh85N73cpOqe0t
+ cAdg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773745441; x=1774350241;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
- b=DwPtqk0pXR42KCVSoxvip8GzMPv3lECb228q/9rqLZsi6CFx5/f1INGJd9w1qa4Giy
- oFCnxcKwdbYI0E6KSd3vzXMAbdaOcUEQEFUTMXq32vfp+hT5OTNx+eXi3zbq47tr97KU
- mc6WDfZkCEsZdUOd323KiGlhh5Pu7+P30IP7r12GHONDY8X1i0y/xoqdF2D3/RV7SLWF
- 86Uxff7+IFQ3ukBhVic3sNmytlxkhv7SKSR1scjdWnRMdcO1rqT2qPp+7vo5TM4H4JJ3
- RxK2cNi1vY25m4fT0TTAAwjja90If4Ng0GnSR0HsMnoOt5Olnr5G/oFmonU49pIp7+Aa
- /fJQ==
-X-Gm-Message-State: AOJu0YxM9Fhpn45EZMSziRxVmexsCJrCxkCGO2+vBfSS0rAW1UMlzJxe
- mm0tvnkLeT3D17v561xtnHXRXM7w2Gx0md9/RaXFA5a38hedVeNMY+cNx3HdhbdjSjyl+3s3hor
- 2yXWvC9MrWb0jx0mEc2A1YG8s3AHbu0/3dzJFNyaBtw9PZkTgImZuAuV9
-X-Gm-Gg: ATEYQzymSD9XQmqsQTsEm8zdTqMmOJCzEm9Cxbl2h5jhTBODbGRlJ9gTjOH0AMQHO/Q
- a94JGL+uNlcd/ZEkeAggqCTinkaRIF4QB6ioZOaBUc5XxIFWnfrkE4gnhlBOILULhAMwJ6TGXNa
- /ygfCVoHOdmNszY9Cv9FbLjpOu4N3nohiO/rQClmT3iLgdDdVnz3lZlCy2hWAk3wrkurdmZdcme
- X5b+TLtper45dM+EvV5G1RbAstxzvbWf90PRxr12hGxWXXr+o2rY/+XvNStLVAGQq4xoW8WtDMs
- y1H7zSDN4/wEWfu7TpZ0mls1PlWPaEc6XfAc07U9b+Yd433WG/bzPR5A+v4YavYBAq64CioV9O6
- 8ENQMql37Xh/gB5Xn8g5qEkfdStDb3keaVOc8TW6Tx9VYoL9mrQbtue5pZ+RiC7upIw4gRIV8uz
- 22lRzEIHwCHnIl2J3fODNjWdFHNyA=
-X-Received: by 2002:a05:600c:4f54:b0:485:353f:c651 with SMTP id
- 5b1f17b1804b1-48556702b4dmr277348485e9.22.1773745441068; 
- Tue, 17 Mar 2026 04:04:01 -0700 (PDT)
-X-Received: by 2002:a05:600c:4f54:b0:485:353f:c651 with SMTP id
- 5b1f17b1804b1-48556702b4dmr277347695e9.22.1773745440573; 
- Tue, 17 Mar 2026 04:04:00 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.144.138])
+ d=1e100.net; s=20251104; t=1773745883; x=1774350683;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=GZF9kn1GifXuriiiuFYGF1LFBi6if1Y7iHvqUJJdTkM=;
+ b=gwyoxja8eJ+B1VvDN6SqM7BnoSvSMIORn6rF32/eAFR2+u5U0ghosaZm0p+f5Y5AYO
+ bSgfzpFll3C8b9qVI1LOSk68mRafO/K1MC+AMo8W3LMnM+NHpmCNTfGtDunGRzsdF4Ba
+ cgwRpiWuRrziTe/mjmFRpR0Q6QB3DxQgS2dI/hPAlOr8fBBVkmkHJV4bi5LIHH41gH46
+ Kn1FSZSmAKfGnb7VF2Y0S+9ZofO284hhegPPH8A7MiTEHTwjbS2VLttRk/Rap5is1wyB
+ QbYfcgX0zM4Doy6nyw5DJsTWI662aHOzqJN1GYVczKHbbm50bK0ym5oS4gNzpL+ysPth
+ Wyvg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWAAIPWItcEof7D3AJowym5c8oICTxmHe3z6icdwdcDfr8f/KYsM/gELCjgU4vmW5pLaVe30uIKfo9U@nongnu.org
+X-Gm-Message-State: AOJu0YwYQUlj/05BE4HDYqJrffqY0+FsYHC8BM6koK18m/VfbKA14BzN
+ pfjRO94N7CvBYupwzT0ijI9UfE3bi7sRc/POhbohvwg0avZI5FRinv2PCInj4g4vBvE=
+X-Gm-Gg: ATEYQzw5eGyXqv0vMjLel5pT8aCuIcYpczKgJ0LAsKoToZCut3t+mDlDSoK+mlpZMR+
+ 65zlr/Ty8pjbCjftoNLMjtsc17RNBVMXRQeC/glCk49+nJe4VbZ9X4NqqZY+b+kuRnWHQ0e55s6
+ quNArXpZt3ahOta9ZbZPNlf7ZXNmmFIaPLzoGWOpVZbB2B8goUFYPheupVe6FKW3agpo72oO9Gt
+ on9f61L8M0ezNDppXkzVw/9/NARPZNIsgSZUpSSjedThGQkopZYnbtXOP1yyBt7E4cGZSjP+WIV
+ 0FohxzmAS8Uub7nIk5XxxG48YCIRe0AcBDB2pjY1ar+cw5Psq/nRmPkFwGNlZuc9Vua3vsxJc+5
+ bDaPBu+SDPOT2o1IZq0riro9BP8363BkNadnppu0Py8iX5qJkPOQT3lvFzYinCly5PdIvJDxfNA
+ F9eEEmIZI5ELxvHeVkGy+On4QteleNjjHG0XXo4N4Qoy/GCTvFtI+t3tW/cyxeCzfzcV9uPTKf/
+ KrzR/VBNth/i8cSWRgEhrS2yMwtQmQ=
+X-Received: by 2002:a05:600c:a46:b0:485:358b:e80c with SMTP id
+ 5b1f17b1804b1-4855649971bmr295742285e9.0.1773745883097; 
+ Tue, 17 Mar 2026 04:11:23 -0700 (PDT)
+Received: from lanath.. (wildly.archaic.org.uk. [81.2.115.145])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-48557c66583sm120630785e9.21.2026.03.17.04.03.59
+ 5b1f17b1804b1-48557c7c514sm116579885e9.32.2026.03.17.04.11.21
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 04:03:59 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: marcandre.lureau@redhat.com
-Cc: qemu-devel@nongnu.org, berrange@redhat.com,
+ Tue, 17 Mar 2026 04:11:22 -0700 (PDT)
+From: Peter Maydell <peter.maydell@linaro.org>
+To: qemu-arm@nongnu.org,
+	qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH] build-sys: use the "run" variable
-Date: Tue, 17 Mar 2026 12:03:57 +0100
-Message-ID: <20260317110357.796605-1-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260211103305.3112657-1-marcandre.lureau@redhat.com>
-References: 
+Subject: [PATCH] tests/qtest/arm-cpu-features: Fix thinko in g_strdup_printf()
+ call
+Date: Tue, 17 Mar 2026 11:11:21 +0000
+Message-ID: <20260317111121.2062455-1-peter.maydell@linaro.org>
+X-Mailer: git-send-email 2.43.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
+ envelope-from=peter.maydell@linaro.org; helo=mail-wm1-x32f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,8 +102,43 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Queued, thanks.
+In commit 62272f9f8891 we changed some uses of fixed char arrays
+to call g_strdup_printf() instead. In one place I made a silly
+error where in changing
+  sprintf(name, "fmt string", ...)
+to
+  name = g_strdup_printf("fmt string", ...)
+I forgot to delete "name" from the argument list.
 
-Paolo
+Luckily Coverity spotted this (as CID 1645771) because at this
+point "name" is NULL and passing g_strdup_printf() a NULL first
+argument is not valid.
+
+We didn't notice the mistake in testing or CI because this bit of
+code is only run if on an AArch64 host with KVM and SVE available.
+
+Correct the error by removing the stray function argument.
+
+Fixes: 62272f9f8891 ("tests/qtest/arm-cpu-features: Use g_strdup_printf() instead of char arrays")
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+---
+ tests/qtest/arm-cpu-features.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/tests/qtest/arm-cpu-features.c b/tests/qtest/arm-cpu-features.c
+index 5444e4d40b..bbdd89a81d 100644
+--- a/tests/qtest/arm-cpu-features.c
++++ b/tests/qtest/arm-cpu-features.c
+@@ -612,7 +612,7 @@ static void test_query_cpu_model_expansion_kvm(const void *data)
+              * we need at least one vector length enabled.
+              */
+             vq = __builtin_ffsll(vls);
+-            name = g_strdup_printf(name, "sve%u", vq * 128);
++            name = g_strdup_printf("sve%u", vq * 128);
+             error = g_strdup_printf("cannot disable %s", name);
+             assert_error(qts, "host", error, "{ %s: false }", name);
+             g_free(error);
+-- 
+2.43.0
 
 
