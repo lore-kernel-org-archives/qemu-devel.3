@@ -4,77 +4,122 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EE358F33821
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8242EF3381D
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:31:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QiR-0003LD-7H; Tue, 17 Mar 2026 05:27:55 -0400
+	id 1w2QlX-00046W-T8; Tue, 17 Mar 2026 05:31:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2QiM-0003Ke-FL
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:27:50 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2QlU-00045S-1p
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:04 -0400
+Received: from smtpout1.mo533.mail-out.ovh.net ([51.210.94.138])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2QiK-0005LL-Bs
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:27:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773739667;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=F0zikJrdi3WOOJgIFjcJ/6WkuJkRsb8FmYqpsq3SxBk=;
- b=gS2gAMDWwmlgrv4HFSnTVGOdhT8BlykYCGzFucXxPjQOW275WtWQ7j1LDBJgWDFa5cNuAp
- nA3bamQmxYo1M1qbDCH9htoVtiUGf/ZfwhscoUtsFcvDupQortFYb13nUiAqzPlG4B4KRH
- Gzb+XmrtL2X9xncJFmiUElHd+b08F48=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-609-e2QffPsyM7aaaK9Sa5G-iQ-1; Tue,
- 17 Mar 2026 05:27:45 -0400
-X-MC-Unique: e2QffPsyM7aaaK9Sa5G-iQ-1
-X-Mimecast-MFC-AGG-ID: e2QffPsyM7aaaK9Sa5G-iQ_1773739664
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9EF14195609E; Tue, 17 Mar 2026 09:27:44 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 443F019539A0; Tue, 17 Mar 2026 09:27:44 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id EE5F621E6937; Tue, 17 Mar 2026 10:27:41 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel P.
- =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Peter Xu
- <peterx@redhat.com>,  Philippe
- =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: -device T,help crashes
-In-Reply-To: <af46754d-5602-41ec-9971-b3a3e3591ba9@redhat.com> (Thomas Huth's
- message of "Tue, 17 Mar 2026 09:12:50 +0100")
-References: <87pl5abgpl.fsf@pond.sub.org> <87bjgtzcoa.fsf@pond.sub.org>
- <bd616907-9265-4ca2-83d3-d157d717c916@redhat.com>
- <87y0jqlxhx.fsf@pond.sub.org>
- <af46754d-5602-41ec-9971-b3a3e3591ba9@redhat.com>
-Date: Tue, 17 Mar 2026 10:27:41 +0100
-Message-ID: <87jyvakdpu.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2QlP-0005i8-JK
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:02 -0400
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net [79.137.60.37])
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4fZmsp1bcGz64fs;
+ Tue, 17 Mar 2026 09:30:54 +0000 (UTC)
+Received: from director4.derp.mail-out.ovh.net
+ (director4.derp.mail-out.ovh.net. [127.0.0.1])
+ by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
+ for <jamin_lin@aspeedtech.com>; Tue, 17 Mar 2026 09:30:54 +0000 (UTC)
+Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.228])
+ by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
+ 4fZmsp0msTz1xs1; Tue, 17 Mar 2026 09:30:54 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.3])
+ (Authenticated sender: clg@kaod.org)
+ by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id D384A12E3903;
+ Tue, 17 Mar 2026 09:30:52 +0000 (UTC)
+Authentication-Results: garm.ovh; auth=pass
+ (GARM-109S003843d2769-4cc7-4212-a1bd-7d856089e547,
+ 4AC1E9A3EE45423C0527B61D87123FAFA3CB088F) smtp.auth=clg@kaod.org
+X-OVh-ClientIp: 82.64.250.170
+Message-ID: <bf895caa-c968-4ef5-8f3f-0c5d4848db12@kaod.org>
+Date: Tue, 17 Mar 2026 10:30:52 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v1] tests/functional/aarch64/test_aspeed: Disable kernel
+ crypto self-tests in AST2700 boot tests
+To: Jamin Lin <jamin_lin@aspeedtech.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
+ Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
+ "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+ "open list:All patches CC here" <qemu-devel@nongnu.org>
+Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
+References: <20260316081549.1279841-1-jamin_lin@aspeedtech.com>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
+Autocrypt: addr=clg@kaod.org; keydata=
+ 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
+In-Reply-To: <20260316081549.1279841-1-jamin_lin@aspeedtech.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+x-ovh-tracer-id: 2255740467509046283
+X-VR-SPAMSTATE: OK
+X-VR-SPAMSCORE: -100
+X-VR-SPAMCAUSE: dmFkZTErgfqI25EuZLs24ggH/7Ad5Srut2Th+Ia5SoNCO0CM3yIZJXL+VRbKgToXXv7T/r/MzX0RaVhrxmRbbUxTw3P3J3tz9A6dy6s0ynogtBh6q9lhXVa/tYjtfuWyiV+qUAXP3yjbXhSCLXD7Rg3ZQk2RSrjEhBweOnFdGdFhk4H22PFrWk0knl/lvtvqQ2WQjqmIZGRF4qE2zCsUax9Dv3uN0N7LXPA9zS3Iv8MqysGZER1DvQRrX+ZE0ZMBbcZS2WQl4ixy7o0EoLWXWyTXjlU6chUeOmeFBHK6fPJZq/diT4DHp28n+V1zkYwiQg7LnRfM8aD83bja+T4sMIXy2h25pqiHJp9OVOgFT3XEXd5qca5Hrwl4O2hu22cQjGstjd2/mGvJtagPa86nCo7rn9TrtIOxja00xWjqNpxin9cRqSIFi9D2f2X8M+Lvxz78G/tFl1aLUpsGlF4MBun+ZUorJS749zIAXOcdhZb15kyeeDTFKR9kktp2ZzD2o6sgNouwyTriAHBG+ecJLWSfMeYLH3fKHPF2fa+fxYqem17Z5LGXvrVvxN3j/OEqgI8XEmW9LoESPRrNX1QhcvFd7t2iHj6/niAIdVg7KMNO/ZY5lvEK5yHrniMud9vDKbPvgP1LOm+X9vqHNFY6OTxs/du2HoCJKPJG4t4t+AC9PaqbPg
+DKIM-Signature: a=rsa-sha256; bh=jGl+/Onif2FknLSQK0w9PxtOREDjUklwrRSdGGBNAzE=; 
+ c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
+ t=1773739854; v=1;
+ b=wOPbhmCS3aK1pESrOgwYzsmBzgbPf7oLo702A2eulEDlESgyNUgUBu8btJNC2U6yx5rafoUq
+ prlav50SUMf5VtK4buyBkkdbZRj9zHjEIS0a7kCxeSvVuWJhsoKazxT24NCDRI5bo7V/VX+NuBM
+ kIZkogLFdvDsku6T0+GZG2wO4IN9r5GXrs+nKYMSbCvEsEUDwbpDgiFLge8+JP1sqtD7dUMnnhF
+ Phjm44oyRQ/Irakz7XuiB0gKztikwkbQI3KwvOtEsYIam4sP1y2SJ511u7Gq7OqnN2/+8zHvQAs
+ TamyPDDdrrFj2VC5cbCQCHzwWeenXGFWlC/fJF2Su0zoA==
+Received-SPF: pass client-ip=51.210.94.138; envelope-from=clg@kaod.org;
+ helo=smtpout1.mo533.mail-out.ovh.net
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -90,84 +135,147 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+On 3/16/26 09:15, Jamin Lin wrote:
+> Disable the kernel crypto self-tests in the AST2700 functional tests by
+> appending "cryptomgr.notests=1" to the U-Boot bootargs before booting
+> the kernel.
+> 
+> The ASPEED SDK enables crypto self-tests during kernel startup to
+> validate the hardware crypto engine. However, the current QEMU
+> implementation of the AST2700 HACE/crypto engine is still incomplete.
+> As a result, the kernel crypto self-tests trigger multiple warnings
+> during boot when running under QEMU.
+> 
+> Typical examples observed in the kernel log include failures for
+> several cipher modes such as DES/TDES/AES in ECB/CBC/CTR modes:
+> 
+> alg: self-tests for ctr(des) using aspeed-ctr-des failed (rc=-22)
+> alg: self-tests for ecb(des3_ede) using aspeed-ecb-tdes failed (rc=-22)
+> alg: self-tests for cbc(aes) using aspeed-cbc-aes failed (rc=-22)
+> ...
+> 
+> To reduce noise in the functional test logs, the tests now append
+> the following parameter to the kernel bootargs:
+> 
+>    cryptomgr.notests=1
+> 
+> This disables the kernel crypto self-tests when running the functional
+> tests under QEMU.
+> 
+> For validating the HACE implementation, we should instead rely on the
+> dedicated QEMU unit tests located in:
+> 
+>    tests/qtest/ast2700-hace-test.c
+> 
+> Once the QEMU implementation of the ASPEED HACE/crypto model has
+> progressed further and supports the missing crypto modes, we can
+> reassess whether enabling the kernel crypto self-tests again in the
+> functional tests is appropriate.
+> 
+> Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
+> ---
+>   tests/functional/aarch64/test_aspeed_ast2700a1.py | 11 +++++++++--
+>   tests/functional/aarch64/test_aspeed_ast2700a2.py | 11 +++++++++--
+>   tests/functional/aarch64/test_aspeed_ast2700fc.py |  9 +++++++--
+>   3 files changed, 25 insertions(+), 6 deletions(-)
+> 
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700a1.py b/tests/functional/aarch64/test_aspeed_ast2700a1.py
+> index 5c0c4b0ed5..b0c08854da 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700a1.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700a1.py
+> @@ -51,9 +51,11 @@ def verify_vbootrom_firmware_flow(self):
+>           wait_for_console_pattern(self, 'pass')
+>           wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
+>   
+> +    def disable_kernel_crypto_selftest(self):
+> +         exec_command_and_wait_for_pattern(self,
+> +            'setenv bootargs "${bootargs} cryptomgr.notests=1"', '=>')
+> +
+>       def enable_ast2700_pcie2(self):
+> -        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> -        exec_command_and_wait_for_pattern(self, '\012', '=>')
+>           exec_command_and_wait_for_pattern(self,
+>               'cp 100420000 403000000 900000', '=>')
+>           exec_command_and_wait_for_pattern(self,
+> @@ -67,8 +69,13 @@ def enable_ast2700_pcie2(self):
+>   
+>       def verify_openbmc_boot_start(self, enable_pcie=True):
+>           wait_for_console_pattern(self, 'U-Boot 2023.10')
+> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
+> +        self.disable_kernel_crypto_selftest()
+>           if enable_pcie:
+>               self.enable_ast2700_pcie2()
+> +        else:
+> +            exec_command(self, 'boot')
+>           wait_for_console_pattern(self, 'Linux version ')
+>   
+>       def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700a2.py b/tests/functional/aarch64/test_aspeed_ast2700a2.py
+> index cc62a915b5..ed414999f4 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700a2.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700a2.py
+> @@ -51,9 +51,11 @@ def verify_vbootrom_firmware_flow(self):
+>           wait_for_console_pattern(self, 'pass')
+>           wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
+>   
+> +    def disable_kernel_crypto_selftest(self):
+> +         exec_command_and_wait_for_pattern(self,
+> +            'setenv bootargs "${bootargs} cryptomgr.notests=1"', '=>')
+> +
+>       def enable_ast2700_pcie2(self):
+> -        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> -        exec_command_and_wait_for_pattern(self, '\012', '=>')
+>           exec_command_and_wait_for_pattern(self,
+>               'cp 100420000 403000000 900000', '=>')
+>           exec_command_and_wait_for_pattern(self,
+> @@ -67,8 +69,13 @@ def enable_ast2700_pcie2(self):
+>   
+>       def verify_openbmc_boot_start(self, enable_pcie=True):
+>           wait_for_console_pattern(self, 'U-Boot 2023.10')
+> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
+> +        self.disable_kernel_crypto_selftest()
+>           if enable_pcie:
+>               self.enable_ast2700_pcie2()
+> +        else:
+> +            exec_command(self, 'boot')
+>           wait_for_console_pattern(self, 'Linux version ')
+>   
+>       def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
+> diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> index f68f40a1bf..df889134ed 100755
+> --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
+> @@ -27,9 +27,11 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
+>   
+>           self.vm.launch()
+>   
+> +    def disable_kernel_crypto_selftest(self):
+> +         exec_command_and_wait_for_pattern(self,
+> +            'setenv bootargs "${bootargs} cryptomgr.notests=1"', '=>')
+> +
+>       def enable_ast2700_pcie2(self):
+> -        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> -        exec_command_and_wait_for_pattern(self, '\012', '=>')
+>           exec_command_and_wait_for_pattern(self,
+>               'cp 100420000 403000000 900000', '=>')
+>           exec_command_and_wait_for_pattern(self,
+> @@ -43,6 +45,9 @@ def enable_ast2700_pcie2(self):
+>   
+>       def verify_openbmc_boot_and_login(self, name):
+>           wait_for_console_pattern(self, 'U-Boot 2023.10')
+> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
+> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
+> +        self.disable_kernel_crypto_selftest()
+>           self.enable_ast2700_pcie2()
+>           wait_for_console_pattern(self, 'Starting kernel ...')
+>   
 
-> On 17/03/2026 08.35, Markus Armbruster wrote:
->> Thomas Huth <thuth@redhat.com> writes:
->> 
->>> On 12/03/2026 09.15, Markus Armbruster wrote:
->>>> Markus Armbruster <armbru@redhat.com> writes:
->>> ...
->>>>> These crashes escape tests/qtest/device-introspect-test, because it
->>>>> covers only HMP "device_add T,help", not CLI "-device T,help".
->>>>
->>>> Anyone wants to cook up a patch to cover -device?
->>>
->>> Quick'n'dirty patch:
->>>
->>> diff --git a/tests/qtest/device-introspect-test.c b/tests/qtest/device-introspect-test.c
->>> --- a/tests/qtest/device-introspect-test.c
->>> +++ b/tests/qtest/device-introspect-test.c
->>> @@ -105,6 +105,7 @@ static void test_one_device(QTestState *qts, const char *type)
->>>       QDict *resp;
->>>       char *help, *escaped;
->>>       GRegex *comma;
->>> +    int ret;
->>>
->>>       g_test_message("Testing device '%s'", type);
->>>
->>> @@ -119,6 +120,17 @@ static void test_one_device(QTestState *qts, const char *type)
->>>
->>>       help = qtest_hmp(qts, "device_add \"%s,help\"", escaped);
->>>       g_free(help);
->>> +
->>> +    if (!g_str_equal(type, "nonexistent") && !g_str_equal(type, "device")) {
->>> +        help = g_strdup_printf("%s -device \"%s,help\" > /dev/null", qtest_qemu_binary(NULL), escaped);
->>> +        ret = system(help);
->> 
->> Not using qtest_init() or similar.  Hmm.
->
-> I mentioned it's quick-n-dirty ;-)
+Applied to aspeed-next.
 
-Fair, fair :)
+Thanks,
 
->>> +        g_free(help);
->>> +        if (ret) {
->>> +            fprintf(stderr, "Running qemu with -device %s,help failed!\n", escaped);
->>> +            abort();
->>> +        }
->>> +    }
->>> +
->>>       g_free(escaped);
->>>   }
->>>
->>> But I think it needs some more work - we likely don't want to run this for each test run since it slows down the test quite a bit. And the g_test_quick() switch is already used for something else here.
->> 
->> It's used to test with every machine type, not just with "none".
->> 
->> I think we could also use it to additionally test -device just with
->> "none".  Testing it with every machine type would be even slower, and I
->> doubt it's worthwhile.
->
-> Agreed.
->
->> Another idea to conserve cycles: use a unit test instead.
->
-> Unit tests don't have a way yet to determine which qemu-system-xyz binaries 
-> are available, do they? ... so that would need some more logic in the 
-> meson.build file there - not sure whether that's worth the effort, I think 
-> the device-introspect qtest is likely a better place?
-
-A unit test isn't supposed to run qemu-system-xyz.  Instead, it mocks up
-the environment and just runs "the unit".  In this case,
-qdev_device_help().
-
-This is less protection than a qtest, but it can also be a lot faster.
-
-> Or maybe add it to scripts/device-crash-test ?
-
-That's another option.
-
-[...]
+C.
 
 
