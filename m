@@ -4,94 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82205F33808
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 07:10:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8D45EF3380A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 07:30:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2OYu-0003x7-Rp; Tue, 17 Mar 2026 03:09:57 -0400
+	id 1w2Orq-0006dt-68; Tue, 17 Mar 2026 03:29:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w2OYr-0003wu-O9
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:09:53 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w2OrZ-0006b7-5P; Tue, 17 Mar 2026 03:29:13 -0400
+Received: from sender4-of-o54.zoho.com ([136.143.188.54])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w2OYo-0003Jq-Mw
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:09:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773731375; bh=ShAuoR+pyRZ1QyrLlN6/Q+K45OKFL0JY4G6EEZy8NQY=;
- h=Date:To:From:Subject;
- b=TSj/HHsTvAP5Ccck2zjwn12mJb0EEFSiVH7NyrmzY4njJnJ6Nwh3dTORxwt/gTjC6
- frcvc6zIt97bz5g+FcTUBjSjHrcjdXc7vLjfnaAdvpBTMcfLhvWO27/k5D6yDxXIbp
- nP6fN9fvg7Aao1RTyRKp54IGXrW/Di31XgkQvHj/yEk6R5fXB411Me6m2w986wOscH
- jfzYZ/R2RtR0azTbxqitWqsHCgPoDcIr02jeDp4BOzBAlJR/bPCkc3+4HCJut8bBcj
- PqP7An8Qd6VPM7B0VSjQ/LHkYegWICMbnw1V6d1bDrIZV0ZPfRiVQGYHrKdzlgZOnQ
- b57GLL/7bCuZQ==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 959501942AD
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 10:09:35 +0300 (MSK)
-Message-ID: <05558efe-354b-4a30-8136-7239bb0926e0@tls.msk.ru>
-Date: Tue, 17 Mar 2026 10:09:40 +0300
+ (Exim 4.90_1) (envelope-from <anirudh@anirudhrb.com>)
+ id 1w2OrV-0001DU-Ic; Tue, 17 Mar 2026 03:29:12 -0400
+ARC-Seal: i=1; a=rsa-sha256; t=1773732531; cv=none; 
+ d=zohomail.com; s=zohoarc; 
+ b=W+DyPI+TK1dz7NGSmxRAfepmecOK6T/0Q19STushHlSPF7IHIs06zuO19iMaY161Hz4e49aQXvqW1j6/4b72ufstPYEhf3/C9wdOG58ZXBkuxsATWxmD++172X2gxurOJ7RzuC0ocbryeNoGEzB/ZsxNkviBPerBSW9j+AcprOs=
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=zohomail.com;
+ s=zohoarc; t=1773732531;
+ h=Content-Type:Cc:Cc:Date:Date:From:From:In-Reply-To:MIME-Version:Message-ID:References:Subject:Subject:To:To:Message-Id:Reply-To;
+ bh=ctGBz/mZo+EX0eZhP1zxdHoJeQiVjASwQXCYiN2OiZ4=; 
+ b=mqNCdjX1TfjKLf9WGj3j+LcaRxAsLphS4GuwfJAG4hg4UIikQ7N1uP4Xn00m0OvzSXbtC0evKAEGEflYBoPYZjBPPJaxFoxl/QIE+vev5js9zpTGCI1TKj3xeNkxO/gwfLcH435Mka4rG+2k/ZUL/GKLLrt04aVptXM0XylDiDA=
+ARC-Authentication-Results: i=1; mx.zohomail.com;
+ dkim=pass  header.i=anirudhrb.com;
+ spf=pass  smtp.mailfrom=anirudh@anirudhrb.com;
+ dmarc=pass header.from=<anirudh@anirudhrb.com>
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; t=1773732531; 
+ s=zoho; d=anirudhrb.com; i=anirudh@anirudhrb.com;
+ h=Date:Date:From:From:To:To:Cc:Cc:Subject:Subject:Message-ID:References:MIME-Version:Content-Type:In-Reply-To:Message-Id:Reply-To;
+ bh=ctGBz/mZo+EX0eZhP1zxdHoJeQiVjASwQXCYiN2OiZ4=;
+ b=zOAAsV/80W6HYtVrs5SkNO+y7BBRM6cx+SByvypXCYYxTD7Mh0f2IJPCmrPMU+2I
+ +77mkMhWW+ZXRBJbzVRHXlqVJtBQ6Ap7BmcQkHZdVE38C3vf4/Vd1OhuO0qrJquriBV
+ vpPoDg+qpBVfp9lxMKA7eLL5920Asmj13zjxcHDg=
+Received: by mx.zohomail.com with SMTPS id 1773732523854139.5036936920675;
+ Tue, 17 Mar 2026 00:28:43 -0700 (PDT)
+Date: Tue, 17 Mar 2026 07:28:38 +0000
+From: Anirudh Rayabharam <anirudh@anirudhrb.com>
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Magnus Kulke <magnuskulke@linux.microsoft.com>,
+ Wei Liu <wei.liu@kernel.org>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Marc-Andr=E9?= Lureau <marcandre.lureau@redhat.com>,
+ =?iso-8859-1?Q?=22Daniel_P=2E_Berrang=E9=22?= <berrange@redhat.com>,
+ Philippe =?iso-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Aastha Rawat <aastharawat@linux.microsoft.com>, qemu-arm@nongnu.org
+Subject: Re: [PATCH 11/14] target/arm/mshv: add vCPU run loop
+Message-ID: <20260317-crimson-pillbug-of-strength-daf7ea@anirudhrb>
+References: <20260311-mshv_accel_arm64_supp-v1-0-c31699b7bc1f@anirudhrb.com>
+ <20260311-mshv_accel_arm64_supp-v1-11-c31699b7bc1f@anirudhrb.com>
+ <DBA9B933-08E0-4599-AF36-AED339598F75@unpredictable.fr>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: QEMU Development <qemu-devel@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: romfiles for NICs: are these really necessary?
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <DBA9B933-08E0-4599-AF36-AED339598F75@unpredictable.fr>
+X-ZohoMailClient: External
+Received-SPF: pass client-ip=136.143.188.54;
+ envelope-from=anirudh@anirudhrb.com; helo=sender4-of-o54.zoho.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,28 +84,328 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+On Wed, Mar 11, 2026 at 04:58:28PM +0100, Mohamed Mediouni wrote:
+> 
+> 
+> > On 11. Mar 2026, at 16:15, Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com> wrote:
+> > 
+> > Add the main vCPU run loop for MSHV using the MSHV_RUN_VP_IOCTL.
+> > 
+> > Handle MMIO exits by emulating the instruction using the syndrome
+> > information from ESR_EL2.
+> > 
+> > Signed-off-by: Anirudh Rayabharam (Microsoft) <anirudh@anirudhrb.com>
+> > ---
+> > include/hw/hyperv/hvgdk_mini.h |  44 +++++++++
+> > target/arm/mshv/mshv-all.c     | 198 +++++++++++++++++++++++++++++++++++++++++
+> > 2 files changed, 242 insertions(+)
+> > 
+> Hello,
+> 
+> GDK updates in separate patches from the rest please. Maybe even combine them together.
 
-Once again I've got a circular dependency between packages in
-Debian, - ipxe tests the roms during build, for which it depends
-on qemu, which, in turn, depends on ipxe.  And I'm thinking -
-do we really need the rom file dependencies?
+The header updates are closely related to what this patch is doing.
 
-PXE boot is kind of a niche thing, used rarely even within qemu.
-However, it is enabled by default, and qemu fails if it can't
-load the rom.
+> 
+> And more comments below...
+> 
+> > diff --git a/include/hw/hyperv/hvgdk_mini.h b/include/hw/hyperv/hvgdk_mini.h
+> > index d56be0d70f..84b3c6af5f 100644
+> > --- a/include/hw/hyperv/hvgdk_mini.h
+> > +++ b/include/hw/hyperv/hvgdk_mini.h
+> > @@ -750,6 +750,50 @@ struct hv_x64_memory_intercept_message {
+> >     uint8_t instruction_bytes[16];
+> > };
+> > 
+> > +union hv_arm64_vp_execution_state {
+> > +    uint16_t as_uint16;
+> > +    struct {
+> > +        uint16_t cpl:2;
+> > +        uint16_t debug_active:1;
+> > +        uint16_t interruption_pending:1;
+> > +        uint16_t vtl:4;
+> > +        uint16_t virtualization_fault_active:1;
+> > +        uint16_t reserved:7;
+> > +    };
+> > +};
+> > +
+> > +struct hv_arm64_intercept_message_header {
+> > +    uint32_t vp_index;
+> > +    uint8_t instruction_length;
+> > +    uint8_t intercept_access_type;
+> > +    union hv_arm64_vp_execution_state execution_state;
+> > +    uint64_t pc;
+> > +    uint64_t cpsr;
+> > +};
+> > +
+> > +union hv_arm64_memory_access_info {
+> > +    uint8_t as_uint8;
+> > +    struct {
+> > +        uint8_t gva_valid:1;
+> > +        uint8_t gva_gpa_valid:1;
+> > +        uint8_t hypercall_output_pending:1;
+> > +        uint8_t reserved:5;
+> > +    };
+> > +};
+> > +
+> > +struct hv_arm64_memory_intercept_message {
+> > +    struct hv_arm64_intercept_message_header header;
+> > +    uint32_t cache_type; /* enum hv_cache_type */
+> > +    uint8_t instruction_byte_count;
+> > +    union hv_arm64_memory_access_info memory_access_info;
+> > +    uint16_t reserved1;
+> > +    uint8_t instruction_bytes[4];
+> > +    uint32_t reserved2;
+> > +    uint64_t guest_virtual_address;
+> > +    uint64_t guest_physical_address;
+> > +    uint64_t syndrome;
+> > +};
+> > +
+> > union hv_message_flags {
+> >     uint8_t asu8;
+> >     struct {
+> > diff --git a/target/arm/mshv/mshv-all.c b/target/arm/mshv/mshv-all.c
+> > index 2b983845d3..b0649ba10b 100644
+> > --- a/target/arm/mshv/mshv-all.c
+> > +++ b/target/arm/mshv/mshv-all.c
+> > @@ -166,8 +166,206 @@ int mshv_arch_put_registers(const CPUState *cpu)
+> >     return 0;
+> > }
+> > 
+> > +static int set_memory_info(const struct hyperv_message *msg,
+> > +                           struct hv_arm64_memory_intercept_message *info)
+> > +{
+> > +    if (msg->header.message_type != HVMSG_GPA_INTERCEPT
+> > +            && msg->header.message_type != HVMSG_UNMAPPED_GPA
+> > +            && msg->header.message_type != HVMSG_UNACCEPTED_GPA) {
+> > +        error_report("invalid message type");
+> > +        return -1;
+> > +    }
+> > +    memcpy(info, msg->payload, sizeof(*info));
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > +typedef union {
+> > +    uint64_t raw;
+> > +    struct {
+> > +        uint32_t iss:25;
+> > +        uint32_t il:1;
+> > +        uint32_t ec:6;
+> > +        uint32_t iss2:5;
+> > +        uint32_t _rsvd:27;
+> > +    } QEMU_PACKED;
+> > +} EsrEl2;
+> > +
+> > +typedef union {
+> > +    uint32_t raw;
+> > +    struct {
+> > +        uint32_t dfsc:6;
+> > +        uint32_t wnr:1;
+> > +        uint32_t s1ptw:1;
+> > +        uint32_t cm:1;
+> > +        uint32_t ea:1;
+> > +        uint32_t fnv:1;
+> > +        uint32_t set:2;
+> > +        uint32_t vncr:1;
+> > +        uint32_t ar:1;
+> > +        uint32_t sf:1;
+> > +        uint32_t srt:5;
+> > +        uint32_t sse:1;
+> > +        uint32_t sas:2;
+> > +        uint32_t isv:1;
+> > +        uint32_t _unused:7;
+> > +    } QEMU_PACKED;
+> > +} IssDataAbort;
+> Think this is better suited for common code somewhere...
+> > +
+> > +typedef enum {
+> > +    data_abort_lower = 36,
+> > +    data_abort = 37,
+> > +} ExceptionClass;
+> > +
+> > +int mshv_store_regs(CPUState *cpu)
+> > +{
+> > +    int ret;
+> > +
+> > +    ret = set_standard_regs(cpu);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to store standard registers");
+> > +        return -1;
+> > +    }
+> > +
+> > +    /* TODO: should store special registers? the equivalent hvf code doesn't */
+> WHPX does handle this via state levels, but what HVF does via a separate function is also workable.
 
-Wouldn't it make more sense to disable pxe boot by default, and
-enable it only if explicitly enabled on the NIC property?  And
-if not enabled, omit loading of the rom itself?
+Yeah, we'll add more registers in a later series. I think I'll get rid of
+this TODO.
 
-We already have bootindex - which can be (ab)used here, - only
-load the rom if bootindex >= 0, and make it -1 by default for
-the NICs.
+> 
+> > +    return 0;
+> > +}
+> > +
+> > +static int emulate_with_syndrome(CPUState *cpu,
+> > +                                 struct hv_arm64_memory_intercept_message *info)
+> > +{
+> > +    ARMCPU *arm_cpu = ARM_CPU(cpu);
+> > +    CPUARMState *env = &arm_cpu->env;
+> > +    int ret;
+> > +    EsrEl2 syndrome = { 0 };
+> > +    IssDataAbort iss = { 0 };
+> > +    uint64_t gpa = info->guest_physical_address;
+> > +    uint64_t len, reg_index;
+> > +    bool sign_extend;
+> > +
+> > +    syndrome.raw = info->syndrome;
+> > +
+> > +    if (!(syndrome.ec == data_abort_lower || syndrome.ec == data_abort)) {
+> > +        error_report("Unknown exception class 0x%x", syndrome.ec);
+> > +        return -1;
+> > +    }
+> > +
+> > +    iss.raw = syndrome.iss;
+> > +    if (!iss.isv) {
+> > +        error_report("Invalid ESR EL2 ISV field");
+> > +        return -1;
+> > +    }
+> > +
+> > +    len = 1ULL << iss.sas;
+> > +    sign_extend = iss.sse;
+> > +    reg_index = iss.srt;
+> > +
+> > +    ret = mshv_load_regs(cpu);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to load registers");
+> > +        return -1;
+> > +    }
+> > +
+> > +    if (iss.wnr) {
+> > +        uint8_t data[8];
+> > +        uint64_t val = reg_index < 31 ? env->xregs[reg_index] : 0ULL;
+> > +
+> > +        val = cpu_to_le64(val);
+> > +
+> > +        memcpy(data, &val, sizeof(val));
+> > +        ret = mshv_guest_mem_write(gpa, data, len, false);
+> > +        if (ret < 0) {
+> > +            error_report("Failed to write guest memory");
+> > +            return -1;
+> > +        }
+> > +    } else {
+> > +        uint8_t data[8] = { 0 };
+> > +
+> > +        ret = mshv_guest_mem_read(gpa, data, len, false, false);
+> > +        if (ret < 0) {
+> > +            error_report("Failed to read guest memory");
+> > +            return -1;
+> > +        }
+> > +
+> > +        uint64_t val;
+> > +        memcpy(&val, data, sizeof(val));
+> > +
+> > +        val = le64_to_cpu(val);
+> > +
+> > +        if (sign_extend) {
+> > +            uint64_t shift = 64 - (len * 8);
+> > +            val = (((int64_t)val << shift) >> shift);
+> > +            if (!iss.sf) {
+> > +                val &= 0xffffffff;
+> > +            }
+> > +        }
+> > +
+> > +        env->xregs[reg_index] = val;
+> > +    }
+> > +
+> > +    env->pc += (syndrome.il == 1) ? 4 : 2;
+> > +
+> > +    ret = mshv_store_regs(cpu);
+> > +    if (ret < 0) {
+> > +        error_report("failed to store registers");
+> > +        return -1;
+> > +    }
+> > +
+> > +    return 0;
+> > +}
+> 
+> I think this deserves to go to common code somewhere at this point :)
 
-This way, the boot roms will be optional.
+Do you have any ideas as to where this code can go?
+
+> 
+> > +
+> > +static int handle_unmapped_mem(int vm_fd, CPUState *cpu,
+> > +                               const struct hyperv_message *msg,
+> > +                               MshvVmExit *exit_reason)
+> > +{
+> > +    struct hv_arm64_memory_intercept_message info = { 0 };
+> > +    int ret;
+> > +
+> > +    ret = set_memory_info(msg, &info);
+> > +    if (ret < 0) {
+> > +        error_report("failed to convert message to memory info");
+> > +        return -1;
+> > +    }
+> > +
+> > +    ret = emulate_with_syndrome(cpu, &info);
+> > +    if (ret < 0) {
+> > +        error_report("Failed to emulate with syndrome");
+> > +        return -1;
+> > +    }
+> > +
+> > +    *exit_reason = MshvVmExitIgnore;
+> > +
+> > +    return 0;
+> > +}
+> > +
+> > int mshv_run_vcpu(int vm_fd, CPUState *cpu, hv_message *msg, MshvVmExit *exit)
+> > {
+> > +    int ret;
+> > +    int cpu_fd = mshv_vcpufd(cpu);
+> > +
+> > +    ret = ioctl(cpu_fd, MSHV_RUN_VP, msg);
+> > +    if (ret < 0) {
+> > +        *exit = MshvVmExitShutdown;
+> > +        return ret;
+> > +    }
+> > +
+> > +    switch (msg->header.message_type) {
+> > +    case HVMSG_UNRECOVERABLE_EXCEPTION:
+> > +        *exit = MshvVmExitShutdown;
+> > +        break;
+> > +    case HVMSG_UNMAPPED_GPA:
+> At least as observed on WHPX you also need to handle GpaIntercept the same way
+> for EDK2 to be happy
+
+Interesting, because Cloud Hypervisor doesn't handle GPA_INTERCEPT at
+all for arm64 and still works fine with EDK2.
+
+Anyway, I tried adding it but EDK2 still isn't happy. There seems to be
+some other issue potentially related to the mshv driver in the kernel.
 
 Thanks,
+Anirudh.
 
-/mjt
+> > 
+> > 
+> > +        ret = handle_unmapped_mem(vm_fd, cpu, msg, exit);
+> > +        if (ret < 0) {
+> > +            error_report("failed to handle mmio");
+> > +            return -1;
+> > +        }
+> > +        break;
+> > +    default:
+> > +        error_report("Unhandled message type: 0x%x", msg->header.message_type);
+> > +        return -1;
+> > +    }
+> > +
+> >     return 0;
+> > }
+> > 
+> > 
+> > -- 
+> > 2.43.0
+> > 
+> > 
+> 
+> 
 
