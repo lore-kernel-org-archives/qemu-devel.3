@@ -4,156 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 44E51FED9E1
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:01:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C380BFED9E1
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:07:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2VvH-0006yY-6B; Tue, 17 Mar 2026 11:01:31 -0400
+	id 1w2Vzz-00085u-2q; Tue, 17 Mar 2026 11:06:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2VvD-0006xd-Dv
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:01:27 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1w2Vzw-00085L-QL; Tue, 17 Mar 2026 11:06:20 -0400
+Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2Vv8-0005PR-DB
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:01:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773759681;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=mypNcJpK+yPgPi6JYqT8PlLuNL+S7EbCcb3HMjQEwYE=;
- b=enFd6I1N+arr1klRB4Xe/n/nhn/NHO1hqLL/o124YeUSP1rIHm4YzhcEfRqE2R/If9tImY
- TQFKNj9FofGYkuwhZ9wqfdETPf+MkB05Mrw+fsDJAejFzOqq80zy1Y0Nx7bYdeh988D678
- C4oOCMPhPfe6mpXv3extKS+NM81GPA8=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-xqLBaB5fOkiWNpT8d1fX5Q-1; Tue, 17 Mar 2026 11:01:20 -0400
-X-MC-Unique: xqLBaB5fOkiWNpT8d1fX5Q-1
-X-Mimecast-MFC-AGG-ID: xqLBaB5fOkiWNpT8d1fX5Q_1773759679
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-485375aa56eso42411725e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:01:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773759678; x=1774364478; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=mypNcJpK+yPgPi6JYqT8PlLuNL+S7EbCcb3HMjQEwYE=;
- b=brAGH1zd9X/fdKO/9GXQgUMHTZrTMar03C2iHn8tUt5TZUP6/8dqWTvgBEt1t8GnI7
- G2ZLcLX8IjMKCn8kcxIRvOv0KeajMaxO2HdkDhEw0pvnr1mNtgZgb0hQB/JUvbEv9dsS
- p90TTfIR/BeDmFDZbg8jhS0COgnUdzPSQKgRvgiDVN3oIY+IyuMjGoAj1mfjjCW3S7wS
- RJnYpenX3gxVCOcgK2PwNQOF5IRbY9UwYYTxIBCQZ7HOS+4KHn/o8lzfarH+RPCigyf/
- JHUrAgZn1pP7v9MPKD5hBHIn9eva82LMn1HWQxVGDl8IPqnWIh1yAMkBU+f2EAtgSw+E
- Pthg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773759678; x=1774364478;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :references:cc:to:from:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=mypNcJpK+yPgPi6JYqT8PlLuNL+S7EbCcb3HMjQEwYE=;
- b=HhqyyUxOC14GlsbLzI+yDi+W9NIuyd+10on9cyUV186vVsatyZCjnC3dORSWYmauYw
- bKU8olkZ7BJXKhag3dSz7RbMyGOTAPJMeddoXgg0xFKZJKDCqwCBDxb7O4OyHMBVkDGG
- xauFBxSDyHA/fJBRz6ee8m2pffNR0OSI6+it4A5l8QLngC6ORvn8bzU2piRllx/I9mDc
- SrvyxayGww96IookNsHaQIBCnIXioRZUuXj2/OpFLvCL6CKIwlPIH+IR0v1G5wIrOrEs
- Li4zGqmFpozB8TBYNrmub2ad//P5Du181JaKngohvaVxLc32v2JLcfp7tuWjLYIOsllH
- iATQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWB+keK5Iu+7rjVk4s3myUibWIB8jzU1KP4pMYpg86wRsSz1GBT1LNOCxGZVnDhtwz1KaOZfeux4l6v@nongnu.org
-X-Gm-Message-State: AOJu0YxrA+orLzPrFkF4EPwC5mmQvZosFw0Ktwd4jx6K1kaVqtiEL6Bo
- nIpiCEJaP6hLOoG0p9eodXJZlL6sQzcoS3cykdNi6TBDXH15fo8YEFEwAWOz0c7TIzIRc88NmzS
- Xt8b/Tuj79+jpdLlyI+t2Qg/7OczA9ISAH8WtaWwoJ2kYABajZ8JzC+EJQi6qUpkg
-X-Gm-Gg: ATEYQzySdJwml9MaOZEkefSHeE+lBdwwkHkVd1pLL3t8AwpoC7HuJ7dGp9FhBE4cexi
- 96jiVLT2XR40i53AsdbEd4MKzYyBwtbQoU7zf2G7AHrXnqaKTf4Y9O3eiNV9BylRVI0T0yhI5Fz
- lDRqHsC8hToKgnI2YSPdSNieA2bxb+keMd5J7UE+em2e3zO9wZ9ot80MCnbUGYQqdVEeoTrg2ng
- 9fpfmu5ftnvQ+vCliL7LY6kiADl8jqORr2QAAmOoYO6f9/WkhTlFubH12IzfH4e96gkAz7R+MB0
- VM3FSTY2mbm0dbhl29RvOIsNhM6S/Ik55wxXvj1GYX14flD7m5jMKMZg2owEh0WhlY6PTWoME/k
- PsMgVKfziiqrPlf9HibXhjv/6i7Y08mnd3NEJjr2rcTcIKT6Xqnhz3DT2//HX
-X-Received: by 2002:a05:600c:8b72:b0:485:f1d1:8f29 with SMTP id
- 5b1f17b1804b1-485f1d19fffmr39277345e9.2.1773759678293; 
- Tue, 17 Mar 2026 08:01:18 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b72:b0:485:f1d1:8f29 with SMTP id
- 5b1f17b1804b1-485f1d19fffmr39276565e9.2.1773759677674; 
- Tue, 17 Mar 2026 08:01:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4856eab15f4sm75106315e9.14.2026.03.17.08.01.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 08:01:17 -0700 (PDT)
-Message-ID: <fd123458-7468-4987-917a-1b04d8f690d2@redhat.com>
-Date: Tue, 17 Mar 2026 16:01:16 +0100
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1w2Vzv-0005vT-1s; Tue, 17 Mar 2026 11:06:20 -0400
+Received: from pps.filterd (m0356516.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62H71IXq969073; Tue, 17 Mar 2026 15:06:17 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=0r+qPD
+ GAdZAhMB4CnRDUS1s8w8qU34q2o094SYJlETk=; b=YNqYnUH3mLRkue70iEiCZR
+ vRQ7r+jY/79QGDbXcL8TYVuqB+qPpxuRZLU+zVIkmm5G9kvaawxyJUPMxizHJNLC
+ hK20/elyWa/aNjZnYPGcsO8en3HWTe5btHBcmMe+oq8D5hc2YrXmEec1vhNyRrwx
+ AxFl0J3h5BBszE7LYfLLWF2vRccdhohPy65ZnZxQkl4QGvWZT4W5q/Swel0pboSJ
+ 4Y13O/3g0vfiraliTn9ZX1N78ujRF7PYNFbU6NAMEO4cMr7Jp8jMfOsc99QSQKp/
+ qb3tS4gyjNAtsN538SNaNyIECe53eu/A/my1Pel8SCcgAXg43pbrgEmahHJ3TOnw
+ ==
+Received: from ppma11.dal12v.mail.ibm.com
+ (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvw3hw1r8-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Mar 2026 15:06:17 +0000 (GMT)
+Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62HCN7sj028510;
+ Tue, 17 Mar 2026 15:06:16 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwmq19ffy-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Mar 2026 15:06:16 +0000
+Received: from smtpav04.dal12v.mail.ibm.com (smtpav04.dal12v.mail.ibm.com
+ [10.241.53.103])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62HF6E3957475346
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Mar 2026 15:06:14 GMT
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 69AB25805E;
+ Tue, 17 Mar 2026 15:06:14 +0000 (GMT)
+Received: from smtpav04.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id D819658052;
+ Tue, 17 Mar 2026 15:06:13 +0000 (GMT)
+Received: from [9.61.145.197] (unknown [9.61.145.197])
+ by smtpav04.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Mar 2026 15:06:13 +0000 (GMT)
+Message-ID: <cf9ea919-882a-449d-9ec2-1c6acfd23fb0@linux.ibm.com>
+Date: Tue, 17 Mar 2026 11:06:13 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v11 06/10] vfio/region: Add a helper to get region index
- from memory region
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-To: Vivek Kasireddy <vivek.kasireddy@intel.com>, qemu-devel@nongnu.org
-Cc: Alex Williamson <alex@shazbot.org>
-References: <20260311025340.1335673-1-vivek.kasireddy@intel.com>
- <20260311025340.1335673-7-vivek.kasireddy@intel.com>
- <2f048542-173e-4b93-ba4e-f7ce75788f73@redhat.com>
-Content-Language: en-US, fr
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <2f048542-173e-4b93-ba4e-f7ce75788f73@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Subject: Re: [PATCH] target/s390x/kvm: Simplify the async pfault handling code
+To: Thomas Huth <thuth@redhat.com>, Halil Pasic <pasic@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, qemu-devel@nongnu.org
+Cc: Eric Farman <farman@linux.ibm.com>, qemu-s390x@nongnu.org
+References: <20260317134531.460141-1-thuth@redhat.com>
+Content-Language: en-US
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260317134531.460141-1-thuth@redhat.com>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-GUID: IU0gcKDJ_VGD61FULnAXCDdu0Xk-F5oN
+X-Proofpoint-ORIG-GUID: IU0gcKDJ_VGD61FULnAXCDdu0Xk-F5oN
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDEzMCBTYWx0ZWRfX3TnhJ2XiI2Mc
+ C4nBHg86pnou7s4JB/UbMDaGhMGhfm/PMYzC9AFw85qxqT/kRcu3GqaM1ZGo2noQpzep+ttV/pB
+ Q3dHjyurAlFMbhBNxXEuTrmEEZT2pZMB/0SUtC7V2v6nl8rLEoaCpTi7OYpfrZv1HxM9boKxsOW
+ BtN2TN0EJYiGTHPLW56EtY17vfCOGK5tsWwfpvtxPhzcxBwRLJMuCC7z76g+TuzTGRc1CmqD8pa
+ Ip7rsm8g8vMKNNgKsz3YbnZn9fHNX+q9r7X7nu+WV5iBU0fdCuX/+ydDvbwVbNTLtv9YeIvwVN3
+ 21rSW6iFnXWwPFiyk34EZ6M+7Ug3aSVWWsaB+jKOYzwQvVuAaKXbLe4TTyTpuX3V2OwEsH1l4W/
+ eFuez9TbS6GFafniL0y7kMlpsLToe4RbYLXQhfYtSb1rFTdegurvervW3sBM5qljRTjAPwURm72
+ P5lhrvL+2AMNJpW367A==
+X-Authority-Analysis: v=2.4 cv=Hf8ZjyE8 c=1 sm=1 tr=0 ts=69b96de9 cx=c_pps
+ a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=Y2IxJ9c9Rs8Kov3niI8_:22 a=20KFwNOVAAAA:8
+ a=VnNF1IyMAAAA:8 a=1PiBuSbX7Db_E7daJGwA:9 a=QEXdDO2ut3YA:10
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-17_01,2026-03-17_01,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 malwarescore=0 lowpriorityscore=0 impostorscore=0 bulkscore=0
+ suspectscore=0 priorityscore=1501 spamscore=0 adultscore=0 clxscore=1015
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603170130
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -169,81 +122,22 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/26 15:41, Cédric Le Goater wrote:
-> On 3/11/26 03:50, Vivek Kasireddy wrote:
->> Having a way to figure out the region index (or bar) associated
->> with a memory region is helpful in various scenarios. For example,
->> this capability can be useful in retrieving the region info needed
->> for mapping a part of a VFIO region or creating a dmabuf.
->>
->> Cc: Alex Williamson <alex@shazbot.org>
->> Cc: Cédric Le Goater <clg@redhat.com>
->> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
->> ---
->>   hw/vfio/region.c              | 14 ++++++++++++++
->>   include/hw/vfio/vfio-device.h | 10 ++++++++++
->>   2 files changed, 24 insertions(+)
->>
->> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
->> index 47fdc2df34..4cb92216ef 100644
->> --- a/hw/vfio/region.c
->> +++ b/hw/vfio/region.c
->> @@ -539,3 +539,17 @@ void vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
->>       trace_vfio_region_mmaps_set_enabled(memory_region_name(region->mem),
->>                                           enabled);
->>   }
->> +
->> +int vfio_get_region_index_from_mr(MemoryRegion *mr)
+On 3/17/26 9:45 AM, Thomas Huth wrote:
+> From: Thomas Huth <thuth@redhat.com>
 > 
+> Since commit 126e7f78036 ("kvm: require KVM_CAP_IOEVENTFD and
+> KVM_CAP_IOEVENTFD_ANY_LENGTH") we require at least kernel v4.4 to
+> be able to use KVM. KVM_CAP_ASYNC_PF is available in the kernel
+> since v3.15 and KVM_SYNC_PFAULT is available since kernel v3.18,
+> so we can assume now that they are available in all supported
+> kernels. Thus simplify the code a little bit by removing the
+> checks for these features.
 > 
-> I think you can move this routine as a static in device.c now. No need
-> to export a service.
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
 
-you can't because of vfio_region_ops.
+LGTM, thanks Thomas!
 
-Returning a VFIORegion seems cleaner though.
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
 
-Thanks,
-
-C.
-
-
-> 
-> Thanks,
-> 
-> C.
-> 
->> +{
->> +    VFIORegion *region;
->> +
->> +    while (mr->container) {
->> +        if (mr->ops == &vfio_region_ops) {
->> +            region = mr->opaque;
->> +            return region->nr;
->> +        }
->> +        mr = mr->container;
->> +    }
->> +    return -1;
->> +}
->> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-device.h
->> index 828a31c006..596c7f5a10 100644
->> --- a/include/hw/vfio/vfio-device.h
->> +++ b/include/hw/vfio/vfio-device.h
->> @@ -308,6 +308,16 @@ bool vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t cap_t
->>   int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
->>                                   struct vfio_irq_info *info);
->> +
->> +/**
->> + * Return the region index associated with a given MemoryRegion. The index
->> + * can be useful in retrieving region info.
->> + *
->> + * @mr: MemoryRegion to use
->> + *
->> + * Returns the region index or -1 on error.
->> + */
->> +int vfio_get_region_index_from_mr(MemoryRegion *mr);
->>   #endif
->>   /* Returns 0 on success, or a negative errno. */
-> 
 
 
