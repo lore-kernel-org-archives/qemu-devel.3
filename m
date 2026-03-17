@@ -4,80 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CB4FDF33817
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:56:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82A2EF3381B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:56:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QC3-0001EA-Ti; Tue, 17 Mar 2026 04:54:28 -0400
+	id 1w2QDz-0004uZ-PV; Tue, 17 Mar 2026 04:56:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QB9-00085z-AH
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:53:32 -0400
+ id 1w2QCQ-0002ya-KD
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:54:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QB7-0003Ov-Nw
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:53:30 -0400
+ id 1w2QCM-0006p1-KM
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:54:48 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737608;
+ s=mimecast20190719; t=1773737685;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=xWzndOWq7ArgzZjWdyWaap0dhjwt0oLMqBrIzkL/y8Q=;
- b=GDRkuAmcdfr7vSCekKuTldWD1JgbzFQN+ngfQezW8kDGNL4Ii89SAvoN0px0lCp2LcC6Y8
- zyKfdjTz4Wt8IrB5ExdPGU0mN8oi/ONAp8KeI7Fett9FpsOoKYxqhU/tPNoHJF5L01lkue
- w/RcFTHv95GveEgZ+QSRv89aE+SFSkw=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ bh=EGn1kwoZqRzEPfZ7L3thAtcBGbOjUmNNivIgdm7tnB4=;
+ b=iAwotrkE+NFsN4VCBVNSEPMfPd4xKoj6s9cvPw2RbJGGGNyXWNdXx1lm44+XW/lSHP2fRy
+ Ix07aBFdLccLG66R4iaLazGTMNTYhO04jXb83xTpD3r3pPl33uMXg+gEip5/Fo1luMTkLs
+ 2cdtRBq7CY8zCNIvPa7UaQBNdQ0ktYA=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-9-kuFnNGocNUa3ODb8Z9u5xA-1; Tue,
- 17 Mar 2026 04:53:26 -0400
-X-MC-Unique: kuFnNGocNUa3ODb8Z9u5xA-1
-X-Mimecast-MFC-AGG-ID: kuFnNGocNUa3ODb8Z9u5xA_1773737606
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-417-vjqSHQFIMKmtsS1Bya0MvA-1; Tue,
+ 17 Mar 2026 04:54:44 -0400
+X-MC-Unique: vjqSHQFIMKmtsS1Bya0MvA-1
+X-Mimecast-MFC-AGG-ID: vjqSHQFIMKmtsS1Bya0MvA_1773737683
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 20120195608C
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:53:26 +0000 (UTC)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C6EBB1955EAC
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:54:43 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0980B1800361
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:53:24 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id A9D0F3000223
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:54:42 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:50:43 +0400
-Subject: [PATCH 29/60] ui/console-vc: extract vt100_keysym() from
- qemu_text_console_handle_keysym()
+Date: Tue, 17 Mar 2026 12:50:56 +0400
+Subject: [PATCH 42/60] ui/vnc: assert preconditions instead of silently
+ returning
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-29-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-42-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2718;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1325;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=Z81RkVNThOvnq6XkQ31MYQymYu0yiyGQpUgt2GLyfpg=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXbisCYld+dRzGUDGXkNJ/cL7gF4MSYoK8w+
- 1OGbvm1j66JAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2wAKCRDa6OEJdZac
- 5fs/D/4teXnS8qHZ4DS8tH/EVfFZgVGvCHLvzf2Da/ZxRmTgVmve7f0EknxjSuKF8lZePoMZgwx
- 1Tp8K1C9dcmZ3wxnayw2gq/C6Rm23wj/4uHQcn5vHt6sWOeAjUcX88/9PwiYBBVQtmjWzIk3Jet
- CLpCygXsPrtM/fR9rXXAGyUoPBiyGI+qpvJmsB5HrKoD5GW9TKMpB0Z3UOynPq7CDi4DUz5wQ7+
- iMH6Wy546GmbPuBlde3HoQIyVMqx61/14k8ieAPNIatveSI0TOHZPvy0ye/4ShngusSrGUh1yeK
- 81/lgmg8VM6mrgPrkVrjwxkylDraL4QQ/1ScC001JyMaNmENPvxUIoaWQfm/ep7vyY2CDyH6cHT
- sam/+nS1W3EdRBfPS56l8CMevUIei0u3vp9THiHE+j3IZGJoZl4NOE9Or3sQwPaNlTSfXyIm7f1
- wiyD9WMAMX3gdqZps4ttPaQ9AQZ3VQwA6erc2YaORlCvJJ00HdsTQIW80lakwWKE3PZ8WlYB/r1
- yRT5EZyq/EqE8GZ8fPArcC+tNdstY2MkVic3MUn8jzVVIKRxcgqXPMIynlbxYELguKrWkibLS4l
- pxJ93BvgFCATbBXTomxtAwVrtvBN1Cr4pOvojAl8xdvBjRznaO7l6BOZcGUr4yZa50hbP5uFRDL
- vmmil3CJB3GfXpg==
+ bh=X4qgBvBliW+YREf4/3xvNHw7a1+98eJKhFPoGll8W5U=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXcZtehu9FXAyg/a/h3Cxam+x/WwH2exmBUm
+ I/XHSeKVpyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3AAKCRDa6OEJdZac
+ 5bJGD/9KmQSyeiVeb0H5irkKizDwFX0zWB8Lgtt3ePAAn8/HgiJugvyJXr6xnkQBomJ65xQSFR7
+ LZGT9Y0LNT9ypFXMCZPo1RTTEa/kbNNSplad7Yb+xx7s0VNkovbvrooIz1etEHRxWs7Ph092SI2
+ 1lWLK5uQLp8Ku4jH0Ixngn53DvayT/a9kzoN3wUw0BSDBCSA6uC5nLtcyIqHkywji+EJ5AMLwVY
+ XYn4thYhOKvs8uIjcJAOrVjkdDBCiacmRa9CFNaJSqQqZ4o+f8liKxolEWktpL/6Xs3C14P/W3f
+ cnxk6CZSdXkNaeofrYimv3HIR2fMseekkDBve5E4/LWat0JpV8JYvU48oG4MI7kfANmSr3H2dvn
+ c8JF2j1WmuxqVfH9n/nvfjROR+MDACd0cu24LjRMHVy2LGvMZ1rmlvUuIMDS7njdLdvYFsj3JSI
+ hEmAJBSxhTuQscVwIb6xSNP4W8DqNU0lzVNg90WeD0YV8igkrNCd56nAXS0Xr1oTR4WKgmuP1eH
+ wqdVtNS/xddBcaibxr0ZWWcVNXghJIp8Pp3fkS9fh5mZsmCkOw1qgQmmhG8EnoBRMqYTBd9UABr
+ 1b5qRVPrGquByVr7FO3yhHxaMPZGk4kJSm+Xz9ij+ioCQrwH0BCWns9yIewvIkh9BwMnxJjV5tC
+ 8kvKInN6aPxmKQA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -104,85 +104,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Move the keysym handling logic out of qemu_text_console_handle_keysym()
-into a new vt100_keysym() helper that operates on QemuVT100 directly,
-continuing the effort to decouple the VT100 layer from the console layer.
-
-The echo path is updated to call vt100_input() instead of
-qemu_chr_write(), since the function no longer has direct access
-to the chardev.
+Replace defensive NULL guards with assert() in vnc_display_close()
+and vnc_display_open(). These are internal functions whose callers
+guarantee non-NULL arguments, so a NULL value would indicate a
+programming error rather than a runtime condition.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/console-vc.c | 29 ++++++++++++++++++-----------
- 1 file changed, 18 insertions(+), 11 deletions(-)
+ ui/vnc.c | 15 ++++-----------
+ 1 file changed, 4 insertions(+), 11 deletions(-)
 
-diff --git a/ui/console-vc.c b/ui/console-vc.c
-index 3ef492c2d4c..dcd6445a1c3 100644
---- a/ui/console-vc.c
-+++ b/ui/console-vc.c
-@@ -326,24 +326,25 @@ static void vt100_write(QemuVT100 *vt, const void *buf, size_t len)
-     vt->out_flush(vt);
- }
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 87ec3e6d799..605e5117b7f 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -3464,9 +3464,7 @@ void vnc_display_init(const char *id, Error **errp)
  
--/* called when an ascii key is pressed */
--void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
-+static int vt100_input(QemuVT100 *vt, const uint8_t *buf, int len);
-+
-+static void vt100_keysym(QemuVT100 *vt, int keysym)
+ static void vnc_display_close(VncDisplay *vd)
  {
-     uint8_t buf[16], *q;
-     int c;
+-    if (!vd) {
+-        return;
+-    }
++    assert(vd);
  
-     switch(keysym) {
-     case QEMU_KEY_CTRL_UP:
--        vt100_scroll(&s->vt, -1);
-+        vt100_scroll(vt, -1);
-         break;
-     case QEMU_KEY_CTRL_DOWN:
--        vt100_scroll(&s->vt, 1);
-+        vt100_scroll(vt, 1);
-         break;
-     case QEMU_KEY_CTRL_PAGEUP:
--        vt100_scroll(&s->vt, -10);
-+        vt100_scroll(vt, -10);
-         break;
-     case QEMU_KEY_CTRL_PAGEDOWN:
--        vt100_scroll(&s->vt, 10);
-+        vt100_scroll(vt, 10);
-         break;
-     default:
-         /* convert the QEMU keysym to VT100 key string */
-@@ -360,18 +361,24 @@ void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
-             *q++ = '\033';
-             *q++ = '[';
-             *q++ = keysym & 0xff;
--        } else if (s->vt.echo && (keysym == '\r' || keysym == '\n')) {
--            qemu_chr_write(s->chr, (uint8_t *)"\r", 1, true);
-+        } else if (vt->echo && (keysym == '\r' || keysym == '\n')) {
-+            vt100_input(vt, (uint8_t *)"\r", 1);
-             *q++ = '\n';
-         } else {
-             *q++ = keysym;
-         }
--        if (s->vt.echo) {
--            qemu_chr_write(s->chr, buf, q - buf, true);
-+        if (vt->echo) {
-+            vt100_input(vt, buf, q - buf);
-         }
--        vt100_write(&s->vt, buf, q - buf);
-+        vt100_write(vt, buf, q - buf);
-         break;
-     }
-+
-+}
-+/* called when an ascii key is pressed */
-+void qemu_text_console_handle_keysym(QemuTextConsole *s, int keysym)
-+{
-+    vt100_keysym(&s->vt, keysym);
- }
+     if (vd->listener) {
+         qio_net_listener_disconnect(vd->listener);
+@@ -4067,15 +4065,10 @@ void vnc_display_open(const char *id, Error **errp)
+     const char *audiodev;
+     const char *passwordSecret;
  
- static void text_console_update(void *opaque, console_ch_t *chardata)
+-    if (!vd) {
+-        error_setg(errp, "VNC display not active");
+-        return;
+-    }
+-    vnc_display_close(vd);
++    assert(vd);
++    assert(opts);
+ 
+-    if (!opts) {
+-        return;
+-    }
++    vnc_display_close(vd);
+ 
+     reverse = qemu_opt_get_bool(opts, "reverse", false);
+     if (vnc_display_get_addresses(opts, reverse, &saddr_list, &wsaddr_list,
 
 -- 
 2.53.0
