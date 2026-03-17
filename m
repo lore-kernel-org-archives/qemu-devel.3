@@ -4,112 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ED9F1FD877B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 14:09:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4E39FFD877B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 14:10:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2V5x-0006Ni-GF; Tue, 17 Mar 2026 10:08:29 -0400
+	id 1w2V7O-0006vq-Go; Tue, 17 Mar 2026 10:09:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w2V5q-0006MI-3f
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 10:08:22 -0400
+ id 1w2V7M-0006vA-13
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 10:09:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <kkostiuk@redhat.com>)
- id 1w2V5l-000618-Nj
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 10:08:21 -0400
+ id 1w2V7K-00068n-8X
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 10:09:55 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773756495;
+ s=mimecast20190719; t=1773756593;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=CXuEFuKxKOf1n9AWSmJS66yd7c7oRKnUjdNpsGMQPkE=;
- b=dxamk78tfgioHwuW/goe/2TBcLJL4k2AyfsxzQiOuomX7AItuUKFTvqoroog9tFDMtYwRR
- 7EqdmEh4IBJkxR+HWbPubZ7411dtOqHbdiGrbrs//v7Cz9n6SwwyNYG7SDyIfFTS+kcNXk
- mYbrl0BBmXJwZK2FpjR8k/KM32DgR7g=
-Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
- [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=dBRGOYnCg0AQQ94AQ28BLDsZiZdyjLqiHJNiPxxl20I=;
+ b=BYHRxG3QINhJoLMnQqRO+G6ybVG84Tq12TK41Fx+SKGgkCkcv5qHorcj1hekiSutDPhD/o
+ AlE/K5CKwY+Jtt73FJCyZAnirbSoC164rRHnkE2ULCoZlgMpzmd3alf12cPlvIKXcjFsML
+ RTpLO5aGgKuZlPn+T04qT6Dv8Dwo/2o=
+Received: from mail-qv1-f71.google.com (mail-qv1-f71.google.com
+ [209.85.219.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-408-z7_fTDeHMVeDXDC6k3Lt4Q-1; Tue, 17 Mar 2026 10:08:14 -0400
-X-MC-Unique: z7_fTDeHMVeDXDC6k3Lt4Q-1
-X-Mimecast-MFC-AGG-ID: z7_fTDeHMVeDXDC6k3Lt4Q_1773756492
-Received: by mail-qv1-f70.google.com with SMTP id
- 6a1803df08f44-89a0013d87bso942903516d6.2
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 07:08:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773756492; cv=none;
+ us-mta-152-kyYUg0RxPYyiEZJWV_baqw-1; Tue, 17 Mar 2026 10:09:51 -0400
+X-MC-Unique: kyYUg0RxPYyiEZJWV_baqw-1
+X-Mimecast-MFC-AGG-ID: kyYUg0RxPYyiEZJWV_baqw_1773756590
+Received: by mail-qv1-f71.google.com with SMTP id
+ 6a1803df08f44-89c519dbafeso175435936d6.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 07:09:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773756590; cv=none;
  d=google.com; s=arc-20240605;
- b=f9cb61PcQl16xFeNvL41lO6gLkZe2BPBH4Stk9+wodto6ktCiTD13oi7yI+fL4JRTF
- aVfO6GEpBIXQWkU3wjAz+ICHFbdi7yl4kwAAVxNlmkKFPqUS5Jn4CayXCVg1PZlY1oa+
- dd9w5OFDaunQVodwoBwFVWJNJ05fGTfPF2+zeaiD5iICW27EmfunGFF89SgpK0hWjPWh
- uFat31wb+iszGaDfxws3RhRiWvMQJGFN+VuMn4brJsombyPIM32Ww4BdsokdkfOCD9Ai
- JZbC6B0RibYVIjpN325f6oau0774irs7QpFVViL8CcdPnZ9qynQV5M8F7L0q29RatTno
- bn7A==
+ b=XxBioDcqVZx4cpXNjX+R/MJx/HeiVXXezwonlAvzL0/I1JJAAI82DBdFQDXYzxeMRU
+ R5elYC15lgYTrcBtVtphkvm1/Jh3MZm4jpVW1kq5Kc3TE3T7eEQVewu3c4tAxUMUeaTg
+ keLe353wGhh0rch+QA1eBzqWq/0tL/tDRMVAPHo27q1H1wbKaw1lr0IBg8bWGI2XnCRt
+ +f0SoX8AoElIDOoVnM4ZyvFRBKgA7nhG3MmERVaHJWrMvnP4W0AVyqbRMEmbKBwylS+g
+ 4dnQNVYa2JXZoIXaJCVTtawk4D6r5JFUOtDDyhx1JGXDk9bdeeozBZWNlJeDhxsgkOaW
+ sVXg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=CXuEFuKxKOf1n9AWSmJS66yd7c7oRKnUjdNpsGMQPkE=;
- fh=wZGJy6Be4bECC4yB2hGbYRgyOcM+26fIztlsf0/LmxA=;
- b=Oby5JL3/+g1flDotnpCmlio9ZswNXqQeHEA6GEm8+1MMjw1YGKvA/R/rLhtp5P1VBW
- ikrcaYfk/lnvksirbbD9Gi4BeW/r9KmAOUI6ikWJv2Gvhs6mXdKoq8zyYk0m6ljZDOtj
- 0DA/7DKKt0tP3l6cg/aDqHLolhA4l1tNIYQHqKz/YJlnHshhCHfumelIaPUsr7NXZDt4
- tqVckX7NkYZENbyylqOeB16U9OqUokI/uhFpjXosS/iRM3oN20wk7mJmPWWCCAdIDEss
- Mn4ynUzMelqNvZB7180klBD/P5wngCKv6ixOzgxj9990fIGke+RtTExrHgP6ORPgkMNv
- 397A==; darn=nongnu.org
+ bh=dBRGOYnCg0AQQ94AQ28BLDsZiZdyjLqiHJNiPxxl20I=;
+ fh=BeZRKHJnXg5VKpZp9pIG1L6JBImdwLr5Kxe/kRWzq0c=;
+ b=aWJuOS2Hh2DZTt9CXaHIMdquwv4ZelUlkR/rXGP9yKVoTicsDq6SvesNB8PQx0AMvl
+ J51jMX+Hn2/R06qbGBNk8GJ8bglwFxvHp+tZZ15FK5nXdWStW7dvaOhOgl7U2FNknQTJ
+ 2UmY0K66/EB7V+mewUoGYrIpWnMQqrcx9+1sYdLKBZHhOAuh5cB67rrTiIahIwCwfrWm
+ wDeaabaoSDHkGQUo8ojSZxaGJhWdUaNDmxrBS0tjVOvPYAUv0Go1gLzC4m+28FdCIbFn
+ R2fM4lsVe31AfqB3S2YJwNTufX1js1HTiUYyN2hFMrx/HEi7K0bpJT38GgI/ZvTf5OuV
+ eFmA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773756492; x=1774361292; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773756590; x=1774361390; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=CXuEFuKxKOf1n9AWSmJS66yd7c7oRKnUjdNpsGMQPkE=;
- b=XV7Fq9QGhSQcNafJOy/oTE8SglFBdvkFbAUu/bezWNrtCDsQcC2pE0I0EwUvX7pvSb
- oIqT/c2Cr0rW0ruygIFA9E28KWuhNX38mgBlHWaMXPznW4Ix9wUn87akjK9kAz9Hm9iC
- rsBTC7E+HZjddf4eRCUN8uX+M2NPklZXAcboBZDf4rG8WzQtFx4hRg7BgwzUpQBeMJHk
- DSXCeQEGHk/D1Qxfj/FRZpl2k6O5FBVGn/MVy9n03BnO6s7tQJObX8f0THS9Fuw/PniQ
- sm/OuNCMSEXPZpOjEhhyeHc5CZ0I0FYL5lHW2iwkWbbGQAnXdTgbLMiq5p0hxDWLocAr
- sdzw==
+ bh=dBRGOYnCg0AQQ94AQ28BLDsZiZdyjLqiHJNiPxxl20I=;
+ b=d7qubZOaDFtYcWRECl+O/3ouvCL814ozuGjW9Q0FPC+koZAU0KwN7/zJf2+A8bU3TX
+ u+TaVoQsuiBKdOqav1hucGYV20Eb9fz+a6+PoWvintPoYJWAW//jLX2usMsadS1Ssq+8
+ Vuc4DlskabAAcTT7fZJljsIPsmvz/X6H6ARmlrvA5k176BVHxlICm5lXBSC3r/7NCl0W
+ p8t42+CtOZKCM7FJ/aGH2kd1aRY09F5JDwerqb2uOUN7oYYECEz7ekCKh0wQuhuFk0XV
+ W/e1eR36atXDPV+CvlTZ/JVn/leUwXzMOIw/Qqct4S8cieZdXu6klyYhopwpcFWhc0bC
+ bm1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773756492; x=1774361292;
+ d=1e100.net; s=20251104; t=1773756590; x=1774361390;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=CXuEFuKxKOf1n9AWSmJS66yd7c7oRKnUjdNpsGMQPkE=;
- b=S9A3F/+AEuZrNcT7feZGLy7IxfZYpxdlXCrwiG/0i+d5qlD7QWmjgK0/Gyf9g0w2rY
- 4+13H5xgvQ6YBiQNSeWbzmQJgiJNYYkuTNz3ERFC9nXIumPEK4T9xQbFU/VkPgdQRFJs
- 1wDaV94RMCFLxb4NA+UcwPOAUCmZkTRtuHU4xJj1izC7g/OBseJE8KSCHVLnjwAzflIN
- +GS+0FIvBUJ53lc4LM+JK/euXGvRUItjU0FT+0EdEr5qdS5SzLogcNrUmF4OYnUfe+Tx
- 7KwDdwcGWwrW6dO3IJDzKudkWmywMoGoWMY35mPBhTCBZd6B6drEF6LgfAijTv2cy0Zr
- +AeA==
-X-Gm-Message-State: AOJu0YwAvM4/+xUR5LJE+8Q95kL+3EhcN5xR8Dz888dCEy0tpNltCm2W
- p/t2u8Sr44kXpa16Pynn56V9WTi5YvzeV8/sgVjrQoA8Q7Mr7mw6QXONZgXBuwsbttKYP8P21zZ
- 10eprG9VkFQYJT2hJamjmS0JbTr9ISsHsIkzn93j5jVBgErjy+rJHvIIm0VNHvIg+zDsTBdhwLt
- 8WiJustu5171aS7inJk2l2k6m1GjtXXR8=
-X-Gm-Gg: ATEYQzzv/wcnSxIX3fem24Js1hjmoWEXAnI5j133NthI8lkZ1vfAU94QH+sp8KALQIj
- 53NcF8Ouf1+zmqs3jI1HAlG8ezfW/0mw7jKaZrltl/hcYBN+qWJwuMY+7GmCFCSwVdi2gttZ3Is
- igR+NiBg0ZJttmwIduMmLVXFfgODwV3XzMf8Obag0JlXP4MdSSkqsmI872ReQq5ROBk9X+ukyri
- ZxbFuZc
-X-Received: by 2002:a05:6214:170c:b0:89c:3f38:a992 with SMTP id
- 6a1803df08f44-89c3f38b699mr105931576d6.22.1773756492423; 
- Tue, 17 Mar 2026 07:08:12 -0700 (PDT)
-X-Received: by 2002:a05:6214:170c:b0:89c:3f38:a992 with SMTP id
- 6a1803df08f44-89c3f38b699mr105930996d6.22.1773756491844; Tue, 17 Mar 2026
- 07:08:11 -0700 (PDT)
+ bh=dBRGOYnCg0AQQ94AQ28BLDsZiZdyjLqiHJNiPxxl20I=;
+ b=CQzxpZeOnUjdrGnBkXW41ZTIn66mwRGR1xSL/PZ9mmcVBQYEq9+ODByWIOH/G/1PtF
+ UFDA8JFu3O3k+mPkMDM+51DKCkW2PYaxAsW5QMvVZK0wnRD5NZ63YAixyb+AYTcvQ6Oe
+ Zkp1W6H0RB/9F+qjS9rKO9RFP3EsSHUzmjLRxM0fkD6Q/ktoBuTZaUM9J9xnYpKPx8Vv
+ P1/ZgNhQXgSOrB+xanJBoiFrkPYldDWT3GjajIiI8zq22hyMDPzPJnYryDYZZm1hxFBX
+ 8r3Pzoi8K55Bt0l6nT3Nm3iI7H0DgvkMjbKNy5dh2ytVEkDtmXpnQ8fSOb44pTwBwe/p
+ /EVw==
+X-Gm-Message-State: AOJu0Yx9MEH8BUJZzPQqzXLzmlgpH2H0l4u+Rkndu4iNF8BI67iEVIyB
+ Bfi/TqMQLwrjKsZfyRszfKZYDk0CIruW1aACjFWnoRnBmbpe5N7Epmd3SGNBpHPqkhym3wVkzVI
+ qF7t0Adg4+5cyupv0MXkSJh+RKEEQMiw+tRSdtoTzk+3zVGAcAPlT2pvY8L5eSOlP4lI46FN9Pc
+ nCjYOvzVsMxh5MuJG6fvWCgNzUmPEKyRE=
+X-Gm-Gg: ATEYQzxm2DNWR55IWXwQgJjf9Sm4cj4WdcKXs7mvkobFK77WSrFag3RDaP480eLdXV7
+ HUxWCMy07qvTQL/DS1hhGhvycDLIWdJ8Bf3oIRarVac+scDKxm3Wb5ZC8h00G71YJB+iOwW6q6n
+ h9772/ci/nbog/CDTDrPVeMzKMSB7/+a4NKyXuW6hN8FZY8xUeShGUVVOo1YDwPg1uxzlKOJYxj
+ D4vVF/9
+X-Received: by 2002:ad4:4aeb:0:b0:89c:4cac:74c5 with SMTP id
+ 6a1803df08f44-89c4cac7911mr84320436d6.25.1773756590385; 
+ Tue, 17 Mar 2026 07:09:50 -0700 (PDT)
+X-Received: by 2002:ad4:4aeb:0:b0:89c:4cac:74c5 with SMTP id
+ 6a1803df08f44-89c4cac7911mr84320036d6.25.1773756589822; Tue, 17 Mar 2026
+ 07:09:49 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260316123144.1758888-1-eashurov@redhat.com>
-In-Reply-To: <20260316123144.1758888-1-eashurov@redhat.com>
+References: <20260317094806.1944053-1-peter.maydell@linaro.org>
+ <20260317094806.1944053-2-peter.maydell@linaro.org>
+In-Reply-To: <20260317094806.1944053-2-peter.maydell@linaro.org>
 From: Kostiantyn Kostiuk <kkostiuk@redhat.com>
-Date: Tue, 17 Mar 2026 16:07:59 +0200
-X-Gm-Features: AaiRm50vIJtbKV9c2vwCTOCezpUsmMGUJDFGnDHrgjqB2n87dKK6BRG0H8I3ycY
-Message-ID: <CAPMcbCr1XmSnHG_KUvDekU=OzKWhuD7=PjHcxB6VmCYrZCqY4Q@mail.gmail.com>
-Subject: Re: [PATCH v1] qga: add guest-get-windows-security-info command
-To: Elizabeth Ashurov <eashurov@redhat.com>
-Cc: qemu-devel@nongnu.org,
- =?UTF-8?Q?Daniel_Berrang=C3=A9?= <berrange@redhat.com>, 
- =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>, 
- Yan Vugenfirer <yvugenfi@redhat.com>
-Content-Type: multipart/alternative; boundary="0000000000009d6b3b064d38ddda"
+Date: Tue, 17 Mar 2026 16:09:39 +0200
+X-Gm-Features: AaiRm53-yd5j-Dqr2FSktJoa7WxyrmpYhGNO717OgJ5SmmYMxDi9MYtHZ_Dj234
+Message-ID: <CAPMcbCp9USsLS01a1-zsn2mkRB8beKfWf7RjCKmwpEtcYNkbtw@mail.gmail.com>
+Subject: Re: [PATCH 1/3] scripts/qemu-guest-agent/fsfreeze-hook: Avoid
+ bash-isms
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Michael Roth <michael.roth@amd.com>
+Content-Type: multipart/alternative; boundary="000000000000746f85064d38e32c"
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=kkostiuk@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -136,1200 +135,206 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---0000000000009d6b3b064d38ddda
+--000000000000746f85064d38e32c
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-On Mon, Mar 16, 2026 at 2:32=E2=80=AFPM Elizabeth Ashurov <eashurov@redhat.=
-com>
+Reviewed-by: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+
+On Tue, Mar 17, 2026 at 11:48=E2=80=AFAM Peter Maydell <peter.maydell@linar=
+o.org>
 wrote:
 
-> Add a new Windows-only QGA command to retrieve Windows security
-> features status including VBS, Secure Boot, and TPM information
-> from the guest.
+> The fsfreeze-hook script starts with #!/bin/sh, but it uses
+> several bash-specific constructs, resulting in misbehaviour
+> on guest systems where /bin/sh is some other POSIX shell.
 >
-> The implementation queries Win32_DeviceGuard and Win32_Tpm via
-> WMI, and reads the SecureBoot UEFI variable through
-> GetFirmwareEnvironmentVariable().
+> Fix the simple ones reported by shellcheck:
 >
-> Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+> In scripts/qemu-guest-agent/fsfreeze-hook line 27:
+> touch "$LOGFILE" &>/dev/null || USE_SYSLOG=3D1
+>                  ^---------^ SC3020 (warning): In POSIX sh, &> is
+> undefined.
+>
+> In scripts/qemu-guest-agent/fsfreeze-hook line 31:
+>     local message=3D"$1"
+>     ^-----------^ SC3043 (warning): In POSIX sh, 'local' is undefined.
+>
+> In scripts/qemu-guest-agent/fsfreeze-hook line 46:
+>     log_message "Executing $file $@"
+>                                  ^-- SC2145 (error): Argument mixes strin=
+g
+> and array. Use * or separate argument.
+>
+> In scripts/qemu-guest-agent/fsfreeze-hook line 55:
+>     if [ $STATUS -ne 0 ]; then
+>          ^-----^ SC2086 (info): Double quote to prevent globbing and word
+> splitting.
+>
+> There is also a use of PIPESTATUS that is more complex to fix;
+> that will be dealt with in a separate commit.
+>
+> Cc: qemu-stable@nongnu.org
+> Fixes: 85978dfb6b1c133 ("qemu-ga: Optimize freeze-hook script logic of
+> logging error")
+> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->  qga/commands-win32.c | 404 +++++++++++++++++++++++++++++++++++++++++++
->  qga/qapi-schema.json |  56 ++++++
->  2 files changed, 460 insertions(+)
+>  scripts/qemu-guest-agent/fsfreeze-hook | 11 +++++------
+>  1 file changed, 5 insertions(+), 6 deletions(-)
 >
-> diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-> index c0bf3467bd..8da9ef521f 100644
-> --- a/qga/commands-win32.c
-> +++ b/qga/commands-win32.c
-> @@ -28,6 +28,7 @@
->  #include <wtsapi32.h>
->  #include <wininet.h>
->  #include <pdh.h>
-> +#include <wbemidl.h>
+> diff --git a/scripts/qemu-guest-agent/fsfreeze-hook
+> b/scripts/qemu-guest-agent/fsfreeze-hook
+> index 5b915af017..6e2d7588af 100755
+> --- a/scripts/qemu-guest-agent/fsfreeze-hook
+> +++ b/scripts/qemu-guest-agent/fsfreeze-hook
+> @@ -24,15 +24,14 @@ USE_SYSLOG=3D0
+>  # if log file is not writable, fallback to syslog
+>  [ ! -w "$LOGFILE" ] && USE_SYSLOG=3D1
+>  # try to update log file and fallback to syslog if it fails
+> -touch "$LOGFILE" &>/dev/null || USE_SYSLOG=3D1
+> +touch "$LOGFILE" >/dev/null 2>&1 || USE_SYSLOG=3D1
 >
->  #include "guest-agent-core.h"
->  #include "vss-win32.h"
-> @@ -2764,3 +2765,406 @@ GuestNetworkRouteList
-> *qmp_guest_network_get_route(Error **errp)
->      g_hash_table_destroy(interface_metric_cache);
->      return head;
+>  # Ensure the log file is writable, fallback to syslog if not
+>  log_message() {
+> -    local message=3D"$1"
+>      if [ "$USE_SYSLOG" -eq 0 ]; then
+> -        printf "%s: %s\n" "$(date)" "$message" >>"$LOGFILE"
+> +        printf "%s: %s\n" "$(date)" "$1" >>"$LOGFILE"
+>      else
+> -        logger -t qemu-ga-freeze-hook "$message"
+> +        logger -t qemu-ga-freeze-hook "$1"
+>      fi
 >  }
-> +
-> +/*
-> + * WMI GUIDs
-> + */
-> +static const GUID qga_CLSID_WbemLocator =3D {
-> +    0x4590f811, 0x1d3a, 0x11d0,
-> +    {0x89, 0x1f, 0x00, 0xaa, 0x00, 0x4b, 0x2e, 0x24}
-> +};
-> +static const GUID qga_IID_IWbemLocator =3D {
-> +    0xdc12a687, 0x737f, 0x11cf,
-> +    {0x88, 0x4d, 0x00, 0xaa, 0x00, 0x4b, 0x2e, 0x24}
-> +};
-> +
-> +static IWbemServices *wmi_connect_to_namespace(const wchar_t
-> *namespace_path,
-> +                                               Error **errp)
-> +{
-> +    HRESULT hr;
-> +    IWbemLocator *locator =3D NULL;
-> +    IWbemServices *services =3D NULL;
-> +    BSTR bstr_ns =3D SysAllocString(namespace_path);
-> +
-> +    if (!bstr_ns) {
-> +        error_setg(errp, "failed to allocate WMI namespace string");
-> +        return NULL;
-> +    }
-> +
-> +    hr =3D CoCreateInstance(&qga_CLSID_WbemLocator, NULL,
-> CLSCTX_INPROC_SERVER,
-> +                          &qga_IID_IWbemLocator, (LPVOID *)&locator);
-> +    if (FAILED(hr)) {
-> +        error_setg_win32(errp, hr, "failed to create IWbemLocator");
-> +        goto out;
-> +    }
-> +
-> +    hr =3D locator->lpVtbl->ConnectServer(locator, bstr_ns, NULL, NULL,
-> NULL,
-> +                                        0, NULL, NULL, &services);
-> +    if (FAILED(hr)) {
-> +        error_setg_win32(errp, hr, "failed to connect to WMI namespace")=
-;
-> +        goto out;
-> +    }
-> +
-> +    hr =3D CoSetProxyBlanket((IUnknown *)services,
-> +                           RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, NULL,
-> +                           RPC_C_AUTHN_LEVEL_CALL,
-> +                           RPC_C_IMP_LEVEL_IMPERSONATE,
-> +                           NULL, EOAC_NONE);
-> +    if (FAILED(hr)) {
-> +        error_setg_win32(errp, hr, "failed to set WMI proxy blanket");
-> +        services->lpVtbl->Release(services);
-> +        services =3D NULL;
-> +    }
-> +
-> +out:
-> +    SysFreeString(bstr_ns);
-> +    if (locator) {
-> +        locator->lpVtbl->Release(locator);
-> +    }
-> +    return services;
-> +}
-> +
-> +static IEnumWbemClassObject *wmi_exec_query(IWbemServices *services,
-> +                                            const wchar_t *query,
-> +                                            Error **errp)
-> +{
-> +    HRESULT hr;
-> +    IEnumWbemClassObject *enumerator =3D NULL;
-> +    BSTR bstr_wql =3D SysAllocString(L"WQL");
-> +    BSTR bstr_query =3D SysAllocString(query);
-> +
-> +    if (!bstr_wql || !bstr_query) {
-> +        error_setg(errp, "failed to allocate WMI query strings");
-> +        goto out;
-> +    }
-> +
-> +    hr =3D services->lpVtbl->ExecQuery(services, bstr_wql, bstr_query,
-> +                                     WBEM_FLAG_RETURN_IMMEDIATELY |
-> +                                     WBEM_FLAG_FORWARD_ONLY,
-> +                                     NULL, &enumerator);
-> +    if (FAILED(hr)) {
-> +        error_setg_win32(errp, hr, "WMI query failed");
-> +    }
-> +
-> +out:
-> +    SysFreeString(bstr_wql);
-> +    SysFreeString(bstr_query);
-> +    return enumerator;
-> +}
-> +
-> +static HRESULT wmi_get_property(IWbemClassObject *obj, const wchar_t
-> *name,
-> +                                VARIANT *var)
-> +{
-> +    return obj->lpVtbl->Get(obj, name, 0, var, NULL, NULL);
-> +}
-> +
-> +/* Read a WMI integer property (VT_I4 or VT_UI4). */
-> +static bool wmi_get_int_property(IWbemClassObject *obj,
-> +                                 const wchar_t *name,
-> +                                 int64_t *out)
-> +{
-> +    VARIANT var;
-> +    bool ret =3D false;
-> +
-> +    VariantInit(&var);
-> +    if (SUCCEEDED(wmi_get_property(obj, name, &var))) {
-> +        if (V_VT(&var) =3D=3D VT_I4) {
-> +            *out =3D V_I4(&var);
-> +            ret =3D true;
-> +        } else if (V_VT(&var) =3D=3D VT_UI4) {
-> +            *out =3D V_UI4(&var);
-> +            ret =3D true;
-> +        }
-> +    }
-> +    VariantClear(&var);
-> +    return ret;
-> +}
-> +
-> +/* Read an integer SAFEARRAY WMI property into a QAPI intList. */
-> +static bool wmi_safearray_to_int_list(IWbemClassObject *obj,
-> +                                      const wchar_t *prop_name,
-> +                                      intList **list)
-> +{
-> +    VARIANT var;
-> +    HRESULT hr;
-> +    LONG lb, ub, i;
-> +    uint32_t *data =3D NULL;
-> +
-> +    VariantInit(&var);
-> +    hr =3D wmi_get_property(obj, prop_name, &var);
-> +    if (FAILED(hr) || V_VT(&var) =3D=3D VT_NULL) {
-> +        VariantClear(&var);
-> +        return false;
-> +    }
-> +
-> +    if (!(V_VT(&var) & VT_ARRAY)) {
-> +        VariantClear(&var);
-> +        return false;
-> +    }
-> +
-> +    SAFEARRAY *sa =3D V_ARRAY(&var);
-> +    if (FAILED(SafeArrayGetLBound(sa, 1, &lb)) ||
-> +        FAILED(SafeArrayGetUBound(sa, 1, &ub))) {
-> +        VariantClear(&var);
-> +        return false;
-> +    }
-> +
-> +    if (FAILED(SafeArrayAccessData(sa, (void **)&data))) {
-> +        VariantClear(&var);
-> +        return false;
-> +    }
-> +
-> +    intList **tail =3D list;
-> +    for (i =3D 0; i <=3D ub - lb; i++) {
-> +        QAPI_LIST_APPEND(tail, (int64_t)data[i]);
-> +    }
-> +
-> +    SafeArrayUnaccessData(sa);
-> +    VariantClear(&var);
-> +    return true;
-> +}
-> +
-> +/*
-> + * Query Win32_DeviceGuard WMI class for VBS and related properties.
-> + */
-> +static void get_device_guard_info(GuestWindowsSecurityInfo *info,
-> +                                  Error **errp)
-> +{
-> +    Error *local_err =3D NULL;
-> +    IWbemServices *services =3D NULL;
-> +    IEnumWbemClassObject *enumerator =3D NULL;
-> +    IWbemClassObject *obj =3D NULL;
-> +    ULONG count =3D 0;
-> +    HRESULT hr;
-> +    int64_t val;
-> +
-> +    services =3D wmi_connect_to_namespace(
-> +        L"ROOT\\Microsoft\\Windows\\DeviceGuard", &local_err);
-> +    if (!services) {
-> +        error_propagate(errp, local_err);
-> +        return;
-> +    }
-> +
-> +    enumerator =3D wmi_exec_query(services,
-> +        L"SELECT * FROM Win32_DeviceGuard", &local_err);
-> +    if (!enumerator) {
-> +        error_propagate(errp, local_err);
-> +        goto out;
-> +    }
-> +
-> +    hr =3D enumerator->lpVtbl->Next(enumerator, WBEM_INFINITE, 1,
-> +                                   &obj, &count);
-> +    if (FAILED(hr)) {
-> +        error_setg_win32(errp, hr, "failed to enumerate
-> Win32_DeviceGuard");
-> +        goto out;
-> +    }
-> +    if (count =3D=3D 0) {
-> +        error_setg(errp, "no Win32_DeviceGuard instance found");
-> +        goto out;
-> +    }
-> +
-> +    if (wmi_get_int_property(obj, L"VirtualizationBasedSecurityStatus",
-> +                             &val)) {
-> +        info->vbs_status =3D val;
-> +    }
-> +
-> +    if (wmi_get_int_property(obj, L"CodeIntegrityPolicyEnforcementStatus=
-",
-> +                             &val)) {
-> +        info->has_code_integrity_policy_enforcement_status =3D true;
-> +        info->code_integrity_policy_enforcement_status =3D val;
-> +    }
-> +
-> +    if (wmi_get_int_property(obj,
-> +
->  L"UsermodeCodeIntegrityPolicyEnforcementStatus",
-> +                             &val)) {
-> +        info->has_usr_cfg_code_integrity_policy_enforcement_status =3D t=
-rue;
-> +        info->usr_cfg_code_integrity_policy_enforcement_status =3D val;
-> +    }
-> +
-> +    if (wmi_safearray_to_int_list(obj, L"AvailableSecurityProperties",
-> +                                  &info->available_security_properties))=
- {
-> +        info->has_available_security_properties =3D true;
-> +    }
-> +
-> +    if (wmi_safearray_to_int_list(obj, L"RequiredSecurityProperties",
-> +                                  &info->required_security_properties)) =
-{
-> +        info->has_required_security_properties =3D true;
-> +    }
-> +
-> +    if (wmi_safearray_to_int_list(obj, L"SecurityServicesConfigured",
-> +                                  &info->security_services_configured)) =
-{
-> +        info->has_security_services_configured =3D true;
-> +    }
-> +
-> +    if (wmi_safearray_to_int_list(obj, L"SecurityServicesRunning",
-> +                                  &info->security_services_running)) {
-> +        info->has_security_services_running =3D true;
-> +    }
-> +
-> +    obj->lpVtbl->Release(obj);
-> +    obj =3D NULL;
-> +
-> +    /* Drain remaining results */
-> +    while (true) {
-> +        hr =3D enumerator->lpVtbl->Next(enumerator, WBEM_INFINITE, 1,
-> +                                      &obj, &count);
-> +        if (FAILED(hr) || count =3D=3D 0) {
-> +            break;
-> +        }
-> +        obj->lpVtbl->Release(obj);
-> +        obj =3D NULL;
-> +    }
-> +
-> +out:
-> +    if (obj) {
-> +        obj->lpVtbl->Release(obj);
-> +    }
-> +    if (enumerator) {
-> +        enumerator->lpVtbl->Release(enumerator);
-> +    }
-> +    if (services) {
-> +        services->lpVtbl->Release(services);
-> +    }
-> +}
-> +
-> +/*
-> + * Read the SecureBoot UEFI variable to determine whether Secure Boot
-> + * is enabled.  Returns false on legacy BIOS systems.
-> + */
-> +static bool get_secure_boot_status(Error **errp)
-> +{
-> +    Error *local_err =3D NULL;
-> +    BYTE value =3D 0;
-> +    DWORD ret;
-> +
-> +    acquire_privilege(SE_SYSTEM_ENVIRONMENT_NAME, &local_err);
-> +    if (local_err) {
-> +        error_propagate(errp, local_err);
-> +        return false;
-> +    }
-> +
-> +    ret =3D GetFirmwareEnvironmentVariableA("SecureBoot",
-> +        "{8be4df61-93ca-11d2-aa0d-00e098032b8c}", &value, sizeof(value))=
-;
 >
-+
-> +    if (ret =3D=3D 0) {
-> +        DWORD err =3D GetLastError();
-> +        if (err =3D=3D ERROR_INVALID_FUNCTION || err =3D=3D
-> ERROR_ENVVAR_NOT_FOUND) {
-> +            return false;
-> +        }
-> +        error_setg_win32(errp, err,
-> +                         "failed to read SecureBoot UEFI variable");
-> +        return false;
-> +    }
-> +
-> +    return value =3D=3D 1;
-> +}
-> +
-> +/*
-> + * Query Win32_Tpm WMI class for TPM presence and version.
-> + */
-> +static void get_tpm_info(GuestWindowsSecurityInfo *info, Error **errp)
-> +{
-> +    Error *local_err =3D NULL;
-> +    IWbemServices *services =3D NULL;
-> +    IEnumWbemClassObject *enumerator =3D NULL;
-> +    IWbemClassObject *obj =3D NULL;
-> +    ULONG count =3D 0;
-> +    HRESULT hr;
-> +    VARIANT var;
-> +
-> +    services =3D wmi_connect_to_namespace(
-> +        L"ROOT\\CIMV2\\Security\\MicrosoftTpm", &local_err);
-> +    if (!services) {
-> +        /* TPM namespace may not exist -- not an error */
+> @@ -43,7 +42,7 @@ for file in "$FSFREEZE_D"/* ; do
+>      is_ignored_file "$file" && continue
+>      [ -x "$file" ] || continue
 >
-This is a case for the missing "tpm_present" field
-
-
-> +        error_free(local_err);
-> +        info->tpm_present =3D false;
-> +        return;
-> +    }
-> +
-> +    enumerator =3D wmi_exec_query(services,
-> +        L"SELECT * FROM Win32_Tpm", &local_err);
-> +    if (!enumerator) {
-> +        error_free(local_err);
-> +        info->tpm_present =3D false;
-> +        goto out;
-> +    }
-> +
-> +    hr =3D enumerator->lpVtbl->Next(enumerator, WBEM_INFINITE, 1,
-> +                                   &obj, &count);
-> +    if (FAILED(hr) || count =3D=3D 0) {
-> +        info->tpm_present =3D false;
-> +        goto out;
-> +    }
-> +
-> +    info->tpm_present =3D true;
-> +
-> +    VariantInit(&var);
-> +    if (SUCCEEDED(wmi_get_property(obj, L"SpecVersion", &var)) &&
-> +        V_VT(&var) =3D=3D VT_BSTR && V_BSTR(&var)) {
-> +        info->tpm_version =3D g_utf16_to_utf8(
-> +            (const gunichar2 *)V_BSTR(&var), -1, NULL, NULL, NULL);
-> +        if (info->tpm_version) {
-> +            /* keep only the part before the first comma */
-> +            char *comma =3D strchr(info->tpm_version, ',');
-> +            if (comma) {
-> +                *comma =3D '\0';
-> +            }
-> +        }
-> +    }
-> +    VariantClear(&var);
-> +
-> +    obj->lpVtbl->Release(obj);
-> +    obj =3D NULL;
-> +
-> +    /* Drain remaining results */
-> +    while (true) {
-> +        hr =3D enumerator->lpVtbl->Next(enumerator, WBEM_INFINITE, 1,
-> +                                      &obj, &count);
-> +        if (FAILED(hr) || count =3D=3D 0) {
-> +            break;
-> +        }
-> +        obj->lpVtbl->Release(obj);
-> +        obj =3D NULL;
-> +    }
-> +
-> +out:
-> +    if (obj) {
-> +        obj->lpVtbl->Release(obj);
-> +    }
-> +    if (enumerator) {
-> +        enumerator->lpVtbl->Release(enumerator);
-> +    }
-> +    if (services) {
-> +        services->lpVtbl->Release(services);
-> +    }
-> +}
-> +
-> +GuestWindowsSecurityInfo *qmp_guest_get_windows_security_info(Error
-> **errp)
-> +{
-> +    Error *local_err =3D NULL;
-> +    GuestWindowsSecurityInfo *info =3D g_new0(GuestWindowsSecurityInfo, =
-1);
-> +
-> +    get_device_guard_info(info, &local_err);
-> +    if (local_err) {
-> +        error_propagate(errp, local_err);
-> +        goto err;
-> +    }
-> +
-> +    info->secure_boot =3D get_secure_boot_status(&local_err);
-> +    if (local_err) {
-> +        error_propagate(errp, local_err);
-> +        goto err;
-> +    }
-> +
-> +    get_tpm_info(info, &local_err);
-> +    if (local_err) {
-> +        error_propagate(errp, local_err);
-> +        goto err;
-> +    }
-> +
-> +    return info;
-> +
-> +err:
-> +    qapi_free_GuestWindowsSecurityInfo(info);
-> +    return NULL;
-> +}
-> diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
-> index c57bc9a02f..f54fdf942f 100644
-> --- a/qga/qapi-schema.json
-> +++ b/qga/qapi-schema.json
-> @@ -1952,3 +1952,59 @@
->    'returns': ['GuestNetworkRoute'],
->    'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
->  }
-> +
-> +##
-> +# @GuestWindowsSecurityInfo:
-> +#
-> +# Windows security features status.
-> +#
-> +# @vbs-status: VirtualizationBasedSecurityStatus
-> +#
-> +# @available-security-properties: AvailableSecurityProperties
-> +#
-> +# @code-integrity-policy-enforcement-status:
-> +#     CodeIntegrityPolicyEnforcementStatus
-> +#
-> +# @required-security-properties: RequiredSecurityProperties
-> +#
-> +# @security-services-configured: SecurityServicesConfigured
-> +#
-> +# @security-services-running: SecurityServicesRunning
-> +#
-> +# @usr-cfg-code-integrity-policy-enforcement-status:
-> +#     UsermodeCodeIntegrityPolicyEnforcementStatus
-> +#
-> +# @secure-boot: Whether UEFI Secure Boot is enabled
-> +#
-> +# @tpm-present: Whether a TPM device is present
-> +#
-> +# @tpm-version: TPM specification version string (e.g. "2.0")
-> +#
-> +# Since: 10.3
-> +##
-> +{ 'struct': 'GuestWindowsSecurityInfo',
-> +  'data': {
-> +      'vbs-status': 'int',
-> +      '*available-security-properties': ['int'],
-> +      '*code-integrity-policy-enforcement-status': 'int',
-> +      '*required-security-properties': ['int'],
-> +      '*security-services-configured': ['int'],
-> +      '*security-services-running': ['int'],
-> +      '*usr-cfg-code-integrity-policy-enforcement-status': 'int',
-> +      'secure-boot': 'bool',
-> +      'tpm-present': 'bool',
-> +      '*tpm-version': 'str' },
-> +  'if': 'CONFIG_WIN32' }
+> -    log_message "Executing $file $@"
+> +    log_message "Executing $file $*"
+>      if [ "$USE_SYSLOG" -eq 0 ]; then
+>          "$file" "$@" >>"$LOGFILE" 2>&1
+>          STATUS=3D$?
+> @@ -52,7 +51,7 @@ for file in "$FSFREEZE_D"/* ; do
+>          STATUS=3D${PIPESTATUS[0]}
+>      fi
 >
->
-Let's make this more generic
-command guest-get-security-info
-use 'union' to describe OS specific option like VBS
-{ 'tmp_present': false, 'secure_boot': true, 'os': { 'type': 'windows',
-'vbs': false, .... } }
-
-make tmp_present, secure_boot, vbs_status optiononal
-missing =3D unknown - as we can have it unimplemented for some POSIX/BSD OS=
-es
-
-vbs_status is Win10+ only feature, so it can be unknown for Win8
-
-
-+
-> +##
-> +# @guest-get-windows-security-info:
-> +#
-> +# Retrieve Windows security features status (VBS, Secure Boot, TPM).
-> +#
-> +# Returns: @GuestWindowsSecurityInfo
-> +#
-> +# Since: 10.3
->
-
-11.1
-
-
-> +##
-> +{ 'command': 'guest-get-windows-security-info',
-> +  'returns': 'GuestWindowsSecurityInfo',
-> +  'if': 'CONFIG_WIN32' }
+> -    if [ $STATUS -ne 0 ]; then
+> +    if [ "$STATUS" -ne 0 ]; then
+>          log_message "Error: $file finished with status=3D$STATUS"
+>      else
+>          log_message "$file finished successfully"
 > --
-> 2.51.0
+> 2.43.0
 >
 >
 
---0000000000009d6b3b064d38ddda
+--000000000000746f85064d38e32c
 Content-Type: text/html; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
 
-<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
-mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Mon, Mar 16,=
- 2026 at 2:32=E2=80=AFPM Elizabeth Ashurov &lt;<a href=3D"mailto:eashurov@r=
-edhat.com">eashurov@redhat.com</a>&gt; wrote:<br></div><blockquote class=3D=
-"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(2=
-04,204,204);padding-left:1ex"><div><div><div>Add a new Windows-only QGA com=
-mand to retrieve Windows security<br>
-features status including VBS, Secure Boot, and TPM information<br>
-from the guest.<br>
+<div dir=3D"ltr">Reviewed-by: Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkos=
+tiuk@redhat.com" target=3D"_blank">kkostiuk@redhat.com</a>&gt;</div><br><di=
+v class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=3D"gma=
+il_attr">On Tue, Mar 17, 2026 at 11:48=E2=80=AFAM Peter Maydell &lt;<a href=
+=3D"mailto:peter.maydell@linaro.org">peter.maydell@linaro.org</a>&gt; wrote=
+:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.=
+8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">The fsfreeze-h=
+ook script starts with #!/bin/sh, but it uses<br>
+several bash-specific constructs, resulting in misbehaviour<br>
+on guest systems where /bin/sh is some other POSIX shell.<br>
 <br>
-The implementation queries Win32_DeviceGuard and Win32_Tpm via<br>
-WMI, and reads the SecureBoot UEFI variable through<br>
-GetFirmwareEnvironmentVariable().<br>
+Fix the simple ones reported by shellcheck:<br>
 <br>
-Signed-off-by: Elizabeth Ashurov &lt;<a href=3D"mailto:eashurov@redhat.com"=
- target=3D"_blank">eashurov@redhat.com</a>&gt;<br>
+In scripts/qemu-guest-agent/fsfreeze-hook line 27:<br>
+touch &quot;$LOGFILE&quot; &amp;&gt;/dev/null || USE_SYSLOG=3D1<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^---------^ S=
+C3020 (warning): In POSIX sh, &amp;&gt; is undefined.<br>
+<br>
+In scripts/qemu-guest-agent/fsfreeze-hook line 31:<br>
+=C2=A0 =C2=A0 local message=3D&quot;$1&quot;<br>
+=C2=A0 =C2=A0 ^-----------^ SC3043 (warning): In POSIX sh, &#39;local&#39; =
+is undefined.<br>
+<br>
+In scripts/qemu-guest-agent/fsfreeze-hook line 46:<br>
+=C2=A0 =C2=A0 log_message &quot;Executing $file $@&quot;<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^-- SC2145 (error): Argument m=
+ixes string and array. Use * or separate argument.<br>
+<br>
+In scripts/qemu-guest-agent/fsfreeze-hook line 55:<br>
+=C2=A0 =C2=A0 if [ $STATUS -ne 0 ]; then<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0^-----^ SC2086 (info): Double quote to pr=
+event globbing and word splitting.<br>
+<br>
+There is also a use of PIPESTATUS that is more complex to fix;<br>
+that will be dealt with in a separate commit.<br>
+<br>
+Cc: <a href=3D"mailto:qemu-stable@nongnu.org" target=3D"_blank">qemu-stable=
+@nongnu.org</a><br>
+Fixes: 85978dfb6b1c133 (&quot;qemu-ga: Optimize freeze-hook script logic of=
+ logging error&quot;)<br>
+Signed-off-by: Peter Maydell &lt;<a href=3D"mailto:peter.maydell@linaro.org=
+" target=3D"_blank">peter.maydell@linaro.org</a>&gt;<br>
 ---<br>
-=C2=A0qga/commands-win32.c | 404 ++++++++++++++++++++++++++++++++++++++++++=
-+<br>
-=C2=A0qga/qapi-schema.json |=C2=A0 56 ++++++<br>
-=C2=A02 files changed, 460 insertions(+)<br>
+=C2=A0scripts/qemu-guest-agent/fsfreeze-hook | 11 +++++------<br>
+=C2=A01 file changed, 5 insertions(+), 6 deletions(-)<br>
 <br>
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c<br>
-index c0bf3467bd..8da9ef521f 100644<br>
---- a/qga/commands-win32.c<br>
-+++ b/qga/commands-win32.c<br>
-@@ -28,6 +28,7 @@<br>
-=C2=A0#include &lt;wtsapi32.h&gt;<br>
-=C2=A0#include &lt;wininet.h&gt;<br>
-=C2=A0#include &lt;pdh.h&gt;<br>
-+#include &lt;wbemidl.h&gt;<br>
+diff --git a/scripts/qemu-guest-agent/fsfreeze-hook b/scripts/qemu-guest-ag=
+ent/fsfreeze-hook<br>
+index 5b915af017..6e2d7588af 100755<br>
+--- a/scripts/qemu-guest-agent/fsfreeze-hook<br>
++++ b/scripts/qemu-guest-agent/fsfreeze-hook<br>
+@@ -24,15 +24,14 @@ USE_SYSLOG=3D0<br>
+=C2=A0# if log file is not writable, fallback to syslog<br>
+=C2=A0[ ! -w &quot;$LOGFILE&quot; ] &amp;&amp; USE_SYSLOG=3D1<br>
+=C2=A0# try to update log file and fallback to syslog if it fails<br>
+-touch &quot;$LOGFILE&quot; &amp;&gt;/dev/null || USE_SYSLOG=3D1<br>
++touch &quot;$LOGFILE&quot; &gt;/dev/null 2&gt;&amp;1 || USE_SYSLOG=3D1<br>
 <br>
-=C2=A0#include &quot;guest-agent-core.h&quot;<br>
-=C2=A0#include &quot;vss-win32.h&quot;<br>
-@@ -2764,3 +2765,406 @@ GuestNetworkRouteList *qmp_guest_network_get_route(=
-Error **errp)<br>
-=C2=A0 =C2=A0 =C2=A0g_hash_table_destroy(interface_metric_cache);<br>
-=C2=A0 =C2=A0 =C2=A0return head;<br>
-=C2=A0}<br>
-+<br>
-+/*<br>
-+ * WMI GUIDs<br>
-+ */<br>
-+static const GUID qga_CLSID_WbemLocator =3D {<br>
-+=C2=A0 =C2=A0 0x4590f811, 0x1d3a, 0x11d0,<br>
-+=C2=A0 =C2=A0 {0x89, 0x1f, 0x00, 0xaa, 0x00, 0x4b, 0x2e, 0x24}<br>
-+};<br>
-+static const GUID qga_IID_IWbemLocator =3D {<br>
-+=C2=A0 =C2=A0 0xdc12a687, 0x737f, 0x11cf,<br>
-+=C2=A0 =C2=A0 {0x88, 0x4d, 0x00, 0xaa, 0x00, 0x4b, 0x2e, 0x24}<br>
-+};<br>
-+<br>
-+static IWbemServices *wmi_connect_to_namespace(const wchar_t *namespace_pa=
-th,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 HRESULT hr;<br>
-+=C2=A0 =C2=A0 IWbemLocator *locator =3D NULL;<br>
-+=C2=A0 =C2=A0 IWbemServices *services =3D NULL;<br>
-+=C2=A0 =C2=A0 BSTR bstr_ns =3D SysAllocString(namespace_path);<br>
-+<br>
-+=C2=A0 =C2=A0 if (!bstr_ns) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;failed to allocate WMI =
-namespace string&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 hr =3D CoCreateInstance(&amp;qga_CLSID_WbemLocator, NULL, CL=
-SCTX_INPROC_SERVER,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 &amp;qga_IID_IWbemLocator, (LPVOID *)&amp;locator);<br>
-+=C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(errp, hr, &quot;failed to cre=
-ate IWbemLocator&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 hr =3D locator-&gt;lpVtbl-&gt;ConnectServer(locator, bstr_ns=
-, NULL, NULL, NULL,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 0, NULL,=
- NULL, &amp;services);<br>
-+=C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(errp, hr, &quot;failed to con=
-nect to WMI namespace&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 hr =3D CoSetProxyBlanket((IUnknown *)services,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0RPC_C_AUTHN_WINNT, RPC_C_AUTHZ_NONE, NULL,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0RPC_C_AUTHN_LEVEL_CALL,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0RPC_C_IMP_LEVEL_IMPERSONATE,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0NULL, EOAC_NONE);<br>
-+=C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(errp, hr, &quot;failed to set=
- WMI proxy blanket&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 services-&gt;lpVtbl-&gt;Release(services);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 services =3D NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+out:<br>
-+=C2=A0 =C2=A0 SysFreeString(bstr_ns);<br>
-+=C2=A0 =C2=A0 if (locator) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 locator-&gt;lpVtbl-&gt;Release(locator);<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 return services;<br>
-+}<br>
-+<br>
-+static IEnumWbemClassObject *wmi_exec_query(IWbemServices *services,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 const wchar_t *query,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
-=C2=A0 Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 HRESULT hr;<br>
-+=C2=A0 =C2=A0 IEnumWbemClassObject *enumerator =3D NULL;<br>
-+=C2=A0 =C2=A0 BSTR bstr_wql =3D SysAllocString(L&quot;WQL&quot;);<br>
-+=C2=A0 =C2=A0 BSTR bstr_query =3D SysAllocString(query);<br>
-+<br>
-+=C2=A0 =C2=A0 if (!bstr_wql || !bstr_query) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;failed to allocate WMI =
-query strings&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 hr =3D services-&gt;lpVtbl-&gt;ExecQuery(services, bstr_wql,=
- bstr_query,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0WBEM_FLAG_RETURN=
-_IMMEDIATELY |<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0WBEM_FLAG_FORWAR=
-D_ONLY,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NULL, &amp;enume=
-rator);<br>
-+=C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(errp, hr, &quot;WMI query fai=
-led&quot;);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+out:<br>
-+=C2=A0 =C2=A0 SysFreeString(bstr_wql);<br>
-+=C2=A0 =C2=A0 SysFreeString(bstr_query);<br>
-+=C2=A0 =C2=A0 return enumerator;<br>
-+}<br>
-+<br>
-+static HRESULT wmi_get_property(IWbemClassObject *obj, const wchar_t *name=
-,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 VARIANT *var)<br>
-+{<br>
-+=C2=A0 =C2=A0 return obj-&gt;lpVtbl-&gt;Get(obj, name, 0, var, NULL, NULL)=
-;<br>
-+}<br>
-+<br>
-+/* Read a WMI integer property (VT_I4 or VT_UI4). */<br>
-+static bool wmi_get_int_property(IWbemClassObject *obj,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0const wchar_t *name,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0int64_t *out)<br>
-+{<br>
-+=C2=A0 =C2=A0 VARIANT var;<br>
-+=C2=A0 =C2=A0 bool ret =3D false;<br>
-+<br>
-+=C2=A0 =C2=A0 VariantInit(&amp;var);<br>
-+=C2=A0 =C2=A0 if (SUCCEEDED(wmi_get_property(obj, name, &amp;var))) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (V_VT(&amp;var) =3D=3D VT_I4) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *out =3D V_I4(&amp;var);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 } else if (V_VT(&amp;var) =3D=3D VT_UI4) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *out =3D V_UI4(&amp;var);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ret =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 VariantClear(&amp;var);<br>
-+=C2=A0 =C2=A0 return ret;<br>
-+}<br>
-+<br>
-+/* Read an integer SAFEARRAY WMI property into a QAPI intList. */<br>
-+static bool wmi_safearray_to_int_list(IWbemClassObject *obj,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 const wchar_t *=
-prop_name,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 intList **list)=
-<br>
-+{<br>
-+=C2=A0 =C2=A0 VARIANT var;<br>
-+=C2=A0 =C2=A0 HRESULT hr;<br>
-+=C2=A0 =C2=A0 LONG lb, ub, i;<br>
-+=C2=A0 =C2=A0 uint32_t *data =3D NULL;<br>
-+<br>
-+=C2=A0 =C2=A0 VariantInit(&amp;var);<br>
-+=C2=A0 =C2=A0 hr =3D wmi_get_property(obj, prop_name, &amp;var);<br>
-+=C2=A0 =C2=A0 if (FAILED(hr) || V_VT(&amp;var) =3D=3D VT_NULL) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 VariantClear(&amp;var);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (!(V_VT(&amp;var) &amp; VT_ARRAY)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 VariantClear(&amp;var);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 SAFEARRAY *sa =3D V_ARRAY(&amp;var);<br>
-+=C2=A0 =C2=A0 if (FAILED(SafeArrayGetLBound(sa, 1, &amp;lb)) ||<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 FAILED(SafeArrayGetUBound(sa, 1, &amp;ub))) {<=
-br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 VariantClear(&amp;var);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (FAILED(SafeArrayAccessData(sa, (void **)&amp;data))) {<b=
+=C2=A0# Ensure the log file is writable, fallback to syslog if not<br>
+=C2=A0log_message() {<br>
+-=C2=A0 =C2=A0 local message=3D&quot;$1&quot;<br>
+=C2=A0 =C2=A0 =C2=A0if [ &quot;$USE_SYSLOG&quot; -eq 0 ]; then<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 printf &quot;%s: %s\n&quot; &quot;$(date)&quot=
+; &quot;$message&quot; &gt;&gt;&quot;$LOGFILE&quot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 printf &quot;%s: %s\n&quot; &quot;$(date)&quot=
+; &quot;$1&quot; &gt;&gt;&quot;$LOGFILE&quot;<br>
+=C2=A0 =C2=A0 =C2=A0else<br>
+-=C2=A0 =C2=A0 =C2=A0 =C2=A0 logger -t qemu-ga-freeze-hook &quot;$message&q=
+uot;<br>
++=C2=A0 =C2=A0 =C2=A0 =C2=A0 logger -t qemu-ga-freeze-hook &quot;$1&quot;<b=
 r>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 VariantClear(&amp;var);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 intList **tail =3D list;<br>
-+=C2=A0 =C2=A0 for (i =3D 0; i &lt;=3D ub - lb; i++) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 QAPI_LIST_APPEND(tail, (int64_t)data[i]);<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 SafeArrayUnaccessData(sa);<br>
-+=C2=A0 =C2=A0 VariantClear(&amp;var);<br>
-+=C2=A0 =C2=A0 return true;<br>
-+}<br>
-+<br>
-+/*<br>
-+ * Query Win32_DeviceGuard WMI class for VBS and related properties.<br>
-+ */<br>
-+static void get_device_guard_info(GuestWindowsSecurityInfo *info,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+=C2=A0 =C2=A0 IWbemServices *services =3D NULL;<br>
-+=C2=A0 =C2=A0 IEnumWbemClassObject *enumerator =3D NULL;<br>
-+=C2=A0 =C2=A0 IWbemClassObject *obj =3D NULL;<br>
-+=C2=A0 =C2=A0 ULONG count =3D 0;<br>
-+=C2=A0 =C2=A0 HRESULT hr;<br>
-+=C2=A0 =C2=A0 int64_t val;<br>
-+<br>
-+=C2=A0 =C2=A0 services =3D wmi_connect_to_namespace(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 L&quot;ROOT\\Microsoft\\Windows\\DeviceGuard&q=
-uot;, &amp;local_err);<br>
-+=C2=A0 =C2=A0 if (!services) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 enumerator =3D wmi_exec_query(services,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 L&quot;SELECT * FROM Win32_DeviceGuard&quot;, =
-&amp;local_err);<br>
-+=C2=A0 =C2=A0 if (!enumerator) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 hr =3D enumerator-&gt;lpVtbl-&gt;Next(enumerator, WBEM_INFIN=
-ITE, 1,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;obj, &amp;count);<=
-br>
-+=C2=A0 =C2=A0 if (FAILED(hr)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(errp, hr, &quot;failed to enu=
-merate Win32_DeviceGuard&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 if (count =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg(errp, &quot;no Win32_DeviceGuard in=
-stance found&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (wmi_get_int_property(obj, L&quot;VirtualizationBasedSecu=
-rityStatus&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;val)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;vbs_status =3D val;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (wmi_get_int_property(obj, L&quot;CodeIntegrityPolicyEnfo=
-rcementStatus&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;val)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;has_code_integrity_policy_enforcement=
-_status =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;code_integrity_policy_enforcement_sta=
-tus =3D val;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (wmi_get_int_property(obj,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0L&quot;UsermodeCodeIntegrityPolicyEnforcemen=
-tStatus&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;val)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;has_usr_cfg_code_integrity_policy_enf=
-orcement_status =3D true;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;usr_cfg_code_integrity_policy_enforce=
-ment_status =3D val;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (wmi_safearray_to_int_list(obj, L&quot;AvailableSecurityP=
-roperties&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;info-&gt;available_secur=
-ity_properties)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;has_available_security_properties =3D=
- true;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (wmi_safearray_to_int_list(obj, L&quot;RequiredSecurityPr=
-operties&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;info-&gt;required_securi=
-ty_properties)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;has_required_security_properties =3D =
-true;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (wmi_safearray_to_int_list(obj, L&quot;SecurityServicesCo=
-nfigured&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;info-&gt;security_servic=
-es_configured)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;has_security_services_configured =3D =
-true;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 if (wmi_safearray_to_int_list(obj, L&quot;SecurityServicesRu=
-nning&quot;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;info-&gt;security_servic=
-es_running)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;has_security_services_running =3D tru=
-e;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 obj-&gt;lpVtbl-&gt;Release(obj);<br>
-+=C2=A0 =C2=A0 obj =3D NULL;<br>
-+<br>
-+=C2=A0 =C2=A0 /* Drain remaining results */<br>
-+=C2=A0 =C2=A0 while (true) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D enumerator-&gt;lpVtbl-&gt;Next(enumerat=
-or, WBEM_INFINITE, 1,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;obj, &amp;=
-count);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (FAILED(hr) || count =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 obj-&gt;lpVtbl-&gt;Release(obj);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 obj =3D NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+out:<br>
-+=C2=A0 =C2=A0 if (obj) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 obj-&gt;lpVtbl-&gt;Release(obj);<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 if (enumerator) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 enumerator-&gt;lpVtbl-&gt;Release(enumerator);=
-<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 if (services) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 services-&gt;lpVtbl-&gt;Release(services);<br>
-+=C2=A0 =C2=A0 }<br>
-+}<br>
-+<br>
-+/*<br>
-+ * Read the SecureBoot UEFI variable to determine whether Secure Boot<br>
-+ * is enabled.=C2=A0 Returns false on legacy BIOS systems.<br>
-+ */<br>
-+static bool get_secure_boot_status(Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+=C2=A0 =C2=A0 BYTE value =3D 0;<br>
-+=C2=A0 =C2=A0 DWORD ret;<br>
-+<br>
-+=C2=A0 =C2=A0 acquire_privilege(SE_SYSTEM_ENVIRONMENT_NAME, &amp;local_err=
-);<br>
-+=C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 ret =3D GetFirmwareEnvironmentVariableA(&quot;SecureBoot&quo=
-t;,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 &quot;{8be4df61-93ca-11d2-aa0d-00e098032b8c}&q=
-uot;, &amp;value, sizeof(value));=C2=A0</div></div></div></blockquote><bloc=
-kquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:=
-1px solid rgb(204,204,204);padding-left:1ex"><div><div><div>
-+<br>
-+=C2=A0 =C2=A0 if (ret =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 DWORD err =3D GetLastError();<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (err =3D=3D ERROR_INVALID_FUNCTION || err =
-=3D=3D ERROR_ENVVAR_NOT_FOUND) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_setg_win32(errp, err,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0&quot;failed to read SecureBoot UEFI variable&quot;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return false;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 return value =3D=3D 1;<br>
-+}<br>
-+<br>
-+/*<br>
-+ * Query Win32_Tpm WMI class for TPM presence and version.<br>
-+ */<br>
-+static void get_tpm_info(GuestWindowsSecurityInfo *info, Error **errp)<br>
-+{<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+=C2=A0 =C2=A0 IWbemServices *services =3D NULL;<br>
-+=C2=A0 =C2=A0 IEnumWbemClassObject *enumerator =3D NULL;<br>
-+=C2=A0 =C2=A0 IWbemClassObject *obj =3D NULL;<br>
-+=C2=A0 =C2=A0 ULONG count =3D 0;<br>
-+=C2=A0 =C2=A0 HRESULT hr;<br>
-+=C2=A0 =C2=A0 VARIANT var;<br>
-+<br>
-+=C2=A0 =C2=A0 services =3D wmi_connect_to_namespace(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 L&quot;ROOT\\CIMV2\\Security\\MicrosoftTpm&quo=
-t;, &amp;local_err);<br>
-+=C2=A0 =C2=A0 if (!services) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 /* TPM namespace may not exist -- not an error=
- */<br></div></div></div></blockquote><div>This is a case for the missing &=
-quot;tpm_present&quot; field</div><div>=C2=A0</div><blockquote class=3D"gma=
-il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left:1px solid rgb(204,2=
-04,204);padding-left:1ex"><div><div><div>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;tpm_present =3D false;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 return;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 enumerator =3D wmi_exec_query(services,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 L&quot;SELECT * FROM Win32_Tpm&quot;, &amp;loc=
-al_err);<br>
-+=C2=A0 =C2=A0 if (!enumerator) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_free(local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;tpm_present =3D false;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 hr =3D enumerator-&gt;lpVtbl-&gt;Next(enumerator, WBEM_INFIN=
-ITE, 1,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&amp;obj, &amp;count);<=
-br>
-+=C2=A0 =C2=A0 if (FAILED(hr) || count =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;tpm_present =3D false;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto out;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 info-&gt;tpm_present =3D true;<br>
-+<br>
-+=C2=A0 =C2=A0 VariantInit(&amp;var);<br>
-+=C2=A0 =C2=A0 if (SUCCEEDED(wmi_get_property(obj, L&quot;SpecVersion&quot;=
-, &amp;var)) &amp;&amp;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 V_VT(&amp;var) =3D=3D VT_BSTR &amp;&amp; V_BST=
-R(&amp;var)) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 info-&gt;tpm_version =3D g_utf16_to_utf8(<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 (const gunichar2 *)V_BSTR(&amp;v=
-ar), -1, NULL, NULL, NULL);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (info-&gt;tpm_version) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 /* keep only the part before the=
- first comma */<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 char *comma =3D strchr(info-&gt;=
-tpm_version, &#39;,&#39;);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 if (comma) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 *comma =3D &#39;\0=
-&#39;;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 VariantClear(&amp;var);<br>
-+<br>
-+=C2=A0 =C2=A0 obj-&gt;lpVtbl-&gt;Release(obj);<br>
-+=C2=A0 =C2=A0 obj =3D NULL;<br>
-+<br>
-+=C2=A0 =C2=A0 /* Drain remaining results */<br>
-+=C2=A0 =C2=A0 while (true) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 hr =3D enumerator-&gt;lpVtbl-&gt;Next(enumerat=
-or, WBEM_INFINITE, 1,<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 &amp;obj, &amp;=
-count);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 if (FAILED(hr) || count =3D=3D 0) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 break;<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 obj-&gt;lpVtbl-&gt;Release(obj);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 obj =3D NULL;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+out:<br>
-+=C2=A0 =C2=A0 if (obj) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 obj-&gt;lpVtbl-&gt;Release(obj);<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 if (enumerator) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 enumerator-&gt;lpVtbl-&gt;Release(enumerator);=
-<br>
-+=C2=A0 =C2=A0 }<br>
-+=C2=A0 =C2=A0 if (services) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 services-&gt;lpVtbl-&gt;Release(services);<br>
-+=C2=A0 =C2=A0 }<br>
-+}<br>
-+<br>
-+GuestWindowsSecurityInfo *qmp_guest_get_windows_security_info(Error **errp=
-)<br>
-+{<br>
-+=C2=A0 =C2=A0 Error *local_err =3D NULL;<br>
-+=C2=A0 =C2=A0 GuestWindowsSecurityInfo *info =3D g_new0(GuestWindowsSecuri=
-tyInfo, 1);<br>
-+<br>
-+=C2=A0 =C2=A0 get_device_guard_info(info, &amp;local_err);<br>
-+=C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 info-&gt;secure_boot =3D get_secure_boot_status(&amp;local_e=
-rr);<br>
-+=C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 get_tpm_info(info, &amp;local_err);<br>
-+=C2=A0 =C2=A0 if (local_err) {<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 error_propagate(errp, local_err);<br>
-+=C2=A0 =C2=A0 =C2=A0 =C2=A0 goto err;<br>
-+=C2=A0 =C2=A0 }<br>
-+<br>
-+=C2=A0 =C2=A0 return info;<br>
-+<br>
-+err:<br>
-+=C2=A0 =C2=A0 qapi_free_GuestWindowsSecurityInfo(info);<br>
-+=C2=A0 =C2=A0 return NULL;<br>
-+}<br>
-diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json<br>
-index c57bc9a02f..f54fdf942f 100644<br>
---- a/qga/qapi-schema.json<br>
-+++ b/qga/qapi-schema.json<br>
-@@ -1952,3 +1952,59 @@<br>
-=C2=A0 =C2=A0&#39;returns&#39;: [&#39;GuestNetworkRoute&#39;],<br>
-=C2=A0 =C2=A0&#39;if&#39;: { &#39;any&#39;: [&#39;CONFIG_LINUX&#39;, &#39;C=
-ONFIG_WIN32&#39;] }<br>
+=C2=A0 =C2=A0 =C2=A0fi<br>
 =C2=A0}<br>
-+<br>
-+##<br>
-+# @GuestWindowsSecurityInfo:<br>
-+#<br>
-+# Windows security features status.<br>
-+#<br>
-+# @vbs-status: VirtualizationBasedSecurityStatus<br>
-+#<br>
-+# @available-security-properties: AvailableSecurityProperties<br>
-+#<br>
-+# @code-integrity-policy-enforcement-status:<br>
-+#=C2=A0 =C2=A0 =C2=A0CodeIntegrityPolicyEnforcementStatus<br>
-+#<br>
-+# @required-security-properties: RequiredSecurityProperties<br>
-+#<br>
-+# @security-services-configured: SecurityServicesConfigured<br>
-+#<br>
-+# @security-services-running: SecurityServicesRunning<br>
-+#<br>
-+# @usr-cfg-code-integrity-policy-enforcement-status:<br>
-+#=C2=A0 =C2=A0 =C2=A0UsermodeCodeIntegrityPolicyEnforcementStatus<br>
-+#<br>
-+# @secure-boot: Whether UEFI Secure Boot is enabled<br>
-+#<br>
-+# @tpm-present: Whether a TPM device is present<br>
-+#<br>
-+# @tpm-version: TPM specification version string (e.g. &quot;2.0&quot;)<br=
->
-+#<br>
-+# Since: 10.3<br>
-+##<br>
-+{ &#39;struct&#39;: &#39;GuestWindowsSecurityInfo&#39;,<br>
-+=C2=A0 &#39;data&#39;: {<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;vbs-status&#39;: &#39;int&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;*available-security-properties&#39;: [&#39;int&#=
-39;],<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;*code-integrity-policy-enforcement-status&#39;: =
-&#39;int&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;*required-security-properties&#39;: [&#39;int&#3=
-9;],<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;*security-services-configured&#39;: [&#39;int&#3=
-9;],<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;*security-services-running&#39;: [&#39;int&#39;]=
-,<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;*usr-cfg-code-integrity-policy-enforcement-statu=
-s&#39;: &#39;int&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;secure-boot&#39;: &#39;bool&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;tpm-present&#39;: &#39;bool&#39;,<br>
-+=C2=A0 =C2=A0 =C2=A0 &#39;*tpm-version&#39;: &#39;str&#39; },<br>
-+=C2=A0 &#39;if&#39;: &#39;CONFIG_WIN32&#39; }<br><br></div></div></div></b=
-lockquote><div>=C2=A0</div><div>Let&#39;s make this more generic<br>command=
- guest-get-security-info<br>use &#39;union&#39; to describe OS specific opt=
-ion like VBS<br>{ &#39;tmp_present&#39;: false, &#39;secure_boot&#39;: true=
-, &#39;os&#39;: { &#39;type&#39;: &#39;windows&#39;, &#39;vbs&#39;: false, =
-.... } }<br><br>make tmp_present, secure_boot, vbs_status optiononal <br>mi=
-ssing =3D unknown - as we can have it unimplemented for some POSIX/BSD OSes=
-<br><br>vbs_status is Win10+ only feature, so it can be unknown for Win8</d=
-iv><div><br><br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px=
- 0px 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex"><di=
-v><div>+<br>
-+##<br>
-+# @guest-get-windows-security-info:<br>
-+#<br>
-+# Retrieve Windows security features status (VBS, Secure Boot, TPM).<br>
-+#<br>
-+# Returns: @GuestWindowsSecurityInfo<br>
-+#<br>
-+# Since: 10.3</div></div></blockquote><div><br>11.1</div><div>=C2=A0</div>=
-<blockquote class=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-=
-left:1px solid rgb(204,204,204);padding-left:1ex">
-+##<br>
-+{ &#39;command&#39;: &#39;guest-get-windows-security-info&#39;,<br>
-+=C2=A0 &#39;returns&#39;: &#39;GuestWindowsSecurityInfo&#39;,<br>
-+=C2=A0 &#39;if&#39;: &#39;CONFIG_WIN32&#39; }<br>
--- <br>
-2.51.0<br>
 <br>
-</blockquote></div></div>
+@@ -43,7 +42,7 @@ for file in &quot;$FSFREEZE_D&quot;/* ; do<br>
+=C2=A0 =C2=A0 =C2=A0is_ignored_file &quot;$file&quot; &amp;&amp; continue<b=
+r>
+=C2=A0 =C2=A0 =C2=A0[ -x &quot;$file&quot; ] || continue<br>
+<br>
+-=C2=A0 =C2=A0 log_message &quot;Executing $file $@&quot;<br>
++=C2=A0 =C2=A0 log_message &quot;Executing $file $*&quot;<br>
+=C2=A0 =C2=A0 =C2=A0if [ &quot;$USE_SYSLOG&quot; -eq 0 ]; then<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0&quot;$file&quot; &quot;$@&quot; &gt;&gt;=
+&quot;$LOGFILE&quot; 2&gt;&amp;1<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0STATUS=3D$?<br>
+@@ -52,7 +51,7 @@ for file in &quot;$FSFREEZE_D&quot;/* ; do<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0STATUS=3D${PIPESTATUS[0]}<br>
+=C2=A0 =C2=A0 =C2=A0fi<br>
+<br>
+-=C2=A0 =C2=A0 if [ $STATUS -ne 0 ]; then<br>
++=C2=A0 =C2=A0 if [ &quot;$STATUS&quot; -ne 0 ]; then<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0log_message &quot;Error: $file finished w=
+ith status=3D$STATUS&quot;<br>
+=C2=A0 =C2=A0 =C2=A0else<br>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0log_message &quot;$file finished successf=
+ully&quot;<br>
+-- <br>
+2.43.0<br>
+<br>
+</blockquote></div>
 
---0000000000009d6b3b064d38ddda--
+--000000000000746f85064d38e32c--
 
 
