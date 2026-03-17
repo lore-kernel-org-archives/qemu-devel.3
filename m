@@ -4,93 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 77775FF6E9B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:25:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9AB50FF6E9B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:25:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2dlX-0003zg-6u; Tue, 17 Mar 2026 19:23:59 -0400
+	id 1w2dlM-0003xH-LF; Tue, 17 Mar 2026 19:23:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlV-0003zW-BI
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlL-0003wq-El
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:47 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlT-0006Ti-MG
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:57 -0400
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlK-0006SO-4m
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773789835;
+ s=mimecast20190719; t=1773789825;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=BTcRRki4RVI+IH0q3dAynZQWyxZQTTE18znN3ItjLD4=;
- b=gPTUT+rqSJxwd2YLjxU24wPG3n91cTQAtezPMFCagSH2Y5f2WRWFK4GLQwWa7oYIDYGX84
- aLidUYnFOB6CoDqP0VL2v4Mm1hrC9ZFl6JdOqwStsfCkZwAlZpdxCJ3NBZcxsY8+RKLjUx
- 6HrLO/qkj+ZUx2WSBEvuN867ZIdF5Cc=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=p13D+9yMmIAV5Felq6/xUYZn5oEef6jEs3SIEfUrsbI=;
+ b=VSvL01az+d0dCCv4t/1ND1BbIPR0tO0K5SsHT7KUmdv4++1XjgcwOfAjSiR5MrZADf3+B9
+ ELc/D97M3mh2kKsqW/jlNOggm/KE7SpBm6SwfFn8NNj4fAh05XutEJWKCm1I88jLUz4zGz
+ cq98IG9Pa2e3hy/BLGd0i/as00FSMTI=
+Received: from mail-qt1-f199.google.com (mail-qt1-f199.google.com
+ [209.85.160.199]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-329-o0Rf9xeQPqGUbX8IIEQj9g-1; Tue, 17 Mar 2026 19:23:51 -0400
-X-MC-Unique: o0Rf9xeQPqGUbX8IIEQj9g-1
-X-Mimecast-MFC-AGG-ID: o0Rf9xeQPqGUbX8IIEQj9g_1773789831
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-899f671ceb2so480546916d6.3
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 16:23:51 -0700 (PDT)
+ us-mta-687-_Rg5CuiIOXW8c_7fdwGRSQ-1; Tue, 17 Mar 2026 19:23:44 -0400
+X-MC-Unique: _Rg5CuiIOXW8c_7fdwGRSQ-1
+X-Mimecast-MFC-AGG-ID: _Rg5CuiIOXW8c_7fdwGRSQ_1773789823
+Received: by mail-qt1-f199.google.com with SMTP id
+ d75a77b69052e-5091327215dso116081761cf.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 16:23:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773789831; x=1774394631; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773789823; x=1774394623; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BTcRRki4RVI+IH0q3dAynZQWyxZQTTE18znN3ItjLD4=;
- b=QJjNZakIwGiMsJckghSJGel/sKUe2XYsKLYMoWN6g0nM1ZJ5khcVtsnxdMY7/pRTer
- D1ACHp0GcnBduKpEtO9iwBCNPWD/b4mdR3/INh1X9IhDtv1XYxCRKTpLhe8sFFE8/AqG
- 4dAsFIvHwMnMfTLdyFn/QcSwM1/wXPr+S0GIi1GOrDeatEY3O0s7TKhwHY+eXdROgb45
- e3wGOf6IEAnEvcrDl2KNi+f68PLKPpKPNjpHZVljErn9y2DcPihP8i7fXmydKMYE+4bN
- zHw8n5PB/Ry5OorjH69nlkD5p7hS0NvqHYCGx7VeR0z7Rknfs43P1rbCAhJmtyZSlp0F
- /r/g==
+ bh=p13D+9yMmIAV5Felq6/xUYZn5oEef6jEs3SIEfUrsbI=;
+ b=eLyYHiFe3xu19ZJgknaN0MAjwrC6DJXRmbbc8vj4XDk5txZBoq2U4iDzFGblvsuAOu
+ ZwGcdnmkuzAqEUqXlKoOMnxth6VpZ0hD/R+4lt2bkkXj6Tszcp7umtKh5QJ/4iQQIcQB
+ F/n9XCBgHuyGw9CUQ6qG5prqplOu4acOB+ex9Dx6jdPU6d0q0lUmmPpOLKkFK+bXxIOf
+ EL2SO6hBfuCO+2eWRbN2gOtJBDuuyfdgtfw2NpsRJjSYJ/biemQjzKkzbraT1allojb/
+ +ne+11NmVtT7O8DHhP83kbXXUlihgniVOPOVlL+fESAGiBRFoOlH//430KPKz7GXD4N4
+ /drg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773789831; x=1774394631;
+ d=1e100.net; s=20251104; t=1773789823; x=1774394623;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=BTcRRki4RVI+IH0q3dAynZQWyxZQTTE18znN3ItjLD4=;
- b=qddy+w8orLQ7cevl8H8Cuf1KBmcfA0wNg9apI1InDYm5RzSAF97QZtY6bPWLJRPNuM
- SPnrrR5CVF14cpA1EIlck6RRdSBQJTfSCK0dGz7JaFqilnmMdTZ0z6y32art+vDGq1LK
- Ri80VbK47jxDo+yyjJpMGo1iBLytn0J5FIC9hZE/D0Jr7KjkH/LKbGyjsXodSajEY4Om
- LMvnbLyZDRMO+kBgnG0SAhklHCZ9s/NEeTMsArBFZwqeJXQs+0mASuO0wK8urWstSWLe
- mkV9V/PxnNZpVQJCHM+87mMKaGBL8HS9DfnQfh0oJHhx1Fak54rDrwlHtixuyLgMHRGN
- jIMg==
-X-Gm-Message-State: AOJu0YxH0INdrvuCBkFPx0VxI2q3m0vhlwuqQb+ajTP1LDwycjH8No5I
- hK51134I67DiP0559cSjfPy2fwinPmBu5L/Z1kkHlKIxr2dIp1y56LmPp4i24g3j0PB7Jlzvtor
- C6dxhEB6Yg6DICY99JzGoqzlcBHLeHCHqCF9ryZKy5avs4mnuoAm8nD0oK3oCsFhCaIEi3GObnI
- p3YEn+dVF+p18tfyID2QBZyRvcvKnZIH0dz6LH7g==
-X-Gm-Gg: ATEYQzzl/mTMK7ZbMVBroO+dKtmpDfCW9A3jW5ewFD9lLa1Oy2bEWHRKn1D1C7tKpfz
- vX9yV4lU67NktkIJ8OLsQMjbOLL0SaasEEb8ow7FKGyranBFNwqUr+TYGVhLFjkKUxBTizKjk0m
- J8zaJLcFKPILgB4he61AlokuqJEmHmDLMWGjo4IUEUW/tr8cWcjnxfJWVQ96X7u+6OzjMDiAtux
- hG7kDb47xdxwhog7aIhum2g7SDFb39MGSB/TSXcbFdiXLC6LNDc8os+TmII4iiDu/cXoQmbeqzZ
- 4lVobGk9e/HFJmYQ4JIX4kuGCfa/xYsuvwfKDRQgJqZ8vUphHoTJGELrMwicMTgAuGIE6eIwGUD
- +zpWviAQpjiM0+A==
-X-Received: by 2002:a05:6214:4a8d:b0:89c:3ff5:78dc with SMTP id
- 6a1803df08f44-89c6b591469mr23226816d6.32.1773789830621; 
- Tue, 17 Mar 2026 16:23:50 -0700 (PDT)
-X-Received: by 2002:a05:6214:4a8d:b0:89c:3ff5:78dc with SMTP id
- 6a1803df08f44-89c6b591469mr23226496d6.32.1773789830091; 
- Tue, 17 Mar 2026 16:23:50 -0700 (PDT)
+ bh=p13D+9yMmIAV5Felq6/xUYZn5oEef6jEs3SIEfUrsbI=;
+ b=jCD236+gev7F0uIWyXb02X6HWUFG0xRTjQw4ZgC9ufQttmxYMDvDYvyjZQO51NRANj
+ StHfejNx14MYHhDuHQ4smzpoWkqd/fe5dSI3ijoVu0xVRcfSWw8Gvh7uFIHNW8E4+959
+ FmN38uU9KoTB6wwnEo3+oL7b1CxBBctOa4orGzxLVkqsj6JFB/zWIvtIZG8Mo+2TT8Cc
+ qBb4NYp8zunYDM9qYv6LtKUDH+5zr6WT+quQ7IRzCQCIOEAWXV1F3oxVJkpiyn4PqNRv
+ dd+xoRWNRZaEi+ahawBloAQkaHz6i3Bgh9BwRoMZKUEnHmkrcK8AvhM7plZchjUBAH0q
+ CHJw==
+X-Gm-Message-State: AOJu0YzoRtWYyYn7UlJkp0y3BZdbZOaGNEeMeHS9KnfJwSZTTHQZfPmY
+ kJZ8O5Bn7zBiSFX3mRlu8ZUhS4GhY9h0QcVyOi5Z6CIVFpJXabmqfgUXc74guIGOhhYN1r+oFQk
+ WLjfWnqNZ2gabbZli1RiGlAFPLbbxXujvqeVyQmHbuc+pWvOsFhO0ps9F1soRhxR26SW/hjaDSG
+ 1+5+wX9d25kQNpRcPC3KCzAIdd11cg3KT+wIKe5Q==
+X-Gm-Gg: ATEYQzxXmMatdY1dQL6sr3uWHH85KzwNuQDt0JnJF0PZXSNhuIA4sIbm5SqWNJn5dsp
+ YeZ3LZDbvZmtkKuQrFbG0nJHO0OiOzwWzC7YKpb3zghdPy20d5Tf1WPaaJG42edSwtpsjFpD2/M
+ 2ny0n//vP4cjug5ePaRsq2P3v+tKMYGH9zlh7fZg987JpvqsaZvZIDHR99Zf+A5pRbYNUjl3j63
+ jiMhC0R4SgzIHK2dunBzPVs1AZHdQkLig0vXWaCIcuj/JtuhWFPfoQ/I6RD40FGcYzuyo5FQF4A
+ u5ocOj14Plv22AI2zNty6ilasRKyICRKMGyAqmppw3WXPW4im64Sd6ezV1Hq0uC+n9V8PcRjv3G
+ pUdThh9CT87jAIQ==
+X-Received: by 2002:ac8:58c1:0:b0:4ee:1e82:e3f4 with SMTP id
+ d75a77b69052e-50b148b9963mr16083421cf.64.1773789823253; 
+ Tue, 17 Mar 2026 16:23:43 -0700 (PDT)
+X-Received: by 2002:ac8:58c1:0:b0:4ee:1e82:e3f4 with SMTP id
+ d75a77b69052e-50b148b9963mr16083121cf.64.1773789822717; 
+ Tue, 17 Mar 2026 16:23:42 -0700 (PDT)
 Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- 6a1803df08f44-89c6b9ea39asm8203806d6.37.2026.03.17.16.23.48
+ 6a1803df08f44-89c6b9ea39asm8203806d6.37.2026.03.17.16.23.41
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 16:23:49 -0700 (PDT)
+ Tue, 17 Mar 2026 16:23:41 -0700 (PDT)
 From: Peter Xu <peterx@redhat.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
- Fabiano Rosas <farosas@suse.de>,
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH RFC 10/10] tests/unit/test-vmstate: add tests for
- VMS_ARRAY_OF_POINTER_ALLOW_NULL
-Date: Tue, 17 Mar 2026 19:23:32 -0400
-Message-ID: <20260317232332.15209-11-peterx@redhat.com>
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH RFC 05/10] vmstate: Rename VMS_NULLPTR_MARKER to
+ VMS_MARKER_PTR_NULL
+Date: Tue, 17 Mar 2026 19:23:27 -0400
+Message-ID: <20260317232332.15209-6-peterx@redhat.com>
 X-Mailer: git-send-email 2.50.1
 In-Reply-To: <20260317232332.15209-1-peterx@redhat.com>
 References: <20260317232332.15209-1-peterx@redhat.com>
@@ -121,121 +120,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
+Prepare for a new MARKER for non-NULL pointer.
 
-Add tests for VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC.
-
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-[peterx: Removed two tests due to macro not used, rebase, fix warning]
 Signed-off-by: Peter Xu <peterx@redhat.com>
 ---
- tests/unit/test-vmstate.c | 86 +++++++++++++++++++++++++++++++++++++++
- 1 file changed, 86 insertions(+)
+ include/migration/vmstate.h | 2 +-
+ migration/vmstate-types.c   | 4 ++--
+ tests/unit/test-vmstate.c   | 2 +-
+ 3 files changed, 4 insertions(+), 4 deletions(-)
 
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index b4bc69486d..092e8f7e9a 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -283,7 +283,7 @@ extern const VMStateInfo vmstate_info_uint64;
+ extern const VMStateInfo vmstate_info_fd;
+ 
+ /** Put this in the stream when migrating a null pointer.*/
+-#define VMS_NULLPTR_MARKER (0x30U) /* '0' */
++#define VMS_MARKER_PTR_NULL          (0x30U)   /* '0' */
+ extern const VMStateInfo vmstate_info_nullptr;
+ 
+ extern const VMStateInfo vmstate_info_cpudouble;
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index 23f3433696..7622cf8f01 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -363,7 +363,7 @@ static bool load_nullptr(QEMUFile *f, void *pv, size_t size,
+                          const VMStateField *field, Error **errp)
+ 
+ {
+-    if (qemu_get_byte(f) == VMS_NULLPTR_MARKER) {
++    if (qemu_get_byte(f) == VMS_MARKER_PTR_NULL) {
+         return true;
+     }
+ 
+@@ -377,7 +377,7 @@ static bool save_nullptr(QEMUFile *f, void *pv, size_t size,
+ 
+ {
+     if (pv == NULL) {
+-        qemu_put_byte(f, VMS_NULLPTR_MARKER);
++        qemu_put_byte(f, VMS_MARKER_PTR_NULL);
+         return true;
+     }
+ 
 diff --git a/tests/unit/test-vmstate.c b/tests/unit/test-vmstate.c
-index dae15786aa..df1fb4c778 100644
+index 6a42cc1a4e..dae15786aa 100644
 --- a/tests/unit/test-vmstate.c
 +++ b/tests/unit/test-vmstate.c
-@@ -702,6 +702,88 @@ static void test_arr_ptr_prim_0_load(void)
-     }
- }
+@@ -620,7 +620,7 @@ static void test_arr_ptr_str_no0_load(void)
  
-+static uint8_t wire_arr_ptr_with_nulls[] = {
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x00,
+ static uint8_t wire_arr_ptr_0[] = {
+     0x00, 0x00, 0x00, 0x00,
+-    VMS_NULLPTR_MARKER,
 +    VMS_MARKER_PTR_NULL,
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x02,
-+    VMS_MARKER_PTR_VALID,
-+    0x00, 0x00, 0x00, 0x03,
-+    QEMU_VM_EOF
-+};
-+
-+typedef struct {
-+    uint32_t       ar_items_num;
-+    TestStructTriv **ar;
-+} TestVArrayOfPtrToStuctWithNULLs;
-+
-+const VMStateDescription vmsd_arps_with_nulls = {
-+    .name = "test/arps_with_nulls",
-+    .version_id = 1,
-+    .minimum_version_id = 1,
-+    .fields = (const VMStateField[]) {
-+        VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT32_ALLOC(
-+            ar, TestVArrayOfPtrToStuctWithNULLs, ar_items_num,
-+            0, vmsd_tst, TestStructTriv),
-+        VMSTATE_END_OF_LIST()
-+    }
-+};
-+
-+static void test_arr_ptr_nulls_str_save(void)
-+{
-+    TestStructTriv ar[AR_SIZE] = { {.i = 0}, {.i = 1}, {.i = 2}, {.i = 3} };
-+    TestVArrayOfPtrToStuctWithNULLs sample = {};
-+    int idx;
-+
-+    sample.ar_items_num = AR_SIZE;
-+    sample.ar = g_new0(TestStructTriv*, sample.ar_items_num);
-+    sample.ar[0] = g_new0(TestStructTriv, 1);
-+    *sample.ar[0] = ar[0];
-+    /* note, sample.ar[1] remains NULL */
-+    sample.ar[2] = g_new0(TestStructTriv, 1);
-+    *sample.ar[2] = ar[2];
-+    sample.ar[3] = g_new0(TestStructTriv, 1);
-+    *sample.ar[3] = ar[3];
-+
-+    save_vmstate(&vmsd_arps_with_nulls, &sample);
-+    compare_vmstate(wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls));
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        g_free(sample.ar[idx]);
-+    }
-+    g_free(sample.ar);
-+}
-+
-+static void test_arr_ptr_nulls_str_load(void)
-+{
-+    TestStructTriv ar_gt[AR_SIZE] = {{.i = 0}, {.i = 0}, {.i = 2}, {.i = 3} };
-+    TestVArrayOfPtrToStuctWithNULLs obj = {};
-+    int idx;
-+
-+    obj.ar_items_num = AR_SIZE;
-+    obj.ar = g_new0(TestStructTriv*, obj.ar_items_num);
-+
-+    save_buffer(wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls));
-+    SUCCESS(load_vmstate_one(
-+                &vmsd_arps_with_nulls, &obj, 1,
-+                wire_arr_ptr_with_nulls, sizeof(wire_arr_ptr_with_nulls)));
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        if (idx == 1) {
-+            g_assert_cmpint((uintptr_t)(obj.ar[idx]), ==, 0);
-+        } else {
-+            /* compare the target array ar with the ground truth array ar_gt */
-+            g_assert_cmpint(ar_gt[idx].i, ==, obj.ar[idx]->i);
-+        }
-+    }
-+
-+    for (idx = 0; idx < AR_SIZE; ++idx) {
-+        g_free(obj.ar[idx]);
-+    }
-+    g_free(obj.ar);
-+}
-+
- /* test QTAILQ migration */
- typedef struct TestQtailqElement TestQtailqElement;
- 
-@@ -1568,6 +1650,10 @@ int main(int argc, char **argv)
-                     test_arr_ptr_prim_0_save);
-     g_test_add_func("/vmstate/array/ptr/prim/0/load",
-                     test_arr_ptr_prim_0_load);
-+    g_test_add_func("/vmstate/array/ptr-nulls/str/save",
-+                    test_arr_ptr_nulls_str_save);
-+    g_test_add_func("/vmstate/array/ptr-nulls/str/load",
-+                    test_arr_ptr_nulls_str_load);
-     g_test_add_func("/vmstate/qtailq/save/saveq", test_save_q);
-     g_test_add_func("/vmstate/qtailq/load/loadq", test_load_q);
-     g_test_add_func("/vmstate/gtree/save/savedomain", test_gtree_save_domain);
+     0x00, 0x00, 0x00, 0x02,
+     0x00, 0x00, 0x00, 0x03,
+     QEMU_VM_EOF
 -- 
 2.50.1
 
