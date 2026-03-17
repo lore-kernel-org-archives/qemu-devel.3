@@ -4,131 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 15096FF6E9B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 22:59:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 031ECFF6E9B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:24:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2dO5-0000Fq-QU; Tue, 17 Mar 2026 18:59:45 -0400
+	id 1w2dlO-0003y6-TF; Tue, 17 Mar 2026 19:23:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2dO4-0000Fg-Jr
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 18:59:44 -0400
-Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2dO2-00028L-Lb
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 18:59:44 -0400
-Received: by mail-pg1-x536.google.com with SMTP id
- 41be03b00d2f7-c739e680bebso118556a12.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:59:42 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlN-0003xN-87
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:49 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w2dlL-0006SZ-NI
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:23:48 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773789827;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=t3NlxwHq8kLfCc7uDMmSml3SsH2i/1WLYIAZ4DD4aAk=;
+ b=Wbxm27KXFqhjzvet5A9YNKLELqmVL1xuEHIm3tQYsq4pb03C2OaJN3gTYqkIgYFZmbZz7p
+ DD85wMZFIUkTLJ5UR2sau4BWXPXhcV53sdfALw8emxULi0bo3+8dW/FpsW+U3FJlPatkkf
+ curHOOC9yO+4nbQ426KT4+d9EX2sO2w=
+Received: from mail-qv1-f70.google.com (mail-qv1-f70.google.com
+ [209.85.219.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-45-gacc5mPQMAaDX_LAJrz7yg-1; Tue, 17 Mar 2026 19:23:45 -0400
+X-MC-Unique: gacc5mPQMAaDX_LAJrz7yg-1
+X-Mimecast-MFC-AGG-ID: gacc5mPQMAaDX_LAJrz7yg_1773789825
+Received: by mail-qv1-f70.google.com with SMTP id
+ 6a1803df08f44-8950562d351so536721916d6.3
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 16:23:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773788381; x=1774393181; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=fNC+XVAk099ybPuxER01A0Kcd/XgdWr9OXxKrj++y24=;
- b=x+kgc+J80Moywutnf/J1ocn1Iech0qB5vgfnPS7qCz1QLjsNb9CyLgSNxtwiBcihrt
- yF6QXFszv87tevQLuOTgZig9EnHO98ppGV4SznhfouM1/6uJt+U5q5mwaKP3Hxe0ZCma
- sg8P7c20ZsynxFBqlNhzNjfVuKhYJ2h+XsZZeDrsmcmdP1X6GqbY17RpDBDoTjoajJ9h
- g31QamA8eg3zNg5cTNO0lATqkFdXvIQUb2JDbGQguM8e7PR1xEcvzl6E8SZCumjSJna4
- FGP4Y6wRnte/W9r9Xfl5MydMP3UtYv7zGj7Lq7uLTdICbJbCZTSMSaXlZBczWNIGWcLa
- LUlw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773788381; x=1774393181;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1773789825; x=1774394625; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fNC+XVAk099ybPuxER01A0Kcd/XgdWr9OXxKrj++y24=;
- b=epkEkToSYs1gVbdJghYEfom7EgjH1Hk73WjTMRchu6bBTEaNwA/NveNq5Nifch+254
- PksS90gnHbqNdQM41ZqFZpmXvt8lL8ZscGMyrgx/IkmrKaz2Hn43zHu8Fl8wnz74Csfz
- Q0GnHBJ2y7PvXvGLG0cQNlf70y1+kQznTue8XrR0oF0/kRukVdG/oDGXFx3xrZK5EgGy
- Sx7O3vO45fbBrxlcKTTWjQvZQqEwyJ+Cs7wb2YurgdnS6xtRsBBqMBJBQR7UCyGKAbE6
- vtlbz5LSnTVHvcEOmjUrVm4lgITSYvIguTF54ABoXj8cuEqEbyC4pdPa49dlpe0uJiL6
- kN6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWfCZCX6gWPwFqpMdl7Rm6RWz5MGT4euRH2+w7C5JgbO3IclGwheW2WElqwA7zDAz+jFJqmjMF3yZ8+@nongnu.org
-X-Gm-Message-State: AOJu0YydurapMF9eoZW8A2zCEXFnRyEO8+VGhiQ/p1qS7dcSgDgEttYp
- EJay+ZpEoDPPWAnnYq2DJX83/4gQVldnudtChxbCMPvzObZ7UUhEQciDGZWnfgkI0E8=
-X-Gm-Gg: ATEYQzxQC/rZrmmXX5+/vI4LHRG9RDeX/yq95T9E2jptWTvSfXwjKM+vp2cTNliJFAk
- CPIrRQO6jetQfyypYqeTyt//gkm6NaU49xWY4jTfLDe71z4oc7YNUrFGBKyHcDo7vkkzkZcOwh0
- vGBmaa+67sfGu+x0QCajKOIZWtByAddYSuVQrVYuVKyzVV18YcRsRKKb+z3GX2MnlV663lFFsBZ
- vaj9+6prfe04EhFgjkdEWiv4zRlxm9hlByvbYSwMR3NQZk9Bt0M+609LQP9JVQY8wLKvlC5/dFr
- x6QG/JEs2YXH5qF8YDsQQqKbZcJBvzOah7h76RGoDvCXPIzf3nQo0MWRr7/jaNWL+UQGKyjYQDg
- zo7PvEAvcLfKu2NFHhRQ4xFNT59u+hgJ98vTWGXKoKA7zYFdusKJBX9Pot90jqyH5FxXBJ5t5L8
- Oo6WBUppDaDLZw3kEhfLKVGZ5ZrQYejqypx8W3C9mRoXWDi7n9trHG9ivC8YH1407qPcyl
-X-Received: by 2002:a05:6a21:1505:b0:39b:8e94:c4b2 with SMTP id
- adf61e73a8af0-39b977fa4b5mr1102666637.12.1773788380853; 
- Tue, 17 Mar 2026 15:59:40 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a6bbb2f41sm469275b3a.33.2026.03.17.15.59.39
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 15:59:40 -0700 (PDT)
-Message-ID: <9ff1cda3-f9e1-4145-bbaa-75d60703f99b@linaro.org>
-Date: Tue, 17 Mar 2026 15:59:39 -0700
+ bh=t3NlxwHq8kLfCc7uDMmSml3SsH2i/1WLYIAZ4DD4aAk=;
+ b=Pm6cntEk/iAs1EZLVomG86xp1wqFLvT7XaJhyQysnlHoCzoV//6xS/h/OZ6IuJULma
+ prfZswcOAPDKxCKD2DR3wpDUNxHSwK/QC2jlIcrTfahNmWa+6wazdxT+sfkgzsPqbvY9
+ ksZd9o83JFCYMLwAdMtS32FqAPWnWn6EL24rjZDDi/YaUS0vuE5LJv8q2VNPOS5cilV/
+ lrhoPX8zWA4lYaw/IVQUeODZ9m3fPRdZvFleJtq9ZWKrQNoreewdo/q358E7p9T0AYCY
+ 03pmSjhITZzRRxIbfI6pQUs7hrpBiZW2qwIZ+VDLX/I02Qlgo8Ug3WeXnjPHpNrm9Azi
+ eFmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773789825; x=1774394625;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=t3NlxwHq8kLfCc7uDMmSml3SsH2i/1WLYIAZ4DD4aAk=;
+ b=oKjW8xhvgw1wqqcU3fDWqp9wJl6Ne2Urey0wmxnwxWfWpypeiQ/KnKXNjGcOV5Zct9
+ Z4Tfqi5cLgnPs5Om4vXThjXG3Coe/brrQJY54gvGeBYdM0713SVSyq2l7nBlMzHKdgwn
+ OAbyn9E0+V0xfDbMqhVPWDgR8v7KvQUOZHTulhDeD3TspneOpuav1j2vs9ow3cJTvK3K
+ T1A989GMZJbfocXRUVWGxk1rPlM55/QHC6+4zxhMy0kx9FxNXmpHxtOH+ZLknFVULEOO
+ QivryKQeuGz+R8YYBAattL+uWe0icWrMDkfn6cQP4i1Jt4JGHbnLNp/aBQloyyAGhMTu
+ C5og==
+X-Gm-Message-State: AOJu0Yyp09NyvYJUFfcSCc9ZUcRiwd8iJCYwbDH0TuBdXAm58WQS7wN9
+ HnrQpsx+oLPFqhxYpjIIOEV94Mn5XxQFaXHm7CPMudgzDUwT7PtCNsSQlTep2l8HyjsJqL9bcX+
+ +H5p128NsV2XWc9G6AgkU38kQeSgwd4k6jhQfZWbi0CcA/Alr3Jlt9RCOL9fb2cZFc0+Kr/xi/W
+ F2+PeKc+JG2TJX8vDntma6IGl9XJcqeaiDJ95u0g==
+X-Gm-Gg: ATEYQzwjEWlHZI0A97tAH3mHj89HLJMPpP1oZ82IEN/2stzHVH5M0K3Q9SZxKFwVHnw
+ buffYmNVq04XtwgNxdCk5wuYcfnAZNpoa6qSAFFRmRzZPpLZ1haH19ffy6FbtQoemx0ZPOKggHQ
+ yEYAjNf3cYl/HEeAvPZ6Q9Qt8h+D21kN7Q7/WD0eQPPN8Aq9CW6ibEI2TzgkU2TewPC+FTUAtVB
+ t7Dpare3gIQ9zjJtLLwvTINq8zeRq+17CeGHEjO3hhDpLbvdstg8qzobEi+HEdZ5jlrOYkl41+S
+ gf0eLA/+eAFof2UuS0NJsX8OVkL38WW2VY12PCZBz+5mwYiD3twzXh79076MsrKSZ47DEYEKwA/
+ EmScB+Z+w5HAgqA==
+X-Received: by 2002:a05:6214:319a:b0:899:f2ba:9d7e with SMTP id
+ 6a1803df08f44-89c6b595f87mr23211746d6.38.1773789824668; 
+ Tue, 17 Mar 2026 16:23:44 -0700 (PDT)
+X-Received: by 2002:a05:6214:319a:b0:899:f2ba:9d7e with SMTP id
+ 6a1803df08f44-89c6b595f87mr23211476d6.38.1773789824232; 
+ Tue, 17 Mar 2026 16:23:44 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ 6a1803df08f44-89c6b9ea39asm8203806d6.37.2026.03.17.16.23.42
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Mar 2026 16:23:43 -0700 (PDT)
+From: Peter Xu <peterx@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Juraj Marcin <jmarcin@redhat.com>, peterx@redhat.com,
+ Fabiano Rosas <farosas@suse.de>
+Subject: [PATCH RFC 06/10] vmstate: Introduce vmstate_save_field_with_vmdesc()
+Date: Tue, 17 Mar 2026 19:23:28 -0400
+Message-ID: <20260317232332.15209-7-peterx@redhat.com>
+X-Mailer: git-send-email 2.50.1
+In-Reply-To: <20260317232332.15209-1-peterx@redhat.com>
+References: <20260317232332.15209-1-peterx@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 4/8] hw/vfio: eradicate CONFIG_IOMMU from sources
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-ppc@nongnu.org,
- eric.auger@redhat.com
-References: <20260315070834.198331-1-pierrick.bouvier@linaro.org>
- <20260315070834.198331-5-pierrick.bouvier@linaro.org>
- <8bcc2cb9-6562-4ba2-be95-04f8b23e40f2@redhat.com>
- <0cc139d6-9289-44a0-9122-d701426dae0c@linaro.org>
- <e8254fe0-4c23-4b92-9549-a15ce2627bfb@redhat.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <e8254fe0-4c23-4b92-9549-a15ce2627bfb@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -144,23 +119,86 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/26 6:55 AM, Cédric Le Goater wrote:
->> Writing my answer and seeing current behavior, I wonder if we could not have better error messages simply by checking if /dev/iommu exists when setting the iommufd property of vfio-pci device or when realizing the iommufd object (-object iommufd,id=iommufd0). For the latter, I need to double check order or initialization/realization as it might be tricky to catch before setting accessing vfio-dev/vfio0/dev.
-> 
-> yes. as said before, QEMU attaches to the device before connecting it
-> to the IOMMU backend. So the iommufd object is unused until we reach
-> this step of the device initialization.
-> 
->> $ qemu-system-* -object iommufd,id=iommufd0
->> can't create iommufd object: /dev/iommu not found
->> Is your kernel config missing CONFIG_IOMMUFD?
-> 
-> Why not. Would you have time for it ?
->
+Introduce a helper to do both the JSON blob dump and vmstate dump.  This
+further shrinks the function a bit.  More importantly, we'll need to dump
+two fields in one loop very soon in the future with the JSON blob.
 
-Sent a separate series here:
-https://lore.kernel.org/qemu-devel/20260317225751.1325098-1-pierrick.bouvier@linaro.org/T/#t
+Signed-off-by: Peter Xu <peterx@redhat.com>
+---
+ migration/vmstate.c | 38 +++++++++++++++++++++++++++-----------
+ 1 file changed, 27 insertions(+), 11 deletions(-)
 
-Regards,
-Pierrick
+diff --git a/migration/vmstate.c b/migration/vmstate.c
+index caa7b50bce..5a6b352764 100644
+--- a/migration/vmstate.c
++++ b/migration/vmstate.c
+@@ -514,6 +514,30 @@ static bool vmstate_save_field(QEMUFile *f, void *pv, size_t size,
+     return true;
+ }
+ 
++/*
++ * Dump a whole VMSD field, including its JSON blob separately when @vmdesc
++ * is specified.
++ */
++static inline bool
++vmstate_save_field_with_vmdesc(QEMUFile *f, void *pv, size_t size,
++                               const VMStateDescription *vmsd,
++                               const VMStateField *field, JSONWriter *vmdesc,
++                               int i, int max, Error **errp)
++{
++    uint64_t old_offset, written_bytes;
++    bool ok;
++
++    vmsd_desc_field_start(vmsd, vmdesc, field, i, max);
++
++    old_offset = qemu_file_transferred(f);
++    ok = vmstate_save_field(f, pv, size, field, vmdesc, errp);
++    written_bytes = qemu_file_transferred(f) - old_offset;
++
++    vmsd_desc_field_end(vmsd, vmdesc, field, written_bytes);
++
++    return ok;
++}
++
+ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                                 void *opaque, JSONWriter *vmdesc,
+                                 int version_id, Error **errp)
+@@ -542,7 +566,6 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+             void *first_elem = opaque + field->offset;
+             int i, n_elems = vmstate_n_elems(opaque, field);
+             int size = vmstate_size(opaque, field);
+-            uint64_t old_offset, written_bytes;
+             JSONWriter *vmdesc_loop = vmdesc;
+             bool is_prev_null = false;
+ 
+@@ -558,7 +581,6 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                 bool is_null;
+                 int max_elems = n_elems - i;
+ 
+-                old_offset = qemu_file_transferred(f);
+                 if (field->flags & VMS_ARRAY_OF_POINTER) {
+                     assert(curr_elem);
+                     curr_elem = *(void **)curr_elem;
+@@ -606,15 +628,9 @@ static bool vmstate_save_vmsd_v(QEMUFile *f, const VMStateDescription *vmsd,
+                     }
+                 }
+ 
+-                vmsd_desc_field_start(vmsd, vmdesc_loop, inner_field,
+-                                      i, max_elems);
+-
+-                ok = vmstate_save_field(f, curr_elem, size, inner_field,
+-                                        vmdesc_loop, errp);
+-
+-                written_bytes = qemu_file_transferred(f) - old_offset;
+-                vmsd_desc_field_end(vmsd, vmdesc_loop, inner_field,
+-                                    written_bytes);
++                ok = vmstate_save_field_with_vmdesc(f, curr_elem, size, vmsd,
++                                                    inner_field, vmdesc_loop,
++                                                    i, max_elems, errp);
+ 
+                 /* If we used a fake temp field.. free it now */
+                 if (is_null) {
+-- 
+2.50.1
+
 
