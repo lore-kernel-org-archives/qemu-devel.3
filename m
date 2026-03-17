@@ -4,53 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8242EF3381D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:31:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AC06BF33820
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 09:31:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QlX-00046W-T8; Tue, 17 Mar 2026 05:31:08 -0400
+	id 1w2Qlm-0004QO-U2; Tue, 17 Mar 2026 05:31:22 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2QlU-00045S-1p
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:04 -0400
-Received: from smtpout1.mo533.mail-out.ovh.net ([51.210.94.138])
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2Qll-0004OE-27
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:21 -0400
+Received: from 11.mo533.mail-out.ovh.net ([87.98.181.139])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2QlP-0005i8-JK
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:02 -0400
+ (Exim 4.90_1) (envelope-from <clg@kaod.org>) id 1w2Qlj-0008CY-Fd
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 05:31:20 -0400
 Received: from director4.derp.mail-out.ovh.net
  (director4.derp.mail-out.ovh.net [79.137.60.37])
- by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4fZmsp1bcGz64fs;
- Tue, 17 Mar 2026 09:30:54 +0000 (UTC)
+ by mo533.mail-out.ovh.net (Postfix) with ESMTPS id 4fZmtF41nXz5w1b;
+ Tue, 17 Mar 2026 09:31:17 +0000 (UTC)
 Received: from director4.derp.mail-out.ovh.net
  (director4.derp.mail-out.ovh.net. [127.0.0.1])
  by director4.derp.mail-out.ovh.net (inspect_sender_mail_agent) with SMTP
- for <jamin_lin@aspeedtech.com>; Tue, 17 Mar 2026 09:30:54 +0000 (UTC)
-Received: from mta3.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.58.228])
+ for <jamin_lin@aspeedtech.com>; Tue, 17 Mar 2026 09:31:17 +0000 (UTC)
+Received: from mta7.priv.ovhmail-u2.ea.mail.ovh.net (unknown [10.110.43.211])
  by director4.derp.mail-out.ovh.net (Postfix) with ESMTPS id
- 4fZmsp0msTz1xs1; Tue, 17 Mar 2026 09:30:54 +0000 (UTC)
-Received: from kaod.org (unknown [10.1.6.3])
+ 4fZmtF39T2z1xs1; Tue, 17 Mar 2026 09:31:17 +0000 (UTC)
+Received: from kaod.org (unknown [10.1.6.0])
  (Authenticated sender: clg@kaod.org)
- by mta3.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id D384A12E3903;
- Tue, 17 Mar 2026 09:30:52 +0000 (UTC)
+ by mta7.priv.ovhmail-u2.ea.mail.ovh.net (Postfix) with ESMTPSA id BA9D6203923; 
+ Tue, 17 Mar 2026 09:31:16 +0000 (UTC)
 Authentication-Results: garm.ovh; auth=pass
- (GARM-109S003843d2769-4cc7-4212-a1bd-7d856089e547,
+ (GARM-98R0023fe23b45-5052-4a07-b173-b2d05d416bc1,
  4AC1E9A3EE45423C0527B61D87123FAFA3CB088F) smtp.auth=clg@kaod.org
 X-OVh-ClientIp: 82.64.250.170
-Message-ID: <bf895caa-c968-4ef5-8f3f-0c5d4848db12@kaod.org>
-Date: Tue, 17 Mar 2026 10:30:52 +0100
+Message-ID: <24deb7c1-36ae-47b4-99f3-033862ae75b1@kaod.org>
+Date: Tue, 17 Mar 2026 10:31:16 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1] tests/functional/aarch64/test_aspeed: Disable kernel
- crypto self-tests in AST2700 boot tests
-To: Jamin Lin <jamin_lin@aspeedtech.com>,
- Peter Maydell <peter.maydell@linaro.org>,
- Steven Lee <steven_lee@aspeedtech.com>, Troy Lee <leetroy@gmail.com>,
- Andrew Jeffery <andrew@codeconstruct.com.au>, Joel Stanley <joel@jms.id.au>,
- "open list:ASPEED BMCs" <qemu-arm@nongnu.org>,
+Subject: Re: [PATCH v1] hw/i3c/dw-i3c: Fix uninitialized data use in short
+ transfer
+To: Jamin Lin <jamin_lin@aspeedtech.com>, Joe Komlodi <komlodi@google.com>,
+ Nabih Estefan <nabihestefan@google.com>,
  "open list:All patches CC here" <qemu-devel@nongnu.org>
 Cc: Troy Lee <troy_lee@aspeedtech.com>, Kane Chen <kane_chen@aspeedtech.com>
-References: <20260316081549.1279841-1-jamin_lin@aspeedtech.com>
+References: <20260311021319.1053774-1-jamin_lin@aspeedtech.com>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@kaod.org>
 Autocrypt: addr=clg@kaod.org; keydata=
@@ -95,29 +92,29 @@ Autocrypt: addr=clg@kaod.org; keydata=
  3GlqivBNkmYsHYSlFsbxc37E1HpTEaSWsGfAHQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4Pls
  ZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQizDiU6iOrUzBThaMhZO3i927SG2DwWDVzZlt
  KrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gDuVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260316081549.1279841-1-jamin_lin@aspeedtech.com>
+In-Reply-To: <20260311021319.1053774-1-jamin_lin@aspeedtech.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-x-ovh-tracer-id: 2255740467509046283
+x-ovh-tracer-id: 2262214389712923659
 X-VR-SPAMSTATE: OK
 X-VR-SPAMSCORE: -100
-X-VR-SPAMCAUSE: dmFkZTErgfqI25EuZLs24ggH/7Ad5Srut2Th+Ia5SoNCO0CM3yIZJXL+VRbKgToXXv7T/r/MzX0RaVhrxmRbbUxTw3P3J3tz9A6dy6s0ynogtBh6q9lhXVa/tYjtfuWyiV+qUAXP3yjbXhSCLXD7Rg3ZQk2RSrjEhBweOnFdGdFhk4H22PFrWk0knl/lvtvqQ2WQjqmIZGRF4qE2zCsUax9Dv3uN0N7LXPA9zS3Iv8MqysGZER1DvQRrX+ZE0ZMBbcZS2WQl4ixy7o0EoLWXWyTXjlU6chUeOmeFBHK6fPJZq/diT4DHp28n+V1zkYwiQg7LnRfM8aD83bja+T4sMIXy2h25pqiHJp9OVOgFT3XEXd5qca5Hrwl4O2hu22cQjGstjd2/mGvJtagPa86nCo7rn9TrtIOxja00xWjqNpxin9cRqSIFi9D2f2X8M+Lvxz78G/tFl1aLUpsGlF4MBun+ZUorJS749zIAXOcdhZb15kyeeDTFKR9kktp2ZzD2o6sgNouwyTriAHBG+ecJLWSfMeYLH3fKHPF2fa+fxYqem17Z5LGXvrVvxN3j/OEqgI8XEmW9LoESPRrNX1QhcvFd7t2iHj6/niAIdVg7KMNO/ZY5lvEK5yHrniMud9vDKbPvgP1LOm+X9vqHNFY6OTxs/du2HoCJKPJG4t4t+AC9PaqbPg
-DKIM-Signature: a=rsa-sha256; bh=jGl+/Onif2FknLSQK0w9PxtOREDjUklwrRSdGGBNAzE=; 
+X-VR-SPAMCAUSE: dmFkZTEsPG6b8BiDarHoP6qWBHusY+iF8bO1iAsASG+iTDKvpc5nimFdVzIvcLulKhZweEaQ/yqzOwxoqm7XG4zshxjCvB3aHtQWD1gVzUZ+koM6BeDuuzv/r1ssw03hCAOCK2fvN40nje0V89eoZvr1chxeBoJ2vPxIZeEBeeQoXH4plm90/sF6v6mSxYjk5zp4WXgNEd76ECZiIB/YRPfx1DGMLVxwHMryPkC8MnhFIiQUXSxPbnKSNAOEkem3fIqAzIqitwY415VgS0w28P/p+5OIf5LeToRvunpFdop1Rczp2Vg2482ifstAI+wT+GvkwdW3x9rkUX6cDElg8F0vpuz2FQAZvnWwr63l+9g4o059LsiUxxOGJJdnOKpnYlKkqkU0lhk4Mg5Lk48xJxvtKazLD0pk+LX08SksW985661kQxb+261DdhF/fQ8VsACD7VWjjGRM2FQNYmlw+2+8rlgjH9D6jMHf1tyynqAkg732h8s74pNR5JIICM1ZIc1H22YUpb9hgCvRrYRCbw7Sw0QD1G6R3I0Mr2V7TgUDqfvbrQBVhPKxPprPxymEOTiCvXbiDI5x5tOaVFAPL8EJc1QIRm0v1ZzW9/LEBo8Ond2f4Uz7+Oa5oJ1QvBWmQSTWU8PeX/jzqf0ErHdWxjCUC/z2hgCUQw37s1TE4sEr1pgDFg
+DKIM-Signature: a=rsa-sha256; bh=MiUMYYQtSdL57dsf1dJqcarS4JqpqHytCRZ5gXv1U5Y=; 
  c=relaxed/relaxed; d=kaod.org; h=From; s=ovhmo393970-selector1;
- t=1773739854; v=1;
- b=wOPbhmCS3aK1pESrOgwYzsmBzgbPf7oLo702A2eulEDlESgyNUgUBu8btJNC2U6yx5rafoUq
- prlav50SUMf5VtK4buyBkkdbZRj9zHjEIS0a7kCxeSvVuWJhsoKazxT24NCDRI5bo7V/VX+NuBM
- kIZkogLFdvDsku6T0+GZG2wO4IN9r5GXrs+nKYMSbCvEsEUDwbpDgiFLge8+JP1sqtD7dUMnnhF
- Phjm44oyRQ/Irakz7XuiB0gKztikwkbQI3KwvOtEsYIam4sP1y2SJ511u7Gq7OqnN2/+8zHvQAs
- TamyPDDdrrFj2VC5cbCQCHzwWeenXGFWlC/fJF2Su0zoA==
-Received-SPF: pass client-ip=51.210.94.138; envelope-from=clg@kaod.org;
- helo=smtpout1.mo533.mail-out.ovh.net
+ t=1773739877; v=1;
+ b=MAd3uwhnGPH1l27yqCgdhR+3zT8OryDtX8MgeF/qeejelB3c5TnmYqfjYG6BR3Qjudc2Y6r9
+ yepZ2X3YxgObUUVPtcZ6lMtANRsGP+nPHmEmQS455EiVJYUBo7c+UidNxT9z2iX08fnBNH6zsmb
+ jy/KfmaKbG0i9qL7Q575PSdsxTJQI7D+OUuMUaYy1rkFf6gghUZNmHaZUA/DQ4Ve7I38jbH0vhz
+ FuBXXDCGqof787FmWVQa56s0nixEMgDPBAluvz8GJ/zwSMs/sHML9D4u+F/Psw4N5EvnyxvByE4
+ zgzUbWxlrUP3p7+jAd9W9rVFBl4q1Vd4q/Ni9IfYPYFCg==
+Received-SPF: pass client-ip=87.98.181.139; envelope-from=clg@kaod.org;
+ helo=11.mo533.mail-out.ovh.net
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -135,142 +132,60 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/16/26 09:15, Jamin Lin wrote:
-> Disable the kernel crypto self-tests in the AST2700 functional tests by
-> appending "cryptomgr.notests=1" to the U-Boot bootargs before booting
-> the kernel.
+On 3/11/26 03:13, Jamin Lin wrote:
+> Coverity reports that dw_i3c_short_transfer() may pass an
+> uninitialized buffer to dw_i3c_send().
 > 
-> The ASPEED SDK enables crypto self-tests during kernel startup to
-> validate the hardware crypto engine. However, the current QEMU
-> implementation of the AST2700 HACE/crypto engine is still incomplete.
-> As a result, the kernel crypto self-tests trigger multiple warnings
-> during boot when running under QEMU.
+> The immediate cause is the use of `data[len] += arg.byte0`, which
+> reads from an uninitialized element of the buffer. Replace this with
+> a simple assignment.
 > 
-> Typical examples observed in the kernel log include failures for
-> several cipher modes such as DES/TDES/AES in ECB/CBC/CTR modes:
+> Additionally, avoid calling dw_i3c_send() when the constructed payload
+> length is zero. In that case the transfer has no data phase, so the
+> controller can transition to the idle state directly.
 > 
-> alg: self-tests for ctr(des) using aspeed-ctr-des failed (rc=-22)
-> alg: self-tests for ecb(des3_ede) using aspeed-ecb-tdes failed (rc=-22)
-> alg: self-tests for cbc(aes) using aspeed-cbc-aes failed (rc=-22)
-> ...
+> This resolves the Coverity UNINIT warning and clarifies the handling
+> of zero-length short transfers.
 > 
-> To reduce noise in the functional test logs, the tests now append
-> the following parameter to the kernel bootargs:
-> 
->    cryptomgr.notests=1
-> 
-> This disables the kernel crypto self-tests when running the functional
-> tests under QEMU.
-> 
-> For validating the HACE implementation, we should instead rely on the
-> dedicated QEMU unit tests located in:
-> 
->    tests/qtest/ast2700-hace-test.c
-> 
-> Once the QEMU implementation of the ASPEED HACE/crypto model has
-> progressed further and supports the missing crypto modes, we can
-> reassess whether enabling the kernel crypto self-tests again in the
-> functional tests is appropriate.
-> 
+> Resolves: Coverity CID 1645555
 > Signed-off-by: Jamin Lin <jamin_lin@aspeedtech.com>
 > ---
->   tests/functional/aarch64/test_aspeed_ast2700a1.py | 11 +++++++++--
->   tests/functional/aarch64/test_aspeed_ast2700a2.py | 11 +++++++++--
->   tests/functional/aarch64/test_aspeed_ast2700fc.py |  9 +++++++--
->   3 files changed, 25 insertions(+), 6 deletions(-)
+>   hw/i3c/dw-i3c.c | 14 ++++++++++----
+>   1 file changed, 10 insertions(+), 4 deletions(-)
 > 
-> diff --git a/tests/functional/aarch64/test_aspeed_ast2700a1.py b/tests/functional/aarch64/test_aspeed_ast2700a1.py
-> index 5c0c4b0ed5..b0c08854da 100755
-> --- a/tests/functional/aarch64/test_aspeed_ast2700a1.py
-> +++ b/tests/functional/aarch64/test_aspeed_ast2700a1.py
-> @@ -51,9 +51,11 @@ def verify_vbootrom_firmware_flow(self):
->           wait_for_console_pattern(self, 'pass')
->           wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
+> diff --git a/hw/i3c/dw-i3c.c b/hw/i3c/dw-i3c.c
+> index 3d8b95a14c..aa6c27c8de 100644
+> --- a/hw/i3c/dw-i3c.c
+> +++ b/hw/i3c/dw-i3c.c
+> @@ -1211,7 +1211,7 @@ static void dw_i3c_short_transfer(DWI3C *s, DWI3CTransferCmd cmd,
+>            * ignored.
+>            */
+>           if (cmd.dbp) {
+> -            data[len] += arg.byte0;
+> +            data[len] = arg.byte0;
+>               len++;
+>           }
+>       }
+> @@ -1226,10 +1226,16 @@ static void dw_i3c_short_transfer(DWI3C *s, DWI3CTransferCmd cmd,
+>           len++;
+>       }
 >   
-> +    def disable_kernel_crypto_selftest(self):
-> +         exec_command_and_wait_for_pattern(self,
-> +            'setenv bootargs "${bootargs} cryptomgr.notests=1"', '=>')
-> +
->       def enable_ast2700_pcie2(self):
-> -        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
-> -        exec_command_and_wait_for_pattern(self, '\012', '=>')
->           exec_command_and_wait_for_pattern(self,
->               'cp 100420000 403000000 900000', '=>')
->           exec_command_and_wait_for_pattern(self,
-> @@ -67,8 +69,13 @@ def enable_ast2700_pcie2(self):
->   
->       def verify_openbmc_boot_start(self, enable_pcie=True):
->           wait_for_console_pattern(self, 'U-Boot 2023.10')
-> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
-> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
-> +        self.disable_kernel_crypto_selftest()
->           if enable_pcie:
->               self.enable_ast2700_pcie2()
-> +        else:
-> +            exec_command(self, 'boot')
->           wait_for_console_pattern(self, 'Linux version ')
->   
->       def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
-> diff --git a/tests/functional/aarch64/test_aspeed_ast2700a2.py b/tests/functional/aarch64/test_aspeed_ast2700a2.py
-> index cc62a915b5..ed414999f4 100755
-> --- a/tests/functional/aarch64/test_aspeed_ast2700a2.py
-> +++ b/tests/functional/aarch64/test_aspeed_ast2700a2.py
-> @@ -51,9 +51,11 @@ def verify_vbootrom_firmware_flow(self):
->           wait_for_console_pattern(self, 'pass')
->           wait_for_console_pattern(self, 'Jumping to BL31 (Trusted Firmware-A)')
->   
-> +    def disable_kernel_crypto_selftest(self):
-> +         exec_command_and_wait_for_pattern(self,
-> +            'setenv bootargs "${bootargs} cryptomgr.notests=1"', '=>')
-> +
->       def enable_ast2700_pcie2(self):
-> -        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
-> -        exec_command_and_wait_for_pattern(self, '\012', '=>')
->           exec_command_and_wait_for_pattern(self,
->               'cp 100420000 403000000 900000', '=>')
->           exec_command_and_wait_for_pattern(self,
-> @@ -67,8 +69,13 @@ def enable_ast2700_pcie2(self):
->   
->       def verify_openbmc_boot_start(self, enable_pcie=True):
->           wait_for_console_pattern(self, 'U-Boot 2023.10')
-> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
-> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
-> +        self.disable_kernel_crypto_selftest()
->           if enable_pcie:
->               self.enable_ast2700_pcie2()
-> +        else:
-> +            exec_command(self, 'boot')
->           wait_for_console_pattern(self, 'Linux version ')
->   
->       def verify_openbmc_boot_and_login(self, name, enable_pcie=True):
-> diff --git a/tests/functional/aarch64/test_aspeed_ast2700fc.py b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> index f68f40a1bf..df889134ed 100755
-> --- a/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> +++ b/tests/functional/aarch64/test_aspeed_ast2700fc.py
-> @@ -27,9 +27,11 @@ def do_test_aarch64_aspeed_sdk_start(self, image):
->   
->           self.vm.launch()
->   
-> +    def disable_kernel_crypto_selftest(self):
-> +         exec_command_and_wait_for_pattern(self,
-> +            'setenv bootargs "${bootargs} cryptomgr.notests=1"', '=>')
-> +
->       def enable_ast2700_pcie2(self):
-> -        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
-> -        exec_command_and_wait_for_pattern(self, '\012', '=>')
->           exec_command_and_wait_for_pattern(self,
->               'cp 100420000 403000000 900000', '=>')
->           exec_command_and_wait_for_pattern(self,
-> @@ -43,6 +45,9 @@ def enable_ast2700_pcie2(self):
->   
->       def verify_openbmc_boot_and_login(self, name):
->           wait_for_console_pattern(self, 'U-Boot 2023.10')
-> +        wait_for_console_pattern(self, 'Hit any key to stop autoboot')
-> +        exec_command_and_wait_for_pattern(self, '\012', '=>')
-> +        self.disable_kernel_crypto_selftest()
->           self.enable_ast2700_pcie2()
->           wait_for_console_pattern(self, 'Starting kernel ...')
->   
+> -    if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {
+> -        err = DW_I3C_RESP_QUEUE_ERR_I2C_NACK;
+> +    if (len > 0) {
+> +        if (dw_i3c_send(s, data, len, &bytes_sent, is_i2c)) {
+> +            err = DW_I3C_RESP_QUEUE_ERR_I2C_NACK;
+> +        } else {
+> +            /* Only go to an idle state on a successful transfer. */
+> +            ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
+> +                             DW_I3C_TRANSFER_STATE_IDLE);
+> +        }
+>       } else {
+> -        /* Only go to an idle state on a successful transfer. */
+> +        /* No payload bytes for this short transfer. */
+>           ARRAY_FIELD_DP32(s->regs, PRESENT_STATE, CM_TFR_ST_STATUS,
+>                            DW_I3C_TRANSFER_STATE_IDLE);
+>       }
 
 Applied to aspeed-next.
 
