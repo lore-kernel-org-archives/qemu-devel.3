@@ -4,76 +4,77 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 40BB0F3381A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:52:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59AEDF33817
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:52:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Q9i-0005q5-P0; Tue, 17 Mar 2026 04:52:04 -0400
+	id 1w2Q9w-0006Jk-ET; Tue, 17 Mar 2026 04:52:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q8w-0005eL-0v
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:14 -0400
+ id 1w2Q9J-0005mS-IT
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:42 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q8t-0002gY-O4
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:13 -0400
+ id 1w2Q9H-0002kK-Fe
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:37 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737467;
+ s=mimecast20190719; t=1773737494;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=b1TdznvfNo/kLR4VJ2BTsWYY5GiN7ppg+wGeY50m1ko=;
- b=cVLorUcZS2WwSNsbDrZRqZyPLgsG1bNnKAIOPr1G/dzRPweCVnzTEkBB5NR0jAIglMJb3k
- NI8l/O9uK7CVEBjuvHFz9hG0hmDEd+UfwxsxqARFM9uRtD6v+w7wWt+0nsr5Nv0vnAs0Ys
- Hn5WAibPJbyl9Tnt2KTOSZEKjQxT0PI=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=UgGMqWRoNgYqfadnrZRN+egBryZS2leBtfp1A62h7kc=;
+ b=GQUenXLzCKXZ9Emg50oFIj8yIQ6LSlPXMyKh79esBWiCneF0ciTZwrjnDkmRfBeM66b+YP
+ XHJX222Wb1A9jxTo5xDiYQXS6McSKAfEFHNavUtap7jnCA3jD/JUXYS8isI7QjYic40IdT
+ dS06yu3fbsmWakUHBCM5sUE7vsmik40=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-97-cJlvGoeFOt698YnLvwtXHQ-1; Tue,
- 17 Mar 2026 04:51:05 -0400
-X-MC-Unique: cJlvGoeFOt698YnLvwtXHQ-1
-X-Mimecast-MFC-AGG-ID: cJlvGoeFOt698YnLvwtXHQ_1773737465
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-55-dyvESVB6Mv2-RaNqlsln4g-1; Tue,
+ 17 Mar 2026 04:51:33 -0400
+X-MC-Unique: dyvESVB6Mv2-RaNqlsln4g-1
+X-Mimecast-MFC-AGG-ID: dyvESVB6Mv2-RaNqlsln4g_1773737492
 Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
  (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 117D319560A1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:51:05 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 3EE4E18005B0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:51:32 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
  by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 07D2C1800107
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:51:03 +0000 (UTC)
+ id 22DB8180075B
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:51:30 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:50:18 +0400
-Subject: [PATCH 04/60] ui/vnc: clarify intent using buffer_empty() function
+Date: Tue, 17 Mar 2026 12:50:23 +0400
+Subject: [PATCH 09/60] ui/vnc-jobs: drop redundant (and needless)
+ qemu_thread_get_self()
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-4-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-9-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1100;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=726;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=j4U6dEjJpDeqnxOtsFHIu/TPbBPNsN4KR/RfvB51MEM=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXaxQauwEZJjMtxnCzxzZPR9z7YAD2W+s5j7
- odo7ABm9IuJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2gAKCRDa6OEJdZac
- 5VW5EACVRtgWpW8GkB2VnJp+ZtVPH0ZeWooSs7X6yJv8TtlZ8JjvQH2A7NPR6Gp1uSqC6eDeqXI
- NEveb1JycOkkss09nhwq5OfigSua7Y++0xFn12oJ5NLnVhO4B3Gc6yL9y/4T7WyqrFisPqc5DCv
- ooUTDDq257n7AuC/0E8kjpPJOUS1tDDDunsV+QQeVeXUfEkfPUCFIhQbQKu5rPh2W1Li3bftwhD
- 9fGjBRA4+MwMZ5i7Nw1v/+6nKwWfIsiR45BVSqOOzzRIHLZVfp64Zzwq5btha8FbC1PzrcZON7L
- oEGaM2LOU2I7TGveNs1DEYUkr3hqhaz6V8b1YFipnJXSaTa10mDRyyKwya0PbRisL5HF0v4+RdR
- 2zxP2tRcWIyQUXS1OZwS2SHxSpHlDmL25lgKJYzTJzNyydSdNchwnSY9rLHFLTdya8dHVIBiSzf
- wM9Ox0NtG2phJAjcJ3kV7Hmqpci9VT1KNnG0UDlp8CQGMIO0gG+AXpllw6NN7/A93j8oViOVqYi
- XLsAJuoxXmxLMRwp9n4vZk9et9OyN9vRJuRpPrDskcYtx/4J7yg1RrTv2xfNX0TOzjGBpfNgMcI
- 3FOvex7YVUPXxl8ACnPGPnFiKH50PRGu4DtwRaEgfttI7qAyfCMrf9IF/FbIVnKb9UBIpdEVmmz
- 5ksuZgr6tSNyCcQ==
+ bh=b1rg64rVjg+JyQU94K34Xh3zXu/+C7TtUel6eexqkFA=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXasXDRbk3PAiMHTFDMytATM3KJio/YfZWM2
+ wJvO2VzcVyJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2gAKCRDa6OEJdZac
+ 5arjD/9o1Ca9oO63aAUpA9MRqZeLmBLW/dyxzMuBv2L4ZaIxLu2EeMUWEV0rcRPS6SsAkcajdE4
+ hXNmUvYwxfIoFzzJWQVUikY1Zq9URNlvMHwA9E8kTUwZbUNG0r90N9jJArFd4aSF4FnR7X4T4HV
+ FTxvPmdgQW67Rh28cMty3tpB4ZujJpmQrbbKZRgcQvbBDQVoPzzfZdBYdFGg85UPc633V4+KiTl
+ JZxFIVrqkjeTS4RLr9ZY1sFSYiqiQ40ki2A26PQYtg8MdT9VpDNJl/LofReELXhuWJSFsqimONi
+ iK1i6FwcQIKrD2uvVcL26vHtgk68zw4gbDr8FwcOc4NfhDUdF02GdqqmsH6MzIGgOkIXxC9J74v
+ ly44LSGic30sAOM/N8ipUKbJLF+FugfxRn8nxpm7dJM1onAUDI2VjFLmLZbLB+W6sfeYk/RIK35
+ mOj/fIQWwph7zEFxLTdlyXobiFvF6+XonizkcHKZ3k3Vc0RnYCjKiNWu3Gr6r4D1UvBojQvjW8r
+ 7Z50+8TFiE/AacxXP2DeeI6/llFN/BFWxU89Rl6c5JbLtq6GwJMuO5OKUYHJQUeU7Szqlbdr3uU
+ yE7I1ZNcmOghnzBZ0WcfWPfhYz580udvIGngYNUONP+dAAG6cvRbs/AJjf3cnuNKCJr6pkU2Y3p
+ w2noAWgBuj+aKjw==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
 X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
@@ -103,38 +104,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The call is unnecessary, since "thread" is already set at creation time.
+Furthermore, the "thread" field is mostly useless as the thread is
+created DETACHED and isn't used for anything but perhaps debugging.
+
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc-jobs.c | 2 +-
- ui/vnc.c      | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
+ ui/vnc-jobs.c | 2 --
+ 1 file changed, 2 deletions(-)
 
 diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index a6ab733faa1..4dd7ccad969 100644
+index ae925171fae..0523e52cbd2 100644
 --- a/ui/vnc-jobs.c
 +++ b/ui/vnc-jobs.c
-@@ -160,7 +160,7 @@ void vnc_jobs_consume_buffer(VncState *vs)
-     bool flush;
- 
-     vnc_lock_output(vs);
--    if (vs->jobs_buffer.offset) {
-+    if (!buffer_empty(&vs->jobs_buffer)) {
-         if (vs->ioc != NULL && buffer_empty(&vs->output)) {
-             g_clear_handle_id(&vs->ioc_tag, g_source_remove);
-             if (vs->disconnecting == FALSE) {
-diff --git a/ui/vnc.c b/ui/vnc.c
-index ccc73bd7aa4..4aa446a48d7 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -1718,7 +1718,7 @@ void vnc_write_u8(VncState *vs, uint8_t value)
- void vnc_flush(VncState *vs)
+@@ -349,8 +349,6 @@ static void *vnc_worker_thread(void *arg)
  {
-     vnc_lock_output(vs);
--    if (vs->ioc != NULL && vs->output.offset) {
-+    if (vs->ioc != NULL && !buffer_empty(&vs->output)) {
-         vnc_client_write_locked(vs);
-     }
-     if (vs->disconnecting) {
+     VncJobQueue *queue = arg;
+ 
+-    qemu_thread_get_self(&queue->thread);
+-
+     while (!vnc_worker_thread_loop(queue)) ;
+     g_assert_not_reached();
+     return NULL;
 
 -- 
 2.53.0
