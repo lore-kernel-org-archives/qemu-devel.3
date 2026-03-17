@@ -4,96 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0EB1EF33833
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 10:07:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 34587FD7070
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 10:18:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2RJH-0005qp-5t; Tue, 17 Mar 2026 06:05:59 -0400
+	id 1w2RUo-0007zi-MJ; Tue, 17 Mar 2026 06:17:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2RJD-0005px-Rh
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:05:55 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2RJB-0005bB-8q
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:05:54 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-43b4fd681c2so169485f8f.3
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 03:05:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773741951; x=1774346751; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=bePTC6x9ABx52gcgngpBWxh6je2HUi72HTlKHovIp30=;
- b=Odi8VKdC8gnzGJ5fxQWP0nEOWFr5rWr1HWyW67A6YFw0vAuW74lNbaL9jBCPhAFkXs
- TsV64/Q0sXpZGD3Tq4ddx2s/tKohe3o01b6xYCO2SiaqwK5g2k+VEyGDRjbXMDWiXTUL
- uHQy1JTXo23FdsT8WARWFoI5EiRa3e1gGl7K5ukj/vBXzS9KCfYdGJzAqFvTaR6UaMeU
- Kz8qO26AfqOPQZTOZA6QoyVpDv57eZ0+252ZAGAbfY1RbZ8laa32XYQavYuYfiaxiy/t
- YOxbxYuR49KmVrEyzWs0PUandbPWQsttJiBYXZy7b1zZodgSQkQq6E1IhAhvu1rXXHv4
- /QdQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773741951; x=1774346751;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=bePTC6x9ABx52gcgngpBWxh6je2HUi72HTlKHovIp30=;
- b=cXNXfrBUc6NU/OnebXeCUQYG9WBJEDgqavO+yCuXHgMXQ1fnES+mN+v2pqElX3WW9g
- Nau3qv9n1MipVK8FVmF1r3JNCICmPIS/alQfgr/Id6Nuh299gEUKSoU8qXXd9G/y3M4K
- ZHmKrUa8+8vyvwv/ttbYdsXTbT/UanZYARTsVoeY8dkAK2m7XCamAkeR2WbYN6d4rr4K
- l53GtJHvDz1kDdQSdZ0bj9Nq2SZXqS1Xf4rh731XsT9G8OhfxL1w7a8lCdRqXV6gkdaH
- Pe8kokBnPx1V8sl026v0iyAS0zmAZGbSylvLIyHLlNPQd0LtHo0eqkcv5Sae9nNQUBjf
- 6ZvA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWyyTvLb9SexvAQRvX6iwQVeyhkoGSC6sCFbhHJAQZEKrtOoZVQFbahH4fWBAS/CAMwWOqdRsy9ocrX@nongnu.org
-X-Gm-Message-State: AOJu0YwZ3Gl00W1TIEQW8t8jwooh8Foujb/KwZkzwIkinN/qdYGsGUWW
- 8BL/cZME28ByLLLsTa4r0cnlVfcuWAjkM4SRXbffqwMTy/wl8JlTQuEcQpy6i8KQ0aM=
-X-Gm-Gg: ATEYQzzQC1UEtdvcMBthCvRi4AfBbBeka8Htue39LoRDIOUFsELHIK9NKo6OUoDkBOq
- sWKcT6JrhkT3xMhUWPeatEnLhymCMl3YuThf7BnP8r32mUZcgqQl7XT+EHaO5FFLXb8rBdeWbUQ
- yqoP6dXYoIZTNiBF+H0Xtgzo+ZzEZH/7TL8+geDYwzErp9+zH1DburJPaXOm9gdcBwyl6US4RXS
- T+Cn08UUh1hTDsYqRNrt5o1OChqvadJVsbU6b0Z7uwNBH+s9Si9xCQ7aZoap+ayGeNXvsPrcD2W
- YVnv1LQZnC8svhCwU8ItCCVXRU5R3AZHdmjHq71WEz868uXaY5XZEPXaMu+Vo5XAjGluLXjAbkt
- vpCKwxZ54GvVKxQ6u1DMhYwYEAkHk8wpuY1MVdqm/IfMlB76b74KmeLjW//Fs1optDdpnPkMPlY
- D4+kvKUMge5LxcUNXAViW/2XDQ1rlx24Dm9NQyMHbWzzTtTnTrMC+IaX7ARlMCtSu+dM2aOFzKR
- RH/
-X-Received: by 2002:a05:6000:2313:b0:43b:436d:782a with SMTP id
- ffacd0b85a97d-43b436d7b2cmr12883138f8f.5.1773741950609; 
- Tue, 17 Mar 2026 03:05:50 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b3d427457sm27902744f8f.3.2026.03.17.03.05.48
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 03:05:48 -0700 (PDT)
-Message-ID: <abfb425a-50b3-4807-b600-6977b8d1f2fe@linaro.org>
-Date: Tue, 17 Mar 2026 11:05:48 +0100
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w2RUm-0007z4-5P
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:17:52 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w2RUj-0005Lv-Ib
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:17:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DD263596ADE;
+ Tue, 17 Mar 2026 11:17:39 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id T34Noul0_7mb; Tue, 17 Mar 2026 11:17:37 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id DECC9596A47; Tue, 17 Mar 2026 11:17:37 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id DC1E15969F3;
+ Tue, 17 Mar 2026 11:17:37 +0100 (CET)
+Date: Tue, 17 Mar 2026 11:17:37 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Thomas Huth <thuth@redhat.com>
+cc: Peter Xu <peterx@redhat.com>, qemu-devel@nongnu.org, 
+ Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>, 
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
+In-Reply-To: <035415da-97a1-4929-8e7f-f982acd8d044@redhat.com>
+Message-ID: <3e9fddbc-2a2c-4163-09b2-8c29048bfc9e@eik.bme.hu>
+References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
+ <abgqjKVFHKxuKupP@x1.local> <812f2a8d-f6bb-f127-a3f9-4629de5a03e5@eik.bme.hu>
+ <abh2ZdpzQNepUTIy@x1.local> <ebd251c9-a1d1-4956-af11-ae9858e76254@eik.bme.hu>
+ <afa7d52b-7087-4256-996a-b8ca7b2bfb95@redhat.com>
+ <035415da-97a1-4929-8e7f-f982acd8d044@redhat.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC PATCH] target/riscv: Restrict access to RV128 registers on
- RV32
-Content-Language: en-US
-To: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
- <frederic.petrot@univ-grenoble-alpes.fr>, qemu-devel@nongnu.org
-Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
- Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Palmer Dabbelt <palmer@dabbelt.com>
-References: <20260315165949.40027-1-philmd@linaro.org>
- <35544128-3c7f-48b2-a67f-9253cf8f5df0@univ-grenoble-alpes.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <35544128-3c7f-48b2-a67f-9253cf8f5df0@univ-grenoble-alpes.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+Content-Type: multipart/mixed;
+ boundary="3866299591-1055668361-1773742657=:98342"
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
+X-Spam_bar: -
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
@@ -110,62 +72,53 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Frédéric,
+  This message is in MIME format.  The first part should be readable text,
+  while the remaining parts are likely unreadable without MIME-aware tools.
 
-On 15/3/26 19:55, Frédéric Pétrot wrote:
-> Hi Phil,
-> 
->    my understanding is that rv128 makes no sense with rv32, and
->    the user is not expected to run qemu-system-riscv32 with
->    the -cpu=x-rv128 (it triggers an "unable to find CPU model
->    'x-rv128'" error).
->    The rv128 code just relies on XLEN being 128, and assumes
->    (implicitely I admit) running on a 64-bit host machine, so
->    with tl = 64.
->    The code is absolutely erroneous when tl = 32, agreed.
->    The thing is that, as we want to get rid of the
->    TARGET_RISCV64/TARGET_RISCV32 defines, the rv128 specific
->    code still must compile whatever tl, so that qemu can be built.
->    However, it should never be executed if tl = 32.
->    Typically, the patches I sent earlier this year to deal
->    with lq/sq endianness fit into that 'compile only' category
->    for rv32.
+--3866299591-1055668361-1773742657=:98342
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8BIT
 
-I'd really like to include your patch which fixes the endianness
-issue I reported, but unfortunately as reported it doesn't even
-build for rv32 builds:
+On Tue, 17 Mar 2026, Thomas Huth wrote:
+> On 17/03/2026 06.41, Thomas Huth wrote:
+>> On 16/03/2026 23.30, BALATON Zoltan wrote:
+>>> On Mon, 16 Mar 2026, Peter Xu wrote:
+>>>> On Mon, Mar 16, 2026 at 07:10:05PM +0100, BALATON Zoltan wrote:
+>>>>> On Mon, 16 Mar 2026, Peter Xu wrote:
+>>>>>> On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
+>>>>>>> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
+>>>>>>> current_machine which is not set during init when inspecting the
+>>>>>>> device. This causes the qtest/device-introspect-test to fail since a
+>>>>>> 
+>>>>>> Does it has anything to do with aux-ram-share?  I thought it's because 
+>>>>>> the
+>>>>>> qom introspect test will create yet another sun-tcx device, causing 
+>>>>>> double
+>>>>>> registration?
+>>>>> 
+>>>>> I could reproduce it like this:
+>>>> 
+>>>> I would treat this one a separate bug, because it doesn't look special to
+>>>> sparc systems.
+>>> 
+>>> I thought this is the issue Thomas has reported. I found this command by 
+>>> looking at what the test does but looks like this gets a different error 
+>>> but the fix is the same.
+>> 
+>> It's slightly different. The bug that I found via the device introspection 
+>> test is using "-M SS-20" and then it's crashing when a second sun-tcx 
+>> device is instantiated.
+>> The bug that you found is crashing because using "-device sun-tcx,help" 
+>> instantiates the device for introspection before the machine has been 
+>> created, so code that dereferences current_machine is running into a NULL 
+>> pointer related segmentation fault.
+>
+> By the way, "qemu-system-sparc -device cgthree,help" crashes in the same way.
 
-https://lore.kernel.org/qemu-devel/ad717d8c-a6b9-4dd8-a4bd-fdd6d1d756a5@linaro.org/
+OK, I'll send a v2 fixing that and updating the commit message to mention 
+both issues.
 
-Which is why I'm trying to restrict RV128 on rv32 binary so
-we can apply your other patch.
-
-Anyway, Daniel suggestions to use 'get_xl(ctx) == MXL_RV32'
-instead of this ugly TARGET_RISCV32 #ifdef'ry is certainly
-the way to go (which is why I posted this as RFC).
-
-> 
->    Thanks,
->    Frédéric
-> 
-> On 3/15/26 17:59, Philippe Mathieu-Daudé wrote:
->> One half of 128-bit registers code is not reachable for CPUs
->> running in 32-bit mode, while the other half is completely
->> broken (handled as a pair of 32-bit registers).
->> Better restrict this code on 32-bit builds until RV128 is
->> properly implemented.
->>
->> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> ---
->> More than 1y having issue with the 128-bit code path and
->> the single binary effort. Fortunately while I dunno how to
->> test 128-bit I could with 32/64 bits.
->> ---
->>   target/riscv/cpu.h                          |  2 ++
->>   target/riscv/machine.c                      |  4 +++
->>   target/riscv/monitor.c                      |  4 +++
->>   target/riscv/translate.c                    | 31 +++++++++++++++++++--
->>   target/riscv/insn_trans/trans_rvzacas.c.inc |  2 ++
->>   5 files changed, 41 insertions(+), 2 deletions(-)
-
+Regards,
+BALATON Zoltan
+--3866299591-1055668361-1773742657=:98342--
 
