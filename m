@@ -4,101 +4,116 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 17073FD875E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 12:55:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0DD33FD8763
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 13:02:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2TwW-0008W5-QR; Tue, 17 Mar 2026 08:54:40 -0400
+	id 1w2U3r-0004Uf-Ii; Tue, 17 Mar 2026 09:02:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
- id 1w2Sl8-0003TZ-7a
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:38:52 -0400
-Received: from mail-wm1-x32a.google.com ([2a00:1450:4864:20::32a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
- id 1w2Sl1-0007sX-V0
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:38:47 -0400
-Received: by mail-wm1-x32a.google.com with SMTP id
- 5b1f17b1804b1-4853aec185aso46339015e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 04:38:41 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1w2U3n-0004UJ-Oo
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 09:02:12 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <leonardi@redhat.com>)
+ id 1w2U3l-00035a-NY
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 09:02:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773752526;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=X84dwyjbZoJMU1tLYMgVdKe9XEn4KqkiGjeoDFKXh0U=;
+ b=jBc5Yvkyu/+Z2Vygjmww6fV+4jcT7AT0WJa0N6ovSqYh6LWy6pWB0/AhZ/UW+mW6oYF3FU
+ Dq0fiTlhiCbbi+Wlv2GQdzJJtFnw8FkU/lsRfdrWTTnjGozdrwBHRqFst10qmlyuv8Ta6B
+ niYwHU0oeWl03G5CA+2v5RYtEstHu9o=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-314-G0exgOPsMCygbWAlBD9bRg-1; Tue, 17 Mar 2026 09:02:05 -0400
+X-MC-Unique: G0exgOPsMCygbWAlBD9bRg-1
+X-Mimecast-MFC-AGG-ID: G0exgOPsMCygbWAlBD9bRg_1773752524
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-4868e691614so3855215e9.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 06:02:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773747520; x=1774352320; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=f/Z6YxY4bjtcLuIq1xD2AVGk/omLNPN8GtNtXsnHqh4=;
- b=dZgjt1tuHtTQaV91SwAtR2ZRACg7l0Q1ecx9hk1SFMm3EuuFYhWGQNvKVLZgyVY/ZR
- AgdAXY5ZvfX4KZF9mGaMSJtBNcUExloAvZLjG/mpoKFHpAMkbdpUvStfVPBJfzPZ3Z4Z
- Tl/rSy2U2O5es1IBWb3mykOcyR6AzEpCY1gx7zsWXD6HG45CzHEGIFU0csN1sc9k/p2x
- 9h8Os/wya/h0kmSvd8PjubdsBZRp6pBk9nFFSRPc//UjnQT/RQHUzUwPrMuxenDuVWxA
- lE7O7gsR+OyHJq40o6RTykkYVjS4AJ78aShNYsYS21oDhtxzritmlc4MN3QryWe+BDJ4
- j4Vg==
+ d=redhat.com; s=google; t=1773752524; x=1774357324; darn=nongnu.org;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:from:to
+ :cc:subject:date:message-id:reply-to;
+ bh=X84dwyjbZoJMU1tLYMgVdKe9XEn4KqkiGjeoDFKXh0U=;
+ b=mKSAfzzxuQUwAA+ER5WBsjmCOShyOq3MmGHbru+lKxF6lWVwfScNwqj3YmR7x1+On3
+ 0w0SbQ8Npluss4+CUR27KK+0tM9/n9WJYYHCEVNqsZTRtmQIyA+tGKzMdOevuGjqIJAg
+ QW+nanJUHnyVrDktI34cVTCs/oFMseDaGRW+zdCwl4sFaHDPAM1/dv8HhM+L943/C21H
+ d7RESYD65Cp9gbLI8db2e3iAZgKU0Obp1cYl8h7LwtVK/h8b1S5AfgWVTXsmTLR2wWKC
+ ZeQsKk2WsJD+KQGUB+FYis31p2/1Z/rlMlpIwtYgxHAr8B+93O+M9odpVIRtos3nL//v
+ zgvQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773747520; x=1774352320;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=f/Z6YxY4bjtcLuIq1xD2AVGk/omLNPN8GtNtXsnHqh4=;
- b=JrVOhyT3GGxkdXM0vPPvzZ09T7VnrEOJD2DKyO/wYgNKFFq1+F7AWAdckykSJJ/g6e
- w8KqaEyQPg3ri0mhTLhtCu1hMM4TF+85pttwcVbJde2BFL+5mYNbCzKwqChFtz9IVMgw
- H2VELZkcZA2NC0GxKYCMacGYXDGFaB4XNM90iHffizYj0dStEMkkxuly9zXUoYdfwrap
- 9gxBTuk+MvoBkHTCme53nKd6Fk6KPPbg8oCoGT1thbCKOtHkMPAFieVQLNIwKBwdvvl5
- Lvfek3jyEaytssP8ra6SZpWQGM/RFMk9qji2a3lrVVu5mtikC70wWJu42Zpt4EPW1Ehv
- gsPg==
-X-Gm-Message-State: AOJu0YxdfQmmy21BPgzb1givLka+HfkibxBZrmxAeGQbAYK6zTnE6C96
- nAl17zZVQPsu4KXm0XjmineJnnPLMB53tknQSwcGpH2tIYdhmnEOQa7NdF0GT0eA
-X-Gm-Gg: ATEYQzzJOfNH95WC62xT54R+f1+8kZkjzbj2CweL76QP4Fpb0gHEbS9msunmcigzrV0
- JYv+F2wUIhFnzXF2CZopkqNDqsZJJsUG6uMDIclp2elcKUR0mCVSkuOScd6RESM3HacuS2Jgpve
- H2lFXZYIqXh6m/RxGJm09wpOeg6anQDL7hy2yI/909DP4AnGhMwAdrUXrSxRWLVANs9NGogACHB
- yeKtGsH7jy4I7Au9GNR9vW14nhLukZRQCix+lX2g3kn7MvXl19r3SRxIJH3Inrg/9mjd2UzH44C
- HdKuOOxEQyOzI4JZolHnC9FXTUrvY0yrs6vikX7l7sIefitCAIIRyCQYuPIuqi1MRxgZ5SO4C4G
- ryXVK8GCkNo2JNpVI3B1lcAkfV2o+4qJG6anoaK1SjkKAjTEsn/aRxYC45FpxyFrqPCGNIlRzHp
- u3kKZj+I8syl8NJwHiVfL7cOnMWCFhn67oe3GCi8/+xVpIc96qqmd+qlvkw7ggbYv1A1rZYlqVS
- aW1qpNGWSi4AXWM7xQw
-X-Received: by 2002:a05:600c:4e4a:b0:485:4135:5c92 with SMTP id
- 5b1f17b1804b1-4855649360amr279452545e9.0.1773747520221; 
- Tue, 17 Mar 2026 04:38:40 -0700 (PDT)
-Received: from DesktopTC.localdomain
- (host-87-27-45-215.business.telecomitalia.it. [87.27.45.215])
+ d=1e100.net; s=20251104; t=1773752524; x=1774357324;
+ h=in-reply-to:content-transfer-encoding:content-disposition
+ :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
+ :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
+ bh=X84dwyjbZoJMU1tLYMgVdKe9XEn4KqkiGjeoDFKXh0U=;
+ b=MFqXSVFL0fUUIogS4Itm+NjgMfbMxPJ6rzcRRMXV7qcNDFuFpesLSdB1WgN7X+H3AP
+ //3fIoTLyXjUOokAqJffVoYmyp92lMkqDvLEhG8GBX0tQqoy7O/GgJLdCfDstCuIoLm9
+ TEaOoEU/Ugc/Z/PvWZ31acRfVpAxCZ1QSIEv3UHnPIp28oDGvBZ65i7TxxavcoPUo0hu
+ L6uTLGJ4W/pCCLtAhehVwU2E4GIBqn+ObsS9e5if6bw2GQml1rzhpGepg/2h+jZT1vFU
+ 6J9UAk6bFDHB5Ksuk0oyWR+YOy/tDQC6VV4Bo6nYqIvoxqLgwa9kTERdLmAJSS+H6hte
+ 3i7Q==
+X-Gm-Message-State: AOJu0Yw+7LmGA3ER8+PmPtlQYY0LnDXL6WhsGknfNGWK+njEs24H+xZH
+ je6OwWuMhPofwufhZ4sErjDBOIqiz1uicpFKGW2kRgGxLi6xAXd7jh4LpI3v/rIkM0cw5GkpRwV
+ 4WRoTPWezAApYiGd+wNsweT3CPFp9bur4gvn0q8vZDRh51nECAcrfFkK5
+X-Gm-Gg: ATEYQzymlUAr2dadjZEy+mBjlXgB3hkwtInT9FSMVCBrw0AL7qABue8KfuG2IWI0qx3
+ 7Pqfj4e+iupHZ05hdVa6qwMY+TLUBRFaTNgP/gZE/7qv24ObtWsF7tft+RKvLEYF9X5Yl55OKrf
+ QKaqf3gsMh/QLjoZwlpUrkBBiEp65fJUu3pUQ9D/fYnjdvQ9z/G3V8AmdLciHjO2UBmIhE1bsA2
+ BST8/97VVa7qCgtsgmsNcfSTGzuVKhQAirAI4OvQ6fTe4jNehl+BQZz4Bqebvl0GjW+U0imWJr7
+ fbqn6/gEjmZHoJS43t+Oakcy68cHKI1OXMCH89dwfHYKd3DR/oeVOTiTQNtgv8lApXF0G4Dv1rZ
+ H/Y3CxfjZbN5Nom1yvNTTjelbiaA=
+X-Received: by 2002:a05:600c:190d:b0:485:6e40:5584 with SMTP id
+ 5b1f17b1804b1-4856e40559amr64189005e9.6.1773752524046; 
+ Tue, 17 Mar 2026 06:02:04 -0700 (PDT)
+X-Received: by 2002:a05:600c:190d:b0:485:6e40:5584 with SMTP id
+ 5b1f17b1804b1-4856e40559amr64188235e9.6.1773752523414; 
+ Tue, 17 Mar 2026 06:02:03 -0700 (PDT)
+Received: from leonardi-redhat ([176.206.19.176])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4856eaee04fsm62721365e9.13.2026.03.17.04.38.39
+ 5b1f17b1804b1-4856eaee04fsm67125555e9.13.2026.03.17.06.02.01
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 04:38:39 -0700 (PDT)
-From: Tommaso Califano <califano.tommaso@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: kvm@vger.kernel.org, Eduardo Habkost <eduardo@habkost.net>,
- Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Eric Blake <eblake@redhat.com>,
- Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
+ Tue, 17 Mar 2026 06:02:02 -0700 (PDT)
+Date: Tue, 17 Mar 2026 14:01:59 +0100
+From: Luigi Leonardi <leonardi@redhat.com>
+To: Tommaso Califano <califano.tommaso@gmail.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org, 
+ Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster <armbru@redhat.com>, 
+ Zhao Liu <zhao1.liu@intel.com>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>, 
+ Marcelo Tosatti <mtosatti@redhat.com>, Eric Blake <eblake@redhat.com>, 
+ Oliver Steffen <osteffen@redhat.com>, Stefano Garzarella <sgarzare@redhat.com>,
  Giuseppe Lettieri <giuseppe.lettieri@unipi.it>,
- Paolo Bonzini <pbonzini@redhat.com>, Luigi Leonardi <leonardi@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Tommaso Califano <califano.tommaso@gmail.com>
-Subject: [PATCH 5/5] i386/sev: Implement emulated launch secret injection and
- TEK property
-Date: Tue, 17 Mar 2026 12:38:40 +0100
-Message-ID: <20260317113840.33017-6-califano.tommaso@gmail.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260317113840.33017-1-califano.tommaso@gmail.com>
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 0/5] i386/sev: Add TCG-emulated AMD SEV guest support
+Message-ID: <ablPsAJl1k1raW7v@leonardi-redhat>
 References: <20260317113840.33017-1-califano.tommaso@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: base64
-Received-SPF: pass client-ip=2a00:1450:4864:20::32a;
- envelope-from=califano.tommaso@gmail.com; helo=mail-wm1-x32a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20260317113840.33017-1-califano.tommaso@gmail.com>
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=leonardi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Tue, 17 Mar 2026 08:54:34 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -113,116 +128,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-VGhlIGZpbmFsIHN0ZXAgdG8gY29tcGxldGUgU0VWIGF0dGVzdGF0aW9uIGlzIHRoZSBpbXBsZW1l
-bnRhdGlvbiBvZgoic2V2LWluamVjdC1sYXVuY2gtc2VjcmV0Iiwgd2hpY2ggZW5hYmxlcyBpbmpl
-Y3RpbmcgYSBzZWNyZXQgaW50bwpndWVzdCBtZW1vcnkuCgpUaGUgZnVuY3Rpb24gc2V2X2VtdWxh
-dGVkX2luamVjdGlvbigpIHBlcmZvcm1zIHRoaXMgc3RlcC4KSXQgaXMgaW52b2tlZCBmcm9tIHRo
-ZSBleGlzdGluZyBzZXZfaW5qZWN0X2xhdW5jaF9zZWNyZXQoKSB3aGVuCnNldl9lbXVsYXRlZF9l
-bmFibGVkKCkgaXMgYWN0aXZlLCBhbGxvd2luZyB0aGUgYnlwYXNzIG9mCnRoZSBLVk1fU0VWX0xB
-VU5DSF9TRUNSRVQgaW9jdGwuClVwb24gaW52b2NhdGlvbiwgaXQgZGVjcnlwdHMgdGhlIHNlY3Jl
-dCBwYWNrZXQgdXNpbmcgQUVTLTEyOC1DVFIKd2l0aCB0aGUgY29uZmlndXJlZCBURUssIGV4dHJh
-Y3RpbmcgdGhlIElWIGZyb20gaGVhZGVyIGJ5dGVzIDTigJMxOSwKYW5kIHdyaXRlcyB0aGUgZGVj
-cnlwdGVkIHBheWxvYWQgdG8gdGhlIGd1ZXN0LXNwZWNpZmllZCBtZW1vcnkKYWRkcmVzcy4KCkFm
-dGVyIGluamVjdGlvbiwgdGhlIFNFViBzdGF0ZSB0cmFuc2l0aW9ucyB0byBSVU5OSU5HLCBjb21w
-bGV0aW5nCnRoZSBUQ0ctZW11bGF0ZWQgU0VWIGxhdW5jaCBzZXF1ZW5jZSBmb3IgdGVzdGluZyBn
-dWVzdHMgd2l0aG91dApBTUQgU0VWIGhhcmR3YXJlLgoKVGhlIFRFSyBpcyBwcm92aWRlZCB0aHJv
-dWdoIGEgMTYtYnl0ZSBiaW5hcnkgZmlsZSwgc2ltaWxhciB0bwp0aGUgVElLLCBhbmQgc3BlY2lm
-aWVkIHZpYSB0aGUgbmV3IFNldkVtdWxhdGVkUHJvcGVydHkgInRlayIKcGF0aC4gSWYgdW5zcGVj
-aWZpZWQsIHRoZSBrZXkgZGVmYXVsdHMgdG8gYWxsIHplcm9lcy4KCkV4YW1wbGUgb2YgYWxsIFFF
-TVUgYXJndW1lbnRzOgoKCS1jcHUgIkVQWUMtTWlsYW4iIFwKCS1hY2NlbCB0Y2cgXAoJLW9iamVj
-dCBzZXYtZW11bGF0ZWQsaWQ9c2V2MCxjYml0cG9zPTQ3LHJlZHVjZWQtcGh5cy1iaXRzPTEsXAoJ
-CQl0aWs9L3BhdGgvdG8vdGlrLmJpbix0ZWs9L3BhdGgvdG8vdGVrLmJpbiBcCgktbWFjaGluZSBt
-ZW1vcnktZW5jcnlwdGlvbj1zZXYwCgpTaWduZWQtb2ZmLWJ5OiBUb21tYXNvIENhbGlmYW5vIDxj
-YWxpZmFuby50b21tYXNvQGdtYWlsLmNvbT4KLS0tCiBxYXBpL3FvbS5qc29uICAgICB8ICA1ICsr
-LQogdGFyZ2V0L2kzODYvc2V2LmMgfCA5MiArKysrKysrKysrKysrKysrKysrKysrKysrKysrKysr
-KysrKysrKysrKysrKysrLQogMiBmaWxlcyBjaGFuZ2VkLCA5NSBpbnNlcnRpb25zKCspLCAyIGRl
-bGV0aW9ucygtKQoKZGlmZiAtLWdpdCBhL3FhcGkvcW9tLmpzb24gYi9xYXBpL3FvbS5qc29uCmlu
-ZGV4IGFmZmI1MDI0YjUuLjQwNWI2ZmM4NTggMTAwNjQ0Ci0tLSBhL3FhcGkvcW9tLmpzb24KKysr
-IGIvcWFwaS9xb20uanNvbgpAQCAtMTA2NSwxMSArMTA2NSwxNCBAQAogIyBpdCBkb2VzIG5vdCBy
-ZXF1aXJlIHJlYWwgaGFyZHdhcmUgdG8gcnVuLgogIwogIyBAdGlrOiBiaW5hcnkgZmlsZSBvZiB0
-aGUgU0VWIFRJSyAoZGVmYXVsdDogYWxsIDApLgorIworIyBAdGVrOiBiaW5hcnkgZmlsZSBvZiB0
-aGUgU0VWIFRFSyAoZGVmYXVsdDogYWxsIDApLgogIyBTaW5jZTogMTAuMS4wCiAjIwogeyAnc3Ry
-dWN0JzogJ1NldkVtdWxhdGVkUHJvcGVydGllcycsCiAgICdiYXNlJzogJ1Nldkd1ZXN0UHJvcGVy
-dGllcycsCi0gICdkYXRhJzogeycqdGlrJzogJ3N0cid9fQorICAnZGF0YSc6IHsnKnRpayc6ICdz
-dHInLAorICAgICAgICAgICAnKnRlayc6ICdzdHInIH19CiAKICMjCiAjIEBTZXZTbnBHdWVzdFBy
-b3BlcnRpZXM6CmRpZmYgLS1naXQgYS90YXJnZXQvaTM4Ni9zZXYuYyBiL3RhcmdldC9pMzg2L3Nl
-di5jCmluZGV4IDViMWMwMDE2MzMuLjg5YjNmZTM1MDcgMTAwNjQ0Ci0tLSBhL3RhcmdldC9pMzg2
-L3Nldi5jCisrKyBiL3RhcmdldC9pMzg2L3Nldi5jCkBAIC00OCw2ICs0OCw3IEBACiAjaW5jbHVk
-ZSAiaHcvaTM4Ni9lODIwX21lbW9yeV9sYXlvdXQuaCIKICNpbmNsdWRlICJxZW11L3F1ZXVlLmgi
-CiAjaW5jbHVkZSAicWVtdS9jdXRpbHMuaCIKKyNpbmNsdWRlICJjcnlwdG8vY2lwaGVyLmgiCiAj
-aW5jbHVkZSAiY3J5cHRvL2htYWMuaCIKICNpbmNsdWRlICJjcnlwdG8vcmFuZG9tLmgiCiAKQEAg
-LTIwMiw2ICsyMDMsNyBAQCBzdHJ1Y3QgU2V2R3Vlc3RTdGF0ZSB7CiAKIHR5cGVkZWYgc3RydWN0
-IFNldkVtdWxhdGVkU3RhdGUgewogICAgIFNldkd1ZXN0U3RhdGUgcGFyZW50X29iajsKKyAgICB1
-aW50OF90ICp0ZWs7CiAgICAgdWludDhfdCAqdGlrOwogICAgIFFFTVVJT1ZlY3RvciBsZF9kYXRh
-OwogfSBTZXZFbXVsYXRlZFN0YXRlOwpAQCAtMjIxOSw2ICsyMjIxLDU4IEBAIHNldl9lbmNyeXB0
-X2ZsYXNoKGh3YWRkciBncGEsIHVpbnQ4X3QgKnB0ciwgdWludDY0X3QgbGVuLCBFcnJvciAqKmVy
-cnApCiAgICAgcmV0dXJuIDA7CiB9CiAKK3N0YXRpYyBpbnQgc2V2X2VtdWxhdGVkX2luamVjdGlv
-bih2b2lkICpodmEsIGd1Y2hhciAqZGF0YSwKKyAgICAgICAgICAgICAgICAgICAgICAgICAgICBn
-c2l6ZSBkYXRhX3N6LCBndWNoYXIgKmhkcikKK3sKKworICAgIFNldkVtdWxhdGVkU3RhdGUgKnNl
-dl9lbXVsYXRlZCA9CisgICAgICAgICAgICAgICAgU0VWX0VNVUxBVEVEKE1BQ0hJTkUocWRldl9n
-ZXRfbWFjaGluZSgpKS0+Y2dzKTsKKyAgICB1aW50OF90IGl2W1RFS19USUtfSVZfU0laRV07Cisg
-ICAgUUNyeXB0b0NpcGhlciAqY2lwaGVyID0gTlVMTDsKKyAgICBnX2F1dG9mcmVlIGd1Y2hhciAq
-cGxhaW50ZXh0ID0gZ19uZXcwKGd1Y2hhciwgZGF0YV9zeik7CisgICAgaW50IHJldCA9IDA7Cisg
-ICAgRXJyb3IgKmVyciA9IE5VTEw7CisKKyAgICAvKiBQcmVwYXJlIHRoZSBjaXBoZXIgKi8KKyAg
-ICBjaXBoZXIgPSBxY3J5cHRvX2NpcGhlcl9uZXcoCisgICAgICAgIFFDUllQVE9fQ0lQSEVSX0FM
-R09fQUVTXzEyOCwKKyAgICAgICAgUUNSWVBUT19DSVBIRVJfTU9ERV9DVFIsCisgICAgICAgIHNl
-dl9lbXVsYXRlZC0+dGVrLAorICAgICAgICBURUtfVElLX0lWX1NJWkUsCisgICAgICAgICZlcnIK
-KyAgICApOworICAgIGlmICghY2lwaGVyKSB7CisgICAgICAgIGVycm9yX3JlcG9ydF9lcnIoZXJy
-KTsKKyAgICAgICAgcmV0dXJuIDE7CisgICAgfQorCisgICAgLyogRXh0cmFjdCB0aGUgSVYgZnJv
-bSB0aGUgaGVhZGVyICovCisgICAgbWVtY3B5KGl2LCBoZHIgKyA0LCBURUtfVElLX0lWX1NJWkUp
-OworICAgIHJldCA9IHFjcnlwdG9fY2lwaGVyX3NldGl2KGNpcGhlciwgaXYsIFRFS19USUtfSVZf
-U0laRSwgJmVycik7CisgICAgaWYgKHJldCA8IDApIHsKKyAgICAgICAgZXJyb3JfcmVwb3J0X2Vy
-cihlcnIpOworICAgICAgICBxY3J5cHRvX2NpcGhlcl9mcmVlKGNpcGhlcik7CisgICAgICAgIHJl
-dHVybiAxOworICAgIH0KKworICAgIC8qIERlY3J5cHQgdGhlIHBheWxvYWQgKi8KKyAgICByZXQg
-PSBxY3J5cHRvX2NpcGhlcl9kZWNyeXB0KGNpcGhlciwKKyAgICAgICAgICAgICAgICAgICAgICAg
-ICAgIGRhdGEsCisgICAgICAgICAgICAgICAgICAgICAgICAgICBwbGFpbnRleHQsCisgICAgICAg
-ICAgICAgICAgICAgICAgICAgICBkYXRhX3N6LAorICAgICAgICAgICAgICAgICAgICAgICAgICAg
-JmVycik7CisgICAgaWYgKHJldCA8IDApIHsKKyAgICAgICAgZXJyb3JfcmVwb3J0X2VycihlcnIp
-OworICAgICAgICBxY3J5cHRvX2NpcGhlcl9mcmVlKGNpcGhlcik7CisgICAgICAgIHJldHVybiAx
-OworICAgIH0KKyAgICBxY3J5cHRvX2NpcGhlcl9mcmVlKGNpcGhlcik7CisgICAgbWVtY3B5KGh2
-YSwgcGxhaW50ZXh0LCBkYXRhX3N6KTsKKworICAgIHJldHVybiAwOworfQorCisKIGludCBzZXZf
-aW5qZWN0X2xhdW5jaF9zZWNyZXQoY29uc3QgY2hhciAqcGFja2V0X2hkciwgY29uc3QgY2hhciAq
-c2VjcmV0LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICB1aW50NjRfdCBncGEsIEVycm9y
-ICoqZXJycCkKIHsKQEAgLTIyNzMsNiArMjMyNywxNSBAQCBpbnQgc2V2X2luamVjdF9sYXVuY2hf
-c2VjcmV0KGNvbnN0IGNoYXIgKnBhY2tldF9oZHIsIGNvbnN0IGNoYXIgKnNlY3JldCwKICAgICB0
-cmFjZV9rdm1fc2V2X2xhdW5jaF9zZWNyZXQoZ3BhLCBpbnB1dC5ndWVzdF91YWRkciwKICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgaW5wdXQudHJhbnNfdWFkZHIsIGlucHV0LnRyYW5z
-X2xlbik7CiAKKyAgICAvKgorICAgICAqIElmIFNFViBlbXVsYXRpb24gaXMgZW5hYmxlZCwgc2tp
-cCB0aGUgS1ZNIGlvY3RsIChzZXZfZmQgPT0gLTEpIGFuZAorICAgICAqIGluamVjdCB0aGUgc2Vj
-cmV0IGRpcmVjdGx5IGludG8gZ3Vlc3QgbWVtb3J5IHZpYQorICAgICAqIHNldl9lbXVsYXRlZF9p
-bmplY3Rpb24oKS4KKyAgICAgKi8KKyAgICBpZiAoc2V2X2VtdWxhdGVkX2VuYWJsZWQoKSkgewor
-ICAgICAgICByZXR1cm4gc2V2X2VtdWxhdGVkX2luamVjdGlvbihodmEsIGRhdGEsIGRhdGFfc3os
-IGhkcik7CisgICAgfQorCiAgICAgcmV0ID0gc2V2X2lvY3RsKHNldl9jb21tb24tPnNldl9mZCwg
-S1ZNX1NFVl9MQVVOQ0hfU0VDUkVULAogICAgICAgICAgICAgICAgICAgICAmaW5wdXQsICZlcnJv
-cik7CiAgICAgaWYgKHJldCkgewpAQCAtMzIxNCw2ICszMjc3LDI1IEBAIHN0YXRpYyB2b2lkIHNl
-dl9lbXVsYXRlZF9zZXRfdGlrKAogICAgICk7CiB9CiAKK3N0YXRpYyBjaGFyICpzZXZfZW11bGF0
-ZWRfZ2V0X3RlayhPYmplY3QgKm9iaiwgRXJyb3IgKiplcnJwKQoreworICAgIFNldkVtdWxhdGVk
-U3RhdGUgKnNldl9lbXVsYXRlZCA9IFNFVl9FTVVMQVRFRChvYmopOworCisgICAgcmV0dXJuIGdf
-bWVtZHVwMihzZXZfZW11bGF0ZWQtPnRlaywgVEVLX1RJS19JVl9TSVpFKTsKK30KKworc3RhdGlj
-IHZvaWQgc2V2X2VtdWxhdGVkX3NldF90ZWsoCisgICAgICAgICAgICBPYmplY3QgKm9iaiwgY29u
-c3QgY2hhciAqa2V5X2ZpbGVuYW1lLCBFcnJvciAqKmVycnApCit7CisgICAgU2V2RW11bGF0ZWRT
-dGF0ZSAqc2V2X2VtdWxhdGVkID0gU0VWX0VNVUxBVEVEKG9iaik7CisKKyAgICBzZXZfZW11bGF0
-ZWRfcmVhZF9rZXkoCisgICAgICAgIHNldl9lbXVsYXRlZC0+dGVrLAorICAgICAgICBrZXlfZmls
-ZW5hbWUsCisgICAgICAgIGVycnAKKyAgICApOworfQorCiBzdGF0aWMgdm9pZCBzZXZfZW11bGF0
-ZWRfY2xhc3NfaW5pdChPYmplY3RDbGFzcyAqb2MsIGNvbnN0IHZvaWQgKmRhdGEpCiB7CiAgICAg
-U2V2Q29tbW9uU3RhdGVDbGFzcyAqc2NjID0gU0VWX0NPTU1PTl9DTEFTUyhvYyk7CkBAIC0zMjIz
-LDcgKzMzMDUsMTQgQEAgc3RhdGljIHZvaWQgc2V2X2VtdWxhdGVkX2NsYXNzX2luaXQoT2JqZWN0
-Q2xhc3MgKm9jLCBjb25zdCB2b2lkICpkYXRhKQogICAgIHNjYy0+bGF1bmNoX3VwZGF0ZV9kYXRh
-ID0gc2V2X2VtdWxhdGVkX2xhdW5jaF91cGRhdGVfZGF0YTsKICAgICBzY2MtPmxhdW5jaF9maW5p
-c2ggPSBzZXZfZW11bGF0ZWRfbGF1bmNoX2ZpbmlzaDsKIAotICAgIC8qIEFkZGluZyBlbXVsYXRp
-b24gc3BlY2lmaWMgcHJvcGVydHkgKi8KKyAgICAvKiBBZGRpbmcgZW11bGF0aW9uIHNwZWNpZmlj
-IHByb3BlcnRpZXMgKi8KKyAgICBvYmplY3RfY2xhc3NfcHJvcGVydHlfYWRkX3N0cihvYywgInRl
-ayIsCisgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHNldl9lbXVsYXRlZF9nZXRfdGVr
-LAorICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZXZfZW11bGF0ZWRfc2V0X3Rlayk7
-CisgICAgb2JqZWN0X2NsYXNzX3Byb3BlcnR5X3NldF9kZXNjcmlwdGlvbihvYywgInRlayIsCisg
-ICAgICAgICJQYXRoIHRvIHRoZSBiaW5hcnkgZmlsZSBjb250YWluaW5nIHRoZSIKKyAgICAgICAg
-ICAgICAgICAgICAgICAgICAgICAgICAgIlNFViBUcmFuc3BvcnQgRW5jcnlwdGlvbiBLZXkgKDE2
-IGJ5dGVzKSIpOworCiAgICAgb2JqZWN0X2NsYXNzX3Byb3BlcnR5X2FkZF9zdHIob2MsICJ0aWsi
-LAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzZXZfZW11bGF0ZWRfZ2V0X3RpaywK
-ICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc2V2X2VtdWxhdGVkX3NldF90aWspOwpA
-QCAtMzIzOCw2ICszMzI3LDcgQEAgc3RhdGljIHZvaWQgc2V2X2VtdWxhdGVkX2luc3RhbmNlX2lu
-aXQoT2JqZWN0ICpvYmopCiAKICAgICAvKiBJbml0aWFsaXplIHRoZSBrZXkgZm9yIGVtdWxhdGlv
-biAqLwogICAgIHNldl9lbXVsYXRlZC0+dGlrID0gZ19tYWxsb2MwKFRFS19USUtfSVZfU0laRSk7
-CisgICAgc2V2X2VtdWxhdGVkLT50ZWsgPSBnX21hbGxvYzAoVEVLX1RJS19JVl9TSVpFKTsKIH0K
-IAogLyogZ3Vlc3QgaW5mbyBzcGVjaWZpYyBzZXYvc2V2LWVzICovCi0tIAoyLjUzLjAKCg==
+On Tue, Mar 17, 2026 at 12:38:35PM +0100, Tommaso Califano wrote:
+>From: Tommaso Califano <califano.tommaso@gmail.com>
+>
+>QEMU's AMD SEV support currently requires KVM on expensive AMD EPYC
+>hardware, limiting development and testing of SEV-aware guest software to
+>users with server-grade machines.
+>
+>This series introduces a TCG-emulated SEV guest mode that enables SEV
+>validation without hardware dependencies, focusing on functional testing
+>rather than reproducing the hardware’s cryptographic context.
+>
+>The emulation exposes SEV from the guest's perspective:
+> - Exposed CPUID leaf 0x8000001F to indicate active support.
+> - Active bit 0 in MSR 0xc0010131 to enable SEV on the guest.
+> - C-bit manipulation in PTEs/CR3 for paging consistency with the host.
+> - Complete SEV attestation workflow for injecting secrets into guest
+>   memory (including direct kernel boot support).
+>
+>The emulation uses a new QOM object "sev-emulated", derived from
+>"sev-guest", to maximize reuse of the existing SEV infrastructure while
+>maintaining a compiling dependency with KVM.
+>Below are the pros and cons of this choice.
+>
+>In addition to inherited guest properties, two new ones are added (binary
+>files; default all-zero):
+> - tik: 16-byte Transport Integrity Key (TIK) for measurement HMAC.
+> - tek: 16-byte Transport Encryption Key (TEK) for secret payload
+>   decryption.
+>
+>Code reuse benefits:
+> - SEV detection via sev_enabled() and TYPE_SEV_COMMON object cast enables
+>   the required checks for emulation without adding new conditions to the
+>   codebase.
+> - QAPI fields for query-sev/launch-measure inherited from SevCommonState
+>   and SevGuestState.
+> - Identical QMP interface (query-sev, query-sev-launch-measure,
+>   sev-inject-launch-secret) as real SEV.
+> - Shared state machine (sev_set_guest_state()); override backend vtable
+>   only (kvm_init → sev_emulated_init, launch_update_data, launch_finish,
+>   sev_launch_get_measure).
+>
+>Trade-offs:
+> - KVM linkage: sev-guest is KVM-centric; even if KVM is not used at
+>   runtime, its code is required for compilation, so it is not possible to
+>   use emulation with --disable-kvm.
+>
+>Example usage:
+>
+>	-cpu "EPYC-Milan" \
+>	-accel tcg \
+>	-object sev-emulated,id=sev0,cbitpos=47,reduced-phys-bits=1,\
+>		tik=/path/to/tik.bin,tek=/path/to/tek.bin \
+>	-machine memory-encryption=sev0
+>
+>Build requirements:
+>
+>	../qemu/configure --enable-gcrypt --enable-crypto-afalg
+>
+>These provide libgcrypt support for crypto/hmac.h, crypto/cipher.h, and
+>crypto/random.h, used for:
+> - HMAC-SHA256 launch measurement (TIK key).
+> - Secret payload decryption (TEK key).
+>Note: --disable-kvm unsupported due to sev-guest inheritance (KVM code
+>linked, no runtime dependency).
+>
+>
+
+To give maintainers some more context: this is part of an ongoing work to
+enable SNP emulation in QEMU, which would be very useful for development
+purposes (eg coconut-SVSM). However, it should not be used in a production
+environment as it provides no security guarantees.
+
+Please consider this as an RFC.
+
+Luigi
+
 
