@@ -4,91 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90736FD874D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 12:07:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AB956FD8752
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 12:08:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2TCw-0002iw-Sr; Tue, 17 Mar 2026 08:07:37 -0400
+	id 1w2TDa-0003Q4-53; Tue, 17 Mar 2026 08:08:14 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2T9a-0000Pa-TR
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:04:08 -0400
-Received: from mail-wr1-x435.google.com ([2a00:1450:4864:20::435])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2TB9-0001XL-Vi
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:05:46 -0400
+Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2T9Z-0001ZN-9P
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:04:06 -0400
-Received: by mail-wr1-x435.google.com with SMTP id
- ffacd0b85a97d-43b4d734678so540870f8f.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 05:04:04 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2TB1-0001zZ-Ea
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:05:40 -0400
+Received: by mail-wr1-x42f.google.com with SMTP id
+ ffacd0b85a97d-439b2965d4bso3969492f8f.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 05:05:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773749043; x=1774353843; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773749133; x=1774353933; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=Hxek9CocehZdmLp7IhxuYRyRHSF2IBXEaBEP678jAAs=;
- b=cHYfhO8OSWOONiWbuR61OWPm4EJzB1puTvPDns2DpU6bUZeLeHoN1PyqjQ10J54afY
- M5OOMm4Lm8VIClKctCX70IlIwrEjzfObb5b+1jqlzxBlxmrZHraaJ6zR+ctwlCAbwF7m
- a2aPr0z0+8X3cgE7Eqc0LP5o3HnTh1EBDOehQblLBrlkrXQ49OyPUa+ZXQySeTTNeYfw
- 3egsuTeREP3E4B/BpPgIwEyZiGg4I6Qy8y4sWwDoQNMDflkQmkLiWMU+3iQjD4XyDVNm
- 7GNH3FBmpvCIqz0lYXg/rINwXYVLUMarsrcfgs0TPGkJR1P3fPvF4HVhafPAqj3dVbKL
- I2VQ==
+ bh=/8H5f9V1b4EuZBVKlgbOgqbu+Z/LMVrj1yIhPrbxncQ=;
+ b=xqnljpV1w5hnWTLNt0d0dY4xe8ykYcQKnFZsuu2ulflzzG7nDE8EYD8oT2g/dEkRRV
+ SdmeJTNroLV7vgwUpxF36SuRzDuzFwh2YLESBzg3tAnhAcs9ZQXYtDeEYCMISdDcfUCG
+ GxgYRSLL3NPcH0PiG4ZBRZDKuZvtdFpo8GvuxvQN0A/Nb3pIJzSr6dmaK/YFc36m9Eu/
+ RAh1lkhvjBES++C6KCcQtNbh93pfnwjJk68gA5r5zjgmcxr5c7AkWSf7NyGFwaCfwAzo
+ dTczcMFngmGOuxqNgotdHHhG9lc56m260W2ieKrAjmhhXKvdxIN3xxP4WQZdnAeF5iDk
+ WHCg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773749043; x=1774353843;
+ d=1e100.net; s=20251104; t=1773749133; x=1774353933;
  h=content-transfer-encoding:in-reply-to:from:references:cc:to
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=Hxek9CocehZdmLp7IhxuYRyRHSF2IBXEaBEP678jAAs=;
- b=gyWDZDXE16Enu6Xh6drqBw/xXHHM73zfTAiJIdpuNcy3dOjPGZhjK/filawZ+Ld0ab
- qgbBXzeqm2X2WO2SvYOsDFY3x8kZIWRd5p3ft3Ul8ZgWb0hqvWx63ew5ZaU64pkKkRUw
- 2EH3oPZX4axtbBoaFnCwBZKT8j2Dtjm8XM8ZwzFkSQwEGSIH358hUGGsowRGoRCuCEwS
- W/GkDD/1/Yqucl6zSRu13loeQapXNL5IdUuRcsA/6OdX0/x8vC6zhgaJh/4SDLo1QhXA
- kQPRRskYIBV+16+Ae3xXHD5RRlmE2IHCBN/eQhr0YuO48FpDdWNwXkQJxRffhz+EpV24
- YSvA==
+ bh=/8H5f9V1b4EuZBVKlgbOgqbu+Z/LMVrj1yIhPrbxncQ=;
+ b=o+cwz7fdhOaeVKEO1fiHqPdMQHKThdVEiogQXSFxscWAqf9zgbF37T9wRo62jg7gWE
+ YwQ8kGN69hjP48QZMgCirWHgCJtvvn5pZsoJOhJLeOHmKgHw5eqvd6J0u+vU5+u8tjeP
+ 4qyJHwukL3UN6KXpUBuGOncTQzpuYPLhbQ6K1LF7RMsBqz2GW2S88lVY4xpQZ5j2NmCQ
+ Hu4LOx4zhY7vu79pa4JaRf/9bsGVdrOHzSYItbgnzCY1Vm0JqordK5yorWAZY29hkjLy
+ Jsvo+6uKn/ciIYMCdQ08VTxhq3cH845CjATOXf0Y8+3+bPJhIIG5vE/vojIJp0lymsfz
+ pMeA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCXLl1N7+xxWMEjvZ9CALZ9UWn7F4xXF7fFH9lV1k4lX+ZwTrQ0IH5D8dNf5gMBGqJ2cd/TZ3YyOg+iX@nongnu.org
-X-Gm-Message-State: AOJu0YxeGkTTsmllCaXp9Sxc5MJotl4GZuAT3q+OdRSegwgJ/AoWaNtX
- 5+PxhCG5BfLszZsNAFT5jxqUvxIhcrteDJ2Wmy3TdTUj2tolw3GU3bSEd5Su537w054=
-X-Gm-Gg: ATEYQzyiHG+9pP05l/bvH4gc6ikdIdvMzHwHMImfiwY6pL5J8axiAmAyadbEznaDuna
- VZVryzoAxN9vq5HObe122i8gMPQrKdBM8BdpyoKeBw5sSVYeWd4SDHyV/ly7mGtJPEoSOmBTvmu
- m/ogfHc4VBPxL6uSHMLlalHozSc+WQ15gQ2BTgykXFA5Q7V6Y6CrEI/evfRZj6HvY0AgV8IXLXA
- S+mXg8AhTmWHuvkPE8WDagNZ0RW5MTqfArHdz1Qj0MPxIvhwHb1UcHcvO0GppDJmMfR5V6wxQrV
- RZsjzDjbQWrnewpYLY3Pt1vyxq5wc0BOOElPAU7QE7B/yVq4P/eZi1jOc7IrwVCsKnUzfkUHnZy
- Z+v6CXL/ipcpS69UF33hfLB3/+D7u+U/mCrHXt6VHM17uMeEifio1bECwW67x9q/bSv5XtSvOlv
- lKrQS5Bwh1yspZNEpCjcSROYyPDcShK+9UD1YRjiYjxVPUbpW+R1HZvBKZ64AzvFrIWw==
-X-Received: by 2002:a05:600c:2284:b0:485:3f58:d9f with SMTP id
- 5b1f17b1804b1-4855670c0a0mr199811375e9.30.1773749043358; 
- Tue, 17 Mar 2026 05:04:03 -0700 (PDT)
+ AJvYcCUwBSC/YEa8aidyxnNGNs23ncAIjIS9bQADDOrlEYpTE5ufWoMJ2sVz6qeR2TRbSuuT0OvpX1yCYweX@nongnu.org
+X-Gm-Message-State: AOJu0Yz2WfRE4FkcefF84BjIv61tLrot6GXnLMjoH/EdaMRn1jrT7iEM
+ MI2gXqQ2LmrAf+PtGtdWBeriUqTpJa1NmAhscN78jChogJ+SscRu+WTVnzTQ4ybMnwI=
+X-Gm-Gg: ATEYQzyyk96cOMVFqnGj0jucSvixwfgXThxExdGapanUxenmZt6c8PlTaOlU5ieJNTf
+ yBwhHyyxC+AGC1aZJf7eZLPUrUGTTuMh5uF+CpqfcFkMdPqRx7CspRFB2fxDf2knWsIcMRoB+lj
+ qIyVrdIrMUJVu7w5T7kK5RdBtSpheJDwiH2+9n3MopnQU4YQLyZg8Qf7fRapa5rrM0L6/hy3wXy
+ PpAUNVXPLlQriCNBl2y1aIjbPYggEzMTdObR+ZjNDCYnfPczpDyTx034RW7fKocJjyS73l84f4o
+ 10DOwv1yEJ9I54SFYvexcb4+mHLQkIpaZtDmq6vUpm2gmDQjodqpk56JYMS10VGj3CrfkFPeW2X
+ bmIuMOua3+JYFzcqlULdMXbZtosGYDF/Hmax5angMslFD+VtM0z4emKIyOEB6LKhyfDwzOCGzqv
+ LRwNQ2o+svwVCtHY89ejhmSRZ+2iSKeEEcmrgh8uNTnftfIiYIYsItMutn3RUQGxC8EQ==
+X-Received: by 2002:a05:6000:26d3:b0:439:c550:d933 with SMTP id
+ ffacd0b85a97d-43a04dc3108mr31548451f8f.41.1773749133108; 
+ Tue, 17 Mar 2026 05:05:33 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4857f49d327sm15762205e9.11.2026.03.17.05.04.02
+ ffacd0b85a97d-439fe20c473sm53032062f8f.24.2026.03.17.05.05.31
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 05:04:02 -0700 (PDT)
-Message-ID: <a851c223-7273-4627-947e-01846926730e@linaro.org>
-Date: Tue, 17 Mar 2026 13:04:01 +0100
+ Tue, 17 Mar 2026 05:05:32 -0700 (PDT)
+Message-ID: <596137df-e936-48e8-aca2-b0a10d98d2f2@linaro.org>
+Date: Tue, 17 Mar 2026 13:05:31 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] tests/qtest/arm-cpu-features: Fix thinko in
- g_strdup_printf() call
+Subject: Re: [PATCH] configure: Remove unused variable default_cflags
 Content-Language: en-US
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-References: <20260317111121.2062455-1-peter.maydell@linaro.org>
+To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
+Cc: qemu-trivial@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260317120215.2075164-1-peter.maydell@linaro.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317111121.2062455-1-peter.maydell@linaro.org>
+In-Reply-To: <20260317120215.2075164-1-peter.maydell@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::435;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x435.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,29 +104,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 12:11, Peter Maydell wrote:
-> In commit 62272f9f8891 we changed some uses of fixed char arrays
-> to call g_strdup_printf() instead. In one place I made a silly
-> error where in changing
->    sprintf(name, "fmt string", ...)
-> to
->    name = g_strdup_printf("fmt string", ...)
-> I forgot to delete "name" from the argument list.
+On 17/3/26 13:02, Peter Maydell wrote:
+> configure has a variable default_cflags, which was originally added
+> in commit bafe78ad3bc4c ("contrib/plugins: use an independent
+> makefile") as part of it setting up the build environment for
+> contrib/plugins, which at the time used make.  However, we now build
+> the plugins with meson, and in commit 55c84a72aba4 ("contrib/plugins:
+> remove Makefile for contrib/plugins") we dropped the logic from
+> configure that does that makefile setup, leaving default_cflags
+> as an unused variable.
 > 
-> Luckily Coverity spotted this (as CID 1645771) because at this
-> point "name" is NULL and passing g_strdup_printf() a NULL first
-> argument is not valid.
+> shellcheck helpfully reports this:
+>        default_cflags='-O0 -g'
+>        ^------------^ SC2034 (warning): default_cflags appears unused. Verify use (or export if used externally).
 > 
-> We didn't notice the mistake in testing or CI because this bit of
-> code is only run if on an AArch64 host with KVM and SVE available.
+> Remove the unused variable.
 > 
-> Correct the error by removing the stray function argument.
-> 
-> Fixes: 62272f9f8891 ("tests/qtest/arm-cpu-features: Use g_strdup_printf() instead of char arrays")
 > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
 > ---
->   tests/qtest/arm-cpu-features.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>   configure | 2 --
+>   1 file changed, 2 deletions(-)
+> 
+> diff --git a/configure b/configure
+> index cd1dadd8bb..42c45fe47a 100755
+> --- a/configure
+> +++ b/configure
+> @@ -248,7 +248,6 @@ for opt do
+>     esac
+>   done
+>   
+> -default_cflags='-O2 -g'
+>   git_submodules_action="update"
+>   docs="auto"
+>   EXESUF=""
+> @@ -707,7 +706,6 @@ for opt do
+>         meson_option_parse --enable-debug-graph-lock ""
+>         meson_option_parse --enable-debug-mutex ""
+>         meson_option_add -Doptimization=0
+> -      default_cflags='-O0 -g'
+>     ;;
+>     --disable-tcg) tcg="disabled"
+>     ;;
 
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
 
