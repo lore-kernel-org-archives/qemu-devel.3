@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 61A25F3381A
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:51:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E8048F3381A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:51:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Q8p-0005XW-Hj; Tue, 17 Mar 2026 04:51:10 -0400
+	id 1w2Q8v-0005cS-Rd; Tue, 17 Mar 2026 04:51:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q8a-0005VL-KF
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:50:55 -0400
+ id 1w2Q8g-0005WP-Pc
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:51:01 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Q8Z-0002dS-3e
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:50:52 -0400
+ id 1w2Q8f-0002ec-6x
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:50:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737450;
+ s=mimecast20190719; t=1773737456;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=aGTjgtHL5muRT74itdDRSEurgAYGEKElfvAsD0TqRGo=;
- b=TNpHvxu3ypNyWA9EPno/uDJnXRNVZHDI+TYlnEmrTlx+KChqzLbLpZic6yW0/inlRt4Lm8
- ZmkHKByLHPnRXsSfoqySkZVeOucaa0NjbFBMowCwpYvzyr8cU3W6Hggm1WCqoLMfwWdJ+x
- QQJcgmuz9lRDI+nJHPb3yIEjgnyIORY=
-Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lCfogonzVWuqUsCZibtn9CrGck935VlJnTOvoIoLaI4=;
+ b=Gy2KfrI1MUoU/8yMicdbXBvnQD7hKBsNJ3GGZedgqbhEpeFQrmH4Z6BUQExh7XAp0/ABUZ
+ YoWfnY79i9h3+H4PYp3SVjiszuvG+19Fa5TKB3LIQIJIa+OG8EpgqrGw30CXlbtlsM8qOx
+ DNWdrTkIpCuCwMyZ1i3GN9bUpGyFxPk=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-479-pcPOBXkCN_6rbDG4-mm0Fw-1; Tue,
- 17 Mar 2026 04:50:48 -0400
-X-MC-Unique: pcPOBXkCN_6rbDG4-mm0Fw-1
-X-Mimecast-MFC-AGG-ID: pcPOBXkCN_6rbDG4-mm0Fw_1773737447
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-185-aZgkQtFAOyWwTKRetsuWqw-1; Tue,
+ 17 Mar 2026 04:50:54 -0400
+X-MC-Unique: aZgkQtFAOyWwTKRetsuWqw-1
+X-Mimecast-MFC-AGG-ID: aZgkQtFAOyWwTKRetsuWqw_1773737453
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id C8D391955F6A
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:47 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id C55EF19560B4
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:53 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id BB1B41800361
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:46 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8CCA63000223
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:50:51 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:50:15 +0400
-Subject: [PATCH 01/60] ui/vnc-jobs: fix VncRectEntry leak on job cleanup
+Date: Tue, 17 Mar 2026 12:50:16 +0400
+Subject: [PATCH 02/60] ui/vnc-jobs: clear source tag
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-1-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-2-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=2171;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=3974;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=RLlcTNCdLyyu+aN9n+BJ1vQwoIRnZWh7ApczLnywLF0=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXZJ3D0hoPuJ3ln2WZo2Fl/+PuO+vJKhx3ot
- PpSHvjoCsWJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2QAKCRDa6OEJdZac
- 5afAD/9fdHym8fTFD89znrza2+JPB/Z+bByMb5yFTYQdsL0ha9sYZrBBkwA1Fx2u/CUhMuQ1VO7
- j1naWzJsQdxfpupiT0iJKmdNlkxX1fBtj7GPb/9fSC46T6l/641JTYVX88M+uJAV42MC4YjRCD+
- uDcJu4CjdSidUYXTbe0Xv8fR1GqQITRVuPO1edhmc/eHJzq5ygcv/YkhyJffYKjpPp3mvxmm5+Q
- EUNt0G/pQJCQbpiVetp01gjDXwvq7D1lmFqeL2NrXCYyJfsmY+qAavoLi1uwJ/a8PGFGD8JlyEI
- fgQoJAoKhqCPxjuPDbLlYDKz2GYVK40ilWh1Y/aa62byx60PKz5kQw6GWagUiSYo8cmaY71DlRW
- EfKfolVZMff1V65YSbV4a4Fd/9+pIxb3cYrF2x47uFVb3GsDEhTuPnJdKRB5xmXw3y36MfO7v1H
- rdGmi+gbV4xLgj0owjOoxtKvHOwtj/kvW75NpaXNEkzjEoazcR94JaOlsjIWUetHv3bkcDDDhc2
- bL+9CKaQU/2Zhwwb49kCb8dOcQskA7j2tCp/NkiSqdUWQMI3Mqv/CX2pzQJxQMGyFkQ09jCaEV3
- bn+vzV2ruDGxERxqLzwRdQSrBIE2hxrqM1fjfeC2xqpMinmpxZAVXJlAYmWM5lUXfUSR0maumCO
- /33YvkQWKlAYzIA==
+ bh=z9xlIu2VqM0UcsaG7dgBxxV0J2Tcq9TvqcBIeQ44UFo=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXZAN5pfJZfFFS5gMN9Nym9pzLS5zVhnklRL
+ 3qCQ0NyA4iJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV2QAKCRDa6OEJdZac
+ 5Q3ID/99oAAR2K8vkDXe05VGhj1D6Lfz4UzWmjKZT3QDTEny6b9WRn+e+w6eQhYIxK3Q9iAO3oN
+ 188IoHdt9QhEIe7klMy/YhjJLfwJq6g10QSlj2YBS8GfAt7ZrbBzBabbdPCeHssC+ZVjZxR08H7
+ UD+YSiZRmgIQKsRdeuj0KmvYa/GHFGCi7sUSLevCzq5oOLwPbFpLCTVnUpUyATUoVpG0fnMDi5l
+ o4yUq2UMLe1tDZXSehiAoP3qiht7NY+jEEWdzR3SBiLlgNmKn6JbwrqwcYBUjKAV3yKlLWlfpNO
+ c1FN15rWGVmDasAeU9k2TFpVv4CkPLP6ErnL6SQE5DsMxcO5a8cG3IOid41VJY1Nb+b2W149wzv
+ W7lvECDg7uHy5bcXJsq0gEf/RlqaNkBCHDwrHwKS0FBXYgUsv8GVQqXcOD9IMhr1Z5dXMCiDY46
+ OruWFgF2klzKfW0aVGL081/zkt2M3qC+3vFIEIPdZXbAGoijFAFvRVqrHIozAsMx79YA0kb8Qtr
+ NN511fKwL9SH+GznIud+hgA5J1drMCE04jLI/Hy7ydRqZoW9owCqRJ5uDAo4/x8gNkvus+2XyMW
+ jq5n5Sx6ko/RMrmWRZZHA3KI6Qa0/DtN5bvxar6iSsCrdlc4mLmgKPfYX2i2jyUWDUWbEI5inYV
+ E40Dz4IFuZ0WpnA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,73 +103,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When a VncJob is freed, its associated VncRectEntry list must also be
-freed. Previously, vnc_job_push() and the disconnected path in
-vnc_worker_thread_loop() called g_free(job) directly, leaking all
-VncRectEntry allocations.
+Avoid potentially removing a dangling source & simplify code.
 
-Introduce vnc_job_free() which iterates and frees the rectangle entries
-before freeing the job itself, and use it in both paths.
-
-Also add QLIST_REMOVE() in the worker loop before g_free(entry), so
-that entries processed during normal operation are properly unlinked.
-Without this, vnc_job_free() would iterate dangling pointers to
-already-freed entries, causing use-after-free.
-
-Fixes: bd023f953e5e ("vnc: threaded VNC server")
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc-jobs.c | 19 +++++++++++++++++--
- 1 file changed, 17 insertions(+), 2 deletions(-)
+ ui/vnc-jobs.c |  4 +---
+ ui/vnc.c      | 31 +++++++------------------------
+ 2 files changed, 8 insertions(+), 27 deletions(-)
 
 diff --git a/ui/vnc-jobs.c b/ui/vnc-jobs.c
-index b296d19e089..ca625da6d05 100644
+index ca625da6d05..ec90ae6d5fc 100644
 --- a/ui/vnc-jobs.c
 +++ b/ui/vnc-jobs.c
-@@ -107,11 +107,25 @@ int vnc_job_add_rect(VncJob *job, int x, int y, int w, int h)
-     return 1;
- }
- 
-+static void vnc_job_free(VncJob *job)
-+{
-+    VncRectEntry *entry, *tmp;
-+
-+    if (!job) {
-+        return;
-+    }
-+    QLIST_FOREACH_SAFE(entry, &job->rectangles, next, tmp) {
-+        /* no need for QLIST_REMOVE(entry, next) */
-+        g_free(entry);
-+    }
-+    g_free(job);
-+}
-+
- void vnc_job_push(VncJob *job)
- {
-     vnc_lock_queue(queue);
-     if (queue->exit || QLIST_EMPTY(&job->rectangles)) {
--        g_free(job);
-+        vnc_job_free(job);
-     } else {
-         QTAILQ_INSERT_TAIL(&queue->jobs, job, next);
-         qemu_cond_broadcast(&queue->cond);
-@@ -296,6 +310,7 @@ static int vnc_worker_thread_loop(VncJobQueue *queue)
-                 n_rectangles += n;
-             }
-         }
-+        QLIST_REMOVE(entry, next);
-         g_free(entry);
+@@ -162,9 +162,7 @@ void vnc_jobs_consume_buffer(VncState *vs)
+     vnc_lock_output(vs);
+     if (vs->jobs_buffer.offset) {
+         if (vs->ioc != NULL && buffer_empty(&vs->output)) {
+-            if (vs->ioc_tag) {
+-                g_source_remove(vs->ioc_tag);
+-            }
++            g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+             if (vs->disconnecting == FALSE) {
+                 vs->ioc_tag = qio_channel_add_watch(
+                     vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_OUT,
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 952976e9649..ccc73bd7aa4 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -1301,10 +1301,7 @@ static void vnc_disconnect_start(VncState *vs)
      }
-     trace_vnc_job_nrects(&vs, job, n_rectangles);
-@@ -324,7 +339,7 @@ disconnected:
-     QTAILQ_REMOVE(&queue->jobs, job, next);
-     vnc_unlock_queue(queue);
-     qemu_cond_broadcast(&queue->cond);
--    g_free(job);
-+    vnc_job_free(job);
-     vs.magic = 0;
-     return 0;
+     trace_vnc_client_disconnect_start(vs, vs->ioc);
+     vnc_set_share_mode(vs, VNC_SHARE_MODE_DISCONNECTED);
+-    if (vs->ioc_tag) {
+-        g_source_remove(vs->ioc_tag);
+-        vs->ioc_tag = 0;
+-    }
++    g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+     qio_channel_close(vs->ioc, NULL);
+     vs->disconnecting = TRUE;
  }
+@@ -1462,9 +1459,7 @@ static size_t vnc_client_write_plain(VncState *vs)
+     }
+ 
+     if (vs->output.offset == 0) {
+-        if (vs->ioc_tag) {
+-            g_source_remove(vs->ioc_tag);
+-        }
++        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+         vs->ioc_tag = qio_channel_add_watch(
+             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR,
+             vnc_client_io, vs, NULL);
+@@ -1500,9 +1495,7 @@ static void vnc_client_write(VncState *vs)
+     if (vs->output.offset) {
+         vnc_client_write_locked(vs);
+     } else if (vs->ioc != NULL) {
+-        if (vs->ioc_tag) {
+-            g_source_remove(vs->ioc_tag);
+-        }
++        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+         vs->ioc_tag = qio_channel_add_watch(
+             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR,
+             vnc_client_io, vs, NULL);
+@@ -1638,10 +1631,7 @@ gboolean vnc_client_io(QIOChannel *ioc G_GNUC_UNUSED,
+     }
+ 
+     if (vs->disconnecting) {
+-        if (vs->ioc_tag != 0) {
+-            g_source_remove(vs->ioc_tag);
+-        }
+-        vs->ioc_tag = 0;
++        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+     }
+     return TRUE;
+ }
+@@ -1684,9 +1674,7 @@ void vnc_write(VncState *vs, const void *data, size_t len)
+     buffer_reserve(&vs->output, len);
+ 
+     if (vs->ioc != NULL && buffer_empty(&vs->output)) {
+-        if (vs->ioc_tag) {
+-            g_source_remove(vs->ioc_tag);
+-        }
++        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+         vs->ioc_tag = qio_channel_add_watch(
+             vs->ioc, G_IO_IN | G_IO_HUP | G_IO_ERR | G_IO_OUT,
+             vnc_client_io, vs, NULL);
+@@ -1734,10 +1722,7 @@ void vnc_flush(VncState *vs)
+         vnc_client_write_locked(vs);
+     }
+     if (vs->disconnecting) {
+-        if (vs->ioc_tag != 0) {
+-            g_source_remove(vs->ioc_tag);
+-        }
+-        vs->ioc_tag = 0;
++        g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+     }
+     vnc_unlock_output(vs);
+ }
+@@ -3342,9 +3327,7 @@ static void vnc_connect(VncDisplay *vd, QIOChannelSocket *sioc,
+     VNC_DEBUG("New client on socket %p\n", vs->sioc);
+     update_displaychangelistener(&vd->dcl, VNC_REFRESH_INTERVAL_BASE);
+     qio_channel_set_blocking(vs->ioc, false, &error_abort);
+-    if (vs->ioc_tag) {
+-        g_source_remove(vs->ioc_tag);
+-    }
++    g_clear_handle_id(&vs->ioc_tag, g_source_remove);
+     if (websocket) {
+         vs->websocket = 1;
+         if (vd->tlscreds) {
 
 -- 
 2.53.0
