@@ -4,105 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83DA9FD7075
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 10:50:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02A6EFD707A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 11:04:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Rzt-0002Y1-OZ; Tue, 17 Mar 2026 06:50:02 -0400
+	id 1w2SDb-0004qw-LS; Tue, 17 Mar 2026 07:04:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2Rzi-0002XD-V8
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:49:52 -0400
-Received: from mail-yx1-xb133.google.com ([2607:f8b0:4864:20::b133])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2Rzg-0002jU-Uu
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:49:50 -0400
-Received: by mail-yx1-xb133.google.com with SMTP id
- 956f58d0204a3-649278a69c5so4918344d50.3
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 03:49:48 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773744588; cv=none;
- d=google.com; s=arc-20240605;
- b=HTRyhuOyGrd4awA7Tb/OZTrDsz5VLqVkRT0AQRNS4wgn+o8rCqkv6iGmhkF2KkK6Fi
- vHJAPhPdUCTEHaRpia2ZAix4BnVJvyxaSfHOrq30wB5OMT44QGLRyQ74nmCcgUOrYCvy
- mvPNCLSp3thamA/jUhHfXKTaYgK8z0ChQKJ/eNLWq98fKPcaGiPZr3wB40ma5HrzOMhl
- rUgxiPYZ0JsFWyp3lDbXn3heEX7fdcyMy5cq4hnHno87hJQZ5FI0lpInY3wMYBY5ZF/m
- xCrL98vpcL+HflAAD3PN8HcPG6h/1bJC9e2OUMNRneW9q0lia7RXClnOeIzmhS6fy/t6
- bbzA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=8wlzjznJXIac+iav3XAtgq8V2nFnx53+ZHyW4SgB54s=;
- fh=lSj/1hQsilLqqrIQB6s4Q1wh6081l/JyVKvt7e1AODI=;
- b=lFpL3HZmfyD1P3cF9SYm47oOgrjKPRXIBz1jeCFBFz9pTcB14SjMfs1SFCI+ogsprY
- bNBloLrYkk7ChnsULaXhdK4eWiJzcCzWdqWLfvMdus9dmEp07aw1D4e2dWh3prKQHHgV
- eLkKrKMf0oxWtutvWDn/rtMF3QP7zG7xwADD92nfipgKJo+WEaRbsQ7fLfgsrx5yBb2d
- 8blWgogVcyR1Xc1J7UiVrQQx8i/auPxluMS3IRePn7dFZkclWLcX2O1Ao68I5nCRscgg
- LO+J6OQWDa2nVrOg//gRHTxIfJYV3a59riwsflE2xIVWK2zYBS3Qn+qtYRGaF7Flmd+4
- 4rJg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w2SDY-0004pV-H4
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:04:09 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w2SDW-0000Zm-3O
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 07:04:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773745443;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=PQJIrAfFeOULAWlFqB99x5fCwLc8IbZeA65L/b01W/XzCqh9oTzThMqIGGwZFh6e/yHk+b
+ 1W6qdtOJt1XHDScfuYZcj54R9bfw9ZwOwINJTT3hQXGdzatA8hzQ9USfPE1Q6HBqy798J3
+ aYiDIL9SvbCBy8hfiHH8VbQ9WKedkvs=
+Received: from mail-wm1-f72.google.com (mail-wm1-f72.google.com
+ [209.85.128.72]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-426-oWRJ6gfIOLiTuEwp-k8EUg-1; Tue, 17 Mar 2026 07:04:02 -0400
+X-MC-Unique: oWRJ6gfIOLiTuEwp-k8EUg-1
+X-Mimecast-MFC-AGG-ID: oWRJ6gfIOLiTuEwp-k8EUg_1773745441
+Received: by mail-wm1-f72.google.com with SMTP id
+ 5b1f17b1804b1-4865f728934so3638745e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 04:04:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773744588; x=1774349388; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=8wlzjznJXIac+iav3XAtgq8V2nFnx53+ZHyW4SgB54s=;
- b=bAZw8pJp8bXcCI2F3uSOjVq4No6cY9bYfON4GGKOUFsLxr/dyIUYZdzChmzIeCybto
- 5q+uIe/l5NASWZV2aPQz0B2S71VzC29pIVxvoIBkx8QSAX0ZuJFQzY2vXa89RIFU2N/j
- vCeC0TKSnJaRKt9YNQxMpExoa4zBL5JX0AbjznYhvOcvDhGuwcdupuTVltHIyhML268k
- chRJb+3s1bKe+iWEbGyB2Fjfvt2G7gBjto4h22Be0m9NcKAknw9iOo2kmfPlaavRIHzN
- 2RF6UIDygSM+/2u6kKZkTc4T++JsZ1GFEVsQsvxIblaeX5pN52brV8jacdXmDRlPt3od
- T0Vg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773744588; x=1774349388;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=redhat.com; s=google; t=1773745441; x=1774350241; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=8wlzjznJXIac+iav3XAtgq8V2nFnx53+ZHyW4SgB54s=;
- b=kgmwSmY6v+k5Kz8BB5XGLRQqHnWssRZwvcxS9yXArwVp28XG2ykWDsnz1f/6l75QMl
- pVvbyAO5DuZT+Mub1xVwj94/Jra+r7NQ1AxsjCKJOFElfbMuc/DYc7mZLZHEnjrr14UY
- OJNcWVb4RWkL2oMo1HuGdeOO9RC21UinjsHx3iyK6YffM8+m2G817DioE+CUBnaAIzcQ
- EMGUZmdp06HTr/euM/D5Q9pBiDtIjslqe8h70SZgoJEron+hOKr8UqwlleMLoKBzExIY
- Uh82+EAIZbdBCD9SmGUlnn+mtpxlJRXus3aBXlLis6CFfH04LjvfXE77tACJBLz93e3g
- gN7A==
-X-Gm-Message-State: AOJu0Yxb/oyKzkb7ZxIQrFdVxrBJfvQ+Id7kiEe1pZ+i/w/QKVqf8pQ6
- SII1IXA5GWNIVcemRhef/x5Kcq0ONzcS8FXf/XkrLoEurZSHCdhUNCHAE5z7EuBCV3Dj+Ny1Pht
- voz6Nho3oKV+d7itNBJDEPXMwScFH1JZCF004pw5z1Q==
-X-Gm-Gg: ATEYQzw5rkCLxtrfflw4GX6ZADIJRbPQEbAe4UzPNoZeYaBkRB5vOC/rFSg6l0jUXDq
- /4tKVKQVhl6E7as98I/LJGU1BqbNmkfpAwOgHgJOXNGfDMHWTEswRWi0a2Mc6gP0ma0CI9+S91/
- s/D+n0Sf3Bv9J4ZAf09aGdRzmqwA8IYFOBk+Cf5DqNG79kPfpsYQ1LTmdqu8BkJLBSMUKmtT22k
- F4Fzt4q5KyAhIS5PyHtgvtgAPa7FrJ+zNYhbf/pkT5vKtG/hR4trt9DiCNOja3qVX0ad5jfIe5L
- iudYeldhwsCWZ86iX26JDYQHzg+kikUhTVUjdOdV7Fl0UW7pRAKIx5n8LkyrYESdJZo=
-X-Received: by 2002:a05:690e:d09:b0:64e:8748:38a5 with SMTP id
- 956f58d0204a3-64e87483c3cmr3560510d50.77.1773744587678; Tue, 17 Mar 2026
- 03:49:47 -0700 (PDT)
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=R0g+XdkjmYaHvk7Li8S7a8out+LVlO5N46PfXj4HCtDaoRntXjLDnXFoyM6UpIJTS4
+ yMdlUttouFPVSA7wwS7gtNkqFNCnzYgyqLzMmbF5Xo0gphDOytjBluV42oO4F9cbaImX
+ Uz9UnAHRDJDL+HnjS/nusnhNLgJctFdFR5idr+lIjwpl56dKDh/1zqS5TWsq8JBHnkO/
+ ZxNcw4vm4eoXPgHYOGSfr8pDuQQh7jx5GFoaWNsYB2j3m25V/CpUhBnlpx4KGoaw+JZm
+ 1DlqrLB2fIntj0bbeSPxn1jYghsectdDw4Xq4RcBzp1APfSUxMsCjwF+eBfUoIpLlVPR
+ QvuA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773745441; x=1774350241;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=cyh9GNwkSeiWX8VVWJet6cmrStrv1Y1BhHYKMAKCy08=;
+ b=DwPtqk0pXR42KCVSoxvip8GzMPv3lECb228q/9rqLZsi6CFx5/f1INGJd9w1qa4Giy
+ oFCnxcKwdbYI0E6KSd3vzXMAbdaOcUEQEFUTMXq32vfp+hT5OTNx+eXi3zbq47tr97KU
+ mc6WDfZkCEsZdUOd323KiGlhh5Pu7+P30IP7r12GHONDY8X1i0y/xoqdF2D3/RV7SLWF
+ 86Uxff7+IFQ3ukBhVic3sNmytlxkhv7SKSR1scjdWnRMdcO1rqT2qPp+7vo5TM4H4JJ3
+ RxK2cNi1vY25m4fT0TTAAwjja90If4Ng0GnSR0HsMnoOt5Olnr5G/oFmonU49pIp7+Aa
+ /fJQ==
+X-Gm-Message-State: AOJu0YxM9Fhpn45EZMSziRxVmexsCJrCxkCGO2+vBfSS0rAW1UMlzJxe
+ mm0tvnkLeT3D17v561xtnHXRXM7w2Gx0md9/RaXFA5a38hedVeNMY+cNx3HdhbdjSjyl+3s3hor
+ 2yXWvC9MrWb0jx0mEc2A1YG8s3AHbu0/3dzJFNyaBtw9PZkTgImZuAuV9
+X-Gm-Gg: ATEYQzymSD9XQmqsQTsEm8zdTqMmOJCzEm9Cxbl2h5jhTBODbGRlJ9gTjOH0AMQHO/Q
+ a94JGL+uNlcd/ZEkeAggqCTinkaRIF4QB6ioZOaBUc5XxIFWnfrkE4gnhlBOILULhAMwJ6TGXNa
+ /ygfCVoHOdmNszY9Cv9FbLjpOu4N3nohiO/rQClmT3iLgdDdVnz3lZlCy2hWAk3wrkurdmZdcme
+ X5b+TLtper45dM+EvV5G1RbAstxzvbWf90PRxr12hGxWXXr+o2rY/+XvNStLVAGQq4xoW8WtDMs
+ y1H7zSDN4/wEWfu7TpZ0mls1PlWPaEc6XfAc07U9b+Yd433WG/bzPR5A+v4YavYBAq64CioV9O6
+ 8ENQMql37Xh/gB5Xn8g5qEkfdStDb3keaVOc8TW6Tx9VYoL9mrQbtue5pZ+RiC7upIw4gRIV8uz
+ 22lRzEIHwCHnIl2J3fODNjWdFHNyA=
+X-Received: by 2002:a05:600c:4f54:b0:485:353f:c651 with SMTP id
+ 5b1f17b1804b1-48556702b4dmr277348485e9.22.1773745441068; 
+ Tue, 17 Mar 2026 04:04:01 -0700 (PDT)
+X-Received: by 2002:a05:600c:4f54:b0:485:353f:c651 with SMTP id
+ 5b1f17b1804b1-48556702b4dmr277347695e9.22.1773745440573; 
+ Tue, 17 Mar 2026 04:04:00 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.144.138])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-48557c66583sm120630785e9.21.2026.03.17.04.03.59
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Mar 2026 04:03:59 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: marcandre.lureau@redhat.com
+Cc: qemu-devel@nongnu.org, berrange@redhat.com,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH] build-sys: use the "run" variable
+Date: Tue, 17 Mar 2026 12:03:57 +0100
+Message-ID: <20260317110357.796605-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260211103305.3112657-1-marcandre.lureau@redhat.com>
+References: 
 MIME-Version: 1.0
-References: <cover.1773618848.git.balaton@eik.bme.hu>
- <0cc6620e1d15af6ef465e2322dce6d4c79ad0793.1773618848.git.balaton@eik.bme.hu>
- <CAFEAcA99ZqUsaW+NWMHAWz88tuDx8-hj=u-k9mBpEQFLw=QJdw@mail.gmail.com>
- <ba05fa2c-c3e2-de3e-1f3f-06c3296c4d05@eik.bme.hu>
-In-Reply-To: <ba05fa2c-c3e2-de3e-1f3f-06c3296c4d05@eik.bme.hu>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Tue, 17 Mar 2026 10:49:36 +0000
-X-Gm-Features: AaiRm53Wm6JnEXE9ue4wrHvgZ6Ru4c5fYCGK_E8xzTHkV3YluunzeUMdKWFVm8s
-Message-ID: <CAFEAcA8-mLdtDxnBXDtk+wCBPnTZekU0BZJ4q8SEjptL=35p4Q@mail.gmail.com>
-Subject: Re: [PATCH 4/4] ati-vga: Avoid warning about sign extension
-To: BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>,
- marcandre.lureau@redhat.com, Chad Jablonski <chad@jablonski.xyz>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b133;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb133.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -118,48 +121,8 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Mar 2026 at 10:34, BALATON Zoltan <balaton@eik.bme.hu> wrote:
->
-> On Tue, 17 Mar 2026, Peter Maydell wrote:
-> > On Mon, 16 Mar 2026 at 00:06, BALATON Zoltan <balaton@eik.bme.hu> wrote:
-> >>
-> >> Coverity reports possible sign extension error (CID 1645615) when
-> >> reading DEFAULT_SC_BOTTOM_RIGHT register. It cannot happen because the
-> >> values are limited when writing the register but change the code to
-> >> match other similar registers and to avoid this warning.
-> >>
-> >> Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-> >> ---
-> >>  hw/display/ati.c | 4 ++--
-> >>  1 file changed, 2 insertions(+), 2 deletions(-)
-> >>
-> >> diff --git a/hw/display/ati.c b/hw/display/ati.c
-> >> index 1a6a5ad4fd..d194f15002 100644
-> >> --- a/hw/display/ati.c
-> >> +++ b/hw/display/ati.c
-> >> @@ -513,8 +513,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-> >>          val |= s->regs.default_tile << 16;
-> >>          break;
-> >>      case DEFAULT_SC_BOTTOM_RIGHT:
-> >> -        val = (s->regs.default_sc_bottom << 16) |
-> >> -              s->regs.default_sc_right;
-> >> +        val = s->regs.default_sc_right;
-> >> +        val |= s->regs.default_sc_bottom << 16;
-> >
-> > I don't think this is going to make Coverity any happier, because
-> > we're still doing:
-> > * take a value in a 16-bit unsigned type
-> > * shift it without a cast, giving a 'signed int' (32-bit)
-> > * promote that to 64-bits to do the |=, because 'val' is
-> >   64 bits, causing a potential sign extension
-> > The rephrasing of the code doesn't avoid the sign-extension.
->
-> OK then I'd additionally change val to uint32_t which should avoid it
-> then. Would that work?
+Queued, thanks.
 
-Yes, I think that using uint32_t for val would silence the
-coverity warnings.
+Paolo
 
-thanks
--- PMM
 
