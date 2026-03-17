@@ -4,59 +4,59 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26592F3029B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 05:32:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0A7C1F3029B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 05:42:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2N2I-0001lA-Ck; Tue, 17 Mar 2026 01:32:10 -0400
+	id 1w2NBv-00037r-2E; Tue, 17 Mar 2026 01:42:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2N2B-0001kC-Bn
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 01:32:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2NBf-00037L-JQ
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 01:41:55 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2N27-0004Cf-Lx
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 01:32:03 -0400
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2NBd-00047b-7S
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 01:41:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773725516;
+ s=mimecast20190719; t=1773726107;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sazvgy7qqJbkrDP8aIgZXzxq04H/Et77UAwMIiKzXPI=;
- b=anwbaieC+XhwaKKfbe/y/Ki4LOcK5hfKajWvduaaA1CMQIXrn7dQdMI80nSSQN5q6ExRTi
- GTsK9FAUDmsbjDo3da/OQW9Z66tEEulzWzU3fny3tYgRUdxUnfgHiju1ewqfmjRpjyHSLH
- mQvSIYkpf1Oo3vECYRBizfSZKqFRRrY=
+ bh=ze/3n+kT3LqqLxaKWtqXOvvdnZO+sc0ZSGFrPPt60rg=;
+ b=ipM0YADsVRwZgsbtbxld+L9QIbWn6Qo47KDil3yNwKKUvvVqrHzwfnDT3/oXssrXZ92I7c
+ kGT7QWuZKdJUeZyn9Jw1l9N1zaWa0+YNOfa0jkOsd6y+MYtNSUIVT3J0GxYsjKRiTfbQzE
+ 7AwmpYyWkAZXHpHG7p5tmpARwbxYGkM=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-484-RM9n4KmVP5KcdbIVy5enbg-1; Tue,
- 17 Mar 2026 01:31:51 -0400
-X-MC-Unique: RM9n4KmVP5KcdbIVy5enbg-1
-X-Mimecast-MFC-AGG-ID: RM9n4KmVP5KcdbIVy5enbg_1773725510
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-127-xpmWhfSROIqnp5yoIj0qbQ-1; Tue,
+ 17 Mar 2026 01:41:43 -0400
+X-MC-Unique: xpmWhfSROIqnp5yoIj0qbQ-1
+X-Mimecast-MFC-AGG-ID: xpmWhfSROIqnp5yoIj0qbQ_1773726102
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9DF7419560A1; Tue, 17 Mar 2026 05:31:49 +0000 (UTC)
+ id 459F2195609D; Tue, 17 Mar 2026 05:41:42 +0000 (UTC)
 Received: from [10.44.32.37] (unknown [10.44.32.37])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 0DDB218001FE; Tue, 17 Mar 2026 05:31:45 +0000 (UTC)
-Message-ID: <384cc5cc-4071-4aa0-885e-d86f3605dd27@redhat.com>
-Date: Tue, 17 Mar 2026 06:31:44 +0100
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8DD141800351; Tue, 17 Mar 2026 05:41:39 +0000 (UTC)
+Message-ID: <afa7d52b-7087-4256-996a-b8ca7b2bfb95@redhat.com>
+Date: Tue, 17 Mar 2026 06:41:37 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH] hw/display/tcx: Init memory regions in realize
-To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- Peter Xu <peterx@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>
-Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>,
+To: BALATON Zoltan <balaton@eik.bme.hu>, Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
+ Peter Maydell <peter.maydell@linaro.org>,
  =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 References: <20260316130651.5C8735968DE@zero.eik.bme.hu>
- <abgqjKVFHKxuKupP@x1.local> <e596bcf2-962b-4857-addc-1200702fe455@redhat.com>
- <d0aa8081-30df-4696-9281-b35c2b775a57@ilande.co.uk>
+ <abgqjKVFHKxuKupP@x1.local> <812f2a8d-f6bb-f127-a3f9-4629de5a03e5@eik.bme.hu>
+ <abh2ZdpzQNepUTIy@x1.local> <ebd251c9-a1d1-4956-af11-ae9858e76254@eik.bme.hu>
 From: Thomas Huth <thuth@redhat.com>
 Content-Language: en-US
 Autocrypt: addr=thuth@redhat.com; keydata=
@@ -101,18 +101,18 @@ Autocrypt: addr=thuth@redhat.com; keydata=
  oiT+z+/E59qj/EKfyce3sbC9XLjXv3mHMrq1tKX4G7IJGnS989E/fg6crv6NHae9Ckm7+lSs
  IQu4bBP2GxiRQ+NV3iV/KU3ebMRzqIC//DCOxzQNFNJAKldPe/bKZMCxEqtVoRkuJtNdp/5a
  yXFZ6TfE1hGKrDBYAm4vrnZ4CXFSBDllL59cFFOJCkn4Xboj/aVxxJxF30bn
-In-Reply-To: <d0aa8081-30df-4696-9281-b35c2b775a57@ilande.co.uk>
+In-Reply-To: <ebd251c9-a1d1-4956-af11-ae9858e76254@eik.bme.hu>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=thuth@redhat.com;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -130,47 +130,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 16/03/2026 22.45, Mark Cave-Ayland wrote:
-> On 16/03/2026 16:23, Thomas Huth wrote:
-> 
->> On 16/03/2026 17.06, Peter Xu wrote:
->>> On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
->>>> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
->>>> current_machine which is not set during init when inspecting the
->>>> device. This causes the qtest/device-introspect-test to fail since a
+On 16/03/2026 23.30, BALATON Zoltan wrote:
+> On Mon, 16 Mar 2026, Peter Xu wrote:
+>> On Mon, Mar 16, 2026 at 07:10:05PM +0100, BALATON Zoltan wrote:
+>>> On Mon, 16 Mar 2026, Peter Xu wrote:
+>>>> On Mon, Mar 16, 2026 at 02:06:51PM +0100, BALATON Zoltan wrote:
+>>>>> Due to aux-ram-share property qemu_ram_alloc_internal dereferences
+>>>>> current_machine which is not set during init when inspecting the
+>>>>> device. This causes the qtest/device-introspect-test to fail since a
+>>>>
+>>>> Does it has anything to do with aux-ram-share?  I thought it's because the
+>>>> qom introspect test will create yet another sun-tcx device, causing double
+>>>> registration?
 >>>
->>> Does it has anything to do with aux-ram-share?  I thought it's because the
->>> qom introspect test will create yet another sun-tcx device, causing double
->>> registration?
+>>> I could reproduce it like this:
 >>
->> I think it happens because the test starts QEMU with the sun4m machine (or 
->> whichever machine uses this device by default), and then creates another 
->> instance of the device for introspection (without realizing it). You can 
->> easily recreate the bug manually like this:
->>
->>   $ ./qemu-system-sparc -M SS-20 -display none -monitor stdio
->>   QEMU 10.2.50 monitor - type 'help' for more information
->>   (qemu) device_add sun-tcx,help
->>   RAMBlock "tcx.prom" already registered, abort!
->>   Aborted (core dumped)
->>
->> An instance_init() function should not change the global state of QEMU, so 
->> registering memory regions this way is a no-go. This has to be done in 
->> realize() instead.
+>> I would treat this one a separate bug, because it doesn't look special to
+>> sparc systems.
 > 
-> Just to confirm that when you mention global state, you're talking about 
-> registering the ROM in this particular case?
+> I thought this is the issue Thomas has reported. I found this command by 
+> looking at what the test does but looks like this gets a different error but 
+> the fix is the same.
 
-I haven't looked very deeply into this issue, but I think yes. The error 
-message indicates that a RAMBlock with a given name can only registered once 
-at a time, but with introspection, a instance_init() can run again for a new 
-object while another object of the same class has already been instantiated.
+It's slightly different. The bug that I found via the device introspection 
+test is using "-M SS-20" and then it's crashing when a second sun-tcx device 
+is instantiated.
+The bug that you found is crashing because using "-device sun-tcx,help" 
+instantiates the device for introspection before the machine has been 
+created, so code that dereferences current_machine is running into a NULL 
+pointer related segmentation fault.
+Both problems should hopefully be fixed by your patch that moves the 
+problematic code from instance_init into realize().
 
-I once also wrote a related blog post about this:
-
-  https://people.redhat.com/~thuth/blog/qemu/2018/09/10/instance-init-realize.html
-
-  HTH,
-   Thomas
+  Thomas
 
 
