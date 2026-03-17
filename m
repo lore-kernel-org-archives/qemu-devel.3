@@ -4,107 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 75FB3FF6E8B
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 22:12:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5D43FF6E9B
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 22:58:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2cdZ-00081I-Lu; Tue, 17 Mar 2026 18:11:42 -0400
+	id 1w2dMU-0007TV-JN; Tue, 17 Mar 2026 18:58:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w2cdW-000819-L5
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 18:11:39 -0400
-Received: from fout-a6-smtp.messagingengine.com ([103.168.172.149])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w2cdS-0005Ee-CP
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 18:11:35 -0400
-Received: from phl-compute-02.internal (phl-compute-02.internal [10.202.2.42])
- by mailfout.phl.internal (Postfix) with ESMTP id EAA94EC00B4;
- Tue, 17 Mar 2026 18:11:32 -0400 (EDT)
-Received: from phl-frontend-04 ([10.202.2.163])
- by phl-compute-02.internal (MEProxy); Tue, 17 Mar 2026 18:11:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1773785492; x=1773871892; bh=m5zML0x9FhlNamEURUaQYBSRup7okcYx
- s0kUoyPk5pI=; b=DogeW1IMXsp5nivCfwn4PdY0Bngx+wdPbnyDryi3fKiRHafW
- NZR9O++pWOSScW+Ps2CBqmhQpUxfFLwmE/RQagGmFgu9UPUFc3vs1DqxOoa6FN00
- wy2s8RkM96g1WlxcW2xE/j3WSudbBatgBAk/8NSFyHZSa/81d2QDvZo/UONHCROO
- Pjpyh0NornA5g6nvmDPfqiiN3g8/UlXbHR0RQP6F1dCwzmN865A+YBQSesASrLqU
- Vbx3xoheHoFotlkPcLqus1RKoRmLP2JT+QwufvfObUy4LQVZ5xHd3EwI7ZoKxg5D
- Gk855M+eXry4HNAxj+8ZElc+ChZiPbsaaGBu+w==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773785492; x=
- 1773871892; bh=m5zML0x9FhlNamEURUaQYBSRup7okcYxs0kUoyPk5pI=; b=t
- l7iRdqjgxVImubkiCU56M/KouHCQSZU3/fTkju8GkKIDngfHGGu9YUWJaQ5I/Uik
- e9Xw46/SprNo/ETlMQPlJZUesVyf7nKtfyRSZDsODq2xAxtOVFoe0XId0KpoBNU9
- EDZWz5yq4AYjmQVHJH3wne51vW1TD1cdVlmlxfTI8HK34FW8s8yNLhb8pdUiy/o7
- Z9+8kgPSuspTG6yIh2qXF58QGWm+LCwPdcLTnNO6qEtEsvRccsMKn7WURFjDrW4N
- crl0n7wDZ4BbBLRGywnLqMHus1+9cvC1gfkSPb+iKxhfAHlPxptZVESN9CMo+lTj
- I4UPpHFOs4iCDpCAzCEdg==
-X-ME-Sender: <xms:lNG5aYbBnscEIQw5pN8k3ksEhAa-Arg3iMXcNSdCfTuTQRhIlp3dkg>
- <xme:lNG5aXELcDOjaQYhUePbfFk9mdanP9KfOFO7PT7D8RjnT0-6gNvUGwvLJ8VB59CbZ
- QuYO5bFnSyZpPXC1JbZm3URMGVnTtoQOgD9ij36UWR1379tlzPmFkk>
-X-ME-Received: <xmr:lNG5acy_62MKIOzQdy6KralkECsHDHPH04fkAEBv5FPeierOuMObF11rKP0I>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftddvgeduucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkhffvvefuofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpeevudekfeeftdekkefgvdegudeh
- feeugeehfedtueehieehgefggeettdehgfehteenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepmhgrrh
- gtrghnughrvgdrlhhurhgvrghusehrvgguhhgrthdrtghomhdprhgtphhtthhopehphhhi
- lhhmugeslhhinhgrrhhordhorhhgpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsg
- hmvgdrhhhupdhrtghpthhtohepqhgvmhhuqdguvghvvghlsehnohhnghhnuhdrohhrghdp
- rhgtphhtthhopegthhgrugesjhgrsghlohhnshhkihdrgiihiidprhgtphhtthhopehkrh
- grgigvlhesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:lNG5aZlhr_VDmldrt9bnvJR65HOxCJvCBXTIvrtqOqGvpzWpjQpmKw>
- <xmx:lNG5aVnT3TqFe0bdr46PmNtIL5W3jpOaPJLTtqeb5Zwz_9xF10wKdg>
- <xmx:lNG5abwRke_81ERczD6OZx8ydHDFPuTJZWN7gTFxGYLAnyRQaH_AYw>
- <xmx:lNG5aarrC8b0CDXmLqzrNzDqleEpF5Nwo2fKDz9HkfgNwUViLfXNZQ>
- <xmx:lNG5aX7VJ6TIa_glTMZNjTu-VMKDFJePEAzqFQ9eZ-cznu_qdCFZ_5Su>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Tue,
- 17 Mar 2026 18:11:31 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 72ea8c6d;
- Tue, 17 Mar 2026 22:11:31 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Tue, 17 Mar 2026 18:11:31 -0400
-Message-Id: <DH5EH98LVPBI.CG92QKRD78O8@jablonski.xyz>
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
-Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
- "Chad Jablonski" <chad@jablonski.xyz>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH 2/4] ati-vga: Also switch mode on HW cursor enable bit
- change
-X-Mailer: aerc 0.21.0
-References: <cover.1773618848.git.balaton@eik.bme.hu>
- <c4edeb5a19ad62b6bb14240dbbce8a54de08321a.1773618848.git.balaton@eik.bme.hu>
-In-Reply-To: <c4edeb5a19ad62b6bb14240dbbce8a54de08321a.1773618848.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=103.168.172.149; envelope-from=chad@jablonski.xyz;
- helo=fout-a6-smtp.messagingengine.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.5,
- PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w2dMT-0007RK-5P
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 18:58:05 -0400
+Received: from mail-pf1-x429.google.com ([2607:f8b0:4864:20::429])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w2dMR-0001oM-Hf
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 18:58:04 -0400
+Received: by mail-pf1-x429.google.com with SMTP id
+ d2e1a72fcca58-82a07738118so3641007b3a.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:58:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773788282; x=1774393082; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=3adXOulV1dTwRwi3VaDDPIxHsr/yRTuhhOa3Gu78OXA=;
+ b=pttTTNqaQ6XjwHAKfRfWbFMD/SoK1LeLKar1IGe8tT6LVErEYg+2JS9hZ/Uok5I0mC
+ J3GIl8gm66ECCaLF3XBXkp79mqYJMfNTbV7osrHk2T/Grl3dRUJRKFWKoU4yuC8ca7LL
+ YfZM7UVvKN0LcOz8bJhkOWP+TnXA2CZfT7lx+oSNCLnK+kHND7wXshLnNoOqwVxcI+Ud
+ aB1gKJQ6NLaeoCTmHRfe/fqeyq/97+SvIcCEQqvpd+R9i/xSEC2ft8H49vzEurmmsaSv
+ EIOBEEZ8dDL0Q3FNHgJhyunULI+jyzrPmrZrq7UsIIYDsEFaOuYf5F8uIt6cvhJcVTX/
+ IFXw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773788282; x=1774393082;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=3adXOulV1dTwRwi3VaDDPIxHsr/yRTuhhOa3Gu78OXA=;
+ b=F9HFLc8IcFHT61Oex0Zw4WY8Ym6USeYxU0HLIk2S4NOwaflTLPCsH1CJsb86rixy1b
+ NIhsOmeUP5vQ0J2giu0aWv4eIC+pv3jumeO+QR24i48fEpwuB7bPANA9KAB5k0uNfeE3
+ QyvhPpH3Sl9Uk2Td0Bj3UfHqt4xgJmScOEJrOiAtxV/XHLJmFK1RYF5YzHi5WssBDIIt
+ Jm6xDK4CUtBt7KF4sQb1dmTDPMuhh0aW9aPYTMLasZ/kV7dy7ingAhadSfDP6u6GpMC5
+ 3fg1HI7hEgVktFRxP1HYtWpn46IQcQKB2Bn4jL69nb+ON+TrUmWU79kFmeg8nH7Z1bXh
+ dy9A==
+X-Gm-Message-State: AOJu0YwMXZqG5VxWEIAWPnpET3GlLK3p9CDonaFmyWqFIlXQBmLjI7Db
+ FB/vbFsV4TEghwQ1ATkThPP6EhZH/YeIlrJlvNmk3op6ctFiqpYpKpfEIBliwlfmWc7JCyOkzcD
+ 9MKq6UHg=
+X-Gm-Gg: ATEYQzzZjXDXsPhRGiYWvUhJwnxgWBkJanN7iwsR5iGArlVdHBvWOp3env4MHCVf8jm
+ svS3htskSFMDUDLGAWfuY/TiI1nVuXdxw0Ix30zGyOwfC7Y3OWLjm4PoLET+3c4eBoT+qFGGXqA
+ ja9qiIRAQWJpSx3g18hzDGocS3rL1WlMo1Ut1xALOphg4o4ko1i/1VKij5pc4j2giVMzdtFa45C
+ S4Y4geYPI/RiJnvSpY/mU6ubNte1YiHqXwnmVw7MYnXtsHACEF70JYpKlT3by/5pW2LmgfTjX9L
+ HCkClKyAKC/2ZLW4hp+nt/aOrjYYaFnL2a3DWc8sdOPMKZv1EA3QWJTIsVQ5/uR1AbTyyB3pWhk
+ Ci+My6ZY29WkTZNGTMABnrf8FlQTmbDaeb/AAwOYzIYVNtkhTx/3Ntj0ZApZuqphVMPexrLpNu2
+ /pMKvLqBPQC7RGlO4M89ZdyJlum/EBvkBNr3lAUeLto09Um/0jBaigQXlifPflcj2QztK0bn+dZ
+ 0t1
+X-Received: by 2002:a05:6a00:10c2:b0:821:807a:e427 with SMTP id
+ d2e1a72fcca58-82a6acbd7f6mr832457b3a.21.1773788281798; 
+ Tue, 17 Mar 2026 15:58:01 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82a6bbe7cc9sm484825b3a.48.2026.03.17.15.58.01
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Mar 2026 15:58:01 -0700 (PDT)
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
+ Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+ Alex Williamson <alex@shazbot.org>, Eric Auger <eric.auger@redhat.com>,
+ philmd@linaro.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: [PATCH 2/2] hw/vfio/iommufd.c: report hint to user when
+ vfio-dev/vfio*/dev is missing
+Date: Tue, 17 Mar 2026 15:57:51 -0700
+Message-ID: <20260317225751.1325098-3-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260317225751.1325098-1-pierrick.bouvier@linaro.org>
+References: <20260317225751.1325098-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::429;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x429.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,10 +105,30 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Tested this on x86_64 Solaris 10. Prior to the patch xterm under XOrg is
-drawn incorrectly. It looks like scanlines are drawn every other line.
-After, xterm is drawn correctly.
+Give a hint about missing kernel config CONFIG_VFIO_DEVICE_CDEV.
 
-Tested-by: Chad Jablonski <chad@jablonski.xyz>
-Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ hw/vfio/iommufd.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+index 131612eb836..3e33dfbb356 100644
+--- a/hw/vfio/iommufd.c
++++ b/hw/vfio/iommufd.c
+@@ -274,7 +274,10 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+     }
+ 
+     if (!g_file_get_contents(vfio_dev_path, &contents, &length, NULL)) {
+-        error_setg(errp, "failed to load \"%s\"", vfio_dev_path);
++        error_setg(errp,
++                   "failed to load \"%s\""
++                   " (is your kernel config missing CONFIG_VFIO_DEVICE_CDEV?)",
++                   vfio_dev_path);
+         goto out_close_dir;
+     }
+ 
+-- 
+2.47.3
+
 
