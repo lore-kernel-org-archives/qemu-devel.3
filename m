@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8584EFF6E97
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:32:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 83D8BFF6E97
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 23:32:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2dtu-000107-Ci; Tue, 17 Mar 2026 19:32:38 -0400
+	id 1w2dtr-0000yo-6m; Tue, 17 Mar 2026 19:32:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2dts-0000zI-OV
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:32:37 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1w2dtp-0000xn-8w
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:32:33 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2dtr-0006av-5v
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:32:36 -0400
+ id 1w2dtn-0006ah-2A
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 19:32:33 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id A8331596E09;
- Wed, 18 Mar 2026 00:32:31 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id C6B2A596E02;
+ Wed, 18 Mar 2026 00:32:29 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id C9xTWsgI5V6I; Wed, 18 Mar 2026 00:32:29 +0100 (CET)
+ id uTfLki-LBhVG; Wed, 18 Mar 2026 00:32:27 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B099A596DFE; Wed, 18 Mar 2026 00:32:29 +0100 (CET)
-Message-ID: <89e33449b948c5dd3677e68d4c290d7521726375.1773789314.git.balaton@eik.bme.hu>
+ id 98F72596A4E; Wed, 18 Mar 2026 00:32:27 +0100 (CET)
+Message-ID: <b3af90af051762d7fcbb4393ba9c0714282ea903.1773789314.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1773789314.git.balaton@eik.bme.hu>
 References: <cover.1773789314.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v3 4/5] ati-vga: Avoid warnings about sign extension
+Subject: [PATCH v3 2/5] ati-vga: Also switch mode on HW cursor enable bit
+ change
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,14 +42,15 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Wed, 18 Mar 2026 00:32:29 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Wed, 18 Mar 2026 00:32:27 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,52 +66,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Coverity reports several possible sign extension errors (latest is CID
-1645615). These cannot happen because the values are limited when
-writing the registers and only 32 bits of the return value matter but
-change type of the variable storing the return value to uint32_t to
-avoid these warnings. Also change DEFAULT_SC_BOTTOM_RIGHT register
-read to match what other similar registers do for consistency.
+This does nothing for most drivers but works around issue and fixes
+output with the Solaris R128 driver that only sets display parameters
+after enabling CRT controller which we would miss otherwise.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Tested-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ hw/display/ati.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 8286f67c1c..705e4db6e4 100644
+index c165434938..8286f67c1c 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -266,7 +266,7 @@ static void ati_vga_vblank_irq(void *opaque)
-     ati_vga_update_irq(s);
- }
- 
--static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
-+static inline uint32_t ati_reg_read_offs(uint32_t reg, int offs,
-                                          unsigned int size)
- {
-     if (offs == 0 && size == 4) {
-@@ -279,7 +279,7 @@ static inline uint64_t ati_reg_read_offs(uint32_t reg, int offs,
- static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
- {
-     ATIVGAState *s = opaque;
--    uint64_t val = 0;
-+    uint32_t val = 0;
- 
-     switch (addr) {
-     case MM_INDEX:
-@@ -514,8 +514,8 @@ static uint64_t ati_mm_read(void *opaque, hwaddr addr, unsigned int size)
-         val |= s->regs.default_tile << 16;
-         break;
-     case DEFAULT_SC_BOTTOM_RIGHT:
--        val = (s->regs.default_sc_bottom << 16) |
--              s->regs.default_sc_right;
-+        val = s->regs.default_sc_right;
-+        val |= s->regs.default_sc_bottom << 16;
-         break;
-     case SC_TOP:
-         val = s->regs.sc_top;
+@@ -632,6 +632,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         ati_reg_write_offs(&s->regs.crtc_gen_cntl,
+                            addr - CRTC_GEN_CNTL, data, size);
+         if ((val & CRTC2_CUR_EN) != (s->regs.crtc_gen_cntl & CRTC2_CUR_EN)) {
++            ati_vga_switch_mode(s);
+             if (s->cursor_guest_mode) {
+                 s->vga.force_shadow = !!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN);
+             } else {
 -- 
 2.41.3
 
