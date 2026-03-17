@@ -4,80 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4980CF3381C
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:58:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4173F3381D
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:58:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QEm-00005x-UR; Tue, 17 Mar 2026 04:57:18 -0400
+	id 1w2QFQ-0001tA-6u; Tue, 17 Mar 2026 04:57:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QDc-00044k-0l
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:04 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1w2QD9-0003XJ-64
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QDa-00079K-9h
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:03 -0400
+ id 1w2QD7-00075Y-F8
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737761;
+ s=mimecast20190719; t=1773737731;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=7VJL4O8+9LOo4hAKKpIFVFC+Y74OqIliDbmAvOmaadA=;
- b=Gwu8ZhDZvUGheCrqEEQFKjCQLZMPpYj0XzcVB4CXW0p6y3T0mvupz/AFbTfQEsRx2mKkNn
- qQ9uiphx3VQ3uxRar+52Ysi4eeVDyEUTNmUWp1+GM4E3cG/JiG4d58MBbb90fanS47w2OO
- dgpM2WsQtj+MzTAeyMq1zs6qcFoG8tI=
+ bh=irDzdmZlKqZlZ/OSsviQSMNHKsUUa1AJoPXCVd7AfrY=;
+ b=bWkKHVJNMJOYGeWlDmCVjjLC0QbNxLVoRb1zN/d9dCYta40kZCloJa5AJrZHJS3NXSDgm6
+ 3ch2gLoWyuTyRgqHUDjzZuyBPSN0vq4yyHJ6/CPbfcinL5oTV3xlmLZCyB5AvPTZNFYE4x
+ 84PiEuZI00yA+TYKKP7HUntTBewcwdE=
 Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-530-fgBwIegrNZenWK_ngrdZOg-1; Tue,
- 17 Mar 2026 04:55:59 -0400
-X-MC-Unique: fgBwIegrNZenWK_ngrdZOg-1
-X-Mimecast-MFC-AGG-ID: fgBwIegrNZenWK_ngrdZOg_1773737759
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-77-RcQloQdSNFGIItbklTZfRw-1; Tue,
+ 17 Mar 2026 04:55:29 -0400
+X-MC-Unique: RcQloQdSNFGIItbklTZfRw-1
+X-Mimecast-MFC-AGG-ID: RcQloQdSNFGIItbklTZfRw_1773737728
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 1DB731956062
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:59 +0000 (UTC)
+ id AC88B19560BB
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:28 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 05F9F19560AB
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:57 +0000 (UTC)
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id AEB3B3000223
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:27 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:51:09 +0400
-Subject: [PATCH 55/60] ui/console: move console_handle_touch_event() to input
+Date: Tue, 17 Mar 2026 12:51:04 +0400
+Subject: [PATCH 50/60] ui/vnc: add vnc-system unit, to allow different
+ implementations
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-55-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-50-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=9163;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=2652;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=t+6Ffhw7rudrKvlgQwWmSl0HC8a1R6zvwMGLDGQoEoY=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXcrooT+4BTEc1EfOvod+OaJgEXb81sM04AL
- H72dnAw/bSJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3AAKCRDa6OEJdZac
- 5bbMD/9X2j6ghtNBTPAF63e0OZCLDJRdgjA+4RKnNC2BraaMchYf10z5U2v+5NJFLguEpSVA19D
- i2rtwozSdV2xnDYyRMioiZLKWkO5i/Fu/m7Ny0zueKIWN1p8ctJc5weMzYhO9mQar90X0VyiAze
- JuxwMUy1q9Q0MO0IiSnBYCy/5uXS0XL8cOiXlKJ6t23tUmYREHpd4WrV0igGuZoF0cHhrYFQfyA
- eIKzhYPNVR5cqJwBDNqZdcVbbhU+ILmXuyc5tDAd55dPeV7NUAV4d7bC+HQ0pYKLPGUpplLNN8w
- awmV2CCvIlPf//LCj7fKp+qj/O7o6YhyinSYEE7h0kojYHhK2/E2sAtgQsTgMOs+VBeY0O/zAPS
- oJo8YFz7rZMC3dZToePR7QUeFFY/Mbf7M/QopwGZWhnE1YWG0Yn5YUhrcxOTH3vTN7JmsZ3Uk1W
- 3wz3mgh8yRsiuFmog9bQkqNo5+LbhbpXC1KHwHAc4a8DNwqC99jwFTsRWyzoeT9URmh6Qj0nxRj
- nZNvNzvCoCWd9pIHUoEl6AHc9YCIaJnx9O116CR3QkwLY62NC/5rGZPOgNj/D6Fm8UTOFJxwA7V
- K71ZUVX1pHBY1XhiC+iVNEs/BAYEagGal0Mnzs6SGRE/UzUFwNq3Vf3wBw0z6OZNVir2gMmgdGf
- 8fXsBaw0Box0ViA==
+ bh=37JYZZ/P1/dRjhOzYk0C7VpU4vVI2PAO/cjaK3GzNI4=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXcRcGwJCKFRaEXEi7xmC01JZKBVfnhQ/KwZ
+ edKCEIVEBmJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3AAKCRDa6OEJdZac
+ 5V98D/4564clLhp9TDRB0CILguG6DdmGwy2WbmUX2CBre0f7LcLI5KDPZ/nVFi64xzLd6llgzFI
+ QtGi2VTbQ0GJW54uIDSHexYAERCkEGUOe4Kf6wb5wkb0bUl0h7uyOYpQr85ng1n4j5rTiz1PcYS
+ yhcNK5AM9umlhotw4Y7+nelTaXvB6m45b+MvLMcV///FuRQb56Dz658KkbqMGsQEFWOMGIobNxw
+ aE6+kQRKj5t/oQFYpt9fpAQdpcbzNY50Z8pM46kHnRVyY/39nNQhgkNmzMz28Pyxpmt+t9NBn7V
+ RtxgVu9UGGC7+74v8Hw9wKsxwsCnAX87wfKdm9Tu37uI+pQbeLhXk0JRRDYTkS6KDHX01eQ+y8X
+ 9T44khEg6+vg8i4ExklY6hGv5rJz/sb39fi/kSN89D2lH08QtCm0UNjB88LKYNuMyWJQKH/rE8i
+ rxWtYbUMW1tSPkM7gfKOkB01iDVAfKzRoKLD6cyhDS4xdTd/NO2hm0da1dFPp7A89Ikid01tVlB
+ HtfU61KhJ4O5Vc6V4WVR4anM2wcJJvUvscJs6R9V5sbUTgFeN9dv/6+eL4hLXYBYgKmSNRDkoU5
+ rUpuKVlQAyNcDDYUYAd9yUiJWjMSJ7ascvZe/rEOuwmqX+uNc2Y8rUJiBYIWyubF0b4pOKQ6sMn
+ 9ee2pFU4MuVl0HA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -85,7 +86,7 @@ X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -103,256 +104,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The function uses input.c functions to provide a simpler abstraction for
-touch events. Let's move it from the already overloaded console.c, and
-to avoid some unnecessary dependency from console.c on input.c.
+The qemu-vnc server will want to signal the XVP requests, let it
+have its own implementation.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- include/ui/console.h | 14 -----------
- include/ui/input.h   | 15 ++++++++++++
- ui/console.c         | 65 ----------------------------------------------------
- ui/dbus-console.c    |  6 ++---
- ui/gtk.c             |  8 +++----
- ui/input.c           | 65 ++++++++++++++++++++++++++++++++++++++++++++++++++++
- 6 files changed, 87 insertions(+), 86 deletions(-)
+ ui/vnc.h        |  4 ++++
+ ui/vnc-system.c | 19 +++++++++++++++++++
+ ui/vnc.c        |  4 ++--
+ ui/meson.build  |  2 +-
+ 4 files changed, 26 insertions(+), 3 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index f8163ef96a8..6968a1e35f3 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -111,20 +111,6 @@ void qemu_text_console_put_keysym(QemuTextConsole *s, int keysym);
- bool qemu_text_console_put_qcode(QemuTextConsole *s, int qcode, bool ctrl);
- void qemu_text_console_put_string(QemuTextConsole *s, const char *str, int len);
+diff --git a/ui/vnc.h b/ui/vnc.h
+index 6afe0f16d12..1db9747599c 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -648,4 +648,8 @@ void vnc_server_cut_text_caps(VncState *vs);
+ void vnc_client_cut_text(VncState *vs, size_t len, uint8_t *text);
+ void vnc_client_cut_text_ext(VncState *vs, int32_t len, uint32_t flags, uint8_t *data);
  
--/* Touch devices */
--typedef struct touch_slot {
--    int x;
--    int y;
--    int tracking_id;
--} touch_slot;
--
--void console_handle_touch_event(QemuConsole *con,
--                                struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
--                                uint64_t num_slot,
--                                int width, int height,
--                                double x, double y,
--                                InputMultiTouchType type,
--                                Error **errp);
- /* consoles */
- 
- struct QemuConsoleClass {
-diff --git a/include/ui/input.h b/include/ui/input.h
-index 8f9aac562ed..52c164bde57 100644
---- a/include/ui/input.h
-+++ b/include/ui/input.h
-@@ -70,6 +70,21 @@ void qemu_input_queue_mtt_abs(QemuConsole *src, InputAxis axis, int value,
-                               int min_in, int max_in,
-                               int slot, int tracking_id);
- 
-+/* Touch devices */
-+typedef struct touch_slot {
-+    int x;
-+    int y;
-+    int tracking_id;
-+} touch_slot;
++/* XVP events */
++void vnc_action_shutdown(VncState *vs);
++void vnc_action_reset(VncState *vs);
 +
-+void qemu_input_touch_event(QemuConsole *con,
-+                            struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
-+                            uint64_t num_slot,
-+                            int width, int height,
-+                            double x, double y,
-+                            InputMultiTouchType type,
-+                            Error **errp);
+ #endif /* QEMU_VNC_H */
+diff --git a/ui/vnc-system.c b/ui/vnc-system.c
+new file mode 100644
+index 00000000000..0632885f655
+--- /dev/null
++++ b/ui/vnc-system.c
+@@ -0,0 +1,19 @@
++/*
++ * QEMU VNC display driver
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++#include "qemu/osdep.h"
 +
- void qemu_input_check_mode_change(void);
- void qemu_add_mouse_mode_change_notifier(Notifier *notify);
- void qemu_remove_mouse_mode_change_notifier(Notifier *notify);
-diff --git a/ui/console.c b/ui/console.c
-index 05c72e19c02..d1079348970 100644
---- a/ui/console.c
-+++ b/ui/console.c
-@@ -550,71 +550,6 @@ static bool console_compatible_with(QemuConsole *con,
-     return true;
- }
- 
--void console_handle_touch_event(QemuConsole *con,
--                                struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
--                                uint64_t num_slot,
--                                int width, int height,
--                                double x, double y,
--                                InputMultiTouchType type,
--                                Error **errp)
--{
--    struct touch_slot *slot;
--    bool needs_sync = false;
--    int update;
--    int i;
--
--    if (num_slot >= INPUT_EVENT_SLOTS_MAX) {
--        error_setg(errp,
--                   "Unexpected touch slot number: % " PRId64" >= %d",
--                   num_slot, INPUT_EVENT_SLOTS_MAX);
--        return;
--    }
--
--    slot = &touch_slots[num_slot];
--    slot->x = x;
--    slot->y = y;
--
--    if (type == INPUT_MULTI_TOUCH_TYPE_BEGIN) {
--        slot->tracking_id = num_slot;
--    }
--
--    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; ++i) {
--        if (i == num_slot) {
--            update = type;
--        } else {
--            update = INPUT_MULTI_TOUCH_TYPE_UPDATE;
--        }
--
--        slot = &touch_slots[i];
--
--        if (slot->tracking_id == -1) {
--            continue;
--        }
--
--        if (update == INPUT_MULTI_TOUCH_TYPE_END) {
--            slot->tracking_id = -1;
--            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
--            needs_sync = true;
--        } else {
--            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
--            qemu_input_queue_btn(con, INPUT_BUTTON_TOUCH, true);
--            qemu_input_queue_mtt_abs(con,
--                                    INPUT_AXIS_X, (int) slot->x,
--                                    0, width,
--                                    i, slot->tracking_id);
--            qemu_input_queue_mtt_abs(con,
--                                    INPUT_AXIS_Y, (int) slot->y,
--                                    0, height,
--                                    i, slot->tracking_id);
--            needs_sync = true;
--        }
--    }
--
--    if (needs_sync) {
--        qemu_input_event_sync();
--    }
--}
--
- void qemu_console_set_display_gl_ctx(QemuConsole *con, DisplayGLCtx *gl)
- {
-     /* display has opengl support */
-diff --git a/ui/dbus-console.c b/ui/dbus-console.c
-index 88f58e88efb..b8e5c57b148 100644
---- a/ui/dbus-console.c
-+++ b/ui/dbus-console.c
-@@ -423,9 +423,9 @@ dbus_touch_send_event(DBusDisplayConsole *ddc,
-     width = qemu_console_get_width(ddc->dcl.con, 0);
-     height = qemu_console_get_height(ddc->dcl.con, 0);
- 
--    console_handle_touch_event(ddc->dcl.con, touch_slots,
--                               num_slot, width, height,
--                               x, y, kind, &error);
-+    qemu_input_touch_event(ddc->dcl.con, touch_slots,
-+                           num_slot, width, height,
-+                           x, y, kind, &error);
-     if (error != NULL) {
-         g_dbus_method_invocation_return_error(
-             invocation, DBUS_DISPLAY_ERROR,
-diff --git a/ui/gtk.c b/ui/gtk.c
-index bcb67db7ee7..3b84224d8e8 100644
---- a/ui/gtk.c
-+++ b/ui/gtk.c
-@@ -1201,10 +1201,10 @@ static gboolean gd_touch_event(GtkWidget *widget, GdkEventTouch *touch,
-         return FALSE;
-     }
- 
--    console_handle_touch_event(vc->gfx.dcl.con, touch_slots,
--                               num_slot, surface_width(vc->gfx.ds),
--                               surface_height(vc->gfx.ds), touch->x,
--                               touch->y, type, &err);
-+    qemu_input_touch_event(vc->gfx.dcl.con, touch_slots,
-+                           num_slot, surface_width(vc->gfx.ds),
-+                           surface_height(vc->gfx.ds), touch->x,
-+                           touch->y, type, &err);
-     if (err) {
-         warn_report_err(err);
-     }
-diff --git a/ui/input.c b/ui/input.c
-index 147e69c1c3c..57e7817878a 100644
---- a/ui/input.c
-+++ b/ui/input.c
-@@ -609,3 +609,68 @@ bool qemu_mouse_set(int index, Error **errp)
-     notifier_list_notify(&mouse_mode_notifiers, NULL);
-     return true;
- }
++#include "ui/vnc.h"
++#include "system/runstate.h"
 +
-+void qemu_input_touch_event(QemuConsole *con,
-+                            struct touch_slot touch_slots[INPUT_EVENT_SLOTS_MAX],
-+                            uint64_t num_slot,
-+                            int width, int height,
-+                            double x, double y,
-+                            InputMultiTouchType type,
-+                            Error **errp)
++void vnc_action_shutdown(VncState *vs)
 +{
-+    struct touch_slot *slot;
-+    bool needs_sync = false;
-+    int update;
-+    int i;
-+
-+    if (num_slot >= INPUT_EVENT_SLOTS_MAX) {
-+        error_setg(errp,
-+                   "Unexpected touch slot number: % " PRId64" >= %d",
-+                   num_slot, INPUT_EVENT_SLOTS_MAX);
-+        return;
-+    }
-+
-+    slot = &touch_slots[num_slot];
-+    slot->x = x;
-+    slot->y = y;
-+
-+    if (type == INPUT_MULTI_TOUCH_TYPE_BEGIN) {
-+        slot->tracking_id = num_slot;
-+    }
-+
-+    for (i = 0; i < INPUT_EVENT_SLOTS_MAX; ++i) {
-+        if (i == num_slot) {
-+            update = type;
-+        } else {
-+            update = INPUT_MULTI_TOUCH_TYPE_UPDATE;
-+        }
-+
-+        slot = &touch_slots[i];
-+
-+        if (slot->tracking_id == -1) {
-+            continue;
-+        }
-+
-+        if (update == INPUT_MULTI_TOUCH_TYPE_END) {
-+            slot->tracking_id = -1;
-+            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
-+            needs_sync = true;
-+        } else {
-+            qemu_input_queue_mtt(con, update, i, slot->tracking_id);
-+            qemu_input_queue_btn(con, INPUT_BUTTON_TOUCH, true);
-+            qemu_input_queue_mtt_abs(con,
-+                                    INPUT_AXIS_X, (int) slot->x,
-+                                    0, width,
-+                                    i, slot->tracking_id);
-+            qemu_input_queue_mtt_abs(con,
-+                                    INPUT_AXIS_Y, (int) slot->y,
-+                                    0, height,
-+                                    i, slot->tracking_id);
-+            needs_sync = true;
-+        }
-+    }
-+
-+    if (needs_sync) {
-+        qemu_input_event_sync();
-+    }
++    qemu_system_powerdown_request();
 +}
++
++void vnc_action_reset(VncState *vs)
++{
++    qemu_system_reset_request(SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET);
++}
+diff --git a/ui/vnc.c b/ui/vnc.c
+index c38be7113f1..fe2659a39ca 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -2520,13 +2520,13 @@ static int protocol_client_msg(VncState *vs, uint8_t *data, size_t len)
+ 
+             switch (action) {
+             case VNC_XVP_ACTION_SHUTDOWN:
+-                qemu_system_powerdown_request();
++                vnc_action_shutdown(vs);
+                 break;
+             case VNC_XVP_ACTION_REBOOT:
+                 send_xvp_message(vs, VNC_XVP_CODE_FAIL);
+                 break;
+             case VNC_XVP_ACTION_RESET:
+-                qemu_system_reset_request(SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET);
++                vnc_action_reset(vs);
+                 break;
+             default:
+                 send_xvp_message(vs, VNC_XVP_CODE_FAIL);
+diff --git a/ui/meson.build b/ui/meson.build
+index b31ddf96282..f959f8972b5 100644
+--- a/ui/meson.build
++++ b/ui/meson.build
+@@ -48,7 +48,7 @@ vnc_ss.add(files(
+ vnc_ss.add(zlib, jpeg, png)
+ vnc_ss.add(when: sasl, if_true: files('vnc-auth-sasl.c'))
+ system_ss.add_all(when: [vnc, pixman], if_true: vnc_ss)
+-system_ss.add(when: vnc, if_false: files('vnc-stubs.c'))
++system_ss.add(when: vnc, if_true: files('vnc-system.c'), if_false: files('vnc-stubs.c'))
+ 
+ ui_modules = {}
+ 
 
 -- 
 2.53.0
