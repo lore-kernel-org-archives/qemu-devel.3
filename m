@@ -4,43 +4,43 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 64CCCFEDA0D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:53:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9DE14FEDA1C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:53:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2aSO-00046E-GP; Tue, 17 Mar 2026 15:52:00 -0400
+	id 1w2aSP-00046e-QC; Tue, 17 Mar 2026 15:52:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSL-00045c-7j
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:51:57 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSM-00045v-Gm
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:51:59 -0400
 Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSJ-0006Qv-Se
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:51:56 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSL-0006RM-9f
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:51:58 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id BBD8A6132E;
+ by tor.source.kernel.org (Postfix) with ESMTP id 42CB960103;
+ Tue, 17 Mar 2026 19:51:56 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id DDD18C2BCAF;
  Tue, 17 Mar 2026 19:51:54 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 58A31C2BC86;
- Tue, 17 Mar 2026 19:51:53 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773777114;
- bh=5QpdIoSwsa33hR70/3MF/nBPFADPqiqC0KgaCFxH+0k=;
+ s=k20201202; t=1773777116;
+ bh=s6g2Gm4dbBjnbiN8tY8IiTMbXrriTjpNP6nrtcMrisw=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=r8ihLwGGrWX/Z8F/rg9Ml+1gtfOFgwk+wdpgx/7RvxSPRTkYFApLFJkjzmDLvxoFo
- ezjxLqhJhs8vgIWoNyr+TIuhbHtwN6xS8dyWVnoDQ2H8A5Snhi4x9C8zhRbz6HGaR4
- F/51VPsvYpJPvKYvsJDqx74deLebru88CaIYctg2dtGpp4G1T8qThQv75GqBOfGkOy
- nIg7DHCcl9CUTsLEdpo6AbRiICEAOBc1k3Zhe1NPMnm2LU7pFubzE++4EfYOrVThM1
- 8FvZoPkS8e7gG7KZWbL4tRi4SxHOLD9Y0U0kv5vwSs0apYU49DCLthB8RL4qkhtBQs
- wfb/P6ITDoGLA==
+ b=T5ofgio/DLTlgwYEgmxtTdXJ0cSvYVFDobCecNEXNLo9UTNnHewl9ByGf6K92kWxF
+ doIvp5q5isaHoq5PdjYXRpbCu6RsMuDcPDE16TS7N9iqGj5XtUAmdz9BWBofw+9Khc
+ +rCeZhuyBcbVkc2IkHyl/BkFQwox7AOPAcT/RxUAP12RdNHM6yDz9kgQJCJPlnu8oG
+ KwkCVsQkIn6COUlGXv9msHTp8FWjz4zckFfF5HRu9b8Ym7/54UbFyJpySeVYDq1mSK
+ nY4dZRM0u2iEYFOnSvMpArSKzXOGe2rz/9xiKjYrdVPRJ3QZWh6TNHv3iIJP0EamPi
+ dt9uoOraphdKA==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 1/6] hw/hppa: Fix description of the HP A400-44 server
-Date: Tue, 17 Mar 2026 20:51:44 +0100
-Message-ID: <20260317195149.8386-2-deller@kernel.org>
+Subject: [PATCH 2/6] hw/hppa: Adjust physical addresses of Astro and Elroy
+Date: Tue, 17 Mar 2026 20:51:45 +0100
+Message-ID: <20260317195149.8386-3-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317195149.8386-1-deller@kernel.org>
 References: <20260317195149.8386-1-deller@kernel.org>
@@ -72,27 +72,29 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-The HP A400-44 machine has a height of 2U and is a noisy server machine
-which was usually running in the datacenter.
+Adjust the addresses of the Astro and Elroy PCI chips to a
+44-bit physical address space when running a PA8700 CPU.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ hw/hppa/hppa_hardware.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index ec63dc1297..e72dda2a68 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -840,7 +840,7 @@ static void HP_A400_machine_init_class_init(ObjectClass *oc, const void *data)
-     };
-     MachineClass *mc = MACHINE_CLASS(oc);
+diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
+index 0a89c3ed52..006aae63b9 100644
+--- a/hw/hppa/hppa_hardware.h
++++ b/hw/hppa/hppa_hardware.h
+@@ -61,8 +61,8 @@
+ #define ASTRO_BUS_MODULE        0x0a            /* C3700: 0x0a, others maybe 0 ? */
  
--    mc->desc = "HP A400-44 workstation";
-+    mc->desc = "HP A400-44 server";
-     mc->default_cpu_type = TYPE_HPPA_CPU_PA_8500;
-     mc->valid_cpu_types = valid_cpu_types;
-     mc->init = machine_HP_A400_init;
+ /* ASTRO Memory and I/O regions */
+-#define ASTRO_BASE_HPA            0xfffed00000
+-#define ELROY0_BASE_HPA           0xfffed30000  /* ELROY0_HPA */
++#define ASTRO_BASE_HPA            0xffffed00000
++#define ELROY0_BASE_HPA           0xffffed30000  /* ELROY0_HPA */
+ 
+ #define ROPES_PER_IOC           8       /* per Ike half or Pluto/Astro */
+ 
 -- 
 2.53.0
 
