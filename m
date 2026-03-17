@@ -4,67 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 00C19FD7072
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 10:28:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B861FFD7072
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 10:28:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2ReS-00023J-50; Tue, 17 Mar 2026 06:27:52 -0400
+	id 1w2ReS-000236-2V; Tue, 17 Mar 2026 06:27:52 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w2Rdx-0001va-B8
+ id 1w2Rdx-0001ve-CG
  for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:27:22 -0400
-Received: from mail-wm1-x333.google.com ([2a00:1450:4864:20::333])
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w2Rds-0006W2-2z
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:27:19 -0400
-Received: by mail-wm1-x333.google.com with SMTP id
- 5b1f17b1804b1-4853c3c2fe7so32668925e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 03:27:15 -0700 (PDT)
+ id 1w2Rdr-0006VJ-K0
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 06:27:18 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso6106085e9.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 03:27:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1773743235; x=1774348035; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2mdV95Xn1uRZNv+wMaqt5uMFd58yUD2RuxYvZm/pTuU=;
- b=BT4WZMfRk2VhKDke9wpMnwkiEAhVQjrvX673zFan8dCTyGOic7FpJ+2lXVbEa+mxqL
- D1g7JRPQM9LP261LM0SaGmTp+pWjiqoEzOt4HPr6Tei8UjsTiW2b/6SA+gvFqvn1Fo6p
- olnxGzhofadI3j7E1KwfIcNU5PaKBJjNre2bw=
+ d=mihalicyn.com; s=mihalicyn; t=1773743231; x=1774348031; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=iRDEAFCxC5LjnOCBEZCiS2Pr7Crk112Fz556YwJLg3g=;
+ b=FB2QLunRr2chv1GoXd+1qbnjV2zOt7SCnruze7ilV5mRS9OgF5KB6eFWm3D2EP2GPk
+ jN44aK5nNeuzo/bHhmc2U3ydH426V6K4C4IBz7tbrhoccNOW9z6UPDfmckBuapm7wkMG
+ pLuAJJ++seSfpDainBR3g51B+a10fWD8y6KdY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773743235; x=1774348035;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=2mdV95Xn1uRZNv+wMaqt5uMFd58yUD2RuxYvZm/pTuU=;
- b=FYBvKLTa1vMNv93MMiZ/lZt5iJWxpQTMnNq0OTcQqQkA8L8Z3GLBcDeS1sS2DEbWes
- YGxY7kl7sw08askjuMu6HH/gmLGNEiUEIcPVk2ERbrpDRzIFAZYcCrU/oMPNhQ1mkU9j
- x1DSvZxuk+6pvSP65x+UB77AF4lvxeVjjmj/fmiRwCqPL+mz+HKefOoSa1GkgNJ+aVx2
- FjZYsAGrnakzF4vnQ1eACe+FiNLu5RWVpaSemys0ODV/2Y8WxFpVPdHDNIxFTH2vel+P
- jolKkiYtO1fBI3F6flrC03iJ9L77uuHiExELSeNjk3zz6ORzgohwHCzq2EDoh3QnDRqD
- aq6g==
-X-Gm-Message-State: AOJu0YyrZldsZ87jBaXlX3S3gSd5movGkQc9OYcZWhlL6WhZjRwOS2e5
- e7uIBVBNrPf2zZaDGJ2aAZg0w4ihFhkQ2U2LHIPAOZas2J0HB/7jk959/njTDFwn+EYN0e5WueT
- c56Rxefk=
-X-Gm-Gg: ATEYQzyGeBjg+McFgFaRKt6q+O4InedLnoYZ2YeF3lZNxn9k9EmnwxEvpB7DLM0pQql
- 5ni7IW4qKkwUdlqMs3cn4s8qcaF9YqYmrxJO8Yot6M8oyGqfwIRcc1Mxm3a8DFqyi7Ahf0IkiSR
- Fd9fyRTFdBtg5M6ZUSRjh/+esjibCoafI+z8ErtJwhrSq71dfGhIxpwyaasBAaZbWjTje9gjR7c
- IihCZ/fttTwXG52eDNq9yZkp0Lt/d0juFyxXIH3X4Fmrb857a6QJ0WzI70jXGTh9gwj1aasW49d
- OsuOx7FJ8Pe/1rpHhfxMSfUV5IvlJSfP8wkyzG7Sf1dQPCw1TOMQHU2o+gGlYMWdSQyWvu/yv6n
- D5pKDSvdbxexX2Xf1YWH+EHtoxX871lfpBZwwrvk82rfykUtGHULC0GElN2YcAyJV6dHn6q/7fG
- h4JQ7IVdjqQCAgAKJpAFP5qK3TUBl1yuw/k+U3tTY4zUACjcGIYzLxzQKKA06G3cgPmzi/GDiq/
- UBXj+VkNVvkTOYKxO8kXE0=
-X-Received: by 2002:a05:600d:8488:10b0:480:3ad0:93bf with SMTP id
- 5b1f17b1804b1-485567060a1mr198689335e9.24.1773743234402; 
- Tue, 17 Mar 2026 03:27:14 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773743231; x=1774348031;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=iRDEAFCxC5LjnOCBEZCiS2Pr7Crk112Fz556YwJLg3g=;
+ b=s9f4Eu1CdbuxiQbQ0yErIeTGyJ49zhvt/R52TQPuR0puSdcQeihU/aczBAJ28KI15m
+ G7/TqEUJnT57y/Z7xzt5/yw+kwaa71tto4nS3TgjHzfkmxVdW0RPIfROIJy9KkX6+W72
+ SnKXf3mz2RrhhlUUBfdzoyuz5GjGlIzDmw07HocqAmJxvuXKJunbEhe6Xcub+pk2cQFq
+ gyZhlUApJMiIULRJGPnt2wGwpxQSu0RQe8RwvTgkWCpUEIl2gjCt0P6ZVNsEvKr8x1P1
+ hwbro0k4Qlu85SpyEEFY0dm6PqRtFt6eWQGMvnM1XikmqEAPuyLog7R3PlBl2S4EVnvK
+ +t6A==
+X-Gm-Message-State: AOJu0YzoJVqXQnGpj4DAKy4vVGoSWHunuDeuY5IOcQNDkEFctW2l1veC
+ ZCia68LZmtNTmvuK8JlYII41JHnCckQ+BVM3LQUN9+aihf/cZJ0N8hyKahFXlfqaunpGijrX4AW
+ bhhpoJO0=
+X-Gm-Gg: ATEYQzxIh50XQ9oVved/pcucOkx7/LaOFMf+9iKN61clYZ0DEz7u/0ksbq5gcq1lGnO
+ Ckeu1QFg+2+JUAVeFJugcLra9zIaOve8XHRdUymKpSBGqHMSlD+84I3AE2PobLoh7obQyOTBv0o
+ ZDj8udPQegyrCy2UjkUlyyhC0coxg+V3lBkf2tstToGLUMLYXa3V0e8wqU5mTQjm553w/Xk2Tln
+ Y46xjx4eLZsiGywoBs6DCgmtaeJyCTMMvqNGsBSCdlHwK2SdNg7aOVd82nKM0ORiAkYrJKbJvOK
+ K/9slUIiOyxV3RRx7YJ3+hCQXQG8EwABaSaRewT2o+74NTq/V4/rfolsOAUWQdWNU3BNcnubSMz
+ c2O3a08IhA2H0zVjhaIaILvmy4QX5BhfT5y2MAHq7d4mhksrVbTD6jIlTEsWxO/iRE36w9Im/qB
+ hvwrCj2c37v0Q7SjUHSKh+SjrYugbMZDoi+FWKJNIBw+7hdudwXKC/B+CFCpPuPNCXhhzwSJSTo
+ /+HCpruX8FRp2es9q0CC04=
+X-Received: by 2002:a05:600c:4f0b:b0:485:3b4a:f707 with SMTP id
+ 5b1f17b1804b1-4856eacf14emr43510155e9.10.1773743229747; 
+ Tue, 17 Mar 2026 03:27:09 -0700 (PDT)
 Received: from alex-laptop.lan
  (p200300cf57228c0051af80c54da1a9bc.dip0.t-ipconnect.de.
  [2003:cf:5722:8c00:51af:80c5:4da1:a9bc])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4856ea9c36bsm61977665e9.9.2026.03.17.03.27.13
+ 5b1f17b1804b1-4856ea9c36bsm61977665e9.9.2026.03.17.03.27.08
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 03:27:13 -0700 (PDT)
+ Tue, 17 Mar 2026 03:27:09 -0700 (PDT)
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
 To: qemu-devel@nongnu.org
 Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
@@ -77,17 +76,15 @@ Cc: Alexander Mikhalitsyn <alexander@mihalicyn.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Subject: [PATCH v5 4/8] tests/functional/migration: add VM launch/configure
- hooks
-Date: Tue, 17 Mar 2026 11:27:04 +0100
-Message-ID: <20260317102708.126725-5-alexander@mihalicyn.com>
+Subject: [PATCH v5 0/8] hw/nvme: add basic live migration support
+Date: Tue, 17 Mar 2026 11:27:00 +0100
+Message-ID: <20260317102708.126725-1-alexander@mihalicyn.com>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260317102708.126725-1-alexander@mihalicyn.com>
-References: <20260317102708.126725-1-alexander@mihalicyn.com>
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::333;
- envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x333.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=alexander@mihalicyn.com; helo=mail-wm1-x32c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -112,58 +109,98 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
-Introduce configure_machine, launch_source_vm and assert_dest_vm
-methods to allow child classes to override some pieces of
-source/dest VMs creation, start and check logic.
+Dear friends,
 
-Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
----
- tests/functional/migration.py | 22 +++++++++++++++++++---
- 1 file changed, 19 insertions(+), 3 deletions(-)
+This patchset adds basic live migration support for
+QEMU emulated NVMe device.
 
-diff --git a/tests/functional/migration.py b/tests/functional/migration.py
-index e995328e833..40e9c094c46 100644
---- a/tests/functional/migration.py
-+++ b/tests/functional/migration.py
-@@ -40,19 +40,35 @@ def assert_migration(self, src_vm, dst_vm):
-         self.assertEqual(dst_vm.cmd('query-status')['status'], 'running')
-         self.assertEqual(src_vm.cmd('query-status')['status'],'postmigrate')
- 
-+    # Can be overridden by subclasses to configure both source/dest VMs.
-+    def configure_machine(self, vm):
-+        vm.add_args('-nodefaults')
-+
-+    # Can be overridden by subclasses to prepare the source VM before migration,
-+    # e.g. by running some workload inside the source VM to see if it continues
-+    # to run properly after migration.
-+    def launch_source_vm(self, vm):
-+        vm.launch()
-+
-+    # Can be overridden by subclasses to check the destination VM after migration,
-+    # e.g. by checking if the workload is still running after migration.
-+    def assert_dest_vm(self, vm):
-+        pass
-+
-     def migrate_vms(self, dst_uri, src_uri, dst_vm, src_vm):
-         dst_vm.qmp('migrate-incoming', uri=dst_uri)
-         src_vm.qmp('migrate', uri=src_uri)
-         self.assert_migration(src_vm, dst_vm)
-+        self.assert_dest_vm(dst_vm)
- 
-     def migrate(self, dst_uri, src_uri=None):
-         dst_vm = self.get_vm('-incoming', 'defer', name="dst-qemu")
--        dst_vm.add_args('-nodefaults')
-+        self.configure_machine(dst_vm)
-         dst_vm.launch()
- 
-         src_vm = self.get_vm(name="src-qemu")
--        src_vm.add_args('-nodefaults')
--        src_vm.launch()
-+        self.configure_machine(src_vm)
-+        self.launch_source_vm(src_vm)
- 
-         if src_uri is None:
-             src_uri = dst_uri
+Implementation has some limitations:
+- only one NVMe namespace is supported
+- SMART counters are not preserved
+- CMB is not supported
+- PMR is not supported
+- SPDM is not supported
+- SR-IOV is not supported
+
+I believe this is something I can support in next patchset versions or
+separately on-demand (when usecase appears).
+
+Testing.
+
+This patch series was manually tested on:
+- Debian 13.3 VM (kernel 6.12.69+deb13-amd64) using fio on *non-root* NVMe disk
+  (root disk was virtio-scsi):
+
+time fio --name=nvme-verify \
+    --filename=/dev/nvme0n1 \
+    --size=5G \
+    --rw=randwrite \
+    --bs=4k \
+    --iodepth=16 \
+    --numjobs=1 \
+    --direct=0 \
+    --ioengine=io_uring \
+    --verify=crc32c \
+    --verify_fatal=1
+
+- Windows Server 2022 VM (NVMe drive was a *root* disk) with opened browser
+  playing video.
+
+No defects were found.
+
+Git tree:
+https://github.com/mihalicyn/qemu/commits/nvme-live-migration
+
+Changelog for version 5:
+- rebased on top of https://lore.kernel.org/all/20260304212303.667141-1-vsementsov@yandex-team.ru/
+  (as Peter has requested)
+
+Changelog for version 4:
+- vmstate dynamic array support reworked as suggested by Peter Xu
+  VMS_ARRAY_OF_POINTER_ALLOW_NULL flag was introduced
+  qtests were added
+- NVMe migration blockers were reworked as Klaus has requested earlier
+  Now, instead of having "deny list" approach, we have more strict pattern
+  of NVMe features filtering and it should be harded to break migration when
+  adding new NVMe features.
+
+Changelog for version 3:
+- rebased
+- simple functional test was added (in accordance with Klaus Jensen's review comment)
+  $ meson test 'func-x86_64-nvme_migration' --setup thorough -C build
+
+Changelog for version 2:
+- full support for AERs (in-flight requests and queued events too)
+
+Kind regards,
+Alex
+
+Alexander Mikhalitsyn (8):
+  migration/vmstate: export vmstate_{load, save}_field helpers
+  migration: add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
+  tests/unit/test-vmstate: add tests for VMS_ARRAY_OF_POINTER_ALLOW_NULL
+  tests/functional/migration: add VM launch/configure hooks
+  hw/nvme: add migration blockers for non-supported cases
+  hw/nvme: split nvme_init_sq/nvme_init_cq into helpers
+  hw/nvme: add basic live migration support
+  tests/functional/x86_64: add migration test for NVMe device
+
+ hw/nvme/ctrl.c                                | 874 +++++++++++++++++-
+ hw/nvme/ns.c                                  | 160 ++++
+ hw/nvme/nvme.h                                |   8 +
+ hw/nvme/trace-events                          |  11 +
+ include/block/nvme.h                          |  12 +
+ include/migration/vmstate.h                   |  83 +-
+ migration/savevm.c                            |  26 +
+ migration/vmstate-types.c                     |  91 ++
+ migration/vmstate.c                           |  64 +-
+ tests/functional/migration.py                 |  22 +-
+ tests/functional/x86_64/meson.build           |   1 +
+ .../functional/x86_64/test_nvme_migration.py  | 159 ++++
+ tests/unit/test-vmstate.c                     | 157 ++++
+ 13 files changed, 1618 insertions(+), 50 deletions(-)
+ create mode 100755 tests/functional/x86_64/test_nvme_migration.py
+
 -- 
 2.47.3
 
