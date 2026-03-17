@@ -4,107 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C6A8F33802
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 06:25:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E08C0F33805
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 06:47:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2NrK-0005ID-EN; Tue, 17 Mar 2026 02:24:54 -0400
+	id 1w2OCX-0008QY-GM; Tue, 17 Mar 2026 02:46:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2NrH-0005I5-QQ
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:24:52 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2OCQ-0008QJ-VY
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:46:45 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w2NrF-0002ld-KJ
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:24:51 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2OCO-00009h-4Q
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 02:46:42 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773728688;
+ s=mimecast20190719; t=1773729996;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=qOilMFnKwPk4JZ1kbuAAO3oY/kEae6P2L8wIIQrvGxk=;
- b=XCbaNqBK7hvkhNInWYXFU6Cy39KhqXwDNV89HmHqRaDON083Uk5tmQjJa0VTnx0XL9yN7E
- uGVAVKTuRnGyb7SCJtymb+DIrMVCDfDrC6FPJ884OCkQrYpD4dHiUwPsfpNszT/ARs8oXV
- InawadfkSQNYxq2Oi/nQFgkljVn8FrE=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ in-reply-to:in-reply-to:references:references;
+ bh=d91tdzbxhDbJjvX+l29VuRNyuFqUyAH+SkvraxNqufY=;
+ b=dkz1a4/jS3q4B+bqW6jPOTrSMkyxmF3xB1VVFaxL46omFBQvQLsswJ+GdPpG32IHBYCHP9
+ ijYqI/XWh4cIN3aKwC5ZetBLBlvMVoDq/wwty3h735R6mdbciNha++qrGrnii6p7ot2pq4
+ nMvIvaJCX6+gSDLfGtz2MVB/P0UHwYs=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-397-BhDXwFkfNJ-uoCKGXE0MXg-1; Tue,
- 17 Mar 2026 02:24:46 -0400
-X-MC-Unique: BhDXwFkfNJ-uoCKGXE0MXg-1
-X-Mimecast-MFC-AGG-ID: BhDXwFkfNJ-uoCKGXE0MXg_1773728685
-Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-679-Be0GzhyYOjizm1RfAJH6UA-1; Tue,
+ 17 Mar 2026 02:46:33 -0400
+X-MC-Unique: Be0GzhyYOjizm1RfAJH6UA-1
+X-Mimecast-MFC-AGG-ID: Be0GzhyYOjizm1RfAJH6UA_1773729992
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 11DAE1800464; Tue, 17 Mar 2026 06:24:45 +0000 (UTC)
-Received: from [10.44.32.37] (unknown [10.44.32.37])
- by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id DD47C1955F19; Tue, 17 Mar 2026 06:24:41 +0000 (UTC)
-Message-ID: <bd616907-9265-4ca2-83d3-d157d717c916@redhat.com>
-Date: Tue, 17 Mar 2026 07:24:40 +0100
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 76D6B19560A2; Tue, 17 Mar 2026 06:46:32 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id F00611800107; Tue, 17 Mar 2026 06:46:31 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 7D10621E6937; Tue, 17 Mar 2026 07:46:29 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Alessandro Ratti <alessandro@0x65c.net>
+Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  berrange@redhat.com,
+ mst@redhat.com,  pbonzini@redhat.com
+Subject: Re: [PATCH v2 1/2] hw/qdev: Clarify fallback order in
+ qdev_get_printable_name()
+In-Reply-To: <20260311215003.664815-2-alessandro@0x65c.net> (Alessandro
+ Ratti's message of "Wed, 11 Mar 2026 22:50:02 +0100")
+References: <20260311215003.664815-1-alessandro@0x65c.net>
+ <20260311215003.664815-2-alessandro@0x65c.net>
+Date: Tue, 17 Mar 2026 07:46:29 +0100
+Message-ID: <87ldfrlzqy.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: -device T,help crashes
-To: Markus Armbruster <armbru@redhat.com>, qemu-devel@nongnu.org
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?=
- <philmd@linaro.org>
-References: <87pl5abgpl.fsf@pond.sub.org> <87bjgtzcoa.fsf@pond.sub.org>
-From: Thomas Huth <thuth@redhat.com>
-Content-Language: en-US
-Autocrypt: addr=thuth@redhat.com; keydata=
- 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
-In-Reply-To: <87bjgtzcoa.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -129,61 +87,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 12/03/2026 09.15, Markus Armbruster wrote:
-> Markus Armbruster <armbru@redhat.com> writes:
-...
->> These crashes escape tests/qtest/device-introspect-test, because it
->> covers only HMP "device_add T,help", not CLI "-device T,help".
-> 
-> Anyone wants to cook up a patch to cover -device?
+Alessandro Ratti <alessandro@0x65c.net> writes:
 
-Quick'n'dirty patch:
+> Replace the uninformative "<unknown device>" final fallback with the
+> canonical QOM path (e.g. /machine/peripheral-anon/device[0]).
+>
+> Also clean up comments to accurately describe qdev_get_dev_path()
+> behavior, drop an unnecessary comment on the dev->id check, rename
+> the @vdev parameter to @dev for consistency with surrounding code,
+> and add g_assert(dev) to match qdev_get_human_name()'s precondition.
+>
+> Update the doc comment in qdev.h to reflect the new fallback chain.
+>
+> Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+> ---
+>  hw/core/qdev.c         | 29 ++++++++++++-----------------
+>  include/hw/core/qdev.h | 11 +++++------
+>  2 files changed, 17 insertions(+), 23 deletions(-)
+>
+> diff --git a/hw/core/qdev.c b/hw/core/qdev.c
+> index e48616b2c6..f9fb7966dd 100644
+> --- a/hw/core/qdev.c
+> +++ b/hw/core/qdev.c
+> @@ -411,33 +411,28 @@ char *qdev_get_dev_path(DeviceState *dev)
+>      return NULL;
+>  }
+>  
+> -const char *qdev_get_printable_name(DeviceState *vdev)
+> +const char *qdev_get_printable_name(DeviceState *dev)
+>  {
+> -    /*
+> -     * Return device ID if explicity set
+> -     * (e.g. -device virtio-blk-pci,id=foo)
+> -     * This allows users to correlate errors with their custom device
+> -     * names.
+> -     */
+> -    if (vdev->id) {
+> -        return g_strdup(vdev->id);
+> +    g_assert(dev != NULL);
 
-diff --git a/tests/qtest/device-introspect-test.c 
-b/tests/qtest/device-introspect-test.c
---- a/tests/qtest/device-introspect-test.c
-+++ b/tests/qtest/device-introspect-test.c
-@@ -105,6 +105,7 @@ static void test_one_device(QTestState *qts, const char 
-*type)
-      QDict *resp;
-      char *help, *escaped;
-      GRegex *comma;
-+    int ret;
+This replaces crash on dev->id below by an assertion failure.  I
+wouldn't bother.
 
-      g_test_message("Testing device '%s'", type);
+> +
+> +    if (dev->id) {
+> +        return g_strdup(dev->id);
+>      }
+> +
+>      /*
+> -     * Fall back to the canonical QOM device path (eg. ID for PCI
+> -     * devices).
+> -     * This ensures the device is still uniquely and meaningfully
+> -     * identified.
+> +     * Fall back to a bus-specific device path, if the bus
+> +     * provides one (e.g. PCI address "0000:00:04.0").
+>       */
+> -    const char *path = qdev_get_dev_path(vdev);
+> +    const char *path = qdev_get_dev_path(dev);
+>      if (path) {
+>          return path;
+>      }
+>  
+>      /*
+> -     * Final fallback: if all else fails, return a placeholder string.
+> -     * This ensures the error message always contains a valid string.
+> +     * Final fallback: return the canonical QOM path
+> +     * (e.g. /machine/peripheral-anon/device[0]).
+>       */
 
-@@ -119,6 +120,17 @@ static void test_one_device(QTestState *qts, const char 
-*type)
+Is the comment useful?
 
-      help = qtest_hmp(qts, "device_add \"%s,help\"", escaped);
-      g_free(help);
-+
-+    if (!g_str_equal(type, "nonexistent") && !g_str_equal(type, "device")) {
-+        help = g_strdup_printf("%s -device \"%s,help\" > /dev/null", 
-qtest_qemu_binary(NULL), escaped);
-+        ret = system(help);
-+        g_free(help);
-+        if (ret) {
-+            fprintf(stderr, "Running qemu with -device %s,help failed!\n", 
-escaped);
-+            abort();
-+        }
-+    }
-+
-      g_free(escaped);
-  }
+> -    return g_strdup("<unknown device>");
+> +    return object_get_canonical_path(OBJECT(dev));
+>  }
+>  
+>  void qdev_add_unplug_blocker(DeviceState *dev, Error *reason)
+> diff --git a/include/hw/core/qdev.h b/include/hw/core/qdev.h
+> index f99a8979cc..2da7327144 100644
+> --- a/include/hw/core/qdev.h
+> +++ b/include/hw/core/qdev.h
+> @@ -1087,18 +1087,17 @@ char *qdev_get_dev_path(DeviceState *dev);
+>  
+>  /**
+>   * qdev_get_printable_name: Return human readable name for device
+> - * @dev: Device to get name of
+> + * @dev: Device to get name of. Must not be NULL.
+>   *
+>   * Returns: A newly allocated string containing some human
+>   * readable name for the device, suitable for printing in
+> - * user-facing error messages. The function will never return NULL,
+> - * so the name can be used without further checking or fallbacks.
+> + * user-facing error messages.
+>   *
+>   * If the device has an explicitly set ID (e.g. by the user on the
+>   * command line via "-device thisdev,id=myid") this is preferred.
+> - * Otherwise we try the canonical QOM device path (which will be
+> - * the PCI ID for PCI devices, for example). If all else fails
+> - * we will return the placeholder "<unknown device">.
+> + * Otherwise we try the bus-specific device path (which will be
+> + * the PCI address for PCI devices, for example). If all else fails
+> + * we return the canonical QOM path.
 
-But I think it needs some more work - we likely don't want to run this for 
-each test run since it slows down the test quite a bit. And the 
-g_test_quick() switch is already used for something else here.
+I prefer imperative mood for describing function behavior:
 
-Anyway, found these additional issues so far:
+      Return the device's ID if it has one.  Else, return the path of a
+      device on its bus if it has one.  Else return its canonical QOM
+      path.
 
-  ./qemu-system-ppc -device raven-pcihost,help
-  Segmentation fault (core dumped)
-  ./qemu-system-sparc -device cgthree,help
-  Segmentation fault (core dumped)
+Bonus: obviously not the longwinded, flowery prose LLMs barf out[*].
 
-  Thomas
+>   */
+>  const char *qdev_get_printable_name(DeviceState *dev);
+
+
+[*] Would not be welcome in QEMU at this time; see section "Use of
+AI-generated content" in docs/devel/code-provenance.rst.
 
 
