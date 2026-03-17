@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 94686FEDA1D
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:52:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD05EFEDA1C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 19:53:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2aSU-00047k-Ol; Tue, 17 Mar 2026 15:52:06 -0400
+	id 1w2aSP-00046a-9i; Tue, 17 Mar 2026 15:52:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSR-00047U-L4
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:52:03 -0400
-Received: from tor.source.kernel.org ([2600:3c04:e001:324:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSN-00046D-RW
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:52:00 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSQ-0006SO-8l
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:52:03 -0400
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w2aSM-0006Rg-CM
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 15:51:59 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by tor.source.kernel.org (Postfix) with ESMTP id CB37D61334;
- Tue, 17 Mar 2026 19:52:00 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 6EB58C2BCAF;
- Tue, 17 Mar 2026 19:51:59 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id C03AB6132E;
+ Tue, 17 Mar 2026 19:51:57 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 65736C2BC86;
+ Tue, 17 Mar 2026 19:51:56 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773777120;
- bh=u4k0A1PGQkwO1utbIW6Oaek16i16TJKYwPifohF2eXU=;
+ s=k20201202; t=1773777117;
+ bh=FLrAsBWJ3Lntbh4BRVoONkkoJVDgEccjWA/1sJEobgQ=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=rdMdkqgVjsu0wU34x+cfwBv4eA97bp/Abv9O4yH0gHEuWCBqezrCS8ZVCN6lIqrQS
- CRnLOCqpom4fjIWZ6/qHhr6JT4qk7rhc4TLeeXiHxR8p8tsF1qaTz4wlydLkQKlNXb
- DT6ZShYb74P9ChqDjA0JI25wnTP9nF5uUpLXbqV9A1LukMBgZdh5GrFlfOrUbJXoJB
- aF3gPPYngNGFBK4VucoK08WQkOgFARQi784cxzX7xCihlhip+kiMqYnVm+vNYZ8xw9
- y4rteKh9fVYl2bLfPi9v/q2Fs/IagQdvx2oEQ+oMhGdv5ucrYfSpOErD7E9L+GC4un
- ScBwnbq4kkrqg==
+ b=tPzpBPl+Qk1KRV/W3MRhz7nqgtpEoEkL5bMFOOmts4v9xC6Hm+lHuruD1eDF+1qsp
+ 0RUz+4XYHb3Kq3mYdrPwdnKXD74arTA4ZzJW0i2ETiU1tpeWgJq6ek1JRPK36so1ku
+ BdP2hnXf5tdivghHU0rxp2PiK05K/YqYFj2d4Od3kDZa5K+zqJNFIwNLatyeTLbTYO
+ GUDQgBLcZmtPMSYAUih4KCGLFiL38igA230Gue9FFyzvFeM+BjCHxFNHBlQIphwc0l
+ fzL/hGF17LkjR7KnMuG6e6s3wZ7hhpb6R72YlLrw17V0au121XzGFNurAtnYsLo0sv
+ oJxPIdIiTCEYg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PATCH 5/6] hw/hppa: Fix crash of 64-bit HP-UX 11 while flushing
- caches
-Date: Tue, 17 Mar 2026 20:51:48 +0100
-Message-ID: <20260317195149.8386-6-deller@kernel.org>
+Subject: [PATCH 3/6] target/hppa: Always map 64-bit firmware at
+ 0xfffffff0f0000000
+Date: Tue, 17 Mar 2026 20:51:46 +0100
+Message-ID: <20260317195149.8386-4-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260317195149.8386-1-deller@kernel.org>
 References: <20260317195149.8386-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c04:e001:324:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=tor.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,42 +73,47 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-HP-UX 11 64-bit reads at bootup a word from address CPU_HPA + 0x500
-while flushing the the cache of a T600.
-Add a memory handler to avoid crashing while reading this word.
+I checked on a physical A500, C3700 and C8000 machine and all load their
+64-bit PDC (Firmware) at 0xfffffff0f0000000, independed if the CPU uses
+40 or 44 physical address bits.
+For qemu we will do the same and load the 64-bit SeaBIOS-hppa at the
+same address for our emulated machines.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 ---
- hw/hppa/machine.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+ target/hppa/mem_helper.c | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index e72dda2a68..7e8ebbca3b 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -313,6 +313,22 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
-         memory_region_add_subregion(addr_space,
-                                     translate(NULL, CPU_HPA + i * 0x1000),
-                                     cpu_region);
-+
-+        if (!hppa_is_pa20(&cpu[0]->env))
-+            continue;
-+
-+        /* HP-UX 11 64-bit reads a word from address CPU_HPA + 0x500
-+         * while flushing the the cache of a T600, which was the first
-+         * server with a 64-bit PA-RISC 2.0 CPU.
-+         * We return 0, since the value isn't used anyway. */
-+        g_autofree char *cflush_name;
-+        cflush_name = g_strdup_printf("cpu%u-T600-cacheflush", i);
-+        MemoryRegion *cflush = g_new(MemoryRegion, 1);
-+        memory_region_init_io(cflush, NULL, &hppa_pci_ignore_ops,
-+                              NULL, cflush_name, 4);
-+        memory_region_add_subregion(addr_space,
-+                              translate(NULL, CPU_HPA + i * 0x1000 + 0x500),
-+                              cflush);
-     }
+diff --git a/target/hppa/mem_helper.c b/target/hppa/mem_helper.c
+index a4b382069d..ffbad8acfd 100644
+--- a/target/hppa/mem_helper.c
++++ b/target/hppa/mem_helper.c
+@@ -27,6 +27,7 @@
+ #include "exec/target_page.h"
+ #include "exec/helper-proto.h"
+ #include "hw/core/cpu.h"
++#include "hw/hppa/hppa_hardware.h"
+ #include "trace.h"
  
-     /* RTC and DebugOutputPort on CPU #0 */
+ hwaddr hppa_abs_to_phys_pa1x(uint8_t phys_addr_bits, vaddr addr)
+@@ -66,12 +67,13 @@ hwaddr hppa_abs_to_phys_pa2_w0(uint8_t phys_addr_bits, vaddr addr)
+         /*
+          * PDC address space:
+          * Figures H-10 and H-11 of the parisc2.0 spec do not specify
+-         * where to map into the 64-bit PDC address space.
+-         * We map with an offset which equals the 32-bit address, which
+-         * is what can be seen on physical machines too.
++         * where to map into the 64-bit PDC address space, but verification
++         * on physical A500, C3700 and C8000 machines show that PDC is always
++         * mapped at 0xfffffff0f0000000, independed if the CPU has 40 or 44
++         * physical bits.
+          */
+         addr = (uint32_t)addr;
+-        addr |= -1ull << (phys_addr_bits - 4);
++        addr |= ((uint64_t) FIRMWARE_HIGH) << 32;
+     }
+     return addr;
+ }
 -- 
 2.53.0
 
