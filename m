@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18654F3381E
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:58:26 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C009F3381C
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 08:58:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2QFC-0001H7-IA; Tue, 17 Mar 2026 04:57:43 -0400
+	id 1w2QFV-0002QZ-41; Tue, 17 Mar 2026 04:58:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QCq-0003TY-Tj
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:21 -0400
+ id 1w2QDn-0004S6-7E
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:16 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2QCp-000736-BZ
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:55:16 -0400
+ id 1w2QDl-0007Al-9f
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 04:56:14 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773737714;
+ s=mimecast20190719; t=1773737772;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=e0JR/J6OJK+GQEzT8ir8klbcnwwkITj+TK5vevotDWQ=;
- b=emVIv6+tT938A4bZolbqczFEt2h83fH1lfZq5MWjlbZ/BvEwyy21bDHyytb0Xd6u0mYrFI
- yxQPyQC1haEwwp76JWvrn29ip4AqvHopqsHyP2eHr3RwFQW9sYdbSxPFeZJ5sYK730yDcu
- aZcej1HSqvEicilWny9fYn/RR6lGWnI=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ bh=IThIbV3TFRFRLbuyCHha/PXGer5pKdYiecHjOLIjUJo=;
+ b=JXoE2rMhHC7buPS1KnvYlq+rYH+7BsE2kcX7r8H9cegUJYAWC04tdcP8hFLIYsNWwMKJjv
+ 2FmREx0wRB2qM5bV0+VUF77Ndu+4kK/fKUdlt7ycJkutaHG8H+dAqJZ/ASONP/Ddzx60xi
+ IDb0XwamLaFNsguW8qUmupApUUiGZeI=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-657-8qPUIYJ4Onmfg1KQCZ2XLQ-1; Tue,
- 17 Mar 2026 04:55:13 -0400
-X-MC-Unique: 8qPUIYJ4Onmfg1KQCZ2XLQ-1
-X-Mimecast-MFC-AGG-ID: 8qPUIYJ4Onmfg1KQCZ2XLQ_1773737712
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-35-6TsztJv_NBC1t_gVSCjhng-1; Tue,
+ 17 Mar 2026 04:56:11 -0400
+X-MC-Unique: 6TsztJv_NBC1t_gVSCjhng-1
+X-Mimecast-MFC-AGG-ID: 6TsztJv_NBC1t_gVSCjhng_1773737770
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 5D42C18005B0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:12 +0000 (UTC)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1D14A19560B5
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:56:10 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 508D530002DA
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:55:10 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 1449C180075B
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 08:56:08 +0000 (UTC)
 From: =?utf-8?q?Marc-Andr=C3=A9_Lureau?= <marcandre.lureau@redhat.com>
-Date: Tue, 17 Mar 2026 12:51:01 +0400
-Subject: [PATCH 47/60] ui/vnc: report an error for duplicate display id
+Date: Tue, 17 Mar 2026 12:51:11 +0400
+Subject: [PATCH 57/60] tests: rename the dbus-daemon helper script
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Message-Id: <20260317-qemu-vnc-v1-47-48eb1dcf7b76@redhat.com>
+Message-Id: <20260317-qemu-vnc-v1-57-48eb1dcf7b76@redhat.com>
 References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 In-Reply-To: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
 To: qemu-devel@nongnu.org
-X-Developer-Signature: v=1; a=openpgp-sha256; l=688;
+X-Developer-Signature: v=1; a=openpgp-sha256; l=1187;
  i=marcandre.lureau@redhat.com; h=from:subject:message-id;
- bh=tbQe9OOb5vcHdHHZ8MKDbxR1oX4ZCQVt+T/ARXPvgwk=;
- b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXceKPzXZk8scS5cNs6p3M5EnJd/r76sf0eh
- hDzszrGLUOJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3AAKCRDa6OEJdZac
- 5clcD/43Vo0dBHwUNJWXMFRdIuyW8LSP8rSCiy65S6EbGbrHI7iKJlArrqxpcqBUhxxh/mclf/2
- E6z1o9yvk7T3U4mj40bJz04OXb8otvddh/tjcXP/wz71gF+nN4uydCah9TYEE4Tgk+gEpAlvvrl
- go6IbRqUNA/wbi7VvA+tMf1l9upqhSuRfOpu/xIU83rk4r99A8H6Go3gfZAu5bClnfRBkPJAHuN
- f7VhUOmSfiBf2Pdx9hv8UBlkPWaaQYaaIVvBJ1Q/m5nMLopT0aaLbeMRteSBjHP9NxNUemUOOdi
- jPjP/wc/0Gwoma3mbCB97d27LJ3iX96fJSKYhHAx7ICqYnFu1cyy6z6j1NYtOEZnLckqlzCP+9+
- /2zkb/0EERFNDONBvKTW8CHPP5yS+6sbwmYS11KG61joRGc2p54UzriCxmQm8QQKEY+y6OaBSLP
- GfZBGRbiHU3svVpAv349T+e9F/CA+Gz8jmIFO4/EOqmqfewtwYjWfYZTXAKwJRUc/XfUvETwVGh
- sKwTUs9OaJfUS/68jLivYYH3hXC+br8Rh5jsYEMAFOdbUNBsvRrLIr/Q5T3YcUavSmG7kJhChPI
- FAEV6Un2tu01+QJ7yJMFLLUAv/chCeK6M5CQua37XRGjy9HHJfuWDLv1sqR4sg0uWD8YzcsqqYm
- E73SGTUXBIFWbwQ==
+ bh=I8NqN9mhZ5tch4xSwu14CjXz3zrFIMA/k1n2seamxoI=;
+ b=owEBbQKS/ZANAwAKAdro4Ql1lpzlAcsmYgBpuRXdJn4AvotO+ZHOQcAqzqNW76H2bhhU1DcS5
+ /3Jk3lUErGJAjMEAAEKAB0WIQSHqb2TP4fGBtJ29i3a6OEJdZac5QUCabkV3QAKCRDa6OEJdZac
+ 5UvREACteLOxeiWOlJAqo7XrWShWDkCPvw9SvwAYucvxS/Egcnpf/P3DTPdyAaEKl/1EQpLMFoz
+ xWE74hCtZSMKRGnUZxeGnyBg6mNXhHcE2pnM+mZhbpAUBlSQAq/8gEfkzyhUat+H+Z2HG/s2+oQ
+ hYRgCKaOOLWpMrQrqftRviDHGpAIJAe4v/yAQGnMvuG7c076BNJXchf1/UW+46DkMSHWFM/FQlK
+ OayO3W/fpzkpwl820EbKtfoCXrx4LZyzCWhbkq0ufiTi+pNW5hEkdsq6c2nSvW2wdZTOYmiRMH9
+ PLj02LE2px/KbYW12ZwXoSMFNyCwQ0te7hBYc0l9+2UOwPzB5SNHhd7FtQ/qipGkbSqXNeS7360
+ H3pZsz3Cx3iV/LcL8PYvq7BYatMgb73Qi2KFJFVtHDm9HQ5K5tPscjWaFTHKXQ8SeCAXjgWtXvv
+ jtI2oESyYpiaOrbFN6wsmZYDWZO23xCSSSnqpCsvpocE3IOEkbOjPluqee6+Qafb6t8J7ZptApq
+ j5N2L4J2RHjDof1+OrC2E+n8UtpktI4nezeQncI/7VBohrUH9nLzbqUbuzfzLs0ym4lVZAKqTGj
+ 3RPiqHiNR3CiXX+ikTY7/AEUKjTVzO1Z5dwUT7Xo1cfBMJ5z88hsSoDUAKcQiboBFhBbWu4+b5O
+ kSOLBak6g9ndhOA==
 X-Developer-Key: i=marcandre.lureau@redhat.com; a=openpgp;
  fpr=87A9BD933F87C606D276F62DDAE8E10975969CE5
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -103,28 +103,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Returning NULL without setting an error is odd.
-
-Note that we could make this a programming error too, as the duplicate
-check is also done during QemuOpt parsing.
+The following patches are going to use it for qemu-vnc.
 
 Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
 ---
- ui/vnc.c | 1 +
- 1 file changed, 1 insertion(+)
+ tests/{dbus-vmstate-daemon.sh => dbus-daemon.sh} | 0
+ tests/qtest/meson.build                          | 2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/ui/vnc.c b/ui/vnc.c
-index 03b99c9e590..2c53c92914b 100644
---- a/ui/vnc.c
-+++ b/ui/vnc.c
-@@ -3428,6 +3428,7 @@ VncDisplay *vnc_display_new(const char *id, Error **errp)
-     VncDisplay *vd;
- 
-     if (vnc_display_find(id) != NULL) {
-+        error_setg(errp, "Display '%s' already exists", id);
-         return NULL;
-     }
-     vd = g_malloc0(sizeof(*vd));
+diff --git a/tests/dbus-vmstate-daemon.sh b/tests/dbus-daemon.sh
+similarity index 100%
+rename from tests/dbus-vmstate-daemon.sh
+rename to tests/dbus-daemon.sh
+diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+index be4fa627b5f..b735f55fc40 100644
+--- a/tests/qtest/meson.build
++++ b/tests/qtest/meson.build
+@@ -435,7 +435,7 @@ foreach dir : target_dirs
+     qtest_env.set('QTEST_QEMU_IMG', './qemu-img')
+     test_deps += [qemu_img]
+   endif
+-  qtest_env.set('G_TEST_DBUS_DAEMON', meson.project_source_root() / 'tests/dbus-vmstate-daemon.sh')
++  qtest_env.set('G_TEST_DBUS_DAEMON', meson.project_source_root() / 'tests/dbus-daemon.sh')
+   qtest_env.set('QTEST_QEMU_BINARY', './qemu-system-' + target_base)
+   if have_tools and have_vhost_user_blk_server
+     qtest_env.set('QTEST_QEMU_STORAGE_DAEMON_BINARY', './storage-daemon/qemu-storage-daemon')
 
 -- 
 2.53.0
