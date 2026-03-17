@@ -4,48 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C902BFED9F2
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:20:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3C81CFED9F1
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:20:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Y53-0001wM-8r; Tue, 17 Mar 2026 13:19:45 -0400
+	id 1w2Y5F-0001yY-Vo; Tue, 17 Mar 2026 13:19:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y4t-0001vz-Hw
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:37 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1w2Y53-0001wd-03
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y4q-0005JB-LL
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:34 -0400
+ id 1w2Y51-0005KL-DN
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773767968;
+ s=mimecast20190719; t=1773767982;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding;
- bh=T6BSK8DBmce9Y+BuiYRhi1P9uHDjL4l3FRKtss2mpcc=;
- b=eNNRLI+o71Y0BV4lJcwpMUXeVgOUeqiK1KHzn3r+sK4ubB/K0Ctxlh/ysxm4D8dd4nUOIR
- tLGiBO0K7duZmZwv81vhfjXWqPU7N38g3I/bbquwogocHrYB7kPPwWJIVy1xRdEriEsmEw
- FeKHXb1y7Tjg395PWxkwbI0vqRPdQNk=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QsMnLGi/PISBgtSi+2udu6nlOMSdXWd4W1sADkglRYo=;
+ b=QVnmkz2xJ0B13Z1cuXMb/EBYXzm6yd3RV+mYA/8NzQwi0eu21yATbQoP2jvIzgfFN+v0w/
+ Px+74nrHHWnjlCz+bUDRSPr5M0SDDk2UvSgBhr1PZ7k4sX7r17Ei7iu6xtSXxtQqctc0Ly
+ kmnouXjKbGd0qxM/ahfeDG7RkEy9AhY=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-536-DwTEpTyvO-eAZL9P4GTz0g-1; Tue,
- 17 Mar 2026 13:19:25 -0400
-X-MC-Unique: DwTEpTyvO-eAZL9P4GTz0g-1
-X-Mimecast-MFC-AGG-ID: DwTEpTyvO-eAZL9P4GTz0g_1773767963
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-635-_bpdVQ03PSiFgY2hUR5mAA-1; Tue,
+ 17 Mar 2026 13:19:39 -0400
+X-MC-Unique: _bpdVQ03PSiFgY2hUR5mAA-1
+X-Mimecast-MFC-AGG-ID: _bpdVQ03PSiFgY2hUR5mAA_1773767977
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 023BB195608C; Tue, 17 Mar 2026 17:19:23 +0000 (UTC)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0E4FB19560B4; Tue, 17 Mar 2026 17:19:37 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id B025619560AB; Tue, 17 Mar 2026 17:19:20 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id C8829180075B; Tue, 17 Mar 2026 17:19:34 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
@@ -59,14 +60,17 @@ Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 00/16] ui/audio/dump patches for 11.0-rc
-Date: Tue, 17 Mar 2026 21:19:00 +0400
-Message-ID: <20260317171916.438575-1-marcandre.lureau@redhat.com>
+Subject: [PULL 02/16] rutabaga: improve error handling,
+ fix potential crash during init
+Date: Tue, 17 Mar 2026 21:19:02 +0400
+Message-ID: <20260317171916.438575-3-marcandre.lureau@redhat.com>
+In-Reply-To: <20260317171916.438575-1-marcandre.lureau@redhat.com>
+References: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.133.124;
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
+Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -74,7 +78,7 @@ X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -94,69 +98,76 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-The following changes since commit 559919ce54927d59b215a4665eda7ab6118a48aa:
+When virtio_gpu_rutabaga_get_num_capsets() returns 0, virtio_init()
+isn't called and the device later crashes during realize.
+==72545==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x556ad6f7ba9e bp 0x7ffe6958f810 sp 0x7ffe6958f7e0 T0)
+==72545==The signal is caused by a READ memory access.
+==72545==Hint: address points to the zero page.
+#0 0x556ad6f7ba9e in virtio_memory_listener_commit ../hw/virtio/virtio.c:4034
+#1 0x556ad6a24c96 in listener_add_address_space ../system/memory.c:3128
+#2 0x556ad6a25d15 in memory_listener_register ../system/memory.c:3216
+#3 0x556ad6f7bf11 in virtio_device_realize ../hw/virtio/virtio.c:4075
 
-  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2026-03-16 13:07:33 +0000)
+Rework error handling of the function to set Error appropriately. 0
+capset may be ok now.
 
-are available in the Git repository at:
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+---
+ hw/display/virtio-gpu-rutabaga.c | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
 
-  https://gitlab.com/marcandre.lureau/qemu.git tags/for-11.0-pull-request
-
-for you to fetch changes up to 461632f0b1cb2c5c29ba9875857637e3356b903c:
-
-  coreaudio: Initialize the buffer for device change (2026-03-17 21:15:10 +0400)
-
-----------------------------------------------------------------
-Gather various audio/ui/dump patches for 11.0-rc
-
-----------------------------------------------------------------
-
-Akihiko Odaki (7):
-  ui/console: Unify pixman-OpenGL format mapping
-  ui/console: Remove DisplaySurface::mem_obj
-  ui/surface: Avoid including epoxy/gl.h in header files
-  coreaudio: Improve naming
-  coreaudio: Commit the result of init in the end
-  audio: Add functions to initialize buffers
-  coreaudio: Initialize the buffer for device change
-
-Dongwon Kim (1):
-  ui/gtk-egl: Ensure EGL surface is available before drawing
-
-Fiona Ebner (1):
-  ui/vdagent: add migration blocker when machine version < 10.1
-
-Marc-André Lureau (6):
-  audio/mixeng: drop some needless checks
-  rutabaga: improve error handling, fix potential crash during init
-  virtio-gpu: fix overflow check when allocating 2d image
-  virtio-gpu: use computed rowstride instead of deriving it from hostmem
-  ui/dbus-listener: Fix FBO leak in dbus_cursor_dmabuf
-  ui/dbus-listener: remove dbus_filter on connection close
-
-Nikolai Barybin (1):
-  dump: enhance dump_state_prepare fd initialization
-
- audio/audio_int.h                |   2 +
- audio/audio_template.h           |   6 -
- include/ui/console.h             |   4 +-
- include/ui/shader.h              |   2 -
- include/ui/spice-display.h       |   1 +
- include/ui/surface.h             |   6 +-
- audio/audio-mixeng-be.c          |  24 +++-
- dump/dump.c                      |   9 +-
- hw/core/machine.c                |   1 +
- hw/display/virtio-gpu-rutabaga.c |  19 ++-
- hw/display/virtio-gpu.c          |  43 +++++--
- ui/console-gl.c                  |  74 ++++++-----
- ui/dbus-listener.c               |  16 +++
- ui/gtk-egl.c                     |  12 +-
- ui/shader.c                      |   1 +
- ui/spice-display.c               |   9 +-
- ui/vdagent.c                     |  46 +++++++
- audio/coreaudio.m                | 204 ++++++++++++++++---------------
- 18 files changed, 288 insertions(+), 191 deletions(-)
-
+diff --git a/hw/display/virtio-gpu-rutabaga.c b/hw/display/virtio-gpu-rutabaga.c
+index ed5ae52acbe..ebb6c783fb0 100644
+--- a/hw/display/virtio-gpu-rutabaga.c
++++ b/hw/display/virtio-gpu-rutabaga.c
+@@ -1032,19 +1032,19 @@ static bool virtio_gpu_rutabaga_init(VirtIOGPU *g, Error **errp)
+     return true;
+ }
+ 
+-static int virtio_gpu_rutabaga_get_num_capsets(VirtIOGPU *g)
++static bool
++virtio_gpu_rutabaga_get_num_capsets(VirtIOGPU *g, uint32_t *num_capsets, Error **errp)
+ {
+     int result;
+-    uint32_t num_capsets;
+     VirtIOGPURutabaga *vr = VIRTIO_GPU_RUTABAGA(g);
+ 
+-    result = rutabaga_get_num_capsets(vr->rutabaga, &num_capsets);
++    result = rutabaga_get_num_capsets(vr->rutabaga, num_capsets);
+     if (result) {
+-        error_report("Failed to get capsets");
+-        return 0;
++        error_setg_errno(errp, -result, "Failed to get num_capsets");
++        return false;
+     }
+-    vr->num_capsets = num_capsets;
+-    return num_capsets;
++    vr->num_capsets = *num_capsets;
++    return true;
+ }
+ 
+ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+@@ -1070,7 +1070,7 @@ static void virtio_gpu_rutabaga_handle_ctrl(VirtIODevice *vdev, VirtQueue *vq)
+ 
+ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
+ {
+-    int num_capsets;
++    uint32_t num_capsets;
+     VirtIOGPUBase *bdev = VIRTIO_GPU_BASE(qdev);
+     VirtIOGPU *gpudev = VIRTIO_GPU(qdev);
+ 
+@@ -1083,8 +1083,7 @@ static void virtio_gpu_rutabaga_realize(DeviceState *qdev, Error **errp)
+         return;
+     }
+ 
+-    num_capsets = virtio_gpu_rutabaga_get_num_capsets(gpudev);
+-    if (!num_capsets) {
++    if (!virtio_gpu_rutabaga_get_num_capsets(gpudev, &num_capsets, errp)) {
+         return;
+     }
+ 
 -- 
 2.53.0
 
