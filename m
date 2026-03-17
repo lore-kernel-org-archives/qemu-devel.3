@@ -4,115 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 030DAFD8776
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 13:44:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CA073FD876A
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 13:45:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Uhu-0006Iq-OI; Tue, 17 Mar 2026 09:43:38 -0400
+	id 1w2Ujw-0007lz-Rv; Tue, 17 Mar 2026 09:45:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1w2Uhs-0006H7-Nr; Tue, 17 Mar 2026 09:43:37 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2Ujs-0007l9-VA
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 09:45:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <milesg@linux.ibm.com>)
- id 1w2Uhr-0005iS-0O; Tue, 17 Mar 2026 09:43:36 -0400
-Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62H696ol442363; Tue, 17 Mar 2026 13:43:29 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:reply-to:subject:to; s=pp1;
- bh=O+pbnDwDIhI9m+VOyD59vcXya5J3p2DxQK0PrmGU1VU=; b=kv9DbexHpRXu
- VryzIiG848GFzACCtEUvttoswH2yQDnPJT8pqL0drSYo1KVDMxtjt8dMAMWluKuX
- n1lIJT4Zc0q7zBnz7bmldbH5kiqMGqHthenb2g33IPlY2fc6agNQncYiDJ9NLstF
- IdTc0cP225k2aZxSoM9UfRFHU15Tz7qLdn/6U84hJIycl+1Vpm6uSyUMHoDBHim4
- LaqklbhJUuO3KEFU1hTdYIkJzzLuO/P2I3NSA+/v0fJbLg3JpDCbcZHzIZIR0zu3
- V9OFRKZMKyMa9dx70mbFAarPJvwLjnsQNMKJhHBF4GgCFRTJ/hXJujkf8tcQy4WG
- khH6jjG6Gg==
-Received: from ppma12.dal12v.mail.ibm.com
- (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvybs4ykd-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Mar 2026 13:43:28 +0000 (GMT)
-Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
- by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62HAw1DO004559;
- Tue, 17 Mar 2026 13:43:27 GMT
-Received: from smtprelay03.dal12v.mail.ibm.com ([172.16.1.5])
- by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwj0s9gak-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Tue, 17 Mar 2026 13:43:27 +0000
-Received: from smtpav04.wdc07v.mail.ibm.com (smtpav04.wdc07v.mail.ibm.com
- [10.39.53.231])
- by smtprelay03.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62HDhRIH11010814
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Tue, 17 Mar 2026 13:43:27 GMT
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id A145658052;
- Tue, 17 Mar 2026 13:43:26 +0000 (GMT)
-Received: from smtpav04.wdc07v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 15B715806A;
- Tue, 17 Mar 2026 13:43:26 +0000 (GMT)
-Received: from mambor8.rchland.ibm.com (unknown [9.10.239.198])
- by smtpav04.wdc07v.mail.ibm.com (Postfix) with ESMTP;
- Tue, 17 Mar 2026 13:43:25 +0000 (GMT)
-Message-ID: <843a92d17038ca06d7aab8e40227bed8f6957b0c.camel@linux.ibm.com>
-Subject: Re: [PATCH 2/3] target/ppc: Explicitly declare 'cpu_reserve_val2'
- register as 64-bit
-From: Miles Glenn <milesg@linux.ibm.com>
-To: Philippe =?ISO-8859-1?Q?Mathieu-Daud=E9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Chinmay Rath <rathc@linux.ibm.com>, Anton Johansson <anjo@rev.ng>, Nicholas
- Piggin <npiggin@gmail.com>
-Date: Tue, 17 Mar 2026 08:43:25 -0500
-In-Reply-To: <20260315170832.40331-3-philmd@linaro.org>
-References: <20260315170832.40331-1-philmd@linaro.org>
- <20260315170832.40331-3-philmd@linaro.org>
-Organization: IBM
-Content-Type: text/plain; charset="UTF-8"
-X-Mailer: Evolution 3.28.5 (3.28.5-27.el8_10) 
-Mime-Version: 1.0
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2Ujp-0002Af-9R
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 09:45:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773755135;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=kh60y58qR6LPfRiaxV2jE7W8hWj+RaAOQfVKuB0Z59A=;
+ b=ZQ8ga5uv92Z1ygkXBiRncAoLB2axRCgphZkQD3sQb8dbMaFJRWQ7E7NsvWcUegkeUqyeU0
+ T2aTRmPg+yzf6xw+J/SmopI0xH8z6r7xSOBd7oCZkkJZxw+Z4AT0WxE8p5nyZqkjRxMGU4
+ mhPP/MsDKbbMf4HMmZSVxJgsQ7x33UI=
+Received: from mail-wr1-f69.google.com (mail-wr1-f69.google.com
+ [209.85.221.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-318-aeeDnYTpNjKtPnxMfcTZlw-1; Tue, 17 Mar 2026 09:45:33 -0400
+X-MC-Unique: aeeDnYTpNjKtPnxMfcTZlw-1
+X-Mimecast-MFC-AGG-ID: aeeDnYTpNjKtPnxMfcTZlw_1773755132
+Received: by mail-wr1-f69.google.com with SMTP id
+ ffacd0b85a97d-439c54e0f6aso676175f8f.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 06:45:33 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773755132; x=1774359932; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kh60y58qR6LPfRiaxV2jE7W8hWj+RaAOQfVKuB0Z59A=;
+ b=Q/764CGY6ts+QwxEkhgPLz9l9QAgd4Un2tz5Qx3/Z22qHMX9dY4y85vkLLd6ImVz8k
+ NGd7Ungw3/0D3rZNDrxf95x0anH19Oa8c3K9gJOLrKE0G7sTRIFvRFgQseJ0sqjBmA1c
+ i0H1p/ptAgHCxstkP2PWAaRXGx9A4JR1G2EdpSA1dxvuNIIoVYd1HtaIQRnqzjywmwiv
+ 0JY6Ha2NduAOzjAHqmUqgKCM6OG0BWE7yQVqLtR0jVtXQT/96cJV7DfXFrkMjGogs6O+
+ rk/6hl8/MudNM3FySPDm3MMWv45J48x5ehjbQgIZ+Pi/AWhII2IugIx0QkPnRFv0iaGG
+ J7Dg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773755132; x=1774359932;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kh60y58qR6LPfRiaxV2jE7W8hWj+RaAOQfVKuB0Z59A=;
+ b=WPRk+3jffE6luQOMGGpfzMUR/LuOifREWmo7xjpaojZrjGyYmPASzYNqFcm15ez9Ev
+ BrUAT+gAxHAjKSIQGkyb9FaLosoFj1P9I28dguKutuM2Ez6IcbZkzUf+8Y0psFQpSF84
+ ldbzdzAYhRyjXczvfs43I7vK5+vUEtU8BXlUkdwGjaApQZ31CNWx87134/iTtOObDzFD
+ PLpONW/jHcgY+8t3/JOrbY789PHHjA+sB64+1LnzOw3uGAYAlD5pIWDfKMI+L33sfeNl
+ wjiKx9AN/ZtrL5ZkF0Y/DO2PhuNV/wC3dOxTQDP3B6FZcnhzhnd+Jc2/8HyuJTGGxhjM
+ PQPQ==
+X-Gm-Message-State: AOJu0YxhVKwKhWWveaRamp4AZF2KEd/aCIOmx8+Jse4mzkPr0ZBB45LX
+ IEOiugrJWGtjcnw9K2tmclVDUBZXqJ3eAVUB8SZ8l4NnIeRws0leuY38AK/Zg5iCQLREaDuDEOu
+ 5g2G7H+oUeRX3Wwbr/FqOkFqtqB9AzMnA9OrbgxkiCmLlqkzlOKqjG5aY
+X-Gm-Gg: ATEYQzz4zO6pkXAIxFP/uQQEeA3dd+SG4lbP0LA8lE52dioC0nzKGMtfPE3YhZJL/oA
+ v74bHt6IK477BCTssFMXxkw+uML7LoiKKCCHFnTzR4Ydn4BEH6HIBXrTPv3xbNL3Fq2WZQFYtsJ
+ Z/UYAQ3Zjy86IpEEw3CfPytcyp795VnD66yJaFflHQr/F3Z7hkej776ILARoGvriPiQkZGtT+Jx
+ HTYXwaqT62CbjYf4fbxY2Ot31gyY264Ik0P8ZLSkkorBlrWuMgP0It69zb0C8GRn1jJg733XuWs
+ 3RRCh+ei0FaGuSDUoiXkGjMhSlEs/SPjDLjnRTeVHfFlRUWXyDd11UNm8E7ZReIJq24jWwlb+ld
+ pzijM6M/59nBRZ0QsmF7oBHyK41U9HHg7dc8GZo5A3kJfHrUGs9FWlfG0inkiTthKQIiGGdNFJp
+ BOqxw=
+X-Received: by 2002:a05:6000:144d:b0:439:adc3:f0e7 with SMTP id
+ ffacd0b85a97d-43b4981a37emr6829783f8f.9.1773755132474; 
+ Tue, 17 Mar 2026 06:45:32 -0700 (PDT)
+X-Received: by 2002:a05:6000:144d:b0:439:adc3:f0e7 with SMTP id
+ ffacd0b85a97d-43b4981a37emr6829722f8f.9.1773755131981; 
+ Tue, 17 Mar 2026 06:45:31 -0700 (PDT)
+Received: from localhost
+ (p200300cfd737d0a83481d97604204561.dip0.t-ipconnect.de.
+ [2003:cf:d737:d0a8:3481:d976:420:4561])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-439fe19b936sm54168435f8f.5.2026.03.17.06.45.31
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Tue, 17 Mar 2026 06:45:31 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>
+Subject: [PULL 0/2] Block layer patches
+Date: Tue, 17 Mar 2026 14:45:19 +0100
+Message-ID: <20260317134521.112121-1-hreitz@redhat.com>
+X-Mailer: git-send-email 2.53.0
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Authority-Analysis: v=2.4 cv=MMttWcZl c=1 sm=1 tr=0 ts=69b95a81 cx=c_pps
- a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
- a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VnNF1IyMAAAA:8
- a=KKAkSRfTAAAA:8 a=ja36r-UFxlY8USd8m5QA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
- a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: UMH3j_jgrwwY-V_tRTQDi6KbWn3dhHUS
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDEyMSBTYWx0ZWRfX3s/WkRgpqFWq
- mD7QFi+JDyIjy2U2esishhlpCiLuWcmwywadW0AvceQVaYGxoNAj66kmxsE0sK80pBCBuoO8KQb
- mBxtBOCit1O7aar1nP9AfMOIxzBqHiTjeShU9UoXTRM066VWbs+RQLP2ejnCt2/qsN1C/3twwBh
- fYod4ZxEhX0jgcUhPxzqvuxHoU4kH/E1eEtL0hGt8nVE2NpEtgb38VguveKdftboTz+RJBSkmAs
- /xTCoK68TrVF9ln5OoBkqC3ujQlmFKpG2Xy5GTg1GyxMKlExewzrEWWGrL9S4EGf/bSGeA9P9jT
- uDXeOISExtylxhUwz5gl1/q6mY1JwSVQ/rg1kqLOquQYblwBbUXXMMF4jT4vWSVUZS01IiOcoXZ
- uLih6LxiHH548pfqwb6Bx0r8hVvQhh0AMdcWsx9/iI+6PRP2rLvqvMp/KPb1bvBle8FE/in1y1C
- Ub9sUdpkeJbCDWyZegg==
-X-Proofpoint-GUID: lXHhmhMJtjvhXx3YrnRBO68qxcHciGsu
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-17_01,2026-03-17_01,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 lowpriorityscore=0 malwarescore=0 spamscore=0
- priorityscore=1501 impostorscore=0 adultscore=0 phishscore=0 clxscore=1015
- bulkscore=0 classifier=typeunknown authscore=0 authtc= authcc= route=outbound
- adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603170121
-Received-SPF: pass client-ip=148.163.156.1; envelope-from=milesg@linux.ibm.com;
- helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -125,76 +115,41 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: milesg@linux.ibm.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Reviewed-by: Glenn Miles <milesg@linux.ibm.com>
+The following changes since commit 559919ce54927d59b215a4665eda7ab6118a48aa:
 
-Thanks,
+  Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2026-03-16 13:07:33 +0000)
 
-Glenn
+are available in the Git repository at:
 
-On Sun, 2026-03-15 at 18:08 +0100, Philippe Mathieu-Daudé wrote:
-> When TARGET_PPC64 is set, the 'target_ulong' type expand to
-> the 'uint64_t' one. Use the latter which is more explicity,
-> similarly with the TCG and migration APIs. No logical change
-> intended.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->  target/ppc/cpu.h       | 2 +-
->  target/ppc/machine.c   | 2 +-
->  target/ppc/translate.c | 4 ++--
->  3 files changed, 4 insertions(+), 4 deletions(-)
-> 
-> diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-> index 63c8fa25acc..f4438982928 100644
-> --- a/target/ppc/cpu.h
-> +++ b/target/ppc/cpu.h
-> @@ -1298,7 +1298,7 @@ struct CPUArchState {
->      target_ulong reserve_length; /* Reservation larx op size (bytes) */
->      target_ulong reserve_val;    /* Reservation value */
->  #if defined(TARGET_PPC64)
-> -    target_ulong reserve_val2;
-> +    uint64_t reserve_val2;
->  #endif
->  
->      /* These are used in supervisor mode only */
-> diff --git a/target/ppc/machine.c b/target/ppc/machine.c
-> index 49cfdc6d674..b44c3ccf0ae 100644
-> --- a/target/ppc/machine.c
-> +++ b/target/ppc/machine.c
-> @@ -682,7 +682,7 @@ static const VMStateDescription vmstate_reservation = {
->          VMSTATE_UINTTL(env.reserve_length, PowerPCCPU),
->          VMSTATE_UINTTL(env.reserve_val, PowerPCCPU),
->  #if defined(TARGET_PPC64)
-> -        VMSTATE_UINTTL(env.reserve_val2, PowerPCCPU),
-> +        VMSTATE_UINT64(env.reserve_val2, PowerPCCPU),
->  #endif
->          VMSTATE_END_OF_LIST()
->      }
-> diff --git a/target/ppc/translate.c b/target/ppc/translate.c
-> index 0fc81570a8b..ecf75c1376e 100644
-> --- a/target/ppc/translate.c
-> +++ b/target/ppc/translate.c
-> @@ -76,7 +76,7 @@ static TCGv cpu_reserve;
->  static TCGv cpu_reserve_length;
->  static TCGv cpu_reserve_val;
->  #if defined(TARGET_PPC64)
-> -static TCGv cpu_reserve_val2;
-> +static TCGv_i64 cpu_reserve_val2;
->  #endif
->  static TCGv cpu_fpscr;
->  static TCGv_i32 cpu_access_type;
-> @@ -152,7 +152,7 @@ void ppc_translate_init(void)
->                                           offsetof(CPUPPCState, reserve_val),
->                                           "reserve_val");
->  #if defined(TARGET_PPC64)
-> -    cpu_reserve_val2 = tcg_global_mem_new(tcg_env,
-> +    cpu_reserve_val2 = tcg_global_mem_new_i64(tcg_env,
->                                            offsetof(CPUPPCState, reserve_val2),
->                                            "reserve_val2");
->  #endif
+  https://gitlab.com/hreitz/qemu.git tags/pull-block-2026-03-17
+
+for you to fetch changes up to 9ac85f4cc7995217db8f736733b990d6addcb036:
+
+  block/mirror: fix assertion failure upon duplicate complete for job using 'replaces' (2026-03-17 12:31:54 +0100)
+
+----------------------------------------------------------------
+Block layer patches for rc0
+
+- Fix race condition in throttle-group code triggering an assertion
+  failure
+- Fix assertion failure in mirror job when issuing job-complete twice
+
+----------------------------------------------------------------
+Alberto Garcia (1):
+  throttle-group: Fix race condition in throttle_group_restart_queue()
+
+Fiona Ebner (1):
+  block/mirror: fix assertion failure upon duplicate complete for job
+    using 'replaces'
+
+ block/mirror.c          | 28 ++++++++-------
+ block/throttle-groups.c | 79 +++++++++++++++++++++++++++++++----------
+ 2 files changed, 75 insertions(+), 32 deletions(-)
+
+-- 
+2.53.0
 
 
