@@ -4,90 +4,88 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C7472FED9F6
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 14F6FFED9EF
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:50:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2YWv-0003Qn-W7; Tue, 17 Mar 2026 13:48:34 -0400
+	id 1w2YXw-0004zS-GS; Tue, 17 Mar 2026 13:49:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w2YWJ-0003M8-IK
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:47:57 -0400
-Received: from mail-dl1-x122d.google.com ([2607:f8b0:4864:20::122d])
+ id 1w2YXr-0004ts-FS
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:49:32 -0400
+Received: from mail-dy1-x1334.google.com ([2607:f8b0:4864:20::1334])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <lucaaamaral@gmail.com>)
- id 1w2YWG-0006yM-MN
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:47:55 -0400
-Received: by mail-dl1-x122d.google.com with SMTP id
- a92af1059eb24-128b9b7e3edso3100083c88.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 10:47:52 -0700 (PDT)
+ id 1w2YXp-00078x-2q
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:49:30 -0400
+Received: by mail-dy1-x1334.google.com with SMTP id
+ 5a478bee46e88-2c0e3a2605fso643800eec.0
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 10:49:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773769671; x=1774374471; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773769767; x=1774374567; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=igadBMQz9znvrsencUvgyKo5P35QP2wP5jvgu00wOBw=;
- b=BOwCwUYUChr6o5oWqSCzhUtcw2AFQF977o+wmz6qgVAigogORfWKgJFWFaqEJCxiUl
- xk/iYUvG57yJzDSsDX6dIJK9D9gkUpdZQdcNrAYFIKCS8yX3VYns1shjcAeobHgUNKrk
- B3DFoid0zAKJJvOSVXPcnazYaokKESAMo/j61oeABr+mgMMd5XUfO2V/RagyUQ+iDDwp
- FtKZ6LhPVmTdU/6JYXrOsA4w1p94XDh+i8L6gOzkTgRblzSuiCwd6IalGYVFYS3SdD5F
- GA7b2rmgnw715uUPqDfBiLbraFb2mfG4kpwvLbaawppSrM03ZiQrqZX+vmCx5bUQHtEy
- FdoQ==
+ bh=ZI53HZkSc7DNY29qJq30SopvLPnb6dODYs8Z/mK2TEw=;
+ b=ja94keE27aX6eBqZD5TOu7Mj8/Z7BBh+Qtc5YA0yCSrhWq6J9iAlljU8pxLu6MTgxr
+ wHlYIk19R51KPsISjJWNqhPyxfsvLkCX9hpMjmFgvA0MhJowB8G22qO1th13wIAtMLO8
+ o4XWmBTd8XlV02bEXOVJoX3wHUA9eDkvdtrpKTB8hYAi65Nb4u1q+okg6RQt9Dhl2nYr
+ xhFZMUl7GXQmFmgmJ+W82/7MvKZ9TmI3QYSAack6A2I+ganUczWcKQNwSUuNf15oxTVW
+ eaXd8fViHmUci6ExtGsXZbZ+d+0AXWVU+8bC3tYl2JpQrBYdpPULTsfCEkWPHw1KxuHR
+ o1xQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773769671; x=1774374471;
+ d=1e100.net; s=20251104; t=1773769767; x=1774374567;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=igadBMQz9znvrsencUvgyKo5P35QP2wP5jvgu00wOBw=;
- b=pBRcLKqEQ5Cq2wGxR3vuZ4J5RDwptR0jcSHi1jfzMT9+i7FvtBbF4YOFdgOus/8TA2
- xmAbeP+lryiwVLXMnH+Z5dOXFHQwlZQasbP+x8fYjqfYUmutEG0KcJvMZbPXq0F+kDe/
- wiCKqSZIxrrQa1+AeNiZRIDFZX6Wl+64FXd6cBcln1zLcLTrH1ITmR2kCE68uQxPwArP
- Krvmh1QVp3CTnpaW4XWyf9hgLrfZV9v7wq7AzdpmOc+pNKq1hdBJ9Y445hksJRKAyuuv
- o+9FC2EzGKjHuFcZtfNMexdQA9dTkuJoDpnq/5U5ECGXIjpJR/xRJfKyJ2SguLkBomg7
- R7sw==
-X-Gm-Message-State: AOJu0YyLGb+je2ZAZ72wG6cP23wln218NrWJoPPxQRmMUCVIgFf4vw3O
- 0Psf/HJBq9tOLQAUTboSUt1/+3hkY4KOIP0qd2LxlU/P0rGPALWX26PV2nk4lErg
-X-Gm-Gg: ATEYQzy9fC3bsnEUyJudFgclUpf3vLdXFzx64WSxeOMkho7t3KOaZWDpB6tD5qI0SKm
- QzdJO8+/K9gcsPc0ne2NuyTrvBE92IfCfuVqvMwIYUzp5XTk2PH+B5HnI7bj9mC6yFnkUt88P1f
- dbuKD5rQoBSr6bSF0CptEbUSJIIJpXblV/FCrN4x7BuPFhJ0HL3Qj+j0V/DSPOnj3ckGMX0e3AQ
- nmu/Ky35zcwxm9+DFTSXdTnAnGy2sygQ1ZfdA6Zw56ucOzLXB29P3594/jBtzOUzhfyE2sSWmTJ
- gJqhiJI5JAvRbSG/E2v/k5xWXrkxe7nwT86e2oBOKGaeKfaTu3tQEOlV2wZl2VoQ9YgF5W/TTdl
- 7LERvRuqxe+f8CbzpITtg02ZIirNJ1Fw0Xfc9m1123Tb2pRz+WwhigmdH2IzPMd+inncgw08fCQ
- Mwe/+h0LEfllvfbXiQ5N2q1xHJf9uWwsHJjj9rSSXdwdMKFxpPKXem
-X-Received: by 2002:a05:7022:68a5:b0:128:d737:d7a6 with SMTP id
- a92af1059eb24-129a70f9326mr215746c88.3.1773769670650; 
- Tue, 17 Mar 2026 10:47:50 -0700 (PDT)
+ bh=ZI53HZkSc7DNY29qJq30SopvLPnb6dODYs8Z/mK2TEw=;
+ b=aB7cDQwtNi5ZaSmv/ov3R4Eex/QL1kD6jCkudkF+ew1gS7FtLwX4nBo4vAGwUT8y8k
+ N1TSFl95vfZ16QUv0wxSbPT7Te+Vkc1fjSs7/f/4Mv8smZEeXIXfygvTDjIh/fJuPEDN
+ U5NBryvWNY+MKNOqJrwKdrbrNNBYFWSiMO+3u3lWNl+2uJsrF4Y4JvjpUQ2sOafHvoMg
+ Uu8ltf0eoJwcLN54Gg6MDNpDk1vgL6OM6LET4j4bM8KNrALhIkb39H63AsB+E3Xtfmvv
+ TPtTBA81Yp03S/rL00Yb+ZmzxEg3TyDCfk/iwEImS9GdhcMEmRHal1+8i/W/HxIyqNYa
+ 0J+A==
+X-Gm-Message-State: AOJu0Yzfv61rwiuogXFAhtoV45JsOb5542VETGyDb8FxAzS+nxI7u9uo
+ M4JBRibWaFlGZLWnXh6tC605QzOmQym5EzLRX9Y4D3AFldg0dzRvut5aGV1H6dhf
+X-Gm-Gg: ATEYQzysBBEd4qlLVn4ig3Qf4FITavkhGcPj0Tt2Nhwtclp0ebPK1ypseaQcVUI4BWs
+ sey3ivlvmDAmy/psHDoGbWRBIALLqfiKWeaJ2gsDoW1uAtrPJzFjT0TbjwIgmJ5AESGyE5P0u9f
+ 4cTkD6cjpa+20Pu8c1dENwyJccSnvbTXVZFEzgmRePfP4dUiwXnJJXguLRKOXLO7F7Q5qNjEWUR
+ vWSxBizK7I0fmqOkCfjf/DHKR36wrQg/rS67BZZFp1/bKDQMzIQohQHpXbsZJmoSi6HJUvFXAei
+ pV1SKlpz5oijJE2kqmHmhhsObTGsEW0mtYjahUoiyJkTrPLdUfXcrArHC27f4N2IHLEIc8/WgIB
+ U3YpU+/i2tBoT/6dKFf3GF1GmQTvWwRz+Fse79Z2hjNYtF7zjHZYZKasgCIvCyDszjApO8tEauX
+ seJEUnuxKg4AdfLJbc/dcVfJpSmOxeCC+VgaEtJ9/V46bLx5Yfk1J/
+X-Received: by 2002:a05:7301:4b03:b0:2c0:c903:4be1 with SMTP id
+ 5a478bee46e88-2c0e4e4fe47mr206289eec.0.1773769767240; 
+ Tue, 17 Mar 2026 10:49:27 -0700 (PDT)
 Received: from localhost.localdomain ([143.54.78.51])
  by smtp.gmail.com with ESMTPSA id
- a92af1059eb24-129b4147522sm281844c88.15.2026.03.17.10.47.47
+ 5a478bee46e88-2c0e536896csm282115eec.3.2026.03.17.10.49.24
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Tue, 17 Mar 2026 10:47:50 -0700 (PDT)
+ Tue, 17 Mar 2026 10:49:26 -0700 (PDT)
 From: Lucas Amaral <lucaaamaral@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: qemu-arm@nongnu.org, agraf@csgraf.de, peter.maydell@linaro.org,
- mohamed@unpredictable.fr, alex.bennee@linaro.org,
- Lucas Amaral <lucaaamaral@gmail.com>
-Subject: [PATCH v5 1/6] target/arm/emulate: add ISV=0 emulation library with
- load/store immediate
-Date: Tue, 17 Mar 2026 14:47:35 -0300
-Message-ID: <20260317174740.31674-2-lucaaamaral@gmail.com>
+Cc: qemu-arm@nongnu.org, alex.bennee@linaro.org, dmitry.osipenko@collabora.com,
+ marcandre.lureau@redhat.com, Lucas Amaral <lucaaamaral@gmail.com>
+Subject: [PATCH v4 2/4] virtio-gpu: decouple Venus from CONFIG_OPENGL
+Date: Tue, 17 Mar 2026 14:49:13 -0300
+Message-ID: <20260317174915.31829-3-lucaaamaral@gmail.com>
 X-Mailer: git-send-email 2.52.0
-In-Reply-To: <20260317174740.31674-1-lucaaamaral@gmail.com>
-References: <20260317174740.31674-1-lucaaamaral@gmail.com>
+In-Reply-To: <20260317174915.31829-1-lucaaamaral@gmail.com>
+References: <20260317174915.31829-1-lucaaamaral@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::122d;
- envelope-from=lucaaamaral@gmail.com; helo=mail-dl1-x122d.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1334;
+ envelope-from=lucaaamaral@gmail.com; helo=mail-dy1-x1334.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -103,495 +101,268 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a shared emulation library for AArch64 load/store instructions that
-cause ISV=0 data aborts under hardware virtualization (HVF, WHPX).
+Venus (virtio-gpu Vulkan context) currently requires an OpenGL
+display backend due to build-time and runtime coupling.  On macOS,
+no OpenGL display backend exists.
 
-When the Instruction Syndrome Valid bit is clear, the hypervisor cannot
-determine the faulting instruction's target register or access size from
-the syndrome alone.  This library fetches and decodes the instruction
-using a decodetree-generated decoder, then emulates it by accessing the
-vCPU's register file (CPUARMState) and memory (cpu_memory_rw_debug)
-directly.
+Remove the opengl.found() build requirement for the virtio-gpu-gl
+module; virglrenderer provides Venus independently of OpenGL.
 
-This patch establishes the framework and adds load/store single with
-immediate addressing — the most common ISV=0 trigger.  Subsequent
-patches add register-offset, pair, exclusive, and atomic instructions.
-
-Instruction coverage:
-  - STR/LDR (GPR): unscaled, post-indexed, unprivileged, pre-indexed,
-    unsigned offset — all sizes (8/16/32/64-bit), sign/zero extension
-  - STR/LDR (SIMD/FP): same addressing modes, 8-128 bit elements
-  - PRFM: prefetch treated as NOP
-  - DC cache maintenance (SYS CRn=C7): NOP on MMIO
-
-This library uses its own a64-ldst.decode rather than sharing
-target/arm/tcg/a64.decode.  TCG's trans_* functions are a compiler:
-they emit IR ops into a translation block for later execution.  This
-library's trans_* functions are an interpreter: they execute directly
-against the vCPU register file and memory.  The decodetree-generated
-dispatcher calls trans_* by name, so both cannot coexist in the same
-translation unit.  Decode patterns are kept consistent with TCG's
-where possible.
-
-Decodetree differences from TCG:
-  - &ldst_imm adds a 'u' flag to distinguish 9-bit signed vs 12-bit
-    unsigned immediate forms.  TCG uses %uimm_scaled to pre-scale
-    the unsigned immediate at decode time; here imm:12 is extracted
-    raw and the handler scales it.
+Gate GL-specific code paths behind CONFIG_OPENGL and display_opengl:
+- Only advertise VIRGL/VIRGL2 capsets when display_opengl is set
+- Only pass VIRGL_RENDERER_NO_VIRGL when !display_opengl with Venus
+- Null out GL context callbacks when no GL display is available
+- Route 2D display commands to the software renderer (pixman) when
+  Venus runs without GL (venus no-GL mode)
+- Allow Venus to bypass the OpenGL display check at device realize
 
 Signed-off-by: Lucas Amaral <lucaaamaral@gmail.com>
 ---
- target/arm/emulate/a64-ldst.decode | 129 ++++++++++++++++
- target/arm/emulate/arm_emulate.c   | 237 +++++++++++++++++++++++++++++
- target/arm/emulate/arm_emulate.h   |  30 ++++
- target/arm/emulate/meson.build     |   8 +
- target/arm/meson.build             |   1 +
- 5 files changed, 405 insertions(+)
- create mode 100644 target/arm/emulate/a64-ldst.decode
- create mode 100644 target/arm/emulate/arm_emulate.c
- create mode 100644 target/arm/emulate/arm_emulate.h
- create mode 100644 target/arm/emulate/meson.build
+ hw/display/meson.build        |  8 ++--
+ hw/display/virtio-gpu-base.c  | 15 ++++++-
+ hw/display/virtio-gpu-gl.c    |  6 ++-
+ hw/display/virtio-gpu-virgl.c | 85 ++++++++++++++++++++++++++++++-----
+ 4 files changed, 98 insertions(+), 16 deletions(-)
 
-diff --git a/target/arm/emulate/a64-ldst.decode b/target/arm/emulate/a64-ldst.decode
-new file mode 100644
-index 00000000..c887dcba
---- /dev/null
-+++ b/target/arm/emulate/a64-ldst.decode
-@@ -0,0 +1,129 @@
-+# AArch64 load/store instruction patterns for ISV=0 emulation
-+#
-+# Copyright (c) 2026 Lucas Amaral <lucaaamaral@gmail.com>
-+#
-+# SPDX-License-Identifier: GPL-2.0-or-later
+diff --git a/hw/display/meson.build b/hw/display/meson.build
+index 90e6c041..509479e7 100644
+--- a/hw/display/meson.build
++++ b/hw/display/meson.build
+@@ -76,9 +76,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_GPU')
+   virtio_gpu_ss.add(when: 'CONFIG_VHOST_USER_GPU', if_true: files('vhost-user-gpu.c'))
+   hw_display_modules += {'virtio-gpu': virtio_gpu_ss}
+ 
+-  if virgl.found() and opengl.found()
++  if virgl.found()
+     virtio_gpu_gl_ss = ss.source_set()
+-    virtio_gpu_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', virgl, opengl],
++    virtio_gpu_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', virgl],
+                          if_true: [files('virtio-gpu-gl.c', 'virtio-gpu-virgl.c'), pixman, virgl])
+     hw_display_modules += {'virtio-gpu-gl': virtio_gpu_gl_ss}
+   endif
+@@ -99,9 +99,9 @@ if config_all_devices.has_key('CONFIG_VIRTIO_PCI')
+                         if_true: files('vhost-user-gpu-pci.c'))
+   hw_display_modules += {'virtio-gpu-pci': virtio_gpu_pci_ss}
+ 
+-  if virgl.found() and opengl.found()
++  if virgl.found()
+     virtio_gpu_pci_gl_ss = ss.source_set()
+-    virtio_gpu_pci_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', 'CONFIG_VIRTIO_PCI', virgl, opengl],
++    virtio_gpu_pci_gl_ss.add(when: ['CONFIG_VIRTIO_GPU', 'CONFIG_VIRTIO_PCI', virgl],
+                              if_true: [files('virtio-gpu-pci-gl.c'), pixman])
+     hw_display_modules += {'virtio-gpu-pci-gl': virtio_gpu_pci_gl_ss}
+   endif
+diff --git a/hw/display/virtio-gpu-base.c b/hw/display/virtio-gpu-base.c
+index cb76302e..cc9704cd 100644
+--- a/hw/display/virtio-gpu-base.c
++++ b/hw/display/virtio-gpu-base.c
+@@ -18,6 +18,7 @@
+ #include "qapi/error.h"
+ #include "qemu/error-report.h"
+ #include "hw/display/edid.h"
++#include "system/system.h"
+ #include "trace.h"
+ #include "qapi/qapi-types-virtio.h"
+ 
+@@ -157,7 +158,18 @@ virtio_gpu_get_flags(void *opaque)
+     VirtIOGPUBase *g = opaque;
+     int flags = GRAPHIC_FLAGS_NONE;
+ 
+-    if (virtio_gpu_virgl_enabled(g->conf)) {
++    if (virtio_gpu_venus_enabled(g->conf)) {
++        /* TODO: set GRAPHIC_FLAGS_VK for direct Vulkan scanout */
++    }
 +
-+### Argument sets
-+
-+# Load/store immediate (unscaled, pre/post-index, unprivileged, unsigned offset)
-+# 'u' flag: 0 = 9-bit signed immediate (byte offset), 1 = 12-bit unsigned (needs << sz)
-+&ldst_imm       rt rn imm sz sign w p unpriv ext u
-+
-+### Format templates
-+
-+# Load/store immediate (9-bit signed)
-+@ldst_imm       .. ... . .. .. . imm:s9 .. rn:5 rt:5   &ldst_imm u=0 unpriv=0 p=0 w=0
-+@ldst_imm_pre   .. ... . .. .. . imm:s9 .. rn:5 rt:5   &ldst_imm u=0 unpriv=0 p=0 w=1
-+@ldst_imm_post  .. ... . .. .. . imm:s9 .. rn:5 rt:5   &ldst_imm u=0 unpriv=0 p=1 w=1
-+@ldst_imm_user  .. ... . .. .. . imm:s9 .. rn:5 rt:5   &ldst_imm u=0 unpriv=1 p=0 w=0
-+
-+# Load/store unsigned offset (12-bit, handler scales by << sz)
-+@ldst_uimm      .. ... . .. .. imm:12 rn:5 rt:5        &ldst_imm u=1 unpriv=0 p=0 w=0
-+
-+### Load/store register — unscaled immediate (LDUR/STUR)
-+
-+# GPR
-+STR_i           sz:2 111 0 00 00 0 ......... 00 ..... .....    @ldst_imm sign=0 ext=0
-+LDR_i           00 111 0 00 01 0 ......... 00 ..... .....      @ldst_imm sign=0 ext=1 sz=0
-+LDR_i           01 111 0 00 01 0 ......... 00 ..... .....      @ldst_imm sign=0 ext=1 sz=1
-+LDR_i           10 111 0 00 01 0 ......... 00 ..... .....      @ldst_imm sign=0 ext=1 sz=2
-+LDR_i           11 111 0 00 01 0 ......... 00 ..... .....      @ldst_imm sign=0 ext=0 sz=3
-+LDR_i           00 111 0 00 10 0 ......... 00 ..... .....      @ldst_imm sign=1 ext=0 sz=0
-+LDR_i           01 111 0 00 10 0 ......... 00 ..... .....      @ldst_imm sign=1 ext=0 sz=1
-+LDR_i           10 111 0 00 10 0 ......... 00 ..... .....      @ldst_imm sign=1 ext=0 sz=2
-+LDR_i           00 111 0 00 11 0 ......... 00 ..... .....      @ldst_imm sign=1 ext=1 sz=0
-+LDR_i           01 111 0 00 11 0 ......... 00 ..... .....      @ldst_imm sign=1 ext=1 sz=1
-+
-+# SIMD/FP
-+STR_v_i         sz:2 111 1 00 00 0 ......... 00 ..... .....    @ldst_imm sign=0 ext=0
-+STR_v_i         00 111 1 00 10 0 ......... 00 ..... .....      @ldst_imm sign=0 ext=0 sz=4
-+LDR_v_i         sz:2 111 1 00 01 0 ......... 00 ..... .....    @ldst_imm sign=0 ext=0
-+LDR_v_i         00 111 1 00 11 0 ......... 00 ..... .....      @ldst_imm sign=0 ext=0 sz=4
-+
-+### Load/store register — post-indexed
-+
-+# GPR
-+STR_i           sz:2 111 0 00 00 0 ......... 01 ..... .....    @ldst_imm_post sign=0 ext=0
-+LDR_i           00 111 0 00 01 0 ......... 01 ..... .....      @ldst_imm_post sign=0 ext=1 sz=0
-+LDR_i           01 111 0 00 01 0 ......... 01 ..... .....      @ldst_imm_post sign=0 ext=1 sz=1
-+LDR_i           10 111 0 00 01 0 ......... 01 ..... .....      @ldst_imm_post sign=0 ext=1 sz=2
-+LDR_i           11 111 0 00 01 0 ......... 01 ..... .....      @ldst_imm_post sign=0 ext=0 sz=3
-+LDR_i           00 111 0 00 10 0 ......... 01 ..... .....      @ldst_imm_post sign=1 ext=0 sz=0
-+LDR_i           01 111 0 00 10 0 ......... 01 ..... .....      @ldst_imm_post sign=1 ext=0 sz=1
-+LDR_i           10 111 0 00 10 0 ......... 01 ..... .....      @ldst_imm_post sign=1 ext=0 sz=2
-+LDR_i           00 111 0 00 11 0 ......... 01 ..... .....      @ldst_imm_post sign=1 ext=1 sz=0
-+LDR_i           01 111 0 00 11 0 ......... 01 ..... .....      @ldst_imm_post sign=1 ext=1 sz=1
-+
-+# SIMD/FP
-+STR_v_i         sz:2 111 1 00 00 0 ......... 01 ..... .....    @ldst_imm_post sign=0 ext=0
-+STR_v_i         00 111 1 00 10 0 ......... 01 ..... .....      @ldst_imm_post sign=0 ext=0 sz=4
-+LDR_v_i         sz:2 111 1 00 01 0 ......... 01 ..... .....    @ldst_imm_post sign=0 ext=0
-+LDR_v_i         00 111 1 00 11 0 ......... 01 ..... .....      @ldst_imm_post sign=0 ext=0 sz=4
-+
-+### Load/store register — unprivileged
-+
-+# GPR only (no SIMD/FP unprivileged forms)
-+STR_i           sz:2 111 0 00 00 0 ......... 10 ..... .....    @ldst_imm_user sign=0 ext=0
-+LDR_i           00 111 0 00 01 0 ......... 10 ..... .....      @ldst_imm_user sign=0 ext=1 sz=0
-+LDR_i           01 111 0 00 01 0 ......... 10 ..... .....      @ldst_imm_user sign=0 ext=1 sz=1
-+LDR_i           10 111 0 00 01 0 ......... 10 ..... .....      @ldst_imm_user sign=0 ext=1 sz=2
-+LDR_i           11 111 0 00 01 0 ......... 10 ..... .....      @ldst_imm_user sign=0 ext=0 sz=3
-+LDR_i           00 111 0 00 10 0 ......... 10 ..... .....      @ldst_imm_user sign=1 ext=0 sz=0
-+LDR_i           01 111 0 00 10 0 ......... 10 ..... .....      @ldst_imm_user sign=1 ext=0 sz=1
-+LDR_i           10 111 0 00 10 0 ......... 10 ..... .....      @ldst_imm_user sign=1 ext=0 sz=2
-+LDR_i           00 111 0 00 11 0 ......... 10 ..... .....      @ldst_imm_user sign=1 ext=1 sz=0
-+LDR_i           01 111 0 00 11 0 ......... 10 ..... .....      @ldst_imm_user sign=1 ext=1 sz=1
-+
-+### Load/store register — pre-indexed
-+
-+# GPR
-+STR_i           sz:2 111 0 00 00 0 ......... 11 ..... .....    @ldst_imm_pre sign=0 ext=0
-+LDR_i           00 111 0 00 01 0 ......... 11 ..... .....      @ldst_imm_pre sign=0 ext=1 sz=0
-+LDR_i           01 111 0 00 01 0 ......... 11 ..... .....      @ldst_imm_pre sign=0 ext=1 sz=1
-+LDR_i           10 111 0 00 01 0 ......... 11 ..... .....      @ldst_imm_pre sign=0 ext=1 sz=2
-+LDR_i           11 111 0 00 01 0 ......... 11 ..... .....      @ldst_imm_pre sign=0 ext=0 sz=3
-+LDR_i           00 111 0 00 10 0 ......... 11 ..... .....      @ldst_imm_pre sign=1 ext=0 sz=0
-+LDR_i           01 111 0 00 10 0 ......... 11 ..... .....      @ldst_imm_pre sign=1 ext=0 sz=1
-+LDR_i           10 111 0 00 10 0 ......... 11 ..... .....      @ldst_imm_pre sign=1 ext=0 sz=2
-+LDR_i           00 111 0 00 11 0 ......... 11 ..... .....      @ldst_imm_pre sign=1 ext=1 sz=0
-+LDR_i           01 111 0 00 11 0 ......... 11 ..... .....      @ldst_imm_pre sign=1 ext=1 sz=1
-+
-+# SIMD/FP
-+STR_v_i         sz:2 111 1 00 00 0 ......... 11 ..... .....    @ldst_imm_pre sign=0 ext=0
-+STR_v_i         00 111 1 00 10 0 ......... 11 ..... .....      @ldst_imm_pre sign=0 ext=0 sz=4
-+LDR_v_i         sz:2 111 1 00 01 0 ......... 11 ..... .....    @ldst_imm_pre sign=0 ext=0
-+LDR_v_i         00 111 1 00 11 0 ......... 11 ..... .....      @ldst_imm_pre sign=0 ext=0 sz=4
-+
-+### PRFM — unscaled immediate: prefetch is a NOP
-+
-+NOP             11 111 0 00 10 0 --------- 00 ----- -----
-+
-+### Load/store register — unsigned offset
-+
-+# GPR
-+STR_i           sz:2 111 0 01 00 ............ ..... .....       @ldst_uimm sign=0 ext=0
-+LDR_i           00 111 0 01 01 ............ ..... .....         @ldst_uimm sign=0 ext=1 sz=0
-+LDR_i           01 111 0 01 01 ............ ..... .....         @ldst_uimm sign=0 ext=1 sz=1
-+LDR_i           10 111 0 01 01 ............ ..... .....         @ldst_uimm sign=0 ext=1 sz=2
-+LDR_i           11 111 0 01 01 ............ ..... .....         @ldst_uimm sign=0 ext=0 sz=3
-+LDR_i           00 111 0 01 10 ............ ..... .....         @ldst_uimm sign=1 ext=0 sz=0
-+LDR_i           01 111 0 01 10 ............ ..... .....         @ldst_uimm sign=1 ext=0 sz=1
-+LDR_i           10 111 0 01 10 ............ ..... .....         @ldst_uimm sign=1 ext=0 sz=2
-+LDR_i           00 111 0 01 11 ............ ..... .....         @ldst_uimm sign=1 ext=1 sz=0
-+LDR_i           01 111 0 01 11 ............ ..... .....         @ldst_uimm sign=1 ext=1 sz=1
-+
-+# PRFM — unsigned offset
-+NOP             11 111 0 01 10 ------------ ----- -----
-+
-+# SIMD/FP
-+STR_v_i         sz:2 111 1 01 00 ............ ..... .....       @ldst_uimm sign=0 ext=0
-+STR_v_i         00 111 1 01 10 ............ ..... .....         @ldst_uimm sign=0 ext=0 sz=4
-+LDR_v_i         sz:2 111 1 01 01 ............ ..... .....       @ldst_uimm sign=0 ext=0
-+LDR_v_i         00 111 1 01 11 ............ ..... .....         @ldst_uimm sign=0 ext=0 sz=4
-+
-+### System instructions — DC cache maintenance
-+
-+# SYS with CRn=C7 covers all data cache operations (DC CIVAC, CVAC, etc.).
-+# On MMIO regions, cache maintenance is a harmless no-op.
-+NOP             1101 0101 0000 1 --- 0111 ---- --- -----
-diff --git a/target/arm/emulate/arm_emulate.c b/target/arm/emulate/arm_emulate.c
-new file mode 100644
-index 00000000..02fefc30
---- /dev/null
-+++ b/target/arm/emulate/arm_emulate.c
-@@ -0,0 +1,237 @@
++    /*
++     * TODO: virtio_gpu_virgl_enabled() checks VIRTIO_GPU_FLAG_VIRGL_ENABLED
++     * which is set for both OpenGL (VIRGL) and Vulkan (Venus) backends.
++     * This condition should ideally use a dedicated OpenGL-only flag. For
++     * now, display_opengl correctly gates GL scanout since Venus leaves it
++     * at 0.
++     */
++    if (virtio_gpu_virgl_enabled(g->conf) && display_opengl) {
+         flags |= GRAPHIC_FLAGS_GL;
+     }
+ 
+@@ -273,6 +285,7 @@ virtio_gpu_base_get_features(VirtIODevice *vdev, uint64_t features,
+     }
+     if (virtio_gpu_blob_enabled(g->conf)) {
+         features |= (1 << VIRTIO_GPU_F_RESOURCE_BLOB);
++        features |= (1 << VIRTIO_GPU_F_BLOB_ALIGNMENT);
+     }
+     if (virtio_gpu_context_init_enabled(g->conf)) {
+         features |= (1 << VIRTIO_GPU_F_CONTEXT_INIT);
+diff --git a/hw/display/virtio-gpu-gl.c b/hw/display/virtio-gpu-gl.c
+index 2b7a41c4..1a95e6a7 100644
+--- a/hw/display/virtio-gpu-gl.c
++++ b/hw/display/virtio-gpu-gl.c
+@@ -124,7 +124,9 @@ static void virtio_gpu_gl_device_realize(DeviceState *qdev, Error **errp)
+         return;
+     }
+ 
+-    if (!display_opengl) {
++    if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
++        /* Venus uses Vulkan in the render server, no GL needed */
++    } else if (!display_opengl) {
+         error_setg(errp,
+                    "The display backend does not have OpenGL support enabled");
+         error_append_hint(errp,
+@@ -245,4 +247,6 @@ static void virtio_register_types(void)
+ type_init(virtio_register_types)
+ 
+ module_dep("hw-display-virtio-gpu");
++#ifdef CONFIG_OPENGL
+ module_dep("ui-opengl");
++#endif
+diff --git a/hw/display/virtio-gpu-virgl.c b/hw/display/virtio-gpu-virgl.c
+index b7a2d160..2f9700e0 100644
+--- a/hw/display/virtio-gpu-virgl.c
++++ b/hw/display/virtio-gpu-virgl.c
+@@ -19,8 +19,10 @@
+ #include "hw/virtio/virtio-gpu.h"
+ #include "hw/virtio/virtio-gpu-bswap.h"
+ #include "hw/virtio/virtio-gpu-pixman.h"
+-
++#include "system/system.h"
++#ifdef CONFIG_OPENGL
+ #include "ui/egl-helpers.h"
++#endif
+ 
+ #include <virglrenderer.h>
+ 
+@@ -50,6 +52,16 @@ struct virtio_gpu_virgl_resource {
+     void *map_fixed;
+ };
+ 
 +/*
-+ * AArch64 instruction emulation for ISV=0 data aborts
-+ *
-+ * Copyright (c) 2026 Lucas Amaral <lucaaamaral@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
++ * Venus no-GL mode: Venus is enabled but no OpenGL display is available.
++ * Display commands use software (pixman) rendering; Venus/3D commands
++ * go through the virglrenderer render server.
 + */
-+
-+#include "arm_emulate.h"
-+#include "target/arm/cpu.h"
-+#include "exec/cpu-common.h"
-+#include "exec/target_page.h"
-+
-+/* TODO: assumes LE guest data layout (sufficient for HVF/WHPX, both LE-only) */
-+
-+/* Named "DisasContext" as required by the decodetree code generator */
-+typedef struct {
-+    CPUState *cpu;
-+    CPUARMState *env;
-+    ArmEmulResult result;
-+} DisasContext;
-+
-+#include "decode-a64-ldst.c.inc"
-+
-+/* GPR data access (Rt, Rs, Rt2) -- register 31 = XZR */
-+
-+static uint64_t gpr_read(DisasContext *ctx, int reg)
++static bool virtio_gpu_venus_nogl(VirtIOGPU *g)
 +{
-+    if (reg == 31) {
-+        return 0;  /* XZR */
-+    }
-+    return ctx->env->xregs[reg];
++    return virtio_gpu_venus_enabled(g->parent_obj.conf) && !display_opengl;
 +}
 +
-+static void gpr_write(DisasContext *ctx, int reg, uint64_t val)
-+{
-+    if (reg == 31) {
-+        return;  /* XZR -- discard */
-+    }
-+    ctx->env->xregs[reg] = val;
-+    ctx->cpu->vcpu_dirty = true;
-+}
-+
-+/* Base register access (Rn) -- register 31 = SP */
-+
-+static uint64_t base_read(DisasContext *ctx, int rn)
-+{
-+    return ctx->env->xregs[rn];
-+}
-+
-+static void base_write(DisasContext *ctx, int rn, uint64_t val)
-+{
-+    ctx->env->xregs[rn] = val;
-+    ctx->cpu->vcpu_dirty = true;
-+}
-+
-+/* SIMD/FP register access */
-+
-+static void fpreg_read(DisasContext *ctx, int reg, void *buf, int size)
-+{
-+    memcpy(buf, &ctx->env->vfp.zregs[reg], size);
-+}
-+
-+static void fpreg_write(DisasContext *ctx, int reg, const void *buf, int size)
-+{
-+    memset(&ctx->env->vfp.zregs[reg], 0, sizeof(ctx->env->vfp.zregs[reg]));
-+    memcpy(&ctx->env->vfp.zregs[reg], buf, size);
-+    ctx->cpu->vcpu_dirty = true;
-+}
-+
-+/* Memory access wrappers */
-+
-+static int mem_read(DisasContext *ctx, uint64_t va, void *buf, int size)
-+{
-+    if (((va & ~TARGET_PAGE_MASK) + size) > TARGET_PAGE_SIZE) {
-+        ctx->result = ARM_EMUL_ERR_MEM;
-+        return -1;
-+    }
-+    int ret = cpu_memory_rw_debug(ctx->cpu, va, buf, size, false);
-+    if (ret != 0) {
-+        ctx->result = ARM_EMUL_ERR_MEM;
-+    }
-+    return ret;
-+}
-+
-+static int mem_write(DisasContext *ctx, uint64_t va, const void *buf, int size)
-+{
-+    if (((va & ~TARGET_PAGE_MASK) + size) > TARGET_PAGE_SIZE) {
-+        ctx->result = ARM_EMUL_ERR_MEM;
-+        return -1;
-+    }
-+    int ret = cpu_memory_rw_debug(ctx->cpu, va, (void *)buf, size, true);
-+    if (ret != 0) {
-+        ctx->result = ARM_EMUL_ERR_MEM;
-+    }
-+    return ret;
-+}
-+
-+/* Sign/zero extension helpers */
-+
-+static uint64_t sign_extend(uint64_t val, int from_bits)
-+{
-+    int shift = 64 - from_bits;
-+    return (int64_t)(val << shift) >> shift;
-+}
-+
-+/* Apply sign/zero extension */
-+static uint64_t load_extend(uint64_t val, int sz, int sign, int ext)
-+{
-+    int data_bits = 8 << sz;
-+
-+    if (sign) {
-+        val = sign_extend(val, data_bits);
-+        if (ext) {
-+            /* Sign-extend to 32 bits (W register) */
-+            val &= 0xFFFFFFFF;
+ static struct virtio_gpu_virgl_resource *
+ virtio_gpu_virgl_find_resource(VirtIOGPU *g, uint32_t resource_id)
+ {
+@@ -63,7 +75,7 @@ virtio_gpu_virgl_find_resource(VirtIOGPU *g, uint32_t resource_id)
+     return container_of(res, struct virtio_gpu_virgl_resource, base);
+ }
+ 
+-#if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
++#if VIRGL_RENDERER_CALLBACKS_VERSION >= 4 && defined(CONFIG_OPENGL)
+ static void *
+ virgl_get_egl_display(G_GNUC_UNUSED void *cookie)
+ {
+@@ -1032,6 +1044,45 @@ void virtio_gpu_virgl_process_cmd(VirtIOGPU *g,
+ 
+     VIRTIO_GPU_FILL_CMD(cmd->cmd_hdr);
+ 
++    /*
++     * Venus no-GL mode: route 2D display commands to the base software
++     * renderer (pixman). The guest kernel always uses 2D commands for
++     * display framebuffers even with VIRGL enabled; Venus/3D commands
++     * go through the virglrenderer render server as usual.
++     */
++    if (virtio_gpu_venus_nogl(g)) {
++        switch (cmd->cmd_hdr.type) {
++        case VIRTIO_GPU_CMD_RESOURCE_CREATE_2D:
++        case VIRTIO_GPU_CMD_SET_SCANOUT:
++        case VIRTIO_GPU_CMD_RESOURCE_FLUSH:
++        case VIRTIO_GPU_CMD_TRANSFER_TO_HOST_2D:
++        case VIRTIO_GPU_CMD_GET_DISPLAY_INFO:
++        case VIRTIO_GPU_CMD_GET_EDID:
++            virtio_gpu_simple_process_cmd(g, cmd);
++            return;
++        case VIRTIO_GPU_CMD_RESOURCE_UNREF:
++        case VIRTIO_GPU_CMD_RESOURCE_ATTACH_BACKING:
++        case VIRTIO_GPU_CMD_RESOURCE_DETACH_BACKING: {
++            /*
++             * Both 2D (simple) and blob (virgl) resources share g->reslist.
++             * Check if virglrenderer owns the resource to pick
++             * the right handler.
++             */
++            struct virtio_gpu_resource_unref hdr;
++            struct virgl_renderer_resource_info info;
++            VIRTIO_GPU_FILL_CMD(hdr);
++            if (virgl_renderer_resource_get_info(hdr.resource_id, &info)) {
++                /* Not in virglrenderer — it's a 2D software resource */
++                virtio_gpu_simple_process_cmd(g, cmd);
++                return;
++            }
++            break; /* virglrenderer owns it — fall through */
 +        }
-+    } else if (ext) {
-+        /* Zero-extend to 32 bits (W register) */
-+        val &= 0xFFFFFFFF;
-+    }
-+    return val;
-+}
-+
-+/* Load/store single -- immediate (GPR) (DDI 0487 C3.3.8 -- C3.3.13) */
-+
-+static bool trans_STR_i(DisasContext *ctx, arg_ldst_imm *a)
-+{
-+    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
-+    int64_t offset = a->u ? ((int64_t)(uint64_t)a->imm << a->sz)
-+                          : (int64_t)a->imm;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset;
-+
-+    uint64_t val = gpr_read(ctx, a->rt);
-+    if (mem_write(ctx, va, &val, esize) != 0) {
-+        return true;
++        default:
++            break;
++        }
 +    }
 +
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
-+    return true;
-+}
-+
-+static bool trans_LDR_i(DisasContext *ctx, arg_ldst_imm *a)
-+{
-+    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
-+    int64_t offset = a->u ? ((int64_t)(uint64_t)a->imm << a->sz)
-+                          : (int64_t)a->imm;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset;
-+    uint64_t val = 0;
-+
-+    if (mem_read(ctx, va, &val, esize) != 0) {
-+        return true;
-+    }
-+
-+    val = load_extend(val, a->sz, a->sign, a->ext);
-+    gpr_write(ctx, a->rt, val);
-+
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
-+    return true;
-+}
-+
-+/*
-+ * Load/store single -- immediate (SIMD/FP)
-+ * STR_v_i / LDR_v_i (DDI 0487 C3.3.10)
-+ */
-+
-+static bool trans_STR_v_i(DisasContext *ctx, arg_ldst_imm *a)
-+{
-+    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
-+    int64_t offset = a->u ? ((int64_t)(uint64_t)a->imm << a->sz)
-+                          : (int64_t)a->imm;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset;
-+    uint8_t buf[16];
-+
-+    fpreg_read(ctx, a->rt, buf, esize);
-+    if (mem_write(ctx, va, buf, esize) != 0) {
-+        return true;
-+    }
-+
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
-+    return true;
-+}
-+
-+static bool trans_LDR_v_i(DisasContext *ctx, arg_ldst_imm *a)
-+{
-+    int esize = (a->sz <= 3) ? (1 << a->sz) : 16;
-+    int64_t offset = a->u ? ((int64_t)(uint64_t)a->imm << a->sz)
-+                          : (int64_t)a->imm;
-+    uint64_t base = base_read(ctx, a->rn);
-+    uint64_t va = a->p ? base : base + offset;
-+    uint8_t buf[16];
-+
-+    if (mem_read(ctx, va, buf, esize) != 0) {
-+        return true;
-+    }
-+
-+    fpreg_write(ctx, a->rt, buf, esize);
-+
-+    if (a->w) {
-+        base_write(ctx, a->rn, base + offset);
-+    }
-+    return true;
-+}
-+
-+/* PRFM, DC cache maintenance -- treated as NOP */
-+static bool trans_NOP(DisasContext *ctx, arg_NOP *a)
-+{
-+    (void)ctx;
-+    (void)a;
-+    return true;
-+}
-+
-+/* Entry point */
-+
-+ArmEmulResult arm_emul_insn(CPUArchState *env, uint32_t insn)
-+{
-+    DisasContext ctx = {
-+        .cpu = env_cpu(env),
-+        .env = env,
-+        .result = ARM_EMUL_OK,
-+    };
-+
-+    if (!decode_a64_ldst(&ctx, insn)) {
-+        return ARM_EMUL_UNHANDLED;
-+    }
-+
-+    return ctx.result;
-+}
-diff --git a/target/arm/emulate/arm_emulate.h b/target/arm/emulate/arm_emulate.h
-new file mode 100644
-index 00000000..7fe29839
---- /dev/null
-+++ b/target/arm/emulate/arm_emulate.h
-@@ -0,0 +1,30 @@
-+/*
-+ * AArch64 instruction emulation library
-+ *
-+ * Copyright (c) 2026 Lucas Amaral <lucaaamaral@gmail.com>
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#ifndef ARM_EMULATE_H
-+#define ARM_EMULATE_H
-+
-+#include "qemu/osdep.h"
-+
-+/**
-+ * ArmEmulResult - return status from arm_emul_insn()
-+ */
-+typedef enum {
-+    ARM_EMUL_OK,         /* Instruction emulated successfully */
-+    ARM_EMUL_UNHANDLED,  /* Instruction not recognized by decoder */
-+    ARM_EMUL_ERR_MEM,    /* Memory access failed */
-+} ArmEmulResult;
-+
-+/**
-+ * arm_emul_insn - decode and emulate one AArch64 instruction
-+ *
-+ * Caller must synchronize CPU state and fetch @insn before calling.
-+ */
-+ArmEmulResult arm_emul_insn(CPUArchState *env, uint32_t insn);
-+
-+#endif /* ARM_EMULATE_H */
-diff --git a/target/arm/emulate/meson.build b/target/arm/emulate/meson.build
-new file mode 100644
-index 00000000..e5455bd2
---- /dev/null
-+++ b/target/arm/emulate/meson.build
-@@ -0,0 +1,8 @@
-+# SPDX-License-Identifier: GPL-2.0-or-later
-+
-+gen_a64_ldst = decodetree.process('a64-ldst.decode',
-+    extra_args: ['--static-decode=decode_a64_ldst'])
-+
-+arm_common_system_ss.add(when: 'TARGET_AARCH64', if_true: [
-+    gen_a64_ldst, files('arm_emulate.c')
-+])
-diff --git a/target/arm/meson.build b/target/arm/meson.build
-index 6e0e504a..a4b2291b 100644
---- a/target/arm/meson.build
-+++ b/target/arm/meson.build
-@@ -57,6 +57,7 @@ arm_common_system_ss.add(files(
-   'vfp_fpscr.c',
- ))
+     virgl_renderer_force_ctx_0();
+     switch (cmd->cmd_hdr.type) {
+     case VIRTIO_GPU_CMD_CTX_CREATE:
+@@ -1433,6 +1484,7 @@ static int virtio_gpu_virgl_init(VirtIOGPU *g)
+     uint32_t flags = 0;
+     VirtIOGPUGL *gl = VIRTIO_GPU_GL(g);
  
-+subdir('emulate')
- subdir('hvf')
- subdir('whpx')
++#ifdef CONFIG_OPENGL
+ #if VIRGL_RENDERER_CALLBACKS_VERSION >= 4
+     if (qemu_egl_display) {
+         virtio_gpu_3d_cbs.version = 4;
+@@ -1450,9 +1502,14 @@ static int virtio_gpu_virgl_init(VirtIOGPU *g)
+         flags |= VIRGL_RENDERER_D3D11_SHARE_TEXTURE;
+     }
+ #endif
++#endif /* CONFIG_OPENGL */
+ #if VIRGL_VERSION_MAJOR >= 1
+     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
+-        flags |= VIRGL_RENDERER_VENUS | VIRGL_RENDERER_RENDER_SERVER;
++        flags |= VIRGL_RENDERER_VENUS
++               | VIRGL_RENDERER_RENDER_SERVER;
++        if (!display_opengl) {
++            flags |= VIRGL_RENDERER_NO_VIRGL;
++        }
+     }
+     if (virtio_gpu_drm_enabled(g->parent_obj.conf)) {
+         flags |= VIRGL_RENDERER_DRM;
+@@ -1475,6 +1532,12 @@ static int virtio_gpu_virgl_init(VirtIOGPU *g)
+     }
+ #endif
  
++    if (!display_opengl) {
++        virtio_gpu_3d_cbs.create_gl_context = NULL;
++        virtio_gpu_3d_cbs.destroy_gl_context = NULL;
++        virtio_gpu_3d_cbs.make_current = NULL;
++    }
++
+     ret = virgl_renderer_init(g, flags, &virtio_gpu_3d_cbs);
+     if (ret != 0) {
+         error_report("virgl could not be initialized: %d", ret);
+@@ -1546,14 +1609,16 @@ GArray *virtio_gpu_virgl_get_capsets(VirtIOGPU *g)
+ 
+     capset_ids = g_array_new(false, false, sizeof(uint32_t));
+ 
+-    /* VIRGL is always supported. */
+-    virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
++    /* OpenGL: VIRGL/VIRGL2 require a GL display backend */
++    if (display_opengl) {
++        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL);
+ 
+-    virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
+-                               &capset_max_ver,
+-                               &capset_max_size);
+-    if (capset_max_ver) {
+-        virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
++        virgl_renderer_get_cap_set(VIRTIO_GPU_CAPSET_VIRGL2,
++                                   &capset_max_ver,
++                                   &capset_max_size);
++        if (capset_max_ver) {
++            virtio_gpu_virgl_add_capset(capset_ids, VIRTIO_GPU_CAPSET_VIRGL2);
++        }
+     }
+ 
+     if (virtio_gpu_venus_enabled(g->parent_obj.conf)) {
 -- 
 2.52.0
 
