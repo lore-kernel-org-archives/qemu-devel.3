@@ -4,73 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3D53AF33806
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 07:09:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 82205F33808
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 07:10:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2OXd-0003V9-UG; Tue, 17 Mar 2026 03:08:38 -0400
+	id 1w2OYu-0003x7-Rp; Tue, 17 Mar 2026 03:09:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2OXb-0003Ub-Gx
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:08:35 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w2OYr-0003wu-O9
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:09:53 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2OXZ-0003E8-E5
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:08:35 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773731311;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=4D74xfK6NlrVIH9KPxrbCJcarQ4coinPVQW2Pvqbdb4=;
- b=iIkzdu+YZ65jyC1m4MsHvrowVP8mcS7TjoSFAquBBeFff55Dya/Q3j03+NvY+YxUu+F0YS
- Ka2DiE+OJOAUzN8Wb1CxFPol5RqurJ6kv8LGB8lnNfsfATVIWsadJULCL/yN9GVz8S+khh
- 8C4V/mPN6YLShJUwPIZnXoy+BG53RPk=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-515-F1cSvxEMPiCPJdfEaVZjQw-1; Tue,
- 17 Mar 2026 03:08:29 -0400
-X-MC-Unique: F1cSvxEMPiCPJdfEaVZjQw-1
-X-Mimecast-MFC-AGG-ID: F1cSvxEMPiCPJdfEaVZjQw_1773731308
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9AD1F18005B4; Tue, 17 Mar 2026 07:08:28 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2E2A71800361; Tue, 17 Mar 2026 07:08:28 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 23C1921E6937; Tue, 17 Mar 2026 08:08:25 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Alessandro Ratti <alessandro@0x65c.net>
-Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  berrange@redhat.com,
- mst@redhat.com,  pbonzini@redhat.com
-Subject: Re: [PATCH v2 2/2] hw/qdev: Remove qdev_get_human_name()
-In-Reply-To: <20260311215003.664815-3-alessandro@0x65c.net> (Alessandro
- Ratti's message of "Wed, 11 Mar 2026 22:50:03 +0100")
-References: <20260311215003.664815-1-alessandro@0x65c.net>
- <20260311215003.664815-3-alessandro@0x65c.net>
-Date: Tue, 17 Mar 2026 08:08:25 +0100
-Message-ID: <87h5qflyqe.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w2OYo-0003Jq-Mw
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 03:09:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773731375; bh=ShAuoR+pyRZ1QyrLlN6/Q+K45OKFL0JY4G6EEZy8NQY=;
+ h=Date:To:From:Subject;
+ b=TSj/HHsTvAP5Ccck2zjwn12mJb0EEFSiVH7NyrmzY4njJnJ6Nwh3dTORxwt/gTjC6
+ frcvc6zIt97bz5g+FcTUBjSjHrcjdXc7vLjfnaAdvpBTMcfLhvWO27/k5D6yDxXIbp
+ nP6fN9fvg7Aao1RTyRKp54IGXrW/Di31XgkQvHj/yEk6R5fXB411Me6m2w986wOscH
+ jfzYZ/R2RtR0azTbxqitWqsHCgPoDcIr02jeDp4BOzBAlJR/bPCkc3+4HCJut8bBcj
+ PqP7An8Qd6VPM7B0VSjQ/LHkYegWICMbnw1V6d1bDrIZV0ZPfRiVQGYHrKdzlgZOnQ
+ b57GLL/7bCuZQ==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 959501942AD
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 10:09:35 +0300 (MSK)
+Message-ID: <05558efe-354b-4a30-8136-7239bb0926e0@tls.msk.ru>
+Date: Tue, 17 Mar 2026 10:09:40 +0300
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: QEMU Development <qemu-devel@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: romfiles for NICs: are these really necessary?
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -86,48 +107,28 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alessandro Ratti <alessandro@0x65c.net> writes:
+Hi!
 
-> Remove qdev_get_human_name() and switch its two callers in
-> hw/block/block.c to qdev_get_printable_name().
->
-> qdev_get_printable_name() subsumes qdev_get_human_name(): both
-> return the device ID when set and fall back to the canonical QOM
-> path, but qdev_get_printable_name() also tries the bus-specific
-> device path first, providing more informative output.
->
-> Narrow the scope of dev_id in blk_check_size_and_read_all() to the
-> blocks where it is actually used.
->
-> Suggested-by: Peter Maydell <peter.maydell@linaro.org>
-> Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
+Once again I've got a circular dependency between packages in
+Debian, - ipxe tests the roms during build, for which it depends
+on qemu, which, in turn, depends on ipxe.  And I'm thinking -
+do we really need the rom file dependencies?
 
-This replaces two ways to describe a device to the user by one.  Good.
+PXE boot is kind of a niche thing, used rarely even within qemu.
+However, it is enabled by default, and qemu fails if it can't
+load the rom.
 
-One half of the uses is unchanged.  Good.
+Wouldn't it make more sense to disable pxe boot by default, and
+enable it only if explicitly enabled on the NIC property?  And
+if not enabled, omit loading of the rom itself?
 
-The other half can now show a bus-specific device path instead of the
-canonical QOM path.  This path can be difficult to interpret: we have
-some twenty .get_dev_path() methods, and each of them can format however
-it wants.  I need to guess the format to make sense of the value.  I'm
-inclined to call this a regression.
+We already have bootindex - which can be (ab)used here, - only
+load the rom if bootindex >= 0, and make it -1 by default for
+the NICs.
 
-To address this, please insert another patch before this one that
-changes
+This way, the boot roms will be optional.
 
-        device <dev-path>
+Thanks,
 
-  to
-
-        <bus> device <dev-path>
-
-This removes the guesswork, and actually satisfies the claim "more
-informative output".
-
-If you have reasons to do it in a follow-up patch instead, explain them
-briefly.
-
-qdev_get_human_name() is a better name than qdev_get_printable_name().
-Please consider renaming the function so we keep the better name.
-
+/mjt
 
