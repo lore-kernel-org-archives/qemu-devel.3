@@ -4,114 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 16B92FD875F
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 12:38:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05B98FD875F
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 12:39:56 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2TgM-0003l6-4s; Tue, 17 Mar 2026 08:37:58 -0400
+	id 1w2Ti1-0004NK-NF; Tue, 17 Mar 2026 08:39:41 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2TgI-0003cx-0P
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:37:55 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2TgE-0003ZC-Sm
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:37:53 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773751069;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=sSQ6bJvuIxl/uFLBcQ3FrfoPi2RL7SvB7DNlsD2RMpI=;
- b=aI+k3oISqZiTQhilDKbw4uRf0SVkaPoC/NCwgATKZ399T4kyM7TKxvx81DAGg5QDFErXrx
- 1hAKCaKc4SMg/YpNxxPA+20iwShcrqz/Ieptu1nyyRwwGvACwioUZT3Y5k0lwdUinhMOzn
- rmtlOncZIFeeGqUotZWdEB4zBekxKE8=
-Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
- [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-600-ncttu0EyNEqD1smVvDN2YQ-1; Tue, 17 Mar 2026 08:37:48 -0400
-X-MC-Unique: ncttu0EyNEqD1smVvDN2YQ-1
-X-Mimecast-MFC-AGG-ID: ncttu0EyNEqD1smVvDN2YQ_1773751067
-Received: by mail-wm1-f70.google.com with SMTP id
- 5b1f17b1804b1-485fb873e57so5296165e9.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 05:37:48 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1w2Thz-0004Lk-NC
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:39:40 -0400
+Received: from mail-qk1-x734.google.com ([2607:f8b0:4864:20::734])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <marcandre.lureau@gmail.com>)
+ id 1w2Thy-0005SF-1L
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 08:39:39 -0400
+Received: by mail-qk1-x734.google.com with SMTP id
+ af79cd13be357-8cb40149037so643994385a.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 05:39:37 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773751176; cv=none;
+ d=google.com; s=arc-20240605;
+ b=j3kZqqm243Gs1n6GdQZAwlJZ8TPWq51L0cHtLwfZ5M++5RyEpO6EfawZz6d1iN6Fzl
+ Vcnv07VVPihhJWycWCetNSU0KFOV1DgY8wVjjv5hhWwgH1h4e324SVMEcW+UtX1ykpP4
+ u/bfvRLtoRRFE79Y8kJuDZOTIDzPbAj7BC6+GHQyjzoIXAZ57+1rlP4vX22H/2bAE4/l
+ Ogy4G5Q8csS6wKq+0ZkU6ARb5ukn/Cjyq1plngrZU3orXgqtUpOA4qyhfWGTDx1N6wU9
+ eSYFoA3P60PAVQ48pN6ocBKhKUj9BNHt83bJO5xIKd4mF6JBUS8wuMbT3VEHf+h97gF4
+ Wxjg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=K/nIzC6V3cbsm1fDJPTt2AfQeUSz1mO0iIiCWf+u0Qs=;
+ fh=QwYyyUxj49fE3r2/5S05Hg3zHNtF3HBjcsjpjamgaAA=;
+ b=ALEhWRkWNwNhM1FlNgPy8MEjAzXLANBinMN/3o35tPi+VAD36XAZztdVhP7W0uXX0G
+ 2mF7DfLML/5XZy76mODvaK4w0Px5Bh08Dw/VlhFVBYg6Z/BvopKH84ROiiVw1i3Kiqf1
+ KpDpI2aLkL76oFQ7nc70fEVfOBxMvEl73JOC8rZy4UZGMj7xwdyU/kJlPiqXXrzPxV1F
+ w2hMLpIx/PI5IYJV32OTlhoSgRoByiGBQ3g0WduUeLYUQrgr4CoTG6ahajkGA8jfV76R
+ kPbtxNqztdVB+YBh0cj9gF1gN09T6vYAdzly8GOAoVQM+CTu5AJYyxgfg2pm4OWJuSuS
+ k4Kg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773751066; x=1774355866; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=sSQ6bJvuIxl/uFLBcQ3FrfoPi2RL7SvB7DNlsD2RMpI=;
- b=Hh7FmILY7W2+jym+uxrvlZNx/PbktgxawJhnFVMsMp2OGvNQq2xMrficp5mpSzuMhc
- t23voC79LuoR3l22dM3A4xACPK7MVLmJlEKnzswxS4XGhZPylBbM1sjt/C0RgaKzkRY6
- HxyaUeLUPABAQx3DCED0yRAh2QRkncT5f2p01O0E1Kxl8l/U5Rdlj+CM4iuvKMtmW3je
- m1uIusxxC2vUtaTQa2e5Tbc/ZOFdtspzlLa7ujsxtSx/SMDmBmeppX2gt/Q2r4eG2aCg
- TzmjZkEgpMfoXfEubZJ1DZcplkxBfLDEC1LWgxpQlkskdJiSg4MH4lpHRb36Q3l8bAhD
- +j1Q==
+ d=gmail.com; s=20230601; t=1773751176; x=1774355976; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=K/nIzC6V3cbsm1fDJPTt2AfQeUSz1mO0iIiCWf+u0Qs=;
+ b=Wx0oua7rZl1+Mqh3Ad7o163TrcVOwJIJUJUU6k+rXVgkbPiQGlR2THh68Rwv8dlNdj
+ MiJjhkgAxmL9FNUUhC3tLlY+hdgnS4u6cP/OvgFm7yP7Yx9Hws1FWNqSHBtzhqom9Im8
+ mC0C0xzUYbtoF4DWp31Iqxhq9kJh0Yn8mGiNDhI2PaFcsv9zce0mV412mk/4+rLWDl0T
+ YzhQj/6+0U9lguHjMgIAtJRYeQE6nnLLgJWxwgyDnsWuZ1gYqYt1cULspOiYeVuWr2iD
+ bspM+TsUKaGXdfKAwtTF9XMkOr+W2zlY8RoVidpHM7YkkMm3sJWYT5Tw4L5AdA1/swXa
+ Tllg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773751066; x=1774355866;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=sSQ6bJvuIxl/uFLBcQ3FrfoPi2RL7SvB7DNlsD2RMpI=;
- b=FKEtiYaf388k6cV+2oHsCQ884vaJAiLtic15y1eC/6YX0Vdbli5C0yapbLld1DOwp8
- Amai/DJOqWmASxW3qjdCJS7EOUo60kzDODaI2A8QYkvD6VGODlDaaw2sPCNz5LDHwx+c
- tdv2fRSVy1AnXqMYY1Sw8ExbRZrgGCoGXhyqPLdVFc0gK5v9iXUtJvlCGEuUo98STpKz
- YkVP/vyJFXRCXVqjdlYzQFIUSezd/1f9W6RdsqArgRoOKtIWlJn+gZpF4JDd/Z1Iz6jO
- jZRlDZA9C3h3OZYitgpdQfyK7MyLL3eBa9TuKFkuL5Sb4evCD2N0ztVbkZooQPzM77Hf
- VmGg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWxl4crNrS+OtMBHjg/Lj4excPZGto7/FFnuqoRGfbqZH6e2gIzsAefa/hRgjOsZ/BQCl3Q4GFvkYGp@nongnu.org
-X-Gm-Message-State: AOJu0Yx8QB0hPrCGd+Ue97ZUJ4TbPLNyaOmIWNOwLrmXW0TOFlGQ6qJn
- TqxDb1TlR8tNXEAjWWcLH17xrzVs0EcHK0J3yYuf6vwlN7eyYb6mIXcUp6hsr/Um/sEKO///tsN
- UX2ysm4fTeb7FocTQhMkELZMjfhGCLrQZMbQMaVUNYu7dMzX0NmwaEIRWK1Wg1UUU
-X-Gm-Gg: ATEYQzwz/tpCVG3846kjnqbcin+PkVRnlX6IlhvC509rRralJS07z7vHnZsy2xu1yuP
- EmHvZRKtuHLT0e6HLBv6df2bISNztacui7U+uEftSgF3r2G9eCHnwz9j9+R7BJaQCvNX5otugsW
- 89tWjydnTUsRKA9nJAdGGDTHMTnTCfHUAeBlPR1VBN6+bahp7MaOiWOR9shczdtiKmUAsm4Bchu
- WxlYFRouxvbQXEZiyjlmaWSOntvrkYaTPDKi1B0lv+ruofjADIBI6HGzwbL3x4pMk3CM0Fo/1Jx
- ulNh8uQePyLacPNy1Ix1AbgtFPvuHjGKDh3V6maFb+KqZq+gDagHRIX5AJmm250+T7qNy2N7Wwg
- 5slvmjftAcIWQRvHg0z/1tVLdOsYFT/vc1UjarI4jQljcdEdMf2Ndr3eQahU9iqw+yEYH3PQGA9
- 183b8Ij93cxJ3JrbRJveYZL1/81xZZhrizRsQ7BfFnRlbADRsj
-X-Received: by 2002:a05:600c:1388:b0:485:2fd9:3d4a with SMTP id
- 5b1f17b1804b1-4855670283cmr276591965e9.22.1773751066586; 
- Tue, 17 Mar 2026 05:37:46 -0700 (PDT)
-X-Received: by 2002:a05:600c:1388:b0:485:2fd9:3d4a with SMTP id
- 5b1f17b1804b1-4855670283cmr276591365e9.22.1773751066104; 
- Tue, 17 Mar 2026 05:37:46 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d737:d0a8:3481:d976:420:4561?
- (p200300cfd737d0a83481d97604204561.dip0.t-ipconnect.de.
- [2003:cf:d737:d0a8:3481:d976:420:4561])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-485563f8c23sm206433365e9.1.2026.03.17.05.37.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 05:37:44 -0700 (PDT)
-Message-ID: <80882a7e-2c12-4658-bb3d-cc91d780c808@redhat.com>
-Date: Tue, 17 Mar 2026 13:37:35 +0100
+ d=1e100.net; s=20251104; t=1773751176; x=1774355976;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=K/nIzC6V3cbsm1fDJPTt2AfQeUSz1mO0iIiCWf+u0Qs=;
+ b=QnHXpuGfxkn+CgK0utU8D8D7TGYcA70pqAcwHL58Ja5fN7oI/4styJBf4/m/4ahtCk
+ JhfkcoJCunkfVt1m3l5CIJrtYU/4HJchGrzvLMM775fN79Q1ExdRkb9N4Et8LCpQxFeu
+ QPxbhjDbZLYWt5xAQjbklv8rBiK/xabCKjT4idzSVa5wtbwPUd9f8+cbG3QAml01qIaf
+ DCScVOEfMSf6pwBLMQADQvYO8lDnNFDMGTM1bIpGrR8ijIE2tJKfDbHYO5zM/b7MtMMC
+ bH3O9l9+xuMr71FlsA1fgFHI2BmqAlOnYBLRZPHD1Jg9Qg/Ki7QcL9GoInAZLwKi1mEa
+ VKnQ==
+X-Gm-Message-State: AOJu0YyLbmyMmmPGSqFr7E7AQBQNyeCtdG0raUo0JxxnqzMmI5oWNZkJ
+ WlUhkcPGJSAUp5SjNcQZiWTMVJ2qUpbBavnd5+Hq2DocigtCnYGlDBKR40Oa1Lr7dwV3V5fERqq
+ tRFnMaPla0hvco4J5TQ69YIpAz+I+j24=
+X-Gm-Gg: ATEYQzzD3dfddvVBoduEIf2n37zYRwcOfbM9cL/40j9FNqHRvP0olC5rmM2cX/M2HSi
+ n4OnYCAkBq1qYLjV6fW/b8SgmVDwF9jCLykREcY+yVL2p7YZgmL0dYj7n5I6mV8tl+YvaoB2x3U
+ O3GqyveG1Tpom5O1XJ0xDI5cacpXu0B/hh24tmRsR8fnb7Y49w3W1pqIsFJoAPj03xato5HmdyX
+ csnb3rvq9jf4RDcpO3zZ3T1PW6qIgBT3gc/5i2JLm3Y8bToVuRoOsYOGONHFmZe44RwzHLqNNap
+ 7AO8tg6o
+X-Received: by 2002:a05:620a:710c:b0:8cb:3a1d:79f2 with SMTP id
+ af79cd13be357-8cdb5b71480mr2154367685a.71.1773751176264; Tue, 17 Mar 2026
+ 05:39:36 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 0/3] block/mirror: fix assertion failure upon duplicate
- complete for job using 'replaces'
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, vsementsov@yandex-team.ru,
- jsnow@redhat.com, qemu-stable@nongnu.org
-References: <20260311145717.668492-1-f.ebner@proxmox.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <20260311145717.668492-1-f.ebner@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260317-qemu-vnc-v1-0-48eb1dcf7b76@redhat.com>
+ <20260317-qemu-vnc-v1-58-48eb1dcf7b76@redhat.com> <87ms06r668.fsf@suse.de>
+In-Reply-To: <87ms06r668.fsf@suse.de>
+From: =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@gmail.com>
+Date: Tue, 17 Mar 2026 16:39:24 +0400
+X-Gm-Features: AaiRm51hsCEk12FCKx3AEXkc9lo8YtfUAkLko2lf63Dj-6IE5jzeibMLu00Yb3w
+Message-ID: <CAJ+F1CKwizBkU7TRXGWcDj9d7qEOaxjD5=13Jp-+y7M+50tQSQ@mail.gmail.com>
+Subject: Re: [PATCH 58/60] tests/qtest: fix dbus-vmstate-test compilation
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2607:f8b0:4864:20::734;
+ envelope-from=marcandre.lureau@gmail.com; helo=mail-qk1-x734.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -127,30 +116,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 11.03.26 15:54, Fiona Ebner wrote:
-> If s->replace_blocker was already set by an earlier invocation of
-> mirror_complete(), then there will be an assertion failure when
-> error_setg() is called for it a second time. The bdrv_ref() operation
-> should only be done a single time too.
+Hi
+
+On Tue, Mar 17, 2026 at 4:29=E2=80=AFPM Fabiano Rosas <farosas@suse.de> wro=
+te:
 >
-> I thought about using an early return with an error, but that might
-> break existing users that (accidentally) issue duplicate
-> 'job-complete' without using 'replaces'.
+> Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com> writes:
 >
-> A paused job does not accept the 'complete' verb, so using an
-> externally throttled node was the best I could come up with for the
-> test.
+> > The test is still disabled, and trying to compile it will fail now.
+> >
+> > Fix it, and remove the G_TEST_DBUS_DAEMON setting, since it is passed b=
+y
+> > meson test. Fwiw, the test passes here.
+> >
 >
-> Fiona Ebner (3):
->    block/mirror: fix assertion failure upon duplicate complete for job
->      using 'replaces'
+> Hi, I have a series re-enabling this test and doing a few fixes, take a
+> look whether it helps you. I'm a bit short on time right now, but I
+> could rebase and post it after the freeze.
+>
+> https://gitlab.com/farosas/qemu/-/commits/migration-test-dbus-vmstate?ref=
+_type=3Dheads
 
-Thanks, I’ve applied this patch 1 to my block branch (for rc0):
+Ok, let's get your series merged first. This can indeed wait for the
+freeze period, but feel free to send it and ping me!
 
-https://gitlab.com/hreitz/qemu/-/commits/block
+thanks
 
-Better to have the code in earlier, and add the test later.
+>
+> > Signed-off-by: Marc-Andr=C3=A9 Lureau <marcandre.lureau@redhat.com>
+> > ---
+> >  tests/qtest/dbus-vmstate-test.c | 11 ++---------
+> >  tests/qtest/meson.build         |  3 ++-
+> >  2 files changed, 4 insertions(+), 10 deletions(-)
+> >
+> > diff --git a/tests/qtest/dbus-vmstate-test.c b/tests/qtest/dbus-vmstate=
+-test.c
+> > index 6c990864e3e..ed4a52d0255 100644
+> > --- a/tests/qtest/dbus-vmstate-test.c
+> > +++ b/tests/qtest/dbus-vmstate-test.c
+> > @@ -3,7 +3,7 @@
+> >  #include <gio/gio.h>
+>
+> I remember some CI job failed due to the test not declaring this
+> dependency.
+>
+> >  #include "libqtest.h"
+> >  #include "dbus-vmstate1.h"
+> > -#include "migration-helpers.h"
+> > +#include "migration/migration-qmp.h"
+> >
+> >  static char *workdir;
+> >
+> > @@ -229,7 +229,7 @@ test_dbus_vmstate(Test *test)
+> >
+> >      thread =3D g_thread_new("dbus-vmstate-thread", dbus_vmstate_thread=
+, loop);
+> >
+> > -    migrate_qmp(src_qemu, uri, "{}");
+> > +    migrate_qmp(src_qemu, dst_qemu, uri, NULL, "{}");
+>
+> This works, however I have patches queued for the hardfreeze that change
+> some details in the migration tests infra:
+>
+> - dst cmdline should use -incoming defer
+> - migrate_incoming_qmp needs to be called
+> - no more setting: qtest_set_expected_status(dst_qemu, EXIT_FAILURE);
+>
+> >      test->src_qemu =3D src_qemu;
+> >      if (test->migrate_fail) {
+> >          wait_for_migration_fail(src_qemu, true);
+> > @@ -342,15 +342,8 @@ int
+> >  main(int argc, char **argv)
+> >  {
+> >      GError *err =3D NULL;
+> > -    g_autofree char *dbus_daemon =3D NULL;
+> >      int ret;
+> >
+> > -    dbus_daemon =3D g_build_filename(G_STRINGIFY(SRCDIR),
+> > -                                   "tests",
+> > -                                   "dbus-vmstate-daemon.sh",
+> > -                                   NULL);
+> > -    g_setenv("G_TEST_DBUS_DAEMON", dbus_daemon, true);
+> > -
+> >      g_test_init(&argc, &argv, NULL);
+> >
+> >      workdir =3D g_dir_make_tmp("dbus-vmstate-test-XXXXXX", &err);
+> > diff --git a/tests/qtest/meson.build b/tests/qtest/meson.build
+> > index b735f55fc40..5f8cff172c8 100644
+> > --- a/tests/qtest/meson.build
+> > +++ b/tests/qtest/meson.build
+> > @@ -130,7 +130,8 @@ if dbus_daemon.found() and gdbus_codegen.found()
+> >                                  input: meson.project_source_root() / '=
+backends/dbus-vmstate1.xml',
+> >                                  command: [gdbus_codegen, '@INPUT@',
+> >                                            '--interface-prefix', 'org.q=
+emu',
+> > -                                          '--generate-c-code', '@BASEN=
+AME@']).to_list()
+> > +                                          '--generate-c-code', '@BASEN=
+AME@',
+> > +                                          '--output-directory', meson.=
+current_build_dir()]).to_list()
+> >  else
+> >    dbus_vmstate1 =3D []
+> >  endif
+>
 
-Hanna
 
+--=20
+Marc-Andr=C3=A9 Lureau
 
