@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 133C3FED9F1
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:21:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D9CB7FED9F0
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 17:21:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2Y6L-0002nr-47; Tue, 17 Mar 2026 13:21:05 -0400
+	id 1w2Y5K-00020J-Pm; Tue, 17 Mar 2026 13:20:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y68-0002an-4N
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:54 -0400
+ id 1w2Y5F-0001yd-Px
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:57 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <marcandre.lureau@redhat.com>)
- id 1w2Y66-0005dl-8A
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:20:51 -0400
+ id 1w2Y5E-0005MF-Be
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 13:19:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773768048;
+ s=mimecast20190719; t=1773767994;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=5rR90AFdo1Am/JLo89PgA9Iv5kx1gqs6R7n5iAEgk20=;
- b=CdiqFOUXAf2/Bu+2CwrCERyftBmZZxzTHJxsnAKTzYpVdevrpS2QqtmAu8Xl0AiHWriMDj
- 5cJ1J6pIFdZWp4uMJZkt3mk7Fam9f6owiTOzEX43d+EnOF0foSY/j6La4PRMpTmuISK/19
- n0CoAJ4nbe3DW0xIAYEY5drGHUhYvhc=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=8h0sizqDRrWh4i0kVqCLWnQ1yrxi4rvEkqw6RMr/1k4=;
+ b=ekEYlOU6GhXU888HtJ//HzJOYZaw2QMwif5Rm+MzvdTJBUu1nOYZurH8ePRaceJhO8Zd81
+ /5+nNHnO2f8j6vFj9Qg5iRyXPG0+ltjGNVLCPTmHxd4AfTPSkBBG4rAp+dm5/QIpSTn7Gq
+ WRhI2lRC+4gHm0Y/YIiJS5lCu3AWrtg=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-281-0kv6Y4hdPsu58QUQYHrU3A-1; Tue,
- 17 Mar 2026 13:20:44 -0400
-X-MC-Unique: 0kv6Y4hdPsu58QUQYHrU3A-1
-X-Mimecast-MFC-AGG-ID: 0kv6Y4hdPsu58QUQYHrU3A_1773768042
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-473-BMVKYw-lP2yzcljQnT6FrA-1; Tue,
+ 17 Mar 2026 13:19:52 -0400
+X-MC-Unique: BMVKYw-lP2yzcljQnT6FrA-1
+X-Mimecast-MFC-AGG-ID: BMVKYw-lP2yzcljQnT6FrA_1773767991
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AE6791944EAA; Tue, 17 Mar 2026 17:20:42 +0000 (UTC)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id DECE118005BD; Tue, 17 Mar 2026 17:19:50 +0000 (UTC)
 Received: from localhost (unknown [10.44.22.4])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
- id 584A830002C3; Tue, 17 Mar 2026 17:20:38 +0000 (UTC)
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 8B6721800576; Tue, 17 Mar 2026 17:19:48 +0000 (UTC)
 From: marcandre.lureau@redhat.com
 To: qemu-devel@nongnu.org
 Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
@@ -60,15 +60,15 @@ Cc: Dmitry Osipenko <dmitry.osipenko@collabora.com>,
  Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
  Yanan Wang <wangyanan55@huawei.com>,
  Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Subject: [PULL 12/16] ui/surface: Avoid including epoxy/gl.h in header files
-Date: Tue, 17 Mar 2026 21:19:12 +0400
-Message-ID: <20260317171916.438575-13-marcandre.lureau@redhat.com>
+Subject: [PULL 04/16] virtio-gpu: fix overflow check when allocating 2d image
+Date: Tue, 17 Mar 2026 21:19:04 +0400
+Message-ID: <20260317171916.438575-5-marcandre.lureau@redhat.com>
 In-Reply-To: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 References: <20260317171916.438575-1-marcandre.lureau@redhat.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
 Received-SPF: pass client-ip=170.10.129.124;
  envelope-from=marcandre.lureau@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
@@ -95,162 +95,104 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+From: Marc-André Lureau <marcandre.lureau@redhat.com>
 
-include/ui/shader.h and include/ui/surface.h are included by files that
-do not depend on Epoxy so they shouldn't include epoxy/gl.h. Otherwise,
-compilations of these files can fail because the path to the directory
-containing epoxy/gl.h may not be passed to the compiler.
+The calc_image_hostmem() comment says pixman_image_create_bits() checks
+for overflow. However, this relied on the facts that "bits" was NULL and
+it performed it when it was introduced. Since commit 9462ff4695aa, the
+"bits" argument can be provided and the check is no longer applied.
 
-Signed-off-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
-Reviewed-by: Marc-André Lureau <marcandre.lureau@redhat.com>
-Message-Id: <20260303-gl-v1-3-d90f0a237a52@rsg.ci.i.u-tokyo.ac.jp>
+Promotes the computation to uint64_t and adds an explicit overflow check
+to avoid potential later OOB read/write on the image data.
+
+Fixes: CVE-2026-3886
+Fixes: ZDI-CAN-27578
+Fixes: 9462ff4695aa ("virtio-gpu/win32: allocate shareable 2d resources/images")
+Reported-by: Zero Day Initiative <zdi-disclosures@trendmicro.com>
+Signed-off-by: Marc-André Lureau <marcandre.lureau@redhat.com>
+Reviewed-by: Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>
+Message-Id: <20260311-cve-v1-1-f72b4c7c1ab2@redhat.com>
 ---
- include/ui/console.h |  4 ++--
- include/ui/shader.h  |  2 --
- include/ui/surface.h |  5 +----
- ui/console-gl.c      | 27 ++++++++++++++-------------
- ui/shader.c          |  1 +
- 5 files changed, 18 insertions(+), 21 deletions(-)
+ hw/display/virtio-gpu.c | 36 +++++++++++++++++++++++++-----------
+ 1 file changed, 25 insertions(+), 11 deletions(-)
 
-diff --git a/include/ui/console.h b/include/ui/console.h
-index 3677a9d334d..08082389f71 100644
---- a/include/ui/console.h
-+++ b/include/ui/console.h
-@@ -423,8 +423,8 @@ bool console_gl_check_format(DisplayChangeListener *dcl,
- void surface_gl_create_texture(QemuGLShader *gls,
-                                DisplaySurface *surface);
- bool surface_gl_create_texture_from_fd(DisplaySurface *surface,
--                                       int fd, GLuint *texture,
--                                       GLuint *mem_obj);
-+                                       int fd, uint32_t *texture,
-+                                       uint32_t *mem_obj);
- void surface_gl_update_texture(QemuGLShader *gls,
-                                DisplaySurface *surface,
-                                int x, int y, int w, int h);
-diff --git a/include/ui/shader.h b/include/ui/shader.h
-index 4c5acb2ce8b..e82213263c4 100644
---- a/include/ui/shader.h
-+++ b/include/ui/shader.h
-@@ -1,8 +1,6 @@
- #ifndef QEMU_SHADER_H
- #define QEMU_SHADER_H
+diff --git a/hw/display/virtio-gpu.c b/hw/display/virtio-gpu.c
+index de7a86a73d2..468ea6ab0fb 100644
+--- a/hw/display/virtio-gpu.c
++++ b/hw/display/virtio-gpu.c
+@@ -227,16 +227,20 @@ void virtio_gpu_get_edid(VirtIOGPU *g,
+     virtio_gpu_ctrl_response(g, cmd, &edid.hdr, sizeof(edid));
+ }
  
--#include <epoxy/gl.h>
--
- typedef struct QemuGLShader QemuGLShader;
- 
- void qemu_gl_run_texture_blit(QemuGLShader *gls, bool flip);
-diff --git a/include/ui/surface.h b/include/ui/surface.h
-index f16f7be8be8..d2542d3ace5 100644
---- a/include/ui/surface.h
-+++ b/include/ui/surface.h
-@@ -8,7 +8,6 @@
- #include "ui/qemu-pixman.h"
- 
- #ifdef CONFIG_OPENGL
--# include <epoxy/gl.h>
- # include "ui/shader.h"
- #endif
- 
-@@ -19,9 +18,7 @@ typedef struct DisplaySurface {
-     pixman_image_t *image;
-     uint8_t flags;
- #ifdef CONFIG_OPENGL
--    GLenum glformat;
--    GLenum gltype;
--    GLuint texture;
-+    uint32_t texture;
- #endif
-     qemu_pixman_shareable share_handle;
-     uint32_t share_handle_offset;
-diff --git a/ui/console-gl.c b/ui/console-gl.c
-index 73be35c1fc7..d4b9017b53d 100644
---- a/ui/console-gl.c
-+++ b/ui/console-gl.c
-@@ -25,6 +25,7 @@
-  * THE SOFTWARE.
-  */
- #include "qemu/osdep.h"
-+#include <epoxy/gl.h>
- #include "qemu/error-report.h"
- #include "ui/console.h"
- #include "ui/shader.h"
-@@ -66,6 +67,9 @@ bool console_gl_check_format(DisplayChangeListener *dcl,
- void surface_gl_create_texture(QemuGLShader *gls,
-                                DisplaySurface *surface)
+-static uint32_t calc_image_hostmem(pixman_format_code_t pformat,
+-                                   uint32_t width, uint32_t height)
++static bool calc_image_hostmem(pixman_format_code_t pformat,
++                               uint32_t width, uint32_t height,
++                               uint32_t *hostmem)
  {
-+    GLenum glformat;
-+    GLenum gltype;
-+
-     assert(gls);
-     assert(QEMU_IS_ALIGNED(surface_stride(surface), surface_bytes_per_pixel(surface)));
+-    /* Copied from pixman/pixman-bits-image.c, skip integer overflow check.
+-     * pixman_image_create_bits will fail in case it overflow.
+-     */
++    uint64_t bpp = PIXMAN_FORMAT_BPP(pformat);
++    uint64_t stride = (((uint64_t)width * bpp + 0x1f) >> 5) * sizeof(uint32_t);
++    uint64_t size = (uint64_t)height * stride;
  
-@@ -73,7 +77,7 @@ void surface_gl_create_texture(QemuGLShader *gls,
+-    int bpp = PIXMAN_FORMAT_BPP(pformat);
+-    int stride = ((width * bpp + 0x1f) >> 5) * sizeof(uint32_t);
+-    return height * stride;
++    if (size > UINT32_MAX) {
++        return false;
++    }
++
++    *hostmem = size;
++    return true;
+ }
+ 
+ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
+@@ -246,6 +250,7 @@ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
+     pixman_format_code_t pformat;
+     struct virtio_gpu_simple_resource *res;
+     struct virtio_gpu_resource_create_2d c2d;
++    uint32_t hostmem;
+ 
+     VIRTIO_GPU_FILL_CMD(c2d);
+     virtio_gpu_bswap_32(&c2d, sizeof(c2d));
+@@ -284,7 +289,12 @@ static void virtio_gpu_resource_create_2d(VirtIOGPU *g,
          return;
      }
  
--    assert(map_format(surface_format(surface), &surface->glformat, &surface->gltype));
-+    assert(map_format(surface_format(surface), &glformat, &gltype));
-     glGenTextures(1, &surface->texture);
-     glEnable(GL_TEXTURE_2D);
-     glBindTexture(GL_TEXTURE_2D, surface->texture);
-@@ -81,16 +85,12 @@ void surface_gl_create_texture(QemuGLShader *gls,
-                   surface_stride(surface) / surface_bytes_per_pixel(surface));
-     if (epoxy_is_desktop_gl()) {
-         glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB,
--                     surface_width(surface),
--                     surface_height(surface),
--                     0, surface->glformat, surface->gltype,
--                     surface_data(surface));
-+                     surface_width(surface), surface_height(surface), 0,
-+                     glformat, gltype, surface_data(surface));
-     } else {
--        glTexImage2D(GL_TEXTURE_2D, 0, surface->glformat,
--                     surface_width(surface),
--                     surface_height(surface),
--                     0, surface->glformat, surface->gltype,
--                     surface_data(surface));
-+        glTexImage2D(GL_TEXTURE_2D, 0, glformat,
-+                     surface_width(surface), surface_height(surface), 0,
-+                     glformat, gltype, surface_data(surface));
-         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_SWIZZLE_A, GL_ONE);
-     }
+-    res->hostmem = calc_image_hostmem(pformat, c2d.width, c2d.height);
++    if (!calc_image_hostmem(pformat, c2d.width, c2d.height, &hostmem)) {
++        qemu_log_mask(LOG_GUEST_ERROR, "%s: image dimensions overflow\n",
++                      __func__);
++        goto end;
++    }
++    res->hostmem = hostmem;
+     if (res->hostmem + g->hostmem < g->conf_max_hostmem) {
+         if (!qemu_pixman_image_new_shareable(
+                 &res->image,
+@@ -1292,7 +1302,7 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+     VirtIOGPU *g = opaque;
+     Error *err = NULL;
+     struct virtio_gpu_simple_resource *res;
+-    uint32_t resource_id, pformat;
++    uint32_t resource_id, pformat, hostmem;
+     int i, ret;
  
-@@ -150,17 +150,18 @@ void surface_gl_update_texture(QemuGLShader *gls,
-                                int x, int y, int w, int h)
- {
-     uint8_t *data = (void *)surface_data(surface);
-+    GLenum glformat;
-+    GLenum gltype;
+     g->hostmem = 0;
+@@ -1318,7 +1328,11 @@ static int virtio_gpu_load(QEMUFile *f, void *opaque, size_t size,
+             return -EINVAL;
+         }
  
-     assert(gls);
-+    assert(map_format(surface_format(surface), &glformat, &gltype));
- 
-     if (surface->texture) {
-         glBindTexture(GL_TEXTURE_2D, surface->texture);
-         glPixelStorei(GL_UNPACK_ROW_LENGTH_EXT,
-                       surface_stride(surface)
-                       / surface_bytes_per_pixel(surface));
--        glTexSubImage2D(GL_TEXTURE_2D, 0,
--                        x, y, w, h,
--                        surface->glformat, surface->gltype,
-+        glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, glformat, gltype,
-                         data + surface_stride(surface) * y
-                         + surface_bytes_per_pixel(surface) * x);
-     }
-diff --git a/ui/shader.c b/ui/shader.c
-index ab448c41d4c..76ee4c32785 100644
---- a/ui/shader.c
-+++ b/ui/shader.c
-@@ -25,6 +25,7 @@
-  * THE SOFTWARE.
-  */
- #include "qemu/osdep.h"
-+#include <epoxy/gl.h>
- #include "ui/shader.h"
- 
- #include "ui/shader/texture-blit-vert.h"
+-        res->hostmem = calc_image_hostmem(pformat, res->width, res->height);
++        if (!calc_image_hostmem(pformat, res->width, res->height, &hostmem)) {
++            g_free(res);
++            return -EINVAL;
++        }
++        res->hostmem = hostmem;
+         if (!qemu_pixman_image_new_shareable(&res->image,
+                                              &res->share_handle,
+                                              "virtio-gpu res",
 -- 
 2.53.0
 
