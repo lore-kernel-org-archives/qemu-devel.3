@@ -4,86 +4,90 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AA3CCFED9E4
-	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:08:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2DEEFED9E4
+	for <qemu-devel@archiver.kernel.org>; Tue, 17 Mar 2026 15:08:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2W1n-0000KS-TL; Tue, 17 Mar 2026 11:08:15 -0400
+	id 1w2W28-0000MV-RT; Tue, 17 Mar 2026 11:08:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1w2W1l-0000KH-CK
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:08:13 -0400
+ id 1w2W25-0000Li-Gs; Tue, 17 Mar 2026 11:08:33 -0400
 Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <harshpb@linux.ibm.com>)
- id 1w2W1j-00071w-Nc
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 11:08:13 -0400
+ id 1w2W22-000738-BO; Tue, 17 Mar 2026 11:08:33 -0400
 Received: from pps.filterd (m0353729.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62HEOHuO3853770
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:08 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=
- content-transfer-encoding:date:from:message-id:mime-version
- :subject:to; s=pp1; bh=axND4xlA8p4NKRQW/G47Au9QYklXnG+K/JzgiSwu+
- HQ=; b=qYLnWENJ1OIiyuPhKPtoZcr+2g738YT0Wra7+3KHqA+BZHOgpJJ+OK4d6
- b4YLwthzyzCA5esvqdts+TCvmlbZY0Furk2lkJdTEnp5GncvSduP+obeBwoHU2xl
- Bfe7IoqkPMuvT20ntoLva3NQ181fuIlOkoM/eMThM0Kbd4Nn5UUhc6pdBChsia55
- 3A5CcFJtf1DpTV1NGwSsVs3AUxU2+3oP5PxZEA1GqwxDuC0Vl9wrN1QetXQfCVHe
- fMR+3wpbTPVCtsRdREkZhwcNR4aSS8ENaxWUtPaGTxiY/IRbAHg5BbF3RdSEsI4a
- efi1OnZQfrULvNsXSgUdh5dOmQQig==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvybs5cn6-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:08 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62HCUN0b028501
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:07 GMT
-Received: from smtprelay01.fra02v.mail.ibm.com ([9.218.2.227])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwmq19fqf-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT)
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:07 +0000
+ 62H7E4uG839813; Tue, 17 Mar 2026 15:08:15 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:in-reply-to:message-id
+ :mime-version:references:subject:to; s=pp1; bh=7vu2bhd2gxrC9LVgH
+ dBb5sDARYo3YfIa3rJnX6xtJKM=; b=BcAn5fcoN3Hu/EkbspU+Q2M9P2TZXlyQD
+ e4jVXGhKIFtSg8Qor5JVMS+r2LQGaXLFwXSuHwlKk0/SJFc/CtgAH0WBOTQe6etX
+ ad4vx4VETUztZPJhVFTI7JaRQi2TXkdBlwctMI6qkOisg3/CGx+vr0TFw+mcNrE7
+ IA97mD+gOfp/WRK3+4DSVx3KtxtBNXhDAHLVOJkQf9BhqpcvMPeSlcITK4derrgL
+ sL04V9+nJ4gKbGs8SiYbXyTjb5ngxHCpI+unsT8oOhUA00W6ktGqLWbknDbwCPV/
+ eTr4ncgnWvhbue4E41S2gn5+JAQafWoEH366HgxTsC3lqw9nsTmzw==
+Received: from ppma12.dal12v.mail.ibm.com
+ (dc.9e.1632.ip4.static.sl-reverse.com [50.22.158.220])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvybs5cnq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Mar 2026 15:08:15 +0000 (GMT)
+Received: from pps.filterd (ppma12.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma12.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62HEVwlt005412;
+ Tue, 17 Mar 2026 15:08:14 GMT
+Received: from smtprelay02.fra02v.mail.ibm.com ([9.218.2.226])
+ by ppma12.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwj0s9trq-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Tue, 17 Mar 2026 15:08:14 +0000
 Received: from smtpav07.fra02v.mail.ibm.com (smtpav07.fra02v.mail.ibm.com
  [10.20.54.106])
- by smtprelay01.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62HF86w661080008
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK)
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:06 GMT
+ by smtprelay02.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62HF8Ab951904946
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Tue, 17 Mar 2026 15:08:10 GMT
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 1664C20043
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:06 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id 5FB1820043;
+ Tue, 17 Mar 2026 15:08:10 +0000 (GMT)
 Received: from smtpav07.fra02v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 6ED0E20040
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:05 +0000 (GMT)
+ by IMSVA (Postfix) with ESMTP id D300120040;
+ Tue, 17 Mar 2026 15:08:08 +0000 (GMT)
 Received: from Mac.com (unknown [9.39.22.133])
- by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 15:08:05 +0000 (GMT)
+ by smtpav07.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Tue, 17 Mar 2026 15:08:08 +0000 (GMT)
 From: Harsh Prateek Bora <harshpb@linux.ibm.com>
 To: qemu-devel@nongnu.org
-Subject: [PULL 0/1] ppc-for-11.0-hardfreeze queue
-Date: Tue, 17 Mar 2026 20:37:57 +0530
-Message-ID: <20260317150758.53781-1-harshpb@linux.ibm.com>
+Cc: Shivang Upadhyay <shivangu@linux.ibm.com>,
+ Aditya Gupta <adityag@linux.ibm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ BALATON Zoltan <balaton@eik.bme.hu>, qemu-stable@nongnu.org
+Subject: [PULL 1/1] ppc/pnv: fix dumpdtb option
+Date: Tue, 17 Mar 2026 20:37:58 +0530
+Message-ID: <20260317150758.53781-2-harshpb@linux.ibm.com>
 X-Mailer: git-send-email 2.52.0
+In-Reply-To: <20260317150758.53781-1-harshpb@linux.ibm.com>
+References: <20260317150758.53781-1-harshpb@linux.ibm.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Authority-Analysis: v=2.4 cv=MMttWcZl c=1 sm=1 tr=0 ts=69b96e58 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Authority-Analysis: v=2.4 cv=MMttWcZl c=1 sm=1 tr=0 ts=69b96e5f cx=c_pps
+ a=bLidbwmWQ0KltjZqbj+ezA==:117 a=bLidbwmWQ0KltjZqbj+ezA==:17
  a=Yq5XynenixoA:10 a=f7IdgyKtn90A:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=p0WdMEafAAAA:8
- a=lvJexoOC8j4WlqM8shQA:9
-X-Proofpoint-ORIG-GUID: -CJyjX7KCbixzgpa03oCwTfQmfmMNmWx
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDEzMCBTYWx0ZWRfXxeuadiJU/e+G
- KojMiphjQaIplQS0eKgV45GcsHaEPcT8zitye2Z+wtqAjiDONxIpRqfiE79bl6WqeUOv2JNoLVu
- Uqcwt2xYl3+O+vZpzh86FAayoaY2DwrW+EY4ekF0y35hrhTQ7pOhLyHELXUx6g+ncRgvLVvXy8L
- A5kw7tCNYU2H57g0sb/9kLkqcofEwGx7jqBKJzUIUSX82NzrUgepLMrMrSyzaHmuFVkU16dIX3W
- nfJBmxjo6hCUhemuypKjh4Kyjsoze99F+NDOuM701ZMg1O/k8b+iR2yHgjAyONCxVxLoVuC/JWe
- LcTU/LYpHQxmQE1nO4J5OBX7ExWvfyOxdIGUtGZf3mVqs5bwhY8Zz39gNOhA2SaPwAKY4S31KaL
- ABXfVCRZAMeBUDU5gHFvoURnJ6bkaEzkFbAov9iogPgZrLRW3oe7lLj7Ls3tCs47yMrfKi12nRo
- cud2HDACpg9E6eyb8Tw==
-X-Proofpoint-GUID: -CJyjX7KCbixzgpa03oCwTfQmfmMNmWx
+ a=RnoormkPH1_aCDwRdu11:22 a=uAbxVGIbfxUO_5tXvNgY:22 a=VwQbUJbxAAAA:8
+ a=KKAkSRfTAAAA:8 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8 a=CGBzvb4MnhGT_TwKM-YA:9
+ a=cvBusfyB2V15izCimMoJ:22 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-ORIG-GUID: nknI9dnDQH1F1iHjURxm6p0g9h6CMxNW
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE3MDEzMCBTYWx0ZWRfX04ARkyA+DI98
+ o2aiubuPuGQbpuzQ49ua95UulGkRng8T5Vlde6khFZTb82JgV7wKGLh7rPpgPSm7KP+BjVsAeCZ
+ H4Jmww8AIwwmmoggKVOjga9KqviNGhg8CK6GSdVqOMwFNer/FxxLoc97spm21tJzST3QVq2NH1l
+ Qto7OcnBCk8l6JRH0TOwr+7vDXL7iFyDpujXpv4eDZP1ePQL0sWSGfm00zMQuA1C9xetauTi+ja
+ Nt9KB7KLH9mfrsKc7zpNyebEltgJ29s8YpQvbU0HxkRjjj7lO0nCYFI/KKDOoeM5RhNaTTA6+Uk
+ Gj1URX7QqOs+vp1AkKZsF5RKahXmccjYr+Ggos18P8i9GYNpF9J0yCQkAPjrAigIS5g7U6x+XPh
+ dSsafDhnPnX1jdDUeU+nmwvvA0Ov5Hl9WZgymd46wjUsnNGLuQ6PsbjDmzsTeI7SdbDs6a9V8Y6
+ jgeLDQ8JlbFhF1oI6dA==
+X-Proofpoint-GUID: nknI9dnDQH1F1iHjURxm6p0g9h6CMxNW
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-17_01,2026-03-17_01,2025-10-01_01
@@ -118,44 +122,75 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The following changes since commit 6667668e0cf369e47aa9dd0bae40989896e9ed9f:
+From: Shivang Upadhyay <shivangu@linux.ibm.com>
 
-  Merge tag 'pr-plugins-20260316' of https://gitlab.com/pbo-linaro/qemu into staging (2026-03-17 10:20:30 +0000)
+The '-machine dumpdtb' command line option stopped working on
+PowerPC/pnv systems after recent design change [1].
 
-are available in the Git repository at:
+Fixing this by generating fdt blob in `pnv_init`.
 
-  https://gitlab.com/harshpb/qemu.git tags/pull-ppc-for-11.0-hardfreeze-20260317
+[1] https://lore.kernel.org/qemu-devel/20250206151214.2947842-1-peter.maydell@linaro.org/
 
-for you to fetch changes up to a16d4c2f162a86db1f84ef0836d42eabaf57fe69:
-
-  ppc/pnv: fix dumpdtb option (2026-03-17 20:31:42 +0530)
-
-----------------------------------------------------------------
-ppc queue for 11.0
-
-* ppc/powernv: fix dumpdtb option
-
------BEGIN PGP SIGNATURE-----
-
-iQIzBAABCAAdFiEEa4EM1tK+EPOIPSFCRUTplPnWj7sFAmm5bZ4ACgkQRUTplPnW
-j7vZvQ/9HlYrlHQD3eQSEyUlVoEkR4piSh/D8sdigOOOdYhPEQZ6spluHg3OLEml
-MvDv2Uz1t8GVKzGuZ19Y18H8wOW0zbjsOa9bfbtO7Mral7LIMbBFLej391czQVQC
-NQ64Wms2B2TwjKDam8msekMkME646m5SanzgT1hGkKmIAKKSCBLwA9Na1HfxdcwQ
-1TcDpjHBLg0x3OOmkh7V1PYyb7RSIAFRcYEkPnvgEWvIOaGubTVpB7/syb2n+cdq
-ToPy0MvoIdlPID0wFd0t7t3tRPah/ubXD4ubrOEvWLDZ40BtLiB3p1Ou+MUU6lj1
-GfPx7gjW4QG4o5aV4MmsAKxEP6K3RfJcRVjJUa3tl8oJvggS9uwvewEqHT07XBWc
-NmxdEGzgkLCUXAVZLkKjqInz5VJlHROUWpsS8bq1edK09wju1o1CR0B0WDK//Cek
-oqfZtb/6XHvmFrNnJprJvPNOWuhash1XRbL+iyfYxJJwuqIZPkQWjABeD7Fu8/aZ
-Gpw3/2V+CiWJvThe9Z/vIEw/ksl1qigdNCtdVMeO9S8pQAtORZnUvNzWN5QKaVvL
-VjxsFXhiEEn6bdoycJE0V6mfuPGaKcvE/APTDA4dT1b4du8IaUiiqGvGvVY+F1vg
-p7ZpDlJmKd48jbkXnim8YiyXZO3sUUk7tw0N/xwPvCj+56nTv64=
-=OUEg
------END PGP SIGNATURE-----
-
-----------------------------------------------------------------
-Shivang Upadhyay (1):
-      ppc/pnv: fix dumpdtb option
-
+Cc: Aditya Gupta <adityag@linux.ibm.com>
+Cc: Harsh Prateek Bora <harshpb@linux.ibm.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Cc: BALATON Zoltan <balaton@eik.bme.hu>
+Cc: qemu-stable@nongnu.org
+Fixes: 8fd2518ef2f8d34 ("hw: Centralize handling of -machine dumpdtb option")
+Signed-off-by: Shivang Upadhyay <shivangu@linux.ibm.com>
+Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Aditya Gupta <adityag@linux.ibm.com>
+Link: https://lore.kernel.org/qemu-devel/20260311143549.118720-1-shivangu@linux.ibm.com
+Signed-off-by: Harsh Prateek Bora <harshpb@linux.ibm.com>
+---
  hw/ppc/pnv.c | 25 ++++++-------------------
  1 file changed, 6 insertions(+), 19 deletions(-)
+
+diff --git a/hw/ppc/pnv.c b/hw/ppc/pnv.c
+index 1513575b8f..7e54b6bc60 100644
+--- a/hw/ppc/pnv.c
++++ b/hw/ppc/pnv.c
+@@ -773,26 +773,8 @@ static void pnv_reset(MachineState *machine, ResetType type)
+         }
+     }
+ 
+-    if (machine->fdt) {
+-        fdt = machine->fdt;
+-    } else {
+-        fdt = pnv_dt_create(machine);
+-        /* Pack resulting tree */
+-        _FDT((fdt_pack(fdt)));
+-    }
+-
++    fdt = machine->fdt;
+     cpu_physical_memory_write(PNV_FDT_ADDR, fdt, fdt_totalsize(fdt));
+-
+-    /* Update machine->fdt with latest fdt */
+-    if (machine->fdt != fdt) {
+-        /*
+-         * Set machine->fdt for 'dumpdtb' QMP/HMP command. Free
+-         * the existing machine->fdt to avoid leaking it during
+-         * a reset.
+-         */
+-        g_free(machine->fdt);
+-        machine->fdt = fdt;
+-    }
+ }
+ 
+ static ISABus *pnv_chip_power8_isa_create(PnvChip *chip, Error **errp)
+@@ -1261,6 +1243,11 @@ static void pnv_init(MachineState *machine)
+     if (pmc->i2c_init) {
+         pmc->i2c_init(pnv);
+     }
++
++    if (!machine->fdt) {
++        machine->fdt = pnv_dt_create(machine);
++        _FDT((fdt_pack(machine->fdt)));
++    }
+ }
+ 
+ /*
+-- 
+2.52.0
+
 
