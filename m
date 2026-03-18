@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C72610706E8
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:34:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F30EE10706E8
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:34:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2oDH-0003lX-O2; Wed, 18 Mar 2026 06:33:19 -0400
+	id 1w2oDD-0003Wg-6v; Wed, 18 Mar 2026 06:33:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2oDF-0003gI-I3
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:33:17 -0400
-Received: from mail-wr1-x42a.google.com ([2a00:1450:4864:20::42a])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2oD8-0003F9-NP
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:33:10 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2oDE-0002YW-18
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:33:17 -0400
-Received: by mail-wr1-x42a.google.com with SMTP id
- ffacd0b85a97d-43b4fd681c2so1250513f8f.3
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:33:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2oD7-0002Xy-1i
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:33:10 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43b4915161fso2243663f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:33:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773829994; x=1774434794; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773829987; x=1774434787; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=n2Sgkb6N71I15zCHePybcfBnW8R6vfuIZgllQvpx1Uc=;
- b=GkkJ4TDnF9A87W6rNQdnATqlDm3l5jlXP6PMIH2+xqzgEdHtKLQH3S0OyDGfG9qa91
- aPjzfKrxECWCoOXoLluhAT3HhI1qHB4BFYAxSPFbRMS1eqBnX8b8ATwsmnIy2ZPVatyM
- A5zssta5AIw0LLzXco/Jn2Fl0fvyrr3Z7hAIna8jKJB/2BwjJmJy2yRHDJ/mqWSRbUHZ
- we1L3Xd3NbvPHi/ocAtJQO1CiJv2MLzLc8LE5H0djaQRVb0HjCcZB6AH5RYguGFKwt2I
- mAy8GfGvEnQBfKpWQV9u0l8Fz21gngrAjOcOqEeNJVloOJoCYqDrK9k/++5Y/F+3zGgy
- YCfg==
+ bh=31YJoguDTECg29DDzAK2HWxAHgXIKCQcZk0EpeWDAXA=;
+ b=DYZP426ev9sisz8BDHNT3Gy1r+jnZLB4udSH5mdTWK5OC8vzJHLPHpdEUL62IDXMcc
+ dncWOkc9GnLQqgj68RCrM0Gu0FEbJrus4AlNgUPq3EUnzOyZSpMrLdMyY5ece9UHX1Y/
+ GhYPoD01O0MEoY4WzX3+PSQ3jTl/3/ZFOCzCzf0nbeHp7GkHYlU7SkL4iDQAtfdWKB3b
+ v19iLrADXd/Rk+o10YcYtL2DMnbIgvWPeqiv7t7EpkyQlJtc8ckgHBAKLSpg3cXR2UW5
+ sF3DckGrR6LAeWRWPoziq3tKLsZiDuZdUd02j2oP2U3mBqG3JcsJj42SIUIoyfifqHMU
+ BURg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773829994; x=1774434794;
+ d=1e100.net; s=20251104; t=1773829987; x=1774434787;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=n2Sgkb6N71I15zCHePybcfBnW8R6vfuIZgllQvpx1Uc=;
- b=lSmgj+N4tlhKnlX67NwGoEzKgxVlAKjv0bYmJSPMLb7vopQeNDJ9f3PJ8baYjhbX85
- jWPXilEKONJEeDUTv25tv5rgqtSxTp4Zns+n+dTM3fe1Wp1VAIVefZs2uNUDwtZDsbRk
- zl7LGixhZOBAmZUmQ5mo4LmKcGKvVp0mj3kBG+eF/bmVxwAKtE+KxOBLQiV46MTIOUVx
- Lf9v8kP0tqNUmD6/d9NsyYqpoExKgA9OiAC1HBrHFmHRsPsJQAWWanBzr1/Dw8TtajKO
- nXoriSGS215AeMUPvodPK+ajrMWW5SedTeGrPRv1CgbBppN0pL2jsXxr8SmBXBnidFu1
- TBZw==
-X-Gm-Message-State: AOJu0YzvkU8J1gzgKNEoMK04ZkNLl0RJEdrsfykPx/m+S2t47YCUxJ7N
- Ismf/OmsvCesdBqC7PVpi6bnGaGL7j/v0iZ+BE04qFtC0YH4XxbPeRH0NJc7El2hr0/Emz7sez+
- UM4ATbVA=
-X-Gm-Gg: ATEYQzxy2yo9rfOgoamAhkOAbqL/RCMNsXts2PCh/xiLoWZvqEV9vEOeEQ0EWCnYWTI
- roH8pP1ISMyL0LCr3eBag6Dpi6SrHPeu8V4VGYHC9QTKDuPftYstniSBOAKu4qNrkyCEa+f/2Ar
- u3Bzir3JrI+J81KPh3xrGrbXkeH7OzwFUL8iQUJKk4Vqe6a/w0GpNIrTaOB6RL9rtw5iyxKiSQy
- gP0kEYztWiODq80V4UMXam1boyd2qz4WRvN5ZEbJwyfrC2XQbbfEiZPqd0kGEYjn4RAGQusItUn
- VNZg8ZdXLnLAAXPF/Dxekt5i36HJAUZvaAF/8Oc5vg8pybTQS3IzFZIFYFLjUQPrgl6IiKQW7im
- zBK1Iv12YeNXqNAeImpLFXqLw/kuOKEUU87JsHT8RfwMMZCzFNt/PoYo6J2Ooj4yc3BPxS4g9u4
- Dds4E1324ENab+D5ckrFEgFJ2MKCx7YDT3oGFP5kmNS5nlqyy6AxqQ31Vu25VFhG2sLGJGGRrm
-X-Received: by 2002:a05:6000:24c3:b0:439:b55d:b0e5 with SMTP id
- ffacd0b85a97d-43b527c4301mr4406646f8f.28.1773829994167; 
- Wed, 18 Mar 2026 03:33:14 -0700 (PDT)
+ bh=31YJoguDTECg29DDzAK2HWxAHgXIKCQcZk0EpeWDAXA=;
+ b=MJy9SwNR9R5sCVttsTGqDQs8p7DHAJe+oohOlpEtaZlW/15uS+Qyco3q2piEwLrAhJ
+ dGK66fdQGNpnd9chx8f9vI2VwBKuymS9MlbyuUBNRFvVazHGmfq9xQIqtTqXp5X/Rg6w
+ 1Don9LuN3t1uhfk035d8v4gagLdHKvz53NPP5Y0n4mZs0cvb9Tv4ypQUxFtp2x2OZVVn
+ ErsugIcLuoHlpDBCLfzRgzAKICUthKImwsL3fPpq30rRRI76NtiHo0MnqAWklLQ7e1m4
+ AwFUXU3sNuMz9ZhPiJdUFJuDDiPYJqYNVPoMKHfAev5i//cMOHaWKAODajZMxrhfhm+6
+ rxbw==
+X-Gm-Message-State: AOJu0Yy6Nn0G6KwmS3O0ghTvXQk/h3PaYfvucwbfcCU35NSqwjXVg2BJ
+ ZlvH2LXJKkERo6XW9kcZX1267J7Cvc0WChvk0KQtuAKnTNEWttZWKctidB86/VPBhhp8Tjy8K2s
+ iJBLc4zA=
+X-Gm-Gg: ATEYQzw7MSE9HC1k9DEOg6w821xp3IPbdWeT86U5ALgOSB0i6ELbNuuidOt4qCMnWMs
+ cvcBRpCmgwBEvWSmbw/bcFZnhxjNWXCFBFoc/o2Q3zzFN4xv91D2UKLXqQ4CFVgdwjMb7kJSDfI
+ efZ2tt7oULgv3U0+7g0C9gp5EZnHCFzpSOEtfZbbGbzz8h461dKTG+q+pfib+7HIdPcC9Zi9BWL
+ KsWwyLPkxeeKhCdvAW43ZqtvhAQjLFzokJV7KvCbkdAO8rv1amHnK1bXf8xwG8sH+kPMpLzVXIw
+ UKXw/LxjbvZRtyJ9K7DfVZo0z6iM/0r0GG9WkiUneMPQMj/tLViQoRZN1OrF2T+rVhUvmDxjh3v
+ LMzMuG895UMS/x5aI9blVt9fGh/S3w8a/pepFGuxapoOenNWI9zrY0MF7aXszMs+CPEsVHuHfcc
+ zWxqQ3YdDqKH6dtTo61o95TE6hlnVI4ynZSOyE3mDxY5I0eCq4r76nKbBL0lyGCp2qu2/hb7Co
+X-Received: by 2002:a5d:5f86:0:b0:439:fd78:188d with SMTP id
+ ffacd0b85a97d-43b527aaa6bmr4766771f8f.17.1773829987021; 
+ Wed, 18 Mar 2026 03:33:07 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b5189971asm6778525f8f.30.2026.03.18.03.33.12
+ ffacd0b85a97d-43b518a2cd3sm5591005f8f.32.2026.03.18.03.33.05
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Wed, 18 Mar 2026 03:33:13 -0700 (PDT)
+ Wed, 18 Mar 2026 03:33:06 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Weiwei Li <liwei1518@gmail.com>,
@@ -78,17 +78,17 @@ Cc: Weiwei Li <liwei1518@gmail.com>,
  Alistair Francis <alistair.francis@wdc.com>,
  Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Subject: [PATCH-for-11.1 15/16] target/riscv: Use MO_LE for instruction fetch
-Date: Wed, 18 Mar 2026 11:31:20 +0100
-Message-ID: <20260318103122.97244-16-philmd@linaro.org>
+Subject: [PATCH-for-11.1 14/16] target/riscv: Replace MO_TE -> MO_LE
+Date: Wed, 18 Mar 2026 11:31:19 +0100
+Message-ID: <20260318103122.97244-15-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260318103122.97244-1-philmd@linaro.org>
 References: <20260318103122.97244-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42a;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42a.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -111,69 +111,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+We only build the RISC-V target using little endianness order,
+therefore the MO_TE definitions expand to the little endian
+one. Use the latter which is more explicit.
 
-RISC-V instructions are always little-endian regardless of the data
-endianness mode configured via mstatus SBE/MBE/UBE bits.
+Mechanical change running:
 
-Currently, instruction fetches in decode_opc() and the page boundary
-check use mo_endian(ctx), which returns MO_TE. This happens to work
-today because RISC-V targets are little-endian only, but is
-semantically incorrect and will break once mo_endian() is updated to
-respect runtime data endianness for big-endian support.
+  $ sed -i -e s/MO_TE/MO_LE/ \
+        $(git grep -wl MO_TE target/riscv/)
 
-Use MO_LE explicitly for all instruction fetch paths. Data memory
-operations (AMOs, loads/stores via mxl_memop) continue to use
-mo_endian(ctx) as they should respect the configured data endianness.
-
-Not-Signed-off-by: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260311115910.564481-3-djordje.todorovic@htecgroup.com>
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/riscv/translate.c | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
+ target/riscv/internals.h | 2 +-
+ target/riscv/translate.c | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
 
+diff --git a/target/riscv/internals.h b/target/riscv/internals.h
+index 860c47732b6..460346dd6de 100644
+--- a/target/riscv/internals.h
++++ b/target/riscv/internals.h
+@@ -71,7 +71,7 @@ static inline MemOp mo_endian_env(CPURISCVState *env)
+      *  - MSTATUS_MBE (Machine-mode)
+      * but we don't implement that yet.
+      */
+-    return MO_TE;
++    return MO_LE;
+ }
+ 
+ /* share data between vector helpers and decode code */
 diff --git a/target/riscv/translate.c b/target/riscv/translate.c
-index 6f8b8e9d19a..5df5b738495 100644
+index cb4f4436018..6f8b8e9d19a 100644
 --- a/target/riscv/translate.c
 +++ b/target/riscv/translate.c
-@@ -1255,7 +1255,7 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
-          * additional page fault.
-          */
-         opcode = translator_ldl_end(env, &ctx->base, ctx->base.pc_next,
--                                    mo_endian(ctx));
-+                                    MO_LE);
-     } else {
-         /*
-          * For unaligned pc, instruction preload may trigger additional
-@@ -1263,7 +1263,7 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
-          */
-         opcode = (uint32_t) translator_lduw_end(env, &ctx->base,
-                                                 ctx->base.pc_next,
--                                                mo_endian(ctx));
-+                                                MO_LE);
-     }
-     ctx->ol = ctx->xl;
+@@ -135,7 +135,7 @@ static inline MemOp mo_endian(DisasContext *ctx)
+      *  - MSTATUS_MBE (Machine-mode)
+      * but we don't implement that yet.
+      */
+-    return MO_TE;
++    return MO_LE;
+ }
  
-@@ -1285,7 +1285,7 @@ static void decode_opc(CPURISCVState *env, DisasContext *ctx)
-             opcode = deposit32(opcode, 16, 16,
-                                translator_lduw_end(env, &ctx->base,
-                                                    ctx->base.pc_next + 2,
--                                                   mo_endian(ctx)));
-+                                                   MO_LE));
-         }
-         ctx->opcode = opcode;
- 
-@@ -1401,7 +1401,7 @@ static void riscv_tr_translate_insn(DisasContextBase *dcbase, CPUState *cpu)
-             if (page_ofs > TARGET_PAGE_SIZE - MAX_INSN_LEN) {
-                 uint16_t next_insn =
-                     translator_lduw_end(env, &ctx->base, ctx->base.pc_next,
--                                        mo_endian(ctx));
-+                                        MO_LE);
-                 int len = insn_len(next_insn);
- 
-                 if (!translator_is_same_page(&ctx->base, ctx->base.pc_next + len - 1)) {
+ #ifdef TARGET_RISCV32
 -- 
 2.53.0
 
