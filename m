@@ -4,97 +4,48 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A848E10775E6
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 16:46:05 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 28E3610775E7
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 16:55:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2u1u-0007PG-VT; Wed, 18 Mar 2026 12:45:59 -0400
+	id 1w2uAp-0000aq-06; Wed, 18 Mar 2026 12:55:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pfalcato@suse.de>) id 1w2tmU-0004RT-CO
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:30:02 -0400
-Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pfalcato@suse.de>) id 1w2tmS-000063-BC
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:30:01 -0400
-Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by smtp-out2.suse.de (Postfix) with ESMTPS id 16B745BECB;
- Wed, 18 Mar 2026 16:29:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773851395; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
- b=Fc/dYUZF/69DEuHAyWGb8Z4rtQWRV26oKGti+wxNoXQ8Owy8TGAyA6S6YosCSv3n5QjE2h
- Pp4K6e2KbXcYQr0H/rt9SVmOdDLs1pzGM6EgJ10PMn7O4BTc3Xi7udnXNhOGVnx+dIAEa6
- 1sWUg2gmj1fIStIjZkTSwX3NPrKDdOY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773851395;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
- b=fzgKsO3yxsEu93eTb7jwGilpBEzoMBvTEw/i+Nq/DfBvQeohrkS1J2hYFqZciyeIY76q+Y
- kjhcC4lyaS0QkOAQ==
-Authentication-Results: smtp-out2.suse.de;
-	none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
- t=1773851395; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
- b=Fc/dYUZF/69DEuHAyWGb8Z4rtQWRV26oKGti+wxNoXQ8Owy8TGAyA6S6YosCSv3n5QjE2h
- Pp4K6e2KbXcYQr0H/rt9SVmOdDLs1pzGM6EgJ10PMn7O4BTc3Xi7udnXNhOGVnx+dIAEa6
- 1sWUg2gmj1fIStIjZkTSwX3NPrKDdOY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
- s=susede2_ed25519; t=1773851395;
- h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
- mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
- bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
- b=fzgKsO3yxsEu93eTb7jwGilpBEzoMBvTEw/i+Nq/DfBvQeohrkS1J2hYFqZciyeIY76q+Y
- kjhcC4lyaS0QkOAQ==
-Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 912D24273B;
- Wed, 18 Mar 2026 16:29:54 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
- by imap1.dmz-prg2.suse.org with ESMTPSA id mOoPIALTumnJYwAAD6G6ig
- (envelope-from <pfalcato@suse.de>); Wed, 18 Mar 2026 16:29:54 +0000
-From: Pedro Falcato <pfalcato@suse.de>
-To: John Snow <jsnow@redhat.com>
-Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
- Pedro Falcato <pfalcato@suse.de>, qemu-stable@nongnu.org,
- Niklas Cassel <cassel@kernel.org>
-Subject: [PATCH] ide: Set IDENTIFY word 93 to 0 on SATA drives
-Date: Wed, 18 Mar 2026 16:29:51 +0000
-Message-ID: <20260318162951.1060969-1-pfalcato@suse.de>
-X-Mailer: git-send-email 2.53.0
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1w2uAg-0000Zf-2q; Wed, 18 Mar 2026 12:55:03 -0400
+Received: from proxmox-new.maurer-it.com ([94.136.29.106])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <f.ebner@proxmox.com>)
+ id 1w2uAd-0006Ia-0v; Wed, 18 Mar 2026 12:55:01 -0400
+Received: from proxmox-new.maurer-it.com (localhost.localdomain [127.0.0.1])
+ by proxmox-new.maurer-it.com (Proxmox) with ESMTP id 7C28D8039C;
+ Wed, 18 Mar 2026 17:54:55 +0100 (CET)
+From: Fiona Ebner <f.ebner@proxmox.com>
+To: qemu-devel@nongnu.org
+Cc: qemu-block@nongnu.org,
+	hreitz@redhat.com,
+	kwolf@redhat.com
+Subject: [PATCH v2 1/2] iotests/041: add test for mirror with throttled NBD
+ export as target
+Date: Wed, 18 Mar 2026 17:54:33 +0100
+Message-ID: <20260318165446.709541-2-f.ebner@proxmox.com>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260318165446.709541-1-f.ebner@proxmox.com>
+References: <20260318165446.709541-1-f.ebner@proxmox.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
- NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
- R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
- MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
- TO_DN_SOME(0.00)[];
- DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
- RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
- RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
- DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
- RCPT_COUNT_FIVE(0.00)[6]; RCVD_TLS_ALL(0.00)[]
-Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
- envelope-from=pfalcato@suse.de; helo=smtp-out2.suse.de
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Bm-Milter-Handled: 55990f41-d878-4baa-be0a-ee34c49e34d2
+X-Bm-Transport-Timestamp: 1773852852337
+Received-SPF: pass client-ip=94.136.29.106; envelope-from=f.ebner@proxmox.com;
+ helo=proxmox-new.maurer-it.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 18 Mar 2026 12:45:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,63 +60,204 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-According to the ATA Command Set specification (and the SATA specification
-too), SATA drives are supposed to set word 93 (which for PATA holds hardware
-reset results) to 0. As such, clear it when ncq_queues > 0 (which is only true
-for SATA drives).
+Mostly in preparation for commit "iotests/041: add test for duplicate
+job-complete with throttled target".
 
-Doing so fixes a quirk in Linux where it thinks the AHCI QEMU drive is PATA
-over a SATA bridge, and thus limits maximum transfer sizes for individual IOs
-with a:
-[    1.632121] ata1.00: applying bridge limits
+Use a second VM instance for providing the NBD export rather than
+qemu-storage-daemon, because the latter does not support qtest for
+stepping the clock.
 
-While at it, bump the device's firmware revision for IDENTIFY. This makes it
-so Linux can avoid enabling a quirk for fixed QEMU releases.
+Use copy_mode='write-blocking' for easy checking how many bytes were
+written in a given time. In the job's offset, the numbers are
+inflated, since a 1 KiB write will mean copying a full cluster of
+64 KiB.
 
-Link: https://lore.kernel.org/linux-ide/20260303183337.1013474-1-pfalcato@suse.de/
-Cc: qemu-stable@nongnu.org
-Suggsted-by: Niklas Cassel <cassel@kernel.org>
-Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
 ---
-Note: I understand the version bump is vaguely controversial (particularly
- exposing the QEMU version in the string) but I don't have a much better
- idea. Logically, bumping it to 11.0 for stable releases doesn't make much
- sense.
- 
- hw/ide/core.c | 12 ++++++++++--
- 1 file changed, 10 insertions(+), 2 deletions(-)
+ tests/qemu-iotests/041     | 155 +++++++++++++++++++++++++++++++++++++
+ tests/qemu-iotests/041.out |   4 +-
+ 2 files changed, 157 insertions(+), 2 deletions(-)
 
-diff --git a/hw/ide/core.c b/hw/ide/core.c
-index b45abf067b20..89f62f301e94 100644
---- a/hw/ide/core.c
-+++ b/hw/ide/core.c
-@@ -211,7 +211,15 @@ static void ide_identify(IDEState *s)
-         put_le16(p + 87, (1 << 14) | 0);
-     }
-     put_le16(p + 88, 0x3f | (1 << 13)); /* udma5 set and supported */
--    put_le16(p + 93, 1 | (1 << 14) | 0x2000);
-+    if (s->ncq_queues) {
-+        /*
-+         * This is SATA, which is required by the spec to return 0 for this
-+         * field.
-+         */
-+        put_le16(p + 93, 0);
-+    } else {
-+        put_le16(p + 93, 1 | (1 << 14) | 0x2000);
-+    }
-     /* *(p + 100) := nb_sectors       -- see ide_identify_size */
-     /* *(p + 101) := nb_sectors >> 16 -- see ide_identify_size */
-     /* *(p + 102) := nb_sectors >> 32 -- see ide_identify_size */
-@@ -2660,7 +2668,7 @@ int ide_init_drive(IDEState *s, IDEDevice *dev, IDEDriveKind kind, Error **errp)
-     if (dev->version) {
-         pstrcpy(s->version, sizeof(s->version), dev->version);
-     } else {
--        pstrcpy(s->version, sizeof(s->version), qemu_hw_version());
-+        pstrcpy(s->version, sizeof(s->version), "11.0");
-     }
+diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
+index 8452845f44..7b4a701aba 100755
+--- a/tests/qemu-iotests/041
++++ b/tests/qemu-iotests/041
+@@ -1373,6 +1373,161 @@ class TestFilters(iotests.QMPTestCase):
  
-     ide_reset(s);
+         self.complete_and_wait('mirror')
+ 
++# Tests for mirror where the target is a throttled NBD export.
++class TestThrottledNBDTarget(iotests.QMPTestCase):
++    image_len = 32 * 1024 * 1024
++    reqs = 20
++    req_len = 1024
++
++    def setUp(self):
++        iotests.create_image(backing_img, self.image_len)
++        iotests.create_image(target_backing_img, self.image_len)
++        qemu_img('create', '-f', iotests.imgfmt,
++                 '-o', f'backing_file={backing_img}', '-F', 'raw', test_img)
++        qemu_img('create', '-f', iotests.imgfmt,
++                 '-o', f'backing_file={target_backing_img}', '-F', 'raw',
++                 target_img)
++        qemu_io('-c', f'write -P 23 0 {self.image_len}', test_img)
++
++        self.target_vm = iotests.VM()
++        self.target_vm.launch()
++
++        self.target_vm.cmd('nbd-server-start', {
++            'addr': {
++                'type': 'unix',
++                'data': {
++                    'path': nbd_sock_path
++                }
++            }
++        })
++
++        self.target_vm.cmd('object-add', {
++            'qom-type': 'throttle-group',
++            'id': 'thrgr-target',
++            'limits': {} # limits are set by the individual tests
++        })
++
++        self.target_vm.cmd('blockdev-add', {
++            'node-name': 'target',
++            'driver': 'throttle',
++            'throttle-group': 'thrgr-target',
++            'file': {
++                'driver': iotests.imgfmt,
++                'file': {
++                    'driver': 'file',
++                    'filename': target_img
++                }
++            }
++        })
++
++        self.target_vm.cmd('block-export-add', {
++            'id': 'exp0',
++            'type': 'nbd',
++            'node-name': 'target',
++            'writable': True
++        })
++
++        self.vm = iotests.VM().add_device('virtio-scsi,id=vio-scsi')
++        self.vm.launch()
++
++        self.vm.cmd('blockdev-add',{
++            'node-name': 'source',
++            'driver': iotests.imgfmt,
++            'file': {
++                'driver': 'file',
++                'filename': test_img
++            },
++            'backing': {
++                'node-name': 'backing',
++                'driver': 'raw',
++                'file': {
++                    'driver': 'file',
++                    'filename': backing_img
++                }
++            }
++        })
++
++        self.vm.cmd('device_add',
++                    driver='scsi-hd',
++                    id='virtio',
++                    bus='vio-scsi.0',
++                    drive='source')
++
++        self.vm.cmd('blockdev-add', {
++            'node-name': 'target',
++            'driver': 'nbd',
++            'export': 'target',
++            'server': {
++                'type': 'unix',
++                'path': nbd_sock_path
++            }
++        })
++
++        self.drive_qdev = '/machine/peripheral/virtio'
++
++    def set_throttle_limits(self, limits):
++        self.target_vm.cmd('qom-set', {
++            'path': 'thrgr-target',
++            'property': 'limits',
++            'value': limits
++        })
++
++    def disable_throttling(self):
++        if self.target_vm.is_running():
++            self.set_throttle_limits({})
++            for i in range(0, self.reqs):
++                self.target_vm.qtest(f'clock_step {1 * 1000 * 1000 * 1000}')
++
++    def tearDown(self):
++        if self.target_vm.is_running():
++            self.disable_throttling()
++            self.target_vm.shutdown()
++        self.vm.shutdown()
++        os.remove(test_img)
++        os.remove(target_img)
++        os.remove(backing_img)
++        os.remove(target_backing_img)
++
++    def test_throttled(self):
++        self.vm.cmd('blockdev-mirror',
++                    job_id='mirror',
++                    device='source',
++                    target='target',
++                    sync='full',
++                    copy_mode='write-blocking')
++
++        self.wait_ready('mirror')
++
++        self.set_throttle_limits({'iops-write': 1})
++
++        # Issue requests that will be throttled.
++        for i in range(0, self.reqs):
++            req = f'aio_write -P 7 {i}M {self.req_len}'
++            self.vm.hmp_qemu_io(self.drive_qdev, req, qdev=True)
++
++        # Check that requests do not complete faster than 1 per second. They
++        # might complete in batches, so do not check for exactly 1 per second.
++        for i in range(0, self.reqs):
++            result = self.vm.cmd('query-blockstats')
++            assert result[0]['stats']['wr_bytes'] <= (i + 1) * self.req_len
++
++            self.target_vm.qtest(f'clock_step {1 * 1000 * 1000 * 1000}')
++            time.sleep(0.1)
++
++        time.sleep(2)
++
++        # Check that all requests are complete.
++        result = self.vm.cmd('query-blockstats')
++        self.assertEqual(result[0]['stats']['wr_bytes'],
++                         self.reqs * self.req_len)
++
++        self.disable_throttling()
++
++        self.complete_and_wait('mirror', wait_ready=False)
++        self.target_vm.shutdown()
++        self.vm.shutdown()
++        self.assertTrue(iotests.compare_images(test_img, target_img),
++                        'target image does not match source after mirroring')
+ 
+ if __name__ == '__main__':
+     iotests.main(supported_fmts=['qcow2', 'qed'],
+diff --git a/tests/qemu-iotests/041.out b/tests/qemu-iotests/041.out
+index 46651953e8..5273ce86c3 100644
+--- a/tests/qemu-iotests/041.out
++++ b/tests/qemu-iotests/041.out
+@@ -1,5 +1,5 @@
+-...........................................................................................................
++............................................................................................................
+ ----------------------------------------------------------------------
+-Ran 107 tests
++Ran 108 tests
+ 
+ OK
 -- 
-2.53.0
+2.47.3
+
 
 
