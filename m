@@ -4,82 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B0E1103E160
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:48:43 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1BBC103E162
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:48:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2oQp-0003bu-Qz; Wed, 18 Mar 2026 06:47:19 -0400
+	id 1w2oQm-0003ay-S2; Wed, 18 Mar 2026 06:47:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w2oQd-0003X5-LK
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:47:08 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ id 1w2oQg-0003XS-S1
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:47:13 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w2oQb-0003Lh-D3
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:47:07 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-48539d21b76so49446455e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:47:05 -0700 (PDT)
+ id 1w2oQf-0003Mq-9r
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:47:10 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso7392415e9.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:47:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773830823; x=1774435623; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773830827; x=1774435627; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=ZccvTnv2HkjQxcvO+im/Zhj/O+R+gRIbwLk7ilc4DiI=;
- b=O6gQuZ8GfxeS8/hu7E1rkowN8SojwCj0JanjYlV1dZG+Zs/wTnsY/g4BKxZbhe7RTe
- sT178ful8HQlZZK52rHQ3QsK3Hvj7Em0ys13cxzO+88tT1AALcEssNHTEGdh/t224yQb
- Rv/gROub1SucHQ9FTJ2YNu6mBTJGJpwkYBjLMCzNrQ2p50r8kJW8VmpdetqgzpgbEyjo
- t3qtdLhippAcXja33/ZD2/uSnSVxh52Y6+KgI1GjlufmLVGbHaCBC43x4nC3lUNKuHS/
- xRByuwbwqUUZK6T/VgN3cIR/wTklKxEl5O9Nbe9pcx1RKLyntoNS9e5a7mmZ8hczVMpK
- a+9A==
+ bh=RXbm6LZc46i8z/YUVSg+0qi3TRX5Dk3YHcYXiwqEKZc=;
+ b=aRWPH/SL1bZzMeqyPSW4wr70fLn6HSOw82IstzcKCR5whYnieMiMZgTOqBRaECbgB4
+ JuWP1+u2ldiVUPwG8eN6v3Vl+GpI+vsqE7CerEEcno2NglDtnN0qMMdp+Mto6GTnRomI
+ cd/kv/PjwQdLQa6iBrNUjOX/pS9fDGY7azZXXUX4y9RaW7iUtvqepknecLln4z28kvFt
+ NdzFzXG1YFh5tAm7AgI/6NHmKE9os7scGCrQ2fFdFp9oe3z12PW7YRd9bdD+kOLHlfag
+ +mRFqsbImRvjDnhSNlojqoDAmlKiSp1e5aRyFVrRM5Zq5vwZ6ThYghhmujUFl09kTo9W
+ FLgA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773830824; x=1774435624;
+ d=1e100.net; s=20251104; t=1773830827; x=1774435627;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=ZccvTnv2HkjQxcvO+im/Zhj/O+R+gRIbwLk7ilc4DiI=;
- b=rI+p6uO2rj6gzdoYsRXIuLgzrU8ms+zwJN3c8htWdgnLn9rNi5TwIU+arOhVJ7WmGx
- 5TyZRsl3jCTkN1+xhTDpPQU2koCEPf7A0oNH/K52V2a7f3i0VFHCmgUNKdHzATOD/4HM
- CiMyNJNY3isFet9rdHAFI+12V2GOlslC7i6ywXUG1KnJCh+SpHLwgGk2s9kDarVCaBKD
- 50K44M+GDop3IZE9pynRjwKZBC7q75NT47zVYVt7Cs53gJPsGKdHA6KqsJw6xWNxemdX
- ZT4soaZklhXJKmuH7yupCeZg8YQENiXfRna0t6FZ7jKWPZD6BfKPxGr/UuY/tlaM4rum
- zgVg==
-X-Gm-Message-State: AOJu0YzXTssguRSbOVCW6kZ2otFzIaofNEFeOKsUSm4UbY4KASFDuADm
- A0sW6GXS6xJoY7g1accWmCj4qe9TqrxAw3J/H+F2vy1rmD4P16rqCETUA1dzB3SU
-X-Gm-Gg: ATEYQzxZi38EpXf6tnXI5V3t5RevzZOVErZ7/+eXrljZ3hQCNMETZGQ8WUtodWqgVZA
- kdc31j2Uq+X8U7Uo4VgSAVr8ev3vWBXiOilFQxa8IIo2y2L70nWaBO9oiLJUnw/2DX/QffUBecD
- a3RClyZyUEyzU0XLd1kQ8WhNTG1Xzn38IODDLrPm9ZX3XbEozo0WFIjXnfUft05TMRaPsGTnJCx
- DYs8o2i6rLrx+yOnVeeiO1u+2WwR1mEOSYaWfdnHduMWX1v881Q8yFNX2gjtiXffh7sJ/HazMSs
- /oC7eaEKvqggLUoIN0peBdNamic9MKtBat35jx895jxEqcO13P9kll2P2iO/udJ08YmihBdE+Un
- a1/DI2vQzitXRSjBYoRmxSgbqnS17/1E9IzrGU1yuXeteAEF83EvsZI/ObNfy9twmQYEwq4AiEb
- Ldh+Wkjmr5EJw6U8cRAzcTR+nXNo0SOgL7qqpDCaUDnwln6qm28W4XnuMEai8NzBymtg==
-X-Received: by 2002:a05:600c:5248:b0:485:2f6a:6ed with SMTP id
- 5b1f17b1804b1-486f4451b9amr52307335e9.28.1773830823435; 
- Wed, 18 Mar 2026 03:47:03 -0700 (PDT)
+ bh=RXbm6LZc46i8z/YUVSg+0qi3TRX5Dk3YHcYXiwqEKZc=;
+ b=ml0pEW5oj0qBx9zy4/xkzAAwitzXypABU6QsLJXY6zrXRClP0J351QPqHee3BDNq8K
+ bXOueJDFaC6WSGzXw/b8xjnVi7CeTg8CNMoBTtBydtg1YukkuGNj7PwcUjqB2pXUlLzm
+ IwATLXUqxxK2m/B91Gji6HZUejWQCufSB3qDNB8IAUsvmjDiyJLipdp8d5gfPOB3n85x
+ nCIcyfSZyXmxlpoB4RnRT1asD4GUUbCOwhYSQI73xo4tl3UDhQkOMqeZxt42ZtmZxW6b
+ MPs6tGlFMYUXQsPYnj9RuahzqCQMDpe5ZQtAZPjnS0/5lOgLz5QBfrLK2pvnez95YxkF
+ 7uHA==
+X-Gm-Message-State: AOJu0Yw76RSLqZA09k6lhQ5Sj1FJeUIqvmAhzQs/SNYwcEqylWvzT2ad
+ eU69TJuphVokLxF26FR6KFWjEdxRShqIm16rcvSbGsXDSUyeTy3+ekSEQTBJn0gd
+X-Gm-Gg: ATEYQzzM8vivtw1WaIfV11W//pnmfQ4nZ4q2FotspG5JcY871aUaVdYAduYY/51E3E2
+ CTBkvh/pKw93g9/5+v89cMzHLs+rsOAp4f/nDTkZgkOrDFcj7tC8dMt/p+kRd591SD6vpz7sc6V
+ ZYPnLgkG6IrXfpPHPLM2tvlLyvr8kFDa65wDbeh2YErYyNEr0DVTwOq8mI/7y4G3ql/opV8BeKV
+ yc2lbT36hgRSt8QNJN2ZaRTsgaMPyJek0whlbbTAHc8v/APaIO9KtYaV3q0ucRgGO80M2Ltbh1I
+ Cx4n8iZ30O3Xbz7A6tNhXOvNm68hvJUGFnffOcwdgotWWb0x9SPIOk6jLQbO2XSTCeby2Oqz1d5
+ cN5JgvKnvC9V26M3+xGK+pzLAR0FTg0VR3HQvWCOdmEDujPGQy5sh6Hc26zhl3XbBWNEZaGuDdy
+ 5r6oXiaymHUUE1I4WeHj3ny2t73HRg6bz5wWsxyinrBXVt76+U5AxbJzb/aDyzk4rMEz1QxUio6
+ Xne
+X-Received: by 2002:a05:600c:314c:b0:485:3989:b3e4 with SMTP id
+ 5b1f17b1804b1-486f40ab752mr45145435e9.6.1773830827346; 
+ Wed, 18 Mar 2026 03:47:07 -0700 (PDT)
 Received: from thinkpad-t470s.. (93-143-80-194.adsl.net.t-com.hr.
  [93.143.80.194]) by smtp.googlemail.com with ESMTPSA id
- 5b1f17b1804b1-486f420de8asm56471095e9.3.2026.03.18.03.47.02
+ 5b1f17b1804b1-486f420de8asm56471095e9.3.2026.03.18.03.47.06
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 03:47:02 -0700 (PDT)
+ Wed, 18 Mar 2026 03:47:06 -0700 (PDT)
 From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
 To: qemu-devel@nongnu.org
 Cc: qemu-arm@nongnu.org, artem_mygaiev@epam.com, volodymyr_babchuk@epam.com,
  alex.bennee@linaro.org, peter.maydell@linaro.org,
  pierrick.bouvier@linaro.org, philmd@linaro.org, Ruslan_Ruslichenko@epam.com
-Subject: [RFC PATCH 4/9] plugins: Introduce fault injection API and core
- subsystem
-Date: Wed, 18 Mar 2026 11:46:35 +0100
-Message-ID: <20260318104640.239752-5-ruslichenko.r@gmail.com>
+Subject: [RFC PATCH 7/9] hw/arm/smmuv3: Add plugin fault handler for CMDQ
+ errors
+Date: Wed, 18 Mar 2026 11:46:38 +0100
+Message-ID: <20260318104640.239752-8-ruslichenko.r@gmail.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260318104640.239752-1-ruslichenko.r@gmail.com>
 References: <20260318104640.239752-1-ruslichenko.r@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x330.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=ruslichenko.r@gmail.com; helo=mail-wm1-x32e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -104,289 +105,95 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 
-The patch adds infrastructure of fault injection API to plugins.
-The following capabilities introduced:
+Register custom 'smmu_gerror_cmdq' handler within plugin subsystem.
 
-- MMIO overrides: Allows plugins to register callbacks that intercept
-  MMIO accesses.
-- IRQ injection: Provides mechanism to raise or pulse hardware irq's
-  directly to primary interrupt controller.
-- CPU Excheption injection: Provides API for injecting CPU exceptions.
-  As of now only ARM targets supported.
-- Custom Fault Registry: Implements a registry allowing QEMU device
-  models to expose custom, device-specific fault handlers. Plugins
-  can trigger these dynamically by name.
+This enables external plugins to dynamically inject Command Queue
+errors and trigger GERROR interrupts.
 
 Signed-off-by: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
 ---
- include/plugins/qemu-plugin.h |  19 ++++++
- include/qemu/plugin.h         |  39 ++++++++++++
- plugins/api.c                 |  27 ++++++++
- plugins/fault.c               | 116 ++++++++++++++++++++++++++++++++++
- plugins/meson.build           |   1 +
- 5 files changed, 202 insertions(+)
- create mode 100644 plugins/fault.c
+ hw/arm/smmuv3.c | 54 +++++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 54 insertions(+)
 
-diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
-index a68427536f..96e2787788 100644
---- a/include/plugins/qemu-plugin.h
-+++ b/include/plugins/qemu-plugin.h
-@@ -1255,6 +1255,25 @@ uint64_t qemu_plugin_get_virtual_clock_ns(void);
- QEMU_PLUGIN_API
- void qemu_plugin_timer_virt_ns(uint64_t time, void (*cb)(void*), void *opaque);
- 
-+typedef bool (*qemu_plugin_mmio_override_cb_t)(uint64_t hwaddr,
-+                                               unsigned size,
-+                                               bool is_write,
-+                                               uint64_t *value);
-+
-+QEMU_PLUGIN_API
-+void qemu_plugin_register_mmio_override_cb(qemu_plugin_id_t id,
-+                                           qemu_plugin_mmio_override_cb_t cb);
-+
-+QEMU_PLUGIN_API
-+void qemu_plugin_inject_irq(int irq_num, int cpu, bool pulse);
-+
-+QEMU_PLUGIN_API
-+void qemu_plugin_inject_exception(int excp_index, uint32_t data);
-+
-+QEMU_PLUGIN_API
-+void qemu_plugin_trigger_custom_fault(const char *fault_name, void *target_data,
-+                                      void *fault_data);
-+
- #ifdef __cplusplus
- } /* extern "C" */
- #endif
-diff --git a/include/qemu/plugin.h b/include/qemu/plugin.h
-index ddd77bd82c..4cb01b2125 100644
---- a/include/qemu/plugin.h
-+++ b/include/qemu/plugin.h
-@@ -43,6 +43,11 @@ get_plugin_meminfo_rw(qemu_plugin_meminfo_t i)
-     return i >> 16;
- }
- 
-+typedef void (*plugin_irq_inject_cb) (void *opaque, int irq,
-+                                      int cpu, bool pulse);
-+
-+typedef void (*plugin_custom_fault_cb)(void *target_data, void *fault_data);
-+
- #ifdef CONFIG_PLUGIN
- extern QemuOptsList qemu_plugin_opts;
- 
-@@ -234,6 +239,27 @@ static inline enum qemu_plugin_cb_flags qemu_plugin_get_cb_flags(void)
-     return current_cpu->neg.plugin_cb_flags;
- }
- 
-+void plugin_register_mmio_override_cb(qemu_plugin_id_t id,
-+                                      qemu_plugin_mmio_override_cb_t cb);
-+
-+bool plugin_mmio_override_cb_invoke(uint64_t hwaddr,
-+                                    uint64_t size,
-+                                    bool is_write,
-+                                    uint64_t* data);
-+
-+void plugin_register_intc(void *opaque, plugin_irq_inject_cb cb);
-+
-+void plugin_inject_irq(int irq_num, int cpu, bool pulse);
-+
-+void plugin_inject_exception(int excp_index, uint32_t data);
-+
-+void plugin_register_custom_fault(const char *fault_name,
-+                                  plugin_custom_fault_cb cb);
-+
-+void plugin_trigger_custom_fault(const char* fault_name, void *target_data,
-+                                 void *fault_data);
-+
-+
- #else /* !CONFIG_PLUGIN */
- 
- static inline void qemu_plugin_add_opts(void)
-@@ -324,6 +350,19 @@ static inline void qemu_plugin_user_prefork_lock(void)
- static inline void qemu_plugin_user_postfork(bool is_child)
- { }
- 
-+static inline bool plugin_mmio_override_cb_invoke(uint64_t hwaddr,
-+                                                  uint64_t size,
-+                                                  bool is_write,
-+                                                  void* data)
-+{ return false; }
-+
-+static void plugin_register_intc(void *opaque, plugin_irq_inject_cb cb)
-+{ }
-+
-+static void plugin_register_custom_fault(const char *fault_name,
-+                                         plugin_custom_fault_cb cb)
-+{ }
-+
- #endif /* !CONFIG_PLUGIN */
- 
- #endif /* QEMU_PLUGIN_H */
-diff --git a/plugins/api.c b/plugins/api.c
-index fa650e1219..0adeaa0bc3 100644
---- a/plugins/api.c
-+++ b/plugins/api.c
-@@ -687,3 +687,30 @@ void qemu_plugin_timer_virt_ns(uint64_t time, void (*cb)(void*), void *opaque)
- 
-     timer_mod(data->timer, time);
- }
-+
-+uint64_t qemu_plugin_get_virtual_clock_ns(void)
-+{
-+    return qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
-+}
-+
-+void qemu_plugin_register_mmio_override_cb(qemu_plugin_id_t id,
-+                                           qemu_plugin_mmio_override_cb_t cb)
-+{
-+    plugin_register_mmio_override_cb(id, cb);
-+}
-+
-+void qemu_plugin_inject_irq(int irq_num, int cpu, bool pulse)
-+{
-+    plugin_inject_irq(irq_num, cpu, pulse);
-+}
-+
-+void qemu_plugin_inject_exception(int excp_index, uint32_t data)
-+{
-+    plugin_inject_exception(excp_index, data);
-+}
-+
-+void qemu_plugin_trigger_custom_fault(const char *fault_name,
-+                                      void *target_data, void *fault_data)
-+{
-+    plugin_trigger_custom_fault(fault_name, target_data, fault_data);
-+}
-diff --git a/plugins/fault.c b/plugins/fault.c
-new file mode 100644
-index 0000000000..8f7c1e1333
---- /dev/null
-+++ b/plugins/fault.c
-@@ -0,0 +1,116 @@
-+/*
-+ * Fault Injection Core Subsystem
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "cpu.h"
-+#include "qemu/main-loop.h"
-+#include "hw/core/irq.h"
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index c08d58c579..e80b80e843 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -27,6 +27,8 @@
+ #include "hw/pci/pci.h"
+ #include "cpu.h"
+ #include "exec/target_page.h"
 +#include "qemu/plugin.h"
++#include "qom/object.h"
+ #include "trace.h"
+ #include "qemu/log.h"
+ #include "qemu/error-report.h"
+@@ -42,6 +44,55 @@
+                                         ((ptw_info).stage == SMMU_STAGE_2 && \
+                                         (cfg)->s2cfg.record_faults))
+ 
++static void smmuv3_trigger_irq(SMMUv3State *s, SMMUIrq irq,
++                               uint32_t gerror_mask);
 +
 +typedef struct {
-+    qemu_plugin_id_t id;
-+    qemu_plugin_mmio_override_cb_t cb;
-+} MMIOOverrideEntry;
++    uint64_t base_addr;
++    Object *found_obj;
++} SMMUSearchArgs;
 +
-+static GArray *mmio_callbacks = NULL;
-+
-+void *intc_opaque;
-+static plugin_irq_inject_cb irq_inject_cb = NULL;
-+
-+static GHashTable *fault_registry = NULL;
-+
-+void plugin_register_mmio_override_cb(qemu_plugin_id_t id,
-+                                      qemu_plugin_mmio_override_cb_t cb)
++static int smmu_match_addr_cb(Object *obj, void *opaque)
 +{
-+    if (!mmio_callbacks) {
-+        mmio_callbacks = g_array_new(FALSE, FALSE,
-+                        sizeof(MMIOOverrideEntry));
-+    }
++    SMMUSearchArgs *args = (SMMUSearchArgs *)opaque;
 +
-+    MMIOOverrideEntry entry = { .id = id, .cb = cb };
-+    g_array_append_val(mmio_callbacks, entry);
-+}
++    if (object_dynamic_cast(obj, TYPE_ARM_SMMUV3)) {
++        SysBusDevice *sbd = SYS_BUS_DEVICE(obj);
 +
-+bool plugin_mmio_override_cb_invoke(uint64_t hwaddr,
-+                                    uint64_t size,
-+                                    bool is_write,
-+                                    uint64_t* data)
-+{
-+    if (!mmio_callbacks) {
-+        return false;
-+    }
-+
-+    for (int i = 0; i < mmio_callbacks->len; ++i) {
-+        MMIOOverrideEntry *entry = &g_array_index(mmio_callbacks,
-+                                                  MMIOOverrideEntry, i);
-+        if (entry->cb(hwaddr, size, is_write, data)) {
-+            /* Stop on first match */
-+            return true;
++        if (sbd->mmio[0].addr == args->base_addr) {
++            args->found_obj = obj;
++            return 1;
 +        }
 +    }
 +
-+    return false;
++    return 0;
 +}
 +
-+void plugin_register_intc(void *opaque, plugin_irq_inject_cb cb)
++static void smmu_inject_gerror_cmdq(void *target_data, void *fault_data)
 +{
-+    intc_opaque = opaque;
-+    irq_inject_cb = cb;
-+}
++    uint64_t base_address = *(uint64_t *)target_data;
++    SMMUCmdError cmd_error = *(SMMUCmdError*)fault_data;
++    Object *obj = NULL;
 +
-+void plugin_inject_irq(int irq_num, int cpu, bool pulse)
-+{
-+    if (!irq_inject_cb) {
++    if (base_address) {
++        SMMUSearchArgs args = { .base_addr = base_address, .found_obj = NULL };
++        object_child_foreach_recursive(object_get_root(), smmu_match_addr_cb, &args);
++
++        obj = args.found_obj;
++    } else {
++        obj = object_resolve_path_type("", TYPE_ARM_SMMUV3, NULL);
++    }
++
++    if (!obj) {
 +        return;
 +    }
 +
-+    bool locked = bql_locked();
++    SMMUv3State *s = ARM_SMMUV3(obj);
 +
-+    if (!locked) {
-+        bql_lock();
-+    }
-+
-+    irq_inject_cb(intc_opaque, irq_num, cpu, pulse);
-+
-+    if (!locked) {
-+        bql_unlock();
-+    }
++    smmu_write_cmdq_err(s, cmd_error);
++    smmuv3_trigger_irq(s, SMMU_IRQ_GERROR, R_GERROR_CMDQ_ERR_MASK);
 +}
 +
-+void plugin_inject_exception(int excp_index, uint32_t data)
-+{
-+#if defined (TARGET_ARM)
-+    arm_cpu_inject_exception(excp_index, data);
-+#else
-+    qemu_log_mask(LOG_UNIMP,
-+                  "FI: Injecting exception is not supported for this target\n");
-+#endif
-+}
-+
-+void plugin_register_custom_fault(const char *fault_name,
-+                                  plugin_custom_fault_cb cb){
-+    if (!fault_registry) {
-+        fault_registry = g_hash_table_new_full(g_str_hash, g_str_equal,
-+                                               g_free, NULL);
-+    }
-+
-+    g_hash_table_insert(fault_registry, g_strdup(fault_name), cb);
-+}
-+
-+void plugin_trigger_custom_fault(const char* fault_name, void *target_data,
-+                                 void *fault_data)
-+{
-+    plugin_custom_fault_cb cb = NULL;
-+
-+    if (fault_registry) {
-+        cb = g_hash_table_lookup(fault_registry, fault_name);
-+    }
-+
-+    if (cb) {
-+        cb(target_data, fault_data);
-+    }
-+}
-diff --git a/plugins/meson.build b/plugins/meson.build
-index 9899f166ee..8995ce5977 100644
---- a/plugins/meson.build
-+++ b/plugins/meson.build
-@@ -86,3 +86,4 @@ system_ss.add(files('api.c', 'core.c'))
+ /**
+  * smmuv3_trigger_irq - pulse @irq if enabled and update
+  * GERROR register in case of GERROR interrupt
+@@ -2130,6 +2181,9 @@ static void smmuv3_class_init(ObjectClass *klass, const void *data)
+     dc->hotpluggable = false;
+     dc->user_creatable = true;
  
- common_ss.add(files('loader.c'))
- 
-+specific_ss.add(files('fault.c'))
++    plugin_register_custom_fault("smmu_gerror_cmdq",
++                              smmu_inject_gerror_cmdq);
++
+     object_class_property_set_description(klass, "accel",
+         "Enable SMMUv3 accelerator support. Allows host SMMUv3 to be "
+         "configured in nested mode for vfio-pci dev assignment");
 -- 
 2.43.0
 
