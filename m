@@ -4,101 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D7815FCD0CD
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:08:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4390AFCD0CD
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:11:28 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2lwu-0003UP-Uj; Wed, 18 Mar 2026 04:08:18 -0400
+	id 1w2lza-00047o-FO; Wed, 18 Mar 2026 04:11:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2lwq-0003U3-No
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:08:14 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2lzP-00047H-OR
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:10:52 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2lwo-0004QM-CR
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:08:12 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2lzM-0005XU-HC
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:10:50 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773821288;
+ s=mimecast20190719; t=1773821446;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=tOyvmhp4poXy2aHO05eKZVAgeqzNOYPabHL9vZOxcds=;
- b=d1O2lKpytczj0gQRI5yGVGwn9b6hUdsq7PcpTW3t3a5f9bHs7zGQ8DtpjVYfqM7UsHVk18
- F8JRAtOh5IbzApEtHp87qDOLyJKPlGlvLpYP0WF/rZZH4xNWZg+tEcdqCBFt5fb4SLQ2CP
- 5+NIK65X/4mu7NMNdbTb9i4pQmwnowo=
+ bh=b4iVUJZXpPB06P8LxK1UsgezufZA/Xa1+6lXVhtEzns=;
+ b=GEfRSF3ndy+PCYxi79Fc7fgkigFpLDGb6fxJ5zwDOAH73tUL1idIt1QOcNUlmgIkIo2qtr
+ gy5rmNzHOErs1TZ4W9Vuaeg4lXjflEwJy6o8bz2JiKPTHrPNxP1LI3wEkOuVN2TBtAp5Ch
+ JfNvspFIRP6BDJwBFv9jlaQ/jyJ75Cw=
 Received: from mail-wr1-f72.google.com (mail-wr1-f72.google.com
  [209.85.221.72]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-613-u1h6ASOmPlaWGfILjUMbyw-1; Wed, 18 Mar 2026 04:08:06 -0400
-X-MC-Unique: u1h6ASOmPlaWGfILjUMbyw-1
-X-Mimecast-MFC-AGG-ID: u1h6ASOmPlaWGfILjUMbyw_1773821285
+ us-mta-411-Grg77_l5Noii2t7UdugNog-1; Wed, 18 Mar 2026 04:10:45 -0400
+X-MC-Unique: Grg77_l5Noii2t7UdugNog-1
+X-Mimecast-MFC-AGG-ID: Grg77_l5Noii2t7UdugNog_1773821444
 Received: by mail-wr1-f72.google.com with SMTP id
- ffacd0b85a97d-43b47c19ed8so2778354f8f.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 01:08:06 -0700 (PDT)
+ ffacd0b85a97d-43b3a675316so2871077f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 01:10:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773821285; x=1774426085; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773821444; x=1774426244; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=tOyvmhp4poXy2aHO05eKZVAgeqzNOYPabHL9vZOxcds=;
- b=s+zx9p0x2U6mbkhfRY2l1ziJ22V/RtLlYdxAKuZjZdSaCeoUa7UopnRaFRdCJF8Cyy
- iIIcwEL2484Olzj7+AjiP356kybD9DONYJeyDHyGZaFh2aVGQjRNJwStgJHVJXCW/Ce5
- w7XaJNmuIpbZOz6e2DyRa08V56FOX1s3t3CKa33cPB1oDXat47Q+LttpQcWj8T31GVC4
- UDlKMbefHubXej/gTZ4lpQbEO/2BsjHBFVXUKGTrftFx3QvyF5KPq/BIrh+rfSr3YS+X
- 3a8Aelql9BQ/2VogMKM7SEcOTTPXoLw+8lYp510tQbtKD1RkJ2//l80O+ruKv+UC9Bgp
- PL4A==
+ bh=b4iVUJZXpPB06P8LxK1UsgezufZA/Xa1+6lXVhtEzns=;
+ b=ccKAul3Wi3OFRiSV5Nhg8jVwqgkEp8/yoVkqxNhZ7BP2kih+3paZB+qRFJOOK0kHVU
+ MU0z8+uF9Gw/T+RufQR11qSEKFSf44VSXw1NQOWdjwOs1U05hhhMXlEi/sYJ7S3cJTtC
+ w1Uwtvt/pNqe5Y9ZYrnaVq67dfZ57kZLKCN0ERGSOT6qoJ9UM18kLrmz14c7G0KANqii
+ +IMKBMdl4r9Q2LUS706+T5Fm6fI8PIMBcBM97gtisFxDyafQlEgKrwOwYVkeJZppeEp0
+ unf29KPs6nQ7rdl/r3Or6ghcBNoPcxz3XvcNtTHGkLS8WUrKjCH+NdZygV0wjUquAH+/
+ S7Ng==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773821285; x=1774426085;
+ d=1e100.net; s=20251104; t=1773821444; x=1774426244;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=tOyvmhp4poXy2aHO05eKZVAgeqzNOYPabHL9vZOxcds=;
- b=WUFzRsHV/NLe4nDLHhd2sM4ugwWA3HbjVvMUKIZlBUKg8aXnuzLYqTHZCUSP1xX96I
- OBZmtIPe6u/CYPSidr+ttv3LnsG1Fu9vbPsGgKWtmsj7xP2oFuNi3w1cj1AQvShC6EYZ
- Vtf3fGny1n3q5Aa9Km8pv2vlvU+xAiHusnFtfki31Nbbny3TQuQmXCo8I/3rAK4jC5q7
- nh7M5I9JJYkQ4loSC6ytI1953VI6qH0VlDK9qjFHa31KJK2M46B8O6/GnvMBsInjSkca
- q5VdEpM0qeMFCcUQh/WHDc8K8pNsXMxcqfmYXrVdYBbpEovv8X7+foWD50i9Yje867sq
- ChEg==
+ bh=b4iVUJZXpPB06P8LxK1UsgezufZA/Xa1+6lXVhtEzns=;
+ b=fHxuFhKND94LSR9L7zEWLrvtEK26qUC3FxH0EhkFz5X6jh8RaLGU/9LOnzyZLSN99f
+ Kv7ImBUYTVfGpGJLwVM3AhxsUkgUrWD1MRsEKBI8KqpC6IdiZMQ8Glxh5Acl1g7ndHUJ
+ Aev1VCkvtjZRSOw/tQsXqtPTlSH8JMXzXHlDjo02zimNkoHy2liw/eRGD5/r4XeGgP1d
+ MlMRkiJOCqDr2gqj8ZNFcjJTR9MRzTGkKS0tn6E+KPlBRPUzWeDpGChaD/X6MnlQRHsF
+ YWIJyvCRVEwnOzq3PnJOoBP+vqPZInZc0hoc2JL8eo717AJzJRNsz24fvwecuCiaEbrq
+ GLOw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVuGgRLZqNLbmYyzkHyxiKbR/0udwS/U0bU/61ggxjJldwiCov7aNspt74aAJAfnfUgCSai9gapGBNs@nongnu.org
-X-Gm-Message-State: AOJu0Yz+RW8IuP68wRvTpP+dmOOp+lkNvhI3ZQDGGfcunSWQM4R+iFKp
- xjnQ8pNzl3LqroMIPlKXGcN4TRV1gKxMKk27T/PwjBrEU3vULG1Nl+9bN47oGXd9RZTaornHOPf
- 9yhlvhAz0IdLaU/mIJU1wiFkbZTzMDx6Imo4Zh5pYzPUeOAkH/t/dFkbU
-X-Gm-Gg: ATEYQzzf+/vt60ujn2U3QhCpImw7zuV/dyEt5wZVs90ZLM9G4K08GuqF//tJSX3xHdg
- KF7GadH/HZ6PLc/oFajo1ErdFMRama4x2hH3yy4yGFLRUKEammxt+Ob99yjcty/2MQRWaxqr5Cj
- 547GoXLj2A5crq677HlYPU5b3jYtLnwic2ti189tTwFwiUbu9lCgS3o1YESeMSyZ/wgZqAACJdD
- 03t0zQgGRYCV03Y/j/X9nt/+hMg3pRW8ronqlhsLa/bbD9Atf8rkeUfuhkY2OKLPiwfDMvOPsOq
- oCvylNsczcsAjANuzhaKCiU69ZMfsKTqrFCdxQfChBpf9WI7ozS9xInnAekdeM0SOVCD2NBvJJj
- GDsCtUDcloMJZ6cfJmGGtCLKDqpKbzMLjD23hbBfDMtq2URddLHIcgbboQgdF
-X-Received: by 2002:a05:600c:4e91:b0:485:3c8f:e4ce with SMTP id
- 5b1f17b1804b1-486f4474c39mr41336815e9.18.1773821285068; 
- Wed, 18 Mar 2026 01:08:05 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e91:b0:485:3c8f:e4ce with SMTP id
- 5b1f17b1804b1-486f4474c39mr41336405e9.18.1773821284582; 
- Wed, 18 Mar 2026 01:08:04 -0700 (PDT)
+ AJvYcCXtmTLlMt5t4QyE12+5J7Fl6w4uv5UA7vCJs3H9qQJ61GFdbE46thDVRZ9wJ3w0gGBBWczHxCmtwCnD@nongnu.org
+X-Gm-Message-State: AOJu0YzcVmS4Smo/lvkUDnPEID6wSXoYf59CBv66cvfaX7x7GuhWaNUT
+ H2IXTfE795zb5YwEQCjKF/doH7cbaiZY6LDRwwrhYZuh0w/vD9ZmE7QWaxZqvGlLAVOobObA7aO
+ 6olwceEbA7+SA/YNwR8qpj1H+ac9Duz0oyPXjr83cxeZXUMimWA9lIUbG
+X-Gm-Gg: ATEYQzwNyTpO1PxnDdjCRwmlX28wtnIKRznskfWd11SriOUHFih02rnigqCekiuDsE0
+ 9KpAu3tfbe+KTZhFEd4gMrBRtZrPl/Tao7OSU8Uro71bAgl3X9k3lRH5qkJC198Uaa+Pni7MhZR
+ pgBGfIMXUSJR9eGQ300zATMbUBCzUZpBcrZ1DidZLWtqwvOJM8tf1xsj2DEr7qCJJV7iZbJtMKX
+ e2GXQpxmEL8CK/j52vxZRre8iwil92GRGM4WKpjmPE+6ZHwKZ+rMYGs/PGx8zEm1AynyoX04ASd
+ Zr6qqJfcIQTSZU1SEot4Jpn6b/wC2Os5zBgGF0kWsnzc9NyOTsQZpD98i5HzJ0Bl12F3j/iWXB0
+ sIOjzHaPtDGcPXS16zHvsJp3sr9jdM7mhezoLmIAHX7EIwoh0iq2MgaDsS/eE
+X-Received: by 2002:a05:6000:4008:b0:43b:42d3:31ac with SMTP id
+ ffacd0b85a97d-43b5264dc3bmr3510067f8f.0.1773821444167; 
+ Wed, 18 Mar 2026 01:10:44 -0700 (PDT)
+X-Received: by 2002:a05:6000:4008:b0:43b:42d3:31ac with SMTP id
+ ffacd0b85a97d-43b5264dc3bmr3510012f8f.0.1773821443569; 
+ Wed, 18 Mar 2026 01:10:43 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-4856ec4c9f3sm112729635e9.0.2026.03.18.01.08.03
+ ffacd0b85a97d-43b51805291sm6384620f8f.0.2026.03.18.01.10.42
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 01:08:04 -0700 (PDT)
-Message-ID: <068a3098-4e4d-490c-9cef-ac39a7e9c29f@redhat.com>
-Date: Wed, 18 Mar 2026 09:08:02 +0100
+ Wed, 18 Mar 2026 01:10:43 -0700 (PDT)
+Message-ID: <024f2ab1-a22b-426b-99b1-ad710b87b83c@redhat.com>
+Date: Wed, 18 Mar 2026 09:10:42 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
- not available
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "Liu, Yi L" <yi.l.liu@intel.com>, Alex Williamson <alex@shazbot.org>,
- Eric Auger <eric.auger@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>
+Subject: Re: [PATCH 2/2] hw/vfio/iommufd.c: report hint to user when
+ vfio-dev/vfio*/dev is missing
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
+ Alex Williamson <alex@shazbot.org>, Eric Auger <eric.auger@redhat.com>,
+ philmd@linaro.org
 References: <20260317225751.1325098-1-pierrick.bouvier@linaro.org>
- <20260317225751.1325098-2-pierrick.bouvier@linaro.org>
- <IA3PR11MB913683DE47A156F52C77AE7C924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <20260317225751.1325098-3-pierrick.bouvier@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -144,9 +142,9 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <IA3PR11MB913683DE47A156F52C77AE7C924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
+In-Reply-To: <20260317225751.1325098-3-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -172,64 +170,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/26 08:36, Duan, Zhenzhong wrote:
+On 3/17/26 23:57, Pierrick Bouvier wrote:
+> Give a hint about missing kernel config CONFIG_VFIO_DEVICE_CDEV.
 > 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   hw/vfio/iommufd.c | 5 ++++-
+>   1 file changed, 4 insertions(+), 1 deletion(-)
 > 
->> -----Original Message-----
->> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> Subject: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is not
->> available
->>
->> In case current kernel does not support /dev/iommu, qemu will probably
->> fail first because /sys/bus/pci/devices/*/vfio-dev/ is not present,
->> since QEMU opens it before /dev/iommu.
->>
->> Instead, report an error directly when initializing iommufd object, to
->> inform user that kernel does not support it, with a hint about missing
->> CONFIG_IOMMUFD.
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->> ---
->> backends/iommufd.c | 5 +++++
->> 1 file changed, 5 insertions(+)
->>
->> diff --git a/backends/iommufd.c b/backends/iommufd.c
->> index acfab907c03..c4eb3de1307 100644
->> --- a/backends/iommufd.c
->> +++ b/backends/iommufd.c
->> @@ -32,6 +32,11 @@ static void iommufd_backend_init(Object *obj)
->> {
->>      IOMMUFDBackend *be = IOMMUFD_BACKEND(obj);
->>
->> +    if (!g_file_test("/dev/iommu", G_FILE_TEST_EXISTS)) {
->> +        error_setg(&error_fatal, "/dev/iommu does not exist"
->> +                                 " (is your kernel config missing CONFIG_IOMMUFD?)");
-> 
-> If hot add an iommufd object with object_add QMP, may this kill QEMU instance?
+> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
+> index 131612eb836..3e33dfbb356 100644
+> --- a/hw/vfio/iommufd.c
+> +++ b/hw/vfio/iommufd.c
+> @@ -274,7 +274,10 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
+>       }
+>   
+>       if (!g_file_get_contents(vfio_dev_path, &contents, &length, NULL)) {
+> -        error_setg(errp, "failed to load \"%s\"", vfio_dev_path);
+> +        error_setg(errp,
+> +                   "failed to load \"%s\""
+> +                   " (is your kernel config missing CONFIG_VFIO_DEVICE_CDEV?)",
+> +                   vfio_dev_path);
+>           goto out_close_dir;
+>       }
+>   
 
-yes.
-
-
-Unfortunately, backends are Objects. So we don't have a realize
-handler and a 'Error **' parameter :/
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
 C.
-
-
-
-> 
-> Thanks
-> Zhenzhong
-> 
->> +    }
->> +
->>      be->fd = -1;
->>      be->users = 0;
->>      be->owned = true;
->> --
->> 2.47.3
-> 
 
 
