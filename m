@@ -4,96 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E071107760C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 19:45:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D8278107760E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 19:45:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2woR-0005uI-Qk; Wed, 18 Mar 2026 15:44:15 -0400
+	id 1w2woe-0005xB-3o; Wed, 18 Mar 2026 15:44:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luisccunha8@gmail.com>)
- id 1w2w0s-0002Un-CN
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 14:53:02 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w2wgg-00042J-8b
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 15:36:14 -0400
+Received: from mail-qt1-x829.google.com ([2607:f8b0:4864:20::829])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luisccunha8@gmail.com>)
- id 1w2w0p-00065G-Qr
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 14:53:02 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-482f454be5bso12561085e9.0
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 11:52:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w2wge-0003KL-Oo
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 15:36:13 -0400
+Received: by mail-qt1-x829.google.com with SMTP id
+ d75a77b69052e-506251815a3so1689651cf.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 12:36:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773859978; x=1774464778; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=MyLex6OTnYvy/DWccP0n2Mw9tvmu2JJXYlF6lIdz31c=;
- b=HA8Z+eM0i233D6Jxws26wt/4pG6VFAYoyHO9jmnKd/XB/XY5KVINWyiGui+vMmoBIS
- U2jqGtuG7Vx6STq5KAyKA6ZpDwLzd4JEUuYB2Ow8nqM+ter1LJOa8HyDDargszio8gRk
- m4W9JUHT0zPkJb/ChZ7VrcX9N3Jvw66QKFUGws4XkKMiFLh2CvK2W1lbnf9/wiiSbwOU
- iRRhyRPPPy3Rr4GNjrkN4wdXNfZe1XqQLUIpmi3ZX+DBfjKHuV9OElwNadpKhHCmkDDr
- fjrdtYlBTAjJGo8G94ntRnn+hLLM5FriM4Xm1Y7N5WwSsJpnkoQm3CfF7xzxuRnuvDBO
- s3NA==
+ d=gmail.com; s=20230601; t=1773862571; x=1774467371; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=kxHv2vQshSzX2nvcK9cDy+jlEkeqRKn5NZJXLQavEwc=;
+ b=lRTxrQXDeqs+Mgw23xH/JdDIzQx6BBosSus7x+Ub4hpywW23w9QUxftUJ7sjr8wdTW
+ RWkrXvE0sjaLG/AgzoCbk1lznX6CcvVmxRfvQyl8dXlvfYNAIipfF/GaTR5Xb9nbAREE
+ o5xKGTO07C/Qk/donpB9EgOZyEZCz/aHYO8N0tH9yo+gI+gpcX4UZjAkNMWW4Efdq93e
+ xPlAUZnQJuOPyD0d2qrbyx/caN+FsS/stZAXtaWaGxKLcI6+NEWFanLOLpbuRiXFICej
+ +PokFjI9BHmSw96TxadMA4TtPjKBx5YP7XGW5nsEaLDwu3xwMKP4nnnaoP6J+gnp7ozg
+ JUww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773859978; x=1774464778;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=MyLex6OTnYvy/DWccP0n2Mw9tvmu2JJXYlF6lIdz31c=;
- b=pFv0ttLpH0RvxA3CVymodJ/rsXZAViCvbkYUB6v5C/lbm+RQZbYdWeHASjOfQyDjtH
- CMndRJQBbppA1k2ZyDJVFtWYOTOG48fd4M3a338n/ZrMONNomEGHUlY4oFZHJk2+MpF/
- wurbhPXHcvywaeBE2LFlULnjL2yJKj8Qp5sb0fsWoi+2XUv5bVKcanuf5jz+UzAM3xqS
- LH8lmxyBBPhFsyFDTsykbisYp/zgOuR+yTXuBeiex4qLswQoXr5IMX3Ufhldt87iCxxd
- nffXsiaJrsxsXvtP9j1364P9F+eZl1p3CAcmiu+YErOrXbCBo6ueJop1U3D/nzh+S8zn
- jCfg==
-X-Gm-Message-State: AOJu0Yw16QfKy6o/nG0f5nK+2X4uWcL8+9cXvjzsEWLr+fQdsEs4sNSt
- PliHHyew/BbEvnJJWrPEFpGBavEc2zV/be3Cao25aKu0z+I5/Evp1VBU1WfYUq52fuU=
-X-Gm-Gg: ATEYQzwQgZvrercQchcYu8VJmf+9Z61RFzAE4qQN/JC2BBjy3PKgVtt0g4LPA58foSV
- DDHoCR+c8P2vdjoLBZtTuZxTyiFaP9qrMaAhrfb/eYAbSuF0d9YFpWJjbIMBEk25v42ZrC6I8+i
- aProFSfi0UIbtd6/EI23GQRyGJmIpPqlI6+Pjn4N8aDGz8/1j/OsIiDqzWaTp332EGHHIFC4950
- OOXTps4Q3NzYi67C9uQDjdRQKN3v9C52XI52j+UtQzTg5jVhyvGk86ow8PDsDvMWbPGZEKnMQ5k
- 1MB9msEtCoyAd8vteVB9SShdI6Ds3DdWOq0c4YK+cOg+S8L79OMSM8vhREeio28WAfMNPKMRwEZ
- jd53oMvAYekOzVfD7hW0w9P4DNwge2dt8fA94ticp2vimf1PdXkzXHIn5VYkLYDuF6eLRKeGurV
- EM4wZmsOkJaRQ9bPk+te62FtPM/IKUlcFe+OMyVuae46CWVEZimuUJUS1iDkBceGuYhwhbws51b
- CNJTU4JfRth6J82zE1JymcwUBBKotG6EchtGfk=
-X-Received: by 2002:a05:600c:3544:b0:485:3e00:944a with SMTP id
- 5b1f17b1804b1-486f8b35605mr11473145e9.9.1773859977695; 
- Wed, 18 Mar 2026 11:52:57 -0700 (PDT)
-Received: from luis-IdeaPad-Flex-5-14ALC05.. ([148.69.202.102])
+ d=1e100.net; s=20251104; t=1773862571; x=1774467371;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=kxHv2vQshSzX2nvcK9cDy+jlEkeqRKn5NZJXLQavEwc=;
+ b=cKCTX6CunYcg69m95eJk+RIQKkO5uNxC1dulPCwWFFVtzemqbV7uehyLnkNJ/976Lb
+ EwrnAiTnUwjiU5Tl8Ut2FiD7NbtokEvLpDSj2qwjnnrA6NRUdHAXyyu3u65lVZ/fyH2b
+ 4CAexmTQXY0dMlaizwr5MtASiEQzn3a8S1ow1ZsOTOAkBSOdqgH3sejAs8VhiW4c7LSH
+ XZD6/JM+T2mYvkbaxFeLjb09mdGSTfSl8DfMDwcQwjS2KBK3YHZ057EtmIKPoXcPs1KD
+ gLLKDjGl5QtaCdffhd+amqRmGQDuwX1vc4LEwMpQIBh8vqrucOoorIqJUg8yuB2ayuhC
+ 0saQ==
+X-Gm-Message-State: AOJu0YwpqKz8+2cjUOp2/I4CqhZJdM+xMrWmfT1vN4Mb1YdL840CfLwp
+ 5qQutYjXVWIIRyThDGYX0LBFLJJdIYxGA/0nu3YoqjCmH9sm6YhZuq0V9awpcrONoaU=
+X-Gm-Gg: ATEYQzzS7OVpWkKj8lMqNAgbaWTcPOhkTtj7DvdI40ZZctZVwZkkYjX4io181eSchS8
+ S9nFwaykK4HsEd7qkGcOh/iml8T5mLhgwgcfwBb6oAswFBS0q1QJEnJfBy14Ed061sSsptPU1aS
+ fs6D70qMeHcWk5I8qsR5qsRfRNUsXAgjmMG8TacF1raOGpCZbzSFvPa1Ob1MMh1zxRNpPJWXBIa
+ Y5HmhCtCzVPhn9bPb+53DSDk1ti+RSNLVuFBvvr2nZwdFoR3UyJ+zGImjUd9PfzbuGWrIUx6+hs
+ isBNJpLWWmoaYSURX0VYMC+QdIV+gs/vXHfGdoNKyraRE9rpCAYK3hlLeC2jzwcHtyU2vXWiNVm
+ bozrk6luICJocPfkrR2iDnzlSpckpdDECGWb4JZ6CI/G0cj7ljBZgs4QLRMRJryDjWq3ffb/HVJ
+ scKh3K4+aVTXaE8oF5L+Nuip8l6eepMPaveg==
+X-Received: by 2002:a05:622a:1301:b0:509:14f6:9855 with SMTP id
+ d75a77b69052e-50b14916975mr55932141cf.42.1773862571100; 
+ Wed, 18 Mar 2026 12:36:11 -0700 (PDT)
+Received: from 192-222-50-213.ll.local ([192.222.50.213])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f8b0bc58sm16135905e9.3.2026.03.18.11.52.53
+ d75a77b69052e-50b135d6194sm29327321cf.28.2026.03.18.12.36.10
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 11:52:57 -0700 (PDT)
-From: luisccc <luisccunha8@gmail.com>
+ Wed, 18 Mar 2026 12:36:10 -0700 (PDT)
+From: Jenny Guanni Qu <qguanni@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: luisccc <luisccunha8@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [RFC PATCH 1/6] target/riscv: Add SPMP infrastructure
-Date: Wed, 18 Mar 2026 18:52:31 +0000
-Message-ID: <20260318185238.99143-2-luisccunha8@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260318185238.99143-1-luisccunha8@gmail.com>
-References: <20260318185238.99143-1-luisccunha8@gmail.com>
+Cc: berrange@redhat.com, mcascell@redhat.com, peter.maydell@linaro.org,
+ qemu-security@nongnu.org, Jenny Guanni Qu <qguanni@gmail.com>
+Subject: [PATCH] hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
+Date: Wed, 18 Mar 2026 19:36:10 +0000
+Message-Id: <20260318193610.2043847-1-qguanni@gmail.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=luisccunha8@gmail.com; helo=mail-wm1-x330.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+Received-SPF: pass client-ip=2607:f8b0:4864:20::829;
+ envelope-from=qguanni@gmail.com; helo=mail-qt1-x829.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 18 Mar 2026 15:44:14 -0400
+X-Mailman-Approved-At: Wed, 18 Mar 2026 15:44:26 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -108,679 +96,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Introduce the initial infrastructure required for the RISC-V S-mode Physical Memory Protection (SPMP) implementation.
+When a guest sets MaxPacketSize to 0 in an OHCI Endpoint Descriptor,
+ohci_service_td() transfers 0 bytes per iteration. The Transfer
+Descriptor never completes because CBP never advances toward BE,
+causing ohci_service_ed_list() to loop indefinitely and hang QEMU.
 
-This patch adds the SPMP source files, integrates them into the build system, and introduces the CPU state and configuration fields required by subsequent patches. No SPMP checks are enforced yet.
+Add a check for MPS==0 after extracting the field from ED flags.
+If MPS is zero, call ohci_die() to reset the controller and return
+an error, preventing the infinite loop.
 
-Signed-off-by: Luis Cunha <luisccunha8@gmail.com>
+Fixes: CVE-2026-3890
+Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
+Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
 ---
- target/riscv/cpu.h                |   6 +
- target/riscv/cpu_cfg_fields.h.inc |   1 +
- target/riscv/meson.build          |   1 +
- target/riscv/spmp.c               | 512 ++++++++++++++++++++++++++++++
- target/riscv/spmp.h               |  83 +++++
- 5 files changed, 603 insertions(+)
- create mode 100644 target/riscv/spmp.c
- create mode 100644 target/riscv/spmp.h
+ hw/usb/hcd-ohci.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/target/riscv/cpu.h b/target/riscv/cpu.h
-index 35d1f6362c..c265098324 100644
---- a/target/riscv/cpu.h
-+++ b/target/riscv/cpu.h
-@@ -178,8 +178,11 @@ extern RISCVCPUImpliedExtsRule *riscv_multi_ext_implied_rules[];
- #define OLD_MAX_RISCV_PMPS (16)
- #define MIN_RISCV_PMP_GRANULARITY 4
- 
-+#define MAX_RISCV_SPMPS (64)
-+
- #if !defined(CONFIG_USER_ONLY)
- #include "pmp.h"
-+#include "spmp.h"
- #include "debug.h"
- #endif
- 
-@@ -442,6 +445,9 @@ struct CPUArchState {
-     pmp_table_t pmp_state;
-     target_ulong mseccfg;
- 
-+    /* S-mode Physical Memory Protection */
-+    spmp_table_t spmp_state;
-+
-     /* trigger module */
-     target_ulong trigger_cur;
-     target_ulong tdata1[RV_MAX_TRIGGERS];
-diff --git a/target/riscv/cpu_cfg_fields.h.inc b/target/riscv/cpu_cfg_fields.h.inc
-index 70ec650abf..72d417c241 100644
---- a/target/riscv/cpu_cfg_fields.h.inc
-+++ b/target/riscv/cpu_cfg_fields.h.inc
-@@ -156,6 +156,7 @@ BOOL_FIELD(ext_xmipslsp)
- 
- BOOL_FIELD(mmu)
- BOOL_FIELD(pmp)
-+BOOL_FIELD(spmp)
- BOOL_FIELD(debug)
- BOOL_FIELD(misa_w)
- 
-diff --git a/target/riscv/meson.build b/target/riscv/meson.build
-index 3842c7c1a8..d03f3a7826 100644
---- a/target/riscv/meson.build
-+++ b/target/riscv/meson.build
-@@ -34,6 +34,7 @@ riscv_system_ss = ss.source_set()
- riscv_system_ss.add(files(
-   'arch_dump.c',
-   'pmp.c',
-+  'spmp.c',
-   'debug.c',
-   'monitor.c',
-   'machine.c',
-diff --git a/target/riscv/spmp.c b/target/riscv/spmp.c
-new file mode 100644
-index 0000000000..85c5259b33
---- /dev/null
-+++ b/target/riscv/spmp.c
-@@ -0,0 +1,512 @@
-+/*
-+ * QEMU RISC-V SPMP (S-mode Physical Memory Protection)
-+ *
-+ * Author:
-+ *   Luís Cunha <luisccunha8@gmail.com>
-+ *
-+ * Based on an earlier SPMP prototype by:
-+ *   Bicheng Yang <SuperYbc@outlook.com>
-+ *   Dong Du      <Ddnirvana1@gmail.com>
-+ *
-+ * This provides a RISC-V S-mode Physical Memory Protection interface.
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "qemu/log.h"
-+#include "qapi/error.h"
-+#include "cpu.h"
-+#include "cpu_bits.h"
-+#include "trace.h"
-+#include "exec/target_page.h"
-+
-+/*
-+ * Accessor method to extract address matching type 'a field' from cfg reg
-+ */
-+uint8_t spmp_get_a_field(uint8_t cfg)
-+{
-+    uint8_t a = cfg >> 3;
-+    return a & 0x3;
-+}
-+
-+/*
-+ * Check whether mstatus.sum is set.
-+ */
-+static inline int sum_is_set(CPURISCVState *env)
-+{
-+    if (env->mstatus & MSTATUS_SUM) {
-+        return 1;
-+    }
-+
-+    return 0;
-+}
-+
-+void spmp_decode_napot(target_ulong a, target_ulong *sa, target_ulong *ea)
-+{
-+    /*
-+     * aaaa...aaa0   8-byte NAPOT range
-+     * aaaa...aa01   16-byte NAPOT range
-+     * aaaa...a011   32-byte NAPOT range
-+     * ...
-+     * aa01...1111   2^XLEN-byte NAPOT range
-+     * a011...1111   2^(XLEN+1)-byte NAPOT range
-+     * 0111...1111   2^(XLEN+2)-byte NAPOT range
-+     * 1111...1111   Reserved
-+     */
-+    a = (a << 2) | 0x3;
-+    *sa = a & (a + 1);
-+    *ea = a | (a + 1);
-+}
-+
-+static void spmp_update_rule_addr(CPURISCVState *env, uint32_t spmp_index)
-+{
-+    uint8_t this_cfg = env->spmp_state.spmp[spmp_index].cfg_reg;
-+    target_ulong this_addr = env->spmp_state.spmp[spmp_index].addr_reg;
-+    target_ulong prev_addr = 0u;
-+    target_ulong sa = 0u;
-+    target_ulong ea = 0u;
-+
-+    if (spmp_index >= 1u) {
-+        prev_addr = env->spmp_state.spmp[spmp_index - 1].addr_reg;
-+    }
-+
-+    switch (spmp_get_a_field(this_cfg)) {
-+    case SPMP_AMATCH_OFF:
-+        sa = 0u;
-+        ea = -1;
-+        break;
-+
-+    case SPMP_AMATCH_TOR:
-+        sa = prev_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
-+        ea = (this_addr << 2) - 1u;
-+        break;
-+
-+    case SPMP_AMATCH_NA4:
-+        sa = this_addr << 2; /* shift up from [xx:0] to [xx+2:2] */
-+        ea = (sa + 4u) - 1u;
-+        break;
-+
-+    case SPMP_AMATCH_NAPOT:
-+        spmp_decode_napot(this_addr, &sa, &ea);
-+        break;
-+
-+    default:
-+        sa = 0u;
-+        ea = 0u;
-+        break;
-+    }
-+
-+    env->spmp_state.addr[spmp_index].sa = sa;
-+    env->spmp_state.addr[spmp_index].ea = ea;
-+}
-+
-+static void spmp_update_rule_nums(CPURISCVState *env)
-+{
-+    int i;
-+
-+    env->spmp_state.num_active_rules = 0;
-+    for (i = 0; i < MAX_RISCV_SPMPS; i++) {
-+        const uint8_t a_field =
-+            spmp_get_a_field(env->spmp_state.spmp[i].cfg_reg);
-+        if (SPMP_AMATCH_OFF != a_field) {
-+            env->spmp_state.num_active_rules++;
-+        }
-+    }
-+}
-+
-+/*
-+ * Convert cfg/addr reg values here into simple 'sa' --> start address and 'ea'
-+ * end address values.
-+ * This function is called relatively infrequently whereas the check that
-+ * an address is within a spmp rule is called often, so optimise that one
-+ */
-+static void spmp_update_rule(CPURISCVState *env, uint32_t spmp_index)
-+{
-+    spmp_update_rule_addr(env, spmp_index);
-+    spmp_update_rule_nums(env);
-+}
-+
-+static uint8_t spmp_is_in_range(CPURISCVState *env, int spmp_index,
-+                                target_ulong addr)
-+{
-+    if ((addr >= env->spmp_state.addr[spmp_index].sa)
-+        && (addr <= env->spmp_state.addr[spmp_index].ea)) {
-+        return 1;
-+    }
-+
-+    return 0;
-+}
-+
-+static bool spmp_get_spmpen_bit(CPURISCVState *env, int index)
-+{
-+    return true;
-+}
-+
-+/*
-+ * Check if the address has required RWX privs when no SPMP entry is matched.
-+ */
-+static bool spmp_hart_has_privs_default(CPURISCVState *env, target_ulong addr,
-+                                        spmp_priv_t *allowed_privs,
-+                                        target_ulong mode)
-+{
-+    bool ret;
-+    mode = env->virt_enabled ? PRV_U : mode;
-+
-+    if ((!riscv_cpu_cfg(env)->spmp) || !(mode == PRV_U)) {
-+        /*
-+         * The SPMP proposal states three circumstances that the access
-+         * is allowed:
-+         * 1. The HW does not implement any SPMP entry.
-+         * 2. If the effective privilege mode of the access is S and no SPMP
-+         * entry matches
-+         * 3. The access mode is M.
-+         */
-+        ret = true;
-+        *allowed_privs = SPMP_READ | SPMP_WRITE | SPMP_EXEC;
-+    } else {
-+        /*
-+         * U-mode is not allowed to succeed if they don't match a rule,
-+         * but there are rules. We've checked for those rules earlier in this
-+         * function.
-+         */
-+        ret = false;
-+        *allowed_privs = 0;
-+    }
-+
-+    return ret;
-+}
-+
-+
-+/*
-+ * Public Interface
-+ */
-+
-+/*
-+ * Check if the address has required RWX privs to complete desired operation
-+ */
-+bool spmp_hart_has_privs(CPURISCVState *env, target_ulong addr,
-+    target_ulong size, spmp_priv_t privs, spmp_priv_t *allowed_privs,
-+    target_ulong mode)
-+{
-+    int i = 0;
-+    int ret = -1;
-+    int spmp_size = 0;
-+    target_ulong s = 0;
-+    target_ulong e = 0;
-+    bool spmpen_en = false;
-+
-+    /* If it is either VS or VU mode, we treat it as U mode */
-+    mode = env->virt_enabled ? PRV_U : mode;
-+
-+    /* Short cut for M-mode access */
-+    if (mode == PRV_M) {
-+        *allowed_privs = SPMP_READ | SPMP_WRITE | SPMP_EXEC;
-+        return true;
-+    }
-+
-+    /* Short cut if no rules */
-+    if (env->spmp_state.num_active_rules == 0) {
-+        return spmp_hart_has_privs_default(env, addr, allowed_privs, mode);
-+    }
-+
-+    if (size == 0) {
-+        if (riscv_cpu_cfg(env)->mmu) {
-+            /*
-+             * If size is unknown (0), assume that all bytes
-+             * from addr to the end of the page will be accessed.
-+             */
-+            spmp_size = -(addr | TARGET_PAGE_MASK);
-+        } else {
-+            spmp_size = sizeof(target_ulong);
-+        }
-+    } else {
-+        spmp_size = size;
-+    }
-+
-+    /* It depends on mpmpdeleg */
-+    for (i = 0; i < env->spmp_state.num_deleg_rules; i++) {
-+        s = spmp_is_in_range(env, i, addr);
-+        e = spmp_is_in_range(env, i, addr + spmp_size - 1);
-+        spmpen_en = spmp_get_spmpen_bit(env, i);
-+
-+        /* partially inside */
-+        if ((s + e) == 1) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                          "%s: spmp violation - access is partially inside\n",
-+                          __func__);
-+            ret = 0;
-+            break;
-+        }
-+
-+        /* fully inside */
-+        const uint8_t a_field =
-+            spmp_get_a_field(env->spmp_state.spmp[i].cfg_reg);
-+
-+        /*
-+         * Convert the SPMP permissions to match the truth table in the
-+         * SPMP spec.
-+         */
-+        const uint8_t spmp_operation =
-+                                (env->spmp_state.spmp[i].cfg_reg & SPMP_EXEC)
-+                                | (env->spmp_state.spmp[i].cfg_reg & SPMP_WRITE)
-+                                | (env->spmp_state.spmp[i].cfg_reg & SPMP_READ);
-+
-+        if (((s + e) == 2) && (SPMP_AMATCH_OFF != a_field) && spmpen_en) {
-+            /*
-+             * If the SPMP entry is not off, spmpen bit is set, and the address
-+             * is in range, do the priv check
-+             */
-+
-+            /* Shared not set */
-+            if (!(env->spmp_state.spmp[i].cfg_reg & SPMP_SHARED)) {
-+                /*
-+                 *   Deny if:
-+                 *   S mode access, with SUM not set, and UMODE set.
-+                 *   U mode access, with UMODE not set.
-+                 */
-+                if ((mode == PRV_S && !sum_is_set(env) &&
-+                    (env->spmp_state.spmp[i].cfg_reg & SPMP_UMODE)) ||
-+                    (mode == PRV_U &&
-+                        !(env->spmp_state.spmp[i].cfg_reg & SPMP_UMODE))) {
-+                    *allowed_privs = 0;
-+                }
-+                /*
-+                 *   EnforceNoX if:
-+                 *   S mode access, with SUM set, and UMODE set.
-+                 *   Note: The specification has the table in RWX, the oposite
-+                 *   of the order in the cfg reg.
-+                 */
-+                else if (mode == PRV_S && sum_is_set(env) &&
-+                        (env->spmp_state.spmp[i].cfg_reg & SPMP_UMODE)) {
-+                    switch (spmp_operation) {
-+                    case 0:
-+                    case 2:
-+                    case 4:
-+                    case 6:
-+                        *allowed_privs = 0;
-+                        break;
-+                    case 1:
-+                    case 5:
-+                        *allowed_privs = SPMP_READ;
-+                        break;
-+                    case 3:
-+                    case 7:
-+                        *allowed_privs = SPMP_READ | SPMP_WRITE;
-+                        break;
-+                    default:
-+                        g_assert_not_reached();
-+                    }
-+                } else {
-+                    /* Check for reserved configs */
-+                    if (spmp_operation == 2 || spmp_operation == 6) {
-+                        *allowed_privs = 0;
-+                    } else {
-+                        /* U mode falls here - Enforce */
-+                        *allowed_privs = spmp_operation & 0x7;
-+                    }
-+                }
+diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
+index 1aeed9286f..b93a99593e 100644
+--- a/hw/usb/hcd-ohci.c
++++ b/hw/usb/hcd-ohci.c
+@@ -956,6 +956,10 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
+         if (len && dir != OHCI_TD_DIR_IN) {
+             /* The endpoint may not allow us to transfer it all now */
+             pktlen = (ed->flags & OHCI_ED_MPS_MASK) >> OHCI_ED_MPS_SHIFT;
++            if (pktlen == 0) {
++                ohci_die(ohci);
++                return 1;
 +            }
-+            /* Set Shared bit */
-+            else {
-+                if (mode == PRV_S) {
-+                    /* Check for reserved configs */
-+                    if (spmp_operation == 2 || spmp_operation == 6) {
-+                        *allowed_privs = 0;
-+                    } else {
-+                        *allowed_privs = spmp_operation & 0x7;
-+                    }
-+                } else {
-+                    switch (spmp_operation) {
-+                    case 0:
-+                    case 2:
-+                    case 6:
-+                        *allowed_privs = 0;
-+                        break;
-+                    case 1:
-+                    case 3:
-+                        *allowed_privs = SPMP_READ;
-+                        break;
-+                    case 4:
-+                    case 7:
-+                        *allowed_privs = SPMP_EXEC;
-+                        break;
-+                    case 5:
-+                        *allowed_privs = SPMP_READ | SPMP_EXEC;
-+                        break;
-+                    default:
-+                        g_assert_not_reached();
-+                    }
-+                }
-+            }
-+
-+            ret = ((privs & *allowed_privs) == privs);
-+            break;
-+        }
-+    }
-+
-+    /* No rule matched */
-+    if (ret == -1) {
-+        return spmp_hart_has_privs_default(env, addr, allowed_privs, mode);
-+    }
-+
-+    return ret == 1 ? true : false;
-+}
-+
-+static bool is_entry_locked(CPURISCVState *env, int index)
-+{
-+    uint8_t next_a_field = SPMP_AMATCH_TOR;
-+
-+    /*
-+     *  Verify if it is the last entry.
-+     *  If not, check if the next entry is TOR type.
-+     *  If it is TOR, check if either this or next entry is locked.
-+     */
-+    if (index < env->spmp_state.num_deleg_rules - 1) {
-+        next_a_field =
-+                    spmp_get_a_field(env->spmp_state.spmp[index + 1].cfg_reg);
-+
-+        if (next_a_field == SPMP_AMATCH_TOR) {
-+            return (env->spmp_state.locked_rules >> index) & 0x1
-+                    || (env->spmp_state.locked_rules >> (index + 1)) & 0x1;
-+        }
-+    }
-+
-+    /* Otherwise, just check this entry */
-+    return (env->spmp_state.locked_rules >> index) & 0x1;
-+}
-+
-+/*
-+ * Accessor to set the cfg reg for a specific SPMP/HART
-+ * Bounds checks.
-+ */
-+void spmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-+    target_ulong val, bool m_mode_access)
-+{
-+    bool locked = m_mode_access ? false : is_entry_locked(env, reg_index);
-+
-+    /* If within bounds and not locked */
-+    if (reg_index < env->spmp_state.num_deleg_rules && !locked) {
-+
-+        env->spmp_state.spmp[reg_index].cfg_reg = val;
-+        /* Storing this allows for faster switching with the sspmpen ext */
-+        env->spmp_state.locked_rules |=
-+                                ((val & SPMP_LOCK) >> 7 & 0x1) << reg_index;
-+
-+        spmp_update_rule(env, reg_index);
-+    } else {
-+        if (locked) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                    "%s: ignoring spmpcfg write - locked entry\n", __func__);
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                    "%s: ignoring spmpcfg write - out of bounds\n", __func__);
-+        }
-+    }
-+}
-+
-+/*
-+ * Handle a read from a spmpcfg CSR
-+ */
-+target_ulong spmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index)
-+{
-+    if (reg_index < env->spmp_state.num_deleg_rules) {
-+        return env->spmp_state.spmp[reg_index].cfg_reg;
-+    }
-+
-+    return 0;
-+}
-+
-+/*
-+ * Handle a write to a spmpaddr CSR
-+ */
-+void spmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-+    target_ulong val, bool m_mode_access)
-+{
-+    bool locked = m_mode_access ? false : is_entry_locked(env, addr_index);
-+
-+    /* If within bounds and not locked */
-+    if (addr_index < env->spmp_state.num_deleg_rules && !locked) {
-+
-+        env->spmp_state.spmp[addr_index].addr_reg = val;
-+        spmp_update_rule(env, addr_index);
-+    } else {
-+        if (locked) {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                    "%s: ignoring spmpaddr write - locked entry\n", __func__);
-+        } else {
-+            qemu_log_mask(LOG_GUEST_ERROR,
-+                    "%s: ignoring spmpaddr write - out of bounds\n", __func__);
-+        }
-+    }
-+}
-+
-+/*
-+ * Handle a read from a spmpaddr CSR
-+ */
-+target_ulong spmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index)
-+{
-+    target_ulong val = 0;
-+
-+    if (addr_index < env->spmp_state.num_deleg_rules) {
-+        val = env->spmp_state.spmp[addr_index].addr_reg;
-+    } else {
-+        qemu_log_mask(LOG_GUEST_ERROR,
-+                      "%s: ignoring spmpaddr read - out of bounds\n", __func__);
-+    }
-+
-+    return val;
-+}
-+
-+/*
-+ * Handle a write to the sspmpen CSR
-+ */
-+void sspmpen_csr_write(CPURISCVState *env, uint64_t new_val)
-+{
-+    uint64_t mask = (env->spmp_state.num_deleg_rules == MAX_RISCV_SPMPS) ?
-+                    ~0ULL : ((1ULL << env->spmp_state.num_deleg_rules) - 1);
-+
-+    /* If the rule is locked, the bit cannot be changed */
-+    env->spmp_state.spmpen =
-+                    (env->spmp_state.spmpen & env->spmp_state.locked_rules) |
-+                    (new_val & ~env->spmp_state.locked_rules);
-+    env->spmp_state.spmpen &= mask;
-+}
-+
-+/*
-+ * Convert SPMP privilege to TLB page privilege.
-+ */
-+int spmp_priv_to_page_prot(spmp_priv_t spmp_priv)
-+{
-+    int prot = 0;
-+
-+    if (spmp_priv & SPMP_READ) {
-+        prot |= PAGE_READ;
-+    }
-+    if (spmp_priv & SPMP_WRITE) {
-+        prot |= PAGE_WRITE;
-+    }
-+    if (spmp_priv & SPMP_EXEC) {
-+        prot |= PAGE_EXEC;
-+    }
-+
-+    return prot;
-+}
-+
-+void spmp_unlock_entries(CPURISCVState *env)
-+{
-+    /* Reset everything */
-+    for (int i = 0; i < MAX_RISCV_SPMPS; i++) {
-+        env->spmp_state.spmp[i].cfg_reg &= ~(SPMP_LOCK | SPMP_AMATCH);
-+    }
-+
-+    env->spmp_state.locked_rules = 0;
-+    env->spmp_state.num_active_rules = 0;
-+}
-diff --git a/target/riscv/spmp.h b/target/riscv/spmp.h
-new file mode 100644
-index 0000000000..02a05acdf8
---- /dev/null
-+++ b/target/riscv/spmp.h
-@@ -0,0 +1,83 @@
-+/*
-+ * QEMU RISC-V SPMP (S-mode Physical Memory Protection)
-+ *
-+ * Author:
-+ *   Luís Cunha <luisccunha8@gmail.com>
-+ *
-+ * Based on an earlier SPMP prototype by:
-+ *   Bicheng Yang <SuperYbc@outlook.com>
-+ *   Dong Du      <Ddnirvana1@gmail.com>
-+ *
-+ * This provides a RISC-V S-mode Physical Memory Protection interface.
-+ *
-+ * This program is free software; you can redistribute it and/or modify it
-+ * under the terms and conditions of the GNU General Public License,
-+ * version 2 or later, as published by the Free Software Foundation.
-+ *
-+ * This program is distributed in the hope it will be useful, but WITHOUT
-+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
-+ * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
-+ * more details.
-+ */
-+
-+#ifndef RISCV_SPMP_H
-+#define RISCV_SPMP_H
-+
-+
-+typedef enum {
-+    SPMP_READ   = (1 << 0),
-+    SPMP_WRITE  = (1 << 1),
-+    SPMP_EXEC   = (1 << 2),
-+    SPMP_AMATCH = (3 << 3),
-+    SPMP_LOCK   = (1 << 7),
-+    SPMP_UMODE  = (1 << 8),
-+    SPMP_SHARED = (1 << 9)
-+} spmp_priv_t;
-+
-+typedef enum {
-+    SPMP_AMATCH_OFF,  /* Null (off)                            */
-+    SPMP_AMATCH_TOR,  /* Top of Range                          */
-+    SPMP_AMATCH_NA4,  /* Naturally aligned four-byte region    */
-+    SPMP_AMATCH_NAPOT /* Naturally aligned power-of-two region */
-+} spmp_am_t;
-+
-+typedef struct {
-+    target_ulong addr_reg;
-+    uint16_t  cfg_reg;
-+} spmp_entry_t;
-+
-+typedef struct {
-+    target_ulong sa;
-+    target_ulong ea;
-+} spmp_addr_t;
-+
-+typedef struct {
-+    spmp_entry_t spmp[MAX_RISCV_SPMPS];
-+    spmp_addr_t  addr[MAX_RISCV_SPMPS];
-+
-+    uint8_t     num_active_rules;
-+    uint8_t     num_deleg_rules;
-+    uint64_t    spmpen;
-+    uint64_t    locked_rules;
-+} spmp_table_t;
-+
-+void spmpcfg_csr_write(CPURISCVState *env, uint32_t reg_index,
-+    target_ulong val, bool m_mode_access);
-+target_ulong spmpcfg_csr_read(CPURISCVState *env, uint32_t reg_index);
-+
-+target_ulong spmpaddr_csr_read(CPURISCVState *env, uint32_t addr_index);
-+void spmpaddr_csr_write(CPURISCVState *env, uint32_t addr_index,
-+    target_ulong val, bool m_mode_access);
-+
-+void sspmpen_csr_write(CPURISCVState *env, uint64_t new_val);
-+
-+bool spmp_hart_has_privs(CPURISCVState *env, target_ulong addr,
-+    target_ulong size, spmp_priv_t privs, spmp_priv_t *allowed_privs,
-+    target_ulong mode);
-+int spmp_priv_to_page_prot(spmp_priv_t spmp_priv);
-+void spmp_unlock_entries(CPURISCVState *env);
-+
-+void spmp_decode_napot(target_ulong a, target_ulong *sa, target_ulong *ea);
-+uint8_t spmp_get_a_field(uint8_t cfg);
-+
-+#endif
+             if (pktlen > len) {
+                 pktlen = len;
+             }
 -- 
-2.43.0
+2.34.1
 
 
