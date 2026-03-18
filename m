@@ -4,72 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2AF25FCD0BF
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 06:19:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CECD4FCD0C2
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 06:34:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2kFa-00038p-Jt; Wed, 18 Mar 2026 02:19:26 -0400
+	id 1w2kT3-0005S1-9C; Wed, 18 Mar 2026 02:33:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kFX-00036o-AH
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:19:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kSz-0005RV-17
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:33:17 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kFT-00076k-La
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:19:23 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kSw-00084r-Ct
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:33:16 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773814758;
+ s=mimecast20190719; t=1773815592;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=Nyry6HRSfyal5LU6pTpe3CHqKuNRW0NKKEFjDJ2OaP0=;
- b=bwR4xZ4IORiY0lUn0G6/u/RCdbP9jnH1L2JwtNP2yJtxTA0hATIGb5TPar5Ce5KQH0GZGP
- QWqOGn3r+enXj4LAwYXBKR7v1p8e3SAxYm3BHsJaX+uXlCmj4piQo3HgcvIyNa/GZe7Kua
- Q+ouIse9TFO/6T4sTawoZ4EVP3UORdI=
+ bh=0RhnUJCsFP4+V67l0haM/Y96AFbcGNgGgT1BCamtFbk=;
+ b=dl+7ie9zKbftj10IrT3JO8GyveTaNEjYtKZ2ockMrfu+Fyfl5GjTcm8h3ERuabKtctgjVh
+ hC+wuAEGdoZUqZwKuzsoTc+MY9sPpbV15vL4Rxmicz48perC8yj1vzd/z2BJCFt2faZpIc
+ yPlg4gQaHkgU6SgLVKhkUFw+ZNZPKJs=
 Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-659-Y5GCceEEMw-Ct4YSqsPBGA-1; Wed,
- 18 Mar 2026 02:19:14 -0400
-X-MC-Unique: Y5GCceEEMw-Ct4YSqsPBGA-1
-X-Mimecast-MFC-AGG-ID: Y5GCceEEMw-Ct4YSqsPBGA_1773814753
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-45-xjE4GHBSM9uHWJWrFoVuSQ-1; Wed,
+ 18 Mar 2026 02:33:09 -0400
+X-MC-Unique: xjE4GHBSM9uHWJWrFoVuSQ-1
+X-Mimecast-MFC-AGG-ID: xjE4GHBSM9uHWJWrFoVuSQ_1773815588
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 7673B19560AE; Wed, 18 Mar 2026 06:19:13 +0000 (UTC)
+ id 0D9D419560AF; Wed, 18 Mar 2026 06:33:08 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id A58B030001A1; Wed, 18 Mar 2026 06:19:12 +0000 (UTC)
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 619B019560AB; Wed, 18 Mar 2026 06:33:07 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 45FEE21E6937; Wed, 18 Mar 2026 07:19:10 +0100 (CET)
+ id DE85821E6937; Wed, 18 Mar 2026 07:33:04 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
-To: Zhang Chen <zhangckid@gmail.com>
-Cc: Stefan Hajnoczi <stefanha@redhat.com>,  Kevin Wolf <kwolf@redhat.com>,
- qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
- <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
- Tsirkin" <mst@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
-Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
- holder name
-In-Reply-To: <CAK3tnvJc2U+c=sx=RASKHCAjcTQMx9dg0iOpe5eEui9U0-Ft_g@mail.gmail.com>
- (Zhang Chen's message of "Tue, 17 Mar 2026 21:25:06 +0800")
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-5-zhangckid@gmail.com>
- <20260309081502.GC39949@fedora>
- <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
- <20260312052422.GA116604@fedora> <87bjgtxv9b.fsf@pond.sub.org>
- <CAK3tnvJc2U+c=sx=RASKHCAjcTQMx9dg0iOpe5eEui9U0-Ft_g@mail.gmail.com>
-Date: Wed, 18 Mar 2026 07:19:10 +0100
-Message-ID: <87jyv9fyn5.fsf@pond.sub.org>
+To: Alessandro Ratti <alessandro@0x65c.net>
+Cc: Markus Armbruster <armbru@redhat.com>,  qemu-devel@nongnu.org,
+ peter.maydell@linaro.org,  berrange@redhat.com,  mst@redhat.com,
+ pbonzini@redhat.com
+Subject: Re: [PATCH v2 2/2] hw/qdev: Remove qdev_get_human_name()
+In-Reply-To: <CAKiXHKd15rFWk3qM+f_X2JXr29u1ygTumCcGrm9iDLEtwALQNQ@mail.gmail.com>
+ (Alessandro Ratti's message of "Tue, 17 Mar 2026 22:38:48 +0100")
+References: <20260311215003.664815-1-alessandro@0x65c.net>
+ <20260311215003.664815-3-alessandro@0x65c.net>
+ <87h5qflyqe.fsf@pond.sub.org>
+ <CAKiXHKd15rFWk3qM+f_X2JXr29u1ygTumCcGrm9iDLEtwALQNQ@mail.gmail.com>
+Date: Wed, 18 Mar 2026 07:33:04 +0100
+Message-ID: <87bjglsl3z.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
 Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -95,199 +89,134 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Zhang Chen <zhangckid@gmail.com> writes:
+Alessandro Ratti <alessandro@0x65c.net> writes:
 
-> On Thu, Mar 12, 2026 at 5:16=E2=80=AFPM Markus Armbruster <armbru@redhat.=
-com> wrote:
+> On Tue, 17 Mar 2026 at 08:08, Markus Armbruster <armbru@redhat.com> wrote:
 >>
->> Context...  we're talking about this command:
+>> Alessandro Ratti <alessandro@0x65c.net> writes:
 >>
->>     ##
->>     # @x-blockdev-set-iothread:
->>     #
->>     # Move @node and its children into the @iothread.  If @iothread is
->>     # null then move @node and its children into the main loop.
->>     #
->>     # The node must not be attached to a BlockBackend.
->>     #
->>     # @node-name: the name of the block driver node
->>     #
->>     # @iothread: the name of the IOThread object or null for the main lo=
-op
->>     #
->>     # @force: true if the node and its children should be moved when a
->>     #     BlockBackend is already attached
->>     #
->>     # Features:
->>     #
->>     # @unstable: This command is experimental and intended for test cases
->>     #     that need control over IOThreads only.
->>     #
->>     # Since: 2.12
->>     #
->>     # .. qmp-example::
->>     #    :title: Move a node into an IOThread
->>     #
->>     #     -> { "execute": "x-blockdev-set-iothread",
->>     #          "arguments": { "node-name": "disk1",
->>     #                         "iothread": "iothread0" } }
->>     #     <- { "return": {} }
->>     #
->>     # .. qmp-example::
->>     #    :title: Move a node into the main loop
->>     #
->>     #     -> { "execute": "x-blockdev-set-iothread",
->>     #          "arguments": { "node-name": "disk1",
->>     #                         "iothread": null } }
->>     #     <- { "return": {} }
->>     ##
->>     { 'command': 'x-blockdev-set-iothread',
->>       'data' : { 'node-name': 'str',
->>                  'iothread': 'StrOrNull',
->>                  '*force': 'bool' },
->>       'features': [ 'unstable' ],
->>       'allow-preconfig': true }
->>
->>
->> Stefan Hajnoczi <stefanha@redhat.com> writes:
->>
->> > On Tue, Mar 10, 2026 at 06:02:54PM +0800, Zhang Chen wrote:
->> >> On Mon, Mar 9, 2026 at 4:15=E2=80=AFPM Stefan Hajnoczi <stefanha@redh=
-at.com> wrote:
->> >> >
->> >> > On Thu, Mar 05, 2026 at 10:24:50PM +0800, Zhang Chen wrote:
->> >> > > Update the usage of "iothread_get_aio_context()".
->> >> > >
->> >> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
->> >> > > ---
->> >> > >  blockdev.c | 9 ++++++++-
->> >> > >  1 file changed, 8 insertions(+), 1 deletion(-)
->> >> > >
->> >> > > diff --git a/blockdev.c b/blockdev.c
->> >> > > index 6e86c6262f..01ccf64b3f 100644
->> >> > > --- a/blockdev.c
->> >> > > +++ b/blockdev.c
->> >> > > @@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const cha=
-r *node_name, StrOrNull *iothread,
->> >> > >              goto out;
->> >> > >          }
->> >> > >
->> >> > > -        new_context =3D iothread_get_aio_context(obj);
->> >> > > +        char *path =3D object_get_canonical_path(OBJECT(bs));
->> >> >
->> >> > CCing Kevin and Markus in case they have an opinion on this.
->> >> >
->> >> > BlockDriverState is not a QOM Object so using OBJECT(bs) is undefin=
-ed
->> >> > behavior and may crash.
->>
->> Yes.
->>
->> >> > node_name is unique across block driver graph nodes and could be us=
-ed.
->> >> > Unfortunately it's not connected to the QOM Object hierarchy.
->>
->> Correct.
->>
->> >> >                                                               Maybe=
- it's
->> >> > best to build a holder name that is an invalid QOM path so there ca=
-n be
->> >> > no collisions between QOM paths and block driver graph nodes.
->>
->> I guess you're talking about the values that go into IOThreadInfo member
->> holders.  From PATCH 13:
->>
->>     # @holders: The parameter is an array of QOM paths indicating how ma=
-ny
->>     #     active devices are currently associated with this iothread
->>     #     (e.g. virtio-blk).  In hotplug scenarios, users can
->>     #     pre-allocate multiple iothread objects to serve as a persistent
->>     #     thread pool.  When a device is hot-unplugged, the corresponding
->>     #     IOThread is released but remains available, allowing subsequent
->>     #     hot-plugged devices to attach to and reuse the existing thread.
->>     #     Returns empty if no devices are attached.  (since 11.0)
->>     #
->>
->> I further guess you need it to refer to both QOM objects and block
->> nodes, and you worry about ambiguity.
->>
->> Ambiguity indeed exists: a block node name can be a valid QOM path.
->>
->> We could restrict QOM paths to absolute paths.  These start with '/'.
->> If I remember correctly, node names cannot contain '/'.
->>
->> Note that canonical paths (returned object_get_canonical_path()) are
->> absolute.
->>
->> We ran into a similar design issue in review of Vladimir's "[PATCH v10
->> 4/8] qapi: add blockdev-replace command" not too long ago:
->>
->>     Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
->>     Date: Wed, 04 Feb 2026 13:26:35 +0100
->>     Message-ID: <87wm0sy9s4.fsf@pond.sub.org>
->>
->> There, the new command needs to refer to QOM object, block node, or
->> block export.
->>
->> >> >   g_autofree char *holder =3D g_strdup_printf("BlockDriverState %s"=
-, node_name);
->> >> >
->> >> > (A cleaner long-term solution would be making BlockDriverStates QOM
->> >> > Objects so they have a proper path.)
->>
->> Yes, but that's a beefy project, isn't it?
->>
->> >> If no other comments, it's OK for me. This issue like I mentioned in
->> >> patch 7 and 9.
+>> > Remove qdev_get_human_name() and switch its two callers in
+>> > hw/block/block.c to qdev_get_printable_name().
 >> >
->> > A thought about the QAPI interface:
+>> > qdev_get_printable_name() subsumes qdev_get_human_name(): both
+>> > return the device ID when set and fall back to the canonical QOM
+>> > path, but qdev_get_printable_name() also tries the bus-specific
+>> > device path first, providing more informative output.
 >> >
->> > QAPI expresses as much information in the schema as possible, so I thi=
-nk
->> > the right approach would be a {'union': 'IOThreadHolder',
->> > 'discriminator': 'type', ...} that supports at least "qom" and
->> > "block-node". That way there are proper types to encode QOM Object pat=
-hs
->> > vs block node-names. Let's avoid having a single string value that tak=
-es
->> > on different meaning depending on the type of holder.
+>> > Narrow the scope of dev_id in blk_check_size_and_read_all() to the
+>> > blocks where it is actually used.
+>> >
+>> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
+>> > Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
 >>
->> This shifts the complexity from semantics to syntax.
+>> This replaces two ways to describe a device to the user by one.  Good.
 >>
->> Semantics: the member can have multiple meanings, and you have to
->> examine its value to decide which one applies.  The member's
->> documentation should specify how to decide.  Say something like "if the
->> value starts with '/', it's an absolute QOM path, else it's a block node
->> name".
+>> One half of the uses is unchanged.  Good.
 >>
->> Syntax: meaning is syntactically obvious.  For instance, union of QOM
->> path and block node name.
+>> The other half can now show a bus-specific device path instead of the
+>> canonical QOM path.  This path can be difficult to interpret: we have
+>> some twenty .get_dev_path() methods, and each of them can format however
+>> it wants.  I need to guess the format to make sense of the value.  I'm
+>> inclined to call this a regression.
 >>
->> Complex semantics tend to require more complex documentation.
+>> To address this, please insert another patch before this one that
+>> changes
 >>
->> Which choice is better depends on the specific case.  I generally lean
->> towards syntax.
+>>         device <dev-path>
+>>
+>>   to
+>>
+>>         <bus> device <dev-path>
+>>
+>> This removes the guesswork, and actually satisfies the claim "more
+>> informative output".
 >>
 >
-> I agree Markus's suggestion.
-> Compare with standard QOM path:
-> /machine/peripheral/blk0/virtio-backend
+> Will do. I've prototyped this using object_get_typename() on
+> dev->parent_bus to get the bus type.
 >
-> I will try to implement block nodes path like this:
-> /machine/blockdriverstate/node-name
+> A complication: a few buses (virtio-pci-bus, ufs-bus) delegate
+> get_dev_path() to their parent unchanged,
 
-I gather you'd like to try creating QOM objects for block nodes.
+Like so:
 
-First, this should not go into /machine.  We already have /chardevs and
-/audiodevs, which suggests something like /blockdevs or /block-nodes.
+    static char *ufs_bus_get_dev_path(DeviceState *dev)
+    {
+        BusState *bus = qdev_get_parent_bus(dev);
 
-Second, QOMifying block nodes feels ambitious to me.  Please discuss it
-with block maintainers Kevin and Hanna.
+        return qdev_get_dev_path(bus->parent);
+    }
 
-> And Markus, could you please take a look at patch 13?
-> I will prepare the V6 after your comments.
+>                                           so the path format doesn't
+> match the immediate bus type.
 
-Done.  It may need an update for changes made here, though.
+.get_dev_path()'s contract:
+
+    /**
+     * qdev_get_dev_path(): Return the path of a device on its bus
+     * @dev: device to get the path of
+     *
+     * Returns: A newly allocated string containing the dev path of
+     * @dev. The caller must free this with g_free().
+     * The format of the string depends on the bus; for instance a
+     * PCI device's path will be in the format::
+     *
+     *   Domain:00:Slot.Function:Slot.Function....:Slot.Function
+     *
+     * and a SCSI device's path will be::
+     *
+     *   channel:ID:LUN
+     *
+     * (possibly prefixed by the path of the SCSI controller).
+     *
+     * If @dev is NULL or not on a bus, returns NULL.
+     */
+
+This looks decent at a glance, but it's actually somewhat woolly.
+
+>                               I detect delegation by comparing the
+> child's path to the parent bus's path, and format as
+> "<child-bus> on <parent-bus> device <path>".
+>
+> Tested with i440fx + virtio-blk + UFS + USB + SCSI:
+>
+>   PCI device 0000:00:04.0
+>   virtio-pci-bus on PCI device 0000:00:04.0
+>   ufs-bus on PCI device 0000:00:04.0
+>   SCSI device 0000:00:04.0/0:0:0
+>   usb-bus device 0000:00:03.0/1
+>
+> And with Q35:
+>
+>   PCIE device 0000:00:04.0
+>   virtio-pci-bus on PCIE device 0000:00:04.0
+>   ufs-bus on PCIE device 0000:00:04.0
+>   SCSI device 0000:00:04.0/0:0:0
+>   usb-bus device 0000:00:03.0/1
+>
+> If my understanding is correct, VMBus delegates to sysbus which has
+> no get_dev_path(), so it falls through to the QOM path.
+>
+> Note: object_get_typename() gives "PCI" on i440fx and "PCIE" on Q35
+> for the same address format. Not sure if that's confusing enough to
+> warrant normalizing.
+>
+>> qdev_get_human_name() is a better name than qdev_get_printable_name().
+>> Please consider renaming the function so we keep the better name.
+>>
+>
+> Ack, will rename.
+>
+> If my proposal to add "<bus> device" prefix sounds solid,
+> I'll send a v3 with the series restructured as:
+>
+>   1. Replace "<unknown device>" with canonical QOM path, clean up comments
+>   2. Add "<bus> device" prefix to bus-specific paths
+>   3. Consolidate into qdev_get_human_name()
+>
+> Thanks for your time and consideration.
+>
+> Best regards,
+> Alessandro
 
 
