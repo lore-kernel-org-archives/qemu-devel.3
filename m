@@ -4,59 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A5E48103E189
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9EE1E103E187
 	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 14:02:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2rSz-0002rh-M5; Wed, 18 Mar 2026 10:01:45 -0400
+	id 1w2rSs-0002pz-99; Wed, 18 Mar 2026 10:01:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1w2rSy-0002rK-Ce
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:01:44 -0400
+ id 1w2rSm-0002my-HA
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:01:34 -0400
 Received: from mgamail.intel.com ([198.175.65.18])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1w2rSw-0005oH-T7
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:01:44 -0400
+ id 1w2rSj-0005n7-V2
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:01:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773842503; x=1805378503;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=90kUuCitCAIs4715mOIY03O2iNep11NxIP4ar18j9X4=;
- b=ZBOsFV5HgA8zm//AWWAN5/3fthjfvdOp6yNet530e00iFl+D0V92Uyp0
- cosZMmB74NZ5L7Y3vFwNTe0fZqMD/QACeegsZ8hEzWy4+Zv8UliCZdKrT
- PGIndz/+9KF9rsmov9FxmbU8hyH76IeQfCmPiTnuCR1uwzP4BKChtC0li
- w/TWLhdv9IciX1xMvf230EWHAYmS/S12WS6r1fkg0dezsVbjYEX39NpMk
- oPdpD/PauXM+yRDJkEQZuSobAUWbUJT2buV6wPsrxRisJNZJfmpihov68
- veTLdjY5//S2O5uG5oeYJkyFwe7ojF9DwxZZzmloIZgwoprhe1iR1Qfu4 A==;
-X-CSE-ConnectionGUID: GDJ0cuX7RK+f3K/i3vA3KA==
-X-CSE-MsgGUID: /3ewt5Q7TlqSuQVV9XSdGw==
-X-IronPort-AV: E=McAfee;i="6800,10657,11733"; a="74925792"
-X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="74925792"
+ t=1773842490; x=1805378490;
+ h=from:to:cc:subject:date:message-id:mime-version:
+ content-transfer-encoding;
+ bh=yzJTSu+HLBddDI9SaMfklqPhMNyHA0U9nAhZTnYM7vM=;
+ b=geNPttlEpzu35IoNLX5pP/k6HNR6CIAeL7qAQmNxETnYsAlpufUfSLiT
+ XPj0fLoUs9NswlFuxcIA5k1rEV0oFvTJdmbdG58OXPNIokqa8GsHOb1wj
+ Z18KmoSZS5DHq2/ulJrQNCXFCT7Cz8uGRyszjAis/ekdv91gJ0Xr8zRFC
+ w7GlA7tqy5gYwiET7ZLWUwRrjcAQ61GHSTxHjjZSGje0+0PQ3NVKyX1Vd
+ eZPu0lohz2wecY0Ayq//g3Q+TiCBhydhtx7MBE55aGuxnGEKTmCMxCAaK
+ 2ksKgpjqJygqbls0VsCmF7nBZuiYNZefSLZbvc7QVNGuy8GcCpRRdyVkF w==;
+X-CSE-ConnectionGUID: vORcdLXNTk6dUs/YxhEGPA==
+X-CSE-MsgGUID: mz8k6B6QRGGsnp7PHzFf/A==
+X-IronPort-AV: E=McAfee;i="6800,10657,11733"; a="74925769"
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="74925769"
 Received: from fmviesa006.fm.intel.com ([10.60.135.146])
  by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 07:01:42 -0700
-X-CSE-ConnectionGUID: 30ehs/XVSkawEEgxCN7PdQ==
-X-CSE-MsgGUID: FytE+OzFTLipGayDVGS1UQ==
+ 18 Mar 2026 07:01:26 -0700
+X-CSE-ConnectionGUID: DT3+9Rd1Sm6mqqejEYApmQ==
+X-CSE-MsgGUID: 3obRIv5aQjift3D2aGO72w==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="218205230"
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="218205212"
 Received: from junjieca-mobl.ccr.corp.intel.com ([10.124.242.111])
  by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 07:01:40 -0700
+ 18 Mar 2026 07:01:24 -0700
 From: Junjie Cao <junjie.cao@intel.com>
 To: qemu-devel@nongnu.org
 Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
  junjie.cao@intel.com
-Subject: [PATCH v2 2/3] migration/file: fix type mismatch and NULL deref in
+Subject: [PATCH v2 0/3] migration/file: fix type mismatch and NULL deref in
  multifd_file_recv_data
-Date: Wed, 18 Mar 2026 22:01:12 +0800
-Message-ID: <20260318140113.434-3-junjie.cao@intel.com>
+Date: Wed, 18 Mar 2026 22:01:10 +0800
+Message-ID: <20260318140113.434-1-junjie.cao@intel.com>
 X-Mailer: git-send-email 2.53.0.windows.2
-In-Reply-To: <20260318140113.434-1-junjie.cao@intel.com>
-References: <20260318140113.434-1-junjie.cao@intel.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -85,57 +83,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-multifd_file_recv_data() stores the return value of qio_channel_pread()
-(ssize_t) in a size_t variable.  On I/O error the -1 return value wraps
-to SIZE_MAX, producing a nonsensical read size in the error message.
+multifd_file_recv_data() has two bugs: a size_t/ssize_t type mismatch
+that garbles error messages, and a NULL pointer dereference when a
+short read occurs on a truncated migration file.
 
-More critically, a short read (0 <= ret < data->size) is possible when
-the migration file is truncated.  In that case qio_channel_pread()
-returns a non-negative value without setting *errp.  The function then
-calls error_prepend(errp, ...) which dereferences *errp -- a NULL
-pointer -- crashing QEMU.
+v1 fixed the symptoms by splitting the error handling.  Peter and
+Daniel pointed out that short reads should be retried rather than
+just reported, so v2 introduces qio_channel_pread{v,}_all() and
+preadv_all_eof() (following the existing read_all pattern), uses them
+in the migration code, and adds unit tests covering the key semantics.
 
-Fix both issues by switching to qio_channel_pread_all() introduced in
-the previous commit, which retries on short reads and treats
-end-of-file as an error, so the caller no longer needs to check the
-byte count manually.  Add ERRP_GUARD() so that error_prepend() works
-correctly even when errp is &error_fatal or NULL.
+Note: qemu_get_buffer_at() in migration/qemu-file.c has a similar
+type mismatch and does not retry on short reads either.  That will
+be addressed in a follow-up series.
 
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- migration/file.c | 17 ++++++++---------
- 1 file changed, 8 insertions(+), 9 deletions(-)
+v1: https://lore.kernel.org/qemu-devel/20260316084618.52-1-junjie.cao@intel.com/
 
-diff --git a/migration/file.c b/migration/file.c
-index 5618aced49..b0d3affa4c 100644
---- a/migration/file.c
-+++ b/migration/file.c
-@@ -254,16 +254,15 @@ int file_write_ramblock_iov(QIOChannel *ioc, const struct iovec *iov,
- 
- int multifd_file_recv_data(MultiFDRecvParams *p, Error **errp)
- {
-+    ERRP_GUARD();
-     MultiFDRecvData *data = p->data;
--    size_t ret;
--
--    ret = qio_channel_pread(p->c, (char *) data->opaque,
--                            data->size, data->file_offset, errp);
--    if (ret != data->size) {
--        error_prepend(errp,
--                      "multifd recv (%u): read 0x%zx, expected 0x%zx",
--                      p->id, ret, data->size);
--        return -1;
-+    int ret;
-+
-+    ret = qio_channel_pread_all(p->c, (char *) data->opaque,
-+                                data->size, data->file_offset, errp);
-+    if (ret < 0) {
-+        error_prepend(errp, "multifd recv (%u): ", p->id);
-+        return ret;
-     }
- 
-     return 0;
+v1 -> v2:
+  - [NEW] Patch 1/3: introduce qio_channel_pread{v,}_all() and
+    preadv_all_eof() helpers in io/channel that retry on short reads,
+    advancing the file offset automatically (suggested by Peter Xu).
+    All three are marked coroutine_mixed_fn, consistent with
+    existing _all helpers.
+  - Patch 2/3: switch multifd_file_recv_data() from qio_channel_pread()
+    to qio_channel_pread_all(), eliminating the manual byte-count check
+    and fixing both the type mismatch and the NULL deref.
+  - [NEW] Patch 3/3: add five unit tests for the new pread_all
+    helpers covering success, clean EOF, partial EOF, and the
+    strict-wrapper EOF-as-error semantics.
+
+Junjie Cao (3):
+  io/channel: introduce qio_channel_pread{v,}_all() and preadv_all_eof()
+  migration/file: fix type mismatch and NULL deref in
+    multifd_file_recv_data
+  tests/unit: add pread_all and preadv_all tests for io channel file
+
+ include/io/channel.h              |  63 ++++++++++++++
+ io/channel.c                      |  85 ++++++++++++++++++
+ migration/file.c                  |  17 ++--
+ tests/unit/test-io-channel-file.c | 137 ++++++++++++++++++++++++++++++
+ 4 files changed, 293 insertions(+), 9 deletions(-)
+
 -- 
 2.43.0
 
