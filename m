@@ -4,86 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5418BFCD0C3
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 06:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BA161FCD0BE
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 07:01:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2kgc-00017L-Sv; Wed, 18 Mar 2026 02:47:23 -0400
+	id 1w2ku3-0003ZH-55; Wed, 18 Mar 2026 03:01:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2kga-00016z-LH
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:47:20 -0400
-Received: from mail-wm1-x32f.google.com ([2a00:1450:4864:20::32f])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2ktn-0003YT-CE
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 03:01:00 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2kgW-0007rs-J7
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:47:19 -0400
-Received: by mail-wm1-x32f.google.com with SMTP id
- 5b1f17b1804b1-48535a0ef86so54056585e9.1
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 23:47:14 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2ktk-0001wa-3s
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 03:00:57 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso5089335e9.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 00:00:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773816434; x=1774421234; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=linaro.org; s=google; t=1773817253; x=1774422053; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=SQdDFSElZ+wmeLkOTAGHbjZXrDNiBnhyDg6GlfJfuNE=;
- b=wC3vSP2GscsQP7XpYpGyqYA+t/m1gDEFrS5I8AZ1gyr+uAiHY0KVqetU6/Iby0ElB8
- rds9AdAlFGIf8kzdM8Pnip8AfsgXRAoDrUU2LyUB5kq2JOkVy6plHBqwVU4p0wqMtlbd
- vNSIeKrVXKw1Id0++h5yVwp3zn0VSXBBiLM9etaR84Tcdpox6gcL6uZ/XKdttik907Qo
- KzPJXucBaJsEFv1bcE0i105ICqlN9ZhdV1JBqx1zNQuk1AM7FrkKNi5x5HdhIZvYMEwV
- +jkmTMzSsIFKvU/9qiV0wfK8Y+D+oN54sucPHyCy3F9ZLLv2oSR+cNU0F91CL+5n0Qe3
- ORrQ==
+ bh=xCVokCm7YwmRHt6zOU0wQ0XcKj2XIvvneyn90BhQRpc=;
+ b=TlQBNeI2aWPI3D7XR8TndZYrJeVYnNHq/pi4vsST2xmSssEaSZIvUWvK1WAfCJwQw7
+ ykvpAQ4XYU5kMJ4qYhM/JpKNH8SQh3GyTxhQl2r7ebHeR7WIyDCfORrC0a4E7erj2MO9
+ jsmAJ7zQkcXF8R8cK437dCNXa+ww/RngmrJJVWWqNi9yWxDnoMuBw1dODitMAmrS9aUb
+ nCAeQ18ZGIFzmfU5pmnDV2kZ9KDtf39DVqSIgLnX2dL9FMz0ZsesuEQpE6XxhNT9Chnm
+ YtnI1360vY/zuqqFGEp3LihhwX7eEgRl2ETaKitXB66/vcqyRsJ3ajLn3AICxIJGqRV2
+ jTig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773816434; x=1774421234;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ d=1e100.net; s=20251104; t=1773817253; x=1774422053;
+ h=content-transfer-encoding:in-reply-to:references:cc:to:from
  :content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=SQdDFSElZ+wmeLkOTAGHbjZXrDNiBnhyDg6GlfJfuNE=;
- b=b43C7ebc/xm2YW/jDtF5Ttr0bGcrmjaAGJAfTWCOS6aSVyGelyu2gF3683bB/qgL2Z
- 0yiwlY57vce8kPSdShvTiSF3G7C3zogDGmIYRCyymFQ7KUY0UpX5lU4lvumRxgbV7YrE
- l8nAl/FPV6diPAj8OKl+NLO6FxrORaRwnk/TBt09zMunoayZ8vLfG5aK2JqHfwPZ4dpL
- mNTTvFXtd77mIAo32I8PSxzPiBNAOFc0ddO+vItfKedn65Rct9NxDWQ2jBat8bfYhsBR
- O2p3GcGMs7LeF1IaesPD4gEr4BsDq7PvB6C70roDw22NAre0r9a1HXFgvP77rQaROXXI
- d4fg==
+ bh=xCVokCm7YwmRHt6zOU0wQ0XcKj2XIvvneyn90BhQRpc=;
+ b=s7ZiMQJxHhOisiAi7EdgRB7nG+AtDTCu54PjWXhnKk4QQMhusT4jdfcI2knC/TX516
+ c9zeokDpfcSbTe2ynEM/RnHkK48hPoLRIo9NRqedmapTgOgfYRAVCtqExISA+S6UUc64
+ iQbkk/wsTq1eLDApBAXSHSpaf+9n2K2yXrEtCZZ8/zSWR1rl4aN4PAVa/IVQhao+dGac
+ IpcaLeI8uwtXxSb1Z3gOacauMm70KFDTLEnUvKZB8Vr9bgksmCT/obpskvFqu/aQVHUT
+ d+YFJOaR14DW9yS32ZjSnMz/jaGe8p99r9vTsObI11rHil6CjkbBsxykDaY/Br6/Rtir
+ M/9A==
 X-Forwarded-Encrypted: i=1;
- AJvYcCWCRs+p52H33EbwUsArYKnItbK8jL638wfvBXdB983zymdRKtu7DX0f66elIkmFwX9TuVknJTn49pBt@nongnu.org
-X-Gm-Message-State: AOJu0Yw+lylw+NeQ6lYT7zG5I+m1P1GmaTCOAVuHSNeZzP/AAdp8tWLZ
- FEBMmnxoB0B66Jh3xvfy8vwjsLNbsUEsQjaoFVNmZbTsIGNxNMm7L2/0l76XueRSMnE=
-X-Gm-Gg: ATEYQzyeFpP1PdpY2u2q3OFxp5wnkp3m1XWy08q1J35Ctrs1PVGH/nwxvhwMKDAvYAC
- XcP84Pr7nLYvTNlKwl1MKHf05SRJUcVGu1073rWoBErN0iARBaJVGkSzuSlkRyGh1Yv7W7dRvRG
- LMW5urUkcByGVahORWXj1gHCQ/px1aRzG3pg16wdVtA0f5bQZUujEx8CYJ96SA+wJ71mGbAUl1P
- vgiWqzjDeSUNiNaMqeRr8gVF4cPjjI8qBVslBnGIL8CBqL/KbZFq2cnXTYugJ9LPDH2jEv5tyXR
- ecOsBPlUinqqWW/ZjyAII0x9UkCJMvyAyhfyvJ+/sYsg5qKz5fgqbLBYaRsszI7VkhoWKwtw8/M
- IV8QbnAE54jdUd94SDW6nct8HEs/mp9vLLyrYlV4njz8GdBhUv3sDWkBU9uR7cTj32Gfw+IWUsW
- WrNAd0kWYD4qLq3Iuj0mTHjq5QRZRLlz3aUdDknUz+ECNpWYSHQ3B8K1Au9zhGIwZ11TGhNGpW+
- ldi
-X-Received: by 2002:a05:600c:810c:b0:477:b642:9dc1 with SMTP id
- 5b1f17b1804b1-486f4475342mr35347295e9.20.1773816433637; 
- Tue, 17 Mar 2026 23:47:13 -0700 (PDT)
+ AJvYcCX6+f97YEhqMmFkJmSkYTtsUQmow5S8QV/n8DOxKD30yTW8WfaEVT444TgszDr70s93grv8MkXz6DfR@nongnu.org
+X-Gm-Message-State: AOJu0Yw46iwhFkAb6Z9akmjKp2+DrLrAsrxyqFW04a8GGI6cOSyLC/oz
+ cwxKBu0UX8qOMzA/NrI6NTnd5k3JnOLjIFZ5mfzvHDXhtCDdBmIlSp5Z4KItePqZkwM=
+X-Gm-Gg: ATEYQzyoWq7ZQrSfR9pyPFGtKOHVS8LFgTFoHgowMilHyn23RuDwRPedTiObzr4SGkI
+ YTxzbCUxQewoTkbd874owtnLod2cKPaNk8XYsTuQUfriKuvDvl5Q0+fhXcPT4cGgJeAxBbuswSe
+ 967Z7t8gngWuqdf3vEzkRVdnb1DasUo68TCMFP8CUn5aTh+vvlnFOI7wdQ6Udcbe9quoByAgt/C
+ sgaTI0mEMleX6UuTGBGsCwIl9/sEZs7Bxw2yEs78ePkLzWY60Hpb1XgVJqYkUFHT9fAITpIHHpA
+ GUpLSocWY5cSfRARhM6ipmr20lxEDZq6Yy3xgA7r9broqWFc8HQgXZzDuibljMAO1smMwbjcSWH
+ hqxGEoBg852AVgqFAymup8irSIDd92DianDG8u+87Oj1woIq1o+3e0EWeLAozL9JqBnERJVU92y
+ 40SmffXofjuzmvRNYYNfzgAsBKZPooqQFH/f/h83NB5pMT4szJhcDyw4yRJTzr7fPcCarnpj49V
+ 5Eb
+X-Received: by 2002:a05:600c:4ed0:b0:483:6d9e:e4f5 with SMTP id
+ 5b1f17b1804b1-486f40a60f3mr38061225e9.5.1773817253165; 
+ Wed, 18 Mar 2026 00:00:53 -0700 (PDT)
 Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f420de8asm42472495e9.3.2026.03.17.23.47.12
+ 5b1f17b1804b1-4856ea9dc46sm131597445e9.8.2026.03.18.00.00.51
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 23:47:12 -0700 (PDT)
-Message-ID: <767522fd-f8bf-45ae-9245-91e18c9c91ad@linaro.org>
-Date: Wed, 18 Mar 2026 07:47:11 +0100
+ Wed, 18 Mar 2026 00:00:51 -0700 (PDT)
+Message-ID: <75a7d8ee-9b5e-429d-9d40-f6b3c4ae0cfb@linaro.org>
+Date: Wed, 18 Mar 2026 08:00:50 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 4/6] hw/pci-host/astro: Use proper region names
+Subject: Re: [PATCH v3 8/9] system/memory: Fix subpage endianness for
+ big-endian targets
 Content-Language: en-US
-To: Helge Deller <deller@kernel.org>, qemu-devel@nongnu.org
-Cc: Helge Deller <deller@gmx.de>,
- Richard Henderson <richard.henderson@linaro.org>,
- Anton Johansson <anjo@rev.ng>
-References: <20260317195149.8386-1-deller@kernel.org>
- <20260317195149.8386-5-deller@kernel.org>
 From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260317195149.8386-5-deller@kernel.org>
+To: Djordje Todorovic <Djordje.Todorovic@htecgroup.com>,
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+Cc: "qemu-riscv@nongnu.org" <qemu-riscv@nongnu.org>,
+ "cfu@mips.com" <cfu@mips.com>, "mst@redhat.com" <mst@redhat.com>,
+ "marcel.apfelbaum@gmail.com" <marcel.apfelbaum@gmail.com>,
+ "dbarboza@ventanamicro.com" <dbarboza@ventanamicro.com>,
+ "alistair23@gmail.com" <alistair23@gmail.com>,
+ "thuth@redhat.com" <thuth@redhat.com>
+References: <20260311115910.564481-1-djordje.todorovic@htecgroup.com>
+ <20260311115910.564481-9-djordje.todorovic@htecgroup.com>
+ <10764d13-1e18-4ee8-9a6e-64eab71d1305@linaro.org>
+In-Reply-To: <10764d13-1e18-4ee8-9a6e-64eab71d1305@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32f;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32f.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,49 +112,47 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 20:51, Helge Deller wrote:
-> From: Helge Deller <deller@gmx.de>
+On 11/3/26 13:19, Philippe Mathieu-Daudé wrote:
+> On 11/3/26 12:59, Djordje Todorovic wrote:
+>> The subpage memory region wrapper dispatches MMIO accesses through
+>> flatview_read/write, which re-enters memory_region_dispatch_read/write
+>> on the underlying device MR. The inner dispatch uses size_memop() which
+>> strips endianness bits (effectively MO_LE), causing adjust_endianness to
+>> apply a byte-swap for DEVICE_NATIVE_ENDIAN devices on big-endian targets.
+>> The outer dispatch's adjust_endianness then sees matching endianness
+>> (MO_BE == devend_BE) and does nothing, leaving the data incorrectly 
+>> swapped.
+>>
+>> Fix by changing subpage_ops from DEVICE_NATIVE_ENDIAN to 
+>> DEVICE_LITTLE_ENDIAN.
+>> This matches the implicit LE semantics of size_memop() used in the inner
+>> dispatch, so the outer adjust_endianness correctly compensates with a
+>> second swap, yielding the correct net result.
+>>
+>> For little-endian targets, DEVICE_NATIVE_ENDIAN already equals LE, so
+>> this change has zero behavioral impact.
+>> ---
+>>   system/physmem.c | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>
+>> diff --git a/system/physmem.c b/system/physmem.c
+>> index 2fb0c25c93..5d917482eb 100644
+>> --- a/system/physmem.c
+>> +++ b/system/physmem.c
+>> @@ -2929,7 +2929,7 @@ static const MemoryRegionOps subpage_ops = {
+>>       .valid.min_access_size = 1,
+>>       .valid.max_access_size = 8,
+>>       .valid.accepts = subpage_accepts,
+>> -    .endianness = DEVICE_NATIVE_ENDIAN,
+>> +    .endianness = DEVICE_LITTLE_ENDIAN,
 > 
-> All 64-bit hppa machines have at least 4 Elroy PCI busses in the system.
-> Make sure to use proper names in the qemu device tree, e.g. "elroy0" or
-> "elroy2-pci-mmio", to be able to distinguish between the various chips.
+> NAck, this likely break big-endian hosts.
+
+(see also 
+https://lore.kernel.org/qemu-devel/20251224152210.87880-4-philmd@linaro.org/ 
+and Paolo's response)
+
+>>   };
 > 
-> Signed-off-by: Helge Deller <deller@gmx.de>
-> ---
->   hw/pci-host/astro.c | 6 ++++--
->   1 file changed, 4 insertions(+), 2 deletions(-)
-> 
-> diff --git a/hw/pci-host/astro.c b/hw/pci-host/astro.c
-> index 626aa9ce22..2c97d400bf 100644
-> --- a/hw/pci-host/astro.c
-> +++ b/hw/pci-host/astro.c
-> @@ -433,7 +433,7 @@ static void elroy_pcihost_realize(DeviceState *dev, Error **errp)
->   
->       /* Elroy config access from CPU.  */
->       memory_region_init_io(&s->this_mem, obj, &elroy_chip_ops,
-> -                          s, "elroy", 0x2000);
-> +                          s, dev->id, 0x2000);
->   
->       /* Elroy PCI config. */
->       memory_region_init_io(&phb->conf_mem, obj,
-> @@ -448,7 +448,9 @@ static void elroy_pcihost_realize(DeviceState *dev, Error **errp)
->                                   &phb->data_mem);
->   
->       /* Elroy PCI bus memory.  */
-> -    memory_region_init(&s->pci_mmio, obj, "pci-mmio", UINT64_MAX);
-> +    g_autofree char *elroy_mmio_name;
-
-Please move to function prologue:
-
-     g_autofree char *elroy_mmio_name = NULL;
-
-With that:
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-
-> +    elroy_mmio_name = g_strdup_printf("%s-pci-mmio", dev->id);
-> +    memory_region_init(&s->pci_mmio, obj, elroy_mmio_name, UINT64_MAX);
->       memory_region_init_io(&s->pci_io, obj, &unassigned_io_ops, obj,
->                               "pci-isa-mmio",
->                               ((uint32_t) IOS_DIST_BASE_SIZE) / ROPES_PER_IOC);
 
 
