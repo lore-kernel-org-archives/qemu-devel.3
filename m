@@ -4,91 +4,111 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9CA5410854CE
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 02:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3030FCD0A8
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 04:41:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2gry-0002Nh-Ev; Tue, 17 Mar 2026 22:42:50 -0400
+	id 1w2ihk-0003Xm-LP; Wed, 18 Mar 2026 00:40:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1w2grw-0002N3-Jj
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 22:42:48 -0400
-Received: from mail-pj1-x102b.google.com ([2607:f8b0:4864:20::102b])
+ id 1w2ihg-0003XC-U1
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 00:40:21 -0400
+Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1w2grv-0002DR-4A
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 22:42:48 -0400
-Received: by mail-pj1-x102b.google.com with SMTP id
- 98e67ed59e1d1-35b95e21ccaso232801a91.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 19:42:46 -0700 (PDT)
+ id 1w2ihf-0002sY-4m
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 00:40:20 -0400
+Received: by mail-ed1-x52c.google.com with SMTP id
+ 4fb4d7f45d1cf-667f8794e97so134164a12.2
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 21:40:16 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773808815; cv=none;
+ d=google.com; s=arc-20240605;
+ b=aRtr/3hriYXLF0p5IMQNNeu3RBeg7nsNd1/ebaKm1Z53XsHnyTnvf2ZDldj2QbA3cT
+ hOypLvS9uA+29hC6tC4tvRpRBH3rG9lRhHpnOgMnlfMcQxiNV8xWMn5KFAD/oEXk9EH8
+ 0rHJb0eVynllD7DwB3ZPX63OioMPOq03ynHeW6FpaauZ7zVskiP8UQWMHzqzhRRmebWW
+ i+JosPq5WNu2vW+9nL2J7B3aXgEmkkVV3e2eN4VIjhxoUVqA9PDmVYKtGkBZK6Qu3yi9
+ EGBDB6lnenLaXusgFXZBr/j4s8eR/IuIETa7BHBtaufRyLtD8DKLBG8yBoHYXAfwPFtV
+ +yGA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=vuwIiXqAxMx++vD693Uzn3ZjQfSxf49VPGnUdkE+Wo8=;
+ fh=bu2ZrHDXs3FhRCEK57XcXWlfhM8WXuf6PCAcBelvNxU=;
+ b=A7jAjePnUG1qIt/zSHdC09rZCZ2YhT3zt2NGfiGvoAf4wK5aOCKAOhldZayZ6d/5HD
+ ajtxMhL3yPHxhv/BYYnDgz2gZxcTpKnqR84bZVFGVMxiALVWeyhRODpeDbLMRQBlebVy
+ B/guyblKQOAOeE3tGR9RNXZ029ZxrfjomRhNsez1OhIVofACz5Gy4harfnwvDw0CU0nG
+ m6xJizefox//MKVC+Ks9n8zAVmy/tCDrbBOH9tbBDkZFgilTYa/mEd5/XeXPHoQHkmpX
+ sWC/EOS/a2fSKc0pIGLMvS2+9Hiapv/sgitKVMoT066oYFQG5xkr/EW8OASzGHGCPUX/
+ lZdw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1773801765; x=1774406565; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=h5HVr6oMXmyyZo/7M7vYBpkPmDpvrpR169IY4RgXgJ8=;
- b=GLekj9WixSVv5nlbjUKZEKbGzsp3Oa9+IWkMg/kftMFj18KWXGAOax21PQlEsBr9tw
- McNeyzEJijyMFhg/olM6HRYN7UQ9Y1M7PyJFj4O3+4Vpa7d6XK/NMRx3m8mnPwh1QfO2
- c3/YQtN4Ig0A/6An1WCNmBu81wJkmt9SvM11vshnKZKqt5qx2zGE8XnJEOY59e/XmBSw
- OU1cQcvsMi+z+RVfylBWmd3GozglaujCGU4+gvnI1VJYCqPf56lZqte7wIbjAG002TmI
- bSYcPNf44FjCVhLk8SaAA5jdYWa8mYhIBqzlTJtWERnqkL/MuA2nM82uz7YTZJTJY0Hg
- cnUw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773801765; x=1774406565;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=sifive.com; s=google; t=1773808815; x=1774413615; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=h5HVr6oMXmyyZo/7M7vYBpkPmDpvrpR169IY4RgXgJ8=;
- b=syztBjlQ0aUDAestnue8uvzYjvpcx5/WfzHfPHubWKQYxCP5u4Q6G6vZF7ZwlcJOvE
- 3zS66hbFqJV/f9B5gebtpecAzC40Q9DlF3vdjq5Q9rC3u8mGoRYKiSHQXOB/Yaf0oTg/
- mxq8+n2EJ4M1S0Qcy6EeeO40kFb6cL+J9R9Tf+4iLR/Oir1Xw6o4H3q5Ct2JeUVcMTJA
- SFHlJBv3soW1yiVe7IF4Xj4QlOtYNqYexsP15+feW4nW/u64IfBVN1A5MhJMEN9/TwEr
- +ojseDfGNIGisjawiTJBdNBbDdtCSKFcPSnLuf7U67TECyM9hkkDGri5KLAAnjj6cNFK
- kj8Q==
-X-Gm-Message-State: AOJu0YyAd1WfKxhdkc7uI4p6UaITaiTIfui3rT+FDhzsw5sjCvn+qJwQ
- f3ahgPDKgORPEU3irPJU57Kv/XnmBXFOOBvSmwCq4PlHXz3mSyicUDaHm2lHpEGE5Pyf3sdxcOX
- BS1srVK4FtbY11R0yHI4/zLD8zRBzoKdwaQJanETYGQMac0SxiOClVY7LzQFLBrtpCyZp1kDuqE
- yTLYw1zZ3q7A+6Y1vFjnpXbBgVlAwNxfHKrPN9rdA5
-X-Gm-Gg: ATEYQzz83dTkzLKaYP9OSWs9zMPVp/zA+JA8cMraUNtgNwjlUYXeRDBemo9ePvuaWga
- cKEQMQV1vBrtwBm1gQwKdPUyOVSodQEztc1yey8+wfM0XQ6dgoCCi/fy4tZZ3rc2pE9mf8gIlld
- wo6ryAZnXzBIVF1B56hBVOQwmjivUfKr6LtCaSz60TvPDsL+e0cn5cp+HUUhlUgLGz5/YgihG9n
- 60F6AGUMLKjqSuuLYOLYIndbPJ2uL8mAgG/6dA19s3F68LV4sgSlYggAN+ScYVZjwT9NR7fOUQn
- FNa/yTc5Ru09V1zund7Nw/aY1BOe35iyMLPgwj30+6C3mfsBGE6XcUWqQWvjRO5wsekwEhd+Vrs
- KNWVPhpl/KBjs/owoQ2WLNbUsgnLLGfGJUvZfeFYo1vgxsYbMbdl2ltf35KQvmC3eA66oevrdI/
- C0pe8N1XnBPd1w5JCotGCaHbdK3h1B584ZygFJwBZd/w5a
-X-Received: by 2002:a17:90b:52:b0:35b:9d0c:a2f3 with SMTP id
- 98e67ed59e1d1-35bb9a41281mr1478191a91.15.1773801764524; 
- Tue, 17 Mar 2026 19:42:44 -0700 (PDT)
-Received: from hsinchu26.internal.sifive.com ([210.176.154.34])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bbbedd0desm462732a91.4.2026.03.17.19.42.40
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Tue, 17 Mar 2026 19:42:42 -0700 (PDT)
-From: Jim Shu <jim.shu@sifive.com>
-To: qemu-devel@nongnu.org,
-	qemu-riscv@nongnu.org
-Cc: Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Jim Shu <jim.shu@sifive.com>,
- Max Chou <max.chou@sifive.com>
-Subject: [PATCH] target/riscv: Fix scountovf CSR behavior in VS-mode and M-mode
-Date: Wed, 18 Mar 2026 10:42:34 +0800
-Message-ID: <20260318024234.2772480-1-jim.shu@sifive.com>
-X-Mailer: git-send-email 2.43.0
+ bh=vuwIiXqAxMx++vD693Uzn3ZjQfSxf49VPGnUdkE+Wo8=;
+ b=Ernb1LG8vTmNv7wdkGC0e614jouEpt8YUz2ZyH8iHGH0BrgXr50Jfix/lZCmM+evle
+ +bIHgzqnNm3hgFwIMLeFeJELM17x1Eqln5yyu9LyBsMzdYC/dAYLq6Q7xx+jub9JGN3r
+ z1nwsIgxehQBSqDgWRRcqA8xEJT8O9FcdDxTwqVYcHzpWdi8nQ+SlLlF2hxd7hJGLsU+
+ VEtePXtc1k0GPpBazQb4BKxkBTiGE0+pB5HV00l70OkU9envk7IFXN5NIG7pHO8GTP77
+ 80RHUopTln7h12PZeiR9XAhqLgDIN1BJ/1DsFV0rO3a1KbRavHAQVUvci+Wp0duccA+J
+ ub0w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773808815; x=1774413615;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=vuwIiXqAxMx++vD693Uzn3ZjQfSxf49VPGnUdkE+Wo8=;
+ b=UL0d/2E4ILDldAP8hOgksN+IdGzdL9FN6W5DgNJRn3ailmZdtK5w2R7d1LyqZSfmNb
+ +cAZT4tdjLgCiQQ7H/xQ0SsZQMehgUEwcmsdGe49xh1I6a24ucH0DTqTxtEmFDDgs7xB
+ n+1EOIvLoXpNxLuLPWAd2me4TcdzobPBJ9+wzYaWb+DUJlpvAIYs24nor4fepK8Uxvnl
+ lS6nNJV7GNwWglLRowviBYtdzG4E7s2OtrvY9J57N3AX0kfLSPMXSV6BRwY2tXucVNjo
+ rWubPOl50uN/tutgn0FkjipOB9ude03VFSGCZKjh8Y1ZcoUM5mI8r3yCmwLYfPW1eD+8
+ frCw==
+X-Gm-Message-State: AOJu0Yy7ODXYz2PO7xP75TvDy65/fdIXSuUbRh/eN3UKtcysCFR1NlH0
+ Gjh+ncO6Pho11Q5RBFTXOKGRaops3LbNUCJ39fg71v50E3CCFUm7QFz45c0zadSzdnrGFhANUWZ
+ +ui9KMok+nMb9lXQe/CV6pJnskkS1IUUmII/A+ufbPA==
+X-Gm-Gg: ATEYQzw+HTKlwRW9kCZOaWA10vmMoBRqAb/YCXbjnuf7ulmJCpBPaMTLrZ6CC7Jx8Gy
+ 9eZKLQqegCvtoBvGoObrZBS/6cAsHk20/McFGHKcuPr1kj1ZIWSUpSDTwMgWsnTu05rB/JQkqP4
+ riuC/I/7VDB1/YGvOESeIAt5yowjwtaiuKv/0yBFCS1W+Pcb3TlMFDNi9ygFt1d2IEnlcZzDrFE
+ CYl7JhpsoXa3owI73zUrG/79qfrHbIkfCeXICW2RpRoCWTHySXwSgC9BTn/8G3v0MTCrOsGm2f9
+ fTDq75VW5w==
+X-Received: by 2002:a05:6402:42cb:b0:665:57ca:901e with SMTP id
+ 4fb4d7f45d1cf-667b2ff7955mr1269890a12.15.1773808815538; Tue, 17 Mar 2026
+ 21:40:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102b;
- envelope-from=jim.shu@sifive.com; helo=mail-pj1-x102b.google.com
+References: <20260209115846.2276651-1-jim.shu@sifive.com>
+ <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
+In-Reply-To: <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
+From: Jim Shu <jim.shu@sifive.com>
+Date: Wed, 18 Mar 2026 12:40:03 +0800
+X-Gm-Features: AaiRm51wIubBE7texOWWV6r0g_bGK-xy3Ou-gZXq-51NaL_xlR0blBfA2C6dXF8
+Message-ID: <CALw707rbMvg1mf1S_3qiqDWbZ0qjzgx4UJ9pUGmQODKWttKFyQ@mail.gmail.com>
+Subject: Re: [PATCH] exec: Add RISC-V WorldGuard WID field to MemTxAttrs
+To: Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@kernel.org>, 
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu=2D=2DDrif?= <clement.mathieu--drif@eviden.com>, 
+ Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>, 
+ =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
+ envelope-from=jim.shu@sifive.com; helo=mail-ed1-x52c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,54 +124,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From Sscofpmf spec [1]:
-- In M-mode, scountovf bit X is always readable.
-- in VS mode, scountovf bit X is readable when mcounteren bit X and
-  hcounteren bit X are both set, and otherwise reads as zero.
+On Tue, Feb 10, 2026 at 8:25=E2=80=AFAM Richard Henderson
+<richard.henderson@linaro.org> wrote:
+...
+> Hmm.  This really overlaps the secure and space fields from arm, and poss=
+ibly some of the
+> others as well (e.g. user, requester_id, pid).
+>
+> I don't really have a good suggestion for that right now, but it would be=
+ nice to not keep
+> expanding the count of these sorts of fields that somehow specify the ori=
+ginator, but
+> clearly cannot overlap.
+>
+> I'm reasonably sure we've had this discussion before, but nothing has com=
+e of it.
+>
+> Time to paint the bikeshed again?
+>
 
-[1] https://github.com/riscv/riscv-isa-manual/blob/main/src/sscofpmf.adoc
+I can union the 'secure' and 'world_id' fields, as they are not used togeth=
+er.
+However, I have no idea about the 'space' fields.
 
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
----
- target/riscv/csr.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+I have seen CPUTLBEntryFull has the extra union to support ARM-specific mem=
+bers.
+Another idea is that also adding the extra union to MemTxAttrs to
+place the RISC-V worid_id.
+We can use this extra union to as SoC-specific signals in the bus,
+like AXI AxUSER signal.
+Do you think it is suitable?
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5064483917..a75281539b 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1599,6 +1599,7 @@ static RISCVException read_scountovf(CPURISCVState *env, int csrno,
-     int mhpmevt_start = CSR_MHPMEVENT3 - CSR_MCOUNTINHIBIT;
-     int i;
-     *val = 0;
-+    bool virt = env->virt_enabled;
- 
-     /* Virtualize scountovf for counter delegation */
-     if (riscv_cpu_cfg(env)->ext_sscofpmf &&
-@@ -1609,8 +1610,19 @@ static RISCVException read_scountovf(CPURISCVState *env, int csrno,
-     }
- 
-     for (i = mhpmevt_start; i < RV_MAX_MHPMEVENTS; i++) {
--        if ((get_field(env->mcounteren, BIT(i))) &&
--            (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF)) {
-+        if (env->priv < PRV_M) {
-+            if (!get_field(env->mcounteren, BIT(i))) {
-+                /* no mcounteren in S/HS-mode */
-+                continue;
-+            }
-+
-+            if (virt && !get_field(env->hcounteren, BIT(i))) {
-+                /* no hcounteren in VS-mode */
-+                continue;
-+            }
-+        }
-+
-+        if (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF) {
-             *val |= BIT(i);
-         }
-     }
--- 
-2.43.0
 
+Thanks,
+
+Jim
 
