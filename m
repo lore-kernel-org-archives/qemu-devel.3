@@ -4,51 +4,98 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3445C1077612
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 20:14:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BF91077612
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 20:36:46 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2xGx-0005Ma-7r; Wed, 18 Mar 2026 16:13:43 -0400
+	id 1w2xcI-0001GU-Rl; Wed, 18 Mar 2026 16:35:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2xGu-0005LD-Nv; Wed, 18 Mar 2026 16:13:40 -0400
-Received: from zero.eik.bme.hu ([152.66.115.2])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w2xcE-0001FN-JJ; Wed, 18 Mar 2026 16:35:42 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2xGs-0004b2-1P; Wed, 18 Mar 2026 16:13:40 -0400
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 32F595969F3;
- Wed, 18 Mar 2026 21:13:34 +0100 (CET)
-X-Virus-Scanned: amavis at eik.bme.hu
-Received: from zero.eik.bme.hu ([127.0.0.1])
- by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id RT-ecY6mw7Xy; Wed, 18 Mar 2026 21:13:31 +0100 (CET)
-Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id B24D65969E4; Wed, 18 Mar 2026 21:13:31 +0100 (CET)
-Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id B0B5B5966F4;
- Wed, 18 Mar 2026 21:13:31 +0100 (CET)
-Date: Wed, 18 Mar 2026 21:13:31 +0100 (CET)
-From: BALATON Zoltan <balaton@eik.bme.hu>
-To: Pedro Falcato <pfalcato@suse.de>
-cc: John Snow <jsnow@redhat.com>, qemu-block@nongnu.org, qemu-devel@nongnu.org,
- qemu-stable@nongnu.org, Niklas Cassel <cassel@kernel.org>
-Subject: Re: [PATCH] ide: Set IDENTIFY word 93 to 0 on SATA drives
-In-Reply-To: <20260318162951.1060969-1-pfalcato@suse.de>
-Message-ID: <3c35a0f5-1b52-5f1f-fb75-c7d6ec105667@eik.bme.hu>
-References: <20260318162951.1060969-1-pfalcato@suse.de>
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w2xcB-0005TS-95; Wed, 18 Mar 2026 16:35:42 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773866118; bh=jcvlcTIblxWGCOGMbDjqAozQmtTh8zioIEymsBpq694=;
+ h=Date:Subject:To:Cc:References:From:In-Reply-To;
+ b=Kbu0yER5lgE7T+7vesygVdovPpcNNjIvvrQVv/yfwFxQ0czRvIj9O/7ij36rvrHkm
+ 6OLZ/1FvckMD+G43T1Jnk3TCB+B0mfEAJO6KFUieu3ZeTIsNR09oDV6h+D4VoS4o5x
+ 0uUqNh1+cfNCvRTLkcs0guhOq0OBwa2zNdAk3zQ6mQl0NiiX8Qbntm5JUYWpUQoQLh
+ IJkYcb/CAW8fcLv1rtpGnkTMzW1C3ci3FLeAJGFi9LpyU1tAAWhQFF34hCB2HkN94+
+ PDLHpAj3PQutwVD5rnR4LGQiKt/UQI4bsi8nG6ZsFtW0LGySxKSH5eaAyP1G8HxFhO
+ 8RTnUKbrq/DMw==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 32EDE195124;
+ Wed, 18 Mar 2026 23:35:18 +0300 (MSK)
+Message-ID: <7e3a45c4-a7bf-4679-8799-7f482fd9334c@tls.msk.ru>
+Date: Wed, 18 Mar 2026 23:35:26 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII; format=flowed
-Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
- helo=zero.eik.bme.hu
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/2] Block layer patches
+To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260317134521.112121-1-hreitz@redhat.com>
+Content-Language: en-US, ru-RU
+From: Michael Tokarev <mjt@tls.msk.ru>
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ xsFNBGYpLkcBEACsajkUXU2lngbm6RyZuCljo19q/XjZTMikctzMoJnBGVSmFV66kylUghxs
+ HDQQF2YZJbnhSVt/mP6+V7gG6MKR5gYXYxLmypgu2lJdqelrtGf1XtMrobG6kuKFiD8OqV6l
+ 2M5iyOZT3ydIFOUX0WB/B9Lz9WcQ6zYO9Ohm92tiWWORCqhAnwZy4ua/nMZW3RgO7bM6GZKt
+ /SFIorK9rVqzv40D6KNnSyeWfqf4WN3EvEOozMfWrXbEqA7kvd6ShjJoe1FzCEQ71Fj9dQHL
+ DZG+44QXvN650DqEtQ4RW9ozFk3Du9u8lbrXC5cqaCIO4dx4E3zxIddqf6xFfu4Oa5cotCM6
+ /4dgxDoF9udvmC36qYta+zuDsnAXrYSrut5RBb0moez/AR8HD/cs/dS360CLMrl67dpmA+XD
+ 7KKF+6g0RH46CD4cbj9c2egfoBOc+N5XYyr+6ejzeZNf40yjMZ9SFLrcWp4yQ7cpLsSz08lk
+ a0RBKTpNWJdblviPQaLW5gair3tyJR+J1ER1UWRmKErm+Uq0VgLDBDQoFd9eqfJjCwuWZECp
+ z2JUO+zBuGoKDzrDIZH2ErdcPx3oSlVC2VYOk6H4cH1CWr9Ri8i91ClivRAyVTbs67ha295B
+ y4XnxIVaZU+jJzNgLvrXrkI1fTg4FJSQfN4W5BLCxT4sq8BDtwARAQABzSBNaWNoYWVsIFRv
+ a2FyZXYgPG1qdEB0bHMubXNrLnJ1PsLBlAQTAQoAPhYhBJ2L4U4/Kp3XkZko8WGtPZjs3yyO
+ BQJmKS5HAhsDBQkSzAMABQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEGGtPZjs3yyOZSAP
+ /ibilK1gbHqEI2zR2J59Dc0tjtbByVmQ8IMh0SYU3j1jeUoku2UCgdnGKpwvLXtwZINgdl6Q
+ cEaDBRX6drHLJFAi/sdgwVgdnDxaWVJO/ZIN/uJI0Tx7+FSAk8CWSa4IWUOzPNmtrDfb4z6v
+ G36rppY8bTNKbX6nWFXuv2LXQr7g6+kKnbwv4QFpD+UFF1CrLm3byMq4ikdBXpZx030qBL61
+ b7PrfXcBLao0357kWGH6C2Zu4wBnDUJwGi68pI5rzSRAFyAQsE89sjLdR1yFoBH8NiFnAQXP
+ LA8Am9FMsC7D/bi/kwKTJdcZvzdGU1HG6tJvXLWC+nqGpJNBzRdDpjqtxNuL76vVd/JbsFMS
+ JchLN+01fNQ5FHglvkd6md7vO+ULq+r9An5hMiDoRbYVUOBN8uiYNk+qKbdgSfbhsgPURqHi
+ 1bXkgMeMasqWbGMe7iBW/YH2ePfZ6HuKLNQDCkiWZYPQZvyXHvQHjuJJ5+US81tkqM+Q6Snq
+ 0L/O/LD0qLlbinHrcx0abg06VXBoYmGICJpf/3hhWQM4f+B/5w4vpl8q0B6Osz01pBUBfYak
+ CiYCNHMWWVZkW9ZnY7FWiiPOu8iE1s5oPYqBljk3FNUk04SDKMF5TxL87I2nMBnVnvp0ZAuY
+ k9ojiLqlhaKnZ1+zwmwmPmXzFSwlyMczPUMSzsFNBGYpLkcBEAC0mxV2j5M1x7GiXqxNVyWy
+ OnlWqJkbkoyMlWFSErf+RUYlC9qVGwUihgsgEhQMg0nJiSISmU3vsNEx5j0T13pTEyWXWBdS
+ XtZpNEW1lZ2DptoGg+6unpvxd2wn+dqzJqlpr4AY3vc95q4Za/NptWtSCsyJebZ7DxCCkzET
+ tzbbnCjW1souCETrMy+G916w1gJkz4V1jLlRMEEoJHLrr1XKDdJRk/34AqXPKOzILlWRFK6s
+ zOWa80/FNQV5cvjc2eN1HsTMFY5hjG3zOZb60WqwTisJwArjQbWKF49NLHp/6MpiSXIxF/FU
+ jcVYrEk9sKHN+pERnLqIjHA8023whDWvJide7f1V9lrVcFt0zRIhZOp0IAE86E3stSJhZRhY
+ xyIAx4dpDrw7EURLOhu+IXLeEJbtW89tp2Ydm7TVAt5iqBubpHpGTWV7hwPRQX2w2MBq1hCn
+ K5Xx79omukJisbLqG5xUCR1RZBUfBlYnArssIZSOpdJ9wWMK+fl5gn54cs+yziUYU3Tgk0fJ
+ t0DzQsgfd2JkxOEzJACjJWti2Gh3szmdgdoPEJH1Og7KeqbOu2mVCJm+2PrNlzCybOZuHOV5
+ +vSarkb69qg9nU+4ZGX1m+EFLDqVUt1g0SjY6QmM5yjGBA46G3dwTEV0/u5Wh7idNT0mRg8R
+ eP/62iTL55AM6QARAQABwsF8BBgBCgAmFiEEnYvhTj8qndeRmSjxYa09mOzfLI4FAmYpLkcC
+ GwwFCRLMAwAACgkQYa09mOzfLI53ag/+ITb3WW9iqvbjDueV1ZHwUXYvebUEyQV7BFofaJbJ
+ Sr7ek46iYdV4Jdosvq1FW+mzuzrhT+QzadEfYmLKrQV4EK7oYTyQ5hcch55eX00o+hyBHqM2
+ RR/B5HGLYsuyQNv7a08dAUmmi9eAktQ29IfJi+2Y+S1okAEkWFxCUs4EE8YinCrVergB/MG5
+ S7lN3XxITIaW00faKbqGtNqij3vNxua7UenN8NHNXTkrCgA+65clqYI3MGwpqkPnXIpTLGl+
+ wBI5S540sIjhgrmWB0trjtUNxe9QcTGHoHtLeGX9QV5KgzNKoUNZsyqh++CPXHyvcN3OFJXm
+ VUNRs/O3/b1capLdrVu+LPd6Zi7KAyWUqByPkK18+kwNUZvGsAt8WuVQF5telJ6TutfO8xqT
+ FUzuTAHE+IaRU8DEnBpqv0LJ4wqqQ2MeEtodT1icXQ/5EDtM7OTH231lJCR5JxXOnWPuG6el
+ YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
+ ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
+ 3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
+In-Reply-To: <20260317134521.112121-1-hreitz@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,78 +111,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Mar 2026, Pedro Falcato wrote:
-> According to the ATA Command Set specification (and the SATA specification
-> too), SATA drives are supposed to set word 93 (which for PATA holds hardware
-> reset results) to 0. As such, clear it when ncq_queues > 0 (which is only true
-> for SATA drives).
+On 17.03.2026 16:45, Hanna Czenczek wrote:
+[]
+> Block layer patches for rc0
+> 
+> - Fix race condition in throttle-group code triggering an assertion
+>    failure
+> - Fix assertion failure in mirror job when issuing job-complete twice
+> 
+> ----------------------------------------------------------------
+> Alberto Garcia (1):
+>    throttle-group: Fix race condition in throttle_group_restart_queue()
+> 
+> Fiona Ebner (1):
+>    block/mirror: fix assertion failure upon duplicate complete for job
+>      using 'replaces'
+> 
+>   block/mirror.c          | 28 ++++++++-------
+>   block/throttle-groups.c | 79 +++++++++++++++++++++++++++++++----------
+>   2 files changed, 75 insertions(+), 32 deletions(-)
 
-AHCI is not the only SATA controller emulated but the only one setting 
-ncq_queues so that's not a good way to identify SATA in general. Maybe 
-there should be something else that SATA controllers could set which you 
-test for here but I don't know what would be the best way for that. It 
-seems a drive is SATA if it's connected to a SATA controller so maybe the 
-bus should have a field set to say it's a SATA bus?
+Is it not qemu-stable material?
+The amount of changes is a bit too high though.
 
-As for ABI and behaviour change, usually if you change something that 
-would make a Windows guest detect new hardware then that should be 
-introduced with new machine version with compatibity kept for older 
-machine versions. I don't know if that applies to replacing IDE drives 
-with SATA drives but seems likely.
+I'm picking it up for the currently active stable branches, please
+let me know if I shouldn't.
 
-Regards,
-BALATON Zoltan
+Thanks,
 
-> Doing so fixes a quirk in Linux where it thinks the AHCI QEMU drive is PATA
-> over a SATA bridge, and thus limits maximum transfer sizes for individual IOs
-> with a:
-> [    1.632121] ata1.00: applying bridge limits
->
-> While at it, bump the device's firmware revision for IDENTIFY. This makes it
-> so Linux can avoid enabling a quirk for fixed QEMU releases.
->
-> Link: https://lore.kernel.org/linux-ide/20260303183337.1013474-1-pfalcato@suse.de/
-> Cc: qemu-stable@nongnu.org
-> Suggsted-by: Niklas Cassel <cassel@kernel.org>
-> Signed-off-by: Pedro Falcato <pfalcato@suse.de>
-> ---
-> Note: I understand the version bump is vaguely controversial (particularly
-> exposing the QEMU version in the string) but I don't have a much better
-> idea. Logically, bumping it to 11.0 for stable releases doesn't make much
-> sense.
->
-> hw/ide/core.c | 12 ++++++++++--
-> 1 file changed, 10 insertions(+), 2 deletions(-)
->
-> diff --git a/hw/ide/core.c b/hw/ide/core.c
-> index b45abf067b20..89f62f301e94 100644
-> --- a/hw/ide/core.c
-> +++ b/hw/ide/core.c
-> @@ -211,7 +211,15 @@ static void ide_identify(IDEState *s)
->         put_le16(p + 87, (1 << 14) | 0);
->     }
->     put_le16(p + 88, 0x3f | (1 << 13)); /* udma5 set and supported */
-> -    put_le16(p + 93, 1 | (1 << 14) | 0x2000);
-> +    if (s->ncq_queues) {
-> +        /*
-> +         * This is SATA, which is required by the spec to return 0 for this
-> +         * field.
-> +         */
-> +        put_le16(p + 93, 0);
-> +    } else {
-> +        put_le16(p + 93, 1 | (1 << 14) | 0x2000);
-> +    }
->     /* *(p + 100) := nb_sectors       -- see ide_identify_size */
->     /* *(p + 101) := nb_sectors >> 16 -- see ide_identify_size */
->     /* *(p + 102) := nb_sectors >> 32 -- see ide_identify_size */
-> @@ -2660,7 +2668,7 @@ int ide_init_drive(IDEState *s, IDEDevice *dev, IDEDriveKind kind, Error **errp)
->     if (dev->version) {
->         pstrcpy(s->version, sizeof(s->version), dev->version);
->     } else {
-> -        pstrcpy(s->version, sizeof(s->version), qemu_hw_version());
-> +        pstrcpy(s->version, sizeof(s->version), "11.0");
->     }
->
->     ide_reset(s);
->
+/mjt
 
