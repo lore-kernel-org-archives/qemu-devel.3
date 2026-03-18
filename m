@@ -4,110 +4,179 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B68DDFB5EAB
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:33:53 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66F88FF6E8C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:37:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2mKq-0000t8-MT; Wed, 18 Mar 2026 04:33:00 -0400
+	id 1w2mPN-00030X-8h; Wed, 18 Mar 2026 04:37:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w2mKo-0000s8-Af
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:32:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w2mPJ-00030P-MK
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:37:37 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
- id 1w2mKl-0001nx-Hx
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:32:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773822772;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=wIJ7DrPgVmjwpgfX5YS474vIHpoL5e37oQePzDSoBEo=;
- b=fAfDReLvhcGBW7hx69bRZqWGie+gb2lGgvEDLPX/+YhiVGkGx18zgU5Q5L9+1iuHeBy5Ma
- 15aEqXpKHlL+yUtQBHi7cd086eAUc52B2IP04+lNQOzMoYatSCDlx2SrCpzxZGAM1GqXey
- GTegS6O5GT6UBMxonS854M9xoNHvasg=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-jsaMgZ63OBuLrDC7dn2Q0w-1; Wed, 18 Mar 2026 04:32:51 -0400
-X-MC-Unique: jsaMgZ63OBuLrDC7dn2Q0w-1
-X-Mimecast-MFC-AGG-ID: jsaMgZ63OBuLrDC7dn2Q0w_1773822769
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-485c45885e6so3402545e9.0
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 01:32:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773822768; x=1774427568; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=wIJ7DrPgVmjwpgfX5YS474vIHpoL5e37oQePzDSoBEo=;
- b=EiVVyuK3hsHyDA470aYWW9RhrP8UjbS7NvH991yXuTMJd3/aVtWDugeI8YQ8U78i0g
- 21ZDMP1gLEHTuXUAjRSLtLaEXzEqgtZ7oGmS/WCuA5j9gY7EhKaiOygV7oiO530Owss8
- gsvP55nW5vk/cPw3Y9Nqvb5gNHCOf/kKsjml1RoHbpGj/GdpfuN3nxMwSJZdZqI1nAAV
- 3jcH9VURPHaS9rmkhKnuA/YO97jU0p9JXfPlZJYmqc3yeQeUZ9pWdQp8Iqp9NA6TgJuZ
- 7beQCdyFJyEzH/f0DIsXp10OGxFdDxw1m1Gi4sj7GXeoTYuR5Qo1iQlTgRAmREXa65HW
- aqjw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773822768; x=1774427568;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=wIJ7DrPgVmjwpgfX5YS474vIHpoL5e37oQePzDSoBEo=;
- b=rxKvxNWUi+Zor5KElz8SSKxPDJDSv9sa72drkqV2LehkdrO8YaU+HNM3FbWifZYOgf
- dD7ymgGzmgHLtUbB7whZInJIVY2oxMoZzzhSTr+5Z3PVgpIHCWtvVRevjbG2m8+iJHdU
- IpXIrhEEwm9mOggXy88CKWWwyXgj1FpRQ7LU1B79LvBBskwnhEQQmIxAlptDOUhx8Kpj
- KOGKIm+ISCNKfHowVJUwqleQySNs3WA1OyPZ7qea/RVbTALg4WAAxD8w/zgsCIIOjsfP
- epRv7XXVUt3fB2I3ZbLE74F42Jgon5qYIj5Kf2NWEkkgFEfoocC056GmtPAUvPAwHJFx
- X3Vw==
-X-Gm-Message-State: AOJu0YwYKLBfKbXPXHtg0zb8rtiunDO3PZag7qgAUcRLegCpHEOqZDL3
- CImwnAO3rGuzdEfKDIpdmOM15LvGMFF7a+C4vfTUlf7u05LMjYYISs1j7PNPDt2Mc+/VvN+ilRB
- UOsCnyZAdc+R/YSgavFT1jTG2RxjZEBacwXw5/VAY5GKA6FC8b/IoResaUKl7J4/j+BsLaaNOsG
- KUnQnkX+tMshs4ZuXID35JFIsTe7D9LzYj42MjJN7L
-X-Gm-Gg: ATEYQzxM7S92OUJ/c1yzrNjzLM6NxOufZn2tVRkfrHuReVwCuswxm41TUynX5UThypE
- u6r7mXZL89R7LUdvqvrAA+sq3ycg439S9Wqf7eAin7yqWpdEvlIfkr0lagD+jyPLjBHcAwum+9w
- +k+UrIb4YAm96eIylUH5sXJmPqBvWXqQ/7lrIcQGADskLGm2cNcWSuKhqPHfxE0ch1D+trBL606
- AZK41eQgLTC77LYs2PvuriYcMPx5blobY2D87tHDXYIy3aoS93D0PLWaXkHNSq1mMaRWwBBHPQV
- iZT9tf3YBoSs3fQfy5g9smK107n+YsQSbiJqTggXpAYO3Kzpuv6Ks5Fim3gomR8XgGEsydQPAYF
- xZDg9pOR61VJqPYOHOk3NeLi8zGqDD6CkywTHpGPUNBiSzoTw1hoTaX5J7fGBZBpD57BVeTFhkP
- LBs3+rGYPV4zxRLc+YMknkIm9QEeY=
-X-Received: by 2002:a05:600c:8b52:b0:483:8062:b2f with SMTP id
- 5b1f17b1804b1-486f4421c57mr37873955e9.6.1773822767528; 
- Wed, 18 Mar 2026 01:32:47 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b52:b0:483:8062:b2f with SMTP id
- 5b1f17b1804b1-486f4421c57mr37873425e9.6.1773822766945; 
- Wed, 18 Mar 2026 01:32:46 -0700 (PDT)
-Received: from [192.168.10.48] ([151.95.144.138])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f4e5495csm21231305e9.2.2026.03.18.01.32.46
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 01:32:46 -0700 (PDT)
-From: Paolo Bonzini <pbonzini@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
- Peter Maydell <peter.maydell@linaro.org>
-Subject: [PULL 4/4] rust: suggest passing --locked to "cargo install"
-Date: Wed, 18 Mar 2026 09:32:38 +0100
-Message-ID: <20260318083238.1132609-5-pbonzini@redhat.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260318083238.1132609-1-pbonzini@redhat.com>
-References: <20260318083238.1132609-1-pbonzini@redhat.com>
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w2mPF-0002Lb-Gw
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:37:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773823053; x=1805359053;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=KZdb0CMKZtGxrjv+uOHKLtrXySxwUnyFaefbuZ0XRTI=;
+ b=Jch828usKSsjbGsUKjZEh4nB+7fWmmcz0PsjdG9xhgk+32R4IOUqWEmd
+ e/Zf8LkSi00jkVXCC7HfrL1WEJ1IhAha4zpIOHkmhdj4vLEO9dX49cyCc
+ xnTFRwHDqSggeDs61bfPHNiKOCVLRshN3I+HKz/k6w4NVZKNjNdVkvdic
+ av4Qi9aNxn7oGIxZeB3dZNSm8ZZVZlpigzL4de6TlvjtnaKzXi/CY4f4U
+ Wue2CwAosaTS67fjoidqWgZJ+l2UU4wXa8n/wv0aZdIobfm547J29QdMh
+ KQh47uS7l4RSKfm1dehtKgYvipCp4p82XNnQQnRTqPYbWZhe++256XC9H g==;
+X-CSE-ConnectionGUID: xUoujPbkRySyk/ADdOP3dg==
+X-CSE-MsgGUID: o4HpZnvRQvmzMZz6/nYgWA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11732"; a="73891005"
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="73891005"
+Received: from orviesa006.jf.intel.com ([10.64.159.146])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Mar 2026 01:37:30 -0700
+X-CSE-ConnectionGUID: U7J348DnSACpPxMimxPJvg==
+X-CSE-MsgGUID: 6DwtWx0eQuaiPA9KaJh1dQ==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="221637271"
+Received: from orsmsx903.amr.corp.intel.com ([10.22.229.25])
+ by orviesa006.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Mar 2026 01:37:30 -0700
+Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 18 Mar 2026 01:37:28 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Wed, 18 Mar 2026 01:37:28 -0700
+Received: from SJ2PR03CU001.outbound.protection.outlook.com (52.101.43.60) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 18 Mar 2026 01:37:27 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=IOiz1orYU/HVi0Ag7QrQsRkflokCNa9HvF6APCkD+0bSsOg3D2nALwKrDsI6yv1OPMQGogKPfbJtOotKpHVPA1el2vtZMPPDArDyEkrmLJ7vGnU47oE/l1Op29Zg2cnqtY9l0wOdp+FWdcN1AYAWs6G9T+xV8yt1pn9qriGbLSvHN9zzVoaC53KfYB++Ff7ze5jzVBrgu3KHlmQ/cSndT4vWsB+kDR6zolbZuV1A7NMjdU62yTNJ3etoGFfgKtFqJ5Ec+SWnOPeEOXYKLxlgvmg/sgij3am8SJM+LJOGuaeGoQGU1FLr5eagyx10dJdH/sbeItfeCJpid7RZ5GoLfw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=KZdb0CMKZtGxrjv+uOHKLtrXySxwUnyFaefbuZ0XRTI=;
+ b=WrhNVcPquFFkTDhTWiLOPGMwx8dx3BT+fDqjcectrMx+UfIx9wW/2rz2pIbK5NjANjcFaThC+giPCL4qsojTK2zT5s+pmxmzEnad99IcfVe6YWcN1LFcZOPxlSOUzHd616YhSBgILkS1aH0cE3hn19gHfxIHaXBzxgNQUCKJBluHD88TsmS07V5+sstBdSbw0cbB+drL5rIr6mo4wE4+4tDT/uk4dGKvgYlwEYl+QdHr6PArPVXs6KHif4FvZfqAqGDWbg4x0I0sRwfd9WDNCJ+iKzSp6RI8MIUsamR+4MPWaB+yt+Gi5qojuUkvwW/PI3T0ZuPJ1qakmI8YakxhoQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by IA1PR11MB6516.namprd11.prod.outlook.com (2603:10b6:208:3a0::15)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.16; Wed, 18 Mar
+ 2026 08:37:25 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9723.013; Wed, 18 Mar 2026
+ 08:37:25 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, Pierrick Bouvier
+ <pierrick.bouvier@linaro.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: "Liu, Yi L" <yi.l.liu@intel.com>, Alex Williamson <alex@shazbot.org>, Eric
+ Auger <eric.auger@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>
+Subject: RE: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
+ not available
+Thread-Topic: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
+ not available
+Thread-Index: AQHctmGHiBHM8iMR00eLUFzvqqaWNrWz5tXggAAJFgCAAAPtEA==
+Date: Wed, 18 Mar 2026 08:37:24 +0000
+Message-ID: <IA3PR11MB91364D3734AA30AB6C474E1D924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260317225751.1325098-1-pierrick.bouvier@linaro.org>
+ <20260317225751.1325098-2-pierrick.bouvier@linaro.org>
+ <IA3PR11MB913683DE47A156F52C77AE7C924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
+ <068a3098-4e4d-490c-9cef-ac39a7e9c29f@redhat.com>
+In-Reply-To: <068a3098-4e4d-490c-9cef-ac39a7e9c29f@redhat.com>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|IA1PR11MB6516:EE_
+x-ms-office365-filtering-correlation-id: a2792017-67eb-4b94-bd1d-08de84c994ab
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|38070700021|22082099003|18002099003|56012099003;
+x-microsoft-antispam-message-info: AfkHEFtIva32UOmJmXCzAQaVQkVhYVeQr/1M/xkZtC9Rxmqqbv3jRfA/eRwkn0TfQRT/eqW0MWV35NlyIEJxLiLz4MLes3eC+c+DMobPOFd95+ypNALHGOGD6p7/NoVrPFh7RgRgj+wawYILqn9zjX7INx9kqLs5OmgZ9N2Ge1e4NdhV8hWOTis7m5FqUIT4aC5BHbq9N5EeXN4NU1+O0x1Nd2pksMe75i4AX7VvHChfpVwvRPaTXVE7M/emJYiDAIgOf2zujWeW/b8QkXCs9VbOzm/dry0VNL7eH0Ra+ZgLFxwMzb1ZcpNE+/5BoIRxecUcwos+oOBAILH5hvUEsm2sPSOT7XZJ57fE+lWxMvTG15zinpVMj6aCvxdkAcrmkUTVgn9Dh5spjtgsIcKV0U2PxA3opwUyoN/sySNiB9u/KHxKqB89FZ5h/HfAbzkLf/JdC7dE42yXAjmpQ6ugE48PEpRhgF2kBY58pgTOwCDqIpYKpEv0dT+9Fz3kw1dWfwfgRr55i8/24LWJqGABkiBnZT3hgBGvTGVS3nfcU2XhCAYWsG/Z3VpZO9bLPxy9KFLDWR0wM3vd85RVP0UZ8bmoyCLZ/HHYQtjk3o3CPWCyvun0QH4O8THaZPaiEaLIHFY96skfwmtJ0WibuSvnDp5kLZ1sYCBSVOK+HMhfoijGft3JtPgOmfZf5VdJeqGhu2mnSn1FRdX9S9MyXe0F8X7CL8lFPaho+kmd65AOPpr6OAAExv4cOljOk9m6Ij0eLIovDLNn1p3QA4uX2DaoSuperDUTnpQS7imhgAg0MmU=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(38070700021)(22082099003)(18002099003)(56012099003);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?QjFyVWtqb3RTSFFtUjlZeUJZOU9nSC9EcFdsczBJMnRVL1VEVWlvaVl3QUNW?=
+ =?utf-8?B?ZkVlcHN6WEwxSldhK1ZLUDg0L1I5M281cUxIMzlaN1lMbWhTR3grM2VCMmx6?=
+ =?utf-8?B?ejFSbWVGMk9NNzlVa0V5dUJyajljM1dFMG9Wc2E0SVpoK0Ewc3V4M0NkbTVm?=
+ =?utf-8?B?bG05RlRFaWZhb1lxQ3BBYmFWd05kNjVyNldGR2RTTVJWd05xdm1Peno3dU04?=
+ =?utf-8?B?Vm9PV1pZRmNpTjRIdnlQOXk4cUNLWS80RG11cXgxcms5Wi91OXNyL21BZ01R?=
+ =?utf-8?B?eGFjUVVNNDdzMTdCRk5pRUFPTWthY083RWM5NjhMWTVRSTl2RmtCaWJveTRJ?=
+ =?utf-8?B?V09mRlVxa0RGdzAraG10ejhsQWJyYVpRbzZQQjE5czBQSWxpYzRIaGk0T2pZ?=
+ =?utf-8?B?RTFNbEVQYXlyM0xMNXlhWXNXUWNrRzlQeVh6RnFGRGNieUJ5Y0hoYURSeWl3?=
+ =?utf-8?B?Z3VKMzlobmJNMHlQYmZldXljRUZKalJNdkx0L1U2WHQxSm54ZHpoVjFMcmda?=
+ =?utf-8?B?UW1WZmtKVXZKV3dKZFZnYTBqWk85QzRzSW55aGNJUzJpWkVUV3l3K3FHTnRZ?=
+ =?utf-8?B?Ylh5dFZwSjhKL1Jia3lsU21iV0JtU1plTXlQUnB2YnZITWEvRlhvOGlsazE4?=
+ =?utf-8?B?bjUyRU0rdE82VGIyWUROaGhQQm9INnpjNStPUXFiR2krK05CREU2VUF6NGVE?=
+ =?utf-8?B?N1ZDRXgzU0x0UVdndytaSjBQVkQxbjRJY3RaWmJxYWJva0MrZ21CRVo0VlU4?=
+ =?utf-8?B?c25lU2pWMXpxVmsyeEFyTVR2c2VyVjhFeE5CbVB1RzQvODhBankvZTVxNTdj?=
+ =?utf-8?B?U0RxTXBzZGl0c3crdWp2WE1XelpWYk1URTY5elNXTUZRZUJGQ1NHZEZYZHlp?=
+ =?utf-8?B?YTUxMHRINGIweU5NWXo0Yk1SSDVVaFJTUjl6eEJ4UG90bVMwVXJ2bUZYWmVP?=
+ =?utf-8?B?ZmxBeHZLdW9ocGVZYzRyL0NBWVpPZUI1ZHZuWjV2YUd5V3VkYUJXUVJESVJL?=
+ =?utf-8?B?NW1yUlJYSENvbU43cGpCUzFZQTlkMWlTZnZXM0NOemNvM3VvTDRqZnRWQyt6?=
+ =?utf-8?B?SmZVUThVZmN5d2Q4cHRXdmRSMlUxeXcwemJpamY0QVBpamN0eWJVdG9GdTdG?=
+ =?utf-8?B?Ui9jclFpLzdINnBiT1AvUEoyRlpkUGVmYnNaOHV1SU9EQy9OVGp3YUN5M01x?=
+ =?utf-8?B?ZWpSbEVrc0JHcjBPbjIraUNNWjRwVnFvSCtGV1BXMDg2OHpyWGhvR0pyemtX?=
+ =?utf-8?B?eEk5ZTVhSHlWQUhQM3drR1VNV1QvUnQ5MUJ0SU9hdGdWY0hpV0RDdFR1UGFD?=
+ =?utf-8?B?cEY3MVZMRHZyM24vcmhVZmd3VUVuekJTRVRRY1hSVVNjUGNCMVhoM09OQ3hi?=
+ =?utf-8?B?SXptcjZ6SXN4T0NzTGNIaXZXQTJPd3NocUF0VmxKNTZYb0FXWnlHU1BJR3Nn?=
+ =?utf-8?B?cjFpaTIyOFdISmVGdEozU0NFTDNlaDNpL25RQTYxVGxqdU1EbmF2YnRvaHZB?=
+ =?utf-8?B?OU5BWVMxSkhKNUVpRnAraXBVUktvdG5WRnAzdlpWUW1xSEthL01WbmxVd1A4?=
+ =?utf-8?B?WStaUjNrNGVBell1NnBNOWFhWmVRNkRxR3pKWXFYb1BHeFFWWTRVQ3hHaUg5?=
+ =?utf-8?B?QW5wZzJZMXFYUUtwMWgxNDlUUUNVU0JhOFV0d1ZhaWVCaVZCNGRzSGVLcVhZ?=
+ =?utf-8?B?NGNQLzJ4ZGN6MjhzWXhOb2dwYzVYNHA1VVJzNFJMR3o2N1p5TURMTzRhMnJk?=
+ =?utf-8?B?aW41SmhOQTJYa1o5RS91bU1HQjdwNnhFK2NmS3E0cVI1YXlST0NBQUdCSG5k?=
+ =?utf-8?B?blhwTVV2YUlYdU1PcGYvY3VBSkpDZitVc0NSUTQ4SXV1ZUJmeGNFWjVRdnIy?=
+ =?utf-8?B?Wk4yWTAra1VrL0kzZ2lzSTVuZ2thU1A4YXB0dWVsVWhwRmdRUFNwODBFYXdu?=
+ =?utf-8?B?YlVJazdDcktlRDN3M0EyVUl2OEFhUkJET0dQcUVHbm1FOUZBY2t1L3R5V1lO?=
+ =?utf-8?B?WHB5WHpMN1FMK1lGeFVYdkV4cUo1bXpQTDQ5K1NuNjlpZWMwOXYzaHo3M05l?=
+ =?utf-8?B?d1dEbVY3SGpNT0tiZlhrZysrZGd3dUFFVXpjcTY0UW44ZjJEMCtML0JQc2Rv?=
+ =?utf-8?B?WUhvanpTK2I3VzcrMTdoUUZkOGFNN1RtYXBnOTFOYlEzSDVUSXZoTWJVZW9j?=
+ =?utf-8?B?cFYvWWI4akVIMWdqZ25oODQ5MVI5YjRMdmFVOG9qRUFLYUNBVEZVdm05L3pL?=
+ =?utf-8?B?cGJxYTJheUxYbVpHSnZ6SFdsbStLdDNnU3lNT256MmMyZ1NjdkRHcDFpS2t0?=
+ =?utf-8?B?NG9FVzlPN0F4cnFrWEwrM2ZHbVV5WTZvQjR0SmJKWUVRQWZTUGFHdz09?=
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Exchange-RoutingPolicyChecked: NhfNwK8xtNuGYdWyJ1yO+2G0i/2Bq3OVE9TDNEBNdz2Zrm+mhp8uZ1saKkYpA9jlYfhcQNEx1g1Gxu7a5cJu/XO7h9zBEpnnxUjzLBqWkyvciPFg6wcVwy5bHjIR+UeXKe3tJCcdosVpOctnWG7+Hgxjk2ttKvhD9YLkfYow5CeZW/bf8B0I8iji2sqOpejW1/gnv14GCqhqKmSFQP8NfA1NuoV2YRzET6nBfphTEiPmdl+WCmJ+j8Mkg3WhWg0KA38Mbsz2gAVmddPpoB9uU/fkS9NOYppW3l87+hPCSqiwWuDKszUrho9stTSFSLiPUOiUFGrShZH0sMSvZNm4vw==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: a2792017-67eb-4b94-bd1d-08de84c994ab
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2026 08:37:25.0172 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: OQjLg5Xq8Eku6YTGSPu9UX2dQgGdHJvsPIeJZyiefZLG0uqhUWcCrnuAgAFUFnwY2ZErAr3IVXs1xgGBB2WPzI6085F0gl+KwQRBrhV57e0=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: IA1PR11MB6516
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -123,98 +192,35 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Without the option, cargo will try using the latest version of the
-dependencies of bindgen-cli. While it will obviously respect the
-constraints in Cargo.toml, old versions of Cargo do not have
-version-constrained resolution and will choke on dependencies
-that need Rust 2024.
-
-Cc: Daniel P. Berrangé <berrange@redhat.com>
-Cc: Peter Maydell <peter.maydell@linaro.org>
-Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
----
- docs/about/build-platforms.rst                      | 2 +-
- meson.build                                         | 2 +-
- tests/docker/dockerfiles/fedora-rust-nightly.docker | 2 +-
- tests/docker/dockerfiles/ubuntu2204.docker          | 2 +-
- tests/lcitool/refresh                               | 4 ++--
- 5 files changed, 6 insertions(+), 6 deletions(-)
-
-diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
-index 6e3088d524a..3d23dfbd779 100644
---- a/docs/about/build-platforms.rst
-+++ b/docs/about/build-platforms.rst
-@@ -114,7 +114,7 @@ Rust build dependencies
-   bindgen tool, which is too big to package and distribute.  The minimum
-   supported version of bindgen is 0.60.x.  For distributions that do not
-   include bindgen or have an older version, it is recommended to install
--  a newer version using ``cargo install bindgen-cli``.
-+  a newer version using ``cargo install --locked bindgen-cli``.
- 
-   QEMU requires Rust 1.83.0.  This is available on all supported platforms
-   except for the ``mips64el`` architecture on Debian bookworm.  For all other
-diff --git a/meson.build b/meson.build
-index d016482db1b..62fab727f4e 100644
---- a/meson.build
-+++ b/meson.build
-@@ -114,7 +114,7 @@ if have_rust
-   bindgen = find_program('bindgen', required: get_option('rust'))
-   if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
-     if get_option('rust').enabled()
--      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install bindgen-cli"')
-+      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install --locked bindgen-cli"')
-     else
-       if bindgen.found()
-         warning('bindgen version ' + bindgen.version() + ' is unsupported, disabling Rust compilation.')
-diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-index 043b42a0a9b..38381ef8f59 100644
---- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
-+++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
-@@ -179,7 +179,7 @@ RUN set -eux && \
-   test "$RUSTDOC" = "$(/usr/local/cargo/bin/rustup +nightly which rustdoc)" && \
-   test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
- ENV PATH=$CARGO_HOME/bin:$PATH
--RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli
-+RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli
- RUN $CARGO --list
- # As a final step configure the user (if env is defined)
- ARG USER
-diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
-index 23b33d6ad44..44e763f571a 100644
---- a/tests/docker/dockerfiles/ubuntu2204.docker
-+++ b/tests/docker/dockerfiles/ubuntu2204.docker
-@@ -162,7 +162,7 @@ ENV CARGO_HOME=/usr/local/cargo
- ENV PATH=$CARGO_HOME/bin:$PATH
- RUN DEBIAN_FRONTEND=noninteractive eatmydata \
-   apt install -y --no-install-recommends cargo
--RUN cargo install bindgen-cli
-+RUN cargo install --locked bindgen-cli
- # As a final step configure the user (if env is defined)
- ARG USER
- ARG UID
-diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
-index 259e6ea0729..79a280feab4 100755
---- a/tests/lcitool/refresh
-+++ b/tests/lcitool/refresh
-@@ -147,7 +147,7 @@ fedora_rustup_nightly_extras = [
-     '  test "$RUSTDOC" = "$(/usr/local/cargo/bin/rustup +nightly which rustdoc)" && \\\n',
-     '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
-     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
--    'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
-+    'RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli\n',
-     'RUN $CARGO --list\n',
- ]
- 
-@@ -158,7 +158,7 @@ ubuntu2204_rust_extras = [
-     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
-     "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
-     "  apt install -y --no-install-recommends cargo\n",
--    'RUN cargo install bindgen-cli\n',
-+    'RUN cargo install --locked bindgen-cli\n',
- ]
- 
- debian_all_test_cross_compilers = [
--- 
-2.53.0
-
+DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IEPDqWRyaWMgTGUgR29hdGVy
+IDxjbGdAcmVkaGF0LmNvbT4NCj5TdWJqZWN0OiBSZTogW1BBVENIIDEvMl0gYmFja2VuZHMvaW9t
+bXVmZC5jOiByZXBvcnQgZXJyb3Igd2hlbiAvZGV2L2lvbW11IGlzDQo+bm90IGF2YWlsYWJsZQ0K
+Pg0KPk9uIDMvMTgvMjYgMDg6MzYsIER1YW4sIFpoZW56aG9uZyB3cm90ZToNCj4+DQo+Pg0KPj4+
+IC0tLS0tT3JpZ2luYWwgTWVzc2FnZS0tLS0tDQo+Pj4gRnJvbTogUGllcnJpY2sgQm91dmllciA8
+cGllcnJpY2suYm91dmllckBsaW5hcm8ub3JnPg0KPj4+IFN1YmplY3Q6IFtQQVRDSCAxLzJdIGJh
+Y2tlbmRzL2lvbW11ZmQuYzogcmVwb3J0IGVycm9yIHdoZW4gL2Rldi9pb21tdSBpcw0KPm5vdA0K
+Pj4+IGF2YWlsYWJsZQ0KPj4+DQo+Pj4gSW4gY2FzZSBjdXJyZW50IGtlcm5lbCBkb2VzIG5vdCBz
+dXBwb3J0IC9kZXYvaW9tbXUsIHFlbXUgd2lsbCBwcm9iYWJseQ0KPj4+IGZhaWwgZmlyc3QgYmVj
+YXVzZSAvc3lzL2J1cy9wY2kvZGV2aWNlcy8qL3ZmaW8tZGV2LyBpcyBub3QgcHJlc2VudCwNCj4+
+PiBzaW5jZSBRRU1VIG9wZW5zIGl0IGJlZm9yZSAvZGV2L2lvbW11Lg0KPj4+DQo+Pj4gSW5zdGVh
+ZCwgcmVwb3J0IGFuIGVycm9yIGRpcmVjdGx5IHdoZW4gaW5pdGlhbGl6aW5nIGlvbW11ZmQgb2Jq
+ZWN0LCB0bw0KPj4+IGluZm9ybSB1c2VyIHRoYXQga2VybmVsIGRvZXMgbm90IHN1cHBvcnQgaXQs
+IHdpdGggYSBoaW50IGFib3V0IG1pc3NpbmcNCj4+PiBDT05GSUdfSU9NTVVGRC4NCj4+Pg0KPj4+
+IFNpZ25lZC1vZmYtYnk6IFBpZXJyaWNrIEJvdXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJv
+Lm9yZz4NCj4+PiAtLS0NCj4+PiBiYWNrZW5kcy9pb21tdWZkLmMgfCA1ICsrKysrDQo+Pj4gMSBm
+aWxlIGNoYW5nZWQsIDUgaW5zZXJ0aW9ucygrKQ0KPj4+DQo+Pj4gZGlmZiAtLWdpdCBhL2JhY2tl
+bmRzL2lvbW11ZmQuYyBiL2JhY2tlbmRzL2lvbW11ZmQuYw0KPj4+IGluZGV4IGFjZmFiOTA3YzAz
+Li5jNGViM2RlMTMwNyAxMDA2NDQNCj4+PiAtLS0gYS9iYWNrZW5kcy9pb21tdWZkLmMNCj4+PiAr
+KysgYi9iYWNrZW5kcy9pb21tdWZkLmMNCj4+PiBAQCAtMzIsNiArMzIsMTEgQEAgc3RhdGljIHZv
+aWQgaW9tbXVmZF9iYWNrZW5kX2luaXQoT2JqZWN0ICpvYmopDQo+Pj4gew0KPj4+ICAgICAgSU9N
+TVVGREJhY2tlbmQgKmJlID0gSU9NTVVGRF9CQUNLRU5EKG9iaik7DQo+Pj4NCj4+PiArICAgIGlm
+ICghZ19maWxlX3Rlc3QoIi9kZXYvaW9tbXUiLCBHX0ZJTEVfVEVTVF9FWElTVFMpKSB7DQo+Pj4g
+KyAgICAgICAgZXJyb3Jfc2V0ZygmZXJyb3JfZmF0YWwsICIvZGV2L2lvbW11IGRvZXMgbm90IGV4
+aXN0Ig0KPj4+ICsgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAiIChpcyB5b3VyIGtl
+cm5lbCBjb25maWcgbWlzc2luZyBDT05GSUdfSU9NTVVGRD8pIik7DQo+Pg0KPj4gSWYgaG90IGFk
+ZCBhbiBpb21tdWZkIG9iamVjdCB3aXRoIG9iamVjdF9hZGQgUU1QLCBtYXkgdGhpcyBraWxsIFFF
+TVUNCj5pbnN0YW5jZT8NCj4NCj55ZXMuDQo+DQo+DQo+VW5mb3J0dW5hdGVseSwgYmFja2VuZHMg
+YXJlIE9iamVjdHMuIFNvIHdlIGRvbid0IGhhdmUgYSByZWFsaXplDQo+aGFuZGxlciBhbmQgYSAn
+RXJyb3IgKionIHBhcmFtZXRlciA6Lw0KDQpNYXliZSBkbyBpdCBpbiBpb21tdWZkX2JhY2tlbmRf
+Y29tcGxldGUoKT8NCg0KVGhhbmtzDQpaaGVuemhvbmcNCg==
 
