@@ -4,123 +4,106 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D047BFCD0D0
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:20:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7E3A7FCD0D2
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:21:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2m7z-00060x-Gq; Wed, 18 Mar 2026 04:19:43 -0400
+	id 1w2m9j-0006fQ-MM; Wed, 18 Mar 2026 04:21:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1w2m7y-00060h-Bk; Wed, 18 Mar 2026 04:19:42 -0400
-Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w2m9d-0006eW-3s
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:21:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
- id 1w2m7v-00035V-RN; Wed, 18 Mar 2026 04:19:42 -0400
-Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
- by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62HLdRaX1188668; Wed, 18 Mar 2026 08:19:36 GMT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
- :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=NaJVRh
- 3ENp+2VF8/QOIE2WYFX+YSTnfJtheWgaYpzno=; b=hcctRplHFqTklNU1m5DPPt
- /GgSTHs3GhGAuri+3ZqcNNFiDZRRojSp6GpDpe0n3hileRm7dLIekAFaiaIJ3M7A
- XNuQyKFc1swr8o5E4xVZxVzUDf19bLODKhTJKx+5pH64gxszw5l9F/DzyBjgfqpp
- jn2gbe2FXj0Ok1ReV3ZO+2psRkLAp4eh5Y0Q1RxV4jABkXV6BVwejV7q3FwiJ3OU
- AmRLrgDNVuhaerIWZlhY6GgyYP91y1G/t5a+s/WiA9UX7vsnByaRkYbGhzNQVTXW
- 19lY/0GIr82NZLefE+F9rP5wTF+VJSDy0sKBFkDOkjRog03P42i/LR2FewAowGBA
- ==
-Received: from ppma22.wdc07v.mail.ibm.com
- (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cx7vfk5nh-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Mar 2026 08:19:36 +0000 (GMT)
-Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
- by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62I4gM7Z014011;
- Wed, 18 Mar 2026 08:19:35 GMT
-Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
- by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cwjcy55nr-1
- (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Wed, 18 Mar 2026 08:19:35 +0000
-Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
- [10.241.53.102])
- by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62I8JXkA33030892
- (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Wed, 18 Mar 2026 08:19:34 GMT
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 8F2A058056;
- Wed, 18 Mar 2026 08:19:33 +0000 (GMT)
-Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 23EA958060;
- Wed, 18 Mar 2026 08:19:33 +0000 (GMT)
-Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
- by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Wed, 18 Mar 2026 08:19:33 +0000 (GMT)
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w2m9Y-0006MW-NN
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:21:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773822079;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding;
+ bh=wIJ7DrPgVmjwpgfX5YS474vIHpoL5e37oQePzDSoBEo=;
+ b=aqgia+1UzzUWA9ieErCar9YcVswypk2cSYmJrezfACuY7SsF3h1ztN3/W//PeeUAwsaceX
+ dLYlojv3ZQ7j6opvN0UObC47F5vt6AJCeKpUF0a57QOp9H2TsD7oY67L3uCF763KuAw8c2
+ AcWUKVuYnH0nzat45sONa4DEmlTxcbk=
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
+ [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-588-PDHbwZvRPNGIjKOMMcrczg-1; Wed, 18 Mar 2026 04:21:17 -0400
+X-MC-Unique: PDHbwZvRPNGIjKOMMcrczg-1
+X-Mimecast-MFC-AGG-ID: PDHbwZvRPNGIjKOMMcrczg_1773822076
+Received: by mail-wm1-f71.google.com with SMTP id
+ 5b1f17b1804b1-4839fc4cef6so8128075e9.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 01:21:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773822075; x=1774426875; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=wIJ7DrPgVmjwpgfX5YS474vIHpoL5e37oQePzDSoBEo=;
+ b=OR5vT8xv7SWTwXZRvbAaNkC8HFCPhJ//z/P0bQue2B1XyhIIPNFuzGc8Li1lbCnP2F
+ PmcLAEeYbTlZ3/e8vL/Cp7MVS9H22P4iW/+nCR1rEbiYm2GbliqOnuCCp/4RosGc7nIh
+ pei921flYncQVJdnMKrvxqYGouA4U8ja9WFuh3L0kuiLHISo3hdKv/VdwNIyVFdyhzfJ
+ CS5Kf5EzU0OQVvVLnSHcCGwz3EhMe6kCwJz09BmJF5RihXhXRCEQoaz/HoC84Utcjpc0
+ 4CHtl3aK1eHz0e2MFggJRKZoCjZJIuYiD66xVxdCj/YTpXgXHFxXQVHtuGHaOlFciHLZ
+ aQxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773822075; x=1774426875;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wIJ7DrPgVmjwpgfX5YS474vIHpoL5e37oQePzDSoBEo=;
+ b=XU8NO0Zo4xePsbqH4UYXqyVgBwD8PkLD98Io5ciYOChi0yJKLUTeGGInqyCkVeN27Y
+ 5XQPSCbdX1ZcSi55pKU65Wi9xyb95ZZ3qzgvX7A8wZGjTuT3op7Hd31a9yq4NienrQcw
+ FdtuUNqIRqg8q8vyYJfqvNtlg6LoiNxbA8vIKIFZ0YKYqSAungrnV9TdDW7Zz+RfY894
+ pgi24BRQwTWXAgkcGa+HifXexMS2yoSxBTo5NSu7tEq7PjqS3V7DTkTBJmig68/pRu+T
+ iSuq1nCbrntkllluhrDPuWybLZsz0/MjMUKIUT35E6hH79Y1XiAy8rDoHgKTjtOf815B
+ O6ew==
+X-Gm-Message-State: AOJu0Yzzwvn5lLIINbgSNoi9f+ZkvD7LOakVkFYmRyFc4Ebqoq4GNnvK
+ g0QcqZGHwIJTcKsLv1BkplHofyIRsCNtUsh7DkeKO5h+uqpBIUR06pbNxL+5iQn+neEt1t+q1q2
+ WrkEs+DG00D7tULsSw+nNFdDNL8EKHUR/jtUMQBlE0dBOFRWhJ1+5JEMWG/EC6A3aofj/kpeCuY
+ LjikQm2edIh2O4wg0hk8FNQDNPjRxmw8HpowvyLCL9
+X-Gm-Gg: ATEYQzyQQfg8q5Yls7j5txnuvddHb15NnLm47vNGlE56WwGG7S86P2zclaDuth+2g53
+ qHp9NC2DnGCKm+SY+oKHrt+/dL4TsKmCN+BElE4vKflYrWtD8BBiR00Pml369rolDCNdlja7xXV
+ +aC3IksfQOjAUj1sLHG8Ly9auYeKJF/axVQ0dZhw5VtVR6hXPVOIkWUwJA/yS2XnLUAH3NoO+3j
+ Li3aLAkbtCDJ33gZ0lcgX6VZycGj/4Dcc1sKX8CbAm8WsY4wQ5M2OrWUJmjB58TJr+WWsGP+CVS
+ gh5vJhmRTafBikX6ZNAYgugiMeRVxx24Te5SdNvkGCo0nS1FsbIW/VeQ3m/Mh7Btlb2QG2knyC+
+ DZgL3rqkhHtLdxVuu6PHqOVEiF93XmnHaxeLSmA2ufp7boI0ZNlkELnfbT9rikGviXBqkbstmIF
+ pyp0yVUPCdAnv/X2cJhkL3FixWX14=
+X-Received: by 2002:a05:600c:a0d:b0:485:3e00:944a with SMTP id
+ 5b1f17b1804b1-486f40c1975mr41165845e9.9.1773822075347; 
+ Wed, 18 Mar 2026 01:21:15 -0700 (PDT)
+X-Received: by 2002:a05:600c:a0d:b0:485:3e00:944a with SMTP id
+ 5b1f17b1804b1-486f40c1975mr41165435e9.9.1773822074833; 
+ Wed, 18 Mar 2026 01:21:14 -0700 (PDT)
+Received: from [192.168.10.48] ([151.95.144.138])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-4856eaeca12sm212955275e9.12.2026.03.18.01.21.13
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Mar 2026 01:21:14 -0700 (PDT)
+From: Paolo Bonzini <pbonzini@redhat.com>
+To: qemu-devel@nongnu.org
+Cc: =?UTF-8?q?Daniel=20P=2E=20Berrang=C3=A9?= <berrange@redhat.com>,
+ Peter Maydell <peter.maydell@linaro.org>
+Subject: [PATCH] rust: suggest passing --locked to "cargo install"
+Date: Wed, 18 Mar 2026 09:21:13 +0100
+Message-ID: <20260318082113.1127992-1-pbonzini@redhat.com>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-Date: Wed, 18 Mar 2026 13:49:32 +0530
-From: Misbah Anjum N <misanjum@linux.ibm.com>
-To: Ani Sinha <anisinha@redhat.com>, Pbonzini <pbonzini@redhat.com>, Qemu
- Devel <qemu-devel@nongnu.org>, Qemu Ppc <qemu-ppc@nongnu.org>
-Cc: npiggin@gmail.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
- vaibhav@linux.ibm.com, sbhat@linux.ibm.com
-Subject: Re: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
- commit 98884e0c
-In-Reply-To: <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
-References: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
- <2cc23a5ce64847dd8a9278c87f58119b@linux.ibm.com>
- <5bc7997d-329e-47a9-9b4d-750a3104094a@linux.ibm.com>
- <4797B580-7853-490E-8852-B6312619FE95@redhat.com>
- <e966c053-2e69-b185-532e-fcb4173b4daf@redhat.com>
- <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
- <ED4A083D-2B96-468A-BE77-211E9F3FA88D@redhat.com>
- <7bbeb3cb105934e95bf1a5356cfc4613@linux.ibm.com>
- <7ACBCD63-B759-47FD-824F-0327726E47F6@redhat.com>
- <35f6361f69ef4f09f80bd915f3460a28@linux.ibm.com>
- <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
-Message-ID: <526d7172f3933baf913bf4b105a6fa9a@linux.ibm.com>
-X-Sender: misanjum@linux.ibm.com
-Organization: IBM
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-ORIG-GUID: OPa5kKVrhMf26jWPDRq-3HSoIzDwyug9
-X-Authority-Analysis: v=2.4 cv=KajfcAYD c=1 sm=1 tr=0 ts=69ba6018 cx=c_pps
- a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
- a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
- a=wMR-pP4OzeqKIkH-kCoA:9 a=CjuIK1q_8ugA:10
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE4MDA2OSBTYWx0ZWRfXz9ld1dJnbMXK
- 5RTNqkMXWg1VnxcDnl32ql+T1W3z0nc5Ti/vTULcGWL1X82VGwmiwEpMhObVn0vM6NClxqED9U4
- yjdjOR95itI+kYM0zukIKPgEdseZSZ8IQ1WSF+3N0tTbKyGEeXvtnSvYGR0btCoQcyxu6rfQtnI
- KDBNFZ0G81zSr+JS2M7wjetncYUapkienjyLuIBfR6ysjztpdH2mDPQqQ/R5ZE0ifoXux3jFhqF
- JOlywSsgL6FxB+IharjYNMhQARIuhgQsSqGAuEZEtADLDos5Zex1Pz1hUilpLs09pINO7X/YMBT
- 2osKqqniBK/k5lgkqpDWgTzJyyU0BdAXr5QhGbzFXc9VHfqrlJ0oI0cbfoWR4peTVEZhv/RzxAU
- 5W+rhU6t15k34NDFSJLwPvV1r+D2M/7d7adTaRMzZu7oXhI/DRdMZfF9VIK5axb46/EveZtg5Ni
- /rTZ84q4gf/DMaJlgFg==
-X-Proofpoint-GUID: YcRCGRnOWnps9ErtT4eJVRAbv513-kTy
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-17_05,2026-03-17_02,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 clxscore=1015
- impostorscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
- phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
- route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
- definitions=main-2603180069
-Received-SPF: pass client-ip=148.163.156.1;
- envelope-from=misanjum@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
-X-Spam_score_int: -9
-X-Spam_score: -1.0
-X-Spam_bar: -
-X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,154 +119,98 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi Ani and Paolo,
+Without the option, cargo will try using the latest version of the
+dependencies of bindgen-cli. While it will obviously respect the
+constraints in Cargo.toml, old versions of Cargo do not have
+version-constrained resolution and will choke on dependencies
+that need Rust 2024.
 
-Following up on the KVM guest boot issue due to commit 98884e0c, I have 
-conducted additional testing that reveals important new information 
-about the nature of this issue.
+Cc: Daniel P. Berrangé <berrange@redhat.com>
+Cc: Peter Maydell <peter.maydell@linaro.org>
+Signed-off-by: Paolo Bonzini <pbonzini@redhat.com>
+---
+ docs/about/build-platforms.rst                      | 2 +-
+ meson.build                                         | 2 +-
+ tests/docker/dockerfiles/fedora-rust-nightly.docker | 2 +-
+ tests/docker/dockerfiles/ubuntu2204.docker          | 2 +-
+ tests/lcitool/refresh                               | 4 ++--
+ 5 files changed, 6 insertions(+), 6 deletions(-)
 
-The hang is specifically triggered when SMP is configured, that is, when 
--smp parameter is provided in the QEMU command. This is also validated 
-via KVM Unit Tests involving SMP which are failing due to the same 
-commit.
+diff --git a/docs/about/build-platforms.rst b/docs/about/build-platforms.rst
+index 6e3088d524a..3d23dfbd779 100644
+--- a/docs/about/build-platforms.rst
++++ b/docs/about/build-platforms.rst
+@@ -114,7 +114,7 @@ Rust build dependencies
+   bindgen tool, which is too big to package and distribute.  The minimum
+   supported version of bindgen is 0.60.x.  For distributions that do not
+   include bindgen or have an older version, it is recommended to install
+-  a newer version using ``cargo install bindgen-cli``.
++  a newer version using ``cargo install --locked bindgen-cli``.
+ 
+   QEMU requires Rust 1.83.0.  This is available on all supported platforms
+   except for the ``mips64el`` architecture on Debian bookworm.  For all other
+diff --git a/meson.build b/meson.build
+index d016482db1b..62fab727f4e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -114,7 +114,7 @@ if have_rust
+   bindgen = find_program('bindgen', required: get_option('rust'))
+   if not bindgen.found() or bindgen.version().version_compare('<0.60.0')
+     if get_option('rust').enabled()
+-      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install bindgen-cli"')
++      error('bindgen version ' + bindgen.version() + ' is unsupported. You can install a new version with "cargo install --locked bindgen-cli"')
+     else
+       if bindgen.found()
+         warning('bindgen version ' + bindgen.version() + ' is unsupported, disabling Rust compilation.')
+diff --git a/tests/docker/dockerfiles/fedora-rust-nightly.docker b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+index 043b42a0a9b..38381ef8f59 100644
+--- a/tests/docker/dockerfiles/fedora-rust-nightly.docker
++++ b/tests/docker/dockerfiles/fedora-rust-nightly.docker
+@@ -179,7 +179,7 @@ RUN set -eux && \
+   test "$RUSTDOC" = "$(/usr/local/cargo/bin/rustup +nightly which rustdoc)" && \
+   test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"
+ ENV PATH=$CARGO_HOME/bin:$PATH
+-RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli
++RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli
+ RUN $CARGO --list
+ # As a final step configure the user (if env is defined)
+ ARG USER
+diff --git a/tests/docker/dockerfiles/ubuntu2204.docker b/tests/docker/dockerfiles/ubuntu2204.docker
+index 23b33d6ad44..44e763f571a 100644
+--- a/tests/docker/dockerfiles/ubuntu2204.docker
++++ b/tests/docker/dockerfiles/ubuntu2204.docker
+@@ -162,7 +162,7 @@ ENV CARGO_HOME=/usr/local/cargo
+ ENV PATH=$CARGO_HOME/bin:$PATH
+ RUN DEBIAN_FRONTEND=noninteractive eatmydata \
+   apt install -y --no-install-recommends cargo
+-RUN cargo install bindgen-cli
++RUN cargo install --locked bindgen-cli
+ # As a final step configure the user (if env is defined)
+ ARG USER
+ ARG UID
+diff --git a/tests/lcitool/refresh b/tests/lcitool/refresh
+index 259e6ea0729..79a280feab4 100755
+--- a/tests/lcitool/refresh
++++ b/tests/lcitool/refresh
+@@ -147,7 +147,7 @@ fedora_rustup_nightly_extras = [
+     '  test "$RUSTDOC" = "$(/usr/local/cargo/bin/rustup +nightly which rustdoc)" && \\\n',
+     '  test "$RUSTC" = "$(/usr/local/cargo/bin/rustup +nightly which rustc)"\n',
+     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+-    'RUN /usr/local/cargo/bin/rustup run nightly cargo install bindgen-cli\n',
++    'RUN /usr/local/cargo/bin/rustup run nightly cargo install --locked bindgen-cli\n',
+     'RUN $CARGO --list\n',
+ ]
+ 
+@@ -158,7 +158,7 @@ ubuntu2204_rust_extras = [
+     'ENV PATH=$CARGO_HOME/bin:$PATH\n',
+     "RUN DEBIAN_FRONTEND=noninteractive eatmydata \\\n",
+     "  apt install -y --no-install-recommends cargo\n",
+-    'RUN cargo install bindgen-cli\n',
++    'RUN cargo install --locked bindgen-cli\n',
+ ]
+ 
+ debian_all_test_cross_compilers = [
+-- 
+2.53.0
 
-Test Results:
-Without SMP (boots successfully):
-/usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine 
-pseries,accel=kvm \
-   -enable-kvm -m 32768 -nographic -device virtio-balloon \
-   -device virtio-scsi-pci,id=scsi0 \
-   -drive 
-file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le-hpb.qcow2,if=none,id=drive-scsi0-0-0,format=qcow2 
-\
-   -device scsi-hd,bus=scsi0.0,drive=drive-scsi0-0-0 \
-   -netdev bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
-
-SLOF 
-**********************************************************************
-QEMU Starting
-  Build Date = Oct 26 2025 18:45:22
-  FW Version = release 20251026
-  Press "s" to enter Open Firmware.
-
-Populating /vdevice methods
-Populating /vdevice/vty@71000000
-Populating /vdevice/nvram@71000001
-Populating /pci@800000020000000
-...
-...
-Result: Guest boots successfully
-
-With SMP (hangs indefinitely):
-/usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine 
-pseries,accel=kvm \
-   -enable-kvm -m 32768 -smp 32,sockets=1,cores=32,threads=1 -nographic \
-   -device virtio-balloon -device virtio-scsi-pci,id=scsi0 \
-   -drive 
-file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le-hpb.qcow2,if=none,id=drive-scsi0-0-0,format=qcow2 
-\
-   -device scsi-hd,bus=scsi0.0,drive=drive-scsi0-0-0 \
-   -netdev bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
-...
-...
-Result: Hangs indefinitely at bql_lock() in qemu_default_main()
-
-KVM Unit Tests:
-Running kvm-unit-tests confirms the SMP dependency. Note that tests 
-explicitly involving SMP (smp, smp-smt, atomics) all fail with SIGKILL, 
-while single-threaded tests pass.
-
-# ./run_tests.sh
-FAIL selftest-setup (terminated on SIGKILL)
-PASS selftest-migration (2 tests)
-PASS selftest-migration-skip (1 tests)
-PASS migration-memory (1 tests)
-PASS spapr_hcall (9 tests, 1 skipped)
-PASS spapr_vpa (13 tests)
-PASS rtas-get-time-of-day (10 tests)
-PASS rtas-get-time-of-day-base (10 tests)
-PASS rtas-set-time-of-day (5 tests)
-PASS emulator (4 tests)
-PASS interrupts (13 tests)
-FAIL mmu (terminated on SIGKILL)
-FAIL smp (terminated on SIGKILL)
-FAIL smp-smt (terminated on SIGKILL)
-SKIP smp-thread-single (qemu-system-ppc64: -accel tcg,thread=single: 
-invalid accelerator tcg)
-FAIL atomics (terminated on SIGKILL)
-PASS atomics-migration (1 tests)
-PASS timebase (12 tests, 1 known failures, 1 skipped)
-SKIP timebase-icount (qemu-system-ppc64: -icount shift=5: cannot 
-configure icount, TCG support not available)
-FAIL h_cede_tm
-PASS sprs (14 tests)
-FAIL sprs-migration (14 tests, 1 unexpected failures)
-PASS sieve
-
-Thanks,
-Misbah Anjum N <misanjum@linux.ibm.com>
-
-
-On 2026-03-10 15:42, Ani Sinha wrote:
->>> This theory is not substantiated by code or evidence.
->>> 98884e0cc10997a17ce9abfd6ff10be19224ca6a introduces kvm_reset_vmfd()
->>> which is called by this block of code with the tip at
->>> 98884e0cc10997a17ce9abfd6ff10be19224ca6a :
->>>   if (!cpus_are_resettable() &&
->>>        (reason == SHUTDOWN_CAUSE_GUEST_RESET ||
->>>         reason == SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET)) {
->>>        if (ac->rebuild_guest) {
->>>            ret = ac->rebuild_guest(current_machine);
->>>            if (ret < 0) {
->>>                error_report("unable to rebuild guest: %s(%d)",
->>>                             strerror(-ret), ret);
->>>                vm_stop(RUN_STATE_INTERNAL_ERROR);
->>>            } else {
->>>                info_report("virtual machine state has been rebuilt 
->>> with new "
->>>                            "guest file handle.");
->>>                guest_state_rebuilt = true;
->>>            }
->>>        } else if (!cpus_are_resettable())  {
->>>            error_report("accelerator does not support reset!");
->>>        } else {
->>>            error_report("accelerator does not support rebuilding 
->>> guest state,"
->>>                         " proceeding with normal reset!");
->>>        }
->>>    }
->>> If cpus are resettable, this block will not be called and nothing 
->>> that
->>> the patch introduces will have been executed.
->>> So I think you guys need to explain a bit more why you so strongly
->>> feel this patch broke it. I am confused and unable to reason this.
->>>> Did you validate your patches on other architectures which does not 
->>>> support this feature yet?
->>> As you have already seen, on other architectures, the entire block of
->>> code is not executed at all. Only SEV-ES, SEV-SNP and TDX currently
->>> exercises this.
->> 
->> I understand your concern about the code path analysis. Let me clarify 
->> our findings with concrete evidence.
->> 
->> Reproducibility Evidence:
->> With commit 98884e0cc10997a17ce9abfd6ff10be19224ca6a applied, we are 
->> able to reproduce the hang issue 100% of the time across multiple test 
->> runs. When we revert to the previous commit 
->> df8df3cb6b743372ebb335bd8404bc3d748da350, the same KVM guest boots 
->> successfully 100% of the time.
->> 
->> This consistent reproducibility strongly indicates that commit 
->> 98884e0cc10997a17ce9abfd6ff10be19224ca6a is introducing the 
->> regression, even if the code path analysis suggests otherwise. This 
->> suggests the issue may not be in the code path, but rather in the 
->> changes introduced by the patch series.
->> 
->> As the author who led the development of this patch series, we would 
->> appreciate your help in figuring out this issue.
-> 
-> I am really not sure what changes in that patch can cause this
-> breakage in a completely unrelated area when the changes are not even
-> executed.
-> 
 
