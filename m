@@ -4,79 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E7BF103E183
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 14:15:22 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 80119103E18B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 14:15:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2rfs-0006od-EJ; Wed, 18 Mar 2026 10:15:04 -0400
+	id 1w2rgF-0006yj-Sy; Wed, 18 Mar 2026 10:15:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w2rfo-0006nz-D3
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:15:00 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ id 1w2rgE-0006yS-Mt
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:15:26 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <vikingtc4@gmail.com>)
- id 1w2rfm-0005lQ-1q
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:14:59 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-82a7539851fso200329b3a.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 07:14:57 -0700 (PDT)
+ id 1w2rgC-0005zC-Tp
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:15:26 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-829759ca646so4184098b3a.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 07:15:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773843296; x=1774448096; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=jZORAx5okj97F1LsSgHyM9lahihlA6VdW3AFu49zcYg=;
- b=KWER8YPtYjOfdbcdELsxZgxfsKsW0GAZgZLb8t7tw71zRoCE536SnRFEN5qXBR2zWS
- ar2UhnbYLMH2UGh/qVVfbnag8baR0pJ5oOBIwMLc6wRKQYMh+GtxdDXE45RQfsN9qZI4
- po+E/lilcjxX0b8zu1Hu6sziaUL0ywUifp3XgfqwrrrTfYdx1eKCwTNTrvdxKddxIaYU
- wipq74LelASGbUgLb5MRv5C5Crs4+yzlFvy4ktIf5UIoCmmhQh/ka/NSihvIuXpunpSY
- tEfJ+2q92+b5SnCUJ4TGFE+OhbaUhGFOiPvwhbM/j7VtPETqSRvbnnIMTdx/+jr0gUly
- Bm3Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773843296; x=1774448096;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773843323; x=1774448123; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=jZORAx5okj97F1LsSgHyM9lahihlA6VdW3AFu49zcYg=;
- b=DY3WdKrmTjsBHP6AKC5sJFQVNZMFV1X/rRInuf/QMC6+OGBUyQ0YAYiaxBjD3CLoqa
- MtsKEmbhiS4p7YsHvoTfX+uP4Xt453PLufYSrsS5iWs+3Tru8apI7NkwWWqavRssNFmy
- p55yuevbIzvXKUWMEgfq3TYE7cXsEl2+Vx2ZOTaRYeGmz3cdkpj4HXvSGUGM6A42Iac9
- 1WHtlVCQqwP2NsgqNlOyPGNEbh0itW+aDfkhCw6B70q+AhkwVkhIdOLW/sHr9JDCjdSf
- gtD/12gUbwLQMwELOD2z/ME47r8XXzgsf41CVC2c+H7n9yyccEWSdDtWF9WNgtLGtGop
- YKpQ==
-X-Gm-Message-State: AOJu0YzjSsIrqwSKEEVm65IKeTFqfoZVFbgdqIo8zhZHoawKAfglHnUW
- Ayby+jWIEeT/lTq7eytEhgdtxEuY2SZB2UJy4fP69+5ATOFUIq5ZaSzN2cLQsCTV
-X-Gm-Gg: ATEYQzyfCeByxYoF59CKHnm1/uQxQ5VPVj9qoKcJpi5DVwhNi6QA/PHxgVi7MceSLgy
- vdnnO1EascePHZQSmbN01xbYZUu9Y6rJyU2TRCbOMx2BlS/ZQX6NSuAd3lCJ5k30ZmbPT1Edh9V
- 65mRlF3xFe1FyFPIAX83tNfpY/0GWJ7JCandZ7WqBV5OKK34EVseVkatLL9Dxq/KHv2RRM69674
- 07tCvCxSe3N/ZlnYGgyfyuT0mEdfAMqFVdYNH8oKGEDwiTUvjG2sLCN02gUg7xB36p/V/6CU0tD
- HIzi6xv2TGtYfjLVFQbPU1BiEd/HZsGY/MejZTfLTQx4RoIC3JAH+nQsBUCJoa/CkGcgJsQZP/k
- ofpsIbhyOLkDOrHzkBHVUvJgg0C5/jP27U71zbJMPiURkvTAkcHGkbT3UfQROLOXWrqS/uetYNk
- MWj7HSRH8oJiCVEnVxVJj4OObQ/ht7lJtClVOxySx0xCtI5xWJXcGRCAIfuG0NAxHvbjnVeq6yn
- klcCgD4BQ==
-X-Received: by 2002:a05:6a21:50a:b0:398:9379:d052 with SMTP id
- adf61e73a8af0-39b99ed66c2mr3383972637.30.1773843296070; 
- Wed, 18 Mar 2026 07:14:56 -0700 (PDT)
+ bh=0JwfkhT9sSlS9UqhjPbzhhn/aYQKLtUB2y+zwcN3UPM=;
+ b=dPDbyJ8FXP+9PMx1GohxCvh4/hMmMwJGBf/C6j65FIDJvA22qpDupWREIIkbbZlL/p
+ VF9/yskaGwgoXEQHFQb7Pkap+9ncE4mNXCYt4TrJYewnPZzXmoDkfHmxSId7VvW/yGFZ
+ own503XP1AxZ2EzON+Q2fr/LG5FRGSeb0absY/aGrXWrteWSAluUsouefzeG9iH0q8D6
+ F/Cz06uYUe6DTdP9ugr5Lk/Yx36MT+9+SpJxFDaBv1qtZRtfx/iEtDJ6AML36xznfWHG
+ L0hUgsf859NBAtKjUCXd95nX5x5C+3LrDIP/c+Bs58Ek4UBjGiOGTOWkindjPokFgTEt
+ 84aQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773843323; x=1774448123;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=0JwfkhT9sSlS9UqhjPbzhhn/aYQKLtUB2y+zwcN3UPM=;
+ b=ZHPe/AuVbrejtSzdzNPzra+k9lGWjrDB4BLLK24grTq/xbJaZBfhT+ALRSh1peKOxR
+ /1odMLj1g63CbSLZuL8pVMk/5uofaRK0pI/1A+6GzJ4i5UYe4A+o4WIfaIED4XSVqL48
+ youTplqaUvttqwh3Oxz4gOpTQuNaszkoRgIuaxhGEAPhp1rjC9aolQUTghjUAFZBx3SF
+ 9CP7EnvIk1dhfbxJi8GzLkKgGwrjpUQMnr0nHEG+uCAt2GB5WlooKChsU3EEGE0o5O9G
+ eS0gRYP8ukZWez/hOO4vyuwECqL/JYUUERlVGAnZTrcTWl/uy5+xE8Uhg8fGWfAD0M8g
+ FRgA==
+X-Gm-Message-State: AOJu0YxyljMNPx1zBEpVmtzvGwcaYzamCXLVez47kpMoouD+w96Mq2Le
+ D3gZlx5SKcRy42Va1TuWeCmSPsIpVTh554mg/h7XlpJkBbxejoNt5pq8F16plG41GYY=
+X-Gm-Gg: ATEYQzzvcytNWfCj4eVzgYR1d3EJIDydUQIkUVtNIAdVAuexj0Sl0++kbdgp9FqXR1F
+ BtNsU1Nlt1xHgqLOndYzbZeDT6X+gsSBQB1kdonavayIAg20YQvQtIcsjwCt3fSoM5QdKidGhd0
+ nIZNOpN9ySVlTN285Mhp5M0kfWewJteWqBCMDXYSiqmpHXIPtARb62nUX3FPxuzfEPb9ilJUjj9
+ 7En0cEwy5wH3VCFozHubqObOfnuH/tEMxQybUyUrCTqRMQDu/noqIpjFKqivvoq4BxlMK1T7DLp
+ xGZQ3BXXI1CDaGo63CGrIKh6iMp/HXBIokd0N582uIgpMZTbX5cfVJEUfiyD4DixWoJU7XzIuwz
+ BP8xGsquyzjnpeEb+dFnvO0PehcjFgGDFZQNSiWNtLgYCtCJGF71i1Ngzh6rSbD2I3r1oWiw3qY
+ soulHkAxDCqjLhOWoSuug77tgpGQ53kwkteq84/gBCB3XU0lyzsgzCmP9P9bfU0qOm2Ww2iw4g4
+ SVT3v64Bg==
+X-Received: by 2002:a05:6a00:91de:b0:82a:6dc5:4e0c with SMTP id
+ d2e1a72fcca58-82a6dc55684mr2327856b3a.27.1773843322630; 
+ Wed, 18 Mar 2026 07:15:22 -0700 (PDT)
 Received: from trieu2-huynh-trieuhpn-ubuntu24.bee-live.svc.cluster.local
  ([27.122.242.65]) by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a6af06bd7sm2927272b3a.0.2026.03.18.07.14.54
+ d2e1a72fcca58-82a6af06bd7sm2927272b3a.0.2026.03.18.07.15.20
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 07:14:55 -0700 (PDT)
+ Wed, 18 Mar 2026 07:15:22 -0700 (PDT)
 From: Trieu Huynh <vikingtc4@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: Trieu Huynh <vikingtc4@gmail.com>
-Subject: [PATCH v3 0/4] Fix error handling for callers of load_image_targphys,
- get_image_size, event_notifier_init, msix_init
-Date: Wed, 18 Mar 2026 23:14:09 +0900
-Message-ID: <20260318141415.8538-1-vikingtc4@gmail.com>
+Cc: Trieu Huynh <vikingtc4@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Helge Deller <deller@gmx.de>, Thomas Huth <th.huth+qemu@posteo.eu>,
+ Laurent Vivier <laurent@vivier.eu>,
+ "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Subject: [PATCH v3 1/4] hw/core/loader: fix error handling for
+ load_image_targphys callers
+Date: Wed, 18 Mar 2026 23:14:10 +0900
+Message-ID: <20260318141415.8538-2-vikingtc4@gmail.com>
 X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260318141415.8538-1-vikingtc4@gmail.com>
+References: <20260318141415.8538-1-vikingtc4@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x431.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=vikingtc4@gmail.com; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: 15
 X-Spam_score: 1.5
 X-Spam_bar: +
@@ -99,51 +105,121 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Changes in v3:
-- Patch 1: For next-cube, use a local Error* instead of &error_fatal
-so that load failures are reported only when !qtest_enabled(),
-matching the existing guard. Distinguishes "file not found" (error
-set) from "file too short" (no error, size < 8) in next-cube.
-(pointed out by Peter Maydell)
-- Patch 2: Drop leon3.c change: warning is meaningless for baremetal
-programs where no BIOS is expected, and error handling already
-exists downstream. (pointed out by Clément Chigot)
-- Patch 3: No code changes. Add Reviewed-by tags.
-- Patch 4: Replace error_propagate() with conditional errp passing:
-(s->msix == ON_OFF_AUTO_ON ? errp : NULL), avoiding the need for
-a local error variable. (pointed out by Akihiko Odaki)
+Use QEMU's Error API to handle load_image_targphys() failures
+consistently across callers.
+
+- Use &error_fatal for callers that previously passed NULL, ensuring
+the process exits early on failure instead of continuing in an invalid
+state.
+- No functional changes.
 
 Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
+Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
+---
+ hw/alpha/dp264.c     |  2 +-
+ hw/hppa/machine.c    |  2 +-
+ hw/m68k/next-cube.c  | 11 +++++++++--
+ hw/m68k/q800.c       |  2 +-
+ hw/m68k/virt.c       |  2 +-
+ hw/microblaze/boot.c |  3 ++-
+ 6 files changed, 15 insertions(+), 7 deletions(-)
 
-Trieu Huynh (4):
-  hw/core/loader: fix error handling for load_image_targphys callers
-  hw/core/loader: fix error handling for get_image_size callers
-  util/event_notifier: fix error handling for event_notifier_init
-    callers
-  hw/pci/msix: fix error handling for msix_init callers
-
- hw/alpha/dp264.c       |  2 +-
- hw/hppa/machine.c      |  2 +-
- hw/hyperv/hyperv.c     |  4 ++--
- hw/hyperv/vmbus.c      |  4 ++--
- hw/ipmi/ipmi_bmc_sim.c |  2 ++
- hw/m68k/next-cube.c    | 11 +++++++++--
- hw/m68k/q800.c         |  2 +-
- hw/m68k/virt.c         |  2 +-
- hw/microblaze/boot.c   |  3 ++-
- hw/net/igbvf.c         |  2 +-
- hw/net/rocker/rocker.c |  2 +-
- hw/pci/msix.c          |  2 +-
- hw/remote/proxy.c      | 15 +++++++++++++--
- hw/scsi/megasas.c      | 16 +++++++++++-----
- hw/usb/hcd-xhci-pci.c  | 16 +++++++++++-----
- hw/vfio/ap.c           |  2 +-
- hw/vfio/ccw.c          |  2 +-
- hw/vfio/pci-quirks.c   |  2 +-
- hw/vfio/pci.c          |  2 +-
- hw/virtio/vhost-vdpa.c |  4 ++--
- 20 files changed, 65 insertions(+), 32 deletions(-)
-
+diff --git a/hw/alpha/dp264.c b/hw/alpha/dp264.c
+index 98219f0456..2ab3c14747 100644
+--- a/hw/alpha/dp264.c
++++ b/hw/alpha/dp264.c
+@@ -190,7 +190,7 @@ static void clipper_init(MachineState *machine)
+             /* Put the initrd image as high in memory as possible.  */
+             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
+             load_image_targphys(initrd_filename, initrd_base,
+-                                ram_size - initrd_base, NULL);
++                                ram_size - initrd_base, &error_fatal);
+ 
+             address_space_stq_le(&address_space_memory, param_offset + 0x100,
+                                  initrd_base + 0xfffffc0000000000ULL,
+diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
+index ec63dc1297..99a4c22c73 100644
+--- a/hw/hppa/machine.c
++++ b/hw/hppa/machine.c
+@@ -507,7 +507,7 @@ static void machine_HP_common_init_tail(MachineState *machine, PCIBus *pci_bus,
+             }
+ 
+             load_image_targphys(initrd_filename, initrd_base, initrd_size,
+-                                NULL);
++                                &error_fatal);
+             cpu[0]->env.initrd_base = initrd_base;
+             cpu[0]->env.initrd_end  = initrd_base + initrd_size;
+         }
+diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
+index 26177c7b86..4bfe5bcf56 100644
+--- a/hw/m68k/next-cube.c
++++ b/hw/m68k/next-cube.c
+@@ -1326,9 +1326,16 @@ static void next_cube_init(MachineState *machine)
+     memory_region_init_alias(&m->rom2, NULL, "next.rom2", &m->rom, 0x0,
+                              0x20000);
+     memory_region_add_subregion(sysmem, 0x0, &m->rom2);
+-    if (load_image_targphys(bios_name, 0x01000000, 0x20000, NULL) < 8) {
++    Error *local_err = NULL;
++    if (load_image_targphys(bios_name, 0x01000000, 0x20000, &local_err) < 8) {
+         if (!qtest_enabled()) {
+-            error_report("Failed to load firmware '%s'.", bios_name);
++            if (local_err) {
++                error_report_err(local_err);
++            } else {
++                error_report("Firmware image '%s' is too short.", bios_name);
++            }
++        } else {
++            error_free(local_err);
+         }
+     } else {
+         uint8_t *ptr;
+diff --git a/hw/m68k/q800.c b/hw/m68k/q800.c
+index ded531394e..c0d78eb7d7 100644
+--- a/hw/m68k/q800.c
++++ b/hw/m68k/q800.c
+@@ -633,7 +633,7 @@ static void q800_machine_init(MachineState *machine)
+ 
+             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
+             load_image_targphys(initrd_filename, initrd_base,
+-                                ram_size - initrd_base, NULL);
++                                ram_size - initrd_base, &error_fatal);
+             BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
+                       initrd_size);
+         } else {
+diff --git a/hw/m68k/virt.c b/hw/m68k/virt.c
+index e67900c727..ffe6e23415 100644
+--- a/hw/m68k/virt.c
++++ b/hw/m68k/virt.c
+@@ -292,7 +292,7 @@ static void virt_init(MachineState *machine)
+ 
+             initrd_base = (ram_size - initrd_size) & TARGET_PAGE_MASK;
+             load_image_targphys(initrd_filename, initrd_base,
+-                                ram_size - initrd_base, NULL);
++                                ram_size - initrd_base, &error_fatal);
+             BOOTINFO2(param_ptr, BI_RAMDISK, initrd_base,
+                       initrd_size);
+         } else {
+diff --git a/hw/microblaze/boot.c b/hw/microblaze/boot.c
+index a6f9ebab90..4ad5ffd34b 100644
+--- a/hw/microblaze/boot.c
++++ b/hw/microblaze/boot.c
+@@ -38,6 +38,7 @@
+ #include "hw/core/loader.h"
+ #include "elf.h"
+ #include "qemu/cutils.h"
++#include "qapi/error.h"
+ 
+ #include "boot.h"
+ 
+@@ -171,7 +172,7 @@ void microblaze_load_kernel(MicroBlazeCPU *cpu, bool is_little_endian,
+         /* Not an ELF image nor an u-boot image, try a RAW image.  */
+         if (kernel_size < 0) {
+             kernel_size = load_image_targphys(kernel_filename, ddr_base,
+-                                              ramsize, NULL);
++                                              ramsize, &error_fatal);
+             boot_info.bootstrap_pc = ddr_base;
+             high = (ddr_base + kernel_size + 3) & ~3;
+         }
 -- 
 2.43.0
 
