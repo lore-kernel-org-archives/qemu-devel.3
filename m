@@ -4,155 +4,123 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 55B40FCD0CF
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:12:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D047BFCD0D0
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:20:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2m0a-0004V6-Nb; Wed, 18 Mar 2026 04:12:05 -0400
+	id 1w2m7z-00060x-Gq; Wed, 18 Mar 2026 04:19:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2m0U-0004T7-II
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:11:58 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1w2m7y-00060h-Bk; Wed, 18 Mar 2026 04:19:42 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2m0R-00060P-Mo
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:11:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773821514;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=0obZQtca6d6glbYBCYnsmcZ8egVVaPB3btnSlzkln+w=;
- b=VUA4sPCh0A/lTiEPLN9cvlWLScKTmQx1SFKVMzpNTY/rfsna6WD/2sp3nrjAP9RACePK2b
- PoVpUNWp3OpEObh1/RdtGFgNtUj9Z0MayMBv46g8EVGj1FqT9YOv/nLQ7ltuv88F3ixfjr
- DIyOTa/9js/ysnry2L9CDuqpzNRWhwI=
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com
- [209.85.128.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-178-9ChEXmbaMI2lunrIPO3F2w-1; Wed, 18 Mar 2026 04:11:52 -0400
-X-MC-Unique: 9ChEXmbaMI2lunrIPO3F2w-1
-X-Mimecast-MFC-AGG-ID: 9ChEXmbaMI2lunrIPO3F2w_1773821512
-Received: by mail-wm1-f71.google.com with SMTP id
- 5b1f17b1804b1-48532df52c5so91493085e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 01:11:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773821511; x=1774426311; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=0obZQtca6d6glbYBCYnsmcZ8egVVaPB3btnSlzkln+w=;
- b=dsJ5GrOO7kjOiTGKrfcceo3sGrtkUSmcwnvTsdFQ2yjv3bKs5DNsIB7TNPGMALxxEL
- 1GACZrNc4/5qiFTSIeqC176BOu8bJAT8n9ueo9A/RHmDC1dabQoFWIUbXWOmuDw/Z4YG
- H4sTJwu85ILM2a3tV6xz07N+Qho87SKoZQKaflj6of/II9Ear3m1JUL6wQYt2tP+7+7f
- ZpHtFIrtTBQf7ZSE5Ws1LujRtvK8vsiyMQZE3Oxox5/yxvluBC+n6KvgeKiEmCuF4F80
- YqRRBhOJ11HEgki9RD9gq2kLlWzpIBTWIfxG/6aBX9lBk0N7HIW4RGilO2xmK02zI4z4
- Mqvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773821511; x=1774426311;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0obZQtca6d6glbYBCYnsmcZ8egVVaPB3btnSlzkln+w=;
- b=qWX7KcnrpfiwL06lwQfU4m58Nq1iBTrVSAPcsd5C0qAA5Y1XC6ZfIY8org4WVDRjs/
- W34C+4N6N1exp2MrKxXvI/soo0J5Rj1DUrvNuKU49PfmkVQXJzuD6hVozd+O/WFkqUV9
- 8LcvAb6Fk3PJ35arxB8ARGnjCAZ0KVLs1H9pRmTjnVP9r5R08Pg1++ZBD3afF6BWm6Bx
- Ur1+gHM0mFE+EPKqxASA6n8EhBc07BoiHAiRehvdBsbv0hq/gB4plpfdHLkAk+OH/iVx
- sREJUVx+l/2PdjTW8baM/eLDdlWk6LnN4Lvx0abtphQS6LLAS0xkMqADQKWDjzRw/2c+
- dwAQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXPMl7CR+h2O9Opc1Bp9XrwgW+YQtWIFeHFXwTMT/LuDetYHvDatvvnNiSWWfijdUjNCqo6JBf+tIPz@nongnu.org
-X-Gm-Message-State: AOJu0YzZd67O6hxVFWrmTmB/Tr4LZRhTRQiBRAguwHsjmBi6nuh18JTL
- Bm9Pu591fqXtuEISGu3HpExAdFTCVFeOB4qtBDA+PfwC0zk0BYxlYJKTTvtYAzNoI5anzueC87Z
- 5AZ0UKKDmnwPalDNRIaHKRPusUoNgi+nnWChxwJmsAG+FDkGUxrQIPiyi
-X-Gm-Gg: ATEYQzyuxeGgR+4SSPilSGX6fv1i3O+HmUKINYgTIKq0ecxnsWr0WoFmAd65qZraXJL
- P2FZklBBNsbzLy56pJ33OccDpXsfUqOwq47AuyzP4RXmn86u2DhYGvSnF3tNdNrqQ/h//KsRzVa
- 16ySzd5nz2ARJ4K10zcNj4aoFdsscYSStHePMZH7FAWzAwfZGH1w+ogNH5TU53Lt19M/KckzZer
- MUNhq35s4xJKRvWqqWMNWBNpyMV0ZI1oZdtdZ5kPzblPLpre2xRJsX3eb2/0MJ9aDmBl6S+9JLq
- 3ZvTh7Ah9BwAHfa6qvhOg74oySczGFIXieI8v4zQY+w57HUoBGYrGjIB092EtLELJEfQcyWanut
- 6P+pla3cO0l64HdD0/fBRa+gIpHaovqwCBTY+tPpBWXPXeZzkaaQMkW8Cz1bX
-X-Received: by 2002:a05:600c:358e:b0:485:40a6:442e with SMTP id
- 5b1f17b1804b1-486f41ff20dmr47327215e9.0.1773821511366; 
- Wed, 18 Mar 2026 01:11:51 -0700 (PDT)
-X-Received: by 2002:a05:600c:358e:b0:485:40a6:442e with SMTP id
- 5b1f17b1804b1-486f41ff20dmr47326675e9.0.1773821510859; 
- Wed, 18 Mar 2026 01:11:50 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b51805291sm6391176f8f.0.2026.03.18.01.11.49
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 01:11:50 -0700 (PDT)
-Message-ID: <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
-Date: Wed, 18 Mar 2026 09:11:49 +0100
+ (Exim 4.90_1) (envelope-from <misanjum@linux.ibm.com>)
+ id 1w2m7v-00035V-RN; Wed, 18 Mar 2026 04:19:42 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62HLdRaX1188668; Wed, 18 Mar 2026 08:19:36 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=NaJVRh
+ 3ENp+2VF8/QOIE2WYFX+YSTnfJtheWgaYpzno=; b=hcctRplHFqTklNU1m5DPPt
+ /GgSTHs3GhGAuri+3ZqcNNFiDZRRojSp6GpDpe0n3hileRm7dLIekAFaiaIJ3M7A
+ XNuQyKFc1swr8o5E4xVZxVzUDf19bLODKhTJKx+5pH64gxszw5l9F/DzyBjgfqpp
+ jn2gbe2FXj0Ok1ReV3ZO+2psRkLAp4eh5Y0Q1RxV4jABkXV6BVwejV7q3FwiJ3OU
+ AmRLrgDNVuhaerIWZlhY6GgyYP91y1G/t5a+s/WiA9UX7vsnByaRkYbGhzNQVTXW
+ 19lY/0GIr82NZLefE+F9rP5wTF+VJSDy0sKBFkDOkjRog03P42i/LR2FewAowGBA
+ ==
+Received: from ppma22.wdc07v.mail.ibm.com
+ (5c.69.3da9.ip4.static.sl-reverse.com [169.61.105.92])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cx7vfk5nh-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Mar 2026 08:19:36 +0000 (GMT)
+Received: from pps.filterd (ppma22.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma22.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62I4gM7Z014011;
+ Wed, 18 Mar 2026 08:19:35 GMT
+Received: from smtprelay07.wdc07v.mail.ibm.com ([172.16.1.74])
+ by ppma22.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cwjcy55nr-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Wed, 18 Mar 2026 08:19:35 +0000
+Received: from smtpav03.dal12v.mail.ibm.com (smtpav03.dal12v.mail.ibm.com
+ [10.241.53.102])
+ by smtprelay07.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62I8JXkA33030892
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Wed, 18 Mar 2026 08:19:34 GMT
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 8F2A058056;
+ Wed, 18 Mar 2026 08:19:33 +0000 (GMT)
+Received: from smtpav03.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 23EA958060;
+ Wed, 18 Mar 2026 08:19:33 +0000 (GMT)
+Received: from ltc.linux.ibm.com (unknown [9.5.196.140])
+ by smtpav03.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Wed, 18 Mar 2026 08:19:33 +0000 (GMT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org
-References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
- <20260317194241.869568-4-pierrick.bouvier@linaro.org>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260317194241.869568-4-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Date: Wed, 18 Mar 2026 13:49:32 +0530
+From: Misbah Anjum N <misanjum@linux.ibm.com>
+To: Ani Sinha <anisinha@redhat.com>, Pbonzini <pbonzini@redhat.com>, Qemu
+ Devel <qemu-devel@nongnu.org>, Qemu Ppc <qemu-ppc@nongnu.org>
+Cc: npiggin@gmail.com, Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ vaibhav@linux.ibm.com, sbhat@linux.ibm.com
+Subject: Re: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
+ commit 98884e0c
+In-Reply-To: <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
+References: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
+ <2cc23a5ce64847dd8a9278c87f58119b@linux.ibm.com>
+ <5bc7997d-329e-47a9-9b4d-750a3104094a@linux.ibm.com>
+ <4797B580-7853-490E-8852-B6312619FE95@redhat.com>
+ <e966c053-2e69-b185-532e-fcb4173b4daf@redhat.com>
+ <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
+ <ED4A083D-2B96-468A-BE77-211E9F3FA88D@redhat.com>
+ <7bbeb3cb105934e95bf1a5356cfc4613@linux.ibm.com>
+ <7ACBCD63-B759-47FD-824F-0327726E47F6@redhat.com>
+ <35f6361f69ef4f09f80bd915f3460a28@linux.ibm.com>
+ <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
+Message-ID: <526d7172f3933baf913bf4b105a6fa9a@linux.ibm.com>
+X-Sender: misanjum@linux.ibm.com
+Organization: IBM
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-Reinject: loops=2 maxloops=12
+X-Proofpoint-ORIG-GUID: OPa5kKVrhMf26jWPDRq-3HSoIzDwyug9
+X-Authority-Analysis: v=2.4 cv=KajfcAYD c=1 sm=1 tr=0 ts=69ba6018 cx=c_pps
+ a=5BHTudwdYE3Te8bg5FgnPg==:117 a=5BHTudwdYE3Te8bg5FgnPg==:17
+ a=kj9zAlcOel0A:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=wMR-pP4OzeqKIkH-kCoA:9 a=CjuIK1q_8ugA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE4MDA2OSBTYWx0ZWRfXz9ld1dJnbMXK
+ 5RTNqkMXWg1VnxcDnl32ql+T1W3z0nc5Ti/vTULcGWL1X82VGwmiwEpMhObVn0vM6NClxqED9U4
+ yjdjOR95itI+kYM0zukIKPgEdseZSZ8IQ1WSF+3N0tTbKyGEeXvtnSvYGR0btCoQcyxu6rfQtnI
+ KDBNFZ0G81zSr+JS2M7wjetncYUapkienjyLuIBfR6ysjztpdH2mDPQqQ/R5ZE0ifoXux3jFhqF
+ JOlywSsgL6FxB+IharjYNMhQARIuhgQsSqGAuEZEtADLDos5Zex1Pz1hUilpLs09pINO7X/YMBT
+ 2osKqqniBK/k5lgkqpDWgTzJyyU0BdAXr5QhGbzFXc9VHfqrlJ0oI0cbfoWR4peTVEZhv/RzxAU
+ 5W+rhU6t15k34NDFSJLwPvV1r+D2M/7d7adTaRMzZu7oXhI/DRdMZfF9VIK5axb46/EveZtg5Ni
+ /rTZ84q4gf/DMaJlgFg==
+X-Proofpoint-GUID: YcRCGRnOWnps9ErtT4eJVRAbv513-kTy
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-17_05,2026-03-17_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 clxscore=1015
+ impostorscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603180069
+Received-SPF: pass client-ip=148.163.156.1;
+ envelope-from=misanjum@linux.ibm.com; helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -168,150 +136,154 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/26 20:42, Pierrick Bouvier wrote:
-> Add stubs for needed functions.
-> 
-> As well, we need to add pixman to qemuutil library dependencies since
-> pixman is transitively included from pci.h header, which is needed to be
-> able to include prototypes for stubs we declared.
-> In file included from include/ui/console.h:4,
->                   from ../hw/vfio/vfio-display.h:12,
->                   from ../hw/vfio/pci.h:25,
->                   from ../hw/vfio/igd-stubs.c:9:
-> include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or directory
->     10 | #include <pixman.h>
->        |          ^~~~~~~~~~
-> 
-> On OpenBSD, opengl headers are not available in default include path,
-> and thus we need to add opengl to list of qemuutil dependencies.
-> In file included from /home/root/qemu/include/ui/console.h:9:
-> /home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h' file not found
-> 
-> Finally, vfio_pci_hot_reset_info must be forwarded declared on non linux
-> platforms:
-> In file included from ../hw/vfio/igd-stubs.c:9:
-> ../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info' declared inside parameter list will not be visible outside of this definition or declaration [-Werror]
->    265 |                                     struct vfio_pci_hot_reset_info **info_p);
->        |
-> 
-> Reviewed-by: Cédric Le Goater <clg@redhat.com>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Hi Ani and Paolo,
 
-Duplicated Signed-off-by. I can fix when applying.
+Following up on the KVM guest boot issue due to commit 98884e0c, I have 
+conducted additional testing that reveals important new information 
+about the nature of this issue.
+
+The hang is specifically triggered when SMP is configured, that is, when 
+-smp parameter is provided in the QEMU command. This is also validated 
+via KVM Unit Tests involving SMP which are failing due to the same 
+commit.
+
+Test Results:
+Without SMP (boots successfully):
+/usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine 
+pseries,accel=kvm \
+   -enable-kvm -m 32768 -nographic -device virtio-balloon \
+   -device virtio-scsi-pci,id=scsi0 \
+   -drive 
+file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le-hpb.qcow2,if=none,id=drive-scsi0-0-0,format=qcow2 
+\
+   -device scsi-hd,bus=scsi0.0,drive=drive-scsi0-0-0 \
+   -netdev bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
+
+SLOF 
+**********************************************************************
+QEMU Starting
+  Build Date = Oct 26 2025 18:45:22
+  FW Version = release 20251026
+  Press "s" to enter Open Firmware.
+
+Populating /vdevice methods
+Populating /vdevice/vty@71000000
+Populating /vdevice/nvram@71000001
+Populating /pci@800000020000000
+...
+...
+Result: Guest boots successfully
+
+With SMP (hangs indefinitely):
+/usr/bin/qemu-system-ppc64 -name avocado-vt-vm1 -machine 
+pseries,accel=kvm \
+   -enable-kvm -m 32768 -smp 32,sockets=1,cores=32,threads=1 -nographic \
+   -device virtio-balloon -device virtio-scsi-pci,id=scsi0 \
+   -drive 
+file=/home/kvmci/tests/data/avocado-vt/images/rhel8.0devel-ppc64le-hpb.qcow2,if=none,id=drive-scsi0-0-0,format=qcow2 
+\
+   -device scsi-hd,bus=scsi0.0,drive=drive-scsi0-0-0 \
+   -netdev bridge,id=net0,br=virbr0 -device virtio-net-pci,netdev=net0
+...
+...
+Result: Hangs indefinitely at bql_lock() in qemu_default_main()
+
+KVM Unit Tests:
+Running kvm-unit-tests confirms the SMP dependency. Note that tests 
+explicitly involving SMP (smp, smp-smt, atomics) all fail with SIGKILL, 
+while single-threaded tests pass.
+
+# ./run_tests.sh
+FAIL selftest-setup (terminated on SIGKILL)
+PASS selftest-migration (2 tests)
+PASS selftest-migration-skip (1 tests)
+PASS migration-memory (1 tests)
+PASS spapr_hcall (9 tests, 1 skipped)
+PASS spapr_vpa (13 tests)
+PASS rtas-get-time-of-day (10 tests)
+PASS rtas-get-time-of-day-base (10 tests)
+PASS rtas-set-time-of-day (5 tests)
+PASS emulator (4 tests)
+PASS interrupts (13 tests)
+FAIL mmu (terminated on SIGKILL)
+FAIL smp (terminated on SIGKILL)
+FAIL smp-smt (terminated on SIGKILL)
+SKIP smp-thread-single (qemu-system-ppc64: -accel tcg,thread=single: 
+invalid accelerator tcg)
+FAIL atomics (terminated on SIGKILL)
+PASS atomics-migration (1 tests)
+PASS timebase (12 tests, 1 known failures, 1 skipped)
+SKIP timebase-icount (qemu-system-ppc64: -icount shift=5: cannot 
+configure icount, TCG support not available)
+FAIL h_cede_tm
+PASS sprs (14 tests)
+FAIL sprs-migration (14 tests, 1 unexpected failures)
+PASS sieve
 
 Thanks,
+Misbah Anjum N <misanjum@linux.ibm.com>
 
-C.
 
-> ---
->   meson.build          |  2 +-
->   hw/vfio/pci.h        |  2 ++
->   hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
->   hw/vfio/pci-quirks.c |  5 -----
->   hw/vfio/meson.build  |  1 +
->   5 files changed, 24 insertions(+), 6 deletions(-)
->   create mode 100644 hw/vfio/igd-stubs.c
+On 2026-03-10 15:42, Ani Sinha wrote:
+>>> This theory is not substantiated by code or evidence.
+>>> 98884e0cc10997a17ce9abfd6ff10be19224ca6a introduces kvm_reset_vmfd()
+>>> which is called by this block of code with the tip at
+>>> 98884e0cc10997a17ce9abfd6ff10be19224ca6a :
+>>>   if (!cpus_are_resettable() &&
+>>>        (reason == SHUTDOWN_CAUSE_GUEST_RESET ||
+>>>         reason == SHUTDOWN_CAUSE_HOST_QMP_SYSTEM_RESET)) {
+>>>        if (ac->rebuild_guest) {
+>>>            ret = ac->rebuild_guest(current_machine);
+>>>            if (ret < 0) {
+>>>                error_report("unable to rebuild guest: %s(%d)",
+>>>                             strerror(-ret), ret);
+>>>                vm_stop(RUN_STATE_INTERNAL_ERROR);
+>>>            } else {
+>>>                info_report("virtual machine state has been rebuilt 
+>>> with new "
+>>>                            "guest file handle.");
+>>>                guest_state_rebuilt = true;
+>>>            }
+>>>        } else if (!cpus_are_resettable())  {
+>>>            error_report("accelerator does not support reset!");
+>>>        } else {
+>>>            error_report("accelerator does not support rebuilding 
+>>> guest state,"
+>>>                         " proceeding with normal reset!");
+>>>        }
+>>>    }
+>>> If cpus are resettable, this block will not be called and nothing 
+>>> that
+>>> the patch introduces will have been executed.
+>>> So I think you guys need to explain a bit more why you so strongly
+>>> feel this patch broke it. I am confused and unable to reason this.
+>>>> Did you validate your patches on other architectures which does not 
+>>>> support this feature yet?
+>>> As you have already seen, on other architectures, the entire block of
+>>> code is not executed at all. Only SEV-ES, SEV-SNP and TDX currently
+>>> exercises this.
+>> 
+>> I understand your concern about the code path analysis. Let me clarify 
+>> our findings with concrete evidence.
+>> 
+>> Reproducibility Evidence:
+>> With commit 98884e0cc10997a17ce9abfd6ff10be19224ca6a applied, we are 
+>> able to reproduce the hang issue 100% of the time across multiple test 
+>> runs. When we revert to the previous commit 
+>> df8df3cb6b743372ebb335bd8404bc3d748da350, the same KVM guest boots 
+>> successfully 100% of the time.
+>> 
+>> This consistent reproducibility strongly indicates that commit 
+>> 98884e0cc10997a17ce9abfd6ff10be19224ca6a is introducing the 
+>> regression, even if the code path analysis suggests otherwise. This 
+>> suggests the issue may not be in the code path, but rather in the 
+>> changes introduced by the patch series.
+>> 
+>> As the author who led the development of this patch series, we would 
+>> appreciate your help in figuring out this issue.
 > 
-> diff --git a/meson.build b/meson.build
-> index b2154bb9287..ab726ea1152 100644
-> --- a/meson.build
-> +++ b/meson.build
-> @@ -3781,7 +3781,7 @@ util_ss = util_ss.apply({})
->   libqemuutil = static_library('qemuutil',
->                                build_by_default: false,
->                                sources: util_ss.sources() + stub_ss.sources() + genh,
-> -                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc, rt])
-> +                             dependencies: [util_ss.dependencies(), libm, threads, glib, socket, malloc, rt, pixman, opengl])
->   qemuutil = declare_dependency(link_with: libqemuutil,
->                                 sources: genh + version_res,
->                                 dependencies: [event_loop_base])
-> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
-> index d6495d7f297..c3a1f53d350 100644
-> --- a/hw/vfio/pci.h
-> +++ b/hw/vfio/pci.h
-> @@ -258,6 +258,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp);
->   
->   extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
->   
-> +struct vfio_pci_hot_reset_info;
-> +
->   void vfio_pci_pre_reset(VFIOPCIDevice *vdev);
->   void vfio_pci_post_reset(VFIOPCIDevice *vdev);
->   bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
-> diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
-> new file mode 100644
-> index 00000000000..f7687d90912
-> --- /dev/null
-> +++ b/hw/vfio/igd-stubs.c
-> @@ -0,0 +1,20 @@
-> +/*
-> + * IGD device quirks stubs
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include "qapi/qmp/qerror.h"
-> +#include "pci.h"
-> +#include "pci-quirks.h"
-> +
-> +void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
-> +{
-> +    return;
-> +}
-> +
-> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
-> +{
-> +    return true;
-> +}
-> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
-> index 7b907b9360d..ab864048943 100644
-> --- a/hw/vfio/pci-quirks.c
-> +++ b/hw/vfio/pci-quirks.c
-> @@ -11,7 +11,6 @@
->    */
->   
->   #include "qemu/osdep.h"
-> -#include CONFIG_DEVICES
->   #include "exec/memop.h"
->   #include "qemu/units.h"
->   #include "qemu/log.h"
-> @@ -1128,11 +1127,9 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
->    */
->   bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
->   {
-> -#ifdef CONFIG_VFIO_IGD
->       if (!vfio_probe_igd_config_quirk(vdev, errp)) {
->           return false;
->       }
-> -#endif
->       return true;
->   }
->   
-> @@ -1179,9 +1176,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr)
->       vfio_probe_nvidia_bar5_quirk(vdev, nr);
->       vfio_probe_nvidia_bar0_quirk(vdev, nr);
->       vfio_probe_rtl8168_bar2_quirk(vdev, nr);
-> -#ifdef CONFIG_VFIO_IGD
->       vfio_probe_igd_bar0_quirk(vdev, nr);
-> -#endif
->   }
->   
->   void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr)
-> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index f2a7728d3d0..6c00a7f51bb 100644
-> --- a/hw/vfio/meson.build
-> +++ b/hw/vfio/meson.build
-> @@ -17,6 +17,7 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
->   vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
->   vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
->   vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
-> +stub_ss.add(files('igd-stubs.c'))
->   
->   specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
->   
-
+> I am really not sure what changes in that patch can cause this
+> breakage in a completely unrelated area when the changes are not even
+> executed.
+> 
 
