@@ -4,173 +4,129 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50CCB103E171
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 12:38:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 06617103E171
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 12:40:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2qAK-0002tc-Nc; Wed, 18 Mar 2026 08:38:24 -0400
+	id 1w2qBm-0003Ms-4x; Wed, 18 Mar 2026 08:39:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w2qAG-0002sl-19
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:38:20 -0400
-Received: from mgamail.intel.com ([192.198.163.11])
+ (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
+ id 1w2qBj-0003Mg-SR
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:39:52 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w2qAA-00049s-0m
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:38:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773837494; x=1805373494;
- h=message-id:date:subject:to:cc:references:from:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=saN8saodrmbVdKX8pWh2n+hsVBbXwiQpmXiIeXkjGqE=;
- b=a16NCy2P1nNfodO1GEMgxjin7kFDEdjemcZjQZD1S6xF5wn+P9AgKCb3
- RYzOVdkcCtWO33VCmtXGINE/klNYWGlQEHl+uW7Z9HzSKTblalwAF8oc2
- 84TlxlZZQ+VbmGNY8s/MhKaC0hzo+F1VBhIu1ishdFXt+SjevpDDalXC3
- Dwixv13GKd3QbrK7HuA4ERakdDreSHwaSyjqBVHDOruWZTSwG+VfMLqhD
- e1ozv5uCxqZoJh6vgMBQ/ZZrUpdLOq7VJJ4GljZQbHo5RxDtjJl7/LOtJ
- 3yV+/ePuGEECV4crIKlN8I0hGuhmD1Wdc/2vRA0RYe7EjJLpPupdgrkTa g==;
-X-CSE-ConnectionGUID: 2avHu1BRQeORAI5+6Iaddg==
-X-CSE-MsgGUID: IWdwP4qyRGur60OqrbPeUg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11733"; a="85519098"
-X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="85519098"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa105.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 05:38:11 -0700
-X-CSE-ConnectionGUID: URlcsWwZRsyf6EEBaz8/TA==
-X-CSE-MsgGUID: n5WXY22+RmSXxZoK3lRUHA==
-X-ExtLoop1: 1
-Received: from fmsmsx903.amr.corp.intel.com ([10.18.126.92])
- by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 05:38:11 -0700
-Received: from FMSMSX902.amr.corp.intel.com (10.18.126.91) by
- fmsmsx903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 18 Mar 2026 05:38:10 -0700
-Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
- FMSMSX902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 18 Mar 2026 05:38:10 -0700
-Received: from MW6PR02CU001.outbound.protection.outlook.com (52.101.48.22) by
- edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 18 Mar 2026 05:38:10 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=WFsA1aDbQRVp9j1gako6Yoi7LSW5fKS6LM9nLmOnLoOZUNF7gDc3a1QbyteUaGZuKmxM1Uhu/Ft0rb/RBJMJkU2FULdxaWBHHETENsJLiKGXAFx0L8/0eStdN/er2E0nMpldPKrXnFBXGkj2wFX2QRxbSEvKwE7kVbN8uhKsoCg6Hdv7tRGju73F5+D6YBmp0y011AEBrhPRcw+3UWfj/WeBCfzeOtjVJUV/jJApDClzqK7nVGnSBYySwZJGIMJNaee4XZewvLtAJn3C1xCi4f6ebvwGhn3PV8d83DGQEyRadgfLyUl+EnUxfw9c3KAaMfuy282oCFteOImI+H1pSA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=eF6EhPD5/L0jCyKB0XQYehk86F01/ksmLtri5/nDtYs=;
- b=SjK6HUUXor1Omno/hwWK7EVoXFe9DYgvkqeO6fmduBn/MDxi1zHzBWUO6dc+RDw234f0A0b7tREB/O1LwI5yO0cDGJjwg0htPd01dfGEZ48hfhBj5s8bqrlfBYeWUKndkI5InTWx9eEZCJtZcbEVeMMt/y25SYehYwGR63bi9ImY7/rr2eWtxS/WmV2aQB9xR7cUxSfJT+iqwqc9DoDbYNVliZWe1iZXpF6aCK0YB/GabbnEAkhJD7G/snT2gHAjs1eu2ntTfcR37UQjjCeiJOrc0prjp/Q252Yl1OB3DWlrStxKWTNW9zpcsO3L7LW/xEToFR5nqaivRshrHvpljQ==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Authentication-Results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
- by PH7PR11MB6605.namprd11.prod.outlook.com (2603:10b6:510:1b0::16)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Wed, 18 Mar
- 2026 12:38:07 +0000
-Received: from LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
- ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.20.9723.018; Wed, 18 Mar 2026
- 12:38:07 +0000
-Message-ID: <2f49aa5c-4139-4c81-93f5-288a6a6c6249@intel.com>
-Date: Wed, 18 Mar 2026 20:45:53 +0800
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] hw/vfio/iommufd.c: report hint to user when
- vfio-dev/vfio*/dev is missing
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, <qemu-devel@nongnu.org>
-CC: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, Zhenzhong Duan
- <zhenzhong.duan@intel.com>, Alex Williamson <alex@shazbot.org>, Eric Auger
- <eric.auger@redhat.com>, <philmd@linaro.org>
-References: <20260317225751.1325098-1-pierrick.bouvier@linaro.org>
- <20260317225751.1325098-3-pierrick.bouvier@linaro.org>
-Content-Language: en-US
-From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260317225751.1325098-3-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset="UTF-8"; format=flowed
-Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0060.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:3::15) To LV8PR11MB8509.namprd11.prod.outlook.com
- (2603:10b6:408:1e6::15)
+ (Exim 4.90_1) (envelope-from <yvugenfi@redhat.com>)
+ id 1w2qBf-0004Gt-JR
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:39:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773837585;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gxfKXaSfciQ9SX5cYZt1VefRRc/I4yK8mJFzGnYRwGk=;
+ b=covRzWy+1z18TDpXSHPqqvnKoyIEtYZFp1kLT7keiYm9SjhblK6cFjw8mFDB/w/ZEl/HFd
+ NQzOE9DVPPxOvt6HR9jt8tkgBrtbF8VQ41TGqoTtEdk36EtrzEqwztOqUEZL42A30AkKj+
+ mQZqd5V6AavzKjF3rqS0ftBewT7/5q8=
+Received: from mail-lj1-f200.google.com (mail-lj1-f200.google.com
+ [209.85.208.200]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-263-kAYIkjvROBmh-BuWH2AmiA-1; Wed, 18 Mar 2026 08:38:36 -0400
+X-MC-Unique: kAYIkjvROBmh-BuWH2AmiA-1
+X-Mimecast-MFC-AGG-ID: kAYIkjvROBmh-BuWH2AmiA_1773837514
+Received: by mail-lj1-f200.google.com with SMTP id
+ 38308e7fff4ca-38bd5d21ebfso7308801fa.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 05:38:35 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773837514; cv=none;
+ d=google.com; s=arc-20240605;
+ b=dcr2XgbP4+Ots0UawfD0mns6BEuM/7qHTzQ1lOEpjGSRNH+VOyeIk3Ijbo0F9CaYvx
+ PU9TRMY7lHZ34OXxQTzvsOgnYyS0RDt49zhiRFC3VllEAToI0VALvEBmwZBxd+thISNb
+ 72WB1oQOYmuG1dj/gnvd7he+egLhVwMy5Xco5NUWSHq33GUQhfTcW5KqWkKoBAv+nIDw
+ zGcyVhsKgT4LUdHTIfy8L8vNnQ7AgQveEa9zrCUXF0ksxzzLd0XqP3maRMIJ5WB8ClRg
+ ej3J0JwQhzu0dzeocu8JYdYvrGqQ19ASf30LL9m1A8T0zKOoaoz05MjhGPHw5ZdrH7B5
+ BJLQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=gxfKXaSfciQ9SX5cYZt1VefRRc/I4yK8mJFzGnYRwGk=;
+ fh=vvDBlctUNPQXbwEXY1OBm1eIPEe0du0LCFKxyhiyG5Q=;
+ b=VGVyDPoGweMks/IlozAwLlyJ2LFkpyjXInYAfIekvwPSROcqq9o0AQ7JluXLnqaC8o
+ UwqOlOhC21v4nBN0Eekr+++sxoDRlTRCu66+gWDySqa2llkM60UL898bg8aGtqJ2JP+c
+ tyuQ2Xeov8mPgKOSDbbMjcDrb0rBaZXaHNOTHzhl4Q2f+0f1ZcNJxo9teeQqSnDubId9
+ vhMOsfVNabZu3RDK+HEELRkuvRiVfuQrGKmYiRhOZ48yzeIDoZWGhG+RGx3FefmfcXco
+ 4cpBAqNILQiu9QCf8CzKzmXMz/A8bzobD7mFuO0CcuTfN1jRN/CJlE0rNV9dU5Zn6dlR
+ SUKg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773837514; x=1774442314; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=gxfKXaSfciQ9SX5cYZt1VefRRc/I4yK8mJFzGnYRwGk=;
+ b=XKS0WNBSKLm8L61ZxO/2PIUPPqTz2I+Ov0lIJJNU2XSo+75zT2SlkjOKiSzlNy5Gm/
+ Lc0Lss2eI66iPSRLTWYN3/7OVRthlRn8HnHRqIPloB2pzK+jXCQBXTMc8UiBRIA1UvcG
+ jdVJEsC46PMQbhu56Lg7PwFOgYHmH3P7OAAI4PTzAZDKO1jJ7InCvMkqGTYqgiTcdpGk
+ FiGeotnqhynTXDD+IVWFVY5lHgjAFj7LRjAdGX16g9Ps2013CCJAovk23Ro7QOpbc/5X
+ RzGAmNsmWc3+a60SxTwfNKAXLf0TTvtwQeLdtLGxqm41MRqKU2PORtXBggKIkGAVzhpf
+ yjWA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773837514; x=1774442314;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=gxfKXaSfciQ9SX5cYZt1VefRRc/I4yK8mJFzGnYRwGk=;
+ b=k23hxm+23RFqXDI1uKzcZfnnZAVSMg2FG+rQkByl4mpPx6t6hhQegn77PByxonxTny
+ k94qwVzqhz+kL5XlIeBQLTNMKToKVaO5g5BSt7bczpHgEljpIqq3+RAshXtM/IHpXDRD
+ YHVbx9S7wX48BJtlSmrxElg7WM25XR9VciAhsS7VFK2xcvAC5CjPw+AFN5LMmzwpew/B
+ b+3eTVTa1rjbcK+MV9+/hA91MEs4GJRVZ7oi5TZwjPJPKSRy8RcUtnfikPpTF7dLrXx6
+ zICa8pk9RcPVm9YIZrD/HdaSB2K0dHQoXsS4dUMnL2yZex7ozMS0bKpJs3dBPk0mVX/V
+ 5PfA==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCULkXVoGxa54XL+m0qrZn1dbaeRT8clijdd2TR6OCRDTFKokISFj1BadEKnSCRsrvot++1A8BCL39mv@nongnu.org
+X-Gm-Message-State: AOJu0YzFYRTfYvFmcRf4ZHLQj8Uem20efljMyKlOfSMvDS6ILzUBBode
+ D2aZ9hcfUSxmuECCUUNe1kCIZq6OF9Adz1TbPNuu4jJuoN9dK1r2QMxTBSMU3//dc/9hh7IZ2eE
+ ISg0pxvI96lvUENAAPhgBGbXe86zwkeS97Ghzl+X4Vrssy98dJpKCWcRYLL8eEf+o1Ik3eYUKMf
+ Ycrm2EbCS4R9P+STs4FblnK9QM1kxPrtE=
+X-Gm-Gg: ATEYQzxa6RjgyL9iJl5gBPeZKyWhcUs5k2nAdopKnW4WlGeKXxpwQcjDDLBJ2tf2JMt
+ r4bvUzWFs3b2jxdLVHEOsQE+k383dgAyqK3CDMjT2bNAzRK9IiRr0EhDsembpdXgWHCcL++uN8V
+ /95zdugX9/uBnXFdymk1+HDzRmvdgzHo3paMLDN9G2ht0zQ0gbJWzS2iRQE7S/gTPhfcbqFXSn7
+ UiVyOL8T57j26QbKDMkHUXk4oK9YJtegmKUV4yw4ThJs4Pp7sMR5ZwxW80BZa/sQ+YfXzNm
+X-Received: by 2002:a05:651c:f02:b0:38a:6acb:ea92 with SMTP id
+ 38308e7fff4ca-38bd5850551mr12878651fa.20.1773837514226; 
+ Wed, 18 Mar 2026 05:38:34 -0700 (PDT)
+X-Received: by 2002:a05:651c:f02:b0:38a:6acb:ea92 with SMTP id
+ 38308e7fff4ca-38bd5850551mr12878481fa.20.1773837513548; Wed, 18 Mar 2026
+ 05:38:33 -0700 (PDT)
 MIME-Version: 1.0
-X-MS-PublicTrafficType: Email
-X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|PH7PR11MB6605:EE_
-X-MS-Office365-Filtering-Correlation-Id: e77fddb3-458b-455a-d4eb-08de84eb34ff
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
- ARA:13230040|366016|376014|1800799024|42112799006|22082099003|56012099003|18002099003|7053199007;
-X-Microsoft-Antispam-Message-Info: 3virL7Ny3CxpwDwvKijHCTdyYzYVMqGr1S0yeTgH9o76BUMe1xl2iC+yx9ak8yXHeI2A8AXGxinUmvCFY9dFIWrAOCo432rJCCjpA2PQuzMVwRX31z2gRfR1Pu/FREGQH1v3YXEeSSwvl1kQ3R5ZSIjcQaRF+CEKZRKGcV4HrnhHmF0rYTTYjRj6o72Quxjd2JVas2QDPKd+laUPRFp6Iw0ZgL5d3I5r5kE33SnaO4AIf09aM3psr9My0ZmFmwEPfRdCL3LzopICekveorRXAXne0NAXafwj19sW3lNH6FSAz7fRRq3bCImQ3YoOsoovS1hCMuH20PvfWqFvcUrUhNugGJhWD8hiLc8WO85IGI9w5uxwZ9DZVAN1syQF7Ow2bxA7TpEzmtkLhGCxXkXT/WnZ4sOZkaif+/eldXJ9d9qpbrWvf1e0zxJM59U5HtyZ1YNoxtAYef0Em9MCoobke7V9RGw1E3uH1Bs2DKdP1tyCnpRd9avKbj3H3QfomYFxUWtmvwgdRlWSAGUKm92xq/wQsA4ik4Yp5/EZ3YLhGy4+eT2lVt7Mxc/MO60bipvBDNXbjXP2kC/BKoCUwGNWDC3FTBC63LjNoLUzWZa7cVkwthETIwc4QcZnmEx7Tvk1Q6PeWsbCYtpvTNCQk3Yt6sBVa+9FthawLr06daxid/lQK2WyBmyzQ0koGiELsKFIfVE0/v7EcLTo44YGeBGVgG3af9Gylv9A1C+MqEsrhsw=
-X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(376014)(1800799024)(42112799006)(22082099003)(56012099003)(18002099003)(7053199007);
- DIR:OUT; SFP:1101; 
-X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?LzB4V2lLTHNFS0FBK3ZQSXR5bThpbVgrK3dlR0xrTmFrcU5BajdNc3h4NFlx?=
- =?utf-8?B?VE14T3NXRFRnUzZvcVNZaEJoMGlYclEyTUtIOHcrcVB3eVpQZU00NXNSam1h?=
- =?utf-8?B?UUNzWHJTUzd5UXd2aU1NZjNpUHVsNDdTVFMvTWxtcW8vZUFYVVcramFwSUpY?=
- =?utf-8?B?eEdXWDJVRmF6RDRBeUNJb3hvWjhzVzQ4YmdRWGNBWERCU2JiVGtuTDAxZHRZ?=
- =?utf-8?B?WlNCMStjVFAvREpBQUdlZG5Rai83aDdhTm0vcWtkajhKWEFadGlLYTVoT0h6?=
- =?utf-8?B?WGpiRTM3OThGQnRhaVZCaVF3Y2puRnVaSlhUa1psa1l1RDdveWVIbm94Wis2?=
- =?utf-8?B?bmNrQVhhZE02cnRLZm90NUdaeCszV3N2WmkycVNJN1p4dlBXZmJieTU3bE12?=
- =?utf-8?B?ZmVtUjQ4UTQ1ZU82V3BnRDdJSDdNbmloQXFsWlB3MVVMdms1QVZWWUQrTnVS?=
- =?utf-8?B?OG52NExJYXN3RG52c2VDL25WTTQ2NWtlWnp4dEtneWFJODFJaHRtdUU3clBq?=
- =?utf-8?B?WSt5emNEVjBuWURDYitma1dvRU9BZktncTRiaVU4Q2NFaHVrQVVOc1lPYTBm?=
- =?utf-8?B?c0RiYW1qQ2lEUDRCVTV1L2hpbkRuSXlPU0xXOXkzNUkzRkV5citYMEF3Q0Ir?=
- =?utf-8?B?OHhkY05tYmNYN1k5K0ZaU283Zy9GdmtqL0lOK09rUTBaajBLSkFhN09YcXBm?=
- =?utf-8?B?emNvSlRMSFF2T2VIYjc1YVdHWHhyRWx4RUpYWURtUU9ZNkZwRlJsQVZxNEZQ?=
- =?utf-8?B?VXdRd3RhSkJnU1orYzF3ZVMvOGJJa2lmUWErUGROd2d6UnFYbUdpOFFGa3VY?=
- =?utf-8?B?NWxVdkptZERZWXhyNEtEalBKSndNcDRDZU5kbXgyVXFJdjlhN0J1VVl6d3Ey?=
- =?utf-8?B?T2phVUg1NlN3V2RVOU82ekF1bTg3NStOUkdiRjFmd1J3Q1hFOXRaMEJBZE1a?=
- =?utf-8?B?UVc5QlRKRmJjbHlXeWZIeGFEdXNsd3NBMGl3a2F3WkNBQXBucFVJOWV3R0dT?=
- =?utf-8?B?dUFzazRabGFKK000bFoxTWI2K250bWgxaW14NGhwY1VNbmtLWW4yNC8wRWJU?=
- =?utf-8?B?NXVJZ2hzTklRZjhMY0tIZ0NmT2Z0SVJJOGFwRDlXZ3ZhcUpQYmh6R0Z3ZnNj?=
- =?utf-8?B?dmxPbm00ZklmSko0SFdnaHV0MndHT3BlalJTVEFXMU1jYVEvSzFkNm1GTXVR?=
- =?utf-8?B?VjBMSXZWalhaR2JSR0hJSHB6ZVU0cndER3p1cXhDYjdSWkY0VU5samVjd2dI?=
- =?utf-8?B?eXJHNlcxaWEzd1J5LzNsQUhQRGtCWERoc0NlRGFETjVGUUwwcXdubzRiZ0xl?=
- =?utf-8?B?NXJicHUzR1A3a0hTQ2pvV0ZqaWJXdDBrWWJlQVBhSEVna1J5d2ZIWitLVDgy?=
- =?utf-8?B?RWhjWm1DaXpjZGk2YTkvbzVxdkNxdXk4ZnFRMUdMMjMvb3BlT3FKUlZUM0wy?=
- =?utf-8?B?czEvV3daK0wwb20vRDF4Z0g0Z1ZNcFduVVVPOVJjV0hvR3E5TE1VaWdlYTRN?=
- =?utf-8?B?clVpcVB0LzQ5S0wwQk4xbml2WVZWVHpUVG9kRlhlOHdHT0h2UGZ2ZmhWa2lo?=
- =?utf-8?B?Zm42NVF2b1RET3lRQWI4OG9YSXYvTDVsdmx5b1VuV2lFcFZWZGFyY056aE5P?=
- =?utf-8?B?bHZoSzJKN0ZVOUY0VU5BSkV4N2E3VjlMdTZ4R1N5eUpyRlRZU0hYWGFLQWEy?=
- =?utf-8?B?VHQxbDVEdFFTUzZpd2pXUFZKaWFUZkhDRXMwN1hUYTh2VDJYYTRqRy9pelR4?=
- =?utf-8?B?ZE9vaTBlRmVwS1k4K2VwdWM0a1Noei8ya3NaMG1xOUZGQkxBcytyUERGdDBW?=
- =?utf-8?B?ejEycnQwVlZ1dU91NS9rcW9xd0MyQmE2YWU4c2Z4RzZiZlAvZHNhcFpPK0FQ?=
- =?utf-8?B?b2RLZVpYa0VsQU1LT0M5Q1g3VEhVa0xoVU1pVXp2Y0Joc2t6RzJDak1mZEQ4?=
- =?utf-8?B?ZHN1MzJYbjNPREM2WnI3SktUMXFpOTV6WFlPTFhNRU1SSEppMWdpKy9lVitV?=
- =?utf-8?B?b1AvRUVkZ2tpNkZsbHVKUU1QN0p1MkNTNE1vNDN5S01zMjM1YkVJMmVoUm1w?=
- =?utf-8?B?WG91VUZuL0FrZVlrY1lub1hkeVVwczdHV2loNWF5MFp3RHJOcWRnUzhSRmw4?=
- =?utf-8?B?a3Y0b2gxcTVkOUJCMEdydHFZK3F6SGRnZU1zQVpsaXJPejUxOUdRc2VxRWNV?=
- =?utf-8?B?WVB1UFFKQkJBQzJtN2wwK0hHYjdUeWVtWi9BVmxlejZWN1gvYU14R2R2Vkps?=
- =?utf-8?B?MVFGMmpMKzZ6U3l3T1VyWDJyRGZ3ZTl0RURQOUlWbkVzelVUU3AvTk1mN1dH?=
- =?utf-8?B?akozSmYrRUhrZjkycEl4V0pXb081SG1GNVBpa1REcmE2cXF5WnRvZz09?=
-X-Exchange-RoutingPolicyChecked: M3aBKfDDOURhCylM7s+I0JR9O8FsZ6KQef+HkLDqI7JTio3aAaiF9SEPivP0ARXQOQSbjftGjs0Xk1nzQTR0poh1ZmTOGF4d2AUxKEUbIC3q5t2pkSBgYYoyMTMSTngHjd0gzAcWzVoFAWg2kJS8WaGRNDB6Su6wa7DcJvZkPJ6uTB2LAgfS6reBjFo62DNEq76itNctTmI4UyKIgIXdsNJdq1a7otQiTrmiMdLxVEJwV84bAnhCx5wGpu4+s4taxoggY4wxKBUO2QJIdD3IXhWkzLGDqBtLy3qUlpUTV9tVRFL7Y+RPGovdV2t/k7TdEjEkBdPXAnvLlDYfQLzcjw==
-X-MS-Exchange-CrossTenant-Network-Message-Id: e77fddb3-458b-455a-d4eb-08de84eb34ff
-X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2026 12:38:07.5951 (UTC)
-X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
-X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: AeBrB6Oux310D/FjAPj5kIvwqRGNJOlgasmQO1kVVcXPGQ8tKm7lhh7pQsazeMpFrJgeECFiQ7aEg7zMcRIGmg==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB6605
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.11; envelope-from=yi.l.liu@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+References: <20260316123144.1758888-1-eashurov@redhat.com>
+ <CAPMcbCr1XmSnHG_KUvDekU=OzKWhuD7=PjHcxB6VmCYrZCqY4Q@mail.gmail.com>
+ <ablh_gd57v3vGP6m@redhat.com>
+ <CAPMcbCoEL-a_TxCaJO7y7mkPNGR9us-N8mHTQRM=iGiJxTek+w@mail.gmail.com>
+ <ablsEcXwDIPlMzZb@redhat.com>
+ <CAPMcbCohY6Oy8xp7iwf_ftzu_LD-PzPw9_HarXBAhE0J9CFjRQ@mail.gmail.com>
+In-Reply-To: <CAPMcbCohY6Oy8xp7iwf_ftzu_LD-PzPw9_HarXBAhE0J9CFjRQ@mail.gmail.com>
+From: Yan Vugenfirer <yvugenfi@redhat.com>
+Date: Wed, 18 Mar 2026 14:38:16 +0200
+X-Gm-Features: AaiRm50kII1lmMcZO5tGN8_TMx_c1CBot8mK5gdylSnzetQHVKFfK4afcEIFjuE
+Message-ID: <CAGoVJZw+H=jvZ3a2L+fqN4cOuNCJVeXx6uPX_7-_sxH26TU+Gg@mail.gmail.com>
+Subject: Re: [PATCH v1] qga: add guest-get-windows-security-info command
+To: Kostiantyn Kostiuk <kkostiuk@redhat.com>
+Cc: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>, 
+ Elizabeth Ashurov <eashurov@redhat.com>, qemu-devel@nongnu.org, 
+ =?UTF-8?B?TWFyYy1BbmRyw6kgTHVyZWF1?= <marcandre.lureau@redhat.com>
+Content-Type: multipart/alternative; boundary="000000000000e27941064d4bba3a"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=yvugenfi@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -186,30 +142,371 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/26 06:57, Pierrick Bouvier wrote:
-> Give a hint about missing kernel config CONFIG_VFIO_DEVICE_CDEV.
-> 
-> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> ---
->   hw/vfio/iommufd.c | 5 ++++-
->   1 file changed, 4 insertions(+), 1 deletion(-)
-> 
-> diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-> index 131612eb836..3e33dfbb356 100644
-> --- a/hw/vfio/iommufd.c
-> +++ b/hw/vfio/iommufd.c
-> @@ -274,7 +274,10 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
->       }
->   
->       if (!g_file_get_contents(vfio_dev_path, &contents, &length, NULL)) {
-> -        error_setg(errp, "failed to load \"%s\"", vfio_dev_path);
-> +        error_setg(errp,
-> +                   "failed to load \"%s\""
-> +                   " (is your kernel config missing CONFIG_VFIO_DEVICE_CDEV?)",
-> +                   vfio_dev_path);
->           goto out_close_dir;
->       }
->   
+--000000000000e27941064d4bba3a
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
+On Tue, Mar 17, 2026 at 6:35=E2=80=AFPM Kostiantyn Kostiuk <kkostiuk@redhat=
+.com>
+wrote:
+
+>
+>
+>
+>
+> On Tue, Mar 17, 2026 at 4:58=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange=
+@redhat.com>
+> wrote:
+>
+>> On Tue, Mar 17, 2026 at 04:45:20PM +0200, Kostiantyn Kostiuk wrote:
+>> > On Tue, Mar 17, 2026 at 4:15=E2=80=AFPM Daniel P. Berrang=C3=A9 <berra=
+nge@redhat.com
+>> >
+>> > wrote:
+>> >
+>> > > On Tue, Mar 17, 2026 at 04:07:59PM +0200, Kostiantyn Kostiuk wrote:
+>> > > > On Mon, Mar 16, 2026 at 2:32=E2=80=AFPM Elizabeth Ashurov <
+>> eashurov@redhat.com>
+>> > > > wrote:
+>> > > >
+>> > > > > Add a new Windows-only QGA command to retrieve Windows security
+>> > > > > features status including VBS, Secure Boot, and TPM information
+>> > > > > from the guest.
+>> > > > >
+>> > > > > The implementation queries Win32_DeviceGuard and Win32_Tpm via
+>> > > > > WMI, and reads the SecureBoot UEFI variable through
+>> > > > > GetFirmwareEnvironmentVariable().
+>> > > > >
+>> > > > > Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+>> > > > > ---
+>> > > > >  qga/commands-win32.c | 404
+>> +++++++++++++++++++++++++++++++++++++++++++
+>> > > > >  qga/qapi-schema.json |  56 ++++++
+>> > > > >  2 files changed, 460 insertions(+)
+>> > >
+>> > > snip
+>> > >
+>> > > > > diff --git a/qga/qapi-schema.json b/qga/qapi-schema.json
+>> > > > > index c57bc9a02f..f54fdf942f 100644
+>> > > > > --- a/qga/qapi-schema.json
+>> > > > > +++ b/qga/qapi-schema.json
+>> > > > > @@ -1952,3 +1952,59 @@
+>> > > > >    'returns': ['GuestNetworkRoute'],
+>> > > > >    'if': { 'any': ['CONFIG_LINUX', 'CONFIG_WIN32'] }
+>> > > > >  }
+>> > > > > +
+>> > > > > +##
+>> > > > > +# @GuestWindowsSecurityInfo:
+>> > > > > +#
+>> > > > > +# Windows security features status.
+>> > > > > +#
+>> > > > > +# @vbs-status: VirtualizationBasedSecurityStatus
+>> > > > > +#
+>> > > > > +# @available-security-properties: AvailableSecurityProperties
+>> > > > > +#
+>> > > > > +# @code-integrity-policy-enforcement-status:
+>> > > > > +#     CodeIntegrityPolicyEnforcementStatus
+>> > > > > +#
+>> > > > > +# @required-security-properties: RequiredSecurityProperties
+>> > > > > +#
+>> > > > > +# @security-services-configured: SecurityServicesConfigured
+>> > > > > +#
+>> > > > > +# @security-services-running: SecurityServicesRunning
+>> > > > > +#
+>> > > > > +# @usr-cfg-code-integrity-policy-enforcement-status:
+>> > > > > +#     UsermodeCodeIntegrityPolicyEnforcementStatus
+>> > > > > +#
+>> > > > > +# @secure-boot: Whether UEFI Secure Boot is enabled
+>> > > > > +#
+>> > > > > +# @tpm-present: Whether a TPM device is present
+>> > > > > +#
+>> > > > > +# @tpm-version: TPM specification version string (e.g. "2.0")
+>> > > > > +#
+>> > > > > +# Since: 10.3
+>> > > > > +##
+>> > > > > +{ 'struct': 'GuestWindowsSecurityInfo',
+>> > > > > +  'data': {
+>> > > > > +      'vbs-status': 'int',
+>> > > > > +      '*available-security-properties': ['int'],
+>> > > > > +      '*code-integrity-policy-enforcement-status': 'int',
+>> > > > > +      '*required-security-properties': ['int'],
+>> > > > > +      '*security-services-configured': ['int'],
+>> > > > > +      '*security-services-running': ['int'],
+>> > > > > +      '*usr-cfg-code-integrity-policy-enforcement-status': 'int=
+',
+>> > > > > +      'secure-boot': 'bool',
+>> > > > > +      'tpm-present': 'bool',
+>> > > > > +      '*tpm-version': 'str' },
+>> > > > > +  'if': 'CONFIG_WIN32' }
+>> > > > >
+>> > > > >
+>> > > > Let's make this more generic
+>> > > > command guest-get-security-info
+>> > > > use 'union' to describe OS specific option like VBS
+>> > > > { 'tmp_present': false, 'secure_boot': true, 'os': { 'type':
+>> 'windows',
+>> > > > 'vbs': false, .... } }
+>> > > >
+>> > > > make tmp_present, secure_boot, vbs_status optiononal
+>> > > > missing =3D unknown - as we can have it unimplemented for some
+>> POSIX/BSD
+>> > > OSes
+>> > > >
+>> > > > vbs_status is Win10+ only feature, so it can be unknown for Win8
+>> > >
+>> > > I wonder if a new command is justifiable / needed.
+>> > >
+>> > > Should we consider returning more info with 'guest-get-osinfo' ? It
+>> > > is slightly different from the info returned there currently, but
+>> > > at the same time reasonably in scope in the sense that it is
+>> > > essentially reporting a set of OS "feature flags". They happen to
+>> > > be security related in this case, but we could have other feature
+>> > > flags we want to report too in future.
+>> > >
+>> >
+>> > guest-get-security-info can fail due to WMI issue. If we merge this in=
+to
+>> > guest-get-osinfo,
+>> > it means guest-get-osinfo will fail just because of a Windows componen=
+t
+>> > error. Sounds bad.
+>>
+>> In what scenarios would WMI fail, and should we treat that as non-fatal
+>> regardless ? ie indicate that the information is unavailable - that
+>> already appears to be done for the TPM feature, but not the other
+>> security features.
+>>
+>
+>
+How the managment layer will distingiush between the failure and old guest
+agent that cannot return any data?
+
+Best regards,
+Yan.
+
+
+> Simple WMI fail - disable WMI service
+> From my experience - WMI DB was broken after 3rd-party software
+> installation / after Windows Update
+>
+> >should we treat that as non-fatal regardless ?
+>
+> I am open to discussion.
+>
+>
+>> With regards,
+>> Daniel
+>> --
+>> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :=
+|
+>> |: https://libvirt.org          ~~          https://entangle-photo.org :=
+|
+>> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :=
+|
+>>
+>>
+
+--000000000000e27941064d4bba3a
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div dir=3D"ltr"><br></div><br><div class=3D"gmail_quote g=
+mail_quote_container"><div dir=3D"ltr" class=3D"gmail_attr">On Tue, Mar 17,=
+ 2026 at 6:35=E2=80=AFPM Kostiantyn Kostiuk &lt;<a href=3D"mailto:kkostiuk@=
+redhat.com">kkostiuk@redhat.com</a>&gt; wrote:<br></div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;bo=
+rder-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">=
+<div dir=3D"ltr"><div dir=3D"ltr"><div><br clear=3D"all"></div><div><div di=
+r=3D"ltr" class=3D"gmail_signature"><div dir=3D"ltr"><br></div></div></div>=
+<br></div><br><div class=3D"gmail_quote"><div dir=3D"ltr" class=3D"gmail_at=
+tr">On Tue, Mar 17, 2026 at 4:58=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a =
+href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com</=
+a>&gt; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0p=
+x 0px 0px 0.8ex;border-left-width:1px;border-left-style:solid;border-left-c=
+olor:rgb(204,204,204);padding-left:1ex">On Tue, Mar 17, 2026 at 04:45:20PM =
++0200, Kostiantyn Kostiuk wrote:<br>
+&gt; On Tue, Mar 17, 2026 at 4:15=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a=
+ href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com<=
+/a>&gt;<br>
+&gt; wrote:<br>
+&gt; <br>
+&gt; &gt; On Tue, Mar 17, 2026 at 04:07:59PM +0200, Kostiantyn Kostiuk wrot=
+e:<br>
+&gt; &gt; &gt; On Mon, Mar 16, 2026 at 2:32=E2=80=AFPM Elizabeth Ashurov &l=
+t;<a href=3D"mailto:eashurov@redhat.com" target=3D"_blank">eashurov@redhat.=
+com</a>&gt;<br>
+&gt; &gt; &gt; wrote:<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; Add a new Windows-only QGA command to retrieve Windows =
+security<br>
+&gt; &gt; &gt; &gt; features status including VBS, Secure Boot, and TPM inf=
+ormation<br>
+&gt; &gt; &gt; &gt; from the guest.<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; The implementation queries Win32_DeviceGuard and Win32_=
+Tpm via<br>
+&gt; &gt; &gt; &gt; WMI, and reads the SecureBoot UEFI variable through<br>
+&gt; &gt; &gt; &gt; GetFirmwareEnvironmentVariable().<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt; Signed-off-by: Elizabeth Ashurov &lt;<a href=3D"mailto:=
+eashurov@redhat.com" target=3D"_blank">eashurov@redhat.com</a>&gt;<br>
+&gt; &gt; &gt; &gt; ---<br>
+&gt; &gt; &gt; &gt;=C2=A0 qga/commands-win32.c | 404 ++++++++++++++++++++++=
++++++++++++++++++++++<br>
+&gt; &gt; &gt; &gt;=C2=A0 qga/qapi-schema.json |=C2=A0 56 ++++++<br>
+&gt; &gt; &gt; &gt;=C2=A0 2 files changed, 460 insertions(+)<br>
+&gt; &gt;<br>
+&gt; &gt; snip<br>
+&gt; &gt;<br>
+&gt; &gt; &gt; &gt; diff --git a/qga/qapi-schema.json b/qga/qapi-schema.jso=
+n<br>
+&gt; &gt; &gt; &gt; index c57bc9a02f..f54fdf942f 100644<br>
+&gt; &gt; &gt; &gt; --- a/qga/qapi-schema.json<br>
+&gt; &gt; &gt; &gt; +++ b/qga/qapi-schema.json<br>
+&gt; &gt; &gt; &gt; @@ -1952,3 +1952,59 @@<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 &#39;returns&#39;: [&#39;GuestNetworkRoute=
+&#39;],<br>
+&gt; &gt; &gt; &gt;=C2=A0 =C2=A0 &#39;if&#39;: { &#39;any&#39;: [&#39;CONFI=
+G_LINUX&#39;, &#39;CONFIG_WIN32&#39;] }<br>
+&gt; &gt; &gt; &gt;=C2=A0 }<br>
+&gt; &gt; &gt; &gt; +<br>
+&gt; &gt; &gt; &gt; +##<br>
+&gt; &gt; &gt; &gt; +# @GuestWindowsSecurityInfo:<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# Windows security features status.<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @vbs-status: VirtualizationBasedSecurityStatus<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @available-security-properties: AvailableSecurityPro=
+perties<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @code-integrity-policy-enforcement-status:<br>
+&gt; &gt; &gt; &gt; +#=C2=A0 =C2=A0 =C2=A0CodeIntegrityPolicyEnforcementSta=
+tus<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @required-security-properties: RequiredSecurityPrope=
+rties<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @security-services-configured: SecurityServicesConfi=
+gured<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @security-services-running: SecurityServicesRunning<=
+br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @usr-cfg-code-integrity-policy-enforcement-status:<b=
+r>
+&gt; &gt; &gt; &gt; +#=C2=A0 =C2=A0 =C2=A0UsermodeCodeIntegrityPolicyEnforc=
+ementStatus<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @secure-boot: Whether UEFI Secure Boot is enabled<br=
+>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @tpm-present: Whether a TPM device is present<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# @tpm-version: TPM specification version string (e.g.=
+ &quot;2.0&quot;)<br>
+&gt; &gt; &gt; &gt; +#<br>
+&gt; &gt; &gt; &gt; +# Since: 10.3<br>
+&gt; &gt; &gt; &gt; +##<br>
+&gt; &gt; &gt; &gt; +{ &#39;struct&#39;: &#39;GuestWindowsSecurityInfo&#39;=
+,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 &#39;data&#39;: {<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;vbs-status&#39;: &#39;int&#3=
+9;,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;*available-security-properti=
+es&#39;: [&#39;int&#39;],<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;*code-integrity-policy-enfor=
+cement-status&#39;: &#39;int&#39;,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;*required-security-propertie=
+s&#39;: [&#39;int&#39;],<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;*security-services-configure=
+d&#39;: [&#39;int&#39;],<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;*security-services-running&#=
+39;: [&#39;int&#39;],<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;*usr-cfg-code-integrity-poli=
+cy-enforcement-status&#39;: &#39;int&#39;,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;secure-boot&#39;: &#39;bool&=
+#39;,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;tpm-present&#39;: &#39;bool&=
+#39;,<br>
+&gt; &gt; &gt; &gt; +=C2=A0 =C2=A0 =C2=A0 &#39;*tpm-version&#39;: &#39;str&=
+#39; },<br>
+&gt; &gt; &gt; &gt; +=C2=A0 &#39;if&#39;: &#39;CONFIG_WIN32&#39; }<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; &gt;<br>
+&gt; &gt; &gt; Let&#39;s make this more generic<br>
+&gt; &gt; &gt; command guest-get-security-info<br>
+&gt; &gt; &gt; use &#39;union&#39; to describe OS specific option like VBS<=
+br>
+&gt; &gt; &gt; { &#39;tmp_present&#39;: false, &#39;secure_boot&#39;: true,=
+ &#39;os&#39;: { &#39;type&#39;: &#39;windows&#39;,<br>
+&gt; &gt; &gt; &#39;vbs&#39;: false, .... } }<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; make tmp_present, secure_boot, vbs_status optiononal<br>
+&gt; &gt; &gt; missing =3D unknown - as we can have it unimplemented for so=
+me POSIX/BSD<br>
+&gt; &gt; OSes<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; vbs_status is Win10+ only feature, so it can be unknown for =
+Win8<br>
+&gt; &gt;<br>
+&gt; &gt; I wonder if a new command is justifiable / needed.<br>
+&gt; &gt;<br>
+&gt; &gt; Should we consider returning more info with &#39;guest-get-osinfo=
+&#39; ? It<br>
+&gt; &gt; is slightly different from the info returned there currently, but=
+<br>
+&gt; &gt; at the same time reasonably in scope in the sense that it is<br>
+&gt; &gt; essentially reporting a set of OS &quot;feature flags&quot;. They=
+ happen to<br>
+&gt; &gt; be security related in this case, but we could have other feature=
+<br>
+&gt; &gt; flags we want to report too in future.<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; guest-get-security-info can fail due to WMI issue. If we merge this in=
+to<br>
+&gt; guest-get-osinfo,<br>
+&gt; it means guest-get-osinfo will fail just because of a Windows componen=
+t<br>
+&gt; error. Sounds bad.<br>
+<br>
+In what scenarios would WMI fail, and should we treat that as non-fatal<br>
+regardless ? ie indicate that the information is unavailable - that<br>
+already appears to be done for the TPM feature, but not the other<br>
+security features.<br></blockquote><div><br></div></div></div></blockquote>=
+<div><br></div><div>How the managment layer will distingiush between the fa=
+ilure and old guest agent that cannot return any data?</div><div><br></div>=
+<div>Best regards,</div><div>Yan.</div><div>=C2=A0</div><blockquote class=
+=3D"gmail_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;bo=
+rder-left-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">=
+<div dir=3D"ltr"><div class=3D"gmail_quote"><div></div><div>Simple WMI fail=
+ - disable WMI service<br></div><div>From my experience - WMI DB was broken=
+ after 3rd-party software installation / after Windows Update<br><br>&gt;sh=
+ould we treat that as non-fatal=C2=A0regardless ?</div><div><br></div><div>=
+I am open to discussion.=C2=A0</div><div><br></div><blockquote class=3D"gma=
+il_quote" style=3D"margin:0px 0px 0px 0.8ex;border-left-width:1px;border-le=
+ft-style:solid;border-left-color:rgb(204,204,204);padding-left:1ex">
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer" target=3D=
+"_blank">https://hachyderm.io/@berrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
+ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"noreferrer"=
+ target=3D"_blank">https://entangle-photo.org</a> :|<br>
+|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer" target=3D"_=
+blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =C2=A0 <a hre=
+f=3D"https://fstop138.berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://fstop138.berrange.com</a> :|<br>
+<br>
+</blockquote></div></div>
+</blockquote></div></div>
+
+--000000000000e27941064d4bba3a--
+
 
