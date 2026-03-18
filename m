@@ -4,138 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1845C10854DB
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:44:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7A010854DE
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:47:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2nRY-0004KC-8v; Wed, 18 Mar 2026 05:44:00 -0400
+	id 1w2nUM-0005lS-Tc; Wed, 18 Mar 2026 05:46:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1w2nRQ-0004JJ-QR; Wed, 18 Mar 2026 05:43:53 -0400
-Received: from mail-westusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c000::1] helo=BYAPR05CU005.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1w2nRO-0007Em-CC; Wed, 18 Mar 2026 05:43:52 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=wSIcHEOIOiFKthIT4ia4u943OE2PD4ShhX9frKkBAOXFGTnQ3QDKKkjHRhByWTn4HLx2bRYE9ux0DFkFB1CFX32VRE52r/UFRfy+3Pe/fFfNXvsFxDe93i2nq7jX35vsS9datgMK8Ec+s2z7t/mgBqyFJOQ3zXVAMA/m9HLhpbpCkxqndDKKqnR44HYmbM6e4O+W/dfLE0LccQZpZEtYpzHa51hbiyV/kx+CzX+k4pfse03v27b0eBrnUPcdBECiu2TFq1n2/nfeM6S/OXa3CUqL3iKH55uQfbQ2EMExJNYiXaa5h+7pPgX49R3GzTdfXmyuXg0M4slcAtLRYI40jw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=GxPu9luNRoiTI4abXiTiN6a6nHpUDjF4XhNiVY5AOow=;
- b=c+cHK7OMwXdV3qrZYozglUPaJfpCyMajk0VR2e8ioka6NOhU7qa7Hm75/v37dJBPQr0AzW6QClTeRD2OSp1Y2bgQtC0tU6nZIZHRnm7eAU9+xeSjZhnGqt/1kaYNtSQrABzhjo+CrNhzOe+OmXaJGjdLJlPHXAQQfZI33O0Lr1kZHGOZ6bCq79InEP7Tw/18F3mU1d0jgfLJQFVLFI5i8S0u6hRcoe/GbCMOPQtnixMrtJUHXf89G524lXlypsRHjagbkdtgo2gibViH0E8/slsvqUwsa7niOGk5k1ObSnXGK2dN0QjhQz1H5cQbfh/3ZecHK/cjOQ5TSv2QKI1ZFg==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=GxPu9luNRoiTI4abXiTiN6a6nHpUDjF4XhNiVY5AOow=;
- b=MA84ZF3JUDdpKWfkn9ONGwacYQ8bWpVUNWj2pEHFBx7Mq+0zhQxHKBi5k4aGbNe3xPwZisp8ZxK7LA+wAU2t3C5CZXKyKBdi7GsydtGvUbWg0tUO91++RYR1eHvi/9J9MwrO3PKUOgfbBW1uVYSnCunsWkXCOhRwJLR3AZwL4s+9QZKoD11R7Z+NYsoahcmit4f5H1ODqJO/GWmHZdrWqC3x5mBM5z/YG+Vcm4AoV1+fGiXWp3xMuVHY70VHmnd8RTmVDH/vju14YRMH1OPvQf/bV6Axcxou2+RgTBjqlYDF7tYMY6nGLyqslBKOR8Hj02EfFzrew6ZylCEbYv9QkQ==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by SJ0PR12MB5664.namprd12.prod.outlook.com (2603:10b6:a03:42b::18)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.12; Wed, 18 Mar
- 2026 09:43:43 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9745.007; Wed, 18 Mar 2026
- 09:43:43 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Nathan Chen <nathanc@nvidia.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael
- S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Daniel_P_=2E_Berrang=E9?= <berrange@redhat.com>, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Matt Ochs
- <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-Subject: RE: [PATCH v3 5/8] hw/arm/smmuv3-accel: Change SSIDSIZE property to
- SsidSizeMode
-Thread-Topic: [PATCH v3 5/8] hw/arm/smmuv3-accel: Change SSIDSIZE property to
- SsidSizeMode
-Thread-Index: AQHctj1EXBRxWOJF90qSnwk8rr+aiLW0CgSA
-Date: Wed, 18 Mar 2026 09:43:43 +0000
-Message-ID: <CH3PR12MB7548B578F85AE862E3C0A45FAB4EA@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260317183755.3721625-1-nathanc@nvidia.com>
- <20260317183755.3721625-6-nathanc@nvidia.com>
-In-Reply-To: <20260317183755.3721625-6-nathanc@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|SJ0PR12MB5664:EE_
-x-ms-office365-filtering-correlation-id: 1c06656f-8134-4dea-03f7-08de84d2d810
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|7416014|376014|366016|38070700021|56012099003|22082099003|18002099003|7053199007;
-x-microsoft-antispam-message-info: xxs2NGwb/ITnxVVCC6/uGfpnnOZoSu/WBdxM07gZ6FS+/1ULZ2bEKXUVfjRdrxEnZe4tHLtViATocDa0e9J4BHl0LUyA2BdVV1VXwUTdFXCJxZUGwh7TUK3TCOzVxIgQgQH7TymVWF9Xug++3FtcUwS3N/eG8Dh5uaxvxqOj4lvUy/2Q0D7J3eaet7KB5juc0sO55caMGaNVmbT1wbWPbAU/WlJ1+767zyg2qcu0LrO33NDE2zE6dm1HuKuxMJE5snf6EzdcrNgLKE3wFWi05/9MfOiv6oVGODXG04CLx5S1RYoudNM5LX8fX/Okaqzf9z9dkZW4tl1bE7J3nEYelShSYBFFSCGMJXBKZw5siLfkRp7vQRtLZSdY1W2S5LBOdJZDyYZFQaP21tOZ+t+QQxbZolK2h9TY1xDt1CU8To5qD+hKpDQ0ySt0FXlWZn8JmtuiKIpUhWRI45NiYceE9YuiFaYdSiucsVWTDDDyAwrfnsp7JgDZndmhIHpdfyvv1KHOg2uYKzOgvJKKUJinZdbsNEn5BxtR+cEjVjwK+HxovpqDJ7xeuT2Z2nxyTXSkn70li4H4soDl3iikcYXj5YrgsRQIijzVflrq1vb8xIN7spT21ggG4b+I74U4oA/GgV2ZtfLtPC0izYmNR3m9MiConLXo4+6GcH975Rt9kQI0uZ+cxEEeAPdGQ4B8RCuwLdKvS01BE/XpMKrWtNqZxfD9FHUrUgAHlTEGk00xveTsiC6gvduNBdNXAi+ubZQxnO0eTvy6XCw7fQ8NHyLVOeARAyOHGSbNGN88hczyC9k=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(7416014)(376014)(366016)(38070700021)(56012099003)(22082099003)(18002099003)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?s+54rBU2w5uXJVZ8UJ7i8U9NQMUKcIFmtlfgu0kLJHnaNMuzcB7l0tal9a?=
- =?iso-8859-1?Q?RtmUCzE8aaOKrLoEm2S3NypDkSMkzQDsKUoqUSLLrapJh11B/RhBqF8pjc?=
- =?iso-8859-1?Q?diR/e1DdwJXfHolJdjFGFspZHrfvmgCCMkB9C6vSgXoQO5ltHeSyUWC8/H?=
- =?iso-8859-1?Q?IhthQDqCT5MDAapWMEJUpT2sQW3aROIj9xexIN5buJehBT5EkfOURPE1/b?=
- =?iso-8859-1?Q?sfMThYdpPiMCtgWv80/f+5EY6upydsfJh+cqmcvBAeOG+89halySifMp0i?=
- =?iso-8859-1?Q?h046J+StJze96m6paTD8i8sfFbVsGGqGGxH7iY43SBlqEWzTYwxw2pYEPV?=
- =?iso-8859-1?Q?DFgQjHfMgq8YvZLEyCRDfMv5aK6n/rnOpcVe469zcXKo4V1EJB33ZQACdo?=
- =?iso-8859-1?Q?55xkqvirzu9lp7BaG1Vgv6TPHCXWfvLwGU4juscgQY5QVDu3N5m4xnLeK5?=
- =?iso-8859-1?Q?diEFjS97jXjYTuhqvxXgka6kNuNzMvL2fplvtND3IxMKtppJVPelLlQnP3?=
- =?iso-8859-1?Q?YStvQ/0a+stg2/nwzzof82Uv5BjL8FP/lfvNZDHdSTH9sblDCLZotPS9r/?=
- =?iso-8859-1?Q?mmjpEXJOMHYavjX7lhtf9FQkKBT0ee7sYUbHtXMCVXPs4FrlSxH90HCQzQ?=
- =?iso-8859-1?Q?7HXjDUkniypxYYDZvou4DF7VdkVlVo5DSgbyW8xbKVNCs6td+ik250f1Fi?=
- =?iso-8859-1?Q?q0t0yQrRpmXRtm2eucbUAlpCTSqoEWRy1AsJwYvuxz3/fO+P2N2mecc75s?=
- =?iso-8859-1?Q?a9iuDNmWEXKO6DiGcSz7VdfFDs4WVXkgp+A8Gs62+LeOVsABjPPGrZCHtd?=
- =?iso-8859-1?Q?1Kuy8cXn+7JgDdnkSHIckNRkgZFfNgErJa6kSW9kdbTJevz/ARC7uoHwRa?=
- =?iso-8859-1?Q?nUKHiwKlt6fj/Lt+Usx3LYIWLQNL64Hkp72Elz87bQffieaKoNqXvsHC0V?=
- =?iso-8859-1?Q?QOC40x+F4Qi9FQGf+VojNOAxTM+kBh6+QK8hcTiCzgTM05VmARze+8ZS90?=
- =?iso-8859-1?Q?uwqHtYiENb4sHxDVr/vL5goGA9H4NzzlxiJV+3Mohgppg2r6e6gY6JI1NB?=
- =?iso-8859-1?Q?IWrdpZFs2OiPte24J9cPrtF6rT6dDmaLTLwPL6hL19Pyg2//JSX0DTAG6c?=
- =?iso-8859-1?Q?I/8TrqyMsZ/6SyNvoeL6HhDlbkcq/5AMNrVTs823HAp2V4jz9sYbCzA0OH?=
- =?iso-8859-1?Q?2fnHfS02x8y3GK6WZ91Q0Ihn6K3DPNlVTtV1jvj0t1WlUnnBf4xY/xp8zB?=
- =?iso-8859-1?Q?jFZ7C+ojENj3iTUtHn0pcxvbNav6jraXj1khxSLBFqWdLvOeUh6BBwlUpt?=
- =?iso-8859-1?Q?uXgimed6Kvdoq3KIa0++ihxTCrqQ0BuQJ4r4jEpOL5HjZzTkZIKyIAUpgd?=
- =?iso-8859-1?Q?oXe5wjv9fg8+m64tT9V4SbOeH+15Dlu9PYwUJQYhZIw0+jbmsVbyGsj583?=
- =?iso-8859-1?Q?8uiTKgdeiY9GghVBkqZF9d6VswoRESfYKtZyG92gn4QHuhkTPC+G3lyn9e?=
- =?iso-8859-1?Q?CRkn7BEqDcjKvjtMX6cjxfLK4gzPg5XLbGBeeFkkCC+vjfFUJN5NEV9pTH?=
- =?iso-8859-1?Q?nOs1PScv81uUQqENcA7CoJyXeiADTUicqI5j0b9CQRhPQxUNGBTyUUn22p?=
- =?iso-8859-1?Q?pP1FypdTQYio2au0XHGEW3JRL6Qd4NSTd3CKGP3OV5SnAWpxZLE9wBFu3J?=
- =?iso-8859-1?Q?kOuzMxjbc5bPujI+sSNoUcHkFMeyxxrSSvlRJGu8iHHtwn+pYBuDAQvMb0?=
- =?iso-8859-1?Q?yAU5aULDKQ/NGPRoqy9caCVG7CLN6qIwLihgQKIutKkywQ6eR/aXAYNjM5?=
- =?iso-8859-1?Q?oWxUbrtOig=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nUH-0005l1-GJ
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:46:49 -0400
+Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nUF-0007i6-G9
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:46:49 -0400
+Received: by mail-wm1-x330.google.com with SMTP id
+ 5b1f17b1804b1-4853f2826f7so68779455e9.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 02:46:47 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773827205; x=1774432005; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=fdyOOLf5i8Dd0YGruaC4rY66y3fKstXBEGkq6ENOaj0=;
+ b=aAcWGtgnv6scg080ZlpYBelPJsxn0YmpeZaNBkpQk0olyq5LpcMfMckF5Y2PGUxP+b
+ yA9Mi8jtHTDmJQZdo8UoTWxPpOok3SlY5KEv9locls3utBV/qL4//HNhh5FKQbhOREdA
+ 8PeFZHPD7qQRTa6Vse136OTaX0QBgJ+1YCCGdZnpE2+2znWoqXMWiGVs7wQr4dXAMnx3
+ VWN+3XjOOSiATpxCvoPxHYyeqT4/wNMf7mcoPF6Ab0SIYXJ+e8wiOMOkSinSGrifNksh
+ TOAuP+k6NAb3GwM3JsqOtFaftaRI7zUra0MTnIUS+NzyHDwLiB1gJaKaTJVQ1H5awjOV
+ BVDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773827205; x=1774432005;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=fdyOOLf5i8Dd0YGruaC4rY66y3fKstXBEGkq6ENOaj0=;
+ b=DEQycp0Ak6vJRk1kUJYx9c8eu1y2VVYkkViWazB7FYRflXuj4xXotXkVsMs0lLXONM
+ oHm6xQJmSyJ4dqYe1DbHS5c+SnuXex3bdiOb6BZr9kvPH7Y8p/cW7IKkgAbZfwuBBFzQ
+ ZCOBhLsr9fSyzslurY12B8zr/OF1OmLsUsI8xyeBG40qRmL1TuTo3oHpPlJeqCAmUnWZ
+ y+JLKz3SmwvMJ/3DHDJBXJc+9oogq24HSx4QRVKIm42qsVKpbQKfTonQZezDMNk6kb5E
+ Phay8ZeQvMswcLoCq9Nu49cqv4bWwYAyCxtoCy+6A38T0UazOyNXefqmFtrkCgoHfSCx
+ 92Xg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUYR0Actgj2h6EOi5gkmJLgBRLdP+lYD2hmzaB1mXirbbd6e1OHuOWq5ZbCvpkIUPQPN9jo51pzG/07@nongnu.org
+X-Gm-Message-State: AOJu0Yzf2j6ZKplwnWT4x4a+UyILN/FzKhS5vgpUuQQJye/sKwkIPYoX
+ WG9ZKef3UONG5QutoqaCG9R3f33NE0lpQbgimsdCCACzJ6iLR8keqxqa5UbTjF7BS3U=
+X-Gm-Gg: ATEYQzxKdS5dYjDmDWDUfNqVHDqdZBL7gwOSab5qRz63wCAp3m2SioxEb6LOxpzUpsv
+ gpnS5AUzW+IZkdZ4GeGBNpfip/9IO3Gr2KW90/ZqWJ3pog93OaLlgsrjm1kKTTasozViGRInJuS
+ twl+ExEq2k5v7AKggATqGgCquGP6JapKQwk07jOeJvMLs0qTDdZgmWXkEjaAhPegMNjXYPHi9RR
+ NWv3iuTVw30efq5CA5TDJyHFn64NlpMbMeYjTnSaq+JLn0xcnXHBDR+JljdIag2xv0z9lrMYHLp
+ l2YVWs87jPVxGeVgG5efhEWJ6h8/z15Xdq3dEf6Fn5lO0eBi6PSiUBNC2uFh4bQ3BHPhr/5JzoX
+ CcT1hZ+5iS27AS4L6OjB6vvx2pXnp+qNSLNYWKqOWkcC9DO1u3qOaGA4gBihjh6SGV6osQu1Eep
+ LkH82zsfMoY/++40MjWGypU7h1BQ4WhzawC6JkvF1xTInwyW0kxWCn5Bxe0CCtH2S+LM5FHwdSa
+ LdS
+X-Received: by 2002:a05:600c:698c:b0:485:3ca4:4ef4 with SMTP id
+ 5b1f17b1804b1-486f4437560mr42510605e9.9.1773827205345; 
+ Wed, 18 Mar 2026 02:46:45 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486f4b810bcsm15040595e9.15.2026.03.18.02.46.44
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Mar 2026 02:46:44 -0700 (PDT)
+Message-ID: <b57f120e-dc8e-4d58-861a-01c2112b7d8a@linaro.org>
+Date: Wed, 18 Mar 2026 10:46:43 +0100
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 1c06656f-8134-4dea-03f7-08de84d2d810
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2026 09:43:43.5509 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 3sv/bATITl5npzhfm/eXloPxcflKgEReLhQAqKVAnaLDIl8RJMCpWkJWm+0PJzk0umk3KsZVhXlHDkIQ4ahpow==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR12MB5664
-Received-SPF: permerror client-ip=2a01:111:f403:c000::1;
- envelope-from=skolothumtho@nvidia.com;
- helo=BYAPR05CU005.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
+ <20260317194241.869568-4-pierrick.bouvier@linaro.org>
+ <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::330;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,190 +107,179 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+On 18/3/26 09:11, Cédric Le Goater wrote:
+> On 3/17/26 20:42, Pierrick Bouvier wrote:
+>> Add stubs for needed functions.
+>>
 
+--->
 
-> -----Original Message-----
-> From: Nathan Chen <nathanc@nvidia.com>
-> Sent: 17 March 2026 18:38
-> To: qemu-devel@nongnu.org; qemu-arm@nongnu.org
-> Cc: Eric Auger <eric.auger@redhat.com>; Peter Maydell
-> <peter.maydell@linaro.org>; Shannon Zhao <shannon.zhaosl@gmail.com>;
-> Michael S . Tsirkin <mst@redhat.com>; Igor Mammedov
-> <imammedo@redhat.com>; Ani Sinha <anisinha@redhat.com>; Paolo Bonzini
-> <pbonzini@redhat.com>; Daniel P . Berrang=E9 <berrange@redhat.com>; Eric
-> Blake <eblake@redhat.com>; Markus Armbruster <armbru@redhat.com>;
-> Shameer Kolothum Thodi <skolothumtho@nvidia.com>; Matt Ochs
-> <mochs@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; Nathan Chen
-> <nathanc@nvidia.com>
-> Subject: [PATCH v3 5/8] hw/arm/smmuv3-accel: Change SSIDSIZE property to
-> SsidSizeMode
->=20
-> From: Nathan Chen <nathanc@nvidia.com>
->=20
-> Change accel SMMUv3 SSIDSIZE property from uint8_t to SsidSizeMode.
-> The 'auto' value is not implemented, as this commit is meant to set the
-> property to the correct type and avoid breaking JSON/QMP when the auto
-> mode is introduced. A future patch will implement resolution of 'auto'
-> value to match the host SMMUv3 SSIDSIZE value.
->=20
-> Fixes: b8c6f8a69d27 ("hw/arm/smmuv3-accel: Make SubstreamID support
-> configurable")
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c   | 23 +++++++++++++++++++++--
->  hw/arm/smmuv3.c         | 18 ++++++++++--------
->  include/hw/arm/smmuv3.h |  3 ++-
->  3 files changed, 33 insertions(+), 11 deletions(-)
->=20
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
-> index ddd927fa80..c90fa9f5bb 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -802,7 +802,7 @@ static uint64_t
-> smmuv3_accel_get_viommu_flags(void *opaque)
->      SMMUState *bs =3D opaque;
->      SMMUv3State *s =3D ARM_SMMUV3(bs);
->=20
-> -    if (s->ssidsize) {
-> +    if (s->ssidsize > SSID_SIZE_MODE_0) {
->          flags |=3D VIOMMU_FLAG_PASID_SUPPORTED;
->      }
->      return flags;
-> @@ -817,6 +817,22 @@ static const PCIIOMMUOps smmuv3_accel_ops =3D {
->      .get_msi_direct_gpa =3D smmuv3_accel_get_msi_gpa,
->  };
->=20
-> +/*
-> + * This returns the value of a SsidSizeMode value offset by 1 to
-> + * account for the enum values offset by 1 from actual values.
-> + *
-> + * SSID_SIZE_MODE_0 =3D 1, SSID_SIZE_MODE_1 =3D 2, etc. so return 0
-> + * if SSID_SIZE_MODE_0 is passed as input, return 1 if
-> + * SSID_SIZE_MODE_1 is passed as input, etc.
-> + */
-> +static uint8_t ssidsize_mode_to_value(SsidSizeMode mode)
-> +{
-> +    if (mode =3D=3D SSID_SIZE_MODE_AUTO) {
-> +        return 0;
-> +    }
-> +    return mode - 1;
-> +}
-> +
->  void smmuv3_accel_idr_override(SMMUv3State *s)
->  {
->      if (!s->accel) {
-> @@ -842,7 +858,10 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
->       * By default QEMU SMMUv3 has no SubstreamID support. Update IDR1 if
-> user
->       * has enabled it.
->       */
-> -    s->idr[1] =3D FIELD_DP32(s->idr[1], IDR1, SSIDSIZE, s->ssidsize);
-> +    if (s->ssidsize > SSID_SIZE_MODE_0) {
-> +        s->idr[1] =3D FIELD_DP32(s->idr[1], IDR1, SSIDSIZE,
-> +                               ssidsize_mode_to_value(s->ssidsize));
-> +    }
->  }
->=20
->  /* Based on SMUUv3 GPBA.ABORT configuration, attach a corresponding
-> HWPT */
-> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
-> index 40d6aca83e..e7fec7a69e 100644
-> --- a/hw/arm/smmuv3.c
-> +++ b/hw/arm/smmuv3.c
-> @@ -20,6 +20,7 @@
->  #include "qemu/bitops.h"
->  #include "hw/core/irq.h"
->  #include "hw/core/sysbus.h"
-> +#include "hw/core/qdev-properties-system.h"
->  #include "migration/blocker.h"
->  #include "migration/vmstate.h"
->  #include "hw/core/qdev-properties.h"
-> @@ -625,7 +626,7 @@ static int decode_ste(SMMUv3State *s,
-> SMMUTransCfg *cfg,
->      }
->=20
->      /* Multiple context descriptors require SubstreamID support */
-> -    if (!s->ssidsize && STE_S1CDMAX(ste) !=3D 0) {
-> +    if (s->ssidsize =3D=3D SSID_SIZE_MODE_0 && STE_S1CDMAX(ste) !=3D 0) =
-{
->          qemu_log_mask(LOG_UNIMP,
->                  "SMMUv3: multiple S1 context descriptors require Substre=
-amID
-> support. "
->                  "Configure ssidsize > 0 (requires accel=3Don)\n");
-> @@ -1984,7 +1985,7 @@ static bool
-> smmu_validate_property(SMMUv3State *s, Error **errp)
->              error_setg(errp, "OAS must be 44 bits when accel=3Doff");
->              return false;
->          }
-> -        if (s->ssidsize) {
-> +        if (s->ssidsize > SSID_SIZE_MODE_0) {
->              error_setg(errp, "ssidsize can only be set if accel=3Don");
->              return false;
->          }
-> @@ -2008,13 +2009,13 @@ static bool
-> smmu_validate_property(SMMUv3State *s, Error **errp)
->          return false;
->      }
->=20
-> -    if (s->oas !=3D SMMU_OAS_44BIT && s->oas !=3D SMMU_OAS_48BIT) {
-> -        error_setg(errp, "OAS can only be set to 44 or 48 bits");
-> +    if (s->ssidsize =3D=3D SSID_SIZE_MODE_AUTO) {
-> +        error_setg(errp, "ssidsize cannot be set to auto");
->          return false;
->      }
-> -    if (s->ssidsize > SMMU_SSID_MAX_BITS) {
-> -        error_setg(errp, "ssidsize must be in the range 0 to %d",
-> -                   SMMU_SSID_MAX_BITS);
+>> As well, we need to add pixman to qemuutil library dependencies since
+>> pixman is transitively included from pci.h header, which is needed to be
+>> able to include prototypes for stubs we declared.
+>> In file included from include/ui/console.h:4,
+>>                   from ../hw/vfio/vfio-display.h:12,
+>>                   from ../hw/vfio/pci.h:25,
+>>                   from ../hw/vfio/igd-stubs.c:9:
+>> include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or 
+>> directory
+>>     10 | #include <pixman.h>
+>>        |          ^~~~~~~~~~
+>>
+>> On OpenBSD, opengl headers are not available in default include path,
+>> and thus we need to add opengl to list of qemuutil dependencies.
+>> In file included from /home/root/qemu/include/ui/console.h:9:
+>> /home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h' 
+>> file not found
+>>
+>> Finally, 
 
-I think we can now get rid of the "#define SMMU_SSID_MAX_BITS"
-as I don't think it is used anywhere else and SsidSizeMode won't
-accept anything > 20. Right?
+<---
 
-Thanks,
-Shameer
+>> vfio_pci_hot_reset_info must be forwarded declared on non linux
+>> platforms:
+>> In file included from ../hw/vfio/igd-stubs.c:9:
+>> ../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info' 
+>> declared inside parameter list will not be visible outside of this 
+>> definition or declaration [-Werror]
+>>    265 |                                     struct 
+>> vfio_pci_hot_reset_info **info_p);
+>>        |
+>>
+>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> Duplicated Signed-off-by. I can fix when applying.
 
-> +
-> +    if (s->oas !=3D SMMU_OAS_44BIT && s->oas !=3D SMMU_OAS_48BIT) {
-> +        error_setg(errp, "OAS can only be set to 44 or 48 bits");
->          return false;
->      }
->=20
-> @@ -2145,7 +2146,8 @@ static const Property smmuv3_properties[] =3D {
->      DEFINE_PROP_ON_OFF_AUTO("ril", SMMUv3State, ril,
-> ON_OFF_AUTO_ON),
->      DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats,
-> ON_OFF_AUTO_OFF),
->      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
-> -    DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
-> +    DEFINE_PROP_SSIDSIZE_MODE("ssidsize", SMMUv3State, ssidsize,
-> +                              SSID_SIZE_MODE_0),
->  };
->=20
->  static void smmuv3_instance_init(Object *obj)
-> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
-> index c35e599bbc..ddf472493d 100644
-> --- a/include/hw/arm/smmuv3.h
-> +++ b/include/hw/arm/smmuv3.h
-> @@ -21,6 +21,7 @@
->=20
->  #include "hw/arm/smmu-common.h"
->  #include "qom/object.h"
-> +#include "qapi/qapi-types-misc-arm.h"
->=20
->  #define TYPE_SMMUV3_IOMMU_MEMORY_REGION "smmuv3-iommu-
-> memory-region"
->=20
-> @@ -72,7 +73,7 @@ struct SMMUv3State {
->      OnOffAuto ril;
->      OnOffAuto ats;
->      uint8_t oas;
-> -    uint8_t ssidsize;
-> +    SsidSizeMode ssidsize;
->  };
->=20
->  typedef enum {
-> --
-> 2.43.0
+Actually you can also cut description marked betwwen --->
+and <--- because already mentioned in future commit 988499515da:
+https://lore.kernel.org/qemu-devel/20260317190250.70506-3-philmd@linaro.org/
+which removes [*] below (should disappear on rebase).
+
+(Sorry for that hiccups, I was expecting Pierrick series to
+be posted after my PR was merged).
+
+Regards,
+
+Phil.
+
+> 
+> Thanks,
+> 
+> C.
+> 
+>> ---
+>>   meson.build          |  2 +-
+>>   hw/vfio/pci.h        |  2 ++
+>>   hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
+>>   hw/vfio/pci-quirks.c |  5 -----
+>>   hw/vfio/meson.build  |  1 +
+>>   5 files changed, 24 insertions(+), 6 deletions(-)
+>>   create mode 100644 hw/vfio/igd-stubs.c
+>>
+>> diff --git a/meson.build b/meson.build
+>> index b2154bb9287..ab726ea1152 100644
+>> --- a/meson.build
+>> +++ b/meson.build
+>> @@ -3781,7 +3781,7 @@ util_ss = util_ss.apply({})
+>>   libqemuutil = static_library('qemuutil',
+>>                                build_by_default: false,
+>>                                sources: util_ss.sources() + 
+>> stub_ss.sources() + genh,
+>> -                             dependencies: [util_ss.dependencies(), 
+>> libm, threads, glib, socket, malloc, rt])
+>> +                             dependencies: [util_ss.dependencies(), 
+>> libm, threads, glib, socket, malloc, rt, pixman, opengl])
+
+[*]
+
+>>   qemuutil = declare_dependency(link_with: libqemuutil,
+>>                                 sources: genh + version_res,
+>>                                 dependencies: [event_loop_base])
+>> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+>> index d6495d7f297..c3a1f53d350 100644
+>> --- a/hw/vfio/pci.h
+>> +++ b/hw/vfio/pci.h
+>> @@ -258,6 +258,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice 
+>> *vdev, Error **errp);
+>>   extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
+>> +struct vfio_pci_hot_reset_info;
+>> +
+>>   void vfio_pci_pre_reset(VFIOPCIDevice *vdev);
+>>   void vfio_pci_post_reset(VFIOPCIDevice *vdev);
+>>   bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
+>> diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
+>> new file mode 100644
+>> index 00000000000..f7687d90912
+>> --- /dev/null
+>> +++ b/hw/vfio/igd-stubs.c
+>> @@ -0,0 +1,20 @@
+>> +/*
+>> + * IGD device quirks stubs
+>> + *
+>> + * SPDX-License-Identifier: GPL-2.0-or-later
+>> + */
+>> +
+>> +#include "qemu/osdep.h"
+>> +#include "qapi/qmp/qerror.h"
+>> +#include "pci.h"
+>> +#include "pci-quirks.h"
+>> +
+>> +void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
+>> +{
+>> +    return;
+>> +}
+>> +
+>> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
+>> +{
+>> +    return true;
+>> +}
+>> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+>> index 7b907b9360d..ab864048943 100644
+>> --- a/hw/vfio/pci-quirks.c
+>> +++ b/hw/vfio/pci-quirks.c
+>> @@ -11,7 +11,6 @@
+>>    */
+>>   #include "qemu/osdep.h"
+>> -#include CONFIG_DEVICES
+>>   #include "exec/memop.h"
+>>   #include "qemu/units.h"
+>>   #include "qemu/log.h"
+>> @@ -1128,11 +1127,9 @@ static void 
+>> vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
+>>    */
+>>   bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
+>>   {
+>> -#ifdef CONFIG_VFIO_IGD
+>>       if (!vfio_probe_igd_config_quirk(vdev, errp)) {
+>>           return false;
+>>       }
+>> -#endif
+>>       return true;
+>>   }
+>> @@ -1179,9 +1176,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, 
+>> int nr)
+>>       vfio_probe_nvidia_bar5_quirk(vdev, nr);
+>>       vfio_probe_nvidia_bar0_quirk(vdev, nr);
+>>       vfio_probe_rtl8168_bar2_quirk(vdev, nr);
+>> -#ifdef CONFIG_VFIO_IGD
+>>       vfio_probe_igd_bar0_quirk(vdev, nr);
+>> -#endif
+>>   }
+>>   void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr)
+>> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+>> index f2a7728d3d0..6c00a7f51bb 100644
+>> --- a/hw/vfio/meson.build
+>> +++ b/hw/vfio/meson.build
+>> @@ -17,6 +17,7 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+>>   vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
+>>   vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
+>>   vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
+>> +stub_ss.add(files('igd-stubs.c'))
+>>   specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+> 
 
 
