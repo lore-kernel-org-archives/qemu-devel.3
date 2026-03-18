@@ -4,74 +4,125 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 725B1103E19B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 15:49:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9F2FA10775E1
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 16:14:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2t8b-0007mx-QL; Wed, 18 Mar 2026 11:48:49 -0400
+	id 1w2tWx-0000F7-W8; Wed, 18 Mar 2026 12:14:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1w2t8Y-0007mP-S5
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 11:48:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ id 1w2tWw-0000Ee-D0
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:13:58 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <eashurov@redhat.com>)
- id 1w2t8W-00065Q-Fp
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 11:48:46 -0400
+ id 1w2tWt-0000mb-5m
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:13:58 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773848923;
+ s=mimecast20190719; t=1773850433;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=qFhE1L3rkdpLxGQSaBtC6ial7Yx1ApsEEwl1kLfwaKI=;
- b=KI2oU7/cyd/OPoMK9irj8qQUsFTpFO8nWl4BXyohxnfw25u9gkxFMxiOmezFZH8X4ysc6o
- AuB7Ik3PnePsAAx0n9X1v+aEHeO2C1NZFfOERG/FHXz0KFfoRrcMDqIqhYuNQkqpOmlMvt
- zAvfPNPV+5aUkDGxsl+sv0BrJ+fz6HE=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-304-47SeQl5VO8Wh8UVsF2zhnw-1; Wed,
- 18 Mar 2026 11:48:42 -0400
-X-MC-Unique: 47SeQl5VO8Wh8UVsF2zhnw-1
-X-Mimecast-MFC-AGG-ID: 47SeQl5VO8Wh8UVsF2zhnw_1773848921
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 271F418005B6
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 15:48:41 +0000 (UTC)
-Received: from eashurov-thinkpadx1carbongen12.raanaii.csb (unknown
- [10.45.226.106])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2A15A30001A1; Wed, 18 Mar 2026 15:48:38 +0000 (UTC)
-From: Elizabeth Ashurov <eashurov@redhat.com>
-To: qemu-devel@nongnu.org
-Cc: berrange@redhat.com, kkostiuk@redhat.com, yvugenfi@redhat.com,
- Elizabeth Ashurov <eashurov@redhat.com>
-Subject: [PATCH v2 2/2] qga: add --audit option for command logging control
-Date: Wed, 18 Mar 2026 17:47:52 +0200
-Message-ID: <20260318154752.1880933-2-eashurov@redhat.com>
-In-Reply-To: <20260318154752.1880933-1-eashurov@redhat.com>
-References: <20260312141657.1701801-1-eashurov@redhat.com>
- <20260318154752.1880933-1-eashurov@redhat.com>
+ bh=rRZUpOGGHZemQWBldF14O7s+mQu036Em0tbqzBQyoS4=;
+ b=GvqWafuZddiiW3Y4jeMiWWGvIgdHoQhcpEvorVBTH/aHLKJoV62i0TEihevCMQzSQw0VEc
+ +NnJ/F/KZ3DvWvP5sudRW/PLvJ4ddenvTrju+wbn5kFLfNinMfYpCTYBUexrxccbIkbxBr
+ xO4E/tERbL48RzVWnyMFs9KyxdsZpw8=
+Received: from mail-lj1-f199.google.com (mail-lj1-f199.google.com
+ [209.85.208.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-683-3ffYrw-BMySuRaOLYwIdtw-1; Wed, 18 Mar 2026 12:13:51 -0400
+X-MC-Unique: 3ffYrw-BMySuRaOLYwIdtw-1
+X-Mimecast-MFC-AGG-ID: 3ffYrw-BMySuRaOLYwIdtw_1773850430
+Received: by mail-lj1-f199.google.com with SMTP id
+ 38308e7fff4ca-38a247e261dso360401fa.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 09:13:51 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773850430; cv=none;
+ d=google.com; s=arc-20240605;
+ b=VfV+pFC4hmmRQGCexuCsoluP2M24JE0J/zk4Qp3wbYuujwqk2mDWJ6EwGhJSHTZJUz
+ 1kj+AUhi+FtCBGjdTdfU7QNvHRiF3aNHa/Xr+fIXH/VxNF3FqQFRynBztBLlN8FFQDUV
+ y/PDMV1CpaemyDTv9J2p5bvUyeL7K/s9isSMzh1Jsq8hv7MikBuEJXa39w0dIVu06vOH
+ 0B+ChUaZCmS4OkQc+IxYN223cqQNVNT/3PYWjrl+4PA/sHEqolSpA9FCVl5ng3TQ0q8M
+ LVL/wWch2w2zAYNs7w9lQbSnxWfdtFHh+VewbKUkaPz9ig1w5hcUAbz/VwqYfk1CzUTV
+ GCbg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=rRZUpOGGHZemQWBldF14O7s+mQu036Em0tbqzBQyoS4=;
+ fh=71IQ9ZIOXSQ8Y1O/2FNDVQcE5FyDqKuSvM3MTWgYVks=;
+ b=gAkYxDTz6FKDHImDBIPzyHuafmeIVqXMMyhs8UqEYK4zae2Ca9z7DtXJs3lf+tnySb
+ BKox6WewU0xiPno5l5MaAFnlIji4RI2z5FPCYY3pGOA6YBs5CGIll67Yu2rVsrTbngQo
+ gi3oe00LUXgvZoIwyX4zkdaimGH1V94Xaws4vpTXhFxfh8rwFsOZ8oyEv7nMs19RkOeN
+ rXLIJCbVh+Ekr0OfguHGvG/DI2hYJz1wuH2piVky3+QvA4/IsdqYfz2GnToGKB9+zOtK
+ gEbe0gpI2nX3HFRmG+fCl/2akrRFWAWO6DAp6eakbybWoBm8u0fLxQYaa51xHuJp3rkI
+ N8ig==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773850430; x=1774455230; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=rRZUpOGGHZemQWBldF14O7s+mQu036Em0tbqzBQyoS4=;
+ b=jqACHG07t7RU79Bcl6NKF0IcjjSiMkXyGZJhuqwbkXYog8o45sx5/2KHXV35E7XwqE
+ CLlIEspK0tEYmB/SCGTXf+nn201xF7v7/9RArDfZllWtiYMSnQbFY+nelJLGUv1gMoxL
+ Ssfh7WUTueDKJMq8fG3W9eZxv1u2R6VvkS1iE/9OujqxxSUbBQtjostPDq+f+gIw+KVM
+ 3JI3gHdxhMCy1dDtEyE3Bwnrp5cwFnq4j/3ZVtgQKnLlBiuI01Rt0n4qVMtaYyqaftbV
+ z/umdHPBrnCPGrbaSEeaAPXMoSq55Ows15F6XdaHpcJ0WUknwgGjTrNVzGqODhbrlrsL
+ VgwA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773850430; x=1774455230;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=rRZUpOGGHZemQWBldF14O7s+mQu036Em0tbqzBQyoS4=;
+ b=irw2yfNWwztJIHfrf8LRszZ52CXVPUUhBeVGbjxpZoV1G7TAWq3NDGBLDFGYn7GCTs
+ eL2MjjUnbXdzn3MpBt2g64NRe1YVAPedpx/Rn89kgFMEiCXjwLFiwiYKCHLD4dT3BXm6
+ nnEdEm5CqhlCDvLB+Dvvm4EWTEC9uFmFHHNK70mILFUe3VeTbC6EIugf3R3a6vWbOtQN
+ Sosl4Y9Yj1CD3ocwEurBs75AtmlEgoE4IbTpQ5CMoLfwaoyh0XE9N3ij7/nh9u8imUO+
+ Rq7r+Kx0No/+b2aabJEwe27NvzUzwABNlpEmcaKDRWayOyH5EobyCQ4irTv82jkxxCgF
+ rwxg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXpZv1rBEGxiPIiag42VboN+CG1HEOYeeckb6oiOtoS2fh9Ra2/93SkE5Re2WFGOtyDvBJhwe6OJcNO@nongnu.org
+X-Gm-Message-State: AOJu0YxVCV1THe00jHft1e6fgu76UVALsnd/g9KOsJ4AmdKa18fx303C
+ Nmmw/3fIkFztkOyKu2NYiPB4bhBjpcu/l7eqSBHXlaRekjUdGZU23aGwk7n5JNyakaXXbKdBocp
+ W7C1MLDZs053feyu3NQusY6ItGzitT4uQybqTcDNgHb5WlGZ7h/VNvY+RLQnUk9PPMdLJfEyuK0
+ D+E+gSru9SbxGmieSyU6uZV70IkEwsi6g=
+X-Gm-Gg: ATEYQzxKERhtQNVbkLN/QTfjGE4fBVg60NQFBCNiODKtNs3b9z+P/D9dCS2DGbEBWkH
+ x5UEdAIaMrrNbTJ33GScLk7aUe9QgjWM+0VC1Kb9PwuS4zlwbh4OlQwRD7mo0UkNWi5mx7s08/q
+ aUR45NK7i1C0JXhbmPI76mciGSvgVg5V4fPvw5yN0vYZcU5XKaXH8q6oBHAT4BtouKdKq7YYZHi
+ KHY
+X-Received: by 2002:a2e:3218:0:b0:38a:56d0:9d24 with SMTP id
+ 38308e7fff4ca-38bd5850543mr13894831fa.18.1773850430085; 
+ Wed, 18 Mar 2026 09:13:50 -0700 (PDT)
+X-Received: by 2002:a2e:3218:0:b0:38a:56d0:9d24 with SMTP id
+ 38308e7fff4ca-38bd5850543mr13894741fa.18.1773850429385; Wed, 18 Mar 2026
+ 09:13:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=eashurov@redhat.com;
+References: <20260312141657.1701801-1-eashurov@redhat.com>
+ <abLVj2eLZmKbPs9J@redhat.com>
+ <CAPMcbCq4i8DhwRqPkJxywt6H==NRW=3_7NA0ZQhe8cMFtVGRCA@mail.gmail.com>
+ <abLdcy6eoedHgeSV@redhat.com>
+In-Reply-To: <abLdcy6eoedHgeSV@redhat.com>
+From: Elizabeth Ashurov <eashurov@redhat.com>
+Date: Wed, 18 Mar 2026 18:13:37 +0200
+X-Gm-Features: AaiRm53EfIa7SQpWBCY_RtATEHXMFzJ8wZNcSMUubUdsbAR_hMEFzx3rJGJwgRA
+Message-ID: <CAK957kGvCpN22L40oJ1zJi_RAO9_rzgijzoBPqk=vTjEegt8BQ@mail.gmail.com>
+Subject: Re: [PATCH v1] qga: rework slog to support multiple severity levels
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>
+Cc: Kostiantyn Kostiuk <kkostiuk@redhat.com>, qemu-devel@nongnu.org
+Content-Type: multipart/alternative; boundary="000000000000ba8a1c064d4ebc71"
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=eashurov@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001,
+ RCVD_IN_MSPIKE_WL=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_PASS=-0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,364 +138,347 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add -A/--audit=LIST option to control which guest agent commands
-are logged at info level (visible with --verbose) and which at
-debug level (visible only with --debug).
+--000000000000ba8a1c064d4ebc71
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-Patterns are comma-separated and checked in order; the first match
-wins. Patterns starting with '!' log the command at debug level
-instead of info.
-For example: --audit=!guest-ping,* logs all commands
-at info level except guest-ping.
+Hi,
 
-Move command logging from individual handlers into process_event()
-so all commands are logged in one place. Keep g_debug() calls in
-handlers for useful details like file paths, handles, and PIDs.
+Thanks for the review and suggestions.
+I updated the patch based on the discussion and sent v2.
 
-The default pattern is '*', so all commands are logged at info
-level unless configured otherwise.
+Best regards,
 
-Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
----
- qga/commands-linux.c |  2 --
- qga/commands-posix.c | 11 +++----
- qga/commands-win32.c | 14 +++------
- qga/commands.c       |  6 ++--
- qga/main.c           | 73 ++++++++++++++++++++++++++++++++++++++++++--
- 5 files changed, 81 insertions(+), 25 deletions(-)
+On Thu, Mar 12, 2026 at 5:36=E2=80=AFPM Daniel P. Berrang=C3=A9 <berrange@r=
+edhat.com>
+wrote:
 
-diff --git a/qga/commands-linux.c b/qga/commands-linux.c
-index a722de2e6a..8df83963fa 100644
---- a/qga/commands-linux.c
-+++ b/qga/commands-linux.c
-@@ -1158,8 +1158,6 @@ qmp_guest_fstrim(bool has_minimum, int64_t minimum, Error **errp)
-     int fd;
-     struct fstrim_range r;
- 
--    g_info("guest-fstrim called");
--
-     QTAILQ_INIT(&mounts);
-     if (!build_fs_mount_list(&mounts, errp)) {
-         return NULL;
-diff --git a/qga/commands-posix.c b/qga/commands-posix.c
-index 96939a6f36..6a3e6c78e3 100644
---- a/qga/commands-posix.c
-+++ b/qga/commands-posix.c
-@@ -240,7 +240,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
-     const char *reboot_flag = "-r";
- #endif
- 
--    g_info("guest-shutdown called, mode: %s", mode);
-+    g_debug("guest-shutdown mode: %s", mode);
-     if (!mode || strcmp(mode, "powerdown") == 0) {
-         if (access(POWEROFF_CMD_PATH, X_OK) == 0) {
-             shutdown_cmd = POWEROFF_CMD_PATH;
-@@ -519,7 +519,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode,
-     if (!mode) {
-         mode = "r";
-     }
--    g_info("guest-file-open called, filepath: %s, mode: %s", path, mode);
-+    g_debug("guest-file-open filepath: %s, mode: %s", path, mode);
-     fh = safe_open_or_create(path, mode, &local_err);
-     if (local_err != NULL) {
-         error_propagate(errp, local_err);
-@@ -540,7 +540,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode,
-         return -1;
-     }
- 
--    g_info("guest-file-open, handle: %" PRId64, handle);
-+    g_debug("guest-file-open handle: %" PRId64, handle);
-     return handle;
- }
- 
-@@ -549,7 +549,7 @@ void qmp_guest_file_close(int64_t handle, Error **errp)
-     GuestFileHandle *gfh = guest_file_handle_find(handle, errp);
-     int ret;
- 
--    g_info("guest-file-close called, handle: %" PRId64, handle);
-+    g_debug("guest-file-close handle: %" PRId64, handle);
-     if (!gfh) {
-         return;
-     }
-@@ -793,8 +793,6 @@ int64_t qmp_guest_fsfreeze_freeze_list(bool has_mountpoints,
-     FsMountList mounts;
-     Error *local_err = NULL;
- 
--    g_info("guest-fsfreeze called");
--
-     execute_fsfreeze_hook(FSFREEZE_HOOK_FREEZE, &local_err);
-     if (local_err) {
-         error_propagate(errp, local_err);
-@@ -833,7 +831,6 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
- 
-     if (ret >= 0) {
-         ga_unset_frozen(ga_state);
--        g_info("guest-fsthaw called");
-         execute_fsfreeze_hook(FSFREEZE_HOOK_THAW, errp);
-     } else {
-         ret = 0;
-diff --git a/qga/commands-win32.c b/qga/commands-win32.c
-index d26b0041ce..e916d081f5 100644
---- a/qga/commands-win32.c
-+++ b/qga/commands-win32.c
-@@ -231,7 +231,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
-     if (!mode) {
-         mode = "r";
-     }
--    g_info("guest-file-open called, filepath: %s, mode: %s", path, mode);
-+    g_debug("guest-file-open filepath: %s, mode: %s", path, mode);
-     guest_flags = find_open_flag(mode);
-     if (guest_flags == NULL) {
-         error_setg(errp, "invalid file open mode");
-@@ -267,8 +267,7 @@ int64_t qmp_guest_file_open(const char *path, const char *mode, Error **errp)
-         goto done;
-     }
- 
--    g_info("guest-file-open, handle: % " PRId64, fd);
--
-+    g_debug("guest-file-open handle: %" PRId64, fd);
- done:
-     g_free(w_path);
-     return fd;
-@@ -278,7 +277,7 @@ void qmp_guest_file_close(int64_t handle, Error **errp)
- {
-     bool ret;
-     GuestFileHandle *gfh = guest_file_handle_find(handle, errp);
--    g_info("guest-file-close called, handle: %" PRId64, handle);
-+    g_debug("guest-file-close handle: %" PRId64, handle);
-     if (gfh == NULL) {
-         return;
-     }
-@@ -337,8 +336,7 @@ void qmp_guest_shutdown(const char *mode, Error **errp)
-     Error *local_err = NULL;
-     UINT shutdown_flag = EWX_FORCE;
- 
--    g_info("guest-shutdown called, mode: %s", mode);
--
-+    g_debug("guest-shutdown mode: %s", mode);
-     if (!mode || strcmp(mode, "powerdown") == 0) {
-         shutdown_flag |= EWX_POWEROFF;
-     } else if (strcmp(mode, "halt") == 0) {
-@@ -1255,8 +1253,6 @@ int64_t qmp_guest_fsfreeze_freeze_list(bool has_mountpoints,
-         return 0;
-     }
- 
--    g_info("guest-fsfreeze called");
--
-     /* cannot risk guest agent blocking itself on a write in this state */
-     ga_set_frozen(ga_state);
- 
-@@ -1294,8 +1290,6 @@ int64_t qmp_guest_fsfreeze_thaw(Error **errp)
- 
-     ga_unset_frozen(ga_state);
- 
--    g_info("guest-fsthaw called");
--
-     return i;
- }
- 
-diff --git a/qga/commands.c b/qga/commands.c
-index 55edd9fd4c..4462922005 100644
---- a/qga/commands.c
-+++ b/qga/commands.c
-@@ -43,7 +43,6 @@ int64_t qmp_guest_sync(int64_t id, Error **errp)
- 
- void qmp_guest_ping(Error **errp)
- {
--    g_info("guest-ping called");
- }
- 
- static void qmp_command_info(const QmpCommand *cmd, void *opaque)
-@@ -136,8 +135,7 @@ GuestExecStatus *qmp_guest_exec_status(int64_t pid, Error **errp)
-     GuestExecInfo *gei;
-     GuestExecStatus *ges;
- 
--    g_info("guest-exec-status called, pid: %u", (uint32_t)pid);
--
-+    g_debug("guest-exec-status pid: %u", (uint32_t)pid);
-     gei = guest_exec_info_find(pid);
-     if (gei == NULL) {
-         error_setg(errp, "PID " PRId64 " does not exist");
-@@ -238,7 +236,7 @@ static char **guest_exec_get_args(const strList *entry, bool log)
-     args[i] = NULL;
- 
-     if (log) {
--        g_info("guest-exec called: \"%s\"", str);
-+        g_debug("guest-exec called: \"%s\"", str);
-     }
-     g_free(str);
- 
-diff --git a/qga/main.c b/qga/main.c
-index 04c772b680..5b289ae7f9 100644
---- a/qga/main.c
-+++ b/qga/main.c
-@@ -87,8 +87,10 @@ struct GAConfig {
- #endif
-     gchar *bliststr; /* blockedrpcs may point to this string */
-     gchar *aliststr; /* allowedrpcs may point to this string */
-+    gchar *auditstr;
-     GList *blockedrpcs;
-     GList *allowedrpcs;
-+    GList *audit_patterns;
-     int daemonize;
-     GLogLevelFlags log_level;
-     int dumpconf;
-@@ -116,6 +118,7 @@ struct GAState {
-     bool frozen;
-     GList *blockedrpcs;
-     GList *allowedrpcs;
-+    GList *audit_patterns;
-     char *state_filepath_isfrozen;
-     struct {
-         const char *log_filepath;
-@@ -288,6 +291,11 @@ QEMU_COPYRIGHT "\n"
- "                    only, default is %s)\n"
- "  -v, --verbose     enable verbose logging (warning/info and above)\n"
- "  -g, --debug       enable debug logging (all messages)\n"
-+"  -A, --audit=LIST  comma-separated list of command patterns to log at\n"
-+"                    info level (default: *, no spaces).\n"
-+"                    Patterns prefixed with '!' are logged at debug level.\n"
-+"                    Patterns are evaluated in order; the first match wins.\n"
-+"                    Example: --audit=!guest-ping,*\n"
- "  -V, --version     print version information and exit\n"
- "  -d, --daemonize   become a daemon\n"
- #ifdef _WIN32
-@@ -413,6 +421,29 @@ static void ga_log(const gchar *domain, GLogLevelFlags level,
-     }
- }
- 
-+static void ga_audit_log(GAState *s, const char *command)
-+{
-+    GList *l;
-+
-+    for (l = s->audit_patterns; l; l = l->next) {
-+        const char *pattern = l->data;
-+
-+        if (pattern[0] == '!') {
-+            if (g_pattern_match_simple(pattern + 1, command)) {
-+                g_debug("%s called", command);
-+                return;
-+            }
-+        } else {
-+            if (g_pattern_match_simple(pattern, command)) {
-+                g_info("%s called", command);
-+                return;
-+            }
-+        }
-+    }
-+
-+    g_debug("%s called", command);
-+}
-+
- void ga_set_response_delimited(GAState *s)
- {
-     s->delimit_response = true;
-@@ -706,7 +737,22 @@ static void process_event(void *opaque, QObject *obj, Error *err)
-     }
- 
-     g_debug("processing command");
--    rsp = qmp_dispatch(&ga_commands, obj, false, NULL);
-+    {
-+        QDict *dict = qobject_to(QDict, obj);
-+        const char *command = dict ? qdict_get_try_str(dict, "execute") : NULL;
-+        bool logging_before = ga_logging_enabled(s);
-+        bool audit = command && qmp_find_command(&ga_commands, command);
-+
-+        if (audit) {
-+            ga_audit_log(s, command);
-+        }
-+
-+        rsp = qmp_dispatch(&ga_commands, obj, false, NULL);
-+
-+        if (!logging_before && audit) {
-+            ga_audit_log(s, command);
-+        }
-+    }
- 
- end:
-     ret = send_response(s, rsp);
-@@ -1158,6 +1204,14 @@ static void config_load(GAConfig *config, const char *confpath, bool required)
-         config->retry_path =
-             g_key_file_get_boolean(keyfile, "general", "retry-path", &gerr);
-     }
-+    if (g_key_file_has_key(keyfile, "general", "audit", NULL)) {
-+        config->auditstr =
-+            g_key_file_get_string(keyfile, "general", "audit", &gerr);
-+        config->audit_patterns = g_list_concat(config->audit_patterns,
-+                                               g_list_reverse(
-+                                                   split_list(config->auditstr,
-+                                                              ",")));
-+    }
- 
-     if (g_key_file_has_key(keyfile, "general", "block-rpcs", NULL)) {
-         config->bliststr =
-@@ -1230,6 +1284,9 @@ static void config_dump(GAConfig *config)
-                            config->log_level & G_LOG_LEVEL_DEBUG);
-     g_key_file_set_boolean(keyfile, "general", "retry-path",
-                            config->retry_path);
-+    tmp = list_join(config->audit_patterns, ',');
-+    g_key_file_set_string(keyfile, "general", "audit", tmp);
-+    g_free(tmp);
-     tmp = list_join(config->blockedrpcs, ',');
-     g_key_file_set_string(keyfile, "general", "block-rpcs", tmp);
-     g_free(tmp);
-@@ -1251,7 +1308,7 @@ static void config_dump(GAConfig *config)
- 
- static void config_parse(GAConfig *config, int argc, char **argv)
- {
--    const char *sopt = "hVvdgc:m:p:l:f:F::b:a:s:t:Dr";
-+    const char *sopt = "hVvdgc:m:p:l:f:F::b:a:A:s:t:Dr";
-     int opt_ind = 0, ch;
-     const struct option lopt[] = {
-         { "help", 0, NULL, 'h' },
-@@ -1270,6 +1327,7 @@ static void config_parse(GAConfig *config, int argc, char **argv)
-         { "daemonize", 0, NULL, 'd' },
-         { "block-rpcs", 1, NULL, 'b' },
-         { "allow-rpcs", 1, NULL, 'a' },
-+        { "audit", 1, NULL, 'A' },
- #ifdef _WIN32
-         { "service", 1, NULL, 's' },
- #endif
-@@ -1363,6 +1421,10 @@ static void config_parse(GAConfig *config, int argc, char **argv)
-                                                 split_list(optarg, ","));
-             break;
-         }
-+        case 'A':
-+            g_list_free_full(config->audit_patterns, g_free);
-+            config->audit_patterns = g_list_reverse(split_list(optarg, ","));
-+            break;
- #ifdef _WIN32
-         case 's':
-             config->service = optarg;
-@@ -1417,6 +1479,8 @@ static void config_free(GAConfig *config)
- #endif
-     g_list_free_full(config->blockedrpcs, g_free);
-     g_list_free_full(config->allowedrpcs, g_free);
-+    g_list_free_full(config->audit_patterns, g_free);
-+    g_free(config->auditstr);
-     g_free(config);
- }
- 
-@@ -1460,6 +1524,7 @@ static GAState *initialize_agent(GAConfig *config, int socket_activation)
-     g_assert(ga_state == NULL);
- 
-     s->log_level = config->log_level;
-+    s->audit_patterns = config->audit_patterns;
-     s->log_file = stderr;
- #ifdef CONFIG_FSFREEZE
-     s->fsfreeze_hook = config->fsfreeze_hook;
-@@ -1698,6 +1763,10 @@ int main(int argc, char **argv)
-     init_dfl_pathnames();
-     config_parse(config, argc, argv);
- 
-+    if (config->audit_patterns == NULL) {
-+        config->audit_patterns = g_list_append(NULL, g_strdup("*"));
-+    }
-+
-     if (config->pid_filepath == NULL) {
-         config->pid_filepath = g_strdup(dfl_pathnames.pidfile);
-     }
--- 
-2.51.0
+> On Thu, Mar 12, 2026 at 05:15:05PM +0200, Kostiantyn Kostiuk wrote:
+> > On Thu, Mar 12, 2026 at 5:02=E2=80=AFPM Daniel P. Berrang=C3=A9 <berran=
+ge@redhat.com>
+> > wrote:
+> >
+> > > On Thu, Mar 12, 2026 at 04:16:57PM +0200, Elizabeth Ashurov wrote:
+> > > > ga_log() forwarded all "syslog" domain messages unconditionally,
+> > > > bypassing the log level filter. Furthermore, slog() hardcoded
+> > > > all messages to G_LOG_LEVEL_INFO, causing log spam from frequent
+> > > > guest-ping calls.
+> > > >
+> > > > - Split slog() into slog_error() (WARNING), slog() (MESSAGE), and
+> > > slog_trace() (INFO)
+> > > > - Apply s->log_level filtering to "syslog" in ga_log()
+> > > > - Move guest-ping to slog_trace()
+> > > > - Move error messages to slog_error()
+> > > >
+> > > > Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3214
+> > > >
+> > > > Signed-off-by: Elizabeth Ashurov <eashurov@redhat.com>
+> > > > ---
+> > > >  qga/commands-linux.c   |  6 ++++--
+> > > >  qga/commands-posix.c   | 13 +++++++------
+> > > >  qga/commands-win32.c   | 34 +++++++++++++++++-----------------
+> > > >  qga/commands.c         | 30 ++++++++++++++++++++++++------
+> > > >  qga/guest-agent-core.h |  2 ++
+> > > >  qga/main.c             |  6 +++++-
+> > > >  6 files changed, 59 insertions(+), 32 deletions(-)
+> > > >
+> > >
+> > > > diff --git a/qga/commands.c b/qga/commands.c
+> > > > index 5f20af25d3..ed52a7d3c2 100644
+> > > > --- a/qga/commands.c
+> > > > +++ b/qga/commands.c
+> > > > @@ -38,6 +38,24 @@ void slog(const gchar *fmt, ...)
+> > > >  {
+> > > >      va_list ap;
+> > > >
+> > > > +    va_start(ap, fmt);
+> > > > +    g_logv("syslog", G_LOG_LEVEL_MESSAGE, fmt, ap);
+> > > > +    va_end(ap);
+> > > > +}
+> > > > +
+> > > > +void slog_error(const gchar *fmt, ...)
+> > > > +{
+> > > > +    va_list ap;
+> > > > +
+> > > > +    va_start(ap, fmt);
+> > > > +    g_logv("syslog", G_LOG_LEVEL_WARNING, fmt, ap);
+> > > > +    va_end(ap);
+> > > > +}
+> > > > +
+> > > > +void slog_trace(const gchar *fmt, ...)
+> > > > +{
+> > > > +    va_list ap;
+> > > > +
+> > > >      va_start(ap, fmt);
+> > > >      g_logv("syslog", G_LOG_LEVEL_INFO, fmt, ap);
+> > > >      va_end(ap);
+> > >
+> > > This is really the wrong approach IMHO.
+> > >
+> > > It is bad practice for the call sites to be declaring what log
+> > > output they are targetting.
+> > >
+> > > Also the first parameter of g_log call is supposed to be the
+> > > "domain" which is a name that identicates the *source* of the
+> > > error message. For code in a library it would be the library
+> > > name, or a module name within the library. For applications
+> > > it would usually be the application name.
+> > >
+> > > Passing the name of a desired log target "syslog" is really
+> > > a misuse of the logging framework.
+> > >
+> > > IMHO the existing usage of "slog" should be replaced by
+> > > calls to g_error() (for the cases which are reporting error
+> > > messages) and g_info() (for the cases which are reporting the
+> > > names of commands being executed).
+> > >
+> > > Then, we should offer better command line control over the
+> > > usage of logging
+> > >
+> > >  "verbose" should enable g_info() or higher
+> > >  "debug" should enable g_debug() or higher
+> > >
+> > > The log file (if configured) should receive *all* messages
+> > > per the verbose/debug flag settings. (currently it misses
+> > > any messages that get sent to syslog which is bad as it
+> > > makes the logfile incomplete.
+> > >
+> > > The syslog output should also receive all messages at
+> > > "info" level of higher (provided the verbose flag is
+> > > set). It shouldn't get debug messages, even if 'debug'
+> > > flag is set.
+> > >
+> > > We should not specialcase the "ping" command either IMHO,
+> > > it should remain "info" like the other commands. Per that
+> > > bug, users can exclude ping messages via a log filter on
+> > > the systemd service config.
+> > >
+> >
+> > What to do with Windows? We definitely want to see a freeze/thaw event =
+in
+> > Event Viewer, but ping is also redundant there.
+>
+> If we think of the recording of commands as more of an "audit" task,
+> we could expose an "audit" argument to control this. It would take
+> a list of command names, optionally with wildcards, and optionally
+> with negation
+>
+>    audit =3D *
+>
+>     =3D> current default - all commands at "info" level
+>
+>    audit =3D "!guest-ping,*"
+>
+>     =3D> a new default - all commands at "info" level, except ping
+>
+>    audit =3D "!guest-ssh-get*,guest-ssh*"
+>
+>     =3D> a restrictive audit, only commands which modify ssh
+>        setup
+>
+> anything not matched by the audit setting, would be logged at
+> g_debug instead of g_info
+>
+>
+> With regards,
+> Daniel
+> --
+> |: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+> |: https://libvirt.org          ~~          https://entangle-photo.org :|
+> |: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+>
+>
+
+--000000000000ba8a1c064d4ebc71
+Content-Type: text/html; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+
+<div dir=3D"ltr"><div id=3D"gmail-:1dz" class=3D"gmail-Am gmail-aiL gmail-a=
+O9 gmail-Al editable gmail-LW-avf gmail-tS-tW gmail-tS-tY" aria-label=3D"Me=
+ssage Body" role=3D"textbox" aria-multiline=3D"true" tabindex=3D"1" style=
+=3D"direction:ltr;min-height:85px" aria-controls=3D":1jh" aria-expanded=3D"=
+false">Hi,<br><br>Thanks for the review and suggestions.<br>I updated the p=
+atch based on the discussion and sent v2.<br><br>Best regards,</div></div><=
+br><div class=3D"gmail_quote gmail_quote_container"><div dir=3D"ltr" class=
+=3D"gmail_attr">On Thu, Mar 12, 2026 at 5:36=E2=80=AFPM Daniel P. Berrang=
+=C3=A9 &lt;<a href=3D"mailto:berrange@redhat.com">berrange@redhat.com</a>&g=
+t; wrote:<br></div><blockquote class=3D"gmail_quote" style=3D"margin:0px 0p=
+x 0px 0.8ex;border-left:1px solid rgb(204,204,204);padding-left:1ex">On Thu=
+, Mar 12, 2026 at 05:15:05PM +0200, Kostiantyn Kostiuk wrote:<br>
+&gt; On Thu, Mar 12, 2026 at 5:02=E2=80=AFPM Daniel P. Berrang=C3=A9 &lt;<a=
+ href=3D"mailto:berrange@redhat.com" target=3D"_blank">berrange@redhat.com<=
+/a>&gt;<br>
+&gt; wrote:<br>
+&gt; <br>
+&gt; &gt; On Thu, Mar 12, 2026 at 04:16:57PM +0200, Elizabeth Ashurov wrote=
+:<br>
+&gt; &gt; &gt; ga_log() forwarded all &quot;syslog&quot; domain messages un=
+conditionally,<br>
+&gt; &gt; &gt; bypassing the log level filter. Furthermore, slog() hardcode=
+d<br>
+&gt; &gt; &gt; all messages to G_LOG_LEVEL_INFO, causing log spam from freq=
+uent<br>
+&gt; &gt; &gt; guest-ping calls.<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; - Split slog() into slog_error() (WARNING), slog() (MESSAGE)=
+, and<br>
+&gt; &gt; slog_trace() (INFO)<br>
+&gt; &gt; &gt; - Apply s-&gt;log_level filtering to &quot;syslog&quot; in g=
+a_log()<br>
+&gt; &gt; &gt; - Move guest-ping to slog_trace()<br>
+&gt; &gt; &gt; - Move error messages to slog_error()<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Resolves: <a href=3D"https://gitlab.com/qemu-project/qemu/-/=
+work_items/3214" rel=3D"noreferrer" target=3D"_blank">https://gitlab.com/qe=
+mu-project/qemu/-/work_items/3214</a><br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; Signed-off-by: Elizabeth Ashurov &lt;<a href=3D"mailto:eashu=
+rov@redhat.com" target=3D"_blank">eashurov@redhat.com</a>&gt;<br>
+&gt; &gt; &gt; ---<br>
+&gt; &gt; &gt;=C2=A0 qga/commands-linux.c=C2=A0 =C2=A0|=C2=A0 6 ++++--<br>
+&gt; &gt; &gt;=C2=A0 qga/commands-posix.c=C2=A0 =C2=A0| 13 +++++++------<br=
+>
+&gt; &gt; &gt;=C2=A0 qga/commands-win32.c=C2=A0 =C2=A0| 34 ++++++++++++++++=
++-----------------<br>
+&gt; &gt; &gt;=C2=A0 qga/commands.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0| 30 +=
++++++++++++++++++++++++------<br>
+&gt; &gt; &gt;=C2=A0 qga/guest-agent-core.h |=C2=A0 2 ++<br>
+&gt; &gt; &gt;=C2=A0 qga/main.c=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =
+=C2=A0|=C2=A0 6 +++++-<br>
+&gt; &gt; &gt;=C2=A0 6 files changed, 59 insertions(+), 32 deletions(-)<br>
+&gt; &gt; &gt;<br>
+&gt; &gt;<br>
+&gt; &gt; &gt; diff --git a/qga/commands.c b/qga/commands.c<br>
+&gt; &gt; &gt; index 5f20af25d3..ed52a7d3c2 100644<br>
+&gt; &gt; &gt; --- a/qga/commands.c<br>
+&gt; &gt; &gt; +++ b/qga/commands.c<br>
+&gt; &gt; &gt; @@ -38,6 +38,24 @@ void slog(const gchar *fmt, ...)<br>
+&gt; &gt; &gt;=C2=A0 {<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 va_list ap;<br>
+&gt; &gt; &gt;<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 va_start(ap, fmt);<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 g_logv(&quot;syslog&quot;, G_LOG_LEVEL_MESSAG=
+E, fmt, ap);<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 va_end(ap);<br>
+&gt; &gt; &gt; +}<br>
+&gt; &gt; &gt; +<br>
+&gt; &gt; &gt; +void slog_error(const gchar *fmt, ...)<br>
+&gt; &gt; &gt; +{<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 va_list ap;<br>
+&gt; &gt; &gt; +<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 va_start(ap, fmt);<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 g_logv(&quot;syslog&quot;, G_LOG_LEVEL_WARNIN=
+G, fmt, ap);<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 va_end(ap);<br>
+&gt; &gt; &gt; +}<br>
+&gt; &gt; &gt; +<br>
+&gt; &gt; &gt; +void slog_trace(const gchar *fmt, ...)<br>
+&gt; &gt; &gt; +{<br>
+&gt; &gt; &gt; +=C2=A0 =C2=A0 va_list ap;<br>
+&gt; &gt; &gt; +<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 va_start(ap, fmt);<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 g_logv(&quot;syslog&quot;, G_LOG_LEVEL_I=
+NFO, fmt, ap);<br>
+&gt; &gt; &gt;=C2=A0 =C2=A0 =C2=A0 va_end(ap);<br>
+&gt; &gt;<br>
+&gt; &gt; This is really the wrong approach IMHO.<br>
+&gt; &gt;<br>
+&gt; &gt; It is bad practice for the call sites to be declaring what log<br=
+>
+&gt; &gt; output they are targetting.<br>
+&gt; &gt;<br>
+&gt; &gt; Also the first parameter of g_log call is supposed to be the<br>
+&gt; &gt; &quot;domain&quot; which is a name that identicates the *source* =
+of the<br>
+&gt; &gt; error message. For code in a library it would be the library<br>
+&gt; &gt; name, or a module name within the library. For applications<br>
+&gt; &gt; it would usually be the application name.<br>
+&gt; &gt;<br>
+&gt; &gt; Passing the name of a desired log target &quot;syslog&quot; is re=
+ally<br>
+&gt; &gt; a misuse of the logging framework.<br>
+&gt; &gt;<br>
+&gt; &gt; IMHO the existing usage of &quot;slog&quot; should be replaced by=
+<br>
+&gt; &gt; calls to g_error() (for the cases which are reporting error<br>
+&gt; &gt; messages) and g_info() (for the cases which are reporting the<br>
+&gt; &gt; names of commands being executed).<br>
+&gt; &gt;<br>
+&gt; &gt; Then, we should offer better command line control over the<br>
+&gt; &gt; usage of logging<br>
+&gt; &gt;<br>
+&gt; &gt;=C2=A0 &quot;verbose&quot; should enable g_info() or higher<br>
+&gt; &gt;=C2=A0 &quot;debug&quot; should enable g_debug() or higher<br>
+&gt; &gt;<br>
+&gt; &gt; The log file (if configured) should receive *all* messages<br>
+&gt; &gt; per the verbose/debug flag settings. (currently it misses<br>
+&gt; &gt; any messages that get sent to syslog which is bad as it<br>
+&gt; &gt; makes the logfile incomplete.<br>
+&gt; &gt;<br>
+&gt; &gt; The syslog output should also receive all messages at<br>
+&gt; &gt; &quot;info&quot; level of higher (provided the verbose flag is<br=
+>
+&gt; &gt; set). It shouldn&#39;t get debug messages, even if &#39;debug&#39=
+;<br>
+&gt; &gt; flag is set.<br>
+&gt; &gt;<br>
+&gt; &gt; We should not specialcase the &quot;ping&quot; command either IMH=
+O,<br>
+&gt; &gt; it should remain &quot;info&quot; like the other commands. Per th=
+at<br>
+&gt; &gt; bug, users can exclude ping messages via a log filter on<br>
+&gt; &gt; the systemd service config.<br>
+&gt; &gt;<br>
+&gt; <br>
+&gt; What to do with Windows? We definitely want to see a freeze/thaw event=
+ in<br>
+&gt; Event Viewer, but ping is also redundant there.<br>
+<br>
+If we think of the recording of commands as more of an &quot;audit&quot; ta=
+sk,<br>
+we could expose an &quot;audit&quot; argument to control this. It would tak=
+e<br>
+a list of command names, optionally with wildcards, and optionally<br>
+with negation<br>
+<br>
+=C2=A0 =C2=A0audit =3D *<br>
+<br>
+=C2=A0 =C2=A0 =3D&gt; current default - all commands at &quot;info&quot; le=
+vel<br>
+<br>
+=C2=A0 =C2=A0audit =3D &quot;!guest-ping,*&quot;<br>
+<br>
+=C2=A0 =C2=A0 =3D&gt; a new default - all commands at &quot;info&quot; leve=
+l, except ping<br>
+<br>
+=C2=A0 =C2=A0audit =3D &quot;!guest-ssh-get*,guest-ssh*&quot;<br>
+<br>
+=C2=A0 =C2=A0 =3D&gt; a restrictive audit, only commands which modify ssh<b=
+r>
+=C2=A0 =C2=A0 =C2=A0 =C2=A0setup<br>
+<br>
+anything not matched by the audit setting, would be logged at<br>
+g_debug instead of g_info<br>
+<br>
+<br>
+With regards,<br>
+Daniel<br>
+-- <br>
+|: <a href=3D"https://berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://berrange.com</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0~~=C2=A0 =C2=A0 =C2=A0 =C2=
+=A0 <a href=3D"https://hachyderm.io/@berrange" rel=3D"noreferrer" target=3D=
+"_blank">https://hachyderm.io/@berrange</a> :|<br>
+|: <a href=3D"https://libvirt.org" rel=3D"noreferrer" target=3D"_blank">htt=
+ps://libvirt.org</a>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 ~~=C2=A0 =C2=A0 =C2=
+=A0 =C2=A0 =C2=A0 <a href=3D"https://entangle-photo.org" rel=3D"noreferrer"=
+ target=3D"_blank">https://entangle-photo.org</a> :|<br>
+|: <a href=3D"https://pixelfed.art/berrange" rel=3D"noreferrer" target=3D"_=
+blank">https://pixelfed.art/berrange</a>=C2=A0 =C2=A0~~=C2=A0 =C2=A0 <a hre=
+f=3D"https://fstop138.berrange.com" rel=3D"noreferrer" target=3D"_blank">ht=
+tps://fstop138.berrange.com</a> :|<br>
+<br>
+</blockquote></div>
+
+--000000000000ba8a1c064d4ebc71--
 
 
