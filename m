@@ -4,76 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 18244FCD0C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 06:34:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A625CFCD0C1
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 06:43:09 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2kTu-0005cj-1d; Wed, 18 Mar 2026 02:34:14 -0400
+	id 1w2kc7-0007Cz-Qp; Wed, 18 Mar 2026 02:42:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kTr-0005cQ-79
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:34:11 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kTp-00088S-Vc
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:34:10 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773815649;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=DF2ZYICOIpBxRZ3y49CRf6yo4609ITpUBm0TZHro7WY=;
- b=ho7xSFm5gYEL4mg6Ck2327pXDIeG7Ykg3ZDh6L2R7zxyjo9ZonwPc7SBlIG4GbbKLdRXrb
- S01hsjcESX0dxbrZc/U7S9Z/EumvmW3U25My/mg3pte5ePyjxLFOQMWtagGsKhf+UbGw2t
- gzElzQ+ybe836jehW0H6XmIDauJfbbQ=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-625-E0bcqTzDP_KJObVOq9K6cg-1; Wed,
- 18 Mar 2026 02:34:05 -0400
-X-MC-Unique: E0bcqTzDP_KJObVOq9K6cg-1
-X-Mimecast-MFC-AGG-ID: E0bcqTzDP_KJObVOq9K6cg_1773815644
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3CC2F180058A; Wed, 18 Mar 2026 06:34:04 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id CD41F1800763; Wed, 18 Mar 2026 06:34:03 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 7289F21E6937; Wed, 18 Mar 2026 07:34:01 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Alessandro Ratti <alessandro@0x65c.net>
-Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  berrange@redhat.com,
- mst@redhat.com,  pbonzini@redhat.com
-Subject: Re: [PATCH v2 2/2] hw/qdev: Remove qdev_get_human_name()
-In-Reply-To: <87bjglsl3z.fsf@pond.sub.org> (Markus Armbruster's message of
- "Wed, 18 Mar 2026 07:33:04 +0100")
-References: <20260311215003.664815-1-alessandro@0x65c.net>
- <20260311215003.664815-3-alessandro@0x65c.net>
- <87h5qflyqe.fsf@pond.sub.org>
- <CAKiXHKd15rFWk3qM+f_X2JXr29u1ygTumCcGrm9iDLEtwALQNQ@mail.gmail.com>
- <87bjglsl3z.fsf@pond.sub.org>
-Date: Wed, 18 Mar 2026 07:34:01 +0100
-Message-ID: <87341xsl2e.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2kc2-0007B4-BJ
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:42:38 -0400
+Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2kc0-0005XZ-5o
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:42:38 -0400
+Received: by mail-wr1-x436.google.com with SMTP id
+ ffacd0b85a97d-43b45bb7548so266084f8f.1
+ for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 23:42:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773816154; x=1774420954; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=sOwXNX63OVg1KRKqmr0UFjgn+eyovuUAv6hy60d5c3U=;
+ b=l4UqqqeJ6WRJg3bCc5sgetXc+ss7p+nukZI8Ngzxc3airdxbOvCKaPr9gCqrOeu7ui
+ sHxixhyBdnkcO+gvVQnXmrEezK3VPMMldWDdB0XKePnscxVYEWZZw9d7avwNYgO9IkyO
+ XtdmSgsDDx75LL+P4YPeyQ9Pg29sYSydXU0QXn/bo+p4SWxGxLGg4vS9IPkqEaGUyIxs
+ pou1Mh3J5Ws53k9y4z8Hw7Z97X0rSoQaSXBtCm11YP76b44fS184WQ/uvr3DWTUf/h8Z
+ DJX/hifhn0x8YjlDQXPl446J8RWIPDognuVARNbO+xtphI64g2Rz1mRPZ8+G5rjd5EN1
+ Ve+g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773816154; x=1774420954;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=sOwXNX63OVg1KRKqmr0UFjgn+eyovuUAv6hy60d5c3U=;
+ b=PXzGrIGyqbVuskqcEvk63QkxXyXbQfWE9GCPjdj43U9mfjNgeo7NIa7DbzPRdZks9n
+ HZfbarRaj9QGsitNo/3PyxST/PxhkIfRjw3L1ucRc8nEa69DObJQmv9/q98SnVi2rFTM
+ dK2bbs1mdzANsqSC5IP6fRIeffmWzmwE2rdR642fkbO4LnQRI9rY7oV4K7Ml3U/1qT4e
+ RLM0AbNPV9FbKpzLHLkMf2Vw+l/LBgihsU7vXeh/PBUhIBaAeya3frM2QvE4jUFsfSTv
+ nkBfe68Rbk5S9cbRQLymVilp9ljsQ+qPqEB9hlUZaRgJy/ZzxRBpw0MwntDgPdQN/V1K
+ f9Aw==
+X-Gm-Message-State: AOJu0YxX9YRx71f7D7gGiZDITnG3vMd0T9eC7ETFpU57HLwE5D3C6/zD
+ LGm3Bl6yljAlSNAQ7KbDjmE/ZomuMP612+8N6t9ALXM9XvdklZudemCMlpEBeap/Xk8=
+X-Gm-Gg: ATEYQzzrEQleF9guW64sUxcehwZMI/LvKdJkd9GATKKExHUBG2S6B37R0BR1shRWCJP
+ Jul90IUnsS3VTVX0ysnk457vAwGs/RD9r4ii2aTYX5c9WEb1xmToQcU9yZmWo2UPCSZWDMekZAW
+ XY+DnIvDuDxiS5sXVaki8AWZV7HmZckSmpJEk54bbIpwHiFCqkMJoR12obQYxk7wawtZJW0s/K+
+ s3PwfioOfCcDKDAylqhy3rFfDYeZQGOd4QMaF96s7SCj/xFI8jXJXBKU1MGu6CKNq94mPaZZLcC
+ 5dg5wLzqAeZnu7fpq0+fhQnCSJoagJifRekfNB0t8YSD9B4vdt9Hjp67dbPVd6PQuGYtRKosKGp
+ 1K4DD/Z3ofttc/d/PtQ/nT6kJF3XWrSjlvQgp4u6+twC+1d/BEefi+sgBEeqYOS/Iw7+pBEAKsm
+ RLOdigTZD+EatMffu42QkVHTeaB2SocmUTFF4uyJz+JwuskCVUiOLN5IIbwZ1Qk1HM6A==
+X-Received: by 2002:a05:6000:420f:b0:439:b59e:5e6a with SMTP id
+ ffacd0b85a97d-43b527a5920mr3182680f8f.14.1773816154019; 
+ Tue, 17 Mar 2026 23:42:34 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b51892234sm5183442f8f.24.2026.03.17.23.42.32
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Tue, 17 Mar 2026 23:42:32 -0700 (PDT)
+Message-ID: <08c5f243-5aaa-4fe2-bc71-6a3fd9a1914e@linaro.org>
+Date: Wed, 18 Mar 2026 07:42:31 +0100
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH] exec: Add RISC-V WorldGuard WID field to MemTxAttrs
+Content-Language: en-US
+To: Jim Shu <jim.shu@sifive.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org,
+ "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
+ David Hildenbrand <david@kernel.org>,
+ =?UTF-8?Q?Cl=C3=A9ment_Mathieu--Drif?= <clement.mathieu--drif@eviden.com>,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Zhao Liu <zhao1.liu@intel.com>, "Edgar E. Iglesias"
+ <edgar.iglesias@gmail.com>, =?UTF-8?Q?Cl=C3=A9ment_Chigot?=
+ <chigot@adacore.com>, Frederic Konrad <konrad.frederic@yahoo.fr>
+References: <20260209115846.2276651-1-jim.shu@sifive.com>
+ <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
+ <CALw707rbMvg1mf1S_3qiqDWbZ0qjzgx4UJ9pUGmQODKWttKFyQ@mail.gmail.com>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <CALw707rbMvg1mf1S_3qiqDWbZ0qjzgx4UJ9pUGmQODKWttKFyQ@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::436;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x436.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -89,6 +113,42 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Ignore this one, butterfingers.  Complete reply coming.
+On 18/3/26 05:40, Jim Shu wrote:
+> On Tue, Feb 10, 2026 at 8:25 AM Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+> ...
+>> Hmm.  This really overlaps the secure and space fields from arm, and possibly some of the
+>> others as well (e.g. user, requester_id, pid).
+>>
+>> I don't really have a good suggestion for that right now, but it would be nice to not keep
+>> expanding the count of these sorts of fields that somehow specify the originator, but
+>> clearly cannot overlap.
+>>
+>> I'm reasonably sure we've had this discussion before, but nothing has come of it.
+>>
+>> Time to paint the bikeshed again?
+
+Last discussion IIRC:
+https://lore.kernel.org/qemu-devel/CAFEAcA8vKNkfKgp_Yymo9NA1=E2XJYXAMTgO3z6q6DHgqkAwRw@mail.gmail.com/
+
+(see also a suggestion in 
+https://lore.kernel.org/qemu-devel/Z4+P3eHXqcU4Dqdx@intel.com/)
+
+>>
+> 
+> I can union the 'secure' and 'world_id' fields, as they are not used together.
+> However, I have no idea about the 'space' fields.
+> 
+> I have seen CPUTLBEntryFull has the extra union to support ARM-specific members.
+> Another idea is that also adding the extra union to MemTxAttrs to
+> place the RISC-V worid_id.
+> We can use this extra union to as SoC-specific signals in the bus,
+> like AXI AxUSER signal.
+> Do you think it is suitable?
+> 
+> 
+> Thanks,
+> 
+> Jim
 
 
