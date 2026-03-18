@@ -4,58 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E2DA103E195
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 15:02:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD5AD103E199
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 15:33:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2sP5-00028c-Be; Wed, 18 Mar 2026 11:01:47 -0400
+	id 1w2ssp-0002Wg-8U; Wed, 18 Mar 2026 11:32:31 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1w2sOu-000254-4s
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 11:01:37 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2ssl-0002Vu-Fa
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 11:32:28 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
- id 1w2sOp-0005rH-JL
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 11:01:35 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fbX7N4Q5czJ46ZS;
- Wed, 18 Mar 2026 23:00:16 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 7E83F40584;
- Wed, 18 Mar 2026 23:01:14 +0800 (CST)
-Received: from localhost (10.203.177.99) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Wed, 18 Mar
- 2026 15:01:13 +0000
-Date: Wed, 18 Mar 2026 15:01:08 +0000
-To: Li Chen <me@linux.beauty>
-CC: Jonathan Cameron <jonathan.cameron@huawei.com>, Fan Ni
- <fan.ni@samsung.com>, <qemu-devel@nongnu.org>, <linux-cxl@vger.kernel.org>
-Subject: Re: [PATCH 0/3] cxl: avoid KVM internal error for fixed memory windows
-Message-ID: <20260318150108.00001a5f.alireza.sanaee@huawei.com>
-In-Reply-To: <20260317165702.00003c98@huawei.com>
-References: <20260317033304.3185291-1-me@linux.beauty>
- <20260317165702.00003c98@huawei.com>
-Organization: Huawei
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2ssi-0000OD-LE
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 11:32:26 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773847943;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=nYV5RP+iiMyqxFM+ztI27k0197hYqdiP0TOvg+Wefz4=;
+ b=KNDuOe/4NVYY8s3pE0kbwvnUMuCf8yFe8cg7iQ617t90qr0lkMs6OPg7PvV0ysDTTNd+8+
+ gT1W1f48M9Xg3TK0N13jVBB+hxRQgsIncgxNxwdQwi8Dh7qdd5En8YVI5QdX+P/Ql7IbOw
+ asSWM+WFSbtWaGY2C87qM7VCdw+H2R0=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-481-JLsDT6acOIWMhH-e5ps_Kw-1; Wed, 18 Mar 2026 11:32:20 -0400
+X-MC-Unique: JLsDT6acOIWMhH-e5ps_Kw-1
+X-Mimecast-MFC-AGG-ID: JLsDT6acOIWMhH-e5ps_Kw_1773847939
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-439a85832c0so5655530f8f.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 08:32:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=redhat.com; s=google; t=1773847939; x=1774452739; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nYV5RP+iiMyqxFM+ztI27k0197hYqdiP0TOvg+Wefz4=;
+ b=uNMgQwapaxClfag2QB+Zb1vmVVHT+xTeOTbas3odn8mdzgbVlv/aQzeNnrub4FgNec
+ W2L08TZn1j2+3pUmxJNoHTzuhoQC5R0inkGsAQ21q2pMUQb70X/3JmgnANYALh+3HPPy
+ 4FV690UxPLkGpFszL5Sf1MDiorcVXQcpQ7cXaVhkWCWO9n+34bgQ3eJXGaL7msiJuxEo
+ C+1e5V9PZl9v5W7K6+tq4/q2+og/m3RvqKQTbEB2fTZTON/+Ap13C9iqsU2kEqg71mPC
+ DMRy8xNuBe9bvMxJj2WhCfSBs6uSkueJio0N3fUnwtwKYOVBDxOivYhrpzw7WKRQRteW
+ B+7w==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773847939; x=1774452739;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nYV5RP+iiMyqxFM+ztI27k0197hYqdiP0TOvg+Wefz4=;
+ b=ele7ZGCZKJPAc8pzh+hVleB1pfPk3l0NCCVqA91df+Sz/m+y8CtyGlqx886PeTl3JS
+ ADXRd4xq8DHrSQsCsleTYEJThZ7I5t4klM4EwmO//hXOnxsgDmoEeE2gXlkphEHo3g9J
+ Hhq+d6WIKmEejr+ATApHfYbZWR5BtTREqwp1O6B0rJ5vgAzO7Y8axpbBJwoA1vS3dKGi
+ XC+Y2+jx9He9be3mLiPNCuLrlyY4JwWcheQt5KOJ6vwx3hTRAg3kZOGa2PhWoZghWy7f
+ vIeKy/BCNFszrbTG+rvjkjMQGWkvumP+MaiEsLYFY76l5wVvT8KpAf1LUB3S5YJXrnjf
+ 1JqQ==
+X-Gm-Message-State: AOJu0YynNQQwM4LKBngMyVuvMY3wW2Tu7t0Ca9GgkZLv7gNDTeq82zKM
+ 9G+xI9OPhEEGAmyQKXB6Bhy6NfIjRGUEYjuqShmdE75JrFP7OUY045cNDoHmHda1oYVfKJXh6fW
+ vK9RwA/Nr7LzW1zj4GATKZzD60bV/FvqT1Zv+keNIr0pPkvVmlMPsS5aA
+X-Gm-Gg: ATEYQzxEKnZ6oyb52FhRMypyZacc5bwHkSMt41wLTcmIjlx1Z1r07rc1Yi9s4tM/f6O
+ NLtzqWxWce04L72Q4dO+emSxHT1QWQivI6IEZCI3bD6dWyCyFWEInznLyoSk0GisT/CAeh8aGr4
+ /NFtpQ/kZsgUeafnbZd68a2DQI22kvm0Ak6FPUitbhX0s/t8FSfcDZVy+Qrr6UuUt+oTG4A5tUb
+ NZmkECUiPpLw+2jKy8stYzWU0E4tSW+pQuI1kH/mzdZJmlkkg1YzPhTW/lE7krwvAjLfSNoJhfw
+ UGiGYUBd7nuoFfQuZnlaHkJGo2N8e0KC6P9x7NuUOXsNVfxHJ8MHMbxO+sz0C431rTq8+loa5S1
+ YvLo4ZS2Bf1mxHIUvzz5Oh5SvJHVsyDgL2MNNNja3xU4uMFC8/ThzdyptvgujrlYJyYQ6voDQ24
+ ghkTQ=
+X-Received: by 2002:a05:6000:4008:b0:43b:42d3:31ac with SMTP id
+ ffacd0b85a97d-43b5264dc3bmr6370570f8f.0.1773847938957; 
+ Wed, 18 Mar 2026 08:32:18 -0700 (PDT)
+X-Received: by 2002:a05:6000:4008:b0:43b:42d3:31ac with SMTP id
+ ffacd0b85a97d-43b5264dc3bmr6370498f8f.0.1773847938398; 
+ Wed, 18 Mar 2026 08:32:18 -0700 (PDT)
+Received: from localhost
+ (p200300cfd737d03304b9bf783d26f60b.dip0.t-ipconnect.de.
+ [2003:cf:d737:d033:4b9:bf78:3d26:f60b])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b51852ab3sm8954215f8f.12.2026.03.18.08.32.17
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Mar 2026 08:32:17 -0700 (PDT)
+From: Hanna Czenczek <hreitz@redhat.com>
+To: qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Hanna Czenczek <hreitz@redhat.com>,
+ Kevin Wolf <kwolf@redhat.com>, Julia Suvorova <jusual@redhat.com>,
+ Aarushi Mehta <mehta.aaru20@gmail.com>,
+ Stefan Hajnoczi <stefanha@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>
+Subject: [PATCH for-11.0 1/3] linux-aio: Put all parameters into qemu_laiocb
+Date: Wed, 18 Mar 2026 16:32:03 +0100
+Message-ID: <20260318153206.171494-2-hreitz@redhat.com>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260318153206.171494-1-hreitz@redhat.com>
+References: <20260318153206.171494-1-hreitz@redhat.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.99]
-X-ClientProxiedBy: lhrpeml500012.china.huawei.com (7.191.174.4) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
- RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -68,122 +122,118 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
-From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Mar 2026 16:57:02 +0000
-Jonathan Cameron <jonathan.cameron@huawei.com> wrote:
+Put all request parameters into the qemu_laiocb struct, which will allow
+re-submitting the tail of short reads/writes.
 
-Hi Li,
+Signed-off-by: Hanna Czenczek <hreitz@redhat.com>
+---
+ block/linux-aio.c | 35 ++++++++++++++++++++++-------------
+ 1 file changed, 22 insertions(+), 13 deletions(-)
 
-It looks like what you achieved is quite similar to what I have done in the patchset Jonathan shared earlier.
-
-You have used memory_region_begin_transaction and memory_region_transaction_commit calls that I believe they are useful to be there given other examples I checked in the qemu code base.
-
-I will be using those calls and will send another version. Also, please let me know if that patchset actually addresses your usecase and fix the bug you have in the cover letter.
-
-Thanks,
-Ali
-
-> On Tue, 17 Mar 2026 11:33:00 +0800
-> Li Chen <me@linux.beauty> wrote:
-> 
-> > CXL fixed memory windows are currently modeled as an I/O MemoryRegion.
-> > When running under KVM, this makes the entire window look like MMIO.
-> > If Linux onlines the window as system RAM (e.g. for a CXL Type-3
-> > volatile memdev), normal CPU stores into the window trigger KVM
-> > instruction emulation. Instructions like XSAVEC are not supported by
-> > the emulator and abort the VM with a KVM internal error.
-> > 
-> > Repro:
-> >   - Boot a guest with a CXL Type-3 volatile memdev and a fixed memory window.
-> >   - In the guest, create a RAM region and online it as system RAM:
-> >       cxl create-region -m -t ram -d decoder0.0 -w 1 -g 4096 mem0
-> >   - QEMU exits with a KVM internal error.  
-> 
-> Hi Li Chen,
-> 
-> At least at first look this looks very like:
-> 
-> https://lore.kernel.org/qemu-devel/20260306121151.883-1-alireza.sanaee@huawei.com/
-> 
-> Which was ready for merge as far as I was concerned, but missed getting queued for
-> 11.0 (as last PCI pull request had gone) and is currently ready to go in next cycle.
-> 
-> Please see if that works for your case. If there are improvements I'd prefer
-> to see them applied on top of that series than reinventing what I think
-> is the same thing.
-> 
-> It's not KVM specific as linear mappings (when valid) bring huge performance
-> benefits on TCG as well as correctness for KVM.
-> 
-> Jonathan
-> 
-> +CC linux-cxl which is where CXL folk tend to hang out in larger numbers
-> than on the qemu list.
-> 
-> 
-> 
-> > 
-> > Serial output excerpt:
-> >   KVM internal error. Suberror: 1
-> >   extra data[0]: 0x0000000000000001
-> >   extra data[1]: 0xc0314061c70f480f
-> >   extra data[2]: 0x024080f610478b48
-> >   extra data[3]: 0x0000000000000400
-> >   extra data[4]: 0x000000010000000f
-> >   extra data[5]: 0x00000004a0003140
-> >   extra data[6]: 0x0000000000000000
-> >   extra data[7]: 0x0000000000000000
-> >   emulation failure
-> >   RAX=0000000000000007 RBX=ffff8eace0001a40 RCX=ffff8eace0003100 RDX=0000000000000000
-> >   RSI=0000000000000007 RDI=ffff8eace00030c0 RBP=ffffd48ac1747c08 RSP=ffffd48ac1747bc8
-> >   R8 =0000000000000007 R9 =0000000000000007 R10=000000000000000d R11=0000000000000000
-> >   R12=ffff8ea945b51a40 R13=ffffd48ac166c000 R14=0000000000000000 R15=0000000001200000
-> >   RIP=ffffffffaf77a14d RFL=00000256 [---ZAP-] CPL=0 II=0 A20=1 SMM=0 HLT=0
-> >   ES =0000 0000000000000000 00000000 00000000
-> >   CS =0010 0000000000000000 ffffffff 00a09b00 DPL=0 CS64 [-RA]
-> >   SS =0018 0000000000000000 ffffffff 00c09300 DPL=0 DS   [-WA]
-> >   DS =0000 0000000000000000 00000000 00000000
-> >   FS =0000 00007f997da3fec0 00000000 00000000
-> >   GS =0000 ffff8eab0535d000 00000000 00000000
-> >   LDT=0000 fffffe7600000000 00000000 00000000
-> >   TR =0040 fffffe767cf8f000 00004087 00008b00 DPL=0 TSS64-busy
-> >   GDT=     fffffe767cf8d000 0000007f
-> >   IDT=     fffffe0000000000 00000fff
-> >   CR0=80050033 CR2=000055fd193a6468 CR3=000000010930c000 CR4=00350ef0
-> >   DR0=0000000000000000 DR1=0000000000000000 DR2=0000000000000000 DR3=0000000000000000
-> >   DR6=00000000ffff0ff0 DR7=0000000000000400
-> >   EFER=0000000000001d01
-> >   Code=0f 1f 44 00 00 48 8b 4f 10 48 8b 41 08 48 89 c2 48 c1 ea 20 <48> 0f c7 61 40 31 c0 48 8b 47 10 f6 80 40 02 00 00 c0 74 1e 48 8b 05 98 f8 e8 01 48 89 47
-> > 
-> > This series keeps the existing MMIO dispatcher, but turns the fixed
-> > window into a container and (when the window maps linearly to a Type-3
-> > volatile memdev) overlays a RAM alias so KVM can create a memslot for
-> > the range. The mapping is updated when HDM decoders are
-> > committed/uncommitted by the guest.
-> > 
-> > This patchset is based on master branch 559919ce54927d59b215a4665eda7ab6118a48aa
-> > 
-> > Local validation on this base confirmed that the issue reproduces
-> > without the series and is fixed with the 3 patches below.
-> > 
-> > Li Chen (3):
-> >   cxl/type3: expose vmem mapping for fixed windows
-> >   cxl: alias fixed memory windows to RAM under KVM
-> >   cxl: update fixed window mappings on decoder programming
-> > 
-> >  hw/cxl/cxl-component-utils.c |   2 +
-> >  hw/cxl/cxl-host-stubs.c      |   1 +
-> >  hw/cxl/cxl-host.c            | 189 ++++++++++++++++++++++++++++++++++-
-> >  hw/mem/cxl_type3.c           |  59 +++++++++++
-> >  include/hw/cxl/cxl.h         |   5 +
-> >  include/hw/cxl/cxl_device.h  |   3 +
-> >  include/hw/cxl/cxl_host.h    |   1 +
-> >  7 files changed, 258 insertions(+), 2 deletions(-)
-> >   
-> 
+diff --git a/block/linux-aio.c b/block/linux-aio.c
+index 53c3e9af8a..1f25339dc9 100644
+--- a/block/linux-aio.c
++++ b/block/linux-aio.c
+@@ -40,10 +40,15 @@ struct qemu_laiocb {
+     Coroutine *co;
+     LinuxAioState *ctx;
+     struct iocb iocb;
++    int fd;
+     ssize_t ret;
++    off_t offset;
+     size_t nbytes;
+     QEMUIOVector *qiov;
+-    bool is_read;
++
++    int type;
++    BdrvRequestFlags flags;
++    uint64_t dev_max_batch;
+     QSIMPLEQ_ENTRY(qemu_laiocb) next;
+ };
+ 
+@@ -87,7 +92,7 @@ static void qemu_laio_process_completion(struct qemu_laiocb *laiocb)
+             ret = 0;
+         } else if (ret >= 0) {
+             /* Short reads mean EOF, pad with zeros. */
+-            if (laiocb->is_read) {
++            if (laiocb->type == QEMU_AIO_READ) {
+                 qemu_iovec_memset(laiocb->qiov, ret, 0,
+                     laiocb->qiov->size - ret);
+             } else {
+@@ -367,23 +372,23 @@ static void laio_deferred_fn(void *opaque)
+     }
+ }
+ 
+-static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+-                          int type, BdrvRequestFlags flags,
+-                          uint64_t dev_max_batch)
++static int laio_do_submit(struct qemu_laiocb *laiocb)
+ {
+     LinuxAioState *s = laiocb->ctx;
+     struct iocb *iocbs = &laiocb->iocb;
+     QEMUIOVector *qiov = laiocb->qiov;
++    int fd = laiocb->fd;
++    off_t offset = laiocb->offset;
+ 
+-    switch (type) {
++    switch (laiocb->type) {
+     case QEMU_AIO_WRITE:
+ #ifdef HAVE_IO_PREP_PWRITEV2
+     {
+-        int laio_flags = (flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
++        int laio_flags = (laiocb->flags & BDRV_REQ_FUA) ? RWF_DSYNC : 0;
+         io_prep_pwritev2(iocbs, fd, qiov->iov, qiov->niov, offset, laio_flags);
+     }
+ #else
+-        assert(flags == 0);
++        assert(laiocb->flags == 0);
+         io_prep_pwritev(iocbs, fd, qiov->iov, qiov->niov, offset);
+ #endif
+         break;
+@@ -399,7 +404,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+     /* Currently Linux kernel does not support other operations */
+     default:
+         fprintf(stderr, "%s: invalid AIO request type 0x%x.\n",
+-                        __func__, type);
++                        __func__, laiocb->type);
+         return -EIO;
+     }
+     io_set_eventfd(&laiocb->iocb, event_notifier_get_fd(&s->e));
+@@ -407,7 +412,7 @@ static int laio_do_submit(int fd, struct qemu_laiocb *laiocb, off_t offset,
+     QSIMPLEQ_INSERT_TAIL(&s->io_q.pending, laiocb, next);
+     s->io_q.in_queue++;
+     if (!s->io_q.blocked) {
+-        if (s->io_q.in_queue >= laio_max_batch(s, dev_max_batch)) {
++        if (s->io_q.in_queue >= laio_max_batch(s, laiocb->dev_max_batch)) {
+             ioq_submit(s);
+         } else {
+             defer_call(laio_deferred_fn, s);
+@@ -425,14 +430,18 @@ int coroutine_fn laio_co_submit(int fd, uint64_t offset, QEMUIOVector *qiov,
+     AioContext *ctx = qemu_get_current_aio_context();
+     struct qemu_laiocb laiocb = {
+         .co         = qemu_coroutine_self(),
+-        .nbytes     = qiov ? qiov->size : 0,
++        .fd         = fd,
++        .offset     = offset,
++        .nbytes     = (qiov ? qiov->size : 0),
+         .ctx        = aio_get_linux_aio(ctx),
+         .ret        = -EINPROGRESS,
+-        .is_read    = (type == QEMU_AIO_READ),
+         .qiov       = qiov,
++        .type       = type,
++        .flags      = flags,
++        .dev_max_batch = dev_max_batch,
+     };
+ 
+-    ret = laio_do_submit(fd, &laiocb, offset, type, flags, dev_max_batch);
++    ret = laio_do_submit(&laiocb);
+     if (ret < 0) {
+         return ret;
+     }
+-- 
+2.53.0
 
 
