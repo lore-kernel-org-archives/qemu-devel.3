@@ -4,129 +4,61 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id ADB6A10775EA
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:20:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 54E9B10775EA
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:20:43 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2uYi-00005R-2t; Wed, 18 Mar 2026 13:19:52 -0400
+	id 1w2uZS-00019f-P1; Wed, 18 Mar 2026 13:20:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2uYg-0008LS-2U
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:19:50 -0400
-Received: from mail-pg1-x52a.google.com ([2607:f8b0:4864:20::52a])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2uYe-0000jY-Ev
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:19:49 -0400
-Received: by mail-pg1-x52a.google.com with SMTP id
- 41be03b00d2f7-c73fbdd9b53so23596a12.3
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:19:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773854387; x=1774459187; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=loTOcW34Qr7PnBNfKgZiJM9E7Nhew1lIv9YNxN1fVjk=;
- b=WlmMphOt3RWy42xPrJmphb20ddk4NOtV8t4OPaPQEsW2ukrLEdBpproA5pca4sYi9f
- nWfen/c2+zoVqzJ/V8M7KyH9R4Gp0YT+WnyGQQK6B0SwHJI4RS/wRJVl/pboRsSE2z1x
- YWhzRBq3YlRqzAWNg4vSecINyRcefeylCmcQ52RtV1eZnbtJZDLp3OnsiVUTL9W2wmS/
- lJ7b/0G8IKyrFea5/vTkKbMU31G7JIx0AnM8RGDgJ/mLVWsC3QRP745+SccQtEhuUzNf
- hGJDOADJUqQTslpWxr2BTMrFECxWA5EfMA5HNaqzbXYXmzxY3UvXgFCa6xVgmfLw+d+6
- yzDQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773854387; x=1774459187;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=loTOcW34Qr7PnBNfKgZiJM9E7Nhew1lIv9YNxN1fVjk=;
- b=b0Qq+E07OGsRTf14+oQusJc/hUaHgnbL8DGYssPiN61yib7nIsZuxlNpXuun5hMXzc
- 9onyH3n/clFs/OVPfA8vUDni+j6JDa64z525QlIrsbog7NH5UbnLJxO6yTGrJG8tnRPz
- 6+eBPj/amZXmv9VYVAxV2OLnCvAXoDz2L9ON35nHKfQpVTLNQozjyWVJZhzB3k5Y9k6V
- P2KOt769V+j1DkUdrEk6/Z1n7eSEYao6Y2wsgTtTCXdhnNoJvTxH0Y8hf8cQOtXJ71fX
- 3dJdt6zN2pFyQl2HFjkHsAyNAjAOe2CfpuemGvc9jt5lgJJC/vtp4/g19mQEwyx5x//3
- wPZg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWpeX+KWInf0qJu1coMo4B34Vmv6GTuQ7Lt5TffhyGU5bVogjfalgMsVzkIWeiriFoOZG2319K+PETO@nongnu.org
-X-Gm-Message-State: AOJu0YyTj1ZkXkpk3eLeBbcx4YxnqF8NvoSQA311+CmR7vVJ7XL+YN7x
- X1ZVX5800kVbwAA5RkBMU+GWIezvs1sjeYcn/nGUVcpcpHPkOFIXIy+Pa9nqarrpIEU=
-X-Gm-Gg: ATEYQzw4xTMS2FsiMmKDQzPzKDfFdJ4ARHVC3hGXtl6UEmz5WfZ4vs/WExkZUDC/Dyd
- yEtTqXvw8CsmSu+u8putw4GF1muVRMZWD/EfvdJnJUPDL0VWzGCBNLd78s6zmbDlsr3iQvwRaWW
- jLu6r9gXTwmLghoa4nnGu1TXKKmpylWsVAu0e5thxkmzuE7VpTP5AvZoxmPp78j0Qnk4vgSskcr
- fldj7v8UGCc3ed/zlR+g9Ybv0e0QddlXGEFN+5e6ao5N47uRQHj0zBhekon2exx4hWh1Dkm9FoZ
- P9aNK8VoEZD+k6q6YPZ3a7Vh+6wr4hcEJTF/Mi5LuNuz03YMj6zwyHQs8cxi+JVddpvVBF1TDzG
- EtVmou5bBU2qMSMeYMk4cn9Yqu7d9Bb0DYSY8wtqI4be+PUIgBDnJecDuyvLiCUFtk/wvNUfkhQ
- c7rHQam2Q9tEJQWjdYB1m4CFeeJt70SBq0oCiNeq0yORWDLb+kXZ2QWcJJ5NwVYtozp11Tns5FW
- 2Nq5bI=
-X-Received: by 2002:a17:903:2f87:b0:2b0:5dcb:84cb with SMTP id
- d9443c01a7336-2b06e321083mr40804565ad.2.1773854386651; 
- Wed, 18 Mar 2026 10:19:46 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b06e5ef42asm39634175ad.40.2026.03.18.10.19.45
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 10:19:45 -0700 (PDT)
-Message-ID: <8b6763ea-0398-423a-a71d-87809e9b7406@linaro.org>
-Date: Wed, 18 Mar 2026 10:19:45 -0700
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1w2uZP-00019F-8Y
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:20:35 -0400
+Received: from frasgout.his.huawei.com ([185.176.79.56])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <alireza.sanaee@huawei.com>)
+ id 1w2uZM-00011A-9j
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:20:34 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fbbD13nzzzJ467X;
+ Thu, 19 Mar 2026 01:19:29 +0800 (CST)
+Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
+ by mail.maildlp.com (Postfix) with ESMTPS id 8E1664056A;
+ Thu, 19 Mar 2026 01:20:27 +0800 (CST)
+Received: from a2303103017.china.huawei.com (10.203.177.99) by
+ dubpeml500005.china.huawei.com (7.214.145.207) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.1544.11; Wed, 18 Mar 2026 17:20:26 +0000
+To: <qemu-devel@nongnu.org>
+CC: <anisa.su887@gmail.com>, <armbru@redhat.com>, <david@kernel.org>,
+ <gourry@gourry.net>, <imammedo@redhat.com>, <jonathan.cameron@huawei.com>,
+ <linuxarm@huawei.com>, <lizhijian@fujitsu.com>, <mst@redhat.com>,
+ <nifan.cxl@gmail.com>, <pbonzini@redhat.com>, <peterx@redhat.com>,
+ <philmd@linaro.org>, <venkataravis@micron.com>, <me@linux.beauty>,
+ <xiaoguangrong.eric@gmail.com>
+Subject: [PATCH v8 2/3] hw/cxl: Allow cxl_cfmws_find_device() to filter on
+ whether interleaved paths are accepted
+Date: Wed, 18 Mar 2026 17:19:16 +0000
+Message-ID: <20260318171918.146-3-alireza.sanaee@huawei.com>
+X-Mailer: git-send-email 2.51.0.windows.2
+In-Reply-To: <20260318171918.146-1-alireza.sanaee@huawei.com>
+References: <20260318171918.146-1-alireza.sanaee@huawei.com>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v2 v2] plugins/api-system: Handle migrate_add_blocker()
- failure
-Content-Language: en-US
-To: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org
-Cc: peter.maydell@linaro.org, alex.bennee@linaro.org, erdnaxe@crans.org,
- ma.mandourr@gmail.com
-References: <20260312121617.228654-1-vikingtc4@gmail.com>
- <20260317134733.126584-1-vikingtc4@gmail.com>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260317134733.126584-1-vikingtc4@gmail.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::52a;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x52a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.203.177.99]
+X-ClientProxiedBy: lhrpeml500009.china.huawei.com (7.191.174.84) To
+ dubpeml500005.china.huawei.com (7.214.145.207)
+Received-SPF: pass client-ip=185.176.79.56;
+ envelope-from=alireza.sanaee@huawei.com; helo=frasgout.his.huawei.com
+X-Spam_score_int: -24
+X-Spam_score: -2.5
 X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,48 +71,128 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Alireza Sanaee <alireza.sanaee@huawei.com>
+From:  Alireza Sanaee via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/26 6:47 AM, Trieu Huynh wrote:
-> migrate_add_blocker() can fail (e.g. if migration is already in
-> progress), in which case it returns a negative value and populates
-> its errp argument with the reason.
-> 
-> The previous code ignored the return value. Pass &error_fatal so
-> that on failure QEMU exits cleanly with an informative error message
-> rather than continuing in an inconsistent state.
-> 
-> Resolves: CID 1645470
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> ---
-> v2:
-> - Pass &error_fatal instead of returning NULL: the plugin has no
->    recovery path, QEMU should exit cleanly with an error message.
->    (Peter Maydell, Pierrick Bouvier)
-> - Remove manual error_free(migration_blocker) + migration_blocker = NULL:
->    migrate_add_blocker() already does this on failure. (Peter Maydell)
-> ---
->   plugins/api-system.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/plugins/api-system.c b/plugins/api-system.c
-> index 9a70b9caa6..fbf905cd63 100644
-> --- a/plugins/api-system.c
-> +++ b/plugins/api-system.c
-> @@ -108,7 +108,7 @@ const void *qemu_plugin_request_time_control(void)
->           has_control = true;
->           error_setg(&migration_blocker,
->                      "TCG plugin time control does not support migration");
-> -        migrate_add_blocker(&migration_blocker, NULL);
-> +        migrate_add_blocker(&migration_blocker, &error_fatal);
->           return &has_control;
->       }
->       return NULL;
+Extend cxl_cfmws_find_device() with a parameter that filters on whether the
+address lies in an interleaved range. For now all callers accept
+interleave configurations so no functional changes.
 
-This was merged into master (aed38fe5206d848a8366181bfab96835fcd5643b).
-Thank you for your contribution!
+Reviewed-by: Li Zhijian <lizhijian@fujitsu.com>
+Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+Reviewed-by: Gregory Price <gourry@gourry.net>
+Tested-by: Gregory Price <gourry@gourry.net>
+Signed-off-by: Alireza Sanaee <alireza.sanaee@huawei.com>
+---
+ hw/cxl/cxl-host.c | 33 ++++++++++++++++++++++++++-------
+ 1 file changed, 26 insertions(+), 7 deletions(-)
 
-Regards,
-Pierrick
+diff --git a/hw/cxl/cxl-host.c b/hw/cxl/cxl-host.c
+index a94b893e99..2dc9f77007 100644
+--- a/hw/cxl/cxl-host.c
++++ b/hw/cxl/cxl-host.c
+@@ -104,7 +104,7 @@ void cxl_fmws_link_targets(Error **errp)
+ }
+ 
+ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+-                                uint8_t *target)
++                                uint8_t *target, bool *interleaved)
+ {
+     int hdm_inc = R_CXL_HDM_DECODER1_BASE_LO - R_CXL_HDM_DECODER0_BASE_LO;
+     unsigned int hdm_count;
+@@ -138,6 +138,11 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+         found = true;
+         ig_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IG);
+         iw_enc = FIELD_EX32(ctrl, CXL_HDM_DECODER0_CTRL, IW);
++
++        if (interleaved) {
++            *interleaved = iw_enc != 0;
++        }
++
+         target_idx = (addr / cxl_decode_ig(ig_enc)) % (1 << iw_enc);
+ 
+         if (target_idx < 4) {
+@@ -157,7 +162,8 @@ static bool cxl_hdm_find_target(uint32_t *cache_mem, hwaddr addr,
+     return found;
+ }
+ 
+-static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
++static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr,
++                                        bool allow_interleave)
+ {
+     CXLComponentState *hb_cstate, *usp_cstate;
+     PCIHostState *hb;
+@@ -165,9 +171,13 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+     int rb_index;
+     uint32_t *cache_mem;
+     uint8_t target;
+-    bool target_found;
++    bool target_found, interleaved;
+     PCIDevice *rp, *d;
+ 
++    if ((fw->num_targets > 1) && !allow_interleave) {
++        return NULL;
++    }
++
+     rb_index = (addr / cxl_decode_ig(fw->enc_int_gran)) % fw->num_targets;
+     hb = PCI_HOST_BRIDGE(fw->target_hbs[rb_index]->cxl_host_bridge);
+     if (!hb || !hb->bus || !pci_bus_is_cxl(hb->bus)) {
+@@ -187,11 +197,16 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+ 
+         cache_mem = hb_cstate->crb.cache_mem_registers;
+ 
+-        target_found = cxl_hdm_find_target(cache_mem, addr, &target);
++        target_found = cxl_hdm_find_target(cache_mem, addr, &target,
++                                           &interleaved);
+         if (!target_found) {
+             return NULL;
+         }
+ 
++        if (interleaved && !allow_interleave) {
++            return NULL;
++        }
++
+         rp = pcie_find_port_by_pn(hb->bus, target);
+         if (!rp) {
+             return NULL;
+@@ -223,11 +238,15 @@ static PCIDevice *cxl_cfmws_find_device(CXLFixedWindow *fw, hwaddr addr)
+ 
+     cache_mem = usp_cstate->crb.cache_mem_registers;
+ 
+-    target_found = cxl_hdm_find_target(cache_mem, addr, &target);
++    target_found = cxl_hdm_find_target(cache_mem, addr, &target, &interleaved);
+     if (!target_found) {
+         return NULL;
+     }
+ 
++    if (interleaved && !allow_interleave) {
++        return NULL;
++    }
++
+     d = pcie_find_port_by_pn(&PCI_BRIDGE(d)->sec_bus, target);
+     if (!d) {
+         return NULL;
+@@ -251,7 +270,7 @@ static MemTxResult cxl_read_cfmws(void *opaque, hwaddr addr, uint64_t *data,
+     CXLFixedWindow *fw = opaque;
+     PCIDevice *d;
+ 
+-    d = cxl_cfmws_find_device(fw, addr + fw->base);
++    d = cxl_cfmws_find_device(fw, addr + fw->base, true);
+     if (d == NULL) {
+         *data = 0;
+         /* Reads to invalid address return poison */
+@@ -268,7 +287,7 @@ static MemTxResult cxl_write_cfmws(void *opaque, hwaddr addr,
+     CXLFixedWindow *fw = opaque;
+     PCIDevice *d;
+ 
+-    d = cxl_cfmws_find_device(fw, addr + fw->base);
++    d = cxl_cfmws_find_device(fw, addr + fw->base, true);
+     if (d == NULL) {
+         /* Writes to invalid address are silent */
+         return MEMTX_OK;
+-- 
+2.43.0
+
 
