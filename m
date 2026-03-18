@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1EC6FCD0DC
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:31:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 879D2FCD0DC
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 08:31:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2mIT-0008Hx-5H; Wed, 18 Mar 2026 04:30:34 -0400
+	id 1w2mJa-0008Vq-EO; Wed, 18 Mar 2026 04:31:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2mIQ-0008HR-4v
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:30:30 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2mJE-0008UL-1a
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:31:24 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2mIM-0008UC-Ch
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:30:29 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2mJB-00005w-D8
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 04:31:19 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773822623;
+ s=mimecast20190719; t=1773822675;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=sUyjVWNjK5xD/pgsjqtucUhg3T5SdXP97zMCxzAN68M=;
- b=EBHnjAseHzMOTlhpR2M3Hsb0zaqm2mVJ5sq4JNM45yhwIK12gaH+wEjo7cwGsSxfmb8QCo
- V7HpZ+ykcoH0YicbUD1//5BOWZyC56bV9K5IVP2Bmu+k1JyUplirqmK4qonWBNLSZb1Oem
- syNOr+9lxtdkZH2Ib+Fc6yFWmm+7xow=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=9lpYg480c4fPMkvNO+xVaXELygcWb2xqwE0auihC/dI=;
+ b=irzE9MMuYgvaS0fACzvvD5cGPIoEyt012sXOpH0wBt/Uoe2rzQbXaYlYU0qYTb+GHqo5jj
+ TzkgZXfN4VobD44W4+wLoqYX+nhQma6LyREghP/eMU1F2+jisM/9sLyrBQSsVUDoeKlcqm
+ TKxQxVdzL1wLK0W10hXuF0P+tUodi7w=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-226-9aExbs9GMMiscHE5Cly4tA-1; Wed, 18 Mar 2026 04:30:22 -0400
-X-MC-Unique: 9aExbs9GMMiscHE5Cly4tA-1
-X-Mimecast-MFC-AGG-ID: 9aExbs9GMMiscHE5Cly4tA_1773822621
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4852d27f473so34898725e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 01:30:22 -0700 (PDT)
+ us-mta-502-K19WV5FjODqhS-DIDLdVXA-1; Wed, 18 Mar 2026 04:31:12 -0400
+X-MC-Unique: K19WV5FjODqhS-DIDLdVXA-1
+X-Mimecast-MFC-AGG-ID: K19WV5FjODqhS-DIDLdVXA_1773822672
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-43b46b2b161so2865797f8f.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 01:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773822621; x=1774427421; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773822672; x=1774427472; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=sUyjVWNjK5xD/pgsjqtucUhg3T5SdXP97zMCxzAN68M=;
- b=DJ0o3o8AH68QDc9yEiit5DwBwsQQR18dktJmRHDtNwwjohpTcJrWRcFWr6X0l4S82J
- xmjEv2+A07PHsldbxR1ByKq/oLThFczeFWnzCFHxnHqInVVRkBYQBHoyhKXkabx/Vddw
- EzUuganhfSGCyMJ+3CGvBTk4C1BcTSWHGdOBVPY8Qo/8fzxyvhuBnan5b0PL8YFg06am
- ywcGeKOmfTaQx2dyRFbpP4KvUUsgDrxbN5C8BEZkchLyH3pIy7wjhYdFeSVDmJMM5Bf1
- WENE1+sLG0XKWOTFHKmUYJe2shfa3c7KmNdJ7SiApm4CpFrpFWHJuB4f94KI6yz/Y+86
- Jkog==
+ bh=9lpYg480c4fPMkvNO+xVaXELygcWb2xqwE0auihC/dI=;
+ b=qLPVcd1nXR9A2ZWsp8l9OuF2LLJo8M4UaVQramlGxotG8w2dE/IrvTIT1g/z/KZv6O
+ 5UeNjeCdZXb5fKzY8dda3OlNJYys/U/SSlhhHdpcMJ1BCQSn+4oASR848u+dIpz6dLj0
+ qq7Hx+4MYLA35zuIR7uz0szMZzx3Db9RGcIoyLKAEM4AWlNpf8t431+YafTUkYM8AQi5
+ FsJ5sAwubKgZVdfQ3Tn9xidD/r1kcP6kC64FN7ycKGzu4T5cMDm7DGYpy/YSlmXPqI02
+ vwmiNcxSccQJijhVQAnVnd0sAnHW1KHcKl/kkPIGKySpA6NQYRYOzMjDuMbG7IlCtvDe
+ /2Tg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773822621; x=1774427421;
+ d=1e100.net; s=20251104; t=1773822672; x=1774427472;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=sUyjVWNjK5xD/pgsjqtucUhg3T5SdXP97zMCxzAN68M=;
- b=NmW8ccdbHIaGsJ6Rwdou0N2E9y4ryouMgYimYuMKQpenC27Z+noBqpayJhtiFasbN6
- bGNdWA13tc8PwTT2W5HczrmQhKaUNBjSX/CT3VagZ23QHmDkFI9QXM62igvraTDuEhI6
- PluMBqp5WqAdeemZwdta3LBs5OfKWhfrzxF/IqV8oC/G7dN14YRGNx+B5dDm4KZd0JuG
- zKxkb8pvxOUEB/FqfCDTgNByGnPEiHtDOu8q2bCsVkveOJAZYo6oeCWgRmoEO69CvxvH
- AMrnqpCvT74s3Zae1Hj+8J1RMWt7C2fzkuG4+BgRh475tXa2/NqJFT52JY5MfFUlIdIK
- GpFw==
+ bh=9lpYg480c4fPMkvNO+xVaXELygcWb2xqwE0auihC/dI=;
+ b=i6+VP6T3tVD8iYVfcMeq6Ytgrh6adIENkXRBXm0JwQJwr/ARJXGv0NEZ6S8HNrXJbq
+ CVl1NHEFk3mgNJwe2Zwrv+efgez+gtb/trE4BJ6rfMI7nzcnlpbi5pbJQeW42N8a+iSA
+ WnkHKhRoeUxyz8a9VLchwj3xo0KHTAP26uuClZrpbso27lV0+BIJ1Hx5kKmCFtSL+MIB
+ gJOZL+QWC/MAJ8maGgUIHtmWtX7J3STAoVEQPolqpqHPrM934amS7jtOi3hXo962BW7e
+ FBm+TboSZFGK6+L+o4ENY3OZp4Ans/VNCEcqyjfPLVlW6m5cdkjGzn5eZoKjXHBnMzHp
+ Cn/w==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUwmtxXdtaPjL6+SaTxzJsmVmftM2KygQ8n6/+yF8eH7SOJjN3a/qmJMUte8v4yjHtPTjllDTf+NKe2@nongnu.org
-X-Gm-Message-State: AOJu0YyylOLjKpWzoOWMmwC0cvmsUKw+1F7txBxplKi8za8AbRpjjxpY
- yqMysL/cu/m8uaAVaJyQQteVCpcCGu00HYCgSKB1qhntX0JYnHCSdN35bgbytt+RZErKfj41cY1
- preg5It5QVtT2gjtHxd/gYNvbSfC9e+l0dRHciJlx7jZQtv/Cyy/9U36d
-X-Gm-Gg: ATEYQzwH5TycQmhFTE2TNR9vd/+dsuI7fb0d647bkEs1CKskClQ1bjmieKkDc0S6EIy
- pr2bdLAIgP7H2h2G96oC5aAjN5jLxb05THWSB38003SreJUAjyOJln4YpybEqKRY7aU48wx0TPQ
- 6sSHERhy+v8dBQl6Hd6+pVKPXGm1atMsZjXXjKCGg6WF+lWT9rfmtlA8aeo2K2DKDAAItBE/osq
- lEIdKIMpnEyhziRvReijo5lt4y4iKfBFzpbx43cH3ZlG8pVVaw8WqF8OabjnWDszeEYMTpVGX1R
- j0xJfoK6DVym2smVI2f9reeoTRG/085eJyEiwpYld0qhmmB2nO83izLp2SiAAwup5YVPUJQrNzD
- HNMwyzitd5Wfm0wAsAbAoTYdGnt5sS1Jpg35bBKWgeUFgIBXKJ70cuM/1OUvk
-X-Received: by 2002:a05:600c:8b85:b0:485:4135:5c92 with SMTP id
- 5b1f17b1804b1-486f41ffff7mr40939035e9.0.1773822621167; 
- Wed, 18 Mar 2026 01:30:21 -0700 (PDT)
-X-Received: by 2002:a05:600c:8b85:b0:485:4135:5c92 with SMTP id
- 5b1f17b1804b1-486f41ffff7mr40938445e9.0.1773822620503; 
- Wed, 18 Mar 2026 01:30:20 -0700 (PDT)
+ AJvYcCU/iAthQrBsvmxeEdGviXYD7OzO/DwnPI2hhLt4iZXLH++cTQBFyp5FredKGvBVrtv+/Ah2jbWszr/Z@nongnu.org
+X-Gm-Message-State: AOJu0YyiEWk+V5io92d5FvksUfIl7X/o7uZcKspdb3oPpRyxZscqGvjd
+ F7HY1v46QT49oHt1yj+iuIrPaCgm+gBw4zLE69jWue/YUML7HVgRgBO5K8n+ppSC3ywasOpY2AG
+ wcFhCXW5pnv1PHExi3Pbye3D38e8btpvyn4S5PTcHpXCc8F+wwrTLjBuJ
+X-Gm-Gg: ATEYQzzpBW12u/eW6Xfvbmayi2V/ajcm3KNuLMgutdJeoQv2dgXnLBBCds+3wG2//9s
+ p685ThpGXC1Ib1R1U0uS3tmaDp/RueE6bZkEPLaZNbyEVhmyqZ+fFt804gHJYCgzzeDC+JJ1GBR
+ ob72UH4MFRnfZrk+ux3FiHyaEwa37fnSS6+vZDZKQstTflUyZWilxCnLVjOB1VfKyghv9js+6X/
+ 82Jh219ApLc1aacLcJ3objco3hmvYZc9q9il+GTn6MxjNfPjgAyL0DGMY3/Asyf0W2Lubrzyy1U
+ 7lGsFNSpILXo37vOMUEGV9ET3glvj69H6dwyzgtc/EhUlLVVuvWaYvbyufyCQixuYw9WLg7FIl6
+ 7q1reXHjN9jVaabYXh1vDiOE8U/o3fH7bPfp+CQQnfxt7Svj4BYO1bGgQhTpZ
+X-Received: by 2002:a05:6000:24c8:b0:43b:4ec7:f924 with SMTP id
+ ffacd0b85a97d-43b527c4e7cmr3840830f8f.34.1773822671477; 
+ Wed, 18 Mar 2026 01:31:11 -0700 (PDT)
+X-Received: by 2002:a05:6000:24c8:b0:43b:4ec7:f924 with SMTP id
+ ffacd0b85a97d-43b527c4e7cmr3840740f8f.34.1773822670806; 
+ Wed, 18 Mar 2026 01:31:10 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f4bc96c6sm21312115e9.5.2026.03.18.01.30.19
+ ffacd0b85a97d-43b51892244sm6084243f8f.22.2026.03.18.01.31.09
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 01:30:20 -0700 (PDT)
-Message-ID: <9f1aafb3-b731-40fe-86da-70cb594b4f7b@redhat.com>
-Date: Wed, 18 Mar 2026 09:30:18 +0100
+ Wed, 18 Mar 2026 01:31:10 -0700 (PDT)
+Message-ID: <78675050-16b3-45d2-8650-78268ea8e2f1@redhat.com>
+Date: Wed, 18 Mar 2026 09:31:09 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 7/8] hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce
- to hw/vfio/kvm-spapr.c
+Subject: Re: [PATCH v4 8/8] hw/vfio: all vfio files can now be common files
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
  qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org
 References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
- <20260317194241.869568-8-pierrick.bouvier@linaro.org>
+ <20260317194241.869568-9-pierrick.bouvier@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -141,7 +140,7 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260317194241.869568-8-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260317194241.869568-9-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
@@ -170,185 +169,31 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/17/26 20:42, Pierrick Bouvier wrote:
-> Since this function needs kvm specific types, we need to extract in
-> another file and link it only for KVM builds.
-> 
 > Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 > ---
->   hw/vfio/kvm-spapr.h | 12 ++++++++++++
->   hw/vfio/kvm-spapr.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
->   hw/vfio/kvm-stubs.c |  8 ++++++++
->   hw/vfio/spapr.c     | 30 ++++-------------------------
-
-Next step (or prereq step I wonder) would be to move all the pseries
-stuff under hw/ppc/spapr_pci_vfio.c.
-
-I will take a look.
-
-C.
-
-
-
->   hw/vfio/meson.build |  1 +
->   5 files changed, 72 insertions(+), 26 deletions(-)
->   create mode 100644 hw/vfio/kvm-spapr.h
->   create mode 100644 hw/vfio/kvm-spapr.c
+>   hw/vfio/meson.build | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/hw/vfio/kvm-spapr.h b/hw/vfio/kvm-spapr.h
-> new file mode 100644
-> index 00000000000..b1f68c686a7
-> --- /dev/null
-> +++ b/hw/vfio/kvm-spapr.h
-> @@ -0,0 +1,12 @@
-> +/*
-> + * VFIO sPAPR KVM specific functions
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "hw/vfio/vfio-container.h"
-> +#include "qapi/error.h"
-> +
-> +bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
-> +                               MemoryRegionSection *section,
-> +                               Error **errp);
-> diff --git a/hw/vfio/kvm-spapr.c b/hw/vfio/kvm-spapr.c
-> new file mode 100644
-> index 00000000000..ad71c5a85e2
-> --- /dev/null
-> +++ b/hw/vfio/kvm-spapr.c
-> @@ -0,0 +1,47 @@
-> +/*
-> + * VFIO sPAPR KVM specific functions
-> + *
-> + * SPDX-License-Identifier: GPL-2.0-or-later
-> + */
-> +
-> +#include "qemu/osdep.h"
-> +#include <sys/ioctl.h>
-> +#include <linux/vfio.h>
-> +#include <linux/kvm.h>
-> +
-> +#include "hw/vfio/vfio-container-legacy.h"
-> +#include "hw/vfio/kvm-spapr.h"
-> +#include "qapi/error.h"
-> +#include "trace.h"
-> +#include "vfio-helpers.h"
-> +
-> +bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
-> +                               MemoryRegionSection *section,
-> +                               Error **errp)
-> +{
-> +    VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
-> +    VFIOGroup *group;
-> +    IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
-> +    struct kvm_vfio_spapr_tce param;
-> +    struct kvm_device_attr attr = {
-> +        .group = KVM_DEV_VFIO_GROUP,
-> +        .attr = KVM_DEV_VFIO_GROUP_SET_SPAPR_TCE,
-> +        .addr = (uint64_t)(unsigned long)&param,
-> +    };
-> +
-> +    if (!memory_region_iommu_get_attr(iommu_mr, IOMMU_ATTR_SPAPR_TCE_FD,
-> +                &param.tablefd)) {
-> +        QLIST_FOREACH(group, &container->group_list, container_next) {
-> +            param.groupfd = group->fd;
-> +            if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-> +                error_setg_errno(errp, errno,
-> +                        "vfio: failed GROUP_SET_SPAPR_TCE for "
-> +                        "KVM VFIO device %d and group fd %d",
-> +                        param.tablefd, param.groupfd);
-> +                return false;
-> +            }
-> +            trace_vfio_spapr_group_attach(param.groupfd, param.tablefd);
-> +        }
-> +    }
-> +    return true;
-> +}
-> diff --git a/hw/vfio/kvm-stubs.c b/hw/vfio/kvm-stubs.c
-> index 5a489d1b711..78c51b99155 100644
-> --- a/hw/vfio/kvm-stubs.c
-> +++ b/hw/vfio/kvm-stubs.c
-> @@ -6,6 +6,7 @@
->   
->   #include "qemu/osdep.h"
->   
-> +#include "hw/vfio/kvm-spapr.h"
->   #include "hw/vfio/vfio-device.h"
->   #include "qapi/error.h"
->   #include "vfio-helpers.h"
-> @@ -24,3 +25,10 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
->   {
->       return 0;
->   }
-> +
-> +bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
-> +                               MemoryRegionSection *section,
-> +                               Error **errp)
-> +{
-> +    g_assert_not_reached();
-> +}
-> diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
-> index a9f093c3570..42690e4323d 100644
-> --- a/hw/vfio/spapr.c
-> +++ b/hw/vfio/spapr.c
-> @@ -16,6 +16,7 @@
->   #include "system/address-spaces.h"
->   
->   #include "hw/vfio/vfio-container-legacy.h"
-> +#include "hw/vfio/kvm-spapr.h"
->   #include "hw/core/hw-error.h"
->   #include "qemu/error-report.h"
->   #include "qapi/error.h"
-> @@ -406,33 +407,10 @@ vfio_spapr_container_add_section_window(VFIOContainer *bcontainer,
->       vfio_host_win_add(scontainer, section->offset_within_address_space,
->                         section->offset_within_address_space +
->                         int128_get64(section->size) - 1, pgsize);
-> -#ifdef CONFIG_KVM
-> -    if (kvm_enabled()) {
-> -        VFIOGroup *group;
-> -        IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
-> -        struct kvm_vfio_spapr_tce param;
-> -        struct kvm_device_attr attr = {
-> -            .group = KVM_DEV_VFIO_GROUP,
-> -            .attr = KVM_DEV_VFIO_GROUP_SET_SPAPR_TCE,
-> -            .addr = (uint64_t)(unsigned long)&param,
-> -        };
-> -
-> -        if (!memory_region_iommu_get_attr(iommu_mr, IOMMU_ATTR_SPAPR_TCE_FD,
-> -                                          &param.tablefd)) {
-> -            QLIST_FOREACH(group, &container->group_list, container_next) {
-> -                param.groupfd = group->fd;
-> -                if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-> -                    error_setg_errno(errp, errno,
-> -                                     "vfio: failed GROUP_SET_SPAPR_TCE for "
-> -                                     "KVM VFIO device %d and group fd %d",
-> -                                     param.tablefd, param.groupfd);
-> -                    return false;
-> -                }
-> -                trace_vfio_spapr_group_attach(param.groupfd, param.tablefd);
-> -            }
-> -        }
-> +    if (kvm_enabled() && !vfio_spapr_kvm_attach_tce(bcontainer, section, errp)) {
-> +        return false;
->       }
-> -#endif
-> +
->       return true;
->   }
->   
 > diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-> index 6c00a7f51bb..bab5f2b7f15 100644
+> index bab5f2b7f15..fa0ea6ecf0e 100644
 > --- a/hw/vfio/meson.build
 > +++ b/hw/vfio/meson.build
-> @@ -10,6 +10,7 @@ vfio_ss.add(files(
->   vfio_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-helpers.c'))
->   stub_ss.add(files('kvm-stubs.c'))
->   vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
-> +vfio_ss.add(when: ['CONFIG_KVM', 'CONFIG_PSERIES'], if_true: files('kvm-spapr.c'))
->   vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
->     'pci-quirks.c',
->     'pci.c',
+> @@ -20,7 +20,7 @@ vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
+>   vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
+>   stub_ss.add(files('igd-stubs.c'))
+>   
+> -specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+> +system_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+>   
+>   system_ss.add(when: 'CONFIG_VFIO', if_true: files(
+>     'cpr.c',
+
+
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+
+Thanks,
+
+C.
 
 
