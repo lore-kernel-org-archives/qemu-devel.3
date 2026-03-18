@@ -4,67 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B2015103E169
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 12:11:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E614B103E168
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 12:12:55 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2pk7-00037T-RU; Wed, 18 Mar 2026 08:11:19 -0400
+	id 1w2plU-0003fJ-5O; Wed, 18 Mar 2026 08:12:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w2pk4-000374-1F
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:11:16 -0400
+ id 1w2plR-0003es-Ad
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:12:41 -0400
 Received: from mgamail.intel.com ([198.175.65.10])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <yi.l.liu@intel.com>)
- id 1w2pk1-0007uQ-ME
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:11:15 -0400
+ id 1w2plO-00085a-RF
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:12:40 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773835874; x=1805371874;
+ t=1773835959; x=1805371959;
  h=message-id:date:subject:to:cc:references:from:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=ArlZn6P5omM9Xx85LnBA0qNFKMk4pWBoT0Z4hOLmdVo=;
- b=U72P8mf/z1KAIWrqHNA9/Dl5hWb58NItsfy8qpk5oHFzYYLqVJktGWSv
- vuAHlLp1q0x+ByoZW4C3K+JyGEeGZQsyn+Od7ldudst0gEdovXBycIwyx
- 0kLxHLNtQqlgE4KAB4fmlWXgtaABkx80LWw5HI2wb0neXhI7vqYm+DkjE
- BZ9bIXCDABXF/1GTO4g8JDhCf8RZ0vz4AAmdZr6dXFbMWp1NePddkJMop
- PKgFBcVmYq70LQdrtcw6YilF5HdblfSrQsj6YlaMxte8JaigvBGYjW2Hn
- VB+V7p/URIpSGFGQcUbYxowmGCshn667iH1Mnk7Ht5G8BiNpRYe1enj1P g==;
-X-CSE-ConnectionGUID: Xqw8hgYMSOaO3VECq9yILA==
-X-CSE-MsgGUID: JvG8VwbTSViKioBDyaF2+g==
-X-IronPort-AV: E=McAfee;i="6800,10657,11732"; a="92268741"
-X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="92268741"
+ bh=RMECA+UBxqE1+dmTbrF5KkHt5qsaNOaeSremNbNz4uI=;
+ b=Rq5ipNIaHFDZ2n1YpuaUgUA9R+LqsZRTfTWLBv7EldgooABEaq2M7LIX
+ ma4FFR0cGgXZNZBKsEkAAvSTk6YWJUjAp9PRoodERZOu798FlFXh4JW80
+ otGHVrqY7aoi13NxDiv5AdQO3kREz7/+N7I2UeA0eO0t7f1R44N+cYj7u
+ ZJfJ59uaPai3/GeFScv9uLKk3W8jRrJuB1a9EGs6A7RQSBAny9uyyejIh
+ 1oveT1QZNf+lOSQSIvqBic0izcJ0EdUNFDDZcoLbTBOhjJPkx/i9Q8P+d
+ NPPaHUm1EJml/P+aV0cJVghcqXvg/kdPaBnO2sJkVkW958GZyiNYugxA4 A==;
+X-CSE-ConnectionGUID: DSkoMtYES4WQ2VVNo9t0fQ==
+X-CSE-MsgGUID: 9ejS2lk0T/Kz8YHYKeoi8w==
+X-IronPort-AV: E=McAfee;i="6800,10657,11732"; a="92268836"
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="92268836"
 Received: from fmviesa007.fm.intel.com ([10.60.135.147])
  by orvoesa102.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 05:11:12 -0700
-X-CSE-ConnectionGUID: bz/lnAGrQzCIAQi4ehLIaA==
-X-CSE-MsgGUID: mMfsx3zxTGm3zJbDNIctfQ==
+ 18 Mar 2026 05:12:36 -0700
+X-CSE-ConnectionGUID: g9vt+T4ITeKG0xK+jfAwpQ==
+X-CSE-MsgGUID: n+JpgnJWTd69TsXLHMPGeA==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="219650491"
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="219650773"
 Received: from orsmsx902.amr.corp.intel.com ([10.22.229.24])
  by fmviesa007.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 05:11:11 -0700
-Received: from ORSMSX901.amr.corp.intel.com (10.22.229.23) by
+ 18 Mar 2026 05:12:36 -0700
+Received: from ORSMSX902.amr.corp.intel.com (10.22.229.24) by
  ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 18 Mar 2026 05:11:10 -0700
-Received: from ORSEDG901.ED.cps.intel.com (10.7.248.11) by
- ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ 15.2.2562.37; Wed, 18 Mar 2026 05:12:34 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX902.amr.corp.intel.com (10.22.229.24) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Wed, 18 Mar 2026 05:11:10 -0700
-Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.10) by
- edgegateway.intel.com (134.134.137.111) with Microsoft SMTP Server
+ 15.2.2562.37 via Frontend Transport; Wed, 18 Mar 2026 05:12:34 -0700
+Received: from BYAPR05CU005.outbound.protection.outlook.com (52.101.85.5) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Wed, 18 Mar 2026 05:11:10 -0700
+ 15.2.2562.37; Wed, 18 Mar 2026 05:12:34 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=k5IzX/cMj2/tHg5EeG7dOZU1jKJa5xcNkdNR6J4epeJE+qlmAZbQ1WzhPzavM4GV+NshI+iAfxms2IwDzYciFNQ3j1TWBMQcwe7d69x5pwuxaW0jI0F2ZvVJdQlxid9GSStbBRW4lFfNwShGPAwPilDh+CRvL9AOxiNcqGpuTGWWuXdeVGaZ91OwrZYdvuDbDtrvJ49G8fQo3d7LQzOfxTGsJBchiWYIdCbNM0mb+DV0nf02PcTA1DSNuL3rPojPB8/WMDOam+03dC0c2wCVq67FOo+ph/Af1z8con9eojj4AcMlES+uBUiU2Yci6/cI5EEZz7zTRdXTZCtyIbZGVg==
+ b=KJa7E+BRqj3btut6DUT18dY6HVefuIQZjeagKdl33p1KGFwls5tZnxhsgVVMdAO2IcWtN5bn3OifNoQy2q/AWZBNHPqKe2hv4vRG0cw3sSd6EA9q2FYNQC62lucZP1wlISeFpq8KYoHk0EPdzM9uNHSvghbFz+x1BvWXcbRbD2VY4bkNe1RwNoIFPUdwOSYewuVMsHPSXNc3TBqFlX6txrz0IPUcdVqHOluIoNHUbwuZrnLZjnybqMLKlxXtPh9/tzhZpitDqq5GQAnidNok+I8AdmGDKotIZk0x/ILm3/TeJKki8pwKxrna2QKMYZhpO21n0O9j6KQ1nTqRwLjDTg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=P2cY9up+YkM7kiSvtg1RSffxBvgFh3oTw+YL1BxoUCA=;
- b=AobdI9AR16mhzXzfWx+98+Ab43h6qsq717vH1V0zSBWoaMefpEyX1YdT20oM6rlZIS+IFNQKjeleb8nyOPPr8RqtqyWZdzgjd5kHHDT+qJ8DhobiC3PkPTZQ16gepp3MEhH5TRPRx5YmT2orW0OOU9JvdJIp0ia/cnOJ2mpEAOk9nmj7o6HFw1JWwKhp1VyRux0jouOX8tpDMExErIYPBzMF1CGZsR0d7u3B/We8Npt+CBqJhuRpImvL223wi/bVwDFP6msmlG1SoQKnQ3DzEYqwauhWGqycH1lNYK722SkwXpHeqBVPerRfX0SMFhpsdDquwfEnSUhgnURSkvoJsA==
+ bh=hPmxZGhWfMd0mQD9VtoQTZt67ozmI9R11nw5BunV/Ys=;
+ b=lKaKG+Sz27PijM3bkO/Z51tKDz5UgZVljil4BrWjsY6m6ZbLS+Jsc1gZ82Ob57pzV3wasBM6cqnB2tbH6tOPqvv3t5FD2MGOD+Yqc6sRB2nz2FMKElNTHuyWyETJK0LjPn+e+gaP5N2w+DrQCu6+hvBT7y5nNuM/kh5jq5OixpOMVJ0wislMpxnz04Ztwf6ccapIwZ3VSSpp006qx1m7hBj6wOPzi3cdwZu3C9dYnlVXk55R5l2SgB8RSkeEvISqmFHy9N2yR/4AFYC4tx7+Esz9B72Hrb6iyzjtoxIoKORmA3PzmpFcgGTFA5ssObbsuIyMGiX9EZaQstiwyR9AsA==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
@@ -74,16 +74,16 @@ Received: from LV8PR11MB8509.namprd11.prod.outlook.com (2603:10b6:408:1e6::15)
  by PH0PR11MB5207.namprd11.prod.outlook.com (2603:10b6:510:32::15)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.17; Wed, 18 Mar
- 2026 12:11:08 +0000
+ 2026 12:12:33 +0000
 Received: from LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7]) by LV8PR11MB8509.namprd11.prod.outlook.com
  ([fe80::f5bd:4dde:4f2f:20b7%5]) with mapi id 15.20.9723.018; Wed, 18 Mar 2026
- 12:11:08 +0000
-Message-ID: <eb5d4a67-96fc-40bf-9f86-62fccc9263ba@intel.com>
-Date: Wed, 18 Mar 2026 20:18:51 +0800
+ 12:12:32 +0000
+Message-ID: <4b0c92ff-54d9-4383-859f-169a5735de9d@intel.com>
+Date: Wed, 18 Mar 2026 20:20:16 +0800
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v1 04/13] intel_iommu: Create the nested hwpt with
- IOMMU_HWPT_ALLOC_PASID flag
+Subject: Re: [PATCH v1 05/13] intel_iommu: Change pasid property from bool to
+ uint8
 To: Zhenzhong Duan <zhenzhong.duan@intel.com>, <qemu-devel@nongnu.org>
 CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <mst@redhat.com>, <jasowang@redhat.com>, <jgg@nvidia.com>,
@@ -91,77 +91,77 @@ CC: <alex@shazbot.org>, <clg@redhat.com>, <eric.auger@redhat.com>,
  <joao.m.martins@oracle.com>, <clement.mathieu--drif@eviden.com>,
  <kevin.tian@intel.com>, <xudong.hao@intel.com>
 References: <20260306034409.184873-1-zhenzhong.duan@intel.com>
- <20260306034409.184873-5-zhenzhong.duan@intel.com>
+ <20260306034409.184873-6-zhenzhong.duan@intel.com>
 Content-Language: en-US
 From: Yi Liu <yi.l.liu@intel.com>
-In-Reply-To: <20260306034409.184873-5-zhenzhong.duan@intel.com>
+In-Reply-To: <20260306034409.184873-6-zhenzhong.duan@intel.com>
 Content-Type: text/plain; charset="UTF-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-X-ClientProxiedBy: TP0P295CA0017.TWNP295.PROD.OUTLOOK.COM
- (2603:1096:910:5::11) To LV8PR11MB8509.namprd11.prod.outlook.com
+X-ClientProxiedBy: TP0P295CA0020.TWNP295.PROD.OUTLOOK.COM
+ (2603:1096:910:5::10) To LV8PR11MB8509.namprd11.prod.outlook.com
  (2603:10b6:408:1e6::15)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: LV8PR11MB8509:EE_|PH0PR11MB5207:EE_
-X-MS-Office365-Filtering-Correlation-Id: 6e9c60a4-9e17-439d-e7cb-08de84e76f8a
+X-MS-Office365-Filtering-Correlation-Id: 50365fb0-d591-4430-78a4-08de84e7a1f0
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|7416014|42112799006|376014|1800799024|366016|22082099003|56012099003|18002099003;
-X-Microsoft-Antispam-Message-Info: XhJyyRtOiR5KSyqfpvEEH89k6aQcpc9P6h/BQMzvrSYtUjbkQmV32M+c/fLcG3P9AFqagB3GZtN1drXO6Qyff04mBCtPFkR0sngCsFLULGnNxNvlWW42cMD/aAGb9nT4gZsFr3WRFcuhSw2w68BhuJkDPbADyq2Ssdxa2kF3HwI0r3rcrYcgY7pF3A9ItGnuzJ0F5yxBAAOVjrADazyni9M9TkCYUzAVOoR2mmNKv7+D1tbTqWRd392PMBQVAnPhpVY5VnRWOY1RhZDYhnBgda85zpLkX5yz+bR6U1X/DdNoiF2EdGphBJ9f1g46opMAF8RUBho94XuV19xLiDGVTLy4QxXByhB1WKr/ObK30X8bsuLO/LI20Ya23J4f9sghbHAwYgcOowOw4Xs1fNXEdfDo7p2pVT6QmycdeGWHyS4681WaoXtBcXakCIPe1iWYy4xAIILlJiVWh9mLLUg5bk6ljFQsuDXrIswmNUYYWRE+MmNk5l+Z1BcKe4CXwMpTaDvWmm/XNz5QGxCVOGgTpbu6gQFfzMtB3O/eEbNaE3FoFZhP8qtu8a7XdEoy137vIFiLTHTIg/3kNXLkdhqaqECwb/PGFvKiW8EcNuG7Oa7cPMbpvBO6AOq4y0O/bO/1Eg9tLznpQ+hgVAHAeclwLsTOyuquxdaMY0oVNsxaLAhq6gPy8M1Dcry7A4qAHz3yaK0llDpWDaNIey5AQWbD7Atse41X5JcVBJNL9LSf4T0=
+X-Microsoft-Antispam-Message-Info: vWZrxVa1fy3tt3jAQS8KlRqS/2ZZ0R39V9f3tova+23xc2zoxvXzAA2M4clydO1b4urqfA3dirq8HmMbtxSGJaypH3RayKYf5RSs+G6Tn2//rPgddVIwLRTk2aUHpN0G84Rj0WnxpWt4wozqWM/2Ws8Qxqcek8kZcmlgRhOyrIWNb9Y5ElFEACEzcQfo/mIo4nOHXa4Ib8DXyoyCkINsVrtyydlyF6mQHoP/Nb79egu1p7sZ0oesGfRN9EJetorzU7jdj7tA7c0ws3HSJMff3jAZgJmrzZhooc7AwMg+y1m45+aOs7kR9BWBkSzZNvXdDWVSM9FgzBIKB55zEhPionMyRNBCK29c9DSiP4Nur0KCpU6groreSVc2RJyxwUNzAB9RceXhfUL7sOLRYEiewHQt4ZK+b823+5I318KldWUDdNGgE2DhxPbYHlb+Dac5ZqpiJXtLcIUpoPXfWGWj713UqjRj8VCqfpKJU+h4adnh7XFNe5HPzcwX7Dl+sMXcqMvhgVKjOwpXEq8znw8U8AoQ99R3pXFqpf74XIONQWP5xxhwO0TJAW4ao8henSqgF0REgWaOfalkvLZA3ucRFDZ3ohzAkSrckqhkr3X3YjejcNtuEmEddDFZet6JIVgMEybDXyloGP01jMANQgumlMAtVfXgjOO939L2of6dnzktABWJrhxm9s6BWSUZxw3H70/Vvd8gthk6s+f9WmjdgBbEm64T1XhED0aKLb2Uw08=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:LV8PR11MB8509.namprd11.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(7416014)(42112799006)(376014)(1800799024)(366016)(22082099003)(56012099003)(18002099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?dkV5NU9oajEycDRFMGRmbldNbC8vZnh5ZFAxRVQyaG9vNTQxVWhsYVIwOE96?=
- =?utf-8?B?bjNGY05iQXVLc2U5SXgrc0ZXZ2N6YzFySEpXUUFFTDJIUy9JMFlOZzhPMFZr?=
- =?utf-8?B?NlRINU1RYjFJMUM4aXFyaGJNSDk2dkZQdTY5Z1FXM0ZRL0tYVGZNL3JJdFda?=
- =?utf-8?B?dGdPc0J5UzNvOFF2SVpVYnQxSGhBVFU5YkY2Z1hMZDJnemxwc2JyWEtOQzQy?=
- =?utf-8?B?ZnBBTFJLdGRENFRkd2QvRkhuM28yTVU4WDdheno1c1NhZE1ldHplYmV3eGZr?=
- =?utf-8?B?NnFhbnV6eURWd0p6YjNCWVpkWnRwdVh4ckNxSnhQOWpJNG1YYlFUUVhvWFA4?=
- =?utf-8?B?MUJYSzAvTVVyeDFMV1dDTkRRU0VHOGhpVUZNbWhQNElXQ095aXJFNjd3MHZW?=
- =?utf-8?B?Q3BXRzE1QWRTVityUHo5TUVsYlVDSjJ6OWdicE5hZVkreWlmQWFlV0FLN2JD?=
- =?utf-8?B?UFZWRlorVzBmRjlUL3k5UWVzRXc2cyt3Y0tHbUUxQWNXNVYwM25iL0cxK0lK?=
- =?utf-8?B?L1FYWjgxR3B0NGk3dDgxbnhyRzh5SFdqbi8xYUJvMmRTeHd0T0NkOHRXRjU2?=
- =?utf-8?B?Ym1xb1lhYXpUWUh5Mm9uQk8ra1BlTWIxZ1R3UE9zWTE2cU8ydEU2OUFYZXFZ?=
- =?utf-8?B?dkdieWRISi9nWGhNeXVFaTFzbkZLQi9qWXFWZGFkaEgrMmJsWU1RTXM4Tkxj?=
- =?utf-8?B?WnpTL1VXUnEzVlYwV2llbHpSb1lFWEhUdzNLV0N2RUhFck1ySmdNWlprZEFX?=
- =?utf-8?B?dGdBazh3Qk9QTFdaL3Fua3h6WXk3YXNsc08zeHN6SkQ4aXBQRnFYQWFsUXV0?=
- =?utf-8?B?UGsvN0ZhUjk5bE1aMFdiWmUycThzQjJpaXYzREdOTUdGVEhJVEtCc25odWV6?=
- =?utf-8?B?TzV0TzZXcHJ1dm42cWkxdERGMkpjWXdrSVRJSGdhQVpucGhlMGRiaDFhTGgr?=
- =?utf-8?B?bDBjVkRYeGVlRGxiY1RMYnd5T1M2U3NnbWMxalhYN0FsRllaQkRsSmo5VE9i?=
- =?utf-8?B?b1ZMM09UcEZJQTdXS0IrdGtBcVU2b1BnTFVaTkZNaTdTRlpZcFpyQmFTaXBN?=
- =?utf-8?B?V0lESW1ic291dFY5bWtCNWtURGFnMXhQZ0pyaE4vekgwU0JGRlY0ODh4VXNm?=
- =?utf-8?B?akxEb3FUQnU4U3RPQXRFc2Zqa0VLTUhITUhSeXJRUFRQSm1iV2s5ZmtUTWRZ?=
- =?utf-8?B?Z1N4YlNCRTN1dWVRQTU0UTVZMjY0RnExNUNnbE1xTUgwN21HY1VPN3NkWnYz?=
- =?utf-8?B?ZFhhRWRLRkYxQ2M4eDY2T3ArOVh6ZWlZRmQ0bVlUb2pnOFgxSlR1bDlVNUpx?=
- =?utf-8?B?d3JrZ3JiYWR0T3pwUDZyQXUxVTExVVA2VXdybTUzZDhSbGw0RWVTZzBWN3hO?=
- =?utf-8?B?ellLQVRiNm8rcjNBUnFxNVJ5RlA4LzdUU0kvb2o2ZTN6Ky9uWVUybExRaVBm?=
- =?utf-8?B?d21DZ2Nra2lJbXg1K3lON1JFQ1FBUnJuNGFKUFBzZ1VNdlN0RUJobmtYZktU?=
- =?utf-8?B?QVBMNiswTjJ0cTA3eWhKbWwrM29uSnZQdGRjems4SEhoMVJMaGovcFJUUXpu?=
- =?utf-8?B?UGRkS3BmMUVhR1RFWnZLTWVxTFBQSU96K3U2dmhoMndERktPNzFqeVJ5NXpP?=
- =?utf-8?B?QjEybmhsaHRrbzM1ZS9LdHlEeWIzZ2VOekQ3VjJ4ZjdBRUJrNENnRHJzSldM?=
- =?utf-8?B?cVMwWVQvYUp1TkNaUnpELzB1LzdlYlU4ZkJqc0tWNVpOMXBvdTVOL0pSeUln?=
- =?utf-8?B?Z0E4dGg0dmo1bHpNcWEva2RLUEtWUUF2eFVhbUszdEhnK2tWVnQzRjdVRjl0?=
- =?utf-8?B?M1E1SFdscXBnSUhsQURQTzFIeEdrYXM2NHNuUEU0aVg1bGtUQkl5aFlFWlV6?=
- =?utf-8?B?VWNkSEthSUMwb3dEaWxaRmtuVnhKNUlPRGpXRTdlb3NVUmY2amRJZmRidkVI?=
- =?utf-8?B?bmZkb29mWE04ZlVRRVA0a282RUpZOHFvMmdVUnZRekd4c1VFZGhtMlpNL2FN?=
- =?utf-8?B?UFlSeGI4VW9md0Q1eVVTSGViWXlLQ0t0bUdjWEFOWlp6dDRnemsxc3BkbkhO?=
- =?utf-8?B?cXB0bForWGo3S0JIY2l3U1A5S2d2dVpMdUZCQTNTeVdFREJOdjZNc1QxeXRr?=
- =?utf-8?B?SWQ4b3lCVUtGL0JKNjllVGdmaklGRmFJZGI5R3NJV1FmbmVoUUFoZkJJR1pJ?=
- =?utf-8?B?SVdBdDFwZnIyR1ZSWVM4Tm13U3Y4UFhvTlNjL3V6RmVtY09ha0NEd3pKY0NM?=
- =?utf-8?B?Tjh2bXNXUFNzT3dJZHFQaXJlNnMwK3pLUCtyWWt6TnhqYXJqQ3lyMUNVSnVk?=
- =?utf-8?B?L2tDdjdvMzVLdWk2ZC84NFI0cHhDOWxOcU5XMUFhQWpsV0V4a1l3QT09?=
-X-Exchange-RoutingPolicyChecked: fNJaNSC7un9tWbhrCY3p8bbHsWka6knxyuvcOzf5mA8L93huxpsv1bZSOWZGw3HhbDvE4yrCLDxHbXqdMvf3RZejpgJPo26k7maTMS4SmscFpKbHXWnz0Aijgw+hUSpvF1KyoAuxXBMDVAF5r3YC6ICxNbRDGDFvse7eMwkXSLjBKMvxvVW3oCJ5EU+qtNAziIahkvfeAOAxbbjIDnRXvi9SYG314gUPS81mxgcy+bRD0JazmtN0qnoBpWrlrWWPaJyN0ZqVcCrcWuzM6TeClEPPiahxiBmQq+vdWALiGLRVzyKclqCOBRJe+JImvcQDwvV71pntfs/OWBD7z8TQ9A==
-X-MS-Exchange-CrossTenant-Network-Message-Id: 6e9c60a4-9e17-439d-e7cb-08de84e76f8a
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?SkltVVE4N3FFbFY1NzRvWjEwNHhsaXVWaHB0VENPVjdKaUh0a2sweUE2dHFr?=
+ =?utf-8?B?T3Q0cWJYR0xWY1VHem5tUFVIZWVldTRVVkgxb29JdmFGM0wwUUovb0ZMRzZP?=
+ =?utf-8?B?MVBER2pJTkd2RC9NaHhoQnJzT0hqcUFhWUFLaUxrQ0dPNmYxVGN3ZHYxSVQv?=
+ =?utf-8?B?Vk1UdTI1dVBXZlBwbmRyT3RUcUVNam5sdThDOExZZlhua1kyWVJFQWM3SUZ0?=
+ =?utf-8?B?bDMwS2owWFMxK3ZFcWtTTEhWR0tBZ1BydFRSZFFlaStDVFpDWE1IUk9RNGhD?=
+ =?utf-8?B?MWJ2ZDcwRVBVaHJVYWVXVVBXdVFRY0VMcmJKWlJCY1VWenFMTGNUa25ueFlv?=
+ =?utf-8?B?dzlvQ1lNYlJhZHg3eGNTaXJxM0RMQksrc0FRdmhrUlIyNmNrQVB6K3RFNFNL?=
+ =?utf-8?B?MGJYQVRyZDVDczNDSVc1bnlOSFRBWEVlcldrVDQ0OTR5bFVjSlZEY3RVNGYx?=
+ =?utf-8?B?MHhxK0FGZEx1emFjaTE3a2wyY1ZiT1cwZFkxR1pZemdNVWFpK2trVXRRY0pw?=
+ =?utf-8?B?QmJIWjJTQ2pZSkRBcFlrU0lJZ0VDQ1Rla21IdGZyV0daY0YwV2hXYlNIRDlI?=
+ =?utf-8?B?VXMvQWZxanFXeTdVeVY0UUx2UmJ0eE9VQWtSalNqN01HVnMrTGFNSTd3eFJO?=
+ =?utf-8?B?a0huMkVsVU51b09lZU1aUDRpQkFtWG11SE4wVUZpL244Z0M4Zk1JWHFDQUJ1?=
+ =?utf-8?B?eTJqRVlmWUNUbXhjVWlxK2xqMkdUelorOVdxbVU2anlIbkVYKzBBRW1MNjhX?=
+ =?utf-8?B?UUVvSk9ESjNJbGN2c1hMZzZvWGkrTjVJZWNTSjg1Y3lqdENNbklOS25yLzF4?=
+ =?utf-8?B?VUZ1TEhCS1RBQVh2OXEyMDMvNEFRSkEvamFaYWxlZVV2WklaMnRNK3p1MXZu?=
+ =?utf-8?B?QkR3YmhJdUlWV3dSUTdXenhUR3VnVS8vSmRiWFlSemV3TmRWQnQ2Q2xXM3Jh?=
+ =?utf-8?B?NkRtekp4OXF4Ymc2N0UvL1l2bnhqZVd3NHlTN2NuNTdRcEdtbGZxajZFdjN6?=
+ =?utf-8?B?RnV0aERlb3BKVGh5Kzl1SkdMdFhrS1RhMFFGWFdNNkFCUHNYSUptSzhZMUJQ?=
+ =?utf-8?B?SG5KUnRZdlJMLzBQNUJ2ZFh2QzlTa2dueTA4dmdNRUZKZThwRTYyWlFDVC9N?=
+ =?utf-8?B?MDJzR2RXeHM3emNKZkJYL1c1RUNlNXA2YWN5Si9wdjl0QUN5eFB5OGtHMXNx?=
+ =?utf-8?B?bFJSZmgya3BGcy9TdjliY1hDSUdMWE1xUFBOTHc2T0EwN3lveWRUWmhGcXRR?=
+ =?utf-8?B?V2ljZTZ6THF5MTd4Y0VobEhLZlI4VlNRL2d1Ky9HZUZFaWZlQ25hSndsdVl4?=
+ =?utf-8?B?UjVBenhUaXJIR053YVpKU1FxbDNDOTNpN0RiSE11MlVGcFJDZk8xUEFvbXZt?=
+ =?utf-8?B?VmdkYVNTUWZlNWZDYlo2MWlweE9pdDhQeEhDYlZwSmxQT2ZmVW41MTB0c1E1?=
+ =?utf-8?B?cFd4U0x2MGMwb3I5dXRmRzJqN0lEbEhxc21vTEU3SWdhT3gxM3MrS2FHVlVY?=
+ =?utf-8?B?TGowQThxNnZJeEJCVFA2UjhEL1YrNDlMZ0R2WUVGNlZ5V3VjNFdLSCtIRFQ3?=
+ =?utf-8?B?WHBDLy8yUDdJQmFQVU9XZDBkNk51bDNRTkJHZ3Jya25hVVJTRVpDcW5sV3ov?=
+ =?utf-8?B?c1hpMjY2Q0JOSG9OMXYveHdpZUxpbCs5Zm9tdUtVZ1FsTEVEQTVoNHlSbjBL?=
+ =?utf-8?B?WWJVL1YySC9vdFVRb3BBaUR5UVlvRUZxVVBVK3cweFJrUk5SaCt4Z1J0Q3pT?=
+ =?utf-8?B?S2NrNzAvb0tBa0ZuM0NEcThFU2NsODg5OEJweEpPK2RWaG1CT0U0b0FqNWJC?=
+ =?utf-8?B?UW9zQ2MvUW1VUUFzRS9ZRU9WdDUrbkVBZkFpcTlPMElqdDk3c2NacEQ2dlB3?=
+ =?utf-8?B?U3N1Z25LNURGekp4U1JHK2puT0gwcU93ZEg1d21ySFpDQkFRd0x2Q3lxVDFM?=
+ =?utf-8?B?MktIU1k2Vndncnp4YndZeStFQU8xbFlNdHY3cGRWSHh3Lys4cFFOak5waTMy?=
+ =?utf-8?B?Z1VFUVJ5VXJzTnVFa0MvTzhQNW5jSjJMUyt6MTd5bkZRS3NWTmdMNWJQNFV4?=
+ =?utf-8?B?WmVIM0lXcll2clhBOTIraHh6d1JuSmpWanRuczkyd2tOWndJWHhuTElGdFZC?=
+ =?utf-8?B?d3RybDh4U2pXeDBnYWN3N1hOa2UyZHJNbzBWUTVWSS9wZ2tIWkJlK1V4YktP?=
+ =?utf-8?B?aFF4QnpaU3FzVXNKVE5FakNHd09EV3BtMFZ4VjNrWWxGM2R2R3VBdGtyRDJF?=
+ =?utf-8?B?eFJxV3kxSUVHWitxSVFLS1NpNENuZGluTHVhcldvSDlTUUxVMVNKa1ZZL1Fs?=
+ =?utf-8?B?UWFNWEdnQ015dlFLSnVFRm1hNUlJZVU4UVlHR2NMY3V1WjZGbTdydz09?=
+X-Exchange-RoutingPolicyChecked: JnxUoVCUeAZa6In5M9+lYn1R+yHrhu9RoQMndKRi1wvn+PEWzqIhnF+6EJEJ8cdUgYOmhJfPmm2jiSoAE6uAyEiLyNGEB1/HICYy/F7HTGXnzCqiZfwAhBeU0JympIZyiyxoTTYpo+LuEiQTGEv95wTvy9LkTVnLjRWMZcpPqqI8X/GBm3A912/PeGddIWOqY1PmQD4/GxrNs7vBdzol81+/cv2k27E1Ght2ziQQx0nL3cr2f536q+CMtJH6vO8S3/k7vHsG1ljyB3cd4FG4Wr5LAwDBxXgne2HEdCgAJ0zCPITsk/za2cwLh+W46cuzFXa1678vl21OSB1dMqKA1A==
+X-MS-Exchange-CrossTenant-Network-Message-Id: 50365fb0-d591-4430-78a4-08de84e7a1f0
 X-MS-Exchange-CrossTenant-AuthSource: LV8PR11MB8509.namprd11.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2026 12:11:08.0959 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2026 12:12:32.5716 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: GgZx+GxyBM+afVOSBsBHluRUnGvAXkfh0dLlR/PbbjozHDXM2BcCP4jok/wEcMMR7E+Sf92TSla8sOQbvbg5/Q==
+X-MS-Exchange-CrossTenant-UserPrincipalName: hTgpE1kdFnuSHRUjuv0XeGaC41NlwQITTwlarBqkgfC3Z5jny2Jkz5kVWIlDCn1zoXl0JerDdx2FaM3f54GHvQ==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR11MB5207
 X-OriginatorOrg: intel.com
 Received-SPF: pass client-ip=198.175.65.10; envelope-from=yi.l.liu@intel.com;
@@ -190,83 +190,74 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/6/26 11:43, Zhenzhong Duan wrote:
-> When pasid is enabled, any hwpt attached to non-PASID or PASID should be
-> IOMMU_HWPT_ALLOC_PASID flagged, or else attachment fails.
+> 'x-pasid-mode' is a bool property, we need an extra 'pss' property to
+> represent PASID size supported. Because there is no any device in QEMU
+> supporting pasid capability yet, no guest could use the pasid feature
+> until now, 'x-pasid-mode' takes no effect.
 > 
-> Change vtd_destroy_old_fs_hwpt() to pass in 'VTDHostIOMMUDevice *' for
-> naming consistency.
+> So instead of an extra 'pss' property we can use a single 'pasid'
+> property of uint8 type to represent if pasid is supported and the PASID
+> bits size. A value of N > 0 means pasid is supported and N - 1 is the
+> value in PSS field in ECAP register.
+> 
+
+should we keep the "x-" prefix since this is new pasid support?
 
 > Signed-off-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
 > ---
->   hw/i386/intel_iommu_accel.c | 18 +++++++++++-------
->   1 file changed, 11 insertions(+), 7 deletions(-)
-
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-
-> diff --git a/hw/i386/intel_iommu_accel.c b/hw/i386/intel_iommu_accel.c
-> index 45c08c8f6f..c2757f3bcd 100644
-> --- a/hw/i386/intel_iommu_accel.c
-> +++ b/hw/i386/intel_iommu_accel.c
-> @@ -69,11 +69,13 @@ VTDHostIOMMUDevice *vtd_find_hiod_iommufd(VTDAddressSpace *as)
->       return NULL;
+>   hw/i386/intel_iommu_internal.h | 2 +-
+>   include/hw/i386/intel_iommu.h  | 2 +-
+>   hw/i386/intel_iommu.c          | 5 +++--
+>   3 files changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/hw/i386/intel_iommu_internal.h b/hw/i386/intel_iommu_internal.h
+> index 11a53aa369..db4f186a3e 100644
+> --- a/hw/i386/intel_iommu_internal.h
+> +++ b/hw/i386/intel_iommu_internal.h
+> @@ -195,7 +195,7 @@
+>   #define VTD_ECAP_MHMV               (15ULL << 20)
+>   #define VTD_ECAP_SRS                (1ULL << 31)
+>   #define VTD_ECAP_NWFS               (1ULL << 33)
+> -#define VTD_ECAP_PSS                (7ULL << 35) /* limit: MemTxAttrs::pid */
+> +#define VTD_ECAP_SET_PSS(x, v)      ((x)->ecap = deposit64((x)->ecap, 35, 5, v))
+>   #define VTD_ECAP_PASID              (1ULL << 40)
+>   #define VTD_ECAP_PDS                (1ULL << 42)
+>   #define VTD_ECAP_SMTS               (1ULL << 43)
+> diff --git a/include/hw/i386/intel_iommu.h b/include/hw/i386/intel_iommu.h
+> index 54c2b6b77a..bb957b93e0 100644
+> --- a/include/hw/i386/intel_iommu.h
+> +++ b/include/hw/i386/intel_iommu.h
+> @@ -315,7 +315,7 @@ struct IntelIOMMUState {
+>       OnOffAuto intr_eim;             /* Toggle for EIM cabability */
+>       uint8_t aw_bits;                /* Host/IOVA address width (in bits) */
+>       bool dma_drain;                 /* Whether DMA r/w draining enabled */
+> -    bool pasid;                     /* Whether to support PASID */
+> +    uint8_t pasid;                  /* PASID supported in bits, 0 if not */
+>       bool fs1gp;                     /* First Stage 1-GByte Page Support */
+>   
+>       /* Transient Mapping, Reserved(0) since VTD spec revision 3.2 */
+> diff --git a/hw/i386/intel_iommu.c b/hw/i386/intel_iommu.c
+> index d24ba989bf..e5b9689fae 100644
+> --- a/hw/i386/intel_iommu.c
+> +++ b/hw/i386/intel_iommu.c
+> @@ -4203,7 +4203,7 @@ static const Property vtd_properties[] = {
+>       DEFINE_PROP_BOOL("x-scalable-mode", IntelIOMMUState, scalable_mode, FALSE),
+>       DEFINE_PROP_BOOL("x-flts", IntelIOMMUState, fsts, FALSE),
+>       DEFINE_PROP_BOOL("snoop-control", IntelIOMMUState, snoop_control, false),
+> -    DEFINE_PROP_BOOL("x-pasid-mode", IntelIOMMUState, pasid, false),
+> +    DEFINE_PROP_UINT8("pasid", IntelIOMMUState, pasid, 0),
+>       DEFINE_PROP_BOOL("svm", IntelIOMMUState, svm, false),
+>       DEFINE_PROP_BOOL("dma-drain", IntelIOMMUState, dma_drain, true),
+>       DEFINE_PROP_BOOL("stale-tm", IntelIOMMUState, stale_tm, false),
+> @@ -5046,7 +5046,8 @@ static void vtd_cap_init(IntelIOMMUState *s)
+>       }
+>   
+>       if (s->pasid) {
+> -        s->ecap |= VTD_ECAP_PASID | VTD_ECAP_PSS;
+> +        VTD_ECAP_SET_PSS(s, s->pasid - 1);
+> +        s->ecap |= VTD_ECAP_PASID;
+>       }
 >   }
 >   
-> -static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +static bool vtd_create_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
->                                  VTDPASIDEntry *pe, uint32_t *fs_hwpt_id,
->                                  Error **errp)
->   {
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
->       struct iommu_hwpt_vtd_s1 vtd = {};
-> +    uint32_t flags = vtd_hiod->iommu_state->pasid ? IOMMU_HWPT_ALLOC_PASID : 0;
->   
->       vtd.flags = (VTD_SM_PASID_ENTRY_SRE(pe) ? IOMMU_VTD_S1_SRE : 0) |
->                   (VTD_SM_PASID_ENTRY_WPE(pe) ? IOMMU_VTD_S1_WPE : 0) |
-> @@ -82,13 +84,15 @@ static bool vtd_create_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
->       vtd.pgtbl_addr = (uint64_t)vtd_pe_get_fspt_base(pe);
->   
->       return iommufd_backend_alloc_hwpt(idev->iommufd, idev->devid, idev->hwpt_id,
-> -                                      0, IOMMU_HWPT_DATA_VTD_S1, sizeof(vtd),
-> -                                      &vtd, fs_hwpt_id, errp);
-> +                                      flags, IOMMU_HWPT_DATA_VTD_S1,
-> +                                      sizeof(vtd), &vtd, fs_hwpt_id, errp);
->   }
->   
-> -static void vtd_destroy_old_fs_hwpt(HostIOMMUDeviceIOMMUFD *idev,
-> +static void vtd_destroy_old_fs_hwpt(VTDHostIOMMUDevice *vtd_hiod,
->                                       VTDAddressSpace *vtd_as)
->   {
-> +    HostIOMMUDeviceIOMMUFD *idev = HOST_IOMMU_DEVICE_IOMMUFD(vtd_hiod->hiod);
-> +
->       if (!vtd_as->fs_hwpt_id) {
->           return;
->       }
-> @@ -116,7 +120,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
->       }
->   
->       if (vtd_pe_pgtt_is_fst(pe)) {
-> -        if (!vtd_create_fs_hwpt(idev, pe, &hwpt_id, errp)) {
-> +        if (!vtd_create_fs_hwpt(vtd_hiod, pe, &hwpt_id, errp)) {
->               return false;
->           }
->       }
-> @@ -126,7 +130,7 @@ static bool vtd_device_attach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
->       trace_vtd_device_attach_hwpt(idev->devid, vtd_as->pasid, hwpt_id, ret);
->       if (ret) {
->           /* Destroy old fs_hwpt if it's a replacement */
-> -        vtd_destroy_old_fs_hwpt(idev, vtd_as);
-> +        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
->           if (vtd_pe_pgtt_is_fst(pe)) {
->               vtd_as->fs_hwpt_id = hwpt_id;
->           }
-> @@ -161,7 +165,7 @@ static bool vtd_device_detach_iommufd(VTDHostIOMMUDevice *vtd_hiod,
->       }
->   
->       if (ret) {
-> -        vtd_destroy_old_fs_hwpt(idev, vtd_as);
-> +        vtd_destroy_old_fs_hwpt(vtd_hiod, vtd_as);
->       }
->   
->       return ret;
 
 
