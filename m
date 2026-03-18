@@ -4,43 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B842A107760E
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 21:12:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5AEA0107760E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 21:12:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2yB5-00011Z-Go; Wed, 18 Mar 2026 17:11:43 -0400
+	id 1w2yBw-0001Bi-3z; Wed, 18 Mar 2026 17:12:36 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w2yB3-00011M-Ou
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 17:11:41 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w2yBt-0001BU-UK
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 17:12:33 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w2yB1-0008P1-G6
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 17:11:41 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w2yBs-0000jB-KW
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 17:12:33 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Type:MIME-Version:References:Message-ID:Subject
  :Cc:To:From:Date:Sender:Reply-To:Content-Transfer-Encoding:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=G06vPmWlnPfrQb0I43Tb6uUDW5ywFLDiUjEyl/cL62o=; b=t0HzVCnHWAzeKjL
- 8tG5aWiAP4K5o4llu+Dkny4DUVVfFOvIH5nbKZqzNXUao3ohXMHW6CnDkuisZpOEqqbRBvQvwfU9c
- zzZwYof3j5wE7H2+vYJUCLuLRMjWMJux7sKpx6xkv3HiVE08ddjCCO6F04FPiKUjl8LatD1HmYrsN
- r0=;
-Date: Wed, 18 Mar 2026 22:15:21 +0100
+ List-Help; bh=M6+/WWVS3UZe5TTue3GOE26vc6IrUifsGZzjB2ihbEs=; b=mh3xGW3e2U9Wa+g
+ oMHfTP1ScpwF4t4jMs+SNHN2Y8z5L5ubDiLv8yGiFaMWDbrFZOqwiydGodNGBubh97fUk3UOxjzEQ
+ Uy1h4wPvcZitzKf80eWDSzuXvLfmfY/pSqStWexQoG+O2LXpkBmOjT4/K8U9yfM+M3FP9W/gWlpRt
+ Gc=;
+Date: Wed, 18 Mar 2026 22:16:21 +0100
 To: Helge Deller <deller@kernel.org>
 Cc: qemu-devel@nongnu.org, Helge Deller <deller@gmx.de>, 
  Richard Henderson <richard.henderson@linaro.org>
-Subject: Re: [PATCH 5/6] hw/hppa: Fix crash of 64-bit HP-UX 11 while flushing
- caches
-Message-ID: <absVMqAQvZEuZ3My@hive.localdomain>
+Subject: Re: [PATCH 6/6] target/hppa: Update SeaBIOS-hppa to version 23
+Message-ID: <absWFVnYeyoB7BHI@hive.localdomain>
 References: <20260317195149.8386-1-deller@kernel.org>
- <20260317195149.8386-6-deller@kernel.org>
+ <20260317195149.8386-7-deller@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20260317195149.8386-6-deller@kernel.org>
+In-Reply-To: <20260317195149.8386-7-deller@kernel.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -3
@@ -70,73 +69,20 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 On 17/03/26, Helge Deller wrote:
 > From: Helge Deller <deller@gmx.de>
 > 
-> HP-UX 11 64-bit reads at bootup a word from address CPU_HPA + 0x500
-> while flushing the the cache of a T600.
-> Add a memory handler to avoid crashing while reading this word.
+> New SeaBIOS-hppa v23 release with various fixes for qemu-v11:
+> - Various fixes to support CPUs with 40 and 44 bits physical address
+> - Fix PAT_CPU call when asking for current CPU
+> - Add function to stop CPU in PDC_PROC
+> - Prevent execution of some functions when running as PAT firmware
+> - Tune cache parameters to speed up cache flushes in operating systems
+> - Revert resetting LSI SCSI with ODE on HP3000
 > 
 > Signed-off-by: Helge Deller <deller@gmx.de>
 > ---
->  hw/hppa/machine.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
-> diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-> index e72dda2a68..7e8ebbca3b 100644
-> --- a/hw/hppa/machine.c
-> +++ b/hw/hppa/machine.c
-
-
-Changeset looks good apart from breaking coding convention
-
-
-> @@ -313,6 +313,22 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
->          memory_region_add_subregion(addr_space,
->                                      translate(NULL, CPU_HPA + i * 0x1000),
->                                      cpu_region);
-> +
-> +        if (!hppa_is_pa20(&cpu[0]->env))
-> +            continue;
-
-braces around if statement
-
-
-> +
-> +        /* HP-UX 11 64-bit reads a word from address CPU_HPA + 0x500
-> +         * while flushing the the cache of a T600, which was the first
-> +         * server with a 64-bit PA-RISC 2.0 CPU.
-> +         * We return 0, since the value isn't used anyway. */
-
-/*
- * HP-UX 11 64-bit reads a word from address CPU_HPA + 0x500
- * while flushing the the cache of a T600, which was the first
- * server with a 64-bit PA-RISC 2.0 CPU.
- * We return 0, since the value isn't used anyway.
- */
- 
-
-> +        g_autofree char *cflush_name;
-
-declare at top of for() scope, or top of function
-
-
-> +        cflush_name = g_strdup_printf("cpu%u-T600-cacheflush", i);
-> +        MemoryRegion *cflush = g_new(MemoryRegion, 1);
-
-likewise
-
-
-> +        memory_region_init_io(cflush, NULL, &hppa_pci_ignore_ops,
-> +                              NULL, cflush_name, 4);
-> +        memory_region_add_subregion(addr_space,
-> +                              translate(NULL, CPU_HPA + i * 0x1000 + 0x500),
-> +                              cflush);
->      }
->  
->      /* RTC and DebugOutputPort on CPU #0 */
-> -- 
-> 2.53.0
-> 
-
-Other than that
+>  pc-bios/hppa-firmware.img   | Bin 632048 -> 631968 bytes
+>  pc-bios/hppa-firmware64.img | Bin 713608 -> 714440 bytes
+>  roms/seabios-hppa           |   2 +-
+>  3 files changed, 1 insertion(+), 1 deletion(-)
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
