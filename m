@@ -4,129 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24CE810775FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:48:25 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7556010775FC
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:48:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2v0F-0002EQ-AD; Wed, 18 Mar 2026 13:48:19 -0400
+	id 1w2uzq-00024q-Nx; Wed, 18 Mar 2026 13:47:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2v0B-0002BQ-O5
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:48:15 -0400
-Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
+ id 1w2uzi-000207-AD
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:47:48 -0400
+Received: from mail-pl1-x62e.google.com ([2607:f8b0:4864:20::62e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2v08-0005tP-O6
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:48:15 -0400
-Received: by mail-pj1-x102e.google.com with SMTP id
- 98e67ed59e1d1-35ba2ae4df3so137536a91.2
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:48:09 -0700 (PDT)
+ id 1w2uzf-0005oX-Kx
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:47:45 -0400
+Received: by mail-pl1-x62e.google.com with SMTP id
+ d9443c01a7336-2aae146b604so475455ad.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:47:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773856088; x=1774460888; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=gzM98ZpdKYV6I0FC+I9SAtX8rZ0C+wqkOwS7Hr5bJHs=;
- b=xx5aSl2XZHl/9Tv4i2G7xxLha+aJiHnoyIbRjAcuuwP6pngLoHVEoDzOi44TVT63aW
- eEJexLU/hLcHAM1NnNKVqH8PvBnGNxBtxeBEnKWndknQ/6E+ZegGR8y9upoFd8g84STZ
- e0RHuXHtY7UBePz1/UWjXQMvyXPwGhg6wnotZUmLonFuwt3XGmc1jD/P/INXceZ8l9Js
- 2NNdl/ckgtUnmARbHEZnl+/KC1zlnKYhCY9i2I7iJx2J+HUMTRW1nYJxa4H53L1xQ9J4
- oXcnVa7MMY/R2JIUvDuyvwx++JN36GubOOx+Gs6Ro/mHUv8pKjRIzKYKWHc83JDU8As4
- Us9w==
+ d=linaro.org; s=google; t=1773856061; x=1774460861; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=Isu00EW2YlgRGO8VPU3tjd6Ko/MUdKtIVB1rQeSkNIk=;
+ b=JzW+6DvQJzAtOwBk9y/mXmDIW5fW/R1btrhUJRY38qLAe7vWh+/ulUQsXSgnRVVDvH
+ 8RM7IB7iQFJf33OZ3xU+EIbXPqAfyXjUPQxWLDFduTm2HX8BoJO01t1J9NzqfFQNdYmi
+ Yths65PWCLhE9cxcuSFlI69OB3SkoXZNaSxKclCV/pwg9CAh5auXMYAJ4RPukQW+zhWo
+ SjPnlE/uqtrMBJBpNeRDZHGCcBmNByRgdQIkJ9csRqMdtfigT9LaL4bFEYBHxzF+th5e
+ QD2on0mM43wT2Ba3b7Gnn40JmX0ILQV6CXl8Rob9GIL3vPGXP9eSlZNKSQlDlka6MA6k
+ 7oug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773856088; x=1774460888;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=gzM98ZpdKYV6I0FC+I9SAtX8rZ0C+wqkOwS7Hr5bJHs=;
- b=c60hLQjmmmNY7Urhi+umkip3j8zfJxY+wjyllj4gy2gYb9U+rrSUBupAmlZr1FAqb5
- vEzt68y1fL53+33MQyoQ0XM9/6bm7nkL4L6ZkAW2zqnPB09pC2oxQtLgQFPtQHYmCI4d
- TRJmQJuBZe4z/enAUKqYBaageoiPwx+wMdKogmUuTOSnmiOo2ofR+INls/deLFQ+Ujuv
- aQBI/fLDTHMKQCuBwm1PWNJcfvUESErM21a/TLmScU60SAoC7qxTV31J6ZM7oRQDl0wt
- bPtImM+cxSg6T4Myi4Tz2SJKA0RqsY9CsrS/yFa49e7cbCL3wiKK9N1OwHo0Dj06Ju9M
- syIg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVoTKYyb90ONbkClZ2wHvttsCHHQjGz9LIIT+AIFAdM5gkx47lOfXhSDktSuqDrWFl45Ff4Km7XsXcv@nongnu.org
-X-Gm-Message-State: AOJu0YzXFjOizKsuXQxSdaqCrVY2SO8VzXNN4VpQVmAfvjL1d1xyRU2m
- BKaN1oSlq8WZcdaYGG1/HT+JS+BZDWqDGh8BCYuGdqWHnytJHDoahUh2Cmq8J+obf8M=
-X-Gm-Gg: ATEYQzw05bsQ+0ohrhtgsnCAeHw3ttXrnFtJBHnRC/3koIfjPGsVIeFXdbf4Je2AkmT
- tXttJk7gxoRnkgJuVMz6cbAgBVqkAG76NXtnhrJrjzH5K2Lvqk/kBAoHZpM319kWXwkEsGb+tpw
- hPQTS297/aC1RyHfCuxn7OW6gQrZTP6B9MzCX9MYGcih1366IsaE9tqEmknie9N7kdkcTazO184
- N20QDz8kkhYsc4uwQWlNQOCLx0YkZGXmSDbrskr84SO6bISWFBFYVEYxEJKj1/za7iI+JstsDxl
- qBEWPyuEaXyw04FGRPvzo2UKXh+cBPA55EELTrHAvKBOqWpmlv1hH2ifa/7YCH2NG+GsZVuXSq7
- egzyOz3akkAfKMJ4QhEy8WKJ2QNz3GdSokYDshp242SGHkZazRTnO++6kppEn0TTl+wfzwrLHBA
- mpCeih4plueFs3cfKaCOGox2mF5shAv1ksS/EMDw7Eh9dNnpx3gz1XLOM22rlVvG4XfoqA
-X-Received: by 2002:a17:90b:3f47:b0:354:c602:a573 with SMTP id
- 98e67ed59e1d1-35bb9f17c79mr3937720a91.27.1773856088103; 
- Wed, 18 Mar 2026 10:48:08 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bc62e44ccsm212885a91.5.2026.03.18.10.48.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 10:48:07 -0700 (PDT)
-Message-ID: <5718eb21-ab32-49e1-82ce-beabb33983ea@linaro.org>
-Date: Wed, 18 Mar 2026 10:48:07 -0700
-MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] hw/vfio: single-binary
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
- <517be5bb-d6c8-4220-b585-3adbe4826056@linaro.org>
+ d=1e100.net; s=20251104; t=1773856061; x=1774460861;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=Isu00EW2YlgRGO8VPU3tjd6Ko/MUdKtIVB1rQeSkNIk=;
+ b=gsU+Z9Cn//a7Zb4hZKQ4etRXnItXCEHQQ8V2yIwThfZIdKtpVfqdOsHeDgFD0e1oQW
+ 8okVtMfDTp1ptLD8cZ3g4kzJABXLBN+/akcr9FfvYL2GwpPGhjGZlJOvN30GO4bD3Xw4
+ vqT9LvHGpfUbVx+ZdiwuhPCOKKV0D2/NpCOlx7gpXePZEzSG6lEDMFDor7E1Uw5aWYbl
+ i8z87XwggEqNIsM1/xCsHiOWZM5nS9J1qXkOle+Ts0SfeOnfz5qNSENgPHThmZMeS6Bf
+ 5EBCc5rSCmqjzcaBuIw5T21EUJs6U76RpDPX9/CWfOF8AKBY7vVUhqv/pk6eTmmDxowM
+ KRxg==
+X-Gm-Message-State: AOJu0YyDcKNM/xJiPanCkb8OXEfaCIAWpokRm/LoMT6ohmfuM80sCmzC
+ aiaCv8Ht6lq5IY0a6Sxt54icBOYwerA8fHkNNP7n/Tmtw4BJ7epbm1dndhD/t+JAmSP8SfVAMbM
+ JZ3LatQc=
+X-Gm-Gg: ATEYQzz2hJy3WbKN3CxZnK2shUSS/QKuD44/OIyJrLPC79am2XpMsP7QX1pAaUBGOEo
+ 91y9eurdzoeN7p9Yhsdt+iyyPnxYuzKPVx0lYM89WVyqbZviuBS/KqpTr3laI6A5WbFWbIZh5Fo
+ QbGt6Gxf21Cvq4QmIN5nOroRAs8Pt4fKOKK155maQnFXN32QuFuIkzCTZ8dqIuAPhTw/xt2QBHb
+ PBeXTmDScFHoskWdn6ZjSEMkBgfnlJFjTY6LpN1FyHqrestat27AI8PsFt4mlDxp1sesE6HbZzM
+ lumqW4l+frW0ipfloXkKGciAxfB/71zzn8mWh7XCNfaYk7hxnXpmpTbDhAHcHvWFEWTE0BJ6BCY
+ +jrnMbpeB0BFMFp/QG9yFGFq92t3tNuKlli3AS+t4qi1+Wes7RYqTPzQc00cWHPvMqaEVfEPvM9
+ uqcy5yn3lntUUs5zZgkfQwMefvzc67Js2Ub6814ZN1nOH6cD+5veOZNbD4hWTF6feJTVwF+U7Za
+ GDB
+X-Received: by 2002:a17:903:b85:b0:2ae:7fbd:3dcd with SMTP id
+ d9443c01a7336-2b06e44062dmr37780395ad.52.1773856061017; 
+ Wed, 18 Mar 2026 10:47:41 -0700 (PDT)
+Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
+ [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b06e5f0ac2sm34066185ad.52.2026.03.18.10.47.40
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Wed, 18 Mar 2026 10:47:40 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
- eOiRCUY9l7IbtPYPHN5YVx+7W3vo6v89I7mL940oYAW8loPZRSMbyCiUeSoiN4gWPXetoNBg
- CJmXbVYQgL5e6rsXoMlwFWuGrBY3Ig8YhEqpuYDkRXj2idO11CiDBT/b8A2aGixnpWV/s+AD
- gUyEVjHU6Z8UervvuNKlRUNE0rUfc502Sa8Azdyda8a7MAyrbA/OI0UnSL1m+pXXCxOxCvtU
- qOlipoCOycBjpLlzjj1xxRci+ssiZeOhxdejILf5LO1gXf6pP+ROdW4ySp9L3dAWnNDcnj6U
- 2voYk7/RpRUTpecvkxnwiOoiIQ7BatjkssFy+0sZOYNbOmoqU/Gq+LeFqFYKDV8gNmAoxBvk
- L6EtXUNfTBjiMHyjA/HMMq27Ja3/Y73xlFpTVp7byQoTwF4p1uZOOXjFzqIyW25GvEekDRF8
- IpYd6/BomxHzvMZ2sQ/VXaMAEQEAAc0uUGllcnJpY2sgQm91dmllciA8cGllcnJpY2suYm91
- dmllckBsaW5hcm8ub3JnPsLBDgQTAQoAOBYhBGa5lOyhT38uWroIH3+QVA0KHNAPBQJivXYM
- AhsDBQsJCAcCBhUKCQgLAgQWAgMBAh4BAheAAAoJEH+QVA0KHNAPX58L/1DYzrEO4TU9ZhJE
- tKcw/+mCZrzHxPNlQtENJ5NULAJWVaJ/8kRQ3Et5hQYhYDKK+3I+0Tl/tYuUeKNV74dFE7mv
- PmikCXBGN5hv5povhinZ9T14S2xkMgym2T3DbkeaYFSmu8Z89jm/AQVt3ZDRjV6vrVfvVW0L
- F6wPJSOLIvKjOc8/+NXrKLrV/YTEi2R1ovIPXcK7NP6tvzAEgh76kW34AHtroC7GFQKu/aAn
- HnL7XrvNvByjpa636jIM9ij43LpLXjIQk3bwHeoHebkmgzFef+lZafzD+oSNNLoYkuWfoL2l
- CR1mifjh7eybmVx7hfhj3GCmRu9o1x59nct06E3ri8/eY52l/XaWGGuKz1bbCd3xa6NxuzDM
- UZU+b0PxHyg9tvASaVWKZ5SsQ5Lf9Gw6WKEhnyTR8Msnh8kMkE7+QWNDmjr0xqB+k/xMlVLE
- uI9Pmq/RApQkW0Q96lTa1Z/UKPm69BMVnUvHv6u3n0tRCDOHTUKHXp/9h5CH3xawms7AzQRi
- vXYMAQwAwXUyTS/Vgq3M9F+9r6XGwbak6D7sJB3ZSG/ZQe5ByCnH9ZSIFqjMnxr4GZUzgBAj
- FWMSVlseSninYe7MoH15T4QXi0gMmKsU40ckXLG/EW/mXRlLd8NOTZj8lULPwg/lQNAnc7GN
- I4uZoaXmYSc4eI7+gUWTqAHmESHYFjilweyuxcvXhIKez7EXnwaakHMAOzNHIdcGGs8NFh44
- oPh93uIr65EUDNxf0fDjnvu92ujf0rUKGxXJx9BrcYJzr7FliQvprlHaRKjahuwLYfZK6Ma6
- TCU40GsDxbGjR5w/UeOgjpb4SVU99Nol/W9C2aZ7e//2f9APVuzY8USAGWnu3eBJcJB+o9ck
- y2bSJ5gmGT96r88RtH/E1460QxF0GGWZcDzZ6SEKkvGSCYueUMzAAqJz9JSirc76E/JoHXYI
- /FWKgFcC4HRQpZ5ThvyAoj9nTIPI4DwqoaFOdulyYAxcbNmcGAFAsl0jJYJ5Mcm2qfQwNiiW
- YnqdwQzVfhwaAcPVABEBAAHCwPYEGAEKACAWIQRmuZTsoU9/Llq6CB9/kFQNChzQDwUCYr12
- DAIbDAAKCRB/kFQNChzQD/XaC/9MnvmPi8keFJggOg28v+r42P7UQtQ9D3LJMgj3OTzBN2as
- v20Ju09/rj+gx3u7XofHBUj6BsOLVCWjIX52hcEEg+Bzo3uPZ3apYtIgqfjrn/fPB0bCVIbi
- 0hAw6W7Ygt+T1Wuak/EV0KS/If309W4b/DiI+fkQpZhCiLUK7DrA97xA1OT1bJJYkC3y4seo
- 0VHOnZTpnOyZ+8Ejs6gcMiEboFHEEt9P+3mrlVJL/cHpGRtg0ZKJ4QC8UmCE3arzv7KCAc+2
- dRDWiCoRovqXGE2PdAW8788qH5DEXnwfzDhnCQ9Eot0Eyi41d4PWI8TWZFi9KzGXJO82O9gW
- 5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
- X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <517be5bb-d6c8-4220-b585-3adbe4826056@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
+To: qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, philmd@linaro.org,
+ qemu-ppc@nongnu.org
+Subject: [PATCH v5 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+Date: Wed, 18 Mar 2026 10:47:28 -0700
+Message-ID: <20260318174733.1717643-4-pierrick.bouvier@linaro.org>
+X-Mailer: git-send-email 2.47.3
+In-Reply-To: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
+References: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62e;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x62e.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -142,26 +106,111 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/26 10:57 PM, Philippe Mathieu-Daudé wrote:
-> On 17/3/26 20:42, Pierrick Bouvier wrote:
-> 
->> Pierrick Bouvier (8):
->>     hw/vfio/listener.c: remove CONFIG_KVM
->>     hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
->>     hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
->>     hw/vfio: eradicate CONFIG_IOMMU from sources
->>     hw/vfio/pci.c: eradicate CONFIG_KVM
->>     hw/vfio/ap.c: use full path for target specific header
->>     hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
->>       hw/vfio/kvm-spapr.c
->>     hw/vfio: all vfio files can now be common files
-> 
-> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> 
+Add stubs for needed functions.
 
-For some reason, b4 trailers does not apply this. I added it manually on 
-latest patch of series.
+vfio_pci_hot_reset_info must be forwarded declared on non linux platforms:
+In file included from ../hw/vfio/igd-stubs.c:9:
+../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info' declared inside parameter list will not be visible outside of this definition or declaration [-Werror]
+  265 |                                     struct vfio_pci_hot_reset_info **info_p);
+      |
 
-Regards,
-Pierrick
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+---
+ hw/vfio/pci.h        |  2 ++
+ hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
+ hw/vfio/pci-quirks.c |  5 -----
+ hw/vfio/meson.build  |  1 +
+ 4 files changed, 23 insertions(+), 5 deletions(-)
+ create mode 100644 hw/vfio/igd-stubs.c
+
+diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
+index d6495d7f297..c3a1f53d350 100644
+--- a/hw/vfio/pci.h
++++ b/hw/vfio/pci.h
+@@ -258,6 +258,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp);
+ 
+ extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
+ 
++struct vfio_pci_hot_reset_info;
++
+ void vfio_pci_pre_reset(VFIOPCIDevice *vdev);
+ void vfio_pci_post_reset(VFIOPCIDevice *vdev);
+ bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
+diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
+new file mode 100644
+index 00000000000..f7687d90912
+--- /dev/null
++++ b/hw/vfio/igd-stubs.c
+@@ -0,0 +1,20 @@
++/*
++ * IGD device quirks stubs
++ *
++ * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "qemu/osdep.h"
++#include "qapi/qmp/qerror.h"
++#include "pci.h"
++#include "pci-quirks.h"
++
++void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
++{
++    return;
++}
++
++bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
++{
++    return true;
++}
+diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
+index 7b907b9360d..ab864048943 100644
+--- a/hw/vfio/pci-quirks.c
++++ b/hw/vfio/pci-quirks.c
+@@ -11,7 +11,6 @@
+  */
+ 
+ #include "qemu/osdep.h"
+-#include CONFIG_DEVICES
+ #include "exec/memop.h"
+ #include "qemu/units.h"
+ #include "qemu/log.h"
+@@ -1128,11 +1127,9 @@ static void vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
+  */
+ bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
+ {
+-#ifdef CONFIG_VFIO_IGD
+     if (!vfio_probe_igd_config_quirk(vdev, errp)) {
+         return false;
+     }
+-#endif
+     return true;
+ }
+ 
+@@ -1179,9 +1176,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, int nr)
+     vfio_probe_nvidia_bar5_quirk(vdev, nr);
+     vfio_probe_nvidia_bar0_quirk(vdev, nr);
+     vfio_probe_rtl8168_bar2_quirk(vdev, nr);
+-#ifdef CONFIG_VFIO_IGD
+     vfio_probe_igd_bar0_quirk(vdev, nr);
+-#endif
+ }
+ 
+ void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr)
+diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+index f2a7728d3d0..6c00a7f51bb 100644
+--- a/hw/vfio/meson.build
++++ b/hw/vfio/meson.build
+@@ -17,6 +17,7 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+ vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
+ vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
+ vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
++stub_ss.add(files('igd-stubs.c'))
+ 
+ specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
+ 
+-- 
+2.47.3
+
 
