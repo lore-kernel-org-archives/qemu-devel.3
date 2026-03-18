@@ -4,138 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 02BC710854D7
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:11:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 671C110854D9
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:13:51 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2mux-0002Ix-3c; Wed, 18 Mar 2026 05:10:19 -0400
+	id 1w2my4-00032F-Rk; Wed, 18 Mar 2026 05:13:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1w2muv-0002IX-20; Wed, 18 Mar 2026 05:10:17 -0400
-Received: from mail-northcentralusazlp170100001.outbound.protection.outlook.com
- ([2a01:111:f403:c105::1] helo=CH1PR05CU001.outbound.protection.outlook.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
- id 1w2mut-0002PC-5h; Wed, 18 Mar 2026 05:10:16 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=Ff9qEyZ7Zxv+fnncWxK8IZkHzdomNZRHGPiIzAN469E8M12RjFhRm94yB0P4ElvZi/YEb4RHD2KtsXfICC5pAjrUcPwuy0Emcsablv3KwG5LuCm/28e/g9qzfMzcMjU5bQIDsMuWzH4NpDCltlsbm8UFmlEA3hidYIDZjZ3jRXPXYrs0SD5ZzEOmAqyk6f+A34l1X75+d0l6QK0qPAaA/KYBZnQgXsWK+A8HBQwI9XFXrMpqeSFzPN1pekLI9+WH+yfLWKYhNydCIz0bsWhbMLe/cIMskdr4/L6b2KsdzC4fbIO+YeenbM/iKdU2cKpQHhWQ9d8iTf38U6nI1S7qcg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=+SpI4Fr+QYW/NplyKfQfgZ+YLNxdKTBeVFBADaNsSdA=;
- b=pLpSbfOzAAET5fE34GG2zWZE6Eciiuv6OZM3QQTOQms7u1K/2j7jm4FoNLuHH4NM//wCC1nFyvt7rLyNYdzkwYC/AQqPf7yWBXVIPR+Xs66BC180oWT2U39NRVF9lcUtYJiJzO6IFYIexUXHb/R40Zj4fxrVCwdRbwOS0A3rEWdwRwfM66Q+cW2++h6P30mjzhIz/FQ3KmJm6YGnKdb2hEN7u09PeuLbqfIOyM/xbW0imqPwVIV80Cahy4NDzCXxTFWqSat1qzfR47ftWfvOMM6TPWjxUiJF9AYCVO0UTicEEb6MmKCqTrWCLfaHmmFLLguwfb8xdDPvhOmtzvz+2A==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
- dkim=pass header.d=nvidia.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=+SpI4Fr+QYW/NplyKfQfgZ+YLNxdKTBeVFBADaNsSdA=;
- b=mRGGEzytFLUbjECXF/0XxEKKxGVEAiEZbjmHTobyWTHZW0nkW38WaPJXes9Qczes1DxiQ+oScm0nTPEP0DvDfymApyGvkcf5KBo3pCq3sxnfwC9+f5ZAwQZ1qzi7Au9a+lXYFejYRG+6vFFP+lvrkg9FftdO2zfu16ii7c9gocx14MBPuhX/iTHI99HeGrj+xJWsMEHRc9rx4+3qRt7wyRc8g5zcxhWJFNbxwalekMGon0dAOAeFRAhjO0UzhR8jJ7NdImYpo3frjQX3MnXvfCeOxxY3YNk628+OMWTOel81ZBwKf3UBDzv7+Pk9LkjMwvtX07+sd6WSPVQxXtqLaA==
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
- by CY8PR12MB8196.namprd12.prod.outlook.com (2603:10b6:930:78::17)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Wed, 18 Mar
- 2026 09:10:07 +0000
-Received: from CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
- ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9745.007; Wed, 18 Mar 2026
- 09:10:07 +0000
-From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
-To: Nathan Chen <nathanc@nvidia.com>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
-CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
- <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael
- S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
- <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- =?iso-8859-1?Q?Daniel_P_=2E_Berrang=E9?= <berrange@redhat.com>, Eric Blake
- <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Matt Ochs
- <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
-Subject: RE: [PATCH v3 1/8] hw/arm/smmuv3-accel: Check ATS compatibility
- between host and guest
-Thread-Topic: [PATCH v3 1/8] hw/arm/smmuv3-accel: Check ATS compatibility
- between host and guest
-Thread-Index: AQHctj0+CkSbs9/TNU+sHpuWsshrU7W0AKQQ
-Date: Wed, 18 Mar 2026 09:10:06 +0000
-Message-ID: <CH3PR12MB7548DD2E34492D7E73376999AB4EA@CH3PR12MB7548.namprd12.prod.outlook.com>
-References: <20260317183755.3721625-1-nathanc@nvidia.com>
- <20260317183755.3721625-2-nathanc@nvidia.com>
-In-Reply-To: <20260317183755.3721625-2-nathanc@nvidia.com>
-Accept-Language: en-US, en-GB
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=nvidia.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CY8PR12MB8196:EE_
-x-ms-office365-filtering-correlation-id: 241d372a-6920-48a3-8e29-08de84ce2623
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|1800799024|366016|7416014|376014|38070700021|22082099003|56012099003|18002099003|7053199007;
-x-microsoft-antispam-message-info: OJOkfZYTIgihWvS474kHTvlaKUSszimEojn5FW4vXILpJ2Jdm4Rnw6L+ystc2639kqOd9Pp4wFiVnlxYYb/xaMBvBLXSYE1puTx9R3LcEiBoySeYAvtDjRt+Pzu84O37AuSYrOUI+eNaTJvnV2PpArV7uhpbo8jt3cydT+rJzIcMz3X32ZUDsSlRWiQ8ePxiYltz1SMuTOnq95pO11COROUF+YCd0yx4W0Ovvlu8zKkWtZzq7RnaiWzFfIv3BVHiII/KaTyE2rMa3WwDQyGfFl9P/Y0tjNI3kH2/TGZYGkBGp6ZRUqzaaFp/3WBwEG0nvWc6sMsFEoPGfOtGN8WXbiDiAAq/GBRpKuoyEQnri8/pFyt1vzRy/U7A7LPX2a//WUDuHsRhf3jfpkdvHiZPdPxmpHiQ4nvaV2tVgS8hB8BngL6rfRSTyFV2hwJnYnViL75cUcBcDKodQ5f1taF+hE+q6zcIexhmI3aeiZixXSFEImbNo0PYx/lNV4NrT15Z23xqYUU9ArWFF2p/J6kfP2v4PLH1GBosNaW0iabOoWPkjc1CO8TzBIdRVxU+t+Gz9QYruTZu4B/Sr9kGuiSvHKrgJW/2QGjFOtZqDonIzW14Q41bcHZW0gfxGqccST/QVpaubaDdF3S0A5Rd4fXHUMUqPFC26XMlUjtray5BREFqrTg7LV0VkqKEY205b97972EVoAm1l1Djz9dUbRlkRzi7V5M98CnQaEuGGvDJbSFRPpC4EbV6ICWbvq+19ZpYQ16lx2yRwoVioTFJBYtrnfoQk94QhwrqY0jYhAnbMrQ=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(1800799024)(366016)(7416014)(376014)(38070700021)(22082099003)(56012099003)(18002099003)(7053199007);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?3H95xl0kjaOfLErhBVvJXm9ml3wdC1ZzW0oKSRux+kxWNEOLaWX18XoNJ2?=
- =?iso-8859-1?Q?HVWTvH4e5E+IOYRFNq8bz+tabVziDm9T93+eZ6LVJUoyktsQFGkzYf4xDT?=
- =?iso-8859-1?Q?XRkWYMSgFXYLku5Q4Vw52tyf46FNaDr+QKpAdnj2tivKcSqC91yqGpBNi8?=
- =?iso-8859-1?Q?Omqu1Zs2eIyVUWuLL2RpP1YKJf1iQ+0g42OcUQH8ILtm+ox5pe2affNPca?=
- =?iso-8859-1?Q?E5cJPojaaL3CbK6IFr0QbpkMxbDaMrk87sbeVZKjFyfQI8uq0FGNpwI2Z8?=
- =?iso-8859-1?Q?rZHwLMhH0Ov1MWNL20KM1mbPbCgAnbA4Okrf3z5XTsKqYOCQHm/qOjItYK?=
- =?iso-8859-1?Q?BazEoCULKIYFQxTZM0jGCQPc8HILyuQysVLcwZcf5y1tpTtXUZkJUFdgi2?=
- =?iso-8859-1?Q?yyZPZ8PZ5UzxKZU8F2e+AnTXWAoSVVpNdr6sN9JIv03KFVI1FnmGCDasbz?=
- =?iso-8859-1?Q?3x+fF0xsyCIxvllY2zYDLh3mLZ7JeyzQACTIZOcV0gNCFynkzQurqxjKxs?=
- =?iso-8859-1?Q?/Hl4ur8JBgQEjGgq01tjtxTxpUYJ+c6c233POknAQ0XAiFo4OI0FgxoeHy?=
- =?iso-8859-1?Q?8sWMsNkkrnlZMrBnUdBVhJLm6a0uOvUriTf4SKKoFKV3zhTSTAxL679rq8?=
- =?iso-8859-1?Q?9eR4anb3Ylh/5lUEbmZBLb706dk8NCyjFFN2A4n5fuy+jI1If3ssWRHLZi?=
- =?iso-8859-1?Q?NOCqFodju3OeT3/8Bdopbbi/i3POXKyjyPtFX6rxxY69hAm5yvHvxGN84D?=
- =?iso-8859-1?Q?V8LwHGYK9ETcvvnUvK21DDQos+ORb9Afiui8CXF73BCsd+Cnu2DtKRoz34?=
- =?iso-8859-1?Q?xcVXv0TBOJ/fop3pReRnXTlqgz5OM+1eyWwuMi2VwPgMCDP75xT6RQdUCc?=
- =?iso-8859-1?Q?q81c5jnZg+i1I8y3eWL1GU77EWK0adSpFqgcOEwDxGYsF/Z6u3zaYjsDD7?=
- =?iso-8859-1?Q?jEuDKggH6T5OixMQNwe3QXhnpLB6WS7kMOJ6siA7tB1J48jB2HPv6R+EPy?=
- =?iso-8859-1?Q?P9t3spCl5+/RV7FxXZR9ju+P2kUvoaAnjx9EwzlNJBlFnHLtdqKmnwulVY?=
- =?iso-8859-1?Q?zXCMujoFpowx3b4DV+Q9F+PkydSJcFY/IRF8LJTtitOhPw+3AdTPEpBQ6s?=
- =?iso-8859-1?Q?cbQFfHzKIiIIsSBgnOlTc0P7iJ9SM9XDse0jPkDZxY+UD+SBqevYKrVWRK?=
- =?iso-8859-1?Q?Ky6zzxN+UAmnmmfo3yqH34Iq8YbeLWur/8eiRPi70LOGItH0pq6o0a7jVI?=
- =?iso-8859-1?Q?G62ThVrR1o4bVCtcr/ice48wNnYJahhg5kWAAC6Hngu3mpTgj1Q8PzMZ1P?=
- =?iso-8859-1?Q?f+eYr9sc8Cvcj0Yxlwa6iFvPNrvuOA+GGm9dP/hKSBHhRldoPySyRvUeCi?=
- =?iso-8859-1?Q?TBYvxjViNsku7ETiT1Ce0BduzSy0JMDq5VhTPy0zYWF/5HPDkK0TxA1PcU?=
- =?iso-8859-1?Q?VRpYtl97gcP690ehXi5GSJ/hsUPUA3oDy94PfpSDgTBFL7AmUqcv+0tcPB?=
- =?iso-8859-1?Q?pCJ7EC967MHFMumAsCf9l8c7e89E2o+TPywAqji1e9htaYaC+8aHDt5Ldq?=
- =?iso-8859-1?Q?pnGM9gm4V7TsL+yp5NTn+udHqkqz/Zt3oE7TZHHRBX8ldy6D/LQDDI3zFo?=
- =?iso-8859-1?Q?gM7qwVWHVD5mxq7ZdcRaBbjnL1Rltrzex0kHuwhrkQK4MRIKfQsoPr3N4C?=
- =?iso-8859-1?Q?wTJzXczqBpK3bvlXMltlARwIECFRFg/QNF7UDNEcKYFfUVIIHwQJ53SrBJ?=
- =?iso-8859-1?Q?kb2gU2oGalCZeDDvC4EosoEGwYtDv4zBD/gbYrYSelxMyYilSMbuw/qtRI?=
- =?iso-8859-1?Q?GB8Tz2UgSg=3D=3D?=
-Content-Type: text/plain; charset="iso-8859-1"
-Content-Transfer-Encoding: quoted-printable
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1w2my3-00031u-CU
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:13:31 -0400
+Received: from mail-ed1-x530.google.com ([2a00:1450:4864:20::530])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <stefanha@gmail.com>)
+ id 1w2my1-0004TR-7I
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:13:31 -0400
+Received: by mail-ed1-x530.google.com with SMTP id
+ 4fb4d7f45d1cf-667d8f30bb7so662990a12.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 02:13:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773825207; cv=none;
+ d=google.com; s=arc-20240605;
+ b=BCipB2h86jigQusIPTq+RnhhJl6Tw6O3zMLGS9ejhAVm/TYC30036cBpfYW4lwp5Tf
+ d5NrBHw+ILVkF99f10RVr53k1b4QbYPElAmKwUTm/RIIUhOvVL0x7EYkUPUW9QVIR9nS
+ Oz7KHIFQ7LWrAwpEf+lSj+VSMpNwi2E6ZqTMHX1LH918h2Yp0eS+7hGnZjvEGU8TgmQH
+ P+GFqfxiUfJMTg7E5ll87WJhavPDkIFd0g7LQDXm+TeDhQUMzeWgxhHlXhtVVaAaHngD
+ V50jSpoHkfb7F7/gAS0KIJdnn1fm6OMADoAu+1PdL0+V7pUHnkHCrCNT4lTnt8HJHt4B
+ 0Upw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=sDwWSNjqwGPVnzFNOms8iNcfp/jQBQm8yfITtTLfZis=;
+ fh=7uQb03SakFrMBOkt6UN6cgs3l1LlfbhKYrhfFdD5gok=;
+ b=W9yCCV6pTLeyvn0ta+0ZqicXj5tcCfNl1j8UYWyz141YIFp9GQJYHDw9jm3qlbDDHH
+ wuqw/0zrI2exEO1jX5+NvgyIBDfH/eDz5oOnSHvcoMtbYrh19Odcd1NYcT+glBQx5t+r
+ MBzEIcJV8RE++19cUP3CAsJw3dGbSzXBXA/5fAqqAeu1YW3KlEucPBPaMqVMaRiHxxbX
+ bNzlVXsjWYDwr8c0R8jFFjSRKJ2nI6wMfDBsToXTLCEs0pNPR467mYRoQ3TdhdR5LB89
+ 3qtRNnXAGlR9AKCR24lVMxY47q5g6NYXleCIx7Xy22w3f+5nfCTNsIoksZQaB/RB/eTX
+ oliw==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1773825207; x=1774430007; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=sDwWSNjqwGPVnzFNOms8iNcfp/jQBQm8yfITtTLfZis=;
+ b=gdqoTO9SQar0qVdDCIA9qmATDqWsSSKE7KOdZ42pIOP7pQPWzGFX7BJOAkwzbvGMQN
+ hX++zAH0FupSswLeS7HZmTPbMWAjppa/pUt24rl+XrAxxa66j67e+d8RR/Oaqkx0w396
+ GeQzFOWSTLCuQNbT4xl7wQmE39wZTNHw0+u8y3HIPzGsb2tNwClQ/9S29ayhdGJUIGDS
+ 6KR88m8Uy5bw8NGPESPDiaYkX/iJU0L09mXynl7XEdPLi8lgeSbTZHY2ukLnnxWCVySs
+ TT735DvJ3gGQLhBlfsHv66lIr8/rOSWQaras2rvhAC44S8fCpNG02fyYv+XkT4auq+h/
+ PUaw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773825207; x=1774430007;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=sDwWSNjqwGPVnzFNOms8iNcfp/jQBQm8yfITtTLfZis=;
+ b=p6kkkOkbQwwHRTI0v16zv4p3/6AwJs6Yzs5+YiynutN/fGgILhukNcSn8lqsIGEEnn
+ +Uo7ao4pWOOQpbOyCSpWOevHNWebanMkIKPRUEaXS6XSLoeuB5km9wf7JXksjNzIlQ0j
+ 2eBx9gWYCs/FbC6sR0terSVCedc2LDhk/6D+8opXxuH3DHjTIUwIq7c1FQh7BI5nyD0w
+ WkxfKY1sGhim6qZk75CQWGM1p+A+mIwqOvji66BvwCpkFH/xHlj9FUb7jAx5uFP4i9bT
+ tPmu3MilA5BSiuBFuhDTmU+4LQo+zPki+S/m2k3naw78ff8pfXX0Cbw2ieddyOMegQUR
+ Tkeg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW32B1sxzLngNYLPqLpJpXC1lmarPQIzkTf9OTlcNxb24Cl0x0anhvJRo5vLvAUBKSR5isv0W7zxzno@nongnu.org
+X-Gm-Message-State: AOJu0Yw9VlpYtpG9cVnxIjlhv8THzRq/+LN3Ghi1MIccRzyIUce3IzLO
+ H7rXcNET29IL7SkMw5OoTuoxj818KXLh460ccfMgl1wlVuhHcPKX4SLFZDNfrIMEUyitopLN6cF
+ FGfFNRsbB9W/hURXMgbarXEgBz9vh39k=
+X-Gm-Gg: ATEYQzy2riTK+kxM8/Xr+6fSYtiuzpMZb26lNhLu3JcgzEGCUegoPj6Xox3o1Eua3dm
+ obuYYz3J/60LdF7tygjO1r6LY8jgGpDXBYczsNlbGpWdubbYgrF8MMKoAv+tj4gnLM8N8RWmHZt
+ XvYq1fX601ieoI2rvYXwJIY6GL5J8RFtMrjPcJBBYLxhq1CrOEDDzWat1ZBiKihfYUW9ypB0lKt
+ Jobni00oJ9XtXSpvFcaV51vb4oNIhtlZSyElWBfEzjw+aLvA9VuRS7wYjRV9HATMZc8w+xdV9lZ
+ jjX/V55MVhtkCG5rMk9Q2WEdHh7qnl7V7wjTadQ9iAhlUz/VeYG6
+X-Received: by 2002:a05:6402:1ed5:b0:667:247:b026 with SMTP id
+ 4fb4d7f45d1cf-667b2c033aamr1984998a12.18.1773825206505; Wed, 18 Mar 2026
+ 02:13:26 -0700 (PDT)
 MIME-Version: 1.0
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 241d372a-6920-48a3-8e29-08de84ce2623
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2026 09:10:07.0555 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: Qhng5Th1Mws8wDQ+BR5lf19LhOlDQjr4Mpkvc+l+UIk6GFh/7SFDrvOsRRjINcJGJL5HApkCJhDqlVGXvWyllw==
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY8PR12MB8196
-Received-SPF: permerror client-ip=2a01:111:f403:c105::1;
- envelope-from=skolothumtho@nvidia.com;
- helo=CH1PR05CU001.outbound.protection.outlook.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
-X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FORGED_SPF_HELO=1, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_PASS=-0.001,
- SPF_NONE=0.001 autolearn=no autolearn_force=no
+References: <20260305142459.52559-1-zhangckid@gmail.com>
+ <20260305142459.52559-5-zhangckid@gmail.com>
+ <20260309081502.GC39949@fedora>
+ <CAK3tnv+HfV9JCR7whLRDcXpfp6ZAdbw1AhWzT1RSdTVevtyvBg@mail.gmail.com>
+ <20260312052422.GA116604@fedora> <87bjgtxv9b.fsf@pond.sub.org>
+ <CAK3tnvJc2U+c=sx=RASKHCAjcTQMx9dg0iOpe5eEui9U0-Ft_g@mail.gmail.com>
+ <87jyv9fyn5.fsf@pond.sub.org>
+In-Reply-To: <87jyv9fyn5.fsf@pond.sub.org>
+From: Stefan Hajnoczi <stefanha@gmail.com>
+Date: Wed, 18 Mar 2026 17:13:13 +0800
+X-Gm-Features: AaiRm52kXACm8rf6WahfgS_y5lcZcrYU9sathbN_Is-SLfVzKRgRuZZjFw7g7-A
+Message-ID: <CAJSP0QWnRRRATvgRtWss_hw4ygqB_bHgBuWQd3mqUcbb1q48KA@mail.gmail.com>
+Subject: Re: [PATCH V5 04/13] blockdev: Update tracking iothread users with
+ holder name
+To: Markus Armbruster <armbru@redhat.com>
+Cc: Zhang Chen <zhangckid@gmail.com>, Stefan Hajnoczi <stefanha@redhat.com>, 
+ Kevin Wolf <kwolf@redhat.com>, qemu-devel <qemu-devel@nongnu.org>, 
+ "Dr . David Alan Gilbert" <dave@treblig.org>, Eric Blake <eblake@redhat.com>, 
+ "Michael S . Tsirkin" <mst@redhat.com>, Hanna Czenczek <hreitz@redhat.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::530;
+ envelope-from=stefanha@gmail.com; helo=mail-ed1-x530.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -151,59 +127,212 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-> -----Original Message-----
-> From: Nathan Chen <nathanc@nvidia.com>
-> Sent: 17 March 2026 18:38
-> To: qemu-devel@nongnu.org; qemu-arm@nongnu.org
-> Cc: Eric Auger <eric.auger@redhat.com>; Peter Maydell
-> <peter.maydell@linaro.org>; Shannon Zhao <shannon.zhaosl@gmail.com>;
-> Michael S . Tsirkin <mst@redhat.com>; Igor Mammedov
-> <imammedo@redhat.com>; Ani Sinha <anisinha@redhat.com>; Paolo Bonzini
-> <pbonzini@redhat.com>; Daniel P . Berrang=E9 <berrange@redhat.com>; Eric
-> Blake <eblake@redhat.com>; Markus Armbruster <armbru@redhat.com>;
-> Shameer Kolothum Thodi <skolothumtho@nvidia.com>; Matt Ochs
-> <mochs@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; Nathan Chen
-> <nathanc@nvidia.com>
-> Subject: [PATCH v3 1/8] hw/arm/smmuv3-accel: Check ATS compatibility
-> between host and guest
->=20
-> From: Nathan Chen <nathanc@nvidia.com>
->=20
-> Compare the host SMMUv3 ATS support bit with the guest SMMUv3 ATS
-> support bit in IDR0 and fail the compatibility check if ATS support is op=
-ted as
-> enabled on the guest SMMUv3 when it is not supported on host SMMUv3.
->=20
-> Fixes: f7f5013a55a3 ("hw/arm/smmuv3-accel: Add support for ATS")
-> Reviewed-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
-> ---
->  hw/arm/smmuv3-accel.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->=20
-> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c index
-> 17306cd04b..2bb142c47f 100644
-> --- a/hw/arm/smmuv3-accel.c
-> +++ b/hw/arm/smmuv3-accel.c
-> @@ -101,6 +101,12 @@
-> smmuv3_accel_check_hw_compatible(SMMUv3State *s,
->                     smmuv3_oas_bits(FIELD_EX32(s->idr[5], IDR5, OAS)));
->          return false;
->      }
-> +    /* Check ATS value opted is compatible with Host SMMUv3 */
-> +    if (FIELD_EX32(info->idr[0], IDR0, ATS) <
-> +                FIELD_EX32(s->idr[0], IDR0, ATS)) {
-> +        error_setg(errp, "Host SMMUv3 doesn't support Address Translatio=
+On Wed, Mar 18, 2026 at 2:20=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
+m> wrote:
+>
+> Zhang Chen <zhangckid@gmail.com> writes:
+>
+> > On Thu, Mar 12, 2026 at 5:16=E2=80=AFPM Markus Armbruster <armbru@redha=
+t.com> wrote:
+> >>
+> >> Context...  we're talking about this command:
+> >>
+> >>     ##
+> >>     # @x-blockdev-set-iothread:
+> >>     #
+> >>     # Move @node and its children into the @iothread.  If @iothread is
+> >>     # null then move @node and its children into the main loop.
+> >>     #
+> >>     # The node must not be attached to a BlockBackend.
+> >>     #
+> >>     # @node-name: the name of the block driver node
+> >>     #
+> >>     # @iothread: the name of the IOThread object or null for the main =
+loop
+> >>     #
+> >>     # @force: true if the node and its children should be moved when a
+> >>     #     BlockBackend is already attached
+> >>     #
+> >>     # Features:
+> >>     #
+> >>     # @unstable: This command is experimental and intended for test ca=
+ses
+> >>     #     that need control over IOThreads only.
+> >>     #
+> >>     # Since: 2.12
+> >>     #
+> >>     # .. qmp-example::
+> >>     #    :title: Move a node into an IOThread
+> >>     #
+> >>     #     -> { "execute": "x-blockdev-set-iothread",
+> >>     #          "arguments": { "node-name": "disk1",
+> >>     #                         "iothread": "iothread0" } }
+> >>     #     <- { "return": {} }
+> >>     #
+> >>     # .. qmp-example::
+> >>     #    :title: Move a node into the main loop
+> >>     #
+> >>     #     -> { "execute": "x-blockdev-set-iothread",
+> >>     #          "arguments": { "node-name": "disk1",
+> >>     #                         "iothread": null } }
+> >>     #     <- { "return": {} }
+> >>     ##
+> >>     { 'command': 'x-blockdev-set-iothread',
+> >>       'data' : { 'node-name': 'str',
+> >>                  'iothread': 'StrOrNull',
+> >>                  '*force': 'bool' },
+> >>       'features': [ 'unstable' ],
+> >>       'allow-preconfig': true }
+> >>
+> >>
+> >> Stefan Hajnoczi <stefanha@redhat.com> writes:
+> >>
+> >> > On Tue, Mar 10, 2026 at 06:02:54PM +0800, Zhang Chen wrote:
+> >> >> On Mon, Mar 9, 2026 at 4:15=E2=80=AFPM Stefan Hajnoczi <stefanha@re=
+dhat.com> wrote:
+> >> >> >
+> >> >> > On Thu, Mar 05, 2026 at 10:24:50PM +0800, Zhang Chen wrote:
+> >> >> > > Update the usage of "iothread_get_aio_context()".
+> >> >> > >
+> >> >> > > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+> >> >> > > ---
+> >> >> > >  blockdev.c | 9 ++++++++-
+> >> >> > >  1 file changed, 8 insertions(+), 1 deletion(-)
+> >> >> > >
+> >> >> > > diff --git a/blockdev.c b/blockdev.c
+> >> >> > > index 6e86c6262f..01ccf64b3f 100644
+> >> >> > > --- a/blockdev.c
+> >> >> > > +++ b/blockdev.c
+> >> >> > > @@ -3683,7 +3683,14 @@ void qmp_x_blockdev_set_iothread(const c=
+har *node_name, StrOrNull *iothread,
+> >> >> > >              goto out;
+> >> >> > >          }
+> >> >> > >
+> >> >> > > -        new_context =3D iothread_get_aio_context(obj);
+> >> >> > > +        char *path =3D object_get_canonical_path(OBJECT(bs));
+> >> >> >
+> >> >> > CCing Kevin and Markus in case they have an opinion on this.
+> >> >> >
+> >> >> > BlockDriverState is not a QOM Object so using OBJECT(bs) is undef=
+ined
+> >> >> > behavior and may crash.
+> >>
+> >> Yes.
+> >>
+> >> >> > node_name is unique across block driver graph nodes and could be =
+used.
+> >> >> > Unfortunately it's not connected to the QOM Object hierarchy.
+> >>
+> >> Correct.
+> >>
+> >> >> >                                                               May=
+be it's
+> >> >> > best to build a holder name that is an invalid QOM path so there =
+can be
+> >> >> > no collisions between QOM paths and block driver graph nodes.
+> >>
+> >> I guess you're talking about the values that go into IOThreadInfo memb=
+er
+> >> holders.  From PATCH 13:
+> >>
+> >>     # @holders: The parameter is an array of QOM paths indicating how =
+many
+> >>     #     active devices are currently associated with this iothread
+> >>     #     (e.g. virtio-blk).  In hotplug scenarios, users can
+> >>     #     pre-allocate multiple iothread objects to serve as a persist=
+ent
+> >>     #     thread pool.  When a device is hot-unplugged, the correspond=
+ing
+> >>     #     IOThread is released but remains available, allowing subsequ=
+ent
+> >>     #     hot-plugged devices to attach to and reuse the existing thre=
+ad.
+> >>     #     Returns empty if no devices are attached.  (since 11.0)
+> >>     #
+> >>
+> >> I further guess you need it to refer to both QOM objects and block
+> >> nodes, and you worry about ambiguity.
+> >>
+> >> Ambiguity indeed exists: a block node name can be a valid QOM path.
+> >>
+> >> We could restrict QOM paths to absolute paths.  These start with '/'.
+> >> If I remember correctly, node names cannot contain '/'.
+> >>
+> >> Note that canonical paths (returned object_get_canonical_path()) are
+> >> absolute.
+> >>
+> >> We ran into a similar design issue in review of Vladimir's "[PATCH v10
+> >> 4/8] qapi: add blockdev-replace command" not too long ago:
+> >>
+> >>     Subject: Re: [PATCH v10 4/8] qapi: add blockdev-replace command
+> >>     Date: Wed, 04 Feb 2026 13:26:35 +0100
+> >>     Message-ID: <87wm0sy9s4.fsf@pond.sub.org>
+> >>
+> >> There, the new command needs to refer to QOM object, block node, or
+> >> block export.
+> >>
+> >> >> >   g_autofree char *holder =3D g_strdup_printf("BlockDriverState %=
+s", node_name);
+> >> >> >
+> >> >> > (A cleaner long-term solution would be making BlockDriverStates Q=
+OM
+> >> >> > Objects so they have a proper path.)
+> >>
+> >> Yes, but that's a beefy project, isn't it?
+> >>
+> >> >> If no other comments, it's OK for me. This issue like I mentioned i=
 n
-> Services");
-> +        return false;
-> +    }
+> >> >> patch 7 and 9.
+> >> >
+> >> > A thought about the QAPI interface:
+> >> >
+> >> > QAPI expresses as much information in the schema as possible, so I t=
+hink
+> >> > the right approach would be a {'union': 'IOThreadHolder',
+> >> > 'discriminator': 'type', ...} that supports at least "qom" and
+> >> > "block-node". That way there are proper types to encode QOM Object p=
+aths
+> >> > vs block node-names. Let's avoid having a single string value that t=
+akes
+> >> > on different meaning depending on the type of holder.
+> >>
+> >> This shifts the complexity from semantics to syntax.
+> >>
+> >> Semantics: the member can have multiple meanings, and you have to
+> >> examine its value to decide which one applies.  The member's
+> >> documentation should specify how to decide.  Say something like "if th=
+e
+> >> value starts with '/', it's an absolute QOM path, else it's a block no=
+de
+> >> name".
+> >>
+> >> Syntax: meaning is syntactically obvious.  For instance, union of QOM
+> >> path and block node name.
+> >>
+> >> Complex semantics tend to require more complex documentation.
+> >>
+> >> Which choice is better depends on the specific case.  I generally lean
+> >> towards syntax.
+> >>
+> >
+> > I agree Markus's suggestion.
+> > Compare with standard QOM path:
+> > /machine/peripheral/blk0/virtio-backend
+> >
+> > I will try to implement block nodes path like this:
+> > /machine/blockdriverstate/node-name
+>
+> I gather you'd like to try creating QOM objects for block nodes.
+>
+> First, this should not go into /machine.  We already have /chardevs and
+> /audiodevs, which suggests something like /blockdevs or /block-nodes.
 
-Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
+It may be a lot of work. An alternative I suggested was a holder enum
+instead of a string so that QOM paths and block node names can be
+separated with no chance of collisions. That approach is more
+straightforward to implement and the main drawback I see is that the
+enum would become superfluous if block nodes become QOM objects in the
+future. That's not terrible.
 
-Thanks,
-Shameer
-
+Stefan
 
