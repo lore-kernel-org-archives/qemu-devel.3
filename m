@@ -4,111 +4,52 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3030FCD0A8
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 04:41:07 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 96153FCD0AA
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 04:57:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2ihk-0003Xm-LP; Wed, 18 Mar 2026 00:40:24 -0400
+	id 1w2ixB-0005QP-Ed; Wed, 18 Mar 2026 00:56:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1w2ihg-0003XC-U1
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 00:40:21 -0400
-Received: from mail-ed1-x52c.google.com ([2a00:1450:4864:20::52c])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <jim.shu@sifive.com>)
- id 1w2ihf-0002sY-4m
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 00:40:20 -0400
-Received: by mail-ed1-x52c.google.com with SMTP id
- 4fb4d7f45d1cf-667f8794e97so134164a12.2
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 21:40:16 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773808815; cv=none;
- d=google.com; s=arc-20240605;
- b=aRtr/3hriYXLF0p5IMQNNeu3RBeg7nsNd1/ebaKm1Z53XsHnyTnvf2ZDldj2QbA3cT
- hOypLvS9uA+29hC6tC4tvRpRBH3rG9lRhHpnOgMnlfMcQxiNV8xWMn5KFAD/oEXk9EH8
- 0rHJb0eVynllD7DwB3ZPX63OioMPOq03ynHeW6FpaauZ7zVskiP8UQWMHzqzhRRmebWW
- i+JosPq5WNu2vW+9nL2J7B3aXgEmkkVV3e2eN4VIjhxoUVqA9PDmVYKtGkBZK6Qu3yi9
- EGBDB6lnenLaXusgFXZBr/j4s8eR/IuIETa7BHBtaufRyLtD8DKLBG8yBoHYXAfwPFtV
- +yGA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=vuwIiXqAxMx++vD693Uzn3ZjQfSxf49VPGnUdkE+Wo8=;
- fh=bu2ZrHDXs3FhRCEK57XcXWlfhM8WXuf6PCAcBelvNxU=;
- b=A7jAjePnUG1qIt/zSHdC09rZCZ2YhT3zt2NGfiGvoAf4wK5aOCKAOhldZayZ6d/5HD
- ajtxMhL3yPHxhv/BYYnDgz2gZxcTpKnqR84bZVFGVMxiALVWeyhRODpeDbLMRQBlebVy
- B/guyblKQOAOeE3tGR9RNXZ029ZxrfjomRhNsez1OhIVofACz5Gy4harfnwvDw0CU0nG
- m6xJizefox//MKVC+Ks9n8zAVmy/tCDrbBOH9tbBDkZFgilTYa/mEd5/XeXPHoQHkmpX
- sWC/EOS/a2fSKc0pIGLMvS2+9Hiapv/sgitKVMoT066oYFQG5xkr/EW8OASzGHGCPUX/
- lZdw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=sifive.com; s=google; t=1773808815; x=1774413615; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=vuwIiXqAxMx++vD693Uzn3ZjQfSxf49VPGnUdkE+Wo8=;
- b=Ernb1LG8vTmNv7wdkGC0e614jouEpt8YUz2ZyH8iHGH0BrgXr50Jfix/lZCmM+evle
- +bIHgzqnNm3hgFwIMLeFeJELM17x1Eqln5yyu9LyBsMzdYC/dAYLq6Q7xx+jub9JGN3r
- z1nwsIgxehQBSqDgWRRcqA8xEJT8O9FcdDxTwqVYcHzpWdi8nQ+SlLlF2hxd7hJGLsU+
- VEtePXtc1k0GPpBazQb4BKxkBTiGE0+pB5HV00l70OkU9envk7IFXN5NIG7pHO8GTP77
- 80RHUopTln7h12PZeiR9XAhqLgDIN1BJ/1DsFV0rO3a1KbRavHAQVUvci+Wp0duccA+J
- ub0w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773808815; x=1774413615;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=vuwIiXqAxMx++vD693Uzn3ZjQfSxf49VPGnUdkE+Wo8=;
- b=UL0d/2E4ILDldAP8hOgksN+IdGzdL9FN6W5DgNJRn3ailmZdtK5w2R7d1LyqZSfmNb
- +cAZT4tdjLgCiQQ7H/xQ0SsZQMehgUEwcmsdGe49xh1I6a24ucH0DTqTxtEmFDDgs7xB
- n+1EOIvLoXpNxLuLPWAd2me4TcdzobPBJ9+wzYaWb+DUJlpvAIYs24nor4fepK8Uxvnl
- lS6nNJV7GNwWglLRowviBYtdzG4E7s2OtrvY9J57N3AX0kfLSPMXSV6BRwY2tXucVNjo
- rWubPOl50uN/tutgn0FkjipOB9ude03VFSGCZKjh8Y1ZcoUM5mI8r3yCmwLYfPW1eD+8
- frCw==
-X-Gm-Message-State: AOJu0Yy7ODXYz2PO7xP75TvDy65/fdIXSuUbRh/eN3UKtcysCFR1NlH0
- Gjh+ncO6Pho11Q5RBFTXOKGRaops3LbNUCJ39fg71v50E3CCFUm7QFz45c0zadSzdnrGFhANUWZ
- +ui9KMok+nMb9lXQe/CV6pJnskkS1IUUmII/A+ufbPA==
-X-Gm-Gg: ATEYQzw+HTKlwRW9kCZOaWA10vmMoBRqAb/YCXbjnuf7ulmJCpBPaMTLrZ6CC7Jx8Gy
- 9eZKLQqegCvtoBvGoObrZBS/6cAsHk20/McFGHKcuPr1kj1ZIWSUpSDTwMgWsnTu05rB/JQkqP4
- riuC/I/7VDB1/YGvOESeIAt5yowjwtaiuKv/0yBFCS1W+Pcb3TlMFDNi9ygFt1d2IEnlcZzDrFE
- CYl7JhpsoXa3owI73zUrG/79qfrHbIkfCeXICW2RpRoCWTHySXwSgC9BTn/8G3v0MTCrOsGm2f9
- fTDq75VW5w==
-X-Received: by 2002:a05:6402:42cb:b0:665:57ca:901e with SMTP id
- 4fb4d7f45d1cf-667b2ff7955mr1269890a12.15.1773808815538; Tue, 17 Mar 2026
- 21:40:15 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w2ix8-0005Pp-Az; Wed, 18 Mar 2026 00:56:18 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
+ id 1w2ix3-0004P3-F9; Wed, 18 Mar 2026 00:56:18 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773809762; bh=5QDJkDSdT5hTcB062Ake5ZdqvaVs08oV1CiKUE5BbEM=;
+ h=Subject:From:To:Cc:Date;
+ b=pau4YsWVv8eOMdiw121pMnSMuxtQHvzldbhVff370ObaIsyHZOV98iiDUedK1HW+A
+ jLjn20rTOQMkckBx94dtR2irJs5Fj5YAljtfNb2HQKtOErdMxE3GBPJ/yK/Zrk8DDg
+ 0TEArE91Zk/r2WX1d2qb+Z2a5/p45jX49niV+O8TF+f058AaJNSjWP0gJHtoWwRnc+
+ N+l2IIqHo7+IhW24Twax9Lq8/3O4X4m0Y+NMC/1KoA5DJ9FtxdcjQGiKO/1MY3gAhh
+ hBWfsaZS2WBJttOy77+3NPi4B9Kb9efd1AqmTt2foPdZekn/Ndfm2BPr/Sv4vJI5Ib
+ 2Q4pXaA8Jw60g==
+Received: from think4mjt.localdomain (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 1D41A194909;
+ Wed, 18 Mar 2026 07:56:02 +0300 (MSK)
+Received: by think4mjt.localdomain (Postfix, from userid 1000)
+ id 8332313DFF9; Wed, 18 Mar 2026 07:56:08 +0300 (MSK)
+Subject: [ANNOUNCE] QEMU 10.2.2 Stable released
+From: Michael Tokarev <mjt@tls.msk.ru>
+To: qemu-devel@nongnu.org
+Cc: qemu-stable@nongnu.org
 MIME-Version: 1.0
-References: <20260209115846.2276651-1-jim.shu@sifive.com>
- <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
-In-Reply-To: <7be3b4f7-7516-40ab-8a95-b3b4a2aea095@linaro.org>
-From: Jim Shu <jim.shu@sifive.com>
-Date: Wed, 18 Mar 2026 12:40:03 +0800
-X-Gm-Features: AaiRm51wIubBE7texOWWV6r0g_bGK-xy3Ou-gZXq-51NaL_xlR0blBfA2C6dXF8
-Message-ID: <CALw707rbMvg1mf1S_3qiqDWbZ0qjzgx4UJ9pUGmQODKWttKFyQ@mail.gmail.com>
-Subject: Re: [PATCH] exec: Add RISC-V WorldGuard WID field to MemTxAttrs
-To: Richard Henderson <richard.henderson@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
- "Michael S. Tsirkin" <mst@redhat.com>, Peter Xu <peterx@redhat.com>,
- David Hildenbrand <david@kernel.org>, 
- =?UTF-8?Q?Cl=C3=A9ment_Mathieu=2D=2DDrif?= <clement.mathieu--drif@eviden.com>, 
- Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
- Peter Maydell <peter.maydell@linaro.org>, 
- =?UTF-8?B?QWxleCBCZW5uw6ll?= <alex.bennee@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52c;
- envelope-from=jim.shu@sifive.com; helo=mail-ed1-x52c.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Message-Id: <20260318045608.8332313DFF9@think4mjt.localdomain>
+Date: Wed, 18 Mar 2026 07:56:08 +0300 (MSK)
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
+X-Spam_bar: /
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, MIME_QP_LONG_LINE=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -124,39 +65,141 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, Feb 10, 2026 at 8:25=E2=80=AFAM Richard Henderson
-<richard.henderson@linaro.org> wrote:
-...
-> Hmm.  This really overlaps the secure and space fields from arm, and poss=
-ibly some of the
-> others as well (e.g. user, requester_id, pid).
->
-> I don't really have a good suggestion for that right now, but it would be=
- nice to not keep
-> expanding the count of these sorts of fields that somehow specify the ori=
-ginator, but
-> clearly cannot overlap.
->
-> I'm reasonably sure we've had this discussion before, but nothing has com=
-e of it.
->
-> Time to paint the bikeshed again?
->
+Hi everyone,
 
-I can union the 'secure' and 'world_id' fields, as they are not used togeth=
-er.
-However, I have no idea about the 'space' fields.
+The QEMU v10.2.2 stable release is now available.
 
-I have seen CPUTLBEntryFull has the extra union to support ARM-specific mem=
-bers.
-Another idea is that also adding the extra union to MemTxAttrs to
-place the RISC-V worid_id.
-We can use this extra union to as SoC-specific signals in the bus,
-like AXI AxUSER signal.
-Do you think it is suitable?
+You can grab the tarball from our download page here:
 
+  https://www.qemu.org/download/#source
 
-Thanks,
+  https://download.qemu.org/qemu-10.2.2.tar.xz
+  https://download.qemu.org/qemu-10.2.2.tar.xz.sig (signature)
 
-Jim
+v10.2.2 is now tagged in the official qemu.git repository, and the
+stable-10.2 branch has been updated accordingly:
+
+  https://gitlab.com/qemu-project/qemu/-/commits/stable-10.2
+
+There are 55 changes since the previous v10.2.1 release.
+
+Thank you everyone who has been involved and helped with the stable series!
+
+/mjt
+
+Changelog (stable-10.2-hash master-hash Author Name: Commmit-Subject):
+
+f8ed81651e Michael Tokarev:
+ Update version for 10.2.2 release
+0103b23cb7 1b80f1009d Fiona Ebner:
+ target/i386: add compat for migrating error code
+85af4e9370 4f28b87fdd Paolo Bonzini:
+ hyperv/syndbg: check length returned by cpu_physical_memory_map()
+3e7e7cf05a a3fcbca0ef Hanna Czenczek:
+ fuse: Copy write buffer content before polling
+8b3b97dae5 2d877bc02a rail5:
+ target/loongarch: Preserve PTE permission bits in LDPTE
+477d1f3c59 db2325f794 rail5:
+ target/loongarch: Avoid recursive PNX exception on CSR_BADI fetch
+f07f64c3d8 1e3e1d51e2 Peter Maydell:
+ hw: Make qdev_get_printable_name() consistently return freeable string
+a69152d257 550391c713 Peter Maydell:
+ hw/net/npcm_gmac: Catch accesses off the end of the register array
+6f6bdf3763 6a1221614f Andreas Schwab:
+ linux-user: fix TIOCGSID ioctl
+2481744d96 c865b6bce5 Bingwu Zhang:
+ tests/tcg/multiarch/test-mmap: Check mmaps beyond reserved_va
+ed18bbbc11 e8e7d1f977 Bingwu Zhang:
+ bsd-user: Deal with mmap where start > reserved_va
+82d83d29bd f2813e13fe Bingwu Zhang:
+ linux-user: Deal with mmap where start > reserved_va
+d9dfd5f425 6595a8d5d1 Peter Maydell:
+ hw/net/xilinx_ethlite: Check for oversized TX packets
+0c5199e52b 235f9b3638 Dmitry Osipenko:
+ virtio-gpu: Ensure BHs are invoked only from main-loop thread
+a40b3f664c 961fcc0f22 Jens Axboe:
+ fdmon-io_uring: check CQ ring directly in gsource_check
+f9b1537744 2ae361ef1d Jens Axboe:
+ aio-posix: notify main loop when SQEs are queued
+8b851e5bb1 1d6610099b Hanna Czenczek:
+ block/nfs: Do not enter coroutine from CB
+ca8b13eb04 544ddbb637 Kevin Wolf:
+ block: Never drop BLOCK_IO_ERROR with action=stop for rate limiting
+43e60c88f1 d481617765 Dmitry Guryanov:
+ block/throttle-groups: fix deadlock with iolimits and muliple iothreads
+61f14858c1 0f51f9c342 Kevin Wolf:
+ mirror: Fix missed dirty bitmap writes during startup
+11589707ec 6f7b0a23a6 Antoine Damhet:
+ block/curl: fix concurrent completion handling
+86b5130fef cfda94eddb Halil Oktay (oblivionsage):
+ block/vmdk: fix OOB read in vmdk_read_extent()
+52cb65f9a6 d8e19f8042 Peter Maydell:
+ hw/net/smc91c111: Don't allow negative-length packets
+e944f36993 9545c059f7 Daniel P. Berrangé:
+ io: fix cleanup for websock I/O source data on cancellation
+f8943633a9 d39d0f3acd Daniel P. Berrangé:
+ io: fix cleanup for TLS I/O source data on cancellation
+68e031345a 163cd0ae11 Daniel P. Berrangé:
+ io: separate freeing of tasks from marking them as complete
+0deef85292 78c6b6010c Peter Maydell:
+ target/ppc/translate: Fix TCG debug assert translating CLRBWIBC
+438b752c76 1b93832f55 Bernhard Beschow:
+ target/i386/emulate/x86_decode: Actually use stream in decode_instruction_stream()
+32c1fc948e 529e5e7643 Bernhard Beschow:
+ target/i386/hvf/x86_mmu: Fix compiler warning
+17ec370a79 c86bca1671 Bernhard Beschow:
+ target/i386/emulate/x86_decode: Fix compiler warning
+7426a375bc 48c8916aec Josh Poimboeuf:
+ hw/i386/vmmouse: Fix hypercall clobbers
+f577bc677f b72d15f47c Christian Schoenebeck:
+ hw/9pfs: fix missing EOPNOTSUPP on Twstat and Trenameat for fs synth driver
+cdafefe5ae c96f6d2398 Richie Buturla:
+ hw/9pfs: fix data race in v9fs_mark_fids_unreclaim()
+b0560afef6 662fd548a0 Alex Bennée:
+ target/arm: set the correct TI bits for WFIT traps
+7e64af6463 669683cf14 Weixie Cui:
+ hw/ssi/xilinx_spips: Reset TX FIFO in reset
+dc9f0565a2 8608ed356e Kuan-Wei Chiu:
+ hw/misc/virt_ctrl: Fix incorrect trace event in read operation
+2989865251 7994203bb1 Manos Pitsidianakis:
+ virtio-snd: tighten read amount in in_cb
+a730f98a7a bcb53328aa Manos Pitsidianakis:
+ virtio-snd: fix max_size bounds check in input cb
+d84fbf241d 61679d7dcf Manos Pitsidianakis:
+ virtio-snd: handle 5.14.6.2 for PCM_INFO properly
+421123a691 34238f078a Manos Pitsidianakis:
+ virtio-snd: remove TODO comments
+f402cbe224 b2a279094c Akihiko Odaki:
+ virtio-gpu-virgl: Add virtio-gpu-virgl-hostmem-region type
+22687ae317 16786eb7bf Helge Deller:
+ hw/hppa: Add BMC on 64-bit machines only
+5fc003f542 aeb3c147fc Peter Maydell:
+ target/arm: Don't let 'sme=on' downgrade SME
+aeaff51f58 433097a224 Peter Maydell:
+ target/arm/tcg: Allow SVE RAX1 in SME2p1 streaming mode
+aa9c49d19e ee5bf0962e Peter Maydell:
+ target/arm: Fix feature check in DO_SVE2_RRX, DO_SVE2_RRX_TB
+188b8070ce 42eab40a12 Peter Maydell:
+ target/arm: Account for SME in aarch64_sve_narrow_vq() assertion
+0e311e683f c2c5beec42 Jamin Lin:
+ hw/i2c/aspeed_i2c: Fix out-of-bounds read in I2C MMIO handlers
+713e807357 e4ed74c9ae Alex Bradbury:
+ docs/about/emulation: Add documentation for hotblocks plugin arguments
+cb327d638f e777f6ab91 Alex Bradbury:
+ contrib/plugins/hotblocks: Print uint64_t with PRIu64 rather than PRId64
+8532740333 1c1e45fcd6 Alex Bradbury:
+ contrib/plugins/hotblocks: Fix off by one error in iteration of sorted blocks
+2729113a79 90fabd5dda Alex Bradbury:
+ contrib/plugins/hotblocks: Correctly free sorted counts list
+6500ee3d5a e44a26ba94 John Snow:
+ python: drop uses of pkg_resources
+641cb36c07 267d7ae99a Fiona Ebner:
+ iotests: test active mirror with unaligned, small write zeroes op
+8d2f7ef7c0 4a7b1bd18d Fiona Ebner:
+ block/mirror: check range when setting zero bitmap for sync write
+24690bf836 b0353beebb Mohamed Mediouni:
+ plugins: fix cross-build using LLVM for Windows targets
+2cfc92842a 00ebc44514 Jaehoon Kim:
+ s390x/pci: Fix endianness for zPCI BAR values.
+
 
