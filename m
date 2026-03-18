@@ -4,47 +4,47 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3AFED107760A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 18:50:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6F2991077608
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 18:50:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2vxl-0006md-OA; Wed, 18 Mar 2026 14:49:49 -0400
+	id 1w2vxp-0006oe-Tx; Wed, 18 Mar 2026 14:49:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w2vxk-0006m9-5Y; Wed, 18 Mar 2026 14:49:48 -0400
+ id 1w2vxo-0006o1-By; Wed, 18 Mar 2026 14:49:52 -0400
 Received: from mail-southcentralusazlp170130001.outbound.protection.outlook.com
  ([2a01:111:f403:c10c::1] helo=SA9PR02CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
- id 1w2vxi-0004y3-NR; Wed, 18 Mar 2026 14:49:47 -0400
+ id 1w2vxm-0004y3-Rl; Wed, 18 Mar 2026 14:49:52 -0400
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=mZkJo/XthC0XyTy1V8EakOZSrsFBmcqOfKi4Wm44MQF1eCg2QG1TaKbgp7/DGAMV8wYU7Ss7I0e+Q/oKhGh5YqycQ78FZS8AtK5kVP17wxDl8z/xw9MJvrme9WQjnnUAtURmRV/xhn5i5cNgO8uA1JU4FT58FU1+MrtOwCKGz90pLIPdu5CShCgiQdAWrl8wk+KIit2GTuQngaYeLyW+E4z4GNvI7eIBzFbiuEz9TFK87Y/mXzGbbbekYe0iyEX+9nXtJi+RSBAuzEEoVrDan5uD/c8SXok5DVEsteCtLVJ+f5eTeDGa62SXp/4FfNlJGzr5aG0wmLBUA8R03QeM6Q==
+ b=GDKj8eF6O2AWLv7VMpE/L9Ll8fuk35u7vES4RWdOAo6mrYY9wFbzcgjuvR9CZbwJQZsDtOs5Quy7xrF/H5fqXdR7gtL0M4o52k7xaJ4T6q0qqvfxmYvwly4djpOQtdzv3ksyb+dSFsBaKjBH8SjJVBmCbvTgxQbhocEyvMGJh9cYXQExhaleZzUJc+OwkhywR/V5j4XUL1PbFpOW97ZxbeWO/mG/7yTWlCoSQ7cvORIBHDBrFQH/QwBz4LX07KEYcIKwmKRnPq1JtzNn1onmuU1isBoOeUesWMsDeXeMt2yEfNKpVCyvhqyFmoRcxlHzw8G5VneWjdC60ghH1W6c5g==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=pxZqU0HrWJwpTcncjX/b6F8vQPilW4peCev9OOt7cFU=;
- b=Uyq8I5cffLhLfrMA3tTZTW+wSukZ8j77BJzeRvTkZNBr5+AFGG0b+C/X87k33PQGgEc4x0yOKqDVJpvLieTRTNmioLjIWqtJHBaIGo0o4B28OdRuHVkpv94cZLk7C2DLoh9yOMRAQIT+gsi0UfcA2KPFRR2yUuBGRpucMyBN/VeA1f+vqI2zLQ/FHUmwOgBtUAnk8M0VTpg4KGWYCjjVQP0oZKL37z3K4x6ocNlngjSrS/ST6u7f+HB5qo098he2o3jbsfnEwM384Z7WDCJlkwmqWJuCzK1orFzMGAMWuX5AW722p28B4xRT1Ef0ZaSFydfewmeWU/5f/FvGKuRGzA==
+ bh=43R6OWOqFNBC1q52lLRypkKNoHL8egkoN2T0ShcJZ2w=;
+ b=tR53Ppmk0RtHfJlNYiKtaw8CEm0nQP+s2yWuVDeQrf4ARTjUXuwpm5Q3pVo7L6RURoDp+lxkcQf/8Tz3t6dx5SGPjJdlDLGJa29T9h9YIRJces15AL6VM1kGQsMjbipTyYm4ZzReZxS+DmYxPWyr1qqyDrKyc8U42kKB0eiZ4Et2h9lpgDsH45ND2s9hmqS3W8cPZeQIudS7brPhnBCObT0dgcheAfJXEGkBgdcHQH/JJFr+2h6Cm/y2M+Ck5LZh6/m/iyHQtBEDn9u9hjG+367OJCI2mZBnhFNJ3POHA8zjSnvWXAdiUylyhmlVs+pF0eYJN5M0mnBPcgRTY+2Qeg==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
  dkim=pass header.d=nvidia.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
  s=selector2;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pxZqU0HrWJwpTcncjX/b6F8vQPilW4peCev9OOt7cFU=;
- b=hiWh3QlgubTRY3T9VPJ6v6cayxj+/PWSTshOLs7VsDqlLujE3+dYTpuIKq1F2JG8UlvAOzceOXsoF5J3602r/8l1NrZfT7so3vIzfdwm6813lZf4N/aTu9kwJ0Y8Xpidfa8y2+KopvGfHPoVFsJ2a+GnTpdl8NjspaOgnhiV6a43vOJ6K1NP2cksfJ9uvX3uMB3nOjpkBjWsFwIM7XQJ28On/IxGfX4udwpq+0a14hwfHIrtdBWlQuf8D/ZEzG5HzgK8Ih267SeDrR4kclphEriks6Q8Z92OYps2e6tdPKxiA/65o/S6riBCU8DMZlXG/mkbG/FCiahdd5+xtZFuDA==
+ bh=43R6OWOqFNBC1q52lLRypkKNoHL8egkoN2T0ShcJZ2w=;
+ b=k6REiBAP55BCX6ItLp0NbqXQBNfkSBOFq9/5FuA4SX/ynIVU1kpLqY7Kqdv8T96qQ8ohCo135ZdhsjGgDXLY3ODIgr1jZmEmIpJx1UFm6Vg680+85/8lBOrYHw0tLKVgrXhPD22XHcquCnxM5we6fQ+KAHZ31dbh7MkOZZr7t5rCSn7KhrIA3BzmDZvebvObmDp/ob6iF365ZNf1Cs2jD5N7STmhOQ4ZvGfaKSC11knmpwhZrlNJdig8mexYTvFgfoNS6nkzHoA0fnpTn4x9oOVdsUZur9vRtAniDQStrJvfzXaRvlV44l3Fsm7YaYlAGxp4zpUy38o1O0Zh8bJYzA==
 Authentication-Results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=nvidia.com;
 Received: from CY3PR12MB9555.namprd12.prod.outlook.com (2603:10b6:930:10a::14)
  by CH3PR12MB8233.namprd12.prod.outlook.com (2603:10b6:610:129::15)
  with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9745.9; Wed, 18 Mar
- 2026 18:49:39 +0000
+ 2026 18:49:42 +0000
 Received: from CY3PR12MB9555.namprd12.prod.outlook.com
  ([fe80::fdb2:266d:ee2b:8d1e]) by CY3PR12MB9555.namprd12.prod.outlook.com
  ([fe80::fdb2:266d:ee2b:8d1e%6]) with mapi id 15.20.9745.007; Wed, 18 Mar 2026
- 18:49:39 +0000
+ 18:49:42 +0000
 From: Nathan Chen <nathanc@nvidia.com>
 To: qemu-devel@nongnu.org,
 	qemu-arm@nongnu.org
@@ -58,70 +58,71 @@ Cc: Eric Auger <eric.auger@redhat.com>,
  Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
  Shameer Kolothum <skolothumtho@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
  Nicolin Chen <nicolinc@nvidia.com>, Nathan Chen <nathanc@nvidia.com>
-Subject: [PATCH v4 6/8] qdev: Add an OasMode property
-Date: Wed, 18 Mar 2026 11:49:05 -0700
-Message-ID: <20260318184907.4060030-7-nathanc@nvidia.com>
+Subject: [PATCH v4 8/8] qemu-options.hx: Document arm-smmuv3 device's accel
+ properties
+Date: Wed, 18 Mar 2026 11:49:07 -0700
+Message-ID: <20260318184907.4060030-9-nathanc@nvidia.com>
 X-Mailer: git-send-email 2.43.0
 In-Reply-To: <20260318184907.4060030-1-nathanc@nvidia.com>
 References: <20260318184907.4060030-1-nathanc@nvidia.com>
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
-X-ClientProxiedBy: BY3PR05CA0047.namprd05.prod.outlook.com
- (2603:10b6:a03:39b::22) To CY3PR12MB9555.namprd12.prod.outlook.com
+X-ClientProxiedBy: BYAPR02CA0061.namprd02.prod.outlook.com
+ (2603:10b6:a03:54::38) To CY3PR12MB9555.namprd12.prod.outlook.com
  (2603:10b6:930:10a::14)
 MIME-Version: 1.0
 X-MS-PublicTrafficType: Email
 X-MS-TrafficTypeDiagnostic: CY3PR12MB9555:EE_|CH3PR12MB8233:EE_
-X-MS-Office365-Filtering-Correlation-Id: e23daa60-38fb-4ba7-9fe5-08de851f1c05
+X-MS-Office365-Filtering-Correlation-Id: 11f06742-96f3-4ec0-fa7c-08de851f1db6
 X-MS-Exchange-SenderADCheck: 1
 X-MS-Exchange-AntiSpam-Relay: 0
 X-Microsoft-Antispam: BCL:0;
  ARA:13230040|366016|7416014|376014|1800799024|18002099003|22082099003|56012099003;
-X-Microsoft-Antispam-Message-Info: m/UliRDIvz3qDRLZruSmyCQOME3H6iWSAuZqi9D43ZPuVtNMT941j0mSWK4D5Xk2/Jyf1F6EsPfhNn+Z1+VmLwHCWr2h0GlqNcy/NUnl3Pn7PVHxNMFVSzuhss8ysSOESdczSlqV2B3EJUdX9XcE3pOOnLsfkkDN9jZ2DboG+VFm+ICAVdl95hIFeeb7uo9A23tap68YA5vRP7iWU7eHX/pjbN1a08fvqxNHpIajO8CEjXeliQxaMYg88aHL3tUvbiCIO0W7CLVUUqcaExEvRU8FV+6PsiM0BHbhyvHtYR7DXsWsDPY/RnxaImdyh6miTnoYSipvLknrbPjLzAsx1xl9hJfVot8IlPUNGKcVseb9H4EWzwebIepdqagwWgiRKWfzxpn+Z867V7JupXClofvrZ5l0J00JJ3HE3rfIGaKeyUztNL83tg2TX4h1Qil8uDO5GegTJ0oqRGMgEs9AkXPTbKV8Hv23FNGPtgzB5ynkf1hJ2y76bsKBZ25R+tJPaqpf5BcCg1wQlDb9Zw6cqjKXv1PgSMSbh0q+9YT+vUm1fBGqKx5eDdMRE7RZTpuTeRVo7pCUiEgX2i0H/IJtUf+XU9jYVRrFyXHpx9nejUcbn49PijayVxTYv77tkuQzaSfOQMcWYumtDa8doWNXl8SVYYVuhWUsrqO1Kj9EySvrV/as0ymK6xoZCdMmNCCrHeQz2DeFpRwAFIk0s8eOzhCjOU7vGMuYm1/CUgrMFBg=
+X-Microsoft-Antispam-Message-Info: Rd0VmXWmpXJmMjPMtpNfrEmpbtcMlyxKSlhSBJE7aE1FDFujzFOFvyrZBtkifeO0rGvkkAVWmsa5ge8mHkK/Dts3DTatLm18JH5p8+19akX4/m9BxVLcnRRi0ZRyNNjbX7WHQvRvIs2UXtncJFE0UisJHsyHibaLZePy9U5ZZD9FTpRSbqVogUjZGKCkvZCXvz267eewjdqwvxPx21bJmDe5qQO+JD6uSI9rB1lHtpd52J7js5CdH3lo7+0+D579IjQrbJmZlceX4XWjfy/nqFB7kVIy19BbT24cpCt0niOHxsgpSD6xNSWhVhLucfprZZ2HRI9idlbokRiCgJid2ipAV6RgV63xY6b3JsCFv5Lmdp3HE/DAEYHpnpyPaY/BhKTeDBrqZ87wFHJVspUSAM5p1Rhnj/A5VoZXTgQhQb3TNYM94c9pk1a/RRuzBePe2bCGLOz/g/F/+vnPSTn+XP/ohMo5Be8r88jvfkVKebnPKR65vvgVw6ID4WCwIfOmWmq8I4b6OLAriGg7pgnXtXobzKW+mfcVRihLzGmsRR1gP5skOaZQ1dYmk3qHCMLZrfykKXu3QXZmtAlcqsNJHzJ8C32WYC+ScMnpfP2YHJPdx4TsExp1euLH9CF04wf/35ldmHxkRvkOpWeWg4MCHasyVMeQw9N/vD3kdRqFc1u45PmFGVSRJ1jy5oQjzR0Mlx0tgODxls/KsUtdeP9zSr7oDCMpTh6iRTJTkPa1Vvg=
 X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CY3PR12MB9555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
  SFS:(13230040)(366016)(7416014)(376014)(1800799024)(18002099003)(22082099003)(56012099003);
  DIR:OUT; SFP:1101; 
 X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
-X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?aYcDhM1NlLaN328pOVg+iQ0sCWr3hz3SN0Ju5cA04LmTP1cSMwQywxIHFUkx?=
- =?us-ascii?Q?s2v6LRoVQbEP6YUhE1H3yDRCQ+4AxHTC6c069STbqmWaUdny/aYsLDlMoPgS?=
- =?us-ascii?Q?z6M1h86F/FOjNipPRa6r27cozI03LQatrDMi85gpqEywDuNNAGfl7S7IOwwQ?=
- =?us-ascii?Q?15d4E9o7SRt10a2wqOoWZPwmJUCTEXmbfnWgYkGwqQVHgs/IyAS8R4KvftB/?=
- =?us-ascii?Q?kJs4pbvS+nQin+1ugsvF3IyfZ1pDUGTMacS/2mVKqa9jsd1n4sr2CbBK5oSf?=
- =?us-ascii?Q?WHPFCANR0KtJJI4zNp4qmjWaUvtUYYRC8h+hEewT9P7AsvTrRsU+gcQt7/gW?=
- =?us-ascii?Q?NhHgvhCSEjssKnAYoAaiFqf0DfOTyVnqSRUZ87tOIYXzidbFVyofcTpJbuHD?=
- =?us-ascii?Q?sC1di3ISz+KRUcc/YTHu4QDhStARroeJ1wRfbiN+JV0vI5qXesVY24CXOqRW?=
- =?us-ascii?Q?NHvlyj1+DaaNVJ1qfm2q0U18RJMEVbvARbz3TAodS1Zn7MMPD63ws2tLtYKj?=
- =?us-ascii?Q?cWikJ4KQx7ntRFRPyiJEv86KUD71lyHLq7YxjsxgPri2WZawiYU61m9BadZH?=
- =?us-ascii?Q?F9cz+c+6vblGZ3/pzIyd2TGsv4Nlf47ktdHanH96wf9GrAyqpo8mu0ML6hOJ?=
- =?us-ascii?Q?J04yExRGp/XyM9OZaW82ntDR1tek/2ul+cDUw6As13TYbOHxTGseoDMSXRti?=
- =?us-ascii?Q?qqpBUEoXjklH7/np3Yeu0httcJoggwNUzUO1wdCupOmSCHz3R3wUwZEP8PJ2?=
- =?us-ascii?Q?zFPPm2tbKCe3f1dIMfyCVGdfxOZAvd+DQQpJ0CrAes2gSJ5UqO1ygQo82jwW?=
- =?us-ascii?Q?tHgcdYG6BO/NZKRXHuU5KsWmQNcMSNc4TLZRLcDhrr4L7UexZ5RF+xq/MqaF?=
- =?us-ascii?Q?OVJLCSUfkMhfZgaHWG+tW3BhP9sdfRZ5cme5Dp84ikdkSfb5iFzYyd0rsMxS?=
- =?us-ascii?Q?aEMIpnNGCzJvELU51AvubxsBAuQKQQxdls0T5D7h0UXkOQSzld2JFsL/7D2s?=
- =?us-ascii?Q?OnR16eNy16jn3cOp7BITaGGi3wbBri0ZfacuJr9kRp8Do3cQFht8yvHTKGwB?=
- =?us-ascii?Q?6uTo8QVD0ffGjAj2xZUafQ3nLuWVjzL7DtxLzq/UrnG8IFTZjOynzGv6Dm0m?=
- =?us-ascii?Q?PjiM/Dqkj/8Hk53qMAObymDq1AUckuzDYPUMHooNFQeIyF6GARQ/4dEN1s/8?=
- =?us-ascii?Q?aRW/bnBa0YLKWaOdLO3WKZGwFL5mhZ3ZvuN6hixO5k6cNjftvRlRXiBOtuLA?=
- =?us-ascii?Q?FVfmrPyrIh6tYF+tFjLhCxbfM0XDQ7JJ/Uz88Xrm6N9Ou8G+V/DRYIUQcBmu?=
- =?us-ascii?Q?otO97D8ae+BlVSwaZ/myWnSkyi+4R2mnMjpf7Lt5B8pWhSXxbCAhXmoo8y3W?=
- =?us-ascii?Q?kYAzrMWpWNksXeEXDBcquWRNVmXEiwnkyqQ5jxSlnqRDewNqZ0UCOwQY8Nd3?=
- =?us-ascii?Q?bbXkVp1jH7aWtF+V+3NIuGl9MTdjoSN9+7+4coY6YjZwWn93LKvYLHSwFlsa?=
- =?us-ascii?Q?rfSkwnly1DZdb6DvTXsW8p7XIHVv4YD0Qe3i9V/U9/mYQmEl4/cpK8iXczd4?=
- =?us-ascii?Q?szHzp488Jm60Kos0+y+YFOhoQRw+R9w8d2UALuJv0ujLftJWftwMyw+rHJiL?=
- =?us-ascii?Q?vbWP7jN9y1MVijw1BnuMmzofjRyxXX4bZUxTgWfDUPZoDUmmLpyemyo11gF8?=
- =?us-ascii?Q?yMmtAclc3NMthHMVv2RTstTWFslo35McCLDy824ql4KSWkrzWuZUEiPIN+BL?=
- =?us-ascii?Q?9lVQ9YBAsg=3D=3D?=
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?IMJh8OPp9CZA8rmV74C7e6LckX3fdfDNxXE/dqIuNPKJEzeDA/OeVH7GdP18?=
+ =?us-ascii?Q?iNT1Z7qwg1sHuRqnr+yJyIQ7XdwoE+cgbNeZeJVMIaXXjQ6aWZQm0GEKmMDa?=
+ =?us-ascii?Q?h45IMzcAZ6BAPQKQE2uDpu4UnVq/PjvOCMIncp1CLu0D9fNcw8tU0zc4iv/x?=
+ =?us-ascii?Q?QTMsztcHj/PHWjVnRY7Y/GDWUVTK35Nkn+5aMNLxH7PLsA2KJ+fmUArrI2+g?=
+ =?us-ascii?Q?gIjo6TCuaMbV/wIu0dXxmswJK0jx8STd5SEC22TpkeRIFP3336vJnBayYnba?=
+ =?us-ascii?Q?cXymjMleXzmnjU2PBZLeNBbR2UJsTtPjQJ746QjXP0qDhS0lQBPCNGZZLAEa?=
+ =?us-ascii?Q?Rkshd8CU8SFskYt547OzYSR3ZmI6jkF4Ducy2T1tgjgB+DBiaAIDt/iqAiL+?=
+ =?us-ascii?Q?hV9T3JqdEP14RR4VBKz+H1xH288nWiNluuZyN0Om4R46plbt/6WBwllblXmi?=
+ =?us-ascii?Q?KdHaS72pEpikiDQOjRYWBXl8x1/iJdi29sVF2x0mbPZVSi1hu1xHweX8EEP4?=
+ =?us-ascii?Q?RPhAw6bMvyfYa0qDS+MizlbAR8WEpcuz3MV6mAHsf7IXCiPigNZgVtBzsVoR?=
+ =?us-ascii?Q?DsYfug/byD9eWXPyPs3gkVcN9TcBYZgeCZa4PpgMrqni9g7+x5XprLR3x1Zd?=
+ =?us-ascii?Q?6qkCQMyKIqeT00S0J2+s1xLdBOLy/bPldYSXQ2b8vIU4LiaLtPUMQx2F+g60?=
+ =?us-ascii?Q?IMTbzGuHUmHXHdh784HwvsIK5lfUN6bYf7pOrsIKNHg3SVdkWfU7Ck2d01CH?=
+ =?us-ascii?Q?DbJxu2TqQwubcK9zWnLPJZToGTfOZna4B1tXMZjVSp53+q+MZGiZoq+cVCKP?=
+ =?us-ascii?Q?+g+gDQcXM0JrxZNNsugJ/SkMIo/ZO11KB15qsH5PPHGA0r5HxultbL/UUXPO?=
+ =?us-ascii?Q?KmtDcRGaEx/AhgXJrNJhVGmrEqslJXmL8WIOvcXUkFwjSjmREfimq6Ayho+q?=
+ =?us-ascii?Q?NcWzAM+H7EzeY+WAnbo8r4O3xNiN+OiZ8LvcFsANEhXwcmDPzquW667wSljT?=
+ =?us-ascii?Q?uNCYxQ6vnNiQKwpcmMIhdkFIQiQw1xrAfP1OhnmlJd9iIeSxleYKIrAPeYg9?=
+ =?us-ascii?Q?Vbr7cWp3h1ASymkIiVIpxSPMKVinjEIS8hpslOEK40t87YaiEdInlAN9FLLD?=
+ =?us-ascii?Q?22o3MT/tir6dDkkAa0K48GHfMEzrk44D5envhTixRrTLVSmnpgDy9cFKHBS/?=
+ =?us-ascii?Q?x/Ot7LPDf9yRzdy/oBYAqCtwDW6QyJJ8aqHF24V3GocSjKyPXmxPtFnGAD5O?=
+ =?us-ascii?Q?XOra23xY6OogKhvb6B+hpziVnHqheFKIHSfyy+BDWegwcRTqdHlBjS2yIeFe?=
+ =?us-ascii?Q?wwYZEgfjCcdFpP3aR7ZewfO3ZP6TnI90RK/NRc3Q2jyACDAPipg9DoDRtWpV?=
+ =?us-ascii?Q?mqyMp6MVVPB28DbdHskZ64xC3qOofQyyYj+Z4E9mme+WVaqDQTn9ASPZ7RR4?=
+ =?us-ascii?Q?+5K/d87PGDwCpBH6/YvIpWKgyiVJbxJAmvrZq+GQMigcsnH4NlWLvHDmVZcp?=
+ =?us-ascii?Q?CfvshLH6A/mZIYabV4F22hsu2q0aCJj2jgQyi39IpaF5a35dF7S8Ic5Ieog3?=
+ =?us-ascii?Q?8vVp0MkbSIYCtaKQi1asadiFFxY1JDW/za+Jt/XhT4J4PTrGk55NGYYxi7b/?=
+ =?us-ascii?Q?HRn/vkcI/I0cHlDiJJi7mE17ZYvesaAwCxHN7orA9PJINvuD5Q47jX6sKdku?=
+ =?us-ascii?Q?JsPhlL7/fmGabaCJBX6jrnBlqYtOYfZY6Sn7661aChgECwM5ykD6O5P4Q8Pj?=
+ =?us-ascii?Q?+j/T2zeLQw=3D=3D?=
 X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: e23daa60-38fb-4ba7-9fe5-08de851f1c05
+X-MS-Exchange-CrossTenant-Network-Message-Id: 11f06742-96f3-4ec0-fa7c-08de851f1db6
 X-MS-Exchange-CrossTenant-AuthSource: CY3PR12MB9555.namprd12.prod.outlook.com
 X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2026 18:49:39.4810 (UTC)
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 18 Mar 2026 18:49:42.3264 (UTC)
 X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
 X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
 X-MS-Exchange-CrossTenant-MailboxType: HOSTED
-X-MS-Exchange-CrossTenant-UserPrincipalName: Vi/ECcKL4EnC6c1F5j5+92nqeEsImL38oVa+aqjys7jHMyQxSjUWKlBK+sE4DkAB8Fn+fa6iqkCJ4SzjD2RU3g==
+X-MS-Exchange-CrossTenant-UserPrincipalName: 0DGwhctqLJ402UBZqHRLdZ5czeVRVuIOlvqsHOrWv1OrJkjAT9zdwOVsMo8o2gL9RzHCJxBIECrXYfLG5w/ydA==
 X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR12MB8233
 Received-SPF: permerror client-ip=2a01:111:f403:c10c::1;
  envelope-from=nathanc@nvidia.com;
@@ -150,100 +151,67 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Nathan Chen <nathanc@nvidia.com>
 
-Introduce a new enum type property allowing to set an Output Address
-Size. Values are auto, 32, 36, 40, 42, 44, 48, 52, and 56, where a
-value of N specifies an N-bit OAS.
+Document arm-smmuv3 properties for setting HW-acceleration,
+Range Invalidation, and Address Translation Services support, as
+well as setting Output Address size and Substream ID size.
 
 Reviewed-by: Eric Auger <eric.auger@redhat.com>
 Tested-by: Eric Auger <eric.auger@redhat.com>
+Reviewed-by: Shameer Kolothum <skolothumtho@nvidia.com>
 Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 ---
- hw/core/qdev-properties-system.c         | 13 +++++++++++
- include/hw/core/qdev-properties-system.h |  3 +++
- qapi/misc-arm.json                       | 28 ++++++++++++++++++++++++
- 3 files changed, 44 insertions(+)
+ qemu-options.hx | 32 +++++++++++++++++++++++++++++++-
+ 1 file changed, 31 insertions(+), 1 deletion(-)
 
-diff --git a/hw/core/qdev-properties-system.c b/hw/core/qdev-properties-system.c
-index 4aca1d4326..a805ee2e1f 100644
---- a/hw/core/qdev-properties-system.c
-+++ b/hw/core/qdev-properties-system.c
-@@ -737,6 +737,19 @@ const PropertyInfo qdev_prop_ssidsize_mode = {
-     .set_default_value = qdev_propinfo_set_default_value_enum,
- };
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 69e5a874c1..f8da35513a 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -1279,13 +1279,43 @@ SRST
+     ``aw-bits=val`` (val between 32 and 64, default depends on machine)
+         This decides the address width of the IOVA address space.
  
-+/* --- OasMode --- */
-+
-+QEMU_BUILD_BUG_ON(sizeof(OasMode) != sizeof(int));
-+
-+const PropertyInfo qdev_prop_oas_mode = {
-+    .type = "OasMode",
-+    .description = "oas mode: auto, 32, 36, 40, 42, 44, 48, 52, 56",
-+    .enum_table = &OasMode_lookup,
-+    .get = qdev_propinfo_get_enum,
-+    .set = qdev_propinfo_set_enum,
-+    .set_default_value = qdev_propinfo_set_default_value_enum,
-+};
-+
- /* --- Reserved Region --- */
+-``-device arm-smmuv3,primary-bus=id``
++``-device arm-smmuv3,primary-bus=id[,option=...]``
+     This is only supported by ``-machine virt`` (ARM).
  
- /*
-diff --git a/include/hw/core/qdev-properties-system.h b/include/hw/core/qdev-properties-system.h
-index 4708885164..2cbea16d61 100644
---- a/include/hw/core/qdev-properties-system.h
-+++ b/include/hw/core/qdev-properties-system.h
-@@ -15,6 +15,7 @@ extern const PropertyInfo qdev_prop_mig_mode;
- extern const PropertyInfo qdev_prop_granule_mode;
- extern const PropertyInfo qdev_prop_zero_page_detection;
- extern const PropertyInfo qdev_prop_ssidsize_mode;
-+extern const PropertyInfo qdev_prop_oas_mode;
- extern const PropertyInfo qdev_prop_losttickpolicy;
- extern const PropertyInfo qdev_prop_blockdev_on_error;
- extern const PropertyInfo qdev_prop_bios_chs_trans;
-@@ -64,6 +65,8 @@ extern const PropertyInfo qdev_prop_virtio_gpu_output_list;
-                        ZeroPageDetection)
- #define DEFINE_PROP_SSIDSIZE_MODE(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_ssidsize_mode, SsidSizeMode)
-+#define DEFINE_PROP_OAS_MODE(_n, _s, _f, _d) \
-+    DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_oas_mode, OasMode)
- #define DEFINE_PROP_LOSTTICKPOLICY(_n, _s, _f, _d) \
-     DEFINE_PROP_SIGNED(_n, _s, _f, _d, qdev_prop_losttickpolicy, \
-                         LostTickPolicy)
-diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
-index 76ea0a09fa..5dbb4add91 100644
---- a/qapi/misc-arm.json
-+++ b/qapi/misc-arm.json
-@@ -61,3 +61,31 @@
-   'data': [ 'auto', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-             '10', '11', '12', '13', '14', '15', '16', '17', '18',
-             '19', '20' ] } # order matters, see ssid_size_mode_auto()
+     ``primary-bus=id``
+         Accepts either the default root complex (pcie.0) or a
+         pxb-pcie based root complex.
+ 
++    ``accel=on|off`` (default: off)
++        Enables guest to leverage host SMMUv3 features for acceleration.
++        Enabling accel configures the host SMMUv3 in nested mode to support
++        vfio-pci passthrough.
 +
-+##
-+# @OasMode:
-+#
-+# SMMUv3 Output Address Size configuration mode.
-+#
-+# @auto: derive from host IOMMU capabilities
-+#
-+# @32: 32-bit output address size
-+#
-+# @36: 36-bit output address size
-+#
-+# @40: 40-bit output address size
-+#
-+# @42: 42-bit output address size
-+#
-+# @44: 44-bit output address size
-+#
-+# @48: 48-bit output address size
-+#
-+# @52: 52-bit output address size
-+#
-+# @56: 56-bit output address size
-+#
-+# Since: 11.0
-+##
-+{ 'enum': 'OasMode',
-+  'data': [ 'auto', '32', '36', '40', '42', '44', '48', '52', '56' ] }
++     The following options are available when accel=on.
++     Note: 'auto' mode is not currently supported.
++
++    ``ril=on|off`` (default: on)
++        Support for Range Invalidation, which allows the SMMUv3 driver to
++        invalidate TLB entries for a range of IOVAs at once instead of issuing
++        separate commands to invalidate each page. Must match with host SMMUv3
++        Range Invalidation support.
++
++    ``ats=on|off`` (default: off)
++        Support for Address Translation Services, which enables PCIe devices to
++        cache address translations in their local TLB and reduce latency. Host
++        SMMUv3 must support ATS in order to enable this feature for the vIOMMU.
++
++    ``oas=val`` (supported values are 44 and 48. default: 44)
++        Sets the Output Address Size in bits. The value set here must be less
++        than or equal to the host SMMUv3's supported OAS, so that the
++        intermediate physical addresses (IPA) consumed by host SMMU for stage-2
++        translation do not exceed the host's max supported IPA size.
++
++    ``ssidsize=val`` (val between 0 and 20. default: 0)
++        Sets the Substream ID size in bits. When set to a non-zero value,
++        PASID capability is advertised to the vIOMMU and accelerated use cases
++        such as Shared Virtual Addressing (SVA) are supported.
++
+ ``-device amd-iommu[,option=...]``
+     Enables emulation of an AMD-Vi I/O Memory Management Unit (IOMMU).
+     Only available with ``-machine q35``, it supports the following options:
 -- 
 2.43.0
 
