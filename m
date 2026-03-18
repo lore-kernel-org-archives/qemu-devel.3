@@ -4,152 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1B86B103E16B
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 12:18:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 04FD1103E16F
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 12:28:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2prF-00059U-AH; Wed, 18 Mar 2026 08:18:41 -0400
+	id 1w2q05-0007Om-RN; Wed, 18 Mar 2026 08:27:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2pr6-00058k-UT
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:18:33 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w2q04-0007Oc-2i
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:27:48 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w2pr2-0000hc-QB
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:18:32 -0400
+ (Exim 4.90_1) (envelope-from <pbonzini@redhat.com>)
+ id 1w2q01-0006Kb-NU
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 08:27:47 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773836302;
+ s=mimecast20190719; t=1773836863;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=1OySJbJSgKJsQ9il6G39vmwFA8l7iqFnTjBX9p53j9Q=;
- b=W499/7SxiyGGU9xPuq+yzxPkjvicxi25h1Zk57KIikbO2OwuI204ScH0BzoUwnGMyMcFd1
- mS2go5B72R9T6B1NoGYOXYOui+oG0j2XzEZNtq032jGs7pTadVaAoZ0pdDN/TrZEGEBhTZ
- d1HlZ8gOY8rF7wxuKH9jpYTBs3YrLRU=
-Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
- [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-348-3XYJQftHO9uaExodRqg5LA-1; Wed, 18 Mar 2026 08:18:19 -0400
-X-MC-Unique: 3XYJQftHO9uaExodRqg5LA-1
-X-Mimecast-MFC-AGG-ID: 3XYJQftHO9uaExodRqg5LA_1773836298
-Received: by mail-wm1-f69.google.com with SMTP id
- 5b1f17b1804b1-4853f33b7dbso59853965e9.3
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 05:18:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773836298; x=1774441098; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=1OySJbJSgKJsQ9il6G39vmwFA8l7iqFnTjBX9p53j9Q=;
- b=qSBQJMhAa/2WZWeNkDIoriZoW95KY6yr18/dTuZEJwvYVWD+7+ceBspAUNVCwoXXjr
- UXXEQbfd1Z04zTL8mMl/g4MJiPGQe+V1l6KnPwJvDpsharg2H7RsSJwfjwhx4V2nvN4v
- NFUCjvbJa/5WYlVS/ywwUy93ANMnJXFmQZdfi/CfQE14KgsWG1Em704OKvr6kHE9K4+Q
- 8VF3xT2XTLHGr0IzMIU1HfaqZZoukbeVIVJ4hx3BqFVByjVkRu7/Wb0rf7OvDJuyIZBk
- gAUFHGXVhnqGPa2qcw9dkE+pkoJX4zC3UCUmDuqMc6NuDrGoLPnz/Fvo3nzJrUuFEoNo
- 50EA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773836298; x=1774441098;
- h=content-transfer-encoding:in-reply-to:autocrypt:from
- :content-language:references:cc:to:subject:user-agent:mime-version
- :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1OySJbJSgKJsQ9il6G39vmwFA8l7iqFnTjBX9p53j9Q=;
- b=jG+JGfBTYQWOYej1OS7PVMBEu/hamemECJy/5XeVA4ZlX69RiHLWPF8NczF3fCUGjy
- ZeHgmpVUbSX4Y95+FX3zgXasBinsXfGD891/9RhhiSLRW88eayo6dN+NzUZsemref6Bi
- RD9KYrMXYdLKnLYO6CGvaQVO3eIw1OGsGNhFqgetvip5UQELOBY3iMp6d8fbIC/A84oz
- Ie2Wot2DxFE3kHVC7YIzxCCfbinG4zc5Z8ZIQ/QX1Sc0uEzCbFUqRPwZkIJlZ4YjJLRG
- B94/ouYVqNrCWjL/GyNTajAhXRHUlJzEZ4zXbSxe7WIpof8FerOG/a/hI5n69ee9zYxs
- jRDQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWMRGnrMAcOYcGqu2HM0oCYmX5wvTcXSaXqDgOpfL4UYa+1bAPXMDQL0DcCipnz40KxFWqPqmk0VEAB@nongnu.org
-X-Gm-Message-State: AOJu0Yw6+r7CYhDZi6A3xrIL5mBe16QQQJojcRWz6GuLBTG0PGCPn5il
- 7rCPrJySd6gpEFCMV3WYYOon6RaV58iS10nXqNU/88RVffWgLYf8evIJYJSBQtLU/xSdZNXpkr1
- Uyto9Rf6cdobC8cRozWaEEtOgoF5fHGucFk/o4RRxQz9vxg543BvZRoJS
-X-Gm-Gg: ATEYQzzhf6ZCi3lPt3oUkgebTArYk30dteg+zBji7Y28Np7CBu77xMYMriEM8Z1C8ed
- C4hB6rn7/4Gi05+3gXIO8qb3GBjRBJZVhSV1Lc84QjD3eiZ6Gkab/Wmat0dc0bAwVVqig63zAD2
- Ta9Jb07mWdMfv+6vCXDi7yyTKtfR9OeYeucGlLZZxxGNDY8DzZ38sMOpOJY10+zLJD3jrTNFZia
- Z9dO6UOSNAX4nUzsVxi6hSa91+kWWfMwO90aLRmMMOCbRG+/V+0V8CwnJALiWIz5gTf/QiiuN/9
- isy+KV/JvPaA9spre64Nf3FDJWlCWWXvNbpeGFsoR2G6h3K2bCSHhO+s+f3ZS/AMkWo2okyHMUG
- 2azN7JCvb3d6SvFefhSmMF1LvwgEkMDXJwSHe6IqJ2UFcY03vzD2Q282KFq4b
-X-Received: by 2002:a05:600c:1f11:b0:485:3ae8:2231 with SMTP id
- 5b1f17b1804b1-486f4460586mr51780155e9.30.1773836297698; 
- Wed, 18 Mar 2026 05:18:17 -0700 (PDT)
-X-Received: by 2002:a05:600c:1f11:b0:485:3ae8:2231 with SMTP id
- 5b1f17b1804b1-486f4460586mr51779535e9.30.1773836297218; 
- Wed, 18 Mar 2026 05:18:17 -0700 (PDT)
-Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
- ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b51892161sm7961402f8f.21.2026.03.18.05.18.16
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 05:18:16 -0700 (PDT)
-Message-ID: <af3fdb2e-7c0b-46ab-807c-4c0527f6734c@redhat.com>
-Date: Wed, 18 Mar 2026 13:18:15 +0100
+ bh=9WIiu7eYcQduEBYJbsRuuBGSKlVx8LaYIw0uxL0aDRc=;
+ b=Ul762pWzouKnZxga06Nc6EuqR9c4b5LCkBR7kRF3A72boO68WQVFjmS5Nwa7dIFgCXmmA/
+ EPplH43Cqu4AKp708S6dGt+tFRtlRuj6C6W0w/IGzbjrkZceTHLDu+Nz5Z9eN2YUancykK
+ p7Y9X9ytP9etDxSR4U3u52cK3gLIOgo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-376-7uboAS9nN7iRlllDSfDwzw-1; Wed,
+ 18 Mar 2026 08:27:40 -0400
+X-MC-Unique: 7uboAS9nN7iRlllDSfDwzw-1
+X-Mimecast-MFC-AGG-ID: 7uboAS9nN7iRlllDSfDwzw_1773836859
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id CC605195609E; Wed, 18 Mar 2026 12:27:38 +0000 (UTC)
+Received: from [10.44.34.28] (unknown [10.44.34.28])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTP
+ id 50EA51953952; Wed, 18 Mar 2026 12:27:37 +0000 (UTC)
+Message-ID: <2c5efc3d-8e36-4ca4-8593-9cf9e64c7982@redhat.com>
+Date: Wed, 18 Mar 2026 13:27:35 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
- not available
-To: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
-Cc: "Liu, Yi L" <yi.l.liu@intel.com>, Alex Williamson <alex@shazbot.org>,
- Eric Auger <eric.auger@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>
-References: <20260317225751.1325098-1-pierrick.bouvier@linaro.org>
- <20260317225751.1325098-2-pierrick.bouvier@linaro.org>
- <IA3PR11MB913683DE47A156F52C77AE7C924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
- <068a3098-4e4d-490c-9cef-ac39a7e9c29f@redhat.com>
- <IA3PR11MB91364D3734AA30AB6C474E1D924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
-Content-Language: en-US, fr
-From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
-Autocrypt: addr=clg@redhat.com; keydata=
- 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
- uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <IA3PR11MB91364D3734AA30AB6C474E1D924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
+Subject: Re: [PATCH] rust: suggest passing --locked to "cargo install"
+To: =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Manos Pitsidianakis <manos.pitsidianakis@linaro.org>
+Cc: qemu-devel@nongnu.org, Peter Maydell <peter.maydell@linaro.org>
+References: <20260318082113.1127992-1-pbonzini@redhat.com>
+ <CAAjaMXbRGLX6=dnP0mh2q5G3ZUe4H_JBmmzskiwKOf=Ddsh0Jg@mail.gmail.com>
+ <980ab0ed-d009-4e7b-a199-8edc8379e676@redhat.com>
+ <CAAjaMXaRoghMM10Km=aMeGByibyc-bBqricaUCUORb6Rxxp2yQ@mail.gmail.com>
+ <abpzqslfxriaC5uD@redhat.com>
+From: Paolo Bonzini <pbonzini@redhat.com>
+Content-Language: en-US
+Autocrypt: addr=pbonzini@redhat.com; keydata=
+ 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
+In-Reply-To: <abpzqslfxriaC5uD@redhat.com>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=pbonzini@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -174,69 +126,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/26 09:37, Duan, Zhenzhong wrote:
+On 3/18/26 10:43, Daniel P. Berrangé wrote:
+> On Wed, Mar 18, 2026 at 11:32:59AM +0200, Manos Pitsidianakis wrote:
+>>> The "cargo install bindgen-cli" command does not use QEMU's Cargo.lock,
+>>
+>> So what does `--locked` do here? As per `--help`: "--locked Assert
+>> that `Cargo.lock` will remain unchanged" What Cargo.lock does it not
+>> change?
 > 
-> 
->> -----Original Message-----
->> From: Cédric Le Goater <clg@redhat.com>
->> Subject: Re: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
->> not available
->>
->> On 3/18/26 08:36, Duan, Zhenzhong wrote:
->>>
->>>
->>>> -----Original Message-----
->>>> From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> Subject: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
->> not
->>>> available
->>>>
->>>> In case current kernel does not support /dev/iommu, qemu will probably
->>>> fail first because /sys/bus/pci/devices/*/vfio-dev/ is not present,
->>>> since QEMU opens it before /dev/iommu.
->>>>
->>>> Instead, report an error directly when initializing iommufd object, to
->>>> inform user that kernel does not support it, with a hint about missing
->>>> CONFIG_IOMMUFD.
->>>>
->>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>> ---
->>>> backends/iommufd.c | 5 +++++
->>>> 1 file changed, 5 insertions(+)
->>>>
->>>> diff --git a/backends/iommufd.c b/backends/iommufd.c
->>>> index acfab907c03..c4eb3de1307 100644
->>>> --- a/backends/iommufd.c
->>>> +++ b/backends/iommufd.c
->>>> @@ -32,6 +32,11 @@ static void iommufd_backend_init(Object *obj)
->>>> {
->>>>       IOMMUFDBackend *be = IOMMUFD_BACKEND(obj);
->>>>
->>>> +    if (!g_file_test("/dev/iommu", G_FILE_TEST_EXISTS)) {
->>>> +        error_setg(&error_fatal, "/dev/iommu does not exist"
->>>> +                                 " (is your kernel config missing CONFIG_IOMMUFD?)");
->>>
->>> If hot add an iommufd object with object_add QMP, may this kill QEMU
->> instance?
->>
->> yes.
->>
->>
->> Unfortunately, backends are Objects. So we don't have a realize
->> handler and a 'Error **' parameter :/
-> 
-> Maybe do it in iommufd_backend_complete()?
-Yep. Perfect.
+> --locked ensures that cargo honours the Cargo.lock from the bindgen.git
+> repo, instead of pulling in arbitrarily newer dependencies. The
+> fixed versions of deps in bindgen's Cargo.lock are still compatible
+> with edition2021, but the latest deps are only compatible with edition2024,
+> and we need edition2021
 
-Pierrick,
+... and that does mean that sooner or later bindgen might update to a 
+version that requires 2024 and we're out of luck.  So we could indeed 
+add "--version" too, just like Manos suggested.  (Separately because 
+this issue was breaking the build and Peter speed-runned the merging).
 
-Can you please move the test under the complete handler ?
-May be add a  #define for "/dev/iommu" while at it.
+That said, support for 22.04 is going away soon and at that point "cargo 
+install" will only be needed for the nightly job.  So it's not super 
+necessary, either.
 
-Thanks,
-
-C.
-
-
+Paolo
 
 
