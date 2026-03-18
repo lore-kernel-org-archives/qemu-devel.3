@@ -4,107 +4,128 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDAC610775F8
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:29:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D6510775F9
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:38:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2uhp-0004ir-6N; Wed, 18 Mar 2026 13:29:17 -0400
+	id 1w2upf-0007Jm-6x; Wed, 18 Mar 2026 13:37:23 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w2uhh-0004hG-4M
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:29:12 -0400
-Received: from fhigh-a7-smtp.messagingengine.com ([103.168.172.158])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w2uhe-0003lL-GY
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:29:08 -0400
-Received: from phl-compute-10.internal (phl-compute-10.internal [10.202.2.50])
- by mailfhigh.phl.internal (Postfix) with ESMTP id B5C1814001DD;
- Wed, 18 Mar 2026 13:28:58 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-10.internal (MEProxy); Wed, 18 Mar 2026 13:28:58 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
- h=cc:cc:content-transfer-encoding:content-type:content-type
- :date:date:from:from:in-reply-to:in-reply-to:message-id
- :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1773854938; x=1773941338; bh=NLxqvO6KM8hWSwlO2aSOcACX6MKJjTuC
- 4YarPxZ11nw=; b=KWZwF/+wOzJLruWHjHG0yQGGPoHa0qrP9LaLopxGgeOcLRHi
- jb4JxptktoGEdba9xRu1x8D+FaxGMTo4+08fFCIyMoUnuLSSeTRebkHwnTm2D78V
- rvZg/dqF8wWAT/FCX5Br++YVC1NcRRuyAYqgpu4soPprF79jNWFuR6y7AkcdnEdj
- 0XhSO+3JHdb5e9ZT/lMY2DWMqlx4SLuQXoIx9xDouqb1qhOSrLJMo9ekXB6rsL5k
- FaiVzlKmkStiDeTttQrAz62qlYhwuCB6MCD2yRF5c4zjstrCap/eisNX2dZvVwLD
- d+7+WuLL5Sc6G6mkVqsTCvaD56jzEn62kCYYmg==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
- messagingengine.com; h=cc:cc:content-transfer-encoding
- :content-type:content-type:date:date:feedback-id:feedback-id
- :from:from:in-reply-to:in-reply-to:message-id:mime-version
- :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773854938; x=
- 1773941338; bh=NLxqvO6KM8hWSwlO2aSOcACX6MKJjTuC4YarPxZ11nw=; b=l
- A02Xp566fAOT5QnakdA/jRIaE3f18KJ6Ltpr/+91heMJgrEG1AS5Eyg7n8wNybMt
- 1dPEe8xRtWjgxr8FNmKUcKHZisGSLUY2OeQWjH3iqw80AGRXGWklYw3H6Z4qSVbd
- CX0Ht0n0+ac+weKM0NHALp8ViB0vXOQDKTAKHhGiOgPMGRFw52wwJT0kQMf6kU30
- HTv7pAXeb4Tc0kBpsPuELbRWjELWBcPXSnvu4Ww9VFP+q5bYXovEd+hLHlw8I8C5
- 8ohLjV/km8SIty1BkEf8xaVcL3aGOrHUo30zE9Y4ZKs3eGpIbjBmAQwD7BLuzLV4
- 6PgZ06x9bept4DSW/TVgQ==
-X-ME-Sender: <xms:2eC6aeblWglNj2sDgR3ZWdMMUVTC15fB5C2ff_RkxmqGc7VTP83Wrg>
- <xme:2eC6aVHIuQFfmDHklFLEco6S_s_y_HTbBKbKQ7lxov7M1B7IuG-z3raF8SD3mdxCo
- kjFBMaUdwu9OM52oJ8mN8dwN3dkjjIWEngKgizecFJE5ZMwL7zQJaM>
-X-ME-Received: <xmr:2eC6aSxrgtfTRGLgAYQWfoOTwJ2LM0t-x84oQ1ix8q3HXGqNGh8oObzS6a-n>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdegjeefucetufdoteggodetrf
- dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
- rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
- jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
- tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
- curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
- nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepsggrlh
- grthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrggusehjrggslhhonhhs
- khhirdighiiipdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvgguhh
- grthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhhonhhgnhhurdhorhhg
- pdhrtghpthhtohepphhhihhlmhgusehlihhnrghrohdrohhrghdprhgtphhtthhopehkrh
- grgigvlhesrhgvughhrghtrdgtohhm
-X-ME-Proxy: <xmx:2eC6aXmZTsew25_JSzHyCsx3LqFtFzbVUqr6S8OhVHo0Oi2pNRJlVQ>
- <xmx:2eC6abndW0q1sEmEu5AKlbFWRXx0f0RP_BVFozxuGp2G9LUwejZnsA>
- <xmx:2eC6aZy8DZbp63V-PtBEi4CImF_WZOY6afMkZNVVpNg93muass1T2Q>
- <xmx:2eC6aQrtJXE76pDn0mQSfDgC5O9OUN36YOJsdTToKymmF_HjxvHTPA>
- <xmx:2uC6ad4cmifLpSpq3AgosxEJMFSZUCx4tEtHD9XpRcSudCHFZ7vn6K_0>
-Feedback-ID: ib26944c1:Fastmail
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 13:28:57 -0400 (EDT)
-Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 7eb9cbd8;
- Wed, 18 Mar 2026 17:28:56 +0000 (UTC)
-Mime-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Type: text/plain; charset=UTF-8
-Date: Wed, 18 Mar 2026 13:28:56 -0400
-Message-Id: <DH633G213QPR.2EMRCN626JXVS@jablonski.xyz>
-Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
- "Chad Jablonski" <chad@jablonski.xyz>,
- =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: Re: [PATCH v4 1/6] ati-vga: Fix colors when frame buffer endianness
- does not match host
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
-X-Mailer: aerc 0.21.0
-References: <cover.1773797056.git.balaton@eik.bme.hu>
- <40f0e42b1fa51bea1d9199eb0cd519a5b8da6fdd.1773797056.git.balaton@eik.bme.hu>
-In-Reply-To: <40f0e42b1fa51bea1d9199eb0cd519a5b8da6fdd.1773797056.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=103.168.172.158; envelope-from=chad@jablonski.xyz;
- helo=fhigh-a7-smtp.messagingengine.com
-X-Spam_score_int: 14
-X-Spam_score: 1.4
-X-Spam_bar: +
-X-Spam_report: (1.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
- DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FROM_SUSPICIOUS_NTLD=0.5,
- PDS_OTHER_BAD_TLD=1.999, RCVD_IN_DNSWL_LOW=-0.7,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w2upa-0007H5-CQ
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:37:18 -0400
+Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
+ id 1w2upQ-0002MO-NC
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:37:15 -0400
+Received: by mail-pj1-x102c.google.com with SMTP id
+ 98e67ed59e1d1-3590042fa8eso155636a91.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:37:07 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773855426; x=1774460226; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=zj10rYnO+npsJslo1dI9gtLqeH8twmoLY57z6+6WU8A=;
+ b=WVonlLDRTvvNiAYAna/1ESqY7W78MHuRC2YAVEujAfKVGNJWSODoo8UL0ypj68osW6
+ 7IAkxFlCQZoKUpf7w6CUMC82x+dpVdM7NUZKhZGgMlAZ67tdflmDVNPDyBQM+1qpgCFn
+ 1UQXbf3+wHE3vXCzVxxsXcoL2ulFQSWIq5MnCiP9pvKR/RqPqIFbNZ50h7+7KtehQ437
+ sQLrxzcxaqnE1+BWo/4z/whlA9u/GhIZX1s5OPc1wDIQcP3iBuvZB+kkbS1r1kJiheEN
+ xjDbQR2MxnQj87+Qfjj/RWs2uy/GGvE8bspDca9k9TBZxnlHEDbyAtn54695qr+L8ypP
+ 0X+Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773855426; x=1774460226;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
+ :to:content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=zj10rYnO+npsJslo1dI9gtLqeH8twmoLY57z6+6WU8A=;
+ b=BlZpJ7SpzZIiKTME2S0Mpl6ROyCeEbDz6r5QJUVbngoP3kBuFhs+Tj7LUxAvAyCeVq
+ nQSx6ATo+xeWtFcmd9Ld+riR7Az/gqFBNS2UHg3701PRskso4fooaRYxE8B3rFe+650b
+ c/wbGSmtKFDcfcl6TKbcZe5LN7JQ8T1yL6Wu3UKormg4TYKZej3zhc7wmfbtMKUmt4jL
+ O1exEAyiRtSor8BEoiPsEvi07xPaVYk2xPGtv5nP1EcqV5GvBPhgPTKYyYI2Gk/fsAjG
+ BgiestvvdZlUmsH/7Cme+EPDb/qu0NJ9wWPygqF7Q0mbq6COZeXMoo61xr9wMMnAGGUi
+ VKtg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCUxwz+1TL9PexEKXjoGOdEaxAzyZH1wY4xYl0zU+5Zvv0qb0kJPbJGB75SVw3CsbaMwQIU9UOGRhnnA@nongnu.org
+X-Gm-Message-State: AOJu0Ywf4EPtGZiaUFVNzeMHsd/dSliyQENVFWpNv+Qq+hCv5FSWT4rc
+ YASFgLuy8kMAUOzIT8ukTUbiidYFeiAM8pwzYf4kzXQmT7Vyh/WXjTXoz76/EcXidgc=
+X-Gm-Gg: ATEYQzwq/Awc3Y5XJfFM97OuzOA+OaEWf3WIL8tDSz8CjNlsKM/iFt/4rrxlSEfQoU2
+ ls58/k2Z8WQDDcYsW3Dp7iqDlt7SGNl+GmIs210n2VPXrOCEz09au80NDo2bGZcvCLQGZAGJ090
+ 4psKiPmJJzyBbknhOxBo9q9IlsZalyGEjCJVZ4Ze8aFDRLRFKCxe7Ofsw1eQBnDysbgeyXQlCfu
+ WwktRJMBNdyj2Q8heL7GhvESOg8G0sG/3Q5Wvoo+zgodEHoiO7Y+GGS4RMUMPVXs9J8KvTexNmS
+ yAUaujgN5hYbn7BgAYGLQM8yzI18UiHf2vWskUd2jLvAFPaIhdiTl2V1MxwmvipWrRPUx37LmrB
+ u+9NT4+36ZuxuxLLZi/wxTihh20ttEXCFPwaKLng0yt+T+KHOVu1WFm4NVnBtqkKiv5GsQzZ0Tt
+ FKpHRSgU/AQ95bCHaDB5THhgIuo9FsWWp+T6tnFsQ3otWKjlwTja6a6Yv5N8oobYugl75g
+X-Received: by 2002:a17:90b:3b89:b0:353:356c:6821 with SMTP id
+ 98e67ed59e1d1-35bb9e9cfadmr3704088a91.8.1773855426151; 
+ Wed, 18 Mar 2026 10:37:06 -0700 (PDT)
+Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
+ by smtp.gmail.com with ESMTPSA id
+ 98e67ed59e1d1-35bc62f8e6bsm176419a91.10.2026.03.18.10.37.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Mar 2026 10:37:05 -0700 (PDT)
+Message-ID: <de24b377-1c7f-426d-b31d-16b1879ad813@linaro.org>
+Date: Wed, 18 Mar 2026 10:37:04 -0700
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v4 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+Content-Language: en-US
+To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org
+References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
+ <20260317194241.869568-4-pierrick.bouvier@linaro.org>
+ <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
+From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
+ 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
+ ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
+In-Reply-To: <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -120,20 +141,46 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> =20
-> +static uint32_t make_filler(int bpp, uint32_t color)
-> +{
-> +    if (bpp < 24) {
-> +        color |=3D color << 16;
-> +        if (bpp < 15) {
-> +            color |=3D color << 8;
-> +        }
-> +    }
-> +    return color;
-> +}
-> +
+On 3/18/26 1:11 AM, Cédric Le Goater wrote:
+> On 3/17/26 20:42, Pierrick Bouvier wrote:
+>> Add stubs for needed functions.
+>>
+>> As well, we need to add pixman to qemuutil library dependencies since
+>> pixman is transitively included from pci.h header, which is needed to be
+>> able to include prototypes for stubs we declared.
+>> In file included from include/ui/console.h:4,
+>>                    from ../hw/vfio/vfio-display.h:12,
+>>                    from ../hw/vfio/pci.h:25,
+>>                    from ../hw/vfio/igd-stubs.c:9:
+>> include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or directory
+>>      10 | #include <pixman.h>
+>>         |          ^~~~~~~~~~
+>>
+>> On OpenBSD, opengl headers are not available in default include path,
+>> and thus we need to add opengl to list of qemuutil dependencies.
+>> In file included from /home/root/qemu/include/ui/console.h:9:
+>> /home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h' file not found
+>>
+>> Finally, vfio_pci_hot_reset_info must be forwarded declared on non linux
+>> platforms:
+>> In file included from ../hw/vfio/igd-stubs.c:9:
+>> ../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info' declared inside parameter list will not be visible outside of this definition or declaration [-Werror]
+>>     265 |                                     struct vfio_pci_hot_reset_info **info_p);
+>>         |
+>>
+>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> 
+> Duplicated Signed-off-by. I can fix when applying.
+>
 
-Does this assume that the upper bits of color are zeroed when bpp < 24? Is =
-that
-a safe assumption or could those bits be garbage?
+Oops, that's a rebase mistake. thanks!
+
+> Thanks,
+> 
+> C.
+>
 
