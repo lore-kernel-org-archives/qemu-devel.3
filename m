@@ -4,94 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DD7A010854DE
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:47:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 379BF10854DF
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2nUM-0005lS-Tc; Wed, 18 Mar 2026 05:46:55 -0400
+	id 1w2nWf-0006Eu-S8; Wed, 18 Mar 2026 05:49:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nUH-0005l1-GJ
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:46:49 -0400
-Received: from mail-wm1-x330.google.com ([2a00:1450:4864:20::330])
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w2nWd-0006Ej-QM
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:49:16 -0400
+Received: from mail-lj1-x22a.google.com ([2a00:1450:4864:20::22a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nUF-0007i6-G9
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:46:49 -0400
-Received: by mail-wm1-x330.google.com with SMTP id
- 5b1f17b1804b1-4853f2826f7so68779455e9.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 02:46:47 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
+ id 1w2nWc-0007sn-0s
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:49:15 -0400
+Received: by mail-lj1-x22a.google.com with SMTP id
+ 38308e7fff4ca-38a4118c4f7so71301931fa.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 02:49:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773827351; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Up7zz8oQuIuPRdC6eoMrZsGbEAdRjf7yoKxBQEFc/u7xdDjXWo9w0neyDUS5I2Dk/c
+ CKXGruXKa7ZipOqjIwo6Caiu6QOcEM9t30jhPT635qwUVxaXNjO9X+OZ0Yj6uYXnCnQM
+ pl0k8ziISLeMj/R88a9IWPiG5RxFJn/yO8GmWb9JgEiv23P8wo/1IzlLDqUJ9VLF0QG6
+ qh2GwOthu0sPHgpBt/gDnJUXreWYdW0qcfsxOnHs/+fDJ8ti2e/T+CvXWy0n3IWhrmx6
+ KccTNUKbCWFmlQ0fyoMrrFbJAW17dJgOSt1h1Oaj7AcJXtMxRTg8F6ud57G9ycjmGoZu
+ a8Xg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=I0wPu/lEJmcvlbKKM5OHBGJe3tIJSA8ZXnt1tdIG+UY=;
+ fh=D9TiOsAcOSpRlHrkA38ELZyIVSvZmg48LLzTtJLYv+0=;
+ b=CBmHjz7k9obFEVjRzrVNH6MjyxQo4Pwmwo3bRVyyYl8f9o6JAycD+YwwlQjMcuRj8N
+ finWb9tJwVW7Gh9t+8dZnZryp9p0nwhZUhNrSToypzV9AeJBXdi8HrhaW0RSy5ELHmCi
+ 5BCoNN4mq19L7N8BbmdGnH6Xyp/54kCakN6tdw1CNj+lj4r5BqB/fg1sF0YWFL4XsckN
+ /bsf0/OKoW1PVlxR4Giywzc/7UFD3lQ/QOCN+xs8vNkxu+TxHTjqFFxxHFH75wOQbeMO
+ MZ+g3mJTjRWgARMUGLhlerI9vw8ILFKQ+2vr0AB5jaHHJNYtb6vfkWAEqwMeYdhEITHe
+ upOA==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773827205; x=1774432005; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=fdyOOLf5i8Dd0YGruaC4rY66y3fKstXBEGkq6ENOaj0=;
- b=aAcWGtgnv6scg080ZlpYBelPJsxn0YmpeZaNBkpQk0olyq5LpcMfMckF5Y2PGUxP+b
- yA9Mi8jtHTDmJQZdo8UoTWxPpOok3SlY5KEv9locls3utBV/qL4//HNhh5FKQbhOREdA
- 8PeFZHPD7qQRTa6Vse136OTaX0QBgJ+1YCCGdZnpE2+2znWoqXMWiGVs7wQr4dXAMnx3
- VWN+3XjOOSiATpxCvoPxHYyeqT4/wNMf7mcoPF6Ab0SIYXJ+e8wiOMOkSinSGrifNksh
- TOAuP+k6NAb3GwM3JsqOtFaftaRI7zUra0MTnIUS+NzyHDwLiB1gJaKaTJVQ1H5awjOV
- BVDw==
+ d=mihalicyn.com; s=mihalicyn; t=1773827351; x=1774432151; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I0wPu/lEJmcvlbKKM5OHBGJe3tIJSA8ZXnt1tdIG+UY=;
+ b=ZoMC8PGvJQhA3nWdow2VbiXtlBXhjBmigCQsLPFW38WQp8OaRPEPHlxJaUOpzeCF+Y
+ i3Ugn5xevYowmXC1nvlOjxHH0kISB/bQYwyYEJZPQoLh4vSoGRTyKljlGcUHMBz1w5Gd
+ WS4ahd6NKAO+ChDZOfupzV2F8OAkZMQ1xrbds=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773827205; x=1774432005;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=fdyOOLf5i8Dd0YGruaC4rY66y3fKstXBEGkq6ENOaj0=;
- b=DEQycp0Ak6vJRk1kUJYx9c8eu1y2VVYkkViWazB7FYRflXuj4xXotXkVsMs0lLXONM
- oHm6xQJmSyJ4dqYe1DbHS5c+SnuXex3bdiOb6BZr9kvPH7Y8p/cW7IKkgAbZfwuBBFzQ
- ZCOBhLsr9fSyzslurY12B8zr/OF1OmLsUsI8xyeBG40qRmL1TuTo3oHpPlJeqCAmUnWZ
- y+JLKz3SmwvMJ/3DHDJBXJc+9oogq24HSx4QRVKIm42qsVKpbQKfTonQZezDMNk6kb5E
- Phay8ZeQvMswcLoCq9Nu49cqv4bWwYAyCxtoCy+6A38T0UazOyNXefqmFtrkCgoHfSCx
- 92Xg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUYR0Actgj2h6EOi5gkmJLgBRLdP+lYD2hmzaB1mXirbbd6e1OHuOWq5ZbCvpkIUPQPN9jo51pzG/07@nongnu.org
-X-Gm-Message-State: AOJu0Yzf2j6ZKplwnWT4x4a+UyILN/FzKhS5vgpUuQQJye/sKwkIPYoX
- WG9ZKef3UONG5QutoqaCG9R3f33NE0lpQbgimsdCCACzJ6iLR8keqxqa5UbTjF7BS3U=
-X-Gm-Gg: ATEYQzxKdS5dYjDmDWDUfNqVHDqdZBL7gwOSab5qRz63wCAp3m2SioxEb6LOxpzUpsv
- gpnS5AUzW+IZkdZ4GeGBNpfip/9IO3Gr2KW90/ZqWJ3pog93OaLlgsrjm1kKTTasozViGRInJuS
- twl+ExEq2k5v7AKggATqGgCquGP6JapKQwk07jOeJvMLs0qTDdZgmWXkEjaAhPegMNjXYPHi9RR
- NWv3iuTVw30efq5CA5TDJyHFn64NlpMbMeYjTnSaq+JLn0xcnXHBDR+JljdIag2xv0z9lrMYHLp
- l2YVWs87jPVxGeVgG5efhEWJ6h8/z15Xdq3dEf6Fn5lO0eBi6PSiUBNC2uFh4bQ3BHPhr/5JzoX
- CcT1hZ+5iS27AS4L6OjB6vvx2pXnp+qNSLNYWKqOWkcC9DO1u3qOaGA4gBihjh6SGV6osQu1Eep
- LkH82zsfMoY/++40MjWGypU7h1BQ4WhzawC6JkvF1xTInwyW0kxWCn5Bxe0CCtH2S+LM5FHwdSa
- LdS
-X-Received: by 2002:a05:600c:698c:b0:485:3ca4:4ef4 with SMTP id
- 5b1f17b1804b1-486f4437560mr42510605e9.9.1773827205345; 
- Wed, 18 Mar 2026 02:46:45 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f4b810bcsm15040595e9.15.2026.03.18.02.46.44
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 02:46:44 -0700 (PDT)
-Message-ID: <b57f120e-dc8e-4d58-861a-01c2112b7d8a@linaro.org>
-Date: Wed, 18 Mar 2026 10:46:43 +0100
+ d=1e100.net; s=20251104; t=1773827351; x=1774432151;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=I0wPu/lEJmcvlbKKM5OHBGJe3tIJSA8ZXnt1tdIG+UY=;
+ b=EH5YnzwogxfLZMXnDQsOswWS0H/h9A6MCcHZYubcN4D0gdVKsCYoGIW3lkzkwopv/7
+ Ush03359NEDO3kY/pk4f6rxhZLp/SSOnmxoWHTQXUOXMmbkhqlNMf/CRxgn+dC/qSAZr
+ iCnyms7n1s4j2+9gq5c9ycbVP7Iy/EvgcNy8ONS3ft++0gvRl0i0cyIH016eTtCBXUPP
+ RaRpswp0Jw3nHBp14hnwO5lr5ABdZlyqEWofHrMa7povaRgxhiwJ09tffsmlBs/0YyCY
+ NQjB6n9X5Pz20QDznOMWLSjeXDU2faCPo9/+CEJfJVz86G2uhBbf4l+4YTiFLZdYadng
+ ShWg==
+X-Gm-Message-State: AOJu0YwCZN8WfsBc6QfgO7666TtHE/YzR1C0RE1rBw8Kg5j9/k4xAZZ1
+ QgdoMqkvyGHV5f2CFuNRCCSbrc3VPQwHF5oyTReI09wleFcVkml2mJeqPDoEf7DtBRe00/DUEaG
+ V1NzYfp6E+5P7SniSusfcBqvKhf7MyCMs8b0wKiVRXCLNeDdTpq5rFEmm9A==
+X-Gm-Gg: ATEYQzyJHNi0/YFjsI+u9i13s0IDEFYaseu1HzelLR5jBWIC2oRC2S8ZVPd4sDc72uc
+ D38O+tF8mdR0vrU3YZ8Fi1AL6MlBNJVnAT967m95RjKiWhACdkBMAbv5dLqyQa7DrkqutcaOV/M
+ QS+JwP1Oy5XPW5OUs5aLQzGcTZDm7fOrULe/dBfufvzVCNdZVeR5PBzFFbHZg7/1BwmlX6t1BaU
+ jeaFV8+/kRN5pN8DToDaPgb9nMcJPRnF9WrDQy6Ba9B3Huq4FEvv+U5eb63PCOcIIQ9tLoevRv2
+ fxZGAcM1He/dd6aVoDE2ev6Ypl9P4EkIwBKkEpHkos69ilWTOg==
+X-Received: by 2002:a05:651c:3248:10b0:38a:3dcb:927 with SMTP id
+ 38308e7fff4ca-38bd59b94a7mr8874081fa.35.1773827350532; Wed, 18 Mar 2026
+ 02:49:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
-Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
- <20260317194241.869568-4-pierrick.bouvier@linaro.org>
- <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::330;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x330.google.com
+References: <20260317232332.15209-1-peterx@redhat.com>
+ <20260317232332.15209-9-peterx@redhat.com>
+In-Reply-To: <20260317232332.15209-9-peterx@redhat.com>
+From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
+Date: Wed, 18 Mar 2026 10:48:59 +0100
+X-Gm-Features: AaiRm52AXyt-V2hOlbju6LTY94ezW_6rtskwzWd6LHT3rGuExOqsPWppYQyT1mg
+Message-ID: <CAJqdLroCO105YVCdXnTv9ndmU1-UYfwuKmK6R0WkGO+cPs4suQ@mail.gmail.com>
+Subject: Re: [PATCH RFC 08/10] vmstate: Implement load of ptr marker in
+ vmstate core
+To: Peter Xu <peterx@redhat.com>
+Cc: qemu-devel@nongnu.org, Juraj Marcin <jmarcin@redhat.com>, 
+ Fabiano Rosas <farosas@suse.de>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::22a;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lj1-x22a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -107,179 +115,132 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18/3/26 09:11, Cédric Le Goater wrote:
-> On 3/17/26 20:42, Pierrick Bouvier wrote:
->> Add stubs for needed functions.
->>
+Am Mi., 18. M=C3=A4rz 2026 um 00:23 Uhr schrieb Peter Xu <peterx@redhat.com=
+>:
+>
+> The loader side of ptr marker is pretty straightforward, instead of playi=
+ng
+> the inner_field trick, just do the load manually assuming the marker layo=
+ut
+> is a stable ABI (which it is true already).
+>
+> This will remove some logic while loading VMSD, and hopefully it makes it
+> slightly easier to read.  Unfortunately, we still need to keep the sender
+> side because of the JSON blob we're maintaining..
+>
+> This paves way for future processing of non-NULL markers as well.
+>
+> Signed-off-by: Peter Xu <peterx@redhat.com>
 
---->
+Reviewed-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 
->> As well, we need to add pixman to qemuutil library dependencies since
->> pixman is transitively included from pci.h header, which is needed to be
->> able to include prototypes for stubs we declared.
->> In file included from include/ui/console.h:4,
->>                   from ../hw/vfio/vfio-display.h:12,
->>                   from ../hw/vfio/pci.h:25,
->>                   from ../hw/vfio/igd-stubs.c:9:
->> include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or 
->> directory
->>     10 | #include <pixman.h>
->>        |          ^~~~~~~~~~
->>
->> On OpenBSD, opengl headers are not available in default include path,
->> and thus we need to add opengl to list of qemuutil dependencies.
->> In file included from /home/root/qemu/include/ui/console.h:9:
->> /home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h' 
->> file not found
->>
->> Finally, 
-
-<---
-
->> vfio_pci_hot_reset_info must be forwarded declared on non linux
->> platforms:
->> In file included from ../hw/vfio/igd-stubs.c:9:
->> ../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info' 
->> declared inside parameter list will not be visible outside of this 
->> definition or declaration [-Werror]
->>    265 |                                     struct 
->> vfio_pci_hot_reset_info **info_p);
->>        |
->>
->> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-> 
-> Duplicated Signed-off-by. I can fix when applying.
-
-Actually you can also cut description marked betwwen --->
-and <--- because already mentioned in future commit 988499515da:
-https://lore.kernel.org/qemu-devel/20260317190250.70506-3-philmd@linaro.org/
-which removes [*] below (should disappear on rebase).
-
-(Sorry for that hiccups, I was expecting Pierrick series to
-be posted after my PR was merged).
-
-Regards,
-
-Phil.
-
-> 
-> Thanks,
-> 
-> C.
-> 
->> ---
->>   meson.build          |  2 +-
->>   hw/vfio/pci.h        |  2 ++
->>   hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
->>   hw/vfio/pci-quirks.c |  5 -----
->>   hw/vfio/meson.build  |  1 +
->>   5 files changed, 24 insertions(+), 6 deletions(-)
->>   create mode 100644 hw/vfio/igd-stubs.c
->>
->> diff --git a/meson.build b/meson.build
->> index b2154bb9287..ab726ea1152 100644
->> --- a/meson.build
->> +++ b/meson.build
->> @@ -3781,7 +3781,7 @@ util_ss = util_ss.apply({})
->>   libqemuutil = static_library('qemuutil',
->>                                build_by_default: false,
->>                                sources: util_ss.sources() + 
->> stub_ss.sources() + genh,
->> -                             dependencies: [util_ss.dependencies(), 
->> libm, threads, glib, socket, malloc, rt])
->> +                             dependencies: [util_ss.dependencies(), 
->> libm, threads, glib, socket, malloc, rt, pixman, opengl])
-
-[*]
-
->>   qemuutil = declare_dependency(link_with: libqemuutil,
->>                                 sources: genh + version_res,
->>                                 dependencies: [event_loop_base])
->> diff --git a/hw/vfio/pci.h b/hw/vfio/pci.h
->> index d6495d7f297..c3a1f53d350 100644
->> --- a/hw/vfio/pci.h
->> +++ b/hw/vfio/pci.h
->> @@ -258,6 +258,8 @@ bool vfio_probe_igd_config_quirk(VFIOPCIDevice 
->> *vdev, Error **errp);
->>   extern const PropertyInfo qdev_prop_nv_gpudirect_clique;
->> +struct vfio_pci_hot_reset_info;
->> +
->>   void vfio_pci_pre_reset(VFIOPCIDevice *vdev);
->>   void vfio_pci_post_reset(VFIOPCIDevice *vdev);
->>   bool vfio_pci_host_match(PCIHostDeviceAddress *addr, const char *name);
->> diff --git a/hw/vfio/igd-stubs.c b/hw/vfio/igd-stubs.c
->> new file mode 100644
->> index 00000000000..f7687d90912
->> --- /dev/null
->> +++ b/hw/vfio/igd-stubs.c
->> @@ -0,0 +1,20 @@
->> +/*
->> + * IGD device quirks stubs
->> + *
->> + * SPDX-License-Identifier: GPL-2.0-or-later
->> + */
->> +
->> +#include "qemu/osdep.h"
->> +#include "qapi/qmp/qerror.h"
->> +#include "pci.h"
->> +#include "pci-quirks.h"
->> +
->> +void vfio_probe_igd_bar0_quirk(VFIOPCIDevice *vdev, int nr)
->> +{
->> +    return;
->> +}
->> +
->> +bool vfio_probe_igd_config_quirk(VFIOPCIDevice *vdev, Error **errp)
->> +{
->> +    return true;
->> +}
->> diff --git a/hw/vfio/pci-quirks.c b/hw/vfio/pci-quirks.c
->> index 7b907b9360d..ab864048943 100644
->> --- a/hw/vfio/pci-quirks.c
->> +++ b/hw/vfio/pci-quirks.c
->> @@ -11,7 +11,6 @@
->>    */
->>   #include "qemu/osdep.h"
->> -#include CONFIG_DEVICES
->>   #include "exec/memop.h"
->>   #include "qemu/units.h"
->>   #include "qemu/log.h"
->> @@ -1128,11 +1127,9 @@ static void 
->> vfio_probe_rtl8168_bar2_quirk(VFIOPCIDevice *vdev, int nr)
->>    */
->>   bool vfio_config_quirk_setup(VFIOPCIDevice *vdev, Error **errp)
->>   {
->> -#ifdef CONFIG_VFIO_IGD
->>       if (!vfio_probe_igd_config_quirk(vdev, errp)) {
->>           return false;
->>       }
->> -#endif
->>       return true;
->>   }
->> @@ -1179,9 +1176,7 @@ void vfio_bar_quirk_setup(VFIOPCIDevice *vdev, 
->> int nr)
->>       vfio_probe_nvidia_bar5_quirk(vdev, nr);
->>       vfio_probe_nvidia_bar0_quirk(vdev, nr);
->>       vfio_probe_rtl8168_bar2_quirk(vdev, nr);
->> -#ifdef CONFIG_VFIO_IGD
->>       vfio_probe_igd_bar0_quirk(vdev, nr);
->> -#endif
->>   }
->>   void vfio_bar_quirk_exit(VFIOPCIDevice *vdev, int nr)
->> diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
->> index f2a7728d3d0..6c00a7f51bb 100644
->> --- a/hw/vfio/meson.build
->> +++ b/hw/vfio/meson.build
->> @@ -17,6 +17,7 @@ vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
->>   vfio_ss.add(when: 'CONFIG_VFIO_CCW', if_true: files('ccw.c'))
->>   vfio_ss.add(when: 'CONFIG_VFIO_AP', if_true: files('ap.c'))
->>   vfio_ss.add(when: 'CONFIG_VFIO_IGD', if_true: files('igd.c'))
->> +stub_ss.add(files('igd-stubs.c'))
->>   specific_ss.add_all(when: 'CONFIG_VFIO', if_true: vfio_ss)
-> 
-
+> ---
+>  migration/vmstate-types.c | 12 ++++--------
+>  migration/vmstate.c       | 40 ++++++++++++++++++++++++---------------
+>  2 files changed, 29 insertions(+), 23 deletions(-)
+>
+> diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> index b31689fc3c..ae465c5c2c 100644
+> --- a/migration/vmstate-types.c
+> +++ b/migration/vmstate-types.c
+> @@ -363,14 +363,10 @@ static bool load_ptr_marker(QEMUFile *f, void *pv, =
+size_t size,
+>                              const VMStateField *field, Error **errp)
+>
+>  {
+> -    int byte =3D qemu_get_byte(f);
+> -
+> -    if (byte =3D=3D VMS_MARKER_PTR_NULL || byte =3D=3D VMS_MARKER_PTR_VA=
+LID) {
+> -        /* TODO: process PTR_VALID case */
+> -        return true;
+> -    }
+> -
+> -    error_setg(errp, "%s: unexpected ptr marker: %d", __func__, byte);
+> +    /*
+> +     * Load is done in vmstate core, see vmstate_ptr_marker_load().
+> +     */
+> +    g_assert_not_reached();
+>      return false;
+>  }
+>
+> diff --git a/migration/vmstate.c b/migration/vmstate.c
+> index a3a5f25946..d65fc84dfa 100644
+> --- a/migration/vmstate.c
+> +++ b/migration/vmstate.c
+> @@ -142,6 +142,21 @@ static void vmstate_handle_alloc(void *ptr, const VM=
+StateField *field,
+>      }
+>  }
+>
+> +static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
+> +                                    Error **errp)
+> +{
+> +    int byte =3D qemu_get_byte(f);
+> +
+> +    if (byte =3D=3D VMS_MARKER_PTR_NULL) {
+> +        /* When it's a null ptr marker, do not continue the load */
+> +        *load_field =3D false;
+> +        return true;
+> +    }
+> +
+> +    error_setg(errp, "Unexpected ptr marker: %d", byte);
+> +    return false;
+> +}
+> +
+>  static bool vmstate_pre_load(const VMStateDescription *vmsd, void *opaqu=
+e,
+>                               Error **errp)
+>  {
+> @@ -264,30 +279,25 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDe=
+scription *vmsd,
+>              }
+>
+>              for (i =3D 0; i < n_elems; i++) {
+> -                bool ok;
+> +                /* If we will process the load of field? */
+> +                bool load_field =3D true;
+> +                bool ok =3D true;
+>                  void *curr_elem =3D first_elem + size * i;
+> -                const VMStateField *inner_field;
+>
+>                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+>                      curr_elem =3D *(void **)curr_elem;
+>                  }
+>
+>                  if (!curr_elem && size) {
+> -                    /*
+> -                     * If null pointer found (which should only happen i=
+n
+> -                     * an array of pointers), use null placeholder and d=
+o
+> -                     * not follow.
+> -                     */
+> -                    inner_field =3D vmsd_create_ptr_marker_field(field);
+> -                } else {
+> -                    inner_field =3D field;
+> +                    /* Read the marker instead of VMSD itself */
+> +                    if (!vmstate_ptr_marker_load(f, &load_field, errp)) =
+{
+> +                        trace_vmstate_load_field_error(field->name, -EIN=
+VAL);
+> +                        return false;
+> +                    }
+>                  }
+>
+> -                ok =3D vmstate_load_field(f, curr_elem, size, inner_fiel=
+d, errp);
+> -
+> -                /* If we used a fake temp field.. free it now */
+> -                if (inner_field !=3D field) {
+> -                    g_clear_pointer((gpointer *)&inner_field, g_free);
+> +                if (load_field) {
+> +                    ok =3D vmstate_load_field(f, curr_elem, size, field,=
+ errp);
+>                  }
+>
+>                  if (ok) {
+> --
+> 2.50.1
+>
 
