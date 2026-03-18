@@ -4,95 +4,57 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152B0107760C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 19:46:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B71B107760E
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 19:51:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2woa-0005wG-4R; Wed, 18 Mar 2026 15:44:24 -0400
+	id 1w2wv2-0002D5-Qy; Wed, 18 Mar 2026 15:51:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <luisccunha8@gmail.com>)
- id 1w2w1e-0002dm-JA
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 14:53:50 -0400
-Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <luisccunha8@gmail.com>)
- id 1w2w1d-0006cx-1p
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 14:53:50 -0400
-Received: by mail-wm1-x32e.google.com with SMTP id
- 5b1f17b1804b1-4853c1ca73aso1183725e9.2
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 11:53:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773860027; x=1774464827; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=XxLT5THnGV2VliLFwB1i1UVfc5yvR4zYfU/4uELoqVA=;
- b=K3e7HEF7mDQy5evcNwMjrv6+8V/ebKPryk+D5yaqSv+LoIik/xFwcUxAn5iEdGb6z/
- onv9Soq8zf3szjif1fXy+Ecea0roVkHAkYW8yRPKOIqARmPApr6FUyZvDb9Jpdp91VoF
- HGvGhw/tfvuxRFtIOHnqbWWfSHcgjHXvQ0vilfj77jOxlOtV6U+vxajcrxE/7GzEvepu
- bFaMWq5KfPI9GeW5QlHw33L7YGuI0sAx/CQFYv+Lv1TqrQ6ABr3uUkLeFpEhc9/k5g3+
- tDb2pLW8RtdkUfEhL9HbCjpjccJAtldU933GeerpzkR0Xht+1D88HnyLqBV5bux+wAKM
- gjXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773860027; x=1774464827;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=XxLT5THnGV2VliLFwB1i1UVfc5yvR4zYfU/4uELoqVA=;
- b=NXu2wWcWgMtlEEDqX1w95NFBGrD5WK4m6x91LBCOA8xDnqA0FayxuLS7DRYb+Ed39+
- fNy73fdKpM5C76BVNLsvSo1ehtrDtjroPXi/4vNOm3SMdbZ8fbQ8RiSrRlI6eLNmFjFw
- tABmEbX3yh6nOOpBEXtpjMAmkMLc/97n6/g4MXADXHsS74GMZrxTdVctvbkdW5Upw+kH
- e/OQd+B9nOlD6Q+DlX5BeVsBPLVgf4J7p6lxL814wmeJijcMVmkfJ0qtTSobG9TQ3bsj
- hoYgf1x0/7R95SaDg4G1MenHqC0hlf6KSlN4PlaNmNk+9U+IX0t4cnXcmCqLA6f8oEQh
- 0N7w==
-X-Gm-Message-State: AOJu0Yz5IJ3iJTOotYpNy8yIdkD/A2k0Hc981Q8tm4dAN4h2yZao2Rcs
- cB8no1E3l6mrhYGWHsqQ1GKpx7v8C/Bdlhw5+/I5chG3xhc3gh4pzVw1163gf5CGVdo=
-X-Gm-Gg: ATEYQzwkLXxvL5WmNUn8T9KtfL1r4FqQXE2nR9HKmAFLJQBr1zubKf2b+fQO29z+RUT
- O6V64FCEgAfsaP/mbV9sqs7d8UuJ3uRJ7xgAWdQDuoc5Nr3HIqlKPkAlX/FXvfNlbm2caOPiIh3
- Q4hnqYhzhz6trQOjjzHcxQVUblTBiLSq7Fhq9FN9Pq/o34kcFcrdtmnpLyO4LliwfnspeLqEkD4
- C7az2yCIWKPmHdwd/U1ZLBEDI/S2DnNxnV3bQl3kr3A4Mwpo9QgK+9KaIbheNw5NMNZiG3lL6bU
- 4DJpK6MM0xULB9M3GPNRwWrbOvnuh728vjrHFfv8ZJvPktrRQ7wI+1p7p7tNdgGEPsW4B1vjUdh
- TP4FRm4kqHcGs4SBL/5SR0TN+0W9wKjPbeUxXeL71Ezw32rIFieXhawaynu/TeTNt/oAWJNDWdx
- x21Md+lnLs3i3uYqsF6Orhr4zvP/MwDDmtF+uqYjETfvGcSC8GolH5YNS0I2nbWMFF401x0buKz
- M38raYOLQ1jtrHenWyPH/s9qtP9Y3OdHARD5go=
-X-Received: by 2002:a05:600c:4fc6:b0:480:690e:f14a with SMTP id
- 5b1f17b1804b1-486f4460743mr71345165e9.14.1773860026956; 
- Wed, 18 Mar 2026 11:53:46 -0700 (PDT)
-Received: from luis-IdeaPad-Flex-5-14ALC05.. ([148.69.202.102])
- by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f8b0bc58sm16135905e9.3.2026.03.18.11.53.42
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 11:53:46 -0700 (PDT)
-From: luisccc <luisccunha8@gmail.com>
-To: qemu-devel@nongnu.org
-Cc: luisccc <luisccunha8@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
- Alistair Francis <alistair.francis@wdc.com>,
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
- qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
-Subject: [RFC PATCH 6/6] target/riscv: Add CPU properties for SPMP and sspmpen
-Date: Wed, 18 Mar 2026 18:52:36 +0000
-Message-ID: <20260318185238.99143-7-luisccunha8@gmail.com>
-X-Mailer: git-send-email 2.43.0
-In-Reply-To: <20260318185238.99143-1-luisccunha8@gmail.com>
-References: <20260318185238.99143-1-luisccunha8@gmail.com>
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w2wup-0002Bk-Bv
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 15:50:53 -0400
+Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
+ id 1w2wum-0001AC-DM
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 15:50:51 -0400
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BD9625969F3;
+ Wed, 18 Mar 2026 20:50:30 +0100 (CET)
+X-Virus-Scanned: amavis at eik.bme.hu
+Received: from zero.eik.bme.hu ([127.0.0.1])
+ by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
+ id SQDuJ0QCS268; Wed, 18 Mar 2026 20:50:28 +0100 (CET)
+Received: by zero.eik.bme.hu (Postfix, from userid 432)
+ id BD1545969E4; Wed, 18 Mar 2026 20:50:28 +0100 (CET)
+Received: from localhost (localhost [127.0.0.1])
+ by zero.eik.bme.hu (Postfix) with ESMTP id BB4AC5966F4;
+ Wed, 18 Mar 2026 20:50:28 +0100 (CET)
+Date: Wed, 18 Mar 2026 20:50:28 +0100 (CET)
+From: BALATON Zoltan <balaton@eik.bme.hu>
+To: Chad Jablonski <chad@jablonski.xyz>
+cc: qemu-devel@nongnu.org, Gerd Hoffmann <kraxel@redhat.com>, 
+ marcandre.lureau@redhat.com, 
+ =?ISO-8859-15?Q?Philippe_Mathieu-Daud=E9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 1/6] ati-vga: Fix colors when frame buffer endianness
+ does not match host
+In-Reply-To: <DH633G213QPR.2EMRCN626JXVS@jablonski.xyz>
+Message-ID: <ec4a000e-cac6-01d0-a8cd-b21ef7aba431@eik.bme.hu>
+References: <cover.1773797056.git.balaton@eik.bme.hu>
+ <40f0e42b1fa51bea1d9199eb0cd519a5b8da6fdd.1773797056.git.balaton@eik.bme.hu>
+ <DH633G213QPR.2EMRCN626JXVS@jablonski.xyz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
- envelope-from=luisccunha8@gmail.com; helo=mail-wm1-x32e.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
+Content-Type: text/plain; charset=US-ASCII; format=flowed
+Received-SPF: pass client-ip=2001:738:2001:2001::2001;
+ envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
+X-Spam_score_int: -18
+X-Spam_score: -1.9
 X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 18 Mar 2026 15:44:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -107,120 +69,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add CPU properties to control the SPMP and sspmpen extensions from the QEMU command line.
+On Wed, 18 Mar 2026, Chad Jablonski wrote:
+>> +static uint32_t make_filler(int bpp, uint32_t color)
+>> +{
+>> +    if (bpp < 24) {
+>> +        color |= color << 16;
+>> +        if (bpp < 15) {
+>> +            color |= color << 8;
+>> +        }
+>> +    }
+>> +    return color;
+>> +}
+>> +
+>
+> Does this assume that the upper bits of color are zeroed when bpp < 24? Is that
+> a safe assumption or could those bits be garbage?
 
-SPMP can be enabled with:
-  -cpu <model>,spmp=true
-Note: This automatically enables smpmpdeleg, sscsrind, and smcsrind.
+I think to be a valid <24 bit color the upper bits should be 0 here. In 
+practice this is called with register values where we only support 32 bit 
+writes so the only way to get garbage there if the guest does a 32 bit 
+write with garbage bits. (I.e. it can't do an 8 or 16 bit write and leave 
+garbage in upper bits from earier value.) It seems unlikely that a guest 
+doing 32 bit write would leave garbage in upper bits and if this could 
+happen it's better to take care of that at register write not here so I'd 
+assume color is some valid color for the bpp and the caller should make 
+sure if needed. This function just expands that to 32 bits so we don't 
+have to care about other sizes later.
 
-The sspmpen extension can be enabled with:
-  -cpu <model>,sspmpen=true
-Note: This automatically enables SPMP and its depedencies.
-
-Signed-off-by: Luis Cunha <luisccunha8@gmail.com>
----
- target/riscv/cpu.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
-
-diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
-index 5383e07dbd..29bfce6581 100644
---- a/target/riscv/cpu.c
-+++ b/target/riscv/cpu.c
-@@ -1656,6 +1656,84 @@ static const PropertyInfo prop_pmp_granularity = {
-     .set = prop_pmp_granularity_set,
- };
- 
-+static void prop_spmp_set(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    bool value;
-+
-+    visit_type_bool(v, name, &value, errp);
-+
-+    if (cpu->cfg.spmp != value && riscv_cpu_is_vendor(obj)) {
-+        cpu_set_prop_err(cpu, name, errp);
-+        return;
-+    }
-+
-+    cpu_option_add_user_setting(name, value);
-+    cpu->cfg.spmp = value;
-+    cpu->cfg.ext_smpmpdeleg = value;
-+
-+    /* Enable necessary extensions */
-+    if (value) {
-+        cpu->cfg.ext_sscsrind = true;
-+        cpu->cfg.ext_smcsrind = true;
-+    }
-+}
-+
-+static void prop_spmp_get(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
-+{
-+    bool value = RISCV_CPU(obj)->cfg.spmp;
-+
-+    visit_type_bool(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_spmp = {
-+    .type = "bool",
-+    .description = "spmp",
-+    .get = prop_spmp_get,
-+    .set = prop_spmp_set,
-+};
-+
-+static void prop_sspmpen_set(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
-+{
-+    RISCVCPU *cpu = RISCV_CPU(obj);
-+    bool value;
-+
-+    visit_type_bool(v, name, &value, errp);
-+
-+    if (cpu->cfg.spmp != value && riscv_cpu_is_vendor(obj)) {
-+        cpu_set_prop_err(cpu, name, errp);
-+        return;
-+    }
-+
-+    cpu_option_add_user_setting(name, value);
-+    cpu->cfg.ext_sspmpen = value;
-+
-+    /* Enable necessary extensions */
-+    if (value) {
-+        cpu->cfg.spmp = true;
-+        cpu->cfg.ext_sscsrind = true;
-+        cpu->cfg.ext_smcsrind = true;
-+    }
-+}
-+
-+static void prop_sspmpen_get(Object *obj, Visitor *v, const char *name,
-+                         void *opaque, Error **errp)
-+{
-+    bool value = RISCV_CPU(obj)->cfg.ext_sspmpen;
-+
-+    visit_type_bool(v, name, &value, errp);
-+}
-+
-+static const PropertyInfo prop_ext_sspmpen = {
-+    .type = "bool",
-+    .description = "ext_sspmpen",
-+    .get = prop_sspmpen_get,
-+    .set = prop_sspmpen_set,
-+};
-+
- static int priv_spec_from_str(const char *priv_spec_str)
- {
-     int priv_version = -1;
-@@ -2657,6 +2735,8 @@ static const Property riscv_cpu_properties[] = {
-     {.name = "pmp", .info = &prop_pmp},
-     {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
-     {.name = "pmp-granularity", .info = &prop_pmp_granularity},
-+    {.name = "spmp", .info = &prop_spmp},
-+    {.name = "sspmpen", .info = &prop_ext_sspmpen},
- 
-     {.name = "priv_spec", .info = &prop_priv_spec},
-     {.name = "vext_spec", .info = &prop_vext_spec},
--- 
-2.43.0
-
+Regards,
+BALATON Zoltan
 
