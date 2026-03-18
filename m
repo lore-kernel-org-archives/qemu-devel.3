@@ -4,91 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90821FCD0BA
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 05:58:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B53EEFCD0B4
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 06:10:20 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2juV-0006K1-5P; Wed, 18 Mar 2026 01:57:39 -0400
+	id 1w2k66-00085E-R0; Wed, 18 Mar 2026 02:09:38 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2juT-0006Jb-6S
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 01:57:37 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2juR-00064N-Ks
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 01:57:36 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43b4f48c47cso1023538f8f.0
- for <qemu-devel@nongnu.org>; Tue, 17 Mar 2026 22:57:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773813454; x=1774418254; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=JbAIpPa3wmxM5B4eAlPohCBrDuHqCSTFHyZ3pYhs8FQ=;
- b=xZm8QZ+dCbfvRA1/musER7CRmSI7Nv1JeyZ77h6dNQvmAwzby9BeZZApF/SUgDTTJE
- jjdaSQa48lpVaupV3gWbxKbSBkumC6ahLVEsPyFy06e6Yk/4ASmW+chjeQzUnoCWx5TG
- VOcoHFnKfuH3v/sC6pePOJGIb0g3U5udouwvW7VDUkdcDRbfTxBGcqeLOWPICpbMge7J
- Fz+QrmSdEe/ImirOmLTqfn3rVuQ0b95P/w9kTenANyNRMsH06GcJXtnBk8PArM/qef82
- dLsIbSLuhJ5KO3PYO6nevttGJyQu65y9ljYtKla6JVPDVw2PY5kyBTLlSrwWqmdOlMR0
- 6D9g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773813454; x=1774418254;
- h=content-transfer-encoding:in-reply-to:content-language:from
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=JbAIpPa3wmxM5B4eAlPohCBrDuHqCSTFHyZ3pYhs8FQ=;
- b=TjwLbZwyBW04tXPO8naRTUaqsVxbGr30Rh/jCxIEUDYj7nazNXhDNSutOwi3uLw6u0
- MbyX2ymJcD+C4h5KxlzndHg0viJJS4DR8cIlkEWbq/PWJ8Esbw99L1VQbAYDALFD+KQP
- mmRhSTA2lFvsQ+YMEyiflBNVs/ixxL3yJba/CPP2Gwh884zG26vZyFhVJk/nrK8S4Pf3
- f+7GkTT66u2lILQ4ojeiGbr0OzLr6KdgpQXF+FHw+2tFfQ7JmmOGxRAgUGhNhjrNlUkE
- U1fnN+d2Dae/6LNVbzSO8hM/rh3OlsndcqgNetgsBXzO3d5P4od3hPa6ya7Z7zq6pCzZ
- WLPw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVeWVza8MkncD3ebIker1bCMwPirhs4mFm5Uv8CFLoVyOaid9ro8k7Ic8+fqqDp0KfAywz6eDX8x5kD@nongnu.org
-X-Gm-Message-State: AOJu0Yxu8xaNyiizBzwVM2hTmhs/Au4uYHEZdzRX2FG1braYU3onISeO
- fI/B5EsM1d9E2HcNZV2rsmSB+6Gmqx1nkZGWdjpOPuUQeNLF35hXqeccJJ/1UlN1uv8=
-X-Gm-Gg: ATEYQzwEXCBogaV2ltEPmamAzT8/0exSYwkuFSnzcYZA0sBibiQ/caU6GV1GxvYWnIH
- Ju3IIW1QMMtuXPqhQJ29Sns0pMShyEHT/eZVTAxf6Am2fLqRzEoUinjbpqCaqAmvPmud3Vto/NI
- TwUS+KUpaS1VGwWLkd/ZtCS2VRiQS4+RamveOX59Awgq/Lef4l3zGLJpsAp+aJ5YWGMwBiIr5lo
- BDtpcMb2XoUgO4siP97Cxv+WKqyx3bk1GUNJ6UxzDl83in38crh4ogq3U7nd/xkbvlXKOhSY+qX
- WXt/0fqcUTTsKQIl/e1lB598CTcjzaEHZ2sI911hlPX/VN4lVXU8HN77Lay1yaZPDvIfnW1Cxpq
- ZfUJk6KDSgaeCR779FTPhqc18qkyLPD4UtQ+7BQQb0/D71isBqbwMO1ep32+yT7iQwHeMURPaQ+
- otpIcMV0wojGKIcRijlcmXdEbG2xuhQs+3wLOuFnCeTBLSErI28BBUjrBfKtXHOPDA7A==
-X-Received: by 2002:a05:6000:2285:b0:43b:3bed:154b with SMTP id
- ffacd0b85a97d-43b527c9e9amr2975452f8f.40.1773813453731; 
- Tue, 17 Mar 2026 22:57:33 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b51849636sm5183529f8f.8.2026.03.17.22.57.31
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Tue, 17 Mar 2026 22:57:32 -0700 (PDT)
-Message-ID: <517be5bb-d6c8-4220-b585-3adbe4826056@linaro.org>
-Date: Wed, 18 Mar 2026 06:57:31 +0100
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2k65-00084i-0V
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:09:37 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2k63-0005eU-0U
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 02:09:36 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773814173;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=B7d/4IIKOs5x4vpYZz2T+iMjWHF8DJu3oifTs2yhIaU=;
+ b=ZEQNpa2Q/gquA4/35/EtnHnwz6YhY/usztH1JqCUCzvFz+7bSw7HlTXck3O41GhsxZsVHF
+ lQlp1ZmiuNHVYyIfRG7BS5kS3oQmdgtTg9XPvLWbzcScFpr+8V6MSSiL4Aztiql/4wFMVB
+ NIT0d/EYlS28okPT5fNL/44OjO50Roo=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-271-1-K00ulWNz6Q35p80ou8ew-1; Wed,
+ 18 Mar 2026 02:09:29 -0400
+X-MC-Unique: 1-K00ulWNz6Q35p80ou8ew-1
+X-Mimecast-MFC-AGG-ID: 1-K00ulWNz6Q35p80ou8ew_1773814168
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 79F461956048; Wed, 18 Mar 2026 06:09:28 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id E8DC019560AB; Wed, 18 Mar 2026 06:09:27 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 9F21921E6937; Wed, 18 Mar 2026 07:09:25 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Zhang Chen <zhangckid@gmail.com>
+Cc: qemu-devel <qemu-devel@nongnu.org>,  "Dr . David Alan Gilbert"
+ <dave@treblig.org>,  Eric Blake <eblake@redhat.com>,  "Michael S .
+ Tsirkin" <mst@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>
+Subject: Re: [PATCH V5 13/13] qapi: examine IOThread attachment status via
+ query-iothreads
+In-Reply-To: <20260305142459.52559-14-zhangckid@gmail.com> (Zhang Chen's
+ message of "Thu, 5 Mar 2026 22:24:59 +0800")
+References: <20260305142459.52559-1-zhangckid@gmail.com>
+ <20260305142459.52559-14-zhangckid@gmail.com>
+Date: Wed, 18 Mar 2026 07:09:25 +0100
+Message-ID: <87o6klfz3e.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] hw/vfio: single-binary
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Content-Language: en-US
-In-Reply-To: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -104,19 +88,80 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17/3/26 20:42, Pierrick Bouvier wrote:
+Zhang Chen <zhangckid@gmail.com> writes:
 
-> Pierrick Bouvier (8):
->    hw/vfio/listener.c: remove CONFIG_KVM
->    hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
->    hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
->    hw/vfio: eradicate CONFIG_IOMMU from sources
->    hw/vfio/pci.c: eradicate CONFIG_KVM
->    hw/vfio/ap.c: use full path for target specific header
->    hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
->      hw/vfio/kvm-spapr.c
->    hw/vfio: all vfio files can now be common files
+> Extend the 'IOThreadInfo' structure to include attachment metrics.
+> This allows users to monitor the associated devices by identify them
+> by their QOM paths.
+>
+> New fields added to IOThreadInfo:
+> - @holders: A string containing of QOM paths for the attached devices.
+>
+> These fields are also exposed via the Human Monitor Interface (HMP)
+> command 'info iothreads' to assist with manual debugging and
+> performance tuning.
+>
+> Signed-off-by: Zhang Chen <zhangckid@gmail.com>
 
-Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+[...]
+
+> diff --git a/qapi/misc.json b/qapi/misc.json
+> index 1f5062df2a..a381074c04 100644
+> --- a/qapi/misc.json
+> +++ b/qapi/misc.json
+> @@ -76,6 +76,15 @@
+>  #
+>  # @thread-id: ID of the underlying host thread
+>  #
+> +# @holders: The parameter is an array of QOM paths indicating how many
+> +#     active devices are currently associated with this iothread
+> +#     (e.g. virtio-blk).  In hotplug scenarios, users can
+> +#     pre-allocate multiple iothread objects to serve as a persistent
+> +#     thread pool.  When a device is hot-unplugged, the corresponding
+> +#     IOThread is released but remains available, allowing subsequent
+> +#     hot-plugged devices to attach to and reuse the existing thread.
+> +#     Returns empty if no devices are attached.  (since 11.0)
+
+Let me try to polish this a bit:
+
+   # @holders: QOM paths of the devices currently associated with this
+   #     iothread.  Users can pre-allocate multiple iothread objects to
+   #     serve as a persistent thread pool.  When a device is
+   #     hot-unplugged, it is detached from its iothread, but the
+   #     iothread remains available, allowing future hot-plugged devices
+   #     to attach to it.
+
+> +#
+>  # @poll-max-ns: maximum polling time in ns, 0 means polling is
+>  #     disabled (since 2.9)
+>  #
+> @@ -93,6 +102,7 @@
+>  { 'struct': 'IOThreadInfo',
+>    'data': {'id': 'str',
+>             'thread-id': 'int',
+> +           'holders': ['str'],
+>             'poll-max-ns': 'int',
+>             'poll-grow': 'int',
+>             'poll-shrink': 'int',
+> @@ -118,6 +128,8 @@
+>  #              {
+>  #                 "id":"iothread0",
+>  #                 "thread-id":3134,
+> +#                 "holders":["/machine/peripheral/blk1/virtio-backend",
+> +#                            "/machine/peripheral/blk0/virtio-backend"],
+>  #                 "poll-max-ns":32768,
+>  #                 "poll-grow":0,
+>  #                 "poll-shrink":0,
+> @@ -126,6 +138,7 @@
+>  #              {
+>  #                 "id":"iothread1",
+>  #                 "thread-id":3135,
+> +#                 "holders":["/machine/peripheral/blk2/virtio-backend"],
+>  #                 "poll-max-ns":32768,
+>  #                 "poll-grow":0,
+>  #                 "poll-shrink":0,
+
+With a bit of doc polish:
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
