@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8E770FCD0B4
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 05:43:50 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6CE59FCD0B5
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 05:50:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2jgk-0003V7-9c; Wed, 18 Mar 2026 01:43:26 -0400
+	id 1w2jn6-0004mH-Vc; Wed, 18 Mar 2026 01:50:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1w2jgh-0003Uf-Gh
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 01:43:23 -0400
-Received: from mgamail.intel.com ([198.175.65.15])
+ id 1w2jn3-0004m0-VQ
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 01:49:58 -0400
+Received: from mgamail.intel.com ([198.175.65.11])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vivek.kasireddy@intel.com>)
- id 1w2jgf-0004hl-23
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 01:43:23 -0400
+ id 1w2jn1-0002Et-94
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 01:49:57 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
  d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773812601; x=1805348601;
+ t=1773812995; x=1805348995;
  h=from:to:cc:subject:date:message-id:references:
  in-reply-to:content-transfer-encoding:mime-version;
- bh=dFAEFUOZyj8yyXrvcXdPagv+4CV/naLWq0Wizp6EjKo=;
- b=WjxjTuaCpSH6irR/HGs4KDCd8MMqzbQMmiQ7OAFxpgiCJIafWL0U6znF
- LtfPwQRNHu11xVPIRN0jrTnyHs9dXWYynwWurzb3Jxaa1/DfFd0/zUA+A
- 7lsVxAnW/xnq/f99gqD8CklRuWXR5E+iDBEpdCwZawIdRNI7T2EP0mvBh
- w7AZMjWMdhkr4hW5JaREiMhfydH7DBSppZoh+fNvaJL34OVpY+4BY+gmf
- IBqZ400BOrmm8FaFuQLP2qtllQ9WgipSS3syw/BGDWSjfL04c6Jp/0thj
- tnJcOWA7q8Qit5YEHS0G1m5sZdxOIvDECbg1T8ZCHvuIpMebA05AsHb7B Q==;
-X-CSE-ConnectionGUID: cqGFgFZ+RSWwLntpHjPtvg==
-X-CSE-MsgGUID: qm0tbowXSkqk/2sGqCqhQg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11732"; a="78468912"
-X-IronPort-AV: E=Sophos;i="6.23,126,1770624000"; d="scan'208";a="78468912"
-Received: from orviesa008.jf.intel.com ([10.64.159.148])
- by orvoesa107.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2026 22:43:19 -0700
-X-CSE-ConnectionGUID: IQ+vkjr/Sveg9UGaVR+uYQ==
-X-CSE-MsgGUID: eMqgSKZ8T0uHf9VBzIZMsQ==
+ bh=kytOjJu45vRGwSxzHFZjAGlfRH3oKk4kf3Iw+/G2Ung=;
+ b=kxZMGvUWh9mEUee/JVP1Fz35IjnmGCAEVu9S+oS3vpWw+srxUtHGxuoL
+ HvoIR6VYkzpnsnUoRVA61thZU798pK2HpcqMknLJ1vfXe99kmutgUKORX
+ rMrdi5k6QqVc2JQG1lw02fXlJi3P4mX7T4tACOOhJTfQHGAsULefzl7km
+ jsHUJk++6/aFBBucsY1XiA9iU+9rN1/3H+kiTPxdvU+jxHyldppSwXe+P
+ 0V4zr+UaCpQvfexKuuBOaDR9DkBQSGoGxP3yrOYnrcIMoR6dgAJYCHRUP
+ U01+iX/PvO/Wk1duTjhNTQq18LhQBkIBvode2KXl/Yy2OWLVYAM3bE/W8 Q==;
+X-CSE-ConnectionGUID: 9ovU/x0vSauevvduKe33Aw==
+X-CSE-MsgGUID: 6DuD0ZJFQTO9AXWdEq6HQA==
+X-IronPort-AV: E=McAfee;i="6800,10657,11732"; a="85175428"
+X-IronPort-AV: E=Sophos;i="6.23,126,1770624000"; d="scan'208";a="85175428"
+Received: from fmviesa005.fm.intel.com ([10.60.135.145])
+ by orvoesa103.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2026 22:49:53 -0700
+X-CSE-ConnectionGUID: VxXvExoASuyO9pnE38SF+g==
+X-CSE-MsgGUID: jmO8Bd6IRhC08CWOYYCk0Q==
 X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,126,1770624000"; d="scan'208";a="222555364"
-Received: from fmsmsx901.amr.corp.intel.com ([10.18.126.90])
- by orviesa008.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 17 Mar 2026 22:43:18 -0700
+X-IronPort-AV: E=Sophos;i="6.23,126,1770624000"; d="scan'208";a="227185085"
+Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
+ by fmviesa005.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 17 Mar 2026 22:49:53 -0700
 Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx901.amr.corp.intel.com (10.18.126.90) with Microsoft SMTP Server
+ fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 17 Mar 2026 22:43:17 -0700
+ 15.2.2562.37; Tue, 17 Mar 2026 22:49:52 -0700
 Received: from fmsedg901.ED.cps.intel.com (10.1.192.143) by
  FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Tue, 17 Mar 2026 22:43:17 -0700
-Received: from BN8PR05CU002.outbound.protection.outlook.com (52.101.57.52) by
+ 15.2.2562.37 via Frontend Transport; Tue, 17 Mar 2026 22:49:52 -0700
+Received: from PH0PR06CU001.outbound.protection.outlook.com (40.107.208.54) by
  edgegateway.intel.com (192.55.55.81) with Microsoft SMTP Server
  (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Tue, 17 Mar 2026 22:43:17 -0700
+ 15.2.2562.37; Tue, 17 Mar 2026 22:49:52 -0700
 ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=DTrW/Oz6QbsOOpa3mxISlYCQK60DX7S1GakLaVm2o5SjpawCood1alAMjrSB7rqX/AXK4DXoSUh/G268840KnhjRh4U/pWxGFrMGBxUhzuT7laLDULROA91S2IzxWUD32T7db+nRLAxDfCHsY0BiaqPJdFUEGw6cXnqNbZdMw/rdtsiijnL/buXtTrGHJVpbtbt4HNHAdt4X0UcCCB0kkPOvufHxlhkZI2hhiAO1LfrBfaCjjvvUDRh9MB0YOFBghZn8ADIQfZhRs8Jk5MoBlrxHDc9Gkc4OHNtIEJrX54DVARjh3Eau+cqOr7oe1GgUYxOHZ6nw/qF+pJhlUKKyyA==
+ b=drM4rYQMaJbelw8v5QWEE5kI3OT8BlVZU+oRuTejd7jCWFF4/5vY+H/qxODHq7MziznhBJ+3WR07HbGE0oYJefWkrmAe0EuBLHTTZGNJz3q2tD0scO0fgn1iwjyOlQbjLU+gmsW6w2DdCB/MhG7lyqrSjSUYVGFTePMwVB5dFesAVQ53YE3Kc8Jl8CCjIHVpMbmUheJwbEJ4G4QqN+EsRX4FHGRVKPB1GDHlWrigC3GGYfMaQPXgyukDN+UWnCLQkp7CdaUDVL13fgDmPWiv+msExPdtri2VLeuVc/nF6glwVu5e+/5j1eFALi6uf1Lw88KjLGE4mRt/Lh64l/sPDg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
  s=arcselector10001;
  h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=dFAEFUOZyj8yyXrvcXdPagv+4CV/naLWq0Wizp6EjKo=;
- b=S9grVIOGsQMelhMq4/t7SfqKQXSWZ72T8meqMu5I6DV/n5aZyknLwmsYsHekoXE3o8HdN1VsCP0JExAERWvJ9wvfTaS42LpU6EW29UDYjLHx5u1LR1TEHYktLcoZdIDIv1jByQ2+XtZEQyQatZvNj4o2GRjKKQrRJv1SKXyR7DqFCyC4QM4uLodsAQCOaK03b2vCnvONDqSkrENModKBwLH5zlSBlQouOsxEITsNg+JpGC9Yp0OBAKmjtZn3rw7vJm67AylEC0G8YxBz8RiOGmAs/PK3muafLfu5VWOg39lAVaMXoOn9FOSV1uJPAf2r4zgPwMhN/9kFyGMtgkt6+g==
+ bh=vrzIXLidvhIGdB0ZgimIFhGSkhJtNgk7Srsdz7Lygis=;
+ b=WTJC6x7hf+VY22I2CdWrC1mv2k/Jf/wV9Amf0OidepQRXUOoV/KglW5yx6AoP7Pcamz3blmIiC96LdexQCarJ8gEWtOi1MdkEeNgQ2h8ACGZiQ1x0yadyy2mpwDRU5RvkUXSqk58mnzW7NN8KXqsng9nOYvtujWQ95l8b6NCVf1UD/86o11SkZzz3wZNQMkGQJex5/fyx6LPYOYg77TzEM0fVsDC+fa5IJOerG8un1AN5oWCC1mjaF8EzSa6oK8/bMLX7ZSDiG2MQkZtbrT8N5wVxrEUx7ICzdPBT7J8kHf/19pYimVDdc/YQySVU726kLQZqgSu/JjmYp+t2IXsNw==
 ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
  smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
  dkim=pass header.d=intel.com; arc=none
 Received: from CH3PR11MB7177.namprd11.prod.outlook.com (2603:10b6:610:153::8)
- by DS7PR11MB8853.namprd11.prod.outlook.com (2603:10b6:8:255::9) with
- Microsoft SMTP Server (version=TLS1_2,
+ by CO1PR11MB5012.namprd11.prod.outlook.com (2603:10b6:303:90::18)
+ with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Wed, 18 Mar
- 2026 05:43:12 +0000
+ 2026 05:49:50 +0000
 Received: from CH3PR11MB7177.namprd11.prod.outlook.com
  ([fe80::b997:e226:4979:c035]) by CH3PR11MB7177.namprd11.prod.outlook.com
  ([fe80::b997:e226:4979:c035%5]) with mapi id 15.20.9723.018; Wed, 18 Mar 2026
- 05:43:11 +0000
+ 05:49:50 +0000
 From: "Kasireddy, Vivek" <vivek.kasireddy@intel.com>
 To: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>,
- "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>
+ "qemu-devel@nongnu.org" <qemu-devel@nongnu.org>, Akihiko Odaki
+ <odaki@rsg.ci.i.u-tokyo.ac.jp>
 CC: Alex Williamson <alex@shazbot.org>
-Subject: RE: [PATCH v11 06/10] vfio/region: Add a helper to get region index
- from memory region
-Thread-Topic: [PATCH v11 06/10] vfio/region: Add a helper to get region index
- from memory region
-Thread-Index: AQHcsQKuB9On+hMUHEShcdPuK+wOLrWy1jiAgAAFkQCAAFTzwA==
-Date: Wed, 18 Mar 2026 05:43:11 +0000
-Message-ID: <CH3PR11MB7177D2DF27382270C266DC97F84EA@CH3PR11MB7177.namprd11.prod.outlook.com>
+Subject: RE: [PATCH v11 07/10] vfio/device: Add support for creating dmabuf
+ from multiple ranges
+Thread-Topic: [PATCH v11 07/10] vfio/device: Add support for creating dmabuf
+ from multiple ranges
+Thread-Index: AQHcsQKuikOpoSIkLUmoXhv75zh8zLWy25OAgABSA5A=
+Date: Wed, 18 Mar 2026 05:49:50 +0000
+Message-ID: <CH3PR11MB7177C6A65EE7D28D84F4F826F84EA@CH3PR11MB7177.namprd11.prod.outlook.com>
 References: <20260311025340.1335673-1-vivek.kasireddy@intel.com>
- <20260311025340.1335673-7-vivek.kasireddy@intel.com>
- <2f048542-173e-4b93-ba4e-f7ce75788f73@redhat.com>
- <fd123458-7468-4987-917a-1b04d8f690d2@redhat.com>
-In-Reply-To: <fd123458-7468-4987-917a-1b04d8f690d2@redhat.com>
+ <20260311025340.1335673-8-vivek.kasireddy@intel.com>
+ <d313433e-e601-4ebc-baee-ae5baef45b29@redhat.com>
+In-Reply-To: <d313433e-e601-4ebc-baee-ae5baef45b29@redhat.com>
 Accept-Language: en-US
 Content-Language: en-US
 X-MS-Has-Attach: 
@@ -100,64 +100,64 @@ X-MS-TNEF-Correlator:
 authentication-results: dkim=none (message not signed)
  header.d=none;dmarc=none action=none header.from=intel.com;
 x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: CH3PR11MB7177:EE_|DS7PR11MB8853:EE_
-x-ms-office365-filtering-correlation-id: 8545f0a9-a677-447f-9731-08de84b13e1a
+x-ms-traffictypediagnostic: CH3PR11MB7177:EE_|CO1PR11MB5012:EE_
+x-ms-office365-filtering-correlation-id: b3a294d4-46e6-4ec9-510d-08de84b22ba4
 x-ms-exchange-senderadcheck: 1
 x-ms-exchange-antispam-relay: 0
 x-microsoft-antispam: BCL:0;
- ARA:13230040|366016|1800799024|376014|38070700021|18002099003|56012099003|22082099003;
-x-microsoft-antispam-message-info: 03QO6wUoUqPTXiRRG5iWEdhGddKoeLcfW7PVubqpxYI+BcdPtFaF+pZVN8LLzeLF6g4vAYKgge3zaRoeedqfChIWeN3UOk82cyAs66jTeIGcZof4WzaGj05Y2PoWgLIuJ66Sb9qlt6C57+bt2wPqzHXenC1kgwIwQf8KxamNOVckHOd7LxkcB/+ShEPF3xc3RwvIE1RdG1s5vAUBSiMC1BcxWOgW0WLNI8GkaIKQ6RVBM9PyRdrEcuBTjfhe8XVLUBfjhiHGT8K/ithPW6oFqbFTLPC0rm+fA0Ux+X5b9stAYbN+GnjmCz4A1K2F/19KX3xRXfhi3obsbzWEntnAqhjKPL+ROtGH1XdOZ0snXvhD0eeqypx9wCOyB3UQHyxr0Zs1HZbhKfuzZkhQ7fItP3kDcs9r0gBLRm9+ipmaHbTJiWuCGcRYYQQPc5y2ILuQ+cFtirJzPPAeUxnJkRJcOtunSAWV+ODDWsK7pxfg5prBY/270XhpBPezz0fO5Z8XFy8RVBim8yTA34ZjYsr4jbYB6CgAyuP0LHYxug/aQ6wramSmqYgEcQJpLd6bDcGfEhL++mObdWVx39MZqkgRvkE7tVQtyetJIEs0vf6TguSSAAMbGy7bC2IPyDMDSLl5O/x7jbj5C+EI2GeHOcS9jIKk8jI9jA4r6SNL0xb7rdeU+o++Km0ajo608NlbVvpT89NHMy/tDcQHudlrPx+hmeiwD9h4J+nIVhEUtgR1LXwkvrH9ATL/nQ0lwvq8U24ReSTFEPU1UwIpVzOE4Dbz3xHJvbrYK/217gXoyvA01uA=
+ ARA:13230040|376014|366016|1800799024|22082099003|18002099003|56012099003|38070700021;
+x-microsoft-antispam-message-info: HzY7iu/hvxBy2auklSaGfsYsnipvvP7Nxw5+qyFLfB+Zsnckzzu8LumxDtAejYo0s6IRuGFxk8QGGADa5S2A+X9bW6gF5c00R3epNjO2hf9GN8RCRnFKs0nnn8zhlPLk6z7xDtvARuX7iEL+j3aUX1OoSKmoF568eoR0hr1q6/m+zfOOWGnbJwR5GYwXnSaJlpDKzqiu9d4HwSDhdd5iPHqCIK8V9SpZ3ozGnLN8fxgdCSsfyxxyY3sT7MipDxynIpE7PGKFjK9Xf32gD2CmCLAa4gx8FRvqhmdz1EcQY3DoUUmocwonwbJROal81kNom1yXEp/fKegmQDneohPvTvsFLN0yN7vU03YjqHqo+oE7WmtQxSV6StpWUNSR3GjHyZuca7W8zGa+RNW8MJvXKdJVKJSG3kSxKvb4f4vj4j+KZ14grtw8yuG/Sym5GYFKr+x5PwYR/G04Aw2Ezu3b6QjP05edZQR2so3v/zaiQXJuIo5lF+H49znlbn8pWdnwCN5pnc+5jme4TyyquBW0tGWVRNl/hsbL/ajNT6XNU2NvENcN12ygt20ixmaNiuSBCBxcZxYcp6CoSwguITsNBGelB/U5WqI+MrcZr9OnUFqfrSPFKArBywnNkQYEiOm7BdQWZXoUhSN8V1W8emAYZrnoX9EIorq32EzQSAQB0xqXlK50o96G3D8yOkhqE9LJBubKy7/joXwVteb5ot9XW9lXSA1drCet8EKWDL/v6GPS+CYaibw607us6ggCBwllOjoSRmddOuKfRRjP1ZLAIHznUBGMbHEU5mqf/9UUIg4=
 x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
  IPV:NLI; SFV:NSPM; H:CH3PR11MB7177.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(366016)(1800799024)(376014)(38070700021)(18002099003)(56012099003)(22082099003);
+ SFS:(13230040)(376014)(366016)(1800799024)(22082099003)(18002099003)(56012099003)(38070700021);
  DIR:OUT; SFP:1101; 
 x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?6+Bf+Ooy4lJZ2e2auNymlQfVlPrU+m9sg4BQbyaU1qXf0FumIu2KnhV54d?=
- =?iso-8859-1?Q?GRk9tdK29WLac4tK5tG7n8APTRG/S2Mrtq6H5it2KmcPqNJVMEv/0Dwi1w?=
- =?iso-8859-1?Q?UoCz3OE2EeNBi7Q67P4Fl9TA2en3zJwrOhZtah7YgwcUdp9kw3RB7ZlKMD?=
- =?iso-8859-1?Q?onLi0CUI0Cz+lhuTr6zp/iUcAYt4bIlauKJEphL7dP8LIY8PgiP9+cjNq7?=
- =?iso-8859-1?Q?l/BjNdlc+2WwKGmITSsHdigZ3rgLPMj5Yh90lXtKM1iOvvsmHck+x1KMob?=
- =?iso-8859-1?Q?9linmMkmj3DWTKSrr8ioyg/JqMo+AHnNmyKtBiFPN+Qp6uHVqiNzXcpQI9?=
- =?iso-8859-1?Q?M/QKOPtSOc5vOHbKs3KWpEPdOvV1xZjSVAoziOFOy6bkrKjMD4MQ52vzxm?=
- =?iso-8859-1?Q?hVVl3/DjqUeHYNSlxfTg3lP0SEMxpEFNgejQdpmB6Ag8KNLuz3fz2yh9iL?=
- =?iso-8859-1?Q?t0an9oPeKxHX6jSl5sQbHlPSxLnUokOlzyzWnVmfl6mA/9UhIEXhDEr8JF?=
- =?iso-8859-1?Q?iO6TGgPKS1dAk48T13KehwAk08wZ3MCr2nqab/2/I+sDHIuf80/UKHGQcL?=
- =?iso-8859-1?Q?NWBEPEppvG0AcE1a7K5/vJGciOni1N0KQom0L0CL8crPcNS780+RvBsMcI?=
- =?iso-8859-1?Q?IUJyPprfods/kYTDhaoCr/6rygA1T7rh/I+HGm1pnnNqaxOn00ETz7Eg3T?=
- =?iso-8859-1?Q?hDsW+it9AkJscoPkv2UjRBIp7HJv2Hn5V6cSqPrFTYeBruOZ+qpZAqHaQR?=
- =?iso-8859-1?Q?ZMCFE2kLWd2ZSw/z4jHMzQTAVf7mmXcDsinvuxBmdxYSX2K7VWe+abqsTF?=
- =?iso-8859-1?Q?wEfSvJoTx3A4YLN3JFUlFcTU54KkzRujC5CjaFKwlxKIe6+h3U0CtO24q1?=
- =?iso-8859-1?Q?8GI3JXEHm0Zu+f2aVczOo0twABp17mZod24vIgObuWmn9hmkbDOKVqQ0xB?=
- =?iso-8859-1?Q?INzM0KLAAHN2nqE8WWidzz4Et4OWsbykNqHelU/rIG/9NdF2kYgjhmhmKE?=
- =?iso-8859-1?Q?oBj6S9z94eIXffAI6OvmgabRVj9IxPRXTO8/5Xv7c8Tn8OfP5cq00orKO2?=
- =?iso-8859-1?Q?9Ce261vQ2cVOpB3VR0K8hT4qpqW3yxWmiy5oPJwmiAzadrXb/7g6zQw8Uj?=
- =?iso-8859-1?Q?WYQuE5cnsyf/VrYIrioF/EdXdLfXBh1pEe6QfUbUyv75gsH/pglcfeM5jw?=
- =?iso-8859-1?Q?qG66+CHFvH4yRBjPaS5o1rYXMKqoh8VDyrK1BXeueklN7PpcfBanPlDhUo?=
- =?iso-8859-1?Q?FkgPrb7ECcHGdX8TbkHch/DPKJBcEl9n3T8q969JUPfTnYjRikyENBU7OU?=
- =?iso-8859-1?Q?K+Ck3j9FxafMvHE5KPXGRh4JamPzw7qFZr70HjcqG+xXV1p6trv4vNjCyY?=
- =?iso-8859-1?Q?HMIFi/c+X+EWPwvSpc6rM0yYfQY3ueU5upBoT+i1mpW3It0Cx6mtnnh55T?=
- =?iso-8859-1?Q?j6Tjzb04ZA6VgJXZAXQT22H0z5j2l7AAYgzE+Ae6fNmIbvLbwXfxntmKl3?=
- =?iso-8859-1?Q?2knVkqhSJGnKztR/7duas5BfKR+NnuwAGf1jHJVpcYw7tMtstgh4XsFZbc?=
- =?iso-8859-1?Q?4ituesPWryQg2JwN1SrmWqryBy3T0E+2GtZB7Vynspi4i4j4GUE0G1fwE0?=
- =?iso-8859-1?Q?ssaHlq0SYVzkUoYI15NrwnuVXRV8vZMvqB9ImgpqL50ehfQBr2ia06GYJY?=
- =?iso-8859-1?Q?eA1Vv15e7KKsdYtLHCx+pkh0YmTGV+elrLzTXd+oZNJoSX5A3bb7QLsl9G?=
- =?iso-8859-1?Q?kFG5NWRrO360OiWznXoaTGNA6llnPu5+bp9J6U0ZHjK52nMOrJG5vEg1bD?=
- =?iso-8859-1?Q?lJ3ZSszx+A=3D=3D?=
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?fotfHt0vmgRL/74ay3r4j6EcqRS3+ERsvZz8h0kDiHfgzqO6GYjcNSMJDH?=
+ =?iso-8859-1?Q?vtiroiilO5446GOas74EBADOwAOdVUDTiYEckRB4kB7fYmezn9MtP6bgBA?=
+ =?iso-8859-1?Q?7fikF/o/MmNq/0/58Ivtn8VkEV4nj99AIWquYeXXf0T9m6HnDNFsQ7r4gW?=
+ =?iso-8859-1?Q?UTbpDqnuEu7PW1w1J/w6F6xb27xCBhp1P7H1LXvXbM3CS6mp78r0jPcY+Q?=
+ =?iso-8859-1?Q?BiHDdAoSlC5TWrALI2ImXDrivpYtXa1wEiOvvx4SwqsBlXldETXu+o8REG?=
+ =?iso-8859-1?Q?Tic30A+WIeLiAX6GLMshHXs5RMTt7nFa1Jph3E1UTRCvfnJ0rCbvdejuIC?=
+ =?iso-8859-1?Q?vHkA18R4kcnMgxE3XqRIoAEvvnpZFhXEQZ6YO5UcP6NXO/4/PkxmAQ/6Jc?=
+ =?iso-8859-1?Q?/mXr9H/5YqWPO6H88gAPdcXbockLND+IP7yqnzE5VavmP3MvRjGtYsMAnN?=
+ =?iso-8859-1?Q?f7zrTGyTrzTD8JuHG6xPhGW5O+kJ2d9xzVu5Nume+9cEM2QZai3x98C99s?=
+ =?iso-8859-1?Q?Mr9VD7ZV3xsIzWi5YLa2Gqdi7O3kqLIWAJDQ2NTyRbX9Lh3Y7dTONODamR?=
+ =?iso-8859-1?Q?X7gqcgavQT31HEQRrIX4HPrqgNdrVFUTt9Bh6/6y6L5H+H7dMEflaxJC+n?=
+ =?iso-8859-1?Q?cwSSdVdlWfu2rXvD0JPMSMmqTLa+AlQHMolRCDJWs7NiGuIB7iFjOwGfuy?=
+ =?iso-8859-1?Q?m1AdEp6zxrDUIraSgH50SAM2nCS2QOJEsJuX2FEsJYSpjiqOsMdZVeqwXc?=
+ =?iso-8859-1?Q?fQTOOmKpQf8gVP37QR4eGSffY1FRCreZIpgLXSfYVZoWJNixsDAfvdvLDj?=
+ =?iso-8859-1?Q?IMVUNu1HEMhFrsjYr5KN5mhXpSWsXw9HNLXxXxjfn1c12QgCrxeuUwQp1s?=
+ =?iso-8859-1?Q?QIJJZN2j8g1VlCcuKdHGWj7lvoVmnkgQQaKWSO3yKqKAHdxHesC5NWHqdY?=
+ =?iso-8859-1?Q?Nf648j4N2kwG/S0oMkDXyEwegY2ugTfDJWzl22Z+WiFPkFgUQ8OtTrA18m?=
+ =?iso-8859-1?Q?ZUFGCqOmoVBpKzgOJg496hdwByKGyX+plnK8CLvn9FuB2hIl8/toImP+j/?=
+ =?iso-8859-1?Q?It6AtNsWNnLyUhX9vLgn7xb3gcPJMiYtSOhMha6MMMcy5Q9Rc1JOo4eC0o?=
+ =?iso-8859-1?Q?EvOF3/RFOSX5gQDw0IHYZZge0pp9NO/PAe2KyinFNvNr90rkGGCs0wJOAt?=
+ =?iso-8859-1?Q?tO3wOqiY+rDbgCXWzRLUy1XCQbcz3WAcDv8IdgO8MvJ/0/Xfe2JriQA/tM?=
+ =?iso-8859-1?Q?bDAut454d2Ynqtzr6DEKAPr6BYv1cXNOhY6fWJbFmipSWdau1eRsxzF928?=
+ =?iso-8859-1?Q?TcfINoI8IXjEK/biOCb1DVy6mAV1njy6lthGEMIf1wFBL3gnwwTcV3OTnG?=
+ =?iso-8859-1?Q?Wxz2OUy8tPaUATykp7JiqZyht9rGpOCSNqqCQUZFeuTnDrsI844K2Saxsx?=
+ =?iso-8859-1?Q?AzY1WaC8Y3TiMZsB2a7p4sJ9XW3c8ThlWekmo/dWq4VzqVoTwR8QLPj7DC?=
+ =?iso-8859-1?Q?yGvGt9xRo8d83Xg/8x0aP23jb4Qzh/hpP+oAuH3sWGwPKAcPbg3ADHwwK+?=
+ =?iso-8859-1?Q?uUvGFCASPINSjS/jD84sqjmj+s8MXu1xZ8zj7l7kBp0cCuKzDzzvE1pJ9U?=
+ =?iso-8859-1?Q?SR6nYxwQdpbuZp2HK0RHI7tkRc7cks/W7TZjzyUwdPlkTkU8rn1FQ184SG?=
+ =?iso-8859-1?Q?hNpmfBiVv7mF1XunNOEBj93jqWy43QZdVsGP46kszyqFnUvwCwUb/SOSlR?=
+ =?iso-8859-1?Q?xnr0y6rkT26kRq7h+SM2JtO6/fCQx0/PjBqQ4XdXhEbZuTY7Dq3qGeIA8j?=
+ =?iso-8859-1?Q?C4Ww1qkDGQ=3D=3D?=
 Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: NjlG0UiOE09Bi2jLQw34lOvf58TK9+OXEck0NTrV0A8Q3pDKyfmsKq669/ssAhL6seMQ0PKWAw7tQr2nBHOpLq00pnv3iVGFfgjpxbsFncDxJ8/bfboaOLl1FKYuXXJ2q/KHfpm/knQ/NIMl1m2PJVYFwVLE8U9sitZ+wYsF9VBcpmsPwoBBIVkmDlNCtDWeShp5lFuYlo2Sc7H1QaxqiWZ7hKE79abu819B6I5lxWlPYEa298dZFzm51866LwvNO9APs2VPzsto8Nck0b9YVisdNOa+Dfd1XVSikWR4Rtb5Mp6TFIulS7CXoBiurSkJ7GJSL4E8hm7FWzqHtEnCkg==
+X-Exchange-RoutingPolicyChecked: mLTn7TPnbmQwz+6mYuF2ahZKrDkMneuZlcFe6n7CCF2xs04zLQ3KP3Pack/whKswOi20rYAeeK86Ob51e6NbvV/Za5JtG+HeyJe5E+ZIorS7ldh/H+9E63L9QVWtDBksq4xZWxtJMjknfwrzuDauX2vT6wmDX40iXtwQ9OpilpZ2fV4E8QKuySnuNErAEUG7HNQQTpQiFQfFWauF7kOjJ6eV5nv+Wqz6JOXchKW9eYby5B718OLuabc2mVR5oBX8+SokCWw2jdBdWHxT2gKnuRNjWDwWXpzBMb0qukDUFO8M84LI7g1uWVjJqcwoyGlIsqpGUupHgUq4KC+0DAHlgg==
 X-MS-Exchange-CrossTenant-AuthAs: Internal
 X-MS-Exchange-CrossTenant-AuthSource: CH3PR11MB7177.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 8545f0a9-a677-447f-9731-08de84b13e1a
-X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2026 05:43:11.8589 (UTC)
+X-MS-Exchange-CrossTenant-Network-Message-Id: b3a294d4-46e6-4ec9-510d-08de84b22ba4
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2026 05:49:50.3900 (UTC)
 X-MS-Exchange-CrossTenant-fromentityheader: Hosted
 X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
 X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: GrWyQV81HAYjquy1pIRep/o4eGlAvoKz/h3uu4zNlK7ixrusUrKdNflOzKXx170P7/KMWnHDzZWUMrmeXcquzwlNKSpjn6d5JGq7lz4bAkk=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: DS7PR11MB8853
+X-MS-Exchange-CrossTenant-userprincipalname: xnN7kVsRdlDJXy0imGym4ERoIZCbqUOyOgS2RwtNGiDpFZaBXKn1aVD9K6JCFxXvorYN1NuYiJzun+1bwi5HF4UHwGnZC3eaXe1+FoVgsJI=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO1PR11MB5012
 X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=198.175.65.15;
+Received-SPF: pass client-ip=198.175.65.11;
  envelope-from=vivek.kasireddy@intel.com; helo=mgamail.intel.com
 X-Spam_score_int: -26
 X-Spam_score: -2.7
@@ -182,99 +182,285 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-> Subject: Re: [PATCH v11 06/10] vfio/region: Add a helper to get region
-> index from memory region
+Hi Cedric,
+
+> Subject: Re: [PATCH v11 07/10] vfio/device: Add support for creating
+> dmabuf from multiple ranges
 >=20
-> On 3/17/26 15:41, C=E9dric Le Goater wrote:
-> > On 3/11/26 03:50, Vivek Kasireddy wrote:
-> >> Having a way to figure out the region index (or bar) associated
-> >> with a memory region is helpful in various scenarios. For example,
-> >> this capability can be useful in retrieving the region info needed
-> >> for mapping a part of a VFIO region or creating a dmabuf.
-> >>
-> >> Cc: Alex Williamson <alex@shazbot.org>
-> >> Cc: C=E9dric Le Goater <clg@redhat.com>
-> >> Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
-> >> ---
-> >> =A0 hw/vfio/region.c=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 | 14 +++++=
-+++++++++
-> >> =A0 include/hw/vfio/vfio-device.h | 10 ++++++++++
-> >> =A0 2 files changed, 24 insertions(+)
-> >>
-> >> diff --git a/hw/vfio/region.c b/hw/vfio/region.c
-> >> index 47fdc2df34..4cb92216ef 100644
-> >> --- a/hw/vfio/region.c
-> >> +++ b/hw/vfio/region.c
-> >> @@ -539,3 +539,17 @@ void
-> vfio_region_mmaps_set_enabled(VFIORegion *region, bool enabled)
-> >> =A0=A0=A0=A0=A0 trace_vfio_region_mmaps_set_enabled(memory_region_name=
-(re
-> gion->mem),
-> >> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 enabled);
-> >> =A0 }
-> >> +
-> >> +int vfio_get_region_index_from_mr(MemoryRegion *mr)
+> HEllo,
+>=20
+> On 3/11/26 03:50, Vivek Kasireddy wrote:
+> > In order to create a dmabuf associated with a buffer that spans
+> > multiple ranges, we first need to identify the VFIO region and
+> > index the buffer (represented by iovec) belongs to and then
+> > translate its addresses to offsets within that region.
 > >
+> > The qemu_ram_block_from_host() API gives us both the region and
+> > the offset info we need to populate the dma ranges so that we can
+> > invoke the VFIO_DEVICE_FEATURE_DMA_BUF feature to create the
+> dmabuf.
 > >
-> > I think you can move this routine as a static in device.c now. No need
-> > to export a service.
+> > Also, instead of iterating over all QOM devices to find the
+> > VFIODevice associated with a memory region, introduce a helper to
+> > just use the vfio_device_list to lookup the VFIODevice.
+> >
+> > Lastly, introduce an enum to return the type of error encountered
+> > while creating the dmabuf fd.
+> >
+> > Cc: Alex Williamson <alex@shazbot.org>
+> > Cc: C=E9dric Le Goater <clg@redhat.com>
+> > Signed-off-by: Vivek Kasireddy <vivek.kasireddy@intel.com>
+> > ---
+> >   hw/vfio/device.c              | 81
+> +++++++++++++++++++++++++++++++++++
+> >   hw/vfio/dmabuf-stubs.c        | 17 ++++++++
+> >   hw/vfio/meson.build           |  1 +
+> >   include/hw/vfio/vfio-device.h | 22 ++++++++++
 >=20
-> you can't because of vfio_region_ops.
+> Please add to your .git/config
 >=20
-> Returning a VFIORegion seems cleaner though.
-I agree. Will make the change in the next version.
+> [diff]
+> 	orderFile =3D /path/to/qemu/scripts/git.orderfile
+Done. Thank you for the tip.
+
+>=20
+>=20
+>=20
+> >   4 files changed, 121 insertions(+)
+> >   create mode 100644 hw/vfio/dmabuf-stubs.c
+> >
+> > diff --git a/hw/vfio/device.c b/hw/vfio/device.c
+> > index 973fc35b59..2d01059be0 100644
+> > --- a/hw/vfio/device.c
+> > +++ b/hw/vfio/device.c
+> > @@ -21,6 +21,7 @@
+> >   #include "qemu/osdep.h"
+> >   #include <sys/ioctl.h>
+> >
+> > +#include "system/ramblock.h"
+> >   #include "hw/vfio/vfio-device.h"
+> >   #include "hw/vfio/pci.h"
+> >   #include "hw/core/iommu.h"
+> > @@ -644,3 +645,83 @@ static VFIODeviceIOOps
+> vfio_device_io_ops_ioctl =3D {
+> >       .region_read =3D vfio_device_io_region_read,
+> >       .region_write =3D vfio_device_io_region_write,
+> >   };
+> > +
+>=20
+> Please add a comment
+>=20
+>    /*
+>     * For virtio-gpu, < explain the context >
+>     */
+Ok, will do.
+
+>=20
+>=20
+> > +static bool vfio_device_lookup(struct iovec *iov, VFIODevice
+> **vbasedevp,
+> > +                               Error **errp)
+> > +{
+> > +    VFIODevice *vbasedev;
+> > +    RAMBlock *first_rb;
+> > +    ram_addr_t offset;
+> > +
+> > +    first_rb =3D qemu_ram_block_from_host(iov[0].iov_base, false,
+> &offset);
+> > +    if (!first_rb) {
+> > +        error_setg(errp, "Could not find first ramblock\n");
+> > +        return false;
+> > +    }
+> > +
+> > +    QLIST_FOREACH(vbasedev, &vfio_device_list, next) {
+> > +        if (vbasedev->dev =3D=3D first_rb->mr->dev) {
+> > +            *vbasedevp =3D vbasedev;
+> > +            return true;
+> > +        }
+> > +    }
+> > +    error_setg(errp, "No VFIO device found to create dmabuf from\n");
+> > +    return false;
+> > +}
+> > +
+> > +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+> iov_cnt,
+> > +                                 Error **errp)
+> > +{
+> > +    g_autofree struct vfio_device_feature *feature =3D NULL;
+> > +    struct vfio_device_feature_dma_buf *dma_buf;
+> > +    RAMBlock *rb, *first_rb;
+> > +    VFIODevice *vbasedev;
+> > +    ram_addr_t offset;
+> > +    int i, index, ret;
+> > +    size_t argsz;
+>=20
+> Shouldn't we check iov and iov_cnt values ?
+You mean something like this:
+if (iov_size(iov, iov_cnt) !=3D dmabuf_size)
+and also calling vfio_device_lookup() here instead of below?
+
+>=20
+> > +    argsz =3D sizeof(*feature) + sizeof (*dma_buf) +
+> > +            sizeof(struct vfio_region_dma_range) * iov_cnt;
+> > +    feature =3D g_malloc0(argsz);
+> > +    *feature =3D (struct vfio_device_feature) {
+> > +        .argsz =3D argsz,
+> > +        .flags =3D VFIO_DEVICE_FEATURE_GET |
+> VFIO_DEVICE_FEATURE_DMA_BUF,
+> > +    };
+> > +    dma_buf =3D (struct vfio_device_feature_dma_buf *)feature->data;
+> > +
+> > +    if (!vfio_device_lookup(iov, &vbasedev, errp)) {
+> > +        return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+> > +    }
+> > +
+> > +    for (i =3D 0; i < iov_cnt; i++) {
+> > +        rb =3D qemu_ram_block_from_host(iov[i].iov_base, false, &offse=
+t);
+> > +        if (i =3D=3D 0) {
+> > +            first_rb =3D rb;
+> > +        }
+> > +        if (!rb || rb !=3D first_rb) {
+> > +            error_setg(errp, "Cannot create dmabuf with different
+> regions\n");
+> > +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+> > +        }
+> > +
+> > +        index =3D vfio_get_region_index_from_mr(rb->mr);
+>=20
+> returning a VFIORegion seems cleaner.
+>=20
+> > +        if (index < 0) {
+> > +            error_setg(errp, "Cannot find region index for dmabuf
+> segment\n");
+> > +            return VFIO_DMABUF_CREATE_ERR_INVALID_IOV;
+> > +        }
+>=20
+>=20
+> Could you please introduce a common helper for the code above that
+> could be shared with vfio_device_mmap_dmabuf() ? The same
+> sequence
+> is duplicated.
+Ok, I'll try to add a common helper.
+
+>=20
+>=20
+> > +        dma_buf->region_index =3D index;
+> > +        dma_buf->dma_ranges[i].offset =3D offset;
+> > +        dma_buf->dma_ranges[i].length =3D iov[i].iov_len;
+> > +    }
+> > +
+> > +    dma_buf->nr_ranges =3D iov_cnt;
+> > +    dma_buf->open_flags =3D O_RDONLY | O_CLOEXEC;
+> > +
+> > +    ret =3D vfio_device_get_feature(vbasedev, feature);
+> > +    if (ret < 0) {
+> > +        error_setg_errno(errp, -ret,
+> > +                         "Could not create dmabuf fd via VFIO device")=
+;
+> > +        return VFIO_DMABUF_CREATE_ERR_UNSPEC;
+>=20
+> See vfio_region_create_dma_buf() for possible errors. You might want
+> to introduce a helper.
+IIUC, for this use-case, I think we want to treat any error here as a failu=
+re
+instead of treating ENOTTY as success like in the case of
+vfio_region_create_dma_buf().
+
+>=20
+>=20
+> > +    }
+> > +    return ret;
+> > +}
+> > diff --git a/hw/vfio/dmabuf-stubs.c b/hw/vfio/dmabuf-stubs.c
+> > new file mode 100644
+> > index 0000000000..e71e2b68dd
+> > --- /dev/null
+> > +++ b/hw/vfio/dmabuf-stubs.c
+> > @@ -0,0 +1,17 @@
+> > +/*
+> > + * Copyright (c) 2026 Intel and/or its affiliates.
+> > + *
+> > + * SPDX-License-Identifier: GPL-2.0-or-later
+> > + */
+> > +
+> > +#include "qemu/osdep.h"
+> > +#include "qemu/error-report.h"
+> > +#include "qemu/iov.h"
+> > +#include "hw/vfio/vfio-device.h"
+> > +
+> > +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+> iov_cnt,
+> > +                                 Error **errp)
+> > +{
+> > +    error_setg(errp, "VFIO dmabuf support is not enabled");
+> > +    return VFIO_DMABUF_CREATE_HOST_ERROR;
+> > +}
+> > diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
+> > index 82f68698fb..ac899d30a8 100644
+> > --- a/hw/vfio/meson.build
+> > +++ b/hw/vfio/meson.build
+> > @@ -34,3 +34,4 @@ system_ss.add(when: 'CONFIG_IOMMUFD',
+> if_false: files('iommufd-stubs.c'))
+> >   system_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
+> >     'display.c',
+> >   ))
+> > +system_ss.add(when: 'CONFIG_VFIO', if_false: files('dmabuf-stubs.c'))
+> > diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-
+> device.h
+> > index 596c7f5a10..566e5d8bc0 100644
+> > --- a/include/hw/vfio/vfio-device.h
+> > +++ b/include/hw/vfio/vfio-device.h
+> > @@ -41,6 +41,13 @@ enum {
+> >       VFIO_DEVICE_TYPE_AP =3D 3,
+> >   };
+> >
+> > +enum {
+> > +    /* The Guest passed addresses stored in IOV are invalid */
+> > +    VFIO_DMABUF_CREATE_ERR_INVALID_IOV =3D -1,
+> > +    /* Guest or Host may be at fault for this type of error */
+> > +    VFIO_DMABUF_CREATE_ERR_UNSPEC =3D -2,
+> > +};
+>=20
+> This is overkill. Please return a bool value and ensure the errp
+> argument is correctly filled.
+Having these specific errors is really useful as it makes the dmabuf
+handling in virtio-gpu very intuitive and sensible. Akihiko (virtio-gpu
+reviewer) suggested this mechanism and can add more comments
+or explain the rationale for this.
 
 Thanks,
 Vivek
 
 >=20
-> Thanks,
->=20
-> C.
->=20
->=20
+> > +
+> >   typedef struct VFIODeviceOps VFIODeviceOps;
+> >   typedef struct VFIODeviceIOOps VFIODeviceIOOps;
+> >   typedef struct VFIOMigration VFIOMigration;
+> > @@ -318,6 +325,21 @@ int vfio_device_get_irq_info(VFIODevice
+> *vbasedev, int index,
+> >    * Returns the region index or -1 on error.
+> >    */
+> >   int vfio_get_region_index_from_mr(MemoryRegion *mr);
+> > +
+> > +/**
+> > + * Create a dmabuf fd by first translating the addresses in the
+> > + * iovec array into VFIO region offsets and then invoking the
+> > + * VFIO_DEVICE_FEATURE_DMA_BUF feature.
+> > + *
+> > + * @iov: array of iovec entries associated with a buffer
+> > + * @iov_cnt: number of entries in the iovec array
+> > + * @errp: pointer to Error*, to store an error if it happens.
+> > + *
+> > + * Returns the created dmabuf fd or either
+> VFIO_DMABUF_CREATE_ERR_UNSPEC
+> > + * or VFIO_DMABUF_CREATE_ERR_INVALID_IOV on error.
+> > + */
+> > +int vfio_device_create_dmabuf_fd(struct iovec *iov, unsigned int
+> iov_cnt,
+> > +                                 Error **errp);
+> >   #endif
 > >
-> > Thanks,
-> >
-> > C.
-> >
-> >> +{
-> >> +=A0=A0=A0 VFIORegion *region;
-> >> +
-> >> +=A0=A0=A0 while (mr->container) {
-> >> +=A0=A0=A0=A0=A0=A0=A0 if (mr->ops =3D=3D &vfio_region_ops) {
-> >> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 region =3D mr->opaque;
-> >> +=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 return region->nr;
-> >> +=A0=A0=A0=A0=A0=A0=A0 }
-> >> +=A0=A0=A0=A0=A0=A0=A0 mr =3D mr->container;
-> >> +=A0=A0=A0 }
-> >> +=A0=A0=A0 return -1;
-> >> +}
-> >> diff --git a/include/hw/vfio/vfio-device.h b/include/hw/vfio/vfio-
-> device.h
-> >> index 828a31c006..596c7f5a10 100644
-> >> --- a/include/hw/vfio/vfio-device.h
-> >> +++ b/include/hw/vfio/vfio-device.h
-> >> @@ -308,6 +308,16 @@ bool
-> vfio_device_has_region_cap(VFIODevice *vbasedev, int region, uint16_t
-> cap_t
-> >> =A0 int vfio_device_get_irq_info(VFIODevice *vbasedev, int index,
-> >> =A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0=
-=A0=A0=A0=A0=A0=A0=A0=A0=A0=A0 struct vfio_irq_info *info);
-> >> +
-> >> +/**
-> >> + * Return the region index associated with a given MemoryRegion.
-> The index
-> >> + * can be useful in retrieving region info.
-> >> + *
-> >> + * @mr: MemoryRegion to use
-> >> + *
-> >> + * Returns the region index or -1 on error.
-> >> + */
-> >> +int vfio_get_region_index_from_mr(MemoryRegion *mr);
-> >> =A0 #endif
-> >> =A0 /* Returns 0 on success, or a negative errno. */
-> >
+> >   /* Returns 0 on success, or a negative errno. */
 
 
