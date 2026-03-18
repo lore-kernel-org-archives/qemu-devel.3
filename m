@@ -4,41 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E7BF91077612
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 20:36:46 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 306AF1077612
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 20:37:07 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2xcI-0001GU-Rl; Wed, 18 Mar 2026 16:35:47 -0400
+	id 1w2xdQ-0001wl-Hd; Wed, 18 Mar 2026 16:36:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w2xcE-0001FN-JJ; Wed, 18 Mar 2026 16:35:42 -0400
+ id 1w2xdO-0001vw-R4; Wed, 18 Mar 2026 16:36:54 -0400
 Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>)
- id 1w2xcB-0005TS-95; Wed, 18 Mar 2026 16:35:42 -0400
+ id 1w2xdM-0006Cs-Jb; Wed, 18 Mar 2026 16:36:54 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773866118; bh=jcvlcTIblxWGCOGMbDjqAozQmtTh8zioIEymsBpq694=;
+ t=1773866202; bh=niQw1e9r5WH4hH4jD8mT2JIkEC8LTiHuf7P6ZLmacQ0=;
  h=Date:Subject:To:Cc:References:From:In-Reply-To;
- b=Kbu0yER5lgE7T+7vesygVdovPpcNNjIvvrQVv/yfwFxQ0czRvIj9O/7ij36rvrHkm
- 6OLZ/1FvckMD+G43T1Jnk3TCB+B0mfEAJO6KFUieu3ZeTIsNR09oDV6h+D4VoS4o5x
- 0uUqNh1+cfNCvRTLkcs0guhOq0OBwa2zNdAk3zQ6mQl0NiiX8Qbntm5JUYWpUQoQLh
- IJkYcb/CAW8fcLv1rtpGnkTMzW1C3ci3FLeAJGFi9LpyU1tAAWhQFF34hCB2HkN94+
- PDLHpAj3PQutwVD5rnR4LGQiKt/UQI4bsi8nG6ZsFtW0LGySxKSH5eaAyP1G8HxFhO
- 8RTnUKbrq/DMw==
+ b=b148Cnglr7xlQ5SIstB+OLB+WAkvAZq+zNlCLZYVIM8bVsneIC9tkKpl2YcrAMuIs
+ Lx8TKR0+TJtrMFkjIemnU2lVUSAUQdYnPpz9U8iXu4gYVC47rA6PUczRlO09b3FuCJ
+ 4fVvbxIJR5i7JWbzzN5pgKo3wDP79EN76BT2bbE4y4VKIY1+YcirBlORYwYhDdYexx
+ AsUL+AgEuIO+Awpx0Xk/7R+FSTOyiy7AzQnvLyP8GmREXw6eZsT9jgVAuPYsfSzTbm
+ vM75pWRs9SJ+9f5nZ7lYPweK5g8ovmSRrOXkVaJEp1wmfCeaopEw2umrtI+4gcBe/y
+ 2C//LwATfwEtQ==
 Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 32EDE195124;
- Wed, 18 Mar 2026 23:35:18 +0300 (MSK)
-Message-ID: <7e3a45c4-a7bf-4679-8799-7f482fd9334c@tls.msk.ru>
-Date: Wed, 18 Mar 2026 23:35:26 +0300
+ by isrv.corpit.ru (Postfix) with ESMTP id A93EA195127;
+ Wed, 18 Mar 2026 23:36:42 +0300 (MSK)
+Message-ID: <f6c365e9-7d4e-4ad5-afc3-1fe31230baae@tls.msk.ru>
+Date: Wed, 18 Mar 2026 23:36:50 +0300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Block layer patches
-To: Hanna Czenczek <hreitz@redhat.com>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260317134521.112121-1-hreitz@redhat.com>
+Subject: Re: [PULL 02/10] io: Fix TLS bye task leak
+To: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org
+Cc: Peter Xu <peterx@redhat.com>, =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?=
+ <berrange@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+References: <20260317182320.31991-1-farosas@suse.de>
+ <20260317182320.31991-3-farosas@suse.de>
 Content-Language: en-US, ru-RU
 From: Michael Tokarev <mjt@tls.msk.ru>
 Autocrypt: addr=mjt@tls.msk.ru; keydata=
@@ -84,9 +85,9 @@ Autocrypt: addr=mjt@tls.msk.ru; keydata=
  YPkzzso6HT7rlapB5nulYmplJZSZ4RmE1ATZKf+wUPocDu6N10LtBNbwHWTT5NLtxNJAJAvl
  ojis6H1kRWZE/n5buyPY2NYeyWfjjrerOYt3er55n4C1I88RSCTGeejVmXWuo65QD2epvzE6
  3GgKngeVm7shlp7+d3D3+fAAHTvulQQqV3jOodz+B4yzuZ7WljkNrmrWrH8aI4uA98c=
-In-Reply-To: <20260317134521.112121-1-hreitz@redhat.com>
+In-Reply-To: <20260317182320.31991-3-farosas@suse.de>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
  helo=isrv.corpit.ru
 X-Spam_score_int: -2
@@ -111,33 +112,36 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 17.03.2026 16:45, Hanna Czenczek wrote:
-[]
-> Block layer patches for rc0
+On 17.03.2026 21:23, Fabiano Rosas wrote:
+> Recent fixes to TLS tasks memory handling have left the TLS bye task
+> uncovered. Fix by freeing the task in the same way the handshake task
+> is freed.
 > 
-> - Fix race condition in throttle-group code triggering an assertion
->    failure
-> - Fix assertion failure in mirror job when issuing job-complete twice
+> Direct leak of 704 byte(s) in 4 object(s) allocated from:
+>      #1 0x7f5909b1d6a0 in g_malloc0 ../glib/gmem.c:163
+>      #2 0x557650496d61 in qio_task_new ../io/task.c:58:12
+>      #3 0x557650475d7f in qio_channel_tls_bye ../io/channel-tls.c:352:12
+>      #4 0x55764f7a1bb4 in migration_tls_channel_end ../migration/tls.c:159:5
+>      #5 0x55764f709750 in migration_ioc_shutdown_gracefully ../migration/multifd.c:462:9
+>      #6 0x55764f6fcf53 in multifd_send_terminate_threads ../migration/multifd.c:493:13
+>      #7 0x55764f6fcafb in multifd_send_shutdown ../migration/multifd.c:580:5
+>      #8 0x55764f6e1b14 in migration_cleanup ../migration/migration.c:1323:9
+>      #9 0x55764f6f5bac in migration_cleanup_bh ../migration/migration.c:1350:5
 > 
-> ----------------------------------------------------------------
-> Alberto Garcia (1):
->    throttle-group: Fix race condition in throttle_group_restart_queue()
-> 
-> Fiona Ebner (1):
->    block/mirror: fix assertion failure upon duplicate complete for job
->      using 'replaces'
-> 
->   block/mirror.c          | 28 ++++++++-------
->   block/throttle-groups.c | 79 +++++++++++++++++++++++++++++++----------
->   2 files changed, 75 insertions(+), 32 deletions(-)
+> Fixes: d39d0f3acd ("io: fix cleanup for TLS I/O source data on cancellation")
+> Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+> Link: https://lore.kernel.org/qemu-devel/20260311213418.16951-3-farosas@suse.de
+> Signed-off-by: Fabiano Rosas <farosas@suse.de>
 
-Is it not qemu-stable material?
-The amount of changes is a bit too high though.
+This seems like a qemu-stable material, -- since the above mentioned
+commit is in currently active stable branches.
 
-I'm picking it up for the currently active stable branches, please
-let me know if I shouldn't.
+Please let me know if I shouldn't pick it up for the currently active
+stable branches (10.0 & 10.2).
 
 Thanks,
 
 /mjt
+
 
