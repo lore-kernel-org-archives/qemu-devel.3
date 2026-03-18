@@ -4,75 +4,169 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DED0FCD0C1
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 07:04:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D1F8CFCD0C6
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 07:37:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2kxD-0004Va-V0; Wed, 18 Mar 2026 03:04:32 -0400
+	id 1w2lSb-000835-V5; Wed, 18 Mar 2026 03:36:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kx7-0004P0-Q4
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 03:04:25 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w2lSZ-00082i-Kx
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 03:36:55 -0400
+Received: from mgamail.intel.com ([192.198.163.19])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w2kx5-0002CB-4a
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 03:04:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773817459;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=6W/bWXTuFUqd3Xy1AArmgNcL8Adju5I7FKYhUPJ9Te4=;
- b=BSCx9qENQOUU14rn6N1LE0YPn/6Chr+4WsEzlA5yp2jHl6bmo7c3W45Ng9JG39ivSUn/mo
- H7FsGAfY9HQ+O6REZa5jTk30wb0MI6sIrVzoLKz656xAeMw2gLz6VK9ac0P4DdLy2LY897
- ByL7hIE0r61lVIrUMCWS/7IId9hn4c0=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-356-9ff9mFV9O3mKLmBNM0Ygig-1; Wed,
- 18 Mar 2026 03:04:13 -0400
-X-MC-Unique: 9ff9mFV9O3mKLmBNM0Ygig-1
-X-Mimecast-MFC-AGG-ID: 9ff9mFV9O3mKLmBNM0Ygig_1773817452
-Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 0EEC41800283; Wed, 18 Mar 2026 07:04:12 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 3E18030001A1; Wed, 18 Mar 2026 07:04:11 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id C2A3E21E6937; Wed, 18 Mar 2026 08:04:08 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Alessandro Ratti <alessandro@0x65c.net>
-Cc: qemu-devel@nongnu.org,  peter.maydell@linaro.org,  berrange@redhat.com,
- mst@redhat.com,  pbonzini@redhat.com
-Subject: Re: [PATCH v2 2/2] hw/qdev: Remove qdev_get_human_name()
-In-Reply-To: <CAKiXHKd15rFWk3qM+f_X2JXr29u1ygTumCcGrm9iDLEtwALQNQ@mail.gmail.com>
- (Alessandro Ratti's message of "Tue, 17 Mar 2026 22:38:48 +0100")
-References: <20260311215003.664815-1-alessandro@0x65c.net>
- <20260311215003.664815-3-alessandro@0x65c.net>
- <87h5qflyqe.fsf@pond.sub.org>
- <CAKiXHKd15rFWk3qM+f_X2JXr29u1ygTumCcGrm9iDLEtwALQNQ@mail.gmail.com>
-Date: Wed, 18 Mar 2026 08:04:08 +0100
-Message-ID: <87wlz9r53r.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
+ id 1w2lSW-0005CV-Vh
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 03:36:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
+ d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
+ t=1773819413; x=1805355413;
+ h=from:to:cc:subject:date:message-id:references:
+ in-reply-to:content-transfer-encoding:mime-version;
+ bh=2QGf46Ji0zzWAPpuj5OsDVVVKnENoh+HYNTKuGRekXg=;
+ b=Ju+LJ6BZSZXc0IehQZnO0+8smEaoabSCARIXKNObQdzwF2IafysbGmUP
+ uUelMGkxhman11gKX/O8y/B7xsgX70VNUYwAPw7WkHjDyZgJjnHQ/RPgA
+ zcCgnspILjbecyGHbviJ1IaxV9nxzR7dn6N7dWECleNANDha9yQx74Lfy
+ XBjqpUWjRZcMX00CjUDv2tRsGN4UQauaeO5V+AM4OREU5Te0/7QalIIg3
+ kxn4Inx9gltadmFMzSQ6XEWCAo1YBUjUsaqXdT3vwL8VAU7GMVL0umSs8
+ mR0nf2qkOCJI+bVSlNVGEfxJmcN3GaWsPXJX0ABDUFiXkelJjk38hbcw9 A==;
+X-CSE-ConnectionGUID: OcMcyYmJSQCaX8MUR2Hdww==
+X-CSE-MsgGUID: z0fn+A8RS+uQxTk6R2MjmQ==
+X-IronPort-AV: E=McAfee;i="6800,10657,11732"; a="73886235"
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="73886235"
+Received: from fmviesa008.fm.intel.com ([10.60.135.148])
+ by fmvoesa113.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Mar 2026 00:36:47 -0700
+X-CSE-ConnectionGUID: ePesRMqRRcuG3ro7cW0pIg==
+X-CSE-MsgGUID: Jew+/Q1fSxS3qZ5Pj4chZg==
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="219985420"
+Received: from orsmsx901.amr.corp.intel.com ([10.22.229.23])
+ by fmviesa008.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
+ 18 Mar 2026 00:36:47 -0700
+Received: from ORSMSX903.amr.corp.intel.com (10.22.229.25) by
+ ORSMSX901.amr.corp.intel.com (10.22.229.23) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 18 Mar 2026 00:36:45 -0700
+Received: from ORSEDG902.ED.cps.intel.com (10.7.248.12) by
+ ORSMSX903.amr.corp.intel.com (10.22.229.25) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37 via Frontend Transport; Wed, 18 Mar 2026 00:36:45 -0700
+Received: from PH8PR06CU001.outbound.protection.outlook.com (40.107.209.51) by
+ edgegateway.intel.com (134.134.137.112) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.2562.37; Wed, 18 Mar 2026 00:36:43 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=mVOb5kzmHMcb9Mbli7yZzzaptgFYJumz1XpFDqZjS1dxy4dZ9nQQuP3H/9WP4ak+VusUfBRcF6UZMOrCa8yQT7wJHnRlllB9Yx5QuM0PNlgmKoURBAYgyywROf3Zrdhq2mVQL53Lo9pgl3WEPPNGwVHSN7ETx9HR1awmhg5+t5ae7hA+Ho4zQMEysp+s3mu5d74BiaFwqUcCAXUZ7yQYmxnHWUAGO+Nq5+uIN9BSr9mI0zJATZ2NL/NxVgKVpKa2wz7CiyXuElvaVXMmQ9UhSd+8AMpKqNqHtZrOqHJSIh+qOAxYmLE+rKK6vnWBoY+kWQb+fYI/L3cbKn3PJe+QLA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=DhovkzMvltIxBCS9Fh0L0ij4CC1oPEEMXyrLIebijq0=;
+ b=dC+MM5dqB0CKMGOVjc1/P1UESXYey7pzpvij1ppwxY0vh/6nLrPdbhMEamucidHdR++rIvTUQTlk3rH/xeXU/NNLsKOmr/HLE9+ZxQRQSmA48QwNYW1j+kJaMKwFtUQ/EEtZ6iZLhB8/9BqxyRXsbVkVr6dA6r7qyXYd2XmnU3aN0SCyWkxqUSA6CKqjgLlS6pPxNwx15dwVpB3ZWNCI88viifYA/xkiTYi5HDfi5JnA2PUj+6tZiwAyhftjsIm87W5iABRo9hR831QpUORcSZH3NNoAsvaH7c9f21X33JjmOg/VeNqO0AnIS4XKnM6BtoOti53SlyA6/DIpn/hbXw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
+ dkim=pass header.d=intel.com; arc=none
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
+ by CH3PR11MB8433.namprd11.prod.outlook.com (2603:10b6:610:168::14)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Wed, 18 Mar
+ 2026 07:36:41 +0000
+Received: from IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
+ ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9723.013; Wed, 18 Mar 2026
+ 07:36:41 +0000
+From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>
+CC: =?iso-8859-1?Q?C=E9dric_Le_Goater?= <clg@redhat.com>, "Liu, Yi L"
+ <yi.l.liu@intel.com>, Alex Williamson <alex@shazbot.org>, Eric Auger
+ <eric.auger@redhat.com>, "philmd@linaro.org" <philmd@linaro.org>
+Subject: RE: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
+ not available
+Thread-Topic: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is
+ not available
+Thread-Index: AQHctmGHiBHM8iMR00eLUFzvqqaWNrWz5tXg
+Date: Wed, 18 Mar 2026 07:36:41 +0000
+Message-ID: <IA3PR11MB913683DE47A156F52C77AE7C924EA@IA3PR11MB9136.namprd11.prod.outlook.com>
+References: <20260317225751.1325098-1-pierrick.bouvier@linaro.org>
+ <20260317225751.1325098-2-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260317225751.1325098-2-pierrick.bouvier@linaro.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=intel.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|CH3PR11MB8433:EE_
+x-ms-office365-filtering-correlation-id: 5ecc7bd0-aa26-4f7a-5b1b-08de84c118c7
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|376014|366016|1800799024|18002099003|22082099003|56012099003|38070700021;
+x-microsoft-antispam-message-info: 3SNgKLzCD71HqbXWiKLaG6uvsY2CXxLgM3WkblFgraRFdJpWe0YCwJlsBvYt9FK7kzmKfSes7GfPWK+LZu0dHiKKodu3TIB8ZENBb/dzzn/s3kKJFvdGNMGux40bG3E5F6CUf4XSDyVJLm+lqT99zn1OF+HzQov45BynwfuizHz7Cdfc5KmieDOCKJ4oaJMCAwKoxg9IhDn2MF1ZE1pH+uAocPqcctHUIUFe54IhowukAZcYcesUuvkqTF0Z6sbE7ZGxQ6h6vZ4FXquRyaf4+UWQr40G63NUicxkwNYL40+VxHfYiFWjjgpOACrQHXBS+SMCN5jultAXhHKINoBF1g97Syecep8DjUyKW2jar/PwBUvi+vnDwPS0rFj3x3BDWkajnJokSa3EoRAKyYvo4zY4/uAGR7un16EXXTWgMCT9Uq+TNyXL1M2tXS9sFNSXOihwHY07qbMVyQchRHWV+aNBjfQHPkqo2oLFEgeRqCR3aOGKdx2QxB1m3hZQ/wVYu2oE6gfpB7ekNdHyfCK3m+xG2Knqv8Us+JSvW5tH1YpBMtvRwasdxvAN5Dsd2NVG+54psE7EmXxpPerERpQveijMtuCS45q9AIVqCBzT6Mx6/pa05XiUBlREOln3RjGRvUF6jz07u6aBZc4DGjHSLthiQmgT/CqDQkrC9vo66PHyxmCwg4vEiGhgfEKK3BN7/CXTfSAFE8Sz5Ci9GIcMGJ37qMklHzpLEeQuE7BsyD5hM1IJXKGuw3KUCYZeMovplR3KUO3YuQPWcHsAXTRdV+9uL0OS7P3zLRPg/7h/hP8=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(366016)(1800799024)(18002099003)(22082099003)(56012099003)(38070700021);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?yka2/CTn7YUiPkXLM8XINmUVfUnq5wWRW+TztY9ZXgthf2saeoQV9u2g1W?=
+ =?iso-8859-1?Q?DUHQ9JX/HmFIvNe6UtIdT1TyfhuHbQ5seSXRS3z5m/E0HHXIin4PyCV/ap?=
+ =?iso-8859-1?Q?QjHQ3828kdahvHO4wD7ouA7yLxe5txz1uoJlIzBcpcrRioMxudmUKfOp5H?=
+ =?iso-8859-1?Q?OVnGE0fcqQdDWvb1Aauf34VlvpRiKpWSm7FnGt/gcVcVcEAjWH73CT1ewT?=
+ =?iso-8859-1?Q?bLcq/gz2M9Hnf7OpBKMpyizfDKY3I9ODgN215Tne6jXd6L3LFKTgiGNTyu?=
+ =?iso-8859-1?Q?7kNStHukENtPCiisgkKDUJAZ/ntk2It0AlTxZMhGrg7jIoAzmyzvqnSqbw?=
+ =?iso-8859-1?Q?r+ykI7feQJNHU7mZhgRRJIIsTG0J4PkMsaJdCRp/zNJ+YbY0WBG8izsf3M?=
+ =?iso-8859-1?Q?8iSpt2jnSzXBUrZJ7juUWAU0H6Rlfw6VEH3AaGAhhklK00O3hBZU0UfcM+?=
+ =?iso-8859-1?Q?uZH8QcN6tgdQNU24NZtauqKdsp6UUO4o9UmX+BTylZD7oKh2SVC7NoG6A4?=
+ =?iso-8859-1?Q?SHe+V30csZ4D+pOePRVgOGJq21sYQIqzM33wr1vc59qhwT8ZWuvP2V2ji5?=
+ =?iso-8859-1?Q?eytmOtrpgcOxIsnAIxiJ1qLOApWl9RIVQN0JawtAY6QP3ntmp/k1So2Uw7?=
+ =?iso-8859-1?Q?1LaYhSzLQqUxnPI9apLVyzeA/VF4OKPg0fAmRr3AISRiAI5yvmoRi0jlIm?=
+ =?iso-8859-1?Q?kTHOPLb5AYS3JqCW9KrkePJf8G0HIwlbARI+w7epQqdAlIrHvcO+k9YJf8?=
+ =?iso-8859-1?Q?kjzowaJagsLeuIb8moTIKz5brgOIbrealqSdGCeLkorPTU+PC3t2jY0L9N?=
+ =?iso-8859-1?Q?ywQkmmIzOZpxPsPcQSuu9v6TE2x0rs3Y3epwFhbtV0ALfBUKh8IgAg/VkH?=
+ =?iso-8859-1?Q?XzHx6zJu1qv5I1AP80UU+xw2zSkx6tQE9GKBIEe4YiDcr53m1JwFglqD2b?=
+ =?iso-8859-1?Q?Rl2BrtNrp0+foY7iaBnxQyuCr8yEuShkjxd2pxciRZRPIuaVf0xCszCtvi?=
+ =?iso-8859-1?Q?QKqq7ouN4wxqvACP15zAHjTTphiVuSZvhGMQeKD6oS8YvgYl+yJPhs8/7T?=
+ =?iso-8859-1?Q?7x8B8dxn9Xf4NvOKJOMX4p/DPWrefJrYGM+O7dtBDEi3zm3OqjamwoQMPa?=
+ =?iso-8859-1?Q?D3Yqpp7dQ3FbtfZM4kq/rqzL3biEzmBpdsPcyinPtsQqarOXBDmPc7Niez?=
+ =?iso-8859-1?Q?Pse9pxHdieCxeORnJlJ1B5CFnPl6ZV9PAmMb+eai80AYl0mOVE5lLvgt60?=
+ =?iso-8859-1?Q?emk0gDUYgMZ1W1eJWhXRZw6mWSiabzsRWI2DPy/okFm2uEvLY06wl3PkP6?=
+ =?iso-8859-1?Q?wdk1PwyzEVeShZMjmfYcQkkuZYkn+vIEfRjPkrBZDZIc2M3fCoRimd5fnG?=
+ =?iso-8859-1?Q?GRIw7IjTD0MSd5eLjQEA3UKdipLBU7VBa8iai+l/Kq2esfA0p6yZbC2mBd?=
+ =?iso-8859-1?Q?NGTAxUz9af3YvOG5HunqXl/mozdIiZfa7WTapPqu4Dw/CWDVUBvhNoGZSm?=
+ =?iso-8859-1?Q?SUuRNZRes/VbOqChpv5bXcAX7uTEgM1WtoP5bwFUe4kewZysPQ6swEWSjW?=
+ =?iso-8859-1?Q?INCQuFqoIaC1UomWj47KSkcvjwb2DuqOB0SvW6mn5IqvOdt8XjOuWNOmkU?=
+ =?iso-8859-1?Q?LjrX6yS2ts9zuC6abdX6yqu5ZfUKnLxN1PXYvQP6yWtyglgqfPfircE8TC?=
+ =?iso-8859-1?Q?KuEYu4iAv5F9cFfrZLBLtzdEEY9fN6U1IC8g2AIPs+Q+0S5ZMk3EJHSK4N?=
+ =?iso-8859-1?Q?Z3tziqWxdgMUJNbCc9xKLp5JJijcaTeyuwPKUA8LXoLCgzE8XrnDcE/ZpF?=
+ =?iso-8859-1?Q?PcwEisbL0w=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
+Content-Transfer-Encoding: quoted-printable
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+X-Exchange-RoutingPolicyChecked: JzpoptSwHnamDxzLX4dhCMIc+EOtMEjiFqYz8c6MfADahz2Pq/hIKYsSLcDiYKbRQF9sc1dTMWYoK0xaII0WzpEYo7azWNfrVAFtqtUis9ry/8ebIa9GnEUuZ7+yjwzBwbZnj+fhS/rMPLyS23Fu2rahKxSyT9nHDGP08IgO2oND7UKkAbg0Tw/EqHb1l+gXRz/vj6Uu6IqNR4OALkqEvVhofOJwGWLKH/Oy4ZREirFiiPQgGMfzOg/OBrmw+8Ne4c8UPMuUPmAnXp/3YtieS/SMKp0PeazRGNd7o0d0fQJRZ/5fLtH2ylgAwACvnZjC8vduiPbW4zuMe0jKvJ4q/Q==
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 5ecc7bd0-aa26-4f7a-5b1b-08de84c118c7
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2026 07:36:41.2096 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: Jrs0BF7y+mHnx728fFVo5lVmz+p5UHca2viKv0hrtwkjFRVltZ7XgmrH9M575T1ikiGGoafcGY6uvoArcByEUdXKEnkWIPKydihE5eoC5os=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CH3PR11MB8433
+X-OriginatorOrg: intel.com
+Received-SPF: pass client-ip=192.198.163.19;
+ envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
+X-Spam_score_int: -26
+X-Spam_score: -2.7
+X-Spam_bar: --
+X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,201 +182,52 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Alessandro Ratti <alessandro@0x65c.net> writes:
 
-> On Tue, 17 Mar 2026 at 08:08, Markus Armbruster <armbru@redhat.com> wrote:
->>
->> Alessandro Ratti <alessandro@0x65c.net> writes:
->>
->> > Remove qdev_get_human_name() and switch its two callers in
->> > hw/block/block.c to qdev_get_printable_name().
->> >
->> > qdev_get_printable_name() subsumes qdev_get_human_name(): both
->> > return the device ID when set and fall back to the canonical QOM
->> > path, but qdev_get_printable_name() also tries the bus-specific
->> > device path first, providing more informative output.
->> >
->> > Narrow the scope of dev_id in blk_check_size_and_read_all() to the
->> > blocks where it is actually used.
->> >
->> > Suggested-by: Peter Maydell <peter.maydell@linaro.org>
->> > Signed-off-by: Alessandro Ratti <alessandro@0x65c.net>
->>
->> This replaces two ways to describe a device to the user by one.  Good.
->>
->> One half of the uses is unchanged.  Good.
->>
->> The other half can now show a bus-specific device path instead of the
->> canonical QOM path.  This path can be difficult to interpret: we have
->> some twenty .get_dev_path() methods, and each of them can format however
->> it wants.  I need to guess the format to make sense of the value.  I'm
->> inclined to call this a regression.
->>
->> To address this, please insert another patch before this one that
->> changes
->>
->>         device <dev-path>
->>
->>   to
->>
->>         <bus> device <dev-path>
->>
->> This removes the guesswork, and actually satisfies the claim "more
->> informative output".
->>
+
+>-----Original Message-----
+>From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>Subject: [PATCH 1/2] backends/iommufd.c: report error when /dev/iommu is n=
+ot
+>available
 >
-> Will do. I've prototyped this using object_get_typename() on
-> dev->parent_bus to get the bus type.
+>In case current kernel does not support /dev/iommu, qemu will probably
+>fail first because /sys/bus/pci/devices/*/vfio-dev/ is not present,
+>since QEMU opens it before /dev/iommu.
 >
-> A complication: a few buses (virtio-pci-bus, ufs-bus) delegate
-> get_dev_path() to their parent unchanged,
-
-Like so:
-
-    static char *ufs_bus_get_dev_path(DeviceState *dev)
-    {
-        BusState *bus = qdev_get_parent_bus(dev);
-
-        return qdev_get_dev_path(bus->parent);
-    }
-
->                                           so the path format doesn't
-> match the immediate bus type.
-
-Well, what *is* the immediate bus type's path format?
-
-Does it even have one?
-
->                               I detect delegation by comparing the
-> child's path to the parent bus's path, and format as
-> "<child-bus> on <parent-bus> device <path>".
-
-Hmm.
-
-> Tested with i440fx + virtio-blk + UFS + USB + SCSI:
+>Instead, report an error directly when initializing iommufd object, to
+>inform user that kernel does not support it, with a hint about missing
+>CONFIG_IOMMUFD.
 >
->   PCI device 0000:00:04.0
->   virtio-pci-bus on PCI device 0000:00:04.0
->   ufs-bus on PCI device 0000:00:04.0
->   SCSI device 0000:00:04.0/0:0:0
->   usb-bus device 0000:00:03.0/1
+>Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>---
+> backends/iommufd.c | 5 +++++
+> 1 file changed, 5 insertions(+)
 >
-> And with Q35:
+>diff --git a/backends/iommufd.c b/backends/iommufd.c
+>index acfab907c03..c4eb3de1307 100644
+>--- a/backends/iommufd.c
+>+++ b/backends/iommufd.c
+>@@ -32,6 +32,11 @@ static void iommufd_backend_init(Object *obj)
+> {
+>     IOMMUFDBackend *be =3D IOMMUFD_BACKEND(obj);
 >
->   PCIE device 0000:00:04.0
->   virtio-pci-bus on PCIE device 0000:00:04.0
->   ufs-bus on PCIE device 0000:00:04.0
->   SCSI device 0000:00:04.0/0:0:0
+>+    if (!g_file_test("/dev/iommu", G_FILE_TEST_EXISTS)) {
+>+        error_setg(&error_fatal, "/dev/iommu does not exist"
+>+                                 " (is your kernel config missing CONFIG_=
+IOMMUFD?)");
 
-Note the dev path format PARENT-DEV-PATH/BUS-ADDRESS.
+If hot add an iommufd object with object_add QMP, may this kill QEMU instan=
+ce?
 
-The parent device happens to be a PCI device, so PARENT-DEV-PATH is a
-PCI address, which is unique within the machine.
+Thanks
+Zhenzhong
 
->   usb-bus device 0000:00:03.0/1
-
-Likewise.
-
-ufs-bus does just PARENT-DEV-PATH.  Clashes with the parent device's dev
-path, and also with sibling buses if the parent device provides more
-than one ufs-bus.  Prefixing with the bus type disambiguates parent and
-child, but not siblings.  I don't like this at all.
-
-The stupidest patch I can think of: PARENT-DEV-PATH/NUMBER, where NUMBER
-enumerates the siblings.
-
-> If my understanding is correct, VMBus delegates to sysbus which has
-> no get_dev_path(), so it falls through to the QOM path.
-
-.get_dev_path()'s contract:
-
-    /**
-     * qdev_get_dev_path(): Return the path of a device on its bus
-     * @dev: device to get the path of
-     *
-     * Returns: A newly allocated string containing the dev path of
-     * @dev. The caller must free this with g_free().
-     * The format of the string depends on the bus; for instance a
-     * PCI device's path will be in the format::
-     *
-     *   Domain:00:Slot.Function:Slot.Function....:Slot.Function
-     *
-     * and a SCSI device's path will be::
-     *
-     *   channel:ID:LUN
-     *
-     * (possibly prefixed by the path of the SCSI controller).
-     *
-     * If @dev is NULL or not on a bus, returns NULL.
-     */
-
-This looks decent at first glance, but it's actually quite woolly.
-
-What's a "path on a bus"?
-
-Is it unique within the machine?
-
-For what it's worth, the PCI device path shown as example is.
-
-The SCSI device path isn't, unless it's actually "prefixed by the path
-of the SCSI controller", *and* that path is unique.  Code:
-
-    static char *scsibus_get_dev_path(DeviceState *dev)
-    {
-        SCSIDevice *d = SCSI_DEVICE(dev);
-        DeviceState *hba = dev->parent_bus->parent;
-        char *id;
-        char *path;
-
-        id = qdev_get_dev_path(hba);
-        if (id) {
-            path = g_strdup_printf("%s/%d:%d:%d", id, d->channel, d->id, d->lun);
-        } else {
-            path = g_strdup_printf("%d:%d:%d", d->channel, d->id, d->lun);
-        }
-        g_free(id);
-        return path;
-    }
-
-The returned path is unique within the machine only when
-get_dev_path(hba) is non-null and unique.
-
-I smell a dung pile.
-
-I think your idea to add "on PARENT-DEV-PATH" papers over
-.get_dev_path() defects we should fix instead.  I'm not demanding *you*
-fix them all.
-
-How would you code qdev_get_printable_name() if qdev_get_dev_path()
-either returns null or a string that together with the bus type uniquely
-identifies the device?
-
-> Note: object_get_typename() gives "PCI" on i440fx and "PCIE" on Q35
-> for the same address format. Not sure if that's confusing enough to
-> warrant normalizing.
-
-Feels okay to me.
-
->> qdev_get_human_name() is a better name than qdev_get_printable_name().
->> Please consider renaming the function so we keep the better name.
->>
->
-> Ack, will rename.
->
-> If my proposal to add "<bus> device" prefix sounds solid,
-> I'll send a v3 with the series restructured as:
->
->   1. Replace "<unknown device>" with canonical QOM path, clean up comments
->   2. Add "<bus> device" prefix to bus-specific paths
->   3. Consolidate into qdev_get_human_name()
-
-Sounds good!
-
-> Thanks for your time and consideration.
->
-> Best regards,
-> Alessandro
-
-Thank you!
+>+    }
+>+
+>     be->fd =3D -1;
+>     be->users =3D 0;
+>     be->owned =3D true;
+>--
+>2.47.3
 
 
