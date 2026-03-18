@@ -4,126 +4,138 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C409310854DB
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:31:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 39CDA10854D7
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 09:32:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2nEv-0006ee-Oe; Wed, 18 Mar 2026 05:30:57 -0400
+	id 1w2nFj-0007Ah-L5; Wed, 18 Mar 2026 05:31:47 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w2nEp-0006df-0t
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:30:52 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1w2nFh-00079p-0c; Wed, 18 Mar 2026 05:31:45 -0400
+Received: from mail-southcentralusazlp170120001.outbound.protection.outlook.com
+ ([2a01:111:f403:c10d::1] helo=SN4PR2101CU001.outbound.protection.outlook.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w2nEl-00022k-Gc
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 05:30:50 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773826246;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=9qGRQWMTn75qUw7IVoZ2yAaT15wnaio8egs6pf0ArEM=;
- b=Tb7v6nF0X/TTKw+iD2qqrwNwk2LZRho5UKtHwzwnLc2OieNCaIimJo0MOxpnCkAxeUtlnt
- V4ItrpZvrBWUWRFfgaOyAJ8oYQ9Q6NPm0kPKAlIOgpY9bWPLzTDb6Qo271h7qbjvYRgaRj
- 5SGTq37L4FCXcxIUHLOmT11iXWwNB/U=
-Received: from mail-pl1-f197.google.com (mail-pl1-f197.google.com
- [209.85.214.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-314-LUIpjpnoNbm-_D8dAxfCcw-1; Wed, 18 Mar 2026 05:30:44 -0400
-X-MC-Unique: LUIpjpnoNbm-_D8dAxfCcw-1
-X-Mimecast-MFC-AGG-ID: LUIpjpnoNbm-_D8dAxfCcw_1773826244
-Received: by mail-pl1-f197.google.com with SMTP id
- d9443c01a7336-2aec07e8aafso44273625ad.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 02:30:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773826243; x=1774431043; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=9qGRQWMTn75qUw7IVoZ2yAaT15wnaio8egs6pf0ArEM=;
- b=sNNrYiB9J1d8LL2oItgAFxkNIG24VAXjZ281hkeIJyK1CyEMW6T4ENL4Q1waRL6KFK
- XxJNp0AelTvi+XAiYcwOi4MYqY/8gUOpHBxqAzTKuMleN/Ry/Ak5agGdTVRe1hcnbprr
- rXfeWo7SaTgJNSbTzPrB+6pxYM1uPmpdPF3JHcrI8LXeroj+lR4XWoswG/nPMizi5kZJ
- cvuvTbtq7QacSAx7DwX67dhSFXzdJ7Rc0ys4opz35Fs05Q3GFXLE2dWz3w4hpiqdktNP
- jFelRmJQFTwb2iAlkkYSzAoCI14YMgJBYcRNkr4CQCy9JWzyCQFmPzFHAg7s9EOnmGsq
- Pkcw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773826243; x=1774431043;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=9qGRQWMTn75qUw7IVoZ2yAaT15wnaio8egs6pf0ArEM=;
- b=DDaCOiwbVuj0fiJb+ZwnyKDOtgxhYuNLFl6KDebYOk3JfDQGaq1xR1BkCwJbw7AbcI
- Y/QFtmWVk+a+qG3gOZ29sU6wVMvqTeo4GP409R9aXCEURygTr2KgGC63Y7OtHlw7x01X
- OOdw3tNJfsa1VfnFcGkDXcPw2LKaNniMCwVCGELptD7UPJ6eM4+8D1xFBxkhZhcP3xUv
- IdhS+W8LhMifGpN8I0OCSJTCvIC/weo2NwQ/GV7wty8XaOguUOJKu66UxptBhP6BGPcE
- g5ZIGKFdzM7sG1vzEzSjTRXfW/E6DEFwvJXqSsKu0QS5nzCKoxC7U5jtJQrygmpKkuC+
- wTog==
-X-Forwarded-Encrypted: i=1;
- AJvYcCWbwgn0nrzrq/+LITiw4Lb7itEqzuy4ES9QFhdEgplVuuJ5WKB9WTm+Mt2z4482DEEt+qXpXtGxTpQb@nongnu.org
-X-Gm-Message-State: AOJu0Yyy8AHU5WlYFcagAWJzboLwoiQBqKdURXqy8c5ApAS95GCYVgkw
- 21fGT4gFrtDrA3S0DT6eY3FiuRk260G87mwuWVY/nH79DZyGNsrw1P/YMKppGx7hvJT8gBjhAeU
- FrzhiNayvdK7dVY1o3Z+jIRAL1725CHUpMQWIvvrlMuA2YsfqdVtOALfbfd9NcCHp
-X-Gm-Gg: ATEYQzxAoZv3FaQUaKRTwUUr4FI+5eRymSbwc/fxHxKeXz+N0lmtxm/UA8Myp24V70t
- 0cqlFjQzEteshKb34T/x4WqhHIUiMo7t7tBX5LnwYUQW70Xrzt3DgxqdlOSGRixq+1cE7vbcOu0
- J1aHX/1ZI70J8FhQOEQTeK0Gy0A487X/QVRWXLxSCATpqezEw8Jwd9juK2Z/xEERhHAkc7mRyVI
- B2KZgd6GhP7H9OatennhO3EQdlx59560CkTyzFKnSZ1mnA35pigOwxwgxNKMAwRm/I/mC6trdwu
- izQXKDLG4u3SW2+YDy52J+JQl/w27/Ydi3BrVYZ7d3c8SezXc6akooJjv7CPylkJNaGB8JV/VKg
- XPppZS8Hj+mHrr0/WMkgV4wUzt7tZ2rwhHFCBTwrzmzwE9byMtVoovyOPPnggqnO4/AJVfg==
-X-Received: by 2002:a17:903:1666:b0:2ae:7f9b:3148 with SMTP id
- d9443c01a7336-2b06e33a0demr25800785ad.14.1773826243523; 
- Wed, 18 Mar 2026 02:30:43 -0700 (PDT)
-X-Received: by 2002:a17:903:1666:b0:2ae:7f9b:3148 with SMTP id
- d9443c01a7336-2b06e33a0demr25800515ad.14.1773826243012; 
- Wed, 18 Mar 2026 02:30:43 -0700 (PDT)
-Received: from smtpclient.apple ([122.176.129.56])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b06e629da3sm20527235ad.76.2026.03.18.02.30.40
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Wed, 18 Mar 2026 02:30:42 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [BUG] [powerpc] KVM guest boot failure - hangs on startup after
- commit 98884e0c
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <9794AFF9-DFD9-48D0-B4EA-7745ABDED6F7@redhat.com>
-Date: Wed, 18 Mar 2026 15:00:27 +0530
-Cc: Paolo Bonzini <pbonzini@redhat.com>, qemu-devel <qemu-devel@nongnu.org>,
- Qemu Ppc <qemu-ppc@nongnu.org>, npiggin@gmail.com,
- Harsh Prateek Bora <harshpb@linux.ibm.com>, vaibhav@linux.ibm.com,
- sbhat@linux.ibm.com
+ (Exim 4.90_1) (envelope-from <skolothumtho@nvidia.com>)
+ id 1w2nFe-00026K-TZ; Wed, 18 Mar 2026 05:31:44 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=J6U1OWkif574QGtjb5DYglFJ9U2JFtlpjj6jUae+N+ZcLt9waGVAOgrC2eedC3EuD1keIRyJqPHpWW1jWLoLN4M4AXJ9hU1+Rrg3FnOlMLJHQZugzOi8/bv73n7DzK+QVlSPU9tQyXknlOuyrvI3YLApBcm608mmIM6H3imDClWdnv745ALkqPT3Bm8j3rbMzADVhRUBChwqvkqVnxroxoA1kG/ge58vzAmFQYjr3ioVsHL7vp+ZKTGB8orOspFhZ1mSjn0TxMjuHNiFgk8Q00YywRa0geFP8wVojA0YUzzKv591mhi/81qUb/+oS5B7Sma+Fk8Vy3rrAw3nLISXxw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=nMSFfSnP8Oe5hlW/Bg6cb1rjDCVwHQjyWpFyk2CLBFY=;
+ b=TDNmgAWdMLAuaWk4XuSHklHENCqt0lmNXq8gxd3cgi2Styx06gjKrBvGB0fVcU4yOqQ9mi4GVrhW3no8d6b2cch5C+nY5+k6q56J4JuECJgJqkfITyUlG7OnDBf8mIBBsQEINM1rAHt/bS+VA7KKdlNS14tcdT1+bUdy/DKbPnfWQpR8MjOk/mpIbO5KZ8J8cFXRVzve0HJUt4xaneLdIE3WK4kK0sW3ZDs13Ws+9XpfVOpb3GidO7XCyo+VMtQd7mKZE2CIJ9/hXQJhfOnPfQL9sjPziXegcDdbbwTehNPQespIl/173wMqlkJq4d7pCo1joWkjRM2Ks5o71j8LVA==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=nMSFfSnP8Oe5hlW/Bg6cb1rjDCVwHQjyWpFyk2CLBFY=;
+ b=R9oFECbse3eD8SBiDoWefJFFdY750erPN+0W99vXULca38IiobnEfMqc8cHPLfj6dB6BmUaLXNcjvuUqaIOuQ7kOhpLgBmb680mHE38ckYGNaPNFoZYOAj14sCY67jx23SdOSRb3tr3BCIIrV9arTCHJmUcF/mOPPBn/a4QbcHqtXOQVhraI1I1hzMbZjFq4YVmlptrNBCUhNEBlTSLnVOIysnlCIjefDYenuV90MkHIrpibJpLPhJXvgtIpLwbhcmV+a1f0VF4a4rp8ThegQeSnzSZ+tRpZQx2eaF3/CEJh2gCrm7cXug3TpC8GuqAN0EqWx++f29EylbuUwuz3sw==
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com (2603:10b6:610:144::12)
+ by CY5PR12MB6084.namprd12.prod.outlook.com (2603:10b6:930:28::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Wed, 18 Mar
+ 2026 09:31:33 +0000
+Received: from CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de]) by CH3PR12MB7548.namprd12.prod.outlook.com
+ ([fe80::b710:d6a1:ab16:76de%5]) with mapi id 15.20.9745.007; Wed, 18 Mar 2026
+ 09:31:32 +0000
+From: Shameer Kolothum Thodi <skolothumtho@nvidia.com>
+To: Nathan Chen <nathanc@nvidia.com>, "qemu-devel@nongnu.org"
+ <qemu-devel@nongnu.org>, "qemu-arm@nongnu.org" <qemu-arm@nongnu.org>
+CC: Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael
+ S . Tsirkin" <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>, Ani Sinha
+ <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?iso-8859-1?Q?Daniel_P_=2E_Berrang=E9?= <berrange@redhat.com>, Eric Blake
+ <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>, Matt Ochs
+ <mochs@nvidia.com>, Nicolin Chen <nicolinc@nvidia.com>
+Subject: RE: [PATCH v3 2/8] hw/arm/smmuv3-accel: Change ATS property to
+ OnOffAuto
+Thread-Topic: [PATCH v3 2/8] hw/arm/smmuv3-accel: Change ATS property to
+ OnOffAuto
+Thread-Index: AQHctj1A602KWUZyckqcFyhauS7IbrW0BNPA
+Date: Wed, 18 Mar 2026 09:31:32 +0000
+Message-ID: <CH3PR12MB7548D2B0E4C731983EFC8EFBAB4EA@CH3PR12MB7548.namprd12.prod.outlook.com>
+References: <20260317183755.3721625-1-nathanc@nvidia.com>
+ <20260317183755.3721625-3-nathanc@nvidia.com>
+In-Reply-To: <20260317183755.3721625-3-nathanc@nvidia.com>
+Accept-Language: en-US, en-GB
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+authentication-results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+x-ms-publictraffictype: Email
+x-ms-traffictypediagnostic: CH3PR12MB7548:EE_|CY5PR12MB6084:EE_
+x-ms-office365-filtering-correlation-id: bb22bf8d-27bb-4a99-7d90-08de84d12481
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+ ARA:13230040|366016|376014|7416014|1800799024|38070700021|22082099003|56012099003|18002099003|7053199007;
+x-microsoft-antispam-message-info: LXYHK6TedWhGE+Y9lgaS5AzFBY/3chAzKe1guOdsDxTtGbZpQrPYOJkKODeYtTKUj8dwea1lvQb3/s4vVD1JOkg772HwemPuNFcDeiKxvV7TIbuwaiKgVjHvIvLGv3vqLOaOgJXHlhWl/s/kUWyvPT/OX6oRx7UJBZBQHRxPhBhTRjxyO9yeh/0yWxOtR9rfzRB14Qwtx15AQZupue+1VzK2Cxk1W/C2C1NBsRYpicX04YMEMp6AZh++rudgc2dOq5ws6tHsXtlhNvjdsxPjpaBnyucORA2FOMEFVtCvjlWxxBRdK7U7XXYJXI832GVqU7RCYhfV/lbo9gClPDvEMsfiw5HO6oAw8+zPBpSajQ8lpk/vFKD5sudL+o7AyCpAI3DjAhWQq0GXJQBd+G2Ac7Gk92rw9wcw9php+iCfEyPH0xPeBZNS6pX8EtvuhxV5prKnbe7rK//Ar6b/fr7wawD9mkm+qV9gCj5m50QJq4LHmNbr5sz7MUbFAvAOe/jYJqUFEVjMpt3HxW13TENEZXFLwg+qYf9TsHPS1rRkgKEMoXOgrPzKLTO4+yzDy4xBSYHJmq7S7jcI7ybLVemRFXo2wJO8SyIBvPU0NRceOIlUKJbkJ+iTud2/T7DKhwXj77nEkoK1VJRshFpALgz/uOUYP7te0nJwhAn0eemHHhfhXPLju0n5vOkdAUSJ/xmB4OgEAqPlngCBcfhph2e+OPYFtHjR8XqP99NeopYVJBIcmpBOFCEMEVqlSyxXqbh2THkZuRn9Gc2zEWh+j6p6WNJT5W/0KCtYgsUoEWXT3O4=
+x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CH3PR12MB7548.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(366016)(376014)(7416014)(1800799024)(38070700021)(22082099003)(56012099003)(18002099003)(7053199007);
+ DIR:OUT; SFP:1101; 
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?iso-8859-1?Q?igMPhq/dRYBZRXFmKnWE/aYya7bsM76SQOHkjI/AvclrD79gGIfU0blMHu?=
+ =?iso-8859-1?Q?Y/4UuFgKDSn6qNUz0vy2bMmhharuR8VieuC3swr5ARf0pc58sYemPN+4wo?=
+ =?iso-8859-1?Q?qsooEzXcmCQSzZ2A0GoboTMu0iaVBfOHczQyKUzqHeAR8gzKJOzJT2jvxF?=
+ =?iso-8859-1?Q?bHvBj4Fa2p+/NVtl4+ns0gi55Obb8bTV6AZ8PUtSrIRvAcjYe+MIwh8xsA?=
+ =?iso-8859-1?Q?UOp5WEe/AEqX+UlQVE3bkF4fYkO+zDZXZH7FTBRYEctsZpDsCYw6lQiQLc?=
+ =?iso-8859-1?Q?ZUSst06+eX6PAo5uZBf+4bABtkWFoMoCxOaKj+dI82au//bD3jaXgdAEjc?=
+ =?iso-8859-1?Q?46NtmgxRAs3Pr7+wzmBG3JmazC0yanyD9ddwckKjIoNXfas7WLTaVH0ts2?=
+ =?iso-8859-1?Q?GnouYjog3TTO0s+1XDkfgXRva4mkTH3oWIK1oYTBfsk0euyfp+bYwFBqM3?=
+ =?iso-8859-1?Q?bJL+rsf2UJLBa3uZOc6Yh0dFYkS4LczARAaHHsfYAN28ejwNbxhDIHuLqa?=
+ =?iso-8859-1?Q?2ieiX1sFuukKTpdxSuuNOxyKO6bl3KBbzugpw49TTmXMiGe2RL26j/l6Dt?=
+ =?iso-8859-1?Q?g5JIh/T9Tj4kI+LVni+5EXXx6NLK+BtOt4s/qisQV6VCQl+Tam4nVwcQqa?=
+ =?iso-8859-1?Q?eg2K8imZAkaE354gKg4PurztL5bLQTQ7mQqRTZEknMWpZVDcAw9V0ehG4a?=
+ =?iso-8859-1?Q?9fIYNyGGE/0xrYGsmPHqu8XvjEfgJHv0czeH/FKspUuECS+rgUacwoILGJ?=
+ =?iso-8859-1?Q?aW0uwemZKOwLItA9QSty1JixONbkEht3dVm/jrLoUO5ZyzhCYC8KQffih0?=
+ =?iso-8859-1?Q?RF39xL33DxlyUFXdRk7SSY9I64bJwTgNdgYmpsd+RLoHBYFwez+HaZTfaJ?=
+ =?iso-8859-1?Q?Cf0feSqMm3TTD+/0ha95ChZjnEXBCbkiEpGQqFmE122Jy7I4DyEhSojkOG?=
+ =?iso-8859-1?Q?szVVVQQoGrsJUmY1lK8HmyOlDSylGbR2OVFozgOYM4XW+espkZzasizvKp?=
+ =?iso-8859-1?Q?d9RPinoSFexvAepWo82ISPnXbG2NK4TsZf7l9nTnYMUrzwA6R4o9AlJfXU?=
+ =?iso-8859-1?Q?lG7BvYXpqjQ3EF7NM56doNFoleSyIQP7JtXoEu0Fba696nM9sqgAr3mmA+?=
+ =?iso-8859-1?Q?QQqZCMu+ixAFQ5tVTVsOoPWgh9HR8zh/8ePcXbu3umQKH5QEsVc2gD+dyt?=
+ =?iso-8859-1?Q?wC1E8eLeqS5gDtXtwsGoNs0UztPQJlc/iZmoAk4r9jpU8qWsEH/JoLpmK8?=
+ =?iso-8859-1?Q?c2U62Vne9epDO2ayAU6Lw2LRfjItGhuBXqavYKrPWAGbdnOyBcesdGCoQa?=
+ =?iso-8859-1?Q?N0q0M7yaaRKVEV3m4Bc/+abdTdp7amA/umnfagdwTn+07pVRis7VQZ1c8s?=
+ =?iso-8859-1?Q?Q718bjHIbKoMS5Eav0yxf9cTBFWFLVXF2o0r1XFgRVvuCljmYQfIY4odOc?=
+ =?iso-8859-1?Q?jIgyTqGqxuMv45ri/xNIXmFfeM9T1XNjlas3QzXpCzE8T9TexXOj3oJxTV?=
+ =?iso-8859-1?Q?lzN0CUN0z8RSCTMT6RbKtQ9aR6INSnaLCJvL/pCIxElEeOHRYnwOTTNTgh?=
+ =?iso-8859-1?Q?LFIJTdXYaSl2Ng8JSClbu5j7OcQp6Sufy1YpoIDqhUyPUH+zPYMSIE9tr0?=
+ =?iso-8859-1?Q?QauwYj6sGvAnJpMLf9zI0oCw6j2gGqXO560BD0ivFnm+9Ie92vPStDjY+6?=
+ =?iso-8859-1?Q?9XnftNvdqvSThYVw4oTmLawQ8fQwVR1pEGnqebHnr0Mn4ibkymBvKtwhMk?=
+ =?iso-8859-1?Q?ksav1cLvglzxJfF4EliVny8qaN0mT30pBH6xev7AcRQOn/7mpJ1zUFL2kQ?=
+ =?iso-8859-1?Q?76qNBSMwvw=3D=3D?=
+Content-Type: text/plain; charset="iso-8859-1"
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <DCB3A7E9-412C-402D-A4C9-EA558CD1FE29@redhat.com>
-References: <e0fa0840fa7758499aa8c64a148e5367@linux.ibm.com>
- <2cc23a5ce64847dd8a9278c87f58119b@linux.ibm.com>
- <5bc7997d-329e-47a9-9b4d-750a3104094a@linux.ibm.com>
- <4797B580-7853-490E-8852-B6312619FE95@redhat.com>
- <e966c053-2e69-b185-532e-fcb4173b4daf@redhat.com>
- <b088f554af34cbcc4d88271e227074e1@linux.ibm.com>
- <ED4A083D-2B96-468A-BE77-211E9F3FA88D@redhat.com>
- <7bbeb3cb105934e95bf1a5356cfc4613@linux.ibm.com>
- <7ACBCD63-B759-47FD-824F-0327726E47F6@redhat.com>
- <35f6361f69ef4f09f80bd915f3460a28@linux.ibm.com>
- <B2B682DB-1467-4C42-AF74-346BC61DE31B@redhat.com>
- <526d7172f3933baf913bf4b105a6fa9a@linux.ibm.com>
- <9794AFF9-DFD9-48D0-B4EA-7745ABDED6F7@redhat.com>
-To: Misbah Anjum N <misanjum@linux.ibm.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+MIME-Version: 1.0
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: CH3PR12MB7548.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: bb22bf8d-27bb-4a99-7d90-08de84d12481
+X-MS-Exchange-CrossTenant-originalarrivaltime: 18 Mar 2026 09:31:32.8638 (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: ynEtrsTztwI+6jCZuSm4VkdTi6rF/M76+Ya+68nEVxGimuuY71hZpJokK4soy3ntckLKY+JNFM07e1ZSL4YjdQ==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CY5PR12MB6084
+Received-SPF: permerror client-ip=2a01:111:f403:c10d::1;
+ envelope-from=skolothumtho@nvidia.com;
+ helo=SN4PR2101CU001.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ FORGED_SPF_HELO=1, SPF_HELO_PASS=-0.001,
+ SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -141,58 +153,164 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 18 Mar 2026, at 2:09=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
-wrote:
+> -----Original Message-----
+> From: Nathan Chen <nathanc@nvidia.com>
+> Sent: 17 March 2026 18:38
+> To: qemu-devel@nongnu.org; qemu-arm@nongnu.org
+> Cc: Eric Auger <eric.auger@redhat.com>; Peter Maydell
+> <peter.maydell@linaro.org>; Shannon Zhao <shannon.zhaosl@gmail.com>;
+> Michael S . Tsirkin <mst@redhat.com>; Igor Mammedov
+> <imammedo@redhat.com>; Ani Sinha <anisinha@redhat.com>; Paolo Bonzini
+> <pbonzini@redhat.com>; Daniel P . Berrang=E9 <berrange@redhat.com>; Eric
+> Blake <eblake@redhat.com>; Markus Armbruster <armbru@redhat.com>;
+> Shameer Kolothum Thodi <skolothumtho@nvidia.com>; Matt Ochs
+> <mochs@nvidia.com>; Nicolin Chen <nicolinc@nvidia.com>; Nathan Chen
+> <nathanc@nvidia.com>
+> Subject: [PATCH v3 2/8] hw/arm/smmuv3-accel: Change ATS property to
+> OnOffAuto
 >=20
+> From: Nathan Chen <nathanc@nvidia.com>
 >=20
+> Change accel SMMUv3 ATS property from bool to OnOffAuto. The 'auto'
+> value is not implemented, as this commit is meant to set the property
+> to the correct type and avoid breaking JSON/QMP when the auto mode is
+> introduced. A future patch will implement resolution of the 'auto'
+> value to match the host SMMUv3 ATS support.
 >=20
->> On 18 Mar 2026, at 1:49=E2=80=AFPM, Misbah Anjum N =
-<misanjum@linux.ibm.com> wrote:
->>=20
->> Hi Ani and Paolo,
->>=20
->> Following up on the KVM guest boot issue due to commit 98884e0c, I =
-have conducted additional testing that reveals important new information =
-about the nature of this issue.
->>=20
->> The hang is specifically triggered when SMP is configured, that is, =
-when -smp parameter is provided in the QEMU command. This is also =
-validated via KVM Unit Tests involving SMP which are failing due to the =
-same commit.
+> Fixes: f7f5013a55a3 ("hw/arm/smmuv3-accel: Add support for ATS")
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+> ---
+>  hw/arm/smmuv3-accel.c    |  6 ++++--
+>  hw/arm/smmuv3.c          | 14 ++++++++++++--
+>  hw/arm/virt-acpi-build.c |  2 +-
+>  include/hw/arm/smmuv3.h  |  4 +++-
+>  4 files changed, 20 insertions(+), 6 deletions(-)
 >=20
-> So basically what we know is:
-> - Issue seems to show on ppc64.
-> - tree with df8df3cb6b at tip does not show issue.
-> - tree with next commit 98884e0cc1 at tip shows the issue.
-> - kvm_reset_vmfd() introduced by 98884e0cc1 is not called.=20
+> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+> index 2bb142c47f..621ac531a5 100644
+> --- a/hw/arm/smmuv3-accel.c
+> +++ b/hw/arm/smmuv3-accel.c
+> @@ -826,8 +826,10 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+>      /* By default QEMU SMMUv3 has RIL. Update IDR3 if user has disabled =
+it */
+>      s->idr[3] =3D FIELD_DP32(s->idr[3], IDR3, RIL, s->ril);
 >=20
-> You think any one these commits are the cause of the issue (which I =
-personally cannot agree with):
->=20
-> 98884e0cc1 accel/kvm: add changes required to support KVM VM file =
-descriptor change
-> df8df3cb6b system/physmem: add helper to reattach existing memory =
-after KVM VM fd change
-> 4003e5e65f hw/accel: add a per-accelerator callback to change VM =
-accelerator handle
-> 2391125f13 accel/kvm: add confidential class member to indicate guest =
-rebuild capability
-> b3f0a55576 i386/kvm: avoid installing duplicate msr entries in =
-msr_handlers
->=20
-> None of the above commits does anything SMP related.
+> -    /* QEMU SMMUv3 has no ATS. Advertise ATS if opt-in by property */
+> -    s->idr[0] =3D FIELD_DP32(s->idr[0], IDR0, ATS, s->ats);
+> +    /* Only override ATS if user explicitly set ON */
+> +    if (s->ats =3D=3D ON_OFF_AUTO_ON) {
+> +        s->idr[0] =3D FIELD_DP32(s->idr[0], IDR0, ATS, 1);
+> +    }
 
-One possible thing to try is:
+Nit: I think we can keep the original comment.
 
-Revert everything in stubs/kvm.c and hence changes in stubs/meson.build, =
-include/system/kvm.h and in target/i386/kvm/kvm.c introduced by =
-98884e0cc1 .
-You will have to comment out calls to kvm_arch_supports_vmfd_change() =
-and kvm_arch_on_vmfd_change() in kvm_reset_vmfd(). Since =
-kvm_reset_vmfd() is not called anyway, not should make no difference if =
-those calls are commented out.
+>=20
+>      /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits).=
+ */
+>      if (s->oas =3D=3D SMMU_OAS_48BIT) {
+> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+> index 068108e49b..3dead0bcd3 100644
+> --- a/hw/arm/smmuv3.c
+> +++ b/hw/arm/smmuv3.c
+> @@ -317,6 +317,11 @@ static void smmuv3_init_id_regs(SMMUv3State *s)
+>      smmuv3_accel_idr_override(s);
+>  }
+>=20
+> +bool smmuv3_ats_enabled(SMMUv3State *s)
+> +{
+> +    return FIELD_EX32(s->idr[0], IDR0, ATS);
+> +}
+> +
+>  static void smmuv3_reset(SMMUv3State *s)
+>  {
+>      s->cmdq.base =3D deposit64(s->cmdq.base, 0, 5, SMMU_CMDQS);
+> @@ -1971,7 +1976,7 @@ static bool
+> smmu_validate_property(SMMUv3State *s, Error **errp)
+>              error_setg(errp, "ril can only be disabled if accel=3Don");
+>              return false;
+>          }
+> -        if (s->ats) {
+> +        if (s->ats =3D=3D ON_OFF_AUTO_ON) {
+>              error_setg(errp, "ats can only be enabled if accel=3Don");
+>              return false;
+>          }
+> @@ -1993,6 +1998,11 @@ static bool
+> smmu_validate_property(SMMUv3State *s, Error **errp)
+>          return false;
+>      }
+>=20
+> +    if (s->ats =3D=3D ON_OFF_AUTO_AUTO) {
+> +        error_setg(errp, "ats cannot be set to auto");
+> +        return false;
+> +    }
+ Nit: Is "ats auto mode not supported" better?=20
 
-Let me know what you get after doing the above.
+Also, should we do this before the if (!s->accel)  check above?
+Otherwise, I think it will carry on for non-accel smmuv3 cases like,
 
+-device arm-smmuv3,primary-bus=3Dpcie.1,accel=3Doff,ats=3Dauto
+
+I think this applies to other properties in this series as well.
+
+>      if (s->oas !=3D SMMU_OAS_44BIT && s->oas !=3D SMMU_OAS_48BIT) {
+>          error_setg(errp, "OAS can only be set to 44 or 48 bits");
+>          return false;
+> @@ -2128,7 +2138,7 @@ static const Property smmuv3_properties[] =3D {
+>      DEFINE_PROP_UINT64("msi-gpa", SMMUv3State, msi_gpa, 0),
+>      /* RIL can be turned off for accel cases */
+>      DEFINE_PROP_BOOL("ril", SMMUv3State, ril, true),
+> -    DEFINE_PROP_BOOL("ats", SMMUv3State, ats, false),
+> +    DEFINE_PROP_ON_OFF_AUTO("ats", SMMUv3State, ats,
+> ON_OFF_AUTO_OFF),
+
+I think we should update the description in object_class_property_set_descr=
+iption
+to mention auto not supported.
+
+Thanks,
+Shameer
+
+>      DEFINE_PROP_UINT8("oas", SMMUv3State, oas, 44),
+>      DEFINE_PROP_UINT8("ssidsize", SMMUv3State, ssidsize, 0),
+>  };
+> diff --git a/hw/arm/virt-acpi-build.c b/hw/arm/virt-acpi-build.c
+> index 719d2f994e..591cfc993c 100644
+> --- a/hw/arm/virt-acpi-build.c
+> +++ b/hw/arm/virt-acpi-build.c
+> @@ -402,7 +402,7 @@ static int iort_smmuv3_devices(Object *obj, void
+> *opaque)
+>=20
+>      bus =3D PCI_BUS(object_property_get_link(obj, "primary-bus",
+> &error_abort));
+>      sdev.accel =3D object_property_get_bool(obj, "accel", &error_abort);
+> -    sdev.ats =3D object_property_get_bool(obj, "ats", &error_abort);
+> +    sdev.ats =3D smmuv3_ats_enabled(ARM_SMMUV3(obj));
+>      pbus =3D PLATFORM_BUS_DEVICE(vms->platform_bus_dev);
+>      sbdev =3D SYS_BUS_DEVICE(obj);
+>      sdev.base =3D platform_bus_get_mmio_addr(pbus, sbdev, 0);
+> diff --git a/include/hw/arm/smmuv3.h b/include/hw/arm/smmuv3.h
+> index 26b2fc42fd..ce51a5b9b4 100644
+> --- a/include/hw/arm/smmuv3.h
+> +++ b/include/hw/arm/smmuv3.h
+> @@ -70,7 +70,7 @@ struct SMMUv3State {
+>      uint64_t msi_gpa;
+>      Error *migration_blocker;
+>      bool ril;
+> -    bool ats;
+> +    OnOffAuto ats;
+>      uint8_t oas;
+>      uint8_t ssidsize;
+>  };
+> @@ -91,6 +91,8 @@ struct SMMUv3Class {
+>      ResettablePhases parent_phases;
+>  };
+>=20
+> +bool smmuv3_ats_enabled(struct SMMUv3State *s);
+> +
+>  #define TYPE_ARM_SMMUV3   "arm-smmuv3"
+>  OBJECT_DECLARE_TYPE(SMMUv3State, SMMUv3Class, ARM_SMMUV3)
+>=20
+> --
+> 2.43.0
 
 
