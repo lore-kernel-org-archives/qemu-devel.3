@@ -4,130 +4,62 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E30710775EB
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:39:48 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 67D41FCD0A2
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:46:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2urn-0007rS-Tr; Wed, 18 Mar 2026 13:39:35 -0400
+	id 1w2uxa-00019y-K2; Wed, 18 Mar 2026 13:45:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2ure-0007r1-AS
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:39:26 -0400
-Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1w2uxW-00019N-Kq; Wed, 18 Mar 2026 13:45:31 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2urc-0003ek-Gn
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:39:26 -0400
-Received: by mail-pf1-x431.google.com with SMTP id
- d2e1a72fcca58-82985f42664so152000b3a.0
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:39:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773855562; x=1774460362; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=nVwEkADz5nsARFrPsqKVQXnvqp4qHPPvZEZBdKH/L60=;
- b=wKzF9NUrLRXp1y2ulb2tpLDIvLmuvWaiCV+uE2PClOYK31qtNA6jG5eyOU95UMBIV2
- BXbKIpNsIQXiH4Cp6ViTHDt0q8GKBNUxbA31OC/l2LJ+ITQmujd5wLK3M4n/2GK4NMx7
- v6tJfUu6wMvesLXCi/2SY87ZCJm9ZGdL342XUCJ0p5pu148Zhzj2XbxGIPQNNZ/mMNCl
- ziGNgRgLx7pN4KlwLWGhEx9fi2JBJi+ncI9RSxeNazBZ+aNF5dhrvFeedb1z2wWz7GxG
- v82wKoupVDVsk4iWvMFaVuqxQvf7spGbFwKTVOGZkP9Ze2/nFCJy5ss6twLngGRmliud
- mVww==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773855562; x=1774460362;
- h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
- :to:content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=nVwEkADz5nsARFrPsqKVQXnvqp4qHPPvZEZBdKH/L60=;
- b=Tr8D+PYIz+q5nKaWTcrR7GEm93/5Tjp9sDEzcamM+M8d0P0wFoUl6KGPf5l6vtmjCS
- hScDReCqNL53LovnnK5dIKRzc2C4shm0LaGvAJALol/VY5IKN1RTqfZ2xzv8aY5VdF4r
- dMDt7D0/EkwJfXoRUIXZwpJ5PypIJew/ra/iZUugdDq29URxyxOglLymgOqhXxyTeG1S
- 2ylFo4GF9WiH3IJ5HynS4Xd8sjof2SbfK55oJ1hVjQ0dVuswWYh4ORSimAnvCwfVJi7/
- OoJGVJTnZYwtFKZ49x5lpch9CZ/ydO0ZqOq3pdzY+BmABWHK5JNyBPvx4NOjS/zhWMOg
- a7OA==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVHMz4dFksKAWJeBCV4MYcduvzsNIpqCdD52OTsuSOmbCOjbB/HvEJ3uP7NtDa7cSpIXCtcbVJEChNt@nongnu.org
-X-Gm-Message-State: AOJu0YyCW52lBGKiUF6xA3f9RmQaCc0lYg5pl7m6A+VOCeCyzCrBsX9o
- CCvOtJuPK3/uziJ7Bm4TGfjf1mf6HVWA1NYRNEKexdhvPsrkWKCwvNuU34vY2pe4kJ0=
-X-Gm-Gg: ATEYQzycsxtTQGMIgPY8j7FIe075OSqQN03yGzAYfrjeAO0ETCasiwf0OUArwPjr0D/
- aswfHmRkPcHQ8PkD9SMVJYtf6gbp6UYKsjKBDYty8s4gTa/niuIHXsP7v2wYFjoE3WtYDQRORrd
- AWFbw+vyVMMnsQKY7Nu34Ht5bBFm0CEHesai/e8Jx5WtEHbF/XaJwPPm4IKupJDfXm5j1U1gGjf
- E9kDmv6OGwMyAHjX5zG6Hn9tj1YrTKabw0UdPjNE8GQqO1Az9I+SaU6yfqHuVIn2DlcvZgFgCAl
- P/5q9Nqk0Ulk1UHigDLfzMv5tcQty/ouCTlQ6cAh2CGNljz3i6m1Qg4TgAbhnuE4rdb6zGGFJnT
- GTSf1K3Tw54hToVh2u2IK6XEO+BCIrsjDns90SJVHb5h6hZ2MgJY4vsn0c5CDKpyA7TKUphWe2v
- aL5dFW1T++dQ6joUMc2dEh3wwzXSlUI30Go2AJZiN/faDPG2Ep5XlDgXngOv3gQQOCdmow
-X-Received: by 2002:a05:6a00:114c:b0:829:809e:8978 with SMTP id
- d2e1a72fcca58-82a6ae7056fmr3766454b3a.31.1773855562110; 
- Wed, 18 Mar 2026 10:39:22 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d2e1a72fcca58-82a6b56ac50sm4306898b3a.16.2026.03.18.10.39.21
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 10:39:21 -0700 (PDT)
-Message-ID: <cfadb291-159e-4f57-830e-c1b0054c8547@linaro.org>
-Date: Wed, 18 Mar 2026 10:39:20 -0700
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1w2uxU-0005Lg-FE; Wed, 18 Mar 2026 13:45:30 -0400
+Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id 20CF7DA07A3;
+ Wed, 18 Mar 2026 18:45:23 +0100 (CET)
+Authentication-Results: mail.v2201612906741603.powersrv.de; dkim=none;
+ spf=temperror (mail.v2201612906741603.powersrv.de: error in processing during
+ lookup of stefan@weilnetz.de: DNS error) smtp.mailfrom=stefan@weilnetz.de
+Received: by qemu.weilnetz.de (Postfix, from userid 1000)
+ id F2AFA460028; Wed, 18 Mar 2026 18:45:22 +0100 (CET)
+To: =?UTF-8?q?C=C3=A9sar=20Belley?= <cesar.belley@lse.epita.fr>,
+ Gerd Hoffmann <kraxel@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, qemu-trivial@nongnu.org,
+ Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH for-11.0.0] Fix include statement for u2f-emu.h
+Date: Wed, 18 Mar 2026 18:45:22 +0100
+Message-ID: <20260318174522.87902-1-sw@weilnetz.de>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
-Content-Language: en-US
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
-Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
- <20260317194241.869568-4-pierrick.bouvier@linaro.org>
- <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
- <b57f120e-dc8e-4d58-861a-01c2112b7d8a@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <b57f120e-dc8e-4d58-861a-01c2112b7d8a@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: 20CF7DA07A3
+X-Spamd-Bar: -
+X-Spamd-Result: default: False [-1.00 / 12.00]; BAYES_HAM(-3.00)[100.00%];
+ MID_CONTAINS_FROM(1.00)[]; R_MISSING_CHARSET(0.50)[];
+ FORGED_SENDER(0.30)[sw@weilnetz.de,stefan@weilnetz.de];
+ ONCE_RECEIVED(0.20)[]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_NO_TLS_LAST(0.10)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[]; RCVD_COUNT_ONE(0.00)[1];
+ TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_NEQ_ENVFROM(0.00)[sw@weilnetz.de,stefan@weilnetz.de];
+ RCPT_COUNT_FIVE(0.00)[6]; ARC_NA(0.00)[]; R_DKIM_NA(0.00)[];
+ R_SPF_DNSFAIL(0.00)[DNS failed]; FROM_HAS_DN(0.00)[]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -140,87 +72,103 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/26 2:46 AM, Philippe Mathieu-Daudé wrote:
-> On 18/3/26 09:11, Cédric Le Goater wrote:
->> On 3/17/26 20:42, Pierrick Bouvier wrote:
->>> Add stubs for needed functions.
->>>
-> 
-> --->
-> 
->>> As well, we need to add pixman to qemuutil library dependencies since
->>> pixman is transitively included from pci.h header, which is needed to be
->>> able to include prototypes for stubs we declared.
->>> In file included from include/ui/console.h:4,
->>>                    from ../hw/vfio/vfio-display.h:12,
->>>                    from ../hw/vfio/pci.h:25,
->>>                    from ../hw/vfio/igd-stubs.c:9:
->>> include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or
->>> directory
->>>      10 | #include <pixman.h>
->>>         |          ^~~~~~~~~~
->>>
->>> On OpenBSD, opengl headers are not available in default include path,
->>> and thus we need to add opengl to list of qemuutil dependencies.
->>> In file included from /home/root/qemu/include/ui/console.h:9:
->>> /home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h'
->>> file not found
->>>
->>> Finally,
-> 
-> <---
-> 
->>> vfio_pci_hot_reset_info must be forwarded declared on non linux
->>> platforms:
->>> In file included from ../hw/vfio/igd-stubs.c:9:
->>> ../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info'
->>> declared inside parameter list will not be visible outside of this
->>> definition or declaration [-Werror]
->>>     265 |                                     struct
->>> vfio_pci_hot_reset_info **info_p);
->>>         |
->>>
->>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>>
->>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Duplicated Signed-off-by. I can fix when applying.
-> 
-> Actually you can also cut description marked betwwen --->
-> and <--- because already mentioned in future commit 988499515da:
-> https://lore.kernel.org/qemu-devel/20260317190250.70506-3-philmd@linaro.org/
-> which removes [*] below (should disappear on rebase).
-> 
-> (Sorry for that hiccups, I was expecting Pierrick series to
-> be posted after my PR was merged).
->
+All examples on https://github.com/Agnoctopus/libu2f-emu/ don't
+simply include u2f-emu.h without any added directory.
 
-No problem, I'll change it and fix the extra signed-off by, so Cedric 
-can have a clean v5 to apply.
+The additional include directory does not exist when libu2f
+was built with meson.
 
-Thanks!
+It's up to pkgconfig to make sure that u2f-emu.h is found in any case.
 
-> Regards,
-> 
-> Phil.
-> 
->>
->> Thanks,
->>
->> C.
->>
->>> ---
->>>    meson.build          |  2 +-
->>>    hw/vfio/pci.h        |  2 ++
->>>    hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
->>>    hw/vfio/pci-quirks.c |  5 -----
->>>    hw/vfio/meson.build  |  1 +
->>>    5 files changed, 24 insertions(+), 6 deletions(-)
->>>    create mode 100644 hw/vfio/igd-stubs.c
->>>
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
+---
+
+libu2f-emu seems to be unmaintained. There are no Debian/Ubuntu packages,
+and I am afraid that it is also not part of the CI tests.
+
+Should it be deprecated/removed?
+
+I recently was asked by a user to add it to QEMU for Windows.
+It seems to work basically, but the user also noticed some issues.
+
+Regards
+Stefan
+
+Citing the user's feedback:
+
+As promised, I have tested the u2f and so far, it works as expected.
+However, I do have a few notes.
+
+1)
+If you send the u2f emulation a malformed USB HID packet either to the HID Control EP
+or the HID Interrupt EP, it crashes QEmu. Windows will show the "busy" mouse cursor
+for a few seconds and then it will shut down QEmu. I am guessing the u2f emulation
+doesn't do much error checking on that part.
+
+2)
+There are two versions of the u2f, one dated 11/04/2017 and one dated 12/20/2023.
+The emulation is for the later, not the former. There is enough of a difference that it
+is not backward compatible. I wonder if a note can be placed in the documentation
+that the emulation is for the version dated 12/20/2023.
+
+old version (11/04/2017)
+https://fidoalliance.org/specs/fido-u2f-v1.2-ps-20170411/
+
+new version (12/20/2023)
+https://fidoalliance.org/specs/u2f-specs-master/
+
+3)
+If I don't send a "challenge" request first, the u2f seems to still process a successful
+transfer even though the CID value is invalid. I guess the emulation doesn't check
+for a valid CID before processing the request. This is a huge security problem, though
+only in emulation, not host related.
+
+4) (not really a QEmu problem, but still worth mentioning)
+The specs don't specifically state that each transaction must be only a 64-byte
+USB transaction. For example, if you need to send a message that is two 64-byte packets,
+you must send them as individual USB transactions. You cannot send a single 128-byte USB transaction.
+After reading the specs a bit more, it is implied, but not directly specified.
+It took me a little trial and error to figure this out. I had a message that was more
+than 64 bytes and less than 128 bytes so I was sending a single 128-byte USB transaction.
+The u2f emulation didn't like this and only works if I send two consecutive 64-byte USB transactions.
+
+5)
+I only used the following in my command line:
+
+  -device u2f-emulated
+
+I did not try the 'passthru' nor the two following examples from the QEmu documentation.
+
+ -device u2f-emulated,dir=$dir
+ -device u2f-emulated,cert=$DIR1/$FILE1,priv=$DIR2/$FILE2,counter=$DIR3/$FILE3,entropy=$DIR4/$FILE4
+
+All in all, if you have a properly coded u2f driver, I believe the QEmu u2f emulation to work as expected.
+However, it does need some error checking added.
+
+
+
+ hw/usb/u2f-emulated.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/hw/usb/u2f-emulated.c b/hw/usb/u2f-emulated.c
+index 196d05a83a..b82a315019 100644
+--- a/hw/usb/u2f-emulated.c
++++ b/hw/usb/u2f-emulated.c
+@@ -31,7 +31,7 @@
+ #include "hw/usb/usb.h"
+ #include "hw/core/qdev-properties.h"
+ 
+-#include <u2f-emu/u2f-emu.h>
++#include <u2f-emu.h>
+ 
+ #include "u2f.h"
+ 
+-- 
+2.47.3
+
 
