@@ -4,94 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 702FE103E173
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 13:29:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 820DD103E173
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 13:29:54 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2qxP-0001yJ-3o; Wed, 18 Mar 2026 09:29:07 -0400
+	id 1w2qxN-0001vg-IB; Wed, 18 Mar 2026 09:29:05 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2qvb-0000qB-6K
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:27:16 -0400
-Received: from mail-yw1-x1131.google.com ([2607:f8b0:4864:20::1131])
+ id 1w2qv8-0000bu-CQ
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:26:49 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w2qvV-0006G8-Dv
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:27:11 -0400
-Received: by mail-yw1-x1131.google.com with SMTP id
- 00721157ae682-79800183233so12531497b3.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 06:27:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773840428; cv=none;
+ id 1w2qv6-0005g4-Mi
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:26:46 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64c31ca77b4so7359468d50.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 06:26:43 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773840403; cv=none;
  d=google.com; s=arc-20240605;
- b=RdhnDcR2/R2xo6CzQJSLdBXWLnF0KY65Y3kaNCc3HW8A2ohn7sIX0uWX6V+Aoi0ZKJ
- K95+6x2PHM8fWcXs+pdnF10ODe9MlYRT5juuA5aDTow347/GrqD4+083zePJlkDc+5UU
- 3ZF13blOVyGDEtG7uby+CibgUdllZMcKcK/19vMNOLhr5gVlxGNE+XHiogopPhXERpc9
- OoUyRc2Qx5r6m0eOk5I6Lcwaa5iO9od/MANPrtROQPdAGPQe5yel+3yJkItl3oY4jFEC
- xYSngp7FAWU5v69EdhMnFXubMsxHCB8BLt4Nx+FWTzwG+Jrmv6UqvggFcpAUU4Xw9orv
- dXDA==
+ b=H8scBhOKKJFlGBOL0xWnZHKHuFUIeqbFV1cuR8cTJ5PPauQ1rvHnFQyMHgTowNLdPU
+ pzaeXsiSgwHtBM6lD5iXkfhpXq35DVNncT0/Y14Xl8BbHMuhXv2UpVTPAj7dOea0HpQR
+ IIJwYM/QrBHiy7bAr26q8fgCUNGhe09AURIaJq+bljsriEFI+uoDSN+HJxc/5iLdsZfZ
+ qC/Xzu6pHNMKyBin17lIB/emcTABVIp4ZUDUu02JXSrzJKJwVT1s8h7+U4DJKoBFpUJu
+ ITT+yjr4AXvmrwaWhCkvUxiiy93Zr+su+OJvGwtpov2qRO3fw2FHzz49PfyT30yy5BS7
+ 3LUw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=HU2oSODkTilRKPEFDsflR/wtS1pqHAXHKF5lDwX0Gic=;
- fh=Ka5Fm2uGNoMN6LvftSCwVWZ6LDxGZumgYDW+5kU6bEI=;
- b=ahz1TnZOttGqI2epHN+f2J6WZzOylUzshajdVtZNn7zeTPB1A6kM+V9oPINccbk+3y
- OHwvpMz8xxIM0b/W88TmViIG0DhHToctdpDuWWZJ7tvpBtq3RNJSsVp3NOKZ0uGLrpYb
- Iu3ARkMQYpILdoN4rCo7njBjSa4Fo7on7ew6OYdFHSqie25hpWnqHH8TpTK8jujAAbta
- cWi8Yvw2Q9H49O9uCITdu6yjsnIbJsdWK+9G1VvPSt6mOe75Rv/PYtKhFhOGS2D7dq8k
- pECNHUzF0cae+3PdGQsRavHEh+EdR/mbEFaIhg0IOgHcEXnLWSxmxVItv+jDJ0xr8P93
- IJIQ==; darn=nongnu.org
+ bh=2J/ARexlEkhoSjahDVI/cZqJwbPhZEMlfNgmS7ZCJBM=;
+ fh=6kJ3CohSxQ+7EgnARanNFMAgatAnP0uu5SOkx3O7QGs=;
+ b=QDR1yqyEooG9r4eOY2OrdgdfYQKAGpL7lQCFJXShTTY0gpi6Fk6heKZaQFZJQhB27p
+ xFDrv6naqbADnjGKNFQsNjvfMGWsTc5HfTOgmZlSgUVZ8lGI1M5uXWLidRw3qIncZKml
+ 6LXY+ulquSsQosICTC7WWyarqLx4FG4lXCtjQs6Y+9k46T8Di6XQ0uW2uhHiGMNrfMqz
+ /imzMWj2K3qEKzGbBSGRbqP+FiuHx8Dj596YbkDmIvLwMxGXP8Cuepv0vYqCzEnpo32A
+ Fw3p4FL1VT06Oarawa3bs83Xpxz/cMzg0xOwgIK+NIUlrf9WeXRenVuSZhrs88ggZ4KS
+ IRZQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773840428; x=1774445228; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773840403; x=1774445203; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=HU2oSODkTilRKPEFDsflR/wtS1pqHAXHKF5lDwX0Gic=;
- b=csR3umTiE45awGtxU4QYcSyvOXe2omeHGTBZdd9ojhTnpLItsgsUWPD+lSNSleD0hY
- M1sG8/bocgFp/fs+zqay5+n9ptIXLQ9LQ2QHt0N/nj5lQiRcvVg6IkjiMLfNFBMGWOL/
- xX2NmK3sremiOqNzEgYB8x7RMBScD79drPF7lFs+RDZlF7RbZTxxdT4aRpw7uBWeZWFh
- ILqo9zDxuLnYrVfyZ9pOBoXyOgiRZBjPiCsmKLotIOdgD4/4WxvA3QF2c990HH2i/66a
- 6QBfc2kPlPi+9U8+zNjtHHK/61lDWfBKGP4N3TsE7RBKg13h+Rn0qoC7HuanPvmomvLc
- SDUw==
+ bh=2J/ARexlEkhoSjahDVI/cZqJwbPhZEMlfNgmS7ZCJBM=;
+ b=GFMwtKEWhl85iBUCztgTV8HbsV57iwKoocLEDt/Lrjs6M9D4cl7sEm704CPL5XHA1M
+ FkoJ4c59paZ/dAfYe4pUv/HOZskO0LznWX0yLqBSgbW7lbLKW9e67kcFBKglhlj/e7Cy
+ 8gMCz4yabFl3TNFw5F79eIjMF0KXNugwm2QTuDwzGaO4xJXulKfP0n+YTF582U67gyoM
+ xldUDab1XO3NQA37W2d4dWkLzjbYVMKQYjNxxoNRJbt6wVGc2vz97kiMKtJyM5SyiuUy
+ C8vz/iGM/1A2hObixDV80XNF+M5tC4xno+PTkwjmUA7fuW6QilBTNOnavHRAjOFkxw8n
+ IAYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773840428; x=1774445228;
+ d=1e100.net; s=20251104; t=1773840403; x=1774445203;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=HU2oSODkTilRKPEFDsflR/wtS1pqHAXHKF5lDwX0Gic=;
- b=gPH3rD2N1HgDrKe2Dm2GukxkhYzS7yQwQIbcC7V/FqN0RnmXFQ3Wa3kJLKyO2U63AZ
- 9qYmKT5TC9Cn1j7FCjqK2lrDicYgdeeaJrF7Ch1OOJZwSfqkRM0Bnf3aeKDbJ9dXWemJ
- NiaR+qP/Q//uedujT2LNwKJszDh7f9X4OdHLjcdzottUg6GUbyw+ZEANkikGAB+ZGHqw
- czz/azVQfpZGsf9dQpHeF1AoHBi90YRrspfWa0ZgvIXvUHuJfMQwRvQkaNfX2bWZuwAh
- D9uVgERzNxh3mFd7Fmqk8ygkqF/HgQ6raUq7iJtJTyAZj+spgtPWyhQ90iA6B2xDcsBH
- CwNw==
-X-Gm-Message-State: AOJu0YyLMm+R7J4P+178jGCvt4Guee+G35iiBIZfWfsCEel+mtaf9wGR
- XHWz4E0ShTz3/MrrJ/CEbzYS3fNU1jprAm9Tw1RiV5SbVeeT4Qc/8SnovN5BmmAfMeyEzgTRUYf
- Ux2qH+Dmno0H6bVNpkvGhGRrn04XMqVQMJ3EjFsCbPg==
-X-Gm-Gg: ATEYQzwH2didhICB/KLXAOyMs4U9oOK9FwTinkq61ChmfPtPCzdCQy0PRJrEn/iKTVH
- A08/Ws8/aKLvUSY1PcHIHg/8tElspdDZZ7CF0RXm0q0q8k4KxU6JFgVoaLzGu3x0NFZ7ISuDDQF
- nm9aCCF7tFVWelj1sSZe4qNS4EmIrqFQKbhQ5TdugGetR+8fjBrfDQqMDwb8mFbEEHgRJzduT4B
- cnQeY8HtrzOQtGGLbarjasN8AvwlUMpuiA3ybsfUA4HkYaASa6cr0Hn27KC+69CKOOg+l1pHlBx
- HEuFAdYg0T8j0kxm/jg8GOz70j/iD8cqKqhv6zJkp15hUMVip1zQpv3ElTYuaQlgvSo=
-X-Received: by 2002:a05:690c:4b89:b0:799:164:a053 with SMTP id
- 00721157ae682-79a619357fbmr68418177b3.33.1773840427637; Wed, 18 Mar 2026
- 06:27:07 -0700 (PDT)
+ bh=2J/ARexlEkhoSjahDVI/cZqJwbPhZEMlfNgmS7ZCJBM=;
+ b=QVd4tsZmAvEpelpLLEzRvHegAABTJR17J2qwZBlynrF3xEW8G9+MSmwkcTAmANC4dM
+ TlGPImpTvtXbsmU0v1c1IQ5C1SqWzc7Mt3Yt3B8UJmVWwZBFLUu3EsreTRmai7MlGIO4
+ 8OlEqf8TWMQ/G9Fm3e+xhvS3IYLR6nEpvMOG79p3czW8vxuxeQsZOPzZPgSiRGqGOTyD
+ CQlYtStbqProrwHJIgWmUnhwhbFDe0Oj2d4t7tJTN0vN1BksFpchkVZxAMbW4DfgEMJI
+ qPue3IHg37/xa4tYOGNzduMOWslsJV8yxRGJSnFfaiRbNLdkHlhAmEmlwM3mF8BU/Kwb
+ O4bw==
+X-Gm-Message-State: AOJu0Yymmw9LML/0lZVSH9Q3k9KUp0u2MSu/AHcCxj92Cx7OYv3O+cs5
+ 5MviwJ4QRVGtArwhRNaG9R9VyPmxWvc26ZqreZDfPgsqqMb8cE31ZYqaem5figjcRaE5dNLLevU
+ M3Nkexar1muGRNDUP2dECGdON17/IBhLH2Bj5+RaFmptrrPp26Ojh
+X-Gm-Gg: ATEYQzycjtrouawC7D5joTzR/piTTRAhJpxZviA2sH72NboHfWwlGrYR08nxULtb4Yc
+ ruzGBeCF/ifv7Q6xB5RjZfwC7/eL3AvjhfHR0t8Q91xRCF6nxA2mvqXam+RLkh9E3BI+cvAGhBP
+ 0FYtJXMAafdbzdS6RS07dSAFJF19N99Pa2cwFvh48iPALlP5W7TVigZ67ZnU9OjmorSkrlyUeP+
+ 7MXtQQAa9fakCxzPu+NAT+hf/3i2jKITbX40daSlZVM+GD0M9eIAU6Krht5z2Rt4IEI8agG8j77
+ /gblEP+dlbdijcVHkfTZeKZHtG5n2BkxXZFZAGvNgD5pq5WVsIUC8D4d+7xkszEgK6k=
+X-Received: by 2002:a53:acd0:0:20b0:64a:d74f:2583 with SMTP id
+ 956f58d0204a3-64e912eeb52mr2891587d50.8.1773840402933; Wed, 18 Mar 2026
+ 06:26:42 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260317191356.844712-1-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260317191356.844712-1-pierrick.bouvier@linaro.org>
+References: <20260317182320.31991-1-farosas@suse.de>
+In-Reply-To: <20260317182320.31991-1-farosas@suse.de>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Wed, 18 Mar 2026 13:26:54 +0000
-X-Gm-Features: AaiRm509Vi4-fEk7dcyMPmHvur5bVPXxaWEjyVwZCf7_r3Q36WODDVb7VXvKhDo
-Message-ID: <CAFEAcA-z9WKmDr63VxZjvRQYL1QQFgb73Q9ujn=yiO0ptWTd5Q@mail.gmail.com>
-Subject: Re: [PULL 0/1] Plugins update for 2026-03-17
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, richard.henderson@linaro.org, pbonzini@redhat.com, 
- stefanha@redhat.com
+Date: Wed, 18 Mar 2026 13:26:30 +0000
+X-Gm-Features: AaiRm50999roi0uVICXCfyqSConArnNzI3s_qcGOI9-co16_7t3YVu5hL1wEWmg
+Message-ID: <CAFEAcA88aWh3S2Wv0EeeskpjHc57avLFDCCm4YM0=+oZ6qG95g@mail.gmail.com>
+Subject: Re: [PULL 00/10] Migration/Qtest patches for 2026-03-17
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -114,8 +113,7 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Mar 2026 at 19:14, Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
+On Tue, 17 Mar 2026 at 18:23, Fabiano Rosas <farosas@suse.de> wrote:
 >
 > The following changes since commit 6667668e0cf369e47aa9dd0bae40989896e9ed9f:
 >
@@ -123,20 +121,16 @@ On Tue, 17 Mar 2026 at 19:14, Pierrick Bouvier
 >
 > are available in the Git repository at:
 >
->   https://gitlab.com/pbo-linaro/qemu tags/pr-plugins-20260317
+>   https://gitlab.com/farosas/qemu.git tags/migration-20260317-pull-request
 >
-> for you to fetch changes up to db52193355cf75394a39ca9f70b1325d4bbe18d6:
+> for you to fetch changes up to 8f627bf1be077382f8ebf2cbda5cfb7e94006c54:
 >
->   plugins/api-system: Handle migrate_add_blocker() failure (2026-03-17 12:13:16 -0700)
->
-> ----------------------------------------------------------------
-> Changes:
-> - [PATCH v2 v2] plugins/api-system: Handle migrate_add_blocker() failure (Trieu Huynh <vikingtc4@gmail.com>)
->   Link: https://lore.kernel.org/qemu-devel/20260317134733.126584-1-vikingtc4@gmail.com
+>   tests/qtest/test-hmp: Free machine options (2026-03-17 14:58:09 -0300)
 >
 > ----------------------------------------------------------------
-> Trieu Huynh (1):
->       plugins/api-system: Handle migrate_add_blocker() failure
+> Migration/Qtest pull request
+>
+> Various fixes
 
 
 
