@@ -4,39 +4,39 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 31AF4103E167
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 11:32:56 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BDD09103E166
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 11:33:01 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2p8J-0006iu-E3; Wed, 18 Mar 2026 07:32:15 -0400
+	id 1w2p8G-0006iT-TY; Wed, 18 Mar 2026 07:32:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w2p88-0006hG-0C
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:06 -0400
+ id 1w2p85-0006gp-0r
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:01 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w2p85-0001wu-Oq
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:03 -0400
+ id 1w2p80-0001wH-RP
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:00 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id D681380850;
- Wed, 18 Mar 2026 14:31:59 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 3B8E780802;
+ Wed, 18 Mar 2026 14:31:54 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:431::1:10])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id kVLGYB2A1mI0-ZmNIdA43; Wed, 18 Mar 2026 14:31:59 +0300
+ ESMTPSA id kVLGYB2A1mI0-mv1tbenO; Wed, 18 Mar 2026 14:31:53 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1773833519;
- bh=NNb48t8wnOSFR4AUklejd8ftAbqN+eMp3ss6l2obUJQ=;
+ s=default; t=1773833513;
+ bh=O1aFHfFqIf4I8kxp1u/NtjbtrDLND5ZakhNLMbNPvUk=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=mGgs1OXUXr/aDAL2MFrF6NblxU/1Xdn1BvazN5RI8e2WlFRW41l53+hqIFwTz2XeM
- iDqK3n4H7ZMJ0RB4kbOQtEviGNeCp9hxDKcBcUrBqf4P2Pxsu2v/F1OEpXdpAqF8kM
- sU59uFjIK6B0m+/4CQgcMlvQx7lhj0i1vFltVtaA=
+ b=q6hnLMHu2h0KLXtw+JI1oHY6L1zqyomOHz5UNOiU3MaoRPf2Mmm/uHKJBNo0C84R1
+ FrWmQ3POsz1AmaGqgv9cnzWYBn173JRG27NQxH1jKkiJ1ZY9yOaviB+tpufBZyLZET
+ zjaw84SvBgGbL6SU9y0c2qrPO6eRZLjwvzoKaIug=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
@@ -44,9 +44,10 @@ To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru,
  vsementsov@yandex-team.ru
-Subject: [PATCH v4 07/13] net/tap: net_init_tap_one(): drop model parameter
-Date: Wed, 18 Mar 2026 14:31:37 +0300
-Message-ID: <20260318113144.15697-8-vsementsov@yandex-team.ru>
+Subject: [PATCH v4 03/13] net/tap: net_init_tap(): drop extra vhostfdname
+ variable
+Date: Wed, 18 Mar 2026 14:31:33 +0300
+Message-ID: <20260318113144.15697-4-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260318113144.15697-1-vsementsov@yandex-team.ru>
 References: <20260318113144.15697-1-vsementsov@yandex-team.ru>
@@ -75,71 +76,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-It could be simply derived from tap parameter. And this change
-simplifies further refactoring.
-
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- net/tap.c | 13 +++++++------
- 1 file changed, 7 insertions(+), 6 deletions(-)
+ net/tap.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
 
 diff --git a/net/tap.c b/net/tap.c
-index 2c5f8e73fe4..db3fe380a44 100644
+index a389aec218f..55b8b33ea84 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -704,12 +704,13 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
- #define MAX_TAP_QUEUES 1024
+@@ -822,14 +822,12 @@ int net_init_tap(const Netdev *netdev, const char *name,
+     const NetdevTapOptions *tap;
+     int fd, vnet_hdr = 0, i = 0, queues;
+     /* for the no-fd, no-helper case */
+-    const char *vhostfdname;
+     char ifname[128];
+     int ret = 0;
  
- static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
--                             const char *model, const char *name,
-+                             const char *name,
-                              const char *ifname, const char *script,
-                              const char *downscript, int vhostfd,
-                              int vnet_hdr, int fd, Error **errp)
- {
--    TAPState *s = net_tap_fd_init(peer, model, name, fd, vnet_hdr);
-+    TAPState *s = net_tap_fd_init(peer, tap->helper ? "bridge" : "tap",
-+                                  name, fd, vnet_hdr);
-     bool sndbuf_required = tap->has_sndbuf;
-     int sndbuf =
-         (tap->has_sndbuf && tap->sndbuf) ? MIN(tap->sndbuf, INT_MAX) : INT_MAX;
-@@ -883,7 +884,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             goto fail;
-         }
+     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
+     tap = &netdev->u.tap;
+     queues = tap->has_queues ? tap->queues : 1;
+-    vhostfdname = tap->vhostfd;
  
--        if (!net_init_tap_one(tap, peer, "tap", name, NULL,
-+        if (!net_init_tap_one(tap, peer, name, NULL,
+     /* QEMU hubs do not support multiqueue tap, in this case peer is set.
+      * For -netdev, peer is always NULL. */
+@@ -871,7 +869,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
+ 
+         if (!net_init_tap_one(tap, peer, "tap", name, NULL,
                                NULL, NULL,
-                               vhostfd, vnet_hdr, fd, errp)) {
-             goto fail;
-@@ -934,7 +935,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-                 goto fail;
-             }
- 
--            if (!net_init_tap_one(tap, peer, "tap", name, ifname,
-+            if (!net_init_tap_one(tap, peer, name, ifname,
-                                   NULL, NULL,
-                                   vhostfd,
-                                   vnet_hdr, fd, errp)) {
-@@ -957,7 +958,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             goto fail;
+-                              vhostfdname, vnet_hdr, fd, errp)) {
++                              tap->vhostfd, vnet_hdr, fd, errp)) {
+             close(fd);
+             return -1;
+         }
+@@ -972,7 +970,7 @@ free_fail:
          }
  
--        if (!net_init_tap_one(tap, peer, "bridge", name, ifname,
-+        if (!net_init_tap_one(tap, peer, name, ifname,
-                               NULL, NULL, vhostfd,
+         if (!net_init_tap_one(tap, peer, "bridge", name, ifname,
+-                              NULL, NULL, vhostfdname,
++                              NULL, NULL, tap->vhostfd,
                                vnet_hdr, fd, errp)) {
-             goto fail;
-@@ -988,7 +989,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-                 }
-             }
- 
--            if (!net_init_tap_one(tap, peer, "tap", name, ifname,
-+            if (!net_init_tap_one(tap, peer, name, ifname,
+             close(fd);
+             return -1;
+@@ -1012,7 +1010,7 @@ free_fail:
+             if (!net_init_tap_one(tap, peer, "tap", name, ifname,
                                    i >= 1 ? NULL : script,
                                    i >= 1 ? NULL : downscript,
-                                   vhostfd, vnet_hdr, fd, errp)) {
+-                                  vhostfdname, vnet_hdr, fd, errp)) {
++                                  tap->vhostfd, vnet_hdr, fd, errp)) {
+                 close(fd);
+                 return -1;
+             }
 -- 
 2.52.0
 
