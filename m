@@ -4,83 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF45A107760C
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 19:46:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 152B0107760C
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 19:46:41 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2wod-0005wx-Mc; Wed, 18 Mar 2026 15:44:27 -0400
+	id 1w2woa-0005wG-4R; Wed, 18 Mar 2026 15:44:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w2wa1-00030I-Lo
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 15:29:21 -0400
-Received: from mail-qt1-x82d.google.com ([2607:f8b0:4864:20::82d])
+ (Exim 4.90_1) (envelope-from <luisccunha8@gmail.com>)
+ id 1w2w1e-0002dm-JA
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 14:53:50 -0400
+Received: from mail-wm1-x32e.google.com ([2a00:1450:4864:20::32e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <qguanni@gmail.com>) id 1w2wa0-0004VC-A1
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 15:29:21 -0400
-Received: by mail-qt1-x82d.google.com with SMTP id
- d75a77b69052e-50912a097b0so1329341cf.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 12:29:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <luisccunha8@gmail.com>)
+ id 1w2w1d-0006cx-1p
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 14:53:50 -0400
+Received: by mail-wm1-x32e.google.com with SMTP id
+ 5b1f17b1804b1-4853c1ca73aso1183725e9.2
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 11:53:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773862159; x=1774466959; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=pZ1STxHanH7uDSXL/hEGwgt1+ssrfoHCJHHnIo3lWLQ=;
- b=a+vJkJQnmW7FPFzO5d03YwT6CN8EqJ18h3/s9YfWveywHiImPGxRVu3WqGzDzxb7Bw
- e+w88qmy/MRW1TY86UkgQ2KIzOAMFPEVHbd1xxMddHs1YoWvph6g5wU60n1JEFJeL+eJ
- qUQfxYRm4af2iBwDwYYiHcEKI5l0yAiHXBKy87PjCrShJxBDbryoRyAMpTIa4tm9bdhj
- oJ0vzIojACSgVgmj1A/cnsdqN/sYCw4UNCQgeXXn1hQvxZ/LKa1qMyglzg6xYwLb6tbI
- +dozrZMFMG/olLHhP3nZ32MT6EYdyuGyTxt2VCX2jm9zjtJ0bDR/+KYQ7j3LfgFiDOfe
- 716A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773862159; x=1774466959;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773860027; x=1774464827; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=pZ1STxHanH7uDSXL/hEGwgt1+ssrfoHCJHHnIo3lWLQ=;
- b=asZIbCqsYndASlLtyTCyJRY2wuRHmq4K651sA/HxdyySKWbDRKVdy6D2QUPBU1Cy9S
- ljNIJUZSqu6F70BASLfmtXE/88DPNlOa+q2F9VLO4dgfNABMlC97MF8PVicGOk2vAVeE
- iEwfAIQKFIl4eATeE9eyRlFhaIydBnG6nG+yQGCdDi3K67GrXcuYbZnUj7KrNmAEAsrb
- 1BxUd6o+fI6vshBfs1/3pxFnEp4/7bzbaR40jo9K3AubBYW7FLZjD7lM8Ddp+I9pbfv0
- +rqZYjfwJIfzZwIslhONaWHRpNpoCvCDDlqALcvipHNCRdBRKkHtkFrGkBsg+WAgaB4R
- Offg==
-X-Gm-Message-State: AOJu0Ywwx1KC2kbUnlLZDYsKvOpSXIK+mtiqaUjUxHy5wkGOV4TfmBh9
- 8BZMknckrN9QSxANF4PMWbklMhm3WpKayd+gQII7MwrvRiHUrYG3gFW8WJb50nKeFxI=
-X-Gm-Gg: ATEYQzwG5+U82zlXxMX0Mo3lJVMEtZDN8OkRt9qUbJwxgipkM9x2umCFTlxqCc9pLjj
- YvOEHgGV7StTShtVdDoaoGCQF817+Ru1Y7tOe4te32J5Uck09BE54oMSsnFP2YHDjVDfRjwSgvu
- N3qiVXhQa1Eb5SDHT0kNRKhjnMNOe7dx/9lefLxcieypTTfVVidJxrleFzseNxpM90trzOqb5+G
- Q4ihtNArhDk3Qtmh45R/nvdUYvybMD3TIqtAJOhldEenwwKlwrvmaWC1zq0Vs4aZmbURiEm1HDa
- 2UwQhQvp2BjKzAN/p4Xu50s6ChR/HQUUC/sD64kqdaTsp0/mapCCwNihEU5hfU98+5LuKMjdnDJ
- /Gzt6KwB4nvH5NZIqT7JASTsy1ob8zcnQcm4ldk9rSGQfh/L2S4Lp0hbgDlEJ3KlMz8uE/3cojB
- XeHnHJWGmJwO7UdN+R/18CLjPf5ehF4CxEdA==
-X-Received: by 2002:ac8:5fd0:0:b0:509:23c5:328b with SMTP id
- d75a77b69052e-50b1485a788mr60445931cf.41.1773862158681; 
- Wed, 18 Mar 2026 12:29:18 -0700 (PDT)
-Received: from 192-222-50-213.ll.local ([192.222.50.213])
+ bh=XxLT5THnGV2VliLFwB1i1UVfc5yvR4zYfU/4uELoqVA=;
+ b=K3e7HEF7mDQy5evcNwMjrv6+8V/ebKPryk+D5yaqSv+LoIik/xFwcUxAn5iEdGb6z/
+ onv9Soq8zf3szjif1fXy+Ecea0roVkHAkYW8yRPKOIqARmPApr6FUyZvDb9Jpdp91VoF
+ HGvGhw/tfvuxRFtIOHnqbWWfSHcgjHXvQ0vilfj77jOxlOtV6U+vxajcrxE/7GzEvepu
+ bFaMWq5KfPI9GeW5QlHw33L7YGuI0sAx/CQFYv+Lv1TqrQ6ABr3uUkLeFpEhc9/k5g3+
+ tDb2pLW8RtdkUfEhL9HbCjpjccJAtldU933GeerpzkR0Xht+1D88HnyLqBV5bux+wAKM
+ gjXA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773860027; x=1774464827;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=XxLT5THnGV2VliLFwB1i1UVfc5yvR4zYfU/4uELoqVA=;
+ b=NXu2wWcWgMtlEEDqX1w95NFBGrD5WK4m6x91LBCOA8xDnqA0FayxuLS7DRYb+Ed39+
+ fNy73fdKpM5C76BVNLsvSo1ehtrDtjroPXi/4vNOm3SMdbZ8fbQ8RiSrRlI6eLNmFjFw
+ tABmEbX3yh6nOOpBEXtpjMAmkMLc/97n6/g4MXADXHsS74GMZrxTdVctvbkdW5Upw+kH
+ e/OQd+B9nOlD6Q+DlX5BeVsBPLVgf4J7p6lxL814wmeJijcMVmkfJ0qtTSobG9TQ3bsj
+ hoYgf1x0/7R95SaDg4G1MenHqC0hlf6KSlN4PlaNmNk+9U+IX0t4cnXcmCqLA6f8oEQh
+ 0N7w==
+X-Gm-Message-State: AOJu0Yz5IJ3iJTOotYpNy8yIdkD/A2k0Hc981Q8tm4dAN4h2yZao2Rcs
+ cB8no1E3l6mrhYGWHsqQ1GKpx7v8C/Bdlhw5+/I5chG3xhc3gh4pzVw1163gf5CGVdo=
+X-Gm-Gg: ATEYQzwkLXxvL5WmNUn8T9KtfL1r4FqQXE2nR9HKmAFLJQBr1zubKf2b+fQO29z+RUT
+ O6V64FCEgAfsaP/mbV9sqs7d8UuJ3uRJ7xgAWdQDuoc5Nr3HIqlKPkAlX/FXvfNlbm2caOPiIh3
+ Q4hnqYhzhz6trQOjjzHcxQVUblTBiLSq7Fhq9FN9Pq/o34kcFcrdtmnpLyO4LliwfnspeLqEkD4
+ C7az2yCIWKPmHdwd/U1ZLBEDI/S2DnNxnV3bQl3kr3A4Mwpo9QgK+9KaIbheNw5NMNZiG3lL6bU
+ 4DJpK6MM0xULB9M3GPNRwWrbOvnuh728vjrHFfv8ZJvPktrRQ7wI+1p7p7tNdgGEPsW4B1vjUdh
+ TP4FRm4kqHcGs4SBL/5SR0TN+0W9wKjPbeUxXeL71Ezw32rIFieXhawaynu/TeTNt/oAWJNDWdx
+ x21Md+lnLs3i3uYqsF6Orhr4zvP/MwDDmtF+uqYjETfvGcSC8GolH5YNS0I2nbWMFF401x0buKz
+ M38raYOLQ1jtrHenWyPH/s9qtP9Y3OdHARD5go=
+X-Received: by 2002:a05:600c:4fc6:b0:480:690e:f14a with SMTP id
+ 5b1f17b1804b1-486f4460743mr71345165e9.14.1773860026956; 
+ Wed, 18 Mar 2026 11:53:46 -0700 (PDT)
+Received: from luis-IdeaPad-Flex-5-14ALC05.. ([148.69.202.102])
  by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50b135d523bsm28906831cf.27.2026.03.18.12.29.18
+ 5b1f17b1804b1-486f8b0bc58sm16135905e9.3.2026.03.18.11.53.42
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 12:29:18 -0700 (PDT)
-From: Jenny Guanni Qu <qguanni@gmail.com>
+ Wed, 18 Mar 2026 11:53:46 -0700 (PDT)
+From: luisccc <luisccunha8@gmail.com>
 To: qemu-devel@nongnu.org
-Cc: thuth@redhat.com, berrange@redhat.com, Jenny Guanni Qu <qguanni@gmail.com>
-Subject: [PATCH] hw/audio/sb16: validate VMState fields in post_load
-Date: Wed, 18 Mar 2026 19:29:18 +0000
-Message-Id: <20260318192918.65481-1-qguanni@gmail.com>
-X-Mailer: git-send-email 2.34.1
+Cc: luisccc <luisccunha8@gmail.com>, Palmer Dabbelt <palmer@dabbelt.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Weiwei Li <liwei1518@gmail.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ qemu-riscv@nongnu.org (open list:RISC-V TCG CPUs)
+Subject: [RFC PATCH 6/6] target/riscv: Add CPU properties for SPMP and sspmpen
+Date: Wed, 18 Mar 2026 18:52:36 +0000
+Message-ID: <20260318185238.99143-7-luisccunha8@gmail.com>
+X-Mailer: git-send-email 2.43.0
+In-Reply-To: <20260318185238.99143-1-luisccunha8@gmail.com>
+References: <20260318185238.99143-1-luisccunha8@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::82d;
- envelope-from=qguanni@gmail.com; helo=mail-qt1-x82d.google.com
-X-Spam_score_int: -10
-X-Spam_score: -1.1
+Received-SPF: pass client-ip=2a00:1450:4864:20::32e;
+ envelope-from=luisccunha8@gmail.com; helo=mail-wm1-x32e.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
 X-Spam_bar: -
-X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FORGED_GMAIL_RCVD=1,
- FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Wed, 18 Mar 2026 15:44:25 -0400
+X-Mailman-Approved-At: Wed, 18 Mar 2026 15:44:23 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -95,41 +107,120 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The SB16 VMState loads in_index and out_data_len as raw INT32
-values with no bounds validation. A crafted migration stream or
-VM snapshot can set these to values exceeding their respective
-buffer sizes (in2_data[10] and out_data[50]), causing heap OOB
-write in dsp_write() and heap OOB read in dsp_read().
+Add CPU properties to control the SPMP and sspmpen extensions from the QEMU command line.
 
-Add bounds checks in sb16_post_load() to reject invalid values
-before they can be used as array indices.
+SPMP can be enabled with:
+  -cpu <model>,spmp=true
+Note: This automatically enables smpmpdeleg, sscsrind, and smcsrind.
 
-Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3326
-Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
-Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+The sspmpen extension can be enabled with:
+  -cpu <model>,sspmpen=true
+Note: This automatically enables SPMP and its depedencies.
+
+Signed-off-by: Luis Cunha <luisccunha8@gmail.com>
 ---
- hw/audio/sb16.c | 7 +++++++
- 1 file changed, 7 insertions(+)
+ target/riscv/cpu.c | 80 ++++++++++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 80 insertions(+)
 
-diff --git a/hw/audio/sb16.c b/hw/audio/sb16.c
-index 1b5e452a29..1838d3ef7b 100644
---- a/hw/audio/sb16.c
-+++ b/hw/audio/sb16.c
-@@ -1286,6 +1286,13 @@ static int sb16_post_load (void *opaque, int version_id)
- {
-     SB16State *s = opaque;
+diff --git a/target/riscv/cpu.c b/target/riscv/cpu.c
+index 5383e07dbd..29bfce6581 100644
+--- a/target/riscv/cpu.c
++++ b/target/riscv/cpu.c
+@@ -1656,6 +1656,84 @@ static const PropertyInfo prop_pmp_granularity = {
+     .set = prop_pmp_granularity_set,
+ };
  
++static void prop_spmp_set(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    bool value;
 +
-+    if (s->in_index < 0 || s->in_index > (int)sizeof(s->in2_data)) {
-+        return -1;
++    visit_type_bool(v, name, &value, errp);
++
++    if (cpu->cfg.spmp != value && riscv_cpu_is_vendor(obj)) {
++        cpu_set_prop_err(cpu, name, errp);
++        return;
 +    }
-+    if (s->out_data_len < 0 || s->out_data_len > (int)sizeof(s->out_data)) {
-+        return -1;
++
++    cpu_option_add_user_setting(name, value);
++    cpu->cfg.spmp = value;
++    cpu->cfg.ext_smpmpdeleg = value;
++
++    /* Enable necessary extensions */
++    if (value) {
++        cpu->cfg.ext_sscsrind = true;
++        cpu->cfg.ext_smcsrind = true;
 +    }
-     if (s->voice) {
-         audio_be_close_out(s->audio_be, s->voice);
-         s->voice = NULL;
++}
++
++static void prop_spmp_get(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    bool value = RISCV_CPU(obj)->cfg.spmp;
++
++    visit_type_bool(v, name, &value, errp);
++}
++
++static const PropertyInfo prop_spmp = {
++    .type = "bool",
++    .description = "spmp",
++    .get = prop_spmp_get,
++    .set = prop_spmp_set,
++};
++
++static void prop_sspmpen_set(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    RISCVCPU *cpu = RISCV_CPU(obj);
++    bool value;
++
++    visit_type_bool(v, name, &value, errp);
++
++    if (cpu->cfg.spmp != value && riscv_cpu_is_vendor(obj)) {
++        cpu_set_prop_err(cpu, name, errp);
++        return;
++    }
++
++    cpu_option_add_user_setting(name, value);
++    cpu->cfg.ext_sspmpen = value;
++
++    /* Enable necessary extensions */
++    if (value) {
++        cpu->cfg.spmp = true;
++        cpu->cfg.ext_sscsrind = true;
++        cpu->cfg.ext_smcsrind = true;
++    }
++}
++
++static void prop_sspmpen_get(Object *obj, Visitor *v, const char *name,
++                         void *opaque, Error **errp)
++{
++    bool value = RISCV_CPU(obj)->cfg.ext_sspmpen;
++
++    visit_type_bool(v, name, &value, errp);
++}
++
++static const PropertyInfo prop_ext_sspmpen = {
++    .type = "bool",
++    .description = "ext_sspmpen",
++    .get = prop_sspmpen_get,
++    .set = prop_sspmpen_set,
++};
++
+ static int priv_spec_from_str(const char *priv_spec_str)
+ {
+     int priv_version = -1;
+@@ -2657,6 +2735,8 @@ static const Property riscv_cpu_properties[] = {
+     {.name = "pmp", .info = &prop_pmp},
+     {.name = "num-pmp-regions", .info = &prop_num_pmp_regions},
+     {.name = "pmp-granularity", .info = &prop_pmp_granularity},
++    {.name = "spmp", .info = &prop_spmp},
++    {.name = "sspmpen", .info = &prop_ext_sspmpen},
+ 
+     {.name = "priv_spec", .info = &prop_priv_spec},
+     {.name = "vext_spec", .info = &prop_vext_spec},
 -- 
-2.34.1
+2.43.0
 
 
