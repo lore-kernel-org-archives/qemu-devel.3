@@ -4,36 +4,37 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B0A1810854CA
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 01:36:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1208CFEDA17
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 01:36:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2foz-0006cD-Ei; Tue, 17 Mar 2026 21:35:41 -0400
+	id 1w2fon-0006aR-CW; Tue, 17 Mar 2026 21:35:29 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2fon-0006ah-KP
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 21:35:30 -0400
-Received: from zero.eik.bme.hu ([2001:738:2001:2001::2001])
+ id 1w2fok-0006Z3-5M
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 21:35:26 -0400
+Received: from zero.eik.bme.hu ([152.66.115.2])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <balaton@eik.bme.hu>)
- id 1w2fol-0001iw-Gz
- for qemu-devel@nongnu.org; Tue, 17 Mar 2026 21:35:29 -0400
+ id 1w2foh-0001iF-31
+ for qemu-devel@nongnu.org; Tue, 17 Mar 2026 21:35:25 -0400
 Received: from localhost (localhost [127.0.0.1])
- by zero.eik.bme.hu (Postfix) with ESMTP id 067615968DE;
- Wed, 18 Mar 2026 02:35:25 +0100 (CET)
+ by zero.eik.bme.hu (Postfix) with ESMTP id 09E6E596DF7;
+ Wed, 18 Mar 2026 02:35:21 +0100 (CET)
 X-Virus-Scanned: amavis at eik.bme.hu
 Received: from zero.eik.bme.hu ([127.0.0.1])
  by localhost (zero.eik.bme.hu [127.0.0.1]) (amavis, port 10028) with ESMTP
- id DqJIhd8jRNwl; Wed, 18 Mar 2026 02:35:23 +0100 (CET)
+ id SAgFZdbgWZ7Q; Wed, 18 Mar 2026 02:35:18 +0100 (CET)
 Received: by zero.eik.bme.hu (Postfix, from userid 432)
- id 0E900596E04; Wed, 18 Mar 2026 02:35:23 +0100 (CET)
-Message-ID: <a96811f47b6ae3224e2b2a7761248622d6578e76.1773797056.git.balaton@eik.bme.hu>
+ id D80AA596A4F; Wed, 18 Mar 2026 02:35:18 +0100 (CET)
+Message-ID: <b3af90af051762d7fcbb4393ba9c0714282ea903.1773797056.git.balaton@eik.bme.hu>
 In-Reply-To: <cover.1773797056.git.balaton@eik.bme.hu>
 References: <cover.1773797056.git.balaton@eik.bme.hu>
 From: BALATON Zoltan <balaton@eik.bme.hu>
-Subject: [PATCH v4 6/6] ati-vga: Add work around for fuloong2e
+Subject: [PATCH v4 2/6] ati-vga: Also switch mode on HW cursor enable bit
+ change
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
@@ -41,14 +42,15 @@ To: qemu-devel@nongnu.org
 Cc: Gerd Hoffmann <kraxel@redhat.com>, marcandre.lureau@redhat.com,
  Chad Jablonski <chad@jablonski.xyz>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Date: Wed, 18 Mar 2026 02:35:23 +0100 (CET)
-Received-SPF: pass client-ip=2001:738:2001:2001::2001;
- envelope-from=balaton@eik.bme.hu; helo=zero.eik.bme.hu
-X-Spam_score_int: -18
-X-Spam_score: -1.9
-X-Spam_bar: -
-X-Spam_report: (-1.9 / 5.0 requ) BAYES_00=-1.9, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Date: Wed, 18 Mar 2026 02:35:18 +0100 (CET)
+Received-SPF: pass client-ip=152.66.115.2; envelope-from=balaton@eik.bme.hu;
+ helo=zero.eik.bme.hu
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -64,86 +66,29 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-With the linear aperture size fixed to match real card fuloong2e no
-longer works due to running out of PCI memory because only one PCI bus
-is emulated on that machine. Add a property to allow fuloong2e to set
-a smaller linear aperture size to work around that problem until the
-machine model is improved.
+This does nothing for most drivers but works around issue and fixes
+output with the Solaris R128 driver that only sets display parameters
+after enabling CRT controller which we would miss otherwise.
 
 Signed-off-by: BALATON Zoltan <balaton@eik.bme.hu>
+Tested-by: Chad Jablonski <chad@jablonski.xyz>
+Reviewed-by: Chad Jablonski <chad@jablonski.xyz>
 ---
- hw/display/ati.c     | 17 +++++++++++++----
- hw/display/ati_int.h |  1 +
- hw/mips/fuloong2e.c  |  1 +
- 3 files changed, 15 insertions(+), 4 deletions(-)
+ hw/display/ati.c | 1 +
+ 1 file changed, 1 insertion(+)
 
 diff --git a/hw/display/ati.c b/hw/display/ati.c
-index 705e4db6e4..7621303d0a 100644
+index c165434938..8286f67c1c 100644
 --- a/hw/display/ati.c
 +++ b/hw/display/ati.c
-@@ -1074,7 +1074,6 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
-     ATIVGAState *s = ATI_VGA(dev);
-     VGACommonState *vga = &s->vga;
-     I2CBus *i2cbus;
--    uint64_t aper_size;
- 
- #ifndef CONFIG_PIXMAN
-     if (s->use_pixman != 0) {
-@@ -1138,10 +1137,19 @@ static void ati_vga_realize(PCIDevice *dev, Error **errp)
-      * Rage128 the upper half of the aperture is reserved for an AGP
-      * window (which we do not emulate.)
-      */
--    aper_size = s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF ?
--                ATI_RAGE128_LINEAR_APER_SIZE : ATI_R100_LINEAR_APER_SIZE;
-+    if (!s->linear_aper_sz) {
-+        if (s->dev_id == PCI_DEVICE_ID_ATI_RAGE128_PF) {
-+            s->linear_aper_sz = ATI_RAGE128_LINEAR_APER_SIZE;
-+        } else {
-+            s->linear_aper_sz = ATI_R100_LINEAR_APER_SIZE;
-+        }
-+    }
-+    if (s->linear_aper_sz < 16 * MiB) {
-+        error_setg(errp, "x-linear-aper-size is too small (minimum 16 MiB");
-+        return;
-+    }
-     memory_region_init(&s->linear_aper, OBJECT(dev), "ati-linear-aperture0",
--                       aper_size);
-+                       s->linear_aper_sz);
-     memory_region_add_subregion(&s->linear_aper, 0, &vga->vram);
- 
-     pci_register_bar(dev, 0, PCI_BASE_ADDRESS_MEM_PREFETCH, &s->linear_aper);
-@@ -1186,6 +1194,7 @@ static const Property ati_vga_properties[] = {
-     DEFINE_PROP_BOOL("guest_hwcursor", ATIVGAState, cursor_guest_mode, false),
-     /* this is a debug option, prefer PROP_UINT over PROP_BIT for simplicity */
-     DEFINE_PROP_UINT8("x-pixman", ATIVGAState, use_pixman, DEFAULT_X_PIXMAN),
-+    DEFINE_PROP_UINT64("x-linear-aper-size", ATIVGAState, linear_aper_sz, 0),
-     DEFINE_EDID_PROPERTIES(ATIVGAState, i2cddc.edid_info),
- };
- 
-diff --git a/hw/display/ati_int.h b/hw/display/ati_int.h
-index 21b74511e0..0c48934d33 100644
---- a/hw/display/ati_int.h
-+++ b/hw/display/ati_int.h
-@@ -119,6 +119,7 @@ struct ATIVGAState {
-     QEMUTimer vblank_timer;
-     bitbang_i2c_interface bbi2c;
-     I2CDDCState i2cddc;
-+    uint64_t linear_aper_sz;
-     MemoryRegion linear_aper;
-     MemoryRegion io;
-     MemoryRegion mm;
-diff --git a/hw/mips/fuloong2e.c b/hw/mips/fuloong2e.c
-index d0efe36f7c..72ad4507df 100644
---- a/hw/mips/fuloong2e.c
-+++ b/hw/mips/fuloong2e.c
-@@ -316,6 +316,7 @@ static void mips_fuloong2e_init(MachineState *machine)
-         dev = DEVICE(pci_dev);
-         qdev_prop_set_uint32(dev, "vgamem_mb", 16);
-         qdev_prop_set_uint16(dev, "x-device-id", 0x5159);
-+        qdev_prop_set_uint64(dev, "x-linear-aper-size", 16 * MiB);
-         pci_realize_and_unref(pci_dev, pci_bus, &error_fatal);
-     }
- 
+@@ -632,6 +632,7 @@ static void ati_mm_write(void *opaque, hwaddr addr,
+         ati_reg_write_offs(&s->regs.crtc_gen_cntl,
+                            addr - CRTC_GEN_CNTL, data, size);
+         if ((val & CRTC2_CUR_EN) != (s->regs.crtc_gen_cntl & CRTC2_CUR_EN)) {
++            ati_vga_switch_mode(s);
+             if (s->cursor_guest_mode) {
+                 s->vga.force_shadow = !!(s->regs.crtc_gen_cntl & CRTC2_CUR_EN);
+             } else {
 -- 
 2.41.3
 
