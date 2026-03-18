@@ -4,87 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 60799103D958
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:10:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9754010706D6
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:11:31 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2nqy-0004s5-Ox; Wed, 18 Mar 2026 06:10:18 -0400
+	id 1w2nrw-0005Qn-Tn; Wed, 18 Mar 2026 06:11:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nqr-0004rB-VU
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:10:11 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2nrv-0005QY-IP
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:11:15 -0400
+Received: from mail-yw1-x1130.google.com ([2607:f8b0:4864:20::1130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nqq-0005CT-6e
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:10:09 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b47b95a77so2211193f8f.0
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:10:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2nrs-0006gv-1A
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:11:14 -0400
+Received: by mail-yw1-x1130.google.com with SMTP id
+ 00721157ae682-798374d0f44so11616327b3.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:11:11 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773828670; cv=none;
+ d=google.com; s=arc-20240605;
+ b=Bbo59VokuBFqQ03zispRBP6E180rcihZcc6fEOvdSeidS9sXdPkY+oYDa4KMK6EQz7
+ 34CzUJL9VP7fKMh/cvUZa8x4sHgjupwy5ESZdIXOD+DiIoZQ6YpMBxdCwIwnyZe8+VkG
+ O73viXH5QrO4Ubh+VAPNNO9FoF1pft+wCm3BSfROBHB5ihsuPC1qnE4RitSEo1J913SL
+ 5hTNB6rOCROtKqfZhFpgOn98h/lYV8FPYBu5EVC3WUb0Y8eW+lx/BSLwJtoMRtidF5fk
+ Kum70aS4rmlU4t41O+oiMBb7Sarg0vzEogGCwwUfSuy8jU7jsmYbzipAZKj22d2c4oCJ
+ WOPA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=7fRBsfiEyGPQyFguCO7JUqSPE9oZnDWBZHhDWDo7AlQ=;
+ fh=B22JtR9ZUsXUrdiOg5Iw9LSBCcKra7oUC9BuSyZP/90=;
+ b=RT3WnoGKFs8YhNZ0amc2qeosPXoLAukfh8FQUQCbZEpVXL4ZHe19DpL0CDgNv/ZLvQ
+ eRNFJ42OOa5q7XuOyDQG7IHC8hYH4OC0iJs7LDuZhfbGaiAlEZe1YDrdwlZ9L7+XbzP9
+ Q/VM/qht3alggpHcVZe7jp0TS6BpYGok/j4u+RNvhVmDWW5kLy0oTosloLbY1NygbAu6
+ 1Yv46b5P9GZxxFiXiQpWuMspGWHh8HQ8ki97EVMsCMnfMAFiTPAf8+/39/NBHwj9LJzj
+ kqdAiCAgsqDEHK4Vm7VO8alP0HL0RIZJrs8RDJty9CXtBIE5wo/WJnbIXGmFn+HaDzx9
+ Hx8Q==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773828607; x=1774433407; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=3vK5xN/X3WGliUWg4AD991r4Wr2GK0P8FJz7TTAo808=;
- b=lfahO/YLe1PQoE7AjhvJbRq3WHIlIY3VBIQAO4iLpMSzRNLKSK20YKqzs7pJNnZJ1c
- KLZIBkQ94rpSyMmwQJIls98+M2QBmzPfYc7bEUB9bh8Co/pvDmiKAGHdKEV52FR6xVSC
- JtZ6HOcnlzFwWWlACeE5RdOhGwYWrCGqWS35BgxM/z0c8/2s+yUfyWeK6VE+fdCSJWRd
- JqBOaW/vlt9RILdFCXK+0dAi+lHR8LJah2ZW3SWmWWeW+SOeqQZdLThr3fxYmn8y1mnu
- ghRC5wAoeVm86JLVAySpQLcCzJVP9iSh+OnyDTc0lWyjUw/KTif9yo6EQKYNfsCNoU3b
- I7Kg==
+ d=linaro.org; s=google; t=1773828670; x=1774433470; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=7fRBsfiEyGPQyFguCO7JUqSPE9oZnDWBZHhDWDo7AlQ=;
+ b=dBjDg49ooPGv/WaZWvTXtHrZIutmWqYacVy6G9iEBHBU2U9S1fFKsSNrF9oh9fFBkX
+ 2QMzSZoPjW4Uo4lFHRhF7t2j/LeEUbvnkDCgjrOxfpHnJpvUtC2gfTT9f97AiBdxj546
+ lBtiRok3mzirQg+NMN1qoD5z8Bl0REnFO0pZMNXYHQ8kl1WhxnXCjIKm66ZmBtmzKDGM
+ gKvxW3zA/OAkqhEbIhKSbc/rBXjfj5zlLLTkvnYKcZND74wy7E1mvgLbqeonTlRgTQjF
+ t5f6InWlBy+1vvfM8iY+5ly42Ejzf7Vg0nOft7RdKYpXuLTHQ5XDNlyMB+pNZ+Kxj6k8
+ UwLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773828607; x=1774433407;
- h=content-transfer-encoding:in-reply-to:from:references:cc:to
- :content-language:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=3vK5xN/X3WGliUWg4AD991r4Wr2GK0P8FJz7TTAo808=;
- b=lEu4bcaQUt98GxTPRCNqRDOVUmcfpZnC4FJbbc5OYN35EG9AIubzbYG8XeSW58g4Fy
- xZGyTs4jndiW6xGaA47Xa1rb/iSz4IHBRo//mYQZQkx/Pdmpsqi3yU+fa3n7k2Vos/Y7
- CojIURsqSj6214TxHe6PARmQMZ6O9hCK8bCW5vKt6M+479M5A4tGPhVOL+NOqhEnuk4D
- WpNddYT2b5PVvZy8R1vTB9vQ4W/H5m+S4nlU3OVB2qe/xV0VacXGCLiCPH9AS4H/LYYZ
- 71zcCKWi4FlqHkIazq6V+K8dPeiwnSSwwibY3Q+eS1YG/eZu0Y1bYp3QuteXVD5cd8eF
- TpEw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCU8Bg+XLAsxa6h2/9hGc028GW9iRyXFvnjA8zAUgOStad4f2DAYppQs651qxab2p8cOITfDU6CG6aas@nongnu.org
-X-Gm-Message-State: AOJu0Yypf7U+XwQ0Re1FRon8GCQPIB5RiUE1qIZkm50Vv7eeSySlZGbw
- sxLhwf8OU4B4nD4mMyo9hUTZ9l8ahbG3DRC/Pdj8BkI15ZOJrU49DZTKxdrMccmJ3jw=
-X-Gm-Gg: ATEYQzzHKf3wpaWH82cIjAQGZPZVd27z9BrTdPJWc4WCUVDDMvwMNxop09BL5wfLene
- QrbyToQxqlFwtcNA9jfTPHRFw5YRnph9GzVOXIBlvZRXAPn9sS3OFxYkK3Lb8UIWxvQbZd3U2p2
- Hu/DTVZ+Y6syw7S//PgisFwExe3CqvUozw86NCBIsfsAUFp2ken7Lc6FOqk0lkRwDp5zJ8yiWHS
- L/6VDIhbahGicU+NY+KiCgX+yInA43YEfnEmpAIqjyXwq6+FsAPopM8PGC4ToNOV8G/R1Th/JAB
- ODmqbqHmvzlyEn+oAnwRGhPXpW5B0koKaVVMRRsFkZ8PVE8I6U8W/WPRivmNPucd/RKP1RIs1R0
- AeyMHboASHdqvaQz09R0wg4H0BC+rx+aniIcwXgsufJqXp/GImVvHNszztYrwh6u8RJ3yICktHA
- NBegZw7gpEwZPknUvSz2JB/L6GrCKHXoOjhcUtrkbIKTUA1Z9Oq56hTxqiMZcmenV7mw==
-X-Received: by 2002:a05:6000:2409:b0:43b:446e:dfa9 with SMTP id
- ffacd0b85a97d-43b527c40bamr4961745f8f.31.1773828606625; 
- Wed, 18 Mar 2026 03:10:06 -0700 (PDT)
-Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b518a3dfasm6075402f8f.33.2026.03.18.03.10.05
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 03:10:06 -0700 (PDT)
-Message-ID: <a70df26c-ccd1-4078-97d3-5cc24f19df34@linaro.org>
-Date: Wed, 18 Mar 2026 11:10:05 +0100
+ d=1e100.net; s=20251104; t=1773828670; x=1774433470;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=7fRBsfiEyGPQyFguCO7JUqSPE9oZnDWBZHhDWDo7AlQ=;
+ b=rZu1FYj0hryAydIH3gE4tCFZYW3rg+b12HGyCppLLfvmAhzopbYtijHeZgv6NFwfQN
+ m9wuZrG3bbE56v2yMPOgYGyOjkCeOH/Ee0uZnqW+eNcYu4Gm9Jp9rrrBGkEK/iplT00Y
+ 0MzqGyLjZoVrMHJfNBHIZJKmnT+4b8z0xwS81a1uwuyQ33JE3yANfpfRdITjQ3Ua8OXB
+ VcS+dpas1Vr/6hhuhDwaWd+SFfSWcsqr09rLC66YPi59+n5qEna8Pux3fGXNzaPrtWyz
+ G5TdX1+fQrOnWfMKw8CTspz33FeMNxaAhISKQxQKBxCiGbORSFUE9pzyCzTfEX4MwNGg
+ wbZA==
+X-Gm-Message-State: AOJu0Yw4IZMosEcoZikCOWllaMyNXcwYJq3kcP6IZRjzOC9AcqbGZjoi
+ yIymtiJdwUA+2NAlVkuZMVN9oEfAw7hIpApKm/8ZoD6vPtK7HvL+SCwPM2RMv1jDqDpwJDGor4e
+ f6wtB3TGSuDqc/8MIfA5Juyppnp4BZgPDEJNMFjbEmQ==
+X-Gm-Gg: ATEYQzzk/1LDHbHS0eTyeB2pNKSSW4u8TeWCKhO7Ay9gffHLRgcx1DCQ3LLCilSu1Ww
+ DKqS3tO1vMCnmskuLyKDMwvpZACRp21UR4IiBt+tDwGgbFeps19LSD956V37YBeA6MzSu7EZnlE
+ 1N6CgTiX8VTb84cYXs3hX//mn3r5wq2GipaAcQp2Zs08appJ91+0J38BN6ivf9HRFl+4iCn2k2f
+ 9/8QU8MxcMvaFgSNs5QsOGv9RqAZunYLUZd6Cu9F49dAbKZpTQp6rrkwLkHwRpk5QL6gVjuROGr
+ DmiU14Ttczz9G5VBuFo6WIlNFbSUfErAnG21QB0Sico65YOtp7IOf3wFsUcjZkB6cJc=
+X-Received: by 2002:a05:690c:630a:b0:79a:4b22:5e4d with SMTP id
+ 00721157ae682-79a617c99e9mr58295337b3.10.1773828670409; Wed, 18 Mar 2026
+ 03:11:10 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/2] riscv/tcg/tcg-cpu.c: Remove mttcg check for x-rv128
-Content-Language: en-US
-To: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
- <frederic.petrot@univ-grenoble-alpes.fr>, palmer@dabbelt.com,
- alistair.francis@wdc.com, liwei1518@gmail.com,
- daniel.barboza@oss.qualcomm.com, zhiwei_liu@linux.alibaba.com
-Cc: qemu-riscv@nongnu.org, qemu-devel@nongnu.org,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260101181442.2489496-1-frederic.petrot@univ-grenoble-alpes.fr>
- <20260101181442.2489496-3-frederic.petrot@univ-grenoble-alpes.fr>
-From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-In-Reply-To: <20260101181442.2489496-3-frederic.petrot@univ-grenoble-alpes.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+References: <20260318083238.1132609-1-pbonzini@redhat.com>
+In-Reply-To: <20260318083238.1132609-1-pbonzini@redhat.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 18 Mar 2026 10:10:59 +0000
+X-Gm-Features: AaiRm51uGqiMCC0PXs7Ff9oN-UPPy6YDh63U386E1m_sjCQ025XcTJKpQhLoQsE
+Message-ID: <CAFEAcA-Zb9zJhbpwyGs92oSL3OMsDyshNdKatQfebzq71y0LYA@mail.gmail.com>
+Subject: Re: [PULL 0/4] Last minute changes for QEMU 11.0 hard freeze
+To: Paolo Bonzini <pbonzini@redhat.com>
+Cc: qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::1130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yw1-x1130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,39 +113,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 1/1/26 19:14, frederic.petrot--- via wrote:
-> We had to check that mttcg was not used when executing QEMU with
-> -cpu x-rv128 as a single 128-bit access was done as two distinct 64-bit
-> accesses.
-> Now that we use the 128-bit ld/st that access the data atomically,
-> this check is no longer necessary.
-> 
-> Signed-off-by: Frédéric Pétrot <frederic.petrot@univ-grenoble-alpes.fr>
-> ---
->   target/riscv/tcg/tcg-cpu.c | 10 ----------
->   1 file changed, 10 deletions(-)
-> 
-> diff --git a/target/riscv/tcg/tcg-cpu.c b/target/riscv/tcg/tcg-cpu.c
-> index 440626ddfa..15d39f9912 100644
-> --- a/target/riscv/tcg/tcg-cpu.c
-> +++ b/target/riscv/tcg/tcg-cpu.c
-> @@ -1305,16 +1305,6 @@ static bool riscv_tcg_cpu_realize(CPUState *cs, Error **errp)
->       }
->   
->   #ifndef CONFIG_USER_ONLY
-> -    RISCVCPUClass *mcc = RISCV_CPU_GET_CLASS(cpu);
-> -
-> -    if (mcc->def->misa_mxl_max >= MXL_RV128 && qemu_tcg_mttcg_enabled()) {
-> -        /* Missing 128-bit aligned atomics */
-> -        error_setg(errp,
-> -                   "128-bit RISC-V currently does not work with Multi "
-> -                   "Threaded TCG. Please use: -accel tcg,thread=single");
-> -        return false;
-> -    }
-> -
->       CPURISCVState *env = &cpu->env;
->   
->       tcg_cflags_set(CPU(cs), CF_PCREL);
+On Wed, 18 Mar 2026 at 08:33, Paolo Bonzini <pbonzini@redhat.com> wrote:
+>
+> The following changes since commit fff352b9b6080e580aa1fadd29b4eccf4cb2922a:
+>
+>   Merge tag 'for-upstream' of https://gitlab.com/bonzini/qemu into staging (2026-03-12 15:21:06 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://gitlab.com/bonzini/qemu.git tags/for-upstream
+>
+> for you to fetch changes up to 6257754bb9b00b52018951096a9fba28b98a5b0d:
+>
+>   rust: suggest passing --locked to "cargo install" (2026-03-18 09:20:57 +0100)
+>
+> ----------------------------------------------------------------
+> * runstate: handle return code of EOPNOTSUPP properly from rebuild_guest()
+> * meson: do not hardcode paths to generated files
+> * rust: fix build when --disable-rust and meson < 1.9
+> * rust: suggest passing --locked to "cargo install"
+>
 
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+
+
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
