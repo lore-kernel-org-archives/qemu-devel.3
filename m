@@ -4,103 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6F2FCD0A6
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:07:42 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A752FCD0A6
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:09:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2no0-0003lR-Ue; Wed, 18 Mar 2026 06:07:12 -0400
+	id 1w2nqB-0004RN-Kb; Wed, 18 Mar 2026 06:09:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w2nny-0003l6-MJ
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:07:10 -0400
-Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nqB-0004R8-2N
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:09:27 -0400
+Received: from mail-wr1-x433.google.com ([2a00:1450:4864:20::433])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w2nnx-0004ZI-1c
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:07:10 -0400
-Received: by mail-lj1-x22c.google.com with SMTP id
- 38308e7fff4ca-38a42a0d7f7so6426451fa.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:07:08 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773828427; cv=none;
- d=google.com; s=arc-20240605;
- b=ZBQUmJfGwCpkfpyH5/zFB/z5UVtdLB7qGWTQkrv4ZadAoiqTxSHJ9QkIuINzJ1dzIb
- /HLUfYvTByErIyBoopxocueu1c7TmCx82qEUc6QP8GfreKnWGWdx+wMUQSGuB0ZCZAZS
- NFX0fEcCFT2Hw0tZ4YQ+gWee7wBFuO5h94RJnvrc5QGhWPEuvvCOmpRWU7h3CnazDnR/
- zjxIXRflUt8BFGEMHxOmRO+NKX23owm62vb9oBg+VSNNT5XKu8YBe64Uhk6fuOFXOjCJ
- 85X8csmceh7KIVnvIjs6Pu9LhvKaAKcEPVDnqb4GuVzl1qaLZqW5GhQL1jI1SB3gT2hv
- xwWg==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=/R9/OSK/DKaqZPMUwiM3r7jZnekbVIwQZyVh0XFK1d4=;
- fh=PPOvtMHkqOkqS+s4WoZGxCoh6Ztf1gmLjaBoC9ThygE=;
- b=I5onauAic0chFt6S3UoBpfnb9EwC45zd0nXdgGYH/FnqDmG8CPBreYHUW5hPd7FJci
- +U+yAWqROltmVEdmqaVJGjdPJRCD5bpdLx/VzyFFAWDUREfBEY9VUaGgOgBui/RcCZ4d
- bJWS3JXT/0oSt+GUnP4cy19KQykIfuo8fbKXq9ODiL2P7Ei7n4TLJWjkJEvMZNSXxT+Z
- 0/0Y2cqgljZTCoocDCmYiMAtbu6YAYwnSgFOLrIMbXVnU1lvsnvsjPD3y6jGYPy0mV4l
- 9TgseKmo1uqNuUbA9PuzupPXM2RKeM/Hr2I4OqWfCB29RGN+sarTKevE6Qzu6Lr1tqz3
- mrtg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w2nq9-00054v-3E
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:09:26 -0400
+Received: by mail-wr1-x433.google.com with SMTP id
+ ffacd0b85a97d-43b4d734678so1519183f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:09:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1773828427; x=1774433227; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=/R9/OSK/DKaqZPMUwiM3r7jZnekbVIwQZyVh0XFK1d4=;
- b=DRzGNuqkD3cgnIGvMGX2Gl204lrWxfMyWHFRXCOIipPGgspgF+10w7oN9SObxx5uhJ
- zblHe7FA8BhCgd5xScYcim3AqfAj/IFNQgRyJo/D/LJWhrUbFs2d9PSTddZ/x8Cp5hGK
- gC8XCivP2Y96zxbGcCaXU1In6WsIEPB8TtIj0=
+ d=linaro.org; s=google; t=1773828563; x=1774433363; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=+lAYt0pkLbcYah3cW5JmMxZMLWVOnVd43OasVJOYXms=;
+ b=thSdYVoy4FQQl9GMaGlpEHPwAh4HTJNE/dUgI8AxwfPjIV7tpYvJBterxn1wYOLGs2
+ bPFJ9ujrZtQsV7EMBt5MVoVwVwvoEU81Xbf5p1iJZ4KbT1d/ORm8LC9tjcKda3dex1zi
+ wbcrEJ3NNh9DMb6cVs9lah+DJGnPIxxyGgYgbDSoqKuWBK/DmloiuMh01i8LKh7zG5f9
+ ppdXJUisJY35hH0gbYj61uZytS5MjeQzGwuleSgWNeB4sdvNcP7waJmGTNUvgNRciFPy
+ saNJ3Ucl7ooGcXY2vyuzRf0q+Vm3rB4hiFW/UXyFscOfzuqt6R4x6WC+5l1a8M6gMNQc
+ aKCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773828427; x=1774433227;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=/R9/OSK/DKaqZPMUwiM3r7jZnekbVIwQZyVh0XFK1d4=;
- b=AGYzjDLSK8DeiSCS+cyrJMLe1TQz5/4VFIX/pV9MXxVZMyE7I/+FO3M7ERa92eCNXq
- i2g7flCKbdcbCazGEVrWrCUPU9pYE+93/tdxnZ55xgrCYBpktmDpwEo1GTbgOShu2mVs
- Idd2+JrwfQO4aSA1UHTub879KMRmM+vPjo50qR2cXtvzidKIV9X1p0QxUSuAyYQuSXt+
- ykevi1kF4i1KDqHNz61Vu5T4Ia92Rrr8+FKWAWlsUdz9LtarCO89J23OtxJof1e1gOGm
- Q5nComK+nXP/AeHMV5t1fhU9KaKJXAPABUZvxV9ND7lwaMa6ZeVfzR/eN1DxOXxZitdy
- PYlA==
-X-Gm-Message-State: AOJu0YyRjWeBzlciBI9SYc1JP51j/KjTL0U8N96Gmvb2r/KLCJx/7Ghj
- WFPQQ8isVbEpFn6EoXkFvGmmQLUcrceN3eHHYVOREeV8UFtnvnA/HC5PNxXg7GmnNc3KG9nqeDx
- Cgz1dybvfJzTxlE9lDOyh90xI1nUMAM6kHjItnuRC8g==
-X-Gm-Gg: ATEYQzz3E4m3b4veUK6+revfy9HGxk7Vn5LW2hw4cb0Af8v6XAnQKp1AJmcFCX3kLUf
- KI47YlQJ7biRHVmfg8Z5qo4BvuA9pUErqH02H+Vj95s9AlakW0dbAeSeYkO0a9Rb9wc2/GymtuU
- m1uRLpCGvwGdYPlMQSN5DNUqcSzjEsi3+bSe31DdulmtgZryG+oqMVd382g3mf4rNi0gY+YQ6Nl
- RYaz5qPANcy07DrFwKe+LvYm2FDz/ipSt3MWOzz8GyGjsglH47oLuKUwIeANT08XHQyRZI6eMyq
- 1aEnlT1/fvvPVKX1tUYDC2p+MSrlAPUIfRk7rTM=
-X-Received: by 2002:a2e:8e99:0:b0:38a:78dc:844f with SMTP id
- 38308e7fff4ca-38ace9112bfmr18972791fa.13.1773828426688; Wed, 18 Mar 2026
- 03:07:06 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773828563; x=1774433363;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=+lAYt0pkLbcYah3cW5JmMxZMLWVOnVd43OasVJOYXms=;
+ b=qYe2+CoA8sBkQMEDEgxFSO0u9cK0zHn9xG37VjAjSS+rQalT9RDRhqbpLrs0S0SisG
+ tcL5PHcgtPV+C8PkNe9lInh0Su31gcImqNvj+BCpGG7mB/9WBXUmoWFIrDwdxOfJl7hB
+ lWkcqdltyIZ+6UkmctWoiuFC4u4l4dJp1KOtcCJvBPbRa2BCMhgepL6dbq8nd2NqxAl4
+ liKraOTxPJQf4WJjZ6ffgpWb4wH6EbGKDEm/MFAyzvcumcqNDn6ay3VH0pA+WKcuy9ec
+ xvXdf+66TdikA4b2rAQUx1Wa00rh/6TGFzqO8hlLP9QBw6qUITlest+B8cEB5yzbgzUx
+ Doyg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCW0AJobUKNGHTarKBUvm5qHzNFeNy+b0O+hpEL4ItivM0GV88wwscf8b23lPr0kAJFqaMT4xxzRWBj/@nongnu.org
+X-Gm-Message-State: AOJu0Yw1nqUVXALhYTtfGD8ImyDx7N6hXkwpuEAFyOU5ug//5io2rOxw
+ lRhJvvgCj74Y27jpm78n1SvgD4lEjNEIWWxhFM3/6Umrx8jX1WYFXo1TsjrYAk2Y1S4=
+X-Gm-Gg: ATEYQzxFYpFhB7A4uFdCUBK7fs92GSTfdttUL0LbkO4lTXoihAXU/tXxe1a5PXortuF
+ ZjXPG3Y2jQihuEky8f7xpmdkCKFYTno3KMwHMAAhoNtgKT5SLzengq/HCV38CkcwUTfCXsyyVph
+ 10QL3W2Q54Tm6SYzjsltm2JCjVjNx18afaCLM/VyYQaFNvHuUlxBDZJfo6P1WYUjSVhdT88PJbQ
+ n+AZDh8xSIUX+SO7eaf4OpbnletQ1OY4X4OZYlUDuqmEmhrQOlRjzD3e11ALmeeUhKuKajRb5b5
+ 3XqdaUx343ho246q6Oqtfo8GZOW6jZnpoOgmQFivUlQBV3DWuAoj9M5qZAL3Fg6egPukDT5yx8B
+ KvekK5jgT6sdVELWvc5+7uGn/9K7oX+n60v8jGaThRT/+gNJzY/X7eii20dSdcEoDSWL7jjh7M6
+ gtSKq1qg6/vt4mGoeRs3pmHMMQMOH5hDMFdlObpZrRQ/6JV+7NjL7/SdBQKelKxHaGkQ==
+X-Received: by 2002:a05:6000:2c0e:b0:439:cd10:a1f9 with SMTP id
+ ffacd0b85a97d-43b527cc035mr4524179f8f.54.1773828562683; 
+ Wed, 18 Mar 2026 03:09:22 -0700 (PDT)
+Received: from [192.168.69.206] (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b51851e43sm6283803f8f.10.2026.03.18.03.09.21
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Mar 2026 03:09:22 -0700 (PDT)
+Message-ID: <92abffc9-d171-49d4-ae44-2bffdf9b8103@linaro.org>
+Date: Wed, 18 Mar 2026 11:09:21 +0100
 MIME-Version: 1.0
-References: <20260317102708.126725-1-alexander@mihalicyn.com>
- <20260317102708.126725-3-alexander@mihalicyn.com> <abnKKguESqlptJdp@x1.local>
- <abnkFu0BAHYpQqo_@x1.local>
-In-Reply-To: <abnkFu0BAHYpQqo_@x1.local>
-From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Wed, 18 Mar 2026 11:06:55 +0100
-X-Gm-Features: AaiRm51xfkys8u5YwApPYAEecxbjWT6w7Q_xG_kld4lZBbCNYAR86vDPrlc6qcE
-Message-ID: <CAJqdLrpiu1ZVw5vRQpbAO2NPMbSAm-gY6Yy7=7Thgkxst0TeaA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/8] migration: add
- VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
-To: Peter Xu <peterx@redhat.com>
-Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>, 
- Jesper Devantier <foss@defmacro.it>, Klaus Jensen <its@irrelevant.dk>, 
- =?UTF-8?Q?St=C3=A9phane_Graber?= <stgraber@stgraber.org>, 
- qemu-block@nongnu.org, Stefan Hajnoczi <stefanha@redhat.com>, 
- Hanna Reitz <hreitz@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Keith Busch <kbusch@kernel.org>, Fam Zheng <fam@euphon.net>,
- =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- Zhao Liu <zhao1.liu@intel.com>, Kevin Wolf <kwolf@redhat.com>, 
- Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
- envelope-from=alexander@mihalicyn.com; helo=mail-lj1-x22c.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH] target/riscv: Restrict access to RV128 registers on
+ RV32
+Content-Language: en-US
+To: =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?=
+ <frederic.petrot@univ-grenoble-alpes.fr>, qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-riscv@nongnu.org,
+ Weiwei Li <liwei1518@gmail.com>, Liu Zhiwei <zhiwei_liu@linux.alibaba.com>,
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>
+References: <20260315165949.40027-1-philmd@linaro.org>
+ <35544128-3c7f-48b2-a67f-9253cf8f5df0@univ-grenoble-alpes.fr>
+ <abfb425a-50b3-4807-b600-6977b8d1f2fe@linaro.org>
+ <27b3c263-45eb-4adc-9fc6-5693bed31345@univ-grenoble-alpes.fr>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+In-Reply-To: <27b3c263-45eb-4adc-9fc6-5693bed31345@univ-grenoble-alpes.fr>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::433;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x433.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -123,27 +111,102 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Mi., 18. M=C3=A4rz 2026 um 00:30 Uhr schrieb Peter Xu <peterx@redhat.com=
->:
->
-> On Tue, Mar 17, 2026 at 05:39:54PM -0400, Peter Xu wrote:
-> > I'll likely send something very soon just to show what I meant, it'll b=
-e
-> > good if you can have a look at that when it comes.
->
-> I've posted the series as RFC here:
->
-> https://lore.kernel.org/r/20260317232332.15209-1-peterx@redhat.com
+On 17/3/26 17:48, Frédéric Pétrot wrote:
+> Thanks Phil,
+> 
+> On 3/17/26 11:05, Philippe Mathieu-Daudé wrote:
+>> Hi Frédéric,
+>>
+>> On 15/3/26 19:55, Frédéric Pétrot wrote:
+>>> Hi Phil,
+>>>
+>>>    my understanding is that rv128 makes no sense with rv32, and
+>>>    the user is not expected to run qemu-system-riscv32 with
+>>>    the -cpu=x-rv128 (it triggers an "unable to find CPU model
+>>>    'x-rv128'" error).
+>>>    The rv128 code just relies on XLEN being 128, and assumes
+>>>    (implicitely I admit) running on a 64-bit host machine, so
+>>>    with tl = 64.
+>>>    The code is absolutely erroneous when tl = 32, agreed.
+>>>    The thing is that, as we want to get rid of the
+>>>    TARGET_RISCV64/TARGET_RISCV32 defines, the rv128 specific
+>>>    code still must compile whatever tl, so that qemu can be built.
+>>>    However, it should never be executed if tl = 32.
+>>>    Typically, the patches I sent earlier this year to deal
+>>>    with lq/sq endianness fit into that 'compile only' category
+>>>    for rv32.
+>>
+>> I'd really like to include your patch which fixes the endianness
+>> issue I reported, but unfortunately as reported it doesn't even
+>> build for rv32 builds:
+>>
+>> https://lore.kernel.org/qemu-devel/ad717d8c-a6b9-4dd8-a4bd- 
+>> fdd6d1d756a5@linaro.org/
+> 
+>    Very sorry for that.
+>    I took care of the errors in a later patch you might have
+>    missed :
+> 
+> https://lore.kernel.org/qemu-devel/20260101181442.2489496-1- 
+> frederic.petrot@univ-grenoble-alpes.fr/
 
-HUGE thanks for this, Peter!
+Oh indeed this isn't in my mailbox... Fortunately the list got
+it so I could import it.
 
-I've left my RWB and Tested-by tags on that series.
+> 
+>    This compiles fine on Alister current riscv-to-apply.next
+>    branch for both 32 and 64 bit versions (known that the
+>    32 bit version does nothing useful, but is never used
+>    anyway).
 
-Kind regards,
-Alex
+Yep, this is sufficient to fixes my issues and let me continue!
 
->
-> --
-> Peter Xu
->
+> 
+>>
+>> Which is why I'm trying to restrict RV128 on rv32 binary so
+>> we can apply your other patch.
+>>
+>> Anyway, Daniel suggestions to use 'get_xl(ctx) == MXL_RV32'
+>> instead of this ugly TARGET_RISCV32 #ifdef'ry is certainly
+>> the way to go (which is why I posted this as RFC).
+> 
+>    It might, indeed.
+>    Thanks again for your time,
+
+Sorry if I sounded grumpy ;)
+
+>    Frédéric
+> 
+>>
+>>>
+>>>    Thanks,
+>>>    Frédéric
+>>>
+>>> On 3/15/26 17:59, Philippe Mathieu-Daudé wrote:
+>>>> One half of 128-bit registers code is not reachable for CPUs
+>>>> running in 32-bit mode, while the other half is completely
+>>>> broken (handled as a pair of 32-bit registers).
+>>>> Better restrict this code on 32-bit builds until RV128 is
+>>>> properly implemented.
+>>>>
+>>>> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>>> ---
+>>>> More than 1y having issue with the 128-bit code path and
+>>>> the single binary effort. Fortunately while I dunno how to
+>>>> test 128-bit I could with 32/64 bits.
+>>>> ---
+>>>>   target/riscv/cpu.h                          |  2 ++
+>>>>   target/riscv/machine.c                      |  4 +++
+>>>>   target/riscv/monitor.c                      |  4 +++
+>>>>   target/riscv/translate.c                    | 31 +++++++++++++++++ 
+>>>> ++--
+>>>>   target/riscv/insn_trans/trans_rvzacas.c.inc |  2 ++
+>>>>   5 files changed, 41 insertions(+), 2 deletions(-)
+>>
+>>
+>>
+>>
+>>
+> 
+
 
