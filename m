@@ -4,72 +4,110 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84CE6103E17A
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 14:02:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EACFF103E18B
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 14:14:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2rSu-0002qN-9y; Wed, 18 Mar 2026 10:01:40 -0400
+	id 1w2reB-0006E8-BA; Wed, 18 Mar 2026 10:13:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1w2rSp-0002n5-5E
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:01:36 -0400
-Received: from mgamail.intel.com ([198.175.65.18])
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w2re8-0006DO-H9
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:13:16 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <junjie.cao@intel.com>)
- id 1w2rSm-0005nK-KM
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:01:34 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773842493; x=1805378493;
- h=from:to:cc:subject:date:message-id:in-reply-to:
- references:mime-version:content-transfer-encoding;
- bh=482T7NbGblsuvsjZFboPfT+pkuzemfVXyB8k6UhHv7E=;
- b=XzILZ3veEcvw5Ra4jKRlOKObcKL398eO/sICqmVShAvtbtx+Y1KGx3ky
- 9qW8pmYKNbOzuNiymiljebNogS19Jv3hVnTqrxnoI2rubLtbOnUp1A9on
- vUwGGrjYyXj2DJOuYtHTK4MIr/YXsxet4JQUaZsDY1PAeNZ0VOFBxdEfx
- zfCcLl/G0se45WtHrx6cu2mBUNIyiqGuyxnZb9H2CjA3ljfsXGzjelyUc
- vMPzD04oTHP0PwaepT9k5LOc7a8wIQK3NmpYyZs/Q8DH3tEU5pG/5Ec+E
- Ggp/5KuYU/QmpCkDKDcXqqemqEeXzOJuEeoxJhQnZovKjvvXFOEQa5BTM Q==;
-X-CSE-ConnectionGUID: gG7LUq2/RGKEshgdSEFdXA==
-X-CSE-MsgGUID: ZzwBpGNaT660ZAacw9tuoQ==
-X-IronPort-AV: E=McAfee;i="6800,10657,11733"; a="74925778"
-X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="74925778"
-Received: from fmviesa006.fm.intel.com ([10.60.135.146])
- by orvoesa110.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 07:01:31 -0700
-X-CSE-ConnectionGUID: TYI1HMJWR1aOBe+v7fPZGg==
-X-CSE-MsgGUID: xQKW/ACnTSisSBBw40XDtQ==
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="6.23,127,1770624000"; d="scan'208";a="218205218"
-Received: from junjieca-mobl.ccr.corp.intel.com ([10.124.242.111])
- by fmviesa006-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 18 Mar 2026 07:01:29 -0700
-From: Junjie Cao <junjie.cao@intel.com>
-To: qemu-devel@nongnu.org
-Cc: peterx@redhat.com, farosas@suse.de, berrange@redhat.com,
- junjie.cao@intel.com
-Subject: [PATCH v2 1/3] io/channel: introduce qio_channel_pread{v,
- }_all() and preadv_all_eof()
-Date: Wed, 18 Mar 2026 22:01:11 +0800
-Message-ID: <20260318140113.434-2-junjie.cao@intel.com>
-X-Mailer: git-send-email 2.53.0.windows.2
-In-Reply-To: <20260318140113.434-1-junjie.cao@intel.com>
-References: <20260318140113.434-1-junjie.cao@intel.com>
+ (Exim 4.90_1) (envelope-from <eric.auger@redhat.com>)
+ id 1w2re5-0005ee-VV
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 10:13:16 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773843192;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=QUKFDcF/eO64vgTd59UYgSrhBZZ2lBaSNEAFegVROnU=;
+ b=Vj5UezgBr4sM5aV+LdljlzgVYHfoW7OexA1r1g7Q2eZJq4Ppwv1fCvOJ7ZB6dqbTCIgiTp
+ 5QoWRoyo5mMisXwX/VtaL4ACguPJeezh2oXpbFusMaT5pNFIu6fl2r5yz5KpUlYFeE8qrL
+ 1W2e5SJe4QU/uAXiPA1qyIU7EveeHB4=
+Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
+ [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-587-pL4_ItAuOcS09a2bqFQorw-1; Wed, 18 Mar 2026 10:13:09 -0400
+X-MC-Unique: pL4_ItAuOcS09a2bqFQorw-1
+X-Mimecast-MFC-AGG-ID: pL4_ItAuOcS09a2bqFQorw_1773843188
+Received: by mail-wr1-f71.google.com with SMTP id
+ ffacd0b85a97d-439b8bc43aeso6048201f8f.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 07:13:09 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773843188; x=1774447988;
+ h=content-transfer-encoding:in-reply-to:from:references:cc:to
+ :content-language:subject:reply-to:user-agent:mime-version:date
+ :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=QUKFDcF/eO64vgTd59UYgSrhBZZ2lBaSNEAFegVROnU=;
+ b=TLf7yxb0Sfqm+8s2+ZXoNEvAvXo9miVXtE2bwkkTGCjZkdWG+fiGtOxNFa4cJiGPuJ
+ Utr7IqTA6pUulGF0hf9D7y7+oO2lWThR8eJA5C/TB+F59tt6j2jib29nfvEa7KaBc+h/
+ TmG3PWbDvjuANuzfxDN7YoDFMDe8FPrN99Ez32skdVGE2gpR98+SW3xZJ8XiivJ6SHRC
+ 8HrZigjHBGEXC+gbsr2uNFQNM8BOPBmbeF8P8q4sAnHEbl4onYM5wnOFYn6cXdAxnHKM
+ 0VemtW+J0AaGkwg/8d+bkkL2/0TJw7+40WpfZqZ54YRlLNf34WJU+uoqmo27AI2N8aZI
+ 6s+w==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCV8WsqvbHHAm4rw0oz9l/tA8+SRfB+UJUrVikFdYRXSrzYChgajbGvnqOf9TUdA56mFIlvvIuLlyKX4@nongnu.org
+X-Gm-Message-State: AOJu0YyFAQUL4VJiHS2Zg38zctf8U7pf+HoBPHctZsmFhIBbz1GHHWOf
+ 1oyoUYOrLO0pu82Lv9i/BPrZR8HAFkbHyQqQJZPwkdftim/7ftj7CfvB6MRLMiSWbq8vG0Ikk2R
+ MjBqwdo0EqzETvYjOYtzo2z76+xM7NNWENla0BZf6BBGuZEZzwFslGLwb
+X-Gm-Gg: ATEYQzzNuMwMP/Y6GY7tx3YnraE5Wynfx8c9WF7NoXXKbKINJhYpv+C+rmko8+o/TfE
+ I0XrkPD17+91jXqXB0/5aSw9T6YyvFO0UHOlzjuSVh/PoNTJq6sAqrYyXKvdEFE3+SCOC2UvULo
+ T2JugdH57O/SzBSxCDPbPCD7pH32NSzagR6MGvKuMcXL6r+kixyvqjMFNjhxbw9A5lwdTkl5SBs
+ 7MekIIm5dw8L+o1ofLVCa023j7l88F+ABsgvTS6tvQzy2R/MKqQG3c2PUuT0yVO18HtJXEUhGvu
+ 0S2mMrIwNeC9gyg0RO8eI2wLg7tphKs1jI5bsjz2xSmo8CMrX/GRUCn7cZer1vNXRzgMBDyYo2X
+ d2jJC3PKB796pzROTUIDWsYnQouhSDCImumxEtgS2a17IU5GsiougOvfCUaWWmQfn0KStvg==
+X-Received: by 2002:a05:600c:3491:b0:483:7783:537b with SMTP id
+ 5b1f17b1804b1-486f4450338mr58867175e9.24.1773843188267; 
+ Wed, 18 Mar 2026 07:13:08 -0700 (PDT)
+X-Received: by 2002:a05:600c:3491:b0:483:7783:537b with SMTP id
+ 5b1f17b1804b1-486f4450338mr58866535e9.24.1773843187726; 
+ Wed, 18 Mar 2026 07:13:07 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:f0e:9070:527b:9dff:feef:3874?
+ ([2a01:e0a:f0e:9070:527b:9dff:feef:3874])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486f4e5495csm36268005e9.2.2026.03.18.07.13.06
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Wed, 18 Mar 2026 07:13:07 -0700 (PDT)
+Message-ID: <b65e3f7c-c8cd-42a4-8eae-b673e406a31c@redhat.com>
+Date: Wed, 18 Mar 2026 15:13:05 +0100
 MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH for-11.0 v3 0/8] hw/arm/smmuv3-accel: Support AUTO
+ properties
+Content-Language: en-US
+To: Nathan Chen <nathanc@nvidia.com>, qemu-devel@nongnu.org,
+ qemu-arm@nongnu.org
+Cc: Peter Maydell <peter.maydell@linaro.org>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, "Michael S . Tsirkin"
+ <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ Ani Sinha <anisinha@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eric Blake <eblake@redhat.com>, Markus Armbruster <armbru@redhat.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+References: <20260317183755.3721625-1-nathanc@nvidia.com>
+From: Eric Auger <eric.auger@redhat.com>
+In-Reply-To: <20260317183755.3721625-1-nathanc@nvidia.com>
 Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=198.175.65.18; envelope-from=junjie.cao@intel.com;
- helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124;
+ envelope-from=eric.auger@redhat.com; helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -82,206 +120,95 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: eric.auger@redhat.com
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-qio_channel_pread() and qio_channel_preadv() perform a single read
-and may return a short result.  Callers that need all bytes currently
-have to open-code a retry loop or simply treat a short read as an
-error.
+Hi Nathan,
 
-Introduce three new helpers following the existing read_all / readv_all
-pattern:
+On 3/17/26 7:37 PM, Nathan Chen wrote:
+> Hi,
+>
+> This is a follow-up to the previous series [0] that introduces support
+> for specifying 'auto' for arm-smmuv3 accelerated mode's ATS, RIL,
+> SSIDSIZE, and OAS feature properties.
+>
+> In QEMU 11.0 we introduced new options for vSMMU [1], but feedback received
+> when starting the integration of layered products shows the need for
+> auto/host-retrieved values. To avoid breaking JSON/QMP compat, we want
+> to fix the option types so that they can later support the auto mode. At
+> the moment the auto mode is not supported though.
+>
+> A future series will introduce support for resolving the 'auto' values
+> based on host SMMUv3 IDR values, as well as setting per-device ATS
+> capability.
+>
+> A complete branch can be found here:
+> https://github.com/NathanChenNVIDIA/qemu/tree/smmuv3-accel-auto-v3
+>
+> Please take a look and let me know your feedback.
+>
+> Thanks,
+> Nathan
+>
+> Changes from v2:
+> - Enforce 'auto' value not being supported for HW-accel SMMUv3 props
+> - Revise docs to mention auto is not supported and these properties
+>   are only applicable when accel=on.
+> - Only override non-defaults in smmuv3_accel_idr_override()
+> - Remove check for SSIDSIZE AUTO in smmuv3_accel_idr_override() as
+>   smmu_validate_property() checks for AUTO beforehand
+> - Consolidate comments for ssidsize_mode_to_value()
+> - Include Fixes tags in commit descriptions
+> - Include R-by tags from v2
+>
+> Changes from RFCv1:
+> - Remove changes that resolve the 'auto' values based on host SMMUv3
+> - Restore defaults values for RIL, OAS, SSIDSIZE, and ATS
+> - Update OasMode to accept all OAS sizes instead of only auto, 44, and
+>   48
+> - Include comment in SsidSizeMode schema clarifying enum value
+>   ordering
+> - Replace ats-enabled prop with a helper that accepts the dynamic
+>   casted TYPE_ARM_SMMUV3 object
+> - Separate out guest vs. host ATS check in
+>   smmuv3_accel_check_hw_compatible() to a different commit
+> - Document accel, RIL, OAS, SSIDSIZE, and ATS properties in
+>   qemu-options.hx
+>
+> Testing:
+> Basic sanity testing was performed on an NVIDIA Grace platform with GPU
+> device assignment and running CUDA test apps on the guest. Additional
+> testing and feedback are welcome.
 
-  qio_channel_preadv_all_eof()  – retry loop; returns 1 on success,
-                                   0 on clean EOF, -1 on error.
-  qio_channel_preadv_all()      – wraps _eof; treats early EOF as
-                                   error; returns 0 / -1.
-  qio_channel_pread_all()       – single-buffer convenience wrapper
-                                   around preadv_all().
+Feel free to add my
+Tested-by: Eric Auger <eric.auger@redhat.com>
 
-These advance the file offset internally after each partial read, so
-callers only need a single call.  All three are marked
-coroutine_mixed_fn, consistent with the existing _all helpers.
-
-Suggested-by: Peter Xu <peterx@redhat.com>
-Signed-off-by: Junjie Cao <junjie.cao@intel.com>
----
- include/io/channel.h | 63 ++++++++++++++++++++++++++++++++
- io/channel.c         | 85 ++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 148 insertions(+)
-
-diff --git a/include/io/channel.h b/include/io/channel.h
-index 1b02350437..d5b14c8c77 100644
---- a/include/io/channel.h
-+++ b/include/io/channel.h
-@@ -634,6 +634,69 @@ ssize_t qio_channel_preadv(QIOChannel *ioc, const struct iovec *iov,
- ssize_t qio_channel_pread(QIOChannel *ioc, void *buf, size_t buflen,
-                           off_t offset, Error **errp);
- 
-+/**
-+ * qio_channel_preadv_all_eof:
-+ * @ioc: the channel object
-+ * @iov: the array of memory regions to read data into
-+ * @niov: the length of the @iov array
-+ * @offset: the starting offset in the channel to read from
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Reads data contiguously from the channel into @iov starting at
-+ * @offset, retrying on short reads until all requested bytes have
-+ * been read.  The offset is advanced internally after each partial
-+ * read.
-+ *
-+ * Returns: 1 if all bytes were read, 0 if no data could be read
-+ *          before encountering end-of-file, or -1 on error
-+ */
-+int coroutine_mixed_fn qio_channel_preadv_all_eof(QIOChannel *ioc,
-+                                                  const struct iovec *iov,
-+                                                  size_t niov,
-+                                                  off_t offset,
-+                                                  Error **errp);
-+
-+/**
-+ * qio_channel_preadv_all:
-+ * @ioc: the channel object
-+ * @iov: the array of memory regions to read data into
-+ * @niov: the length of the @iov array
-+ * @offset: the starting offset in the channel to read from
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Reads data contiguously from the channel into @iov starting at
-+ * @offset, retrying on short reads until all requested bytes have
-+ * been read.  Unlike qio_channel_preadv_all_eof(), end-of-file
-+ * before all data has been read is treated as an error.
-+ *
-+ * Returns: 0 if all bytes were read, or -1 on error
-+ */
-+int coroutine_mixed_fn qio_channel_preadv_all(QIOChannel *ioc,
-+                                              const struct iovec *iov,
-+                                              size_t niov,
-+                                              off_t offset,
-+                                              Error **errp);
-+
-+/**
-+ * qio_channel_pread_all:
-+ * @ioc: the channel object
-+ * @buf: the memory region to read data into
-+ * @buflen: the number of bytes to read into @buf
-+ * @offset: the starting offset in the channel to read from
-+ * @errp: pointer to a NULL-initialized error object
-+ *
-+ * Reads @buflen bytes contiguously from the channel at @offset
-+ * into @buf, retrying on short reads.  End-of-file before all data
-+ * has been read is treated as an error.
-+ *
-+ * Returns: 0 if all bytes were read, or -1 on error
-+ */
-+int coroutine_mixed_fn qio_channel_pread_all(QIOChannel *ioc,
-+                                             void *buf,
-+                                             size_t buflen,
-+                                             off_t offset,
-+                                             Error **errp);
-+
- /**
-  * qio_channel_shutdown:
-  * @ioc: the channel object
-diff --git a/io/channel.c b/io/channel.c
-index cc02d997a4..e18c40aa0b 100644
---- a/io/channel.c
-+++ b/io/channel.c
-@@ -507,6 +507,91 @@ ssize_t qio_channel_pread(QIOChannel *ioc, void *buf, size_t buflen,
-     return qio_channel_preadv(ioc, &iov, 1, offset, errp);
- }
- 
-+int coroutine_mixed_fn qio_channel_preadv_all_eof(QIOChannel *ioc,
-+                                                  const struct iovec *iov,
-+                                                  size_t niov,
-+                                                  off_t offset,
-+                                                  Error **errp)
-+{
-+    int ret = -1;
-+    struct iovec *local_iov = g_new(struct iovec, niov);
-+    struct iovec *local_iov_head = local_iov;
-+    unsigned int nlocal_iov = niov;
-+    bool partial = false;
-+
-+    nlocal_iov = iov_copy(local_iov, nlocal_iov,
-+                          iov, niov,
-+                          0, iov_size(iov, niov));
-+
-+    while (nlocal_iov > 0) {
-+        ssize_t len;
-+        len = qio_channel_preadv(ioc, local_iov, nlocal_iov, offset, errp);
-+
-+        if (len == QIO_CHANNEL_ERR_BLOCK) {
-+            qio_channel_wait_cond(ioc, G_IO_IN);
-+            continue;
-+        }
-+
-+        if (len == 0) {
-+            if (!partial) {
-+                ret = 0;
-+                goto cleanup;
-+            }
-+            error_setg(errp,
-+                       "Unexpected end-of-file before all data were read");
-+            goto cleanup;
-+        }
-+
-+        if (len < 0) {
-+            goto cleanup;
-+        }
-+
-+        partial = true;
-+        offset += len;
-+        iov_discard_front(&local_iov, &nlocal_iov, len);
-+    }
-+
-+    ret = 1;
-+
-+ cleanup:
-+    g_free(local_iov_head);
-+    return ret;
-+}
-+
-+int coroutine_mixed_fn qio_channel_preadv_all(QIOChannel *ioc,
-+                                              const struct iovec *iov,
-+                                              size_t niov,
-+                                              off_t offset,
-+                                              Error **errp)
-+{
-+    int ret = qio_channel_preadv_all_eof(ioc, iov, niov, offset, errp);
-+
-+    if (ret == 0) {
-+        error_setg(errp,
-+                   "Unexpected end-of-file before all data were read");
-+        return -1;
-+    }
-+    if (ret == 1) {
-+        return 0;
-+    }
-+
-+    return ret;
-+}
-+
-+int coroutine_mixed_fn qio_channel_pread_all(QIOChannel *ioc,
-+                                             void *buf,
-+                                             size_t buflen,
-+                                             off_t offset,
-+                                             Error **errp)
-+{
-+    struct iovec iov = {
-+        .iov_base = buf,
-+        .iov_len = buflen
-+    };
-+
-+    return qio_channel_preadv_all(ioc, &iov, 1, offset, errp);
-+}
-+
- int qio_channel_shutdown(QIOChannel *ioc,
-                          QIOChannelShutdown how,
-                          Error **errp)
--- 
-2.43.0
+Eric
+>
+> [0] https://lore.kernel.org/qemu-devel/20260312210328.2016191-1-nathanc@nvidia.com/
+> [1] https://lore.kernel.org/all/20260126104342.253965-1-skolothumtho@nvidia.com/
+>
+> Nathan Chen (8):
+>   hw/arm/smmuv3-accel: Check ATS compatibility between host and guest
+>   hw/arm/smmuv3-accel: Change ATS property to OnOffAuto
+>   hw/arm/smmuv3-accel: Change RIL property to OnOffAuto
+>   qdev: Add a SsidSizeMode property
+>   hw/arm/smmuv3-accel: Change SSIDSIZE property to SsidSizeMode
+>   qdev: Add an OasMode property
+>   hw/arm/smmuv3-accel: Change OAS property to OasMode
+>   qemu-options.hx: Document arm-smmuv3 device's accel properties
+>
+>  hw/arm/smmuv3-accel.c                    | 43 ++++++++++++++++++----
+>  hw/arm/smmuv3.c                          | 45 ++++++++++++++++--------
+>  hw/arm/virt-acpi-build.c                 |  2 +-
+>  hw/core/qdev-properties-system.c         | 27 ++++++++++++++
+>  include/hw/arm/smmuv3.h                  | 11 +++---
+>  include/hw/core/qdev-properties-system.h |  6 ++++
+>  qapi/misc-arm.json                       | 44 +++++++++++++++++++++++
+>  qapi/pragma.json                         |  1 +
+>  qemu-options.hx                          | 35 +++++++++++++++++-
+>  9 files changed, 187 insertions(+), 27 deletions(-)
+>
 
 
