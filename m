@@ -4,81 +4,83 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E1D6510775F9
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:38:02 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E30710775EB
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:39:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2upf-0007Jm-6x; Wed, 18 Mar 2026 13:37:23 -0400
+	id 1w2urn-0007rS-Tr; Wed, 18 Mar 2026 13:39:35 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2upa-0007H5-CQ
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:37:18 -0400
-Received: from mail-pj1-x102c.google.com ([2607:f8b0:4864:20::102c])
+ id 1w2ure-0007r1-AS
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:39:26 -0400
+Received: from mail-pf1-x431.google.com ([2607:f8b0:4864:20::431])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2upQ-0002MO-NC
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:37:15 -0400
-Received: by mail-pj1-x102c.google.com with SMTP id
- 98e67ed59e1d1-3590042fa8eso155636a91.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:37:07 -0700 (PDT)
+ id 1w2urc-0003ek-Gn
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:39:26 -0400
+Received: by mail-pf1-x431.google.com with SMTP id
+ d2e1a72fcca58-82985f42664so152000b3a.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:39:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773855426; x=1774460226; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773855562; x=1774460362; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=zj10rYnO+npsJslo1dI9gtLqeH8twmoLY57z6+6WU8A=;
- b=WVonlLDRTvvNiAYAna/1ESqY7W78MHuRC2YAVEujAfKVGNJWSODoo8UL0ypj68osW6
- 7IAkxFlCQZoKUpf7w6CUMC82x+dpVdM7NUZKhZGgMlAZ67tdflmDVNPDyBQM+1qpgCFn
- 1UQXbf3+wHE3vXCzVxxsXcoL2ulFQSWIq5MnCiP9pvKR/RqPqIFbNZ50h7+7KtehQ437
- sQLrxzcxaqnE1+BWo/4z/whlA9u/GhIZX1s5OPc1wDIQcP3iBuvZB+kkbS1r1kJiheEN
- xjDbQR2MxnQj87+Qfjj/RWs2uy/GGvE8bspDca9k9TBZxnlHEDbyAtn54695qr+L8ypP
- 0X+Q==
+ bh=nVwEkADz5nsARFrPsqKVQXnvqp4qHPPvZEZBdKH/L60=;
+ b=wKzF9NUrLRXp1y2ulb2tpLDIvLmuvWaiCV+uE2PClOYK31qtNA6jG5eyOU95UMBIV2
+ BXbKIpNsIQXiH4Cp6ViTHDt0q8GKBNUxbA31OC/l2LJ+ITQmujd5wLK3M4n/2GK4NMx7
+ v6tJfUu6wMvesLXCi/2SY87ZCJm9ZGdL342XUCJ0p5pu148Zhzj2XbxGIPQNNZ/mMNCl
+ ziGNgRgLx7pN4KlwLWGhEx9fi2JBJi+ncI9RSxeNazBZ+aNF5dhrvFeedb1z2wWz7GxG
+ v82wKoupVDVsk4iWvMFaVuqxQvf7spGbFwKTVOGZkP9Ze2/nFCJy5ss6twLngGRmliud
+ mVww==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773855426; x=1774460226;
+ d=1e100.net; s=20251104; t=1773855562; x=1774460362;
  h=content-transfer-encoding:in-reply-to:autocrypt:from:references:cc
  :to:content-language:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=zj10rYnO+npsJslo1dI9gtLqeH8twmoLY57z6+6WU8A=;
- b=BlZpJ7SpzZIiKTME2S0Mpl6ROyCeEbDz6r5QJUVbngoP3kBuFhs+Tj7LUxAvAyCeVq
- nQSx6ATo+xeWtFcmd9Ld+riR7Az/gqFBNS2UHg3701PRskso4fooaRYxE8B3rFe+650b
- c/wbGSmtKFDcfcl6TKbcZe5LN7JQ8T1yL6Wu3UKormg4TYKZej3zhc7wmfbtMKUmt4jL
- O1exEAyiRtSor8BEoiPsEvi07xPaVYk2xPGtv5nP1EcqV5GvBPhgPTKYyYI2Gk/fsAjG
- BgiestvvdZlUmsH/7Cme+EPDb/qu0NJ9wWPygqF7Q0mbq6COZeXMoo61xr9wMMnAGGUi
- VKtg==
+ bh=nVwEkADz5nsARFrPsqKVQXnvqp4qHPPvZEZBdKH/L60=;
+ b=Tr8D+PYIz+q5nKaWTcrR7GEm93/5Tjp9sDEzcamM+M8d0P0wFoUl6KGPf5l6vtmjCS
+ hScDReCqNL53LovnnK5dIKRzc2C4shm0LaGvAJALol/VY5IKN1RTqfZ2xzv8aY5VdF4r
+ dMDt7D0/EkwJfXoRUIXZwpJ5PypIJew/ra/iZUugdDq29URxyxOglLymgOqhXxyTeG1S
+ 2ylFo4GF9WiH3IJ5HynS4Xd8sjof2SbfK55oJ1hVjQ0dVuswWYh4ORSimAnvCwfVJi7/
+ OoJGVJTnZYwtFKZ49x5lpch9CZ/ydO0ZqOq3pdzY+BmABWHK5JNyBPvx4NOjS/zhWMOg
+ a7OA==
 X-Forwarded-Encrypted: i=1;
- AJvYcCUxwz+1TL9PexEKXjoGOdEaxAzyZH1wY4xYl0zU+5Zvv0qb0kJPbJGB75SVw3CsbaMwQIU9UOGRhnnA@nongnu.org
-X-Gm-Message-State: AOJu0Ywf4EPtGZiaUFVNzeMHsd/dSliyQENVFWpNv+Qq+hCv5FSWT4rc
- YASFgLuy8kMAUOzIT8ukTUbiidYFeiAM8pwzYf4kzXQmT7Vyh/WXjTXoz76/EcXidgc=
-X-Gm-Gg: ATEYQzwq/Awc3Y5XJfFM97OuzOA+OaEWf3WIL8tDSz8CjNlsKM/iFt/4rrxlSEfQoU2
- ls58/k2Z8WQDDcYsW3Dp7iqDlt7SGNl+GmIs210n2VPXrOCEz09au80NDo2bGZcvCLQGZAGJ090
- 4psKiPmJJzyBbknhOxBo9q9IlsZalyGEjCJVZ4Ze8aFDRLRFKCxe7Ofsw1eQBnDysbgeyXQlCfu
- WwktRJMBNdyj2Q8heL7GhvESOg8G0sG/3Q5Wvoo+zgodEHoiO7Y+GGS4RMUMPVXs9J8KvTexNmS
- yAUaujgN5hYbn7BgAYGLQM8yzI18UiHf2vWskUd2jLvAFPaIhdiTl2V1MxwmvipWrRPUx37LmrB
- u+9NT4+36ZuxuxLLZi/wxTihh20ttEXCFPwaKLng0yt+T+KHOVu1WFm4NVnBtqkKiv5GsQzZ0Tt
- FKpHRSgU/AQ95bCHaDB5THhgIuo9FsWWp+T6tnFsQ3otWKjlwTja6a6Yv5N8oobYugl75g
-X-Received: by 2002:a17:90b:3b89:b0:353:356c:6821 with SMTP id
- 98e67ed59e1d1-35bb9e9cfadmr3704088a91.8.1773855426151; 
- Wed, 18 Mar 2026 10:37:06 -0700 (PDT)
+ AJvYcCVHMz4dFksKAWJeBCV4MYcduvzsNIpqCdD52OTsuSOmbCOjbB/HvEJ3uP7NtDa7cSpIXCtcbVJEChNt@nongnu.org
+X-Gm-Message-State: AOJu0YyCW52lBGKiUF6xA3f9RmQaCc0lYg5pl7m6A+VOCeCyzCrBsX9o
+ CCvOtJuPK3/uziJ7Bm4TGfjf1mf6HVWA1NYRNEKexdhvPsrkWKCwvNuU34vY2pe4kJ0=
+X-Gm-Gg: ATEYQzycsxtTQGMIgPY8j7FIe075OSqQN03yGzAYfrjeAO0ETCasiwf0OUArwPjr0D/
+ aswfHmRkPcHQ8PkD9SMVJYtf6gbp6UYKsjKBDYty8s4gTa/niuIHXsP7v2wYFjoE3WtYDQRORrd
+ AWFbw+vyVMMnsQKY7Nu34Ht5bBFm0CEHesai/e8Jx5WtEHbF/XaJwPPm4IKupJDfXm5j1U1gGjf
+ E9kDmv6OGwMyAHjX5zG6Hn9tj1YrTKabw0UdPjNE8GQqO1Az9I+SaU6yfqHuVIn2DlcvZgFgCAl
+ P/5q9Nqk0Ulk1UHigDLfzMv5tcQty/ouCTlQ6cAh2CGNljz3i6m1Qg4TgAbhnuE4rdb6zGGFJnT
+ GTSf1K3Tw54hToVh2u2IK6XEO+BCIrsjDns90SJVHb5h6hZ2MgJY4vsn0c5CDKpyA7TKUphWe2v
+ aL5dFW1T++dQ6joUMc2dEh3wwzXSlUI30Go2AJZiN/faDPG2Ep5XlDgXngOv3gQQOCdmow
+X-Received: by 2002:a05:6a00:114c:b0:829:809e:8978 with SMTP id
+ d2e1a72fcca58-82a6ae7056fmr3766454b3a.31.1773855562110; 
+ Wed, 18 Mar 2026 10:39:22 -0700 (PDT)
 Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bc62f8e6bsm176419a91.10.2026.03.18.10.37.05
+ d2e1a72fcca58-82a6b56ac50sm4306898b3a.16.2026.03.18.10.39.21
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 10:37:05 -0700 (PDT)
-Message-ID: <de24b377-1c7f-426d-b31d-16b1879ad813@linaro.org>
-Date: Wed, 18 Mar 2026 10:37:04 -0700
+ Wed, 18 Mar 2026 10:39:21 -0700 (PDT)
+Message-ID: <cfadb291-159e-4f57-830e-c1b0054c8547@linaro.org>
+Date: Wed, 18 Mar 2026 10:39:20 -0700
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
 Subject: Re: [PATCH v4 3/8] hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
 Content-Language: en-US
-To: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
 References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
  <20260317194241.869568-4-pierrick.bouvier@linaro.org>
  <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
+ <b57f120e-dc8e-4d58-861a-01c2112b7d8a@linaro.org>
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  xsDNBGK9dgwBDACYuRpR31LD+BnJ0M4b5YnPZKbj+gyu82IDN0MeMf2PGf1sux+1O2ryzmnA
@@ -114,11 +116,11 @@ Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
  5SYuJaKzCAgNeAy3gUVUUPrUsul1oe2PeWMFUhWKrqko0/Qo4HkwTZY6S16drTMncoUahSAl
  X4Z3BbSPXPq0v1JJBYNBL9qmjULEX+NbtRd3v0OfB5L49sSAC2zIO8S9Cufiibqx3mxZTaJ1
  ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <40924489-a8bb-4f6f-b85e-6f53cf475304@redhat.com>
+In-Reply-To: <b57f120e-dc8e-4d58-861a-01c2112b7d8a@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::102c;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::431;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pf1-x431.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -141,46 +143,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/18/26 1:11 AM, Cédric Le Goater wrote:
-> On 3/17/26 20:42, Pierrick Bouvier wrote:
->> Add stubs for needed functions.
->>
->> As well, we need to add pixman to qemuutil library dependencies since
->> pixman is transitively included from pci.h header, which is needed to be
->> able to include prototypes for stubs we declared.
->> In file included from include/ui/console.h:4,
->>                    from ../hw/vfio/vfio-display.h:12,
->>                    from ../hw/vfio/pci.h:25,
->>                    from ../hw/vfio/igd-stubs.c:9:
->> include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or directory
->>      10 | #include <pixman.h>
->>         |          ^~~~~~~~~~
->>
->> On OpenBSD, opengl headers are not available in default include path,
->> and thus we need to add opengl to list of qemuutil dependencies.
->> In file included from /home/root/qemu/include/ui/console.h:9:
->> /home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h' file not found
->>
->> Finally, vfio_pci_hot_reset_info must be forwarded declared on non linux
->> platforms:
->> In file included from ../hw/vfio/igd-stubs.c:9:
->> ../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info' declared inside parameter list will not be visible outside of this definition or declaration [-Werror]
->>     265 |                                     struct vfio_pci_hot_reset_info **info_p);
->>         |
->>
->> Reviewed-by: Cédric Le Goater <clg@redhat.com>
->> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
->>
->> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+On 3/18/26 2:46 AM, Philippe Mathieu-Daudé wrote:
+> On 18/3/26 09:11, Cédric Le Goater wrote:
+>> On 3/17/26 20:42, Pierrick Bouvier wrote:
+>>> Add stubs for needed functions.
+>>>
 > 
-> Duplicated Signed-off-by. I can fix when applying.
+> --->
+> 
+>>> As well, we need to add pixman to qemuutil library dependencies since
+>>> pixman is transitively included from pci.h header, which is needed to be
+>>> able to include prototypes for stubs we declared.
+>>> In file included from include/ui/console.h:4,
+>>>                    from ../hw/vfio/vfio-display.h:12,
+>>>                    from ../hw/vfio/pci.h:25,
+>>>                    from ../hw/vfio/igd-stubs.c:9:
+>>> include/ui/qemu-pixman.h:10:10: fatal error: pixman.h: No such file or
+>>> directory
+>>>      10 | #include <pixman.h>
+>>>         |          ^~~~~~~~~~
+>>>
+>>> On OpenBSD, opengl headers are not available in default include path,
+>>> and thus we need to add opengl to list of qemuutil dependencies.
+>>> In file included from /home/root/qemu/include/ui/console.h:9:
+>>> /home/root/qemu/include/ui/surface.h:11:11: fatal error: 'epoxy/gl.h'
+>>> file not found
+>>>
+>>> Finally,
+> 
+> <---
+> 
+>>> vfio_pci_hot_reset_info must be forwarded declared on non linux
+>>> platforms:
+>>> In file included from ../hw/vfio/igd-stubs.c:9:
+>>> ../hw/vfio/pci.h:265:44: error: 'struct vfio_pci_hot_reset_info'
+>>> declared inside parameter list will not be visible outside of this
+>>> definition or declaration [-Werror]
+>>>     265 |                                     struct
+>>> vfio_pci_hot_reset_info **info_p);
+>>>         |
+>>>
+>>> Reviewed-by: Cédric Le Goater <clg@redhat.com>
+>>> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>>
+>>> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+>>
+>> Duplicated Signed-off-by. I can fix when applying.
+> 
+> Actually you can also cut description marked betwwen --->
+> and <--- because already mentioned in future commit 988499515da:
+> https://lore.kernel.org/qemu-devel/20260317190250.70506-3-philmd@linaro.org/
+> which removes [*] below (should disappear on rebase).
+> 
+> (Sorry for that hiccups, I was expecting Pierrick series to
+> be posted after my PR was merged).
 >
 
-Oops, that's a rebase mistake. thanks!
+No problem, I'll change it and fix the extra signed-off by, so Cedric 
+can have a clean v5 to apply.
 
-> Thanks,
+Thanks!
+
+> Regards,
 > 
-> C.
->
+> Phil.
+> 
+>>
+>> Thanks,
+>>
+>> C.
+>>
+>>> ---
+>>>    meson.build          |  2 +-
+>>>    hw/vfio/pci.h        |  2 ++
+>>>    hw/vfio/igd-stubs.c  | 20 ++++++++++++++++++++
+>>>    hw/vfio/pci-quirks.c |  5 -----
+>>>    hw/vfio/meson.build  |  1 +
+>>>    5 files changed, 24 insertions(+), 6 deletions(-)
+>>>    create mode 100644 hw/vfio/igd-stubs.c
+>>>
 
