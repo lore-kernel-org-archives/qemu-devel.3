@@ -4,68 +4,68 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D4F7710775FC
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:49:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B659310775FC
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 17:49:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2uzq-00023p-3D; Wed, 18 Mar 2026 13:47:54 -0400
+	id 1w2uzs-00026X-RA; Wed, 18 Mar 2026 13:47:56 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2uzg-0001zM-ER
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:47:45 -0400
-Received: from mail-pj1-x1034.google.com ([2607:f8b0:4864:20::1034])
+ id 1w2uzm-00021W-TZ
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:47:51 -0400
+Received: from mail-pg1-x536.google.com ([2607:f8b0:4864:20::536])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w2uzd-0005oG-Qr
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:47:44 -0400
-Received: by mail-pj1-x1034.google.com with SMTP id
- 98e67ed59e1d1-35b9d29480aso163614a91.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:47:41 -0700 (PDT)
+ id 1w2uzi-0005q3-1U
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 13:47:50 -0400
+Received: by mail-pg1-x536.google.com with SMTP id
+ 41be03b00d2f7-c742882d2a4so71424a12.0
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 10:47:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773856060; x=1774460860; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773856064; x=1774460864; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Wg3l86J4Mr25+rkQyEjziZ0gWLQDxkgWnrfmi6Gz93U=;
- b=Lz01B+T2XsC3NHtVOV/vinF3JHBZjBaelmk5yPbdisQ7YbMBOrW69ClXYLvjnxRmfJ
- O4AjmGm8BRkapOJL2plD3DHLFEWUmOEmJFd8Mpt742ycMFjOBJZVqgrIulEuqOAciW4G
- N73DzIzJ+mphk7U7+wnh5osSV0CghLZquCQo66+X/5DhUk9gMLwHHa6vjO/rZO1RSaTp
- WzF5R6GXF3vUes1PVP+Mui8YS0kIK9ELsZtZVbAZudRWF5CEfcF/bXaKUIP0SYPmH3V6
- kNGgvZDpV8sd3HVktxefCGWz/r7psLWoxrrw8QM9sBLS4x84IvDDLZ7qETpRYjUKbqJu
- xCNw==
+ bh=U6HBDS69l4fbTlZmSQgqfg1BjiYPNjySjY8DwVgdsMo=;
+ b=EpR1IiM0ib+o83m6xvxhWFTyvMDPdY9F1+KGRVcn9JA3hWC52zQYJeMSWNnFUqE8zD
+ hFk27vVApKUi9koJMULBLXbNTI40XfZP3ztbtBsDzBDaGhYZIk8JaLfV64Wopn8A7NOl
+ xN9JlRM0Risyx8CtY1XjghDOpQkpbFvx2fYqsmtjlZCu91RAUMFIWMjvkAkoDpMOPzXY
+ EFrJEYIzptqenO2YjWu3ZN2bLTRMIaW6wOChCrgJhjimwuuC2NZ39w67SdnquY8Z0vXQ
+ 2+GQdg2zyEOrVxF5Ybaklvk9Sg6yJhhIpx1pq8f31SPx4uapRsXdC9w4uwU48mU/A5Ms
+ eM3A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773856060; x=1774460860;
+ d=1e100.net; s=20251104; t=1773856064; x=1774460864;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Wg3l86J4Mr25+rkQyEjziZ0gWLQDxkgWnrfmi6Gz93U=;
- b=suSEZT9BM1gS8zVDGiGfdg5MO/TRQBpTCChOEJnYy5pfRzGDOnoVCJwNl9qBB4T23u
- HFCkZTjhMR6lrBiwBPA/QcixiNL3epHfF5T0gIO+qcNzhgDJ7qdIgaYPgrYzdzHySH+N
- /EDsc1Z0/gxW8eEsQrNcue6VKAP80KzboXNeVPJtAQvqtSsCzahZAYSyFAcUsAD6cLQT
- YsB86h65Llugi41EC3/mShktlanCcNvPPmC/xDpz6NwWgav7BY7a59XWr4POxbYzyJnK
- 8olYsOBSu4FtvR7p6b+YbgPSFaNAVmH4g7gWl+6x0QQ8b9ypMu/3FRylF5HS7UaBmEZ1
- J28Q==
-X-Gm-Message-State: AOJu0YzPEGvJzzvvjo7hYSiTaMbvSmCgg5Ia9/hf41DLtiR8jDVgPBwA
- thTjmgo48rL28t8B3SvQEBejxguvgUWU+qaymH3ankv5N3CkJPiCKjFgxjGwgILjYDXGY4IpqcZ
- MdGSVi8Q=
-X-Gm-Gg: ATEYQzzUycvlzu6bWr/azGd4how5n9MmT2HbsRb9NjDd5SK0i+4ipXvODBoswcKczfA
- kD2Sy38wV34Zdxt0AZPHB22L/Uq4ChaLCqFoZ/pf3FR49lBmRt/3vYUFbucIX6nAVJ7RTl9AMde
- Rh8QFPp5eLMqyZHvIFDuVsYVqvW7IrPaPYotw4aANmK7XMKicIALej+gAjq/exdt7usuEjiIXLW
- 2GZcZbrAxCdzBAdRaX+ug+AEKRI4+Br+Y2RVR7C3cByze5Q5NJHCxtZlzzzG9wghfYvWG9pEFxa
- hV2JYsgzzYlCwH9ML5inbWFPXu8VRuBb09rBIpww+D4TGJCmINhzxD5tijMmj0YybKDe2YDgGH6
- RasAyURlh7UPQlE7V45C4AnLSWwTB7TLn3mF3rSo+849ftLF1S/cpsey46DfIr9O+cl3J5w0VtE
- 7z9i3GqanBKjrJZnyU+I5GsX5c/R90cIz4RGq8/A9HvP3jSQnhoWWIjl8Xh6KgWKP2bBxzg4aTF
- KC+
-X-Received: by 2002:a17:902:ea0a:b0:2ae:ceb0:d5f7 with SMTP id
- d9443c01a7336-2b06e43fc20mr41709805ad.52.1773856060134; 
- Wed, 18 Mar 2026 10:47:40 -0700 (PDT)
+ bh=U6HBDS69l4fbTlZmSQgqfg1BjiYPNjySjY8DwVgdsMo=;
+ b=TmDsWB353u9lvF/4rSoUIa4j2SLXnjTFSAIeZpWDf4KZD1OExBHLZAonN86KK50WOd
+ gif5r5MYqCmGAPP+Gs7fXCgUw788BGWNLJG+qF0cdkNPNKymv7MpfMGUgfKjUxME0xib
+ nLdMX3b44+EwIg20n5tVxHZ422wZ4vigqrtscMtixp9Twwhx2bTAc2vj3DP0HUWtAmDz
+ 7u6uAFrxxKRQrn+22hS1EfwdVCiufL8VYRS+kCvmk5o1OlhIF3mHgeC6t1AdusVKBBlY
+ +t0OjlHf4oOfmVYl6G83KEr1LzNcaldMOdJA8wkrd2JGsePSTpGXo6eQOpnGxv1YlDjv
+ J6ow==
+X-Gm-Message-State: AOJu0Ywh64F8nebHhqSg7IO27p8DXPIhHPuLiucec1sQLrRb+BzN1KPc
+ mX02rJmm+hS6tWDsDiPEgZoR7qdQnRUkOadazaLCfBb3P4x/pPSnVjYa+icdAcPXB0pR+lnYBo+
+ b5W/uRLg=
+X-Gm-Gg: ATEYQzzFKaX1A+Bs96nsD2l13d8/vhfXffQMCMJ+5/ddL99ozyIX1ZcO8/U/4bTRO3X
+ 7FvnytSHvdfipA8A7K7qz4H0Uob+DN0UU8mA2Ib8j2PIg3gzMzBmNcdzd4Hg88Yxn1jZllSVLku
+ r0KBd3Dqev8UpitKN6CUyu/L4qAfqrfTYwOinWvIbCTtQbID4HakaVYcDQ/NOIwhW5bH7fI+RQM
+ y1hRGk6yJVLLPyCLqcmXud2fefLjjIxXIZEaB6ESLAyggcbw4WsaOhyE9r98Cx1ltL9xv8ayuxF
+ FCL3hissix8Ir9FgZ9SkV4L51Ru3GlmkK1JBr+c2V7W8miuA2oZ+kOKlwmjxG1nEpZyIN+aTgzq
+ lXgnxHxan2w/Eq/PX+41IXdoyBwjXlqsxlmXXnbsMI0PFjqtUpGu2UiuqDy/hOmBCr2nNUEp1dg
+ jJoA8OjihLPpGswWdkiubiifMjKQo8fa8iEYXplkADzXCNni9EAsNZVaPjNC5NIy7vHP43UId6k
+ etE
+X-Received: by 2002:a17:903:2f8e:b0:2ae:c981:2a29 with SMTP id
+ d9443c01a7336-2b06e2fac2emr39135465ad.2.1773856064117; 
+ Wed, 18 Mar 2026 10:47:44 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b06e5f0ac2sm34066185ad.52.2026.03.18.10.47.39
+ d9443c01a7336-2b06e5f0ac2sm34066185ad.52.2026.03.18.10.47.43
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 10:47:39 -0700 (PDT)
+ Wed, 18 Mar 2026 10:47:43 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
@@ -73,24 +73,25 @@ Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>, philmd@linaro.org,
  qemu-ppc@nongnu.org
-Subject: [PATCH v5 2/8] hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
-Date: Wed, 18 Mar 2026 10:47:27 -0700
-Message-ID: <20260318174733.1717643-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v5 7/8] hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
+ hw/vfio/kvm-spapr.c
+Date: Wed, 18 Mar 2026 10:47:32 -0700
+Message-ID: <20260318174733.1717643-8-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
 References: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1034;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1034.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::536;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pg1-x536.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -106,456 +107,176 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Because those functions use kvm specific types, they need to be isolated
-in another source file.
-This allows us to link kvm-helpers only in configurations with
-CONFIG_KVM.
+Since this function needs kvm specific types, we need to extract in
+another file and link it only for KVM builds.
 
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
 Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 ---
- hw/vfio/helpers.c     | 172 -------------------------------------
- hw/vfio/kvm-helpers.c | 192 ++++++++++++++++++++++++++++++++++++++++++
- hw/vfio/kvm-stubs.c   |  26 ++++++
- hw/vfio/meson.build   |   2 +
- 4 files changed, 220 insertions(+), 172 deletions(-)
- create mode 100644 hw/vfio/kvm-helpers.c
- create mode 100644 hw/vfio/kvm-stubs.c
+ hw/vfio/kvm-spapr.h | 12 ++++++++++++
+ hw/vfio/kvm-spapr.c | 47 +++++++++++++++++++++++++++++++++++++++++++++
+ hw/vfio/kvm-stubs.c |  8 ++++++++
+ hw/vfio/spapr.c     | 30 ++++-------------------------
+ hw/vfio/meson.build |  1 +
+ 5 files changed, 72 insertions(+), 26 deletions(-)
+ create mode 100644 hw/vfio/kvm-spapr.h
+ create mode 100644 hw/vfio/kvm-spapr.c
 
-diff --git a/hw/vfio/helpers.c b/hw/vfio/helpers.c
-index 00d42d3b98e..65c6dba0428 100644
---- a/hw/vfio/helpers.c
-+++ b/hw/vfio/helpers.c
-@@ -22,7 +22,6 @@
- #include "qemu/osdep.h"
- #include <sys/ioctl.h>
- 
--#include "system/kvm.h"
- #include "exec/cpu-common.h"
- #include "hw/vfio/vfio-device.h"
- #include "hw/core/hw-error.h"
-@@ -107,177 +106,6 @@ bool vfio_get_info_dma_avail(struct vfio_iommu_type1_info *info,
-     return true;
- }
- 
--#ifdef CONFIG_KVM
--/*
-- * We have a single VFIO pseudo device per KVM VM.  Once created it lives
-- * for the life of the VM.  Closing the file descriptor only drops our
-- * reference to it and the device's reference to kvm.  Therefore once
-- * initialized, this file descriptor is only released on QEMU exit and
-- * we'll re-use it should another vfio device be attached before then.
-- */
--int vfio_kvm_device_fd = -1;
--
--/*
-- * Confidential virtual machines:
-- * During reset of confidential vms, the kvm vm file descriptor changes.
-- * In this case, the old vfio kvm file descriptor is
-- * closed and a new descriptor is created against the new kvm vm file
-- * descriptor.
-- */
--
--typedef struct VFIODeviceFd {
--    int fd;
--    QLIST_ENTRY(VFIODeviceFd) node;
--} VFIODeviceFd;
--
--static QLIST_HEAD(, VFIODeviceFd) vfio_device_fds =
--    QLIST_HEAD_INITIALIZER(vfio_device_fds);
--
--static void vfio_device_fd_list_add(int fd)
--{
--    VFIODeviceFd *file_fd;
--    file_fd = g_malloc0(sizeof(*file_fd));
--    file_fd->fd = fd;
--    QLIST_INSERT_HEAD(&vfio_device_fds, file_fd, node);
--}
--
--static void vfio_device_fd_list_remove(int fd)
--{
--    VFIODeviceFd *file_fd, *next;
--
--    QLIST_FOREACH_SAFE(file_fd, &vfio_device_fds, node, next) {
--        if (file_fd->fd == fd) {
--            QLIST_REMOVE(file_fd, node);
--            g_free(file_fd);
--            break;
--        }
--    }
--}
--
--static int vfio_device_fd_rebind(NotifierWithReturn *notifier, void *data,
--                                  Error **errp)
--{
--    VFIODeviceFd *file_fd;
--    struct kvm_device_attr attr = {
--        .group = KVM_DEV_VFIO_FILE,
--        .attr = KVM_DEV_VFIO_FILE_ADD,
--    };
--    struct kvm_create_device cd = {
--        .type = KVM_DEV_TYPE_VFIO,
--    };
--
--    /* we are not interested in pre vmfd change notification */
--    if (((VmfdChangeNotifier *)data)->pre) {
--        return 0;
--    }
--
--    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
--        error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
--        return -errno;
--    }
--
--    if (vfio_kvm_device_fd != -1) {
--        close(vfio_kvm_device_fd);
--    }
--
--    vfio_kvm_device_fd = cd.fd;
--
--    QLIST_FOREACH(file_fd, &vfio_device_fds, node) {
--        attr.addr = (uint64_t)(unsigned long)&file_fd->fd;
--        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
--            error_setg_errno(errp, errno,
--                             "Failed to add fd %d to KVM VFIO device",
--                             file_fd->fd);
--            return -errno;
--        }
--    }
--    return 0;
--}
--
--static struct NotifierWithReturn vfio_vmfd_change_notifier = {
--    .notify = vfio_device_fd_rebind,
--};
--
--#endif
--
--void vfio_kvm_device_close(void)
--{
--#ifdef CONFIG_KVM
--    kvm_close();
--    if (vfio_kvm_device_fd != -1) {
--        close(vfio_kvm_device_fd);
--        vfio_kvm_device_fd = -1;
--    }
--#endif
--}
--
--int vfio_kvm_device_add_fd(int fd, Error **errp)
--{
--#ifdef CONFIG_KVM
--    struct kvm_device_attr attr = {
--        .group = KVM_DEV_VFIO_FILE,
--        .attr = KVM_DEV_VFIO_FILE_ADD,
--        .addr = (uint64_t)(unsigned long)&fd,
--    };
--
--    if (!kvm_enabled()) {
--        return 0;
--    }
--
--    if (vfio_kvm_device_fd < 0) {
--        struct kvm_create_device cd = {
--            .type = KVM_DEV_TYPE_VFIO,
--        };
--
--        if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
--            error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
--            return -errno;
--        }
--
--        vfio_kvm_device_fd = cd.fd;
--        /*
--         * If the vm file descriptor changes, add a notifier so that we can
--         * re-create the vfio_kvm_device_fd.
--         */
--        kvm_vmfd_add_change_notifier(&vfio_vmfd_change_notifier);
--    }
--
--    if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
--        error_setg_errno(errp, errno, "Failed to add fd %d to KVM VFIO device",
--                         fd);
--        return -errno;
--    }
--
--    vfio_device_fd_list_add(fd);
--#endif
--    return 0;
--}
--
--int vfio_kvm_device_del_fd(int fd, Error **errp)
--{
--#ifdef CONFIG_KVM
--    struct kvm_device_attr attr = {
--        .group = KVM_DEV_VFIO_FILE,
--        .attr = KVM_DEV_VFIO_FILE_DEL,
--        .addr = (uint64_t)(unsigned long)&fd,
--    };
--
--    if (vfio_kvm_device_fd < 0) {
--        error_setg(errp, "KVM VFIO device isn't created yet");
--        return -EINVAL;
--    }
--
--    if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
--        error_setg_errno(errp, errno,
--                         "Failed to remove fd %d from KVM VFIO device", fd);
--        return -errno;
--    }
--
--    vfio_device_fd_list_remove(fd);
--#endif
--    return 0;
--}
--
- struct vfio_device_info *vfio_get_device_info(int fd)
- {
-     struct vfio_device_info *info;
-diff --git a/hw/vfio/kvm-helpers.c b/hw/vfio/kvm-helpers.c
+diff --git a/hw/vfio/kvm-spapr.h b/hw/vfio/kvm-spapr.h
 new file mode 100644
-index 00000000000..d71c9590aaa
+index 00000000000..b1f68c686a7
 --- /dev/null
-+++ b/hw/vfio/kvm-helpers.c
-@@ -0,0 +1,192 @@
++++ b/hw/vfio/kvm-spapr.h
+@@ -0,0 +1,12 @@
 +/*
-+ * low level and IOMMU backend agnostic helpers used by VFIO devices,
-+ * related to regions, interrupts, capabilities
-+ *
-+ * Copyright Red Hat, Inc. 2012
-+ *
-+ * Authors:
-+ *  Alex Williamson <alex.williamson@redhat.com>
++ * VFIO sPAPR KVM specific functions
 + *
 + * SPDX-License-Identifier: GPL-2.0-or-later
++ */
++
++#include "hw/vfio/vfio-container.h"
++#include "qapi/error.h"
++
++bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
++                               MemoryRegionSection *section,
++                               Error **errp);
+diff --git a/hw/vfio/kvm-spapr.c b/hw/vfio/kvm-spapr.c
+new file mode 100644
+index 00000000000..ad71c5a85e2
+--- /dev/null
++++ b/hw/vfio/kvm-spapr.c
+@@ -0,0 +1,47 @@
++/*
++ * VFIO sPAPR KVM specific functions
 + *
-+ * Based on qemu-kvm device-assignment:
-+ *  Adapted for KVM by Qumranet.
-+ *  Copyright (c) 2007, Neocleus, Alex Novik (alex@neocleus.com)
-+ *  Copyright (c) 2007, Neocleus, Guy Zana (guy@neocleus.com)
-+ *  Copyright (C) 2008, Qumranet, Amit Shah (amit.shah@qumranet.com)
-+ *  Copyright (C) 2008, Red Hat, Amit Shah (amit.shah@redhat.com)
-+ *  Copyright (C) 2008, IBM, Muli Ben-Yehuda (muli@il.ibm.com)
++ * SPDX-License-Identifier: GPL-2.0-or-later
 + */
 +
 +#include "qemu/osdep.h"
 +#include <sys/ioctl.h>
-+
++#include <linux/vfio.h>
 +#include <linux/kvm.h>
-+#include "system/kvm.h"
-+#include "exec/cpu-common.h"
-+#include "hw/vfio/vfio-device.h"
-+#include "hw/core/hw-error.h"
++
++#include "hw/vfio/vfio-container-legacy.h"
++#include "hw/vfio/kvm-spapr.h"
 +#include "qapi/error.h"
++#include "trace.h"
 +#include "vfio-helpers.h"
 +
-+/*
-+ * We have a single VFIO pseudo device per KVM VM.  Once created it lives
-+ * for the life of the VM.  Closing the file descriptor only drops our
-+ * reference to it and the device's reference to kvm.  Therefore once
-+ * initialized, this file descriptor is only released on QEMU exit and
-+ * we'll re-use it should another vfio device be attached before then.
-+ */
-+int vfio_kvm_device_fd = -1;
-+
-+/*
-+ * Confidential virtual machines:
-+ * During reset of confidential vms, the kvm vm file descriptor changes.
-+ * In this case, the old vfio kvm file descriptor is
-+ * closed and a new descriptor is created against the new kvm vm file
-+ * descriptor.
-+ */
-+
-+typedef struct VFIODeviceFd {
-+    int fd;
-+    QLIST_ENTRY(VFIODeviceFd) node;
-+} VFIODeviceFd;
-+
-+static QLIST_HEAD(, VFIODeviceFd) vfio_device_fds =
-+    QLIST_HEAD_INITIALIZER(vfio_device_fds);
-+
-+static void vfio_device_fd_list_add(int fd)
++bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
++                               MemoryRegionSection *section,
++                               Error **errp)
 +{
-+    VFIODeviceFd *file_fd;
-+    file_fd = g_malloc0(sizeof(*file_fd));
-+    file_fd->fd = fd;
-+    QLIST_INSERT_HEAD(&vfio_device_fds, file_fd, node);
-+}
++    VFIOLegacyContainer *container = VFIO_IOMMU_LEGACY(bcontainer);
++    VFIOGroup *group;
++    IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
++    struct kvm_vfio_spapr_tce param;
++    struct kvm_device_attr attr = {
++        .group = KVM_DEV_VFIO_GROUP,
++        .attr = KVM_DEV_VFIO_GROUP_SET_SPAPR_TCE,
++        .addr = (uint64_t)(unsigned long)&param,
++    };
 +
-+static void vfio_device_fd_list_remove(int fd)
-+{
-+    VFIODeviceFd *file_fd, *next;
-+
-+    QLIST_FOREACH_SAFE(file_fd, &vfio_device_fds, node, next) {
-+        if (file_fd->fd == fd) {
-+            QLIST_REMOVE(file_fd, node);
-+            g_free(file_fd);
-+            break;
++    if (!memory_region_iommu_get_attr(iommu_mr, IOMMU_ATTR_SPAPR_TCE_FD,
++                &param.tablefd)) {
++        QLIST_FOREACH(group, &container->group_list, container_next) {
++            param.groupfd = group->fd;
++            if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
++                error_setg_errno(errp, errno,
++                        "vfio: failed GROUP_SET_SPAPR_TCE for "
++                        "KVM VFIO device %d and group fd %d",
++                        param.tablefd, param.groupfd);
++                return false;
++            }
++            trace_vfio_spapr_group_attach(param.groupfd, param.tablefd);
 +        }
 +    }
-+}
-+
-+static int vfio_device_fd_rebind(NotifierWithReturn *notifier, void *data,
-+                                  Error **errp)
-+{
-+    VFIODeviceFd *file_fd;
-+    struct kvm_device_attr attr = {
-+        .group = KVM_DEV_VFIO_FILE,
-+        .attr = KVM_DEV_VFIO_FILE_ADD,
-+    };
-+    struct kvm_create_device cd = {
-+        .type = KVM_DEV_TYPE_VFIO,
-+    };
-+
-+    /* we are not interested in pre vmfd change notification */
-+    if (((VmfdChangeNotifier *)data)->pre) {
-+        return 0;
-+    }
-+
-+    if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
-+        error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
-+        return -errno;
-+    }
-+
-+    if (vfio_kvm_device_fd != -1) {
-+        close(vfio_kvm_device_fd);
-+    }
-+
-+    vfio_kvm_device_fd = cd.fd;
-+
-+    QLIST_FOREACH(file_fd, &vfio_device_fds, node) {
-+        attr.addr = (uint64_t)(unsigned long)&file_fd->fd;
-+        if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-+            error_setg_errno(errp, errno,
-+                             "Failed to add fd %d to KVM VFIO device",
-+                             file_fd->fd);
-+            return -errno;
-+        }
-+    }
-+    return 0;
-+}
-+
-+static struct NotifierWithReturn vfio_vmfd_change_notifier = {
-+    .notify = vfio_device_fd_rebind,
-+};
-+
-+void vfio_kvm_device_close(void)
-+{
-+    kvm_close();
-+    if (vfio_kvm_device_fd != -1) {
-+        close(vfio_kvm_device_fd);
-+        vfio_kvm_device_fd = -1;
-+    }
-+}
-+
-+int vfio_kvm_device_add_fd(int fd, Error **errp)
-+{
-+    struct kvm_device_attr attr = {
-+        .group = KVM_DEV_VFIO_FILE,
-+        .attr = KVM_DEV_VFIO_FILE_ADD,
-+        .addr = (uint64_t)(unsigned long)&fd,
-+    };
-+
-+    if (!kvm_enabled()) {
-+        return 0;
-+    }
-+
-+    if (vfio_kvm_device_fd < 0) {
-+        struct kvm_create_device cd = {
-+            .type = KVM_DEV_TYPE_VFIO,
-+        };
-+
-+        if (kvm_vm_ioctl(kvm_state, KVM_CREATE_DEVICE, &cd)) {
-+            error_setg_errno(errp, errno, "Failed to create KVM VFIO device");
-+            return -errno;
-+        }
-+
-+        vfio_kvm_device_fd = cd.fd;
-+        /*
-+         * If the vm file descriptor changes, add a notifier so that we can
-+         * re-create the vfio_kvm_device_fd.
-+         */
-+        kvm_vmfd_add_change_notifier(&vfio_vmfd_change_notifier);
-+    }
-+
-+    if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-+        error_setg_errno(errp, errno, "Failed to add fd %d to KVM VFIO device",
-+                         fd);
-+        return -errno;
-+    }
-+
-+    vfio_device_fd_list_add(fd);
-+    return 0;
-+}
-+
-+int vfio_kvm_device_del_fd(int fd, Error **errp)
-+{
-+    struct kvm_device_attr attr = {
-+        .group = KVM_DEV_VFIO_FILE,
-+        .attr = KVM_DEV_VFIO_FILE_DEL,
-+        .addr = (uint64_t)(unsigned long)&fd,
-+    };
-+
-+    if (vfio_kvm_device_fd < 0) {
-+        error_setg(errp, "KVM VFIO device isn't created yet");
-+        return -EINVAL;
-+    }
-+
-+    if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
-+        error_setg_errno(errp, errno,
-+                         "Failed to remove fd %d from KVM VFIO device", fd);
-+        return -errno;
-+    }
-+
-+    vfio_device_fd_list_remove(fd);
-+    return 0;
++    return true;
 +}
 diff --git a/hw/vfio/kvm-stubs.c b/hw/vfio/kvm-stubs.c
-new file mode 100644
-index 00000000000..5a489d1b711
---- /dev/null
+index 5a489d1b711..78c51b99155 100644
+--- a/hw/vfio/kvm-stubs.c
 +++ b/hw/vfio/kvm-stubs.c
-@@ -0,0 +1,26 @@
-+/*
-+ * Stubs for kvm helpers
-+ *
-+ * SPDX-License-Identifier: GPL-2.0-or-later
-+ */
+@@ -6,6 +6,7 @@
+ 
+ #include "qemu/osdep.h"
+ 
++#include "hw/vfio/kvm-spapr.h"
+ #include "hw/vfio/vfio-device.h"
+ #include "qapi/error.h"
+ #include "vfio-helpers.h"
+@@ -24,3 +25,10 @@ int vfio_kvm_device_del_fd(int fd, Error **errp)
+ {
+     return 0;
+ }
 +
-+#include "qemu/osdep.h"
-+
-+#include "hw/vfio/vfio-device.h"
-+#include "qapi/error.h"
-+#include "vfio-helpers.h"
-+
-+void vfio_kvm_device_close(void)
++bool vfio_spapr_kvm_attach_tce(VFIOContainer *bcontainer,
++                               MemoryRegionSection *section,
++                               Error **errp)
 +{
-+    return;
++    g_assert_not_reached();
 +}
+diff --git a/hw/vfio/spapr.c b/hw/vfio/spapr.c
+index a9f093c3570..42690e4323d 100644
+--- a/hw/vfio/spapr.c
++++ b/hw/vfio/spapr.c
+@@ -16,6 +16,7 @@
+ #include "system/address-spaces.h"
+ 
+ #include "hw/vfio/vfio-container-legacy.h"
++#include "hw/vfio/kvm-spapr.h"
+ #include "hw/core/hw-error.h"
+ #include "qemu/error-report.h"
+ #include "qapi/error.h"
+@@ -406,33 +407,10 @@ vfio_spapr_container_add_section_window(VFIOContainer *bcontainer,
+     vfio_host_win_add(scontainer, section->offset_within_address_space,
+                       section->offset_within_address_space +
+                       int128_get64(section->size) - 1, pgsize);
+-#ifdef CONFIG_KVM
+-    if (kvm_enabled()) {
+-        VFIOGroup *group;
+-        IOMMUMemoryRegion *iommu_mr = IOMMU_MEMORY_REGION(section->mr);
+-        struct kvm_vfio_spapr_tce param;
+-        struct kvm_device_attr attr = {
+-            .group = KVM_DEV_VFIO_GROUP,
+-            .attr = KVM_DEV_VFIO_GROUP_SET_SPAPR_TCE,
+-            .addr = (uint64_t)(unsigned long)&param,
+-        };
+-
+-        if (!memory_region_iommu_get_attr(iommu_mr, IOMMU_ATTR_SPAPR_TCE_FD,
+-                                          &param.tablefd)) {
+-            QLIST_FOREACH(group, &container->group_list, container_next) {
+-                param.groupfd = group->fd;
+-                if (ioctl(vfio_kvm_device_fd, KVM_SET_DEVICE_ATTR, &attr)) {
+-                    error_setg_errno(errp, errno,
+-                                     "vfio: failed GROUP_SET_SPAPR_TCE for "
+-                                     "KVM VFIO device %d and group fd %d",
+-                                     param.tablefd, param.groupfd);
+-                    return false;
+-                }
+-                trace_vfio_spapr_group_attach(param.groupfd, param.tablefd);
+-            }
+-        }
++    if (kvm_enabled() && !vfio_spapr_kvm_attach_tce(bcontainer, section, errp)) {
++        return false;
+     }
+-#endif
 +
-+int vfio_kvm_device_add_fd(int fd, Error **errp)
-+{
-+    return 0;
-+}
-+
-+int vfio_kvm_device_del_fd(int fd, Error **errp)
-+{
-+    return 0;
-+}
+     return true;
+ }
+ 
 diff --git a/hw/vfio/meson.build b/hw/vfio/meson.build
-index 82f68698fb8..f2a7728d3d0 100644
+index 6c00a7f51bb..bab5f2b7f15 100644
 --- a/hw/vfio/meson.build
 +++ b/hw/vfio/meson.build
-@@ -7,6 +7,8 @@ vfio_ss.add(files(
-   'container-legacy.c',
-   'helpers.c',
- ))
-+vfio_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-helpers.c'))
-+stub_ss.add(files('kvm-stubs.c'))
+@@ -10,6 +10,7 @@ vfio_ss.add(files(
+ vfio_ss.add(when: 'CONFIG_KVM', if_true: files('kvm-helpers.c'))
+ stub_ss.add(files('kvm-stubs.c'))
  vfio_ss.add(when: 'CONFIG_PSERIES', if_true: files('spapr.c'))
++vfio_ss.add(when: ['CONFIG_KVM', 'CONFIG_PSERIES'], if_true: files('kvm-spapr.c'))
  vfio_ss.add(when: 'CONFIG_VFIO_PCI', if_true: files(
    'pci-quirks.c',
+   'pci.c',
 -- 
 2.47.3
 
