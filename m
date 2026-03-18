@@ -4,106 +4,100 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 48D91103E173
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 13:29:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 62085103E177
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 13:29:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2qwf-0001SQ-1O; Wed, 18 Mar 2026 09:28:21 -0400
+	id 1w2qxS-00023Y-Ld; Wed, 18 Mar 2026 09:29:10 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1w2quv-0000Sd-EO
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:26:36 -0400
-Received: from mail-ed1-x52e.google.com ([2a00:1450:4864:20::52e])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2qvK-0000hZ-TF
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:27:00 -0400
+Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <zhangckid@gmail.com>)
- id 1w2qut-0005c4-Md
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:26:33 -0400
-Received: by mail-ed1-x52e.google.com with SMTP id
- 4fb4d7f45d1cf-661cfb9f3aaso10122857a12.2
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 06:26:30 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773840389; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w2qvH-0006AO-MM
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 09:26:56 -0400
+Received: by mail-yx1-xb131.google.com with SMTP id
+ 956f58d0204a3-64ca9ec3ee7so8386642d50.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 06:26:55 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773840414; cv=none;
  d=google.com; s=arc-20240605;
- b=F9Om+4n4TZMjhH7z8QxRifVyiqeE/R8WG56smaQPJLG7zy8qdHOgv8vzZQm+fJejNr
- qz9GEc7lqn2sQbO7khrhuSYCai2h+wTD6MtTFzGIUSgrvNE+wA8Ska1NsAGfWky60dHa
- tLopb04QzSaNCn5ybl9S7IJf/06u+Vc12MBApVSo9ZxJFRPSzYFkS7ktL50H60qlZRhl
- U29emOdAeyAs7yFSuFsyV5NikxPp8jx0JDnvI+u9QRWyFWluhS/aixDUKloGG/eMgmHD
- 6x88BtDOD3soPFPYGj33AVR/dcFAbJW1zJJ8df2dAZDiOkI6BYWc+yO5i9WRGDg4ZJtS
- SVqw==
+ b=ghhGLDE+gEXscZfcamWUHgjS31+nOvqqJBL/hfwBmn8ouX8Lp6hgdHvk2WIkt7P75J
+ W3uTDpzeTJIdEUaPFoGn8Fg67mhJrlUdD/rnmxcs+S0BUeqLRqL2orSuKhLOItHOJGcA
+ Mh+X5Y31AOxEOWn4cVYCbv1XzS70dZirpogrZ/WEMKnVHe7iLdbbr6UKHhk4jUb3AmqA
+ t//1gPrYTcXbEqFxZGRUEXZaQLkwWOwmhA5EFJ/SzeLmXfn3bcXL2W/WvcCM7ddIDmNV
+ Ds5Qtn0kWqO9vWYL6qx2nkb8r2OXGS5gXb14UVzQG8DNyeM6L0TGV/b09bROVBFgYjXo
+ C/ow==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=WRWiTz/6+qlR+xnRzuNo43U8uvidEDfeVm/ThRDH1nQ=;
- fh=2vCTedxg5r0JPg5LnC8s7len6poc60rIFIIE/ngH4cY=;
- b=bkKMeHHax3cnHzHl7uWmDBwHWzv3PC/v0xqT6JoX7wPyTXuHRTVxZN2FzqT4an/xV5
- ae+cQEF24ZE1zkUR2SLqjTO10UZ9FqGnuk9qyK3GdYkJUpr2tOvzrXBI1U8BQt0pIf1z
- Zmf/9hkVaJ8VPTRYv68YaJ4uMUa0rcgx38plG0Dv243vQCADiV0G32heDY5aJlXol40B
- CRcSyH+CctnflSFIz5aGn1BjGCHQ/tVRAdB52uJZz5eZDbOpYiAzJF0UNX2Tr1BtDp9M
- YKgUYoaNqy0XcDCRkPwqpwA8gXI+NwFIiuQlpwl7FHhsrQjo7KGtgrapc+Ht7vwsYqTy
- NGVQ==; darn=nongnu.org
+ bh=TVjhYadQw7kvPzU1W80hVUUvkJE1f/2kKWLVhDW7q/k=;
+ fh=zpiKzW8LH3ELwKzluQ3AheUCgrr23INy4hQ6ZjBUBr4=;
+ b=SKsJ0DGATFezCH19puGNonmATc3OWvQXiU3ZloXhpbKUmirHdOP3eKQhSDg+h5yk6i
+ AEZSu4Mp0TQF4Z6f+pRVyKHbtDXUEk5kpQD83g9XBp2RgR3IhrkONytFi6JVibkrr41i
+ RPhYP3skrRcvJBmXq8jAyj8xBowCbf7WmP2nsNXkk6rgHpLrirZlEgGVWTtb2Qx36GYl
+ dtvN7QttbNdLE2/RNAjfkhitTsg+LCE/qLIpEMI8olZSjzJ3teOVSzzuUALM+0wdPQ7Q
+ rHDhGrEkjr/JKzv81Y2I4XidvxaQ9Ddqu4qGnsHCwtyr5/2MHhAmsYvhDpaaIuafB6ao
+ P82Q==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773840389; x=1774445189; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773840414; x=1774445214; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=WRWiTz/6+qlR+xnRzuNo43U8uvidEDfeVm/ThRDH1nQ=;
- b=gt4qZC8RWj5CB/O2Qz+5eztHSyy9niqLy9zBj4/QzuE0cxl5qgbPIJ8equQ5s79a+t
- 6y44iUQHr6s17RPydUHfKs8vZqC6/z7xewID8MBt5UFd6B1ptzZH5PwZMO1haP4JfEJi
- 0r9j8aWp//Jc36fnjUChhdonu1tDDYclG2Rj+rlgF7tor34jCYyuk1lgbbmI8E2oOk0r
- mi2dBnLkbbpL5b+w4jSO1bPYtTa/TsTI4dpNAWx3ZgHA3i7pvaXFHXq89M1ueAGP89K/
- HhvmA8VfCj9y4JydYvGU4omTsicbuKz76qUzVHMdvP5Z5CKJFbB4SiJa0c+EWakgxAbJ
- cFDg==
+ bh=TVjhYadQw7kvPzU1W80hVUUvkJE1f/2kKWLVhDW7q/k=;
+ b=Zi/GDN2DMntH5gxJwbNoo66Yw7bfFvAkU3KWjVmndyHCtfPeBNVjRFOtbR8flwKmSD
+ /lmDn7oy+DnTVM5DGS6zh04e78q9XO9e6VV1xTgy+xwwwzdBC97a5+TlkP/XyA7a/GGL
+ UXUhAxx6EUya+L/tHYC3Tr40k1SLj1jJ5WZ5aAcdtna6URHCNDzu6SN+lORKD10d+N84
+ fKs3WkzUT/3SAygwiaVVcXvwkwJUKIMQJuzcbavhxrqFLXjrsNP3zG7dLpkUT4MYszbJ
+ bri0cZj3/iLs1hJ6VA0P7lWih3zu5Fn7s0yhVodA52iwH93qW4dhSPe5o0xoFb7ORrXT
+ 6xAw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773840389; x=1774445189;
+ d=1e100.net; s=20251104; t=1773840414; x=1774445214;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=WRWiTz/6+qlR+xnRzuNo43U8uvidEDfeVm/ThRDH1nQ=;
- b=ZyvTT/3FasULWAI/tY1xMKPgDSsZqR5gIn4suvv/hzxCH4t/vnbj6dayA6jRVMLMey
- XNHyjYr78twXuiwiEZVdMGY/qnHssuOlU0tdStl/wvhtqJ0lK8iF4ybS98CK2VxJ8EK4
- Gb1O4DrzBoPrLagJV2vKgfsG2aBE5st4aZ9fAWTE0Aw0V9w+tOBWOGVXrwc8C37A0Pm6
- qFXcgg1lCiyrx/s7rvTGTs1YHa6ADIIJOEjfxiE0P9awlSfjpNrBmAsCvebEJN+Dn0tZ
- 2TefheAuVqunbO7wk0T8vE8m4h8rjgcgYG3IArLkEvprtDQiKSFPBToFCJ5nUjSwzj9w
- /cFA==
-X-Gm-Message-State: AOJu0YxCubbliDFnYKzzfVXGoJkmeVFb2RJiLBBIZFGiHIlT6CP2KcAJ
- rkmIuj+Z0yueqzwltXaoFTyK4yGSPQqUwZ4fXaD/nQodK24ALGfzeYTDHtDYaT3Wt4nP1EgeIy4
- RJwPhFqRdIGefKbJK6sA9BiiRj8fYLMRK0olUn3LMxQ==
-X-Gm-Gg: ATEYQzyTE4IEAgtYb4YkMxX8Uj3bXPgqdg5ac1E7OW4TZXxMjv+PH4/rjcO4Zdtb48r
- ixHk7MiWGRyhix1INtrc7yb0UCL8px6RVvG0Vd0oRPh5rEZGEDgr0A2e10zL2IDJT+UYbSElm/v
- FOe/oGPu1bgs0d5cb2AdoTVGW3oSCSLwAWL4t+nnSuWU/YLrdgBGRwiz6CtpJ6aCjdmHCdDGGkd
- lb4+CIu9kcfTG4iQYO2vmR9V3AI9mojgGKDD3lRbnaRseerRacgF6WSMjiPyXGDIUWiq3L5SlSI
- 43nRpzVk
-X-Received: by 2002:a17:907:1004:b0:b8e:796a:fd5c with SMTP id
- a640c23a62f3a-b97f4a78843mr145913766b.27.1773840388774; Wed, 18 Mar 2026
- 06:26:28 -0700 (PDT)
+ bh=TVjhYadQw7kvPzU1W80hVUUvkJE1f/2kKWLVhDW7q/k=;
+ b=QDToiQbMwjoRQ9mpnfzx3gFG4vWZgqDgrWZ38VKEutqu6TZagCZQw7T2gehjFccq+h
+ j/XOeCq54oulyxfdLKafrPQHMIjuo8opMsE6peD9wlqVtxnbm7hBO8QBpMhUGmMjpOuX
+ 98IDacPeI5XM+Bbq3XgEC7Ekpx83NSbNj3IRAIzHgGe+pw0Py1R1VWB9lCLzPHXQMjJw
+ jqSBm+Qh7j80iWX/BwP7R8Y5JNB8EtwOlxuKkdYN/nSRNjpSJO9MOEUP/1vuXAjZ8ESX
+ nRd7GPdN+JkYcErzKVy/HiqMv56dBX6kjFnMsUC+o96plhsPP6egUMctL4DC0PPugizi
+ n92w==
+X-Gm-Message-State: AOJu0YytFZM3q+0Coy/lTNUHEDCJtt+pClHKM1KmV5mjFEq1XWuJ2ACE
+ bAiR0/OvVkOkQ9D7JjA2Oz4T8bNMnDyEjf5Rrxo5cKjXWvPdQ3vr977wps5g+lp3vtafbZWZayk
+ 9BJYsOPFleudzEoq9cgZ99m29TZvwQKaO39NyepFvGA==
+X-Gm-Gg: ATEYQzx5IgdpTjca7ZQmKZ6DEvQWJdPCr9F+hdiqFKQgi6P5tPK/zUXG9IxF/weJLDL
+ 22/2Yr7J3Z3V254WUdQONjvKgbZagFuFiaJYDxFbnM1px5qHxb6hh+0ff/VN07JkYIHWKeUo5Mt
+ nAEbjHNw/l6eLgAk0XKhUQGWXfzV1hhc5bJOfnGzNePmrG9m+R2/tIywjY0lJQ2FMqR7WcRtTmR
+ 5/QT11JjpWLP5sjcPPqNxt5j3Th13QX/h2rFnplsOAakvU8WlgCP9sGzhic0waWd7jDwiOfVkvR
+ LGoCzZ3D/Amj3oxKhwYYwtCOCcNpmAvC4gxyOGRIaRhIsxbRZQ1apqa8H0Pjo1/C5YA=
+X-Received: by 2002:a53:da4a:0:b0:64c:c00b:e771 with SMTP id
+ 956f58d0204a3-64e915b9e31mr2685533d50.58.1773840414345; Wed, 18 Mar 2026
+ 06:26:54 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260305142459.52559-1-zhangckid@gmail.com>
- <20260305142459.52559-14-zhangckid@gmail.com>
- <87o6klfz3e.fsf@pond.sub.org>
-In-Reply-To: <87o6klfz3e.fsf@pond.sub.org>
-From: Zhang Chen <zhangckid@gmail.com>
-Date: Wed, 18 Mar 2026 21:25:46 +0800
-X-Gm-Features: AaiRm52Z96PVNwPAqlvdgR_SOxgblHaCZ-U8nU78BCgo9lSO7Z1ZrNB1FNrI5SU
-Message-ID: <CAK3tnvLyCkc6__O8c6SB=vNk0gn5m=8_jMGUzO1AxkNBAuJJ=g@mail.gmail.com>
-Subject: Re: [PATCH V5 13/13] qapi: examine IOThread attachment status via
- query-iothreads
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel <qemu-devel@nongnu.org>,
- "Dr . David Alan Gilbert" <dave@treblig.org>, 
- Eric Blake <eblake@redhat.com>, "Michael S . Tsirkin" <mst@redhat.com>, 
- Stefan Hajnoczi <stefanha@redhat.com>
+References: <20260317190250.70506-1-philmd@linaro.org>
+In-Reply-To: <20260317190250.70506-1-philmd@linaro.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Wed, 18 Mar 2026 13:26:42 +0000
+X-Gm-Features: AaiRm52qhxgm6WneX07oFzMmeeJrGhBaI_GTWIhSfnZH2m0khertmbjvkwBGQ_Q
+Message-ID: <CAFEAcA-Hb9c5PL4p35pHRJe+usyj9bTWVK9OfZVRfj381=zxow@mail.gmail.com>
+Subject: Re: [PULL 0/5] Single binary patches for 2026-03-17
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::52e;
- envelope-from=zhangckid@gmail.com; helo=mail-ed1-x52e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -121,92 +115,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 18, 2026 at 2:09=E2=80=AFPM Markus Armbruster <armbru@redhat.co=
-m> wrote:
+On Tue, 17 Mar 2026 at 19:03, Philippe Mathieu-Daud=C3=A9 <philmd@linaro.or=
+g> wrote:
 >
-> Zhang Chen <zhangckid@gmail.com> writes:
+> The following changes since commit 6667668e0cf369e47aa9dd0bae40989896e9ed=
+9f:
 >
-> > Extend the 'IOThreadInfo' structure to include attachment metrics.
-> > This allows users to monitor the associated devices by identify them
-> > by their QOM paths.
-> >
-> > New fields added to IOThreadInfo:
-> > - @holders: A string containing of QOM paths for the attached devices.
-> >
-> > These fields are also exposed via the Human Monitor Interface (HMP)
-> > command 'info iothreads' to assist with manual debugging and
-> > performance tuning.
-> >
-> > Signed-off-by: Zhang Chen <zhangckid@gmail.com>
+>   Merge tag 'pr-plugins-20260316' of https://gitlab.com/pbo-linaro/qemu i=
+nto staging (2026-03-17 10:20:30 +0000)
 >
-> [...]
+> are available in the Git repository at:
 >
-> > diff --git a/qapi/misc.json b/qapi/misc.json
-> > index 1f5062df2a..a381074c04 100644
-> > --- a/qapi/misc.json
-> > +++ b/qapi/misc.json
-> > @@ -76,6 +76,15 @@
-> >  #
-> >  # @thread-id: ID of the underlying host thread
-> >  #
-> > +# @holders: The parameter is an array of QOM paths indicating how many
-> > +#     active devices are currently associated with this iothread
-> > +#     (e.g. virtio-blk).  In hotplug scenarios, users can
-> > +#     pre-allocate multiple iothread objects to serve as a persistent
-> > +#     thread pool.  When a device is hot-unplugged, the corresponding
-> > +#     IOThread is released but remains available, allowing subsequent
-> > +#     hot-plugged devices to attach to and reuse the existing thread.
-> > +#     Returns empty if no devices are attached.  (since 11.0)
+>   https://github.com/philmd/qemu.git tags/single-binary-20260317
 >
-> Let me try to polish this a bit:
+> for you to fetch changes up to eda09ccd3e00648bed8b13df465ef15c3c6a7a5d:
 >
->    # @holders: QOM paths of the devices currently associated with this
->    #     iothread.  Users can pre-allocate multiple iothread objects to
->    #     serve as a persistent thread pool.  When a device is
->    #     hot-unplugged, it is detached from its iothread, but the
->    #     iothread remains available, allowing future hot-plugged devices
->    #     to attach to it.
+>   target/ppc: Replace TARGET_PAGE_BITS -> qemu_target_page_bits() (2026-0=
+3-17 19:53:17 +0100)
 >
-> > +#
-> >  # @poll-max-ns: maximum polling time in ns, 0 means polling is
-> >  #     disabled (since 2.9)
-> >  #
-> > @@ -93,6 +102,7 @@
-> >  { 'struct': 'IOThreadInfo',
-> >    'data': {'id': 'str',
-> >             'thread-id': 'int',
-> > +           'holders': ['str'],
-> >             'poll-max-ns': 'int',
-> >             'poll-grow': 'int',
-> >             'poll-shrink': 'int',
-> > @@ -118,6 +128,8 @@
-> >  #              {
-> >  #                 "id":"iothread0",
-> >  #                 "thread-id":3134,
-> > +#                 "holders":["/machine/peripheral/blk1/virtio-backend"=
-,
-> > +#                            "/machine/peripheral/blk0/virtio-backend"=
-],
-> >  #                 "poll-max-ns":32768,
-> >  #                 "poll-grow":0,
-> >  #                 "poll-shrink":0,
-> > @@ -126,6 +138,7 @@
-> >  #              {
-> >  #                 "id":"iothread1",
-> >  #                 "thread-id":3135,
-> > +#                 "holders":["/machine/peripheral/blk2/virtio-backend"=
-],
-> >  #                 "poll-max-ns":32768,
-> >  #                 "poll-grow":0,
-> >  #                 "poll-shrink":0,
+> ----------------------------------------------------------------
+> Few patches related to single binary effort:
 >
-> With a bit of doc polish:
-> Acked-by: Markus Armbruster <armbru@redhat.com>
+> - Build some stub files once
+> - Replace TARGET_PAGE_BITS by qemu_target_page_bits()
+> ----------------------------------------------------------------
 
-Thank you for your suggestion, I will update it next version.
 
-Thanks
-Chen
 
->
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
