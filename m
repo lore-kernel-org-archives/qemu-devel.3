@@ -4,49 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8A2A4103E162
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 11:33:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 50ACD103E162
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 11:33:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2p8f-0006mf-Pi; Wed, 18 Mar 2026 07:32:37 -0400
+	id 1w2p8h-0006n7-AH; Wed, 18 Mar 2026 07:32:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w2p8A-0006hW-LF
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:08 -0400
+ id 1w2p85-0006gs-5n
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:05 -0400
 Received: from forwardcorp1b.mail.yandex.net ([178.154.239.136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <vsementsov@yandex-team.ru>)
- id 1w2p87-0001xh-PR
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:05 -0400
+ id 1w2p82-0001wL-KL
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 07:32:00 -0400
 Received: from mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  (mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net
  [IPv6:2a02:6b8:c24:fa2:0:640:41ee:0])
- by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id 253038092A;
- Wed, 18 Mar 2026 14:32:02 +0300 (MSK)
+ by forwardcorp1b.mail.yandex.net (Yandex) with ESMTPS id A01808092B;
+ Wed, 18 Mar 2026 14:31:55 +0300 (MSK)
 Received: from vsementsov-lin (unknown [2a02:6bf:8080:431::1:10])
  by mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net (smtpcorp/Yandex) with
- ESMTPSA id kVLGYB2A1mI0-5D0hRdHW; Wed, 18 Mar 2026 14:32:00 +0300
+ ESMTPSA id kVLGYB2A1mI0-cCnSANRQ; Wed, 18 Mar 2026 14:31:54 +0300
 Precedence: bulk
 X-Yandex-Fwd: 1
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
- s=default; t=1773833521;
- bh=79mlTXY2yoE2rb5C7EPR4RQQVmNg2LyzET0jX8/C28E=;
+ s=default; t=1773833515;
+ bh=52QCXUdXz7q3nmUl8vdRkB0Je5ENVXDMWksBuy+5rqA=;
  h=Message-ID:Date:In-Reply-To:Cc:Subject:References:To:From;
- b=pVO3Nddc8Oa29Rd74w20J5PSiJOpowuuhn+xSbkQV1ChwuotAVj3d31mEbggmOU8+
- GXRkVh0H+Vv/vlrv17uPQUjMFpT8UFm+t/ulPq1CRaFPeSw7TbC0O5U8EJtceoXuba
- FEetdy63qJTx8Y+b1+ejtOIrBEDva/jM+5Yrn5RA=
+ b=kcN2g/REXZNASFMkHpX869zEdnVt6rl0MyZxzp8saeQxUUqoLcKvqH7V+8ER0fwkS
+ gqrHh6b37vDHS/7Dj4/OPhavn0RReL414TL5epTj8TYXLdwMlk+SyCiXzV1dbyjdm0
+ NmmwKGu4wEqvGZ+9+crdMfsGsMSAUXIYsmK/gfBk=
 Authentication-Results: mail-nwsmtp-smtp-corp-main-34.sas.yp-c.yandex.net;
  dkim=pass header.i=@yandex-team.ru
 From: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 To: jasowang@redhat.com
 Cc: qemu-devel@nongnu.org, bchaney@akamai.com, yc-core@yandex-team.ru,
  d-tatianin@yandex-team.ru, davydov-max@yandex-team.ru,
- vsementsov@yandex-team.ru, Ilya Maximets <i.maximets@ovn.org>
-Subject: [PATCH v4 08/13] net: introduce net_parse_fds()
-Date: Wed, 18 Mar 2026 14:31:38 +0300
-Message-ID: <20260318113144.15697-9-vsementsov@yandex-team.ru>
+ vsementsov@yandex-team.ru
+Subject: [PATCH v4 04/13] net/tap: net_init_tap(): refactor parameter checking
+Date: Wed, 18 Mar 2026 14:31:34 +0300
+Message-ID: <20260318113144.15697-5-vsementsov@yandex-team.ru>
 X-Mailer: git-send-email 2.52.0
 In-Reply-To: <20260318113144.15697-1-vsementsov@yandex-team.ru>
 References: <20260318113144.15697-1-vsementsov@yandex-team.ru>
@@ -75,328 +75,101 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add common net_parse_fds() and net_free_fds() helpers and use them
-in tap.c and af-xdp.c.
-
-Choose returning queues instead of fds, because we'll have derived
-helper in net/tap, which will be able to return fds=NULL and non-zero
-queues on success. That's also why we move to INT_MAX for queues, to
-support negative return value for net_parse_fds() (for failure paths).
-
-Note that redundant restriction of MAX_TAP_QUEUES is dropped for tap.c
+Move checks to the top of the function to simplify further
+refactoring. Merge duplicated checks.
 
 Signed-off-by: Vladimir Sementsov-Ogievskiy <vsementsov@yandex-team.ru>
 Reviewed-by: Ben Chaney <bchaney@akamai.com>
 ---
- net/af-xdp.c | 33 ++-----------------
- net/tap.c    | 92 +++++++++++-----------------------------------------
- net/util.c   | 50 ++++++++++++++++++++++++++++
- net/util.h   | 14 ++++++++
- 4 files changed, 85 insertions(+), 104 deletions(-)
+ net/tap.c | 53 +++++++++++++++++++++++------------------------------
+ 1 file changed, 23 insertions(+), 30 deletions(-)
 
-diff --git a/net/af-xdp.c b/net/af-xdp.c
-index ff1cb30a98d..1ffd6363a8c 100644
---- a/net/af-xdp.c
-+++ b/net/af-xdp.c
-@@ -21,6 +21,7 @@
- #include "clients.h"
- #include "monitor/monitor.h"
- #include "net/net.h"
-+#include "net/util.h"
- #include "qapi/error.h"
- #include "qemu/cutils.h"
- #include "qemu/error-report.h"
-@@ -441,35 +442,6 @@ static NetClientInfo net_af_xdp_info = {
-     .cleanup = af_xdp_cleanup,
- };
- 
--static int *parse_socket_fds(const char *sock_fds_str,
--                             int n_expected, Error **errp)
--{
--    gchar **substrings = g_strsplit(sock_fds_str, ":", -1);
--    int i, n_sock_fds = g_strv_length(substrings);
--    int *sock_fds = NULL;
--
--    if (n_sock_fds != n_expected) {
--        error_setg(errp, "expected %d socket fds, got %d",
--                   n_expected, n_sock_fds);
--        goto exit;
--    }
--
--    sock_fds = g_new(int, n_sock_fds);
--
--    for (i = 0; i < n_sock_fds; i++) {
--        sock_fds[i] = monitor_fd_param(monitor_cur(), substrings[i], errp);
--        if (sock_fds[i] < 0) {
--            g_free(sock_fds);
--            sock_fds = NULL;
--            goto exit;
--        }
--    }
--
--exit:
--    g_strfreev(substrings);
--    return sock_fds;
--}
--
- /*
-  * The exported init function.
-  *
-@@ -530,8 +502,7 @@ int net_init_af_xdp(const Netdev *netdev,
-     }
- 
-     if (opts->sock_fds) {
--        sock_fds = parse_socket_fds(opts->sock_fds, queues, errp);
--        if (!sock_fds) {
-+        if (net_parse_fds(opts->sock_fds, &sock_fds, queues, errp) < 0) {
-             return -1;
-         }
-     }
 diff --git a/net/tap.c b/net/tap.c
-index db3fe380a44..2d4630c350b 100644
+index 55b8b33ea84..331a779585f 100644
 --- a/net/tap.c
 +++ b/net/tap.c
-@@ -45,6 +45,7 @@
- #include "hw/virtio/vhost.h"
+@@ -841,16 +841,30 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         return -1;
+     }
  
- #include "net/tap.h"
-+#include "net/util.h"
+-    if (tap->fd) {
+-        if (tap->ifname || tap->script || tap->downscript ||
+-            tap->has_vnet_hdr || tap->helper || tap->has_queues ||
+-            tap->fds || tap->vhostfds) {
+-            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+-                       "helper=, queues=, fds=, and vhostfds= "
+-                       "are invalid with fd=");
+-            return -1;
+-        }
++    if (tap->has_queues + !!tap->helper + !!tap->fds + !!tap->fd > 1) {
++        error_setg(errp, "queues=, helper=, fds= and fd= are mutual exclusive");
++        return -1;
++    }
  
- #include "net/vhost_net.h"
++    if ((tap->fd || tap->fds || tap->helper) &&
++        (tap->ifname || tap->script || tap->downscript ||
++         tap->has_vnet_hdr)) {
++        error_setg(errp, "ifname=, script=, downscript=, vnet_hdr= "
++                   "are invalid with fd=/fds=/helper=");
++        return -1;
++    }
++
++    if (tap->vhostfds && !tap->fds) {
++        error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
++        return -1;
++    }
++
++    if (tap->vhostfd && tap->fds) {
++        error_setg(errp, "vhostfd= is invalid with fds=");
++        return -1;
++    }
++
++    if (tap->fd) {
+         fd = monitor_fd_param(monitor_cur(), tap->fd, errp);
+         if (fd == -1) {
+             return -1;
+@@ -878,15 +892,6 @@ int net_init_tap(const Netdev *netdev, const char *name,
+         char **vhost_fds;
+         int nfds = 0, nvhosts = 0;
  
-@@ -701,8 +702,6 @@ static int net_tap_init(const NetdevTapOptions *tap, int *vnet_hdr,
-     return fd;
- }
- 
--#define MAX_TAP_QUEUES 1024
--
- static bool net_init_tap_one(const NetdevTapOptions *tap, NetClientState *peer,
-                              const char *name,
-                              const char *ifname, const char *script,
-@@ -782,32 +781,6 @@ failed:
-     return false;
- }
- 
--static int get_fds(char *str, char *fds[], int max)
--{
--    char *ptr = str, *this;
--    size_t len = strlen(str);
--    int i = 0;
--
--    while (i < max && ptr < str + len) {
--        this = strchr(ptr, ':');
--
--        if (this == NULL) {
--            fds[i] = g_strdup(ptr);
--        } else {
--            fds[i] = g_strndup(ptr, this - ptr);
+-        if (tap->ifname || tap->script || tap->downscript ||
+-            tap->has_vnet_hdr || tap->helper || tap->has_queues ||
+-            tap->vhostfd) {
+-            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+-                       "helper=, queues=, and vhostfd= "
+-                       "are invalid with fds=");
+-            return -1;
 -        }
 -
--        i++;
--        if (this == NULL) {
--            break;
--        } else {
--            ptr = this + 1;
--        }
--    }
--
--    return i;
--}
--
- int net_init_tap(const Netdev *netdev, const char *name,
-                  NetClientState *peer, Error **errp)
- {
-@@ -815,9 +788,7 @@ int net_init_tap(const Netdev *netdev, const char *name,
-     int fd = -1, vhostfd = -1, vnet_hdr = 0, i = 0, queues;
-     /* for the no-fd, no-helper case */
-     char ifname[128];
--    char **fds = NULL, **vhost_fds = NULL;
--    int nfds = 0, nvhosts = 0;
--
-+    int *fds = NULL, *vhost_fds = NULL;
+         fds = g_new0(char *, MAX_TAP_QUEUES);
+         vhost_fds = g_new0(char *, MAX_TAP_QUEUES);
  
-     assert(netdev->type == NET_CLIENT_DRIVER_TAP);
-     tap = &netdev->u.tap;
-@@ -890,46 +861,31 @@ int net_init_tap(const Netdev *netdev, const char *name,
-             goto fail;
-         }
-     } else if (tap->fds) {
--        fds = g_new0(char *, MAX_TAP_QUEUES);
--        vhost_fds = g_new0(char *, MAX_TAP_QUEUES);
+@@ -946,13 +951,6 @@ free_fail:
+         g_free(vhost_fds);
+         return ret;
+     } else if (tap->helper) {
+-        if (tap->ifname || tap->script || tap->downscript ||
+-            tap->has_vnet_hdr || tap->has_queues || tap->vhostfds) {
+-            error_setg(errp, "ifname=, script=, downscript=, vnet_hdr=, "
+-                       "queues=, and vhostfds= are invalid with helper=");
+-            return -1;
+-        }
 -
--        nfds = get_fds(tap->fds, fds, MAX_TAP_QUEUES);
+         fd = net_bridge_run_helper(tap->helper,
+                                    tap->br ?: DEFAULT_BRIDGE_INTERFACE,
+                                    errp);
+@@ -981,11 +979,6 @@ free_fail:
+         g_autofree char *downscript =
+             tap_parse_script(tap->downscript, DEFAULT_NETWORK_DOWN_SCRIPT);
+ 
 -        if (tap->vhostfds) {
--            nvhosts = get_fds(tap->vhostfds, vhost_fds, MAX_TAP_QUEUES);
--            if (nfds != nvhosts) {
--                error_setg(errp, "The number of fds passed does not match "
--                           "the number of vhostfds passed");
--                goto fail;
--            }
-+        queues = net_parse_fds(tap->fds, &fds, 0, errp);
-+        if (queues < 0) {
-+            goto fail;
-         }
- 
--        for (i = 0; i < nfds; i++) {
--            fd = monitor_fd_param(monitor_cur(), fds[i], errp);
--            if (fd == -1) {
--                goto fail;
--            }
-+        if (tap->vhostfds && net_parse_fds(tap->vhostfds, &vhost_fds,
-+                                           queues, errp) < 0) {
-+            goto fail;
-+        }
- 
--            if (!qemu_set_blocking(fd, false, errp)) {
-+        for (i = 0; i < queues; i++) {
-+            if (!qemu_set_blocking(fds[i], false, errp)) {
-                 goto fail;
-             }
- 
--            if (tap->vhostfds) {
--                vhostfd = monitor_fd_param(monitor_cur(), vhost_fds[i], errp);
--                if (vhostfd == -1) {
--                    goto fail;
--                }
+-            error_setg(errp, "vhostfds= is invalid if fds= wasn't specified");
+-            return -1;
+-        }
 -
--                if (!qemu_set_blocking(vhostfd, false, errp)) {
--                    goto fail;
--                }
-+            if (vhost_fds && !qemu_set_blocking(vhost_fds[i], false, errp)) {
-+                goto fail;
-             }
- 
-             if (i == 0) {
--                vnet_hdr = tap_probe_vnet_hdr(fd, errp);
-+                vnet_hdr = tap_probe_vnet_hdr(fds[i], errp);
-                 if (vnet_hdr < 0) {
-                     goto fail;
-                 }
--            } else if (vnet_hdr != tap_probe_vnet_hdr(fd, NULL)) {
-+            } else if (vnet_hdr != tap_probe_vnet_hdr(fds[i], NULL)) {
-                 error_setg(errp,
-                            "vnet_hdr not consistent across given tap fds");
-                 goto fail;
-@@ -937,8 +893,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
- 
-             if (!net_init_tap_one(tap, peer, name, ifname,
-                                   NULL, NULL,
--                                  vhostfd,
--                                  vnet_hdr, fd, errp)) {
-+                                  vhost_fds ? vhost_fds[i] : -1,
-+                                  vnet_hdr, fds[i], errp)) {
-                 goto fail;
-             }
-         }
-@@ -1003,18 +959,8 @@ int net_init_tap(const Netdev *netdev, const char *name,
- fail:
-     close(fd);
-     close(vhostfd);
--    if (vhost_fds) {
--        for (i = 0; i < nvhosts; i++) {
--            g_free(vhost_fds[i]);
--        }
--        g_free(vhost_fds);
--    }
--    if (fds) {
--        for (i = 0; i < nfds; i++) {
--            g_free(fds[i]);
--        }
--        g_free(fds);
--    }
-+    net_free_fds(fds, queues);
-+    net_free_fds(vhost_fds, queues);
-     return -1;
- }
- 
-diff --git a/net/util.c b/net/util.c
-index 0b3dbfe5d34..1998a6554e0 100644
---- a/net/util.c
-+++ b/net/util.c
-@@ -23,6 +23,8 @@
-  */
- 
- #include "qemu/osdep.h"
-+#include "monitor/monitor.h"
-+#include "qapi/error.h"
- #include "util.h"
- 
- int net_parse_macaddr(uint8_t *macaddr, const char *p)
-@@ -57,3 +59,51 @@ int net_parse_macaddr(uint8_t *macaddr, const char *p)
- 
-     return 0;
- }
-+
-+void net_free_fds(int *fds, int nfds)
-+{
-+    int i;
-+
-+    if (!fds || nfds <= 0) {
-+        return;
-+    }
-+
-+    for (i = 0; i < nfds; i++) {
-+        if (fds[i] != -1) {
-+            close(fds[i]);
-+        }
-+    }
-+
-+    g_free(fds);
-+}
-+
-+int net_parse_fds(const char *fds_param, int **fds, int expected_nfds,
-+                  Error **errp)
-+{
-+    g_auto(GStrv) fdnames = g_strsplit(fds_param, ":", -1);
-+    unsigned nfds = g_strv_length(fdnames);
-+    int i;
-+
-+    if (nfds > INT_MAX) {
-+        error_setg(errp, "fds parameter exceeds maximum of %d", INT_MAX);
-+        return -1;
-+    }
-+
-+    if (expected_nfds && nfds != expected_nfds) {
-+        error_setg(errp, "expected %u socket fds, got %u", expected_nfds, nfds);
-+        return -1;
-+    }
-+
-+    *fds = g_new(int, nfds);
-+
-+    for (i = 0; i < nfds; i++) {
-+        (*fds)[i] = monitor_fd_param(monitor_cur(), fdnames[i], errp);
-+        if ((*fds)[i] == -1) {
-+            net_free_fds(*fds, i);
-+            *fds = NULL;
-+            return -1;
-+        }
-+    }
-+
-+    return nfds;
-+}
-diff --git a/net/util.h b/net/util.h
-index 288312979f0..4dbc5d416db 100644
---- a/net/util.h
-+++ b/net/util.h
-@@ -83,4 +83,18 @@ static inline bool in6_equal_net(const struct in6_addr *a,
- 
- int net_parse_macaddr(uint8_t *macaddr, const char *p);
- 
-+/*
-+ * Close all @fds and free @fds itself
-+ */
-+void net_free_fds(int *fds, int nfds);
-+
-+/*
-+ * Parse @fds_param, where monitor fds are separated by a colon.
-+ * @nfds must be non-NULL. If *@nfds is zero - set it accordingly.
-+ * If *@nfds is non-zero - check that we have exactly *@nfds fds
-+ * and fail otherwise.
-+ */
-+int net_parse_fds(const char *fds_param, int **fds, int expected_nfds,
-+                  Error **errp);
-+
- #endif /* QEMU_NET_UTIL_H */
+         if (tap->ifname) {
+             pstrcpy(ifname, sizeof ifname, tap->ifname);
+         } else {
 -- 
 2.52.0
 
