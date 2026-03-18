@@ -4,118 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8ED5710775E1
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 16:45:12 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A848E10775E6
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 16:46:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2u0J-0006ir-Mt; Wed, 18 Mar 2026 12:44:19 -0400
+	id 1w2u1u-0007PG-VT; Wed, 18 Mar 2026 12:45:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2u0H-0006i6-VY
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:44:18 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w2u0E-0006PN-Et
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:44:17 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773852251;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=UA63hmKg84npnsscASkCdHsTVjRESYIZeFpzR6rWNd0=;
- b=fdd2qEka9Y0S4SVwcB3RfgrhegQwA0Vd1EXG6/YjswlxWbK887goKh9QqHqSUdjcigNkzW
- BbI0l1Xu1OR2m3uOY9Vm26tlz3DmxaSHKoLVpMyCPDm7rgd61cWdDDMAkVgxOz3coh5ZRK
- hxaCFhFPBfBUuL1JkdQ656KSApwE2r8=
-Received: from mail-wr1-f71.google.com (mail-wr1-f71.google.com
- [209.85.221.71]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-591-JKyGzuMfOJK_33ik6UJu4g-1; Wed, 18 Mar 2026 12:44:10 -0400
-X-MC-Unique: JKyGzuMfOJK_33ik6UJu4g-1
-X-Mimecast-MFC-AGG-ID: JKyGzuMfOJK_33ik6UJu4g_1773852249
-Received: by mail-wr1-f71.google.com with SMTP id
- ffacd0b85a97d-439bab2d095so340053f8f.3
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 09:44:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773852249; x=1774457049; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=UA63hmKg84npnsscASkCdHsTVjRESYIZeFpzR6rWNd0=;
- b=SYdeReCmFRzwCr7b0YhCu42Hk2qOMmSj2KcfKjULe2xpwMY0/WGIFiQMvFU2pAdrzv
- rv7sa31rMJXkNBLxhiZxYi+9xF+UWCarAbYTp1tv1XULdfezpvKSBdxlgvyqGv6OBn/d
- wkNKExsBGX872QB4j6nI8znm3nZ8ZIzkdUXCHlj0TOqJTeAc8gJdryu+R98N3uXfCYKl
- /kAzlScg049O3V258aTattA8LiHZPT5Y7fceAZyx3wQbyz1m0a/N/NFOq+NWV3o9Ucbt
- qTWTvZaFugJi00d0Mvc+E7FL6eurfNq4sy4lsCcfhcwdRgHgUK56FpVGeO7z6AJXXSFE
- yvMA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773852249; x=1774457049;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=UA63hmKg84npnsscASkCdHsTVjRESYIZeFpzR6rWNd0=;
- b=DydlJ300Dp6Jc9M5+HlkNpdYZJ587e8lrloIw9O7XbYIYomtj6Ku3eKxH3gXx4Zvnp
- ARjGJzwcrSC79xrBiWIDAnKVzKQNXambst8xJmMf/Ypp1H4K8jLn7R8MQYViDLxBulMC
- ZRZ/JEkOXb/eyji0z1fT2GUOdEVp1aHXxeeAGC+SPss3VyEx0RTOoBwGPDFuyR8v2dwc
- nH9FWXzcQjmSwKWeuq8JkA7VvR1QBd7zmIBWhOOdpQOO5LqaPhp9scM6EoQZzT7zVnpQ
- Xbn16VH4TGopL8S7edUaYbLGxosB7lw65KqH4d+TVCIg0q0mhO2fmAacBhUwlX2LnmKU
- EiVQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUkI+HGbXSP6cwk7bgs9z+7iibeIvKjrPQ8txoAUhG2TGFEb3gcKCheLnICYBZWPh2SLUl70N8ANy7H@nongnu.org
-X-Gm-Message-State: AOJu0YyUCnhAH0K/3BOxS/hl9HJVPRqdigFdmwWjilHDWMToPcySCHTF
- CcbhMmxMa4qYfDJ1eCWgll7QRxUk/UkaO32lirjb+i4z6K4GJ1dXLkoA8UfO6qzyTbjsYHMOdPD
- v92Uyg+S5lS6pyLgvLXoGwscTyFrijOUnEd3EHf50i21o5cGMfR1kvzoT
-X-Gm-Gg: ATEYQzxKim9H8lG4a9DbkhtyzOoBxUABVvNinJunAMCXpqfsChwRGWHFc0hznZDPsDI
- E/Dte/QMoqJXWDvX7wkw2JwNmAb4/AZrV2g6VzxInwlrUj/B7VopzxKgq1rpfkU5cvxQ3PGS9yv
- g1PUnSgqshnDYvq4dLIWQinYOSrBjj8yU+0d3s6846SlLrRlAetKRCr48EruuJMF4jURcFh++Ji
- tZIocMP+D/S0ZFmDeViSS9FYfZdAb/zRmFYQAoHQ88kvZK7oNOEAYxKHPK0Ina0eJ2CVA8v/B1c
- dyBy2d81haC1BnqEMB9vJsp5TMnJOyg4I6cM20e21edwr7i7X1aoYSRHCjN5b4tiUevy/Khb4sq
- oe/JWSd2Qb3sywcPlhKxEjEHBj2bzBZspZanWC7kMvq8L6lgnkKxg6fP4rSAO1YAAlr3cRpI7lr
- Yv5CR6n2hlOJWegcitAVOFazm2Zjx8Pm/k7vQ25umieHZ0WzUd
-X-Received: by 2002:a05:600c:4e46:b0:485:3c8f:e4c5 with SMTP id
- 5b1f17b1804b1-486f44485b3mr63863835e9.17.1773852248863; 
- Wed, 18 Mar 2026 09:44:08 -0700 (PDT)
-X-Received: by 2002:a05:600c:4e46:b0:485:3c8f:e4c5 with SMTP id
- 5b1f17b1804b1-486f44485b3mr63863405e9.17.1773852248373; 
- Wed, 18 Mar 2026 09:44:08 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d737:d033:4b9:bf78:3d26:f60b?
- (p200300cfd737d03304b9bf783d26f60b.dip0.t-ipconnect.de.
- [2003:cf:d737:d033:4b9:bf78:3d26:f60b])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b5184962bsm9160516f8f.7.2026.03.18.09.44.07
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Wed, 18 Mar 2026 09:44:07 -0700 (PDT)
-Message-ID: <8562aca8-c6a4-46a4-843b-43e25ddc9775@redhat.com>
-Date: Wed, 18 Mar 2026 17:44:06 +0100
+ (Exim 4.90_1) (envelope-from <pfalcato@suse.de>) id 1w2tmU-0004RT-CO
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:30:02 -0400
+Received: from smtp-out2.suse.de ([2a07:de40:b251:101:10:150:64:2])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <pfalcato@suse.de>) id 1w2tmS-000063-BC
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 12:30:01 -0400
+Received: from imap1.dmz-prg2.suse.org (unknown [10.150.64.97])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by smtp-out2.suse.de (Postfix) with ESMTPS id 16B745BECB;
+ Wed, 18 Mar 2026 16:29:55 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773851395; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
+ b=Fc/dYUZF/69DEuHAyWGb8Z4rtQWRV26oKGti+wxNoXQ8Owy8TGAyA6S6YosCSv3n5QjE2h
+ Pp4K6e2KbXcYQr0H/rt9SVmOdDLs1pzGM6EgJ10PMn7O4BTc3Xi7udnXNhOGVnx+dIAEa6
+ 1sWUg2gmj1fIStIjZkTSwX3NPrKDdOY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773851395;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
+ b=fzgKsO3yxsEu93eTb7jwGilpBEzoMBvTEw/i+Nq/DfBvQeohrkS1J2hYFqZciyeIY76q+Y
+ kjhcC4lyaS0QkOAQ==
+Authentication-Results: smtp-out2.suse.de;
+	none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+ t=1773851395; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
+ b=Fc/dYUZF/69DEuHAyWGb8Z4rtQWRV26oKGti+wxNoXQ8Owy8TGAyA6S6YosCSv3n5QjE2h
+ Pp4K6e2KbXcYQr0H/rt9SVmOdDLs1pzGM6EgJ10PMn7O4BTc3Xi7udnXNhOGVnx+dIAEa6
+ 1sWUg2gmj1fIStIjZkTSwX3NPrKDdOY=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+ s=susede2_ed25519; t=1773851395;
+ h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+ mime-version:mime-version: content-transfer-encoding:content-transfer-encoding;
+ bh=MLQF0cGJStof3nDqoSS/VGYCR2qfVs2/I0b7oZR7/2w=;
+ b=fzgKsO3yxsEu93eTb7jwGilpBEzoMBvTEw/i+Nq/DfBvQeohrkS1J2hYFqZciyeIY76q+Y
+ kjhcC4lyaS0QkOAQ==
+Received: from imap1.dmz-prg2.suse.org (localhost [127.0.0.1])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
+ (No client certificate requested)
+ by imap1.dmz-prg2.suse.org (Postfix) with ESMTPS id 912D24273B;
+ Wed, 18 Mar 2026 16:29:54 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([2a07:de40:b281:106:10:150:64:167])
+ by imap1.dmz-prg2.suse.org with ESMTPSA id mOoPIALTumnJYwAAD6G6ig
+ (envelope-from <pfalcato@suse.de>); Wed, 18 Mar 2026 16:29:54 +0000
+From: Pedro Falcato <pfalcato@suse.de>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ Pedro Falcato <pfalcato@suse.de>, qemu-stable@nongnu.org,
+ Niklas Cassel <cassel@kernel.org>
+Subject: [PATCH] ide: Set IDENTIFY word 93 to 0 on SATA drives
+Date: Wed, 18 Mar 2026 16:29:51 +0000
+Message-ID: <20260318162951.1060969-1-pfalcato@suse.de>
+X-Mailer: git-send-email 2.53.0
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 2/3] iotests/041: add test for mirror with throttled NBD
- export as target
-To: Fiona Ebner <f.ebner@proxmox.com>, qemu-devel@nongnu.org
-Cc: qemu-block@nongnu.org, kwolf@redhat.com, vsementsov@yandex-team.ru,
- jsnow@redhat.com, qemu-stable@nongnu.org
-References: <20260311145717.668492-1-f.ebner@proxmox.com>
- <20260311145717.668492-3-f.ebner@proxmox.com>
- <ad6a2467-3763-4590-8a86-097ab916a4c1@redhat.com>
- <3f4ddd09-a79b-4bfc-93d4-a3f7b6146da0@proxmox.com>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <3f4ddd09-a79b-4bfc-93d4-a3f7b6146da0@proxmox.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=hreitz@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spamd-Result: default: False [-2.80 / 50.00]; BAYES_HAM(-3.00)[99.99%];
+ NEURAL_HAM_LONG(-1.00)[-1.000]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[]; NEURAL_HAM_SHORT(-0.20)[-1.000];
+ MIME_GOOD(-0.10)[text/plain]; TO_MATCH_ENVRCPT_ALL(0.00)[];
+ FROM_HAS_DN(0.00)[]; ARC_NA(0.00)[]; MIME_TRACE(0.00)[0:+];
+ TO_DN_SOME(0.00)[];
+ DBL_BLOCKED_OPENRESOLVER(0.00)[suse.de:mid,suse.de:email,imap1.dmz-prg2.suse.org:helo];
+ RCVD_VIA_SMTP_AUTH(0.00)[]; FROM_EQ_ENVFROM(0.00)[];
+ RCVD_COUNT_TWO(0.00)[2]; FUZZY_RATELIMITED(0.00)[rspamd.com];
+ DKIM_SIGNED(0.00)[suse.de:s=susede2_rsa,suse.de:s=susede2_ed25519];
+ RCPT_COUNT_FIVE(0.00)[6]; RCVD_TLS_ALL(0.00)[]
+Received-SPF: pass client-ip=2a07:de40:b251:101:10:150:64:2;
+ envelope-from=pfalcato@suse.de; helo=smtp-out2.suse.de
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
+X-Mailman-Approved-At: Wed, 18 Mar 2026 12:45:56 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -130,65 +109,63 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.03.26 15:51, Fiona Ebner wrote:
-> Am 16.03.26 um 6:27 PM schrieb Hanna Czenczek:
->> On 11.03.26 15:54, Fiona Ebner wrote:
->>> Mostly in preparation for commit "iotests/041: add test for duplicate
->>> job-complete with throttled target".
->>>
->>> Signed-off-by: Fiona Ebner <f.ebner@proxmox.com>
->>> ---
->>>    tests/qemu-iotests/041     | 112 ++++++++++++++++++++++++++++++++++++-
->>>    tests/qemu-iotests/041.out |   4 +-
->>>    2 files changed, 113 insertions(+), 3 deletions(-)
->>>
->>> diff --git a/tests/qemu-iotests/041 b/tests/qemu-iotests/041
->>> index 8452845f44..a7e1980f13 100755
->>> --- a/tests/qemu-iotests/041
->>> +++ b/tests/qemu-iotests/041
->> [...]
->>
->>
->>> +    def tearDown(self):
->>> +        os.remove(test_img)
->>> +        os.remove(target_img)
->>> +        os.remove(backing_img)
->>> +        os.remove(target_backing_img)
->> It would be good if tearDown() could still contain the VM/QSD shutdown/
->> stop.
-> Will do!
->
->>> +
->>> +    def test_throttled(self):
->>> +        self.vm.cmd('blockdev-mirror',
->>> +                    job_id='mirror',
->>> +                    device='source',
->>> +                    target='target',
->>> +                    sync='full')
->>> +
->>> +        time.sleep(1)
->>> +        result = self.vm.qmp('query-block-jobs')
->>> +        self.assert_qmp(result, 'return[0]/ready', False)
->>> +        self.vm.qtest(f'clock_step {4 * 1000 * 1000 * 1000}')
->>> +        time.sleep(1) # in real time, the rest should now comlpete fast
->> I think the clock_step belongs on the export side, the QSD.  On the
->> other hand, QSD has no way to enable qtest, I believe, so it won’t work
->> well as an export here.  I think it works accidentally because throttle
->> allows a burst, and can allow to write 3 MB in 2 seconds.
-> Ah, good catch! I originally did everything with just the VM, but
-> draining during mirror completion disables the throttling, so the issue
-> with the duplicate complete wouldn't trigger for the test in patch 3/3.
-> That's why an external target is needed.
->
->> This whole test is also a bit fiddly. It needs to write 3 MB in one
->> second, I believe, which seems prone to being flakey.  I’d be happy with
->> a null export on the target side, if that still did the job (pun intended).
-> The one from patch 3/3 relies on the same kind of behavior. I guess
-> using a second VM instance rather than QSD for the export could work?
-> And adapting the test to make throttling actually have an effect.
+According to the ATA Command Set specification (and the SATA specification
+too), SATA drives are supposed to set word 93 (which for PATA holds hardware
+reset results) to 0. As such, clear it when ncq_queues > 0 (which is only true
+for SATA drives).
 
-Yes, that’s what I had in mind.
+Doing so fixes a quirk in Linux where it thinks the AHCI QEMU drive is PATA
+over a SATA bridge, and thus limits maximum transfer sizes for individual IOs
+with a:
+[    1.632121] ata1.00: applying bridge limits
 
-Hanna
+While at it, bump the device's firmware revision for IDENTIFY. This makes it
+so Linux can avoid enabling a quirk for fixed QEMU releases.
+
+Link: https://lore.kernel.org/linux-ide/20260303183337.1013474-1-pfalcato@suse.de/
+Cc: qemu-stable@nongnu.org
+Suggsted-by: Niklas Cassel <cassel@kernel.org>
+Signed-off-by: Pedro Falcato <pfalcato@suse.de>
+---
+Note: I understand the version bump is vaguely controversial (particularly
+ exposing the QEMU version in the string) but I don't have a much better
+ idea. Logically, bumping it to 11.0 for stable releases doesn't make much
+ sense.
+ 
+ hw/ide/core.c | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ide/core.c b/hw/ide/core.c
+index b45abf067b20..89f62f301e94 100644
+--- a/hw/ide/core.c
++++ b/hw/ide/core.c
+@@ -211,7 +211,15 @@ static void ide_identify(IDEState *s)
+         put_le16(p + 87, (1 << 14) | 0);
+     }
+     put_le16(p + 88, 0x3f | (1 << 13)); /* udma5 set and supported */
+-    put_le16(p + 93, 1 | (1 << 14) | 0x2000);
++    if (s->ncq_queues) {
++        /*
++         * This is SATA, which is required by the spec to return 0 for this
++         * field.
++         */
++        put_le16(p + 93, 0);
++    } else {
++        put_le16(p + 93, 1 | (1 << 14) | 0x2000);
++    }
+     /* *(p + 100) := nb_sectors       -- see ide_identify_size */
+     /* *(p + 101) := nb_sectors >> 16 -- see ide_identify_size */
+     /* *(p + 102) := nb_sectors >> 32 -- see ide_identify_size */
+@@ -2660,7 +2668,7 @@ int ide_init_drive(IDEState *s, IDEDevice *dev, IDEDriveKind kind, Error **errp)
+     if (dev->version) {
+         pstrcpy(s->version, sizeof(s->version), dev->version);
+     } else {
+-        pstrcpy(s->version, sizeof(s->version), qemu_hw_version());
++        pstrcpy(s->version, sizeof(s->version), "11.0");
+     }
+ 
+     ide_reset(s);
+-- 
+2.53.0
 
 
