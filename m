@@ -4,86 +4,87 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E463BFCD0A6
-	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:06:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F6F2FCD0A6
+	for <qemu-devel@archiver.kernel.org>; Wed, 18 Mar 2026 10:07:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w2nmk-00039l-Hn; Wed, 18 Mar 2026 06:05:54 -0400
+	id 1w2no0-0003lR-Ue; Wed, 18 Mar 2026 06:07:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w2nmf-00038y-2L
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:05:50 -0400
-Received: from mail-lf1-x133.google.com ([2a00:1450:4864:20::133])
+ id 1w2nny-0003l6-MJ
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:07:10 -0400
+Received: from mail-lj1-x22c.google.com ([2a00:1450:4864:20::22c])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alexander@mihalicyn.com>)
- id 1w2nmd-00049v-7D
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:05:48 -0400
-Received: by mail-lf1-x133.google.com with SMTP id
- 2adb3069b0e04-5a0fc5e2c59so7536668e87.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:05:46 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773828344; cv=none;
+ id 1w2nnx-0004ZI-1c
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 06:07:10 -0400
+Received: by mail-lj1-x22c.google.com with SMTP id
+ 38308e7fff4ca-38a42a0d7f7so6426451fa.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 03:07:08 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773828427; cv=none;
  d=google.com; s=arc-20240605;
- b=fZbzbiqMcVjPFzR+DHWAXsaweFm3T+2XOVy9jsfg1OrS5bs2YEI1+aEdEb+ZHTImAu
- sbE83TIs6RmuWaKZP72H7hZEOwmNC/kUdKXGdN/8RmuYjt8c2eWhKP7V/vQbgUf9NmIN
- YxioABv+68tVDfY15s4l6E4YBE2Of9v5zOwJ8S6AoySJzwQIzMAnMRBOiRfmXmD3dnzS
- OswHl0vm9NtjAclnUuSTxOgRGI3EZPsdzMWfYExFoNYa2s0MaxUbygCBTZlLOMUDXA63
- W+HEUk6uTSdRKuZJwdTfRPoTYaCwCwNAlYCFnAm14JU30+0PIE3vV9ulATtW75FWe6la
- FvKw==
+ b=ZBQUmJfGwCpkfpyH5/zFB/z5UVtdLB7qGWTQkrv4ZadAoiqTxSHJ9QkIuINzJ1dzIb
+ /HLUfYvTByErIyBoopxocueu1c7TmCx82qEUc6QP8GfreKnWGWdx+wMUQSGuB0ZCZAZS
+ NFX0fEcCFT2Hw0tZ4YQ+gWee7wBFuO5h94RJnvrc5QGhWPEuvvCOmpRWU7h3CnazDnR/
+ zjxIXRflUt8BFGEMHxOmRO+NKX23owm62vb9oBg+VSNNT5XKu8YBe64Uhk6fuOFXOjCJ
+ 85X8csmceh7KIVnvIjs6Pu9LhvKaAKcEPVDnqb4GuVzl1qaLZqW5GhQL1jI1SB3gT2hv
+ xwWg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=e5ImvG9rvTHH+Bj4mOwgcCururl81itA0QyDqlpYRp8=;
+ bh=/R9/OSK/DKaqZPMUwiM3r7jZnekbVIwQZyVh0XFK1d4=;
  fh=PPOvtMHkqOkqS+s4WoZGxCoh6Ztf1gmLjaBoC9ThygE=;
- b=aDqZ8nG5mW0YNhlNGBTQLFLIeXphZjTO8UHpj8YROz0CUgVDSnqg0srOOXSbC6VxD9
- ppCZegiHHxuNu2CbKG4LfS4VBHyC3zjmHM++vkWttc+xY7o5K8MgyrXu84l+Bi9F+/0w
- DaeqemKJZuD4+EfKWg6JK6NXKvfJu3Z3HQvcaaTusdEC8R4oQkCaLjBK2V0cMlTeRWUL
- AEhikrbnCEN7hNn9O8uqHzwB5IklBIRuwBDCrOOoF9Tiv/jJ+ETFtM43zAnCI8TCDkrK
- OBPcpukeXPu/iGCsk3SMq8BesrmI0z3tEnWOdtVtZG6z95gVwt6uoAIk4oLjJxVQJ0hF
- DTEw==; darn=nongnu.org
+ b=I5onauAic0chFt6S3UoBpfnb9EwC45zd0nXdgGYH/FnqDmG8CPBreYHUW5hPd7FJci
+ +U+yAWqROltmVEdmqaVJGjdPJRCD5bpdLx/VzyFFAWDUREfBEY9VUaGgOgBui/RcCZ4d
+ bJWS3JXT/0oSt+GUnP4cy19KQykIfuo8fbKXq9ODiL2P7Ei7n4TLJWjkJEvMZNSXxT+Z
+ 0/0Y2cqgljZTCoocDCmYiMAtbu6YAYwnSgFOLrIMbXVnU1lvsnvsjPD3y6jGYPy0mV4l
+ 9TgseKmo1uqNuUbA9PuzupPXM2RKeM/Hr2I4OqWfCB29RGN+sarTKevE6Qzu6Lr1tqz3
+ mrtg==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=mihalicyn.com; s=mihalicyn; t=1773828344; x=1774433144; darn=nongnu.org;
+ d=mihalicyn.com; s=mihalicyn; t=1773828427; x=1774433227; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=e5ImvG9rvTHH+Bj4mOwgcCururl81itA0QyDqlpYRp8=;
- b=Q8v3vkeQJ0GAt8XdZFgKKMp+nVA8edymuJmZHUJ+s1Ow7cPW9bCb31C8FEXIXb2DFX
- rKEmCw8OhciG5yovZIViLvGfdMSq+QcprU0NPb/zFlDl+qc2RVgnGUPRF90ysyI+Lj+X
- bQDE1rynf9Ueefyt0jfQo8xJE7YczsNwWlhoo=
+ bh=/R9/OSK/DKaqZPMUwiM3r7jZnekbVIwQZyVh0XFK1d4=;
+ b=DRzGNuqkD3cgnIGvMGX2Gl204lrWxfMyWHFRXCOIipPGgspgF+10w7oN9SObxx5uhJ
+ zblHe7FA8BhCgd5xScYcim3AqfAj/IFNQgRyJo/D/LJWhrUbFs2d9PSTddZ/x8Cp5hGK
+ gC8XCivP2Y96zxbGcCaXU1In6WsIEPB8TtIj0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773828344; x=1774433144;
+ d=1e100.net; s=20251104; t=1773828427; x=1774433227;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=e5ImvG9rvTHH+Bj4mOwgcCururl81itA0QyDqlpYRp8=;
- b=QMdNiLQ97sHut2VuMi2A0zkurg7ELa+PHk8erABlhqarA5qrkUjLnBp+IzumKq/Q7W
- aGKXmMb20KQUmV+Lz29ZCS0D84B9cmTIkI/YvpSvaYzlDjggZJF/dBDkkKyLoWDNkjY+
- 95YdIYbSiYBsqHI5g2CEPPyX77Z+Pz2b4IAJP3cRLF60wbS2EqOZqQleabMHwL87sYYe
- 3EL39rOX6qnYE3TAoAmVcl6de3tiWzWe4sOScUnKXoYKASYR/Wcf4LBUaqtOEoTIXwJr
- tba5Wi917HYAMkiLfgDf1qQloGYVsJzBpvLD3yY5guF18axXFduZhIVFKXth4rTBYAFM
- f91Q==
-X-Gm-Message-State: AOJu0Ywsc2OHNZZBjcLaOG4DZxfHK4KQNnxQikPlNbftVwUQtsCCjhPh
- T/hthvwL8EpDGt5xe4wHOnd1d+EybBu7sfnmbjSSlv2SEmAdnWOFOmdkOp2AHS19PtbhezNzc/0
- mzoyUydCV3k5BU1p1u75DexHjAJgIlLyjgqS0B3qObw==
-X-Gm-Gg: ATEYQzyfm6wPrxQg4F2SQON+Rg43wj4APgal68NcpO64ZxMqgPeAi4SGC0kmLJ3g8dU
- LE+KVZtdDaxsG7GwOrIH1+BLK3VCCkT2sxGpKYrBa9Fa3Z9cAM3CASTLl2bZwG7O1YoPdxstzgz
- d4Y9CTsQ9kDLtP4+zuFVzp1N1ap2F7ZpvaSdF/ASvyjYL/WDd+AnoIpz/W16J1dLGe5cZssER4t
- Hwb6RO0klh9mBPrxNHR5VmE3iKL0Ef6Or/tBOIgvy9wHZyLozR4I25+6ZzZF1H6M6kUKOXuiJjq
- IEt2TSBAE8C9VwfFX2hdzVUpZeSj5C3bAQOpLY0=
-X-Received: by 2002:a19:f012:0:b0:5a1:422b:275a with SMTP id
- 2adb3069b0e04-5a2796c30b1mr752542e87.38.1773828343609; Wed, 18 Mar 2026
- 03:05:43 -0700 (PDT)
+ bh=/R9/OSK/DKaqZPMUwiM3r7jZnekbVIwQZyVh0XFK1d4=;
+ b=AGYzjDLSK8DeiSCS+cyrJMLe1TQz5/4VFIX/pV9MXxVZMyE7I/+FO3M7ERa92eCNXq
+ i2g7flCKbdcbCazGEVrWrCUPU9pYE+93/tdxnZ55xgrCYBpktmDpwEo1GTbgOShu2mVs
+ Idd2+JrwfQO4aSA1UHTub879KMRmM+vPjo50qR2cXtvzidKIV9X1p0QxUSuAyYQuSXt+
+ ykevi1kF4i1KDqHNz61Vu5T4Ia92Rrr8+FKWAWlsUdz9LtarCO89J23OtxJof1e1gOGm
+ Q5nComK+nXP/AeHMV5t1fhU9KaKJXAPABUZvxV9ND7lwaMa6ZeVfzR/eN1DxOXxZitdy
+ PYlA==
+X-Gm-Message-State: AOJu0YyRjWeBzlciBI9SYc1JP51j/KjTL0U8N96Gmvb2r/KLCJx/7Ghj
+ WFPQQ8isVbEpFn6EoXkFvGmmQLUcrceN3eHHYVOREeV8UFtnvnA/HC5PNxXg7GmnNc3KG9nqeDx
+ Cgz1dybvfJzTxlE9lDOyh90xI1nUMAM6kHjItnuRC8g==
+X-Gm-Gg: ATEYQzz3E4m3b4veUK6+revfy9HGxk7Vn5LW2hw4cb0Af8v6XAnQKp1AJmcFCX3kLUf
+ KI47YlQJ7biRHVmfg8Z5qo4BvuA9pUErqH02H+Vj95s9AlakW0dbAeSeYkO0a9Rb9wc2/GymtuU
+ m1uRLpCGvwGdYPlMQSN5DNUqcSzjEsi3+bSe31DdulmtgZryG+oqMVd382g3mf4rNi0gY+YQ6Nl
+ RYaz5qPANcy07DrFwKe+LvYm2FDz/ipSt3MWOzz8GyGjsglH47oLuKUwIeANT08XHQyRZI6eMyq
+ 1aEnlT1/fvvPVKX1tUYDC2p+MSrlAPUIfRk7rTM=
+X-Received: by 2002:a2e:8e99:0:b0:38a:78dc:844f with SMTP id
+ 38308e7fff4ca-38ace9112bfmr18972791fa.13.1773828426688; Wed, 18 Mar 2026
+ 03:07:06 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260317102708.126725-1-alexander@mihalicyn.com>
  <20260317102708.126725-3-alexander@mihalicyn.com> <abnKKguESqlptJdp@x1.local>
-In-Reply-To: <abnKKguESqlptJdp@x1.local>
+ <abnkFu0BAHYpQqo_@x1.local>
+In-Reply-To: <abnkFu0BAHYpQqo_@x1.local>
 From: Alexander Mikhalitsyn <alexander@mihalicyn.com>
-Date: Wed, 18 Mar 2026 11:05:32 +0100
-X-Gm-Features: AaiRm50bZgokqrBrtrTQ8hZa9fwZG1VRdmGygDVLGMm72WKgHJBWhnIeZbHNr8k
-Message-ID: <CAJqdLrrH2OD3+N+KOiSLB8MuWaaNL2PAg6A1j9e4JByWidwdZw@mail.gmail.com>
+Date: Wed, 18 Mar 2026 11:06:55 +0100
+X-Gm-Features: AaiRm51xfkys8u5YwApPYAEecxbjWT6w7Q_xG_kld4lZBbCNYAR86vDPrlc6qcE
+Message-ID: <CAJqdLrpiu1ZVw5vRQpbAO2NPMbSAm-gY6Yy7=7Thgkxst0TeaA@mail.gmail.com>
 Subject: Re: [PATCH v5 2/8] migration: add
  VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC
 To: Peter Xu <peterx@redhat.com>
@@ -98,8 +99,8 @@ Cc: qemu-devel@nongnu.org, Fabiano Rosas <farosas@suse.de>,
  Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::133;
- envelope-from=alexander@mihalicyn.com; helo=mail-lf1-x133.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::22c;
+ envelope-from=alexander@mihalicyn.com; helo=mail-lj1-x22c.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -122,86 +123,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am Di., 17. M=C3=A4rz 2026 um 22:40 Uhr schrieb Peter Xu <peterx@redhat.com=
+Am Mi., 18. M=C3=A4rz 2026 um 00:30 Uhr schrieb Peter Xu <peterx@redhat.com=
 >:
 >
-> On Tue, Mar 17, 2026 at 11:27:02AM +0100, Alexander Mikhalitsyn wrote:
-> > From: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion.io>
-> >
-> > Add VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT{8, 32}_ALLOC, which
-> > helps to save/restore a dynamic array of pointers to
-> > structures.
-> >
-> > Suggested-by: Peter Xu <peterx@redhat.com>
-> > Signed-off-by: Alexander Mikhalitsyn <aleksandr.mikhalitsyn@futurfusion=
-.io>
-> > v2:
-> > - added VMSTATE_VARRAY_OF_POINTER_TO_STRUCT_UINT8_ALLOC
-> > v4:
-> > - almost completely reworked, new flag VMS_ARRAY_OF_POINTER_ALLOW_NULL
-> >   was introduced as suggested by Peter
-> > v5:
-> > - rebased on top of https://lore.kernel.org/all/20260304212303.667141-1=
--vsementsov@yandex-team.ru/
-> > ---
-> >  include/migration/vmstate.h | 77 ++++++++++++++++++++++++++++++-
-> >  migration/savevm.c          | 26 +++++++++++
-> >  migration/vmstate-types.c   | 91 +++++++++++++++++++++++++++++++++++++
-> >  migration/vmstate.c         | 54 ++++++++++++++++++----
-> >  4 files changed, 236 insertions(+), 12 deletions(-)
->
-> Hi, Alexander,
-
-Hi Peter,
-
->
-> Sorry for a late reply, I didn't reply to your previous version on patch =
-2
-> because I didn't yet get time to really review this patch. It took me som=
+> On Tue, Mar 17, 2026 at 05:39:54PM -0400, Peter Xu wrote:
+> > I'll likely send something very soon just to show what I meant, it'll b=
 e
-> time to figure out what's the best way to do this.  I still think it'll b=
-e
-> good to avoid introducing yet another info like what this patch did.  In
-> general, I want to see if we can reduce get()/put()/save()/load() rather
-> than adding more.
-
-It took a while for me too, and I've failed :D
-
+> > good if you can have a look at that when it comes.
 >
-> Meanwhile, there're small issues here and there I saw.
+> I've posted the series as RFC here:
 >
-> E.g. reusing ->start to cache the object size sounds too tricky.  I am
-> trying to figure out if we can always stick with ->size to store the obje=
-ct
-> size; I'll need some even pre-requisite patches though to convert some
-> existing VMS_ARRAY_OF_POINTER users to reserve the ->size field for that,
-> though.
+> https://lore.kernel.org/r/20260317232332.15209-1-peterx@redhat.com
 
-yep, it completely makes sense. I was using the same approach as we have fo=
-r
-QLIST/QTAILQ/GTREE, but I agree that it's a bit hacky.
+HUGE thanks for this, Peter!
 
->
-> The other thing is I had a gut feeling this patch may have issue on the
-> JSON blob dumped in the migration stream, via the JSONWriter* object pass=
-ed
-> into vmstate_save_vmsd_v().
->
-> All these made me feel like I'd better go prepare some RFC patches, becau=
-se
-> commenting will be too slow.
-
-sure, thank you!
-
->
-> I'll likely send something very soon just to show what I meant, it'll be
-> good if you can have a look at that when it comes.
+I've left my RWB and Tested-by tags on that series.
 
 Kind regards,
 Alex
 
->
-> Thanks,
 >
 > --
 > Peter Xu
