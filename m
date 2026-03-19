@@ -4,88 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3DABA109192F
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 70C881091931
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:32:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Mkx-000102-4A; Thu, 19 Mar 2026 19:26:23 -0400
+	id 1w3MqF-0008Ru-9X; Thu, 19 Mar 2026 19:31:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mkv-0000sv-4h
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:21 -0400
-Received: from mail-pl1-x629.google.com ([2607:f8b0:4864:20::629])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w3MqD-0008Rd-QQ
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:31:49 -0400
+Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mkt-0007ht-I9
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:20 -0400
-Received: by mail-pl1-x629.google.com with SMTP id
- d9443c01a7336-2b056b7f783so7079595ad.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:19 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w3MqB-0003IC-Cd
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:31:49 -0400
+Received: by mail-pl1-x62f.google.com with SMTP id
+ d9443c01a7336-2b0603ee486so10372665ad.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:31:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962778; x=1774567578; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=rk9qu+43yuAwQNmV+HOd24mU8ny8bR4PCXHORU3AcGI=;
- b=nd3SxwTFEz2RixrDv/348UglldLOTBaTjIoMAKwAryTk46OJAYzgiApZgEyyP5giQt
- fFWViMUQev7gMT+qXNG0svFFmnSgjLSCZTemQrW+vkdNcfabvSYd1W5NZFn1xis3AkVI
- dp2MGmsSkDlMaCH/B3U2YrJSZ6BYnoFJn8QL7q26UUq1VWxMntnF/CHQizkgZSILoi8u
- eWRKtnMo3DzsEVhs4n3A36kQwEhCmJcJCgRcIWz1hwwse/EFUvJgorOgSVXzFr4qsyDt
- 8cHTxOgcJ7pfdzhb7PDKPV3bfE/bz3HGZSfHEGFyoO42yG4ctQaWhLFQzzz66U2BaRoW
- 0ysg==
+ d=linaro.org; s=google; t=1773963106; x=1774567906; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ybx6zcDVa17XUYTeWE8lu+X+CZbyJZ6dwu788G/NCW0=;
+ b=pHsCDUigx7xiW8er1nWuQ36Z8EpR/3xxkiICKp1hOb886sC4QgGbTpBmVyaDbOhb6H
+ G475WnoqqrlIXf9t8CWB+skFoXQe9/tgX/Py8hiJga6wntEHKHmujG2e9NHHFlYIxvfE
+ i9rn44MM4qxtxi47Z/ns0fycca/e9rR+nTRgfLExvJBaKjiQCHjq60OVTKx2mWMXE++3
+ H0+KZJYN9icmYpfruj+w2lGSkWYrjXlFVS1Nw/7nDfE8D1HZ/2sdOAsFj6iXn6hyby1K
+ b33DcvRHwnQD/n4MmppiwDViuUzHq0nQJBlTTVe+TuU5FmKMDrMoEvHRfqUrcSX4rKBX
+ Zh4w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962778; x=1774567578;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=rk9qu+43yuAwQNmV+HOd24mU8ny8bR4PCXHORU3AcGI=;
- b=aBj1LnwP0EqQezJQNzia8/wM/83v0A4ynO6/ijsYYVHNdz/y1Bd67J1KrVELlD0slm
- hbEtrCwiFPuhk6HYVQeSJADUUQ9se+L0CdjarA6Pq4HCOiVgQtKiDJ/M/kbS6c3UYUdT
- wcAmKPzkMuEBOFu46IGTSnBjrx5Hi1LIECJC6YvY8X4UtYv2fq7226uL9P4VNSKlGjug
- hIgLx+ymO4Jub/AY8HmQMGFF2rpmSC9+eQSAc0XiJQZqP+TyYAeDitQyZmNyTH/PzGqv
- 4A5uCOrS8vbbt/+ArdXAHq/Vav39aPIooS+gZEaXWwniibVDPPfr+4Aq5Gk+sVHaN1J2
- f7Eg==
-X-Gm-Message-State: AOJu0YxrgqFb+ZTmzIjMSJsHXDrQ3P1K9QuFt8nyoH+kLnVMruL/hGtr
- So8a3mYMwXwpYjZJIB5VB4G7/qYew5bmzC2v3HENR9S9FaEBRamMyFMPw0/uNA==
-X-Gm-Gg: ATEYQzyD/k362tzI6mX5xFnAierx7xX9qrE+wyNBmjF/kRc5OijAUsIiBE7Br7humtv
- jUOhx2yhgjmxwgsYWbcDAaEUCpFcxRiF9udB1mRxmskLpO2mDX3ObZLpVW8pt14SSQx2tpZC8uM
- MfjfzP99la2+nLiSkEjNtaXEOjEqhCBXpRejxdKbdrt0k7Kw9ysx2oFUWdTu+54dKH5lAfSkHiL
- //XEnvNkMUalJJJz4ykwuqX1Jp0dfS3Hml8FjYxZhoickCZ6jWQP/TJADrKIavWrn0VFA6v1Ltp
- Oyi2Ngg0C6NZxY8oJ8kVsbVaq1UNEvn2i2+NdRr7oE4Ad3QrzNqIXMYKioCpVrPqlDEb3uTJ2/3
- vcGLj8Gik1122ndH9rLntz01dRWoER2oM7DRWjNTxFFNJRGZCEltD2C+bNNNH1kXTj3wZZQdIPt
- 23lcZUSswhtOj3Pp6JQdfG8rqkuW603H/vNfVXEZo6kA==
-X-Received: by 2002:a17:903:388d:b0:2ae:5346:d4e6 with SMTP id
- d9443c01a7336-2b07725f8cbmr51729315ad.28.1773962777687; 
- Thu, 19 Mar 2026 16:26:17 -0700 (PDT)
-Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.15
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:26:17 -0700 (PDT)
-From: alistair23@gmail.com
-X-Google-Original-From: alistair.francis@wdc.com
-To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 12/17] hw/char: sifive_uart: Sync txwm interrupt pending status
- after TX FIFO enqueue
-Date: Fri, 20 Mar 2026 09:25:17 +1000
-Message-ID: <20260319232522.1867400-13-alistair.francis@wdc.com>
-X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
-References: <20260319232522.1867400-1-alistair.francis@wdc.com>
+ d=1e100.net; s=20251104; t=1773963106; x=1774567906;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ybx6zcDVa17XUYTeWE8lu+X+CZbyJZ6dwu788G/NCW0=;
+ b=IAGR0I66DuZ8mYukWh29etNeNnYgaF9k9r1vl9kCevVa41bgFFS9D1XWmaXZ1iGaIY
+ jZTgJxsx5mXUNoyeaZB2cGGY2EUcKkPqhAnfSPU4RHJ5bHBOhePok+K9fVTokKVctngS
+ WUUWbAZ8bTeFfJpjHzmYLKuTUb1xU8S8d28Mui+edO6NOEcTApU2md/Vy1isDTjvpZ4o
+ ncGZpmR3xh55UN26gIfo62wAUA89fy0TpUFSozbvJGnXhNEnUsmwbysK44U07sz06mBK
+ ATLKGb4hDUsVlKRP0DEIqFYd11EAdGXGqMjaZkywQcXQ5aMVSVYloGupEqIO+zv4fF4o
+ EHvQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCVyARZ0nGD7vfzZa0mYodk2BqaXJE+WdnOyhvlrajiPlrkGKhcedHO6cOEsO8GmWrMZKu1J6IUbWGr7@nongnu.org
+X-Gm-Message-State: AOJu0YzjQB3ElDJFw1PWv5chK8dTxSncpHwqKLGhi11xzM8AEFavj0MR
+ 68wnECYkrouIQ4Ibblt8GiGoOOwCnJXu02l/U2W0XcEY04DB/PUVTz672DI/XIFQ/Lw=
+X-Gm-Gg: ATEYQzwBHmFmFgiRsOCLueR4cjrmLZehFXA/1Lii3vWuZc6S9T2iw3BZANVY7YNCQV4
+ kjfZcaYlDnEGhoBeB4L4uQACXUDtJkb/fsZQizYzzQ8XQiKxxoYRKObgjqt+xuFjjg2QfBsITwH
+ l7+Y/RC+AhycJnYMgnRBFtQBQ3TeULTFWuYf1CJt0iV8XCKLzNf8+kV9Ci2d9Uw/YMnsqGSjm3u
+ jLt/EM6hnljIQGrYUf7N8tjTVUoqSrn2d7TdZT3EZUar91tUTBPt4Jx/M3kD9DLgkGERLI0yN2J
+ PjZxegPsedNit0HpwCvDCUQkgBx9MqVkdO/jLEDdmkk8CaCLpMApWZd5l+m0LFFWnOnbi+g7ftw
+ xS+XmguJly6TytjXlzv6ivmXTtYXRc1QjW2X8wZe5KIfPFUBsOQSGMz20m/aIDMn0qDxZD9Mxgm
+ 1t8cICppbAVPSZOqFOiyOMzb3ttZTDd1jk0lc=
+X-Received: by 2002:a17:902:d510:b0:2b0:4eeb:f810 with SMTP id
+ d9443c01a7336-2b082769d79mr8656485ad.31.1773963105523; 
+ Thu, 19 Mar 2026 16:31:45 -0700 (PDT)
+Received: from [10.5.0.209] ([114.23.167.13]) by smtp.gmail.com with ESMTPSA id
+ d9443c01a7336-2b083655718sm2996525ad.39.2026.03.19.16.31.43
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Mar 2026 16:31:45 -0700 (PDT)
+Message-ID: <34ae8827-6bb4-4676-98ba-56c95c0c4bf1@linaro.org>
+Date: Fri, 20 Mar 2026 12:31:40 +1300
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x629.google.com
-X-Spam_score_int: -17
-X-Spam_score: -1.8
-X-Spam_bar: -
-X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+User-Agent: Mozilla Thunderbird
+Subject: Re: duplicating CPUs with memcpy() in cpu_copy() vs memory-allocated
+ things in CPUArchState structs
+To: Peter Maydell <peter.maydell@linaro.org>,
+ QEMU Developers <qemu-devel@nongnu.org>
+Cc: Laurent Vivier <Laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <CAFEAcA9QAyZjjj4kXeC+wM4gg_C+U6Z7McYGrB9u=C1PbiaWZw@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9QAyZjjj4kXeC+wM4gg_C+U6Z7McYGrB9u=C1PbiaWZw@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pl1-x62f.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -103,80 +106,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+On 3/6/26 06:47, Peter Maydell wrote:
+> There are a couple of ways I can see that we could try to fix this:
+> 
+> (A) We could insist that every target's CPUFooState (env struct)
+> must be shallow-copiable, and anything that isn't (pointers, etc)
+> needs to be moved out to its FOOCPU (QOM CPU object struct).
+> Then we could let targets implement any per-target copying specifics
+> in some function in linux-user/$ARCH/ that we call from cpu_copy()
+> after doing the memcpy(). This would be painful if there are any
+> targets that have something non shallow-copiable that they want
+> access to directly from generated code, which has the env pointer
+> but not the CPU object struct.
+> 
+> (B) We could standardize the "end_reset_fields" convention that
+> some targets have in their env struct, where an empty struct
+> marks the end of the point in the struct where fields can be
+> reset by zeroing them. If they can be reset by zeroing they can
+> also be safely shallow copied with memcpy(). We could then let the
+> target handle anything else via some target hook as above.
+> This would require a lot of targets having this field marker added,
+> which could be a pain if they don't have their structs ordered in
+> a convenient way for this.
+> 
+> (C) We could say that trying to write generic code that can
+> copy a target-specific structure is a fool's errand, and require
+> the targets to implement it entirely themselves (only copying the
+> stuff in the common CPU base class in common code). If a plain
+> memcpy() works for them then their implementation can be simple.
+> 
+> Any preferences ?
+The fixup function, as required by A and B, makes me prefer C.
 
-Currently, the txwm interrupt pending status is only updated when the
-asynchronous transmit handler runs. This can cause the txwm interrupt
-state to become unsynchronized between the SiFive UART and the
-interrupt controller.
+Surely it's clearer to have
 
-For example, when a txwm interrupt is raised, the corresponding APLIC
-pending bit is also set. However, if software later enqueues additional
-characters into the TX FIFO exceeding the transmit watermark, the
-APLIC pending bit may remain set because the txwm interrupt pending
-status is not updated at enqueue time.
+   cc->copy_env(new, old);
 
-This issue has been observed on resource-constrained machines, where
-Linux reports spurious IRQ errors. In these cases, the asynchronous
-transmit handler is unable to drain the TX FIFO quickly enough to update
-the txwm pending status before software reads the ip register, which
-derives the txwm pending state directly from the actual number of
-characters in the TX FIFO.
+than
 
-This commit fixes the issue by updating the txwm interrupt pending
-status immediately after enqueuing data into the TX FIFO, ensuring that
-the interrupt pending status between the SiFive UART and the interrupt
-controller remains synchronized.
+   memcpy(new, old, some_size);
+   cc->fixup_env(new);
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260312033201.1619554-3-frank.chang@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- hw/char/sifive_uart.c | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+especially with the computation of some_size containing some
+amount of target-specific peril.
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index 3ce6a4ee76..ae71a15a2a 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -124,12 +124,20 @@ static void sifive_uart_trigger_tx_fifo(SiFiveUARTState *s)
- static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-                                       int size)
- {
-+    uint32_t txcnt = SIFIVE_UART_GET_TXCNT(s->txctrl);
-+    bool update_irq = false;
-+
-     if (size > fifo8_num_free(&s->tx_fifo)) {
-         size = fifo8_num_free(&s->tx_fifo);
-         qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow.\n");
-     }
- 
-     if (size > 0) {
-+        if (fifo8_num_used(&s->tx_fifo) < txcnt &&
-+            (fifo8_num_used(&s->tx_fifo) + size) >= txcnt) {
-+            update_irq = true;
-+        }
-+
-         fifo8_push_all(&s->tx_fifo, buf, size);
-     }
- 
-@@ -137,6 +145,14 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-         s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
-     }
- 
-+    /*
-+     * Update txwm interrupt pending status when the number of entries
-+     * in the transmit FIFO crosses or reaches the watermark.
-+     */
-+    if (update_irq) {
-+        sifive_uart_update_irq(s);
-+    }
-+
-     sifive_uart_trigger_tx_fifo(s);
- }
- 
--- 
-2.53.0
 
+r~
 
