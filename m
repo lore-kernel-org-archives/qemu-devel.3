@@ -4,84 +4,94 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6AE8109190D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:30:01 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF72E1091904
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:31:16 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3I7Z-0005Aw-Gc; Thu, 19 Mar 2026 14:29:26 -0400
+	id 1w3I94-0005mP-C9; Thu, 19 Mar 2026 14:31:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1w3I7O-0005AB-VG
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:29:16 -0400
-Received: from mail-ot1-x336.google.com ([2607:f8b0:4864:20::336])
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3I8z-0005lw-00
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:30:54 -0400
+Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <corey@minyard.net>) id 1w3I7M-0007nG-Py
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:29:14 -0400
-Received: by mail-ot1-x336.google.com with SMTP id
- 46e09a7af769-7d4c383f2fcso938143a34.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 11:29:11 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3I8x-00006i-25
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:30:52 -0400
+Received: by mail-yx1-xb12a.google.com with SMTP id
+ 956f58d0204a3-64ad79dfb6eso1909138d50.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 11:30:50 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773945049; cv=none;
+ d=google.com; s=arc-20240605;
+ b=UeOXtqk+g4gOwrV8W74GAcWsX7j0J4vL0T2PkXA46gWRDO3yHYT1dyi0J9GwhJIL1r
+ mVH8Ugj74HVNR2Uf6/l3JB+Lvyf6GL2wCkZOrjQ3P/CdnV5SdnX+c1mrvq1Q+2WtYsD1
+ UbAm2zVWN1JN2BiRPph0jsc91SUegMQHGL9QwcztmEglms+jmrL/gsTNHnOA6f2BqZ54
+ iZjXD7uimznvIJCzuQbfmntvWi/tMoUxv6d36p6IWmg3d/lPELWdrDmhkmsYac7abSce
+ 7TbRA9WWAtduFE5k9YfjTPJA5XJsMJf+6bFT1tUJ3OOMcZV1/lABMjirWWmPLFxGDY8j
+ mHzQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=I8lcAC6tJVUUZKrDENyeBYATNzHzh4cCAFz/MtM/JQ4=;
+ fh=BNPn5plGW4iapFgomzvvXDa0mZylAFxlcZuJupMSfiQ=;
+ b=ObWyCKlDgUSlwT7HxTsyfJ2eOSm9KVogHLrGZm4A2L4LAR7xXQ7S57mIGng2aIWmNB
+ pJDKVBrBGCvCdBiaX3R1P508E1f4Umxh0k6PEX8N9GxkNqfq3hSFWiwFTH6hAewFEYi7
+ /I1NUwkYoLrrviGNMhznUisF4zJsw8/dOQF0LzvgXtt/u6zuYEUAFG8UPt0ymygZ7djb
+ Ftst94GpqAFg/du0iY8bXDUrlZLvKy96l92HG4GLC8dsK8LGfAphTQAIzzI0cnsfxjDK
+ fAVzgBAkvpvQKSeGQdEQj0oJvVtH8HEDFOR+MWzX4OqpBHN98vwsaPPB3gxShulnPSMQ
+ Ytfg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=minyard.net; s=google; t=1773944950; x=1774549750; darn=nongnu.org;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:from:to:cc:subject:date
- :message-id:reply-to;
- bh=1+GFDDuNZP9lpoEAedTFSRU5OOtTJHGoHb67dh2Gu+4=;
- b=cYdsYAMlCUfELWkovPvD65iUc6Eu0yThGvHEUlt6iozanRdn3OqwGpypPR5erK0/71
- rLSSYLP2FZNRA/UlvfwpajclTko82d5LWuMW4Ei5uq6Nffd1iHP0qqqxbCvcbenoNrut
- wOxhweAA8kKg3CDr6PSk4qFe3dSSbY2PLme2Div+IN9LFCjveBpL6+ghCu3u0BSuk7WZ
- kVDl70M/2GywJZiUIwnyCIYjlImFVl+aQpZZ2rtwNvm0he9534jZcIkmwyHAN0jWFbiL
- j9KRMfVnSLD/bkFrqXq4SnN1CsXjbdqViRLbjSX/PZ4Lqq1LuLP+loAN3kpA6D+jXySG
- fVqQ==
+ d=linaro.org; s=google; t=1773945049; x=1774549849; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=I8lcAC6tJVUUZKrDENyeBYATNzHzh4cCAFz/MtM/JQ4=;
+ b=YIpf8bUQWtRvcN3InmnHq2VAFlVbFLU7C56iZw1YZiWcFaNK77Z3CUtihhnTuP+Z5g
+ +HQpdrZQH8Bdx7zSRKQwv8FLK0Zs6gEtZKqy5j/yuGRoWPI1jycqKmpQz3uPThRCgECk
+ lsevGHcKfviSqVhMh7rF7Z+V7AUBS6URErAOo1bsMUkwFJN1jkGl23EklLUa3wskavmU
+ sfGObUDpr4UWBWobPNGjrWNY2r2oxPDOtw7esk40rpFXmZlR944Jqu+2TLgJNlp0qZ8k
+ an0xpp4wNnKLGhBRpny9peaGKJdkbQgHVmRUD2H/l0PZoimyCw9lbhoThg1BLPmhRDcL
+ tdAg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773944950; x=1774549750;
- h=in-reply-to:content-disposition:mime-version:references:reply-to
- :message-id:subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=1+GFDDuNZP9lpoEAedTFSRU5OOtTJHGoHb67dh2Gu+4=;
- b=b0GVAfkN7ppVGWPNk3GxUogEQmpmCMtJ5P9VCkbA3kVTJYdfUPIktWDL3e6bHDPKIf
- bWtZ7CijrijcTXd9KVoks5W3nE/PxuoYJNeWi8it2kjzviH2h7ksgkFZ38M2NjlDinPY
- EnOjJql0k/ohvbgca3dy892op/6awYwpGpgOJgV0X56WKAA/lrTlWXjL9q0VM8/BDltX
- yj19pJURKLfkoTLoVf9SnRS6wVcXpwgPXvFsOQsHm59qvO3bRRCh6+UXidyAGDqbjJEj
- uqNNGDtuFW2B1O2WM301pFhLPb5TVW4gOUtLJqCwxC+01Nm9BcJVwKDxjpDSqul01PzP
- db6Q==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUUwu4edrDb19UCyJNF9XzqUd00Y8huRRU0g6wKwk2SbSg0nZUwjcJXJ4VXsSD1uPTTWDIeuOHjkAJA@nongnu.org
-X-Gm-Message-State: AOJu0YwhQp9PTZr06WaBzt5l7BcLjLOLM2s8IOmWBddmW6jIXDZFyGN7
- m5pVl3xoOEXpThd1fNoLSiXUmLd8xnbYJLTFaqbCridVYCRZMi8juCV0TxcVhrtF5Ek=
-X-Gm-Gg: ATEYQzz/5IVoy0LN2uG0mycKwnZ49en2C5mewSDS4aHvMZX39cGz57jgebkRlTKrYJS
- +b2CrT0BjvfcNgqBC65iJbAPYXyzONAG+9Ks9j7EGoFVVO9evaDkhoWLBLABOO3oheVWV/Gs5eu
- VYABEN5VQZ+Cmt2BHhnT4EaOGd2Mlt+TkQORXOGAU3vNRHKAmIcVAnkO5e7YgR6ThXd0KAAmCYQ
- 0HAItqJUn2qW8gbZiTUkbkhg/PVlpVtZh5Zn1RpY6N1dc+D/GvIZW1LzphfSgB8CeqZqJdu3EVS
- Ef0Th968LjTGP8odgq25SeD7J1HX0+gxk7zErVPOxv+EB5Ye4+tWyP8DCoWqG1SdUy3tP7XVQTh
- WBN4ke9lijF7jC5V1WiTxNoi+jmgf0+NMnbbL9TW53sgYCwMpzvZXAdTkY+wZhZsruj96VWGEDo
- 6aSNkozDn6J3iEgt9s+fstBSN2koWYkZqxKqSm4LeoUsrxyONfuvLZJxwJrQ60opmX31XYwNrcV
- /Ner+kQ6Q/p2Js=
-X-Received: by 2002:a05:6830:270f:b0:7d7:e565:a4f7 with SMTP id
- 46e09a7af769-7d7eaf75cddmr144216a34.18.1773944950134; 
- Thu, 19 Mar 2026 11:29:10 -0700 (PDT)
-Received: from mail.minyard.net ([2001:470:b8f6:1b:c752:f4d5:810f:91b3])
- by smtp.gmail.com with ESMTPSA id
- 46e09a7af769-7d7eac2dffbsm169191a34.10.2026.03.19.11.29.09
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 11:29:09 -0700 (PDT)
-Date: Thu, 19 Mar 2026 13:29:05 -0500
-From: Corey Minyard <corey@minyard.net>
-To: Peter Maydell <peter.maydell@linaro.org>
-Cc: Trieu Huynh <vikingtc4@gmail.com>, qemu-devel@nongnu.org,
- Corey Minyard <minyard@acm.org>
-Subject: Re: [PATCH v3 2/4] hw/core/loader: fix error handling for
- get_image_size callers
-Message-ID: <abxAcZs2hXzFPKor@mail.minyard.net>
-References: <20260318141415.8538-1-vikingtc4@gmail.com>
- <20260318141415.8538-3-vikingtc4@gmail.com>
- <CAFEAcA8pktQGG5Fd-F=0SRO9MTrC0GVcOf3p8BnneqG3F504xw@mail.gmail.com>
+ d=1e100.net; s=20251104; t=1773945049; x=1774549849;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=I8lcAC6tJVUUZKrDENyeBYATNzHzh4cCAFz/MtM/JQ4=;
+ b=aMb4ikkjmIciFZ2EB20+c4T9ewQB8DvksFNFFfYK4S+OOh27nwTDBrHlQ+OsQS/Zby
+ b+Gk71NMIgEgiTRMwReA9wUFl6uSIVv0NKyQl+MxvOCAfBwO/C/kxmS5n7Vc4+Sb9x6G
+ vXVWVYTRppg3MOa1QwqkhlS9fqDRoFs1fD8ZOjZDcX5cNFt6iqTP36xdebxQiTh1V5oq
+ AfTz7RWkQSUjyJ7wUp5HL9Y2FMvdiOeht3QoKAC5SCD7XJctuENkinyalGVH5jgj38n5
+ hM0L+Rp4EdsEE6pBpUcL07cuhdACVy6vCXuRuyXJr8Xln0ZV5KXSdaAw0GHssKWF/tMj
+ fTAA==
+X-Gm-Message-State: AOJu0YwSwUWk5Z97yBC5vLJpW6PrdtdTN5HzrHCHjuY6GGcpTkUSQrj8
+ Z4dTYVKTF1x7S+A1ESQlwETkyaRoXqPGrIlsph22C1HRfQG3j9zQVtX/obFdVZsESC8KfAfGcnB
+ +fBZaqEWtFGBu4DZ65AQrYpGlxS1uWYCan7NM+fHW1Q==
+X-Gm-Gg: ATEYQzwgSou+zBizOwXyfengF0zKNJhGE83VPdymdqliGMp85HCeGkefdwC1Kr2DGAU
+ F3NceImf3qhCtuB3u5RfAAnlSKhlR0rJW6ou5r3vXwzKiuun8d5s2F0Bc8jnj+hxIObq67tozjK
+ 7xZ/wMR9piUv7Af0R5viHJcm1zfC1Qm8Ff9XfqsffVSyPrWj3+yMGVnxVNFV/SGtj6tgHWoNKJc
+ vPINtChcRgaTSHWJBBp1zknc6GDZTueHy9fOCfJNuJ1H7XFiQztlv5pqbB/OyW3LkEfgnENEPtR
+ NT7RcmE8zGhUWhqp1g98alYG4FdUfgRWMdvhtpGc+c27uIalK0Dc2cD4YKm35h5yWB8rgoepB+U
+ 9Lg==
+X-Received: by 2002:a53:bdd0:0:b0:64e:9dc7:90b3 with SMTP id
+ 956f58d0204a3-64eaa7ab875mr461610d50.39.1773945049247; Thu, 19 Mar 2026
+ 11:30:49 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAFEAcA8pktQGG5Fd-F=0SRO9MTrC0GVcOf3p8BnneqG3F504xw@mail.gmail.com>
-Received-SPF: pass client-ip=2607:f8b0:4864:20::336;
- envelope-from=corey@minyard.net; helo=mail-ot1-x336.google.com
+References: <20260317095216.25877-1-shyliuli@aosc.io>
+In-Reply-To: <20260317095216.25877-1-shyliuli@aosc.io>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Mar 2026 18:30:37 +0000
+X-Gm-Features: AaiRm53TBYR14g0I76EYwSMWO4mE3X-9o_JYOBmZ3i4fW6322qEcrKxNMnI0Q3c
+Message-ID: <CAFEAcA_aqQ2Bd7fqm3XaCGb0chHjmxLmh79NTtJmLCrgQriQrg@mail.gmail.com>
+Subject: Re: [PATCH] linux-user: update ppoll/pselect6 timeout on EINTR
+To: Sun Haoyu <shyliuli@aosc.io>
+Cc: qemu-devel@nongnu.org, laurent@vivier.eu, pierrick.bouvier@linaro.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -101,47 +111,40 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-To: corey@minyard.net
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 19, 2026 at 06:04:33PM +0000, Peter Maydell wrote:
-> On Wed, 18 Mar 2026 at 14:15, Trieu Huynh <vikingtc4@gmail.com> wrote:
-> >
-> > Check the return value of get_image_size() and report failures
-> > for non-mandatory file such as FRU image.
+On Tue, 17 Mar 2026 at 09:52, Sun Haoyu <shyliuli@aosc.io> wrote:
+>
+> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3343
+>
+> Linux kernel writes back the remaining timeout when raw ppoll/pselect6
+> syscalls are interrupted by signals (-EINTR).
+>
+> However, QEMU keeps the original timeout and loses the remaining time.
+>
+> Both do_ppoll() and do_pselect6() now write back the timeout on -EINTR
+> to match the kernel.
+>
+> Tested with the issue reproducer.
 
-Yes, this makes sense.  You want to do this through my tree, or do you
-have another way you want to get it in?
+Hi; thanks for sending in this patch. I have a couple of thoughts:
 
--corey
+(1) if you look at the Linux kernel code for select/pselect/etc,
+it doesn't actually make the "update the timespec" handling
+specific to "operation succeeded or hit EINTR", it just does
+it unconditionally:
+https://elixir.bootlin.com/linux/v6.19.8/source/fs/select.c#L295
+So I think we could do that too. (There are some early-exit
+error cases where the host kernel doesn't get as far as
+calling poll_select_finish(), but for those the timespec
+struct won't have been changed by the host kernel. So it
+will be harmless that we round-tripped it through the
+target_to_host_foo and host_to_target_foo conversions.)
 
-> >
-> > - Use ret < 0 to detect failures in getting image size.
-> > - No functional changes.
-> >
-> > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
-> > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> > ---
-> >  hw/ipmi/ipmi_bmc_sim.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> >
-> > diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-> > index 012e2ee4fe..fd875491f5 100644
-> > --- a/hw/ipmi/ipmi_bmc_sim.c
-> > +++ b/hw/ipmi/ipmi_bmc_sim.c
-> > @@ -2561,6 +2561,8 @@ static void ipmi_fru_init(IPMIFru *fru)
-> >              g_free(fru->data);
-> >              fru->data = NULL;
-> >          }
-> > +    } else {
-> > +        error_report("Could not get file size '%s'", fru->filename);
-> >      }
-> >
-> >  out:
-> 
-> Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-> 
-> thanks
-> -- PMM
+(2) this patch handles pselect6() and ppoll(), but do
+we also need to do this in do_select() ?
+
+thanks
+-- PMM
 
