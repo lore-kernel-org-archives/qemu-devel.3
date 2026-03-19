@@ -4,101 +4,70 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF72E1091904
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:31:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 52A89109190D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:35:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3I94-0005mP-C9; Thu, 19 Mar 2026 14:31:00 -0400
+	id 1w3ID1-0006di-HV; Thu, 19 Mar 2026 14:35:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3I8z-0005lw-00
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:30:54 -0400
-Received: from mail-yx1-xb12a.google.com ([2607:f8b0:4864:20::b12a])
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1w3ICz-0006cC-0g; Thu, 19 Mar 2026 14:35:01 -0400
+Received: from mail.weilnetz.de ([37.120.169.71]
+ helo=mail.v2201612906741603.powersrv.de)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3I8x-00006i-25
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:30:52 -0400
-Received: by mail-yx1-xb12a.google.com with SMTP id
- 956f58d0204a3-64ad79dfb6eso1909138d50.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 11:30:50 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773945049; cv=none;
- d=google.com; s=arc-20240605;
- b=UeOXtqk+g4gOwrV8W74GAcWsX7j0J4vL0T2PkXA46gWRDO3yHYT1dyi0J9GwhJIL1r
- mVH8Ugj74HVNR2Uf6/l3JB+Lvyf6GL2wCkZOrjQ3P/CdnV5SdnX+c1mrvq1Q+2WtYsD1
- UbAm2zVWN1JN2BiRPph0jsc91SUegMQHGL9QwcztmEglms+jmrL/gsTNHnOA6f2BqZ54
- iZjXD7uimznvIJCzuQbfmntvWi/tMoUxv6d36p6IWmg3d/lPELWdrDmhkmsYac7abSce
- 7TbRA9WWAtduFE5k9YfjTPJA5XJsMJf+6bFT1tUJ3OOMcZV1/lABMjirWWmPLFxGDY8j
- mHzQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=I8lcAC6tJVUUZKrDENyeBYATNzHzh4cCAFz/MtM/JQ4=;
- fh=BNPn5plGW4iapFgomzvvXDa0mZylAFxlcZuJupMSfiQ=;
- b=ObWyCKlDgUSlwT7HxTsyfJ2eOSm9KVogHLrGZm4A2L4LAR7xXQ7S57mIGng2aIWmNB
- pJDKVBrBGCvCdBiaX3R1P508E1f4Umxh0k6PEX8N9GxkNqfq3hSFWiwFTH6hAewFEYi7
- /I1NUwkYoLrrviGNMhznUisF4zJsw8/dOQF0LzvgXtt/u6zuYEUAFG8UPt0ymygZ7djb
- Ftst94GpqAFg/du0iY8bXDUrlZLvKy96l92HG4GLC8dsK8LGfAphTQAIzzI0cnsfxjDK
- fAVzgBAkvpvQKSeGQdEQj0oJvVtH8HEDFOR+MWzX4OqpBHN98vwsaPPB3gxShulnPSMQ
- Ytfg==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773945049; x=1774549849; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=I8lcAC6tJVUUZKrDENyeBYATNzHzh4cCAFz/MtM/JQ4=;
- b=YIpf8bUQWtRvcN3InmnHq2VAFlVbFLU7C56iZw1YZiWcFaNK77Z3CUtihhnTuP+Z5g
- +HQpdrZQH8Bdx7zSRKQwv8FLK0Zs6gEtZKqy5j/yuGRoWPI1jycqKmpQz3uPThRCgECk
- lsevGHcKfviSqVhMh7rF7Z+V7AUBS6URErAOo1bsMUkwFJN1jkGl23EklLUa3wskavmU
- sfGObUDpr4UWBWobPNGjrWNY2r2oxPDOtw7esk40rpFXmZlR944Jqu+2TLgJNlp0qZ8k
- an0xpp4wNnKLGhBRpny9peaGKJdkbQgHVmRUD2H/l0PZoimyCw9lbhoThg1BLPmhRDcL
- tdAg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773945049; x=1774549849;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=I8lcAC6tJVUUZKrDENyeBYATNzHzh4cCAFz/MtM/JQ4=;
- b=aMb4ikkjmIciFZ2EB20+c4T9ewQB8DvksFNFFfYK4S+OOh27nwTDBrHlQ+OsQS/Zby
- b+Gk71NMIgEgiTRMwReA9wUFl6uSIVv0NKyQl+MxvOCAfBwO/C/kxmS5n7Vc4+Sb9x6G
- vXVWVYTRppg3MOa1QwqkhlS9fqDRoFs1fD8ZOjZDcX5cNFt6iqTP36xdebxQiTh1V5oq
- AfTz7RWkQSUjyJ7wUp5HL9Y2FMvdiOeht3QoKAC5SCD7XJctuENkinyalGVH5jgj38n5
- hM0L+Rp4EdsEE6pBpUcL07cuhdACVy6vCXuRuyXJr8Xln0ZV5KXSdaAw0GHssKWF/tMj
- fTAA==
-X-Gm-Message-State: AOJu0YwSwUWk5Z97yBC5vLJpW6PrdtdTN5HzrHCHjuY6GGcpTkUSQrj8
- Z4dTYVKTF1x7S+A1ESQlwETkyaRoXqPGrIlsph22C1HRfQG3j9zQVtX/obFdVZsESC8KfAfGcnB
- +fBZaqEWtFGBu4DZ65AQrYpGlxS1uWYCan7NM+fHW1Q==
-X-Gm-Gg: ATEYQzwgSou+zBizOwXyfengF0zKNJhGE83VPdymdqliGMp85HCeGkefdwC1Kr2DGAU
- F3NceImf3qhCtuB3u5RfAAnlSKhlR0rJW6ou5r3vXwzKiuun8d5s2F0Bc8jnj+hxIObq67tozjK
- 7xZ/wMR9piUv7Af0R5viHJcm1zfC1Qm8Ff9XfqsffVSyPrWj3+yMGVnxVNFV/SGtj6tgHWoNKJc
- vPINtChcRgaTSHWJBBp1zknc6GDZTueHy9fOCfJNuJ1H7XFiQztlv5pqbB/OyW3LkEfgnENEPtR
- NT7RcmE8zGhUWhqp1g98alYG4FdUfgRWMdvhtpGc+c27uIalK0Dc2cD4YKm35h5yWB8rgoepB+U
- 9Lg==
-X-Received: by 2002:a53:bdd0:0:b0:64e:9dc7:90b3 with SMTP id
- 956f58d0204a3-64eaa7ab875mr461610d50.39.1773945049247; Thu, 19 Mar 2026
- 11:30:49 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <stefan@weilnetz.de>)
+ id 1w3ICw-0003TD-KS; Thu, 19 Mar 2026 14:35:00 -0400
+Received: from qemu.weilnetz.de (qemu.weilnetz.de [188.68.58.204])
+ by mail.v2201612906741603.powersrv.de (Postfix) with ESMTP id EEEBEDA03EE;
+ Thu, 19 Mar 2026 19:34:53 +0100 (CET)
+Authentication-Results: mail.v2201612906741603.powersrv.de; dkim=none;
+ spf=temperror (mail.v2201612906741603.powersrv.de: error in processing during
+ lookup of stefan@weilnetz.de: DNS error) smtp.mailfrom=stefan@weilnetz.de
+Received: by qemu.weilnetz.de (Postfix, from userid 1000)
+ id C5F23460028; Thu, 19 Mar 2026 19:34:53 +0100 (CET)
+To: =?UTF-8?q?Alex=20Benn=C3=A9e?= <alex.bennee@linaro.org>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Alexandre Iooss <erdnaxe@crans.org>,
+ Mahmoud Mandour <ma.mandourr@gmail.com>,
+ Peter Maydell <peter.maydell@linaro.org>, Eric Blake <eblake@redhat.com>,
+ Markus Armbruster <armbru@redhat.com>, Kevin Wolf <kwolf@redhat.com>,
+ Hanna Reitz <hreitz@redhat.com>, John Snow <jsnow@redhat.com>
+Cc: qemu-arm@nongnu.org, qemu-block@nongnu.org, qemu-devel@nongnu.org,
+ qemu-trivial@nongnu.org, Stefan Weil <sw@weilnetz.de>
+Subject: [PATCH for-11.0] Fix several typos in documentation (found by
+ codespell)
+Date: Thu, 19 Mar 2026 19:34:53 +0100
+Message-ID: <20260319183453.100545-1-sw@weilnetz.de>
+X-Mailer: git-send-email 2.47.3
 MIME-Version: 1.0
-References: <20260317095216.25877-1-shyliuli@aosc.io>
-In-Reply-To: <20260317095216.25877-1-shyliuli@aosc.io>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Mar 2026 18:30:37 +0000
-X-Gm-Features: AaiRm53TBYR14g0I76EYwSMWO4mE3X-9o_JYOBmZ3i4fW6322qEcrKxNMnI0Q3c
-Message-ID: <CAFEAcA_aqQ2Bd7fqm3XaCGb0chHjmxLmh79NTtJmLCrgQriQrg@mail.gmail.com>
-Subject: Re: [PATCH] linux-user: update ppoll/pselect6 timeout on EINTR
-To: Sun Haoyu <shyliuli@aosc.io>
-Cc: qemu-devel@nongnu.org, laurent@vivier.eu, pierrick.bouvier@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12a;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12a.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Transfer-Encoding: 8bit
+X-Rspamd-Server: v2201612906741603
+X-Rspamd-Queue-Id: EEEBEDA03EE
+X-Spamd-Bar: /
+X-Spamd-Result: default: False [0.50 / 12.00]; BAYES_HAM(-3.00)[100.00%];
+ SUSPICIOUS_RECIPS(1.50)[]; MID_CONTAINS_FROM(1.00)[];
+ R_MISSING_CHARSET(0.50)[];
+ FORGED_SENDER(0.30)[sw@weilnetz.de,stefan@weilnetz.de];
+ ONCE_RECEIVED(0.20)[]; MIME_GOOD(-0.10)[text/plain];
+ RCVD_NO_TLS_LAST(0.10)[]; FREEMAIL_ENVRCPT(0.00)[gmail.com];
+ RCVD_COUNT_ONE(0.00)[1]; FROM_HAS_DN(0.00)[];
+ MIME_TRACE(0.00)[0:+]; RCPT_COUNT_TWELVE(0.00)[15];
+ TO_MATCH_ENVRCPT_ALL(0.00)[]; ARC_NA(0.00)[];
+ R_SPF_DNSFAIL(0.00)[DNS failed]; R_DKIM_NA(0.00)[];
+ FROM_NEQ_ENVFROM(0.00)[sw@weilnetz.de,stefan@weilnetz.de];
+ TO_DN_SOME(0.00)[]; TAGGED_RCPT(0.00)[];
+ FREEMAIL_TO(0.00)[linaro.org,crans.org,gmail.com,redhat.com]
+X-Rspamd-Action: no action
+Received-SPF: pass client-ip=37.120.169.71; envelope-from=stefan@weilnetz.de;
+ helo=mail.v2201612906741603.powersrv.de
+X-Spam_score_int: -1
+X-Spam_score: -0.2
+X-Spam_bar: /
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -111,40 +80,236 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Stefan Weil <sw@weilnetz.de>
+From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Mar 2026 at 09:52, Sun Haoyu <shyliuli@aosc.io> wrote:
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/work_items/3343
->
-> Linux kernel writes back the remaining timeout when raw ppoll/pselect6
-> syscalls are interrupted by signals (-EINTR).
->
-> However, QEMU keeps the original timeout and loses the remaining time.
->
-> Both do_ppoll() and do_pselect6() now write back the timeout on -EINTR
-> to match the kernel.
->
-> Tested with the issue reproducer.
+Signed-off-by: Stefan Weil <sw@weilnetz.de>
 
-Hi; thanks for sending in this patch. I have a couple of thoughts:
+These typos are part of the generated documentation.
+Therefore they should be fixed in the new release.
 
-(1) if you look at the Linux kernel code for select/pselect/etc,
-it doesn't actually make the "update the timespec" handling
-specific to "operation succeeded or hit EINTR", it just does
-it unconditionally:
-https://elixir.bootlin.com/linux/v6.19.8/source/fs/select.c#L295
-So I think we could do that too. (There are some early-exit
-error cases where the host kernel doesn't get as far as
-calling poll_select_finish(), but for those the timespec
-struct won't have been changed by the host kernel. So it
-will be harmless that we round-tripped it through the
-target_to_host_foo and host_to_target_foo conversions.)
+More typos can be found in the remaining code, mostly in comments.
 
-(2) this patch handles pselect6() and ppoll(), but do
-we also need to do this in do_select() ?
+Regards,
+Stefan
 
-thanks
--- PMM
+---
+ contrib/plugins/traps.c        | 2 +-
+ docs/about/emulation.rst       | 2 +-
+ docs/devel/code-provenance.rst | 4 ++--
+ docs/system/tls.rst            | 8 ++++----
+ hw/arm/virt.c                  | 2 +-
+ include/hw/arm/virt.h          | 2 +-
+ include/plugins/qemu-plugin.h  | 2 +-
+ qapi/block-core.json           | 6 +++---
+ qapi/job.json                  | 2 +-
+ qapi/uefi.json                 | 2 +-
+ qemu-options.hx                | 4 ++--
+ 11 files changed, 18 insertions(+), 18 deletions(-)
+
+diff --git a/contrib/plugins/traps.c b/contrib/plugins/traps.c
+index d5ddc0f3dd..a741580fbf 100644
+--- a/contrib/plugins/traps.c
++++ b/contrib/plugins/traps.c
+@@ -4,7 +4,7 @@
+  *
+  * Traps - count traps
+  *
+- * Count the number of interrupts (asyncronous events), exceptions (synchronous
++ * Count the number of interrupts (asynchronous events), exceptions (synchronous
+  * events) and host calls (e.g. semihosting) per cpu and report those counts on
+  * exit.
+  */
+diff --git a/docs/about/emulation.rst b/docs/about/emulation.rst
+index 76c6ea92ca..469f31bab6 100644
+--- a/docs/about/emulation.rst
++++ b/docs/about/emulation.rst
+@@ -1043,7 +1043,7 @@ Count traps
+ 
+ ``contrib/plugins/traps.c``
+ 
+-This plugin counts the number of interrupts (asyncronous events), exceptions
++This plugin counts the number of interrupts (asynchronous events), exceptions
+ (synchronous events) and host calls (e.g. semihosting) per cpu.
+ 
+ Other emulation features
+diff --git a/docs/devel/code-provenance.rst b/docs/devel/code-provenance.rst
+index 8cdc56f664..4e6a9afe0d 100644
+--- a/docs/devel/code-provenance.rst
++++ b/docs/devel/code-provenance.rst
+@@ -213,7 +213,7 @@ The general principles when picking up abandoned work are:
+  * Indicate where the original patch was obtained from (mailing list, bug
+    tracker, author's git repo, etc) when sending it for review
+  * Acknowledge the extra work of the new contributor by including their
+-   ``Signed-off-by`` in the patch in addition to the orignal author's
++   ``Signed-off-by`` in the patch in addition to the original author's
+  * Indicate who is responsible for what parts of the patch. This is typically
+    done via a note in the commit message, just prior to the new contributor's
+    ``Signed-off-by``::
+@@ -259,7 +259,7 @@ process. A non-exhaustive list of examples is:
+    container images from a clean git checkout.
+ 
+  * eBPF: QEMU includes some generated eBPF machine code, since the required
+-   eBPF compilation tools are not broadly available on all targetted OS
++   eBPF compilation tools are not broadly available on all targeted OS
+    distributions. The corresponding eBPF C code for the binary is also
+    provided. This is a time-limited exception until the eBPF toolchain is
+    sufficiently broadly available in distros.
+diff --git a/docs/system/tls.rst b/docs/system/tls.rst
+index 03fa1d8166..477ec7dcd1 100644
+--- a/docs/system/tls.rst
++++ b/docs/system/tls.rst
+@@ -76,10 +76,10 @@ loaded certificate will preferred. IOW file naming can influence
+ which certificates are used for a session.
+ 
+ The use of multiple sets of certificates is intended to allow an
+-incremental transition to certificates using different crytographic
++incremental transition to certificates using different cryptographic
+ algorithms. This allows a newly deployed QEMU to introduce use of
+ stronger cryptographic algorithms that will be preferred when talking
+-to other newly deployed QEMU instances, while retaining compatbility
++to other newly deployed QEMU instances, while retaining compatibility
+ with certificates issued to a historically deployed QEMU. This is
+ notably useful to support live migration from an old QEMU deployed
+ on older operating system releases, which may support fewer crypto
+@@ -350,7 +350,7 @@ TLS certificates for Post-Quantum Cryptography
+ 
+ Given a new enough gnutls release, suitably integrated & configured with the
+ operating system crypto policies, QEMU is able to support post-quantum
+-crytography on TLS enabled services, either exclusively or in a hybrid mode.
++cryptography on TLS enabled services, either exclusively or in a hybrid mode.
+ 
+ In exclusive mode, only a single set of certificates need to be configured
+ for QEMU, with PQC compliant algorithms. Such a QEMU configuration will only
+@@ -404,7 +404,7 @@ Force disabling PQC via crypto priority
+ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ 
+ In the OS configuration for system crypto algorithm priorities has
+-enabled PQC, this can (optionally) be overriden in QEMU configuration
++enabled PQC, this can (optionally) be overridden in QEMU configuration
+ disable use of PQC using the ``priority`` parameter to the ``tls-creds-x509``
+ object::
+ 
+diff --git a/hw/arm/virt.c b/hw/arm/virt.c
+index 7456614d05..26fef92158 100644
+--- a/hw/arm/virt.c
++++ b/hw/arm/virt.c
+@@ -2784,7 +2784,7 @@ static void virt_set_msi(Object *obj, const char *value, Error **errp)
+     VirtMachineState *vms = VIRT_MACHINE(obj);
+ 
+     if (!strcmp(value, "auto")) {
+-        vms->msi_controller = VIRT_MSI_CTRL_AUTO; /* Will be overriden later */
++        vms->msi_controller = VIRT_MSI_CTRL_AUTO; /* Will be overridden later */
+     } else if (!strcmp(value, "its")) {
+         vms->msi_controller = VIRT_MSI_CTRL_ITS;
+     } else if (!strcmp(value, "gicv2m")) {
+diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
+index dba8ac7f2f..5fcbd1c76f 100644
+--- a/include/hw/arm/virt.h
++++ b/include/hw/arm/virt.h
+@@ -101,7 +101,7 @@ typedef enum VirtIOMMUType {
+ 
+ typedef enum VirtMSIControllerType {
+     VIRT_MSI_CTRL_NONE,
+-    /* This value is overriden at runtime.*/
++    /* This value is overridden at runtime.*/
+     VIRT_MSI_CTRL_AUTO,
+     /* Legacy option: its=off provides a GICv2m when using GICv2 */
+     VIRT_MSI_LEGACY_OPT_ITS_OFF,
+diff --git a/include/plugins/qemu-plugin.h b/include/plugins/qemu-plugin.h
+index 9e4e40acee..2ce7a7fb6c 100644
+--- a/include/plugins/qemu-plugin.h
++++ b/include/plugins/qemu-plugin.h
+@@ -1125,7 +1125,7 @@ bool qemu_plugin_read_register(struct qemu_plugin_register *handle,
+  * Attempting to write a register with @buf smaller than the register size
+  * will result in a crash or other undesired behavior.
+  *
+- * Returns true on sucess, false on failure.
++ * Returns true on success, false on failure.
+  */
+ QEMU_PLUGIN_API
+ bool qemu_plugin_write_register(struct qemu_plugin_register *handle,
+diff --git a/qapi/block-core.json b/qapi/block-core.json
+index f8d446b3d6..e8adaaea34 100644
+--- a/qapi/block-core.json
++++ b/qapi/block-core.json
+@@ -3122,7 +3122,7 @@
+ # the device to write to the target path only.  Note that drive
+ # mirroring includes `drive-mirror`, `blockdev-mirror` and
+ # `block-commit` job (only in case of "active commit", when the node
+-# being commited is used by the guest).  The ability to complete is
++# being committed is used by the guest).  The ability to complete is
+ # signaled with a `BLOCK_JOB_READY` event.
+ #
+ # This command completes an active background block operation
+@@ -5086,14 +5086,14 @@
+ ##
+ # @blockdev-set-active:
+ #
+-# Activate or inactivate a block device.  Use this to manage the
++# Activate or deactivate a block device.  Use this to manage the
+ # handover of block devices on migration with qemu-storage-daemon.
+ #
+ # Activating a node automatically activates all of its child nodes
+ # first.  Inactivating a node automatically inactivates any of its
+ # child nodes that are not in use by a still active node.
+ #
+-# @node-name: Name of the graph node to activate or inactivate.  By
++# @node-name: Name of the graph node to activate or deactivate.  By
+ #     default, all nodes are affected by the operation.
+ #
+ # @active: true if the nodes should be active when the command returns
+diff --git a/qapi/job.json b/qapi/job.json
+index 0a301fc094..31618e6ebc 100644
+--- a/qapi/job.json
++++ b/qapi/job.json
+@@ -196,7 +196,7 @@
+ # the device to write to the target path only.  Note that drive
+ # mirroring includes `drive-mirror`, `blockdev-mirror` and
+ # `block-commit` job (only in case of "active commit", when the node
+-# being commited is used by the guest).  The ability to complete is
++# being committed is used by the guest).  The ability to complete is
+ # signaled with a `BLOCK_JOB_READY` event.
+ #
+ # This command completes an active background block operation
+diff --git a/qapi/uefi.json b/qapi/uefi.json
+index a206c2e953..86f33b234b 100644
+--- a/qapi/uefi.json
++++ b/qapi/uefi.json
+@@ -18,7 +18,7 @@
+ ##
+ # @UefiVariable:
+ #
+-# UEFI Variable.  Check the UEFI specifification for more detailed
++# UEFI Variable.  Check the UEFI specification for more detailed
+ # information on the fields.
+ #
+ # @guid: variable namespace GUID
+diff --git a/qemu-options.hx b/qemu-options.hx
+index 69e5a874c1..b58097d864 100644
+--- a/qemu-options.hx
++++ b/qemu-options.hx
+@@ -3223,7 +3223,7 @@ SRST
+         Enable/disable list in DHCP/DHCPv6/NDP
+ 
+     ``map-host-loopback``
+-        Addresse to refer to host
++        Address to refer to host
+ 
+     ``map-guest-addr``
+         Addr to translate to guest's address
+@@ -3272,7 +3272,7 @@ SRST
+ 
+     ``param=string``
+          ``string`` will be passed to passt has a command line parameter,
+-         we can have multiple occurences of the ``param`` parameter to
++         we can have multiple occurrences of the ``param`` parameter to
+          pass multiple parameters to passt.
+ 
+          For instance, to pass ``--trace --log=trace.log``:
+-- 
+2.47.3
+
 
