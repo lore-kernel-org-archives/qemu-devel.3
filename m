@@ -4,126 +4,109 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DC45E1091916
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 21:28:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D81F81091916
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 21:58:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Ktv-0006JA-IB; Thu, 19 Mar 2026 17:27:31 -0400
+	id 1w3LN9-0003uz-Ii; Thu, 19 Mar 2026 17:57:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3Ktu-0006Ho-AR
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 17:27:30 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3Kts-00077H-QS
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 17:27:30 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2ad617d5b80so9007865ad.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 14:27:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w3LN6-0003uq-PL
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 17:57:40 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w3LN4-0000W1-8p
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 17:57:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773957456;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=wgqHUiJcvYdLMjjaVW9eK3o7UDSHGms+p0DJcy6Wa9U=;
+ b=Hz4380JuJDW1jM1BFcUzlbq5DsQ6C+IyryzrlmJmm4QUgVEjuUpQ7PISBGimnbBxALz4qk
+ Mu5qpN/EuR3064GB0AxDO4A2SwZ6VEF1j67cY/rLV6NJsiuja+CRTYVYEFUHQeKQj0dzbO
+ pBCjCToAlzk9d6hy9z+39twt8oHYSZ4=
+Received: from mail-qk1-f199.google.com (mail-qk1-f199.google.com
+ [209.85.222.199]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-689-Yn2kWrTTN86gaOGx12G_Ew-1; Thu, 19 Mar 2026 17:57:35 -0400
+X-MC-Unique: Yn2kWrTTN86gaOGx12G_Ew-1
+X-Mimecast-MFC-AGG-ID: Yn2kWrTTN86gaOGx12G_Ew_1773957454
+Received: by mail-qk1-f199.google.com with SMTP id
+ af79cd13be357-8cfba9b4eb3so681887585a.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 14:57:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773955647; x=1774560447; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=JSu9iJ+Ai+uTxKLZdU7fFZp7WivAO2Q5DSXtiW2wbgc=;
- b=X8msKMmy84qTcjl1RyxDxMg70p9sQrb1ETvIMSpbujk1b769rzc+Jd8FLY0+wOd8so
- P3GHncYDGyW3mJ9UMK/JrPqDV5qJgUVAWjlh2w3/DvvnHAjN4ET+SJstsuXzzxt7ZGgl
- mYKAkhWnB2Arrp9AP65qusWSiIyY3key7EwSCLBrQkESEvIe5TkDPLJtQnkVaoeVEH6z
- 8q0FIOJZBf6rrqMBbHJ1tD4EI6c8zZ/QgpUZEdYxiu80BGNRTSmNLCDdWVXKsbNVqaGq
- 2gPnwsAkKWVYLE/jTzujle8EN+qXk7J44JWxNelY7RWX2xzBOV4EoKFWI6m416IF98yc
- 60nQ==
+ d=redhat.com; s=google; t=1773957454; x=1774562254; darn=nongnu.org;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:from:to:cc:subject:date:message-id:reply-to;
+ bh=wgqHUiJcvYdLMjjaVW9eK3o7UDSHGms+p0DJcy6Wa9U=;
+ b=bFRVu6wYpCU7Qp1rWoQ8yto8cG0ZdFznWcHoGTrv3EI/oJ1N2iI6N/Xt6Hh0sE9YL1
+ Xr+Stcsojm2CbbtVEEy10q2XQbIVQpmAOnCe84gJb2/yvkw+oNb/k5sT/3ZSrhCj5pxA
+ rG2OqopfzwpiMHXkiVdCIbPhg8cwy42inr6oeA3ZGjml0vecbS6RiofRfhwncHRP0ZQg
+ 9KxWCZRygzcxVI7VjSca1WrlwVgWK6TQdm6BDdg1t4pRZj44R3MbrVdmGD5jGMZNIIIt
+ rnLjbPHh3gpeCt+GJhT49LEne30IM92Y7oR9nZTTLseiOMqs+Ae+JeFRU0+03DMZaH70
+ cpTw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773955647; x=1774560447;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=JSu9iJ+Ai+uTxKLZdU7fFZp7WivAO2Q5DSXtiW2wbgc=;
- b=qU+mvI7UrUZXFYkvWtYk/ln0Tl0Jp8F57IrH0NBR5AChMTgX0ZllF+Do5i+pCq6DS4
- YRP9xJTFQlR0AF1fYjdjBSO3pufWf8S0RaTEsak0xsd4UsZHKhJtBh3SJiiJC3BegMbN
- pCwtKYNhdLdV3f+iEmkS5ehkMn1yn/riWeO1AQ3AepiTKuYX8lf1J1Vf2y42bFuO+wEz
- C7UZCy03YkwUflZVJEAMlVy7ckw5Hilk6/tjm1Qp9CR9QkUK2AB8Bw1+UWSp0BP7D138
- HM+et3HzQ8vACao8M6pXwnFZ0A8u0hDLTflDOVUU4gTXndIc0oX0nAdwS/aut81IkMIY
- cO5A==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXyMimdOPbKR+ak97Oxns8IcOb5nUo2FOhLDJGIAq2UuBZH0zVBb3Wzhv9cmR4FfAqRgIcOUCJn3Kw7@nongnu.org
-X-Gm-Message-State: AOJu0YxpBMTO9rjUgOtfRN7W7D3sdP19NEMPE6TyFhuPVgA1+O9TXu/f
- OnkZKVX7prDWsRJVWi0Zb+kFAGEfGxgbW0EopX99ejsQDfvZmVbb02MXb8BENCW3MuU=
-X-Gm-Gg: ATEYQzyXyrqTJf9fFMRuF8bC3MaF6wJHerYxQOCYFHmypjY331qJTDlbvF1Fs29DR53
- 0fhNYIxL9IxRUg1/ewW/23ZuzYMQoBXrmuLO/xdYCPAfyKFSa4Wyvrqw028w83msc+5IZJgpZ2C
- Enl/Yspa/h9CHOYqMT707Maq4rzMEQiLldnIZXLWE2usCjIKrPDfSOO83KgdL6pDtwc76l1RRr0
- cit/EYx4b6Zk8qDXsmVJWfHFLdtmKAq/jzAgly9H9Ym5ddTfV1sonAP1ST8W22V3zKaJXmCcgbe
- JSE37XvDMx2wBCGvUel6k/GX3yDT8LNkjF+J55/SKdyFxh++eDIVyt9CQ9Ap9IOvz7ksCmJlHHQ
- dy8DhBOp7UWLns2xFLNZ2jy7K6jzK1EafhgkC+vfKQHklsn+Xidjc2FPtdXo+89JhES3BhZMZ/b
- N1XOwycT7/YGJdE6Fw/dsn4CT/+JKPOCHv20FfEdbgIppjI62Gr0ESVvz5oKNwPA52KziF
-X-Received: by 2002:a17:902:e551:b0:2ae:c9be:5f30 with SMTP id
- d9443c01a7336-2b0827898f7mr5965525ad.23.1773955647099; 
- Thu, 19 Mar 2026 14:27:27 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083655b68sm1753605ad.43.2026.03.19.14.27.26
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Mar 2026 14:27:26 -0700 (PDT)
-Message-ID: <23215f96-17f6-4eb5-ac50-9bef80bf5e13@linaro.org>
-Date: Thu, 19 Mar 2026 14:27:25 -0700
+ d=1e100.net; s=20251104; t=1773957454; x=1774562254;
+ h=in-reply-to:content-disposition:mime-version:references:message-id
+ :subject:cc:to:from:date:x-gm-gg:x-gm-message-state:from:to:cc
+ :subject:date:message-id:reply-to;
+ bh=wgqHUiJcvYdLMjjaVW9eK3o7UDSHGms+p0DJcy6Wa9U=;
+ b=d++PAsHnzlB2T0+HIqgQFSPV4aDFhMwB+dI16DBn59E6DewqDHX14LHGeNunKpRrgM
+ tug8DPmiCeOwEPWUr/G45vaNpBRXfoFkmCB8dcr9s+rsdE3VftEqgoAb9ATRuesvac3q
+ 3zt6fxyYGnX7Ygw5PFUZPwVoaOoTVk/ATP/GRVto800a4Mg17w4wZkukMd984zDTz641
+ K0773cAIgBlr+vC7oeLA40KYa687PtxvTfApyzNH6q11QtQM5y2vUmC9dcX2yJ64zCYv
+ zCk+FhYspOjneOVQELMLqRmZFIZEpjwJNlVa6YQnF3uPw51WLiihqeMBXtHo5KPkWosO
+ /3EA==
+X-Gm-Message-State: AOJu0YxSu54gHTPLbPw1gWXCRW748XWUOs5DcwnGp3FKDytlylxWYCE1
+ f+CVaBuWlkYeas+UX57t0tXHEJbAV9pBIG/JsNuqNML94NWcJ5sPARwooQ85shHTSRAQP54sTWd
+ AHHO3nkQDYfcSHPFgNZkQKGOmc1OlQJxTVu9/EoD6WUz2nVhDO1krbWAlpDBtQnNj
+X-Gm-Gg: ATEYQzxcodi40OtJ1gKB8YjoXXtbJk4bdA/uC0NuCQPJBpw/qDxL42DZVTXkoATPbQa
+ 4wMdDVnBOnfA07SOJ3N9iNwrllN3ND71ZcAO6+k0WcWtpnJZJEXd8EXsYoHTNNYKSwTj/7Ehp3L
+ arZFHGis3LWwmXeQIOG60m5u/NCIVdVP9w+iR3pJXl+oLxg0WtBNaCe8Cof7mu4PRR0V250qvq/
+ EGXWheqBOGLViNJ00xdVdnOl07Ke2iBQws9oPcFlCUXKUULujGoM280EJL9LDNAhslU+caGCX0C
+ 7lzRDiKFwiteszPDHJv/UiJ4G0zNdxlhHgh58K6DA4GiKYPGF9eMKP+fZq4OrLWL4y+XQdXMU1x
+ oqDVUvMTNwF+8JQ==
+X-Received: by 2002:a05:620a:3705:b0:8cd:c079:fdae with SMTP id
+ af79cd13be357-8cfc809732dmr142836785a.73.1773957453999; 
+ Thu, 19 Mar 2026 14:57:33 -0700 (PDT)
+X-Received: by 2002:a05:620a:3705:b0:8cd:c079:fdae with SMTP id
+ af79cd13be357-8cfc809732dmr142832685a.73.1773957453398; 
+ Thu, 19 Mar 2026 14:57:33 -0700 (PDT)
+Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
+ af79cd13be357-8cfc9089bebsm26008285a.27.2026.03.19.14.57.32
+ (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+ Thu, 19 Mar 2026 14:57:32 -0700 (PDT)
+Date: Thu, 19 Mar 2026 17:57:31 -0400
+From: Peter Xu <peterx@redhat.com>
+To: Fabiano Rosas <farosas@suse.de>
+Cc: qemu-devel@nongnu.org, Alexander Mikhalitsyn <alexander@mihalicyn.com>,
+ Juraj Marcin <jmarcin@redhat.com>, Alexander Graf <graf@amazon.com>,
+ Markus Armbruster <armbru@redhat.com>,
+ "Dr. David Alan Gilbert" <dave@treblig.org>,
+ Juan Quintela <quintela@trasno.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+Subject: Re: [PATCH RFC 08/10] vmstate: Implement load of ptr marker in
+ vmstate core
+Message-ID: <abxxS10KOBTg6GXH@x1.local>
+References: <20260317232332.15209-1-peterx@redhat.com>
+ <20260317232332.15209-9-peterx@redhat.com> <87a4w335d7.fsf@suse.de>
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH] configure: Remove unused variable default_cflags
-To: Peter Maydell <peter.maydell@linaro.org>, qemu-devel@nongnu.org
-Cc: qemu-trivial@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>,
- =?UTF-8?Q?Alex_Benn=C3=A9e?= <alex.bennee@linaro.org>
-References: <20260317120215.2075164-1-peter.maydell@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <20260317120215.2075164-1-peter.maydell@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pl1-x636.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <87a4w335d7.fsf@suse.de>
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -139,27 +122,192 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/17/26 5:02 AM, Peter Maydell wrote:
-> configure has a variable default_cflags, which was originally added
-> in commit bafe78ad3bc4c ("contrib/plugins: use an independent
-> makefile") as part of it setting up the build environment for
-> contrib/plugins, which at the time used make.  However, we now build
-> the plugins with meson, and in commit 55c84a72aba4 ("contrib/plugins:
-> remove Makefile for contrib/plugins") we dropped the logic from
-> configure that does that makefile setup, leaving default_cflags
-> as an unused variable.
+On Thu, Mar 19, 2026 at 05:56:52PM -0300, Fabiano Rosas wrote:
+> Peter Xu <peterx@redhat.com> writes:
 > 
-> shellcheck helpfully reports this:
->        default_cflags='-O0 -g'
->        ^------------^ SC2034 (warning): default_cflags appears unused. Verify use (or export if used externally).
+> > The loader side of ptr marker is pretty straightforward, instead of playing
+> > the inner_field trick, just do the load manually assuming the marker layout
+> > is a stable ABI (which it is true already).
+> >
+> > This will remove some logic while loading VMSD, and hopefully it makes it
+> > slightly easier to read.  Unfortunately, we still need to keep the sender
+> > side because of the JSON blob we're maintaining..
+> >
 > 
-> Remove the unused variable.
+> /ramble
+> Is the JSON blob ABI? Can we kill it?
+
+Yeah, that's a fair ramble.  I had sometimes the same feeling that I wished
+it not be there, it'll save quite some work..
+
+Per my limited understanding of reading the code in the past, the plan 10
+years ago was having those blob to always be together with the binary
+stream so that the stream (especially when causing loading failures..) will
+be parsable and it's easier to know why the load fail.
+
+However I also confess in the past few years since I worked on migration, I
+never used it to debug any real VMSD issues..
+
+I think one reason might be that when migration was very new and when
+device emulation developers were easier to mess things up, crash happen
+more, and at that time this tool helps debugging things.  It'll also almost
+make the VM dump self-explanatory.
+
+Nowadays, we added more codes into migration to help, e.g., I recall we
+added things like QEMU_VM_SECTION_FOOTER and likely more after the vmdesc,
+which can also help to identify VMSD issues directly from dest QEMU errors.
+
+Let me copy some more people to see if there's any thoughts or inputs on
+the JSON blobs..
+
+> AFAIR, it only serves to add
+> complexity and to break analyze-script from time to time. We'd be better
+> off parsing the actual stream from a file. Could maybe even use the same
+> loadvm code, but mock the .get functions to print instead of actually
+> loading.
+
+The problem might be that direct parsing of the binary stream is almost
+impossible when without the json blob, due to the fact we have a very
+condensed VMSD fields in the stream (we have zero headers for fields..), so
+they're very efficient but compat, I think we won't be able to parse an
+image if we don't know which version of QEMU it was generated from
+otherwise.
+
+But again, I'm not sure we strictly need this in each VM image we send,
+especially right now on dest QEMU we explicitly allocates that buffer, load
+this vmdesc dump and then drop it.. There's also that postcopy won't dump
+this (pretty much because we know it's an active QEMU instance so JSON blob
+may not really help..), so it's just a bit weird to not be able to see how
+it helps besides debugging a "migrate to file" case with unknown QEMU
+versions, for example.  When I know the version of QEMU on src side when
+something wrong happened (normally we do..), it may not be very needed.
+
 > 
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
-> ---
->   configure | 2 --
->   1 file changed, 2 deletions(-)
+> Having separate code that parses a "thing" that's not the stream, but
+> that should reflect the stream, but it's not the stream, but pretty
+> close it's a bit weird to me. I recently had to simply open the raw
+> stream on emacs and navigate through it because the file: stream was
+> somehow different from the stream on the qcow2, for the same command
+> line.
+
+Do you mean snapshot-save v.s. live migrate to file URIs when all caps off?
+
+> 
+> (that's another point, parsing from the qcow2 would be cool, which the
+> JSON blob doesn't provide today I think)
+> ramble/
+> 
+> > This paves way for future processing of non-NULL markers as well.
+> >
+> > Signed-off-by: Peter Xu <peterx@redhat.com>
+> > ---
+> >  migration/vmstate-types.c | 12 ++++--------
+> >  migration/vmstate.c       | 40 ++++++++++++++++++++++++---------------
+> >  2 files changed, 29 insertions(+), 23 deletions(-)
+> >
+> > diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+> > index b31689fc3c..ae465c5c2c 100644
+> > --- a/migration/vmstate-types.c
+> > +++ b/migration/vmstate-types.c
+> > @@ -363,14 +363,10 @@ static bool load_ptr_marker(QEMUFile *f, void *pv, size_t size,
+> >                              const VMStateField *field, Error **errp)
+> >  
+> >  {
+> > -    int byte = qemu_get_byte(f);
+> > -
+> > -    if (byte == VMS_MARKER_PTR_NULL || byte == VMS_MARKER_PTR_VALID) {
+> > -        /* TODO: process PTR_VALID case */
+> > -        return true;
+> > -    }
+> > -
+> > -    error_setg(errp, "%s: unexpected ptr marker: %d", __func__, byte);
+> > +    /*
+> > +     * Load is done in vmstate core, see vmstate_ptr_marker_load().
+> > +     */
+> > +    g_assert_not_reached();
+> >      return false;
+> >  }
+> >  
+> > diff --git a/migration/vmstate.c b/migration/vmstate.c
+> > index a3a5f25946..d65fc84dfa 100644
+> > --- a/migration/vmstate.c
+> > +++ b/migration/vmstate.c
+> > @@ -142,6 +142,21 @@ static void vmstate_handle_alloc(void *ptr, const VMStateField *field,
+> >      }
+> >  }
+> >  
+> > +static bool vmstate_ptr_marker_load(QEMUFile *f, bool *load_field,
+> > +                                    Error **errp)
+> > +{
+> > +    int byte = qemu_get_byte(f);
+> > +
+> > +    if (byte == VMS_MARKER_PTR_NULL) {
+> > +        /* When it's a null ptr marker, do not continue the load */
+> > +        *load_field = false;
+> > +        return true;
+> > +    }
+> > +
+> > +    error_setg(errp, "Unexpected ptr marker: %d", byte);
+> > +    return false;
+> > +}
+> > +
+> >  static bool vmstate_pre_load(const VMStateDescription *vmsd, void *opaque,
+> >                               Error **errp)
+> >  {
+> > @@ -264,30 +279,25 @@ bool vmstate_load_vmsd(QEMUFile *f, const VMStateDescription *vmsd,
+> >              }
+> >  
+> >              for (i = 0; i < n_elems; i++) {
+> > -                bool ok;
+> > +                /* If we will process the load of field? */
+> > +                bool load_field = true;
+> 
+> maybe valid_ptr would be more clear?
+
+I don't think we can?  Note, that we will only update this field iff the
+field used the new VMS_ARRAY_OF_POINTER_AUTO_ALLOC, otherwise it simply
+should be true always and it says "let's load this VMSD".  IOW, in most
+cases there's no ptr, hence "valid_ptr=true" will be weird on its own I
+think..
+
+> 
+> > +                bool ok = true;
+> >                  void *curr_elem = first_elem + size * i;
+> > -                const VMStateField *inner_field;
+> >  
+> >                  if (field->flags & VMS_ARRAY_OF_POINTER) {
+> >                      curr_elem = *(void **)curr_elem;
+> >                  }
+> >  
+> >                  if (!curr_elem && size) {
+> > -                    /*
+> > -                     * If null pointer found (which should only happen in
+> > -                     * an array of pointers), use null placeholder and do
+> > -                     * not follow.
+> > -                     */
+> > -                    inner_field = vmsd_create_ptr_marker_field(field);
+> > -                } else {
+> > -                    inner_field = field;
+> > +                    /* Read the marker instead of VMSD itself */
+> > +                    if (!vmstate_ptr_marker_load(f, &load_field, errp)) {
+> > +                        trace_vmstate_load_field_error(field->name, -EINVAL);
+> > +                        return false;
+> > +                    }
+> >                  }
+> >  
+> > -                ok = vmstate_load_field(f, curr_elem, size, inner_field, errp);
+> > -
+> > -                /* If we used a fake temp field.. free it now */
+> > -                if (inner_field != field) {
+> > -                    g_clear_pointer((gpointer *)&inner_field, g_free);
+> > +                if (load_field) {
+> > +                    ok = vmstate_load_field(f, curr_elem, size, field, errp);
+> >                  }
+> >  
+> >                  if (ok) {
 > 
 
-Reviewed-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+-- 
+Peter Xu
+
 
