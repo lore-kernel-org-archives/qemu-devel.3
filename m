@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 26453108E1E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:20:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 576F4108E1ED
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:21:04 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BQJ-0007gS-W4; Thu, 19 Mar 2026 07:20:20 -0400
+	id 1w3BQI-0007fe-NZ; Thu, 19 Mar 2026 07:20:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQ5-0007YV-BA
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:05 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BPq-0007WY-0U
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:19:57 -0400
 Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BPz-0004jh-QG
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:02 -0400
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BPo-0004Hc-9R
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:19:49 -0400
 Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-48538c5956bso7110625e9.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:19:57 -0700 (PDT)
+ 5b1f17b1804b1-48557c8ad47so6521485e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:19:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773919195; x=1774523995; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773919186; x=1774523986; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1EF35YN3CJ8u12H8BkNu2tiJ6lwUGD01EvYz7GmtlEg=;
- b=kKqbokV7hzT3WeeMCE2a2vowThXQK+07iJHsrc3htmqSCQYpW6yLqBf1anhUZTlBCb
- JfszmI80XpTtk9C2+qD7RjYMKUnLkeEBIUBp5QRHBqV1YJtgnQArwjn3VKIZaKMphBbL
- E04M9TKRxarFm+HC9bnuB9bhWsgJ24oz0gep58R1xVLr/GBiTBK6n80TewYC8sNiAV2q
- F8YJDdy9eDloXLHS4RO0LrLXIXHWD1HX2abfwaQxg0DT2mwnGzmVgytPDgcNv1fUrt9M
- 3AUP20K88u2jXVWwPFmzeOQsdDvHBKGIqYnOhur9y+Xv4vs653OMv7584fC+xh+cN9l0
- fkCQ==
+ bh=MAlQ6OL3gpyVI0jWnvjBgu6bCA13ejnahNH1d2j0ink=;
+ b=BrdwRIj/yB7cxkZ9iXg4wAcmeEJYaalcHtE9LhOIZMOx8dESoV7uI/bAoRRkNQvkzT
+ VZ2KB24ekmI43IfHcyuZFS+EzjcBr4c/d77tQ4i6IarPVCGoVMo4f+9p/+W125/iOpRS
+ tPwJ0E6W8MPbhCWD+BFOajee5Gjyh4it4erBmDazbzPT+rxk/3YuclqZV1mox2jz/QVs
+ nTSdgP7M4aU7PwZzvvEiwNn1XkVsGgLkjnMm7Ze49gAvks8nVaKNTiWoC9r2kLykoFsJ
+ x5/y0vI8QHqkOBbHcFrx5XGDB9oj3hiLcpj7iY+OAJQXyfc61QXlb0hYwD/5QcSGlkDW
+ 9wIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773919195; x=1774523995;
+ d=1e100.net; s=20251104; t=1773919186; x=1774523986;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=1EF35YN3CJ8u12H8BkNu2tiJ6lwUGD01EvYz7GmtlEg=;
- b=SY2GaelnM1dqkgqzXUdGjFsfpJdh+C6lKLUerQpJ6R3wi4ZHWIxGWUdCOsQ7HiAMhG
- +Nz5YlTgoYEpvNXxxC6OTCT19CKjDoZDKQkXEfGWDENaxNo2uPrYvRx6C7B/5LWg3hF8
- Y7u1qnlc5mMfYnzQFGFDCfu2tGCgBJwUkKQiVqSdHexr4Cf+juGKfY5ka9ZEG7yFfhMv
- OG+1da0+SXUk8QFXzTWwfdOOuplCnaYZXhQEdjMr4jHHqXCSYAaSJZR7OnuWatRd/LQ5
- n/40Oz6535nDHF1VrodvheH8TMmRUwK14b4OnMR1ff502y97ga8QRMLol6tAwIYTyDRG
- 2T+w==
-X-Gm-Message-State: AOJu0YxwC0oMvfktdWXg/EfOGCNHIKaiCE74Md+nrJjZnz4M5y4N2j1b
- ycOkZ/9vu42S1hpbdKVe0WaY6zDGXrGqM+2O7YyHgEOEmWigdkU3BmMjs1LiTvWos3HA3eCVJP1
- /4udQ7Ek=
-X-Gm-Gg: ATEYQzyYnNbYYJKFwZQPGl+0h5Cc5uhFHeuJ909j62nT7hcS3ogaqOBp6ouYYwy1DWD
- XwaEL7f6C/AyIi7vXhpRrjscr5fkcLEYjr0suc0y3tPs070uRoIk+C1tzkmZuTP5zcV0XRQ9E69
- 2DtXp71IfXGJC2B6HcUJiTIHG+81l6yU/FaSp7CH+Yrh6AyGEetavfHDwAsg9HBUGqf6mvSPf/E
- ZZU+x57l7vv6PZcN+APnrqjcRLFUOrTL8rrcOPHc4XMDWxpLcq63kWWCCJyOlDdVI4aW3aqbm2c
- 8w02/wDfHZRQBskHtk7vIRluxqgMn/SjFryPPvdnI9bV29KP/CoshQymZV0+Pge3j3iHSiW0mJV
- 0lmjC0QHe3yVrWoEKJh7tsTQRxW8jyg7+2hgxxpjxzJ/uaF5N1SE26RPRS62kVgxqg8yR9C78Jv
- e9u/AC7OtiW4VNDf6BPXhZ9UTZKjuNRsRAs9m5jrSVv2VO8lnODjWCZII/07qZgXok5pB4pTbK
-X-Received: by 2002:a05:600c:8b10:b0:486:f893:56c6 with SMTP id
- 5b1f17b1804b1-486f8b46651mr48087815e9.10.1773919195014; 
- Thu, 19 Mar 2026 04:19:55 -0700 (PDT)
+ bh=MAlQ6OL3gpyVI0jWnvjBgu6bCA13ejnahNH1d2j0ink=;
+ b=qnTUoX3mZ7xn/dcHnNrbzQ0q+WMrQnQcCuwOBab3+KjUXUFvMSkg1YqgCDnc8Bdk9Q
+ dCotNXh0ydkotyCOvDt7cmDJ9P31mCcKnvJUJjDtK3X8v3SKO5CA307gOoQDBejiQZl8
+ 7e3ST1WWIA5/eBxTpbWLunezWjjFzN3+CMm98A1/E9kpU1qd3tMhBI+LsHjfifFOzHGg
+ bS+bVEFf+fmdkZzSkwBKMZm3HfhoPIZrcul8E0CfZAyoPmybRndoQzj63BCDaQQxCuMT
+ dz2PQPdCpcBYzwZfhbnSxjPsVpyiTSYFrSpskEAFyTikNlhfYQFizE2GP9FtBW85bV9J
+ ehLw==
+X-Gm-Message-State: AOJu0YyuGMHKB4V0sGc+jnvv+a3dojo6aWe8tIq69Iag6LkxVF0owWMc
+ LlwIYgWsAfPN5DrWoZHjUXxh7YwEEEi2p2sC0GEE/ZpFyd9YBf5U1rTaN9iez4l4grAj2SLvL7B
+ 4diFQ9Dw=
+X-Gm-Gg: ATEYQzxDiXBAhc1QxQS1b2M3XpgYtdVI3uYmc2rEToSKBLjYKrtRNz3BkfjN6vZch0G
+ WjzlY5l4iAIUNUyO5a8HshF1A4ZAXjEDrhAAIdI9ih8rVqPaxvHkxyaKIXbANkobnTf0fumWwWn
+ rlkfSzndkmAUNnOJUcpKJTHarsXNuY9ouYY+ymlX4C2Wz6UeRAOefxu6vlonnTcZg1dHguGaGNk
+ UjbuWA9HX+MINMTrn7q7DI3WDlQaNhruq1WvvIzbdBceXpgVbyUzMfNPyKtSzyz8nnXp8DEhCzT
+ 2ymfRSSVjPOFsmT5TlKMW4fWwkZHU/TN8QcKZXNJ1PIs3KjQTTUkuemZQGO+dGYRYR+fdVPfX+l
+ P1ZQVn3K52o6+5+IvkDvFKnAz/pYNs1nP4Kd0XevVSo8ySdvZGjP5d/nXNPev178lDIDFzHXI9H
+ 0bjlWA32aqbMBeQxF6pdeHFghl+ynodIBJ5LZDam1Op0XdO+mPPgagQOKr0UlqLT3518guG/bz1
+ RTl+p10iYc=
+X-Received: by 2002:a05:600c:4fcb:b0:485:3f38:3de3 with SMTP id
+ 5b1f17b1804b1-486f44384d4mr115148365e9.3.1773919186220; 
+ Thu, 19 Mar 2026 04:19:46 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486f8bd9d78sm19811235e9.5.2026.03.19.04.19.52
+ 5b1f17b1804b1-486f8b949e1sm103526265e9.9.2026.03.19.04.19.45
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Mar 2026 04:19:53 -0700 (PDT)
+ Thu, 19 Mar 2026 04:19:45 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,9 +73,9 @@ Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chinmay Rath <rathc@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 2/8] target/ppc: Factor common ppc_load_epr() helper out
-Date: Thu, 19 Mar 2026 12:19:30 +0100
-Message-ID: <20260319111936.68041-3-philmd@linaro.org>
+Subject: [PATCH 1/8] hw/ppc/spapr: Un-inline rtas_load/store() helpers
+Date: Thu, 19 Mar 2026 12:19:29 +0100
+Message-ID: <20260319111936.68041-2-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319111936.68041-1-philmd@linaro.org>
 References: <20260319111936.68041-1-philmd@linaro.org>
@@ -89,7 +90,7 @@ X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -105,81 +106,72 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+The 32-bit binary doesn't use these helpers, so don't need to
+compile them. Rather than using 64-bit target #ifdef'ry in a
+global header, un-inline the calls since the helpers are called
+from I/O (cold) path.
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/ppc/cpu.h         | 2 ++
- target/ppc/cpu.c         | 8 ++++++++
- target/ppc/excp_helper.c | 3 +--
- target/ppc/kvm.c         | 2 +-
- 4 files changed, 12 insertions(+), 3 deletions(-)
+ include/hw/ppc/spapr.h | 18 +++---------------
+ hw/ppc/spapr_rtas.c    | 15 +++++++++++++++
+ 2 files changed, 18 insertions(+), 15 deletions(-)
 
-diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
-index d637a50798f..e3e4bce91b7 100644
---- a/target/ppc/cpu.h
-+++ b/target/ppc/cpu.h
-@@ -2822,6 +2822,8 @@ enum {
- target_ulong cpu_read_xer(const CPUPPCState *env);
- void cpu_write_xer(CPUPPCState *env, target_ulong xer);
- 
-+uint64_t ppc_load_epr(CPUPPCState *env);
-+
- /*
-  * All 64-bit server processors compliant with arch 2.x, ie. 970 and newer,
-  * have PPC_SEGMENT_64B.
-diff --git a/target/ppc/cpu.c b/target/ppc/cpu.c
-index 4d8faaddee2..f24801a9731 100644
---- a/target/ppc/cpu.c
-+++ b/target/ppc/cpu.c
-@@ -26,6 +26,7 @@
- #include "fpu/softfloat-helpers.h"
- #include "mmu-hash64.h"
- #include "helper_regs.h"
-+#include "system/memory.h"
- #include "system/tcg.h"
- 
- target_ulong cpu_read_xer(const CPUPPCState *env)
-@@ -105,6 +106,13 @@ void ppc_store_lpcr(PowerPCCPU *cpu, target_ulong val)
-     ppc_maybe_interrupt(env);
+diff --git a/include/hw/ppc/spapr.h b/include/hw/ppc/spapr.h
+index b022f8dd25d..9acda15d4f6 100644
+--- a/include/hw/ppc/spapr.h
++++ b/include/hw/ppc/spapr.h
+@@ -796,21 +796,9 @@ static inline uint64_t ppc64_phys_to_real(uint64_t addr)
+     return addr & ~0xF000000000000000ULL;
  }
  
-+uint64_t ppc_load_epr(CPUPPCState *env)
+-static inline uint32_t rtas_ld(target_ulong phys, int n)
+-{
+-    return ldl_be_phys(&address_space_memory,
+-                       ppc64_phys_to_real(phys + 4 * n));
+-}
+-
+-static inline uint64_t rtas_ldq(target_ulong phys, int n)
+-{
+-    return (uint64_t)rtas_ld(phys, n) << 32 | rtas_ld(phys, n + 1);
+-}
+-
+-static inline void rtas_st(target_ulong phys, int n, uint32_t val)
+-{
+-    stl_be_phys(&address_space_memory, ppc64_phys_to_real(phys + 4 * n), val);
+-}
++uint32_t rtas_ld(target_ulong phys, int n);
++uint64_t rtas_ldq(target_ulong phys, int n);
++void rtas_st(target_ulong phys, int n, uint32_t val);
+ 
+ typedef void (*spapr_rtas_fn)(PowerPCCPU *cpu, SpaprMachineState *sm,
+                               uint32_t token,
+diff --git a/hw/ppc/spapr_rtas.c b/hw/ppc/spapr_rtas.c
+index cb79ad34053..0871425237e 100644
+--- a/hw/ppc/spapr_rtas.c
++++ b/hw/ppc/spapr_rtas.c
+@@ -52,6 +52,21 @@
+ #include "migration/blocker.h"
+ #include "helper_regs.h"
+ 
++uint32_t rtas_ld(target_ulong phys, int n)
 +{
-+    CPUState *cs = env_cpu(env);
-+
-+    return ldl_phys(cs->as, env->mpic_iack);
++    return ldl_be_phys(&address_space_memory, ppc64_phys_to_real(phys + 4 * n));
 +}
 +
- #if defined(TARGET_PPC64)
- void ppc_update_ciabr(CPUPPCState *env)
- {
-diff --git a/target/ppc/excp_helper.c b/target/ppc/excp_helper.c
-index 6d05b865058..3b476c145ab 100644
---- a/target/ppc/excp_helper.c
-+++ b/target/ppc/excp_helper.c
-@@ -1166,9 +1166,8 @@ static void powerpc_excp_booke(PowerPCCPU *cpu, int excp)
-         break;
-     case POWERPC_EXCP_EXTERNAL:  /* External input                           */
-         if (env->mpic_proxy) {
--            CPUState *cs = env_cpu(env);
-             /* IACK the IRQ on delivery */
--            env->spr[SPR_BOOKE_EPR] = ldl_phys(cs->as, env->mpic_iack);
-+            env->spr[SPR_BOOKE_EPR] = ppc_load_epr(env);
-         }
-         break;
-     case POWERPC_EXCP_ALIGN:     /* Alignment exception                      */
-diff --git a/target/ppc/kvm.c b/target/ppc/kvm.c
-index 41bd03ec2a2..3bff75b7f54 100644
---- a/target/ppc/kvm.c
-+++ b/target/ppc/kvm.c
-@@ -1692,7 +1692,7 @@ int kvm_arch_handle_exit(CPUState *cs, struct kvm_run *run)
- #endif
-     case KVM_EXIT_EPR:
-         trace_kvm_handle_epr();
--        run->epr.epr = ldl_phys(cs->as, env->mpic_iack);
-+        run->epr.epr = ppc_load_epr(env);
-         ret = 0;
-         break;
-     case KVM_EXIT_WATCHDOG:
++uint64_t rtas_ldq(target_ulong phys, int n)
++{
++    return (uint64_t)rtas_ld(phys, n) << 32 | rtas_ld(phys, n + 1);
++}
++
++void rtas_st(target_ulong phys, int n, uint32_t val)
++{
++    stl_be_phys(&address_space_memory, ppc64_phys_to_real(phys + 4 * n), val);
++}
++
+ static void rtas_display_character(PowerPCCPU *cpu, SpaprMachineState *spapr,
+                                    uint32_t token, uint32_t nargs,
+                                    target_ulong args,
 -- 
 2.53.0
 
