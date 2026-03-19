@@ -4,80 +4,50 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277C9108E1F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:55:44 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 19C32108E1FA
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:55:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3By7-0002jn-Pf; Thu, 19 Mar 2026 07:55:15 -0400
+	id 1w3By5-0002gs-Cn; Thu, 19 Mar 2026 07:55:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3By6-0002iM-Oh
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3By5-0002PK-77
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:14 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773921312;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=cghQw2wZlYWTnUyhIggiIgbgwEbKW06jE0Cc1GCWpzA=;
- b=MDAry6ds7Ne/riWkgk1JnHDtf0FTA+kYJT8iK2x7mAYlEJoOwc7bkqEBRXEXbmKGDmRxp/
- epyEF6sJZWKzidRAnotRede055SAUq4eoSzh8OQOfNrbOQ3HYIQg5ku44nZ0omSnCnCvns
- He0nOc+BrkRhvsj4pBtguhklAjJZkpk=
-Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-yhNzkXyxOOiuNylzPeZOqA-1; Thu,
- 19 Mar 2026 07:55:09 -0400
-X-MC-Unique: yhNzkXyxOOiuNylzPeZOqA-1
-X-Mimecast-MFC-AGG-ID: yhNzkXyxOOiuNylzPeZOqA_1773921307
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id AA2471944F05; Thu, 19 Mar 2026 11:55:07 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 45D211955F21; Thu, 19 Mar 2026 11:55:07 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id D6E0521E6937; Thu, 19 Mar 2026 12:55:04 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Nathan Chen <nathanc@nvidia.com>
-Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Eric Auger
- <eric.auger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
- "Michael S . Tsirkin" <mst@redhat.com>,  Igor Mammedov
- <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Shannon Zhao
- <shannon.zhaosl@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel
- P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
- <eblake@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,  Matt Ochs
- <mochs@nvidia.com>,  Nicolin Chen <nicolinc@nvidia.com>
-Subject: Re: [PATCH v4 3/8] hw/arm/smmuv3-accel: Change RIL property to
- OnOffAuto
-In-Reply-To: <20260318184907.4060030-4-nathanc@nvidia.com> (Nathan Chen's
- message of "Wed, 18 Mar 2026 11:49:02 -0700")
-References: <20260318184907.4060030-1-nathanc@nvidia.com>
- <20260318184907.4060030-4-nathanc@nvidia.com>
-Date: Thu, 19 Mar 2026 12:55:04 +0100
-Message-ID: <87se9w9gpz.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
+ id 1w3By2-0002Zp-Ld
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:10 -0400
+Received: from mail.loongson.cn ([114.242.206.163])
+ by eggs.gnu.org with esmtp (Exim 4.90_1)
+ (envelope-from <gaosong@loongson.cn>) id 1w3Bxz-0002Cn-Kp
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:10 -0400
+Received: from loongson.cn (unknown [10.2.5.185])
+ by gateway (Coremail) with SMTP id _____8BxWcIS5LtpuKocAA--.17511S3;
+ Thu, 19 Mar 2026 19:54:58 +0800 (CST)
+Received: from localhost.localdomain (unknown [10.2.5.185])
+ by front1 (Coremail) with SMTP id qMiowJCxPMIO5Ltp3qBYAA--.36678S2;
+ Thu, 19 Mar 2026 19:54:55 +0800 (CST)
+From: Song Gao <gaosong@loongson.cn>
+To: maobibo@loongson.cn
+Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com,
+ chenhuacai@kernel.org, lixianglai@loongson.cn
+Subject: [RFC PATCH v3 0/2] LoongArch : Add KVM DINTC support
+Date: Thu, 19 Mar 2026 19:29:28 +0800
+Message-Id: <20260319112930.2255004-1-gaosong@loongson.cn>
+X-Mailer: git-send-email 2.39.1
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+Content-Transfer-Encoding: 8bit
+X-CM-TRANSID: qMiowJCxPMIO5Ltp3qBYAA--.36678S2
+X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
+X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
+ ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
+ nUUI43ZEXa7xR_UUUUUUUUU==
+Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
+ helo=mail.loongson.cn
+X-Spam_score_int: -1
+X-Spam_score: -0.2
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -93,25 +63,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Nathan Chen <nathanc@nvidia.com> writes:
+Hi
 
-> From: Nathan Chen <nathanc@nvidia.com>
->
-> Change accel SMMUv3 RIL property from bool to OnOffAuto. The 'auto'
+This series adds KVM put/get support for msgint CSRs and introduces
+msgint feature checks. It also adds kvm_dintc_realize() when
+kvm_irqchip_in_kernel is enabled, which creates and initializes the DINTC
+device in kernel mode. This series uses the  'RFC'tag in the title,
+as some required linux headers have not yet been merged upstream.
 
-Incompatible change; okay because property "ril" is new in this release.
-Spelling such things out in the commit message helps reviewers.  Not
-worth a respin.
+Test;
+1. add kernel patch:
+https://patchew.org/linux/20260304013254.2543620-1-maobibo@loongson.cn/
+https://patchew.org/linux/20260311085059.1040263-1-gaosong@loongson.cn/
 
-> value is not implemented, as this commit is meant to set the property
-> to the correct type and avoid breaking JSON/QMP when the auto mode is
-> introduced. A future patch will implement resolution of the 'auto'
-> value to match the host SMMUv3 RIL support.
->
-> Fixes: bd715ff5bda9 ("hw/arm/smmuv3-accel: Add a property to specify RIL support")
-> Tested-by: Eric Auger <eric.auger@redhat.com>
-> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+2. run script with '-cpu max,msgint=on' and virt,dmsi=on.
+'
+./build/qemu-system-loongarch64 -accel kvm \
+     -bios /usr/share/edk2/loongarch64/QEMU_EFI-silent-pflash.raw \
+     -cpu max,msgint=on\
+     -smp 4 \
+     -machine virt,dmsi=on,kernel_irqchip=on\
+     -m 16G \
+     -netdev tap,id=net0,ifname=tap0,script=/root/net.sh,downscript=no,vhost=on,queues=4 \
+    -device virtio-net-pci,netdev=net0,mq=on,vectors=128,mac=52:54:00:12:34:56 \
+     -monitor telnet:localhost:4418,server,nowait \
+    -device virtio-gpu-pci \
+    -drive if=none,id=disk0,file=/home/kvm/lns23.qcow2,format=qcow2 \
+    -device virtio-blk-pci,drive=disk0,id=virtio_disk0 \
+    --nographic
+'
+3  the vm can work well with with net test, such as netperf or iperf test.
 
-Acked-by: Markus Armbruster <armbru@redhat.com>
+Thanks.
+Song Gao
+
+Song Gao (2):
+  target/loongarch: Add kvm support dintc
+  Add dintc kvm_irqchip_in_kernel support
+
+ hw/intc/loongarch_dintc.c         | 13 ++++++
+ hw/intc/loongarch_dintc_kvm.c     | 48 +++++++++++++++++++++
+ hw/intc/meson.build               |  2 +
+ include/hw/intc/loongarch_dintc.h | 10 +++++
+ linux-headers/asm-loongarch/kvm.h |  4 ++
+ linux-headers/linux/kvm.h         |  2 +
+ target/loongarch/cpu.c            |  5 +--
+ target/loongarch/cpu.h            |  1 +
+ target/loongarch/kvm/kvm.c        | 69 +++++++++++++++++++++++++++++++
+ 9 files changed, 151 insertions(+), 3 deletions(-)
+ create mode 100644 hw/intc/loongarch_dintc_kvm.c
+
+-- 
+2.41.0
 
 
