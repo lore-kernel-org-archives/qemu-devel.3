@@ -4,102 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7887A1091900
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 17:42:08 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ACC341091901
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 17:50:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3HNE-0008UA-KX; Thu, 19 Mar 2026 13:41:33 -0400
+	id 1w3HV8-0002rS-Jk; Thu, 19 Mar 2026 13:49:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3HND-0008U1-Ff
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:41:31 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3HNB-0008Ph-PM
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:41:31 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64c9707fc11so1033166d50.2
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 10:41:29 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773942088; cv=none;
- d=google.com; s=arc-20240605;
- b=EHPU+hkHGX1t5mgmbMsIcG6jmfOCoJCllfYwKPSUeDagx7euBfBrN7Ep/oyAy1ApgI
- x0B71wt4sbKxLvNhrty6xKt2Zw3/pOIl8K7D+zw02rv7dglsxG/zA/7Iy6/TbBfMu/nf
- jqRr9L3PXVgOhQCVaw9849GxTDGVgtKzvafjQ/K/PmCZ8lh4rqx/7U8BPaHQufzGyud0
- O6cSU5IifNWrzMpsLvRrE6dZ3WIBFanHIdnWUwc7kzwLlvUxFbBl/e1d/MeCBrTUviNa
- 9E1fWV1p1QD638l2fnITo92deAPeMrepAr5DQtYyHvWO6d+74WZeBBxuLbKNscbd5bDV
- nFLQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=WKaACPQsl5AHC9/3yfX3aq6ksbv8J5wba/nVwvxfz1g=;
- fh=7g8R6cEJaVMV/1BX4UiN0GJ7QdXpS1kB7s61x593jpg=;
- b=SkxlThEHmAMTSix0g2LA7Z72E2YPf/LkJShDZDfZbAu4h4mClcBqX/rtNXPK6HDb1I
- jOf2xZ41dkM7B6NNrR86fghGp/p5Ot8FQHZkq3qQaRaYk3B4AnteMoy00pRGo/b4tXN2
- /lcTCABkWfdMgi9FUIBSiBaqr+co8OwEiiteJ0cNTvgGjDAwH3K9eFD/Ig/mKCyaXbXq
- sPCpCpkSfHgG+7j33vHaAyy887xifhLG94Ab9ZPwgXYMNTOBAoFVERmkaZWtuAikiMRz
- b7DmfBNSxjHH/gUJh0tt89XAUOXxWYiu0DYxZN6GaXa+pdfd8yUjYLjsI/7IR8c8MKLl
- lyZw==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773942088; x=1774546888; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=WKaACPQsl5AHC9/3yfX3aq6ksbv8J5wba/nVwvxfz1g=;
- b=vwizhuGnrNTWW6OD/7bp2wYXJq+ebq/xxx9Vat/ih/bmv6oPITRBAkizAPov6ltsir
- Ph5jSQV5qJRt8u0MPMUtQm21ldkMihPR0IHInC0QjTzN/urgiMSVRdU8OIi3693ugdEc
- PWRXzGjE7YL4SY2e4KhXF1E9kDNJpRUc/D4hBb1Ajyxqjo3gE15HZdwXqsp7aSmyiqZz
- AgSbqprOU/3wHJgDm1XGMzIPsuXLVKyNE0mqn/DcSo8AEZkyduDRcvD04NZxpoTxOrPu
- t9VF8e8jSF8Te1/YlmjN5F3+oAzESTQ64v/KPjNsGo13W9/laTv5S41dGTPJuVj7PVto
- TBDw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773942088; x=1774546888;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=WKaACPQsl5AHC9/3yfX3aq6ksbv8J5wba/nVwvxfz1g=;
- b=c/MzqPhgjpor/Tl1Z6xO3MR9zcJ+x1duY81WrJL8ofJdF+8CDovoEcSXGNriklcStQ
- 87Kg70zj+A+7CUBNftHFDPB6scPAun6SYILFZ3B8Mp0Ajzg0Tuabp4R9+VORIAiGLE5l
- kOFL8pWzx6uBlKjPblBh2PJmB/5x9GzqXNhuNTSzKaoG2gwAeoaBfZEbKw/5xUmeAqlD
- PvKWOVKvxx8PAp5R22TuNqLpo6JKgHYc3gX2mNR3idAmFriwhFMDqad/mBvvzyNjmkRU
- Owpzm7u755t8q9jkWKDG+m3p61i2I40oDxkZF7/rOQCGcnkVtLbP/t6Xt8YEvutKnLF+
- 8FGw==
-X-Gm-Message-State: AOJu0YwDRAJ1A74sGtDMp1HwHVqaQX3fXCF9SaIRWpFHfibAMX0BwK18
- y4JZAcGJpypJLGtB3URdebchP9ZyKRt/PjKqz9iCMjXyZQoCrnmlhmG71u1XSIfz0DDOrIubnJN
- H+UizcH1AfLcmG876Pomiwn6Pc4qpl6TwfShSJ2m0Rw==
-X-Gm-Gg: ATEYQzwDz35QY/tUcuAuF7vBgs3vOaJlFCZWvHWoQ66Ia+jlcN4XuFNMUUjP+pVWRbb
- QPztNf5LftaekVy4jo4frc8U9mkbXIm1opa2HMHGXJaAygo3fdfhVb42mbKmToqqQm/OgCNAgfm
- Y7IJ0FrcQmL3rulV20xl/RQLv8o9+oeA+Lw1+O+AWxyVhn0wbBp8DWdUb99mOddzC/7i6CfDwLr
- pph1qVoov8eiG7N3QuLu3CDZcy6VryH5pwtUusQY5VG7h57VX65DxRoShuUdRIUHh3A0R3szsUx
- xVvWwiBug06irc+i4gsRe4YOakyq1/vWXABsXC7NLNqmY68EOtXoOUg2dt15AvGfqtQ=
-X-Received: by 2002:a05:690e:d45:b0:64e:a229:2147 with SMTP id
- 956f58d0204a3-64eaa87510dmr352639d50.71.1773942088497; Thu, 19 Mar 2026
- 10:41:28 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w3HV5-0002r8-Rw
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:49:39 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w3HV2-0004tN-HA
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:49:39 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773942573;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:in-reply-to:in-reply-to:  references:references;
+ bh=uQyBZzCwXDXdpUeXAxqBqXapSeTVDkRFWVG1TMgWj/o=;
+ b=BB+aBK/iIZ4k3bm+TTjLCFd/CznTGDRMFR7VkaXFXTCQTxA5V2l3th8JysD64lgq+eq0uM
+ M4USDuF5CBd2u/7SWA5wbDK1HlbWQL55IF7H2ynXtYUwWc34XazYlIJAi8Tk27/XWKCr1U
+ eEuLxCpuxwGVSy3byQ8+mthLNVvEUTo=
+Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-505-MVPMckdeN5al8DVc57SLcQ-1; Thu,
+ 19 Mar 2026 13:49:29 -0400
+X-MC-Unique: MVPMckdeN5al8DVc57SLcQ-1
+X-Mimecast-MFC-AGG-ID: MVPMckdeN5al8DVc57SLcQ_1773942568
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 7BA1E19560B9; Thu, 19 Mar 2026 17:49:27 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.194])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 840861955F21; Thu, 19 Mar 2026 17:49:22 +0000 (UTC)
+Date: Thu, 19 Mar 2026 17:49:18 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Tommaso Califano <califano.tommaso@gmail.com>
+Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
+ Eduardo Habkost <eduardo@habkost.net>,
+ Markus Armbruster <armbru@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
+ Marcelo Tosatti <mtosatti@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Oliver Steffen <osteffen@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,
+ Giuseppe Lettieri <giuseppe.lettieri@unipi.it>,
+ Paolo Bonzini <pbonzini@redhat.com>, Luigi Leonardi <leonardi@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/5] i386/sev: Add sev-emulated QOM object with TCG support
+Message-ID: <abw3HqBJqEWiY7GP@redhat.com>
+References: <20260317113840.33017-1-califano.tommaso@gmail.com>
+ <20260317113840.33017-2-califano.tommaso@gmail.com>
 MIME-Version: 1.0
-References: <20260310055530.8893-1-thuth@redhat.com>
- <20260310055530.8893-4-thuth@redhat.com>
-In-Reply-To: <20260310055530.8893-4-thuth@redhat.com>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Mar 2026 17:41:17 +0000
-X-Gm-Features: AaiRm53pN7httHkeWpNcK_WZvZEPpL9rjEr9vhdLVwkci2GBY27ABZ7PNk8Am3s
-Message-ID: <CAFEAcA_84LiDD-aMsQrXipWa2ski1uzt_HeL_1SeFYRZMxuH7g@mail.gmail.com>
-Subject: Re: [PULL 03/25] tests/functional/ppc/test_40: Fix the URL of the
- NetBSD-7.1.2-prep.iso asset
-To: Thomas Huth <thuth@redhat.com>
-Cc: qemu-devel@nongnu.org, Reinoud Zandijk <reinoud@netbsd.org>
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20260317113840.33017-2-califano.tommaso@gmail.com>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=berrange@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,38 +90,237 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 10 Mar 2026 at 05:55, Thomas Huth <thuth@redhat.com> wrote:
->
-> From: Thomas Huth <thuth@redhat.com>
->
-> We now need a slightly different URL to be able to download this asset.
->
-> Suggested-by: Reinoud Zandijk <reinoud@NetBSD.org>
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
-> Message-ID: <20260212143843.287090-1-thuth@redhat.com>
-> ---
->  tests/functional/ppc/test_40p.py | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
->
-> diff --git a/tests/functional/ppc/test_40p.py b/tests/functional/ppc/test_40p.py
-> index 614972a7eb3..ed272147f6e 100755
-> --- a/tests/functional/ppc/test_40p.py
-> +++ b/tests/functional/ppc/test_40p.py
-> @@ -27,7 +27,7 @@ class IbmPrep40pMachine(QemuSystemTest):
->          'f86236e9d01b3f0dd0f5d3b8d5bbd40c68e78b4db560a108358f5ad58e636619')
->      ASSET_NETBSD71 = Asset(
->          ('https://archive.netbsd.org/pub/NetBSD-archive/'
-> -         'NetBSD-7.1.2/iso/NetBSD-7.1.2-prep.iso'),
-> +         'NetBSD-7.1.2/iso/NetBSD-7.1.2-prep.iso?key=NetBSD'),
->          'cc7cb290b06aaa839362deb7bd9f417ac5015557db24088508330f76c3f825ec')
+On Tue, Mar 17, 2026 at 12:38:36PM +0100, Tommaso Califano wrote:
+> With this change it is possible to run a VM with the SEV CPUID active
+> adding:
+> 
+>     -accel tcg \
+>     -object sev-emulated,id=sev0,cbitpos=47,reduced-phys-bits=1 \
+>     -machine memory-encryption=sev0
 
-My local machine has been sat downloading this file very very
-slowly for the last half an hour. Is there somewhere that
-we can get the asset from that manages faster downloads?
+snip
 
-thanks
--- PMM
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index c653248f85..35cda819ec 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1057,6 +1057,19 @@
+>              '*handle': 'uint32',
+>              '*legacy-vm-type': 'OnOffAuto' } }
+>  
+> +##
+> +# @SevEmulatedProperties:
+> +#
+> +# Properties for sev-emulated objects.
+> +# This object functionally emulates AMD SEV hardware via TCG, so
+> +# it does not require real hardware to run.
+> +#
+> +# Since: 10.1.0
+> +##
+> +{ 'struct': 'SevEmulatedProperties',
+> +  'base': 'SevGuestProperties',
+> +  'data': {}}
+
+This is deriving 'sev-emulated' from 'sev-guest' which means it
+supports all the properties that 'sev-guest' does, which for
+the record is:
+
+ sev-guest options:
+  dh-cert-file=<string>  - guest owners DH certificate (encoded with base64)
+  kernel-hashes=<bool>   - add kernel hashes to guest firmware for measured Linux boot
+  legacy-vm-type=<OnOffAuto> - use legacy VM type to maintain measurement compatibility with older QEMU or kernel versions.
+  session-file=<string>  - guest owners session parameters (encoded with base64)
+  sev-device=<string>    - SEV device to use
+
+
+Of those properties
+
+ * dh-cert-file + session-file are traditionally used
+   as a means to transfer the TIK+TEK to the SEV firmware,
+   with wrapping to protect them from the hypervisor.
+
+   These can't be used with sev-emulated, as implemented,
+   since they require a key derivation  from the PDH, a
+   concept which IIUC is not implemented in this series.
+
+   Instead, in a later patch 'tik' and 'tek' properties
+   are added to 'sev-emulated', and to pass the TIK+TEK
+   in clear text.
+
+ * sev-device + legacy-vm-type - these are only relevant
+   to the KVM integration, so not applicable for emulation
+
+ * kernel-hashes - would be relevant if formally emulating
+   LAUNCH_UPDATE_DATA for attestation, but IIUC, this is
+   not done/used by this series
+  
+
+IOW, we're deriving from 'sev-guest' but AFAICT none of
+its properties are relevant to the emulation. The
+dh-cert-file and session-file could potentially be
+relevant if implementing the PDH concept and key
+derivation, but that's not done, instead the tik/tek
+are passed explicitly.
+
+What is the value we get from this sev-guest -> sev-emulated
+inheritance ?  My gut feeling is that this perhaps isn't
+the right way to be modelling things unless there's a plan
+for future work that would benefit from them.
+
+Another question related to modelling is whether there is
+an intention to support SEV-SNP at a later date, would that
+imply a sev-snp-emulated object type too ? If so, would it
+inherit from sev-emulated or from sev-snp-guest ?
+
+> +
+>  ##
+>  # @SevSnpGuestProperties:
+>  #
+> @@ -1241,6 +1254,7 @@
+>      { 'name': 'secret_keyring',
+>        'if': 'CONFIG_SECRET_KEYRING' },
+>      'sev-guest',
+> +    'sev-emulated',
+>      'sev-snp-guest',
+>      'thread-context',
+>      's390-pv-guest',
+> @@ -1318,6 +1332,7 @@
+>        'secret_keyring':             { 'type': 'SecretKeyringProperties',
+>                                        'if': 'CONFIG_SECRET_KEYRING' },
+>        'sev-guest':                  'SevGuestProperties',
+> +      'sev-emulated':               'SevEmulatedProperties',
+>        'sev-snp-guest':              'SevSnpGuestProperties',
+>        'tdx-guest':                  'TdxGuestProperties',
+>        'thread-context':             'ThreadContextProperties',
+> diff --git a/target/i386/sev.c b/target/i386/sev.c
+> index 9dde972c11..2502e860e2 100644
+> --- a/target/i386/sev.c
+> +++ b/target/i386/sev.c
+> @@ -51,6 +51,7 @@
+>  
+>  OBJECT_DECLARE_TYPE(SevCommonState, SevCommonStateClass, SEV_COMMON)
+>  OBJECT_DECLARE_TYPE(SevGuestState, SevCommonStateClass, SEV_GUEST)
+> +OBJECT_DECLARE_TYPE(SevEmulatedState, SevCommonStateClass, SEV_EMULATED)
+>  OBJECT_DECLARE_TYPE(SevSnpGuestState, SevCommonStateClass, SEV_SNP_GUEST)
+>  
+>  /* hard code sha256 digest size */
+> @@ -177,6 +178,21 @@ struct SevGuestState {
+>      OnOffAuto legacy_vm_type;
+>  };
+>  
+> +/**
+> + * SevEmulatedState:
+> + *
+> + * The SevEmulatedState object is used for creating and managing a SEV emulated
+> + * guest.
+> + *
+> + * # $QEMU \
+> + *         -object sev-emulated,id=sev0 \
+> + *         -machine ...,memory-encryption=sev0
+> + */
+> +
+> +typedef struct SevEmulatedState {
+> +    SevGuestState parent_obj;
+> +} SevEmulatedState;
+> +
+>  struct SevSnpGuestState {
+>      SevCommonState parent_obj;
+>  
+> @@ -2936,6 +2952,46 @@ sev_guest_instance_init(Object *obj)
+>      sev_guest->legacy_vm_type = ON_OFF_AUTO_AUTO;
+>  }
+>  
+> +static int sev_emulated_init(ConfidentialGuestSupport *cgs, Error **errp)
+> +{
+> +    SevCommonState *sev_common = SEV_COMMON(cgs);
+> +
+> +    /*
+> +     * The cbitpos value will be placed in bit positions 5:0 of the EBX
+> +     * register of CPUID 0x8000001F. We need to verify the range as the
+> +     * comparison with the host cbitpos is missing.
+> +     */
+> +    if (sev_common->cbitpos < 32 ||
+> +        sev_common->cbitpos > 63) {
+> +        error_setg(errp, "%s: cbitpos check failed, requested '%d',"
+> +                   "the firmware requires >=32",
+> +                   __func__, sev_common->cbitpos);
+> +        return -1;
+> +    }
+> +
+> +    /*
+> +     * The reduced-phys-bits value will be placed in bit positions 11:6 of
+> +     * the EBX register of CPUID 0x8000001F, so verify the supplied value
+> +     * is in the range of 1 to 63.
+> +     */
+> +    if (sev_common->reduced_phys_bits < 1 ||
+> +        sev_common->reduced_phys_bits > 63) {
+> +        error_setg(errp, "%s: reduced_phys_bits check failed,"
+> +                   " it should be in the range of 1 to 63, requested '%d'",
+> +                   __func__, sev_common->reduced_phys_bits);
+> +        return -1;
+> +    }
+> +    cgs->ready = true;
+> +    return 0;
+> +}
+> +
+> +static void sev_emulated_class_init(ObjectClass *oc, const void *data)
+> +{
+> +    ConfidentialGuestSupportClass *klass = CONFIDENTIAL_GUEST_SUPPORT_CLASS(oc);
+> +    /* Override the sev-common method that uses kvm */
+> +    klass->kvm_init = sev_emulated_init;
+> +}
+> +
+>  /* guest info specific sev/sev-es */
+>  static const TypeInfo sev_guest_info = {
+>      .parent = TYPE_SEV_COMMON,
+> @@ -2945,6 +3001,14 @@ static const TypeInfo sev_guest_info = {
+>      .class_init = sev_guest_class_init,
+>  };
+>  
+> +/* emulated sev */
+> +static const TypeInfo sev_emulated_info = {
+> +    .parent = TYPE_SEV_GUEST,
+> +    .name = TYPE_SEV_EMULATED,
+> +    .instance_size = sizeof(SevEmulatedState),
+> +    .class_init = sev_emulated_class_init
+> +};
+> +
+>  static void
+>  sev_snp_guest_get_policy(Object *obj, Visitor *v, const char *name,
+>                           void *opaque, Error **errp)
+> @@ -3207,6 +3271,7 @@ static void
+>  sev_register_types(void)
+>  {
+>      type_register_static(&sev_common_info);
+> +    type_register_static(&sev_emulated_info);
+>      type_register_static(&sev_guest_info);
+>      type_register_static(&sev_snp_guest_info);
+>  }
+> diff --git a/target/i386/sev.h b/target/i386/sev.h
+> index 4358df40e4..839656e2be 100644
+> --- a/target/i386/sev.h
+> +++ b/target/i386/sev.h
+> @@ -33,6 +33,7 @@ bool sev_snp_enabled(void);
+>  #if !defined(CONFIG_USER_ONLY)
+>  
+>  #define TYPE_SEV_COMMON "sev-common"
+> +#define TYPE_SEV_EMULATED "sev-emulated"
+>  #define TYPE_SEV_GUEST "sev-guest"
+>  #define TYPE_SEV_SNP_GUEST "sev-snp-guest"
+>  
+> -- 
+> 2.53.0
+> 
+
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
+
 
