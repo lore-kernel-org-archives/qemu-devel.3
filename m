@@ -4,74 +4,56 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 84D9B108E1EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:22:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F091B108E1F3
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:39:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BSD-0002pL-95; Thu, 19 Mar 2026 07:22:17 -0400
+	id 1w3Bif-0007K6-7h; Thu, 19 Mar 2026 07:39:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BRe-0002CC-Vf
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:21:46 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BRd-00086Z-Dr
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:21:42 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773919300;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=l4csdD4+wmUDavOf5Ct/wBlwj0SfcwNfXyPbcSh4l0I=;
- b=Byfzs5YVCCowAvTT5K+MhJmUaK8Ffba0JsST+5FPwzMpnBz+VJqwY1P1oQqwCMIkz0u0G0
- w4fjWpiKqcv20GcVImrgh6V6aIrte2B9x/qMW7Oc7//RdaB+XFKX184aw1mmidWLae1v/1
- AouPoifAUPoOvlfFGAuk/sRG5fELY6Y=
-Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-308-yogILNUYOAqddDUCaR5OYg-1; Thu,
- 19 Mar 2026 07:21:37 -0400
-X-MC-Unique: yogILNUYOAqddDUCaR5OYg-1
-X-Mimecast-MFC-AGG-ID: yogILNUYOAqddDUCaR5OYg_1773919296
-Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 2692518005BB; Thu, 19 Mar 2026 11:21:36 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 994E81800576; Thu, 19 Mar 2026 11:21:35 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 0C5CF21E6937; Thu, 19 Mar 2026 12:21:33 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- qemu-devel@nongnu.org,  qemu-trivial@nongnu.org,  BALATON Zoltan
- <balaton@eik.bme.hu>,  Artyom Tarasenko <atar4qemu@gmail.com>
-Subject: Re: [PATCH] hw/sparc/sun4m_iommu: Fix crash when introspecting
- sun4m-iommu from the CLI
-In-Reply-To: <20260317084450.442071-1-thuth@redhat.com> (Thomas Huth's message
- of "Tue, 17 Mar 2026 09:44:50 +0100")
-References: <20260317084450.442071-1-thuth@redhat.com>
-Date: Thu, 19 Mar 2026 12:21:33 +0100
-Message-ID: <875x6sawua.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w3Bib-0007Js-RO
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:14 -0400
+Received: from va-1-112.ptr.blmpb.com ([209.127.230.112])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
+ id 1w3Bia-0004cR-2d
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+ s=2212171451; d=bytedance.com; t=1773920346; h=from:subject:
+ mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
+ mime-version:in-reply-to:message-id;
+ bh=TveFI/sDZqiQ3mrpO0u1dXilS/98mgQUpWeqgtqotqQ=;
+ b=ENXfe4z0cQx7yKjeFM2ayRbgBztO75YaAJzRVZiUfHZq52JeXuunVfrkoCG6cYC4GAwGIH
+ nufwaOwV3z51LCFshFqkYqmHNeuHTd6SJcgOWui0aRICew23+HhMkC+fl6o996zuF5nxhZ
+ y8fwRIX7kAmjJ32EWMWX/oFlVfsk8u0L3ZU/afUvVgMee94FNbmCejxl6HZuT/EHbsWVY4
+ XPRk5SyTMMzer2dlRiiFW8MDtFdyX8n4PRgq6equUXL3iYtxJLtPcN6rlcYkrwBItg5xg2
+ qc0qSXXC/zQ4IJp+wO6wi6hVSJ4403VzKdoNxoex9TMApjanJoc9KTaMW3bngw==
+Cc: <peterx@redhat.com>, <farosas@suse.de>, <mark.kanda@oracle.com>, 
+ <bchaney@akamai.com>, "hongmianquan" <hongmianquan@bytedance.com>
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Subject: [RFC v2 2/2] cpr: use hashtable for cpr fds
+Mime-Version: 1.0
+In-Reply-To: <20260319113830.53867-1-hongmianquan@bytedance.com>
+To: <qemu-devel@nongnu.org>
+References: <20260319113830.53867-1-hongmianquan@bytedance.com>
+X-Mailer: git-send-email 2.32.1 (Apple Git-133)
+Date: Thu, 19 Mar 2026 19:38:30 +0800
+Message-Id: <20260319113830.53867-3-hongmianquan@bytedance.com>
+X-Lms-Return-Path: <lba+269bbe058+29f6a8+nongnu.org+hongmianquan@bytedance.com>
+X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Received-SPF: pass client-ip=209.127.230.112;
+ envelope-from=hongmianquan@bytedance.com; helo=va-1-112.ptr.blmpb.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -87,25 +69,259 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Use a hashtable to store cpr fds to reduce the time
+consumption of `cpr_find_fd` in scenarios with a large
+number of fds, which relies on the migration support for
+GHashTable implemented earlier. The time complexity for
+`cpr_find_fd` is reduced from O(N) to O(1).
+To demonstrate the performance improvement, we tested the total time
+consumed by `cpr_find_fd` (called N times for N fds) under our real-world
+business scenarios with different numbers of file descriptors. The results
+are measured in nanoseconds:
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> QEMU currently crashes when introspecting the sun4m-iommu device from the
-> command line interface:
->
->  $ ./qemu-system-sparc -display none -device sun4m-iommu,help
->  qemu-system-sparc: ../../devel/qemu/system/physmem.c:1401:
->   register_multipage: Assertion `num_pages' failed.
->  Aborted (core dumped)
->
-> There does not seem to be a compelling reason for initializing the
-> memory regions from the instance_init function, so let's simply move
-> the code into a realize() function instead to fix this issue.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+| Number of FDs | Total time with QLIST (ns) | Total time with GHashTable (ns) |
+|---------------|----------------------------|---------------------------------|
+| 540           | 936,753                    | 393,358                         |
+| 2,870         | 24,102,342                 | 2,212,113                       |
+| 7,530         | 152,715,916                | 5,474,310                       |
 
-Reported-by: Markus Armbruster <armbru@redhat.com>
-Tested-by: Markus Armbruster <armbru@redhat.com>
+As shown in the data, the lookup time grows exponentially with the QLIST
+as the number of fds increases. With the GHashTable, the time consumption
+remains linear (O(1) per lookup), significantly reducing the downtime during
+the CPR process.
 
+Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+---
+ include/migration/cpr.h |   4 +-
+ migration/cpr.c         | 129 ++++++++++++++++++++++++++++------------
+ system/vl.c             |   2 +
+ 3 files changed, 95 insertions(+), 40 deletions(-)
+
+diff --git a/include/migration/cpr.h b/include/migration/cpr.h
+index 5850fd1788..858b251bb5 100644
+--- a/include/migration/cpr.h
++++ b/include/migration/cpr.h
+@@ -18,16 +18,16 @@
+ #define QEMU_CPR_FILE_VERSION   0x00000001
+ #define CPR_STATE "CprState"
+ 
+-typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
+ typedef QLIST_HEAD(CprVFIODeviceList, CprVFIODevice) CprVFIODeviceList;
+ 
+ typedef struct CprState {
+-    CprFdList fds;
++    GHashTable *fds;
+     CprVFIODeviceList vfio_devices;
+ } CprState;
+ 
+ extern CprState cpr_state;
+ 
++void cpr_state_init(void);
+ void cpr_save_fd(const char *name, int id, int fd);
+ void cpr_delete_fd(const char *name, int id);
+ int cpr_find_fd(const char *name, int id);
+diff --git a/migration/cpr.c b/migration/cpr.c
+index a0b37007f5..cfdddb5043 100644
+--- a/migration/cpr.c
++++ b/migration/cpr.c
+@@ -27,59 +27,101 @@ CprState cpr_state;
+ 
+ /****************************************************************************/
+ 
+-typedef struct CprFd {
++typedef struct CprFdKey {
+     char *name;
+     unsigned int namelen;
+     int id;
++} CprFdKey;
++
++typedef struct CprFdVal {
+     int fd;
+-    QLIST_ENTRY(CprFd) next;
+-} CprFd;
++} CprFdVal;
++
++#define VMSTATE_FDS_KEY                                                 \
++{                                                                       \
++    .name = "cpr-fd-key",                                               \
++    .version_id = 1,                                                    \
++    .minimum_version_id = 1,                                            \
++    .fields = (const VMStateField[]) {                                  \
++        VMSTATE_UINT32(namelen, CprFdKey),                              \
++        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFdKey, 0, NULL, namelen), \
++        VMSTATE_INT32(id, CprFdKey),                                    \
++        VMSTATE_END_OF_LIST()                                           \
++    }                                                                   \
++}
+ 
+-static const VMStateDescription vmstate_cpr_fd = {
+-    .name = "cpr fd",
+-    .version_id = 1,
+-    .minimum_version_id = 1,
+-    .fields = (VMStateField[]) {
+-        VMSTATE_UINT32(namelen, CprFd),
+-        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
+-        VMSTATE_INT32(id, CprFd),
+-        VMSTATE_FD(fd, CprFd),
+-        VMSTATE_END_OF_LIST()
+-    }
++#define VMSTATE_FDS_VAL                 \
++{                                       \
++    .name = "cpr-fd-value",             \
++    .version_id = 1,                    \
++    .minimum_version_id = 1,            \
++    .fields = (const VMStateField[]) {  \
++        VMSTATE_FD(fd, CprFdVal),       \
++        VMSTATE_END_OF_LIST()           \
++    }                                   \
++}
++
++static const VMStateDescription vmstate_fds_hashtable[2] = {
++    VMSTATE_FDS_VAL,   /* value */
++    VMSTATE_FDS_KEY   /* key */
+ };
+ 
++static guint cpr_fd_key_hash(gconstpointer v)
++{
++    const CprFdKey *key = v;
++    return g_str_hash(key->name) ^ key->id;
++}
++
++static gboolean cpr_fd_key_equal(gconstpointer a, gconstpointer b)
++{
++    const CprFdKey *key_a = a;
++    const CprFdKey *key_b = b;
++    return !strcmp(key_a->name, key_b->name) && key_a->id == key_b->id;
++}
++
++static void cpr_destroy_fd_key(gpointer data)
++{
++    CprFdKey *k = (CprFdKey *) data;
++    g_free(k->name);
++    g_free(k);
++}
++
++void cpr_state_init(void)
++{
++    CprState *s = &cpr_state;
++
++    s->fds = g_hash_table_new_full(cpr_fd_key_hash, cpr_fd_key_equal,
++                                   cpr_destroy_fd_key, g_free);
++}
++
+ void cpr_save_fd(const char *name, int id, int fd)
+ {
+-    CprFd *elem = g_new0(CprFd, 1);
++    CprFdKey *key = g_new0(CprFdKey, 1);
++    CprFdVal *val = g_new0(CprFdVal, 1);
+ 
+     trace_cpr_save_fd(name, id, fd);
+-    elem->name = g_strdup(name);
+-    elem->namelen = strlen(name) + 1;
+-    elem->id = id;
+-    elem->fd = fd;
+-    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
++    key->name = g_strdup(name);
++    key->namelen = strlen(name) + 1;
++    key->id = id;
++    val->fd = fd;
++    g_hash_table_insert(cpr_state.fds, key, val);
+ }
+ 
+-static CprFd *find_fd(CprFdList *head, const char *name, int id)
++static CprFdVal *find_fd(CprFdKey *key)
+ {
+-    CprFd *elem;
+-
+-    QLIST_FOREACH(elem, head, next) {
+-        if (!strcmp(elem->name, name) && elem->id == id) {
+-            return elem;
+-        }
+-    }
+-    return NULL;
++    return g_hash_table_lookup(cpr_state.fds, key);
+ }
+ 
+ void cpr_delete_fd(const char *name, int id)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFdKey key = {
++        .name = (char *)name,
++        .id = id,
++    };
++    CprFdVal *elem = find_fd(&key);
+ 
+     if (elem) {
+-        QLIST_REMOVE(elem, next);
+-        g_free(elem->name);
+-        g_free(elem);
++        g_hash_table_remove(cpr_state.fds, &key);
+     }
+ 
+     trace_cpr_delete_fd(name, id);
+@@ -87,7 +129,11 @@ void cpr_delete_fd(const char *name, int id)
+ 
+ int cpr_find_fd(const char *name, int id)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFdKey key = {
++        .name = (char *)name,
++        .id = id,
++    };
++    CprFdVal *elem = find_fd(&key);
+     int fd = elem ? elem->fd : -1;
+ 
+     trace_cpr_find_fd(name, id, fd);
+@@ -96,7 +142,11 @@ int cpr_find_fd(const char *name, int id)
+ 
+ void cpr_resave_fd(const char *name, int id, int fd)
+ {
+-    CprFd *elem = find_fd(&cpr_state.fds, name, id);
++    CprFdKey key = {
++        .name = (char *)name,
++        .id = id,
++    };
++    CprFdVal *elem = find_fd(&key);
+     int old_fd = elem ? elem->fd : -1;
+ 
+     if (old_fd < 0) {
+@@ -125,9 +175,11 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
+ 
+ bool cpr_walk_fd(cpr_walk_fd_cb cb)
+ {
+-    CprFd *elem;
++    GHashTableIter iter;
++    CprFdVal *elem;
+ 
+-    QLIST_FOREACH(elem, &cpr_state.fds, next) {
++    g_hash_table_iter_init(&iter, cpr_state.fds);
++    while (g_hash_table_iter_next(&iter, NULL, (gpointer *)&elem)) {
+         g_assert(elem->fd >= 0);
+         if (!cb(elem->fd)) {
+             return false;
+@@ -142,7 +194,8 @@ static const VMStateDescription vmstate_cpr_state = {
+     .version_id = 1,
+     .minimum_version_id = 1,
+     .fields = (VMStateField[]) {
+-        VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
++        VMSTATE_GHASH_V(fds, CprState, 1, vmstate_fds_hashtable,
++                        CprFdKey, CprFdVal),
+         VMSTATE_END_OF_LIST()
+     },
+     .subsections = (const VMStateDescription * const []) {
+diff --git a/system/vl.c b/system/vl.c
+index 3e341142a0..da42de87db 100644
+--- a/system/vl.c
++++ b/system/vl.c
+@@ -2894,6 +2894,8 @@ void qemu_init(int argc, char **argv)
+ 
+     qemu_init_subsystems();
+ 
++    cpr_state_init();
++
+     /* first pass of option parsing */
+     optind = 1;
+     while (optind < argc) {
+-- 
+2.32.1 (Apple Git-133)
 
