@@ -4,52 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B3B26108E1F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:55:54 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AD09B108E1F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:03:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3By5-0002fn-9k; Thu, 19 Mar 2026 07:55:13 -0400
+	id 1w3C5V-000670-3K; Thu, 19 Mar 2026 08:02:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1w3By3-0002bc-47
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:11 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1w3Bxz-0002D0-HN
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:10 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8AxQcAT5LtpvKocAA--.23654S3;
- Thu, 19 Mar 2026 19:54:59 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxPMIO5Ltp3qBYAA--.36678S3;
- Thu, 19 Mar 2026 19:54:57 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, lixianglai@loongson.cn
-Subject: [RFC PATCH v3 1/2] target/loongarch: Add kvm support dintc
-Date: Thu, 19 Mar 2026 19:29:29 +0800
-Message-Id: <20260319112930.2255004-2-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260319112930.2255004-1-gaosong@loongson.cn>
-References: <20260319112930.2255004-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3C5D-00061W-H0
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 08:02:35 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3C59-0003p6-NV
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 08:02:35 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773921750;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=gW9btTrUwVcKATrCcXs1ELji0esgye0fWpCs3tg2EGY=;
+ b=AKGC6I1S4OP+lt3SHaYQRJGW+Wo01M7i8s4HG4I4q6t9UtIh6gFnmClcaD78oTyys0XqIj
+ EEg46CuvNaU8o4BAsIGkUXwSoZpgZOcU8ObG1m8uaAyu9DUypwfEnFgBZWGN8eSeIh4l70
+ afLC2DcM4z1EmyQXNecHRKTXTZLVAIM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-480-jQKAt9P7MaqRwnBCx3g7bQ-1; Thu,
+ 19 Mar 2026 08:02:28 -0400
+X-MC-Unique: jQKAt9P7MaqRwnBCx3g7bQ-1
+X-Mimecast-MFC-AGG-ID: jQKAt9P7MaqRwnBCx3g7bQ_1773921747
+Received: from mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.17])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 1EA6318002FC; Thu, 19 Mar 2026 12:02:27 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id B5F801955D84; Thu, 19 Mar 2026 12:02:26 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 4C65221E6937; Thu, 19 Mar 2026 13:02:24 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Nathan Chen <nathanc@nvidia.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Eric Auger
+ <eric.auger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Shannon Zhao
+ <shannon.zhaosl@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel
+ P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
+ <eblake@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,  Matt Ochs
+ <mochs@nvidia.com>,  Nicolin Chen <nicolinc@nvidia.com>
+Subject: Re: [PATCH v4 4/8] qdev: Add a SsidSizeMode property
+In-Reply-To: <20260318184907.4060030-5-nathanc@nvidia.com> (Nathan Chen's
+ message of "Wed, 18 Mar 2026 11:49:03 -0700")
+References: <20260318184907.4060030-1-nathanc@nvidia.com>
+ <20260318184907.4060030-5-nathanc@nvidia.com>
+Date: Thu, 19 Mar 2026 13:02:24 +0100
+Message-ID: <87jyv89gdr.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxPMIO5Ltp3qBYAA--.36678S3
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.17
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,166 +92,64 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch adds Kvm put/get msgint CSRs and check msgint feature.
+Nathan Chen <nathanc@nvidia.com> writes:
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- target/loongarch/cpu.c     |  5 ++-
- target/loongarch/cpu.h     |  1 +
- target/loongarch/kvm/kvm.c | 69 ++++++++++++++++++++++++++++++++++++++
- 3 files changed, 72 insertions(+), 3 deletions(-)
+> From: Nathan Chen <nathanc@nvidia.com>
+>
+> Introduce a new enum type property allowing to set a Substream ID size
+> for HW-accelerated smmuv3. Values are auto and 0..20. The auto value
+> allows SSID size property to be derived from host IOMMU capabilities.
+> A value of 0 disables SubstreamID, while non-zero values specify the
+> SSID size in bits.
+>
+> Reviewed-by: Eric Auger <eric.auger@redhat.com>
+> Tested-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
 
-diff --git a/target/loongarch/cpu.c b/target/loongarch/cpu.c
-index e22568c84a..fe60c9b92b 100644
---- a/target/loongarch/cpu.c
-+++ b/target/loongarch/cpu.c
-@@ -443,9 +443,6 @@ static void loongarch_max_initfn(Object *obj)
- 
-     cpu->ptw = ON_OFF_AUTO_AUTO;
-     if (tcg_enabled()) {
--        cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
--        cpu->msgint = ON_OFF_AUTO_AUTO;
--
-         uint32_t data = cpu->env.cpucfg[2];
-         data = FIELD_DP32(data, CPUCFG2, HPTW, 1);
-         /* Enable LA v1.1 instructions */
-@@ -456,6 +453,8 @@ static void loongarch_max_initfn(Object *obj)
-         data = FIELD_DP32(data, CPUCFG2, SCQ, 1);
-         cpu->env.cpucfg[2] = data;
-     }
-+    cpu->env.cpucfg[1] = FIELD_DP32(cpu->env.cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    cpu->msgint = ON_OFF_AUTO_AUTO;
- }
- 
- #if defined(CONFIG_KVM)
-diff --git a/target/loongarch/cpu.h b/target/loongarch/cpu.h
-index 4d333806ed..edd840fbed 100644
---- a/target/loongarch/cpu.h
-+++ b/target/loongarch/cpu.h
-@@ -302,6 +302,7 @@ enum loongarch_features {
-     LOONGARCH_FEATURE_PV_IPI,
-     LOONGARCH_FEATURE_STEALTIME,
-     LOONGARCH_FEATURE_PTW,
-+    LOONGARCH_FEATURE_MSGINT,
- };
- 
- typedef struct  LoongArchBT {
-diff --git a/target/loongarch/kvm/kvm.c b/target/loongarch/kvm/kvm.c
-index 9d844c4905..e32e5f1274 100644
---- a/target/loongarch/kvm/kvm.c
-+++ b/target/loongarch/kvm/kvm.c
-@@ -35,6 +35,13 @@ const KVMCapabilityInfo kvm_arch_required_capabilities[] = {
-     KVM_CAP_LAST_INFO
- };
- 
-+static bool msgint_needed(CPUState *cs)
-+{
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+
-+    return FIELD_EX64(cpu->env.cpucfg[1], CPUCFG1, MSG_INT);
-+}
-+
- static int kvm_get_stealtime(CPUState *cs)
- {
-     CPULoongArchState *env = cpu_env(cs);
-@@ -358,6 +365,20 @@ static int kvm_loongarch_get_csr(CPUState *cs)
- 
-     ret |= kvm_loongarch_get_pmu(cs);
- 
-+    if (msgint_needed(cs)) {
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &env->CSR_MSGIS[0]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &env->CSR_MSGIS[1]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &env->CSR_MSGIS[2]);
-+
-+        ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &env->CSR_MSGIS[3]);
-+    }
-+
-     ret |= kvm_get_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_TVAL),
-                            &env->CSR_TVAL);
- 
-@@ -533,6 +554,20 @@ static int kvm_loongarch_put_csr(CPUState *cs, KvmPutState level)
- 
-     ret |= kvm_loongarch_put_pmu(cs);
- 
-+    if (msgint_needed(cs)) {
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(0)),
-+                               &env->CSR_MSGIS[0]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(1)),
-+                               &env->CSR_MSGIS[1]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(2)),
-+                               &env->CSR_MSGIS[2]);
-+
-+        ret |= kvm_set_one_reg(cs, KVM_IOC_CSRID(LOONGARCH_CSR_MSGIS(3)),
-+                               &env->CSR_MSGIS[3]);
-+    }
-+
-     /*
-      * timer cfg must be put at last since it is used to enable
-      * guest timer
-@@ -982,6 +1017,12 @@ static bool kvm_feature_supported(CPUState *cs, enum loongarch_features feature)
-         ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-         return (ret == 0);
- 
-+    case LOONGARCH_FEATURE_MSGINT:
-+        attr.group = KVM_LOONGARCH_VM_FEAT_CTRL;
-+        attr.attr = KVM_LOONGARCH_VM_FEAT_MSGINT;
-+        ret = kvm_vm_ioctl(kvm_state, KVM_HAS_DEVICE_ATTR, &attr);
-+        return (ret == 0);
-+
-     default:
-         return false;
-     }
-@@ -1155,6 +1196,28 @@ static int kvm_cpu_check_pv_features(CPUState *cs, Error **errp)
-     return 0;
- }
- 
-+static int kvm_cpu_check_msgint(CPUState *cs, Error **errp)
-+{
-+    CPULoongArchState *env = cpu_env(cs);
-+    LoongArchCPU *cpu = LOONGARCH_CPU(cs);
-+    bool kvm_supported;
-+
-+    kvm_supported = kvm_feature_supported(cs, LOONGARCH_FEATURE_MSGINT);
-+    env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 0);
-+    if (cpu->msgint == ON_OFF_AUTO_ON) {
-+        if (kvm_supported) {
-+            env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+        } else {
-+            error_setg(errp, "'msgint' feature not supported by KVM on this host");
-+            return -ENOTSUP;
-+        }
-+    } else if ((cpu->msgint == ON_OFF_AUTO_AUTO) && kvm_supported) {
-+        env->cpucfg[1] = FIELD_DP32(env->cpucfg[1], CPUCFG1, MSG_INT, 1);
-+    }
-+
-+    return 0;
-+}
-+
- int kvm_arch_pre_create_vcpu(CPUState *cpu, Error **errp)
- {
-     return 0;
-@@ -1210,6 +1273,12 @@ int kvm_arch_init_vcpu(CPUState *cs)
-         return ret;
-     }
- 
-+    ret = kvm_cpu_check_msgint(cs, &local_err);
-+    if (ret < 0) {
-+        error_report_err(local_err);
-+        return ret;
-+    }
-+
-     return 0;
- }
- 
--- 
-2.41.0
+[...]
+
+> diff --git a/qapi/misc-arm.json b/qapi/misc-arm.json
+> index f921d740f1..76ea0a09fa 100644
+> --- a/qapi/misc-arm.json
+> +++ b/qapi/misc-arm.json
+> @@ -45,3 +45,19 @@
+>  #                     { "version": 3, "emulated": false, "kernel": true } ] }
+>  ##
+>  { 'command': 'query-gic-capabilities', 'returns': ['GICCapability'] }
+> +
+> +##
+> +# @SsidSizeMode:
+> +#
+> +# SMMUv3 SubstreamID size configuration mode.
+> +#
+> +# @auto: derive from host IOMMU capabilities
+> +#
+> +# Values 0-20: SSIDSIZE value in bits.  0 disables SubstreamID.
+> +#
+> +# Since: 11.0
+> +##
+> +{ 'enum': 'SsidSizeMode',
+> +  'data': [ 'auto', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+> +            '10', '11', '12', '13', '14', '15', '16', '17', '18',
+> +            '19', '20' ] } # order matters, see ssid_size_mode_auto()
+
+As pointed out in review of the RFC, generated documentation will look
+fairly bad, but we lack the means to do better right now.
+
+> diff --git a/qapi/pragma.json b/qapi/pragma.json
+> index 193bc39059..24aebbe8f5 100644
+> --- a/qapi/pragma.json
+> +++ b/qapi/pragma.json
+> @@ -68,6 +68,7 @@
+>          'S390CpuEntitlement',
+>          'S390CpuPolarization',
+>          'S390CpuState',
+> +        'SsidSizeMode',
+>          'String',
+>          'StringWrapper',
+>          'SysEmuTarget',
+
+QAPI schema
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
