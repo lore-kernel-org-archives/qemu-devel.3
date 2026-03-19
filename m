@@ -4,98 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AED001088E63
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 02:28:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2C971088E66
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 02:35:42 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w337u-0007Iz-CZ; Wed, 18 Mar 2026 22:28:46 -0400
+	id 1w33EK-0000Tu-Si; Wed, 18 Mar 2026 22:35:24 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w337q-0007HH-Uo
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:28:44 -0400
-Received: from fout-b7-smtp.messagingengine.com ([202.12.124.150])
+ id 1w33EB-0000Os-IN
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:35:19 -0400
+Received: from fhigh-b5-smtp.messagingengine.com ([202.12.124.156])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <chad@jablonski.xyz>)
- id 1w337o-0003vV-VR
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:28:42 -0400
-Received: from phl-compute-12.internal (phl-compute-12.internal [10.202.2.52])
- by mailfout.stl.internal (Postfix) with ESMTP id 4301E1D001DF;
- Wed, 18 Mar 2026 22:28:39 -0400 (EDT)
-Received: from phl-frontend-03 ([10.202.2.162])
- by phl-compute-12.internal (MEProxy); Wed, 18 Mar 2026 22:28:39 -0400
+ id 1w33EA-0003RT-5J
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:35:15 -0400
+Received: from phl-compute-05.internal (phl-compute-05.internal [10.202.2.45])
+ by mailfhigh.stl.internal (Postfix) with ESMTP id D356A7A0031;
+ Wed, 18 Mar 2026 22:35:12 -0400 (EDT)
+Received: from phl-frontend-04 ([10.202.2.163])
+ by phl-compute-05.internal (MEProxy); Wed, 18 Mar 2026 22:35:13 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=jablonski.xyz;
  h=cc:cc:content-transfer-encoding:content-type:content-type
  :date:date:from:from:in-reply-to:in-reply-to:message-id
  :mime-version:references:reply-to:subject:subject:to:to; s=fm3;
- t=1773887319; x=1773973719; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p
- 0gRn5cEe2Wc=; b=EeKPeeRJ+AAuMtl67cssmZ477SOhME6WNoihEOZXbN9D3vlH
- msF3xSyLZyObIV178JCfd/6wwJn8BuBw5tooj92c6TIZJxtJ+z3u23oupsRlomZ+
- RujTThR16Zc1ocq6A1GaceSMKvLWfuHUQZ5U22RactpYLl265enLX59dBDSV7qdL
- b8YFYBvUr7SUovorVhq8S9Kb/JuZwvsM5F287tzVznVbMif9ncH/RYvbnnJqPBvY
- bSSqai9lRW6gRlhrQqsMS0dYC/IUNigdFgvIqYGNgMrWo6r/jGR+E1yesfgmAN4i
- rggDzSXXz6d8FsWnp32BEfUKgGKvQdbInLhrUQ==
+ t=1773887712; x=1773974112; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p
+ 0gRn5cEe2Wc=; b=gWykBJplMQnbA1EhdJr7xCUPRg8EXO2woatGht6hlvAZqxBh
+ nWx7MPcDXX1U/ky4EXmmoABYJbTFhCkce18fuU9FMdjiUR6Ai7qECl60pVPeroMb
+ 1GIL8ZlPUxfFN7j9gm8DbZamKal2cPtmTOL+v8oRVawa/Cj1V4iEG18kZKkfXU1f
+ 9cX6VFEmbSCCsg+kEqIUrhSWwv+EUTTxk6mMKm0qN3jGOxJzniNCdAmprGelvuaX
+ ZcbxMbJ/sSNXZjB76CoYbsH3QCwzCES1RHYHbk9h+QLbsiSN+MasKWfj5eYkfx0D
+ CiIIlf1XczdQ/FBvbrQvj/LQVEa3Qs2/sVU4Qg==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
  messagingengine.com; h=cc:cc:content-transfer-encoding
  :content-type:content-type:date:date:feedback-id:feedback-id
  :from:from:in-reply-to:in-reply-to:message-id:mime-version
  :references:reply-to:subject:subject:to:to:x-me-proxy
- :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773887319; x=
- 1773973719; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p0gRn5cEe2Wc=; b=L
- 9sDmY34jWmcDR/rBBDvmG5MEQiHAF0cwjydllGey00XZXuDgbeLPK7UJi81dS0kV
- EJ19EQ4ablBCoERz7GIkUN/qg+C61k6UpWvZOIoHDSjIa4HaGS5Dd8DSzD5Fi0O5
- km8YfPZA3y/vQiYwESPbtHl5bSflQy+nwRLjdWnki+C5YQ18YzXmBRFFVpVII0dm
- ueyYFCEP0AiANdC1SijTr2ds1kh7ZkXVnFSkMWuru4ZFRRwy7kkWdSRG7QAIh6KC
- jnHGiW/XjlwoTi3MIV8eBy1v16GOAIKLiCWzfd+e2NYHLedA2MSKRaYusdQ407FO
- 0RHDQ5wYlMjcPuDxFvKbA==
-X-ME-Sender: <xms:Vl-7acJCRwxxgKq3xvx4p96wWHTNqQzcsPVr6NHBNhzwgud_XUZA0w>
- <xme:Vl-7af35mv5ntpgiqarCi_C_Ylwe9DovZB4UtL4x99j66vnRvMiHHs8JyL4eKXVFO
- RlL5lEzj2FireaVdUlqXwFwxecyUwF-buoQk-7GoBFyPw5JL0rD0YOB>
-X-ME-Received: <xmr:Vl-7aWgZlchrDA83xPZb30IKyPPAFc4ZX4LOZa9CsLMaO2M4W_Jy3hs7kdF1>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehkeduucetufdoteggodetrf
+ :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; t=1773887712; x=
+ 1773974112; bh=X4vr3y5P7uxElxeresXU7PPjABdWVi5p0gRn5cEe2Wc=; b=j
+ Vybbtd5eRhFa2sj/DtZPut8cl5WW3QY8uCTuJLJiMF1dQXQITM0xoTsMQl4qOBRR
+ IH09CD6v6Y8o36aa6Ubu5mho/+YByLnUd8aGvX6e9zQK7qJaogspRLZfu5RkXdcm
+ GOObvIiJ5IHssYCSqX9vu4Gb851/sjYV26H9AMW2m8cQkzMitUPthorXwtmNNEM4
+ IfQ0PJ3a8Bjo0JYfNklMamj8/72sYDDl7uM1XqdgJJlccq8FsLbshRbnKI8zrkrE
+ q38Zc47jtX/luLJIsmlKqzU0NAWGz25OYB0RpbgCmYldGKkEvIJEY/vrfHFyipi7
+ q90xm9LFfn32gCNjvo3Jg==
+X-ME-Sender: <xms:4GC7aQP5Ov-3Pk4FSx0S-1-0D5rhBubLEkx4g7mEow1xjRIZDvdMeQ>
+ <xme:4GC7aar5Ccg_kaUp1-jn3By0peH2yaAm1cAiIvN-wGfTTRD20vH_O4TDZeSTzf2bK
+ nghck5KQzvJjnLHXzWXlRAP_KJ3fjPCVzXNde4fNY0ORuZ5SxxTkKw>
+X-ME-Received: <xmr:4GC7aRFkCQDtMyDqu5ngMsJm_sAZAEoqNYQuqKiaNeTNP-Eelr-sI_6fepBb>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgeefgedrtddtgdeftdehkeefucetufdoteggodetrf
  dotffvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfurfetoffkrfgpnffqhgenuceu
  rghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmnegfrh
- hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkuffhvfevofhfjgesthhqredtredt
+ hlucfvnfffucdljedtmdenucfjughrpegggfgtfffkvefuhffvofhfjgesthhqredtredt
  jeenucfhrhhomhepfdevhhgrugculfgrsghlohhnshhkihdfuceotghhrggusehjrggslh
- honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpeekkeekfedujefgleeguddtuefg
- hedvhfehhfdutdekffdujeelfeefkeegleejhfenucevlhhushhtvghrufhiiigvpedtne
+ honhhskhhirdighiiiqeenucggtffrrghtthgvrhhnpefhfeduffekffehudffteelvdek
+ tedvjeehtdehkeethfehvdeghfehtefhffekgeenucevlhhushhtvghrufhiiigvpedtne
  curfgrrhgrmhepmhgrihhlfhhrohhmpegthhgrugesjhgrsghlohhnshhkihdrgiihiidp
  nhgspghrtghpthhtohepiedpmhhouggvpehsmhhtphhouhhtpdhrtghpthhtohepkhhrrg
- igvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdquggvvhgvlhesnhho
- nhhgnhhurdhorhhgpdhrtghpthhtohepmhgrrhgtrghnughrvgdrlhhurhgvrghusehrvg
- guhhgrthdrtghomhdprhgtphhtthhopehphhhilhhmugeslhhinhgrrhhordhorhhgpdhr
- tghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpthhtoheptghhrg
- gusehjrggslhhonhhskhhirdighiii
-X-ME-Proxy: <xmx:Vl-7aQWxHNzLpFUeymgLlZ5r308cB-pgxscO8Df8Y8U3EEnrHJ96gQ>
- <xmx:Vl-7aVWsU2ymx0zJfenYvR4yHZEic5UYe_P5ta0nahlDgi_wLMHfOQ>
- <xmx:Vl-7aQjdAHCwWDEUhfF3VGFzJx8QHFz9bJbQ5Mmx_kjfVS5m87mf4Q>
- <xmx:Vl-7aQbDWzi3efRKP54L0bqTYoFeVuXBmu7fFMGlDtPj0BxY70pl_Q>
- <xmx:V1-7aZqARe7uJKSwgPRbvTIhuGkHeOre5YajvwXlDJjk0TdbfCFYb3Ma>
+ igvghlsehrvgguhhgrthdrtghomhdprhgtphhtthhopehphhhilhhmugeslhhinhgrrhho
+ rdhorhhgpdhrtghpthhtohepsggrlhgrthhonhesvghikhdrsghmvgdrhhhupdhrtghpth
+ htoheptghhrggusehjrggslhhonhhskhhirdighiiipdhrtghpthhtohepmhgrrhgtrghn
+ ughrvgdrlhhurhgvrghusehrvgguhhgrthdrtghomhdprhgtphhtthhopehqvghmuhdqug
+ gvvhgvlhesnhhonhhgnhhurdhorhhg
+X-ME-Proxy: <xmx:4GC7afpQgFU_Ol3AbUQJSo_MgQsErtGSTxpdnv8_0k1bmfn9hfo1hg>
+ <xmx:4GC7aablUIlX86yiukdWJ2p-MZl_ZWFgopC0fX7zTOOm8b269nYcqw>
+ <xmx:4GC7aYUK_V0x3t0hl2ZMqlDkObfsXrTQgH917kNkZUo-dtoXh2p6MA>
+ <xmx:4GC7aT9v1XLThh-vCv__4zi5qtyeoJjz7jztjXnqjvwDvsZq_Gewyw>
+ <xmx:4GC7aeMgirknXUHcwrDNhTzdcO6_zw__41hDMtCgIVcsfmwIWTYvh7aZ>
 Feedback-ID: ib26944c1:Fastmail
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 18 Mar 2026 22:28:38 -0400 (EDT)
+ 18 Mar 2026 22:35:12 -0400 (EDT)
 Received: from localhost (chomposaur [local])
- by chomposaur (OpenSMTPD) with ESMTPA id 14fd1ec2;
- Thu, 19 Mar 2026 02:28:38 +0000 (UTC)
+ by chomposaur (OpenSMTPD) with ESMTPA id 6aef3805;
+ Thu, 19 Mar 2026 02:35:11 +0000 (UTC)
 Mime-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
 Content-Type: text/plain; charset=UTF-8
-Date: Wed, 18 Mar 2026 22:28:38 -0400
-Message-Id: <DH6EKNXJHAFW.33AF7MQ5GKGMG@jablonski.xyz>
-Subject: Re: [PATCH v4 3/6] ati-vga: Do not add crtc offset to src and dst
- data address
-From: "Chad Jablonski" <chad@jablonski.xyz>
-To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
+Date: Wed, 18 Mar 2026 22:35:11 -0400
+Message-Id: <DH6EPOOIBB8J.1HT1JGU0TQHND@jablonski.xyz>
 Cc: "Gerd Hoffmann" <kraxel@redhat.com>, <marcandre.lureau@redhat.com>,
  "Chad Jablonski" <chad@jablonski.xyz>,
  =?utf-8?q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: Re: [PATCH v4 5/6] ati-vga: Fix display updates in non-32 bit modes
+From: "Chad Jablonski" <chad@jablonski.xyz>
+To: "BALATON Zoltan" <balaton@eik.bme.hu>, <qemu-devel@nongnu.org>
 X-Mailer: aerc 0.21.0
 References: <cover.1773797056.git.balaton@eik.bme.hu>
- <3abba5651a31af2d40b20269e224c0dcec73fc9a.1773797056.git.balaton@eik.bme.hu>
-In-Reply-To: <3abba5651a31af2d40b20269e224c0dcec73fc9a.1773797056.git.balaton@eik.bme.hu>
-Received-SPF: pass client-ip=202.12.124.150; envelope-from=chad@jablonski.xyz;
- helo=fout-b7-smtp.messagingengine.com
+ <91b8c3d6dba4cc5039f98bdc847e4391329f8b32.1773797056.git.balaton@eik.bme.hu>
+In-Reply-To: <91b8c3d6dba4cc5039f98bdc847e4391329f8b32.1773797056.git.balaton@eik.bme.hu>
+Received-SPF: pass client-ip=202.12.124.156; envelope-from=chad@jablonski.xyz;
+ helo=fhigh-b5-smtp.messagingengine.com
 X-Spam_score_int: 14
 X-Spam_score: 1.4
 X-Spam_bar: +
