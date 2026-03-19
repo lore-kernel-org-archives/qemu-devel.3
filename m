@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 72F061088E5E
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 17:35:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7887A1091900
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 17:42:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3HGm-0006p2-KG; Thu, 19 Mar 2026 13:34:54 -0400
+	id 1w3HNE-0008UA-KX; Thu, 19 Mar 2026 13:41:33 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3HGc-0006oa-Mp
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:34:42 -0400
-Received: from mail-yx1-xb12f.google.com ([2607:f8b0:4864:20::b12f])
+ id 1w3HND-0008U1-Ff
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:41:31 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3HGb-0002Nc-5x
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:34:42 -0400
-Received: by mail-yx1-xb12f.google.com with SMTP id
- 956f58d0204a3-64ea87939b3so406748d50.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 10:34:40 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773941680; cv=none;
+ id 1w3HNB-0008Ph-PM
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:41:31 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-64c9707fc11so1033166d50.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 10:41:29 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773942088; cv=none;
  d=google.com; s=arc-20240605;
- b=WHZ4mgznotYi8GdHKKBNYzvUcRvo2diEJSat2N4UkHEMyM5YmsfRMiexU40nda4ALO
- 4Qp7N1bg5tWZcnv+/Wm2IokJO5m5cTDO5VX5PxTC1xmh0VRIbIEOVE2V6QUilZV5ZUOQ
- QK8BheD9hyuRmI99seZB8ywK7Orw6+L/u5+3fKJ6zzzqg9c0vaZocqtO1JkWkL6qkn/X
- TFofGjKqKoqJmnR/TvVtmQyr+NC3c8rJfxgjpOXnAVeiKBng9kxBdR7+Xp76lNeOpEGm
- PhqnVWHK9ENROor8AtUnZKyW9TISg6HHQrrRpioD8CBDmayMw4ON+L1GS//By/iGP+LJ
- OWvQ==
+ b=EHPU+hkHGX1t5mgmbMsIcG6jmfOCoJCllfYwKPSUeDagx7euBfBrN7Ep/oyAy1ApgI
+ x0B71wt4sbKxLvNhrty6xKt2Zw3/pOIl8K7D+zw02rv7dglsxG/zA/7Iy6/TbBfMu/nf
+ jqRr9L3PXVgOhQCVaw9849GxTDGVgtKzvafjQ/K/PmCZ8lh4rqx/7U8BPaHQufzGyud0
+ O6cSU5IifNWrzMpsLvRrE6dZ3WIBFanHIdnWUwc7kzwLlvUxFbBl/e1d/MeCBrTUviNa
+ 9E1fWV1p1QD638l2fnITo92deAPeMrepAr5DQtYyHvWO6d+74WZeBBxuLbKNscbd5bDV
+ nFLQ==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=fOL4c2q9gla+Uu04yGal6zOHbTfHMT1xGYmmambwpaw=;
- fh=LKm8SA9mUPlQVekpeFoPIxDgWCQ8iL0Atn5eXCmBJIY=;
- b=A6QpD2QEkW9sBhFNO5/mFuuen57DN7dt//bQCnao5iGmDQ2ekr8L20dcfzFfF8x47Q
- J4ldod/Xbd3ZgJ4q8FPblNW3rf4QDWpjBNjOPNXaW9Sfx6H2Lo/f0SIAcQxU1Vw1jype
- Y/FMedhoSWk/Fpc678XjG/R4hmYb+t3W+MnAsn4nxkbEdgQ5sZW8kBbfL/JerILt9WSb
- oRh8xZ8woEKCktXsGCXFsqouBsGYBTIvL/cdokUnApTSU39VeX4c2yelzr+0q3k4vwwT
- AOFMtJ37Vce1OmFxhQV+Nyo6tTbEsfekRy0CM6O3tHX0wawda3woqsGw/6fNwC/dS+EB
- X3EA==; darn=nongnu.org
+ bh=WKaACPQsl5AHC9/3yfX3aq6ksbv8J5wba/nVwvxfz1g=;
+ fh=7g8R6cEJaVMV/1BX4UiN0GJ7QdXpS1kB7s61x593jpg=;
+ b=SkxlThEHmAMTSix0g2LA7Z72E2YPf/LkJShDZDfZbAu4h4mClcBqX/rtNXPK6HDb1I
+ jOf2xZ41dkM7B6NNrR86fghGp/p5Ot8FQHZkq3qQaRaYk3B4AnteMoy00pRGo/b4tXN2
+ /lcTCABkWfdMgi9FUIBSiBaqr+co8OwEiiteJ0cNTvgGjDAwH3K9eFD/Ig/mKCyaXbXq
+ sPCpCpkSfHgG+7j33vHaAyy887xifhLG94Ab9ZPwgXYMNTOBAoFVERmkaZWtuAikiMRz
+ b7DmfBNSxjHH/gUJh0tt89XAUOXxWYiu0DYxZN6GaXa+pdfd8yUjYLjsI/7IR8c8MKLl
+ lyZw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773941680; x=1774546480; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773942088; x=1774546888; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=fOL4c2q9gla+Uu04yGal6zOHbTfHMT1xGYmmambwpaw=;
- b=E2TsAtUTfW+euQ4edbgt+FyHbljkwoeJAgcKyc4KsV+va5R/Xjt0Ir9zRZQEtSlq70
- PN1HHIPA5B8AwAMlpnAZFWWwSCHoCa/ItuMoW3Wucu8bwS/lmfGWvWx/4uvFFgag48hl
- KOL+5hWBJlUP2kfBo9JhnrcZPYJB86oZwzjB+I5aY5VHT6uBiIrmty4c4DdzgHaa1Sp5
- m2nRLMgqD1XazekXfMgqrWgyo0U3WcICH0kurIbGRR0Bz7iQSsNYxjHFwu3yhzVeT+RI
- JG+/oleal/9YlN+85ppedOI+YyHnIVwr6Hi3EM27fuGdBqhFuIEiMjUs9TN2xAFUqkLz
- a/5g==
+ bh=WKaACPQsl5AHC9/3yfX3aq6ksbv8J5wba/nVwvxfz1g=;
+ b=vwizhuGnrNTWW6OD/7bp2wYXJq+ebq/xxx9Vat/ih/bmv6oPITRBAkizAPov6ltsir
+ Ph5jSQV5qJRt8u0MPMUtQm21ldkMihPR0IHInC0QjTzN/urgiMSVRdU8OIi3693ugdEc
+ PWRXzGjE7YL4SY2e4KhXF1E9kDNJpRUc/D4hBb1Ajyxqjo3gE15HZdwXqsp7aSmyiqZz
+ AgSbqprOU/3wHJgDm1XGMzIPsuXLVKyNE0mqn/DcSo8AEZkyduDRcvD04NZxpoTxOrPu
+ t9VF8e8jSF8Te1/YlmjN5F3+oAzESTQ64v/KPjNsGo13W9/laTv5S41dGTPJuVj7PVto
+ TBDw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773941680; x=1774546480;
+ d=1e100.net; s=20251104; t=1773942088; x=1774546888;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=fOL4c2q9gla+Uu04yGal6zOHbTfHMT1xGYmmambwpaw=;
- b=f9vPeagHYQTjqyBgZIUjLM8nkbC7YRlQKGWLvkvhGI4uLVONn+yW2BL/HWZRRwSG/d
- rqxxcyyHGWwHSafDL2zhAXztBHjhkc4ItAmgCfMDKZweA5HU9Znt4J/sld2VCH8Opwf9
- fy3/IOtF7UPHp5fN2oUa0IW9tG5EAE3IGLY1C5ubiMm6hVlI1pLI0KmW94ciUpCWwFE1
- lpLHA9x7oej7aGgFHVAK8YhsPOmsWiP4qwabVgwEIEeoG6pE5BZAOvDC/jRtgqEWiZqG
- SqnsaLPRDBtAcCbZ4pW9sKtSDp3r7s1ZamYrUrJkbs4oCIeAPMcOBE0jyERxEZlMtCqy
- i0fQ==
-X-Gm-Message-State: AOJu0YxECdUHgP3jiIN818LF00MN/q6ujDlEKn6fIKJsHomP9mruUb9q
- TOCYfu3zy/Zqda2i1vjPUqhs2yy3BMuC6J3ytrT3GpL+KlvcQe/8IQ11OW74E2hs6cX7Vfk0wuE
- Ap5t3rlw8dDUVGf9u8rIPbMq9hWw63uQGQVDGjDb9pw==
-X-Gm-Gg: ATEYQzwhb1lGWIrO87DngtFRivQAM2aFSDQ/KHDxY4lQvnH/Mwcu0o7xkqW/CCpcvgo
- 9PvoAmiVQBdopCSBBb+7AQA1WOjQedM/B5HCm0x+gu2KilJX6MZAViUkohUgkdrWJb37Z5Rez+D
- dWTHg4pwESlJszELR3BvdajtwVpxzBweFiXVc+ZB2T97UkppbEvKrAaxpL9ivtBlBzI7RTb6hGG
- l4V/t2i3B9s9U0hG9fh9zU23h6JHZVt8Dwagimlbjz8gCt2Pwv5H0dAQk1h4X4eX3fSwsJY9NLA
- VNE9lDSgkgYUkAM8dw7KibG9pj8w0NSK++WWAKSVOBO44g7GwSC3iXCjznzqCOBc2+D0gUOQVfw
- 4EA==
-X-Received: by 2002:a53:ac84:0:b0:64a:db17:3ce6 with SMTP id
- 956f58d0204a3-64eaa698034mr450433d50.2.1773941679535; Thu, 19 Mar 2026
- 10:34:39 -0700 (PDT)
+ bh=WKaACPQsl5AHC9/3yfX3aq6ksbv8J5wba/nVwvxfz1g=;
+ b=c/MzqPhgjpor/Tl1Z6xO3MR9zcJ+x1duY81WrJL8ofJdF+8CDovoEcSXGNriklcStQ
+ 87Kg70zj+A+7CUBNftHFDPB6scPAun6SYILFZ3B8Mp0Ajzg0Tuabp4R9+VORIAiGLE5l
+ kOFL8pWzx6uBlKjPblBh2PJmB/5x9GzqXNhuNTSzKaoG2gwAeoaBfZEbKw/5xUmeAqlD
+ PvKWOVKvxx8PAp5R22TuNqLpo6JKgHYc3gX2mNR3idAmFriwhFMDqad/mBvvzyNjmkRU
+ Owpzm7u755t8q9jkWKDG+m3p61i2I40oDxkZF7/rOQCGcnkVtLbP/t6Xt8YEvutKnLF+
+ 8FGw==
+X-Gm-Message-State: AOJu0YwDRAJ1A74sGtDMp1HwHVqaQX3fXCF9SaIRWpFHfibAMX0BwK18
+ y4JZAcGJpypJLGtB3URdebchP9ZyKRt/PjKqz9iCMjXyZQoCrnmlhmG71u1XSIfz0DDOrIubnJN
+ H+UizcH1AfLcmG876Pomiwn6Pc4qpl6TwfShSJ2m0Rw==
+X-Gm-Gg: ATEYQzwDz35QY/tUcuAuF7vBgs3vOaJlFCZWvHWoQ66Ia+jlcN4XuFNMUUjP+pVWRbb
+ QPztNf5LftaekVy4jo4frc8U9mkbXIm1opa2HMHGXJaAygo3fdfhVb42mbKmToqqQm/OgCNAgfm
+ Y7IJ0FrcQmL3rulV20xl/RQLv8o9+oeA+Lw1+O+AWxyVhn0wbBp8DWdUb99mOddzC/7i6CfDwLr
+ pph1qVoov8eiG7N3QuLu3CDZcy6VryH5pwtUusQY5VG7h57VX65DxRoShuUdRIUHh3A0R3szsUx
+ xVvWwiBug06irc+i4gsRe4YOakyq1/vWXABsXC7NLNqmY68EOtXoOUg2dt15AvGfqtQ=
+X-Received: by 2002:a05:690e:d45:b0:64e:a229:2147 with SMTP id
+ 956f58d0204a3-64eaa87510dmr352639d50.71.1773942088497; Thu, 19 Mar 2026
+ 10:41:28 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260318193610.2043847-1-qguanni@gmail.com>
-In-Reply-To: <20260318193610.2043847-1-qguanni@gmail.com>
+References: <20260310055530.8893-1-thuth@redhat.com>
+ <20260310055530.8893-4-thuth@redhat.com>
+In-Reply-To: <20260310055530.8893-4-thuth@redhat.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Mar 2026 17:34:28 +0000
-X-Gm-Features: AaiRm52tiMAgpnS89Cv18WnTy86i_3R5QdSyFUsnAvEhA1hfStAnMDPdg3BabPs
-Message-ID: <CAFEAcA_tiZT=vhEvtS3VAgjJLrYEZDBTQxm5xbbWmTBm8DLnng@mail.gmail.com>
-Subject: Re: [PATCH] hw/usb/hcd-ohci: check for MPS=0 to avoid infinite loop
-To: Jenny Guanni Qu <qguanni@gmail.com>
-Cc: qemu-devel@nongnu.org, berrange@redhat.com, mcascell@redhat.com, 
- qemu-security@nongnu.org
+Date: Thu, 19 Mar 2026 17:41:17 +0000
+X-Gm-Features: AaiRm53pN7httHkeWpNcK_WZvZEPpL9rjEr9vhdLVwkci2GBY27ABZ7PNk8Am3s
+Message-ID: <CAFEAcA_84LiDD-aMsQrXipWa2ski1uzt_HeL_1SeFYRZMxuH7g@mail.gmail.com>
+Subject: Re: [PULL 03/25] tests/functional/ppc/test_40: Fix the URL of the
+ NetBSD-7.1.2-prep.iso asset
+To: Thomas Huth <thuth@redhat.com>
+Cc: qemu-devel@nongnu.org, Reinoud Zandijk <reinoud@netbsd.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12f;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,55 +115,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Mar 2026 at 19:36, Jenny Guanni Qu <qguanni@gmail.com> wrote:
+On Tue, 10 Mar 2026 at 05:55, Thomas Huth <thuth@redhat.com> wrote:
 >
-> When a guest sets MaxPacketSize to 0 in an OHCI Endpoint Descriptor,
-> ohci_service_td() transfers 0 bytes per iteration. The Transfer
-> Descriptor never completes because CBP never advances toward BE,
-> causing ohci_service_ed_list() to loop indefinitely and hang QEMU.
+> From: Thomas Huth <thuth@redhat.com>
 >
-> Add a check for MPS==0 after extracting the field from ED flags.
-> If MPS is zero, call ohci_die() to reset the controller and return
-> an error, preventing the infinite loop.
+> We now need a slightly different URL to be able to download this asset.
 >
-> Fixes: CVE-2026-3890
-> Reported-by: Jenny Guanni Qu <qguanni@gmail.com>
-> Signed-off-by: Jenny Guanni Qu <qguanni@gmail.com>
+> Suggested-by: Reinoud Zandijk <reinoud@NetBSD.org>
+> Signed-off-by: Thomas Huth <thuth@redhat.com>
+> Message-ID: <20260212143843.287090-1-thuth@redhat.com>
 > ---
->  hw/usb/hcd-ohci.c | 4 ++++
->  1 file changed, 4 insertions(+)
+>  tests/functional/ppc/test_40p.py | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 >
-> diff --git a/hw/usb/hcd-ohci.c b/hw/usb/hcd-ohci.c
-> index 1aeed9286f..b93a99593e 100644
-> --- a/hw/usb/hcd-ohci.c
-> +++ b/hw/usb/hcd-ohci.c
-> @@ -956,6 +956,10 @@ static int ohci_service_td(OHCIState *ohci, struct ohci_ed *ed)
->          if (len && dir != OHCI_TD_DIR_IN) {
->              /* The endpoint may not allow us to transfer it all now */
->              pktlen = (ed->flags & OHCI_ED_MPS_MASK) >> OHCI_ED_MPS_SHIFT;
-> +            if (pktlen == 0) {
-> +                ohci_die(ohci);
-> +                return 1;
-> +            }
+> diff --git a/tests/functional/ppc/test_40p.py b/tests/functional/ppc/test_40p.py
+> index 614972a7eb3..ed272147f6e 100755
+> --- a/tests/functional/ppc/test_40p.py
+> +++ b/tests/functional/ppc/test_40p.py
+> @@ -27,7 +27,7 @@ class IbmPrep40pMachine(QemuSystemTest):
+>          'f86236e9d01b3f0dd0f5d3b8d5bbd40c68e78b4db560a108358f5ad58e636619')
+>      ASSET_NETBSD71 = Asset(
+>          ('https://archive.netbsd.org/pub/NetBSD-archive/'
+> -         'NetBSD-7.1.2/iso/NetBSD-7.1.2-prep.iso'),
+> +         'NetBSD-7.1.2/iso/NetBSD-7.1.2-prep.iso?key=NetBSD'),
+>          'cc7cb290b06aaa839362deb7bd9f417ac5015557db24088508330f76c3f825ec')
 
-The OHCI spec doesn't (as far as I can tell) say what the
-hardware should do for this situation, so I guess "flag it
-as an error" is a reasonable choice. I think it would be
-useful to note in a comment that this is our best-guess, though:
-
-/*
- * The OHCI spec doesn't say what to do if the guest hands us
- * an endpoint descriptor which specifies a MaximumPacketSize
- * of zero, which would mean we can never actually make forward
- * progress transferring data to it. We choose to treat it as
- * an error.
- */
-
-With something like that,
-
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
-
-(Or if I've missed something in the spec, let me know...)
+My local machine has been sat downloading this file very very
+slowly for the last half an hour. Is there somewhere that
+we can get the asset from that manages faster downloads?
 
 thanks
 -- PMM
