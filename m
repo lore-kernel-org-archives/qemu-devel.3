@@ -4,58 +4,55 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E39A61090222
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:59:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D842A1090223
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:59:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Cvu-0005X6-BV; Thu, 19 Mar 2026 08:57:02 -0400
+	id 1w3Cvv-0005XG-FD; Thu, 19 Mar 2026 08:57:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
- id 1w38m8-0006pj-Uk
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:40 -0400
-Received: from exmail.andestech.com ([60.248.187.195]
- helo=Atcsqr.andestech.com)
+ (Exim 4.90_1) (envelope-from <kniv@yandex-team.ru>)
+ id 1w3964-00066m-0D; Thu, 19 Mar 2026 04:51:16 -0400
+Received: from forwardcorp1a.mail.yandex.net ([178.154.239.72])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
- id 1w38m6-0000PR-Vd
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:40 -0400
-Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTP id 62J8TtpH014939;
- Thu, 19 Mar 2026 16:29:55 +0800 (+08)
- (envelope-from ycliang@andestech.com)
-Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
- (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 19 Mar
- 2026 16:29:55 +0800
-To: <u-boot@lists.denx.de>
-CC: <pbonzini@redhat.com>, <trini@konsulko.com>, <rick@andestech.com>,
- <ycliang@andestech.com>, <jerome.forissier@arm.com>,
- <xypron.glpk@gmx.de>, <ilias.apalodimas@linaro.org>,
- <kory.maincent@bootlin.com>,
- <eric.schikschneit@novatechautomation.com>, <sputnik@on-the-web.ch>,
- <michal.simek@amd.com>, <cnoize@andestech.com>, <qemu-devel@nongnu.org>
-Subject: [PATCH 1/6] riscv: sbi: Add Andes vendor extension and PMA call
- wrappers
-Date: Thu, 19 Mar 2026 16:29:46 +0800
-Message-ID: <20260319082951.3310908-1-ycliang@andestech.com>
+ (Exim 4.90_1) (envelope-from <kniv@yandex-team.ru>)
+ id 1w395z-0002z8-U1; Thu, 19 Mar 2026 04:51:14 -0400
+Received: from mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ (mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net
+ [IPv6:2a02:6b8:c0c:119a:0:640:98fa:0])
+ by forwardcorp1a.mail.yandex.net (Yandex) with ESMTPS id 7A45CC0237;
+ Thu, 19 Mar 2026 11:51:05 +0300 (MSK)
+Received: from kniv-nix.yandex-team.ru (unknown [2a02:6bf:8080:b63::1:31])
+ by mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net (smtpcorp/Yandex) with
+ ESMTPSA id ooJakP0AQuQ0-g1myH6BT; Thu, 19 Mar 2026 11:51:05 +0300
+X-Yandex-Fwd: 1
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=yandex-team.ru;
+ s=default; t=1773910265;
+ bh=ua+utAIb/Aq6z+QAQTGHRzg0lX/9uTinaldLO54cuOI=;
+ h=Message-Id:Date:Cc:Subject:To:From;
+ b=jKfi8dDbYvHx1MWt/MSelf0ZmpR6oX8V8ZDHr4slTikd278gIs1/sDKO78X8nsEWF
+ C0e/fI83R9xeU6aYMiZfJgsPGb/huINpdwHSSrdNiVOtCdEtFtrgcZTQ64usOBZI4G
+ 7pk5aWd7A8mmOlpKCOrqbYAZDfdSlqgs9gC9F76E=
+Authentication-Results: mail-nwsmtp-smtp-corp-main-80.iva.yp-c.yandex.net;
+ dkim=pass header.i=@yandex-team.ru
+From: Nikolay Kuratov <kniv@yandex-team.ru>
+To: "Michael S. Tsirkin" <mst@redhat.com>
+Cc: qemu-devel@nongnu.org,
+	qemu-stable@nongnu.org
+Subject: [PATCH] qmp: Check vhost protocol features for NULL prior to dumping
+Date: Thu, 19 Mar 2026 11:50:50 +0300
+Message-Id: <20260319085050.1982608-1-kniv@yandex-team.ru>
 X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Content-Type: text/plain
-X-Originating-IP: [10.0.15.183]
-X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
- ATCPCS34.andestech.com (10.0.1.134)
-X-DKIM-Results: atcpcs34.andestech.com; dkim=none;
-X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 62J8TtpH014939
-Received-SPF: pass client-ip=60.248.187.195;
- envelope-from=ycliang@andestech.com; helo=Atcsqr.andestech.com
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+Received-SPF: pass client-ip=178.154.239.72; envelope-from=kniv@yandex-team.ru;
+ helo=forwardcorp1a.mail.yandex.net
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -71,132 +68,38 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Leo Yu-Chi Liang <ycliang@andestech.com>
-From:  Leo Yu-Chi Liang via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add support for the Andes SBI vendor extension (EXT_ID 0x0900031E)
-with function IDs for PMA (Physical Memory Attribute) operations:
-probe, set, and free.
+vhost_dev->protocol_features field can be legitimately set to NULL
+as apparently it's vhost-user only field. At least I was able to get
+NULL deref with a vhost-net VM.
 
-These SBI calls allow S-mode software to configure memory attributes
-through OpenSBI, which is needed for setting up noncached memory
-regions on Andes RISC-V platforms.
+Without that check querying vhost-net device:
+info virtio-status /machine/peripheral-anon/device[0]/virtio-backend
+will lead to SIGSEGV.
 
-Signed-off-by: Leo Yu-Chi Liang <ycliang@andestech.com>
+Fixes: 8a8287981d1169f534894d983ecfd3b70b71918b ("hmp: add virtio commands")
+Cc: qemu-stable@nongnu.org
+Signed-off-by: Nikolay Kuratov <kniv@yandex-team.ru>
 ---
- arch/riscv/include/asm/sbi.h | 22 ++++++++++++++++
- arch/riscv/lib/sbi.c         | 51 ++++++++++++++++++++++++++++++++++++
- 2 files changed, 73 insertions(+)
+ hw/virtio/virtio-hmp-cmds.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-diff --git a/arch/riscv/include/asm/sbi.h b/arch/riscv/include/asm/sbi.h
-index 47124dbaac8..8642954d272 100644
---- a/arch/riscv/include/asm/sbi.h
-+++ b/arch/riscv/include/asm/sbi.h
-@@ -37,6 +37,7 @@ enum sbi_ext_id {
- 	SBI_EXT_FWFT = 0x46574654,
- 	SBI_EXT_DBTR = 0x44425452,
- 	SBI_EXT_MPXY = 0x4D505859,
-+	SBI_EXT_ANDES = 0x0900031E,
- };
- 
- enum sbi_ext_base_fid {
-@@ -98,6 +99,23 @@ enum sbi_srst_reset_reason {
- 	SBI_SRST_RESET_REASON_SYS_FAILURE,
- };
- 
-+enum sbi_ext_andes_fid {
-+	SBI_EXT_ANDES_FID0 = 0,
-+	SBI_EXT_ANDES_IOCP_SW_WORKAROUND,
-+	SBI_EXT_ANDES_PMA_PROBE,
-+	SBI_EXT_ANDES_PMA_SET,
-+	SBI_EXT_ANDES_PMA_FREE,
-+};
-+
-+/* Andes PMA configuration flags */
-+#define ANDES_PMACFG_ETYP_OFFSET	0
-+#define ANDES_PMACFG_ETYP_NAPOT	(3 << ANDES_PMACFG_ETYP_OFFSET)
-+#define ANDES_PMACFG_ETYP_OFF		(0 << ANDES_PMACFG_ETYP_OFFSET)
-+#define ANDES_PMACFG_ETYP_MASK		(3 << ANDES_PMACFG_ETYP_OFFSET)
-+#define ANDES_PMACFG_MTYP_OFFSET		2
-+#define ANDES_PMACFG_MTYP_MEM_NON_CACHE_BUF	(3 << ANDES_PMACFG_MTYP_OFFSET)
-+#define ANDES_PMACFG_MTYP_DEV_NOBUF		(0 << ANDES_PMACFG_MTYP_OFFSET)
-+
- enum sbi_ext_dbcn_fid {
- 	SBI_EXT_DBCN_CONSOLE_WRITE = 0,
- 	SBI_EXT_DBCN_CONSOLE_READ,
-@@ -176,4 +194,8 @@ int sbi_get_mimpid(long *mimpid);
- void sbi_srst_reset(unsigned long type, unsigned long reason);
- int sbi_dbcn_write_byte(unsigned char ch);
- 
-+int sbi_pma_probe(void);
-+int sbi_pma_set(unsigned long pa, unsigned long size, unsigned long flags);
-+int sbi_pma_free(unsigned long pa);
-+
- #endif
-diff --git a/arch/riscv/lib/sbi.c b/arch/riscv/lib/sbi.c
-index 35a7d3b12f5..f8a2da5c271 100644
---- a/arch/riscv/lib/sbi.c
-+++ b/arch/riscv/lib/sbi.c
-@@ -220,6 +220,57 @@ int sbi_dbcn_write_byte(unsigned char ch)
- 	return ret.error;
- }
- 
-+/**
-+ * sbi_pma_probe() - Probe for Andes PMA support
-+ *
-+ * Return: Number of PMA entries on success, SBI error on failure
-+ */
-+int sbi_pma_probe(void)
-+{
-+	struct sbiret ret;
-+
-+	ret = sbi_ecall(SBI_EXT_ANDES, SBI_EXT_ANDES_PMA_PROBE,
-+			0, 0, 0, 0, 0, 0);
-+	if (ret.error)
-+		return ret.error;
-+
-+	return ret.value;
-+}
-+
-+/**
-+ * sbi_pma_set() - Set a PMA region
-+ * @pa:		Physical address of the region
-+ * @size:	Size of the region
-+ * @flags:	PMA configuration flags
-+ *
-+ * Return: 0 on success, SBI error on failure
-+ */
-+int sbi_pma_set(unsigned long pa, unsigned long size, unsigned long flags)
-+{
-+	struct sbiret ret;
-+
-+	ret = sbi_ecall(SBI_EXT_ANDES, SBI_EXT_ANDES_PMA_SET,
-+			pa, size, flags, 0, 0, 0);
-+
-+	return ret.error;
-+}
-+
-+/**
-+ * sbi_pma_free() - Free a PMA region
-+ * @pa:		Physical address of the region to free
-+ *
-+ * Return: 0 on success, SBI error on failure
-+ */
-+int sbi_pma_free(unsigned long pa)
-+{
-+	struct sbiret ret;
-+
-+	ret = sbi_ecall(SBI_EXT_ANDES, SBI_EXT_ANDES_PMA_FREE,
-+			pa, 0, 0, 0, 0, 0);
-+
-+	return ret.error;
-+}
-+
- #ifdef CONFIG_SBI_V01
- 
- /**
+diff --git a/hw/virtio/virtio-hmp-cmds.c b/hw/virtio/virtio-hmp-cmds.c
+index 1daae482d3..b9980197ef 100644
+--- a/hw/virtio/virtio-hmp-cmds.c
++++ b/hw/virtio/virtio-hmp-cmds.c
+@@ -15,6 +15,9 @@
+ static void hmp_virtio_dump_protocols(Monitor *mon,
+                                       VhostDeviceProtocols *pcol)
+ {
++    if (pcol == NULL) {
++        return;
++    }
+     strList *pcol_list = pcol->protocols;
+     while (pcol_list) {
+         monitor_printf(mon, "\t%s", pcol_list->value);
 -- 
 2.34.1
 
