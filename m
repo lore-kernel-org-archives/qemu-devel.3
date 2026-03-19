@@ -4,133 +4,144 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B4581090255
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 16:44:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 769311090255
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 16:58:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3GTY-000330-VQ; Thu, 19 Mar 2026 12:44:00 -0400
+	id 1w3Gh0-0006x3-3O; Thu, 19 Mar 2026 12:57:54 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3GTX-000327-Dz
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 12:43:59 -0400
-Received: from mail-pj1-x1030.google.com ([2607:f8b0:4864:20::1030])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3GTV-0003R2-OH
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 12:43:59 -0400
-Received: by mail-pj1-x1030.google.com with SMTP id
- 98e67ed59e1d1-35b98def50bso675905a91.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 09:43:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773938636; x=1774543436; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=2ujEm+aBkGXplseJRQTMt9u5pLAPsE+VT0XOE17Oyo0=;
- b=t1I4uUTNqlvS3nhopASrgiyNALe96N5Wsjmbsj3Jao6zQP70TDFpZ5Oi7+7txCPmRG
- 8vshu1g/CcQ7q08ftcZjTadEZbsWEs1kKl8VHKQH621rCswexuWydSRAn5ZjQPM+ptr9
- LokWpWKH7ndgEzqb6ys4OIsqaQpQjVNE73rUXh484rRRFY+nRoWMjX4z4NLypuOfMpXD
- mEpSlpyz7eQokUAHOry1tUbTFmyhIxlSMO32qjcGZesXITQsI+5O1YLNd9RBZkuYTpox
- L5PFAN3gHhncRYlfOx3ahwKjslujKSbAuAv9WFAZ9blfmKoA/T+8psKnEeMe/BKQ5r59
- pbEg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773938636; x=1774543436;
- h=content-transfer-encoding:in-reply-to:autocrypt:content-language
- :from:references:cc:to:subject:user-agent:mime-version:date
- :message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=2ujEm+aBkGXplseJRQTMt9u5pLAPsE+VT0XOE17Oyo0=;
- b=Nl7E9cE2qMKRpVH7ujUvatXcY9lvILnhZzaMB7N3+yBRumaHa9Mvxb70CetsE3cF+k
- TT46UUYuL6USOicOUCJr5InySo7s/mLRJ8v6evIt/+DaOrwy6L7X1NYVzbXN3l70FvlG
- 0Hu6zOju0o+3k3uiekZ3o5yVHlhJ4PST3XEmsYA4aNNNV4YVtObMF162+KjqCzHs5wQG
- xGXboe8esivZdBFSYdkgn+qtbQcNGHvs1wiaiYkZL4y+rGyWN7qfe1l+pGSRzNPOtsGP
- uUFutVpbBLST9EKIEUlknzTjvwKoZc7U7wxkGCuY0eVNjy4jCsqm7c41+fXmG4skr25k
- RYMQ==
-X-Forwarded-Encrypted: i=1;
- AJvYcCW9FzluhBZRsFwcmkkuWxjLGBoIoLd3m6bh6AA5goMDh6S3WdUBhpaak806hwtqpocSPozU9HLOX8Gj@nongnu.org
-X-Gm-Message-State: AOJu0YzXB6U3q+fx/HFzM8gaqryTeX6WIaHczmcbHN9/AU7JoKwFsU/B
- VRy+uU0f9vLLAZfEqdWnjSZeK3+pGzZ2HWr3u+Q+duPQEouc9URXDbKkkp3oovQawjV98KROO22
- emxStRpk=
-X-Gm-Gg: ATEYQzyDWo40a6t5nv6ZzMbBPzngBB0kSfs/+Mengs2Y6Ji0mL1OUYpcSVfzgtTFPBV
- j0qP8kXIk/6qiFmTSmm00D31SWAMEqvYiiMGbPcNXO6M23S6Tfwzy3WMzINBHQB0YpndtQKNDId
- idwOU7J6+3FeK8/uFWCgVmuVBkyuXjQ3wdAMqjt/SEnKR7nrM7PYzuNlJLWSszbsBXkQQghB2cd
- l9okiav8eDLIGgEHWShk9I5wSKJ13k2+edYMGlDgfJHhfRY2v4u7XnkaxEhL8k4o/jMxXadni/C
- WbO/T+StPPw3TvPWtcmgk9uon3X/CHv/nJLsN9SZS7alxSIwqQu9yicQLCAykigqQzwnf1Z5jeU
- yPFbw4u8x80w7DDr1lIBlQqM9DbLqS21vL7GRQt11/DjfZ3U69h8lvqImpTVsy+7IpiLlVkFjxH
- p8Z/B/qFdbFupMu7q3Y02m2ZFJnB/T+jgT9vmrzO6giuZpfikAjp1xdm/8wGI9pnMFOXVF0y1YK
- 0zrt4I=
-X-Received: by 2002:a17:90b:2d8e:b0:35b:a656:a61a with SMTP id
- 98e67ed59e1d1-35bb9f3eeccmr6836748a91.25.1773938635611; 
- Thu, 19 Mar 2026 09:43:55 -0700 (PDT)
-Received: from [192.168.1.87] (216-71-219-44.dyn.novuscom.net. [216.71.219.44])
- by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bc6026a5asm3935681a91.8.2026.03.19.09.43.54
- (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Mar 2026 09:43:54 -0700 (PDT)
-Message-ID: <cf1c21aa-ba15-41d0-9ae8-8c43d5af9794@linaro.org>
-Date: Thu, 19 Mar 2026 09:43:53 -0700
-MIME-Version: 1.0
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1w3Ggt-0006wT-2z; Thu, 19 Mar 2026 12:57:48 -0400
+Received: from mail-eastus2azlp170100001.outbound.protection.outlook.com
+ ([2a01:111:f403:c110::1] helo=BN1PR04CU002.outbound.protection.outlook.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nathanc@nvidia.com>)
+ id 1w3Ggq-0001gX-Sl; Thu, 19 Mar 2026 12:57:46 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
+ b=t4gVMZndsLwv7z7HDDOeM/ZFRkgxWiemGGunyV2Vi0hrA0lR3pXMYgpwrvYqM1WAhUqZ6k/vF9UnGrFiePoQpqiqh9yrCakfejhix4QM52oIOyIWZBUcp6KSccQ+8dS8W80VsYIzCBjHC5dFqzanCZtRlBU8uT+dmbQ09DaUjeuzIPzdCTh9ZWapiH9xRMTK7bUuvy9o7AabixEywxve0O1lobQf7gIenkzc6AbWgi1J+D7jH3HmbbmaUTrpEvXVhflv/fRQ5cgKGL8kZRnp/bKHydwrmeLHENZN5sjus0WRKomwCwEMVziIWh/7iJaBXMKc9fy1dfxjnFNOx/h+Dw==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
+ s=arcselector10001;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=T+OoDg8quUw4M/0pie89BQOzVdnHdWsSH+LKUsYAzlc=;
+ b=XsoW16WZZSTaFaYm5hcAAMDCCaOeZUKBMzstCGMSc/Ewe06qDu77394BpDLLZj0jTcBc4X2FH3o4h7DqZp6nTc8enMQZEENVuC4TjyfzapESMhCLRzYG0aaGaVGXCzpT+BDAqy4vdDSAnhhLE9vacEt4W6z83Mf46VfFvM+Q/kH67qli9GWXlEtsho8r19L7Pory6hnKRIEX/6SVMyHbM8qxwb2UEq5lfvixXGAOb2IB2Sv/kxSCsoVVo08eNfsNjzZvuS2knKUOwAd9gnbPpG6qZHPagGOntciLZSzQ0ynoWzac1eJemKqTVJYq4EPGUA1TnLJFJR/1U+JhK4vppQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=nvidia.com; dmarc=pass action=none header.from=nvidia.com;
+ dkim=pass header.d=nvidia.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
+ s=selector2;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=T+OoDg8quUw4M/0pie89BQOzVdnHdWsSH+LKUsYAzlc=;
+ b=HP0ckGFddczQqYQwmDHBjSydG00RNx899tSBHQQcj+WX56fv2wOjr2YQv5x4sBe3s5kqHtfRPRmamPGFLWqI5P/XAZaTqBifYztS1uHL+Y5aNMEjWeKluVLxldmWa6JRODVARVx8lzct76EK5dS9Ik2JJBRSapfETQDwd+dH3QsGltXEx6pBTSmcmtxKB0uA0D78VbhSSg9Gwg7sCsKKhZGuJL83Es9qEyOHbhEuKIxQRq9GbM4sLtwGUIZXwJ4aciou4j2ea8HR25ZwHoVkB9UKBKxe7dwK4oDa2lXR0dR1cRrUG1UkIn6/RSEzAS7CNJGWZncj+ciaOsTBNjBZIg==
+Authentication-Results: dkim=none (message not signed)
+ header.d=none;dmarc=none action=none header.from=nvidia.com;
+Received: from CY3PR12MB9555.namprd12.prod.outlook.com (2603:10b6:930:10a::14)
+ by LV8PR12MB9084.namprd12.prod.outlook.com (2603:10b6:408:18e::11)
+ with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Thu, 19 Mar
+ 2026 16:57:37 +0000
+Received: from CY3PR12MB9555.namprd12.prod.outlook.com
+ ([fe80::fdb2:266d:ee2b:8d1e]) by CY3PR12MB9555.namprd12.prod.outlook.com
+ ([fe80::fdb2:266d:ee2b:8d1e%6]) with mapi id 15.20.9745.007; Thu, 19 Mar 2026
+ 16:57:36 +0000
+Content-Type: multipart/alternative;
+ boundary="------------03LYOlqCzwWxI0uhUyCnhFtQ"
+Message-ID: <654cb406-93fd-4c20-8dec-d01fc7d245ee@nvidia.com>
+Date: Thu, 19 Mar 2026 09:57:34 -0700
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v4 0/8] hw/vfio: single-binary
-To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
- qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
-References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
- <517be5bb-d6c8-4220-b585-3adbe4826056@linaro.org>
- <5718eb21-ab32-49e1-82ce-beabb33983ea@linaro.org>
- <f09a4fba-96c2-43f1-92de-412a1db18ac3@linaro.org>
-From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+Subject: Re: [PATCH v4 7/8] hw/arm/smmuv3-accel: Change OAS property to OasMode
+To: Markus Armbruster <armbru@redhat.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org,
+ Eric Auger <eric.auger@redhat.com>, Peter Maydell
+ <peter.maydell@linaro.org>, "Michael S . Tsirkin" <mst@redhat.com>,
+ Igor Mammedov <imammedo@redhat.com>, Ani Sinha <anisinha@redhat.com>,
+ Shannon Zhao <shannon.zhaosl@gmail.com>, Paolo Bonzini
+ <pbonzini@redhat.com>, =?UTF-8?Q?Daniel_P=2EBerrang=C3=A9?=
+ <berrange@redhat.com>, Eric Blake <eblake@redhat.com>,
+ Shameer Kolothum <skolothumtho@nvidia.com>, Matt Ochs <mochs@nvidia.com>,
+ Nicolin Chen <nicolinc@nvidia.com>
+References: <20260318184907.4060030-1-nathanc@nvidia.com>
+ <20260318184907.4060030-8-nathanc@nvidia.com> <87pl5080zl.fsf@pond.sub.org>
 Content-Language: en-US
-Autocrypt: addr=pierrick.bouvier@linaro.org; keydata=
- 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
- ZtfdHNZotF092MIH0IQC3poExQpV/WBYFAI=
-In-Reply-To: <f09a4fba-96c2-43f1-92de-412a1db18ac3@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1030;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1030.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+From: Nathan Chen <nathanc@nvidia.com>
+In-Reply-To: <87pl5080zl.fsf@pond.sub.org>
+X-ClientProxiedBy: SJ0PR03CA0297.namprd03.prod.outlook.com
+ (2603:10b6:a03:39e::32) To CY3PR12MB9555.namprd12.prod.outlook.com
+ (2603:10b6:930:10a::14)
+MIME-Version: 1.0
+X-MS-PublicTrafficType: Email
+X-MS-TrafficTypeDiagnostic: CY3PR12MB9555:EE_|LV8PR12MB9084:EE_
+X-MS-Office365-Filtering-Correlation-Id: 3e4d6498-98bf-42ff-6649-08de85d89ef6
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+ ARA:13230040|376014|7416014|366016|1800799024|8096899003|18002099003|56012099003|22082099003;
+X-Microsoft-Antispam-Message-Info: pK4pwmtJQshgf9JJA6kIB6kGvxGY2h/4mwtuLV6dkbQqJ19SmhWQMzm+MFq3gMl8BxlovpwkWi85otoB/LcQ0CqCSqD4PRxqytVquRuExosuGzoDR5H5y9Nhrj/EeeFZu06Y1I33VypN/ILLz3L4EVRDWjCyyzAfD/197XIK9UrYblqQGzTYFRfcTwxYgxSw0/mN8WiqMIPrZYhW7NeEwZh9MWFTIq+pos67MmdKw0rigW26Dpm1r7LEOTnn0L9ZEdP7f3EAXvNstkHJFCiL9vAcx3gnwiYjAX7550R7q3NQpiHQz8yB8dWdHBxm3X9Eth743I5+SuTp3XgK+InQHVSYGo9DRNj4p5PM0C7V1lOXO4wUopkn7N2VQCwHQ3FUB9suGMH6r0vdiNwfOS3U/X9lzaaXhyTI/J3ymWE/+vPzP1rKFz/eq2aZFeFACDMDRrzNqZm2nFdHjy+wH1LaqywspFXy+bCK3kSCvoCjMYYuJgvdZo+wnnOWARuuy2pGDOMFEwb5Q/mvfJOGefwLaANYlJbqnoY0kdtw6iPXX9s4wcE8vQVXjq4Ff7fsZp8hkcYhLUGIy9u31U8oqiGaL16OEoeX/TqZgRjizC6Si+tj4gHRui3EenCRuRAP6iffpOPIpsHCa6sBCFyE/8ITE1vinimsKGnvsM8p86pIWEwdMyY8NGPCTBuhe7iSNgnmFeYMB2EmiiQx50O01oP2VJgO2Kl5/VuUaMmWB94A3Po=
+X-Forefront-Antispam-Report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
+ IPV:NLI; SFV:NSPM; H:CY3PR12MB9555.namprd12.prod.outlook.com; PTR:; CAT:NONE;
+ SFS:(13230040)(376014)(7416014)(366016)(1800799024)(8096899003)(18002099003)(56012099003)(22082099003);
+ DIR:OUT; SFP:1101; 
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?utf-8?B?YnZNSjBGbjdBSUY3VTh1ZXJibXlPVnJLRnpIb0pXQSsxVFlVRzQvOXc5QUZj?=
+ =?utf-8?B?ZHdHaHE3U2YzU1R4Zms4bnEwR3cyTlhnZGVITEdBNmJRSmcyT253eFBxNVp2?=
+ =?utf-8?B?R3d4Q0VkS3hOeVFNUFBLd01abjFBNlBCbVRWM3RxQ0djNkdJeFEvdDYxUGxj?=
+ =?utf-8?B?WUxwdjlVL0tidUszeTRYcnJDdlVCOHUva1BLTGcrUmQyYm5UY1EwRHMvblFp?=
+ =?utf-8?B?VG5teWlnQmpTajErZUlnVGIvUDV0Um9qWVFNQ0lLYXh5dkhQRCtPSmpZa3po?=
+ =?utf-8?B?K015VVZldjRFZkQwdGhWUkRVSUtqbERhUEErekk0ZnhPNkliY093ck4yeHdJ?=
+ =?utf-8?B?WWVqd0tZZnoyR0Z4eUFzRVdVd2hCU2trOWpiaEFFVHFLWVNSSTVnbFV6ZnB4?=
+ =?utf-8?B?a29BcDVQdERqVjZrc2NQQzBEdjVSTWtLSm91UnNyQjI4ZnI1dWUvb0R4MFdL?=
+ =?utf-8?B?OXZNblBPZVpHMzNtKzB6VnlCaWR0d0RGUXM4T2IwOXRaVzBWSUwyNEw1K1dT?=
+ =?utf-8?B?c20wYmI4U000eVE1Wm40Y2xraFFnTWVKb2ZmTU1ONWFkTjZObFhURzdjZXhQ?=
+ =?utf-8?B?dEhEc0lqUThjZG00R2FPdW1PUFZpMy9ZN3V4MFlXdEwxVXlHeUVsSUR6eDJn?=
+ =?utf-8?B?ZU9rNUYxOU5FS0F4ZVpJdFVQNjVGVFVUOXpFVFk3OG1TbEdLOGlPTW5VUmN4?=
+ =?utf-8?B?cVUzVXdNdk84clZTSVFSdnluRUppbFY4eWFqWDJjVTh1RXhacDdFMks3RHlT?=
+ =?utf-8?B?aTllRnhxQ21jMzIxRzdoT0tWc1B2bExJN21XUU5KUDc0QjhGaWRHdEtOMVlP?=
+ =?utf-8?B?bzFUcmdVQTNvS3lEZkthVUxPRFlDeG5NTC9CZWpDL3hhQitsSmhnVnJrN1lx?=
+ =?utf-8?B?dHNKM004T0pHOGpPNXFvbzNJU3MzZGZTdkRzdkUwd1NJbEdxWU9BdjdDRWI2?=
+ =?utf-8?B?WmR0bzlQZmFmZy8vcU04R3hxaElpZVk3ZlhpZkUrSks3UHU0dHFINGxkZ1NR?=
+ =?utf-8?B?aUNZOWJpTnB6R1o2SmxNc3F3OFhYSldVTVkxVTRIWFc2NkVUeFVRUzhwMysy?=
+ =?utf-8?B?SUdDanN3U2xqODNhSUdYZHQ0cHFNTVc5eGhVMkwzUE5zOW13aXRGWDBIMXcr?=
+ =?utf-8?B?QVB6RytGOURtdUNBNXhTM3ZsMmtBcWw4cm9DbkJZZE9xQkZCaVQ3bDJ5blNm?=
+ =?utf-8?B?M0dXVWpNY1pzVU92R1FXNklEeEpOMHd1UDQvMEp2R1dNV21sM3hlYWFwSWJK?=
+ =?utf-8?B?MVRudmsxdHR6bjlpaFhZSmMzWmNBOUp1dWZHdVFHK0dFRDVUUVpqaUtOQVcv?=
+ =?utf-8?B?RVIyaVRiRnBPOVZFSnkvTkR5elJSc3NZRVRNejJIZEc4SEZpZ3dZTDFwZUkw?=
+ =?utf-8?B?dmFydWxGZTkzV3gxaUpWSGdOL1IzSXhWSkZlVmJUVENYYW1xMnZEalJoVHd4?=
+ =?utf-8?B?WE5oeUxPdXZ4Yi91VXJNUGtWWGcrekYrOGNlWVRmQnV2ckNVOTFWbUU5d3pn?=
+ =?utf-8?B?cWg5aEpwWE5EWUsvR1gyS2w5RkZRdlorT3d4c1o1M1lZUzk4QXJBTXM3SGYw?=
+ =?utf-8?B?RUNvaklMVWJxbTk2QlJqU2tsakMvV1NjSVJuNFgzd0FNVERYaFpRSVoram1i?=
+ =?utf-8?B?OWRmY1FaNTdWN0xxazZNcEZuSWJLZUVlRU1rY0ZmdVc3S01zeGVSdVFNTE04?=
+ =?utf-8?B?a3BPcHNPTnI1NlZVN0pvZ0FOS3lwQjB6Ty9oQUZ0WGR2LzluYjVCRk9RR2x0?=
+ =?utf-8?B?RG5PRkJ0ZGZCbDNsME9XM2pMSFUyWm1ETXRuVDBBWVpvdWZyYlpPb216Lytq?=
+ =?utf-8?B?NnJ2ZXJWM3NtRWNuaHJyeXdPcFNYRFFVTTNMaUFLNW1hdGZhdkQ2OEdzekxu?=
+ =?utf-8?B?UXg4NmVqT3pYMWRLdFRMTU5pZlhWK0U1OG1YOFZtYnJGc1VZVmNaVVBoY1c0?=
+ =?utf-8?B?VXhmdmd2S0M0VDh5RTFtWVFoeTRpL1V5cWpSQ1VEY2QwWk80RmtsSmVmOTZ5?=
+ =?utf-8?B?NzhiZkhMK3RCZ2FvRnpPamlNcmd3Mk9rSk5OV3MzSC9HRlNZSFRjeVlhZFNX?=
+ =?utf-8?B?Q3RmcjNjVTVqR2hBcWw3OGVJWEdPSlJCVXZYV1dsRCtSbkFCaUZCekFmSkl3?=
+ =?utf-8?B?UGhudDNtR3BLWEp2K0l6N1psQnpkR1FmeUF3NzE3THhpVGl2OHkrbTMwQWNP?=
+ =?utf-8?B?enFHRmhsSU5rSmU1eDQ4bXpCRlpVYzhNMDhnaG8vMllKV01DNW9aU0taZUpx?=
+ =?utf-8?B?VTB6TVYvd0dUOTlPaW8vVUNoTFRITm9Hb1UyalEzbFZ5bE1lVWpxcW1qQmMx?=
+ =?utf-8?B?YW9xUmxpQ0dTZUMydXBWNFZ0eHIzY29GZFhVK09LaUt3VlFsWFBSdz09?=
+X-OriginatorOrg: Nvidia.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 3e4d6498-98bf-42ff-6649-08de85d89ef6
+X-MS-Exchange-CrossTenant-AuthSource: CY3PR12MB9555.namprd12.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 19 Mar 2026 16:57:36.1178 (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: TqWhpRAWs3G5otlOOP0JGlEuV1utX/yzox1QUq2AmYAdHnVDZiftmfPTqy+BRrO8gHQoxPe7DOiqQp/aAdOJVg==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: LV8PR12MB9084
+Received-SPF: permerror client-ip=2a01:111:f403:c110::1;
+ envelope-from=nathanc@nvidia.com;
+ helo=BN1PR04CU002.outbound.protection.outlook.com
+X-Spam_score_int: -10
+X-Spam_score: -1.1
+X-Spam_bar: -
+X-Spam_report: (-1.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FORGED_SPF_HELO=1, HTML_MESSAGE=0.001, RCVD_IN_DNSWL_NONE=-0.0001,
+ SPF_HELO_PASS=-0.001, SPF_NONE=0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -146,42 +157,149 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 3/19/26 12:39 AM, Philippe Mathieu-Daudé wrote:
-> On 18/3/26 18:48, Pierrick Bouvier wrote:
->> On 3/17/26 10:57 PM, Philippe Mathieu-Daudé wrote:
->>> On 17/3/26 20:42, Pierrick Bouvier wrote:
->>>
->>>> Pierrick Bouvier (8):
->>>>      hw/vfio/listener.c: remove CONFIG_KVM
->>>>      hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
->>>>      hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
->>>>      hw/vfio: eradicate CONFIG_IOMMU from sources
->>>>      hw/vfio/pci.c: eradicate CONFIG_KVM
->>>>      hw/vfio/ap.c: use full path for target specific header
->>>>      hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
->>>>        hw/vfio/kvm-spapr.c
->>>>      hw/vfio: all vfio files can now be common files
->>>
->>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
->>>
+--------------03LYOlqCzwWxI0uhUyCnhFtQ
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+
+
+On 3/19/2026 5:20 AM, Markus Armbruster wrote:
+>> From: Nathan Chen<nathanc@nvidia.com>
 >>
->> For some reason, b4 trailers does not apply this. I added it manually on
->> latest patch of series.
-> 
-> Sorry for the inconvenience.
-> 
-> Maybe I should have prefixed with "Series:"?
-> 
-> Also there is the '-t' option:
-> 
->     -t, --apply-cover-trailers
->        Apply trailers sent to the cover letter to all patches
->
+>> Change accel SMMUv3 OAS property from uint8_t to OasMode. The
+> Incompatible change; okay because property "oas" is new in this
+> release.  Spelling out such things out in the commit message helps
+> reviewers.  Not worth a respin by itself.
+Ok, I will keep this in mind and mention this is an incompatible change 
+for the next refresh.
+>> 'auto' value is not implemented, as this commit is meant to
+>> set the property to the correct type and avoid breaking JSON/QMP
+>> when the auto mode is introduced. A future patch will implement
+>> resolution of 'auto' value to match the host SMMUv3 OAS value.
+>>
+>> Fixes: a015ac990fd3 ("hw/arm/smmuv3-accel: Add property to specify OAS bits")
+>> Tested-by: Eric Auger<eric.auger@redhat.com>
+>> Signed-off-by: Nathan Chen<nathanc@nvidia.com>
+>> ---
+>>   hw/arm/smmuv3-accel.c          |  2 +-
+>>   hw/arm/smmuv3.c                | 16 ++++++++--------
+>>   include/hw/arm/smmuv3-common.h |  2 --
+>>   include/hw/arm/smmuv3.h        |  2 +-
+>>   4 files changed, 10 insertions(+), 12 deletions(-)
+>>
+>> diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+>> index bc6cbfebc2..65c2f44880 100644
+>> --- a/hw/arm/smmuv3-accel.c
+>> +++ b/hw/arm/smmuv3-accel.c
+>> @@ -850,7 +850,7 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+>>       }
+>>   
+>>       /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
+>> -    if (s->oas == SMMU_OAS_48BIT) {
+>> +    if (s->oas == OAS_MODE_48) {
+>>           s->idr[5] = FIELD_DP32(s->idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
+>>       }
+>>   
+>> diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+>> index 79018f8d66..c67819d6f2 100644
+>> --- a/hw/arm/smmuv3.c
+>> +++ b/hw/arm/smmuv3.c
+>> @@ -1984,6 +1984,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+>>           error_setg(errp, "ssidsize auto mode is not supported");
+>>           return false;
+>>       }
+>> +    if (s->oas != OAS_MODE_44 && s->oas != OAS_MODE_48) {
+>> +        error_setg(errp, "OAS can only be set to 44 or 48 bits");
+>> +        return false;
+>> +    }
+> So, OasMode values other than 44 and 48 are currently useless.  Correct?
 
-Unfortunately, this is available only with b4 shazam, and not b4 
-trailers that I use.
+Yes, in an earlier version we had only implemented auto, 44, and 48 for 
+OasMode, but we included the other OasMode values according to the 
+SMMUv3 spec after receiving feedback to do so.
 
->> Regards,
->> Pierrick
-> 
+
+Thanks,
+
+Nathan
+
+--------------03LYOlqCzwWxI0uhUyCnhFtQ
+Content-Type: text/html; charset=UTF-8
+Content-Transfer-Encoding: 7bit
+
+<!DOCTYPE html><html><head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  </head>
+  <body>
+    <p><br>
+    </p>
+    <div class="moz-cite-prefix">On 3/19/2026 5:20 AM, Markus Armbruster
+      wrote:<br>
+    </div>
+    <blockquote type="cite" cite="mid:87pl5080zl.fsf@pond.sub.org">
+      <pre class="moz-quote-pre" wrap=""><blockquote type="cite" style="color: #007cff;"><pre wrap="" class="moz-quote-pre">From: Nathan Chen <a class="moz-txt-link-rfc2396E" href="mailto:nathanc@nvidia.com" moz-do-not-send="true">&lt;nathanc@nvidia.com&gt;</a>
+
+Change accel SMMUv3 OAS property from uint8_t to OasMode. The
+</pre></blockquote><pre wrap="" class="moz-quote-pre">Incompatible change; okay because property &quot;oas&quot; is new in this
+release.  Spelling out such things out in the commit message helps
+reviewers.  Not worth a respin by itself.
+</pre></pre>
+    </blockquote>
+    Ok, I will keep this in mind and mention this is an incompatible
+    change for the next refresh.
+    <blockquote type="cite" cite="mid:87pl5080zl.fsf@pond.sub.org">
+      <pre class="moz-quote-pre" wrap=""><pre wrap="" class="moz-quote-pre">
+</pre><blockquote type="cite" style="color: #007cff;"><pre wrap="" class="moz-quote-pre">'auto' value is not implemented, as this commit is meant to
+set the property to the correct type and avoid breaking JSON/QMP
+when the auto mode is introduced. A future patch will implement
+resolution of 'auto' value to match the host SMMUv3 OAS value.
+
+Fixes: a015ac990fd3 (&quot;hw/arm/smmuv3-accel: Add property to specify OAS bits&quot;)
+Tested-by: Eric Auger <a class="moz-txt-link-rfc2396E" href="mailto:eric.auger@redhat.com" moz-do-not-send="true">&lt;eric.auger@redhat.com&gt;</a>
+Signed-off-by: Nathan Chen <a class="moz-txt-link-rfc2396E" href="mailto:nathanc@nvidia.com" moz-do-not-send="true">&lt;nathanc@nvidia.com&gt;</a>
+---
+ hw/arm/smmuv3-accel.c          |  2 +-
+ hw/arm/smmuv3.c                | 16 ++++++++--------
+ include/hw/arm/smmuv3-common.h |  2 --
+ include/hw/arm/smmuv3.h        |  2 +-
+ 4 files changed, 10 insertions(+), 12 deletions(-)
+
+diff --git a/hw/arm/smmuv3-accel.c b/hw/arm/smmuv3-accel.c
+index bc6cbfebc2..65c2f44880 100644
+--- a/hw/arm/smmuv3-accel.c
++++ b/hw/arm/smmuv3-accel.c
+@@ -850,7 +850,7 @@ void smmuv3_accel_idr_override(SMMUv3State *s)
+     }
+ 
+     /* Advertise 48-bit OAS in IDR5 when requested (default is 44 bits). */
+-    if (s-&gt;oas == SMMU_OAS_48BIT) {
++    if (s-&gt;oas == OAS_MODE_48) {
+         s-&gt;idr[5] = FIELD_DP32(s-&gt;idr[5], IDR5, OAS, SMMU_IDR5_OAS_48);
+     }
+ 
+diff --git a/hw/arm/smmuv3.c b/hw/arm/smmuv3.c
+index 79018f8d66..c67819d6f2 100644
+--- a/hw/arm/smmuv3.c
++++ b/hw/arm/smmuv3.c
+@@ -1984,6 +1984,10 @@ static bool smmu_validate_property(SMMUv3State *s, Error **errp)
+         error_setg(errp, &quot;ssidsize auto mode is not supported&quot;);
+         return false;
+     }
++    if (s-&gt;oas != OAS_MODE_44 &amp;&amp; s-&gt;oas != OAS_MODE_48) {
++        error_setg(errp, &quot;OAS can only be set to 44 or 48 bits&quot;);
++        return false;
++    }
+</pre></blockquote><pre wrap="" class="moz-quote-pre">So, OasMode values other than 44 and 48 are currently useless.  Correct?</pre></pre>
+    </blockquote>
+    <p><font face="monospace">Yes, in an earlier version we had only
+        implemented auto, 44, and 48 for OasMode, but we included the
+        other OasMode values according to the SMMUv3 spec after
+        receiving feedback to do so.</font></p>
+    <p><font face="monospace"><br>
+      </font></p>
+    <p><font face="monospace">Thanks,</font></p>
+    <p><font face="monospace">Nathan</font></p>
+  </body>
+</html>
+
+--------------03LYOlqCzwWxI0uhUyCnhFtQ--
 
