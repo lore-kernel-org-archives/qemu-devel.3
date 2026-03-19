@@ -4,56 +4,104 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7867C1075286
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 09:47:38 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id ABA40107528B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 09:49:18 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w39y3-0003VK-EZ; Thu, 19 Mar 2026 05:47:03 -0400
+	id 1w39zm-0004G4-UK; Thu, 19 Mar 2026 05:48:50 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w39xz-0003Um-R6; Thu, 19 Mar 2026 05:47:00 -0400
-Received: from frasgout.his.huawei.com ([185.176.79.56])
+ (Exim 4.90_1) (envelope-from <ggala@linux.ibm.com>)
+ id 1w39zk-0004FR-5C; Thu, 19 Mar 2026 05:48:48 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w39xx-0000K2-3u; Thu, 19 Mar 2026 05:46:59 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.83])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fc16j2KqzzHnHBQ;
- Thu, 19 Mar 2026 17:46:21 +0800 (CST)
-Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 8CDAB40573;
- Thu, 19 Mar 2026 17:46:44 +0800 (CST)
-Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
- (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Thu, 19 Mar
- 2026 09:46:43 +0000
-Date: Thu, 19 Mar 2026 09:46:42 +0000
-To: Gustavo Romero <gustavo.romero@linaro.org>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
- <richard.henderson@linaro.org>, <alex.bennee@linaro.org>,
- <peter.maydell@linaro.org>
-Subject: Re: [RFC PATCH 5/7] hw/arm/virt: Add machine option 'mec'
-Message-ID: <20260319094642.00007696@huawei.com>
-In-Reply-To: <20260319022335.22523-6-gustavo.romero@linaro.org>
-References: <20260319022335.22523-1-gustavo.romero@linaro.org>
- <20260319022335.22523-6-gustavo.romero@linaro.org>
-X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
+ (Exim 4.90_1) (envelope-from <ggala@linux.ibm.com>)
+ id 1w39ze-0000qD-Jb; Thu, 19 Mar 2026 05:48:44 -0400
+Received: from pps.filterd (m0360083.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62J01Mfl1374065; Thu, 19 Mar 2026 09:48:39 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:date:from:message-id:mime-version
+ :subject:to; s=pp1; bh=Rluje6chA2npxbemdnviGNEqdugyLj0SszUkomNuZ
+ wc=; b=qB973cqfPzY0Q69XJOBr8Cl+9a1hPCYzreKuDzyKfAC3vcfk/uyLrLa4q
+ zqBrvIuPMAWzmESJ+Ok0Eool8eq8gKVjDNZUeSjGvmvabd1P2/A99MZ5pAA1uiSv
+ Y46CY3agO/gq2zskxsqGEpHnKNxtfmm93DFD90uJSNnTzH/Y03d8SFlWSi5o2wWY
+ tt3WMGAJTgWGQygvoz1Q+hd1ul9+0p0wwyAXc8LYtEkXL08xlfVauH/cughmSKd/
+ vQiGUD9/94KQ0k+mEysM45rkesbf/StZj+UZNAxNSBqEbSUfAqYE4ZZNe9cJx2jW
+ yphL437ASQz+LNbW32FPh12E4vzsQ==
+Received: from ppma13.dal12v.mail.ibm.com
+ (dd.9e.1632.ip4.static.sl-reverse.com [50.22.158.221])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvy64xc6g-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Mar 2026 09:48:39 +0000 (GMT)
+Received: from pps.filterd (ppma13.dal12v.mail.ibm.com [127.0.0.1])
+ by ppma13.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62J9eb8j032343;
+ Thu, 19 Mar 2026 09:48:38 GMT
+Received: from smtprelay04.dal12v.mail.ibm.com ([172.16.1.6])
+ by ppma13.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwm7k1qrs-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Mar 2026 09:48:38 +0000
+Received: from smtpav06.dal12v.mail.ibm.com (smtpav06.dal12v.mail.ibm.com
+ [10.241.53.105])
+ by smtprelay04.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62J9mbwP27919002
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 19 Mar 2026 09:48:37 GMT
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 6741058055;
+ Thu, 19 Mar 2026 09:48:37 +0000 (GMT)
+Received: from smtpav06.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5D79758043;
+ Thu, 19 Mar 2026 09:48:36 +0000 (GMT)
+Received: from b46lp13.lnxne.boe (unknown [9.87.84.240])
+ by smtpav06.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 19 Mar 2026 09:48:36 +0000 (GMT)
+From: Gautam Gala <ggala@linux.ibm.com>
+To: qemu-devel@nongnu.org, qemu-s390x@nongnu.org
+Cc: Nina Schoetterl-Glausch <nsg@linux.ibm.com>,
+ Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Subject: [PATCH] MAINTAINERS: S390 CPU topology: Change maintainer
+Date: Thu, 19 Mar 2026 10:48:35 +0100
+Message-ID: <20260319094835.80329-1-ggala@linux.ibm.com>
+X-Mailer: git-send-email 2.52.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="US-ASCII"
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.203.177.15]
-X-ClientProxiedBy: lhrpeml100010.china.huawei.com (7.191.174.197) To
- dubpeml500005.china.huawei.com (7.214.145.207)
-Received-SPF: pass client-ip=185.176.79.56;
- envelope-from=jonathan.cameron@huawei.com; helo=frasgout.his.huawei.com
-X-Spam_score_int: -24
-X-Spam_score: -2.5
-X-Spam_bar: --
-X-Spam_report: (-2.5 / 5.0 requ) BAYES_00=-1.9, RCVD_IN_DNSWL_MED=-2.3,
+Content-Transfer-Encoding: 8bit
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: XEsXMGvxGgheRZPQq5TBpwbj5de8M8ZV
+X-Proofpoint-GUID: XEsXMGvxGgheRZPQq5TBpwbj5de8M8ZV
+X-Authority-Analysis: v=2.4 cv=KYnfcAYD c=1 sm=1 tr=0 ts=69bbc677 cx=c_pps
+ a=AfN7/Ok6k8XGzOShvHwTGQ==:117 a=AfN7/Ok6k8XGzOShvHwTGQ==:17
+ a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=RnoormkPH1_aCDwRdu11:22
+ a=iQ6ETzBq9ecOQQE5vZCe:22 a=VnNF1IyMAAAA:8 a=69wJf7TsAAAA:8
+ a=SfxrH7SkzMIKDkb5ygcA:9 a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE5MDA3NyBTYWx0ZWRfX9C5TozPpL4IJ
+ toMq77lZ3xx6p6XS1CMODhwxCIO/42920oDQHFQfLiYdKDhPGBo8ebkW+mhhp8rbJ6qt/lW+nzJ
+ qe/Sl0oBBHnfQ1Sy23In/RjKR/rLztXcnrVyKNH4nIpCxrIGVCJWhfVmWCsnXqM6gN/65ktT2qH
+ KN7G8m/nrHFTXwg/QMeTWuVTxUrbogjNJqSWxnmxWmY/e0MLQSIYL2GFxrphlbrVhg+rxj93NZI
+ PFoqb0k1X4/lS698CdFJNjgA4/KOSCWacvdi3lIHqqBhRL5MpkDdUgjQ8byab5eyaH/hftjvSDn
+ 2WVX8MZEZeU0G6F2n+0Xn5HUbpHPLVkt1X19Qv7itnGcYcEDfnsZ1GYJbGo2kLM544B5hdeHTCO
+ ga0ptQBaH6aMj2yyF7mkP+fv6FkKa8bQgL9LAHxGPmddAVyIBQuP2TGlunhSF1SPLxqyEedVVVe
+ rY+y1CQjN6veBYhW5GA==
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-19_01,2026-03-17_02,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ phishscore=0 lowpriorityscore=0 priorityscore=1501 suspectscore=0 bulkscore=0
+ spamscore=0 impostorscore=0 malwarescore=0 adultscore=0 clxscore=1011
+ classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
+ reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603190077
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=ggala@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
  RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -66,70 +114,30 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Jonathan Cameron <jonathan.cameron@huawei.com>
-From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Mar 2026 23:23:33 -0300
-Gustavo Romero <gustavo.romero@linaro.org> wrote:
+Replace Nina with me as the maintainer for s390 CPU topology.
 
-> Add new machine option 'mec' that enables and sets the memory used by
-> FEAT_MEC.
-> 
-> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
+---
+ MAINTAINERS | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Drive by comments only. I'm curious enough to read the patches
-but no idea if this is how people would like to see this implemented!
-
-Jonathan
-
->  static void create_secure_ram(VirtMachineState *vms,
->                                MemoryRegion *secure_sysmem,
->                                MemoryRegion *secure_tag_sysmem)
-> @@ -2267,6 +2288,8 @@ static void machvirt_init(MachineState *machine)
->      MemoryRegion *secure_sysmem = NULL;
->      MemoryRegion *tag_sysmem = NULL;
->      MemoryRegion *secure_tag_sysmem = NULL;
-> +    MemoryRegion *pseudo_encrypted_page = NULL;
-> +    MemoryRegion *tuple_memory = NULL;
->      int n, virt_max_cpus;
->      bool firmware_loaded;
->      bool aarch64 = true;
-> @@ -2495,6 +2518,28 @@ static void machvirt_init(MachineState *machine)
->              }
->          }
->  
-> +        if (vms->mec) {
-> +            if (tcg_enabled()) {
-> +                if (tuple_memory == NULL) {
-> +                    /* XXX(gromero): Add object_property_find(cpuobj, "tuple-memory", ...) here. */
-> +
-> +                    tuple_memory = g_new(MemoryRegion, 1);
-> +                    memory_region_init(tuple_memory, OBJECT(machine), "mec", UINT64_MAX / 32);
-> +
-> +                    pseudo_encrypted_page = g_new(MemoryRegion, 1);
-> +                    memory_region_init(pseudo_encrypted_page, OBJECT(machine), "mec-page", 4 * 1024 /* 4 KiB */);
-> +                }
-> +
-> +                object_property_set_link(cpuobj, "mec",  OBJECT(tuple_memory), &error_abort);
-> +                object_property_set_link(cpuobj, "mec-page",  OBJECT(pseudo_encrypted_page), &error_abort);
-Trivial but some bonus spaces.
-
-> +
-> +                } else {
-
-Indent seems off. 
-
-> +                    /* Check for other accels here. */
-> +                    error_report("MEC requested, but not supported");
-> +                    exit(1);
-> +                }
-> +        }
-> +
->          qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
->          object_unref(cpuobj);
->      }
-
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 97f2759138..f977a41757 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -1916,7 +1916,7 @@ F: hw/s390x/sclp*.c
+ L: qemu-s390x@nongnu.org
+ 
+ S390 CPU topology
+-M: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
++M: Gautam Gala <ggala@linux.ibm.com>
+ S: Supported
+ F: include/hw/s390x/cpu-topology.h
+ F: hw/s390x/cpu-topology.c
+-- 
+2.47.3
 
 
