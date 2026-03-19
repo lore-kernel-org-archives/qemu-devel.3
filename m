@@ -4,79 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E06021091904
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 009511091912
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 19:11:06 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3IlJ-0008WH-DF; Thu, 19 Mar 2026 15:10:29 -0400
+	id 1w3IlT-00008G-Mp; Thu, 19 Mar 2026 15:10:39 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3IlF-0008W4-RR
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:26 -0400
-Received: from mail-wm1-x32d.google.com ([2a00:1450:4864:20::32d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3IlS-000082-0M
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:38 -0400
+Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3IlC-0008EG-AF
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:24 -0400
-Received: by mail-wm1-x32d.google.com with SMTP id
- 5b1f17b1804b1-48541edecf9so14064105e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 12:10:21 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3IlQ-0008Qb-CK
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:37 -0400
+Received: by mail-wr1-x429.google.com with SMTP id
+ ffacd0b85a97d-43b4fd681c2so1104111f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 12:10:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773947420; x=1774552220; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=vU8ZyooruV3h3bAlmHkr5VcsSDa9nsQZcNL7OQ+2qtU=;
- b=QsEJtpSCHg6JtAfvpZajtWoval0b0BVngeMF8uaKGy9ET7VFvlqyvQu3/nHPpmbo8W
- nNLHwO5mz86qu9WYH77O9HNaO9dRqYkfWN7lg3VgwBDPAtOGu3Q0mC7vxRQUUdV/G67L
- GAjMZ7mBJPtApIFRNI7BXBWsCBjwRZptf6sRVMs6oZ20ux8KvElS1d8mPvnFOsY5QJrE
- Lr9CpQCuO29KC0w+0mHzfT+WTaz93bfQElFR29RyG0wbAsmm2Fr4Io0ErysCXxFOq6Uw
- mzdAfoFANF5jVgbG6MeBWMmTp9c+UTnybNwtR3oD6o7c7W0uhCr3hrBV3Ep0ueLfrXnQ
- AUoA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773947420; x=1774552220;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773947434; x=1774552234; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=vU8ZyooruV3h3bAlmHkr5VcsSDa9nsQZcNL7OQ+2qtU=;
- b=ebocgB63buBtJjsRQpmELxS+Lc36eVTVGi9HQ/PpQPJsgFLrRH5onsDRljrHxqZOX+
- EJqPdytKQLp/Zpi8hv+llETZ0HYT/9aFf6kHcv+wbJ5i3K8NnlUPIKHiPb1UpVHeYDqy
- 3ctrUT5BNIY4ViTHPeR2IpJmb4o+5XcMVhy5kyGYOXxPTKS2YO+kIEYELVgoLjcY90/h
- 3vW5htDgYmdbGdzMn3QiVmCLx7ryEJERBOdQ6JMBMMvHfzBlUKnhnuEKPTs+6aD61vAj
- 2qTtinb9cRYrb1gSy0fnPt5ZGZ1M0GUbfwTlOA7GVI7/W42ePYcRqFmi6UYYNGx9b1Po
- LktA==
-X-Gm-Message-State: AOJu0YyUWDSTSJbgQX7FcPMZklUzG1Bx81Df6kvYcsfBw5VaDoOcSLBo
- faMIb8w6PQBjY9H2J91Jt3UEl5EXzXwuN8x2tfbnqFHq5jAZrOlQ5g/qIJraSj6flKe+fJTCv/b
- d83GG8So=
-X-Gm-Gg: ATEYQzy/7OfmncoR5RCjuKBuH5BHkCGeW0IGzJrZZ6PV9gYSiPJDpPulctLCD4iMSCf
- 4Qh9v5IU4YUkTdx+TlBpVYblz5u7fAYJa3dm5QdFwA2l3HLUOfaT6oEaDbZzwX5QYeB46Cexgjq
- 9d/S5icNAMvmrfwPbxo4QwYl6kt073sWvvLRHzaUf0XjL0ckQTNY01iuXVvpqBAeFN/E8MW+Km2
- uJmifXaqrmQ+mG+NWoINKHNg5F3NLChGzPQ4vJvaB8bwTc0V+Yaxw1cY6UCvdtH0ZLZGsf/xlmL
- PjSKd6VXn6ca6bzIQfEx+QScZd2LSO1JzSFzXZhbjAnU/nD/3Mf8Ldn8nWvSAE75u9Y+/xG33Qy
- qaqdrlO/y0YyvniQGD/lLWfzaGwSjxMnyIWespw68IWiH8jeiiCU7VOTgC8NZxzdP5AoSQ9OFQP
- 19qn26nX5shBdulc5Z7s4O8/MG/lgyJ7ybUIyI3bOzmwrcJfHEQWHfxEVxN5QMyIhJ8blO7NhC
-X-Received: by 2002:a05:600c:8b61:b0:485:4328:407a with SMTP id
- 5b1f17b1804b1-486fee1485dmr3407105e9.19.1773947420061; 
- Thu, 19 Mar 2026 12:10:20 -0700 (PDT)
+ bh=usTdj5QCO2BS7JbYt223RkU570yU80bsvLKdRRzFES0=;
+ b=CKYkmoutwWRAqf7r5cvAJqp/ajKSL0SdtdLJY74FNRQQ+lcbUCWgGgkcUweqfVPcmj
+ AjlQun+/mF4vwKlMa2mvf+hH06KHAiSJYD3ZI+ujHQ3TeMHhZMowb839L4mOvmVB6mRB
+ 8/ePkA0zFYyRBFhChXxPpOG1yN9/BRkMgRnkLWk9tJIfh1c37ig4wy27ddxr3z+eMEVw
+ r/yNgFD+vlTrK8f7H3MR+JdrKcJ6/xLT3a6Q3geg75c/i9KFlsyzjBe0do3lWnEbaQNS
+ PIottVeAJNZMNIv97Dkk3o6tta9yHVNxQiV9rqbTgRdMOf3AhfTaybaeANgUPcrfjCjB
+ yNIw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773947434; x=1774552234;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=usTdj5QCO2BS7JbYt223RkU570yU80bsvLKdRRzFES0=;
+ b=d8giiBw4lY8FKSm1zjEpnHX1R6iZ4SYQdJIInKEs2uejcefEYbM4up7Wwr9zIWMPzG
+ dGNtlP5z02R9odzBVy1N0DZonLgg6kmNDZFyVvbBPY9KHHxZRHVhSLAQxdCP2kZoL9Dk
+ Tzpko285GarqBbs9UmIV5JwhhE+I0Nm2MbKCUo02kpncYZpASF+Zew4kB9xqPJtaZujb
+ dXbD/FE3GIAfQSwJDGsYmffDzGYlmSL66sOz5vVQVtTCPhA4pKGEX6Bmmgll0/NEpb4E
+ kmNq4iYonrsZGbPcX9FNYR7xQ9oE4JwB2HXWvbe6196HRx5MFmaFUECEhq8VR4fNNh5w
+ T1Xg==
+X-Gm-Message-State: AOJu0YxmxIxGF5ajJ6mA3QUUVeGlB2yiWWlL7M0bRHtEPPFtOF4Eu+st
+ 7dJaNZXV1BaCxnK5/anDtbGykgNQxmsgVrpRnai/fotBuEl6nlLNaBBxzSVFWBG0t7thJucVfj2
+ bFWTeWn8=
+X-Gm-Gg: ATEYQzxY9Ts4Hd/euKdjhWeiPCecKtFFXqjeW+XHCHuozOHBlEmOtUmxcAnHnPObGUv
+ BbbsCN+6AQQPMewIeVmUB10rHs1SevYR8hbakdYfZMH048mvBYF+xlNHTzxzC8oALPHHC/poubZ
+ iHGPk6GXLZmIMhl1jWx8yn5+VEn9q0tmMtD5EizCrYi0I6IKcl/wqElu6u9i/QQgtocMKNEovVE
+ qweQhJNkNwlcDdFLZpxIUj8DGB1RWlIU8O5MZUonv30qbjuUOYleJC1cXHKFuNgi9OszIOXTdMG
+ sH/4s9Y4PMPD7/h5jQcdV+3zCFTNqOxdBj8Fpf/Z0bk0hh/YKWBfLoyu0Rr5sJal8z0O/iSqc8+
+ bz6alZiHBK9qFc6U4bWdcBoyIKsxuw6xm8LLAmP+5Uik8er2sOeyU47LwxiTQvKkZk9CaXDNSNk
+ z+qOKV9LG6JSRfX8exbOQ6hoE2ihti1dsJBYlIM3oN5GYkbhjwSvpDLN2qncd0zO/Cei25f2Sy
+X-Received: by 2002:a05:6000:2f84:b0:43b:3d53:93ae with SMTP id
+ ffacd0b85a97d-43b6423f844mr803015f8f.12.1773947434269; 
+ Thu, 19 Mar 2026 12:10:34 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe68ec05sm18762585e9.0.2026.03.19.12.10.18
+ ffacd0b85a97d-43b6470b243sm601578f8f.26.2026.03.19.12.10.33
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Mar 2026 12:10:19 -0700 (PDT)
+ Thu, 19 Mar 2026 12:10:33 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 0/8] system/memory: Constify various
- AddressSpace/MemoryRegionCache arguments
-Date: Thu, 19 Mar 2026 20:10:09 +0100
-Message-ID: <20260319191017.12636-1-philmd@linaro.org>
+Subject: [PATCH-for-11.1 2/8] system/memory: Constify various AddressSpace
+ arguments (checks)
+Date: Thu, 19 Mar 2026 20:10:11 +0100
+Message-ID: <20260319191017.12636-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260319191017.12636-1-philmd@linaro.org>
+References: <20260319191017.12636-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32d;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::429;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,28 +102,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-When structures are only accessed read-only, it is safer to mark
-them const to protect against invalid API (ab)uses. This is also
-an useful hint to compilers.
+Mark the AddressSpace structure const when it is only accessed read-only.
 
-Philippe Mathieu-Daudé (8):
-  system/memory: Constify various AddressSpace arguments (flatview)
-  system/memory: Constify various AddressSpace arguments (checks)
-  system/memory: Constify various AddressSpace arguments (xlat)
-  system/memory: Constify various AddressSpace arguments (flat-range)
-  system/memory: Constify various AddressSpace arguments (notify)
-  system/memory: Constify various AddressSpace arguments (cache)
-  system/memory: Constify various AddressSpace arguments (access)
-  system/memory: Constify various MemoryRegionCache arguments
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ include/system/memory.h | 5 +++--
+ system/physmem.c        | 4 ++--
+ 2 files changed, 5 insertions(+), 4 deletions(-)
 
- include/system/memory.h                 | 32 +++++++++---------
- include/system/memory_cached.h          | 20 +++++------
- system/memory-internal.h                |  5 +--
- include/system/memory_ldst_cached.h.inc | 15 +++++----
- system/memory.c                         | 18 +++++-----
- system/physmem.c                        | 44 ++++++++++++++-----------
- 6 files changed, 73 insertions(+), 61 deletions(-)
-
+diff --git a/include/system/memory.h b/include/system/memory.h
+index 1417132f6d9..858dc40dc5f 100644
+--- a/include/system/memory.h
++++ b/include/system/memory.h
+@@ -2829,7 +2829,8 @@ static inline MemoryRegion *address_space_translate(AddressSpace *as,
+  * @is_write: indicates the transfer direction
+  * @attrs: memory attributes
+  */
+-bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
++bool address_space_access_valid(const AddressSpace *as,
++                                hwaddr addr, hwaddr len,
+                                 bool is_write, MemTxAttrs attrs);
+ 
+ /**
+@@ -2839,7 +2840,7 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
+  * @as: #AddressSpace to be accessed
+  * @addr: address within that address space
+  */
+-bool address_space_is_io(AddressSpace *as, hwaddr addr);
++bool address_space_is_io(const AddressSpace *as, hwaddr addr);
+ 
+ /* address_space_map: map a physical memory region into a host virtual address
+  *
+diff --git a/system/physmem.c b/system/physmem.c
+index 4e26f1a1d42..23ea6b69255 100644
+--- a/system/physmem.c
++++ b/system/physmem.c
+@@ -3652,7 +3652,7 @@ static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
+     return true;
+ }
+ 
+-bool address_space_access_valid(AddressSpace *as, hwaddr addr,
++bool address_space_access_valid(const AddressSpace *as, hwaddr addr,
+                                 hwaddr len, bool is_write,
+                                 MemTxAttrs attrs)
+ {
+@@ -3663,7 +3663,7 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr,
+     return flatview_access_valid(fv, addr, len, is_write, attrs);
+ }
+ 
+-bool address_space_is_io(AddressSpace *as, hwaddr addr)
++bool address_space_is_io(const AddressSpace *as, hwaddr addr)
+ {
+     MemoryRegion *mr;
+ 
 -- 
 2.53.0
 
