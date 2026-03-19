@@ -4,66 +4,114 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 69D381088E6C
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 03:09:10 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 181031088E67
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 03:10:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w33kh-000778-SA; Wed, 18 Mar 2026 23:08:51 -0400
+	id 1w33lv-0007gl-6M; Wed, 18 Mar 2026 23:10:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1w33kg-00076h-70; Wed, 18 Mar 2026 23:08:50 -0400
-Received: from mxhk.zte.com.cn ([160.30.148.35])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <liu.xuemei1@zte.com.cn>)
- id 1w33ke-0000BJ-M8; Wed, 18 Mar 2026 23:08:49 -0400
-Received: from mse-fl2.zte.com.cn (unknown [10.5.228.133])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange x25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mxhk.zte.com.cn (FangMail) with ESMTPS id 4fbrHw5hpCz8Xs77;
- Thu, 19 Mar 2026 11:08:44 +0800 (CST)
-Received: from xaxapp04.zte.com.cn ([10.99.98.157])
- by mse-fl2.zte.com.cn with SMTP id 62J38dNW051669;
- Thu, 19 Mar 2026 11:08:39 +0800 (+08)
- (envelope-from liu.xuemei1@zte.com.cn)
-Received: from mapi (xaxapp02[null]) by mapi (Zmail) with MAPI id mid32;
- Thu, 19 Mar 2026 11:08:40 +0800 (CST)
-X-Zmail-TransId: 2afa69bb68b8615-1ea11
-X-Mailer: Zmail v1.0
-Message-ID: <20260319110840842yQtSz2Z4vbFYNq1lVioQo@zte.com.cn>
-In-Reply-To: <20260319110005712RbJuYoQlyLGr39EPL4uH4@zte.com.cn>
-References: 20260319110005712RbJuYoQlyLGr39EPL4uH4@zte.com.cn
-Date: Thu, 19 Mar 2026 11:08:40 +0800 (CST)
-Mime-Version: 1.0
-From: <liu.xuemei1@zte.com.cn>
-To: <mst@redhat.com>, <imammedo@redhat.com>, <anisinha@redhat.com>,
- <pbonzini@redhat.com>, <palmer@dabbelt.com>,
- <alistair.francis@wdc.com>, <liwei1518@gmail.com>,
- <dbarboza@ventanamicro.com>, <zhiwei_liu@linux.alibaba.com>,
- <sunilvl@ventanamicro.com>
-Cc: <qemu-riscv@nongnu.org>, <qemu-devel@nongnu.org>, <liu.xuemei1@zte.com.cn>
-Subject: =?UTF-8?B?W1BBVENIIHY2IFJFU0VORCA0LzRdIHRlc3RzL2FjcGk6IEFkZCBhY3BpIGdlZCBhbmQgcG93ZXIgYnV0dG9uIGluIERTRFQgZm9yIFJJU0MtVg==?=
-Content-Type: text/plain;
-	charset="UTF-8"
-X-MAIL: mse-fl2.zte.com.cn 62J38dNW051669
-X-TLS: YES
-X-SPF-DOMAIN: zte.com.cn
-X-ENVELOPE-SENDER: liu.xuemei1@zte.com.cn
-X-SPF: None
-X-SOURCE-IP: 10.5.228.133 unknown Thu, 19 Mar 2026 11:08:44 +0800
-X-Fangmail-Anti-Spam-Filtered: true
-X-Fangmail-MID-QID: 69BB68BC.002/4fbrHw5hpCz8Xs77
-Received-SPF: pass client-ip=160.30.148.35;
- envelope-from=liu.xuemei1@zte.com.cn; helo=mxhk.zte.com.cn
-X-Spam_score_int: -1
-X-Spam_score: -0.2
-X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1w33lt-0007fb-Jr
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 23:10:05 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
+ id 1w33lr-0000J6-Pl
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 23:10:05 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b97ba4c2be2so62521866b.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 20:10:03 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773889802; cv=none;
+ d=google.com; s=arc-20240605;
+ b=dPbzwNRRHeDaxPySkfIyRXhnahA27021GQqSQnpLibV8AYCJ7TslHrS78iazHFeHj0
+ Gt8j6FoS8JXBmm7p8VVAk6IObCl2e+OuvNCSS+p9PrV1IqOKRE/7AXJsscCLFHAfmFI9
+ yDSm4lWwIAQMZrQXtuxT/VrmnRC+ae4jb+c9gfy3bcaGy/CpuybnVFdmE4xI87H/4m4G
+ T5C7P8yxJ7xL3hYOEriMUUOQQWbha0yD0Q10kK9Pt4WVuwVDegQ6QKxkZBomECufV8ne
+ mp0xKWc/920QIQCT1P4aAdgnU82Yhg9tHMmCs5H8dFEBlPUTLvWubiDgR1le80FjsZc6
+ +ZbQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:dkim-signature;
+ bh=nmOirF6w2jm2cEgOGc8ceaxr91LsbHfhtAVwxmw9A7U=;
+ fh=0bIOm+75pw/QTN9FDs8ZhfYo0XBcsOIKWWC6mti+rTw=;
+ b=KGrWxbWp3edO9RLa8lxxhym49aASVQqyQtsrzN8JEwQMF/ZbM9xK5gb9Vk2QXgNlYr
+ u+JSHC+s6W5ZgTh3OrP56z/gSG3ndhIx5oF0/FlIkbDR8XVHQ1tRV4YLWOz8T4WAK97z
+ 2MKUZUQppTI/fiOvILqDKfAdKA8buS5V0MOX0OWIjomtLT2iJhyYqezSlsBFUdHtpsLR
+ KoWFxOYiMAzz+ZksW/7emetqI00VMI3lL1/hc0ckflaIPIz+4JQ3NY2gbRxnks7xNS5+
+ k1EyFAEuCQtlii8oOtRLPMOfO5MwRp9CqrdZZOFA0DJisXVnpvSjtTrFIrit3UhLagOw
+ k72w==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=gmail.com; s=20230601; t=1773889802; x=1774494602; darn=nongnu.org;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nmOirF6w2jm2cEgOGc8ceaxr91LsbHfhtAVwxmw9A7U=;
+ b=HNeB1EHrCJ3k3pfvvb2qocVx8N4Hi4zXLrmaG3Hy1kz45/XltAiX+OCQOtDGP+ksTx
+ uY7XTt1XAv8+mbOfQUT5alU0VrUh0Qcw9mot9mjAhRAfa8CRCaikf4hOLCb8FPct3Juq
+ jcAQfal33VsZo0z+eOfOvjH7EkOWvLrjGk61ZFdi99IMNUjZ7Bd4f4bROVi3qhuZU2TK
+ R/P4nsbQ8SucDGPFOt3gCxuIB1CehydliWYuVJJhW/jL0Lqx1FBGK3qSX22Sx6r4HeQP
+ DisKTcmEh76cV6iuWsWClMkpNxvAnS7vKXl94AAzzUY1M8qrMJzJhUzJ7EugCkpwBcLz
+ jiNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773889802; x=1774494602;
+ h=content-transfer-encoding:cc:to:subject:message-id:date:from
+ :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=nmOirF6w2jm2cEgOGc8ceaxr91LsbHfhtAVwxmw9A7U=;
+ b=NOcccmNarjWcWTta0fU6RBsyRlQOEfDT6bYZ31Cis5OZdIWtjri5P8KRNOdt1jbk9x
+ 9Gi7srRvWwywht4N70EHZBTEilxMmdKC4d0ChYGvKwuaQc0KivI+pmcXpc5bNxVAsCNu
+ XPUGGk3VCZ6oWvwlWDEJwJZttZeYwaJ6jFwpdiGVEousuXhlQc3NE9UtopRuAVRBrPhm
+ WE5HjMFwe9dIf1eofynnsHpaKGYYAOsCcl7JA5MhpFifrRjOJOc9HCNOBqPGJyojzaNo
+ PbMqcebivxn0rTAIJhs9AlHPJGKFTI2HDTISvX2GMpl4b4rEah7pBiLRXASrCBX64z7H
+ cB1A==
+X-Gm-Message-State: AOJu0YxyFtpzw6dar6iMGlQL/20nUPrIF84JgthZBc1r2DsQDPmGyo1b
+ SpDx73Wtd88zm4eK0RJdQpxBdJO/KYVx6rXIicldpT89j91iwrA0YXgNXqA9AIT+BC8Ak3tFAmf
+ QtuUW+K5Sr0O7lvF5+KBXAe1hMuxg1xw=
+X-Gm-Gg: ATEYQzy2AxwQfsbPH6RezP8mryAl70efmkzxUnDDakQWUAHXn4dKZpmWLpAJoAJ4+Y5
+ Jhn7C1K5YC02k94Q8lBx8LOHBsadXcZ7IqAtP+eYbN2QYVfeKR4agwCReBavxg2R1a9CIUbc60g
+ 2bwygH9EnNCW2E6fanp4wHNaB+6vR/sfE8SQ6HBq3G6wT10VrDz0Drax+b+gp0KDhsCYqwLuOsp
+ qVfMKATnSs6BiPcbmMnX1nDeVKBxZORX/ySyRET9Tai03pzK64OoxfFvnqg4WISTJRaoKYbIsiU
+ BNXrvBOfkPKFIJI7dK+N3l9frTrinN1baS/7aA==
+X-Received: by 2002:a17:906:7145:b0:b93:5405:9260 with SMTP id
+ a640c23a62f3a-b97f4a7e80bmr326032466b.30.1773889801662; Wed, 18 Mar 2026
+ 20:10:01 -0700 (PDT)
+MIME-Version: 1.0
+References: <20260318103122.97244-1-philmd@linaro.org>
+ <20260318103122.97244-3-philmd@linaro.org>
+In-Reply-To: <20260318103122.97244-3-philmd@linaro.org>
+From: Alistair Francis <alistair23@gmail.com>
+Date: Thu, 19 Mar 2026 13:09:35 +1000
+X-Gm-Features: AaiRm50jZxUp16NBdAGNGwHyJqS5UnqKIUXpKhiAcORGkekI6x6l9I2k8et4OMQ
+Message-ID: <CAKmqyKNBUO9PQAma-9z6kr079V6VZu9nYgehNQ4EeKUSvZ24vA@mail.gmail.com>
+Subject: Re: [PATCH-for-11.1 02/16] target/riscv: Use explicit little-endian
+ LD/ST API
+To: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>
+Cc: qemu-devel@nongnu.org, Weiwei Li <liwei1518@gmail.com>, 
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>, Warner Losh <imp@bsdimp.com>, 
+ =?UTF-8?B?RnLDqWTDqXJpYyBQw6l0cm90?= <frederic.petrot@univ-grenoble-alpes.fr>, 
+ Vijai Kumar K <vijai@behindbytes.com>, Anton Johansson <anjo@rev.ng>, 
+ Daniel Henrique Barboza <dbarboza@ventanamicro.com>, qemu-riscv@nongnu.org, 
+ Alistair Francis <Alistair.Francis@wdc.com>,
+ Palmer Dabbelt <palmer@dabbelt.com>, 
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Peter Maydell <peter.maydell@linaro.org>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Djordje Todorovic <Djordje.Todorovic@htecgroup.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
+X-Spam_score_int: -17
+X-Spam_score: -1.8
+X-Spam_bar: -
+X-Spam_report: (-1.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -79,87 +127,49 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Xuemei Liu <liu.xuemei1@zte.com.cn>
+On Wed, Mar 18, 2026 at 8:33=E2=80=AFPM Philippe Mathieu-Daud=C3=A9
+<philmd@linaro.org> wrote:
+>
+> We only build our RISC-V targets as little-endian, therefore
+> the LD/ST API expands to its little-endian variant. Directly
+> use the latter.
+>
+> Mechanical change running:
+>
+>   $ for a in uw w l q; do \
+>       sed -i -e "s/ld${a}_p(/ld${a}_le_p(/" \
+>         $(git grep -wlE '(ld|st)u?[wlq]_p' target/riscv);
+>     done
+>
+> Signed-off-by: Philippe Mathieu-Daud=C3=A9 <philmd@linaro.org>
 
-Update the reference DSDT blob to include acpi ged and power button
-for RISC-V.
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
 
-DSDT diff:
-  * Original Table Header:
-  *     Signature        "DSDT"
-- *     Length           0x00000DD2 (3538)
-+ *     Length           0x00000E61 (3681)
-  *     Revision         0x02
-- *     Checksum         0x25
-+ *     Checksum         0xFC
-  *     OEM ID           "BOCHS "
-  *     OEM Table ID     "BXPC    "
-  *     OEM Revision     0x00000001 (1)
-@@ -1463,6 +1463,39 @@ DefinitionBlock ("", "DSDT", 2, "BOCHS ", "BXPC    ", 0x00000001)
-                 })
-             }
-         }
-+
-+        Device (\_SB.GED)
-+        {
-+            Name (_HID, "ACPI0013" /* Generic Event Device */)  // _HID: Hardware ID
-+            Name (_UID, "GED")  // _UID: Unique ID
-+            Name (_CRS, ResourceTemplate ()  // _CRS: Current Resource Settings
-+            {
-+                Interrupt (ResourceConsumer, Edge, ActiveHigh, Exclusive, ,, )
-+                {
-+                    0x00000009,
-+                }
-+            })
-+            OperationRegion (EREG, SystemMemory, 0x10101000, 0x04)
-+            Field (EREG, DWordAcc, NoLock, WriteAsZeros)
-+            {
-+                ESEL,   32
-+            }
-+
-+            Method (_EVT, 1, Serialized)  // _EVT: Event
-+            {
-+                Local0 = ESEL /* \_SB_.GED_.ESEL */
-+                If (((Local0 & 0x02) == 0x02))
-+                {
-+                    Notify (PWRB, 0x80) // Status Change
-+                }
-+            }
-+        }
-+
-+        Device (PWRB)
-+        {
-+            Name (_HID, "PNP0C0C" /* Power Button Device */)  // _HID: Hardware ID
-+            Name (_UID, Zero)  // _UID: Unique ID
-+        }
-     }
- }
+Alistair
 
-Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
----
- tests/data/acpi/riscv64/virt/DSDT           | Bin 3538 -> 3681 bytes
- tests/qtest/bios-tables-test-allowed-diff.h |   1 -
- 2 files changed, 1 deletion(-)
-
-diff --git a/tests/data/acpi/riscv64/virt/DSDT b/tests/data/acpi/riscv64/virt/DSDT
-index 968e1a15c87bb5753b3a84ddb357e26312767220..90de02e889f0057cbaeadb932ae135e2ca8943c9 100644
-GIT binary patch
-delta 170
-zcmca4{ZNL>CD<h-k&l6a>CZ$iX(pe?8`W3y)<-uvvB&7e2Rp^PySl`4#Cv$U@H#pN
-zcp4ZO8Z&UjhXT1k2_VZkC|Hn>i@TGJftit$fq|itA-cge$km;Jhe1F<fQu!%ksHKy
-zb`5s*Q4o=hcMS{SEC6v576?qPPT*o<;9_bE2oG}NYKU%<1TjFC3ApeE_yrg^8#qHO
-GV*mhK>?tS!
-
-delta 25
-hcmaDTb4i-ZCD<k85-$S-lj=k+X(r!W8`W3y0sv*P2bll>
-
-diff --git a/tests/qtest/bios-tables-test-allowed-diff.h b/tests/qtest/bios-tables-test-allowed-diff.h
-index 8e85fcdee9..dfb8523c8b 100644
---- a/tests/qtest/bios-tables-test-allowed-diff.h
-+++ b/tests/qtest/bios-tables-test-allowed-diff.h
-@@ -1,2 +1 @@
- /* List of comma-separated changed AML files to ignore */
--"tests/data/acpi/riscv64/virt/DSDT",
--- 
-2.27.0
+> ---
+>  target/riscv/cpu_helper.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/target/riscv/cpu_helper.c b/target/riscv/cpu_helper.c
+> index dd6c861a90e..c28832e0e39 100644
+> --- a/target/riscv/cpu_helper.c
+> +++ b/target/riscv/cpu_helper.c
+> @@ -1365,9 +1365,9 @@ static int get_physical_address(CPURISCVState *env,=
+ hwaddr *physical,
+>          }
+>
+>          if (riscv_cpu_mxl(env) =3D=3D MXL_RV32) {
+> -            pte =3D address_space_ldl(cs->as, pte_addr, attrs, &res);
+> +            pte =3D address_space_ldl_le(cs->as, pte_addr, attrs, &res);
+>          } else {
+> -            pte =3D address_space_ldq(cs->as, pte_addr, attrs, &res);
+> +            pte =3D address_space_ldq_le(cs->as, pte_addr, attrs, &res);
+>          }
+>
+>          if (res !=3D MEMTX_OK) {
+> --
+> 2.53.0
+>
+>
 
