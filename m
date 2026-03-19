@@ -4,72 +4,72 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 03DD01088E63
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 02:28:28 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2A581088E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 02:28:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w335x-0003ma-T3; Wed, 18 Mar 2026 22:26:45 -0400
+	id 1w335x-0003lo-5F; Wed, 18 Mar 2026 22:26:45 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1w335t-0003jX-Ku
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:26:41 -0400
+ id 1w335s-0003iC-Jn
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:26:40 -0400
 Received: from mail-yw1-x112a.google.com ([2607:f8b0:4864:20::112a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1w335r-0002sn-Vv
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:26:41 -0400
+ id 1w335p-0002rl-FK
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:26:40 -0400
 Received: by mail-yw1-x112a.google.com with SMTP id
- 00721157ae682-7947cf097c1so5340317b3.2
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 19:26:39 -0700 (PDT)
+ 00721157ae682-79a535e7c00so5725127b3.3
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 19:26:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773887199; x=1774491999; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773887196; x=1774491996; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=Tj5zvCy48mw2g9/BEVzB0FOExoU07LA09j0teQZUMxY=;
- b=KbybQ//RwTPSOkMhhQnKZ35QBMlv4ccKDrtSsAv/IWCY8pzIwGC63EGo8ZJgIzjzTM
- G5SeY1XxYXy7L1PHpbRINC9Cif4b9Aofb5k4J5dx67ZtFjEntMol+++/Y2LeFlwnwQm0
- TUmlQguQehMsYvqw2jCKtmEyikqecj5M1zJRUifqRhBGYR7IKATVJRQZqJ/UuMIt57SV
- n3brlpOVbnltPaI/VOY5+KhXLeQ5YIXIOPI6PridFPNulb3MGD6PcN4V3k9l5wvKR++d
- zjFep4mzndWS4nKi5meqqDfqOJzw/ctiC4n7+0X4ZRmR+QPQQLvR9yt8lGr/0CfsGZe1
- KsOQ==
+ bh=DKkANjLZg1ioAK7kFziWCBF+Rd7tkHlYjXgtjul6Zjg=;
+ b=MGCiiPxEHjBVEbVePiv3NpSD5HJr5ykm90U4JZDrxPkiTcIOJIUP7yX21kvut4hM4A
+ quqCvi9r/92mHmuxNyI7et2un/X5Grnk6Np0aoOoyRzyGmeD9EmneYG5itFvx5X+XJcA
+ C/TUJEPUntO4Eh+2igQ40UexikzksbZx5CTtL+FpfplTHnFGt7F4t0AsnP0sBifmSlyb
+ nuVJjqUZyG0CSaluDNlvW2h/hqVFGUm4rFjylzE2ZyZ39Eq1CnZCSsovN784pri8kPpj
+ PozXNrq0IyYk5MVP74Xud0IYHzEHZxzixBfhC9S2RaeNmq6D5G4RzO6eOJCyZoOFdDmy
+ bLbg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773887199; x=1774491999;
+ d=1e100.net; s=20251104; t=1773887196; x=1774491996;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=Tj5zvCy48mw2g9/BEVzB0FOExoU07LA09j0teQZUMxY=;
- b=XrU/Eg2yOZ3G2sSgqdu4z22KLJJeEsr3uR616gkTE1V04FQEN0am8FKCLG80yDg1pL
- 8GRgcAH0nWokwKxaf6LGj9aNC5dZ/+1/7P4onIEDJpJi2TNjaGstTTd/8+6ul/EZL7li
- 1YzVwto3X53fCdOoPD1WyAIPMNtzKd21MLGWkbbi2l9lNrKMsMcAQlOhv8vVP+HnYI0G
- FT/yvzY3Qh05ePyftvFY5+67fzPT/quHuEDcTUw2s9g6Igk3TEq3jikT8wCHfOVgG+CP
- qcGhywePTu02moMj2LiEfby1c5cpih2Ob0kO8ObcXfC4O2Ogk5hY19IUjdnKEiB5lMIE
- j8gQ==
-X-Gm-Message-State: AOJu0YywvHBmir2bsx+8yFrPJzXlmQjCEKLr+6L/OGiQxVLQvyhYAUyI
- 6ecIwMTushNxNbBn5qn69tCPtI1otCSJtjF1Xj2f4eUo6WB2sjtzqLHlKPUlQ4FOwRwCZSYz1+D
- 9Gan3s2k=
-X-Gm-Gg: ATEYQzy2Z+dbsGAOvxT/PMhgY+2iKj/FaRNMXZNECtnRmhQikGJGbEU/y55O6KGw7bs
- jV7mqvSajqYnp6/SETKcLlTBI35iV0Nayhh3sA4M/AOSpJnoYbUzVqzdHuDxlHfXXxwLoPmkViK
- UVnA9x0Qj3dLAUo3TjjZnkx1h+zmyyV1Qc/uFIactuYn0WQcJIS2rW0GYbabHArKr6x4ZVoFrQl
- 6ppLpR7vnBQ3x4D+xwL4ZLq3rx8IjeHEWYlCqsKRL/zvBxqMpN3a8FMKEXLcWYQmwBLyYvzyYuE
- 1AvY3BZbnxJ3pnF6/6Qd0F1T+Fl6aDOgTE5DQA2EFKFVNkKUhtgYiKM0TBovKeIiWnJElgTKnre
- cnoAGVi2xQ0t347opuDTKKtSARA1Nn8x1svuTfDoxFheF3wSO0aPvcBr/5zKqMPHi9Qk98qz3Q5
- 5eboQkwybZ3gnqsCytiMKJgo8VnqPzGg==
-X-Received: by 2002:a05:690c:4dc5:20b0:799:266:83ba with SMTP id
- 00721157ae682-79a71830746mr47572837b3.4.1773887198700; 
- Wed, 18 Mar 2026 19:26:38 -0700 (PDT)
+ bh=DKkANjLZg1ioAK7kFziWCBF+Rd7tkHlYjXgtjul6Zjg=;
+ b=Y7sb8g+YuKeWwZLx1MYcvN8G/78NwMdxAIASNrITRTElzre0CHEQG8YoWYK0CxBGyb
+ rEt/8vFvotYSkEkdPFs77z+B5l2RQGlYvnO0Uj1VtVJY+6BBNTfZprqeLpn3hFcy6zzA
+ prOJPV3KQb+xxAwLey3ArE6Z1R832c8PoBEf9sotv9U3QImY+go/bNyHltQeeKdk6iGk
+ 46SYNECZRzprgm3rvGuP/JJCaHhvOgOpNQtJw+eLgXIrmzd8rRrpHDllFwZxqdDjDC3I
+ v2zzHY6O0bIxXyZb0gbctodeDWFFpub5QMMnCgwbGKxCUB5N97U5dzcogTOgE7hpIwVN
+ cb0A==
+X-Gm-Message-State: AOJu0YxXgSDImRjRDIGOz+d+NUxpEuDORLtX+/zmiZjqbnRKvfFz74bk
+ IbIL/gjgw/f/O5101y3ZtLXIrg6EMvlATXjzLkf4W9W+zOb2VrXK6cxpHsb2sQhpfTPXrxsqqrc
+ vrf0LSYU=
+X-Gm-Gg: ATEYQzzGum1P1P8vW/yC8Dt8Kiqs1VHEg24KxKFQQwo5ggVGcUWenbzKn5yIKVP6Uyt
+ dA4xl/jlxhw1kaSOTtQDl2MwudgDzChCV2I5LI/rGsA1HrRtJ17tPCAlLROJtSwvbZ+0TDJiGib
+ D2ed8PEG188yBcEKoCNdxpPr+1dyZqH4gCcq0uszobUoiTr/dJL7K9OXJZTgkOxdIDEwkNGN/U/
+ VNEgZLLOPdi1nif9/Z/WlxidiUWapW+IV55yDATyL+9jt9LhalRMIz+Dr+MHcangHvtbJCJouE2
+ QxQhkeEfAwkeaKtcpgRzn+cQmx8zGHgIC3bRAjwOITqKmg9i/kOw8OIC0N6mjceCBFKAYU2pyA+
+ uMcVBwN0zTJExNsKomn190JQ7Jf6eRNwKhSrqwrWPB3z8XynuOP6HMj1iboY8I49fR0enYTbnAu
+ kFE++SS66l2fYy2IJu2BIIRMqhnlny8Q==
+X-Received: by 2002:a05:690c:9988:b0:79a:6eda:b24e with SMTP id
+ 00721157ae682-79a71ade8bamr60109677b3.33.1773887196291; 
+ Wed, 18 Mar 2026 19:26:36 -0700 (PDT)
 Received: from gromero0.. ([177.146.137.168]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-79a7141eb65sm28159417b3.21.2026.03.18.19.26.36
+ 00721157ae682-79a7141eb65sm28159417b3.21.2026.03.18.19.26.34
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 19:26:38 -0700 (PDT)
+ Wed, 18 Mar 2026 19:26:36 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org
 Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, gustavo.romero@linaro.org
-Subject: [RFC PATCH 5/7] hw/arm/virt: Add machine option 'mec'
-Date: Wed, 18 Mar 2026 23:23:33 -0300
-Message-Id: <20260319022335.22523-6-gustavo.romero@linaro.org>
+Subject: [RFC PATCH 4/7] target/arm/cpu: Add FEAT_MEC object properties
+Date: Wed, 18 Mar 2026 23:23:32 -0300
+Message-Id: <20260319022335.22523-5-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260319022335.22523-1-gustavo.romero@linaro.org>
 References: <20260319022335.22523-1-gustavo.romero@linaro.org>
@@ -99,156 +99,68 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add new machine option 'mec' that enables and sets the memory used by
-FEAT_MEC.
+Add 'mec' and 'mec-page' object properties to the Arm CPU object that
+allows setting at machine level the memories used by FEAT_MEC.
 
 Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- hw/arm/virt.c         | 76 +++++++++++++++++++++++++++++++++++++++++++
- include/hw/arm/virt.h |  1 +
- 2 files changed, 77 insertions(+)
+ target/arm/cpu.c | 20 ++++++++++++++++++++
+ target/arm/cpu.h |  4 ++++
+ 2 files changed, 24 insertions(+)
 
-diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-index cab2e21e8a..7d127a4205 100644
---- a/hw/arm/virt.c
-+++ b/hw/arm/virt.c
-@@ -1762,6 +1762,27 @@ static void create_tag_ram(MemoryRegion *tag_sysmem,
-     memory_region_add_subregion(tag_sysmem, base / 32, tagram);
- }
- 
-+static void create_mec_ram(MemoryRegion *tag_sysmem,
-+                           hwaddr base, hwaddr size,
-+                           const char *name)
-+{
-+    memory_region_init_ram(tag_sysmem, NULL, name, size / 32, &error_fatal);
-+}
-+
-+static void create_mec_ram_fake_page(MemoryRegion *mr, uint64_t size, const char *name)
-+{
-+    assert(is_power_of_2(size) );
-+    assert(size >= sizeof(uint32_t));
-+
-+    uint32_t *ptr = g_malloc(size);
-+
-+    for (int i = 0; i < size / sizeof(uint32_t); i++) {
-+        ptr[i] = 0xDEADBEEF;
-+    }
-+
-+    memory_region_init_ram_ptr(mr, NULL, name, size, ptr);
-+}
-+
- static void create_secure_ram(VirtMachineState *vms,
-                               MemoryRegion *secure_sysmem,
-                               MemoryRegion *secure_tag_sysmem)
-@@ -2267,6 +2288,8 @@ static void machvirt_init(MachineState *machine)
-     MemoryRegion *secure_sysmem = NULL;
-     MemoryRegion *tag_sysmem = NULL;
-     MemoryRegion *secure_tag_sysmem = NULL;
-+    MemoryRegion *pseudo_encrypted_page = NULL;
-+    MemoryRegion *tuple_memory = NULL;
-     int n, virt_max_cpus;
-     bool firmware_loaded;
-     bool aarch64 = true;
-@@ -2495,6 +2518,28 @@ static void machvirt_init(MachineState *machine)
-             }
+diff --git a/target/arm/cpu.c b/target/arm/cpu.c
+index 7e3e84b4bb..98bb559eb2 100644
+--- a/target/arm/cpu.c
++++ b/target/arm/cpu.c
+@@ -1542,6 +1542,21 @@ static void arm_cpu_post_init(Object *obj)
+                                      OBJ_PROP_LINK_STRONG);
          }
- 
-+        if (vms->mec) {
-+            if (tcg_enabled()) {
-+                if (tuple_memory == NULL) {
-+                    /* XXX(gromero): Add object_property_find(cpuobj, "tuple-memory", ...) here. */
-+
-+                    tuple_memory = g_new(MemoryRegion, 1);
-+                    memory_region_init(tuple_memory, OBJECT(machine), "mec", UINT64_MAX / 32);
-+
-+                    pseudo_encrypted_page = g_new(MemoryRegion, 1);
-+                    memory_region_init(pseudo_encrypted_page, OBJECT(machine), "mec-page", 4 * 1024 /* 4 KiB */);
-+                }
-+
-+                object_property_set_link(cpuobj, "mec",  OBJECT(tuple_memory), &error_abort);
-+                object_property_set_link(cpuobj, "mec-page",  OBJECT(pseudo_encrypted_page), &error_abort);
-+
-+                } else {
-+                    /* Check for other accels here. */
-+                    error_report("MEC requested, but not supported");
-+                    exit(1);
-+                }
-+        }
-+
-         qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
-         object_unref(cpuobj);
      }
-@@ -2561,6 +2606,14 @@ static void machvirt_init(MachineState *machine)
-                        machine->ram_size, "mach-virt.tag");
-     }
- 
-+    if (tuple_memory) {
-+        create_mec_ram(tuple_memory, vms->memmap[VIRT_MEM].base, machine->ram_size, "tuple-memory");
-+    }
 +
-+    if(pseudo_encrypted_page) {
-+       create_mec_ram_fake_page(pseudo_encrypted_page, 4 * 1024, "mec-fake-page");
-+    }
++    if (arm_feature(&cpu->env, ARM_FEATURE_AARCH64) &&
++        cpu_isar_feature(aa64_mec, cpu)) {
 +
-     vms->highmem_ecam &= (!firmware_loaded || aarch64);
- 
-     create_rtc(vms);
-@@ -2966,6 +3019,20 @@ static void virt_set_mte(Object *obj, bool value, Error **errp)
-     vms->mte = value;
++        object_property_add_link(obj, "mec", TYPE_MEMORY_REGION,
++                                 (Object **)&cpu->mec,
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++
++        object_property_add_link(obj, "mec-page",
++                                 TYPE_MEMORY_REGION,
++                                 (Object **)&cpu->mec_page,
++                                 qdev_prop_allow_set_link_before_realize,
++                                 OBJ_PROP_LINK_STRONG);
++   }
+ #endif
+     qdev_property_add_static(DEVICE(obj), &arm_cpu_cfgend_property);
  }
+@@ -2169,6 +2184,11 @@ static void arm_cpu_realizefn(DeviceState *dev, Error **errp)
+         }
+     }
  
-+static bool virt_get_mec(Object *obj, Error **errp)
-+{
-+    VirtMachineState *vms = VIRT_MACHINE(obj);
++    if (cpu->mec != NULL) {
++        cpu_address_space_init(cs, ARMASIdx_MEC, "cpu-tuple-memory", cpu->mec);
++        cpu_address_space_init(cs, ARMASIdx_MEC_PAGE, "cpu-pseudo-encrypted-page", cpu->mec_page);
++    }
 +
-+    return vms->mec;
-+}
-+
-+static void virt_set_mec(Object *obj, bool value, Error **errp)
-+{
-+    VirtMachineState *vms = VIRT_MACHINE(obj);
-+
-+    vms->mec = value;
-+}
-+
- static char *virt_get_gic_version(Object *obj, Error **errp)
- {
-     VirtMachineState *vms = VIRT_MACHINE(obj);
-@@ -3602,6 +3669,12 @@ static void virt_machine_class_init(ObjectClass *oc, const void *data)
-                                           "guest CPU which implements the ARM "
-                                           "Memory Tagging Extension");
+     /* No core_count specified, default to smp_cpus. */
+     if (cpu->core_count == -1) {
+         cpu->core_count = smp_cpus;
+diff --git a/target/arm/cpu.h b/target/arm/cpu.h
+index ebf4e4e01c..a91db25d68 100644
+--- a/target/arm/cpu.h
++++ b/target/arm/cpu.h
+@@ -977,6 +977,10 @@ struct ArchCPU {
+     MemoryRegion *tag_memory;
+     MemoryRegion *secure_tag_memory;
  
-+    object_class_property_add_bool(oc, "mec", virt_get_mec, virt_set_mec);
-+    object_class_property_set_description(oc, "mec",
-+		                          "Set on/off to enable/disable emulating a"
-+					  "guest CPU which implements the ARM"
-+					  "Memory Encryption Extention");
++    /* MemoryRegion use by FEAT_MEC. */
++    MemoryRegion *mec;
++    MemoryRegion *mec_page;
 +
-     object_class_property_add_bool(oc, "its", virt_get_its,
-                                    virt_set_its);
-     object_class_property_set_description(oc, "its",
-@@ -3686,6 +3759,9 @@ static void virt_instance_init(Object *obj)
-     /* MTE is disabled by default.  */
-     vms->mte = false;
+     /* For v8M, pointer to the IDAU interface provided by board/SoC */
+     Object *idau;
  
-+    /* FEAT_MEC is disabled by default. */
-+    vms->mec = false;
-+
-     /* Supply kaslr-seed and rng-seed by default */
-     vms->dtb_randomness = true;
- 
-diff --git a/include/hw/arm/virt.h b/include/hw/arm/virt.h
-index dba8ac7f2f..4e49eb1d13 100644
---- a/include/hw/arm/virt.h
-+++ b/include/hw/arm/virt.h
-@@ -154,6 +154,7 @@ struct VirtMachineState {
-     bool virt;
-     bool ras;
-     bool mte;
-+    bool mec;
-     bool dtb_randomness;
-     bool second_ns_uart_present;
-     OnOffAuto acpi;
 -- 
 2.34.1
 
