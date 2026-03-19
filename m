@@ -4,84 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2B5661091930
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:26:39 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7FCBA1091930
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:26:50 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Mkf-0000lz-WE; Thu, 19 Mar 2026 19:26:06 -0400
+	id 1w3MkY-0000jm-Eu; Thu, 19 Mar 2026 19:25:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mke-0000la-HN
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:04 -0400
-Received: from mail-pj1-x1032.google.com ([2607:f8b0:4864:20::1032])
+ id 1w3MkU-0000ht-K9
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:55 -0400
+Received: from mail-pl1-x630.google.com ([2607:f8b0:4864:20::630])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mkc-0007db-TG
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:04 -0400
-Received: by mail-pj1-x1032.google.com with SMTP id
- 98e67ed59e1d1-35a288a2c00so720038a91.2
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:01 -0700 (PDT)
+ id 1w3MkS-0007cc-UX
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:54 -0400
+Received: by mail-pl1-x630.google.com with SMTP id
+ d9443c01a7336-2b0603ee486so10353775ad.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:25:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962760; x=1774567560; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773962750; x=1774567550; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=aiG6bmN4hvSd4Ok8JNbYY1S2q/CsTpB05WZb49qcpBU=;
- b=Q0eFifhsq1uHp/3SBGDZh6CW+CCF65seXzTisfJyeyR+vu9OFzpCaCPY1/eY9NEk9u
- Fn8kU20Vtix4n4gq6a60NqMrni5FR5QLz90XpcMVJxwdzCiJfttM6E2YSBJ4ds9xLh0z
- 8xsa3wVx2YxQxy0A0/V90QtE6Cq4TUSWkz+ACxWIeDc5JQeqBJwJjLfIfK56gkjP4rMf
- dzyXn41Olrw8CfHStL0xVMhIA+4S4IhDns/5GZx9hnsuMNKDg2hSvnG9Y/u3+MX934Jr
- SQHnChA3TMXYJ7ATwFLDQfEPrlouF6h7ywW3Ld0tvMaggBZxjdPcW8EsERcLaWX282kR
- 9Elw==
+ bh=BGSATsLFsfHshxNlmzSKfII+zwdPR9wYNnJJOI144t8=;
+ b=bP437ccZxkDqErC4AuIel5DVFBXPLs+NxeHpL5UtRc4ntOJY4+qVgrawPT4MOwbB1n
+ rKfI5XHudQwxDS7NvjO8TRVy8yHd8FVRjuv4YGQOllkjAZt3BHsKMxSuDfiosWmSnQlJ
+ w3gcJPUTyeJwGKGoITxHgHKZ4XdrPULvOtqIoauRtkgyyY89p5EdMOIYLQ18DE3SGMi9
+ Z2GG3ujld48eGtHEnjyniK5WBDNnD3TnIzdPFTN8RX7ySQDNxrJwpEj+U+0IHXu94FNU
+ s/X8LeqdG3gXn+0CKjGBpVgy6mx2YX4TCNTyISK59r62qdwUb92y/qegODEsOZ/yPnOy
+ vstQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962760; x=1774567560;
+ d=1e100.net; s=20251104; t=1773962750; x=1774567550;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=aiG6bmN4hvSd4Ok8JNbYY1S2q/CsTpB05WZb49qcpBU=;
- b=JPKi6q6kV2QRbXcaYISTNj+ufeF0d2aBFxkd/sR5mtM0hDzFl24LOL0JThWFSIdgME
- ESvSQ4QyZ1Vi7+qf5navH51nMngP74Nf7dM2NbcNAw3PeW/X11KAG0REPLrX5vjtoNGy
- jAk2l8Hhx/jaLI78zXV8BUYD1fVBlj5JMwLohkz849PJmY6RHCDpTmXeocx0vs1k1z8v
- Oa+laG+SSJbfo1ITgYSc02o5rYftYEqzKSTjvVAkYUhBbEl47Mi8c8orGGsgvmIdshXm
- HUN8h8MzOmQBWMvhf2BW5nY1JuzPdX0IY+z+uyCd73H3+p0gIhW5NP0/LxffcWjMP7DA
- aAiQ==
-X-Gm-Message-State: AOJu0Yz7fcQIX0SuN+fLnYPdN+wki+ZixmJ0/RQQaudCBHhzK2HnGLnd
- vIXOxwXqbwarNYF2mtKOFA34KFFUnVlVgBMqZEok5lypc/ycYKuNboH5CoWHTg==
-X-Gm-Gg: ATEYQzztW2QNN9KEX/OIMl6/k5q1kLJpd58V4o7wLunVuO0l2qAMNpijOKG6cDaiAEr
- JnGyGh4YYst6x0+RBrrPGmvmSHDsSirvHXdSs5js2or9yfV5Memrg68cxKkULSZzg8q1N3mFtex
- CrIAScXMBK7hmy0+ezHCbL0L911fttttIqOHs+AQjsPSKWCHZaDYhcpdMlBOIhJJ1eXvJNrpCt2
- EEBpuCRvQ8L6sM3evl4Q3vN8sZAqKWHe7ah0/eyDx75laIjbuxn5xUg+4oHXFm8/A+IQsOC8W5a
- yu1kyvZuPSOifkFqLf/GbyOQdOAChYaWGhraD5ASpd/BPFktoIA+fHxryKLuj0N6EMN7ATNQnVf
- lsGik5ltTUmde1sESPMrmJiFQHkZj6rCsiKNv4tO+uJQEOb0xwo23tJmLGIDa9x30K0SH6V37nE
- 198Ojh8its8AL6AUC/Z3d7CsBo46IekQdzdwjNpWHp3w==
-X-Received: by 2002:a17:903:4b47:b0:2b0:6e60:958e with SMTP id
- d9443c01a7336-2b0826c3fefmr7790975ad.7.1773962760363; 
- Thu, 19 Mar 2026 16:26:00 -0700 (PDT)
+ bh=BGSATsLFsfHshxNlmzSKfII+zwdPR9wYNnJJOI144t8=;
+ b=KBRuPcQ+jAk6WVZcXtgyMCiHE2d57MZ3kWIz5XupSUPmAXq4hJvoyi4U5Ky1WnQGJA
+ jX0QfzIu7Ywj3Yw3JXq5BqCnlzu0qF0V9toZW9BGIczNY8T9mS6EgjOUzXzK9A9GXaMA
+ d9DFA1ZmIcCbcHEt9pEXkAP5OGSPziyxAQkjc/m60ZpisAiFvCu8PNdnmv0z+D6/jwD3
+ ux2u3QFbwygL/ccH1QgOQxhDuRRFHLzfnR1tdrXy4hAM2c/lN0vfI4MSabY8jsWKyKne
+ EsN2Foa4QPXjxmPWUtRyGi9MMFQ0TkdY53liS6onchfDki5IkOHE9VIQt2MlW4Yv7YZJ
+ IzFQ==
+X-Gm-Message-State: AOJu0YwVpajSriA0jzijqd0KFf2MtVK2Ee4KJoLDvSaZVgsGirTy5Pw5
+ Ch/du1EZyEQ50WJsDV0Qgcc2R88eC8LjedSjez9arJvLZoHkDvrsyRF8B0EK/Q==
+X-Gm-Gg: ATEYQzza+AgZr6aPBlkKcef6cMJ9DP3O0W3w4SPmKz+j97KgxsKX7SiUF4stOfkEoxX
+ rF/BbY6TtnFyv6FolhDrMZjfzrFEzlrj7PjEqSI4LS5KWPsvNzGGa9r7gqLldYRipbUO5cazMnq
+ sI/OWLgGFV+p5ZJ/qlbymbdmEJzGa5GcmR4iNkotyklqWcM/6WqK/oxd+E3BTIgEedCXm/x+xOb
+ blgGu04J1z42CM47uXP0z4UK7CZRPqK3VT6n76/JlT2t5bpgK3tV+zDHVJBcx78nXcmzKU67PxF
+ +Hs6hLDJHUdiuIPU6NC9Kn/Km/7GQ9mVqNNOZZl48d561sMeuNPmo0uAwbN32LoucoEf9vfGjzM
+ t9ROJqrsW8H12GUFpCM0jDlrPchnizUoFHtZxC8LDb5Kk/UhrFuh/NivEww/HyR8lYcWv6b18NZ
+ sucKl45t73ofcZc6NKNJF9Yi87kmpGHvhVkqn57S6BtQ==
+X-Received: by 2002:a17:903:41c4:b0:2b0:5661:e10f with SMTP id
+ d9443c01a7336-2b0827d7a84mr7128565ad.53.1773962749693; 
+ Thu, 19 Mar 2026 16:25:49 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.25.57
+ d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.25.46
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:25:59 -0700 (PDT)
+ Thu, 19 Mar 2026 16:25:49 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Chao Liu <chao.liu.zevorn@gmail.com>,
+Cc: alistair23@gmail.com, Chao Liu <chao.liu.zevorn@gmail.com>,
+ Bin Meng <bmeng.cn@gmail.com>,
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ LIU Zhiwei <zhiwei_liu@linux.alibaba.com>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 07/17] fpu: Fix repacking issues in the uncanonical step for
- E4M3 overflow
-Date: Fri, 20 Mar 2026 09:25:12 +1000
-Message-ID: <20260319232522.1867400-8-alistair.francis@wdc.com>
+Subject: [PULL 04/17] MAINTAINERS: Add myself as a reviewer for RISC-V TCG CPUs
+Date: Fri, 20 Mar 2026 09:25:09 +1000
+Message-ID: <20260319232522.1867400-5-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
 References: <20260319232522.1867400-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1032;
- envelope-from=alistair23@gmail.com; helo=mail-pj1-x1032.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::630;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x630.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -105,47 +105,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Chao Liu <chao.liu.zevorn@gmail.com>
 
-In the uncanonical step, the input FloatParts will be repacked to the
-target FloatFmt. This commit fixes following issues after calling
-uncanon_e4m3_overflow in the uncanon/uncanon_normal functions.
+Add myself as a reviewer for RISC-V TCG CPU related code to better
+participate in patch review.
 
-- Add the local exp update after calling uncanon_e4m3_overflow in the
-  parts_uncanon_normal function.
-- Add the fraction shift after calling uncanon_e4m3_overflow in the
-  parts_uncanon function.
-
-Fixes: 27e989f99c ("fpu: Add conversion routines for OCP FP8 E4M3")
-Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
-Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Message-ID: <20260226071817.1417875-2-max.chou@sifive.com>
+Signed-off-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Bin Meng <bmeng.cn@gmail.com>
+Reviewed-by: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+Reviewed-by: LIU Zhiwei <zhiwei_liu@linux.alibaba.com>
+Message-ID: <20260226102008.146928-1-chao.liu.zevorn@gmail.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- fpu/softfloat-parts.c.inc | 2 ++
- 1 file changed, 2 insertions(+)
+ MAINTAINERS | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
-index 61b07307bf..a738758aee 100644
---- a/fpu/softfloat-parts.c.inc
-+++ b/fpu/softfloat-parts.c.inc
-@@ -387,6 +387,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
-             case float_expmax_e4m3:
-                 if (exp > exp_max || p->frac_hi > E4M3_NORMAL_FRAC_MAX) {
-                     partsN(uncanon_e4m3_overflow)(p, s, fmt, overflow_norm);
-+                    exp = p->exp;
-                 }
-                 break;
- 
-@@ -496,6 +497,7 @@ static void partsN(uncanon)(FloatPartsN *p, float_status *s,
-                 break;
-             case float_expmax_e4m3:
-                 partsN(uncanon_e4m3_overflow)(p, s, fmt, saturate);
-+                frac_shr(p, fmt->frac_shift);
-                 break;
-             case float_expmax_normal:
-             default:
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 62fb18d125..25fb621c30 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -343,6 +343,7 @@ M: Alistair Francis <alistair.francis@wdc.com>
+ R: Weiwei Li <liwei1518@gmail.com>
+ R: Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>
+ R: Liu Zhiwei <zhiwei_liu@linux.alibaba.com>
++R: Chao Liu <chao.liu.zevorn@gmail.com>
+ L: qemu-riscv@nongnu.org
+ S: Supported
+ F: configs/targets/riscv*
 -- 
 2.53.0
 
