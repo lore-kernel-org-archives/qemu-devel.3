@@ -4,82 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5B80109190D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:51:11 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB24A109190D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:52:30 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ISH-0002fZ-BF; Thu, 19 Mar 2026 14:50:49 -0400
+	id 1w3ITr-0003NB-7a; Thu, 19 Mar 2026 14:52:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w3ISD-0002eB-3U
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:50:45 -0400
-Received: from p-west2-cluster6-host11-snip4-1.eps.apple.com ([57.103.70.104]
- helo=outbound.mr.icloud.com)
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mohamed@unpredictable.fr>)
- id 1w3IS9-0000rS-Q4
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:50:44 -0400
-Received: from outbound.mr.icloud.com (unknown [127.0.0.2])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-7 (Postfix) with ESMTPS id
- DB64F1800556; Thu, 19 Mar 2026 18:50:36 +0000 (UTC)
-Dkim-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=unpredictable.fr;
- s=sig1; t=1773946239; x=1776538239;
- bh=krxHIbtBMSe2MifOiFUaIGaMiVhfvzQgriXMvtUJR8k=;
- h=Content-Type:Mime-Version:Subject:From:Date:Message-Id:To:x-icloud-hme;
- b=A2SnyOaGEZUOVmoGPbB8Sw/W+YoxgXLDgrfsddLor+y3t4BuyY00u5+wnBFiiR/TUjIZ1gGKDXwKnwLphU/eV+lOH4vZF5PbPqym5EiFWE56TpOWJ+fXqczFdC3DkiXQml53VcTKOo26bunMTzRUmdHtYK9R0pMlnk/4nkBToGNW+aOqSwRO/lNw1Y7RSavY9VsjbxJjc6lyLiZfi4DryOmUBAPkM0Xee5dwtBs9XzvVuWuTaMBPBA5iXWKlxFN86aQH74S/k/FbO6s3H4RAi7mZmxEoAjjvO6ov2stbM7+mkmomsT6ggnFr6c2msq/gNl63mfbOpvwE6iUNh2fMwg==
-mail-alias-created-date: 1752046281608
-Received: from smtpclient.apple (unknown [17.57.152.38])
- by p00-icloudmta-asmtp-us-west-2a-60-percent-7 (Postfix) with ESMTPSA id
- 52EEC1800429; Thu, 19 Mar 2026 18:50:34 +0000 (UTC)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3864.400.21\))
-Subject: Re: [PATCH v3 3/6] whpx: arm: enable more enlightements
-From: Mohamed Mediouni <mohamed@unpredictable.fr>
-In-Reply-To: <CAFEAcA8v59wSwRvig6NRjWHyvBGY=gPhWFN1B_jD9k+aXqo9Ng@mail.gmail.com>
-Date: Thu, 19 Mar 2026 19:50:18 +0100
-Cc: qemu-devel@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
- qemu-arm@nongnu.org
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <4387E53A-E140-48E9-80C3-721F9C0B9A9D@unpredictable.fr>
-References: <20260314221529.47841-1-mohamed@unpredictable.fr>
- <20260314221529.47841-4-mohamed@unpredictable.fr>
- <CAFEAcA8v59wSwRvig6NRjWHyvBGY=gPhWFN1B_jD9k+aXqo9Ng@mail.gmail.com>
-To: Peter Maydell <peter.maydell@linaro.org>
-X-Mailer: Apple Mail (2.3864.400.21)
-X-Proofpoint-GUID: LIBJK3vu0kQkhv8HUkXCbvOoQLTrLjQh
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE5MDE1MSBTYWx0ZWRfX2Y+1A57r9v4+
- JZJ/QiSFedSWvaE/5vx4aUk1jqIvORFdwHr0Lw3QEd8jxf043DzQQ8AL0ETBXO2HhoA89ngw5qB
- 2wAvSExz70aY/a7xpH/kniy676KMo3afeb4veTgOitEs1qwNgZBB1szclBdF17XMGW+nySbrDBN
- jsQ9ZNzY9ipPPv8X8ciKltJjUnv4RzMFRYVTkmza0ABmxLBWt8P4L+PV5Iyf6pDa7tFVvjTCtzs
- kzixQRTam2yE9U5UTDLy4SeX+YLnI2i5LQbIcmLW8wD88ML6qGATmfyKH0DrN3ZRR0OlQ0JN/pX
- z/9TrVhFO5n2OpVYFk/RSOmbwieTozicMG8m06T1d/rNVMZ9yh4D25F/SCWoas=
-X-Authority-Info-Out: v=2.4 cv=fLk0HJae c=1 sm=1 tr=0 ts=69bc457d
- cx=c_apl:c_pps:t_out a=9OgfyREA4BUYbbCgc0Y0oA==:117
- a=9OgfyREA4BUYbbCgc0Y0oA==:17 a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10
- a=VkNPw1HP01LnGYTKEx00:22 a=KKAkSRfTAAAA:8 a=AeSh69YkIUbGMtCq220A:9
- a=QEXdDO2ut3YA:10 a=cvBusfyB2V15izCimMoJ:22
-X-Proofpoint-ORIG-GUID: LIBJK3vu0kQkhv8HUkXCbvOoQLTrLjQh
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
- definitions=2026-03-19_03,2026-03-19_05,2025-10-01_01
-X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxlogscore=921
- malwarescore=0 mlxscore=0 bulkscore=0 phishscore=0
- clxscore=1030
- suspectscore=0 adultscore=0 spamscore=0 lowpriorityscore=0 classifier=spam
- authscore=0 adjust=0 reason=mlx scancount=1 engine=8.22.0-2601150000
- definitions=main-2603190151
-Received-SPF: pass client-ip=57.103.70.104;
- envelope-from=mohamed@unpredictable.fr; helo=outbound.mr.icloud.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ITp-0003MI-DA
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:52:25 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ITo-00011F-0o
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:52:25 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-485445e80bdso11289615e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 11:52:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773946342; x=1774551142; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=06PbSn9Pduw968j+IvDOdjXCS1Zr8HZL4HWuUI+RKJQ=;
+ b=RNRR5ip9VuvsFjuaCFZivUfNJPrr2zh1UbCeMd/r9RMtq4BbRkl5XbDv5aMcwDAF32
+ vpSmRufxXkX53MVz94V/mTFCEtg2lpNtRgwye6ro+Zdz1IE6IDxxaOvZ+ucpdKddQGD+
+ Phofs//I9Ly1qhNTXEOvUwRiY7QYhMT2kTbwVmrPof+3w70ya6R+6YibRpaHLM/0x49D
+ +3LJjLrukBOGVrSlcYlZEcptko11+11OABLzryElc45esaGUIBKJIWyLW1INR4HKsJg3
+ eOaqNtsJxb43Q0mjlChpRHH/Wl94cDOoDrxWjaELf0Z0/P4PObLZHAyXAt9wyyL7K9RF
+ olIQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773946342; x=1774551142;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=06PbSn9Pduw968j+IvDOdjXCS1Zr8HZL4HWuUI+RKJQ=;
+ b=G49RQATqsTXVhTBZHCB/kvmvUEIpMKLFacdfJevW+OzubfvKjJ1tBdEQ8cll1fKBRO
+ QtT/NA3ciVeOYmEdax+nQi5QS18DwScnsyC5fmz3pTP1Q0ZYneA76ml8eM+cmSWQxJ5w
+ 9YmsbF4f1mKJCwwBGHzIhGkSGom8H0tcL8rn+635HC9/4RAjDpL3EiBh4vjOuZaFtyVg
+ lUZ6Cr/xk6Asl712a565jRS4YvP3cJWmSJoRYt8sqZMW82VYvoyxOI2FEIZWUSySJZnD
+ 2fnW1MACt1/4SaNkiuoEzTNO53cUpuiHKWjTshX0OyhV/mZmb8htt8MWtZ8qoYPZ+MHU
+ ICRg==
+X-Gm-Message-State: AOJu0YwCoE1zOH3gJV8JDtzwKXP+YpfqdReMAN6Sm0HInRUHroe+CJEN
+ kiBV5FGqQ/tO0YEkD4PzlO7jXaDFRExTEHwdGtDDXbdjaTQAULZNmqclWjW0xagFcNq6oj53aCR
+ 2mpQcyGE=
+X-Gm-Gg: ATEYQzxEEP6owVKTNgJ1dXR2kl0Hq2m95BTLvhg3AeQTXrAEiA/DiOzifXsHTPNRY78
+ ZyCTsP4k5nfgQjAX+d7tRhU6gqRg30I6AdLFfAfEz8VK4gxT1ruXjp6d0aJx5/X9wYsccpgvI0K
+ OGIywVpl6ivU0AP/hRbnIQVPaP+JSKrqWxMjiUvXE3MW8pbb0UecSUj7AMaqldiBQg3qqQT0S0S
+ jj96ZhlFm8HwY31cqvCEQOtbH5HGXt1ELZDseaaIIPVRc0/h95+n0OmLcL5y/YlftNXyoSDZ37w
+ qcbV4uk41kRK+O554Fgw16TNWqKNn/KJir1uUsVIPYKQ4dWK2MaaEbsJ1rIEwdU5LYGaNhAYhzy
+ JrgSeMXf1UMlK548QfMSJxt8B3JqnAM/2OTqwCxit7XTF/agq3IsKNlxKZ+LOJTxyMcktYs5/Zo
+ UUOT+9+rzagBNUc6LLuYviqb6zI1qQo5EYATP09YA19sM+XNnjsMrzKcAtRnc2TS+OG1c88R6z
+X-Received: by 2002:a05:600c:450b:b0:47a:7fd0:9eea with SMTP id
+ 5b1f17b1804b1-486fede7341mr3242055e9.3.1773946342300; 
+ Thu, 19 Mar 2026 11:52:22 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486f8aacc73sm74068155e9.0.2026.03.19.11.52.20
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 19 Mar 2026 11:52:21 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Anton Johansson <anjo@rev.ng>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, qemu-s390x@nongnu.org,
+ David Hildenbrand <david@kernel.org>, Cornelia Huck <cohuck@redhat.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 2/5] target/s390x: Replace legacy ld/st_phys ->
+ address_space_ld/st (mmu)
+Date: Thu, 19 Mar 2026 19:52:00 +0100
+Message-ID: <20260319185203.11799-3-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260319185203.11799-1-philmd@linaro.org>
+References: <20260319185203.11799-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -95,58 +108,34 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Prefer the address_space_ld/st API over the legacy ld_phys()
+because it allow checking for bus access fault.
+This code however doesn't check for fault, so we simply inline
+the calls (not specifying any memory transaction attribute nor
+expecting transation result). No logical change intended.
 
-> On 19. Mar 2026, at 19:13, Peter Maydell <peter.maydell@linaro.org> =
-wrote:
->=20
-> On Sat, 14 Mar 2026 at 22:15, Mohamed Mediouni =
-<mohamed@unpredictable.fr> wrote:
->>=20
->> Linux uses AccessVpRegs without checking availability and panics if =
-it's not there. Expose it unconditionally.
->=20
-> The commit message subject says we're enabling enlightenments...
->=20
->> @@ -953,13 +953,15 @@ int whpx_accel_init(AccelState *as, =
-MachineState *ms)
->>     synthetic_features.Bank0.AccessPartitionReferenceTsc =3D 1;
->>     synthetic_features.Bank0.AccessHypercallRegs =3D 1;
->>     synthetic_features.Bank0.AccessVpIndex =3D 1;
->> -    synthetic_features.Bank0.AccessHypercallRegs =3D 1;
->=20
-> ...but the code change seems to be removing one as well as
-> adding the three new ones. Intentional?
-Hello,
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/s390x/mmu_helper.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-The AccessHypercallRegs bit was set twice - with the first one being two=20=
-
-lines earlier - removed a spurious one of the two.
-
->=20
->>     synthetic_features.Bank0.TbFlushHypercalls =3D 1;
->>     synthetic_features.Bank0.AccessSynicRegs =3D 1;
->>     synthetic_features.Bank0.AccessSyntheticTimerRegs =3D 1;
->>     synthetic_features.Bank0.AccessIntrCtrlRegs =3D 1;
->>     synthetic_features.Bank0.SyntheticClusterIpi =3D 1;
->>     synthetic_features.Bank0.DirectSyntheticTimers =3D 1;
->> +    synthetic_features.Bank0.FastHypercallOutput =3D 1;
->> +    synthetic_features.Bank0.AccessVpRegs =3D 1;
->> +    synthetic_features.Bank0.SyncContext =3D 1;
->>=20
->>     /*
->>      * On ARM64, have enlightenments off by default
->=20
-> I've taken this series into target-arm.next for the moment --
-> I can either drop this patch or else fix it up depending on
-> what the right thing is.
->=20
-> PS: for commit messages, could you wrap the body text at
-> the usual 70-ish columns, please?
-Will add some tooling to catch those earlier instead of trying to =
-manually wrap=E2=80=A6
-(and inevitably failing some of the time=E2=80=A6)
->=20
-> thanks
-> -- PMM
+diff --git a/target/s390x/mmu_helper.c b/target/s390x/mmu_helper.c
+index 246573ff642..255271b9d34 100644
+--- a/target/s390x/mmu_helper.c
++++ b/target/s390x/mmu_helper.c
+@@ -44,8 +44,9 @@ static void trigger_access_exception(CPUS390XState *env, uint32_t type,
+     } else {
+         CPUState *cs = env_cpu(env);
+         if (type != PGM_ADDRESSING) {
+-            stq_be_phys(cs->as, env->psa + offsetof(LowCore, trans_exc_code),
+-                        tec);
++            address_space_stq_be(cs->as,
++                                 env->psa + offsetof(LowCore, trans_exc_code),
++                                 tec, MEMTXATTRS_UNSPECIFIED, NULL);
+         }
+         trigger_pgm_exception(env, type);
+     }
+-- 
+2.53.0
 
 
