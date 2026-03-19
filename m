@@ -4,74 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 1E84C1091930
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:41 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852E01091930
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Ml3-00014z-Jw; Thu, 19 Mar 2026 19:26:29 -0400
+	id 1w3MlV-00020j-9D; Thu, 19 Mar 2026 19:26:59 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Ml1-00012u-IF
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:27 -0400
+ id 1w3MlD-0001Rl-1O
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:39 -0400
 Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mkz-0007iO-Ul
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:27 -0400
+ id 1w3MlB-0007jI-7q
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:38 -0400
 Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2b04e6a989eso9796685ad.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:25 -0700 (PDT)
+ d9443c01a7336-2adff872068so274745ad.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962784; x=1774567584; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773962793; x=1774567593; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=JEb8zTJzS/m1p8rg1ZAG9mFLhEcaPRnQLFl3tU6IqbU=;
- b=KYHKpiwYpK5Z6h/OO/dCIU7QV1WcZUohwRTo1aqG5MH8tzdXQMNuRrkEhIfKlE1yEi
- A5FuTvsM2K77yAUsGXSgW8XzzCydFktERuCgaJg5TynVkO1hEXUrQbJlCpJFX5mSg2u0
- m1mb3jyVVlJ3G97nhtz2eUdwtxqS1V/72YYiOYjdu/ILuC+FGURrZxPNOpUpP12/zxX5
- KMbfV6sDz9n89sE1jKdkTAMCTo8mF+FcvTc2cQ2K++2VGHWliQ7zyCGzwjXsIr7Z48AF
- 0w5xOkUCWVIrL7kh+wDSCTJ14jZGPMJvKBN4DeDz83dh4etOUTQNPYtB3crygWF85snd
- WZtQ==
+ bh=RYB7pnWPDF09kxM2pVeCxMznDuYzQx/e50Ubr54oZJY=;
+ b=XLpZJGAEdls4o7FiLQKpDqhaTrzTxJWVbLTmscYyW/Iv/dCCAN+hxa6IDk45lFVE0Z
+ hCkhlXmvSympn1Z8M0g+d3zXMQDiq5v19OE5rChvvLRVt4sLr8hjBznqqM681tiR4imZ
+ GXSe7/d1ilDKzLJ2R0RhDdT62QuVphMTPleSjmyiMVmwmOUMy57YXkOdwId94kVg7eU3
+ tTW+lwlb0vmkvhHzzF+NGXv2nUrN5gZ2waoWeyjqwvXUTDY0KSSv8EGlygG+nM8T3Qm3
+ k1VQFFW9j1evhV7MauUtGgQQVNE1CSr8bu1k6MOMVnZjrY8VcHtotxGpCanG8/VlCDVk
+ +o+Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962784; x=1774567584;
+ d=1e100.net; s=20251104; t=1773962793; x=1774567593;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=JEb8zTJzS/m1p8rg1ZAG9mFLhEcaPRnQLFl3tU6IqbU=;
- b=gvKjnqZitDZzL7tmsYDYfk1hpJiUJ4En8VLDdWmK8zWHPDMYb4mzA9g6EmvaSTRQbU
- FwAZ9qXAjwOwtYP6mW2wPen6s/RUYjtNMI+5no9nPUqRQL6iYNKyPFEmHEfvQqz6YEm/
- xTxxfigamUNga4v0ccalrmzevaZEVHKG1hd8Tbk9VqxlA91P9rNa7jArlrxV0tzudalh
- sU1sJPAEw8UnQN3LctQJ9R7Gmh4J0tRB+guucifn8XG4dPJ+4fUhlr8EVi+2HoVJ0BKa
- A8bK1VKvUrzY1Tlq9+ssRx+06cU9/fl0RfQA4k7hmiPVT9mwjGUfPGik41GL5l1o8Skw
- YVOw==
-X-Gm-Message-State: AOJu0Yw+rGZOr36ZAXHrJ6ANqPUdmXjwblE3JyKJMvjBM/+b+Mav1XbF
- eRgY7Wl9CQIgEAjRs9ag4Yw67vOkq9wWxw/OppXZ6OqxNo01CDQPV+TBnR8tOg==
-X-Gm-Gg: ATEYQzyXfOtDKVoSZV52yppnkmjeJQOQTWoWHDM3fnxe3jpoPj7SUZsjDluVZKX1hdK
- YQm+5Hhb+92Ddf7Pdp8/zX3AQf1BDsGPhZbBPAF7gSQbcGwB9SQPuHeD2AAPAdVnTwBIjesOCpF
- 8konvPAc2abhO0QfUWrP5A8hRA6bCyvTNRxHL6YSKj0fcKkVOLIJ6FXJgqpEJ0Uywu7S3RRDPO9
- jJnnifhV4ULUBo0Cqu4LIucA4vyMfwd9imuDW9aAHyOk/Z1+rI9k4XLYSEWqjL8zlh8zfZAm7sZ
- +nvMD++X4CCtM3nQiDNg9W91Ok4jPU/eOsjJDlHo4Lh0WHyAh4FW5NnUURrCrOiPZLYZ9Q4zIeA
- 9zhmRsfeoUgAypPJ1cA91jp5klHlaMS1MFHkaMyNW8PRFmLa1AvgcsahEJTgHbTyqK/8XSa4+Vg
- d3RtWPgO61U8nOm6zyySyujhYsaVGZefuvgQahFHQLEw==
-X-Received: by 2002:a17:902:f60d:b0:2ae:829d:3c33 with SMTP id
- d9443c01a7336-2b0826c3d65mr8041215ad.8.1773962783900; 
- Thu, 19 Mar 2026 16:26:23 -0700 (PDT)
+ bh=RYB7pnWPDF09kxM2pVeCxMznDuYzQx/e50Ubr54oZJY=;
+ b=TehzG2OFDkbvI0qOSB3Vsab3v/dLdNQQVIHyVKZNrjr3Eb4VtsTtROVTweBVEm1/Er
+ nmfSgRXq3MqTp7n/BpyXjjQ6AalnJ5yNOmQETfc+woXm42teM4wpq/i01rPso5LZUjWW
+ QUHYhtxWyvVVO/i4VLFN8s+sFyJC5vuBmFTn2r6TPS+oS/FwR0+T1c9KutcznoUwDW5M
+ bQax6GvTWtegkJlY9bntXrS/dRN22cTqjJojcOAddtC3JlgHbCCZHhMPvNz9hliA9I93
+ llW2NFnAdkJjNpMmDvcHh9L8VWO/gG6YLrLN/qDjHxleWe2Hr8TyYPwbX2VsCy4TNgfE
+ s11g==
+X-Gm-Message-State: AOJu0YyDcdN1EOgAlWTWVNUNLvlSlHsEyFkCpohSl1ySXsedjlQwNUMN
+ KW4ZQsl7hSCpl4z6LH/81Fa9UXshgWaau64Euvteyh8ThOL15I9tug1S3rOpEw==
+X-Gm-Gg: ATEYQzy1FQXCYMA9yPXYV1kWahD+0VTnlGm8Bzhu5hOo40VscNoGTJxI2vMjH6AsmOy
+ JjNl3FQ4FwtVnq3INm5QKqVBZOrWDE5BLs+VYeAxB92Z7u6pnStkpr/8WaydqQC+ur0vuFNQOfQ
+ 8dXkDvGOqEK9ZblIJ3TS4cc75NvuZJzhprptWFae3uuLpZ5hfNgDwSpCyVqWnXXYugtEgH8MTNJ
+ gB8S7Z1JFVCsXv9itNWaL4VLk5BwCcGFnS/b0TNqFBD0jOC2Ubzg4MOsLu2gTXcLTKeY7rzfZ2M
+ wFwORP+fXNdi6ut/udG05jRq1NK86rLc4B20JqG2SH/pUy9Tal8GaviXszoIUcl6pGXc8Bfkm04
+ JES4mul3J21iZnJmHx17zZ4wJdeoQ+aN5szvVwee44Q3ILtv7h+P5FJS+P1N+WuBi2hOqMpSA1C
+ U5ipDT0XsmdUj+NeCB0ES1Eez/tP6ztWKJ0V9KtUGXgw==
+X-Received: by 2002:a17:902:dad1:b0:2ae:cb0e:fd5e with SMTP id
+ d9443c01a7336-2b08275878cmr8524945ad.23.1773962793541; 
+ Thu, 19 Mar 2026 16:26:33 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.21
+ d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.30
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:26:23 -0700 (PDT)
+ Thu, 19 Mar 2026 16:26:33 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 14/17] hw/char: sifive_uart: Remove ip variable
-Date: Fri, 20 Mar 2026 09:25:19 +1000
-Message-ID: <20260319232522.1867400-15-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
+ Max Chou <max.chou@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 17/17] target/riscv: Fix scountovf CSR behavior in VS-mode and
+ M-mode
+Date: Fri, 20 Mar 2026 09:25:22 +1000
+Message-ID: <20260319232522.1867400-18-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
 References: <20260319232522.1867400-1-alistair.francis@wdc.com>
@@ -102,61 +103,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Jim Shu <jim.shu@sifive.com>
 
-The ip variable is no longer used in the code. Remove it from the
-codebase.
+From Sscofpmf spec [1]:
+- In M-mode, scountovf bit X is always readable.
+- in VS mode, scountovf bit X is readable when mcounteren bit X and
+  hcounteren bit X are both set, and otherwise reads as zero.
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
+[1] https://github.com/riscv/riscv-isa-manual/blob/main/src/sscofpmf.adoc
+
+Signed-off-by: Jim Shu <jim.shu@sifive.com>
+Signed-off-by: Max Chou <max.chou@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260312033201.1619554-5-frank.chang@sifive.com>
+Message-ID: <20260318024234.2772480-1-jim.shu@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/char/sifive_uart.h | 1 -
- hw/char/sifive_uart.c         | 6 ++----
- 2 files changed, 2 insertions(+), 5 deletions(-)
+ target/riscv/csr.c | 16 ++++++++++++++--
+ 1 file changed, 14 insertions(+), 2 deletions(-)
 
-diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.h
-index c78d9bd1fc..5f3b1327de 100644
---- a/include/hw/char/sifive_uart.h
-+++ b/include/hw/char/sifive_uart.h
-@@ -73,7 +73,6 @@ struct SiFiveUARTState {
+diff --git a/target/riscv/csr.c b/target/riscv/csr.c
+index 5064483917..a75281539b 100644
+--- a/target/riscv/csr.c
++++ b/target/riscv/csr.c
+@@ -1599,6 +1599,7 @@ static RISCVException read_scountovf(CPURISCVState *env, int csrno,
+     int mhpmevt_start = CSR_MHPMEVENT3 - CSR_MCOUNTINHIBIT;
+     int i;
+     *val = 0;
++    bool virt = env->virt_enabled;
  
-     uint32_t txfifo;
-     uint32_t ie;
--    uint32_t ip;
-     uint32_t txctrl;
-     uint32_t rxctrl;
-     uint32_t div;
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index f255cca960..4c30fbf568 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -285,7 +285,6 @@ static void sifive_uart_reset_enter(Object *obj, ResetType type)
+     /* Virtualize scountovf for counter delegation */
+     if (riscv_cpu_cfg(env)->ext_sscofpmf &&
+@@ -1609,8 +1610,19 @@ static RISCVException read_scountovf(CPURISCVState *env, int csrno,
+     }
  
-     s->txfifo = 0;
-     s->ie = 0;
--    s->ip = 0;
-     s->txctrl = 0;
-     s->rxctrl = 0;
-     s->div = 0;
-@@ -343,14 +342,13 @@ static void sifive_uart_reset_hold(Object *obj, ResetType type)
- 
- static const VMStateDescription vmstate_sifive_uart = {
-     .name = TYPE_SIFIVE_UART,
--    .version_id = 2,
--    .minimum_version_id = 2,
-+    .version_id = 3,
-+    .minimum_version_id = 3,
-     .fields = (const VMStateField[]) {
-         VMSTATE_UINT8_ARRAY(rx_fifo, SiFiveUARTState,
-                             SIFIVE_UART_RX_FIFO_SIZE),
-         VMSTATE_UINT8(rx_fifo_len, SiFiveUARTState),
-         VMSTATE_UINT32(ie, SiFiveUARTState),
--        VMSTATE_UINT32(ip, SiFiveUARTState),
-         VMSTATE_UINT32(txctrl, SiFiveUARTState),
-         VMSTATE_UINT32(rxctrl, SiFiveUARTState),
-         VMSTATE_UINT32(div, SiFiveUARTState),
+     for (i = mhpmevt_start; i < RV_MAX_MHPMEVENTS; i++) {
+-        if ((get_field(env->mcounteren, BIT(i))) &&
+-            (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF)) {
++        if (env->priv < PRV_M) {
++            if (!get_field(env->mcounteren, BIT(i))) {
++                /* no mcounteren in S/HS-mode */
++                continue;
++            }
++
++            if (virt && !get_field(env->hcounteren, BIT(i))) {
++                /* no hcounteren in VS-mode */
++                continue;
++            }
++        }
++
++        if (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF) {
+             *val |= BIT(i);
+         }
+     }
 -- 
 2.53.0
 
