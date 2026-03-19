@@ -4,47 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F091B108E1F3
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:39:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507AE108E1F4
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:40:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Bif-0007K6-7h; Thu, 19 Mar 2026 07:39:17 -0400
+	id 1w3BiW-0007J3-6X; Thu, 19 Mar 2026 07:39:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w3Bib-0007Js-RO
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:14 -0400
+ id 1w3BiT-0007Ic-2x
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:05 -0400
 Received: from va-1-112.ptr.blmpb.com ([209.127.230.112])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w3Bia-0004cR-2d
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:13 -0400
+ id 1w3BiO-0004aq-Tn
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1773920346; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1773920324; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=TveFI/sDZqiQ3mrpO0u1dXilS/98mgQUpWeqgtqotqQ=;
- b=ENXfe4z0cQx7yKjeFM2ayRbgBztO75YaAJzRVZiUfHZq52JeXuunVfrkoCG6cYC4GAwGIH
- nufwaOwV3z51LCFshFqkYqmHNeuHTd6SJcgOWui0aRICew23+HhMkC+fl6o996zuF5nxhZ
- y8fwRIX7kAmjJ32EWMWX/oFlVfsk8u0L3ZU/afUvVgMee94FNbmCejxl6HZuT/EHbsWVY4
- XPRk5SyTMMzer2dlRiiFW8MDtFdyX8n4PRgq6equUXL3iYtxJLtPcN6rlcYkrwBItg5xg2
- qc0qSXXC/zQ4IJp+wO6wi6hVSJ4403VzKdoNxoex9TMApjanJoc9KTaMW3bngw==
+ bh=wqboUZ0f6vFFVw5ws29kYKMSNzJiaVUpowo2r2mSgt0=;
+ b=IsqhoX0RvLMpa90t0y/rezTTjueZH7CrrEGFqq5IWK/SQgG1S0bFNDX2KufFlXcZQRfcT4
+ qx9XZ6h1cSP/F6UXCTW7Qd1JPQwq99R1mqq9fbvvVLmlJH4naTupTNvvHyc5k2okQCMgCU
+ dxlEiC4y/US6M3WhQVMvwzMK8368rWG3x6HOBElN+udoPvjUVVnhwXud/ximdent3TExZK
+ XmgP+b66S5eLhZInmCe92h4tYp5bknzD/dpKxCztEA8SajxKzPLhwyA7QVj+QUKGFuOhU3
+ QnKZjV4yv8WfWROhvBFbRFqFuOoK7SGFpWtOWKXk7p4HmiGoO4S8ql5M0JloQg==
+Subject: [RFC V2 0/2] migration: optimize cpr fd lookup using GHashTable
+X-Lms-Return-Path: <lba+269bbe042+d80d80+nongnu.org+hongmianquan@bytedance.com>
+Content-Transfer-Encoding: 7bit
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Date: Thu, 19 Mar 2026 19:38:28 +0800
+Mime-Version: 1.0
+X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+To: <qemu-devel@nongnu.org>
 Cc: <peterx@redhat.com>, <farosas@suse.de>, <mark.kanda@oracle.com>, 
  <bchaney@akamai.com>, "hongmianquan" <hongmianquan@bytedance.com>
-From: "hongmianquan" <hongmianquan@bytedance.com>
-Subject: [RFC v2 2/2] cpr: use hashtable for cpr fds
-Mime-Version: 1.0
-In-Reply-To: <20260319113830.53867-1-hongmianquan@bytedance.com>
-To: <qemu-devel@nongnu.org>
-References: <20260319113830.53867-1-hongmianquan@bytedance.com>
+Message-Id: <20260319113830.53867-1-hongmianquan@bytedance.com>
 X-Mailer: git-send-email 2.32.1 (Apple Git-133)
-Date: Thu, 19 Mar 2026 19:38:30 +0800
-Message-Id: <20260319113830.53867-3-hongmianquan@bytedance.com>
-X-Lms-Return-Path: <lba+269bbe058+29f6a8+nongnu.org+hongmianquan@bytedance.com>
-X-Original-From: hongmianquan <hongmianquan@bytedance.com>
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset=UTF-8
 Received-SPF: pass client-ip=209.127.230.112;
  envelope-from=hongmianquan@bytedance.com; helo=va-1-112.ptr.blmpb.com
 X-Spam_score_int: -3
@@ -69,11 +67,14 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Use a hashtable to store cpr fds to reduce the time
-consumption of `cpr_find_fd` in scenarios with a large
-number of fds, which relies on the migration support for
-GHashTable implemented earlier. The time complexity for
-`cpr_find_fd` is reduced from O(N) to O(1).
+Currently, the CPR subsystem in QEMU uses a QLIST to store fds.
+In scenarios where a large number of
+fds are involved (such as a VM with many vfio-pci devices), looking up an fd
+via `cpr_find_fd` becomes a performance bottleneck due to the O(N) linear search.
+This patch series optimizes the cpr fd storage by replacing the QLIST
+with a GHashTable. The time complexity for `cpr_find_fd` is reduced
+from O(N) to O(1).
+
 To demonstrate the performance improvement, we tested the total time
 consumed by `cpr_find_fd` (called N times for N fds) under our real-world
 business scenarios with different numbers of file descriptors. The results
@@ -90,238 +91,39 @@ as the number of fds increases. With the GHashTable, the time consumption
 remains linear (O(1) per lookup), significantly reducing the downtime during
 the CPR process.
 
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
----
- include/migration/cpr.h |   4 +-
- migration/cpr.c         | 129 ++++++++++++++++++++++++++++------------
- system/vl.c             |   2 +
- 3 files changed, 95 insertions(+), 40 deletions(-)
+We choose to migrate the GHashTable directly rather than migrating a
+QLIST and rebuilding the hash on the destination side. Since `cpr_find_fd`
+is used during normal runtime (where fds are frequently added or deleted),
+reconstructing the hash would require us to maintain and synchronize both
+a QLIST and a temporary hashtable simultaneously on both the source and
+destination sides.
+Migrating the GHashTable natively keeps `cpr_state.fds` as the single
+source of truth, eliminating synchronization overhead and potential bugs.
+Additionally, the new `VMSTATE_GHASH_V` macro provides a reusable API
+for other QEMU subsystems to migrate key-value mappings.
 
-diff --git a/include/migration/cpr.h b/include/migration/cpr.h
-index 5850fd1788..858b251bb5 100644
---- a/include/migration/cpr.h
-+++ b/include/migration/cpr.h
-@@ -18,16 +18,16 @@
- #define QEMU_CPR_FILE_VERSION   0x00000001
- #define CPR_STATE "CprState"
- 
--typedef QLIST_HEAD(CprFdList, CprFd) CprFdList;
- typedef QLIST_HEAD(CprVFIODeviceList, CprVFIODevice) CprVFIODeviceList;
- 
- typedef struct CprState {
--    CprFdList fds;
-+    GHashTable *fds;
-     CprVFIODeviceList vfio_devices;
- } CprState;
- 
- extern CprState cpr_state;
- 
-+void cpr_state_init(void);
- void cpr_save_fd(const char *name, int id, int fd);
- void cpr_delete_fd(const char *name, int id);
- int cpr_find_fd(const char *name, int id);
-diff --git a/migration/cpr.c b/migration/cpr.c
-index a0b37007f5..cfdddb5043 100644
---- a/migration/cpr.c
-+++ b/migration/cpr.c
-@@ -27,59 +27,101 @@ CprState cpr_state;
- 
- /****************************************************************************/
- 
--typedef struct CprFd {
-+typedef struct CprFdKey {
-     char *name;
-     unsigned int namelen;
-     int id;
-+} CprFdKey;
-+
-+typedef struct CprFdVal {
-     int fd;
--    QLIST_ENTRY(CprFd) next;
--} CprFd;
-+} CprFdVal;
-+
-+#define VMSTATE_FDS_KEY                                                 \
-+{                                                                       \
-+    .name = "cpr-fd-key",                                               \
-+    .version_id = 1,                                                    \
-+    .minimum_version_id = 1,                                            \
-+    .fields = (const VMStateField[]) {                                  \
-+        VMSTATE_UINT32(namelen, CprFdKey),                              \
-+        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFdKey, 0, NULL, namelen), \
-+        VMSTATE_INT32(id, CprFdKey),                                    \
-+        VMSTATE_END_OF_LIST()                                           \
-+    }                                                                   \
-+}
- 
--static const VMStateDescription vmstate_cpr_fd = {
--    .name = "cpr fd",
--    .version_id = 1,
--    .minimum_version_id = 1,
--    .fields = (VMStateField[]) {
--        VMSTATE_UINT32(namelen, CprFd),
--        VMSTATE_VBUFFER_ALLOC_UINT32(name, CprFd, 0, NULL, namelen),
--        VMSTATE_INT32(id, CprFd),
--        VMSTATE_FD(fd, CprFd),
--        VMSTATE_END_OF_LIST()
--    }
-+#define VMSTATE_FDS_VAL                 \
-+{                                       \
-+    .name = "cpr-fd-value",             \
-+    .version_id = 1,                    \
-+    .minimum_version_id = 1,            \
-+    .fields = (const VMStateField[]) {  \
-+        VMSTATE_FD(fd, CprFdVal),       \
-+        VMSTATE_END_OF_LIST()           \
-+    }                                   \
-+}
-+
-+static const VMStateDescription vmstate_fds_hashtable[2] = {
-+    VMSTATE_FDS_VAL,   /* value */
-+    VMSTATE_FDS_KEY   /* key */
- };
- 
-+static guint cpr_fd_key_hash(gconstpointer v)
-+{
-+    const CprFdKey *key = v;
-+    return g_str_hash(key->name) ^ key->id;
-+}
-+
-+static gboolean cpr_fd_key_equal(gconstpointer a, gconstpointer b)
-+{
-+    const CprFdKey *key_a = a;
-+    const CprFdKey *key_b = b;
-+    return !strcmp(key_a->name, key_b->name) && key_a->id == key_b->id;
-+}
-+
-+static void cpr_destroy_fd_key(gpointer data)
-+{
-+    CprFdKey *k = (CprFdKey *) data;
-+    g_free(k->name);
-+    g_free(k);
-+}
-+
-+void cpr_state_init(void)
-+{
-+    CprState *s = &cpr_state;
-+
-+    s->fds = g_hash_table_new_full(cpr_fd_key_hash, cpr_fd_key_equal,
-+                                   cpr_destroy_fd_key, g_free);
-+}
-+
- void cpr_save_fd(const char *name, int id, int fd)
- {
--    CprFd *elem = g_new0(CprFd, 1);
-+    CprFdKey *key = g_new0(CprFdKey, 1);
-+    CprFdVal *val = g_new0(CprFdVal, 1);
- 
-     trace_cpr_save_fd(name, id, fd);
--    elem->name = g_strdup(name);
--    elem->namelen = strlen(name) + 1;
--    elem->id = id;
--    elem->fd = fd;
--    QLIST_INSERT_HEAD(&cpr_state.fds, elem, next);
-+    key->name = g_strdup(name);
-+    key->namelen = strlen(name) + 1;
-+    key->id = id;
-+    val->fd = fd;
-+    g_hash_table_insert(cpr_state.fds, key, val);
- }
- 
--static CprFd *find_fd(CprFdList *head, const char *name, int id)
-+static CprFdVal *find_fd(CprFdKey *key)
- {
--    CprFd *elem;
--
--    QLIST_FOREACH(elem, head, next) {
--        if (!strcmp(elem->name, name) && elem->id == id) {
--            return elem;
--        }
--    }
--    return NULL;
-+    return g_hash_table_lookup(cpr_state.fds, key);
- }
- 
- void cpr_delete_fd(const char *name, int id)
- {
--    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+    CprFdKey key = {
-+        .name = (char *)name,
-+        .id = id,
-+    };
-+    CprFdVal *elem = find_fd(&key);
- 
-     if (elem) {
--        QLIST_REMOVE(elem, next);
--        g_free(elem->name);
--        g_free(elem);
-+        g_hash_table_remove(cpr_state.fds, &key);
-     }
- 
-     trace_cpr_delete_fd(name, id);
-@@ -87,7 +129,11 @@ void cpr_delete_fd(const char *name, int id)
- 
- int cpr_find_fd(const char *name, int id)
- {
--    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+    CprFdKey key = {
-+        .name = (char *)name,
-+        .id = id,
-+    };
-+    CprFdVal *elem = find_fd(&key);
-     int fd = elem ? elem->fd : -1;
- 
-     trace_cpr_find_fd(name, id, fd);
-@@ -96,7 +142,11 @@ int cpr_find_fd(const char *name, int id)
- 
- void cpr_resave_fd(const char *name, int id, int fd)
- {
--    CprFd *elem = find_fd(&cpr_state.fds, name, id);
-+    CprFdKey key = {
-+        .name = (char *)name,
-+        .id = id,
-+    };
-+    CprFdVal *elem = find_fd(&key);
-     int old_fd = elem ? elem->fd : -1;
- 
-     if (old_fd < 0) {
-@@ -125,9 +175,11 @@ int cpr_open_fd(const char *path, int flags, const char *name, int id,
- 
- bool cpr_walk_fd(cpr_walk_fd_cb cb)
- {
--    CprFd *elem;
-+    GHashTableIter iter;
-+    CprFdVal *elem;
- 
--    QLIST_FOREACH(elem, &cpr_state.fds, next) {
-+    g_hash_table_iter_init(&iter, cpr_state.fds);
-+    while (g_hash_table_iter_next(&iter, NULL, (gpointer *)&elem)) {
-         g_assert(elem->fd >= 0);
-         if (!cb(elem->fd)) {
-             return false;
-@@ -142,7 +194,8 @@ static const VMStateDescription vmstate_cpr_state = {
-     .version_id = 1,
-     .minimum_version_id = 1,
-     .fields = (VMStateField[]) {
--        VMSTATE_QLIST_V(fds, CprState, 1, vmstate_cpr_fd, CprFd, next),
-+        VMSTATE_GHASH_V(fds, CprState, 1, vmstate_fds_hashtable,
-+                        CprFdKey, CprFdVal),
-         VMSTATE_END_OF_LIST()
-     },
-     .subsections = (const VMStateDescription * const []) {
-diff --git a/system/vl.c b/system/vl.c
-index 3e341142a0..da42de87db 100644
---- a/system/vl.c
-+++ b/system/vl.c
-@@ -2894,6 +2894,8 @@ void qemu_init(int argc, char **argv)
- 
-     qemu_init_subsystems();
- 
-+    cpr_state_init();
-+
-     /* first pass of option parsing */
-     optind = 1;
-     while (optind < argc) {
+The series is structured as follows:
+1. The first patch introduces migration support for `GHashTable` by
+   adding the `VMSTATE_GHASH_V` macro and related save/load functions.
+   This is inspired by previous implementations (e.g., commit 9a85e4b)
+   and handles the serialization of hash table keys and values.
+2. The second patch refactors `cpr_state.fds` from a QLIST to a
+   GHashTable. It defines `CprFdKey` and `CprFdVal`, sets up the hash
+   and equal functions, and updates all fd operations (save, delete,
+   find, resave, walk) to use the new hash table API.
+
+hongmianquan (2):
+  migration: Support ghash migration
+  cpr: use hashtable for cpr fds
+
+ include/migration/cpr.h     |   4 +-
+ include/migration/vmstate.h |  22 ++++++
+ migration/cpr.c             | 129 +++++++++++++++++++++----------
+ migration/trace-events      |   5 ++
+ migration/vmstate-types.c   | 147 ++++++++++++++++++++++++++++++++++++
+ system/vl.c                 |   2 +
+ 6 files changed, 269 insertions(+), 40 deletions(-)
+
 -- 
 2.32.1 (Apple Git-133)
 
