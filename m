@@ -4,110 +4,153 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB1E61075275
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:30:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5519F1075275
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:32:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w38ll-0006du-Mn; Thu, 19 Mar 2026 04:30:17 -0400
+	id 1w38nk-0007nW-DB; Thu, 19 Mar 2026 04:32:20 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w38li-0006aT-4q
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:14 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w38nj-0007mi-0c
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:32:19 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w38lf-0000Kk-Jz
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:13 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w38ng-0000dU-PC
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:32:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773909010;
+ s=mimecast20190719; t=1773909135;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=ROz1EIPTG3foMg7BwtsMwRyIo6psphGItQIQ0124oM8=;
- b=Uh2A+v0XI0RsmFV9D0/VpRhPGNeh2JTv3ocDANXLVOaekEvwuzfKO+dDjZqtzxBOR3qtQD
- cIV/fdYdPe6H3wPjZ/AtsuCTSIoW4LaQFNfejit6kVn6vYeomKPRoN6MKsdw5FTEJFqyX+
- 6gqiUhQB1Sjde+MAGNNCagbULNbxvFM=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=nE4FdSkE+MXKjJZ+6basvJb745kw5EQgJ71kQ++7VG0=;
+ b=iFrrzUhPNXaZ2DI3oh5gWfuhN894eTWBkqJknOtuCXyQAotJmLz8H2LsKEnX03cxK+Ot8m
+ VGJunMimcCTsMyeN7dNPEktDwWn8Fbxh6/BtpvJ+FMB+i7OCqG/0oeZVZ/jh5tn77XC9fQ
+ 4Q9RyXUWmyRm1cppFdrWrldWKKRnOo8=
+Received: from mail-wm1-f70.google.com (mail-wm1-f70.google.com
+ [209.85.128.70]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-288-wSErEmzsPp2IRRdDsAjVtw-1; Thu, 19 Mar 2026 04:30:08 -0400
-X-MC-Unique: wSErEmzsPp2IRRdDsAjVtw-1
-X-Mimecast-MFC-AGG-ID: wSErEmzsPp2IRRdDsAjVtw_1773909007
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43b4730dad8so638146f8f.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 01:30:08 -0700 (PDT)
+ us-mta-5-nJTdwg4bOMewaouR-r03qg-1; Thu, 19 Mar 2026 04:32:14 -0400
+X-MC-Unique: nJTdwg4bOMewaouR-r03qg-1
+X-Mimecast-MFC-AGG-ID: nJTdwg4bOMewaouR-r03qg_1773909133
+Received: by mail-wm1-f70.google.com with SMTP id
+ 5b1f17b1804b1-486fa35b005so5792895e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 01:32:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773909007; x=1774513807; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :from:to:cc:subject:date:message-id:reply-to;
- bh=ROz1EIPTG3foMg7BwtsMwRyIo6psphGItQIQ0124oM8=;
- b=ss+crYslwfazuE2ASisbwmVL/EdPjezlGF+jsKqYj9maqORXgCBzJ+GPiPU+Ha7TcX
- 3vt+6U+06fwYn0QgwXsS1eYh1oGWk7BZE6NGwY8l8Zx+e5duksp5Wrvum/KLM+ulmkST
- bDS5fXRn+TXPZSqKmwLySFyvRxfWAI8u9HtCi22V7SMXJgKE7XcidlUCW2ancAq92pkJ
- zqzHarmWJwcIFxQ4DYiRvzpUcQivcvz4V5N7I91IpX0Bp8bDR13bk064EoWnjIF9yK0b
- x710GBaYp0N84ML2eaYnK0P0rNDdGxJTD/0j1aXJscl+NONZ4gsG/KEGQcbBSWxTU8d9
- ldbQ==
+ d=redhat.com; s=google; t=1773909133; x=1774513933; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=nE4FdSkE+MXKjJZ+6basvJb745kw5EQgJ71kQ++7VG0=;
+ b=LA8wmj5r7m/WuAsmrHfu52gUhyjmWKVrED50oHbUMWyiQnHI/KxzqtMxH7JgkVYaBh
+ C07UZwgdOpOKglwL6ves1tfJt8yVjOv6R65z05mkgUvRVtefvyRQbmGTpng21O2GroKc
+ L/3rIYrPP6DakWKWOqIIsB/fIYc5OGcXB5n3kXxoI043okAb7dQJ8mJXtyrvw9KB24J8
+ v+qFBRTzZGQjeVLw5wcZ2850nyUb7qIPgdhquE4wk+yMykzvrZRR1Rqm268pTgcC7oTu
+ wg+XLhUdYkHIeD+rFssIQ0CBBbVFEQVD1GG7bfCo3449JsULecuaGn3Hg+kxoMo+Q8ZT
+ Y5EQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773909007; x=1774513807;
- h=content-transfer-encoding:in-reply-to:from:content-language
- :references:cc:to:subject:user-agent:mime-version:date:message-id
- :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
- :reply-to;
- bh=ROz1EIPTG3foMg7BwtsMwRyIo6psphGItQIQ0124oM8=;
- b=gJ3dHogPx/A+9Pyu/9hFCi7UD5Qsqek1VRhHB9Go0cdO4k9DInue6J4SoAhpiDWPvx
- 2juQK286RuLTcjuw1mt19DSWBgJ0vRoEN55+QT9u873gYmA0Rfoy/h9TfczxZ5xbDiuu
- D4+RppXupXuSHY36w/4p1833RKP6MAI6QvrBvW58ViwOua4H22VENSnrxaXbJA4buBj9
- H4jWU0FZYXseKWm60BwKlHu1Ub9RaFPOiAUS4ax2yhp17Dyy85aEzKGqyGB9aW1g+Z99
- bdR4RjG7mJ3zBcEILfJsEK7ybrdEPvCdMcZvou8iKrPV4GIJgll5tAueQP9mof3GlBmd
- CVPQ==
-X-Gm-Message-State: AOJu0YzW7eWBWIv/3K/21YC8Ge8/F0VH/6g8R4Ef349BndPVjjrqa8ax
- K2HR6x/Oj2JKqTaDkXHy843lbEOluav31K9DSMLdoCYoUYv5nDXNDVSJOVLHZlsLxU3EU1WRouW
- 3tsZJYlxU3i+3tiBI9x07DPVb2l4kvFU++lE5fnTnlOy4YR0qmw8Cp3Cp
-X-Gm-Gg: ATEYQzz6ULvoV98xnsBmCL/uUvInCiPxexb5yVoUE5PxW+w+OH45+Nqiwg9rfB2RY+u
- xvb3LNduaBaJBGnFFWfwJ+n1xgeccwj3A9K/M4qdYlznZOOCi9YD7PIAIjv1tcgHku+HLcNDhq1
- nj8AS9F11gzxFMUoBKDmvxeaIpHJaFOMLs+wKg/3O0Yf1ESdEdLG+ppYBFJZkVcAxEf5LgeDm72
- 2Yb//nMypWIcc9wFnfJOs8AnEUgspdh97yk6NKBEdoWexbWeMr/vek3E9tW7Bw5VPgF4bfYIN/i
- wlK6AWL7Gzo4AVM+KbGrwVMYkqPaVgB9SO6YfpoS7nK1ep/A6JDKNJwngA7qiY/tNyKli/ISUL7
- kR2yH+/d3jBqgqAWaYB7x98nDtHpJMSNAxozCO9DykmnMNs91jOCs5qlMGJAbdCBN/396tvkF69
- D6M/E5Nb5riCsz69mVXJzwIU+MZUYX9Fb+OPkyUfI9ow4aW0E+
-X-Received: by 2002:a05:6000:609:b0:43b:498f:dcf0 with SMTP id
- ffacd0b85a97d-43b527a3b93mr11321420f8f.9.1773909007223; 
- Thu, 19 Mar 2026 01:30:07 -0700 (PDT)
-X-Received: by 2002:a05:6000:609:b0:43b:498f:dcf0 with SMTP id
- ffacd0b85a97d-43b527a3b93mr11321330f8f.9.1773909006549; 
- Thu, 19 Mar 2026 01:30:06 -0700 (PDT)
-Received: from ?IPV6:2003:cf:d737:d033:4b9:bf78:3d26:f60b?
- (p200300cfd737d03304b9bf783d26f60b.dip0.t-ipconnect.de.
- [2003:cf:d737:d033:4b9:bf78:3d26:f60b])
+ d=1e100.net; s=20251104; t=1773909133; x=1774513933;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=nE4FdSkE+MXKjJZ+6basvJb745kw5EQgJ71kQ++7VG0=;
+ b=GgHwX50rW2d6wPAUQcdiyU3seoBX65nsj60BZVPlFabZWzoQ/MFIf8mzV4pTFOt6/T
+ 28Etzmes9/hPYM/MpbtIvwvpwHt8ubfTzsJu83StIfMmqP6urvCimeCcSIqBC2B881B4
+ wR0iAbbENBYhw2M1+TCIBx5ELZpcXFURRw8krSiXYvrkeoKGBkrRGlgaHjCo0aqt8Ygy
+ BOQYZOJUGOP/a8HdK5jJZZULKy0fTMXCYkT57S+xEtEgxYvNIafQM6U1bkDO0biLjV0+
+ t6fugHSN6SYXVwXOS+Ioo42DGIc8MY1ineVXG05RklcLen3JSUkYs95ONlDEhm/zpj50
+ XPJg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCXoD8J0g+2x0S/q9YL4f/V86a1dw2b1dn2ma0bHYlannl4RmHZanjWf9+Nh0ev3UyRzikKWklww86Sq@nongnu.org
+X-Gm-Message-State: AOJu0Yztf/MFvOpAQvhJ/fFlvRquRblrpXu1Y1JGPRJ8y3BYlofAY/Mz
+ VM7sVxLKAdqcQ/LiHlGpSUiPZlXKRIARCEN/5gMVrV7IspMqZ48Hpg20qXk8Zcv8JCtDZK47d9x
+ 4rdQEPbJRAcxzuJMmrhkk6qWiubXx0T7h+/9aYK+S4LBvSdA8rYcVrBDQ
+X-Gm-Gg: ATEYQzxwczWSveaHjMU2/KP4jflUA/9gsvH23qbtcRqx2J0CmW89FpqmjGMEJ9Z07vr
+ m8P/HYOs6crzsVZr9x7nvMRRv1/F5H/mzSD/pb3OBGaPf/V0Xry9YrevLY5tCJsccNkS6MOU1bY
+ ZE3425zF38EKXRyI9QIlmH757QTQqlQqLelV2Y+Ac2pI7TpEhgX4TiLcdE9Tr9Ws2CiPBdLeOYc
+ YEddKmV59Y3ThLuHLW5qeZEqwKAMrVS7dZUKIuhE30LHqEPrWtdRVWpfvNBJUrttiEMEdhHXbb2
+ Cujvw1TNkreUllxNSbVJuP2zDq9cW7yxPwHC1Tdr0x/Nd1/Efrpyi+myLz5HPe13METpZRHKnln
+ JVWUg6bXzgG2ZSsiBnPPHh3jMEoMfPrb4hSbBUFRA4LmsNuepwhBL7tJ5mAAU
+X-Received: by 2002:a05:600c:4e12:b0:480:20f1:7aa6 with SMTP id
+ 5b1f17b1804b1-486f44435a7mr102649505e9.21.1773909132704; 
+ Thu, 19 Mar 2026 01:32:12 -0700 (PDT)
+X-Received: by 2002:a05:600c:4e12:b0:480:20f1:7aa6 with SMTP id
+ 5b1f17b1804b1-486f44435a7mr102649205e9.21.1773909132230; 
+ Thu, 19 Mar 2026 01:32:12 -0700 (PDT)
+Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
+ ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b5189221dsm14400011f8f.23.2026.03.19.01.30.05
+ 5b1f17b1804b1-486fc61dd4asm12072395e9.14.2026.03.19.01.32.11
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Mar 2026 01:30:05 -0700 (PDT)
-Message-ID: <a9e0575b-428e-42a6-b8bf-9d37b59d64e0@redhat.com>
-Date: Thu, 19 Mar 2026 09:30:04 +0100
+ Thu, 19 Mar 2026 01:32:11 -0700 (PDT)
+Message-ID: <1a90bb09-9141-4fde-a8c4-87d82664da9e@redhat.com>
+Date: Thu, 19 Mar 2026 09:32:10 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PULL 0/2] Block layer patches
-To: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
-Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
- qemu-stable <qemu-stable@nongnu.org>
-References: <20260317134521.112121-1-hreitz@redhat.com>
- <7e3a45c4-a7bf-4679-8799-7f482fd9334c@tls.msk.ru>
-Content-Language: en-US
-From: Hanna Czenczek <hreitz@redhat.com>
-In-Reply-To: <7e3a45c4-a7bf-4679-8799-7f482fd9334c@tls.msk.ru>
+Subject: Re: [PATCH v5 4/8] hw/vfio: eradicate CONFIG_IOMMU from sources
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
+ Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-ppc@nongnu.org
+References: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
+ <20260318174733.1717643-5-pierrick.bouvier@linaro.org>
+Content-Language: en-US, fr
+From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
+Autocrypt: addr=clg@redhat.com; keydata=
+ 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
+ uVKe8BVz4atMOoktmt0GWTOC8P4=
+In-Reply-To: <20260318174733.1717643-5-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -125,38 +168,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On 18.03.26 21:35, Michael Tokarev wrote:
-> On 17.03.2026 16:45, Hanna Czenczek wrote:
-> []
->> Block layer patches for rc0
->>
->> - Fix race condition in throttle-group code triggering an assertion
->>    failure
->> - Fix assertion failure in mirror job when issuing job-complete twice
->>
->> ----------------------------------------------------------------
->> Alberto Garcia (1):
->>    throttle-group: Fix race condition in throttle_group_restart_queue()
->>
->> Fiona Ebner (1):
->>    block/mirror: fix assertion failure upon duplicate complete for job
->>      using 'replaces'
->>
->>   block/mirror.c          | 28 ++++++++-------
->>   block/throttle-groups.c | 79 +++++++++++++++++++++++++++++++----------
->>   2 files changed, 75 insertions(+), 32 deletions(-)
->
-> Is it not qemu-stable material?
-> The amount of changes is a bit too high though.
+On 3/18/26 18:47, Pierrick Bouvier wrote:
+> This commit removes usage of CONFIG_IOMMU in hw/vfio sources, exposing
+> inconditionally iommufd related properties, which are declared
+> statically (in const arrays). The alternative to expose them dynamically
+> is more complex and requires boilerplate to set properties at runtime,
+> with set_* callbacks and added logic to check if iommufd backend is
+> available, with no obvious benefit.
+> 
+> One possible difference is that user may see a different error message
+> when trying to attach a vfio device with a QEMU not supporting iommufd,
+> without declaring iommufd object associated.
+> 
+> Instead of:
+> ```
+> $ qemu-system-* -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0
+> qemu-system-*: -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0: Property 'vfio-pci.iommufd' not found
+> ```
+> User will now see:
+> ```
+> qemu-system-aarch64: -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0: Device 'iommufd0' not found
+> ```
+> 
+> However, since declaring the iommufd object is needed, error reported
+> before and after is still the same:
+> ```
+> $ qemu-system-* -object iommufd,id=iommufd0 -device vfio-pci,host=0000:01:00.0,iommufd=iommufd0
+> qemu-system-*: invalid object type: iommufd
+> ```
+> 
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   hw/vfio/ap.c  |  9 ---------
+>   hw/vfio/ccw.c |  9 ---------
+>   hw/vfio/pci.c | 11 -----------
+>   3 files changed, 29 deletions(-)
 
-The mirror one should be simple enough, the throttle-groups one… I think 
-it still is good.
 
-> I'm picking it up for the currently active stable branches, please
-> let me know if I shouldn't.
 
-Yes, thanks!
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
-Hanna
+Thanks,
+
+C.
 
 
