@@ -4,89 +4,112 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4B3D81075275
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:30:16 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id EB1E61075275
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:30:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w38lX-0006T3-Oa; Thu, 19 Mar 2026 04:30:03 -0400
+	id 1w38ll-0006du-Mn; Thu, 19 Mar 2026 04:30:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w38lW-0006Sg-07
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:02 -0400
-Received: from mail-wr1-x42f.google.com ([2a00:1450:4864:20::42f])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w38lU-00005I-Dl
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:01 -0400
-Received: by mail-wr1-x42f.google.com with SMTP id
- ffacd0b85a97d-43b45bb7548so417621f8f.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 01:29:59 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w38li-0006aT-4q
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <hreitz@redhat.com>) id 1w38lf-0000Kk-Jz
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:30:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773909010;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references;
+ bh=ROz1EIPTG3foMg7BwtsMwRyIo6psphGItQIQ0124oM8=;
+ b=Uh2A+v0XI0RsmFV9D0/VpRhPGNeh2JTv3ocDANXLVOaekEvwuzfKO+dDjZqtzxBOR3qtQD
+ cIV/fdYdPe6H3wPjZ/AtsuCTSIoW4LaQFNfejit6kVn6vYeomKPRoN6MKsdw5FTEJFqyX+
+ 6gqiUhQB1Sjde+MAGNNCagbULNbxvFM=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-288-wSErEmzsPp2IRRdDsAjVtw-1; Thu, 19 Mar 2026 04:30:08 -0400
+X-MC-Unique: wSErEmzsPp2IRRdDsAjVtw-1
+X-Mimecast-MFC-AGG-ID: wSErEmzsPp2IRRdDsAjVtw_1773909007
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-43b4730dad8so638146f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 01:30:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773908998; x=1774513798; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=Jg1Ac/W6rLVfHyVE5FH13fCwEpFUB9bueqclq2Ybdqg=;
- b=xW7fhnpo8/3vE7BaxWv7KzfsUV4igiwjjOrrZ450kd5jfJC+3xdekSKJ0uRPI1oFOj
- ZrMT1XClgvSB/OisDWX/4DFBpAGhB0i/N40H0BYqa9AAmxsD1wShngnnFJCPL96LDjo/
- ORRKrftkVOgqiwJkHJKQ3Z4PVEmx6WfXLRSBJLBbZG0Q2jqInxt1Qj+d3bA5nxgKMymP
- IhDrMY6ysCpnNdxgP+c7FwvqhUHyO/F0Xr5Ch5Nksrf0hy3GTPdS3x0ek0DzgJImVzC2
- GO+om7ci2v5rNQFRaAXoPqE1nQvHglpGOl2KEYGg/iD2Qcw4oIsXz0PbGbYVkWdLp2/p
- R9sw==
+ d=redhat.com; s=google; t=1773909007; x=1774513807; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=ROz1EIPTG3foMg7BwtsMwRyIo6psphGItQIQ0124oM8=;
+ b=ss+crYslwfazuE2ASisbwmVL/EdPjezlGF+jsKqYj9maqORXgCBzJ+GPiPU+Ha7TcX
+ 3vt+6U+06fwYn0QgwXsS1eYh1oGWk7BZE6NGwY8l8Zx+e5duksp5Wrvum/KLM+ulmkST
+ bDS5fXRn+TXPZSqKmwLySFyvRxfWAI8u9HtCi22V7SMXJgKE7XcidlUCW2ancAq92pkJ
+ zqzHarmWJwcIFxQ4DYiRvzpUcQivcvz4V5N7I91IpX0Bp8bDR13bk064EoWnjIF9yK0b
+ x710GBaYp0N84ML2eaYnK0P0rNDdGxJTD/0j1aXJscl+NONZ4gsG/KEGQcbBSWxTU8d9
+ ldbQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773908998; x=1774513798;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=Jg1Ac/W6rLVfHyVE5FH13fCwEpFUB9bueqclq2Ybdqg=;
- b=dD0D7u2GAc5CytRRuaZ0lnMhYo5MInAZJ8396en0lkzzJ8nFAxd/huB1VPdT8C5Dvt
- 0mbSFXE4sktKz5FwWwicRpzqRk1aQoCGMwHBVGJcpJe3Biir6KwpqTnylLQiUEqOygos
- 2nRwfFVlnDzWaASe08PLfgSa2meIW+nq1bQQOgZW9/Erpd/kgKQ/pMNlBfxGZWPPYdXc
- QY+Q4681XTBr63O5t9yfG/h+ATiDu6tMQL3OHPghwWL9XqMQNL9C06bzgmxcuZNDA4PU
- O2WoCItRakA2BCb+C7odALR9bEP7uU5CI02t5yO7HxIX/9URNKC9fTF1i0AlCU5nNIiT
- ANaw==
-X-Gm-Message-State: AOJu0YxvZvNob6CL18FE2UhkswIQ/+PcvF/jjQeasdxqKLZ7Dwp0Tf/t
- Z4pt4mnzylopMqw1V25iYEovjwTOt5w0d7bXhrHa04I+l9RiVL8bP9qA8+60wd9ReFYmQzEIU+f
- erCDEtOA=
-X-Gm-Gg: ATEYQzzXNvcv96IAvtnUtIGzC7YAb8dBMB+lTanAH3C0lGF48SugFcKZWO7vIsgoHnL
- oXtnj1MBOLKsl9fuSNkySig+7tBSuc8bSszyLcBRkYyiAKPhyp1EWlCSA+GlKg3TYPQGgH20Aw6
- DcPem88ZLQhP5EicFr8Q/RRNIZdiMavhbSMOH2xnF6Z6nXQ0OAMUaWAZjIv1rdQEZe4zbrE5F50
- JrwLjyP3mvulOiEi+HhDQRzf/cnIse29FQYxOha6ApeQ6eItxyhLNnbXYOMJud8XPuA9s0p6MwX
- GksJaglKaWsRoXPVw6IuKisEwrbMC9HVYaAsC1U3Zn9eGhrlFey97ozd3HRE6/bm0n543Hjx8Nd
- eIBUnkg8n+2BGzRu+wCkEhidPbNpu4uD/MWa1jYFKpmOp0SbX0vHeFdWVvQ5ZySkXoaIpj6HoqR
- ILIdydoPXL70KSDDJZi47CI3q55KwASGibeHqTc0nw1K6nuYIhc6v++dZWZLri4zH9El305zUi/
- UBkWnR+xU0=
-X-Received: by 2002:a05:6000:608:b0:43b:40ef:5d1a with SMTP id
- ffacd0b85a97d-43b5279deaamr10354065f8f.5.1773908998235; 
- Thu, 19 Mar 2026 01:29:58 -0700 (PDT)
-Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
- [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b51892161sm15238798f8f.21.2026.03.19.01.29.55
- (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Mar 2026 01:29:56 -0700 (PDT)
-From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-To: qemu-devel@nongnu.org
-Cc: Alexandr Moshkov <dtalexundeer@yandex-team.ru>,
- Ani Sinha <anisinha@redhat.com>,
- "Maciej S . Szmigiero" <maciej.szmigiero@oracle.com>,
- Jon Doron <arilou@gmail.com>, Michael Tokarev <mjt@tls.msk.ru>,
- Roman Kagan <rvkagan@yandex-team.ru>,
- =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH] hw/hyperv: Replace legacy ld_phys() -> address_space_ld()
-Date: Thu, 19 Mar 2026 09:29:54 +0100
-Message-ID: <20260319082954.65069-1-philmd@linaro.org>
-X-Mailer: git-send-email 2.53.0
+ d=1e100.net; s=20251104; t=1773909007; x=1774513807;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=ROz1EIPTG3foMg7BwtsMwRyIo6psphGItQIQ0124oM8=;
+ b=gJ3dHogPx/A+9Pyu/9hFCi7UD5Qsqek1VRhHB9Go0cdO4k9DInue6J4SoAhpiDWPvx
+ 2juQK286RuLTcjuw1mt19DSWBgJ0vRoEN55+QT9u873gYmA0Rfoy/h9TfczxZ5xbDiuu
+ D4+RppXupXuSHY36w/4p1833RKP6MAI6QvrBvW58ViwOua4H22VENSnrxaXbJA4buBj9
+ H4jWU0FZYXseKWm60BwKlHu1Ub9RaFPOiAUS4ax2yhp17Dyy85aEzKGqyGB9aW1g+Z99
+ bdR4RjG7mJ3zBcEILfJsEK7ybrdEPvCdMcZvou8iKrPV4GIJgll5tAueQP9mof3GlBmd
+ CVPQ==
+X-Gm-Message-State: AOJu0YzW7eWBWIv/3K/21YC8Ge8/F0VH/6g8R4Ef349BndPVjjrqa8ax
+ K2HR6x/Oj2JKqTaDkXHy843lbEOluav31K9DSMLdoCYoUYv5nDXNDVSJOVLHZlsLxU3EU1WRouW
+ 3tsZJYlxU3i+3tiBI9x07DPVb2l4kvFU++lE5fnTnlOy4YR0qmw8Cp3Cp
+X-Gm-Gg: ATEYQzz6ULvoV98xnsBmCL/uUvInCiPxexb5yVoUE5PxW+w+OH45+Nqiwg9rfB2RY+u
+ xvb3LNduaBaJBGnFFWfwJ+n1xgeccwj3A9K/M4qdYlznZOOCi9YD7PIAIjv1tcgHku+HLcNDhq1
+ nj8AS9F11gzxFMUoBKDmvxeaIpHJaFOMLs+wKg/3O0Yf1ESdEdLG+ppYBFJZkVcAxEf5LgeDm72
+ 2Yb//nMypWIcc9wFnfJOs8AnEUgspdh97yk6NKBEdoWexbWeMr/vek3E9tW7Bw5VPgF4bfYIN/i
+ wlK6AWL7Gzo4AVM+KbGrwVMYkqPaVgB9SO6YfpoS7nK1ep/A6JDKNJwngA7qiY/tNyKli/ISUL7
+ kR2yH+/d3jBqgqAWaYB7x98nDtHpJMSNAxozCO9DykmnMNs91jOCs5qlMGJAbdCBN/396tvkF69
+ D6M/E5Nb5riCsz69mVXJzwIU+MZUYX9Fb+OPkyUfI9ow4aW0E+
+X-Received: by 2002:a05:6000:609:b0:43b:498f:dcf0 with SMTP id
+ ffacd0b85a97d-43b527a3b93mr11321420f8f.9.1773909007223; 
+ Thu, 19 Mar 2026 01:30:07 -0700 (PDT)
+X-Received: by 2002:a05:6000:609:b0:43b:498f:dcf0 with SMTP id
+ ffacd0b85a97d-43b527a3b93mr11321330f8f.9.1773909006549; 
+ Thu, 19 Mar 2026 01:30:06 -0700 (PDT)
+Received: from ?IPV6:2003:cf:d737:d033:4b9:bf78:3d26:f60b?
+ (p200300cfd737d03304b9bf783d26f60b.dip0.t-ipconnect.de.
+ [2003:cf:d737:d033:4b9:bf78:3d26:f60b])
+ by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b5189221dsm14400011f8f.23.2026.03.19.01.30.05
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Mar 2026 01:30:05 -0700 (PDT)
+Message-ID: <a9e0575b-428e-42a6-b8bf-9d37b59d64e0@redhat.com>
+Date: Thu, 19 Mar 2026 09:30:04 +0100
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PULL 0/2] Block layer patches
+To: Michael Tokarev <mjt@tls.msk.ru>, qemu-block@nongnu.org
+Cc: qemu-devel@nongnu.org, Kevin Wolf <kwolf@redhat.com>,
+ qemu-stable <qemu-stable@nongnu.org>
+References: <20260317134521.112121-1-hreitz@redhat.com>
+ <7e3a45c4-a7bf-4679-8799-7f482fd9334c@tls.msk.ru>
+Content-Language: en-US
+From: Hanna Czenczek <hreitz@redhat.com>
+In-Reply-To: <7e3a45c4-a7bf-4679-8799-7f482fd9334c@tls.msk.ru>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42f;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42f.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=hreitz@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -102,38 +125,38 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer the address_space_ld/st API over the legacy ld/st_phys()
-because it allow checking for bus access fault, which shouldn't
-happen here.
+On 18.03.26 21:35, Michael Tokarev wrote:
+> On 17.03.2026 16:45, Hanna Czenczek wrote:
+> []
+>> Block layer patches for rc0
+>>
+>> - Fix race condition in throttle-group code triggering an assertion
+>>    failure
+>> - Fix assertion failure in mirror job when issuing job-complete twice
+>>
+>> ----------------------------------------------------------------
+>> Alberto Garcia (1):
+>>    throttle-group: Fix race condition in throttle_group_restart_queue()
+>>
+>> Fiona Ebner (1):
+>>    block/mirror: fix assertion failure upon duplicate complete for job
+>>      using 'replaces'
+>>
+>>   block/mirror.c          | 28 ++++++++-------
+>>   block/throttle-groups.c | 79 +++++++++++++++++++++++++++++++----------
+>>   2 files changed, 75 insertions(+), 32 deletions(-)
+>
+> Is it not qemu-stable material?
+> The amount of changes is a bit too high though.
 
-Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
----
- hw/hyperv/hyperv.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+The mirror one should be simple enough, the throttle-groups one… I think 
+it still is good.
 
-diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-index 27e323a8196..5a0e00892d8 100644
---- a/hw/hyperv/hyperv.c
-+++ b/hw/hyperv/hyperv.c
-@@ -704,13 +704,16 @@ uint16_t hyperv_hcall_signal_event(uint64_t param, bool fast)
-     EventFlagHandler *handler;
- 
-     if (unlikely(!fast)) {
-+        MemTxResult result;
-         hwaddr addr = param;
- 
-         if (addr & (__alignof__(addr) - 1)) {
-             return HV_STATUS_INVALID_ALIGNMENT;
-         }
- 
--        param = ldq_phys(&address_space_memory, addr);
-+        param = address_space_ldq_le(&address_space_memory, addr,
-+                                     MEMTXATTRS_UNSPECIFIED, &result);
-+        assert(result == MEMTX_OK);
-     }
- 
-     /*
--- 
-2.53.0
+> I'm picking it up for the currently active stable branches, please
+> let me know if I shouldn't.
+
+Yes, thanks!
+
+Hanna
 
 
