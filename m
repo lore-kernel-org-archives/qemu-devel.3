@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 852E01091930
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:45 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C3E271091930
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3MlV-00020j-9D; Thu, 19 Mar 2026 19:26:59 -0400
+	id 1w3Mka-0000ki-7I; Thu, 19 Mar 2026 19:26:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3MlD-0001Rl-1O
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:39 -0400
-Received: from mail-pl1-x62f.google.com ([2607:f8b0:4864:20::62f])
+ id 1w3MkX-0000jr-Bo
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:58 -0400
+Received: from mail-pl1-x635.google.com ([2607:f8b0:4864:20::635])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3MlB-0007jI-7q
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:38 -0400
-Received: by mail-pl1-x62f.google.com with SMTP id
- d9443c01a7336-2adff872068so274745ad.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:34 -0700 (PDT)
+ id 1w3MkU-0007ct-Uj
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:56 -0400
+Received: by mail-pl1-x635.google.com with SMTP id
+ d9443c01a7336-2ab39b111b9so328055ad.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:25:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962793; x=1774567593; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773962753; x=1774567553; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=RYB7pnWPDF09kxM2pVeCxMznDuYzQx/e50Ubr54oZJY=;
- b=XLpZJGAEdls4o7FiLQKpDqhaTrzTxJWVbLTmscYyW/Iv/dCCAN+hxa6IDk45lFVE0Z
- hCkhlXmvSympn1Z8M0g+d3zXMQDiq5v19OE5rChvvLRVt4sLr8hjBznqqM681tiR4imZ
- GXSe7/d1ilDKzLJ2R0RhDdT62QuVphMTPleSjmyiMVmwmOUMy57YXkOdwId94kVg7eU3
- tTW+lwlb0vmkvhHzzF+NGXv2nUrN5gZ2waoWeyjqwvXUTDY0KSSv8EGlygG+nM8T3Qm3
- k1VQFFW9j1evhV7MauUtGgQQVNE1CSr8bu1k6MOMVnZjrY8VcHtotxGpCanG8/VlCDVk
- +o+Q==
+ bh=dnpq0ftMx8G84qoaXkcolzp3tfJeZoMWYUC6e4g/8hM=;
+ b=eNZa8EFwRdPW/ZuSsvyxqEuvgfNKYQVnRoe03Zfw1T4lHOPSAbsioKvcNkJ61dRg2B
+ 5kTiGZXv1UzF5sPEhjyCH+LPNXyz6ZltlFyurfxLNQqC4og/Hz/1WkVV5xsqij151M77
+ RYfhYqi3YG0s3+Ih+OQ5909dEeGzziZETp36wEhaG98cBd3nRxp/sUUUubJXK2e1dPB0
+ 3yJg6vXcx9p0BpT8dy7xUdYxjBWWSnZKaPs8WLe01EE5pppEEjq8GyTx2f4MiNaskCH3
+ Y6iP9F88mnOeKlhVVBHTrI8dtm+IBXIje1A2d3g2rzOV3sxD83mKsbLCB0gxtBy5iHTu
+ U8kA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962793; x=1774567593;
+ d=1e100.net; s=20251104; t=1773962753; x=1774567553;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=RYB7pnWPDF09kxM2pVeCxMznDuYzQx/e50Ubr54oZJY=;
- b=TehzG2OFDkbvI0qOSB3Vsab3v/dLdNQQVIHyVKZNrjr3Eb4VtsTtROVTweBVEm1/Er
- nmfSgRXq3MqTp7n/BpyXjjQ6AalnJ5yNOmQETfc+woXm42teM4wpq/i01rPso5LZUjWW
- QUHYhtxWyvVVO/i4VLFN8s+sFyJC5vuBmFTn2r6TPS+oS/FwR0+T1c9KutcznoUwDW5M
- bQax6GvTWtegkJlY9bntXrS/dRN22cTqjJojcOAddtC3JlgHbCCZHhMPvNz9hliA9I93
- llW2NFnAdkJjNpMmDvcHh9L8VWO/gG6YLrLN/qDjHxleWe2Hr8TyYPwbX2VsCy4TNgfE
- s11g==
-X-Gm-Message-State: AOJu0YyDcdN1EOgAlWTWVNUNLvlSlHsEyFkCpohSl1ySXsedjlQwNUMN
- KW4ZQsl7hSCpl4z6LH/81Fa9UXshgWaau64Euvteyh8ThOL15I9tug1S3rOpEw==
-X-Gm-Gg: ATEYQzy1FQXCYMA9yPXYV1kWahD+0VTnlGm8Bzhu5hOo40VscNoGTJxI2vMjH6AsmOy
- JjNl3FQ4FwtVnq3INm5QKqVBZOrWDE5BLs+VYeAxB92Z7u6pnStkpr/8WaydqQC+ur0vuFNQOfQ
- 8dXkDvGOqEK9ZblIJ3TS4cc75NvuZJzhprptWFae3uuLpZ5hfNgDwSpCyVqWnXXYugtEgH8MTNJ
- gB8S7Z1JFVCsXv9itNWaL4VLk5BwCcGFnS/b0TNqFBD0jOC2Ubzg4MOsLu2gTXcLTKeY7rzfZ2M
- wFwORP+fXNdi6ut/udG05jRq1NK86rLc4B20JqG2SH/pUy9Tal8GaviXszoIUcl6pGXc8Bfkm04
- JES4mul3J21iZnJmHx17zZ4wJdeoQ+aN5szvVwee44Q3ILtv7h+P5FJS+P1N+WuBi2hOqMpSA1C
- U5ipDT0XsmdUj+NeCB0ES1Eez/tP6ztWKJ0V9KtUGXgw==
-X-Received: by 2002:a17:902:dad1:b0:2ae:cb0e:fd5e with SMTP id
- d9443c01a7336-2b08275878cmr8524945ad.23.1773962793541; 
- Thu, 19 Mar 2026 16:26:33 -0700 (PDT)
+ bh=dnpq0ftMx8G84qoaXkcolzp3tfJeZoMWYUC6e4g/8hM=;
+ b=Lu/UVpvYA/trmRmEC1Ee8ml1tlAHUh8OLrPOGahcTfQHhskswxIVquR/HXEbEdkN61
+ F1L2pIxrDcbT+o7+KOTV1GE4Xl7Eei84fqj9F/jGmeR7D+WpjO1pR/Y4GHgBWq2qxkFu
+ i2li87x4+hQrT2GYXZd8tLD9e+HRebi8TGhVq+LvS5tkiFfjMSmB2lIppy6EK0QTlSdM
+ asjCQg/W4kFn65dHlwQgeq4rQk3DljRPmUANNe6nm5mX7LUJlF3W/hTdRibr6snMk+gw
+ MxB8533Yxa941t+KO+qUfJobdMWRP+qO6q3Y7AsnoIsXvSDeerMPSnTztv7kIsi5ZOh+
+ TlyQ==
+X-Gm-Message-State: AOJu0Yz2vLcj7Os6qS4EYwSBndz32qN+6m3uTYY5UyFrSsLWuelIJ9Gd
+ CiYPHXror6SzOKrVUiuJtkVJrZrFCjgqJZd0+bp4NSukhxJzDP0rezSCSoS2/Q==
+X-Gm-Gg: ATEYQzw+TDOHU1gUhchrN3QN8nrHyHXHa8pySIxBCIh+nsoMpXPI/Qq+W+sGawkw6U+
+ BHFsmVm52xSf02DG0WotSsynwd6gxAtS/oL+srXeJqwESDs3n245/2xPX3Mzm1V8lfFfdrw0pXh
+ bEKoUD08thhM3pyQud3Uf8qic0SX2g7G4cbNHA5tuB89A8ItX7xSUHpE0UItbw9f36yM33a2iJy
+ Uq7e8Mkzk47q/YE28XqzSh0RUIIYtzn/lDsRjE3LTNnTcAbPnxOe0NF/leYXY3O8JD9EExDlvEH
+ m1q1DcW+VY3WnIqqRRMG2VO13g6xRXqgkP20SQalDsRUb7cP0n1vWd+ieX2Ieq2HUe7qsq88dIk
+ 6sWo5FnmDRd96DMY3a2IxGPPyRbuexHGa/vtbaBFxDp574a1R0TSosvtjbuz9WpbW/YgYmNy/eC
+ db+qfHW/GSZEURSMyLaH9I4gRW+DH1cq9b2S3pF84DdQ==
+X-Received: by 2002:a17:902:f790:b0:2ae:6259:5aff with SMTP id
+ d9443c01a7336-2b0826ffc3bmr8420105ad.6.1773962753006; 
+ Thu, 19 Mar 2026 16:25:53 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.30
+ d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.25.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:26:33 -0700 (PDT)
+ Thu, 19 Mar 2026 16:25:52 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Jim Shu <jim.shu@sifive.com>,
- Max Chou <max.chou@sifive.com>, Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 17/17] target/riscv: Fix scountovf CSR behavior in VS-mode and
- M-mode
-Date: Fri, 20 Mar 2026 09:25:22 +1000
-Message-ID: <20260319232522.1867400-18-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Jay Chang <jay.chang@sifive.com>,
+ Frank Chang <frank.chang@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 05/17] hw/dma: sifive_pdma: Set done bit upon completion
+Date: Fri, 20 Mar 2026 09:25:10 +1000
+Message-ID: <20260319232522.1867400-6-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
 References: <20260319232522.1867400-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::62f;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x62f.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::635;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x635.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,58 +103,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Jim Shu <jim.shu@sifive.com>
+From: Jay Chang <jay.chang@sifive.com>
 
-From Sscofpmf spec [1]:
-- In M-mode, scountovf bit X is always readable.
-- in VS mode, scountovf bit X is readable when mcounteren bit X and
-  hcounteren bit X are both set, and otherwise reads as zero.
+Ensure that the 'done' bit is set upon transfer completion, even if
+an error occurs, since all transfers are considered completed regardless
+of success or failure.
 
-[1] https://github.com/riscv/riscv-isa-manual/blob/main/src/sscofpmf.adoc
-
-Signed-off-by: Jim Shu <jim.shu@sifive.com>
-Signed-off-by: Max Chou <max.chou@sifive.com>
+Signed-off-by: Jay Chang <jay.chang@sifive.com>
+Reviewed-by: Frank Chang <frank.chang@sifive.com>
 Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260318024234.2772480-1-jim.shu@sifive.com>
+Message-ID: <20260304030816.33209-1-jay.chang@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/csr.c | 16 ++++++++++++++--
- 1 file changed, 14 insertions(+), 2 deletions(-)
+ hw/dma/sifive_pdma.c | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-index 5064483917..a75281539b 100644
---- a/target/riscv/csr.c
-+++ b/target/riscv/csr.c
-@@ -1599,6 +1599,7 @@ static RISCVException read_scountovf(CPURISCVState *env, int csrno,
-     int mhpmevt_start = CSR_MHPMEVENT3 - CSR_MCOUNTINHIBIT;
-     int i;
-     *val = 0;
-+    bool virt = env->virt_enabled;
+diff --git a/hw/dma/sifive_pdma.c b/hw/dma/sifive_pdma.c
+index 6d06ec0375..7b22e51492 100644
+--- a/hw/dma/sifive_pdma.c
++++ b/hw/dma/sifive_pdma.c
+@@ -153,6 +153,7 @@ done:
+ error:
+     s->chan[ch].state = DMA_CHAN_STATE_ERROR;
+     s->chan[ch].control |= CONTROL_ERR;
++    s->chan[ch].control |= CONTROL_DONE;
+ }
  
-     /* Virtualize scountovf for counter delegation */
-     if (riscv_cpu_cfg(env)->ext_sscofpmf &&
-@@ -1609,8 +1610,19 @@ static RISCVException read_scountovf(CPURISCVState *env, int csrno,
-     }
- 
-     for (i = mhpmevt_start; i < RV_MAX_MHPMEVENTS; i++) {
--        if ((get_field(env->mcounteren, BIT(i))) &&
--            (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF)) {
-+        if (env->priv < PRV_M) {
-+            if (!get_field(env->mcounteren, BIT(i))) {
-+                /* no mcounteren in S/HS-mode */
-+                continue;
-+            }
-+
-+            if (virt && !get_field(env->hcounteren, BIT(i))) {
-+                /* no hcounteren in VS-mode */
-+                continue;
-+            }
-+        }
-+
-+        if (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF) {
-             *val |= BIT(i);
-         }
-     }
+ static inline void sifive_pdma_update_irq(SiFivePDMAState *s, int ch)
 -- 
 2.53.0
 
