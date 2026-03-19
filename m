@@ -4,101 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6B2ECFB5EAA
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 03:41:32 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 551701088E70
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 03:45:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w34Fw-0005li-6Z; Wed, 18 Mar 2026 23:41:08 -0400
+	id 1w34KC-0006ms-Hp; Wed, 18 Mar 2026 23:45:32 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w34Fs-0005kr-Fn
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 23:41:05 -0400
-Received: from mail-ej1-x629.google.com ([2a00:1450:4864:20::629])
+ id 1w34KA-0006mb-Sg
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 23:45:30 -0400
+Received: from mail-ej1-x634.google.com ([2a00:1450:4864:20::634])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w34Fq-0004rg-D5
- for qemu-devel@nongnu.org; Wed, 18 Mar 2026 23:41:04 -0400
-Received: by mail-ej1-x629.google.com with SMTP id
- a640c23a62f3a-b97905516faso59250866b.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 20:41:02 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773891661; cv=none;
+ id 1w34K9-0006jV-8l
+ for qemu-devel@nongnu.org; Wed, 18 Mar 2026 23:45:30 -0400
+Received: by mail-ej1-x634.google.com with SMTP id
+ a640c23a62f3a-b9358dd7f79so72541966b.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 20:45:28 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773891927; cv=none;
  d=google.com; s=arc-20240605;
- b=k04w3+NXfWnsquNS+Tu2KQHe+W+cuqSLi1BsjcBWoO6GwRCzvVXw09euA3iAVDZ4UU
- b0cMmyjZ7BNWocYuOgE2pTI557l+hXBFCTZQhBKLX2Q6z76jo7mxBN/Gc57vRSRdpzGB
- yNuJkOR7aSOEpXKvrd/3XHADl944noLYl5S/u1SE+R0h1dVcjYu8aHUm01I9o+RNFeI/
- LcY7KNtgVMN2284zHzBSeBe/qfOU2g/sj0l1Z8T/TYlzXel08/z29h/HfmAirJ0N1LhS
- tuLGH5nHZut0zGOZy1buIPOAOk8g6mG1pjOiPo2gI/E0rvVuYXze9hcnfdeQP4lw1ABg
- Wd9Q==
+ b=ES2xaYEZ4Mi0QbgAa5o/nijuy7b8BRw/Tulb+GQIZmlAwlvj8u6Qr92fQjouEufW0K
+ cOJRCXiSP0BNhL3+V0cEbdU0FJTQBruG8RXY0NAWReM5sYDn9aOa04NHJWBxCbIDFiDY
+ 9rzd8t7gGQ0rf/hBBNu9wtMZxZ9/jNC089TggJHKl5MxsgnDwFmJ/lILzPTrMuIRjft1
+ v1V0uL8yMzJstdiybWmjNx9S/u9FCcrpsXiddYvxsfjql/ypN2nbtUb6eVhZHtkLfcql
+ 7H5f6wibf5RiDsVL5gqb6d6OGtDFEUj5Ef0zGbdCzqeb1nopivYhl4dLQ2GVLUfR6lLh
+ 2qXA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:dkim-signature;
- bh=DFYmK6ITmeuaRM2WaLu+ZgV79ZlZniogYry9/F4mCJ8=;
- fh=rBjBKsEzs1JIYGyQCUy7R8m0YYLVbZbBPtXybSKKRhw=;
- b=XUHzKkF0SUiL41oXolk+JcRUBZlxGcjNXzAIQgBPwf8qL8s2MH5v6ivNkkHWJ8M5bw
- zZuXsotRs4y18JlCef6P7lV4LOfyaPgOZ/up7Nw2lruUwntyBU6G0ukoczJAa50mZpjN
- vOF+1m9jS70AZGGUUQavnnAJ7dFCnMbxP27LSjjwEK1DtzB8/+z6dRTlUQDK1S3AqBOb
- Zx0Xlvo4sBS5RLMRXowEv/dOMJSi3t+KGKSgb/l8y7iRjpzBlQNkkdy/zlZ/YU6YR/0x
- HuwbbeXMeC8pxyQJ3uS0RfcggMqWAj2v5YaX5mqxsnB8eWkIi05RvQxw+evlirLv/f1p
- LGNQ==; darn=nongnu.org
+ bh=Jfr7swISXfky0TRkGnfBtMQG5t1kGtGdr9QeHqfxjR0=;
+ fh=XErS4XjkAQDBkClscxjQUC7TY1MVaIkgq5whaEGujtU=;
+ b=PP+Hj2jhaCn5aawlBF6/452Mw3/6bCl7OG3ek9MK7VQcFjdHJhOYFuzf68NW6MD3dY
+ hhBHcmsxcY+9BIF4oQPF5IVy6RXqrhmI4cgAD2xCO6y5cFgZRaeLNlEUgTaKXFt/THwG
+ itzORiJQehge3m8P9v5zoN8sNXeREizuM8gOUDDt8aT048hMdMhNsowbdPoWjxtpdtNw
+ Rvn11EFMtUHZZwluZ5VRGEEd7N+TWbMyt58rJ6w3w76/wgbvCZyzlMSew4C3U8QGq5vT
+ u4iTj5SlyO5gjFxF46gwQV7/ULtrFmlf8UFs8PI3ZfMJ4S7WTdicdXems+eJsZpHq6YZ
+ wBKA==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773891661; x=1774496461; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773891927; x=1774496727; darn=nongnu.org;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=DFYmK6ITmeuaRM2WaLu+ZgV79ZlZniogYry9/F4mCJ8=;
- b=QRxlZAxQc57f3raAm5rrNVZveUcoehECs3gCQx5RWknouL8GhviOAo+V4BN4gfjPMT
- gwD1ALu5a13rsELzzM7LClOsuMfVOk8q6JbwD8Es7bcjzJTG6QrRkmEJkaxH/C/5vF5x
- McrMtulF4gNRprTWu4e+pg6K+/GqHIvAC1nXvIULa15CqNRiJXZtzAPOUp/0qDuZZ5iU
- bywjFT56mvQ4g2FZIvOCyI1ea5SLacE2k9ZTsaI1HR+WNdehh9TGcvCUqnv4ICThXAHl
- ZwqgY4cuqQEgZ/+ABFDaiJ33+tN05VoxhRubTKe58FfcDMOsy+4owWuGs9zy0rCZf/dR
- Fy/g==
+ bh=Jfr7swISXfky0TRkGnfBtMQG5t1kGtGdr9QeHqfxjR0=;
+ b=fvsaZmCr0xY00lzRer/SgibwsMcO6+Hv3Sg11GEoEs72BffiHTGWOvGxiz7wLmDm9h
+ TIqfGO2LULJJ4MRZzLYWd4UQrtWlunddUk6qE9fhoj0YZnfGcziAmYXmPCOgwOt5Q9Nd
+ Qwij/+ELGMoRIrXtvhr1pcWRVtyduM7grpXua0HRbSIwwdEE2Jtu6C6V+MHzVkhD3bSb
+ +Nb7QJhyqW82nQtWw05Y2dh9A0rFgoQyGzcRJzt8BTY+RSBgQ7kPoCO9p87XQ26Bex6/
+ dpE72GBUlOGgUdgySiK4tYYOnPUEh61z8gN/5dA/54YF9DTwHZG7fFYowHPUBZN0cI7y
+ SwCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773891661; x=1774496461;
+ d=1e100.net; s=20251104; t=1773891927; x=1774496727;
  h=content-transfer-encoding:cc:to:subject:message-id:date:from
  :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=DFYmK6ITmeuaRM2WaLu+ZgV79ZlZniogYry9/F4mCJ8=;
- b=Vt5xLZwmw4u98Dml4TvGhNoAtb/ZuTGR4vCTTunTkFGK4lbqNAOvV8RjjWTCb4WSX6
- s8T5xQ3fr8Rp87/rsVbHEcGsza8q1tsgW3KL9S/jMROmPvr5q742hEx1p6nPwtrBeTCF
- tQtTY1dPAdD2iSZAAhEo1ZK708xwSo8a/6ecsBqQyT4Ma7f63WC4+Rl/mgHVoUoOunYO
- MfrY7qr2EqCf7B/Uko7Vf8f+A8tySh7MKLJzHwT3W9O2YlRW7xbkV4QvPzbJWxVpB1yf
- t31Kapk4A2oytxfodxxsUSIT6+N19cM6+LM7kMPS6XhmnsXbgt8BU5ILuQyfl36Dd5Yi
- jlZg==
-X-Gm-Message-State: AOJu0YxioUhDjnuZ6lpDWVpvhKXN1wBWMxEDETS4FojcOyVNR++N29r9
- cLwiCon63DI8y3UEjF4FtEBRvlIjVpN5eX6gubHmxyt7kx4G9yNb430UfAVvvzc+N8OU6uNKfCT
- mzZElOJyRjKsixQtu9lRWM9hPyQNTdEo=
-X-Gm-Gg: ATEYQzy1tHpXuWLUX2jaGtxAOItXtavQau4zyXpfkIfo1clJmwsIHX/eA0aT85MoyQd
- OZi14uOezFsVCITFv/WFbmZ6dg8vMsW05U+2zZa2gq9wR5yfQIUGgtTJrIK9D50qBdb4f+xv6ZW
- hY4hWexuRI71E24HaRywusceF7GkFsOWtxZK1ho51WLFMjveU+iIhaPDRN+zioLYeI6fGZL5NUS
- a/+2pAuCMmvXVhorEm4IxDd7IBU4LpZlPeK8DtgdU1tw6ZpLsqF3/7xk3rwr1GE161SY+IqS3p/
- 4f2g7zNIRxlcH1uCADPlHRlskz5/uF6u4SRaFg==
-X-Received: by 2002:a17:907:268c:b0:b87:7485:b4a8 with SMTP id
- a640c23a62f3a-b97f437c5e0mr368077666b.0.1773891660505; Wed, 18 Mar 2026
- 20:41:00 -0700 (PDT)
+ bh=Jfr7swISXfky0TRkGnfBtMQG5t1kGtGdr9QeHqfxjR0=;
+ b=Ks842u2CxCBCIEg0zH8hmbb6GmL579NkY7Qra9QoAzw8KQDunHD9cY+eWE/7KYqo07
+ GFQ3ikxl28gy7p37MnkH9oUN+ysSaNLeZKM9ifZE+cj1zxRhd0xYARQsCb/9D9xPYS2J
+ O6w+atO0k6jE6CDc2g93ye+W5bpresJgqU2gnkLNB9TYpojNL74PhQourGaXgwA98/ty
+ ehAtIwuYDGQb3JQK4Dfm8V2wjv9HlX3aigz3eqCLLoAyYfH4Kr2vwGqawdQ6jZeYjb/H
+ /zVm8WA/r4sQUKGvt1TFYmBBFU/f4zDbdZc61KBezpuGysDrfXVBAEjfKGDeRsGkkllC
+ ZQHg==
+X-Gm-Message-State: AOJu0Yw5yZ/dYKEZNiq0+1gojWfa9hbln4rp80aYwxpiowZf+F5GIe1B
+ XpUult4jwwcYsfuBaCCmT7lslSvIQ0TEz8TaiTbIFiMRi4sUDZtTx0+jYJIuCfkc3fX/ex8rxC8
+ yPpWal/4lqYXlTKfCBfBzypdifBBDRZw=
+X-Gm-Gg: ATEYQzxrKhh3MUXnYkSx/Xla3m++yRtocLm7lLu7QI/5AqFmMf6Rd/3lDwKzt0WQeJh
+ I9JxQUk47l+FyBNE8lJFewR30I51Jbtl6DZIEvo9lHrljHRz+VqWrFIKoAvONEQ7w/iVnmB6OqZ
+ ewq0qP7J9FP8yVW5bd0fePVTtsed2w50bOc9G3W+kS+l+Ib27M2xplYIHcBD6i7dmN1bn7EOahd
+ Be+42oWvH4m+RQNBHC3Q8mLnv8Pij9MiP9zEiiSuIrdS6DsVwQ2eDMOqylW/GM/XnGgsXHeDuyj
+ Ho+GJEYWYK3QGj/bgUshvviuCXpvCbS5hXinqYCcGcaZEZfY
+X-Received: by 2002:a17:907:78b:b0:b97:8866:77eb with SMTP id
+ a640c23a62f3a-b97f486326fmr333985966b.5.1773891927075; Wed, 18 Mar 2026
+ 20:45:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260318024234.2772480-1-jim.shu@sifive.com>
-In-Reply-To: <20260318024234.2772480-1-jim.shu@sifive.com>
+References: <20260306071105.3328365-1-max.chou@sifive.com>
+ <CAKmqyKP7VKi21xfMAiKi9nmAGaaNdrtH9u=6ktCbWBk7kiRoJA@mail.gmail.com>
+ <abKfuTO7zg5d67E8@sifive.com>
+ <CAKmqyKOcCKAb2w2t2qYgOevswst75FjzKfihrYP9+odRAsCQmw@mail.gmail.com>
+ <abe80eiIC4gXUHxk@sifive.com>
+In-Reply-To: <abe80eiIC4gXUHxk@sifive.com>
 From: Alistair Francis <alistair23@gmail.com>
-Date: Thu, 19 Mar 2026 13:40:31 +1000
-X-Gm-Features: AaiRm53VfYW_ethorKXxec_Ei3fshstYLFZ04unhl_Ws9UiLN2Ymvt75fzsJgUY
-Message-ID: <CAKmqyKP-n6-RP_kExrQv7NeT1EBKgeaG_fj=-V2+sydncX4dqQ@mail.gmail.com>
-Subject: Re: [PATCH] target/riscv: Fix scountovf CSR behavior in VS-mode and
- M-mode
-To: Jim Shu <jim.shu@sifive.com>
+Date: Thu, 19 Mar 2026 13:45:00 +1000
+X-Gm-Features: AaiRm51muVGzHmq1CwfRLfHUsy3qGdmdBpsxQ7DTXnN4VrQBjjBeh9Qn4YJPa14
+Message-ID: <CAKmqyKP-42diNbiAwr_qykVTAYgR=Ok2S4dgLwPN5oGuLTQGRg@mail.gmail.com>
+Subject: Re: [PATCH v5 0/9] Add Zvfbfa extension support
+To: Max Chou <max.chou@sifive.com>
 Cc: qemu-devel@nongnu.org, qemu-riscv@nongnu.org, 
  Palmer Dabbelt <palmer@dabbelt.com>,
  Alistair Francis <alistair.francis@wdc.com>, 
- Weiwei Li <liwei1518@gmail.com>,
- Daniel Henrique Barboza <dbarboza@ventanamicro.com>, 
- Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, Max Chou <max.chou@sifive.com>
+ Weiwei Li <liwei1518@gmail.com>, 
+ Daniel Henrique Barboza <daniel.barboza@oss.qualcomm.com>,
+ Liu Zhiwei <zhiwei_liu@linux.alibaba.com>, 
+ Chao Liu <chao.liu.zevorn@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2a00:1450:4864:20::629;
- envelope-from=alistair23@gmail.com; helo=mail-ej1-x629.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::634;
+ envelope-from=alistair23@gmail.com; helo=mail-ej1-x634.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -122,67 +126,74 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, Mar 18, 2026 at 12:44=E2=80=AFPM Jim Shu <jim.shu@sifive.com> wrote=
-:
+On Mon, Mar 16, 2026 at 6:28=E2=80=AFPM Max Chou <max.chou@sifive.com> wrot=
+e:
 >
-> From Sscofpmf spec [1]:
-> - In M-mode, scountovf bit X is always readable.
-> - in VS mode, scountovf bit X is readable when mcounteren bit X and
->   hcounteren bit X are both set, and otherwise reads as zero.
+> On 2026-03-13 11:09, Alistair Francis wrote:
+> > The problem here is that there is no version control. If we merge this
+> > series and the PR changes then suddenly we are out of sync there is no
+> > way to track which version of the draft spec we support.
+> >
+> > We need clear versions, like we previously have. For example version
+> > 0.7 and then 0.8. Draft versions are ok, but we need a stable target
+> > to develop against.
+> >
+> > >
+> > > PR #2743 is currently open, meaning ratification is pending but not
+> > > yet complete. Under the new workflow, merge into main of
+> > > riscv-isa-manual is the signal that ratification is finalized. If you
+> > > prefer to wait until that merge happens before applying this patchset=
+,
+> > > I completely understand. Alternatively, if you are comfortable
+> > > accepting it as ratification-pending, I am happy to address any
+> > > remaining technical comments.
+> >
+> > In this case we will have to wait as there is no stable version of the
+> > spec to point to.
+> >
+> > Alistair
+> >
 >
-> [1] https://github.com/riscv/riscv-isa-manual/blob/main/src/sscofpmf.adoc
+> Hi Alistair,
 >
-> Signed-off-by: Jim Shu <jim.shu@sifive.com>
-> Signed-off-by: Max Chou <max.chou@sifive.com>
+> Thank you for your feedback on the version control and stability of the
+> Zvfbfa specification. I understand your concern about developing against
+> a moving target.
+>
+> To address the lack of a stable target as you mentioned, I=E2=80=99d like=
+ to
+> help bridge this gap. Since this patchset was prepared based on the
+> Zvfbfa version v0.1 and this version has passed the ARC review, I
+> propose we coordinate with the Zvfbfa isa designer to check the
+> specific tag/commit ID of the Zvfbfa v0.1.
 
-Thanks!
 
-Applied to riscv-to-apply.next
+> If we could create a tag or release for v0.1 (e.g., v0.1/v0.1-draft)
+> within the Zvfbfa repository that explicitly marks the current state of
+> the Zvfbfa spec, would that provide the necessary versioning baseline
+> for you to accept this patchset?
+
+Yes, that's how things previously worked. Basically I think we just
+need a tag (that won't be changed) in an official RISC-V repo that we
+can point to. That way it's easy to say "this is the exact version we
+used to write the QEMU implementation". Then if there is a version 0.2
+we can easily see what has changed and update to match.
+
+With the seemingly infinite number of draft extensions we need
+something to manage the version and compatibility, and that seems like
+the best bet.
+
+Posting the draft PDF spec somewhere immutable would also work. We
+just need to be able to point to something that won't change and
+represents some sort of "release". So a git commit doesn't seem like
+enough, we need a "release" that everyone can converge on.
 
 Alistair
 
-> ---
->  target/riscv/csr.c | 16 ++++++++++++++--
->  1 file changed, 14 insertions(+), 2 deletions(-)
 >
-> diff --git a/target/riscv/csr.c b/target/riscv/csr.c
-> index 5064483917..a75281539b 100644
-> --- a/target/riscv/csr.c
-> +++ b/target/riscv/csr.c
-> @@ -1599,6 +1599,7 @@ static RISCVException read_scountovf(CPURISCVState =
-*env, int csrno,
->      int mhpmevt_start =3D CSR_MHPMEVENT3 - CSR_MCOUNTINHIBIT;
->      int i;
->      *val =3D 0;
-> +    bool virt =3D env->virt_enabled;
+> My goal is to ensure QEMU supports a traceable version of the draft spec
+> while respecting the current RVIA development process for this ISA
+> implementation patchset and the followings in the future.
 >
->      /* Virtualize scountovf for counter delegation */
->      if (riscv_cpu_cfg(env)->ext_sscofpmf &&
-> @@ -1609,8 +1610,19 @@ static RISCVException read_scountovf(CPURISCVState=
- *env, int csrno,
->      }
->
->      for (i =3D mhpmevt_start; i < RV_MAX_MHPMEVENTS; i++) {
-> -        if ((get_field(env->mcounteren, BIT(i))) &&
-> -            (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF)) {
-> +        if (env->priv < PRV_M) {
-> +            if (!get_field(env->mcounteren, BIT(i))) {
-> +                /* no mcounteren in S/HS-mode */
-> +                continue;
-> +            }
-> +
-> +            if (virt && !get_field(env->hcounteren, BIT(i))) {
-> +                /* no hcounteren in VS-mode */
-> +                continue;
-> +            }
-> +        }
-> +
-> +        if (env->mhpmevent_val[i] & MHPMEVENT_BIT_OF) {
->              *val |=3D BIT(i);
->          }
->      }
-> --
-> 2.43.0
->
->
+> rnax
 
