@@ -4,44 +4,41 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 009231090223
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:59:17 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B287B1090223
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:59:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Cvu-0005XT-Re; Thu, 19 Mar 2026 08:57:02 -0400
+	id 1w3Cvp-0005V0-7N; Thu, 19 Mar 2026 08:56:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
- id 1w38tJ-0003I5-9R
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:38:05 -0400
+ id 1w38lD-0006Pf-C5
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:29:43 -0400
 Received: from exmail.andestech.com ([60.248.187.195]
  helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
- id 1w38tF-0001VF-Vt
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:38:05 -0400
+ id 1w38lB-0008Uo-26
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:29:42 -0400
 Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
- by Atcsqr.andestech.com with ESMTP id 62J8bIUD017661;
- Thu, 19 Mar 2026 16:37:18 +0800 (+08)
+ by Atcsqr.andestech.com with ESMTP id 62J8TGIZ014809;
+ Thu, 19 Mar 2026 16:29:16 +0800 (+08)
  (envelope-from ycliang@andestech.com)
 Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
  (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 19 Mar
- 2026 16:37:18 +0800
+ 2026 16:29:15 +0800
 To: <u-boot@lists.denx.de>
-CC: <pbonzini@redhat.com>, <trini@konsulko.com>, <rick@andestech.com>,
- <ycliang@andestech.com>, <jerome.forissier@arm.com>,
- <xypron.glpk@gmx.de>, <ilias.apalodimas@linaro.org>,
- <kory.maincent@bootlin.com>,
- <eric.schikschneit@novatechautomation.com>, <sputnik@on-the-web.ch>,
- <michal.simek@amd.com>, <cnoize@andestech.com>, <qemu-devel@nongnu.org>
-Subject: [PATCH 4/6] cache: andes-l2: Add writeback-invalidate operation
-Date: Thu, 19 Mar 2026 16:37:11 +0800
-Message-ID: <20260319083713.3456894-2-ycliang@andestech.com>
+CC: <rick@andestech.com>, <ycliang@andestech.com>, <trini@konsulko.com>,
+ <me@ziyao.cc>, <anshuld@ti.com>, <xypron.glpk@gmx.de>,
+ <qemu-devel@nongnu.org>
+Subject: [PATCH 2/2] riscv: andes: Add Smstateen extension support
+Date: Thu, 19 Mar 2026 16:29:11 +0800
+Message-ID: <20260319082911.3270255-2-ycliang@andestech.com>
 X-Mailer: git-send-email 2.34.1
-In-Reply-To: <20260319083713.3456894-1-ycliang@andestech.com>
-References: <20260319083713.3456894-1-ycliang@andestech.com>
+In-Reply-To: <20260319082911.3270255-1-ycliang@andestech.com>
+References: <20260319082911.3270255-1-ycliang@andestech.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Content-Type: text/plain
@@ -50,7 +47,7 @@ X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
  ATCPCS34.andestech.com (10.0.1.134)
 X-DKIM-Results: atcpcs34.andestech.com; dkim=none;
 X-DNSRBL: 
-X-MAIL: Atcsqr.andestech.com 62J8bIUD017661
+X-MAIL: Atcsqr.andestech.com 62J8TGIZ014809
 Received-SPF: pass client-ip=60.248.187.195;
  envelope-from=ycliang@andestech.com; helo=Atcsqr.andestech.com
 X-Spam_score_int: -1
@@ -77,136 +74,108 @@ From:  Leo Yu-Chi Liang via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a wbinval operation to the cache uclass that performs
-writeback-invalidate without the disable/enable cycle that the
-existing disable path uses. This is needed for flush_dcache_all()
-to properly flush both L1 and L2 caches.
+Use the CSR detection mechanism to probe for the Smstateen extension
+and initialize mstateen0/sstateen0 CSRs when present.
 
-Implement andes_l2_wbinval_all() in the Andes L2 cache driver
-which issues the L2_WBINVAL_ALL command while keeping the cache
-enabled.
+The mstateen0 register is configured to allow S-mode access to fcsr,
+AIA, IMSIC, indirect CSR access, environment configuration, and
+sstateen0. The sstateen0 register enables U-mode access to compressed
+extension state and fcsr.
 
-Update flush_dcache_all() in the Andes cache code to also call
-L2 wbinval when CONFIG_ANDES_L2_CACHE is enabled.
+Supports both RV32 (using MSTATEEN0/MSTATEEN0H split) and RV64.
 
 Signed-off-by: Leo Yu-Chi Liang <ycliang@andestech.com>
 ---
- arch/riscv/cpu/andes/cache.c   |  4 ++++
- drivers/cache/cache-andes-l2.c | 24 ++++++++++++++++++++++++
- drivers/cache/cache-uclass.c   | 10 ++++++++++
- include/cache.h                | 16 ++++++++++++++++
- 4 files changed, 54 insertions(+)
+ arch/riscv/cpu/andes/cpu.c   | 29 +++++++++++++++++++++++++++++
+ arch/riscv/include/asm/csr.h | 15 +++++++++++++++
+ 2 files changed, 44 insertions(+)
 
-diff --git a/arch/riscv/cpu/andes/cache.c b/arch/riscv/cpu/andes/cache.c
-index bb57498d75a..3b325d77954 100644
---- a/arch/riscv/cpu/andes/cache.c
-+++ b/arch/riscv/cpu/andes/cache.c
-@@ -44,6 +44,10 @@ static void cache_ops(int (*ops)(struct udevice *dev))
- void flush_dcache_all(void)
- {
- 	csr_write(CSR_UCCTLCOMMAND, CCTL_L1D_WBINVAL_ALL);
+diff --git a/arch/riscv/cpu/andes/cpu.c b/arch/riscv/cpu/andes/cpu.c
+index d25ecba0e88..feb755a4f0d 100644
+--- a/arch/riscv/cpu/andes/cpu.c
++++ b/arch/riscv/cpu/andes/cpu.c
+@@ -9,6 +9,7 @@
+ #include <irq_func.h>
+ #include <asm/cache.h>
+ #include <asm/csr.h>
++#include <asm/csr_detect.h>
+ #include <asm/arch-andes/csr.h>
+ 
+ /*
+@@ -60,5 +61,33 @@ void harts_early_init(void)
+ 		mmisc_ctl_val |= MMISC_CTL_NON_BLOCKING_EN;
+ 
+ 		csr_write(CSR_MMISC_CTL, mmisc_ctl_val);
 +
-+#ifdef CONFIG_ANDES_L2_CACHE
-+	cache_ops(cache_wbinval);
++		/* Initialize Smstateen if the extension is present */
++		{
++			int trap = 0;
++			unsigned long long mstateen0;
++
++			mstateen0 = csr_read_allowed(CSR_MSTATEEN0, trap);
++			if (!trap) {
++#if __riscv_xlen == 32
++				mstateen0 |= (unsigned long long)
++					csr_read(CSR_MSTATEEN0H) << 32;
 +#endif
- }
- 
- void flush_dcache_range(unsigned long start, unsigned long end)
-diff --git a/drivers/cache/cache-andes-l2.c b/drivers/cache/cache-andes-l2.c
-index 45a4f216b07..5ceccf609e5 100644
---- a/drivers/cache/cache-andes-l2.c
-+++ b/drivers/cache/cache-andes-l2.c
-@@ -91,6 +91,29 @@ static int andes_l2_enable(struct udevice *dev)
- 	return 0;
- }
- 
-+static int andes_l2_wbinval_all(struct udevice *dev)
-+{
-+	struct andes_l2_plat *plat = dev_get_plat(dev);
-+	volatile struct l2cache *regs = plat->regs;
-+	u8 hart = gd->arch.boot_hart;
-+
-+	void __iomem *cctlcmd = (void __iomem *)CCTL_CMD_REG(regs, hart);
-+	void __iomem *cctlstatus = (void __iomem *)CCTL_STATUS_REG(regs, hart);
-+
-+	if ((regs) && (readl(&regs->control) & L2_ENABLE)) {
-+		writel(L2_WBINVAL_ALL, cctlcmd);
-+
-+		while ((readl(cctlstatus) & CCTL_STATUS_MSK(hart))) {
-+			if ((readl(cctlstatus) & CCTL_STATUS_ILLEGAL(hart))) {
-+				printf("L2 flush illegal! hanging...");
-+				hang();
++				mstateen0 |= SMSTATEEN0_CS | SMSTATEEN0_FCSR |
++					     SMSTATEEN0_CONTEXT |
++					     SMSTATEEN0_IMSIC |
++					     SMSTATEEN0_AIA |
++					     SMSTATEEN0_CSRIND |
++					     SMSTATEEN0_ENVCFG |
++					     SMSTATEEN0_SE0;
++				csr_write(CSR_MSTATEEN0, mstateen0);
++#if __riscv_xlen == 32
++				csr_write(CSR_MSTATEEN0H, mstateen0 >> 32);
++#endif
++				csr_write(CSR_SSTATEEN0,
++					  csr_read(CSR_SSTATEEN0) |
++					  SMSTATEEN0_CS | SMSTATEEN0_FCSR);
 +			}
 +		}
-+	}
-+
-+	return 0;
-+}
-+
- static int andes_l2_disable(struct udevice *dev)
- {
- 	struct andes_l2_plat *plat = dev_get_plat(dev);
-@@ -192,6 +215,7 @@ static const struct udevice_id andes_l2_cache_ids[] = {
- static const struct cache_ops andes_l2_cache_ops = {
- 	.enable		= andes_l2_enable,
- 	.disable	= andes_l2_disable,
-+	.wbinval	= andes_l2_wbinval_all,
- };
- 
- U_BOOT_DRIVER(andes_l2_cache) = {
-diff --git a/drivers/cache/cache-uclass.c b/drivers/cache/cache-uclass.c
-index 300e7bc86e1..8e77c9e2f4e 100644
---- a/drivers/cache/cache-uclass.c
-+++ b/drivers/cache/cache-uclass.c
-@@ -38,6 +38,16 @@ int cache_disable(struct udevice *dev)
- 	return ops->disable(dev);
+ 	}
  }
+diff --git a/arch/riscv/include/asm/csr.h b/arch/riscv/include/asm/csr.h
+index 986f951c31a..cef0fd906da 100644
+--- a/arch/riscv/include/asm/csr.h
++++ b/arch/riscv/include/asm/csr.h
+@@ -97,6 +97,18 @@
+ #define SIE_STIE		(_AC(0x1, UL) << IRQ_S_TIMER)
+ #define SIE_SEIE		(_AC(0x1, UL) << IRQ_S_EXT)
  
-+int cache_wbinval(struct udevice *dev)
-+{
-+	struct cache_ops *ops = cache_get_ops(dev);
++/* Smstateen: mstateen0 / sstateen0 bit definitions */
++#define SMSTATEEN0_CS		(_AC(0x1, ULL) << 0)
++#define SMSTATEEN0_FCSR		(_AC(0x1, ULL) << 1)
++#define SMSTATEEN0_JVT		(_AC(0x1, ULL) << 2)
++#define SMSTATEEN0_CONTEXT	(_AC(0x1, ULL) << 57)
++#define SMSTATEEN0_IMSIC	(_AC(0x1, ULL) << 58)
++#define SMSTATEEN0_AIA		(_AC(0x1, ULL) << 59)
++#define SMSTATEEN0_CSRIND	(_AC(0x1, ULL) << 60)
++#define SMSTATEEN0_P1P13	(_AC(0x1, ULL) << 61)
++#define SMSTATEEN0_ENVCFG	(_AC(0x1, ULL) << 62)
++#define SMSTATEEN0_SE0		(_AC(0x1, ULL) << 63)
 +
-+	if (!ops->wbinval)
-+		return -ENOSYS;
-+
-+	return ops->wbinval(dev);
-+}
-+
- UCLASS_DRIVER(cache) = {
- 	.id		= UCLASS_CACHE,
- 	.name		= "cache",
-diff --git a/include/cache.h b/include/cache.h
-index 296ae3c8b48..45b27ab989c 100644
---- a/include/cache.h
-+++ b/include/cache.h
-@@ -42,6 +42,14 @@ struct cache_ops {
- 	 * @return 0 if OK, -ve on error
- 	 */
- 	int (*disable)(struct udevice *dev);
-+
-+	/**
-+	 * wbinval() - Writeback and invalidate cache
-+	 *
-+	 * @dev:	Device to check (UCLASS_CACHE)
-+	 * @return 0 if OK, -ve on error
-+	 */
-+	int (*wbinval)(struct udevice *dev);
- };
- 
- #define cache_get_ops(dev)	((struct cache_ops *)(dev)->driver->ops)
-@@ -70,4 +78,12 @@ int cache_enable(struct udevice *dev);
-  * Return: 0 if OK, -ve on error
-  */
- int cache_disable(struct udevice *dev);
-+
-+/**
-+ * cache_wbinval() - Writeback and invalidate cache
-+ *
-+ * @dev:	Device to check (UCLASS_CACHE)
-+ * Return: 0 if OK, -ve on error
-+ */
-+int cache_wbinval(struct udevice *dev);
+ #define CSR_FCSR		0x003
+ #define CSR_CYCLE		0xc00
+ #define CSR_TIME		0xc01
+@@ -105,6 +117,7 @@
+ #define CSR_SIE			0x104
+ #define CSR_STVEC		0x105
+ #define CSR_SCOUNTEREN		0x106
++#define CSR_SSTATEEN0		0x10c
+ #define CSR_SSCRATCH		0x140
+ #define CSR_SEPC		0x141
+ #define CSR_SCAUSE		0x142
+@@ -126,6 +139,8 @@
+ #else
+ #define CSR_MCOUNTEREN		0x306
  #endif
++#define CSR_MSTATEEN0		0x30c
++#define CSR_MSTATEEN0H		0x31c
+ #define CSR_MSCRATCH		0x340
+ #define CSR_MEPC		0x341
+ #define CSR_MCAUSE		0x342
 -- 
 2.34.1
 
