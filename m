@@ -4,96 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C5D201075270
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 17:18:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5C9C81075270
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 17:28:58 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Gzx-0002yf-H0; Thu, 19 Mar 2026 13:17:29 -0400
+	id 1w3HAF-0005dE-4f; Thu, 19 Mar 2026 13:28:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3Gzv-0002y6-49
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:17:27 -0400
-Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1w3HAD-0005ck-MP
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:28:05 -0400
+Received: from mail-vs1-xe32.google.com ([2607:f8b0:4864:20::e32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3Gzt-0004wV-GP
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:17:26 -0400
-Received: by mail-yx1-xb136.google.com with SMTP id
- 956f58d0204a3-64ca9ec3ee7so1640223d50.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 10:17:24 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773940644; cv=none;
- d=google.com; s=arc-20240605;
- b=ae71Pwx8xRoru3JUDdq/XxJzYvtphDQQBfKdkNiDtuCtHkyVr2osfcec2G+HWniq2v
- GLaAemxz51BCm2B7c5KjwHzc0ZLMclp2wmGEhKZD95E4hafDnZ2Ei+pgWxLD0Is1mKr/
- TQ5KHpZoaBfno6OPzrszaRJ+pwhwTchmf6+PLQt63LiSTqllr0Vb/Q5DAOQ3dMd5WPGs
- U+FFTnsPr7OeVtwwn1mQEvBI0uWkirP7+D6a6ZC9L1uIH/ll+qTzWLeUnQB2b7L2A7Ng
- gjTe2OGPrNu4D8CKgY6pcUbWrr0G4+Bzlq1bC9fWB/FkhA1rs+meGtU58mdmaD7B8SW7
- PH7w==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:dkim-signature;
- bh=YCfuWH8bT9x/PhAdwRasHtQQEXTD1hekvbgghEbTFKg=;
- fh=ZCKRcW0krquc7GxWO4b7nkYdQBKO1cKooD+z+fmNBCE=;
- b=fG56WP7xzz1sO7VgtuUDsfkMF8GexMmDWLDBU4cm2TPDx7aZIlCRJIsRYCt/UqMEji
- fH6D9MUTgISb3FJj83aoEV5gdkXxEL1Dy5fFMBYEfzEINDCXsThZ2JKKLUftV0Ihgy+Z
- 5I1eL67bNKgOXhRwfheLHTbcs4W/GW8iF4nI6PQbkWGkC1Dl1n+NVqxKr/tf/sOIlftv
- yTbU/nmd9wy8WQMFElyUOPn7BETAZdbxWTaDHqrlFPn63DPPcjm2CiSfm6I5ucPxvcnQ
- Ew07Ygm0tlfVk0smhWM87EViwvrdmfEjI3a7NVTycTSX6Jb6vA1A6p+g9HSYTgu/tF+w
- /v3Q==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
+ id 1w3HAC-0007B9-0E
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:28:05 -0400
+Received: by mail-vs1-xe32.google.com with SMTP id
+ ada2fe7eead31-5ffbcfbcecaso516412137.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 10:28:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773940644; x=1774545444; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=YCfuWH8bT9x/PhAdwRasHtQQEXTD1hekvbgghEbTFKg=;
- b=yQrIZfmYKVwioBtC3eLSsRSah04DkvFUSnr3LRn/kTr6A3/YE4tUlORCgm6aJ1pzJb
- aH0Y1cvDKa1DsOc0xvX/tt0mkg84VNqXDn8n2LEgNz6w8m7MPgUcrfi8n/qc5WXr62pN
- qK+PCF8YEzBBpPACgmbfX/fWG1jisKnYSSEBg6l0h/1mZCGFGN4RezT9jt6wiLN2zfpi
- DYbds5PRbQEq+LtpZOR+bpfv3AQ+SAQy6jQ+A+Tq9gOXtMi8OCz5XiZ5xd7dzMzs4E3R
- xoX0p9cEpVviOiwlcTFTZFjEONurEpJuMAUBgxoQd2H85//+x9zTKJNUoUXPo4hnqtc+
- n4TA==
+ d=linaro.org; s=google; t=1773941283; x=1774546083; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=4nnmHB3nqwGj5UofgUlAJM++PQ8DaK/tC1D4HESzjSQ=;
+ b=CisZgd0ceHSWLs2HOXWpGFeQQeuzo0OWChkm3PfmgnXs8gGpVuUnwNLKAwVYHxomFZ
+ 6X3ZukdReUkvpHvwjTmIKV3Op/csK7nbcl3AWIdY2aZVKz/tnifPz//YjpJmq5Lk6RN6
+ J851NzkxgKRDmzC0d5aNJW3yMMyyXLh0Eauzb7R+5yghBxE7QqD+RCrD7Q0Yt1z22fYA
+ em6Bdh76MJUvbyFc4KvGTF/RUHlvb/35dkFiQtGm9A83dHUfDVJyYnQUYjee/UYGqFn0
+ 9QQMJof9pcxdQS6iwkPXawSmW8WyQMWQsPIqfQwbVzHGAv69OIgA++Zfq2ThfSaPSKMJ
+ MNpA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773940644; x=1774545444;
- h=cc:to:subject:message-id:date:from:in-reply-to:references
- :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
- :message-id:reply-to;
- bh=YCfuWH8bT9x/PhAdwRasHtQQEXTD1hekvbgghEbTFKg=;
- b=Bf+nJ9a0qkqCPZFLYTW3eiYtaoxKeSnkGLzyRgIGU09pvx9laZjG7oVIwVFKMVAqs5
- O6s6oeQjQtK5KpvAMKbniasWl/Yk3853dWyK1LncREPOEAzuhyvfC5MwcUKMWDhlCsYb
- WmTDa9430pRhgXtPuNUZUqe1brfOeS12S+jHYbLSMbYNje4fqayvvrBURzVZUMedQVUF
- eJq1s4jIV9mXaUTerwqZlvcNNQs3PUOYK28KhUe2JySZ3yJeN9N8ibFHEp3D0ugPjurU
- hvoaDz/PVQtzYC68n+YJuVBzVQ+9ORqh+LYXi5Yc6iTERoH9Dlhf2gdFEnHlvRzPQTjD
- r7cw==
-X-Forwarded-Encrypted: i=1;
- AJvYcCVv4WSWdtSPWXcEV+f8uj/QXUKAEZbExL1DavzHKrJflyolK6CbBbCuGr8uIkzf2OOmcIokrIPp0lxE@nongnu.org
-X-Gm-Message-State: AOJu0Ywfa5XAoRPuYFE89L/bmrgYD1g2s3o9zxbfhwQyrHKF50PgmXUm
- d+M2xOXIfIwF51kGzmN36SpSp4tbffnIbJ86OCeWtOWq9KwyypEUOF4snpTEY8c+NV+HucwSr6c
- th+8i0S6YdYmZCXOxHKRWmprBPuGlxqGSihRfY83zhw==
-X-Gm-Gg: ATEYQzwu+Mdgs7wa1TQxONhsiISitf1Iudm3Sl0ellQ0GTRPnDzcROfKsrxagorCfnr
- vDEnz6jHPLoujTCVIKIeTSOo8SGu4YHQduT8x0wFBh9PikoGnRjFTX461ipLPWRMgAR45hB61on
- QGm1EFaeJ42SPm9CNm3Vw1einEfT8Q61xohCOyNHLQvw58bUOm5US5hgMiP3vKgtXa5YmJc8SP8
- yNcyvM9/FH9ut78l5gCUQwjaqe62C5/UcS8DDHF5rgLzWq7Ej2q9B3G+W5un3dV4A0Skm0aFInY
- KK0M/xGT+yo2t5QJjUKDEdB55k0PAL/3WFXbqwf2uwQDi9e2Q3REaQPgKd0U/WriTyTcFGDsiA3
- c9Q==
-X-Received: by 2002:a05:690e:d45:b0:64c:9f31:e33 with SMTP id
- 956f58d0204a3-64eaa7f38d3mr332062d50.65.1773940643626; Thu, 19 Mar 2026
- 10:17:23 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773941283; x=1774546083;
+ h=content-transfer-encoding:in-reply-to:from:content-language
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=4nnmHB3nqwGj5UofgUlAJM++PQ8DaK/tC1D4HESzjSQ=;
+ b=oMD2c/Dvj06KGlAfTzTZuz6041fF8jNQP7EI3QY2OCQV5ZjySYd1kflentCHRIy/ZL
+ ouHrMEY9uXMUNKq4X2+QC74XYS/QdDDbKa+Sq43nLB2G3uuNQLRjqWhXo3BfHhUiKjVA
+ nSBXYnBiDHjzbxV6NNGALaHcb698jeYh4v+sWcL15Z/amtEmCubnbDRLxjSdr1fCcZtT
+ pKBsJUq/d4H0DBhNkTgxggl3ajfQH4Z6hTlBA3YORF4MCC6dQu8xLQMAh8TZrtt1+7QV
+ HaGxrqHKLpXlFaGCmIoRvNVi9r+tW+5QYw4JAYBX+YcQKgv4PUMByo+7aqVvlYKl6+oC
+ pVEA==
+X-Gm-Message-State: AOJu0YzFT+xliv5FZSVXPEayIxtDc4b2Wsl4t+uEh4Y+f5tNl/XQ+bwx
+ RPBZ7wWxWNyvbhHr3XpG51jSe031VmsgxlKwIgeEJtt7VaSfNEDUj3DH+qkAZpIYM4A=
+X-Gm-Gg: ATEYQzzVqr57fKZjBkMVlpJprFhm6847OdJY4D8w5RdckTk5k3iQdqfXiibOMC0CUQf
+ HlZCPX2sQGGKd1I+PKP1csSAoY1reXrEjAofKZXdQuykZ63/1ee7LviBj4TEskkO3dy42o1/6nN
+ 9FDREs3sCuzun/hRuHRP4qsNnA4PcnAoXdH+kqpKZvX7Ug6/hCcL5C18Be2Q0ZeXW9hF8d5tIiX
+ LKp181gXCceKHCvmkPc5qcyw1S6kVtbvb9+R7J8Mb3xTK91nw1z3+sW7FI5Zi2mO57doum1bilD
+ QAMKEEMt5+QZCfDgfRwLplHMJfq9z2Utnkuloay1+4C9AVfPuLZEhL1A93RXuvnFKsSXDX7YS+L
+ XW/VuuNRC36MB9asn7wWEGAaccj1C/EDIqntxpsE6ycZxj5fbpTz8nmSuk7NkBNTI0zE7sAoyak
+ EGfr7oksrJu8dX1wvtTHXX/G71F3zWgJCcXp60
+X-Received: by 2002:a05:6102:6a83:b0:5ff:fd17:d74e with SMTP id
+ ada2fe7eead31-602aed999c4mr189575137.34.1773941282654; 
+ Thu, 19 Mar 2026 10:28:02 -0700 (PDT)
+Received: from [192.168.0.103] ([177.146.137.168])
+ by smtp.gmail.com with ESMTPSA id
+ ada2fe7eead31-602af8539b1sm41593137.1.2026.03.19.10.27.59
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Mar 2026 10:28:02 -0700 (PDT)
+Message-ID: <c04a5077-e122-4784-91ad-259055c0f63b@linaro.org>
+Date: Thu, 19 Mar 2026 14:27:57 -0300
 MIME-Version: 1.0
-References: <20260317122517.47627-1-zenghui.yu@linux.dev>
-In-Reply-To: <20260317122517.47627-1-zenghui.yu@linux.dev>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Mar 2026 17:17:11 +0000
-X-Gm-Features: AaiRm53BOTvRKZalQUSrNqMq3FTDwSag3h_vL90K1ryzA8KOQfSwIpXJRDUxlnI
-Message-ID: <CAFEAcA9bGVuWXAPA0=EaAWXhSigm_yf5OYfnYoTjaQ8x1qXKYg@mail.gmail.com>
-Subject: Re: [PATCH] target/arm: Don't skip access flag fault for AccessType_AT
-To: Zenghui Yu <zenghui.yu@linux.dev>
-Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org, richard.henderson@linaro.org
-Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+User-Agent: Mozilla Thunderbird
+Subject: Re: [RFC PATCH 5/7] hw/arm/virt: Add machine option 'mec'
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org, 
+ alex.bennee@linaro.org, peter.maydell@linaro.org
+References: <20260319022335.22523-1-gustavo.romero@linaro.org>
+ <20260319022335.22523-6-gustavo.romero@linaro.org>
+ <20260319094642.00007696@huawei.com>
+Content-Language: en-US
+From: Gustavo Romero <gustavo.romero@linaro.org>
+In-Reply-To: <20260319094642.00007696@huawei.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=2607:f8b0:4864:20::e32;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-vs1-xe32.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -116,87 +105,82 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Tue, 17 Mar 2026 at 12:25, Zenghui Yu <zenghui.yu@linux.dev> wrote:
->
-> As per the pseudo code from DDI0487 M.a.a (on J1-16021) AArch64.S1Walk():
->
->   // Check descriptor AF bit
->   elsif (descriptor<10> == '0' && walkparams.ha == '0' &&
->           (!accdesc.acctype IN {AccessType_DC, AccessType_IC} ||
->            boolean IMPLEMENTATION_DEFINED "Generate access flag fault on IC/DC operations")) then
->       fault.statuscode = Fault_AccessFlag;
->
-> an access flag fault should be generated for AccessType_AT, if the AF bit
-> is 0 and !param.ha.
+Hi Jonathan,
 
-Did you find this by code inspection, or because it caused
-a guest to go wrong?
+On 3/19/26 06:46, Jonathan Cameron wrote:
+> On Wed, 18 Mar 2026 23:23:33 -0300
+> Gustavo Romero <gustavo.romero@linaro.org> wrote:
+> 
+>> Add new machine option 'mec' that enables and sets the memory used by
+>> FEAT_MEC.
+>>
+>> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
+> 
+> Drive by comments only. I'm curious enough to read the patches
+> but no idea if this is how people would like to see this implemented!
 
-We should probably
+Thanks for taking a look at it and for you comments.
 
-Cc: qemu-stable@nongnu.org
+In which sense do you mean exactly? Do mind to elaborate a bit more on 
+it? If it's about the whole implementation, would it be about not
+really encrypting data or something else? Please help me to understand it :)
 
-> Fixes: efebeec13d07 ("target/arm: Skip AF and DB updates for AccessType_AT")
-> Signed-off-by: Zenghui Yu <zenghui.yu@linux.dev>
-> ---
->  target/arm/ptw.c | 16 ++++++++--------
->  1 file changed, 8 insertions(+), 8 deletions(-)
->
-> diff --git a/target/arm/ptw.c b/target/arm/ptw.c
-> index 8b8dc09e72..572048d560 100644
-> --- a/target/arm/ptw.c
-> +++ b/target/arm/ptw.c
-> @@ -2118,6 +2118,12 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
->      descaddr &= ~(hwaddr)(page_size - 1);
->      descaddr |= (address & (page_size - 1));
->
-> +    /* Check descriptor AF bit */
-> +    if (!(descriptor & (1 << 10)) && !param.ha) {
-> +        fi->type = ARMFault_AccessFlag;
-> +        goto do_fault;
-> +    }
-> +
->      /*
->       * For AccessType_AT, DB is not updated (AArch64.SetDirtyFlag),
->       * and it is IMPLEMENTATION DEFINED whether AF is updated
-> @@ -2127,15 +2133,9 @@ static bool get_phys_addr_lpae(CPUARMState *env, S1Translate *ptw,
->          /*
->           * Access flag.
->           * If HA is enabled, prepare to update the descriptor below.
-> -         * Otherwise, pass the access fault on to software.
->           */
-> -        if (!(descriptor & (1 << 10))) {
-> -            if (param.ha) {
-> -                new_descriptor |= 1 << 10; /* AF */
-> -            } else {
-> -                fi->type = ARMFault_AccessFlag;
-> -                goto do_fault;
-> -            }
-> +        if (!(descriptor & (1 << 10)) && param.ha) {
-> +            new_descriptor |= 1 << 10; /* AF */
->          }
+I'm not sure if you're talking about just this patch or the whole 
+FEAT_MEC design.
 
-This is definitely correct behaviour for AT insns. The only
-thing I'm wondering about is what we should do for the
-ptw->in_debug == true case. Before commit efebeec13d07 we
-were checking !ptw->in_debug to skip both the testing and
-the updating of the access flag; now we will skip the update
-(definitely correct) but will fail debug accesses if the
-access flag is not set.
 
-There's an argument that if you're doing a debugger access
-it's not very helpful for it to not work just because the OS
-happens to have cleared the access flag on the page table entry
-(we also ignore permissions on debug accesses, though there
-are some code paths where we do enforce permissions, not
-really intentionally).
+Cheers,
+Gustavo
 
-On the other hand, we don't and I think have never suppressed
-AccessFlag faults for the get_phys_addr_v6 short-descriptor
-tables, so honouring them here too is at least consistent.
+> Jonathan
+> 
+>>   static void create_secure_ram(VirtMachineState *vms,
+>>                                 MemoryRegion *secure_sysmem,
+>>                                 MemoryRegion *secure_tag_sysmem)
+>> @@ -2267,6 +2288,8 @@ static void machvirt_init(MachineState *machine)
+>>       MemoryRegion *secure_sysmem = NULL;
+>>       MemoryRegion *tag_sysmem = NULL;
+>>       MemoryRegion *secure_tag_sysmem = NULL;
+>> +    MemoryRegion *pseudo_encrypted_page = NULL;
+>> +    MemoryRegion *tuple_memory = NULL;
+>>       int n, virt_max_cpus;
+>>       bool firmware_loaded;
+>>       bool aarch64 = true;
+>> @@ -2495,6 +2518,28 @@ static void machvirt_init(MachineState *machine)
+>>               }
+>>           }
+>>   
+>> +        if (vms->mec) {
+>> +            if (tcg_enabled()) {
+>> +                if (tuple_memory == NULL) {
+>> +                    /* XXX(gromero): Add object_property_find(cpuobj, "tuple-memory", ...) here. */
+>> +
+>> +                    tuple_memory = g_new(MemoryRegion, 1);
+>> +                    memory_region_init(tuple_memory, OBJECT(machine), "mec", UINT64_MAX / 32);
+>> +
+>> +                    pseudo_encrypted_page = g_new(MemoryRegion, 1);
+>> +                    memory_region_init(pseudo_encrypted_page, OBJECT(machine), "mec-page", 4 * 1024 /* 4 KiB */);
+>> +                }
+>> +
+>> +                object_property_set_link(cpuobj, "mec",  OBJECT(tuple_memory), &error_abort);
+>> +                object_property_set_link(cpuobj, "mec-page",  OBJECT(pseudo_encrypted_page), &error_abort);
+> Trivial but some bonus spaces.
+> 
+>> +
+>> +                } else {
+> 
+> Indent seems off.
+> 
+>> +                    /* Check for other accels here. */
+>> +                    error_report("MEC requested, but not supported");
+>> +                    exit(1);
+>> +                }
+>> +        }
+>> +
+>>           qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
+>>           object_unref(cpuobj);
+>>       }
+> 
+> 
 
-Richard, what do you think?
-
-thanks
--- PMM
 
