@@ -4,79 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2C7D51088E66
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 02:27:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 743891088E65
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 02:28:02 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w335t-0003jd-Pd; Wed, 18 Mar 2026 22:26:41 -0400
+	id 1w335u-0003jr-FD; Wed, 18 Mar 2026 22:26:42 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1w335r-0003i5-DK
+ id 1w335r-0003i2-8f
  for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:26:39 -0400
-Received: from mail-yw1-x112e.google.com ([2607:f8b0:4864:20::112e])
+Received: from mail-yw1-x112f.google.com ([2607:f8b0:4864:20::112f])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <gustavo.romero@linaro.org>)
- id 1w335o-0002r3-Ls
+ id 1w335o-0002rJ-Lq
  for qemu-devel@nongnu.org; Wed, 18 Mar 2026 22:26:39 -0400
-Received: by mail-yw1-x112e.google.com with SMTP id
- 00721157ae682-79a51edef1fso24804477b3.1
- for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 19:26:32 -0700 (PDT)
+Received: by mail-yw1-x112f.google.com with SMTP id
+ 00721157ae682-79800183233so5546777b3.1
+ for <qemu-devel@nongnu.org>; Wed, 18 Mar 2026 19:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773887191; x=1774491991; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773887194; x=1774491994; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=LqOECBK48fd3/HOaVd+Lj39XqKiw8Mz+sralwGO6znk=;
- b=rdmBSyKIN6dqtCycNYee4/XxZlSvCHQx5amvwpBeZoPmC7qK7TsIDE7IvPal4ZRclk
- mOkjoC/L/oVTKrHhcM9d9YgZ+r59IE8TPVesZui3mxfdD6tQzvH7YfWNDLdTiy1PvzgP
- 5+Ha0pi7+Q53cyA5EXnlRR/7v9QFs9hpHIjwgQpmB7CW6PSYBHs33J0HKhwJPsKyDk5T
- 747O4VKDxQTTvF6SqJ5daocq0Gt4k72fK5PekEV2T8CWOFcNU1f99SOarrG+RumUDBzd
- lUBh4kZEz0iXp/goohLKV/Xb/OLglh6DM84xvmbXmj2no86JnKpeNx1d5lA9TtUIkqTJ
- VmqA==
+ bh=pPR+B5HhuRzCWChWo5IsIa4xYMcv5gwsDSjxGxdN6ps=;
+ b=bKh81J/4AHgqGUmmfxHajKnHUs1b1shVLeoCNbG5v0X5sg6/h9pjVesCpANr0M4fJb
+ Nsx3v+jfgH2ty/sYdHyLMdd97d72HPz1XeA5A1kB9PjcTzYRjBp4zUh1Xh62PBQVQUfG
+ VKsziPeKkj+p/YYwqNYI3KNxub5UlDTx52hZrrAwQ1EmMZ2bggppGBHIDf4+t5QdNyGS
+ EprseK+dP1TXsxFxikcsw14XVlYX8qW9vvuIbFkZC0dbCKEJQ2z2LOnQPQ0r54orKv35
+ CXhp5upLxHdglxQHxhMFGV2nJGcA6Gc8ZPSoXIPKI2qxHidOhSnqzVId3YdC0r5dgvKZ
+ IePA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773887191; x=1774491991;
+ d=1e100.net; s=20251104; t=1773887194; x=1774491994;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=LqOECBK48fd3/HOaVd+Lj39XqKiw8Mz+sralwGO6znk=;
- b=QXsQ8w5CymolwQIGPjqJ3Dew2fnFxlU2kjzTBNienwKkjnakr71JuTP3fANPsPYBQi
- Kv0VyHHNsclq5l/jtvOM472sway7tvaWVYFnHbIWgwXEiAqvtfHNFKSUNQcrIMl1uRZJ
- 29n7V5IUTuFeYqfSL+LCTJfXDfrTz2quWYFtDooQVuEPlU4bCAW05FfBxkPyk8q092OL
- pR6+w861Iuy+a088cdh0BFO/iceW5mhjc79T7I08lxXGJTUsDBymmeunBu/rHFqZUQDy
- o4o4TgetO0qTw031HefAfWkK3D42WOsS0ZBUtNmMTljimOFe5Uyj+10oGHUj7tqb+RNo
- /vnw==
-X-Gm-Message-State: AOJu0YxVH7vJG1qhBVtZTHQW/C8fFJJjMobFbn82AZov0B27TDPYYT0x
- I4TxoQMeuO7MpdfYlM0JvYuDhi3ckXwj1s7I0UwXZcOBdreWUP6SzEVh16fYQqM7XiI/nFZbu57
- ubcOn76w=
-X-Gm-Gg: ATEYQzymW33x92mAfL5FyyWXy9SonBqgimKE3naQgFet2znI2LAIQPmyhReyTkwvHT2
- 7fdXK4rVU+og1Xkk25aXdIvNff94oJDHrSZw5RZRLA4POSEUFxYAJzIpXz3u5svAzsrn0iCz1e0
- z8CWBOKs3SO6wJ7TwZdJq/AbXyWClHssgwu6bPf7fzv9GW4ZNCWpZN0BrCrDL7ycKmuE5d+y4n2
- yDRfz2XoWX4qLsiBj/ej2VDCmsMelsAMKMwF0uQh18lSnAipGR88669DTJti+65vcHB2RB5lLSD
- 5YfDgycyPIics70YsClKqRf30Sg7nmwzk40iNFxVFIRkEuoGRktPNsICh6gc2QMcp23RrllPPO4
- IuAJW73LBX5ke6IrNkL6054jwg1Fzogw5iq8kIka9lL4dahmJrRvDA8PvCj8csiPF2EwaAe6fWc
- NUMIJFwrz0EsfmXGgvtZcfJLRiJOX9bg==
-X-Received: by 2002:a05:690c:91:b0:794:c02e:f617 with SMTP id
- 00721157ae682-79a81a9018emr19109557b3.12.1773887191446; 
- Wed, 18 Mar 2026 19:26:31 -0700 (PDT)
+ bh=pPR+B5HhuRzCWChWo5IsIa4xYMcv5gwsDSjxGxdN6ps=;
+ b=LllNLNHX9wRO3vFmqXZ4Xnd09BrGvtTZhJWJDfILDbrEDwbHIvegvs1NrwgOevH3tW
+ GYt0O/4J1Ovl0zsErU29VjiP7GHXhdtj96CdYGxqtiewGMyHNx0bmE5D7Z1+FlPI+hh5
+ Px49la8dp7+hRFFhF+ETtCKc0D/4YTL4BdBSoq5Gq7Cns2doRto3UML0a8ji4JDRU7Pj
+ l0Cg/y97P3hrVdSFeT+R+z1nQ7zWkCw84uRs0kLfiozgraxgyd6kEuqdQ7W1htzaHfI+
+ RS3EEh+LD/5stskuMAhMJVGz8lwxvXnL2CAfsTYqCOj3oj2vKYIFnIddNoc6drME+kZB
+ yHVQ==
+X-Gm-Message-State: AOJu0Yws6AbQN3wJO5WyNFByd7IuTiUB8PXTLTupLC5G64IGEZ7JP/YF
+ T24IGgn8xrusTg1kS8uhp1BHSmf2KcXIx6GEqTws/XcvAh7O3xKq1+xRGRN11Ck+nxImzPA6Lyo
+ jRUJ1vBw=
+X-Gm-Gg: ATEYQzz5UYn0gf5O+l4hT+m2z/wd2eVDKjDI9gwi0o05OCxhLClp+YB0cZNnYwgMTu7
+ hy4ytZdBLBHMGNvlBFphgzvukthPTYfQpAmMLSfUoP1cYqmesjV6yxdGnKwb/QMdbHOYiDPasny
+ mFQ1T9AjKbHnk94vnqQpPQF8P+gunMIrAR1GrdZCKQIEgs1VWO+2UikD7rDINSqRoY0HJc+zfZp
+ /QI2sfw7Z0Mpz5DmHms9NtYJ9/aorJNGNjpyDX9lLj4VTKPbtnIamxQhNYYUcRmxztHkf01nIsk
+ nzIByg4otP9LlyjXgpF+NKf0lw4fNihhA6kNlqBR08ck2GUBAeDpBm9QTl27gPCi6/Cnx5hF9L5
+ Sbqc1+qirFC6ZZ+q3D6yNdqf3Kus4658SqljZPnMwcMwPaEt48KVeoZevSW9oS7ZPTRtbW6zvtR
+ vZSNLiFXdQNMzQO7TfGAWsIkE4EN+LEOT9oEGjrvRC
+X-Received: by 2002:a05:690c:3481:b0:797:bc42:9e35 with SMTP id
+ 00721157ae682-79a81b952afmr17720397b3.23.1773887193848; 
+ Wed, 18 Mar 2026 19:26:33 -0700 (PDT)
 Received: from gromero0.. ([177.146.137.168]) by smtp.gmail.com with ESMTPSA id
- 00721157ae682-79a7141eb65sm28159417b3.21.2026.03.18.19.26.29
+ 00721157ae682-79a7141eb65sm28159417b3.21.2026.03.18.19.26.31
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Wed, 18 Mar 2026 19:26:31 -0700 (PDT)
+ Wed, 18 Mar 2026 19:26:33 -0700 (PDT)
 From: Gustavo Romero <gustavo.romero@linaro.org>
 To: qemu-devel@nongnu.org, qemu-arm@nongnu.org, richard.henderson@linaro.org
 Cc: alex.bennee@linaro.org, peter.maydell@linaro.org, gustavo.romero@linaro.org
-Subject: [RFC PATCH 2/7] target/cpu: Add two new address spaces for FEAT_MEC
-Date: Wed, 18 Mar 2026 23:23:30 -0300
-Message-Id: <20260319022335.22523-3-gustavo.romero@linaro.org>
+Subject: [RFC PATCH 3/7] memattrs: Add new attribute 'encrypted'
+Date: Wed, 18 Mar 2026 23:23:31 -0300
+Message-Id: <20260319022335.22523-4-gustavo.romero@linaro.org>
 X-Mailer: git-send-email 2.34.1
 In-Reply-To: <20260319022335.22523-1-gustavo.romero@linaro.org>
 References: <20260319022335.22523-1-gustavo.romero@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::112e;
- envelope-from=gustavo.romero@linaro.org; helo=mail-yw1-x112e.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::112f;
+ envelope-from=gustavo.romero@linaro.org; helo=mail-yw1-x112f.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -99,31 +99,50 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add two new address spaces for FEAT_MEC. One is used to store the
-substitute encrypted page, which is returned instead of the actual
-encrypted page in case of a MECID mismatch. The other is used to store
-the MECIDs themselves, associated with physical addresses.
+Add new attribute to the memory transaction attributes that is used
+on Arm to select the address space where the encrypted page resides.
 
-Signed-off-by: Gustavo Bueno <gustavo.romero@linaro.org>
+Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>
 ---
- target/arm/cpu.h | 4 +++-
- 1 file changed, 3 insertions(+), 1 deletion(-)
+ include/exec/memattrs.h | 7 +++++++
+ target/arm/cpu.h        | 6 +++++-
+ 2 files changed, 12 insertions(+), 1 deletion(-)
 
+diff --git a/include/exec/memattrs.h b/include/exec/memattrs.h
+index 52ee955249..efe9d9c7ba 100644
+--- a/include/exec/memattrs.h
++++ b/include/exec/memattrs.h
+@@ -57,6 +57,13 @@ typedef struct MemTxAttrs {
+     /* PCI - IOMMU operations, see PCIAddressType */
+     unsigned int address_type:1;
+ 
++    /*
++    * Memory is encrypted. This is used to acccess the substitute
++    * encrypted page that has its own address space. This is required
++    * by FEAT_MEC on ARM.
++    */
++    unsigned int encrypted:1;
++
+     /*
+      * Bus masters which don't specify any attributes will get this
+      * (via the MEMTXATTRS_UNSPECIFIED constant), so that we can
 diff --git a/target/arm/cpu.h b/target/arm/cpu.h
-index 657ff4ab20..87c1787c9b 100644
+index 87c1787c9b..ebf4e4e01c 100644
 --- a/target/arm/cpu.h
 +++ b/target/arm/cpu.h
-@@ -2364,7 +2364,9 @@ typedef enum ARMASIdx {
-     ARMASIdx_S = 1,
-     ARMASIdx_TagNS = 2,
-     ARMASIdx_TagS = 3,
--    ARMASIdx_MAX = ARMASIdx_TagS
-+    ARMASIdx_MEC = 4,
-+    ARMASIdx_MEC_PAGE = 5,
-+    ARMASIdx_MAX = ARMASIdx_MEC_PAGE
- } ARMASIdx;
+@@ -2596,7 +2596,11 @@ enum {
+ /* Return the address space index to use for a memory access */
+ static inline int arm_asidx_from_attrs(CPUState *cs, MemTxAttrs attrs)
+ {
+-    return attrs.secure ? ARMASIdx_S : ARMASIdx_NS;
++    if (attrs.encrypted) {
++        return ARMASIdx_MEC_PAGE;
++    } else {
++        return attrs.secure ? ARMASIdx_S : ARMASIdx_NS;
++    }
+ }
  
- static inline ARMMMUIdx arm_space_to_phys(ARMSecuritySpace space)
+ /* Return the AddressSpace to use for a memory access
 -- 
 2.34.1
 
