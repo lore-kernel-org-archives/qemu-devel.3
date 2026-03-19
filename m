@@ -4,54 +4,108 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD58108E1F7
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:40:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DA110108E1F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:49:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BiX-0007JI-Dd; Thu, 19 Mar 2026 07:39:09 -0400
+	id 1w3BsH-0001di-M0; Thu, 19 Mar 2026 07:49:13 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w3BiU-0007Ik-G6
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:06 -0400
-Received: from va-1-115.ptr.blmpb.com ([209.127.230.115])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w3BiR-0004bb-Sn
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:06 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1773920337; h=from:subject:
- mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
- mime-version:in-reply-to:message-id;
- bh=G7AZ4K1LApZ83qpc7CCQiivvbVea9ymgYf/d/4iWmjM=;
- b=Jp9Gsz6GP3NynVO96NhxFEMFFE7ynQpb4UA5QeQJF0oan7I6qlQHQo2VafOcXtU+yHTCcG
- nnE40+tFfL6bAbZfhoTlHhyZydzG8+0EZ88pkow7pDbiMwWCrpqRYine6+hJN+aHgJU3q8
- J9E4AtLFScInyZ8V1xbKxS8WLfC/FEi/PrffjZcT5hyN52QIUtyQkX/eGvBh+qsr+3ueeG
- LrhVCPPMB58+Ai6UHUkJCTCnVR4HH61aMGyILXTM0Wxzidov52EfG+jFRILHjiXS0fS9tM
- ifQmNzR0InophUZVgDWkLI/DU/WKmKA2mM+DO+xniNdWPiPTY4sDyyRcaoge8g==
-To: <qemu-devel@nongnu.org>
-Subject: [RFC v2 1/2] migration: Support ghash migration
-In-Reply-To: <20260319113830.53867-1-hongmianquan@bytedance.com>
-Mime-Version: 1.0
-Cc: <peterx@redhat.com>, <farosas@suse.de>, <mark.kanda@oracle.com>, 
- <bchaney@akamai.com>, "hongmianquan" <hongmianquan@bytedance.com>
-X-Lms-Return-Path: <lba+269bbe04f+6297f1+nongnu.org+hongmianquan@bytedance.com>
-X-Mailer: git-send-email 2.32.1 (Apple Git-133)
-Content-Transfer-Encoding: 7bit
-From: "hongmianquan" <hongmianquan@bytedance.com>
-Date: Thu, 19 Mar 2026 19:38:29 +0800
-Message-Id: <20260319113830.53867-2-hongmianquan@bytedance.com>
-X-Original-From: hongmianquan <hongmianquan@bytedance.com>
-References: <20260319113830.53867-1-hongmianquan@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
-Received-SPF: pass client-ip=209.127.230.115;
- envelope-from=hongmianquan@bytedance.com; helo=va-1-115.ptr.blmpb.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1w3BsE-0001cq-Es; Thu, 19 Mar 2026 07:49:10 -0400
+Received: from mx0a-001b2d01.pphosted.com ([148.163.156.1])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <nsg@linux.ibm.com>)
+ id 1w3BsC-00007x-Fp; Thu, 19 Mar 2026 07:49:10 -0400
+Received: from pps.filterd (m0356517.ppops.net [127.0.0.1])
+ by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
+ 62J43PXv1288189; Thu, 19 Mar 2026 11:49:05 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
+ :content-transfer-encoding:content-type:date:from:in-reply-to
+ :message-id:mime-version:references:subject:to; s=pp1; bh=coIGNs
+ Vbc3q2DWciHsb5bOplNBOD5Y7XC50nJYXv5Xg=; b=AiytlhbcX+NfkViK+nqSOb
+ 2ZAeHcFK36KqyCS8jpSre2zOeORzqeYQbff9jchynOaD/P66e6KI4zXTB6x+HMBt
+ 2icteP6Y1b0gx5SAIRFIYgmpcL+3mg9zQVvvFU/igrvdhcShjOEBRKKpTe82Oo+H
+ tOuGNtQEaYnxCl1OjEbbXkUjZ8FJ4c6emFJtQIqPO3Qw3TarhmnTXT5f75gA7jS+
+ bFK14u2c3ggcW0C6j5cIwLm3dKXQWXxlppd+hjpagLaoY3q1WnCBs6HFjh5JHwGe
+ Sn4OqzJFICH0BT8skHYNQ+vL+PoNoZ7Ck/CHp45AU3palpTLEqAX5vDOk9tLIO5Q
+ ==
+Received: from ppma23.wdc07v.mail.ibm.com
+ (5d.69.3da9.ip4.static.sl-reverse.com [169.61.105.93])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cx7vfry4y-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Mar 2026 11:49:04 +0000 (GMT)
+Received: from pps.filterd (ppma23.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma23.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62J8ouKc028720;
+ Thu, 19 Mar 2026 11:49:03 GMT
+Received: from smtprelay03.fra02v.mail.ibm.com ([9.218.2.224])
+ by ppma23.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cwkgkj99x-1
+ (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
+ Thu, 19 Mar 2026 11:49:03 +0000
+Received: from smtpav01.fra02v.mail.ibm.com (smtpav01.fra02v.mail.ibm.com
+ [10.20.54.100])
+ by smtprelay03.fra02v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62JBmxvv47186400
+ (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+ Thu, 19 Mar 2026 11:48:59 GMT
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 5E7F02004B;
+ Thu, 19 Mar 2026 11:48:59 +0000 (GMT)
+Received: from smtpav01.fra02v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 3F5E720040;
+ Thu, 19 Mar 2026 11:48:59 +0000 (GMT)
+Received: from li-978a334c-2cba-11b2-a85c-a0743a31b510.ibm.com (unknown
+ [9.52.214.219]) by smtpav01.fra02v.mail.ibm.com (Postfix) with ESMTP;
+ Thu, 19 Mar 2026 11:48:59 +0000 (GMT)
+Message-ID: <1b6ccc353a721ff02242b7fe2193b9524cf54fcb.camel@linux.ibm.com>
+Subject: Re: [PATCH] MAINTAINERS: S390 CPU topology: Change maintainer
+From: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+To: Gautam Gala <ggala@linux.ibm.com>, qemu-devel@nongnu.org,
+ qemu-s390x@nongnu.org
+Cc: Cornelia Huck <cohuck@redhat.com>, Eric Farman <farman@linux.ibm.com>,
+ Matthew Rosato <mjrosato@linux.ibm.com>
+Date: Thu, 19 Mar 2026 12:48:54 +0100
+In-Reply-To: <20260319094835.80329-1-ggala@linux.ibm.com>
+References: <20260319094835.80329-1-ggala@linux.ibm.com>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
+User-Agent: Evolution 3.56.2 (3.56.2-2.fc42) 
+MIME-Version: 1.0
+X-TM-AS-GCONF: 00
+X-Proofpoint-ORIG-GUID: pYIeUTNCYu7gU_N-xplR-HU5lO-K0jk9
+X-Authority-Analysis: v=2.4 cv=KajfcAYD c=1 sm=1 tr=0 ts=69bbe2b0 cx=c_pps
+ a=3Bg1Hr4SwmMryq2xdFQyZA==:117 a=3Bg1Hr4SwmMryq2xdFQyZA==:17
+ a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
+ a=RnoormkPH1_aCDwRdu11:22 a=U7nrCbtTmkRpXpFmAIza:22 a=VnNF1IyMAAAA:8
+ a=69wJf7TsAAAA:8 a=vDfXbEq_FW8YIDqasRAA:9 a=QEXdDO2ut3YA:10
+ a=Fg1AiH1G6rFz08G2ETeA:22
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzE5MDA5NCBTYWx0ZWRfXybnnM8GvBAqN
+ YW51d7wKySFFN7sBHwb8peBl5LnhEZmjQM5VMCOw/v7ZNsVZvBl0wTf3TelUvTqiu9d9xTD8uOj
+ /ha8BwGEp6jCgm+sQLbXeW7CHpbGnOcY3DgLVxUbAHox/c3cIHrFbnjkIfUjXHRO9RKC59DWtpd
+ 5Eq8TPIysabSpG9pF4d3Sx19ToMrMR6v7Ca7uy4NWRE8CNUnRzr4FCdROi5FnXkyUEvxQtmik40
+ BBSElB+ON3u7l2G3khP5ZYIbsSC1FbPSo/bsAjUExMlTmkTobsbs+Qnk47AEdskqb1Yvsavz707
+ mVglRm20ufq4iQNYGiqaC/ssdFj4ptXgAjr1MkpPW1t/j+/Rp3R42K0NMLr0WZT38wSMtxSREMA
+ G84Yl7Fur9IGBarrIw0/+HI9BgdFsc1T2ZGuD7obGKquVwpriyoi/ZvHhsMOaN291WnvlOzruYz
+ fZ1Owq3fX7YrEji2waw==
+X-Proofpoint-GUID: pYIeUTNCYu7gU_N-xplR-HU5lO-K0jk9
+X-Proofpoint-Virus-Version: vendor=baseguard
+ engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
+ definitions=2026-03-19_01,2026-03-19_03,2025-10-01_01
+X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
+ suspectscore=0 adultscore=0 spamscore=0 malwarescore=0 clxscore=1015
+ impostorscore=0 bulkscore=0 lowpriorityscore=0 priorityscore=1501
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603190094
+Received-SPF: pass client-ip=148.163.156.1; envelope-from=nsg@linux.ibm.com;
+ helo=mx0a-001b2d01.pphosted.com
+X-Spam_score_int: -9
+X-Spam_score: -1.0
+X-Spam_bar: -
+X-Spam_report: (-1.0 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H4=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -69,232 +123,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Refer to commit 9a85e4b8f672016adbf7b7d5beaab2a99b9b5615 to
-support for GHashTable migration. A custom save/restore is implemented.
-Each item is made of a key and a data. Currently, only pointer-type
-keys and values are supported.
-On the get() path, ghashtable must be allocated using the proper
-key compare, key destroy and value destroy. This must be handled
-beforehand, for example in a pre_load method.
+On Thu, 2026-03-19 at 10:48 +0100, Gautam Gala wrote:
+> Replace Nina with me as the maintainer for s390 CPU topology.
+>=20
+> Signed-off-by: Gautam Gala <ggala@linux.ibm.com>
 
-Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
----
- include/migration/vmstate.h |  22 ++++++
- migration/trace-events      |   5 ++
- migration/vmstate-types.c   | 147 ++++++++++++++++++++++++++++++++++++
- 3 files changed, 174 insertions(+)
+Acked-by: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
 
-diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
-index 89f9f49d20..cd7893c66a 100644
---- a/include/migration/vmstate.h
-+++ b/include/migration/vmstate.h
-@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
- extern const VMStateInfo vmstate_info_qtailq;
- extern const VMStateInfo vmstate_info_gtree;
- extern const VMStateInfo vmstate_info_qlist;
-+extern const VMStateInfo vmstate_info_ghash;
- 
- #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
- /*
-@@ -882,6 +883,27 @@ extern const VMStateInfo vmstate_info_qlist;
-     .start        = offsetof(_type, _next),                              \
- }
- 
-+/*
-+ * For migrating a GHashTable whose key is a pointer to _key_type and the
-+ * value, a pointer to _val_type
-+ * The target hashtable must have been properly initialized
-+ * _vmsd: Start address of the 2 element array containing the data vmsd
-+ *        and the key vmsd, in that order
-+ * _key_type: type of the key
-+ * _val_type: type of the value
-+ */
-+#define VMSTATE_GHASH_V(_field, _state, _version, _vmsd,                       \
-+                        _key_type, _val_type)                                  \
-+{                                                                              \
-+    .name         = (stringify(_field)),                                       \
-+    .version_id   = (_version),                                                \
-+    .vmsd         = (_vmsd),                                                   \
-+    .info         = &vmstate_info_ghash,                                       \
-+    .start        = sizeof(_key_type),                                         \
-+    .size         = sizeof(_val_type),                                         \
-+    .offset       = offsetof(_state, _field),                                  \
-+}
-+
- /* _f : field name
-    _f_n : num of elements field_name
-    _n : num of elements
-diff --git a/migration/trace-events b/migration/trace-events
-index 90629f828f..f00f4c3e74 100644
---- a/migration/trace-events
-+++ b/migration/trace-events
-@@ -86,6 +86,11 @@ get_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
- put_qlist(const char *field_name, const char *vmsd_name, int version_id) "%s(%s v%d)"
- put_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
- 
-+get_ghash(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, uint32_t nnodes) "%s(%s/%s) nnodes=%d"
-+get_ghash_end(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, int ret) "%s(%s/%s) %d"
-+put_ghash(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, uint32_t nnodes) "%s(%s/%s) nnodes=%d"
-+put_ghash_end(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, int ret) "%s(%s/%s) %d"
-+
- # qemu-file.c
- qemu_file_fclose(void) ""
- qemu_file_put_fd(const char *name, int fd, int ret) "ioc %s, fd %d -> status %d"
-diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
-index 89cb211472..e6c3573789 100644
---- a/migration/vmstate-types.c
-+++ b/migration/vmstate-types.c
-@@ -942,3 +942,150 @@ const VMStateInfo vmstate_info_qlist = {
-     .get  = get_qlist,
-     .put  = put_qlist,
- };
-+
-+struct put_ghash_data {
-+    QEMUFile *f;
-+    const VMStateDescription *key_vmsd;
-+    const VMStateDescription *val_vmsd;
-+    JSONWriter *vmdesc;
-+    int ret;
-+};
-+
-+static gboolean put_ghash_elem(gpointer key, gpointer value, gpointer data)
-+{
-+    struct put_ghash_data *capsule = (struct put_ghash_data *)data;
-+    QEMUFile *f = capsule->f;
-+    int ret;
-+    Error *local_err = NULL;
-+
-+    qemu_put_byte(f, true);
-+
-+    /* put the key */
-+    ret = vmstate_save_state(f, capsule->key_vmsd, key,
-+                             capsule->vmdesc, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
-+        capsule->ret = ret;
-+        return false;
-+    }
-+
-+    /* put the data */
-+    ret = vmstate_save_state(f, capsule->val_vmsd, value,
-+                             capsule->vmdesc, &local_err);
-+    if (ret) {
-+        error_report_err(local_err);
-+        capsule->ret = ret;
-+        return false;
-+    }
-+    return true;
-+}
-+
-+static int put_ghash(QEMUFile *f, void *pv, size_t unused_size,
-+                     const VMStateField *field, JSONWriter *vmdesc)
-+{
-+    const VMStateDescription *key_vmsd = &field->vmsd[1];
-+    const VMStateDescription *val_vmsd = &field->vmsd[0];
-+    struct put_ghash_data capsule = {
-+        .f = f,
-+        .key_vmsd = key_vmsd,
-+        .val_vmsd = val_vmsd,
-+        .vmdesc = vmdesc,
-+        .ret = 0};
-+    GHashTable **pval = pv;
-+    GHashTable *hash = *pval;
-+    GHashTableIter iter;
-+    gpointer key, value;
-+    uint32_t nnodes = g_hash_table_size(hash);
-+    int ret;
-+
-+    trace_put_ghash(field->name, key_vmsd->name, val_vmsd->name, nnodes);
-+    qemu_put_be32(f, nnodes);
-+    g_hash_table_iter_init(&iter, hash);
-+    while (g_hash_table_iter_next(&iter, &key, &value)) {
-+        if (!put_ghash_elem(key, value, (gpointer)&capsule)) {
-+            break;
-+        }
-+    }
-+    qemu_put_byte(f, false);
-+    ret = capsule.ret;
-+    if (ret) {
-+        error_report("%s : failed to save ghash (%d)", field->name, ret);
-+    }
-+    trace_put_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
-+    return ret;
-+}
-+
-+static int get_ghash(QEMUFile *f, void *pv, size_t unused_size,
-+                     const VMStateField *field)
-+{
-+    const VMStateDescription *key_vmsd = &field->vmsd[1];
-+    const VMStateDescription *val_vmsd = &field->vmsd[0];
-+    int version_id = field->version_id;
-+    size_t key_size = field->start;
-+    size_t val_size = field->size;
-+    int nnodes, count = 0;
-+    GHashTable **pval = pv;
-+    GHashTable *hash = *pval;
-+    void *key, *val;
-+    int ret = 0;
-+    Error *local_err = NULL;
-+
-+    if (version_id > key_vmsd->version_id) {
-+        error_report("%s %s", key_vmsd->name, "too new");
-+        return -EINVAL;
-+    }
-+    if (version_id < key_vmsd->minimum_version_id) {
-+        error_report("%s %s", key_vmsd->name, "too old");
-+        return -EINVAL;
-+    }
-+    if (version_id > val_vmsd->version_id) {
-+        error_report("%s %s", val_vmsd->name, "too new");
-+        return -EINVAL;
-+    }
-+    if (version_id < val_vmsd->minimum_version_id) {
-+        error_report("%s %s", val_vmsd->name, "too old");
-+        return -EINVAL;
-+    }
-+
-+    nnodes = qemu_get_be32(f);
-+    trace_get_ghash(field->name, key_vmsd->name, val_vmsd->name, nnodes);
-+
-+    while (qemu_get_byte(f)) {
-+        if ((++count) > nnodes) {
-+            ret = -EINVAL;
-+            break;
-+        }
-+        key = g_malloc0(key_size);
-+        ret = vmstate_load_state(f, key_vmsd, key, version_id, &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+            goto key_error;
-+        }
-+        val = g_malloc0(val_size);
-+        ret = vmstate_load_state(f, val_vmsd, val, version_id, &local_err);
-+        if (ret) {
-+            error_report_err(local_err);
-+            goto val_error;
-+        }
-+        g_hash_table_insert(hash, key, val);
-+    }
-+    if (count != nnodes) {
-+        error_report("%s inconsistent stream when loading the ghash",
-+                     field->name);
-+        return -EINVAL;
-+    }
-+    trace_get_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
-+    return ret;
-+val_error:
-+    g_free(val);
-+key_error:
-+    g_free(key);
-+    trace_get_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
-+    return ret;
-+}
-+
-+const VMStateInfo vmstate_info_ghash = {
-+    .name = "ghash",
-+    .get  = get_ghash,
-+    .put  = put_ghash,
-+};
--- 
-2.32.1 (Apple Git-133)
+Thanks Gautam
+
+> ---
+>  MAINTAINERS | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index 97f2759138..f977a41757 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -1916,7 +1916,7 @@ F: hw/s390x/sclp*.c
+>  L: qemu-s390x@nongnu.org
+> =20
+>  S390 CPU topology
+> -M: Nina Schoetterl-Glausch <nsg@linux.ibm.com>
+> +M: Gautam Gala <ggala@linux.ibm.com>
+>  S: Supported
+>  F: include/hw/s390x/cpu-topology.h
+>  F: hw/s390x/cpu-topology.c
+
+--=20
+IBM Deutschland Research & Development GmbH
+Vorsitzender des Aufsichtsrats: Wolfgang Wendt
+Gesch=C3=A4ftsf=C3=BChrung: David Faller
+Sitz der Gesellschaft: Ehningen / Registergericht: Amtsgericht Stuttgart, H=
+RB 243294
 
