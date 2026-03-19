@@ -4,108 +4,147 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C1430109192B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 22:30:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D6C82109192B
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 22:41:53 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Lrv-0002s5-Cw; Thu, 19 Mar 2026 18:29:31 -0400
+	id 1w3M3A-0005CY-R7; Thu, 19 Mar 2026 18:41:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w3Lrs-0002rh-Db
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 18:29:28 -0400
-Received: from mail-ot1-x32d.google.com ([2607:f8b0:4864:20::32d])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <ruslichenko.r@gmail.com>)
- id 1w3Lrq-00053j-8q
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 18:29:28 -0400
-Received: by mail-ot1-x32d.google.com with SMTP id
- 46e09a7af769-7d7c76e1951so1214436a34.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 15:29:25 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773959365; cv=none;
- d=google.com; s=arc-20240605;
- b=PYPm9/3Iz2M+9juHEbAzXNS1xyZNSRe6sEhA018w3gvoTN/v9Q3avszdj0DcJBEput
- F9B7ZctkJXQjFW0PqPZckS93HKAJnkKZpCHL9hnnMoDu3NyPIjVIUQqk/rWwdfQze7cU
- aHSuYMFcbtNksc5MnmHw9bBJiEyJsxs1f/5x/pv71nWniDbXO4M+uErKGfQ/C3OLmI33
- 6UennzMZrmc8+A3dcCLSGOY790IXggf2IB5/yqNSxMx+dLaeFgm9cuDIDPjL2xCX0ahx
- nUdnv9p69ByDvw9ISuTDW9zMxhM6EfM7wNJ9WcPIV2skpshQno+JExxkoWo+yk0/CNkF
- TXGQ==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=zSo8NjxK1kjRVJe+MMsvA1/YI76pZtWxBrvNv1Slaxo=;
- fh=q4q/vXes3FoEamFAzRw19gQc6zeAKWvBwB+8E/Ot0+E=;
- b=PFgGF5Ha+98dNQEOs5YbODFa0g+FDEMPZ/enjZSVpqS2DWPPueVdtMIrFQ+IXaEyxC
- 69YiL/oR6QBUe1qQAE524iqdP93phuGrQSOPq0+R6dMNx9hVLS3gM9qdzG3NKlrHYy8h
- S9PbzTmJTOnX9N0FkgPS9uzHY/cKRL+BRkx2qI8hJmpQOqZS5p6isVRmHzzidcqXR/Y6
- pRYPYCr2WAnlKjHfxU3bpHRd/J3xFoujVcuWm5s6wSNeCDCQn24oto66sYXS9ZZUDlcr
- LBt3XeGACWbNVHr1BNtocyC20j770X0DgMFDvtlX4OWvEMXd9q2KZIjSEUcffYdyAlfO
- PX1g==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773959365; x=1774564165; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=zSo8NjxK1kjRVJe+MMsvA1/YI76pZtWxBrvNv1Slaxo=;
- b=ZxPSWwqM/LS8rvu+BbmQ35DBo+/YPj3w3x+1sAHYmPqx4ca8FZGnV2Dx4PJfZnAKw6
- yyW9u4g5+czImb3d7jlMQl9QYB/+zXp1Dh+JmLrS/B6oPTv2GSyv5kugd2MoFzDS0tXj
- TZBYS85hPTbVvn0hArAlVqKRYDJ/Lsap1tpeB1HzF+Mxu8EMyKMklUoMg725UcMk70N1
- Jnbltrp5/tUiG8dPuzFTtKRzRD4PK+Gcft/Se/B9qgk3D7Gsb7n/jbqXlbpmC1H5GGtO
- 4tIYjL7SkBjlo52hQectscU3QHqqFZ45gfS17/B7V6qA+VmqeCrg/yFWKtDo87nqbnQI
- I5BQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773959365; x=1774564165;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=zSo8NjxK1kjRVJe+MMsvA1/YI76pZtWxBrvNv1Slaxo=;
- b=VhKog7yC5nYrCqL1HkvDuhrpqUnRZhSQMZFX+BQ9r4p8CwJoCHUCU+WZDYMNshLmD/
- 17jG9zz/0xGrtMxVPOJEhgMxFVO4SXYpa1E8SSKfd/O69u7qSFIq4XvC0KRLtj1I1tnU
- EXh1FuITU2s4cjwX4Cu98nermvlfO9x80ga3VRq89ITQgnYPVoYK6UrGGgLG5QjMuXly
- oJcBnzCxvdN8Zifkjl5s1Si5Am/acV1wAWKqxxK4YpJMwHZUWVr1ccDXYVkeqm2PnkY3
- G6kCXq+48H/LUf6K2VpX37CHKOug6cd0XNUq4OnDZCfDea/2J+JlP+7V7gMcSju0cvh1
- PYdA==
-X-Gm-Message-State: AOJu0YxGT8J4VVl2Bowwy4BxPERCg/kTqdHHv4iovCCfxpCueU/lBbjV
- I/HJjMElVXQjGKZmW0tixVZSkJcfj5KMrOFqvZAVhhCekVwqr83n3CCWjpR6WwIZ92yqeLQqTkO
- 9Q885FenDyCW8dTs6IzkaG3/f1ZU/3R4=
-X-Gm-Gg: ATEYQzwW4zHU6f7Yp/UuMzb2qU9W+FRzfZ+EygNbt9r/UAyGhHhtOSRTAulj4ttuzLl
- ScaF4GmTfA28F/3fFF/vKb4OzfzMZWYbcbr77KFCNbJY+bM5KmATvXFadP/nvnvK/539YdWCr30
- umxu3h2uhENtWOvVu7uKSsEQypYnq5YuK3Uk6L5vc4ZjzZdEUiF5DM2J94fcR2Hm209FiIIma2P
- JmLmW2/ntsFHUvycan3eENGnZ56Q1zD0C+qrRd3GI93MaQftKf3Ouim5rj3KJ1vUDKw7YLOlfXM
- z7eirAC3
-X-Received: by 2002:a05:6830:7107:b0:7d7:e8e6:b8b4 with SMTP id
- 46e09a7af769-7d7eb033576mr765049a34.34.1773959364768; Thu, 19 Mar 2026
- 15:29:24 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1w3M39-0005Bc-0p
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 18:41:07 -0400
+Received: from mout.web.de ([212.227.17.12])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <lukasstraub2@web.de>)
+ id 1w3M36-00026k-J0
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 18:41:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=web.de;
+ s=s29768273; t=1773960050; x=1774564850; i=lukasstraub2@web.de;
+ bh=xUUKqcTUhhhtZLbMuV/1sjBDCOO/We+Bti0AKDFoO74=;
+ h=X-UI-Sender-Class:Date:From:To:Cc:Subject:Message-ID:In-Reply-To:
+ References:MIME-Version:Content-Type:cc:content-transfer-encoding:
+ content-type:date:from:message-id:mime-version:reply-to:subject:
+ to;
+ b=VYHnSTWOUe80ouEptdKUozLDumkxv7AxwjN9GAerpo9oydCwTgHEFKE8vSh+RDd4
+ ZhEd0xCdeXbSi2q6cclYlU5Gy3jClgCf1KksLXjIjSncL3gdq9xLcV+PNyw/+PeZy
+ wsb3t0yYUf9hTc1dGto8AXwD2xU2IBHtGd5Uano8ypBqfP+vaOA9pOXrRPIif6dOD
+ h9PutAh2o7kihaPNa8KVl/YSlRi1neRklq7j3yxXxt6jnKDCvhAtJtwHncMQzqVgW
+ KQyjo0M8I+jSiuTBRdiIQ+5rJ9tfHTGa4VTw2cN1/9gdfHz5rSZrMU/bVElv5x9zM
+ GHlI4nrTJ6JvvnZi4A==
+X-UI-Sender-Class: 814a7b36-bfc1-4dae-8640-3722d8ec6cd6
+Received: from client.hidden.invalid by smtp.web.de (mrweb106
+ [213.165.67.124]) with ESMTPSA (Nemesis) id 1MQ8ao-1wGT2o0CwK-00IKuw; Thu, 19
+ Mar 2026 23:40:50 +0100
+Date: Thu, 19 Mar 2026 23:40:31 +0100
+From: Lukas Straub <lukasstraub2@web.de>
+To: Arun Menon <armenon@redhat.com>
+Cc: qemu-devel@nongnu.org, Peter Xu <peterx@redhat.com>, Fabiano Rosas
+ <farosas@suse.de>, Zhang Chen <zhangckid@gmail.com>, Hailiang Zhang
+ <zhanghailiang@xfusion.com>, Li Zhijian <lizhijian@fujitsu.com>
+Subject: Re: [PATCH v11 13/21] migration-test: Add COLO migration unit test
+Message-ID: <20260319232607.6d79f980@penguin>
+In-Reply-To: <abBYAVLFQ9YDIKpr@fedora>
+References: <20260302-colo_unit_test_multifd-v11-0-d653fb3b1d80@web.de>
+ <20260302-colo_unit_test_multifd-v11-13-d653fb3b1d80@web.de>
+ <abAvHRJJewZOz-BW@fedora> <20260310162954.61da59f1@penguin>
+ <abBYAVLFQ9YDIKpr@fedora>
 MIME-Version: 1.0
-References: <20260318104640.239752-1-ruslichenko.r@gmail.com>
- <4e8f4e6e-e9d2-4457-af3d-755ced6d2a45@linaro.org>
- <CAN-aV1FER7w1rqw0zM=L2z7MT_RKsBhFg7m6NijxyQa6t5JNqw@mail.gmail.com>
- <4d2d16df-0047-4b96-8312-46489ba0f1bf@linaro.org>
-In-Reply-To: <4d2d16df-0047-4b96-8312-46489ba0f1bf@linaro.org>
-From: Ruslan Ruslichenko <ruslichenko.r@gmail.com>
-Date: Thu, 19 Mar 2026 23:29:13 +0100
-X-Gm-Features: AaiRm50wvdoYSXCGkD2fSP9lcr5PhsU8m0dcoMn6A9vp9AVygfxHIB4cV7xgB5E
-Message-ID: <CAN-aV1F6O3dv5F1946wEugdLxkYDp0BW6QZPxwye02A5-HYz9g@mail.gmail.com>
-Subject: Re: [RFC PATCH 0/9] plugins: Introduce Fault Injection framework and
- API extensions
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Cc: qemu-devel@nongnu.org, qemu-arm@nongnu.org, artem_mygaiev@epam.com, 
- volodymyr_babchuk@epam.com, alex.bennee@linaro.org, peter.maydell@linaro.org, 
- philmd@linaro.org, Ruslan_Ruslichenko@epam.com
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::32d;
- envelope-from=ruslichenko.r@gmail.com; helo=mail-ot1-x32d.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+Content-Type: multipart/signed; boundary="Sig_/UK=lmMuo3WwjUGui3sIhh7x";
+ protocol="application/pgp-signature"; micalg=pgp-sha512
+X-Provags-ID: V03:K1:jjLj+bBme3pij2Xg4QFA8+Cd72UTHAT5i1V/pq7yCnwnfqludaM
+ huPA3zdFKFyLCgi3Kono1+QRFOgqYrW5TEKEq83IDtlW8pzE/njuFWQQD2W98Om46oneYfg
+ y8y2lncSMllF9J21gq5bBbIBzcj0O8nR5yC96uI3iMRQOATQ7xhVROiTCxWweqFyzQXok/2
+ KXKgmvkpH/HbP2I5IeRBg==
+UI-OutboundReport: notjunk:1;M01:P0:Hugj98Pi66I=;K/w6Ny6eLMLascNQAubwMi9Ru0i
+ 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
+ fB
+Received-SPF: pass client-ip=212.227.17.12; envelope-from=lukasstraub2@web.de;
+ helo=mout.web.de
+X-Spam_score_int: -7
+X-Spam_score: -0.8
+X-Spam_bar: /
+X-Spam_report: (-0.8 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, RCVD_IN_DNSWL_LOW=-0.7,
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -121,248 +160,193 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 19, 2026 at 8:04=E2=80=AFPM Pierrick Bouvier
-<pierrick.bouvier@linaro.org> wrote:
->
-> On 3/19/26 11:20 AM, Ruslan Ruslichenko wrote:
-> > Hi Pierrick,
-> >
-> > Thank you for the feedback and review!
-> >
-> > Our current plan is to put this plugin through our internal workflows t=
-o gather
-> > more data on its limitations and performance.
-> > Based on results, we may consider extending or refining the implementat=
-ion
-> > in the future.
-> >
-> > Any further feedback on potential issues is highly appreciated.
-> >
->
-> By design, the approach of modifying QEMU internals to allow to inject
-> IRQ, set a timer, or trigger SMMU has very few chances to be integrated
-> as it is. At least, it should be discussed with the concerned
-> maintainers, and see if they would be open to it or not.
->
-> It's not wrong in itself, if you want a downstream solution, but it does
-> not scale upstream if we have to consider and accept everyone's needs.
-> The plugin API in itself can accept the burden for such things, but it's
-> harder to justify for internal stuff.
->
-> I believe it would be better to rely on ad hoc devices generating this,
-> with the advantage that even if they don't get accepted upstream, it
-> will be more easy for you to maintain them downstream compared to more
-> intrusive patches.
->
-> > On Wed, Mar 18, 2026 at 6:16=E2=80=AFPM Pierrick Bouvier
-> > <pierrick.bouvier@linaro.org> wrote:
-> >>
-> >> Hi Ruslan,
-> >>
-> >> On 3/18/26 3:46 AM, Ruslan Ruslichenko wrote:
-> >>> From: Ruslan Ruslichenko <Ruslan_Ruslichenko@epam.com>
-> >>>
-> >>> This patch series is submitted as an RFC to gather early feedback on =
-a Fault Injection (FI) framework built on top of the QEMU TCG plugin subsys=
-tem.
-> >>>
-> >>> Motivation
-> >>>
-> >>> Testing guest operating systems, hypervisors (like Xen), and low-leve=
-l drivers against unexpected hardware failures can be difficult.
-> >>> This series provides an interface to inject faults dynamically withou=
-t altering QEMU's core emulation source code for every test case.
-> >>>
-> >>> Architecture & Key Features
-> >>>
-> >>> The series introduces the core API extensions and implements a fault =
-injection plugin (contrib/plugins/fault_injection.c) targeting AArch64.
-> >>> The plugin can be controlled statically via XML configurations on boo=
-t, or dynamically at runtime via a UNIX socket (enabling integration with a=
-utomated testing frameworks via Python or GDB).
-> >>>
-> >>> New Plugin API Capabilities:
-> >>>
-> >>> MMIO Interception: Allows plugins to hook into memory_region_dispatch=
-_read/write to modify hardware register reads or drop writes.
-> >>> Asynchronous Timers: Exposes QEMU_CLOCK_VIRTUAL to plugins, allowing =
-callbacks to be scheduled based on guest virtual time.
-> >>> TB Cache Flushing: Exposes qemu_plugin_flush_tb_cache() so plugins ca=
-n force re-translation when applying dynamic PC-based hooks.
-> >>> Interrupt & Exception Injection: Exposes APIs to raise/pulse hardware=
- IRQs on the primary INTC and inject CPU exceptions (e.g., SErrors).
-> >>> Custom Device Faults: Introduces a registry where device models (e.g.=
-, SMMUv3) can expose specific fault handlers (like CMDQ errors) to be trigg=
-ered externally by plugins.
-> >>>
-> >>> Patch Summary
-> >>> Patch 1 (target/arm): Adds support for asynchronous CPU exception inj=
-ection.
-> >>> Patch 2-3 (plugins/api): Exposes virtual clock timers and TB cache fl=
-ushing to the public plugin API.
-> >>> Patch 4 (plugins): Introduces the core fault injection subsystem, IRQ=
-/Exception routing, and the Custom Fault registry.
-> >>> Patch 5 (system/memory): Adds the MMIO override hooks into the memory=
- dispatch path.
-> >>> Patch 6 (hw/intc): Registers the ARM GIC (v2/v3) with the plugin subs=
-ystem to enable direct hardware IRQ injection.
-> >>> Patch 7 (hw/arm): Registers the SMMUv3 with the custom fault registry=
- to demonstrate how device models can expose specific errors (like CMDQ fau=
-lts) to plugins.
-> >>> Patch 8 (contrib/plugins): Implements the actual fault_injection plug=
-in using the new APIs.
-> >>> Patch 9 (docs): Adds documentation and usage examples for the plugin.
-> >>>
-> >>> Request for Comments & Feedback
-> >>>
-> >>> Any suggestions on improvements, potential edge cases, or issues with=
- the current design are highly welcome.
-> >>>
-> >>> Ruslan Ruslichenko (9):
-> >>>     target/arm: Add API for dynamic exception injection
-> >>>     plugins/api: Expose virtual clock timers to plugins
-> >>>     plugins: Expose Transaction Block cache flush API to plugins
-> >>>     plugins: Introduce fault injection API and core subsystem
-> >>>     system/memory: Add plugin callbacks to intercept MMIO accesses
-> >>>     hw/intc/arm_gic: Register primary GIC for plugin IRQ injection
-> >>>     hw/arm/smmuv3: Add plugin fault handler for CMDQ errors
-> >>>     contrib/plugins: Add fault injection plugin
-> >>>     docs: Add description of fault-injection plugin and subsystem
-> >>>
-> >>>    contrib/plugins/fault_injection.c | 772 ++++++++++++++++++++++++++=
-++++
-> >>>    contrib/plugins/meson.build       |   1 +
-> >>>    docs/fault-injection.txt          | 111 +++++
-> >>>    hw/arm/smmuv3.c                   |  54 +++
-> >>>    hw/intc/arm_gic.c                 |  28 ++
-> >>>    hw/intc/arm_gicv3.c               |  28 ++
-> >>>    include/plugins/qemu-plugin.h     |  28 ++
-> >>>    include/qemu/plugin.h             |  39 ++
-> >>>    plugins/api.c                     |  62 +++
-> >>>    plugins/core.c                    |  11 +
-> >>>    plugins/fault.c                   | 116 +++++
-> >>>    plugins/meson.build               |   1 +
-> >>>    plugins/plugin.h                  |   2 +
-> >>>    system/memory.c                   |   8 +
-> >>>    target/arm/cpu.h                  |   4 +
-> >>>    target/arm/helper.c               |  55 +++
-> >>>    16 files changed, 1320 insertions(+)
-> >>>    create mode 100644 contrib/plugins/fault_injection.c
-> >>>    create mode 100644 docs/fault-injection.txt
-> >>>    create mode 100644 plugins/fault.c
-> >>>
-> >>
-> >> first, thanks for posting your series!
-> >>
-> >> About the general approach.
-> >> As you noticed, this is exposing a lot of QEMU internals, and it's
-> >> something we tend to avoid to do. As well, it's very architecture
-> >> specific, which is another pattern we try to avoid.
-> >>
-> >> For some of your needs (especially IRQ injection and timer injection),
-> >> did you consider writing a custom ad-hoc device and timer generating t=
-hose?
-> >> There is nothing preventing you from writing a plugin that can
-> >> communicate with this specific device (through a socket for instance),
-> >> to request specific injections. I feel that it would scale better than
-> >> exposing all this to QEMU plugins API.
-> >>
-> >> For SMMU, this is trickier. Tao recently (6ce361b02c82) an iommu test
-> >> device, associated to qtest to unit test the smmu implementation. We
-> >> could maybe see to leverage that on a full machine, associated with th=
-e
-> >> communication method mentioned above, to generate specific operations =
-at
-> >> runtime, all triggered via a plugin.
-> >>
-> >> Exposing qemu_plugin_flush_tb_cache is a hint we are missing something
-> >> on QEMU side. Better to fix it than expose this very internal function=
-.
-> >
-> > The reason this was needed is that the plugin may receive PC trigger
-> > configuration
-> > dynamically and need to register instruction callback at runtime.
-> > If the TB for that PC is already translated and cached, our newly regis=
-tered
-> > callback might not be executed.
-> >
-> > If there is a more proper way to force QEMU to re-translate a specific
-> > TB or attach
-> > a callback to cached TB it would be great to reduce the complexity here=
-.
-> >
->
-> I understand better. QEMU plugin current implementation is too limited
-> for this, and everything has to be done/known at translation time.
-> What is your use case for receiving PC trigger after translation? Do you
-> have some mechanism to communicate with the plugin for this?
+--Sig_/UK=lmMuo3WwjUGui3sIhh7x
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-Yes, exactly. If the guest has already executed the target code, the newly
-added trigger will be ignored, as the TB is cached.
+On Tue, 10 Mar 2026 23:12:25 +0530
+Arun Menon <armenon@redhat.com> wrote:
 
-For runtime configuration, the plugin spawns a background thread that liste=
-ns
-on a socket. External Python test script connects to this socket to send
-dynamically generated XML faults.
+> Hi Lukas,
+>=20
+> On Tue, Mar 10, 2026 at 04:29:54PM +0100, Lukas Straub wrote:
+> > On Tue, 10 Mar 2026 20:17:57 +0530
+> > Arun Menon <armenon@redhat.com> wrote:
+> >  =20
+> > > Hi Lukas,
+> > >=20
+> > > On Mon, Mar 02, 2026 at 12:45:28PM +0100, Lukas Straub wrote: =20
+> > > > Add a COLO migration test for COLO migration and failover.
+> > > >=20
+> > > > Reviewed-by: Fabiano Rosas <farosas@suse.de>
+> > > > Tested-by: Fabiano Rosas <farosas@suse.de>
+> > > > Reviewed-by: Peter Xu <peterx@redhat.com>
+> > > > Signed-off-by: Lukas Straub <lukasstraub2@web.de>
+> > > > [...]
+> > > >   =20
+> > >=20
+> > > I was running the qtests locally, and I encountered a timeout error.
+> > >=20
+> > > Command run: mkdir -p build ; cd build ; make check-qtest-x86_64;
+> > >=20
+> > > Following is the output:
+> > > =3D=3D=3D=3D=3D=3D
+> > > [...]
+> > >=20
+> > > Summary of Failures:
+> > > 67/67 qtest+qtest-x86_64 - qemu:qtest-x86_64/migration-test         T=
+IMEOUT        480.05s   killed by signal 15 SIGTERM
+> > > Ok:                64
+> > > Fail:              0
+> > > Skipped:           2
+> > > Timeout:           1
+> > > =3D=3D=3D=3D=3D=3D
+> > >=20
+> > > It seems that the test runner is stuck waiting for some input.
+> > > Following is the stack trace
+> > > [...]
+> > > =3D=3D=3D=3D=3D=3D
+> > > gstack 128276
+> > > Thread 2 (Thread 0x7fdd090716c0 (LWP 128279) "call_rcu"):
+> > > #0  0x00007fdd0921434d in syscall () from /lib64/libc.so.6
+> > > #1  0x0000557fd604563a in qemu_futex_wait (f=3D0x557fd60a0190 <rcu_ca=
+ll_ready_event>, val=3D4294967295) at /home/arun/workdir/new/devel/upstream=
+/qemu-priv/include/qemu/futex.h:47
+> > > #2  0x0000557fd604584e in qemu_event_wait (ev=3D0x557fd60a0190 <rcu_c=
+all_ready_event>) at ../util/event.c:162
+> > > #3  0x0000557fd6045fde in call_rcu_thread (opaque=3D0x0) at ../util/r=
+cu.c:304
+> > > #4  0x0000557fd600e8fb in qemu_thread_start (args=3D0x557fd6beec70) a=
+t ../util/qemu-thread-posix.c:414
+> > > #5  0x00007fdd09193464 in start_thread () from /lib64/libc.so.6
+> > > #6  0x00007fdd092165ac in __clone3 () from /lib64/libc.so.6
+> > >=20
+> > > Thread 1 (Thread 0x7fdd09073240 (LWP 128276) "migration-test"):
+> > > #0  0x00007fdd0919b982 in __syscall_cancel_arch () from /lib64/libc.s=
+o.6
+> > > #1  0x00007fdd0918fc3c in __internal_syscall_cancel () from /lib64/li=
+bc.so.6
+> > > #2  0x00007fdd091dfb62 in clock_nanosleep@GLIBC_2.2.5 () from /lib64/=
+libc.so.6
+> > > #3  0x00007fdd091ebb37 in nanosleep () from /lib64/libc.so.6
+> > > #4  0x00007fdd0921613a in usleep () from /lib64/libc.so.6
+> > > #5  0x0000557fd5fd99cd in wait_for_serial (side=3D0x557fd6065f08 "des=
+t_serial") at ../tests/qtest/migration/framework.c:82
+> > > #6  0x0000557fd5fe5865 in test_colo_common (args=3D0x557fd6bfdf50, fa=
+ilover_during_checkpoint=3Dfalse, primary_failover=3Dtrue) at ../tests/qtes=
+t/migration/colo-tests.c:66 =20
+> >=20
+> > 60    migrate_qmp(from, to, args->connect_uri, NULL, "{}");
+> > 61
+> > 62    wait_for_migration_status(from, "colo", NULL);
+> > 63    wait_for_resume(to, get_dst());
+> > 64
+> > 65    wait_for_serial("src_serial");
+> > 66    wait_for_serial("dest_serial");
+> >=20
+> > Interesting, so the secondary guest is stuck/crahsed after entering
+> > colo state despite having resumed.
+> >=20
+> > It works fine here on master. And before the merge I have looped the
+> > colo tests for a whole day on my machine without any failures.
+> >=20
+> > How often does this happen? What is the commit you are on, host, ASAN,
+> > MSAN, UBSAN, configure options? With kvm or without? =20
+>=20
+> I have started the run on a fedora-43 VM. I am on commit:
+> de61484ec39f418e5c0d4603017695f9ffb8fe24 master branch.
 
-There are several scenarios where this might be needed, mainly for faults t=
-hat
-are difficult to define statically at boot time.
-Examples include injecting faults after specific chain of events, freezing =
-or
-overriding system registers values at specific execution points (since this
-is currently implemented via PC triggers). Supporting environments with KAS=
-LR
-enabled might be one more case.
+Okay, so the problem is that nested virtualization slows down kvm page
+faults (e.g. dirtying the dirty bitmap) so much that it takes longer
+for the guest to dirty the memory than the interval between two colo
+checkpoints at which point the dirty bitmap is cleared again. And to
+make matters worse the secondary qemu process is starved by the primary
+qemu for some reason.
 
->
-> >> The associated TRIGGER_ON_PC is very similar to existing inline
-> >> operations. They could be enhanced to support writing to a given
-> >> register, all the bricks are there. For TRIGGER_ON_SYSREG it's a bit
-> >> more complex, but we might enhance inline operations also to support
-> >> hooks on specific register writes.
-> >
-> > TRIGGER_ON_PC may also be used for generating other faults too. For exa=
-mple,
-> > one use-case is to trigger CPU exceptions on specific instructions.
-> > Supporting TRIGGER_ON_SYSREG as an inline operation sounds like a
-> > really interesting
-> > direction to explore.
-> >
->
-> In general, having inline operations support on register read/writes
-> would be a very nice thing to have (though might be tricky to implement
-> correctly), and more efficient that the existing approach that requires
-> to check their value everytime.
->
-> >>
-> >> For MMIO override, the current approach you have is good, and it's
-> >> definitely something we could integrate.
-> >>
-> >> What are you toughts about this? (especially the device based approach
-> >> in case that you maybe tried first).
-> >
-> > I agree such an approach can work well for IRQ's and Timers, and would =
-be
-> > more clean way to implement this.
-> >
-> > However, for SMMU and similar cases, triggering internal state errors i=
-s not
-> > easy and requires accessing internal logic. So for those specific cases=
-,
-> > a different approach may be needed.
-> >
->
-> Thus the iommu-testdev I mentioned, that could be extended to support thi=
-s.
->
-> >>
-> >> Regards,
-> >> Pierrick
-> >
-> > BR,
-> > Ruslan
->
+So the following happens:
+1. After a checkpoint primary dirties all it's memory pretty quickly
+and afterwards the dirty mem + serial out loops quickly. So it is very
+likely the guest is in the middle of dirtying the memory at any given
+time.
+2. The colo checkpointing is actually working flawlessly it only seems
+stuck because the migraion-test is stuck and not echoing the qmp events.
+The secondary receives the primary checkpoint (whose guest is in the
+middle of dirtying memory) and both sides resume. The secondary is
+starved and spends a lot of time in the dirty mem phase.
+3. Another checkpoint happens, before the secondary guest is finished
+dirtying memory and has a chance sending the serial out signal. Goto 1.
+
+Can you try increasing the checkpoint interval the following and see
+what works for you:
+migrate_set_parameter_int(from, "x-checkpoint-delay", 300);
+
+In my tests, raising it to 1000 worked fine. Though for a doubly nested VM
+I had to raise it to 5000. E.g. It takes up to 5 seconds to dirty 100Mb
+memory in a doubly nested VM.
+
+Regards,
+Lukas Straub
+
+>=20
+> The configuration command I used was:
+> ../configure --target-list=3Dx86_64-softmmu --enable-debug --enable-trace=
+-backends=3Dlog --enable-slirp
+>=20
+> Targets and accelerators
+>   KVM support                     : YES
+>=20
+> >=20
+> > Can you try the following and show me the log:
+> > (cd build && QTEST_QEMU_IMG=3D./qemu-img QTEST_QEMU_BINARY=3D./qemu-sys=
+tem-x86_64 QTEST_LOG=3D- tests/qtest/migration-test --full -p /x86_64/migra=
+tion/colo/plain)
+> >  =20
+>=20
+> I have attached the log file : qemu.log to this email. It is stuck at
+> the last line :=20
+> {"timestamp": {"seconds": 1773164370, "microseconds": 609791}, "event": "=
+RESUME"}
+>=20
+> It should be some configuration miss from my end.
+> Thank you for looking into it.
+>=20
+> [...]
+> > >=20
+> > >=20
+> > > Is there something that I am missing? Can you please look into this?=
+=20
+> > >=20
+> > >=20
+> > > Regards,
+> > > Arun Menon
+> > >  =20
+> >  =20
+>=20
 > Regards,
-> Pierrick
+> Arun Menon
+>=20
+
+
+--Sig_/UK=lmMuo3WwjUGui3sIhh7x
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAEBCgAdFiEEg/qxWKDZuPtyYo+kNasLKJxdslgFAmm8e18ACgkQNasLKJxd
+slh3fBAArbuk03t+D+3bQ2jaPvJX/znIT5sO4hr2gsgqXJA0uLTla6r/2fIDLbZy
+ObJyRVrww19k7hwDtXduVuYQc7v9nDr4l5Gu9/fQwehlbOUaEJsQOTkpIsWiaGeF
+bI1dFBDRxZVQWZFPXnahy7njmUOOPaj4YGXDuMFwUwpJEWHX3/BNk4qpfMnz2P9q
+0VbotMiIgaRJWcC7+ZHj3WkHIvEBVACEfNPZx4TGhIizfs9Ypw0RJJOBG7ujHp6E
+EcQGwWqRQMzG/ag+PYhQbn+EJE2WvxwBLpZzh67QjVJR+PlKMd7GpX0jgpb0Gntm
+x0jfxErrCvLRDRF/hv3xCqSceAkqgQEnIYPF5vVilW1KvWNUAQhVYRaAGFItIGii
+3AWVSdIp19OCFNuHPNunwoQBBRafGVYJaTsoqsIjCIdFzKRdQnwVHTeN2F74T54N
+LbgXLRg8EFr9Y0oU1avck5wrewsJnXPIeH3eOYjlEsTJdxrlDVDvQV8jsJ+pbDyU
+rEP6lTerC3cI2fT/QIHSsyaEU5PRSy+JgPGA4qfSWZT2MPdi4ogutq+/m3oByCXl
+1W2y5UUqh/Yamy48xdhjeekjjlxEmhmNe4yLIyNoMAvU3q995hbJXXVSWOpQj8nj
+ZiZ+ZS+HU+4M5Kr2MGVID1/EUYFuXKOWvjAkFSXnln1rz5hlVhQ=
+=Nctq
+-----END PGP SIGNATURE-----
+
+--Sig_/UK=lmMuo3WwjUGui3sIhh7x--
 
