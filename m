@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC6C1091910
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B97061091911
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 19:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Ilp-0000Bk-4b; Thu, 19 Mar 2026 15:11:01 -0400
+	id 1w3Im6-0000c1-6j; Thu, 19 Mar 2026 15:11:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Ilm-0000BM-K4
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:58 -0400
-Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Im1-0000KD-3b
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:11:14 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Ilk-0008U1-SS
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:58 -0400
-Received: by mail-wm1-x32b.google.com with SMTP id
- 5b1f17b1804b1-48541edecf9so14067465e9.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 12:10:56 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Ilz-0008VQ-0N
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:11:12 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-439c56e822eso1272702f8f.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 12:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773947455; x=1774552255; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773947469; x=1774552269; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=eayvJ5Zp7NdtS6KVYiYLFGGBY/XbYTEjOUNmnHg50PU=;
- b=gbIi66VoGN5yePlyC+MJv7jjFNZTMFuLUd15Y7Vcw+jYpOTQjoyUAIJIs9sDwG60yM
- BlHmJETkLVdybuVudrx5jDnupH7S37884klZXdVOruHE+geaEom9KzJ28A5JusY9QqLE
- VZTdhBBb6eU8lsSKNhB9eoKl5c3zM07hkvBctQYdVdf0DMvNtin5iIvHg90+OTZUgkHU
- 0MoGVA2q2IteBR10X6+h5ctBCDu25cI4KKa0z521gR2Aay8V6U3avvJMciefDTksdT3d
- sn6uWf6KTbOZIlUdU6yfsIZaT3yLjXsdSWWMoV0v2bVZJJEZPt3PEWxlA/CZn1IDYU3D
- V1+g==
+ bh=Z8aNR9y2E9n4ZOiMZCdLhmicb9NfofciJCxllCBGqfg=;
+ b=jiGSIUuM3Tm+S/sjUWoBD6JgoQ3WNHdTUhBYWgpHu3vK/aUBtid/nNNFXEAVwvhZVM
+ MWIqaKrXED1u2N72bjWlPcZbzOSeV8dbxvwkHfJ0QuR5vqgzoXgulLkltHYeZHMSQAfl
+ XkKXO7Ax5tJMXaZHRI3Rz9++TW2BJhD4y7g6L0/Pi5ljPoW59J4nIMj8WE4RpsWKhilf
+ fsKgg7SfjUBReAd+DdZ0ixus9m1SSiAw70s0b14OfoRLlL0HB0W561ZdnCTQYVWujdTk
+ 6qCqr2iqCw/i0MrYACe8sOAq0nXBGO2uV1i0dHnLgFKy+a66iCniu+RSFwJ6actfZhmk
+ 1KNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773947455; x=1774552255;
+ d=1e100.net; s=20251104; t=1773947469; x=1774552269;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=eayvJ5Zp7NdtS6KVYiYLFGGBY/XbYTEjOUNmnHg50PU=;
- b=Q9IYlIKML+n3nfOhnlbncckZfi1d0+ZzhaACbWnUnvNf5Y7gp5YLsBXKUEba/g2NvS
- xC0pOV6hsTadSsDL8ShRX0+b0Edrj+T3kkhlryYCUxUhrKgmspiVFbFS95mvyqNS2s2w
- 2nk80Rgr26Tv6+nd+/BeirxTFoJUYF1h3JGIjSO4htjl/pa5WTOkBw07neE2h3ch5yZL
- TdBRnCOMPJ9p9sasnJggCIfDJYGlj7FzBHb5b7nMvPWuCKPuTFGpD4F6rdDcymw336V6
- Td1BhuiUZnQWeiWcaqacAKzkjXbolld1RCXxnOe6uK/rlGOcIQ2H/bOHvmQ7J1b3nq+B
- tkKQ==
-X-Gm-Message-State: AOJu0Yx+p59SHU+EecOxf9gBl9F+tw3rRHiwUacjHcY/a48cMv1ySA+o
- Fa5UD1Ju0nksNIr2C7WtXcaCtBXYUV5AuUaNj/BMXAX2yfRZETeqvx78Vvr1XfqrBU3/SjgPETO
- YKrulMJo=
-X-Gm-Gg: ATEYQzztBmNdLmqqbZGYrw+UtOZ86PTOHl7lPEhbAzsMl4GHd2OO37Jwzp0HDER7L7X
- QZV6ycbA1/4AgoC2Nclae8M/x9xaHLShPYH2BppENox851JGVdk0UfwCs3Tl45SW+KFaPzipIKp
- MPaDZXRjJXzcBbdoDpwXAqlQpBZSWL1HjpD2D9ALuRHOF9a1Q52Ptp8ki75I/q1+hZiDeL7ffTe
- FVADudVe96Wk12UNbGw/BTSKGm4qJ4KqO0jwG4zYgCENXH4As30FufBZUAL1ci6s9wkH5/wMsRP
- 04ZKznIcXVvKMwNqJXl/749heoc3kAhgR67xtBVF/WR5aVMEygjFkA/SDMH5qSZCfnZ0GUUR7Jw
- KWDpQ5Sp67eRPA1UuMzqqpwYp79ve5T174EQNJGKNjL2l9751RQA1fKpte+ASt96QOVqJdOnZTF
- f/kw21WJznt4yTnGUDax0tMBdyicGrjwqjAFPwpkqKg92jZE/MrZbl+LjvMBJBy0hALz77YRK0
-X-Received: by 2002:a05:600c:8711:b0:485:3f58:d9f with SMTP id
- 5b1f17b1804b1-486ff029008mr3708615e9.30.1773947454801; 
- Thu, 19 Mar 2026 12:10:54 -0700 (PDT)
+ bh=Z8aNR9y2E9n4ZOiMZCdLhmicb9NfofciJCxllCBGqfg=;
+ b=XqVe8df5CotdpHoGCgI95rTzowrS5TgoFcKfmz4Em7jObDA/XOI+WmPS9fi7Qsp596
+ P8Ncq/xeZKFXrDIQ19aRViVz2A9a875EHDMQD6+L4wGaFhghI82ZrSpuFb64d+4HS8CI
+ 5lLp6wLM4Me4R48ohKp9yuRpqiS4n2JuID3BEZSFBZTOOGMryZjW/lLiWjOFnv2inTP2
+ nXqgbEj0TmVpPyJM/Sh6n5b7fLQEgOB7GrrNja5oTq2v6H3XYgdV26tloLjh3pqgZlRq
+ NzoGHXVRRSI1itemaXLx6sHvxUXIYLPVVWVKLSBvd60NemEV2cfOo7lSA/I16Z4dnv0R
+ hfRg==
+X-Gm-Message-State: AOJu0YwCM0sFZJ1b7utnz0ChH05wUF1fhOdK8IltA+nO2qLTWawW4FM4
+ +yf0USX1Y6OgmS8bKNDjH1rdD71ks14utnUYO8BqCwpKNH28fh+wcsT6vMsXh3aJTaU08WQeGA4
+ QLiZewWw=
+X-Gm-Gg: ATEYQzxR0gZPelREIf7H/m0iER7dcn2iL1GeNlZA805IXeH6U1clO0R+JzqqW6lK+qr
+ LOl3+OmkdeDBfUUBphIukI4oZ95dYbTT7Y0uxVFugLW/o1zecbawYUlndssMkSrEWTgAmOXjuNV
+ iT897cFpg72TUrBTCIRfyv8wdSyfPBVrDbZ8ql7CCoOkyHg747C64AGp2Y9xOF8CXEyOtbeQxMP
+ jkDNJT1IjEv2c5tN1X5eu/9T7+MVu1TNJmBF+g4a2BCOSWQ/MfDMDMVTAdySFiBl1M1M73qML4p
+ 96ANbXnIUvvu/5EoS0GQdJciIY6esHf+pNM1s0Cqf1XR4kWrgOzCl4NqHjO8xTOcjUafN/tlKWQ
+ 0A8dUG6OVCRL5dALsJkBiFx0Aa716gznNfegb4r2HPEXGWZOBOCB+ELTs12ZD0zlIvkQYFDBu5E
+ zUSmq4Yk+XDb9XPRlqN+DtmAu/ViDFDmkdQGRY/icON2wAf79r8pANbvMNT3awzDS4yVRbVpeb
+X-Received: by 2002:a05:6000:4013:b0:439:c2b6:d5d8 with SMTP id
+ ffacd0b85a97d-43b64278337mr793064f8f.36.1773947468809; 
+ Thu, 19 Mar 2026 12:11:08 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe6d9896sm9506265e9.2.2026.03.19.12.10.53
+ ffacd0b85a97d-43b6470380asm637590f8f.24.2026.03.19.12.11.07
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Mar 2026 12:10:54 -0700 (PDT)
+ Thu, 19 Mar 2026 12:11:08 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 5/8] system/memory: Constify various AddressSpace
- arguments (notify)
-Date: Thu, 19 Mar 2026 20:10:14 +0100
-Message-ID: <20260319191017.12636-6-philmd@linaro.org>
+Subject: [PATCH-for-11.1 7/8] system/memory: Constify various AddressSpace
+ arguments (access)
+Date: Thu, 19 Mar 2026 20:10:16 +0100
+Message-ID: <20260319191017.12636-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319191017.12636-1-philmd@linaro.org>
 References: <20260319191017.12636-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
- envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,68 +106,159 @@ Mark the AddressSpace structure const when it is only accessed read-only.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/system/memory.h | 2 +-
- system/memory.c         | 6 +++---
- system/physmem.c        | 2 +-
- 3 files changed, 5 insertions(+), 5 deletions(-)
+ include/system/memory.h | 19 ++++++++++---------
+ system/physmem.c        | 16 +++++++++-------
+ 2 files changed, 19 insertions(+), 16 deletions(-)
 
 diff --git a/include/system/memory.h b/include/system/memory.h
-index 38e4f7b25e5..4c013593cae 100644
+index 4c013593cae..564b94f1448 100644
 --- a/include/system/memory.h
 +++ b/include/system/memory.h
-@@ -2682,7 +2682,7 @@ void address_space_destroy_free(AddressSpace *as);
-  *
-  * @as: an initialized #AddressSpace
+@@ -2698,7 +2698,7 @@ void address_space_remove_listeners(const AddressSpace *as);
+  * @len: the number of bytes to read or write
+  * @is_write: indicates the transfer direction
   */
--void address_space_remove_listeners(AddressSpace *as);
-+void address_space_remove_listeners(const AddressSpace *as);
+-MemTxResult address_space_rw(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_rw(const AddressSpace *as, hwaddr addr,
+                              MemTxAttrs attrs, void *buf,
+                              hwaddr len, bool is_write);
  
- /**
-  * address_space_rw: read from or write to an address space.
-diff --git a/system/memory.c b/system/memory.c
-index 87ebeb93458..40e17ed22c6 100644
---- a/system/memory.c
-+++ b/system/memory.c
-@@ -2978,7 +2978,7 @@ void memory_global_dirty_log_stop(unsigned int flags)
- }
+@@ -2715,7 +2715,7 @@ MemTxResult address_space_rw(AddressSpace *as, hwaddr addr,
+  * @buf: buffer with the data transferred
+  * @len: the number of bytes to write
+  */
+-MemTxResult address_space_write(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_write(const AddressSpace *as, hwaddr addr,
+                                 MemTxAttrs attrs,
+                                 const void *buf, hwaddr len);
  
- static void listener_add_address_space(MemoryListener *listener,
--                                       AddressSpace *as)
-+                                       const AddressSpace *as)
+@@ -2741,7 +2741,7 @@ MemTxResult address_space_write(AddressSpace *as, hwaddr addr,
+  * @buf: buffer with the data transferred
+  * @len: the number of bytes to write
+  */
+-MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_write_rom(const AddressSpace *as, hwaddr addr,
+                                     MemTxAttrs attrs,
+                                     const void *buf, hwaddr len);
+ 
+@@ -2768,17 +2768,18 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+ 
+ #define SUFFIX
+ #define ARG1         as
+-#define ARG1_DECL    AddressSpace *as
++#define ARG1_DECL    const AddressSpace *as
+ #include "system/memory_ldst.h.inc"
+ 
+ #ifndef TARGET_NOT_USING_LEGACY_LDST_PHYS_API
+ #define SUFFIX
+ #define ARG1         as
+-#define ARG1_DECL    AddressSpace *as
++#define ARG1_DECL    const AddressSpace *as
+ #include "system/memory_ldst_phys.h.inc"
+ #endif
+ 
+-void address_space_flush_icache_range(AddressSpace *as, hwaddr addr, hwaddr len);
++void address_space_flush_icache_range(const AddressSpace *as,
++                                      hwaddr addr, hwaddr len);
+ 
+ /* address_space_get_iotlb_entry: translate an address into an IOTLB
+  * entry. Should be called from an RCU critical section.
+@@ -2898,7 +2899,7 @@ void address_space_register_map_client(AddressSpace *as, QEMUBH *bh);
+ void address_space_unregister_map_client(AddressSpace *as, QEMUBH *bh);
+ 
+ /* Internal functions, part of the implementation of address_space_read.  */
+-MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_read_full(const AddressSpace *as, hwaddr addr,
+                                     MemTxAttrs attrs, void *buf, hwaddr len);
+ MemTxResult flatview_read_continue(FlatView *fv, hwaddr addr,
+                                    MemTxAttrs attrs, void *buf,
+@@ -2953,7 +2954,7 @@ static inline bool memory_access_is_direct(const MemoryRegion *mr,
+  * @len: length of the data transferred
+  */
+ static inline __attribute__((__always_inline__))
+-MemTxResult address_space_read(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_read(const AddressSpace *as, hwaddr addr,
+                                MemTxAttrs attrs, void *buf,
+                                hwaddr len)
  {
-     unsigned i;
-     FlatView *view;
-@@ -3043,7 +3043,7 @@ static void listener_add_address_space(MemoryListener *listener,
- }
+@@ -2996,7 +2997,7 @@ MemTxResult address_space_read(AddressSpace *as, hwaddr addr,
+  * @len: the number of bytes to fill with the constant byte
+  * @attrs: memory transaction attributes
+  */
+-MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_set(const AddressSpace *as, hwaddr addr,
+                               uint8_t c, hwaddr len, MemTxAttrs attrs);
  
- static void listener_del_address_space(MemoryListener *listener,
--                                       AddressSpace *as)
-+                                       const AddressSpace *as)
- {
-     unsigned i;
-     FlatView *view;
-@@ -3148,7 +3148,7 @@ void memory_listener_unregister(MemoryListener *listener)
-     listener->address_space = NULL;
- }
- 
--void address_space_remove_listeners(AddressSpace *as)
-+void address_space_remove_listeners(const AddressSpace *as)
- {
-     while (!QTAILQ_EMPTY(&as->listeners)) {
-         memory_listener_unregister(QTAILQ_FIRST(&as->listeners));
+ /* Coalesced MMIO regions are areas where write operations can be reordered.
 diff --git a/system/physmem.c b/system/physmem.c
-index bbcbcedda15..c00f75bf591 100644
+index b7280e74aa2..8327b7c3de1 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -3573,7 +3573,7 @@ address_space_unregister_map_client_do(AddressSpaceMapClient *client)
-     g_free(client);
+@@ -3424,7 +3424,7 @@ static MemTxResult flatview_read(FlatView *fv, hwaddr addr,
+                                   mr_addr, l, mr);
  }
  
--static void address_space_notify_map_clients_locked(AddressSpace *as)
-+static void address_space_notify_map_clients_locked(const AddressSpace *as)
+-MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_read_full(const AddressSpace *as, hwaddr addr,
+                                     MemTxAttrs attrs, void *buf, hwaddr len)
  {
-     AddressSpaceMapClient *client;
+     MemTxResult result = MEMTX_OK;
+@@ -3439,7 +3439,7 @@ MemTxResult address_space_read_full(AddressSpace *as, hwaddr addr,
+     return result;
+ }
  
+-MemTxResult address_space_write(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_write(const AddressSpace *as, hwaddr addr,
+                                 MemTxAttrs attrs,
+                                 const void *buf, hwaddr len)
+ {
+@@ -3455,7 +3455,8 @@ MemTxResult address_space_write(AddressSpace *as, hwaddr addr,
+     return result;
+ }
+ 
+-MemTxResult address_space_rw(AddressSpace *as, hwaddr addr, MemTxAttrs attrs,
++MemTxResult address_space_rw(const AddressSpace *as,
++                             hwaddr addr, MemTxAttrs attrs,
+                              void *buf, hwaddr len, bool is_write)
+ {
+     if (is_write) {
+@@ -3465,7 +3466,7 @@ MemTxResult address_space_rw(AddressSpace *as, hwaddr addr, MemTxAttrs attrs,
+     }
+ }
+ 
+-MemTxResult address_space_set(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_set(const AddressSpace *as, hwaddr addr,
+                               uint8_t c, hwaddr len, MemTxAttrs attrs)
+ {
+ #define FILLBUF_SIZE 512
+@@ -3497,7 +3498,7 @@ void cpu_physical_memory_write(hwaddr addr, const void *buf, hwaddr len)
+ }
+ 
+ /* used for ROM loading : can write in RAM and ROM */
+-MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
++MemTxResult address_space_write_rom(const AddressSpace *as, hwaddr addr,
+                                     MemTxAttrs attrs,
+                                     const void *buf, hwaddr len)
+ {
+@@ -3522,7 +3523,8 @@ MemTxResult address_space_write_rom(AddressSpace *as, hwaddr addr,
+     return MEMTX_OK;
+ }
+ 
+-void address_space_flush_icache_range(AddressSpace *as, hwaddr addr, hwaddr len)
++void address_space_flush_icache_range(const AddressSpace *as,
++                                      hwaddr addr, hwaddr len)
+ {
+     /*
+      * This function should do the same thing as an icache flush that was
+@@ -3828,7 +3830,7 @@ void cpu_physical_memory_unmap(void *buffer, hwaddr len,
+     return address_space_unmap(&address_space_memory, buffer, len, is_write, access_len);
+ }
+ 
+-#define ARG1_DECL                AddressSpace *as
++#define ARG1_DECL                const AddressSpace *as
+ #define ARG1                     as
+ #define SUFFIX
+ #define TRANSLATE(...)           address_space_translate(as, __VA_ARGS__)
 -- 
 2.53.0
 
