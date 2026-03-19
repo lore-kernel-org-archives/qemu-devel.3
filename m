@@ -4,100 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F08651090221
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:57:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BB8A41090222
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:57:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Cvu-0005X7-CZ; Thu, 19 Mar 2026 08:57:02 -0400
+	id 1w3Cvu-0005Xb-SM; Thu, 19 Mar 2026 08:57:02 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <kaixuanli0131@gmail.com>)
- id 1w39RJ-0003rF-Dy
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 05:13:15 -0400
-Received: from mail-wr1-x436.google.com ([2a00:1450:4864:20::436])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <kaixuanli0131@gmail.com>)
- id 1w39RG-0001UM-3g
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 05:13:12 -0400
-Received: by mail-wr1-x436.google.com with SMTP id
- ffacd0b85a97d-4327790c4e9so267006f8f.2
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 02:13:09 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773911588; cv=none;
- d=google.com; s=arc-20240605;
- b=E+3RgbWLYWB/67lqVoDMmdC69kguptGTY+ZOVkNCzCfI9QdziuXLFpKLtNzowGkn1N
- +aorCfRBbFDbmNiaHi6lRDJFZAaQYkE20kC3ZqNepkHlrxTUk/2Z6sifuXZPvED7qNsR
- ihroJG0cQxWy4hYazD9EvBVD76rLRMIWQhHuFbMKTwm1C756S4xpC82NBeXP/RPXQElX
- va0BJqCkGpvmNFzxM3cnJQ8avx+1P0XIFFfzsNVDjRoJzR5jD0EeagKx9Ec2G5v8dA9E
- 6zozICUNv4W21W0xTsopDONNEy655I9PayDbLt1//Hct8Q/7omqknOJls5pQuAs7VIOs
- h8dw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=cc:to:subject:message-id:date:from:mime-version:dkim-signature;
- bh=sLqxu7g9uUSHs6PhlhyCBj0KsjT84KXNqehugl6HIsE=;
- fh=0AqpBOgfML+KKR+67JVrryUB9PgnRt/yLukaJSznPAU=;
- b=MvzA6qvnQ8jtgHOl8+58+Y/V4CtTw+WfKezqKBA2kQ15IhBAIRTxqzyuHQoPWUOsxH
- rIy022uiyJ/SG/oS8f6v8b7d4qwwjuAHIl0NPZhPhv7eaHreL/OQ4rIj3kdn05hUyPdb
- exti5yuNIqningK0uA2RM9rFyZ1df9OskJPAaDgvN+/Us9HghwHzrTO3YThf9S/omKNR
- 0YISP7EoLz8FaVgeo7q7+KefxWvSg2SoVxfpNLzYbM+QKHOMaz9R6cdvYj3ckYNw9Pl6
- JkvseOaCcTyc7Jqq/M7+0qqggzaDEqLwLzOlK9PY73cm/C22UBG6kzIMQaQlButGUG4s
- MUrA==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773911588; x=1774516388; darn=nongnu.org;
- h=cc:to:subject:message-id:date:from:mime-version:from:to:cc:subject
- :date:message-id:reply-to;
- bh=sLqxu7g9uUSHs6PhlhyCBj0KsjT84KXNqehugl6HIsE=;
- b=DQlULv9hVoygy8kNLcK8aTZ0TYoQ0+1awx5GhtdgMc7BG/bW5w90WspGEfIGA0e6T9
- uBKYhYrZitacRoY9ntcEJMXImKeuwav076GgB3L4LjSYPOwprW0lIzJJoh4r3SHQTzvM
- foI0nOq/Q48AdZDbpZE+yG51WrordnIjxXM8QWsSiBNQqsUOF8EtqGoR8wGOHWerLM2D
- UGgNL6Y0reaCHawLthTj/eCZfUAZdS41s3dobtbHmichf9qZf9b8KhlzeTjGSxSq5Gff
- rRV/iHlmNJxTDpgKtZGj+EQXeRJ5Ih1zd8GNxt2ewGcZy2pfiAyGh6JAqns7fHr05xW5
- 4nbg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773911588; x=1774516388;
- h=cc:to:subject:message-id:date:from:mime-version:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=sLqxu7g9uUSHs6PhlhyCBj0KsjT84KXNqehugl6HIsE=;
- b=otfKBxYTNpNtoMCJJJMsZO+o+xrccdr7JTdeZ2c9k3VzRmzHUixlONCSkMq/Zba3e1
- NAlnpw4zKr5xue6WT1gqp7Po4tgr+2KqIpaZITlLXloRzkajUGR5jOYjMnb5PviPgSgA
- +W0buvIcTpsbmimofolMStCu0Iej+gndLGt30H9F2KSZ5RX/6yJCmctnheoErrhWon8X
- YH90LlsXKprdoajiMMBbfU8VJTppy092qj9kGKRlkF6+TYyXdPZfRB0EM7xY/yUTDcm8
- yVd0PTLxolVePrApotH626gV1M/WQzv/1NReRmwpcEmj9GAVFA2FgFep/1vo0C/isnFz
- tWAw==
-X-Gm-Message-State: AOJu0YzxD9pwE+v4kBFo0894cj7E3zeX8CgD4IZpuwJmnn0pENEErJHD
- +Ig0yyqgAmOTzo5euFqfRJvja5FeZEGkBR5dy0Qq4BweH44adU7h8kuAI0aOQ61mEo29yrTEkPf
- 5XfygUQFk8F+RYaRgQzuTt2H0IFDrIUBFr+B7
-X-Gm-Gg: ATEYQzy9JexkNJxSpBlZZgiesbyEUYGY6pS2M3s+99nu42l+VR0u8drndojr3oGtzZF
- CfXImK7YR6XFsEolMR8Lkc08LLayyAp/R/5MfHDc45xgP6Zkn6vHIo/omgdwWdCBAntYzQPhJ86
- l+1QQdOGhESalA3T7K21InX2giKupFpH1bImYNRZhOtDQMwsvbfBdjXN3I6h2hiqYHNThxGW8D1
- gpOgbn9lSakWmV3KUWLMK7DGl0yabzA4fvPRjjeNC97ilvf6RHMr4qOWnuVuc9jT1EvQ6n+rBgT
- jRbjzWKuZx6g++wKRQ==
-X-Received: by 2002:a05:6000:420f:b0:439:c299:4d8f with SMTP id
- ffacd0b85a97d-43b527a51ccmr10613821f8f.17.1773911587462; Thu, 19 Mar 2026
- 02:13:07 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
+ id 1w38pT-0001Gt-6j
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:34:07 -0400
+Received: from exmail.andestech.com ([60.248.187.195]
+ helo=Atcsqr.andestech.com)
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
+ id 1w38pR-0000w3-5i
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:34:06 -0400
+Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
+ by Atcsqr.andestech.com with ESMTP id 62J8XlCB016335;
+ Thu, 19 Mar 2026 16:33:47 +0800 (+08)
+ (envelope-from ycliang@andestech.com)
+Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
+ (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 19 Mar
+ 2026 16:33:47 +0800
+To: <u-boot@lists.denx.de>
+CC: <rick@andestech.com>, <ycliang@andestech.com>, <trini@konsulko.com>,
+ <me@ziyao.cc>, <anshuld@ti.com>, <xypron.glpk@gmx.de>,
+ <qemu-devel@nongnu.org>
+Subject: [PATCH 1/2] riscv: Add CSR detection support
+Date: Thu, 19 Mar 2026 16:33:38 +0800
+Message-ID: <20260319083339.3429776-1-ycliang@andestech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
-From: Kaixuan Li <kaixuanli0131@gmail.com>
-Date: Thu, 19 Mar 2026 17:12:56 +0800
-X-Gm-Features: AaiRm53RT3RbIWXxdXC1cDTi2MEh8gUbzes0Udy_thgI_Eel_zRRjUHRDZB9ESo
-Message-ID: <CAGVefVU7AbunJKhw9_R7jFX+RJi81QLimnkOuDM8wwvG++hesw@mail.gmail.com>
-Subject: [PATCH] hw/nvme: fix heap-buffer-overflow in nvme_abort (issues/3348)
-To: qemu-devel@nongnu.org, qemu-block@nongnu.org
-Cc: kbusch@kernel.org, its@irrelevant.dk, foss@defmacro.it, 
- qemu-stable@nongnu.org
-Content-Type: multipart/alternative; boundary="00000000000008a2c8064d5cfacb"
-Received-SPF: pass client-ip=2a00:1450:4864:20::436;
- envelope-from=kaixuanli0131@gmail.com; helo=mail-wr1-x436.google.com
-X-Spam_score_int: 1
-X-Spam_score: 0.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [10.0.15.183]
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DKIM-Results: atcpcs34.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 62J8XlCB016335
+Received-SPF: pass client-ip=60.248.187.195;
+ envelope-from=ycliang@andestech.com; helo=Atcsqr.andestech.com
+X-Spam_score_int: -1
+X-Spam_score: -0.2
 X-Spam_bar: /
-X-Spam_report: (0.1 / 5.0 requ) BAYES_00=-1.9, DEAR_SOMETHING=1.973,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- FREEMAIL_ENVFROM_END_DIGIT=0.25, FREEMAIL_FROM=0.001, HTML_MESSAGE=0.001,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 19 Mar 2026 08:56:51 -0400
+X-Mailman-Approved-At: Thu, 19 Mar 2026 08:56:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -109,113 +67,171 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Leo Yu-Chi Liang <ycliang@andestech.com>
+From:  Leo Yu-Chi Liang via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
---00000000000008a2c8064d5cfacb
-Content-Type: text/plain; charset="UTF-8"
+Add a lightweight mechanism to safely probe CSRs that may not exist
+on the current hart. This is useful for detecting optional extensions
+(e.g. Smstateen) without relying on MARCHID or ISA string parsing.
 
-Dear Sir or Madam,
+The implementation consists of:
+- A minimal expected trap handler (__riscv_expected_trap) that advances
+  past the faulting instruction and signals the trap via register a4.
+- csr_read_allowed() and csr_write_allowed() macros that temporarily
+  swap the trap vector, attempt the CSR access, and report whether it
+  trapped.
 
-Since my institution email address doesn't allow git email, I sent the
-patch manually as follows:
+Ported from OpenSBI's sbi_csr_detect.h mechanism.
 
-In nvme_abort(), the submission queue pointer is dereferenced from the
-  guest-controlled sqid before validating it with nvme_check_sqid():
+Signed-off-by: Leo Yu-Chi Liang <ycliang@andestech.com>
+---
+ arch/riscv/include/asm/csr_detect.h | 90 +++++++++++++++++++++++++++++
+ arch/riscv/lib/Makefile             |  1 +
+ arch/riscv/lib/csr_detect.S         | 23 ++++++++
+ 3 files changed, 114 insertions(+)
+ create mode 100644 arch/riscv/include/asm/csr_detect.h
+ create mode 100644 arch/riscv/lib/csr_detect.S
 
-      NvmeSQueue *sq = n->sq[sqid];
+diff --git a/arch/riscv/include/asm/csr_detect.h b/arch/riscv/include/asm/csr_detect.h
+new file mode 100644
+index 00000000000..c058b6b85ea
+--- /dev/null
++++ b/arch/riscv/include/asm/csr_detect.h
+@@ -0,0 +1,90 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * Copyright (C) 2026 Andes Technology Corporation
++ * Leo Yu-Chi Liang <ycliang@andestech.com>
++ *
++ * RISC-V CSR detection support
++ *
++ * Provides macros to safely probe CSRs that may not exist on the
++ * current hart. Uses a lightweight trap handler that simply advances
++ * past the faulting instruction and sets a flag.
++ *
++ * Ported from OpenSBI's sbi_csr_detect.h.
++ */
++
++#ifndef _ASM_RISCV_CSR_DETECT_H
++#define _ASM_RISCV_CSR_DETECT_H
++
++#include <asm/csr.h>
++
++#ifndef __ASSEMBLY__
++
++/* Two-level stringification so CSR macros are expanded before quoting */
++#define __CSR_DETECT_XSTR(x)	#x
++#define __CSR_DETECT_STR(x)	__CSR_DETECT_XSTR(x)
++
++#if CONFIG_IS_ENABLED(RISCV_SMODE)
++#define CSR_XTVEC	CSR_STVEC
++#else
++#define CSR_XTVEC	CSR_MTVEC
++#endif
++
++void __riscv_expected_trap(void);
++
++/**
++ * csr_read_allowed() - Read a CSR, detecting illegal-instruction traps.
++ * @csr_num:	CSR number (must be a compile-time constant).
++ * @trap:	lvalue that is set to 1 if the access trapped, 0 otherwise.
++ *
++ * Returns the CSR value on success, or 0 if the CSR does not exist.
++ *
++ * This works by temporarily installing a minimal trap handler that
++ * skips the faulting instruction and sets register a4 to 1. Interrupts
++ * must be disabled when calling this macro (they normally are during
++ * early init).
++ */
++#define csr_read_allowed(csr_num, trap)					\
++({									\
++	register unsigned long __mtvec =				\
++		(unsigned long)__riscv_expected_trap;			\
++	register unsigned long __trap asm("a4") = 0;			\
++	register unsigned long __ret = 0;				\
++	__asm__ __volatile__(						\
++		"csrrw %[mtvec], "					\
++			__CSR_DETECT_STR(CSR_XTVEC) ", %[mtvec]\n"	\
++		"csrr %[ret], " __ASM_STR(csr_num) "\n"		\
++		"csrw "	__CSR_DETECT_STR(CSR_XTVEC) ", %[mtvec]"	\
++		: [mtvec] "+&r"(__mtvec), [ret] "=&r"(__ret),		\
++		  [trap] "+&r"(__trap)					\
++		:							\
++		: "memory");						\
++	trap = __trap;							\
++	__ret;								\
++})
++
++/**
++ * csr_write_allowed() - Write a CSR, detecting illegal-instruction traps.
++ * @csr_num:	CSR number (must be a compile-time constant).
++ * @trap:	lvalue that is set to 1 if the access trapped, 0 otherwise.
++ * @value:	Value to write.
++ */
++#define csr_write_allowed(csr_num, trap, value)				\
++({									\
++	register unsigned long __mtvec =				\
++		(unsigned long)__riscv_expected_trap;			\
++	register unsigned long __trap asm("a4") = 0;			\
++	register unsigned long __val = (unsigned long)(value);		\
++	__asm__ __volatile__(						\
++		"csrrw %[mtvec], "					\
++			__CSR_DETECT_STR(CSR_XTVEC) ", %[mtvec]\n"	\
++		"csrw " __ASM_STR(csr_num) ", %[val]\n"		\
++		"csrw "	__CSR_DETECT_STR(CSR_XTVEC) ", %[mtvec]"	\
++		: [mtvec] "+&r"(__mtvec), [trap] "+&r"(__trap)		\
++		: [val] "rK"(__val)					\
++		: "memory");						\
++	trap = __trap;							\
++})
++
++#endif /* !__ASSEMBLY__ */
++
++#endif /* _ASM_RISCV_CSR_DETECT_H */
+diff --git a/arch/riscv/lib/Makefile b/arch/riscv/lib/Makefile
+index a527b3e9ae3..42463b8bed0 100644
+--- a/arch/riscv/lib/Makefile
++++ b/arch/riscv/lib/Makefile
+@@ -12,6 +12,7 @@ obj-$(CONFIG_$(PHASE_)LIB_BOOTM) += bootm.o
+ obj-$(CONFIG_$(PHASE_)LIB_BOOTI) += image.o
+ obj-$(CONFIG_CMD_GO) += boot.o
+ obj-y	+= cache.o
++obj-y	+= csr_detect.o
+ obj-$(CONFIG_SIFIVE_CACHE) += sifive_cache.o
+ obj-$(CONFIG_SYS_CACHE_THEAD_CMO) += thead_cmo.o
+ ifeq ($(CONFIG_$(PHASE_)RISCV_MMODE),y)
+diff --git a/arch/riscv/lib/csr_detect.S b/arch/riscv/lib/csr_detect.S
+new file mode 100644
+index 00000000000..69c4b8e7933
+--- /dev/null
++++ b/arch/riscv/lib/csr_detect.S
+@@ -0,0 +1,23 @@
++/* SPDX-License-Identifier: GPL-2.0+ */
++/*
++ * RISC-V CSR detection support
++ *
++ * Copyright (C) 2025 Andes Technology Corporation
++ * Leo Yu-Chi Liang <ycliang@andestech.com>
++ *
++ * Ported from OpenSBI's expected trap mechanism.
++ */
++
++#include <asm/encoding.h>
++
++	.text
++	.align 2
++	.global __riscv_expected_trap
++__riscv_expected_trap:
++	/* Advance past the faulting instruction */
++	csrr	a4, MODE_PREFIX(epc)
++	addi	a4, a4, 4
++	csrw	MODE_PREFIX(epc), a4
++	/* Set a4 = 1 to signal that a trap occurred */
++	li	a4, 1
++	MODE_PREFIX(ret)
+-- 
+2.34.1
 
-  Since sqid is a 16-bit value (range 0-65535) taken directly from CDW10,
-  and n->sq[] is typically only max_ioqpairs+1 (65) entries, a malicious
-guest can trigger an out-of-bounds heap read by sending an Abort command
-  with a large sqid.
-
-  ASan reports this as heap-buffer-overflow in nvme_abort.
-
-  Fix this by moving the array dereference to after the nvme_check_sqid()
-  bounds validation.
-
-  Resolves: https://gitlab.com/qemu-project/qemu/-/issues/3348
-  Fixes: 75209c071a ("hw/nvme: actually implement abort")
-  Cc: qemu-stable@nongnu.org
-  Signed-off-by: Kaixuan Li <kaixuanli@ntu.edu.sg>
-  ---
-   hw/nvme/ctrl.c | 4 +++-
-   1 file changed, 3 insertions(+), 1 deletion(-)
-
-  diff --git a/hw/nvme/ctrl.c b/hw/nvme/ctrl.c
-  index cc4593cd42..be6c7028cb 100644
-  --- a/hw/nvme/ctrl.c
-  +++ b/hw/nvme/ctrl.c
-  @@ -6111,7 +6111,7 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest
-*req)
-   {
-       uint16_t sqid = le32_to_cpu(req->cmd.cdw10) & 0xffff;
-       uint16_t cid  = (le32_to_cpu(req->cmd.cdw10) >> 16) & 0xffff;
-  -    NvmeSQueue *sq = n->sq[sqid];
-  +    NvmeSQueue *sq;
-       NvmeRequest *r, *next;
-       int i;
-
-  @@ -6120,6 +6120,8 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest
-*req)
-           return NVME_INVALID_FIELD | NVME_DNR;
-       }
-
-  +    sq = n->sq[sqid];
-  +
-       if (sqid == 0) {
-           for (i = 0; i < n->outstanding_aers; i++) {
-               NvmeRequest *re = n->aer_reqs[i];
-  --
-  2.34.1
-
-Feel free to contact me if there are any questions.
-
-Best regards,
-Kaixuan
-
---00000000000008a2c8064d5cfacb
-Content-Type: text/html; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-
-<div dir=3D"ltr">Dear Sir or Madam,<div><br></div><div>Since my institution=
- email address doesn&#39;t=C2=A0allow git email,=C2=A0I sent the patch manu=
-ally as follows:</div><div><br><div>In nvme_abort(), the submission queue p=
-ointer is dereferenced from the<br>=C2=A0 guest-controlled sqid before vali=
-dating it with nvme_check_sqid():<br><br>=C2=A0 =C2=A0 =C2=A0 NvmeSQueue *s=
-q =3D n-&gt;sq[sqid];<br><br>=C2=A0 Since sqid is a 16-bit value (range 0-6=
-5535) taken directly from CDW10,<br>=C2=A0 and n-&gt;sq[] is typically only=
- max_ioqpairs+1 (65) entries, a malicious<br>guest can trigger an out-of-bo=
-unds heap read by sending an Abort command<br>=C2=A0 with a large sqid.<br>=
-<br>=C2=A0 ASan reports this as heap-buffer-overflow in nvme_abort.<br><br>=
-=C2=A0 Fix this by moving the array dereference to after the nvme_check_sqi=
-d()<br>=C2=A0 bounds validation.<br><br>=C2=A0 Resolves: <a href=3D"https:/=
-/gitlab.com/qemu-project/qemu/-/issues/3348">https://gitlab.com/qemu-projec=
-t/qemu/-/issues/3348</a><br>=C2=A0 Fixes: 75209c071a (&quot;hw/nvme: actual=
-ly implement abort&quot;)<br>=C2=A0 Cc: <a href=3D"mailto:qemu-stable@nongn=
-u.org">qemu-stable@nongnu.org</a><br>=C2=A0 Signed-off-by: Kaixuan Li &lt;<=
-a href=3D"mailto:kaixuanli@ntu.edu.sg">kaixuanli@ntu.edu.sg</a>&gt;<br>=C2=
-=A0 ---<br>=C2=A0 =C2=A0hw/nvme/ctrl.c | 4 +++-<br>=C2=A0 =C2=A01 file chan=
-ged, 3 insertions(+), 1 deletion(-)<br><br>=C2=A0 diff --git a/hw/nvme/ctrl=
-.c b/hw/nvme/ctrl.c<br>=C2=A0 index cc4593cd42..be6c7028cb 100644<br>=C2=A0=
- --- a/hw/nvme/ctrl.c<br>=C2=A0 +++ b/hw/nvme/ctrl.c<br>=C2=A0 @@ -6111,7 +=
-6111,7 @@ static uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)<br>=C2=
-=A0 =C2=A0{<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0uint16_t sqid =3D le32_to_cpu(req=
--&gt;cmd.cdw10) &amp; 0xffff;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0uint16_t cid =
-=C2=A0=3D (le32_to_cpu(req-&gt;cmd.cdw10) &gt;&gt; 16) &amp; 0xffff;<br>=C2=
-=A0 - =C2=A0 =C2=A0NvmeSQueue *sq =3D n-&gt;sq[sqid];<br>=C2=A0 + =C2=A0 =
-=C2=A0NvmeSQueue *sq;<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0NvmeRequest *r, *next;<=
-br>=C2=A0 =C2=A0 =C2=A0 =C2=A0int i;<br><br>=C2=A0 @@ -6120,6 +6120,8 @@ st=
-atic uint16_t nvme_abort(NvmeCtrl *n, NvmeRequest *req)<br>=C2=A0 =C2=A0 =
-=C2=A0 =C2=A0 =C2=A0 =C2=A0return NVME_INVALID_FIELD | NVME_DNR;<br>=C2=A0 =
-=C2=A0 =C2=A0 =C2=A0}<br><br>=C2=A0 + =C2=A0 =C2=A0sq =3D n-&gt;sq[sqid];<b=
-r>=C2=A0 +<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0if (sqid =3D=3D 0) {<br>=C2=A0 =C2=
-=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0for (i =3D 0; i &lt; n-&gt;outstanding_aers;=
- i++) {<br>=C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0 =C2=A0NvmeReque=
-st *re =3D n-&gt;aer_reqs[i];<br>=C2=A0 --<br>=C2=A0 2.34.1<div><br></div><=
-div>Feel free to contact me if there are any questions.</div><div><br></div=
-><div>Best regards,</div><div>Kaixuan</div></div></div></div>
-
---00000000000008a2c8064d5cfacb--
 
