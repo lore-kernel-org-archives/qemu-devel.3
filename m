@@ -4,52 +4,80 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id BF21B108E1F9
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:55:34 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 277C9108E1F9
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:55:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3By5-0002hw-TC; Thu, 19 Mar 2026 07:55:13 -0400
+	id 1w3By7-0002jn-Pf; Thu, 19 Mar 2026 07:55:15 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <gaosong@loongson.cn>)
- id 1w3By4-0002fT-7O
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:12 -0400
-Received: from mail.loongson.cn ([114.242.206.163])
- by eggs.gnu.org with esmtp (Exim 4.90_1)
- (envelope-from <gaosong@loongson.cn>) id 1w3By0-0002Nj-T1
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:11 -0400
-Received: from loongson.cn (unknown [10.2.5.185])
- by gateway (Coremail) with SMTP id _____8Cx76sU5LtpvaocAA--.23648S3;
- Thu, 19 Mar 2026 19:55:00 +0800 (CST)
-Received: from localhost.localdomain (unknown [10.2.5.185])
- by front1 (Coremail) with SMTP id qMiowJCxPMIO5Ltp3qBYAA--.36678S4;
- Thu, 19 Mar 2026 19:54:58 +0800 (CST)
-From: Song Gao <gaosong@loongson.cn>
-To: maobibo@loongson.cn
-Cc: qemu-devel@nongnu.org, philmd@linaro.org, jiaxun.yang@flygoat.com,
- chenhuacai@kernel.org, lixianglai@loongson.cn
-Subject: [RFC PATCH v3 2/2] Add dintc kvm_irqchip_in_kernel support
-Date: Thu, 19 Mar 2026 19:29:30 +0800
-Message-Id: <20260319112930.2255004-3-gaosong@loongson.cn>
-X-Mailer: git-send-email 2.39.1
-In-Reply-To: <20260319112930.2255004-1-gaosong@loongson.cn>
-References: <20260319112930.2255004-1-gaosong@loongson.cn>
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3By6-0002iM-Oh
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:14 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3By5-0002PK-77
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:55:14 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773921312;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=cghQw2wZlYWTnUyhIggiIgbgwEbKW06jE0Cc1GCWpzA=;
+ b=MDAry6ds7Ne/riWkgk1JnHDtf0FTA+kYJT8iK2x7mAYlEJoOwc7bkqEBRXEXbmKGDmRxp/
+ epyEF6sJZWKzidRAnotRede055SAUq4eoSzh8OQOfNrbOQ3HYIQg5ku44nZ0omSnCnCvns
+ He0nOc+BrkRhvsj4pBtguhklAjJZkpk=
+Received: from mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-599-yhNzkXyxOOiuNylzPeZOqA-1; Thu,
+ 19 Mar 2026 07:55:09 -0400
+X-MC-Unique: yhNzkXyxOOiuNylzPeZOqA-1
+X-Mimecast-MFC-AGG-ID: yhNzkXyxOOiuNylzPeZOqA_1773921307
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id AA2471944F05; Thu, 19 Mar 2026 11:55:07 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 45D211955F21; Thu, 19 Mar 2026 11:55:07 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id D6E0521E6937; Thu, 19 Mar 2026 12:55:04 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Nathan Chen <nathanc@nvidia.com>
+Cc: qemu-devel@nongnu.org,  qemu-arm@nongnu.org,  Eric Auger
+ <eric.auger@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>,  Igor Mammedov
+ <imammedo@redhat.com>,  Ani Sinha <anisinha@redhat.com>,  Shannon Zhao
+ <shannon.zhaosl@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,  Daniel
+ P . =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Eric Blake
+ <eblake@redhat.com>, Shameer Kolothum <skolothumtho@nvidia.com>,  Matt Ochs
+ <mochs@nvidia.com>,  Nicolin Chen <nicolinc@nvidia.com>
+Subject: Re: [PATCH v4 3/8] hw/arm/smmuv3-accel: Change RIL property to
+ OnOffAuto
+In-Reply-To: <20260318184907.4060030-4-nathanc@nvidia.com> (Nathan Chen's
+ message of "Wed, 18 Mar 2026 11:49:02 -0700")
+References: <20260318184907.4060030-1-nathanc@nvidia.com>
+ <20260318184907.4060030-4-nathanc@nvidia.com>
+Date: Thu, 19 Mar 2026 12:55:04 +0100
+Message-ID: <87se9w9gpz.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-CM-TRANSID: qMiowJCxPMIO5Ltp3qBYAA--.36678S4
-X-CM-SenderInfo: 5jdr20tqj6z05rqj20fqof0/
-X-Coremail-Antispam: 1Uk129KBjDUn29KB7ZKAUJUUUUU529EdanIXcx71UUUUU7KY7
- ZEXasCq-sGcSsGvfJ3UbIjqfuFe4nvWSU5nxnvy29KBjDU0xBIdaVrnUUvcSsGvfC2Kfnx
- nUUI43ZEXa7xR_UUUUUUUUU==
-Received-SPF: pass client-ip=114.242.206.163; envelope-from=gaosong@loongson.cn;
- helo=mail.loongson.cn
-X-Spam_score_int: -1
-X-Spam_score: -0.2
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
 X-Spam_bar: /
-X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -65,178 +93,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Function kvm_dintc_realize() is added if kvm_irqchip_in_kernel is
-set. It is to create and initialize DINTC device in kernel mode.
-and use kvm_irqchip_send_msi() to send  msi to kernel.
+Nathan Chen <nathanc@nvidia.com> writes:
 
-Signed-off-by: Song Gao <gaosong@loongson.cn>
----
- hw/intc/loongarch_dintc.c         | 13 +++++++++
- hw/intc/loongarch_dintc_kvm.c     | 48 +++++++++++++++++++++++++++++++
- hw/intc/meson.build               |  2 ++
- include/hw/intc/loongarch_dintc.h | 10 +++++++
- linux-headers/asm-loongarch/kvm.h |  4 +++
- linux-headers/linux/kvm.h         |  2 ++
- 6 files changed, 79 insertions(+)
- create mode 100644 hw/intc/loongarch_dintc_kvm.c
+> From: Nathan Chen <nathanc@nvidia.com>
+>
+> Change accel SMMUv3 RIL property from bool to OnOffAuto. The 'auto'
 
-diff --git a/hw/intc/loongarch_dintc.c b/hw/intc/loongarch_dintc.c
-index c42a919df4..b8bd7ae015 100644
---- a/hw/intc/loongarch_dintc.c
-+++ b/hw/intc/loongarch_dintc.c
-@@ -53,6 +53,15 @@ static void loongarch_dintc_mem_write(void *opaque, hwaddr addr,
-     cs = cpu_by_arch_id(cpu_num);
-     irq_num = FIELD_EX64(msg_addr, MSG_ADDR, IRQ_NUM);
- 
-+    if (kvm_irqchip_in_kernel()) {
-+        MSIMessage msg;
-+
-+        msg.address = msg_addr;
-+        msg.data = val;
-+        kvm_irqchip_send_msi(kvm_state, msg);
-+        return;
-+    }
-+
-     async_run_on_cpu(cs, do_set_vcpu_dintc_irq,
-                          RUN_ON_CPU_HOST_INT(irq_num));
-     qemu_set_irq(s->cpu[cpu_num].parent_irq, 1);
-@@ -95,6 +104,10 @@ static void loongarch_dintc_realize(DeviceState *dev, Error **errp)
-         qdev_init_gpio_out(dev, &s->cpu[i].parent_irq, 1);
-     }
- 
-+    if (kvm_irqchip_in_kernel()) {
-+        kvm_dintc_realize(dev, errp);
-+    }
-+
-     return;
- }
- 
-diff --git a/hw/intc/loongarch_dintc_kvm.c b/hw/intc/loongarch_dintc_kvm.c
-new file mode 100644
-index 0000000000..16da33d0b7
---- /dev/null
-+++ b/hw/intc/loongarch_dintc_kvm.c
-@@ -0,0 +1,48 @@
-+/* SPDX-License-Identifier: GPL-2.0-or-later */
-+/*
-+ * LoongArch DINTC interrupt kvm support
-+ *
-+ * Copyright (C) 2025 Loongson Technology Corporation Limited
-+ */
-+
-+#include "qemu/osdep.h"
-+#include "hw/intc/loongarch_dintc.h"
-+#include "linux/kvm.h"
-+#include "qapi/error.h"
-+#include "system/kvm.h"
-+
-+void kvm_dintc_realize(DeviceState *dev, Error **errp)
-+{
-+    LoongArchDINTCState *lds = LOONGARCH_DINTC(dev);
-+    int ret;
-+
-+    ret = kvm_create_device(kvm_state, KVM_DEV_TYPE_LOONGARCH_DINTC, false);
-+    if (ret < 0) {
-+        fprintf(stderr, "create KVM_DEV_TYPE_LOONGARCH_AVEC failed: %s\n",
-+               strerror(-ret));
-+        abort();
-+    }
-+    lds->dev_fd = ret;
-+
-+    /* init dintc config */
-+    lds->msg_addr_base = VIRT_DINTC_BASE;
-+    lds->msg_addr_size = VIRT_DINTC_SIZE;
-+
-+    ret = kvm_device_access(lds->dev_fd, KVM_DEV_LOONGARCH_DINTC_CTRL,
-+                            KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_BASE,
-+                            &lds->msg_addr_base, true, NULL);
-+    if (ret < 0) {
-+        fprintf(stderr, "KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_BASE failed: %s\n",
-+                strerror(ret));
-+        abort();
-+    }
-+
-+    ret = kvm_device_access(lds->dev_fd, KVM_DEV_LOONGARCH_DINTC_CTRL,
-+                            KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_SIZE,
-+                            &lds->msg_addr_size, true, NULL);
-+    if (ret < 0) {
-+        fprintf(stderr, "KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_SIZE failed: %s\n",
-+                strerror(ret));
-+        abort();
-+    }
-+}
-diff --git a/hw/intc/meson.build b/hw/intc/meson.build
-index 96742df090..015c1e67e4 100644
---- a/hw/intc/meson.build
-+++ b/hw/intc/meson.build
-@@ -82,3 +82,5 @@ specific_ss.add(when: 'CONFIG_LOONGARCH_EXTIOI', if_true: files('loongarch_extio
- specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_EXTIOI'],
-                if_true: files('loongarch_extioi_kvm.c'))
- specific_ss.add(when: 'CONFIG_LOONGARCH_DINTC', if_true: files('loongarch_dintc.c'))
-+specific_ss.add(when: ['CONFIG_KVM', 'CONFIG_LOONGARCH_DINTC'],
-+               if_true: files('loongarch_dintc_kvm.c'))
-diff --git a/include/hw/intc/loongarch_dintc.h b/include/hw/intc/loongarch_dintc.h
-index 1f4f65705a..95a7879e26 100644
---- a/include/hw/intc/loongarch_dintc.h
-+++ b/include/hw/intc/loongarch_dintc.h
-@@ -9,8 +9,13 @@
- #include "hw/core/sysbus.h"
- #include "hw/loongarch/virt.h"
- #include "system/memory.h"
-+#include "hw/pci-host/ls7a.h"
- 
- #define NR_VECTORS     256
-+#define IRQ_BIT_BASE    5
-+#define IRQ_BIT_LEN     8
-+#define CPU_BIT_BASE   13
-+#define CPU_BIT_LEN     8
- 
- #define TYPE_LOONGARCH_DINTC "loongarch_dintc"
- OBJECT_DECLARE_TYPE(LoongArchDINTCState, LoongArchDINTCClass, LOONGARCH_DINTC)
-@@ -25,7 +30,10 @@ struct LoongArchDINTCState {
-     SysBusDevice parent_obj;
-     MemoryRegion dintc_mmio;
-     DINTCCore *cpu;
-+    int dev_fd;
-     uint32_t num_cpu;
-+    uint64_t msg_addr_base;
-+    uint64_t msg_addr_size;
- };
- 
- struct LoongArchDINTCClass {
-@@ -34,3 +42,5 @@ struct LoongArchDINTCClass {
-     DeviceRealize parent_realize;
-     DeviceUnrealize parent_unrealize;
- };
-+
-+void kvm_dintc_realize(DeviceState *dev, Error **errp);
-diff --git a/linux-headers/asm-loongarch/kvm.h b/linux-headers/asm-loongarch/kvm.h
-index de6c3f18e4..eabc61ed68 100644
---- a/linux-headers/asm-loongarch/kvm.h
-+++ b/linux-headers/asm-loongarch/kvm.h
-@@ -154,4 +154,8 @@ struct kvm_iocsr_entry {
- #define KVM_DEV_LOONGARCH_PCH_PIC_GRP_CTRL	        0x40000006
- #define KVM_DEV_LOONGARCH_PCH_PIC_CTRL_INIT	        0
- 
-+#define KVM_DEV_LOONGARCH_DINTC_CTRL                   0x40000007
-+#define  KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_BASE         0x0
-+#define  KVM_DEV_LOONGARCH_DINTC_MSG_ADDR_SIZE         0x1
-+
- #endif /* __UAPI_ASM_LOONGARCH_KVM_H */
-diff --git a/linux-headers/linux/kvm.h b/linux-headers/linux/kvm.h
-index a4ab42dcba..c721bb9ffa 100644
---- a/linux-headers/linux/kvm.h
-+++ b/linux-headers/linux/kvm.h
-@@ -1201,6 +1201,8 @@ enum kvm_device_type {
- #define KVM_DEV_TYPE_LOONGARCH_EIOINTC	KVM_DEV_TYPE_LOONGARCH_EIOINTC
- 	KVM_DEV_TYPE_LOONGARCH_PCHPIC,
- #define KVM_DEV_TYPE_LOONGARCH_PCHPIC	KVM_DEV_TYPE_LOONGARCH_PCHPIC
-+       KVM_DEV_TYPE_LOONGARCH_DINTC,
-+#define KVM_DEV_TYPE_LOONGARCH_DINTC   KVM_DEV_TYPE_LOONGARCH_DINTC
- 
- 	KVM_DEV_TYPE_MAX,
- 
--- 
-2.41.0
+Incompatible change; okay because property "ril" is new in this release.
+Spelling such things out in the commit message helps reviewers.  Not
+worth a respin.
+
+> value is not implemented, as this commit is meant to set the property
+> to the correct type and avoid breaking JSON/QMP when the auto mode is
+> introduced. A future patch will implement resolution of the 'auto'
+> value to match the host SMMUv3 RIL support.
+>
+> Fixes: bd715ff5bda9 ("hw/arm/smmuv3-accel: Add a property to specify RIL support")
+> Tested-by: Eric Auger <eric.auger@redhat.com>
+> Signed-off-by: Nathan Chen <nathanc@nvidia.com>
+
+Acked-by: Markus Armbruster <armbru@redhat.com>
 
 
