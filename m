@@ -4,64 +4,64 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id B8198108E1E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:22:09 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B7F96108E1E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:22:22 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BQu-000829-98; Thu, 19 Mar 2026 07:20:56 -0400
+	id 1w3BSC-0002ke-Lt; Thu, 19 Mar 2026 07:22:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BQs-00081k-OQ
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:54 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BRo-0002LT-1b
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:21:56 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BQr-0006zH-Dx
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:54 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BRm-000884-II
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:21:51 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773919252;
+ s=mimecast20190719; t=1773919309;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=cWZq5rCXRHJc6vx0NOQdqblmOCKa6Yl/CxCRqy9W7GI=;
- b=A67AvhMBUyFjT21CA2GjUua9W6EThlEbGaqevXqal8t6yFKsyD2+VMSlh/z2XA1W5xd7ZH
- rYpaPsJAf4MfRtPrnRTUNNQBxp1Ue/MchGZ1ZqqVTr+H6M6M4CLMnvC3JIFTStAXIKk/zN
- sTjS4cemp0bBt8fcPvyA0bTe0Q5efEY=
-Received: from mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ bh=v5n2rzLTJOT6jhhqr0oksgbKEDds3CCeNC7nR8BZLR8=;
+ b=TkvVt6PLD+Rw7rMvedga6xVFdkhhDeEl/fP9uACVJSW6HzZw4c4zHTGP7pDD7sR/gW7Io0
+ FuaP14qu3056W3LQbQ1Q/Ppb82yMQT5Wzh3mfGVnoLMVsVPPcY5fWCYb74DqQrL9eV80az
+ o4FJW+0/gvU5SKacjR7YNnZIZIl9frM=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-226-jw1F7pFxNpqFvk_OeF7d5w-1; Thu,
- 19 Mar 2026 07:20:47 -0400
-X-MC-Unique: jw1F7pFxNpqFvk_OeF7d5w-1
-X-Mimecast-MFC-AGG-ID: jw1F7pFxNpqFvk_OeF7d5w_1773919246
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-474-BAJQ4RMINe6DP5GCszuPKA-1; Thu,
+ 19 Mar 2026 07:21:46 -0400
+X-MC-Unique: BAJQ4RMINe6DP5GCszuPKA-1
+X-Mimecast-MFC-AGG-ID: BAJQ4RMINe6DP5GCszuPKA_1773919305
+Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id E4F2719560B9; Thu, 19 Mar 2026 11:20:45 +0000 (UTC)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 6D31B180034F; Thu, 19 Mar 2026 11:21:45 +0000 (UTC)
 Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 9531C1955F25; Thu, 19 Mar 2026 11:20:45 +0000 (UTC)
+ by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 166251800107; Thu, 19 Mar 2026 11:21:45 +0000 (UTC)
 Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 1F05B21E6937; Thu, 19 Mar 2026 12:20:43 +0100 (CET)
+ id B72A421E6937; Thu, 19 Mar 2026 12:21:42 +0100 (CET)
 From: Markus Armbruster <armbru@redhat.com>
 To: Thomas Huth <thuth@redhat.com>
 Cc: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>,
- qemu-devel@nongnu.org,  qemu-trivial@nongnu.org,  BALATON Zoltan
- <balaton@eik.bme.hu>
-Subject: Re: [PATCH] hw/display/cg3: Fix crash when introspecting cgthree
- from the CLI
-In-Reply-To: <20260317080623.438230-1-thuth@redhat.com> (Thomas Huth's message
- of "Tue, 17 Mar 2026 09:06:23 +0100")
-References: <20260317080623.438230-1-thuth@redhat.com>
-Date: Thu, 19 Mar 2026 12:20:43 +0100
-Message-ID: <87a4w4awvo.fsf@pond.sub.org>
+ qemu-devel@nongnu.org,  qemu-trivial@nongnu.org,  Markus Armbruster
+ <armbru@redhat.com>,  Artyom Tarasenko <atar4qemu@gmail.com>
+Subject: Re: [PATCH] hw/sparc64/sun4u_iommu: Fix crash when introspecting
+ sun4u-iommu from the CLI
+In-Reply-To: <20260317085839.445178-1-thuth@redhat.com> (Thomas Huth's message
+ of "Tue, 17 Mar 2026 09:58:39 +0100")
+References: <20260317085839.445178-1-thuth@redhat.com>
+Date: Thu, 19 Mar 2026 12:21:42 +0100
+Message-ID: <871phgawu1.fsf@pond.sub.org>
 User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
 Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
 Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
@@ -91,23 +91,21 @@ Thomas Huth <thuth@redhat.com> writes:
 
 > From: Thomas Huth <thuth@redhat.com>
 >
-> QEMU currently crashes when introspecting the cgthree device from the
+> QEMU currently crashes when introspecting the sun4u-iommu device from the
 > command line interface:
 >
->  $ ./qemu-system-sparc -device cgthree,help
->  Segmentation fault (core dumped)
->
-> This happens because the memory_region_init_rom() function internally
-> calls qemu_ram_alloc_internal() that needs the current_machine pointer
-> to be set up - which is not the case here since the machine has not
-> been created yet.
+>  $ ./qemu-system-sparc64 -display none -device sun4u-iommu,help
+>  qemu-system-sparc64: ../../devel/qemu/system/physmem.c:1401:
+>   register_multipage: Assertion `num_pages' failed.
+>  Aborted (core dumped)
 >
 > There does not seem to be a compelling reason for initializing the
 > memory regions from the instance_init function, so let's simply move
-> the code into the realize() function instead to fix this issue.
+> the code into a realize() function instead to fix this issue.
 >
 > Signed-off-by: Thomas Huth <thuth@redhat.com>
 
+Reported-by: Markus Armbruster <armbru@redhat.com>
 Tested-by: Markus Armbruster <armbru@redhat.com>
 
 
