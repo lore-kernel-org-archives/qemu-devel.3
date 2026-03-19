@@ -4,68 +4,67 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 87723109191B
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 21:00:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 24E75109191D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 21:00:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3KTG-0006i6-DQ; Thu, 19 Mar 2026 16:59:58 -0400
+	id 1w3KTG-0006iQ-SJ; Thu, 19 Mar 2026 16:59:58 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3KTE-0006hP-9i
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 16:59:56 -0400
-Received: from mail-pj1-x1033.google.com ([2607:f8b0:4864:20::1033])
+ id 1w3KTD-0006gv-6i
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 16:59:55 -0400
+Received: from mail-pj1-x102d.google.com ([2607:f8b0:4864:20::102d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <pierrick.bouvier@linaro.org>)
- id 1w3KTC-0005s9-V4
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 16:59:56 -0400
-Received: by mail-pj1-x1033.google.com with SMTP id
- 98e67ed59e1d1-35a1f549e7eso7681a91.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 13:59:54 -0700 (PDT)
+ id 1w3KTB-0005s1-1v
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 16:59:54 -0400
+Received: by mail-pj1-x102d.google.com with SMTP id
+ 98e67ed59e1d1-35bb7afdc38so919079a91.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 13:59:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773953993; x=1774558793; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=bBRdioarDBlwzHg1xa4ywHaBWAnWfXCcdobe4gbGus8=;
- b=WCgbVlcg5Qg9nlNiEJ8EfYAT8zFikZay8mFy/sjU8/OjYrx+ujCwtaKKAvJMQF4moe
- rVCs+I9t+CSjpc7r/O6jXVYLG9Oyx/I/mmKWoYq2nHmty6l7iU8sNVJoWIsxV9450F/M
- 24XU+Oy88mD/PhXoufqEsZmz0sflluERgI6Icy6iaDcKGhI3cV9KkQb2DSljYeYAosxd
- 4aE4vAbRv3LrekN8oOOwXU2NPVGgLaFXDlvd3N6Ng+BjI2p5ew5bloWcPb2ykNj/SyZz
- JvQrSbjxdCNNStziUIN+eRoFNhxe39st4hnWVsq7q+tOSlupGY/VD6kp3ZqDNTNvPfps
- yTww==
+ d=linaro.org; s=google; t=1773953991; x=1774558791; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=pkmd32xFo5bwhSQnQC9HJzlY+NYxJbF4ADfY4Le2asI=;
+ b=XvcXD7XaNxmJUCEk5foXQtRoqjGTvGvMaAERa3c914Y6Od3v0OkXuBLYggMgGU1fyh
+ rkUoJC32vEN470sAdVq1SCLKsqleo44RGMH5NWF4X4ODzCVM++QI8Kk/eBqlWSZdTLm6
+ fDVamAD99oHV5wvEixdLjlEcoXdycbV8rarCi6HJSiiJF/1VBcRwhdDx5CKRgf7GvvzA
+ JH6um9Kfav0oihXso3kb4SwNfdxkXdVX3Tf5UmBcQf9Vu3jMccARUj86IAJQCJJp8pQW
+ KKc9fcSfVHCVz8a/LHit+HWCR/mIoOsRolycNDWE8BPFl9qlCEQFpzHa/a390UdhxbMV
+ x62g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773953993; x=1774558793;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=bBRdioarDBlwzHg1xa4ywHaBWAnWfXCcdobe4gbGus8=;
- b=IEYJn6BSMHQ2It57pGvrnjaQhtiXJHxEZ+IqgZXlwBbo5Y1GRnSb8s02JJiTS3h125
- B809egF8atGU3xTqB+iQJl2uPU+M7Tf/f1U5xMmwFFzFWSE5OyXrYqCb/PJfPmwQ/uCM
- 6nBMqCfdakYr4zk88Tla8gL0xQW4eBNu5gOF4iGyRG6wetqmwiCrmPdONjrQlhbpxZYj
- 0II65PCe2bsWqCrApl2tyXh9ON2DZ+mKcaMd5GZP7SvYWGMhNColzriLZZj8EJvSjiIQ
- od/inIaPUlvbcb8Kewo9cbrnYClKaC0pWvXG1Hv2K5Ox8yRREb2y86PNyG//aLUzYuw4
- 6uRA==
-X-Gm-Message-State: AOJu0YyG8ufSQWBex4A5xz9ZnkLEcQ5d7oB7xCywzRjvSHfD0wo4rUKh
- 0syvWU5LCneZaYjlJYkbRhPyPL/j6WtLhp1Jr/CpMrXRaDr6ThvmMJWEHLNQkcKkdZ1Qnt1xabi
- nYpGQ26k=
-X-Gm-Gg: ATEYQzygd+622VxRqvtgpcLZcCei5ZJYVIiZ7e3BcFs15VN/B7Aw2RKmOKcbar/kjed
- Atr9yYNegNKUvln2PPN8isz1TYHbLddi+drK6xOSOTAGBi+5eBU2oy55He+t5sXhUvlyJ/Jk4Vi
- oAHG2A5+fmM+vOkdiiALMeBNb3w9stLBmA8t7iTYMPH5dtSke4IUm152WGloJAL4rmtKgiC1r/l
- MKFvjJ5ldLuLrkAnnmnweuFiWA3bugdM5M/6TWKQEbq1TLm1A7qfC3SQ353CD6bTGfDebX3ArM6
- u5S3bJmtjZNC9F7vWBRvEJHnX8eFCpFgNfArKrJlm0vZK42tBtNrklApC37c8yMnDSTEB/oH48I
- 7ni9PZRz4rvKlx2hH1KtHeMlQXLfpGlNfhD62e8uFePeH3Jw0j/6coZTgbBDZxvVf6J4DeimFQo
- s3gHWH2kJWMFNdIm0RjdaFDSt/fMiZB98Fy29p4Vkb1zjbvm9SawH+tQIG4uIpReR95SsBppRLR
- Vg0
-X-Received: by 2002:a17:90b:288f:b0:35b:9a95:dfb0 with SMTP id
- 98e67ed59e1d1-35bd2ce31c9mr392221a91.25.1773953992731; 
- Thu, 19 Mar 2026 13:59:52 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773953991; x=1774558791;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=pkmd32xFo5bwhSQnQC9HJzlY+NYxJbF4ADfY4Le2asI=;
+ b=jVg2kA6dDVnee2oZcz3NOlsEYLpiMMNdMo99U0wB+TDVkcUPXmUOeoafOIAU7pfWkZ
+ ezEmQZl6vXDcXCpRgvlni0yUM1LNBRkZmnVDwDZ+gIjCz9IowBqxB5M6r34y/hpVQ+EV
+ KFkfm4+Fjl95eFkSCSaeu0mgpy3nqmd6dxxch2yWOFzpsRIf+zXupKw4nQFPiJWDeJoM
+ fEolV/F6BCEJ0OpM+njI8I81YZmCLKL3i8uh4A0ZkrquNKuJZe1TVModcXLdtPPwmyoR
+ HaIwMe4KTfaE0jFm4rkx3NxIEo9lMvgO1EEXhc1n1YxeNkQsZ5WFyIAJdNSp6jugysXs
+ kU2A==
+X-Gm-Message-State: AOJu0YwXXnP51y5aSVsz4wocnoaoluCUUQ16WDme5ZVq3r33tMedRTfm
+ UWeQryd7M3pe9jmp3IbAExdbio3XR/Ra35/DMHxMmK8XFtxfZ4+NYTC+SmsZbjJHn2WhZYAKf/c
+ UAFjg7Ac=
+X-Gm-Gg: ATEYQzyPEphBcp08EQERNPKyFXGjMr2cka+VpSnIdZuYw5ogMc1TMGU8fWje5JiY2fk
+ LbSnX67WEVJTe3yvq0MgeeN89oPMSAU3Cigru5LMi2fgWcJ7uF50I3q75HIquhKFcjfLHSOYmmS
+ Bjea2jMwxpE5LP33q15+hTDwqdlFaPf2PuRI4wQA7rX2cYWSuzgcFM5mJbZWCSdSaPC3FNISQRh
+ pkh3dtAHnHEPDYpp7IUR+X5TE+B1kyaevN7bmVSBceo5zonWrOZcfglUAWBdPC6/WMJdJqKs3AX
+ TJ+hJzglqGUoPDVNprdjEz1V96WJ43l/KXwx3HJUDOlUQAIz/azRMSs/ESA3Bu/VJhGllkAQCav
+ xA1qprBdU1hl8qtk0wt/yyszBNIJtUAZd5CQAy6Sf83YiEX4PhD8fFEEkUz83lbMNXiO7ddpuat
+ YTx/hYeV3/pBKMg95Tr3ROlchIY6vUWfYWMhZ+tLdN2V01gC1i6DXMqoeITxJrZj2F7/AUiRno2
+ ZxJ
+X-Received: by 2002:a17:90a:e7d1:b0:35b:90e7:c458 with SMTP id
+ 98e67ed59e1d1-35bd2bba0admr441241a91.3.1773953990939; 
+ Thu, 19 Mar 2026 13:59:50 -0700 (PDT)
 Received: from pc.taild8403c.ts.net (216-71-219-44.dyn.novuscom.net.
  [216.71.219.44]) by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bd40e4bfdsm31273a91.9.2026.03.19.13.59.52
+ 98e67ed59e1d1-35bd40e4bfdsm31273a91.9.2026.03.19.13.59.50
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 13:59:52 -0700 (PDT)
+ Thu, 19 Mar 2026 13:59:50 -0700 (PDT)
 From: Pierrick Bouvier <pierrick.bouvier@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
@@ -73,18 +72,15 @@ Cc: Zhenzhong Duan <zhenzhong.duan@intel.com>, Yi Liu <yi.l.liu@intel.com>,
  =?UTF-8?q?C=C3=A9dric=20Le=20Goater?= <clg@redhat.com>,
  Alex Williamson <alex@shazbot.org>, philmd@linaro.org,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>
-Subject: [PATCH v3 2/2] hw/vfio/iommufd.c: report hint to user when
- vfio-dev/vfio*/dev is missing
-Date: Thu, 19 Mar 2026 13:59:42 -0700
-Message-ID: <20260319205942.367705-3-pierrick.bouvier@linaro.org>
+Subject: [PATCH v3 0/2] iommufd: give hints to user about kernel support
+Date: Thu, 19 Mar 2026 13:59:40 -0700
+Message-ID: <20260319205942.367705-1-pierrick.bouvier@linaro.org>
 X-Mailer: git-send-email 2.47.3
-In-Reply-To: <20260319205942.367705-1-pierrick.bouvier@linaro.org>
-References: <20260319205942.367705-1-pierrick.bouvier@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::1033;
- envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x1033.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102d;
+ envelope-from=pierrick.bouvier@linaro.org; helo=mail-pj1-x102d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -107,33 +103,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Give a hint about missing kernel config CONFIG_VFIO_DEVICE_CDEV.
+Using iommufd requires two different kernel config:
+CONFIG_IOMMUFD and CONFIG_VFIO_DEVICE_CDEV
+https://docs.kernel.org/driver-api/vfio.html#vfio-device-cdev
 
-Reviewed-by: Yi Liu <yi.l.liu@intel.com>
-Reviewed-by: Zhenzhong Duan <zhenzhong.duan@intel.com>
-Reviewed-by: Cédric Le Goater <clg@redhat.com>
-Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
----
- hw/vfio/iommufd.c | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+It can be complex to identify what is missing when trying to use it. This series
+gives hints to user about it.
 
-diff --git a/hw/vfio/iommufd.c b/hw/vfio/iommufd.c
-index 131612eb836..3e33dfbb356 100644
---- a/hw/vfio/iommufd.c
-+++ b/hw/vfio/iommufd.c
-@@ -274,7 +274,10 @@ static int iommufd_cdev_getfd(const char *sysfs_path, Error **errp)
-     }
- 
-     if (!g_file_get_contents(vfio_dev_path, &contents, &length, NULL)) {
--        error_setg(errp, "failed to load \"%s\"", vfio_dev_path);
-+        error_setg(errp,
-+                   "failed to load \"%s\""
-+                   " (is your kernel config missing CONFIG_VFIO_DEVICE_CDEV?)",
-+                   vfio_dev_path);
-         goto out_close_dir;
-     }
- 
+Suggested on:
+https://lore.kernel.org/qemu-devel/0cc139d6-9289-44a0-9122-d701426dae0c@linaro.org/
+
+Tested using a cross compiled QEMU and a custom kernel + debian rootfs [1].
+
+[1] https://github.com/p-b-o/qemu-linux-stack/tree/device_passthrough
+
+v3
+--
+
+- more accurate check for /dev/iommu presence in iommufd_backend_complete
+
+v2
+--
+
+- Move /dev/iommu to iommufd_backend_complete, so we can report the error
+  instead of aborting.
+
+Pierrick Bouvier (2):
+  backends/iommufd.c: report error when /dev/iommu is not available
+  hw/vfio/iommufd.c: report hint to user when vfio-dev/vfio*/dev is
+    missing
+
+ backends/iommufd.c | 3 +++
+ hw/vfio/iommufd.c  | 5 ++++-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
 -- 
 2.47.3
 
