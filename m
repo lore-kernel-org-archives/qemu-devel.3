@@ -4,95 +4,95 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E83361091903
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:05:18 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6E36F1091904
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:14:32 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Hjt-0005iK-Hi; Thu, 19 Mar 2026 14:04:57 -0400
+	id 1w3HsU-00089Z-1A; Thu, 19 Mar 2026 14:13:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3Hjq-0005i5-UD
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:04:55 -0400
-Received: from mail-yx1-xb131.google.com ([2607:f8b0:4864:20::b131])
+ id 1w3HsI-00088q-Ah
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:13:39 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3Hjn-0000Ko-S9
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:04:54 -0400
-Received: by mail-yx1-xb131.google.com with SMTP id
- 956f58d0204a3-64e8ae85700so1524336d50.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 11:04:47 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773943487; cv=none;
+ id 1w3HsC-0001mi-Fl
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:13:35 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64ca4dfdd88so1594004d50.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 11:13:31 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773944011; cv=none;
  d=google.com; s=arc-20240605;
- b=YTA1WbM1COL1M54hL9Tpbla38psjU8wXUdqNFMANEHwaeqAr2lsmRbptpLzTJscAIq
- nYD0bZJSZjifeMP1Ss+u0VtdH94atWSE8tq2GrVroBpGltxuIlsEAu7KhKeUJ7/QlRVt
- NNPyN4euePNio5uUJynV5bOpcXoYaaLWfjbhHvcHxl0IWjlG2A5BYa2Jqd5WL+lPxmj1
- GG0RtZBYy/07dOvSviVXWm63Eo+e/3bc5RsCoKhC8gKZvBai5XQARuEvLkNaf/Q1Hs3L
- fhPZTE3qoevfFmxYw42YxXJHQgfub94pp1PYrVd50wf860m+pKd6VvLiUcH2y3GdT73k
- Kmmg==
+ b=kqsGYLKelSZc61iPqYREcJGBAn93hmHIQhl0ne855COcU84MgJHvNHDr9PqXxTG3Yz
+ ltuBQiYpjSy83o8/kj8b2Tbd4Y1c+p/KyxD1q9vivSGD34Y+SU8ajNy4dr2bz/wAhNIf
+ WHbELfuwFQ9RJk6fZnb6fDRIUGRrXhv05Jpfy8IUJmQ8YETjdIbQat4wkNheyPynTHtL
+ I0zWM0SGDq46jRakyEBWeQNe5V0DrwWJ4w6J+EG/aNVPuOl/YI9b/Jc2qf0OESfNXatV
+ /4pnmWX/sSj7yySjgeYk71ajedOLd33yX641JVGUCLuxnwlrfeiTmnllpp9KKBcWOH11
+ n+9Q==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=1UvD4fAQjgtqKP3JgMnzdAwMrQooTWDEYsukSchaXus=;
- fh=GUYBhrF/kTXchbIZooTtA8LiLDp68FR7HCowT2sG4Xw=;
- b=BCXX4p38uYMlp0RBxx//1mJtdgH8QBcsVbN/Cr/4oFepLwdFccnvV3L0FImYthIV7N
- C7r8CtxB/A8c1d49mnvxiwEbxC0RTlFJw0ULGXL3HpSUZyXzJYkQNPjA0ARyCSwLSOdZ
- un8IxytH9B3G6StQkcqWwxHoU58bKPL8Rbtq00fpF0uGfir2VDWp8K8qPMA5b76lcO95
- 6h8zBSDC6zgOtz8YzSiAvxftaCyN6XBDD/NN4r6TpCRkP3jJc8UlvrkSWyncg+WZUuj3
- 9Tj8GvNYvkaQois+c7Pkc2PurVCJyo3QXQlGXuqMgdbE1fuTg+XG4iar7wyV1HwrQ18B
- bhvw==; darn=nongnu.org
+ bh=h6dUmwybOkzd+tc4CxA5WMU2XRCU4BR0Zfvfg3spHAg=;
+ fh=WibSQDncNgWSyywKvPHAKYpHRJ63hQ7/by0Ly3U6FhU=;
+ b=ZMtv/xcvYwWJaf+2FDFHJLCyWef0Z4J64mnmDoPXNqOn00IdHfipwiEMY7anV0Gl6F
+ RWpGPcf+4HCVFwjZF4WtBfVDWxRTcIHQtFiwnA1+EPG4RQpjO+KNRlTN+qfVwXloEkqI
+ 8NDqnJop0JUdNo5I1RsKX7opVnl7KiOuc5TIQwgg6PpZTjiWgEfgn/J2TcfdR/mvkFzL
+ xTde56SNJ/4RQudTwATWQ3Up2971ERd/3/cN3gZUaRaRr8AM7Cyc6JcE9SrdByJFmjkj
+ GQ4ILISb5/jironuTJophzzIxCgU/HyjuUOzcYZkUSZWd6vEDcapJawFEhzHey9mWj34
+ BeNw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773943487; x=1774548287; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773944011; x=1774548811; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=1UvD4fAQjgtqKP3JgMnzdAwMrQooTWDEYsukSchaXus=;
- b=o/69QQqKYYggT8lJ8PKGUDqFn9nVDiU2EWeQ4pWR0t7rXvIjOt+2Dt1D3CfM6G0gG2
- +r5LtDdLyl5NL4AHwNySTJOE5OW8Trz7A17yWdsLZ1YaKI/OmbFdZKKcHR/deOhwL71q
- KcMNc8Clcejsa4FCSc45dEsJDvlHtvi2MC4/ozX1RRAWqUUuM6DFiB3avujedgdir7sN
- g7739+Mhq9vIkK1LyruacqVEsWDRg3kxxRI41+Ni/M82BI57V0Xd6AoePWdYemZuWvKA
- t2mQ83mNIWFwLbM8FaeQTwgiy7XiVFYXLA7KzM34QR0JomUNsTwSGWtFhhs63zQ1LGSA
- pS4w==
+ bh=h6dUmwybOkzd+tc4CxA5WMU2XRCU4BR0Zfvfg3spHAg=;
+ b=qFCLAOUpanfCNG0TchDKpJSzf9ZV3U6jQ+4nF3J1ycp+qta6/uRZfGrcLKMzu5hOX4
+ f1dMyFD0H608svtO8MmD6uZEpLVZbxUS9W7BvMGLVadnQwzqEl65QZ+iooFdTZCo3SHP
+ LjeyEojn4+At7o612IB3952NyDT0ZauJIuRzOQYAhE3+Eklo1vPzzpmceq3JHDmNLGaU
+ +afJNnzEM30cyHMfG8OJZ1KKkMoUIyaVCtrdFLKVubDmZiIzYKVXxTdaPrhFN9YVmcAU
+ mX9LChEF4cpL9z0TyNsjCaDof4TmD1T/MDwpg3NjLiJaNpW9VwdEr6V0Aiwr1W3ojYi6
+ X5Jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773943487; x=1774548287;
+ d=1e100.net; s=20251104; t=1773944011; x=1774548811;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1UvD4fAQjgtqKP3JgMnzdAwMrQooTWDEYsukSchaXus=;
- b=V5zfQBt8Xddp96wxn4QISVa5UfM7AxIuJgSchKCgijEZn4mAo2bW1U+VCMRiAggdvy
- MYTISZhGJOz3WLL6cbYNZOkq8Zr+LZmCZomQPKfwMEvIC94CT/lG0ZbCyqpiQL7uZBxB
- w2knd7P/9aZL7mPgkof8spQHBWu4ra/GaIAL/IyZ6E5F9xQs4UHpkR2aNzTzCUiarwRm
- LlmVgI/xHZaD+MiuKUTWLr+dMIIw8YkV+jm/0RDC3Mmfa9QP/XIItaDW9iS/JG13EXcx
- QitT1foHb0YDMhenPmVpIve/Jp2ruI7AWTmbYQKLTvANgTrokWfFFOsc68FOW13D/mIq
- RfGA==
-X-Gm-Message-State: AOJu0YxQQTj+QpZ0Y5WUO11aSWSn95US7s0LstbeZqWQpNGaZfs0ys4k
- 9i4Y+6TBirNwNrwFjt0q0JKHb5LL2c6rJ66wp98gcrIADfh/Oz868AdUvq0y1G9/EFTnhvhv8Ez
- wYg1ktrTV5XATRjyd6tMEcX2yn0AkD1YfsdnPIGufCe6EG85xg2wd
-X-Gm-Gg: ATEYQzw+UKYW4xlJzw1sCepDhYh4Yh7QoHm2pV0eGJmles0f05wNBZpfwyWJCiRhEHS
- y5ScntNVeVJDnjydzDGQdGEfTaHGgs6ppeQBNKeehUs3oYftjwxf3lUid14aBYZ2ieIv2WC6Wwr
- RT1RqZFnsU795gA93DjIAD4yps3VKXOgOVYnz5vEHpn55CkYpb2ebwR9qjfBe4RI8qi8JvlL5VI
- W8yDo99zhOt5bEvu74nMk83c4g4F+ZKGUF64Zz9ixr0YBy0nS+VYluMqE2FItF65NCjFIiAymla
- yv+08H5lCxlOF3vlyi1E7GSRP0z9ltoey/ujKbog1xtKZzFfNJhKbvH5R69kwx6HiCg=
-X-Received: by 2002:a05:690e:2490:b0:64e:a107:c3a3 with SMTP id
- 956f58d0204a3-64eaa6df089mr366239d50.24.1773943484886; Thu, 19 Mar 2026
- 11:04:44 -0700 (PDT)
+ bh=h6dUmwybOkzd+tc4CxA5WMU2XRCU4BR0Zfvfg3spHAg=;
+ b=eA6i1FwtKEdlW81lPFju02XvbZ8mgaNJtsrnd0/Z0/hoYfZzoj+qdS1sFX5XGaycEF
+ ATXom99lipy2eIGf+uvnkx6VI45MOGJMO3FlXdRJk4fQV64a6zEPSFVVhJsNxm6ob3er
+ DQxPThEDQ/iCV1wvuRq9IZ5xETnS9rHE92u5t0n0lD0wtUbH7eHyyPSu463+zuvl6ey5
+ igQlr2AKyRpDdRS4z9vi+CjF+zXlukYaH+3hgSMwWHeos/t0Ycvp2udDqlhuNThxIhiB
+ Tq9EHXRnk+r/NWSzBnjcG9SudoOn9y961Ivz/cRcmVhEtGjgGLi+XMpcIo6Coyp6K39V
+ 9aJA==
+X-Gm-Message-State: AOJu0YyePuOYq3IzqYgWCjZVcVcG0ZfhbrGmZ2Wr2+encry6hYJ956rD
+ 0eWq4wNPAYVHON/7jXeNLPc+Yk5U5Y7/TsZvj+S2zjVSDyunR8/jGqGB7E7eeH36wsAQ/9ULrWw
+ p3rkAMVjo1it2eOvrPporKgM9wX5KUgN6aiag6+qfsA==
+X-Gm-Gg: ATEYQzxAp4UGmPgkuUSlc6GVzN/TaprundiVobnqmZqis5k7ZdsDhnkf6e2UuRQ5GLD
+ sbKOAnOLwoWxSeXIyYdRNq5+efEOveqbNH6Kk/36i1g4E+KJCIhc4U6Vv/RbLJaox8JIdCWvIBb
+ tY3FpZ2u/7/9PnaxZvZXs0DzMSnH+49OXdv1geUX0G5t7P6xzQqg5LEZRTEiDpt0CMZ0JnyT/Sn
+ c9cRXH8zNZDopZIeewMbMYp36HhrtY0weqFjYgSAFeW7Slr51aG7a3hmXHMIhBeLR7JaN2PoFe8
+ IBP4h9HElyiO0BGHSSlwVU3M7eDhm2REnQjyfiz9/Qplb5xqLoEJY4dcCPJR4C11vM8=
+X-Received: by 2002:a53:cc0e:0:b0:64d:5742:5ab0 with SMTP id
+ 956f58d0204a3-64eaa7c3e23mr380500d50.43.1773944010734; Thu, 19 Mar 2026
+ 11:13:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260318141415.8538-1-vikingtc4@gmail.com>
- <20260318141415.8538-3-vikingtc4@gmail.com>
-In-Reply-To: <20260318141415.8538-3-vikingtc4@gmail.com>
+References: <20260314221529.47841-1-mohamed@unpredictable.fr>
+ <20260314221529.47841-4-mohamed@unpredictable.fr>
+In-Reply-To: <20260314221529.47841-4-mohamed@unpredictable.fr>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Mar 2026 18:04:33 +0000
-X-Gm-Features: AaiRm50tgSvfQ76RKYpzNN0AfBOEAIskI0fK7PmO4-05YfgqZvaV04DTCffsaJM
-Message-ID: <CAFEAcA8pktQGG5Fd-F=0SRO9MTrC0GVcOf3p8BnneqG3F504xw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] hw/core/loader: fix error handling for
- get_image_size callers
-To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org, Corey Minyard <minyard@acm.org>
+Date: Thu, 19 Mar 2026 18:13:19 +0000
+X-Gm-Features: AaiRm50gB-YMmG7ltq34QsEMJRsiadnSsSPzaN4F4omYbrcr72mPhnaAsjbR6g4
+Message-ID: <CAFEAcA8v59wSwRvig6NRjWHyvBGY=gPhWFN1B_jD9k+aXqo9Ng@mail.gmail.com>
+Subject: Re: [PATCH v3 3/6] whpx: arm: enable more enlightements
+To: Mohamed Mediouni <mohamed@unpredictable.fr>
+Cc: qemu-devel@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
+ qemu-arm@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b131;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb131.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,35 +115,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Mar 2026 at 14:15, Trieu Huynh <vikingtc4@gmail.com> wrote:
+On Sat, 14 Mar 2026 at 22:15, Mohamed Mediouni <mohamed@unpredictable.fr> wrote:
 >
-> Check the return value of get_image_size() and report failures
-> for non-mandatory file such as FRU image.
->
-> - Use ret < 0 to detect failures in getting image size.
-> - No functional changes.
->
-> Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
-> Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
-> ---
->  hw/ipmi/ipmi_bmc_sim.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/hw/ipmi/ipmi_bmc_sim.c b/hw/ipmi/ipmi_bmc_sim.c
-> index 012e2ee4fe..fd875491f5 100644
-> --- a/hw/ipmi/ipmi_bmc_sim.c
-> +++ b/hw/ipmi/ipmi_bmc_sim.c
-> @@ -2561,6 +2561,8 @@ static void ipmi_fru_init(IPMIFru *fru)
->              g_free(fru->data);
->              fru->data = NULL;
->          }
-> +    } else {
-> +        error_report("Could not get file size '%s'", fru->filename);
->      }
->
->  out:
+> Linux uses AccessVpRegs without checking availability and panics if it's not there. Expose it unconditionally.
 
-Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
+The commit message subject says we're enabling enlightenments...
+
+> @@ -953,13 +953,15 @@ int whpx_accel_init(AccelState *as, MachineState *ms)
+>      synthetic_features.Bank0.AccessPartitionReferenceTsc = 1;
+>      synthetic_features.Bank0.AccessHypercallRegs = 1;
+>      synthetic_features.Bank0.AccessVpIndex = 1;
+> -    synthetic_features.Bank0.AccessHypercallRegs = 1;
+
+...but the code change seems to be removing one as well as
+adding the three new ones. Intentional?
+
+>      synthetic_features.Bank0.TbFlushHypercalls = 1;
+>      synthetic_features.Bank0.AccessSynicRegs = 1;
+>      synthetic_features.Bank0.AccessSyntheticTimerRegs = 1;
+>      synthetic_features.Bank0.AccessIntrCtrlRegs = 1;
+>      synthetic_features.Bank0.SyntheticClusterIpi = 1;
+>      synthetic_features.Bank0.DirectSyntheticTimers = 1;
+> +    synthetic_features.Bank0.FastHypercallOutput = 1;
+> +    synthetic_features.Bank0.AccessVpRegs = 1;
+> +    synthetic_features.Bank0.SyncContext = 1;
+>
+>      /*
+>       * On ARM64, have enlightenments off by default
+
+I've taken this series into target-arm.next for the moment --
+I can either drop this patch or else fix it up depending on
+what the right thing is.
+
+PS: for commit messages, could you wrap the body text at
+the usual 70-ish columns, please?
 
 thanks
 -- PMM
