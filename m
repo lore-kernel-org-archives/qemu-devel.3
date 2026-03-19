@@ -4,117 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACD3108E1E2
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:04:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46F36108E1EC
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:20:47 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BAL-0003Hm-3T; Thu, 19 Mar 2026 07:03:49 -0400
+	id 1w3BQL-0007i8-Gt; Thu, 19 Mar 2026 07:20:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3BAH-0003Ge-TC
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:03:45 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3BAF-0002sf-Dt
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:03:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773918221;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=1eoBXyJHj/P9KfELbcErak9nD0X1SYOJZfak0IUzKnM=;
- b=Pxahz7jKM9v5pBGd4OqnHnWYAcd+7ULsSfXC9UYX85Tgnr7gCv9MsPzoAPm9Ct0xwo27lY
- DdZo6JLAPakZyGbsqCMsPGPxf9ZcVkl42lk9oRLrwhFW+emWx3DYWdM+oKvM9oe0q2MaTe
- Bvaj38LfOK8UL+rqiVo4xNyBORSsBHQ=
-Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
- [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-60-aUYxXJ_YMS6BySi01V17RA-1; Thu, 19 Mar 2026 07:03:39 -0400
-X-MC-Unique: aUYxXJ_YMS6BySi01V17RA-1
-X-Mimecast-MFC-AGG-ID: aUYxXJ_YMS6BySi01V17RA_1773918218
-Received: by mail-pg1-f198.google.com with SMTP id
- 41be03b00d2f7-c6e24ee93a6so1288617a12.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:03:39 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQI-0007fr-Oq
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:19 -0400
+Received: from mail-wm1-x32c.google.com ([2a00:1450:4864:20::32c])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQF-0005Vq-JC
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:18 -0400
+Received: by mail-wm1-x32c.google.com with SMTP id
+ 5b1f17b1804b1-4852e9ca034so7182055e9.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:20:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773918218; x=1774523018; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773919210; x=1774524010; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=1eoBXyJHj/P9KfELbcErak9nD0X1SYOJZfak0IUzKnM=;
- b=uEDjBk8KncawhIm7j0+NJ3zHCO0FE37zWrSqdLXBYqqmuN4mJN5SEu9Luwba7NLhon
- rUPQoAOWJFAvTDSLielFY5tavXPaiWoLtyh3WTemA7Neg0w7vn9DqrjyMf6+bMz2EcG2
- hfdXDOcTa41qvi+z5V1mgTVs5QhMeSKwqM9AKdQyH6AkLYw5eUvoodggWlfiS0URaL9p
- /8b/eWESXI9GcPb40kaf+V/TaJ9z8n8nM2980v/bWtQb1vgI+a1I5cR6+8p9dtfzFh6A
- TRF+KagkxyW9eIIrLFYfrvJy2S7BDgf507bxYKvFJ9dmhVLve9jkj06gjc6DLqY6p7Mi
- LqpQ==
+ bh=ejOVQiRumOacnIAYVijEgBDEEbKLhlSk8KeBK8nEaas=;
+ b=Sx3iuDpG5eXs9OMUeUR42PHbcu6pS2I2tISE23qPHETtj5s9vdlCnEZMq2VNbRySSK
+ hXLicPikDAQkJqysebG+ZBgmhsJC1F07SZH2N0xO0qnc4OOoJkVUDtjWSAwpCuMc6tPo
+ pcYdNjTGAK5XxNQOlN/uKNMWkLJv1JALl3S8dpf/TeHnJYHWtOFD/d8WiJnKBfBLGMlA
+ Hl/cs7s1NehkCMbPNqlPnoF2Y3XKtastnTmNYChNFUiWqZtY7/KG2ALrriAxqf5DxG5n
+ WfT4iSP/HuS9L+u6UgX2tBZS5DkUkklQFjIleZyt/L9CV3uqCLqcu0togNZ1BRr5Uvgs
+ bJWg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773918218; x=1774523018;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=1eoBXyJHj/P9KfELbcErak9nD0X1SYOJZfak0IUzKnM=;
- b=T4QN/6MZ2cs5dC16/nloFUGEe8Aoy1FoK9vydpPkqF3hZdy7aj6e8o65fxkyfJrAbV
- VHFbfxD0Dtks9wQkM3B6MejYV2fMyZMpLeBe12SbBgjtR8wA4CC4sY/r1uek2KvaNuGq
- 4ao9Jr0TBZfBqRF2djGHDRqpuXcqqvtZj+rh72z5+uc4sVPQOYxoCm63bc8mlvBo5MJc
- nMf9eLEx3CZ3HkRKylOVY/zuMd+EjEPT7FKpG0WQj+cF0o8eiP0Plq1pGCjLZBbrWTl5
- FgltpzQVycPcXo0oW0iKK9cm7cPycMtBmPYfE1Op/CSlJW8Donf2+zORKYTAXj46oPb4
- T5zg==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUtQcGBkHAX/cp+uycovuyUKamJ93ojCp1VZ4bxyg+PUUN/HgfzKXqsRd21SqNtcO7MP6FvDQVU/A9r@nongnu.org
-X-Gm-Message-State: AOJu0YyzcYFEeLiv5sBkkSx2L+coWsQfwH1yMiUVyzKmpUlc1hVzJvVb
- oP615fTBnXrbuNEEwmWxMpa7XcedYqOhmQssW/25pUVGM/qGQNg+RjHX6qSX9Vje5dEAvEyGB71
- LQUOWIeE5Pb4RUQS1ZZrk3xT+kFNhwcMjYw+8+qr5LsH3dYJKcQCsY2gF
-X-Gm-Gg: ATEYQzzAvLBVNprEDygQxAn+gKOduqPXLHKoATjP0k5WZXEbrFZTZbh2UU5zixgm5xQ
- f0OWqz6fibVgqa9kEfZBYVBgde/qgZGDK7wRrD/cWOQBdVgiu0bFJfevUjwrp5u6EzpRtZSwi6i
- O3wQmse8u5g0MoVB2V3DZVEHaQAPnbe9RwTDUDQDRDAlT0o3XSuKBn9Nn5j/+K/17E44zN3BTxD
- xT1CRUBqo/uUZV0W03q27R9aBlDFTr++EkurUOa4CFAd9qv5KD2tThhXgqaNJxqXZ6dNKx17kav
- UJi6mRdMhTStod9fguF6UZqegP6bY2AD/IwIQj5Qo7sD5hGCKnJsTRsS+0YuLsTqOBDrLvJ1kaq
- wWPIQoTWF5sPKC73MNGT4pja4SgipOti6ynGgdbm9kkt/lK05UnarcvM/J18ahE2bVDSz4Q==
-X-Received: by 2002:a17:903:1b2b:b0:2b0:4d7d:fb9a with SMTP id
- d9443c01a7336-2b0772a3ed1mr27028315ad.26.1773918218493; 
- Thu, 19 Mar 2026 04:03:38 -0700 (PDT)
-X-Received: by 2002:a17:903:1b2b:b0:2b0:4d7d:fb9a with SMTP id
- d9443c01a7336-2b0772a3ed1mr27028175ad.26.1773918218146; 
- Thu, 19 Mar 2026 04:03:38 -0700 (PDT)
-Received: from smtpclient.apple ([122.163.114.34])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b06e41927bsm73422975ad.10.2026.03.19.04.03.34
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 19 Mar 2026 04:03:37 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH for-11.0 1/2] i386/pc_sysfw: stub out
- x86_firmware_configure
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20260319101128.116301-2-anisinha@redhat.com>
-Date: Thu, 19 Mar 2026 16:33:22 +0530
-Cc: Michael Tokarev <mjt@tls.msk.ru>,
- qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <B0297D88-2C9C-4329-9D55-F72FA6BAEB8D@redhat.com>
-References: <20260319101128.116301-1-anisinha@redhat.com>
- <20260319101128.116301-2-anisinha@redhat.com>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>,
- Michael Tsirkin <mst@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+ d=1e100.net; s=20251104; t=1773919210; x=1774524010;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=ejOVQiRumOacnIAYVijEgBDEEbKLhlSk8KeBK8nEaas=;
+ b=owluTaHZxcoSFoK2caD2q3jrwu/E6v+ZThXYQ+hYC//AJsuQVvxJxawU8MELxNr3oh
+ /xs+hhMLmxY1cdNdU9427slaQowDKgAhBkMxRCBvi0H4IrtwPC+1amj5lUd14qc/3Zy/
+ Xn5icnRk2AvBDHmM/+OatsFS+nwWgWPOqvHg9gbNx+Oic73TigZX5uFaatBG3L3i2Smk
+ 0tmzyYUxet5IZ4HecKr2IM5QlHyG59PXzW4yCr3Cfoao13JKnjJeOjqPa6cU2ubxIy8c
+ AIDFwsuFJa+XBFFz3TZbmX7YrgY6C/WnwPmnsEEbKzO1+LL7Z4g538CD7pR40NtQdEHd
+ k0/w==
+X-Gm-Message-State: AOJu0YzMm0h8XyFoUndDK83yh2dAsOmD44iSUXslk18ucFxptKqoJvNB
+ AcATjTUx6by8Wok/K0kqf3fP+fKtpYIRsHxqaQMt75Gw1j2CkSVCxVjC+zkfKrPx9tVRWR48J+w
+ ZhFpn2ZI=
+X-Gm-Gg: ATEYQzzebdpSzics2/ihIbzGInCF/Xwdz2K9cb3TAJR7X2DW8lLJCbT9wp3CvDl29nP
+ zIdG9huz113ygtRz4cGu6FCEfJLmMql8ih1MrX6fc9+nBzjz7hlTAYkM+FqMuy34eZdgdpi1LeL
+ xUe+DyHMud40G3eiedkBBwj4mRGCNxqs28ulkdulpUzevH9aAOtgpvalQe1GPYc5J/JaWuchliU
+ qmUqav8cQSHu3+mALcXmTDOPz+225Af5qRuldqciO3Id/6FbfYeoVzOPkxI8Xk+BgFFgwKmFw3u
+ DZIGka4Gy2S1XzvG6OC6sxHMDite6hJ46wzWVjNY5KhQTeFVDp+oD+xOVcfYkrLrtZSVkRvELu5
+ IBwH/bUD6qkEe6imaZ5FIEh02wMpvjqHmoswucXIzLeCydANmu8uGG7DT9PwZ9J+K39jN/nvQdd
+ DVxQFIhEfBP5U6CMPQVmh0zlQ5NxlJIPiM8KcS8SwUJB4XTcOW17Yj2I8SLV+JfA9g9de5zn3r3
+ EHDlQmaGBA=
+X-Received: by 2002:a05:600c:64c5:b0:486:fcdf:c065 with SMTP id
+ 5b1f17b1804b1-486fcdfc16dmr11537745e9.27.1773919209867; 
+ Thu, 19 Mar 2026 04:20:09 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486f5e23874sm70980525e9.6.2026.03.19.04.20.08
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 19 Mar 2026 04:20:08 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 4/8] target/ppc/mmu: Restrict hash32_load_hpte() helpers scope
+Date: Thu, 19 Mar 2026 12:19:32 +0100
+Message-ID: <20260319111936.68041-5-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260319111936.68041-1-philmd@linaro.org>
+References: <20260319111936.68041-1-philmd@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32c;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32c.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,43 +106,69 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+hash32_load_hpte() helpers are only used within mmu-hash32.c,
+no need to have each file including "mmu-hash32.h" to compile
+them. Move their definition to this source file.
 
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/ppc/mmu-hash32.h | 16 ----------------
+ target/ppc/mmu-hash32.c | 14 ++++++++++++++
+ 2 files changed, 14 insertions(+), 16 deletions(-)
 
-> On 19 Mar 2026, at 3:41=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
-wrote:
->=20
-> x86_firmware_configure requires ovmf support. Add a stub for this =
-function call
-> for cases where OVMF is not supported.
->=20
-> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
-> Signed-off-by: Ani Sinha <anisinha@redhat.com>
-> ---
-> hw/i386/pc_sysfw_ovmf-stubs.c | 5 +++++
-> 1 file changed, 5 insertions(+)
->=20
-> diff --git a/hw/i386/pc_sysfw_ovmf-stubs.c =
-b/hw/i386/pc_sysfw_ovmf-stubs.c
-> index aabe78b271..b53906a052 100644
-> --- a/hw/i386/pc_sysfw_ovmf-stubs.c
-> +++ b/hw/i386/pc_sysfw_ovmf-stubs.c
-> @@ -24,3 +24,8 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, =
-size_t flash_size)
-> {
->     g_assert_not_reached();
-> }
-> +
-> +void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
-> +{
-> +    g_assert_not_reached();
-> +}
-
-This change alone won=E2=80=99t work for the CONFIG_PC case. I need to =
-move x86_firmware_configure() to pc_sysfw_ovmf.c Will fix in v2 after I =
-run my changes through CI.
-
-> --=20
-> 2.42.0
->=20
+diff --git a/target/ppc/mmu-hash32.h b/target/ppc/mmu-hash32.h
+index 5705f57935b..bfea03ea872 100644
+--- a/target/ppc/mmu-hash32.h
++++ b/target/ppc/mmu-hash32.h
+@@ -71,22 +71,6 @@ static inline hwaddr ppc_hash32_hpt_mask(PowerPCCPU *cpu)
+     return ((cpu->env.spr[SPR_SDR1] & SDR_32_HTABMASK) << 16) | 0xFFFF;
+ }
+ 
+-static inline target_ulong ppc_hash32_load_hpte0(PowerPCCPU *cpu,
+-                                                 hwaddr pte_offset)
+-{
+-    target_ulong base = ppc_hash32_hpt_base(cpu);
+-
+-    return ldl_phys(CPU(cpu)->as, base + pte_offset);
+-}
+-
+-static inline target_ulong ppc_hash32_load_hpte1(PowerPCCPU *cpu,
+-                                                 hwaddr pte_offset)
+-{
+-    target_ulong base = ppc_hash32_hpt_base(cpu);
+-
+-    return ldl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2);
+-}
+-
+ static inline hwaddr get_pteg_offset32(PowerPCCPU *cpu, hwaddr hash)
+ {
+     return (hash * HASH_PTEG_SIZE_32) & ppc_hash32_hpt_mask(cpu);
+diff --git a/target/ppc/mmu-hash32.c b/target/ppc/mmu-hash32.c
+index 8b980a5aa90..08c9f63a132 100644
+--- a/target/ppc/mmu-hash32.c
++++ b/target/ppc/mmu-hash32.c
+@@ -201,6 +201,20 @@ static bool ppc_hash32_direct_store(PowerPCCPU *cpu, target_ulong sr,
+     return false;
+ }
+ 
++static target_ulong ppc_hash32_load_hpte0(PowerPCCPU *cpu, hwaddr pte_offset)
++{
++    target_ulong base = ppc_hash32_hpt_base(cpu);
++
++    return ldl_phys(CPU(cpu)->as, base + pte_offset);
++}
++
++static target_ulong ppc_hash32_load_hpte1(PowerPCCPU *cpu, hwaddr pte_offset)
++{
++    target_ulong base = ppc_hash32_hpt_base(cpu);
++
++    return ldl_phys(CPU(cpu)->as, base + pte_offset + HASH_PTE_SIZE_32 / 2);
++}
++
+ static hwaddr ppc_hash32_pteg_search(PowerPCCPU *cpu, hwaddr pteg_off,
+                                      bool secondary, target_ulong ptem,
+                                      ppc_hash_pte32_t *pte)
+-- 
+2.53.0
 
 
