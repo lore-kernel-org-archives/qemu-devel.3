@@ -4,82 +4,82 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 009511091912
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 19:11:06 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id AEC6C1091910
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 19:11:26 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3IlT-00008G-Mp; Thu, 19 Mar 2026 15:10:39 -0400
+	id 1w3Ilp-0000Bk-4b; Thu, 19 Mar 2026 15:11:01 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3IlS-000082-0M
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:38 -0400
-Received: from mail-wr1-x429.google.com ([2a00:1450:4864:20::429])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Ilm-0000BM-K4
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:58 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3IlQ-0008Qb-CK
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:37 -0400
-Received: by mail-wr1-x429.google.com with SMTP id
- ffacd0b85a97d-43b4fd681c2so1104111f8f.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 12:10:35 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Ilk-0008U1-SS
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 15:10:58 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-48541edecf9so14067465e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 12:10:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773947434; x=1774552234; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773947455; x=1774552255; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=usTdj5QCO2BS7JbYt223RkU570yU80bsvLKdRRzFES0=;
- b=CKYkmoutwWRAqf7r5cvAJqp/ajKSL0SdtdLJY74FNRQQ+lcbUCWgGgkcUweqfVPcmj
- AjlQun+/mF4vwKlMa2mvf+hH06KHAiSJYD3ZI+ujHQ3TeMHhZMowb839L4mOvmVB6mRB
- 8/ePkA0zFYyRBFhChXxPpOG1yN9/BRkMgRnkLWk9tJIfh1c37ig4wy27ddxr3z+eMEVw
- r/yNgFD+vlTrK8f7H3MR+JdrKcJ6/xLT3a6Q3geg75c/i9KFlsyzjBe0do3lWnEbaQNS
- PIottVeAJNZMNIv97Dkk3o6tta9yHVNxQiV9rqbTgRdMOf3AhfTaybaeANgUPcrfjCjB
- yNIw==
+ bh=eayvJ5Zp7NdtS6KVYiYLFGGBY/XbYTEjOUNmnHg50PU=;
+ b=gbIi66VoGN5yePlyC+MJv7jjFNZTMFuLUd15Y7Vcw+jYpOTQjoyUAIJIs9sDwG60yM
+ BlHmJETkLVdybuVudrx5jDnupH7S37884klZXdVOruHE+geaEom9KzJ28A5JusY9QqLE
+ VZTdhBBb6eU8lsSKNhB9eoKl5c3zM07hkvBctQYdVdf0DMvNtin5iIvHg90+OTZUgkHU
+ 0MoGVA2q2IteBR10X6+h5ctBCDu25cI4KKa0z521gR2Aay8V6U3avvJMciefDTksdT3d
+ sn6uWf6KTbOZIlUdU6yfsIZaT3yLjXsdSWWMoV0v2bVZJJEZPt3PEWxlA/CZn1IDYU3D
+ V1+g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773947434; x=1774552234;
+ d=1e100.net; s=20251104; t=1773947455; x=1774552255;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=usTdj5QCO2BS7JbYt223RkU570yU80bsvLKdRRzFES0=;
- b=d8giiBw4lY8FKSm1zjEpnHX1R6iZ4SYQdJIInKEs2uejcefEYbM4up7Wwr9zIWMPzG
- dGNtlP5z02R9odzBVy1N0DZonLgg6kmNDZFyVvbBPY9KHHxZRHVhSLAQxdCP2kZoL9Dk
- Tzpko285GarqBbs9UmIV5JwhhE+I0Nm2MbKCUo02kpncYZpASF+Zew4kB9xqPJtaZujb
- dXbD/FE3GIAfQSwJDGsYmffDzGYlmSL66sOz5vVQVtTCPhA4pKGEX6Bmmgll0/NEpb4E
- kmNq4iYonrsZGbPcX9FNYR7xQ9oE4JwB2HXWvbe6196HRx5MFmaFUECEhq8VR4fNNh5w
- T1Xg==
-X-Gm-Message-State: AOJu0YxmxIxGF5ajJ6mA3QUUVeGlB2yiWWlL7M0bRHtEPPFtOF4Eu+st
- 7dJaNZXV1BaCxnK5/anDtbGykgNQxmsgVrpRnai/fotBuEl6nlLNaBBxzSVFWBG0t7thJucVfj2
- bFWTeWn8=
-X-Gm-Gg: ATEYQzxY9Ts4Hd/euKdjhWeiPCecKtFFXqjeW+XHCHuozOHBlEmOtUmxcAnHnPObGUv
- BbbsCN+6AQQPMewIeVmUB10rHs1SevYR8hbakdYfZMH048mvBYF+xlNHTzxzC8oALPHHC/poubZ
- iHGPk6GXLZmIMhl1jWx8yn5+VEn9q0tmMtD5EizCrYi0I6IKcl/wqElu6u9i/QQgtocMKNEovVE
- qweQhJNkNwlcDdFLZpxIUj8DGB1RWlIU8O5MZUonv30qbjuUOYleJC1cXHKFuNgi9OszIOXTdMG
- sH/4s9Y4PMPD7/h5jQcdV+3zCFTNqOxdBj8Fpf/Z0bk0hh/YKWBfLoyu0Rr5sJal8z0O/iSqc8+
- bz6alZiHBK9qFc6U4bWdcBoyIKsxuw6xm8LLAmP+5Uik8er2sOeyU47LwxiTQvKkZk9CaXDNSNk
- z+qOKV9LG6JSRfX8exbOQ6hoE2ihti1dsJBYlIM3oN5GYkbhjwSvpDLN2qncd0zO/Cei25f2Sy
-X-Received: by 2002:a05:6000:2f84:b0:43b:3d53:93ae with SMTP id
- ffacd0b85a97d-43b6423f844mr803015f8f.12.1773947434269; 
- Thu, 19 Mar 2026 12:10:34 -0700 (PDT)
+ bh=eayvJ5Zp7NdtS6KVYiYLFGGBY/XbYTEjOUNmnHg50PU=;
+ b=Q9IYlIKML+n3nfOhnlbncckZfi1d0+ZzhaACbWnUnvNf5Y7gp5YLsBXKUEba/g2NvS
+ xC0pOV6hsTadSsDL8ShRX0+b0Edrj+T3kkhlryYCUxUhrKgmspiVFbFS95mvyqNS2s2w
+ 2nk80Rgr26Tv6+nd+/BeirxTFoJUYF1h3JGIjSO4htjl/pa5WTOkBw07neE2h3ch5yZL
+ TdBRnCOMPJ9p9sasnJggCIfDJYGlj7FzBHb5b7nMvPWuCKPuTFGpD4F6rdDcymw336V6
+ Td1BhuiUZnQWeiWcaqacAKzkjXbolld1RCXxnOe6uK/rlGOcIQ2H/bOHvmQ7J1b3nq+B
+ tkKQ==
+X-Gm-Message-State: AOJu0Yx+p59SHU+EecOxf9gBl9F+tw3rRHiwUacjHcY/a48cMv1ySA+o
+ Fa5UD1Ju0nksNIr2C7WtXcaCtBXYUV5AuUaNj/BMXAX2yfRZETeqvx78Vvr1XfqrBU3/SjgPETO
+ YKrulMJo=
+X-Gm-Gg: ATEYQzztBmNdLmqqbZGYrw+UtOZ86PTOHl7lPEhbAzsMl4GHd2OO37Jwzp0HDER7L7X
+ QZV6ycbA1/4AgoC2Nclae8M/x9xaHLShPYH2BppENox851JGVdk0UfwCs3Tl45SW+KFaPzipIKp
+ MPaDZXRjJXzcBbdoDpwXAqlQpBZSWL1HjpD2D9ALuRHOF9a1Q52Ptp8ki75I/q1+hZiDeL7ffTe
+ FVADudVe96Wk12UNbGw/BTSKGm4qJ4KqO0jwG4zYgCENXH4As30FufBZUAL1ci6s9wkH5/wMsRP
+ 04ZKznIcXVvKMwNqJXl/749heoc3kAhgR67xtBVF/WR5aVMEygjFkA/SDMH5qSZCfnZ0GUUR7Jw
+ KWDpQ5Sp67eRPA1UuMzqqpwYp79ve5T174EQNJGKNjL2l9751RQA1fKpte+ASt96QOVqJdOnZTF
+ f/kw21WJznt4yTnGUDax0tMBdyicGrjwqjAFPwpkqKg92jZE/MrZbl+LjvMBJBy0hALz77YRK0
+X-Received: by 2002:a05:600c:8711:b0:485:3f58:d9f with SMTP id
+ 5b1f17b1804b1-486ff029008mr3708615e9.30.1773947454801; 
+ Thu, 19 Mar 2026 12:10:54 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b6470b243sm601578f8f.26.2026.03.19.12.10.33
+ 5b1f17b1804b1-486fe6d9896sm9506265e9.2.2026.03.19.12.10.53
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Mar 2026 12:10:33 -0700 (PDT)
+ Thu, 19 Mar 2026 12:10:54 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Paolo Bonzini <pbonzini@redhat.com>, Peter Xu <peterx@redhat.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 2/8] system/memory: Constify various AddressSpace
- arguments (checks)
-Date: Thu, 19 Mar 2026 20:10:11 +0100
-Message-ID: <20260319191017.12636-3-philmd@linaro.org>
+Subject: [PATCH-for-11.1 5/8] system/memory: Constify various AddressSpace
+ arguments (notify)
+Date: Thu, 19 Mar 2026 20:10:14 +0100
+Message-ID: <20260319191017.12636-6-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319191017.12636-1-philmd@linaro.org>
 References: <20260319191017.12636-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::429;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x429.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,54 +106,67 @@ Mark the AddressSpace structure const when it is only accessed read-only.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- include/system/memory.h | 5 +++--
- system/physmem.c        | 4 ++--
- 2 files changed, 5 insertions(+), 4 deletions(-)
+ include/system/memory.h | 2 +-
+ system/memory.c         | 6 +++---
+ system/physmem.c        | 2 +-
+ 3 files changed, 5 insertions(+), 5 deletions(-)
 
 diff --git a/include/system/memory.h b/include/system/memory.h
-index 1417132f6d9..858dc40dc5f 100644
+index 38e4f7b25e5..4c013593cae 100644
 --- a/include/system/memory.h
 +++ b/include/system/memory.h
-@@ -2829,7 +2829,8 @@ static inline MemoryRegion *address_space_translate(AddressSpace *as,
-  * @is_write: indicates the transfer direction
-  * @attrs: memory attributes
+@@ -2682,7 +2682,7 @@ void address_space_destroy_free(AddressSpace *as);
+  *
+  * @as: an initialized #AddressSpace
   */
--bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
-+bool address_space_access_valid(const AddressSpace *as,
-+                                hwaddr addr, hwaddr len,
-                                 bool is_write, MemTxAttrs attrs);
+-void address_space_remove_listeners(AddressSpace *as);
++void address_space_remove_listeners(const AddressSpace *as);
  
  /**
-@@ -2839,7 +2840,7 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr, hwaddr len,
-  * @as: #AddressSpace to be accessed
-  * @addr: address within that address space
-  */
--bool address_space_is_io(AddressSpace *as, hwaddr addr);
-+bool address_space_is_io(const AddressSpace *as, hwaddr addr);
+  * address_space_rw: read from or write to an address space.
+diff --git a/system/memory.c b/system/memory.c
+index 87ebeb93458..40e17ed22c6 100644
+--- a/system/memory.c
++++ b/system/memory.c
+@@ -2978,7 +2978,7 @@ void memory_global_dirty_log_stop(unsigned int flags)
+ }
  
- /* address_space_map: map a physical memory region into a host virtual address
-  *
+ static void listener_add_address_space(MemoryListener *listener,
+-                                       AddressSpace *as)
++                                       const AddressSpace *as)
+ {
+     unsigned i;
+     FlatView *view;
+@@ -3043,7 +3043,7 @@ static void listener_add_address_space(MemoryListener *listener,
+ }
+ 
+ static void listener_del_address_space(MemoryListener *listener,
+-                                       AddressSpace *as)
++                                       const AddressSpace *as)
+ {
+     unsigned i;
+     FlatView *view;
+@@ -3148,7 +3148,7 @@ void memory_listener_unregister(MemoryListener *listener)
+     listener->address_space = NULL;
+ }
+ 
+-void address_space_remove_listeners(AddressSpace *as)
++void address_space_remove_listeners(const AddressSpace *as)
+ {
+     while (!QTAILQ_EMPTY(&as->listeners)) {
+         memory_listener_unregister(QTAILQ_FIRST(&as->listeners));
 diff --git a/system/physmem.c b/system/physmem.c
-index 4e26f1a1d42..23ea6b69255 100644
+index bbcbcedda15..c00f75bf591 100644
 --- a/system/physmem.c
 +++ b/system/physmem.c
-@@ -3652,7 +3652,7 @@ static bool flatview_access_valid(FlatView *fv, hwaddr addr, hwaddr len,
-     return true;
+@@ -3573,7 +3573,7 @@ address_space_unregister_map_client_do(AddressSpaceMapClient *client)
+     g_free(client);
  }
  
--bool address_space_access_valid(AddressSpace *as, hwaddr addr,
-+bool address_space_access_valid(const AddressSpace *as, hwaddr addr,
-                                 hwaddr len, bool is_write,
-                                 MemTxAttrs attrs)
+-static void address_space_notify_map_clients_locked(AddressSpace *as)
++static void address_space_notify_map_clients_locked(const AddressSpace *as)
  {
-@@ -3663,7 +3663,7 @@ bool address_space_access_valid(AddressSpace *as, hwaddr addr,
-     return flatview_access_valid(fv, addr, len, is_write, attrs);
- }
- 
--bool address_space_is_io(AddressSpace *as, hwaddr addr)
-+bool address_space_is_io(const AddressSpace *as, hwaddr addr)
- {
-     MemoryRegion *mr;
+     AddressSpaceMapClient *client;
  
 -- 
 2.53.0
