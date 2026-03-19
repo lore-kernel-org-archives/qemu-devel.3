@@ -4,82 +4,84 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 05A441091930
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:26:30 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 46854109192F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:26:37 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Mkt-0000sI-Kq; Thu, 19 Mar 2026 19:26:19 -0400
+	id 1w3Mki-0000mO-G1; Thu, 19 Mar 2026 19:26:08 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mks-0000rw-B3
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:18 -0400
-Received: from mail-pg1-x531.google.com ([2607:f8b0:4864:20::531])
+ id 1w3Mkh-0000mE-Gz
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:07 -0400
+Received: from mail-pj1-x102e.google.com ([2607:f8b0:4864:20::102e])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mkq-0007hS-Nt
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:18 -0400
-Received: by mail-pg1-x531.google.com with SMTP id
- 41be03b00d2f7-c742824e1d3so527095a12.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:16 -0700 (PDT)
+ id 1w3Mkg-0007eB-2F
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:07 -0400
+Received: by mail-pj1-x102e.google.com with SMTP id
+ 98e67ed59e1d1-35a09e0dd63so99795a91.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962775; x=1774567575; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773962764; x=1774567564; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=FSL75QHFg495FNiNbzzE12kqDvsWACd2HsK7ER6Leyc=;
- b=FjrpJeY9+0uUzdRhftlTXkqY/cM+h0O5uirNpTcXuApnpPd6usix6BNnJnKprM0xqB
- 8c4Xi43FCr685lxnmZfDsod4Sb9B6alDkKseVKJ3muD2fsaRhCqcwpqxUMUgP3D9/FXL
- QgpMOaoKV//4W460eRUidChQvwD7BF7A0rSSFnCQc3D1LnuGRhePbzcPEHmH56EUHSvc
- OERhDjDcTMYUigW4XvANmsVleFkJDKdI7VK0R31w8E/62VQze4e0ZekdqFxZrGmqTGd+
- hPkQkxEiSFQNMgGv7Hyv6Q5aIlGRHAm7cw4RWjTQxLIBqjB+lFfDBiQd0iOqYpxcivU7
- lBZQ==
+ bh=ZHI7TpU+QC4WTx8gqgxxH5tKvjATJUhEPGXQ538mrRM=;
+ b=Kdf255Mw0zqF8XltjUz0NSEfbmT7x3zLKVVMcclqTEWm3/TKywCuZgXYMFonmy7b3E
+ YWXNYgQvV6mtec1pgbPHcwnyDkcrpX3nyO0vfZGnFFUPopr9/IkREvgU4g4VtLMIEC4y
+ 52OvLiuB30zFpPvJeAacmRNlQidkDMWgr2WQiLQM77FerRKRnNpk6Qh9yBO4FGIcxkuH
+ aDRssIzNJ4gvIR4JW1jWolhVZnJMmAM6FtkwoHfgfl5K7g9vpReDPKCRwiQeNC8KEyTz
+ sfDJBbYGPKQiBlAaAtOtcvGi6lu87H1BN7Cr6cYMIfP75VAFOaTLlXBzJmblXUhSx2Jg
+ jdaA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962775; x=1774567575;
+ d=1e100.net; s=20251104; t=1773962764; x=1774567564;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=FSL75QHFg495FNiNbzzE12kqDvsWACd2HsK7ER6Leyc=;
- b=m034fHQDkVVisdph5ESxJMXNyxKXeOWIgjsm/WPhuBCPbdWpiWo56dKkm+6WB9pd8W
- lph458+tK899cmnrI5rEo2ewDUMl/dusJ35/9Ssu1dmbsVMqpk8k50AneaZlM7ICawLU
- PqncoVga6XqU8VGgcqyAX2aSwXrgntJ/IQxohy++aph/R7KbFkyA0AAuI0dWATr3O0Ul
- yqqaLLYT5afYo5kH7RmhGERg5c+ho9ImTAYgMZlQz5RweMGNHLFdQedrWlNt3FUkvhZv
- bCI85Ze71EIKCZIscxJtUPTC+DMK6BNxvconSiCQIm4mmMgTMuIk4iUBbveX14u/VMw5
- a8Hw==
-X-Gm-Message-State: AOJu0YwmFJT7lQB7XLEfxnk4pLTDRmR+ghWRhogEMxNfRtWgYJvAT5p0
- IJ8m5w19t3FjWghDAOZ+a98Y5hcbg1nlI2cTTRone15KGrVYY+uU8HZXBK0LRw==
-X-Gm-Gg: ATEYQzzFFye6EXzVqbB7xY61oKWMKips5ct62zPN2rQwtDZJoHluGODq8xyy9TorFyW
- +oPDC7iMKne8A/dU3bAxW6+DXydXRN/FetvcZ+A3A/WmhyfcG3Pig2N8Ej8e476uk820qi5w8yM
- 0ptsXdmz/QWc4UxgJoNH5Au2jIKAPQzrmIrQFEUN6LbL9UKbdz6F/4amK2tD1Ne7PV1KrZ6bbcK
- BN+W9T9K0aKwxx2SdnJmCmdbyf53nAU3dai74/vEy4Fy3HhspPg8AO2HgDIdAEJJZCUJHVLViY4
- xENm2OlbQE20N56JJI92tfyJjc7rwshco/5ukwsiMg8nXC46F48nKVzvToRU0pH8tebXFMAUjAY
- jKWXPcnqxtfFSBWAv842DVAK8WwGdn7IoHFiQHiiwVBK0ipmpfBeriFsZ4ihgPtpbj0ZXmqv1Iu
- 9iZ4Wm+hOfTzj969gOryJcwC82DOHDulkDabD22YYKInunEVtMGuJ+
-X-Received: by 2002:a17:903:2449:b0:2b0:5ec1:97c1 with SMTP id
- d9443c01a7336-2b0827107e7mr9200765ad.7.1773962774647; 
- Thu, 19 Mar 2026 16:26:14 -0700 (PDT)
+ bh=ZHI7TpU+QC4WTx8gqgxxH5tKvjATJUhEPGXQ538mrRM=;
+ b=XqczN3ieQENXzkscmsxMbdpfes7Q+DZfF5FCgJaw+hxGXH5lKCnAFGz7/U3/Z1vL70
+ oIgNyWgA96K5qx9au46soOKt72GiuTxC22hT+3akA9rEB2u2MG5xy8cgRSjBbluM0w0N
+ f91jLjIuJcNb26tZUS+Rt6ZJ/geiPi4Sp8Qei5l3hlGH4bCsINafy0DTgx5mlwMoKXJB
+ C+7QCZBPuC8Tv17PjJ7COkYEGMTHryDfcO8LLBeMlz+lgtc0Fj5R4OgUCXWUPL8/vyBw
+ Of8YuqueEsdQCVqrk13GTeEUtv7VX50n9P4qkRjAktgjGq86YmJst3jpYAUJ8d1+Bv6p
+ EikQ==
+X-Gm-Message-State: AOJu0Yxqmoz3mz327HJXUmoDgmXlhQudEmqxMZ6TdKCVRs0m4DbYXPnD
+ kxR8qP41TAV3ZLLVOk/GSuA+2l77VbSdKWF5JX3bRkl/mI43aalVqOmes5WFug==
+X-Gm-Gg: ATEYQzz8JCNCpo2BKTopRcpplA+U71j6ro9eEUeFDY2tjXn+FA8UR3jrjYlaknJrqzv
+ gjHKSsksFvpzEKWFO4IYKlCBPzfOClhI6NOOHhmz5mdHm+eLXu+rpiaRDVDKS9fbvInSkAwdnLF
+ B8Q3ikPdshZ4sMMVxJWAnOUHQ88mC7ZXC5KTITE4HoYeCWn7gBHPylC5FsWh6pA4lqCUR2cmpC6
+ jlWJxkYrwfQe7rvY/dN9dQtg1oDogFSMVXSUEuWizg9CkNPiF415INcaEuHewuVpZAEz7z0wtP6
+ iyDxEAGfvwlw8xEhIDeawi5bbg0GKQ2dD1yEryZxZ8ga2hHqNSrTsVqASj3Qodu1Z+vuxOrJoWv
+ gvA3E/DNLr1oQegbEtYpYrypka3tsZyemBLMlSADikP8BbqH8ic0PCi8eCmp4p9j2uMPGm5O8sV
+ oNHSM3C9MJAaxbuCqle0zIyNprPJhgAw2yfxiDm3uvrw==
+X-Received: by 2002:a17:903:1a4c:b0:2b0:68d1:2557 with SMTP id
+ d9443c01a7336-2b0827c9591mr6709445ad.45.1773962764130; 
+ Thu, 19 Mar 2026 16:26:04 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.12
+ d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.00
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:26:14 -0700 (PDT)
+ Thu, 19 Mar 2026 16:26:03 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
+Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
  Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 11/17] hw/char: sifive_uart: Implement txctrl.txen and
- rxctrl.rxen
-Date: Fri, 20 Mar 2026 09:25:16 +1000
-Message-ID: <20260319232522.1867400-12-alistair.francis@wdc.com>
+Subject: [PULL 08/17] fpu: Fix unexpected exception flags when converting
+ infinity to OCP E4M3
+Date: Fri, 20 Mar 2026 09:25:13 +1000
+Message-ID: <20260319232522.1867400-9-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
 References: <20260319232522.1867400-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::531;
- envelope-from=alistair23@gmail.com; helo=mail-pg1-x531.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::102e;
+ envelope-from=alistair23@gmail.com; helo=mail-pj1-x102e.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -103,115 +105,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Max Chou <max.chou@sifive.com>
 
-Implement txctrl.txen and rxctrl.rxen as follows:
+Infinity is a special case distinct from numeric overflow:
+- Numeric overflow: finite value exceeds format's max normal
+  -> overflow|inexact
+- Infinity conversion: input is already infinite
+  -> no flags
 
-* txctrl.txen
-  The txen bit controls whether the Tx channel is active. When cleared,
-  transmission of Tx FIFO contents is suppressed, and the txd pin is
-  driven high.
+This commit fixes the unexpect exception flags by relocating the float
+exception flag update flow to be outside the uncanon_e4m3_overflow.
+And raising the overflow|inexact for numeric overflow in uncanon_normal.
 
-* rxctrl.rxen:
-  The rxen bit controls whether the Rx channel is active. When cleared,
-  the state of the rxd pin is ignored, and no characters will be
-  enqueued into the Rx FIFO.
-
-Therefore, the Tx FIFO should not be dequeued when txctrl.txen is
-cleared, and the Rx FIFO should not be enqueued when rxctrl.rxen is
-cleared.
-
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260312033201.1619554-2-frank.chang@sifive.com>
+Fixes: 27e989f99c ("fpu: Add conversion routines for OCP FP8 E4M3")
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Message-ID: <20260226071817.1417875-3-max.chou@sifive.com>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- include/hw/char/sifive_uart.h |  2 ++
- hw/char/sifive_uart.c         | 27 ++++++++++++++++++++-------
- 2 files changed, 22 insertions(+), 7 deletions(-)
+ fpu/softfloat-parts.c.inc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/include/hw/char/sifive_uart.h b/include/hw/char/sifive_uart.h
-index 414564b026..c78d9bd1fc 100644
---- a/include/hw/char/sifive_uart.h
-+++ b/include/hw/char/sifive_uart.h
-@@ -51,6 +51,8 @@ enum {
- 
- #define SIFIVE_UART_TXFIFO_FULL    0x80000000
- 
-+#define SIFIVE_UART_TXEN(txctrl)        (txctrl & 0x1)
-+#define SIFIVE_UART_RXEN(rxctrl)        (rxctrl & 0x1)
- #define SIFIVE_UART_GET_TXCNT(txctrl)   ((txctrl >> 16) & 0x7)
- #define SIFIVE_UART_GET_RXCNT(rxctrl)   ((rxctrl >> 16) & 0x7)
- 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index af17cf9a6c..3ce6a4ee76 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -78,6 +78,11 @@ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
-         return G_SOURCE_REMOVE;
-     }
- 
-+    /* Don't pop the FIFO if transmit is disabled. */
-+    if (!SIFIVE_UART_TXEN(s->txctrl)) {
-+        return G_SOURCE_REMOVE;
-+    }
-+
-     /* Don't pop the FIFO in case the write fails */
-     characters = fifo8_peek_bufptr(&s->tx_fifo,
-                                    fifo8_num_used(&s->tx_fifo), &numptr);
-@@ -106,11 +111,19 @@ static gboolean sifive_uart_xmit(void *do_not_use, GIOCondition cond,
-     return G_SOURCE_REMOVE;
- }
- 
--static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
--                                      int size)
-+static void sifive_uart_trigger_tx_fifo(SiFiveUARTState *s)
+diff --git a/fpu/softfloat-parts.c.inc b/fpu/softfloat-parts.c.inc
+index a738758aee..3c323c0cec 100644
+--- a/fpu/softfloat-parts.c.inc
++++ b/fpu/softfloat-parts.c.inc
+@@ -277,7 +277,6 @@ static void partsN(uncanon_e4m3_overflow)(FloatPartsN *p, float_status *s,
+                                           const FloatFmt *fmt, bool saturate)
  {
-     uint64_t current_time = qemu_clock_get_ns(QEMU_CLOCK_VIRTUAL);
+     assert(N == 64);
+-    float_raise(float_flag_overflow | float_flag_inexact, s);
+     if (saturate) {
+         p->exp = fmt->exp_max;
+         p->frac_hi = E4M3_NORMAL_FRAC_MAX;
+@@ -388,6 +387,7 @@ static void partsN(uncanon_normal)(FloatPartsN *p, float_status *s,
+                 if (exp > exp_max || p->frac_hi > E4M3_NORMAL_FRAC_MAX) {
+                     partsN(uncanon_e4m3_overflow)(p, s, fmt, overflow_norm);
+                     exp = p->exp;
++                    flags |= (float_flag_overflow | float_flag_inexact);
+                 }
+                 break;
  
-+    if (!timer_pending(s->fifo_trigger_handle)) {
-+        timer_mod(s->fifo_trigger_handle, current_time +
-+            TX_INTERRUPT_TRIGGER_DELAY_NS);
-+    }
-+}
-+
-+static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-+                                      int size)
-+{
-     if (size > fifo8_num_free(&s->tx_fifo)) {
-         size = fifo8_num_free(&s->tx_fifo);
-         qemu_log_mask(LOG_GUEST_ERROR, "sifive_uart: TX FIFO overflow.\n");
-@@ -124,10 +137,7 @@ static void sifive_uart_write_tx_fifo(SiFiveUARTState *s, const uint8_t *buf,
-         s->txfifo |= SIFIVE_UART_TXFIFO_FULL;
-     }
- 
--    if (!timer_pending(s->fifo_trigger_handle)) {
--        timer_mod(s->fifo_trigger_handle, current_time +
--                      TX_INTERRUPT_TRIGGER_DELAY_NS);
--    }
-+    sifive_uart_trigger_tx_fifo(s);
- }
- 
- static uint64_t
-@@ -184,6 +194,9 @@ sifive_uart_write(void *opaque, hwaddr addr,
-         return;
-     case SIFIVE_UART_TXCTRL:
-         s->txctrl = val64;
-+        if (SIFIVE_UART_TXEN(s->txctrl) && !fifo8_is_empty(&s->tx_fifo)) {
-+            sifive_uart_trigger_tx_fifo(s);
-+        }
-         return;
-     case SIFIVE_UART_RXCTRL:
-         s->rxctrl = val64;
-@@ -231,7 +244,7 @@ static int sifive_uart_can_rx(void *opaque)
- {
-     SiFiveUARTState *s = opaque;
- 
--    return s->rx_fifo_len < sizeof(s->rx_fifo);
-+    return SIFIVE_UART_RXEN(s->rxctrl) && (s->rx_fifo_len < sizeof(s->rx_fifo));
- }
- 
- static void sifive_uart_event(void *opaque, QEMUChrEvent event)
 -- 
 2.53.0
 
