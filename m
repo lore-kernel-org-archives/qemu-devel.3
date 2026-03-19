@@ -4,98 +4,101 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 56B121091903
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 17:54:40 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 59CAC1091903
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:04:10 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3HZZ-0003gh-3l; Thu, 19 Mar 2026 13:54:17 -0400
+	id 1w3Hi7-0005FJ-8N; Thu, 19 Mar 2026 14:03:07 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3HZX-0003gQ-Ij
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:54:15 -0400
-Received: from mail-yx1-xb12c.google.com ([2607:f8b0:4864:20::b12c])
+ id 1w3Hi5-0005Eu-RW
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:03:05 -0400
+Received: from mail-yx1-xb12d.google.com ([2607:f8b0:4864:20::b12d])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3HZW-0005bT-01
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 13:54:15 -0400
-Received: by mail-yx1-xb12c.google.com with SMTP id
- 956f58d0204a3-64ca9ec3ee7so1684862d50.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 10:54:13 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1773942852; cv=none;
+ id 1w3Hi1-0007oL-T3
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:03:04 -0400
+Received: by mail-yx1-xb12d.google.com with SMTP id
+ 956f58d0204a3-64ca6595c8aso1303947d50.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 11:03:01 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773943380; cv=none;
  d=google.com; s=arc-20240605;
- b=lV7WUFMVsD46sjAF8iAJx4L1TjY6dLK220mfVvOvnnwghIHbfxMTRYSs8GN1Dq4/Vo
- buIxla1nK2HLKAG+oqJZgGSM61Hm6YDDGEODQJ21U36VFHxAL/VGRlxnUc0WqXlS9XY5
- FrelTkHvUZU4JGGDeiT0ZKvr7gq7J3sCSPhgURoPGR0EfE6Bf/+tR1t83Q9QiDMGvfYJ
- U5/8Ii+1feOHPaAE5Gg/LhYLyDmtUSuBYQa7ZInWyC9mT4/3/caRFufIHYfu6TiFsN80
- Dm8wqOwe6nBw6PWNAh96F89WeEbg75uGrm73MxntwhXjk+aUTPYD1Fvum224P3VIPELL
- p4CA==
+ b=RVopJPsk6EKS9ireoB9jaLy45RGbkSzh8nVIs9OzBUrGkkXBYh95iBYroFpbhZtGMC
+ KPPAjvz4UI9iy6DX5mVSWmhlf4ge7Y2MJUcIPF5tG0ULmXeMRlzS9p3EvxcCO7hvy53R
+ LR4VxUASHL0s5Q9b4qzpKteQWE23vsKfsbvEOcoOa5htE8xex3A9eWGvL5/PPCYlw+g8
+ CfnddcNgol76YKO7cvf8CGkSv1NeM+HWc0NVxDk4XM3gyurH1LRALvjy9qBapgiy2ORt
+ YDXQJteaWOZjSYIYohbSREfO0BGUxt5btYXmrv8K9tb7WY9mMHRmOzxPK3eftx8TDmZH
+ 1TWA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=/VTI7yL0rhg79+0xa3eAZgg+iqcvIY+hNxC4NcSovOM=;
- fh=V+cJCrcmHfk1hjMGitR5yugawEi3UN82KrpCYh9oF6o=;
- b=CwECcr0m7JeV4fhtepbDH8m8AJK41Kl67ytLu5e+GfvxR94Yse/8Bq6Lkrd+0EcY8a
- nBzI3cdDPtpW/05RYJfTMgnxV0DFFRugnDrwR9U+gbdlvVhwRcjqP8kHEBSsY9bBKus3
- jBp3y9WNdNCVA1KJ++AalHaU0CUdpteO0SJkLsJKnbIulfx5fAff+m+UEV4YS4G12T1u
- qzhW2vYmp7nHk473jA/mhX1Q7rsM1HGG6MLsGKXMKQXs4mn6xiitifoiQZjdj/K6T6fP
- OMUlozYxAw+pcoCTJNC4WEhoV19AleXsGuQj+0UMdOp1rHjKZs9Rst6Y+cXJCN+C6WIH
- g5HA==; darn=nongnu.org
+ bh=5vN6LThXqAik1x2kFTxo37hFcyrwMiOw96Avw7nS7Bc=;
+ fh=K72bYlHqvvWYEaJetWJrCHpy4doq0nZwJXIHUGtEaaE=;
+ b=aK93QVHKe50iFpZrtdtWfcQmRjEjjofQ3J32Aglukd0M1Te+uhDlg4i5hDd2R7J/ZL
+ 1YGuhfGRr/b1tSR0vLkfPQwv6s/QsRgGF3pXaFTJCcQAkGfXVVCzShP6eUI9ch43kdnE
+ VSeaYewhsBl7uJtod9PwY9EbRzicJD/cv+N+RkPY4eT+1jw5W3Twz1kb2etNUMeKDYUC
+ pnJcsp88tjuF9anFqDBugtXU2qQgkYNfcYzAlJQGl3EwqlXk7fY/pfvFl/ACQyxsAqRu
+ uQXN7JCvQO+mOymG9/wWERU9ZYuCsDsnizOJCxRpmVB3rL45RxqBNtvLLC+Nw7nFK4gN
+ eShw==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773942852; x=1774547652; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773943380; x=1774548180; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=/VTI7yL0rhg79+0xa3eAZgg+iqcvIY+hNxC4NcSovOM=;
- b=bR2Xz+y2EcNQzBXKV3FB9zrAtloHix+eKDfSJcgQc5GpusYJBIbs2fgSyfCBMrbWKR
- ICVPeMSzvjm0mWVfOMFZcx9g9TdD6v4HUJ3yp2avaQpuBuLF6vnkNjY3zrQsjx3/KNTK
- lWY66i078uUZO4hDV8vsK80cc1r/1IGZebOasQ0S037IIdvAQ3E5Cc1yPtpl1nBRYITn
- kZiO0g6ge8WpE8aZZie+WqAKZQuGkAeMM9cbnRgqOWbLaZq5C0P/dYb+XDHdca2JaxMn
- oUaJXOwd6+Nz5+KcQP/RaSX4Ded4gigt/5eLLthWI11QsZNk9WibYE6Bst8/OJ8cn+Ug
- RcLQ==
+ bh=5vN6LThXqAik1x2kFTxo37hFcyrwMiOw96Avw7nS7Bc=;
+ b=DZ07VwtlZnCq3Np4pYOESPlNt0lJ7nWArv0lDpaCkVIyt6m3uSQK7x5MfxO4ShA8D6
+ qDWLgOlFKBHzY/0546eg1JW3h4uuPjEp7zt63lVnibfdSycyCtAm1HxrWcadhdGj0lBV
+ j7WR9cVns3caQ9naf+kJXiej65pO3iXlWI+DUt+rTN++UZ/sqkkezSPzI5G+wRkHKzGr
+ JExDHRiujFra5j8DOfmczKhks90UCaTChtlBVZDdZJdRHd5J3sBSYO8/YrdUnyc2+UMa
+ ROS/E/t01eEkR6WhZV6REMro/U9oH6UFzuso0JRg9k51pWt5xQF+8M6mLaIArH4v0tuf
+ d6VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773942852; x=1774547652;
+ d=1e100.net; s=20251104; t=1773943380; x=1774548180;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=/VTI7yL0rhg79+0xa3eAZgg+iqcvIY+hNxC4NcSovOM=;
- b=X1HB91OJF/R5/VQf5pb2FNGP/p3Tumn7AykRwDDqVNAgyxptjcFJ//eSExN7NptF/Q
- Xip6K0RVJZ/QrQx395dT/yjW7ZzMdOoaVn2WwE94clrtRblda2W4X8dOH82gPoA+xBie
- OQlz9o0qNqA7yqJQP/JiZhitBz3KUaFodSsjQaQta9HFmNhVe0Nep1mgxefCKoP82muz
- zCSoBQgNbE8p9s+USZw5OEyQBkasUeykrp7FcMtrzTqTfbgtN79WcKtUhfktIn3EEECK
- kO+61LiTLHLFcQYykycGEPsUiVYeTF+n33hstT/Z8MuibfRmvSsYMsCLkRdC1OFMF+zJ
- 395Q==
-X-Gm-Message-State: AOJu0Ywoaxgo+7XYV19UZqap9TKDmoHL0vTBVTwNB/leCejnHlBSyYwf
- WWO/c50jt/Eyywo8Umyc7eaCvilUT/JkzjfcTenf1bKy2HXif+i6jle7SUGT9opN9usbbGRfk4T
- 1Y/tYb3UX3/sPe8NQJTCrbW8c3QWgS6FhmpcP0RRPGg==
-X-Gm-Gg: ATEYQzwkqCMx8kNtOYcAlMFWizbbMoR2BaWsGB5PJOX/dqEGIZ6EgXmF4TXzSxgIQyB
- C+xoaXRfHgAMwCI/0CTWDJ3AaCU6O2k0w/5GkAMFTVKOsIelPGQtlRYeHpXNuYGccfVQjXNlzA2
- qL1Ab6WJ9fNWwTfeoVqJqVTvvlaWEuSGpsSays8TjRgw2ACwdOUIRJdmghjQ8qrq66XdZ/BXQBk
- noPWr/6hlMpZnRmzSjCItgWlOhb/ws81iGYAYMZ9fCa3I3P73Kj7kn771V06LGDzV4N5c3KiuXD
- LSyFPlMGbmpytAzoc1bvYRqHWsZZhqdLZuTUSIrZa7oa06uTKWG6n6l+8AKdnOjA0sE=
-X-Received: by 2002:a05:690e:708:b0:64d:6098:3bdd with SMTP id
- 956f58d0204a3-64eaa77f36emr316681d50.39.1773942852463; Thu, 19 Mar 2026
- 10:54:12 -0700 (PDT)
+ bh=5vN6LThXqAik1x2kFTxo37hFcyrwMiOw96Avw7nS7Bc=;
+ b=EnHZzCbzitNRPCuNEUyErm87uM+jPM0JkTk7zDucd65qv/bm785QO+E7aISNDTVG0f
+ IGFjRpOifUIZfMdsW97BHWNNdMrv7+mTwzyksSyBTa9K3nPx/YP/yeVZzA23qhkMnac2
+ IaD2ze30unE1PeLmJAnrRhOE4tZS65ToM60RIRt+v3pROXhOiwbxlT8qkEd3lyls63aT
+ SYUNNcZunh4EhuI03iNOwlJB/3sefCoALFUtt1khv2/EjjQMr1hMo7vhd53ySsDDx1Ru
+ rwjxn/0RLqIvuasNWTcuWyx20CLBwdxoq4bYU7kwQ2uWCKLsKh5hzmF43NhvSOrQGuDy
+ zcaQ==
+X-Gm-Message-State: AOJu0YyzqmLg6JEuRmGW4hOU0G8zBqDtPOASdUsDTIgkQfJfQ6Uy62X0
+ MlWV7imV5UMJvZxuyxvL7xfQoe2Qz7TG7s1av7YRK9ZhDCMlRSxzBBTGXZXjipd3dodZPWJB2M9
+ U+f5Fi9i3lloLm2mUREqH3hfNk1ohmZjxrWqxOiO0tQ==
+X-Gm-Gg: ATEYQzz/GQULJJOfB8V3vV/+20WB7lkIk4LraRvhBP1Rt0jzb00n7yLaCtOEtprztim
+ fz9lkSLM9xujArRFf821CZZJo82/NJ1IsAx3rmVjXxWBhuIc1fUTjPucqI4MNjYCbQks9aU2YSi
+ Tztetl5+tqRXpXpygEuVJFWzv8rGmyE6LrMXsVQ/po6dpSLtrOdAcYPqUM+md5FDq2pfM6Xjixg
+ 0DPejrJANbQQfwjx2VQ9VHGR7fAL4tT4yM+pxmS9edelqRKVPltg3H4Cp3nEwqIUXq0EuPOEfqV
+ 88dvHqPwl+AEOAzi1mGmxC/J4z/Q09rgH3ru3bw9xVCr2q+/rAYZy9WUtnw/m5x3spc=
+X-Received: by 2002:a05:690e:134e:b0:649:603f:7026 with SMTP id
+ 956f58d0204a3-64eaa6b857emr481051d50.15.1773943379876; Thu, 19 Mar 2026
+ 11:02:59 -0700 (PDT)
 MIME-Version: 1.0
 References: <20260318141415.8538-1-vikingtc4@gmail.com>
- <20260318141415.8538-2-vikingtc4@gmail.com>
-In-Reply-To: <20260318141415.8538-2-vikingtc4@gmail.com>
+ <20260318141415.8538-5-vikingtc4@gmail.com>
+In-Reply-To: <20260318141415.8538-5-vikingtc4@gmail.com>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Thu, 19 Mar 2026 17:54:01 +0000
-X-Gm-Features: AaiRm52ixL8GBMnT75g8WC8Q6fyMqtgD3xzp_AGrgTb0Ga-X7LERf-cPokcr3_c
-Message-ID: <CAFEAcA_HDDqJ0i7pyztER+i4Jiis4C5VrSWopR6mPYwG3G_VKA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/4] hw/core/loader: fix error handling for
- load_image_targphys callers
+Date: Thu, 19 Mar 2026 18:02:48 +0000
+X-Gm-Features: AaiRm5008z2GZ3CXUQFGI-RdyjT2o55QknahsM_RdTyI6T2gnKl2RP-9Dar7xdc
+Message-ID: <CAFEAcA_MYs7x5xAJNWHznbjM0cd3TNew8dj5Y7uFgURttiYh+w@mail.gmail.com>
+Subject: Re: [PATCH v3 4/4] hw/pci/msix: fix error handling for msix_init
+ callers
 To: Trieu Huynh <vikingtc4@gmail.com>
-Cc: qemu-devel@nongnu.org, Richard Henderson <richard.henderson@linaro.org>, 
- Helge Deller <deller@gmx.de>, Thomas Huth <th.huth+qemu@posteo.eu>, 
- Laurent Vivier <laurent@vivier.eu>,
- "Edgar E. Iglesias" <edgar.iglesias@gmail.com>
+Cc: qemu-devel@nongnu.org, Akihiko Odaki <odaki@rsg.ci.i.u-tokyo.ac.jp>, 
+ Sriram Yagnaraman <sriram.yagnaraman@ericsson.com>,
+ Jason Wang <jasowang@redhat.com>, 
+ Jiri Pirko <jiri@resnulli.us>, "Michael S. Tsirkin" <mst@redhat.com>, 
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
+ Paolo Bonzini <pbonzini@redhat.com>, 
+ Fam Zheng <fam@euphon.net>, "open list:megasas" <qemu-block@nongnu.org>
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b12c;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12c.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b12d;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb12d.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -118,69 +121,20 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Wed, 18 Mar 2026 at 14:15, Trieu Huynh <vikingtc4@gmail.com> wrote:
+On Wed, 18 Mar 2026 at 14:16, Trieu Huynh <vikingtc4@gmail.com> wrote:
 >
-> Use QEMU's Error API to handle load_image_targphys() failures
-> consistently across callers.
->
-> - Use &error_fatal for callers that previously passed NULL, ensuring
-> the process exits early on failure instead of continuing in an invalid
-> state.
+> Check return value of msix_init() and return early on
+> failure instead of continuing with invalid state.
+> - Use ret < 0 to handle negative return value.
+> - Use errp parameter to handle failure instead of NULL.
 > - No functional changes.
 >
 > Resolves: https://gitlab.com/qemu-project/qemu/-/issues/413
 > Signed-off-by: Trieu Huynh <vikingtc4@gmail.com>
 > ---
->  hw/alpha/dp264.c     |  2 +-
->  hw/hppa/machine.c    |  2 +-
->  hw/m68k/next-cube.c  | 11 +++++++++--
->  hw/m68k/q800.c       |  2 +-
->  hw/m68k/virt.c       |  2 +-
->  hw/microblaze/boot.c |  3 ++-
->  6 files changed, 15 insertions(+), 7 deletions(-)
-
-
-
-> diff --git a/hw/m68k/next-cube.c b/hw/m68k/next-cube.c
-> index 26177c7b86..4bfe5bcf56 100644
-> --- a/hw/m68k/next-cube.c
-> +++ b/hw/m68k/next-cube.c
-> @@ -1326,9 +1326,16 @@ static void next_cube_init(MachineState *machine)
->      memory_region_init_alias(&m->rom2, NULL, "next.rom2", &m->rom, 0x0,
->                               0x20000);
->      memory_region_add_subregion(sysmem, 0x0, &m->rom2);
-> -    if (load_image_targphys(bios_name, 0x01000000, 0x20000, NULL) < 8) {
-> +    Error *local_err = NULL;
-> +    if (load_image_targphys(bios_name, 0x01000000, 0x20000, &local_err) < 8) {
->          if (!qtest_enabled()) {
-> -            error_report("Failed to load firmware '%s'.", bios_name);
-> +            if (local_err) {
-> +                error_report_err(local_err);
-> +            } else {
-> +                error_report("Firmware image '%s' is too short.", bios_name);
-> +            }
-> +        } else {
-> +            error_free(local_err);
->          }
->      } else {
->          uint8_t *ptr;
-
-This changes the error message with no firmware from:
-qemu-system-m68k: Failed to load firmware 'Rev_2.5_v66.bin'.
-
-to:
-qemu-system-m68k: Could not open 'Rev_2.5_v66.bin': No such file or directory
-
-We lose the mention that this is the firmware blob,
-but gain the more specific error message. That's OK,
-I guess.
-
-Both before and afterwards, once we've printed the message
-we go ahead and run the machine, which immediately takes a
-double mmu fault and aborts. No change with this patch,
-so no problem.
 
 Reviewed-by: Peter Maydell <peter.maydell@linaro.org>
 
+thanks
 -- PMM
 
