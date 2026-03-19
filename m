@@ -4,99 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C61107526D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 07:37:24 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7390C107526F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 07:40:13 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w37w4-0007SZ-Pj; Thu, 19 Mar 2026 03:36:53 -0400
+	id 1w37yu-0000B7-HI; Thu, 19 Mar 2026 03:39:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w37w1-0007S6-KI
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:36:49 -0400
-Received: from isrv.corpit.ru ([212.248.84.144])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w37vy-0001aI-KD
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:36:49 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
- t=1773905794; bh=t8QRZJElaRviEBkR/CBWhJb/uWYNujfq4qx8SXu8FjQ=;
- h=Date:To:From:Subject:Cc;
- b=Cx7nJmm//fuhMPYT6Sum0vxU5xUQ1+UL81DerDXDB4sblpVKGvLohGEpCrJeA8sjE
- d0CpVmuZCX4CcOTVD7rdtwXQVuhIimM55VlKyx9MoAc125mIv7JiaC6lbjMSelWpDj
- /L4mguZnVIKqOglWZXsa4nCslImpzunf7wULlmUtkdL+Ye5ULbUuhi9cEQEgUspLnh
- J1UGZ0Kmcv46qbP6sn5fkEur/xRJ1HxHL3aTohopfs4umzJ7YWE4L4ioGDmS+J+ti1
- imAH/PlmR692xcekxkdu72qt61ZlhmWpdU61PjDO3upaZojP7Mce7lZRvCTxiytbVF
- 5VnKqKtGchJ3Q==
-Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
- by isrv.corpit.ru (Postfix) with ESMTP id 217261953BF;
- Thu, 19 Mar 2026 10:36:34 +0300 (MSK)
-Message-ID: <7393fb31-0def-4558-b051-68de672a4395@tls.msk.ru>
-Date: Thu, 19 Mar 2026 10:36:42 +0300
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w37ys-0000Ad-OQ
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:39:46 -0400
+Received: from mail-wm1-x32b.google.com ([2a00:1450:4864:20::32b])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w37yr-0001xY-27
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:39:46 -0400
+Received: by mail-wm1-x32b.google.com with SMTP id
+ 5b1f17b1804b1-482f454be5bso16732385e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 00:39:43 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773905983; x=1774510783; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :from:to:cc:subject:date:message-id:reply-to;
+ bh=SUOX20E+nqx1tLMRpr8hqxX/8+GzMIpuH3/Xt06d+88=;
+ b=bD+LJl43jqjPqvgBYckPyA1mCekYIN+Df2QGnSER1l1QPKkEPum6pwRvZ8v7hrLnPx
+ xXMO/3CEkWuW7lA4+5q5LVD3SMQm938UaLvDIY/K/8I1p+GNEZsxt2Roy70DXKF5ImC4
+ 3Fzn+nOda0dEy00O77VH22ZaEq1FS8rbt69qG0EOdbGLc3Z+VSBPh8pL+wyacKM2dlZl
+ kQtlyE7qomTb3sP8cpIXF8JBtS9rd7q+FZgm9Lyn7PNqQjixPS3j1AMKm4rURADqZ6TE
+ 4s03Y/gss2yC+biBFhB4U/y32fyESR5wUniUsfICE2/bR+Tds4EUEXiLv3J7U8ruo4an
+ igkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773905983; x=1774510783;
+ h=content-transfer-encoding:in-reply-to:content-language:from
+ :references:cc:to:subject:user-agent:mime-version:date:message-id
+ :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
+ :reply-to;
+ bh=SUOX20E+nqx1tLMRpr8hqxX/8+GzMIpuH3/Xt06d+88=;
+ b=TehrUvK7maKxxnJS2HMY54oSN4ViktMYJqKaaiEG41jhzSrWjcxfFRcEHJqqeyTafN
+ l08z/nxpkwJTWi+xZS3LeAJ3oyBa1+w0bF/Lv+RrnUqYcTAdYhYuGuQnj4VfERtUksUt
+ G2NP1pbndhoqshVBMySZuqq8Qth6rA6NSkAjaCn5UV4f6j+pliPRSIZemNN/b/xGp5iu
+ jcuH4wCeSyoOnFKpDCQeayC7tAHuYYnxD6ZeLsetuJwME7Pqc9MFlXE6nycqjiDHeLto
+ x+Uc4Rg6zvD01zTzMRpRAK/xu5BmMPSZ+k7UPm4eeWSEC+C7PRcPfD0d8ha/rizScVsP
+ r0Hg==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCU0s8zSsDrCtUisQi/vqNoKOXsCKJn5yNI2oCcaE+74pK0qqSC1MIZFztzunIltjYfdXUrixiGyyRuz@nongnu.org
+X-Gm-Message-State: AOJu0Ywjl9t5r4oXhOCT14obv2+vm7D7YHKOdvV8MADJ0CF8QGYSHnDt
+ CtHLwdsHHAhKiEFJlXqpoINPCP6tvTMF/MlecWS7Bn7hkzAx3DyR9WLRNC37KqNtILI=
+X-Gm-Gg: ATEYQzzGpEyaA1dry1R4wJ66pwTWlZGeP1SuPnRt3x9NbT8LVGF/k18Hxl3T07uSgQ+
+ LI4HV/yA4Nzeuf46mUhaB2YJhceMceilewheKHsQVQa1gHx7A6avDrims6/AoaT69iQ+A/uWT0n
+ /vYknsbMxKeaXH8WagjBcBpV3D9eIxVlfL4m1AmMxOk/SYsmUIBNFPBTBUC4R57oXNhvDjqZOh5
+ LzmCp+OQESHZ/ApB5brtIQ93WGlncTmRt9stTttlVRZXo0BGQkf/kDEdWGhfyN7MIML6r4efBXt
+ 0O2cO8ajD0FeKyECilbKJWGT4ngB9Adq8M/GwoBFc2FEBuBicvQTHftna6k7nUc/lfd3eB5r80o
+ oF2QMfUHA2x2V7Lc51gu+o629qOB1U/gYpQBD+F/mlUiHgs2xs2xcc8+8vQoUAE8uZxr1naFJpg
+ dTgIDguCm1sqTBf/3QkN2WH5XjxBTlvLjZEz/r+IY5s1Du9g==
+X-Received: by 2002:a05:600c:4fd6:b0:485:3f58:da2 with SMTP id
+ 5b1f17b1804b1-486f8b6ce01mr37019765e9.16.1773905982646; 
+ Thu, 19 Mar 2026 00:39:42 -0700 (PDT)
+Received: from [192.168.69.206] ([88.187.86.199])
+ by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486f4623a26sm39315275e9.7.2026.03.19.00.39.39
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Thu, 19 Mar 2026 00:39:39 -0700 (PDT)
+Message-ID: <f09a4fba-96c2-43f1-92de-412a1db18ac3@linaro.org>
+Date: Thu, 19 Mar 2026 08:39:36 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Content-Language: en-US, ru-RU
-To: QEMU Development <qemu-devel@nongnu.org>
-From: Michael Tokarev <mjt@tls.msk.ru>
-Subject: minimal microvm build: undefined hyperv_is_synic_enabled
- x86_firmware_configure
-Autocrypt: addr=mjt@tls.msk.ru; keydata=
- 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
-Cc: Paolo Bonzini <pbonzini@redhat.com>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH v4 0/8] hw/vfio: single-binary
+To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
+Cc: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
+ qemu-ppc@nongnu.org, Paolo Bonzini <pbonzini@redhat.com>
+References: <20260317194241.869568-1-pierrick.bouvier@linaro.org>
+ <517be5bb-d6c8-4220-b585-3adbe4826056@linaro.org>
+ <5718eb21-ab32-49e1-82ce-beabb33983ea@linaro.org>
+From: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Content-Language: en-US
+In-Reply-To: <5718eb21-ab32-49e1-82ce-beabb33983ea@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
- helo=isrv.corpit.ru
-X-Spam_score_int: -2
-X-Spam_score: -0.3
-X-Spam_bar: /
-X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::32b;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x32b.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -112,79 +106,37 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Hi!
+On 18/3/26 18:48, Pierrick Bouvier wrote:
+> On 3/17/26 10:57 PM, Philippe Mathieu-Daudé wrote:
+>> On 17/3/26 20:42, Pierrick Bouvier wrote:
+>>
+>>> Pierrick Bouvier (8):
+>>>     hw/vfio/listener.c: remove CONFIG_KVM
+>>>     hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
+>>>     hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
+>>>     hw/vfio: eradicate CONFIG_IOMMU from sources
+>>>     hw/vfio/pci.c: eradicate CONFIG_KVM
+>>>     hw/vfio/ap.c: use full path for target specific header
+>>>     hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
+>>>       hw/vfio/kvm-spapr.c
+>>>     hw/vfio: all vfio files can now be common files
+>>
+>> Tested-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+>>
+> 
+> For some reason, b4 trailers does not apply this. I added it manually on 
+> latest patch of series.
 
-Building a minmal qemu for microvm (the idea is to have small footprint
-binary for fastest loading and being light on resources).  It ends up
-with:
+Sorry for the inconvenience.
 
-  cc -m64 @qemu-system-x86_64.rsp
-  ld: libqemu-x86_64-softmmu.a.p/target_i386_kvm_kvm.c.o: in function 
-`hyperv_init_vcpu':
-  target/i386/kvm/kvm.c:1757:(.text+0x5d83): undefined reference to 
-`hyperv_is_synic_enabled'
-  ld: libqemu-x86_64-softmmu.a.p/hw_i386_x86-common.c.o: in function 
-`x86_bios_rom_reload':
-  hw/i386/x86-common.c:1104:(.text+0x240d): undefined reference to 
-`x86_firmware_configure'
-  collect2: error: ld returned 1 exit status
+Maybe I should have prefixed with "Series:"?
 
-The build is done with the devices file:
+Also there is the '-t' option:
 
-  CONFIG_PCI_DEVICES=n
-  CONFIG_MICROVM=y
-  CONFIG_VIRTIO_BLK=y
-  CONFIG_VIRTIO_SERIAL=y
-  CONFIG_VIRTIO_INPUT=y
-  CONFIG_VIRTIO_INPUT_HOST=y
-  CONFIG_VHOST_USER_INPUT=y
-  CONFIG_VIRTIO_NET=y
-  CONFIG_VIRTIO_SCSI=y
-  CONFIG_VIRTIO_RNG=y
-  CONFIG_VIRTIO_CRYPTO=y
-  CONFIG_VIRTIO_BALLOON=y
-  CONFIG_VIRTIO_GPU=y
-  CONFIG_VHOST_USER_GPU=y
+   -t, --apply-cover-trailers
+      Apply trailers sent to the cover letter to all patches
 
-and with these confiure options:
+> Regards,
+> Pierrick
 
-  ../../configure ${common_configure_opts} \
-                --without-default-features \
-                --target-list=x86_64-softmmu --enable-kvm --disable-tcg \
-                --enable-pixman --enable-vnc \
-                --enable-virtfs \
-                --enable-linux-aio --enable-linux-io-uring \
-                --enable-numa \
-                --enable-attr \
-                --enable-coroutine-pool \
-                --audio-drv-list="" \
-                --without-default-devices \
-                --with-devices-x86_64=microvm \
-                --enable-vhost-kernel --enable-vhost-net \
-                --enable-vhost-vdpa \
-                --enable-vhost-user --enable-vhost-user-blk-server \
-                --enable-vhost-crypto \
-                --enable-seccomp \
-
-
-
-For the first one, hyperv_is_synic_enabled() - it looks like the whole
-hyperv thing in target/i386/kvm/kvm.c should have #ifdef CONFIG_HYPERV
-guard - not just the call to hyperv_is_synic_enabled() but whole
-hyperv_init_vcpu() and related callsite, because hyperv_is_synic_enabled
-is only included when CONFIG_HYPERV=1.  There are hyperv stubs - just a
-few of them, - maybe it's better to actually #ifdef in the actual code
-which call hyperv functions?
-
-For the second, it looks like it's been added when adding confidential
-guest support.  This code, too, looks like it should be conditional on
-CONFIG_X86_FW_OVMF, like pc_sysfw_ovmf.c, - or alternatively,
-x86_firmware_configure should be included in stubs.
-
-Overall, I'm seeing less and less reasons to continue building and
-shipping this light microvm binary.
-
-Thanks,
-
-/mjt
 
