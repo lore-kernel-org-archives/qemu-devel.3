@@ -4,87 +4,91 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9580E108E1DF
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 10:45:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7F748108E1E6
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 10:50:29 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ArX-0006tH-IL; Thu, 19 Mar 2026 06:44:23 -0400
+	id 1w3Ax4-0007rv-9o; Thu, 19 Mar 2026 06:50:06 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ArV-0006sc-Ci
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 06:44:21 -0400
-Received: from mail-wr1-x42d.google.com ([2a00:1450:4864:20::42d])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Ax1-0007nZ-Np
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 06:50:03 -0400
+Received: from mail-wm1-x331.google.com ([2a00:1450:4864:20::331])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3ArS-000784-H8
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 06:44:20 -0400
-Received: by mail-wr1-x42d.google.com with SMTP id
- ffacd0b85a97d-439c6fc2910so510434f8f.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 03:44:17 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3Ax0-0007mF-2U
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 06:50:03 -0400
+Received: by mail-wm1-x331.google.com with SMTP id
+ 5b1f17b1804b1-48540d21f7dso8422555e9.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 03:50:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773917056; x=1774521856; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=BvThwtiwpUjEJkcRvRsNM7vqsy4xO9B9B27tJho3O28=;
- b=sMo0whNok3Tqte2vKOf6F7I6wUr1G3xaIVQZDVLnbP0Wad3uj7VeNPYmvNzi8tdOO8
- HXwetD5mJyc2mmStUr5NIwZNzrBcDY/nP494d89dJp2KDQxTlnjqacGjY84ymP75+eEb
- xLwrL6WIAfcop/2sichpz3TgnKuIn4p7nY3ruPCPfsu8kSC+NS9xUVNXyhOsUEsF1E84
- bc8kuxiCP120fjZKIVpKS3B72ar1cjUZ/zd1nQkbALrlN+ydTF5Dfn78grY2MjIh7ISp
- LWXF0Ugc4zhjNM1XEhKlevTRwoL9bpGqjldj56JqaMTjXpKK6MYvKdoBjkOaM93tbPt+
- +06g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773917056; x=1774521856;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1773917400; x=1774522200; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=BvThwtiwpUjEJkcRvRsNM7vqsy4xO9B9B27tJho3O28=;
- b=k8H+LPjIWGmR5Fp0zZtzP0ycR0ZPOpjandJ1me68ysy5xdFSsB0Vpf/KiyrSzmuzNk
- KQeK0TAafuz+W+DqIjMMM8OyXsLIuHxw4pNcNnfuKqSt4lZbTGnLD5h1JY7Ggux9HYif
- 5r9zc/uJUsnzyxZvImqs1XUCLHBe/JJ4FNj5CUMuJQ9gWBNkMqKfW7vzpxAerDSp78+Q
- rtlDs92V6SOh6SWeek4xWW2wziBxzYwVWRaHzNk/VLB0Du+4aeJA4AUynoGuJxfCB7yY
- 4j2krUHkn7nXgWsapoP6/zlabY9t9u4u6K2zh7Pmy9+kZUcdxE+0PC91kINqkUIra+zt
- 15Gg==
-X-Gm-Message-State: AOJu0YyqCVkToCfuSBCDLBuS34ZdqDQU6byl9BIDG9UZCyLiaSMxz14a
- /+2dFi10Q6p9Ga6NBvQkgxXLMk5qaixlmR1rYwgZePztxKkr9vHX7DlEfs3hoKlw661J1vmJOAA
- ClJ/qRHw=
-X-Gm-Gg: ATEYQzyih011NBXiWPZnt9UGSn/PW9Y7kTuUojcjEExqULFnFFALIe22/cbpk+K7Axr
- d9BTVd6rYlbmGcQTK1qRUcNQYcx4RpRUleRXrsa/z9pGjeDhxZXBsS9EnQBGpkesl8NpLf6qv10
- 7AJe7WPHzBeoLavIgIy3+UDejzMuMpXZDLgFSxOKn1Te+S44IH94PPj2sH1Tc4LMAmHasmlza3m
- atHJS+taKMD/gvW8SE5+44EvgHrD+PM7gmL99xL4Bv5VVwX4GYx+mFEnv4F6PpNpXVU8AK3lVf8
- ja6fC/L5Gfs8U4RQPKxxqXBXnSu8YOhn93xmH7SlFlFqvl8Gx19RrlYATLuinCdeEKTwpXiZ6bx
- xa/0XjqQHMBzy6v6wZOzn/x6xvzOUXy0+2KWGKJgJj6468SsZGeSc5fMxNnbKisbSVUmJ74tk9a
- jVadngooJdWQKqAu7MsFA6DaRsmODdVU5vjQXMWHIhLBesVVx1sWBIozk1FnhCXEfLbFnebErnQ
- 5oGPwUwZdU=
-X-Received: by 2002:a05:6000:2dc3:b0:43b:4aba:8f35 with SMTP id
- ffacd0b85a97d-43b527a8e1bmr12171396f8f.12.1773917056376; 
- Thu, 19 Mar 2026 03:44:16 -0700 (PDT)
+ bh=KIUuROQk5KA90LD+TLHw5mPzwSqERhsxnRpUgzujJ5I=;
+ b=V2eEFCB7HezZ5PxrYNFH9i4Pdutl+ax1RaaHAN5YXHlHoL7b2CS8nVeiVv5j4fq6E9
+ OEpCrEmVfZqO7+iTvMzcT5qNFuKh83Q3oGT2n87+zBI9tjZnDRvZhmt+A3ChoCZX2rKv
+ EgKLjkC3r+UtSDUSoJNeIEi8J9oY50ADrpWBhELYJcI/WtUXcUwfXEOZOPHPi4usiEri
+ TsZaG6w37JC500NrJAjgXV5vnjCKAwtov1wSCXxES8nAiHETogMITSrpeivN4s77dU5c
+ CJx3hgbmxqKEbFlAkVpyij/tkYXCtUzEtkRxapqU9HcFk8CxY39TdZNv+bN6NaonXEee
+ NeKA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773917400; x=1774522200;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=KIUuROQk5KA90LD+TLHw5mPzwSqERhsxnRpUgzujJ5I=;
+ b=P7iMPtq9soHhc0RdWpRFunXF44cCF81s6D2kvNBUroHFThP4hcLWIaV0lb6Jz7fHvX
+ XTqK8W9iHyUOPweeLgqdcIxmNEHTiCmQenwMapvaNPd3o+G0ow5NsKpq+QrSeNHmTvG2
+ rrQE6ApL6vcsvaEGNKE3kGNPRW448vECibMGiHnDttYFFNnbYVC7QpvHGsORr8JInd51
+ +VRt9UUTKpjN6EU88ELSDJWhdWWKnRhw/e59INF6H10mL5OjhMktFL/kDBJxe0nq7Guf
+ 0vDHEo9j9uh+cSXxfNefWnQWP6Cv6xI0Qm79CIJQnxGW3XFNImjoWSoZWde66R9nSF6y
+ 73GQ==
+X-Gm-Message-State: AOJu0Ywg5FKtVGF72tSuJOCjOXw8/6BDeinO+vKX7wQ568KKcuwspszA
+ gD+b/2bSo5MU8hAf7IfokO43JBxi6RLYi0nWv4P0P6vk3Yb5tBJh00668yQ+pAODzWRS9wY7tbc
+ o13Y+nf8=
+X-Gm-Gg: ATEYQzwNGOON1tbPz4OzNNuVx6g9eA81+jnARJ7stBgx28tbvlcdRmF+0382gEowgFF
+ QSF/xyZgT9ETHThTpRAUbTPDl7150Wf/uNRNTmC67dy6jX4CQ0zzX8mIpA41gEwieycFL/bohsG
+ Lcd0ndBsZm8ZLA4n/HJ9io+mU9IFgFRm1DcnNjTp+xJvcGICm5XbQqQ8qNAa3laXWVX5Wu9foNe
+ sq0tW5k6JiU8fiavAbleBcigJDAU86VKXkJPiZa5OHNX7KgXB9WWIQLET+RAkyyGTMFjSENRGQG
+ r7k7ZkuY+mxr9GAnI6W0e7DSMgz60dSnbLzdRsP8VpmSEv2uua/fSwvkp3Dv19PeDHB08KPp0zk
+ rfrcvkS7VShOeEiiWpugg1TuE8JgTm0qJFNbOYtDerb6zSEyLf1ot30bEx4QDHR45WT+TRHyXOP
+ l3ucqzqqIdLNRQ4p3Nsb1JZ6aXjuQfMZ9gdGs+d6DZLeBrLbmKcP2wWZ40aIdQ8wV91gehYwZVj
+ qLsbJjXHpI=
+X-Received: by 2002:a05:600c:4fc4:b0:485:3423:727d with SMTP id
+ 5b1f17b1804b1-486f4476ce8mr107800265e9.26.1773917400148; 
+ Thu, 19 Mar 2026 03:50:00 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b5184962bsm15303184f8f.7.2026.03.19.03.44.15
+ 5b1f17b1804b1-486f8c292e2sm56213525e9.2.2026.03.19.03.49.59
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Mar 2026 03:44:15 -0700 (PDT)
+ Thu, 19 Mar 2026 03:49:59 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
-Cc: Anton Johansson <anjo@rev.ng>,
- Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-arm@nongnu.org,
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Song Gao <gaosong@loongson.cn>, Anton Johansson <anjo@rev.ng>,
+ Jiaxun Yang <jiaxun.yang@flygoat.com>, Bibo Mao <maobibo@loongson.cn>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.0?] configs/targets: Restrict the legacy ldst_phys()
- API on ARM / Aarch64
-Date: Thu, 19 Mar 2026 11:44:14 +0100
-Message-ID: <20260319104414.66367-1-philmd@linaro.org>
+Subject: [PATCH 2/2] configs/targets: Restrict the legacy ldst_phys() API on
+ LoongArch64
+Date: Thu, 19 Mar 2026 11:49:44 +0100
+Message-ID: <20260319104944.66690-3-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260319104944.66690-1-philmd@linaro.org>
+References: <20260319104944.66690-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::42d;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x42d.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::331;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x331.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
  DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -100,35 +104,24 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Commit d751921cffd ("hw/arm/omap1: Remove omap_badwidth_*
-implementations") removed the last use of the legacy ldst_phys()
-API. Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable to
-hide the legacy API to the ARM / Aarch64 binaries, avoiding further
-API uses to creep in.
+The LoongArch64 target doesn't use the legacy ldst_phys() API
+anymore. Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable
+to hide the legacy API to the qemu-system-loongarch64 binary,
+avoiding further API uses to creep in.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- configs/targets/aarch64-softmmu.mak | 1 +
- configs/targets/arm-softmmu.mak     | 1 +
- 2 files changed, 2 insertions(+)
+ configs/targets/loongarch64-softmmu.mak | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/configs/targets/aarch64-softmmu.mak b/configs/targets/aarch64-softmmu.mak
-index 9a20187e2c1..d34aead41c4 100644
---- a/configs/targets/aarch64-softmmu.mak
-+++ b/configs/targets/aarch64-softmmu.mak
-@@ -5,3 +5,4 @@ TARGET_XML_FILES= aarch64-core.xml aarch64-fpu.xml arm-core.xml arm-vfp.xml arm-
- # needed by boot.c
+diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
+index 476407f9413..a425b3dbaae 100644
+--- a/configs/targets/loongarch64-softmmu.mak
++++ b/configs/targets/loongarch64-softmmu.mak
+@@ -6,3 +6,4 @@ TARGET_XML_FILES= loongarch-base32.xml loongarch-base64.xml loongarch-fpu.xml lo
  TARGET_NEED_FDT=y
  TARGET_LONG_BITS=64
-+TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
-diff --git a/configs/targets/arm-softmmu.mak b/configs/targets/arm-softmmu.mak
-index 35af7da79f2..b235e34a380 100644
---- a/configs/targets/arm-softmmu.mak
-+++ b/configs/targets/arm-softmmu.mak
-@@ -3,3 +3,4 @@ TARGET_XML_FILES= arm-core.xml arm-vfp.xml arm-vfp3.xml arm-vfp-sysregs.xml arm-
- # needed by boot.c
- TARGET_NEED_FDT=y
- TARGET_LONG_BITS=32
+ TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
 +TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
 -- 
 2.53.0
