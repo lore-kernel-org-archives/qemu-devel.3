@@ -4,101 +4,71 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id C730F108E1FA
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:22:58 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id A9ADB1088E60
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:33:05 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3COR-0005Lr-BR; Thu, 19 Mar 2026 08:22:27 -0400
+	id 1w3CXz-0007mG-MY; Thu, 19 Mar 2026 08:32:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3COL-0005Ge-V0
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 08:22:25 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3CXs-0007lP-Ps
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 08:32:13 -0400
 Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3COJ-0007gQ-QX
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 08:22:21 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3CXo-0001cq-0E
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 08:32:10 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773922939;
+ s=mimecast20190719; t=1773923526;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:
- content-transfer-encoding:content-transfer-encoding:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  in-reply-to:in-reply-to:references:references;
- bh=8k2dL6NiY1MZVbnAT4dWt1HFJQUIJsjtqhbLDfxcAs8=;
- b=RbaFO+7xAfBVLd1Jgdn15zgnqI4bIC8FhlXeuPv256HAYQrfoVzAuVGSavYceB6F1o2zxA
- +8yFE41mnBZuyIIc2KzSlblJocZYiUjAeV2YPLDbyVN6FQ2jdJtvn0+mzrHkEnMWOnqtm5
- xxoCzaKTXNOkx6JomeIohlt1OiExR+Q=
-Received: from mail-pg1-f197.google.com (mail-pg1-f197.google.com
- [209.85.215.197]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-537-chrtJA_LMhi6iQsEWl-xBA-1; Thu, 19 Mar 2026 08:22:18 -0400
-X-MC-Unique: chrtJA_LMhi6iQsEWl-xBA-1
-X-Mimecast-MFC-AGG-ID: chrtJA_LMhi6iQsEWl-xBA_1773922937
-Received: by mail-pg1-f197.google.com with SMTP id
- 41be03b00d2f7-c70ea91bfe1so865228a12.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 05:22:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773922937; x=1774527737; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=8k2dL6NiY1MZVbnAT4dWt1HFJQUIJsjtqhbLDfxcAs8=;
- b=JrX0EYK7NOrOV5YuRC7B8Xv5TV9AUgVtfwx7W7/YfhjaWKR+DCVvEJ5NkTrV/IEZj3
- 8VMvrYC1lFco49diOlRyrllxiFqPr7lhvyIw97Be9PRuez1HGAbhBiul5mC6mO+os+KB
- IVKRef0kugXKZUL3hmiMUHaL+Qj/cV6qJAiSc4bJXWUnNcd8LnPCHrUz3zkSkPKJ15+m
- ibWTyeDBmXE52/0STDLy14z5qh6M8ADnjO+b+Ql/3oDzDSHVHjFCdroCdpA/GYaZXD89
- 4mhnRJU9wXeByYeGGw3IjXQMcOxSO8ytMjN8bdqxsAvRGbqE+lm6qjE7vuTSe8S1by7W
- GitQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773922937; x=1774527737;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=8k2dL6NiY1MZVbnAT4dWt1HFJQUIJsjtqhbLDfxcAs8=;
- b=ai7DyIimdNyFHS6F1dey9YjZwZOgk3cKBCPXOOseH2XN0hH5vqbQLfWCTdb2+h3hNr
- YhOxa6Dwa/X/utGDJovx7NVLclbWqilNRVL0kPjMJwqN5LHHtDTMcXG68NBHqlFnAVqX
- zs2+3VUu5aVpfbpv7YHIJj1+9HOMt13Ji6K0XD4xpypai5B8KXXlNSLlpgr0o+eLlOw3
- hbQY+L1Zbt2z117aLeLDYpJrG+9uN+AK+CDM4HNBkPsFQ74khRJU6CcJKm6I2JDYv9y3
- Tr36BI2ogjbWrzQd9OqPDUNnljbC7wKe5bMvJdslvdlbjCnYhTDvZq7rp3QUHhT2rXkK
- pYow==
-X-Forwarded-Encrypted: i=1;
- AJvYcCXI6xk6qG7dXC6xv+EAfrzxUch6k9t9hpaj9oVaM5OGZ1pgHa+6AOpTwjhOAdXuUp1sgxpYySbJUTx5@nongnu.org
-X-Gm-Message-State: AOJu0YxSj5WwS8T2DJRp6lkZ5cu8ltfEZhMlcOVBg1gGlYGH66yR0dk7
- 2fxVfqV/eMYDTDaa7W5irgJjzmcyfuQigJejaKIt3R2Ih3r0LFXOdGLHcbTkkcyLOelXxQ+Ks/v
- gvq3s4Vbmt9jiYt3gsYMZVLmnAPs+qWHZN5uEF2Kbnz0Sepkdbr517VEf
-X-Gm-Gg: ATEYQzwGOUabuUhipW67QO1maUeVHlRWyIRHzuS7FrfCM5tOIdgavqFL+TP+BUcZnXr
- RcTaCsfVp0O8cRqVLfBpV9udle5wP3sMTE6Sk8kTkPBETG3zLPzBd8IEFBw029IQlLlZBIdTaaT
- urMG2+tBKb6pm8T5QwkJA6E+CQTD3fE2K0a3JXG648oFQuVdYlQSaUoE25ZNwng2YZZIiPL0vCM
- 7qn8sLKOxcx/wvvP6QUyX5uwGel8v5nLVwEtE24HftwRa95XsUC/V/zzVpt2pHeYFCCgIoUhkdT
- ylCE8FwDeu7Kc+jl63pfd5JQc8MHMsonpJ4q+Ikve38Ta5uP625C2ExmVjHqxJvZVdWBY5eR1od
- oZ/19x2iaLGibY7hdcs6PUPfnEIAo4HxK4/+mJc/SgHWuPf2kWG1LZng=
-X-Received: by 2002:a05:6a21:4781:b0:39b:7f5f:d58e with SMTP id
- adf61e73a8af0-39b99fd74d8mr6939175637.47.1773922936871; 
- Thu, 19 Mar 2026 05:22:16 -0700 (PDT)
-X-Received: by 2002:a05:6a21:4781:b0:39b:7f5f:d58e with SMTP id
- adf61e73a8af0-39b99fd74d8mr6939157637.47.1773922936357; 
- Thu, 19 Mar 2026 05:22:16 -0700 (PDT)
-Received: from rhel9-box.lan ([122.163.114.34])
- by smtp.googlemail.com with ESMTPSA id
- d2e1a72fcca58-82a6bbe1ffbsm7876649b3a.43.2026.03.19.05.22.12
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 05:22:15 -0700 (PDT)
-From: Ani Sinha <anisinha@redhat.com>
-To: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>
-Cc: Ani Sinha <anisinha@redhat.com>, philmd@linaro.org,
- Michale Tokarev <mjt@tls.msk.ru>, kvm@vger.kernel.org,
- qemu-devel@nongnu.org
-Subject: [PATCH for-11.0 v2 2/2] i386/hyperv: add stubs for synic enablement
-Date: Thu, 19 Mar 2026 17:51:36 +0530
-Message-ID: <20260319122137.142178-3-anisinha@redhat.com>
-X-Mailer: git-send-email 2.42.0
-In-Reply-To: <20260319122137.142178-1-anisinha@redhat.com>
-References: <20260319122137.142178-1-anisinha@redhat.com>
+ bh=TYQ2FQAM6tPwzmdYBYO5OvpxbkldqcSyN78Fvt4tmec=;
+ b=X6z83UW5f9rq9ySK7W7xDpCAIgPHABdgf7O8LxjDopHi3ZgY7qk7CaOqagx/q0/yH1yts4
+ H2L0Si9C6wJKPp0yCzlV1wQQhBsxjNeBmHMLMvK2Uhnuqum9ANfhfM+Cs0X/mFvzQF0fM9
+ rEBeCmJEVx+SHOgh+Uijoo0iNUabG4c=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-651-APVG3Or-MRGpIhLpgHqDtA-1; Thu,
+ 19 Mar 2026 08:32:05 -0400
+X-MC-Unique: APVG3Or-MRGpIhLpgHqDtA-1
+X-Mimecast-MFC-AGG-ID: APVG3Or-MRGpIhLpgHqDtA_1773923523
+Received: from mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.111])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 39A44195609D; Thu, 19 Mar 2026 12:32:03 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 4A4791800361; Thu, 19 Mar 2026 12:32:02 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id CE99721E6937; Thu, 19 Mar 2026 13:31:59 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Tommaso Califano <califano.tommaso@gmail.com>
+Cc: qemu-devel@nongnu.org,  kvm@vger.kernel.org,  Eduardo Habkost
+ <eduardo@habkost.net>,  Zhao Liu <zhao1.liu@intel.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Marcelo Tosatti
+ <mtosatti@redhat.com>,
+ Eric Blake <eblake@redhat.com>,  Oliver Steffen <osteffen@redhat.com>,
+ Stefano Garzarella <sgarzare@redhat.com>,  Giuseppe Lettieri
+ <giuseppe.lettieri@unipi.it>,  Paolo Bonzini <pbonzini@redhat.com>,  Luigi
+ Leonardi <leonardi@redhat.com>,  Richard Henderson
+ <richard.henderson@linaro.org>
+Subject: Re: [PATCH 1/5] i386/sev: Add sev-emulated QOM object with TCG support
+In-Reply-To: <20260317113840.33017-2-califano.tommaso@gmail.com> (Tommaso
+ Califano's message of "Tue, 17 Mar 2026 12:38:36 +0100")
+References: <20260317113840.33017-1-califano.tommaso@gmail.com>
+ <20260317113840.33017-2-califano.tommaso@gmail.com>
+Date: Thu, 19 Mar 2026 13:31:59 +0100
+Message-ID: <87tsucvw3k.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.111
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
@@ -123,89 +93,107 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Add a new call hyperv_enable_synic() that can be called whether or not
-CONFIG_HYPERV is enabled. This way genetic code in i396/kvm.c can call this
-function to enable synic for hyperv. For non-hyperv cases, the stub will
-be a noop.
+Tommaso Califano <califano.tommaso@gmail.com> writes:
 
-Reported-by: Michale Tokarev <mjt@tls.msk.ru>
-Signed-off-by: Ani Sinha <anisinha@redhat.com>
----
- target/i386/kvm/hyperv-stub.c |  5 +++++
- target/i386/kvm/hyperv.c      |  9 +++++++++
- target/i386/kvm/hyperv.h      |  1 +
- target/i386/kvm/kvm.c         | 12 +++++-------
- 4 files changed, 20 insertions(+), 7 deletions(-)
+> QEMU's AMD SEV support requires KVM on costly AMD EPYC processors,
+> limiting development and testing to users with specialized server
+> hardware. This makes it hard to validate SEV guest behavior, like
+> OVMF boots or SEV-aware software, on common dev machines.
+> A solution to this is the emulation of SEV from the guest's
+> perspective using TCG.
+>
+> This change begins this process with the exposure of the SEV CPUID leaf.
+> In target/i386/cpu.c:cpu_x86_cpuid() case 0x8000001F:
+>
+> case 0x8000001F:
+>     *eax = *ebx = *ecx = *edx = 0;
+>     if (sev_enabled()) {
+>         *eax = 0x2;
+>         *eax |= sev_es_enabled() ? 0x8 : 0;
+>         *eax |= sev_snp_enabled() ? 0x10 : 0;
+>         *ebx = sev_get_cbit_position() & 0x3f; /* EBX[5:0] */
+>         *ebx |= (sev_get_reduced_phys_bits() & 0x3f) << 6; /* EBX[11:6] */
+>     }
+>     break;
+>
+> sev_enabled() verifies if the QOM object is TYPE_SEV_GUEST;
+> TYPE_SEV_EMULATED is derived from TYPE_SEV_GUEST with SevEmulatedState
+> to satisfy this check with minimal changes. In particular this allows
+> to bypass all the sev_enabled() checks for future features.
+>
+> Since KVM hardware isn't available, override the QOM's kvm_init() and add
+> a conditional confidential_guest_kvm_init() call during machine_init() to
+> set up emulated confidential support using the ConfidentialGuestSupport
+> structure.
+>
+> With this change it is possible to run a VM with the SEV CPUID active
+> adding:
+>
+>     -accel tcg \
+>     -object sev-emulated,id=sev0,cbitpos=47,reduced-phys-bits=1 \
+>     -machine memory-encryption=sev0
+>
+> To the QEMU start arguments.
+>
+> Signed-off-by: Tommaso Califano <califano.tommaso@gmail.com>
 
-diff --git a/target/i386/kvm/hyperv-stub.c b/target/i386/kvm/hyperv-stub.c
-index 5836f53c23..767a4c7e1a 100644
---- a/target/i386/kvm/hyperv-stub.c
-+++ b/target/i386/kvm/hyperv-stub.c
-@@ -61,3 +61,8 @@ uint64_t hyperv_syndbg_query_options(void)
- {
-     return 0;
- }
-+
-+int hyperv_enable_synic(X86CPU *cpu)
-+{
-+    return 0;
-+}
-diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
-index f7a81bd270..bd3c26d02b 100644
---- a/target/i386/kvm/hyperv.c
-+++ b/target/i386/kvm/hyperv.c
-@@ -24,6 +24,15 @@ int hyperv_x86_synic_add(X86CPU *cpu)
-     return 0;
- }
- 
-+int hyperv_enable_synic(X86CPU *cpu)
-+{
-+    int ret = 0;
-+    if (!hyperv_is_synic_enabled()) {
-+        ret = hyperv_x86_synic_add(cpu);
-+    }
-+    return ret;
-+}
-+
- /*
-  * All devices possibly using SynIC have to be reset before calling this to let
-  * them remove their SINT routes first.
-diff --git a/target/i386/kvm/hyperv.h b/target/i386/kvm/hyperv.h
-index e45a4512fe..a393a5d428 100644
---- a/target/i386/kvm/hyperv.h
-+++ b/target/i386/kvm/hyperv.h
-@@ -23,6 +23,7 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct kvm_hyperv_exit *exit);
- #endif
- 
- int hyperv_x86_synic_add(X86CPU *cpu);
-+int hyperv_enable_synic(X86CPU *cpu);
- void hyperv_x86_synic_reset(X86CPU *cpu);
- void hyperv_x86_synic_update(X86CPU *cpu);
- 
-diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-index a29f757c16..9e352882c8 100644
---- a/target/i386/kvm/kvm.c
-+++ b/target/i386/kvm/kvm.c
-@@ -1754,13 +1754,11 @@ static int hyperv_init_vcpu(X86CPU *cpu)
-             return ret;
-         }
- 
--        if (!hyperv_is_synic_enabled()) {
--            ret = hyperv_x86_synic_add(cpu);
--            if (ret < 0) {
--                error_report("failed to create HyperV SynIC: %s",
--                             strerror(-ret));
--                return ret;
--            }
-+        ret = hyperv_enable_synic(cpu);
-+        if (ret < 0) {
-+            error_report("failed to create HyperV SynIC: %s",
-+                         strerror(-ret));
-+            return ret;
-         }
-     }
- 
--- 
-2.42.0
+[...]
+
+> diff --git a/qapi/qom.json b/qapi/qom.json
+> index c653248f85..35cda819ec 100644
+> --- a/qapi/qom.json
+> +++ b/qapi/qom.json
+> @@ -1057,6 +1057,19 @@
+>              '*handle': 'uint32',
+>              '*legacy-vm-type': 'OnOffAuto' } }
+>  
+> +##
+> +# @SevEmulatedProperties:
+> +#
+> +# Properties for sev-emulated objects.
+> +# This object functionally emulates AMD SEV hardware via TCG, so
+> +# it does not require real hardware to run.
+
+Wrap the paragraph, please:
+
+   # Properties for sev-emulated objects.  This object functionally
+   # emulates AMD SEV hardware via TCG, so it does not require real
+   # hardware to run.
+
+> +#
+> +# Since: 10.1.0
+
+11.0 right now, but realistically 11.1.
+
+> +##
+> +{ 'struct': 'SevEmulatedProperties',
+> +  'base': 'SevGuestProperties',
+> +  'data': {}}
+> +
+>  ##
+>  # @SevSnpGuestProperties:
+>  #
+> @@ -1241,6 +1254,7 @@
+>      { 'name': 'secret_keyring',
+>        'if': 'CONFIG_SECRET_KEYRING' },
+>      'sev-guest',
+> +    'sev-emulated',
+>      'sev-snp-guest',
+>      'thread-context',
+>      's390-pv-guest',
+
+Please insert before sev-guest to keep things more or less sorted.
+
+> @@ -1318,6 +1332,7 @@
+>        'secret_keyring':             { 'type': 'SecretKeyringProperties',
+>                                        'if': 'CONFIG_SECRET_KEYRING' },
+>        'sev-guest':                  'SevGuestProperties',
+> +      'sev-emulated':               'SevEmulatedProperties',
+
+Likewise.
+
+>        'sev-snp-guest':              'SevSnpGuestProperties',
+>        'tdx-guest':                  'TdxGuestProperties',
+>        'thread-context':             'ThreadContextProperties',
 
 
