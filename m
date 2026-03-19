@@ -4,176 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2ACA1075275
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:36:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2A97E1075276
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:37:33 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w38rS-0002J3-Nj; Thu, 19 Mar 2026 04:36:10 -0400
+	id 1w38sY-0002vh-0d; Thu, 19 Mar 2026 04:37:18 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w38rQ-0002Ib-VS
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:36:09 -0400
-Received: from mgamail.intel.com ([192.198.163.13])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w38sN-0002us-F4
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:37:07 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <zhenzhong.duan@intel.com>)
- id 1w38rM-0001Mh-AM
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:36:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple;
- d=intel.com; i=@intel.com; q=dns/txt; s=Intel;
- t=1773909364; x=1805445364;
- h=from:to:cc:subject:date:message-id:references:
- in-reply-to:content-transfer-encoding:mime-version;
- bh=LdBTogFtK/i03eb9mTGM+BkuSGh2B79k7qDMcg8Ua/E=;
- b=dEDG96+CvsmKJi7rs5C2bNAAzwS7788bEaemwNKJwklNPXQZyD49v9Ev
- hHRa+vU2E0yDjg3IOJK0WIs70OvhtH8MLEf8plm+Skodz9VDvALeiJOUd
- 8+gbmJFL0pfR1KrEqgANvI1ZDzaQ5PvgqmTwAuqMmjYxAgTecHCJwnfNe
- OIWhxoinnG8qDK4um/SXiVob/+AigSblMbiK/0V4lo3q9RopW2UQRgov6
- FMzIE6DYaEfslW2EZ31T9SBaBjBV72X7xNoNCPX9ISMyxibTrEbPB2PJq
- TXkNYldKffKBifeHQtezKlYMKbIXGlYMAOSUS8l1CXVoO6bD0IakcRm9b g==;
-X-CSE-ConnectionGUID: uFr3peXURsqPZdJUuiuZZg==
-X-CSE-MsgGUID: aSxT+s8tQF+cEuo1DgB0Yg==
-X-IronPort-AV: E=McAfee;i="6800,10657,11733"; a="77582794"
-X-IronPort-AV: E=Sophos;i="6.23,129,1770624000"; d="scan'208";a="77582794"
-Received: from fmviesa003.fm.intel.com ([10.60.135.143])
- by fmvoesa107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Mar 2026 01:36:02 -0700
-X-CSE-ConnectionGUID: xAFX7OihSi2IB94w+1L3/Q==
-X-CSE-MsgGUID: VOFn0HkET5umpkMsfQ8+Bg==
-X-ExtLoop1: 1
-Received: from fmsmsx902.amr.corp.intel.com ([10.18.126.91])
- by fmviesa003.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384;
- 19 Mar 2026 01:36:01 -0700
-Received: from FMSMSX903.amr.corp.intel.com (10.18.126.92) by
- fmsmsx902.amr.corp.intel.com (10.18.126.91) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 19 Mar 2026 01:36:01 -0700
-Received: from fmsedg903.ED.cps.intel.com (10.1.192.145) by
- FMSMSX903.amr.corp.intel.com (10.18.126.92) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37 via Frontend Transport; Thu, 19 Mar 2026 01:36:01 -0700
-Received: from CH5PR02CU005.outbound.protection.outlook.com (40.107.200.36) by
- edgegateway.intel.com (192.55.55.83) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.2562.37; Thu, 19 Mar 2026 01:36:01 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector10001; d=microsoft.com; cv=none;
- b=SDG+q+6pfYhkpX8FxSfi4fKcAM8mjwlyG5ZtceIqjBy+57WqO+MKLiEz0k+fbxY05FCJfWUiWmASfV55VQOHBT/voZKtce6ytriBoAmJJ31ovfzY0N7DJmPSRkFHax7zRt5QR0hvY6Tkpzkou+1oSETmapDL5uYomA2SdrxoKYHjoJWnNscGWyh0ZEwwlHBzlgf0YVMeRhXbOYNS1iJyIcsNzwQ8uD9SfznfNPDUM4zl9EDXtppAslGk+sCJ6JAp6AaBJX2pMPj43tCHeMAX0Kd/t9xA+M8dzvNwn4ftxc1C+oDJh8pvmiXFw4krcApaECvIOyF2JpsRCUpwUxzMBw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com; 
- s=arcselector10001;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
- bh=LdBTogFtK/i03eb9mTGM+BkuSGh2B79k7qDMcg8Ua/E=;
- b=HJGlXkEcbNgX9UdAhiPyGKw0WO+HEW1eDx690oavcCGv9RonZLS9g9fIRGgg0qSU7rQEwLvg/O9adcK5rYBCRZ9XE3wxbnuw7LpDonrgeBOAakAZ9Y/meYuJNI6GqLkngXEsZHgOt1Q4Zj9UjKLgl30eL8AyXibdesWUqVmX+gw4EO44tKRX/Z0+CVOzaA8nt/gKBM+MxnnbqIfJvWjJwWr/YNstV8XjnTXXnDXjhKMjMyMijXAJu2nurAjMul85pweooP7UHB8rkpveNI6Ro6jKq/fDOxy6BhMpanSQI4624qraZ6VovDDC///t50jvWQyF9EZjxZYCJ4pQmmuWhA==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=intel.com; dmarc=pass action=none header.from=intel.com;
- dkim=pass header.d=intel.com; arc=none
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com (2603:10b6:208:574::12)
- by PH7PR11MB7569.namprd11.prod.outlook.com (2603:10b6:510:273::9)
- with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.9723.19; Thu, 19 Mar
- 2026 08:35:56 +0000
-Received: from IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b]) by IA3PR11MB9136.namprd11.prod.outlook.com
- ([fe80::37b4:37a9:4f3:518b%5]) with mapi id 15.20.9723.013; Thu, 19 Mar 2026
- 08:35:56 +0000
-From: "Duan, Zhenzhong" <zhenzhong.duan@intel.com>
-To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, "qemu-devel@nongnu.org"
- <qemu-devel@nongnu.org>
-CC: =?utf-8?B?Q8OpZHJpYyBMZSBHb2F0ZXI=?= <clg@redhat.com>, "Liu, Yi L"
- <yi.l.liu@intel.com>, Eric Auger <eric.auger@redhat.com>, Alex Williamson
- <alex@shazbot.org>, "philmd@linaro.org" <philmd@linaro.org>
-Subject: RE: [PATCH v2 1/2] backends/iommufd.c: report error when /dev/iommu
- is not available
-Thread-Topic: [PATCH v2 1/2] backends/iommufd.c: report error when /dev/iommu
- is not available
-Thread-Index: AQHctwIOggPiR2azlEeJpXfCllwWNbW1d5SA
-Date: Thu, 19 Mar 2026 08:35:56 +0000
-Message-ID: <IA3PR11MB913625F24F98AA40ABC7AE3F924FA@IA3PR11MB9136.namprd11.prod.outlook.com>
-References: <20260318180641.1797902-1-pierrick.bouvier@linaro.org>
- <20260318180641.1797902-2-pierrick.bouvier@linaro.org>
-In-Reply-To: <20260318180641.1797902-2-pierrick.bouvier@linaro.org>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-authentication-results: dkim=none (message not signed)
- header.d=none;dmarc=none action=none header.from=intel.com;
-x-ms-publictraffictype: Email
-x-ms-traffictypediagnostic: IA3PR11MB9136:EE_|PH7PR11MB7569:EE_
-x-ms-office365-filtering-correlation-id: f6a7428a-b66a-46e0-7cbc-08de85928a0b
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
- ARA:13230040|376014|1800799024|366016|38070700021|56012099003|18002099003|22082099003;
-x-microsoft-antispam-message-info: gwYqwZRVfu11WdaIeoAkYWKDtmspywNhknju2A7133kfmx6skaE8C/+IIaqjUUXlbAyefUui462pGLNNJn0ky3tkOZnxWBI28Cn8VWfupwZxLuGa8lcv8saBYgQRa1mJ0WPD+bAsoUFoHInCDAE9aY5bv25hRl2elail9f8+DucUsov4noHEqdogs8st+avaQNP0o7H7klL4/IdBMRE1PdeztP4H3dh40Jm8JmMr9r1E5Bqb7Hz4e1TNiQjCiI1OoKf/y7EjwlSdL/GP3TX5vgVI4+5dqy0k6Hr1OOsbWL4kpH9Bq6fZETw9R3altpC8Nip/lqZIyuaynMMiiQZ+J6EOGPEsiSdaAmsripIFL8cyhFM9T2jHx1NWAs53dUIAW3zlwLkhq4NFlv5Z3umKHxflttJJO6kFtCzkNwNTa4sLMHbPH1GI08IvmL4gR0JrWmNU7bdP+jyWwx4g3JwwSYXNFE9lgeLh+uxkZO13he6m/LUAhtaaVHmnp3UiiHxjyqMYAE1njdmEnY2pBugbrFdTJcysD4eS9gxhb3xYqlIJrqEqde9CYAuLBldZeq7ru+3f3ti1ijYnb1Yst9BXDR1g2ySjvxY/f+58O75kG9+x9Hb3c0YZIRGUYLAqG9+qQRaZhapsBIPb/AQNlTPruXSm/WWnN6HzXBPeIoBAnIXIm33iRUEXmZDuvZINkNBiXXKDcEnO3mt0Sny5EQqPYDsw7str4fsds/kQRKrGsckYkYffiIuc+UWGgTYyiKxZNMPt+r5fl3rxF5Oy2u72DaN/hGp14qp0leVsjV4e0co=
-x-forefront-antispam-report: CIP:255.255.255.255; CTRY:; LANG:en; SCL:1; SRV:;
- IPV:NLI; SFV:NSPM; H:IA3PR11MB9136.namprd11.prod.outlook.com; PTR:; CAT:NONE;
- SFS:(13230040)(376014)(1800799024)(366016)(38070700021)(56012099003)(18002099003)(22082099003);
- DIR:OUT; SFP:1101; 
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?NEp6ZGo0RlA0WUNGRXJsT0lueU1sWkV0S2QyN3ZGMUZ0blhnQ1dTV3F0VWRO?=
- =?utf-8?B?dHNlWjYwcE1ZK1VtTXB3TGZHZDBPZ2dhTVUwM2FuREZoNmhXNEIyQVRac2Nu?=
- =?utf-8?B?TnZXdGxFdkVKbDh0YTNJWWwzNnA1dkZ3NDE0cEMyZDJZNDZBOXcvUW9UU09v?=
- =?utf-8?B?OTZvdSt6eXp1MkJ5L2hPaU9KUStVc3EyWFlMTVRIeW1ZTk5GYklndGwxZThJ?=
- =?utf-8?B?d2IxRzFuSVNJdDBJeFl6d0g1VEkySFRtaHFCNk5TT3YyWThWSVQvOFJ0d0do?=
- =?utf-8?B?aTExSkVOeVRkd08yYkFCdW1sWVg5YlREVEVBQWZlSHcxdjNQYk1TQ3pvcXE1?=
- =?utf-8?B?YjdIUGdkUnNYK2lGNDJUbXVNNkRiZklaU0dLaEpKSkNKOWIyZ2ZDb3BpMGpx?=
- =?utf-8?B?R2V5RFBadTFqOWhIcU1mRGVMTHNyZENMWUxxQjdHS2wzZkhzM3V0c0R0QXpm?=
- =?utf-8?B?YTIzVWt6Y2puaGRZa2RhQ1Y3RDRJQlRqSGFNRDlMcGhOTnRnbyt4eXNJN1cx?=
- =?utf-8?B?dHFzSGVXZm5ESCtVdjBHNGh6KzdxT0R0Q3k3KzBteDVqdmdEeFE5RTNwa2NM?=
- =?utf-8?B?UE5Kek5KVHU1Ym8yWGdhU09FeCtrejNVRFFXNTB6eVkzY1BYanBzWjlVT2Jk?=
- =?utf-8?B?blpOaWk0YVhHbC90eDltYnJVblpnc2IvTTZLMk9uK2hOdG1hVHZLcmpFdWZ2?=
- =?utf-8?B?dUVlVXNaWWJ3OG1tcGNieGp4SFNVREFTUi9zVHVxQWJCQTdTTFlxMFlaVmpY?=
- =?utf-8?B?Z0pCbUpYOU5kb3BPb2xGY1lxZHVYNHlFL2psQS92Z0w3MXNMYkdidVJsRUZ3?=
- =?utf-8?B?OUMzV014OFpycU9leXQwVThrTDRxcDBFSDNwT2xZQlVXQ2ZrTldTSTFXYkI1?=
- =?utf-8?B?YUFtMEh0V1NnQ3dBQ0xzSy8vTEJ2RlZORVZ1S3o4enBpQ0NWSGN2U1MzUm9Q?=
- =?utf-8?B?TFBnLzRSbFdENUxOcW9IQXVWbkNTa3lwRGZtUGU1VWN1M0ZxRThZWnVVQnd4?=
- =?utf-8?B?aGNRQ3l6WjJwU0lyQ1JLaDVaWFprbXBJK2lHYlFJQmFoaVNnblJndmV4emRm?=
- =?utf-8?B?T2JVaHBYOUxZVTFnbVlvV3IvY0EraUlJVlNDS05XRWY5aThsenpaRTBRVkF1?=
- =?utf-8?B?MTVUVHRVM2dCQm13aFpRQWpSejBuVm4wOXdheThKaDFzNzhUUmNpSmNDSjJu?=
- =?utf-8?B?Y0VSSnJaaWJJOHVoVWtIak1RTE43bXQyUWZVZkRzQnB2WGRraUpQY29vTVFh?=
- =?utf-8?B?dHVIRkF0MmFLNVp0QTc3aTYxcHE2REVKMUcxTjFKUUE2dTcrSDNUQ3I1RFRz?=
- =?utf-8?B?cUhSOHRxejVqTHB2MHh5bWlQUDB1dUVsNCtaeXlLQk9xUEJwRXR0VklmckFT?=
- =?utf-8?B?Y2pOK0psREEvdHQycDZnM0hPQWQ2L0pSQTdPVjBHdXgwb3J0SXhCZmNIay9R?=
- =?utf-8?B?NGE0cTJpRTBHWUR1dHhoUHZRWTBDSHNPbmg3ZytiSXQ0MlFESDdIc3lYV3VN?=
- =?utf-8?B?OExxaXpSSEI4bEtwcmNtR0F2S04veDZzaWVKeW9XUGw4WFJuOFFxQXVNY2ZS?=
- =?utf-8?B?RFczNGZlUEIvZWdBNkxpNHh2TGVUSm80SDc3U3U3NUtPVUUxNGFVaXBHMTBt?=
- =?utf-8?B?SWs0NHlneHFOTm9TQjB6clhoZldQd0Vpb21lajVkTTlFamsrR1E1cnQ5enJt?=
- =?utf-8?B?NndKNlQweWthNE5nZTRtNUJTOFFKdHVmd3dYVjBiZERkZW9IRnJyYUVudkpa?=
- =?utf-8?B?TGhocnN3SUlSSFlEZUx5emR3WGxwd2dza2pPbDFna0tBcGowTjg1Vk9RZEEr?=
- =?utf-8?B?RmxWL0d4Mld2L3RBVDVpaWpHL2NvSkVYZGpWSjFhQXRoRFFQQWhnTm1qclhG?=
- =?utf-8?B?dGRENEZXU1luRHBaU2ltSGZQTytJUnd3ZU9iU2U5b0diRWVYM1Q4ejlhN0dV?=
- =?utf-8?B?Z3VXKzZoUmZKTk9kOEhaWWhENHlKRGF5M1BQM21FZ1BhMnhCUFZsQ0VLOWU2?=
- =?utf-8?B?SEdyT05pNGhSbnB6U0pCeWR5bTBEbUx4blIxZHVsNHRSWE9OQlFpL2NXdGwx?=
- =?utf-8?B?YktiWjdxNjZmRUlGWVFpbjNRSmdPdWVXQjR1MFA0ekFkaC9hL29jTGdLeFRN?=
- =?utf-8?B?L296ZlJheDhKc1lKZjBha0dTS0h6UjNDeG5CVmJ3Sm9rb1lONnVNbXR2TkhD?=
- =?utf-8?B?R0o4YU9ac3g4RmVTaEZ2UUR5THdzNitWODVDS1dRR21IaVNicnFDZ0VKSFJX?=
- =?utf-8?B?ZHY4VkoxK1cyWjlNc0I0bnhYRkhnZjlqZnh5cm16c1kvOEJMNUgzTG5MTm1K?=
- =?utf-8?B?TktGeGxPVHR6ZkMyelY4OTNBbEVZb09PNGNjcUxBT2dDajNVSFdCUT09?=
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: base64
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w38sL-0001RU-7j
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:37:07 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1773909424;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ in-reply-to:in-reply-to:references:references;
+ bh=DflBsotVf/NXATM1Ii279KK7JYfmpuXCwBFKUhgDyAo=;
+ b=KEmGZHU07fVnwY+IsFVt5+eBRy+LComqyxfzrzU8wOCy7KbR82ELs4+ipWcxcUWby/ODJ6
+ 53ir/zXin0FsXtDVSa9j5ui1ntQjJxcoVLZqC6rq0TVA0DP7FQNraueezXN90gyZHzoWbW
+ 3ZGPGobq8hgeC0rfdD6xqEKFnQs9Evw=
+Received: from mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-54-186-198-63.us-west-2.compute.amazonaws.com [54.186.198.63]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-690-HaTMG6RKOwi4_wV1aVcx3w-1; Thu,
+ 19 Mar 2026 04:37:02 -0400
+X-MC-Unique: HaTMG6RKOwi4_wV1aVcx3w-1
+X-Mimecast-MFC-AGG-ID: HaTMG6RKOwi4_wV1aVcx3w_1773909420
+Received: from mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.4])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-05.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id D23E41956046; Thu, 19 Mar 2026 08:36:59 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-01.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id EEC4530001A1; Thu, 19 Mar 2026 08:36:57 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 8E77E21E6937; Thu, 19 Mar 2026 09:36:55 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: Sergei Heifetz <heifetz@yandex-team.com>
+Cc: qemu-devel@nongnu.org,  Eric Blake <eblake@redhat.com>,  "Michael S.
+ Tsirkin" <mst@redhat.com>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,  Marcel
+ Apfelbaum
+ <marcel.apfelbaum@gmail.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Fabiano Rosas <farosas@suse.de>,  =?utf-8?Q?Marc-Andr=C3=A9?= Lureau
+ <marcandre.lureau@redhat.com>,  Eduardo Habkost <eduardo@habkost.net>,
+ Yanan Wang <wangyanan55@huawei.com>,  Zhao Liu <zhao1.liu@intel.com>,
+ Richard Henderson <richard.henderson@linaro.org>,  "Dr. David Alan
+ Gilbert" <dave@treblig.org>,  Thomas Huth <thuth@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Laurent Vivier
+ <lvivier@redhat.com>, Gerd Hoffmann <kraxel@redhat.com>
+Subject: Re: [PATCH v3 09/11] audio: do not build audio-related sources with
+ --disable-audio
+In-Reply-To: <20260315201646.96862-10-heifetz@yandex-team.com> (Sergei
+ Heifetz's message of "Mon, 16 Mar 2026 01:16:44 +0500")
+References: <20260315201646.96862-1-heifetz@yandex-team.com>
+ <20260315201646.96862-10-heifetz@yandex-team.com>
+Date: Thu, 19 Mar 2026 09:36:55 +0100
+Message-ID: <87fr5wcj14.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-X-Exchange-RoutingPolicyChecked: DXqjoelFLc1uia6oRcfc5SQcrS2sSC/yHtY4ZvzuewHfAs4yCk/J7oAMS8nsNTeNlEVpHtSYMtIAnufAP22vFE3GGJKdJO1z5EQSRi8S8aU4vzCu/jmW/QmEzuZWh3mCv9Vz+n1Sn3aMAVnvjzr9VqKNCQb9BdfLNg2W3Zbr1usor16iXeFYs4KGf4ubdIvxn5QzKW/stMU6UR+VZo7SiQHV/AZsV9E7zCrG9kiBkfQFofqsyo8pb/vkif1tV2EcSOLYgdoc88fcXaaOlfn4EHB/11X+F3vSaUz33wliVAuOYpc9C8Xr+S+hPj0i6kKC8f9X14Y45xz6YGgzcGINng==
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: IA3PR11MB9136.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: f6a7428a-b66a-46e0-7cbc-08de85928a0b
-X-MS-Exchange-CrossTenant-originalarrivaltime: 19 Mar 2026 08:35:56.0655 (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 46c98d88-e344-4ed4-8496-4ed7712e255d
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: wWD5fY4inWuIZya4tyoHUEKgnwHzDCxoQX8KJsiHy8IMCK7pktX4kbJjyzlXn7o5wK9Wv0EL/JUb8ZBs+PfVvNVy+JNwrL8PTXNKHnrZ3H0=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH7PR11MB7569
-X-OriginatorOrg: intel.com
-Received-SPF: pass client-ip=192.198.163.13;
- envelope-from=zhenzhong.duan@intel.com; helo=mgamail.intel.com
-X-Spam_score_int: -26
-X-Spam_score: -2.7
-X-Spam_bar: --
-X-Spam_report: (-2.7 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.4
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_MED=-2.3, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -189,39 +98,477 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-DQoNCj4tLS0tLU9yaWdpbmFsIE1lc3NhZ2UtLS0tLQ0KPkZyb206IFBpZXJyaWNrIEJvdXZpZXIg
-PHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj5TdWJqZWN0OiBbUEFUQ0ggdjIgMS8yXSBi
-YWNrZW5kcy9pb21tdWZkLmM6IHJlcG9ydCBlcnJvciB3aGVuIC9kZXYvaW9tbXUgaXMNCj5ub3Qg
-YXZhaWxhYmxlDQo+DQo+SW4gY2FzZSBjdXJyZW50IGtlcm5lbCBkb2VzIG5vdCBzdXBwb3J0IC9k
-ZXYvaW9tbXUsIHFlbXUgd2lsbCBwcm9iYWJseQ0KPmZhaWwgZmlyc3QgYmVjYXVzZSAvc3lzL2J1
-cy9wY2kvZGV2aWNlcy8qL3ZmaW8tZGV2LyBpcyBub3QgcHJlc2VudCwNCj5zaW5jZSBRRU1VIG9w
-ZW5zIGl0IGJlZm9yZSAvZGV2L2lvbW11Lg0KPg0KPkluc3RlYWQsIHJlcG9ydCBhbiBlcnJvciBk
-aXJlY3RseSB3aGVuIGNvbXBsZXRpbmcgYW4gaW9tbXVmZCBvYmplY3QsIHRvDQo+aW5mb3JtIHVz
-ZXIgdGhhdCBrZXJuZWwgZG9lcyBub3Qgc3VwcG9ydCBpdCwgd2l0aCBhIGhpbnQgYWJvdXQgbWlz
-c2luZw0KPkNPTkZJR19JT01NVUZELiBXZSBjYW4ndCBkbyB0aGlzIGZyb20gaW5pdGlhbGl6ZSBh
-cyB0aGVyZSBpcyBubyB3YXkgdG8NCj5yZXR1cm4gYW4gZXJyb3IsIGFuZCB3ZSBkb24ndCB3YW50
-IHRvIGFib3J0IGF0IHRoaXMgc3RlcC4NCj4NCj5SZXZpZXdlZC1ieTogUGhpbGlwcGUgTWF0aGll
-dS1EYXVkw6kgPHBoaWxtZEBsaW5hcm8ub3JnPg0KPlNpZ25lZC1vZmYtYnk6IFBpZXJyaWNrIEJv
-dXZpZXIgPHBpZXJyaWNrLmJvdXZpZXJAbGluYXJvLm9yZz4NCj4tLS0NCj4gYmFja2VuZHMvaW9t
-bXVmZC5jIHwgNiArKysrKysNCj4gMSBmaWxlIGNoYW5nZWQsIDYgaW5zZXJ0aW9ucygrKQ0KPg0K
-PmRpZmYgLS1naXQgYS9iYWNrZW5kcy9pb21tdWZkLmMgYi9iYWNrZW5kcy9pb21tdWZkLmMNCj5p
-bmRleCBhY2ZhYjkwN2MwMy4uMmMzY2EyM2NhMGYgMTAwNjQ0DQo+LS0tIGEvYmFja2VuZHMvaW9t
-bXVmZC5jDQo+KysrIGIvYmFja2VuZHMvaW9tbXVmZC5jDQo+QEAgLTcyLDYgKzcyLDEyIEBAIHN0
-YXRpYyBib29sDQo+aW9tbXVmZF9iYWNrZW5kX2Nhbl9iZV9kZWxldGVkKFVzZXJDcmVhdGFibGUg
-KnVjKQ0KPg0KPiBzdGF0aWMgdm9pZCBpb21tdWZkX2JhY2tlbmRfY29tcGxldGUoVXNlckNyZWF0
-YWJsZSAqdWMsIEVycm9yICoqZXJycCkNCj4gew0KPisgICAgaWYgKCFnX2ZpbGVfdGVzdCgiL2Rl
-di9pb21tdSIsIEdfRklMRV9URVNUX0VYSVNUUykpIHsNCj4rICAgICAgICBlcnJvcl9zZXRnKGVy
-cnAsICIvZGV2L2lvbW11IGRvZXMgbm90IGV4aXN0Ig0KPisgICAgICAgICAgICAgICAgICAgICAg
-ICAgIiAoaXMgeW91ciBrZXJuZWwgY29uZmlnIG1pc3NpbmcgQ09ORklHX0lPTU1VRkQ/KSIpOw0K
-PisgICAgICAgIHJldHVybjsNCj4rICAgIH0NCj4rDQo+ICAgICBJT01NVUZEQmFja2VuZCAqYmUg
-PSBJT01NVUZEX0JBQ0tFTkQodWMpOw0KPiAgICAgY29uc3QgY2hhciAqbmFtZSA9IGlvbW11ZmRf
-ZmRfbmFtZShiZSk7DQoNCkkgdGhpbmsgbW9yZSBhY2N1cmF0ZWx5IGl0IGNvdWxkIGJlOg0KDQpA
-QCAtODIsNyArODIsMTIgQEAgc3RhdGljIHZvaWQgaW9tbXVmZF9iYWNrZW5kX2NvbXBsZXRlKFVz
-ZXJDcmVhdGFibGUgKnVjLCBFcnJvciAqKmVycnApDQogICAgICAgICB9IGVsc2Ugew0KICAgICAg
-ICAgICAgIGNwcl9zYXZlX2ZkKG5hbWUsIDAsIGJlLT5mZCk7DQogICAgICAgICB9DQorICAgIH0g
-ZWxzZSBpZiAoIWdfZmlsZV90ZXN0KCIvZGV2L2lvbW11IiwgR19GSUxFX1RFU1RfRVhJU1RTKSkg
-ew0KKyAgICAgICAgZXJyb3Jfc2V0ZyhlcnJwLCAiL2Rldi9pb21tdSBkb2VzIG5vdCBleGlzdCIN
-CisgICAgICAgICAgICAgICAgICAgICAgICAgIiAoaXMgeW91ciBrZXJuZWwgY29uZmlnIG1pc3Np
-bmcgQ09ORklHX0lPTU1VRkQ/KSIpOw0KKyAgICAgICAgcmV0dXJuOw0KICAgICB9DQorDQogfQ0K
-DQpUaGFua3MNClpoZW56aG9uZw0K
+Sergei Heifetz <heifetz@yandex-team.com> writes:
+
+> When QEMU is configured with `--disable-audio`, do not build any
+> audio-related sources.
+>
+> - audio/meson.build and replay/meson.build:
+>   Exclude audio-related sources when audio is disabled.
+>
+> - replay/replay-audio-stub.c:
+>   Move the existing stubs from replay/stubs-system.c into a separate
+>   file.
+>
+> - qapi/audio.json:
+>   Remove the QMP `query-audiodevs` command.
+>
+> - hmp-commands*.hx:
+>   Remove the HMP `info capture`, `stopcapture` and `wavcapture`
+>   commands.
+>
+> - Other source files:
+>   Wrap audio-related code in ifdefs.
+>
+> Signed-off-by: Sergei Heifetz <heifetz@yandex-team.com>
+
+[...]
+
+> diff --git a/qapi/audio.json b/qapi/audio.json
+> index 2df87b97101..28fda7c8ac3 100644
+> --- a/qapi/audio.json
+> +++ b/qapi/audio.json
+> @@ -540,4 +540,5 @@
+>  # Since: 8.0
+>  ##
+>  { 'command': 'query-audiodevs',
+> -  'returns': ['Audiodev'] }
+> +  'returns': ['Audiodev'],
+> +  'if': 'CONFIG_AUDIO' }
+
+Could we disable all the audio stuff here?
+
+I tried, patch appended.  What do you think?
+
+> diff --git a/replay/meson.build b/replay/meson.build
+> index 4b4175e8dd4..dc2e94e8975 100644
+> --- a/replay/meson.build
+> +++ b/replay/meson.build
+> @@ -7,7 +7,14 @@ system_ss.add(when: 'CONFIG_TCG', if_true: files(
+>    'replay-char.c',
+>    'replay-snapshot.c',
+>    'replay-net.c',
+> -  'replay-audio.c',
+>    'replay-random.c',
+>    'replay-debugging.c',
+>  ), if_false: files('stubs-system.c'))
+> +
+> +if have_audio
+> +  system_ss.add(when: 'CONFIG_TCG',
+> +  if_true: files('replay-audio.c'),
+> +  if_false: files('replay-audio-stub.c'))
+> +else
+> +  system_ss.add(files('replay-audio-stub.c'))
+> +endif
+> diff --git a/replay/replay-audio-stub.c b/replay/replay-audio-stub.c
+> new file mode 100644
+> index 00000000000..b3da8e15583
+> --- /dev/null
+> +++ b/replay/replay-audio-stub.c
+> @@ -0,0 +1,21 @@
+> +/*
+> + * Stub for replay-audio.c
+> + *
+> + * SPDX-License-Identifier: GPL-2.0-or-later
+> + */
+> +
+> +#include "qemu/osdep.h"
+> +#include "system/replay.h"
+> +
+> +void replay_audio_in_start(size_t *nsamples)
+> +{
+> +}
+> +void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
+> +{
+> +}
+> +void replay_audio_in_finish(void)
+> +{
+> +}
+> +void replay_audio_out(size_t *played)
+> +{
+> +}
+
+Should this go into stubs/ instead?  Genuine question!  I can't tell
+when we use stubs/foo*.c and when we use foo/*stub.c.
+
+> diff --git a/replay/stubs-system.c b/replay/stubs-system.c
+> index b2c52bc4043..454415ae8e4 100644
+> --- a/replay/stubs-system.c
+> +++ b/replay/stubs-system.c
+> @@ -15,18 +15,6 @@ void replay_input_sync_event(void)
+>  void replay_add_blocker(const char *feature)
+>  {
+>  }
+> -void replay_audio_in_start(size_t *nsamples)
+> -{
+> -}
+> -void replay_audio_in_sample_lr(uint64_t *left, uint64_t *right)
+> -{
+> -}
+> -void replay_audio_in_finish(void)
+> -{
+> -}
+> -void replay_audio_out(size_t *played)
+> -{
+> -}
+>  void replay_breakpoint(void)
+>  {
+>  }
+
+[...]
+
+Note on the appended patch: the change to ui/dbus.c should be a separate
+cleanup patch.
+
+
+diff --git a/qapi/audio.json b/qapi/audio.json
+index 28fda7c8ac..4f5f5dd988 100644
+--- a/qapi/audio.json
++++ b/qapi/audio.json
+@@ -49,7 +49,8 @@
+     '*channels':       'uint32',
+     '*voices':         'uint32',
+     '*format':         'AudioFormat',
+-    '*buffer-length':  'uint32' } }
++    '*buffer-length':  'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevGenericOptions:
+@@ -65,7 +66,8 @@
+ { 'struct': 'AudiodevGenericOptions',
+   'data': {
+     '*in':  'AudiodevPerDirectionOptions',
+-    '*out': 'AudiodevPerDirectionOptions' } }
++    '*out': 'AudiodevPerDirectionOptions' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevDBusOptions:
+@@ -85,7 +87,8 @@
+   'data': {
+     '*in':  'AudiodevPerDirectionOptions',
+     '*out': 'AudiodevPerDirectionOptions',
+-    '*nsamples': 'uint32'} }
++    '*nsamples': 'uint32'},
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevAlsaPerDirectionOptions:
+@@ -107,7 +110,8 @@
+   'data': {
+     '*dev':           'str',
+     '*period-length': 'uint32',
+-    '*try-poll':      'bool' } }
++    '*try-poll':      'bool' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevAlsaOptions:
+@@ -126,7 +130,8 @@
+   'data': {
+     '*in':        'AudiodevAlsaPerDirectionOptions',
+     '*out':       'AudiodevAlsaPerDirectionOptions',
+-    '*threshold': 'uint32' } }
++    '*threshold': 'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevSndioOptions:
+@@ -148,7 +153,8 @@
+     '*in':        'AudiodevPerDirectionOptions',
+     '*out':       'AudiodevPerDirectionOptions',
+     '*dev':       'str',
+-    '*latency':   'uint32'} }
++    '*latency':   'uint32'},
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevCoreaudioPerDirectionOptions:
+@@ -163,7 +169,8 @@
+ { 'struct': 'AudiodevCoreaudioPerDirectionOptions',
+   'base': 'AudiodevPerDirectionOptions',
+   'data': {
+-    '*buffer-count': 'uint32' } }
++      '*buffer-count': 'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevCoreaudioOptions:
+@@ -179,7 +186,8 @@
+ { 'struct': 'AudiodevCoreaudioOptions',
+   'data': {
+     '*in':  'AudiodevCoreaudioPerDirectionOptions',
+-    '*out': 'AudiodevCoreaudioPerDirectionOptions' } }
++    '*out': 'AudiodevCoreaudioPerDirectionOptions' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevDsoundOptions:
+@@ -199,7 +207,8 @@
+   'data': {
+     '*in':      'AudiodevPerDirectionOptions',
+     '*out':     'AudiodevPerDirectionOptions',
+-    '*latency': 'uint32' } }
++    '*latency': 'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevJackPerDirectionOptions:
+@@ -233,7 +242,8 @@
+     '*client-name':   'str',
+     '*connect-ports': 'str',
+     '*start-server':  'bool',
+-    '*exact-name':    'bool' } }
++    '*exact-name':    'bool' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevJackOptions:
+@@ -249,7 +259,8 @@
+ { 'struct': 'AudiodevJackOptions',
+   'data': {
+     '*in':  'AudiodevJackPerDirectionOptions',
+-    '*out': 'AudiodevJackPerDirectionOptions' } }
++    '*out': 'AudiodevJackPerDirectionOptions' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevOssPerDirectionOptions:
+@@ -271,7 +282,8 @@
+   'data': {
+     '*dev':          'str',
+     '*buffer-count': 'uint32',
+-    '*try-poll':     'bool' } }
++    '*try-poll':     'bool' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevOssOptions:
+@@ -301,7 +313,8 @@
+     '*out':        'AudiodevOssPerDirectionOptions',
+     '*try-mmap':   'bool',
+     '*exclusive':  'bool',
+-    '*dsp-policy': 'uint32' } }
++    '*dsp-policy': 'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevPaPerDirectionOptions:
+@@ -326,7 +339,8 @@
+   'data': {
+     '*name': 'str',
+     '*stream-name': 'str',
+-    '*latency': 'uint32' } }
++    '*latency': 'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevPaOptions:
+@@ -345,7 +359,8 @@
+   'data': {
+     '*in':     'AudiodevPaPerDirectionOptions',
+     '*out':    'AudiodevPaPerDirectionOptions',
+-    '*server': 'str' } }
++    '*server': 'str' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevPipewirePerDirectionOptions:
+@@ -370,7 +385,8 @@
+   'data': {
+     '*name': 'str',
+     '*stream-name': 'str',
+-    '*latency': 'uint32' } }
++    '*latency': 'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevPipewireOptions:
+@@ -386,7 +402,8 @@
+ { 'struct': 'AudiodevPipewireOptions',
+   'data': {
+     '*in':     'AudiodevPipewirePerDirectionOptions',
+-    '*out':    'AudiodevPipewirePerDirectionOptions' } }
++    '*out':    'AudiodevPipewirePerDirectionOptions' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevSdlPerDirectionOptions:
+@@ -401,7 +418,8 @@
+ { 'struct': 'AudiodevSdlPerDirectionOptions',
+   'base': 'AudiodevPerDirectionOptions',
+   'data': {
+-    '*buffer-count': 'uint32' } }
++    '*buffer-count': 'uint32' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevSdlOptions:
+@@ -417,7 +435,8 @@
+ { 'struct': 'AudiodevSdlOptions',
+   'data': {
+     '*in':  'AudiodevSdlPerDirectionOptions',
+-    '*out': 'AudiodevSdlPerDirectionOptions' } }
++    '*out': 'AudiodevSdlPerDirectionOptions' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevWavOptions:
+@@ -436,7 +455,8 @@
+   'data': {
+     '*in':   'AudiodevPerDirectionOptions',
+     '*out':  'AudiodevPerDirectionOptions',
+-    '*path': 'str' } }
++    '*path': 'str' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudioFormat:
+@@ -460,7 +480,8 @@
+ # Since: 4.0
+ ##
+ { 'enum': 'AudioFormat',
+-  'data': [ 'u8', 's8', 'u16', 's16', 'u32', 's32', 'f32' ] }
++  'data': [ 'u8', 's8', 'u16', 's16', 'u32', 's32', 'f32' ],
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @AudiodevDriver:
+@@ -484,7 +505,8 @@
+             { 'name': 'sdl', 'if': 'CONFIG_AUDIO_SDL' },
+             { 'name': 'sndio', 'if': 'CONFIG_AUDIO_SNDIO' },
+             { 'name': 'spice', 'if': 'CONFIG_SPICE' },
+-            'wav' ] }
++            'wav' ],
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @Audiodev:
+@@ -530,7 +552,8 @@
+                    'if': 'CONFIG_AUDIO_SNDIO' },
+     'spice':     { 'type': 'AudiodevGenericOptions',
+                    'if': 'CONFIG_SPICE' },
+-    'wav':       'AudiodevWavOptions' } }
++    'wav':       'AudiodevWavOptions' },
++  'if': 'CONFIG_AUDIO' }
+ 
+ ##
+ # @query-audiodevs:
+diff --git a/audio/mixeng.h b/audio/mixeng.h
+index f63283f408..0dfd5204a6 100644
+--- a/audio/mixeng.h
++++ b/audio/mixeng.h
+@@ -25,6 +25,8 @@
+ #ifndef QEMU_MIXENG_H
+ #define QEMU_MIXENG_H
+ 
++#ifdef CONFIG_AUDIO
++
+ #ifdef FLOAT_MIXENG
+ typedef float mixeng_real;
+ struct mixeng_volume { int mute; mixeng_real r; mixeng_real l; };
+@@ -56,4 +58,5 @@ uint32_t st_rate_frames_in(void *opaque, uint32_t frames_out);
+ void mixeng_clear (struct st_sample *buf, int len);
+ void mixeng_volume (struct st_sample *buf, int len, struct mixeng_volume *vol);
+ 
++#endif
+ #endif /* QEMU_MIXENG_H */
+diff --git a/include/qemu/audio-capture.h b/include/qemu/audio-capture.h
+index f1319c9002..5774967c0e 100644
+--- a/include/qemu/audio-capture.h
++++ b/include/qemu/audio-capture.h
+@@ -8,6 +8,8 @@
+ 
+ #include "audio.h"
+ 
++#ifdef CONFIG_AUDIO
++
+ struct capture_ops {
+     void (*info) (void *opaque);
+     void (*destroy) (void *opaque);
+@@ -30,4 +32,5 @@ void audio_be_del_capture(
+     CaptureVoiceOut *cap,
+     void *cb_opaque);
+ 
++#endif
+ #endif /* QEMU_AUDIO_CAPTURE_H */
+diff --git a/include/qemu/audio.h b/include/qemu/audio.h
+index cff8a334f3..1788a54877 100644
+--- a/include/qemu/audio.h
++++ b/include/qemu/audio.h
+@@ -32,6 +32,8 @@
+ #include "gio/gio.h"
+ #endif
+ 
++#ifdef CONFIG_AUDIO
++
+ typedef void (*audio_callback_fn) (void *opaque, int avail);
+ 
+ typedef struct audsettings {
+@@ -240,4 +242,7 @@ static inline bool audio_format_is_signed(AudioFormat fmt)
+ #define TYPE_AUDIO_BACKEND "audio-backend"
+ OBJECT_DECLARE_TYPE(AudioBackend, AudioBackendClass, AUDIO_BACKEND)
+ 
++#else
++//#define audio_cleanup() ((void)0)
++#endif
+ #endif /* QEMU_AUDIO_H */
+diff --git a/ui/vnc.h b/ui/vnc.h
+index ec8d0c91b5..89e0199be1 100644
+--- a/ui/vnc.h
++++ b/ui/vnc.h
+@@ -184,7 +184,9 @@ struct VncDisplay
+     VncDisplaySASL sasl;
+ #endif
+ 
++#ifdef CONFIG_AUDIO
+     AudioBackend *audio_be;
++#endif
+ 
+     VMChangeStateEntry *vmstate_handler_entry;
+ };
+@@ -325,8 +327,10 @@ struct VncState
+     pixman_format_code_t client_format;
+     int client_endian; /* G_LITTLE_ENDIAN or G_BIG_ENDIAN */
+ 
++#ifdef CONFIG_AUDIO
+     CaptureVoiceOut *audio_cap;
+     struct audsettings as;
++#endif
+ 
+     VncReadEvent *read_handler;
+     size_t read_handler_expect;
+diff --git a/ui/dbus.c b/ui/dbus.c
+index 99dac3e7fe..6086efd017 100644
+--- a/ui/dbus.c
++++ b/ui/dbus.c
+@@ -35,7 +35,6 @@
+ #include "ui/egl-context.h"
+ #endif
+ #include "qemu/audio.h"
+-#include "audio/audio_int.h" /* FIXME: use QOM dynamic cast instead of drv->name */
+ #include "qapi/error.h"
+ #include "trace.h"
+ 
+diff --git a/ui/vnc.c b/ui/vnc.c
+index 0ee5502d1e..7004c875a1 100644
+--- a/ui/vnc.c
++++ b/ui/vnc.c
+@@ -1103,7 +1103,13 @@ static void vnc_update_throttle_offset(VncState *vs)
+     if (vs->throttle_output_offset != offset) {
+         trace_vnc_client_throttle_threshold(
+             vs, vs->ioc, vs->throttle_output_offset, offset, vs->client_width,
+-            vs->client_height, vs->client_pf.bytes_per_pixel, vs->audio_cap);
++            vs->client_height, vs->client_pf.bytes_per_pixel,
++#ifdef CONFIG_AUDIO
++            vs->audio_cap
++#else
++            NULL
++#endif
++            );
+     }
+ 
+     vs->throttle_output_offset = offset;
+
 
