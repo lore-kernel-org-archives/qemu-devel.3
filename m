@@ -4,96 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5796F1075277
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4D7A61075276
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:34:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w38p7-0000t1-Me; Thu, 19 Mar 2026 04:33:45 -0400
+	id 1w38p5-0000rV-F4; Thu, 19 Mar 2026 04:33:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w38p6-0000s8-E8
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:33:44 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w38p4-0000rA-2j
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:33:42 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w38p4-0000pe-QG
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:33:44 -0400
+ (Exim 4.90_1) (envelope-from <clg@redhat.com>) id 1w38p2-0000oa-Ez
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:33:41 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773909222;
+ s=mimecast20190719; t=1773909215;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=7cLxMYNgXnfzz+PN/QWKG8UKjJ1/reoqJ1cH5s+c4Fk=;
- b=Y1y3X78iVB8S3jtGl+7WfbJZqlnDfZJfKzkniOBbztVolDddUDHyT5ZJJV7USrTL4c2e4C
- kGxGJY9qaf99qclbFh8A0bZmYnIiQdMWDfHOq+VIl2rgjlPKtdJVBN1M9/mV/NBPi95MtS
- PLnPLwWvampM7n2pIGcRomRLVMXZLxQ=
-Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
- [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=HnkW5TkmBbhUGG0jH5VbJhi7a7XgbMiDFeA7rDQ0ZPg=;
+ b=XPL0ZCmW/7Z9LyYGTJ12qlKXSEa14loQw7by61s2sSv1Z2bzPNSWENYXQGaJh7s/7W4tSY
+ NJxrtScsl1YOclHchdMv6N/MBLIZcvfx/wPRzYH8YHbX8fPW617p/9loJGONR3wug/BSty
+ pPU5bBuNEXF3BtQZcoc2BxQ/KmWQEAE=
+Received: from mail-wm1-f69.google.com (mail-wm1-f69.google.com
+ [209.85.128.69]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-12-pm90BEFdO42wNBe0Y4RmUw-1; Thu, 19 Mar 2026 04:33:40 -0400
-X-MC-Unique: pm90BEFdO42wNBe0Y4RmUw-1
-X-Mimecast-MFC-AGG-ID: pm90BEFdO42wNBe0Y4RmUw_1773909219
-Received: by mail-wr1-f70.google.com with SMTP id
- ffacd0b85a97d-43b3a41c62bso934403f8f.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 01:33:40 -0700 (PDT)
+ us-mta-551-mtF8xJMpNHOYBMMnCNNM_Q-1; Thu, 19 Mar 2026 04:33:28 -0400
+X-MC-Unique: mtF8xJMpNHOYBMMnCNNM_Q-1
+X-Mimecast-MFC-AGG-ID: mtF8xJMpNHOYBMMnCNNM_Q_1773909201
+Received: by mail-wm1-f69.google.com with SMTP id
+ 5b1f17b1804b1-485375aa56eso7233245e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 01:33:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773909219; x=1774514019; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773909201; x=1774514001; darn=nongnu.org;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:from:to:cc:subject:date:message-id:reply-to;
- bh=7cLxMYNgXnfzz+PN/QWKG8UKjJ1/reoqJ1cH5s+c4Fk=;
- b=G8/drxUUmcgBASaXkJieV59wqTIgGAtz23uCNf44RZmqQXV2r1cPqNd+mqy6QIX1F4
- YXBiu1V9+DqMOsVqOiWPis/Y38nrdwvL/XKgHnJEh0WXVJ5zQiABvxH2XEqhcYb+/BqC
- rbIAew4mpz8WlTJYLYeOey0Vs5y4OC58IZnn9jn86dW0pklYUzLREgjdtqZ1yVB1VE0i
- lFHLV+Fa+94QUQhXU9x7+kGtDG/rLbOwwC8LmqbP01qVVIcLWxhiZnoYfJcmoqCel4nT
- Tyfbu+0SLTeJdkqCpsEvUPZOXvmbSPfNJ9Kz+9vjMBMrncEjKRHDlj7tWOo1pJONIAym
- /3Yg==
+ bh=HnkW5TkmBbhUGG0jH5VbJhi7a7XgbMiDFeA7rDQ0ZPg=;
+ b=LHji82Vwa3Y8845HvvBP4Ia7XYuF4SJBrb+z+mU0CnMMb4X1ZVAr5rw169gxTJby55
+ h36vNhWLRqiQE8fKoKIsiyjqnlSoYEvnCuf/5cM63wwS/ZWA4BbtDQ4TYsLxNZtw1l0G
+ QBHjhMzklBEGsbrLVM2dL+co7AP+xrilHmp6S7pLcLm0zPPVNmmKXI7yixCkFbiKnsgP
+ dQuHj3vLJsJTIN9VbWJIta8VfUmlSFhMILfX4kNEL4M6zPkaPv/eZtdiVmWmE+c9TGvT
+ C5cGbCsoggJCDFzBn4zzmBp4xHokG0H/L6cL7UYKYiXDwFo2J2t7hJ/Hk6KCoz4lsXhw
+ 7osg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773909219; x=1774514019;
+ d=1e100.net; s=20251104; t=1773909201; x=1774514001;
  h=content-transfer-encoding:in-reply-to:autocrypt:from
  :content-language:references:cc:to:subject:user-agent:mime-version
  :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=7cLxMYNgXnfzz+PN/QWKG8UKjJ1/reoqJ1cH5s+c4Fk=;
- b=R/kEQmtvC0TBA0uMRpdGtMOgn6wErh4u0q3Gyl/fLfQl/NMa//MlGMItpoZSTlfU66
- OohXjaShNA9iV/w4vayWr8TIQw2/viOiNPiQB/eN0KRXscKKNkDZoiXY3YtpbDi/GAsM
- 5Q5d1HamL52CjM35vUZ2+/TkxSN9tO/4Vz9EN3A8Nd03xAYt3qLHf9XNkKwLFazHAiRf
- uk+RWzRuDKV3L4Fip3I2gsPVKP3YKVTUtSXWGWmEWgdhMwfoQvtw2+WP8ZlBF676yyMA
- KRxvTtpgfX8eUFvn/sSC6XCfJog1OwRd5rYcRNV64QgWyE5su7PZSysiOAHhS8EOFUZq
- R7BA==
+ bh=HnkW5TkmBbhUGG0jH5VbJhi7a7XgbMiDFeA7rDQ0ZPg=;
+ b=rUc7TkARYZU1IT/B0Q/6+cHyvgZXW21Lbzs7QWCBQaVBL2opS2zHu/tGg7jEZbJ1yX
+ oxaYwEYoAA230jvCQRpxQVlxVe4Y3lxODRV300yPg8dPNf1a6fHM1VC4dUnoxDmjrXBi
+ HmpEPcyVpvrb4j8RJYTcadN95SYokRFWC+kfhZLZ7zG2Q9IrFEl3/cdC4Jw5b4j8gwjV
+ 0ZM3UKIsvun1Tgd9ZKrdiEiP3dmd0iPOy1VpUr6mH7VLmd0SB8/Jv1fpADCrGJdhGLSX
+ xAn1hTkT9HPO8BWxB8lB7DUbd9YJ409Tmcc0Nd883K1jAWVS3aUn6A3n9+SvRDo1l8W3
+ l3tw==
 X-Forwarded-Encrypted: i=1;
- AJvYcCVvhBA8oTL++DdjiSM8rBky66zXbcD0SxfG+dUi5LkoMqskm55FoM5obk3mH5NqAmZIYfxuyYHfYEUm@nongnu.org
-X-Gm-Message-State: AOJu0Yw518b7TguCItqYWZ/P1Tdx9eF4Qln43o5+dYqOEwlW9W4AEcE0
- LvF8Kk5or2lMf921Bo3DBDtFaUQ7JLic9Fl9AtD5KfL2BUjxhefRLuqwSx4hsgTQDJALMSCDB8w
- We9IBCO9ssy/Bd3AZTTz0I5B4jajeTRAiuPaMUt7dQ7FcJi9t3RqsPDTr
-X-Gm-Gg: ATEYQzy4oGk0GVhqu5mIIrxNpzCq7XMrHzT/Fym8ET1vMgR17/3Xc3sLsKunJzW6KAC
- T8O88nsmRgSbThVTWa/HOpn+PKWpzIOJ+9oywereO0OXjCAX0cWVmleMC9R0vLJva2En05gXleI
- She6D4/+O+gjcRO/KNCA093pNQ80ifpimFC3+66L0HpwAWNy52H/CBj22xAyHks52cx5Vhurd+c
- vIp0pQ9G6r4d1nf1ZlLNaJHDAnHuGeMV7/ZSHPSYVXgh10RY5MC/hVtwaqzWUVXA4po26cdGMy4
- XOpkAO128VxlqJu2gP6dZ3zsxe40wUt4/3mlQXnIrTefEdABtL5EDBbl6M3BL3cVAMmy1zF8hmU
- IolV36zPvbildJYUru1inNJI4ekaFD22P+X07r2nYs/rJ0jjGAbJ0zelq0E/8
-X-Received: by 2002:a5d:584e:0:b0:43b:495a:a760 with SMTP id
- ffacd0b85a97d-43b527a4af6mr11257299f8f.5.1773909219234; 
- Thu, 19 Mar 2026 01:33:39 -0700 (PDT)
-X-Received: by 2002:a5d:584e:0:b0:43b:495a:a760 with SMTP id
- ffacd0b85a97d-43b527a4af6mr11257247f8f.5.1773909218682; 
- Thu, 19 Mar 2026 01:33:38 -0700 (PDT)
+ AJvYcCX6i+5CL3CfkvPEH/9hHhvvb+FpnnIVxsFzlCK1jLj5QwhRZwrVnY7+O6DxkhKYZk/BAUPyMzXfEbNP@nongnu.org
+X-Gm-Message-State: AOJu0YxM/GuxkPEzPmiIIHq/gzBBtXnMGN3R2c5wJj6uRG66uv2zhjdZ
+ qeCEcMNpZJuJlVoWB/Uw7dZu0i2hpP2TbrD57qOABG75/EOJBuktoWon3/0WdhkSRFA4i2l6vkj
+ fB+K7Av7Fgyr3BEv02reYbU7mpFP8In7HKrZxgP/MvD9iNJoHKr+Gxv52
+X-Gm-Gg: ATEYQzxSq15YKyAP7ZMD6nd6oAVrUEtNvEyIjOj4KtbcN3PTclsthEqxyEpRckvcY6o
+ 4vU61jasR+1n/LUigP1ZGeZoXxZLs0MN17u0PPGZ+ED05GZ6V1O2FKOU/a7JyUM3ULdgET2Hhmg
+ Qjv6Z292KhdKbdvLMqMcP2JgGe4hcjdHbtazsaXczbSXsXAF7JcuxKZeLtU/z/3pMXLGjMJmI9R
+ vGqiJ8prCWENgO7v2gmbVFt5zNU1iLecz0R7JrFpuEega80tPPqpBHcIAfeXIJs1ya/jZyI7o0H
+ dRTzoZwooAE9QOQChdfxX4vDKskGRFfhjhajczuFqMtO7olJbst3AXR+OORF518xVeY6mFwb7pP
+ sEA3D5ge1VO7gwjB0+P38+ESN4LEZaxaZh9LYV2MjgkcUdWpcHeiETU1/y1My
+X-Received: by 2002:a05:600c:3491:b0:483:7783:537b with SMTP id
+ 5b1f17b1804b1-486f4450338mr99717255e9.24.1773909200710; 
+ Thu, 19 Mar 2026 01:33:20 -0700 (PDT)
+X-Received: by 2002:a05:600c:3491:b0:483:7783:537b with SMTP id
+ 5b1f17b1804b1-486f4450338mr99716805e9.24.1773909200262; 
+ Thu, 19 Mar 2026 01:33:20 -0700 (PDT)
 Received: from ?IPV6:2a01:e0a:280:24f0:9db0:474c:ff43:9f5c?
  ([2a01:e0a:280:24f0:9db0:474c:ff43:9f5c])
  by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b518986fcsm13503461f8f.26.2026.03.19.01.33.37
+ 5b1f17b1804b1-486f4e48ad5sm164422045e9.1.2026.03.19.01.33.19
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Thu, 19 Mar 2026 01:33:38 -0700 (PDT)
-Message-ID: <24e4d1f4-a51c-40e0-be50-54a561cc1b2b@redhat.com>
-Date: Thu, 19 Mar 2026 09:33:37 +0100
+ Thu, 19 Mar 2026 01:33:19 -0700 (PDT)
+Message-ID: <0fe351a8-e08c-401a-af43-578c7be9ab2a@redhat.com>
+Date: Thu, 19 Mar 2026 09:33:18 +0100
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v5 0/8] hw/vfio: single-binary
+Subject: Re: [PATCH v5 5/8] hw/vfio/pci.c: eradicate CONFIG_KVM
 To: Pierrick Bouvier <pierrick.bouvier@linaro.org>, qemu-devel@nongnu.org
 Cc: Richard Henderson <richard.henderson@linaro.org>, eric.auger@redhat.com,
  Paolo Bonzini <pbonzini@redhat.com>, philmd@linaro.org, qemu-ppc@nongnu.org
 References: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
+ <20260318174733.1717643-6-pierrick.bouvier@linaro.org>
 Content-Language: en-US, fr
 From: =?UTF-8?Q?C=C3=A9dric_Le_Goater?= <clg@redhat.com>
 Autocrypt: addr=clg@redhat.com; keydata=
@@ -139,17 +140,17 @@ Autocrypt: addr=clg@redhat.com; keydata=
  HQoPn9qrDJgsgcbBVc1gkUT6hnxShKPp4PlsZVMNjvPAnr5TEBgHkk54HQRhhwcYv1T2QumQ
  izDiU6iOrUzBThaMhZO3i927SG2DwWDVzZltKrCMD1aMPvb3NU8FOYRhNmIFR3fcalYr+9gD
  uVKe8BVz4atMOoktmt0GWTOC8P4=
-In-Reply-To: <20260318174733.1717643-1-pierrick.bouvier@linaro.org>
+In-Reply-To: <20260318174733.1717643-6-pierrick.bouvier@linaro.org>
 Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=clg@redhat.com;
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=clg@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -168,67 +169,138 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 3/18/26 18:47, Pierrick Bouvier wrote:
-> This series makes changes to hw/vfio to compile files only once.
-> Changes are pretty straightforward and are mostly extraction of kvm/other config
-> specific functions to proper files.
-> This is the last hw/* subsystem that needs to be changed for single-binary.
+> We just need to add kvm_enabled() guard when calling concerned
+> functions, but no need to extract those kvm functions since they are not
+> using any kvm specific types that would not be visible at compilation
+> time.
 > 
-> v5
-> --
+> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+> Signed-off-by: Pierrick Bouvier <pierrick.bouvier@linaro.org>
+> ---
+>   hw/vfio/pci.c | 28 ++++++++++------------------
+>   1 file changed, 10 insertions(+), 18 deletions(-)
 > 
-> - Fix extra SoB in "hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD"
-> - Rebase on top of master and remove pixman/opengl details in commit description
->    since it's now already merged.
-> 
-> v4
-> --
-> 
-> - rewrite commit description for "hw/vfio: eradicate CONFIG_IOMMU from sources"
-> 
-> v2 (sent as v3)
-> ---------------
-> 
-> - use global stub_ss (fix some missing dependencies in this case)
-> - move kvm_enabled() guard check on function calls
-> - s/Vfio spapr kvm/VFIO sPAPR KVM/
-> 
-> Pierrick Bouvier (8):
->    hw/vfio/listener.c: remove CONFIG_KVM
->    hw/vfio/helpers.c: extract kvm helpers in kvm-helpers.c
->    hw/vfio/pci-quirks.c: remove CONFIG_VFIO_IGD
->    hw/vfio: eradicate CONFIG_IOMMU from sources
->    hw/vfio/pci.c: eradicate CONFIG_KVM
->    hw/vfio/ap.c: use full path for target specific header
->    hw/vfio/spapr.c: extract vfio_spapr_kvm_attach_tce to
->      hw/vfio/kvm-spapr.c
->    hw/vfio: all vfio files can now be common files
-> 
->   hw/vfio/kvm-spapr.h          |  12 +++
->   hw/vfio/pci.h                |   2 +
->   target/s390x/kvm/kvm_s390x.h |   2 +-
->   hw/vfio/ap.c                 |  11 +-
->   hw/vfio/ccw.c                |   9 --
->   hw/vfio/helpers.c            | 172 -------------------------------
->   hw/vfio/igd-stubs.c          |  20 ++++
->   hw/vfio/kvm-helpers.c        | 192 +++++++++++++++++++++++++++++++++++
->   hw/vfio/kvm-spapr.c          |  47 +++++++++
->   hw/vfio/kvm-stubs.c          |  34 +++++++
->   hw/vfio/listener.c           |   4 -
->   hw/vfio/pci-quirks.c         |   5 -
->   hw/vfio/pci.c                |  39 ++-----
->   hw/vfio/spapr.c              |  30 +-----
->   hw/vfio/meson.build          |   6 +-
->   15 files changed, 328 insertions(+), 257 deletions(-)
->   create mode 100644 hw/vfio/kvm-spapr.h
->   create mode 100644 hw/vfio/igd-stubs.c
->   create mode 100644 hw/vfio/kvm-helpers.c
->   create mode 100644 hw/vfio/kvm-spapr.c
->   create mode 100644 hw/vfio/kvm-stubs.c
-> 
+> diff --git a/hw/vfio/pci.c b/hw/vfio/pci.c
+> index df617f1fe46..811e5001de5 100644
+> --- a/hw/vfio/pci.c
+> +++ b/hw/vfio/pci.c
+> @@ -152,7 +152,6 @@ void vfio_pci_intx_eoi(VFIODevice *vbasedev)
+>   
+>   static bool vfio_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> -#ifdef CONFIG_KVM
+>       PCIDevice *pdev = PCI_DEVICE(vdev);
+>       int irq_fd = event_notifier_get_fd(&vdev->intx.interrupt);
+>   
+> @@ -206,14 +205,10 @@ fail:
+>       qemu_set_fd_handler(irq_fd, vfio_intx_interrupt, NULL, vdev);
+>       vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+>       return false;
+> -#else
+> -    return true;
+> -#endif
+>   }
+>   
+>   static bool vfio_cpr_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>   {
+> -#ifdef CONFIG_KVM
+>       if (vdev->no_kvm_intx || !kvm_irqfds_enabled() ||
+>           vdev->intx.route.mode != PCI_INTX_ENABLED ||
+>           !kvm_resamplefds_enabled()) {
+> @@ -236,14 +231,10 @@ static bool vfio_cpr_intx_enable_kvm(VFIOPCIDevice *vdev, Error **errp)
+>       vdev->intx.kvm_accel = true;
+>       trace_vfio_intx_enable_kvm(vdev->vbasedev.name);
+>       return true;
+> -#else
+> -    return true;
+> -#endif
+>   }
+>   
+>   static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
+>   {
+> -#ifdef CONFIG_KVM
+>       PCIDevice *pdev = PCI_DEVICE(vdev);
+>   
+>       if (!vdev->intx.kvm_accel) {
+> @@ -277,7 +268,6 @@ static void vfio_intx_disable_kvm(VFIOPCIDevice *vdev)
+>       vfio_device_irq_unmask(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+>   
+>       trace_vfio_intx_disable_kvm(vdev->vbasedev.name);
+> -#endif
+>   }
+>   
+>   static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
+> @@ -287,7 +277,9 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
+>       trace_vfio_intx_update(vdev->vbasedev.name,
+>                              vdev->intx.route.irq, route->irq);
+>   
+> -    vfio_intx_disable_kvm(vdev);
+> +    if (kvm_enabled()) {
+> +        vfio_intx_disable_kvm(vdev);
+> +    }
+>   
+>       vdev->intx.route = *route;
+>   
+> @@ -295,7 +287,7 @@ static void vfio_intx_update(VFIOPCIDevice *vdev, PCIINTxRoute *route)
+>           return;
+>       }
+>   
+> -    if (!vfio_intx_enable_kvm(vdev, &err)) {
+> +    if (kvm_enabled() && !vfio_intx_enable_kvm(vdev, &err)) {
+>           warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+>       }
+>   
+> @@ -350,16 +342,14 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>       vdev->intx.pin = pin - 1; /* Pin A (1) -> irq[0] */
+>       pci_config_set_interrupt_pin(pdev->config, pin);
+>   
+> -#ifdef CONFIG_KVM
+>       /*
+>        * Only conditional to avoid generating error messages on platforms
+>        * where we won't actually use the result anyway.
+>        */
+> -    if (kvm_irqfds_enabled() && kvm_resamplefds_enabled()) {
+> +    if (kvm_enabled() && kvm_irqfds_enabled() && kvm_resamplefds_enabled()) {
+>           vdev->intx.route = pci_device_route_intx_to_irq(pdev,
+>                                                           vdev->intx.pin);
+>       }
+> -#endif
+>   
+>       if (!vfio_notifier_init(vdev, &vdev->intx.interrupt, "intx-interrupt", 0,
+>                               errp)) {
+> @@ -370,7 +360,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>   
+>   
+>       if (cpr_is_incoming()) {
+> -        if (!vfio_cpr_intx_enable_kvm(vdev, &err)) {
+> +        if (kvm_enabled() && !vfio_cpr_intx_enable_kvm(vdev, &err)) {
+>               warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+>           }
+>           goto skip_signaling;
+> @@ -383,7 +373,7 @@ static bool vfio_intx_enable(VFIOPCIDevice *vdev, Error **errp)
+>           return false;
+>       }
+>   
+> -    if (!vfio_intx_enable_kvm(vdev, &err)) {
+> +    if (kvm_enabled() && !vfio_intx_enable_kvm(vdev, &err)) {
+>           warn_reportf_err(err, VFIO_MSG_PREFIX, vdev->vbasedev.name);
+>       }
+>   
+> @@ -400,7 +390,9 @@ static void vfio_intx_disable(VFIOPCIDevice *vdev)
+>       int fd;
+>   
+>       timer_del(vdev->intx.mmap_timer);
+> -    vfio_intx_disable_kvm(vdev);
+> +    if (kvm_enabled()) {
+> +        vfio_intx_disable_kvm(vdev);
+> +    }
+>       vfio_device_irq_disable(&vdev->vbasedev, VFIO_PCI_INTX_IRQ_INDEX);
+>       vdev->intx.pending = false;
+>       pci_irq_deassert(pdev);
 
 
 
-Tested-by: Cédric Le Goater <clg@redhat.com>
+Reviewed-by: Cédric Le Goater <clg@redhat.com>
 
 Thanks,
 
