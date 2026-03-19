@@ -4,69 +4,75 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0D4011075279
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:49:29 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id E6912107527C
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 08:58:17 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w393a-0005Pc-PD; Thu, 19 Mar 2026 04:48:42 -0400
+	id 1w39CK-0007tt-UX; Thu, 19 Mar 2026 04:57:44 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w393Z-0005Or-G0
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:48:41 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w39CJ-0007rw-Dk
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:57:43 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w393W-0002Uc-Kd
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:48:41 -0400
+ (Exim 4.90_1) (envelope-from <berrange@redhat.com>)
+ id 1w39CG-00041Z-6X
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:57:43 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773910116;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ s=mimecast20190719; t=1773910658;
+ h=from:from:reply-to:reply-to:subject:subject:date:date:
+ message-id:message-id:to:to:cc:cc:mime-version:mime-version:
+ content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jmbiiSOBSoP+Zu6ZWDpTCvgMgC7r1jcE1U3v75zs+w8=;
- b=izw42Ck7QMji7f4EZvHlUHGimkKZNVZ761bhnrfZlgfZ8mzVgfG7iEq7tLtiiN49iOu1nN
- Qq9AyME/4whli2kxpqLEHS8CYZbDZRChCH3GXB2NeC9e8MIuIDGVePAP54yQtv+QedvdoL
- 3fdYo55sFl6xdXhodgkPePyoMCUe8k4=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ bh=lkBt8n9DalVs6oma+veIa/stHz5C4Wl2ecDeBFozS5Q=;
+ b=HSRxcamXV42nna8JtIE1+ibdKYsbopqXIXmd6volrwlBDtt6fSCxKWaSTyPq89rOCCdAI7
+ 3pbNqQtGN2ZjhCtWOL+uo5ux6DWX+9EuoE3ZnFs7QuzPR6D4eBmSdpwC+EV09vNDIBknjn
+ 0TOOvV3KE5Alq1Tg0jag+c5ydlpTM74=
+Received: from mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com
  (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
  relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-135-chMXbMKMOtSLAs_cvPZ8Tw-1; Thu,
- 19 Mar 2026 04:48:34 -0400
-X-MC-Unique: chMXbMKMOtSLAs_cvPZ8Tw-1
-X-Mimecast-MFC-AGG-ID: chMXbMKMOtSLAs_cvPZ8Tw_1773910113
-Received: from mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.93])
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-388-eFNYyKYMM268RkXwJmt9_w-1; Thu,
+ 19 Mar 2026 04:57:35 -0400
+X-MC-Unique: eFNYyKYMM268RkXwJmt9_w-1
+X-Mimecast-MFC-AGG-ID: eFNYyKYMM268RkXwJmt9_w_1773910654
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 6658818002CF; Thu, 19 Mar 2026 08:48:33 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id B475D18001FE; Thu, 19 Mar 2026 08:48:32 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id 544A321E6937; Thu, 19 Mar 2026 09:48:30 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Samuel Zhang <guoqing.zhang@amd.com>
-Cc: <qemu-devel@nongnu.org>,  <Emily.Deng@amd.com>,  <PengJu.Zhou@amd.com>
-Subject: Re: [PATCH] migration/rdma: add x-rdma-chunk-shift parameter
-In-Reply-To: <20260316062308.1240426-1-guoqing.zhang@amd.com> (Samuel Zhang's
- message of "Mon, 16 Mar 2026 14:23:08 +0800")
-References: <20260316062308.1240426-1-guoqing.zhang@amd.com>
-Date: Thu, 19 Mar 2026 09:48:30 +0100
-Message-ID: <874imcciht.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ by mx-prod-mc-06.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id BAD8B18005BB; Thu, 19 Mar 2026 08:57:33 +0000 (UTC)
+Received: from redhat.com (unknown [10.44.33.194])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 24D071955F21; Thu, 19 Mar 2026 08:57:29 +0000 (UTC)
+Date: Thu, 19 Mar 2026 08:57:26 +0000
+From: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
+To: Michael Tokarev <mjt@tls.msk.ru>
+Cc: Fabiano Rosas <farosas@suse.de>, qemu-devel@nongnu.org,
+ Peter Xu <peterx@redhat.com>, qemu-stable <qemu-stable@nongnu.org>
+Subject: Re: [PULL 02/10] io: Fix TLS bye task leak
+Message-ID: <abu6drYEygCgA0R9@redhat.com>
+References: <20260317182320.31991-1-farosas@suse.de>
+ <20260317182320.31991-3-farosas@suse.de>
+ <f6c365e9-7d4e-4ad5-afc3-1fe31230baae@tls.msk.ru>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.4.1 on 10.30.177.93
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <f6c365e9-7d4e-4ad5-afc3-1fe31230baae@tls.msk.ru>
+User-Agent: Mutt/2.2.14 (2025-02-20)
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=berrange@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -81,239 +87,46 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-To: Daniel =?utf-8?B?UC4gQmVycmFuZ8Op?= <berrange@redhat.com>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Samuel Zhang <guoqing.zhang@amd.com> writes:
+On Wed, Mar 18, 2026 at 11:36:50PM +0300, Michael Tokarev wrote:
+> On 17.03.2026 21:23, Fabiano Rosas wrote:
+> > Recent fixes to TLS tasks memory handling have left the TLS bye task
+> > uncovered. Fix by freeing the task in the same way the handshake task
+> > is freed.
+> > 
+> > Direct leak of 704 byte(s) in 4 object(s) allocated from:
+> >      #1 0x7f5909b1d6a0 in g_malloc0 ../glib/gmem.c:163
+> >      #2 0x557650496d61 in qio_task_new ../io/task.c:58:12
+> >      #3 0x557650475d7f in qio_channel_tls_bye ../io/channel-tls.c:352:12
+> >      #4 0x55764f7a1bb4 in migration_tls_channel_end ../migration/tls.c:159:5
+> >      #5 0x55764f709750 in migration_ioc_shutdown_gracefully ../migration/multifd.c:462:9
+> >      #6 0x55764f6fcf53 in multifd_send_terminate_threads ../migration/multifd.c:493:13
+> >      #7 0x55764f6fcafb in multifd_send_shutdown ../migration/multifd.c:580:5
+> >      #8 0x55764f6e1b14 in migration_cleanup ../migration/migration.c:1323:9
+> >      #9 0x55764f6f5bac in migration_cleanup_bh ../migration/migration.c:1350:5
+> > 
+> > Fixes: d39d0f3acd ("io: fix cleanup for TLS I/O source data on cancellation")
+> > Reviewed-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Acked-by: Daniel P. Berrangé <berrange@redhat.com>
+> > Link: https://lore.kernel.org/qemu-devel/20260311213418.16951-3-farosas@suse.de
+> > Signed-off-by: Fabiano Rosas <farosas@suse.de>
+> 
+> This seems like a qemu-stable material, -- since the above mentioned
+> commit is in currently active stable branches.
+> 
+> Please let me know if I shouldn't pick it up for the currently active
+> stable branches (10.0 & 10.2).
 
-> The default 1MB RDMA chunk size causes slow live migration because
-> each chunk triggers a write_flush (ibv_post_send). For 8GB RAM,
-> 1MB chunks produce ~15000 flushes vs ~3700 with 1GB chunks.
->
-> Add x-rdma-chunk-shift parameter to configure the RDMA chunk size
-> (2^N bytes) for faster migration.
-> Usage: -global migration.x-rdma-chunk-shift=30
->
-> Performance with RDMA live migration of 8GB RAM VM:
->
-> | x-rdma-chunk-shift | chunk size | time (s) | throughput (Mbps) |
-> |--------------------|------------|----------|-------------------|
-> | 20 (default)       | 1 MB       | 37.915   | 1,007             |
-> | 25                 | 32 MB      | 17.880   | 2,260             |
-> | 30                 | 1 GB       |  4.368   | 17,529            |
->
-> Signed-off-by: Samuel Zhang <guoqing.zhang@amd.com>
-> ---
->  migration/options.c | 13 +++++++++++++
->  migration/options.h |  1 +
->  migration/rdma.c    | 37 ++++++++++++++++++++++---------------
->  qapi/migration.json |  9 ++++++++-
->  4 files changed, 44 insertions(+), 16 deletions(-)
->
-> diff --git a/migration/options.c b/migration/options.c
-> index f33b297929..1503ae35a2 100644
-> --- a/migration/options.c
-> +++ b/migration/options.c
-> @@ -90,6 +90,7 @@ const PropertyInfo qdev_prop_StrOrNull;
->  
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT_PERIOD     1000    /* milliseconds */
->  #define DEFAULT_MIGRATE_VCPU_DIRTY_LIMIT            1       /* MB/s */
-> +#define DEFAULT_MIGRATE_X_RDMA_CHUNK_SHIFT          20      /* 1MB */
->  
->  const Property migration_properties[] = {
->      DEFINE_PROP_BOOL("store-global-state", MigrationState,
-> @@ -183,6 +184,9 @@ const Property migration_properties[] = {
->      DEFINE_PROP_ZERO_PAGE_DETECTION("zero-page-detection", MigrationState,
->                         parameters.zero_page_detection,
->                         ZERO_PAGE_DETECTION_MULTIFD),
-> +    DEFINE_PROP_UINT8("x-rdma-chunk-shift", MigrationState,
-> +                      parameters.x_rdma_chunk_shift,
-> +                      DEFAULT_MIGRATE_X_RDMA_CHUNK_SHIFT),
->  
->      /* Migration capabilities */
->      DEFINE_PROP_MIG_CAP("x-xbzrle", MIGRATION_CAPABILITY_XBZRLE),
-> @@ -993,6 +997,15 @@ ZeroPageDetection migrate_zero_page_detection(void)
->      return s->parameters.zero_page_detection;
->  }
->  
-> +uint8_t migrate_rdma_chunk_shift(void)
-> +{
-> +    MigrationState *s = migrate_get_current();
-> +    uint8_t chunk_shift = s->parameters.x_rdma_chunk_shift;
-> +
-> +    assert(20 <= chunk_shift && chunk_shift <= 30);
+Yes, please take to stable.
 
-Where is this ensured?
-
-> +    return chunk_shift;
-> +}
-> +
->  /* parameters helpers */
->  
->  AnnounceParameters *migrate_announce_params(void)
-> diff --git a/migration/options.h b/migration/options.h
-> index b502871097..3f214465a3 100644
-> --- a/migration/options.h
-> +++ b/migration/options.h
-> @@ -87,6 +87,7 @@ const char *migrate_tls_creds(void);
->  const char *migrate_tls_hostname(void);
->  uint64_t migrate_xbzrle_cache_size(void);
->  ZeroPageDetection migrate_zero_page_detection(void);
-> +uint8_t migrate_rdma_chunk_shift(void);
->  
->  /* parameters helpers */
->  
-> diff --git a/migration/rdma.c b/migration/rdma.c
-> index 55ab85650a..d914a7cd3b 100644
-> --- a/migration/rdma.c
-> +++ b/migration/rdma.c
-> @@ -44,11 +44,18 @@
->  
->  #define RDMA_RESOLVE_TIMEOUT_MS 10000
->  
-> -/* Do not merge data if larger than this. */
-> -#define RDMA_MERGE_MAX (2 * 1024 * 1024)
-> -#define RDMA_SIGNALED_SEND_MAX (RDMA_MERGE_MAX / 4096)
-> +#define RDMA_SIGNALED_SEND_MAX 512
-> +
-> +static inline uint64_t rdma_chunk_size(void)
-> +{
-> +    return 1UL << migrate_rdma_chunk_shift();
-> +}
->  
-> -#define RDMA_REG_CHUNK_SHIFT 20 /* 1 MB */
-> +/* Do not merge data if larger than this. */
-> +static inline uint64_t rdma_merge_max(void)
-> +{
-> +    return rdma_chunk_size() * 2;
-> +}
->  
->  /*
->   * This is only for non-live state being migrated.
-> @@ -527,21 +534,21 @@ static int qemu_rdma_exchange_send(RDMAContext *rdma, RDMAControlHeader *head,
->  static inline uint64_t ram_chunk_index(const uint8_t *start,
->                                         const uint8_t *host)
->  {
-> -    return ((uintptr_t) host - (uintptr_t) start) >> RDMA_REG_CHUNK_SHIFT;
-> +    return ((uintptr_t) host - (uintptr_t) start) >> migrate_rdma_chunk_shift();
->  }
->  
->  static inline uint8_t *ram_chunk_start(const RDMALocalBlock *rdma_ram_block,
->                                         uint64_t i)
->  {
->      return (uint8_t *)(uintptr_t)(rdma_ram_block->local_host_addr +
-> -                                  (i << RDMA_REG_CHUNK_SHIFT));
-> +                                  (i << migrate_rdma_chunk_shift()));
->  }
->  
->  static inline uint8_t *ram_chunk_end(const RDMALocalBlock *rdma_ram_block,
->                                       uint64_t i)
->  {
->      uint8_t *result = ram_chunk_start(rdma_ram_block, i) +
-> -                                         (1UL << RDMA_REG_CHUNK_SHIFT);
-> +                                         rdma_chunk_size();
->  
->      if (result > (rdma_ram_block->local_host_addr + rdma_ram_block->length)) {
->          result = rdma_ram_block->local_host_addr + rdma_ram_block->length;
-> @@ -1841,6 +1848,7 @@ static int qemu_rdma_write_one(RDMAContext *rdma,
->      struct ibv_send_wr *bad_wr;
->      int reg_result_idx, ret, count = 0;
->      uint64_t chunk, chunks;
-> +    uint64_t chunk_size = rdma_chunk_size();
->      uint8_t *chunk_start, *chunk_end;
->      RDMALocalBlock *block = &(rdma->local_ram_blocks.block[current_index]);
->      RDMARegister reg;
-> @@ -1861,22 +1869,21 @@ retry:
->      chunk_start = ram_chunk_start(block, chunk);
->  
->      if (block->is_ram_block) {
-> -        chunks = length / (1UL << RDMA_REG_CHUNK_SHIFT);
-> +        chunks = length / chunk_size;
->  
-> -        if (chunks && ((length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-> +        if (chunks && ((length % chunk_size) == 0)) {
->              chunks--;
->          }
->      } else {
-> -        chunks = block->length / (1UL << RDMA_REG_CHUNK_SHIFT);
-> +        chunks = block->length / chunk_size;
->  
-> -        if (chunks && ((block->length % (1UL << RDMA_REG_CHUNK_SHIFT)) == 0)) {
-> +        if (chunks && ((block->length % chunk_size) == 0)) {
->              chunks--;
->          }
->      }
->  
->      trace_qemu_rdma_write_one_top(chunks + 1,
-> -                                  (chunks + 1) *
-> -                                  (1UL << RDMA_REG_CHUNK_SHIFT) / 1024 / 1024);
-> +                                  (chunks + 1) * chunk_size / 1024 / 1024);
->  
->      chunk_end = ram_chunk_end(block, chunk + chunks);
->  
-> @@ -2176,7 +2183,7 @@ static int qemu_rdma_write(RDMAContext *rdma,
->      rdma->current_length += len;
->  
->      /* flush it if buffer is too large */
-> -    if (rdma->current_length >= RDMA_MERGE_MAX) {
-> +    if (rdma->current_length >= rdma_merge_max()) {
->          return qemu_rdma_write_flush(rdma, errp);
->      }
->  
-> @@ -3522,7 +3529,7 @@ int rdma_registration_handle(QEMUFile *f)
->                  } else {
->                      chunk = reg->key.chunk;
->                      host_addr = block->local_host_addr +
-> -                        (reg->key.chunk * (1UL << RDMA_REG_CHUNK_SHIFT));
-> +                        (reg->key.chunk * rdma_chunk_size());
->                      /* Check for particularly bad chunk value */
->                      if (host_addr < (void *)block->local_host_addr) {
->                          error_report("rdma: bad chunk for block %s"
-> diff --git a/qapi/migration.json b/qapi/migration.json
-> index 7134d4ce47..0521bf3d69 100644
-> --- a/qapi/migration.json
-> +++ b/qapi/migration.json
-> @@ -1007,9 +1007,14 @@
->  #     is @cpr-exec.  The first list element is the program's filename,
->  #     the remainder its arguments.  (Since 10.2)
->  #
-> +# @x-rdma-chunk-shift: RDMA memory registration chunk shift.
-> +#     The chunk size is 2^N bytes where N is the value.
-
-The value of what?  Oh, the value of @x-rdma-chunk-shift.
-
-Acceptable range?  I doubt 0 or 255 work :)
-
-Would this be easier to document if we make it a byte count
-@x-rdma-chunk-size, must be a power of two?
-
-> +#     Defaults to 20 (1 MiB).  Only takes effect for RDMA migration.
-
-> +#     (Since 10.2)
-
-11.0 right now, but realistically 11.1.
-
-> +#
->  # Features:
->  #
-> -# @unstable: Members @x-checkpoint-delay and
-> +# @unstable: Members @x-rdma-chunk-shift, @x-checkpoint-delay and
->  #     @x-vcpu-dirty-limit-period are experimental.
-
-Keep the list of members sorted:
-
-   # @unstable: Members @x-checkpoint-delay, @x-rdma-chunk-shift, and
-   #     @x-vcpu-dirty-limit-period are experimental.
-
->  #
->  # Since: 2.4
-> @@ -1045,6 +1050,8 @@
->              '*vcpu-dirty-limit': 'uint64',
->              '*mode': 'MigMode',
->              '*zero-page-detection': 'ZeroPageDetection',
-> +            '*x-rdma-chunk-shift': { 'type': 'uint8',
-> +                                     'features': [ 'unstable' ] },
->              '*direct-io': 'bool',
->              '*cpr-exec-command': [ 'str' ]} }
+With regards,
+Daniel
+-- 
+|: https://berrange.com       ~~        https://hachyderm.io/@berrange :|
+|: https://libvirt.org          ~~          https://entangle-photo.org :|
+|: https://pixelfed.art/berrange   ~~    https://fstop138.berrange.com :|
 
 
