@@ -4,117 +4,99 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 13C78107526E
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 07:28:27 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 36C61107526D
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 07:37:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w37n7-0005bD-5K; Thu, 19 Mar 2026 03:27:37 -0400
+	id 1w37w4-0007SZ-Pj; Thu, 19 Mar 2026 03:36:53 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w37mt-0005Yt-KR
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:27:26 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w37w1-0007S6-KI
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:36:49 -0400
+Received: from isrv.corpit.ru ([212.248.84.144])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w37mp-0000E6-R5
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:27:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773905238;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=SiYrwjNH9gHo6RNCEoGyoSEPAzrVg+V7o4avcRI5xxU=;
- b=SyxMq7gLPe+AOCNxOFbRyVD1JMizq+p0N/PEYfqas36x2PrtGIoDCRDFndiE0/Qqx9CKGW
- DbR8LDwHmB9yFXd7Qsxmjvuwz5pXSTSo5qur8r9c41P5e+/ARW7/kREaOsgnDQhYRIl6zl
- L3Xe6O6AHu5sjA3zGJGRLyHhAL25P9M=
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com
- [209.85.214.200]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-203-mxUkIcXGNPiUgQqAshoPkw-1; Thu, 19 Mar 2026 03:27:16 -0400
-X-MC-Unique: mxUkIcXGNPiUgQqAshoPkw-1
-X-Mimecast-MFC-AGG-ID: mxUkIcXGNPiUgQqAshoPkw_1773905236
-Received: by mail-pl1-f200.google.com with SMTP id
- d9443c01a7336-2adc527eaf5so7393425ad.0
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 00:27:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773905235; x=1774510035; darn=nongnu.org;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=SiYrwjNH9gHo6RNCEoGyoSEPAzrVg+V7o4avcRI5xxU=;
- b=sOrY6hel3B7oYNSVksexPJIgMdrsylVAFnRT71v3/+Cv87bHWmLqpqJUo+OTxVFqqL
- hx/7xZSCpU+fpMUMwoBsbJjkSXJidms+aV/kAocaf4NOzxdCfDBn4OvVDzPnRIX/1RTG
- snnMUduqbIKzT8Nv/8YHH+iuS9COe1YJHmcYR3+uscombGLvl5xAz6+A7s07tJdDQE2a
- EEbrWR+17BcgzJ9e9ftVaj+/IOUC51gnlFdtEgnahrd6MYhvrocITk+rxbhcZhSyCZFy
- m62IGCzWM1VWf/rcuAzIVpA9ebmDgPBx9PRhRTQ48FbxZJcktAHGQUcqETnvItj39qJH
- AaHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773905235; x=1774510035;
- h=to:references:message-id:content-transfer-encoding:cc:date
- :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
- :from:to:cc:subject:date:message-id:reply-to;
- bh=SiYrwjNH9gHo6RNCEoGyoSEPAzrVg+V7o4avcRI5xxU=;
- b=cHO9Vmi+n02ppjXfmFnbMx3f+BElaU0C5qI53k/zH3Y1yg4OtqCrQ/vd4lyOACy+1n
- HFzUhfMGcfY+6dmG4Iu/ltJKGrHquhpAz/EkxgCS7E16rnjOumab4kieiCidmaEnq5Is
- fycrVR9v76a9Rh1kNTKDLxggZneeDMgWxZrwF5/rzqgHsSPcAdVTqOIq2EszbTWhV+AU
- HB0nMOu20E6WeeUkKqXCQB4gZAcrdKxvtKfSbObyIC/wfiL3ABYhdOhBnULF6KqeSA3J
- WeFwsqnTt8pQeR2KN+a9RUYvodDYb9RJ5lkca1ngu3kEK45Txm/RQC9AUM7i8TOHhlSL
- 2H2g==
-X-Forwarded-Encrypted: i=1;
- AJvYcCUz0+qecfGrHFhmHYiDcfwgohfutkux2Irr3emokvhkSZCRpSAcriRgtXNn44tQPZRSiopMgf4vHUF0@nongnu.org
-X-Gm-Message-State: AOJu0Yx8N1szg/TPenfcg1fvx0P44jsNae9xbiul4JPSKalDEwpVht8y
- uuEpMVdHtjroIWmMDQHjaaXbTZwiN75IB84D6LfcELh/I74Tss3Aw50Yq6JAhEZ7AY2/1nH5R5s
- UeBA0nI2XAa/oq60mTmiqOmGFckkv+v9IuWuqbM7AzAqbiFY1sWD5Srlw
-X-Gm-Gg: ATEYQzznbS4ICAp9qUzKTDEtjRqrzZ8XlsdhSYsCaxNqPCIJ4CxVA1BL16XW9KY0l1G
- 38QbMn2O6/meBmpxIZBjx7jpn43m1k86zM/F1BaFryRFuDeOZZ1VyN9Riic62xXBQklhZCTU7rf
- X6XpP8GjyhhUr4HxApKvDuot8elPFFzd5DMe5VyuWyUpIAockVhgJwHWNoprwYv1/dYIhO5tMnp
- BCOi1Y92uo96wVEicfgph9BZIVLyXYL/HMduKuyO+sFfU0wk24iiOw10SyMP64YzvXE/CY2T2mR
- CLFtPc3DAu/BIkxf0cyirPzEQ+Qm1uaBwcexSWrotgUle4sBvDiomAlL8ODNzSLyLWpeQB024gr
- DRH0GAw6kiXfq52mcolbRAYNLyHahl6+7U1T7gAP1mwmoXIZhrYZ13oDUxW5e8bzBVw8UKw==
-X-Received: by 2002:a17:902:e787:b0:2ae:fc60:2651 with SMTP id
- d9443c01a7336-2b06e3e4353mr55404225ad.35.1773905235554; 
- Thu, 19 Mar 2026 00:27:15 -0700 (PDT)
-X-Received: by 2002:a17:902:e787:b0:2ae:fc60:2651 with SMTP id
- d9443c01a7336-2b06e3e4353mr55403975ad.35.1773905235116; 
- Thu, 19 Mar 2026 00:27:15 -0700 (PDT)
-Received: from smtpclient.apple ([122.163.114.34])
- by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b06e41927bsm64606295ad.10.2026.03.19.00.27.11
- (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 19 Mar 2026 00:27:14 -0700 (PDT)
-Content-Type: text/plain;
-	charset=utf-8
-Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH v6 RESEND 3/4] hw/riscv/virt: add system_powerdown hmp
- command support
-From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <20260319110646912lfH-Px_D4YbtX1Q7ZRSXc@zte.com.cn>
-Date: Thu, 19 Mar 2026 12:56:58 +0530
-Cc: Michael Tsirkin <mst@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- Paolo Bonzini <pbonzini@redhat.com>, palmer@dabbelt.com,
- Alistair Francis <alistair.francis@wdc.com>, liwei1518@gmail.com,
- dbarboza@ventanamicro.com, zhiwei_liu@linux.alibaba.com,
- sunilvl@ventanamicro.com, qemu-riscv@nongnu.org,
- qemu-devel <qemu-devel@nongnu.org>
-Content-Transfer-Encoding: quoted-printable
-Message-Id: <495B8049-E563-41C2-8B53-D965517C7284@redhat.com>
-References: <20260319110005712RbJuYoQlyLGr39EPL4uH4@zte.com.cn>
- <20260319110646912lfH-Px_D4YbtX1Q7ZRSXc@zte.com.cn>
-To: liu.xuemei1@zte.com.cn
-X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
+ (Exim 4.90_1) (envelope-from <mjt@tls.msk.ru>) id 1w37vy-0001aI-KD
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 03:36:49 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=tls.msk.ru; s=202602;
+ t=1773905794; bh=t8QRZJElaRviEBkR/CBWhJb/uWYNujfq4qx8SXu8FjQ=;
+ h=Date:To:From:Subject:Cc;
+ b=Cx7nJmm//fuhMPYT6Sum0vxU5xUQ1+UL81DerDXDB4sblpVKGvLohGEpCrJeA8sjE
+ d0CpVmuZCX4CcOTVD7rdtwXQVuhIimM55VlKyx9MoAc125mIv7JiaC6lbjMSelWpDj
+ /L4mguZnVIKqOglWZXsa4nCslImpzunf7wULlmUtkdL+Ye5ULbUuhi9cEQEgUspLnh
+ J1UGZ0Kmcv46qbP6sn5fkEur/xRJ1HxHL3aTohopfs4umzJ7YWE4L4ioGDmS+J+ti1
+ imAH/PlmR692xcekxkdu72qt61ZlhmWpdU61PjDO3upaZojP7Mce7lZRvCTxiytbVF
+ 5VnKqKtGchJ3Q==
+Received: from [192.168.177.146] (mjtthink.wg.tls.msk.ru [192.168.177.146])
+ by isrv.corpit.ru (Postfix) with ESMTP id 217261953BF;
+ Thu, 19 Mar 2026 10:36:34 +0300 (MSK)
+Message-ID: <7393fb31-0def-4558-b051-68de672a4395@tls.msk.ru>
+Date: Thu, 19 Mar 2026 10:36:42 +0300
+MIME-Version: 1.0
+User-Agent: Mozilla Thunderbird
+Content-Language: en-US, ru-RU
+To: QEMU Development <qemu-devel@nongnu.org>
+From: Michael Tokarev <mjt@tls.msk.ru>
+Subject: minimal microvm build: undefined hyperv_is_synic_enabled
+ x86_firmware_configure
+Autocrypt: addr=mjt@tls.msk.ru; keydata=
+ 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
+Cc: Paolo Bonzini <pbonzini@redhat.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Ani Sinha <anisinha@redhat.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=212.248.84.144; envelope-from=mjt@tls.msk.ru;
+ helo=isrv.corpit.ru
+X-Spam_score_int: -2
+X-Spam_score: -0.3
 X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+X-Spam_report: (-0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
+ RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -130,96 +112,79 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
+Hi!
+
+Building a minmal qemu for microvm (the idea is to have small footprint
+binary for fastest loading and being light on resources).  It ends up
+with:
+
+  cc -m64 @qemu-system-x86_64.rsp
+  ld: libqemu-x86_64-softmmu.a.p/target_i386_kvm_kvm.c.o: in function 
+`hyperv_init_vcpu':
+  target/i386/kvm/kvm.c:1757:(.text+0x5d83): undefined reference to 
+`hyperv_is_synic_enabled'
+  ld: libqemu-x86_64-softmmu.a.p/hw_i386_x86-common.c.o: in function 
+`x86_bios_rom_reload':
+  hw/i386/x86-common.c:1104:(.text+0x240d): undefined reference to 
+`x86_firmware_configure'
+  collect2: error: ld returned 1 exit status
+
+The build is done with the devices file:
+
+  CONFIG_PCI_DEVICES=n
+  CONFIG_MICROVM=y
+  CONFIG_VIRTIO_BLK=y
+  CONFIG_VIRTIO_SERIAL=y
+  CONFIG_VIRTIO_INPUT=y
+  CONFIG_VIRTIO_INPUT_HOST=y
+  CONFIG_VHOST_USER_INPUT=y
+  CONFIG_VIRTIO_NET=y
+  CONFIG_VIRTIO_SCSI=y
+  CONFIG_VIRTIO_RNG=y
+  CONFIG_VIRTIO_CRYPTO=y
+  CONFIG_VIRTIO_BALLOON=y
+  CONFIG_VIRTIO_GPU=y
+  CONFIG_VHOST_USER_GPU=y
+
+and with these confiure options:
+
+  ../../configure ${common_configure_opts} \
+                --without-default-features \
+                --target-list=x86_64-softmmu --enable-kvm --disable-tcg \
+                --enable-pixman --enable-vnc \
+                --enable-virtfs \
+                --enable-linux-aio --enable-linux-io-uring \
+                --enable-numa \
+                --enable-attr \
+                --enable-coroutine-pool \
+                --audio-drv-list="" \
+                --without-default-devices \
+                --with-devices-x86_64=microvm \
+                --enable-vhost-kernel --enable-vhost-net \
+                --enable-vhost-vdpa \
+                --enable-vhost-user --enable-vhost-user-blk-server \
+                --enable-vhost-crypto \
+                --enable-seccomp \
 
 
-> On 19 Mar 2026, at 8:36=E2=80=AFAM, liu.xuemei1@zte.com.cn wrote:
->=20
-> From: Xuemei Liu <liu.xuemei1@zte.com.cn>
->=20
-> For riscv virt machine, add powerdown notification callback
-> and send ACPI_POWER_DOWN_STATUS event by acpi ged. Also add
-> acpi dsdt table for ACPI_POWER_BUTTON_DEVICE device in this
-> patch.
->=20
-> Signed-off-by: Xuemei Liu <liu.xuemei1@zte.com.cn>
 
-Reviewed-by: Ani Sinha <anisinha@redhat.com>
+For the first one, hyperv_is_synic_enabled() - it looks like the whole
+hyperv thing in target/i386/kvm/kvm.c should have #ifdef CONFIG_HYPERV
+guard - not just the call to hyperv_is_synic_enabled() but whole
+hyperv_init_vcpu() and related callsite, because hyperv_is_synic_enabled
+is only included when CONFIG_HYPERV=1.  There are hyperv stubs - just a
+few of them, - maybe it's better to actually #ifdef in the actual code
+which call hyperv functions?
 
-> ---
-> hw/riscv/virt-acpi-build.c |  2 ++
-> hw/riscv/virt.c            | 14 ++++++++++++++
-> include/hw/riscv/virt.h    |  1 +
-> 3 files changed, 17 insertions(+)
->=20
-> diff --git a/hw/riscv/virt-acpi-build.c b/hw/riscv/virt-acpi-build.c
-> index 1717b1c24f..77aea55ece 100644
-> --- a/hw/riscv/virt-acpi-build.c
-> +++ b/hw/riscv/virt-acpi-build.c
-> @@ -504,6 +504,8 @@ static void build_dsdt(GArray *table_data,
->                   ACPI_GED_IRQ, AML_SYSTEM_MEMORY,
->                   s->memmap[VIRT_ACPI_GED].base);
->=20
-> +    acpi_dsdt_add_power_button(scope);
-> +
->     aml_append(dsdt, scope);
->=20
->     /* copy AML table into ACPI tables blob and patch header there */
-> diff --git a/hw/riscv/virt.c b/hw/riscv/virt.c
-> index 4f1654d5ec..20002c6e43 100644
-> --- a/hw/riscv/virt.c
-> +++ b/hw/riscv/virt.c
-> @@ -51,6 +51,7 @@
-> #include "system/kvm.h"
-> #include "system/tpm.h"
-> #include "system/qtest.h"
-> +#include "system/runstate.h"
-> #include "hw/pci/pci.h"
-> #include "hw/pci-host/gpex.h"
-> #include "hw/display/ramfb.h"
-> @@ -1446,6 +1447,16 @@ static void virt_build_smbios(RISCVVirtState =
-*s)
->     }
-> }
->=20
-> +static void virt_powerdown_req(Notifier *notifier, void *opaque)
-> +{
-> +    RISCVVirtState *s;
-> +
-> +    s =3D container_of(notifier, RISCVVirtState, powerdown_notifier);
-> +    if (s->acpi_ged) {
-> +        acpi_send_event(s->acpi_ged, ACPI_POWER_DOWN_STATUS);
-> +    }
-> +}
-> +
-> static void virt_machine_done(Notifier *notifier, void *data)
-> {
->     RISCVVirtState *s =3D container_of(notifier, RISCVVirtState,
-> @@ -1773,6 +1784,9 @@ static void virt_machine_init(MachineState =
-*machine)
->         sysbus_realize_and_unref(SYS_BUS_DEVICE(iommu_sys), =
-&error_fatal);
->     }
->=20
-> +    s->powerdown_notifier.notify =3D virt_powerdown_req;
-> +    qemu_register_powerdown_notifier(&s->powerdown_notifier);
-> +
->     s->machine_done.notify =3D virt_machine_done;
->     qemu_add_machine_init_done_notifier(&s->machine_done);
-> }
-> diff --git a/include/hw/riscv/virt.h b/include/hw/riscv/virt.h
-> index 9ea0b3b7b6..e631d57268 100644
-> --- a/include/hw/riscv/virt.h
-> +++ b/include/hw/riscv/virt.h
-> @@ -47,6 +47,7 @@ struct RISCVVirtState {
->=20
->     /*< public >*/
->     Notifier machine_done;
-> +    Notifier powerdown_notifier;
->     DeviceState *acpi_ged;
->     DeviceState *platform_bus_dev;
->     RISCVHartArrayState soc[VIRT_SOCKETS_MAX];
-> --=20
-> 2.27.0
->=20
+For the second, it looks like it's been added when adding confidential
+guest support.  This code, too, looks like it should be conditional on
+CONFIG_X86_FW_OVMF, like pc_sysfw_ovmf.c, - or alternatively,
+x86_firmware_configure should be included in stubs.
 
+Overall, I'm seeing less and less reasons to continue building and
+shipping this light microvm binary.
+
+Thanks,
+
+/mjt
 
