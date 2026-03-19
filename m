@@ -4,102 +4,102 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0CFF109190D
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:43:37 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 0F762109190F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 18:43:38 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3IL9-0000Z0-3p; Thu, 19 Mar 2026 14:43:27 -0400
+	id 1w3ILA-0000cl-6k; Thu, 19 Mar 2026 14:43:28 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1w3IL3-0000Q4-U5
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1w3IL3-0000Pq-Ng
  for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:43:22 -0400
-Received: from cyan.elm.relay.mailchannels.net ([23.83.212.47])
+Received: from butterfly.birch.relay.mailchannels.net ([23.83.209.27])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1w3IL2-0007NB-D6
+ (Exim 4.90_1) (envelope-from <dave@stgolabs.net>) id 1w3IL0-0007NC-NE
  for qemu-devel@nongnu.org; Thu, 19 Mar 2026 14:43:21 -0400
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 Received: from relay.mailchannels.net (localhost [127.0.0.1])
- by relay.mailchannels.net (Postfix) with ESMTP id 810C16C1EF8;
- Thu, 19 Mar 2026 18:43:14 +0000 (UTC)
+ by relay.mailchannels.net (Postfix) with ESMTP id 0C868823B0C;
+ Thu, 19 Mar 2026 18:43:15 +0000 (UTC)
 Received: from pdx1-sub0-mail-a227.dreamhost.com
- (trex-green-1.trex.outbound.svc.cluster.local [100.117.57.254])
+ (100-115-116-28.trex-nlb.outbound.svc.cluster.local [100.115.116.28])
  (Authenticated sender: dreamhost)
- by relay.mailchannels.net (Postfix) with ESMTPA id 2CBED6C1EA4;
+ by relay.mailchannels.net (Postfix) with ESMTPA id 799B6823B68;
  Thu, 19 Mar 2026 18:43:14 +0000 (UTC)
 ARC-Seal: i=1; a=rsa-sha256; d=mailchannels.net; s=arc-2022; cv=none;
  t=1773945794;
- b=WVWlmv+CUR+e5RSuut2hyHI3PgtmRgM3VmAa+VJLQ1Xpw4ADUSNmquqr1v51M+EN8Gzsiz
- yO2i+JgobLa9PBsC1fYiT5UW9XRb2AQG8gaexMINi4DG73nEdwML9r2ufugXG3FtM12Z3F
- BeqDYV6O5gq42n3L83YN3HIUZYLT1Vih6w3tbDKKZP1UGQmbj5XJp+19xgcBKVx89fgl+G
- QPvG/t2WPBTq7ucbaVJCyfXS8puuU9JiWV7MKdQ27w8mnaQaP3d9hXt0A5ygtnrEgiAxRV
- bV0RYObciLKr2fqJ1jbjnn6qJQXPep+SdZLcFG74nuOb3YJLCXaaS/qWEKbPkA==
+ b=FANOe5QurSWHW0Sl2domycUXXa1lVPJuXzWFIHBlHzkimutBqtibnI2bWkDe0ayt4xWpTJ
+ +faDhHwxb52nlTfXlkCc2/Luef/BorMzVEmo04OaKlyp/azeknc6j3/O9rbIoBC2jsWwLv
+ XUEE2tty9/JjyInWQ6Jfz8TxSCfaYPdudFDG4c5bZW9zbYy548KF5t59uZUuBLPAH5LKhG
+ jEMLxJsu8XAjw6eX3k7U93n848f963/hK2kIxRtFYzlCl7CbiQvvs2HkDrJ/+Uh4NX5wRU
+ /V/ZmrEv0uDBZRd//Y7C1ClZqsBJSCHb8i0egC++2xwcYpdIt4ZCC8a+81fazw==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed;
  d=mailchannels.net; s=arc-2022; t=1773945794;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references:dkim-signature;
- bh=RIbQtIMyzdXuMVMoDhozBVahIPjXPJ8h2fuqB+pj6EE=;
- b=Zd4YSpai5YxGjx+xUItuQlMcPteKG8qQX2LgkIW+zqC0/p+MjeGERhYAmqWScIv3a4+E7M
- RMtTP8QqUmtdZ2eWuUI7QCyt1/zJeRE8rMl3838cLVwFbGD9ZpjyOhK7uRDIMBxH2WdNcr
- SvdKajvJ16J/8ldeJG4fF8KDsnEvacjtuY8S9cZhZEpBHd+yrtvr6NWTpajSqxH03oU3Vb
- bOPQm4yVV3BwMyA6FYQWjNFrdOVhZgfHpia++aNYP73HkhjrBYCDsyZpDWNdqTqkRbPCAc
- ySJ4ft1AFOHDT5iGX/gfMKeY07ucfBDvN2b6VQ9jqv0Vns8+j1x2awZuzoHpYQ==
-ARC-Authentication-Results: i=1; rspamd-6d4cb6745-t2cws;
+ bh=PoI4BK3hvU2nKIds7DnxJnNUvQd2NTtab+MbLNuAEt8=;
+ b=N2u1xxeaauXu3Ki1wM4GLdXEiSK4e3iRaNYErPXWu6I6l0Yv32YBACjamOVUrmePuSVinJ
+ l4oLOlerldIr/exU3gafo5oPixW7UwYfEI8XScFILI/nD5xwj4adXw2oajoRSiX1vtJ4JL
+ f31wMgWKfqQw4J4bUXkJ9uH315BHdzSULargWgoz3DFKQrnI7ezGJ0jppiH380aRAqbGdE
+ +jDF+6kGA8t7965lSIbpzbA2iJcyGzEeFKTKLHyMHhwV5FLbVFap1IyhCJL3Qo63RHsnpP
+ L62fh32M7kFZJwlqhZlzzCScwLojk24F+qBTMMR5yBZpShtXg7hy69ZRFG1/8A==
+ARC-Authentication-Results: i=1; rspamd-7f98bb5847-7xrmz;
  auth=pass smtp.auth=dreamhost smtp.mailfrom=dave@stgolabs.net
 X-Sender-Id: dreamhost|x-authsender|dave@stgolabs.net
 X-MC-Relay: Neutral
 X-MailChannels-SenderId: dreamhost|x-authsender|dave@stgolabs.net
 X-MailChannels-Auth-Id: dreamhost
-X-Invention-Quick: 382cf0ca1031cfcc_1773945794423_907135795
-X-MC-Loop-Signature: 1773945794423:878038627
-X-MC-Ingress-Time: 1773945794423
+X-Tasty-Continue: 207cc2b574cbcc62_1773945794938_171937942
+X-MC-Loop-Signature: 1773945794938:617296039
+X-MC-Ingress-Time: 1773945794937
 Received: from pdx1-sub0-mail-a227.dreamhost.com (pop.dreamhost.com
  [64.90.62.162]) (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384)
- by 100.117.57.254 (trex/7.1.5); Thu, 19 Mar 2026 18:43:14 +0000
+ by 100.115.116.28 (trex/7.1.5); Thu, 19 Mar 2026 18:43:14 +0000
 Received: from offworld.lan (unknown [76.167.199.67])
  (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
  key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
  (No client certificate requested)
  (Authenticated sender: dave@stgolabs.net)
- by pdx1-sub0-mail-a227.dreamhost.com (Postfix) with ESMTPSA id 4fcF294Fdrz3P; 
- Thu, 19 Mar 2026 11:43:13 -0700 (PDT)
+ by pdx1-sub0-mail-a227.dreamhost.com (Postfix) with ESMTPSA id 4fcF2B0K0Mz2P; 
+ Thu, 19 Mar 2026 11:43:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=stgolabs.net;
- s=dreamhost; t=1773945793;
- bh=RIbQtIMyzdXuMVMoDhozBVahIPjXPJ8h2fuqB+pj6EE=;
+ s=dreamhost; t=1773945794;
+ bh=PoI4BK3hvU2nKIds7DnxJnNUvQd2NTtab+MbLNuAEt8=;
  h=From:To:Cc:Subject:Date:Content-Transfer-Encoding;
- b=KQ/70riacnd6U++PMQmFq+2ud8Fo840lbJzMbuuOS9jHr9ICMWSGCOyjQKJ9vSfwK
- CSkSv2lkRWjb2EltyOuQtW9tJOsulmq6fHx8a2y35dR4bQP+4C4Q+flzI4PiYSj5xb
- nkNGZvJFJ6Q1+5xmfoRKLdJurKfuoK6YUKWbcEe5wR/CZF7TmNKTyvEeWogRCTEDzp
- BCrAlZqKwTQ/unML+dYU5osXBUO3NYhneSouxHyqwbXum9zOhyhz9tP1bRpV0kCAtB
- nugIiwLludnwwT8XEi6t0mRc/K7K2WO3RzA6fZQe9dBo6JIivEpJHDsqlHStyiE+ng
- vMYaNokTjUROA==
+ b=ahu6Sxt6X+am35BnljL0eFLcwF1K+MK9Q8DRI0Y08gTvEsERDYKW+jq6qJR3UqHTr
+ YO+uMBWT+hKAhAF5CxoLk/DC3GCRdscNMXTF8Wf2iP6q+2rPwio3/aRPe/eG9HMbnB
+ n4JAp3k1+kPehvEwKJnlHMgQzv+vgTcgiZ9wNIKBKQjO4vrSrZgoNswcy7Nxejlxna
+ g9jRueistD7knMBA8Q+dhFHPoikS2KVHWmcdNw9Pu1VJQfgvE6OPv3RfvJXRWJcCJt
+ szTzkQmfZGiH+io8Ez5fnS+IycLBDZ7/DODqk4eDMGs6rwM4H5JndL/BjH3K051rp3
+ pVy28lEj7wSYA==
 From: Davidlohr Bueso <dave@stgolabs.net>
 To: mst@redhat.com,
 	jonathan.cameron@huawei.com
 Cc: qemu-devel@nongnu.org,
 	linux-cxl@vger.kernel.org,
 	dave@stgolabs.net
-Subject: [PATCH 1/2] hw/cxl: Respect Media Operation max ops discovery
- semantics
-Date: Thu, 19 Mar 2026 11:42:55 -0700
-Message-Id: <20260319184256.3762391-2-dave@stgolabs.net>
+Subject: [PATCH 2/2] hw/cxl: Exclude Discovery from Media Operation Discovery
+ output
+Date: Thu, 19 Mar 2026 11:42:56 -0700
+Message-Id: <20260319184256.3762391-3-dave@stgolabs.net>
 X-Mailer: git-send-email 2.39.5
 In-Reply-To: <20260319184256.3762391-1-dave@stgolabs.net>
 References: <20260319184256.3762391-1-dave@stgolabs.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: softfail client-ip=23.83.212.47; envelope-from=dave@stgolabs.net;
- helo=cyan.elm.relay.mailchannels.net
+Received-SPF: softfail client-ip=23.83.209.27; envelope-from=dave@stgolabs.net;
+ helo=butterfly.birch.relay.mailchannels.net
 X-Spam_score_int: 3
 X-Spam_score: 0.3
 X-Spam_bar: /
 X-Spam_report: (0.3 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1, DKIM_VALID=-0.1,
  DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, RCVD_IN_DNSWL_NONE=-0.0001,
- RCVD_IN_MSPIKE_H2=0.001, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
+ RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_SOFTFAIL=0.665 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -115,69 +115,48 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-The Discovery rejects requests where start_index + num_ops
-exceeds the total number of supported operations. Per CXL 4.0
-Table 8-332, num_ops is the "Maximum number of Media Operation to
-return" - a maximum, not an exact count. The device should return
-up to that many entries, not reject the request.
+Per CXL 4.0 Table 8-331, the Discovery operation "returns a list of
+all Media Operations that the device supports, with the exception of
+the Discovery operation (Class=0, Subclass=0)."
 
-Cap num_ops to the available entries from start_index instead of
-erroring the command.
+Filter out Discovery entries when building the output list and adjust
+total_supported_operations accordingly.
 
 Fixes: 77a8e9fe0ecb ("hw/cxl/cxl-mailbox-utils: Add support for Media operations discovery commands cxl r3.2 (8.2.10.9.5.3)")
 Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
 Signed-off-by: Davidlohr Bueso <dave@stgolabs.net>
 ---
- hw/cxl/cxl-mailbox-utils.c | 25 +++++++++++--------------
- 1 file changed, 11 insertions(+), 14 deletions(-)
+ hw/cxl/cxl-mailbox-utils.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
 
 diff --git a/hw/cxl/cxl-mailbox-utils.c b/hw/cxl/cxl-mailbox-utils.c
-index a3143f3faa23..c628f775ac48 100644
+index c628f775ac48..9a5caf62417a 100644
 --- a/hw/cxl/cxl-mailbox-utils.c
 +++ b/hw/cxl/cxl-mailbox-utils.c
-@@ -2593,6 +2593,7 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
+@@ -2593,7 +2593,7 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
      } QEMU_PACKED *media_op_in_disc_pl = (void *)payload_in;
      struct media_op_discovery_out_pl *media_out_pl =
          (struct media_op_discovery_out_pl *)payload_out;
-+    int total = ARRAY_SIZE(media_op_matrix);
+-    int total = ARRAY_SIZE(media_op_matrix);
++    int total = ARRAY_SIZE(media_op_matrix) - 1; /* exclude Discovery */
      int num_ops, start_index, i;
      int count = 0;
  
-@@ -2609,24 +2610,20 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
-      * sub class command.
-      */
-     if (media_op_in_disc_pl->dpa_range_count ||
--        start_index + num_ops > ARRAY_SIZE(media_op_matrix)) {
-+        start_index >= total) {
-         return CXL_MBOX_INVALID_INPUT;
-     }
+@@ -2619,10 +2619,12 @@ static CXLRetCode media_operations_discovery(uint8_t *payload_in,
  
-     media_out_pl->dpa_range_granularity = CXL_CACHE_LINE_SIZE;
--    media_out_pl->total_supported_operations =
--                                     ARRAY_SIZE(media_op_matrix);
--    if (num_ops > 0) {
--        for (i = start_index; i < start_index + num_ops; i++) {
--            media_out_pl->entry[count].media_op_class =
--                    media_op_matrix[i].media_op_class;
--            media_out_pl->entry[count].media_op_subclass =
--                        media_op_matrix[i].media_op_subclass;
--            count++;
--            if (count == num_ops) {
--                break;
--            }
--        }
-+    media_out_pl->total_supported_operations = total;
+     num_ops = MIN(num_ops, total - start_index);
+     for (i = 0; i < num_ops; i++) {
++        int idx = start_index + i + 1; /* skip Discovery (first entry) */
 +
-+    num_ops = MIN(num_ops, total - start_index);
-+    for (i = 0; i < num_ops; i++) {
-+        media_out_pl->entry[count].media_op_class =
-+                media_op_matrix[start_index + i].media_op_class;
-+        media_out_pl->entry[count].media_op_subclass =
-+                media_op_matrix[start_index + i].media_op_subclass;
-+        count++;
+         media_out_pl->entry[count].media_op_class =
+-                media_op_matrix[start_index + i].media_op_class;
++                media_op_matrix[idx].media_op_class;
+         media_out_pl->entry[count].media_op_subclass =
+-                media_op_matrix[start_index + i].media_op_subclass;
++                media_op_matrix[idx].media_op_subclass;
+         count++;
      }
  
-     media_out_pl->num_of_supported_operations = count;
 -- 
 2.39.5
 
