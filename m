@@ -4,47 +4,49 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 507AE108E1F4
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:40:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5DD58108E1F7
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:40:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BiW-0007J3-6X; Thu, 19 Mar 2026 07:39:08 -0400
+	id 1w3BiX-0007JI-Dd; Thu, 19 Mar 2026 07:39:09 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w3BiT-0007Ic-2x
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:05 -0400
-Received: from va-1-112.ptr.blmpb.com ([209.127.230.112])
+ id 1w3BiU-0007Ik-G6
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:06 -0400
+Received: from va-1-115.ptr.blmpb.com ([209.127.230.115])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <hongmianquan@bytedance.com>)
- id 1w3BiO-0004aq-Tn
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:04 -0400
+ id 1w3BiR-0004bb-Sn
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:39:06 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
- s=2212171451; d=bytedance.com; t=1773920324; h=from:subject:
+ s=2212171451; d=bytedance.com; t=1773920337; h=from:subject:
  mime-version:from:date:message-id:subject:to:cc:reply-to:content-type:
  mime-version:in-reply-to:message-id;
- bh=wqboUZ0f6vFFVw5ws29kYKMSNzJiaVUpowo2r2mSgt0=;
- b=IsqhoX0RvLMpa90t0y/rezTTjueZH7CrrEGFqq5IWK/SQgG1S0bFNDX2KufFlXcZQRfcT4
- qx9XZ6h1cSP/F6UXCTW7Qd1JPQwq99R1mqq9fbvvVLmlJH4naTupTNvvHyc5k2okQCMgCU
- dxlEiC4y/US6M3WhQVMvwzMK8368rWG3x6HOBElN+udoPvjUVVnhwXud/ximdent3TExZK
- XmgP+b66S5eLhZInmCe92h4tYp5bknzD/dpKxCztEA8SajxKzPLhwyA7QVj+QUKGFuOhU3
- QnKZjV4yv8WfWROhvBFbRFqFuOoK7SGFpWtOWKXk7p4HmiGoO4S8ql5M0JloQg==
-Subject: [RFC V2 0/2] migration: optimize cpr fd lookup using GHashTable
-X-Lms-Return-Path: <lba+269bbe042+d80d80+nongnu.org+hongmianquan@bytedance.com>
-Content-Transfer-Encoding: 7bit
-From: "hongmianquan" <hongmianquan@bytedance.com>
-Date: Thu, 19 Mar 2026 19:38:28 +0800
-Mime-Version: 1.0
-X-Original-From: hongmianquan <hongmianquan@bytedance.com>
-Content-Type: text/plain; charset=UTF-8
+ bh=G7AZ4K1LApZ83qpc7CCQiivvbVea9ymgYf/d/4iWmjM=;
+ b=Jp9Gsz6GP3NynVO96NhxFEMFFE7ynQpb4UA5QeQJF0oan7I6qlQHQo2VafOcXtU+yHTCcG
+ nnE40+tFfL6bAbZfhoTlHhyZydzG8+0EZ88pkow7pDbiMwWCrpqRYine6+hJN+aHgJU3q8
+ J9E4AtLFScInyZ8V1xbKxS8WLfC/FEi/PrffjZcT5hyN52QIUtyQkX/eGvBh+qsr+3ueeG
+ LrhVCPPMB58+Ai6UHUkJCTCnVR4HH61aMGyILXTM0Wxzidov52EfG+jFRILHjiXS0fS9tM
+ ifQmNzR0InophUZVgDWkLI/DU/WKmKA2mM+DO+xniNdWPiPTY4sDyyRcaoge8g==
 To: <qemu-devel@nongnu.org>
+Subject: [RFC v2 1/2] migration: Support ghash migration
+In-Reply-To: <20260319113830.53867-1-hongmianquan@bytedance.com>
+Mime-Version: 1.0
 Cc: <peterx@redhat.com>, <farosas@suse.de>, <mark.kanda@oracle.com>, 
  <bchaney@akamai.com>, "hongmianquan" <hongmianquan@bytedance.com>
-Message-Id: <20260319113830.53867-1-hongmianquan@bytedance.com>
+X-Lms-Return-Path: <lba+269bbe04f+6297f1+nongnu.org+hongmianquan@bytedance.com>
 X-Mailer: git-send-email 2.32.1 (Apple Git-133)
-Received-SPF: pass client-ip=209.127.230.112;
- envelope-from=hongmianquan@bytedance.com; helo=va-1-112.ptr.blmpb.com
+Content-Transfer-Encoding: 7bit
+From: "hongmianquan" <hongmianquan@bytedance.com>
+Date: Thu, 19 Mar 2026 19:38:29 +0800
+Message-Id: <20260319113830.53867-2-hongmianquan@bytedance.com>
+X-Original-From: hongmianquan <hongmianquan@bytedance.com>
+References: <20260319113830.53867-1-hongmianquan@bytedance.com>
+Content-Type: text/plain; charset=UTF-8
+Received-SPF: pass client-ip=209.127.230.115;
+ envelope-from=hongmianquan@bytedance.com; helo=va-1-115.ptr.blmpb.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
@@ -67,63 +69,232 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently, the CPR subsystem in QEMU uses a QLIST to store fds.
-In scenarios where a large number of
-fds are involved (such as a VM with many vfio-pci devices), looking up an fd
-via `cpr_find_fd` becomes a performance bottleneck due to the O(N) linear search.
-This patch series optimizes the cpr fd storage by replacing the QLIST
-with a GHashTable. The time complexity for `cpr_find_fd` is reduced
-from O(N) to O(1).
+Refer to commit 9a85e4b8f672016adbf7b7d5beaab2a99b9b5615 to
+support for GHashTable migration. A custom save/restore is implemented.
+Each item is made of a key and a data. Currently, only pointer-type
+keys and values are supported.
+On the get() path, ghashtable must be allocated using the proper
+key compare, key destroy and value destroy. This must be handled
+beforehand, for example in a pre_load method.
 
-To demonstrate the performance improvement, we tested the total time
-consumed by `cpr_find_fd` (called N times for N fds) under our real-world
-business scenarios with different numbers of file descriptors. The results
-are measured in nanoseconds:
-
-| Number of FDs | Total time with QLIST (ns) | Total time with GHashTable (ns) |
-|---------------|----------------------------|---------------------------------|
-| 540           | 936,753                    | 393,358                         |
-| 2,870         | 24,102,342                 | 2,212,113                       |
-| 7,530         | 152,715,916                | 5,474,310                       |
-
-As shown in the data, the lookup time grows exponentially with the QLIST
-as the number of fds increases. With the GHashTable, the time consumption
-remains linear (O(1) per lookup), significantly reducing the downtime during
-the CPR process.
-
-We choose to migrate the GHashTable directly rather than migrating a
-QLIST and rebuilding the hash on the destination side. Since `cpr_find_fd`
-is used during normal runtime (where fds are frequently added or deleted),
-reconstructing the hash would require us to maintain and synchronize both
-a QLIST and a temporary hashtable simultaneously on both the source and
-destination sides.
-Migrating the GHashTable natively keeps `cpr_state.fds` as the single
-source of truth, eliminating synchronization overhead and potential bugs.
-Additionally, the new `VMSTATE_GHASH_V` macro provides a reusable API
-for other QEMU subsystems to migrate key-value mappings.
-
-The series is structured as follows:
-1. The first patch introduces migration support for `GHashTable` by
-   adding the `VMSTATE_GHASH_V` macro and related save/load functions.
-   This is inspired by previous implementations (e.g., commit 9a85e4b)
-   and handles the serialization of hash table keys and values.
-2. The second patch refactors `cpr_state.fds` from a QLIST to a
-   GHashTable. It defines `CprFdKey` and `CprFdVal`, sets up the hash
-   and equal functions, and updates all fd operations (save, delete,
-   find, resave, walk) to use the new hash table API.
-
-hongmianquan (2):
-  migration: Support ghash migration
-  cpr: use hashtable for cpr fds
-
- include/migration/cpr.h     |   4 +-
+Signed-off-by: hongmianquan <hongmianquan@bytedance.com>
+---
  include/migration/vmstate.h |  22 ++++++
- migration/cpr.c             | 129 +++++++++++++++++++++----------
  migration/trace-events      |   5 ++
  migration/vmstate-types.c   | 147 ++++++++++++++++++++++++++++++++++++
- system/vl.c                 |   2 +
- 6 files changed, 269 insertions(+), 40 deletions(-)
+ 3 files changed, 174 insertions(+)
 
+diff --git a/include/migration/vmstate.h b/include/migration/vmstate.h
+index 89f9f49d20..cd7893c66a 100644
+--- a/include/migration/vmstate.h
++++ b/include/migration/vmstate.h
+@@ -265,6 +265,7 @@ extern const VMStateInfo vmstate_info_bitmap;
+ extern const VMStateInfo vmstate_info_qtailq;
+ extern const VMStateInfo vmstate_info_gtree;
+ extern const VMStateInfo vmstate_info_qlist;
++extern const VMStateInfo vmstate_info_ghash;
+ 
+ #define type_check_2darray(t1,t2,n,m) ((t1(*)[n][m])0 - (t2*)0)
+ /*
+@@ -882,6 +883,27 @@ extern const VMStateInfo vmstate_info_qlist;
+     .start        = offsetof(_type, _next),                              \
+ }
+ 
++/*
++ * For migrating a GHashTable whose key is a pointer to _key_type and the
++ * value, a pointer to _val_type
++ * The target hashtable must have been properly initialized
++ * _vmsd: Start address of the 2 element array containing the data vmsd
++ *        and the key vmsd, in that order
++ * _key_type: type of the key
++ * _val_type: type of the value
++ */
++#define VMSTATE_GHASH_V(_field, _state, _version, _vmsd,                       \
++                        _key_type, _val_type)                                  \
++{                                                                              \
++    .name         = (stringify(_field)),                                       \
++    .version_id   = (_version),                                                \
++    .vmsd         = (_vmsd),                                                   \
++    .info         = &vmstate_info_ghash,                                       \
++    .start        = sizeof(_key_type),                                         \
++    .size         = sizeof(_val_type),                                         \
++    .offset       = offsetof(_state, _field),                                  \
++}
++
+ /* _f : field name
+    _f_n : num of elements field_name
+    _n : num of elements
+diff --git a/migration/trace-events b/migration/trace-events
+index 90629f828f..f00f4c3e74 100644
+--- a/migration/trace-events
++++ b/migration/trace-events
+@@ -86,6 +86,11 @@ get_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
+ put_qlist(const char *field_name, const char *vmsd_name, int version_id) "%s(%s v%d)"
+ put_qlist_end(const char *field_name, const char *vmsd_name) "%s(%s)"
+ 
++get_ghash(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, uint32_t nnodes) "%s(%s/%s) nnodes=%d"
++get_ghash_end(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, int ret) "%s(%s/%s) %d"
++put_ghash(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, uint32_t nnodes) "%s(%s/%s) nnodes=%d"
++put_ghash_end(const char *field_name, const char *key_vmsd_name, const char *val_vmsd_name, int ret) "%s(%s/%s) %d"
++
+ # qemu-file.c
+ qemu_file_fclose(void) ""
+ qemu_file_put_fd(const char *name, int fd, int ret) "ioc %s, fd %d -> status %d"
+diff --git a/migration/vmstate-types.c b/migration/vmstate-types.c
+index 89cb211472..e6c3573789 100644
+--- a/migration/vmstate-types.c
++++ b/migration/vmstate-types.c
+@@ -942,3 +942,150 @@ const VMStateInfo vmstate_info_qlist = {
+     .get  = get_qlist,
+     .put  = put_qlist,
+ };
++
++struct put_ghash_data {
++    QEMUFile *f;
++    const VMStateDescription *key_vmsd;
++    const VMStateDescription *val_vmsd;
++    JSONWriter *vmdesc;
++    int ret;
++};
++
++static gboolean put_ghash_elem(gpointer key, gpointer value, gpointer data)
++{
++    struct put_ghash_data *capsule = (struct put_ghash_data *)data;
++    QEMUFile *f = capsule->f;
++    int ret;
++    Error *local_err = NULL;
++
++    qemu_put_byte(f, true);
++
++    /* put the key */
++    ret = vmstate_save_state(f, capsule->key_vmsd, key,
++                             capsule->vmdesc, &local_err);
++    if (ret) {
++        error_report_err(local_err);
++        capsule->ret = ret;
++        return false;
++    }
++
++    /* put the data */
++    ret = vmstate_save_state(f, capsule->val_vmsd, value,
++                             capsule->vmdesc, &local_err);
++    if (ret) {
++        error_report_err(local_err);
++        capsule->ret = ret;
++        return false;
++    }
++    return true;
++}
++
++static int put_ghash(QEMUFile *f, void *pv, size_t unused_size,
++                     const VMStateField *field, JSONWriter *vmdesc)
++{
++    const VMStateDescription *key_vmsd = &field->vmsd[1];
++    const VMStateDescription *val_vmsd = &field->vmsd[0];
++    struct put_ghash_data capsule = {
++        .f = f,
++        .key_vmsd = key_vmsd,
++        .val_vmsd = val_vmsd,
++        .vmdesc = vmdesc,
++        .ret = 0};
++    GHashTable **pval = pv;
++    GHashTable *hash = *pval;
++    GHashTableIter iter;
++    gpointer key, value;
++    uint32_t nnodes = g_hash_table_size(hash);
++    int ret;
++
++    trace_put_ghash(field->name, key_vmsd->name, val_vmsd->name, nnodes);
++    qemu_put_be32(f, nnodes);
++    g_hash_table_iter_init(&iter, hash);
++    while (g_hash_table_iter_next(&iter, &key, &value)) {
++        if (!put_ghash_elem(key, value, (gpointer)&capsule)) {
++            break;
++        }
++    }
++    qemu_put_byte(f, false);
++    ret = capsule.ret;
++    if (ret) {
++        error_report("%s : failed to save ghash (%d)", field->name, ret);
++    }
++    trace_put_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
++    return ret;
++}
++
++static int get_ghash(QEMUFile *f, void *pv, size_t unused_size,
++                     const VMStateField *field)
++{
++    const VMStateDescription *key_vmsd = &field->vmsd[1];
++    const VMStateDescription *val_vmsd = &field->vmsd[0];
++    int version_id = field->version_id;
++    size_t key_size = field->start;
++    size_t val_size = field->size;
++    int nnodes, count = 0;
++    GHashTable **pval = pv;
++    GHashTable *hash = *pval;
++    void *key, *val;
++    int ret = 0;
++    Error *local_err = NULL;
++
++    if (version_id > key_vmsd->version_id) {
++        error_report("%s %s", key_vmsd->name, "too new");
++        return -EINVAL;
++    }
++    if (version_id < key_vmsd->minimum_version_id) {
++        error_report("%s %s", key_vmsd->name, "too old");
++        return -EINVAL;
++    }
++    if (version_id > val_vmsd->version_id) {
++        error_report("%s %s", val_vmsd->name, "too new");
++        return -EINVAL;
++    }
++    if (version_id < val_vmsd->minimum_version_id) {
++        error_report("%s %s", val_vmsd->name, "too old");
++        return -EINVAL;
++    }
++
++    nnodes = qemu_get_be32(f);
++    trace_get_ghash(field->name, key_vmsd->name, val_vmsd->name, nnodes);
++
++    while (qemu_get_byte(f)) {
++        if ((++count) > nnodes) {
++            ret = -EINVAL;
++            break;
++        }
++        key = g_malloc0(key_size);
++        ret = vmstate_load_state(f, key_vmsd, key, version_id, &local_err);
++        if (ret) {
++            error_report_err(local_err);
++            goto key_error;
++        }
++        val = g_malloc0(val_size);
++        ret = vmstate_load_state(f, val_vmsd, val, version_id, &local_err);
++        if (ret) {
++            error_report_err(local_err);
++            goto val_error;
++        }
++        g_hash_table_insert(hash, key, val);
++    }
++    if (count != nnodes) {
++        error_report("%s inconsistent stream when loading the ghash",
++                     field->name);
++        return -EINVAL;
++    }
++    trace_get_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
++    return ret;
++val_error:
++    g_free(val);
++key_error:
++    g_free(key);
++    trace_get_ghash_end(field->name, key_vmsd->name, val_vmsd->name, ret);
++    return ret;
++}
++
++const VMStateInfo vmstate_info_ghash = {
++    .name = "ghash",
++    .get  = get_ghash,
++    .put  = put_ghash,
++};
 -- 
 2.32.1 (Apple Git-133)
 
