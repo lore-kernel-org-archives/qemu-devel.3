@@ -4,116 +4,105 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 393061075290
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 10:02:03 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 285771075290
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 10:12:23 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3ABz-0007cF-JR; Thu, 19 Mar 2026 06:01:27 -0400
+	id 1w3AM0-0001a9-GT; Thu, 19 Mar 2026 06:11:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefan.weil@weilnetz.de>)
- id 1w3ABQ-0007Qc-OT; Thu, 19 Mar 2026 06:00:59 -0400
-Received: from mail.weilnetz.de ([37.120.169.71]
- helo=mail.v2201612906741603.powersrv.de)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3ALx-0001ZK-Lr
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 06:11:45 -0400
+Received: from mail-yx1-xb136.google.com ([2607:f8b0:4864:20::b136])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <stefan.weil@weilnetz.de>)
- id 1w3ABO-0005Hv-1X; Thu, 19 Mar 2026 06:00:52 -0400
-Received: from [134.155.50.234] (dock02.bib.uni-mannheim.de [134.155.50.234])
- (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
- key-exchange x25519 server-signature RSA-PSS (4096 bits) server-digest SHA256)
- (No client certificate requested)
- by mail.v2201612906741603.powersrv.de (Postfix) with ESMTPSA id 94189DA027C;
- Thu, 19 Mar 2026 11:00:44 +0100 (CET)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=weilnetz.de; s=dkim1; 
- t=1773914444;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
- bh=TuFpdoXOSVzGozdxSPrbQ+qXej7kHwm0BieXWr+ddfo=;
- b=S1Yz3lDjqP4seLdyNQD8Njbtw8UOxnv4fpOfGKAWoeM61cameyaGdCnecprz9WjFW+mmF6
- eb0q4/WUR51feMXrYoFKT+gAp6oSBtsj2e2xHCqQ2gpgj4hytssJ59ZcZ7xiLA9p0qlV6/
- 3mJDNRsqVYkaCvLudilkmGKmRxa5R+s=
-Authentication-Results: ORIGINATING;
- auth=pass smtp.auth=stefan.weil@weilnetz.de
- smtp.mailfrom=stefan.weil@weilnetz.de
-Message-ID: <cb62f992-cddf-49fa-8928-0cbd338d978d@weilnetz.de>
-Date: Thu, 19 Mar 2026 11:00:43 +0100
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3ALv-0007aM-JV
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 06:11:45 -0400
+Received: by mail-yx1-xb136.google.com with SMTP id
+ 956f58d0204a3-64ca2b32f46so690747d50.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 03:11:42 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1773915102; cv=none;
+ d=google.com; s=arc-20240605;
+ b=eZXKdEtIifZENf06eFd7bed+iF89PIhdCiKMJS/Y9pClGYfz0P3UD6JauHXGtcKxPB
+ keMOg+BhuM9G94hxlH3tkCOWh+rNNKjMqfqKghYn8TAnyDLVvDtsCfdGlu4ARwWvLPNn
+ DtRVwhABlp4OR8Z/CRwF1uAV1W9GQA7XGYGhVohfJ15yv3GOh160vzlHJJpqH9wwgmDW
+ 0sn8SD29iEPqwsPzefcAD2feBaREcHg3DEIFKvJLUd0fO607Qc/BI4d2PE035lTZ1Zts
+ htLDYNt2udu2G7DkhqewZn2rf7gvzHFpCAAWRefkyCnfsp3OzuZdjs48cnPNuJyUS+5C
+ TijQ==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
+ s=arc-20240605; 
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=5lb4pBsSvciDuj1e8aFT7FBogLFyiMAr6c+7FqjVJXQ=;
+ fh=GGDr1ahiSpLi61vb+CZzSa0nWU0dz3YsFhx8zuUJmr4=;
+ b=bofCug4PeWbxzjho8nbaoUwSL47uh71XrZXIJ6cHHkrFoPP+9s+FaoptcFwlmIedhV
+ +KyjpIXmGlSbHMPil6tgzugVzM6Nge9fskHOsG9eEmwHdPM8ZJCtskhKQqRNvZ4N/KvF
+ jE4T0SWehV8dl3yjmvFvQ3y2QREUaxvE+LzcTsQlRvjwJcnypJp5LVtfaN1HrV1pvwnL
+ AYzW0pnXHLX22qaOb4qjbcchRKZ8rGo4LfhstzHGuLTJNUvNCI+IhGHct0tPJA5Jk/Wl
+ cpciWWr8EI58op3FLmbLysBhFIV9Lm1XHjcEPb1eV6TtWH7j4/Jaw3AiXqqTe0IjTyOC
+ Y0qg==; darn=nongnu.org
+ARC-Authentication-Results: i=1; mx.google.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773915102; x=1774519902; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=5lb4pBsSvciDuj1e8aFT7FBogLFyiMAr6c+7FqjVJXQ=;
+ b=Mg7hsjZ/Fs+DLeSteedngyTjJmTlCUXgJt0bML4y+vstixXfm/0eR7gIbyK/LN7CTr
+ doO2CZxu44CYWXNieYTqJ8ungX5al7idQ+QZmYMvA3mBmB1wPtDYVSIJTdi//6e0nFsF
+ Dt0WE66zuYxYoZoyOVzFSSahaPYHW1yZKFLvULI++BQe3bthedwTlnheH+51cwZg7uRQ
+ MP53lDcSYwacDNFKO0G69llHiwIcGMmBOfaL0t86+OVSG9DKl+ezdbRkCOmsQtd09gEh
+ V0a6NG4F08KR74GEwmjhdPYfHH5iVamVVs3gvcUTSE2Npr6rQ8kZ2e4zONx/sSAQ34Xg
+ uDaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773915102; x=1774519902;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=5lb4pBsSvciDuj1e8aFT7FBogLFyiMAr6c+7FqjVJXQ=;
+ b=GEvhUbnScJXunS4UchiqguZLYNpIkyRI+C/jQA+RyebSJ4OJEXg02PKK3OYPzY+uQP
+ OexoSL7WMZdetXVdEil/SrVKYfG94n7DV7P1eVsD0ZKvFHegNqDwch7Jw1sXO6ExDums
+ sF0/ZMMU4YoQwbMvUWTUoWvoyx0SozROgkOh9nQmp2GUEfoT0K46E2UxoEpFHxulzEvH
+ XqwidTsU0pFyKnlbdon03sWSnqA9bTzKFYKhAVHUpAOg9gmVvZbLcgtru8UoFcwolvIW
+ AoXs/OUVQA4C9YipYD/ferLreQWU8vbuGiuhKFv4Gq4UyJ4SY+ZfeiCLONeOIuOUR5Yx
+ lqZQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWcPADun2b6ww9KwgHYiiy4WDfV/v3w17DwlV801rbeq0UYtxzqAr/7X240djzChMygXa5HRSttk4P8@nongnu.org
+X-Gm-Message-State: AOJu0YzEYKloDcMiS4KrZt8aQWlWBlbDTsvgVr7kiCX/O1Wr3Iipbf6r
+ 6ARIbPplmI3bFYHk8/lmpFf4lDznbwmvumJufi6EqoAPjiispovS6/gwSZoZE5DuGeqkh62ZTDT
+ WjHX3terqhsx3qn3tW5tP9hi/b39+Ap2AtRg/fmVDyw==
+X-Gm-Gg: ATEYQzx/Hq1BQfjeb+m8JNHbvC7xQ4sJggGrcnlbIOGsiJfeE7Z+dLKG62RiTmrb0yB
+ a0qLgnHdJU9oBUPWFayOoifbkHrk9Sa8SnBVEDCvv+N0SJgysk2QJoKWdR00IIhqwNLhjYpmtqx
+ JJFyCBuJgus2pi7Itv0eVsGxgb89h0PRixqAOzyTg9AGEhjX2UwcgdiKtouE5OAKhmdrbadLc4u
+ js9hm9kWKO2dMTXH1SUcMSizCqDKOhtj5uNxCqBFbvBMHrzg8k6fT1ztuv/twfwMyfZe86gTu2W
+ w1SS/5E9lQ+NaO1ZwgkB5TkdBhtavIJyaOBHDXj4ZmX5QN+eAlLEiFg9JoW1tb7f6nY=
+X-Received: by 2002:a53:ccc9:0:b0:64c:c616:c356 with SMTP id
+ 956f58d0204a3-64e91354a60mr4695776d50.35.1773915102057; Thu, 19 Mar 2026
+ 03:11:42 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH v3 1/6] whpx: arm: fix -cpu host
-To: Mohamed Mediouni <mohamed@unpredictable.fr>, qemu-devel@nongnu.org
-Cc: Pedro Barbuda <pbarbuda@microsoft.com>,
- Peter Maydell <peter.maydell@linaro.org>, qemu-arm@nongnu.org,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-References: <20260314221529.47841-1-mohamed@unpredictable.fr>
- <20260314221529.47841-2-mohamed@unpredictable.fr>
-Autocrypt: addr=stefan.weil@weilnetz.de; keydata=
- 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
-In-Reply-To: <20260314221529.47841-2-mohamed@unpredictable.fr>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 8bit
-X-Rspamd-Server: v2201612906741603
-X-Rspamd-Queue-Id: 94189DA027C
-X-Spamd-Bar: ---
-X-Spamd-Result: default: False [-3.10 / 12.00]; BAYES_HAM(-3.00)[100.00%];
- MIME_GOOD(-0.10)[text/plain]; RCVD_COUNT_ZERO(0.00)[0];
- MIME_TRACE(0.00)[0:+]; ARC_NA(0.00)[];
- MID_RHS_MATCH_FROM(0.00)[]; FROM_HAS_DN(0.00)[];
- DKIM_SIGNED(0.00)[weilnetz.de:s=dkim1]; TO_DN_SOME(0.00)[];
- FROM_EQ_ENVFROM(0.00)[]; TO_MATCH_ENVRCPT_ALL(0.00)[];
- RCPT_COUNT_FIVE(0.00)[6]
-X-Rspamd-Action: no action
-Received-SPF: pass client-ip=37.120.169.71;
- envelope-from=stefan.weil@weilnetz.de; helo=mail.v2201612906741603.powersrv.de
-X-Spam_score_int: 0
-X-Spam_score: 0.0
-X-Spam_bar: /
-X-Spam_report: (0.0 / 5.0 requ) BAYES_00=-1.9, DKIM_INVALID=0.1,
- DKIM_SIGNED=0.1, RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819,
- RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=no autolearn_force=no
+References: <20260223170212.441276-1-peter.maydell@linaro.org>
+ <20260223170212.441276-33-peter.maydell@linaro.org>
+ <20260311154622.00007541@huawei.com>
+In-Reply-To: <20260311154622.00007541@huawei.com>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Thu, 19 Mar 2026 10:11:30 +0000
+X-Gm-Features: AaiRm50AJqHAtOb_fh3xIWO0_UEQVIFQNg2TFls-d30zpyN8FqnUloI10YKxBRE
+Message-ID: <CAFEAcA_1SZNq0q1AFXCF=bBZ4gof=sbP4atyTGnUYgK5M6q0Nw@mail.gmail.com>
+Subject: Re: [PATCH 32/65] hw/intc/arm_gicv5: Cache pending LPIs in a hash
+ table
+To: Jonathan Cameron <jonathan.cameron@huawei.com>
+Cc: qemu-arm@nongnu.org, qemu-devel@nongnu.org
+Content-Type: text/plain; charset="UTF-8"
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b136;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb136.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -126,34 +115,71 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
-Reply-to:  Stefan Weil <stefan.weil@weilnetz.de>
-From:  Stefan Weil via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Am 14.03.26 um 23:15 schrieb Mohamed Mediouni:
-> "hw/arm/virt: Register valid CPU types dynamically" went under my radar, so fix this for WHPX.
-> 
-> Signed-off-by: Mohamed Mediouni <mohamed@unpredictable.fr>
-> Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
-> ---
->   hw/arm/virt.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/hw/arm/virt.c b/hw/arm/virt.c
-> index bced9f67f4..af3f03ced3 100644
-> --- a/hw/arm/virt.c
-> +++ b/hw/arm/virt.c
-> @@ -3477,7 +3477,7 @@ static GPtrArray *virt_get_valid_cpu_types(const MachineState *ms)
->       if (target_aarch64()) {
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a53")));
->           g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("cortex-a57")));
-> -        if (kvm_enabled() || hvf_enabled()) {
-> +        if (kvm_enabled() || hvf_enabled() || whpx_enabled()) {
->               g_ptr_array_add(vct, g_strdup(ARM_CPU_TYPE_NAME("host")));
->           }
->       }
+On Wed, 11 Mar 2026 at 15:46, Jonathan Cameron
+<jonathan.cameron@huawei.com> wrote:
+>
+> On Mon, 23 Feb 2026 17:01:39 +0000
+> Peter Maydell <peter.maydell@linaro.org> wrote:
+>
+> > The GICv5 stores information about LPIs in a guest-memory data
+> > structure.  Iterating through this to identify the highest priority
+> > pending interrupt would be expensive; to avoid this we will use a
+> > hash table which contains an entry for each pending LPI and which
+> > caches the L2 ISTE.  Typically only a few LPIs will be pending at any
+> > one time, so iterating through the hash table should be fast.
+> >
+> > We can access an L2 ISTE whenever it is valid, and can freely cache
+> > the data for as long as the IST is valid.  We only need to ensure
+> > that we have written back the data at the point where
+> > IRS_IST_BASER.VALID is written to 0.
+> >
+> > We add an LPI to the cache when the pending bit is written to 1, and
+> > remove it when it is written to 0.  Handling of checking the cache,
+> > and of adding and removing entries, is handled within get_l2_iste()
+> > and put_l2_iste(), which all the operations that read and write ISTE
+> > words use.
+> >
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> LGTM
+> Reviewed-by: Jonathan Cameron <jonathan.cameron@huawei.com>
+>
+> > ---
+> >  hw/intc/arm_gicv5.c         | 110 +++++++++++++++++++++++++++++++++++-
+> >  include/hw/intc/arm_gicv5.h |   2 +
+> >  2 files changed, 111 insertions(+), 1 deletion(-)
+> >
+> > diff --git a/hw/intc/arm_gicv5.c b/hw/intc/arm_gicv5.c
+> > index fa7692ca0e..30368998d3 100644
+> > --- a/hw/intc/arm_gicv5.c
+> > +++ b/hw/intc/arm_gicv5.c
+> > @@ -474,10 +474,21 @@ static bool write_l2_iste_mem(GICv5Common *cs, const GICv5ISTConfig *cfg,
+> >   * reads and writes to update the L2 ISTE. In a future commit we
+> >   * will add support for a cache of some of the ISTE data in a
+> >   * local hashtable; the APIs are designed with that in mind.
+> > + * Not all these fields are always valid; they are private to
+> > + * the implementation of get_l2_iste() and put_l2_iste().
+>
+> Completely trivial but wrap seems to be getting shorter as this comment gains
+> lines!
 
-Reviewed-by: Stefan Weil <sw@weilnetz.de>
+I also forgot to remove "In a future commit ..." part now we have
+got to this future commit and added the hashtable :-) Fixed to:
 
+ /*
+  * This is returned by get_l2_iste() and has everything we
+  * need to do the writeback of the L2 ISTE word in put_l2_iste().
+- * Currently the get/put functions always directly do guest memory
+- * reads and writes to update the L2 ISTE. In a future commit we
+- * will add support for a cache of some of the ISTE data in a
+- * local hashtable; the APIs are designed with that in mind.
++ * Not all these fields are always valid; they are private to the
++ * implementation of get_l2_iste() and put_l2_iste().
+  */
+
+
+thanks
+-- PMM
 
