@@ -4,65 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id D933F108E1E9
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:21:35 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 2E97D108E1E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:21:48 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BQb-0007pb-Ky; Thu, 19 Mar 2026 07:20:37 -0400
+	id 1w3BQh-0007r0-Cc; Thu, 19 Mar 2026 07:20:43 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQa-0007pC-2S
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:36 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQf-0007qO-Nm
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:42 -0400
+Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQX-0006Af-IS
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:35 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b40fb7f95so720141f8f.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:20:32 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQe-0006Pt-66
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:41 -0400
+Received: by mail-wm1-x336.google.com with SMTP id
+ 5b1f17b1804b1-486fd5360d4so1807245e9.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:20:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1773919231; x=1774524031; darn=nongnu.org;
+ d=linaro.org; s=google; t=1773919238; x=1774524038; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=wofAlcNimL3fKlS85Aya0QNm0cIokcBfl4ew1SrPm3w=;
- b=Tiy91+XugcS8WQs9Ekc7/PPWmz7J9lFchfwP190//LBaX85pMoyKDvO5TcfRS4a2qL
- rIOgeIU7pDZd+qKRnqQ1Oy8HYhWvHQ9d7NXSlg5u3ZhD0BUj6EORhbrgC124uGHcxZ+B
- TzI4lKJ+K8ArgncGL/FhjQ7YZcjWiuk7/Az1VajUxH49+bGmxardwHeMc+D16l2jptmL
- FgCL33LFCDk/FX+vHBpUIwgmhK9o1oFLOP3n8wshtMvTXLKfmHG5TNaUbVC0NBMHoYlj
- 3D8BHbK/+5mfE+S8XHbYstbSBjSH0Wrzq6l90sYYLQXMV28Qj7xp2IMWVmzzndDVsVmr
- 4/8A==
+ bh=ILd32R5A8XKeMpYg01CS957pigNHqjKdgnpyoMw2kbA=;
+ b=wi3WcjX/nsjKLL+xLWCMw2hICs2UGQBhOBnpj8DJyL7+E06bulr36MRGh0jzgvLT5F
+ rhbHKfpJAWAtSUZIe+efqAxiGfv5dshPqjqXyl3R75/XRh6uTUHaSi3fjlT/ZKaxdUdN
+ 6pMqoTmo9S22Un3AAcL3ZRYP8pTADc1uxs3fcqxKavY6gQpQwCMvkXyjiM5N33Zpg1/j
+ T0cVzYqJ1HTYtUHOfrcvR4m89rrKL1hNtTXLW0BOyxHNKQOtT/jwEPkbpHUvc7kPx6dk
+ YBmjzMcrGXgMxBjEeWKMHNMM9OIoyK2Hkhnmtu0pQZtdl5GD6I9eeX5JVcWMQqL5Z8PE
+ 33fg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773919231; x=1774524031;
+ d=1e100.net; s=20251104; t=1773919238; x=1774524038;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=wofAlcNimL3fKlS85Aya0QNm0cIokcBfl4ew1SrPm3w=;
- b=PR5rvvfYNg+q7dc4G6PNwvA6muxhCZeNMVdtUorpyVO8VSo3EF7nJnGMlZYszT+Y7H
- BZbbYfiGnZjH6d3NSoM1/vajB+JuCY/7xmsp3fTrXRSkbcRBF2GviLLcA+bviFJS5z28
- wOBPpONYg5a2p1EN+ZYKKRq2tfMnMcsjyW7HBFP3sjmPqsRme/Ox2beh83VnzM4i1qx4
- aStzbhJNp1YFlNPf1Sg1FLCOt4f58Om9CdXi/rGFs15+ssNK0y2N1xM5MODE36fwzbVY
- fB3OmqxbvKc67HL94MkuQvL8rn8wEZbPjDQorGDmz3t0flc8F1FYrDoFBpnQxKSzW9kR
- 3g9g==
-X-Gm-Message-State: AOJu0Yy9clS0ZSLmzlFhM6x0IRn4bc9IJbivGKplLB9wiM+95QdoWL3z
- OcfbeMb6c8hvAJVmyGkPiahgr3jhCidRjyx0RluqtyrjmwSkGcVTDOfA+cB5DhjFg33orICN8/k
- iIwiEN8c=
-X-Gm-Gg: ATEYQzwvRMDkcIwAFGkMvoOsRTf25F4E3ABtaLQOVTVH2MbXjTwGCQhMe8KEz+sv1jz
- lvVi4KytoTF9aSAD5gpBvBlc0nxmmOHr1/SRl/f+/1t2QZIswauAREMZn065YN4SGVgCxrEkFin
- ojxXYUDLeiJdccMdUVPO3h3QFvAEh6ijMTB826NxneLN32ZmJH7j7IfzVUm7hZDpdWKGz3ZeEAY
- Cr0sz++CnfTj4+hLn992cpp5hMXp1cB5tDiaFF4HtU9vrabPhq3fjqRPi0eT9Ho7cUOax2ox31X
- TpZZBE6JRBjElTqidSFWVXI5k61WPbuYoEqOyhuCq9+DnuFBtfs2uPKHq5T4g6vmmdJISRb8Vl4
- LwfUucceqt6KAZv8Yka/s7ySXi9G6to6tS6DV4UMdhtzgzdjSzTvjHeayhx2EnjEMc7FS4pnLiz
- WmsbyZjiGj1aBrW1hFCfeeADsqolDqIRe7M63OnTIfNHprZ/WF6BCeZkzD+Oi8g7R7Fke3ApSM
-X-Received: by 2002:a5d:5887:0:b0:43b:4d25:959b with SMTP id
- ffacd0b85a97d-43b527a97a6mr12241121f8f.17.1773919231367; 
- Thu, 19 Mar 2026 04:20:31 -0700 (PDT)
+ bh=ILd32R5A8XKeMpYg01CS957pigNHqjKdgnpyoMw2kbA=;
+ b=J0/FJX+LnImwSGyFb2tYkJ9XNBYeqNWOpC6NiJNE5wDM2UmI/HqFtSedsoAwL8cDP+
+ FxXUpMA0vFL7oPyBXnaaYweiOVuJJfD0Jw2xrO2REZp1kzXHX51P7o59kBLBnamUKAmm
+ gAeEwOM6pQSCIQUvJ5n5JRtUZvdfltFyxhpzqY/bMfnjdqfXw/jRXsKVUnvKKAjo4IGj
+ XiS/vbo+4lS5kLHY+rXA+iviwRDvLGZHGYrf1HlR6xOcCXS2xhvSjgrZ11wGV9wtk0FL
+ raUCDBkK/ejABhw/YA+1UGsWzoQb3SDv+9UFCAeKy0N9+73wH+OlhX8hdPsfF9JwSNnU
+ 9qEg==
+X-Gm-Message-State: AOJu0Yyqe4qJvQ8f4xD89ymZNiRN7EV2KcesV9xfJY3z8RaJkUI6k0fS
+ O/DLPhScIoCmXOpjWRimRva3oeYxsHYGhINa0au+nRTFm3KCVv8/Rz194QvzJ0Ybw4oFq4ZGkns
+ pcJnJoXs=
+X-Gm-Gg: ATEYQzyg3EhvRD6P2AWEK63qduYGWFgtfGFN2hAN0qn2PDebG8Im6DMGu6uYrB3FVib
+ xyIM96KCnPUxVO+/JffM3jxlj4HMhat1RVB7KOsmwzhC+XiL6PUKOe8ceTISpURoJwI3IrSPLee
+ WBRcrEzfwiQBQMhabvQXZEAY7cuQbOCAN15V5LEmQ8ocJZsUWKEwgMxrLRm2UnviLGd6jine6Dz
+ d4ymZ88HrI0iDHwYFwWsbTy4r55RHvyQvXsr3OrR8WkjiaAqgyfUmqjcSlmEeJiANYAheLUlpu8
+ hIozQXvIE6wMdU+VgzQFDAdDEpbhMJaMhiTilTlpGlybhsljdE0M7F/WtImAN7suJXRrhZORpWY
+ rsakSJ3RQXhCD2u5z8dI6D2oYYZx7t8Y5mOMV12SzFjJWSj6TyteNMOHJN8iTECmLxHTZBalYbw
+ LRd9eoZ3DOufhEk81a2ITXXcBvO3lB/nimFQZkQnGd0L5/v9F9lSKw5QfrK+xNTLsBB50i+LdPS
+ jOkQIJRQY4=
+X-Received: by 2002:a05:600c:630f:b0:485:3fd1:992c with SMTP id
+ 5b1f17b1804b1-486f443850dmr121722005e9.1.1773919238343; 
+ Thu, 19 Mar 2026 04:20:38 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b5184b8b9sm15749126f8f.1.2026.03.19.04.20.30
+ 5b1f17b1804b1-486f8b949a5sm56957205e9.11.2026.03.19.04.20.37
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Thu, 19 Mar 2026 04:20:30 -0700 (PDT)
+ Thu, 19 Mar 2026 04:20:37 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
@@ -72,18 +73,18 @@ Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
  qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chinmay Rath <rathc@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH 7/8] hw/ppc/pegasos: Replace legacy ld/st_phys() ->
- address_space_ld/st()
-Date: Thu, 19 Mar 2026 12:19:35 +0100
-Message-ID: <20260319111936.68041-8-philmd@linaro.org>
+Subject: [PATCH 8/8] configs/targets: Restrict the legacy ldst_phys() API on
+ PPC
+Date: Thu, 19 Mar 2026 12:19:36 +0100
+Message-ID: <20260319111936.68041-9-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319111936.68041-1-philmd@linaro.org>
 References: <20260319111936.68041-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::336;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x336.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,58 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Prefer the address_space_ld/st API over the legacy ld_phys()
-because it allow checking for bus access fault.
-
-This code however doesn't check for fault, so we simply inline
-the calls (not specifying any memory transaction attribute nor
-expecting transation result) per the definition in
-"system/memory_ldst_phys_endian.h.inc":
-
- 27 static inline uint32_t LD_PHYS(l)(ARG1_DECL, hwaddr addr)
- 28 {
- 29     return ADDRESS_SPACE_LD(l)(ARG1, addr, MEMTXATTRS_UNSPECIFIED, NULL);
- 30 }
-
- 42 static inline void ST_PHYS(l)(ARG1_DECL, hwaddr addr, uint32_t val)
- 43 {
- 44     ADDRESS_SPACE_ST(l)(ARG1, addr, val, MEMTXATTRS_UNSPECIFIED, NULL);
- 45 }
-
-No logical change intended.
+The 32-bit PPC target doesn't use the legacy ldst_phys() API
+anymore. Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable
+to hide the legacy API to the qemu-system-ppc binary, avoiding
+further API uses to creep in.
 
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- hw/ppc/pegasos.c | 5 +++--
- 1 file changed, 3 insertions(+), 2 deletions(-)
+ configs/targets/ppc-softmmu.mak | 1 +
+ 1 file changed, 1 insertion(+)
 
-diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
-index 4217af25807..52e35949cc1 100644
---- a/hw/ppc/pegasos.c
-+++ b/hw/ppc/pegasos.c
-@@ -21,6 +21,7 @@
- #include "hw/ide/pci.h"
- #include "hw/i2c/smbus_eeprom.h"
- #include "hw/core/qdev-properties.h"
-+#include "system/memory.h"
- #include "system/reset.h"
- #include "system/runstate.h"
- #include "system/qtest.h"
-@@ -593,12 +594,12 @@ enum pegasos2_rtas_tokens {
- 
- static uint32_t rtas_ldl(AddressSpace *as, hwaddr addr)
- {
--    return ldl_be_phys(as, addr);
-+    return address_space_ldl(as, addr, MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
- static void rtas_stl(AddressSpace *as, hwaddr addr, uint32_t value)
- {
--    stl_be_phys(as, addr, value);
-+    address_space_stl(as, addr, value, MEMTXATTRS_UNSPECIFIED, NULL);
- }
- 
- static target_ulong pegasos2_rtas(PowerPCCPU *cpu, PegasosMachineState *pm,
+diff --git a/configs/targets/ppc-softmmu.mak b/configs/targets/ppc-softmmu.mak
+index 867898bd47c..ae7d593bf0d 100644
+--- a/configs/targets/ppc-softmmu.mak
++++ b/configs/targets/ppc-softmmu.mak
+@@ -3,3 +3,4 @@ TARGET_BIG_ENDIAN=y
+ TARGET_KVM_HAVE_GUEST_DEBUG=y
+ TARGET_XML_FILES= power-core.xml power-fpu.xml power-altivec.xml power-spe.xml
+ TARGET_LONG_BITS=32
++TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
 -- 
 2.53.0
 
