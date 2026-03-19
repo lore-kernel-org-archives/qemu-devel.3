@@ -4,62 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8C9A81090223
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:57:47 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B32C1090223
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 12:58:44 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Cvo-0005UA-M9; Thu, 19 Mar 2026 08:56:56 -0400
+	id 1w3Cvm-0005Ta-Sy; Thu, 19 Mar 2026 08:56:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xieyi@kylinos.cn>) id 1w38sf-0002wy-EC
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:37:27 -0400
-Received: from mailgw.kylinos.cn ([124.126.103.232])
+ (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
+ id 1w38l3-0006Ov-Tt
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:29:33 -0400
+Received: from exmail.andestech.com ([60.248.187.195]
+ helo=Atcsqr.andestech.com)
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <xieyi@kylinos.cn>) id 1w38sY-0001Ry-EO
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:37:24 -0400
-X-UUID: ced4740e236e11f1a21c59e7364eecb8-20260319
-X-CID-CACHE: Type:Local,Time:202603191607+08,HitQuantity:1
-X-CID-P-RULE: Release_Ham
-X-CID-O-INFO: VERSION:1.3.11, REQID:56d82894-de1a-435a-b60f-dd4237dc3e06, IP:0,
- U
- RL:0,TC:0,Content:0,EDM:25,RT:0,SF:0,FILE:0,BULK:0,RULE:Release_Ham,ACTION
- :release,TS:25
-X-CID-META: VersionHash:89c9d04, CLOUDID:f3f6983efa17a9e86663841bc7a8309b,
- BulkI
- D:nil,BulkQuantity:0,Recheck:0,SF:102|850|898,TC:nil,Content:0|15|50,EDM:5
- ,IP:nil,URL:0,File:nil,RT:nil,Bulk:nil,QS:nil,BEC:nil,COL:0,OSI:0,OSA:0,AV
- :0,LES:1,SPR:NO,DKR:0,DKP:0,BRR:0,BRE:0,ARC:0
-X-CID-BVR: 2,SSN|SDN
-X-CID-BAS: 2,SSN|SDN,0,_
-X-CID-FACTOR: TF_CID_SPAM_SNR
-X-CID-RHF: D41D8CD98F00B204E9800998ECF8427E
-X-UUID: ced4740e236e11f1a21c59e7364eecb8-20260319
-X-User: xieyi@kylinos.cn
-Received: from localhost.localdomain [(10.44.16.150)] by mailgw.kylinos.cn
- (envelope-from <xieyi@kylinos.cn>)
- (Generic MTA with TLSv1.3 TLS_AES_256_GCM_SHA384 256/256)
- with ESMTP id 634625433; Thu, 19 Mar 2026 16:37:04 +0800
-From: Yi Xie <xieyi@kylinos.cn>
-To: qemu-devel@nongnu.org
-Cc: xieyi <xieyi@kylinos.cn>
-Subject: [PATCH] tests: fix typo in char unit test comment
-Date: Thu, 19 Mar 2026 16:36:48 +0800
-Message-Id: <20260319083648.111604-1-xieyi@kylinos.cn>
-X-Mailer: git-send-email 2.25.1
+ (Exim 4.90_1) (envelope-from <ycliang@andestech.com>)
+ id 1w38l0-0008Np-Eo
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 04:29:33 -0400
+Received: from mail.andestech.com (ATCPCS34.andestech.com [10.0.1.134])
+ by Atcsqr.andestech.com with ESMTP id 62J8SvwO014752;
+ Thu, 19 Mar 2026 16:28:57 +0800 (+08)
+ (envelope-from ycliang@andestech.com)
+Received: from swlinux02.andestech.com (10.0.15.183) by ATCPCS34.andestech.com
+ (10.0.1.134) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2507.39; Thu, 19 Mar
+ 2026 16:28:57 +0800
+To: <u-boot@lists.denx.de>
+CC: <rick@andestech.com>, <ycliang@andestech.com>, <trini@konsulko.com>,
+ <me@ziyao.cc>, <e@freeshell.de>, <qemu-devel@nongnu.org>, CL Wang
+ <cl634@andestech.com>
+Subject: [PATCH] riscv: spl: Clear BSS as early as possible
+Date: Thu, 19 Mar 2026 16:28:51 +0800
+Message-ID: <20260319082851.3262146-1-ycliang@andestech.com>
+X-Mailer: git-send-email 2.34.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=124.126.103.232; envelope-from=xieyi@kylinos.cn;
- helo=mailgw.kylinos.cn
+Content-Type: text/plain
+X-Originating-IP: [10.0.15.183]
+X-ClientProxiedBy: ATCPCS33.andestech.com (10.0.1.100) To
+ ATCPCS34.andestech.com (10.0.1.134)
+X-DKIM-Results: atcpcs34.andestech.com; dkim=none;
+X-DNSRBL: 
+X-MAIL: Atcsqr.andestech.com 62J8SvwO014752
+Received-SPF: pass client-ip=60.248.187.195;
+ envelope-from=ycliang@andestech.com; helo=Atcsqr.andestech.com
 X-Spam_score_int: -1
 X-Spam_score: -0.2
 X-Spam_bar: /
 X-Spam_report: (-0.2 / 5.0 requ) BAYES_00=-1.9,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001,
- UNPARSEABLE_RELAY=0.001 autolearn=no autolearn_force=no
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
-X-Mailman-Approved-At: Thu, 19 Mar 2026 08:56:51 -0400
+X-Mailman-Approved-At: Thu, 19 Mar 2026 08:56:52 -0400
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
 Precedence: list
@@ -71,30 +67,63 @@ List-Post: <mailto:qemu-devel@nongnu.org>
 List-Help: <mailto:qemu-devel-request@nongnu.org?subject=help>
 List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
  <mailto:qemu-devel-request@nongnu.org?subject=subscribe>
+Reply-to:  Leo Yu-Chi Liang <ycliang@andestech.com>
+From:  Leo Yu-Chi Liang via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: xieyi <xieyi@kylinos.cn>
+From: CL Wang <cl634@andestech.com>
 
-Signed-off-by: xieyi <xieyi@kylinos.cn>
+Move the BSS clearing sequence as early as possible, directly after
+the hart lottery selection. This ensures all BSS variables are properly
+zeroed before any C code executes.
+
+Signed-off-by: CL Wang <cl634@andestech.com>
 ---
- tests/unit/test-char.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ arch/riscv/cpu/start.S | 23 ++++++++++++-----------
+ 1 file changed, 12 insertions(+), 11 deletions(-)
 
-diff --git a/tests/unit/test-char.c b/tests/unit/test-char.c
-index 2869c4e09d..b88b557133 100644
---- a/tests/unit/test-char.c
-+++ b/tests/unit/test-char.c
-@@ -710,7 +710,7 @@ static void char_hub_test(void)
-         /*
-          * Now we are good to go, first repeat "lost" sequence, which
-          * was already consumed and drained by the ring buffers, but
--         * pipe have not recieved that yet.
-+         * the pipe has not received it yet.
-          */
-         ret = qemu_chr_fe_write(&chr_fe, (void *)"thisisit", 8);
-         g_assert_cmpint(ret, ==, 8);
+diff --git a/arch/riscv/cpu/start.S b/arch/riscv/cpu/start.S
+index 7bafdfd390a..c54a194f5b1 100644
+--- a/arch/riscv/cpu/start.S
++++ b/arch/riscv/cpu/start.S
+@@ -166,7 +166,18 @@ call_harts_early_init:
+ 	bnez	tp, secondary_hart_loop
+ #endif
+ #endif
+-	
++
++#ifdef CONFIG_XPL_BUILD
++	la	t0, __bss_start
++	la	t1, __bss_end
++	beq	t0, t1, spl_clear_bss_done
++1:
++	SREG	zero, 0(t0)
++	addi	t0, t0, REGBYTES
++	blt	t0, t1, 1b
++spl_clear_bss_done:
++#endif
++
+ 	mv      a0, s0
+ 	jal	board_init_f_init_reserve
+ 
+@@ -219,16 +230,6 @@ wait_for_gd_init:
+ 	jalr	t5			/* jump to board_init_f() */
+ 
+ #ifdef CONFIG_XPL_BUILD
+-spl_clear_bss:
+-	la	t0, __bss_start
+-	la	t1, __bss_end
+-	beq	t0, t1, spl_stack_gd_setup
+-
+-spl_clear_bss_loop:
+-	SREG	zero, 0(t0)
+-	addi	t0, t0, REGBYTES
+-	blt	t0, t1, spl_clear_bss_loop
+-
+ spl_stack_gd_setup:
+ 	jal	spl_relocate_stack_gd
+ 
 -- 
-2.25.1
-
+2.34.1
 
