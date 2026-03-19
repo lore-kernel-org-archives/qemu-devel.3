@@ -4,81 +4,85 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3991091931
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:14 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id C6A35109192F
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:25 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3MlQ-0001fY-Vk; Thu, 19 Mar 2026 19:26:55 -0400
+	id 1w3Mkm-0000qD-BW; Thu, 19 Mar 2026 19:26:12 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3MlC-0001Qp-Pk
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:38 -0400
-Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
+ id 1w3Mkl-0000p8-Hg
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:11 -0400
+Received: from mail-pl1-x632.google.com ([2607:f8b0:4864:20::632])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3MlA-0007j9-T7
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:38 -0400
-Received: by mail-pl1-x631.google.com with SMTP id
- d9443c01a7336-2aecefc7503so8911175ad.1
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:31 -0700 (PDT)
+ id 1w3Mkj-0007eU-Td
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:11 -0400
+Received: by mail-pl1-x632.google.com with SMTP id
+ d9443c01a7336-2b04e6a989eso9795905ad.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962790; x=1774567590; darn=nongnu.org;
+ d=gmail.com; s=20230601; t=1773962768; x=1774567568; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5tJUDngHbr1KPsf6/Ca4HvKW/nIzxeybSJmdbm3AcVc=;
- b=b2EOjBXyIBkr/HYMQTyJ0xHXPrw2nlW3NoEpbtDEROw3m0Rci8J+V1H2E3w/OpgJHx
- n/UmMlUEzPY8XHv0Xy7jaAtzvdM5OzsQPDo7NoDtyjv4tQEiLwjf9VpllzdOiqmKANZi
- si2aeN0SLAzZwl5hF9nWE4Pwmru4pQIzaIU5tkbX88BfGyHG3grYtiFavXW6TQEbhCRA
- ZY+G6UQOt1rxuFOEEdS34/mMMwCJO0Xd7iuArqxeLjSxWkJKm12drxHlMaXp4RtCcQtd
- 4KuetWrfmZtcs5qtt5s61Dai7gMs3bzXJCjC7srCdC6PrCkwj5FiMWRfLU2osRaGujY2
- 461A==
+ bh=70Wuh9XuVwVOLKM0dnCbYpUQR78lBLRnJv9Jda1E+Q0=;
+ b=WCdGpf25hQYbH3qMgWE/tXGMaNsWz/AKm4FM1DGYlj3sZHJiPSLYfHR8jIPpYkoi+X
+ hKdxFVzwrb6zlnTG+9Fef/zPudJi8WBilp16Lfe/6p8suBfM4qa9l4yMr2UhOwcZECV4
+ HxaLdfXzQ55UkYw4t975bzGqvRkVimPbeldC9zAzp+JyHxGuD+gzj/+7vEwyPz8S+J9q
+ QK+OQrMqo4ROMutACtD2sRjeKoLPVVPNYoOhbplbyU803bNdElwVotRPR95JtFkiSbWx
+ 2fhf7yYIgbPEptdNJECSeVTC+Jm/bP/HL9r7a08/hg407AVFBuAv7Xds6KzCzlF0+FOK
+ bPdQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962790; x=1774567590;
+ d=1e100.net; s=20251104; t=1773962768; x=1774567568;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=5tJUDngHbr1KPsf6/Ca4HvKW/nIzxeybSJmdbm3AcVc=;
- b=bHmLINHKC86uUxt3F3PcGBPLTNF3+5ITSRnqL9+HJR9Hl0GyuzuTvS7l+yohY9ZI/R
- k/Rlovr0e4pqG2EzKHi0Pd8ljQNhodwL7OPq8ZOtlYPsb4uyqpTk9RLXbGelnMML5TMZ
- gYa8ycS4H4wBR60sUnt11q8CPBVdvZF+fKBKxCF+A0ol+/3LiPkolnLoG+bd7F+rwmXs
- 9LWLRPiq8oBub/ulByGPfzgM865pOquI0dvuwEut1XY+RGb1YBZCxLSZXb1MQPFnCY9/
- X/FUfTLwBo/iOtpFzUu0vk01HSGCAyGPk70BDIWk1IRIbxdVFWVC5sQDP2na+vPsfSCZ
- FicA==
-X-Gm-Message-State: AOJu0YytM8PRf9pMxikI/I9Fci9qQDwFaHRsyEvPJvDOil8eaD/lKbI+
- rbZv1Op9ES4bwDGAXy14TCeJhXLhD1bZsP404UCdt98rfMecRpLtHEXZpv+m1Q==
-X-Gm-Gg: ATEYQzyBzEQdo6PyLT8ojtEJ4qZXmhuzgpm9jhmllt497ELK+4GjvkR9t5HDB8m577W
- Wdqun6a3n4q8G2HxhkZ2zeuvL1ERHm1C5tJsYuyH4NIv0P/twOEBCwZ+vZUXcXH3yw5lQB8CEgo
- rdHYbEnPR2d0TdNNuAuEVU7nbA8MwpND6hLScZQV+4XnNKAu/D50KxrQYmg4TWuIScdyAlVQcas
- B5CF+y4SjI/gqSUZPfVLmAe44xaJvVCBky3Bla+XTKSY5Bq++vDkLo4ZlvYwAVZ6PcImcDMdCm3
- JAplspgpuesPFCSZWjoS++4VtoN//V0KGmL8QoMcIC+rXjOk3Y1ij/CNiJAiTamaXVSdGpzOW0V
- uXqGeJQnJ/7Wk4rgTNe5IQ5z5bzpmdQeWqMr7dc3lOuRHakusegOB8vugOxpB3d+gmmittjl/uW
- raqbkWEdCWeRLtu28ZvA86BXy18+Szc2/76ysvIjsu8w==
-X-Received: by 2002:a17:902:e883:b0:2ae:5eab:132e with SMTP id
- d9443c01a7336-2b0826dd612mr7362785ad.12.1773962790185; 
- Thu, 19 Mar 2026 16:26:30 -0700 (PDT)
+ bh=70Wuh9XuVwVOLKM0dnCbYpUQR78lBLRnJv9Jda1E+Q0=;
+ b=hjgy1cXMXPzeyD1PjAdivi/oyTmjuZrm7z8MV50EgS/M0EU9Fw2d9HeHYTHNaKC/nf
+ 9YLuW902RmgxYEHpxw46FPzLrFSV27KpkLHFlIUjQ9zazou+HUcNqWkz1VYx9TjjoPCd
+ 5zBljyrImje+ZpnVLdwLF5g3izN8EkoKbAjz2uqh4WFeZcpH+gP+2SfXXZKHquT5fKfQ
+ uzxMt4CpZrhu1AibwgPBva6S6vJiJuK75OJP1NqueMXUJCya3WnL7DhrXnnjtkDxMRIR
+ kRl/eW+z+F/Jz0pYop69R6F0SDBIGRslIJ7cT8HTTu4jHmeOf5sUkCIzy62jArVf34yA
+ 1T5g==
+X-Gm-Message-State: AOJu0YwYMTwbZGLr2dRzUha5QLbca6RIua1ttIyWOCfcVj1WCOCx+5Z5
+ x9AUFwXGpenXqZjXBIsptu3TkufZDJNoCxgIuCmbU1G4zJ5kmyXu75BtTzT7gw==
+X-Gm-Gg: ATEYQzyaeelkSNqQxmY3Tb89sgnC1YR8/Ic4lsL9tMfZP11qxN21KDwLejIM9sfAEa6
+ 8QXvMnSkdfIAR0IupkFRgI70Nuv5M8qCoND3DJ/OyHJFyrnw64Nvn7Cp9rx5MGSOChRnvV2Du1i
+ BQVduxSxwHQkELa8gbOqO6AOmJQRZziB0JIV5lOTrNx4UFk/qaQx+egSrH9KiJe/VXvANfH/TGf
+ K+9wZ6hLUScwJlus+SGdCtNmYeGJBM1M3b8YvcDMOPK0Okeyl8MTFnHeMTiz7fNf1Ri3ZWUMqx6
+ 6ikTFhQC+9hBCEC2eDaUODnEWL2g9PvNr55uGVx9XWL+1Z78ChPZVFRKulWxMDiukfrmVi2JzI+
+ gvZv4QZCr+IFb7RSujU2r5ttTiCyWqxeLyjeZHS5XW8RGkBTkOEDef3vogz13z6yQZVaJDYmHlO
+ RrHs0eHMJD5edINy2kf2fp6AiYVr1AjyZdUxi5m3cejliok/TxlIYC
+X-Received: by 2002:a17:903:1c2:b0:2b0:60db:7927 with SMTP id
+ d9443c01a7336-2b08278ba9dmr8696405ad.28.1773962767885; 
+ Thu, 19 Mar 2026 16:26:07 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.27
+ d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.04
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:26:29 -0700 (PDT)
+ Thu, 19 Mar 2026 16:26:07 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 16/17] target/riscv: rvv: Fix page probe issues in vext_ldff
-Date: Fri, 20 Mar 2026 09:25:21 +1000
-Message-ID: <20260319232522.1867400-17-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Peter Maydell <peter.maydell@linaro.org>,
+ Alistair Francis <alistair.francis@wdc.com>,
+ Chao Liu <chao.liu.zevorn@gmail.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PULL 09/17] hw/riscv/riscv-iommu: Free instance_init allocations in
+ instance_finalize
+Date: Fri, 20 Mar 2026 09:25:14 +1000
+Message-ID: <20260319232522.1867400-10-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
 References: <20260319232522.1867400-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::632;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x632.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,75 +106,84 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Max Chou <max.chou@sifive.com>
+From: Peter Maydell <peter.maydell@linaro.org>
 
-Commit 17288e38bebf ("optimize the memory probing for vector
-fault-only-first loads") introduced an optimization that moved from
-per-element probing to a fast-path broad probe. Unfortunately it
-introduced following bugs in cross-page handling:
+The riscv-iommu device makes various allocations in its
+instance_init method. These will leak when QMP inits an
+object of this type to introspect it, as can be seen if you
+run 'make check' with the address sanitizer enabled:
 
-- Wrong condition for second page probing: checked "env->vl > elems"
-  instead of "env->vl > elems + env->vstart", failing to account for
-  the vstart offset.
+Direct leak of 4096 byte(s) in 1 object(s) allocated from:
+    #0 0x5d8415b6ed9d in calloc (/home/pm215/qemu/build/san/qemu-system-riscv32+0x1832d9d) (BuildId: fedcc313e48ba803d63837329c37fd609dd50849)
+    #1 0x75c0502f1771 in g_malloc0 (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x63771) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
+    #2 0x5d8416d09391 in riscv_iommu_instance_init /home/pm215/qemu/build/san/../../hw/riscv/riscv-iommu.c:2463:18
+    #3 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+    #4 0x5d8417104ee9 in object_initialize /home/pm215/qemu/build/san/../../qom/object.c:578:5
+    #5 0x5d8417104ee9 in object_initialize_child_with_propsv /home/pm215/qemu/build/san/../../qom/object.c:608:5
+    #6 0x5d8417104db1 in object_initialize_child_with_props /home/pm215/qemu/build/san/../../qom/object.c:591:10
+    #7 0x5d8417106506 in object_initialize_child_internal /home/pm215/qemu/build/san/../../qom/object.c:645:5
+    #8 0x5d8416d16a12 in riscv_iommu_sys_init /home/pm215/qemu/build/san/../../hw/riscv/riscv-iommu-sys.c:199:5
+    #9 0x5d841710483f in object_initialize_with_type /home/pm215/qemu/build/san/../../qom/object.c:570:5
+    #10 0x5d841710661f in object_new_with_type /home/pm215/qemu/build/san/../../qom/object.c:774:5
+    #11 0x5d841755d956 in qmp_device_list_properties /home/pm215/qemu/build/san/../../qom/qom-qmp-cmds.c:206:11
 
-- Incorrect second page address calculation: used
-  "addr + (elems << log2_esz)" instead of "addr + page_split".
-  For segment loads (nf > 1), this would probe the wrong address,not
-  at the page boundary.
+(and other similar backtraces).
 
-- Wrong second page probe size: used "elems * msize" (the first page
-  size) instead of calculating the remaining size as
-  "(env->vl - env->vstart) * msize - page_split". This would probe
-  too little memory and could miss faults.
+Fix these by freeing the resources we allocate in instance_init in
+instance_finalize.  In some cases we were freeing these in unrealize,
+and in some cases not at all.
 
-This commit fixes these bugs by leveraging the probe_pages helper
-which automatically handles cross-page memory accesses correctly.
-
-Fixes: 17288e38bebf ("optimize the memory probing for vector fault-only-first loads.")
-
-Signed-off-by: Max Chou <max.chou@sifive.com>
-Acked-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260318013805.1920377-3-max.chou@sifive.com>
+Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
+Reviewed-by: Chao Liu <chao.liu.zevorn@gmail.com>
+Reviewed-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+Message-ID: <20260307125222.3656140-1-peter.maydell@linaro.org>
 Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
 ---
- target/riscv/vector_helper.c | 16 ++++------------
- 1 file changed, 4 insertions(+), 12 deletions(-)
+ hw/riscv/riscv-iommu.c | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
-index e60248d6d3..83dd26314d 100644
---- a/target/riscv/vector_helper.c
-+++ b/target/riscv/vector_helper.c
-@@ -658,9 +658,9 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-     uint32_t esz = 1 << log2_esz;
-     uint32_t msize = nf * esz;
-     uint32_t vma = vext_vma(desc);
--    target_ulong addr, addr_probe, addr_i, offset, remain, page_split, elems;
-+    target_ulong addr, addr_i, offset, remain, page_split, elems;
-     int mmu_index = riscv_env_mmu_index(env, false);
--    int flags, probe_flags;
-+    int flags;
-     void *host;
+diff --git a/hw/riscv/riscv-iommu.c b/hw/riscv/riscv-iommu.c
+index 98345b1280..225394ea83 100644
+--- a/hw/riscv/riscv-iommu.c
++++ b/hw/riscv/riscv-iommu.c
+@@ -2479,6 +2479,18 @@ static void riscv_iommu_instance_init(Object *obj)
+     QLIST_INIT(&s->spaces);
+ }
  
-     VSTART_CHECK_EARLY_EXIT(env, env->vl);
-@@ -674,16 +674,8 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
-     }
++static void riscv_iommu_instance_finalize(Object *obj)
++{
++    RISCVIOMMUState *s = RISCV_IOMMU(obj);
++
++    g_free(s->regs_rw);
++    g_free(s->regs_ro);
++    g_free(s->regs_wc);
++
++    g_hash_table_unref(s->ctx_cache);
++    g_hash_table_unref(s->iot_cache);
++}
++
+ static void riscv_iommu_realize(DeviceState *dev, Error **errp)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
+@@ -2597,9 +2609,6 @@ static void riscv_iommu_unrealize(DeviceState *dev)
+ {
+     RISCVIOMMUState *s = RISCV_IOMMU(dev);
  
-     /* Check page permission/pmp/watchpoint/etc. */
--    probe_pages(env, addr, elems * msize, ra, MMU_DATA_LOAD, mmu_index, &host,
--                &flags, true);
+-    g_hash_table_unref(s->iot_cache);
+-    g_hash_table_unref(s->ctx_cache);
 -
--    /* If we are crossing a page check also the second page. */
--    if (env->vl > elems) {
--        addr_probe = addr + (elems << log2_esz);
--        probe_pages(env, addr_probe, elems * msize, ra, MMU_DATA_LOAD,
--                    mmu_index, &host, &probe_flags, true);
--        flags |= probe_flags;
--    }
-+    probe_pages(env, addr, (env->vl - env->vstart) * msize, ra, MMU_DATA_LOAD,
-+                mmu_index, &host, &flags, true);
+     if (s->cap & RISCV_IOMMU_CAP_HPM) {
+         g_hash_table_unref(s->hpm_event_ctr_map);
+         timer_free(s->hpm_timer);
+@@ -2675,6 +2684,7 @@ static const TypeInfo riscv_iommu_info = {
+     .parent = TYPE_DEVICE,
+     .instance_size = sizeof(RISCVIOMMUState),
+     .instance_init = riscv_iommu_instance_init,
++    .instance_finalize = riscv_iommu_instance_finalize,
+     .class_init = riscv_iommu_class_init,
+ };
  
-     if (flags & ~TLB_WATCHPOINT) {
-         /* probe every access */
 -- 
 2.53.0
 
