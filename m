@@ -4,75 +4,93 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id EFDA9108E1EC
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:21:33 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id D933F108E1E9
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:21:35 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3BQU-0007nU-HU; Thu, 19 Mar 2026 07:20:30 -0400
+	id 1w3BQb-0007pb-Ky; Thu, 19 Mar 2026 07:20:37 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BQR-0007ls-9f
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:28 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3BQN-0005nf-Ts
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:26 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773919221;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- in-reply-to:in-reply-to:references:references;
- bh=Z3LCxgyFo0bzjru08OdGjin0hQE9Ce/IR6a1VQcoVHc=;
- b=HQPzRgA2h2L83VfG0UopgcXCXdkFWj5iV4siiN7xbZawoBdIqQSBCiQ4SfnQv8Dv5VqknL
- zuuiaTuy0JebRl9kBMtoDriJ/rVy7TtnclXs88B8mCCAr45xKqN9oQMC49pj7Ri20iMBmh
- WaLvn3kxwU0y9gVE7/1a2RvTAry1NJk=
-Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
- (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
- relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
- cipher=TLS_AES_256_GCM_SHA384) id us-mta-399-dYbhEiGgMHyE3jHtWZoM_w-1; Thu,
- 19 Mar 2026 07:20:18 -0400
-X-MC-Unique: dYbhEiGgMHyE3jHtWZoM_w-1
-X-Mimecast-MFC-AGG-ID: dYbhEiGgMHyE3jHtWZoM_w_1773919217
-Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
- (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
- (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
- key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
- (No client certificate requested)
- by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 763E41800371; Thu, 19 Mar 2026 11:20:16 +0000 (UTC)
-Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
- by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
- id 8B2051955F21; Thu, 19 Mar 2026 11:20:15 +0000 (UTC)
-Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
- id E871321E6937; Thu, 19 Mar 2026 12:20:12 +0100 (CET)
-From: Markus Armbruster <armbru@redhat.com>
-To: Thomas Huth <thuth@redhat.com>
-Cc: =?utf-8?Q?Herv=C3=A9?= Poussineau <hpoussin@reactos.org>,
- qemu-devel@nongnu.org,
- qemu-ppc@nongnu.org,  qemu-trivial@nongnu.org,  BALATON Zoltan
- <balaton@eik.bme.hu>
-Subject: Re: [PATCH] hw/pci-host/raven: Fix crash when introspecting
- raven-pcihost from the CLI
-In-Reply-To: <20260317074049.436460-1-thuth@redhat.com> (Thomas Huth's message
- of "Tue, 17 Mar 2026 08:40:49 +0100")
-References: <20260317074049.436460-1-thuth@redhat.com>
-Date: Thu, 19 Mar 2026 12:20:12 +0100
-Message-ID: <87eclgawwj.fsf@pond.sub.org>
-User-Agent: Gnus/5.13 (Gnus v5.13)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQa-0007pC-2S
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:36 -0400
+Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3BQX-0006Af-IS
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:20:35 -0400
+Received: by mail-wr1-x434.google.com with SMTP id
+ ffacd0b85a97d-43b40fb7f95so720141f8f.3
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:20:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=linaro.org; s=google; t=1773919231; x=1774524031; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=wofAlcNimL3fKlS85Aya0QNm0cIokcBfl4ew1SrPm3w=;
+ b=Tiy91+XugcS8WQs9Ekc7/PPWmz7J9lFchfwP190//LBaX85pMoyKDvO5TcfRS4a2qL
+ rIOgeIU7pDZd+qKRnqQ1Oy8HYhWvHQ9d7NXSlg5u3ZhD0BUj6EORhbrgC124uGHcxZ+B
+ TzI4lKJ+K8ArgncGL/FhjQ7YZcjWiuk7/Az1VajUxH49+bGmxardwHeMc+D16l2jptmL
+ FgCL33LFCDk/FX+vHBpUIwgmhK9o1oFLOP3n8wshtMvTXLKfmHG5TNaUbVC0NBMHoYlj
+ 3D8BHbK/+5mfE+S8XHbYstbSBjSH0Wrzq6l90sYYLQXMV28Qj7xp2IMWVmzzndDVsVmr
+ 4/8A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773919231; x=1774524031;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=wofAlcNimL3fKlS85Aya0QNm0cIokcBfl4ew1SrPm3w=;
+ b=PR5rvvfYNg+q7dc4G6PNwvA6muxhCZeNMVdtUorpyVO8VSo3EF7nJnGMlZYszT+Y7H
+ BZbbYfiGnZjH6d3NSoM1/vajB+JuCY/7xmsp3fTrXRSkbcRBF2GviLLcA+bviFJS5z28
+ wOBPpONYg5a2p1EN+ZYKKRq2tfMnMcsjyW7HBFP3sjmPqsRme/Ox2beh83VnzM4i1qx4
+ aStzbhJNp1YFlNPf1Sg1FLCOt4f58Om9CdXi/rGFs15+ssNK0y2N1xM5MODE36fwzbVY
+ fB3OmqxbvKc67HL94MkuQvL8rn8wEZbPjDQorGDmz3t0flc8F1FYrDoFBpnQxKSzW9kR
+ 3g9g==
+X-Gm-Message-State: AOJu0Yy9clS0ZSLmzlFhM6x0IRn4bc9IJbivGKplLB9wiM+95QdoWL3z
+ OcfbeMb6c8hvAJVmyGkPiahgr3jhCidRjyx0RluqtyrjmwSkGcVTDOfA+cB5DhjFg33orICN8/k
+ iIwiEN8c=
+X-Gm-Gg: ATEYQzwvRMDkcIwAFGkMvoOsRTf25F4E3ABtaLQOVTVH2MbXjTwGCQhMe8KEz+sv1jz
+ lvVi4KytoTF9aSAD5gpBvBlc0nxmmOHr1/SRl/f+/1t2QZIswauAREMZn065YN4SGVgCxrEkFin
+ ojxXYUDLeiJdccMdUVPO3h3QFvAEh6ijMTB826NxneLN32ZmJH7j7IfzVUm7hZDpdWKGz3ZeEAY
+ Cr0sz++CnfTj4+hLn992cpp5hMXp1cB5tDiaFF4HtU9vrabPhq3fjqRPi0eT9Ho7cUOax2ox31X
+ TpZZBE6JRBjElTqidSFWVXI5k61WPbuYoEqOyhuCq9+DnuFBtfs2uPKHq5T4g6vmmdJISRb8Vl4
+ LwfUucceqt6KAZv8Yka/s7ySXi9G6to6tS6DV4UMdhtzgzdjSzTvjHeayhx2EnjEMc7FS4pnLiz
+ WmsbyZjiGj1aBrW1hFCfeeADsqolDqIRe7M63OnTIfNHprZ/WF6BCeZkzD+Oi8g7R7Fke3ApSM
+X-Received: by 2002:a5d:5887:0:b0:43b:4d25:959b with SMTP id
+ ffacd0b85a97d-43b527a97a6mr12241121f8f.17.1773919231367; 
+ Thu, 19 Mar 2026 04:20:31 -0700 (PDT)
+Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
+ [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
+ ffacd0b85a97d-43b5184b8b9sm15749126f8f.1.2026.03.19.04.20.30
+ (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
+ Thu, 19 Mar 2026 04:20:30 -0700 (PDT)
+From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+To: qemu-devel@nongnu.org
+Cc: Anton Johansson <anjo@rev.ng>, Paolo Bonzini <pbonzini@redhat.com>,
+ Harsh Prateek Bora <harshpb@linux.ibm.com>,
+ BALATON Zoltan <balaton@eik.bme.hu>, Nicholas Piggin <npiggin@gmail.com>,
+ Glenn Miles <milesg@linux.ibm.com>, kvm@vger.kernel.org,
+ qemu-ppc@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Chinmay Rath <rathc@linux.ibm.com>,
+ =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Subject: [PATCH 7/8] hw/ppc/pegasos: Replace legacy ld/st_phys() ->
+ address_space_ld/st()
+Date: Thu, 19 Mar 2026 12:19:35 +0100
+Message-ID: <20260319111936.68041-8-philmd@linaro.org>
+X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260319111936.68041-1-philmd@linaro.org>
+References: <20260319111936.68041-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=armbru@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+Received-SPF: pass client-ip=2a00:1450:4864:20::434;
+ envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -88,25 +106,59 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Thomas Huth <thuth@redhat.com> writes:
+Prefer the address_space_ld/st API over the legacy ld_phys()
+because it allow checking for bus access fault.
 
-> From: Thomas Huth <thuth@redhat.com>
->
-> QEMU currently crashes when introspecting raven-pcihost from the command
-> line interface:
->
->  $ ./qemu-system-ppc -device raven-pcihost,help
->  Segmentation fault (core dumped)
->
-> This happens because the raven_pcihost_initfn instance init function
-> calls get_system_memory(), but that is not available here yet.
->
-> There does not seem to be a compelling reason for initializing the
-> memory regions from the instance init function, so let's simply move
-> the code into the realize() function instead to fix this issue.
->
-> Signed-off-by: Thomas Huth <thuth@redhat.com>
+This code however doesn't check for fault, so we simply inline
+the calls (not specifying any memory transaction attribute nor
+expecting transation result) per the definition in
+"system/memory_ldst_phys_endian.h.inc":
 
-Tested-by: Markus Armbruster <armbru@redhat.com>
+ 27 static inline uint32_t LD_PHYS(l)(ARG1_DECL, hwaddr addr)
+ 28 {
+ 29     return ADDRESS_SPACE_LD(l)(ARG1, addr, MEMTXATTRS_UNSPECIFIED, NULL);
+ 30 }
+
+ 42 static inline void ST_PHYS(l)(ARG1_DECL, hwaddr addr, uint32_t val)
+ 43 {
+ 44     ADDRESS_SPACE_ST(l)(ARG1, addr, val, MEMTXATTRS_UNSPECIFIED, NULL);
+ 45 }
+
+No logical change intended.
+
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ hw/ppc/pegasos.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+diff --git a/hw/ppc/pegasos.c b/hw/ppc/pegasos.c
+index 4217af25807..52e35949cc1 100644
+--- a/hw/ppc/pegasos.c
++++ b/hw/ppc/pegasos.c
+@@ -21,6 +21,7 @@
+ #include "hw/ide/pci.h"
+ #include "hw/i2c/smbus_eeprom.h"
+ #include "hw/core/qdev-properties.h"
++#include "system/memory.h"
+ #include "system/reset.h"
+ #include "system/runstate.h"
+ #include "system/qtest.h"
+@@ -593,12 +594,12 @@ enum pegasos2_rtas_tokens {
+ 
+ static uint32_t rtas_ldl(AddressSpace *as, hwaddr addr)
+ {
+-    return ldl_be_phys(as, addr);
++    return address_space_ldl(as, addr, MEMTXATTRS_UNSPECIFIED, NULL);
+ }
+ 
+ static void rtas_stl(AddressSpace *as, hwaddr addr, uint32_t value)
+ {
+-    stl_be_phys(as, addr, value);
++    address_space_stl(as, addr, value, MEMTXATTRS_UNSPECIFIED, NULL);
+ }
+ 
+ static target_ulong pegasos2_rtas(PowerPCCPU *cpu, PegasosMachineState *pm,
+-- 
+2.53.0
 
 
