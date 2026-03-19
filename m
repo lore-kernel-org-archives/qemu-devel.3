@@ -4,57 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 6A0351091923
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 21:13:23 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9B1C41091924
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 21:13:24 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Kg2-0001cH-RR; Thu, 19 Mar 2026 17:13:10 -0400
+	id 1w3Kfv-0001X2-64; Thu, 19 Mar 2026 17:13:03 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w3Kfp-0001WG-77
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 17:12:57 -0400
-Received: from sea.source.kernel.org ([2600:3c0a:e001:78e:0:1991:8:25])
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w3Kfo-0001W9-CF
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 17:12:56 -0400
+Received: from tor.source.kernel.org ([172.105.4.254])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w3Kfl-0003gk-SV
+ (Exim 4.90_1) (envelope-from <deller@kernel.org>) id 1w3Kfm-0003gD-99
  for qemu-devel@nongnu.org; Thu, 19 Mar 2026 17:12:56 -0400
 Received: from smtp.kernel.org (transwarp.subspace.kernel.org [100.75.92.58])
- by sea.source.kernel.org (Postfix) with ESMTP id A63E743FDA;
- Thu, 19 Mar 2026 21:12:51 +0000 (UTC)
-Received: by smtp.kernel.org (Postfix) with ESMTPSA id 48165C2BC9E;
- Thu, 19 Mar 2026 21:12:50 +0000 (UTC)
+ by tor.source.kernel.org (Postfix) with ESMTP id AC59D60130;
+ Thu, 19 Mar 2026 21:12:46 +0000 (UTC)
+Received: by smtp.kernel.org (Postfix) with ESMTPSA id 242C3C19424;
+ Thu, 19 Mar 2026 21:12:44 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
- s=k20201202; t=1773954771;
- bh=zIl2Hp8jjQ0zjD/njDXTIeEwBZZVJ/K4isuPfVOqJfU=;
+ s=k20201202; t=1773954766;
+ bh=h4p1+ICryI3QqNt5JAMaRMNdkMQaQ1wkNFFSdqKKzlY=;
  h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
- b=ZX4ucVnVukIx/aHRMJ4pfb0OH4l5E9SqmHNzIpJ0H6cP0AK0WeZHpv5aT92PN3Ujf
- Il/XWSBELhFshikMUdPcij9lx1ToXzYf+o8ddP1lo2wj6ZNwbHfs+XhDHh6pDyZLLF
- z37VBHoUViWmGdhh/9iZWEpYYcI+kyIz8+eVRrdigNu2kHMoBeqlvgpVMWFiFVlj1A
- cr08yhLHt12lldY4zKbvYTkV1aHz+zhUKAZAu1yswqajc+L7vGoP0yPvnpe7N+m+Ef
- YEnF8C3foZkw/f8+abVUa+SfUVXyld2MVmQF9mwtv2tfMZjtgSjXFtn4fI6akRrxkg
- ejSibfGMZpknA==
+ b=tU4Co8sVrhpk/7dgE+JWZRBzwG6EHZGy90WDDosHM2BoBGLG1qK4BUgMz6ZqducBs
+ tJUdvqfEzJ4h2amHYFaJ+7pMMoDzN0UILu7q4J9H55X48+xCV+X9fEH6d+K9kKT4at
+ q2f39iH3Q1vsAndyKi+En5GcAYGoQamBZakEqk9vgpS+M7EaiDe5MQHOflfrrDSBHe
+ VNOIRNML8cA242F8kiPVP6UotqJ9NZYtLy4Z2PqWJ3UrSzpg5uL/G+2R4S9HqBjA6/
+ cXQQKDx/vgUK9YB3/o89VymTrvULoB3J6evryLEiSDkN+tZgn4YFN7IT5OdRoFxhGW
+ 5Jj033+hqTnQg==
 From: Helge Deller <deller@kernel.org>
 To: qemu-devel@nongnu.org
 Cc: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
  Helge Deller <deller@gmx.de>,
  Richard Henderson <richard.henderson@linaro.org>,
  Anton Johansson <anjo@rev.ng>
-Subject: [PULL 5/6] hw/hppa: Fix crash of 64-bit HP-UX 11 while flushing caches
-Date: Thu, 19 Mar 2026 22:12:38 +0100
-Message-ID: <20260319211239.7902-6-deller@kernel.org>
+Subject: [PULL 2/6] hw/hppa: Adjust physical addresses of Astro and Elroy
+Date: Thu, 19 Mar 2026 22:12:35 +0100
+Message-ID: <20260319211239.7902-3-deller@kernel.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260319211239.7902-1-deller@kernel.org>
 References: <20260319211239.7902-1-deller@kernel.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2600:3c0a:e001:78e:0:1991:8:25;
- envelope-from=deller@kernel.org; helo=sea.source.kernel.org
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+Received-SPF: pass client-ip=172.105.4.254; envelope-from=deller@kernel.org;
+ helo=tor.source.kernel.org
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=ham autolearn_force=no
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_NONE=0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -72,54 +73,30 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 From: Helge Deller <deller@gmx.de>
 
-HP-UX 11 64-bit reads at bootup a word from address CPU_HPA + 0x500
-while flushing the the cache of a T600.
-Add a memory handler to avoid crashing while reading this word.
+Adjust the addresses of the Astro and Elroy PCI chips to a
+44-bit physical address space when running a PA8700 CPU.
 
 Signed-off-by: Helge Deller <deller@gmx.de>
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 ---
- hw/hppa/machine.c | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
+ hw/hppa/hppa_hardware.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/hw/hppa/machine.c b/hw/hppa/machine.c
-index e72dda2a68..318ebfeee4 100644
---- a/hw/hppa/machine.c
-+++ b/hw/hppa/machine.c
-@@ -306,6 +306,8 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
+diff --git a/hw/hppa/hppa_hardware.h b/hw/hppa/hppa_hardware.h
+index 0a89c3ed52..006aae63b9 100644
+--- a/hw/hppa/hppa_hardware.h
++++ b/hw/hppa/hppa_hardware.h
+@@ -61,8 +61,8 @@
+ #define ASTRO_BUS_MODULE        0x0a            /* C3700: 0x0a, others maybe 0 ? */
  
-     for (unsigned int i = 0; i < smp_cpus; i++) {
-         g_autofree char *name = g_strdup_printf("cpu%u-io-eir", i);
-+        g_autofree char *cflush_name = NULL;
-+        MemoryRegion *cflush;
+ /* ASTRO Memory and I/O regions */
+-#define ASTRO_BASE_HPA            0xfffed00000
+-#define ELROY0_BASE_HPA           0xfffed30000  /* ELROY0_HPA */
++#define ASTRO_BASE_HPA            0xffffed00000
++#define ELROY0_BASE_HPA           0xffffed30000  /* ELROY0_HPA */
  
-         cpu_region = g_new(MemoryRegion, 1);
-         memory_region_init_io(cpu_region, OBJECT(cpu[i]), &hppa_io_eir_ops,
-@@ -313,6 +315,24 @@ static TranslateFn *machine_HP_common_init_cpus(MachineState *machine)
-         memory_region_add_subregion(addr_space,
-                                     translate(NULL, CPU_HPA + i * 0x1000),
-                                     cpu_region);
-+
-+        if (!hppa_is_pa20(&cpu[0]->env)) {
-+            continue;
-+        }
-+
-+        /*
-+         * HP-UX 11 64-bit reads a word from address CPU_HPA + 0x500
-+         * while flushing the cache of a T600, which was the first
-+         * server with a 64-bit PA-RISC 2.0 CPU.
-+         * We return 0, since the value isn't used anyway.
-+         */
-+        cflush_name = g_strdup_printf("cpu%u-T600-cacheflush", i);
-+        cflush = g_new(MemoryRegion, 1);
-+        memory_region_init_io(cflush, NULL, &hppa_pci_ignore_ops,
-+                              NULL, cflush_name, 4);
-+        memory_region_add_subregion(addr_space,
-+                              translate(NULL, CPU_HPA + i * 0x1000 + 0x500),
-+                              cflush);
-     }
+ #define ROPES_PER_IOC           8       /* per Ike half or Pluto/Astro */
  
-     /* RTC and DebugOutputPort on CPU #0 */
 -- 
 2.53.0
 
