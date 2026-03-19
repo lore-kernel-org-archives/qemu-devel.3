@@ -4,112 +4,115 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F0458108E1E7
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:03:00 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id CACD3108E1E2
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 11:04:03 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3B8k-0002kV-De; Thu, 19 Mar 2026 07:02:10 -0400
+	id 1w3BAL-0003Hm-3T; Thu, 19 Mar 2026 07:03:49 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3B8h-0002k7-0V
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:02:07 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ id 1w3BAH-0003Ge-TC
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:03:45 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3B8a-0002Kz-Rh
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:02:04 -0400
+ id 1w3BAF-0002sf-Dt
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 07:03:44 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1773918115;
+ s=mimecast20190719; t=1773918221;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
  content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=6d8TiPLlECBALGOWAGr3SgiSWNx5fswnH7v4qjIEdh8=;
- b=SOiRBKlZrur/JjE2Px9ticYg8ky5KDeWvRYJL9B2ZcgWTnJ9hnKMy7rtN3vPK/JhWM5l/C
- An76mPjkDumN0/CinYdgINBY1ku078KDEX6dvmu/Nh1HxHEJJi0N5fcOLpOaSS1i6yZlj4
- UAFgVWGd21um3V3SjpPRdxZ+xZOTVsE=
-Received: from mail-pj1-f71.google.com (mail-pj1-f71.google.com
- [209.85.216.71]) by relay.mimecast.com with ESMTP with STARTTLS
+ bh=1eoBXyJHj/P9KfELbcErak9nD0X1SYOJZfak0IUzKnM=;
+ b=Pxahz7jKM9v5pBGd4OqnHnWYAcd+7ULsSfXC9UYX85Tgnr7gCv9MsPzoAPm9Ct0xwo27lY
+ DdZo6JLAPakZyGbsqCMsPGPxf9ZcVkl42lk9oRLrwhFW+emWx3DYWdM+oKvM9oe0q2MaTe
+ Bvaj38LfOK8UL+rqiVo4xNyBORSsBHQ=
+Received: from mail-pg1-f198.google.com (mail-pg1-f198.google.com
+ [209.85.215.198]) by relay.mimecast.com with ESMTP with STARTTLS
  (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-311-P7FwLFCGPTCEb7s-uq418A-1; Thu, 19 Mar 2026 07:01:54 -0400
-X-MC-Unique: P7FwLFCGPTCEb7s-uq418A-1
-X-Mimecast-MFC-AGG-ID: P7FwLFCGPTCEb7s-uq418A_1773918113
-Received: by mail-pj1-f71.google.com with SMTP id
- 98e67ed59e1d1-35a0998a441so4174802a91.2
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:01:54 -0700 (PDT)
+ us-mta-60-aUYxXJ_YMS6BySi01V17RA-1; Thu, 19 Mar 2026 07:03:39 -0400
+X-MC-Unique: aUYxXJ_YMS6BySi01V17RA-1
+X-Mimecast-MFC-AGG-ID: aUYxXJ_YMS6BySi01V17RA_1773918218
+Received: by mail-pg1-f198.google.com with SMTP id
+ 41be03b00d2f7-c6e24ee93a6so1288617a12.0
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 04:03:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1773918113; x=1774522913; darn=nongnu.org;
+ d=redhat.com; s=google; t=1773918218; x=1774523018; darn=nongnu.org;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:from:to:cc:subject:date
  :message-id:reply-to;
- bh=6d8TiPLlECBALGOWAGr3SgiSWNx5fswnH7v4qjIEdh8=;
- b=EPiceOLicTDZIOFVbkWgDUWuiOh+kHp6kBc1/O0tJylKr6JUp5rYWWW3PekF4xRiTp
- h479qudR5BhluEbigWEfXs0a5yhzvOhYsUPPprr70qx/nSCo0dIdg01wMLySi1f2qC6B
- RCFCkiBDsAbsIvzc3KdA8RaE+cYF9MqeLVt/ORao1l1HCtGK3mpiajc9Qbj1ZYQZ+Lo3
- ls1mwtKD/V042NGSuLHkb4Qw7jOSC0qbJpMgqHqJA7gX52/tFQzfJWC6X+3OygvKyH9O
- kOGx5+drUpA/KY0es6h9OyiNWOEHQe/YR/GakKnBTKnFcpkeQJo6tCPu9VuQ+iwKOv6R
- i13A==
+ bh=1eoBXyJHj/P9KfELbcErak9nD0X1SYOJZfak0IUzKnM=;
+ b=uEDjBk8KncawhIm7j0+NJ3zHCO0FE37zWrSqdLXBYqqmuN4mJN5SEu9Luwba7NLhon
+ rUPQoAOWJFAvTDSLielFY5tavXPaiWoLtyh3WTemA7Neg0w7vn9DqrjyMf6+bMz2EcG2
+ hfdXDOcTa41qvi+z5V1mgTVs5QhMeSKwqM9AKdQyH6AkLYw5eUvoodggWlfiS0URaL9p
+ /8b/eWESXI9GcPb40kaf+V/TaJ9z8n8nM2980v/bWtQb1vgI+a1I5cR6+8p9dtfzFh6A
+ TRF+KagkxyW9eIIrLFYfrvJy2S7BDgf507bxYKvFJ9dmhVLve9jkj06gjc6DLqY6p7Mi
+ LqpQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773918113; x=1774522913;
+ d=1e100.net; s=20251104; t=1773918218; x=1774523018;
  h=to:references:message-id:content-transfer-encoding:cc:date
  :in-reply-to:from:subject:mime-version:x-gm-gg:x-gm-message-state
  :from:to:cc:subject:date:message-id:reply-to;
- bh=6d8TiPLlECBALGOWAGr3SgiSWNx5fswnH7v4qjIEdh8=;
- b=p0jUXTqIP0ekrtnesaT2ly3uZXq+5lqajn4C7zQ7vq5raCvsPQ7T+lTI4uEor7ZDTv
- pUGkSYQIDq9UDSkgUggOg+pMnvKZO2faofkcS9XHM/ZxyXI3hHyGLV4IxJy+SQ0wTMf0
- DBO2/1yKPcn3R3HbB32eSDWYKQL1x7QHLth9iG0lu+14RnpWiGsoDCxGyMuhLlH3ChjD
- yauIMnKFNQuDUZi0WtJCK9oCXcORIq7B3bR0rGiDv/cTmfslLESK7RBpYsJmC9aUJoeX
- x/9zabbi/yCv2ufaPX1F88XNXhnEhbd9afLy2pvLbJO0SuXkv3wNQ7FgwZ4zMvprRJCI
- IRTA==
+ bh=1eoBXyJHj/P9KfELbcErak9nD0X1SYOJZfak0IUzKnM=;
+ b=T4QN/6MZ2cs5dC16/nloFUGEe8Aoy1FoK9vydpPkqF3hZdy7aj6e8o65fxkyfJrAbV
+ VHFbfxD0Dtks9wQkM3B6MejYV2fMyZMpLeBe12SbBgjtR8wA4CC4sY/r1uek2KvaNuGq
+ 4ao9Jr0TBZfBqRF2djGHDRqpuXcqqvtZj+rh72z5+uc4sVPQOYxoCm63bc8mlvBo5MJc
+ nMf9eLEx3CZ3HkRKylOVY/zuMd+EjEPT7FKpG0WQj+cF0o8eiP0Plq1pGCjLZBbrWTl5
+ FgltpzQVycPcXo0oW0iKK9cm7cPycMtBmPYfE1Op/CSlJW8Donf2+zORKYTAXj46oPb4
+ T5zg==
 X-Forwarded-Encrypted: i=1;
- AJvYcCX+2Smh5YmK6OcWBF2tP+Q2q4B1dgBLKAxHuzgEfSoHUrXv8WKwCUvIycL+lHJbntffkpZDg2JMlsnz@nongnu.org
-X-Gm-Message-State: AOJu0YzUdZ5Gys8gehLL9KYmM4QG3ZlfBza2TCPQ7QTaUPB1KTbkKW5h
- nsuUV7Ki7BQQRIZQRxQMI9rptoXBMPuK7L+IeqYmV6l3Kq8d0H3yDQCsUyMcOPSsC6K0cTxeI+I
- 9XVbgFb4jKJcKcRqWgyI96EZw/CCF1OWP6vzE6G6ekVLJtX6/kQ5MALei
-X-Gm-Gg: ATEYQzwl+Vhn0w87CreRb4F7tn6wUO/Er125U2RX/gYqY7lTOCFbTmoDCoRCV6Mffnd
- NN4XwkPpUZZhF1q46jc3HCLYu5RErSlcH1y9aAQi5sXTHhRuw8AbIro7LKDtEYxHsF7O5QCXsdp
- daE8s7+CUWanDp5mUIXaX8CYZjcOvqNraU471hYd33/q583eQKVt+8hOjdi2X2Gv4Tl5XaJExau
- NaQQNAVg4C82I6Es8EsENLLHYIsrONGsIEgp+UZMrgEePh34B04Q7uYWmW0fqqSGx9RNnwIKbiR
- tS5GqA8vnMFjgo9bRFlFcg3eoT5MiaTNurCwheC1z95PXs+KkFf+GyBUlm80etVgg2v0ZtGDCYz
- dhJpYZv6TO+jVlCOM7MG+rmOmwXhRx8VKf1/NlWkNbkmNUulR8rHoJ1OkVb3GKE1kKic0yg==
-X-Received: by 2002:a17:90b:2687:b0:35b:9a4b:24e7 with SMTP id
- 98e67ed59e1d1-35bb9eac31dmr5855823a91.14.1773918113205; 
- Thu, 19 Mar 2026 04:01:53 -0700 (PDT)
-X-Received: by 2002:a17:90b:2687:b0:35b:9a4b:24e7 with SMTP id
- 98e67ed59e1d1-35bb9eac31dmr5855808a91.14.1773918112699; 
- Thu, 19 Mar 2026 04:01:52 -0700 (PDT)
+ AJvYcCUtQcGBkHAX/cp+uycovuyUKamJ93ojCp1VZ4bxyg+PUUN/HgfzKXqsRd21SqNtcO7MP6FvDQVU/A9r@nongnu.org
+X-Gm-Message-State: AOJu0YyzcYFEeLiv5sBkkSx2L+coWsQfwH1yMiUVyzKmpUlc1hVzJvVb
+ oP615fTBnXrbuNEEwmWxMpa7XcedYqOhmQssW/25pUVGM/qGQNg+RjHX6qSX9Vje5dEAvEyGB71
+ LQUOWIeE5Pb4RUQS1ZZrk3xT+kFNhwcMjYw+8+qr5LsH3dYJKcQCsY2gF
+X-Gm-Gg: ATEYQzzAvLBVNprEDygQxAn+gKOduqPXLHKoATjP0k5WZXEbrFZTZbh2UU5zixgm5xQ
+ f0OWqz6fibVgqa9kEfZBYVBgde/qgZGDK7wRrD/cWOQBdVgiu0bFJfevUjwrp5u6EzpRtZSwi6i
+ O3wQmse8u5g0MoVB2V3DZVEHaQAPnbe9RwTDUDQDRDAlT0o3XSuKBn9Nn5j/+K/17E44zN3BTxD
+ xT1CRUBqo/uUZV0W03q27R9aBlDFTr++EkurUOa4CFAd9qv5KD2tThhXgqaNJxqXZ6dNKx17kav
+ UJi6mRdMhTStod9fguF6UZqegP6bY2AD/IwIQj5Qo7sD5hGCKnJsTRsS+0YuLsTqOBDrLvJ1kaq
+ wWPIQoTWF5sPKC73MNGT4pja4SgipOti6ynGgdbm9kkt/lK05UnarcvM/J18ahE2bVDSz4Q==
+X-Received: by 2002:a17:903:1b2b:b0:2b0:4d7d:fb9a with SMTP id
+ d9443c01a7336-2b0772a3ed1mr27028315ad.26.1773918218493; 
+ Thu, 19 Mar 2026 04:03:38 -0700 (PDT)
+X-Received: by 2002:a17:903:1b2b:b0:2b0:4d7d:fb9a with SMTP id
+ d9443c01a7336-2b0772a3ed1mr27028175ad.26.1773918218146; 
+ Thu, 19 Mar 2026 04:03:38 -0700 (PDT)
 Received: from smtpclient.apple ([122.163.114.34])
  by smtp.gmail.com with ESMTPSA id
- 98e67ed59e1d1-35bc6017492sm2489936a91.5.2026.03.19.04.01.49
+ d9443c01a7336-2b06e41927bsm73422975ad.10.2026.03.19.04.03.34
  (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
- Thu, 19 Mar 2026 04:01:52 -0700 (PDT)
+ Thu, 19 Mar 2026 04:03:37 -0700 (PDT)
 Content-Type: text/plain;
 	charset=utf-8
 Mime-Version: 1.0 (Mac OS X Mail 16.0 \(3826.700.81.1.4\))
-Subject: Re: [PATCH for-11.0 2/2] i386/hyperv: add stubs for synic enablement
+Subject: Re: [PATCH for-11.0 1/2] i386/pc_sysfw: stub out
+ x86_firmware_configure
 From: Ani Sinha <anisinha@redhat.com>
-In-Reply-To: <d616ab91-3cfc-4a77-83db-23ef16a00d49@linaro.org>
-Date: Thu, 19 Mar 2026 16:31:37 +0530
-Cc: Paolo Bonzini <pbonzini@redhat.com>, Marcelo Tosatti <mtosatti@redhat.com>,
- Michale Tokarev <mjt@tls.msk.ru>, kvm@vger.kernel.org,
+In-Reply-To: <20260319101128.116301-2-anisinha@redhat.com>
+Date: Thu, 19 Mar 2026 16:33:22 +0530
+Cc: Michael Tokarev <mjt@tls.msk.ru>,
  qemu-devel <qemu-devel@nongnu.org>
 Content-Transfer-Encoding: quoted-printable
-Message-Id: <72E4CA7A-4362-4C5C-AE5F-3D0C3E129002@redhat.com>
+Message-Id: <B0297D88-2C9C-4329-9D55-F72FA6BAEB8D@redhat.com>
 References: <20260319101128.116301-1-anisinha@redhat.com>
- <20260319101128.116301-3-anisinha@redhat.com>
- <d616ab91-3cfc-4a77-83db-23ef16a00d49@linaro.org>
-To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+ <20260319101128.116301-2-anisinha@redhat.com>
+To: =?utf-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ Gerd Hoffmann <kraxel@redhat.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Michael Tsirkin <mst@redhat.com>,
+ Marcel Apfelbaum <marcel.apfelbaum@gmail.com>
 X-Mailer: Apple Mail (2.3826.700.81.1.4)
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=anisinha@redhat.com;
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -129,103 +132,41 @@ Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 
 
-> On 19 Mar 2026, at 4:23=E2=80=AFPM, Philippe Mathieu-Daud=C3=A9 =
-<philmd@linaro.org> wrote:
+> On 19 Mar 2026, at 3:41=E2=80=AFPM, Ani Sinha <anisinha@redhat.com> =
+wrote:
 >=20
-> Hi Ani,
+> x86_firmware_configure requires ovmf support. Add a stub for this =
+function call
+> for cases where OVMF is not supported.
 >=20
-> On 19/3/26 11:11, Ani Sinha wrote:
->> Add a new call hyperv_enable_synic() that can be called whether or =
-not
->> CONFIG_HYPERV is enabled. This way genetic code in i396/kvm.c can =
-call this
->> function to enable synic for hyperv. For non-hyperv cases, the stub =
-will
->> be a noop.
->> Reported-by: Michale Tokarev <mjt@tls.msk.ru>
->> Signed-off-by: Ani Sinha <anisinha@redhat.com>
->> ---
->>  target/i386/kvm/hyperv-stub.c |  5 +++++
->>  target/i386/kvm/hyperv.c      |  9 +++++++++
->>  target/i386/kvm/hyperv.h      |  1 +
->>  target/i386/kvm/kvm.c         | 12 +++++-------
->>  4 files changed, 20 insertions(+), 7 deletions(-)
->> diff --git a/target/i386/kvm/hyperv-stub.c =
-b/target/i386/kvm/hyperv-stub.c
->> index 5836f53c23..767a4c7e1a 100644
->> --- a/target/i386/kvm/hyperv-stub.c
->> +++ b/target/i386/kvm/hyperv-stub.c
->> @@ -61,3 +61,8 @@ uint64_t hyperv_syndbg_query_options(void)
->>  {
->>      return 0;
->>  }
->> +
->> +int hyperv_enable_synic(X86CPU *cpu)
->> +{
->> +    return 0;
->> +}
->> diff --git a/target/i386/kvm/hyperv.c b/target/i386/kvm/hyperv.c
->> index f7a81bd270..bd3c26d02b 100644
->> --- a/target/i386/kvm/hyperv.c
->> +++ b/target/i386/kvm/hyperv.c
->> @@ -24,6 +24,15 @@ int hyperv_x86_synic_add(X86CPU *cpu)
->>      return 0;
->>  }
->>  +int hyperv_enable_synic(X86CPU *cpu)
->> +{
->> +    int ret =3D 0;
->> +    if (!hyperv_is_synic_enabled()) {
->> +        ret =3D hyperv_x86_synic_add(cpu);
->> +    }
->> +    return ret;
->> +}
->> +
->>  /*
->>   * All devices possibly using SynIC have to be reset before calling =
-this to let
->>   * them remove their SINT routes first.
->> diff --git a/target/i386/kvm/hyperv.h b/target/i386/kvm/hyperv.h
->> index e45a4512fe..a393a5d428 100644
->> --- a/target/i386/kvm/hyperv.h
->> +++ b/target/i386/kvm/hyperv.h
->> @@ -23,6 +23,7 @@ int kvm_hv_handle_exit(X86CPU *cpu, struct =
-kvm_hyperv_exit *exit);
->>  #endif
->>    int hyperv_x86_synic_add(X86CPU *cpu);
->> +int hyperv_enable_synic(X86CPU *cpu);
->>  void hyperv_x86_synic_reset(X86CPU *cpu);
->>  void hyperv_x86_synic_update(X86CPU *cpu);
->>  diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
->> index a29f757c16..9e352882c8 100644
->> --- a/target/i386/kvm/kvm.c
->> +++ b/target/i386/kvm/kvm.c
->> @@ -1754,13 +1754,11 @@ static int hyperv_init_vcpu(X86CPU *cpu)
->>              return ret;
->>          }
->>  -        if (!hyperv_is_synic_enabled()) {
->> -            ret =3D hyperv_x86_synic_add(cpu);
->> -            if (ret < 0) {
->> -                error_report("failed to create HyperV SynIC: %s",
->> -                             strerror(-ret));
->> -                return ret;
->> -            }
->> +        ret =3D hyperv_enable_synic(cpu);
->> +        if (ret < 0) {
->> +            error_report("failed to create HyperV SynIC: %s",
->> +                         strerror(-ret));
->> +            return ret;
->>          }
->>      }
->> =20
+> Reported-by: Michael Tokarev <mjt@tls.msk.ru>
+> Signed-off-by: Ani Sinha <anisinha@redhat.com>
+> ---
+> hw/i386/pc_sysfw_ovmf-stubs.c | 5 +++++
+> 1 file changed, 5 insertions(+)
 >=20
-> Why not simply add a hyperv_is_synic_enabled() stub?
+> diff --git a/hw/i386/pc_sysfw_ovmf-stubs.c =
+b/hw/i386/pc_sysfw_ovmf-stubs.c
+> index aabe78b271..b53906a052 100644
+> --- a/hw/i386/pc_sysfw_ovmf-stubs.c
+> +++ b/hw/i386/pc_sysfw_ovmf-stubs.c
+> @@ -24,3 +24,8 @@ void pc_system_parse_ovmf_flash(uint8_t *flash_ptr, =
+size_t flash_size)
+> {
+>     g_assert_not_reached();
+> }
+> +
+> +void x86_firmware_configure(hwaddr gpa, void *ptr, int size)
+> +{
+> +    g_assert_not_reached();
+> +}
 
-That would be wrong unless I assert in hyperv_is_synic_enabled() stub =
-function which would break minimal microvms?
-The other reason is I do not like hyperv_x86_synic_add() returning =
--ENOSYS. If hyperv is not enabled we do not need to call those functions =
-at all.
+This change alone won=E2=80=99t work for the CONFIG_PC case. I need to =
+move x86_firmware_configure() to pc_sysfw_ovmf.c Will fix in v2 after I =
+run my changes through CI.
 
-
+> --=20
+> 2.42.0
+>=20
 
 
