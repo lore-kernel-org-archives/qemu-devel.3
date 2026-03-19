@@ -4,45 +4,45 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id F2F38109022A
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 13:57:19 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id DB458109022A
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 13:58:34 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Ds0-0001BZ-U5; Thu, 19 Mar 2026 09:57:04 -0400
+	id 1w3DtF-0001jU-RB; Thu, 19 Mar 2026 09:58:21 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w3Drz-0001B9-8n
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 09:57:03 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w3DtD-0001iY-51
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 09:58:19 -0400
 Received: from rev.ng ([94.130.142.21])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w3Drx-0001j0-IU
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 09:57:03 -0400
+ (Exim 4.90_1) (envelope-from <anjo@rev.ng>) id 1w3DtB-0001xd-QX
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 09:58:18 -0400
 DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=rev.ng;
  s=dkim; h=In-Reply-To:Content-Transfer-Encoding:Content-Type:MIME-Version:
  References:Message-ID:Subject:Cc:To:From:Date:Sender:Reply-To:Content-ID:
  Content-Description:Resent-Date:Resent-From:Resent-Sender:Resent-To:Resent-Cc
  :Resent-Message-ID:List-Id:List-Help:List-Unsubscribe:List-Subscribe:
  List-Post:List-Owner:List-Archive:List-Unsubscribe:List-Unsubscribe-Post:
- List-Help; bh=28l7xngpJS7EaNjlyFgWXRKo/bRFNC+pflTGY4pn6Wk=; b=RXyRM6n9eDiF5cI
- wiCLJGGFShNpAJRWx1NqFg4z5L64yxmgFgf6Of5kY/vj2ovTrLmTQF219OirA+rVJl9iUdtQd2pkd
- BqGkOnAFBs2Rl08lXbF8OvKOghgsDtmY41iuO/r0heDXJ9/LTJ40Jqk4xzOuzKnjtM0FB3PF68fhO
- ww=;
-Date: Thu, 19 Mar 2026 15:00:47 +0100
+ List-Help; bh=WQCrO9hwsDs/QIu7AsxG5SF8brDxsPt/zmpR6KKd6zQ=; b=usKwEwj0DZ3ZYSy
+ dw1vHFfZ/HWVTZghHP+cXogIjx0+X2rg1XgsAUDbvnpoEoYHl9Vy6G3rOw5vV7uc1kD8gXS8IqHJ3
+ H2YVoTrFkkRbdBaJ7wk+fbGAQPh/p4P9RY5n8aP6tIKtr/BUyxOB0CZGB5AE8vhRSpICuf76n26mx
+ LA=;
+Date: Thu, 19 Mar 2026 15:02:06 +0100
 To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>, 
  Song Gao <gaosong@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, 
  Bibo Mao <maobibo@loongson.cn>
-Subject: Re: [PATCH 1/2] target/loongarch: Replace legacy ldq_le_phys() ->
- address_space_ldq_le()
-Message-ID: <abwBhG3kFayqMpGD@hive.localdomain>
+Subject: Re: [PATCH 2/2] configs/targets: Restrict the legacy ldst_phys() API
+ on LoongArch64
+Message-ID: <abwB2bdIoNx5iZdm@hive.localdomain>
 References: <20260319104944.66690-1-philmd@linaro.org>
- <20260319104944.66690-2-philmd@linaro.org>
+ <20260319104944.66690-3-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260319104944.66690-2-philmd@linaro.org>
+In-Reply-To: <20260319104944.66690-3-philmd@linaro.org>
 Received-SPF: pass client-ip=94.130.142.21; envelope-from=anjo@rev.ng;
  helo=rev.ng
 X-Spam_score_int: -3
@@ -70,15 +70,29 @@ Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
 On 19/03/26, Philippe Mathieu-Daudé wrote:
-> Prefer the address_space_ld/st API over the legacy ld/st_phys()
-> because it allow checking for bus access fault (although the
-> modified code doesn't check that). There is no logical change.
+> The LoongArch64 target doesn't use the legacy ldst_phys() API
+> anymore. Set the TARGET_NOT_USING_LEGACY_LDST_PHYS_API variable
+> to hide the legacy API to the qemu-system-loongarch64 binary,
+> avoiding further API uses to creep in.
 > 
 > Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 > ---
->  target/loongarch/cpu_helper.c     | 13 +++++++++----
->  target/loongarch/tcg/tlb_helper.c | 10 +++++++---
->  2 files changed, 16 insertions(+), 7 deletions(-)
+>  configs/targets/loongarch64-softmmu.mak | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/configs/targets/loongarch64-softmmu.mak b/configs/targets/loongarch64-softmmu.mak
+> index 476407f9413..a425b3dbaae 100644
+> --- a/configs/targets/loongarch64-softmmu.mak
+> +++ b/configs/targets/loongarch64-softmmu.mak
+> @@ -6,3 +6,4 @@ TARGET_XML_FILES= loongarch-base32.xml loongarch-base64.xml loongarch-fpu.xml lo
+>  TARGET_NEED_FDT=y
+>  TARGET_LONG_BITS=64
+>  TARGET_NOT_USING_LEGACY_NATIVE_ENDIAN_API=y
+> +TARGET_NOT_USING_LEGACY_LDST_PHYS_API=y
+> -- 
+> 2.53.0
+> 
+> 
 
 Reviewed-by: Anton Johansson <anjo@rev.ng>
 
