@@ -4,79 +4,81 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E36D1091933
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 8B3991091931
 	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3MkG-0000TU-It; Thu, 19 Mar 2026 19:25:40 -0400
+	id 1w3MlQ-0001fY-Vk; Thu, 19 Mar 2026 19:26:55 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3MkE-0000Sb-Th
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:39 -0400
-Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
+ id 1w3MlC-0001Qp-Pk
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:38 -0400
+Received: from mail-pl1-x631.google.com ([2607:f8b0:4864:20::631])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3MkD-0007Zt-6G
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:38 -0400
-Received: by mail-pl1-x633.google.com with SMTP id
- d9443c01a7336-2ad9f316d68so6888545ad.2
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:25:36 -0700 (PDT)
+ id 1w3MlA-0007j9-T7
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:38 -0400
+Received: by mail-pl1-x631.google.com with SMTP id
+ d9443c01a7336-2aecefc7503so8911175ad.1
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962735; x=1774567535; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=l7VURy1zxnhOKNNcO5CG8zTLjsSiXMJAZArRfBnF7MY=;
- b=hkT/FtULP03bKcji/PXe4pB4uUil15K0KaC9Pno+3deWyE1tUDPcnDSicdRQhpO5dN
- L/DdrFsr8Pg4cKis6Nq4YpyWslg9qjg8wJJtGj0SGQdRYUkvaW6jwtGES82lJDrEaw+U
- h/eSQkMREu7FwdRCXUx+WwuW9UzlCI/sAf3xkSZnezNmC2Fe3QTTw9xvmCL6t3Btetc3
- P2LhfqfPUg3uGxzAdRS+jstwtvRBcfV4Ms9XKTb+EZcNdNLpECcqf/QVuoqrrrJVWtgX
- EtrwJZaQGmfVtwLmuzFDdbjuvMUyzyM2sBwTLQAVmgVsmIIcy4qJcfTRp3BaH6GgqlPr
- SPIA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962735; x=1774567535;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=gmail.com; s=20230601; t=1773962790; x=1774567590; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=l7VURy1zxnhOKNNcO5CG8zTLjsSiXMJAZArRfBnF7MY=;
- b=aQteDYXoSbQu9+Uo692PLYsBA/8dKaRXfTJquma4fAA50BSM3stvzl08cI6BMiaaL8
- Jaq3a5hny2ddpFenoErOjmjVkQtoAu68X/oELTYQGjNnlw2yv9TrkEjS6r8w6t3MZsJu
- xP1t8Kz+pe72BdcimoajhuHu17F0q0onKo4tGAitJ8VbC9sP5s//pHw6uppVUq5okOps
- zpDmvZcF6ND+ZomdNYBOK2L9YfxNMCFFqfsDDUEw3Sm2i4KUNEInmX47817TVPY6gcD9
- HaXMxyKl7B3OvAiGIYdAYdeD1uIqPLH1P9N6JH31kr2S1jj81xhgR1tYkSafOhROxAxO
- PGew==
-X-Gm-Message-State: AOJu0Yz1OhEkH1dv1qdoa1ajSv4XoBkeNV/AkLCIUfja0gp+Zyjc+R4E
- T9KAjrvXOYX5XFO5z0HBkwXkKKrMtGfrKxu2Tgnz/UAQsOh1XRaIqMEEtq8g/g==
-X-Gm-Gg: ATEYQzwuKBVc0ugnVwtJfVdQKJKi2WozVXGdfrvoKB3XyZaoyukdAxGaRx4Z6JuSkhd
- tExi7ZKxfnoHMX3S/kEmNu17SZaCVJ0g4NMdjoYekKW1tFMB6dD1qu2reDFWnTxo7BUspOSrT5o
- 84vna0pmBWAB1hcqjj0yNKLl8aYYu0JRwpmTkwIf78438969DLSVZjkrcrz73QcoArVueixnXgP
- LRVDAdF1c4KPldSaL2OdU9KQCO66lbiCUVvarY/O1tViiBPyplMEvCKTm8YHpn0d9cA+grP0/jo
- yHssNq5LO7WGsFXUldh3QZ/WVbnh+/OtciKaDEiwtvjnUUU5br04FSCWclFKrNtPR3zpgkCgRti
- +50FWNJLmk5LTiCcJTBvq6r6XKtnxUHUCXo6DMzrMPW/+/n6eM2K5+fdJU2lt9jLqajAtiDdOZV
- /VDyQZEvNN9BUjCzpuYDPeTXRtGj8Oe9JvBjVBHLtTdw==
-X-Received: by 2002:a17:902:d488:b0:2b0:6d2d:f1d5 with SMTP id
- d9443c01a7336-2b0827c2c55mr7691555ad.45.1773962734973; 
- Thu, 19 Mar 2026 16:25:34 -0700 (PDT)
+ bh=5tJUDngHbr1KPsf6/Ca4HvKW/nIzxeybSJmdbm3AcVc=;
+ b=b2EOjBXyIBkr/HYMQTyJ0xHXPrw2nlW3NoEpbtDEROw3m0Rci8J+V1H2E3w/OpgJHx
+ n/UmMlUEzPY8XHv0Xy7jaAtzvdM5OzsQPDo7NoDtyjv4tQEiLwjf9VpllzdOiqmKANZi
+ si2aeN0SLAzZwl5hF9nWE4Pwmru4pQIzaIU5tkbX88BfGyHG3grYtiFavXW6TQEbhCRA
+ ZY+G6UQOt1rxuFOEEdS34/mMMwCJO0Xd7iuArqxeLjSxWkJKm12drxHlMaXp4RtCcQtd
+ 4KuetWrfmZtcs5qtt5s61Dai7gMs3bzXJCjC7srCdC6PrCkwj5FiMWRfLU2osRaGujY2
+ 461A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1773962790; x=1774567590;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=5tJUDngHbr1KPsf6/Ca4HvKW/nIzxeybSJmdbm3AcVc=;
+ b=bHmLINHKC86uUxt3F3PcGBPLTNF3+5ITSRnqL9+HJR9Hl0GyuzuTvS7l+yohY9ZI/R
+ k/Rlovr0e4pqG2EzKHi0Pd8ljQNhodwL7OPq8ZOtlYPsb4uyqpTk9RLXbGelnMML5TMZ
+ gYa8ycS4H4wBR60sUnt11q8CPBVdvZF+fKBKxCF+A0ol+/3LiPkolnLoG+bd7F+rwmXs
+ 9LWLRPiq8oBub/ulByGPfzgM865pOquI0dvuwEut1XY+RGb1YBZCxLSZXb1MQPFnCY9/
+ X/FUfTLwBo/iOtpFzUu0vk01HSGCAyGPk70BDIWk1IRIbxdVFWVC5sQDP2na+vPsfSCZ
+ FicA==
+X-Gm-Message-State: AOJu0YytM8PRf9pMxikI/I9Fci9qQDwFaHRsyEvPJvDOil8eaD/lKbI+
+ rbZv1Op9ES4bwDGAXy14TCeJhXLhD1bZsP404UCdt98rfMecRpLtHEXZpv+m1Q==
+X-Gm-Gg: ATEYQzyBzEQdo6PyLT8ojtEJ4qZXmhuzgpm9jhmllt497ELK+4GjvkR9t5HDB8m577W
+ Wdqun6a3n4q8G2HxhkZ2zeuvL1ERHm1C5tJsYuyH4NIv0P/twOEBCwZ+vZUXcXH3yw5lQB8CEgo
+ rdHYbEnPR2d0TdNNuAuEVU7nbA8MwpND6hLScZQV+4XnNKAu/D50KxrQYmg4TWuIScdyAlVQcas
+ B5CF+y4SjI/gqSUZPfVLmAe44xaJvVCBky3Bla+XTKSY5Bq++vDkLo4ZlvYwAVZ6PcImcDMdCm3
+ JAplspgpuesPFCSZWjoS++4VtoN//V0KGmL8QoMcIC+rXjOk3Y1ij/CNiJAiTamaXVSdGpzOW0V
+ uXqGeJQnJ/7Wk4rgTNe5IQ5z5bzpmdQeWqMr7dc3lOuRHakusegOB8vugOxpB3d+gmmittjl/uW
+ raqbkWEdCWeRLtu28ZvA86BXy18+Szc2/76ysvIjsu8w==
+X-Received: by 2002:a17:902:e883:b0:2ae:5eab:132e with SMTP id
+ d9443c01a7336-2b0826dd612mr7362785ad.12.1773962790185; 
+ Thu, 19 Mar 2026 16:26:30 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.25.32
+ d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.27
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:25:34 -0700 (PDT)
+ Thu, 19 Mar 2026 16:26:29 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com,
-	Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 00/17] riscv-to-apply queue
-Date: Fri, 20 Mar 2026 09:25:05 +1000
-Message-ID: <20260319232522.1867400-1-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com, Max Chou <max.chou@sifive.com>,
+ Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 16/17] target/riscv: rvv: Fix page probe issues in vext_ldff
+Date: Fri, 20 Mar 2026 09:25:21 +1000
+Message-ID: <20260319232522.1867400-17-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
+References: <20260319232522.1867400-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::631;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x631.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -100,88 +102,76 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Alistair Francis <alistair.francis@wdc.com>
+From: Max Chou <max.chou@sifive.com>
 
-The following changes since commit 5a68a3add61208aad34d47134fdcfd3f407d2ce4:
+Commit 17288e38bebf ("optimize the memory probing for vector
+fault-only-first loads") introduced an optimization that moved from
+per-element probing to a fast-path broad probe. Unfortunately it
+introduced following bugs in cross-page handling:
 
-  Update version for v11.0.0-rc0 release (2026-03-18 15:56:51 +0000)
+- Wrong condition for second page probing: checked "env->vl > elems"
+  instead of "env->vl > elems + env->vstart", failing to account for
+  the vstart offset.
 
-are available in the Git repository at:
+- Incorrect second page address calculation: used
+  "addr + (elems << log2_esz)" instead of "addr + page_split".
+  For segment loads (nf > 1), this would probe the wrong address,not
+  at the page boundary.
 
-  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20260320
+- Wrong second page probe size: used "elems * msize" (the first page
+  size) instead of calculating the remaining size as
+  "(env->vl - env->vstart) * msize - page_split". This would probe
+  too little memory and could miss faults.
 
-for you to fetch changes up to 38937473da3ebdd89bbe6bbc3effc0b153ceb414:
+This commit fixes these bugs by leveraging the probe_pages helper
+which automatically handles cross-page memory accesses correctly.
 
-  target/riscv: Fix scountovf CSR behavior in VS-mode and M-mode (2026-03-20 08:41:15 +1000)
+Fixes: 17288e38bebf ("optimize the memory probing for vector fault-only-first loads.")
 
-----------------------------------------------------------------
-RISC-V PR for 11.
+Signed-off-by: Max Chou <max.chou@sifive.com>
+Acked-by: Alistair Francis <alistair.francis@wdc.com>
+Message-ID: <20260318013805.1920377-3-max.chou@sifive.com>
+Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
+---
+ target/riscv/vector_helper.c | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
 
-* Fix integer overflow in cm_base calculation
-* Fix null pointer dereference in cpu_set_exception_base
-* Update Daniel Henrique Barboza's email
-* Add Chao Liu as reviewer
-* Set SiFive PDMA done bit upon completion
-* Remove deprecated 'riscv, delegate' device-tree property
-* Fix OCP FP8 E4M3 conversion issues
-* Fix IOMMU instance_init allocations in instance_finalize
-* Support Smpmpmt extension
-* Fix SiFive UART spurious IRQ issue and misc updates
-* Fix missing flags merge in probe_pages for cross-page accesses
-* Fix page probe issues in vext_ldff
-* Fix scountovf CSR behavior in VS-mode and M-mode
+diff --git a/target/riscv/vector_helper.c b/target/riscv/vector_helper.c
+index e60248d6d3..83dd26314d 100644
+--- a/target/riscv/vector_helper.c
++++ b/target/riscv/vector_helper.c
+@@ -658,9 +658,9 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+     uint32_t esz = 1 << log2_esz;
+     uint32_t msize = nf * esz;
+     uint32_t vma = vext_vma(desc);
+-    target_ulong addr, addr_probe, addr_i, offset, remain, page_split, elems;
++    target_ulong addr, addr_i, offset, remain, page_split, elems;
+     int mmu_index = riscv_env_mmu_index(env, false);
+-    int flags, probe_flags;
++    int flags;
+     void *host;
+ 
+     VSTART_CHECK_EARLY_EXIT(env, env->vl);
+@@ -674,16 +674,8 @@ vext_ldff(void *vd, void *v0, target_ulong base, CPURISCVState *env,
+     }
+ 
+     /* Check page permission/pmp/watchpoint/etc. */
+-    probe_pages(env, addr, elems * msize, ra, MMU_DATA_LOAD, mmu_index, &host,
+-                &flags, true);
+-
+-    /* If we are crossing a page check also the second page. */
+-    if (env->vl > elems) {
+-        addr_probe = addr + (elems << log2_esz);
+-        probe_pages(env, addr_probe, elems * msize, ra, MMU_DATA_LOAD,
+-                    mmu_index, &host, &probe_flags, true);
+-        flags |= probe_flags;
+-    }
++    probe_pages(env, addr, (env->vl - env->vstart) * msize, ra, MMU_DATA_LOAD,
++                mmu_index, &host, &flags, true);
+ 
+     if (flags & ~TLB_WATCHPOINT) {
+         /* probe every access */
+-- 
+2.53.0
 
-----------------------------------------------------------------
-Chao Liu (1):
-      MAINTAINERS: Add myself as a reviewer for RISC-V TCG CPUs
-
-Daniel Henrique Barboza (1):
-      MAINTAINERS: update my email
-
-Djordje Todorovic (2):
-      hw/riscv: Fix integer overflow in cm_base calculation
-      target/riscv: Fix null pointer dereference in cpu_set_exception_base
-
-Frank Chang (4):
-      hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen
-      hw/char: sifive_uart: Sync txwm interrupt pending status after TX FIFO enqueue
-      hw/char: sifive_uart: Update IRQ when rxctrl is written
-      hw/char: sifive_uart: Remove ip variable
-
-Jay Chang (2):
-      hw/dma: sifive_pdma: Set done bit upon completion
-      target/riscv: Support Smpmpmt extension
-
-Jim Shu (1):
-      target/riscv: Fix scountovf CSR behavior in VS-mode and M-mode
-
-Max Chou (4):
-      fpu: Fix repacking issues in the uncanonical step for E4M3 overflow
-      fpu: Fix unexpected exception flags when converting infinity to OCP E4M3
-      target/riscv: rvv: Fix missing flags merge in probe_pages for cross-page accesses
-      target/riscv: rvv: Fix page probe issues in vext_ldff
-
-Peter Maydell (1):
-      hw/riscv/riscv-iommu: Free instance_init allocations in instance_finalize
-
-Philippe Mathieu-Daudé (1):
-      hw/riscv: Remove deprecated 'riscv, delegate' device-tree property
-
- MAINTAINERS                       |  4 +++-
- docs/about/deprecated.rst         | 11 ----------
- docs/about/removed-features.rst   | 11 ++++++++++
- include/hw/char/sifive_uart.h     |  3 ++-
- include/hw/riscv/cps.h            |  2 +-
- target/riscv/pmp.h                |  1 +
- target/riscv/cpu_cfg_fields.h.inc |  1 +
- hw/char/sifive_uart.c             | 46 +++++++++++++++++++++++++++++++--------
- hw/dma/sifive_pdma.c              |  1 +
- hw/riscv/riscv-iommu.c            | 16 +++++++++++---
- hw/riscv/virt.c                   |  9 --------
- target/riscv/cpu.c                |  3 +++
- target/riscv/csr.c                | 16 ++++++++++++--
- target/riscv/pmp.c                | 16 ++++++++++++++
- target/riscv/vector_helper.c      | 23 ++++++--------------
- fpu/softfloat-parts.c.inc         |  4 +++-
- 16 files changed, 113 insertions(+), 54 deletions(-)
 
