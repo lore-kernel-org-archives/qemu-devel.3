@@ -4,81 +4,79 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id DFFCC109192F
-	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:13 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 9E36D1091933
+	for <qemu-devel@archiver.kernel.org>; Thu, 19 Mar 2026 23:27:14 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3Mkz-000127-1Z; Thu, 19 Mar 2026 19:26:25 -0400
+	id 1w3MkG-0000TU-It; Thu, 19 Mar 2026 19:25:40 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mky-00011e-48
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:24 -0400
-Received: from mail-pl1-x636.google.com ([2607:f8b0:4864:20::636])
+ id 1w3MkE-0000Sb-Th
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:39 -0400
+Received: from mail-pl1-x633.google.com ([2607:f8b0:4864:20::633])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <alistair23@gmail.com>)
- id 1w3Mkw-0007iD-N5
- for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:26:23 -0400
-Received: by mail-pl1-x636.google.com with SMTP id
- d9443c01a7336-2b0586d5bb8so9094925ad.3
- for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:26:22 -0700 (PDT)
+ id 1w3MkD-0007Zt-6G
+ for qemu-devel@nongnu.org; Thu, 19 Mar 2026 19:25:38 -0400
+Received: by mail-pl1-x633.google.com with SMTP id
+ d9443c01a7336-2ad9f316d68so6888545ad.2
+ for <qemu-devel@nongnu.org>; Thu, 19 Mar 2026 16:25:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1773962781; x=1774567581; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:from:to:cc:subject:date
- :message-id:reply-to;
- bh=0+0x6O4gZwnc0GCjlyoKzmEsRAKxwFxCRzvQROS36aQ=;
- b=c7EXkeI5BVTz4/L3X15k9vF/ww2ZnLJ9jDtfUCscXdqRFNmepYUWf45Be8clnydAt6
- dFtPnSa/Y21EYuSAblyMQ0au7bnptAiz1ZeLbT/qkmFYl7RtktLXW4zMyg9/PKDJfbFE
- 28laITUy+v+cYKApUmynJ8vf2tO0UIsBxCzQsro40S4YCLe2PCMg7fZbW6PivHrwD2Xi
- lPnzBgGpc8i3lf1vTzJujk5mIgY0xcU7/eEYP8vSjCmf/53cqxXY2UKlDI+XAh2xEDhA
- BZIGWtgMBMZ8o7l+7KYMzcolAgz3VrsiuFJqiISW41TWCSFcBCH/8MR5oLGq0Z78U1II
- 0VCA==
+ d=gmail.com; s=20230601; t=1773962735; x=1774567535; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:from:to:cc:subject:date:message-id:reply-to;
+ bh=l7VURy1zxnhOKNNcO5CG8zTLjsSiXMJAZArRfBnF7MY=;
+ b=hkT/FtULP03bKcji/PXe4pB4uUil15K0KaC9Pno+3deWyE1tUDPcnDSicdRQhpO5dN
+ L/DdrFsr8Pg4cKis6Nq4YpyWslg9qjg8wJJtGj0SGQdRYUkvaW6jwtGES82lJDrEaw+U
+ h/eSQkMREu7FwdRCXUx+WwuW9UzlCI/sAf3xkSZnezNmC2Fe3QTTw9xvmCL6t3Btetc3
+ P2LhfqfPUg3uGxzAdRS+jstwtvRBcfV4Ms9XKTb+EZcNdNLpECcqf/QVuoqrrrJVWtgX
+ EtrwJZaQGmfVtwLmuzFDdbjuvMUyzyM2sBwTLQAVmgVsmIIcy4qJcfTRp3BaH6GgqlPr
+ SPIA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1773962781; x=1774567581;
- h=content-transfer-encoding:mime-version:references:in-reply-to
- :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=0+0x6O4gZwnc0GCjlyoKzmEsRAKxwFxCRzvQROS36aQ=;
- b=eZ2XnSK364nAcTatr7WdbFJu8+6sofWktKVfO87SLIiMmdyIZBmANR0L/L1U6ETBmn
- f/2xIyUXf4ysmqz7hVOvoNkcWSHfzMkkgmwGZRhaHiagYmCN5HDuJnpn8zs8JX/WzJdF
- NNij1saNIK/STSJgq4hUNQ/8uESDjZutbizYVZaOYQnfMuTO5Ooqr/PT4uEMUlxzPS5h
- fIHGRPPiDtf2RB7ntbqFFo3+Iv5/SFceIdxXPfdMaMzH4iG8dw1xHZjrBdCHsvAnglxu
- GTtrKneEi0WL3RsEnMMr/NKD7e4Wtxm2ytUwltTzslg7b1yAqzLqLQjPAHgIMXzXovg2
- VbAw==
-X-Gm-Message-State: AOJu0YwpVM64IhrWv+YYxs9oZzUIe4MVbm+KBqDFjOhokdpqblWRuQQH
- f7sWLmQOfM8d+ccwttGOojo3861kVKVIeRQZmbyS0XF3hpnzz9przOyodMaA5A==
-X-Gm-Gg: ATEYQzznJdo4vo81BKzJzny2RDq4FA1mLArBDkcd/2nZkDfxJ+4lUbkh8QtpwmyjJDx
- iudYhzZDVCpgptxefJ5yve5LMiIsTu3gohOwcqJiSZBoKrhXgzRxTOifpnCxSN2FIzdXcwiuff7
- IRf8kBurdySWOVT5VWKIc4o/7m4ZSORabXLIfQOh6je9RLUsbI5lHSfxuhuWxno414H6MGaLJU7
- t/oDqK/cV8cmHcdiwxd+OEJkEOMAKr71JnnVH6vp455EY4mFeThhOgIQWaY/dilE3EOoqMV/M+e
- jHhX7O9SCJ6rVjEcMX1KxzjUxUwDrUPSRAsWx8Ig0dF1ELxLfzLSxndFx6HB0plZjpi4pvA9DIW
- xzqyRG1SznCtQgO/76ncl0MEZrpvBMRfA+o/w3r0Cxx+9eKwFRmmI4BNkN5KnOwJ7kAftGFyV2T
- JsOlVZl1XmIHju6sjKKZWI0njTZHGQnjnS+vROtDeQDw==
-X-Received: by 2002:a17:903:19eb:b0:2ae:aca4:b177 with SMTP id
- d9443c01a7336-2b0826c696bmr8449675ad.5.1773962780832; 
- Thu, 19 Mar 2026 16:26:20 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1773962735; x=1774567535;
+ h=content-transfer-encoding:mime-version:message-id:date:subject:cc
+ :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=l7VURy1zxnhOKNNcO5CG8zTLjsSiXMJAZArRfBnF7MY=;
+ b=aQteDYXoSbQu9+Uo692PLYsBA/8dKaRXfTJquma4fAA50BSM3stvzl08cI6BMiaaL8
+ Jaq3a5hny2ddpFenoErOjmjVkQtoAu68X/oELTYQGjNnlw2yv9TrkEjS6r8w6t3MZsJu
+ xP1t8Kz+pe72BdcimoajhuHu17F0q0onKo4tGAitJ8VbC9sP5s//pHw6uppVUq5okOps
+ zpDmvZcF6ND+ZomdNYBOK2L9YfxNMCFFqfsDDUEw3Sm2i4KUNEInmX47817TVPY6gcD9
+ HaXMxyKl7B3OvAiGIYdAYdeD1uIqPLH1P9N6JH31kr2S1jj81xhgR1tYkSafOhROxAxO
+ PGew==
+X-Gm-Message-State: AOJu0Yz1OhEkH1dv1qdoa1ajSv4XoBkeNV/AkLCIUfja0gp+Zyjc+R4E
+ T9KAjrvXOYX5XFO5z0HBkwXkKKrMtGfrKxu2Tgnz/UAQsOh1XRaIqMEEtq8g/g==
+X-Gm-Gg: ATEYQzwuKBVc0ugnVwtJfVdQKJKi2WozVXGdfrvoKB3XyZaoyukdAxGaRx4Z6JuSkhd
+ tExi7ZKxfnoHMX3S/kEmNu17SZaCVJ0g4NMdjoYekKW1tFMB6dD1qu2reDFWnTxo7BUspOSrT5o
+ 84vna0pmBWAB1hcqjj0yNKLl8aYYu0JRwpmTkwIf78438969DLSVZjkrcrz73QcoArVueixnXgP
+ LRVDAdF1c4KPldSaL2OdU9KQCO66lbiCUVvarY/O1tViiBPyplMEvCKTm8YHpn0d9cA+grP0/jo
+ yHssNq5LO7WGsFXUldh3QZ/WVbnh+/OtciKaDEiwtvjnUUU5br04FSCWclFKrNtPR3zpgkCgRti
+ +50FWNJLmk5LTiCcJTBvq6r6XKtnxUHUCXo6DMzrMPW/+/n6eM2K5+fdJU2lt9jLqajAtiDdOZV
+ /VDyQZEvNN9BUjCzpuYDPeTXRtGj8Oe9JvBjVBHLtTdw==
+X-Received: by 2002:a17:902:d488:b0:2b0:6d2d:f1d5 with SMTP id
+ d9443c01a7336-2b0827c2c55mr7691555ad.45.1773962734973; 
+ Thu, 19 Mar 2026 16:25:34 -0700 (PDT)
 Received: from toolbx.alistair23.me ([2403:581e:fdf9:0:6209:4521:6813:45b7])
  by smtp.gmail.com with ESMTPSA id
- d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.26.18
+ d9443c01a7336-2b083516ae1sm2979165ad.13.2026.03.19.16.25.32
  (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Thu, 19 Mar 2026 16:26:20 -0700 (PDT)
+ Thu, 19 Mar 2026 16:25:34 -0700 (PDT)
 From: alistair23@gmail.com
 X-Google-Original-From: alistair.francis@wdc.com
 To: qemu-devel@nongnu.org
-Cc: alistair23@gmail.com, Frank Chang <frank.chang@sifive.com>,
- Alistair Francis <alistair.francis@wdc.com>
-Subject: [PULL 13/17] hw/char: sifive_uart: Update IRQ when rxctrl is written
-Date: Fri, 20 Mar 2026 09:25:18 +1000
-Message-ID: <20260319232522.1867400-14-alistair.francis@wdc.com>
+Cc: alistair23@gmail.com,
+	Alistair Francis <alistair.francis@wdc.com>
+Subject: [PULL 00/17] riscv-to-apply queue
+Date: Fri, 20 Mar 2026 09:25:05 +1000
+Message-ID: <20260319232522.1867400-1-alistair.francis@wdc.com>
 X-Mailer: git-send-email 2.53.0
-In-Reply-To: <20260319232522.1867400-1-alistair.francis@wdc.com>
-References: <20260319232522.1867400-1-alistair.francis@wdc.com>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2607:f8b0:4864:20::636;
- envelope-from=alistair23@gmail.com; helo=mail-pl1-x636.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::633;
+ envelope-from=alistair23@gmail.com; helo=mail-pl1-x633.google.com
 X-Spam_score_int: -17
 X-Spam_score: -1.8
 X-Spam_bar: -
@@ -102,33 +100,88 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-From: Frank Chang <frank.chang@sifive.com>
+From: Alistair Francis <alistair.francis@wdc.com>
 
-When rxctl is updated, we also need to check whether the IRQ should be
-raised, as the user may activate the Rx channel or change the Rx FIFO
-watermark level.
+The following changes since commit 5a68a3add61208aad34d47134fdcfd3f407d2ce4:
 
-Signed-off-by: Frank Chang <frank.chang@sifive.com>
-Reviewed-by: Alistair Francis <alistair.francis@wdc.com>
-Message-ID: <20260312033201.1619554-4-frank.chang@sifive.com>
-Signed-off-by: Alistair Francis <alistair.francis@wdc.com>
----
- hw/char/sifive_uart.c | 1 +
- 1 file changed, 1 insertion(+)
+  Update version for v11.0.0-rc0 release (2026-03-18 15:56:51 +0000)
 
-diff --git a/hw/char/sifive_uart.c b/hw/char/sifive_uart.c
-index ae71a15a2a..f255cca960 100644
---- a/hw/char/sifive_uart.c
-+++ b/hw/char/sifive_uart.c
-@@ -216,6 +216,7 @@ sifive_uart_write(void *opaque, hwaddr addr,
-         return;
-     case SIFIVE_UART_RXCTRL:
-         s->rxctrl = val64;
-+        sifive_uart_update_irq(s);
-         return;
-     case SIFIVE_UART_DIV:
-         s->div = val64;
--- 
-2.53.0
+are available in the Git repository at:
 
+  https://github.com/alistair23/qemu.git tags/pull-riscv-to-apply-20260320
+
+for you to fetch changes up to 38937473da3ebdd89bbe6bbc3effc0b153ceb414:
+
+  target/riscv: Fix scountovf CSR behavior in VS-mode and M-mode (2026-03-20 08:41:15 +1000)
+
+----------------------------------------------------------------
+RISC-V PR for 11.
+
+* Fix integer overflow in cm_base calculation
+* Fix null pointer dereference in cpu_set_exception_base
+* Update Daniel Henrique Barboza's email
+* Add Chao Liu as reviewer
+* Set SiFive PDMA done bit upon completion
+* Remove deprecated 'riscv, delegate' device-tree property
+* Fix OCP FP8 E4M3 conversion issues
+* Fix IOMMU instance_init allocations in instance_finalize
+* Support Smpmpmt extension
+* Fix SiFive UART spurious IRQ issue and misc updates
+* Fix missing flags merge in probe_pages for cross-page accesses
+* Fix page probe issues in vext_ldff
+* Fix scountovf CSR behavior in VS-mode and M-mode
+
+----------------------------------------------------------------
+Chao Liu (1):
+      MAINTAINERS: Add myself as a reviewer for RISC-V TCG CPUs
+
+Daniel Henrique Barboza (1):
+      MAINTAINERS: update my email
+
+Djordje Todorovic (2):
+      hw/riscv: Fix integer overflow in cm_base calculation
+      target/riscv: Fix null pointer dereference in cpu_set_exception_base
+
+Frank Chang (4):
+      hw/char: sifive_uart: Implement txctrl.txen and rxctrl.rxen
+      hw/char: sifive_uart: Sync txwm interrupt pending status after TX FIFO enqueue
+      hw/char: sifive_uart: Update IRQ when rxctrl is written
+      hw/char: sifive_uart: Remove ip variable
+
+Jay Chang (2):
+      hw/dma: sifive_pdma: Set done bit upon completion
+      target/riscv: Support Smpmpmt extension
+
+Jim Shu (1):
+      target/riscv: Fix scountovf CSR behavior in VS-mode and M-mode
+
+Max Chou (4):
+      fpu: Fix repacking issues in the uncanonical step for E4M3 overflow
+      fpu: Fix unexpected exception flags when converting infinity to OCP E4M3
+      target/riscv: rvv: Fix missing flags merge in probe_pages for cross-page accesses
+      target/riscv: rvv: Fix page probe issues in vext_ldff
+
+Peter Maydell (1):
+      hw/riscv/riscv-iommu: Free instance_init allocations in instance_finalize
+
+Philippe Mathieu-Daudé (1):
+      hw/riscv: Remove deprecated 'riscv, delegate' device-tree property
+
+ MAINTAINERS                       |  4 +++-
+ docs/about/deprecated.rst         | 11 ----------
+ docs/about/removed-features.rst   | 11 ++++++++++
+ include/hw/char/sifive_uart.h     |  3 ++-
+ include/hw/riscv/cps.h            |  2 +-
+ target/riscv/pmp.h                |  1 +
+ target/riscv/cpu_cfg_fields.h.inc |  1 +
+ hw/char/sifive_uart.c             | 46 +++++++++++++++++++++++++++++++--------
+ hw/dma/sifive_pdma.c              |  1 +
+ hw/riscv/riscv-iommu.c            | 16 +++++++++++---
+ hw/riscv/virt.c                   |  9 --------
+ target/riscv/cpu.c                |  3 +++
+ target/riscv/csr.c                | 16 ++++++++++++--
+ target/riscv/pmp.c                | 16 ++++++++++++++
+ target/riscv/vector_helper.c      | 23 ++++++--------------
+ fpu/softfloat-parts.c.inc         |  4 +++-
+ 16 files changed, 113 insertions(+), 54 deletions(-)
 
