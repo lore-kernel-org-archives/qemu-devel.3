@@ -4,58 +4,58 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id E38B81098788
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:22:52 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 356341098788
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:22:57 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3aiZ-0002xc-Az; Fri, 20 Mar 2026 10:20:51 -0400
+	id 1w3aiZ-0002xz-Si; Fri, 20 Mar 2026 10:20:51 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1w3aiW-0002wb-Mt
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:20:48 -0400
+ id 1w3aiX-0002wn-5F
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:20:49 -0400
 Received: from mx0a-00069f02.pphosted.com ([205.220.165.32])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonah.palmer@oracle.com>)
- id 1w3aiV-0007QP-1c
+ id 1w3aiU-0007QL-OP
  for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:20:48 -0400
-Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+Received: from pps.filterd (m0333521.ppops.net [127.0.0.1])
  by mx0b-00069f02.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62K8Y1Yk2599977; Fri, 20 Mar 2026 14:20:31 GMT
+ 62K8Y3OH3323029; Fri, 20 Mar 2026 14:20:29 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=cc
  :content-transfer-encoding:date:from:in-reply-to:message-id
- :mime-version:references:subject:to; s=corp-2025-04-25; bh=Sv8Wm
- SJvIUPxUqFls32F8YWlQumpgBOdkE/KHWzHOE0=; b=Namk8hFSlcXJSbvMdix/u
- d92faPzwe0J4RFINq5xw3MJ8JfbgBVqjuFq9GbB5WIOmbCzrAJlT3CjY0WLxTspr
- U1arIN1UQXmz+vl5nlAizXUgQngGfSLZSXwvkLnFBCahIFCBxWMrAsXspmpcXOBC
- xZJLYzfo9c5+m+DLJ/jO4aBGYsUHCSovFNuK4nQyyf0aFjIJp1pLnvHq5pLX9RxB
- oDIPhdRk9sEWr8WyzIfwaHPMv9Qv8LiXBQVxunCSIcV1W8qQ6Izub7wBtnH74Roc
- C5D3W+vWwBIzffIZzJgy2vlWEke7B7hVXfNJZW8YhRzbtukAfhM3WtynDsF6i10G
+ :mime-version:references:subject:to; s=corp-2025-04-25; bh=gjr6X
+ 6FjLOGEcEwKsJNBVN5o5O7x2XraQbiJzpXv154=; b=J7XLN43yJByLpY61H20lh
+ Yn90q1t2zuD7r9Y/qss0Ul040frInlOCgC1m+bT5Op4vPBziOvADd0cJOUoGA3RU
+ 5P8pZbTFiqmyCT6qTi6RU2UtBpjrnnn7Hq3vX65RwtJ9oD9eRvGC8+fZkIj4fRgY
+ m/+knvA9P+hKtkqMhApE7bwcr7NmE2qsPzcLsL9qb6oJbV1PIBLPht3HUPJ5rEo/
+ 3/SrDmZ6iPVBJBA8k0E5jl/d0aw8+xiIi8s/VTxrz+qdWZBXFGB9+fHaRL6xLvNc
+ BenlqmIMjS14XEfjppihsyqZvP48Xj3L7ddC1DE8AKvHZCo7wvU34N3U/Y65NeRc
  Q==
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.appoci.oracle.com [138.1.37.129])
- by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cvx8x9tha-1
+ by mx0b-00069f02.pphosted.com (PPS) with ESMTPS id 4cvxk8htjt-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Mar 2026 14:20:31 +0000 (GMT)
+ Fri, 20 Mar 2026 14:20:29 +0000 (GMT)
 Received: from pps.filterd
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (8.18.1.2/8.18.1.2)
- with ESMTP id 62KDEaMa030672; Fri, 20 Mar 2026 14:20:30 GMT
+ with ESMTP id 62KDoNif030576; Fri, 20 Mar 2026 14:20:29 GMT
 Received: from pps.reinject (localhost [127.0.0.1])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTPS id
- 4cvx4eb45e-1
+ 4cvx4eb44d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Mar 2026 14:20:30 +0000
+ Fri, 20 Mar 2026 14:20:28 +0000
 Received: from phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com
  (phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com [127.0.0.1])
- by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62KEK2Jf016730;
- Fri, 20 Mar 2026 14:20:29 GMT
+ by pps.reinject (8.17.1.5/8.17.1.5) with ESMTP id 62KEK2Jd016730;
+ Fri, 20 Mar 2026 14:20:28 GMT
 Received: from jonah-amd-ol9-bm.osdevelopmeniad.oraclevcn.com
  (jonah-amd-ol9-bm.allregionaliads.osdevelopmeniad.oraclevcn.com
  [100.100.252.67])
  by phxpaimrmta03.imrmtpd1.prodappphxaev1.oraclevcn.com (PPS) with ESMTP id
- 4cvx4eb3ue-6; Fri, 20 Mar 2026 14:20:29 +0000
+ 4cvx4eb3ue-5; Fri, 20 Mar 2026 14:20:28 +0000
 From: Jonah Palmer <jonah.palmer@oracle.com>
 To: qemu-devel@nongnu.org
 Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
@@ -63,10 +63,10 @@ Cc: eduardo@habkost.net, marcel.apfelbaum@gmail.com, philmd@linaro.org,
  sgarzare@redhat.com, jasowang@redhat.com, leiyang@redhat.com,
  si-wei.liu@oracle.com, eperezma@redhat.com, boris.ostrovsky@oracle.com,
  armbru@redhat.com, jonah.palmer@oracle.com
-Subject: [RFC v2 05/14] virtio-net: detect VirtIODevice config buffer
- mid-migration change
-Date: Fri, 20 Mar 2026 14:20:06 +0000
-Message-ID: <20260320142015.3856652-6-jonah.palmer@oracle.com>
+Subject: [RFC v2 04/14] virtio-net: detect VirtIODevice status mid-migration
+ change
+Date: Fri, 20 Mar 2026 14:20:05 +0000
+Message-ID: <20260320142015.3856652-5-jonah.palmer@oracle.com>
 X-Mailer: git-send-email 2.47.3
 In-Reply-To: <20260320142015.3856652-1-jonah.palmer@oracle.com>
 References: <20260320142015.3856652-1-jonah.palmer@oracle.com>
@@ -80,21 +80,21 @@ X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0
  suspectscore=0 spamscore=0 adultscore=0 malwarescore=0 bulkscore=0
  classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2603050001
  definitions=main-2603200114
-X-Proofpoint-GUID: jj9kXF1RJk9L2I3Ie9DumYTx6VlLpb4x
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDExNCBTYWx0ZWRfX+HIH9nDjHzd1
- 13UywatPY8zGwIViFKaGc44+JBF/3xNlxqQmWJdp3WJSpfz7Fj/FaA/ishTv7TYGWObZBbHCRfG
- HpXqS9bXMXYE03MwzYrKNgfTTld8pM8C8uXb3X5asfcxxRqgZbuLKX3DDWUuxI/D5SmJpAr7XcX
- pClLQNPibNq0ezlM2lf9kqSfwRl0/jVA1Iu8VTEuJeiLvC6xV/GRFB52Xm3KZcEPlL4p6H8DbkI
- dMbi5wcLlGbQSF+d0NUWBEZsfE/bLgeCkFcijAubWPADW2V11FB6l3XdfntohO+9q4DEvaO2vEO
- 8znTv4oDGvHpnHsZbIrEIqj1JamTcniLHMMYO6wg3MKj7z43bnofBXQ17XZyhOv5052Unk86dZV
- 2C3MICnQFtiGDNMZVrqstqxsQSbXqPfMA8TyxEjcR7OJiA1PtKFTHiZwiroyYcLaIOkETFm+IF8
- OHkxhNNzHgg48RC3Rlw==
-X-Authority-Analysis: v=2.4 cv=dJmrWeZb c=1 sm=1 tr=0 ts=69bd57af b=1 cx=c_pps
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDExNCBTYWx0ZWRfX3u40vBUkEWlC
+ qWI3mSxS7+eaID9dEKs1HyJG3Z1BWl8jwybKNBDjjSoG8hFK2VV3mxGPHBAscFR1SAI4qlrYeKQ
+ FqHVi6emQ286kwC+Mfpsg4vfqOnJTuNKs2r5d4tJb3XUw1mUoQIFYwQhKymza7GUnr72oBJZ0ws
+ 1/zXtmeqn95rnpfjdTxI4mGOenm0uPhfAhJSfBGbSkrCjNh5As10YpLdMpzyUYXx2XhhBLJKy3V
+ AL82zwC6RiW4+JAN44ZjidfIUhWZZ5R4f2R8lyEXuNh040YABasCj6BfwnLnTvfDEI72gTZ0zja
+ IvdX227Hxy65CecY/2wewG5mZ+xrkLIril93OWla99Xqdy1y8o3xFRPHxlvvJ4S+3g4Dmvpbh2T
+ oJZPveiIsE7FL+VihQN/uLEeBOCIEWi6sA6Cr2dW6/cqcOketEmjvJu8HVNmgZoCfqqsGutixQq
+ i0LbK/+qhWfQSjCS31A==
+X-Authority-Analysis: v=2.4 cv=AI0/m/Lt c=1 sm=1 tr=0 ts=69bd57ad b=1 cx=c_pps
  a=WeWmnZmh0fydH62SvGsd2A==:117
  a=WeWmnZmh0fydH62SvGsd2A==:17
  a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22 a=jiCTI4zE5U7BLdzWsZGv:22
- a=RD47p0oAkeU5bO7t-o6f:22 a=yPCof4ZbAAAA:8 a=1bn3fnhKCm_T0IbXVqwA:9
-X-Proofpoint-ORIG-GUID: jj9kXF1RJk9L2I3Ie9DumYTx6VlLpb4x
+ a=x0eKOSpe3m1H3M0S9YoZ:22 a=yPCof4ZbAAAA:8 a=3r8ui8mxyQxcokH5ohsA:9
+X-Proofpoint-GUID: SPzg3wI3BoN1i1W-kmlVJ-2P1y3qFRMv
+X-Proofpoint-ORIG-GUID: SPzg3wI3BoN1i1W-kmlVJ-2P1y3qFRMv
 Received-SPF: pass client-ip=205.220.165.32;
  envelope-from=jonah.palmer@oracle.com; helo=mx0a-00069f02.pphosted.com
 X-Spam_score_int: -10
@@ -120,78 +120,113 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-This patch saves the config buffer and its length of a virtio-net
-device's VirtIODevice to compare with later during the stop-and-copy
-phase.
+This patch introduces the mechanism in which this series will use to
+detect VirtIODevice & VirtIONet state deltas, starting with the
+VirtIODevice's 'status' member of a virtio-net device.
+
+Before we send the device's state early, we save each piece of its state
+in a temporary structure via virtio_net_early_pre_save. Later, once the
+source VM has been paused, we compare the current values of those pieces
+to what we saved earlier. If any mismatch is found, virtio-net's VMSD
+(vmstate_virtio_net) is enabled and resends all state and device prep
+work (as it's normally done today when live migrating a virtio-net
+device).
+
+Once all relevant delta checks are in place, a no-delta case will skip
+vmstate_virtio_net and only resend updated VQ indices.
+
+For this patch, keep a temporary always-true fallback in
+virtio_net_has_delta/virtio_net_needed until follow-up patches cover the
+remaining VirtIONet & VirtIODevice deltas.
 
 Signed-off-by: Jonah Palmer <jonah.palmer@oracle.com>
 ---
- hw/net/virtio-net.c        | 21 +++++++++++++++++++++
- include/hw/virtio/virtio.h |  4 ++++
- 2 files changed, 25 insertions(+)
+ hw/net/virtio-net.c        | 40 ++++++++++++++++++++++++++++++++++++++
+ include/hw/virtio/virtio.h |  2 ++
+ 2 files changed, 42 insertions(+)
 
 diff --git a/hw/net/virtio-net.c b/hw/net/virtio-net.c
-index 2733e0130c..ca4385df1a 100644
+index 5d71ad235e..2733e0130c 100644
 --- a/hw/net/virtio-net.c
 +++ b/hw/net/virtio-net.c
-@@ -3871,6 +3871,15 @@ static int virtio_net_early_pre_save(void *opaque)
-     VirtIODevMigration *vdev_mig = vdev->migration;
- 
-     vdev_mig->status_early = vdev->status;
-+
-+    /* VirtIODevice config buffer snapshot */
-+    g_free(vdev_mig->config_early);
-+    vdev_mig->config_len_early = vdev->config_len;
-+    if (vdev->config_len) {
-+        vdev_mig->config_early = g_memdup2(vdev->config, vdev->config_len);
-+    } else {
-+        vdev_mig->config_early = NULL;
-+    }
-     return 0;
+@@ -3864,6 +3864,16 @@ static bool failover_hide_primary_device(DeviceListener *listener,
+     return qatomic_read(&n->failover_primary_hidden);
  }
  
-@@ -4150,6 +4159,9 @@ static void virtio_net_device_unrealize(DeviceState *dev)
-     virtio_cleanup(vdev);
- 
-     if (n->early_mig) {
-+        g_free(vdev->migration->config_early);
-+        vdev->migration->config_early = NULL;
++static int virtio_net_early_pre_save(void *opaque)
++{
++    VirtIONet *n = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++    VirtIODevMigration *vdev_mig = vdev->migration;
 +
-         g_free(vdev->migration);
-         vdev->migration = NULL;
++    vdev_mig->status_early = vdev->status;
++    return 0;
++}
++
+ static int virtio_net_early_pre_load(void *opaque)
+ {
+     VirtIONet *n = opaque;
+@@ -3887,6 +3897,7 @@ static const VMStateDescription vmstate_virtio_net_early = {
+     .minimum_version_id = VIRTIO_NET_VM_VERSION,
+     .version_id = VIRTIO_NET_VM_VERSION,
+     .early_setup = true,
++    .pre_save = virtio_net_early_pre_save,
+     .pre_load = virtio_net_early_pre_load,
+     .post_load = virtio_net_early_post_load,
+     .fields = (const VMStateField[]) {
+@@ -4231,10 +4242,39 @@ static bool dev_unplug_pending(void *opaque)
+     return vdc->primary_unplug_pending(dev);
+ }
  
-@@ -4251,6 +4263,15 @@ static bool virtio_net_has_delta(VirtIONet *n, VirtIODevice *vdev)
-         return true;
-     }
- 
-+    /* Has the VirtIODevice's config buffer changed? */
-+    if (vdev->config_len != vdev_mig->config_len_early) {
++static bool virtio_net_has_delta(VirtIONet *n, VirtIODevice *vdev)
++{
++    VirtIODevMigration *vdev_mig = vdev->migration;
++
++    /* Has the VirtIODevice's status changed? */
++    if (vdev->status != vdev_mig->status_early) {
 +        return true;
 +    }
-+    if (vdev->config_len && memcmp(vdev->config, vdev_mig->config_early,
-+                                   vdev->config_len) != 0) {
++
++    /*
++     * Always return true for now until we're able to detect all possible
++     * changes to a VirtIONet device.
++     */
++    return true;
++}
++
++static bool virtio_net_needed(void *opaque)
++{
++    VirtIONet *n = opaque;
++    VirtIODevice *vdev = VIRTIO_DEVICE(n);
++
++    if (!n->early_mig) {
 +        return true;
 +    }
 +
-     /*
-      * Always return true for now until we're able to detect all possible
-      * changes to a VirtIONet device.
++    return virtio_net_has_delta(n, vdev);
++}
++
+ static const VMStateDescription vmstate_virtio_net = {
+     .name = "virtio-net",
+     .minimum_version_id = VIRTIO_NET_VM_VERSION,
+     .version_id = VIRTIO_NET_VM_VERSION,
++    .needed = virtio_net_needed,
+     .fields = (const VMStateField[]) {
+         VMSTATE_VIRTIO_DEVICE,
+         VMSTATE_END_OF_LIST()
 diff --git a/include/hw/virtio/virtio.h b/include/hw/virtio/virtio.h
-index 752c46ce53..9949b94b64 100644
+index 74fed8c324..752c46ce53 100644
 --- a/include/hw/virtio/virtio.h
 +++ b/include/hw/virtio/virtio.h
-@@ -103,10 +103,14 @@ enum virtio_device_endian {
+@@ -102,9 +102,11 @@ enum virtio_device_endian {
+ /**
   * struct VirtIODevMigration - Common VirtIODevice migration structure
   * @early_load: Flag to indicate an early virtio_load for the device.
-  * @status_early: Device status at the time it was sent early.
-+ * @config_len_early: Length of the config buffer at the time it was sent early.
-+ * @config_early: Config buffer at the time it was sent early.
++ * @status_early: Device status at the time it was sent early.
   */
  typedef struct VirtIODevMigration {
      bool early_load;
-     uint8_t status_early;
-+    size_t config_len_early;
-+    uint8_t *config_early;
++    uint8_t status_early;
  } VirtIODevMigration;
  
  /**
