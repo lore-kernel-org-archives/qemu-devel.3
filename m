@@ -4,123 +4,103 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 378AA108B8F7
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 11:48:21 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 3F0AF108B8F7
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 11:50:08 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3YKO-0000O6-TQ; Fri, 20 Mar 2026 07:47:45 -0400
+	id 1w3YMO-0000r2-Qb; Fri, 20 Mar 2026 07:49:48 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3YK3-0000NY-UF
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 07:47:23 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <anisinha@redhat.com>)
- id 1w3YK0-0000KL-6O
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 07:47:23 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774007237;
- h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
- to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
- in-reply-to:in-reply-to:references:references;
- bh=muv40qP67JJsCRSxR5C9KfSi4xOJ2xQiuCPI3KypT+w=;
- b=gmENdg+0NPuG4f3N1oUs+7ZNrBgC4kJuD+KQXVeDBvYvJzt3/5ZLgU3G6qIYj5W/EP0wAm
- hLfJFUGSJIYVDvwYuN7VfJQqcOqmHFyF8XfJO7R1fTXuwDt+0qphIUZV/akb0vW5bHvxZG
- YuWmgUzI2YNjYA3nJ4iPDFdW/hASFpA=
-Received: from mail-qv1-f72.google.com (mail-qv1-f72.google.com
- [209.85.219.72]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-378-tdrln-5ENWqpBE046tFUTQ-1; Fri, 20 Mar 2026 07:47:15 -0400
-X-MC-Unique: tdrln-5ENWqpBE046tFUTQ-1
-X-Mimecast-MFC-AGG-ID: tdrln-5ENWqpBE046tFUTQ_1774007235
-Received: by mail-qv1-f72.google.com with SMTP id
- 6a1803df08f44-89c4a339b6bso175048006d6.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 04:47:15 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774007235; cv=none;
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3YMI-0000pw-TP
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 07:49:42 -0400
+Received: from mail-yx1-xb134.google.com ([2607:f8b0:4864:20::b134])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
+ (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
+ id 1w3YMD-0001EY-Ds
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 07:49:41 -0400
+Received: by mail-yx1-xb134.google.com with SMTP id
+ 956f58d0204a3-64d5a7926cfso2028006d50.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 04:49:36 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774007376; cv=none;
  d=google.com; s=arc-20240605;
- b=bVeI1K+40FmJlFPnP+n4l6p0duKlNz4P/oZV4+TqRoI92IrCHsDnb1PISU/WR0wd6c
- b/WQWkE24IVJbiEsZ0oHhLritlUTG82qGwpTYo/89photYPR9dBApNzZ3Wh9mKtL52AB
- EiCwwab5XuNi80DI6fR8WKigK4r0r+uKUu4zL0hMZtCEhlfXRGhTvB/nTloXLv5Ayykl
- i6XGHhnN/shcg4FWaK8Vrj2VxurPjrRCFa/YERfs3C/KJrW4BQmp2JO1s5ImUW+JspYl
- 9SAT2mG5jr67NsMkz4suOCo31ANWJlW/JjgOJ72kfvrz09aOf8UoxID+81+/AWXNkOht
- 6RhA==
+ b=Eany3YRAXFarov3OqrKGk4hsY8Q62Ji5X5YEHHG6AoXjQxtXzuMCc/3ALXbop19KRx
+ vy5FwX01Um+9jy0YlaozltTd7+gn07ypul+DQnBnbwup82vq8AjLnA7gx4nkS3PTZnHq
+ 0wmGTnIW4o6fvIV8f9/kG/nCowgqYhVygy2uaGm4LTr4Z/8//1zeXvLQeSCDWn2/a1iJ
+ FZPTCxE7CB9kE7UZgrZ1uuN7PBDj6+uveglP4JpgwS1GJYPNbLug+pN6qwzLu65yCBDF
+ IB7B/WjlwIPkvQYEBLlh2dHtZ5WLzBuuPue6DqO/Tya11skPigqWr1IG90huRFacC0l7
+ VcaA==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=muv40qP67JJsCRSxR5C9KfSi4xOJ2xQiuCPI3KypT+w=;
- fh=cOPXiLCTVAYpBUbQS6NaQFU8Q0I0efwJyFRhAa/O0mc=;
- b=DEZpXSQUiGs6ECN5gdBKg+tRGf6rrx25G/HjNfVb3hgBVtJh/wg8k4Zg5PkMl/Ue/J
- Yc96MvAt4yYD6UPmjYb3UjRpOdKhMTunX3+qs4bFbqRiTMFbbOzNqA9rTwqoas9PRFnN
- 83T4aFM61roTGfdDsVbFG09fMA7GG7TvSG5BDRCTS1sXEqOyHRW5GKbuHpfn64U5ju+m
- 2cQAPigCK2Gk8tgoJ5TQZp3AbsW3BqAbRlJhjBR+49hkzJOcks2raUGxBxuT882Y184V
- +Xlcpu62eGL8P15Nktg3tpMfRlXymze072R5AinY3k5T+9FWW74+WLldV6XOR5/N+NQm
- 7Lfg==; darn=nongnu.org
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:dkim-signature;
+ bh=fb9ytM/y0hoRFfJW+Syp8kwkmbhECMVJMFv4RYlul6U=;
+ fh=kMw62p/HLqf6b5lD87Y5haPqtGefAR8biFg3XNGEb8k=;
+ b=X4akexhsX0A7htlHanvtSUX2lcHLo18fYf+h5Jt0pEbbUiJVdqTajFG2zbjg5wDF4t
+ IHSmgbu6i9iMHUt+0lIseVDHZjSMH0eMZ3wBZhmug6R0Pv71fdIDDBsPKtuXC6xZfXY+
+ nr06SDznsriSWgYT8jScwSoCjH4Ym4VNHqueAQyezFyAE7v9Lecr3EwifRVjbbchinH3
+ TY9TnInlj/5ZbUtfMHeeqPY2KhfzQHi71RVXms3bIAZCdH+7x8X27YUSggdzHj18B8pq
+ xzeuPCgxyM4bHNbeT5Q1vjsqWwSvYi4u7j0ByOsFJ7OYWyhzexju+mp+NmhcpRoG+ixc
+ 6/wQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774007235; x=1774612035; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=muv40qP67JJsCRSxR5C9KfSi4xOJ2xQiuCPI3KypT+w=;
- b=QbTnDNCf7crAKaOVH20YY6YeHiGaOJoUX2/zqoFhRubCHKxLhI+pRaGZMagDzS2IEE
- 2BqEVrP220D9uT+VD53UOy745GHXJd5v9/50JUB3ZBJ1quRn6YQ+l8qpeMVk0DqmSJWt
- N47RjfixqjRv0SHySpij9ESuHiciZB0HQ+faQGIZ25j3csF659IVwRsgC75A7YpSvr4V
- gJ8Osox9aQf25lZDLlGMOS6hCxjB5Cc9pH3bSIqXk7CLUU6VBoAg8yJ71EGAHHX0Hbd5
- rE5ZZjAcg34JVxBrzguvZBp4c36lUwxQaAKfGPAVjG/o6aLWm1lDhkoWGlmliTMoOAdL
- X2mA==
+ d=linaro.org; s=google; t=1774007376; x=1774612176; darn=nongnu.org;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:from:to:cc:subject:date:message-id:reply-to;
+ bh=fb9ytM/y0hoRFfJW+Syp8kwkmbhECMVJMFv4RYlul6U=;
+ b=OGjZr+XlnDg1ZDTsJoU6PxDoWmSNQoW1XrWCgChHv24URDzLFNkxO9koKMR21KfzBx
+ efI9ISgZLxkXMp0s1rsvlWvCgk4jAZbUVOORX/ajF/UGe+dWvd5DIF4cUH97eAc8ijSg
+ F8KkHDI0JagpMbk7U8Vx3EFFYMh91BfJ/bP5JLxEDJHrb7MKzYAzHrsKOXeWshy2LtCJ
+ Sa01kcDlHJU7TaxOFSiE5wzfYSGVizYbvCQ2UIdNJfvfhkPH1Vki2Ryw9a8Q44LVdE+a
+ dNhnu1q/YOrDGFXojcrJKsBX0d9mIkwMvb6wJQwOW714INkrBkEDjFTr784SuOYOXPxD
+ 0U2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774007235; x=1774612035;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=muv40qP67JJsCRSxR5C9KfSi4xOJ2xQiuCPI3KypT+w=;
- b=rdtAY9LVh7Ho+57UyiWFhRdTw977MuJU63j6AnJx2qlxGjH467W33qXLb3I36f2jns
- ynGf+MRxDAV/f+nWmY03KzgIM0q0O6OtiFVOv/uuL/Sn6uZE67Pjgy4wLMTxFU2LHEy6
- gocmw63uImKlaZJYtEePMcgtJWUwdsR48IUyi2mcRtyr0hLG8NNNj5bnYUzhBU4yufZm
- 6UWPD3UleGLT/hXDY5cjQ2alY+NEhVCWZOf+c10fbZEdTwzLe/pyvJRop8n0QayqW1Wz
- gtMpLqU4sNdU9SwHAX/PN1d+b1f8NYMPt3+ykIESJhn6nHDyZafvknUav5Fzzt3B83mM
- W2oQ==
-X-Gm-Message-State: AOJu0YxP6DxTzSrd70Y9suHHxPt11E9T5NLT52Hn6IiXGH27EnMRhcym
- pZosASWoiNmN/MXFc127JQ0ba74s7f4EjUxcsQBCjXDa5MJpTOb09yqh6BWAyfjxnJKk4mvrfzx
- fpR74bSK0O4ajAWPk+zFBd8o9ifE+BfYLqUuSeZZrIQgUAUaSkhD4S3FxTCOY7ZITYaO31bxxBo
- M7Inr1rL3t+ciBPFAWyvqhRugonSzmOJg=
-X-Gm-Gg: ATEYQzyzE3phJIjk8DfqmPSclGogq/S41csm5XoghYn1SsTFhZ1gv+aZ4aR4NvZrv7+
- 0euQoYhfHEoAoR0YHOm6O0wQE6GEsvBYajqj5rYdCzK4ykFkagP79/lr8vPFrV6IknvLtnOpH5e
- +NatvKwbsPpd9uvJhxGRKvyuxxRQzNdwb368YnfWUWSgOOG9ZOsaShpIhgWp3WVTZPA8kYzWYvW
- 0b56+mzAFODS3LF2sAr+kgtcT/4a85o6ylcI2fLhobiY5xc7uvzk9wg46cX7wpEgqHyPevq
-X-Received: by 2002:a05:6214:cab:b0:89a:45c:bb65 with SMTP id
- 6a1803df08f44-89c773e1b57mr105258806d6.12.1774007234659; 
- Fri, 20 Mar 2026 04:47:14 -0700 (PDT)
-X-Received: by 2002:a05:6214:cab:b0:89a:45c:bb65 with SMTP id
- 6a1803df08f44-89c773e1b57mr105258426d6.12.1774007234193; Fri, 20 Mar 2026
- 04:47:14 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774007376; x=1774612176;
+ h=cc:to:subject:message-id:date:from:in-reply-to:references
+ :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=fb9ytM/y0hoRFfJW+Syp8kwkmbhECMVJMFv4RYlul6U=;
+ b=dDU/kWIGiXp5X+EGkYruUhr4DzA8OhM+dl1hDnXrBNByIl60j1Df0wRLiipvH8af+p
+ aD2gZ6+jr5Qvw4dvWXr6Xy1v3m+xFssqgyO29tH60RQu87vhZcQNN0NkbZlfM6Kq2d+p
+ akBvO23eY9+9wz8CcRaAGOZBhPBuK0OLfVdWhO10VOOGBV07D+9E7XAOW7AWuhT95C0H
+ 207xQ8UqVQdOJHVZIQybSxvqnlWA8n51YDmByH/E8vrY95HhiJPa96OdiuTsvuC1JXdU
+ 5884S3hp3JCdPF0MXtlZJsJxMNZhHp9EBMPA/+mr3d1rKcwQcYKe9jAIp0FTPb+tAeNw
+ iVnw==
+X-Gm-Message-State: AOJu0YxtofMReJbpb0AVLCBbZIdHIi0SMKH0Bx4cBmmmMbEmQlmg7VSo
+ LtvUQ65us21yhxF/Ak0pfmdawdO/T3YvVK+dK7U1WafxQq8ls2BHBY9heUitUuptt/N4JEObY5B
+ f0FyX6L51fW8mdzNWG/vlBNtODoXAz0A36ghZQLUWqlUfXABFf1Xb
+X-Gm-Gg: ATEYQzz7koUPcvbXy4enx+i0UoBaKJ48rfAcPAGFP1vwUpFDrp7pg9rM1THFuakQkim
+ 2ve/l+58Dmd6bSPcvTLiDTG8uBq+NE89ik6lxpdQeAhgzKnTkES85Y9/43zMf3TvesgMYI56fcu
+ g+dKDsCXx3APQjOGJg7XlBimwoIiy+jLhXmeyLBNVdvwrVNFJdlLwD2Ouf930fBgBGlmhqHGVcF
+ PhTarsK9Ngu6xWqVyh82rFlr4ttJamva6t2NE2FqLJeTv6tuSBjRhorvhBDIPser/ufiT2IlUjh
+ 4XWZLkhBDh++q8vgaI3+GpOWNW9AW/sAEWhLDr9InyGkj/Xo5TmRvCiQKdmX7M9itMo=
+X-Received: by 2002:a05:690e:74e:b0:64c:f1d7:6356 with SMTP id
+ 956f58d0204a3-64eaa7a4653mr2199907d50.42.1774007375783; Fri, 20 Mar 2026
+ 04:49:35 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260320104953.67351-1-souravpoddar93042@gmail.com>
-In-Reply-To: <20260320104953.67351-1-souravpoddar93042@gmail.com>
-From: Ani Sinha <anisinha@redhat.com>
-Date: Fri, 20 Mar 2026 17:17:03 +0530
-X-Gm-Features: AaiRm516rjfW6TpBEGlo7HKKPLUSIdVQ4EXj_NPhVKnQoy5xd0GRQ3gfM-7km2s
-Message-ID: <CAK3XEhMg317QPAE+wJswyr0hvJ4kKKm7cXUh8MM8StXPguZNbw@mail.gmail.com>
-Subject: Re: [PATCH] hw/hyperv: fix SynIC not initialized for CPUs after the
- first
-To: Sourav Poddar <souravpoddar93042@gmail.com>
-Cc: qemu-devel@nongnu.org, pbonzini@redhat.com
+References: <20260319211239.7902-1-deller@kernel.org>
+In-Reply-To: <20260319211239.7902-1-deller@kernel.org>
+From: Peter Maydell <peter.maydell@linaro.org>
+Date: Fri, 20 Mar 2026 11:49:23 +0000
+X-Gm-Features: AaiRm52uJb_OXiXe89oiSO3VfmpseeBVt24AQzmrrxdkVCV6vxcY22QqxAHcEug
+Message-ID: <CAFEAcA-LZvEHt0d9BzeVcVhBfQh9v3iQQ6MOD3NpEc_XX0S9RA@mail.gmail.com>
+Subject: Re: [PULL 0/6] Hppa fixes for v11 patches
+To: Helge Deller <deller@kernel.org>
+Cc: qemu-devel@nongnu.org,
+ =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
+ Helge Deller <deller@gmx.de>, Richard Henderson <richard.henderson@linaro.org>,
+ Anton Johansson <anjo@rev.ng>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=170.10.133.124; envelope-from=anisinha@redhat.com;
- helo=us-smtp-delivery-124.mimecast.com
-X-Spam_score_int: -3
-X-Spam_score: -0.4
-X-Spam_bar: /
-X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
- DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
- RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
- SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b134;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb134.google.com
+X-Spam_score_int: -20
+X-Spam_score: -2.1
+X-Spam_bar: --
+X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
+ SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -136,77 +116,39 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, Mar 20, 2026 at 4:20=E2=80=AFPM Sourav Poddar
-<souravpoddar93042@gmail.com> wrote:
+On Thu, 19 Mar 2026 at 21:14, Helge Deller <deller@kernel.org> wrote:
 >
-> hyperv_is_synic_enabled() is a global flag that returns true after the
-> first CPU initializes SynIC. With -smp N, all subsequent CPUs skip
-> hyperv_x86_synic_add(), leaving them without a synic object. This causes
-> get_synic() to return NULL, making hyperv_sint_route_new() fail and
-> triggering an assertion crash in hyperv_testdev.
+> From: Helge Deller <deller@gmx.de>
 >
-> Fix by introducing hyperv_is_synic_present() which checks per-CPU
-> whether a synic object is already attached instead of using the global
-> flag.
+> The following changes since commit 559919ce54927d59b215a4665eda7ab6118a48aa:
+>
+>   Merge tag 'pull-trivial-patches' of https://gitlab.com/mjt0k/qemu into staging (2026-03-16 13:07:33 +0000)
+>
+> are available in the Git repository at:
+>
+>   https://github.com/hdeller/qemu-hppa.git tags/hppa-fixes-for-v11-pull-request
+>
+> for you to fetch changes up to fa2d5d84e023d79d1ad35b952c0f9a3aa8f442e9:
+>
+>   target/hppa: Update SeaBIOS-hppa to version 23 (2026-03-19 22:06:49 +0100)
+>
+> ----------------------------------------------------------------
+> HPPA fixes for v11
+>
+> Some late fixes for QEMU-v11
+>
+> Various fixes in SeaBIOS-hppa and qemu code, most importantly
+> this fixes boot of the C3700, which broke while we added
+> support for CPUs with 40 and 44 bits physical address space.
+>
+> ----------------------------------------------------------------
 
-You may want to rebase this on top of
-fhttps://mail.gnu.org/archive/html/qemu-devel/2026-03/msg05998.html
-and then fix hyperv_enable_synic()
 
->
-> Fixes: c4cf32fc63f1 ("kvm/hyperv: add synic feature to CPU only if its no=
-t enabled")
-> Reported-by: Xudong Hao
-> Signed-off-by: Sourav Poddar <souravpoddar93042@gmail.com>
-> ---
->  hw/hyperv/hyperv.c         | 5 +++++
->  include/hw/hyperv/hyperv.h | 1 +
->  target/i386/kvm/kvm.c      | 2 +-
->  3 files changed, 7 insertions(+), 1 deletion(-)
->
-> diff --git a/hw/hyperv/hyperv.c b/hw/hyperv/hyperv.c
-> index 27e323a819..ff53cbc699 100644
-> --- a/hw/hyperv/hyperv.c
-> +++ b/hw/hyperv/hyperv.c
-> @@ -60,6 +60,11 @@ static SynICState *get_synic(CPUState *cs)
->      return SYNIC(object_resolve_path_component(OBJECT(cs), "synic"));
->  }
->
-> +bool hyperv_is_synic_present(CPUState *cs)
-> +{
-> +    return get_synic(cs) !=3D NULL;
-> +}
-> +
->  static void synic_update(SynICState *synic, bool sctl_enable,
->                           hwaddr msg_page_addr, hwaddr event_page_addr)
->  {
-> diff --git a/include/hw/hyperv/hyperv.h b/include/hw/hyperv/hyperv.h
-> index 63a8b65278..23091301d0 100644
-> --- a/include/hw/hyperv/hyperv.h
-> +++ b/include/hw/hyperv/hyperv.h
-> @@ -81,6 +81,7 @@ void hyperv_synic_reset(CPUState *cs);
->  void hyperv_synic_update(CPUState *cs, bool enable,
->                           hwaddr msg_page_addr, hwaddr event_page_addr);
->  bool hyperv_is_synic_enabled(void);
-> +bool hyperv_is_synic_present(CPUState *cs);
->
->  /*
->   * Process HVCALL_RESET_DEBUG_SESSION hypercall.
-> diff --git a/target/i386/kvm/kvm.c b/target/i386/kvm/kvm.c
-> index a29f757c16..f5faf32606 100644
-> --- a/target/i386/kvm/kvm.c
-> +++ b/target/i386/kvm/kvm.c
-> @@ -1754,7 +1754,7 @@ static int hyperv_init_vcpu(X86CPU *cpu)
->              return ret;
->          }
->
-> -        if (!hyperv_is_synic_enabled()) {
-> +        if (!hyperv_is_synic_present(CPU(cpu))) {
->              ret =3D hyperv_x86_synic_add(cpu);
->              if (ret < 0) {
->                  error_report("failed to create HyperV SynIC: %s",
-> --
-> 2.53.0
->
 
+Applied, thanks.
+
+Please update the changelog at https://wiki.qemu.org/ChangeLog/11.0
+for any user-visible changes.
+
+-- PMM
 
