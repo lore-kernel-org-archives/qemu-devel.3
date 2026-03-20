@@ -4,112 +4,107 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 328AD1099B36
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 18:58:15 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 23ACD1099B39
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 19:30:00 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3f2M-0006Pa-O3; Fri, 20 Mar 2026 14:57:34 -0400
+	id 1w3fX2-000253-3c; Fri, 20 Mar 2026 15:29:16 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w3f2H-0006OI-GY
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 14:57:30 -0400
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1w3fWx-00024h-Ry; Fri, 20 Mar 2026 15:29:11 -0400
 Received: from mx0b-001b2d01.pphosted.com ([148.163.158.5])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <stefanb@linux.ibm.com>)
- id 1w3f2F-0004KF-9X
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 14:57:28 -0400
-Received: from pps.filterd (m0360072.ppops.net [127.0.0.1])
+ (Exim 4.90_1) (envelope-from <mjrosato@linux.ibm.com>)
+ id 1w3fWw-0002ZQ-2R; Fri, 20 Mar 2026 15:29:11 -0400
+Received: from pps.filterd (m0353725.ppops.net [127.0.0.1])
  by mx0a-001b2d01.pphosted.com (8.18.1.11/8.18.1.11) with ESMTP id
- 62KFdlM2802935; Fri, 20 Mar 2026 18:57:11 GMT
+ 62KELta13291959; Fri, 20 Mar 2026 19:28:03 GMT
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ibm.com; h=cc
  :content-transfer-encoding:content-type:date:from:in-reply-to
- :message-id:mime-version:references:subject:to; s=pp1; bh=gulHEL
- TUzXbdqf9FXTe0M64TBQLWFGNqZYU+FGo8mCQ=; b=GqIQ9aY/heOjnk0XRGPq5A
- bbtIDxKW/4JtPRhzIlQT3Sno7eG+0KajfRYe2s+1ZqTXN6f5Qd2vY9pUlOVHQW1E
- RJZZm68VMG8TzcZFFBR7rkZhX4eG8WpY+HhOSXuaICvojp2MVrSPXlQt9q55T+hL
- 0AxXEVYOkAjaRIn0xnMMDI07fcTeaxfZXrfR5TLViqJyzq48rijlhk0HTISVg1c2
- Rdqo2MPey6zobzZxIUujMbkBzl6S2Gk7IRhzsPxa8KtauDu2aCTL3BMdczI1kgx0
- jmWn4KL54aMKcGPoKDVX5ZCjSnGkTpUqombbD6kRSl+RkvenMGEMpq7x7LEmkc6Q
+ :message-id:mime-version:references:subject:to; s=pp1; bh=sh0MSY
+ NoVOnrRs1HaBmB0O6aHOOBOH5CiHerbujjUTk=; b=AYbbMaCRV+bUzwQwvtcCV0
+ 9ocC20d+Sns8jKBFCyYuyRfzWemV6dRcTxzmB+B73X5+xTBzrRtgl1MlWA7GSaad
+ yRvimryidgPTuL9H6234/DJk9geu/54J/3vbzFJWgkCtfme/MJH5Qdbg2QA7Plm6
+ bvlTzwIWJItlDW+vxlRfrK8K8Thswg0kOe1XuI+V4KH8Zjr0CUbI0EiqtjCETWJP
+ xQYbzOEni8lHvl8tcVViTuHmu4yyY3Cx07Xrs8RHHRBli0PJ2MVZxZTTO64dbdFJ
+ ViydHMFmpXXF3qke0eSvNWsgdBMFVjILTVQuhQV8q0rf4E9/ApANUKfIvfIiVtMQ
  ==
-Received: from ppma11.dal12v.mail.ibm.com
- (db.9e.1632.ip4.static.sl-reverse.com [50.22.158.219])
- by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvyauv4mg-1
+Received: from ppma21.wdc07v.mail.ibm.com
+ (5b.69.3da9.ip4.static.sl-reverse.com [169.61.105.91])
+ by mx0a-001b2d01.pphosted.com (PPS) with ESMTPS id 4cvx3dc77d-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Mar 2026 18:57:10 +0000 (GMT)
-Received: from pps.filterd (ppma11.dal12v.mail.ibm.com [127.0.0.1])
- by ppma11.dal12v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62KHQFei028510;
- Fri, 20 Mar 2026 18:57:09 GMT
-Received: from smtprelay06.dal12v.mail.ibm.com ([172.16.1.8])
- by ppma11.dal12v.mail.ibm.com (PPS) with ESMTPS id 4cwmq1raqd-1
+ Fri, 20 Mar 2026 19:28:03 +0000 (GMT)
+Received: from pps.filterd (ppma21.wdc07v.mail.ibm.com [127.0.0.1])
+ by ppma21.wdc07v.mail.ibm.com (8.18.1.2/8.18.1.2) with ESMTP id 62KHEx1w015644;
+ Fri, 20 Mar 2026 19:28:03 GMT
+Received: from smtprelay02.wdc07v.mail.ibm.com ([172.16.1.69])
+ by ppma21.wdc07v.mail.ibm.com (PPS) with ESMTPS id 4cwk0nrnm0-1
  (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
- Fri, 20 Mar 2026 18:57:09 +0000
-Received: from smtpav05.dal12v.mail.ibm.com (smtpav05.dal12v.mail.ibm.com
- [10.241.53.104])
- by smtprelay06.dal12v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
- 62KIv8LD33817108
+ Fri, 20 Mar 2026 19:28:03 +0000
+Received: from smtpav02.dal12v.mail.ibm.com (smtpav02.dal12v.mail.ibm.com
+ [10.241.53.101])
+ by smtprelay02.wdc07v.mail.ibm.com (8.14.9/8.14.9/NCO v10.0) with ESMTP id
+ 62KJS18m30474986
  (version=TLSv1/SSLv3 cipher=DHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
- Fri, 20 Mar 2026 18:57:09 GMT
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id D9EAE58052;
- Fri, 20 Mar 2026 18:57:08 +0000 (GMT)
-Received: from smtpav05.dal12v.mail.ibm.com (unknown [127.0.0.1])
- by IMSVA (Postfix) with ESMTP id 3645558056;
- Fri, 20 Mar 2026 18:57:08 +0000 (GMT)
-Received: from [9.47.158.152] (unknown [9.47.158.152])
- by smtpav05.dal12v.mail.ibm.com (Postfix) with ESMTP;
- Fri, 20 Mar 2026 18:57:08 +0000 (GMT)
-Message-ID: <1334de4e-710c-4daf-aefd-3eee855aa35b@linux.ibm.com>
-Date: Fri, 20 Mar 2026 14:57:07 -0400
+ Fri, 20 Mar 2026 19:28:01 GMT
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id 884B85805C;
+ Fri, 20 Mar 2026 19:28:01 +0000 (GMT)
+Received: from smtpav02.dal12v.mail.ibm.com (unknown [127.0.0.1])
+ by IMSVA (Postfix) with ESMTP id BC29B5805F;
+ Fri, 20 Mar 2026 19:28:00 +0000 (GMT)
+Received: from [9.61.145.197] (unknown [9.61.145.197])
+ by smtpav02.dal12v.mail.ibm.com (Postfix) with ESMTP;
+ Fri, 20 Mar 2026 19:28:00 +0000 (GMT)
+Message-ID: <f0965bf8-b736-4e53-b809-374945f0f48e@linux.ibm.com>
+Date: Fri, 20 Mar 2026 15:28:00 -0400
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [RFC v2 7/7] hw/tpm: Increase TPM TIS max buffer size to 8192
-To: Arun Menon <armenon@redhat.com>, qemu-devel@nongnu.org
-Cc: Ani Sinha <anisinha@redhat.com>,
- Marcel Apfelbaum <marcel.apfelbaum@gmail.com>,
- Laurent Vivier <lvivier@redhat.com>, Zhao Liu <zhao1.liu@intel.com>,
- "Michael S. Tsirkin" <mst@redhat.com>,
- Stefan Berger <stefanb@linux.vnet.ibm.com>,
- marcandre.lureau@redhat.com, Fabiano Rosas <farosas@suse.de>,
- Paolo Bonzini <pbonzini@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
- =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
- Yanan Wang <wangyanan55@huawei.com>
-References: <20260319135316.37412-1-armenon@redhat.com>
- <20260319135316.37412-8-armenon@redhat.com>
+Subject: Re: [PATCH 0/5] target/s390x: Forbid to use legacy ldst_phys() API
+To: =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ qemu-devel@nongnu.org
+Cc: Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Ilya Leoshkevich <iii@linux.ibm.com>, Anton Johansson <anjo@rev.ng>,
+ Eric Farman <farman@linux.ibm.com>,
+ Christian Borntraeger <borntraeger@linux.ibm.com>,
+ Richard Henderson <richard.henderson@linaro.org>,
+ Halil Pasic <pasic@linux.ibm.com>, qemu-s390x@nongnu.org,
+ David Hildenbrand <david@kernel.org>, Cornelia Huck <cohuck@redhat.com>
+References: <20260319185203.11799-1-philmd@linaro.org>
 Content-Language: en-US
-From: Stefan Berger <stefanb@linux.ibm.com>
-In-Reply-To: <20260319135316.37412-8-armenon@redhat.com>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+From: Matthew Rosato <mjrosato@linux.ibm.com>
+In-Reply-To: <20260319185203.11799-1-philmd@linaro.org>
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 X-TM-AS-GCONF: 00
-X-Proofpoint-Reinject: loops=2 maxloops=12
-X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDE1MiBTYWx0ZWRfX3ivsYTsu7kZf
- ZHRG9QNYqvpH80eemLcPLtJ5rfalz17VBwM9xMxou3xyyv9nalUcvU0SYqwW2VqPm9dB+i7z3YX
- YkHmHFTZJzM8mckLM0bnC088yUsUtAA+y2Uor39F5SwccfLsIvt7iJIrPAlqgBuIdaOpiBm2+Dr
- NVTAoVmXmsFMNuVSdfiBuD5ExaGoGKvRWEeEQPk6+1c1f9TTHFOnHRAqf3YTfrW4jgqHfRaPJba
- ZnokbbTDCD9xMOokgtT25vdV7pv5pMLgqLONoxVzalha3vyEhs3UkFTEZBWe4hbGOqS1YWvrH/v
- inVolZMNs7W2HwDwmtXvLch7kDK8NQZl92fqMpPe79LOQL78OSO3qlh6tLNOMNvG8BmNel+Wt+A
- 3mFUzSWIhxAR0bEAsYU3ywOJZ2WxmkjVO64994ToaGQl81vw5Y4cZ9wqFZz1Itv+dHdk9/eoAr3
- rXQ9EV7RPP+o59+YqTA==
-X-Authority-Analysis: v=2.4 cv=GIQF0+NK c=1 sm=1 tr=0 ts=69bd9886 cx=c_pps
- a=aDMHemPKRhS1OARIsFnwRA==:117 a=aDMHemPKRhS1OARIsFnwRA==:17
+X-Authority-Analysis: v=2.4 cv=arO/yCZV c=1 sm=1 tr=0 ts=69bd9fc3 cx=c_pps
+ a=GFwsV6G8L6GxiO2Y/PsHdQ==:117 a=GFwsV6G8L6GxiO2Y/PsHdQ==:17
  a=IkcTkHD0fZMA:10 a=Yq5XynenixoA:10 a=VkNPw1HP01LnGYTKEx00:22
- a=RnoormkPH1_aCDwRdu11:22 a=RzCfie-kr_QcCd8fBx8p:22 a=xt6ew7UTAAAA:8
- a=20KFwNOVAAAA:8 a=15fvszgA47yWHM4l5EcA:9 a=QEXdDO2ut3YA:10
- a=tn93DeGZTgJ6DdWMtdD4:22
-X-Proofpoint-ORIG-GUID: oIZ2ytosk7kbrndMt4Vw_PGjpK1bHZf5
-X-Proofpoint-GUID: Lte4NvXAfoUgjA0jO8F4SrewxnNVFHvJ
+ a=RnoormkPH1_aCDwRdu11:22 a=V8glGbnc2Ofi9Qvn3v5h:22 a=VnNF1IyMAAAA:8
+ a=YtseRGV3vcOpFp3jGzIA:9 a=3ZKOabzyN94A:10 a=QEXdDO2ut3YA:10
+X-Proofpoint-Spam-Details-Enc: AW1haW4tMjYwMzIwMDE1NiBTYWx0ZWRfX58ypproNrh+u
+ lvMu69SEUYMZxsWLYEaPYBzEWdWlK6dalZQqtnhj4jHa3uhA1EGN9pi7kvsaUeGJVdwPL/vhsgC
+ EaxRpP6QmOEdTwzMmRqRl1ZdJXq0l1/1xAPrYaLdCguuYf0TUmqb92L9pTxlonKIuigqKmKnwY/
+ GH3IErxecijENmbyxhLq0Dv+5nKvgZNmp5HP2Gxm9+fPzfS4Z8KygqYaCnh4fsUuLMhsQ2KEcjN
+ Fv5xyg9LXXXdql73IAP74s0uIMyJrkt2YOgfm5Ke+pm64wuui7Q6jHb8fy+D7irIGxRofvxj98p
+ JFrvMqY1umBOCVvuQOV0iodeEmcb7/AniPlqMvzXUdOKSYP6Ga5/zYGS276oXWGe1CqWSZS3Fr4
+ cUxp3BXckLpa1okDrmJhfYxGKmaFp+SVqi43QyyZDZqv3k9QqU86WCJIHDEXLzRc72BCcHMvpof
+ 5MKz0PCx9+dqhjhto1A==
+X-Proofpoint-GUID: NrCHlsGSKbzKFdGYRhYMIMpP73P3ekhm
+X-Proofpoint-ORIG-GUID: NrCHlsGSKbzKFdGYRhYMIMpP73P3ekhm
 X-Proofpoint-Virus-Version: vendor=baseguard
  engine=ICAP:2.0.293,Aquarius:18.0.1143,Hydra:6.1.51,FMLib:17.12.100.49
  definitions=2026-03-20_03,2026-03-20_02,2025-10-01_01
 X-Proofpoint-Spam-Details: rule=outbound_notspam policy=outbound score=0
- spamscore=0 priorityscore=1501 bulkscore=0 lowpriorityscore=0 malwarescore=0
- phishscore=0 impostorscore=0 suspectscore=0 adultscore=0 clxscore=1011
- classifier=typeunknown authscore=0 authtc= authcc= route=outbound adjust=0
- reason=mlx scancount=1 engine=8.22.0-2603050001 definitions=main-2603200152
-Received-SPF: pass client-ip=148.163.158.5; envelope-from=stefanb@linux.ibm.com;
- helo=mx0b-001b2d01.pphosted.com
+ priorityscore=1501 spamscore=0 lowpriorityscore=0 impostorscore=0
+ adultscore=0 bulkscore=0 suspectscore=0 malwarescore=0 clxscore=1011
+ phishscore=0 classifier=typeunknown authscore=0 authtc= authcc=
+ route=outbound adjust=0 reason=mlx scancount=1 engine=8.22.0-2603050001
+ definitions=main-2603200156
+Received-SPF: pass client-ip=148.163.158.5;
+ envelope-from=mjrosato@linux.ibm.com; helo=mx0b-001b2d01.pphosted.com
 X-Spam_score_int: -9
 X-Spam_score: -1.0
 X-Spam_bar: -
@@ -133,56 +128,31 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-On 3/19/26 9:53 AM, Arun Menon wrote:
-> - Double the size from 4096 to 8192 so that we can have bigger buffer
->    enabling support for PQC algorithms in the TPM TIS interface.
-> - v185 of TCG TPM rolls out PQC algorithm support. [1]
+On 3/19/26 2:51 PM, Philippe Mathieu-Daudé wrote:
+> Replace legacy ld/st_phys() by address_space_ld/st()
+> then lock the target again further legacy API uses.
 > 
-> [1] section 46 https://members.trustedcomputinggroup.org/wg/TCG/document/previewpdf/45151
+> Philippe Mathieu-Daudé (5):
+>   target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (cpu)
+>   target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (mmu)
+>   target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (tcg)
+>   target/s390x: Replace legacy ld/st_phys -> address_space_ld/st (kvm)
+>   configs/targets: Restrict the legacy ldst_phys() API on s390x target
+
+For the series:
+
+Reviewed-by: Matthew Rosato <mjrosato@linux.ibm.com>
+
+For good measure I also ran some s390x kvm regression tests, took a less comprehensive spin with a tcg s390x guest (on s390 host), and forced a few of these codepaths as a sanity check.
+
 > 
-> Signed-off-by: Arun Menon <armenon@redhat.com>
-> ---
->   hw/tpm/tpm_tis.h | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
+>  configs/targets/s390x-softmmu.mak |  1 +
+>  target/s390x/cpu-system.c         |  2 +-
+>  target/s390x/kvm/kvm.c            | 12 ++++++++----
+>  target/s390x/mmu_helper.c         |  5 +++--
+>  target/s390x/tcg/excp_helper.c    | 21 +++++++++++++--------
+>  target/s390x/tcg/mem_helper.c     | 12 +++++++-----
+>  6 files changed, 33 insertions(+), 20 deletions(-)
 > 
-> diff --git a/hw/tpm/tpm_tis.h b/hw/tpm/tpm_tis.h
-> index 184632ff66..0df35d5a54 100644
-> --- a/hw/tpm/tpm_tis.h
-> +++ b/hw/tpm/tpm_tis.h
-> @@ -33,7 +33,7 @@
->   
->   #define TPM_TIS_IS_VALID_LOCTY(x)   ((x) < TPM_TIS_NUM_LOCALITIES)
->   
-> -#define TPM_TIS_BUFFER_MAX          4096
-> +#define TPM_TIS_BUFFER_MAX          8192
-
-Unfortunately TIS uses a fixed-size buffer that would now become bigger:
-
-typedef struct TPMState {
-     MemoryRegion mmio;
-
-     unsigned char buffer[TPM_TIS_BUFFER_MAX];  <-- now 8192; before 4096
-
-
-static const VMStateDescription vmstate_tpm_tis_isa = {
-     .name = "tpm-tis",
-     .version_id = 0,
-     .pre_save  = tpm_tis_pre_save_isa,
-     .fields = (const VMStateField[]) {
-         VMSTATE_BUFFER(state.buffer, TPMStateISA),    <-- now 8192; 
-before 4096
-         VMSTATE_UINT16(state.rw_offset, TPMStateISA),
-
-Problem would be if an older version of the TIS (with size 4096) then 
-receives this 8192 buffer, we would (probably) get a buffer overflow.
-
-
-
->   
->   typedef enum {
->       TPM_TIS_STATE_IDLE = 0,
-
 
 
