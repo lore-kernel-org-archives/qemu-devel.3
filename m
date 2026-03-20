@@ -4,42 +4,42 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 09EF41091914
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:32:20 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id BBC6D109193D
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:37:45 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3WCy-0006d3-N7; Fri, 20 Mar 2026 05:31:57 -0400
+	id 1w3WI8-0007Ti-9V; Fri, 20 Mar 2026 05:37:17 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w3WCw-0006cl-3z; Fri, 20 Mar 2026 05:31:54 -0400
+ id 1w3WHx-0007Rz-0e
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:37:06 -0400
 Received: from frasgout.his.huawei.com ([185.176.79.56])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <jonathan.cameron@huawei.com>)
- id 1w3WCs-0007Oz-Fn; Fri, 20 Mar 2026 05:31:53 -0400
-Received: from mail.maildlp.com (unknown [172.18.224.107])
- by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fcckw6nYHzHnH8T;
- Fri, 20 Mar 2026 17:31:20 +0800 (CST)
+ id 1w3WHv-0008F6-8c
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:37:04 -0400
+Received: from mail.maildlp.com (unknown [172.18.224.150])
+ by frasgout.his.huawei.com (SkyGuard) with ESMTPS id 4fccs0376DzHnGcX;
+ Fri, 20 Mar 2026 17:36:36 +0800 (CST)
 Received: from dubpeml500005.china.huawei.com (unknown [7.214.145.207])
- by mail.maildlp.com (Postfix) with ESMTPS id 2B7CF40584;
- Fri, 20 Mar 2026 17:31:46 +0800 (CST)
+ by mail.maildlp.com (Postfix) with ESMTPS id A32274056F;
+ Fri, 20 Mar 2026 17:37:01 +0800 (CST)
 Received: from localhost (10.203.177.15) by dubpeml500005.china.huawei.com
  (7.214.145.207) with Microsoft SMTP Server (version=TLS1_2,
  cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.1544.11; Fri, 20 Mar
- 2026 09:31:45 +0000
-Date: Fri, 20 Mar 2026 09:31:45 +0000
-To: Gustavo Romero <gustavo.romero@linaro.org>
-CC: <qemu-devel@nongnu.org>, <qemu-arm@nongnu.org>,
- <richard.henderson@linaro.org>, <alex.bennee@linaro.org>,
- <peter.maydell@linaro.org>
-Subject: Re: [RFC PATCH 5/7] hw/arm/virt: Add machine option 'mec'
-Message-ID: <20260320093145.000020e1@huawei.com>
-In-Reply-To: <c04a5077-e122-4784-91ad-259055c0f63b@linaro.org>
-References: <20260319022335.22523-1-gustavo.romero@linaro.org>
- <20260319022335.22523-6-gustavo.romero@linaro.org>
- <20260319094642.00007696@huawei.com>
- <c04a5077-e122-4784-91ad-259055c0f63b@linaro.org>
+ 2026 09:37:01 +0000
+Date: Fri, 20 Mar 2026 09:36:59 +0000
+To: Xianglai Li <lixianglai@loongson.cn>
+CC: <qemu-devel@nongnu.org>, Song Gao <gaosong@loongson.cn>, Bibo Mao
+ <maobibo@loongson.cn>, Jiaxun Yang <jiaxun.yang@flygoat.com>, Huacai Chen
+ <zltjiangshi@gmail.com>
+Subject: Re: [PATCH V3 1/2] hw/loongarch: add rtc acpi table
+Message-ID: <20260320093659.00006061@huawei.com>
+In-Reply-To: <c11b8bb41d36b5317171641f8f8bd4faab3ee101.1773911364.git.lixianglai@loongson.cn>
+References: <cover.1773911364.git.lixianglai@loongson.cn>
+ <c11b8bb41d36b5317171641f8f8bd4faab3ee101.1773911364.git.lixianglai@loongson.cn>
 X-Mailer: Claws Mail 4.3.0 (GTK 3.24.42; x86_64-w64-mingw32)
 MIME-Version: 1.0
 Content-Type: text/plain; charset="US-ASCII"
@@ -73,92 +73,71 @@ From:  Jonathan Cameron via qemu development <qemu-devel@nongnu.org>
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, 19 Mar 2026 14:27:57 -0300
-Gustavo Romero <gustavo.romero@linaro.org> wrote:
+On Fri, 20 Mar 2026 08:36:52 +0800
+Xianglai Li <lixianglai@loongson.cn> wrote:
 
-> Hi Jonathan,
+> Add the acpi table to the loongson rtc hardware so that the virtual machine
+> kernel can use the loongson RTC-related drivers.
 > 
-> On 3/19/26 06:46, Jonathan Cameron wrote:
-> > On Wed, 18 Mar 2026 23:23:33 -0300
-> > Gustavo Romero <gustavo.romero@linaro.org> wrote:
-> >   
-> >> Add new machine option 'mec' that enables and sets the memory used by
-> >> FEAT_MEC.
-> >>
-> >> Signed-off-by: Gustavo Romero <gustavo.romero@linaro.org>  
-> > 
-> > Drive by comments only. I'm curious enough to read the patches
-> > but no idea if this is how people would like to see this implemented!  
-> 
-> Thanks for taking a look at it and for you comments.
-> 
-> In which sense do you mean exactly? Do mind to elaborate a bit more on 
-> it? If it's about the whole implementation, would it be about not
-> really encrypting data or something else? Please help me to understand it :)
-> 
-> I'm not sure if you're talking about just this patch or the whole 
-> FEAT_MEC design.
+> Signed-off-by: Xianglai Li <lixianglai@loongson.cn>
 
-I was failing to express that this is fine for me but out of my area of expertise
-wrt to QEMU so would leave the questions of 'is this the best way to do it?'
-for others!
+Hi
 
+No data updates for
+
+tests/dta/acpi/loongarch64/virt?
+
+> ---
+> Cc: Song Gao <gaosong@loongson.cn> 
+> Cc: Bibo Mao <maobibo@loongson.cn> 
+> Cc: Jiaxun Yang <jiaxun.yang@flygoat.com> 
+> Cc: Huacai Chen <zltjiangshi@gmail.com>
 > 
+>  hw/loongarch/virt-acpi-build.c | 25 +++++++++++++++++++++++++
+>  1 file changed, 25 insertions(+)
 > 
-> Cheers,
-> Gustavo
-> 
-> > Jonathan
-> >   
-> >>   static void create_secure_ram(VirtMachineState *vms,
-> >>                                 MemoryRegion *secure_sysmem,
-> >>                                 MemoryRegion *secure_tag_sysmem)
-> >> @@ -2267,6 +2288,8 @@ static void machvirt_init(MachineState *machine)
-> >>       MemoryRegion *secure_sysmem = NULL;
-> >>       MemoryRegion *tag_sysmem = NULL;
-> >>       MemoryRegion *secure_tag_sysmem = NULL;
-> >> +    MemoryRegion *pseudo_encrypted_page = NULL;
-> >> +    MemoryRegion *tuple_memory = NULL;
-> >>       int n, virt_max_cpus;
-> >>       bool firmware_loaded;
-> >>       bool aarch64 = true;
-> >> @@ -2495,6 +2518,28 @@ static void machvirt_init(MachineState *machine)
-> >>               }
-> >>           }
-> >>   
-> >> +        if (vms->mec) {
-> >> +            if (tcg_enabled()) {
-> >> +                if (tuple_memory == NULL) {
-> >> +                    /* XXX(gromero): Add object_property_find(cpuobj, "tuple-memory", ...) here. */
-> >> +
-> >> +                    tuple_memory = g_new(MemoryRegion, 1);
-> >> +                    memory_region_init(tuple_memory, OBJECT(machine), "mec", UINT64_MAX / 32);
-> >> +
-> >> +                    pseudo_encrypted_page = g_new(MemoryRegion, 1);
-> >> +                    memory_region_init(pseudo_encrypted_page, OBJECT(machine), "mec-page", 4 * 1024 /* 4 KiB */);
-> >> +                }
-> >> +
-> >> +                object_property_set_link(cpuobj, "mec",  OBJECT(tuple_memory), &error_abort);
-> >> +                object_property_set_link(cpuobj, "mec-page",  OBJECT(pseudo_encrypted_page), &error_abort);  
-> > Trivial but some bonus spaces.
-> >   
-> >> +
-> >> +                } else {  
-> > 
-> > Indent seems off.
-> >   
-> >> +                    /* Check for other accels here. */
-> >> +                    error_report("MEC requested, but not supported");
-> >> +                    exit(1);
-> >> +                }
-> >> +        }
-> >> +
-> >>           qdev_realize(DEVICE(cpuobj), NULL, &error_fatal);
-> >>           object_unref(cpuobj);
-> >>       }  
-> > 
-> >   
-> 
-> 
+> diff --git a/hw/loongarch/virt-acpi-build.c b/hw/loongarch/virt-acpi-build.c
+> index 3e34bedcd6..42820001d7 100644
+> --- a/hw/loongarch/virt-acpi-build.c
+> +++ b/hw/loongarch/virt-acpi-build.c
+> @@ -460,6 +460,30 @@ static void acpi_dsdt_add_tpm(Aml *scope, LoongArchVirtMachineState *vms)
+>  }
+>  #endif
+>  
+> +static void acpi_dsdt_add_rtc(Aml *scope)
+> +{
+> +    Aml *dev = aml_device("RTC");
+> +
+> +    aml_append(dev, aml_name_decl("_HID", aml_string("LOON0001")));
+> +    aml_append(dev, aml_name_decl("_UID", aml_int(0)));
+> +
+> +    Aml *crs = aml_resource_template();
+> +    aml_append(crs,
+> +        aml_qword_memory(AML_POS_DECODE, AML_MIN_FIXED, AML_MAX_FIXED,
+> +                         AML_NON_CACHEABLE, AML_READ_WRITE,
+> +                         0, VIRT_RTC_REG_BASE,
+> +                         VIRT_RTC_REG_BASE + VIRT_RTC_LEN - 1,
+> +                         0, VIRT_RTC_LEN));
+> +    /*
+> +     * The virtual machine model does not support suspend and wake-up,
+> +     * and rtc is no longer the wake-up source. Therefore, the current
+> +     * rtc table no longer provides the rtc alarm interrupt number to
+> +     * avoid the software initializing alarm.
+> +     */
+> +    aml_append(dev, aml_name_decl("_CRS", crs));
+> +    aml_append(scope, dev);
+> +}
+> +
+>  /* build DSDT */
+>  static void
+>  build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+> @@ -475,6 +499,7 @@ build_dsdt(GArray *table_data, BIOSLinker *linker, MachineState *machine)
+>      for (i = 0; i < VIRT_UART_COUNT; i++) {
+>          build_uart_device_aml(dsdt, i);
+>      }
+> +    acpi_dsdt_add_rtc(dsdt);
+>      build_pci_device_aml(dsdt, lvms);
+>      build_la_ged_aml(dsdt, machine);
+>      build_flash_aml(dsdt, lvms);
 
 
