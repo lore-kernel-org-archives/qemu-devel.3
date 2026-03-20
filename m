@@ -4,95 +4,97 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7C9B0108B8F1
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 10:58:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 7212B108B8EE
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 11:03:27 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3XY7-0004aw-7w; Fri, 20 Mar 2026 06:57:51 -0400
+	id 1w3Xd2-0005Zi-5z; Fri, 20 Mar 2026 07:02:57 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3XY1-0004al-Ta
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 06:57:47 -0400
-Received: from mail-yx1-xb135.google.com ([2607:f8b0:4864:20::b135])
+ id 1w3Xcp-0005YN-A1
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 07:02:45 -0400
+Received: from mail-yx1-xb130.google.com ([2607:f8b0:4864:20::b130])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
  (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3XXz-0000ZM-6t
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 06:57:44 -0400
-Received: by mail-yx1-xb135.google.com with SMTP id
- 956f58d0204a3-64ae222d978so2113778d50.1
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 03:57:42 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774004262; cv=none;
+ id 1w3Xcn-0001r2-Cz
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 07:02:43 -0400
+Received: by mail-yx1-xb130.google.com with SMTP id
+ 956f58d0204a3-64ca6595c8aso401404d50.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 04:02:40 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1774004560; cv=none;
  d=google.com; s=arc-20240605;
- b=Nl2rCfZV3kLp25TGX12+k0iH+O0RJ6dPlSNvEO65rji2+H/gunTZlvffeg+0Rmg9F5
- 2Ghg7O9LfSFbS/NxjfmvP33nE+1ie+ag2vaZD6Corakg3qkvbkXlikmgb32iAel9lYVG
- twKn6BQznCMpkTCaXkDmU1QDHZlSGrq1sZ0uo6oEPNfoFV+GfmLQ6h4Z63QWmatbCBmj
- 2+LS6+Bhq0kBUn6sQybSey1IcFOOZBREu2zvSRXK2m/Jk37+ma2Rf6y1dHUWHxkS/5Cz
- tsuv69xKALveXUAp5u+00aIMM3VUTRN6ZdYC7ZGRvoq/SIHk5jIm29ZR6XW/lJLDd+xx
- gGQw==
+ b=jrYZTc+ANUrqSevdoZkbvp795eT+iVhNJ8QzmcFvhFl3GEcPir2F3JnY1pQY0mRuSW
+ dbc89Bnkp2WwRO2d+gbPvcUDnYnkryxhd+i4EIBkkC02MvkXOmDhe0ONvmaiuXO6LeXP
+ 0/+PTs+eApjEIsyZzv2mem42HXOwVAmBL5bt9mwSuZ52iNMDA+iFOhWf5wySnhqASAE4
+ DVOFte8wzM0IqniCvK6A4Sw0+ZHD+L9zDZIDEyQORVhkbiBPPNL95hcWnhIe+aapIvm1
+ 9cY7uCF6cowx1uYZ4dFRI0prXLS6CEjb3hrUaWqV1csrL6KtfY3JyObwjccRptIOVGi5
+ +3tg==
 ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
  s=arc-20240605; 
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:dkim-signature;
- bh=5NAeb+r0K9g62kSlsVSXkfafDvekb8iDMpL3/jTEgwg=;
- fh=wSwtMC/fXdDmr5GTT/JTfnBwPCKr9UxCbllAKlLTOsw=;
- b=TXHrDkL8qjvkmydmsHxIE/ROvUr7+xnmqqyMSqnl8rtxetTEoOYnxfD1WyM2VTHgyo
- ivUi5s53R5cXWWTbcRMDUe0C9/h9afuzl523huQJBuRcAduackpEyPE6tUPkkSK0uaE2
- VLnph6RhDePlEstqPGIapI1YouucwQnCz1hHFwkb7HTVsCYuaxaV02KZDozA4ZNoJUnT
- 8Og/KQrJbVq0DJfApdkEEttOlPzbmglM+P5nh2Q1BlrDjF4rwibLRBH0l6qGKXY3gexe
- vnJDL83IX2NIrAXjHly/P8F0ifVr61K5B/e7i6ak+364kMLPSpr0LzJKigBkC46g6pl7
- d0bg==; darn=nongnu.org
+ bh=aUiMsebAfyqqQUTXu1UsEugOT0lrKXEEhYz948DS5ws=;
+ fh=hHQwqgTY7ltwat616CldellfBTSzzr31raK2NubcdK0=;
+ b=dtetkoAoAGeFUyp4wTbMbLPjGG2eQCq8n1Qbx75qkItoPrXQ5jTI1DbyyRJx3HNfl3
+ ZgfVEvkEEK16q2cP+JgmIia0hPRAE6CZLXgE258dmCt95f4LrqdB6ftXvPMwDwWY/SCv
+ ML1wm59ptKdCZPBbvUo1cq+5mthLfJm8O2KHVHcGmIXpx28sBEFdlOlrLkwVpC2IkePI
+ y19BeXffMFYzJtLfMY/vzwHZ875U5Sb/UkGaDz4a72bymCGc1nhfH3x69wdszoTs/FId
+ hGXNecJ2ukDlwxZO32H/SDRKuMtpQ0dvUP0fkSTnVYSwDTQLHAeP5++empkR8ISxJz5z
+ +phQ==; darn=nongnu.org
 ARC-Authentication-Results: i=1; mx.google.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774004262; x=1774609062; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774004560; x=1774609360; darn=nongnu.org;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:from:to:cc:subject:date:message-id:reply-to;
- bh=5NAeb+r0K9g62kSlsVSXkfafDvekb8iDMpL3/jTEgwg=;
- b=Qk/BELUQlVpIhcS2PU1Bj+L6UoRn+rz6+KquScA57B+vvtr9GazBwY/ZWDDu2tcioW
- RtAkNhnqMfVQrlUnenl1MRlCwqTQF8uWE+Ni8ZZ3rT5Bv5eAXijYgBm+uW564wpFc3+D
- Anc8Ka3AZlKaMmJtefZF/3Zp2pZUf4u8R+QmsnQU9Qw/KG5k6HvecpJ2HCbISxsgEOfS
- yDN4CZEq1wFskfJua2FeDj+TxybyZb1Sf50sVv/KGyrQWmgmRzTqhdaG65IOE0CanpnZ
- C8ag4+Gbcrzkh/Nf3+CO4ZavMAkof8jsVakO5GyO6NPs2P8ZbJebHT2rMmC5FmG8NXsP
- QxKA==
+ bh=aUiMsebAfyqqQUTXu1UsEugOT0lrKXEEhYz948DS5ws=;
+ b=aSMyWL3xoWBR5HLy6Jf0bkGzevyNcBC/w9H8V6q/0T0CMuDL2H47BMp8/OebMA4Gdo
+ T//4+hC06hMAIIHUnsk7EnTduEEQxdMefx4ZPX9m+1bxrd71Ezgw8jsItnUYXvMiE/0m
+ WdvF5KRQBIiLZz+M6AiXx9kUCKNVTLGGQDJxphqiIdQrUCIffvg5s04WkwThnRROceT6
+ FBqdB1SGOM4cWaMl/xWbIiim4n7R/KFZs3f1/eg63tIAAJ6MpAjAKf3GrrB6RBmbuOUN
+ wS1CUTqLQiMX/Ob7poZ+bHSa9UcnNphGh71f83Co3fVlardv0dPSVTaB0ZQWPUKMygvM
+ bLCA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774004262; x=1774609062;
+ d=1e100.net; s=20251104; t=1774004560; x=1774609360;
  h=cc:to:subject:message-id:date:from:in-reply-to:references
  :mime-version:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
  :message-id:reply-to;
- bh=5NAeb+r0K9g62kSlsVSXkfafDvekb8iDMpL3/jTEgwg=;
- b=PnE2CNdC14iFtt9CO8ZrmopOQasfKK5AdbsZMy9AyuQzNLQmEtH9dY8S/4X4JRG4QC
- Cd/Udfa5eEN0NXNx/kHNAEKKx+4AbYVbJ06MXOtwZjG43C8EkxDcnaZ0tdGqOKxtq5DF
- UcebPtjhxhXssylLVNBn6i38jE4EdrouEYY/gxHR+NLf9RD8Wzj6Et0CzStnvtquoxpT
- NwsJBRS2y46lZQb9cz2CCDab2iaTbXZmNkqNNuepE/Hbk5ZwtUGzfFrMbja+L25NwChs
- iSrsMtWIaqJ38lq0vb/v86FV6nKNgxdTAiizDbMFQoJoa6vDboG0Sz4LxyCODRjVx/Lz
- 3SDA==
-X-Gm-Message-State: AOJu0Yz3E9S5zQi0EKJbLQVajtvnnJ1ErqOFfS7Qy/d2B+qxCLgaepL5
- bDSIOvMR5fOqc4lWLF3gwfvAqJet5yxEe9ApFKHLiDe2xES+1GO5ePTn5/q9S4KwkDHeikQ9oze
- mRCqvQmqTh+KVy3Kblcbh8gN6tK1aWWtIhbgvDhKUZJDlQzjb329o
-X-Gm-Gg: ATEYQzyKUW9rM+zLt1VEg3f2eQU9XPrx7ZGpoj+FLo02ThKJAucf/H2SHHjM1LhVh8s
- F8Iz5Rtc2Bez3TlBM1V3s4K2rjMDkMSuu7V8V94DFF1M2KosY6Ql3uDHFz4JEyAxGkOX/yXn+XD
- W1Ho8xJ9hz1axTqXw7zJNydBm/xXR1fpAC5Tz5dIpFAWutoiPO+pUjhi+wtrqyPb7cybeZi//xY
- tZxhX4ON8TBzLUYfcS729LsbJRZqKW/pbgV/iRBRamMxaVwB+FlbAJnrIPJ2lgkry+sOvSYO4Br
- vgxONFEwekoyqCkcVA38KdJ4SdHxY52zm1343xCD/pUX52QFh7N9RaQJi2RMpSbzgXg=
-X-Received: by 2002:a05:690e:688:b0:64e:adba:f419 with SMTP id
- 956f58d0204a3-64eadbb0af1mr812314d50.72.1774004261735; Fri, 20 Mar 2026
- 03:57:41 -0700 (PDT)
+ bh=aUiMsebAfyqqQUTXu1UsEugOT0lrKXEEhYz948DS5ws=;
+ b=LzI/BPrr+AbAOWYy0K5dzYyh16td4vRgBpj5Zug0EiXhQuZYysjEXVSqEC5UUq1Gu/
+ q8rAyRwSFUUANCpljyyRcLsu5UPXeRG9t3AUOH+aGSe/RijDLED0v0WFsrwQknvgmd/m
+ AFrUd3+7nPmXOFj3nYC1djKH2T6KBDUw9icJDi3X3mq8ZE7rJmtPLQQE4KawTel4XOoK
+ dQ3Se6v1NLQClHuAvDR5QM5y4xyifxYvLrvk+e0u0PydQCmRGcng6t1ZMYP+MOrVwG1r
+ MJlOW3DOJ2Zz6zpN+/fy5AYBKvmBsgExrlrMbLb/fmoJinCEDcA+ngtTJ07d6nyo9JDp
+ FlRw==
+X-Gm-Message-State: AOJu0Yxwk8afliovPElF8tka+bnSaY3LG46kqf+rI0Ye8UVAjFia/UTV
+ qrX5OJ7lwbTg9Qy0hG0lmQZvh5r3rZpLKLC4CA6fQFgl3pTxF8Tt/pDjo/LKRxssveir2/sYLY3
+ xKMUJRlt9Xy8ehiJ8iAz+XxuoQmrl3EQ1dws51Lcbyg==
+X-Gm-Gg: ATEYQzxzEtYrNyXjsTw4tW29d5tc0rXZW6Mu5HWs5BQrDyYx3MyrmiwhqYG0PA+8eFh
+ M/+dOXsl1mTu2r8FBAYp/Ieafwr2G66P9BvmoticgGkmeOmqSWp22TOWqQux2I6vyExy94TAfJj
+ l0vjE643gA5GAQ9RpvaAr84R+p3/k3pOGeYf54HSWUbT76rC98BrlGv4yaLcM6/W3VMfZzUq8v5
+ YsvQHN5a1omOQ/T3sjnuZr6xTRwlmnPwFIEXaoT3YMXEmaxG93K7Or3ej6+FyIdH8Wntm+JeqBP
+ 0F+dMnSqLCp3mJ6HG40JfJ/ZmVWiFB6nGyr0/PVxRyhj9aryyVOT08vmRcmUBpot4LXNKJStPOU
+ eMQ==
+X-Received: by 2002:a05:690e:e83:b0:64a:db13:962e with SMTP id
+ 956f58d0204a3-64eaa70635bmr2820997d50.26.1774004559590; Fri, 20 Mar 2026
+ 04:02:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20260309171258.1905205-1-peter.maydell@linaro.org>
-In-Reply-To: <20260309171258.1905205-1-peter.maydell@linaro.org>
+References: <20260313170938.449538-1-peter.maydell@linaro.org>
+ <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
+In-Reply-To: <48fdece2-5b98-4785-9b47-9eb2528803e2@ilande.co.uk>
 From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 20 Mar 2026 10:57:29 +0000
-X-Gm-Features: AaiRm51nQm4T_iRcRVli7vpuisC9wMzBU6r9Nux3XptwzfnzuY1KIJQC-VRjYdg
-Message-ID: <CAFEAcA-nHH3CzHTkAaumtSwXmkohSxJ3G6gVC5HJpckMDzeGdw@mail.gmail.com>
-Subject: Re: [PATCH] hw/isa/piix: Embed i8259 irq in device state instead of
- allocating
-To: qemu-devel@nongnu.org
-Cc: =?UTF-8?Q?Philippe_Mathieu=2DDaud=C3=A9?= <philmd@linaro.org>, 
- =?UTF-8?Q?Herv=C3=A9_Poussineau?= <hpoussin@reactos.org>
+Date: Fri, 20 Mar 2026 11:02:28 +0000
+X-Gm-Features: AaiRm52GGvi6UlE1Whih_uVFoS0m7XGwco_3kWPIksLe4OuUSddkksYrkbl8_4U
+Message-ID: <CAFEAcA_zf5joZKeiU=c5qP+PzbkrPEVOBZ0nMrOhidiywi_s8w@mail.gmail.com>
+Subject: Re: [PATCH] target/sparc: Set reg window data structures currently
+ after vmstate load
+To: Mark Cave-Ayland <mark.cave-ayland@ilande.co.uk>
+Cc: qemu-devel@nongnu.org, Artyom Tarasenko <atar4qemu@gmail.com>,
+ qemu-stable@nongnu.org
 Content-Type: text/plain; charset="UTF-8"
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b135;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb135.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::b130;
+ envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb130.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -115,38 +117,144 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Mon, 9 Mar 2026 at 17:12, Peter Maydell <peter.maydell@linaro.org> wrote:
+On Mon, 16 Mar 2026 at 21:42, Mark Cave-Ayland
+<mark.cave-ayland@ilande.co.uk> wrote:
 >
-> The pci_piix_realize() function's use of qemu_allocate_irqs()
-> results in a memory leak:
+> On 13/03/2026 17:09, Peter Maydell wrote:
 >
-> Direct leak of 8 byte(s) in 1 object(s) allocated from:
->     #0 0x61045c7a1a43 in malloc (/home/pm215/qemu/build/san/qemu-system-mips+0x16f8a43) (BuildId: aa43d3865e0f1991b1fc04422b5570fe522b6fa7)
->     #1 0x724cc3095ac9 in g_malloc (/lib/x86_64-linux-gnu/libglib-2.0.so.0+0x62ac9) (BuildId: 116e142b9b52c8a4dfd403e759e71ab8f95d8bb3)
->     #2 0x61045db72134 in qemu_extend_irqs /home/pm215/qemu/build/san/../../hw/core/irq.c:77:51
->     #3 0x61045cd7bf49 in pci_piix_realize /home/pm215/qemu/build/san/../../hw/isa/piix.c:318:35
->     #4 0x61045cf4533e in pci_qdev_realize /home/pm215/qemu/build/san/../../hw/pci/pci.c:2308:9
->     #5 0x61045db6cbca in device_set_realized /home/pm215/qemu/build/san/../../hw/core/qdev.c:523:13
->     #6 0x61045db86bd9 in property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:2376:5
->     #7 0x61045db81c5e in object_property_set /home/pm215/qemu/build/san/../../qom/object.c:1450:5
->     #8 0x61045db8e2fc in object_property_set_qobject /home/pm215/qemu/build/san/../../qom/qom-qobject.c:28:10
->     #9 0x61045db8258f in object_property_set_bool /home/pm215/qemu/build/san/../../qom/object.c:1520:15
->     #10 0x61045db687aa in qdev_realize_and_unref /home/pm215/qemu/build/san/../../hw/core/qdev.c:283:11
->     #11 0x61045d892e21 in mips_malta_init /home/pm215/qemu/build/san/../../hw/mips/malta.c:1239:5
+> > In the SPARC CPU state, env->regwptr points into the env->regbase
+> > array at wherever the architectural CWP (current window pointer) says
+> > we are in the register windows.  We don't migrate this directly,
+> > since it's a host pointer, so we must ensure it is set up again
+> > after migration load.
+> >
+> > We also have to deal with a special case when CWP is (nwindows - 1).
+> > In this case, while running we keep the "in" register data for this
+> > window in a temporary location at the end of the regbase[] array, so
+> > that generated code doesn't have to special case this "wrap around"
+> > case.  In cpu_pre_save() we call cpu_set_cwp() to force a copy of the
+> > wrapped data from its temporary location into the architectural
+> > location in window 0's "out" registers.  We then migrate only
+> > (nwindows * 16) entries in the regbase[] array.  So on the
+> > destination we need to copy the "in" register data back to its
+> > temporary location again.
+> >
+> > For 32-bit SPARC we get this right, because the CWP is in the PSR.
+> > The get_psr() function does:
+> >      env->cwp = 0;
+> >      cpu_put_psr_raw(env, val);
+> > which causes cpu_put_psr_raw() to call cpu_set_cwp() in a way that
+> > sets up both regwptr and the wrapped-register data.
+> >
+> > However, for 64-bit SPARC the CWP is not in the PSR, and
+> > cpu_put_psr_raw() will not call cpu_set_cwp().  This leaves the guest
+> > register state in a corrupted state, and the guest will likely crash
+> > on the destination if it didn't happen to be executing with CWP == 0.
+> >
+> > Fix this by adding a cpu_post_load hook which does the cpu_set_cwp()
+> > for the 64-bit case, and enough commentary to explain what is going
+> > on.
+> >
+> > Cc: qemu-stable@nongnu.org
+> > Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> > ---
+> > I ran into this because the "sparc64-migration" functional test seems
+> > to hit this reliably when built with the address sanitizer.  This is
+> > probably a timing thing, because it doesn't trip any ASAN failures,
+> > the guest just crashes on the destination side most of the time
+> > because it returns from a subroutine to a corrupt %o7 return address.
+> >
+> > As far as I can tell this is what the problem is, but I'm a bit
+> > surprised that we have never hit this, given how likely you are to
+> > hit it on a vmsave/vmload or migration.  So am I missing something?
+> > ---
+> >   target/sparc/machine.c | 41 +++++++++++++++++++++++++++++++++++++++--
+> >   1 file changed, 39 insertions(+), 2 deletions(-)
+> >
+> > diff --git a/target/sparc/machine.c b/target/sparc/machine.c
+> > index 4dd75aff74..b935c31630 100644
+> > --- a/target/sparc/machine.c
+> > +++ b/target/sparc/machine.c
+> > @@ -167,14 +167,50 @@ static int cpu_pre_save(void *opaque)
+> >       SPARCCPU *cpu = opaque;
+> >       CPUSPARCState *env = &cpu->env;
+> >
+> > -    /* if env->cwp == env->nwindows - 1, this will set the ins of the last
+> > -     * window as the outs of the first window
+> > +    /*
+> > +     * If env->cwp == env->nwindows - 1, this will set the ins of the last
+> > +     * window as the outs of the first window. We do this because we only
+> > +     * transfer the (nwindows * 16) entries of regbase[] that correspond
+> > +     * to the "proper" locations of the registers; this call has the
+> > +     * effect of copying the wrap register values from their temporary
+> > +     * location down to their proper location ready for migration.
+> >        */
+> >       cpu_set_cwp(env, env->cwp);
+> >
+> >       return 0;
+> >   }
+> >
+> > +static int cpu_post_load(void *opaque, int version_id)
+> > +{
+> > +    /*
+> > +     * For 32-bit SPARC we set the register window data structures
+> > +     * up again correctly when get_psr() called cpu_put_psr_raw(),
+> > +     * which calls cpu_set_cwp(). But for 64-bit SPARC the CWP isn't
+> > +     * part of the PSR, so we need to handle it here.
+> > +     *
+> > +     * There are two things we need to have happen:
+> > +     * 1. regwptr points into regbase[] at the location determined by CWP.
+> > +     * 2. If CWP is (nwindows - 1) then we keep the "in" regs of this window
+> > +     *    in a copy at a temporary location at the end of the regbase[]
+> > +     *    array. For migration we only transferred the (nwindows * 16)
+> > +     *    entries of regbase[] that correspond to the "proper" locations
+> > +     *    of the registers, so now we must copy the wrap registers back to
+> > +     *    their temporary location.
+> > +     *
+> > +     * We achieve both of these by setting env->cwp to 0 and then calling
+> > +     * cpu_set_cwp(). This is the same thing get_psr() does for 32-bit.
+> > +     */
+> > +#if defined(TARGET_SPARC64)
+> > +    SPARCCPU *cpu = opaque;
+> > +    CPUSPARCState *env = &cpu->env;
+> > +    uint32_t cwp = env->cwp;
+> > +
+> > +    env->cwp = 0;
+> > +    cpu_set_cwp(env, cwp);
+> > +#endif
+> > +    return 0;
+> > +}
+> > +
+> >   /* 32-bit SPARC retains migration compatibility with older versions
+> >    * of QEMU; 64-bit SPARC has had a migration break since then, so the
+> >    * versions are different.
+> > @@ -190,6 +226,7 @@ const VMStateDescription vmstate_sparc_cpu = {
+> >       .version_id = SPARC_VMSTATE_VER,
+> >       .minimum_version_id = SPARC_VMSTATE_VER,
+> >       .pre_save = cpu_pre_save,
+> > +    .post_load = cpu_post_load,
+> >       .fields = (const VMStateField[]) {
+> >           VMSTATE_UINTTL_ARRAY(env.gregs, SPARCCPU, 8),
+> >           VMSTATE_UINT32(env.nwindows, SPARCCPU),
 >
-> (The i386 PC sets the has-pic property to 'false', so this only
-> affects the MIPS Malta board.)
+> Nice analysis! I suspect the reason this doesn't always show up is because any
+> context switch (e.g. OpenBIOS, kernel to user, 32-bit to 64-bit etc.) will flush the
+> entire register window set to the stack, and hence reset env->cwp back to 0.
 >
-> Fix this by embedding the i8259 irq in the device state instead of
-> allocating it.  This is a similar fix to the one we used for vt82c686
-> in commit 2225dc562a93dc, except that we use qemu_init_irq_child()
-> instead of qemu_init_irq().  The behaviour is identical except that
-> the _child() version avoids what would be a leak if we ever
-> unrealized the device.
->
-> Signed-off-by: Peter Maydell <peter.maydell@linaro.org>
+> It does instinctively feel odd that 32-bit and 64-bit aren't handled in the same way
+> - I wonder if this implicit behaviour on 32-bit somehow needs to be more explicit?
 
-I'll take this via target-arm.next; thanks for the reviews.
+I did wonder about that, but I preferred leaving the 32-bit handling
+the way it is -- trying to unify it with 64-bit would require making
+the get_psr() code path go out of its way to avoid updating the
+reg window data structures, which seems awkward and a bit unnecessary
+given the code does work. So I opted to describe the way the 32-bit
+targets do it in the cpu_post_load() comment, so at least we have
+a record of it.
 
+Are you OK with this patch as it stands, or would you like me to
+change it?
+
+thanks
 -- PMM
 
