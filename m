@@ -4,109 +4,162 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 5B0DC108B8E6
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:53:31 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 43FC8108B8E3
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 09:53:39 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3WXQ-0003eF-4C; Fri, 20 Mar 2026 05:53:04 -0400
+	id 1w3WXu-0003tL-N7; Fri, 20 Mar 2026 05:53:34 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3WXN-0003e3-Vo
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:01 -0400
-Received: from mail-yx1-xb132.google.com ([2607:f8b0:4864:20::b132])
- by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <peter.maydell@linaro.org>)
- id 1w3WXM-0005k9-43
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:01 -0400
-Received: by mail-yx1-xb132.google.com with SMTP id
- 956f58d0204a3-64ca6595c8aso351738d50.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:52:59 -0700 (PDT)
-ARC-Seal: i=1; a=rsa-sha256; t=1774000379; cv=none;
- d=google.com; s=arc-20240605;
- b=QnYExMdmZVoR2mOJmuvumS2Xr0NQjkrh9e+xsIiHlWm9ky1vvG87dvVGMV2YcbtmK/
- XoUthhdveIBemtbSWvYcX6ShQQcdH1qYTvZyynFmVBF1s5R7aKiqYRFnL91amNsYnmYp
- ZSOF0BEkYQklqyQnqiE4o/DBmIYbgcsGw+vytPN/12COfNmytP5ebuq7YJgyo2YNYd8G
- EOqX3ZWnG6FgL6Dj480714tuR/WsGEXp2dirBW08ZFQ2FYzkL4Y8IFGpJvSBkWStwbl+
- KbWKQOkIa0RRhLZXfUYf3zq0dIfYX/vrz21ZvCSThfO8fD9q3Bhg/NP4CeZ6F8dKFqaD
- hIuw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com;
- s=arc-20240605; 
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:dkim-signature;
- bh=KDqOkgTsxIj2pLe4dKikFxZGA6CGw0gaArlIAepaY6A=;
- fh=WibSQDncNgWSyywKvPHAKYpHRJ63hQ7/by0Ly3U6FhU=;
- b=BkV4KAv6LD7sZOLWHBz6pUzI0IN5qiuAyzHP6Fv4DHcDqpzF6Cmc1MzaalqzucmywI
- S5IAL1SzvJZp1YvzHlpbiwO05ldtXn2v7RVct3ePkv9r0aBZDNrpiF3pzzK7yI2TZjCF
- gjJNpxfw5jW/GDnylsoHbV9nzbPuUYTG/1GFUhbiiK1u63xS3u4UIBYMuW2kbXSguVHy
- ylPMW1YXV+kcYx98o+sdHVCB1DZJ3gZrNAcAWSaG4hsW1Z79vKLgv3ABTgdEd/Zoz3vZ
- /CpRJEKQ4EoiLwFh+qmIuLdPy7yznSEetFXoYnLTLoDmKbqSDGYczZulWHN4RIt+ob1N
- 1tvQ==; darn=nongnu.org
-ARC-Authentication-Results: i=1; mx.google.com; arc=none
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w3WXs-0003nE-OM
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:32 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
+ (Exim 4.90_1) (envelope-from <thuth@redhat.com>) id 1w3WXr-0005q5-Ap
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 05:53:32 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+ s=mimecast20190719; t=1774000409;
+ h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+ to:to:cc:cc:mime-version:mime-version:content-type:content-type:
+ content-transfer-encoding:content-transfer-encoding:
+ in-reply-to:in-reply-to:references:references:autocrypt:autocrypt;
+ bh=g0i+eazWBJJCbRzeHxe2h56ko1/cENdsnIx1zZWfy2Q=;
+ b=NmU1SNSG6np5lRO/yz4SK8+zUre+dvQk1XuzFqVzE4bApYuIzi4E9IAFqj849iX1yChHiG
+ A3If+2VwpUg8xiNtkp8Kqbn4PQPdAxJ0CVedcqNTwwtmzMzDyaMG6c3hIXFByyJx7t2Nli
+ zKjSJTUvBvfxCUm2GxJTanyCQtmxXCw=
+Received: from mail-wr1-f70.google.com (mail-wr1-f70.google.com
+ [209.85.221.70]) by relay.mimecast.com with ESMTP with STARTTLS
+ (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
+ us-mta-215-P0-JoSt-PQm7Watrle2meQ-1; Fri, 20 Mar 2026 05:53:28 -0400
+X-MC-Unique: P0-JoSt-PQm7Watrle2meQ-1
+X-Mimecast-MFC-AGG-ID: P0-JoSt-PQm7Watrle2meQ_1774000407
+Received: by mail-wr1-f70.google.com with SMTP id
+ ffacd0b85a97d-439a85832c0so1411353f8f.2
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 02:53:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774000379; x=1774605179; darn=nongnu.org;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:from:to:cc:subject:date
- :message-id:reply-to;
- bh=KDqOkgTsxIj2pLe4dKikFxZGA6CGw0gaArlIAepaY6A=;
- b=pzqK5/11nD2FKNhuBOfO4Vpw/X5uCrhYU7eE4ytXYOiISPo4q3vJNgmNEc5Uxyn9Yl
- OMD9Ds0ED9+WLy6KCs74GwNRUlKcEzrzqUfK3tPmdPt1DLa45qfoBer+KiiQ+i6bp09g
- 4CAYWyVuWdccuO4ZMmQHHSHSBD7z8lNqs5tLFZLMQvkI1Pe/tTQZY/T6pfqFfsZgwPfG
- kBNNUHKFr/PB16p8kFyw8fEQ0HsVuTctuE18KO+FwLOHMU+Yu3ZGMdL1CG1/yYuJdkXP
- R9473L1gKZHQovai/tLtQfzNGgEAIOr8Gjfe4N+s5mCpu1URV6Osh7KWfDeTHqIjveNI
- BY1g==
+ d=redhat.com; s=google; t=1774000407; x=1774605207; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:from:to:cc:subject:date:message-id:reply-to;
+ bh=g0i+eazWBJJCbRzeHxe2h56ko1/cENdsnIx1zZWfy2Q=;
+ b=gXD1HT/fVRrqR3E5N2SS/mY3g+exyKq1QTgKnx05Ul4Aq39azNyJZeWTKlLN4Vokyg
+ ifUkK0E6PUl7aBHeBc6yoJHf6mtLxolNEvspMSyYwcZAX2JrrW/h6ixxHvaeDfWl7k7X
+ LfdqrL/jIsraew8yuX2Eaz0Xwt3IcvdfR7dyVW3BYF3/QLs102VNc0U9XK6i4mxArA5P
+ 2+aeerHFL3Pz6pQduweqwDjnOh3pC9CbvU/viiccF5mU8qAdbFMRl+2zfqfAhhsyFM9F
+ zgIvn3jhPj+6Yd+nHSa0mA9rm3tTTgdD2GKzJuI5Q8VOrcGMpN9F+LPabwM4qNentZQb
+ kiLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774000379; x=1774605179;
- h=content-transfer-encoding:cc:to:subject:message-id:date:from
- :in-reply-to:references:mime-version:x-gm-gg:x-gm-message-state:from
- :to:cc:subject:date:message-id:reply-to;
- bh=KDqOkgTsxIj2pLe4dKikFxZGA6CGw0gaArlIAepaY6A=;
- b=dl2XcCFg3+FKvsZS9M5n7KFfGl4cAbh2PNV1iltHRF3GMJtpXLcTeBL5CLRIM593Xg
- qDnBseqUW2PM0cJ5063AWuTEuF9jpXAV558KgSDb32QXoU1k9vSWzBD+K84slXsUvtkw
- gCigBEq95C5/zbK7zxwHAREx8EzksLg8IE3d4by32bKGHj3/40gGRwZdEFifnY5uU1Hp
- siduddpLOr5us+AXcLzUV1Q4FYngwVJ9nWAXkeV43NRLz/cCL8tdv/R3yHNtuKn0FDkW
- 3ygBlwllcBKQSnKyb4xBi8r2JuL0kyzoXaYm6MRDWnNU9UrZnhHi3UJ6dAFbfdyuhkaM
- H6/Q==
-X-Gm-Message-State: AOJu0YzvqYLehQv4Tl64SosdRb4BZ/riBng5WKU7P+65CdmPjM8VM8iF
- h4Tvx0b8KZYY6RYJ1MHyTPu0AkkGxyoP58EGRUfOaCbQoY7/8sQhsfnsNvQ0H1worQ9RHyUNxhK
- 375B9cbT8ze8/xbzOx4dT3YwDfIYrInLQl+HMAR7tZS1sLQ7xPjbY
-X-Gm-Gg: ATEYQzzzGejvRBTFIxT2Q8/31cgGRz3panuJrWauc0M5CaG2tsLWDxg2kITwZdm0kPH
- pnQDfk6VY4ryLcPBkLLwm39soPFM8Qiv/8VF3JeradyzGl6QbVEC9k4ZpS2ZO3YmgvC3/u/Jub5
- w3ycBj04Sybc0UlreNjQG131bbTjL77iIU1ljYiAyl1QOOA32XlkFtHsRr/JlTkOuxP1sUijNux
- mwgdp6xHKubNhU2RLlv0Ds0j2Jws8bpKrWOtNhui2kTy4d5RCJE7xEujx4ypSHoG2bIXQ4c5pMp
- eqcjtSM/rUrdaRzIBIrZP7FcyOQ18PuYJKDdljLeLfvGqGPCyHr8QQCMYDQ4CPzoUXO2ydDqjWz
- 8Wg==
-X-Received: by 2002:a05:690e:e83:b0:64e:8d44:5afa with SMTP id
- 956f58d0204a3-64eaa705756mr2887083d50.27.1774000378774; Fri, 20 Mar 2026
- 02:52:58 -0700 (PDT)
+ d=1e100.net; s=20251104; t=1774000407; x=1774605207;
+ h=content-transfer-encoding:in-reply-to:autocrypt:from
+ :content-language:references:cc:to:subject:user-agent:mime-version
+ :date:message-id:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ :message-id:reply-to;
+ bh=g0i+eazWBJJCbRzeHxe2h56ko1/cENdsnIx1zZWfy2Q=;
+ b=YMy13TEVU/5qTwTKWv0pePtKMqrXk7RLsxzqZmB9+zTL2AOfX5f2nKOXcIZvGqt2Xe
+ Jm0WobZgtcvf8wYjMwVszVIG/ebXQttyGTMZDHXZTgoZSDQoU7wkcC/aQ1r970o/P6Dd
+ MYeOPC3hxZtkghErhfrfuSleS/rLbb+ojescxPWdx2Zr0eoTYeafmtmlWMwsSuTSWHsc
+ vJjWOyf/RxCCSpNAQ9vvvggTOhjps674ASqL98KnFOJmSvXOurVSE7LkE7ZeVJWxzQL/
+ 7DU8IUht0cYScx59y/tDg8HEJ4ER+Li0H+9+8hpVGiF/E3GlI/ptzcUikIDbI/eqHwKQ
+ xmEQ==
+X-Forwarded-Encrypted: i=1;
+ AJvYcCWsNy7XX57t2/Cp/YA3YKvqLnL9RTLRN/8ZlJn/x/bu8kv6lUhThpcCU6tmVuTdgwXERTL5ITPig3Te@nongnu.org
+X-Gm-Message-State: AOJu0YzBC0e/lTanfvdq9Y3H1gPorU9oxX1jhIkeit2JGe0EGCuFtp+C
+ oMsPB7CuNEHvr43pkd9Dt5qHAX2D3Hy5HC/5lXamNW92a0VV0uba47l+hTXSGer2KxSJtnOfGkx
+ 3Lpmn1Rt0lEED8+3f3V45w6t2jgq13nIEyibcFlYrlTOGFfbtn/u1kvva
+X-Gm-Gg: ATEYQzxhJMpw5x+Psxlc/ukuKupj7zg224adAcEjwhAwGxE0RdoCWPe3p+wT6J0pYnu
+ cV137CzZ1d0xasdkhW2HbXZR3FFLaZEabUC0ZzjRRAY9eotarvO5rOLq71aT4jTMkTPcy2iFr0z
+ 7oadmMUhIc7TUlP1YAaS0IhDuaY5Kx6v2l37C0Asad+wJkr0/bP4p7Tjto/G/C0pN+wJoRi6Xs0
+ aKfvUkpNq51tTKdRFsfrbwHlbcDX/TKXur5T+eArE9Em+h8W3lOg2DlWh6Camov/cf3ibNhT+GX
+ eECrX3x/QxKoWoWGUwgeMOqI+E0DCVTiV+c96yUEkKdQwA7Kr2CMdfv/jCxXLnAZ3qv3MPbt4hC
+ xTqewhY4HSLngIqtyMA==
+X-Received: by 2002:a05:600c:c167:b0:485:364e:9328 with SMTP id
+ 5b1f17b1804b1-486ff024f53mr35860815e9.16.1774000406836; 
+ Fri, 20 Mar 2026 02:53:26 -0700 (PDT)
+X-Received: by 2002:a05:600c:c167:b0:485:364e:9328 with SMTP id
+ 5b1f17b1804b1-486ff024f53mr35860345e9.16.1774000406337; 
+ Fri, 20 Mar 2026 02:53:26 -0700 (PDT)
+Received: from [192.168.0.9] ([47.64.114.47]) by smtp.gmail.com with ESMTPSA id
+ 5b1f17b1804b1-486fe889652sm19743515e9.2.2026.03.20.02.53.22
+ (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+ Fri, 20 Mar 2026 02:53:25 -0700 (PDT)
+Message-ID: <c9239002-1847-48c4-b643-8a50941c88c9@redhat.com>
+Date: Fri, 20 Mar 2026 10:53:22 +0100
 MIME-Version: 1.0
-References: <20260314221529.47841-1-mohamed@unpredictable.fr>
- <20260314221529.47841-4-mohamed@unpredictable.fr>
- <CAFEAcA8v59wSwRvig6NRjWHyvBGY=gPhWFN1B_jD9k+aXqo9Ng@mail.gmail.com>
- <4387E53A-E140-48E9-80C3-721F9C0B9A9D@unpredictable.fr>
- <CAFEAcA_wVD+mMFhwzDyHx1pY_aMtBvdHjZqQoFoniM_JUCcceA@mail.gmail.com>
- <8B799F60-05AD-49F3-8BAC-4D36EBA8E196@unpredictable.fr>
-In-Reply-To: <8B799F60-05AD-49F3-8BAC-4D36EBA8E196@unpredictable.fr>
-From: Peter Maydell <peter.maydell@linaro.org>
-Date: Fri, 20 Mar 2026 09:52:47 +0000
-X-Gm-Features: AaiRm53oHuu_FAyfnuZav8w0bseS4L158S9D-_DdhqEfw4tbVqL-Z_UE7TvgKDk
-Message-ID: <CAFEAcA99pdJAzxNKKVvCDHbvtaQDa-upxH3Kvn1CexpQUgYWtw@mail.gmail.com>
-Subject: Re: [PATCH v3 3/6] whpx: arm: enable more enlightements
-To: Mohamed Mediouni <mohamed@unpredictable.fr>
-Cc: qemu-devel@nongnu.org, Pedro Barbuda <pbarbuda@microsoft.com>,
- qemu-arm@nongnu.org
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
-Received-SPF: pass client-ip=2607:f8b0:4864:20::b132;
- envelope-from=peter.maydell@linaro.org; helo=mail-yx1-xb132.google.com
-X-Spam_score_int: -20
-X-Spam_score: -2.1
-X-Spam_bar: --
-X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
- SPF_PASS=-0.001 autolearn=unavailable autolearn_force=no
+User-Agent: Mozilla Thunderbird
+Subject: Re: [PATCH v2 02/21] qom/object: cache ObjectPropertyFlags in
+ ObjectProperty
+To: Zhao Liu <zhao1.liu@intel.com>, Paolo Bonzini <pbonzini@redhat.com>,
+ =?UTF-8?Q?Daniel_P_=2E_Berrang=C3=A9?= <berrange@redhat.com>,
+ Eduardo Habkost <eduardo@habkost.net>, Markus Armbruster
+ <armbru@redhat.com>, Igor Mammedov <imammedo@redhat.com>,
+ =?UTF-8?Q?Philippe_Mathieu-Daud=C3=A9?= <philmd@linaro.org>
+Cc: Richard Henderson <richard.henderson@linaro.org>,
+ Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S . Tsirkin" <mst@redhat.com>, BALATON Zoltan <balaton@eik.bme.hu>,
+ Mark Cave-Ayland <mark.caveayland@nutanix.com>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Zide Chen <zide.chen@intel.com>, Dapeng Mi <dapeng1.mi@linux.intel.com>,
+ qemu-devel@nongnu.org, devel@lists.libvirt.org
+References: <20260210032348.987549-1-zhao1.liu@intel.com>
+ <20260210032348.987549-3-zhao1.liu@intel.com>
+Content-Language: en-US
+From: Thomas Huth <thuth@redhat.com>
+Autocrypt: addr=thuth@redhat.com; keydata=
+ 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
+In-Reply-To: <20260210032348.987549-3-zhao1.liu@intel.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Received-SPF: pass client-ip=170.10.129.124; envelope-from=thuth@redhat.com;
+ helo=us-smtp-delivery-124.mimecast.com
+X-Spam_score_int: -3
+X-Spam_score: -0.4
+X-Spam_bar: /
+X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
+ DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
+ SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
 X-BeenThere: qemu-devel@nongnu.org
 X-Mailman-Version: 2.1.29
@@ -122,79 +175,33 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Fri, 20 Mar 2026 at 09:50, Mohamed Mediouni <mohamed@unpredictable.fr> w=
-rote:
->
->
-> > On 20. Mar 2026, at 10:17, Peter Maydell <peter.maydell@linaro.org> wro=
-te:
-> >
-> > On Thu, 19 Mar 2026 at 18:50, Mohamed Mediouni <mohamed@unpredictable.f=
-r> wrote:
-> >>
-> >>
-> >>> On 19. Mar 2026, at 19:13, Peter Maydell <peter.maydell@linaro.org> w=
-rote:
-> >>>
-> >>> On Sat, 14 Mar 2026 at 22:15, Mohamed Mediouni <mohamed@unpredictable=
-.fr> wrote:
-> >>>>
-> >>>> Linux uses AccessVpRegs without checking availability and panics if =
-it's not there. Expose it unconditionally.
-> >>>
-> >>> The commit message subject says we're enabling enlightenments...
-> >>>
-> >>>> @@ -953,13 +953,15 @@ int whpx_accel_init(AccelState *as, MachineSta=
-te *ms)
-> >>>>    synthetic_features.Bank0.AccessPartitionReferenceTsc =3D 1;
-> >>>>    synthetic_features.Bank0.AccessHypercallRegs =3D 1;
-> >>>>    synthetic_features.Bank0.AccessVpIndex =3D 1;
-> >>>> -    synthetic_features.Bank0.AccessHypercallRegs =3D 1;
-> >>>
-> >>> ...but the code change seems to be removing one as well as
-> >>> adding the three new ones. Intentional?
-> >> Hello,
-> >>
-> >> The AccessHypercallRegs bit was set twice - with the first one being t=
-wo
-> >> lines earlier - removed a spurious one of the two.
-> >
-> > Ah, right. How about this for a commit message ?
-> >
-> >
-> >    whpx: arm: enable more enlightenments
-> >
-> >    Unconditionally enable some more enlightenments for whpx. In
-> >    particular, linux uses AccessVpRegs without checking availability an=
-d
-> >    panics if it's not there, so it's important to expose it.
-> >
-> >    We also had a duplicate line where we set AccessHypercallRegs =3D 1
-> >    twice; remove the duplicate.
-> >
-> >
-> > If you have more rationale/info about the other two we're enabling,
-> > that would also be nice to include.
+On 10/02/2026 04.23, Zhao Liu wrote:
+> Introduce a 'flags' field in the ObjectProperty structure to store
+> property-specific behavior modifiers.
+> 
+> Currently, ObjectPropertyFlags (READ/WRITE) are only used for property
+> creation (e.g., initialize accessors for pointer properties).
+> 
+> By caching these flags directly in ObjectProperty, we can:
+> 1. Preserve the initial access intent (read/write) of the property.
+>     * the READ/WRITE flags cached in ObjectProperty have no effect for
+>       now, but they may be useful for cases need write-once, if needed.
+> 
+> 2. Reuse existing ObjectPropertyFlags and provide a foundation for
+>     future flags (e.g., to track if a property was explicitly set by
+>     external user).
+> 
+> To avoid "incomplete type" error, move ObjectPropertyFlags before
+> ObjectProperty definition, and polish the comment of ObjectPropertyFlags
+> to clarify how READ/WRITE flags work for general properties.
+> 
+> Suggested-by: Igor Mammedov <imammedo@redhat.com>
+> Signed-off-by: Zhao Liu <zhao1.liu@intel.com>
+> ---
+>   include/qom/object.h | 34 +++++++++++++++++++++++++---------
+>   qom/object.c         | 16 +++++++++++++++-
+>   2 files changed, 40 insertions(+), 10 deletions(-)
 
-> ```
-> whpx: arm: enable more enlightenments
->
-> Enable some more enlightenments for whpx for -accel whpx,hyperv=3Don.
-> In particular, Linux uses AccessVpRegs without checking availability when
-> Hyper-V enlightenments are exposed and panics if it's not there.
->
-> We also had a duplicate line where we set AccessHypercallRegs =3D 1
-> twice; remove the duplicate.
->
-> Microsoft=E2=80=99s VMM exposes SyncContext on arm64 and FastHypercallOut=
-put
-> regardless of architecture unconditionally, so add those two to match
-> that configuration.
->
-> ```
+Reviewed-by: Thomas Huth <thuth@redhat.com>
 
-Thanks -- I've updated the commit message for this patch in
-target-arm.next to that.
-
--- PMM
 
