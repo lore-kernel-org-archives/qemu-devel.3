@@ -4,105 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 4AA211098787
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:12:49 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 90DB51098787
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 14:13:49 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3aae-0008F5-4g; Fri, 20 Mar 2026 10:12:40 -0400
+	id 1w3abP-0000N8-Ty; Fri, 20 Mar 2026 10:13:27 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w3aac-0008BV-6M
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:12:38 -0400
-Received: from us-smtp-delivery-124.mimecast.com ([170.10.129.124])
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3abO-0000MZ-If
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:13:26 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <peterx@redhat.com>) id 1w3aaZ-0006BQ-Qv
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:12:37 -0400
+ (Exim 4.90_1) (envelope-from <armbru@redhat.com>) id 1w3abN-0006FA-2j
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 10:13:26 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
- s=mimecast20190719; t=1774015951;
+ s=mimecast20190719; t=1774016000;
  h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
  to:to:cc:cc:mime-version:mime-version:content-type:content-type:
- content-transfer-encoding:content-transfer-encoding:
  in-reply-to:in-reply-to:references:references;
- bh=jfjRFr0OoaN3FQHv/rWOnr1mumKP6f+HaRE84uZTPWM=;
- b=YvUAiU+k/lKx9hajrwBYl9OBYbldo98VeiU99+8MlvAbUYHGDcp/OG+g55QGfSJ6Nvnydh
- gkmI+Qi+p8GcqjVvDbCm1qFqjkSK/PWTv+FXsyNX2Nb7ZMWjtOQucY3rXrOE4xwWV41mQo
- fVKHg3KIQORlACtSF4i622H/UUXx+XA=
-Received: from mail-qt1-f198.google.com (mail-qt1-f198.google.com
- [209.85.160.198]) by relay.mimecast.com with ESMTP with STARTTLS
- (version=TLSv1.3, cipher=TLS_AES_256_GCM_SHA384) id
- us-mta-453-z94ZrfIqOyy-wKt1kdQjzQ-1; Fri, 20 Mar 2026 10:12:29 -0400
-X-MC-Unique: z94ZrfIqOyy-wKt1kdQjzQ-1
-X-Mimecast-MFC-AGG-ID: z94ZrfIqOyy-wKt1kdQjzQ_1774015948
-Received: by mail-qt1-f198.google.com with SMTP id
- d75a77b69052e-50b4076dc16so42354931cf.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 07:12:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=redhat.com; s=google; t=1774015948; x=1774620748; darn=nongnu.org;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:from:to
- :cc:subject:date:message-id:reply-to;
- bh=jfjRFr0OoaN3FQHv/rWOnr1mumKP6f+HaRE84uZTPWM=;
- b=r4JEGlqeBgaoOG3X5dw0rEbFMGpC1chBTAxdiBUvK4ZVOTF96pg8h+YqBaUBmVbpdD
- 6st/O0hJzmiNAZPWVssRUR8Cr+81UUA/hrnMtI3yAVpzwcEsBMrswxC0RS30DkVmgd+8
- KX3eQD1ZXuSycugANYY3pqnqU1v1iGIO5RJP/uiE3JkIXHfBl7wmAGgfIqU7o3IoE08K
- yVwDFC5tyuvnH7F48HStNNIkOIkQDj4EQrI6zoW2quyJU8t8DCBpq2FlbAKAMqW6/Bep
- a/o+Rfk1Aj5b94YXzN9gVaa9LPvcZ9KUODO7xIwyVYflwtVeFx/6DA1xfkFBNWSQXSFB
- P9Lg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774015948; x=1774620748;
- h=in-reply-to:content-transfer-encoding:content-disposition
- :mime-version:references:message-id:subject:cc:to:from:date:x-gm-gg
- :x-gm-message-state:from:to:cc:subject:date:message-id:reply-to;
- bh=jfjRFr0OoaN3FQHv/rWOnr1mumKP6f+HaRE84uZTPWM=;
- b=iO1SRi0UuiMI2FDFLGPxBE4YRZz69yNUjU6EM9w6VfAwFUsusJpPyXhSSNByVWDVFH
- ZtywmXBrMmzk7/A49ShMWriamL5LOxuznj0RoeJdJJuLjkJQ0h0gtYTdlwUezVWDmnQe
- bsUW7V84hIxYNxfXKIT9C3uIc8I49IPV9UnMHkw1B/md3ccXls+ytbEN1i6+WRCiWaRx
- f+yyglNCkT/SgTdErnJ5TFjnDcjLsM10mKVbNeQ3E2lOb5uIkRfZzB94DATW5ii9p+xz
- CUGIN1xhiQUUqd5Ig39Je9Qg6kH8/j3dDHkaIQ6SnyPI3hfsHPY5dwvi/xIU2BIjgJME
- YH/Q==
-X-Gm-Message-State: AOJu0Yya+eCDRmJh0FvsrI5zbgrjNu8dDMdEnDOS1IFW8iL959JMYNgr
- KRZl3KUlkvxz12PJjOVevfMgL3xe/lDbdOY9CJy939LxSGBxi7cf+zRtjol0c1vnlnGNVxUZe+T
- pMflpdTevRXtMf1bAnn3E9NQEwaIRqIGU8yb4o9xPAAugB2Nve1F8C3wh
-X-Gm-Gg: ATEYQzwMfQdPLX+XYAUGXOVr+DxiP4Y/se0rMhj2x2y6LvZ919SnFwd6SnwkK7Ztf1B
- 0kmN0tfTYKx44zcnCgsEhsO2Gjd0o8oIGTxt1MCgmqypnck/bQDyxIy5mCbF1xss2/lUO5jvmeO
- nl3WZioWMtvkWqtsOfn1IReTCjBgTLSfwcvF1KZCshHAHQj6hzLSV3pauUr5lOt9qzO7BYBeioy
- 9whnQ7Hr/FWCGR5IsqRZv7KfKJHK80txgZ8FQ9Qvgyvmi8molPkeW3tcb7x9fXROqTQWrfSP7UQ
- oxEKk8ahsBG41Q0RgDK4p2TzQtfpvh3ZtMnPr9rOj1GxdQoW0t/QJZOLEUJnlIlYdO6wASW1NUk
- vjPB6qpaUErHx/Q==
-X-Received: by 2002:a05:622a:a291:b0:50b:1adf:89ba with SMTP id
- d75a77b69052e-50b375254a4mr36964761cf.40.1774015948356; 
- Fri, 20 Mar 2026 07:12:28 -0700 (PDT)
-X-Received: by 2002:a05:622a:a291:b0:50b:1adf:89ba with SMTP id
- d75a77b69052e-50b375254a4mr36964091cf.40.1774015947752; 
- Fri, 20 Mar 2026 07:12:27 -0700 (PDT)
-Received: from x1.local ([142.189.10.167]) by smtp.gmail.com with ESMTPSA id
- d75a77b69052e-50b36d23237sm24887611cf.13.2026.03.20.07.12.26
- (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
- Fri, 20 Mar 2026 07:12:27 -0700 (PDT)
-Date: Fri, 20 Mar 2026 10:12:25 -0400
-From: Peter Xu <peterx@redhat.com>
-To: Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Cc: qemu-devel@nongnu.org, Pierrick Bouvier <pierrick.bouvier@linaro.org>,
- Paolo Bonzini <pbonzini@redhat.com>
-Subject: Re: [PATCH-for-11.1 3/8] system/memory: Constify various
- AddressSpace arguments (xlat)
-Message-ID: <ab1Vyay2knkOdcuT@x1.local>
-References: <20260319191017.12636-1-philmd@linaro.org>
- <20260319191017.12636-4-philmd@linaro.org>
+ bh=sj8IkCLAiNDI/rirPut655O7XhNawX4d8vU0vPeAAAI=;
+ b=iUurFLBKS9zIJFSbSzz0WIGvVRan8MgXrvdLwH3+mI/gZQ1zA4dEoU+3cAREV4yLPIKdM6
+ fCxFuTGEqv1Blj/xVYSPzppTNJL0ALtV0K1fSwrPfgtQRjSCp7qTjdcUXsJ5xVKL8h3Dz6
+ tGABJHHPAJlk0DFXZsg15kTolPC8sbE=
+Received: from mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com
+ (ec2-35-165-154-97.us-west-2.compute.amazonaws.com [35.165.154.97]) by
+ relay.mimecast.com with ESMTP with STARTTLS (version=TLSv1.3,
+ cipher=TLS_AES_256_GCM_SHA384) id us-mta-8-NtI6BFfVMFaD_-jkDJcnpA-1; Fri,
+ 20 Mar 2026 10:13:17 -0400
+X-MC-Unique: NtI6BFfVMFaD_-jkDJcnpA-1
+X-Mimecast-MFC-AGG-ID: NtI6BFfVMFaD_-jkDJcnpA_1774015995
+Received: from mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com
+ (mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com [10.30.177.12])
+ (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+ key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+ (No client certificate requested)
+ by mx-prod-mc-08.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 0F2B318005A3; Fri, 20 Mar 2026 14:13:15 +0000 (UTC)
+Received: from blackfin.pond.sub.org (unknown [10.45.242.6])
+ by mx-prod-int-03.mail-002.prod.us-west-2.aws.redhat.com (Postfix) with ESMTPS
+ id 569691955F21; Fri, 20 Mar 2026 14:13:14 +0000 (UTC)
+Received: by blackfin.pond.sub.org (Postfix, from userid 1000)
+ id 6A90821E6937; Fri, 20 Mar 2026 15:13:11 +0100 (CET)
+From: Markus Armbruster <armbru@redhat.com>
+To: John Snow <jsnow@redhat.com>
+Cc: qemu-devel@nongnu.org,  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
+ Lukas Straub <lukasstraub2@web.de>,  Richard Henderson
+ <richard.henderson@linaro.org>,  Zhao Liu <zhao1.liu@intel.com>,  Jason
+ Wang <jasowang@redhat.com>,  Mauro Carvalho Chehab
+ <mchehab+huawei@kernel.org>,  Alex =?utf-8?Q?Benn=C3=A9e?=
+ <alex.bennee@linaro.org>,  Peter
+ Xu <peterx@redhat.com>,  Eric Blake <eblake@redhat.com>,  Daniel P.
+ =?utf-8?Q?Berrang=C3=A9?= <berrange@redhat.com>,  Fabiano Rosas
+ <farosas@suse.de>,
+ Philippe =?utf-8?Q?Mathieu-Daud=C3=A9?= <philmd@linaro.org>,
+ =?utf-8?Q?C=C3=A9dric?= Le Goater
+ <clg@redhat.com>,  qemu-block@nongnu.org,  =?utf-8?Q?Marc-Andr=C3=A9?=
+ Lureau
+ <marcandre.lureau@redhat.com>,  Peter Maydell <peter.maydell@linaro.org>,
+ "Michael S. Tsirkin" <mst@redhat.com>,  Stefan Berger
+ <stefanb@linux.vnet.ibm.com>,  Alex Williamson <alex@shazbot.org>,  Marcel
+ Apfelbaum <marcel.apfelbaum@gmail.com>,  Kevin Wolf <kwolf@redhat.com>,
+ Michael Roth <michael.roth@amd.com>,  Stefano Garzarella
+ <sgarzare@redhat.com>,  Stefan Hajnoczi <stefanha@redhat.com>,  Igor
+ Mammedov <imammedo@redhat.com>,  Jiri Pirko <jiri@resnulli.us>,  Yanan
+ Wang <wangyanan55@huawei.com>,  Paolo Bonzini <pbonzini@redhat.com>,
+ Kashyap Chamarthy <kchamart@redhat.com>,  Hanna Reitz
+ <hreitz@redhat.com>,  Ani Sinha <anisinha@redhat.com>
+Subject: Re: [PATCH 6/8] qapi: enforce doc block section ordering
+In-Reply-To: <20260316182608.148628-7-jsnow@redhat.com> (John Snow's message
+ of "Mon, 16 Mar 2026 14:26:05 -0400")
+References: <20260316182608.148628-1-jsnow@redhat.com>
+ <20260316182608.148628-7-jsnow@redhat.com>
+Date: Fri, 20 Mar 2026 15:13:11 +0100
+Message-ID: <874ima613c.fsf@pond.sub.org>
+User-Agent: Gnus/5.13 (Gnus v5.13)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20260319191017.12636-4-philmd@linaro.org>
-Received-SPF: pass client-ip=170.10.129.124; envelope-from=peterx@redhat.com;
+Content-Type: text/plain
+X-Scanned-By: MIMEDefang 3.0 on 10.30.177.12
+Received-SPF: pass client-ip=170.10.133.124; envelope-from=armbru@redhat.com;
  helo=us-smtp-delivery-124.mimecast.com
 X-Spam_score_int: -3
 X-Spam_score: -0.4
 X-Spam_bar: /
 X-Spam_report: (-0.4 / 5.0 requ) BAYES_00=-1.9, DKIMWL_WL_HIGH=-0.001,
  DKIM_SIGNED=0.1, DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
- RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H3=0.001, RCVD_IN_MSPIKE_WL=0.001,
+ RCVD_IN_DNSWL_NONE=-0.0001, RCVD_IN_MSPIKE_H5=0.001, RCVD_IN_MSPIKE_WL=0.001,
  RCVD_IN_VALIDITY_RPBL_BLOCKED=0.819, RCVD_IN_VALIDITY_SAFE_BLOCKED=0.903,
  SPF_HELO_PASS=-0.001, SPF_PASS=-0.001 autolearn=no autolearn_force=no
 X-Spam_action: no action
@@ -120,83 +107,25 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-On Thu, Mar 19, 2026 at 08:10:12PM +0100, Philippe Mathieu-Daudé wrote:
-> Mark the AddressSpace structure const when it is only accessed read-only.
-> 
-> Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+John Snow <jsnow@redhat.com> writes:
+
+> Ugly hack, gets the job done. Likely many simplifications can be made as
+> a result, but I didn't make any of them. There are some inconsistencies
+> with human-readable vs ENUM_NAMES in error messages in this patch, but
+> it appears to work anyway.
+>
+> Consider this patch more of a rough idea and not anything approximating
+> the kind of code you'd want to see from an Enterprise Linux Senior
+> Software Engineer.
+>
+> Signed-off-by: John Snow <jsnow@redhat.com>
 > ---
->  include/system/memory.h |  4 ++--
->  system/physmem.c        | 10 ++++++----
->  2 files changed, 8 insertions(+), 6 deletions(-)
-> 
-> diff --git a/include/system/memory.h b/include/system/memory.h
-> index 858dc40dc5f..38e4f7b25e5 100644
-> --- a/include/system/memory.h
-> +++ b/include/system/memory.h
-> @@ -2783,7 +2783,7 @@ void address_space_flush_icache_range(AddressSpace *as, hwaddr addr, hwaddr len)
->  /* address_space_get_iotlb_entry: translate an address into an IOTLB
->   * entry. Should be called from an RCU critical section.
->   */
-> -IOMMUTLBEntry address_space_get_iotlb_entry(AddressSpace *as, hwaddr addr,
-> +IOMMUTLBEntry address_space_get_iotlb_entry(const AddressSpace *as, hwaddr addr,
->                                              bool is_write, MemTxAttrs attrs);
->  
->  /* address_space_translate: translate an address range into an address space
-> @@ -2804,7 +2804,7 @@ MemoryRegion *flatview_translate(FlatView *fv,
->                                   hwaddr *len, bool is_write,
->                                   MemTxAttrs attrs);
->  
-> -static inline MemoryRegion *address_space_translate(AddressSpace *as,
-> +static inline MemoryRegion *address_space_translate(const AddressSpace *as,
->                                                      hwaddr addr, hwaddr *xlat,
->                                                      hwaddr *len, bool is_write,
->                                                      MemTxAttrs attrs)
-> diff --git a/system/physmem.c b/system/physmem.c
-> index 23ea6b69255..bbcbcedda15 100644
-> --- a/system/physmem.c
-> +++ b/system/physmem.c
-> @@ -528,19 +528,21 @@ static MemoryRegionSection flatview_do_translate(FlatView *fv,
->  }
->  
->  /* Called from RCU critical section */
-> -IOMMUTLBEntry address_space_get_iotlb_entry(AddressSpace *as, hwaddr addr,
-> +IOMMUTLBEntry address_space_get_iotlb_entry(const AddressSpace *as, hwaddr addr,
->                                              bool is_write, MemTxAttrs attrs)
->  {
->      MemoryRegionSection section;
->      hwaddr xlat, page_mask;
-> +    AddressSpace target_as = *as;
+>  scripts/qapi/parser.py | 39 +++++++++++++++++++++++----------------
+>  1 file changed, 23 insertions(+), 16 deletions(-)
 
-Is this one an overkill?  It'll deep copy everything of AS..
+Missing: update to docs/devel/qapi-code-gen.rst.  Suggest to put in a
+FIXME, so we don't forget.
 
-> +    AddressSpace *ptarget_as = &target_as;
->  
->      /*
->       * This can never be MMIO, and we don't really care about plen,
->       * but page mask.
->       */
->      section = flatview_do_translate(address_space_to_flatview(as), addr, &xlat,
-> -                                    NULL, &page_mask, is_write, false, &as,
-> -                                    attrs);
-> +                                    NULL, &page_mask, is_write, false,
-> +                                    &ptarget_as, attrs);
->  
->      /* Illegal translation */
->      if (section.mr == &io_mem_unassigned) {
-> @@ -552,7 +554,7 @@ IOMMUTLBEntry address_space_get_iotlb_entry(AddressSpace *as, hwaddr addr,
->          section.offset_within_region;
->  
->      return (IOMMUTLBEntry) {
-> -        .target_as = as,
-> +        .target_as = &target_as,
->          .iova = addr & ~page_mask,
->          .translated_addr = xlat & ~page_mask,
->          .addr_mask = page_mask,
-> -- 
-> 2.53.0
-> 
-
--- 
-Peter Xu
+Missing: test coverage.
 
 
