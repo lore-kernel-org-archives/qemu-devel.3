@@ -4,99 +4,92 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 483491098797
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:34:04 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 32747109879E
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 15:38:15 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3brA-0002IR-QL; Fri, 20 Mar 2026 11:33:48 -0400
+	id 1w3bvE-0003Wj-UY; Fri, 20 Mar 2026 11:38:00 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
- id 1w3br8-0002ID-Tg
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:33:46 -0400
-Received: from mail-wm1-x336.google.com ([2a00:1450:4864:20::336])
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w3bvD-0003WO-9r
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:37:59 -0400
+Received: from mail-pf1-x42a.google.com ([2607:f8b0:4864:20::42a])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <califano.tommaso@gmail.com>)
- id 1w3br7-0001JM-6G
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:33:46 -0400
-Received: by mail-wm1-x336.google.com with SMTP id
- 5b1f17b1804b1-486fe655187so11976195e9.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:33:44 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <richard.henderson@linaro.org>)
+ id 1w3bvB-0003PP-M7
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 11:37:58 -0400
+Received: by mail-pf1-x42a.google.com with SMTP id
+ d2e1a72fcca58-82c20b9f989so222617b3a.0
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 08:37:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=gmail.com; s=20230601; t=1774020823; x=1774625623; darn=nongnu.org;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=linaro.org; s=google; t=1774021076; x=1774625876; darn=nongnu.org;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :from:to:cc:subject:date:message-id:reply-to;
- bh=r7q5uU/FGHIAi3WQ08qV264szit3ZXeqzJkWmXhZxZI=;
- b=MzH2hEDxGNbn53VvoAiSKaqLe20/DMkhOkjlgQ9V1dgJ/E5RuykxJNCTbtm66qY5XS
- /ScvI5n0WATftrfnW0oCmdngM24M4myrI2BeTZhPZMFcmQGTTDOMGgnnPTcqSNaH08ZV
- exMfEjlqZeXXukk6qyAXfA/fp5+OOeYH36Y+4dxj+P6mNz1hf4N36d0zFNXVjc1kUXMP
- /2IMXx2PhZiGKm/UNdKZwf2hc8efX8d3x9LtpKsT+JSPYwHQ9rySI5PkWwAMwVzzsHGE
- cRjKdp/Fg2At+WiEjr1NS66SrooQFKPNMI5v3ZCv1gptziRh6aXrh1/Kzmn8LdgBO4T2
- PYcA==
+ bh=4v9qCCYtNl9abIWnNJdoHNmf9JIEl3xP4H0BlVbHX6U=;
+ b=d9Xpd68nlzAPMQuE+po+dhyBSMHdAuUL9H5RT18iGxEHIWa/l1AxvGie1brQITS3mw
+ ZaI8Al3/66yuy5WKQ9sk7HJVaYv9AR3IXzR9XewaFFP/b34pyDo7fUNOZtHEbAB9ZMLV
+ RVcgLUHne+VDAqcLS8zTnJ/Xfaz0NogsNOXZR/R9KXM/v92+l/SGpVJgyUm8ihey1iT5
+ Nch7Aq6shTAJV7dQ91TtUITQL7sEXJ+Gw3RUI+ESZFyG3Iz9devFoMRkyziGRhcI//y2
+ UT7czYP2RUfuhIsvruTpnjmIPMs5240wal/nh//VTiukjBuf1LQE8AOsLEFMfU4p7mMy
+ /p6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774020823; x=1774625623;
- h=content-transfer-encoding:in-reply-to:from:content-language
+ d=1e100.net; s=20251104; t=1774021076; x=1774625876;
+ h=content-transfer-encoding:in-reply-to:content-language:from
  :references:cc:to:subject:user-agent:mime-version:date:message-id
  :x-gm-gg:x-gm-message-state:from:to:cc:subject:date:message-id
  :reply-to;
- bh=r7q5uU/FGHIAi3WQ08qV264szit3ZXeqzJkWmXhZxZI=;
- b=bNN2KWP6DWTn7G/n91dzJp/YAMsNXTftZUMKRs2jTtkGe6tfjRPRHkIcRNHYTyGGeF
- l8B2pyTaIp70ocUzXww908MY4ycuAU5L6afUbJYWgK9vbpyudJOfGM8mPCEwxt5HS3jZ
- LHyi5J4puBhPozvnc5fRGhgwXDgXZEc/1z/f7XNjlpUAy/7TSFqFidoNrbC5Pv/n4nxp
- 4gAHmucjfRDqJ8fR8MmVtOFwX//Yee9zCsvWY0G+2TcMn57/edQhpE1Die3whcgwGMKZ
- SbqeMc2w4Ebi1+pkco9607URsR6/87ocPaWwLOK6ncrfM8O5cy6UiIGMwcmFYSWZrQtk
- 1KOw==
-X-Gm-Message-State: AOJu0Yw0FKA55MLtNV8E9ouzioZHbnJ5fowPf+E5wB48mS78yUdqvwsu
- PENAhcmlVMucLWfe6H2qT3cLXifC5j3hM5XnDWv1bIpl1Y0k1kEYwFVX
-X-Gm-Gg: ATEYQzy0kCgJIZNl+xgJkJlU+7W2KfYzGfMiFNIQJlfTx/zmUjO5uRE+V9S1iUVnRhG
- O2pyOngy1+XyMpzPGq++WEH92pZL5tsjbeOYxWz8COy98BoCnDrksWSCz027ZyxXfplW7wZ1tfK
- PfKozrDHi2vdwPffh3DfESFB1UYGs6sI1OYMPr6CYDnna7B4yPDiwXiRI8/uViWmXnDhHLoWajo
- RFMF7HY1hvjulFyFkDL7Xo/yrp55+s1fg36zKPNdBiz8WPycoVQdJkOf0igM6qo7QxfS1EiBB88
- wNVzmkw+dA+CsnS93oMpmnQ6SL4r12mfvFCoiLPlNlNW4KnbXI3Fp6KELT09Ev/5kmhoyQvNfST
- jXesUId+DmjpaBbzX+GWyE9UOzVPIYpuPo4FfzGdXg1dYFVEAa0dR0aVKnZkoTC96hZrHMQNozI
- pExZU6aA+GeczSU+nZrS1aT02z3yqTnw7HaK0o7copTJLZDli6MfU7myQu
-X-Received: by 2002:a05:600c:35c1:b0:485:3b50:fe54 with SMTP id
- 5b1f17b1804b1-486fedb2545mr60168225e9.11.1774020822818; 
- Fri, 20 Mar 2026 08:33:42 -0700 (PDT)
-Received: from [192.168.10.55] (77-32-38-61.dyn.eolo.it. [77.32.38.61])
- by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b6470393fsm7801957f8f.17.2026.03.20.08.33.41
+ bh=4v9qCCYtNl9abIWnNJdoHNmf9JIEl3xP4H0BlVbHX6U=;
+ b=PvYsvYFZ0OJO92jqGS5e5comJSJkiVp5aQ4Yu4xMhr8JWKbLcCEt0mFjrEElqciAVW
+ iNA536ItnAYlD2Ws5WNe5Ix9rDPjyhw0vT8c6Id7p3TJxGWWmzHfXz6orLzURNK3G+a+
+ 9YNy7aEf0x8etgU4YMvy6fSK6ifh1VMTkBkvTyM2TerOiEDSv2bTiKlKQj0rVtIlLl6z
+ 1st0tRGirkCuzrqj+62QACUYOukvbp4I9X57jR4y8GuuUBxkrVd1sAgqeNVHGYeUkn1b
+ eHg0DaU/E1idUZhyVWL4cgyPW+7YrbHzOyDUcRYkFAtROlRx5gNEahKKX1kiBviTS/OQ
+ dSeA==
+X-Gm-Message-State: AOJu0Ywkl21hsojJ0EkwLgWO96R1o5VAY9oo3bf829tj8PhpJlb4JPOF
+ PBSLAv7u49SEkoIqUq/U0GdZ41Nfz20wx+NR8fEnrcD9KtRCtCorq/PfPF7pe4qbOZ8=
+X-Gm-Gg: ATEYQzwoFvg1L/Q8iJB86KQVEasP7g11BhopNvo5QLNefDDb0/b8ZWQv66KGW1HGplq
+ bUG7ObwcskbTFHUi5tu3XytZDS5aQiiH2S95gxUVwWaJze19y752XUze26SGkSIRXEIe+mBTThZ
+ vtm75qPyJCt5h5Gh5fjzneFLEbzg9Gze/1JwTMQwQolPb9DTOLL0zUa4APIGIFNsjRWTxGFbJCc
+ 4mN3afwI0z37GvIcXfXDsgSRtZRniHhVe3uac7NxKhfeXhRV8Z2Q1571t9tiaJDrH0oKN6+jCjo
+ 7wecEjgpMYv1xayc0mCIcLBgjuX4kfTcYuQJGKrhyCerR8KJy6HfYH4XmDzcYwqSankRLb4nLl4
+ H/lZKKNwARSpPx1tQrTJUKrvoVBZ3gVQtNWz/5a6oOwSuuAcVk3mG3lUjfNBXXVlSDqz6fNXYiS
+ xBE3yGmdrLXnlpeS/5VrFgfSmvc1Lbw/cM5HFQefZZvK9slw==
+X-Received: by 2002:a05:6a00:21d2:b0:82a:6b97:34a4 with SMTP id
+ d2e1a72fcca58-82a8c351bfdmr3179739b3a.31.1774021075596; 
+ Fri, 20 Mar 2026 08:37:55 -0700 (PDT)
+Received: from [10.5.0.209] ([114.23.167.13]) by smtp.gmail.com with ESMTPSA id
+ d2e1a72fcca58-82b03aa58dcsm2676966b3a.11.2026.03.20.08.37.53
  (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
- Fri, 20 Mar 2026 08:33:42 -0700 (PDT)
-Message-ID: <462f2df0-06ca-4ca0-90cc-aa14ac2d0f83@gmail.com>
-Date: Fri, 20 Mar 2026 16:34:11 +0100
+ Fri, 20 Mar 2026 08:37:55 -0700 (PDT)
+Message-ID: <dedd88a2-cdc0-4f0c-bbf5-69751b9cd827@linaro.org>
+Date: Sat, 21 Mar 2026 04:37:49 +1300
 MIME-Version: 1.0
 User-Agent: Mozilla Thunderbird
-Subject: Re: [PATCH 1/5] i386/sev: Add sev-emulated QOM object with TCG support
-To: Markus Armbruster <armbru@redhat.com>
-Cc: qemu-devel@nongnu.org, kvm@vger.kernel.org,
- Eduardo Habkost <eduardo@habkost.net>, Zhao Liu <zhao1.liu@intel.com>,
- =?UTF-8?Q?Daniel_P=2E_Berrang=C3=A9?= <berrange@redhat.com>,
- Marcelo Tosatti <mtosatti@redhat.com>, Eric Blake <eblake@redhat.com>,
- Oliver Steffen <osteffen@redhat.com>,
- Stefano Garzarella <sgarzare@redhat.com>,
- Giuseppe Lettieri <giuseppe.lettieri@unipi.it>,
- Paolo Bonzini <pbonzini@redhat.com>, Luigi Leonardi <leonardi@redhat.com>,
- Richard Henderson <richard.henderson@linaro.org>
-References: <20260317113840.33017-1-califano.tommaso@gmail.com>
- <20260317113840.33017-2-califano.tommaso@gmail.com>
- <87tsucvw3k.fsf@pond.sub.org>
- <1694998d-ea3d-4707-bf95-726ba9aee6c4@gmail.com>
- <878qbm4kw9.fsf@pond.sub.org>
-Content-Language: en-US, it
-From: Tommaso Califano <califano.tommaso@gmail.com>
-In-Reply-To: <878qbm4kw9.fsf@pond.sub.org>
-Content-Type: text/plain; charset=UTF-8
+Subject: Re: [PATCH] linux-user/i386/signal.c: Correct definition of
+ target_fpstate_32
+To: Peter Maydell <peter.maydell@linaro.org>
+Cc: qemu-devel@nongnu.org, Laurent Vivier <laurent@vivier.eu>,
+ Pierrick Bouvier <pierrick.bouvier@linaro.org>
+References: <20260305161739.1775232-1-peter.maydell@linaro.org>
+ <8d76a679-4d7c-4c3b-80d2-11799dc98fdc@linaro.org>
+ <CAFEAcA9HgVmbe9TXGOZW5Vbkvbn-Dvah24f1oPn4zvymk=_mZg@mail.gmail.com>
+ <a38b768a-3a80-47de-8a03-11faf2b85526@linaro.org>
+ <CAFEAcA9dCKF0H=MkNmOmxnfyJV+SeHk_tObL558MJ-w3w8aQSg@mail.gmail.com>
+From: Richard Henderson <richard.henderson@linaro.org>
+Content-Language: en-US
+In-Reply-To: <CAFEAcA9dCKF0H=MkNmOmxnfyJV+SeHk_tObL558MJ-w3w8aQSg@mail.gmail.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::336;
- envelope-from=califano.tommaso@gmail.com; helo=mail-wm1-x336.google.com
+Received-SPF: pass client-ip=2607:f8b0:4864:20::42a;
+ envelope-from=richard.henderson@linaro.org; helo=mail-pf1-x42a.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
 X-Spam_report: (-2.1 / 5.0 requ) BAYES_00=-1.9, DKIM_SIGNED=0.1,
- DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1, FREEMAIL_FROM=0.001,
+ DKIM_VALID=-0.1, DKIM_VALID_AU=-0.1, DKIM_VALID_EF=-0.1,
  RCVD_IN_DNSWL_NONE=-0.0001, SPF_HELO_NONE=0.001,
  SPF_PASS=-0.001 autolearn=ham autolearn_force=no
 X-Spam_action: no action
@@ -114,87 +107,40 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-
-
-Il 20/03/26 15:48, Markus Armbruster ha scritto:
-> Tommaso Califano <califano.tommaso@gmail.com> writes:
-> 
->> Il 19/03/26 13:31, Markus Armbruster ha scritto:
->>> Tommaso Califano <califano.tommaso@gmail.com> writes:
->>>
->>>> QEMU's AMD SEV support requires KVM on costly AMD EPYC processors,
->>>> limiting development and testing to users with specialized server
->>>> hardware. This makes it hard to validate SEV guest behavior, like
->>>> OVMF boots or SEV-aware software, on common dev machines.
->>>> A solution to this is the emulation of SEV from the guest's
->>>> perspective using TCG.
->>>>
->>>> This change begins this process with the exposure of the SEV CPUID leaf.
->>>> In target/i386/cpu.c:cpu_x86_cpuid() case 0x8000001F:
->>>>
->>>> case 0x8000001F:
->>>>     *eax = *ebx = *ecx = *edx = 0;
->>>>     if (sev_enabled()) {
->>>>         *eax = 0x2;
->>>>         *eax |= sev_es_enabled() ? 0x8 : 0;
->>>>         *eax |= sev_snp_enabled() ? 0x10 : 0;
->>>>         *ebx = sev_get_cbit_position() & 0x3f; /* EBX[5:0] */
->>>>         *ebx |= (sev_get_reduced_phys_bits() & 0x3f) << 6; /* EBX[11:6] */
->>>>     }
->>>>     break;
->>>>
->>>> sev_enabled() verifies if the QOM object is TYPE_SEV_GUEST;
->>>> TYPE_SEV_EMULATED is derived from TYPE_SEV_GUEST with SevEmulatedState
->>>> to satisfy this check with minimal changes. In particular this allows
->>>> to bypass all the sev_enabled() checks for future features.
->>>>
->>>> Since KVM hardware isn't available, override the QOM's kvm_init() and add
->>>> a conditional confidential_guest_kvm_init() call during machine_init() to
->>>> set up emulated confidential support using the ConfidentialGuestSupport
->>>> structure.
->>>>
->>>> With this change it is possible to run a VM with the SEV CPUID active
->>>> adding:
->>>>
->>>>     -accel tcg \
->>>>     -object sev-emulated,id=sev0,cbitpos=47,reduced-phys-bits=1 \
->>>>     -machine memory-encryption=sev0
->>>>
->>>> To the QEMU start arguments.
->>>>
->>>> Signed-off-by: Tommaso Califano <califano.tommaso@gmail.com>
->>>
->>> [...]
->>>
->>>> diff --git a/qapi/qom.json b/qapi/qom.json
->>>> index c653248f85..35cda819ec 100644
->>>> --- a/qapi/qom.json
->>>> +++ b/qapi/qom.json
-> 
-> [...]
-> 
->>>> @@ -1241,6 +1254,7 @@
->>>>      { 'name': 'secret_keyring',
->>>>        'if': 'CONFIG_SECRET_KEYRING' },
->>>>      'sev-guest',
->>>> +    'sev-emulated',
->>>>      'sev-snp-guest',
->>>>      'thread-context',
->>>>      's390-pv-guest',
->>>
->>> Please insert before sev-guest to keep things more or less sorted.
->>>
+On 3/20/26 22:23, Peter Maydell wrote:
+> On Fri, 20 Mar 2026 at 01:15, Richard Henderson
+> <richard.henderson@linaro.org> wrote:
+>> On 3/19/26 22:27, Peter Maydell wrote:
+>>> I also note that for the data structure I am fixing, we never do
+>>> an xsave/xrestore on it -- it is purely junk unused padding.
+>>> The real xsave/xrestore info is elsewhere, in the dynamic part
+>>> of the signal frame.
 >>
->> I'll do it, but I don't understand the convention. I'd organized them
->> by object derivation hierarchy, so what is the expected sorting order?
+>> That is an excellent point.  The structure you're fixing is never really used.
+>>
+>> It's only use at present is to be included in the ia32 sigframe structure, and is only
+>> used for padding.  As an unintended side effect, the alignment of X86LegacyXSaveArea is
+>> inherited by sigframe.
+>>
+>> Perhaps we should simply have
+>>
+>> -    struct target_fpstate_32 fpstate_unused;
+>> +    char fpstate_unused[sizeof(struct target_fregs_state) +
+>> +                        sizeof(X86LegacyXSaveArea)];
 > 
-> It looks alphabetical modulo lazy mistakes to me.
+> I did consider something like that; from the commit message:
 > 
-> [...]
+> # Replace the use of X86LegacyXSaveArea with a set of fields that match
+> # the kernel _fpstate_32 struct, and assert that the length is correct.
+> # We could equally have used
+> #    uint8_t legacy_area[512];
+> # but following the kernel is probably less confusing overall.
 > 
+> Either way works, so I guess I don't care very strongly.
 
-Thanks for the clarification.
+Ok then,
 
-Best regards,
-Tommaso Califano
+Reviewed-by: Richard Henderson <richard.henderson@linaro.org>
+
+r~
 
