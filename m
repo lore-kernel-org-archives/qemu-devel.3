@@ -4,64 +4,66 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id A2BAE10987B6
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id B793B10987A9
 	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:51:21 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3d3N-0005mq-MW; Fri, 20 Mar 2026 12:50:29 -0400
+	id 1w3d43-0006GJ-V8; Fri, 20 Mar 2026 12:51:11 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d3L-0005m0-Fq
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:50:27 -0400
-Received: from mail-wr1-x434.google.com ([2a00:1450:4864:20::434])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d42-0006FU-11
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:51:10 -0400
+Received: from mail-wm1-x332.google.com ([2a00:1450:4864:20::332])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d3K-0001MM-1E
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:50:27 -0400
-Received: by mail-wr1-x434.google.com with SMTP id
- ffacd0b85a97d-43b527ac5d0so433155f8f.2
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:50:25 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d40-0001rz-Ik
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:51:09 -0400
+Received: by mail-wm1-x332.google.com with SMTP id
+ 5b1f17b1804b1-486fd27754bso13297055e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:51:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774025423; x=1774630223; darn=nongnu.org;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:from:to:cc:subject:date:message-id:reply-to;
- bh=K0Mx46DeVNbPDi+3Qbd6FXtet5fvH/iXU4vavaxSE2w=;
- b=YxmOi4/vdCij1S/evNEqZZg0yp9t7ICxVeMO9ladWUFW5+vCAdrkwsUP6HoNTg7Fj/
- 6vafAvJwKtrxwyANAobtG/a8gDQ//9UE6wQhpRMdRtN1xMS8fZPkL8aECMjYIQ4BgNZ0
- L0LyAwIMm/qmLSmDRv/RgiZ3D64jokO6kOQUE8LkoqaLfS/0M5ci1BJdacnHPIuypeJQ
- JP+9qw5QnZVTyGi0f+wr2tdYSqHl9VYZSTnHR//lkbvD7onBqxDVz1V/URmTMYA6/X7t
- MpV7Bcfj79cijUfJRNbPqcZmIyhnsYMvUvwC918kIgER5bxsxUrD7C7Xi3oUY1ha81WC
- p7hQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774025423; x=1774630223;
- h=content-transfer-encoding:mime-version:message-id:date:subject:cc
- :to:from:x-gm-gg:x-gm-message-state:from:to:cc:subject:date
+ d=linaro.org; s=google; t=1774025466; x=1774630266; darn=nongnu.org;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=K0Mx46DeVNbPDi+3Qbd6FXtet5fvH/iXU4vavaxSE2w=;
- b=ncLECRm3Sf4H6v9xtHe3xqKe5ZtF+GEZiC/hbR9cbuXYJrVPKgEK8PEB3ry+NxlPYb
- deQ31KMFnGx+OcrJkFt70hji6Xj6Y/XXVJye7LUGhAJBMat9srLIvr7Q3hIfoEsW47za
- GkC9WBKZ7RRscXplQHK3frlGeAOuZgf9BF9OU0LplhL3l61GNv7m0j7mWj7zNDyKpQuy
- MZI6Hbqny+5OYKcppidww0vPC6I4/7f/gz1vN76nyqy5zj6JoS4nIf8qC3ip1g+y6Se2
- UBv1kzNup884PuiQCE4ockynrjvIfbSQ8ekTlJM0NGT2CXFMS5G7bjO58DRJiRsNc2m3
- HkQg==
-X-Gm-Message-State: AOJu0YywThjXUiDQsP53z+a1BR1An56Cpkw1yuNuILY5TWszlneECXYZ
- SJaEt2dDte4CIXjxpOfzONyhwWPWE38jQCgBYz6mCNJa75sxTBmJ2fHf/zyo8y+qOAaCMacw1ak
- Jsz4+mcE=
-X-Gm-Gg: ATEYQzxEvuSQFgzojjRUxD0pZroHQZGDplewEVz/aWGkV1PDeSb4TurjsgWEl4HQMnb
- TveYn92CG5V+QBoSFFKCZS3lFpAsjm030XNXeU9oXzOV2aWIpc0m4ziuzHXmeGKK5IW8NTJN+Lh
- bNe24iLz/XT250LClvVNa7DJJpMeul5UWbZz1zdpoKmw3RpElYWnK8r+Fw2khiFX+BY/Aa/Wd5x
- 9rx26RAAkUC/IbGJVfeazrLup8ZIZSBApSr1qvbJ1KMThtJib0jfPzueciU9XO2FJN6VjQz0Acl
- Ecvun1wwlJL5FMvT83ewhnzl6cCBZ+2HZ0/X1RfBpfffxSd63b/NjEWuIQQ868rWIQTu9YmRcXv
- e+I50Hv8ExjDtsMZeeUMfwIY7nQovTtzcXB9IX12WAo5CDsZ3/tHTdxOUVQpzkGgbdbG7ebScD6
- x0bNORUhlUwTUzUjEaKayEIDhDUft/HQMQL0ZJg+4DbiDnCE6aZI95LpWTSQc0SSevsZO9SDXS
-X-Received: by 2002:a5d:588c:0:b0:43b:410d:c4ad with SMTP id
- ffacd0b85a97d-43b642815e7mr6519566f8f.42.1774025423496; 
- Fri, 20 Mar 2026 09:50:23 -0700 (PDT)
+ bh=PmtnWJ5PFHdyhRwq5dv+ae8r7zuhkOnXX82QXiYgiuw=;
+ b=WXU00+xkx2xnE+6+7E7zspkRC8dUO/pTM93tczTAts3KRBhr0aBL4eZRniZifKkzV2
+ 9aJV/HoNLuKoxSaTVv8zvSYqjoc+fk5fD0oUbq/0skxqk6hWfCZv4qKZ2nr5Uz3HaeeK
+ WNo9e0T1IflQQY+S5AD0usbiqFlf21AKbI0swyYSiYz2kQzZ7nLMLSiZip6vM2DuFkjU
+ leGKNjMtdfZXyYWG/ipF7cYviMYsScE9gHRRgjG5PPts+D6+2ngR2bpEqh6eSeUm7lfq
+ LXGboRAmWGiDVPhYmSQNwor4H/lfh+fi67bi5+T3Yvg0FpXH4sJAAZeuAp2i+OMxzoBF
+ Jl2Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=1e100.net; s=20251104; t=1774025466; x=1774630266;
+ h=content-transfer-encoding:mime-version:references:in-reply-to
+ :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
+ :to:cc:subject:date:message-id:reply-to;
+ bh=PmtnWJ5PFHdyhRwq5dv+ae8r7zuhkOnXX82QXiYgiuw=;
+ b=O1Ol/qLQN0fds8wKL+QzLx9yQIt5kOcYE1H3tU1zfNlky86labZ2UY2v4UJOfpmsOu
+ ArW/W+USjnIDVZXSORSq8EjbMUGQpDzTqa7zcZwrixwS4ZWVhBbvs4uvSsLG50l0/XdY
+ s+n78j1NFqO6Luhl5HffIpG2mRwSGNYMwQNZltqQuqSUDVpNk7KVOcytcjgx3M4ai8LY
+ lFD41Y62pq3vajSqHIgZodXrm/pjHbl0ZmLd7e2IUwEO0BG8kbrFMPddKtnIFtn7JQN8
+ AhI0gHy0glqnZ8KbrgjdxHX2V0IAkO72VsccvnvybJrA/90GwtDmN30fWqMoY11ZgdcW
+ gpGA==
+X-Gm-Message-State: AOJu0Yw7zwFqs2BqCWh7hbKVF9eM68KTUO5w1zKLmX77aIBRHVj+ZFcp
+ qskCRCYzyiDF6xfDFcX38kc+DCQdc9EWmgv93NgLuZIQOl1PGPJS3TBmwXIyLoZFoKxpWM0my5I
+ O3atvLzM=
+X-Gm-Gg: ATEYQzxAY46Sn3Z9F/XF0wIhsbNurGjbWVfVidFBu4YzkczJgtEGl4q7i8ivHmPUqvs
+ SegonO7O0WN9cGENd5scXal78edWfEUJ6nd7rTNl/1Vh6J9jCwEXZreCNTzGjgkDd+oQUa9ibxu
+ dySFlflIV5dH6xvh4oXE3b2ItgLWOIHGuNuXDi77I2N43AC//jPNTdNoC5sYzAElFVQx5QCk45h
+ hqkbZALLnYS2venPKqPutHIuooiz/3K0oFekl5w4Co+2zo6EVRxoR+yGqh/K1pHiOVNGmAXNvXV
+ abqgFwNKbEAs94vQ1FVS07fpHOE46k/H3D8u8xyw6F5CGjihw8tbR9J6drDDr0QZhTCeTh8520z
+ aMJvlDHj3wAY2FVbgGwuWMLA3SpuZl6QsZm4DhGmEmMEbvKaJ9US+c6rr7ixeDD8kofTAYy2tON
+ +Gyv4i7IV0DwxSY45zDQOtz14/PTz1GD/Cg7iZouXy2AGkVWij4DWh1o4bLQ4BBSEmde9jslQj1
+ nhERh1RQxU=
+X-Received: by 2002:a05:600c:8b66:b0:486:f9d0:aac8 with SMTP id
+ 5b1f17b1804b1-486fee0f835mr53412435e9.18.1774025466464; 
+ Fri, 20 Mar 2026 09:51:06 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- ffacd0b85a97d-43b64715539sm8137757f8f.33.2026.03.20.09.50.22
+ 5b1f17b1804b1-486ff1ce0b9sm28082815e9.6.2026.03.20.09.51.04
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Mar 2026 09:50:22 -0700 (PDT)
+ Fri, 20 Mar 2026 09:51:05 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -71,16 +73,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chinmay Rath <rathc@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 v2 0/7] monitor: Have 'info tlb' dump MMU information
- on monitor
-Date: Fri, 20 Mar 2026 17:50:13 +0100
-Message-ID: <20260320165021.39521-1-philmd@linaro.org>
+Subject: [PATCH-for-11.1 v2 6/7] target/ppc: Rename dump_mmu() ->
+ ppc_monitor_dump_mmu()
+Date: Fri, 20 Mar 2026 17:50:19 +0100
+Message-ID: <20260320165021.39521-7-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
+In-Reply-To: <20260320165021.39521-1-philmd@linaro.org>
+References: <20260320165021.39521-1-philmd@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
+Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::434;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x434.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::332;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x332.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -103,36 +107,58 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently 'info tlb' dumps the MMU information on stdout, fix
-by using the monitor console instead. Rename the dump_mmu()
-functions to avoid name clash on single binary.
+Rename dump_mmu() to avoid a name clash with other targets:
 
-Since v1:
-- Split Xtensa patch (pm215)
-- Update m68k / ppc targets
+  $ git grep -w dump_mmu master | fgrep .h
+  target/m68k/cpu.h:610:void dump_mmu(CPUM68KState *env);
+  target/ppc/cpu.h:3083:void dump_mmu(CPUPPCState *env);
+  target/sparc/cpu.h:603:void dump_mmu(CPUSPARCState *env);
+  target/xtensa/cpu.h:697:void dump_mmu(CPUXtensaState *env);
 
-Philippe Mathieu-Daudé (7):
-  target/m68k: Have 'info tlb' dump MMU information on monitor
-  target/ppc: Have 'info tlb' dump MMU information on monitor
-  target/xtensa: Have 'info tlb' dump MMU information on monitor
-  target/xtensa: Display [ID]TLB header within dump_tlb()
-  target/m68k: Rename dump_mmu() -> m68k_monitor_dump_mmu()
-  target/ppc: Rename dump_mmu() -> ppc_monitor_dump_mmu()
-  target/xtensa: Rename dump_mmu() -> xtensa_monitor_dump_mmu()
+Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
+---
+ target/ppc/cpu.h        | 2 +-
+ target/ppc/mmu_common.c | 2 +-
+ target/ppc/monitor.c    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
- target/m68k/cpu.h          |   2 +-
- target/ppc/cpu.h           |   2 +-
- target/ppc/mmu-hash64.h    |   2 +-
- target/xtensa/cpu.h        |   2 +-
- target/m68k/helper.c       | 116 +++++++++++++++++++------------------
- target/m68k/monitor.c      |   2 +-
- target/ppc/mmu-hash64.c    |  10 ++--
- target/ppc/mmu_common.c    |  66 ++++++++++-----------
- target/ppc/monitor.c       |   2 +-
- target/xtensa/mmu_helper.c |  44 +++++++-------
- target/xtensa/monitor.c    |   2 +-
- 11 files changed, 125 insertions(+), 125 deletions(-)
-
+diff --git a/target/ppc/cpu.h b/target/ppc/cpu.h
+index ba17ea83fa2..7fcafd590d4 100644
+--- a/target/ppc/cpu.h
++++ b/target/ppc/cpu.h
+@@ -3082,7 +3082,7 @@ static inline bool ppc_interrupts_little_endian(PowerPCCPU *cpu, bool hv)
+ }
+ #endif
+ 
+-void dump_mmu(Monitor *mon, CPUPPCState *env);
++void ppc_monitor_dump_mmu(Monitor *mon, CPUPPCState *env);
+ 
+ void ppc_maybe_bswap_register(CPUPPCState *env, uint8_t *mem_buf, int len);
+ void ppc_store_vscr(CPUPPCState *env, uint32_t vscr);
+diff --git a/target/ppc/mmu_common.c b/target/ppc/mmu_common.c
+index 5ea9b6d6773..00923c0b96e 100644
+--- a/target/ppc/mmu_common.c
++++ b/target/ppc/mmu_common.c
+@@ -547,7 +547,7 @@ static void mmu6xx_dump_mmu(Monitor *mon, CPUPPCState *env)
+     }
+ }
+ 
+-void dump_mmu(Monitor *mon, CPUPPCState *env)
++void ppc_monitor_dump_mmu(Monitor *mon, CPUPPCState *env)
+ {
+     switch (env->mmu_model) {
+     case POWERPC_MMU_BOOKE:
+diff --git a/target/ppc/monitor.c b/target/ppc/monitor.c
+index 41337d77a89..f95b1b44c2c 100644
+--- a/target/ppc/monitor.c
++++ b/target/ppc/monitor.c
+@@ -19,5 +19,5 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
+         monitor_printf(mon, "No CPU available\n");
+         return;
+     }
+-    dump_mmu(mon, env1);
++    ppc_monitor_dump_mmu(mon, env1);
+ }
 -- 
 2.53.0
 
