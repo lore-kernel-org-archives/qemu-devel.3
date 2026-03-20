@@ -4,65 +4,65 @@ X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
 Received: from lists.gnu.org (lists.gnu.org [209.51.188.17])
 	(using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
 	(No client certificate requested)
-	by smtp.lore.kernel.org (Postfix) with ESMTPS id 25D3A10987A9
-	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:51:51 +0000 (UTC)
+	by smtp.lore.kernel.org (Postfix) with ESMTPS id 66B5110987A9
+	for <qemu-devel@archiver.kernel.org>; Fri, 20 Mar 2026 16:52:12 +0000 (UTC)
 Received: from localhost ([::1] helo=lists1p.gnu.org)
 	by lists.gnu.org with esmtp (Exim 4.90_1)
 	(envelope-from <qemu-devel-bounces@nongnu.org>)
-	id 1w3d3w-0005yJ-4y; Fri, 20 Mar 2026 12:51:04 -0400
+	id 1w3d4B-0006KT-Gh; Fri, 20 Mar 2026 12:51:19 -0400
 Received: from eggs.gnu.org ([2001:470:142:3::10])
  by lists.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_256_GCM_SHA384:256)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d3l-0005qf-0B
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:50:54 -0400
-Received: from mail-wr1-x432.google.com ([2a00:1450:4864:20::432])
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d49-0006JM-Sl
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:51:17 -0400
+Received: from mail-wm1-x329.google.com ([2a00:1450:4864:20::329])
  by eggs.gnu.org with esmtps (TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128)
- (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d3g-0001Ul-8s
- for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:50:51 -0400
-Received: by mail-wr1-x432.google.com with SMTP id
- ffacd0b85a97d-43b467dcf0bso2120963f8f.0
- for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:50:46 -0700 (PDT)
+ (Exim 4.90_1) (envelope-from <philmd@linaro.org>) id 1w3d48-0001sj-3A
+ for qemu-devel@nongnu.org; Fri, 20 Mar 2026 12:51:17 -0400
+Received: by mail-wm1-x329.google.com with SMTP id
+ 5b1f17b1804b1-48558d6ef83so7709025e9.3
+ for <qemu-devel@nongnu.org>; Fri, 20 Mar 2026 09:51:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=linaro.org; s=google; t=1774025445; x=1774630245; darn=nongnu.org;
+ d=linaro.org; s=google; t=1774025474; x=1774630274; darn=nongnu.org;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:from:to:cc:subject:date
  :message-id:reply-to;
- bh=UMP6P39GtUY9QKw5KFD9byXsM6LV5ZDKVvl9cJpnkZg=;
- b=sYL7udV+fTuMGZR1NhWyvryAd+WAPT5s/GZySbbHYPHtVe/bseRJVdp5Ho8WrQqqba
- UPNeQne/ylpHHAc6FzChrgXd5zzqdp2ezMkLjP1dc22DBUJr9yrqRkbw15k9Jv2ZEwh8
- i7zu+ASnODBLykMw+8/85LuvyE7d+tt/cYh1k0lI2fEkuMk3wA1HXY3WWM2uG9GErPZr
- 99oXLlFhp0MfEYhcao/kfsTsNDwMtH+dusA5CwpxCkzeGE7Q47vSYsVgB9jTwmsqZQp0
- yVC6lF3dwr0PoUuNBJlr/5tRDQEgEPgToUV0qH/aVq4+BPgGXIf2OprqO6fr/eacm/yt
- OtYw==
+ bh=e6sBzq3DUz6gocrIces2uqDUPmvpHqt0ZePVNRFGs/E=;
+ b=UZrp0hcjJ4S+7aLXKfIdecAYwBfX0Y2O5VYqyuqrS9nAIy6UeC63PnLE5ApB9VVbkA
+ BsDjdHxc6QPXVP/IMowVl3sWqLZPgYXOJSZONfg6wHZ1f35+aF9mvxymkzEWKcSanRoU
+ qM0q3b3DVouf7iSaFkP7lAlrpHiyxWOAznLNHn+KRedzNtn57uXVPX1TYL2jQWsFyOue
+ n6CBuEA59RP2S4cXhnFfXVgF7jKVnwpXXLkLu1tYVRyryA/hgGYChZEgjRvuhZxqUihq
+ SM9eLSYJ5zi0zCyVHcrXD3tHXYs336p0jDsh9Gfqlg2xeub6dPfnSlgIlE9pQNCKeMXb
+ ydcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=1e100.net; s=20251104; t=1774025445; x=1774630245;
+ d=1e100.net; s=20251104; t=1774025474; x=1774630274;
  h=content-transfer-encoding:mime-version:references:in-reply-to
  :message-id:date:subject:cc:to:from:x-gm-gg:x-gm-message-state:from
  :to:cc:subject:date:message-id:reply-to;
- bh=UMP6P39GtUY9QKw5KFD9byXsM6LV5ZDKVvl9cJpnkZg=;
- b=FdX13prvfNJ4Uv72UIbb+wq6dvLRANVtxBRk1Skl20f5g2EJy0snc3xpKNZ4jo3GaV
- wvoexqSzRlp9bcfklEIbs3U1Df+AQIYGSa9XiVSrKL2a/tsBI1D8I2m524Q4wZMme+bo
- vDu5p1S7cf3oEM6Pbg/B4wsQonVUzlZRPyVUkdEFmRHjawIPAYOPYQKu8Wpt7PJH/pd+
- UFttLWCOeZl5OotQPvEhDyD9uyuPujHtQhkmBvOERPI70dV7Z1vdmE/K2LDwF8Y+rmiF
- Ro8tNg6p6LLAD/3OcLey2X2R+gISQV1XUTQiih6Ly0xLO/22lkToByj+0CKR5bTcfl2C
- 8LqA==
-X-Gm-Message-State: AOJu0Yz7xMd41n6P8+Ck4P2VJb2dl0FN94Uk0sJWV3Ok9sm9TLIpw64+
- vU7aW636TJ36FWRo0rhEhbHaRgUMEqnaH42TeUuZXDki2q2BeWu7u7A7t6G1NIgkm3RxZV3POb9
- Oi0QjV2E=
-X-Gm-Gg: ATEYQzxksGIBex/kKvPh1K4bRcCqKx/vr1AdsxdMiLFrn/vfmynHMl1Fn5Shc+9o0le
- ieaT63MzOqVw6zbibx+9HToFk/yvZ1ULkNeMslVOfFa7iYtYcToWJBh7uI9Udg903tRezuRjhAm
- 28KL7s6bv7O5xvWhWfa+iridjVWl76nMhlNaRJuT0YaAdeFuUO5wjH1QZBG5bO23yEiP9WUmSGx
- PCdyKbpNUBwUnNHbpnvIiBXetW8TRxcqNdReKLT4Iz+pDIThowXCw0tVpncOMPjSqpsYz4WNhq8
- r9KLnRrt90OvA9TRK/u88UM+uu2d/Izcd5kiftVxsiHQ2lvQncNulKg4TN4tGjpqrLCRxNGXcim
- hYwfipigaoQwHbEvzc13IvB2uBH/lV+TdeVyTmvRCiPJRsfpCsS5Cg9+gUseEcYIqNURGyoBMQC
- NplC4FGf7ZoJv8uTt3t7KWepFMW5PgUj+0E5qDBu6o2y+Hp8ns/3Pkr3MTlaCahmegN9SqfZ0y
-X-Received: by 2002:a05:600c:1383:b0:486:fbc4:8fe2 with SMTP id
- 5b1f17b1804b1-486fe8fb2b2mr63111185e9.15.1774025444675; 
- Fri, 20 Mar 2026 09:50:44 -0700 (PDT)
+ bh=e6sBzq3DUz6gocrIces2uqDUPmvpHqt0ZePVNRFGs/E=;
+ b=MJwp+uSMy2dihvLxW0RN9UjIF1nHB/uPG9V4xS8EANTnezDWCqEOetea4UPR/MyN+z
+ Ce9SdkLymUSaYVcc+EumkH0j7oACmLidZoR9yJGo0jBDB4DNbIMG4xFClTmOr6AYKF0d
+ y2JbhitmGgQ1Xwv8cNytcp5AqVHzt3MP7AxiA7F12dc77Hz+sp1Cng4CtsXmQl7sC3EP
+ Pw42tE1uvBufNcsjLx0YJJ0vc0Y91EHLwTuEFoGdAn9fDRLboeto+7NRyEUOsf8S6I+M
+ vYnMdkN3bh56P7iJbp5pdiF1gPfHYBXVMOCmyYS0boqWNzkSbMWIET/M6X5IlIgaUT/J
+ sWoQ==
+X-Gm-Message-State: AOJu0YyotcIIpIYvMRMSxDgORR/YJVgyrQ02Iail/Wpz+kwsvPaHmCek
+ ZDkz3DWusDm1Gf6ZZXV5av8kEd2zfPQh+NbkRfoBwD8cVBy6md0SX+IdEXU4MVO36mqeN/Dmfxj
+ z3V3bL4s=
+X-Gm-Gg: ATEYQzySufC84OOH9eeMDsfjMHe2nHK2HSs+glBOdj//nHD1MmI4KVIWixtGv6JvY4Y
+ XS96ARoe1xXymZ3iP/trhivZ6wSXimIPKthmKEUczkuDMatY8MUQUrQs05mOWw7emX/7YUgSWwy
+ YwSyvcyB6iSOZZUWzAwEzcIZAD99WE3wUyGJIdvGJ3yUF7i69iPcr8LX/d3xQUAE1y9E45nu3Cg
+ ivyxxdMUMLie5o6dLCmfDe0HnkNrjfOBkUqfK/AeoMvcRnRUmD3gn0oEu/+xPH3l7MTqVWuk2pn
+ rlIn0aGSNYS34Eort2IcV8amWymOiXUW9UONuJEjuSHbTqYNmWHUZQRdLSLQOtLWtfDHtnT3IuU
+ LgnwzU3XN4eL4CWxaTnbuV1gwRpiD+LenTgb0bEgXtQxIduQ0B/7OCYtDtyJaz5ZF04AWe+ZB+/
+ lgNAv1Zq4r1K5JZmTSQANx25wX/n6r7X85vm1xEgeAvDhDjiEGua/RP6TeA9vksXlQGMZRJQDl
+X-Received: by 2002:a05:600c:8b32:b0:485:4394:b0e with SMTP id
+ 5b1f17b1804b1-486fedbad16mr51693335e9.12.1774025474277; 
+ Fri, 20 Mar 2026 09:51:14 -0700 (PDT)
 Received: from localhost.localdomain (88-187-86-199.subs.proxad.net.
  [88.187.86.199]) by smtp.gmail.com with ESMTPSA id
- 5b1f17b1804b1-486fe7e3a94sm82408645e9.7.2026.03.20.09.50.43
+ 5b1f17b1804b1-486fe8ceebdsm30580915e9.4.2026.03.20.09.51.12
  (version=TLS1_3 cipher=TLS_CHACHA20_POLY1305_SHA256 bits=256/256);
- Fri, 20 Mar 2026 09:50:44 -0700 (PDT)
+ Fri, 20 Mar 2026 09:51:12 -0700 (PDT)
 From: =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
 To: qemu-devel@nongnu.org
 Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
@@ -72,18 +72,18 @@ Cc: Nicholas Piggin <npiggin@gmail.com>, Laurent Vivier <laurent@vivier.eu>,
  Pierrick Bouvier <pierrick.bouvier@linaro.org>,
  Chinmay Rath <rathc@linux.ibm.com>,
  =?UTF-8?q?Philippe=20Mathieu-Daud=C3=A9?= <philmd@linaro.org>
-Subject: [PATCH-for-11.1 v2 3/7] target/xtensa: Have 'info tlb' dump MMU
- information on monitor
-Date: Fri, 20 Mar 2026 17:50:16 +0100
-Message-ID: <20260320165021.39521-4-philmd@linaro.org>
+Subject: [PATCH-for-11.1 v2 7/7] target/xtensa: Rename dump_mmu() ->
+ xtensa_monitor_dump_mmu()
+Date: Fri, 20 Mar 2026 17:50:20 +0100
+Message-ID: <20260320165021.39521-8-philmd@linaro.org>
 X-Mailer: git-send-email 2.53.0
 In-Reply-To: <20260320165021.39521-1-philmd@linaro.org>
 References: <20260320165021.39521-1-philmd@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
-Received-SPF: pass client-ip=2a00:1450:4864:20::432;
- envelope-from=philmd@linaro.org; helo=mail-wr1-x432.google.com
+Received-SPF: pass client-ip=2a00:1450:4864:20::329;
+ envelope-from=philmd@linaro.org; helo=mail-wm1-x329.google.com
 X-Spam_score_int: -20
 X-Spam_score: -2.1
 X-Spam_bar: --
@@ -106,174 +106,57 @@ List-Subscribe: <https://lists.nongnu.org/mailman/listinfo/qemu-devel>,
 Errors-To: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 Sender: qemu-devel-bounces+qemu-devel=archiver.kernel.org@nongnu.org
 
-Currently 'info tlb' dumps the MMU information on stdout.
-Propagate the @Monitor argument and replace qemu_printf() by
-monitor_printf() -- or monitor_puts when no formatting -- to
-dump information over the monitor (which is not always stdout).
+Rename dump_mmu() to avoid a name clash with other targets:
 
-Fixes: d41160a3e64 ("Sparc: implement monitor command 'info tlb'")
+  $ git grep -w dump_mmu master | fgrep .h
+  target/m68k/cpu.h:610:void dump_mmu(CPUM68KState *env);
+  target/ppc/cpu.h:3083:void dump_mmu(CPUPPCState *env);
+  target/sparc/cpu.h:603:void dump_mmu(CPUSPARCState *env);
+  target/xtensa/cpu.h:697:void dump_mmu(CPUXtensaState *env);
+
 Signed-off-by: Philippe Mathieu-Daudé <philmd@linaro.org>
 ---
- target/xtensa/cpu.h        |  2 +-
- target/xtensa/mmu_helper.c | 44 +++++++++++++++++++-------------------
- target/xtensa/monitor.c    |  2 +-
- 3 files changed, 24 insertions(+), 24 deletions(-)
+ target/xtensa/cpu.h        | 2 +-
+ target/xtensa/mmu_helper.c | 2 +-
+ target/xtensa/monitor.c    | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/xtensa/cpu.h b/target/xtensa/cpu.h
-index dfd2ceab7cf..caec22bb742 100644
+index caec22bb742..095b4ced45f 100644
 --- a/target/xtensa/cpu.h
 +++ b/target/xtensa/cpu.h
 @@ -693,7 +693,7 @@ int xtensa_get_physical_addr(CPUXtensaState *env, bool update_tlb,
          uint32_t vaddr, int is_write, int mmu_idx,
          uint32_t *paddr, uint32_t *page_size, unsigned *access);
  void reset_mmu(CPUXtensaState *env);
--void dump_mmu(CPUXtensaState *env);
-+void dump_mmu(Monitor *mon, CPUXtensaState *env);
+-void dump_mmu(Monitor *mon, CPUXtensaState *env);
++void xtensa_monitor_dump_mmu(Monitor *mon, CPUXtensaState *env);
  
  static inline MemoryRegion *xtensa_get_er_region(CPUXtensaState *env)
  {
 diff --git a/target/xtensa/mmu_helper.c b/target/xtensa/mmu_helper.c
-index 71330fc84b9..9dbf671228b 100644
+index 48e1d64a3d7..766fe60e2eb 100644
 --- a/target/xtensa/mmu_helper.c
 +++ b/target/xtensa/mmu_helper.c
-@@ -27,7 +27,6 @@
- 
- #include "qemu/osdep.h"
- #include "qemu/log.h"
--#include "qemu/qemu-print.h"
- #include "qemu/units.h"
- #include "cpu.h"
- #include "exec/helper-proto.h"
-@@ -38,6 +37,7 @@
- #include "exec/page-protection.h"
- #include "exec/target_page.h"
- #include "system/memory.h"
-+#include "monitor/monitor.h"
- 
- #define XTENSA_MPU_SEGMENT_MASK 0x0000001f
- #define XTENSA_MPU_ACC_RIGHTS_MASK 0x00000f00
-@@ -1082,7 +1082,7 @@ int xtensa_get_physical_addr(CPUXtensaState *env, bool update_tlb,
+@@ -1198,7 +1198,7 @@ static void dump_mpu(Monitor *mon, CPUXtensaState *env,
      }
  }
  
--static void dump_tlb(CPUXtensaState *env, bool dtlb)
-+static void dump_tlb(Monitor *mon, CPUXtensaState *env, bool dtlb)
- {
-     unsigned wi, ei;
-     const xtensa_tlb *conf =
-@@ -1121,11 +1121,11 @@ static void dump_tlb(CPUXtensaState *env, bool dtlb)
- 
-                 if (print_header) {
-                     print_header = false;
--                    qemu_printf("Way %u (%d %s)\n", wi, sz, sz_text);
--                    qemu_printf("\tVaddr       Paddr       ASID  Attr RWX Cache\n"
-+                    monitor_printf(mon, "Way %u (%d %s)\n", wi, sz, sz_text);
-+                    monitor_puts(mon, "\tVaddr       Paddr       ASID  Attr RWX Cache\n"
-                                 "\t----------  ----------  ----  ---- --- -------\n");
-                 }
--                qemu_printf("\t0x%08x  0x%08x  0x%02x  0x%02x %c%c%c %s\n",
-+                monitor_printf(mon, "\t0x%08x  0x%08x  0x%02x  0x%02x %c%c%c %s\n",
-                             entry->vaddr,
-                             entry->paddr,
-                             entry->asid,
-@@ -1140,12 +1140,12 @@ static void dump_tlb(CPUXtensaState *env, bool dtlb)
-     }
- }
- 
--static void dump_mpu(CPUXtensaState *env,
-+static void dump_mpu(Monitor *mon, CPUXtensaState *env,
-                      const xtensa_mpu_entry *entry, unsigned n)
- {
-     unsigned i;
- 
--    qemu_printf("\t%s  Vaddr       Attr        Ring0  Ring1  System Type    CPU cache\n"
-+    monitor_printf(mon, "\t%s  Vaddr       Attr        Ring0  Ring1  System Type    CPU cache\n"
-                 "\t%s  ----------  ----------  -----  -----  -------------  ---------\n",
-                 env ? "En" : "  ",
-                 env ? "--" : "  ");
-@@ -1157,7 +1157,7 @@ static void dump_mpu(CPUXtensaState *env,
-         unsigned type = mpu_attr_to_type(attr);
-         char cpu_cache = (type & XTENSA_MPU_TYPE_CPU_CACHE) ? '-' : ' ';
- 
--        qemu_printf("\t %c  0x%08x  0x%08x   %c%c%c    %c%c%c   ",
-+        monitor_printf(mon, "\t %c  0x%08x  0x%08x   %c%c%c    %c%c%c   ",
-                     env ?
-                     ((env->sregs[MPUENB] & (1u << i)) ? '+' : '-') : ' ',
-                     entry[i].vaddr, attr,
-@@ -1170,19 +1170,19 @@ static void dump_mpu(CPUXtensaState *env,
- 
-         switch (type & XTENSA_MPU_SYSTEM_TYPE_MASK) {
-         case XTENSA_MPU_SYSTEM_TYPE_DEVICE:
--            qemu_printf("Device %cB %3s\n",
-+            monitor_printf(mon, "Device %cB %3s\n",
-                         (type & XTENSA_MPU_TYPE_B) ? ' ' : 'n',
-                         (type & XTENSA_MPU_TYPE_INT) ? "int" : "");
-             break;
-         case XTENSA_MPU_SYSTEM_TYPE_NC:
--            qemu_printf("Sys NC %cB      %c%c%c\n",
-+            monitor_printf(mon, "Sys NC %cB      %c%c%c\n",
-                         (type & XTENSA_MPU_TYPE_B) ? ' ' : 'n',
-                         (type & XTENSA_MPU_TYPE_CPU_R) ? 'r' : cpu_cache,
-                         (type & XTENSA_MPU_TYPE_CPU_W) ? 'w' : cpu_cache,
-                         (type & XTENSA_MPU_TYPE_CPU_C) ? 'c' : cpu_cache);
-             break;
-         case XTENSA_MPU_SYSTEM_TYPE_C:
--            qemu_printf("Sys  C %c%c%c     %c%c%c\n",
-+            monitor_printf(mon, "Sys  C %c%c%c     %c%c%c\n",
-                         (type & XTENSA_MPU_TYPE_SYS_R) ? 'R' : '-',
-                         (type & XTENSA_MPU_TYPE_SYS_W) ? 'W' : '-',
-                         (type & XTENSA_MPU_TYPE_SYS_C) ? 'C' : '-',
-@@ -1191,29 +1191,29 @@ static void dump_mpu(CPUXtensaState *env,
-                         (type & XTENSA_MPU_TYPE_CPU_C) ? 'c' : cpu_cache);
-             break;
-         default:
--            qemu_printf("Unknown\n");
-+            monitor_puts(mon, "Unknown\n");
-             break;
-         }
-     }
- }
- 
--void dump_mmu(CPUXtensaState *env)
-+void dump_mmu(Monitor *mon, CPUXtensaState *env)
+-void dump_mmu(Monitor *mon, CPUXtensaState *env)
++void xtensa_monitor_dump_mmu(Monitor *mon, CPUXtensaState *env)
  {
      if (xtensa_option_bits_enabled(env->config,
                  XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_PROTECTION) |
-                 XTENSA_OPTION_BIT(XTENSA_OPTION_REGION_TRANSLATION) |
-                 XTENSA_OPTION_BIT(XTENSA_OPTION_MMU))) {
- 
--        qemu_printf("ITLB:\n");
--        dump_tlb(env, false);
--        qemu_printf("\nDTLB:\n");
--        dump_tlb(env, true);
-+        monitor_puts(mon, "ITLB:\n");
-+        dump_tlb(mon, env, false);
-+        monitor_puts(mon, "\nDTLB:\n");
-+        dump_tlb(mon, env, true);
-     } else if (xtensa_option_enabled(env->config, XTENSA_OPTION_MPU)) {
--        qemu_printf("Foreground map:\n");
--        dump_mpu(env, env->mpu_fg, env->config->n_mpu_fg_segments);
--        qemu_printf("\nBackground map:\n");
--        dump_mpu(NULL, env->config->mpu_bg, env->config->n_mpu_bg_segments);
-+        monitor_puts(mon, "Foreground map:\n");
-+        dump_mpu(mon, env, env->mpu_fg, env->config->n_mpu_fg_segments);
-+        monitor_puts(mon, "\nBackground map:\n");
-+        dump_mpu(mon, NULL, env->config->mpu_bg, env->config->n_mpu_bg_segments);
-     } else {
--        qemu_printf("No TLB for this CPU core\n");
-+        monitor_puts(mon, "No TLB for this CPU core\n");
-     }
- }
 diff --git a/target/xtensa/monitor.c b/target/xtensa/monitor.c
-index 2af84934f83..2761735f112 100644
+index 2761735f112..80ebba5acbd 100644
 --- a/target/xtensa/monitor.c
 +++ b/target/xtensa/monitor.c
 @@ -34,5 +34,5 @@ void hmp_info_tlb(Monitor *mon, const QDict *qdict)
          monitor_printf(mon, "No CPU available\n");
          return;
      }
--    dump_mmu(env1);
-+    dump_mmu(mon, env1);
+-    dump_mmu(mon, env1);
++    xtensa_monitor_dump_mmu(mon, env1);
  }
 -- 
 2.53.0
